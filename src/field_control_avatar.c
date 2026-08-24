@@ -79,7 +79,7 @@ extern u8 UseDiveScript[];
 extern u8 S_UseDiveUnderwater[];
 extern u8 EventScript_FallDownHole[];
 extern u8 gUnknown_081A14B8[];
-extern u8 S_EggHatch[];
+extern u8 EventScript_EggHatch[];
 extern u8 gUnknown_0815FD0D[];
 extern u8 EventScript_FallDownHoleMtPyre[];
 
@@ -583,7 +583,7 @@ bool8 TryStartStepCountScript(void)
     if (ShouldEggHatch())
     {
         IncrementGameStat(GAME_STAT_HATCHED_EGGS);
-        ScriptContext_SetupScript(S_EggHatch);
+        ScriptContext_SetupScript(EventScript_EggHatch);
         return TRUE;
     }
     if (SafariZoneTakeStep() == TRUE)

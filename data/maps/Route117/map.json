@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_150D57",
+      "script": "Route117_EventScript_Woman",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_150D60",
+      "script": "Route117_EventScript_LittleBoy",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_1B222D",
+      "script": "Route117_EventScript_DaycareMan",
       "flag": "0"
     },
     {
@@ -123,7 +123,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "Route117_EventScript_150E09",
+      "script": "Route117_EventScript_Dylan",
       "flag": "0"
     },
     {
@@ -136,7 +136,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route117_EventScript_150DCB",
+      "script": "Route117_EventScript_Lydia",
       "flag": "0"
     },
     {
@@ -149,7 +149,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route117_EventScript_150D8D",
+      "script": "Route117_EventScript_Isaac",
       "flag": "0"
     },
     {
@@ -201,7 +201,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_1B1598",
+      "script": "Route117_EventScript_ItemGreatBall",
       "flag": "FLAG_ITEM_ROUTE117_1"
     },
     {
@@ -227,7 +227,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_1B15A5",
+      "script": "Route117_EventScript_ItemRevive",
       "flag": "FLAG_ITEM_ROUTE117_2"
     },
     {
@@ -240,7 +240,7 @@
       "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route117_EventScript_150E47",
+      "script": "Route117_EventScript_Maria",
       "flag": "0"
     },
     {
@@ -253,7 +253,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "Route117_EventScript_150E85",
+      "script": "Route117_EventScript_Derek",
       "flag": "0"
     },
     {
@@ -266,7 +266,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_150EE2",
+      "script": "Route117_EventScript_Meg",
       "flag": "0"
     },
     {
@@ -279,7 +279,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_150E9C",
+      "script": "Route117_EventScript_Anna",
       "flag": "0"
     },
     {
@@ -292,7 +292,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route117_EventScript_150D69",
+      "script": "Route117_EventScript_Girl",
       "flag": "0"
     }
   ],
@@ -313,7 +313,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route117_EventScript_150D72"
+      "script": "Route117_EventScript_RouteSignVerdanturf"
     },
     {
       "type": "sign",
@@ -321,7 +321,7 @@
       "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route117_EventScript_150D7B"
+      "script": "Route117_EventScript_RouteSignMauville"
     },
     {
       "type": "sign",
@@ -329,7 +329,7 @@
       "y": 5,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route117_EventScript_150D84"
+      "script": "Route117_EventScript_DayCareSign"
     },
     {
       "type": "hidden_item",
