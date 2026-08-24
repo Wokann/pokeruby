@@ -32,7 +32,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route115_EventScript_15092E",
+      "script": "Route115_EventScript_Woman",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "6",
-      "script": "Route115_EventScript_150949",
+      "script": "Route115_EventScript_Timothy",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "Route115_EventScript_15099E",
+      "script": "Route115_EventScript_Nob",
       "flag": "0"
     },
     {
@@ -110,7 +110,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route115_EventScript_1509DC",
+      "script": "Route115_EventScript_Cyndy",
       "flag": "0"
     },
     {
@@ -123,7 +123,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route115_EventScript_150987",
+      "script": "Route115_EventScript_Koichi",
       "flag": "0"
     },
     {
@@ -136,7 +136,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route115_EventScript_150A1A",
+      "script": "Route115_EventScript_Hector",
       "flag": "0"
     },
     {
@@ -149,7 +149,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route115_EventScript_1B1530",
+      "script": "Route115_EventScript_ItemSuperPotion",
       "flag": "FLAG_ITEM_ROUTE115_1"
     },
     {
@@ -162,7 +162,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route115_EventScript_1B153D",
+      "script": "Route115_EventScript_ItemTMFocusPunch",
       "flag": "FLAG_ITEM_ROUTE115_2"
     },
     {
@@ -175,7 +175,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route115_EventScript_1B154A",
+      "script": "Route115_EventScript_ItemIron",
       "flag": "FLAG_ITEM_ROUTE115_3"
     },
     {
@@ -227,7 +227,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route115_EventScript_1B1557",
+      "script": "Route115_EventScript_ItemGreatBall",
       "flag": "FLAG_ITEM_ROUTE115_4"
     }
   ],
@@ -262,7 +262,7 @@
       "y": 64,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route115_EventScript_150937"
+      "script": "Route115_EventScript_RouteSignRustboro"
     },
     {
       "type": "sign",
@@ -270,7 +270,7 @@
       "y": 38,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route115_EventScript_150940"
+      "script": "Route115_EventScript_MeteorFallsSign"
     },
     {
       "type": "secret_base",
