@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route103_EventScript_14ED82",
+      "script": "Route103_EventScript_Man",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route103_EventScript_14EB92",
+      "script": "Route103_EventScript_Rival",
       "flag": "FLAG_HIDE_RIVAL_ROUTE103"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route103_EventScript_14ED94",
+      "script": "Route103_EventScript_Daisy",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route103_EventScript_14EDF1",
+      "script": "Route103_EventScript_Liv",
       "flag": "0"
     },
     {
@@ -84,7 +84,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route103_EventScript_14EDAB",
+      "script": "Route103_EventScript_Amy",
       "flag": "0"
     },
     {
@@ -97,7 +97,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route103_EventScript_14EE37",
+      "script": "Route103_EventScript_Andrew",
       "flag": "0"
     },
     {
@@ -149,7 +149,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route103_EventScript_14ED79",
+      "script": "Route103_EventScript_Boy",
       "flag": "0"
     },
     {
@@ -175,7 +175,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "5",
-      "script": "Route103_EventScript_14EE4E",
+      "script": "Route103_EventScript_Miguel",
       "flag": "0"
     },
     {
@@ -227,7 +227,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route103_EventScript_14ED8B"
+      "script": "Route103_EventScript_RouteSign"
     }
   ]
 }

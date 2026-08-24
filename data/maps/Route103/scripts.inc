@@ -1,23 +1,23 @@
 Route103_MapScripts:: @ 814EB81
-	map_script MAP_SCRIPT_ON_TRANSITION, Route103_MapScript1_14EB87
+	map_script MAP_SCRIPT_ON_TRANSITION, Route103_OnTransition
 	.byte 0
 
-Route103_MapScript1_14EB87:: @ 814EB87
+Route103_OnTransition:: @ 814EB87
 	call Common_EventScript_SetupRivalGfxId
 	call ProfBirch_EventScript_UpdateLocation
 	end
 
-Route103_EventScript_14EB92:: @ 814EB92
+Route103_EventScript_Rival:: @ 814EB92
 	lockall
 	checkplayergender
 	compare VAR_RESULT, 0
-	goto_if_eq Route103_EventScript_14EBAB
+	goto_if_eq Route103_EventScript_RivalMay
 	compare VAR_RESULT, 1
-	goto_if_eq Route103_EventScript_14EC04
+	goto_if_eq Route103_EventScript_RivalBrendan
 	end
 
-Route103_EventScript_14EBAB:: @ 814EBAB
-	msgbox Route103_Text_16D57A, MSGBOX_DEFAULT
+Route103_EventScript_RivalMay:: @ 814EBAB
+	msgbox Route103_Text_MayRoute103Pokemon, MSGBOX_DEFAULT
 	playbgm MUS_ENCOUNTER_MAY, TRUE
 	applymovement 2, Common_Movement_FacePlayer
 	waitmovement 0
@@ -25,15 +25,15 @@ Route103_EventScript_14EBAB:: @ 814EBAB
 	waitmovement 0
 	applymovement 2, Common_Movement_Delay48
 	waitmovement 0
-	msgbox Route103_Text_16D5B6, MSGBOX_DEFAULT
+	msgbox Route103_Text_MayLetsBattle, MSGBOX_DEFAULT
 	switch VAR_STARTER_MON
-	case 0, Route103_EventScript_14EC5D
-	case 1, Route103_EventScript_14EC6D
-	case 2, Route103_EventScript_14EC7D
+	case 0, Route103_EventScript_StartMayBattleTreecko
+	case 1, Route103_EventScript_StartMayBattleTorchic
+	case 2, Route103_EventScript_StartMayBattleMudkip
 	end
 
-Route103_EventScript_14EC04:: @ 814EC04
-	msgbox Route103_Text_16D762, MSGBOX_DEFAULT
+Route103_EventScript_RivalBrendan:: @ 814EC04
+	msgbox Route103_Text_BrendanRoute103Pokemon, MSGBOX_DEFAULT
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	applymovement 2, Common_Movement_FacePlayer
 	waitmovement 0
@@ -41,81 +41,81 @@ Route103_EventScript_14EC04:: @ 814EC04
 	waitmovement 0
 	applymovement 2, Common_Movement_Delay48
 	waitmovement 0
-	msgbox Route103_Text_16D7A9, MSGBOX_DEFAULT
+	msgbox Route103_Text_BrendanLetsBattle, MSGBOX_DEFAULT
 	switch VAR_STARTER_MON
-	case 0, Route103_EventScript_14EC8D
-	case 1, Route103_EventScript_14EC9D
-	case 2, Route103_EventScript_14ECAD
+	case 0, Route103_EventScript_StartBrendanBattleTreecko
+	case 1, Route103_EventScript_StartBrendanBattleTorchic
+	case 2, Route103_EventScript_StartBrendanBattleMudkip
 	end
 
-Route103_EventScript_14EC5D:: @ 814EC5D
-	trainerbattle_no_intro TRAINER_MAY_4, Route103_Text_16D65B
-	goto Route103_EventScript_14ECBD
+Route103_EventScript_StartMayBattleTreecko:: @ 814EC5D
+	trainerbattle_no_intro TRAINER_MAY_4, Route103_Text_MayDefeated
+	goto Route103_EventScript_AfterMayBattle
 	end
 
-Route103_EventScript_14EC6D:: @ 814EC6D
-	trainerbattle_no_intro TRAINER_MAY_7, Route103_Text_16D65B
-	goto Route103_EventScript_14ECBD
+Route103_EventScript_StartMayBattleTorchic:: @ 814EC6D
+	trainerbattle_no_intro TRAINER_MAY_7, Route103_Text_MayDefeated
+	goto Route103_EventScript_AfterMayBattle
 	end
 
-Route103_EventScript_14EC7D:: @ 814EC7D
-	trainerbattle_no_intro TRAINER_MAY_1, Route103_Text_16D65B
-	goto Route103_EventScript_14ECBD
+Route103_EventScript_StartMayBattleMudkip:: @ 814EC7D
+	trainerbattle_no_intro TRAINER_MAY_1, Route103_Text_MayDefeated
+	goto Route103_EventScript_AfterMayBattle
 	end
 
-Route103_EventScript_14EC8D:: @ 814EC8D
-	trainerbattle_no_intro TRAINER_BRENDAN_4, Route103_Text_16D836
-	goto Route103_EventScript_14ECCB
+Route103_EventScript_StartBrendanBattleTreecko:: @ 814EC8D
+	trainerbattle_no_intro TRAINER_BRENDAN_4, Route103_Text_BrendanDefeated
+	goto Route103_EventScript_AfterBrendanBattle
 	end
 
-Route103_EventScript_14EC9D:: @ 814EC9D
-	trainerbattle_no_intro TRAINER_BRENDAN_7, Route103_Text_16D836
-	goto Route103_EventScript_14ECCB
+Route103_EventScript_StartBrendanBattleTorchic:: @ 814EC9D
+	trainerbattle_no_intro TRAINER_BRENDAN_7, Route103_Text_BrendanDefeated
+	goto Route103_EventScript_AfterBrendanBattle
 	end
 
-Route103_EventScript_14ECAD:: @ 814ECAD
-	trainerbattle_no_intro TRAINER_BRENDAN_1, Route103_Text_16D836
-	goto Route103_EventScript_14ECCB
+Route103_EventScript_StartBrendanBattleMudkip:: @ 814ECAD
+	trainerbattle_no_intro TRAINER_BRENDAN_1, Route103_Text_BrendanDefeated
+	goto Route103_EventScript_AfterBrendanBattle
 	end
 
-Route103_EventScript_14ECBD:: @ 814ECBD
-	msgbox Route103_Text_16D688, MSGBOX_DEFAULT
-	goto Route103_EventScript_14ECD9
+Route103_EventScript_AfterMayBattle:: @ 814ECBD
+	msgbox Route103_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
+	goto Route103_EventScript_RivalExit
 	end
 
-Route103_EventScript_14ECCB:: @ 814ECCB
-	msgbox Route103_Text_16D856, MSGBOX_DEFAULT
-	goto Route103_EventScript_14ECD9
+Route103_EventScript_AfterBrendanBattle:: @ 814ECCB
+	msgbox Route103_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
+	goto Route103_EventScript_RivalExit
 	end
 
-Route103_EventScript_14ECD9:: @ 814ECD9
+Route103_EventScript_RivalExit:: @ 814ECD9
 	closemessage
 	switch VAR_FACING
-	case 1, Route103_EventScript_14ED29
-	case 2, Route103_EventScript_14ED0C
-	case 3, Route103_EventScript_14ED29
-	case 4, Route103_EventScript_14ED29
+	case 1, Route103_EventScript_RivalExitFacingEastOrWest
+	case 2, Route103_EventScript_RivalExitFacingNorth
+	case 3, Route103_EventScript_RivalExitFacingEastOrWest
+	case 4, Route103_EventScript_RivalExitFacingEastOrWest
 	end
 
-Route103_EventScript_14ED0C:: @ 814ED0C
-	applymovement 2, Route103_Movement_14ED67
+Route103_EventScript_RivalExitFacingNorth:: @ 814ED0C
+	applymovement 2, Route103_Movement_RivalExitFacingNorth1
 	waitmovement 0
 	playse SE_LEDGE
-	applymovement 2, Route103_Movement_14ED6B
+	applymovement 2, Route103_Movement_RivalExitFacingNorth2
 	waitmovement 0
-	goto Route103_EventScript_14ED46
+	goto Route103_EventScript_RivalEnd
 	end
 
-Route103_EventScript_14ED29:: @ 814ED29
-	applymovement 2, Route103_Movement_14ED71
+Route103_EventScript_RivalExitFacingEastOrWest:: @ 814ED29
+	applymovement 2, Route103_Movement_RivalExit1
 	waitmovement 0
 	playse SE_LEDGE
-	applymovement 2, Route103_Movement_14ED74
+	applymovement 2, Route103_Movement_RivalExit2
 	waitmovement 0
-	goto Route103_EventScript_14ED46
+	goto Route103_EventScript_RivalEnd
 	end
 
-Route103_EventScript_14ED46:: @ 814ED46
+Route103_EventScript_RivalEnd:: @ 814ED46
 	removeobject 2
 	setvar VAR_ROUTE103_STATE, 1
 	setvar VAR_BIRCH_LAB_STATE, 4
@@ -128,13 +128,13 @@ Route103_EventScript_14ED46:: @ 814ED46
 	releaseall
 	end
 
-Route103_Movement_14ED67:: @ 814ED67
+Route103_Movement_RivalExitFacingNorth1:: @ 814ED67
 	walk_left
 	walk_down
 	walk_down
 	step_end
 
-Route103_Movement_14ED6B:: @ 814ED6B
+Route103_Movement_RivalExitFacingNorth2:: @ 814ED6B
 	jump_2_down
 	delay_16
 	walk_down
@@ -142,75 +142,75 @@ Route103_Movement_14ED6B:: @ 814ED6B
 	walk_down
 	step_end
 
-Route103_Movement_14ED71:: @ 814ED71
+Route103_Movement_RivalExit1:: @ 814ED71
 	walk_down
 	walk_down
 	step_end
 
-Route103_Movement_14ED74:: @ 814ED74
+Route103_Movement_RivalExit2:: @ 814ED74
 	jump_2_down
 	delay_16
 	walk_down
 	walk_down
 	step_end
 
-Route103_EventScript_14ED79:: @ 814ED79
-	msgbox Route103_Text_16D950, MSGBOX_NPC
+Route103_EventScript_Boy:: @ 814ED79
+	msgbox Route103_Text_ShouldHaveBroughtPotion, MSGBOX_NPC
 	end
 
-Route103_EventScript_14ED82:: @ 814ED82
-	msgbox Route103_Text_16D996, MSGBOX_NPC
+Route103_EventScript_Man:: @ 814ED82
+	msgbox Route103_Text_ShortcutToOldale, MSGBOX_NPC
 	end
 
-Route103_EventScript_14ED8B:: @ 814ED8B
-	msgbox Route103_Text_16D9FB, MSGBOX_SIGN
+Route103_EventScript_RouteSign:: @ 814ED8B
+	msgbox Route103_Text_RouteSign, MSGBOX_SIGN
 	end
 
-Route103_EventScript_14ED94:: @ 814ED94
-	trainerbattle_single TRAINER_DAISY, Route103_Text_1B7D55, Route103_Text_1B7D8B
-	msgbox Route103_Text_1B7DB2, MSGBOX_AUTOCLOSE
+Route103_EventScript_Daisy:: @ 814ED94
+	trainerbattle_single TRAINER_DAISY, Route103_Text_DaisyIntro, Route103_Text_DaisyDefeated
+	msgbox Route103_Text_DaisyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EDAB:: @ 814EDAB
-	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_1B7DF7, Route103_Text_1B7E3B, Route103_Text_1B7EAC
+Route103_EventScript_Amy:: @ 814EDAB
+	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_AmyIntro, Route103_Text_AmyDefeated, Route103_Text_AmyNotEnoughPokemon
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route103_EventScript_14EDD6
-	msgbox Route103_Text_1B7E50, MSGBOX_AUTOCLOSE
+	goto_if_eq Route103_EventScript_AmyRematch
+	msgbox Route103_Text_AmyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EDD6:: @ 814EDD6
-	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_1B7FE7, Route103_Text_1B802B, Route103_Text_1B80AF
-	msgbox Route103_Text_1B8053, MSGBOX_AUTOCLOSE
+Route103_EventScript_AmyRematch:: @ 814EDD6
+	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_AmyRematchIntro, Route103_Text_AmyRematchDefeated, Route103_Text_AmyRematchNotEnoughPokemon
+	msgbox Route103_Text_AmyRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EDF1:: @ 814EDF1
-	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_1B7EFB, Route103_Text_1B7F20, Route103_Text_1B7F8E
+Route103_EventScript_Liv:: @ 814EDF1
+	trainerbattle_double TRAINER_AMY_AND_LIV_1, Route103_Text_LivIntro, Route103_Text_LivDefeated, Route103_Text_LivNotEnoughPokemon
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route103_EventScript_14EE1C
-	msgbox Route103_Text_1B7F40, MSGBOX_AUTOCLOSE
+	goto_if_eq Route103_EventScript_LivRematch
+	msgbox Route103_Text_LivPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EE1C:: @ 814EE1C
-	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_1B80FE, Route103_Text_1B8123, Route103_Text_1B81A1
-	msgbox Route103_Text_1B814D, MSGBOX_AUTOCLOSE
+Route103_EventScript_LivRematch:: @ 814EE1C
+	trainerbattle_rematch_double TRAINER_AMY_AND_LIV_1, Route103_Text_LivRematchIntro, Route103_Text_LivRematchDefeated, Route103_Text_LivRematchNotEnoughPokemon
+	msgbox Route103_Text_LivRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EE37:: @ 814EE37
-	trainerbattle_single TRAINER_ANDREW, Route103_Text_1B81FA, Route103_Text_1B8258
-	msgbox Route103_Text_1B8281, MSGBOX_AUTOCLOSE
+Route103_EventScript_Andrew:: @ 814EE37
+	trainerbattle_single TRAINER_ANDREW, Route103_Text_AndrewIntro, Route103_Text_AndrewDefeated
+	msgbox Route103_Text_AndrewPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EE4E:: @ 814EE4E
-	trainerbattle_single TRAINER_MIGUEL_1, Route103_Text_1B82A9, Route103_Text_1B82EC
+Route103_EventScript_Miguel:: @ 814EE4E
+	trainerbattle_single TRAINER_MIGUEL_1, Route103_Text_MiguelIntro, Route103_Text_MiguelDefeated
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route103_EventScript_14EE75
-	msgbox Route103_Text_1B830D, MSGBOX_AUTOCLOSE
+	goto_if_eq Route103_EventScript_MiguelRematch
+	msgbox Route103_Text_MiguelPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route103_EventScript_14EE75:: @ 814EE75
-	trainerbattle_rematch TRAINER_MIGUEL_1, Route103_Text_1B8349, Route103_Text_1B838C
-	msgbox Route103_Text_1B83A4, MSGBOX_AUTOCLOSE
+Route103_EventScript_MiguelRematch:: @ 814EE75
+	trainerbattle_rematch TRAINER_MIGUEL_1, Route103_Text_MiguelRematchIntro, Route103_Text_MiguelRematchDefeated
+	msgbox Route103_Text_MiguelRematchPostBattle, MSGBOX_AUTOCLOSE
 	end

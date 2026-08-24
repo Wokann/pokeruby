@@ -1,8 +1,8 @@
-Route103_Text_16D57A:: @ 816D57A
+Route103_Text_MayRoute103Pokemon:: @ 816D57A
 	.string "MAIKE: Mal seh'n... Das POKéMON von\n"
 	.string "ROUTE 103 besitzt...$"
 
-Route103_Text_16D5B6:: @ 816D5B6
+Route103_Text_MayLetsBattle:: @ 816D5B6
 	.string "Oh, hi {PLAYER}{KUN}!\p"
 	.string "...Oh... Ich seh' schon. Mein Vater hat dir\n"
 	.string "ein POKéMON geschenkt.\p"
@@ -11,11 +11,11 @@ Route103_Text_16D5B6:: @ 816D5B6
 	.string "Ich gebe dir einen Vorgeschmack auf\n"
 	.string "das Leben als TRAINER.$"
 
-Route103_Text_16D65B:: @ 816D65B
+Route103_Text_MayDefeated:: @ 816D65B
 	.string "Wow! Das war spitze!\n"
 	.string "{PLAYER}{KUN}, du bist ein Naturtalent!$"
 
-Route103_Text_16D688:: @ 816D688
+Route103_Text_MayTimeToHeadBack:: @ 816D688
 	.string "MAIKE: Ich glaube, ich weiß jetzt, warum\n"
 	.string "mein Vater dich ausgesucht hat.\p"
 	.string "Ich meine, du hast dein POKéMON erst\n"
@@ -25,11 +25,11 @@ Route103_Text_16D688:: @ 816D688
 	.string "Nun wird es aber Zeit, zurück ins LABOR\n"
 	.string "zu gehen!$"
 
-Route103_Text_16D762:: @ 816D762
+Route103_Text_BrendanRoute103Pokemon:: @ 816D762
 	.string "BRIX: So... Dieses und dieses lebt an\n"
 	.string "der ROUTE 103...$"
 
-Route103_Text_16D7A9:: @ 816D7A9
+Route103_Text_BrendanLetsBattle:: @ 816D7A9
 	.string "Hey, da ist ja {PLAYER}!\p"
 	.string "...Oh ja. Mein Vater hat dir ein POKéMON\n"
 	.string "geschenkt, nicht wahr?\p"
@@ -38,10 +38,10 @@ Route103_Text_16D7A9:: @ 816D7A9
 	.string "Ich bringe dir bei, was ein TRAINER\n"
 	.string "wissen muss.$"
 
-Route103_Text_16D836:: @ 816D836
+Route103_Text_BrendanDefeated:: @ 816D836
 	.string "Hey, {PLAYER}, das war gar nicht so übel.$"
 
-Route103_Text_16D856:: @ 816D856
+Route103_Text_BrendanTimeToHeadBack:: @ 816D856
 	.string "BRIX: Ich denke, ich habe es kapiert.\n"
 	.string "Ich weiß jetzt, warum mein Vater dich\l"
 	.string "ausgesucht hat.\p"
@@ -51,16 +51,16 @@ Route103_Text_16D856:: @ 816D856
 	.string "POKéMON Freundschaft schließen.\p"
 	.string "Wir sollten nun zurück zum LABOR gehen.$"
 
-Route103_Text_16D950:: @ 816D950
+Route103_Text_ShouldHaveBroughtPotion:: @ 816D950
 	.string "Mein POKéMON ist unglaublich müde...\n"
 	.string "Ich hätte einen TRANK mitnehmen sollen.$"
 
-Route103_Text_16D996:: @ 816D996
+Route103_Text_ShortcutToOldale:: @ 816D996
 	.string "Wenn du von hier das Meer überquerst,\n"
 	.string "nimmst du eine Abkürzung nach\l"
 	.string "ROSALTSTADT.\p"
 	.string "Hahaha, ist das kein praktischer Tipp?$"
 
-Route103_Text_16D9FB:: @ 816D9FB
+Route103_Text_RouteSign:: @ 816D9FB
 	.string "ROUTE 103\n"
 	.string "{DOWN_ARROW} ROSALTSTADT$"
