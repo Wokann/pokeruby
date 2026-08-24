@@ -21,7 +21,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_MrBrineysHouse_EventScript_15BCEB",
+      "script": "Route104_MrBrineysHouse_EventScript_Briney",
       "flag": "FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_MrBrineysHouse_EventScript_15BDD1",
+      "script": "Route104_MrBrineysHouse_EventScript_Peeko",
       "flag": "FLAG_HIDE_PEEKO_BRINEY_HOUSE"
     }
   ],

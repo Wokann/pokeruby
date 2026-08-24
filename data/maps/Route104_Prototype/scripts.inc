@@ -1,47 +1,47 @@
 Route104_Prototype_MapScripts:: @ 8160C4A
 	.byte 0
 
-Route104_Prototype_EventScript_160C4B:: @ 8160C4B
+Route104_Prototype_EventScript_BoyCheckAllTrainersDefeated:: @ 8160C4B
 	lock
 	faceplayer
-	goto_if_not_defeated TRAINER_BRIANNA_1, Route104_Prototype_EventScript_160C99
-	goto_if_not_defeated TRAINER_CINDY_2, Route104_Prototype_EventScript_160C99
-	goto_if_not_defeated TRAINER_AMY_AND_LIV_3, Route104_Prototype_EventScript_160C99
-	goto_if_not_defeated TRAINER_GINA_AND_MIA_2, Route104_Prototype_EventScript_160C99
-	goto_if_not_defeated TRAINER_LUCAS_2, Route104_Prototype_EventScript_160C99
-	goto_if_not_defeated TRAINER_MIKE_1, Route104_Prototype_EventScript_160C99
+	goto_if_not_defeated TRAINER_BRIANNA_1, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_CINDY_2, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_AMY_AND_LIV_3, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_GINA_AND_MIA_2, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_LUCAS_2, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_MIKE_1, Route104_Prototype_EventScript_BoyAskDefeatAllTrainers
 	setflag FLAG_ROUTE104_PROTOTYPE_COMPLETED_1
-	msgbox Route104_Prototype_Text_19B267, MSGBOX_DEFAULT
-	goto_if_set FLAG_ROUTE104_PROTOTYPE_COMPLETED_2, Route104_Prototype_EventScript_160CFB
+	msgbox Route104_Prototype_Text_BoyThankYouForComing, MSGBOX_DEFAULT
+	goto_if_set FLAG_ROUTE104_PROTOTYPE_COMPLETED_2, Route104_Prototype_EventScript_SoftReset
 	release
 	end
 
-Route104_Prototype_EventScript_160C99:: @ 8160C99
-	msgbox Route104_Prototype_Text_19B22E, MSGBOX_DEFAULT
+Route104_Prototype_EventScript_BoyAskDefeatAllTrainers:: @ 8160C99
+	msgbox Route104_Prototype_Text_BoyAskDefeatAllTrainers, MSGBOX_DEFAULT
 	release
 	end
 
-Route104_Prototype_EventScript_160CA3:: @ 8160CA3
+Route104_Prototype_EventScript_GirlCheckAllTrainersDefeated:: @ 8160CA3
 	lock
 	faceplayer
-	goto_if_not_defeated TRAINER_BRIANNA_1, Route104_Prototype_EventScript_160CF1
-	goto_if_not_defeated TRAINER_CINDY_2, Route104_Prototype_EventScript_160CF1
-	goto_if_not_defeated TRAINER_AMY_AND_LIV_3, Route104_Prototype_EventScript_160CF1
-	goto_if_not_defeated TRAINER_GINA_AND_MIA_2, Route104_Prototype_EventScript_160CF1
-	goto_if_not_defeated TRAINER_LUCAS_2, Route104_Prototype_EventScript_160CF1
-	goto_if_not_defeated TRAINER_MIKE_1, Route104_Prototype_EventScript_160CF1
+	goto_if_not_defeated TRAINER_BRIANNA_1, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_CINDY_2, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_AMY_AND_LIV_3, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_GINA_AND_MIA_2, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_LUCAS_2, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
+	goto_if_not_defeated TRAINER_MIKE_1, Route104_Prototype_EventScript_GirlAskDefeatAllTrainers
 	setflag FLAG_ROUTE104_PROTOTYPE_COMPLETED_2
-	msgbox Route104_Prototype_Text_19B2E9, MSGBOX_DEFAULT
-	goto_if_set FLAG_ROUTE104_PROTOTYPE_COMPLETED_1, Route104_Prototype_EventScript_160CFB
+	msgbox Route104_Prototype_Text_GirlThankYouForComing, MSGBOX_DEFAULT
+	goto_if_set FLAG_ROUTE104_PROTOTYPE_COMPLETED_1, Route104_Prototype_EventScript_SoftReset
 	release
 	end
 
-Route104_Prototype_EventScript_160CF1:: @ 8160CF1
-	msgbox Route104_Prototype_Text_19B2B6, MSGBOX_DEFAULT
+Route104_Prototype_EventScript_GirlAskDefeatAllTrainers:: @ 8160CF1
+	msgbox Route104_Prototype_Text_GirlAskDefeatAllTrainers, MSGBOX_DEFAULT
 	release
 	end
 
-Route104_Prototype_EventScript_160CFB:: @ 8160CFB
+Route104_Prototype_EventScript_SoftReset:: @ 8160CFB
 	closemessage
 	delay 60
 	fadescreen FADE_TO_BLACK
@@ -51,48 +51,48 @@ Route104_Prototype_EventScript_160CFB:: @ 8160CFB
 	release
 	end
 
-Route104_Prototype_EventScript_160D0A:: @ 8160D0A
-	msgbox Route104_Prototype_Text_19B33B, MSGBOX_NPC
+Route104_Prototype_EventScript_NeverSeenPokemonLikeYours:: @ 8160D0A
+	msgbox Route104_Prototype_Text_NeverSeenPokemonLikeYours, MSGBOX_NPC
 	end
 
-Route104_Prototype_EventScript_160D13:: @ 8160D13
-	msgbox Route104_Prototype_Text_19B37F, MSGBOX_NPC
+Route104_Prototype_EventScript_TrainersAreWaitingForYou:: @ 8160D13
+	msgbox Route104_Prototype_Text_TrainersAreWaitingForYou, MSGBOX_NPC
 	end
 
-Route104_Prototype_EventScript_160D1C:: @ 8160D1C
-	msgbox Route104_Prototype_Text_19B3DE, MSGBOX_SIGN
+Route104_Prototype_EventScript_WelcomeToWorldOfPokemonSign:: @ 8160D1C
+	msgbox Route104_Prototype_Text_WelcomeToWorldOfPokemon, MSGBOX_SIGN
 	end
 
-Route104_Prototype_EventScript_160D25:: @ 8160D25
-	msgbox Route104_Prototype_Text_19B3FF, MSGBOX_SIGN
+Route104_Prototype_EventScript_PokemonBattlesMessageSign:: @ 8160D25
+	msgbox Route104_Prototype_Text_PokemonBattlesMessage, MSGBOX_SIGN
 	end
 
-Route104_Prototype_EventScript_160D2E:: @ 8160D2E
-	trainerbattle_single TRAINER_CINDY_2, Route104_Prototype_Text_19AD9B, Route104_Prototype_Text_19ADDA
-	msgbox Route104_Prototype_Text_19ADF7, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_Cindy:: @ 8160D2E
+	trainerbattle_single TRAINER_CINDY_2, Route104_Prototype_Text_CindyIntro, Route104_Prototype_Text_CindyDefeated
+	msgbox Route104_Prototype_Text_CindyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route104_Prototype_EventScript_160D45:: @ 8160D45
-	trainerbattle_double TRAINER_AMY_AND_LIV_3, Route104_Prototype_Text_19AE3E, Route104_Prototype_Text_19AE53, Route104_Prototype_Text_19AEA9
-	msgbox Route104_Prototype_Text_19AE6A, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_AmyAndLiv:: @ 8160D45
+	trainerbattle_double TRAINER_AMY_AND_LIV_3, Route104_Prototype_Text_AmyAndLivIntro, Route104_Prototype_Text_AmyAndLivDefeated, Route104_Prototype_Text_AmyAndLivNotEnoughPokemon
+	msgbox Route104_Prototype_Text_AmyAndLivPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route104_Prototype_EventScript_160D60:: @ 8160D60
-	trainerbattle_double TRAINER_GINA_AND_MIA_2, Route104_Prototype_Text_19B148, Route104_Prototype_Text_19B17D, Route104_Prototype_Text_19B1DD
-	msgbox Route104_Prototype_Text_19B18D, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_GinaAndMia:: @ 8160D60
+	trainerbattle_double TRAINER_GINA_AND_MIA_2, Route104_Prototype_Text_GinaAndMiaIntro, Route104_Prototype_Text_GinaAndMiaDefeated, Route104_Prototype_Text_GinaAndMiaNotEnoughPokemon
+	msgbox Route104_Prototype_Text_GinaAndMiaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route104_Prototype_EventScript_160D7B:: @ 8160D7B
-	trainerbattle_single TRAINER_MIKE_1, Route104_Prototype_Text_19AEFB, Route104_Prototype_Text_19AF3E
-	msgbox Route104_Prototype_Text_19AF56, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_Mike:: @ 8160D7B
+	trainerbattle_single TRAINER_MIKE_1, Route104_Prototype_Text_MikeIntro, Route104_Prototype_Text_MikeDefeated
+	msgbox Route104_Prototype_Text_MikePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route104_Prototype_EventScript_160D92:: @ 8160D92
-	trainerbattle_single TRAINER_BRIANNA_1, Route104_Prototype_Text_19AF8A, Route104_Prototype_Text_19AFDB
-	msgbox Route104_Prototype_Text_19B00D, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_Brianna:: @ 8160D92
+	trainerbattle_single TRAINER_BRIANNA_1, Route104_Prototype_Text_BriannaIntro, Route104_Prototype_Text_BriannaDefeated
+	msgbox Route104_Prototype_Text_BriannaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route104_Prototype_EventScript_160DA9:: @ 8160DA9
-	trainerbattle_single TRAINER_LUCAS_2, Route104_Prototype_Text_19B066, Route104_Prototype_Text_19B0D7
-	msgbox Route104_Prototype_Text_19B0EF, MSGBOX_AUTOCLOSE
+Route104_Prototype_EventScript_Lucas:: @ 8160DA9
+	trainerbattle_single TRAINER_LUCAS_2, Route104_Prototype_Text_LucasIntro, Route104_Prototype_Text_LucasDefeated
+	msgbox Route104_Prototype_Text_LucasPostBattle, MSGBOX_AUTOCLOSE
 	end

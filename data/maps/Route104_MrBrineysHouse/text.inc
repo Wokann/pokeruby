@@ -1,8 +1,8 @@
-Route104_MrBrineysHouse_Text_191A82:: @ 8191A82
+Route104_MrBrineysHouse_Text_WaitUpPeeko:: @ 8191A82
 	.string "MR. BRINEY: Hold on, lass!\n"
 	.string "Wait up, PEEKO!$"
 
-Route104_MrBrineysHouse_Text_191AAD:: @ 8191AAD
+Route104_MrBrineysHouse_Text_ItsYouLetsSailToDewford:: @ 8191AAD
 	.string "Hm? You're {PLAYER}{KUN}!\n"
 	.string "You saved my darling PEEKO!\l"
 	.string "We owe so much to you!\p"
@@ -17,18 +17,18 @@ Route104_MrBrineysHouse_Text_191AAD:: @ 8191AAD
 	.string "You've come to the right man!\n"
 	.string "We'll set sail for DEWFORD.$"
 
-Route104_MrBrineysHouse_Text_191BFD:: @ 8191BFD
+Route104_MrBrineysHouse_Text_SetSailForDewford:: @ 8191BFD
 	.string "MR. BRINEY: DEWFORD, here we come!\p"
 	.string "Anchors aweigh!\n"
 	.string "PEEKO, we're setting sail, my darling!$"
 
-Route104_MrBrineysHouse_Text_191C57:: @ 8191C57
+Route104_MrBrineysHouse_Text_DeclineDeliverySail:: @ 8191C57
 	.string "MR. BRINEY: Is that so?\n"
 	.string "Your deliveries can wait?\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
 
-Route104_MrBrineysHouse_Text_191CC3:: @ 8191CC3
+Route104_MrBrineysHouse_Text_NeedToMakeDeliveriesSailToDewford:: @ 8191CC3
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "I know exactly what you want to say!\p"
 	.string "You're to deliver a LETTER to DEWFORD\n"
@@ -37,7 +37,7 @@ Route104_MrBrineysHouse_Text_191CC3:: @ 8191CC3
 	.string "at all - I'm the man for the job!\p"
 	.string "First, we'll set sail for DEWFORD.$"
 
-Route104_MrBrineysHouse_Text_191DA6:: @ 8191DA6
+Route104_MrBrineysHouse_Text_NeedToDeliverPackageSailToDewford:: @ 8191DA6
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "I know exactly what you want to say!\p"
 	.string "You're to deliver a package to\n"
@@ -46,22 +46,22 @@ Route104_MrBrineysHouse_Text_191DA6:: @ 8191DA6
 	.string "at all - I'm the man for the job!\p"
 	.string "First, we'll set sail for DEWFORD.$"
 
-Route104_MrBrineysHouse_Text_191E80:: @ 8191E80
+Route104_MrBrineysHouse_Text_WhereAreWeBound:: @ 8191E80
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "For you, I'll go out to sea anytime!\p"
 	.string "Now, my friend, where are we bound?$"
 
-Route104_MrBrineysHouse_Text_191EDB:: @ 8191EDB
+Route104_MrBrineysHouse_Text_TellMeWheneverYouWantToSail:: @ 8191EDB
 	.string "MR. BRINEY: Is that so?\n"
 	.string "Well, PEEKO owes her life to you.\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
 
-UnknownString_8191F4F: @ 8191F4F
+Route104_MrBrineysHouse_Text_LandedInPetalburgUnused: @ 8191F4F
 	.string "MR. BRINEY: Ahoy!\n"
 	.string "We've made land in PETALBURG!\p"
 	.string "You just go on and tell me whenever\n"
 	.string "you want to set sail!$"
 
-Route104_MrBrineysHouse_Text_191FB9:: @ 8191FB9
+Route104_MrBrineysHouse_Text_Peeko:: @ 8191FB9
 	.string "PEEKO: Pii pihyoroo!$"

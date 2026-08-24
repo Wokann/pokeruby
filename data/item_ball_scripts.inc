@@ -6,19 +6,19 @@ Route103_EventScript_1B1446:: @ 81B1446
 	finditem ITEM_GUARD_SPEC
 	end
 
-Route104_EventScript_1B1453:: @ 81B1453
+Route104_EventScript_ItemPPUp:: @ 81B1453
 	finditem ITEM_PP_UP
 	end
 
-Route104_EventScript_1B1460:: @ 81B1460
+Route104_EventScript_ItemPokeBall:: @ 81B1460
 	finditem ITEM_POKE_BALL
 	end
 
-Route104_EventScript_1B146D:: @ 81B146D
+Route104_EventScript_ItemXAccuracy:: @ 81B146D
 	finditem ITEM_X_ACCURACY
 	end
 
-Route104_EventScript_1B147A:: @ 81B147A
+Route104_EventScript_ItemPotion:: @ 81B147A
 	finditem ITEM_POTION
 	end
 

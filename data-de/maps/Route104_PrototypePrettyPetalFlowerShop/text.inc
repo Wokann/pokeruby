@@ -1,4 +1,4 @@
-Route104_PrototypePrettyPetalFlowerShop_Text_19B436:: @ 819B436
+Route104_PrototypePrettyPetalFlowerShop_Text_SistersPrepareFlowerShop:: @ 819B436
 	.string "Ich muss heute zu Hause bleiben.\p"
 	.string "Meine großen Schwestern sind wegge-\n"
 	.string "gangen. Sie wollen alles vorbereiten.\p"

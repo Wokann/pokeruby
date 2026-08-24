@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route104_Prototype_EventScript_160D2E",
+      "script": "Route104_Prototype_EventScript_Cindy",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D60",
+      "script": "Route104_Prototype_EventScript_GinaAndMia",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D60",
+      "script": "Route104_Prototype_EventScript_GinaAndMia",
       "flag": "0"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route104_Prototype_EventScript_160D7B",
+      "script": "Route104_Prototype_EventScript_Mike",
       "flag": "0"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route104_Prototype_EventScript_160D92",
+      "script": "Route104_Prototype_EventScript_Brianna",
       "flag": "0"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route104_Prototype_EventScript_160DA9",
+      "script": "Route104_Prototype_EventScript_Lucas",
       "flag": "0"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160C4B",
+      "script": "Route104_Prototype_EventScript_BoyCheckAllTrainersDefeated",
       "flag": "0"
     },
     {
@@ -112,7 +112,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160CA3",
+      "script": "Route104_Prototype_EventScript_GirlCheckAllTrainersDefeated",
       "flag": "0"
     },
     {
@@ -125,7 +125,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D45",
+      "script": "Route104_Prototype_EventScript_AmyAndLiv",
       "flag": "0"
     },
     {
@@ -138,7 +138,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D45",
+      "script": "Route104_Prototype_EventScript_AmyAndLiv",
       "flag": "0"
     },
     {
@@ -151,7 +151,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D13",
+      "script": "Route104_Prototype_EventScript_TrainersAreWaitingForYou",
       "flag": "0"
     },
     {
@@ -164,7 +164,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route104_Prototype_EventScript_160D0A",
+      "script": "Route104_Prototype_EventScript_NeverSeenPokemonLikeYours",
       "flag": "0"
     }
   ],
@@ -185,7 +185,7 @@
       "y": 26,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route104_Prototype_EventScript_160D1C"
+      "script": "Route104_Prototype_EventScript_WelcomeToWorldOfPokemonSign"
     },
     {
       "type": "sign",
@@ -193,7 +193,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route104_Prototype_EventScript_160D25"
+      "script": "Route104_Prototype_EventScript_PokemonBattlesMessageSign"
     }
   ]
 }
