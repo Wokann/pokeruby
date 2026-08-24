@@ -1,100 +1,100 @@
 Route113_MapScripts:: @ 81505CC
-	map_script MAP_SCRIPT_ON_RESUME, Route113_MapScript1_1505D7
-	map_script MAP_SCRIPT_ON_TRANSITION, Route113_MapScript1_1505DA
+	map_script MAP_SCRIPT_ON_RESUME, Route113_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Route113_OnTransition
 	.byte 0
 
-Route113_MapScript1_1505D7:: @ 81505D7
+Route113_OnResume:: @ 81505D7
 	setstepcallback 1
 	end
 
-Route113_MapScript1_1505DA:: @ 81505DA
-	call Route113_EventScript_1505E5
+Route113_OnTransition:: @ 81505DA
+	call Route113_EventScript_CheckSetAshWeather
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
-Route113_EventScript_1505E5:: @ 81505E5
+Route113_EventScript_CheckSetAshWeather:: @ 81505E5
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
 	compare VAR_TEMP_0, 19
-	goto_if_lt Route113_EventScript_150604
+	goto_if_lt Route113_EventScript_DontSetAshWeather
 	compare VAR_TEMP_0, 84
-	goto_if_gt Route113_EventScript_150604
+	goto_if_gt Route113_EventScript_DontSetAshWeather
 	setweather WEATHER_ASH
 	return
 
-Route113_EventScript_150604:: @ 8150604
+Route113_EventScript_DontSetAshWeather:: @ 8150604
 	return
 
-Route113_EventScript_150605:: @ 8150605
-	msgbox Route113_Text_16FF7F, MSGBOX_NPC
+Route113_EventScript_Gentleman:: @ 8150605
+	msgbox Route113_Text_AshCanBeFashionedIntoGlass, MSGBOX_NPC
 	end
 
-Route113_EventScript_15060E:: @ 815060E
-	msgbox Route113_Text_16FFEE, MSGBOX_NPC
+Route113_EventScript_NinjaBoy:: @ 815060E
+	msgbox Route113_Text_FunWalkingThroughAsh, MSGBOX_NPC
 	end
 
-Route113_EventScript_150617:: @ 8150617
-	msgbox Route113_Text_170065, MSGBOX_SIGN
+Route113_EventScript_RouteSign111:: @ 8150617
+	msgbox Route113_Text_RouteSign111, MSGBOX_SIGN
 	end
 
-Route113_EventScript_150620:: @ 8150620
-	msgbox Route113_Text_17007B, MSGBOX_SIGN
+Route113_EventScript_RouteSignFallarbor:: @ 8150620
+	msgbox Route113_Text_RouteSignFallarbor, MSGBOX_SIGN
 	end
 
-Route113_EventScript_150629:: @ 8150629
-	msgbox Route113_Text_17011D, MSGBOX_SIGN
+Route113_EventScript_GlassWorkshopSign:: @ 8150629
+	msgbox Route113_Text_GlassWorkshopSign, MSGBOX_SIGN
 	end
 
-Route113_EventScript_150632:: @ 8150632
-	msgbox Route113_Text_170096, MSGBOX_SIGN
+Route113_EventScript_TrainerTipsRegisterKeyItems:: @ 8150632
+	msgbox Route113_Text_TrainerTipsRegisterKeyItems, MSGBOX_SIGN
 	end
 
-Route113_EventScript_15063B:: @ 815063B
-	trainerbattle_single TRAINER_NEAL, Route113_Text_1BB9BA, Route113_Text_1BB9E6
-	msgbox Route113_Text_1BB9FB, MSGBOX_AUTOCLOSE
+Route113_EventScript_Neal:: @ 815063B
+	trainerbattle_single TRAINER_NEAL, Route113_Text_NealIntro, Route113_Text_NealDefeat
+	msgbox Route113_Text_NealPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_150652:: @ 8150652
-	trainerbattle_single TRAINER_DILLON, Route113_Text_1BBA62, Route113_Text_1BBA9B
-	msgbox Route113_Text_1BBAB7, MSGBOX_AUTOCLOSE
+Route113_EventScript_Dillon:: @ 8150652
+	trainerbattle_single TRAINER_DILLON, Route113_Text_DillonIntro, Route113_Text_DillonDefeat
+	msgbox Route113_Text_DillonPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_150669:: @ 8150669
-	trainerbattle_single TRAINER_MADELINE_1, Route113_Text_1BBB27, Route113_Text_1BBB7A
+Route113_EventScript_Madeline:: @ 8150669
+	trainerbattle_single TRAINER_MADELINE_1, Route113_Text_MadelineIntro, Route113_Text_MadelineDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route113_EventScript_150690
-	msgbox Route113_Text_1BBB9A, MSGBOX_AUTOCLOSE
+	goto_if_eq Route113_EventScript_RematchMadeline
+	msgbox Route113_Text_MadelinePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_150690:: @ 8150690
-	trainerbattle_rematch TRAINER_MADELINE_1, Route113_Text_1BBBCE, Route113_Text_1BBC0D
-	msgbox Route113_Text_1BBC1C, MSGBOX_AUTOCLOSE
+Route113_EventScript_RematchMadeline:: @ 8150690
+	trainerbattle_rematch TRAINER_MADELINE_1, Route113_Text_MadelineRematchIntro, Route113_Text_MadelineRematchDefeat
+	msgbox Route113_Text_MadelinePostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_1506A7:: @ 81506A7
-	trainerbattle_single TRAINER_LAO_1, Route113_Text_1BBC59, Route113_Text_1BBC90
+Route113_EventScript_Lao:: @ 81506A7
+	trainerbattle_single TRAINER_LAO_1, Route113_Text_LaoIntro, Route113_Text_LaoDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route113_EventScript_1506CE
-	msgbox Route113_Text_1BBCAB, MSGBOX_AUTOCLOSE
+	goto_if_eq Route113_EventScript_RematchLao
+	msgbox Route113_Text_LaoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_1506CE:: @ 81506CE
-	trainerbattle_rematch TRAINER_LAO_1, Route113_Text_1BBCE6, Route113_Text_1BBD1D
-	msgbox Route113_Text_1BBD38, MSGBOX_AUTOCLOSE
+Route113_EventScript_RematchLao:: @ 81506CE
+	trainerbattle_rematch TRAINER_LAO_1, Route113_Text_LaoRematchIntro, Route113_Text_LaoRematchDefeat
+	msgbox Route113_Text_LaoPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_1506E5:: @ 81506E5
-	trainerbattle_single TRAINER_LUNG, Route113_Text_1BBD92, Route113_Text_1BBDC6
-	msgbox Route113_Text_1BBE1D, MSGBOX_AUTOCLOSE
+Route113_EventScript_Lung:: @ 81506E5
+	trainerbattle_single TRAINER_LUNG, Route113_Text_LungIntro, Route113_Text_LungDefeat
+	msgbox Route113_Text_LungPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_1506FC:: @ 81506FC
-	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_1BBE65, Route113_Text_1BBEA1, Route113_Text_1BBF25
-	msgbox Route113_Text_1BBEE4, MSGBOX_AUTOCLOSE
+Route113_EventScript_Tori:: @ 81506FC
+	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_ToriIntro, Route113_Text_ToriDefeat, Route113_Text_ToriNotEnoughMons
+	msgbox Route113_Text_ToriPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route113_EventScript_150717:: @ 8150717
-	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_1BBF62, Route113_Text_1BBF9D, Route113_Text_1BC021
-	msgbox Route113_Text_1BBFE2, MSGBOX_AUTOCLOSE
+Route113_EventScript_Tia:: @ 8150717
+	trainerbattle_double TRAINER_TORI_AND_TIA, Route113_Text_TiaIntro, Route113_Text_TiaDefeat, Route113_Text_TiaNotEnoughMons
+	msgbox Route113_Text_TiaPostBattle, MSGBOX_AUTOCLOSE
 	end
