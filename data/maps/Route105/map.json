@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "6",
-      "script": "Route105_EventScript_14F2D2",
+      "script": "Route105_EventScript_Luis",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route105_EventScript_14F2E9",
+      "script": "Route105_EventScript_Austin",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 7,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route105_EventScript_14F300",
+      "script": "Route105_EventScript_Beverly",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 5,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route105_EventScript_14F317",
+      "script": "Route105_EventScript_Dawn",
       "flag": "0"
     },
     {
@@ -84,7 +84,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route105_EventScript_1B1487",
+      "script": "Route105_EventScript_ItemIron",
       "flag": "FLAG_ITEM_ROUTE105_1"
     },
     {
@@ -97,7 +97,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route105_EventScript_14F2BB",
+      "script": "Route105_EventScript_Foster",
       "flag": "0"
     }
   ],
