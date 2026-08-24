@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route114_LanettesHouse_EventScript_15C262",
+      "script": "Route114_LanettesHouse_EventScript_Lanette",
       "flag": "FLAG_HIDE_LANETTE"
     }
   ],
@@ -49,7 +49,7 @@
       "y": 1,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route114_LanettesHouse_EventScript_15C299"
+      "script": "Route114_LanettesHouse_EventScript_Notebook"
     },
     {
       "type": "sign",
@@ -57,7 +57,7 @@
       "y": 1,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route114_LanettesHouse_EventScript_15C2D5"
+      "script": "Route114_LanettesHouse_EventScript_PC"
     },
     {
       "type": "sign",
@@ -65,7 +65,7 @@
       "y": 1,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route114_LanettesHouse_EventScript_15C2D5"
+      "script": "Route114_LanettesHouse_EventScript_PC"
     }
   ]
 }

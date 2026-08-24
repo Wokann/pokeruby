@@ -35,15 +35,15 @@ Route111_Text_WhatColorBerriesToLookForToday:: @ 81C57D2
 	.string "Ich frage mich, welche BEEREN-Farbe ich\n"
 	.string "heute wählen soll.$"
 
-Route114_Text_1C5803:: @ 81C5803
+Route114_Text_LoveUsingBerryCrushShareBerry:: @ 81C5803
 	.string "Ich sammle BEEREN, damit ich einen\n"
 	.string "POKéMON WETTBEWERB gewinnen kann.\p"
 	.string "Wenn du magst, gebe ich dir eine ab.$"
 
-Route114_Text_1C5861:: @ 81C5861
+Route114_Text_TryBerryCrushWithFriends:: @ 81C5861
 	.string "Dir auch viel Glück!$"
 
-Route114_Text_1C5878:: @ 81C5878
+Route114_Text_FunToThinkAboutBerries:: @ 81C5878
 	.string "Welche BEEREN soll ich heute pflanzen?\n"
 	.string "Welche Farben sollen die {POKEBLOCK} haben?\p"
 	.string "Darüber nachzudenken, macht irre Spaß.$"
