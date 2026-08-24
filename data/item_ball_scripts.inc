@@ -26,7 +26,7 @@ Route105_EventScript_ItemIron:: @ 81B1487
 	finditem ITEM_IRON
 	end
 
-Route106_EventScript_1B1494:: @ 81B1494
+Route106_EventScript_ItemProtein:: @ 81B1494
 	finditem ITEM_PROTEIN
 	end
 
