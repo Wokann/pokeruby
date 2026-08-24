@@ -1,28 +1,28 @@
 Route116_TunnelersRestHouse_MapScripts:: @ 815C2DE
-	map_script MAP_SCRIPT_ON_TRANSITION, Route116_TunnelersRestHouse_MapScript1_15C2E4
+	map_script MAP_SCRIPT_ON_TRANSITION, Route116_TunnelersRestHouse_OnTransition
 	.byte 0
 
-Route116_TunnelersRestHouse_MapScript1_15C2E4:: @ 815C2E4
+Route116_TunnelersRestHouse_OnTransition:: @ 815C2E4
 	setflag FLAG_LANDMARK_TUNNELERS_REST_HOUSE
 	end
 
-Route116_TunnelersRestHouse_EventScript_15C2E8:: @ 815C2E8
-	msgbox Route116_TunnelersRestHouse_Text_192F33, MSGBOX_NPC
+Route116_TunnelersRestHouse_EventScript_Tunneler1:: @ 815C2E8
+	msgbox Route116_TunnelersRestHouse_Text_WeHadToStopBoring, MSGBOX_NPC
 	end
 
-Route116_TunnelersRestHouse_EventScript_15C2F1:: @ 815C2F1
-	msgbox Route116_TunnelersRestHouse_Text_193049, MSGBOX_NPC
+Route116_TunnelersRestHouse_EventScript_Tunneler2:: @ 815C2F1
+	msgbox Route116_TunnelersRestHouse_Text_ManDiggingHisWayToVerdanturf, MSGBOX_NPC
 	end
 
-Route116_TunnelersRestHouse_EventScript_15C2FA:: @ 815C2FA
+Route116_TunnelersRestHouse_EventScript_Tunneler3:: @ 815C2FA
 	lock
 	faceplayer
-	goto_if_set FLAG_RUSTURF_TUNNEL_OPENED, Route116_TunnelersRestHouse_EventScript_15C30F
-	msgbox Route116_TunnelersRestHouse_Text_193135, MSGBOX_DEFAULT
+	goto_if_set FLAG_RUSTURF_TUNNEL_OPENED, Route116_TunnelersRestHouse_EventScript_TunnelOpened
+	msgbox Route116_TunnelersRestHouse_Text_GetToVerdanturfWithoutTunnel, MSGBOX_DEFAULT
 	release
 	end
 
-Route116_TunnelersRestHouse_EventScript_15C30F:: @ 815C30F
-	msgbox Route116_TunnelersRestHouse_Text_1931C1, MSGBOX_DEFAULT
+Route116_TunnelersRestHouse_EventScript_TunnelOpened:: @ 815C30F
+	msgbox Route116_TunnelersRestHouse_Text_TunnelHasGoneThrough, MSGBOX_DEFAULT
 	release
 	end
