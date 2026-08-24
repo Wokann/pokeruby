@@ -1,60 +1,60 @@
 Route112_MapScripts:: @ 8150502
-	map_script MAP_SCRIPT_ON_TRANSITION, Route112_MapScript1_150508
+	map_script MAP_SCRIPT_ON_TRANSITION, Route112_OnTransition
 	.byte 0
 
-Route112_MapScript1_150508:: @ 8150508
+Route112_OnTransition:: @ 8150508
 	call Common_EventScript_SetupEvilTeamGfxIds
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
 	end
 
-Route112_EventScript_150513:: @ 8150513
-	msgbox Route112_Text_16FDF0, MSGBOX_NPC
+Route112_EventScript_MagmaGrunt1:: @ 8150513
+	msgbox Route112_Text_MagmaGrunt1WaitingForFallarborCrew, MSGBOX_NPC
 	end
 
-Route112_EventScript_15051C:: @ 815051C
-	msgbox Route112_Text_16FE3E, MSGBOX_NPC
+Route112_EventScript_MagmaGrunt2:: @ 815051C
+	msgbox Route112_Text_MagmaGrunt2WantsCableCarRide, MSGBOX_NPC
 	end
 
-Route112_EventScript_150525:: @ 8150525
-	msgbox Route112_Text_16FEED, MSGBOX_SIGN
+Route112_EventScript_MtChimneyCableCarSign:: @ 8150525
+	msgbox Route112_Text_MtChimneyCableCarSign, MSGBOX_SIGN
 	end
 
-Route112_EventScript_15052E:: @ 815052E
-	msgbox Route112_Text_16FF19, MSGBOX_SIGN
+Route112_EventScript_MtChimneySign:: @ 815052E
+	msgbox Route112_Text_MtChimneySign, MSGBOX_SIGN
 	end
 
-Route112_EventScript_150537:: @ 8150537
-	msgbox Route112_Text_16FF64, MSGBOX_SIGN
+Route112_EventScript_RouteSignLavaridge:: @ 8150537
+	msgbox Route112_Text_RouteSignLavaridge, MSGBOX_SIGN
 	end
 
-Route112_EventScript_150540:: @ 8150540
-	msgbox Route112_Text_16FE7A, MSGBOX_NPC
+Route112_EventScript_Hiker:: @ 8150540
+	msgbox Route112_Text_NotEasyToGetBackToLavaridge, MSGBOX_NPC
 	end
 
-Route112_EventScript_150549:: @ 8150549
-	trainerbattle_single TRAINER_BRICE, Route112_Text_1BB619, Route112_Text_1BB655
-	msgbox Route112_Text_1BB667, MSGBOX_AUTOCLOSE
+Route112_EventScript_Brice:: @ 8150549
+	trainerbattle_single TRAINER_BRICE, Route112_Text_BriceIntro, Route112_Text_BriceDefeat
+	msgbox Route112_Text_BricePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route112_EventScript_150560:: @ 8150560
-	trainerbattle_single TRAINER_TRENT_1, Route112_Text_1BB6A0, Route112_Text_1BB707
+Route112_EventScript_Trent:: @ 8150560
+	trainerbattle_single TRAINER_TRENT_1, Route112_Text_TrentIntro, Route112_Text_TrentDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route112_EventScript_150587
-	msgbox Route112_Text_1BB721, MSGBOX_AUTOCLOSE
+	goto_if_eq Route112_EventScript_RematchTrent
+	msgbox Route112_Text_TrentPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route112_EventScript_150587:: @ 8150587
-	trainerbattle_rematch TRAINER_TRENT_1, Route112_Text_1BB7C7, Route112_Text_1BB801
-	msgbox Route112_Text_1BB819, MSGBOX_AUTOCLOSE
+Route112_EventScript_RematchTrent:: @ 8150587
+	trainerbattle_rematch TRAINER_TRENT_1, Route112_Text_TrentRematchIntro, Route112_Text_TrentRematchDefeat
+	msgbox Route112_Text_TrentRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route112_EventScript_15059E:: @ 815059E
-	trainerbattle_single TRAINER_LARRY, Route112_Text_1BB893, Route112_Text_1BB8B6
-	msgbox Route112_Text_1BB8BE, MSGBOX_AUTOCLOSE
+Route112_EventScript_Larry:: @ 815059E
+	trainerbattle_single TRAINER_LARRY, Route112_Text_LarryIntro, Route112_Text_LarryDefeat
+	msgbox Route112_Text_LarryPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route112_EventScript_1505B5:: @ 81505B5
-	trainerbattle_single TRAINER_CAROL, Route112_Text_1BB8F0, Route112_Text_1BB942
-	msgbox Route112_Text_1BB958, MSGBOX_AUTOCLOSE
+Route112_EventScript_Carol:: @ 81505B5
+	trainerbattle_single TRAINER_CAROL, Route112_Text_CarolIntro, Route112_Text_CarolDefeat
+	msgbox Route112_Text_CarolPostBattle, MSGBOX_AUTOCLOSE
 	end

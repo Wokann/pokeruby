@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_1B2C95",
+      "script": "MtChimney_EventScript_OtherTeamLeader",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_1B2CCB",
+      "script": "MtChimney_EventScript_EvilTeamLeader",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "MtChimney_EventScript_15D110",
+      "script": "MtChimney_EventScript_EvilTeamAdmin",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D162",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt8",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D159",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt7",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D0FE",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt2",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D0F5",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt1",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -112,7 +112,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D107",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt3",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -125,7 +125,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15CF95",
+      "script": "MtChimney_EventScript_LavaCookieLady",
       "flag": "FLAG_HIDE_MT_CHIMNEY_PEOPLE"
     },
     {
@@ -138,7 +138,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D162",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt8",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -151,7 +151,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D174",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena2",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -164,7 +164,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -177,7 +177,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D13E",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt4",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -190,7 +190,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -203,7 +203,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -216,7 +216,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D150",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt6",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -229,7 +229,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D13E",
+      "script": "MtChimney_EventScript_BusyEvilTeamGrunt4",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -242,7 +242,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D174",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena2",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -255,7 +255,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -268,7 +268,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D174",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena2",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -281,7 +281,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -294,7 +294,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtChimney_EventScript_15D127",
+      "script": "MtChimney_EventScript_EvilTeamGrunt",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -307,7 +307,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D174",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena2",
       "flag": "FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY"
     },
     {
@@ -320,7 +320,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtChimney_EventScript_15D16B",
+      "script": "MtChimney_EventScript_EvilTeamPoochyena1",
       "flag": "FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY"
     },
     {
@@ -333,7 +333,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtChimney_EventScript_15D1E3",
+      "script": "MtChimney_EventScript_Shelby",
       "flag": "FLAG_HIDE_MT_CHIMNEY_PEOPLE"
     },
     {
@@ -346,7 +346,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "MtChimney_EventScript_15D221",
+      "script": "MtChimney_EventScript_Melissa",
       "flag": "FLAG_HIDE_MT_CHIMNEY_PEOPLE"
     },
     {
@@ -359,7 +359,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtChimney_EventScript_15D238",
+      "script": "MtChimney_EventScript_Sheila",
       "flag": "FLAG_HIDE_MT_CHIMNEY_PEOPLE"
     },
     {
@@ -372,7 +372,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtChimney_EventScript_15D24F",
+      "script": "MtChimney_EventScript_Shirley",
       "flag": "FLAG_HIDE_MT_CHIMNEY_PEOPLE"
     }
   ],
@@ -414,7 +414,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MtChimney_EventScript_15D17D"
+      "script": "MtChimney_EventScript_MeteoriteMachine"
     },
     {
       "type": "sign",
@@ -422,7 +422,7 @@
       "y": 37,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MtChimney_EventScript_15D1DA"
+      "script": "MtChimney_EventScript_RouteSign"
     }
   ]
 }
