@@ -14,7 +14,7 @@ Route102_Text_LetsGoBack:: @ 816D408
 	.string "{PLAYER}, danke schön!\n"
 	.string "Lass uns zurück zur ARENA gehen!$"
 
-Route102_Text_16D431:: @ 816D431
+Route102_Text_ImNotVeryTall:: @ 816D431
 	.string "Ich... bin nicht groß, ich versinke im\n"
 	.string "hohen Gras.\p"
 	.string "Das Gras erreicht meine Nase und...\n"
@@ -31,13 +31,13 @@ UnknownString_816D4BB: @ 816D4BB
 	.string "hochklettern, aber von denen man\l"
 	.string "herunterspringen kann.$"
 
-Route102_Text_16D51A:: @ 816D51A
+Route102_Text_CatchWholeBunchOfPokemon:: @ 816D51A
 	.string "Ich werde jede Menge POKéMON fangen!$"
 
-Route102_Text_16D547:: @ 816D547
+Route102_Text_RouteSignOldale:: @ 816D547
 	.string "ROUTE 102\n"
 	.string "{RIGHT_ARROW} ROSALTSTADT$"
 
-Route102_Text_16D55F:: @ 816D55F
+Route102_Text_RouteSignPetalburg:: @ 816D55F
 	.string "ROUTE 102\n"
 	.string "{LEFT_ARROW} BLÜTENBURG CITY$"

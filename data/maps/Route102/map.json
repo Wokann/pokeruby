@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route102_EventScript_14EADA",
+      "script": "Route102_EventScript_LittleBoy",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route102_EventScript_14EAFE",
+      "script": "Route102_EventScript_Calvin",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route102_EventScript_14EB3C",
+      "script": "Route102_EventScript_Rick",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route102_EventScript_14EB53",
+      "script": "Route102_EventScript_Tiana",
       "flag": "0"
     },
     {
@@ -84,7 +84,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route102_EventScript_14EAF5",
+      "script": "Route102_EventScript_Boy",
       "flag": "0"
     },
     {
@@ -136,7 +136,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route102_EventScript_14EB6A",
+      "script": "Route102_EventScript_Allen",
       "flag": "0"
     }
   ],
@@ -149,7 +149,7 @@
       "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route102_EventScript_14EAEC"
+      "script": "Route102_EventScript_RouteSignPetalburg"
     },
     {
       "type": "sign",
@@ -157,7 +157,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route102_EventScript_14EAE3"
+      "script": "Route102_EventScript_RouteSignOldale"
     }
   ]
 }
