@@ -1,40 +1,40 @@
 Route107_MapScripts:: @ 814F3BB
 	.byte 0
 
-Route107_EventScript_14F3BC:: @ 814F3BC
-	trainerbattle_single TRAINER_DARRIN, Route107_Text_1B926B, Route107_Text_1B92B7
-	msgbox Route107_Text_1B92E7, MSGBOX_AUTOCLOSE
+Route107_EventScript_Darrin:: @ 814F3BC
+	trainerbattle_single TRAINER_DARRIN, Route107_Text_DarrinIntro, Route107_Text_DarrinDefeated
+	msgbox Route107_Text_DarrinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F3D3:: @ 814F3D3
-	trainerbattle_single TRAINER_TONY_1, Route107_Text_1B933A, Route107_Text_1B9365
+Route107_EventScript_Tony:: @ 814F3D3
+	trainerbattle_single TRAINER_TONY_1, Route107_Text_TonyIntro, Route107_Text_TonyDefeated
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq Route107_EventScript_14F3FA
-	msgbox Route107_Text_1B938E, MSGBOX_AUTOCLOSE
+	goto_if_eq Route107_EventScript_TonyRematch
+	msgbox Route107_Text_TonyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F3FA:: @ 814F3FA
-	trainerbattle_rematch TRAINER_TONY_1, Route107_Text_1B93EB, Route107_Text_1B9429
-	msgbox Route107_Text_1B9477, MSGBOX_AUTOCLOSE
+Route107_EventScript_TonyRematch:: @ 814F3FA
+	trainerbattle_rematch TRAINER_TONY_1, Route107_Text_TonyRematchIntro, Route107_Text_TonyRematchDefeated
+	msgbox Route107_Text_TonyRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F411:: @ 814F411
-	trainerbattle_single TRAINER_DENISE, Route107_Text_1B94C8, Route107_Text_1B94F2
-	msgbox Route107_Text_1B94FF, MSGBOX_AUTOCLOSE
+Route107_EventScript_Denise:: @ 814F411
+	trainerbattle_single TRAINER_DENISE, Route107_Text_DeniseIntro, Route107_Text_DeniseDefeated
+	msgbox Route107_Text_DenisePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F428:: @ 814F428
-	trainerbattle_single TRAINER_BETH, Route107_Text_1B9538, Route107_Text_1B956B
-	msgbox Route107_Text_1B9589, MSGBOX_AUTOCLOSE
+Route107_EventScript_Beth:: @ 814F428
+	trainerbattle_single TRAINER_BETH, Route107_Text_BethIntro, Route107_Text_BethDefeated
+	msgbox Route107_Text_BethPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F43F:: @ 814F43F
-	trainerbattle_double TRAINER_LISA_AND_RAY, Route107_Text_1B95CB, Route107_Text_1B95FB, Route107_Text_1B9672
-	msgbox Route107_Text_1B9630, MSGBOX_AUTOCLOSE
+Route107_EventScript_Lisa:: @ 814F43F
+	trainerbattle_double TRAINER_LISA_AND_RAY, Route107_Text_LisaIntro, Route107_Text_LisaDefeated, Route107_Text_LisaNotEnoughPokemon
+	msgbox Route107_Text_LisaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route107_EventScript_14F45A:: @ 814F45A
-	trainerbattle_double TRAINER_LISA_AND_RAY, Route107_Text_1B96AB, Route107_Text_1B9707, Route107_Text_1B9788
-	msgbox Route107_Text_1B9735, MSGBOX_AUTOCLOSE
+Route107_EventScript_Ray:: @ 814F45A
+	trainerbattle_double TRAINER_LISA_AND_RAY, Route107_Text_RayIntro, Route107_Text_RayDefeated, Route107_Text_RayNotEnoughPokemon
+	msgbox Route107_Text_RayPostBattle, MSGBOX_AUTOCLOSE
 	end
