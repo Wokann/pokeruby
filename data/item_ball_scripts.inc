@@ -30,7 +30,7 @@ Route106_EventScript_ItemProtein:: @ 81B1494
 	finditem ITEM_PROTEIN
 	end
 
-Route109_EventScript_1B14A1:: @ 81B14A1
+Route109_EventScript_ItemPPUp:: @ 81B14A1
 	finditem ITEM_PP_UP
 	end
 
