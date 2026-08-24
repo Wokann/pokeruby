@@ -14,7 +14,7 @@ Route110_TrickHouseEnd_Text_AllNightToMakeMaze:: @ 819C333
 	.string "You're almost my equal in greatness by\n"
 	.string "one, two, three, four, five places!$"
 
-Route110_TrickHouseEnd_Text_19C3A7:: @ 819C3A7
+Route110_TrickHouseEnd_Text_AllNightToBringInBoulders:: @ 819C3A7
 	.string "It took me all night to bring in those\n"
 	.string "boulders...\p"
 	.string "You're almost my equal in greatness by\n"

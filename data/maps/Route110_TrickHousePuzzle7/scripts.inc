@@ -93,19 +93,19 @@ Route110_TrickHousePuzzle7_EventScript_ClearState2:: @ 8163285
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 0
 	end
 
-Route110_TrickHousePuzzle7_EventScript_16328B:: @ 816328B
+Route110_TrickHousePuzzle7_EventScript_Scroll:: @ 816328B
 	lockall
 	compare VAR_TRICK_HOUSE_PUZZLE_7_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle7_EventScript_16329D
+	goto_if_eq Route110_TrickHousePuzzle7_EventScript_SetScrollFound
 	goto Route110_TrickHousePuzzle7_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle7_EventScript_16329D:: @ 816329D
+Route110_TrickHousePuzzle7_EventScript_SetScrollFound:: @ 816329D
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE, 1
 	goto Route110_TrickHousePuzzle7_EventScript_FoundScroll
 	end
 
-Route110_TrickHousePuzzle7_EventScript_1632A8:: @ 81632A8
+Route110_TrickHousePuzzle7_EventScript_TeleportPad:: @ 81632A8
 	lockall
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
 	warpteleport MAP_ROUTE110_TRICK_HOUSE_PUZZLE7, 255, 3, 19

@@ -458,7 +458,7 @@ Route110_TrickHouseEntrance_EventScript_MechadollReward:: @ 8161518
 Route110_TrickHouseEntrance_EventScript_ReceivedTent:: @ 8161551
 	msgbox Route110_TrickHouseEntrance_Text_ThenFarewell, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Route110_TrickHouseEntrance_Movement_16309F
+	applymovement 1, Route110_TrickHousePuzzle5_Movement_MechadollShake
 	waitmovement 0
 	applymovement 1, Route110_TrickHouseEntrance_Movement_TrickMasterSpin
 	waitmovement 0

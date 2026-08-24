@@ -17,7 +17,7 @@ Route110_TrickHouseEnd_Text_AllNightToMakeMaze:: @ 819C333
 	.string "bis auf ein, zwei, drei, vier, fünf \l"
 	.string "Punkte!$"
 
-Route110_TrickHouseEnd_Text_19C3A7:: @ 819C3A7
+Route110_TrickHouseEnd_Text_AllNightToBringInBoulders:: @ 819C3A7
 	.string "Ich habe die ganze Nacht gebraucht,\n"
 	.string "die Felsen zu platzieren...\p"
 	.string "Du bist meiner Größe fast ebenbürtig,\n"

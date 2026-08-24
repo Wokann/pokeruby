@@ -83,7 +83,7 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle2:: @ 8161A47
 	end
 
 Route110_TrickHouseEnd_EventScript_CompletedPuzzle3:: @ 8161A83
-	msgbox Route110_TrickHouseEnd_Text_19C3A7, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_AllNightToBringInBoulders, MSGBOX_DEFAULT
 	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
 	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
 	giveitem ITEM_HARD_STONE
