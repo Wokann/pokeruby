@@ -357,7 +357,7 @@
 #define FLAG_HIDDEN_ITEM_5E      0x2B6
 #define FLAG_HIDDEN_ITEM_5F      0x2B7
 #define FLAG_HIDDEN_ITEM_BLACK_GLASSES 0x2B8
-#define FLAG_HIDDEN_ITEM_61      0x2B9
+#define FLAG_HIDDEN_ITEM_ROUTE_115_HEART_SCALE 0x2B9
 
 
 // object event hide/show flags
@@ -630,9 +630,9 @@
 #define FLAG_ITEM_ROUTE_113_SUPER_REPEL     0x3F5
 #define FLAG_ITEM_ROUTE_114_RARE_CANDY      0x3F6
 #define FLAG_ITEM_ROUTE_114_PROTEIN         0x3F7
-#define FLAG_ITEM_ROUTE115_1                0x3F8
-#define FLAG_ITEM_ROUTE115_2                0x3F9
-#define FLAG_ITEM_ROUTE115_3                0x3FA
+#define FLAG_ITEM_ROUTE_115_SUPER_POTION    0x3F8
+#define FLAG_ITEM_ROUTE_115_TM_FOCUS_PUNCH  0x3F9
+#define FLAG_ITEM_ROUTE_115_IRON            0x3FA
 #define FLAG_ITEM_ROUTE116_2                0x3FB
 #define FLAG_ITEM_ROUTE116_3                0x3FC
 #define FLAG_ITEM_ROUTE116_4                0x3FD
@@ -732,7 +732,7 @@
 #define FLAG_ITEM_ROUTE_104_X_ACCURACY       0x45B
 #define FLAG_ITEM_MAUVILLE_CITY_X_SPEED                0x45C
 #define FLAG_ITEM_PETALBURG_WOODS_4         0x45D
-#define FLAG_ITEM_ROUTE115_4                0x45E
+#define FLAG_ITEM_ROUTE_115_GREAT_BALL      0x45E
 #define FLAG_ITEM_SAFARI_ZONE_NORTHEAST_1   0x45F
 #define FLAG_ITEM_MT_PYRE_3F_1              0x460
 #define FLAG_ITEM_ROUTE118_1                0x461
