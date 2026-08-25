@@ -7,12 +7,12 @@ Route112_OnTransition:: @ 8150508
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
 	end
 
-Route112_EventScript_MagmaGrunt1:: @ 8150513
-	msgbox Route112_Text_MagmaGrunt1WaitingForFallarborCrew, MSGBOX_NPC
+Route112_EventScript_EvilTeamGrunt1:: @ 8150513
+	msgbox Route112_Text_EvilTeamGrunt1WaitingForFallarborCrew, MSGBOX_NPC
 	end
 
-Route112_EventScript_MagmaGrunt2:: @ 815051C
-	msgbox Route112_Text_MagmaGrunt2WantsCableCarRide, MSGBOX_NPC
+Route112_EventScript_EvilTeamGrunt2:: @ 815051C
+	msgbox Route112_Text_EvilTeamGrunt2WantsCableCarRide, MSGBOX_NPC
 	end
 
 Route112_EventScript_MtChimneyCableCarSign:: @ 8150525

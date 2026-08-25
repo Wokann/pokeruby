@@ -13,6 +13,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_7",
+      "local_id": "LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER",
       "x": 24,
       "y": 19,
       "elevation": 3,
@@ -26,6 +27,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_6",
+      "local_id": "LOCALID_MT_CHIMNEY_EVIL_TEAM_LEADER",
       "x": 13,
       "y": 6,
       "elevation": 3,
@@ -39,6 +41,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
+      "local_id": "LOCALID_MT_CHIMNEY_EVIL_TEAM_ADMIN",
       "x": 12,
       "y": 11,
       "elevation": 3,
@@ -286,6 +289,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
+      "local_id": "LOCALID_MT_CHIMNEY_EVIL_TEAM_GRUNT",
       "x": 9,
       "y": 15,
       "elevation": 3,

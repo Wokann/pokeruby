@@ -9,8 +9,8 @@ MtChimney_CableCarStation_OnTransition:: @ 815C105
 	end
 
 MtChimney_CableCarStation_EventScript_MoveAttendantAside:: @ 815C111
-	setobjectxyperm 1, 5, 4
-	setobjectmovementtype 1, 10
+	setobjectxyperm LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, 5, 4
+	setobjectmovementtype LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 MtChimney_CableCarStation_OnFrame:: @ 815C11D
@@ -20,11 +20,11 @@ MtChimney_CableCarStation_OnFrame:: @ 815C11D
 MtChimney_CableCarStation_EventScript_ExitCableCar:: @ 815C127
 	lockall
 	applymovement LOCALID_PLAYER, MtChimney_CableCarStation_Movement_ExitCableCar
-	applymovement 1, MtChimney_CableCarStation_Movement_FollowPlayerOutFromCableCar
+	applymovement LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, MtChimney_CableCarStation_Movement_FollowPlayerOutFromCableCar
 	waitmovement 0
 	setvar VAR_CABLE_CAR_STATION_STATE, 0
-	setobjectxyperm 1, 6, 7
-	setobjectmovementtype 1, 8
+	setobjectxyperm LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, 6, 7
+	setobjectmovementtype LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_DOWN
 	releaseall
 	end
 
@@ -39,9 +39,9 @@ MtChimney_CableCarStation_EventScript_Attendant:: @ 815C14B
 	end
 
 MtChimney_CableCarStation_EventScript_RideCableCar:: @ 815C16C
-	msgbox MtChimney_CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
+	msgbox CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, MtChimney_CableCarStation_Movement_LeadPlayerToCableCar
+	applymovement LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT, MtChimney_CableCarStation_Movement_LeadPlayerToCableCar
 	applymovement LOCALID_PLAYER, MtChimney_CableCarStation_Movement_BoardCableCar
 	waitmovement 0
 	setvar VAR_0x8004, 1

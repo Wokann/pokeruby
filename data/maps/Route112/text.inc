@@ -1,9 +1,9 @@
-Route112_Text_MagmaGrunt1WaitingForFallarborCrew:: @ 816FDF0
+Route112_Text_EvilTeamGrunt1WaitingForFallarborCrew:: @ 816FDF0
 	.string "Grumble...\p"
 	.string "What happened to the others who went\n"
 	.string "to FALLARBOR? They're late...$"
 
-Route112_Text_MagmaGrunt2WantsCableCarRide:: @ 816FE3E
+Route112_Text_EvilTeamGrunt2WantsCableCarRide:: @ 816FE3E
 	.string "Grumble...\p"
 	.string "I'd like to ride the CABLE CAR to the\n"
 	.string "top, too..$"

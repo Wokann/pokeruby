@@ -101,7 +101,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D048
+MtChimney_Movement_Unused1:: @ 815D048
 	walk_down
 	walk_down
 	walk_down
@@ -121,7 +121,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D05A
+MtChimney_Movement_Unused2:: @ 815D05A
 	walk_down
 	walk_down
 	walk_down
@@ -132,7 +132,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D063
+MtChimney_Movement_Unused3:: @ 815D063
 	walk_right
 	walk_down
 	walk_down
@@ -149,7 +149,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D072
+MtChimney_Movement_Unused4:: @ 815D072
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
@@ -176,7 +176,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D08B
+MtChimney_Movement_Unused5:: @ 815D08B
 	delay_16
 	delay_16
 	delay_16
@@ -189,7 +189,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D096
+MtChimney_Movement_Unused6:: @ 815D096
 	delay_16
 	walk_left
 	walk_down
@@ -207,7 +207,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0A6
+MtChimney_Movement_Unused7:: @ 815D0A6
 	delay_16
 	walk_left
 	walk_left
@@ -226,7 +226,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0B7
+MtChimney_Movement_Unused8:: @ 815D0B7
 	delay_16
 	walk_down
 	walk_left
@@ -236,7 +236,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_in_place_fastest_down
 	step_end
 
-@ 815D0BF
+MtChimney_Movement_Unused9:: @ 815D0BF
 	walk_down
 	walk_down
 	walk_down
@@ -252,11 +252,11 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0CD
+MtChimney_Movement_Unused10:: @ 815D0CD
 	walk_down
 	step_end
 
-@ 815D0CF
+MtChimney_Movement_Unused11:: @ 815D0CF
 	walk_down
 	walk_down
 	walk_down
@@ -266,7 +266,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0D7
+MtChimney_Movement_Unused12:: @ 815D0D7
 	delay_16
 	delay_16
 	walk_in_place_fastest_left
@@ -278,7 +278,7 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0E1
+MtChimney_Movement_Unused13:: @ 815D0E1
 	delay_16
 	delay_16
 	delay_16
@@ -291,14 +291,14 @@ MtChimney_Movement_OtherTeamLeaderExitNorth:: @ 815D03E
 	walk_down
 	step_end
 
-@ 815D0EC
+MtChimney_Movement_Unused14:: @ 815D0EC
 	lock_facing_direction
 	walk_fast_left
 	unlock_facing_direction
 	face_right
 	step_end
 
-@ 815D0F1
+MtChimney_Movement_Unused15:: @ 815D0F1
 	walk_left
 	walk_in_place_fastest_right
 	delay_16
@@ -356,7 +356,7 @@ MtChimney_EventScript_BusyEvilTeamGrunt4:: @ 815D13E
 	.endif
 	end
 
-@ 815D147
+MtChimney_EventScript_BusyEvilTeamGrunt5:: @ 815D147
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_AquaGruntMeteoritesPower, MSGBOX_SIGN
 	.else

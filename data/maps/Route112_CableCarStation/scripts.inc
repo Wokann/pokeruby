@@ -10,8 +10,8 @@ Route112_CableCarStation_OnTransition:: @ 815C03E
 	end
 
 Route112_CableCarStation_EventScript_MoveAttendantAside:: @ 815C052
-	setobjectxyperm 1, 7, 4
-	setobjectmovementtype 1, 9
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 7, 4
+	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_LEFT
 	return
 
 Route112_CableCarStation_OnFrame:: @ 815C05E
@@ -21,11 +21,11 @@ Route112_CableCarStation_OnFrame:: @ 815C05E
 Route112_CableCarStation_EventScript_ExitCableCar:: @ 815C068
 	lockall
 	applymovement LOCALID_PLAYER, Route112_CableCarStation_Movement_ExitCableCar
-	applymovement 1, Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar
+	applymovement LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar
 	waitmovement 0
 	setvar VAR_CABLE_CAR_STATION_STATE, 0
-	setobjectxyperm 1, 6, 7
-	setobjectmovementtype 1, 8
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 6, 7
+	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_DOWN
 	releaseall
 	end
 
@@ -40,9 +40,9 @@ Route112_CableCarStation_EventScript_Attendant:: @ 815C08C
 	end
 
 Route112_CableCarStation_EventScript_RideCableCar:: @ 815C0AD
-	msgbox MtChimney_CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
+	msgbox CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Route112_CableCarStation_Movement_LeadPlayerToCableCar
+	applymovement LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, Route112_CableCarStation_Movement_LeadPlayerToCableCar
 	applymovement LOCALID_PLAYER, Route112_CableCarStation_Movement_BoardCableCar
 	waitmovement 0
 	setvar VAR_0x8004, 0

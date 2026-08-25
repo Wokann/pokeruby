@@ -4,7 +4,7 @@ MtChimney_EventScript_OtherTeamLeader:: @ 81B2C95
 	call_if_unset FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_OtherTeamLeaderGoStopEvilTeam
 	call_if_set FLAG_EVIL_LEADER_PLEASE_STOP, MtChimney_EventScript_OtherTeamLeaderBusyFighting
 	closemessage
-	applymovement 1, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	setflag FLAG_EVIL_LEADER_PLEASE_STOP
 	release
@@ -33,12 +33,12 @@ MtChimney_EventScript_EvilTeamLeader:: @ 81B2CCB
 	.else
 	msgbox MtChimney_Text_MaxieIntensifyVolcanoPlan, MSGBOX_DEFAULT
 	.endif
-	applymovement 2, Common_Movement_FacePlayer
+	applymovement LOCALID_MT_CHIMNEY_EVIL_TEAM_LEADER, Common_Movement_FacePlayer
 	waitmovement 0
 	playse SE_PIN
-	applymovement 2, Common_Movement_ExclamationMark
+	applymovement LOCALID_MT_CHIMNEY_EVIL_TEAM_LEADER, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 2, Common_Movement_Delay48
+	applymovement LOCALID_MT_CHIMNEY_EVIL_TEAM_LEADER, Common_Movement_Delay48
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox MtChimney_Text_ArchieIntro, MSGBOX_DEFAULT
@@ -58,16 +58,16 @@ MtChimney_EventScript_EvilTeamLeader:: @ 81B2CCB
 	closemessage
 	delay 30
 	fadescreen FADE_TO_BLACK
-	removeobject 2
-	removeobject 3
-	removeobject 22
+	removeobject LOCALID_MT_CHIMNEY_EVIL_TEAM_LEADER
+	removeobject LOCALID_MT_CHIMNEY_EVIL_TEAM_ADMIN
+	removeobject LOCALID_MT_CHIMNEY_EVIL_TEAM_GRUNT
 	setflag FLAG_HIDE_EVIL_TEAM_MT_CHIMNEY
 	fadescreen FADE_FROM_BLACK
-	setobjectxyperm 1, 10, 12
-	addobject 1
-	compare VAR_FACING, 4
+	setobjectxyperm LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, 10, 12
+	addobject LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER
+	compare VAR_FACING, DIR_EAST
 	call_if_eq MtChimney_EventScript_OtherTeamLeaderApproachPlayerEast
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq MtChimney_EventScript_OtherTeamLeaderApproachPlayerNorth
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
@@ -77,11 +77,11 @@ MtChimney_EventScript_EvilTeamLeader:: @ 81B2CCB
 	msgbox MtChimney_Text_ArchieThankYou, MSGBOX_DEFAULT
 	.endif
 	closemessage
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq MtChimney_EventScript_OtherTeamLeaderExitEast
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq MtChimney_EventScript_OtherTeamLeaderExitNorth
-	removeobject 1
+	removeobject LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER
 	setflag FLAG_HIDE_OTHER_TEAM_MT_CHIMNEY
 	setflag FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY
 	clearflag FLAG_HIDE_PROF_COSMO_FALLARBOR
@@ -90,21 +90,21 @@ MtChimney_EventScript_EvilTeamLeader:: @ 81B2CCB
 	end
 
 MtChimney_EventScript_OtherTeamLeaderApproachPlayerEast:: @ 81B2D7D
-	applymovement 1, MtChimney_Movement_OtherTeamLeaderApproachPlayerEast
+	applymovement LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, MtChimney_Movement_OtherTeamLeaderApproachPlayerEast
 	waitmovement 0
 	return
 
 MtChimney_EventScript_OtherTeamLeaderApproachPlayerNorth:: @ 81B2D88
-	applymovement 1, MtChimney_Movement_OtherTeamLeaderApproachPlayerNorth
+	applymovement LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, MtChimney_Movement_OtherTeamLeaderApproachPlayerNorth
 	waitmovement 0
 	return
 
 MtChimney_EventScript_OtherTeamLeaderExitEast:: @ 81B2D93
-	applymovement 1, MtChimney_Movement_OtherTeamLeaderExitEast
+	applymovement LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, MtChimney_Movement_OtherTeamLeaderExitEast
 	waitmovement 0
 	return
 
 MtChimney_EventScript_OtherTeamLeaderExitNorth:: @ 81B2D9E
-	applymovement 1, MtChimney_Movement_OtherTeamLeaderExitNorth
+	applymovement LOCALID_MT_CHIMNEY_OTHER_TEAM_LEADER, MtChimney_Movement_OtherTeamLeaderExitNorth
 	waitmovement 0
 	return

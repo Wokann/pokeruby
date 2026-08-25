@@ -1,9 +1,9 @@
-Route112_Text_MagmaGrunt1WaitingForFallarborCrew:: @ 816FDF0
+Route112_Text_EvilTeamGrunt1WaitingForFallarborCrew:: @ 816FDF0
 	.string "Grummel...\p"
 	.string "Wo bleiben nur die anderen, die in LAUB-\n"
 	.string "WECHSELFELD waren? Sie sind spät dran.$"
 
-Route112_Text_MagmaGrunt2WantsCableCarRide:: @ 816FE3E
+Route112_Text_EvilTeamGrunt2WantsCableCarRide:: @ 816FE3E
 	.string "Grummel...\p"
 	.string "Ich möchte auch mit der SEILBAHN nach\n"
 	.string "oben auf den Gipfel fahren...$"
