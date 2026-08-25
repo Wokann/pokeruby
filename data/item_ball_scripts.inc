@@ -182,15 +182,15 @@ Route123_EventScript_ItemElixir:: @ 81B1682
 	finditem ITEM_ELIXIR
 	end
 
-Route124_EventScript_1B168F:: @ 81B168F
+Route124_EventScript_ItemRedShard:: @ 81B168F
 	finditem ITEM_RED_SHARD
 	end
 
-Route124_EventScript_1B169C:: @ 81B169C
+Route124_EventScript_ItemBlueShard:: @ 81B169C
 	finditem ITEM_BLUE_SHARD
 	end
 
-Route124_EventScript_1B16A9:: @ 81B16A9
+Route124_EventScript_ItemYellowShard:: @ 81B16A9
 	finditem ITEM_YELLOW_SHARD
 	end
 
