@@ -59,7 +59,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route132_EventScript_ItemRareCandy",
-      "flag": "FLAG_ITEM_ROUTE132_1"
+      "flag": "FLAG_ITEM_ROUTE_132_RARE_CANDY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",

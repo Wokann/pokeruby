@@ -650,7 +650,7 @@
 #define FLAG_ITEM_ROUTE_123_RARE_CANDY      0x409
 #define FLAG_ITEM_ROUTE_127_ZINC             0x40A
 #define FLAG_ITEM_ROUTE_127_CARBOS           0x40B
-#define FLAG_ITEM_ROUTE132_1                0x40C
+#define FLAG_ITEM_ROUTE_132_RARE_CANDY       0x40C
 #define FLAG_ITEM_ROUTE133_1                0x40D
 #define FLAG_ITEM_ROUTE133_2                0x40E
 #define FLAG_ITEM_PETALBURG_CITY_MAX_REVIVE               0x40F
