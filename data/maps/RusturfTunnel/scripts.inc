@@ -344,7 +344,7 @@ RusturfTunnel_EventScript_EvilTeamGrunt:: @ 815C9EA
 	setflag FLAG_RECOVERED_DEVON_GOODS
 	setvar VAR_RUSTBORO_STATE, 4
 	setvar VAR_BRINEY_HOUSE_STATE, 1
-	setflag FLAG_HIDE_BRINEY_ROUTE116
+	setflag FLAG_HIDE_ROUTE_116_MR_BRINEY
 	release
 	end
 

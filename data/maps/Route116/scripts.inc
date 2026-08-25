@@ -7,7 +7,7 @@ Route116_OnTransition:: @ 8150A37
 	end
 
 Route116_EventScript_SetWandasBoyfriendPos:: @ 8150A41
-	setobjectxyperm 21, 41, 10
+	setobjectxyperm LOCALID_ROUTE116_WANDAS_BF, 41, 10
 	return
 
 Route116_EventScript_WandasBoyfriend:: @ 8150A49
@@ -40,20 +40,20 @@ Route116_EventScript_DevonEmployee:: @ 8150A7B
 Route116_EventScript_GiveRepeatBall:: @ 8150A94
 	setflag FLAG_MET_DEVON_EMPLOYEE
 	giveitem ITEM_REPEAT_BALL
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Route116_EventScript_NoRoomForRepeatBall
 	msgbox Route116_Text_NewBallAvailableAtMart, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq Route116_EventScript_DevonEmployeeExit
-	compare VAR_FACING, 1
+	compare VAR_FACING, DIR_SOUTH
 	call_if_eq Route116_EventScript_DevonEmployeeExit
-	compare VAR_FACING, 3
+	compare VAR_FACING, DIR_WEST
 	call_if_eq Route116_EventScript_DevonEmployeeExit
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq Route116_EventScript_DevonEmployeeExitEast
 	removeobject VAR_LAST_TALKED
-	clearflag FLAG_HIDE_EMPLOYEE_DEVON_CORP_3F
+	clearflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	setflag FLAG_RECEIVED_REPEAT_BALL
 	release
 	end
@@ -132,7 +132,7 @@ Route116_EventScript_Briney:: @ 8150B5D
 
 Route116_EventScript_BrineyTrigger:: @ 8150B6E
 	lockall
-	applymovement 11, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_ROUTE116_BRINEY, Common_Movement_WalkInPlaceFastestRight
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
@@ -144,10 +144,10 @@ Route116_EventScript_GlassesMan:: @ 8150B8F
 	lock
 	faceplayer
 	checkitem ITEM_BLACK_GLASSES, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route116_EventScript_PlayerHasGlasses
 	specialvar VAR_RESULT, FoundBlackGlasses
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route116_EventScript_FoundGlassesNotOnPlayer
 	msgbox Route116_Text_CanYouHelpMeFindGlasses, MSGBOX_DEFAULT
 	release
@@ -163,7 +163,7 @@ Route116_EventScript_PlayerHasGlasses:: @ 8150BCA
 	msgbox Route116_Text_CanYouHelpMeFindGlasses, MSGBOX_DEFAULT
 	msgbox Route116_Text_MayISeeThoseGlasses, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, FoundBlackGlasses
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route116_EventScript_FoundGlassesOnPlayer
 	msgbox Route116_Text_NotWhatImLookingFor, MSGBOX_DEFAULT
 	release
@@ -177,13 +177,13 @@ Route116_EventScript_FoundGlassesOnPlayer:: @ 8150BF4
 
 Route116_EventScript_GlassesManExit:: @ 8150C03
 	delay 20
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq Route116_EventScript_GlassesManExitNormal
-	compare VAR_FACING, 1
+	compare VAR_FACING, DIR_SOUTH
 	call_if_eq Route116_EventScript_GlassesManExitNormal
-	compare VAR_FACING, 3
+	compare VAR_FACING, DIR_WEST
 	call_if_eq Route116_EventScript_GlassesManExitNormal
-	compare VAR_FACING, 4
+	compare VAR_FACING, DIR_EAST
 	call_if_eq Route116_EventScript_GlassesManExitEast
 	removeobject VAR_LAST_TALKED
 	release
@@ -237,7 +237,7 @@ Route116_EventScript_Jose:: @ 8150C79
 Route116_EventScript_Jerry:: @ 8150C90
 	trainerbattle_single TRAINER_JERRY_1, Route116_Text_JerryIntro, Route116_Text_JerryDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route116_EventScript_RematchJerry
 	msgbox Route116_Text_JerryPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -260,7 +260,7 @@ Route116_EventScript_Janice:: @ 8150CE5
 Route116_EventScript_Karen:: @ 8150CFC
 	trainerbattle_single TRAINER_KAREN_1, Route116_Text_KarenIntro, Route116_Text_KarenDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route116_EventScript_RematchKaren
 	msgbox Route116_Text_KarenPostBattle, MSGBOX_AUTOCLOSE
 	end
