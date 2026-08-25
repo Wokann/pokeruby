@@ -47,7 +47,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route103_EventScript_Rival",
-      "flag": "FLAG_HIDE_RIVAL_ROUTE103"
+      "flag": "FLAG_HIDE_ROUTE_103_RIVAL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
@@ -110,7 +110,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "5",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_103_CHERI_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -123,7 +123,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "6",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_103_LEPPA",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -136,7 +136,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "7",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_103_CHERI_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -164,7 +164,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "ProfBirch_EventScript_AskRatePokedex",
-      "flag": "FLAG_HIDE_BIRCH_ROUTE103"
+      "flag": "FLAG_HIDE_ROUTE_103_BIRCH"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
@@ -190,7 +190,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route103_EventScript_ItemGuardSpec",
-      "flag": "FLAG_ITEM_ROUTE103_1"
+      "flag": "FLAG_ITEM_ROUTE_103_GUARD_SPEC"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CUTTABLE_TREE",
