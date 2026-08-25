@@ -7,7 +7,7 @@ Route131_OnTransition:: @ 8152444
 	end
 
 Route131_EventScript_SetLayout:: @ 815244E
-	setmaplayoutindex 320
+	setmaplayoutindex LAYOUT_ROUTE131_SKY_PILLAR
 	return
 
 Route131_EventScript_Richard:: @ 8152452
