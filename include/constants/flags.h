@@ -651,8 +651,8 @@
 #define FLAG_ITEM_ROUTE_127_ZINC             0x40A
 #define FLAG_ITEM_ROUTE_127_CARBOS           0x40B
 #define FLAG_ITEM_ROUTE_132_RARE_CANDY       0x40C
-#define FLAG_ITEM_ROUTE133_1                0x40D
-#define FLAG_ITEM_ROUTE133_2                0x40E
+#define FLAG_ITEM_ROUTE_133_BIG_PEARL        0x40D
+#define FLAG_ITEM_ROUTE_133_STAR_PIECE       0x40E
 #define FLAG_ITEM_PETALBURG_CITY_MAX_REVIVE               0x40F
 #define FLAG_ITEM_PETALBURG_2               0x410
 #define FLAG_ITEM_RUSTBORO_CITY_X_DEFEND                0x411
