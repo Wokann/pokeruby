@@ -2860,48 +2860,48 @@ Route125_Text_IrisNotEnoughMons:: @ 81C154F
 	.string "IRIS: Oh, wir würden niemals einen\n"
 	.string "2-gegen-1-Kampf ausfechten! Niemals!$"
 
-Route126_Text_1C1590:: @ 81C1590
+Route126_Text_BarryIntro:: @ 81C1590
 	.string "Schwimmen verlangt vollen Körperein-\n"
 	.string "satz. Und so wird man fit!$"
 
-Route126_Text_1C15C3:: @ 81C15C3
+Route126_Text_BarryDefeat:: @ 81C15C3
 	.string "Ich gebe es zu! Du hast gewonnen!$"
 
-Route126_Text_1C15D8:: @ 81C15D8
+Route126_Text_BarryPostBattle:: @ 81C15D8
 	.string "Dank meiner täglichen Schwimmrunden...\n"
 	.string "Guck mal! Schau dir diesen Körperbau an!$"
 
-Route126_Text_1C1627:: @ 81C1627
+Route126_Text_DeanIntro:: @ 81C1627
 	.string "Dieser hohe weiße Berg dort ist\n"
 	.string "XENEROVILLE.$"
 
-Route126_Text_1C1660:: @ 81C1660
+Route126_Text_DeanDefeat:: @ 81C1660
 	.string "Wie, das war's schon?$"
 
-Route126_Text_1C166F:: @ 81C166F
+Route126_Text_DeanPostBattle:: @ 81C166F
 	.string "Ich kann den Eingang zu XENEROVILLE\n"
 	.string "nicht finden. Wo kann er sein?$"
 
-Route126_Text_1C16AB:: @ 81C16AB
+Route126_Text_NikkiIntro:: @ 81C16AB
 	.string "Hihihihihi!\n"
 	.string "Ich bin eine Meerjungfrau!$"
 
-Route126_Text_1C16C5:: @ 81C16C5
+Route126_Text_NikkiDefeat:: @ 81C16C5
 	.string "Mein Traum platzt wie Seifenblasen!\n"
 	.string "Plopp, plopp, plopp...$"
 
-Route126_Text_1C1702:: @ 81C1702
+Route126_Text_NikkiPostBattle:: @ 81C1702
 	.string "Du hast mich geschlagen... Ich möchte im\n"
 	.string "Meer der Verzweiflung untergehen...$"
 
-Route126_Text_1C1741:: @ 81C1741
+Route126_Text_BrendaIntro:: @ 81C1741
 	.string "Hallo, Kindchen!\n"
 	.string "Willst du gegen mich antreten?$"
 
-Route126_Text_1C1766:: @ 81C1766
+Route126_Text_BrendaDefeat:: @ 81C1766
 	.string "Oh, neeeiiin!$"
 
-Route126_Text_1C1773:: @ 81C1773
+Route126_Text_BrendaPostBattle:: @ 81C1773
 	.string "Ich liebe es, einfach so mit meinen \n"
 	.string "POKéMON im Meer abzuhängen!$"
 
