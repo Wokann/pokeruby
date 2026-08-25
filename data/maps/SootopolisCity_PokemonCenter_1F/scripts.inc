@@ -6,8 +6,8 @@ SootopolisCity_PokemonCenter_1F_OnTransition:: @ 815B196
 	setrespawn HEAL_LOCATION_SOOTOPOLIS_CITY
 	end
 
-@ 815B19A
-	setvar VAR_0x800B, 1
+SootopolisCity_PokemonCenter_1F_EventScript_UnusedNurse:: @ 815B19A
+	setvar VAR_0x800B, LOCALID_SOOTOPOLIS_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

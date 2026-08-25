@@ -1,4 +1,4 @@
-SootopolisCity_House8_MapScripts:: @ 815B400
+SootopolisCity_MonSizeRecordHouse_MapScripts:: @ 815B400
 	.byte 0
 
 SootopolisCity_MonSizeRecordHouse_EventScript_ShroomishBrother:: @ 815B401

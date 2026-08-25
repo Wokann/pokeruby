@@ -1,7 +1,7 @@
 {
-  "id": "MAP_SOOTOPOLIS_CITY_HOUSE8",
-  "name": "SootopolisCity_House8",
-  "layout": "LAYOUT_SOOTOPOLIS_CITY_HOUSE8",
+  "id": "MAP_SOOTOPOLIS_CITY_MON_SIZE_RECORD_HOUSE",
+  "name": "SootopolisCity_MonSizeRecordHouse",
+  "layout": "LAYOUT_SOOTOPOLIS_CITY_MON_SIZE_RECORD_HOUSE",
   "music": "MUS_SOOTOPOLIS",
   "region_map_section": "MAPSEC_SOOTOPOLIS_CITY",
   "requires_flash": false,
