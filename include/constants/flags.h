@@ -349,7 +349,7 @@
 #define FLAG_HIDDEN_ITEM_56      0x2AE
 #define FLAG_HIDDEN_ITEM_57      0x2AF
 #define FLAG_HIDDEN_ITEM_ROUTE_104_HEART_SCALE 0x2B0
-#define FLAG_HIDDEN_ITEM_59      0x2B1
+#define FLAG_HIDDEN_ITEM_ROUTE_105_HEART_SCALE 0x2B1
 #define FLAG_HIDDEN_ITEM_5A      0x2B2
 #define FLAG_HIDDEN_ITEM_5B      0x2B3
 #define FLAG_HIDDEN_ITEM_5C      0x2B4
@@ -617,7 +617,7 @@
 #define FLAG_ITEM_ROUTE_102_POTION          0x3E8
 #define FLAG_ITEM_ROUTE116_1                0x3E9
 #define FLAG_ITEM_ROUTE_104_PP_UP           0x3EA
-#define FLAG_ITEM_ROUTE105_1                0x3EB
+#define FLAG_ITEM_ROUTE_105_IRON            0x3EB
 #define FLAG_ITEM_ROUTE106_1                0x3EC
 #define FLAG_ITEM_ROUTE109_1                0x3ED
 #define FLAG_ITEM_ROUTE110_1                0x3EE
