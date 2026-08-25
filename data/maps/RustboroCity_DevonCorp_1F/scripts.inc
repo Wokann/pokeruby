@@ -7,8 +7,8 @@ RustboroCity_DevonCorp_1F_OnTransition:: @ 815740C
 	end
 
 RustboroCity_DevonCorp_1F_EventScript_BlockStairs:: @ 8157416
-	setobjectxyperm 2, 14, 2
-	setobjectmovementtype 2, 8
+	setobjectxyperm LOCALID_DEVON_CORP_STAIR_GUARD, 14, 2
+	setobjectmovementtype LOCALID_DEVON_CORP_STAIR_GUARD, MOVEMENT_TYPE_FACE_DOWN
 	return
 
 RustboroCity_DevonCorp_1F_EventScript_Employee:: @ 8157422

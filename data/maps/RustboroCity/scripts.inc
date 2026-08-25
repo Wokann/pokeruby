@@ -78,7 +78,7 @@ RustboroCity_EventScript_GymSign:: @ 814C41C
 	msgbox RustboroCity_Text_GymSign, MSGBOX_SIGN
 	end
 
-@ 814C425
+RustboroCity_EventScript_DevonCorpBranchOfficeSign:: @ 814C425
 	msgbox RustboroCity_Text_DevonCorpBranchOfficeSign, MSGBOX_SIGN
 	end
 
@@ -98,7 +98,7 @@ RustboroCity_EventScript_LittleBoy:: @ 814C449
 	lock
 	faceplayer
 	msgbox RustboroCity_Text_PokemonCanChangeLookFromExp, MSGBOX_DEFAULT
-	applymovement 7, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_RUSTBORO_LITTLE_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -107,7 +107,7 @@ RustboroCity_EventScript_LittleGirl:: @ 814C45F
 	lock
 	faceplayer
 	msgbox RustboroCity_Text_PokemonChangeShape, MSGBOX_DEFAULT
-	applymovement 8, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_RUSTBORO_LITTLE_GIRL, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -121,40 +121,40 @@ RustboroCity_EventScript_Man2:: @ 814C475
 
 RustboroCity_EventScript_StolenGoodsTrigger0:: @ 814C481
 	lockall
-	setobjectxyperm 9, 14, 21
-	setobjectmovementtype 9, 10
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 14, 21
+	setobjectmovementtype LOCALID_RUSTBORO_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_RIGHT
 	setvar VAR_0x8004, 0
 	goto RustboroCity_EventScript_StolenGoodsScene
 	end
 
 RustboroCity_EventScript_StolenGoodsTrigger1:: @ 814C498
 	lockall
-	setobjectxyperm 9, 14, 21
-	setobjectmovementtype 9, 10
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 14, 21
+	setobjectmovementtype LOCALID_RUSTBORO_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_RIGHT
 	setvar VAR_0x8004, 1
 	goto RustboroCity_EventScript_StolenGoodsScene
 	end
 
 RustboroCity_EventScript_StolenGoodsTrigger2:: @ 814C4AF
 	lockall
-	setobjectxyperm 9, 14, 21
-	setobjectmovementtype 9, 10
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 14, 21
+	setobjectmovementtype LOCALID_RUSTBORO_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_RIGHT
 	setvar VAR_0x8004, 2
 	goto RustboroCity_EventScript_StolenGoodsScene
 	end
 
 RustboroCity_EventScript_StolenGoodsTrigger3:: @ 814C4C6
 	lockall
-	setobjectxyperm 9, 14, 21
-	setobjectmovementtype 9, 10
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 14, 21
+	setobjectmovementtype LOCALID_RUSTBORO_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_RIGHT
 	setvar VAR_0x8004, 3
 	goto RustboroCity_EventScript_StolenGoodsScene
 	end
 
 RustboroCity_EventScript_StolenGoodsTrigger4:: @ 814C4DD
 	lockall
-	setobjectxyperm 9, 14, 21
-	setobjectmovementtype 9, 10
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 14, 21
+	setobjectmovementtype LOCALID_RUSTBORO_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_RIGHT
 	setvar VAR_0x8004, 4
 	goto RustboroCity_EventScript_StolenGoodsScene
 	end
@@ -162,19 +162,19 @@ RustboroCity_EventScript_StolenGoodsTrigger4:: @ 814C4DD
 RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	msgbox RustboroCity_Text_OutOfTheWay, MSGBOX_DEFAULT
 	closemessage
-	addobject 10
-	addobject 9
-	applymovement 10, RustboroCity_Movement_GruntEscape
+	addobject LOCALID_RUSTBORO_GRUNT
+	addobject LOCALID_RUSTBORO_DEVON_EMPLOYEE
+	applymovement LOCALID_RUSTBORO_GRUNT, RustboroCity_Movement_GruntEscape
 	waitmovement 0
-	removeobject 10
-	applymovement 9, RustboroCity_Movement_EmployeeChaseGrunt1
+	removeobject LOCALID_RUSTBORO_GRUNT
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeChaseGrunt1
 	waitmovement 0
 	msgbox RustboroCity_Text_WaitDontTakeMyGoods, MSGBOX_DEFAULT
 	closemessage
-	applymovement 9, RustboroCity_Movement_EmployeeChaseGrunt2
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeChaseGrunt2
 	waitmovement 0
-	removeobject 9
-	setobjectxyperm 9, 30, 10
+	removeobject LOCALID_RUSTBORO_DEVON_EMPLOYEE
+	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 30, 10
 	clearflag FLAG_HIDE_DEVON_RUSTBORO
 	setflag FLAG_DEVON_GOODS_STOLEN
 	setvar VAR_RUSTBORO_STATE, 2
@@ -188,42 +188,42 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	releaseall
 	end
 
-@ 814C55D
+RustboroCity_EventScript_ShadyCharacterTookOff:: @ 814C55D
 	msgbox RustboroCity_Text_ShadyCharacterTookOffTowardsTunnel, MSGBOX_DEFAULT
 	return
 
-@ 814C566
+RustboroCity_EventScript_YouGotItThankYou:: @ 814C566
 	msgbox RustboroCity_Text_YouGotItThankYou, MSGBOX_DEFAULT
 	return
 
-@ 814C56F
-	applymovement 9, RustboroCity_Movement_EmployeeApproachUp
+RustboroCity_EventScript_EmployeeApproachUp:: @ 814C56F
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachUp
 	waitmovement 0
 	return
 
-@ 814C57A
-	applymovement 9, RustboroCity_Movement_EmployeeApproachLeft
+RustboroCity_EventScript_EmployeeApproachLeft:: @ 814C57A
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachLeft
 	waitmovement 0
 	return
 
-@ 814C585
-	applymovement 9, RustboroCity_Movement_EmployeeApproachRight
+RustboroCity_EventScript_EmployeeApproachRight:: @ 814C585
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachRight
 	waitmovement 0
 	return
 
-@ 814C590
-	applymovement 9, RustboroCity_Movement_EmployeeApproachDown
+RustboroCity_EventScript_EmployeeApproachDown:: @ 814C590
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachDown
 	waitmovement 0
 	return
 
-@ 814C59B
-	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerFar
+RustboroCity_EventScript_EmployeeApproachPlayerFar:: @ 814C59B
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachPlayerFar
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	return
 
-@ 814C5B0
+RustboroCity_Movement_GruntEscapeExtended:: @ 814C5B0
 	walk_fastest_right
 	walk_fastest_right
 	walk_fast_right
@@ -369,56 +369,56 @@ RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
 	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown1
 	setflag FLAG_UNKNOWN_9F
 	setvar VAR_RUSTBORO_STATE, 3
-	moveobjectoffscreen 9
+	moveobjectoffscreen LOCALID_RUSTBORO_DEVON_EMPLOYEE
 	msgbox RustboroCity_Text_HelpMeIWasRobbed, MSGBOX_DEFAULT
 	releaseall
 	end
 
 RustboroCity_EventScript_EmployeeFacePlayerUp1:: @ 814C691
-	applymovement 9, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerLeft1:: @ 814C6BD
-	applymovement 9, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerDown1:: @ 814C6E9
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeApproachPlayerDown1:: @ 814C715
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
-	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachPlayerDown
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
@@ -483,62 +483,62 @@ RustboroCity_EventScript_BagFull:: @ 814C7F5
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerUp2:: @ 814C7FE
-	applymovement 9, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerLeft2:: @ 814C82A
-	applymovement 9, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerDown2:: @ 814C856
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeApproachPlayerDown2:: @ 814C882
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
-	applymovement 9, RustboroCity_Movement_EmployeeApproachPlayerDown
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, RustboroCity_Movement_EmployeeApproachPlayerDown
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	return
 
 RustboroCity_EventScript_EmployeeFacePlayerRight:: @ 814C8B8
-	applymovement 9, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	playse SE_PIN
-	applymovement 9, Common_Movement_ExclamationMark
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 9, Common_Movement_Delay48
+	applymovement LOCALID_RUSTBORO_DEVON_EMPLOYEE, Common_Movement_Delay48
 	waitmovement 0
 	return
 

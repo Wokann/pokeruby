@@ -106,6 +106,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_RUSTBORO_LITTLE_BOY",
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY_2",
       "x": 24,
       "y": 51,
@@ -119,6 +120,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_RUSTBORO_LITTLE_GIRL",
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
       "x": 25,
       "y": 51,
@@ -132,6 +134,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_RUSTBORO_DEVON_EMPLOYEE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_2",
       "x": 30,
       "y": 10,
@@ -145,6 +148,7 @@
       "flag": "FLAG_HIDE_DEVON_RUSTBORO"
     },
     {
+      "local_id": "LOCALID_RUSTBORO_GRUNT",
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
       "x": 13,
       "y": 21,
