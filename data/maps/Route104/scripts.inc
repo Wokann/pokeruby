@@ -144,7 +144,7 @@ Route104_EventScript_SailToDewford:: @ 814EFD5
 	applymovement LOCALID_DEWFORD_BRINEY, Route104_Movement_BrineyExitBoat
 	waitmovement 0
 	addobject LOCALID_DEWFORD_BOAT
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
+	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	call Common_EventScript_StopBrineysBoatMusic
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
 	hideobjectat LOCALID_ROUTE104_BOAT, MAP_ROUTE104

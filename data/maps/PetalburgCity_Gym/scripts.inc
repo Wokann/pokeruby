@@ -395,7 +395,7 @@ PetalburgCity_Gym_EventScript_NormanBattle:: @ 81549D6
 	clearflag FLAG_HIDE_WATTSON_MAUVILLE
 	setvar VAR_0x8008, 5
 	call Common_EventScript_SetGymTrainers
-	clearflag FLAG_HIDE_SLUDGE_BOMB_MAN_DEWFORD_HALL
+	clearflag FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN
 	call PetalburgCity_Gym_EventScript_UnlockAllDoors
 	special DrawWholeMapView
 	goto PetalburgCity_Gym_EventScript_GiveFacade2

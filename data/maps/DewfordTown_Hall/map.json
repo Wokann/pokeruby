@@ -130,7 +130,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "DewfordTown_Hall_EventScript_SludgeBombMan",
-      "flag": "FLAG_HIDE_SLUDGE_BOMB_MAN_DEWFORD_HALL"
+      "flag": "FLAG_HIDE_DEWFORD_HALL_SLUDGE_BOMB_MAN"
     }
   ],
   "warp_events": [

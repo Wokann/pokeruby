@@ -45,7 +45,7 @@ DewfordTown_Gym_EventScript_BrightenRoom:: @ 81530BE
 	goto_if_eq DewfordTown_Gym_EventScript_NoLightChange
 	copyvar VAR_0x8001, VAR_0x8000
 	compare VAR_0x8000, 1
-	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash1Trainers
+	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash1Trainer
 	compare VAR_0x8000, 2
 	goto_if_eq DewfordTown_Gym_EventScript_AnimateFlash2Trainers
 	compare VAR_0x8000, 3
@@ -54,7 +54,7 @@ DewfordTown_Gym_EventScript_BrightenRoom:: @ 81530BE
 DewfordTown_Gym_EventScript_NoLightChange:: @ 81530F5
 	return
 
-DewfordTown_Gym_EventScript_AnimateFlash1Trainers:: @ 81530F6
+DewfordTown_Gym_EventScript_AnimateFlash1Trainer:: @ 81530F6
 	playse SE_SWITCH
 	animateflash 3
 	call DewfordTown_Gym_EventScript_SetFlashLevel
