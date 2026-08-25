@@ -71,7 +71,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_151491",
+      "script": "Route119_EventScript_Greg",
       "flag": "0"
     },
     {
@@ -84,7 +84,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_151463",
+      "script": "Route119_EventScript_Taylor",
       "flag": "0"
     },
     {
@@ -97,7 +97,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_15144C",
+      "script": "Route119_EventScript_Donald",
       "flag": "0"
     },
     {
@@ -110,7 +110,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_EventScript_1514BF",
+      "script": "Route119_EventScript_Jackson",
       "flag": "0"
     },
     {
@@ -123,7 +123,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_151435",
+      "script": "Route119_EventScript_Brent",
       "flag": "0"
     },
     {
@@ -136,7 +136,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route119_EventScript_1514FD",
+      "script": "Route119_EventScript_Catherine",
       "flag": "0"
     },
     {
@@ -149,7 +149,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_15147A",
+      "script": "Route119_EventScript_Doug",
       "flag": "0"
     },
     {
@@ -162,7 +162,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "1",
-      "script": "Route119_EventScript_1514A8",
+      "script": "Route119_EventScript_Kent",
       "flag": "0"
     },
     {
@@ -175,7 +175,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route119_EventScript_151569",
+      "script": "Route119_EventScript_Yasu",
       "flag": "0"
     },
     {
@@ -188,7 +188,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_EventScript_151580",
+      "script": "Route119_EventScript_Takashi",
       "flag": "0"
     },
     {
@@ -201,7 +201,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_EventScript_15153B",
+      "script": "Route119_EventScript_Hugh",
       "flag": "0"
     },
     {
@@ -214,7 +214,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_EventScript_151552",
+      "script": "Route119_EventScript_Phil",
       "flag": "0"
     },
     {
@@ -240,7 +240,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B15BF",
+      "script": "Route119_EventScript_ItemSuperRepel",
       "flag": "FLAG_ITEM_ROUTE119_1"
     },
     {
@@ -253,7 +253,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B15CC",
+      "script": "Route119_EventScript_ItemZinc",
       "flag": "FLAG_ITEM_ROUTE119_2"
     },
     {
@@ -266,7 +266,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B15D9",
+      "script": "Route119_EventScript_ItemElixir",
       "flag": "FLAG_ITEM_ROUTE119_3"
     },
     {
@@ -279,7 +279,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B15E6",
+      "script": "Route119_EventScript_ItemLeafStone",
       "flag": "FLAG_ITEM_ROUTE119_4"
     },
     {
@@ -292,7 +292,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B15F3",
+      "script": "Route119_EventScript_ItemRareCandy",
       "flag": "FLAG_ITEM_ROUTE119_5"
     },
     {
@@ -305,7 +305,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B1600",
+      "script": "Route119_EventScript_ItemHyperPotion",
       "flag": "FLAG_ITEM_ROUTE119_6"
     },
     {
@@ -318,7 +318,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1515C5",
+      "script": "Route119_EventScript_BridgeAquaGrunt1",
       "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
     },
     {
@@ -331,7 +331,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1515DC",
+      "script": "Route119_EventScript_BridgeAquaGrunt2",
       "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
     },
     {
@@ -357,7 +357,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1515F3",
+      "script": "Route119_EventScript_Boy1",
       "flag": "0"
     },
     {
@@ -422,7 +422,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_15141A",
+      "script": "Route119_EventScript_CyclingTriathleteM",
       "flag": "0"
     },
     {
@@ -435,7 +435,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1B160D",
+      "script": "Route119_EventScript_ItemHyperPotion2",
       "flag": "FLAG_ITEM_ROUTE119_7"
     },
     {
@@ -448,7 +448,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1515FC",
+      "script": "Route119_EventScript_Boy2",
       "flag": "0"
     },
     {
@@ -461,7 +461,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_EventScript_151597",
+      "script": "Route119_EventScript_Hideo",
       "flag": "0"
     },
     {
@@ -500,7 +500,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_EventScript_1515AE",
+      "script": "Route119_EventScript_Eugene",
       "flag": "0"
     }
   ],
@@ -528,7 +528,7 @@
       "elevation": 0,
       "var": "VAR_ROUTE119_STATE",
       "var_value": "0",
-      "script": "Route119_EventScript_1511C5"
+      "script": "Route119_EventScript_RivalTrigger1"
     },
     {
       "type": "trigger",
@@ -537,7 +537,7 @@
       "elevation": 0,
       "var": "VAR_ROUTE119_STATE",
       "var_value": "0",
-      "script": "Route119_EventScript_1511D0"
+      "script": "Route119_EventScript_RivalTrigger2"
     },
     {
       "type": "weather",
@@ -708,7 +708,7 @@
       "y": 33,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_EventScript_15142C"
+      "script": "Route119_EventScript_WeatherInstituteSign"
     },
     {
       "type": "sign",
@@ -716,7 +716,7 @@
       "y": 19,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_EventScript_151423"
+      "script": "Route119_EventScript_RouteSignFortree"
     },
     {
       "type": "secret_base",
@@ -847,7 +847,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_EventScript_151605"
+      "script": "Route119_EventScript_TrainerTipsDecoration"
     }
   ]
 }

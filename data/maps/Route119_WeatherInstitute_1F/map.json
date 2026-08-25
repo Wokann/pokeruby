@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C94",
+      "script": "Route119_WeatherInstitute_1F_EventScript_Grunt1",
       "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163CAB",
+      "script": "Route119_WeatherInstitute_1F_EventScript_Grunt2",
       "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C7A",
+      "script": "Route119_WeatherInstitute_1F_EventScript_InstituteWorker",
       "flag": "FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_1F"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C71",
+      "script": "Route119_WeatherInstitute_1F_EventScript_RainResearcher",
       "flag": "FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_1F"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C4D",
+      "script": "Route119_WeatherInstitute_1F_EventScript_LittleBoy",
       "flag": "0"
     }
   ],
@@ -108,7 +108,7 @@
       "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C83"
+      "script": "Route119_WeatherInstitute_1F_EventScript_Bed"
     },
     {
       "type": "sign",
@@ -116,7 +116,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C83"
+      "script": "Route119_WeatherInstitute_1F_EventScript_Bed"
     },
     {
       "type": "sign",
@@ -124,7 +124,7 @@
       "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C83"
+      "script": "Route119_WeatherInstitute_1F_EventScript_Bed"
     },
     {
       "type": "sign",
@@ -132,7 +132,7 @@
       "y": 3,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route119_WeatherInstitute_1F_EventScript_163C83"
+      "script": "Route119_WeatherInstitute_1F_EventScript_Bed"
     }
   ]
 }

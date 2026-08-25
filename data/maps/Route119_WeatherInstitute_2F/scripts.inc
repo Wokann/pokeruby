@@ -1,42 +1,42 @@
 Route119_WeatherInstitute_2F_MapScripts:: @ 8163CC2
-	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_2F_MapScript1_163CC8
+	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_2F_OnTransition
 	.byte 0
 
-Route119_WeatherInstitute_2F_MapScript1_163CC8:: @ 8163CC8
+Route119_WeatherInstitute_2F_OnTransition:: @ 8163CC8
 	call Common_EventScript_SetupEvilTeamGfxIds
 	compare VAR_WEATHER_INSTITUTE_STATE, 0
-	call_if_eq Route119_WeatherInstitute_2F_EventScript_163CE4
+	call_if_eq Route119_WeatherInstitute_2F_EventScript_SetScientistPositionBeforeBattle
 	compare VAR_WEATHER_INSTITUTE_STATE, 1
-	call_if_eq Route119_WeatherInstitute_2F_EventScript_163CF0
+	call_if_eq Route119_WeatherInstitute_2F_EventScript_SetScientistPositionAfterBattle
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163CE4:: @ 8163CE4
+Route119_WeatherInstitute_2F_EventScript_SetScientistPositionBeforeBattle:: @ 8163CE4
 	setobjectxyperm 5, 1, 6
 	setobjectmovementtype 5, 10
 	return
 
-Route119_WeatherInstitute_2F_EventScript_163CF0:: @ 8163CF0
+Route119_WeatherInstitute_2F_EventScript_SetScientistPositionAfterBattle:: @ 8163CF0
 	setobjectxyperm 5, 4, 6
 	setobjectmovementtype 5, 10
 	return
 
-Route119_WeatherInstitute_2F_EventScript_163CFC:: @ 8163CFC
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_3, Route119_WeatherInstitute_2F_Text_19EEAF, Route119_WeatherInstitute_2F_Text_19EF1B
-	msgbox Route119_WeatherInstitute_2F_Text_19EF3E, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_2F_EventScript_Grunt3:: @ 8163CFC
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_3, Route119_WeatherInstitute_2F_Text_Grunt3Intro, Route119_WeatherInstitute_2F_Text_Grunt3Defeat
+	msgbox Route119_WeatherInstitute_2F_Text_Grunt3PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163D13:: @ 8163D13
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_4, Route119_WeatherInstitute_2F_Text_19EFA3, Route119_WeatherInstitute_2F_Text_19EFDD
-	msgbox Route119_WeatherInstitute_2F_Text_19EFE9, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_2F_EventScript_Grunt4:: @ 8163D13
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_4, Route119_WeatherInstitute_2F_Text_Grunt4Intro, Route119_WeatherInstitute_2F_Text_Grunt4Defeat
+	msgbox Route119_WeatherInstitute_2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163D2A:: @ 8163D2A
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_5, Route119_WeatherInstitute_2F_Text_19F042, Route119_WeatherInstitute_2F_Text_19F0F4, Route119_WeatherInstitute_2F_EventScript_163D45
-	msgbox Route119_WeatherInstitute_2F_Text_19F11B, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_2F_EventScript_Grunt5:: @ 8163D2A
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_5, Route119_WeatherInstitute_2F_Text_Grunt5Intro, Route119_WeatherInstitute_2F_Text_Grunt5Defeat, Route119_WeatherInstitute_2F_EventScript_Grunt5Defeated
+	msgbox Route119_WeatherInstitute_2F_Text_Grunt5PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163D45:: @ 8163D45
-	msgbox Route119_WeatherInstitute_2F_Text_19F11B, MSGBOX_DEFAULT
+Route119_WeatherInstitute_2F_EventScript_Grunt5Defeated:: @ 8163D45
+	msgbox Route119_WeatherInstitute_2F_Text_Grunt5PostBattle, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_WEATHER_INSTITUTE_STATE, 1
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_2F
@@ -47,46 +47,46 @@ Route119_WeatherInstitute_2F_EventScript_163D45:: @ 8163D45
 	removeobject 2
 	removeobject 3
 	fadescreen FADE_FROM_BLACK
-	applymovement 5, Route119_WeatherInstitute_2F_Movement_163DC8
+	applymovement 5, Route119_WeatherInstitute_2F_Movement_Exit
 	waitmovement 0
 	moveobjectoffscreen 5
-	goto Route119_WeatherInstitute_2F_EventScript_163D7A
+	goto Route119_WeatherInstitute_2F_EventScript_GiveCastform
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163D7A:: @ 8163D7A
-	msgbox Route119_WeatherInstitute_2F_Text_19F1CF, MSGBOX_DEFAULT
+Route119_WeatherInstitute_2F_EventScript_GiveCastform:: @ 8163D7A
+	msgbox Route119_WeatherInstitute_2F_Text_ThanksForSavingUs, MSGBOX_DEFAULT
 	getpartysize
 	compare VAR_RESULT, 6
-	goto_if_eq Route119_WeatherInstitute_2F_EventScript_163DB4
+	goto_if_eq Route119_WeatherInstitute_2F_EventScript_NoRoomForCastform
 	playfanfare MUS_OBTAIN_ITEM
-	message Route119_WeatherInstitute_2F_Text_19F267
+	message Route119_WeatherInstitute_2F_Text_ReceivedCastform
 	waitfanfare
 	waitmessage
 	givemon SPECIES_CASTFORM, 25, ITEM_MYSTIC_WATER
 	setflag FLAG_RECEIVED_CASTFORM
-	msgbox Route119_WeatherInstitute_2F_Text_19F27D, MSGBOX_DEFAULT
+	msgbox Route119_WeatherInstitute_2F_Text_CastformChangesWithWeather, MSGBOX_DEFAULT
 	release
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163DB4:: @ 8163DB4
-	msgbox Route119_WeatherInstitute_2F_Text_19F231, MSGBOX_DEFAULT
+Route119_WeatherInstitute_2F_EventScript_NoRoomForCastform:: @ 8163DB4
+	msgbox Route119_WeatherInstitute_2F_Text_NoRoomForCastform, MSGBOX_DEFAULT
 	release
 	end
 
-Route119_WeatherInstitute_2F_EventScript_163DBE:: @ 8163DBE
-	msgbox Route119_WeatherInstitute_2F_Text_19F2FE, MSGBOX_DEFAULT
+Route119_WeatherInstitute_2F_EventScript_WeatherScientistPostGift:: @ 8163DBE
+	msgbox Route119_WeatherInstitute_2F_Text_StudyingRain, MSGBOX_DEFAULT
 	release
 	end
 
-Route119_WeatherInstitute_2F_Movement_163DC8:: @ 8163DC8
+Route119_WeatherInstitute_2F_Movement_Exit:: @ 8163DC8
 	walk_right
 	walk_right
 	walk_right
 	step_end
 
-Route119_WeatherInstitute_2F_EventScript_163DCC:: @ 8163DCC
+Route119_WeatherInstitute_2F_EventScript_WeatherScientist:: @ 8163DCC
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_163DBE
-	goto Route119_WeatherInstitute_2F_EventScript_163D7A
+	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_WeatherScientistPostGift
+	goto Route119_WeatherInstitute_2F_EventScript_GiveCastform
 	end

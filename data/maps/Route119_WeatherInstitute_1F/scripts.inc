@@ -1,55 +1,55 @@
 Route119_WeatherInstitute_1F_MapScripts:: @ 8163C2A
-	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_1F_MapScript1_163C30
+	map_script MAP_SCRIPT_ON_TRANSITION, Route119_WeatherInstitute_1F_OnTransition
 	.byte 0
 
-Route119_WeatherInstitute_1F_MapScript1_163C30:: @ 8163C30
+Route119_WeatherInstitute_1F_OnTransition:: @ 8163C30
 	call Common_EventScript_SetupEvilTeamGfxIds
 	compare VAR_WEATHER_INSTITUTE_STATE, 0
-	call_if_eq Route119_WeatherInstitute_1F_EventScript_163C41
+	call_if_eq Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPosition
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C41:: @ 8163C41
+Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPosition:: @ 8163C41
 	setobjectxyperm 5, 0, 5
 	setobjectmovementtype 5, 10
 	return
 
-Route119_WeatherInstitute_1F_EventScript_163C4D:: @ 8163C4D
+Route119_WeatherInstitute_1F_EventScript_LittleBoy:: @ 8163C4D
 	lock
 	faceplayer
 	special GetPlayerBigGuyGirlString
 	compare VAR_WEATHER_INSTITUTE_STATE, 0
-	goto_if_eq Route119_WeatherInstitute_1F_EventScript_163C67
-	msgbox Route119_WeatherInstitute_1F_Text_19ED22, MSGBOX_DEFAULT
+	goto_if_eq Route119_WeatherInstitute_1F_EventScript_LittleBoyTeamHere
+	msgbox Route119_WeatherInstitute_1F_Text_WowYoureStrong, MSGBOX_DEFAULT
 	release
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C67:: @ 8163C67
-	msgbox Route119_WeatherInstitute_1F_Text_19ECF4, MSGBOX_DEFAULT
+Route119_WeatherInstitute_1F_EventScript_LittleBoyTeamHere:: @ 8163C67
+	msgbox Route119_WeatherInstitute_1F_Text_EveryoneWentUpstairs, MSGBOX_DEFAULT
 	release
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C71:: @ 8163C71
-	msgbox Route119_WeatherInstitute_1F_Text_19ED6B, MSGBOX_NPC
+Route119_WeatherInstitute_1F_EventScript_RainResearcher:: @ 8163C71
+	msgbox Route119_WeatherInstitute_1F_Text_ProfStudyingRain, MSGBOX_NPC
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C7A:: @ 8163C7A
-	msgbox Route119_WeatherInstitute_1F_Text_19EE25, MSGBOX_NPC
+Route119_WeatherInstitute_1F_EventScript_InstituteWorker:: @ 8163C7A
+	msgbox Route119_WeatherInstitute_1F_Text_WhatWereEvilTeamUpTo, MSGBOX_NPC
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C83:: @ 8163C83
+Route119_WeatherInstitute_1F_EventScript_Bed:: @ 8163C83
 	lockall
-	msgbox Route119_WeatherInstitute_1F_Text_19EE8B, MSGBOX_DEFAULT
+	msgbox Route119_WeatherInstitute_1F_Text_TakeRestInBed, MSGBOX_DEFAULT
 	closemessage
 	call Common_EventScript_OutOfCenterPartyHeal
 	releaseall
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163C94:: @ 8163C94
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_1, Route119_WeatherInstitute_1F_Text_19EB8A, Route119_WeatherInstitute_1F_Text_19EBEE
-	msgbox Route119_WeatherInstitute_1F_Text_19EC0E, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_1F_EventScript_Grunt1:: @ 8163C94
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_1, Route119_WeatherInstitute_1F_Text_Grunt1Intro, Route119_WeatherInstitute_1F_Text_Grunt1Defeat
+	msgbox Route119_WeatherInstitute_1F_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_1F_EventScript_163CAB:: @ 8163CAB
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_2, Route119_WeatherInstitute_1F_Text_19EC6B, Route119_WeatherInstitute_1F_Text_19EC89
-	msgbox Route119_WeatherInstitute_1F_Text_19EC97, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_1F_EventScript_Grunt2:: @ 8163CAB
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_2, Route119_WeatherInstitute_1F_Text_Grunt2Intro, Route119_WeatherInstitute_1F_Text_Grunt2Defeat
+	msgbox Route119_WeatherInstitute_1F_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
