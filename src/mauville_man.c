@@ -25,114 +25,114 @@ extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern u16 gSpecialVar_Result;
 extern u16 gSpecialVar_0x8004;
 
-extern const u8 gTextStoryteller_Story1Title[];
-extern const u8 gTextStoryteller_Story1Action[];
-extern const u8 gTextStoryteller_Story1Text[];
-extern const u8 gTextStoryteller_Story2Title[];
-extern const u8 gTextStoryteller_Story2Action[];
-extern const u8 gTextStoryteller_Story2Text[];
-extern const u8 gTextStoryteller_Story3Title[];
-extern const u8 gTextStoryteller_Story3Action[];
-extern const u8 gTextStoryteller_Story3Text[];
-extern const u8 gTextStoryteller_Story4Title[];
-extern const u8 gTextStoryteller_Story4Action[];
-extern const u8 gTextStoryteller_Story4Text[];
-extern const u8 gTextStoryteller_Story5Title[];
-extern const u8 gTextStoryteller_Story5Action[];
-extern const u8 gTextStoryteller_Story5Text[];
-extern const u8 gTextStoryteller_Story6Title[];
-extern const u8 gTextStoryteller_Story6Action[];
-extern const u8 gTextStoryteller_Story6Text[];
-extern const u8 gTextStoryteller_Story7Title[];
-extern const u8 gTextStoryteller_Story7Action[];
-extern const u8 gTextStoryteller_Story7Text[];
-extern const u8 gTextStoryteller_Story8Title[];
-extern const u8 gTextStoryteller_Story8Action[];
-extern const u8 gTextStoryteller_Story8Text[];
-extern const u8 gTextStoryteller_Story9Title[];
-extern const u8 gTextStoryteller_Story9Action[];
-extern const u8 gTextStoryteller_Story9Text[];
-extern const u8 gTextStoryteller_Story10Title[];
-extern const u8 gTextStoryteller_Story10Action[];
-extern const u8 gTextStoryteller_Story10Text[];
-extern const u8 gTextStoryteller_Story11Title[];
-extern const u8 gTextStoryteller_Story11Action[];
-extern const u8 gTextStoryteller_Story11Text[];
-extern const u8 gTextStoryteller_Story12Title[];
-extern const u8 gTextStoryteller_Story12Action[];
-extern const u8 gTextStoryteller_Story12Text[];
-extern const u8 gTextStoryteller_Story13Title[];
-extern const u8 gTextStoryteller_Story13Action[];
-extern const u8 gTextStoryteller_Story13Text[];
-extern const u8 gTextStoryteller_Story14Title[];
-extern const u8 gTextStoryteller_Story14Action[];
-extern const u8 gTextStoryteller_Story14Text[];
-extern const u8 gTextStoryteller_Story15Title[];
-extern const u8 gTextStoryteller_Story15Action[];
-extern const u8 gTextStoryteller_Story15Text[];
-extern const u8 gTextStoryteller_Story16Title[];
-extern const u8 gTextStoryteller_Story16Action[];
-extern const u8 gTextStoryteller_Story16Text[];
-extern const u8 gTextStoryteller_Story17Title[];
-extern const u8 gTextStoryteller_Story17Action[];
-extern const u8 gTextStoryteller_Story17Text[];
-extern const u8 gTextStoryteller_Story18Title[];
-extern const u8 gTextStoryteller_Story18Action[];
-extern const u8 gTextStoryteller_Story18Text[];
-extern const u8 gTextStoryteller_Story19Title[];
-extern const u8 gTextStoryteller_Story19Action[];
-extern const u8 gTextStoryteller_Story19Text[];
-extern const u8 gTextStoryteller_Story20Title[];
-extern const u8 gTextStoryteller_Story20Action[];
-extern const u8 gTextStoryteller_Story20Text[];
-extern const u8 gTextStoryteller_Story21Title[];
-extern const u8 gTextStoryteller_Story21Action[];
-extern const u8 gTextStoryteller_Story21Text[];
-extern const u8 gTextStoryteller_Story22Title[];
-extern const u8 gTextStoryteller_Story22Action[];
-extern const u8 gTextStoryteller_Story22Text[];
-extern const u8 gTextStoryteller_Story23Title[];
-extern const u8 gTextStoryteller_Story23Action[];
-extern const u8 gTextStoryteller_Story23Text[];
-extern const u8 gTextStoryteller_Story24Title[];
-extern const u8 gTextStoryteller_Story24Action[];
-extern const u8 gTextStoryteller_Story24Text[];
-extern const u8 gTextStoryteller_Story25Title[];
-extern const u8 gTextStoryteller_Story25Action[];
-extern const u8 gTextStoryteller_Story25Text[];
-extern const u8 gTextStoryteller_Story26Title[];
-extern const u8 gTextStoryteller_Story26Action[];
-extern const u8 gTextStoryteller_Story26Text[];
-extern const u8 gTextStoryteller_Story27Title[];
-extern const u8 gTextStoryteller_Story27Action[];
-extern const u8 gTextStoryteller_Story27Text[];
-extern const u8 gTextStoryteller_Story28Title[];
-extern const u8 gTextStoryteller_Story28Action[];
-extern const u8 gTextStoryteller_Story28Text[];
-extern const u8 gTextStoryteller_Story29Title[];
-extern const u8 gTextStoryteller_Story29Action[];
-extern const u8 gTextStoryteller_Story29Text[];
-extern const u8 gTextStoryteller_Story30Title[];
-extern const u8 gTextStoryteller_Story30Action[];
-extern const u8 gTextStoryteller_Story30Text[];
-extern const u8 gTextStoryteller_Story31Title[];
-extern const u8 gTextStoryteller_Story31Action[];
-extern const u8 gTextStoryteller_Story31Text[];
-extern const u8 gTextStoryteller_Story32Title[];
-extern const u8 gTextStoryteller_Story32Action[];
-extern const u8 gTextStoryteller_Story32Text[];
-extern const u8 gTextStoryteller_Story33Title[];
-extern const u8 gTextStoryteller_Story33Action[];
-extern const u8 gTextStoryteller_Story33Text[];
-extern const u8 gTextStoryteller_Story34Title[];
-extern const u8 gTextStoryteller_Story34Action[];
-extern const u8 gTextStoryteller_Story34Text[];
-extern const u8 gTextStoryteller_Story35Title[];
-extern const u8 gTextStoryteller_Story35Action[];
-extern const u8 gTextStoryteller_Story35Text[];
-extern const u8 gTextStoryteller_Story36Title[];
-extern const u8 gTextStoryteller_Story36Action[];
-extern const u8 gTextStoryteller_Story36Text[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SavedGameStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrendsStartedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrendsStartedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrendsStartedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BikeTradesTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BikeTradesAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BikeTradesStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_InterviewsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_InterviewsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_InterviewsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EggsHatchedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EggsHatchedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EggsHatchedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SafariGamesTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SafariGamesAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SafariGamesStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedCutTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedCutAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedCutStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MovedBasesTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MovedBasesAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MovedBasesStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedSplashTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedSplashAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedSplashStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedStruggleTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedStruggleAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedStruggleStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RouletteWinsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RouletteWinsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RouletteWinsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EnteredContestsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EnteredContestsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_EnteredContestsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonContestsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonContestsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonContestsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesShoppedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesShoppedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesShoppedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesRainedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesRainedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TimesRainedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TVWatchedTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TVWatchedAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_TVWatchedStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedClockTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedClockAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_CheckedClockStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonLotteryTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonLotteryAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_WonLotteryStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedDaycareTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedDaycareAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_UsedDaycareStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RodeCableCarTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RodeCableCarAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_RodeCableCarStory[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsTitle[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsAction[];
+extern const u8 MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory[];
 
 struct BardSong gUnknown_03005DA0;
 
@@ -820,42 +820,42 @@ struct Story
 
 static const struct Story sStorytellerStories[] =
 {
-    {0x32, 1, gTextStoryteller_Story1Title,  gTextStoryteller_Story1Action,  gTextStoryteller_Story1Text},
-    {0x02, 1, gTextStoryteller_Story2Title,  gTextStoryteller_Story2Action,  gTextStoryteller_Story2Text},
-    {0x03, 1, gTextStoryteller_Story3Title,  gTextStoryteller_Story3Action,  gTextStoryteller_Story3Text},
-    {0x04, 1, gTextStoryteller_Story4Title,  gTextStoryteller_Story4Action,  gTextStoryteller_Story4Text},
-    {0x06, 1, gTextStoryteller_Story5Title,  gTextStoryteller_Story5Action,  gTextStoryteller_Story5Text},
-    {0x09, 1, gTextStoryteller_Story6Title,  gTextStoryteller_Story6Action,  gTextStoryteller_Story6Text},
-    {0x0B, 1, gTextStoryteller_Story7Title,  gTextStoryteller_Story7Action,  gTextStoryteller_Story7Text},
-    {0x0C, 1, gTextStoryteller_Story8Title,  gTextStoryteller_Story8Action,  gTextStoryteller_Story8Text},
-    {0x0D, 1, gTextStoryteller_Story9Title,  gTextStoryteller_Story9Action,  gTextStoryteller_Story9Text},
-    {0x0E, 1, gTextStoryteller_Story10Title, gTextStoryteller_Story10Action, gTextStoryteller_Story10Text},
-    {0x0F, 1, gTextStoryteller_Story11Title, gTextStoryteller_Story11Action, gTextStoryteller_Story11Text},
-    {0x10, 1, gTextStoryteller_Story12Title, gTextStoryteller_Story12Action, gTextStoryteller_Story12Text},
-    {0x11, 1, gTextStoryteller_Story13Title, gTextStoryteller_Story13Action, gTextStoryteller_Story13Text},
-    {0x12, 1, gTextStoryteller_Story14Title, gTextStoryteller_Story14Action, gTextStoryteller_Story14Text},
-    {0x13, 1, gTextStoryteller_Story15Title, gTextStoryteller_Story15Action, gTextStoryteller_Story15Text},
-    {0x14, 1, gTextStoryteller_Story16Title, gTextStoryteller_Story16Action, gTextStoryteller_Story16Text},
-    {0x1A, 1, gTextStoryteller_Story17Title, gTextStoryteller_Story17Action, gTextStoryteller_Story17Text},
-    {0x1B, 1, gTextStoryteller_Story18Title, gTextStoryteller_Story18Action, gTextStoryteller_Story18Text},
-    {0x1C, 1, gTextStoryteller_Story19Title, gTextStoryteller_Story19Action, gTextStoryteller_Story19Text},
-    {0x1D, 2, gTextStoryteller_Story20Title, gTextStoryteller_Story20Action, gTextStoryteller_Story20Text},
-    {0x1E, 1, gTextStoryteller_Story21Title, gTextStoryteller_Story21Action, gTextStoryteller_Story21Text},
-    {0x21, 1, gTextStoryteller_Story22Title, gTextStoryteller_Story22Action, gTextStoryteller_Story22Text},
-    {0x24, 1, gTextStoryteller_Story23Title, gTextStoryteller_Story23Action, gTextStoryteller_Story23Text},
-    {0x25, 1, gTextStoryteller_Story24Title, gTextStoryteller_Story24Action, gTextStoryteller_Story24Text},
-    {0x26, 1, gTextStoryteller_Story25Title, gTextStoryteller_Story25Action, gTextStoryteller_Story25Text},
-    {0x27, 1, gTextStoryteller_Story26Title, gTextStoryteller_Story26Action, gTextStoryteller_Story26Text},
-    {0x28, 1, gTextStoryteller_Story27Title, gTextStoryteller_Story27Action, gTextStoryteller_Story27Text},
-    {0x29, 1, gTextStoryteller_Story28Title, gTextStoryteller_Story28Action, gTextStoryteller_Story28Text},
-    {0x2A, 1, gTextStoryteller_Story29Title, gTextStoryteller_Story29Action, gTextStoryteller_Story29Text},
-    {0x2B, 1, gTextStoryteller_Story30Title, gTextStoryteller_Story30Action, gTextStoryteller_Story30Text},
-    {0x2C, 1, gTextStoryteller_Story31Title, gTextStoryteller_Story31Action, gTextStoryteller_Story31Text},
-    {0x2D, 1, gTextStoryteller_Story32Title, gTextStoryteller_Story32Action, gTextStoryteller_Story32Text},
-    {0x2E, 1, gTextStoryteller_Story33Title, gTextStoryteller_Story33Action, gTextStoryteller_Story33Text},
-    {0x2F, 1, gTextStoryteller_Story34Title, gTextStoryteller_Story34Action, gTextStoryteller_Story34Text},
-    {0x30, 1, gTextStoryteller_Story35Title, gTextStoryteller_Story35Action, gTextStoryteller_Story35Text},
-    {0x31, 1, gTextStoryteller_Story36Title, gTextStoryteller_Story36Action, gTextStoryteller_Story36Text},
+    {0x32, 1, MauvilleCity_PokemonCenter_1F_Text_SavedGameTitle,  MauvilleCity_PokemonCenter_1F_Text_SavedGameAction,  MauvilleCity_PokemonCenter_1F_Text_SavedGameStory},
+    {0x02, 1, MauvilleCity_PokemonCenter_1F_Text_TrendsStartedTitle,  MauvilleCity_PokemonCenter_1F_Text_TrendsStartedAction,  MauvilleCity_PokemonCenter_1F_Text_TrendsStartedStory},
+    {0x03, 1, MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedTitle,  MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedAction,  MauvilleCity_PokemonCenter_1F_Text_BerriesPlantedStory},
+    {0x04, 1, MauvilleCity_PokemonCenter_1F_Text_BikeTradesTitle,  MauvilleCity_PokemonCenter_1F_Text_BikeTradesAction,  MauvilleCity_PokemonCenter_1F_Text_BikeTradesStory},
+    {0x06, 1, MauvilleCity_PokemonCenter_1F_Text_InterviewsTitle,  MauvilleCity_PokemonCenter_1F_Text_InterviewsAction,  MauvilleCity_PokemonCenter_1F_Text_InterviewsStory},
+    {0x09, 1, MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesTitle,  MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesAction,  MauvilleCity_PokemonCenter_1F_Text_TrainerBattlesStory},
+    {0x0B, 1, MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtTitle,  MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtAction,  MauvilleCity_PokemonCenter_1F_Text_PokemonCaughtStory},
+    {0x0C, 1, MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtTitle,  MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtAction,  MauvilleCity_PokemonCenter_1F_Text_FishingPokemonCaughtStory},
+    {0x0D, 1, MauvilleCity_PokemonCenter_1F_Text_EggsHatchedTitle,  MauvilleCity_PokemonCenter_1F_Text_EggsHatchedAction,  MauvilleCity_PokemonCenter_1F_Text_EggsHatchedStory},
+    {0x0E, 1, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedTitle, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedAction, MauvilleCity_PokemonCenter_1F_Text_PokemonEvolvedStory},
+    {0x0F, 1, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterTitle, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterAction, MauvilleCity_PokemonCenter_1F_Text_UsedPokemonCenterStory},
+    {0x10, 1, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeTitle, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeAction, MauvilleCity_PokemonCenter_1F_Text_RestedAtHomeStory},
+    {0x11, 1, MauvilleCity_PokemonCenter_1F_Text_SafariGamesTitle, MauvilleCity_PokemonCenter_1F_Text_SafariGamesAction, MauvilleCity_PokemonCenter_1F_Text_SafariGamesStory},
+    {0x12, 1, MauvilleCity_PokemonCenter_1F_Text_UsedCutTitle, MauvilleCity_PokemonCenter_1F_Text_UsedCutAction, MauvilleCity_PokemonCenter_1F_Text_UsedCutStory},
+    {0x13, 1, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashTitle, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashAction, MauvilleCity_PokemonCenter_1F_Text_UsedRockSmashStory},
+    {0x14, 1, MauvilleCity_PokemonCenter_1F_Text_MovedBasesTitle, MauvilleCity_PokemonCenter_1F_Text_MovedBasesAction, MauvilleCity_PokemonCenter_1F_Text_MovedBasesStory},
+    {0x1A, 1, MauvilleCity_PokemonCenter_1F_Text_UsedSplashTitle, MauvilleCity_PokemonCenter_1F_Text_UsedSplashAction, MauvilleCity_PokemonCenter_1F_Text_UsedSplashStory},
+    {0x1B, 1, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleTitle, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleAction, MauvilleCity_PokemonCenter_1F_Text_UsedStruggleStory},
+    {0x1C, 1, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsTitle, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsAction, MauvilleCity_PokemonCenter_1F_Text_SlotJackpotsStory},
+    {0x1D, 2, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsTitle, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsAction, MauvilleCity_PokemonCenter_1F_Text_RouletteWinsStory},
+    {0x1E, 1, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesTitle, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesAction, MauvilleCity_PokemonCenter_1F_Text_BattleTowerChallengesStory},
+    {0x21, 1, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksTitle, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksAction, MauvilleCity_PokemonCenter_1F_Text_MadePokeblocksStory},
+    {0x24, 1, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsTitle, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsAction, MauvilleCity_PokemonCenter_1F_Text_EnteredContestsStory},
+    {0x25, 1, MauvilleCity_PokemonCenter_1F_Text_WonContestsTitle, MauvilleCity_PokemonCenter_1F_Text_WonContestsAction, MauvilleCity_PokemonCenter_1F_Text_WonContestsStory},
+    {0x26, 1, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedTitle, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedAction, MauvilleCity_PokemonCenter_1F_Text_TimesShoppedStory},
+    {0x27, 1, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderTitle, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderAction, MauvilleCity_PokemonCenter_1F_Text_UsedItemFinderStory},
+    {0x28, 1, MauvilleCity_PokemonCenter_1F_Text_TimesRainedTitle, MauvilleCity_PokemonCenter_1F_Text_TimesRainedAction, MauvilleCity_PokemonCenter_1F_Text_TimesRainedStory},
+    {0x29, 1, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexTitle, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexAction, MauvilleCity_PokemonCenter_1F_Text_CheckedPokedexStory},
+    {0x2A, 1, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsTitle, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsAction, MauvilleCity_PokemonCenter_1F_Text_ReceivedRibbonsStory},
+    {0x2B, 1, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedTitle, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedAction, MauvilleCity_PokemonCenter_1F_Text_LedgesJumpedStory},
+    {0x2C, 1, MauvilleCity_PokemonCenter_1F_Text_TVWatchedTitle, MauvilleCity_PokemonCenter_1F_Text_TVWatchedAction, MauvilleCity_PokemonCenter_1F_Text_TVWatchedStory},
+    {0x2D, 1, MauvilleCity_PokemonCenter_1F_Text_CheckedClockTitle, MauvilleCity_PokemonCenter_1F_Text_CheckedClockAction, MauvilleCity_PokemonCenter_1F_Text_CheckedClockStory},
+    {0x2E, 1, MauvilleCity_PokemonCenter_1F_Text_WonLotteryTitle, MauvilleCity_PokemonCenter_1F_Text_WonLotteryAction, MauvilleCity_PokemonCenter_1F_Text_WonLotteryStory},
+    {0x2F, 1, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareTitle, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareAction, MauvilleCity_PokemonCenter_1F_Text_UsedDaycareStory},
+    {0x30, 1, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarTitle, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarAction, MauvilleCity_PokemonCenter_1F_Text_RodeCableCarStory},
+    {0x31, 1, MauvilleCity_PokemonCenter_1F_Text_HotSpringsTitle, MauvilleCity_PokemonCenter_1F_Text_HotSpringsAction, MauvilleCity_PokemonCenter_1F_Text_HotSpringsStory},
 };
 
 static void StorytellerSetup(void)
