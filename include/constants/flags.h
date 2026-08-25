@@ -648,8 +648,8 @@
 #define FLAG_ITEM_ROUTE_120_FULL_HEAL       0x407
 #define FLAG_ITEM_ROUTE_123_CALCIUM         0x408
 #define FLAG_ITEM_ROUTE_123_RARE_CANDY      0x409
-#define FLAG_ITEM_ROUTE127_1                0x40A
-#define FLAG_ITEM_ROUTE127_2                0x40B
+#define FLAG_ITEM_ROUTE_127_ZINC             0x40A
+#define FLAG_ITEM_ROUTE_127_CARBOS           0x40B
 #define FLAG_ITEM_ROUTE132_1                0x40C
 #define FLAG_ITEM_ROUTE133_1                0x40D
 #define FLAG_ITEM_ROUTE133_2                0x40E
