@@ -305,17 +305,17 @@ LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist:: @ 8158B85
 	checkitem ITEM_CONTEST_PASS, 1
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass
-	goto_if_set FLAG_TEMP_2, LilycoveCity_ContestLobby_EventScript_158BAE
+	goto_if_set FLAG_TEMP_2, LilycoveCity_ContestLobby_EventScript_RepeatLinkContestPrompt
 	message ContestHall_Text_OnlyRegister4Players
 	waitmessage
 	setflag FLAG_TEMP_2
-	goto LilycoveCity_ContestLobby_EventScript_158BF0
+	goto LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest
 	end
 
-LilycoveCity_ContestLobby_EventScript_158BAE:: @ 8158BAE
+LilycoveCity_ContestLobby_EventScript_RepeatLinkContestPrompt:: @ 8158BAE
 	message LilycoveCity_ContestLobby_Text_EnterContest
 	waitmessage
-	goto LilycoveCity_ContestLobby_EventScript_158BF0
+	goto LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest
 	end
 
 LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass:: @ 8158BBA
@@ -323,7 +323,7 @@ LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass:: @ 8
 	releaseall
 	end
 
-LilycoveCity_ContestLobby_EventScript_158BC4:: @ 8158BC4
+LilycoveCity_ContestLobby_EventScript_TrySaveBeforeLinkContest:: @ 8158BC4
 	msgbox LilycoveCity_ContestLobby_Text_ProgressWillBeSaved, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelEnterContest
@@ -334,16 +334,16 @@ LilycoveCity_ContestLobby_EventScript_158BC4:: @ 8158BC4
 	setflag FLAG_TEMP_3
 	return
 
-LilycoveCity_ContestLobby_EventScript_158BF0:: @ 8158BF0
+LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest:: @ 8158BF0
 	multichoice 0, 0, 2, 0
 	switch VAR_RESULT
-	case 0, LilycoveCity_ContestLobby_EventScript_158CEA
-	case 1, LilycoveCity_ContestLobby_EventScript_158C27
+	case 0, LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
+	case 1, LilycoveCity_ContestLobby_EventScript_ExplainLinkContest
 	case 2, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	end
 
-LilycoveCity_ContestLobby_EventScript_158C27:: @ 8158C27
+LilycoveCity_ContestLobby_EventScript_ExplainLinkContest:: @ 8158C27
 	msgbox LilycoveCity_ContestLobby_Text_Explain4PlayerContest, MSGBOX_DEFAULT
 	goto LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist
 	end
@@ -359,7 +359,7 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon:: @ 8158C42
 	setvar VAR_CONTEST_RANK, 0
 	choosecontestmon
 	compare VAR_0x8004, 255
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_158CEA
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	special ScrSpecial_CheckSelectedMonAndInitContest
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank
@@ -398,8 +398,8 @@ LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest:: @ 8158CC0
 	case 1, LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest
 	end
 
-LilycoveCity_ContestLobby_EventScript_158CEA:: @ 8158CEA
-	call_if_unset FLAG_TEMP_3, LilycoveCity_ContestLobby_EventScript_158BC4
+LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType:: @ 8158CEA
+	call_if_unset FLAG_TEMP_3, LilycoveCity_ContestLobby_EventScript_TrySaveBeforeLinkContest
 	message LilycoveCity_ContestLobby_Text_EnterWhichContest
 	waitmessage
 	multichoice 0, 0, 4, 0
@@ -433,7 +433,7 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 8158D24
 
 LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentContest:: @ 8158D82
 	msgbox LilycoveCity_ContestLobby_Text_PlayersChoseDifferentContest, MSGBOX_DEFAULT
-	goto LilycoveCity_ContestLobby_EventScript_158CEA
+	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	end
 
 LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices:: @ 8158D90
@@ -462,7 +462,7 @@ LilycoveCity_ContestLobby_EventScript_CancelLinkError:: @ 8158DB2
 
 LilycoveCity_ContestLobby_EventScript_CancelLinkTransmissionError:: @ 8158DC3
 	msgbox LilycoveCity_ContestLobby_Text_TransmissionError, MSGBOX_DEFAULT
-	goto LilycoveCity_ContestLobby_EventScript_158CEA
+	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	end
 
 LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
@@ -472,10 +472,10 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 	messageautoscroll LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX
 	waitmessage
 	addvar VAR_0x8004, -1
-	goto LilycoveCity_ContestLobby_EventScript_158DEE
+	goto LilycoveCity_ContestLobby_EventScript_PrepareLinkContestRoom
 	end
 
-LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
+LilycoveCity_ContestLobby_EventScript_PrepareLinkContestRoom:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
 	special ScrSpecial_SetLinkContestTrainerGfxIdx
