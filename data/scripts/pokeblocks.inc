@@ -15,7 +15,7 @@ SlateportCity_ContestLobby_EventScript_BerryBlender1:: @ 81B761E
 	goto SlateportCity_ContestLobby_EventScript_1B7681
 	end
 
-VerdanturfTown_ContestLobby_EventScript_1B763F:: @ 81B763F
+VerdanturfTown_ContestLobby_EventScript_BerryBlender2:: @ 81B763F
 	setvar VAR_0x8008, 2
 	setvar VAR_0x8009, 1
 	applymovement VAR_0x8008, VerdanturfTown_ContestLobby_Movement_1B7821
@@ -130,7 +130,7 @@ SlateportCity_ContestLobby_EventScript_MasterM:: @ 81B7795
 	goto VerdanturfTown_ContestLobby_EventScript_BerryBlendWithNPC
 	end
 
-VerdanturfTown_ContestLobby_EventScript_1B77A0:: @ 81B77A0
+VerdanturfTown_ContestLobby_EventScript_BerryBlenderMan:: @ 81B77A0
 	setvar VAR_0x8008, 2
 	goto VerdanturfTown_ContestLobby_EventScript_BerryBlendWithNPC
 	end
@@ -190,7 +190,7 @@ SlateportCity_ContestLobby_EventScript_BerryBlender0:: @ 81B7829
 	goto SlateportCity_ContestLobby_EventScript_1B783B
 	end
 
-VerdanturfTown_ContestLobby_EventScript_1B782F:: @ 81B782F
+VerdanturfTown_ContestLobby_EventScript_BerryBlender1:: @ 81B782F
 	goto VerdanturfTown_ContestLobby_EventScript_1B783B
 	end
 

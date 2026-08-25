@@ -1,16 +1,16 @@
 VerdanturfTown_ContestLobby_MapScripts:: @ 8153D6A
-	map_script MAP_SCRIPT_ON_TRANSITION, VerdanturfTown_ContestLobby_MapScript1_153D70
+	map_script MAP_SCRIPT_ON_TRANSITION, VerdanturfTown_ContestLobby_OnTransition
 	.byte 0
 
-VerdanturfTown_ContestLobby_MapScript1_153D70:: @ 8153D70
+VerdanturfTown_ContestLobby_OnTransition:: @ 8153D70
 	call LilycoveCity_ContestLobby_EventScript_TryShowContestReporter
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153D76:: @ 8153D76
+VerdanturfTown_ContestLobby_EventScript_ContestReceptionist:: @ 8153D76
 	setvar VAR_0x800B, 5
 	setvar VAR_CONTEST_RANK, 0
 	call LilycoveCity_ContestLobby_EventScript_1A4E92
-	call VerdanturfTown_ContestLobby_EventScript_153DA1
+	call VerdanturfTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
 	setvar VAR_CONTEST_LOCATION, 1
@@ -18,34 +18,34 @@ VerdanturfTown_ContestLobby_EventScript_153D76:: @ 8153D76
 	waitstate
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153DA1:: @ 8153DA1
+VerdanturfTown_ContestLobby_EventScript_LeadToContestHall:: @ 8153DA1
 	lockall
-	applymovement 1, VerdanturfTown_ContestLobby_Movement_153E25
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, VerdanturfTown_ContestLobby_Movement_ReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_WallShadow, 1
-	setmetatile 4, 3, METATILE_Contest_FloorShadow, 1
+	setmetatile 4, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 4, 3, METATILE_Contest_FloorShadow, TRUE
 	special DrawWholeMapView
-	applymovement 1, VerdanturfTown_ContestLobby_Movement_153E28
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, VerdanturfTown_ContestLobby_Movement_ReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, 1
-	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, 1
+	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
 	special DrawWholeMapView
 	delay 20
-	applymovement 1, VerdanturfTown_ContestLobby_Movement_153E35
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, VerdanturfTown_ContestLobby_Movement_ReceptionistFacePlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_153E23
+	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, VerdanturfTown_ContestLobby_Movement_153E2C
-	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_153E19
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, VerdanturfTown_ContestLobby_Movement_ReceptionistWalkToContestHall
+	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_PlayerWalkToContestHall
 	waitmovement 0
 	releaseall
 	return
 
-VerdanturfTown_ContestLobby_Movement_153E19:: @ 8153E19
+VerdanturfTown_ContestLobby_Movement_PlayerWalkToContestHall:: @ 8153E19
 	walk_left
 	walk_left
 	walk_left
@@ -57,22 +57,22 @@ VerdanturfTown_ContestLobby_Movement_153E19:: @ 8153E19
 	set_invisible
 	step_end
 
-VerdanturfTown_ContestLobby_Movement_153E23:: @ 8153E23
+VerdanturfTown_ContestLobby_Movement_PlayerApproachReceptionist:: @ 8153E23
 	walk_in_place_fastest_left
 	step_end
 
-VerdanturfTown_ContestLobby_Movement_153E25:: @ 8153E25
+VerdanturfTown_ContestLobby_Movement_ReceptionistApproachCounter:: @ 8153E25
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-VerdanturfTown_ContestLobby_Movement_153E28:: @ 8153E28
+VerdanturfTown_ContestLobby_Movement_ReceptionistExitCounter:: @ 8153E28
 	walk_down
 	walk_down
 	walk_in_place_fastest_up
 	step_end
 
-VerdanturfTown_ContestLobby_Movement_153E2C:: @ 8153E2C
+VerdanturfTown_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8153E2C
 	walk_left
 	walk_left
 	walk_left
@@ -83,26 +83,26 @@ VerdanturfTown_ContestLobby_Movement_153E2C:: @ 8153E2C
 	set_invisible
 	step_end
 
-VerdanturfTown_ContestLobby_Movement_153E35:: @ 8153E35
+VerdanturfTown_ContestLobby_Movement_ReceptionistFacePlayer:: @ 8153E35
 	walk_in_place_fastest_right
 	step_end
 
-VerdanturfTown_ContestLobby_EventScript_153E37:: @ 8153E37
+VerdanturfTown_ContestLobby_EventScript_ShowContestWinner:: @ 8153E37
 	lockall
 	fadescreen FADE_TO_BLACK
 	showcontestwinner 1
 	releaseall
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153E3E:: @ 8153E3E
-	msgbox VerdanturfTown_ContestLobby_Text_177D6C, MSGBOX_NPC
+VerdanturfTown_ContestLobby_EventScript_BoyVisitedContestHall:: @ 8153E3E
+	msgbox VerdanturfTown_ContestLobby_Text_VisitedContestHall, MSGBOX_NPC
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153E47:: @ 8153E47
+VerdanturfTown_ContestLobby_EventScript_GirlGivesTM45:: @ 8153E47
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM45, VerdanturfTown_ContestLobby_EventScript_153E76
-	msgbox VerdanturfTown_ContestLobby_Text_177DEC, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECEIVED_TM45, VerdanturfTown_ContestLobby_EventScript_GirlAfterGivingTM45
+	msgbox VerdanturfTown_ContestLobby_Text_GirlGivesTM45, MSGBOX_DEFAULT
 	giveitem ITEM_TM45_ATTRACT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
@@ -110,16 +110,16 @@ VerdanturfTown_ContestLobby_EventScript_153E47:: @ 8153E47
 	release
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153E76:: @ 8153E76
-	msgbox VerdanturfTown_ContestLobby_Text_177E98, MSGBOX_DEFAULT
+VerdanturfTown_ContestLobby_EventScript_GirlAfterGivingTM45:: @ 8153E76
+	msgbox VerdanturfTown_ContestLobby_Text_GirlAfterGivingTM45, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153E80:: @ 8153E80
-	msgbox VerdanturfTown_ContestLobby_Text_177ECD, MSGBOX_NPC
+VerdanturfTown_ContestLobby_EventScript_BoyContestAdvice:: @ 8153E80
+	msgbox VerdanturfTown_ContestLobby_Text_ContestAdvice, MSGBOX_NPC
 	end
 
-VerdanturfTown_ContestLobby_EventScript_153E89:: @ 8153E89
+VerdanturfTown_ContestLobby_EventScript_ShowBerryBlenderRecord:: @ 8153E89
 	lockall
 	special ShowBerryBlenderRecordWindow
 	waitbuttonpress

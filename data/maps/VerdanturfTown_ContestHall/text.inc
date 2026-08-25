@@ -1,4 +1,4 @@
-VerdanturfTown_ContestHall_Text_177FB4:: @ 8177FB4
+VerdanturfTown_ContestHall_Text_ContestAdvice:: @ 8177FB4
 	.string "Which CONTEST are you entering?\n"
 	.string "Want a piece of advice?\p"
 	.string "In any CONTEST, for example, a CUTE\n"
@@ -7,20 +7,20 @@ VerdanturfTown_ContestHall_Text_177FB4:: @ 8177FB4
 	.string "You need to work out ways for raising\n"
 	.string "POKéMON better.$"
 
-VerdanturfTown_ContestHall_Text_178091:: @ 8178091
+VerdanturfTown_ContestHall_Text_RaisedPokemonToBeCute:: @ 8178091
 	.string "I raised my POKéMON to be cute.\p"
 	.string "I found out you can put POKéMON in\n"
 	.string "a CONTEST for cuteness!\p"
 	.string "I'm so glad I raised my POKéMON with\n"
 	.string "loving care...$"
 
-VerdanturfTown_ContestHall_Text_178120:: @ 8178120
+VerdanturfTown_ContestHall_Text_PokemonRules:: @ 8178120
 	.string "My POKéMON rules!\p"
 	.string "It's cool, tough yet beautiful, cute,\n"
 	.string "and smart. It's complete!\p"
 	.string "I may as well go for wins in every\n"
 	.string "single CONTEST.$"
 
-VerdanturfTown_ContestHall_Text_1781A5:: @ 81781A5
+VerdanturfTown_ContestHall_Text_NormalRankStage:: @ 81781A5
 	.string "POKéMON CONTESTS\n"
 	.string "NORMAL RANK STAGE!$"

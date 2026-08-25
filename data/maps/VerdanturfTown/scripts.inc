@@ -13,14 +13,14 @@ VerdanturfTown_EventScript_Twin:: @ 814E866
 	faceplayer
 	goto_if_set FLAG_RUSTURF_TUNNEL_OPENED, VerdanturfTown_EventScript_TwinTunnelOpen
 	msgbox VerdanturfTown_Text_ManTryingToDigTunnel, MSGBOX_DEFAULT
-	applymovement 2, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_VERDANTURF_TWIN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
 
 VerdanturfTown_EventScript_TwinTunnelOpen:: @ 814E885
 	msgbox VerdanturfTown_Text_ManDugTunnelForLove, MSGBOX_DEFAULT
-	applymovement 2, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_VERDANTURF_TWIN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
