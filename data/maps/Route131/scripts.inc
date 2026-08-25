@@ -1,41 +1,41 @@
 Route131_MapScripts:: @ 815243E
-	map_script MAP_SCRIPT_ON_TRANSITION, Route131_MapScript1_152444
+	map_script MAP_SCRIPT_ON_TRANSITION, Route131_OnTransition
 	.byte 0
 
-Route131_MapScript1_152444:: @ 8152444
-	call_if_set FLAG_SYS_GAME_CLEAR, Route131_EventScript_15244E
+Route131_OnTransition:: @ 8152444
+	call_if_set FLAG_SYS_GAME_CLEAR, Route131_EventScript_SetLayout
 	end
 
-Route131_EventScript_15244E:: @ 815244E
+Route131_EventScript_SetLayout:: @ 815244E
 	setmaplayoutindex 320
 	return
 
-Route131_EventScript_152452:: @ 8152452
-	trainerbattle_single TRAINER_RICHARD, Route131_Text_1C25B3, Route131_Text_1C25F8
-	msgbox Route131_Text_1C262A, MSGBOX_AUTOCLOSE
+Route131_EventScript_Richard:: @ 8152452
+	trainerbattle_single TRAINER_RICHARD, Route131_Text_RichardIntro, Route131_Text_RichardDefeat
+	msgbox Route131_Text_RichardPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route131_EventScript_152469:: @ 8152469
-	trainerbattle_single TRAINER_HERMAN, Route131_Text_1C26B9, Route131_Text_1C271F
-	msgbox Route131_Text_1C2726, MSGBOX_AUTOCLOSE
+Route131_EventScript_Herman:: @ 8152469
+	trainerbattle_single TRAINER_HERMAN, Route131_Text_HermanIntro, Route131_Text_HermanDefeat
+	msgbox Route131_Text_HermanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route131_EventScript_152480:: @ 8152480
-	trainerbattle_single TRAINER_SUSIE, Route131_Text_1C2774, Route131_Text_1C27A4
-	msgbox Route131_Text_1C27CF, MSGBOX_AUTOCLOSE
+Route131_EventScript_Susie:: @ 8152480
+	trainerbattle_single TRAINER_SUSIE, Route131_Text_SusieIntro, Route131_Text_SusieDefeat
+	msgbox Route131_Text_SusiePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route131_EventScript_152497:: @ 8152497
-	trainerbattle_single TRAINER_KARA, Route131_Text_1C284A, Route131_Text_1C2883
-	msgbox Route131_Text_1C2898, MSGBOX_AUTOCLOSE
+Route131_EventScript_Kara:: @ 8152497
+	trainerbattle_single TRAINER_KARA, Route131_Text_KaraIntro, Route131_Text_KaraDefeat
+	msgbox Route131_Text_KaraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route131_EventScript_1524AE:: @ 81524AE
-	trainerbattle_double TRAINER_RELI_AND_IAN, Route131_Text_1C28E2, Route131_Text_1C2918, Route131_Text_1C29B2
-	msgbox Route131_Text_1C2950, MSGBOX_AUTOCLOSE
+Route131_EventScript_Reli:: @ 81524AE
+	trainerbattle_double TRAINER_RELI_AND_IAN, Route131_Text_ReliIntro, Route131_Text_ReliDefeat, Route131_Text_ReliNotEnoughMons
+	msgbox Route131_Text_ReliPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route131_EventScript_1524C9:: @ 81524C9
-	trainerbattle_double TRAINER_RELI_AND_IAN, Route131_Text_1C29F3, Route131_Text_1C2A20, Route131_Text_1C2ACA
-	msgbox Route131_Text_1C2A5D, MSGBOX_AUTOCLOSE
+Route131_EventScript_Ian:: @ 81524C9
+	trainerbattle_double TRAINER_RELI_AND_IAN, Route131_Text_IanIntro, Route131_Text_IanDefeat, Route131_Text_IanNotEnoughMons
+	msgbox Route131_Text_IanPostBattle, MSGBOX_AUTOCLOSE
 	end
