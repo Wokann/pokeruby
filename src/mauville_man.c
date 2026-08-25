@@ -159,26 +159,26 @@ static const u16 sDefaultBardSongLyrics[] =
 
 static const u8 *const sGiddyAdjectives[] =
 {
-    OtherText_SoPretty,
-    OtherText_SoDarling,
-    OtherText_SoRelaxed,
-    OtherText_SoSunny,
-    OtherText_SoDesirable,
-    OtherText_SoExciting,
-    OtherText_SoAmusing,
-    OtherText_SoMagical,
+    GiddyText_SoPretty,
+    GiddyText_SoDarling,
+    GiddyText_SoRelaxed,
+    GiddyText_SoSunny,
+    GiddyText_SoDesirable,
+    GiddyText_SoExciting,
+    GiddyText_SoAmusing,
+    GiddyText_SoMagical,
 };
 
 static const u8 *const sGiddyQuestions[] =
 {
-    OtherText_WantVacationNicePlace,
-    OtherText_BoughtCrayonsIsNice,
-    OtherText_IfWeCouldFloat,
-    OtherText_SandWashesAwayMakeSad,
-    OtherText_WhatsBottomSeaLike,
-    OtherText_SeeSettingSun,
-    OtherText_LyingInGreenGrass,
-    OtherText_SecretBasesWonderful,
+    GiddyText_ISoWantToGoOnAVacation,
+    GiddyText_IBoughtCrayonsWith120Colors,
+    GiddyText_WouldntItBeNiceIfWeCouldFloat,
+    GiddyText_WhenYouWriteOnASandyBeach,
+    GiddyText_WhatsTheBottomOfTheSeaLike,
+    GiddyText_WhenYouSeeTheSettingSunDoesIt,
+    GiddyText_LyingBackInTheGreenGrass,
+    GiddyText_SecretBasesAreSoWonderful,
 };
 
 static void InitGiddyTaleList(void);
@@ -440,9 +440,9 @@ void GenerateGiddyLine(void)
 
         adjective %= 8;
         stringPtr = EasyChat_GetWordText(gStringVar4, giddy->randomWords[giddy->taleCounter]);
-        stringPtr = StringCopy(stringPtr, gOtherText_Is);
+        stringPtr = StringCopy(stringPtr, GiddyText_Is);
         stringPtr = StringCopy(stringPtr, sGiddyAdjectives[adjective]);
-        StringCopy(stringPtr, gOtherText_DontYouAgree);
+        StringCopy(stringPtr, GiddyText_DontYouAgree);
     }
     else
     {
