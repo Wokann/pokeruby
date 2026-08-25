@@ -39,10 +39,10 @@ Route119_WeatherInstitute_2F_EventScript_EvilTeamAdminDefeated:: @ 8163D45
 	msgbox Route119_WeatherInstitute_2F_Text_EvilTeamAdminPostBattle, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_WEATHER_INSTITUTE_STATE, 1
-	clearflag FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_2F
+	clearflag FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS
 	fadedefaultbgm
 	fadescreen FADE_TO_BLACK
-	setflag FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE
+	setflag FLAG_HIDE_ROUTE_119_TEAM_AQUA
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_GRUNT_3
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_GRUNT_4
 	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_ADMIN
@@ -56,7 +56,7 @@ Route119_WeatherInstitute_2F_EventScript_EvilTeamAdminDefeated:: @ 8163D45
 Route119_WeatherInstitute_2F_EventScript_GiveCastform:: @ 8163D7A
 	msgbox Route119_WeatherInstitute_2F_Text_ThanksForSavingUs, MSGBOX_DEFAULT
 	getpartysize
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq Route119_WeatherInstitute_2F_EventScript_NoRoomForCastform
 	playfanfare MUS_OBTAIN_ITEM
 	message Route119_WeatherInstitute_2F_Text_ReceivedCastform

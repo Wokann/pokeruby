@@ -22,7 +22,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "Route119_WeatherInstitute_1F_EventScript_Grunt1",
-      "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
+      "flag": "FLAG_HIDE_ROUTE_119_TEAM_AQUA"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_2",
@@ -35,7 +35,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
       "script": "Route119_WeatherInstitute_1F_EventScript_Grunt2",
-      "flag": "FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE"
+      "flag": "FLAG_HIDE_ROUTE_119_TEAM_AQUA"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
@@ -48,7 +48,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route119_WeatherInstitute_1F_EventScript_InstituteWorker",
-      "flag": "FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_1F"
+      "flag": "FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
@@ -61,7 +61,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route119_WeatherInstitute_1F_EventScript_RainResearcher",
-      "flag": "FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_1F"
+      "flag": "FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS"
     },
     {
       "local_id": "LOCALID_WEATHER_INSTITUTE_LITTLE_BOY",

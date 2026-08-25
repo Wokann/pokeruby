@@ -32,8 +32,8 @@ Route119_OnTransition:: @ 815119B
 	end
 
 Route119_EventScript_MoveInstituteWorkersDownstairs:: @ 81511B9
-	setflag FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_2F
-	clearflag FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_1F
+	setflag FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS
+	clearflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
 	setvar VAR_WEATHER_INSTITUTE_STATE, 2
 	return
 
@@ -51,9 +51,9 @@ Route119_EventScript_RivalEncounter:: @ 81511DB
 	lockall
 	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	call_if_eq Route119_EventScript_PlayMayMusic
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	call_if_eq Route119_EventScript_PlayBrendanMusic
 	delay 65
 	compare VAR_TEMP_1, 1
@@ -71,9 +71,9 @@ Route119_EventScript_RivalEncounter:: @ 81511DB
 	addobject LOCALID_ROUTE119_RIVAL
 	delay 30
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq Route119_EventScript_BattleMay
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq Route119_EventScript_BattleBrendan
 	releaseall
 	end
@@ -166,7 +166,7 @@ Route119_EventScript_RivalExit:: @ 8151362
 	call_if_eq Route119_EventScript_RivalExit2
 	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	setvar VAR_ROUTE119_STATE, 1
-	savebgm 0
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	releaseall
 	end
@@ -296,7 +296,7 @@ Route119_EventScript_Kent:: @ 81514A8
 Route119_EventScript_Jackson:: @ 81514BF
 	trainerbattle_single TRAINER_JACKSON_1, Route119_Text_JacksonIntro, Route119_Text_JacksonDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route119_EventScript_RematchJackson
 	msgbox Route119_Text_JacksonPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -309,7 +309,7 @@ Route119_EventScript_RematchJackson:: @ 81514E6
 Route119_EventScript_Catherine:: @ 81514FD
 	trainerbattle_single TRAINER_CATHERINE_1, Route119_Text_CatherineIntro, Route119_Text_CatherineDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route119_EventScript_RematchCatherine
 	msgbox Route119_Text_CatherinePostBattle, MSGBOX_AUTOCLOSE
 	end
