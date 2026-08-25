@@ -107,7 +107,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_RIVAL_LAVARIDGE_2"
+      "flag": "FLAG_HIDE_LAVARIDGE_TOWN_RIVAL_ON_BIKE"
     },
     {
       "local_id": "LOCALID_LAVARIDGE_RIVAL",
@@ -121,7 +121,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LavaridgeTown_EventScript_RivalGiveGoGogglesAtHerbShop",
-      "flag": "FLAG_HIDE_RIVAL_LAVARIDGE_1"
+      "flag": "FLAG_HIDE_LAVARIDGE_TOWN_RIVAL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN_1",

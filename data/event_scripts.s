@@ -715,8 +715,8 @@ EventScript_WhiteOut:: @ 819FC74
 EventScript_TryReadyRivalForGoGoggles:
 	goto_if_set FLAG_RECEIVED_GO_GOGGLES, Common_EventScript_Return
 	goto_if_unset FLAG_DEFEATED_LAVARIDGE_GYM, Common_EventScript_Return
-	clearflag FLAG_HIDE_RIVAL_LAVARIDGE_1
-	setvar VAR_LAVARIDGE_RIVAL_STATE, 2
+	clearflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
+	setvar VAR_LAVARIDGE_TOWN_STATE, 2
 	return
 
 EventScript_ResetMrBriney:: @ 819FC9F

@@ -78,7 +78,7 @@ LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated:: @ 8153766
 	setvar VAR_0x8008, 4
 	call Common_EventScript_SetGymTrainers
 	setflag FLAG_HIDE_WALLY_WANDAS_HOUSE
-	setvar VAR_LAVARIDGE_RIVAL_STATE, 1
+	setvar VAR_LAVARIDGE_TOWN_STATE, 1
 	goto LavaridgeTown_Gym_1F_EventScript_GiveOverheat
 	end
 

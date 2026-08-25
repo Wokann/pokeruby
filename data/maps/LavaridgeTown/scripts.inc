@@ -8,7 +8,7 @@ LavaridgeTown_OnTransition:: @ 814E4AE
 	call_if_set FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, LavaridgeTown_EventScript_ShowMtChimneyTrainers
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
-	compare VAR_LAVARIDGE_RIVAL_STATE, 2
+	compare VAR_LAVARIDGE_TOWN_STATE, 2
 	call_if_eq LavaridgeTown_EventScript_SetRivalPos
 	end
 
@@ -22,7 +22,7 @@ LavaridgeTown_EventScript_ShowMtChimneyTrainers:: @ 814E4DF
 	return
 
 LavaridgeTown_OnFrame:: @ 814E4E3
-	map_script_2 VAR_LAVARIDGE_RIVAL_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
+	map_script_2 VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
 	.2byte 0
 
 LavaridgeTown_EventScript_RivalGiveGoGoggles:: @ 814E4ED
@@ -110,7 +110,7 @@ LavaridgeTown_EventScript_RivalExit:: @ 814E5F5
 	compare VAR_0x8008, FALSE
 	call_if_eq LavaridgeTown_EventScript_RivalExitBasedOnPlayerFacing
 	removeobject LOCALID_LAVARIDGE_RIVAL_ON_BIKE
-	setvar VAR_LAVARIDGE_RIVAL_STATE, 2
+	setvar VAR_LAVARIDGE_TOWN_STATE, 2
 	savebgm 0
 	fadedefaultbgm
 	compare VAR_0x8008, FALSE
