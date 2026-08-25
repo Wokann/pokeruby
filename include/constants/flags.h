@@ -625,7 +625,7 @@
 #define FLAG_ITEM_ROUTE_111_TM_SANDSTORM    0x3F0
 #define FLAG_ITEM_ROUTE_111_STARDUST        0x3F1
 #define FLAG_ITEM_ROUTE_111_HP_UP           0x3F2
-#define FLAG_ITEM_ROUTE112_1                0x3F3
+#define FLAG_ITEM_ROUTE_112_NUGGET          0x3F3
 #define FLAG_ITEM_ROUTE113_1                0x3F4
 #define FLAG_ITEM_ROUTE113_2                0x3F5
 #define FLAG_ITEM_ROUTE114_1                0x3F6
@@ -705,7 +705,7 @@
 #define FLAG_ITEM_VICTORY_ROAD_B2F_1        0x440
 #define FLAG_ITEM_MT_PYRE_6F_1              0x441
 #define FLAG_ITEM_SEAFLOOR_CAVERN_ROOM_9_1  0x442
-#define FLAG_ITEM_FIERY_PATH_1              0x443
+#define FLAG_ITEM_FIERY_PATH_TM_TOXIC       0x443
 #define FLAG_ITEM_ROUTE124_2                0x444
 #define FLAG_ITEM_ROUTE124_3                0x445
 #define FLAG_ITEM_SAFARI_ZONE_NORTHWEST_1   0x446
@@ -725,7 +725,7 @@
 #define FLAG_ITEM_ROUTE120_4                0x454
 #define FLAG_ITEM_ROUTE123_4                0x455
 #define FLAG_ITEM_NEW_MAUVILLE_INSIDE_3     0x456
-#define FLAG_ITEM_FIERY_PATH_2              0x457
+#define FLAG_ITEM_FIERY_PATH_FIRE_STONE     0x457
 #define FLAG_ITEM_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_1 0x458
 #define FLAG_ITEM_SHOAL_CAVE_LOW_TIDE_ICE_ROOM_2 0x459
 #define FLAG_ITEM_ROUTE_103_GUARD_SPEC      0x45A

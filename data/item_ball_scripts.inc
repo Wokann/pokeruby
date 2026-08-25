@@ -286,11 +286,11 @@ JaggedPass_EventScript_1B17D4:: @ 81B17D4
 	finditem ITEM_BURN_HEAL
 	end
 
-FieryPath_EventScript_1B17E1:: @ 81B17E1
+FieryPath_EventScript_ItemFireStone:: @ 81B17E1
 	finditem ITEM_FIRE_STONE
 	end
 
-FieryPath_EventScript_1B17EE:: @ 81B17EE
+FieryPath_EventScript_ItemTMToxic:: @ 81B17EE
 	finditem ITEM_TM06_TOXIC
 	end
 
