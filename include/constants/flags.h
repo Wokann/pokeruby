@@ -332,7 +332,7 @@
 #define FLAG_HIDDEN_ITEM_45      0x29D
 #define FLAG_HIDDEN_ITEM_46      0x29E
 #define FLAG_HIDDEN_ITEM_47      0x29F
-#define FLAG_HIDDEN_ITEM_48      0x2A0
+#define FLAG_HIDDEN_ITEM_ROUTE_117_REPEL 0x2A0
 #define FLAG_HIDDEN_ITEM_49      0x2A1
 #define FLAG_HIDDEN_ITEM_4A      0x2A2
 #define FLAG_HIDDEN_ITEM_LILYCOVE_CITY_POKE_BALL      0x2A3
@@ -636,8 +636,8 @@
 #define FLAG_ITEM_ROUTE_116_ETHER           0x3FB
 #define FLAG_ITEM_ROUTE_116_REPEL           0x3FC
 #define FLAG_ITEM_ROUTE_116_HP_UP           0x3FD
-#define FLAG_ITEM_ROUTE117_1                0x3FE
-#define FLAG_ITEM_ROUTE117_2                0x3FF
+#define FLAG_ITEM_ROUTE_117_GREAT_BALL      0x3FE
+#define FLAG_ITEM_ROUTE_117_REVIVE          0x3FF
 #define FLAG_ITEM_ROUTE119_1                0x400
 #define FLAG_ITEM_ROUTE119_2                0x401
 #define FLAG_ITEM_ROUTE119_3                0x402

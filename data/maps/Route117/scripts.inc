@@ -8,7 +8,7 @@ Route117_OnTransition:: @ 8150D40
 
 Route117_EventScript_TryMoveDayCareMan:: @ 8150D46
 	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_StopMoveDayCareMan
-	setobjectxyperm 3, 47, 6
+	setobjectxyperm LOCALID_DAYCARE_MAN, 47, 6
 
 Route117_EventScript_StopMoveDayCareMan:: @ 8150D56
 	return
@@ -40,7 +40,7 @@ Route117_EventScript_DayCareSign:: @ 8150D84
 Route117_EventScript_Isaac:: @ 8150D8D
 	trainerbattle_single TRAINER_ISAAC_1, Route117_Text_IsaacIntro, Route117_Text_IsaacDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchIsaac
 	msgbox Route117_Text_IsaacPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -53,7 +53,7 @@ Route117_EventScript_RematchIsaac:: @ 8150DB4
 Route117_EventScript_Lydia:: @ 8150DCB
 	trainerbattle_single TRAINER_LYDIA_1, Route117_Text_LydiaIntro, Route117_Text_LydiaDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchLydia
 	msgbox Route117_Text_LydiaPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -66,7 +66,7 @@ Route117_EventScript_RematchLydia:: @ 8150DF2
 Route117_EventScript_Dylan:: @ 8150E09
 	trainerbattle_single TRAINER_DYLAN_1, Route117_Text_DylanIntro, Route117_Text_DylanDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchDylan
 	msgbox Route117_Text_DylanPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -79,7 +79,7 @@ Route117_EventScript_RematchDylan:: @ 8150E30
 Route117_EventScript_Maria:: @ 8150E47
 	trainerbattle_single TRAINER_MARIA_1, Route117_Text_MariaIntro, Route117_Text_MariaDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchMaria
 	msgbox Route117_Text_MariaPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -97,7 +97,7 @@ Route117_EventScript_Derek:: @ 8150E85
 Route117_EventScript_Anna:: @ 8150E9C
 	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_AnnaIntro, Route117_Text_AnnaDefeat, Route117_Text_AnnaNotEnoughMons
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchAnna
 	msgbox Route117_Text_AnnaPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -110,7 +110,7 @@ Route117_EventScript_RematchAnna:: @ 8150EC7
 Route117_EventScript_Meg:: @ 8150EE2
 	trainerbattle_double TRAINER_ANNA_AND_MEG_1, Route117_Text_MegIntro, Route117_Text_MegDefeat, Route117_Text_MegNotEnoughMons
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route117_EventScript_RematchMeg
 	msgbox Route117_Text_MegPostBattle, MSGBOX_AUTOCLOSE
 	end

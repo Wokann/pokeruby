@@ -28,7 +28,7 @@ Route117_EventScript_DaycareEggWaiting:: @ 81B2262
 
 Route117_EventScript_DaycareAcceptEgg:: @ 81B2298
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_ne Route117_EventScript_DaycareReceiveEgg
 	msgbox Route117_Text_YouHaveNoRoomForIt, MSGBOX_DEFAULT
 	release
@@ -173,7 +173,7 @@ Route117_PokemonDayCare_EventScript_OneMonInDaycare:: @ 81B242B
 
 Route117_PokemonDayCare_EventScript_TryRetrieveMon:: @ 81B2469
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_eq Route117_PokemonDayCare_EventScript_NoRoom
 	specialvar VAR_RESULT, GetDaycareState
 	setvar VAR_0x8004, 0
@@ -204,7 +204,7 @@ Route117_PokemonDayCare_EventScript_CheckEnoughMoney:: @ 81B24C4
 	end
 
 Route117_PokemonDayCare_EventScript_RetrieveMon:: @ 81B24DE
-	applymovement 1, Route117_PokemonDayCare_Movement_RetrieveDaycareMon
+	applymovement LOCALID_DAYCARE_LADY, Route117_PokemonDayCare_Movement_RetrieveDaycareMon
 	waitmovement 0
 	specialvar VAR_RESULT, TakePokemonFromDaycare
 	special PayMoneyFor
