@@ -86,7 +86,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SeafloorCavern_Room9_EventScript_1B1A37",
+      "script": "SeafloorCavern_Room9_EventScript_ItemTMEarthquake",
       "flag": "FLAG_ITEM_SEAFLOOR_CAVERN_ROOM_9_1"
     },
     {
@@ -120,7 +120,7 @@
       "elevation": 3,
       "var": "VAR_SEAFLOOR_CAVERN_STATE",
       "var_value": "0",
-      "script": "SeafloorCavern_Room9_EventScript_15DAFA"
+      "script": "SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary"
     }
   ],
   "bg_events": []

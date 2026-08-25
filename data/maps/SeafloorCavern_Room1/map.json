@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "SeafloorCavern_Room1_EventScript_15DA6D",
+      "script": "SeafloorCavern_Room1_EventScript_EvilTeamGrunt1",
       "flag": "FLAG_HIDE_EVIL_TEAM_GRUNTS_SEAFLOOR_CAVERN"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "SeafloorCavern_Room1_EventScript_15DA84",
+      "script": "SeafloorCavern_Room1_EventScript_EvilTeamGrunt2",
       "flag": "FLAG_HIDE_EVIL_TEAM_GRUNTS_SEAFLOOR_CAVERN"
     }
   ],

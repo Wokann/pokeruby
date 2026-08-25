@@ -470,7 +470,7 @@ ShoalCave_LowTideIceRoom_EventScript_1B1A2A:: @ 81B1A2A
 	finditem ITEM_NEVER_MELT_ICE
 	end
 
-SeafloorCavern_Room9_EventScript_1B1A37:: @ 81B1A37
+SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 81B1A37
 	finditem ITEM_TM26_EARTHQUAKE
 	end
 

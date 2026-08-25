@@ -1,4 +1,4 @@
-SeafloorCavern_Room3_Text_1975DC:: @ 81975DC
+SeafloorCavern_Room3_Text_EvilTeamAdminIntro:: @ 81975DC
 	.string "Ahahahaha!\p"
 	.string "How did you manage to get here without\n"
 	.string "a submarine?\l"
@@ -10,11 +10,11 @@ SeafloorCavern_Room3_Text_1975DC:: @ 81975DC
 	.string "I'm going to give you a little taste\n"
 	.string "of pain! Resign yourself to it!$"
 
-SeafloorCavern_Room3_Text_1976F3:: @ 81976F3
+SeafloorCavern_Room3_Text_EvilTeamAdminDefeat:: @ 81976F3
 	.string "Ahahahaha!\p"
 	.string "Ouch!$"
 
-SeafloorCavern_Room3_Text_197704:: @ 8197704
+SeafloorCavern_Room3_Text_EvilTeamAdminPostBattle:: @ 8197704
 	.string "Ahahahaha!\n"
 	.string "You're so darn strong.\p"
 	.string "It's terribly disappointing that you're\n"

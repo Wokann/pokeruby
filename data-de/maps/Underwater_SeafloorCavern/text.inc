@@ -1,4 +1,4 @@
-Underwater_SeafloorCavern_Text_197435:: @ 8197435
+Underwater_SeafloorCavern_Text_SubExplorer1:: @ 8197435
 	.string "“TIEFSEE-FORSCHUNGSBOOT 1” steht auf\n"
 	.string "der Außenhülle.\p"
 	.string "Das ist das U-Boot, das TEAM {EVIL_TEAM} in\n"

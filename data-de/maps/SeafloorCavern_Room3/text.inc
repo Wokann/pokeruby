@@ -1,4 +1,4 @@
-SeafloorCavern_Room3_Text_1975DC:: @ 81975DC
+SeafloorCavern_Room3_Text_EvilTeamAdminIntro:: @ 81975DC
 	.string "Ahahahahaha!\p"
 	.string "Wie bist du uns ohne U-Boot gefolgt?\n"
 	.string "Was für ein bemerkenswertes Kind!\p"
@@ -9,11 +9,11 @@ SeafloorCavern_Room3_Text_1975DC:: @ 81975DC
 	.string "Ich gebe dir eine Lektion in Sachen\n"
 	.string "Schmerz! Pass gut auf!$"
 
-SeafloorCavern_Room3_Text_1976F3:: @ 81976F3
+SeafloorCavern_Room3_Text_EvilTeamAdminDefeat:: @ 81976F3
 	.string "Ahahahahaha!\p"
 	.string "Auuuaaa!$"
 
-SeafloorCavern_Room3_Text_197704:: @ 8197704
+SeafloorCavern_Room3_Text_EvilTeamAdminPostBattle:: @ 8197704
 	.string "Ahahahaha!\n"
 	.string "Du bist unglaublich stark!\p"
 	.string "Es ist verdammt schade, dass du kein\n"
