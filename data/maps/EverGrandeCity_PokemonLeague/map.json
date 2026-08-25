@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_LEAGUE_NURSE",
       "graphics_id": "OBJ_EVENT_GFX_NURSE",
       "x": 3,
       "y": 2,
@@ -38,6 +39,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LEAGUE_GUARD_1",
       "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 8,
       "y": 2,
@@ -51,6 +53,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LEAGUE_GUARD_2",
       "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 11,
       "y": 2,

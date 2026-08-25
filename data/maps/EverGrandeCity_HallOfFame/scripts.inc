@@ -17,24 +17,24 @@ EverGrandeCity_HallOfFame_OnFrame:: @ 815BB9E
 
 EverGrandeCity_HallOfFame_EventScript_EnterHallOfFame:: @ 815BBA8
 	lockall
-	applymovement 1, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame1
+	applymovement LOCALID_HALL_OF_FAME_STEVEN, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame1
 	applymovement LOCALID_PLAYER, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame1
 	waitmovement 0
-	applymovement 1, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_HALL_OF_FAME_STEVEN, Common_Movement_WalkInPlaceFastestRight
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	msgbox EverGrandeCity_HallOfFame_Text_HereWeHonorLeagueChampions, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2
+	applymovement LOCALID_HALL_OF_FAME_STEVEN, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2
 	applymovement LOCALID_PLAYER, EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2
 	waitmovement 0
 	delay 20
-	applymovement 1, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_HALL_OF_FAME_STEVEN, Common_Movement_WalkInPlaceFastestRight
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	msgbox EverGrandeCity_HallOfFame_Text_LetsRecordYouAndYourPartnersNames, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_HALL_OF_FAME_STEVEN, Common_Movement_WalkInPlaceFastestUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	delay 20

@@ -57,7 +57,7 @@ EverGrandeCity_ChampionsRoom_EventScript_Defeated:: @ 815B821
 	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_PlayMayMusic
 	compare VAR_RESULT, 1
 	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_PlayBrendanMusic
-	addobject 2
+	addobject LOCALID_CHAMPIONS_ROOM_RIVAL
 	call EverGrandeCity_ChampionsRoom_EventScript_RivalApproachPlayer
 	checkplayergender
 	compare VAR_RESULT, 0
@@ -78,9 +78,9 @@ EverGrandeCity_ChampionsRoom_EventScript_MayAdvice:: @ 815B886
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayAdvice, MSGBOX_DEFAULT
 	delay 40
 	playse SE_PIN
-	applymovement 2, Common_Movement_ExclamationMark
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 2, Common_Movement_Delay48
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	call EverGrandeCity_ChampionsRoom_EventScript_RivalLookBackAndForth
 	msgbox EverGrandeCity_ChampionsRoom_Text_MayItsAlreadyOver, MSGBOX_DEFAULT
@@ -91,9 +91,9 @@ EverGrandeCity_ChampionsRoom_EventScript_BrendanAdvice:: @ 815B8BB
 	msgbox EverGrandeCity_ChampionsRoom_Text_BrendanAdvice, MSGBOX_DEFAULT
 	delay 40
 	playse SE_PIN
-	applymovement 2, Common_Movement_ExclamationMark
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 2, Common_Movement_Delay48
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	call EverGrandeCity_ChampionsRoom_EventScript_RivalLookBackAndForth
 	msgbox EverGrandeCity_ChampionsRoom_Text_BrendanYouveWon, MSGBOX_DEFAULT
@@ -102,26 +102,26 @@ EverGrandeCity_ChampionsRoom_EventScript_BrendanAdvice:: @ 815B8BB
 
 EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	closemessage
-	addobject 3
-	applymovement 3, EverGrandeCity_ChampionsRoom_Movement_BirchArrives
+	addobject LOCALID_CHAMPIONS_ROOM_BIRCH
+	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, EverGrandeCity_ChampionsRoom_Movement_BirchArrives
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchArriveRatePokedex, MSGBOX_DEFAULT
 	call ProfBirch_EventScript_RatePokedex
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchCongratulations, MSGBOX_DEFAULT
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	delay 20
-	applymovement 1, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_StevenComeWithMe, MSGBOX_DEFAULT
 	closemessage
 	delay 30
-	applymovement 1, EverGrandeCity_ChampionsRoom_Movement_StevenExitStart
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExitStart
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart
-	applymovement 3, Common_Movement_WalkInPlaceFastestUp
-	applymovement 2, EverGrandeCity_ChampionsRoom_Movement_RivalFollows
+	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalFollows
 	waitmovement 0
 	delay 20
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
@@ -133,7 +133,7 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	compare VAR_RESULT, 1
 	call_if_eq EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations
 	closemessage
-	applymovement 1, EverGrandeCity_ChampionsRoom_Movement_StevenExit
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExit
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_GYM_GUIDE
@@ -151,14 +151,14 @@ EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations:: @ 815B9B4
 	return
 
 EverGrandeCity_ChampionsRoom_EventScript_RivalApproachPlayer:: @ 815B9BD
-	applymovement 2, EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	return
 
 EverGrandeCity_ChampionsRoom_EventScript_RivalLookBackAndForth:: @ 815B9D2
-	applymovement 2, EverGrandeCity_ChampionsRoom_Movement_RivalLookBackAndForth
+	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalLookBackAndForth
 	waitmovement 0
 	return
 

@@ -3,9 +3,9 @@ EverGrandeCity_Corridor4_MapScripts:: @ 815BA4B
 	.byte 0
 
 EverGrandeCity_Corridor4_OnWarp:: @ 815BA51
-	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_Corridor4_TurnPlayerNorth
+	map_script_2 VAR_TEMP_1, 0, EverGrandeCity_Corridor4_EventScript_TurnPlayerNorth
 	.2byte 0
 
-EverGrandeCity_Corridor4_TurnPlayerNorth:: @ 815BA5B
+EverGrandeCity_Corridor4_EventScript_TurnPlayerNorth:: @ 815BA5B
 	turnobject LOCALID_PLAYER, 2
 	end

@@ -1,4 +1,4 @@
-EverGrandeCity_SidneysRoom_Text_190728:: @ 8190728
+EverGrandeCity_SidneysRoom_Text_IntroSpeech:: @ 8190728
 	.string "Willkommen, Herausforderer!\n"
 	.string "Ich bin ULRICH von den TOP VIER.\p"
 	.string "Ich mag deinen herausfordernden Blick.\n"
