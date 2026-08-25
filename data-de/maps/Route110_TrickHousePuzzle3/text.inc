@@ -35,7 +35,7 @@ Route110_TrickHousePuzzle3_Text_AlanPostBattle:: @ 819D110
 	.string "Du kannst mir das bestimmt\n"
 	.string "beantworten!$"
 
-Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened: @ 819D164
+Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D164
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“RÄTSELMEISTER ist cool.”\n"

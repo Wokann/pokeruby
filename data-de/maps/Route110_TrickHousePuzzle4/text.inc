@@ -33,7 +33,7 @@ Route110_TrickHousePuzzle4_Text_JillPostBattle:: @ 819D386
 	.string "Hat es jemand schon mal bis zum\n"
 	.string "Ende geschafft?$"
 
-Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D3A5
+Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819D3A5
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“RÄTSELMEISTER ist ein Genie.”\n"

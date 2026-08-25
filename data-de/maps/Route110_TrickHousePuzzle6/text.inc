@@ -35,7 +35,7 @@ Route110_TrickHousePuzzle6_Text_SebastianPostBattle:: @ 819DE44
 	.string "Dir scheint das gar nichts auszumachen.\n"
 	.string "Oder ist das nur Show?$"
 
-Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DE8D
+Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819DE8D
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“RÄTSELMEISTER ist riesig.”\n"

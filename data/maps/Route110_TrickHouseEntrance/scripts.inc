@@ -99,8 +99,8 @@ Route110_TrickHouseEntrance_EventScript_NotReadyForPuzzle:: @ 8161088
 	return
 
 Route110_TrickHouseEntrance_EventScript_MoveTrickMasterToDoor:: @ 816108E
-	setobjectxyperm 1, 5, 2
-	setobjectmovementtype 1, 4
+	setobjectxyperm LOCALID_TRICK_MASTER, 5, 2
+	setobjectmovementtype LOCALID_TRICK_MASTER, 4
 	end
 
 Route110_TrickHouseEntrance_EventScript_ReadyBeingWatchedTrigger:: @ 816109A
@@ -131,15 +131,15 @@ Route110_TrickHouseEntrance_OnWarp:: @ 81610B2
 	.2byte 0
 
 Route110_TrickHouseEntrance_EventScript_TrickMasterFound:: @ 81610F4
-	addobject 1
-	showobjectat 1, MAP_ROUTE110_TRICK_HOUSE_ENTRANCE
-	turnobject 1, 4
+	addobject LOCALID_TRICK_MASTER
+	showobjectat LOCALID_TRICK_MASTER, MAP_ROUTE110_TRICK_HOUSE_ENTRANCE
+	turnobject LOCALID_TRICK_MASTER, 4
 	turnobject LOCALID_PLAYER, 3
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetTrickMasterHidingSpot:: @ 8161105
-	addobject 1
-	hideobjectat 1, MAP_ROUTE110_TRICK_HOUSE_ENTRANCE
+	addobject LOCALID_TRICK_MASTER
+	hideobjectat LOCALID_TRICK_MASTER, MAP_ROUTE110_TRICK_HOUSE_ENTRANCE
 	switch VAR_TRICK_HOUSE_ROOMS_COMPLETED
 	case 0, Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle1
 	case 1, Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle2
@@ -152,51 +152,51 @@ Route110_TrickHouseEntrance_EventScript_SetTrickMasterHidingSpot:: @ 8161105
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle1:: @ 816116B
-	setobjectxy 1, 6, 3
+	setobjectxy LOCALID_TRICK_MASTER, 6, 3
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle2:: @ 8161173
-	setobjectxy 1, 11, 5
+	setobjectxy LOCALID_TRICK_MASTER, 11, 5
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle6:: @ 816117B
-	setobjectxy 1, 11, 1
+	setobjectxy LOCALID_TRICK_MASTER, 11, 1
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle4:: @ 8161183
-	setobjectxy 1, 3, 1
+	setobjectxy LOCALID_TRICK_MASTER, 3, 1
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle5:: @ 816118B
-	setobjectxy 1, 0, 5
+	setobjectxy LOCALID_TRICK_MASTER, 0, 5
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle3:: @ 8161193
-	setobjectxy 1, 9, 1
+	setobjectxy LOCALID_TRICK_MASTER, 9, 1
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle7:: @ 816119B
-	setobjectxy 1, 8, 1
+	setobjectxy LOCALID_TRICK_MASTER, 8, 1
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetHidingSpotPuzzle8:: @ 81611A3
-	setobjectxy 1, 4, 4
+	setobjectxy LOCALID_TRICK_MASTER, 4, 4
 	end
 
 Route110_TrickHouseEntrance_EventScript_RemoveTrickMaster:: @ 81611AB
-	removeobject 1
+	removeobject LOCALID_TRICK_MASTER
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetTrickMasterFacingDoor:: @ 81611AF
-	addobject 1
-	setobjectxy 1, 5, 2
-	turnobject 1, 2
+	addobject LOCALID_TRICK_MASTER
+	setobjectxy LOCALID_TRICK_MASTER, 5, 2
+	turnobject LOCALID_TRICK_MASTER, 2
 	end
 
 Route110_TrickHouseEntrance_EventScript_SetTrickMasterInFrontOfDoor:: @ 81611BE
-	addobject 1
-	setobjectxy 1, 5, 2
-	turnobject 1, 1
+	addobject LOCALID_TRICK_MASTER
+	setobjectxy LOCALID_TRICK_MASTER, 5, 2
+	turnobject LOCALID_TRICK_MASTER, 1
 	end
 
 Route110_TrickHouseEntrance_OnFrame:: @ 81611CD
@@ -211,12 +211,12 @@ Route110_TrickHouseEntrance_EventScript_BeginChallenge:: @ 81611D7
 	msgbox Route110_TrickHouseEntrance_Text_ComeToChallengeTrickHouse, MSGBOX_DEFAULT
 	closemessage
 	delay 20
-	applymovement 1, Route110_TrickHouseEntrance_Movement_TrickMasterSpin
+	applymovement LOCALID_TRICK_MASTER, Route110_TrickHouseEntrance_Movement_TrickMasterSpin
 	waitmovement 0
 	playse SE_M_EXPLOSION
-	applymovement 1, Route110_TrickHouseEntrance_Movement_TrickMasterJumpAway
+	applymovement LOCALID_TRICK_MASTER, Route110_TrickHouseEntrance_Movement_TrickMasterJumpAway
 	waitmovement 0
-	removeobject 1
+	removeobject LOCALID_TRICK_MASTER
 	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE_3, 1
 	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE_2, 0
 	releaseall
@@ -327,21 +327,21 @@ Route110_TrickHouseEntrance_EventScript_MeetTrickMaster:: @ 8161327
 Route110_TrickHouseEntrance_EventScript_StillMakingPuzzle:: @ 8161330
 	msgbox Route110_TrickHouseEntrance_Text_NextTimeUseThisTrick, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_FacePlayer
 	waitmovement 0
 	playse SE_PIN
-	applymovement 1, Common_Movement_ExclamationMark
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 1, Common_Movement_Delay48
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Route110_TrickHouseEntrance_Text_InMidstOfDevisingNewChallenges, MSGBOX_DEFAULT
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	releaseall
 	end
 
 Route110_TrickHouseEntrance_EventScript_GiveReward:: @ 816136E
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox Route110_TrickHouseEntrance_Text_YoureHereToAcceptReward, MSGBOX_DEFAULT
 	compare VAR_TRICK_HOUSE_ROOMS_COMPLETED, 1
@@ -433,13 +433,13 @@ Route110_TrickHouseEntrance_EventScript_GivePuzzle7Reward:: @ 81614D6
 Route110_TrickHouseEntrance_EventScript_GotReward:: @ 8161502
 	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
 	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE_3, 3
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	releaseall
 	end
 
 Route110_TrickHouseEntrance_EventScript_MechadollReward:: @ 8161518
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_TRICK_MASTER, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox Route110_TrickHouseEntrance_Text_MechadollWhichTent, MSGBOX_DEFAULT
 	.ifdef SAPPHIRE
@@ -458,14 +458,14 @@ Route110_TrickHouseEntrance_EventScript_MechadollReward:: @ 8161518
 Route110_TrickHouseEntrance_EventScript_ReceivedTent:: @ 8161551
 	msgbox Route110_TrickHouseEntrance_Text_ThenFarewell, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Route110_TrickHousePuzzle5_Movement_MechadollShake
+	applymovement LOCALID_TRICK_MASTER, Route110_TrickHousePuzzle5_Movement_MechadollShake
 	waitmovement 0
-	applymovement 1, Route110_TrickHouseEntrance_Movement_TrickMasterSpin
+	applymovement LOCALID_TRICK_MASTER, Route110_TrickHouseEntrance_Movement_TrickMasterSpin
 	waitmovement 0
 	playse SE_M_EXPLOSION
-	applymovement 1, Route110_TrickHouseEntrance_Movement_TrickMasterJumpAway
+	applymovement LOCALID_TRICK_MASTER, Route110_TrickHouseEntrance_Movement_TrickMasterJumpAway
 	waitmovement 0
-	removeobject 1
+	removeobject LOCALID_TRICK_MASTER
 	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
 	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE_3, 5
 	releaseall
@@ -597,7 +597,7 @@ Route110_TrickHousePuzzle_EventScript_Door:: @ 81616E1
 Route110_TrickHousePuzzle1_EventScript_Door:: @ 8161740
 	compare VAR_TRICK_HOUSE_PUZZLE_1_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox UnknownString_819CAD1, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_1_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -608,7 +608,7 @@ Route110_TrickHousePuzzle1_EventScript_Door:: @ 8161740
 Route110_TrickHousePuzzle2_EventScript_Door:: @ 8161769
 	compare VAR_TRICK_HOUSE_PUZZLE_2_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_2_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -619,7 +619,7 @@ Route110_TrickHousePuzzle2_EventScript_Door:: @ 8161769
 Route110_TrickHousePuzzle3_EventScript_Door:: @ 8161792
 	compare VAR_TRICK_HOUSE_PUZZLE_3_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_3_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -630,7 +630,7 @@ Route110_TrickHousePuzzle3_EventScript_Door:: @ 8161792
 Route110_TrickHousePuzzle4_EventScript_Door:: @ 81617BB
 	compare VAR_TRICK_HOUSE_PUZZLE_4_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_4_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -641,7 +641,7 @@ Route110_TrickHousePuzzle4_EventScript_Door:: @ 81617BB
 Route110_TrickHousePuzzle5_EventScript_Door:: @ 81617E4
 	compare VAR_TRICK_HOUSE_PUZZLE_5_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_5_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -652,7 +652,7 @@ Route110_TrickHousePuzzle5_EventScript_Door:: @ 81617E4
 Route110_TrickHousePuzzle6_EventScript_Door:: @ 816180D
 	compare VAR_TRICK_HOUSE_PUZZLE_6_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_6_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -663,7 +663,7 @@ Route110_TrickHousePuzzle6_EventScript_Door:: @ 816180D
 Route110_TrickHousePuzzle7_EventScript_Door:: @ 8161836
 	compare VAR_TRICK_HOUSE_PUZZLE_7_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0
@@ -674,7 +674,7 @@ Route110_TrickHousePuzzle7_EventScript_Door:: @ 8161836
 Route110_TrickHousePuzzle8_EventScript_Door:: @ 816185F
 	compare VAR_TRICK_HOUSE_PUZZLE_8_STATE, 0
 	goto_if_eq Route110_TrickHousePuzzle_EventScript_DoorLocked
-	msgbox Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened, MSGBOX_DEFAULT
 	playse SE_PIN
 	setvar VAR_TRICK_HOUSE_PUZZLE_8_STATE, 2
 	setmetatile 13, 1, METATILE_TrickHousePuzzle_Stairs_Down, 0

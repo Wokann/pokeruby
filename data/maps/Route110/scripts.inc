@@ -254,7 +254,7 @@ Route110_EventScript_Timmy:: @ 814FC10
 
 Route110_EventScript_CyclingChallengeEnd:: @ 814FC27
 	lockall
-	applymovement 21, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	call Route110_EventScript_CyclingChallengeResults
 	releaseall
@@ -330,11 +330,11 @@ Route110_EventScript_RivalScene:: @ 814FD34
 	call_if_eq Route110_EventScript_PlayMayMusic
 	compare VAR_RESULT, 1
 	call_if_eq Route110_EventScript_PlayBrendanMusic
-	applymovement 28, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
-	applymovement 28, Common_Movement_ExclamationMark
+	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 28, Common_Movement_Delay48
+	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	delay 30
 	compare VAR_0x8008, 1
@@ -431,10 +431,10 @@ Route110_EventScript_RivalExit:: @ 814FEB2
 	call_if_eq Route110_EventScript_MoveRival2
 	compare VAR_0x8008, 3
 	call_if_eq Route110_EventScript_MoveRival3
-	setobjectmovementtype 28, 10
-	setobjectmovementtype 29, 10
-	removeobject 28
-	addobject 29
+	setobjectmovementtype LOCALID_ROUTE110_RIVAL, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectmovementtype LOCALID_ROUTE110_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_RIGHT
+	removeobject LOCALID_ROUTE110_RIVAL
+	addobject LOCALID_ROUTE110_RIVAL_ON_BIKE
 	delay 45
 	compare VAR_0x8008, 1
 	call_if_eq Route110_EventScript_RivalExit1
@@ -442,7 +442,7 @@ Route110_EventScript_RivalExit:: @ 814FEB2
 	call_if_eq Route110_EventScript_RivalExit2
 	compare VAR_0x8008, 3
 	call_if_eq Route110_EventScript_RivalExit3
-	removeobject 29
+	removeobject LOCALID_ROUTE110_RIVAL_ON_BIKE
 	setvar VAR_ROUTE110_STATE, 1
 	savebgm 0
 	fadedefaultbgm
@@ -450,45 +450,45 @@ Route110_EventScript_RivalExit:: @ 814FEB2
 	end
 
 Route110_EventScript_RivalApproachPlayer1:: @ 814FF14
-	applymovement 28, Route110_Movement_RivalApproachPlayer1
+	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer1
 	waitmovement 0
 	return
 
 Route110_EventScript_RivalApproachPlayer2:: @ 814FF1F
-	applymovement 28, Route110_Movement_RivalApproachPlayer2
+	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer2
 	waitmovement 0
 	return
 
 Route110_EventScript_RivalApproachPlayer3:: @ 814FF2A
-	applymovement 28, Route110_Movement_RivalApproachPlayer3
+	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer3
 	waitmovement 0
 	return
 
 Route110_EventScript_RivalExit1:: @ 814FF35
-	applymovement 29, Route110_Movement_RivalExit1
+	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit1
 	waitmovement 0
 	return
 
 Route110_EventScript_RivalExit2:: @ 814FF40
-	applymovement 29, Route110_Movement_RivalExit2
+	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit2
 	waitmovement 0
 	return
 
 Route110_EventScript_RivalExit3:: @ 814FF4B
-	applymovement 29, Route110_Movement_RivalExit3
+	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit3
 	waitmovement 0
 	return
 
 Route110_EventScript_MoveRival1:: @ 814FF56
-	setobjectxyperm 29, 33, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 33, 55
 	return
 
 Route110_EventScript_MoveRival2:: @ 814FF5E
-	setobjectxyperm 29, 34, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 34, 55
 	return
 
 Route110_EventScript_MoveRival3:: @ 814FF66
-	setobjectxyperm 29, 35, 55
+	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 35, 55
 	return
 
 Route110_Movement_RivalApproachPlayer1:: @ 814FF6E

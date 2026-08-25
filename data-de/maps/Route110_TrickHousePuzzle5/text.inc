@@ -136,7 +136,7 @@ Route110_TrickHousePuzzle5_Text_CorrectGoThrough5: @ 819DBD4
 	.string "GLÜCKWUNSCH! RICHTIG.\n"
 	.string "GEHE HINDURCH. BITTE.$"
 
-Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819DC0A
+Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DC0A
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“RÄTSELMEISTER ist mein Leben.”\n"

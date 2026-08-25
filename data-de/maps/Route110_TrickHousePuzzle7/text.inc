@@ -34,7 +34,7 @@ Route110_TrickHousePuzzle7_Text_AlexisPostBattle:: @ 819E0B2
 	.string "Ich glaube, du wirst alle Rätsel in\n"
 	.string "diesem RÄTSELHAUS lösen!$"
 
-Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819E0FF
+Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened: @ 819E0FF
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“Ich liebe den RÄTSELMEISTER.”\n"

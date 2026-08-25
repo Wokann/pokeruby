@@ -133,7 +133,7 @@ Route110_TrickHousePuzzle5_Text_CorrectGoThrough5: @ 819DBD4
 	.string "CONGRATULATIONS. CORRECT YOU ARE.\n"
 	.string "GO THROUGH. PLEASE.$"
 
-Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819DC0A
+Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DC0A
 	.string "{PLAYER} wrote down the secret code\n"
 	.string "on the door.\p"
 	.string "“TRICK MASTER is my life.”\n"

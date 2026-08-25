@@ -21,9 +21,9 @@ Route110_TrickHouseEnd_OnWarp:: @ 8161965
 	.2byte 0
 
 Route110_TrickHouseEnd_EventScript_SetTrickMasterPos:: @ 816196F
-	addobject 1
-	showobjectat 1, MAP_ROUTE110_TRICK_HOUSE_END
-	turnobject 1, 4
+	addobject LOCALID_TRICK_MASTER_END
+	showobjectat LOCALID_TRICK_MASTER_END, MAP_ROUTE110_TRICK_HOUSE_END
+	turnobject LOCALID_TRICK_MASTER_END, 4
 	end
 
 Route110_TrickHouseEnd_OnFrame:: @ 816197C
@@ -161,7 +161,7 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle8:: @ 8161BAF
 	delay 30
 	msgbox Route110_TrickHouseEnd_Text_FountainOfIdeasRunDry, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_FacePlayer
 	waitmovement 0
 	delay 30
 	msgbox Route110_TrickHouseEnd_Text_DefeatedMeTakeTent, MSGBOX_DEFAULT
@@ -180,12 +180,12 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle8:: @ 8161BAF
 	end
 
 Route110_TrickHouseEnd_EventScript_TrickMasterExit:: @ 8161C2E
-	applymovement 1, Route110_TrickHouseEnd_Movement_TrickMasterSpin
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouseEnd_Movement_TrickMasterSpin
 	waitmovement 0
 	playse SE_M_EXPLOSION
-	applymovement 1, Route110_TrickHouseEnd_Movement_TrickMasterJumpAway
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouseEnd_Movement_TrickMasterJumpAway
 	waitmovement 0
-	removeobject 1
+	removeobject LOCALID_TRICK_MASTER_END
 	addvar VAR_TRICK_HOUSE_ROOMS_COMPLETED, 1
 	return
 
@@ -202,33 +202,33 @@ Route110_TrickHouseEnd_EventScript_NoRoomForTent:: @ 8161C61
 	return
 
 Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwaySouth:: @ 8161C74
-	applymovement 1, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	return
 
 Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayNorth:: @ 8161C7F
-	applymovement 1, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	return
 
 Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayWest:: @ 8161C8A
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	return
 
 Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayEast:: @ 8161C95
-	applymovement 1, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	return
 
 Route110_TrickHouseEnd_EventScript_TrickMasterExitTrigger:: @ 8161CA0
 	lockall
-	turnobject 1, 3
+	turnobject LOCALID_TRICK_MASTER_END, 3
 	playse SE_PIN
-	applymovement 1, Common_Movement_ExclamationMark
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_ExclamationMark
 	waitmovement 0
 	delay 20
-	applymovement 1, Route110_TrickHouseEnd_Movement_TrickMasterSurprise
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouseEnd_Movement_TrickMasterSurprise
 	waitmovement 0
 	playse SE_M_EXPLOSION
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
@@ -238,7 +238,7 @@ Route110_TrickHouseEnd_EventScript_TrickMasterExitTrigger:: @ 8161CA0
 	applymovement LOCALID_PLAYER, Route110_TrickHouseEnd_Movement_KeepPlayerInRoom
 	waitmovement 0
 	delay 4
-	turnobject 1, 4
+	turnobject LOCALID_TRICK_MASTER_END, 4
 	releaseall
 	end
 

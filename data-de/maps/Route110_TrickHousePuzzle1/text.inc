@@ -32,7 +32,7 @@ Route110_TrickHousePuzzle1_Text_RobinPostBattle:: @ 819CCAA
 	.string "Du bist stark!\n"
 	.string "Wer bist du eigentlich?$"
 
-Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened: @ 819CCCB
+Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened: @ 819CCCB
 	.string "{PLAYER} hat den geheimen Code auf die\n"
 	.string "Tür geschrieben.\p"
 	.string "“RÄTSELMEISTER ist gewieft.”\n"
