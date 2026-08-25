@@ -70,7 +70,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_STEVEN_ROUTE128"
+      "flag": "FLAG_HIDE_ROUTE_128_STEVEN"
     },
     {
       "local_id": "LOCALID_ROUTE128_EVIL_LEADER",
@@ -84,7 +84,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_EVIL_LEADER_ROUTE128"
+      "flag": "FLAG_HIDE_ROUTE_128_EVIL_LEADER"
     },
     {
       "local_id": "LOCALID_ROUTE128_GOOD_LEADER",
@@ -98,7 +98,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_OTHER_LEADER_ROUTE128"
+      "flag": "FLAG_HIDE_ROUTE_128_OTHER_LEADER"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
@@ -149,7 +149,7 @@
       "y": 9,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5C"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_1"
     },
     {
       "type": "hidden_item",
@@ -157,7 +157,7 @@
       "y": 21,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5D"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_2"
     },
     {
       "type": "hidden_item",
@@ -165,7 +165,7 @@
       "y": 33,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5E"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_128_HEART_SCALE_3"
     }
   ]
 }
