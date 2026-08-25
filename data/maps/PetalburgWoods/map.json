@@ -73,7 +73,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_1B175F",
+      "script": "PetalburgWoods_EventScript_ItemGreatBall",
       "flag": "FLAG_ITEM_PETALBURG_WOODS_2"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_1B1752",
+      "script": "PetalburgWoods_EventScript_ItemXAttack",
       "flag": "FLAG_ITEM_PETALBURG_WOODS_1"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_1B176C",
+      "script": "PetalburgWoods_EventScript_ItemEther",
       "flag": "FLAG_ITEM_PETALBURG_WOODS_3"
     },
     {
@@ -112,7 +112,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_15CECA",
+      "script": "PetalburgWoods_EventScript_Boy1",
       "flag": "0"
     },
     {
@@ -125,7 +125,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "PetalburgWoods_EventScript_15CF27",
+      "script": "PetalburgWoods_EventScript_Lyle",
       "flag": "0"
     },
     {
@@ -138,7 +138,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "PetalburgWoods_EventScript_15CF3E",
+      "script": "PetalburgWoods_EventScript_James",
       "flag": "0"
     },
     {
@@ -151,7 +151,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_15CED3",
+      "script": "PetalburgWoods_EventScript_Boy2",
       "flag": "0"
     },
     {
@@ -164,7 +164,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_1B1779",
+      "script": "PetalburgWoods_EventScript_ItemParalyzeHeal",
       "flag": "FLAG_ITEM_PETALBURG_WOODS_4"
     },
     {
@@ -177,7 +177,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PetalburgWoods_EventScript_15CEDC",
+      "script": "PetalburgWoods_EventScript_Girl",
       "flag": "0"
     }
   ],
@@ -233,7 +233,7 @@
       "elevation": 3,
       "var": "VAR_PETALBURG_WOODS_STATE",
       "var_value": "0",
-      "script": "PetalburgWoods_EventScript_15CCA8"
+      "script": "PetalburgWoods_EventScript_DevonResearcherLeft"
     },
     {
       "type": "trigger",
@@ -242,7 +242,7 @@
       "elevation": 3,
       "var": "VAR_PETALBURG_WOODS_STATE",
       "var_value": "0",
-      "script": "PetalburgWoods_EventScript_15CD42"
+      "script": "PetalburgWoods_EventScript_DevonResearcherRight"
     }
   ],
   "bg_events": [
@@ -252,7 +252,7 @@
       "y": 32,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgWoods_EventScript_15CF15"
+      "script": "PetalburgWoods_EventScript_Sign1"
     },
     {
       "type": "hidden_item",
@@ -292,7 +292,7 @@
       "y": 8,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PetalburgWoods_EventScript_15CF1E"
+      "script": "PetalburgWoods_EventScript_Sign2"
     }
   ]
 }

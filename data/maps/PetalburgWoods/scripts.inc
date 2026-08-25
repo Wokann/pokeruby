@@ -1,121 +1,121 @@
 PetalburgWoods_MapScripts:: @ 815CC9C
-	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgWoods_MapScript1_15CCA2
+	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgWoods_MapScript_SetupEvilTeamGfxIds
 	.byte 0
 
-PetalburgWoods_MapScript1_15CCA2:: @ 815CCA2
+PetalburgWoods_MapScript_SetupEvilTeamGfxIds:: @ 815CCA2
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
-PetalburgWoods_EventScript_15CCA8:: @ 815CCA8
+PetalburgWoods_EventScript_DevonResearcherLeft:: @ 815CCA8
 	lockall
-	call PetalburgWoods_EventScript_15CDE6
-	applymovement 4, PetalburgWoods_Movement_15CE89
+	call PetalburgWoods_EventScript_DevonResearcherIntro
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherApproachPlayerLeft
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194D92, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_HaveYouSeenShroomish, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_EVIL_TEAM, FALSE
-	applymovement 3, PetalburgWoods_Movement_15CEC3
+	applymovement 3, PetalburgWoods_Movement_EvilTeamEntrance
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194DED, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_IWasGoingToAmbushYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, PetalburgWoods_Movement_15CEB0
+	applymovement 3, PetalburgWoods_Movement_EvilTeamApproachResearcherLeft
 	waitmovement 0
 	applymovement 4, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194E6B, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_HandOverThosePapers, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, PetalburgWoods_Movement_15CE9E
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherFleeToPlayerLeft
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194E9A, MSGBOX_DEFAULT
-	applymovement 3, PetalburgWoods_Movement_15CEC8
+	msgbox PetalburgWoods_Text_YouHaveToHelpMe, MSGBOX_DEFAULT
+	applymovement 3, PetalburgWoods_Movement_EvilTeamApproachPlayer
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194EE8, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_194F83
-	applymovement 3, PetalburgWoods_Movement_15CEB3
+	msgbox PetalburgWoods_Text_NoOneCrossesEvilTeam, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_YoureKiddingMe
+	applymovement 3, PetalburgWoods_Movement_EvilTeamBackOff
 	waitmovement 0
-	call PetalburgWoods_EventScript_15CDFA
-	applymovement 4, PetalburgWoods_Movement_15CE80
+	call PetalburgWoods_EventScript_DevonResearcherPostBattle
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherExitLeft
 	waitmovement 0
-	goto PetalburgWoods_EventScript_15CE69
+	goto PetalburgWoods_EventScript_RemoveDevonResearcher
 	end
 
-PetalburgWoods_EventScript_15CD42:: @ 815CD42
+PetalburgWoods_EventScript_DevonResearcherRight:: @ 815CD42
 	lockall
-	call PetalburgWoods_EventScript_15CDE6
-	applymovement 4, PetalburgWoods_Movement_15CE8E
+	call PetalburgWoods_EventScript_DevonResearcherIntro
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherApproachPlayerRight
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194D92, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_HaveYouSeenShroomish, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_EVIL_TEAM, FALSE
-	applymovement 3, PetalburgWoods_Movement_15CEC3
+	applymovement 3, PetalburgWoods_Movement_EvilTeamEntrance
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194DED, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_IWasGoingToAmbushYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, PetalburgWoods_Movement_15CEBF
+	applymovement 3, PetalburgWoods_Movement_EvilTeamApproachResearcherRight
 	waitmovement 0
 	applymovement 4, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194E6B, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_HandOverThosePapers, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, PetalburgWoods_Movement_15CEA4
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherFleeToPlayerRight
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194E9A, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_YouHaveToHelpMe, MSGBOX_DEFAULT
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194EE8, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_194F83
-	applymovement 3, PetalburgWoods_Movement_15CEB3
+	msgbox PetalburgWoods_Text_NoOneCrossesEvilTeam, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_YoureKiddingMe
+	applymovement 3, PetalburgWoods_Movement_EvilTeamBackOff
 	waitmovement 0
-	call PetalburgWoods_EventScript_15CDFA
-	applymovement 4, PetalburgWoods_Movement_15CE95
+	call PetalburgWoods_EventScript_DevonResearcherPostBattle
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherExitRight
 	waitmovement 0
-	goto PetalburgWoods_EventScript_15CE69
+	goto PetalburgWoods_EventScript_RemoveDevonResearcher
 	end
 
-PetalburgWoods_EventScript_15CDE6:: @ 815CDE6
-	applymovement 4, PetalburgWoods_Movement_15CE73
+PetalburgWoods_EventScript_DevonResearcherIntro:: @ 815CDE6
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherLookAround
 	waitmovement 0
-	msgbox PetalburgWoods_Text_194D71, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_NotAOneToBeFound, MSGBOX_DEFAULT
 	closemessage
 	return
 
-PetalburgWoods_EventScript_15CDFA:: @ 815CDFA
-	msgbox PetalburgWoods_Text_194FA4, MSGBOX_DEFAULT
+PetalburgWoods_EventScript_DevonResearcherPostBattle:: @ 815CDFA
+	msgbox PetalburgWoods_Text_YouveGotSomeNerve, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, PetalburgWoods_Movement_15CEB7
+	applymovement 3, PetalburgWoods_Movement_EvilTeamRunAway
 	waitmovement 0
 	removeobject 3
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
-	msgbox PetalburgWoods_Text_19507E, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_ThatWasAwfullyClose, MSGBOX_DEFAULT
 	giveitem ITEM_GREAT_BALL
 	compare VAR_RESULT, 0
-	goto_if_eq PetalburgWoods_EventScript_15CE3F
-	goto PetalburgWoods_EventScript_15CE4D
+	goto_if_eq PetalburgWoods_EventScript_BagFull
+	goto PetalburgWoods_EventScript_DevonResearcherFinish
 	end
 
-PetalburgWoods_EventScript_15CE3F:: @ 815CE3F
-	msgbox PetalburgWoods_Text_195182, MSGBOX_DEFAULT
-	goto PetalburgWoods_EventScript_15CE4D
+PetalburgWoods_EventScript_BagFull:: @ 815CE3F
+	msgbox PetalburgWoods_Text_YoureLoadedWithItems, MSGBOX_DEFAULT
+	goto PetalburgWoods_EventScript_DevonResearcherFinish
 	end
 
-PetalburgWoods_EventScript_15CE4D:: @ 815CE4D
-	msgbox PetalburgWoods_Text_19510A, MSGBOX_DEFAULT
-	applymovement 4, PetalburgWoods_Movement_15CEA8
+PetalburgWoods_EventScript_DevonResearcherFinish:: @ 815CE4D
+	msgbox PetalburgWoods_Text_EvilTeamAfterSomethingInRustboro, MSGBOX_DEFAULT
+	applymovement 4, PetalburgWoods_Movement_DevonResearcherStartExit
 	waitmovement 0
-	msgbox PetalburgWoods_Text_195153, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_ICantBeWastingTime, MSGBOX_DEFAULT
 	closemessage
 	return
 
-PetalburgWoods_EventScript_15CE69:: @ 815CE69
+PetalburgWoods_EventScript_RemoveDevonResearcher:: @ 815CE69
 	removeobject 4
 	setvar VAR_PETALBURG_WOODS_STATE, 1
 	releaseall
 	end
 
-PetalburgWoods_Movement_15CE73:: @ 815CE73
+PetalburgWoods_Movement_DevonResearcherLookAround:: @ 815CE73
 	face_up
 	delay_16
 	face_right
@@ -130,7 +130,7 @@ PetalburgWoods_Movement_15CE73:: @ 815CE73
 	delay_16
 	step_end
 
-PetalburgWoods_Movement_15CE80:: @ 815CE80
+PetalburgWoods_Movement_DevonResearcherExitLeft:: @ 815CE80
 	walk_fast_right
 	walk_fast_up
 	walk_fast_up
@@ -141,14 +141,14 @@ PetalburgWoods_Movement_15CE80:: @ 815CE80
 	walk_fast_up
 	step_end
 
-PetalburgWoods_Movement_15CE89:: @ 815CE89
+PetalburgWoods_Movement_DevonResearcherApproachPlayerLeft:: @ 815CE89
 	delay_16
 	face_player
 	walk_down
 	walk_down
 	step_end
 
-PetalburgWoods_Movement_15CE8E:: @ 815CE8E
+PetalburgWoods_Movement_DevonResearcherApproachPlayerRight:: @ 815CE8E
 	delay_16
 	face_player
 	walk_down
@@ -157,7 +157,7 @@ PetalburgWoods_Movement_15CE8E:: @ 815CE8E
 	walk_in_place_fastest_right
 	step_end
 
-PetalburgWoods_Movement_15CE95:: @ 815CE95
+PetalburgWoods_Movement_DevonResearcherExitRight:: @ 815CE95
 	walk_fast_left
 	walk_fast_up
 	walk_fast_up
@@ -168,7 +168,7 @@ PetalburgWoods_Movement_15CE95:: @ 815CE95
 	walk_fast_up
 	step_end
 
-PetalburgWoods_Movement_15CE9E:: @ 815CE9E
+PetalburgWoods_Movement_DevonResearcherFleeToPlayerLeft:: @ 815CE9E
 	walk_fast_right
 	walk_fast_down
 	walk_fast_down
@@ -176,13 +176,13 @@ PetalburgWoods_Movement_15CE9E:: @ 815CE9E
 	walk_in_place_fastest_up
 	step_end
 
-PetalburgWoods_Movement_15CEA4:: @ 815CEA4
+PetalburgWoods_Movement_DevonResearcherFleeToPlayerRight:: @ 815CEA4
 	walk_fast_down
 	walk_fast_right
 	walk_in_place_fastest_up
 	step_end
 
-PetalburgWoods_Movement_15CEA8:: @ 815CEA8
+PetalburgWoods_Movement_DevonResearcherStartExit:: @ 815CEA8
 	walk_in_place_fastest_down
 	delay_16
 	delay_16
@@ -192,18 +192,18 @@ PetalburgWoods_Movement_15CEA8:: @ 815CEA8
 	face_up
 	step_end
 
-PetalburgWoods_Movement_15CEB0:: @ 815CEB0
+PetalburgWoods_Movement_EvilTeamApproachResearcherLeft:: @ 815CEB0
 	walk_fast_down
 	walk_fast_down
 	step_end
 
-PetalburgWoods_Movement_15CEB3:: @ 815CEB3
+PetalburgWoods_Movement_EvilTeamBackOff:: @ 815CEB3
 	lock_facing_direction
 	walk_up
 	unlock_facing_direction
 	step_end
 
-PetalburgWoods_Movement_15CEB7:: @ 815CEB7
+PetalburgWoods_Movement_EvilTeamRunAway:: @ 815CEB7
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
@@ -213,36 +213,36 @@ PetalburgWoods_Movement_15CEB7:: @ 815CEB7
 	delay_16
 	step_end
 
-PetalburgWoods_Movement_15CEBF:: @ 815CEBF
+PetalburgWoods_Movement_EvilTeamApproachResearcherRight:: @ 815CEBF
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down
 	step_end
 
-PetalburgWoods_Movement_15CEC3:: @ 815CEC3
+PetalburgWoods_Movement_EvilTeamEntrance:: @ 815CEC3
 	walk_down
 	walk_down
 	delay_16
 	delay_16
 	step_end
 
-PetalburgWoods_Movement_15CEC8:: @ 815CEC8
+PetalburgWoods_Movement_EvilTeamApproachPlayer:: @ 815CEC8
 	walk_down
 	step_end
 
-PetalburgWoods_EventScript_15CECA:: @ 815CECA
-	msgbox PetalburgWoods_Text_1953AC, MSGBOX_NPC
+PetalburgWoods_EventScript_Boy1:: @ 815CECA
+	msgbox PetalburgWoods_Text_StayOutOfTallGrass, MSGBOX_NPC
 	end
 
-PetalburgWoods_EventScript_15CED3:: @ 815CED3
-	msgbox PetalburgWoods_Text_19542B, MSGBOX_NPC
+PetalburgWoods_EventScript_Boy2:: @ 815CED3
+	msgbox PetalburgWoods_Text_HiddenItemsExplanation, MSGBOX_NPC
 	end
 
-PetalburgWoods_EventScript_15CEDC:: @ 815CEDC
+PetalburgWoods_EventScript_Girl:: @ 815CEDC
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_MIRACLE_SEED, PetalburgWoods_EventScript_15CF0B
-	msgbox PetalburgWoods_Text_19549E, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECEIVED_MIRACLE_SEED, PetalburgWoods_EventScript_ExplainMiracleSeed
+	msgbox PetalburgWoods_Text_TryUsingThisItem, MSGBOX_DEFAULT
 	giveitem ITEM_MIRACLE_SEED
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
@@ -250,33 +250,33 @@ PetalburgWoods_EventScript_15CEDC:: @ 815CEDC
 	release
 	end
 
-PetalburgWoods_EventScript_15CF0B:: @ 815CF0B
-	msgbox PetalburgWoods_Text_195503, MSGBOX_DEFAULT
+PetalburgWoods_EventScript_ExplainMiracleSeed:: @ 815CF0B
+	msgbox PetalburgWoods_Text_MiracleSeedExplanation, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgWoods_EventScript_15CF15:: @ 815CF15
-	msgbox PetalburgWoods_Text_1955B0, MSGBOX_SIGN
+PetalburgWoods_EventScript_Sign1:: @ 815CF15
+	msgbox PetalburgWoods_Text_TrainerTipsExperience, MSGBOX_SIGN
 	end
 
-PetalburgWoods_EventScript_15CF1E:: @ 815CF1E
-	msgbox PetalburgWoods_Text_1956A6, MSGBOX_SIGN
+PetalburgWoods_EventScript_Sign2:: @ 815CF1E
+	msgbox PetalburgWoods_Text_TrainerTipsPP, MSGBOX_SIGN
 	end
 
-PetalburgWoods_EventScript_15CF27:: @ 815CF27
-	trainerbattle_single TRAINER_LYLE, PetalburgWoods_Text_1951BE, PetalburgWoods_Text_195202
-	msgbox PetalburgWoods_Text_195232, MSGBOX_AUTOCLOSE
+PetalburgWoods_EventScript_Lyle:: @ 815CF27
+	trainerbattle_single TRAINER_LYLE, PetalburgWoods_Text_GoBugPokemonTeam, PetalburgWoods_Text_ICouldntWin
+	msgbox PetalburgWoods_Text_ImOutOfPokeBalls, MSGBOX_AUTOCLOSE
 	end
 
-PetalburgWoods_EventScript_15CF3E:: @ 815CF3E
-	trainerbattle_single TRAINER_JAMES_1, PetalburgWoods_Text_19526A, PetalburgWoods_Text_1952AE
+PetalburgWoods_EventScript_James:: @ 815CF3E
+	trainerbattle_single TRAINER_JAMES_1, PetalburgWoods_Text_InstantlyPopularWithBugPokemon, PetalburgWoods_Text_CantBePopularIfILose
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	compare VAR_RESULT, 1
-	goto_if_eq PetalburgWoods_EventScript_15CF65
-	msgbox PetalburgWoods_Text_1952CC, MSGBOX_AUTOCLOSE
+	goto_if_eq PetalburgWoods_EventScript_JamesRematch
+	msgbox PetalburgWoods_Text_PeopleRespectYou, MSGBOX_AUTOCLOSE
 	end
 
-PetalburgWoods_EventScript_15CF65:: @ 815CF65
-	trainerbattle_rematch TRAINER_JAMES_1, PetalburgWoods_Text_195306, PetalburgWoods_Text_195338
-	msgbox PetalburgWoods_Text_195356, MSGBOX_AUTOCLOSE
+PetalburgWoods_EventScript_JamesRematch:: @ 815CF65
+	trainerbattle_rematch TRAINER_JAMES_1, PetalburgWoods_Text_MyPokemonHaveGrown, PetalburgWoods_Text_CantBePopularIfLose
+	msgbox PetalburgWoods_Text_IveBeenTrainingHard, MSGBOX_AUTOCLOSE
 	end
