@@ -10,7 +10,7 @@ Route104_PrettyPetalFlowerShop_OnTransition:: @ 815BDEA
 	end
 
 Route104_PrettyPetalFlowerShop_EventScript_MoveShopOwner:: @ 815BE03
-	setobjectxyperm 1, 4, 6
+	setobjectxyperm LOCALID_FLOWER_SHOP_OWNER, 4, 6
 	end
 
 Route104_PrettyPetalFlowerShop_EventScript_ShopOwner:: @ 815BE0B

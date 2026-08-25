@@ -119,16 +119,16 @@ Route104_EventScript_Girl2:: @ 814EFCC
 	end
 
 Route104_EventScript_SailToDewford:: @ 814EFD5
-	setobjectpriority 8, MAP_ROUTE104, 0
-	setobjectpriority 255, MAP_ROUTE104, 0
-	applymovement 8, Route104_Movement_BrineyBoardBoat
+	setobjectpriority LOCALID_ROUTE104_BRINEY, MAP_ROUTE104, 0
+	setobjectpriority LOCALID_PLAYER, MAP_ROUTE104, 0
+	applymovement LOCALID_ROUTE104_BRINEY, Route104_Movement_BrineyBoardBoat
 	waitmovement 0
-	removeobject 8
+	removeobject LOCALID_ROUTE104_BRINEY
 	applymovement LOCALID_PLAYER, Route104_Movement_PlayerBoardBoat
 	waitmovement 0
 	hideobjectat LOCALID_PLAYER, MAP_ROUTE104
 	call Common_EventScript_PlayBrineysBoatMusic
-	applymovement 7, Route104_Movement_SailToDewford
+	applymovement LOCALID_ROUTE104_BOAT, Route104_Movement_SailToDewford
 	applymovement LOCALID_PLAYER, Route104_Movement_SailToDewford
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Route104_Movement_PlayerExitBoat
@@ -137,21 +137,21 @@ Route104_EventScript_SailToDewford:: @ 814EFD5
 	showobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
 	applymovement LOCALID_PLAYER, Route104_Movement_PlayerMoveForBriney
 	waitmovement 0
-	setobjectxyperm 2, 12, 8
-	addobject 2
-	setobjectpriority 2, MAP_DEWFORD_TOWN, 0
+	setobjectxyperm LOCALID_DEWFORD_BRINEY, 12, 8
+	addobject LOCALID_DEWFORD_BRINEY
+	setobjectpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
-	applymovement 2, Route104_Movement_BrineyExitBoat
+	applymovement LOCALID_DEWFORD_BRINEY, Route104_Movement_BrineyExitBoat
 	waitmovement 0
-	addobject 4
+	addobject LOCALID_DEWFORD_BOAT
 	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
 	call Common_EventScript_StopBrineysBoatMusic
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
-	hideobjectat 7, MAP_ROUTE104
+	hideobjectat LOCALID_ROUTE104_BOAT, MAP_ROUTE104
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE104
-	resetobjectpriority 2, MAP_DEWFORD_TOWN
-	moveobjectoffscreen 2
+	resetobjectpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
+	moveobjectoffscreen LOCALID_DEWFORD_BRINEY
 	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 0
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_DeliverLetterReminder
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_LandedInDewford
