@@ -198,11 +198,11 @@ Route126_EventScript_ItemGreenShard:: @ 81B16B6
 	finditem ITEM_GREEN_SHARD
 	end
 
-Route127_EventScript_1B16C3:: @ 81B16C3
+Route127_EventScript_ItemZinc:: @ 81B16C3
 	finditem ITEM_ZINC
 	end
 
-Route127_EventScript_1B16D0:: @ 81B16D0
+Route127_EventScript_ItemCarbos:: @ 81B16D0
 	finditem ITEM_CARBOS
 	end
 
