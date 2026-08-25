@@ -1,4 +1,4 @@
-GraniteCave_StevensRoom_Text_194AE5:: @ 8194AE5
+GraniteCave_StevensRoom_Text_ImStevenLetterForMe:: @ 8194AE5
 	.string "Dieses Ding, das du da trägst...\n"
 	.string "Das ist ein POKéNAV.\p"
 	.string "Wenn TRAINER, die einen POKéNAV be-\n"
@@ -11,7 +11,7 @@ GraniteCave_StevensRoom_Text_194AE5:: @ 8194AE5
 	.string "Oh?\n"
 	.string "Ein BRIEF? Für mich?$"
 
-GraniteCave_StevensRoom_Text_194BDD:: @ 8194BDD
+GraniteCave_StevensRoom_Text_ThankYouTakeThis:: @ 8194BDD
 	.string "TROY: Okay, danke schön.\p"
 	.string "Du hast all die Beschwerlichkeiten auf\n"
 	.string "dich genommen, um ihn mir zu bringen.\p"
@@ -20,7 +20,7 @@ GraniteCave_StevensRoom_Text_194BDD:: @ 8194BDD
 	.string "Sie enthält meine Lieblingsattacke,\n"
 	.string "STAHLFLÜGEL.$"
 
-GraniteCave_StevensRoom_Text_194C8D:: @ 8194C8D
+GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:: @ 8194C8D
 	.string "TROY: Deine POKéMON sehen recht\n"
 	.string "talentiert aus.\p"
 	.string "Wenn du fleißig trainierst, wirst du\n"
@@ -28,6 +28,6 @@ GraniteCave_StevensRoom_Text_194C8D:: @ 8194C8D
 	.string "POKéMON LIGA. Das ist meine Meinung.\p"
 	.string "Nun muss ich mich aber wirklich beeilen.$"
 
-GraniteCave_StevensRoom_Text_194D43:: @ 8194D43
+GraniteCave_StevensRoom_Text_OhBagIsFull:: @ 8194D43
 	.string "Oh, dein BEUTEL ist voll.\n"
 	.string "Das ist aber wirklich schade.$"
