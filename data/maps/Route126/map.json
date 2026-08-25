@@ -90,7 +90,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route126_EventScript_ItemGreenShard",
-      "flag": "FLAG_ITEM_ROUTE126_1"
+      "flag": "FLAG_ITEM_ROUTE_126_GREEN_SHARD"
     }
   ],
   "warp_events": [],
