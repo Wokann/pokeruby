@@ -130,7 +130,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 	setflag FLAG_ADVENTURE_STARTED
 	setvar VAR_ROUTE102_ACCESSIBLE, 1
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 4
-	setvar VAR_LITTLEROOT_STATE, 3
+	setvar VAR_LITTLEROOT_TOWN_STATE, 3
 	releaseall
 	end
 

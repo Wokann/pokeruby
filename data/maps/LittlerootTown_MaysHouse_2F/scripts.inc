@@ -37,7 +37,7 @@ RivalsHouse_2F_EventScript_Rival:: @ 8152A9D
 	playse SE_EXIT
 	removeobject VAR_LAST_TALKED
 	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
-	setvar VAR_LITTLEROOT_STATE, 1
+	setvar VAR_LITTLEROOT_TOWN_STATE, 1
 	savebgm 0
 	fadedefaultbgm
 	releaseall

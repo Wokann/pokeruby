@@ -231,7 +231,7 @@ Route101_EventScript_BirchsBag:: @ 814EA7F
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	special ScrSpecial_HealPlayerParty
 	setflag FLAG_HIDE_BIRCH_BATTLE_POOCHYENA
-	clearflag FLAG_HIDE_BIRCH_IN_LAB
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_HIDE_BIRCH_STARTERS_BAG
 	setvar VAR_BIRCH_LAB_STATE, 2
 	setvar VAR_ROUTE101_STATE, 3

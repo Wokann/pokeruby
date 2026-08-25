@@ -8,11 +8,11 @@ LittlerootTown_OnTransition:: @ 814D514
 	compare VAR_LITTLEROOT_INTRO_STATE, 2
 	call_if_eq LittlerootTown_EventScript_MoveMomToMaysDoor
 	call_if_unset FLAG_RESCUED_BIRCH, LittlerootTown_EventScript_SetTwinPos
-	compare VAR_LITTLEROOT_STATE, 3
+	compare VAR_LITTLEROOT_TOWN_STATE, 3
 	call_if_eq LittlerootTown_EventScript_SetMomStandingInFrontOfDoorPos
-	compare VAR_LITTLEROOT_HOUSES_STATE, 4
+	compare VAR_LITTLEROOT_HOUSES_STATE_MAY, 4
 	call_if_eq LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
-	compare VAR_LITTLEROOT_HOUSES_STATE_2, 4
+	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
 	call_if_eq LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
 	compare VAR_OLDALE_STATE, 1
 	call_if_eq LittlerootTown_EventScript_MoveRivalFromOldale
@@ -30,8 +30,8 @@ LittlerootTown_EventScript_MoveRivalFromOldale:: @ 814D567
 	return
 
 LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent:: @ 814D570
-	setvar VAR_LITTLEROOT_HOUSES_STATE, 5
-	setvar VAR_LITTLEROOT_HOUSES_STATE_2, 5
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 5
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 5
 	return
 
 LittlerootTown_EventScript_MoveMomToMaysDoor:: @ 814D57B
@@ -39,7 +39,7 @@ LittlerootTown_EventScript_MoveMomToMaysDoor:: @ 814D57B
 	return
 
 LittlerootTown_EventScript_SetTwinPos:: @ 814D583
-	compare VAR_LITTLEROOT_STATE, 0
+	compare VAR_LITTLEROOT_TOWN_STATE, 0
 	goto_if_eq LittlerootTown_EventScript_SetTwinGuardingRoutePos
 	setobjectxyperm LOCALID_LITTLEROOT_TWIN, 10, 1
 	setobjectmovementtype LOCALID_LITTLEROOT_TWIN, 7
@@ -51,7 +51,7 @@ LittlerootTown_EventScript_SetTwinGuardingRoutePos:: @ 814D59A
 	return
 
 LittlerootTown_EventScript_SetMomStandingInFrontOfDoorPos:: @ 814D5A6
-	clearflag FLAG_HIDE_MOM_LITTLEROOT
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
 	setobjectmovementtype LOCALID_LITTLEROOT_MOM, 8
 	checkplayergender
 	compare VAR_RESULT, MALE
@@ -79,7 +79,7 @@ LittlerootTown_EventScript_StepOffTruckMale:: @ 814D5EF
 	setvar VAR_0x8004, 5
 	setvar VAR_0x8005, 8
 	call LittlerootTown_EventScript_GoInsideWithMom
-	setflag FLAG_HIDE_MOVING_TRUCK_BRENDAN
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
 	warpsilent MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, 255, 8, 8
 	waitstate
 	releaseall
@@ -90,7 +90,7 @@ LittlerootTown_EventScript_StepOffTruckFemale:: @ 814D60D
 	setvar VAR_0x8004, 14
 	setvar VAR_0x8005, 8
 	call LittlerootTown_EventScript_GoInsideWithMom
-	setflag FLAG_HIDE_MOVING_TRUCK_MAY
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
 	warpsilent MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F, 255, 2, 8
 	waitstate
 	releaseall
@@ -121,12 +121,12 @@ LittlerootTown_EventScript_GoInsideWithMom:: @ 814D62B
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomEnterHouse
 	applymovement LOCALID_PLAYER, LittlerootTown_Movement_PlayerEnterHouse
 	waitmovement 0
-	setflag FLAG_HIDE_MOM_LITTLEROOT
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MOM_OUTSIDE
 	setvar VAR_LITTLEROOT_INTRO_STATE, 3
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	closedoor VAR_0x8004, VAR_0x8005
 	waitdooranim
-	clearflag FLAG_HIDE_FAT_MAN_LITTLEROOT
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_FAT_MAN
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	return
 
@@ -188,7 +188,7 @@ LittlerootTown_EventScript_Twin:: @ 814D6DF
 	faceplayer
 	goto_if_set FLAG_ADVENTURE_STARTED, LittlerootTown_EventScript_GoodLuck
 	goto_if_set FLAG_RESCUED_BIRCH, LittlerootTown_EventScript_YouSavedBirch
-	compare VAR_LITTLEROOT_STATE, 0
+	compare VAR_LITTLEROOT_TOWN_STATE, 0
 	goto_if_ne LittlerootTown_EventScript_GoSaveBirch
 	msgbox LittlerootTown_Text_IfYouGoInGrassPokemonWillJumpOut, MSGBOX_DEFAULT
 	release
@@ -199,7 +199,7 @@ LittlerootTown_EventScript_GoSaveBirch:: @ 814D708
 	closemessage
 	applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
-	setvar VAR_LITTLEROOT_STATE, 2
+	setvar VAR_LITTLEROOT_TOWN_STATE, 2
 	release
 	end
 
@@ -316,7 +316,7 @@ LittlerootTown_EventScript_GoSaveBirchTrigger:: @ 814D7C7
 	closemessage
 	applymovement LOCALID_LITTLEROOT_TWIN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
-	setvar VAR_LITTLEROOT_STATE, 2
+	setvar VAR_LITTLEROOT_TOWN_STATE, 2
 	releaseall
 	end
 
@@ -859,7 +859,7 @@ LittlerootTown_EventScript_Mom:: @ 814DCE2
 LittlerootTown_EventScript_SetReceivedRunningShoes:: @ 814DD2B
 	removeobject LOCALID_LITTLEROOT_MOM
 	setflag FLAG_SYS_B_DASH
-	setvar VAR_LITTLEROOT_STATE, 4
+	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	release
 	end
 

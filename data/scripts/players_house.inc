@@ -61,8 +61,8 @@ PlayersHouse_2F_EventScript_WallClock:: @ 81B69EB
 	delay 30
 	setvar VAR_LITTLEROOT_INTRO_STATE, 6
 	setflag FLAG_SET_WALL_CLOCK
-	setflag FLAG_HIDE_MACHOKE_MOVER_1
-	setflag FLAG_HIDE_MACHOKE_MOVER_2
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_1
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_PLAYERS_HOUSE_MACHOKE_2
 	checkplayergender
 	compare VAR_RESULT, MALE
 	call_if_eq PlayersHouse_2F_EventScript_MomComesUpstairsMale
@@ -243,9 +243,9 @@ PlayersHouse_1F_Movement_MomReturnToSeatFemale:: @ 81B6BE5
 PlayersHouse_1F_EventScript_Mom:: @ 81B6BE9
 	lock
 	faceplayer
-	compare VAR_LITTLEROOT_HOUSES_STATE, 4
+	compare VAR_LITTLEROOT_HOUSES_STATE_MAY, 4
 	goto_if_eq PlayersHouse_1F_EventScript_DadShouldStayLonger
-	compare VAR_LITTLEROOT_HOUSES_STATE_2, 4
+	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
 	goto_if_eq PlayersHouse_1F_EventScript_DadShouldStayLonger
 	goto_if_set FLAG_BADGE05_GET, PlayersHouse_1F_EventScript_TryGiveAmuletCoin
 	goto_if_set FLAG_RESCUED_BIRCH, PlayersHouse_1F_EventScript_MomHealsParty
@@ -384,8 +384,8 @@ PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV:: @ 81B6CDE
 	playse SE_DOOR
 	removeobject VAR_0x8009
 	setflag FLAG_RECEIVED_SS_TICKET
-	setvar VAR_LITTLEROOT_HOUSES_STATE, 4
-	setvar VAR_LITTLEROOT_HOUSES_STATE_2, 4
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 4
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
 	releaseall
 	end
 
