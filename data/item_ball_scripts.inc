@@ -514,23 +514,23 @@ Route110_TrickHousePuzzle8_EventScript_ItemBeadMail:: @ 81B1AB9
 	finditem ITEM_BEAD_MAIL
 	end
 
-VictoryRoad_1F_EventScript_1B1AC6:: @ 81B1AC6
+VictoryRoad_1F_EventScript_ItemMaxElixir:: @ 81B1AC6
 	finditem ITEM_MAX_ELIXIR
 	end
 
-VictoryRoad_1F_EventScript_1B1AD3:: @ 81B1AD3
+VictoryRoad_1F_EventScript_ItemPPUp:: @ 81B1AD3
 	finditem ITEM_PP_UP
 	end
 
-VictoryRoad_B1F_EventScript_1B1AE0:: @ 81B1AE0
+VictoryRoad_B1F_EventScript_ItemTMPsychic:: @ 81B1AE0
 	finditem ITEM_TM29_PSYCHIC
 	end
 
-VictoryRoad_B1F_EventScript_1B1AED:: @ 81B1AED
+VictoryRoad_B1F_EventScript_ItemFullRestore:: @ 81B1AED
 	finditem ITEM_FULL_RESTORE
 	end
 
-VictoryRoad_B2F_EventScript_1B1AFA:: @ 81B1AFA
+VictoryRoad_B2F_EventScript_ItemFullHeal:: @ 81B1AFA
 	finditem ITEM_FULL_HEAL
 	end
 
