@@ -11,7 +11,7 @@ OldaleTown_OnTransition:: @ 814DD68
 	end
 
 OldaleTown_EventScript_SetOldaleState:: @ 814DD8C
-	setvar VAR_ROUTE102_ACCESSIBLE, 1
+	setvar VAR_OLDALE_TOWN_STATE, 1
 	return
 
 OldaleTown_EventScript_BlockWestEntrance:: @ 814DD92
@@ -272,8 +272,8 @@ OldaleTown_EventScript_RivalFinish:: @ 814DFC6
 	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
 	waitmovement 0
 	removeobject LOCALID_OLDALE_RIVAL
-	setvar VAR_OLDALE_STATE, 2
-	setflag FLAG_HIDE_RIVAL_OLDALE_TOWN
+	setvar VAR_OLDALE_RIVAL_STATE, 2
+	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	releaseall
 	end
 

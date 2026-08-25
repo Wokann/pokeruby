@@ -14,7 +14,7 @@ LittlerootTown_OnTransition:: @ 814D514
 	call_if_eq LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
 	compare VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 4
 	call_if_eq LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent
-	compare VAR_OLDALE_STATE, 1
+	compare VAR_OLDALE_RIVAL_STATE, 1
 	call_if_eq LittlerootTown_EventScript_MoveRivalFromOldale
 	compare VAR_LITTLEROOT_RIVAL_STATE, 3
 	call_if_eq LittlerootTown_EventScript_SetRivalLeftForRoute103
@@ -25,8 +25,8 @@ LittlerootTown_EventScript_SetRivalLeftForRoute103:: @ 814D563
 	return
 
 LittlerootTown_EventScript_MoveRivalFromOldale:: @ 814D567
-	setvar VAR_OLDALE_STATE, 2
-	setflag FLAG_HIDE_RIVAL_OLDALE_TOWN
+	setvar VAR_OLDALE_RIVAL_STATE, 2
+	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	return
 
 LittlerootTown_EventScript_SetExitedHouseAfterLatiSSTicketEvent:: @ 814D570

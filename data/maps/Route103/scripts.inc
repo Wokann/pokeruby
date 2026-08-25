@@ -121,8 +121,8 @@ Route103_EventScript_RivalEnd:: @ 814ED46
 	setvar VAR_BIRCH_LAB_STATE, 4
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL
 	setflag FLAG_DEFEATED_RIVAL_ROUTE103
-	setvar VAR_OLDALE_STATE, 1
-	clearflag FLAG_HIDE_RIVAL_OLDALE_TOWN
+	setvar VAR_OLDALE_RIVAL_STATE, 1
+	clearflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	savebgm 0
 	fadedefaultbgm
 	releaseall

@@ -80,7 +80,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OldaleTown_EventScript_Rival",
-      "flag": "FLAG_HIDE_RIVAL_OLDALE_TOWN"
+      "flag": "FLAG_HIDE_OLDALE_TOWN_RIVAL"
     }
   ],
   "warp_events": [
@@ -119,7 +119,7 @@
       "x": 0,
       "y": 10,
       "elevation": 3,
-      "var": "VAR_ROUTE102_ACCESSIBLE",
+      "var": "VAR_OLDALE_TOWN_STATE",
       "var_value": "0",
       "script": "OldaleTown_EventScript_BlockedPath"
     },
@@ -128,7 +128,7 @@
       "x": 8,
       "y": 19,
       "elevation": 3,
-      "var": "VAR_OLDALE_STATE",
+      "var": "VAR_OLDALE_RIVAL_STATE",
       "var_value": "1",
       "script": "OldaleTown_EventScript_RivalTrigger1"
     },
@@ -137,7 +137,7 @@
       "x": 9,
       "y": 19,
       "elevation": 3,
-      "var": "VAR_OLDALE_STATE",
+      "var": "VAR_OLDALE_RIVAL_STATE",
       "var_value": "1",
       "script": "OldaleTown_EventScript_RivalTrigger2"
     },
@@ -146,7 +146,7 @@
       "x": 10,
       "y": 19,
       "elevation": 3,
-      "var": "VAR_OLDALE_STATE",
+      "var": "VAR_OLDALE_RIVAL_STATE",
       "var_value": "1",
       "script": "OldaleTown_EventScript_RivalTrigger3"
     }
