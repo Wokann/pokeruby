@@ -1039,7 +1039,7 @@ UnknownString_81A0F60: @ 81A0F60
 UnknownString_81A0F70: @ 81A0F70
 	.string "Zugang zur RUHMESHALLE genehmigt.$"
 
-Route111_Text_1A0F93:: @ 81A0F93
+gText_SandstormIsVicious:: @ 81A0F93
 	.string "Der Sandsturm ist zu stark.\n"
 	.string "Dagegen kann man nicht angehen!$"
 

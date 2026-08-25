@@ -168,7 +168,7 @@ Route111_EventScript_ViciousSandstormTrigger:: @ 815013A
 	end
 
 Route111_EventScript_PreventRouteAccess:: @ 8150151
-	msgbox Route111_Text_1A0F93, MSGBOX_DEFAULT
+	msgbox gText_SandstormIsVicious, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_0x8004, 0
 	call_if_eq Route111_EventScript_PushUpFromRoute

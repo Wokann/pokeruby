@@ -70,7 +70,7 @@ bool8 CheckRelicanthWailord(void)
 
 bool8 ShouldDoBrailleStrengthEffect(void)
 {
-    if (!FlagGet(FLAG_SYS_BRAILLE_STRENGTH) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_DESERT_RUINS) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_DESERT_RUINS)))
+    if (!FlagGet(FLAG_SYS_REGIROCK_PUZZLE_COMPLETED) && (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_DESERT_RUINS) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_DESERT_RUINS)))
     {
         if (gSaveBlock1.pos.x == 10 && gSaveBlock1.pos.y == 23)
             return TRUE;
@@ -94,7 +94,7 @@ void DoBrailleStrengthEffect(void)
     MapGridSetMetatileIdAt(16, 27, METATILE_ID(Cave, SealedChamberEntrance_BottomRight) | MAPGRID_COLLISION_MASK);
     DrawWholeMapView();
     PlaySE(SE_BANG);
-    FlagSet(FLAG_SYS_BRAILLE_STRENGTH);
+    FlagSet(FLAG_SYS_REGIROCK_PUZZLE_COMPLETED);
     UnlockPlayerFieldControls();
 }
 

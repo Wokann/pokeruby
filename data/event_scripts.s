@@ -1038,7 +1038,7 @@ UnknownString_81A0F60: @ 81A0F60
 UnknownString_81A0F70: @ 81A0F70
 	.string "The HALL OF FAME will be accessed.$"
 
-Route111_Text_1A0F93:: @ 81A0F93
+gText_SandstormIsVicious:: @ 81A0F93
 	.string "The sandstorm is vicious.\n"
 	.string "It's impossible to keep going.$"
 

@@ -105,7 +105,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "19",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_111_RAZZ_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -118,7 +118,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "20",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_111_RAZZ_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -199,7 +199,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE442",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_1"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_1"
     },
     {
       "local_id": "LOCALID_ROUTE111_GABBY_1",
@@ -213,7 +213,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE422",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_1"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_1"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -276,7 +276,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "80",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_111_ORAN_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -289,7 +289,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "81",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_111_ORAN_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -305,7 +305,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE4E2",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_2"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2"
     },
     {
       "local_id": "LOCALID_ROUTE111_TY_2",
@@ -319,7 +319,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE502",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_2"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2"
     },
     {
       "local_id": "LOCALID_ROUTE111_GABBY_3",
@@ -333,7 +333,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE562",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_3"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_3"
     },
     {
       "local_id": "LOCALID_ROUTE111_TY_3",
@@ -347,7 +347,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1AE582",
-      "flag": "FLAG_HIDE_GABBY_AND_TY_ROUTE111_3"
+      "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_3"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -464,7 +464,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route111_EventScript_1A3858",
-      "flag": "FLAG_HIDE_SECRET_POWER_MAN"
+      "flag": "FLAG_HIDE_ROUTE_111_SECRET_POWER_MAN"
     },
     {
       "local_id": "LOCALID_ROUTE111_ROOT_FOSSIL",
@@ -921,7 +921,7 @@
       "y": 70,
       "elevation": 0,
       "item": "ITEM_STARDUST",
-      "flag": "FLAG_HIDDEN_ITEM_2"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_STARDUST"
     },
     {
       "type": "secret_base",
@@ -958,7 +958,7 @@
       "y": 55,
       "elevation": 0,
       "item": "ITEM_PROTEIN",
-      "flag": "FLAG_HIDDEN_ITEM_38"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_PROTEIN"
     },
     {
       "type": "hidden_item",
@@ -966,7 +966,7 @@
       "y": 66,
       "elevation": 0,
       "item": "ITEM_RARE_CANDY",
-      "flag": "FLAG_HIDDEN_ITEM_39"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_RARE_CANDY"
     }
   ]
 }

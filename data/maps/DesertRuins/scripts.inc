@@ -1,22 +1,22 @@
 DesertRuins_MapScripts:: @ 815CAF3
-	map_script MAP_SCRIPT_ON_RESUME, DesertRuins_MapScript1_15CB03
-	map_script MAP_SCRIPT_ON_LOAD, DesertRuins_MapScript1_15CB11
-	map_script MAP_SCRIPT_ON_TRANSITION, DesertRuins_MapScript1_15CB52
+	map_script MAP_SCRIPT_ON_RESUME, DesertRuins_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, DesertRuins_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, DesertRuins_OnTransition
 	.byte 0
 
-DesertRuins_MapScript1_15CB03:: @ 815CB03
-	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, DesertRuins_EventScript_15CB0D
+DesertRuins_OnResume:: @ 815CB03
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, DesertRuins_EventScript_TryRemoveRegirock
 	end
 
-DesertRuins_EventScript_15CB0D:: @ 815CB0D
+DesertRuins_EventScript_TryRemoveRegirock:: @ 815CB0D
 	removeobject VAR_LAST_TALKED
 	return
 
-DesertRuins_MapScript1_15CB11:: @ 815CB11
-	call_if_unset FLAG_SYS_BRAILLE_STRENGTH, DesertRuins_EventScript_15CB1B
+DesertRuins_OnLoad:: @ 815CB11
+	call_if_unset FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_HideRegiEntrance
 	end
 
-DesertRuins_EventScript_15CB1B:: @ 815CB1B
+DesertRuins_EventScript_HideRegiEntrance:: @ 815CB1B
 	setmetatile 7, 19, METATILE_Cave_EntranceCover, 1
 	setmetatile 8, 19, METATILE_Cave_EntranceCover, 1
 	setmetatile 9, 19, METATILE_Cave_EntranceCover, 1
@@ -25,25 +25,25 @@ DesertRuins_EventScript_15CB1B:: @ 815CB1B
 	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, 1
 	return
 
-DesertRuins_MapScript1_15CB52:: @ 815CB52
+DesertRuins_OnTransition:: @ 815CB52
 	setflag FLAG_LANDMARK_DESERT_RUINS
 	end
 
-DesertRuins_EventScript_15CB56:: @ 815CB56
+DesertRuins_EventScript_CaveEntranceMiddle:: @ 815CB56
 	lockall
-	goto_if_set FLAG_SYS_BRAILLE_STRENGTH, DesertRuins_EventScript_15CB6D
+	goto_if_set FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_BigHoleInWall
 	braillemessage DesertRuins_Braille_UseStrength
 	waitbuttonpress
 	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
-DesertRuins_EventScript_15CB6D:: @ 815CB6D
+DesertRuins_EventScript_BigHoleInWall:: @ 815CB6D
 	msgbox DesertRuins_Text_1A13BE, MSGBOX_DEFAULT
 	releaseall
 	end
 
-DesertRuins_EventScript_15CB77:: @ 815CB77
+DesertRuins_EventScript_CaveEntranceSide:: @ 815CB77
 	lockall
 	braillemessage DesertRuins_Braille_UseStrength
 	waitbuttonpress
@@ -51,7 +51,7 @@ DesertRuins_EventScript_15CB77:: @ 815CB77
 	releaseall
 	end
 
-DesertRuins_EventScript_15CB85:: @ 815CB85
+DesertRuins_EventScript_Regirock:: @ 815CB85
 	lock
 	faceplayer
 	waitse
