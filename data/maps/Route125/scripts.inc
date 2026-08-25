@@ -29,7 +29,7 @@ Route125_EventScript_Sharon:: @ 8151F73
 Route125_EventScript_Ernest:: @ 8151F8A
 	trainerbattle_single TRAINER_ERNEST_1, Route125_Text_ErnestIntro, Route125_Text_ErnestDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route125_EventScript_RematchErnest
 	msgbox Route125_Text_ErnestPostBattle, MSGBOX_AUTOCLOSE
 	end
