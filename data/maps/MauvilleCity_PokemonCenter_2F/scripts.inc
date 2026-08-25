@@ -16,6 +16,6 @@ MauvilleCity_PokemonCenter_2F_EventScript_1573AE:: @ 81573AE
 	call MauvilleCity_PokemonCenter_2F_EventScript_1A41FB
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_1573B4:: @ 81573B4
-	msgbox MauvilleCity_PokemonCenter_2F_Text_182724, MSGBOX_NPC
+MauvilleCity_PokemonCenter_2F_EventScript_Youngster:: @ 81573B4
+	msgbox MauvilleCity_PokemonCenter_2F_Text_Youngster, MSGBOX_NPC
 	end
