@@ -4,7 +4,7 @@ Route104_MapScripts:: @ 814EE8C
 	.byte 0
 
 Route104_OnFrame:: @ 814EE97
-	map_script_2 VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 1, Route104_EventScript_StartSailToDewford
+	map_script_2 VAR_BOARD_BRINEY_BOAT_STATE, 1, Route104_EventScript_StartSailToDewford
 	.2byte 0
 
 Route104_EventScript_StartSailToDewford:: @ 814EEA1
@@ -19,22 +19,22 @@ Route104_OnTransition:: @ 814EEA8
 Route104_EventScript_ShowOrHideWhiteHerbFlorist:: @ 814EEAE
 	goto_if_unset FLAG_MET_PRETTY_PETAL_SHOP_OWNER, Route104_EventScript_HideWhiteHerbFlorist
 	goto_if_unset FLAG_BADGE03_GET, Route104_EventScript_HideWhiteHerbFlorist
-	clearflag FLAG_HIDE_FLOWER_SHOP_WORKER_OUTSIDE
+	clearflag FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST
 	return
 
 Route104_EventScript_HideWhiteHerbFlorist:: @ 814EEC4
-	setflag FLAG_HIDE_FLOWER_SHOP_WORKER_OUTSIDE
+	setflag FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST
 	return
 
 Route104_EventScript_ExpertF:: @ 814EEC8
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_CHESTO_BERRY_ROUTE104, Route104_EventScript_ReceivedBerry
+	goto_if_set FLAG_RECEIVED_CHESTO_BERRY_ROUTE_104, Route104_EventScript_ReceivedBerry
 	msgbox Route104_Text_PlantBerriesInSoilTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_CHESTO_BERRY
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_CHESTO_BERRY_ROUTE104
+	setflag FLAG_RECEIVED_CHESTO_BERRY_ROUTE_104
 	msgbox Route104_Text_TrainersOftenMakeMonHoldBerries, MSGBOX_DEFAULT
 	release
 	end
@@ -146,13 +146,13 @@ Route104_EventScript_SailToDewford:: @ 814EFD5
 	addobject LOCALID_DEWFORD_BOAT
 	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
 	call Common_EventScript_StopBrineysBoatMusic
-	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
 	hideobjectat LOCALID_ROUTE104_BOAT, MAP_ROUTE104
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE104
 	resetobjectpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
 	moveobjectoffscreen LOCALID_DEWFORD_BRINEY
-	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 0
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 0
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_DeliverLetterReminder
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, Route104_EventScript_LandedInDewford
 	end

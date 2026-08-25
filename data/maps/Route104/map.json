@@ -117,7 +117,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MR_BRINEY_BOAT_ROUTE104"
+      "flag": "FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT"
     },
     {
       "local_id": "LOCALID_ROUTE104_BRINEY",
@@ -131,7 +131,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MR_BRINEY_ROUTE104"
+      "flag": "FLAG_HIDE_ROUTE_104_MR_BRINEY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
@@ -155,7 +155,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "8",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_CHERI_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -168,7 +168,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "9",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_SOIL_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -181,7 +181,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "10",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_LEPPA",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -194,7 +194,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "11",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_ORAN_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -207,7 +207,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "12",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_SOIL_3",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -220,7 +220,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "13",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_PECHA",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -246,7 +246,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "3",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_SOIL_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -259,7 +259,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "4",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_ORAN_1",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -272,7 +272,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "75",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_SOIL_4",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -285,7 +285,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "76",
+      "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_104_CHERI_2",
       "script": "S_BerryTree",
       "flag": "0"
     },
@@ -300,7 +300,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route104_EventScript_ItemPPUp",
-      "flag": "FLAG_ITEM_ROUTE104_1"
+      "flag": "FLAG_ITEM_ROUTE_104_PP_UP"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
@@ -313,7 +313,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route104_EventScript_WhiteHerbFlorist",
-      "flag": "FLAG_HIDE_FLOWER_SHOP_WORKER_OUTSIDE"
+      "flag": "FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_1",
@@ -378,7 +378,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route104_EventScript_ItemPokeBall",
-      "flag": "FLAG_ITEM_ROUTE104_2"
+      "flag": "FLAG_ITEM_ROUTE_104_POKE_BALL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
@@ -404,7 +404,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route104_EventScript_ItemXAccuracy",
-      "flag": "FLAG_ITEM_ROUTE104_3"
+      "flag": "FLAG_ITEM_ROUTE_104_X_ACCURACY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CUTTABLE_TREE",
@@ -430,7 +430,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route104_EventScript_ItemPotion",
-      "flag": "FLAG_ITEM_ROUTE104_4"
+      "flag": "FLAG_ITEM_ROUTE_104_POTION"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BOY_2",
@@ -552,7 +552,7 @@
       "y": 6,
       "elevation": 3,
       "item": "ITEM_SUPER_POTION",
-      "flag": "FLAG_HIDDEN_ITEM_2C"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_104_SUPER_POTION"
     },
     {
       "type": "hidden_item",
@@ -560,7 +560,7 @@
       "y": 9,
       "elevation": 3,
       "item": "ITEM_POKE_BALL",
-      "flag": "FLAG_HIDDEN_ITEM_3E"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_104_POKE_BALL"
     },
     {
       "type": "hidden_item",
@@ -568,7 +568,7 @@
       "y": 55,
       "elevation": 3,
       "item": "ITEM_POTION",
-      "flag": "FLAG_HIDDEN_ITEM_25"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_104_POTION"
     },
     {
       "type": "hidden_item",
@@ -576,7 +576,7 @@
       "y": 72,
       "elevation": 3,
       "item": "ITEM_ANTIDOTE",
-      "flag": "FLAG_HIDDEN_ITEM_55"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_104_ANTIDOTE"
     },
     {
       "type": "hidden_item",
@@ -584,7 +584,7 @@
       "y": 64,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_58"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_104_HEART_SCALE"
     }
   ]
 }

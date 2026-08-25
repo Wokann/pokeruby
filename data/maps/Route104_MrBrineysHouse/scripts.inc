@@ -75,10 +75,10 @@ Route104_MrBrineysHouse_EventScript_DeclineSailing:: @ 815BDA1
 Route104_MrBrineysHouse_EventScript_SailToDewford:: @ 815BDAB
 	msgbox Route104_MrBrineysHouse_Text_SetSailForDewford, MSGBOX_DEFAULT
 	call EventScript_BackupMrBrineyLocation
-	setvar VAR_BOARD_BRINEY_BOAT_ROUTE104_STATE, 1
-	clearflag FLAG_HIDE_MR_BRINEY_ROUTE104
-	setflag FLAG_HIDE_MR_BRINEY_ROUTE104_HOUSE
-	setflag FLAG_HIDE_PEEKO_BRINEY_HOUSE
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 1
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
 	warp MAP_ROUTE104, 255, 13, 51
 	waitstate
 	releaseall
