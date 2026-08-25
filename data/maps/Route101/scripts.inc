@@ -21,19 +21,19 @@ Route101_EventScript_StartBirchRescue:: @ 814E948
 	playbgm MUS_HELP, TRUE
 	msgbox Route101_Text_HelpMe, MSGBOX_DEFAULT
 	closemessage
-	setobjectxy 2, 0, 15
-	setobjectxy 4, 0, 16
+	setobjectxy LOCALID_ROUTE101_BIRCH, 0, 15
+	setobjectxy LOCALID_ROUTE101_POOCHYENA, 0, 16
 	applymovement LOCALID_PLAYER, Route101_Movement_EnterScene
-	applymovement 2, Route101_Movement_BirchRunAway1
-	applymovement 4, Route101_Movement_ZigzagoonChase1
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunAway1
+	applymovement LOCALID_ROUTE101_POOCHYENA, Route101_Movement_PoochyenaChase1
 	waitmovement 0
-	applymovement 4, Route101_Movement_ZigzagoonChaseInCircles
-	applymovement 2, Route101_Movement_BirchRunInCircles
+	applymovement LOCALID_ROUTE101_POOCHYENA, Route101_Movement_PoochyenaChaseInCircles
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunInCircles
 	waitmovement 0
-	applymovement 2, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
-	applymovement 4, Route101_Movement_ZigzagoonFaceBirch
-	applymovement 2, Route101_Movement_BirchFaceZigzagoon
+	applymovement LOCALID_ROUTE101_POOCHYENA, Route101_Movement_PoochyenaFaceBirch
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchFacePoochyena
 	waitmovement 0
 	msgbox Route101_Text_PleaseHelp, MSGBOX_DEFAULT
 	closemessage
@@ -80,7 +80,7 @@ Route101_Movement_PreventExitNorth:: @ 814E9FE
 	walk_down
 	step_end
 
-Route101_Movement_ZigzagoonChaseInCircles:: @ 814EA00
+Route101_Movement_PoochyenaChaseInCircles:: @ 814EA00
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
@@ -113,7 +113,7 @@ Route101_Movement_ZigzagoonChaseInCircles:: @ 814EA00
 	walk_fast_left
 	step_end
 
-Route101_Movement_ZigzagoonChase1:: @ 814EA1F
+Route101_Movement_PoochyenaChase1:: @ 814EA1F
 	walk_fast_up
 	walk_fast_right
 	walk_fast_right
@@ -125,7 +125,7 @@ Route101_Movement_ZigzagoonChase1:: @ 814EA1F
 @ 814EA26
 	step_end
 
-Route101_Movement_ZigzagoonFaceBirch:: @ 814EA27
+Route101_Movement_PoochyenaFaceBirch:: @ 814EA27
 	walk_in_place_fast_left
 	walk_in_place_fast_left
 	walk_in_place_fast_left
@@ -184,19 +184,19 @@ Route101_Movement_BirchRunAway1:: @ 814EA50
 @ 814EA57
 	step_end
 
-Route101_Movement_BirchFaceZigzagoon:: @ 814EA58
+Route101_Movement_BirchFacePoochyena:: @ 814EA58
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	walk_in_place_fast_right
 	step_end
 
-@ 814EA5D
+Route101_Movement_Unused1:: @ 814EA5D
 	walk_up
 	walk_up
 	step_end
 
-@ 814EA60
+Route101_Movement_Unused2:: @ 814EA60
 	walk_up
 	walk_left
 	walk_up
@@ -220,13 +220,13 @@ Route101_EventScript_BirchsBag:: @ 814EA7F
 	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_RESCUED_BIRCH
 	fadescreen FADE_TO_BLACK
-	removeobject 4
+	removeobject LOCALID_ROUTE101_POOCHYENA
 	setobjectxy LOCALID_PLAYER, 6, 13
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	special ScrSpecial_ChooseStarter
 	waitstate
-	applymovement 2, Route101_Movement_BirchApproachPlayer
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
 	waitmovement 0
 	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	special ScrSpecial_HealPlayerParty
