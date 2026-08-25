@@ -5,47 +5,47 @@ Route120_MapScripts:: @ 815160E
 	.byte 0
 
 Route120_OnResume:: @ 815161E
-	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route120_EventScript_151628
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route120_EventScript_RemoveKecleonObject
 	end
 
-Route120_EventScript_151628:: @ 8151628
+Route120_EventScript_RemoveKecleonObject:: @ 8151628
 	compare VAR_0x8004, 0
-	call_if_eq Route120_EventScript_15166B
+	call_if_eq Route120_EventScript_RemoveBridgeKecleon
 	compare VAR_0x8004, 1
-	call_if_eq Route120_EventScript_151672
+	call_if_eq Route120_EventScript_RemoveKecleon1
 	compare VAR_0x8004, 2
-	call_if_eq Route120_EventScript_151676
+	call_if_eq Route120_EventScript_RemoveKecleon2
 	compare VAR_0x8004, 3
-	call_if_eq Route120_EventScript_15167A
+	call_if_eq Route120_EventScript_RemoveKecleon3
 	compare VAR_0x8004, 4
-	call_if_eq Route120_EventScript_15167E
+	call_if_eq Route120_EventScript_RemoveKecleon4
 	compare VAR_0x8004, 5
-	call_if_eq Route120_EventScript_151682
+	call_if_eq Route120_EventScript_RemoveKecleon5
 	return
 
-Route120_EventScript_15166B:: @ 815166B
-	removeobject 30
-	removeobject 36
+Route120_EventScript_RemoveBridgeKecleon:: @ 815166B
+	removeobject LOCALID_BRIDGE_KECLEON
+	removeobject LOCALID_BRIDGE_KECLEON_SHADOW
 	return
 
-Route120_EventScript_151672:: @ 8151672
-	removeobject 37
+Route120_EventScript_RemoveKecleon1:: @ 8151672
+	removeobject LOCALID_ROUTE120_KECLEON_1
 	return
 
-Route120_EventScript_151676:: @ 8151676
-	removeobject 38
+Route120_EventScript_RemoveKecleon2:: @ 8151676
+	removeobject LOCALID_ROUTE120_KECLEON_2
 	return
 
-Route120_EventScript_15167A:: @ 815167A
-	removeobject 39
+Route120_EventScript_RemoveKecleon3:: @ 815167A
+	removeobject LOCALID_ROUTE120_KECLEON_3
 	return
 
-Route120_EventScript_15167E:: @ 815167E
-	removeobject 41
+Route120_EventScript_RemoveKecleon4:: @ 815167E
+	removeobject LOCALID_ROUTE120_KECLEON_4
 	return
 
-Route120_EventScript_151682:: @ 8151682
-	removeobject 40
+Route120_EventScript_RemoveKecleon5:: @ 8151682
+	removeobject LOCALID_ROUTE120_KECLEON_5
 	return
 
 Route120_OnLoad:: @ 8151686
@@ -67,7 +67,7 @@ Route120_EventScript_SetBridgeClearMetatiles:: @ 81516B5
 	return
 
 Route120_EventScript_SetBridgeKecleonMovement:: @ 81516DA
-	setobjectmovementtype 36, 10
+	setobjectmovementtype LOCALID_BRIDGE_KECLEON_SHADOW, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route120_OnTransition:: @ 81516DF
@@ -206,14 +206,14 @@ Route120_EventScript_StevenBattleKecleon:: @ 815189D
 	call_if_eq Route120_EventScript_PlayerApproachKecleonNorth
 	compare VAR_FACING, 3
 	call_if_eq Route120_EventScript_PlayerApproachKecleonWest
-	applymovement 31, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	delay 20
 	msgbox Route120_Text_StevenUsedDevonScope, MSGBOX_DEFAULT
 	closemessage
-	applymovement 30, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_BRIDGE_KECLEON, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
-	applymovement 30, Movement_KecleonAppears
+	applymovement LOCALID_BRIDGE_KECLEON, Movement_KecleonAppears
 	waitmovement 0
 	waitse
 	playmoncry SPECIES_KECLEON, 2
@@ -228,7 +228,7 @@ Route120_EventScript_StevenBattleKecleon:: @ 815189D
 	end
 
 Route120_EventScript_StevenGiveDeconScope:: @ 8151908
-	applymovement 31, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox Route120_Text_StevenGiveDevonScope, MSGBOX_DEFAULT
@@ -236,13 +236,13 @@ Route120_EventScript_StevenGiveDeconScope:: @ 8151908
 	setflag FLAG_RECEIVED_DEVON_SCOPE
 	msgbox Route120_Text_StevenGoodbye, MSGBOX_DEFAULT
 	closemessage
-	applymovement 31, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	delay 15
-	removeobject 31
+	removeobject LOCALID_ROUTE120_STEVEN
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	setmetatile 13, 15, METATILE_Fortree_WoodBridge_Kecleon0, 0
 	setmetatile 12, 16, METATILE_Fortree_WoodBridge_Kecleon1, 0
@@ -267,8 +267,8 @@ Route120_Movement_ApproachKecleonWest:: @ 8151995
 	walk_left
 	step_end
 
-Route120_EventScript_151998:: @ 8151998
-	msgbox Text_SomethingUnseeable, MSGBOX_NPC
+Route120_EventScript_BridgeKecleon:: @ 8151998
+	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_NPC
 	end
 
 Route120_EventScript_RouteSignFortree:: @ 81519A1

@@ -404,6 +404,7 @@
       "flag": "FLAG_ITEM_ROUTE120_3"
     },
     {
+      "local_id": "LOCALID_BRIDGE_KECLEON",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 12,
       "y": 16,
@@ -413,10 +414,11 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route120_EventScript_151998",
+      "script": "Route120_EventScript_BridgeKecleon",
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_1"
     },
     {
+      "local_id": "LOCALID_ROUTE120_STEVEN",
       "graphics_id": "OBJ_EVENT_GFX_STEVEN",
       "x": 13,
       "y": 15,
@@ -482,6 +484,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_BRIDGE_KECLEON_SHADOW",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_2",
       "x": 12,
       "y": 16,
@@ -495,6 +498,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_2"
     },
     {
+      "local_id": "LOCALID_ROUTE120_KECLEON_1",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 20,
       "y": 11,
@@ -508,6 +512,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_3"
     },
     {
+      "local_id": "LOCALID_ROUTE120_KECLEON_2",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 27,
       "y": 2,
@@ -521,6 +526,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_4"
     },
     {
+      "local_id": "LOCALID_ROUTE120_KECLEON_3",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 4,
       "y": 77,
@@ -534,6 +540,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_5"
     },
     {
+      "local_id": "LOCALID_ROUTE120_KECLEON_5",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 7,
       "y": 51,
@@ -547,6 +554,7 @@
       "flag": "FLAG_HIDE_KECLEON_ROUTE120_7"
     },
     {
+      "local_id": "LOCALID_ROUTE120_KECLEON_4",
       "graphics_id": "OBJ_EVENT_GFX_KECLEON_1",
       "x": 19,
       "y": 48,
