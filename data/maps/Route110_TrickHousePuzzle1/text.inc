@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened: @ 819CAD1
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is fabulous.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle1_Text_SallyIntro:: @ 819CB4F
 	.string "I'll hack and slash my way to victory\n"
 	.string "with the CUT we just learned!$"
@@ -29,10 +36,3 @@ Route110_TrickHousePuzzle1_Text_RobinDefeat:: @ 819CC86
 Route110_TrickHousePuzzle1_Text_RobinPostBattle:: @ 819CCAA
 	.string "You're strong!\n"
 	.string "Just who are you?$"
-
-Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened: @ 819CCCB
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is smart.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

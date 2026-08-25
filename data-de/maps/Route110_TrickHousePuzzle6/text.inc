@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DC0A
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist mein Leben.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle6_Text_SophiaIntro:: @ 819DC87
 	.string "Als ich von dem seltsamen Haus hörte,\n"
 	.string "musste ich mir das sofort ansehen.$"
@@ -34,10 +41,3 @@ Route110_TrickHousePuzzle6_Text_SebastianDefeat:: @ 819DDFE
 Route110_TrickHousePuzzle6_Text_SebastianPostBattle:: @ 819DE44
 	.string "Dir scheint das gar nichts auszumachen.\n"
 	.string "Oder ist das nur Show?$"
-
-Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819DE8D
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist riesig.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

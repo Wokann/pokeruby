@@ -111,10 +111,3 @@ Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou:: @ 819C9BD
 Route110_TrickHouseEnd_Text_YoureIgnoringMe:: @ 819CA8B
 	.string "Nun, nun! Du ignorierst mich?\n"
 	.string "Das bricht mir glatt das Herz!$"
-
-Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened: @ 819CAD1
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist sagenhaft.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

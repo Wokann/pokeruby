@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DC0A
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is my life.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle6_Text_SophiaIntro:: @ 819DC87
 	.string "When I heard there was a strange\n"
 	.string "house, I had to check it out.$"
@@ -33,10 +40,3 @@ Route110_TrickHousePuzzle6_Text_SebastianDefeat:: @ 819DDFE
 Route110_TrickHousePuzzle6_Text_SebastianPostBattle:: @ 819DE44
 	.string "You don't seem to be affected at all.\n"
 	.string "Or do you have your poker face on?$"
-
-Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819DE8D
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is huggable.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

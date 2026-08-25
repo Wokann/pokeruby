@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened: @ 819CEF9
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist gefragt.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle3_Text_JustinIntro:: @ 819CF76
 	.string "Ich laufe und laufe und lande immer\n"
 	.string "wieder hier.$"
@@ -34,10 +41,3 @@ Route110_TrickHousePuzzle3_Text_AlanPostBattle:: @ 819D110
 	.string "Wie viele Fallen gibt es in diesem Haus?\p"
 	.string "Du kannst mir das bestimmt\n"
 	.string "beantworten!$"
-
-Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D164
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist cool.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

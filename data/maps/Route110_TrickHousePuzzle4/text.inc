@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D164
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is cool.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle4_Text_CoraIntro:: @ 819D1DE
 	.string "It's too much bother to think this out.\n"
 	.string "I only wanted to battle!$"
@@ -31,10 +38,3 @@ Route110_TrickHousePuzzle4_Text_JillDefeat:: @ 819D380
 
 Route110_TrickHousePuzzle4_Text_JillPostBattle:: @ 819D386
 	.string "Has anyone made it to the end?$"
-
-Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819D3A5
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is a genius.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

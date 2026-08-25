@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened: @ 819CCCB
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is smart.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle2_Text_TedIntro:: @ 819CD46
 	.string "Which switch closes which hole?$"
 
@@ -30,10 +37,3 @@ Route110_TrickHousePuzzle2_Text_GeorgiaDefeat:: @ 819CE98
 Route110_TrickHousePuzzle2_Text_GeorgiaPostBattle:: @ 819CEB8
 	.string "You're strong, aren't you?\n"
 	.string "Maybe even enough to be a GYM LEADER!$"
-
-Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened: @ 819CEF9
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is coveted.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

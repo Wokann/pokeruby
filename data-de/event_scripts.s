@@ -682,22 +682,6 @@ gStdScripts_End::
 	.include "data/maps/Route109_SeashoreHouse/text.inc"
 	.include "data/maps/Route110_TrickHouseEntrance/text.inc"
 
-Route110_TrickHousePuzzle1_Text_FoundAScroll:: @ 819C1B8
-	.string "{PLAYER} findet eine Schriftrolle.$"
-
-Route110_TrickHousePuzzle1_Text_MemorizedTheCode:: @ 819C1CB
-	.string "{PLAYER} lernt den geheimen Code, der\n"
-	.string "auf der Schriftrolle steht, auswendig.$"
-
-Route110_TrickHousePuzzle1_Text_SecretCodeOnIt:: @ 819C1FF
-	.string "Dort steht ein geheimer Code.$"
-
-Route110_TrickHousePuzzle_Text_DoorLockedWriteSecretCodeHere: @ 819C21F
-	.string "Die Tür ist verschlossen.\p"
-	.string "Bei näherer Betrachtung findet sich\n"
-	.string "ein Hinweis. “Schreibe hier den\l"
-	.string "geheimen Code auf.”$"
-
 	.include "data/maps/Route110_TrickHouseEnd/text.inc"
 	.include "data/maps/Route110_TrickHousePuzzle1/text.inc"
 	.include "data/maps/Route110_TrickHousePuzzle2/text.inc"

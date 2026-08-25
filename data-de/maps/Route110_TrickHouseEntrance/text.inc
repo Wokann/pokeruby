@@ -112,3 +112,19 @@ Route110_TrickHouseEntrance_Text_ThenFarewell:: @ 819C17E
 Route110_TrickHouseEntrance_Text_PCFullAgain:: @ 819C18D
 	.string "PC-STATUS: WIEDER VOLL.\n"
 	.string "GEMEIN DU BIST.$"
+
+Route110_TrickHousePuzzle_Text_FoundAScroll:: @ 819C1B8
+	.string "{PLAYER} findet eine Schriftrolle.$"
+
+Route110_TrickHousePuzzle_Text_MemorizedSecretCode:: @ 819C1CB
+	.string "{PLAYER} lernt den geheimen Code, der\n"
+	.string "auf der Schriftrolle steht, auswendig.$"
+
+Route110_TrickHousePuzzle_Text_SecretCodeWrittenOnIt:: @ 819C1FF
+	.string "Dort steht ein geheimer Code.$"
+
+Route110_TrickHouseEntrance_Text_DoorLockedWriteSecretCodeHere: @ 819C21F
+	.string "Die Tür ist verschlossen.\p"
+	.string "Bei näherer Betrachtung findet sich\n"
+	.string "ein Hinweis. “Schreibe hier den\l"
+	.string "geheimen Code auf.”$"

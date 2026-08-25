@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D164
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist cool.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle4_Text_CoraIntro:: @ 819D1DE
 	.string "Ich habe keine Zeit, das zu verstehen.\n"
 	.string "Ich will nur kämpfen!$"
@@ -32,10 +39,3 @@ Route110_TrickHousePuzzle4_Text_JillDefeat:: @ 819D380
 Route110_TrickHousePuzzle4_Text_JillPostBattle:: @ 819D386
 	.string "Hat es jemand schon mal bis zum\n"
 	.string "Ende geschafft?$"
-
-Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819D3A5
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist ein Genie.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

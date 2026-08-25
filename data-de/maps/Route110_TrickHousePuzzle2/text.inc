@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened: @ 819CCCB
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist gewieft.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle2_Text_TedIntro:: @ 819CD46
 	.string "Welcher Schalter schließt welches Loch?$"
 
@@ -31,10 +38,3 @@ Route110_TrickHousePuzzle2_Text_GeorgiaDefeat:: @ 819CE98
 Route110_TrickHousePuzzle2_Text_GeorgiaPostBattle:: @ 819CEB8
 	.string "Du bist stark, nicht wahr?\n"
 	.string "Stark genug, ein ARENALEITER zu sein.$"
-
-Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened: @ 819CEF9
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist gefragt.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

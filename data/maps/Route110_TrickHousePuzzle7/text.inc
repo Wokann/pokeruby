@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819DE8D
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is huggable.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle7_Text_JoshuaIntro:: @ 819DF0B
 	.string "The TRICK MASTER always vanishes\n"
 	.string "like smoke. How does he do it?$"
@@ -33,10 +40,3 @@ Route110_TrickHousePuzzle7_Text_AlexisDefeat:: @ 819E098
 Route110_TrickHousePuzzle7_Text_AlexisPostBattle:: @ 819E0B2
 	.string "You're solving all the puzzles in the\n"
 	.string "TRICK HOUSE. That's the feeling I get.$"
-
-Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened: @ 819E0FF
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER I love.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

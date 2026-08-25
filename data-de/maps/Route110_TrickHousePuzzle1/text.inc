@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened: @ 819CAD1
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist sagenhaft.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle1_Text_SallyIntro:: @ 819CB4F
 	.string "Ich habe mir den Weg zum Sieg mit dem\n"
 	.string "ZERSCHNEIDER, den wir gerade gelernt\l"
@@ -31,10 +38,3 @@ Route110_TrickHousePuzzle1_Text_RobinDefeat:: @ 819CC86
 Route110_TrickHousePuzzle1_Text_RobinPostBattle:: @ 819CCAA
 	.string "Du bist stark!\n"
 	.string "Wer bist du eigentlich?$"
-
-Route110_TrickHousePuzzle2_Text_WroteSecretCodeLockOpened: @ 819CCCB
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist gewieft.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

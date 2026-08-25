@@ -101,10 +101,3 @@ Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou:: @ 819C9BD
 Route110_TrickHouseEnd_Text_YoureIgnoringMe:: @ 819CA8B
 	.string "Now, now! You're ignoring me now?\n"
 	.string "Now that, I consider heartbreaking!$"
-
-Route110_TrickHousePuzzle1_Text_WroteSecretCodeLockOpened: @ 819CAD1
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is fabulous.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

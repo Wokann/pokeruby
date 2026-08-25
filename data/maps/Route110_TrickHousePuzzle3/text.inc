@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle3_Text_WroteSecretCodeLockOpened: @ 819CEF9
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is coveted.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle3_Text_JustinIntro:: @ 819CF76
 	.string "I keep coming back to this same place!$"
 
@@ -32,10 +39,3 @@ Route110_TrickHousePuzzle3_Text_AlanPostBattle:: @ 819D110
 	.string "I don't get it.\n"
 	.string "How many traps are in this house?\p"
 	.string "You may be the one to solve that.$"
-
-Route110_TrickHousePuzzle4_Text_WroteSecretCodeLockOpened: @ 819D164
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is cool.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"

@@ -683,7 +683,7 @@ Route110_TrickHousePuzzle8_EventScript_Door:: @ 816185F
 	end
 
 Route110_TrickHousePuzzle_EventScript_DoorLocked:: @ 8161888
-	msgbox Route110_TrickHousePuzzle_Text_DoorLockedWriteSecretCodeHere, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEntrance_Text_DoorLockedWriteSecretCodeHere, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -695,7 +695,7 @@ Route110_TrickHousePuzzle5_EventScript_ReadScrollAgain:: @ 8161892
 Route110_TrickHousePuzzle6_EventScript_ReadScrollAgain:: @ 8161892
 Route110_TrickHousePuzzle7_EventScript_ReadScrollAgain:: @ 8161892
 Route110_TrickHousePuzzle8_EventScript_ReadScrollAgain:: @ 8161892
-	msgbox Route110_TrickHousePuzzle1_Text_SecretCodeOnIt, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle_Text_SecretCodeWrittenOnIt, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -708,10 +708,10 @@ Route110_TrickHousePuzzle6_EventScript_FoundScroll:: @ 816189C
 Route110_TrickHousePuzzle7_EventScript_FoundScroll:: @ 816189C
 Route110_TrickHousePuzzle8_EventScript_FoundScroll:: @ 816189C
 	playfanfare MUS_OBTAIN_ITEM
-	message Route110_TrickHousePuzzle1_Text_FoundAScroll
+	message Route110_TrickHousePuzzle_Text_FoundAScroll
 	waitfanfare
 	waitmessage
-	msgbox Route110_TrickHousePuzzle1_Text_MemorizedTheCode, MSGBOX_DEFAULT
+	msgbox Route110_TrickHousePuzzle_Text_MemorizedSecretCode, MSGBOX_DEFAULT
 	releaseall
 	end
 

@@ -109,3 +109,18 @@ Route110_TrickHouseEntrance_Text_ThenFarewell:: @ 819C17E
 Route110_TrickHouseEntrance_Text_PCFullAgain:: @ 819C18D
 	.string "YOUR PC STATUS: FULL AGAIN.\n"
 	.string "MEAN, YOU ARE.$"
+
+Route110_TrickHousePuzzle_Text_FoundAScroll:: @ 819C1B8
+	.string "{PLAYER} found a scroll.$"
+
+Route110_TrickHousePuzzle_Text_MemorizedSecretCode:: @ 819C1CB
+	.string "{PLAYER} memorized the secret code\n"
+	.string "written on the scroll.$"
+
+Route110_TrickHousePuzzle_Text_SecretCodeWrittenOnIt:: @ 819C1FF
+	.string "A secret code is written on it.$"
+
+Route110_TrickHouseEntrance_Text_DoorLockedWriteSecretCodeHere: @ 819C21F
+	.string "The door is locked.\p"
+	.string "...On closer inspection, this is written\n"
+	.string "on it: “Write the secret code here.”$"

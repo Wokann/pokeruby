@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened: @ 819DE8D
+	.string "{PLAYER} hat den geheimen Code auf die\n"
+	.string "Tür geschrieben.\p"
+	.string "“RÄTSELMEISTER ist riesig.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "Das Schloss geht klickend auf.$"
+
 Route110_TrickHousePuzzle7_Text_JoshuaIntro:: @ 819DF0B
 	.string "Der RÄTSELMEISTER verschwindet immer\n"
 	.string "wie Rauch. Wie macht er das nur?$"
@@ -33,10 +40,3 @@ Route110_TrickHousePuzzle7_Text_AlexisDefeat:: @ 819E098
 Route110_TrickHousePuzzle7_Text_AlexisPostBattle:: @ 819E0B2
 	.string "Ich glaube, du wirst alle Rätsel in\n"
 	.string "diesem RÄTSELHAUS lösen!$"
-
-Route110_TrickHousePuzzle8_Text_WroteSecretCodeLockOpened: @ 819E0FF
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“Ich liebe den RÄTSELMEISTER.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

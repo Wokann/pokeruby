@@ -1,3 +1,10 @@
+Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened: @ 819D3A5
+	.string "{PLAYER} wrote down the secret code\n"
+	.string "on the door.\p"
+	.string "“TRICK MASTER is a genius.”\n"
+	.string "... ... ... ... ... ... ... ...\p"
+	.string "The lock clicked open!$"
+
 Route110_TrickHousePuzzle5_Text_Mechadoll1Intro:: @ 819D423
 	.string "CLICKETY-CLACK...\n"
 	.string "MECHADOLL 1 AM I!\p"
@@ -132,10 +139,3 @@ Route110_TrickHousePuzzle5_Text_Mechadoll5Quiz3:: @ 819DB97
 Route110_TrickHousePuzzle5_Text_CorrectGoThrough5: @ 819DBD4
 	.string "CONGRATULATIONS. CORRECT YOU ARE.\n"
 	.string "GO THROUGH. PLEASE.$"
-
-Route110_TrickHousePuzzle6_Text_WroteSecretCodeLockOpened: @ 819DC0A
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is my life.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"
