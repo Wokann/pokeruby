@@ -8,7 +8,7 @@ OldaleTown_PokemonCenter_1F_OnTransition:: @ 8152F0E
 	end
 
 OldaleTown_PokemonCenter_1F_EventScript_Nurse:: @ 8152F17
-	setvar VAR_0x800B, 1
+	setvar VAR_0x800B, LOCALID_OLDALE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

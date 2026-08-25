@@ -15,13 +15,13 @@ OldaleTown_EventScript_SetOldaleState:: @ 814DD8C
 	return
 
 OldaleTown_EventScript_BlockWestEntrance:: @ 814DD92
-	setobjectxyperm 3, 1, 11
-	setobjectmovementtype 3, 9
+	setobjectxyperm LOCALID_FOOTPRINTS_MAN, 1, 11
+	setobjectmovementtype LOCALID_FOOTPRINTS_MAN, 9
 	return
 
 OldaleTown_EventScript_MoveMartEmployee:: @ 814DD9E
-	setobjectxyperm 2, 13, 14
-	setobjectmovementtype 2, 8
+	setobjectxyperm LOCALID_OLDALE_MART_EMPLOYEE, 13, 14
+	setobjectmovementtype LOCALID_OLDALE_MART_EMPLOYEE, 8
 	return
 
 OldaleTown_EventScript_TownSign:: @ 814DDAA
@@ -42,20 +42,20 @@ OldaleTown_EventScript_MartEmployee:: @ 814DDBC
 	msgbox OldaleTown_Text_IWorkAtPokemonMart, MSGBOX_DEFAULT
 	closemessage
 	switch VAR_FACING
-	case 1, OldaleTown_EventScript_GoToMartSouth
-	case 2, OldaleTown_EventScript_GoToMartNorth
-	case 4, OldaleTown_EventScript_GoToMartEast
+	case DIR_SOUTH, OldaleTown_EventScript_GoToMartSouth
+	case DIR_NORTH, OldaleTown_EventScript_GoToMartNorth
+	case DIR_EAST, OldaleTown_EventScript_GoToMartEast
 	end
 
 OldaleTown_EventScript_GoToMartSouth:: @ 814DE07
-	applymovement 2, OldaleTown_Movement_EmployeeSouth
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeSouth
 	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerSouth
 	waitmovement 0
 	goto OldaleTown_EventScript_ExplainPokemonMart
 	end
 
 OldaleTown_EventScript_GoToMartNorth:: @ 814DE1E
-	applymovement 2, OldaleTown_Movement_EmployeeNorth
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeNorth
 	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerNorth
 	waitmovement 0
 	goto OldaleTown_EventScript_ExplainPokemonMart
@@ -63,7 +63,7 @@ OldaleTown_EventScript_GoToMartNorth:: @ 814DE1E
 
 OldaleTown_EventScript_GoToMartEast:: @ 814DE35
 	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerEast
-	applymovement 2, OldaleTown_Movement_EmployeeEast
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeEast
 	waitmovement 0
 	goto OldaleTown_EventScript_ExplainPokemonMart
 	end
@@ -125,7 +125,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_in_place_fastest_down
 	step_end
 
-@ 814DEAB
+OldaleTown_Movement_Unused1:: @ 814DEAB
 	walk_up
 	walk_up
 	walk_right
@@ -173,7 +173,7 @@ OldaleTown_Movement_PlayerNorth:: @ 814DECB
 	walk_up
 	step_end
 
-@ 814DED3
+OldaleTown_Movement_Unused2:: @ 814DED3
 	walk_left
 	walk_up
 	walk_up
@@ -193,7 +193,7 @@ OldaleTown_EventScript_FootprintsMan:: @ 814DEDF
 	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_NotBlockingPath
 	msgbox OldaleTown_Text_DiscoveredFootprints, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_FOOTPRINTS_MAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -201,11 +201,11 @@ OldaleTown_EventScript_FootprintsMan:: @ 814DEDF
 OldaleTown_EventScript_BlockedPath:: @ 814DEFF
 	lockall
 	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerStepBack
-	applymovement 3, OldaleTown_Movement_BackUp
+	applymovement LOCALID_FOOTPRINTS_MAN, OldaleTown_Movement_BackUp
 	waitmovement 0
 	msgbox OldaleTown_Text_WaitDontComeInHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, OldaleTown_Movement_ReturnToOriginalPosition
+	applymovement LOCALID_FOOTPRINTS_MAN, OldaleTown_Movement_ReturnToOriginalPosition
 	waitmovement 0
 	releaseall
 	end
@@ -217,14 +217,14 @@ OldaleTown_EventScript_NotBlockingPath:: @ 814DF26
 
 OldaleTown_EventScript_Rival:: @ 814DF30
 	lockall
-	applymovement 4, Common_Movement_FacePlayer
+	applymovement LOCALID_OLDALE_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
 
 OldaleTown_EventScript_RivalTrigger1:: @ 814DF41
 	lockall
-	applymovement 4, OldaleTown_Movement_RivalApproachPlayer1
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer1
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
@@ -233,7 +233,7 @@ OldaleTown_EventScript_RivalTrigger1:: @ 814DF41
 
 OldaleTown_EventScript_RivalTrigger2:: @ 814DF5C
 	lockall
-	applymovement 4, OldaleTown_Movement_RivalApproachPlayer2
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer2
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
@@ -242,7 +242,7 @@ OldaleTown_EventScript_RivalTrigger2:: @ 814DF5C
 
 OldaleTown_EventScript_RivalTrigger3:: @ 814DF77
 	lockall
-	applymovement 4, OldaleTown_Movement_RivalApproachPlayer3
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer3
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
@@ -251,9 +251,9 @@ OldaleTown_EventScript_RivalTrigger3:: @ 814DF77
 
 OldaleTown_EventScript_ShowRivalMessage:: @ 814DF92
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq OldaleTown_EventScript_ShowMayMessage
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq OldaleTown_EventScript_ShowBrendanMessage
 	end
 
@@ -269,9 +269,9 @@ OldaleTown_EventScript_ShowBrendanMessage:: @ 814DFB8
 
 OldaleTown_EventScript_RivalFinish:: @ 814DFC6
 	closemessage
-	applymovement 4, OldaleTown_Movement_RivalExit
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
 	waitmovement 0
-	removeobject 4
+	removeobject LOCALID_OLDALE_RIVAL
 	setvar VAR_OLDALE_STATE, 2
 	setflag FLAG_HIDE_RIVAL_OLDALE_TOWN
 	releaseall
