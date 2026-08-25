@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_1B1A03",
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ItemRareCandy",
       "flag": "FLAG_ITEM_SHOAL_CAVE_LOW_TIDE_INNER_ROOM_1"
     }
   ],
@@ -91,7 +91,7 @@
       "y": 8,
       "elevation": 5,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E329"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalSalt1"
     },
     {
       "type": "sign",
@@ -99,7 +99,7 @@
       "y": 26,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E365"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalSalt2"
     },
     {
       "type": "sign",
@@ -107,7 +107,7 @@
       "y": 20,
       "elevation": 5,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E257"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalShell1"
     },
     {
       "type": "sign",
@@ -115,7 +115,7 @@
       "y": 10,
       "elevation": 5,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E293"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalShell2"
     },
     {
       "type": "sign",
@@ -123,7 +123,7 @@
       "y": 9,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E2C5"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalShell3"
     },
     {
       "type": "sign",
@@ -131,7 +131,7 @@
       "y": 13,
       "elevation": 5,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShoalCave_LowTideInnerRoom_EventScript_15E2F7"
+      "script": "ShoalCave_LowTideInnerRoom_EventScript_ShoalShell4"
     }
   ]
 }

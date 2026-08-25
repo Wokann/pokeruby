@@ -450,23 +450,23 @@ MagmaHideout_B2F_EventScript_ItemNestBall:: @ 81B19E9
 	finditem ITEM_NEST_BALL
 	end
 
-ShoalCave_LowTideEntranceRoom_EventScript_1B19F6:: @ 81B19F6
+ShoalCave_LowTideEntranceRoom_EventScript_ItemBigPearl:: @ 81B19F6
 	finditem ITEM_BIG_PEARL
 	end
 
-ShoalCave_LowTideInnerRoom_EventScript_1B1A03:: @ 81B1A03
+ShoalCave_LowTideInnerRoom_EventScript_ItemRareCandy:: @ 81B1A03
 	finditem ITEM_RARE_CANDY
 	end
 
-ShoalCave_LowTideStairsRoom_EventScript_1B1A10:: @ 81B1A10
+ShoalCave_LowTideStairsRoom_EventScript_ItemIceHeal:: @ 81B1A10
 	finditem ITEM_ICE_HEAL
 	end
 
-ShoalCave_LowTideIceRoom_EventScript_1B1A1D:: @ 81B1A1D
+ShoalCave_LowTideIceRoom_EventScript_ItemTMHail:: @ 81B1A1D
 	finditem ITEM_TM07_HAIL
 	end
 
-ShoalCave_LowTideIceRoom_EventScript_1B1A2A:: @ 81B1A2A
+ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce:: @ 81B1A2A
 	finditem ITEM_NEVER_MELT_ICE
 	end
 

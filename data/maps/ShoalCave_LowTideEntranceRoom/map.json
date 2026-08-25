@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShoalCave_LowTideEntranceRoom_EventScript_1B19F6",
+      "script": "ShoalCave_LowTideEntranceRoom_EventScript_ItemBigPearl",
       "flag": "FLAG_ITEM_SHOAL_CAVE_LOW_TIDE_ENTRANCE_1"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShoalCave_LowTideEntranceRoom_EventScript_15E076",
+      "script": "ShoalCave_LowTideEntranceRoom_EventScript_ShellBellExpert",
       "flag": "0"
     }
   ],
