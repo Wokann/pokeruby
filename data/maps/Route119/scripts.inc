@@ -15,11 +15,11 @@ Route119_EventScript_TryRemoveKecleon:: @ 815117C
 	return
 
 Route119_EventScript_RemoveKecleon1:: @ 8151193
-	removeobject 35
+	removeobject LOCALID_ROUTE119_KECLEON_1
 	return
 
 Route119_EventScript_RemoveKecleon2:: @ 8151197
-	removeobject 36
+	removeobject LOCALID_ROUTE119_KECLEON_2
 	return
 
 Route119_OnTransition:: @ 815119B
@@ -49,7 +49,7 @@ Route119_EventScript_RivalTrigger2:: @ 81511D0
 
 Route119_EventScript_RivalEncounter:: @ 81511DB
 	lockall
-	addobject 25
+	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	checkplayergender
 	compare VAR_RESULT, 0
 	call_if_eq Route119_EventScript_PlayMayMusic
@@ -67,8 +67,8 @@ Route119_EventScript_RivalEncounter:: @ 81511DB
 	call_if_eq Route119_EventScript_SetRivalPos1
 	compare VAR_TEMP_1, 2
 	call_if_eq Route119_EventScript_SetRivalPos2
-	removeobject 25
-	addobject 16
+	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
+	addobject LOCALID_ROUTE119_RIVAL
 	delay 30
 	checkplayergender
 	compare VAR_RESULT, 0
@@ -157,14 +157,14 @@ Route119_EventScript_RivalExit:: @ 8151362
 	call_if_eq Route119_EventScript_SetRivalPos1
 	compare VAR_TEMP_1, 2
 	call_if_eq Route119_EventScript_SetRivalPos2
-	removeobject 16
-	addobject 25
+	removeobject LOCALID_ROUTE119_RIVAL
+	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	delay 30
 	compare VAR_TEMP_1, 1
 	call_if_eq Route119_EventScript_RivalExit1
 	compare VAR_TEMP_1, 2
 	call_if_eq Route119_EventScript_RivalExit2
-	removeobject 25
+	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	setvar VAR_ROUTE119_STATE, 1
 	savebgm 0
 	fadedefaultbgm
@@ -172,33 +172,33 @@ Route119_EventScript_RivalExit:: @ 8151362
 	end
 
 Route119_EventScript_RivalEnter1:: @ 81513A6
-	applymovement 25, Route119_Movement_RivalEnter1
+	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter1
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalEnter2:: @ 81513B1
-	applymovement 25, Route119_Movement_RivalEnter2
+	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter2
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit1:: @ 81513BC
-	applymovement 25, Route119_Movement_RivalExit1
+	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit1
 	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit2:: @ 81513C7
-	applymovement 25, Route119_Movement_RivalExit2
+	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit2
 	waitmovement 0
 	return
 
 Route119_EventScript_SetRivalPos1:: @ 81513D2
-	setobjectxyperm 16, 25, 32
-	setobjectxyperm 25, 25, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL, 25, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 25, 32
 	return
 
 Route119_EventScript_SetRivalPos2:: @ 81513E1
-	setobjectxyperm 16, 26, 32
-	setobjectxyperm 25, 26, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL, 26, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 26, 32
 	return
 
 Route119_Movement_RivalEnter1:: @ 81513F0

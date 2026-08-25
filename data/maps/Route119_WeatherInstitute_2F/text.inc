@@ -24,7 +24,7 @@ Route119_WeatherInstitute_2F_Text_Grunt4PostBattle:: @ 819EFE9
 	.string "TEAM {EVIL_TEAM} are working towards!\l"
 	.string "You stay out of our way!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5Intro:: @ 819F042
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminIntro:: @ 819F042
 	.string "Ahahahaha!\p"
 	.string "You're going to meddle in TEAM {EVIL_TEAM}'s\n"
 	.string "affairs?\p"
@@ -33,11 +33,11 @@ Route119_WeatherInstitute_2F_Text_Grunt5Intro:: @ 819F042
 	.string "You're so cute, you're disgusting!\n"
 	.string "I'll put you down, kiddy!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5Defeat:: @ 819F0F4
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminDefeat:: @ 819F0F4
 	.string "Ahahahaha!\n"
 	.string "You're disgustingly strong!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5PostBattle:: @ 819F11B
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminPostBattle:: @ 819F11B
 	.string "Ahahahaha!\n"
 	.string "We got meddled with unexpectedly!\p"
 	.string "We're out of options.\n"

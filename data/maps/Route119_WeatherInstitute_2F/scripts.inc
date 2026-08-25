@@ -11,13 +11,13 @@ Route119_WeatherInstitute_2F_OnTransition:: @ 8163CC8
 	end
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPositionBeforeBattle:: @ 8163CE4
-	setobjectxyperm 5, 1, 6
-	setobjectmovementtype 5, 10
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 1, 6
+	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPositionAfterBattle:: @ 8163CF0
-	setobjectxyperm 5, 4, 6
-	setobjectmovementtype 5, 10
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 4, 6
+	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route119_WeatherInstitute_2F_EventScript_Grunt3:: @ 8163CFC
@@ -30,26 +30,26 @@ Route119_WeatherInstitute_2F_EventScript_Grunt4:: @ 8163D13
 	msgbox Route119_WeatherInstitute_2F_Text_Grunt4PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_2F_EventScript_Grunt5:: @ 8163D2A
-	trainerbattle_single TRAINER_WEATHER_INSTITUTE_GRUNT_5, Route119_WeatherInstitute_2F_Text_Grunt5Intro, Route119_WeatherInstitute_2F_Text_Grunt5Defeat, Route119_WeatherInstitute_2F_EventScript_Grunt5Defeated
-	msgbox Route119_WeatherInstitute_2F_Text_Grunt5PostBattle, MSGBOX_AUTOCLOSE
+Route119_WeatherInstitute_2F_EventScript_EvilTeamAdmin:: @ 8163D2A
+	trainerbattle_single TRAINER_WEATHER_INSTITUTE_EVIL_TEAM_ADMIN, Route119_WeatherInstitute_2F_Text_EvilTeamAdminIntro, Route119_WeatherInstitute_2F_Text_EvilTeamAdminDefeat, Route119_WeatherInstitute_2F_EventScript_EvilTeamAdminDefeated
+	msgbox Route119_WeatherInstitute_2F_Text_EvilTeamAdminPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route119_WeatherInstitute_2F_EventScript_Grunt5Defeated:: @ 8163D45
-	msgbox Route119_WeatherInstitute_2F_Text_Grunt5PostBattle, MSGBOX_DEFAULT
+Route119_WeatherInstitute_2F_EventScript_EvilTeamAdminDefeated:: @ 8163D45
+	msgbox Route119_WeatherInstitute_2F_Text_EvilTeamAdminPostBattle, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_WEATHER_INSTITUTE_STATE, 1
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_WORKERS_2F
 	fadedefaultbgm
 	fadescreen FADE_TO_BLACK
 	setflag FLAG_HIDE_EVIL_TEAM_WEATHER_INSTITUTE
-	removeobject 1
-	removeobject 2
-	removeobject 3
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_GRUNT_3
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_GRUNT_4
+	removeobject LOCALID_WEATHER_INSTITUTE_2F_EVIL_TEAM_ADMIN
 	fadescreen FADE_FROM_BLACK
-	applymovement 5, Route119_WeatherInstitute_2F_Movement_Exit
+	applymovement LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, Route119_WeatherInstitute_2F_Movement_Exit
 	waitmovement 0
-	moveobjectoffscreen 5
+	moveobjectoffscreen LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST
 	goto Route119_WeatherInstitute_2F_EventScript_GiveCastform
 	end
 

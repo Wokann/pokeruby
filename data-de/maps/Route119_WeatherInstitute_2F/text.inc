@@ -25,7 +25,7 @@ Route119_WeatherInstitute_2F_Text_Grunt4PostBattle:: @ 819EFE9
 	.string "vom TEAM {EVIL_TEAM} vorbereiten!\l"
 	.string "Geh uns gefälligst aus dem Weg!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5Intro:: @ 819F042
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminIntro:: @ 819F042
 	.string "Ahahahahaha!!!\p"
 	.string "Du willst dich allen Ernstes in die Ange-\n"
 	.string "legenheiten von TEAM {EVIL_TEAM} einmischen?\p"
@@ -34,11 +34,11 @@ Route119_WeatherInstitute_2F_Text_Grunt5Intro:: @ 819F042
 	.string "Du bist ja so niedlich. Einfach widerlich!\n"
 	.string "Ich mach dich fertig, du Baby!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5Defeat:: @ 819F0F4
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminDefeat:: @ 819F0F4
 	.string "Ahahahahaha!!!!!\n"
 	.string "Du bist einfach widerlich... stark!$"
 
-Route119_WeatherInstitute_2F_Text_Grunt5PostBattle:: @ 819F11B
+Route119_WeatherInstitute_2F_Text_EvilTeamAdminPostBattle:: @ 819F11B
 	.string "Ahahahahaha! Wir wurden von\n"
 	.string "Unvorhergesehenem gestört!\p"
 	.string "Wir haben keine Möglichkeiten mehr. Wir\n"

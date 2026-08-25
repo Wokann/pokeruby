@@ -9,8 +9,8 @@ Route119_WeatherInstitute_1F_OnTransition:: @ 8163C30
 	end
 
 Route119_WeatherInstitute_1F_EventScript_SetLittleBoyPosition:: @ 8163C41
-	setobjectxyperm 5, 0, 5
-	setobjectmovementtype 5, 10
+	setobjectxyperm LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, 0, 5
+	setobjectmovementtype LOCALID_WEATHER_INSTITUTE_LITTLE_BOY, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route119_WeatherInstitute_1F_EventScript_LittleBoy:: @ 8163C4D
