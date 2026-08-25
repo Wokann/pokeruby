@@ -23,7 +23,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route110_TrickHouseEntrance_EventScript_TrickMaster",
-      "flag": "FLAG_HIDE_TRICKMASTER_ENTRANCE"
+      "flag": "FLAG_HIDE_TRICK_HOUSE_ENTRANCE_MAN"
     }
   ],
   "warp_events": [
@@ -55,7 +55,7 @@
       "x": 4,
       "y": 7,
       "elevation": 3,
-      "var": "VAR_TRICK_HOUSE_ENTRANCE_STATE",
+      "var": "VAR_TRICK_HOUSE_BEING_WATCHED_STATE",
       "var_value": "0",
       "script": "Route110_TrickHouseEntrance_EventScript_TrickMasterHiding"
     },
@@ -64,7 +64,7 @@
       "x": 5,
       "y": 6,
       "elevation": 3,
-      "var": "VAR_TRICK_HOUSE_ENTRANCE_STATE",
+      "var": "VAR_TRICK_HOUSE_BEING_WATCHED_STATE",
       "var_value": "0",
       "script": "Route110_TrickHouseEntrance_EventScript_TrickMasterHiding"
     },
@@ -73,7 +73,7 @@
       "x": 6,
       "y": 6,
       "elevation": 3,
-      "var": "VAR_TRICK_HOUSE_ENTRANCE_STATE",
+      "var": "VAR_TRICK_HOUSE_BEING_WATCHED_STATE",
       "var_value": "0",
       "script": "Route110_TrickHouseEntrance_EventScript_TrickMasterHiding"
     },
@@ -82,7 +82,7 @@
       "x": 7,
       "y": 7,
       "elevation": 3,
-      "var": "VAR_TRICK_HOUSE_ENTRANCE_STATE",
+      "var": "VAR_TRICK_HOUSE_BEING_WATCHED_STATE",
       "var_value": "0",
       "script": "Route110_TrickHouseEntrance_EventScript_TrickMasterHiding"
     }

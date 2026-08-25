@@ -45,7 +45,7 @@ Route110_TrickHouseEnd_EventScript_TrickMaster:: @ 816199E
 	faceplayer
 	msgbox Route110_TrickHouseEnd_Text_YouveMadeItToMe, MSGBOX_DEFAULT
 	setvar VAR_TEMP_2, 1
-	switch VAR_TRICK_HOUSE_ROOMS_COMPLETED
+	switch VAR_TRICK_HOUSE_LEVEL
 	case 0, Route110_TrickHouseEnd_EventScript_CompletedPuzzle1
 	case 1, Route110_TrickHouseEnd_EventScript_CompletedPuzzle2
 	case 2, Route110_TrickHouseEnd_EventScript_CompletedPuzzle3
@@ -186,7 +186,7 @@ Route110_TrickHouseEnd_EventScript_TrickMasterExit:: @ 8161C2E
 	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouseEnd_Movement_TrickMasterJumpAway
 	waitmovement 0
 	removeobject LOCALID_TRICK_MASTER_END
-	addvar VAR_TRICK_HOUSE_ROOMS_COMPLETED, 1
+	addvar VAR_TRICK_HOUSE_LEVEL, 1
 	return
 
 Route110_TrickHouseEnd_EventScript_BagFull:: @ 8161C4E
