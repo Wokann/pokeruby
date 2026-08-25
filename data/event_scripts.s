@@ -1109,14 +1109,14 @@ gText_NurseJoy_Pokerus:: @ 81A1275
 
 	.include "data/text/surf.inc"
 
-SealedChamber_InnerRoom_Text_1A138B:: @ 81A138B
+SealedChamber_InnerRoom_Text_DoorOpenedFarAway:: @ 81A138B
 	.string "It sounded as if a door opened\n"
 	.string "somewhere far away.$"
 
 AncientTomb_Text_1A13BE:: @ 81A13BE
 DesertRuins_Text_1A13BE:: @ 81A13BE
 IslandCave_Text_1A13BE:: @ 81A13BE
-SealedChamber_OuterRoom_Text_1A13BE:: @ 81A13BE
+SealedChamber_OuterRoom_Text_HoleInWall:: @ 81A13BE
 	.string "There is a big hole in the wall.$"
 
 OldaleTown_PokemonCenter_2F_Text_1A13DF:: @ 81A13DF

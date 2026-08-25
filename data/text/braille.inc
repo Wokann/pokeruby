@@ -84,7 +84,7 @@ SealedChamber_InnerRoom_Braille_ThoseWithCourageHope:
 	.braille "THOSE WITH\n"
 	.braille "HOPE.$"
 
-SealedChamber_InnerRoom_Braille_1C549B:
+SealedChamber_InnerRoom_Braille_OpenDoorEternalPokemonWaits:
 	brailleformat 2, 0, 28, 19, 4, 3
 	.braille "OPEN A DOOR.\n"
 	.braille "AN ETERNAL\n"
