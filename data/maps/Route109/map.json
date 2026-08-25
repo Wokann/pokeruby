@@ -34,7 +34,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109"
+      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT"
     },
     {
       "local_id": "LOCALID_ROUTE109_BRINEY",
@@ -48,7 +48,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route109_EventScript_MrBriney",
-      "flag": "FLAG_HIDE_MR_BRINEY_ROUTE109"
+      "flag": "FLAG_HIDE_ROUTE_109_MR_BRINEY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
@@ -152,7 +152,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route109_EventScript_ItemPPUp",
-      "flag": "FLAG_ITEM_ROUTE109_1"
+      "flag": "FLAG_ITEM_ROUTE_109_PP_UP"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_TUBER_F",
@@ -318,7 +318,7 @@
       "y": 23,
       "elevation": 3,
       "item": "ITEM_REVIVE",
-      "flag": "FLAG_HIDDEN_ITEM_32"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_REVIVE"
     },
     {
       "type": "hidden_item",
@@ -326,7 +326,7 @@
       "y": 5,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_34"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_HEART_SCALE_1"
     },
     {
       "type": "hidden_item",
@@ -334,7 +334,7 @@
       "y": 10,
       "elevation": 3,
       "item": "ITEM_GREAT_BALL",
-      "flag": "FLAG_HIDDEN_ITEM_33"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_GREAT_BALL"
     },
     {
       "type": "hidden_item",
@@ -342,7 +342,7 @@
       "y": 20,
       "elevation": 3,
       "item": "ITEM_ETHER",
-      "flag": "FLAG_HIDDEN_ITEM_40"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_ETHER"
     },
     {
       "type": "hidden_item",
@@ -350,7 +350,7 @@
       "y": 16,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5A"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_HEART_SCALE_2"
     },
     {
       "type": "hidden_item",
@@ -358,7 +358,7 @@
       "y": 42,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_5B"
+      "flag": "FLAG_HIDDEN_ITEM_ROUTE_109_HEART_SCALE_3"
     }
   ]
 }
