@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "JaggedPass_EventScript_15D285",
+      "script": "JaggedPass_EventScript_Eric",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "JaggedPass_EventScript_15D2DA",
+      "script": "JaggedPass_EventScript_Ethan",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "JaggedPass_EventScript_1B17D4",
+      "script": "JaggedPass_EventScript_ItemBurnHeal",
       "flag": "FLAG_ITEM_JAGGED_PASS_1"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "JaggedPass_EventScript_15D29C",
+      "script": "JaggedPass_EventScript_Diana",
       "flag": "0"
     }
   ],

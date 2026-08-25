@@ -282,7 +282,7 @@ GraniteCave_B2F_EventScript_1B17C7:: @ 81B17C7
 	finditem ITEM_RARE_CANDY
 	end
 
-JaggedPass_EventScript_1B17D4:: @ 81B17D4
+JaggedPass_EventScript_ItemBurnHeal:: @ 81B17D4
 	finditem ITEM_BURN_HEAL
 	end
 
