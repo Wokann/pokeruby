@@ -1,4 +1,4 @@
-FallarborTown_House2_MapScripts:: @ 8153C90
+FallarborTown_MoveRelearnersHouse_MapScripts:: @ 8153C90
 	.byte 0
 
 FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
