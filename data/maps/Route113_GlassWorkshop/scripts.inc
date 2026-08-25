@@ -182,15 +182,15 @@ Route113_GlassWorkshop_EventScript_CancelGlassItemSelect:: @ 816380E
 
 Route113_GlassWorkshop_EventScript_NotEnoughAsh:: @ 8163818
 	setvar VAR_0x800A, LOWEST_ASH_PRICE
-	subvar VAR_0x800A, 16456
-	buffernumberstring 0, 32778
+	subvar VAR_0x800A, VAR_ASH_GATHER_COUNT
+	buffernumberstring 0, VAR_0x800A
 	msgbox Route113_GlassWorkshop_Text_NotEnoughAshNeedX, MSGBOX_DEFAULT
 	release
 	end
 
 Route113_GlassWorkshop_EventScript_NotEnoughAshForItem:: @ 8163830
-	subvar VAR_0x800A, 16456
-	buffernumberstring 1, 32778
+	subvar VAR_0x800A, VAR_ASH_GATHER_COUNT
+	buffernumberstring 1, VAR_0x800A
 	message Route113_GlassWorkshop_Text_NotEnoughAshToMakeItem
 	waitmessage
 	goto Route113_GlassWorkshop_EventScript_ChooseGlassItem
