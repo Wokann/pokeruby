@@ -1,7 +1,7 @@
 #include "constants/mauville_man.h"
 
 MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan:: @ 81AE744
-	special ScrSpecial_GetCurrentMauvilleMan
+	special Script_GetCurrentMauvilleMan
 	switch VAR_RESULT
 	case MAUVILLE_MAN_BARD,        MauvilleCity_PokemonCenter_1F_EventScript_Bard
 	case MAUVILLE_MAN_HIPSTER,     MauvilleCity_PokemonCenter_1F_EventScript_Hipster
@@ -28,9 +28,9 @@ MauvilleCity_PokemonCenter_1F_EventScript_Bard::
 MauvilleCity_PokemonCenter_1F_EventScript_PlaySong::
 	setvar VAR_0x8004, 0
 	@ Give the player ear rape
-	special ScrSpecial_PlayBardSong
+	special PlayBardSong
 	delay 60
-	special ScrSpecial_HasBardSongBeenChanged
+	special HasBardSongBeenChanged
 	compare VAR_RESULT, FALSE
 	@ Prompt new lyrics only if song hasn't been changed
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_AskToWriteLyrics
@@ -61,12 +61,12 @@ MauvilleCity_PokemonCenter_1F_EventScript_WriteLyrics::
 	msgbox MauvilleCity_PokemonCenter_1F_Text_LetMeSingItForYou, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 1
 	@ Give the player ear rape again
-	special ScrSpecial_PlayBardSong
+	special PlayBardSong
 	delay 60
 	msgbox MauvilleCity_PokemonCenter_1F_Text_ThatHowYouWantedSongToGo, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_WriteLyrics		@ Keep looping until player responds YES
-	special ScrSpecial_SaveBardSongLyrics
+	special SaveBardSongLyrics
 	msgbox MauvilleCity_PokemonCenter_1F_Text_IllSingThisSongForAWhile, MSGBOX_DEFAULT
 	release
 	end
@@ -86,7 +86,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_Hipster::
 	faceplayer
 	setflag FLAG_SYS_HIPSTER_MEET
 	msgbox MauvilleCity_PokemonCenter_1F_Text_TeachWhatsHipAndHappening, MSGBOX_DEFAULT
-	special ScrSpecial_GetHipsterSpokenFlag
+	special HasHipsterTaughtWord
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_TryTeachWord
 	msgbox MauvilleCity_PokemonCenter_1F_Text_IAlreadyTaughtYou, MSGBOX_DEFAULT
@@ -94,7 +94,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_Hipster::
 	end
 
 MauvilleCity_PokemonCenter_1F_EventScript_TryTeachWord::
-	special ScrSpecial_HipsterTeachWord
+	special HipsterTryTeachWord
 	compare VAR_RESULT, TRUE		@ TRUE if player learned a new word
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_TeachWord
 	msgbox MauvilleCity_PokemonCenter_1F_Text_IveGotNothingNewToTeach, MSGBOX_DEFAULT
@@ -103,7 +103,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_TryTeachWord::
 
 MauvilleCity_PokemonCenter_1F_EventScript_TeachWord::
 	msgbox MauvilleCity_PokemonCenter_1F_Text_HaveYouHeardOfWord, MSGBOX_DEFAULT
-	special ScrSpecial_SetHipsterSpokenFlag
+	special SetHipsterTaughtWord
 	release
 	end
 
@@ -220,21 +220,21 @@ MauvilleCity_PokemonCenter_1F_EventScript_Storyteller::
 	msgbox MauvilleCity_PokemonCenter_1F_Text_WillYouHearMyTale, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_DeclineStoryteller
-	specialvar VAR_RESULT, ScrSpecial_StorytellerGetFreeStorySlot
+	specialvar VAR_RESULT, StorytellerGetFreeStorySlot
 	compare VAR_RESULT, 0		@ If slot is 0, then the list is empty
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_KnowNoTales
 MauvilleCity_PokemonCenter_1F_EventScript_ChooseStory::
 	message MauvilleCity_PokemonCenter_1F_Text_WhichTaleToTell
 	waitmessage
-	special ScrSpecial_StorytellerStoryListMenu
+	special StorytellerStoryListMenu
 	waitstate
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_CancelStorySelection
 	setvar VAR_0x8008, 1
-	special ScrSpecial_StorytellerDisplayStory
+	special Script_StorytellerDisplayStory
 	waitmessage
 	waitbuttonpress
-	specialvar VAR_RESULT, ScrSpecial_StorytellerUpdateStat
+	specialvar VAR_RESULT, StorytellerUpdateStat
 	compare VAR_RESULT, FALSE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_AskToHearAnotherTale
 	goto MauvilleCity_PokemonCenter_1F_EventScript_TellPlayersTale
@@ -248,10 +248,10 @@ MauvilleCity_PokemonCenter_1F_EventScript_AskToHearAnotherTale::
 	compare VAR_RESULT, YES
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_ChooseStory
 MauvilleCity_PokemonCenter_1F_EventScript_TryRecordStory::
-	specialvar VAR_RESULT, ScrSpecial_HasStorytellerAlreadyRecorded
+	specialvar VAR_RESULT, HasStorytellerAlreadyRecorded
 	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_StorytellerNoMoreTales		@ already recorded story
-	specialvar VAR_RESULT, ScrSpecial_StorytellerGetFreeStorySlot
+	specialvar VAR_RESULT, StorytellerGetFreeStorySlot
 	compare VAR_RESULT, 4
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_StorytellerNoMoreTales		@ story list is full
 	goto MauvilleCity_PokemonCenter_1F_EventScript_DoYouHaveAnyTales
@@ -261,7 +261,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_DoYouHaveAnyTales::
 	msgbox MauvilleCity_PokemonCenter_1F_Text_HaveYouAnyLegendaryTales, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_DeclineStoryteller
-	specialvar VAR_RESULT, ScrSpecial_StorytellerInitializeRandomStat
+	specialvar VAR_RESULT, Script_StorytellerInitializeRandomStat
 	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_TellPlayersTale
 	msgbox MauvilleCity_PokemonCenter_1F_Text_NotWorthyOfLegend, MSGBOX_DEFAULT
@@ -305,7 +305,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_Giddy::
 	end
 
 MauvilleCity_PokemonCenter_1F_EventScript_TryTellTale::
-	special ScrSpecial_GiddyShouldTellAnotherTale
+	special GiddyShouldTellAnotherTale
 	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_GiddyTellTale
 	compare VAR_RESULT, FALSE
@@ -313,7 +313,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_TryTellTale::
 	end
 
 MauvilleCity_PokemonCenter_1F_EventScript_TryTellNewTale::
-	special ScrSpecial_GiddyShouldTellAnotherTale
+	special GiddyShouldTellAnotherTale
 	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_PokemonCenter_1F_EventScript_GiddyStartNewTale
 	compare VAR_RESULT, FALSE
@@ -326,7 +326,7 @@ MauvilleCity_PokemonCenter_1F_EventScript_GiddyStartNewTale::
 	end
 
 MauvilleCity_PokemonCenter_1F_EventScript_GiddyTellTale::
-	special ScrSpecial_GenerateGiddyLine
+	special GenerateGiddyLine
 	special ShowFieldMessageStringVar4
 	waitmessage
 	yesnobox 20, 8

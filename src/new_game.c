@@ -197,7 +197,7 @@ void NewGameInitData(void)
     ClearPokeblocks();
     ClearDecorationInventories();
     InitEasyChatPhrases();
-    SetupMauvilleOldMan();
+    SetMauvilleOldMan();
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();

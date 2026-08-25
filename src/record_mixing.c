@@ -445,7 +445,7 @@ void ReceiveOldManData(u8 *a, size_t size, u8 index)
     //Probably not how it was originally written, but this matches.
     memcpy(a + index * size, (ptr = recordMixingMauvilleMan), 0x40);
     memcpy(ptr, a + arr[index] * size, 0x40);
-    sub_80F7F30();
+    ResetMauvilleOldManFlag();
 }
 
 void ReceiveBattleTowerData(void *battleTowerRecord, u32 size, u8 index)

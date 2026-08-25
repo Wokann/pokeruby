@@ -289,7 +289,7 @@ SYMBOL(gUnknown_03005D38, 4)
 #endif
 
 // mauville_man.c
-SYMBOL(gUnknown_03005DA0, 0x48)
+SYMBOL(gBardSong, 0x48)
 
 // contest_painting_effects.c
 SYMBOL(gCanvasColumnStart, 4)

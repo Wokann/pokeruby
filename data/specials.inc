@@ -105,22 +105,22 @@ gSpecials::
 	def_special DoWateringBerryTreeAnim
 	def_special ShowEasyChatScreen
 	def_special sub_80EB7C4
-	def_special ScrSpecial_GetCurrentMauvilleMan
-	def_special ScrSpecial_HasBardSongBeenChanged
-	def_special ScrSpecial_SaveBardSongLyrics
-	def_special ScrSpecial_GetHipsterSpokenFlag
-	def_special ScrSpecial_SetHipsterSpokenFlag
-	def_special ScrSpecial_HipsterTeachWord
-	def_special ScrSpecial_PlayBardSong
+	def_special Script_GetCurrentMauvilleMan
+	def_special HasBardSongBeenChanged
+	def_special SaveBardSongLyrics
+	def_special HasHipsterTaughtWord
+	def_special SetHipsterTaughtWord
+	def_special HipsterTryTeachWord
+	def_special PlayBardSong
 	def_special SetMauvilleOldManObjEventGfx
-	def_special ScrSpecial_GenerateGiddyLine
-	def_special ScrSpecial_GiddyShouldTellAnotherTale
-	def_special ScrSpecial_StorytellerGetFreeStorySlot
-	def_special ScrSpecial_StorytellerDisplayStory
-	def_special ScrSpecial_StorytellerStoryListMenu
-	def_special ScrSpecial_StorytellerUpdateStat
-	def_special ScrSpecial_StorytellerInitializeRandomStat
-	def_special ScrSpecial_HasStorytellerAlreadyRecorded
+	def_special GenerateGiddyLine
+	def_special GiddyShouldTellAnotherTale
+	def_special StorytellerGetFreeStorySlot
+	def_special Script_StorytellerDisplayStory
+	def_special StorytellerStoryListMenu
+	def_special StorytellerUpdateStat
+	def_special Script_StorytellerInitializeRandomStat
+	def_special HasStorytellerAlreadyRecorded
 	def_special ScrSpecial_TraderMenuGetDecoration
 	def_special ScrSpecial_GetTraderTradedFlag
 	def_special ScrSpecial_DoesPlayerHaveNoDecorations
