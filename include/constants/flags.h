@@ -614,7 +614,7 @@
 #define FLAG_HIDE_KECLEON_ROUTE119_2        0x3DE
 #define FLAG_HIDE_ROUTE_101_BOY              0x3DF
 
-#define FLAG_ITEM_ROUTE102_1                0x3E8
+#define FLAG_ITEM_ROUTE_102_POTION          0x3E8
 #define FLAG_ITEM_ROUTE116_1                0x3E9
 #define FLAG_ITEM_ROUTE104_1                0x3EA
 #define FLAG_ITEM_ROUTE105_1                0x3EB
