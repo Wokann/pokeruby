@@ -17,7 +17,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes:: @ 8152660
 
 LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual:: @ 8152673
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	goto_if_eq LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
@@ -35,18 +35,18 @@ LittlerootTown_BrendansHouse_1F_OnTransition:: @ 815268A
 	end
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs:: @ 81526AC
-	setobjectxyperm 1, 8, 4
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 8, 4
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV:: @ 81526B8
-	setobjectxyperm 1, 4, 5
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 4, 5
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor:: @ 81526C4
-	setobjectxyperm 1, 9, 8
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 9, 8
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_BrendansHouse_1F_OnFrame:: @ 81526D0
@@ -62,7 +62,7 @@ LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock:: @ 81526FA
 	msgbox PlayersHouse_1F_Text_GoSetTheClock, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
-	applymovement 1, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
+	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
 	waitmovement 0
 	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 255, 7, 1
 	waitstate
@@ -75,27 +75,27 @@ LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs:: @ 8152720
 
 LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn:: @ 8152722
 	lockall
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 0
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, MALE
 	goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
 	end
 
 LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport:: @ 8152733
 	lockall
-	setvar VAR_0x8004, 0
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, MALE
+	setvar VAR_0x8005, LOCALID_PLAYERS_HOUSE_1F_MOM
 	goto PlayersHouse_1F_EventScript_PetalburgGymReportMale
 	end
 
 LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor:: @ 8152744
 	lockall
 	playse SE_PIN
-	applymovement 4, Common_Movement_ExclamationMark
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 4, Common_Movement_Delay48
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 4, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
 	waitmovement 0
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_OhYoureTheNewNeighbor, MSGBOX_DEFAULT
@@ -115,8 +115,8 @@ LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach:: @ 8152782
 
 LittlerootTown_BrendansHouse_1F_EventScript_GoSeeRoom:: @ 8152789
 	lockall
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 0
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, MALE
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_MomGoSeeRoom

@@ -1,4 +1,4 @@
-UnknownString_8173A9D: @ 8173A9D
+LittlerootTown_ProfessorBirchsLab_Text_BirchBookshelf: @ 8173A9D
 	.string "POKéMON & IHRE LEBENSRÄUME...\n"
 	.string "DIE KOEXISTENZ VON MENSCH & POKéMON...\l"
 	.string "POKéMONOLOGIE FÜR ANFÄNGER...\p"

@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_PLAYERS_HOUSE_1F_MOM",
       "graphics_id": "OBJ_EVENT_GFX_MOM",
       "x": 2,
       "y": 6,
@@ -21,7 +22,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "LittlerootTown_BrendansHouse_1F_EventScript_1B6BE9",
+      "script": "PlayersHouse_1F_EventScript_Mom",
       "flag": "FLAG_HIDE_BRENDAN_MOM_DOWNSTAIRS"
     },
     {
@@ -34,7 +35,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "LittlerootTown_BrendansHouse_1F_EventScript_1B6CB9",
+      "script": "PlayersHouse_1F_EventScript_Machoke2",
       "flag": "FLAG_HIDE_MACHOKE_MOVER_2"
     },
     {
@@ -47,10 +48,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "LittlerootTown_BrendansHouse_1F_EventScript_1B6CA6",
+      "script": "PlayersHouse_1F_EventScript_Machoke1",
       "flag": "FLAG_HIDE_MACHOKE_MOVER_1"
     },
     {
+      "local_id": "LOCALID_RIVALS_HOUSE_1F_MOM",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
       "x": 2,
       "y": 7,
@@ -64,6 +66,7 @@
       "flag": "FLAG_HIDE_BRENDAN_MOM"
     },
     {
+      "local_id": "LOCALID_PLAYERS_HOUSE_1F_DAD",
       "graphics_id": "OBJ_EVENT_GFX_NORMAN",
       "x": 5,
       "y": 6,

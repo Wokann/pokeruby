@@ -10,11 +10,11 @@ LittlerootTown_ProfessorBirchsLab_OnTransition:: @ 8152C92
 	end
 
 LittlerootTown_ProfessorBirchsLab_OnWarp:: @ 8152C9D
-	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_152CA7
+	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_TurnPlayerNorth
 	.2byte 0
 
-LittlerootTown_ProfessorBirchsLab_EventScript_152CA7:: @ 8152CA7
-	turnobject LOCALID_PLAYER, 2
+LittlerootTown_ProfessorBirchsLab_EventScript_TurnPlayerNorth:: @ 8152CA7
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
 LittlerootTown_ProfessorBirchsLab_OnFrame:: @ 8152CAC
@@ -103,7 +103,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter:: @ 8152D90
 	release
 	end
 
-LittlerootTown_ProfessorBirchsLab_EventScript_152D9A:: @ 8152D9A
+LittlerootTown_ProfessorBirchsLab_EventScript_Birch:: @ 8152D9A
 	lock
 	faceplayer
 	goto_if_unset FLAG_UNKNOWN_BIRCH_380, ProfBirch_EventScript_AskRatePokedex
@@ -117,14 +117,14 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex, MSGBOX_DEFAULT
 	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
-	applymovement 3, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
+	applymovement LOCALID_BIRCHS_LAB_RIVAL, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls
 	setvar VAR_BIRCH_LAB_STATE, 5
 	setflag FLAG_ADVENTURE_STARTED
@@ -186,9 +186,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Rival:: @ 8152EA3
 	lock
 	faceplayer
 	checkplayergender
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, MALE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	call_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext
 	release
 	end

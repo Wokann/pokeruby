@@ -42,9 +42,9 @@ EventScript_1A6F01:
 
 EventScript_1A6F0B:
 	.ifdef SAPPHIRE
-	msgbox UnknownString_8172D30, MSGBOX_DEFAULT
+	msgbox PlayersHouse_1F_Text_LatiasEmergencyNews, MSGBOX_DEFAULT
 	.else
-	msgbox UnknownString_8172C50, MSGBOX_DEFAULT
+	msgbox PlayersHouse_1F_Text_LatiosEmergencyNews, MSGBOX_DEFAULT
 	.endif
 	special InitRoamer
 	clearflag FLAG_SYS_TV_LATI

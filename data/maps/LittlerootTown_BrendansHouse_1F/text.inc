@@ -81,7 +81,7 @@ PlayersHouse_1F_Text_TheresAMovieOnTV: @ 817288C
 	.string "keyboard.\p"
 	.string "Better get going!$"
 
-UnknownString_81728E3: @ 81728E3
+PlayersHouse_1F_Text_RunningShoesManual: @ 81728E3
 	.string "It's the instruction booklet for the\n"
 	.string "RUNNING SHOES.\p"
 	.string "“Press the B Button to run while\n"
@@ -120,7 +120,7 @@ PlayersHouse_1F_Text_DadShouldStayLonger:: @ 8172BBC
 	.string "while, but all he talks about is POKéMON.\p"
 	.string "He should relax and stay a little longer.$"
 
-UnknownString_8172C50: @ 8172C50
+PlayersHouse_1F_Text_LatiosEmergencyNews: @ 8172C50
 	.string "We bring you a special news bulletin.\p"
 	.string "We've received reports of a blue FLYING\n"
 	.string "POKéMON in various HOENN locales.\p"
@@ -129,7 +129,7 @@ UnknownString_8172C50: @ 8172C50
 	.string "We now return you to your regular\n"
 	.string "movie presentation.$"
 
-UnknownString_8172D30: @ 8172D30
+PlayersHouse_1F_Text_LatiasEmergencyNews: @ 8172D30
 	.string "We bring you a special news bulletin.\p"
 	.string "We've received reports of a red FLYING\n"
 	.string "POKéMON in various HOENN locales.\p"
@@ -138,5 +138,5 @@ UnknownString_8172D30: @ 8172D30
 	.string "We now return you to your regular\n"
 	.string "movie presentation.$"
 
-UnknownString_8172E0F: @ 8172E0F
+PlayersHouse_1F_Text_Machoke3: @ 8172E0F
 	.string "Gau gau!$"

@@ -62,7 +62,7 @@ extern u8 gUnknown_081A4363[];
 extern u8 gUnknown_081C346A[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
 extern u8 EventScript_RegionMap[];
-extern u8 S_RunningShoesManual[];
+extern u8 PlayersHouse_1F_EventScript_RunningShoesManual[];
 extern u8 EventScript_PictureBookshelf[];
 extern u8 EventScript_Bookshelf[];
 extern u8 EventScript_PokemonCenterBookshelf[];
@@ -469,7 +469,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     if (MetatileBehavior_IsRegionMap(metatileBehavior) == TRUE)
         return EventScript_RegionMap;
     if (MetatileBehavior_IsRunningShoesManual(metatileBehavior) == TRUE)
-        return S_RunningShoesManual;
+        return PlayersHouse_1F_EventScript_RunningShoesManual;
     if (MetatileBehavior_IsPictureBookShelf(metatileBehavior) == TRUE)
         return EventScript_PictureBookshelf;
     if (MetatileBehavior_IsBookShelf(metatileBehavior) == TRUE)

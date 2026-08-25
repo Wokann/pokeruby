@@ -17,7 +17,7 @@ LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes:: @ 815289E
 
 LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual:: @ 81528B1
 	checkplayergender
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FEMALE
 	goto_if_eq LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
@@ -35,18 +35,18 @@ LittlerootTown_MaysHouse_1F_OnTransition:: @ 81528C8
 	end
 
 LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs:: @ 81528EA
-	setobjectxyperm 1, 2, 4
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 2, 4
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV:: @ 81528F6
-	setobjectxyperm 1, 6, 5
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 6, 5
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor:: @ 8152902
-	setobjectxyperm 1, 1, 8
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 1, 8
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, 7
 	return
 
 LittlerootTown_MaysHouse_1F_OnFrame:: @ 815290E
@@ -62,7 +62,7 @@ LittlerootTown_MaysHouse_1F_EventScript_GoUpstairsToSetClock:: @ 8152938
 	msgbox PlayersHouse_1F_Text_GoSetTheClock, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs
-	applymovement 1, LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs
+	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs
 	waitmovement 0
 	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 255, 1, 1
 	waitstate
@@ -75,27 +75,27 @@ LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs:: @ 815295E
 
 LittlerootTown_MaysHouse_1F_EventScript_EnterHouseMovingIn:: @ 8152960
 	lockall
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, FEMALE
 	goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
 	end
 
 LittlerootTown_MaysHouse_1F_EventScript_PetalburgGymReport:: @ 8152971
 	lockall
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 1
-	goto LittlerootTown_MaysHouse_1F_EventScript_1B6B2E
+	setvar VAR_0x8004, FEMALE
+	setvar VAR_0x8005, LOCALID_PLAYERS_HOUSE_1F_MOM
+	goto PlayersHouse_1F_EventScript_PetalburgGymReportFemale
 	end
 
 LittlerootTown_MaysHouse_1F_EventScript_YoureNewNeighbor:: @ 8152982
 	lockall
 	playse SE_PIN
-	applymovement 4, Common_Movement_ExclamationMark
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 4, Common_Movement_Delay48
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
-	applymovement 4, LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach
 	waitmovement 0
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_OhYoureTheNewNeighbor, MSGBOX_DEFAULT
@@ -113,20 +113,20 @@ LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach:: @ 81529C0
 	walk_left
 	step_end
 
-@ 81529C7
+LittlerootTown_MaysHouse_1F_EventScript_ShowGymReportIfPlayerFemale:: @ 81529C7
 	lockall
 	checkplayergender
-	compare VAR_RESULT, 0
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_1529E1
-	compare VAR_RESULT, 1
-	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_1529E2
+	compare VAR_RESULT, MALE
+	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_ReturnIfPlayerMale
+	compare VAR_RESULT, FEMALE
+	call_if_eq LittlerootTown_MaysHouse_1F_EventScript_ShowPetalburgGymReport
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_1529E1:: @ 81529E1
+LittlerootTown_MaysHouse_1F_EventScript_ReturnIfPlayerMale:: @ 81529E1
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_1529E2:: @ 81529E2
+LittlerootTown_MaysHouse_1F_EventScript_ShowPetalburgGymReport:: @ 81529E2
 	msgbox PlayersHouse_1F_Text_ReportFromPetalburgGym, MSGBOX_DEFAULT
 	return
 
@@ -136,7 +136,7 @@ RivalsHouse_1F_EventScript_RivalMom:: @ 81529EB
 	goto_if_set FLAG_DEFEATED_RIVAL_ROUTE103, RivalsHouse_1F_EventScript_GoHomeEverySoOften
 	goto_if_set FLAG_RIVAL_LEFT_FOR_ROUTE103, RivalsHouse_1F_EventScript_RivalIsOutSomewhere
 	compare VAR_LITTLEROOT_RIVAL_STATE, 3
-	goto_if_eq LittlerootTown_BrendansHouse_1F_EventScript_WhereHasHusbandGone
+	goto_if_eq RivalsHouse_1F_EventScript_WhereHasHusbandGone
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_RivalIsUpstairsIThink, MSGBOX_DEFAULT
 	release
@@ -152,15 +152,15 @@ RivalsHouse_1F_EventScript_GoHomeEverySoOften:: @ 8152A21
 	release
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_WhereHasHusbandGone:: @ 8152A2B
+RivalsHouse_1F_EventScript_WhereHasHusbandGone:: @ 8152A2B
 	msgbox RivalsHouse_1F_Text_WhereHasHusbandGone, MSGBOX_DEFAULT
 	release
 	end
 
 LittlerootTown_MaysHouse_1F_EventScript_GoSeeRoom:: @ 8152A35
 	lockall
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, FEMALE
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_MomGoSeeRoom

@@ -12,12 +12,12 @@ PlayersHouse_2F_Text_HowDoYouLikeYourRoom:: @ 8172E4C
 	.string "Oh, you should make sure that\n"
 	.string "everything's all there on your desk.$"
 
-UnknownString_8172F31: @ 8172F31
+PlayersHouse_2F_Text_Bookshelf: @ 8172F31
 	.string "The bookshelf is lined entirely with\n"
 	.string "books on POKéMON.\p"
 	.string "It's {PLAYER}'s prized collection.$"
 
-UnknownString_8172F85: @ 8172F85
+PlayersHouse_2F_Text_PlayerBootPC: @ 8172F85
 	.string "{PLAYER} booted up the PC.$"
 
 PlayersHouse_2F_Text_Notebook:: @ 8172F9A

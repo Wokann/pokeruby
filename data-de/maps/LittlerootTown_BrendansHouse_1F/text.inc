@@ -88,7 +88,7 @@ PlayersHouse_1F_Text_TheresAMovieOnTV: @ 817288C
 	.string "Klaviertasten.\p"
 	.string "Aber es wird Zeit aufzubrechen!$"
 
-UnknownString_81728E3: @ 81728E3
+PlayersHouse_1F_Text_RunningShoesManual: @ 81728E3
 	.string "Das ist die Bedienungsanleitung für\n"
 	.string "die TURBOTRETER.\p"
 	.string "“Halte den B-Knopf gedrückt, um\n"
@@ -135,7 +135,7 @@ PlayersHouse_1F_Text_DadShouldStayLonger:: @ 8172BBC
 	.string "Er sollte sich lieber ausruhen und etwas\n"
 	.string "hier bleiben!$"
 
-UnknownString_8172C50: @ 8172C50
+PlayersHouse_1F_Text_LatiosEmergencyNews: @ 8172C50
 	.string "Hier sind die Sondernachrichten.\p"
 	.string "Wir haben die Meldung erhalten, dass in\n"
 	.string "der HOENN-Region ein blaues FLIEGENDES\l"
@@ -145,7 +145,7 @@ UnknownString_8172C50: @ 8172C50
 	.string "Und damit schalten wir wieder um in\n"
 	.string "unser laufendes Programm.$"
 
-UnknownString_8172D30: @ 8172D30
+PlayersHouse_1F_Text_LatiasEmergencyNews: @ 8172D30
 	.string "Hier sind die Sondernachrichten.\p"
 	.string "Wir haben die Meldung erhalten, dass in\n"
 	.string "der HOENN-Region ein rotes FLIEGENDES\l"
@@ -155,5 +155,5 @@ UnknownString_8172D30: @ 8172D30
 	.string "Und damit schalten wir wieder um in\n"
 	.string "unser laufendes Programm.$"
 
-UnknownString_8172E0F: @ 8172E0F
+PlayersHouse_1F_Text_Machoke3: @ 8172E0F
 	.string "Gau gau!$"

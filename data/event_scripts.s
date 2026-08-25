@@ -1571,8 +1571,8 @@ gUnknown_081B694A:: @ 81B694A
 
 	.include "data/scripts/players_house.inc"
 
-S_RunningShoesManual:: @ 81B6E5A
-	msgbox UnknownString_81728E3, MSGBOX_SIGN
+PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
+	msgbox PlayersHouse_1F_Text_RunningShoesManual, MSGBOX_SIGN
 	end
 
 	.include "data/text/pokeblocks.inc"
@@ -1647,7 +1647,7 @@ gUnknown_081C6C02:: @ 81C6C02
 
 @ 81C6C15
 	lockall
-	call LittlerootTown_BrendansHouse_2F_EventScript_1B6A9B
+	call PlayersHouse_2F_EventScript_SetWallClock
 	releaseall
 	end
 
