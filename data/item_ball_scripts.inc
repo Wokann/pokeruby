@@ -418,35 +418,35 @@ MtPyre_Exterior_EventScript_ItemTMSkillSwap:: @ 81B1981
 	finditem ITEM_TM48_SKILL_SWAP
 	end
 
-AquaHideout_B1F_EventScript_1B198E:: @ 81B198E
+AquaHideout_B1F_EventScript_ItemMasterBall:: @ 81B198E
 	finditem ITEM_MASTER_BALL
 	end
 
-AquaHideout_B1F_EventScript_1B199B:: @ 81B199B
+AquaHideout_B1F_EventScript_ItemNugget:: @ 81B199B
 	finditem ITEM_NUGGET
 	end
 
-AquaHideout_B1F_EventScript_1B19A8:: @ 81B19A8
+AquaHideout_B1F_EventScript_ItemMaxElixir:: @ 81B19A8
 	finditem ITEM_MAX_ELIXIR
 	end
 
-AquaHideout_B2F_EventScript_1B19B5:: @ 81B19B5
+AquaHideout_B2F_EventScript_ItemNestBall:: @ 81B19B5
 	finditem ITEM_NEST_BALL
 	end
 
-MagmaHideout_B1F_EventScript_1B19C2:: @ 81B19C2
+MagmaHideout_B1F_EventScript_ItemMasterBall:: @ 81B19C2
 	finditem ITEM_MASTER_BALL
 	end
 
-MagmaHideout_B1F_EventScript_1B19CF:: @ 81B19CF
+MagmaHideout_B1F_EventScript_ItemNugget:: @ 81B19CF
 	finditem ITEM_NUGGET
 	end
 
-MagmaHideout_B1F_EventScript_1B19DC:: @ 81B19DC
+MagmaHideout_B1F_EventScript_ItemMaxElixir:: @ 81B19DC
 	finditem ITEM_MAX_ELIXIR
 	end
 
-MagmaHideout_B2F_EventScript_1B19E9:: @ 81B19E9
+MagmaHideout_B2F_EventScript_ItemNestBall:: @ 81B19E9
 	finditem ITEM_NEST_BALL
 	end
 

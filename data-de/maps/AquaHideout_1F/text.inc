@@ -1,4 +1,4 @@
-AquaHideout_1F_Text_196AFD:: @ 8196AFD
+Hideout_1F_Text_OurBossIsSnatchingSomething:: @ 8196AFD
 	.string "Was? Wie? Was hast du mit TEAM {EVIL_TEAM} zu\n"
 	.string "schaffen?\p"
 	.string "Unser BOSS ist nicht hier! Er ist dabei,\n"
@@ -9,7 +9,7 @@ AquaHideout_1F_Text_196AFD:: @ 8196AFD
 	.string "Uahahaha! Du glaubst doch nicht im\n"
 	.string "Ernst, dass ich dir das verrate!?!$"
 
-AquaHideout_1F_Text_196BC5:: @ 8196BC5
+Hideout_1F_Text_BossWentToJackASubmarine:: @ 8196BC5
 	.string "Was? Wie? Was hast du mit TEAM {EVIL_TEAM} zu\n"
 	.string "schaffen?\p"
 	.string "Unser BOSS ist nicht hier! Er ist dabei,\n"
@@ -20,7 +20,7 @@ AquaHideout_1F_Text_196BC5:: @ 8196BC5
 	.string "Uahahaha! Du glaubst doch nicht im\n"
 	.string "Ernst, dass ich dir das verrate!?!$"
 
-AquaHideout_1F_Text_196C83:: @ 8196C83
+Hideout_1F_Text_BossIsOnRoute122:: @ 8196C83
 	.string "Was? Wie? Was hast du mit TEAM {EVIL_TEAM} zu\n"
 	.string "schaffen?\p"
 	.string "Unser BOSS ist nicht hier! Er ist auf dem\n"
@@ -30,7 +30,7 @@ AquaHideout_1F_Text_196C83:: @ 8196C83
 	.string "Uahahaha! Du glaubst doch nicht im\n"
 	.string "Ernst, dass ich dir das verrate!?!$"
 
-AquaHideout_1F_Text_196D46:: @ 8196D46
+Hideout_1F_Text_BossIsInSlateportCity:: @ 8196D46
 	.string "Was? Wie? Was hast du mit TEAM {EVIL_TEAM} zu\n"
 	.string "schaffen?\p"
 	.string "Unser BOSS ist nicht hier! Er ist auf dem\n"
@@ -40,14 +40,14 @@ AquaHideout_1F_Text_196D46:: @ 8196D46
 	.string "Uahahaha! Du glaubst doch nicht im\n"
 	.string "Ernst, dass ich dir das verrate!?!$"
 
-AquaHideout_1F_Text_196E01:: @ 8196E01
+Hideout_1F_Text_EvilTeamGrunt1Intro:: @ 8196E01
 	.string "Huhuuhuhuu!\n"
 	.string "Verdächtige Person gesichtet!$"
 
-AquaHideout_1F_Text_196E28:: @ 8196E28
+Hideout_1F_Text_EvilTeamGrunt1Defeat:: @ 8196E28
 	.string "Grrr...\n"
 	.string "Ich habe verloren!$"
 
-AquaHideout_1F_Text_196E3D:: @ 8196E3D
+Hideout_1F_Text_EvilTeamGrunt1PostBattle:: @ 8196E3D
 	.string "Nun hat das TEAM verloren, aber ich habe\n"
 	.string "meinen Job gemacht...$"

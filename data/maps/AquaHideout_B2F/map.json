@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "AquaHideout_B2F_EventScript_15D8E1",
+      "script": "AquaHideout_B2F_EventScript_EvilTeamAdmin",
       "flag": "FLAG_HIDE_GRUNTS_HIDEOUTS"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "AquaHideout_B2F_EventScript_15D962",
+      "script": "AquaHideout_B2F_EventScript_EvilTeamGrunt2",
       "flag": "FLAG_HIDE_GRUNTS_HIDEOUTS"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "AquaHideout_B2F_EventScript_1B19B5",
+      "script": "AquaHideout_B2F_EventScript_ItemNestBall",
       "flag": "FLAG_ITEM_AQUA_HIDEOUT_B2F_1"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "4",
-      "script": "AquaHideout_B2F_EventScript_15D987",
+      "script": "AquaHideout_B2F_EventScript_EvilTeamGrunt3",
       "flag": "FLAG_HIDE_GRUNTS_HIDEOUTS"
     }
   ],
@@ -157,7 +157,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "AquaHideout_B2F_EventScript_15D8BD"
+      "script": "AquaHideout_B2F_EventScript_EvilTeamAdminNoticePlayer"
     },
     {
       "type": "trigger",
@@ -166,7 +166,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "AquaHideout_B2F_EventScript_15D8BD"
+      "script": "AquaHideout_B2F_EventScript_EvilTeamAdminNoticePlayer"
     }
   ],
   "bg_events": []

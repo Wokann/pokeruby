@@ -1,4 +1,4 @@
-AquaHideout_B2F_Text_197093:: @ 8197093
+Hideout_B2F_Text_EvilTeamAdminIntro:: @ 8197093
 	.string "Hehehehe... Du hast es tatsächlich\n"
 	.string "bis hierher geschafft?\p"
 	.string "Da haben wir dich wohl etwas\n"
@@ -9,16 +9,16 @@ AquaHideout_B2F_Text_197093:: @ 8197093
 	.string "Ich schinde keine Zeit heraus. Ich\n"
 	.string "werde dich pulverisieren!$"
 
-AquaHideout_B2F_Text_197145:: @ 8197145
+Hideout_B2F_Text_EvilTeamAdminDefeat:: @ 8197145
 	.string "Hehehe...\n"
 	.string "Dann habe ich eben auch verloren. Pöh.$"
 
-AquaHideout_B2F_Text_197162:: @ 8197162
+Hideout_B2F_Text_BossPreparedSubmarine:: @ 8197162
 	.string "Hehehe!\p"
 	.string "Während ich mit dir gespielt habe, hat\n"
 	.string "sich unser BOSS vorbereitet!$"
 
-AquaHideout_B2F_Text_1971AE:: @ 81971AE
+Hideout_B2F_Text_EvilTeamAdminPostBattle:: @ 81971AE
 	.string "Hehehe!\p"
 	.string "Unser BOSS ist schon unterwegs zu\n"
 	.string "einer Unterwasserhöhle!\p"
@@ -28,19 +28,19 @@ AquaHideout_B2F_Text_1971AE:: @ 81971AE
 	.string "Aber ob du ihn dort auch finden wirst?\n"
 	.string "Hehehehehehe...$"
 
-AquaHideout_B2F_Text_197270:: @ 8197270
+Hideout_B2F_Text_EvilTeamGrunt2Intro:: @ 8197270
 	.string "Wahahahah, ich bin müde vom Warten!\n"
 	.string "Du schuldest mir einen Kampf!$"
 
-AquaHideout_B2F_Text_1972AC:: @ 81972AC
+Hideout_B2F_Text_EvilTeamGrunt2Defeat:: @ 81972AC
 	.string "Des Wartens müde...\n"
 	.string "Gedöst und verloren...$"
 
-AquaHideout_B2F_Text_1972D2:: @ 81972D2
+Hideout_B2F_Text_EvilTeamGrunt2PostBattle:: @ 81972D2
 	.string "BOSS...\n"
 	.string "Reicht das aus?$"
 
-AquaHideout_B2F_Text_1972EF:: @ 81972EF
+Hideout_B2F_Text_EvilTeamGrunt3Intro:: @ 81972EF
 	.string "Teleporter... Der ganze Stolz des\n"
 	.string "VERSTECKS!\p"
 	.string "Du weißt gar nicht mehr, wo du gerade\n"
@@ -48,11 +48,11 @@ AquaHideout_B2F_Text_1972EF:: @ 81972EF
 	.string "Den Gegner verwirren, ermüden und dann\n"
 	.string "auf ihn mit Gebrüll! Das ist der Plan!$"
 
-AquaHideout_B2F_Text_197390:: @ 8197390
+Hideout_B2F_Text_EvilTeamGrunt3Defeat:: @ 8197390
 	.string "Was stimmt nicht mit dir?\n"
 	.string "Du bist ja überhaupt nicht müde!$"
 
-AquaHideout_B2F_Text_1973C0:: @ 81973C0
+Hideout_B2F_Text_EvilTeamGrunt3PostBattle:: @ 81973C0
 	.string "Da fällt mir ein... Wo habe ich nur den\n"
 	.string "MEISTERBALL hingelegt?\p"
 	.string "Wenn ich den verloren habe, zieht mir\n"

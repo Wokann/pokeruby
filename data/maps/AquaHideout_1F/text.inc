@@ -1,4 +1,4 @@
-AquaHideout_1F_Text_196AFD:: @ 8196AFD
+Hideout_1F_Text_OurBossIsSnatchingSomething:: @ 8196AFD
 	.string "What? What? What do you want with \n"
 	.string "TEAM {EVIL_TEAM}?\p"
 	.string "Our BOSS isn't here! He's gone off to\n"
@@ -8,7 +8,7 @@ AquaHideout_1F_Text_196AFD:: @ 8196AFD
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
-AquaHideout_1F_Text_196BC5:: @ 8196BC5
+Hideout_1F_Text_BossWentToJackASubmarine:: @ 8196BC5
 	.string "What? What? What do you want with \n"
 	.string "TEAM {EVIL_TEAM}?\p"
 	.string "Our BOSS isn't here!\n"
@@ -18,7 +18,7 @@ AquaHideout_1F_Text_196BC5:: @ 8196BC5
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
-AquaHideout_1F_Text_196C83:: @ 8196C83
+Hideout_1F_Text_BossIsOnRoute122:: @ 8196C83
 	.string "What? What? What do you want with \n"
 	.string "TEAM {EVIL_TEAM}?\p"
 	.string "Our BOSS isn't here! He's on his way to\n"
@@ -28,7 +28,7 @@ AquaHideout_1F_Text_196C83:: @ 8196C83
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
-AquaHideout_1F_Text_196D46:: @ 8196D46
+Hideout_1F_Text_BossIsInSlateportCity:: @ 8196D46
 	.string "What? What? What do you want with\n"
 	.string "TEAM {EVIL_TEAM}?\p"
 	.string "Our BOSS isn't here!\n"
@@ -38,14 +38,14 @@ AquaHideout_1F_Text_196D46:: @ 8196D46
 	.string "Wahaha! Do you really think I'd tell\n"
 	.string "you something that crucial?$"
 
-AquaHideout_1F_Text_196E01:: @ 8196E01
+Hideout_1F_Text_EvilTeamGrunt1Intro:: @ 8196E01
 	.string "Ayiyiyi!\n"
 	.string "Suspicious character spotted!$"
 
-AquaHideout_1F_Text_196E28:: @ 8196E28
+Hideout_1F_Text_EvilTeamGrunt1Defeat:: @ 8196E28
 	.string "Grrrrr...\n"
 	.string "I lost it!$"
 
-AquaHideout_1F_Text_196E3D:: @ 8196E3D
+Hideout_1F_Text_EvilTeamGrunt1PostBattle:: @ 8196E3D
 	.string "I took the loss for the TEAM, but\n"
 	.string "I did my job...$"

@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "5",
-      "script": "MagmaHideout_B1F_EventScript_15D850",
+      "script": "MagmaHideout_B1F_EventScript_EvilTeamGrunt1",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MagmaHideout_B1F_EventScript_15D875",
+      "script": "MagmaHideout_B1F_EventScript_EvilTeamGrunt2",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MagmaHideout_B1F_EventScript_15D89A",
+      "script": "MagmaHideout_B1F_EventScript_EvilTeamGrunt3",
       "flag": "0"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MagmaHideout_B1F_EventScript_1B19C2",
+      "script": "MagmaHideout_B1F_EventScript_ItemMasterBall",
       "flag": "FLAG_ITEM_MAGMA_HIDEOUT_B1F_1"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MagmaHideout_B1F_EventScript_1B19DC",
+      "script": "MagmaHideout_B1F_EventScript_ItemMaxElixir",
       "flag": "FLAG_ITEM_MAGMA_HIDEOUT_B1F_2"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MagmaHideout_B1F_EventScript_1B19CF",
+      "script": "MagmaHideout_B1F_EventScript_ItemNugget",
       "flag": "FLAG_ITEM_MAGMA_HIDEOUT_B1F_3"
     },
     {
