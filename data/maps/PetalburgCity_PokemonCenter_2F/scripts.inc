@@ -1,17 +1,17 @@
 PetalburgCity_PokemonCenter_2F_MapScripts:: @ 815528D
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_PokemonCenter_2F_MapScript2_1A3D88
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PetalburgCity_PokemonCenter_2F_MapScript2_1A3D03
-	map_script MAP_SCRIPT_ON_LOAD, PetalburgCity_PokemonCenter_2F_MapScript1_1A3D32
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, CableClub_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, CableClub_OnWarp
+	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	.byte 0
 
-PetalburgCity_PokemonCenter_2F_EventScript_15529D:: @ 815529D
-	call PetalburgCity_PokemonCenter_2F_EventScript_1A3EA6
+PetalburgCity_PokemonCenter_2F_EventScript_Colosseum:: @ 815529D
+	call CableClub_EventScript_Colosseum
 	end
 
-PetalburgCity_PokemonCenter_2F_EventScript_1552A3:: @ 81552A3
-	call PetalburgCity_PokemonCenter_2F_EventScript_1A40CC
+PetalburgCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 81552A3
+	call CableClub_EventScript_TradeCenter
 	end
 
-PetalburgCity_PokemonCenter_2F_EventScript_1552A9:: @ 81552A9
-	call PetalburgCity_PokemonCenter_2F_EventScript_1A41FB
+PetalburgCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 81552A9
+	call CableClub_EventScript_RecordCorner
 	end
