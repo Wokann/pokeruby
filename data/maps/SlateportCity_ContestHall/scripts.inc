@@ -1,112 +1,112 @@
 SlateportCity_ContestHall_MapScripts:: @ 815554B
 	.byte 0
 
-SlateportCity_ContestHall_EventScript_15554C:: @ 815554C
-	msgbox SlateportCity_ContestHall_Text_17CB71, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ContestMoveComboTip:: @ 815554C
+	msgbox SlateportCity_ContestHall_Text_ContestMoveComboTip, MSGBOX_NPC
 	end
 
-SlateportCity_ContestHall_EventScript_155555:: @ 8155555
-	msgbox SlateportCity_ContestHall_Text_17CC80, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ContestJudgeSon:: @ 8155555
+	msgbox SlateportCity_ContestHall_Text_ContestJudgeSon, MSGBOX_NPC
 	end
 
-SlateportCity_ContestHall_EventScript_15555E:: @ 815555E
+SlateportCity_ContestHall_EventScript_GiveTorment:: @ 815555E
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM41, SlateportCity_ContestHall_EventScript_155595
-	msgbox SlateportCity_ContestHall_Text_17CCE2, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECEIVED_TM41, SlateportCity_ContestHall_EventScript_ExplainTorment
+	msgbox SlateportCity_ContestHall_Text_GiveTorment, MSGBOX_DEFAULT
 	giveitem ITEM_TM41_TORMENT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM41
-	msgbox SlateportCity_ContestHall_Text_17CE28, MSGBOX_DEFAULT
+	msgbox SlateportCity_ContestHall_Text_ExplainTorment, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_ContestHall_EventScript_155595:: @ 8155595
-	msgbox SlateportCity_ContestHall_Text_17CE28, MSGBOX_DEFAULT
+SlateportCity_ContestHall_EventScript_ExplainTorment:: @ 8155595
+	msgbox SlateportCity_ContestHall_Text_ExplainTorment, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_ContestHall_EventScript_15559F:: @ 815559F
-	msgbox SlateportCity_ContestHall_Text_17CEF3, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ContestMC:: @ 815559F
+	msgbox SlateportCity_ContestHall_Text_ContestMC, MSGBOX_NPC
 	lockall
-	applymovement 3, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_MC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_1555B4:: @ 81555B4
-	msgbox SlateportCity_ContestHall_Text_17CFA7, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ContestJudge:: @ 81555B4
+	msgbox SlateportCity_ContestHall_Text_ContestJudge, MSGBOX_NPC
 	lockall
-	applymovement 4, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_JUDGE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_1555C9:: @ 81555C9
-	msgbox SlateportCity_ContestHall_Text_17D054, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_AppealTimeGirl:: @ 81555C9
+	msgbox SlateportCity_ContestHall_Text_AppealTime, MSGBOX_NPC
 	lockall
-	applymovement 5, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_GIRL, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_1555DE:: @ 81555DE
-	msgbox SlateportCity_ContestHall_Text_17D07F, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ComplainingContestant:: @ 81555DE
+	msgbox SlateportCity_ContestHall_Text_ComplainingContestant, MSGBOX_NPC
 	lockall
-	applymovement 6, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_COMPLAINING_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_1555F3:: @ 81555F3
-	msgbox SlateportCity_ContestHall_Text_17D0F9, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_AudienceExcitementTip:: @ 81555F3
+	msgbox SlateportCity_ContestHall_Text_AudienceExcitementTip, MSGBOX_NPC
 	lockall
-	applymovement 7, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_AUDIENCE_TIP_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_155608:: @ 8155608
-	msgbox SlateportCity_ContestHall_Text_17D222, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_NervousContestant:: @ 8155608
+	msgbox SlateportCity_ContestHall_Text_NervousContestant, MSGBOX_NPC
 	lockall
-	applymovement 8, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_NERVOUS_MAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_15561D:: @ 815561D
-	msgbox SlateportCity_ContestHall_Text_17D39A, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_BoastfulManiac:: @ 815561D
+	msgbox SlateportCity_ContestHall_Text_BoastfulManiac, MSGBOX_NPC
 	lockall
-	applymovement 9, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_BOASTFUL_MANIAC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_155632:: @ 8155632
-	msgbox SlateportCity_ContestHall_Text_17D3F0, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_ContestAppealFan:: @ 8155632
+	msgbox SlateportCity_ContestHall_Text_ContestAppealFan, MSGBOX_NPC
 	lockall
-	applymovement 10, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_FAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_155647:: @ 8155647
-	msgbox SlateportCity_ContestHall_Text_17D300, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_SecondaryJudgingTip:: @ 8155647
+	msgbox SlateportCity_ContestHall_Text_SecondaryJudgingTip, MSGBOX_NPC
 	lockall
-	applymovement 12, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_SECONDARY_JUDGING_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_15565C:: @ 815565C
-	msgbox SlateportCity_ContestHall_Text_17D27F, MSGBOX_NPC
+SlateportCity_ContestHall_EventScript_BattleAndContestTip:: @ 815565C
+	msgbox SlateportCity_ContestHall_Text_BattleAndContestTip, MSGBOX_NPC
 	lockall
-	applymovement 11, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_CONTEST_HALL_BATTLE_CONTEST_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_ContestHall_EventScript_155671:: @ 8155671
-	msgbox SlateportCity_ContestHall_Text_17D447, MSGBOX_SIGN
+SlateportCity_ContestHall_EventScript_HyperRankStageSign:: @ 8155671
+	msgbox SlateportCity_ContestHall_Text_HyperRankStage, MSGBOX_SIGN
 	end

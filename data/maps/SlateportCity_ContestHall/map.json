@@ -21,7 +21,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_15554C",
+      "script": "SlateportCity_ContestHall_EventScript_ContestMoveComboTip",
       "flag": "0"
     },
     {
@@ -34,10 +34,11 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_155555",
+      "script": "SlateportCity_ContestHall_EventScript_ContestJudgeSon",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_MC",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
       "x": 9,
       "y": 8,
@@ -47,10 +48,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_15559F",
+      "script": "SlateportCity_ContestHall_EventScript_ContestMC",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_JUDGE",
       "graphics_id": "OBJ_EVENT_GFX_CONTEST_JUDGE",
       "x": 12,
       "y": 8,
@@ -60,10 +62,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_1555B4",
+      "script": "SlateportCity_ContestHall_EventScript_ContestJudge",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_GIRL",
       "graphics_id": "OBJ_EVENT_GFX_GIRL_1",
       "x": 7,
       "y": 11,
@@ -73,10 +76,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_1555C9",
+      "script": "SlateportCity_ContestHall_EventScript_AppealTimeGirl",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_COMPLAINING_BOY",
       "graphics_id": "OBJ_EVENT_GFX_BOY_2",
       "x": 9,
       "y": 11,
@@ -86,10 +90,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_1555DE",
+      "script": "SlateportCity_ContestHall_EventScript_ComplainingContestant",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_AUDIENCE_TIP_BOY",
       "graphics_id": "OBJ_EVENT_GFX_BOY_1",
       "x": 11,
       "y": 11,
@@ -99,10 +104,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_1555F3",
+      "script": "SlateportCity_ContestHall_EventScript_AudienceExcitementTip",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_NERVOUS_MAN",
       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
       "x": 13,
       "y": 11,
@@ -112,10 +118,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_155608",
+      "script": "SlateportCity_ContestHall_EventScript_NervousContestant",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_BOASTFUL_MANIAC",
       "graphics_id": "OBJ_EVENT_GFX_MANIAC",
       "x": 8,
       "y": 6,
@@ -125,10 +132,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_15561D",
+      "script": "SlateportCity_ContestHall_EventScript_BoastfulManiac",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_FAN",
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 12,
       "y": 6,
@@ -138,10 +146,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_155632",
+      "script": "SlateportCity_ContestHall_EventScript_ContestAppealFan",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_BATTLE_CONTEST_BOY",
       "graphics_id": "OBJ_EVENT_GFX_BOY_3",
       "x": 5,
       "y": 10,
@@ -151,10 +160,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_15565C",
+      "script": "SlateportCity_ContestHall_EventScript_BattleAndContestTip",
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_SLATEPORT_CONTEST_HALL_SECONDARY_JUDGING_BOY",
       "graphics_id": "OBJ_EVENT_GFX_BOY_1",
       "x": 15,
       "y": 10,
@@ -164,7 +174,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_155647",
+      "script": "SlateportCity_ContestHall_EventScript_SecondaryJudgingTip",
       "flag": "0"
     },
     {
@@ -177,7 +187,7 @@
       "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_ContestHall_EventScript_15555E",
+      "script": "SlateportCity_ContestHall_EventScript_GiveTorment",
       "flag": "0"
     }
   ],
@@ -205,7 +215,7 @@
       "y": 14,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SlateportCity_ContestHall_EventScript_155671"
+      "script": "SlateportCity_ContestHall_EventScript_HyperRankStageSign"
     },
     {
       "type": "sign",
@@ -213,7 +223,7 @@
       "y": 14,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SlateportCity_ContestHall_EventScript_155671"
+      "script": "SlateportCity_ContestHall_EventScript_HyperRankStageSign"
     }
   ]
 }
