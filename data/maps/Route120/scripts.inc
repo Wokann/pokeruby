@@ -55,15 +55,15 @@ Route120_OnLoad:: @ 8151686
 	end
 
 Route120_EventScript_CloseAncientTomb:: @ 81516A2
-	setmetatile 7, 54, METATILE_General_RockWall_RockBase, 1
-	setmetatile 7, 55, METATILE_General_RockWall_SandBase, 1
+	setmetatile 7, 54, METATILE_General_RockWall_RockBase, TRUE
+	setmetatile 7, 55, METATILE_General_RockWall_SandBase, TRUE
 	return
 
 Route120_EventScript_SetBridgeClearMetatiles:: @ 81516B5
-	setmetatile 13, 15, METATILE_Fortree_WoodBridge_Kecleon0, 0
-	setmetatile 12, 16, METATILE_Fortree_WoodBridge_Kecleon1, 0
-	setmetatile 12, 17, METATILE_General_ReflectiveWater, 0
-	setmetatile 13, 17, METATILE_General_ReflectiveWater, 0
+	setmetatile 13, 15, METATILE_Fortree_WoodBridge_Kecleon0, FALSE
+	setmetatile 12, 16, METATILE_Fortree_WoodBridge_Kecleon1, FALSE
+	setmetatile 12, 17, METATILE_General_ReflectiveWater, FALSE
+	setmetatile 13, 17, METATILE_General_ReflectiveWater, FALSE
 	return
 
 Route120_EventScript_SetBridgeKecleonMovement:: @ 81516DA
@@ -109,7 +109,7 @@ Route120_EventScript_BerryBeauty:: @ 8151739
 	lock
 	faceplayer
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_ROUTE120, Route120_EventScript_ReceivedBerry
+	goto_if_set FLAG_DAILY_ROUTE_120_RECEIVED_BERRY, Route120_EventScript_ReceivedBerry
 	msgbox Route120_Text_BerriesExpressionOfLoveIsntIt, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	call_if_eq Route120_EventScript_BerryLove
@@ -156,9 +156,9 @@ Route120_EventScript_GiveIapapaBerry:: @ 8151808
 
 Route120_EventScript_GiveBerry:: @ 8151813
 	giveitem VAR_0x8004
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_DAILY_RECEIVED_BERRY_ROUTE120
+	setflag FLAG_DAILY_ROUTE_120_RECEIVED_BERRY
 	msgbox Route120_Text_BerryIsRareRaiseItWithCare, MSGBOX_DEFAULT
 	release
 	end
@@ -179,7 +179,7 @@ Route120_EventScript_BerryNotLove:: @ 815184A
 Route120_EventScript_Steven:: @ 8151853
 	lock
 	faceplayer
-	goto_if_set FLAG_NOT_READY_FOR_BATTLE_ROUTE120, Route120_EventScript_StevenAskReadyForBattle
+	goto_if_set FLAG_NOT_READY_FOR_BATTLE_ROUTE_120, Route120_EventScript_StevenAskReadyForBattle
 	msgbox Route120_Text_StevenGreeting, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq Route120_EventScript_StevenNotReady
@@ -188,7 +188,7 @@ Route120_EventScript_Steven:: @ 8151853
 
 Route120_EventScript_StevenNotReady:: @ 8151877
 	msgbox Route120_Text_StevenIllWaitHere, MSGBOX_DEFAULT
-	setflag FLAG_NOT_READY_FOR_BATTLE_ROUTE120
+	setflag FLAG_NOT_READY_FOR_BATTLE_ROUTE_120
 	release
 	end
 
@@ -202,9 +202,9 @@ Route120_EventScript_StevenAskReadyForBattle:: @ 8151884
 Route120_EventScript_StevenBattleKecleon:: @ 815189D
 	msgbox Route120_Text_StevenShowMeYourPower, MSGBOX_DEFAULT
 	closemessage
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq Route120_EventScript_PlayerApproachKecleonNorth
-	compare VAR_FACING, 3
+	compare VAR_FACING, DIR_WEST
 	call_if_eq Route120_EventScript_PlayerApproachKecleonWest
 	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
@@ -244,10 +244,10 @@ Route120_EventScript_StevenGiveDeconScope:: @ 8151908
 	delay 15
 	removeobject LOCALID_ROUTE120_STEVEN
 	waitfieldeffect FLDEFF_NPCFLY_OUT
-	setmetatile 13, 15, METATILE_Fortree_WoodBridge_Kecleon0, 0
-	setmetatile 12, 16, METATILE_Fortree_WoodBridge_Kecleon1, 0
-	setmetatile 12, 17, METATILE_General_ReflectiveWater, 0
-	setmetatile 13, 17, METATILE_General_ReflectiveWater, 0
+	setmetatile 13, 15, METATILE_Fortree_WoodBridge_Kecleon0, FALSE
+	setmetatile 12, 16, METATILE_Fortree_WoodBridge_Kecleon1, FALSE
+	setmetatile 12, 17, METATILE_General_ReflectiveWater, FALSE
+	setmetatile 13, 17, METATILE_General_ReflectiveWater, FALSE
 	special DrawWholeMapView
 	release
 	end
@@ -287,7 +287,7 @@ Route120_EventScript_Colin:: @ 81519B3
 Route120_EventScript_Robert:: @ 81519CA
 	trainerbattle_single TRAINER_ROBERT_1, Route120_Text_RobertIntro, Route120_Text_RobertDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route120_EventScript_RematchRobert
 	msgbox Route120_Text_RobertPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -310,7 +310,7 @@ Route120_EventScript_Jenna:: @ 8151A1F
 Route120_EventScript_Brandon:: @ 8151A36
 	trainerbattle_single TRAINER_BRANDON_1, Route120_Text_BrandonIntro, Route120_Text_BrandonDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route120_EventScript_RematchBrandon
 	msgbox Route120_Text_BrandonPostBattle, MSGBOX_AUTOCLOSE
 	end
