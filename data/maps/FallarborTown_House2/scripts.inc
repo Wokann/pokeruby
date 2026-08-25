@@ -3,7 +3,7 @@ FallarborTown_House2_MapScripts:: @ 8153C90
 
 FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
 	lockall
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MOVE_RELEARNER, Common_Movement_FacePlayer
 	waitmovement 0
 	goto_if_set FLAG_TEMP_1, FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor, MSGBOX_DEFAULT
@@ -13,7 +13,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
 
 FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove:: @ 8153CB6
 	checkitem ITEM_HEART_SCALE, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove, MSGBOX_YESNO
 	switch VAR_RESULT
@@ -28,7 +28,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 	compare VAR_0x8004, 255
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	special IsSelectedMonEgg
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
 	compare VAR_0x8005, 0
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon

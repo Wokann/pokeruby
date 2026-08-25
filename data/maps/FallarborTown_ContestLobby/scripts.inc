@@ -10,7 +10,7 @@ FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD
 	setvar VAR_0x800B, 6
 	setvar VAR_CONTEST_RANK, 1
 	call LilycoveCity_ContestLobby_EventScript_1A4E92
-	call FallarborTown_ContestLobby_EventScript_1539F8
+	call FallarborTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
 	setvar VAR_CONTEST_LOCATION, 2
@@ -18,34 +18,34 @@ FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD
 	waitstate
 	end
 
-FallarborTown_ContestLobby_EventScript_1539F8:: @ 81539F8
+FallarborTown_ContestLobby_EventScript_LeadToContestHall:: @ 81539F8
 	lockall
-	applymovement 1, FallarborTown_ContestLobby_Movement_153A7C
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, FallarborTown_ContestLobby_Movement_ReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_WallShadow, 1
-	setmetatile 4, 3, METATILE_Contest_FloorShadow, 1
+	setmetatile 4, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 4, 3, METATILE_Contest_FloorShadow, TRUE
 	special DrawWholeMapView
-	applymovement 1, FallarborTown_ContestLobby_Movement_153A7F
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, FallarborTown_ContestLobby_Movement_ReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, 1
-	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, 1
+	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
 	special DrawWholeMapView
 	delay 20
-	applymovement 1, FallarborTown_ContestLobby_Movement_153A8C
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, FallarborTown_ContestLobby_Movement_ReceptionistFacePlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_153A7A
+	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, FallarborTown_ContestLobby_Movement_153A83
-	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_153A70
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, FallarborTown_ContestLobby_Movement_ReceptionistWalkToContestHall
+	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_PlayerWalkToContestHall
 	waitmovement 0
 	releaseall
 	return
 
-FallarborTown_ContestLobby_Movement_153A70:: @ 8153A70
+FallarborTown_ContestLobby_Movement_PlayerWalkToContestHall:: @ 8153A70
 	walk_left
 	walk_left
 	walk_left
@@ -57,22 +57,22 @@ FallarborTown_ContestLobby_Movement_153A70:: @ 8153A70
 	set_invisible
 	step_end
 
-FallarborTown_ContestLobby_Movement_153A7A:: @ 8153A7A
+FallarborTown_ContestLobby_Movement_PlayerApproachReceptionist:: @ 8153A7A
 	walk_in_place_fastest_left
 	step_end
 
-FallarborTown_ContestLobby_Movement_153A7C:: @ 8153A7C
+FallarborTown_ContestLobby_Movement_ReceptionistApproachCounter:: @ 8153A7C
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-FallarborTown_ContestLobby_Movement_153A7F:: @ 8153A7F
+FallarborTown_ContestLobby_Movement_ReceptionistExitCounter:: @ 8153A7F
 	walk_down
 	walk_down
 	walk_in_place_fastest_up
 	step_end
 
-FallarborTown_ContestLobby_Movement_153A83:: @ 8153A83
+FallarborTown_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8153A83
 	walk_left
 	walk_left
 	walk_left
@@ -83,7 +83,7 @@ FallarborTown_ContestLobby_Movement_153A83:: @ 8153A83
 	set_invisible
 	step_end
 
-FallarborTown_ContestLobby_Movement_153A8C:: @ 8153A8C
+FallarborTown_ContestLobby_Movement_ReceptionistFacePlayer:: @ 8153A8C
 	walk_in_place_fastest_right
 	step_end
 
@@ -92,11 +92,11 @@ FallarborTown_ContestLobby_EventScript_Boy:: @ 8153A8E
 	end
 
 FallarborTown_ContestLobby_EventScript_SketchArtist:: @ 8153A97
-	goto_if_set FLAG_CONTEST_SKETCH_CREATED, FallarborTown_ContestLobby_EventScript_153AA9
+	goto_if_set FLAG_CONTEST_SKETCH_CREATED, FallarborTown_ContestLobby_EventScript_SketchArtistShowSketch
 	msgbox FallarborTown_ContestLobby_Text_ICreateSketches, MSGBOX_NPC
 	end
 
-FallarborTown_ContestLobby_EventScript_153AA9:: @ 8153AA9
+FallarborTown_ContestLobby_EventScript_SketchArtistShowSketch:: @ 8153AA9
 	msgbox FallarborTown_ContestLobby_Text_YourSketchIsUp, MSGBOX_NPC
 	end
 
