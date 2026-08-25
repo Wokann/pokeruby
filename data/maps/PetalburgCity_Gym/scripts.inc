@@ -848,7 +848,7 @@ PetalburgCity_Gym_EventScript_LoriPostBadge:: @ 8154F55
 PetalburgCity_Gym_EventScript_Jody:: @ 8154F5E
 	trainerbattle_single TRAINER_JODY, PetalburgCity_Gym_Text_JodyIntro, PetalburgCity_Gym_Text_JodyDefeat, PetalburgCity_Gym_EventScript_SlideOpenStrengthRoomDoors
 	goto_if_set FLAG_DEFEATED_PETALBURG_GYM, PetalburgCity_Gym_EventScript_JodyPostBadge
-	msgbox PetalburgCity_Gym_Text_JodiPostBattle, MSGBOX_AUTOCLOSE
+	msgbox PetalburgCity_Gym_Text_JodyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 PetalburgCity_Gym_EventScript_SlideOpenStrengthRoomDoors:: @ 8154F82
@@ -859,7 +859,7 @@ PetalburgCity_Gym_EventScript_SlideOpenStrengthRoomDoors:: @ 8154F82
 	end
 
 PetalburgCity_Gym_EventScript_JodyPostBadge:: @ 8154F91
-	msgbox PetalburgCity_Gym_Text_JodiPostBadge, MSGBOX_NPC
+	msgbox PetalburgCity_Gym_Text_JodyPostBadge, MSGBOX_NPC
 	end
 
 PetalburgCity_Gym_EventScript_OpenGymEntranceDoors:: @ 8154F9A
