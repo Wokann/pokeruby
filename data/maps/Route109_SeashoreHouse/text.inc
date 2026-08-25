@@ -40,18 +40,18 @@ Route109_SeashoreHouse_Text_ThatsTooBad:: @ 819B773
 	.string "No?\n"
 	.string "That's too bad.$"
 
-UnknownString_819B787: @ 819B787
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesPrompt: @ 819B787
 	.string "SODA POP! The POKéMON favorite!\n"
 	.string "Just ¥300 a bottle! Want one?$"
 
-UnknownString_819B7C5: @ 819B7C5
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesSuccess: @ 819B7C5
 	.string "Here you go!$"
 
-UnknownString_819B7D2: @ 819B7D2
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesNotEnoughMoney: @ 819B7D2
 	.string "Oh, dear!\n"
 	.string "You don't have enough money.$"
 
-UnknownString_819B7F9: @ 819B7F9
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesDeclined: @ 819B7F9
 	.string "That's too bad.$"
 
 Route109_SeashoreHouse_Text_DwayneIntro:: @ 819B809

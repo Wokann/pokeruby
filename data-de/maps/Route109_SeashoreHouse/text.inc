@@ -40,18 +40,18 @@ Route109_SeashoreHouse_Text_ThatsTooBad:: @ 819B773
 	.string "Nein?\n"
 	.string "Das ist aber wirklich schade.$"
 
-UnknownString_819B787: @ 819B787
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesPrompt: @ 819B787
 	.string "SPRUDEL! POKéMONs Liebling!\n"
 	.string "Nur ¥300 pro Flasche! Möchtest du eine?$"
 
-UnknownString_819B7C5: @ 819B7C5
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesSuccess: @ 819B7C5
 	.string "Hier, bitte schön!$"
 
-UnknownString_819B7D2: @ 819B7D2
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesNotEnoughMoney: @ 819B7D2
 	.string "Oh je!\n"
 	.string "Du hast nicht genügend Geld.$"
 
-UnknownString_819B7F9: @ 819B7F9
+Route109_SeashoreHouse_Text_UnusedSodaPopSalesDeclined: @ 819B7F9
 	.string "Das ist wirklich sehr schade.$"
 
 Route109_SeashoreHouse_Text_DwayneIntro:: @ 819B809

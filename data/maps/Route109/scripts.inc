@@ -3,11 +3,11 @@ Route109_MapScripts:: @ 814F4D2
 
 Route109_EventScript_StartDepartForDewford:: @ 814F4D3
 	call EventScript_BackupMrBrineyLocation
-	setobjectpriority 2, MAP_ROUTE109, 0
-	setobjectpriority 255, MAP_ROUTE109, 0
-	applymovement 2, Route109_Movement_BrineyEnterBoat
+	setobjectpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
+	setobjectpriority LOCALID_PLAYER, MAP_ROUTE109, 0
+	applymovement LOCALID_ROUTE109_BRINEY, Route109_Movement_BrineyEnterBoat
 	waitmovement 0
-	removeobject 2
+	removeobject LOCALID_ROUTE109_BRINEY
 	switch VAR_FACING
 	case 1, Route109_EventScript_EnterBoatSouth
 	case 3, Route109_EventScript_EnterBoatWest
@@ -35,29 +35,29 @@ Route109_EventScript_EnterBoatWest:: @ 814F538
 Route109_EventScript_DoSailToDewford:: @ 814F548
 	hideobjectat LOCALID_PLAYER, MAP_ROUTE109
 	call Common_EventScript_PlayBrineysBoatMusic
-	applymovement 1, Route109_Movement_SailToDewford
+	applymovement LOCALID_ROUTE109_BOAT, Route109_Movement_SailToDewford
 	applymovement LOCALID_PLAYER, Route109_Movement_SailToDewford
 	waitmovement 0
 	call Common_EventScript_StopBrineysBoatMusic
 	showobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
 	applymovement LOCALID_PLAYER, Route109_Movement_PlayerExitBoat
 	waitmovement 0
-	addobject 4
+	addobject LOCALID_DEWFORD_BOAT
 	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
-	setobjectxyperm 2, 12, 8
-	addobject 2
-	setobjectpriority 2, MAP_DEWFORD_TOWN, 0
-	applymovement 2, Route109_Movement_BrineyExitBoat
+	setobjectxyperm LOCALID_DEWFORD_BRINEY, 12, 8
+	addobject LOCALID_DEWFORD_BRINEY
+	setobjectpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
+	applymovement LOCALID_DEWFORD_BRINEY, Route109_Movement_BrineyExitBoat
 	waitmovement 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
-	hideobjectat 1, MAP_ROUTE109
+	hideobjectat LOCALID_ROUTE109_BOAT, MAP_ROUTE109
 	msgbox Route109_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE109
-	resetobjectpriority 2, MAP_DEWFORD_TOWN
-	moveobjectoffscreen 2
+	resetobjectpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
+	moveobjectoffscreen LOCALID_DEWFORD_BRINEY
 	release
 	end
 
