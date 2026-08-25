@@ -234,7 +234,7 @@ RustboroCity_EventScript_ItemXDefend:: @ 81B172B
 	finditem ITEM_X_DEFEND
 	end
 
-LilycoveCity_EventScript_1B1738:: @ 81B1738
+LilycoveCity_EventScript_ItemMaxRepel:: @ 81B1738
 	finditem ITEM_MAX_REPEL
 	end
 
