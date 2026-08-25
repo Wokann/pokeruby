@@ -173,7 +173,7 @@ static void (*const sMovementTypeCallbacks[])(struct Sprite *) =
     [MOVEMENT_TYPE_COPY_PLAYER_OPPOSITE_IN_GRASS] = MovementType_CopyPlayerInGrass,
     [MOVEMENT_TYPE_COPY_PLAYER_COUNTERCLOCKWISE_IN_GRASS] = MovementType_CopyPlayerInGrass,
     [MOVEMENT_TYPE_COPY_PLAYER_CLOCKWISE_IN_GRASS] = MovementType_CopyPlayerInGrass,
-    [MOVEMENT_TYPE_HIDDEN] = MovementType_Hidden,
+    [MOVEMENT_TYPE_BURIED] = MovementType_Hidden,
     [MOVEMENT_TYPE_WALK_IN_PLACE_DOWN] = MovementType_WalkInPlace,
     [MOVEMENT_TYPE_WALK_IN_PLACE_UP] = MovementType_WalkInPlace,
     [MOVEMENT_TYPE_WALK_IN_PLACE_LEFT] = MovementType_WalkInPlace,
@@ -253,7 +253,7 @@ const u8 gRangedMovementTypes[] = {
     [MOVEMENT_TYPE_COPY_PLAYER_OPPOSITE_IN_GRASS] = 1,
     [MOVEMENT_TYPE_COPY_PLAYER_COUNTERCLOCKWISE_IN_GRASS] = 1,
     [MOVEMENT_TYPE_COPY_PLAYER_CLOCKWISE_IN_GRASS] = 1,
-    [MOVEMENT_TYPE_HIDDEN] = 0,
+    [MOVEMENT_TYPE_BURIED] = 0,
     [MOVEMENT_TYPE_WALK_IN_PLACE_DOWN] = 0,
     [MOVEMENT_TYPE_WALK_IN_PLACE_UP] = 0,
     [MOVEMENT_TYPE_WALK_IN_PLACE_LEFT] = 0,
@@ -333,7 +333,7 @@ const u8 gInitialMovementTypeFacingDirections[] = {
     [MOVEMENT_TYPE_COPY_PLAYER_OPPOSITE_IN_GRASS] = DIR_SOUTH,
     [MOVEMENT_TYPE_COPY_PLAYER_COUNTERCLOCKWISE_IN_GRASS] = DIR_WEST,
     [MOVEMENT_TYPE_COPY_PLAYER_CLOCKWISE_IN_GRASS] = DIR_EAST,
-    [MOVEMENT_TYPE_HIDDEN] = DIR_SOUTH,
+    [MOVEMENT_TYPE_BURIED] = DIR_SOUTH,
     [MOVEMENT_TYPE_WALK_IN_PLACE_DOWN] = DIR_SOUTH,
     [MOVEMENT_TYPE_WALK_IN_PLACE_UP] = DIR_NORTH,
     [MOVEMENT_TYPE_WALK_IN_PLACE_LEFT] = DIR_WEST,
@@ -6373,7 +6373,7 @@ bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (objectEvent->movementType == MOVEMENT_TYPE_HIDDEN)
+    if (objectEvent->movementType == MOVEMENT_TYPE_BURIED)
     {
         sub_8084794(objectEvent);
         return FALSE;
