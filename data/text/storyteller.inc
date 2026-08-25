@@ -1,24 +1,24 @@
-gTextStoryteller_Introduction:: @ 81AECC6
+MauvilleCity_PokemonCenter_1F_Text_WillYouHearMyTale:: @ 81AECC6
 	.string "I'm the STORYTELLER.\n"
 	.string "I'll tell you tales of legendary\l"
 	.string "TRAINERS.\p"
 	.string "Will you hear my tale?$"
 
-gTextStoryteller_OhIFeelStifled:: @ 81AED1D
+MauvilleCity_PokemonCenter_1F_Text_StorytellerFeelingTheBlues:: @ 81AED1D
 	.string "Oh...\n"
 	.string "I feel stifled...$"
 
-gTextStoryteller_WhichTale:: @ 81AED35
+MauvilleCity_PokemonCenter_1F_Text_WhichTaleToTell:: @ 81AED35
 	.string "I know of these legends.\n"
 	.string "Which tale will you have me tell?$"
 
-gTextStoryteller_ButIKnowOfNoLegendaryTrainers:: @ 81AED70
+MauvilleCity_PokemonCenter_1F_Text_IKnowNoTales:: @ 81AED70
 	.string "But, I know of no legendary TRAINERS.\n"
 	.string "Hence, I know no tales.\p"
 	.string "Where does one find a TRAINER worthy\n"
 	.string "of a legendary tale?$"
 
-gTextStoryteller_BirthOfANewLegend:: @ 81AEDE8
+MauvilleCity_PokemonCenter_1F_Text_YouDidStatXTimes:: @ 81AEDE8
 	.string "What's that?!\n"
 	.string "You... You...\p"
 	.string "{STR_VAR_2}\n"
@@ -26,27 +26,27 @@ gTextStoryteller_BirthOfANewLegend:: @ 81AEDE8
 	.string "That is indeed magnificent!\n"
 	.string "It's the birth of a new legend!$"
 
-gTextStoryteller_CouldThereBeOtherTrainers:: @ 81AEE50
+MauvilleCity_PokemonCenter_1F_Text_CouldThereBeOtherLegends:: @ 81AEE50
 	.string "It gets me thinking, could there be\n"
 	.string "other TRAINERS with more impressive\l"
 	.string "legends awaiting discovery?$"
 
-gTextStoryteller_HaveYouAnyTales:: @ 81AEEB4
+MauvilleCity_PokemonCenter_1F_Text_HaveYouAnyLegendaryTales:: @ 81AEEB4
 	.string "Are you a TRAINER?\p"
 	.string "Then tell me, have you any tales that\n"
 	.string "are even remotely legendary?$"
 
-gTextStoryteller_HearAnotherLegendaryTale:: @ 81AEF0A
+MauvilleCity_PokemonCenter_1F_Text_HearAnotherLegendaryTale:: @ 81AEF0A
 	.string "Incidentally... Would you care to hear\n"
 	.string "another legendary tale?$"
 
-gTextStoryteller_ImNotSatisfied:: @ 81AEF49
+MauvilleCity_PokemonCenter_1F_Text_NotWorthyOfLegend:: @ 81AEF49
 	.string "Hmm...\n"
 	.string "I'm not satisfied...\p"
 	.string "I wish you would bring me news worthy\n"
 	.string "of being called a legend.$"
 
-gTextStoryteller_WishMorePeopleWould:: @ 81AEFA5
+MauvilleCity_PokemonCenter_1F_Text_IWishMorePeopleWereInterested:: @ 81AEFA5
 	.string "I wish more people would be interested\n"
 	.string "in hearing my epic tales of legendary\l"
 	.string "TRAINERS.$"

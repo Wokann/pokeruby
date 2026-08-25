@@ -4,15 +4,15 @@ MauvilleCity_PokemonCenter_2F_MapScripts:: @ 8157392
 	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	.byte 0
 
-MauvilleCity_PokemonCenter_2F_EventScript_1573A2:: @ 81573A2
+MauvilleCity_PokemonCenter_2F_EventScript_Colosseum:: @ 81573A2
 	call CableClub_EventScript_Colosseum
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_1573A8:: @ 81573A8
+MauvilleCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 81573A8
 	call CableClub_EventScript_TradeCenter
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_1573AE:: @ 81573AE
+MauvilleCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 81573AE
 	call CableClub_EventScript_RecordCorner
 	end
 

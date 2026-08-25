@@ -1,25 +1,25 @@
-gTextStoryteller_Introduction:: @ 81AECC6
+MauvilleCity_PokemonCenter_1F_Text_WillYouHearMyTale:: @ 81AECC6
 	.string "Ich bin der GESCHICHTENERZÄHLER.\n"
 	.string "Ich erzähle dir die Geschichten von\l"
 	.string "legendären TRAINERN.\p"
 	.string "Soll ich dir etwas erzählen?$"
 
-gTextStoryteller_OhIFeelStifled:: @ 81AED1D
+MauvilleCity_PokemonCenter_1F_Text_StorytellerFeelingTheBlues:: @ 81AED1D
 	.string "Oh...\n"
 	.string "Keiner mag mich...$"
 
-gTextStoryteller_WhichTale:: @ 81AED35
+MauvilleCity_PokemonCenter_1F_Text_WhichTaleToTell:: @ 81AED35
 	.string "Ich kenne viele dieser Legenden.\n"
 	.string "Welche möchtest du hören?$"
 
-gTextStoryteller_ButIKnowOfNoLegendaryTrainers:: @ 81AED70
+MauvilleCity_PokemonCenter_1F_Text_IKnowNoTales:: @ 81AED70
 	.string "Aber ich weiß nichts über legendäre\n"
 	.string "TRAINER. Also habe ich keine Ge-\l"
 	.string "schichte auf Lager.\p"
 	.string "Wo findet man wohl einen TRAINER, der\n"
 	.string "einer lebenden Legende gleicht?$"
 
-gTextStoryteller_BirthOfANewLegend:: @ 81AEDE8
+MauvilleCity_PokemonCenter_1F_Text_YouDidStatXTimes:: @ 81AEDE8
 	.string "Was ist?\n"
 	.string "Du... Du...\p"
 	.string "{STR_VAR_2}\n"
@@ -27,28 +27,28 @@ gTextStoryteller_BirthOfANewLegend:: @ 81AEDE8
 	.string "Das ist einfach großartig!\n"
 	.string "Die Geburt einer neuen Legende!$"
 
-gTextStoryteller_CouldThereBeOtherTrainers:: @ 81AEE50
+MauvilleCity_PokemonCenter_1F_Text_CouldThereBeOtherLegends:: @ 81AEE50
 	.string "Ich überlege, ob es nicht noch andere\n"
 	.string "TRAINER gibt, die mir beeindruckende\l"
 	.string "Geschichten erzählen können.$"
 
-gTextStoryteller_HaveYouAnyTales:: @ 81AEEB4
+MauvilleCity_PokemonCenter_1F_Text_HaveYouAnyLegendaryTales:: @ 81AEEB4
 	.string "Bist du ein TRAINER?\p"
 	.string "Dann sag mir, ob du Geschichten\n"
 	.string "für mich hast, die legendär sind?$"
 
-gTextStoryteller_HearAnotherLegendaryTale:: @ 81AEF0A
+MauvilleCity_PokemonCenter_1F_Text_HearAnotherLegendaryTale:: @ 81AEF0A
 	.string "Übrigens... Möchtest du eine weitere\n"
 	.string "legendäre Geschichte hören?$"
 
-gTextStoryteller_ImNotSatisfied:: @ 81AEF49
+MauvilleCity_PokemonCenter_1F_Text_NotWorthyOfLegend:: @ 81AEF49
 	.string "Hmm...\n"
 	.string "Ich bin nicht zufrieden...\p"
 	.string "Ich wünschte, du würdest mir Neuig-\n"
 	.string "keiten erzählen, die den Titel Legende\l"
 	.string "verdienen.$"
 
-gTextStoryteller_WishMorePeopleWould:: @ 81AEFA5
+MauvilleCity_PokemonCenter_1F_Text_IWishMorePeopleWereInterested:: @ 81AEFA5
 	.string "Ich wollte, mehr Leute würden sich für\n"
 	.string "meine epischen Geschichten über\l"
 	.string "legendäre TRAINER interessieren.$"
