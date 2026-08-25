@@ -22,13 +22,13 @@ Route121_EventScript_EvilTeamGruntsMoveOut:: @ 8151B25
 	lockall
 	msgbox Route121_Text_OkayMoveOutToMtPyre, MSGBOX_DEFAULT
 	closemessage
-	applymovement 12, Route121_Movement_Grunt1Exit
-	applymovement 13, Route121_Movement_Grunt2Exit
-	applymovement 14, Route121_Movement_Grunt3Exit
+	applymovement LOCALID_ROUTE121_EVIL_TEAM_GRUNT_1, Route121_Movement_Grunt1Exit
+	applymovement LOCALID_ROUTE121_EVIL_TEAM_GRUNT_2, Route121_Movement_Grunt2Exit
+	applymovement LOCALID_ROUTE121_EVIL_TEAM_GRUNT_3, Route121_Movement_Grunt3Exit
 	waitmovement 0
-	removeobject 12
-	removeobject 13
-	removeobject 14
+	removeobject LOCALID_ROUTE121_EVIL_TEAM_GRUNT_1
+	removeobject LOCALID_ROUTE121_EVIL_TEAM_GRUNT_2
+	removeobject LOCALID_ROUTE121_EVIL_TEAM_GRUNT_3
 	setvar VAR_ROUTE121_STATE, 1
 	releaseall
 	end
