@@ -4,14 +4,14 @@ RustboroCity_PokemonCenter_2F_MapScripts:: @ 8157BB1
 	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	.byte 0
 
-RustboroCity_PokemonCenter_2F_EventScript_157BC1:: @ 8157BC1
+RustboroCity_PokemonCenter_2F_EventScript_Colosseum:: @ 8157BC1
 	call CableClub_EventScript_Colosseum
 	end
 
-RustboroCity_PokemonCenter_2F_EventScript_157BC7:: @ 8157BC7
+RustboroCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 8157BC7
 	call CableClub_EventScript_TradeCenter
 	end
 
-RustboroCity_PokemonCenter_2F_EventScript_157BCD:: @ 8157BCD
+RustboroCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 8157BCD
 	call CableClub_EventScript_RecordCorner
 	end
