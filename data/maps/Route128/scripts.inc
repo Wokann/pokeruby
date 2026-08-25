@@ -19,49 +19,49 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	special sub_807E25C
 	waitstate
 	.endif
-	applymovement 4, Route128_Movement_EvilLeaderLookAround
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderLookAround
 	waitmovement 0
 	msgbox Route128_Text_EvilLeaderWhatHappened, MSGBOX_DEFAULT
-	applymovement 4, Route128_Movement_EvilLeaderBackUp
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderBackUp
 	waitmovement 0
 	msgbox Route128_Text_EvilLeaderIOnlyWanted, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, Route128_Movement_GoodLeaderApproachEvilLeader
+	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderApproachEvilLeader
 	waitmovement 0
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderDoYouUnderstandNow, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, Route128_Movement_GoodLeaderApproachPlayer
+	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderLeaveThingsToUs, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, Route128_Movement_EvilLeaderRunLeft
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderRunLeft
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 5, Route128_Movement_GoodLeaderWalkLeft
+	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderWalkLeft
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderThisDefiesBelief, MSGBOX_DEFAULT
 	closemessage
 	delay 40
-	applymovement 5, Route128_Movement_GoodLeaderExit
-	applymovement 4, Route128_Movement_EvilLeaderExit
+	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderExit
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderExit
 	waitmovement 0
-	removeobject 5
-	removeobject 4
+	removeobject LOCALID_ROUTE128_GOOD_LEADER
+	removeobject LOCALID_ROUTE128_EVIL_LEADER
 	delay 100
 	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	waitfieldeffect FLDEFF_NPCFLY_OUT
-	addobject 3
-	applymovement 3, Route128_Movement_StevenApproachPlayer
+	addobject LOCALID_ROUTE128_STEVEN
+	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, Route128_Movement_StevenWalkUp
+	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	.ifdef SAPPHIRE
@@ -69,17 +69,17 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	.else
 	msgbox Route128_Text_StevenWholeWorldWillBeParched, MSGBOX_DEFAULT
 	.endif
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
 	closemessage
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	delay 15
-	removeobject 3
+	removeobject LOCALID_ROUTE128_STEVEN
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	setvar VAR_ROUTE128_STATE, 2
 	releaseall
@@ -182,7 +182,7 @@ Route128_Movement_GoodLeaderApproachPlayer:: @ 81522A1
 Route128_EventScript_Isaiah:: @ 81522A4
 	trainerbattle_single TRAINER_ISAIAH_1, Route128_Text_IsaiahIntro, Route128_Text_IsaiahDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route128_EventScript_RematchIsaiah
 	msgbox Route128_Text_IsaiahPostBattle, MSGBOX_AUTOCLOSE
 	end
@@ -195,7 +195,7 @@ Route128_EventScript_RematchIsaiah:: @ 81522CB
 Route128_EventScript_Katelyn:: @ 81522E2
 	trainerbattle_single TRAINER_KATELYN_1, Route128_Text_KatelynIntro, Route128_Text_KatelynDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route128_EventScript_RematchKatelyn
 	msgbox Route128_Text_KatelynPostBattle, MSGBOX_AUTOCLOSE
 	end
