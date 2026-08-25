@@ -21,11 +21,11 @@ Route102_Text_ImNotVeryTall:: @ 816D431
 	.string "Fwafwafwafwafwa...\p"
 	.string "Fwatchoo!$"
 
-UnknownString_816D4A5: @ 816D4A5
+Route102_Text_UnusedWatchMe:: @ 816D4A5
 	.string "Fufufufu...\n"
 	.string "Watch me.$"
 
-UnknownString_816D4BB: @ 816D4BB
+Route102_Text_UnusedLedgeExplanation:: @ 816D4BB
 	.string "Ta-daaaah! Awesome, huh?\p"
 	.string "There are some ledges that you can't\n"
 	.string "climb up, but you can jump down.$"

@@ -21,11 +21,11 @@ Route102_Text_ImNotVeryTall:: @ 816D431
 	.string "Hahahaha...\p"
 	.string "Haaatschiiii!$"
 
-UnknownString_816D4A5: @ 816D4A5
+Route102_Text_UnusedWatchMe:: @ 816D4A5
 	.string "Hähähä...\n"
 	.string "Beobachte mich gut.$"
 
-UnknownString_816D4BB: @ 816D4BB
+Route102_Text_UnusedLedgeExplanation:: @ 816D4BB
 	.string "Ta-daaaaah! Unglaublich, oder?\p"
 	.string "Es gibt einige Absätze, die man nicht\n"
 	.string "hochklettern, aber von denen man\l"
