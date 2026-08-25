@@ -808,7 +808,7 @@ Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
 	return
 
 Common_EventScript_ReadyPetalburgGymForBattle:: @ 81A00FB
-	clearflag FLAG_HIDE_PETALBURG_GYM_GUIDE
+	clearflag FLAG_HIDE_PETALBURG_GYM_GREETER
 	setflag FLAG_PETALBURG_MART_EXPANDED_ITEMS
 	return
 

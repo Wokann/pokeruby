@@ -136,7 +136,7 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExit
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
 	waitmovement 0
-	setflag FLAG_HIDE_PETALBURG_GYM_GUIDE
+	setflag FLAG_HIDE_PETALBURG_GYM_GREETER
 	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, 255, 7, 16
 	waitstate
 	releaseall
