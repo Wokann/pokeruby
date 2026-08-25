@@ -1,3 +1,22 @@
+Route111_Text_UnusedWateredPlantsEveryDayTakeBerry: @ 816F5D7
+	.string "Ich gieße die Pflanzen jeden Tag.\n"
+	.string "Dann bekommen sie viele Blüten.\p"
+	.string "Und daraus werden dann viele BEEREN.\p"
+	.string "Hier, die ist für dich.\n"
+	.string "Du kannst sie haben.$"
+
+Route111_Text_UnusedMakeRedPokeblocks: @ 816F657
+	.string "Ich versuche {POKEBLOCK} ROT zu machen!\n"
+	.string "Ich hoffe, das versuchst du auch!$"
+
+Route111_Text_UnusedBerryPocketFull: @ 816F68A
+	.string "Deine BEEREN-TASCHE ist voll.\p"
+	.string "Ich gebe sie dir ein anderes Mal.$"
+
+Route111_Text_UnusedLookingForRedBerries: @ 816F6CF
+	.string "Ich suche nach roten BEEREN, um\n"
+	.string "{POKEBLOCK} ROT herzustellen.$"
+
 Route111_Text_BattleOurFamily:: @ 816F705
 	.string "Hallo! Ich hab's, du bist ein Reisender.\p"
 	.string "Was hältst du davon? Du trittst mit\n"

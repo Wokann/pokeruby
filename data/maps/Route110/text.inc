@@ -215,22 +215,3 @@ Route110_Text_ThereIsNoRecord:: @ 816F57C
 	.string "THE BEST RECORD TO DATE...\p"
 	.string "No one seems to have taken the\n"
 	.string "challenge. There is no record...$"
-
-Route110_Text_UnusedBerryGrowerGiveBerry: @ 816F5D7
-	.string "I watered the plants every day.\n"
-	.string "They grew lots of flowers.\p"
-	.string "And they gave me lots of BERRIES, too.\p"
-	.string "Here you go!\n"
-	.string "You can have it!$"
-
-Route110_Text_UnusedRedPokeblockMaker: @ 816F657
-	.string "I'm trying to make RED {POKEBLOCK}S!\n"
-	.string "I hope you do, too!$"
-
-Route110_Text_UnusedBerryPocketFull: @ 816F68A
-	.string "Your BAG's BERRIES POCKET is full.\p"
-	.string "I'll give it to you another time.$"
-
-Route110_Text_UnusedRedBerrySearch: @ 816F6CF
-	.string "I'm going to look for red BERRIES to\n"
-	.string "make RED {POKEBLOCK}S.$"

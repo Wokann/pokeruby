@@ -1,3 +1,22 @@
+Route111_Text_UnusedWateredPlantsEveryDayTakeBerry: @ 816F5D7
+	.string "I watered the plants every day.\n"
+	.string "They grew lots of flowers.\p"
+	.string "And they gave me lots of BERRIES, too.\p"
+	.string "Here you go!\n"
+	.string "You can have it!$"
+
+Route111_Text_UnusedMakeRedPokeblocks: @ 816F657
+	.string "I'm trying to make RED {POKEBLOCK}S!\n"
+	.string "I hope you do, too!$"
+
+Route111_Text_UnusedBerryPocketFull: @ 816F68A
+	.string "Your BAG's BERRIES POCKET is full.\p"
+	.string "I'll give it to you another time.$"
+
+Route111_Text_UnusedLookingForRedBerries: @ 816F6CF
+	.string "I'm going to look for red BERRIES to\n"
+	.string "make RED {POKEBLOCK}S.$"
+
 Route111_Text_BattleOurFamily:: @ 816F705
 	.string "Hello! I take it you're a traveler.\p"
 	.string "How's this? What do you say to taking\n"
