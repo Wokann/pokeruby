@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_EASY_CHAT_H
 #define GUARD_CONSTANTS_EASY_CHAT_H
 
+#define EASY_CHAT_TYPE_TRENDY_PHRASE  9
+
 #define EC_GROUP_POKEMON_1      0x0
 #define EC_GROUP_TRAINER        0x1
 #define EC_GROUP_STATUS         0x2

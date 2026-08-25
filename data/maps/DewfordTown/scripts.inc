@@ -12,12 +12,12 @@ DewfordTown_EventScript_Briney:: @ 814E002
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_ReturnToPetalburgPrompt
 	message DewfordTown_Text_WhereAreWeBound
 	waitmessage
-	multichoicedefault 21, 6, 0, 2, 0
+	multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, FALSE
 	switch VAR_RESULT
 	case 0, DewfordTown_EventScript_ChoosePetalburg
 	case 1, DewfordTown_EventScript_ChooseSlateport
 	case 2, DewfordTown_EventScript_CancelSailSelect
-	case 127, DewfordTown_EventScript_CancelSailSelect
+	case MULTI_B_PRESSED, DewfordTown_EventScript_CancelSailSelect
 	end
 
 DewfordTown_EventScript_ChoosePetalburg:: @ 814E04B
@@ -97,7 +97,7 @@ DewfordTown_EventScript_NotGettingItchToFish:: @ 814E111
 DewfordTown_EventScript_HowsFishing:: @ 814E11B
 	message DewfordTown_Text_HowsYourFishing
 	waitmessage
-	multichoice 20, 8, 50, 1
+	multichoice 20, 8, MULTI_HOWS_FISHING, TRUE
 	compare VAR_RESULT, 0
 	goto_if_eq DewfordTown_EventScript_FishingExcellent
 	compare VAR_RESULT, 1
@@ -608,19 +608,19 @@ DewfordTown_EventScript_ConfirmTrendyPhrase:: @ 814E439
 
 DewfordTown_EventScript_RejectTrendyPhrase:: @ 814E443
 	msgbox DewfordTown_Text_TellMeWhatsNewAndIn, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 9
+	setvar VAR_0x8004, EASY_CHAT_TYPE_TRENDY_PHRASE
 	call Common_EventScript_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq DewfordTown_EventScript_GiveNewTrendyPhrase
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq DewfordTown_EventScript_CancelNewTrendyPhrase
 	end
 
 DewfordTown_EventScript_GiveNewTrendyPhrase:: @ 814E46E
 	incrementgamestat GAME_STAT_STARTED_TRENDS
-	compare VAR_0x8004, 0
+	compare VAR_0x8004, FALSE
 	goto_if_eq DewfordTown_EventScript_PhraseNotTrendyEnough
 	msgbox DewfordTown_Text_OfCourseIKnowAboutThat, MSGBOX_DEFAULT
 	release

@@ -29,6 +29,8 @@
 	.equiv DIR_WEST,  3
 	.equiv DIR_EAST,  4
 
+	.equiv EASY_CHAT_TYPE_TRENDY_PHRASE, 9
+
 	.ifdef ENGLISH
 	.equiv GAME_LANGUAGE, 2
 	.else

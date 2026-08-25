@@ -9,6 +9,8 @@
 
 // Multichoice Ids
 // TODO
+#define MULTI_BRINEY_ON_DEWFORD  0
+#define MULTI_HOWS_FISHING       50
 
 // Std String Ids
 #define STDSTRING_COOL             0

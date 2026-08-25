@@ -8,7 +8,7 @@ DewfordTown_PokemonCenter_1F_OnTransition:: @ 815301A
 	end
 
 DewfordTown_PokemonCenter_1F_EventScript_Nurse:: @ 8153023
-	setvar VAR_0x800B, 1
+	setvar VAR_0x800B, LOCALID_DEWFORD_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
