@@ -196,4 +196,6 @@
 
 #define SPECIAL_VARS_END              0x8015
 
+#define TRIGGER_RUN_IMMEDIATELY       0
+
 #endif // GUARD_CONSTANTS_VARS_H

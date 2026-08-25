@@ -37,23 +37,23 @@ LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars:: @ 81536FE
 
 LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers:: @ 81536FF
 	goto_if_defeated TRAINER_COLE, LavaridgeTown_Gym_1F_EventScript_CheckBuryZane
-	setobjectmovementtype 2, 63
+	setobjectmovementtype LOCALID_COLE, MOVEMENT_TYPE_BURIED
 
 LavaridgeTown_Gym_1F_EventScript_CheckBuryZane:: @ 815370C
 	goto_if_defeated TRAINER_ZANE, LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle
-	setobjectmovementtype 3, 63
+	setobjectmovementtype LOCALID_ZANE, MOVEMENT_TYPE_BURIED
 
 LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle:: @ 8153719
 	goto_if_defeated TRAINER_AXLE, LavaridgeTown_Gym_1F_EventScript_CheckBurySadie
-	setobjectmovementtype 4, 63
+	setobjectmovementtype LOCALID_AXLE, MOVEMENT_TYPE_BURIED
 
 LavaridgeTown_Gym_1F_EventScript_CheckBurySadie:: @ 8153726
 	goto_if_defeated TRAINER_SADIE, LavaridgeTown_Gym_1F_EventScript_CheckBuryAndy
-	setobjectmovementtype 5, 63
+	setobjectmovementtype LOCALID_SADIE, MOVEMENT_TYPE_BURIED
 
 LavaridgeTown_Gym_1F_EventScript_CheckBuryAndy:: @ 8153733
 	goto_if_defeated TRAINER_ANDY, LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers
-	setobjectmovementtype 7, 63
+	setobjectmovementtype LOCALID_ANDY, MOVEMENT_TYPE_BURIED
 
 LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers:: @ 8153740
 	return
@@ -92,7 +92,7 @@ LavaridgeTown_Gym_1F_EventScript_GiveOverheat:: @ 81537A7
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Cole:: @ 81537CB
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_COLE, 2, LavaridgeTown_Gym_1F_Text_ColeIntro, LavaridgeTown_Gym_1F_Text_ColeDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_COLE, LOCALID_COLE, LavaridgeTown_Gym_1F_Text_ColeIntro, LavaridgeTown_Gym_1F_Text_ColeDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_ColePostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -102,22 +102,22 @@ LavaridgeTown_Gym_EventScript_CheckTrainerScript:: @ 81537E6
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Axle:: @ 81537ED
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_AXLE, 4, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_AXLE, LOCALID_AXLE, LavaridgeTown_Gym_1F_Text_AxleIntro, LavaridgeTown_Gym_1F_Text_AxleDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_AxlePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Andy:: @ 8153808
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ANDY, 7, LavaridgeTown_Gym_B1F_Text_AndyIntro, LavaridgeTown_Gym_B1F_Text_AndyDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ANDY, LOCALID_ANDY, LavaridgeTown_Gym_B1F_Text_AndyIntro, LavaridgeTown_Gym_B1F_Text_AndyDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_B1F_Text_AndyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Sadie:: @ 8153823
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_SADIE, 5, LavaridgeTown_Gym_1F_Text_SadieIntro, LavaridgeTown_Gym_1F_Text_SadieDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_SADIE, LOCALID_SADIE, LavaridgeTown_Gym_1F_Text_SadieIntro, LavaridgeTown_Gym_1F_Text_SadieDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_SadiePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Zane:: @ 815383E
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ZANE, 3, LavaridgeTown_Gym_1F_Text_ZaneIntro, LavaridgeTown_Gym_1F_Text_ZaneDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ZANE, LOCALID_ZANE, LavaridgeTown_Gym_1F_Text_ZaneIntro, LavaridgeTown_Gym_1F_Text_ZaneDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
 	msgbox LavaridgeTown_Gym_1F_Text_ZanePostBattle, MSGBOX_AUTOCLOSE
 	end
 
