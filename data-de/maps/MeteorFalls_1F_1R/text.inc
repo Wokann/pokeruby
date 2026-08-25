@@ -1,21 +1,21 @@
-MeteorFalls_1F_1R_Text_193237:: @ 8193237
+MeteorFalls_1F_1R_Text_WithThisMeteorite:: @ 8193237
 	.string "Hähähä!\p"
 	.string "Mit diesem METEORITEN wird\n"
 	.string "SCHLOTBERG...$"
 
-MeteorFalls_1F_1R_Text_193268:: @ 8193268
+MeteorFalls_1F_1R_Text_DontExpectMercyFromEvilTeam:: @ 8193268
 	.string "Häh?\p"
 	.string "Ich weiß zwar nicht, wer du bist. Aber\n"
 	.string "wenn du dich TEAM {EVIL_TEAM} in den Weg\l"
 	.string "stellst, erwarte keine Gnade!$"
 
-MeteorFalls_1F_1R_Text_1932C5:: @ 81932C5
+MeteorFalls_1F_1R_Text_HoldItRightThereEvilTeam:: @ 81932C5
 	.string "Bleibt sofort stehen, TEAM {EVIL_TEAM}!\p"
 	.string "Wir, TEAM {GOOD_TEAM}, lassen euch nicht so \n"
 	.string "einfach mit euren Missetaten davon-\l"
 	.string "kommen.$"
 
-MeteorFalls_1F_1R_Text_193320:: @ 8193320
+MeteorFalls_1F_1R_Text_BeSeeingYouOpposingEvilTeam:: @ 8193320
 	.string "Hähähä!\n"
 	.string "Sogar TEAM {GOOD_TEAM} leistet uns\l"
 	.string "Gesellschaft!\p"
@@ -27,7 +27,7 @@ MeteorFalls_1F_1R_Text_193320:: @ 8193320
 	.string "Hähähä! Wir sehen uns, ihr Würstchen\n"
 	.string "vom TEAM {GOOD_TEAM}!$"
 
-MeteorFalls_1F_1R_Text_1933EC:: @ 81933EC
+MeteorFalls_1F_1R_Text_MaxieIntroducesMagma:: @ 81933EC
 	.string "Und du bist?\p"
 	.string "... ... ... ... ... ... ... ...\n"
 	.string "... ... ... ... ... ... ... ...\p"
@@ -44,7 +44,7 @@ MeteorFalls_1F_1R_Text_1933EC:: @ 81933EC
 	.string "Wir, TEAM MAGMA, lieben trockenes Land\n"
 	.string "über alles! TEAM AQUA? Unser Erzfeind!$"
 
-MeteorFalls_1F_1R_Text_193584:: @ 8193584
+MeteorFalls_1F_1R_Text_ArchieIntroducesAqua:: @ 8193584
 	.string "Wer bist du denn???\p"
 	.string "... ... ... ... ... ... ... ...\n"
 	.string "... ... ... ... ... ... ... ...\p"
@@ -60,22 +60,22 @@ MeteorFalls_1F_1R_Text_193584:: @ 8193584
 	.string "Wir, TEAM AQUA, lieben das Meer über\n"
 	.string "alles. TEAM MAGMA ist unser Erzfeind!$"
 
-MeteorFalls_1F_1R_Text_193720:: @ 8193720
+MeteorFalls_1F_1R_Text_GoodLeaderWeShouldChaseEvilTeam:: @ 8193720
 	.string "{GOOD_LEADER}, wir sollten TEAM {EVIL_TEAM}\n"
 	.string "verfolgen...$"
 
-MeteorFalls_1F_1R_Text_193747:: @ 8193747
+MeteorFalls_1F_1R_Text_GoodLeaderOrdersPursuit:: @ 8193747
 	.string "{GOOD_LEADER}: Ja, ja. Das müssen wir!\n"
 	.string "Wir müssen uns beeilen.\p"
 	.string "Nicht auszudenken, was TEAM {EVIL_TEAM} am\n"
 	.string "SCHLOTBERG anrichten will!$"
 
-MeteorFalls_1F_1R_Text_1937AA:: @ 81937AA
+MeteorFalls_1F_1R_Text_GoodLeaderFarewell:: @ 81937AA
 	.string "{GOOD_LEADER}: {PLAYER}{KUN}, du solltest\n"
 	.string "TEAM {EVIL_TEAM} im Auge behalten.\p"
 	.string "Leb wohl!$"
 
-MeteorFalls_1F_1R_Text_1937EB:: @ 81937EB
+MeteorFalls_1F_1R_Text_MeetProfCozmo:: @ 81937EB
 	.string "Ich... Ich bin KOSMO...\n"
 	.string "Ich bin Professor...\p"
 	.string "Eigentlich studiere ich METEORITEN in\n"
@@ -93,7 +93,7 @@ MeteorFalls_1F_1R_Text_1937EB:: @ 81937EB
 	.string "Was haben sie mit dem METEORITEN am\n"
 	.string "SCHLOTBERG vor?$"
 
-MeteorFalls_1F_1R_Text_19396A:: @ 819396A
+MeteorFalls_1F_1R_Text_WhatsEvilTeamDoingAtMtChimney:: @ 819396A
 	.string "PROF. KOSMO: Dieses TEAM {EVIL_TEAM}...\p"
 	.string "Was haben sie mit dem METEORITEN am\n"
 	.string "SCHLOTBERG vor?$"
