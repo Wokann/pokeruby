@@ -19,11 +19,11 @@ Route103_EventScript_Rival:: @ 814EB92
 Route103_EventScript_RivalMay:: @ 814EBAB
 	msgbox Route103_Text_MayRoute103Pokemon, MSGBOX_DEFAULT
 	playbgm MUS_ENCOUNTER_MAY, TRUE
-	applymovement 2, Common_Movement_FacePlayer
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0
-	applymovement 2, Common_Movement_ExclamationMark
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 2, Common_Movement_Delay48
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Route103_Text_MayLetsBattle, MSGBOX_DEFAULT
 	switch VAR_STARTER_MON
@@ -35,11 +35,11 @@ Route103_EventScript_RivalMay:: @ 814EBAB
 Route103_EventScript_RivalBrendan:: @ 814EC04
 	msgbox Route103_Text_BrendanRoute103Pokemon, MSGBOX_DEFAULT
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
-	applymovement 2, Common_Movement_FacePlayer
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0
-	applymovement 2, Common_Movement_ExclamationMark
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 2, Common_Movement_Delay48
+	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Route103_Text_BrendanLetsBattle, MSGBOX_DEFAULT
 	switch VAR_STARTER_MON
@@ -98,25 +98,25 @@ Route103_EventScript_RivalExit:: @ 814ECD9
 	end
 
 Route103_EventScript_RivalExitFacingNorth:: @ 814ED0C
-	applymovement 2, Route103_Movement_RivalExitFacingNorth1
+	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExitFacingNorth1
 	waitmovement 0
 	playse SE_LEDGE
-	applymovement 2, Route103_Movement_RivalExitFacingNorth2
+	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExitFacingNorth2
 	waitmovement 0
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalExitFacingEastOrWest:: @ 814ED29
-	applymovement 2, Route103_Movement_RivalExit1
+	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
 	waitmovement 0
 	playse SE_LEDGE
-	applymovement 2, Route103_Movement_RivalExit2
+	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit2
 	waitmovement 0
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalEnd:: @ 814ED46
-	removeobject 2
+	removeobject LOCALID_ROUTE103_RIVAL
 	setvar VAR_ROUTE103_STATE, 1
 	setvar VAR_BIRCH_LAB_STATE, 4
 	clearflag FLAG_HIDE_RIVAL_BIRCH_LAB
