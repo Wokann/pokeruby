@@ -1,4 +1,4 @@
-Route120_Text_171827:: @ 8171827
+Route120_Text_StevenGreeting:: @ 8171827
 	.string "TROY: Hm? {PLAYER}{KUN}, hi.\n"
 	.string "Es ist lange her...\p"
 	.string "Hier ist etwas, das du nicht sehen\n"
@@ -11,25 +11,25 @@ Route120_Text_171827:: @ 8171827
 	.string "{PLAYER}{KUN}, sind deine POKéMON bereit\n"
 	.string "für einen Kampf?$"
 
-Route120_Text_17193D:: @ 817193D
+Route120_Text_StevenIllWaitHere:: @ 817193D
 	.string "TROY: Nein?\p"
 	.string "Ich warte hier, dann kannst du sie vor-\n"
 	.string "bereiten.$"
 
-Route120_Text_17196F:: @ 817196F
+Route120_Text_StevenReadyForBattle:: @ 817196F
 	.string "TROY: {PLAYER}{KUN}, sind deine\n"
 	.string "POKéMON bereit für einen Kampf?$"
 
-Route120_Text_1719A0:: @ 81719A0
+Route120_Text_StevenShowMeYourPower:: @ 81719A0
 	.string "TROY: {PLAYER}{KUN}, zeig mir deine\n"
 	.string "wahre Stärke als TRAINER!$"
 
-Route120_Text_1719D4:: @ 81719D4
+Route120_Text_StevenUsedDevonScope:: @ 81719D4
 	.string "TROY setzt das DEVON-SCOPE ein.\p"
 	.string "Ein unsichtbares POKéMON wird sichtbar!\p"
 	.string "Das erschreckte POKéMON greift an!$"
 
-Route120_Text_171A40:: @ 8171A40
+Route120_Text_StevenGiveDevonScope:: @ 8171A40
 	.string "TROY: Bemerkenswert... Dein\n"
 	.string "Kampfstil ist wirklich bemerkenswert.\p"
 	.string "Deine POKéMON sind offensichtlich sehr\n"
@@ -40,7 +40,7 @@ Route120_Text_171A40:: @ 8171A40
 	.string "Wer weiß, es gibt bestimmt noch andere\n"
 	.string "verborgene POKéMON.$"
 
-Route120_Text_171B0E:: @ 8171B0E
+Route120_Text_StevenGoodbye:: @ 8171B0E
 	.string "TROY: {PLAYER}{KUN}.\p"
 	.string "Ich liebe es, TRAINER und POKéMON zu\n"
 	.string "sehen, die fest zusammenhalten.\p"
@@ -60,10 +60,10 @@ Text_UseDevonScopeMonAttacked:: @ 8171BF6
 	.string "Ein unsichtbares POKéMON wird sichtbar!\p"
 	.string "Das erschreckte POKéMON greift an!$"
 
-Route120_Text_171C5E:: @ 8171C5E
+Route120_Text_RouteSignFortree:: @ 8171C5E
 	.string "ROUTE 120\n"
 	.string "{LEFT_ARROW} BAUMHAUSEN CITY$"
 
-Route120_Text_171C77:: @ 8171C77
+Route120_Text_RouteSign121:: @ 8171C77
 	.string "{RIGHT_ARROW} ROUTE 121\n"
 	.string "{LEFT_ARROW} ROUTE 120$"

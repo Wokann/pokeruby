@@ -146,19 +146,19 @@ Route119_EventScript_ItemHyperPotion2:: @ 81B160D
 	finditem ITEM_HYPER_POTION
 	end
 
-Route120_EventScript_1B161A:: @ 81B161A
+Route120_EventScript_ItemNugget:: @ 81B161A
 	finditem ITEM_NUGGET
 	end
 
-Route120_EventScript_1B1627:: @ 81B1627
+Route120_EventScript_ItemFullHeal:: @ 81B1627
 	finditem ITEM_FULL_HEAL
 	end
 
-Route120_EventScript_1B1634:: @ 81B1634
+Route120_EventScript_ItemHyperPotion:: @ 81B1634
 	finditem ITEM_HYPER_POTION
 	end
 
-Route120_EventScript_1B1641:: @ 81B1641
+Route120_EventScript_ItemNestBall:: @ 81B1641
 	finditem ITEM_NEST_BALL
 	end
 

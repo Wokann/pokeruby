@@ -1,4 +1,4 @@
-Route120_Text_171827:: @ 8171827
+Route120_Text_StevenGreeting:: @ 8171827
 	.string "STEVEN: Hm? {PLAYER}{KUN}, hi.\n"
 	.string "It's been a while.\p"
 	.string "There's something here that you can't\n"
@@ -11,25 +11,25 @@ Route120_Text_171827:: @ 8171827
 	.string "{PLAYER}{KUN}, are your POKéMON ready for\n"
 	.string "battle?$"
 
-Route120_Text_17193D:: @ 817193D
+Route120_Text_StevenIllWaitHere:: @ 817193D
 	.string "STEVEN: No?\p"
 	.string "I'll wait here, so you can get ready.$"
 
-Route120_Text_17196F:: @ 817196F
+Route120_Text_StevenReadyForBattle:: @ 817196F
 	.string "STEVEN: {PLAYER}{KUN}, are your POKéMON\n"
 	.string "ready for battle?$"
 
-Route120_Text_1719A0:: @ 81719A0
+Route120_Text_StevenShowMeYourPower:: @ 81719A0
 	.string "STEVEN: {PLAYER}{KUN}, show me your true\n"
 	.string "power as a TRAINER!$"
 
-Route120_Text_1719D4:: @ 81719D4
+Route120_Text_StevenUsedDevonScope:: @ 81719D4
 	.string "STEVEN used the DEVON SCOPE.\p"
 	.string "An invisible POKéMON became completely\n"
 	.string "visible!\p"
 	.string "The startled POKéMON attacked!$"
 
-Route120_Text_171A40:: @ 8171A40
+Route120_Text_StevenGiveDevonScope:: @ 8171A40
 	.string "STEVEN: I see...\n"
 	.string "Your battle style is intriguing.\p"
 	.string "Your POKéMON have obviously grown\n"
@@ -39,7 +39,7 @@ Route120_Text_171A40:: @ 8171A40
 	.string "Who knows, there may be other\n"
 	.string "concealed POKéMON.$"
 
-Route120_Text_171B0E:: @ 8171B0E
+Route120_Text_StevenGoodbye:: @ 8171B0E
 	.string "STEVEN: {PLAYER}{KUN}.\p"
 	.string "I enjoy seeing POKéMON and TRAINERS\n"
 	.string "who strive together.\p"
@@ -59,10 +59,10 @@ Text_UseDevonScopeMonAttacked:: @ 8171BF6
 	.string "visible!\p"
 	.string "The startled POKéMON attacked!$"
 
-Route120_Text_171C5E:: @ 8171C5E
+Route120_Text_RouteSignFortree:: @ 8171C5E
 	.string "ROUTE 120\n"
 	.string "{0x7B} FORTREE CITY$"
 
-Route120_Text_171C77:: @ 8171C77
+Route120_Text_RouteSign121:: @ 8171C77
 	.string "{0x7C} ROUTE 121\n"
 	.string "{0x7B} ROUTE 120$"
