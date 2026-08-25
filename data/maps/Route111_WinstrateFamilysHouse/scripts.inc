@@ -4,7 +4,7 @@ Route111_WinstrateFamilysHouse_MapScripts:: @ 815BF24
 Route111_WinstrateFamilysHouse_EventScript_Victor:: @ 815BF25
 	lock
 	faceplayer
-	setvar VAR_0x8008, 2
+	setvar VAR_0x8008, LOCALID_WINSTRATE_HOUSE_VICTOR
 	msgbox Route111_WinstrateFamilysHouse_Text_MySonIsStrongerThanYou, MSGBOX_DEFAULT
 	goto Route111_WinstrateFamilysHouse_EventScript_FaceOriginalDirection
 	end
@@ -12,7 +12,7 @@ Route111_WinstrateFamilysHouse_EventScript_Victor:: @ 815BF25
 Route111_WinstrateFamilysHouse_EventScript_Victoria:: @ 815BF3A
 	lock
 	faceplayer
-	setvar VAR_0x8008, 3
+	setvar VAR_0x8008, LOCALID_WINSTRATE_HOUSE_VICTORIA
 	goto_if_set FLAG_RECEIVED_MACHO_BRACE, Route111_WinstrateFamilysHouse_EventScript_ReceivedMachoBrace
 	msgbox Route111_WinstrateFamilysHouse_Text_LikeYouToHaveMachoBrace, MSGBOX_DEFAULT
 	giveitem ITEM_MACHO_BRACE
@@ -30,7 +30,7 @@ Route111_WinstrateFamilysHouse_EventScript_ReceivedMachoBrace:: @ 815BF72
 Route111_WinstrateFamilysHouse_EventScript_Vivi:: @ 815BF80
 	lock
 	faceplayer
-	setvar VAR_0x8008, 1
+	setvar VAR_0x8008, LOCALID_WINSTRATE_HOUSE_VIVI
 	msgbox Route111_WinstrateFamilysHouse_Text_StrongerFamilyMembers, MSGBOX_DEFAULT
 	goto Route111_WinstrateFamilysHouse_EventScript_FaceOriginalDirection
 	end
@@ -38,7 +38,7 @@ Route111_WinstrateFamilysHouse_EventScript_Vivi:: @ 815BF80
 Route111_WinstrateFamilysHouse_EventScript_Vicky:: @ 815BF95
 	lock
 	faceplayer
-	setvar VAR_0x8008, 4
+	setvar VAR_0x8008, LOCALID_WINSTRATE_HOUSE_VICKY
 	goto_if_set FLAG_TEMP_4, Route111_WinstrateFamilysHouse_EventScript_AlreadySpokenTo
 	msgbox Route111_WinstrateFamilysHouse_Text_GrandsonStrong, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_4
