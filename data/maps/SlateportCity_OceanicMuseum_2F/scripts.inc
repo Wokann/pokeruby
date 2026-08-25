@@ -12,14 +12,14 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	msgbox SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts, MSGBOX_DEFAULT
 	closemessage
 	playbgm MUS_EVIL_TEAM, TRUE
-	addobject 3
-	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_FirstGruntEnter
+	addobject LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_FirstGruntEnter
 	waitmovement 0
-	addobject 4
-	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_SecondGruntEnter
+	addobject LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_SecondGruntEnter
 	waitmovement 0
-	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_FirstGruntApproach
-	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_SecondGruntApproach
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_FirstGruntApproach
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_SecondGruntApproach
 	waitmovement 0
 	compare VAR_FACING, 1
 	call_if_eq SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts
@@ -31,7 +31,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternWhoAreYou, MSGBOX_DEFAULT
 	msgbox SlateportCity_OceanicMuseum_2F_Text_WereEvilTeam, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
 	waitmovement 0
 	compare VAR_FACING, 1
 	call_if_eq SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntSouth
@@ -40,27 +40,27 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	trainerbattle_no_intro TRAINER_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat
 	msgbox SlateportCity_OceanicMuseum_2F_Text_BossGoingToBeFurious, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
 	waitmovement 0
-	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_LetMeTakeCareOfThis, MSGBOX_DEFAULT
 	savebgm 0
 	trainerbattle_no_intro TRAINER_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat
-	applymovement 3, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1, SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated
 	waitmovement 0
-	applymovement 3, Common_Movement_WalkInPlaceFastestDown
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_MeddlingKid, MSGBOX_DEFAULT
 	closemessage
 	delay 35
-	addobject 2
-	applymovement 2, SlateportCity_OceanicMuseum_2F_Movement_EvilLeaderEnter
-	applymovement 4, SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForEvilLeader
+	addobject LOCALID_OCEANIC_MUSEUM_2F_EVIL_LEADER
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_EVIL_LEADER, SlateportCity_OceanicMuseum_2F_Movement_EvilLeaderEnter
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2, SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForEvilLeader
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_2F_Text_CameToSeeWhatsTakingSoLong, MSGBOX_DEFAULT
-	applymovement 2, SlateportCity_OceanicMuseum_2F_Movement_EvilLeaderApproachPlayer
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_EVIL_LEADER, SlateportCity_OceanicMuseum_2F_Movement_EvilLeaderApproachPlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SlateportCity_OceanicMuseum_2F_Text_ArchieWarning, MSGBOX_DEFAULT
@@ -69,9 +69,9 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	.endif
 	closemessage
 	fadescreen FADE_TO_BLACK
-	removeobject 2
-	removeobject 3
-	removeobject 4
+	removeobject LOCALID_OCEANIC_MUSEUM_2F_EVIL_LEADER
+	removeobject LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1
+	removeobject LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2
 	fadescreen FADE_FROM_BLACK
 	delay 30
 	setflag FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM
@@ -82,10 +82,10 @@ SlateportCity_OceanicMuseum_2F_EventScript_CaptStern:: @ 8155CE6
 	call Common_EventScript_PlayerHandedOverTheItem
 	msgbox SlateportCity_OceanicMuseum_2F_Text_SternIveGotToGo, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, SlateportCity_OceanicMuseum_2F_EventScript_SternLeave
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_CAPT_STERN, SlateportCity_OceanicMuseum_2F_Movement_SternLeave
 	waitmovement 0
 	playse SE_EXIT
-	removeobject 1
+	removeobject LOCALID_OCEANIC_MUSEUM_2F_CAPT_STERN
 	setflag FLAG_HIDE_EVIL_TEAM_ROUTE110
 	setflag FLAG_DELIVERED_DEVON_GOODS
 	clearflag FLAG_HIDE_DEVON_EMPLOYEE_ROUTE116
@@ -99,7 +99,7 @@ SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts:: @ 8155E62
 	return
 
 SlateportCity_OceanicMuseum_2F_EventScript_SternFaceGrunts:: @ 8155E6D
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_OCEANIC_MUSEUM_2F_CAPT_STERN, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	return
 
@@ -127,7 +127,7 @@ SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntWest:: @ 8155E92
 	walk_in_place_fastest_left
 	step_end
 
-SlateportCity_OceanicMuseum_2F_EventScript_SternLeave:: @ 8155E98
+SlateportCity_OceanicMuseum_2F_Movement_SternLeave:: @ 8155E98
 	walk_up
 	walk_left
 	walk_left
