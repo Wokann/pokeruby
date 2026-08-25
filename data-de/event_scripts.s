@@ -13,6 +13,7 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 #include "constants/heal_locations.h"
+#include "constants/layouts.h"
 #include "constants/vars.h"
 #include "constants/metatile_labels.h"
 #include "constants/battle_setup.h"

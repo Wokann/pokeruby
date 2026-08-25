@@ -41,6 +41,9 @@
 #define FLAG_TEMP_20  0x20
 #define FLAG_VICTORY_ROAD_ROCK FLAG_TEMP_20
 
+// Temporary flag aliases
+#define FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE FLAG_TEMP_11
+
 // scripts
 #define FLAG_SET_WALL_CLOCK                 0x51
 #define FLAG_RESCUED_BIRCH                  0x52

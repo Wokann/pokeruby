@@ -4,9 +4,9 @@ Route130_MapScripts:: @ 81523C2
 
 Route130_OnTransition:: @ 81523C8
 	specialvar VAR_RESULT, IsMirageIslandPresent
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route130_EventScript_SetMirageIslandLayout
-	setflag FLAG_TEMP_11
+	setflag FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE
 	setflag FLAG_TEMP_12
 	setflag FLAG_TEMP_13
 	setflag FLAG_TEMP_14
@@ -22,11 +22,11 @@ Route130_OnTransition:: @ 81523C8
 	setflag FLAG_TEMP_1E
 	setflag FLAG_TEMP_1F
 	setflag FLAG_TEMP_20
-	setmaplayoutindex 264
+	setmaplayoutindex LAYOUT_ROUTE130
 	end
 
 Route130_EventScript_SetMirageIslandLayout:: @ 815240C
-	setmaplayoutindex 46
+	setmaplayoutindex LAYOUT_ROUTE130_MIRAGE_ISLAND
 	end
 
 Route130_EventScript_Rodney:: @ 8152410

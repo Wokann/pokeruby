@@ -452,14 +452,14 @@
       "blockdata_filepath": "data/layouts/Route129/map.bin"
     },
     {
-      "id": "LAYOUT_UNREFERENCED_MAP",
-      "name": "UnreferencedMap_Layout",
+      "id": "LAYOUT_ROUTE130_MIRAGE_ISLAND",
+      "name": "Route130_MirageIsland_Layout",
       "width": 80,
       "height": 40,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnreferencedMap/border.bin",
-      "blockdata_filepath": "data/layouts/UnreferencedMap/map.bin"
+      "border_filepath": "data/layouts/Route130_MirageIsland/border.bin",
+      "blockdata_filepath": "data/layouts/Route130_MirageIsland/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE131",
