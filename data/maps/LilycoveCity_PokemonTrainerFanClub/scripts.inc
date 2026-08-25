@@ -9,20 +9,20 @@ LilycoveCity_PokemonTrainerFanClub_OnFrame:: @ 8159395
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MeetFirstFans:: @ 815939F
 	lockall
-	applymovement 1, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_TRAINER_FAN_CLUB_LASS, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_OhWowItsPlayer, MSGBOX_DEFAULT
-	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer
-	applymovement 2, LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer
+	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer
+	applymovement LOCALID_TRAINER_FAN_CLUB_MAN, LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_HeardAboutYouImYourFan, MSGBOX_DEFAULT
-	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer
+	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
-	applymovement 4, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer
+	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer
 	waitmovement 0
 	setvar VAR_LILYCOVE_FAN_CLUB_STATE, 2
 	releaseall
@@ -104,35 +104,35 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_UpdateFanMemberPositions:: @ 8159
 	end
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember1ToFarTable:: @ 81594D5
-	setobjectxyperm 1, 7, 5
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_LASS, 7, 5
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember2ToFarTable:: @ 81594DD
-	setobjectxyperm 3, 3, 4
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_POKEFAN_M, 3, 4
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember3ToFarTable:: @ 81594E5
-	setobjectxyperm 4, 7, 2
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, 7, 2
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember4ToFarTable:: @ 81594ED
-	setobjectxyperm 5, 5, 5
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_NINJA_BOY, 5, 5
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember5ToFarTable:: @ 81594F5
-	setobjectxyperm 6, 5, 2
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_BOY, 5, 2
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember6ToFarTable:: @ 81594FD
-	setobjectxyperm 2, 8, 4
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_MAN, 8, 4
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember7ToFarTable:: @ 8159505
-	setobjectxyperm 7, 3, 3
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_WOMAN, 3, 3
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MoveMember8ToFarTable:: @ 815950D
-	setobjectxyperm 8, 8, 3
+	setobjectxyperm LOCALID_TRAINER_FAN_CLUB_EXPERT_F, 8, 3
 	return
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_SetFanMemberPositionsForFirstFanMeeting:: @ 8159515

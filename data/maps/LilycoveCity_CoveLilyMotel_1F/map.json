@@ -13,6 +13,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "local_id": "LOCALID_MOTEL_OWNER",
       "x": 10,
       "y": 3,
       "elevation": 3,

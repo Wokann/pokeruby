@@ -62,16 +62,16 @@ LilycoveCity_LilycoveMuseum_2F_OnFrame:: @ 8158670
 
 LilycoveCity_LilycoveMuseum_2F_EventScript_ShowExhibitHall:: @ 815867A
 	lockall
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MUSEUM_2F_CURATOR, Common_Movement_FacePlayer
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft
 	waitmovement 0
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_ThisIsExhibitHall, MSGBOX_SIGN
-	applymovement 1, LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall
+	applymovement LOCALID_MUSEUM_2F_CURATOR, LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall
 	waitmovement 0
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall
 	waitmovement 0
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_ExplainExhibitHall, MSGBOX_SIGN
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MUSEUM_2F_CURATOR, Common_Movement_FacePlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft
 	waitmovement 0
@@ -107,16 +107,16 @@ LilycoveCity_LilycoveMuseum_2F_EventScript_AddedPainting:: @ 815872C
 	end
 
 LilycoveCity_LilycoveMuseum_2F_EventScript_ThankPlayer:: @ 8158735
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MUSEUM_2F_CURATOR, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_ItsYouPlayer, MSGBOX_DEFAULT
-	applymovement 1, LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall
+	applymovement LOCALID_MUSEUM_2F_CURATOR, LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_PaintingsAttractedMoreGuests, MSGBOX_DEFAULT
 	goto LilycoveCity_LilycoveMuseum_2F_EventScript_GiveGlassOrnament
 	end
 
 LilycoveCity_LilycoveMuseum_2F_EventScript_GiveGlassOrnament:: @ 815875C
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MUSEUM_2F_CURATOR, Common_Movement_FacePlayer
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_TokenOfGratitude, MSGBOX_DEFAULT
 	givedecoration DECOR_GLASS_ORNAMENT
 	compare VAR_RESULT, 0
@@ -168,7 +168,7 @@ LilycoveCity_LilycoveMuseum_2F_EventScript_SmartPainting:: @ 81587E9
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_ItsGreenPictureFrame, MSGBOX_SIGN
 	end
 
-@ 81587FC
+LilycoveCity_LilycoveMuseum_2F_EventScript_UnusedPainting:: @ 81587FC
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_ItsPaintingOfPokemon, MSGBOX_SIGN
 	end
 

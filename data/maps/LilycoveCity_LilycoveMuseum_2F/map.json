@@ -13,6 +13,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "local_id": "LOCALID_MUSEUM_2F_CURATOR",
       "x": 10,
       "y": 8,
       "elevation": 3,

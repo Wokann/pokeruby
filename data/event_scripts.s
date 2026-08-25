@@ -1022,7 +1022,7 @@ UnknownString_81A0E68: @ 81A0E68
 UnknownString_81A0ED6: @ 81A0ED6
 	.string "What should I do for fun today?$"
 
-LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
+gText_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "Welcome to LILYCOVE DEPARTMENT STORE.\p"
 	.string "Which floor would you like?$"
 

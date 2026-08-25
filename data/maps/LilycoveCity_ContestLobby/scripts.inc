@@ -19,9 +19,9 @@ LilycoveCity_ContestLobby_EventScript_TryDoContestArtist:: @ 8158889
 
 LilycoveCity_ContestLobby_EventScript_ContestArtist:: @ 8158898
 	lockall
-	addobject 4
-	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistApproachPlayer
-	waitmovement 4
+	addobject LOCALID_CONTEST_LOBBY_ARTIST
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistApproachPlayer
+	waitmovement LOCALID_CONTEST_LOBBY_ARTIST
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerFaceArtist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
@@ -45,9 +45,9 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum:: @ 81588DE
 	specialvar VAR_RESULT, GiveMonArtistRibbon
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon
-	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistExit
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistExit
 	waitmovement 0
-	removeobject 4
+	removeobject LOCALID_CONTEST_LOBBY_ARTIST
 	call LilycoveCity_ContestLobby_EventScript_UpdateMuseumPatrons
 	call LilycoveCity_ContestLobby_EventScript_SetPaintingFlag
 	releaseall
@@ -59,22 +59,22 @@ LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePainting:: @ 8158918
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseum
 	msgbox LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistExit
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistExit
 	waitmovement 0
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, 0
-	removeobject 4
+	removeobject LOCALID_CONTEST_LOBBY_ARTIST
 	releaseall
 	end
 
 LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon:: @ 8158948
 	incrementgamestat GAME_STAT_RECEIVED_RIBBONS
 	special ScrSpecial_GetContestWinnerNick
-	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistBeginToExit
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistBeginToExit
 	waitmovement 0
 	playse SE_PIN
-	applymovement 4, Common_Movement_ExclamationMark
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistReturnToPlayer
+	applymovement LOCALID_CONTEST_LOBBY_ARTIST, LilycoveCity_ContestLobby_Movement_ArtistReturnToPlayer
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_TakeMementoOfPainting, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
@@ -193,9 +193,9 @@ LilycoveCity_ContestLobby_EventScript_TryDoLinkContestArtist:: @ 8158A5B
 
 LilycoveCity_ContestLobby_EventScript_LinkContestArtist:: @ 8158A6A
 	lockall
-	addobject 11
-	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistApproachPlayer
-	waitmovement 11
+	addobject LOCALID_CONTEST_LOBBY_LINK_ARTIST
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistApproachPlayer
+	waitmovement LOCALID_CONTEST_LOBBY_LINK_ARTIST
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerFaceLinkArtist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint, MSGBOX_DEFAULT
@@ -217,9 +217,9 @@ LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink:: @ 8158AAE
 	specialvar VAR_RESULT, GiveMonArtistRibbon
 	compare VAR_RESULT, 1
 	call_if_eq LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon
-	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistExit
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistExit
 	waitmovement 0
-	removeobject 11
+	removeobject LOCALID_CONTEST_LOBBY_LINK_ARTIST
 	call LilycoveCity_ContestLobby_EventScript_UpdateMuseumPatrons
 	call LilycoveCity_ContestLobby_EventScript_SetPaintingFlag
 	releaseall
@@ -231,22 +231,22 @@ LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePaintingLink:: @ 8158AE8
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_TakePaintingToMuseumLink
 	msgbox LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs, MSGBOX_DEFAULT
 	closemessage
-	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistExit
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistExit
 	waitmovement 0
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, 0
-	removeobject 11
+	removeobject LOCALID_CONTEST_LOBBY_LINK_ARTIST
 	releaseall
 	end
 
 LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon:: @ 8158B18
 	incrementgamestat GAME_STAT_RECEIVED_RIBBONS
 	special ScrSpecial_GetContestWinnerNick
-	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistBeginExit
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistBeginExit
 	waitmovement 0
 	playse SE_PIN
-	applymovement 11, Common_Movement_ExclamationMark
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer
+	applymovement LOCALID_CONTEST_LOBBY_LINK_ARTIST, LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_TakeMementoOfPainting, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
@@ -476,7 +476,7 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 	end
 
 LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
-	call LilycoveCity_ContestLobby_EventScript_158E0B
+	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
 	special ScrSpecial_SetLinkContestTrainerGfxIdx
 	setvar VAR_CONTEST_LOCATION, 5
@@ -484,40 +484,40 @@ LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
 	end
 
-LilycoveCity_ContestLobby_EventScript_158E0B:: @ 8158E0B
+LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall:: @ 8158E0B
 	lockall
 	messageautoscroll LilycoveCity_ContestLobby_Text_ContestBeginShortly
 	waitmessage
 	delay 20
 	closemessage
-	applymovement 2, LilycoveCity_ContestLobby_Movement_158E9C
+	applymovement LOCALID_CONTEST_LOBBY_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
 	setmetatile 9, 2, METATILE_Contest_WallShadow, 1
 	setmetatile 9, 3, METATILE_Contest_FloorShadow, 1
 	special DrawWholeMapView
-	applymovement 2, LilycoveCity_ContestLobby_Movement_158EA0
+	applymovement LOCALID_CONTEST_LOBBY_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
 	setmetatile 9, 2, METATILE_Contest_CounterFlap_Top, 1
 	setmetatile 9, 3, METATILE_Contest_CounterFlap_Bottom, 1
 	special DrawWholeMapView
 	delay 20
-	applymovement 2, LilycoveCity_ContestLobby_Movement_158EAE
+	applymovement LOCALID_CONTEST_LOBBY_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_158E99
+	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist
 	waitmovement 0
 	messageautoscroll LilycoveCity_ContestLobby_Text_ComeThroughHere
 	waitmessage
 	delay 20
 	closemessage
-	applymovement 2, LilycoveCity_ContestLobby_Movement_158EA4
-	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_158E8E
+	applymovement LOCALID_CONTEST_LOBBY_LINK_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall
+	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall
 	waitmovement 0
 	releaseall
 	return
 
-LilycoveCity_ContestLobby_Movement_158E8E:: @ 8158E8E
+LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall:: @ 8158E8E
 	walk_right
 	walk_right
 	walk_right
@@ -530,24 +530,24 @@ LilycoveCity_ContestLobby_Movement_158E8E:: @ 8158E8E
 	set_invisible
 	step_end
 
-LilycoveCity_ContestLobby_Movement_158E99:: @ 8158E99
+LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist:: @ 8158E99
 	walk_in_place_fastest_right
 	walk_right
 	step_end
 
-LilycoveCity_ContestLobby_Movement_158E9C:: @ 8158E9C
+LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter:: @ 8158E9C
 	walk_right
 	walk_right
 	walk_in_place_fastest_down
 	step_end
 
-LilycoveCity_ContestLobby_Movement_158EA0:: @ 8158EA0
+LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter:: @ 8158EA0
 	walk_down
 	walk_down
 	walk_in_place_fastest_up
 	step_end
 
-LilycoveCity_ContestLobby_Movement_158EA4:: @ 8158EA4
+LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall:: @ 8158EA4
 	walk_right
 	walk_right
 	walk_right
@@ -559,7 +559,7 @@ LilycoveCity_ContestLobby_Movement_158EA4:: @ 8158EA4
 	set_invisible
 	step_end
 
-LilycoveCity_ContestLobby_Movement_158EAE:: @ 8158EAE
+LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer:: @ 8158EAE
 	walk_in_place_fastest_left
 	step_end
 
@@ -570,7 +570,7 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	setvar VAR_0x800B, 8
 	setvar VAR_CONTEST_RANK, 3
 	call LilycoveCity_ContestLobby_EventScript_1A4E92
-	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
+	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
 	setvar VAR_CONTEST_LOCATION, 4
@@ -627,34 +627,34 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall3:: @ 8158F79
 	waitstate
 	return
 
-LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall:: @ 8158F86
+LilycoveCity_ContestLobby_EventScript_LeadToContestHall:: @ 8158F86
 	lockall
-	applymovement 1, LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
 	setmetatile 4, 2, METATILE_Contest_WallShadow, 1
 	setmetatile 4, 3, METATILE_Contest_FloorShadow, 1
 	special DrawWholeMapView
-	applymovement 1, LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistExitCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
 	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, 1
 	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, 1
 	special DrawWholeMapView
 	delay 20
-	applymovement 1, LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistFacePlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist
+	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
 	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 1, LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall
-	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall
+	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall
+	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall
 	waitmovement 0
 	releaseall
 	return
 
-LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall:: @ 8158FFE
+LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall:: @ 8158FFE
 	walk_left
 	walk_left
 	walk_left
@@ -666,24 +666,24 @@ LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall:: @ 8158FFE
 	set_invisible
 	step_end
 
-LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist:: @ 8159008
+LilycoveCity_ContestLobby_Movement_PlayerApproachReceptionist:: @ 8159008
 	walk_in_place_fastest_left
 	walk_left
 	step_end
 
-LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter:: @ 815900B
+LilycoveCity_ContestLobby_Movement_ReceptionistApproachCounter:: @ 815900B
 	walk_left
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter:: @ 815900F
+LilycoveCity_ContestLobby_Movement_ReceptionistExitCounter:: @ 815900F
 	walk_down
 	walk_down
 	walk_in_place_fastest_up
 	step_end
 
-LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall:: @ 8159013
+LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8159013
 	walk_left
 	walk_left
 	walk_left
@@ -694,7 +694,7 @@ LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall:: @ 8159013
 	set_invisible
 	step_end
 
-LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer:: @ 815901C
+LilycoveCity_ContestLobby_Movement_ReceptionistFacePlayer:: @ 815901C
 	walk_in_place_fastest_right
 	step_end
 

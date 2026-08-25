@@ -52,6 +52,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SAILOR",
+      "local_id": "LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR",
       "x": 8,
       "y": 10,
       "elevation": 3,

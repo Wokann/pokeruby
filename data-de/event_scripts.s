@@ -1022,7 +1022,7 @@ UnknownString_81A0E68: @ 81A0E68
 UnknownString_81A0ED6: @ 81A0ED6
 	.string "Womit soll ich mir die Zeit vertreiben?$"
 
-LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
+gText_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "Willkommen im SEEGRASULB CITY\n"
 	.string "EINKAUFSZENTRUM.\p"
 	.string "In welches Stockwerk möchtest du?$"

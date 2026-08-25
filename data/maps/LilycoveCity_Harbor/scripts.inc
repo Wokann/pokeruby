@@ -115,16 +115,16 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_LILYCOVE_CITY_HARBOR
 	delay 60
-	addobject 4
+	addobject LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR
 	delay 30
-	applymovement 4, Common_Movement_FacePlayer
+	applymovement LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox EventTicket_Text_ShowEonTicket, MSGBOX_DEFAULT
 	closemessage
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	delay 30
-	removeobject 4
+	removeobject LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR
 	compare VAR_FACING, 2
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryNorth
 	compare VAR_FACING, 4
