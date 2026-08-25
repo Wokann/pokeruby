@@ -1,11 +1,11 @@
 Route130_MapScripts:: @ 81523C2
-	map_script MAP_SCRIPT_ON_TRANSITION, Route130_MapScript1_1523C8
+	map_script MAP_SCRIPT_ON_TRANSITION, Route130_OnTransition
 	.byte 0
 
-Route130_MapScript1_1523C8:: @ 81523C8
+Route130_OnTransition:: @ 81523C8
 	specialvar VAR_RESULT, IsMirageIslandPresent
 	compare VAR_RESULT, 1
-	goto_if_eq Route130_EventScript_15240C
+	goto_if_eq Route130_EventScript_SetMirageIslandLayout
 	setflag FLAG_TEMP_11
 	setflag FLAG_TEMP_12
 	setflag FLAG_TEMP_13
@@ -25,16 +25,16 @@ Route130_MapScript1_1523C8:: @ 81523C8
 	setmaplayoutindex 264
 	end
 
-Route130_EventScript_15240C:: @ 815240C
+Route130_EventScript_SetMirageIslandLayout:: @ 815240C
 	setmaplayoutindex 46
 	end
 
-Route130_EventScript_152410:: @ 8152410
-	trainerbattle_single TRAINER_RODNEY, Route130_Text_1C2401, Route130_Text_1C245D
-	msgbox Route130_Text_1C2479, MSGBOX_AUTOCLOSE
+Route130_EventScript_Rodney:: @ 8152410
+	trainerbattle_single TRAINER_RODNEY, Route130_Text_RodneyIntro, Route130_Text_RodneyDefeat
+	msgbox Route130_Text_RodneyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route130_EventScript_152427:: @ 8152427
-	trainerbattle_single TRAINER_KATIE, Route130_Text_1C24DC, Route130_Text_1C2525
-	msgbox Route130_Text_1C256E, MSGBOX_AUTOCLOSE
+Route130_EventScript_Katie:: @ 8152427
+	trainerbattle_single TRAINER_KATIE, Route130_Text_KatieIntro, Route130_Text_KatieDefeat
+	msgbox Route130_Text_KatiePostBattle, MSGBOX_AUTOCLOSE
 	end
