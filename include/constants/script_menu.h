@@ -11,6 +11,21 @@
 // TODO
 #define MULTI_BRINEY_ON_DEWFORD  0
 #define MULTI_HOWS_FISHING       50
+#define MULTI_SHARDS_R           58
+#define MULTI_SHARDS_Y           59
+#define MULTI_SHARDS_RY          60
+#define MULTI_SHARDS_B           61
+#define MULTI_SHARDS_RB          62
+#define MULTI_SHARDS_YB          63
+#define MULTI_SHARDS_RYB         64
+#define MULTI_SHARDS_G           65
+#define MULTI_SHARDS_RG          66
+#define MULTI_SHARDS_YG          67
+#define MULTI_SHARDS_RYG         68
+#define MULTI_SHARDS_BG          69
+#define MULTI_SHARDS_RBG         70
+#define MULTI_SHARDS_YBG         71
+#define MULTI_SHARDS_RYBG        72
 
 // Std String Ids
 #define STDSTRING_COOL             0

@@ -29,17 +29,17 @@ Route124_DivingTreasureHuntersHouse_EventScript_CheckPlayerHasShard:: @ 8163E2E
 
 Route124_DivingTreasureHuntersHouse_EventScript_GetPlayersShards:: @ 8163E44
 	setvar VAR_TEMP_1, 0
-	checkitem ITEM_RED_SHARD, 1
-	compare VAR_RESULT, 1
+	checkitem ITEM_RED_SHARD
+	compare VAR_RESULT, TRUE
 	call_if_eq Route124_DivingTreasureHuntersHouse_EventScript_HasRedShard
-	checkitem ITEM_YELLOW_SHARD, 1
-	compare VAR_RESULT, 1
+	checkitem ITEM_YELLOW_SHARD
+	compare VAR_RESULT, TRUE
 	call_if_eq Route124_DivingTreasureHuntersHouse_EventScript_HasYellowShard
-	checkitem ITEM_BLUE_SHARD, 1
-	compare VAR_RESULT, 1
+	checkitem ITEM_BLUE_SHARD
+	compare VAR_RESULT, TRUE
 	call_if_eq Route124_DivingTreasureHuntersHouse_EventScript_HasBlueShard
-	checkitem ITEM_GREEN_SHARD, 1
-	compare VAR_RESULT, 1
+	checkitem ITEM_GREEN_SHARD
+	compare VAR_RESULT, TRUE
 	call_if_eq Route124_DivingTreasureHuntersHouse_EventScript_HasGreenShard
 	return
 
@@ -86,7 +86,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShowTradeOptions:: @ 8163EB0
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsR:: @ 8163F61
-	multichoice 0, 0, 58, 0
+	multichoice 0, 0, MULTI_SHARDS_R, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_DeclineTrade
@@ -94,7 +94,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsR:: @ 8163F61
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsY:: @ 8163F87
-	multichoice 0, 0, 59, 0
+	multichoice 0, 0, MULTI_SHARDS_Y, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_DeclineTrade
@@ -102,7 +102,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsY:: @ 8163F87
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRY:: @ 8163FAD
-	multichoice 0, 0, 60, 0
+	multichoice 0, 0, MULTI_SHARDS_RY, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
@@ -111,7 +111,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRY:: @ 8163FAD
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsB:: @ 8163FDE
-	multichoice 0, 0, 61, 0
+	multichoice 0, 0, MULTI_SHARDS_B, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_DeclineTrade
@@ -119,7 +119,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsB:: @ 8163FDE
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRB:: @ 8164004
-	multichoice 0, 0, 62, 0
+	multichoice 0, 0, MULTI_SHARDS_RB, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
@@ -128,7 +128,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRB:: @ 8164004
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYB:: @ 8164035
-	multichoice 0, 0, 63, 0
+	multichoice 0, 0, MULTI_SHARDS_YB, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
@@ -137,7 +137,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYB:: @ 8164035
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRYB:: @ 8164066
-	multichoice 0, 0, 64, 0
+	multichoice 0, 0, MULTI_SHARDS_RYB, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
@@ -147,7 +147,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRYB:: @ 8164066
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsG:: @ 81640A2
-	multichoice 0, 0, 65, 0
+	multichoice 0, 0, MULTI_SHARDS_G, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeGreenShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_DeclineTrade
@@ -155,7 +155,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsG:: @ 81640A2
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRG:: @ 81640C8
-	multichoice 0, 0, 66, 0
+	multichoice 0, 0, MULTI_SHARDS_RG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeGreenShard
@@ -164,7 +164,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRG:: @ 81640C8
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYG:: @ 81640F9
-	multichoice 0, 0, 67, 0
+	multichoice 0, 0, MULTI_SHARDS_YG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeGreenShard
@@ -173,7 +173,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYG:: @ 81640F9
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRYG:: @ 816412A
-	multichoice 0, 0, 68, 0
+	multichoice 0, 0, MULTI_SHARDS_RYG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
@@ -183,7 +183,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRYG:: @ 816412A
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsBG:: @ 8164166
-	multichoice 0, 0, 69, 0
+	multichoice 0, 0, MULTI_SHARDS_BG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeGreenShard
@@ -192,7 +192,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsBG:: @ 8164166
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRBG:: @ 8164197
-	multichoice 0, 0, 70, 0
+	multichoice 0, 0, MULTI_SHARDS_RBG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
@@ -202,7 +202,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRBG:: @ 8164197
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYBG:: @ 81641D3
-	multichoice 0, 0, 71, 0
+	multichoice 0, 0, MULTI_SHARDS_YBG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeBlueShard
@@ -212,7 +212,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsYBG:: @ 81641D3
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_ShardOptionsRYBG:: @ 816420F
-	multichoice 0, 0, 72, 0
+	multichoice 0, 0, MULTI_SHARDS_RYBG, FALSE
 	switch VAR_RESULT
 	case 0, Route124_DivingTreasureHuntersHouse_EventScript_TradeRedShard
 	case 1, Route124_DivingTreasureHuntersHouse_EventScript_TradeYellowShard
@@ -248,11 +248,11 @@ Route124_DivingTreasureHuntersHouse_EventScript_TryTradeShard:: @ 8164292
 	msgbox Route124_DivingTreasureHuntersHouse_Text_YoullTradeShardForStone, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq Route124_DivingTreasureHuntersHouse_EventScript_DeclineTrade
-	checkitemspace VAR_0x8009, 1
-	compare VAR_RESULT, 1
+	checkitemspace VAR_0x8009
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route124_DivingTreasureHuntersHouse_EventScript_TradeShard
 	checkitem VAR_0x8008, 2
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Route124_DivingTreasureHuntersHouse_EventScript_TradeShard
 	goto Route124_DivingTreasureHuntersHouse_EventScript_BagFull
 	end
