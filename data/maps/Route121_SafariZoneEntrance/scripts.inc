@@ -60,11 +60,11 @@ Route121_SafariZoneEntrance_EventScript_EntranceCounterTrigger:: @ 815C383
 
 Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 815C3B3
 	checkitem ITEM_POKEBLOCK_CASE, 1
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Route121_SafariZoneEntrance_EventScript_NoPokeblockCase
 	call Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon
 	checkmoney 500, 0
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
 	msgbox Route121_SafariZoneEntrance_Text_ThatWillBe500Please, MSGBOX_DEFAULT
 	removemoney 500, 0
@@ -88,10 +88,10 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 815C3B3
 
 Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon:: @ 815C425
 	getpartysize
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, PARTY_SIZE
 	goto_if_ne Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
 	specialvar VAR_RESULT, CheckFreePokemonStorageSpace
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
 	msgbox Route121_SafariZoneEntrance_Text_PCIsFull, MSGBOX_DEFAULT
 	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
