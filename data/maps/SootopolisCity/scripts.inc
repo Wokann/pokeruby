@@ -57,7 +57,7 @@ SootopolisCity_EventScript_SetStevenOutsideGymPostLegendary:: @ 814D159
 	return
 
 SootopolisCity_OnResume:: @ 814D165
-	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, 255, 9, 6
+	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, WARP_ID_NONE, 9, 6
 	end
 
 SootopolisCity_EventScript_CaveOfOriginExpert:: @ 814D16E

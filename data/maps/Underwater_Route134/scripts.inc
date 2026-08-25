@@ -3,5 +3,5 @@ Underwater_Route134_MapScripts:: @ 815F071
 	.byte 0
 
 Underwater_Route134_OnResume:: @ 815F077
-	setdivewarp MAP_ROUTE134, 255, 60, 31
+	setdivewarp MAP_ROUTE134, WARP_ID_NONE, 60, 31
 	end

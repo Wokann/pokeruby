@@ -3,7 +3,7 @@ Route134_MapScripts:: @ 81525B5
 	.byte 0
 
 Route134_OnResume:: @ 81525BB
-	setdivewarp MAP_UNDERWATER_ROUTE134, 255, 8, 6
+	setdivewarp MAP_UNDERWATER_ROUTE134, WARP_ID_NONE, 8, 6
 	end
 
 Route134_EventScript_Jack:: @ 81525C4

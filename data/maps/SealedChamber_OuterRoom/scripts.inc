@@ -5,7 +5,7 @@ SealedChamber_OuterRoom_MapScripts:: @ 815F0C6
 	.byte 0
 
 SealedChamber_OuterRoom_OnResume:: @ 815F0D6
-	setdivewarp MAP_UNDERWATER_SEALED_CHAMBER, 255, 12, 44
+	setdivewarp MAP_UNDERWATER_SEALED_CHAMBER, WARP_ID_NONE, 12, 44
 	setescapewarp MAP_UNDERWATER_SEALED_CHAMBER, 255, 12, 44
 	end
 

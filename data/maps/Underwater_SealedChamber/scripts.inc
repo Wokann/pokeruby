@@ -11,11 +11,11 @@ Underwater_SealedChamber_OnDive:: @ 815F086
 	goto Underwater_SealedChamber_EventScript_SurfaceSealedChamber
 
 Underwater_SealedChamber_EventScript_SurfaceRoute134:: @ 815F0A6
-	setdivewarp MAP_ROUTE134, 255, 60, 31
+	setdivewarp MAP_ROUTE134, WARP_ID_NONE, 60, 31
 	end
 
 Underwater_SealedChamber_EventScript_SurfaceSealedChamber:: @ 815F0AF
-	setdivewarp MAP_SEALED_CHAMBER_OUTER_ROOM, 255, 10, 19
+	setdivewarp MAP_SEALED_CHAMBER_OUTER_ROOM, WARP_ID_NONE, 10, 19
 	end
 
 Underwater_SealedChamber_EventScript_Braille:: @ 815F0B8
