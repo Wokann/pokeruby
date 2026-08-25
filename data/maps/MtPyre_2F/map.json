@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "MtPyre_2F_EventScript_15D39B",
+      "script": "MtPyre_2F_EventScript_Mark",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_2F_EventScript_1B1933",
+      "script": "MtPyre_2F_EventScript_ItemUltraBall",
       "flag": "FLAG_ITEM_MT_PYRE_2F_1"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_2F_EventScript_15D389",
+      "script": "MtPyre_2F_EventScript_Woman",
       "flag": "0"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_2F_EventScript_15D392",
+      "script": "MtPyre_2F_EventScript_PokefanM",
       "flag": "0"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_2F_EventScript_15D3CD",
+      "script": "MtPyre_2F_EventScript_Dez",
       "flag": "0"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_2F_EventScript_15D3B2",
+      "script": "MtPyre_2F_EventScript_Luke",
       "flag": "0"
     }
   ],

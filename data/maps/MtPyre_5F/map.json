@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "MtPyre_5F_EventScript_15D430",
+      "script": "MtPyre_5F_EventScript_Tasha",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_5F_EventScript_1B195A",
+      "script": "MtPyre_5F_EventScript_ItemLaxIncense",
       "flag": "FLAG_ITEM_MT_PYRE_5F_1"
     }
   ],

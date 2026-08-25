@@ -390,31 +390,31 @@ SafariZone_Southwest_EventScript_1B1926:: @ 81B1926
 	finditem ITEM_MAX_REVIVE
 	end
 
-MtPyre_2F_EventScript_1B1933:: @ 81B1933
+MtPyre_2F_EventScript_ItemUltraBall:: @ 81B1933
 	finditem ITEM_ULTRA_BALL
 	end
 
-MtPyre_3F_EventScript_1B1940:: @ 81B1940
+MtPyre_3F_EventScript_ItemSuperRepel:: @ 81B1940
 	finditem ITEM_SUPER_REPEL
 	end
 
-MtPyre_4F_EventScript_1B194D:: @ 81B194D
+MtPyre_4F_EventScript_ItemSeaIncense:: @ 81B194D
 	finditem ITEM_SEA_INCENSE
 	end
 
-MtPyre_5F_EventScript_1B195A:: @ 81B195A
+MtPyre_5F_EventScript_ItemLaxIncense:: @ 81B195A
 	finditem ITEM_LAX_INCENSE
 	end
 
-MtPyre_6F_EventScript_1B1967:: @ 81B1967
+MtPyre_6F_EventScript_ItemTMShadowBall:: @ 81B1967
 	finditem ITEM_TM30_SHADOW_BALL
 	end
 
-MtPyre_Exterior_EventScript_1B1974:: @ 81B1974
+MtPyre_Exterior_EventScript_ItemMaxPotion:: @ 81B1974
 	finditem ITEM_MAX_POTION
 	end
 
-MtPyre_Exterior_EventScript_1B1981:: @ 81B1981
+MtPyre_Exterior_EventScript_ItemTMSkillSwap:: @ 81B1981
 	finditem ITEM_TM48_SKILL_SWAP
 	end
 

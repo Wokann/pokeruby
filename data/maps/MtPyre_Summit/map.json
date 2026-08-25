@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_Summit_EventScript_15D5EF",
+      "script": "MtPyre_Summit_EventScript_OldMan",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MtPyre_Summit_EventScript_15D623",
+      "script": "MtPyre_Summit_EventScript_OldLady",
       "flag": "0"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtPyre_Summit_EventScript_1B2DA9",
+      "script": "MtPyre_Summit_EventScript_EvilTeamGrunt1",
       "flag": "FLAG_HIDE_GRUNTS_MT_PYRE_SUMMIT"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtPyre_Summit_EventScript_1B2DC0",
+      "script": "MtPyre_Summit_EventScript_EvilTeamGrunt2",
       "flag": "FLAG_HIDE_GRUNTS_MT_PYRE_SUMMIT"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
-      "script": "MtPyre_Summit_EventScript_1B2DD7",
+      "script": "MtPyre_Summit_EventScript_EvilTeamGrunt3",
       "flag": "FLAG_HIDE_GRUNTS_MT_PYRE_SUMMIT"
     }
   ],
@@ -121,7 +121,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "0",
-      "script": "MtPyre_Summit_EventScript_15D4BD"
+      "script": "MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger0"
     },
     {
       "type": "trigger",
@@ -130,7 +130,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "0",
-      "script": "MtPyre_Summit_EventScript_15D4C9"
+      "script": "MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger1"
     },
     {
       "type": "trigger",
@@ -139,7 +139,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "0",
-      "script": "MtPyre_Summit_EventScript_15D4D5"
+      "script": "MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger2"
     },
     {
       "type": "trigger",
@@ -148,7 +148,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "2",
-      "script": "MtPyre_Summit_EventScript_15D6CE"
+      "script": "MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger0"
     },
     {
       "type": "trigger",
@@ -157,7 +157,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "2",
-      "script": "MtPyre_Summit_EventScript_15D6DA"
+      "script": "MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger1"
     },
     {
       "type": "trigger",
@@ -166,7 +166,7 @@
       "elevation": 3,
       "var": "VAR_MT_PYRE_STATE",
       "var_value": "2",
-      "script": "MtPyre_Summit_EventScript_15D6E6"
+      "script": "MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger2"
     }
   ],
   "bg_events": [

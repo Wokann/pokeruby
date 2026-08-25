@@ -1,45 +1,45 @@
 MtPyre_Summit_MapScripts:: @ 815D4B1
-	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_MapScript1_15D4B7
+	map_script MAP_SCRIPT_ON_TRANSITION, MtPyre_Summit_OnTransition
 	.byte 0
 
-MtPyre_Summit_MapScript1_15D4B7:: @ 815D4B7
+MtPyre_Summit_OnTransition:: @ 815D4B7
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
-MtPyre_Summit_EventScript_15D4BD:: @ 815D4BD
+MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger0:: @ 815D4BD
 	lockall
 	setvar VAR_0x8008, 0
-	goto MtPyre_Summit_EventScript_15D4E1
+	goto MtPyre_Summit_EventScript_EvilTeamStealsOrb
 	end
 
-MtPyre_Summit_EventScript_15D4C9:: @ 815D4C9
+MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger1:: @ 815D4C9
 	lockall
 	setvar VAR_0x8008, 1
-	goto MtPyre_Summit_EventScript_15D4E1
+	goto MtPyre_Summit_EventScript_EvilTeamStealsOrb
 	end
 
-MtPyre_Summit_EventScript_15D4D5:: @ 815D4D5
+MtPyre_Summit_EventScript_EvilTeamStealsOrbTrigger2:: @ 815D4D5
 	lockall
 	setvar VAR_0x8008, 2
-	goto MtPyre_Summit_EventScript_15D4E1
+	goto MtPyre_Summit_EventScript_EvilTeamStealsOrb
 	end
 
-MtPyre_Summit_EventScript_15D4E1:: @ 815D4E1
+MtPyre_Summit_EventScript_EvilTeamStealsOrb:: @ 815D4E1
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	applymovement 2, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 50
 	compare VAR_0x8008, 0
-	call_if_eq MtPyre_Summit_EventScript_15D593
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer0
 	compare VAR_0x8008, 1
-	call_if_eq MtPyre_Summit_EventScript_15D59E
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer1
 	compare VAR_0x8008, 2
-	call_if_eq MtPyre_Summit_EventScript_15D59F
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer2
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B52B0, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_ArchieClaimsRedOrb, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B5EEC, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_MaxieClaimsBlueOrb, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	fadescreen FADE_TO_BLACK
@@ -51,24 +51,24 @@ MtPyre_Summit_EventScript_15D4E1:: @ 815D4E1
 	setflag FLAG_HIDE_GRUNTS_MT_PYRE_SUMMIT
 	fadescreen FADE_FROM_BLACK
 	delay 20
-	call MtPyre_Summit_EventScript_15D57A
+	call MtPyre_Summit_EventScript_SetOrbStolenState
 	compare VAR_0x8008, 0
-	call_if_eq MtPyre_Summit_EventScript_15D5AA
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer0
 	compare VAR_0x8008, 1
-	call_if_eq MtPyre_Summit_EventScript_15D5BF
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer1
 	compare VAR_0x8008, 2
-	call_if_eq MtPyre_Summit_EventScript_15D5CA
+	call_if_eq MtPyre_Summit_EventScript_OldLadyApproachPlayer2
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B53AB, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyGivesBlueOrb, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B5FE6, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyGivesRedOrb, MSGBOX_DEFAULT
 	.endif
 	giveitem ITEM_RED_OR_BLUE_ORB
 	setflag FLAG_RECEIVED_RED_OR_BLUE_ORB
 	releaseall
 	end
 
-MtPyre_Summit_EventScript_15D57A:: @ 815D57A
+MtPyre_Summit_EventScript_SetOrbStolenState:: @ 815D57A
 	setflag FLAG_MT_PYRE_ORB_STOLEN
 	setvar VAR_SLATEPORT_STATE, 1
 	clearflag FLAG_HIDE_STERN_SLATEPORT
@@ -77,122 +77,122 @@ MtPyre_Summit_EventScript_15D57A:: @ 815D57A
 	setvar VAR_MT_PYRE_STATE, 1
 	return
 
-MtPyre_Summit_EventScript_15D593:: @ 815D593
-	applymovement 2, MtPyre_Summit_Movement_15D5E9
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer0:: @ 815D593
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderFacePlayer0
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D59E:: @ 815D59E
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer1:: @ 815D59E
 	return
 
-MtPyre_Summit_EventScript_15D59F:: @ 815D59F
-	applymovement 2, MtPyre_Summit_Movement_15D5EC
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayer2:: @ 815D59F
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderFacePlayer2
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5AA:: @ 815D5AA
-	applymovement 3, MtPyre_Summit_Movement_15D5DF
+MtPyre_Summit_EventScript_OldLadyApproachPlayer0:: @ 815D5AA
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer0
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5BF:: @ 815D5BF
-	applymovement 3, MtPyre_Summit_Movement_15D5E3
+MtPyre_Summit_EventScript_OldLadyApproachPlayer1:: @ 815D5BF
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer1
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D5CA:: @ 815D5CA
-	applymovement 3, MtPyre_Summit_Movement_15D5E5
+MtPyre_Summit_EventScript_OldLadyApproachPlayer2:: @ 815D5CA
+	applymovement 3, MtPyre_Summit_Movement_OldLadyApproachPlayer2
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	return
 
-MtPyre_Summit_Movement_15D5DF:: @ 815D5DF
+MtPyre_Summit_Movement_OldLadyApproachPlayer0:: @ 815D5DF
 	walk_down
 	walk_down
 	walk_in_place_fastest_left
 	step_end
 
-MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
+MtPyre_Summit_Movement_OldLadyApproachPlayer1:: @ 815D5E3
 	walk_down
 	step_end
 
-MtPyre_Summit_Movement_15D5E5:: @ 815D5E5
+MtPyre_Summit_Movement_OldLadyApproachPlayer2:: @ 815D5E5
 	walk_down
 	walk_down
 	walk_in_place_fastest_right
 	step_end
 
-MtPyre_Summit_Movement_15D5E9:: @ 815D5E9
+MtPyre_Summit_Movement_EvilTeamLeaderFacePlayer0:: @ 815D5E9
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-MtPyre_Summit_Movement_15D5EC:: @ 815D5EC
+MtPyre_Summit_Movement_EvilTeamLeaderFacePlayer2:: @ 815D5EC
 	walk_right
 	walk_in_place_fastest_down
 	step_end
 
-MtPyre_Summit_EventScript_15D5EF:: @ 815D5EF
+MtPyre_Summit_EventScript_OldMan:: @ 815D5EF
 	lock
 	faceplayer
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B586F, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_AquaOldManWillYouHearOutMyTale, MSGBOX_YESNO
 	.else
-	msgbox MtPyre_Summit_Text_1B64B3, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_MagmaOldManWillYouHearOutMyTale, MSGBOX_YESNO
 	.endif
 	compare VAR_RESULT, YES
-	call_if_eq MtPyre_Summit_EventScript_15D611
+	call_if_eq MtPyre_Summit_EventScript_OldManTale
 	compare VAR_RESULT, NO
-	call_if_eq MtPyre_Summit_EventScript_15D61A
+	call_if_eq MtPyre_Summit_EventScript_DeclineOldManTale
 	release
 	end
 
-MtPyre_Summit_EventScript_15D611:: @ 815D611
+MtPyre_Summit_EventScript_OldManTale:: @ 815D611
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5992, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_AquaOldManSeaAndLandTale, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B65D6, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_MagmaOldManLandAndSeaTale, MSGBOX_DEFAULT
 	.endif
 	return
 
-MtPyre_Summit_EventScript_15D61A:: @ 815D61A
+MtPyre_Summit_EventScript_DeclineOldManTale:: @ 815D61A
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5BD7, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_AquaOldManDeclineTale, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B6823, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_MagmaOldManDeclineTale, MSGBOX_DEFAULT
 	.endif
 	return
 
-MtPyre_Summit_EventScript_15D623:: @ 815D623
+MtPyre_Summit_EventScript_OldLady:: @ 815D623
 	lock
 	faceplayer
-	goto_if_set FLAG_RETURNED_RED_OR_BLUE_ORB, MtPyre_Summit_EventScript_15D6C4
-	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, MtPyre_Summit_EventScript_15D64A
-	goto_if_set FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN, MtPyre_Summit_EventScript_15D6BA
+	goto_if_set FLAG_RETURNED_RED_OR_BLUE_ORB, MtPyre_Summit_EventScript_OldLadyOrbReturned
+	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, MtPyre_Summit_EventScript_OldLadyAskReturnOrb
+	goto_if_set FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN, MtPyre_Summit_EventScript_OldLadyLegendaryAwakened
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B54BE, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyWarnsRedOrbStolen, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B60F9, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyWarnsBlueOrbStolen, MSGBOX_DEFAULT
 	.endif
 	release
 	end
 
-MtPyre_Summit_EventScript_15D64A:: @ 815D64A
+MtPyre_Summit_EventScript_OldLadyAskReturnOrb:: @ 815D64A
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5647, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_OldLadyAskReturnBlueOrb, MSGBOX_YESNO
 	.else
-	msgbox MtPyre_Summit_Text_1B6283, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_OldLadyAskReturnRedOrb, MSGBOX_YESNO
 	.endif
 	compare VAR_RESULT, YES
-	goto_if_eq MtPyre_Summit_EventScript_15D669
+	goto_if_eq MtPyre_Summit_EventScript_OldLadyReturnOrb
 	compare VAR_RESULT, NO
-	goto_if_eq MtPyre_Summit_EventScript_15D69B
+	goto_if_eq MtPyre_Summit_EventScript_OldLadyAskAgainReturnOrb
 	end
 
-MtPyre_Summit_EventScript_15D669:: @ 815D669
+MtPyre_Summit_EventScript_OldLadyReturnOrb:: @ 815D669
 	setvar VAR_0x8004, ITEM_RED_OR_BLUE_ORB
 	call Common_EventScript_PlayerHandedOverTheItem
 	closemessage
@@ -203,135 +203,135 @@ MtPyre_Summit_EventScript_15D669:: @ 815D669
 	waitmovement 0
 	delay 10
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5762, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyThanksForReturningBlueOrb, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B639C, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyThanksForReturningRedOrb, MSGBOX_DEFAULT
 	.endif
 	setflag FLAG_RETURNED_RED_OR_BLUE_ORB
 	release
 	end
 
-MtPyre_Summit_EventScript_15D69B:: @ 815D69B
+MtPyre_Summit_EventScript_OldLadyAskAgainReturnOrb:: @ 815D69B
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B56AB, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_OldLadyAskAgainReturnBlueOrb, MSGBOX_YESNO
 	.else
-	msgbox MtPyre_Summit_Text_1B62E7, MSGBOX_YESNO
+	msgbox MtPyre_Summit_Text_OldLadyAskAgainReturnRedOrb, MSGBOX_YESNO
 	.endif
 	compare VAR_RESULT, YES
-	goto_if_eq MtPyre_Summit_EventScript_15D669
+	goto_if_eq MtPyre_Summit_EventScript_OldLadyReturnOrb
 	compare VAR_RESULT, NO
-	goto_if_eq MtPyre_Summit_EventScript_15D69B
+	goto_if_eq MtPyre_Summit_EventScript_OldLadyAskAgainReturnOrb
 	end
 
-MtPyre_Summit_EventScript_15D6BA:: @ 815D6BA
+MtPyre_Summit_EventScript_OldLadyLegendaryAwakened:: @ 815D6BA
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5540, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyKyogreAwakened, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B617B, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyGroudonAwakened, MSGBOX_DEFAULT
 	.endif
 	release
 	end
 
-MtPyre_Summit_EventScript_15D6C4:: @ 815D6C4
+MtPyre_Summit_EventScript_OldLadyOrbReturned:: @ 815D6C4
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B57BE, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyExplainsKyogre, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B63F8, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_OldLadyExplainsGroudon, MSGBOX_DEFAULT
 	.endif
 	release
 	end
 
-MtPyre_Summit_EventScript_15D6CE:: @ 815D6CE
+MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger0:: @ 815D6CE
 	lockall
 	setvar VAR_0x8008, 0
-	goto MtPyre_Summit_EventScript_15D6F2
+	goto MtPyre_Summit_EventScript_EvilTeamReturnsOrb
 	end
 
-MtPyre_Summit_EventScript_15D6DA:: @ 815D6DA
+MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger1:: @ 815D6DA
 	lockall
 	setvar VAR_0x8008, 1
-	goto MtPyre_Summit_EventScript_15D6F2
+	goto MtPyre_Summit_EventScript_EvilTeamReturnsOrb
 	end
 
-MtPyre_Summit_EventScript_15D6E6:: @ 815D6E6
+MtPyre_Summit_EventScript_EvilTeamReturnsOrbTrigger2:: @ 815D6E6
 	lockall
 	setvar VAR_0x8008, 2
-	goto MtPyre_Summit_EventScript_15D6F2
+	goto MtPyre_Summit_EventScript_EvilTeamReturnsOrb
 	end
 
-MtPyre_Summit_EventScript_15D6F2:: @ 815D6F2
+MtPyre_Summit_EventScript_EvilTeamReturnsOrb:: @ 815D6F2
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	applymovement 2, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 50
 	compare VAR_0x8008, 0
-	call_if_eq MtPyre_Summit_EventScript_15D75E
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn0
 	compare VAR_0x8008, 1
-	call_if_eq MtPyre_Summit_EventScript_15D769
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn1
 	compare VAR_0x8008, 2
-	call_if_eq MtPyre_Summit_EventScript_15D774
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn2
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B5BFC, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_ArchieReturnsRedOrb, MSGBOX_DEFAULT
 	.else
-	msgbox MtPyre_Summit_Text_1B6848, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_MaxieReturnsBlueOrb, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	compare VAR_0x8008, 0
-	call_if_eq MtPyre_Summit_EventScript_15D77F
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderExit0
 	compare VAR_0x8008, 1
-	call_if_eq MtPyre_Summit_EventScript_15D78A
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderExit1
 	compare VAR_0x8008, 2
-	call_if_eq MtPyre_Summit_EventScript_15D795
+	call_if_eq MtPyre_Summit_EventScript_EvilTeamLeaderExit2
 	removeobject 2
 	setvar VAR_MT_PYRE_STATE, 3
 	releaseall
 	end
 
-MtPyre_Summit_EventScript_15D75E:: @ 815D75E
-	applymovement 2, MtPyre_Summit_Movement_15D7A0
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn0:: @ 815D75E
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn0
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D769:: @ 815D769
-	applymovement 2, MtPyre_Summit_Movement_15D7A3
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn1:: @ 815D769
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn1
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D774:: @ 815D774
-	applymovement 2, MtPyre_Summit_Movement_15D7A4
+MtPyre_Summit_EventScript_EvilTeamLeaderFacePlayerForReturn2:: @ 815D774
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn2
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D77F:: @ 815D77F
-	applymovement 2, MtPyre_Summit_Movement_15D7A7
+MtPyre_Summit_EventScript_EvilTeamLeaderExit0:: @ 815D77F
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderExit0
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D78A:: @ 815D78A
-	applymovement 2, MtPyre_Summit_Movement_15D7B0
+MtPyre_Summit_EventScript_EvilTeamLeaderExit1:: @ 815D78A
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderExit1
 	waitmovement 0
 	return
 
-MtPyre_Summit_EventScript_15D795:: @ 815D795
-	applymovement 2, MtPyre_Summit_Movement_15D7B9
+MtPyre_Summit_EventScript_EvilTeamLeaderExit2:: @ 815D795
+	applymovement 2, MtPyre_Summit_Movement_EvilTeamLeaderExit2
 	waitmovement 0
 	return
 
-MtPyre_Summit_Movement_15D7A0:: @ 815D7A0
+MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn0:: @ 815D7A0
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-MtPyre_Summit_Movement_15D7A3:: @ 815D7A3
+MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn1:: @ 815D7A3
 	step_end
 
-MtPyre_Summit_Movement_15D7A4:: @ 815D7A4
+MtPyre_Summit_Movement_EvilTeamLeaderFacePlayerForReturn2:: @ 815D7A4
 	walk_right
 	walk_in_place_fastest_down
 	step_end
 
-MtPyre_Summit_Movement_15D7A7:: @ 815D7A7
+MtPyre_Summit_Movement_EvilTeamLeaderExit0:: @ 815D7A7
 	walk_right
 	walk_down
 	walk_down
@@ -342,7 +342,7 @@ MtPyre_Summit_Movement_15D7A7:: @ 815D7A7
 	walk_down
 	step_end
 
-MtPyre_Summit_Movement_15D7B0:: @ 815D7B0
+MtPyre_Summit_Movement_EvilTeamLeaderExit1:: @ 815D7B0
 	walk_right
 	walk_down
 	walk_down
@@ -353,7 +353,7 @@ MtPyre_Summit_Movement_15D7B0:: @ 815D7B0
 	walk_down
 	step_end
 
-MtPyre_Summit_Movement_15D7B9:: @ 815D7B9
+MtPyre_Summit_Movement_EvilTeamLeaderExit2:: @ 815D7B9
 	walk_left
 	walk_down
 	walk_down
