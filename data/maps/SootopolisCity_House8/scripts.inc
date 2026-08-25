@@ -95,7 +95,7 @@ SootopolisCity_MonSizeRecordHouse_EventScript_BigBarboach:: @ 815B4F7
 	end
 
 SootopolisCity_MonSizeRecordHouse_EventScript_NoRoomForElixir2:: @ 815B519
-	msgbox SootopolisCity_House8_Text_BagIsFull, MSGBOX_DEFAULT
+	msgbox SootopolisCity_MonSizeRecordHouse_Text_BagCrammedFull2, MSGBOX_DEFAULT
 	release
 	end
 

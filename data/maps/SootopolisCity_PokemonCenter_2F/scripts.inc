@@ -4,14 +4,14 @@ SootopolisCity_PokemonCenter_2F_MapScripts:: @ 815B1F8
 	map_script MAP_SCRIPT_ON_LOAD, SootopolisCity_PokemonCenter_2F_MapScript1_1A3D32
 	.byte 0
 
-SootopolisCity_PokemonCenter_2F_EventScript_15B208:: @ 815B208
+SootopolisCity_PokemonCenter_2F_EventScript_Colosseum:: @ 815B208
 	call SootopolisCity_PokemonCenter_2F_EventScript_1A3EA6
 	end
 
-SootopolisCity_PokemonCenter_2F_EventScript_15B20E:: @ 815B20E
+SootopolisCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 815B20E
 	call SootopolisCity_PokemonCenter_2F_EventScript_1A40CC
 	end
 
-SootopolisCity_PokemonCenter_2F_EventScript_15B214:: @ 815B214
+SootopolisCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 815B214
 	call SootopolisCity_PokemonCenter_2F_EventScript_1A41FB
 	end

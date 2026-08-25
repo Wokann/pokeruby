@@ -12,6 +12,7 @@
   "connections": [],
   "object_events": [
     {
+      "local_id": "LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_1",
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
       "x": 29,
       "y": 20,
@@ -25,6 +26,7 @@
       "flag": "FLAG_HIDE_CAVE_OF_ORIGIN_ENTRANCE_WOMAN_1"
     },
     {
+      "local_id": "LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_2",
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
       "x": 33,
       "y": 20,
@@ -38,6 +40,7 @@
       "flag": "FLAG_HIDE_CAVE_OF_ORIGIN_ENTRANCE_WOMAN_2"
     },
     {
+      "local_id": "LOCALID_SOOTOPOLIS_EXPERT",
       "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
       "x": 36,
       "y": 21,
@@ -64,6 +67,7 @@
       "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
     },
     {
+      "local_id": "LOCALID_SOOTOPOLIS_WALLACE",
       "graphics_id": "OBJ_EVENT_GFX_WALLACE",
       "x": 32,
       "y": 21,
@@ -129,6 +133,7 @@
       "flag": "FLAG_HIDE_SOOTOPOLIS_RESIDENTS"
     },
     {
+      "local_id": "LOCALID_SOOTOPOLIS_STEVEN",
       "graphics_id": "OBJ_EVENT_GFX_STEVEN",
       "x": 30,
       "y": 21,

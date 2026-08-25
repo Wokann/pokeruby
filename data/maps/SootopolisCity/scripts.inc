@@ -10,7 +10,7 @@ SootopolisCity_OnLoad:: @ 814D08D
 	end
 
 SootopolisCity_EventScript_ExpertBlockCaveOfOrigin:: @ 814D0A0
-	setobjectxyperm 3, 31, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
 	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, 1
 	return
 
@@ -38,22 +38,22 @@ SootopolisCity_OnTransition:: @ 814D10D
 
 SootopolisCity_EventScript_SetWeather:: @ 814D123
 	call Common_EventScript_SetLegendaryWeather
-	setobjectxyperm 1, 29, 19
-	setobjectxyperm 2, 33, 19
+	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_1, 29, 19
+	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_2, 33, 19
 	compare VAR_SOOTOPOLIS_STATE, 1
 	call_if_eq SootopolisCity_EventScript_SetStevenWallaceInitialPositions
 	return
 
 SootopolisCity_EventScript_SetStevenWallaceInitialPositions:: @ 814D142
-	setobjectxyperm 10, 29, 6
-	setobjectmovementtype 10, 10
-	setobjectxyperm 5, 30, 6
-	setobjectmovementtype 5, 9
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 29, 6
+	setobjectmovementtype LOCALID_SOOTOPOLIS_STEVEN, 10
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 30, 6
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, 9
 	return
 
 SootopolisCity_EventScript_SetStevenOutsideGymPostLegendary:: @ 814D159
-	setobjectxyperm 10, 31, 33
-	setobjectmovementtype 10, 8
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 31, 33
+	setobjectmovementtype LOCALID_SOOTOPOLIS_STEVEN, 8
 	return
 
 SootopolisCity_OnResume:: @ 814D165
@@ -202,15 +202,15 @@ ClosedSootopolisDoorScript:: @ 814D2FF
 
 SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	lockall
-	applymovement 10, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFastestLeft
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	playse SE_PIN
-	applymovement 10, Common_Movement_ExclamationMark
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 10, Common_Movement_Delay48
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_Delay48
 	waitmovement 0
-	applymovement 10, SootopolisCity_EventScript_StevenApproachYouCameToo
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenApproachPlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_YouCameInRainstorm, MSGBOX_DEFAULT
@@ -218,18 +218,18 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	msgbox SootopolisCity_Text_YouCameInScorchingSun, MSGBOX_DEFAULT
 	.endif
 	closemessage
-	applymovement 10, SootopolisCity_EventScript_StevenLeadPlayerToWallace
-	applymovement LOCALID_PLAYER, SootopolisCity_EventScript_PlayerFollowStevenToWallace
-	waitmovement 10
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenLeadPlayerToWallace
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerFollowStevenToWallace
+	waitmovement LOCALID_SOOTOPOLIS_STEVEN
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_MyNameIsWallaceDownpour, MSGBOX_DEFAULT
 	.else
 	msgbox SootopolisCity_Text_MyNameIsWallaceSunshine, MSGBOX_DEFAULT
 	.endif
 	playse SE_PIN
-	applymovement 5, Common_Movement_ExclamationMark
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 5, Common_Movement_Delay48
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_Delay48
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_ThatIsTheBlueOrb, MSGBOX_DEFAULT
@@ -238,15 +238,15 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	.endif
 	closemessage
 	delay 30
-	applymovement 5, SootopolisCity_EventScript_WallaceStartLeadPlayerToCave
-	applymovement 10, SootopolisCity_EventScript_StevenStartFollowPlayerToCave
-	applymovement LOCALID_PLAYER, SootopolisCity_EventScript_PlayerStartFollowWallaceToCave
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceStartLeadPlayerToCave
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartFollowPlayerToCave
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartFollowWallaceToCave
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFastestRight
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	delay 30
-	applymovement 10, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_PeopleNeedRainToLive, MSGBOX_DEFAULT
@@ -255,11 +255,11 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	.endif
 	closemessage
 	delay 30
-	applymovement 5, SootopolisCity_EventScript_WallaceContinueLeadPlayerToCave
-	applymovement LOCALID_PLAYER, SootopolisCity_EventScript_PlayerContinueFollowWallaceToCave
-	applymovement 10, SootopolisCity_EventScript_StevenContinueFollowPlayerToCave
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceContinueLeadPlayerToCave
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerContinueFollowWallaceToCave
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenContinueFollowPlayerToCave
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_CaveOfOriginWithBlueOrb, MSGBOX_DEFAULT
@@ -273,21 +273,21 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	.else
 	msgbox SootopolisCity_Text_NeverExpectedHoldingRedOrb, MSGBOX_DEFAULT
 	.endif
-	moveobjectoffscreen 5
-	setobjectmovementtype 5, 9
-	moveobjectoffscreen 10
-	setobjectmovementtype 10, 10
+	moveobjectoffscreen LOCALID_SOOTOPOLIS_WALLACE
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, 9
+	moveobjectoffscreen LOCALID_SOOTOPOLIS_STEVEN
+	setobjectmovementtype LOCALID_SOOTOPOLIS_STEVEN, 10
 	setvar VAR_SOOTOPOLIS_STATE, 2
 	releaseall
 	end
 
-SootopolisCity_EventScript_StevenApproachYouCameToo:: @ 814D413
+SootopolisCity_Movement_StevenApproachPlayer:: @ 814D413
 	walk_left
 	walk_left
 	walk_left
 	step_end
 
-SootopolisCity_EventScript_StevenLeadPlayerToWallace:: @ 814D417
+SootopolisCity_Movement_StevenLeadPlayerToWallace:: @ 814D417
 	walk_right
 	walk_right
 	walk_right
@@ -295,7 +295,7 @@ SootopolisCity_EventScript_StevenLeadPlayerToWallace:: @ 814D417
 	walk_in_place_fastest_down
 	step_end
 
-SootopolisCity_EventScript_StevenStartFollowPlayerToCave:: @ 814D41D
+SootopolisCity_Movement_StevenStartFollowPlayerToCave:: @ 814D41D
 	walk_down
 	walk_right
 	walk_down
@@ -313,7 +313,7 @@ SootopolisCity_EventScript_StevenStartFollowPlayerToCave:: @ 814D41D
 	walk_left
 	step_end
 
-SootopolisCity_EventScript_StevenContinueFollowPlayerToCave:: @ 814D42D
+SootopolisCity_Movement_StevenContinueFollowPlayerToCave:: @ 814D42D
 	walk_left
 	walk_left
 	walk_left
@@ -334,14 +334,14 @@ SootopolisCity_EventScript_StevenContinueFollowPlayerToCave:: @ 814D42D
 	walk_right
 	step_end
 
-SootopolisCity_EventScript_PlayerFollowStevenToWallace:: @ 814D440
+SootopolisCity_Movement_PlayerFollowStevenToWallace:: @ 814D440
 	walk_right
 	walk_right
 	walk_right
 	walk_right
 	step_end
 
-SootopolisCity_EventScript_PlayerStartFollowWallaceToCave:: @ 814D445
+SootopolisCity_Movement_PlayerStartFollowWallaceToCave:: @ 814D445
 	walk_right
 	walk_down
 	walk_down
@@ -361,7 +361,7 @@ SootopolisCity_EventScript_PlayerStartFollowWallaceToCave:: @ 814D445
 	walk_left
 	step_end
 
-SootopolisCity_EventScript_PlayerContinueFollowWallaceToCave:: @ 814D457
+SootopolisCity_Movement_PlayerContinueFollowWallaceToCave:: @ 814D457
 	delay_16
 	delay_16
 	walk_left
@@ -382,7 +382,7 @@ SootopolisCity_EventScript_PlayerContinueFollowWallaceToCave:: @ 814D457
 	walk_right
 	step_end
 
-SootopolisCity_EventScript_WallaceStartLeadPlayerToCave:: @ 814D46A
+SootopolisCity_Movement_WallaceStartLeadPlayerToCave:: @ 814D46A
 	walk_down
 	walk_down
 	walk_down
@@ -402,7 +402,7 @@ SootopolisCity_EventScript_WallaceStartLeadPlayerToCave:: @ 814D46A
 	walk_left
 	step_end
 
-SootopolisCity_EventScript_WallaceContinueLeadPlayerToCave:: @ 814D47C
+SootopolisCity_Movement_WallaceContinueLeadPlayerToCave:: @ 814D47C
 	delay_16
 	delay_16
 	walk_left
@@ -434,7 +434,7 @@ SootopolisCity_EventScript_YouMustGoWithOrb:: @ 814D48F
 SootopolisCity_EventScript_YoullBeOkay:: @ 814D498
 	lock
 	faceplayer
-	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, SootopolisCity_EventScript_14D4AD
+	goto_if_set FLAG_LEGENDARY_BATTLE_COMPLETED, SootopolisCity_EventScript_StevenLeaveAfterLegendary
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_YoullBeOkaySapphire, MSGBOX_DEFAULT
 	.else
@@ -443,7 +443,7 @@ SootopolisCity_EventScript_YoullBeOkay:: @ 814D498
 	release
 	end
 
-SootopolisCity_EventScript_14D4AD:: @ 814D4AD
+SootopolisCity_EventScript_StevenLeaveAfterLegendary:: @ 814D4AD
 	msgbox SootopolisCity_Text_WeOweItAllToYou, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown

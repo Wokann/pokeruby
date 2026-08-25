@@ -57,11 +57,11 @@ SootopolisCity_Gym_B1F_Text_BriannaPostBattle:: @ 818EC92
 	.string "Oh... I'm so fortunate to have found\n"
 	.string "POKéMON.$"
 
-SootopolisCity_Gym_1F_Text_ConnieIntro:: @ 818ECEB
+SootopolisCity_Gym_B1F_Text_ConnieIntro:: @ 818ECEB
 	.string "I should teach you how harsh battles\n"
 	.string "can be.$"
 
-SootopolisCity_Gym_1F_Text_ConnieDefeat:: @ 818ED18
+SootopolisCity_Gym_B1F_Text_ConnieDefeat:: @ 818ED18
 	.string "Oh.\n"
 	.string "You're strong.$"
 
@@ -70,15 +70,15 @@ SootopolisCity_Gym_B1F_Text_ConniePostBattle:: @ 818ED2B
 	.string "If you want to reach WALLACE, you\n"
 	.string "need to walk on each floor tile once.$"
 
-SootopolisCity_Gym_1F_Text_BridgetIntro:: @ 818ED91
+SootopolisCity_Gym_B1F_Text_BridgetIntro:: @ 818ED91
 	.string "The POKéMON GYM of the highest level\n"
 	.string "in the HOENN region...\p"
 	.string "That's the SOOTOPOLIS GYM.$"
 
-SootopolisCity_Gym_1F_Text_BridgetDefeat:: @ 818EDE8
+SootopolisCity_Gym_B1F_Text_BridgetDefeat:: @ 818EDE8
 	.string "What a high level you are!$"
 
-SootopolisCity_Gym_1F_Text_BridgetPostBattle:: @ 818EE03
+SootopolisCity_Gym_B1F_Text_BridgetPostBattle:: @ 818EE03
 	.string "Rather than being satisfied by being\n"
 	.string "in a strong GYM, I imagine training in\l"
 	.string "other places will make you stronger.\l"

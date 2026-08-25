@@ -60,11 +60,11 @@ SootopolisCity_Gym_B1F_Text_BriannaPostBattle:: @ 818EC92
 	.string "Oh... Ich bin so glücklich, dass ich mich\n"
 	.string "für POKéMON entschieden habe.$"
 
-SootopolisCity_Gym_1F_Text_ConnieIntro:: @ 818ECEB
+SootopolisCity_Gym_B1F_Text_ConnieIntro:: @ 818ECEB
 	.string "Ich werde dir beibringen, dass Kämpfe\n"
 	.string "kein Zuckerschlecken sind!$"
 
-SootopolisCity_Gym_1F_Text_ConnieDefeat:: @ 818ED18
+SootopolisCity_Gym_B1F_Text_ConnieDefeat:: @ 818ED18
 	.string "Oh.\n"
 	.string "Du bist stark.$"
 
@@ -73,15 +73,15 @@ SootopolisCity_Gym_B1F_Text_ConniePostBattle:: @ 818ED2B
 	.string "Wenn du zu WASSILI willst, dann darfst\n"
 	.string "du auf jede Fliese nur ein Mal treten.$"
 
-SootopolisCity_Gym_1F_Text_BridgetIntro:: @ 818ED91
+SootopolisCity_Gym_B1F_Text_BridgetIntro:: @ 818ED91
 	.string "Die POKéMON ARENA mit den höchsten\n"
 	.string "Anforderungen in der HOENN-Region...\p"
 	.string "Das ist die ARENA von XENEROVILLE.$"
 
-SootopolisCity_Gym_1F_Text_BridgetDefeat:: @ 818EDE8
+SootopolisCity_Gym_B1F_Text_BridgetDefeat:: @ 818EDE8
 	.string "Du kämpfst aber auf einem hohen Niveau!$"
 
-SootopolisCity_Gym_1F_Text_BridgetPostBattle:: @ 818EE03
+SootopolisCity_Gym_B1F_Text_BridgetPostBattle:: @ 818EE03
 	.string "Statt damit zufrieden zu sein, zur\n"
 	.string "besten ARENA zu gehören, würde ich\l"
 	.string "gerne auch an anderen Orten trainieren.\l"

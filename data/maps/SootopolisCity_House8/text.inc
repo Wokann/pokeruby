@@ -18,7 +18,7 @@ SootopolisCity_MonSizeRecordHouse_Text_GoshMightBeBiggerThanBarboach:: @ 819021D
 	.string "Thanks for showing me.\n"
 	.string "This is my thanks!$"
 
-UnknownString_81902AE: @ 81902AE
+SootopolisCity_MonSizeRecordHouse_Text_UnusedReceivedPotion:: @ 81902AE
 	.string "{PLAYER} received a POTION.$"
 
 SootopolisCity_MonSizeRecordHouse_Text_BagCrammedFull1:: @ 81902C4
@@ -65,7 +65,7 @@ SootopolisCity_MonSizeRecordHouse_Text_WowMightBeBiggerThanBarboach:: @ 8190536
 	.string "Thanks for showing me!\n"
 	.string "This is my thanks!$"
 
-SootopolisCity_House8_Text_BagIsFull:: @ 81905C1
+SootopolisCity_MonSizeRecordHouse_Text_BagCrammedFull2:: @ 81905C1
 	.string "Whoops, looks like your BAG is full.$"
 
 SootopolisCity_MonSizeRecordHouse_Text_SeenBiggerBarboach:: @ 81905E6
