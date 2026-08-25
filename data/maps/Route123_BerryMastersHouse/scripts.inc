@@ -10,21 +10,21 @@ Route123_BerryMastersHouse_EventScript_BerryMaster:: @ 81639E9
 	lock
 	faceplayer
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_FROM_BERRYMASTER, Route123_BerryMastersHouse_EventScript_ReceivedBerryToday
+	goto_if_set FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY, Route123_BerryMastersHouse_EventScript_ReceivedBerryToday
 	msgbox Route123_BerryMastersHouse_Text_YoureDeservingOfBerry, MSGBOX_DEFAULT
-	random 10
-	addvar VAR_RESULT, 20
-	addvar VAR_RESULT, 133
+	random NUM_BERRY_MASTER_BERRIES
+	addvar VAR_RESULT, NUM_BERRY_MASTER_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
 	giveitem VAR_RESULT
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
-	setflag FLAG_DAILY_RECEIVED_BERRY_FROM_BERRYMASTER
+	setflag FLAG_DAILY_BERRY_MASTER_RECEIVED_BERRY
 	msgbox Route123_BerryMastersHouse_Text_WhyBeStingyTakeAnother, MSGBOX_DEFAULT
-	random 10
-	addvar VAR_RESULT, 20
-	addvar VAR_RESULT, 133
+	random NUM_BERRY_MASTER_BERRIES
+	addvar VAR_RESULT, NUM_BERRY_MASTER_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
 	giveitem VAR_RESULT
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop, MSGBOX_DEFAULT
 	release
@@ -39,15 +39,15 @@ Route123_BerryMastersHouse_EventScript_BerryMastersWife:: @ 8163A64
 	lock
 	faceplayer
 	dotimebasedevents
-	goto_if_set FLAG_DAILY_RECEIVED_BERRY_FROM_BERRYMASTER_WIFE, Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday
+	goto_if_set FLAG_DAILY_BERRY_MASTERS_WIFE, Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday
 	msgbox Route123_BerryMastersHouse_Text_HeardAGoodSayingLately, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 13
+	setvar VAR_0x8004, EASY_CHAT_TYPE_GOOD_SAYING
 	call Common_EventScript_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GavePhrase
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Route123_BerryMastersHouse_EventScript_CancelPhrase
 	end
 
@@ -58,26 +58,26 @@ Route123_BerryMastersHouse_EventScript_CancelPhrase:: @ 8163A9B
 	end
 
 Route123_BerryMastersHouse_EventScript_GavePhrase:: @ 8163AAD
-	compare VAR_0x8004, 0
+	compare VAR_0x8004, NOT_SPECIAL_PHRASE
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GiveNormalBerry
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, PHRASE_GREAT_BATTLE
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GiveSpelonBerry
-	compare VAR_0x8004, 2
+	compare VAR_0x8004, PHRASE_CHALLENGE_CONTEST
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GivePamtreBerry
-	compare VAR_0x8004, 3
+	compare VAR_0x8004, PHRASE_OVERWHELMING_LATIAS
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GiveWatmelBerry
-	compare VAR_0x8004, 4
+	compare VAR_0x8004, PHRASE_COOL_LATIOS
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GiveDurinBerry
-	compare VAR_0x8004, 5
+	compare VAR_0x8004, PHRASE_SUPER_HUSTLE
 	goto_if_eq Route123_BerryMastersHouse_EventScript_GiveBelueBerry
 	end
 
 Route123_BerryMastersHouse_EventScript_GiveNormalBerry:: @ 8163AF0
 	msgbox Route123_BerryMastersHouse_Text_GoodSayingTakeThis, MSGBOX_DEFAULT
-	random 10
+	random NUM_BERRY_MASTER_WIFE_BERRIES
 	addvar VAR_RESULT, ITEM_CHERI_BERRY
 	giveitem VAR_RESULT
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
 	release
@@ -87,7 +87,7 @@ Route123_BerryMastersHouse_EventScript_GiveSpelonBerry:: @ 8163B1E
 	goto_if_set FLAG_RECEIVED_SPELON_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
 	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_SPELON_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_SPELON_BERRY
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
@@ -97,7 +97,7 @@ Route123_BerryMastersHouse_EventScript_GivePamtreBerry:: @ 8163B4F
 	goto_if_set FLAG_RECEIVED_PAMTRE_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
 	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_PAMTRE_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_PAMTRE_BERRY
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
@@ -107,7 +107,7 @@ Route123_BerryMastersHouse_EventScript_GiveWatmelBerry:: @ 8163B80
 	goto_if_set FLAG_RECEIVED_WATMEL_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
 	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_WATMEL_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_WATMEL_BERRY
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
@@ -117,7 +117,7 @@ Route123_BerryMastersHouse_EventScript_GiveDurinBerry:: @ 8163BB1
 	goto_if_set FLAG_RECEIVED_DURIN_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
 	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_DURIN_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_DURIN_BERRY
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
@@ -127,7 +127,7 @@ Route123_BerryMastersHouse_EventScript_GiveBelueBerry:: @ 8163BE2
 	goto_if_set FLAG_RECEIVED_BELUE_BERRY, Route123_BerryMastersHouse_EventScript_GiveNormalBerry
 	msgbox Route123_BerryMastersHouse_Text_InspirationalTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_BELUE_BERRY
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_BELUE_BERRY
 	goto Route123_BerryMastersHouse_EventScript_GaveBerry
@@ -139,7 +139,7 @@ Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday:: @ 8163C13
 	end
 
 Route123_BerryMastersHouse_EventScript_GaveBerry:: @ 8163C1D
-	setflag FLAG_DAILY_RECEIVED_BERRY_FROM_BERRYMASTER_WIFE
+	setflag FLAG_DAILY_BERRY_MASTERS_WIFE
 	msgbox Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife, MSGBOX_DEFAULT
 	release
 	end

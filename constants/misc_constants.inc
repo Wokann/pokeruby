@@ -30,6 +30,14 @@
 	.equiv DIR_EAST,  4
 
 	.equiv EASY_CHAT_TYPE_TRENDY_PHRASE, 9
+	.equiv EASY_CHAT_TYPE_GOOD_SAYING, 13
+
+	.equiv NOT_SPECIAL_PHRASE,          0
+	.equiv PHRASE_GREAT_BATTLE,         1
+	.equiv PHRASE_CHALLENGE_CONTEST,    2
+	.equiv PHRASE_OVERWHELMING_LATIAS,  3
+	.equiv PHRASE_COOL_LATIOS,          4
+	.equiv PHRASE_SUPER_HUSTLE,         5
 
 	.ifdef ENGLISH
 	.equiv GAME_LANGUAGE, 2
