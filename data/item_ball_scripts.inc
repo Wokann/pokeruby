@@ -314,23 +314,23 @@ MeteorFalls_B1F_2R_EventScript_1B182F:: @ 81B182F
 	finditem ITEM_TM02_DRAGON_CLAW
 	end
 
-NewMauville_Inside_EventScript_1B183C:: @ 81B183C
+NewMauville_Inside_EventScript_ItemUltraBall:: @ 81B183C
 	finditem ITEM_ULTRA_BALL
 	end
 
-NewMauville_Inside_EventScript_1B1849:: @ 81B1849
+NewMauville_Inside_EventScript_ItemEscapeRope:: @ 81B1849
 	finditem ITEM_ESCAPE_ROPE
 	end
 
-NewMauville_Inside_EventScript_1B1856:: @ 81B1856
+NewMauville_Inside_EventScript_ItemThunderStone:: @ 81B1856
 	finditem ITEM_THUNDER_STONE
 	end
 
-NewMauville_Inside_EventScript_1B1863:: @ 81B1863
+NewMauville_Inside_EventScript_ItemFullHeal:: @ 81B1863
 	finditem ITEM_FULL_HEAL
 	end
 
-NewMauville_Inside_EventScript_1B1870:: @ 81B1870
+NewMauville_Inside_EventScript_ItemParalyzeHeal:: @ 81B1870
 	finditem ITEM_PARALYZE_HEAL
 	end
 

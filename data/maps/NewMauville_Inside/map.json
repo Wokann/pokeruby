@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B183C",
+      "script": "NewMauville_Inside_EventScript_ItemUltraBall",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_1"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1849",
+      "script": "NewMauville_Inside_EventScript_ItemEscapeRope",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_2"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1856",
+      "script": "NewMauville_Inside_EventScript_ItemThunderStone",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_3"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1863",
+      "script": "NewMauville_Inside_EventScript_ItemFullHeal",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_4"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1870",
+      "script": "NewMauville_Inside_EventScript_ItemParalyzeHeal",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_5"
     },
     {
@@ -86,7 +86,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_15E900",
+      "script": "NewMauville_Inside_EventScript_Voltorb1",
       "flag": "FLAG_HIDE_VOLTORB_1_NEW_MAUVILLE"
     },
     {
@@ -99,7 +99,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_15E91E",
+      "script": "NewMauville_Inside_EventScript_Voltorb2",
       "flag": "FLAG_HIDE_VOLTORB_2_NEW_MAUVILLE"
     },
     {
@@ -112,7 +112,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_15E93C",
+      "script": "NewMauville_Inside_EventScript_Voltorb3",
       "flag": "FLAG_HIDE_VOLTORB_3_NEW_MAUVILLE"
     }
   ],
@@ -133,7 +133,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5AA"
+      "script": "NewMauville_Inside_EventScript_BlueButton"
     },
     {
       "type": "trigger",
@@ -142,7 +142,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_2",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5C2"
+      "script": "NewMauville_Inside_EventScript_GreenButton"
     },
     {
       "type": "trigger",
@@ -151,7 +151,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5AA"
+      "script": "NewMauville_Inside_EventScript_BlueButton"
     },
     {
       "type": "trigger",
@@ -160,7 +160,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5AA"
+      "script": "NewMauville_Inside_EventScript_BlueButton"
     },
     {
       "type": "trigger",
@@ -169,7 +169,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_2",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5C2"
+      "script": "NewMauville_Inside_EventScript_GreenButton"
     },
     {
       "type": "trigger",
@@ -178,7 +178,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_2",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5C2"
+      "script": "NewMauville_Inside_EventScript_GreenButton"
     },
     {
       "type": "trigger",
@@ -187,7 +187,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5AA"
+      "script": "NewMauville_Inside_EventScript_BlueButton"
     },
     {
       "type": "trigger",
@@ -196,7 +196,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5AA"
+      "script": "NewMauville_Inside_EventScript_BlueButton"
     },
     {
       "type": "trigger",
@@ -205,7 +205,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_2",
       "var_value": "0",
-      "script": "NewMauville_Inside_EventScript_15E5C2"
+      "script": "NewMauville_Inside_EventScript_GreenButton"
     },
     {
       "type": "trigger",
@@ -214,7 +214,7 @@
       "elevation": 3,
       "var": "VAR_NEW_MAUVILLE_STATE",
       "var_value": "1",
-      "script": "NewMauville_Inside_EventScript_15E876"
+      "script": "NewMauville_Inside_EventScript_RedButton"
     }
   ],
   "bg_events": [
@@ -224,7 +224,7 @@
       "y": 4,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -232,7 +232,7 @@
       "y": 3,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -240,7 +240,7 @@
       "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -248,7 +248,7 @@
       "y": 4,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -256,7 +256,7 @@
       "y": 4,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -264,7 +264,7 @@
       "y": 4,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -272,7 +272,7 @@
       "y": 3,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     },
     {
       "type": "sign",
@@ -280,7 +280,7 @@
       "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMauville_Inside_EventScript_15E8E0"
+      "script": "NewMauville_Inside_EventScript_Generator"
     }
   ]
 }
