@@ -4,16 +4,16 @@ VerdanturfTown_PokemonCenter_2F_MapScripts:: @ 8153F38
 	map_script MAP_SCRIPT_ON_LOAD, VerdanturfTown_PokemonCenter_2F_MapScript1_1A3D32
 	.byte 0
 
-PacifidlogTown_PokemonCenter_2F_EventScript_153F48:: @ 8153F48
-VerdanturfTown_PokemonCenter_2F_EventScript_153F48:: @ 8153F48
+PacifidlogTown_PokemonCenter_2F_EventScript_Colosseum:: @ 8153F48
+VerdanturfTown_PokemonCenter_2F_EventScript_Colosseum:: @ 8153F48
 	call VerdanturfTown_PokemonCenter_2F_EventScript_1A3EA6
 	end
 
-PacifidlogTown_PokemonCenter_2F_EventScript_153F4E:: @ 8153F4E
-VerdanturfTown_PokemonCenter_2F_EventScript_153F4E:: @ 8153F4E
+PacifidlogTown_PokemonCenter_2F_EventScript_TradeCenter:: @ 8153F4E
+VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter:: @ 8153F4E
 	call VerdanturfTown_PokemonCenter_2F_EventScript_1A40CC
 	end
 
-VerdanturfTown_PokemonCenter_2F_EventScript_153F54:: @ 8153F54
+VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner:: @ 8153F54
 	call VerdanturfTown_PokemonCenter_2F_EventScript_1A41FB
 	end
