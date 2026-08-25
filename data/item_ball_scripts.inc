@@ -162,7 +162,7 @@ Route120_EventScript_ItemNestBall:: @ 81B1641
 	finditem ITEM_NEST_BALL
 	end
 
-Route121_EventScript_1B164E:: @ 81B164E
+Route121_EventScript_ItemCarbos:: @ 81B164E
 	finditem ITEM_CARBOS
 	end
 
