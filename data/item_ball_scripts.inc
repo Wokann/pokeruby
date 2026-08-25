@@ -222,7 +222,7 @@ PetalburgCity_EventScript_ItemMaxRevive:: @ 81B1704
 	finditem ITEM_MAX_REVIVE
 	end
 
-PetalburgCity_EventScript_1B1711:: @ 81B1711
+PetalburgCity_EventScript_ItemEther:: @ 81B1711
 	finditem ITEM_ETHER
 	end
 
