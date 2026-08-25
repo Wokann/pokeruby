@@ -23,17 +23,17 @@ MossdeepCity_House2_EventScript_Wingull:: @ 815A87B
 	call_if_eq MossdeepCity_House2_EventScript_WingullExitNorth
 	compare VAR_FACING, 3
 	call_if_eq MossdeepCity_House2_EventScript_WingullExitWest
-	removeobject 3
+	removeobject LOCALID_MOSSDEEP_HOUSE_WINGULL
 	release
 	end
 
 MossdeepCity_House2_EventScript_WingullExitNorth:: @ 815A8AE
-	applymovement 3, MossdeepCity_House2_Movement_WingullExitNorth
+	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
 	waitmovement 0
 	return
 
 MossdeepCity_House2_EventScript_WingullExitWest:: @ 815A8B9
-	applymovement 3, MossdeepCity_House2_Movement_WingullExitEast
+	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
 	waitmovement 0
 	return
 

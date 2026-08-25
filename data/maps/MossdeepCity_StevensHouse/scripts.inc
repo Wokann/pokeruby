@@ -18,8 +18,8 @@ MossdeepCity_StevensHouse_OnTransition:: @ 815A9E9
 	end
 
 MossdeepCity_StevensHouse_EventScript_SetStevenPos:: @ 815A9F5
-	setobjectxyperm 1, 6, 5
-	setobjectmovementtype 1, 7
+	setobjectxyperm LOCALID_STEVENS_HOUSE_STEVEN, 6, 5
+	setobjectmovementtype LOCALID_STEVENS_HOUSE_STEVEN, 7
 	return
 
 MossdeepCity_StevensHouse_OnFrame:: @ 815AA01
@@ -28,14 +28,14 @@ MossdeepCity_StevensHouse_OnFrame:: @ 815AA01
 
 MossdeepCity_StevensHouse_EventScript_StevenGivesDive:: @ 815AA0B
 	lockall
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_STEVENS_HOUSE_STEVEN, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	playse SE_PIN
-	applymovement 1, Common_Movement_ExclamationMark
+	applymovement LOCALID_STEVENS_HOUSE_STEVEN, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 1, Common_Movement_Delay48
+	applymovement LOCALID_STEVENS_HOUSE_STEVEN, Common_Movement_Delay48
 	waitmovement 0
-	applymovement 1, MossdeepCity_StevensHouse_Movement_StevenApproachPlayer
+	applymovement LOCALID_STEVENS_HOUSE_STEVEN, MossdeepCity_StevensHouse_Movement_StevenApproachPlayer
 	waitmovement 0
 	msgbox MossdeepCity_StevensHouse_Text_YouveEarnedHMDive, MSGBOX_DEFAULT
 	giveitem ITEM_HM08_DIVE
@@ -44,7 +44,7 @@ MossdeepCity_StevensHouse_EventScript_StevenGivesDive:: @ 815AA0B
 	msgbox MossdeepCity_StevensHouse_Text_ExplainDive, MSGBOX_DEFAULT
 	closemessage
 	delay 20
-	applymovement 1, MossdeepCity_StevensHouse_Movement_StevenReturn
+	applymovement LOCALID_STEVENS_HOUSE_STEVEN, MossdeepCity_StevensHouse_Movement_StevenReturn
 	waitmovement 0
 	setvar VAR_STEVENS_HOUSE_STATE, 1
 	releaseall
@@ -77,7 +77,7 @@ MossdeepCity_StevensHouse_EventScript_BeldumPokeball:: @ 815AA7C
 	compare VAR_RESULT, 6
 	goto_if_eq MossdeepCity_StevensHouse_EventScript_GiveBeldum
 	copyvar VAR_0x8004, VAR_RESULT
-	removeobject 2
+	removeobject LOCALID_STEVENS_HOUSE_BALL
 	playfanfare MUS_OBTAIN_ITEM
 	message MossdeepCity_StevensHouse_Text_ObtainedBeldum
 	waitfanfare
