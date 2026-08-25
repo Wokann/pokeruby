@@ -2369,7 +2369,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_SHADE:      return WEATHER_SHADE;
     case WEATHER_DROUGHT:    return WEATHER_DROUGHT;
     case WEATHER_RAIN_HEAVY: return WEATHER_RAIN_HEAVY;
-    case WEATHER_BUBBLES:    return WEATHER_BUBBLES;
+    case WEATHER_UNDERWATER_BUBBLES: return WEATHER_UNDERWATER_BUBBLES;
     case WEATHER_ROUTE119_CYCLE: return sWeatherCycleRoute119[gSaveBlock1.weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE: return sWeatherCycleRoute123[gSaveBlock1.weatherCycleStage];
     default:                 return WEATHER_NONE;

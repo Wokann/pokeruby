@@ -231,7 +231,7 @@ static const u8 sDebugText_Weather_Underwater[]  = DTR("かいてい　", "FOG 3
 static const u8 sDebugText_Weather_Cloudy[]      = DTR("くもり　　", "SHADE     ");
 static const u8 sDebugText_Weather_Clear3[]      = DTR("はれ3　　", "DROUGHT   ");
 static const u8 sDebugText_Weather_HeavyRain[]   = DTR("おおあめ", "HEAVY RAIN");
-static const u8 sDebugText_Weather_Underwater2[] = DTR("かいてい2",  "UNDERWATER");
+static const u8 sDebugText_Weather_UnderwaterBubbles[] = DTR("かいてい2",  "UNDERWATER");
 
 static const u8 *const sDebugText_Weather[] =
 {
@@ -249,7 +249,7 @@ static const u8 *const sDebugText_Weather[] =
     [WEATHER_SHADE]      = sDebugText_Weather_Cloudy,
     [WEATHER_DROUGHT]    = sDebugText_Weather_Clear3,
     [WEATHER_RAIN_HEAVY] = sDebugText_Weather_HeavyRain,
-    [WEATHER_BUBBLES]    = sDebugText_Weather_Underwater2,
+    [WEATHER_UNDERWATER_BUBBLES] = sDebugText_Weather_UnderwaterBubbles,
 };
 
 #endif

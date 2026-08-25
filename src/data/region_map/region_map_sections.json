@@ -409,7 +409,7 @@
             "height": 3
         },
         {
-            "id": "MAPSEC_UNDERWATER_125",
+            "id": "MAPSEC_UNDERWATER_126",
             "name": "UNDERWATER",
             "x": 20,
             "y": 6,
@@ -417,7 +417,7 @@
             "height": 3
         },
         {
-            "id": "MAPSEC_UNDERWATER_126",
+            "id": "MAPSEC_UNDERWATER_127",
             "name": "UNDERWATER",
             "x": 23,
             "y": 6,
@@ -425,7 +425,7 @@
             "height": 3
         },
         {
-            "id": "MAPSEC_UNDERWATER_127",
+            "id": "MAPSEC_UNDERWATER_128",
             "name": "UNDERWATER",
             "x": 23,
             "y": 9,
@@ -553,7 +553,7 @@
             "height": 1
         },
         {
-            "id": "MAPSEC_UNDERWATER_128",
+            "id": "MAPSEC_UNDERWATER_SEAFLOOR_CAVERN",
             "name": "UNDERWATER",
             "x": 24,
             "y": 9,
