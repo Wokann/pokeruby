@@ -36,7 +36,7 @@ extern u16 gSpecialVar_ContestCategory;
 extern u16 gSpecialVar_ContestRank;
 
 extern u8 gContestMonPartyIndex;
-extern u8 gUnknown_0203856C;
+extern u8 gContestDebugMode;
 
 void SetContestTrainerGfxIds(void)
 {
@@ -227,13 +227,13 @@ void ShowContestWinnerCleanup(void)
 
 void ShowContestWinner(void)
 {
-    if(gUnknown_0203856C)
+    if(gContestDebugMode)
     {
         sub_80AAF30();
         eCurContestWinnerIsForArtist = TRUE;
         eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
         Contest_SaveWinner(3);
-        gUnknown_0203856C = 0;
+        gContestDebugMode = 0;
     }
     SetMainCallback2(CB2_ContestPainting);
     gMain.savedCallback = ShowContestWinnerCleanup;
@@ -266,9 +266,9 @@ bool8 GiveMonArtistRibbon(void)
     }
 }
 
-u8 sub_80C5044(void)
+u8 IsContestDebugActive(void)
 {
-    return gUnknown_0203856C;
+    return gContestDebugMode;
 }
 
 void ShowContestEntryMonPic(void)

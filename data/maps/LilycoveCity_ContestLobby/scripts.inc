@@ -564,7 +564,7 @@ LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer:: @ 8158EAE
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
-	specialvar VAR_RESULT, sub_80C5044
+	specialvar VAR_RESULT, IsContestDebugActive
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
 	setvar VAR_0x800B, 8

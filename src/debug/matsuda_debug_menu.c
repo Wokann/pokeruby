@@ -18,7 +18,7 @@
 #include "task.h"
 #include "text.h"
 
-extern u8 gUnknown_0203856C;
+extern u8 gContestDebugMode;
 extern u8 gContestMonPartyIndex;
 extern u16 gSpecialVar_ContestCategory;
 extern u16 gSpecialVar_ContestRank;
@@ -941,7 +941,7 @@ void sub_80AAF30(void)
 {
     s32 i;
 
-    gUnknown_0203856C = 1;
+    gContestDebugMode = 1;
     gContestPlayerMonIndex = 3;
     Contest_CreatePlayerMon(0);
 
@@ -973,7 +973,7 @@ u8 MatsudaDebugMenu_ResetHighScore(void)
 {
     s32 i;
 
-    gUnknown_0203856C = 0;
+    gContestDebugMode = 0;
     for (i = 0; i < 4; i++)
     {
         gContestMonRound1Points[i] = 0;

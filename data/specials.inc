@@ -98,7 +98,7 @@ gSpecials::
 	def_special ScrSpecial_GetMonCondition
 	def_special ScrSpecial_CanMonParticipateInSelectedLinkContest
 	def_special ScrSpecial_GiveContestRibbon
-	def_special sub_80C5044
+	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
 	def_special TryContestGModeLinkup
 	def_special SaveGame
