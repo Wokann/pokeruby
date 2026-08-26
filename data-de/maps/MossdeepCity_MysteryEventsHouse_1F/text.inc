@@ -36,7 +36,7 @@ MossdeepCity_MysteryEventsHouse_Text_HopeToSeeAGoodMatch:: @ 818E777
 MossdeepCity_MysteryEventsHouse_Text_UnusedEReaderBattleResult1:: @ 818E793
 	.string "{STR_VAR_1}$"
 
-MossdeepCity_MysteryEventsHouse_Text_MatchEndedUpDraw:: @ 818E796
+MossdeepCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw:: @ 818E796
 	.string "Der Kampf endet unentschieden.$"
 
 MossdeepCity_MysteryEventsHouse_Text_BattleTie:: @ 818E7B1

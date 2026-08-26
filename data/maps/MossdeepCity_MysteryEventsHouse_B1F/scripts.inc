@@ -1,4 +1,4 @@
-MossdeepCity_GameCorner_B1F_MapScripts:: @ 815AE55
+MossdeepCity_MysteryEventsHouse_B1F_MapScripts:: @ 815AE55
 	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_MysteryEventsHouse_BattleRoom_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_MysteryEventsHouse_BattleRoom_OnFrame
 	.byte 0
@@ -34,14 +34,14 @@ MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_StartEReaderTrainerBattle
 	waitmovement 0
 	special LoadPlayerParty
 	setvar VAR_TEMP_1, 1
-	warp MAP_MOSSDEEP_CITY_GAME_CORNER_1F, 255, 3, 1
+	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_1F, 255, 3, 1
 	waitstate
 	releaseall
 	end
 
 MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_HandleBattleTie:: @ 815AED5
 	setvar VAR_E_READER_TRAINER_BATTLE_RESULT, 3
-	msgbox MossdeepCity_MysteryEventsHouse_Text_MatchEndedUpDraw, MSGBOX_DEFAULT
+	msgbox MossdeepCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw, MSGBOX_DEFAULT
 	return
 
 MossdeepCity_MysteryEventsHouse_BattleRoom_EventScript_HandleBattleWon:: @ 815AEE3

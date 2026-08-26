@@ -3052,24 +3052,24 @@
       "blockdata_filepath": "data/layouts/SealedChamber_InnerRoom/map.bin"
     },
     {
-      "id": "LAYOUT_MOSSDEEP_CITY_GAME_CORNER_1F",
-      "name": "MossdeepCity_GameCorner_1F_Layout",
+      "id": "LAYOUT_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_1F",
+      "name": "MossdeepCity_MysteryEventsHouse_1F_Layout",
       "width": 11,
       "height": 8,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_GenericBuilding",
-      "border_filepath": "data/layouts/MossdeepCity_GameCorner_1F/border.bin",
-      "blockdata_filepath": "data/layouts/MossdeepCity_GameCorner_1F/map.bin"
+      "border_filepath": "data/layouts/MossdeepCity_MysteryEventsHouse_1F/border.bin",
+      "blockdata_filepath": "data/layouts/MossdeepCity_MysteryEventsHouse_1F/map.bin"
     },
     {
-      "id": "LAYOUT_MOSSDEEP_CITY_GAME_CORNER_B1F",
-      "name": "MossdeepCity_GameCorner_B1F_Layout",
+      "id": "LAYOUT_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_B1F",
+      "name": "MossdeepCity_MysteryEventsHouse_B1F_Layout",
       "width": 12,
       "height": 9,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_GenericBuilding",
-      "border_filepath": "data/layouts/MossdeepCity_GameCorner_B1F/border.bin",
-      "blockdata_filepath": "data/layouts/MossdeepCity_GameCorner_B1F/map.bin"
+      "border_filepath": "data/layouts/MossdeepCity_MysteryEventsHouse_B1F/border.bin",
+      "blockdata_filepath": "data/layouts/MossdeepCity_MysteryEventsHouse_B1F/map.bin"
     },
     {
       "id": "LAYOUT_SOOTOPOLIS_CITY_HOUSE1",

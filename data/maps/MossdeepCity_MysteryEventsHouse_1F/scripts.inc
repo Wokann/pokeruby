@@ -1,4 +1,4 @@
-MossdeepCity_GameCorner_1F_MapScripts:: @ 815AC52
+MossdeepCity_MysteryEventsHouse_1F_MapScripts:: @ 815AC52
 	map_script MAP_SCRIPT_ON_LOAD, MossdeepCity_MysteryEventsHouse_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, MossdeepCity_MysteryEventsHouse_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_MysteryEventsHouse_OnFrame
@@ -117,7 +117,7 @@ MossdeepCity_MysteryEventsHouse_EventScript_ChallengeEReaderTrainer:: @ 815AD59
 	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingEast
 	compare VAR_FACING, 3
 	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_PositionForBattleFacingWest
-	warp MAP_MOSSDEEP_CITY_GAME_CORNER_B1F, 255, 3, 1
+	warp MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_B1F, 255, 3, 1
 	waitstate
 	release
 	end
