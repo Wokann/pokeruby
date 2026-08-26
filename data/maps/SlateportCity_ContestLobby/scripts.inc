@@ -122,7 +122,7 @@ SlateportCity_ContestLobby_EventScript_ShowContestWinner:: @ 815552F
 	end
 
 SlateportCity_ContestLobby_EventScript_Boy:: @ 8155536
-	msgbox SlateportCity_ContestLobby_Text_LetsGetBlendingAlready, MSGBOX_NPC
+	msgbox BerryBlender_Text_LetsGetBlendingAlready, MSGBOX_NPC
 	end
 
 @ 815553F

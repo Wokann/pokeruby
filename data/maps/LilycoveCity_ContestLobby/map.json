@@ -49,7 +49,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "BerryBlender_EventScript_Blender2OldMan",
+      "script": "LilycoveCity_ContestLobby_EventScript_BerryBlenderOldMan",
       "flag": "0"
     },
     {
@@ -236,7 +236,7 @@
       "y": 5,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "BerryBlender_EventScript_BerryBlender1"
+      "script": "LilycoveCity_ContestLobby_EventScript_BerryBlenderLink"
     },
     {
       "type": "sign",
@@ -244,7 +244,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "BerryBlender_EventScript_BerryBlender2"
+      "script": "LilycoveCity_ContestLobby_EventScript_BerryBlender3"
     },
     {
       "type": "sign",

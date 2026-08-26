@@ -1063,7 +1063,7 @@ gText_PlayerHouseBootPC:: @ 81A10D6
 gText_PlayerHouseBootPC:: @ 81A10D6
 	.string "{PLAYER} schaltet den PC ein.$"
 
-FallarborTown_ContestLobby_Text_1A10EB:: @ 81A10EB
+gText_PokeblockLinkCanceled:: @ 81A10EB
 	.string "Die Verbindung wurde abgebrochen.$"
 
 gText_NicknameReceivedPokemon:: @ 81A1102
