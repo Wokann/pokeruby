@@ -23,7 +23,7 @@ MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50:: @ 8156A60
 	goto MauvilleCity_GameCorner_EventScript_CancelBuyCoins
 	end
 
-@ 8156A87
+MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault500:: @ 8156A87
 	multichoicedefault 15, 0, 49, 1, 0
 	switch VAR_RESULT
 	case 0, MauvilleCity_GameCorner_EventScript_Buy50Coins
