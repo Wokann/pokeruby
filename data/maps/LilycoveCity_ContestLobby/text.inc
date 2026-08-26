@@ -1,4 +1,4 @@
-ContestHall_Text_OnlyRegister4Players:: @ 818848C
+LilycoveCity_ContestLobby_Text_OnlyRegister4Players:: @ 818848C
 	.string "I only register four players for\n"
 	.string "POKéMON CONTESTS.\p"
 	.string "If three other players link up, all\n"

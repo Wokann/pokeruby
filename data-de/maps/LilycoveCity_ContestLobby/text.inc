@@ -1,4 +1,4 @@
-ContestHall_Text_OnlyRegister4Players:: @ 818848C
+LilycoveCity_ContestLobby_Text_OnlyRegister4Players:: @ 818848C
 	.string "Nur vier Spieler können sich für den\n"
 	.string "POKéMON WETTBEWERB registrieren.\p"
 	.string "Wenn die anderen drei Spieler via\n"

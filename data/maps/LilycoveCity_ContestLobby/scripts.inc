@@ -306,7 +306,7 @@ LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist:: @ 8158B85
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_RegistrationsFromFourNeedContestPass
 	goto_if_set FLAG_TEMP_2, LilycoveCity_ContestLobby_EventScript_RepeatLinkContestPrompt
-	message ContestHall_Text_OnlyRegister4Players
+	message LilycoveCity_ContestLobby_Text_OnlyRegister4Players
 	waitmessage
 	setflag FLAG_TEMP_2
 	goto LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest
@@ -590,38 +590,38 @@ LilycoveCity_ContestLobby_EventScript_SetDebug:: @ 8158EE8
 
 LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 8158F08
 	switch VAR_CONTEST_CATEGORY
-	case 0, LilycoveCity_ContestLobby_EventScript_WarpToContestHall4
-	case 1, LilycoveCity_ContestLobby_EventScript_WarpToContestHall2
-	case 2, LilycoveCity_ContestLobby_EventScript_WarpToContestHall6
-	case 3, LilycoveCity_ContestLobby_EventScript_WarpToContestHall5
-	case 4, LilycoveCity_ContestLobby_EventScript_WarpToContestHall3
+	case 0, LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall
+	case 1, LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall
+	case 2, LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall
+	case 3, LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall
+	case 4, LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall
 	return
 
-LilycoveCity_ContestLobby_EventScript_WarpToContestHall4:: @ 8158F45
+LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 8158F45
 	setwarp MAP_LINK_CONTEST_ROOM4, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
-LilycoveCity_ContestLobby_EventScript_WarpToContestHall2:: @ 8158F52
+LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 8158F52
 	setwarp MAP_LINK_CONTEST_ROOM2, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
-LilycoveCity_ContestLobby_EventScript_WarpToContestHall6:: @ 8158F5F
+LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 8158F5F
 	setwarp MAP_LINK_CONTEST_ROOM6, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
-LilycoveCity_ContestLobby_EventScript_WarpToContestHall5:: @ 8158F6C
+LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 8158F6C
 	setwarp MAP_LINK_CONTEST_ROOM5, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
-LilycoveCity_ContestLobby_EventScript_WarpToContestHall3:: @ 8158F79
+LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 8158F79
 	setwarp MAP_LINK_CONTEST_ROOM3, 255, 7, 5
 	special sub_8081334
 	waitstate
@@ -748,11 +748,11 @@ LilycoveCity_ContestLobby_EventScript_ContestWinner3:: @ 8159074
 	releaseall
 	end
 
-LilycoveCity_ContestLobby_EventScript_Blender2Boy:: @ 815907B
+LilycoveCity_ContestLobby_EventScript_Blender3Boy:: @ 815907B
 	msgbox BerryBlender_Text_LetsGetBlendingAlready, MSGBOX_NPC
 	end
 
-LilycoveCity_ContestLobby_EventScript_Blender2Girl:: @ 8159084
+LilycoveCity_ContestLobby_EventScript_Blender3Girl:: @ 8159084
 	msgbox BerryBlender_Text_WhatKindOfPokeblockWillIGet, MSGBOX_NPC
 	end
 
