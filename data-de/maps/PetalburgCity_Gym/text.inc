@@ -382,7 +382,7 @@ PetalburgCity_Gym_Text_EnterSpeedRoom:: @ 817B870
 	.string "dem Schild.\p"
 	.string "Möchtest du die Tür öffnen?$"
 
-UnknownString_817B8A8: @ 817B8A8
+PetalburgCity_Gym_Text_DoorAppearsLocked2: @ 817B8A8
 	.string "Die Tür ist noch verschlossen...$"
 
 PetalburgCity_Gym_Text_EnterAccuracyRoom:: @ 817B8D4

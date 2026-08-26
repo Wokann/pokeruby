@@ -367,7 +367,7 @@ PetalburgCity_Gym_Text_EnterSpeedRoom:: @ 817B870
 	.string "“SPEED ROOM,” the sign says.\p"
 	.string "Do you want to go through?$"
 
-UnknownString_817B8A8: @ 817B8A8
+PetalburgCity_Gym_Text_DoorAppearsLocked2: @ 817B8A8
 	.string "This door appears to be locked\n"
 	.string "right now...$"
 
