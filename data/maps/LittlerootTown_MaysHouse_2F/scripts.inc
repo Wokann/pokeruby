@@ -184,8 +184,6 @@ RivalsHouse_2F_Movement_BrendanLeaveForPlayerFacingEastOrNorth:: @ 8152C30
 	delay_8
 	step_end
 
-gUnknown_08152C39:: @ 8152C39
-
 LittlerootTown_MaysHouse_2F_EventScript_PC:: @ 8152C39
 	lockall
 	checkplayergender

@@ -49,8 +49,8 @@ extern u8 gSelectedObjectEvent;
 
 //scripts
 extern u8 gUnknown_081A2C51[];
-extern u8 gUnknown_0815281E[];
-extern u8 gUnknown_08152C39[];
+extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
+extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_PC[];
@@ -317,8 +317,8 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
         return FALSE;
 
     // Play computer noise for PC-related scripts.
-    if (script != gUnknown_0815281E
-     && script != gUnknown_08152C39
+    if (script != LittlerootTown_BrendansHouse_2F_EventScript_PC
+     && script != LittlerootTown_MaysHouse_2F_EventScript_PC
      && script != SecretBase_EventScript_PC
      && script != SecretBase_EventScript_RecordMixingPC
      && script != EventScript_PC)
