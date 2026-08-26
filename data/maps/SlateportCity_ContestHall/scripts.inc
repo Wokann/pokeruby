@@ -2,18 +2,18 @@ SlateportCity_ContestHall_MapScripts:: @ 815554B
 	.byte 0
 
 SlateportCity_ContestHall_EventScript_ContestMoveComboTip:: @ 815554C
-	msgbox SlateportCity_ContestHall_Text_ContestMoveComboTip, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_AdviceForContests, MSGBOX_NPC
 	end
 
 SlateportCity_ContestHall_EventScript_ContestJudgeSon:: @ 8155555
-	msgbox SlateportCity_ContestHall_Text_ContestJudgeSon, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_MyPapaIsContestJudge, MSGBOX_NPC
 	end
 
 SlateportCity_ContestHall_EventScript_GiveTorment:: @ 815555E
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM41, SlateportCity_ContestHall_EventScript_ExplainTorment
-	msgbox SlateportCity_ContestHall_Text_GiveTorment, MSGBOX_DEFAULT
+	msgbox SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed, MSGBOX_DEFAULT
 	giveitem ITEM_TM41_TORMENT
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
@@ -28,7 +28,7 @@ SlateportCity_ContestHall_EventScript_ExplainTorment:: @ 8155595
 	end
 
 SlateportCity_ContestHall_EventScript_ContestMC:: @ 815559F
-	msgbox SlateportCity_ContestHall_Text_ContestMC, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_MCStepUpTakePartInContest, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_MC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -36,7 +36,7 @@ SlateportCity_ContestHall_EventScript_ContestMC:: @ 815559F
 	end
 
 SlateportCity_ContestHall_EventScript_ContestJudge:: @ 81555B4
-	msgbox SlateportCity_ContestHall_Text_ContestJudge, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_JudgeWouldntDoToMissContest, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_JUDGE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -44,7 +44,7 @@ SlateportCity_ContestHall_EventScript_ContestJudge:: @ 81555B4
 	end
 
 SlateportCity_ContestHall_EventScript_AppealTimeGirl:: @ 81555C9
-	msgbox SlateportCity_ContestHall_Text_AppealTime, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_ItsAppealTime, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_GIRL, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -52,7 +52,7 @@ SlateportCity_ContestHall_EventScript_AppealTimeGirl:: @ 81555C9
 	end
 
 SlateportCity_ContestHall_EventScript_ComplainingContestant:: @ 81555DE
-	msgbox SlateportCity_ContestHall_Text_ComplainingContestant, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_DidntPayAttentionToAppeal, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_COMPLAINING_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -60,7 +60,7 @@ SlateportCity_ContestHall_EventScript_ComplainingContestant:: @ 81555DE
 	end
 
 SlateportCity_ContestHall_EventScript_AudienceExcitementTip:: @ 81555F3
-	msgbox SlateportCity_ContestHall_Text_AudienceExcitementTip, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_RewardWithSageAdvice, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_AUDIENCE_TIP_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -68,7 +68,7 @@ SlateportCity_ContestHall_EventScript_AudienceExcitementTip:: @ 81555F3
 	end
 
 SlateportCity_ContestHall_EventScript_NervousContestant:: @ 8155608
-	msgbox SlateportCity_ContestHall_Text_NervousContestant, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_MoreFreakedOutThanMon, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_NERVOUS_MAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -76,7 +76,7 @@ SlateportCity_ContestHall_EventScript_NervousContestant:: @ 8155608
 	end
 
 SlateportCity_ContestHall_EventScript_BoastfulManiac:: @ 815561D
-	msgbox SlateportCity_ContestHall_Text_BoastfulManiac, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_MyMonBetterThanThatLot, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_BOASTFUL_MANIAC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -84,7 +84,7 @@ SlateportCity_ContestHall_EventScript_BoastfulManiac:: @ 815561D
 	end
 
 SlateportCity_ContestHall_EventScript_ContestAppealFan:: @ 8155632
-	msgbox SlateportCity_ContestHall_Text_ContestAppealFan, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_GetUrgeToMoveWithMon, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_APPEAL_FAN, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -92,7 +92,7 @@ SlateportCity_ContestHall_EventScript_ContestAppealFan:: @ 8155632
 	end
 
 SlateportCity_ContestHall_EventScript_SecondaryJudgingTip:: @ 8155647
-	msgbox SlateportCity_ContestHall_Text_SecondaryJudgingTip, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_MonLooksOnTopOfGame, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_SECONDARY_JUDGING_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0
@@ -100,7 +100,7 @@ SlateportCity_ContestHall_EventScript_SecondaryJudgingTip:: @ 8155647
 	end
 
 SlateportCity_ContestHall_EventScript_BattleAndContestTip:: @ 815565C
-	msgbox SlateportCity_ContestHall_Text_BattleAndContestTip, MSGBOX_NPC
+	msgbox SlateportCity_ContestHall_Text_BattleAndContestAlike, MSGBOX_NPC
 	lockall
 	applymovement LOCALID_SLATEPORT_CONTEST_HALL_BATTLE_CONTEST_BOY, Common_Movement_FaceOriginalDirection
 	waitmovement 0

@@ -383,13 +383,13 @@ SlateportCity_EventScript_DollClerk:: @ 814BDF2
 	faceplayer
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor1_Dolls
+	pokemartdecoration SlateportCity_PokemartDecor_Dolls
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor1_Dolls:: @ 814BE0C
+SlateportCity_PokemartDecor_Dolls:: @ 814BE0C
 	.2byte DECOR_AZURILL_DOLL
 	.2byte DECOR_MARILL_DOLL
 	.2byte DECOR_SKITTY_DOLL
@@ -408,13 +408,13 @@ SlateportCity_EventScript_DecorClerk:: @ 814BE20
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor1
+	pokemartdecoration SlateportCity_PokemartDecor
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor1:: @ 814BE40
+SlateportCity_PokemartDecor:: @ 814BE40
 	.2byte DECOR_RED_BRICK
 	.2byte DECOR_BLUE_BRICK
 	.2byte DECOR_YELLOW_BRICK
