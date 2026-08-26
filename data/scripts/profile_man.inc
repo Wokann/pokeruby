@@ -43,7 +43,7 @@ ProfileMan_EventScript_CancelShowProfile:: @ 81B1BB1
 
 ProfileMan_EventScript_ShowProfile:: @ 81B1BBB
 	setvar VAR_0x8004, 0
-	special sub_80EB7C4
+	special ShowEasyChatProfile
 	waitmessage
 	delay 80
 	msgbox ProfileMan_Text_FantasticProfile, MSGBOX_DEFAULT

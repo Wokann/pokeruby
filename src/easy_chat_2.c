@@ -2859,46 +2859,46 @@ u16 sub_80EB784(u16 group)
     return sub_80EB72C(group);
 }
 
-void sub_80EB7C4(void)
+void ShowEasyChatProfile(void)
 {
-    u16 *words;
-    u16 arg1, arg2;
+    u16 *easyChatWords;
+    u16 columns, rows;
 
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        words = gSaveBlock1.easyChats.unk2B1C;
-        arg1 = 2;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B1C;
+        columns = 2;
+        rows = 2;
         break;
     case 1:
-        words = gSaveBlock1.easyChats.unk2B28;
+        easyChatWords = gSaveBlock1.easyChats.unk2B28;
         if (sub_80EB680(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
         {
-            arg1 = 2;
-            arg2 = 3;
+            columns = 2;
+            rows = 3;
         }
         else
         {
-            arg1 = 3;
-            arg2 = 2;
+            columns = 3;
+            rows = 2;
         }
         break;
     case 2:
-        words = gSaveBlock1.easyChats.unk2B34;
-        arg1 = 3;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B34;
+        columns = 3;
+        rows = 2;
         break;
     case 3:
-        words = gSaveBlock1.easyChats.unk2B40;
-        arg1 = 3;
-        arg2 = 2;
+        easyChatWords = gSaveBlock1.easyChats.unk2B40;
+        columns = 3;
+        rows = 2;
         break;
     default:
         return;
     }
 
-    ConvertEasyChatWordsToString(gStringVar4, words, arg1, arg2);
+    ConvertEasyChatWordsToString(gStringVar4, easyChatWords, columns, rows);
     ShowFieldAutoScrollMessage(gStringVar4);
 }
 
