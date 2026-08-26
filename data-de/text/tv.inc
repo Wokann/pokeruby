@@ -112,7 +112,7 @@ gTVBravoTrainerText8:: @ 81A76C5
 gTVBravoTrainerText9:: @ 81A774F
 	.string "Wir stellen vor: TRAINERS {STR_VAR_1}!$"
 
-BattleTower_Lobby_Text_1A776D:: @ 81A776D
+BattleTower_Lobby_Text_InterviewRequest:: @ 81A776D
 	.string "Hallo! Du bist der TRAINER, der gerade\n"
 	.string "gekämpft hat, richtig?\p"
 	.string "Ich interviewe TRAINER in der ganzen\n"
@@ -120,7 +120,7 @@ BattleTower_Lobby_Text_1A776D:: @ 81A776D
 	.string "Würdest du mir deine Eindrücke über\n"
 	.string "das Kämpfen schildern?$"
 
-BattleTower_Lobby_Text_1A7823:: @ 81A7823
+BattleTower_Lobby_Text_HowDidBattleTowerTurnOut:: @ 81A7823
 	.string "Ja? Wirklich?\n"
 	.string "Danke schön!\l"
 	.string "Dann, äh...\p"
@@ -128,37 +128,37 @@ BattleTower_Lobby_Text_1A7823:: @ 81A7823
 	.string "Warst du mit dem Kampf zufrieden?\n"
 	.string "Oder bist du unzufrieden?$"
 
-BattleTower_Lobby_Text_1A78B7:: @ 81A78B7
+BattleTower_Lobby_Text_SorryWeDisturbedYou:: @ 81A78B7
 	.string "Oh...\n"
 	.string "Tut mir Leid, dich zu stören.\p"
 	.string "Bitte gib uns ein Interview, wenn du\n"
 	.string "wieder im DUELLTURM kämpfst.$"
 
-BattleTower_Lobby_Text_1A791B:: @ 81A791B
+BattleTower_Lobby_Text_ObviousYouHadGreatBattle:: @ 81A791B
 	.string "Ja, natürlich!\p"
 	.string "Da ist dieser untrügliche Ausdruck der\n"
 	.string "Zufriedenheit auf deinem Gesicht...\p"
 	.string "Ganz offensichtlich hattest du einen\n"
 	.string "großartigen Kampf!$"
 
-BattleTower_Lobby_Text_1A7990:: @ 81A7990
+BattleTower_Lobby_Text_DifficultToMakeBattleTurnOutAsPlanned:: @ 81A7990
 	.string "Oh, ich verstehe...\p"
 	.string "Nun, es ist immer schwer, den Kampf so\n"
 	.string "zu beeinflussen, wie man es möchte.$"
 
-BattleTower_Lobby_Text_1A79EB:: @ 81A79EB
+BattleTower_Lobby_Text_DescribeYourBattle:: @ 81A79EB
 	.string "Darf ich dir noch eine Frage stellen?\p"
 	.string "Wenn du deine Eindrücke über diesen\n"
 	.string "Kampf beschreiben müsstest, was\l"
 	.string "würdest du dann sagen?$"
 
-BattleTower_Lobby_Text_1A7A6E:: @ 81A7A6E
+BattleTower_Lobby_Text_ThatsGreatLine:: @ 81A7A6E
 	.string "Das ist erstaunlich cool!\p"
 	.string "Eine großartige Sache! Ich wünsche dir\n"
 	.string "im nächsten Kampf genauso viel Glück!\p"
 	.string "Ich hoffe, wir treffen uns bald wieder!$"
 
-BattleTower_Lobby_Text_1A7AE0:: @ 81A7AE0
+BattleTower_Lobby_Text_SilentType:: @ 81A7AE0
 	.string "Oh, ich verstehe...\p"
 	.string "Nun, auch die ruhigen Typen sind cool,\n"
 	.string "nicht wahr?\p"
@@ -166,7 +166,7 @@ BattleTower_Lobby_Text_1A7AE0:: @ 81A7AE0
 	.string "Möglichkeit, deine Eindrücke\l"
 	.string "festzuhalten!$"
 
-BattleTower_Lobby_Text_1A7B66:: @ 81A7B66
+BattleTower_Lobby_Text_LookingForwardToNextBattle:: @ 81A7B66
 	.string "Ich freue mich schon auf deinen\n"
 	.string "nächsten Kampf!$"
 

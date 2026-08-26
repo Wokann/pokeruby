@@ -108,7 +108,7 @@ gTVBravoTrainerText8:: @ 81A76C5
 gTVBravoTrainerText9:: @ 81A774F
 	.string "Introducing the TRAINER's {STR_VAR_1}!$"
 
-BattleTower_Lobby_Text_1A776D:: @ 81A776D
+BattleTower_Lobby_Text_InterviewRequest:: @ 81A776D
 	.string "Hello! You're the TRAINER who just had\n"
 	.string "a battle, right?\p"
 	.string "I'm gathering interviews with TRAINERS\n"
@@ -116,7 +116,7 @@ BattleTower_Lobby_Text_1A776D:: @ 81A776D
 	.string "May I get a few words from you about\n"
 	.string "your impressions on battling?$"
 
-BattleTower_Lobby_Text_1A7823:: @ 81A7823
+BattleTower_Lobby_Text_HowDidBattleTowerTurnOut:: @ 81A7823
 	.string "You will? Really?\n"
 	.string "Thank you!\l"
 	.string "Then, uh...\p"
@@ -125,44 +125,44 @@ BattleTower_Lobby_Text_1A7823:: @ 81A7823
 	.string "Were you satisfied with the battle?\n"
 	.string "Or are you unhappy?$"
 
-BattleTower_Lobby_Text_1A78B7:: @ 81A78B7
+BattleTower_Lobby_Text_SorryWeDisturbedYou:: @ 81A78B7
 	.string "Oh...\n"
 	.string "Sorry we disturbed you.\p"
 	.string "Please give us an interview the next\n"
 	.string "time you visit the BATTLE TOWER.$"
 
-BattleTower_Lobby_Text_1A791B:: @ 81A791B
+BattleTower_Lobby_Text_ObviousYouHadGreatBattle:: @ 81A791B
 	.string "Well, of course!\p"
 	.string "That unmistakable look of satisfaction\n"
 	.string "on your face...\p"
 	.string "It's obvious that you've had a great\n"
 	.string "battle.$"
 
-BattleTower_Lobby_Text_1A7990:: @ 81A7990
+BattleTower_Lobby_Text_DifficultToMakeBattleTurnOutAsPlanned:: @ 81A7990
 	.string "Oh, I see...\p"
 	.string "Well, it certainly is difficult to make a\n"
 	.string "battle turn out exactly as planned.$"
 
-BattleTower_Lobby_Text_1A79EB:: @ 81A79EB
+BattleTower_Lobby_Text_DescribeYourBattle:: @ 81A79EB
 	.string "Oh, oh, may I ask one more question?\p"
 	.string "If you were to describe your\n"
 	.string "impressions about this battle with one\l"
 	.string "saying, what would it be?$"
 
-BattleTower_Lobby_Text_1A7A6E:: @ 81A7A6E
+BattleTower_Lobby_Text_ThatsGreatLine:: @ 81A7A6E
 	.string "Oh, that is stunningly cool!\p"
 	.string "That's a great line!\n"
 	.string "I hope you'll do great next time, too.\p"
 	.string "I hope to see you again!$"
 
-BattleTower_Lobby_Text_1A7AE0:: @ 81A7AE0
+BattleTower_Lobby_Text_SilentType:: @ 81A7AE0
 	.string "Oh, I see...\p"
 	.string "Still, being the silent type is also cool,\n"
 	.string "isn't it?\p"
 	.string "I hope you'll give me the opportunity to\n"
 	.string "share your thoughts again!$"
 
-BattleTower_Lobby_Text_1A7B66:: @ 81A7B66
+BattleTower_Lobby_Text_LookingForwardToNextBattle:: @ 81A7B66
 	.string "I'll be looking forward to your next\n"
 	.string "battle!$"
 

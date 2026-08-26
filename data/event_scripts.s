@@ -1439,87 +1439,87 @@ LilycoveCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1FA
 LilycoveCity_ContestLobby_EventScript_DontShowContestReporter:: @ 81AE1FE
 	return
 
-BattleTower_Lobby_EventScript_1AE1FF:: @ 81AE1FF
+BattleTower_Lobby_EventScript_Reporter:: @ 81AE1FF
 	lock
 	faceplayer
-	goto_if_set FLAG_TEMP_2, BattleTower_Lobby_EventScript_1AE2E3
+	goto_if_set FLAG_TEMP_2, BattleTower_Lobby_EventScript_AlreadyInterviewed
 	setvar VAR_0x8005, 7
 	special InterviewBefore
 	compare VAR_RESULT, 1
-	goto_if_eq BattleTower_Lobby_EventScript_1AE2E3
+	goto_if_eq BattleTower_Lobby_EventScript_AlreadyInterviewed
 	copyvar VAR_0x8009, VAR_0x8006
-	msgbox BattleTower_Lobby_Text_1A776D, MSGBOX_YESNO
+	msgbox BattleTower_Lobby_Text_InterviewRequest, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq BattleTower_Lobby_EventScript_1AE241
+	goto_if_eq BattleTower_Lobby_EventScript_AcceptInterview
 	compare VAR_RESULT, NO
-	goto_if_eq BattleTower_Lobby_EventScript_1AE297
+	goto_if_eq BattleTower_Lobby_EventScript_DeclineInterview
 	end
 
-BattleTower_Lobby_EventScript_1AE241:: @ 81AE241
-	message BattleTower_Lobby_Text_1A7823
+BattleTower_Lobby_EventScript_AcceptInterview:: @ 81AE241
+	message BattleTower_Lobby_Text_HowDidBattleTowerTurnOut
 	waitmessage
 	multichoice 19, 8, 45, 1
 	copyvar VAR_0x8008, VAR_RESULT
 	compare VAR_RESULT, 0
-	call_if_eq BattleTower_Lobby_EventScript_1AE2A1
+	call_if_eq BattleTower_Lobby_EventScript_Satisfied
 	compare VAR_RESULT, 1
-	call_if_eq BattleTower_Lobby_EventScript_1AE2AA
-	msgbox BattleTower_Lobby_Text_1A79EB, MSGBOX_DEFAULT
+	call_if_eq BattleTower_Lobby_EventScript_Dissatisfied
+	msgbox BattleTower_Lobby_Text_DescribeYourBattle, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 12
 	copyvar VAR_0x8005, VAR_0x8009
 	call Common_EventScript_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
-	goto_if_eq BattleTower_Lobby_EventScript_1AE2B3
+	goto_if_eq BattleTower_Lobby_EventScript_SubmitResponse
 	compare VAR_RESULT, 0
-	goto_if_eq BattleTower_Lobby_EventScript_1AE2D9
+	goto_if_eq BattleTower_Lobby_EventScript_CancelInterview
 	end
 
-BattleTower_Lobby_EventScript_1AE297:: @ 81AE297
-	msgbox BattleTower_Lobby_Text_1A78B7, MSGBOX_DEFAULT
+BattleTower_Lobby_EventScript_DeclineInterview:: @ 81AE297
+	msgbox BattleTower_Lobby_Text_SorryWeDisturbedYou, MSGBOX_DEFAULT
 	release
 	end
 
-BattleTower_Lobby_EventScript_1AE2A1:: @ 81AE2A1
-	msgbox BattleTower_Lobby_Text_1A791B, MSGBOX_DEFAULT
+BattleTower_Lobby_EventScript_Satisfied:: @ 81AE2A1
+	msgbox BattleTower_Lobby_Text_ObviousYouHadGreatBattle, MSGBOX_DEFAULT
 	return
 
-BattleTower_Lobby_EventScript_1AE2AA:: @ 81AE2AA
-	msgbox BattleTower_Lobby_Text_1A7990, MSGBOX_DEFAULT
+BattleTower_Lobby_EventScript_Dissatisfied:: @ 81AE2AA
+	msgbox BattleTower_Lobby_Text_DifficultToMakeBattleTurnOutAsPlanned, MSGBOX_DEFAULT
 	return
 
-BattleTower_Lobby_EventScript_1AE2B3:: @ 81AE2B3
+BattleTower_Lobby_EventScript_SubmitResponse:: @ 81AE2B3
 	compare VAR_RESULT, 0
-	goto_if_eq BattleTower_Lobby_EventScript_1AE2D9
-	msgbox BattleTower_Lobby_Text_1A7A6E, MSGBOX_DEFAULT
+	goto_if_eq BattleTower_Lobby_EventScript_CancelInterview
+	msgbox BattleTower_Lobby_Text_ThatsGreatLine, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_2
 	copyvar VAR_0x8004, VAR_0x8008
 	setvar VAR_0x8005, 7
 	goto Interview_EventScript_EndInterview
 	end
 
-BattleTower_Lobby_EventScript_1AE2D9:: @ 81AE2D9
-	msgbox BattleTower_Lobby_Text_1A7AE0, MSGBOX_DEFAULT
+BattleTower_Lobby_EventScript_CancelInterview:: @ 81AE2D9
+	msgbox BattleTower_Lobby_Text_SilentType, MSGBOX_DEFAULT
 	release
 	end
 
-BattleTower_Lobby_EventScript_1AE2E3:: @ 81AE2E3
-	msgbox BattleTower_Lobby_Text_1A7B66, MSGBOX_DEFAULT
+BattleTower_Lobby_EventScript_AlreadyInterviewed:: @ 81AE2E3
+	msgbox BattleTower_Lobby_Text_LookingForwardToNextBattle, MSGBOX_DEFAULT
 	release
 	end
 
-BattleTower_Lobby_EventScript_1AE2ED:: @ 81AE2ED
+BattleTower_Lobby_EventScript_ShowOrHideReporter:: @ 81AE2ED
 	compare VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 0
-	goto_if_eq BattleTower_Lobby_EventScript_1AE30F
+	goto_if_eq BattleTower_Lobby_EventScript_HideReporter
 	setvar VAR_0x8005, 7
 	special InterviewBefore
 	compare VAR_RESULT, 1
-	goto_if_eq BattleTower_Lobby_EventScript_1AE30F
+	goto_if_eq BattleTower_Lobby_EventScript_HideReporter
 	clearflag FLAG_HIDE_REPORTER_BATTLE_TOWER
 	return
 
-BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
+BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	setflag FLAG_HIDE_REPORTER_BATTLE_TOWER
 	return
 

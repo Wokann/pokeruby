@@ -6,12 +6,10 @@ gSaveText_ThereIsAlreadyAFile:: @ 81C6CA6
 	.string "Es gibt bereits einen Spielstand.\n"
 	.string "Spielstand überschreiben?$"
 
-BattleTower_BattleRoom_Text_1C6CE1:: @ 81C6CE1
 gSaveText_DontTurnOff:: @ 81C6CE1
 	.string "SPEICHERN...\n"
 	.string "BITTE DAS GERÄT NICHT AUSSCHALTEN.$"
 
-BattleTower_BattleRoom_Text_1C6D05:: @ 81C6D05
 gSaveText_PlayerSavedTheGame:: @ 81C6D05
 	.string "{PLAYER} hat das Spiel gespeichert.$"
 

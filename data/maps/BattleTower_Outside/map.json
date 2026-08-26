@@ -21,7 +21,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "BattleTower_Outside_EventScript_160263",
+      "script": "BattleTower_Outside_EventScript_BugCatcher",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "BattleTower_Outside_EventScript_16026C",
+      "script": "BattleTower_Outside_EventScript_Woman",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "BattleTower_Outside_EventScript_160275",
+      "script": "BattleTower_Outside_EventScript_Boy",
       "flag": "0"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "BattleTower_Outside_EventScript_160168",
+      "script": "BattleTower_Outside_EventScript_FerryAttendant",
       "flag": "0"
     }
   ],
@@ -94,7 +94,7 @@
       "y": 13,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "BattleTower_Outside_EventScript_16025A"
+      "script": "BattleTower_Outside_EventScript_BattleTowerSign"
     }
   ]
 }
