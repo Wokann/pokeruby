@@ -598,12 +598,12 @@ bool8 TryStartStepCountScript(void)
 
 void Unref_ClearHappinessStepCounter(void)
 {
-    VarSet(VAR_HAPPINESS_STEP_COUNTER, 0);
+    VarSet(VAR_FRIENDSHIP_STEP_COUNTER, 0);
 }
 
 static void UpdateHappinessStep(void)
 {
-    u16 *ptr = GetVarPointer(VAR_HAPPINESS_STEP_COUNTER);
+    u16 *ptr = GetVarPointer(VAR_FRIENDSHIP_STEP_COUNTER);
     int i;
 
     (*ptr)++;
