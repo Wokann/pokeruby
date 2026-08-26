@@ -316,7 +316,7 @@ void sub_809CFF0(void);
 bool8 sub_809D034(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
 void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
 bool8 sub_809D16C(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height);
-void ShowPokemonStorageSystem(void);
+void ShowPokemonStorageSystemPC(void);
 
 void debug_sub_80A433C(struct Pokemon *pokemon, void (*func)(void));
 

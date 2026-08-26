@@ -37,7 +37,7 @@ EventScript_AccessPokemonStorage:
 	call_if_unset FLAG_SYS_PC_LANETTE, EventScript_AccessSomeonesPC
 	call_if_set FLAG_SYS_PC_LANETTE, EventScript_AccessLanettesPC
 	msgbox Text_StorageSystemOpened, MSGBOX_DEFAULT
-	special ShowPokemonStorageSystem
+	special ShowPokemonStorageSystemPC
 	waitstate
 	goto EventScript_PCMainMenu
 	end

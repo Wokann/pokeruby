@@ -347,7 +347,7 @@ void Task_PokemonStorageSystem(u8 taskId)
     }
 }
 
-void ShowPokemonStorageSystem(void)
+void ShowPokemonStorageSystemPC(void)
 {
     u8 taskId = CreateTask(Task_PokemonStorageSystem, 80);
     gTasks[taskId].data[0] = 0;
