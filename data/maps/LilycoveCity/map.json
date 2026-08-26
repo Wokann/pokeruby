@@ -163,7 +163,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_EventScript_ItemMaxRepel",
-      "flag": "FLAG_ITEM_LILYCOVE_1"
+      "flag": "FLAG_ITEM_LILYCOVE_CITY_MAX_REPEL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -241,7 +241,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_EventScript_Rival",
-      "flag": "FLAG_HIDE_RIVAL_LILYCOVE_MART"
+      "flag": "FLAG_HIDE_LILYCOVE_CITY_RIVAL"
     }
   ],
   "warp_events": [
@@ -439,7 +439,7 @@
       "y": 31,
       "elevation": 3,
       "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_1B"
+      "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_HEART_SCALE"
     },
     {
       "type": "hidden_item",
