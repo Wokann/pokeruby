@@ -8,7 +8,7 @@
 .set __special__, 0
 	.align 2
 gSpecials::
-	def_special ScrSpecial_HealPlayerParty
+	def_special HealPlayerParty
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp
 	def_special sub_80810DC
@@ -49,7 +49,7 @@ gSpecials::
 	def_special SpawnBerryBlenderLinkPlayerSprites
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
-	def_special sub_80C5568
+	def_special ChooseHalfPartyForBattle
 	def_special sub_8083BDC
 	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Berry_FadeAndGoToBerryBagMenu
@@ -98,7 +98,7 @@ gSpecials::
 	def_special ScrSpecial_GetMonCondition
 	def_special ScrSpecial_CanMonParticipateInSelectedLinkContest
 	def_special ScrSpecial_GiveContestRibbon
-	def_special sub_80C5044
+	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
 	def_special sub_808363C
 	def_special SaveGame
@@ -329,7 +329,7 @@ gSpecials::
 	def_special sp13E_warp_to_last_warp
 	def_special DoFallWarp
 	def_special ShowContestEntryMonPic
-	def_special sub_80C5164
+	def_special HideContestEntryMonPic
 	def_special SetEReaderTrainerGfxId
 	def_special ScrSpecial_StartSouthernIslandBattle
 	def_special SetRoute119Weather

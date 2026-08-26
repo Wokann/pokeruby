@@ -36,7 +36,10 @@ extern u16 gSpecialVar_ContestCategory;
 extern u16 gSpecialVar_ContestRank;
 
 extern u8 gContestMonPartyIndex;
-extern u8 gUnknown_0203856C;
+extern u8 gContestDebugMode;
+
+static void Task_ShowContestEntryMonPic(u8 taskId);
+static void CB2_ReturnFromChooseHalfParty(void);
 
 void SetContestTrainerGfxIds(void)
 {
@@ -227,13 +230,13 @@ void ShowContestWinnerCleanup(void)
 
 void ShowContestWinner(void)
 {
-    if(gUnknown_0203856C)
+    if(gContestDebugMode)
     {
         sub_80AAF30();
         eCurContestWinnerIsForArtist = TRUE;
         eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
         Contest_SaveWinner(3);
-        gUnknown_0203856C = 0;
+        gContestDebugMode = 0;
     }
     SetMainCallback2(CB2_ContestPainting);
     gMain.savedCallback = ShowContestWinnerCleanup;
@@ -266,9 +269,9 @@ bool8 GiveMonArtistRibbon(void)
     }
 }
 
-u8 sub_80C5044(void)
+u8 IsContestDebugActive(void)
 {
-    return gUnknown_0203856C;
+    return gContestDebugMode;
 }
 
 void ShowContestEntryMonPic(void)
@@ -279,7 +282,7 @@ void ShowContestEntryMonPic(void)
     u8 spriteId;
     u8 taskId;
 
-    if(FindTaskIdByFunc(sub_80C5190) == 0xFF)
+    if(FindTaskIdByFunc(Task_ShowContestEntryMonPic) == 0xFF)
     {
         u8 left = CONTEST_ENTRY_PIC_LEFT;
         u8 top = CONTEST_ENTRY_PIC_TOP;
@@ -288,7 +291,7 @@ void ShowContestEntryMonPic(void)
         species = gContestMons[gSpecialVar_0x8006].species;
         var1 = gContestMons[gSpecialVar_0x8006].personality;
         var2 = gContestMons[gSpecialVar_0x8006].otId;
-        taskId = CreateTask(sub_80C5190, 0x50);
+        taskId = CreateTask(Task_ShowContestEntryMonPic, 0x50);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = species;
         HandleLoadSpecialPokePic(
@@ -312,15 +315,15 @@ void ShowContestEntryMonPic(void)
     }
 }
 
-void sub_80C5164(void)
+void HideContestEntryMonPic(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_80C5190);
+    u8 taskId = FindTaskIdByFunc(Task_ShowContestEntryMonPic);
 
     if(taskId != 0xFF)
         gTasks[taskId].data[0]++;
 }
 
-void sub_80C5190(u8 taskId)
+static void Task_ShowContestEntryMonPic(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     struct Sprite *sprite;
@@ -377,7 +380,7 @@ void ScriptRandom(void)
     *scriptPtr = random % *scriptPtr;
 }
 
-void ScrSpecial_HealPlayerParty(void)
+void HealPlayerParty(void)
 {
     u8 i, j;
     u8 ppBonuses;
@@ -507,13 +510,13 @@ void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
     SetMonMoveSlot(&gPlayerParty[monIndex], move, slot);
 }
 
-void sub_80C5568(void)
+void ChooseHalfPartyForBattle(void)
 {
-    gMain.savedCallback = sub_80C5580;
-    sub_8121E10();
+    gMain.savedCallback = CB2_ReturnFromChooseHalfParty;
+    InitChooseHalfPartyForBattle();
 }
 
-void sub_80C5580(void)
+static void CB2_ReturnFromChooseHalfParty(void)
 {
     u8 var = gSelectedOrderFromParty[0];
 
@@ -533,7 +536,7 @@ void sub_80C5580(void)
 void ChooseBattleTowerPlayerParty(void)
 {
     gMain.savedCallback = SetBattleTowerPlayerParty;
-    sub_8121E34();
+    InitChooseBattleTowerParty();
 }
 
 void SetBattleTowerPlayerParty(void)

@@ -720,7 +720,7 @@ LinkContestRoom1_EventScript_1A5880:: @ 81A5880
 	closemessage
 	release
 	removeobject 13
-	special sub_80C5164
+	special HideContestEntryMonPic
 	switch VAR_0x8006
 	case 0, LinkContestRoom1_EventScript_1A58BA
 	case 1, LinkContestRoom1_EventScript_1A58C7

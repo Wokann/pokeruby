@@ -131,7 +131,7 @@ MossdeepCity_GameCorner_1F_EventScript_15ADE8:: @ 815ADE8
 MossdeepCity_GameCorner_1F_EventScript_15ADF5:: @ 815ADF5
 	msgbox MossdeepCity_GameCorner_B1F_Text_KeepItToA3On3, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	return
 

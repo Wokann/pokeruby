@@ -15,7 +15,7 @@ int GameClear(void)
     int i;
     bool32 ribbonGet;
 
-    ScrSpecial_HealPlayerParty();
+    HealPlayerParty();
 
     if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
     {

@@ -20,7 +20,7 @@ BattleTower_BattleRoom_EventScript_1608FA:: @ 81608FA
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
 	special StartSpecialBattle
@@ -56,7 +56,7 @@ BattleTower_BattleRoom_EventScript_160961:: @ 8160961
 	special SetBattleTowerParty
 	playfanfare MUS_HEAL
 	waitfanfare
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 
 BattleTower_BattleRoom_EventScript_1609B2:: @ 81609B2
 	msgbox BattleTower_BattleRoom_Text_19AD09, MSGBOX_YESNO

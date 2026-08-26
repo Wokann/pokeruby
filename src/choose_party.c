@@ -54,14 +54,14 @@ void sub_8123138(u8);
 static void sub_8123170(u8);
 static void sub_81231AC(void);
 
-void sub_8121E10(void)
+void InitChooseHalfPartyForBattle(void)
 {
     ClearPartySelection();
     ePartyMenu2.unk263 = 0;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
-void sub_8121E34(void)
+void InitChooseBattleTowerParty(void)
 {
     ClearPartySelection();
     ePartyMenu2.unk263 = 1;

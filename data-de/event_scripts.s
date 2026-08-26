@@ -876,7 +876,7 @@ Common_EventScript_OutOfCenterPartyHeal:: @ 81A02CA
 	fadescreen FADE_TO_BLACK
 	playfanfare MUS_HEAL
 	waitfanfare
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	fadescreen FADE_FROM_BLACK
 	return
 

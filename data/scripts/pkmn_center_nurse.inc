@@ -18,7 +18,7 @@ EventScript_PkmnCenterNurse_HealPkmn:: @ 819FD7C
 	waitfieldeffect FLDEFF_POKECENTER_HEAL
 	applymovement VAR_0x800B, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	goto_if_unset FLAG_POKERUS_EXPLAINED, EventScript_PkmnCenterNurse_CheckPokerus
 	goto EventScript_PkmnCenterNurse_ReturnPkmn
 	end

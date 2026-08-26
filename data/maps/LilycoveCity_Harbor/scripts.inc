@@ -131,7 +131,7 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 	call_if_eq LilycoveCity_Harbor_EventScript_PlayerBoardFerryEast
 	delay 30
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	setvar VAR_0x8004, 2
 	call Common_EventScript_FerryDepart
 	warp MAP_SOUTHERN_ISLAND_EXTERIOR, 255, 13, 22

@@ -678,6 +678,6 @@ SecretBase_RedCave1_EventScript_1A350A:: @ 81A350A
 	setvar VAR_0x8005, 0
 	special StartSpecialBattle
 	waitstate
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	release
 	end

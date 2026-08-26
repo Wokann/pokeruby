@@ -29,7 +29,7 @@ MossdeepCity_GameCorner_B1F_EventScript_15AE6E:: @ 815AE6E
 	compare VAR_RESULT, 2
 	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_15AEEE
 	closemessage
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_15AEFF
 	waitmovement 0
 	special LoadPlayerParty

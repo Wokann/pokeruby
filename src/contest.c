@@ -76,7 +76,7 @@ extern const u8 *const sInvalidContestMoveNames[];
 extern const u8 gUnknownText_UnknownFormatting2[];
 extern const u8 gUnknownText_UnknownFormatting3[];
 
-EWRAM_DATA u8 gUnknown_0203856C = 0;
+EWRAM_DATA u8 gContestDebugMode = 0;
 EWRAM_DATA struct ContestPokemon gContestMons[4] = {0};
 EWRAM_DATA s16 gContestMonRound1Points[4] = {0};
 EWRAM_DATA s16 gContestMonTotalPoints[4] = {0};

@@ -210,7 +210,7 @@ static void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
     gSaveBlock1.money /= 2;
-    ScrSpecial_HealPlayerParty();
+    HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
     Overworld_SetWarpDestToLastHealLoc();
     WarpIntoMap();

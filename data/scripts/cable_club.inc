@@ -214,7 +214,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3EF2:: @ 81A3EF2
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A42F5
 
 OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
-	special ScrSpecial_HealPlayerParty
+	special HealPlayerParty
 	special SavePlayerParty
 	special LoadPlayerBag
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
@@ -614,7 +614,7 @@ SingleBattleColosseum_EventScript_1A4379:: @ 81A4379
 
 DoubleBattleColosseum_EventScript_1A4383:: @ 81A4383
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
@@ -625,7 +625,7 @@ DoubleBattleColosseum_EventScript_1A4383:: @ 81A4383
 
 DoubleBattleColosseum_EventScript_1A439E:: @ 81A439E
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
@@ -636,7 +636,7 @@ DoubleBattleColosseum_EventScript_1A439E:: @ 81A439E
 
 DoubleBattleColosseum_EventScript_1A43B9:: @ 81A43B9
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
@@ -647,7 +647,7 @@ DoubleBattleColosseum_EventScript_1A43B9:: @ 81A43B9
 
 DoubleBattleColosseum_EventScript_1A43D4:: @ 81A43D4
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF

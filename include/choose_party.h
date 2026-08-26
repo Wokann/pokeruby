@@ -1,8 +1,8 @@
 #ifndef GUARD_CHOOSE_PARTY_H
 #define GUARD_CHOOSE_PARTY_H
 
-void sub_8121E10(void);
-void sub_8121E34(void);
+void InitChooseHalfPartyForBattle(void);
+void InitChooseBattleTowerParty(void);
 bool8 SetupBattleTowerPartyMenu(void);
 void HandleBattleTowerPartyMenu(u8 taskId);
 bool8 SetupLinkMultiBattlePartyMenu(void);
