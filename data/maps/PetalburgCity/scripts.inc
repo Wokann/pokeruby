@@ -5,9 +5,9 @@ PetalburgCity_MapScripts:: @ 814B70C
 
 PetalburgCity_OnTransition:: @ 814B717
 	setflag FLAG_VISITED_PETALBURG_CITY
-	compare VAR_PETALBURG_STATE, 0
+	compare VAR_PETALBURG_CITY_STATE, 0
 	call_if_eq PetalburgCity_EventScript_MoveGymBoyToWestEntrance
-	compare VAR_PETALBURG_STATE, 2
+	compare VAR_PETALBURG_CITY_STATE, 2
 	call_if_eq PetalburgCity_EventScript_DisableMapMusic
 	end
 
@@ -20,7 +20,7 @@ PetalburgCity_EventScript_DisableMapMusic:: @ 814B739
 	return
 
 PetalburgCity_OnFrame:: @ 814B73D
-	map_script_2 VAR_PETALBURG_STATE, 2, PetalburgCity_EventScript_WallyTutorial
+	map_script_2 VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_WallyTutorial
 	.2byte 0
 
 PetalburgCity_EventScript_WallyTutorial:: @ 814B747
@@ -41,7 +41,7 @@ PetalburgCity_EventScript_WallyTutorial:: @ 814B747
 	msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
 	closemessage
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	setvar VAR_PETALBURG_STATE, 3
+	setvar VAR_PETALBURG_CITY_STATE, 3
 	fadedefaultbgm
 	clearflag FLAG_DONT_TRANSITION_MUSIC
 	special LoadPlayerParty
