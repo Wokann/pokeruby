@@ -21,8 +21,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B17FB",
-      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_1"
+      "script": "MeteorFalls_1F_1R_EventScript_ItemTMIronTail",
+      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_TM_IRON_TAIL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -34,8 +34,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1815",
-      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_3"
+      "script": "MeteorFalls_1F_1R_EventScript_ItemMoonStone",
+      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_MOON_STONE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -47,8 +47,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1808",
-      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_2"
+      "script": "MeteorFalls_1F_1R_EventScript_ItemFullHeal",
+      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_FULL_HEAL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -60,8 +60,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1822",
-      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_4"
+      "script": "MeteorFalls_1F_1R_EventScript_ItemPPUP",
+      "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_PP_UP"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -139,7 +139,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MeteorFalls_1F_1R_EventScript_ProfCozmo",
-      "flag": "FLAG_HIDE_PROF_COSMO_METEOR_FALLS"
+      "flag": "FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO"
     }
   ],
   "warp_events": [

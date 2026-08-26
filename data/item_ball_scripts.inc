@@ -294,23 +294,23 @@ FieryPath_EventScript_ItemTMToxic:: @ 81B17EE
 	finditem ITEM_TM06_TOXIC
 	end
 
-MeteorFalls_1F_1R_EventScript_1B17FB:: @ 81B17FB
+MeteorFalls_1F_1R_EventScript_ItemTMIronTail:: @ 81B17FB
 	finditem ITEM_TM23_IRON_TAIL
 	end
 
-MeteorFalls_1F_1R_EventScript_1B1808:: @ 81B1808
+MeteorFalls_1F_1R_EventScript_ItemFullHeal:: @ 81B1808
 	finditem ITEM_FULL_HEAL
 	end
 
-MeteorFalls_1F_1R_EventScript_1B1815:: @ 81B1815
+MeteorFalls_1F_1R_EventScript_ItemMoonStone:: @ 81B1815
 	finditem ITEM_MOON_STONE
 	end
 
-MeteorFalls_1F_1R_EventScript_1B1822:: @ 81B1822
+MeteorFalls_1F_1R_EventScript_ItemPPUP:: @ 81B1822
 	finditem ITEM_PP_UP
 	end
 
-MeteorFalls_B1F_2R_EventScript_1B182F:: @ 81B182F
+MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw:: @ 81B182F
 	finditem ITEM_TM02_DRAGON_CLAW
 	end
 
