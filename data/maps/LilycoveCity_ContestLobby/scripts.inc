@@ -68,7 +68,7 @@ LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePainting:: @ 8158918
 
 LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon:: @ 8158948
 	incrementgamestat GAME_STAT_RECEIVED_RIBBONS
-	special ScrSpecial_GetContestWinnerNick
+	special BufferContestWinnerMonName
 	applymovement 4, LilycoveCity_ContestLobby_Movement_ArtistBeginToExit
 	waitmovement 0
 	playse SE_PIN
@@ -240,7 +240,7 @@ LilycoveCity_ContestLobby_EventScript_ConfirmDontTakePaintingLink:: @ 8158AE8
 
 LilycoveCity_ContestLobby_EventScript_ReceivedLinkArtistRibbon:: @ 8158B18
 	incrementgamestat GAME_STAT_RECEIVED_RIBBONS
-	special ScrSpecial_GetContestWinnerNick
+	special BufferContestWinnerMonName
 	applymovement 11, LilycoveCity_ContestLobby_Movement_LinkArtistBeginExit
 	waitmovement 0
 	playse SE_PIN
@@ -360,7 +360,7 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon:: @ 8158C42
 	choosecontestmon
 	compare VAR_0x8004, 255
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_158CEA
-	special ScrSpecial_CheckSelectedMonAndInitContest
+	special TryEnterContestMon
 	compare VAR_RESULT, 0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank
 	compare VAR_RESULT, 1
@@ -466,7 +466,7 @@ LilycoveCity_ContestLobby_EventScript_CancelLinkTransmissionError:: @ 8158DC3
 	end
 
 LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
-	special ScrSpecial_GetContestPlayerMonIdx
+	special GetContestPlayerId
 	addvar VAR_0x8004, 1
 	buffernumberstring 1, 32772
 	messageautoscroll LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX
@@ -478,7 +478,7 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 LilycoveCity_ContestLobby_EventScript_158DEE:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_158E0B
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
-	special ScrSpecial_SetLinkContestTrainerGfxIdx
+	special SetLinkContestPlayerGfx
 	setvar VAR_CONTEST_LOCATION, 5
 	setvar VAR_CONTEST_RANK, 3
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall

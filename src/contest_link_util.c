@@ -2562,50 +2562,50 @@ void sub_80C42C0(u8 taskId /*r12*/)
     }
 }
 
-void ScrSpecial_CheckSelectedMonAndInitContest(void)
+void TryEnterContestMon(void)
 {
-    u8 result = CanMonParticipateInContest(&gPlayerParty[gContestMonPartyIndex]);
-    if (result != 0)
+    u8 eligibility = CanMonParticipateInContest(&gPlayerParty[gContestMonPartyIndex]);
+    if (eligibility != 0)
     {
         Contest_InitAllPokemon(gSpecialVar_ContestCategory, gSpecialVar_ContestRank);
         CalculateRound1Points(gSpecialVar_ContestCategory);
     }
-    gSpecialVar_Result = result;
+    gSpecialVar_Result = eligibility;
 }
 
-u16 ScrSpecial_CanMonParticipateInSelectedLinkContest(void)
+u16 HasMonWonThisContestBefore(void)
 {
-    u16 result = 0;
+    u16 hasRankRibbon = 0;
     struct Pokemon *mon = &gPlayerParty[gContestMonPartyIndex];
     switch (gSpecialVar_ContestCategory)
     {
     case CONTEST_CATEGORY_COOL:
         if (GetMonData(mon, MON_DATA_COOL_RIBBON) > gSpecialVar_ContestRank)
-            result = 1;
+            hasRankRibbon = 1;
         break;
     case CONTEST_CATEGORY_BEAUTY:
         if (GetMonData(mon, MON_DATA_BEAUTY_RIBBON) > gSpecialVar_ContestRank)
-            result = 1;
+            hasRankRibbon = 1;
         break;
     case CONTEST_CATEGORY_CUTE:
         if (GetMonData(mon, MON_DATA_CUTE_RIBBON) > gSpecialVar_ContestRank)
-            result = 1;
+            hasRankRibbon = 1;
         break;
     case CONTEST_CATEGORY_SMART:
         if (GetMonData(mon, MON_DATA_SMART_RIBBON) > gSpecialVar_ContestRank)
-            result = 1;
+            hasRankRibbon = 1;
         break;
     case CONTEST_CATEGORY_TOUGH:
         if (GetMonData(mon, MON_DATA_TOUGH_RIBBON) > gSpecialVar_ContestRank)
-            result = 1;
+            hasRankRibbon = 1;
         break;
     }
 
-    return result;
+    return hasRankRibbon;
 }
 
 
-void ScrSpecial_GiveContestRibbon(void)
+void GiveMonContestRibbon(void)
 {
     u8 ribbonData;
 
@@ -2676,7 +2676,7 @@ void Contest_CopyAndConvertNicknameI_Intl(u8 * dest, u8 idx)
     }
 }
 
-void Contest_GetTrainerNameI_StringVar1(void)
+void BufferContestantTrainerName(void)
 {
     if (gIsLinkContest & 1)
     {
@@ -2688,31 +2688,31 @@ void Contest_GetTrainerNameI_StringVar1(void)
     }
 }
 
-void Contest_GetNicknameI_StringVar1(void)
+void BufferContestantMonNickname(void)
 {
     Contest_CopyAndConvertNicknameI_Intl(gStringVar3, gSpecialVar_0x8006);
 }
 
-void ScrSpecial_CountContestMonsWithBetterCondition(void)
+void GetContestMonConditionRanking(void)
 {
     u8 i;
-    u8 count;
+    u8 rank;
 
-    for (i = 0, count = 0; i < 4; i++)
+    for (i = 0, rank = 0; i < 4; i++)
     {
         if (gContestMonRound1Points[gSpecialVar_0x8006] < gContestMonRound1Points[i])
-            count++;
+            rank++;
     }
 
-    gSpecialVar_0x8004 = count;
+    gSpecialVar_0x8004 = rank;
 }
 
-void ScrSpecial_GetMonCondition(void)
+void GetContestMonCondition(void)
 {
     gSpecialVar_0x8004 = gContestMonRound1Points[gSpecialVar_0x8006];
 }
 
-void ScrSpecial_GetContestWinnerIdx(void)
+void GetContestWinnerId(void)
 {
     u8 i;
 
@@ -2722,7 +2722,7 @@ void ScrSpecial_GetContestWinnerIdx(void)
     gSpecialVar_0x8005 = i;
 }
 
-void ScrSpecial_GetContestWinnerTrainerName(void)
+void BufferContestWinnerTrainerName(void)
 {
     u8 i;
 
@@ -2739,7 +2739,7 @@ void ScrSpecial_GetContestWinnerTrainerName(void)
     }
 }
 
-void ScrSpecial_GetContestWinnerNick(void)
+void BufferContestWinnerMonName(void)
 {
     u8 i;
 
@@ -2770,7 +2770,7 @@ void sub_80C48C8(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
 }
 
-void Contest_GetSpeciesNameI_StringVar1(void)
+void BufferContestantMonSpecies(void)
 {
     gSpecialVar_0x8004 = gContestMons[gSpecialVar_0x8006].species;
 }
@@ -2791,7 +2791,7 @@ void sub_80C4940(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
 }
 
-void ScrSpecial_GetContestPlayerMonIdx(void)
+void GetContestPlayerId(void)
 {
     gSpecialVar_0x8004 = gContestPlayerMonIndex;
 }

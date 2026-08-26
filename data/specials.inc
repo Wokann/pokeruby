@@ -84,20 +84,20 @@ gSpecials::
 	def_special CheckForPlayersHouseNews
 	def_special GetMomOrDadStringForTVMessage
 	def_special ResetTVShowState
-	def_special ScrSpecial_GetContestWinnerIdx
-	def_special ScrSpecial_GetContestPlayerMonIdx
+	def_special GetContestWinnerId
+	def_special GetContestPlayerId
 	def_special GetNpcContestantLocalId
-	def_special ScrSpecial_GetContestWinnerTrainerName
-	def_special ScrSpecial_GetContestWinnerNick
+	def_special BufferContestWinnerTrainerName
+	def_special BufferContestWinnerMonName
 	def_special BufferContestTrainerAndMonNames
-	def_special ScrSpecial_CountContestMonsWithBetterCondition
+	def_special GetContestMonConditionRanking
 	def_special SetContestTrainerGfxIds
-	def_special ScrSpecial_CheckSelectedMonAndInitContest
+	def_special TryEnterContestMon
 	def_special GetContestantNamesAtRank
-	def_special ScrSpecial_SetLinkContestTrainerGfxIdx
-	def_special ScrSpecial_GetMonCondition
-	def_special ScrSpecial_CanMonParticipateInSelectedLinkContest
-	def_special ScrSpecial_GiveContestRibbon
+	def_special SetLinkContestPlayerGfx
+	def_special GetContestMonCondition
+	def_special HasMonWonThisContestBefore
+	def_special GiveMonContestRibbon
 	def_special IsContestDebugActive
 	def_special GiveMonArtistRibbon
 	def_special TryContestGModeLinkup

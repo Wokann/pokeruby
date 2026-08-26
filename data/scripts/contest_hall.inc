@@ -117,7 +117,7 @@ FallarborTown_ContestLobby_EventScript_1A5048:: @ 81A5048
 	choosecontestmon
 	compare VAR_0x8004, 255
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1A5097
-	special ScrSpecial_CheckSelectedMonAndInitContest
+	special TryEnterContestMon
 	compare VAR_RESULT, 0
 	goto_if_eq FallarborTown_ContestLobby_EventScript_1A50C8
 	compare VAR_RESULT, 1
@@ -425,7 +425,7 @@ LinkContestRoom1_EventScript_1A53E5:: @ 81A53E5
 	return
 
 LinkContestRoom1_EventScript_1A5455:: @ 81A5455
-	special ScrSpecial_GetMonCondition
+	special GetContestMonCondition
 	compare VAR_CONTEST_LOCATION, 1
 	call_if_eq LinkContestRoom1_EventScript_1A555A
 	compare VAR_CONTEST_LOCATION, 2
@@ -852,7 +852,7 @@ LinkContestRoom1_EventScript_1A59F2:: @ 81A59F2
 	return
 
 LinkContestRoom1_EventScript_1A59FC:: @ 81A59FC
-	special ScrSpecial_GetContestWinnerIdx
+	special GetContestWinnerId
 	switch VAR_0x8005
 	case 0, LinkContestRoom1_EventScript_1A5A31
 	case 1, LinkContestRoom1_EventScript_1A5A37
@@ -877,8 +877,8 @@ LinkContestRoom1_EventScript_1A5A43:: @ 81A5A43
 	return
 
 LinkContestRoom1_EventScript_1A5A49:: @ 81A5A49
-	special ScrSpecial_GetContestWinnerTrainerName
-	special ScrSpecial_GetContestWinnerNick
+	special BufferContestWinnerTrainerName
+	special BufferContestWinnerMonName
 	addvar VAR_0x8005, 1
 	buffernumberstring 1, VAR_0x8005
 	addvar VAR_0x8005, -1
@@ -1015,13 +1015,13 @@ LinkContestRoom1_EventScript_1A5BF6:: @ 81A5BF6
 	return
 
 LinkContestRoom1_EventScript_1A5C12:: @ 81A5C12
-	specialvar VAR_RESULT, ScrSpecial_CanMonParticipateInSelectedLinkContest
+	specialvar VAR_RESULT, HasMonWonThisContestBefore
 	compare VAR_RESULT, 1
 	goto_if_eq LinkContestRoom1_EventScript_1A5C23
 	return
 
 LinkContestRoom1_EventScript_1A5C23:: @ 81A5C23
-	special ScrSpecial_GetContestWinnerIdx
+	special GetContestWinnerId
 	compare VAR_0x8005, 3
 	goto_if_eq LinkContestRoom1_EventScript_1A5C32
 	return
@@ -1057,8 +1057,8 @@ LinkContestRoom1_EventScript_1A5C64:: @ 81A5C64
 	return
 
 LinkContestRoom1_EventScript_1A5C6A:: @ 81A5C6A
-	special ScrSpecial_GetContestPlayerMonIdx
-	special ScrSpecial_GetContestWinnerIdx
+	special GetContestPlayerId
+	special GetContestWinnerId
 	compare VAR_0x8004, VAR_0x8005
 	goto_if_eq LinkContestRoom1_EventScript_1A5C7C
 	return
@@ -1104,7 +1104,7 @@ LinkContestRoom1_EventScript_1A5CD8:: @ 81A5CD8
 	return
 
 LinkContestRoom1_EventScript_1A5CE5:: @ 81A5CE5
-	special ScrSpecial_GetContestWinnerIdx
+	special GetContestWinnerId
 	compare VAR_0x8005, 3
 	goto_if_eq LinkContestRoom1_EventScript_1A5CFC
 	msgbox LinkContestRoom1_Text_1A6DF1, MSGBOX_SIGN
@@ -1114,7 +1114,7 @@ LinkContestRoom1_EventScript_1A5CFC:: @ 81A5CFC
 	compare VAR_CONTEST_LOCATION, 2
 	call_if_eq LinkContestRoom1_EventScript_1A5C42
 	incrementgamestat GAME_STAT_WON_CONTEST
-	specialvar VAR_RESULT, ScrSpecial_CanMonParticipateInSelectedLinkContest
+	specialvar VAR_RESULT, HasMonWonThisContestBefore
 	compare VAR_RESULT, 0
 	goto_if_eq LinkContestRoom1_EventScript_1A5D5B
 	compare VAR_CONTEST_RANK, 3
@@ -1135,7 +1135,7 @@ LinkContestRoom1_EventScript_1A5D3B:: @ 81A5D3B
 	return
 
 LinkContestRoom1_EventScript_1A5D5B:: @ 81A5D5B
-	special ScrSpecial_GiveContestRibbon
+	special GiveMonContestRibbon
 	incrementgamestat GAME_STAT_RECEIVED_RIBBONS
 	setflag FLAG_SYS_RIBBON_GET
 	lockall
@@ -1143,7 +1143,7 @@ LinkContestRoom1_EventScript_1A5D5B:: @ 81A5D5B
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox LinkContestRoom1_Text_1A6D96, MSGBOX_DEFAULT
 	waitfanfare
-	special ScrSpecial_GetContestWinnerNick
+	special BufferContestWinnerMonName
 	msgbox LinkContestRoom1_Text_1A6DAC, MSGBOX_DEFAULT
 	releaseall
 	return

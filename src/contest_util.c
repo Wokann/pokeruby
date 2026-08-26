@@ -51,9 +51,9 @@ void SetContestTrainerGfxIds(void)
 void GetNpcContestantLocalId(void)
 {
     u16 localId;
-    u8 specialVar = gSpecialVar_0x8005;
+    u8 contestant = gSpecialVar_0x8005;
 
-    switch(specialVar)
+    switch(contestant)
     {
     case 0:
         localId = LOCALID_CONTESTANT_1;
@@ -73,9 +73,9 @@ void GetNpcContestantLocalId(void)
 
 void BufferContestTrainerAndMonNames(void)
 {
-    Contest_GetTrainerNameI_StringVar1();
-    Contest_GetNicknameI_StringVar1();
-    Contest_GetSpeciesNameI_StringVar1();
+    BufferContestantTrainerName();
+    BufferContestantMonNickname();
+    BufferContestantMonSpecies();
 }
 
 void DoesContestCategoryHaveMuseumPainting(void)
@@ -242,7 +242,7 @@ void ShowContestWinner(void)
     gMain.savedCallback = ShowContestWinnerCleanup;
 }
 
-void ScrSpecial_SetLinkContestTrainerGfxIdx(void)
+void SetLinkContestPlayerGfx(void)
 {
     VarSet(VAR_OBJ_GFX_ID_0, gContestMons[0].trainerGfxId);
     VarSet(VAR_OBJ_GFX_ID_1, gContestMons[1].trainerGfxId);
@@ -252,15 +252,15 @@ void ScrSpecial_SetLinkContestTrainerGfxIdx(void)
 
 bool8 GiveMonArtistRibbon(void)
 {
-    u8 ribbon = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON);
+    u8 hasArtistRibbon = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON);
 
-    if(ribbon == FALSE
+    if(hasArtistRibbon == FALSE
     && gContestFinalStandings[gContestPlayerMonIndex] == 0
     && gSpecialVar_ContestRank == 3
     && gContestMonTotalPoints[gContestPlayerMonIndex] >= 800)
     {
-        ribbon = TRUE;
-        SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON, &ribbon);
+        hasArtistRibbon = TRUE;
+        SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_ARTIST_RIBBON, &hasArtistRibbon);
         return TRUE;
     }
     else
