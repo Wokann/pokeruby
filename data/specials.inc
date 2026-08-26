@@ -73,15 +73,15 @@ gSpecials::
 	def_special TurnOffTVScreen
 	def_special DoTVShow
 	def_special DoPokeNews
-	def_special special_0x44
-	def_special GetTVShowType
+	def_special GetRandomActiveShowIdx
+	def_special GetSelectedTVShow
 	def_special InterviewBefore
 	def_special InterviewAfter
-	def_special LeadMonNicknamed
+	def_special IsLeadMonNicknamedOrNotEnglish
 	def_special SetContestCategoryStringVarForInterview
-	def_special GetNonMassOutbreakActiveTVShow
-	def_special TV_IsScriptShowKindAlreadyInQueue
-	def_special CheckForBigMovieOrEmergencyNewsOnTV
+	def_special GetNextActiveShowIfMassOutbreak
+	def_special IsTVShowAlreadyInQueue
+	def_special CheckForPlayersHouseNews
 	def_special GetMomOrDadStringForTVMessage
 	def_special ResetTVShowState
 	def_special ScrSpecial_GetContestWinnerIdx
@@ -184,7 +184,7 @@ gSpecials::
 	def_special GabbyAndTyAfterInterview
 	def_special GabbyAndTyBeforeInterview
 	def_special DoTVShowInSearchOfTrainers
-	def_special IsTVShowInSearchOfTrainersAiring
+	def_special IsGabbyAndTyShowOnTheAir
 	def_special GabbyAndTyGetLastQuote
 	def_special GabbyAndTyGetLastBattleTrivia
 	def_special GetGabbyAndTyLocalIds

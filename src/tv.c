@@ -457,7 +457,7 @@ void InterviewBefore_BravoTrainerPkmnProfile(void);
 void InterviewBefore_BravoTrainerBTProfile(void);
 
 
-u8 GetTVChannelByShowType(u8);
+u8 GetTVGroupByShowId(u8);
 
 
 void InterviewAfter_FanClubLetter(void);
@@ -467,7 +467,7 @@ void InterviewAfter_DummyShow4(void);
 void InterviewAfter_BravoTrainerPokemonProfile(void);
 void InterviewAfter_BravoTrainerBattleTowerProfile(void);
 
-u8 special_0x44(void)
+u8 GetRandomActiveShowIdx(void)
 {
     u8 i;
     u8 j;
@@ -487,7 +487,7 @@ u8 special_0x44(void)
 
     do
     {
-        if (GetTVChannelByShowType(gSaveBlock1.tvShows[j].common.kind) != 4)
+        if (GetTVGroupByShowId(gSaveBlock1.tvShows[j].common.kind) != 4)
         {
             if (gSaveBlock1.tvShows[j].common.active == TRUE)
             {
@@ -515,28 +515,28 @@ u8 special_0x44(void)
     return 0xFF;
 }
 
-u8 FindNonMassOutbreakActiveTVShow(void);
+u8 FindFirstActiveTVShowThatIsNotAMassOutbreak(void);
 
-u8 sub_80BD8B8(void)
+u8 FindAnyTVShowOnTheAir(void)
 {
-    u8 retval = special_0x44();
+    u8 retval = GetRandomActiveShowIdx();
 
     if (retval == 0xff)
         return 0xff;
     if (gSaveBlock1.outbreakPokemonSpecies != 0 && gSaveBlock1.tvShows[retval].common.kind == TVSHOW_MASS_OUTBREAK)
-        return FindNonMassOutbreakActiveTVShow();
+        return FindFirstActiveTVShowThatIsNotAMassOutbreak();
     return retval;
 }
 
-u8 CheckForBigMovieOrEmergencyNewsOnTV(void);
+u8 CheckForPlayersHouseNews(void);
 void SetTVMetatilesOnMap(int, int, u16);
-bool8 FindAnyTVNewsOnTheAir(void);
-bool8 IsTVShowInSearchOfTrainersAiring(void);
+bool8 FindAnyPokeNewsOnTheAir(void);
+bool8 IsGabbyAndTyShowOnTheAir(void);
 
 void UpdateTVScreensOnMap(int width, int height)
 {
     FlagSet(FLAG_SYS_TV_WATCH);
-    switch (CheckForBigMovieOrEmergencyNewsOnTV())
+    switch (CheckForPlayersHouseNews())
     {
     case 1:
         SetTVMetatilesOnMap(width, height, METATILE_ID(Building, TV_On));
@@ -549,7 +549,7 @@ void UpdateTVScreensOnMap(int width, int height)
         {
             SetTVMetatilesOnMap(width, height, METATILE_ID(Building, TV_On));
         }
-        else if (FlagGet(FLAG_SYS_TV_START) && (sub_80BD8B8() != 0xff || FindAnyTVNewsOnTheAir() != 0xff || IsTVShowInSearchOfTrainersAiring()))
+        else if (FlagGet(FLAG_SYS_TV_START) && (FindAnyTVShowOnTheAir() != 0xff || FindAnyPokeNewsOnTheAir() != 0xff || IsGabbyAndTyShowOnTheAir()))
         {
             FlagClear(FLAG_SYS_TV_WATCH);
             SetTVMetatilesOnMap(width, height, METATILE_ID(Building, TV_On));
@@ -579,12 +579,12 @@ void TurnOffTVScreen(void)
     DrawWholeMapView();
 }
 
-u8 GetTVShowType(void)
+u8 GetSelectedTVShow(void)
 {
     return gSaveBlock1.tvShows[gSpecialVar_0x8004].common.kind;
 }
 
-u8 FindNonMassOutbreakActiveTVShow(void)
+u8 FindFirstActiveTVShowThatIsNotAMassOutbreak(void)
 {
     u8 showIdx;
     for (showIdx=0; showIdx<24; showIdx++)
@@ -595,12 +595,12 @@ u8 FindNonMassOutbreakActiveTVShow(void)
     return 0xff;
 }
 
-u8 GetNonMassOutbreakActiveTVShow(void)
+u8 GetNextActiveShowIfMassOutbreak(void)
 {
     TVShow *tvShow;
     tvShow = &gSaveBlock1.tvShows[gSpecialVar_0x8004];
     if (tvShow->common.kind == TVSHOW_MASS_OUTBREAK && gSaveBlock1.outbreakPokemonSpecies)
-        return FindNonMassOutbreakActiveTVShow();
+        return FindFirstActiveTVShowThatIsNotAMassOutbreak();
     return gSpecialVar_0x8004;
 }
 
@@ -694,7 +694,7 @@ u8 GabbyAndTyGetBattleNum(void)
         return gSaveBlock1.gabbyAndTyData.battleNum;
 }
 
-bool8 IsTVShowInSearchOfTrainersAiring(void)
+bool8 IsGabbyAndTyShowOnTheAir(void)
 {
     return gSaveBlock1.gabbyAndTyData.valA_4;
 }
@@ -1388,7 +1388,7 @@ void sub_80BEC40(void)
     }
 }
 
-u8 FindAnyTVNewsOnTheAir(void)
+u8 FindAnyPokeNewsOnTheAir(void)
 {
     u8 i;
     for (i = 0; i < POKE_NEWS_COUNT; i++)
@@ -1404,7 +1404,7 @@ u8 FindAnyTVNewsOnTheAir(void)
 void DoPokeNews(void)
 {
     u8 i;
-    i = FindAnyTVNewsOnTheAir();
+    i = FindAnyPokeNewsOnTheAir();
     if (i == 0xff)
     {
         gSpecialVar_Result = 0;
@@ -1804,7 +1804,7 @@ u8 NicknameDiffersFromSpeciesName(u8 pmMonIndex)
 }
 #endif
 
-u8 LeadMonNicknamed(void)
+u8 IsLeadMonNicknamedOrNotEnglish(void)
 {
     return NicknameDiffersFromSpeciesName(GetLeadMonIndex());
 }
@@ -2036,7 +2036,7 @@ void sub_80BF820(u8 arg0, u8 arg1, u8 arg2, u16 arg3, u16 arg4, struct TVShowNam
     StringCopy(gUnknown_083D1464[arg0], flags);
 }
 
-bool8 TV_IsScriptShowKindAlreadyInQueue(void)
+bool8 IsTVShowAlreadyInQueue(void)
 {
     u8 i;
 
@@ -2093,15 +2093,15 @@ void TV_CheckMonOTIDEqualsPlayerID(void)
         gSpecialVar_Result = 1;
 }
 
-u8 GetTVChannelByShowType(u8 arg0)
+u8 GetTVGroupByShowId(u8 kind)
 {
-    if (arg0 == 0)
+    if (kind == 0)
         return 0;
-    else if (arg0 > 0 && arg0 <= 20)
+    else if (kind > 0 && kind <= 20)
         return 2;
-    else if (arg0 > 20 && arg0 <= 40)
+    else if (kind > 20 && kind <= 40)
         return 3;
-    else if (arg0 > 40 && arg0 <= 60)
+    else if (kind > 40 && kind <= 60)
         return 4;
     else
         return 0;
@@ -2112,7 +2112,7 @@ u32 GetPlayerTrainerId(void)
     return (gSaveBlock2.playerTrainerId[3] << 24) | (gSaveBlock2.playerTrainerId[2] << 16) | (gSaveBlock2.playerTrainerId[1] << 8) | (gSaveBlock2.playerTrainerId[0]);
 }
 
-u8 CheckForBigMovieOrEmergencyNewsOnTV(void)
+u8 CheckForPlayersHouseNews(void)
 {
     if (gSaveBlock1.location.mapGroup != MAP_GROUP(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F))
         return 0;
@@ -2281,7 +2281,7 @@ bool8 sub_80BFF68(TVShow * arg1[TV_SHOWS_COUNT], TVShow * arg2[TV_SHOWS_COUNT], 
     tv1 = *arg1;
     tv2 = *arg2;
     value = FALSE;
-    switchval = GetTVChannelByShowType(tv2[gUnknown_03000722].common.kind);
+    switchval = GetTVGroupByShowId(tv2[gUnknown_03000722].common.kind);
     switch (switchval)
     {
     case 2:
@@ -2462,7 +2462,7 @@ void sub_80C045C(void)
 
     for (i = 0; i < 5; i++)
     {
-        if (GetTVChannelByShowType(gSaveBlock1.tvShows[i].common.kind) == 2)
+        if (GetTVGroupByShowId(gSaveBlock1.tvShows[i].common.kind) == 2)
             gSaveBlock1.tvShows[i].common.active = 0;
     }
 }

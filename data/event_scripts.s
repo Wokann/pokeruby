@@ -1027,7 +1027,7 @@ UnknownString_81A0E27: @ 81A0E27
 UnknownString_81A0E4F: @ 81A0E4F
 	.string "Ready for a test battle.$"
 
-UnknownString_81A0E68: @ 81A0E68
+gText_MomOrDadMightLikeThisProgram: @ 81A0E68
 	.string "{STR_VAR_1} might like this program.\n"
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Better get going!$"
@@ -1286,7 +1286,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_1ADF96:: @ 81ADF96
 SlateportCity_PokemonFanClub_EventScript_1ADFA0:: @ 81ADFA0
 	lock
 	faceplayer
-	specialvar VAR_RESULT, LeadMonNicknamed
+	specialvar VAR_RESULT, IsLeadMonNicknamedOrNotEnglish
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_1ADE4D
 	setvar VAR_0x8005, 3

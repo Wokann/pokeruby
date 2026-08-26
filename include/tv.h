@@ -109,7 +109,7 @@ void sub_80C045C();
 void sub_80BF088(u8, s32);
 void sub_80BFD20(void);
 void PutPokemonTodayCaughtOnAir(void);
-u8 GetTVChannelByShowType(u8);
+u8 GetTVGroupByShowId(u8);
 void sub_80BEC40(void);
 
 #endif // GUARD_TV_H

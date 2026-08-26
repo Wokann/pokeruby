@@ -473,7 +473,7 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 {
     u8 i;
     u8 leadMonIndex = GetLeadMonIndex();
-    u8 channel;
+    u8 group;
 
 // This is garbage.
 #define GF_ACCESS(x) ((struct x*)(&(gSaveBlock1.tvShows[a0])))
@@ -485,8 +485,8 @@ void debug_sub_808FA88(u8 a0, u8 a1)
     for (i = 0; i < 0x22; i++)
         gSaveBlock1.tvShows[a0].common.pad02[i] = 1;
 
-    channel = GetTVChannelByShowType(a1);
-    switch (channel)
+    group = GetTVGroupByShowId(a1);
+    switch (group)
     {
         case 2:
         case 4:
