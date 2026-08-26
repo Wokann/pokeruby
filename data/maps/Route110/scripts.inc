@@ -21,10 +21,10 @@ Route110_EventScript_SaveCyclingMusic:: @ 814F92F
 	return
 
 Route110_OnFrame:: @ 814F933
-	map_script_2 VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_BeginCylcingRoadChallenge
+	map_script_2 VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_BeginCyclingRoadChallenge
 	.2byte 0
 
-Route110_EventScript_BeginCylcingRoadChallenge:: @ 814F93D
+Route110_EventScript_BeginCyclingRoadChallenge:: @ 814F93D
 	special ScrSpecial_BeginCyclingRoadChallenge
 	setvar VAR_CYCLING_CHALLENGE_STATE, 2
 	return
