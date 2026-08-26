@@ -11,7 +11,6 @@ struct ElevatorMenuItem {
 extern u8 gUnknown_02039250;
 extern u8 gUnknown_02039251;
 extern u32 gUnknown_02039254;
-extern u8 gUnknown_02039258;
 extern u8 gScrollableMenuItemCount;
 extern u8 gScrollableMenuSelectedItem;
 extern u8 gScrollableMenuScrollIndicatorFlags;

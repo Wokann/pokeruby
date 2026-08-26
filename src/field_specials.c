@@ -58,8 +58,8 @@ extern u8 *const gUnknown_083D1464[3];
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
 EWRAM_DATA u32 gBikeCyclingTimer = 0;
-EWRAM_DATA u8 gUnknown_02039258 = 0;
-EWRAM_DATA u8 gPetalburgGymSlidingDoorIndex = 0;
+static EWRAM_DATA u8 sSlidingDoorNextFrameCounter = 0;
+static EWRAM_DATA u8 sSlidingDoorFrame = 0;
 EWRAM_DATA u8 gScrollableMenuItemCount = 0;
 EWRAM_DATA u8 gScrollableMenuSelectedItem = 0;
 EWRAM_DATA u8 gScrollableMenuScrollIndicatorFlags = 0;
@@ -557,11 +557,11 @@ void MauvilleGymSpecial3(void)
     }
 }
 
-static void Task_SlideOpenPetalburgGymDoors(u8);
-static void SetPetalburgGymDoorTiles(u8, u16);
-const u8 gUnknown_083F8370[] = {0, 1, 1, 1, 1};
+static void Task_PetalburgGymSlideOpenRoomDoors(u8 taskId);
+static void PetalburgGymSetDoorMetatiles(u8 roomNumber, u16 metatileId);
+static const bool8 sSlidingDoorNextFrameDelay[] = {0, 1, 1, 1, 1};
 
-const u16 gPetalburgGymSlidingDoorMetatiles[] = {
+static const u16 sPetalburgGymSlidingDoorMetatiles[] = {
     METATILE_ID(PetalburgGym, SlidingDoor_Frame0),
     METATILE_ID(PetalburgGym, SlidingDoor_Frame1),
     METATILE_ID(PetalburgGym, SlidingDoor_Frame2),
@@ -569,21 +569,21 @@ const u16 gPetalburgGymSlidingDoorMetatiles[] = {
     METATILE_ID(PetalburgGym, SlidingDoor_Frame4),
 };
 
-void PetalburgGymSlideOpenDoors(void)
+void PetalburgGymSlideOpenRoomDoors(void)
 {
-    gUnknown_02039258 = 0;
-    gPetalburgGymSlidingDoorIndex = 0;
+    sSlidingDoorNextFrameCounter = 0;
+    sSlidingDoorFrame = 0;
     PlaySE(SE_UNLOCK);
-    CreateTask(Task_SlideOpenPetalburgGymDoors, 8);
+    CreateTask(Task_PetalburgGymSlideOpenRoomDoors, 8);
 }
 
-static void Task_SlideOpenPetalburgGymDoors(u8 taskId)
+static void Task_PetalburgGymSlideOpenRoomDoors(u8 taskId)
 {
-    if (gUnknown_083F8370[gPetalburgGymSlidingDoorIndex] == gUnknown_02039258)
+    if (sSlidingDoorNextFrameDelay[sSlidingDoorFrame] == sSlidingDoorNextFrameCounter)
     {
-        SetPetalburgGymDoorTiles(gSpecialVar_0x8004, gPetalburgGymSlidingDoorMetatiles[gPetalburgGymSlidingDoorIndex]);
-        gUnknown_02039258 = 0;
-        if ((++gPetalburgGymSlidingDoorIndex) == 5)
+        PetalburgGymSetDoorMetatiles(gSpecialVar_0x8004, sPetalburgGymSlidingDoorMetatiles[sSlidingDoorFrame]);
+        sSlidingDoorNextFrameCounter = 0;
+        if ((++sSlidingDoorFrame) == ARRAY_COUNT(sPetalburgGymSlidingDoorMetatiles))
         {
             DestroyTask(taskId);
             ScriptContext_Enable();
@@ -591,80 +591,80 @@ static void Task_SlideOpenPetalburgGymDoors(u8 taskId)
     }
     else
     {
-        gUnknown_02039258++;
+        sSlidingDoorNextFrameCounter++;
     }
 }
 
-static void SetPetalburgGymDoorTiles(u8 roomIndex, u16 metatile)
+static void PetalburgGymSetDoorMetatiles(u8 roomNumber, u16 metatileId)
 {
-    u16 x[4];
-    u16 y[4];
+    u16 doorCoordsX[4];
+    u16 doorCoordsY[4];
     u8 i;
-    u8 numDoors = 0;
-    switch (roomIndex)
+    u8 nDoors = 0;
+    switch (roomNumber)
     {
         case 1:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x68;
-            y[1] = 0x68;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x68;
+            doorCoordsY[1] = 0x68;
             break;
         case 2:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x4e;
-            y[1] = 0x4e;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x4e;
+            doorCoordsY[1] = 0x4e;
             break;
         case 3:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x5b;
-            y[1] = 0x5b;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x5b;
+            doorCoordsY[1] = 0x5b;
             break;
         case 4:
-            numDoors = 1;
-            x[0] = 7;
-            y[0] = 0x27;
+            nDoors = 1;
+            doorCoordsX[0] = 7;
+            doorCoordsY[0] = 0x27;
             break;
         case 5:
-            numDoors = 2;
-            x[0] = 1;
-            x[1] = 7;
-            y[0] = 0x34;
-            y[1] = 0x34;
+            nDoors = 2;
+            doorCoordsX[0] = 1;
+            doorCoordsX[1] = 7;
+            doorCoordsY[0] = 0x34;
+            doorCoordsY[1] = 0x34;
             break;
         case 6:
-            numDoors = 1;
-            x[0] = 1;
-            y[0] = 0x41;
+            nDoors = 1;
+            doorCoordsX[0] = 1;
+            doorCoordsY[0] = 0x41;
             break;
         case 7:
-            numDoors = 1;
-            x[0] = 7;
-            y[0] = 0xd;
+            nDoors = 1;
+            doorCoordsX[0] = 7;
+            doorCoordsY[0] = 0xd;
             break;
         case 8:
-            numDoors = 1;
-            x[0] = 1;
-            y[0] = 0x1a;
+            nDoors = 1;
+            doorCoordsX[0] = 1;
+            doorCoordsY[0] = 0x1a;
             break;
     }
 
-    for (i = 0; i < numDoors; i++)
+    for (i = 0; i < nDoors; i++)
     {
-        MapGridSetMetatileIdAt(x[i] + 7, y[i] + 7, metatile | 0xc00);
-        MapGridSetMetatileIdAt(x[i] + 7, y[i] + 8, (metatile + 8) | 0xc00);
+        MapGridSetMetatileIdAt(doorCoordsX[i] + 7, doorCoordsY[i] + 7, metatileId | 0xc00);
+        MapGridSetMetatileIdAt(doorCoordsX[i] + 7, doorCoordsY[i] + 8, (metatileId + 8) | 0xc00);
     }
 
     DrawWholeMapView();
 }
 
-void PetalburgGymOpenDoorsInstantly(void)
+void PetalburgGymUnlockRoomDoors(void)
 {
-    SetPetalburgGymDoorTiles(gSpecialVar_0x8004, gPetalburgGymSlidingDoorMetatiles[4]);
+    PetalburgGymSetDoorMetatiles(gSpecialVar_0x8004, sPetalburgGymSlidingDoorMetatiles[4]);
 }
 
 void ShowFieldMessageStringVar4(void)
