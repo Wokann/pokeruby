@@ -57,7 +57,7 @@ LilycoveCity_LilycoveMuseum_2F_Text_PaintingsAttractedMoreGuests:: @ 8188041
 LilycoveCity_LilycoveMuseum_2F_Text_TokenOfGratitude:: @ 8188120
 	.string "Dies ist nur ein kleines Dankeschön.$"
 
-UnknownString_8188148: @ 8188148
+LilycoveCity_LilycoveMuseum_2F_Text_ReceivedGlassOrnament: @ 8188148
 	.string "{PLAYER} erhält das GLASORNAMENT.$"
 
 LilycoveCity_LilycoveMuseum_2F_Text_KeepThisForYou:: @ 8188166
