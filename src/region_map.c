@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/region_map_sections.h"
+#include "constants/field_specials.h"
 #include "event_data.h"
 #include "field_effect.h"
 #include "field_specials.h"
@@ -649,20 +650,20 @@ static void sub_80FB600(void)
 
     switch (GetSSTidalLocation(&mapGroup, &mapNum, &sp2, &sp4))
     {
-    case 1:
+    case SS_TIDAL_LOCATION_SLATEPORT:
         gRegionMap->mapSectionId = MAPSEC_SLATEPORT_CITY;
         break;
-    case 2:
+    case SS_TIDAL_LOCATION_LILYCOVE:
         gRegionMap->mapSectionId = MAPSEC_LILYCOVE_CITY;
         break;
-    case 3:
+    case SS_TIDAL_LOCATION_ROUTE124:
         gRegionMap->mapSectionId = MAPSEC_ROUTE_124;
         break;
-    case 4:
+    case SS_TIDAL_LOCATION_ROUTE131:
         gRegionMap->mapSectionId = MAPSEC_ROUTE_131;
         break;
     default:
-    case 0:
+    case SS_TIDAL_LOCATION_CURRENTS:
         {
             struct MapHeader *mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
             u16 r1;

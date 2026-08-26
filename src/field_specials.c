@@ -12,6 +12,7 @@
 #include "field_player_avatar.h"
 #include "main.h"
 #include "constants/maps.h"
+#include "constants/field_specials.h"
 #include "overworld.h"
 #include "script.h"
 #include "constants/songs.h"
@@ -236,7 +237,7 @@ void ResetSSTidalFlag(void)
 
 bool32 CountSSTidalStep(u16 delta)
 {
-    if (!FlagGet(FLAG_SYS_CRUISE_MODE) || (*GetVarPointer(VAR_CRUISE_STEP_COUNT) += delta) <= 0xcc)
+    if (!FlagGet(FLAG_SYS_CRUISE_MODE) || (*GetVarPointer(VAR_CRUISE_STEP_COUNT) += delta) < SS_TIDAL_MAX_STEPS)
     {
         return FALSE;
     }
@@ -246,21 +247,21 @@ bool32 CountSSTidalStep(u16 delta)
 u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
 {
     u16 *varCruiseStepCount = GetVarPointer(VAR_CRUISE_STEP_COUNT);
-    switch (*GetVarPointer(VAR_PORTHOLE_STATE))
+    switch (*GetVarPointer(VAR_SS_TIDAL_STATE))
     {
-        case 1:
-        case 8:
-            return 1;
-        case 3:
-        case 9:
-            return 4;
-        case 4:
-        case 5:
-            return 2;
-        case 6:
-        case 10:
-            return 3;
-        case 2:
+        case SS_TIDAL_BOARD_SLATEPORT:
+        case SS_TIDAL_LAND_SLATEPORT:
+            return SS_TIDAL_LOCATION_SLATEPORT;
+        case SS_TIDAL_HALFWAY_LILYCOVE:
+        case SS_TIDAL_EXIT_CURRENTS_RIGHT:
+            return SS_TIDAL_LOCATION_ROUTE131;
+        case SS_TIDAL_LAND_LILYCOVE:
+        case SS_TIDAL_BOARD_LILYCOVE:
+            return SS_TIDAL_LOCATION_LILYCOVE;
+        case SS_TIDAL_DEPART_LILYCOVE:
+        case SS_TIDAL_EXIT_CURRENTS_LEFT:
+            return SS_TIDAL_LOCATION_ROUTE124;
+        case SS_TIDAL_DEPART_SLATEPORT:
             if (*varCruiseStepCount < 60)
             {
                 *mapNum = MAP_NUM(MAP_ROUTE134);
@@ -277,7 +278,7 @@ u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
                 *x = *varCruiseStepCount - 140;
             }
             break;
-        case 7:
+        case SS_TIDAL_HALFWAY_SLATEPORT:
             if (*varCruiseStepCount < 66)
             {
                 *mapNum = MAP_NUM(MAP_ROUTE132);
@@ -296,7 +297,7 @@ u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
     }
     *mapGroup = MAP_GROUP(MAP_ROUTE132);
     *y = 20;
-    return 0;
+    return SS_TIDAL_LOCATION_CURRENTS;
 }
 
 u8 GetLinkPartnerNames(void)

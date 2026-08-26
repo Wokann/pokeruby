@@ -12,6 +12,7 @@
 #include "script.h"
 #include "script_movement.h"
 #include "constants/songs.h"
+#include "constants/field_specials.h"
 #include "constants/metatile_labels.h"
 #include "sound.h"
 #include "sprite.h"
@@ -293,7 +294,7 @@ bool8 sub_80C7754(void)
 void Task_HandlePorthole(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u16 *var = GetVarPointer(VAR_PORTHOLE_STATE);
+    u16 *cruiseState = GetVarPointer(VAR_SS_TIDAL_STATE);
     struct WarpData *location = &gSaveBlock1.location;
 
     switch (data[0])
@@ -312,10 +313,10 @@ void Task_HandlePorthole(u8 taskId)
             return;
         if (CountSSTidalStep(1) == TRUE)
         {
-            if (*var == 2)
-                *var = 9;
+            if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT)
+                *cruiseState = SS_TIDAL_EXIT_CURRENTS_RIGHT;
             else
-                *var = 10;
+                *cruiseState = SS_TIDAL_EXIT_CURRENTS_LEFT;
             data[0] = 3;
             return;
         }
@@ -327,7 +328,7 @@ void Task_HandlePorthole(u8 taskId)
             return;
         }
         // run this once.
-        if (*var == 2) // which direction?
+        if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT) // which direction?
         {
             ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, gUnknown_083D295F);
             data[0] = IDLE_CHECK; // run case 1.
@@ -354,7 +355,7 @@ void sub_80C78A0(void)
 
     gSprites[spriteId].coordOffsetEnabled = FALSE;
 
-    if (VarGet(VAR_PORTHOLE_STATE) == 2)
+    if (VarGet(VAR_SS_TIDAL_STATE) == SS_TIDAL_DEPART_SLATEPORT)
     {
         StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(4));
     }

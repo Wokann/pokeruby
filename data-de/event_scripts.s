@@ -22,6 +22,7 @@
 #include "constants/berry.h"
 #include "constants/script_menu.h"
 #include "constants/field_weather.h"
+#include "constants/field_specials.h"
 #include "constants/field_tasks.h"
 	.include "include/macros.inc"
 	.include "include/macros/event.inc"

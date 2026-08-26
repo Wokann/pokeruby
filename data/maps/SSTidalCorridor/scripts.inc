@@ -3,15 +3,15 @@ SSTidalCorridor_MapScripts:: @ 815FC94
 	.byte 0
 
 SSTidalCorridor_OnFrame:: @ 815FC9A
-	map_script_2 VAR_PORTHOLE_STATE, 1, SSTidalCorridor_EventScript_DepartSlateportForLilycove
-	map_script_2 VAR_PORTHOLE_STATE, 5, SSTidalCorridor_EventScript_DepartLilycoveForSlateport
-	map_script_2 VAR_PORTHOLE_STATE, 9, SSTidalCorridor_EventScript_HalfwayToLilycove
-	map_script_2 VAR_PORTHOLE_STATE, 10, SSTidalCorridor_EventScript_ArrivedInSlateport
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_SLATEPORT, SSTidalCorridor_EventScript_DepartSlateportForLilycove
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_LILYCOVE, SSTidalCorridor_EventScript_DepartLilycoveForSlateport
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_EXIT_CURRENTS_RIGHT, SSTidalCorridor_EventScript_HalfwayToLilycove
+	map_script_2 VAR_SS_TIDAL_STATE, SS_TIDAL_EXIT_CURRENTS_LEFT, SSTidalCorridor_EventScript_ArrivedInSlateport
 	.2byte 0
 
 SSTidalCorridor_EventScript_DepartSlateportForLilycove:: @ 815FCBC
 	special SetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 2
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT
 	lockall
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage, MSGBOX_DEFAULT
@@ -19,7 +19,7 @@ SSTidalCorridor_EventScript_DepartSlateportForLilycove:: @ 815FCBC
 	end
 
 SSTidalCorridor_EventScript_DepartLilycoveForSlateport:: @ 815FCD2
-	setvar VAR_PORTHOLE_STATE, 6
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_LILYCOVE
 	lockall
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
@@ -28,28 +28,28 @@ SSTidalCorridor_EventScript_DepartLilycoveForSlateport:: @ 815FCD2
 
 SSTidalRooms_EventScript_HalfwayToSlateport:: @ 815FCE5
 	special SetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 7
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_FastCurrentsHopeYouEnjoyVoyage, MSGBOX_DEFAULT
 	return
 
 SSTidalRooms_EventScript_ArrivedInLilycove:: @ 815FCF9
 	special ResetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 4
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_LILYCOVE
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_MadeLandInLilycove, MSGBOX_DEFAULT
 	return
 
 SSTidalCorridor_EventScript_ReachedStepCount:: @ 815FD0D
-	compare VAR_PORTHOLE_STATE, 2
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT
 	goto_if_eq SSTidalCorridor_EventScript_HalfwayToLilycove
-	compare VAR_PORTHOLE_STATE, 7
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT
 	goto_if_eq SSTidalCorridor_EventScript_ArrivedInSlateport
 	end
 
 SSTidalCorridor_EventScript_HalfwayToLilycove:: @ 815FD24
 	special ResetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 3
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_LILYCOVE
 	lockall
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_HopeYouEnjoyVoyage, MSGBOX_DEFAULT
@@ -58,7 +58,7 @@ SSTidalCorridor_EventScript_HalfwayToLilycove:: @ 815FD24
 
 SSTidalCorridor_EventScript_ArrivedInSlateport:: @ 815FD3A
 	special ResetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 8
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT
 	lockall
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
@@ -67,17 +67,17 @@ SSTidalCorridor_EventScript_ArrivedInSlateport:: @ 815FD3A
 
 SSTidalRooms_EventScript_ArrivedInSlateport:: @ 815FD50
 	special ResetSSTidalFlag
-	setvar VAR_PORTHOLE_STATE, 8
+	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT
 	playse SE_DING_DONG
 	msgbox SSTidal_Text_MadeLandInSlateport, MSGBOX_DEFAULT
 	return
 
 SSTidalRooms_EventScript_ProgressCruiseAfterBed:: @ 815FD64
-	switch VAR_PORTHOLE_STATE
-	case 2, SSTidalRooms_EventScript_ArrivedInLilycove
-	case 3, SSTidalRooms_EventScript_ArrivedInLilycove
-	case 6, SSTidalRooms_EventScript_HalfwayToSlateport
-	case 7, SSTidalRooms_EventScript_ArrivedInSlateport
+	switch VAR_SS_TIDAL_STATE
+	case SS_TIDAL_DEPART_SLATEPORT, SSTidalRooms_EventScript_ArrivedInLilycove
+	case SS_TIDAL_HALFWAY_LILYCOVE, SSTidalRooms_EventScript_ArrivedInLilycove
+	case SS_TIDAL_DEPART_LILYCOVE, SSTidalRooms_EventScript_HalfwayToSlateport
+	case SS_TIDAL_HALFWAY_SLATEPORT, SSTidalRooms_EventScript_ArrivedInSlateport
 	return
 
 SSTidalCorridor_EventScript_Briney:: @ 815FD96
@@ -113,9 +113,9 @@ SSTidalCorridor_EventScript_Cabin4Sign:: @ 815FDCD
 SSTidalCorridor_EventScript_ExitSailor:: @ 815FDD6
 	lock
 	faceplayer
-	compare VAR_PORTHOLE_STATE, 4
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_LILYCOVE
 	goto_if_eq SSTidalCorridor_EventScript_ExitLilycove
-	compare VAR_PORTHOLE_STATE, 8
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_LAND_SLATEPORT
 	goto_if_eq SSTidalCorridor_EventScript_ExitSlateport
 	msgbox SSTidalCorridor_Text_CanRestInCabin2, MSGBOX_DEFAULT
 	release
@@ -145,9 +145,9 @@ SSTidalCorridor_EventScript_HideSnatchGiver:: @ 815FE36
 
 SSTidalCorridor_EventScript_Porthole:: @ 815FE3A
 	lockall
-	compare VAR_PORTHOLE_STATE, 2
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_DEPART_SLATEPORT
 	goto_if_eq SSTidalCorridor_EventScript_LookThroughPorthole
-	compare VAR_PORTHOLE_STATE, 7
+	compare VAR_SS_TIDAL_STATE, SS_TIDAL_HALFWAY_SLATEPORT
 	goto_if_eq SSTidalCorridor_EventScript_LookThroughPorthole
 	msgbox SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole, MSGBOX_DEFAULT
 	releaseall
