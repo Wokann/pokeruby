@@ -2149,7 +2149,7 @@ void sub_80FF394(u16 mapX, u16 mapY, u16 decIdx)
     }
 }
 
-void sub_80FF474(void)
+void SetDecoration(void)
 {
     u8 i;
     u8 j;
@@ -3068,7 +3068,7 @@ void sub_8100A60(u8 a0)
     sDecorationContext.pos[a0] = 0;
 }
 
-void sub_8100A7C(void)
+void PutAwayDecorationIteration(void)
 {
     u16 i;
     gSpecialVar_0x8005 = 0;

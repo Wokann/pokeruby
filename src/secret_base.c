@@ -212,7 +212,7 @@ void CheckPlayerHasSecretBase(void)
         gSpecialVar_Result = 0;
 }
 
-u8 sub_80BB66C(void)
+u8 GetSecretBaseTypeInFrontOfPlayer_(void)
 {
     s16 x, y;
     s16 v0;
@@ -233,9 +233,9 @@ u8 sub_80BB66C(void)
     return 0;
 }
 
-void sub_80BB70C(void)
+void GetSecretBaseTypeInFrontOfPlayer(void)
 {
-    gSpecialVar_0x8007 = sub_80BB66C();
+    gSpecialVar_0x8007 = GetSecretBaseTypeInFrontOfPlayer_();
 }
 
 s16 unref_sub_80BB724(u16 *a0, u8 a1)
@@ -308,7 +308,7 @@ u8 sub_80BB8A8(u8 *arg1)
     return 7;
 }
 
-void sub_80BB8CC(void)
+void SetPlayerSecretBase(void)
 {
     u8 nameLength;
     u16 idx;
@@ -384,7 +384,7 @@ void sub_80BBA48(u8 taskid)
     }
 }
 
-void sub_80BBAF0(void)
+void EnterSecretBase(void)
 {
     CreateTask(sub_80BBA48, 0);
     FadeScreen(1, 0);
@@ -436,7 +436,7 @@ void sub_80BBBEC(u8 taskid)
     }
 }
 
-void sub_80BBC78(void)
+void EnterNewlyCreatedSecretBase(void)
 {
     u8 taskid = CreateTask(sub_80BBBEC, 0);
     gTasks[taskid].data[0] = 0;
@@ -483,7 +483,7 @@ void InitSecretBaseAppearance(u8 flagIn)
     }
 }
 
-void sub_80BBDD0(void)
+void InitSecretBaseDecorationSprites(void)
 {
     u8 *roomdecor;
     u8 *roomdecorpos;
@@ -606,7 +606,7 @@ void sub_80BC0F8(void)
     FadeScreen(1, 0);
 }
 
-void sub_80BC114(void)
+void IsCurSecretBaseOwnedByAnotherPlayer(void)
 {
     if (gSaveBlock1.secretBases[0].secretBaseId != gCurrentSecretBaseId)
         gSpecialVar_Result = 1;
@@ -709,7 +709,7 @@ void SetPlayerSecretBaseRecordMixingParty(void)
     }
 }
 
-void sub_80BC440(void)
+void ClearAndLeaveSecretBase(void)
 {
     u16 backupValue = gSaveBlock1.secretBases[0].numSecretBasesReceived;
     ResetSecretBase(0);
@@ -720,7 +720,7 @@ void sub_80BC440(void)
 void MoveOutOfSecretBase(void)
 {
     IncrementGameStat(GAME_STAT_MOVED_SECRET_BASE);
-    sub_80BC440();
+    ClearAndLeaveSecretBase();
 }
 
 void sub_80BC474(void)

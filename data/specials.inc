@@ -14,25 +14,25 @@ gSpecials::
 	def_special sub_80810DC
 	def_special sub_80839A4
 	def_special sub_80839D0
-	def_special sub_80BB8CC
+	def_special SetPlayerSecretBase
 	def_special CheckPlayerHasSecretBase
-	def_special sub_80BBAF0
-	def_special sub_80BC440
+	def_special EnterSecretBase
+	def_special ClearAndLeaveSecretBase
 	def_special MoveOutOfSecretBase
-	def_special sub_80BC114
+	def_special IsCurSecretBaseOwnedByAnotherPlayer
 	def_special GetCurSecretBaseRegistrationValidity
 	def_special ToggleCurSecretBaseRegistry
 	def_special SecretBasePC_Decoration
 	def_special SecretBasePC_Registry
 	def_special sub_80BCE1C
 	def_special sub_80BCE90
-	def_special sub_80BBDD0
-	def_special sub_80FF474
+	def_special InitSecretBaseDecorationSprites
+	def_special SetDecoration
 	def_special sub_8100B20
-	def_special sub_80BB70C
+	def_special GetSecretBaseTypeInFrontOfPlayer
 	def_special SetSecretBaseOwnerGfxId
-	def_special sub_8100A7C
-	def_special sub_80BBC78
+	def_special PutAwayDecorationIteration
+	def_special EnterNewlyCreatedSecretBase
 	def_special sub_80BCE4C
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered

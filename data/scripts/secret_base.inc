@@ -1,5 +1,5 @@
 SecretBase_EventScript_CheckEntrance:: @ 81A2C51
-	special sub_80BB70C
+	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
 	compare VAR_RESULT, 1
 	goto_if_eq SecretBase_EventScript_AlreadyHasSecretBase
@@ -118,11 +118,11 @@ SecretBase_EventScript_InitSecretBase:
 	playse SE_EXIT
 	setvar VAR_INIT_SECRET_BASE, 0
 	setflag FLAG_DECORATION_1
-	special sub_80BB8CC
-	special sub_80BBAF0
+	special SetPlayerSecretBase
+	special EnterSecretBase
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special sub_80BBDD0
+	special InitSecretBaseDecorationSprites
 	setvar VAR_SECRET_BASE_INITIALIZED, 1
 	waitstate
 	end
@@ -136,13 +136,13 @@ SecretBase_EventScript_FirstEntrance:: @ 81A2DDE
 	goto_if_eq SecretBase_EventScript_SetAsBase
 	closemessage
 	playse SE_EXIT
-	special sub_80BC440
+	special ClearAndLeaveSecretBase
 	end
 
 SecretBase_EventScript_SetAsBase:: @ 81A2E08
 	closemessage
 	setflag FLAG_RECEIVED_SECRET_POWER
-	special sub_80BBC78
+	special EnterNewlyCreatedSecretBase
 	waitstate
 	end
 
@@ -155,18 +155,18 @@ SecretBase_EventScript_Enter:: @ 81A2E14
 	lockall
 	setvar VAR_INIT_SECRET_BASE, 1
 	playse SE_EXIT
-	special sub_80BC114
+	special IsCurSecretBaseOwnedByAnotherPlayer
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_EnterPlayersBase
 	clearflag FLAG_DECORATION_1
-	special sub_80BBAF0
+	special EnterSecretBase
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	waitstate
 	end
 
 SecretBase_EventScript_EnterPlayersBase:
 	setflag FLAG_DECORATION_1
-	special sub_80BBAF0
+	special EnterSecretBase
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	waitstate
 	end
@@ -252,7 +252,7 @@ SecretBase_EventScript_SetDecorationFlags:: @ 81A2F3D
 SecretBase_EventScript_InitDecorations:: @ 81A2F68
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special sub_80BBDD0
+	special InitSecretBaseDecorationSprites
 	setvar VAR_SECRET_BASE_INITIALIZED, 1
 	end
 
@@ -262,7 +262,7 @@ SecretBase_EventScript_SetDecoration:: @ 81A2F7B
 	end
 
 SecretBase_EventScript_SetDecoration2:
-	special sub_80FF474
+	special SetDecoration
 	end
 
 SecretBase_EventScript_PutAwayDecoration:: @ 81A2F8A
@@ -271,7 +271,7 @@ SecretBase_EventScript_PutAwayDecoration:: @ 81A2F8A
 	end
 
 SecretBase_EventScript_PutAwayDecorationLoop:
-	special sub_8100A7C
+	special PutAwayDecorationIteration
 	compare VAR_RESULT, 1
 	goto_if_eq SecretBase_EventScript_PutAwayDecorationEnd
 	addvar VAR_0x8004, 1
