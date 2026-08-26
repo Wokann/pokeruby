@@ -1,46 +1,46 @@
-Event_TV:: @ 81A6E72
+EventScript_TV:: @ 81A6E72
 	lockall
 	incrementgamestat GAME_STAT_WATCHED_TV
 	special ResetTVShowState
 	specialvar VAR_RESULT, CheckForBigMovieOrEmergencyNewsOnTV
 	compare VAR_RESULT, 2
-	goto_if_eq EventScript_1A6F01
+	goto_if_eq EventScript_PlayersHouseMovie
 	compare VAR_RESULT, 1
-	goto_if_eq EventScript_1A6F0B
-	goto_if_unset FLAG_SYS_TV_START, EventScript_1A6EF1
-	goto_if_set FLAG_SYS_TV_WATCH, EventScript_1A6EF1
+	goto_if_eq EventScript_PlayersHouseLatiNewsFlash
+	goto_if_unset FLAG_SYS_TV_START, EventScript_MomDadMightLikeThis1
+	goto_if_set FLAG_SYS_TV_WATCH, EventScript_MomDadMightLikeThis1
 	specialvar VAR_RESULT, IsTVShowInSearchOfTrainersAiring
 	compare VAR_RESULT, 1
-	goto_if_eq EventScript_1A6F66
-	goto EventScript_1A6F50
+	goto_if_eq EventScript_DoInSearchOfTrainers
+	goto EventScript_TryDoPokeNews
 	end
 
-EventScript_1A6EBB:
+EventScript_TryDoTVShow:
 	specialvar VAR_0x8004, special_0x44
 	compare VAR_0x8004, 255
-	goto_if_eq EventScript_1A6F3F
+	goto_if_eq EventScript_MomDadMightLikeThis2
 	specialvar VAR_RESULT, GetNonMassOutbreakActiveTVShow
 	compare VAR_RESULT, 255
-	goto_if_eq EventScript_1A6F3F
+	goto_if_eq EventScript_MomDadMightLikeThis2
 	copyvar VAR_0x8004, VAR_RESULT
 	specialvar VAR_RESULT, GetTVShowType
 	compare VAR_RESULT, 0
-	goto_if_ne EventScript_1A6F21
+	goto_if_ne EventScript_DoTVShow
 	end
 
-EventScript_1A6EF1:
+EventScript_MomDadMightLikeThis1:
 	special GetMomOrDadStringForTVMessage
 	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
 	special TurnOffTVScreen
 	releaseall
 	end
 
-EventScript_1A6F01:
+EventScript_PlayersHouseMovie:
 	msgbox PlayersHouse_1F_Text_TheresAMovieOnTV, MSGBOX_DEFAULT
 	releaseall
 	end
 
-EventScript_1A6F0B:
+EventScript_PlayersHouseLatiNewsFlash:
 	.ifdef SAPPHIRE
 	msgbox PlayersHouse_1F_Text_LatiasEmergencyNews, MSGBOX_DEFAULT
 	.else
@@ -53,41 +53,41 @@ EventScript_1A6F0B:
 	releaseall
 	end
 
-EventScript_1A6F21:
+EventScript_DoTVShow:
 	special DoTVShow
 	waitmessage
 	waitbuttonpress
 	compare VAR_RESULT, 1
-	goto_if_ne EventScript_1A6F21
-	goto EventScript_1A6F37
+	goto_if_ne EventScript_DoTVShow
+	goto EventScript_TurnOffTV
 	end
 
-EventScript_1A6F37:
+EventScript_TurnOffTV:
 	special TurnOffTVScreen
 	setflag FLAG_SYS_TV_WATCH
 	releaseall
 	end
 
-EventScript_1A6F3F:
+EventScript_MomDadMightLikeThis2:
 	special GetMomOrDadStringForTVMessage
 	msgbox gText_MomOrDadMightLikeThisProgram, MSGBOX_DEFAULT
-	goto EventScript_1A6F37
+	goto EventScript_TurnOffTV
 	end
 
-EventScript_1A6F50:
+EventScript_TryDoPokeNews:
 	special DoPokeNews
 	compare VAR_RESULT, 0
-	goto_if_eq EventScript_1A6EBB
+	goto_if_eq EventScript_TryDoTVShow
 	waitmessage
 	waitbuttonpress
-	goto EventScript_1A6F37
+	goto EventScript_TurnOffTV
 	end
 
-EventScript_1A6F66:
+EventScript_DoInSearchOfTrainers:
 	special DoTVShowInSearchOfTrainers
 	waitmessage
 	waitbuttonpress
 	compare VAR_RESULT, 0
-	goto_if_eq EventScript_1A6F66
-	goto EventScript_1A6F37
+	goto_if_eq EventScript_DoInSearchOfTrainers
+	goto EventScript_TurnOffTV
 	end

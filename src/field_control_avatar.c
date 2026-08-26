@@ -56,7 +56,7 @@ extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_PC[];
 extern u8 EventScript_TestSignpostMsg[];
 extern u8 EventScript_HiddenItem[];
-extern u8 Event_TV[];
+extern u8 EventScript_TV[];
 extern u8 ClosedSootopolisDoorScript[];
 extern u8 EventScript_CableBoxResults[];
 extern u8 EventScript_PokeBlockFeeder[];
@@ -455,7 +455,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     s8 height;
 
     if (MetatileBehavior_IsPlayerFacingTVScreen(metatileBehavior, direction) == TRUE)
-        return Event_TV;
+        return EventScript_TV;
     if (MetatileBehavior_IsPC(metatileBehavior) == TRUE)
         return EventScript_PC;
     if (MetatileBehavior_IsClosedSootopolisDoor(metatileBehavior) == TRUE)
