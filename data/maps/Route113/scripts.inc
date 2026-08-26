@@ -4,7 +4,7 @@ Route113_MapScripts:: @ 81505CC
 	.byte 0
 
 Route113_OnResume:: @ 81505D7
-	setstepcallback 1
+	setstepcallback STEP_CB_ASH
 	end
 
 Route113_OnTransition:: @ 81505DA

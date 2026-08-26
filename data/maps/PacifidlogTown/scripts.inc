@@ -8,7 +8,7 @@ PacifidlogTown_OnTransition:: @ 814E8F9
 	end
 
 PacifidlogTown_OnResume:: @ 814E8FD
-	setstepcallback 3
+	setstepcallback STEP_CB_PACIFIDLOG_BRIDGE
 	end
 
 PacifidlogTown_EventScript_NinjaBoy:: @ 814E900

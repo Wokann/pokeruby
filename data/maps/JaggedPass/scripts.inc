@@ -4,7 +4,7 @@ JaggedPass_MapScripts:: @ 815D266
 	.byte 0
 
 JaggedPass_OnResume:: @ 815D271
-	setstepcallback 1
+	setstepcallback STEP_CB_ASH
 	end
 
 JaggedPass_OnTransition:: @ 815D274

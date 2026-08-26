@@ -5,7 +5,7 @@ MtPyre_2F_MapScripts:: @ 815D36E
 	.byte 0
 
 MtPyre_2F_SetHoleWarp:: @ 815D37E
-	setstepcallback 7
+	setstepcallback STEP_CB_CRACKED_FLOOR
 	setholewarp MAP_MT_PYRE_1F, 255, 0, 0
 	end
 

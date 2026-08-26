@@ -9,7 +9,7 @@ MtChimney_OnTransition:: @ 815CF87
 	end
 
 MtChimney_OnResume:: @ 815CF92
-	setstepcallback 1
+	setstepcallback STEP_CB_ASH
 	end
 
 MtChimney_EventScript_LavaCookieLady:: @ 815CF95

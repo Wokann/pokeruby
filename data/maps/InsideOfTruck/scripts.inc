@@ -10,7 +10,7 @@ InsideOfTruck_OnLoad:: @ 815FC0A
 	end
 
 InsideOfTruck_OnResume:: @ 815FC26
-	setstepcallback 5
+	setstepcallback STEP_CB_TRUCK
 	end
 
 InsideOfTruck_EventScript_SetIntroFlags:: @ 815FC29

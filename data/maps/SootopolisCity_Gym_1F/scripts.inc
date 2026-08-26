@@ -10,7 +10,7 @@ SootopolisCity_Gym_1F_OnTransition:: @ 815AF1C
 	end
 
 SootopolisCity_Gym_1F_OnResume:: @ 815AF22
-	setstepcallback 4
+	setstepcallback STEP_CB_SOOTOPOLIS_ICE
 	end
 
 SootopolisCity_Gym_1F_OnLoad:: @ 815AF25

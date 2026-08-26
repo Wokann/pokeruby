@@ -8,7 +8,7 @@ FortreeCity_OnTransition:: @ 814C94E
 	end
 
 FortreeCity_OnResume:: @ 814C952
-	setstepcallback 2
+	setstepcallback STEP_CB_FORTREE_BRIDGE
 	end
 
 FortreeCity_EventScript_Man:: @ 814C955

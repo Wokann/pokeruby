@@ -6,7 +6,7 @@ SecretBase_MapScripts:: @ 815F337
     .byte 0
 
 SecretBase_OnResume:: @ 815F34C
-    setstepcallback 6
+    setstepcallback STEP_CB_SECRET_BASE
     end
 
 SecretBase_OnTransition:: @ 815F34F
