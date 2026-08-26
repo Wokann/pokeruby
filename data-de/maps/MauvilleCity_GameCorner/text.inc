@@ -28,7 +28,7 @@ MauvilleCity_GameCorner_Text_DontNeedCoinsThen:: @ 8181D73
 	.string "Oh... Dann brauchst du keine MÜNZEN?\n"
 	.string "Viel Glück bei deinem Abenteuer!$"
 
-UnknownString_8181DB2: @ 8181DB2
+MauvilleCity_GameCorner_Text_FiftyCoinsCostOneThousand: @ 8181DB2
 	.string "Das macht ¥1000 für 50 MÜNZEN.\n"
 	.string "Möchtest du welche haben?$"
 
@@ -50,7 +50,7 @@ MauvilleCity_GameCorner_Text_SendToYourHomePC:: @ 8181E49
 MauvilleCity_GameCorner_Text_NotEnoughCoins:: @ 8181E76
 	.string "Du hast nicht genügend MÜNZEN.$"
 
-UnknownString_8181E93: @ 8181E93
+MauvilleCity_GameCorner_Text_NoRoomForPlacingDecor: @ 8181E93
 	.string "Du hast nicht genügend Platz, um\n"
 	.string "{STR_VAR_1} zu lagern.$"
 
@@ -62,7 +62,7 @@ MauvilleCity_GameCorner_Text_OhIsThatSo:: @ 8181EC2
 MauvilleCity_GameCorner_Text_HereYouGo:: @ 8181F08
 	.string "Bitte schön!$"
 
-UnknownString_8181F15: @ 8181F15
+MauvilleCity_GameCorner_Text_CantCarryAnyMore: @ 8181F15
 	.string "Oh, du kannst nicht mehr tragen.$"
 
 MauvilleCity_GameCorner_Text_GotTwoOfSameDollWantOne:: @ 8181F3D
