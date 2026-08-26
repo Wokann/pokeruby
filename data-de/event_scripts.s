@@ -986,40 +986,40 @@ Text_PokemonCenterSign:: @ 81A0D75
 	.string "“Erfrische deine müden Partner!”\n"
 	.string "POKéMON-CENTER$"
 
-UnknownString_81A0DA6: @ 81A0DA6
+gText_TestFufufu:: @ 81A0DA6
 	.string "Hahaha...$"
 
-UnknownString_81A0DB0: @ 81A0DB0
+gText_TestMumble:: @ 81A0DB0
 	.string "Murmel... Murmel...$"
 
-UnknownString_81A0DC2: @ 81A0DC2
+gText_TestOh:: @ 81A0DC2
 	.string "Oh!$"
 
-UnknownString_81A0DC6: @ 81A0DC6
+gText_TestClosedToday:: @ 81A0DC6
 	.string "Heute geschlossen!$"
 
-UnknownString_81A0DD4: @ 81A0DD4
+gText_TestLikesTypePokemon:: @ 81A0DD4
 	.string "Magst du {STR_VAR_3}-POKéMON, {STR_VAR_1}?$"
 
-UnknownString_81A0DF5: @ 81A0DF5
+gText_TestContainsAPokemon:: @ 81A0DF5
 	.string "Er enthält ein POKéMON.$"
 
-UnknownString_81A0E0C: @ 81A0E0C
+gText_TestMakingPreparations:: @ 81A0E0C
 	.string "Wir treffen Vorbereitungen.$"
 
-UnknownString_81A0E27: @ 81A0E27
+gText_TestPseudoGymLeader:: @ 81A0E27
 	.string "Ich bin ein Pseudo-ARENALEITER für\n"
 	.string "Interviews.$"
 
-UnknownString_81A0E4F: @ 81A0E4F
+gText_TestReadyForBattle:: @ 81A0E4F
 	.string "Bereit für einen Testkampf.$"
 
-UnknownString_81A0E68: @ 81A0E68
+gText_MomOrDadMightLikeThisProgram:: @ 81A0E68
 	.string "{STR_VAR_1} würde dieses Programm gefallen.\p"
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Ich beeile mich besser!$"
 
-UnknownString_81A0ED6: @ 81A0ED6
+gText_TestWhatToDoForFun:: @ 81A0ED6
 	.string "Womit soll ich mir die Zeit vertreiben?$"
 
 gText_WhichFloorWouldYouLike:: @ 81A0EF6
@@ -1027,16 +1027,16 @@ gText_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "EINKAUFSZENTRUM.\p"
 	.string "In welches Stockwerk möchtest du?$"
 
-UnknownString_81A0F38: @ 81A0F38
+gText_TestWarpToBattleTower:: @ 81A0F38
 	.string "Zum DUELLTURM warpen.$"
 
-UnknownString_81A0F4E: @ 81A0F4E
+gText_TestWarpToLilycove:: @ 81A0F4E
 	.string "Nach SEEGRASULB CITY warpen.$"
 
-UnknownString_81A0F60: @ 81A0F60
+gText_TestTimeIs:: @ 81A0F60
 	.string "Es ist {STR_VAR_1} Uhr.$"
 
-UnknownString_81A0F70: @ 81A0F70
+gText_TestHallOfFameAccessed:: @ 81A0F70
 	.string "Zugang zur RUHMESHALLE genehmigt.$"
 
 gText_SandstormIsVicious:: @ 81A0F93

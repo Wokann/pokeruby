@@ -985,57 +985,57 @@ Text_PokemonCenterSign:: @ 81A0D75
 	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
-UnknownString_81A0DA6: @ 81A0DA6
+gText_TestFufufu:: @ 81A0DA6
 	.string "Fufufu...$"
 
-UnknownString_81A0DB0: @ 81A0DB0
+gText_TestMumble:: @ 81A0DB0
 	.string "Mumble, mumble...$"
 
-UnknownString_81A0DC2: @ 81A0DC2
+gText_TestOh:: @ 81A0DC2
 	.string "Oh!$"
 
-UnknownString_81A0DC6: @ 81A0DC6
+gText_TestClosedToday:: @ 81A0DC6
 	.string "Closed today!$"
 
-UnknownString_81A0DD4: @ 81A0DD4
+gText_TestLikesTypePokemon:: @ 81A0DD4
 	.string "You like the {STR_VAR_3}-type POKéMON\n"
 	.string "{STR_VAR_1}?$"
 
-UnknownString_81A0DF5: @ 81A0DF5
+gText_TestContainsAPokemon:: @ 81A0DF5
 	.string "It contains a POKéMON!$"
 
-UnknownString_81A0E0C: @ 81A0E0C
+gText_TestMakingPreparations:: @ 81A0E0C
 	.string "We're making preparations.$"
 
-UnknownString_81A0E27: @ 81A0E27
+gText_TestPseudoGymLeader:: @ 81A0E27
 	.string "I'm a pseudo-GYM LEADER for\n"
 	.string "interviews.$"
 
-UnknownString_81A0E4F: @ 81A0E4F
+gText_TestReadyForBattle:: @ 81A0E4F
 	.string "Ready for a test battle.$"
 
-UnknownString_81A0E68: @ 81A0E68
+gText_MomOrDadMightLikeThisProgram:: @ 81A0E68
 	.string "{STR_VAR_1} might like this program.\n"
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Better get going!$"
 
-UnknownString_81A0ED6: @ 81A0ED6
+gText_TestWhatToDoForFun:: @ 81A0ED6
 	.string "What should I do for fun today?$"
 
 gText_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "Welcome to LILYCOVE DEPARTMENT STORE.\p"
 	.string "Which floor would you like?$"
 
-UnknownString_81A0F38: @ 81A0F38
+gText_TestWarpToBattleTower:: @ 81A0F38
 	.string "Warp to BATTLE TOWER.$"
 
-UnknownString_81A0F4E: @ 81A0F4E
+gText_TestWarpToLilycove:: @ 81A0F4E
 	.string "Warp to LILYCOVE.$"
 
-UnknownString_81A0F60: @ 81A0F60
+gText_TestTimeIs:: @ 81A0F60
 	.string "The time is {STR_VAR_1}!$"
 
-UnknownString_81A0F70: @ 81A0F70
+gText_TestHallOfFameAccessed:: @ 81A0F70
 	.string "The HALL OF FAME will be accessed.$"
 
 gText_SandstormIsVicious:: @ 81A0F93
