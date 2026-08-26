@@ -125,7 +125,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_in_place_fastest_down
 	step_end
 
-OldaleTown_Movement_Unused1:: @ 814DEAB
+OldaleTown_Movement_Unknown1:: @ 814DEAB
 	walk_up
 	walk_up
 	walk_right
@@ -173,7 +173,7 @@ OldaleTown_Movement_PlayerNorth:: @ 814DECB
 	walk_up
 	step_end
 
-OldaleTown_Movement_Unused2:: @ 814DED3
+OldaleTown_Movement_Unknown2:: @ 814DED3
 	walk_left
 	walk_up
 	walk_up
