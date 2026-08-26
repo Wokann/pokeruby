@@ -25,7 +25,7 @@ struct MapTypeFadePairs
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gPostMenuFieldCallback)(void);
 
-extern u8 gUnknown_081B694A[];
+extern u8 EventScript_UseFlash[];
 
 static void sub_810CBFC(void);
 static void sub_810CC34(void);
@@ -108,7 +108,7 @@ static void sub_810CC34(void)
 {
     PlaySE(SE_M_REFLECT);
     FlagSet(FLAG_SYS_USE_FLASH);
-    ScriptContext_SetupScript(gUnknown_081B694A);
+    ScriptContext_SetupScript(EventScript_UseFlash);
 }
 
 void sub_810CC54(void)

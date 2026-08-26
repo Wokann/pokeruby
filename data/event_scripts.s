@@ -1546,7 +1546,7 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	.include "data/text/aqua_summit.inc"
 	.include "data/text/magma_summit.inc"
 
-gUnknown_081B694A:: @ 81B694A
+EventScript_UseFlash:: @ 81B694A
 	animateflash 1
 	setflashradius 1
 	end
