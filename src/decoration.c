@@ -2564,7 +2564,7 @@ void sub_81000C4(u8 taskId)
     {
         gUnknown_020391A4 = gTasks[taskId].data[0] - 7;
         gUnknown_020391A6 = gTasks[taskId].data[1] - 7;
-        ScriptContext_SetupScript(gUnknown_081A2F7B);
+        ScriptContext_SetupScript(SecretBase_EventScript_SetDecoration);
     }
     gSprites[gUnknown_020391A8].y += 2;
     sub_810028C(taskId);
@@ -3147,7 +3147,7 @@ void sub_8100C88(u8 taskId)
             if (!gPaletteFade.active)
             {
                 DrawWholeMapView();
-                ScriptContext_SetupScript(gUnknown_081A2F8A);
+                ScriptContext_SetupScript(SecretBase_EventScript_PutAwayDecoration);
                 Menu_EraseWindowRect(0, 0, 29, 19);
                 gTasks[taskId].data[2] = 2;
             }

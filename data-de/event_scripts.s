@@ -1158,6 +1158,7 @@ Common_EventScript_Return:: @ 81A14DC
 	.include "data/scripts/debug.inc"
 	.include "data/scripts/berry_tree.inc"
 	.include "data/text/berry_tree.inc"
+	.include "data/text/secret_base_entrances.inc"
 	.include "data/text/secret_base_trainers.inc"
 	.include "data/scripts/secret_base.inc"
 	.include "data/text/secret_power_tm.inc"

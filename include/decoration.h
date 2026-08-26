@@ -116,8 +116,8 @@ extern const struct SpriteTemplate gSpriteTemplate_83ECA88;
 extern const struct Decoration gDecorations[];
 extern struct UnkStruct_02038900 gUnknown_02038900;
 extern u8 *gUnknown_020388D0;
-extern u8 gUnknown_081A2F7B[];
-extern u8 gUnknown_081A2F8A[];
+extern u8 SecretBase_EventScript_SetDecoration[];
+extern u8 SecretBase_EventScript_PutAwayDecoration[];
 extern struct OamData gUnknown_020391AC;
 
 extern u8 gUnknown_020388D4;

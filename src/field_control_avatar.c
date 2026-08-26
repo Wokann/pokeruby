@@ -48,7 +48,7 @@ static EWRAM_DATA u16 sPreviousPlayerMetatileBehavior = 0;
 extern u8 gSelectedObjectEvent;
 
 //scripts
-extern u8 gUnknown_081A2C51[];
+extern u8 SecretBase_EventScript_CheckEntrance[];
 extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
 extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
@@ -442,7 +442,7 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
         {
             gSpecialVar_0x8004 = bgEvent->bgUnion.secretBaseId;
             if (sub_80BC050())
-                return gUnknown_081A2C51;
+                return SecretBase_EventScript_CheckEntrance;
         }
         return NULL;
     }

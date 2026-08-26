@@ -22,7 +22,7 @@ SecretBase_Text_RegistrationCompleted: @ 81A3A22
 SecretBase_Text_DataUnregistered: @ 81A3A3A
 	.string "Data has been unregistered.$"
 
-UnknownString_81A3A56: @ 81A3A56
+SecretBase_Text_NoDecorations: @ 81A3A56
 	.string "There are no decorations...$"
 
 SecretBase_Text_BootUpPC: @ 81A3A72
@@ -54,11 +54,11 @@ SecretBase_Text_SkittyTV: @ 81A3C31
 	.string "A toy TV shaped like a SKITTY.\n"
 	.string "It looks ready to stroll away...$"
 
-UnknownString_81A3C71: @ 81A3C71
+SecretBase_Text_WouldYouLikeToMoveBases: @ 81A3C71
 	.string "You may only make one SECRET BASE.\p"
 	.string "Would you like to move from the SECRET\n"
 	.string "BASE near {STR_VAR_1}?$"
 
-UnknownString_81A3CC9: @ 81A3CC9
+SecretBase_Text_MovingCompletedUseSecretPower: @ 81A3CC9
 	.string "Moving completed.\p"
 	.string "Would you like to use the SECRET POWER?$"

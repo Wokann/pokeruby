@@ -15,9 +15,9 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
 
-extern u8 DoSecretBaseCaveFieldEffectScript[];
-extern u8 DoSecretBaseTreeFieldEffectScript[];
-extern u8 DoSecretBaseShrubFieldEffectScript[];
+extern u8 SecretBase_EventScript_CaveUseSecretPower[];
+extern u8 SecretBase_EventScript_TreeUseSecretPower[];
+extern u8 SecretBase_EventScript_ShrubUseSecretPower[];
 
 const u8 gSpriteImage_83D198C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/0.4bpp");
 const u8 gSpriteImage_83D1A0C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/1.4bpp");
@@ -328,7 +328,7 @@ bool8 SetUpFieldMove_SecretPower(void)
 static void FieldCallback_SecretBaseCave(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(DoSecretBaseCaveFieldEffectScript);
+    ScriptContext_SetupScript(SecretBase_EventScript_CaveUseSecretPower);
 }
 
 bool8 FldEff_UseSecretPowerCave(void)
@@ -389,7 +389,7 @@ static void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite)
 static void FieldCallback_SecretBaseTree(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(DoSecretBaseTreeFieldEffectScript);
+    ScriptContext_SetupScript(SecretBase_EventScript_TreeUseSecretPower);
 }
 
 bool8 FldEff_UseSecretPowerTree(void)
@@ -462,7 +462,7 @@ static void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite)
 static void FieldCallback_SecretBaseShrub(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(DoSecretBaseShrubFieldEffectScript);
+    ScriptContext_SetupScript(SecretBase_EventScript_ShrubUseSecretPower);
 }
 
 bool8 FldEff_UseSecretPowerShrub(void)

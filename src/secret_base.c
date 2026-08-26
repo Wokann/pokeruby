@@ -124,17 +124,17 @@ static const u8 sSecretBaseOwnerGfxIds[] = {
     OBJ_EVENT_GFX_WOMAN_7,
 };
 
-extern u8 gUnknown_081A2E14[];
-extern u8 UnknownString_81A1BB2[];
-extern u8 UnknownString_81A1F67[];
-extern u8 UnknownString_81A2254[];
-extern u8 UnknownString_81A25C3[];
-extern u8 UnknownString_81A2925[];
-extern u8 UnknownString_81A1D74[];
-extern u8 UnknownString_81A20C9[];
-extern u8 UnknownString_81A2439[];
-extern u8 UnknownString_81A2B2A[];
-extern u8 UnknownString_81A2754[];
+extern u8 SecretBase_EventScript_Enter[];
+extern u8 SecretBase_Text_Trainer0Defeated[];
+extern u8 SecretBase_Text_Trainer1Defeated[];
+extern u8 SecretBase_Text_Trainer2Defeated[];
+extern u8 SecretBase_Text_Trainer3Defeated[];
+extern u8 SecretBase_Text_Trainer4Defeated[];
+extern u8 SecretBase_Text_Trainer5Defeated[];
+extern u8 SecretBase_Text_Trainer6Defeated[];
+extern u8 SecretBase_Text_Trainer7Defeated[];
+extern u8 SecretBase_Text_Trainer8Defeated[];
+extern u8 SecretBase_Text_Trainer9Defeated[];
 
 
 void ClearSecretBase(struct SecretBaseRecord *record)
@@ -565,7 +565,7 @@ void sub_80BC038(struct MapPosition *position, const struct MapEvents *events)
 {
     SetCurrentSecretBaseFromPosition(position, events);
     SetCurrentSecretBaseVar();
-    ScriptContext_SetupScript(gUnknown_081A2E14);
+    ScriptContext_SetupScript(SecretBase_EventScript_Enter);
 }
 
 bool8 sub_80BC050(void)
@@ -1109,16 +1109,16 @@ static u8 GetSecretBaseOwnerType(u8 secretBaseIndex)
 const u8 *GetSecretBaseTrainerLoseText(void)
 {
     u8 param = GetSecretBaseOwnerType(VarGet(VAR_CURRENT_SECRET_BASE));
-    if (param == 0) return UnknownString_81A1BB2;
-    if (param == 1) return UnknownString_81A1F67;
-    if (param == 2) return UnknownString_81A2254;
-    if (param == 3) return UnknownString_81A25C3;
-    if (param == 4) return UnknownString_81A2925;
-    if (param == 5) return UnknownString_81A1D74;
-    if (param == 6) return UnknownString_81A20C9;
-    if (param == 7) return UnknownString_81A2439;
-    if (param == 8) return UnknownString_81A2754;
-    return UnknownString_81A2B2A;
+    if (param == 0) return SecretBase_Text_Trainer0Defeated;
+    if (param == 1) return SecretBase_Text_Trainer1Defeated;
+    if (param == 2) return SecretBase_Text_Trainer2Defeated;
+    if (param == 3) return SecretBase_Text_Trainer3Defeated;
+    if (param == 4) return SecretBase_Text_Trainer4Defeated;
+    if (param == 5) return SecretBase_Text_Trainer5Defeated;
+    if (param == 6) return SecretBase_Text_Trainer6Defeated;
+    if (param == 7) return SecretBase_Text_Trainer7Defeated;
+    if (param == 8) return SecretBase_Text_Trainer8Defeated;
+    return SecretBase_Text_Trainer9Defeated;
 }
 
 // Debugging function to test secret base battles.
