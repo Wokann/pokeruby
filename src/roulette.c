@@ -331,23 +331,23 @@ extern u8 gUnknown_02019000[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gPlttBufferFaded[];
 extern u16 gPlttBufferUnfaded[];
-extern const u8 gUnknown_081C4157[];
-extern const u8 gUnknown_081C41E3;
+extern const u8 Roulette_Text_ControlsInstruction[];
+extern const u8 Roulette_Text_KeepPlaying;
 extern const u16 gUnknown_083F8ECE;
 const extern u8 gUnknown_083F8ECA[];
-const extern u8 gUnknown_081C41A5;
-const extern u8 gUnknown_081C4199;
-const extern u8 gUnknown_081C41AE;
-const extern u8 gUnknown_081C41BD;
-const extern u8 gUnknown_081C41F1;
-const extern u8 gUnknown_081C4231;
-const extern u8 gUnknown_081C41D2;
+const extern u8 Roulette_Text_Jackpot;
+const extern u8 Roulette_Text_ItsAHit;
+const extern u8 Roulette_Text_NothingDoing;
+const extern u8 Roulette_Text_YouveWonXCoins;
+const extern u8 Roulette_Text_BoardWillBeCleared;
+const extern u8 Roulette_Text_CoinCaseIsFull;
+const extern u8 Roulette_Text_NoCoinsLeft;
 extern const u32 gUnknown_083F8ED8[];
 extern const u32 gUnknown_083F8EE8[];
 extern const u8 gUnknown_083F8EF4[];
-extern const u8 gUnknown_081C40DF;
-extern const u8 gUnknown_081C4139;
-extern const u8 gUnknown_081C411C;
+extern const u8 Roulette_Text_PlayMinimumWagerIsX;
+extern const u8 Roulette_Text_SpecialRateTable;
+extern const u8 Roulette_Text_NotEnoughCoins;
 #if DEBUG
 EWRAM_DATA u8 unk_203955C[4] = { 0 };
 EWRAM_DATA u8 unk_2039560 = 0;
@@ -494,7 +494,7 @@ void sub_8115384(void)
         sub_811829C(0);
         sub_8117158(0);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(gUnknown_081C4157, 1, 15);
+        Menu_PrintText(Roulette_Text_ControlsInstruction, 1, 15);
         gSpriteCoordOffsetX = -60;
         gSpriteCoordOffsetY = 0;
         gMain.state++;
@@ -572,7 +572,7 @@ void sub_8115734(u8 taskid)
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
-    Menu_PrintText(&gUnknown_081C41E3, 1, 15);
+    Menu_PrintText(&Roulette_Text_KeepPlaying, 1, 15);
     DoYesNoFuncWithChoice(taskid, &gUnknown_083F8EBC);
 }
 
@@ -1102,20 +1102,20 @@ void sub_8116638(u8 taskid)
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C41A5, 1, 15);
+            Menu_PrintText(&Roulette_Text_Jackpot, 1, 15);
         }
         else
         {
             PlayFanfare(MUS_SLOTS_WIN);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4199, 1, 15);
+            Menu_PrintText(&Roulette_Text_ItsAHit, 1, 15);
         }
         break;
     case 0:
     default:
         m4aSongNumStart(SE_FAILURE);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C41AE, 1, 15);
+        Menu_PrintText(&Roulette_Text_NothingDoing, 1, 15);
     }
     gTasks[taskid].data[1] = 0;
     gTasks[taskid].func = sub_811659C;
@@ -1154,7 +1154,7 @@ void sub_81166E8(u8 taskid)
 void sub_811677C(u8 taskid)
 {
     ConvertIntToDecimalStringN((u8 *)&gStringVar1, (eRoulette->var19 * gTasks[taskid].data[2]), STR_CONV_MODE_LEFT_ALIGN, 2);
-    StringExpandPlaceholders((u8 *)&gStringVar4, &gUnknown_081C41BD);
+    StringExpandPlaceholders((u8 *)&gStringVar4, &Roulette_Text_YouveWonXCoins);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText((u8 *)&gStringVar4, 1, 15);
     gTasks[taskid].data[1] = (eRoulette->var19 * gTasks[taskid].data[2]);
@@ -1190,13 +1190,13 @@ void sub_8116880(u8 taskid)
         if (gTasks[taskid].data[6] == 6)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C41F1, 1, 15);
+            Menu_PrintText(&Roulette_Text_BoardWillBeCleared, 1, 15);
             sub_8116C34(taskid, &dp01t_12_3_battle_menu, 0xffff, 3);
         }
         else if (gTasks[taskid].data[13] == 0x270f)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4231, 1, 15);
+            Menu_PrintText(&Roulette_Text_CoinCaseIsFull, 1, 15);
             sub_8116C34(taskid, sub_8115734, 0xffff, 3);
         }
         else
@@ -1207,7 +1207,7 @@ void sub_8116880(u8 taskid)
     else
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C41D2, 1, 15);
+        Menu_PrintText(&Roulette_Text_NoCoinsLeft, 1, 15);
         sub_8116C34(taskid, sub_81157AC, 60, 3);
     }
 }
@@ -1226,7 +1226,7 @@ void dp01t_12_3_battle_menu(u8 taskid)
     if (gTasks[taskid].data[13] == 0x270f)
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
-        Menu_PrintText(&gUnknown_081C4231, 1, 15);
+        Menu_PrintText(&Roulette_Text_CoinCaseIsFull, 1, 15);
         sub_8116C34(taskid, sub_8115734, 0xffff, 3);
     }
     else
@@ -1617,7 +1617,7 @@ void sub_8117630(u8 taskid)
 {
     u32 temp = gUnknown_083F8DF0[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
     ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
-    StringExpandPlaceholders(gStringVar4, &gUnknown_081C40DF);
+    StringExpandPlaceholders(gStringVar4, &Roulette_Text_PlayMinimumWagerIsX);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText(gStringVar4, 1, 15);
     gTasks[taskid].func = sub_81174F8;
@@ -1637,12 +1637,12 @@ void Task_Roulette_0(u8 taskid)
         if ((gSpecialVar_0x8004 & 0x80) && (gSpecialVar_0x8004 & 1))
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
-            Menu_PrintText(&gUnknown_081C4139, 1, 15);
+            Menu_PrintText(&Roulette_Text_SpecialRateTable, 1, 15);
             sub_8116C34(taskid , sub_8117630, 0xffff, 3);
         }
         else
         {
-            StringExpandPlaceholders(gStringVar4, &gUnknown_081C40DF);
+            StringExpandPlaceholders(gStringVar4, &Roulette_Text_PlayMinimumWagerIsX);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(gStringVar4, 1, 15);
             gTasks[taskid].func = sub_81174F8;
@@ -1650,7 +1650,7 @@ void Task_Roulette_0(u8 taskid)
     }
     else
     {
-        StringExpandPlaceholders(gStringVar4, &gUnknown_081C411C);
+        StringExpandPlaceholders(gStringVar4, &Roulette_Text_NotEnoughCoins);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(gStringVar4, 1, 15);
         gTasks[taskid].func = sub_81175DC;
