@@ -974,7 +974,7 @@ bool8 debug_sub_8090278(void)
 
 bool8 debug_sub_809029C(void)
 {
-    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 16, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;

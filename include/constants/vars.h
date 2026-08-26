@@ -60,8 +60,8 @@
 #define VAR_ENIGMA_BERRY_AVAILABLE 0x402D
 
 #define VAR_DAYS                   0x4040
-#define VAR_FANCLUB_UNKNOWN_1      0x4041 // TODO: document these two fanclub vars
-#define VAR_FANCLUB_UNKNOWN_2      0x4042
+#define VAR_FANCLUB_FAN_COUNTER      0x4041
+#define VAR_FANCLUB_LOSE_FAN_TIMER   0x4042
 #define VAR_DEPT_STORE_FLOOR       0x4043
 #define VAR_TRICK_HOUSE_LEVEL 0x4044
 #define VAR_LOTTERY_PRIZE          0x4045
