@@ -794,11 +794,11 @@ EventScript_SetBrineyLocation_Route109:: @ 819FD55
 	.include "data/scripts/pc.inc"
 
 Common_EventScript_PokemartSign:: @ 81A00E1
-	msgbox Text_PokemartSign, MSGBOX_SIGN
+	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_PokemonCenterSign:: @ 81A00EA
-	msgbox Text_PokemonCenterSign, MSGBOX_SIGN
+	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
@@ -961,7 +961,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	bufferitemname 0, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	message FallarborTown_House1_Text_1A1498
+	message gText_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004, 1
@@ -977,11 +977,11 @@ Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
 
-Text_PokemartSign:: @ 81A0D41
+gText_PokemartSign:: @ 81A0D41
 	.string "“Selected items for your convenience!”\n"
 	.string "POKéMON MART$"
 
-Text_PokemonCenterSign:: @ 81A0D75
+gText_PokemonCenterSign:: @ 81A0D75
 	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
@@ -1042,7 +1042,7 @@ gText_SandstormIsVicious:: @ 81A0F93
 	.string "The sandstorm is vicious.\n"
 	.string "It's impossible to keep going.$"
 
-Text_NoRegisteredItem: @ 81A0FCC
+gText_SelectWithoutRegisteredItem:: @ 81A0FCC
 	.string "An item in the BAG can be registered\n"
 	.string "on SELECT for convenience.$"
 
@@ -1065,7 +1065,7 @@ gText_NicknameReceivedPokemon:: @ 81A1102
 	.string "Want to give a nickname to the\n"
 	.string "{STR_VAR_2} you received?$"
 
-fieldPoisonText_PokemonFainted:: @ 81A1132
+gText_PokemonFainted:: @ 81A1132
 	.string "{STR_VAR_1} fainted...\p$"
 
 gText_PlayerWhitedOut:: @ 81A1141
@@ -1081,11 +1081,11 @@ gText_ComeBackWithSecretPower:: @ 81A116E
 	.string "We'll accept you as a member and sell\n"
 	.string "you good stuff in secrecy.$"
 
-gText_NurseJoy_OkayIllTakeYourPokemon:: @ 81A1245
+gText_IllTakeYourPkmn:: @ 81A1245
 	.string "Okay, I'll take your POKéMON for a\n"
 	.string "few seconds.$"
 
-gText_NurseJoy_Pokerus:: @ 81A1275
+gText_PokerusExplanation:: @ 81A1275
 	.string "Your POKéMON may be infected with\n"
 	.string "POKéRUS.\p"
 	.string "Little is known about the POKéRUS\n"
@@ -1096,31 +1096,31 @@ gText_NurseJoy_Pokerus:: @ 81A1275
 
 	.include "data/text/surf.inc"
 
-SealedChamber_InnerRoom_Text_DoorOpenedFarAway:: @ 81A138B
+gText_DoorOpenedFarAway:: @ 81A138B
 	.string "It sounded as if a door opened\n"
 	.string "somewhere far away.$"
 
 gText_BigHoleInTheWall:: @ 81A13BE
 	.string "There is a big hole in the wall.$"
 
-CableClub_Text_ColosseumUndergoingAdjustments:: @ 81A13DF
+gText_SorryColosseumAdjustments:: @ 81A13DF
 	.string "I'm terribly sorry. The COLOSSEUM\n"
 	.string "is undergoing adjustments.$"
 
-CableClub_Text_TradeCenterUndergoingInspections:: @ 81A141C
+gText_SorryTradeCenterInspections:: @ 81A141C
 	.string "I'm terribly sorry. The TRADE CENTER\n"
 	.string "is undergoing inspections.$"
 
-CableClub_Text_RecordCornerUnderPreparation:: @ 81A145C
+gText_SorryRecordCornerPreparation:: @ 81A145C
 	.string "I'm terribly sorry. The RECORD CORNER\n"
 	.string "is under preparation.$"
 
-FallarborTown_House1_Text_1A1498:: @ 81A1498
+gText_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{PLAYER} handed over the\n"
 	.string "{STR_VAR_1}.$"
 
-Event_NoRegisteredItem:: @ 81A14AF
-	msgbox Text_NoRegisteredItem, MSGBOX_SIGN
+EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
+	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
 EventScript_FieldPoison:: @ 81A14B8

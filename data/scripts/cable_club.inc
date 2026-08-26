@@ -472,15 +472,15 @@ CableClub_EventScript_AbortLinkIncorrectNumberOfParticipants:: @ 81A432D
 	end
 
 CableClub_EventScript_TradeCenterUnderInspection:: @ 81A4339
-	msgbox CableClub_Text_TradeCenterUndergoingInspections, MSGBOX_NPC
+	msgbox gText_SorryTradeCenterInspections, MSGBOX_NPC
 	end
 
 CableClub_EventScript_ColosseumUndergoingAdjustments:: @ 81A4342
-	msgbox CableClub_Text_ColosseumUndergoingAdjustments, MSGBOX_NPC
+	msgbox gText_SorryColosseumAdjustments, MSGBOX_NPC
 	end
 
 CableClub_EventScript_RecordCornerUnderPreparation:: @ 81A434B
-	msgbox CableClub_Text_RecordCornerUnderPreparation, MSGBOX_NPC
+	msgbox gText_SorryRecordCornerPreparation, MSGBOX_NPC
 	end
 
 Movement_AttendantFaceDown:: @ 81A4354

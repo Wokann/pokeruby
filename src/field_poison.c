@@ -11,7 +11,7 @@
 #include "constants/species.h"
 
 extern u16 gSpecialVar_Result;
-extern u8 fieldPoisonText_PokemonFainted[];
+extern u8 gText_PokemonFainted[];
 
 static bool32 IsMonValidSpecies(struct Pokemon *mon)
 {
@@ -78,7 +78,7 @@ static void Task_WhiteOut(u8 taskId)
             {
                 // Show message about fainted mon
                 FaintFromFieldPoison(tPartyMember);
-                ShowFieldMessage(fieldPoisonText_PokemonFainted);
+                ShowFieldMessage(gText_PokemonFainted);
                 tState++;
                 return;
             }

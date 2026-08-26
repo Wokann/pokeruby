@@ -27,7 +27,7 @@ SealedChamber_InnerRoom_EventScript_BrailleBackWall:: @ 815F1E8
 	waitstate
 	playse SE_DOOR
 	delay 40
-	msgbox SealedChamber_InnerRoom_Text_DoorOpenedFarAway, MSGBOX_DEFAULT
+	msgbox gText_DoorOpenedFarAway, MSGBOX_DEFAULT
 	closemessage
 	fadeinbgm 0
 	setflag FLAG_REGI_DOORS_OPENED

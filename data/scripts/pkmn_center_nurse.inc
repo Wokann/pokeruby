@@ -10,7 +10,7 @@ Common_EventScript_PkmnCenterNurse:: @ 819FD5B
 
 EventScript_PkmnCenterNurse_HealPkmn:: @ 819FD7C
 	incrementgamestat GAME_STAT_USED_POKECENTER
-	message gText_NurseJoy_OkayIllTakeYourPokemon
+	message gText_IllTakeYourPkmn
 	waitmessage
 	applymovement VAR_0x800B, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
@@ -46,7 +46,7 @@ EventScript_PkmnCenterNurse_CheckPokerus:: @ 819FDCE
 	end
 
 EventScript_PkmnCenterNurse_ExplainPokerus:: @ 819FDEA
-	message gText_NurseJoy_Pokerus
+	message gText_PokerusExplanation
 	waitmessage
 	setflag FLAG_POKERUS_EXPLAINED
 	return

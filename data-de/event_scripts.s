@@ -794,11 +794,11 @@ EventScript_SetBrineyLocation_Route109:: @ 819FD55
 	.include "data/scripts/pc.inc"
 
 Common_EventScript_PokemartSign:: @ 81A00E1
-	msgbox Text_PokemartSign, MSGBOX_SIGN
+	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_PokemonCenterSign:: @ 81A00EA
-	msgbox Text_PokemonCenterSign, MSGBOX_SIGN
+	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
@@ -961,7 +961,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	bufferitemname 0, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	message FallarborTown_House1_Text_1A1498
+	message gText_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004, 1
@@ -977,12 +977,12 @@ Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	.include "data/text/mart_clerk.inc"
 	.include "data/text/obtain_item.inc"
 
-Text_PokemartSign:: @ 81A0D41
+gText_PokemartSign:: @ 81A0D41
 	.string "“Ausgewählte Items für Ihren\n"
 	.string "Gebrauch!”\l"
 	.string "POKéMON-SUPERMARKT$"
 
-Text_PokemonCenterSign:: @ 81A0D75
+gText_PokemonCenterSign:: @ 81A0D75
 	.string "“Erfrische deine müden Partner!”\n"
 	.string "POKéMON-CENTER$"
 
@@ -1043,7 +1043,7 @@ gText_SandstormIsVicious:: @ 81A0F93
 	.string "Der Sandsturm ist zu stark.\n"
 	.string "Dagegen kann man nicht angehen!$"
 
-Text_NoRegisteredItem: @ 81A0FCC
+gText_SelectWithoutRegisteredItem:: @ 81A0FCC
 	.string "Ein Basis-Item aus dem BEUTEL kann auf\n"
 	.string "SELECT gelegt werden. Sehr praktisch!$"
 
@@ -1071,7 +1071,7 @@ gText_NicknameReceivedPokemon:: @ 81A1102
 	.string "Möchtest du {STR_VAR_2} einen\n"
 	.string "Kosenamen geben?$"
 
-fieldPoisonText_PokemonFainted:: @ 81A1132
+gText_PokemonFainted:: @ 81A1132
 	.string "{STR_VAR_1} wurde besiegt...\p"
 	.string "$"
 
@@ -1090,11 +1090,11 @@ gText_ComeBackWithSecretPower:: @ 81A116E
 	.string "nehmen und dir unter der Hand tolle\l"
 	.string "Sachen verkaufen.$"
 
-gText_NurseJoy_OkayIllTakeYourPokemon:: @ 81A1245
+gText_IllTakeYourPkmn:: @ 81A1245
 	.string "Okay, ich nehme deine POKéMON für einen\n"
 	.string "Moment in meine Obhut.$"
 
-gText_NurseJoy_Pokerus:: @ 81A1275
+gText_PokerusExplanation:: @ 81A1275
 	.string "Dein POKéMON scheint von dem\n"
 	.string "POKéRUS befallen zu sein.\p"
 	.string "Über den POKéRUS ist bisher wenig be-\n"
@@ -1105,31 +1105,31 @@ gText_NurseJoy_Pokerus:: @ 81A1275
 
 	.include "data/text/surf.inc"
 
-SealedChamber_InnerRoom_Text_DoorOpenedFarAway:: @ 81A138B
+gText_DoorOpenedFarAway:: @ 81A138B
 	.string "Das hörte sich an, als würde irgendwo\n"
 	.string "eine Tür geöffnet.$"
 
 gText_BigHoleInTheWall:: @ 81A13BE
 	.string "In der Wand ist ein großes Loch.$"
 
-CableClub_Text_ColosseumUndergoingAdjustments:: @ 81A13DF
+gText_SorryColosseumAdjustments:: @ 81A13DF
 	.string "Tut mir schrecklich Leid. Das KOLOSSEUM\n"
 	.string "wird gerade renoviert.$"
 
-CableClub_Text_TradeCenterUndergoingInspections:: @ 81A141C
+gText_SorryTradeCenterInspections:: @ 81A141C
 	.string "Tut mir schrecklich Leid. Das\n"
 	.string "HANDELSCENTER wird gerade renoviert.$"
 
-CableClub_Text_RecordCornerUnderPreparation:: @ 81A145C
+gText_SorryRecordCornerPreparation:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 
-FallarborTown_House1_Text_1A1498:: @ 81A1498
+gText_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{PLAYER} übergibt\n"
 	.string "{STR_VAR_1}.$"
 
-Event_NoRegisteredItem:: @ 81A14AF
-	msgbox Text_NoRegisteredItem, MSGBOX_SIGN
+EventScript_SelectWithoutRegisteredItem:: @ 81A14AF
+	msgbox gText_SelectWithoutRegisteredItem, MSGBOX_SIGN
 	end
 
 EventScript_FieldPoison:: @ 81A14B8

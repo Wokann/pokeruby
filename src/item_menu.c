@@ -143,7 +143,7 @@ void (*gFieldItemUseCallback)(u8) = NULL;
 extern u16 gBattle_BG1_Y;
 struct PocketScrollState gBagPocketScrollStates[5];
 struct ItemSlot *gCurrentBagPocketItemSlots;  // selected pocket item slots
-extern const u8 Event_NoRegisteredItem[];
+extern const u8 EventScript_SelectWithoutRegisteredItem[];
 
 static const struct CompressedSpriteSheet sMaleBagSpriteSheet;
 static const struct CompressedSpriteSheet sFemaleBagSpriteSheet;
@@ -2756,7 +2756,7 @@ bool32 UseRegisteredKeyItem(void)
         }
         gSaveBlock1.registeredItem = 0;
     }
-    ScriptContext_SetupScript(Event_NoRegisteredItem);
+    ScriptContext_SetupScript(EventScript_SelectWithoutRegisteredItem);
     return TRUE;
 }
 
