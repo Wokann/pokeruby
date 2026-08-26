@@ -107,8 +107,8 @@ LavaridgeTown_Gym_1F_EventScript_Axle:: @ 81537ED
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Andy:: @ 8153808
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ANDY, LOCALID_ANDY, LavaridgeTown_Gym_B1F_Text_AndyIntro, LavaridgeTown_Gym_B1F_Text_AndyDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
-	msgbox LavaridgeTown_Gym_B1F_Text_AndyPostBattle, MSGBOX_AUTOCLOSE
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_ANDY, LOCALID_ANDY, LavaridgeTown_Gym_1F_Text_AndyIntro, LavaridgeTown_Gym_1F_Text_AndyDefeat, LavaridgeTown_Gym_EventScript_CheckTrainerScript
+	msgbox LavaridgeTown_Gym_1F_Text_AndyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 LavaridgeTown_Gym_1F_EventScript_Sadie:: @ 8153823

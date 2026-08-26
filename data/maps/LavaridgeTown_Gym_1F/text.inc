@@ -37,7 +37,7 @@ LavaridgeTown_Gym_1F_Text_AxlePostBattle:: @ 8176537
 	.string "If you spend too much time buried in\n"
 	.string "hot sand, it tuckers you out...$"
 
-LavaridgeTown_Gym_B1F_Text_AndyIntro:: @ 817658D
+LavaridgeTown_Gym_1F_Text_AndyIntro:: @ 817658D
 	.string "You must be getting tired by now.\n"
 	.string "You'd like to rest in the hot sand,\l"
 	.string "wouldn't you?\p"
@@ -45,10 +45,10 @@ LavaridgeTown_Gym_B1F_Text_AndyIntro:: @ 817658D
 	.string "your willpower is an important ability\l"
 	.string "for all TRAINERS.$"
 
-LavaridgeTown_Gym_B1F_Text_AndyDefeat:: @ 817663F
+LavaridgeTown_Gym_1F_Text_AndyDefeat:: @ 817663F
 	.string "Play with fire, and be burned...$"
 
-LavaridgeTown_Gym_B1F_Text_AndyPostBattle:: @ 8176660
+LavaridgeTown_Gym_1F_Text_AndyPostBattle:: @ 8176660
 	.string "Your skill is real...\n"
 	.string "But our LEADER FLANNERY is strong.\p"
 	.string "If you don't watch yourself, you'll be\n"
