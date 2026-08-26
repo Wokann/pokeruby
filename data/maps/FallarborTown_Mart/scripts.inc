@@ -6,13 +6,13 @@ FallarborTown_Mart_EventScript_Clerk:: @ 8153967
 	faceplayer
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemart FallarborTown_Mart_Items
+	pokemart FallarborTown_Mart_Pokemart
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-FallarborTown_Mart_Items:: @ 8153980
+FallarborTown_Mart_Pokemart:: @ 8153980
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_SUPER_POTION
 	.2byte ITEM_ANTIDOTE
