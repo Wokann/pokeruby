@@ -1,20 +1,20 @@
 #ifndef GUARD_FIELD_SPECIALS_H
 #define GUARD_FIELD_SPECIALS_H
 
-struct ElevatorMenu {
-    u8 var0;
-    s8 var1;
-    s8 var2;
-    u8 var3;
+struct ElevatorMenuItem {
+    u8 floorTextId;
+    s8 mapGroup;
+    s8 mapNum;
+    u8 unused;
 };
 
 extern u8 gUnknown_02039250;
 extern u8 gUnknown_02039251;
 extern u32 gUnknown_02039254;
 extern u8 gUnknown_02039258;
-extern u8 gUnknown_0203925A;
-extern u8 gUnknown_0203925B;
-extern u8 gUnknown_0203925C;
+extern u8 gScrollableMenuItemCount;
+extern u8 gScrollableMenuSelectedItem;
+extern u8 gScrollableMenuScrollIndicatorFlags;
 
 extern const u8 gFanClubGainMemberIds[];
 extern const u8 gFanClubLossMemberIds[];

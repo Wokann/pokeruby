@@ -1975,12 +1975,12 @@ bool8 ScrCmd_setdoorclosed(struct ScriptContext *ctx)
 
 bool8 ScrCmd_addelevmenuitem(struct ScriptContext *ctx)
 {
-    u8 v3 = ScriptReadByte(ctx);
-    u16 v5 = VarGet(ScriptReadHalfword(ctx));
-    u16 v7 = VarGet(ScriptReadHalfword(ctx));
-    u16 v9 = VarGet(ScriptReadHalfword(ctx));
+    u8 floorTextId = ScriptReadByte(ctx);
+    u16 mapGroup = VarGet(ScriptReadHalfword(ctx));
+    u16 mapNum = VarGet(ScriptReadHalfword(ctx));
+    u16 unused = VarGet(ScriptReadHalfword(ctx));
 
-    ScriptAddElevatorMenuItem(v3, v5, v7, v9);
+    ScriptAddElevatorMenuItem(floorTextId, mapGroup, mapNum, unused);
     return FALSE;
 }
 

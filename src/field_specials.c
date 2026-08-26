@@ -60,13 +60,13 @@ EWRAM_DATA u8 gBikeCollisions = 0;
 EWRAM_DATA u32 gBikeCyclingTimer = 0;
 EWRAM_DATA u8 gUnknown_02039258 = 0;
 EWRAM_DATA u8 gPetalburgGymSlidingDoorIndex = 0;
-EWRAM_DATA u8 gUnknown_0203925A = 0;
-EWRAM_DATA u8 gUnknown_0203925B = 0;
-EWRAM_DATA u8 gUnknown_0203925C = 0;
+EWRAM_DATA u8 gScrollableMenuItemCount = 0;
+EWRAM_DATA u8 gScrollableMenuSelectedItem = 0;
+EWRAM_DATA u8 gScrollableMenuScrollIndicatorFlags = 0;
 
 static void RecordCyclingRoadResults(u32, u8);
 
-static struct ElevatorMenu gUnknown_03000760[20];
+static struct ElevatorMenuItem sElevatorMenuItems[20];
 
 void ScrSpecial_ShowDiploma(void)
 {
@@ -976,22 +976,22 @@ void EndLotteryCornerComputerEffect(void)
     DrawWholeMapView();
 }
 
-static void sub_810E874(void);
+static void InitElevatorMenu(void);
 void DisplayCurrentElevatorFloor(void);
-void sub_810E984(u8);
-bool8 sub_810EAC8(u8, u8);
-void sub_810EB90(u8, u8);
+void Task_ElevatorMenu(u8 taskId);
+bool8 TryScrollElevatorMenu(u8 previousCursorPos, u8 dpadInput);
+void UpdateElevatorMenuScrollIndicators(u8 firstVisibleItem, u8 visibleItemCount);
 void ShakeScreenInElevator(void);
-void sub_810EC34(u8);
-void sub_810EC9C(u8);
-void sub_810ECB0(void);
-void sub_810ECD4(void);
-void sub_810ECFC(void);
-void sub_810ED40(u8);
-void sub_810ED60(struct Task *);
-void sub_810EEDC(void);
+void Task_ShakeScreenInElevator(u8 taskId);
+void DestroyTaskAndEnableScript(u8 taskId);
+void CreateElevatorMenuTopScrollIndicator(void);
+void CreateElevatorMenuBottomScrollIndicator(void);
+void StartElevatorDoorAnimation(void);
+void Task_ElevatorDoorAnimation(u8 taskId);
+void AnimateElevatorDoor(struct Task *task);
+void CloseScrollableMenu(void);
 
-const u8 *const gUnknown_083F8380[] = {
+const u8 *const sElevatorFloorTexts[] = {
     OtherText_1F,
     OtherText_2F,
     OtherText_3F,
@@ -1040,104 +1040,104 @@ void SetDepartmentStoreFloorVar(void)
     VarSet(VAR_DEPT_STORE_FLOOR, deptStoreFloor);
 }
 
-void ScriptAddElevatorMenuItem(u8 a0, u8 a1, u8 a2, u8 a3)
+void ScriptAddElevatorMenuItem(u8 floorTextId, u8 mapGroup, u8 mapNum, u8 unused)
 {
-    u8 i;
+    u8 menuItemIndex;
     if (gSpecialVar_0x8004 == 0)
     {
-        for (i = 0; i < 20; i++)
+        for (menuItemIndex = 0; menuItemIndex < 20; menuItemIndex++)
         {
-            gUnknown_03000760[i].var0 = 16;
+            sElevatorMenuItems[menuItemIndex].floorTextId = 16;
         }
     }
-    gUnknown_03000760[gSpecialVar_0x8004].var0 = a0;
-    gUnknown_03000760[gSpecialVar_0x8004].var1 = a1;
-    gUnknown_03000760[gSpecialVar_0x8004].var2 = a2;
-    gUnknown_03000760[gSpecialVar_0x8004].var3 = a3;
+    sElevatorMenuItems[gSpecialVar_0x8004].floorTextId = floorTextId;
+    sElevatorMenuItems[gSpecialVar_0x8004].mapGroup = mapGroup;
+    sElevatorMenuItems[gSpecialVar_0x8004].mapNum = mapNum;
+    sElevatorMenuItems[gSpecialVar_0x8004].unused = unused;
     gSpecialVar_0x8004++;
 }
 
 void ScriptShowElevatorMenu(void)
 {
-    u8 i = 0;
-    gUnknown_0203925A = 0;
-    gUnknown_0203925B = 0;
+    u8 menuItemIndex = 0;
+    gScrollableMenuItemCount = 0;
+    gScrollableMenuSelectedItem = 0;
     ScriptAddElevatorMenuItem(16, 0, 0, 0);
-    while (gUnknown_03000760[i].var0 != 16)
+    while (sElevatorMenuItems[menuItemIndex].floorTextId != 16)
     {
-        gUnknown_0203925A++;
-        i++;
+        gScrollableMenuItemCount++;
+        menuItemIndex++;
     }
-    sub_810E874();
+    InitElevatorMenu();
 }
 
-static void sub_810E874(void)
+static void InitElevatorMenu(void)
 {
-    u8 i;
+    u8 menuItemIndex;
     LockPlayerFieldControls();
-    if (gUnknown_0203925A > 5)
+    if (gScrollableMenuItemCount > 5)
     {
         Menu_DrawStdWindowFrame(0, 0, 8, 11);
         InitMenu(0, 1, 1, 5, 0, 7);
-        gUnknown_0203925C = 0;
+        gScrollableMenuScrollIndicatorFlags = 0;
         ClearVerticalScrollIndicatorPalettes();
         LoadScrollIndicatorPalette();
-        sub_810ECD4();
+        CreateElevatorMenuBottomScrollIndicator();
     }
     else
     {
-        Menu_DrawStdWindowFrame(0, 0, 8, 2 * gUnknown_0203925A + 1);
-        InitMenu(0, 1, 1, gUnknown_0203925A, 0, 7);
+        Menu_DrawStdWindowFrame(0, 0, 8, 2 * gScrollableMenuItemCount + 1);
+        InitMenu(0, 1, 1, gScrollableMenuItemCount, 0, 7);
     }
-    for (i = 0; i < 5 && gUnknown_03000760[i].var0 != 16; i ++)
+    for (menuItemIndex = 0; menuItemIndex < 5 && sElevatorMenuItems[menuItemIndex].floorTextId != 16; menuItemIndex++)
     {
-        Menu_PrintText(gUnknown_083F8380[gUnknown_03000760[i].var0], 1, 2 * i + 1);
+        Menu_PrintText(sElevatorFloorTexts[sElevatorMenuItems[menuItemIndex].floorTextId], 1, 2 * menuItemIndex + 1);
     }
     DisplayCurrentElevatorFloor();
-    CreateTask(sub_810E984, 8);
+    CreateTask(Task_ElevatorMenu, 8);
 }
 
 void DisplayCurrentElevatorFloor(void)
 {
     Menu_DrawStdWindowFrame(20, 0, 29, 5);
     MenuPrint_Centered(gOtherText_NowOn, 21, 1, 64);
-    MenuPrint_Centered(gUnknown_083F8380[gSpecialVar_0x8005], 21, 3, 64);
+    MenuPrint_Centered(sElevatorFloorTexts[gSpecialVar_0x8005], 21, 3, 64);
 }
 
-void sub_810E984(u8 taskId)
+void Task_ElevatorMenu(u8 taskId)
 {
-    u8 curMenuPos;
-    if (gMain.newKeys == DPAD_UP && gUnknown_0203925B != 0)
+    u8 previousCursorPos;
+    if (gMain.newKeys == DPAD_UP && gScrollableMenuSelectedItem != 0)
     {
-        gUnknown_0203925B--;
-        curMenuPos = Menu_GetCursorPos();
+        gScrollableMenuSelectedItem--;
+        previousCursorPos = Menu_GetCursorPos();
         Menu_MoveCursorNoWrap(-1);
-        sub_810EAC8(curMenuPos, DPAD_UP);
+        TryScrollElevatorMenu(previousCursorPos, DPAD_UP);
     }
-    if (gMain.newKeys == DPAD_DOWN && gUnknown_0203925B != gUnknown_0203925A - 1)
+    if (gMain.newKeys == DPAD_DOWN && gScrollableMenuSelectedItem != gScrollableMenuItemCount - 1)
     {
-        gUnknown_0203925B++;
-        curMenuPos = Menu_GetCursorPos();
+        gScrollableMenuSelectedItem++;
+        previousCursorPos = Menu_GetCursorPos();
         Menu_MoveCursorNoWrap(+1);
-        sub_810EAC8(curMenuPos, DPAD_DOWN);
+        TryScrollElevatorMenu(previousCursorPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
-        saved_warp2_set_2(0, gUnknown_03000760[gUnknown_0203925B].var1, gUnknown_03000760[gUnknown_0203925B].var2, -1, 2, 1);
-        if (gSpecialVar_0x8005 == gUnknown_0203925B)
+        saved_warp2_set_2(0, sElevatorMenuItems[gScrollableMenuSelectedItem].mapGroup, sElevatorMenuItems[gScrollableMenuSelectedItem].mapNum, -1, 2, 1);
+        if (gSpecialVar_0x8005 == gScrollableMenuSelectedItem)
         {
             gSpecialVar_Result = 0;
             PlaySE(SE_SELECT);
             Menu_EraseWindowRect(0, 0, 29, 12);
-            sub_810EC9C(taskId);
+            DestroyTaskAndEnableScript(taskId);
         }
         else
         {
             gSpecialVar_Result = 1;
-            gSpecialVar_0x8005 = gUnknown_0203925B;
+            gSpecialVar_0x8005 = gScrollableMenuSelectedItem;
             ShakeScreenInElevator();
             ObjectEventTurnByLocalIdAndMap(gSpecialVar_LastTalked, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, DIR_SOUTH);
-            sub_810EEDC();
+            CloseScrollableMenu();
             Menu_EraseScreen();
             DestroyTask(taskId);
         }
@@ -1146,82 +1146,82 @@ void sub_810E984(u8 taskId)
     {
         gSpecialVar_Result = 0;
         PlaySE(SE_SELECT);
-        sub_810EEDC();
+        CloseScrollableMenu();
         Menu_EraseWindowRect(0, 0, 29, 12);
-        sub_810EC9C(taskId);
+        DestroyTaskAndEnableScript(taskId);
     }
 }
 
 /* Removing the NONMATCHING block will swap the roles of r4 and r5 throughout.
-Could possibly be fixed by writing code which increases the amount of references to newPos,
-or decreasing the amount of references to i.*/
-bool8 sub_810EAC8(u8 prevMenuPos, u8 dpadInput)
+Could possibly be fixed by writing code which increases the amount of references to firstVisibleItem,
+or decreasing the amount of references to visibleItemIndex.*/
+bool8 TryScrollElevatorMenu(u8 previousCursorPos, u8 dpadInput)
 {
-    u8 i;
-    bool8 flag = 0;
-    u8 newPos = 0;
-    if (gUnknown_0203925A < 5)
+    u8 visibleItemIndex;
+    bool8 shouldRedraw = FALSE;
+    u8 firstVisibleItem = 0;
+    if (gScrollableMenuItemCount < 5)
     {
         return FALSE;
     }
     if (dpadInput == DPAD_UP)
     {
-        if (prevMenuPos == 0)
+        if (previousCursorPos == 0)
         {
-            newPos = gUnknown_0203925B;
-            flag = 1;
+            firstVisibleItem = gScrollableMenuSelectedItem;
+            shouldRedraw = TRUE;
         }
     }
     else if (dpadInput == DPAD_DOWN)
     {
-        if (prevMenuPos == 4)
+        if (previousCursorPos == 4)
         {
-            newPos = gUnknown_0203925B - 4;
-            flag = 1;
+            firstVisibleItem = gScrollableMenuSelectedItem - 4;
+            shouldRedraw = TRUE;
         }
     }
-    if (flag)
+    if (shouldRedraw)
     {
-        sub_810EB90(newPos, 5);
+        UpdateElevatorMenuScrollIndicators(firstVisibleItem, 5);
         Menu_BlankWindowRect(2, 1, 7, 10);
-        for (i=0; i<5 && gUnknown_03000760[newPos].var0 != 16; newPos++, i++)
+        for (visibleItemIndex = 0; visibleItemIndex < 5 && sElevatorMenuItems[firstVisibleItem].floorTextId != 16; firstVisibleItem++, visibleItemIndex++)
         {
-            Menu_PrintText(gUnknown_083F8380[gUnknown_03000760[newPos].var0], 1, i * 2 + 1);
+            Menu_PrintText(sElevatorFloorTexts[sElevatorMenuItems[firstVisibleItem].floorTextId], 1, visibleItemIndex * 2 + 1);
 #ifndef NONMATCHING
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
 #endif
         }
     }
-    return flag;
+    return shouldRedraw;
 }
 
-void sub_810EB90(u8 newPos, u8 maxItems)
+void UpdateElevatorMenuScrollIndicators(u8 firstVisibleItem, u8 visibleItemCount)
 {
-    if (newPos == 0)
+    if (firstVisibleItem == 0)
     {
-        gUnknown_0203925C ^= 0x02;
+        gScrollableMenuScrollIndicatorFlags ^= 0x02;
         DestroyVerticalScrollIndicator(TOP_ARROW);
     }
     else
     {
-        sub_810ECB0();
+        CreateElevatorMenuTopScrollIndicator();
     }
-    if (newPos + maxItems < gUnknown_0203925A)
+    if (firstVisibleItem + visibleItemCount < gScrollableMenuItemCount)
     {
-        sub_810ECD4();
+        CreateElevatorMenuBottomScrollIndicator();
     }
-    else if (newPos + maxItems == gUnknown_0203925A)
+    else if (firstVisibleItem + visibleItemCount == gScrollableMenuItemCount)
     {
-        gUnknown_0203925C ^= 0x01;
+        gScrollableMenuScrollIndicatorFlags ^= 0x01;
         DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     }
 }
 
 void ShakeScreenInElevator(void)
 {
-    u8 taskId = CreateTask(sub_810EC34, 9);
+    u8 taskId = CreateTask(Task_ShakeScreenInElevator, 9);
     gTasks[taskId].data[0] = 1;
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -1229,11 +1229,11 @@ void ShakeScreenInElevator(void)
     gTasks[taskId].data[4] = 1;
     gTasks[taskId].data[5] = 3;
     SetCameraPanningCallback(NULL);
-    sub_810ECFC();
+    StartElevatorDoorAnimation();
     PlaySE(SE_ELEVATOR);
 }
 
-void sub_810EC34(u8 taskId)
+void Task_ShakeScreenInElevator(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     task->data[1] ++;
@@ -1248,42 +1248,42 @@ void sub_810EC34(u8 taskId)
             if (task->data[2] == 23)
             {
                 PlaySE(SE_DING_DONG);
-                sub_810EC9C(taskId);
+                DestroyTaskAndEnableScript(taskId);
                 InstallCameraPanAheadCallback();
             }
         }
     }
 }
 
-void sub_810EC9C(u8 taskId)
+void DestroyTaskAndEnableScript(u8 taskId)
 {
     DestroyTask(taskId);
     ScriptContext_Enable();
 }
 
-void sub_810ECB0(void)
+void CreateElevatorMenuTopScrollIndicator(void)
 {
-    if (gUnknown_0203925C >> 1 != 1)
+    if (gScrollableMenuScrollIndicatorFlags >> 1 != 1)
     {
-        gUnknown_0203925C |= 0x2;
+        gScrollableMenuScrollIndicatorFlags |= 0x2;
         CreateVerticalScrollIndicators(TOP_ARROW, 0x24, 0x08);
     }
 }
 
-void sub_810ECD4(void)
+void CreateElevatorMenuBottomScrollIndicator(void)
 {
-    if ((gUnknown_0203925C & 1) == 0)
+    if ((gScrollableMenuScrollIndicatorFlags & 1) == 0)
     {
-        gUnknown_0203925C |= 0x1;
+        gScrollableMenuScrollIndicatorFlags |= 0x1;
         CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x24, 0x48);
     }
 }
 
-void sub_810ECFC(void)
+void StartElevatorDoorAnimation(void)
 {
-    if (FuncIsActiveTask(sub_810ED40) != TRUE)
+    if (FuncIsActiveTask(Task_ElevatorDoorAnimation) != TRUE)
     {
-        u8 taskId = CreateTask(sub_810ED40, 8);
+        u8 taskId = CreateTask(Task_ElevatorDoorAnimation, 8);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = taskId;
         gTasks[taskId].data[2] = 0;
@@ -1292,12 +1292,12 @@ void sub_810ECFC(void)
     }
 }
 
-void sub_810ED40(u8 taskId)
+void Task_ElevatorDoorAnimation(u8 taskId)
 {
-    sub_810ED60(&gTasks[taskId]);
+    AnimateElevatorDoor(&gTasks[taskId]);
 }
 
-void sub_810ED60(struct Task *task)
+void AnimateElevatorDoor(struct Task *task)
 {
     if (task->data[3] == 8)
     {
@@ -1343,13 +1343,13 @@ void sub_810ED60(struct Task *task)
     task->data[3]++;
 }
 
-void sub_810EEDC(void)
+void CloseScrollableMenu(void)
 {
-    if ((gUnknown_0203925C & 1) != 0)
+    if ((gScrollableMenuScrollIndicatorFlags & 1) != 0)
     {
         DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     }
-    if ((gUnknown_0203925C >> 1) == 1)
+    if ((gScrollableMenuScrollIndicatorFlags >> 1) == 1)
     {
         DestroyVerticalScrollIndicator(TOP_ARROW);
     }
@@ -1438,7 +1438,7 @@ void IsGrassTypeInParty(void)
     gSpecialVar_Result = FALSE;
 }
 
-const u8 *const gUnknown_083F83C0[] = {
+const u8 *const sGlassWorkshopItemTexts[] = {
     OtherText_BlueFlute,
     OtherText_YellowFlute,
     OtherText_RedFlute,
@@ -1449,148 +1449,148 @@ const u8 *const gUnknown_083F83C0[] = {
     gOtherText_CancelNoTerminator
 };
 
-void sub_810F118(u8);
-bool8 sub_810F1F4(u8, u8);
-void sub_810F2B4(void);
-void GlassWorkshopUpdateScrollIndicators(u8, u8);
+void Task_GlassWorkshopMenu(u8 taskId);
+bool8 TryScrollGlassWorkshopMenu(u8 previousCursorPos, u8 dpadInput);
+void CreateGlassWorkshopMenuBottomScrollIndicator(void);
+void GlassWorkshopUpdateScrollIndicators(u8 firstVisibleItem, u8 visibleItemCount);
 
 void ShowGlassWorkshopMenu(void)
 {
-    u8 i;
+    u8 visibleItemIndex;
     LockPlayerFieldControls();
     Menu_DrawStdWindowFrame(0, 0, 10, 11);
     InitMenu(0, 1, 1, 5, 0, 9);
-    gUnknown_0203925C = 0;
+    gScrollableMenuScrollIndicatorFlags = 0;
     ClearVerticalScrollIndicatorPalettes();
     LoadScrollIndicatorPalette();
-    sub_810F2B4();
-    for (i=0; i<5; i++)
+    CreateGlassWorkshopMenuBottomScrollIndicator();
+    for (visibleItemIndex = 0; visibleItemIndex < 5; visibleItemIndex++)
     {
-        Menu_PrintText(gUnknown_083F83C0[i], 1, 2 * i + 1);
+        Menu_PrintText(sGlassWorkshopItemTexts[visibleItemIndex], 1, 2 * visibleItemIndex + 1);
     }
-    gUnknown_0203925B = 0;
-    gUnknown_0203925A = ARRAY_COUNT(gUnknown_083F83C0);
-    CreateTask(sub_810F118, 8);
+    gScrollableMenuSelectedItem = 0;
+    gScrollableMenuItemCount = ARRAY_COUNT(sGlassWorkshopItemTexts);
+    CreateTask(Task_GlassWorkshopMenu, 8);
 }
 
-void sub_810F118(u8 taskId)
+void Task_GlassWorkshopMenu(u8 taskId)
 {
-    u8 prevCursorPos;
-    if (gMain.newKeys == DPAD_UP && gUnknown_0203925B != 0)
+    u8 previousCursorPos;
+    if (gMain.newKeys == DPAD_UP && gScrollableMenuSelectedItem != 0)
     {
-        gUnknown_0203925B--;
-        prevCursorPos = Menu_GetCursorPos();
+        gScrollableMenuSelectedItem--;
+        previousCursorPos = Menu_GetCursorPos();
         Menu_MoveCursorNoWrap(-1);
-        sub_810F1F4(prevCursorPos, DPAD_UP);
+        TryScrollGlassWorkshopMenu(previousCursorPos, DPAD_UP);
     }
-    if (gMain.newKeys == DPAD_DOWN && gUnknown_0203925B != gUnknown_0203925A - 1)
+    if (gMain.newKeys == DPAD_DOWN && gScrollableMenuSelectedItem != gScrollableMenuItemCount - 1)
     {
-        gUnknown_0203925B++;
-        prevCursorPos = Menu_GetCursorPos();
+        gScrollableMenuSelectedItem++;
+        previousCursorPos = Menu_GetCursorPos();
         Menu_MoveCursorNoWrap(1);
-        sub_810F1F4(prevCursorPos, DPAD_DOWN);
+        TryScrollGlassWorkshopMenu(previousCursorPos, DPAD_DOWN);
     }
     if (JOY_NEW(A_BUTTON))
     {
         Menu_DestroyCursor();
-        gSpecialVar_Result = gUnknown_0203925B;
+        gSpecialVar_Result = gScrollableMenuSelectedItem;
         PlaySE(SE_SELECT);
-        sub_810EEDC();
+        CloseScrollableMenu();
         Menu_EraseWindowRect(0, 0, 29, 12);
-        sub_810EC9C(taskId);
+        DestroyTaskAndEnableScript(taskId);
     }
     if (JOY_NEW(B_BUTTON))
     {
         Menu_DestroyCursor();
         gSpecialVar_Result = 0x7f;
         PlaySE(SE_SELECT);
-        sub_810EEDC();
+        CloseScrollableMenu();
         Menu_EraseWindowRect(0, 0, 29, 12);
-        sub_810EC9C(taskId);
+        DestroyTaskAndEnableScript(taskId);
     }
 }
 
 /* Removing the NONMATCHING block will swap the roles of r4 and r5 throughout.
-Could possibly be fixed by writing code which increases the amount of references to newPos,
-or decreasing the amount of references to i.*/
-bool8 sub_810F1F4(u8 prevCursorPos, u8 dpadInput)
+Could possibly be fixed by writing code which increases the amount of references to firstVisibleItem,
+or decreasing the amount of references to visibleItemIndex.*/
+bool8 TryScrollGlassWorkshopMenu(u8 previousCursorPos, u8 dpadInput)
 {
-    u8 i;
-    u8 flag = 0;
-    u8 newPos = 0;
-    if (gUnknown_0203925A < 5)
+    u8 visibleItemIndex;
+    u8 shouldRedraw = FALSE;
+    u8 firstVisibleItem = 0;
+    if (gScrollableMenuItemCount < 5)
     {
         return FALSE;
     }
     if (dpadInput == DPAD_UP)
     {
-        if (prevCursorPos == 0)
+        if (previousCursorPos == 0)
         {
-            newPos = gUnknown_0203925B;
-            flag = TRUE;
+            firstVisibleItem = gScrollableMenuSelectedItem;
+            shouldRedraw = TRUE;
         }
     }
     else if (dpadInput == DPAD_DOWN)
     {
-        if (prevCursorPos == 4)
+        if (previousCursorPos == 4)
         {
-            newPos = gUnknown_0203925B - 4;
-            flag = TRUE;
+            firstVisibleItem = gScrollableMenuSelectedItem - 4;
+            shouldRedraw = TRUE;
         }
     }
-    if (flag)
+    if (shouldRedraw)
     {
-        GlassWorkshopUpdateScrollIndicators(newPos, 5);
+        GlassWorkshopUpdateScrollIndicators(firstVisibleItem, 5);
         Menu_BlankWindowRect(2, 1, 9, 10);
-        for (i=0; i<5; newPos++, i++)
+        for (visibleItemIndex = 0; visibleItemIndex < 5; firstVisibleItem++, visibleItemIndex++)
         {
-            Menu_PrintText(gUnknown_083F83C0[newPos], 1, 2 * i + 1);
+            Menu_PrintText(sGlassWorkshopItemTexts[firstVisibleItem], 1, 2 * visibleItemIndex + 1);
 #ifndef NONMATCHING
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
 #endif
         }
     }
-    return flag;
+    return shouldRedraw;
 }
 
-void sub_810F290(void)
+void CreateGlassWorkshopMenuTopScrollIndicator(void)
 {
-    if (gUnknown_0203925C >> 1 != 1)
+    if (gScrollableMenuScrollIndicatorFlags >> 1 != 1)
     {
-        gUnknown_0203925C |= 0x02;
+        gScrollableMenuScrollIndicatorFlags |= 0x02;
         CreateVerticalScrollIndicators(TOP_ARROW, 0x2c, 0x08);
     }
 }
 
-void sub_810F2B4(void)
+void CreateGlassWorkshopMenuBottomScrollIndicator(void)
 {
-    if (!(gUnknown_0203925C & 0x01))
+    if (!(gScrollableMenuScrollIndicatorFlags & 0x01))
     {
-        gUnknown_0203925C |= 0x01;
+        gScrollableMenuScrollIndicatorFlags |= 0x01;
         CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x2c, 0x58);
     }
 }
 
-void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
+void GlassWorkshopUpdateScrollIndicators(u8 firstVisibleItem, u8 visibleItemCount)
 {
-    if (newPos == 0)
+    if (firstVisibleItem == 0)
     {
-        gUnknown_0203925C ^= 0x02;
+        gScrollableMenuScrollIndicatorFlags ^= 0x02;
         DestroyVerticalScrollIndicator(TOP_ARROW);
     }
     else
     {
-        sub_810F290();
+        CreateGlassWorkshopMenuTopScrollIndicator();
     }
-    if (newPos + maxItems < gUnknown_0203925A)
+    if (firstVisibleItem + visibleItemCount < gScrollableMenuItemCount)
     {
-        sub_810F2B4();
+        CreateGlassWorkshopMenuBottomScrollIndicator();
     }
-    else if (newPos + maxItems == gUnknown_0203925A)
+    else if (firstVisibleItem + visibleItemCount == gScrollableMenuItemCount)
     {
-        gUnknown_0203925C ^= 0x01;
+        gScrollableMenuScrollIndicatorFlags ^= 0x01;
         DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     }
 }
@@ -1790,12 +1790,12 @@ bool8 IsPokerusInParty(void)
     return TRUE;
 }
 
-static void sub_810F7A8(u8);
-static void sub_810F814(u8);
+static void Task_ShakeCamera(u8 taskId);
+static void EndCameraShake(u8 taskId);
 
 void ShakeCamera(void)
 {
-    u8 taskId = CreateTask(sub_810F7A8, 9);
+    u8 taskId = CreateTask(Task_ShakeCamera, 9);
     gTasks[taskId].data[0] = gSpecialVar_0x8005;
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -1806,7 +1806,7 @@ void ShakeCamera(void)
     PlaySE(SE_M_STRENGTH);
 }
 
-static void sub_810F7A8(u8 taskId)
+static void Task_ShakeCamera(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     task->data[1]++;
@@ -1821,14 +1821,14 @@ static void sub_810F7A8(u8 taskId)
             SetCameraPanning(task->data[0], task->data[4]);
             if (task->data[2] == 8)
             {
-                sub_810F814(taskId);
+                EndCameraShake(taskId);
                 InstallCameraPanAheadCallback();
             }
         }
     }
 }
 
-static void sub_810F814(u8 taskId)
+static void EndCameraShake(u8 taskId)
 {
     DestroyTask(taskId);
     ScriptContext_Enable();
