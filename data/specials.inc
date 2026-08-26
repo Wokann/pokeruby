@@ -24,8 +24,8 @@ gSpecials::
 	def_special ToggleCurSecretBaseRegistry
 	def_special SecretBasePC_Decoration
 	def_special SecretBasePC_Registry
-	def_special sub_80BCE1C
-	def_special sub_80BCE90
+	def_special PrepareSecretBaseTrainerBattle
+	def_special GetSecretBaseOwnerAndState
 	def_special InitSecretBaseDecorationSprites
 	def_special SetDecoration
 	def_special sub_8100B20
@@ -33,7 +33,7 @@ gSpecials::
 	def_special SetSecretBaseOwnerGfxId
 	def_special PutAwayDecorationIteration
 	def_special EnterNewlyCreatedSecretBase
-	def_special sub_80BCE4C
+	def_special SetBattledOwnerFromResult
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered
 	def_special sub_808347C

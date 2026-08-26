@@ -286,7 +286,7 @@ SecretBase_EventScript_PutAwayDecorationEnd:
 	end
 
 SecretBase_EventScript_RecordMixTrainer:: @ 81A2FC0
-	special sub_80BCE90
+	special GetSecretBaseOwnerAndState
 	compare VAR_0x8004, 0
 	goto_if_eq SecretBase_EventScript_Trainer0
 	compare VAR_0x8004, 1
@@ -319,7 +319,7 @@ SecretBase_EventScript_Trainer0:: @ 81A3032
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer0DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer0DeclineBattle
@@ -334,7 +334,7 @@ SecretBase_EventScript_Trainer0PreChampion:: @ 81A3086
 
 SecretBase_EventScript_Trainer0DeclineBattle:: @ 81A308F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer0DeclineBattle, MSGBOX_NPC
 	end
@@ -353,7 +353,7 @@ SecretBase_EventScript_Trainer1:: @ 81A30AE
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer1DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer1DeclineBattle
@@ -368,7 +368,7 @@ SecretBase_EventScript_Trainer1PreChampion:: @ 81A3102
 
 SecretBase_EventScript_Trainer1DeclineBattle:: @ 81A310B
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer1DeclineBattle, MSGBOX_NPC
 	end
@@ -387,7 +387,7 @@ SecretBase_EventScript_Trainer2:: @ 81A312A
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer2DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer2DeclineBattle
@@ -402,7 +402,7 @@ SecretBase_EventScript_Trainer2PreChampion:: @ 81A317E
 
 SecretBase_EventScript_Trainer2DeclineBattle:: @ 81A3187
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer2DeclineBattle, MSGBOX_NPC
 	end
@@ -421,7 +421,7 @@ SecretBase_EventScript_Trainer3:: @ 81A31A6
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer3DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer3DeclineBattle
@@ -436,7 +436,7 @@ SecretBase_EventScript_Trainer3PreChampion:: @ 81A31FA
 
 SecretBase_EventScript_Trainer3DeclineBattle:: @ 81A3203
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer3DeclineBattle, MSGBOX_NPC
 	end
@@ -455,7 +455,7 @@ SecretBase_EventScript_Trainer4:: @ 81A3222
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer4DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer4DeclineBattle
@@ -470,7 +470,7 @@ SecretBase_EventScript_Trainer4PreChampion:: @ 81A3276
 
 SecretBase_EventScript_Trainer4DeclineBattle:: @ 81A327F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer4DeclineBattle, MSGBOX_NPC
 	end
@@ -489,7 +489,7 @@ SecretBase_EventScript_Trainer5:: @ 81A329E
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer5DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer5DeclineBattle
@@ -504,7 +504,7 @@ SecretBase_EventScript_Trainer5PreChampion:: @ 81A32F2
 
 SecretBase_EventScript_Trainer5DeclineBattle:: @ 81A32FB
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer5DeclineBattle, MSGBOX_NPC
 	end
@@ -523,7 +523,7 @@ SecretBase_EventScript_Trainer6:: @ 81A331A
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer6DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer6DeclineBattle
@@ -538,7 +538,7 @@ SecretBase_EventScript_Trainer6PreChampion:: @ 81A336E
 
 SecretBase_EventScript_Trainer6DeclineBattle:: @ 81A3377
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer6DeclineBattle, MSGBOX_NPC
 	end
@@ -557,7 +557,7 @@ SecretBase_EventScript_Trainer7:: @ 81A3396
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer7DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer7DeclineBattle
@@ -572,7 +572,7 @@ SecretBase_EventScript_Trainer7PreChampion:: @ 81A33EA
 
 SecretBase_EventScript_Trainer7DeclineBattle:: @ 81A33F3
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer7DeclineBattle, MSGBOX_NPC
 	end
@@ -591,7 +591,7 @@ SecretBase_EventScript_Trainer8:: @ 81A3412
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer8DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer8DeclineBattle
@@ -606,7 +606,7 @@ SecretBase_EventScript_Trainer8PreChampion:: @ 81A3466
 
 SecretBase_EventScript_Trainer8DeclineBattle:: @ 81A346F
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer8DeclineBattle, MSGBOX_NPC
 	end
@@ -625,7 +625,7 @@ SecretBase_EventScript_Trainer9:: @ 81A348E
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_Trainer9DeclineBattle
 	setvar VAR_RESULT, 1
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_Trainer9DeclineBattle
@@ -640,7 +640,7 @@ SecretBase_EventScript_Trainer9PreChampion:: @ 81A34E2
 
 SecretBase_EventScript_Trainer9DeclineBattle:: @ 81A34EB
 	setvar VAR_RESULT, 0
-	special sub_80BCE4C
+	special SetBattledOwnerFromResult
 	erasebox 0, 0, 15, 10
 	msgbox SecretBase_Text_Trainer9DeclineBattle, MSGBOX_NPC
 	end
@@ -650,7 +650,7 @@ SecretBase_EventScript_Trainer9PostBattle:: @ 81A3501
 	end
 
 SecretBase_EventScript_BattleTrainer:: @ 81A350A
-	special sub_80BCE1C
+	special PrepareSecretBaseTrainerBattle
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 0
 	special StartSpecialBattle

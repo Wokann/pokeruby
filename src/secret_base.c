@@ -1137,7 +1137,7 @@ void unref_sub_80BCD7C(u8 secretBaseIndex)
     }
 }
 
-void sub_80BCE1C(void)
+void PrepareSecretBaseTrainerBattle(void)
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 
@@ -1145,12 +1145,12 @@ void sub_80BCE1C(void)
     CreateSecretBaseEnemyParty(&gSaveBlock1.secretBases[curBaseIndex]);
 }
 
-void sub_80BCE4C()
+void SetBattledOwnerFromResult()
 {
     gSaveBlock1.secretBases[VarGet(VAR_CURRENT_SECRET_BASE)].battledOwnerToday = gSpecialVar_Result;
 }
 
-void sub_80BCE90()
+void GetSecretBaseOwnerAndState()
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 
