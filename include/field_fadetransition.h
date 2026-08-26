@@ -25,7 +25,7 @@ void sub_8080F2C(u8);
 void sub_8080F48(void);
 void sub_8080F58(void);
 void sub_8080F68(void);
-void sub_8080F9C(void);
+void DoPortholeWarp(void);
 void debug_sub_80888D8(void);
 void WarpFadeScreen(void);
 void pal_fill_for_map_transition(void);

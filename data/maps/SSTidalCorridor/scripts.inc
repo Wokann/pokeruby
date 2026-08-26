@@ -154,7 +154,7 @@ SSTidalCorridor_EventScript_Porthole:: @ 815FE3A
 	end
 
 SSTidalCorridor_EventScript_LookThroughPorthole:: @ 815FE5B
-	special sub_80C7958
+	special LookThroughPorthole
 	waitstate
 	end
 

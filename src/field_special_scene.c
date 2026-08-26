@@ -55,13 +55,13 @@ static const s8 gTruckCamera_HorizontalTable[] =
     0,
 };
 
-const u8 gUnknown_083D295F[] =
+const u8 sSSTidalSailEastMovementScript[] =
 {
     STEP_18,
     STEP_END,
 };
 
-const u8 gUnknown_083D2961[] =
+const u8 sSSTidalSailWestMovementScript[] =
 {
     STEP_17,
     STEP_END,
@@ -275,7 +275,7 @@ void EndTruckSequence(u8 taskId)
     }
 }
 
-bool8 sub_80C7754(void)
+bool8 TrySetPortholeWarpDestination(void)
 {
     s8 mapGroup, mapNum;
     s16 x, y;
@@ -330,12 +330,12 @@ void Task_HandlePorthole(u8 taskId)
         // run this once.
         if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT) // which direction?
         {
-            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, gUnknown_083D295F);
+            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailEastMovementScript);
             data[0] = IDLE_CHECK; // run case 1.
         }
         else
         {
-            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, gUnknown_083D2961);
+            ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailWestMovementScript);
             data[0] = IDLE_CHECK; // run case 1.
         }
         break;
@@ -349,7 +349,7 @@ void Task_HandlePorthole(u8 taskId)
     }
 }
 
-void sub_80C78A0(void)
+void ShowSSTidalWhileSailing(void)
 {
     u8 spriteId = AddPseudoObjectEvent(0x8C, SpriteCallbackDummy, 112, 80, 0);
 
@@ -365,21 +365,21 @@ void sub_80C78A0(void)
     }
 }
 
-void sub_80C791C(void)
+void FieldCB_ShowPortholeView(void)
 {
-    sub_80C78A0();
+    ShowSSTidalWhileSailing();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     pal_fill_black();
     CreateTask(Task_HandlePorthole, 80);
     LockPlayerFieldControls();
 }
 
-void sub_80C7958(void)
+void LookThroughPorthole(void)
 {
     FlagSet(FLAG_SYS_CRUISE_MODE);
     FlagSet(FLAG_DONT_TRANSITION_MUSIC);
     FlagSet(FLAG_HIDE_MAP_NAME_POPUP);
     saved_warp2_set(0, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1);
-    sub_80C7754();
-    sub_8080F9C();
+    TrySetPortholeWarpDestination();
+    DoPortholeWarp();
 }
