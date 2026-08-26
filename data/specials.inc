@@ -11,9 +11,9 @@ gSpecials::
 	def_special ScrSpecial_HealPlayerParty
 	def_special SetCableClubWarp
 	def_special DoCableClubWarp
-	def_special sub_80810DC
-	def_special sub_80839A4
-	def_special sub_80839D0
+	def_special ReturnFromLinkRoom
+	def_special CleanupLinkRoomState
+	def_special ExitLinkRoom
 	def_special SetPlayerSecretBase
 	def_special CheckPlayerHasSecretBase
 	def_special EnterSecretBase
@@ -36,12 +36,12 @@ gSpecials::
 	def_special SetBattledOwnerFromResult
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered
-	def_special sub_808347C
-	def_special sub_80834E4
-	def_special sub_808350C
+	def_special TryBattleLinkup
+	def_special TryTradeLinkup
+	def_special TryRecordMixLinkup
 	def_special CloseLink
-	def_special sub_8083B90
-	def_special sub_8083B5C
+	def_special ColosseumPlayerSpotTriggered
+	def_special PlayerEnteredTradeSeat
 	def_special sub_8083B80
 	def_special sub_8083820
 	def_special TryBerryBlenderLinkup
@@ -50,7 +50,7 @@ gSpecials::
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
 	def_special ChooseHalfPartyForBattle
-	def_special sub_8083BDC
+	def_special Script_ShowLinkTrainerCard
 	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Berry_FadeAndGoToBerryBagMenu
 	def_special ObjectEventInteractionPlantBerryTree
@@ -303,8 +303,8 @@ gSpecials::
 	def_special LeadMonHasEffortRibbon
 	def_special GivLeadMonEffortRibbon
 	def_special ScrSpecial_AreLeadMonEVsMaxedOut
-	def_special sub_8064EAC
-	def_special sub_8064ED4
+	def_special Script_FacePlayer
+	def_special Script_ClearHeldMovement
 	def_special InitRoamer
 	def_special TryUpdateRusturfTunnelState
 	def_special IsGrassTypeInParty
@@ -349,7 +349,7 @@ gSpecials::
 	def_special TryEnableBravoTrainerBattleTower
 	def_special GetNameOfEnigmaBerryInPlayerParty
 	def_special ScriptRandom
-	def_special sub_80835D8
+	def_special ValidateMixingGameLanguage
 .ifdef GERMAN
 	def_special nullsub_814B200
 .endif

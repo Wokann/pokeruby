@@ -555,7 +555,7 @@ static bool8 sub_8083444(u8 taskId)
     return FALSE;
 }
 
-void sub_808347C(u8 arg0)
+void TryBattleLinkup(void)
 {
     u32 r3 = 2;
     u32 r2 = 2;
@@ -580,14 +580,14 @@ void sub_808347C(u8 arg0)
     sub_8082CD4(r3, r2);
 }
 
-void sub_80834E4(void)
+void TryTradeLinkup(void)
 {
     gLinkType = 0x1133;
     gBattleTypeFlags = 0;
     sub_8082CD4(2, 2);
 }
 
-void sub_808350C(void)
+void TryRecordMixLinkup(void)
 {
     gSpecialVar_Result = 0;
     gLinkType = 0x3311;
@@ -630,7 +630,7 @@ static void sub_808353C(u8 taskId)
     }
 }
 
-void sub_80835D8(void)
+void ValidateMixingGameLanguage(void)
 {
     int taskId = FindTaskIdByFunc(sub_808353C);
 
@@ -805,7 +805,7 @@ static void sub_8083958(void)
     SetMainCallback2(sub_8071B28);
 }
 
-void sub_80839A4(void)
+void CleanupLinkRoomState(void)
 {
     if (gSpecialVar_0x8004 == 1 || gSpecialVar_0x8004 == 2 || gSpecialVar_0x8004 == 5)
     {
@@ -815,7 +815,7 @@ void sub_80839A4(void)
     copy_saved_warp2_bank_and_enter_x_to_warp1(0x7F);
 }
 
-void sub_80839D0(void)
+void ExitLinkRoom(void)
 {
     sub_805559C();
 }
@@ -909,7 +909,7 @@ static void sub_8083B44(u8 taskId)
     DestroyTask(taskId);
 }
 
-void sub_8083B5C(void)
+void PlayerEnteredTradeSeat(void)
 {
     sub_8083A84(sub_8083B44);
 }
@@ -925,7 +925,7 @@ void sub_8083B80(void)
     ScriptContext_Stop();
 }
 
-void sub_8083B90(void)
+void ColosseumPlayerSpotTriggered(void)
 {
     gLinkType = 0x2211;
     sub_8083A84(sub_808382C);
@@ -938,7 +938,7 @@ void unref_sub_8083BB0(void)
     ScriptContext_Stop();
 }
 
-void sub_8083BDC(void)
+void Script_ShowLinkTrainerCard(void)
 {
     TrainerCard_ShowLinkCard(gSpecialVar_0x8006, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }

@@ -10,7 +10,7 @@ bool8 sub_8064DB4(void);
 void LockSelectedObjectEvent(void);
 void ScriptUnfreezeObjectEvents(void);
 void unref_sub_8064E5C(void);
-void sub_8064EAC(void);
-void sub_8064ED4(void);
+void Script_FacePlayer(void);
+void Script_ClearHeldMovement(void);
 
 #endif // GUARD_EVENT_OBJECT_LOCK_H

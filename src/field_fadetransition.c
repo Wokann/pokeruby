@@ -506,7 +506,7 @@ void sub_8081050(u8 taskId)
     }
 }
 
-void sub_80810DC(void)
+void ReturnFromLinkRoom(void)
 {
     CreateTask(sub_8081050, 10);
 }
