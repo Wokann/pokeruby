@@ -8,7 +8,7 @@ SouthernIsland_Interior_OnResume:: @ 8160B5E
 	end
 
 SouthernIsland_Interior_EventScript_TryRemoveLati:: @ 8160B68
-	removeobject 2
+	removeobject LOCALID_SOUTHERN_ISLAND_LATI
 	return
 
 SouthernIsland_Interior_OnTransition:: @ 8160B6C
@@ -47,17 +47,17 @@ SouthernIsland_Interior_EventScript_Lati:: @ 8160BA7
 	goto_if_unset FLAG_SYS_HAS_EON_TICKET, SouthernIsland_Interior_EventScript_Sign
 	setflag FLAG_ENCOUNTERED_LATIAS_OR_LATIOS
 	special SpawnCameraDummy
-	applymovement 127, SouthernIsland_Interior_Movement_CameraPanUp
+	applymovement LOCALID_CAMERA, SouthernIsland_Interior_Movement_CameraPanUp
 	waitmovement 0
 	delay 50
 	waitse
 	playmoncry SPECIES_LATIAS_OR_LATIOS, 0
 	delay 30
 	waitmoncry
-	addobject 2
+	addobject LOCALID_SOUTHERN_ISLAND_LATI
 	delay 30
-	applymovement 127, SouthernIsland_Interior_Movement_CameraPanDown
-	applymovement 2, SouthernIsland_Interior_Movement_LatiApproach
+	applymovement LOCALID_CAMERA, SouthernIsland_Interior_Movement_CameraPanDown
+	applymovement LOCALID_SOUTHERN_ISLAND_LATI, SouthernIsland_Interior_Movement_LatiApproach
 	waitmovement 0
 	delay 50
 	special RemoveCameraDummy

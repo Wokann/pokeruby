@@ -17,8 +17,8 @@ SouthernIsland_Exterior_EventScript_Sailor:: @ 8160AE0
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 30
-	hideobjectat 1, MAP_SOUTHERN_ISLAND_EXTERIOR
-	setvar VAR_0x8004, 2
+	hideobjectat LOCALID_SOUTHERN_ISLAND_SAILOR, MAP_SOUTHERN_ISLAND_EXTERIOR
+	setvar VAR_0x8004, LOCALID_SOUTHERN_ISLAND_SS_TIDAL
 	call Common_EventScript_FerryDepartIsland
 	warp MAP_LILYCOVE_CITY_HARBOR, 255, 8, 11
 	waitstate
