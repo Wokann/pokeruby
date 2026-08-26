@@ -1056,19 +1056,19 @@ bool32 GetTrainerFlagFromScriptPointer(const u8 *data)
     return FlagGet(TRAINER_FLAG_START + flag);
 }
 
-void SetUpTrainerMovement(void)
+void SetTrainerFacingDirection(void)
 {
     struct ObjectEvent *objectEvent = &gObjectEvents[gSelectedObjectEvent];
 
     SetTrainerMovementType(objectEvent, GetTrainerFacingDirectionMovementType(objectEvent->facingDirection));
 }
 
-u8 ScrSpecial_GetTrainerBattleMode(void)
+u8 GetTrainerBattleMode(void)
 {
     return sTrainerBattleMode;
 }
 
-u8 GetTrainerFlag(void)
+bool8 GetTrainerFlag(void)
 {
     return FlagGet(CurrentOpponentTrainerFlag());
 }
@@ -1173,7 +1173,7 @@ u8 *BattleSetup_GetTrainerPostBattleScript(void)
         return gUnknown_081C6C02;
 }
 
-void ScrSpecial_ShowTrainerNonBattlingSpeech(void)
+void ShowTrainerCantBattleSpeech(void)
 {
     ShowFieldMessage(GetTrainerNonBattlingSpeech());
 }
@@ -1474,7 +1474,7 @@ bool8 ShouldTryRematchBattle(void)
         return WasSecondRematchWon(gTrainerEyeTrainers, gTrainerBattleOpponent);
 }
 
-u8 IsTrainerReadyForRematch(void)
+bool8 IsTrainerReadyForRematch(void)
 {
     return GetTrainerEyeRematchFlag(gTrainerEyeTrainers, gTrainerBattleOpponent);
 }

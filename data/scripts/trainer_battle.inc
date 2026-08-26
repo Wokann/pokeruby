@@ -1,7 +1,7 @@
 EventScript_StartTrainerBattle:: @ 819F80B
 	lock
 	special PlayTrainerEncounterMusic
-	special EndTrainerApproach
+	special DoTrainerApproach
 	waitstate
 	goto EventScript_DoTrainerBattle
 
@@ -14,7 +14,7 @@ EventScript_TryDoNormalTrainerBattle:: @ 819F818
 	compare VAR_RESULT, 0
 	goto_if_ne EventScript_NoNormalTrainerBattle
 	special PlayTrainerEncounterMusic
-	special SetUpTrainerMovement
+	special SetTrainerFacingDirection
 	goto EventScript_DoTrainerBattle
 
 EventScript_NoNormalTrainerBattle:
@@ -31,11 +31,11 @@ EventScript_TryDoDoubleTrainerBattle:: @ 819F840
 	compare VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS
 	goto_if_ne EventScript_NotEnoughMonsForDoubleBattle
 	special PlayTrainerEncounterMusic
-	special SetUpTrainerMovement
+	special SetTrainerFacingDirection
 	goto EventScript_DoTrainerBattle
 
 EventScript_NotEnoughMonsForDoubleBattle:
-	special ScrSpecial_ShowTrainerNonBattlingSpeech
+	special ShowTrainerCantBattleSpeech
 	waitmessage
 	waitbuttonpress
 	release
@@ -57,7 +57,7 @@ EventScript_TryDoRematchBattle:: @ 819F887
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_NoRematchTrainerBattle
 	special PlayTrainerEncounterMusic
-	special SetUpTrainerMovement
+	special SetTrainerFacingDirection
 	special ShowTrainerIntroSpeech
 	waitmessage
 	waitbuttonpress
@@ -77,7 +77,7 @@ EventScript_TryDoDoubleRematchBattle:: @ 819F8AE
 	compare VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS
 	goto_if_ne EventScript_NotEnoughMonsForDoubleRematchBattle
 	special PlayTrainerEncounterMusic
-	special SetUpTrainerMovement
+	special SetTrainerFacingDirection
 	special ShowTrainerIntroSpeech
 	waitmessage
 	waitbuttonpress
@@ -90,7 +90,7 @@ EventScript_NoDoubleRematchTrainerBattle:
 	gotopostbattlescript
 
 EventScript_NotEnoughMonsForDoubleRematchBattle:
-	special ScrSpecial_ShowTrainerNonBattlingSpeech
+	special ShowTrainerCantBattleSpeech
 	waitmessage
 	waitbuttonpress
 	release
@@ -110,7 +110,7 @@ EventScript_DoTrainerBattle:
 	waitmessage
 	waitbuttonpress
 	dotrainerbattle
-	specialvar VAR_RESULT, ScrSpecial_GetTrainerBattleMode
+	specialvar VAR_RESULT, GetTrainerBattleMode
 	compare VAR_RESULT, TRAINER_BATTLE_SINGLE
 	goto_if_eq EventScript_EndTrainerBattle
 	compare VAR_RESULT, TRAINER_BATTLE_CONTINUE_SCRIPT

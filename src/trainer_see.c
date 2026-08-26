@@ -16,7 +16,7 @@ static bool8 CheckTrainer(u8);
 static void sub_8084894(struct Sprite *sprite, u16 a2, u8 a3);
 static void objc_exclamation_mark_probably(struct Sprite *sprite);
 static bool8 TrainerCanApproachPlayer(struct ObjectEvent *);
-static void sub_80842C8(struct ObjectEvent *, u8);
+static void InitTrainerApproachTask(struct ObjectEvent *, u8);
 static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction);
 static void RunTrainerSeeFuncList(u8 taskId);
 
@@ -67,7 +67,7 @@ static bool8 CheckTrainer(u8 objEventId)
         if (canApproach)
         {
             TrainerWantsBattle(objEventId, scriptPtr);
-            sub_80842C8(trainerObj, (canApproach - 1));
+            InitTrainerApproachTask(trainerObj, (canApproach - 1));
             return TRUE;
         }
         else
@@ -191,7 +191,7 @@ static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8
 #define tTrainerObjHi   data[1]
 #define tTrainerObjLo   data[2]
 
-static void sub_80842C8(struct ObjectEvent *trainerObj, u8 b)
+static void InitTrainerApproachTask(struct ObjectEvent *trainerObj, u8 b)
 {
     u8 taskId = CreateTask(RunTrainerSeeFuncList, 0x50);
     struct Task *task = &gTasks[taskId];
@@ -201,7 +201,7 @@ static void sub_80842C8(struct ObjectEvent *trainerObj, u8 b)
     task->data[3] = b;
 }
 
-static void sub_80842FC(TaskFunc followupFunc)
+static void StartTrainerApproach(TaskFunc followupFunc)
 {
     TaskFunc taskFunc = RunTrainerSeeFuncList;
     u8 taskId = FindTaskIdByFunc(taskFunc);
@@ -447,14 +447,14 @@ void sub_8084794(struct ObjectEvent *var)
     StoreWordInTwoHalfwords(&gTasks[CreateTask(sub_80846E4, 0)].data[1], (u32)var);
 }
 
-static void Task_DestroyTrainerApproachTask(u8);
+static void Task_EndTrainerApproach(u8);
 
-void EndTrainerApproach(void)
+void DoTrainerApproach(void)
 {
-    sub_80842FC(Task_DestroyTrainerApproachTask);
+    StartTrainerApproach(Task_EndTrainerApproach);
 }
 
-static void Task_DestroyTrainerApproachTask(u8 taskId)
+static void Task_EndTrainerApproach(u8 taskId)
 {
     DestroyTask(taskId);
     ScriptContext_Enable();

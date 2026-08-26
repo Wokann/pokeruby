@@ -59,11 +59,11 @@ gSpecials::
 	def_special ObjectEventInteractionWaterBerryTree
 	def_special PlayerHasBerries
 	def_special IsEnigmaBerryValid
-	def_special ScrSpecial_GetTrainerBattleMode
+	def_special GetTrainerBattleMode
 	def_special ShowTrainerIntroSpeech
-	def_special ScrSpecial_ShowTrainerNonBattlingSpeech
+	def_special ShowTrainerCantBattleSpeech
 	def_special GetTrainerFlag
-	def_special EndTrainerApproach
+	def_special DoTrainerApproach
 	def_special PlayTrainerEncounterMusic
 	def_special ShouldTryRematchBattle
 	def_special IsTrainerReadyForRematch
@@ -322,7 +322,7 @@ gSpecials::
 	def_special ScrSpecial_StartGroudonKyogreBattle
 	def_special ScrSpecial_StartRayquazaBattle
 	def_special ScrSpecial_StartRegiBattle
-	def_special SetUpTrainerMovement
+	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect2
 	def_special FoundBlackGlasses
 	def_special sub_807E25C

@@ -58,19 +58,23 @@ u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data);
 void TrainerWantsBattle(u8, const u8 *);
 
 bool32 GetTrainerFlagFromScriptPointer(const u8 *data);
-//u8 ScrSpecial_GetTrainerBattleMode(void);
+void SetTrainerFacingDirection(void);
+u8 GetTrainerBattleMode(void);
+bool8 GetTrainerFlag(void);
 //void sub_808257C(void);
 //void unref_sub_8082590(void); // unused
 u8 HasTrainerAlreadyBeenFought(u16);
 void SetTrainerFlag(u16);
 void ClearTrainerFlag(u16);
 void BattleSetup_StartTrainerBattle(void);
+void BattleSetup_StartRematchBattle(void);
 void CB2_EndTrainerBattle(void);
 void do_choose_name_or_words_screen(void);
 u8 *BattleSetup_GetScriptAddrAfterBattle(void);
 u8 *BattleSetup_GetTrainerPostBattleScript(void);
-//void ScrSpecial_ShowTrainerNonBattlingSpeech(void);
-//void PlayTrainerEncounterMusic(void);
+void ShowTrainerIntroSpeech(void);
+void ShowTrainerCantBattleSpeech(void);
+void PlayTrainerEncounterMusic(void);
 //u8 *SanitizeString(u8 *str);
 u8 *GetTrainerLoseText(void);
 //u8 *unref_sub_808286C(void);
@@ -91,5 +95,7 @@ void TryUpdateRandomTrainerRematches(u16, u16);
 s32 DoesSomeoneWantRematchIn(u16 mapGroup, u16 mapNum);
 s32 IsRematchTrainerIn(u16 mapGroup, u16 mapNum);
 u16 GetRematchTrainerId(u16 a1);
+bool8 ShouldTryRematchBattle(void);
+bool8 IsTrainerReadyForRematch(void);
 
 #endif // GUARD_BATTLE_SETUP_H
