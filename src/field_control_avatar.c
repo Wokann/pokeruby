@@ -63,9 +63,9 @@ extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
 extern u8 EventScript_RegionMap[];
 extern u8 PlayersHouse_1F_EventScript_RunningShoesManual[];
-extern u8 EventScript_PictureBookshelf[];
-extern u8 EventScript_Bookshelf[];
-extern u8 EventScript_PokemonCenterBookshelf[];
+extern u8 EventScript_PictureBookShelf[];
+extern u8 EventScript_BookShelf[];
+extern u8 EventScript_PokemonCenterBookShelf[];
 extern u8 EventScript_Vase[];
 extern u8 EventScript_EmptyTrashCan[];
 extern u8 EventScript_ShopShelf[];
@@ -471,11 +471,11 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     if (MetatileBehavior_IsRunningShoesManual(metatileBehavior) == TRUE)
         return PlayersHouse_1F_EventScript_RunningShoesManual;
     if (MetatileBehavior_IsPictureBookShelf(metatileBehavior) == TRUE)
-        return EventScript_PictureBookshelf;
+        return EventScript_PictureBookShelf;
     if (MetatileBehavior_IsBookShelf(metatileBehavior) == TRUE)
-        return EventScript_Bookshelf;
+        return EventScript_BookShelf;
     if (MetatileBehavior_IsPokeCenterBookShelf(metatileBehavior) == TRUE)
-        return EventScript_PokemonCenterBookshelf;
+        return EventScript_PokemonCenterBookShelf;
     if (MetatileBehavior_IsVase(metatileBehavior) == TRUE)
         return EventScript_Vase;
     if (MetatileBehavior_IsTrashCan(metatileBehavior) == TRUE)
