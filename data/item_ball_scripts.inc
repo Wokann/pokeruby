@@ -374,7 +374,7 @@ AbandonedShip_HiddenFloorRooms_EventScript_ItemTMRainDance:: @ 81B18F2
 	finditem ITEM_TM18_RAIN_DANCE
 	end
 
-ScorchedSlab_EventScript_1B18FF:: @ 81B18FF
+ScorchedSlab_EventScript_ItemTMSunnyDay:: @ 81B18FF
 	finditem ITEM_TM11_SUNNY_DAY
 	end
 
