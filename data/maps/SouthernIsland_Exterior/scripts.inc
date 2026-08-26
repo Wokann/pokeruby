@@ -1,18 +1,18 @@
 SouthernIsland_Exterior_MapScripts:: @ 8160AD6
-	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Exterior_MapScript1_160ADC
+	map_script MAP_SCRIPT_ON_TRANSITION, SouthernIsland_Exterior_OnTransition
 	.byte 0
 
-SouthernIsland_Exterior_MapScript1_160ADC:: @ 8160ADC
+SouthernIsland_Exterior_OnTransition:: @ 8160ADC
 	setflag FLAG_LANDMARK_SOUTHERN_ISLAND
 	end
 
-SouthernIsland_Exterior_EventScript_160AE0:: @ 8160AE0
+SouthernIsland_Exterior_EventScript_Sailor:: @ 8160AE0
 	lock
 	faceplayer
-	msgbox SouthernIsland_Exterior_Text_1C5215, MSGBOX_YESNO
+	msgbox EventTicket_Text_SouthernIslandSailBack, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq SouthernIsland_Exterior_EventScript_160B25
-	msgbox SouthernIsland_Exterior_Text_1C5281, MSGBOX_DEFAULT
+	goto_if_eq SouthernIsland_Exterior_EventScript_AsYouLike
+	msgbox EventTicket_Text_SailHome, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
@@ -25,30 +25,30 @@ SouthernIsland_Exterior_EventScript_160AE0:: @ 8160AE0
 	release
 	end
 
-SouthernIsland_Exterior_EventScript_160B25:: @ 8160B25
-	msgbox SouthernIsland_Exterior_Text_1C52A6, MSGBOX_DEFAULT
+SouthernIsland_Exterior_EventScript_AsYouLike:: @ 8160B25
+	msgbox EventTicket_Text_AsYouLike, MSGBOX_DEFAULT
 	release
 	end
 
 Ferry_EventScript_DepartIslandSouth:: @ 8160B2F
-	applymovement LOCALID_PLAYER, BattleTower_Outside_Movement_160B45
+	applymovement LOCALID_PLAYER, Ferry_Movement_DepartIslandBoardSouth
 	waitmovement 0
 	return
 
 Ferry_EventScript_DepartIslandWest:: @ 8160B3A
-	applymovement LOCALID_PLAYER, BattleTower_Outside_Movement_160B47
+	applymovement LOCALID_PLAYER, Ferry_Movement_DepartIslandBoardWest
 	waitmovement 0
 	return
 
-BattleTower_Outside_Movement_160B45:: @ 8160B45
+Ferry_Movement_DepartIslandBoardSouth:: @ 8160B45
 	walk_down
 	step_end
 
-BattleTower_Outside_Movement_160B47:: @ 8160B47
+Ferry_Movement_DepartIslandBoardWest:: @ 8160B47
 	walk_left
 	walk_in_place_fastest_down
 	step_end
 
-SouthernIsland_Exterior_EventScript_160B4A:: @ 8160B4A
-	msgbox SouthernIsland_Exterior_Text_1C52FB, MSGBOX_SIGN
+SouthernIsland_Exterior_EventScript_Sign:: @ 8160B4A
+	msgbox SouthernIsland_Exterior_Text_Sign, MSGBOX_SIGN
 	end
