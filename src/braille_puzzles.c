@@ -22,7 +22,7 @@
 extern u8 gPlayerPartyCount;
 extern u8 gLastFieldPokeMenuOpened;
 
-extern u8 S_OpenRegiceChamber[]; // regiice event script
+extern u8 IslandCave_EventScript_OpenRegiEntrance[]; // Regice entrance script
 
 bool8 ShouldDoBrailleDigEffect(void)
 {
@@ -197,7 +197,7 @@ void Task_BrailleWait(u8 taskId)
         break;
     case 4:
         ScriptUnfreezeObjectEvents();
-        ScriptContext_SetupScript(S_OpenRegiceChamber);
+        ScriptContext_SetupScript(IslandCave_EventScript_OpenRegiEntrance);
         DestroyTask(taskId);
         break;
     }
