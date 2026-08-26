@@ -1265,7 +1265,7 @@ static void RunFieldCallback(void)
     if (gFieldCallback != NULL)
         gFieldCallback();
     else
-        mapldr_default();
+        FieldCB_DefaultWarpExit();
     gFieldCallback = NULL;
 }
 
@@ -1301,7 +1301,7 @@ void debug_sub_8058C00(void)
     if (JOY_HELD(R_BUTTON))
         gFieldCallback = ExecuteTruckSequence;
     else
-        gFieldCallback = sub_8080B60;
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
 
     do_load_map_stuff_loop(&gMain.state);
     SetFieldVBlankCallback();
@@ -1324,7 +1324,7 @@ void CB2_WhiteOut(void)
         ResetInitialPlayerAvatarState();
         ScriptContext_Init();
         UnlockPlayerFieldControls();
-        gFieldCallback = sub_8080B60;
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
         val = 0;
         do_load_map_stuff_loop(&val);
         SetFieldVBlankCallback();
@@ -1351,7 +1351,7 @@ void CB2_LoadMap2(void)
     SetMainCallback2(CB2_Overworld);
 }
 
-void sub_8054534(void)
+void CB2_ReturnToFieldContestHall(void)
 {
     if (!gMain.state)
     {
@@ -1451,7 +1451,7 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
 void sub_80546F0(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080B60;
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     CB2_ReturnToField();
 }
 
@@ -1459,7 +1459,7 @@ void sub_805470C(void)
 {
     if (gMapHeader.flags == 1 && sub_80BBB24() == 1)
         ShowMapNamePopup();
-    sub_8080B60();
+    FieldCB_WarpExitFadeFromBlack();
 }
 
 void CB2_ContinueSavedGame(void)

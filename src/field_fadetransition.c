@@ -172,7 +172,7 @@ void sub_8080AC4(void)
     CreateTask(sub_8080A5C, 10);
 }
 
-void sub_8080AE4(void)
+void SetUpWarpExitTask(void)
 {
     s16 x, y;
     u8 behavior;
@@ -188,19 +188,19 @@ void sub_8080AE4(void)
     CreateTask(func, 10);
 }
 
-void mapldr_default(void)
+void FieldCB_DefaultWarpExit(void)
 {
     Overworld_PlaySpecialMapMusic();
     pal_fill_for_map_transition();
-    sub_8080AE4();
+    SetUpWarpExitTask();
     LockPlayerFieldControls();
 }
 
-void sub_8080B60(void)
+void FieldCB_WarpExitFadeFromBlack(void)
 {
     Overworld_PlaySpecialMapMusic();
     pal_fill_black();
-    sub_8080AE4();
+    SetUpWarpExitTask();
     LockPlayerFieldControls();
 }
 
@@ -381,7 +381,7 @@ void sub_8080E88(void)
     WarpFadeScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
 
@@ -391,14 +391,14 @@ void sp13E_warp_to_last_warp(void)
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
     PlayRainSoundEffect();
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
 
 void sub_8080EF0(void)
 {
     LockPlayerFieldControls();
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(sub_808115C, 10);
 }
 
@@ -607,7 +607,7 @@ void sub_808115C(u8 taskId)
     }
 }
 
-void sub_80812C8(u8 taskId)
+void Task_DoContestHallWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -626,19 +626,19 @@ void sub_80812C8(u8 taskId)
         break;
     case 2:
         WarpIntoMap();
-        SetMainCallback2(sub_8054534);
+        SetMainCallback2(CB2_ReturnToFieldContestHall);
         DestroyTask(taskId);
         break;
     }
 }
 
-void sub_8081334(void)
+void DoContestHallWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
-    gFieldCallback = sub_8080B60;
-    CreateTask(sub_80812C8, 10);
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    CreateTask(Task_DoContestHallWarp, 10);
 }

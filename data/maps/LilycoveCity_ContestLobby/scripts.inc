@@ -599,31 +599,31 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 8158F08
 
 LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 8158F45
 	setwarp MAP_CONTEST_HALL_COOL, 255, 7, 5
-	special sub_8081334
+	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 8158F52
 	setwarp MAP_CONTEST_HALL_BEAUTY, 255, 7, 5
-	special sub_8081334
+	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 8158F5F
 	setwarp MAP_CONTEST_HALL_CUTE, 255, 7, 5
-	special sub_8081334
+	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 8158F6C
 	setwarp MAP_CONTEST_HALL_SMART, 255, 7, 5
-	special sub_8081334
+	special DoContestHallWarp
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 8158F79
 	setwarp MAP_CONTEST_HALL_TOUGH, 255, 7, 5
-	special sub_8081334
+	special DoContestHallWarp
 	waitstate
 	return
 

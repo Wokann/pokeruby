@@ -592,7 +592,7 @@ void sub_80BC074(u8 taskid)
     case 2:
         copy_saved_warp2_bank_and_enter_x_to_warp1(0x7E);
         WarpIntoMap();
-        gFieldCallback = mapldr_default;
+        gFieldCallback = FieldCB_DefaultWarpExit;
         SetMainCallback2(CB2_LoadMap);
         UnlockPlayerFieldControls();
         DestroyTask(taskid);
