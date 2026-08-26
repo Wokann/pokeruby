@@ -30,7 +30,7 @@ const u16 gRoute119WaterTileData[] =
 };
 
 extern u16 gSpecialVar_Result;
-extern u8 S_RepelWoreOff[];
+extern u8 EventScript_RepelWoreOff[];
 
 EWRAM_DATA u8 gWildEncountersDisabled = 0;
 EWRAM_DATA static u32 sFeebasRngValue = 0;
@@ -675,7 +675,7 @@ bool8 UpdateRepelCounter(void)
         VarSet(VAR_REPEL_STEP_COUNT, steps);
         if (steps == 0)
         {
-            ScriptContext_SetupScript(S_RepelWoreOff);
+            ScriptContext_SetupScript(EventScript_RepelWoreOff);
             return TRUE;
         }
     }
