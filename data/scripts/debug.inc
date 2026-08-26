@@ -1,48 +1,48 @@
 .if DEBUG
 
-DebugScript_081C1CFE:: @ 81C1CFE
+Debug_EventScript_DoHallOfFame:: @ 81C1CFE
 	setflag FLAG_SYS_GAME_CLEAR
 	call EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
 	end
 
-DebugScript_081C1D07:: @ 81C1D07
+Debug_EventScript_GiveCoinCaseIfNotAlreadyOwned:: @ 81C1D07
 	checkitem ITEM_COIN_CASE, 1
 	compare VAR_RESULT, 1
-	goto_if_eq DebugScript_081C1D1D
+	goto_if_eq Debug_EventScript_EndIfCoinCaseOwned
 	additem ITEM_COIN_CASE, 1
 	end
 
-DebugScript_081C1D1D:: @ 81C1D1D
+Debug_EventScript_EndIfCoinCaseOwned:: @ 81C1D1D
 	end
 
-DebugScript_081C1D1E:: @ 81C1D1E
+Debug_EventScript_SetOldaleStateAfterRoute103Rival:: @ 81C1D1E
 	goto Route103_EventScript_RivalEnd
 
-DebugScript_081C1D23:: @ 81C1D23
+Debug_EventScript_UnusedEndAfterRoute103Rival:: @ 81C1D23
 	end
 
-DebugScript_081C1D24:: @ 81C1D24
+Debug_EventScript_OpenNewMauville:: @ 81C1D24
 	setvar VAR_NEW_MAUVILLE_STATE, 1
 	end
 
-DebugScript_081C1D2A:: @ 81C1D2A
+Debug_EventScript_GiveSSTicketAndDoHallOfFame:: @ 81C1D2A
 	additem ITEM_SS_TICKET, 1
-	goto DebugScript_081C1CFE
+	goto Debug_EventScript_DoHallOfFame
 
-DebugScript_081C1D34:: @ 81C1D34
+Debug_EventScript_UnusedEndAfterSSTicketAndHallOfFame:: @ 81C1D34
 	end
 
-DebugScript_081C1D35:: @ 81C1D35
+Debug_EventScript_GiveKyogreEgg:: @ 81C1D35
 	getpartysize
 	compare VAR_RESULT, 6
-	goto_if_eq DebugScript_081C1D45
+	goto_if_eq Debug_EventScript_EndIfPartyFullForKyogreEgg
 	giveegg SPECIES_KYOGRE
 	end
 
-DebugScript_081C1D45:: @ 81C1D45
+Debug_EventScript_EndIfPartyFullForKyogreEgg:: @ 81C1D45
 	end
 
-DebugScript_081C1D46:: @ 81C1D46
+Debug_EventScript_GiveAllItems:: @ 81C1D46
 	additem ITEM_POTION, 99
 	additem ITEM_ANTIDOTE, 99
 	additem ITEM_BURN_HEAL, 99
@@ -293,7 +293,7 @@ DebugScript_081C1D46:: @ 81C1D46
 	additem ITEM_ENIGMA_BERRY, 999
 	end
 
-DebugScript_081C221F:: @ 81C221F
+Debug_EventScript_GiveAllDecorations:: @ 81C221F
 	adddecoration DECOR_SMALL_DESK
 	adddecoration DECOR_SMALL_DESK
 	adddecoration DECOR_SMALL_DESK
@@ -446,91 +446,91 @@ DebugScript_081C221F:: @ 81C221F
 	adddecoration DECOR_KISS_CUSHION
 	end
 
-DebugScript_081C23E2:: @ 81C23E2
+Debug_EventScript_GiveAllCoins:: @ 81C23E2
 	addcoins 9999
 	end
 
-DebugScript_081C23E6:: @ 81C23E6
+Debug_EventScript_OpenSootopolisGym:: @ 81C23E6
 	setflag FLAG_LEGEND_ESCAPED_SEAFLOOR_CAVERN
 	setflag FLAG_LEGENDARY_BATTLE_COMPLETED
 	warp MAP_SOOTOPOLIS_CITY, 0xFF, 31, 33
 	waitstate
 	end
 
-DebugScript_081C23F6:: @ 81C23F6
+Debug_EventScript_SetMoneyTo0:: @ 81C23F6
 	removemoney 999999, 0
 	end
 
-DebugScript_081C23FD:: @ 81C23FD
+Debug_EventScript_FillPartyWithBarboach:: @ 81C23FD
 	getpartysize
 	compare VAR_RESULT, 1
-	goto_if_eq DebugScript_081C2436
+	goto_if_eq Debug_EventScript_FillPartyWithBarboach_PartySize1
 	compare VAR_RESULT, 2
-	goto_if_eq DebugScript_081C2445
+	goto_if_eq Debug_EventScript_FillPartyWithBarboach_PartySize2
 	compare VAR_RESULT, 3
-	goto_if_eq DebugScript_081C2454
+	goto_if_eq Debug_EventScript_FillPartyWithBarboach_PartySize3
 	compare VAR_RESULT, 4
-	goto_if_eq DebugScript_081C2463
+	goto_if_eq Debug_EventScript_FillPartyWithBarboach_PartySize4
 	compare VAR_RESULT, 5
-	goto_if_eq DebugScript_081C2472
+	goto_if_eq Debug_EventScript_FillPartyWithBarboach_PartySize5
 	end
 
-DebugScript_081C2436:: @ 81C2436
+Debug_EventScript_FillPartyWithBarboach_PartySize1:: @ 81C2436
 	givemon SPECIES_BARBOACH, 99, ITEM_NONE
-DebugScript_081C2445:
+Debug_EventScript_FillPartyWithBarboach_PartySize2:
 	givemon SPECIES_BARBOACH, 99, ITEM_NONE
-DebugScript_081C2454:
+Debug_EventScript_FillPartyWithBarboach_PartySize3:
 	givemon SPECIES_BARBOACH, 99, ITEM_NONE
-DebugScript_081C2463:
+Debug_EventScript_FillPartyWithBarboach_PartySize4:
 	givemon SPECIES_BARBOACH, 99, ITEM_NONE
-DebugScript_081C2472:
+Debug_EventScript_FillPartyWithBarboach_PartySize5:
 	givemon SPECIES_BARBOACH, 99, ITEM_NONE
 	end
 
-DebugScript_081C2482:: @ 81C2482
+Debug_EventScript_FillPartyWithShroomish:: @ 81C2482
 	getpartysize
 	compare VAR_RESULT, 1
-	goto_if_eq DebugScript_081C24BB
+	goto_if_eq Debug_EventScript_FillPartyWithShroomish_PartySize1
 	compare VAR_RESULT, 2
-	goto_if_eq DebugScript_081C24CA
+	goto_if_eq Debug_EventScript_FillPartyWithShroomish_PartySize2
 	compare VAR_RESULT, 3
-	goto_if_eq DebugScript_081C24D9
+	goto_if_eq Debug_EventScript_FillPartyWithShroomish_PartySize3
 	compare VAR_RESULT, 4
-	goto_if_eq DebugScript_081C24E8
+	goto_if_eq Debug_EventScript_FillPartyWithShroomish_PartySize4
 	compare VAR_RESULT, 5
-	goto_if_eq DebugScript_081C24F7
+	goto_if_eq Debug_EventScript_FillPartyWithShroomish_PartySize5
 	end
 
-DebugScript_081C24BB:: @ 81C24BB
+Debug_EventScript_FillPartyWithShroomish_PartySize1:: @ 81C24BB
 	givemon SPECIES_SHROOMISH, 99, ITEM_NONE
-DebugScript_081C24CA:
+Debug_EventScript_FillPartyWithShroomish_PartySize2:
 	givemon SPECIES_SHROOMISH, 99, ITEM_NONE
-DebugScript_081C24D9:
+Debug_EventScript_FillPartyWithShroomish_PartySize3:
 	givemon SPECIES_SHROOMISH, 99, ITEM_NONE
-DebugScript_081C24E8:
+Debug_EventScript_FillPartyWithShroomish_PartySize4:
 	givemon SPECIES_SHROOMISH, 99, ITEM_NONE
-DebugScript_081C24F7:
+Debug_EventScript_FillPartyWithShroomish_PartySize5:
 	givemon SPECIES_SHROOMISH, 99, ITEM_NONE
 	end
 
-DebugScript_081C2507:: @ 81C2507
+Debug_EventScript_GiveBarboachEgg:: @ 81C2507
 	getpartysize
 	compare VAR_RESULT, 6
-	goto_if_eq DebugScript_081C2517
+	goto_if_eq Debug_EventScript_EndIfPartyFullForBarboachEgg
 	giveegg SPECIES_BARBOACH
 	end
 
-DebugScript_081C2517:: @ 81C2517
+Debug_EventScript_EndIfPartyFullForBarboachEgg:: @ 81C2517
 	end
 
-DebugScript_081C2518:: @ 81C2518
+Debug_EventScript_GiveShroomishEgg:: @ 81C2518
 	getpartysize
 	compare VAR_RESULT, 6
-	goto_if_eq DebugScript_081C2528
+	goto_if_eq Debug_EventScript_EndIfPartyFullForShroomishEgg
 	giveegg SPECIES_SHROOMISH
 	end
 
-DebugScript_081C2528:: @ 81C2528
+Debug_EventScript_EndIfPartyFullForShroomishEgg:: @ 81C2528
 	end
 
 .endif

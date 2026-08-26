@@ -66,10 +66,10 @@ static bool8 CallScript_GiveAllDecorations(void);
 static bool8 CallScript_GiveAllCoins(void);
 static bool8 CallScript_OpenSootopolisGym(void);
 static bool8 CallScript_SetMoneyTo0(void);
-static bool8 CallScript_FillPartyWithBarboach(void);
 static bool8 CallScript_FillPartyWithShroomish(void);
-static bool8 CallScript_GiveBarboachEgg(void);
+static bool8 CallScript_FillPartyWithBarboach(void);
 static bool8 CallScript_GiveShroomishEgg(void);
+static bool8 CallScript_GiveBarboachEgg(void);
 static bool8 debug_sub_808C280(void);
 static bool8 debug_sub_808C2E4(void);
 static bool8 ControlFlags_EventFlag_InitSubmenu(void);
@@ -211,21 +211,21 @@ static void PrepareDebugOverlayBeforeShowingContestPainting(u8 a0);
 static void PrintBool(u8, u8, bool8);
 static void PrintUnsignedShort(u8, u8, u16);
 
-extern const u8 DebugScript_081C1CFE[];
-extern const u8 DebugScript_081C1D07[];
-extern const u8 DebugScript_081C1D1E[];
-extern const u8 DebugScript_081C1D24[];
-extern const u8 DebugScript_081C1D2A[];
-extern const u8 DebugScript_081C1D35[];
-extern const u8 DebugScript_081C1D46[];
-extern const u8 DebugScript_081C221F[];
-extern const u8 DebugScript_081C23E2[];
-extern const u8 DebugScript_081C23E6[];
-extern const u8 DebugScript_081C23F6[];
-extern const u8 DebugScript_081C2482[];
-extern const u8 DebugScript_081C23FD[];
-extern const u8 DebugScript_081C2518[];
-extern const u8 DebugScript_081C2507[];
+extern const u8 Debug_EventScript_DoHallOfFame[];
+extern const u8 Debug_EventScript_GiveCoinCaseIfNotAlreadyOwned[];
+extern const u8 Debug_EventScript_SetOldaleStateAfterRoute103Rival[];
+extern const u8 Debug_EventScript_OpenNewMauville[];
+extern const u8 Debug_EventScript_GiveSSTicketAndDoHallOfFame[];
+extern const u8 Debug_EventScript_GiveKyogreEgg[];
+extern const u8 Debug_EventScript_GiveAllItems[];
+extern const u8 Debug_EventScript_GiveAllDecorations[];
+extern const u8 Debug_EventScript_GiveAllCoins[];
+extern const u8 Debug_EventScript_OpenSootopolisGym[];
+extern const u8 Debug_EventScript_SetMoneyTo0[];
+extern const u8 Debug_EventScript_FillPartyWithShroomish[];
+extern const u8 Debug_EventScript_FillPartyWithBarboach[];
+extern const u8 Debug_EventScript_GiveShroomishEgg[];
+extern const u8 Debug_EventScript_GiveBarboachEgg[];
 
 static const u8 sString_ContestGraphics[] = _("Contest graphics");
 static const u8 sString_ArtMuseumGraphics[] = _("Art Mus. graphics");
@@ -408,10 +408,10 @@ static const u8 sString_ShroomishEgg[] = DTR("キノココ　タマゴ", "Get SH
 static const struct MenuAction sMenuActions_ControlEvents_Events2[] = {
     {sString_SootpolisGymOpen, CallScript_OpenSootopolisGym},
     {sString_MoneyTo0, CallScript_SetMoneyTo0},
-    {sString_BarboachFull, CallScript_FillPartyWithBarboach},
-    {sString_ShroomishFull, CallScript_FillPartyWithShroomish},
-    {sString_BarboachEgg, CallScript_GiveBarboachEgg},
-    {sString_ShroomishEgg, CallScript_GiveShroomishEgg}
+    {sString_BarboachFull, CallScript_FillPartyWithShroomish},
+    {sString_ShroomishFull, CallScript_FillPartyWithBarboach},
+    {sString_BarboachEgg, CallScript_GiveShroomishEgg},
+    {sString_ShroomishEgg, CallScript_GiveBarboachEgg}
 };
 
 static const u8 sString_Answork_Mikansei[] = DTR("ANSWORK　みかんせい", "ANSWORK Incomplete");
@@ -2321,105 +2321,105 @@ static bool8 ControlEvents_Events2_HandleInput(void)
 
 static bool8 CallScript_DoHallOfFame(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1CFE);
+    ScriptContext_SetupScript(Debug_EventScript_DoHallOfFame);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveCoinCaseIfNotAlreadyOwned(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D07);
+    ScriptContext_SetupScript(Debug_EventScript_GiveCoinCaseIfNotAlreadyOwned);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_SetOldaleStateAfterRoute103Rival(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D1E);
+    ScriptContext_SetupScript(Debug_EventScript_SetOldaleStateAfterRoute103Rival);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_OpenNewMauville(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D24);
+    ScriptContext_SetupScript(Debug_EventScript_OpenNewMauville);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveSSTicketAndDoHallOfFame(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D2A);
+    ScriptContext_SetupScript(Debug_EventScript_GiveSSTicketAndDoHallOfFame);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveKyogreEgg(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D35);
+    ScriptContext_SetupScript(Debug_EventScript_GiveKyogreEgg);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveAllItems(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C1D46);
+    ScriptContext_SetupScript(Debug_EventScript_GiveAllItems);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveAllDecorations(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C221F);
+    ScriptContext_SetupScript(Debug_EventScript_GiveAllDecorations);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveAllCoins(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C23E2);
+    ScriptContext_SetupScript(Debug_EventScript_GiveAllCoins);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_OpenSootopolisGym(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C23E6);
+    ScriptContext_SetupScript(Debug_EventScript_OpenSootopolisGym);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_SetMoneyTo0(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C23F6);
-    CloseMenu();
-    return TRUE;
-}
-
-static bool8 CallScript_FillPartyWithBarboach(void)
-{
-    ScriptContext_SetupScript(DebugScript_081C2482);
+    ScriptContext_SetupScript(Debug_EventScript_SetMoneyTo0);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_FillPartyWithShroomish(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C23FD);
+    ScriptContext_SetupScript(Debug_EventScript_FillPartyWithShroomish);
     CloseMenu();
     return TRUE;
 }
 
-static bool8 CallScript_GiveBarboachEgg(void)
+static bool8 CallScript_FillPartyWithBarboach(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C2518);
+    ScriptContext_SetupScript(Debug_EventScript_FillPartyWithBarboach);
     CloseMenu();
     return TRUE;
 }
 
 static bool8 CallScript_GiveShroomishEgg(void)
 {
-    ScriptContext_SetupScript(DebugScript_081C2507);
+    ScriptContext_SetupScript(Debug_EventScript_GiveShroomishEgg);
+    CloseMenu();
+    return TRUE;
+}
+
+static bool8 CallScript_GiveBarboachEgg(void)
+{
+    ScriptContext_SetupScript(Debug_EventScript_GiveBarboachEgg);
     CloseMenu();
     return TRUE;
 }
