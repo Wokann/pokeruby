@@ -1,7 +1,7 @@
 {
-  "id": "MAP_SAFARI_ZONE_NORTHEAST",
-  "name": "SafariZone_Northeast",
-  "layout": "LAYOUT_SAFARI_ZONE_NORTHEAST",
+  "id": "MAP_SAFARI_ZONE_NORTH",
+  "name": "SafariZone_North",
+  "layout": "LAYOUT_SAFARI_ZONE_NORTH",
   "music": "MUS_SAFARI_ZONE",
   "region_map_section": "MAPSEC_SAFARI_ZONE",
   "requires_flash": false,
@@ -18,7 +18,7 @@
     {
       "direction": "down",
       "offset": 0,
-      "map": "MAP_SAFARI_ZONE_SOUTHEAST"
+      "map": "MAP_SAFARI_ZONE_SOUTH"
     }
   ],
   "object_events": [
@@ -32,7 +32,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Northeast_EventScript_Fisherman",
+      "script": "SafariZone_North_EventScript_Fisherman",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Northeast_EventScript_Man",
+      "script": "SafariZone_North_EventScript_Man",
       "flag": "0"
     },
     {
@@ -136,8 +136,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Northeast_EventScript_ItemCalcium",
-      "flag": "FLAG_ITEM_SAFARI_ZONE_NORTHEAST_1"
+      "script": "SafariZone_North_EventScript_ItemCalcium",
+      "flag": "FLAG_ITEM_SAFARI_ZONE_NORTH_CALCIUM"
     }
   ],
   "warp_events": [],

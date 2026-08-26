@@ -1,7 +1,7 @@
 {
-  "id": "MAP_SAFARI_ZONE_SOUTHEAST",
-  "name": "SafariZone_Southeast",
-  "layout": "LAYOUT_SAFARI_ZONE_SOUTHEAST",
+  "id": "MAP_SAFARI_ZONE_SOUTH",
+  "name": "SafariZone_South",
+  "layout": "LAYOUT_SAFARI_ZONE_SOUTH",
   "music": "MUS_SAFARI_ZONE",
   "region_map_section": "MAPSEC_SAFARI_ZONE",
   "requires_flash": false,
@@ -13,7 +13,7 @@
     {
       "direction": "up",
       "offset": 0,
-      "map": "MAP_SAFARI_ZONE_NORTHEAST"
+      "map": "MAP_SAFARI_ZONE_NORTH"
     },
     {
       "direction": "left",
@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southeast_EventScript_ExitAttendant",
+      "script": "SafariZone_South_EventScript_ExitAttendant",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southeast_EventScript_Boy",
+      "script": "SafariZone_South_EventScript_Boy",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southeast_EventScript_Man",
+      "script": "SafariZone_South_EventScript_Man",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southeast_EventScript_Youngster",
+      "script": "SafariZone_South_EventScript_Youngster",
       "flag": "0"
     }
   ],

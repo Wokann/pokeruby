@@ -92,32 +92,32 @@ Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:: @ 81C39C3
 	.string "würdest.\p"
 	.string "Bitte besorge dir doch eine {POKEBLOCK}BOX.$"
 
-SafariZone_Southeast_Text_StillHaveTimeExit:: @ 81C3A56
+SafariZone_South_Text_StillHaveTimeExit:: @ 81C3A56
 	.string "Du hast noch Zeit übrig. Möchtest du\n"
 	.string "die SAFARI-ZONE jetzt verlassen?$"
 
-SafariZone_Southeast_Text_EnjoyTheRestOfYourAdventure:: @ 81C3A9C
+SafariZone_South_Text_EnjoyTheRestOfYourAdventure:: @ 81C3A9C
 	.string "Viel Vergnügen bei dem Rest deines\n"
 	.string "wilden Abenteuers!$"
 
-SafariZone_Southeast_Text_ExitEarlyThankYouForPlaying:: @ 81C3ACA
+SafariZone_South_Text_ExitEarlyThankYouForPlaying:: @ 81C3ACA
 	.string "Okay.\p"
 	.string "Ich nehme die verbleibenden\n"
 	.string "SAFARIBÄLLE zurück.\p"
 	.string "Vielen Dank für deine Teilnahme.\n"
 	.string "Komm bald wieder!$"
 
-SafariZone_Southeast_Text_GoodLuck:: @ 81C3B2D
+SafariZone_South_Text_GoodLuck:: @ 81C3B2D
 	.string "Viel Glück!\p"
 	.string "Wenn du irgendetwas brauchst, zögere\n"
 	.string "nicht, mich anzusprechen!$"
 
-SafariZone_Southeast_Text_Boy:: @ 81C3B71
+SafariZone_South_Text_Boy:: @ 81C3B71
 	.string "Weißt du was?\p"
 	.string "Wenn du einen {POKEBLOCK} in diese Kiste\n"
 	.string "dort legst, werden POKéMON angelockt.$"
 
-SafariZone_Southeast_Text_Man:: @ 81C3BBD
+SafariZone_South_Text_Man:: @ 81C3BBD
 	.string "Ich wollte noch weiter hinein, aber\n"
 	.string "ich habe mein RAD vergessen.\p"
 	.string "Irgendetwas sagt mir, dass in den abge-\n"
@@ -136,17 +136,17 @@ SafariZone_Northwest_Text_Man:: @ 81C3CAE
 	.string "Ich bin erschöpft... Japs... Ich habe\n"
 	.string "keine Energie, ein POKéMON zu fangen.$"
 
-SafariZone_Northeast_Text_Fisherman:: @ 81C3D19
+SafariZone_North_Text_Fisherman:: @ 81C3D19
 	.string "Ich habe eine Mission. Ich will WASSER-\n"
 	.string "POKéMON fangen, die es in HOENN nicht\l"
 	.string "gibt.\p"
 	.string "Weißt du zufällig, wo hier der See ist?$"
 
-SafariZone_Northeast_Text_Man:: @ 81C3D80
+SafariZone_North_Text_Man:: @ 81C3D80
 	.string "Ich will viele seltene POKéMON fangen\n"
 	.string "und mit meinen Freunden tauschen.$"
 
-SafariZone_Southeast_Text_Youngster:: @ 81C3DCE
+SafariZone_South_Text_Youngster:: @ 81C3DCE
 	.string "Ich habe einen {POKEBLOCK} in den {POKEBLOCK}-\n"
 	.string "NAPF gelegt. Er ist verschwunden.\p"
 	.string "Ein POKéMON muss ihn gefuttert haben,\n"

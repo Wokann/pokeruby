@@ -8906,8 +8906,8 @@
           }
         },
         {
-          "map": "MAP_SAFARI_ZONE_NORTHEAST",
-          "base_label": "SafariZone_Northeast_Ruby",
+          "map": "MAP_SAFARI_ZONE_NORTH",
+          "base_label": "SafariZone_North_Ruby",
           "land_mons": {
             "encounter_rate": 25,
             "mons": [
@@ -9159,8 +9159,8 @@
           }
         },
         {
-          "map": "MAP_SAFARI_ZONE_SOUTHEAST",
-          "base_label": "SafariZone_Southeast_Ruby",
+          "map": "MAP_SAFARI_ZONE_SOUTH",
+          "base_label": "SafariZone_South_Ruby",
           "land_mons": {
             "encounter_rate": 25,
             "mons": [
@@ -18344,8 +18344,8 @@
           }
         },
         {
-          "map": "MAP_SAFARI_ZONE_NORTHEAST",
-          "base_label": "SafariZone_Northeast_Sapphire",
+          "map": "MAP_SAFARI_ZONE_NORTH",
+          "base_label": "SafariZone_North_Sapphire",
           "land_mons": {
             "encounter_rate": 25,
             "mons": [
@@ -18597,8 +18597,8 @@
           }
         },
         {
-          "map": "MAP_SAFARI_ZONE_SOUTHEAST",
-          "base_label": "SafariZone_Southeast_Sapphire",
+          "map": "MAP_SAFARI_ZONE_SOUTH",
+          "base_label": "SafariZone_South_Sapphire",
           "land_mons": {
             "encounter_rate": 25,
             "mons": [

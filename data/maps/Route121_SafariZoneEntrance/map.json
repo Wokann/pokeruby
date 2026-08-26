@@ -56,14 +56,14 @@
       "x": 2,
       "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_SAFARI_ZONE_SOUTHEAST",
+      "dest_map": "MAP_SAFARI_ZONE_SOUTH",
       "dest_warp_id": "0"
     },
     {
       "x": 3,
       "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_SAFARI_ZONE_SOUTHEAST",
+      "dest_map": "MAP_SAFARI_ZONE_SOUTH",
       "dest_warp_id": "0"
     },
     {

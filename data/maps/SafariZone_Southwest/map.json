@@ -18,7 +18,7 @@
     {
       "direction": "right",
       "offset": 0,
-      "map": "MAP_SAFARI_ZONE_SOUTHEAST"
+      "map": "MAP_SAFARI_ZONE_SOUTH"
     }
   ],
   "object_events": [
@@ -46,7 +46,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SafariZone_Southwest_EventScript_ItemMaxRevive",
-      "flag": "FLAG_ITEM_SAFARI_ZONE_SOUTHWEST"
+      "flag": "FLAG_ITEM_SAFARI_ZONE_SOUTH_WEST_MAX_REVIVE"
     }
   ],
   "warp_events": [

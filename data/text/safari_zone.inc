@@ -89,32 +89,32 @@ Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:: @ 81C39C3
 	.string "fruitful if you use {POKEBLOCK}S.\p"
 	.string "Please come back with a {POKEBLOCK} CASE.$"
 
-SafariZone_Southeast_Text_StillHaveTimeExit:: @ 81C3A56
+SafariZone_South_Text_StillHaveTimeExit:: @ 81C3A56
 	.string "You still have time left. Would you like\n"
 	.string "to exit the SAFARI ZONE now?$"
 
-SafariZone_Southeast_Text_EnjoyTheRestOfYourAdventure:: @ 81C3A9C
+SafariZone_South_Text_EnjoyTheRestOfYourAdventure:: @ 81C3A9C
 	.string "Please enjoy the rest of your wild\n"
 	.string "adventure!$"
 
-SafariZone_Southeast_Text_ExitEarlyThankYouForPlaying:: @ 81C3ACA
+SafariZone_South_Text_ExitEarlyThankYouForPlaying:: @ 81C3ACA
 	.string "Okay.\p"
 	.string "I'll take back your remaining SAFARI\n"
 	.string "BALLS.\p"
 	.string "Thank you for playing.\n"
 	.string "We hope to see you again.$"
 
-SafariZone_Southeast_Text_GoodLuck:: @ 81C3B2D
+SafariZone_South_Text_GoodLuck:: @ 81C3B2D
 	.string "Good luck!\p"
 	.string "If you need anything, don't hesitate\n"
 	.string "to tell me, please!$"
 
-SafariZone_Southeast_Text_Boy:: @ 81C3B71
+SafariZone_South_Text_Boy:: @ 81C3B71
 	.string "Did you know?\p"
 	.string "If you put a {POKEBLOCK} in that square box,\n"
 	.string "POKéMON gather around.$"
 
-SafariZone_Southeast_Text_Man:: @ 81C3BBD
+SafariZone_South_Text_Man:: @ 81C3BBD
 	.string "I want to keep going deeper, but I\n"
 	.string "forgot to bring a BIKE.\p"
 	.string "Something tells me that rare POKéMON\n"
@@ -132,16 +132,16 @@ SafariZone_Northwest_Text_Man:: @ 81C3CAE
 	.string "I'm exhausted... I don't have the\n"
 	.string "energy to catch POKéMON...$"
 
-SafariZone_Northeast_Text_Fisherman:: @ 81C3D19
+SafariZone_North_Text_Fisherman:: @ 81C3D19
 	.string "I'm on a mission to find WATER POKéMON\n"
 	.string "you don't see in HOENN.\p"
 	.string "Do you have any idea where the lake is?$"
 
-SafariZone_Northeast_Text_Man:: @ 81C3D80
+SafariZone_North_Text_Man:: @ 81C3D80
 	.string "I'm going to catch a lot of rare POKéMON\n"
 	.string "here and trade them with my friends!$"
 
-SafariZone_Southeast_Text_Youngster:: @ 81C3DCE
+SafariZone_South_Text_Youngster:: @ 81C3DCE
 	.string "I put a {POKEBLOCK} on the {POKEBLOCK} FEEDER.\n"
 	.string "But it seems to have disappeared.\p"
 	.string "I guess POKéMON must have eaten it\n"

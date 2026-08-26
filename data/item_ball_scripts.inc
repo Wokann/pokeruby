@@ -382,7 +382,7 @@ SafariZone_Northwest_EventScript_ItemTMSolarBeam:: @ 81B190C
 	finditem ITEM_TM22_SOLARBEAM
 	end
 
-SafariZone_Northeast_EventScript_ItemCalcium:: @ 81B1919
+SafariZone_North_EventScript_ItemCalcium:: @ 81B1919
 	finditem ITEM_CALCIUM
 	end
 
