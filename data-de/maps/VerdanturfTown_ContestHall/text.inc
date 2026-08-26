@@ -1,4 +1,4 @@
-VerdanturfTown_ContestHall_Text_ContestAdvice:: @ 8177FB4
+VerdanturfTown_ContestHall_Text_WhichContestYouEntering:: @ 8177FB4
 	.string "An welchem WETTBEWERB nimmst du teil?\n"
 	.string "Darf ich dir einen Rat geben?\p"
 	.string "In jedem WETTBEWERB, zum Beispiel im\n"
@@ -7,7 +7,7 @@ VerdanturfTown_ContestHall_Text_ContestAdvice:: @ 8177FB4
 	.string "Du solltest daher Wege finden, deine\n"
 	.string "POKéMON besser aufzuziehen.$"
 
-VerdanturfTown_ContestHall_Text_RaisedPokemonToBeCute:: @ 8178091
+VerdanturfTown_ContestHall_Text_RaisedMonToBeCute:: @ 8178091
 	.string "Ich habe meine POKéMON zur Anmut\n"
 	.string "erzogen.\p"
 	.string "Man kann seine POKéMON an einem WETT-\n"
@@ -15,7 +15,7 @@ VerdanturfTown_ContestHall_Text_RaisedPokemonToBeCute:: @ 8178091
 	.string "Ich bin so froh, dass ich meine POKéMON\n"
 	.string "liebevoll aufgezogen habe.$"
 
-VerdanturfTown_ContestHall_Text_PokemonRules:: @ 8178120
+VerdanturfTown_ContestHall_Text_MyMonRules:: @ 8178120
 	.string "Mein POKéMON ist der Kracher!\p"
 	.string "Es ist cool, stark, schön, anmutig und\n"
 	.string "klug. Alles in einem!\p"
