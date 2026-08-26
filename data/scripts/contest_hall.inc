@@ -1,180 +1,180 @@
-LilycoveCity_ContestLobby_EventScript_1A4E92:: @ 81A4E92
+LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist:: @ 81A4E92
 	lock
 	faceplayer
 	checkitem ITEM_CONTEST_PASS, 1
 	compare VAR_RESULT, 0
-	call_if_eq FallarborTown_ContestLobby_EventScript_1A4EDD
+	call_if_eq LilycoveCity_ContestLobby_EventScript_ClearContestReceptionState
 	compare VAR_CONTEST_PRIZE_PICKUP, 0
-	goto_if_ne FallarborTown_ContestLobby_EventScript_1A4F4E
-	goto_if_set FLAG_TEMP_1, FallarborTown_ContestLobby_EventScript_1A4F8F
+	goto_if_ne LilycoveCity_ContestLobby_EventScript_PickUpPrize
+	goto_if_set FLAG_TEMP_1, LilycoveCity_ContestLobby_EventScript_AskEnterContest
 	bufferstdstring 0, VAR_0x800B
-	msgbox FallarborTown_ContestLobby_Text_1A5DFC, MSGBOX_DEFAULT
+	msgbox LilycoveCity_ContestLobby_Text_ContestReception, MSGBOX_DEFAULT
 	checkitem ITEM_CONTEST_PASS, 1
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A4EE1
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CheckContestPass
 	setflag FLAG_TEMP_1
-	goto FallarborTown_ContestLobby_EventScript_1A4F8F
+	goto LilycoveCity_ContestLobby_EventScript_AskEnterContest
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4EDD:: @ 81A4EDD
+LilycoveCity_ContestLobby_EventScript_ClearContestReceptionState:: @ 81A4EDD
 	clearflag FLAG_TEMP_1
 	return
 
-FallarborTown_ContestLobby_EventScript_1A4EE1:: @ 81A4EE1
+LilycoveCity_ContestLobby_EventScript_CheckContestPass:: @ 81A4EE1
 	compare VAR_CONTEST_RANK, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A4EF6
-	msgbox FallarborTown_ContestLobby_Text_1A6340, MSGBOX_DEFAULT
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_OfferContestPass
+	msgbox LilycoveCity_ContestLobby_Text_NeedContestPassForNonNormalRank, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4EF6:: @ 81A4EF6
-	msgbox FallarborTown_ContestLobby_Text_1A64F4, MSGBOX_YESNO
+LilycoveCity_ContestLobby_EventScript_OfferContestPass:: @ 81A4EF6
+	msgbox LilycoveCity_ContestLobby_Text_OfferContestPass, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A4F13
-	msgbox FallarborTown_ContestLobby_Text_1A65EA, MSGBOX_DEFAULT
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_GiveContestPass
+	msgbox LilycoveCity_ContestLobby_Text_ComeBackToEnterContest, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F13:: @ 81A4F13
-	goto_if_set FLAG_RECEIVED_CONTEST_PASS, FallarborTown_ContestLobby_EventScript_1A4F44
-	msgbox FallarborTown_ContestLobby_Text_1A6583, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_GiveContestPass:: @ 81A4F13
+	goto_if_set FLAG_RECEIVED_CONTEST_PASS, LilycoveCity_ContestLobby_EventScript_AlreadyReceivedContestPass
+	msgbox LilycoveCity_ContestLobby_Text_ContestPassIssued, MSGBOX_DEFAULT
 	giveitem ITEM_CONTEST_PASS
 	setflag FLAG_RECEIVED_CONTEST_PASS
 	setflag FLAG_TEMP_1
 	msgbox LilycoveCity_ContestLobby_Text_ExplainContests, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A4F8F
+	goto LilycoveCity_ContestLobby_EventScript_AskEnterContest
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F44:: @ 81A4F44
-	msgbox FallarborTown_ContestLobby_Text_1A6590, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_AlreadyReceivedContestPass:: @ 81A4F44
+	msgbox LilycoveCity_ContestLobby_Text_AlreadyReceivedContestPass, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F4E:: @ 81A4F4E
-	msgbox FallarborTown_ContestLobby_Text_1A685A, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_PickUpPrize:: @ 81A4F4E
+	msgbox LilycoveCity_ContestLobby_Text_PokemonWonWeHavePrize, MSGBOX_DEFAULT
 	switch VAR_CONTEST_PRIZE_PICKUP
-	case 4, FallarborTown_ContestLobby_EventScript_1A4F67
+	case 4, LilycoveCity_ContestLobby_EventScript_GiveLuxuryBallAtCounter
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F67:: @ 81A4F67
+LilycoveCity_ContestLobby_EventScript_GiveLuxuryBallAtCounter:: @ 81A4F67
 	giveitem ITEM_LUXURY_BALL
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A4F86
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_NoRoomForLuxuryBallAtCounter
 	setvar VAR_CONTEST_PRIZE_PICKUP, 0
 	closemessage
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F86:: @ 81A4F86
-	msgbox FallarborTown_ContestLobby_Text_1A68C6, MSGBOX_NPC
+LilycoveCity_ContestLobby_EventScript_NoRoomForLuxuryBallAtCounter:: @ 81A4F86
+	msgbox LilycoveCity_ContestLobby_Text_ComeBackForPrizeLater, MSGBOX_NPC
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4F8F:: @ 81A4F8F
-	message FallarborTown_ContestLobby_Text_1A5E46
+LilycoveCity_ContestLobby_EventScript_AskEnterContest:: @ 81A4F8F
+	message LilycoveCity_ContestLobby_Text_EnterContest1
 	waitmessage
 	multichoice 0, 0, 2, 0
 	switch VAR_RESULT
-	case 0, FallarborTown_ContestLobby_EventScript_1A5097
-	case 1, FallarborTown_ContestLobby_EventScript_1A4FCC
-	case 2, FallarborTown_ContestLobby_EventScript_1A503E
-	case 127, FallarborTown_ContestLobby_EventScript_1A503E
+	case 0, LilycoveCity_ContestLobby_EventScript_ChooseContestType
+	case 1, LilycoveCity_ContestLobby_EventScript_ContestInfo
+	case 2, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	end
 
-FallarborTown_ContestLobby_EventScript_1A4FCC:: @ 81A4FCC
-	message FallarborTown_ContestLobby_Text_1A5E7C
+LilycoveCity_ContestLobby_EventScript_ContestInfo:: @ 81A4FCC
+	message LilycoveCity_ContestLobby_Text_WhichTopic1
 	waitmessage
 	multichoice 0, 0, 3, 0
 	switch VAR_RESULT
-	case 0, FallarborTown_ContestLobby_EventScript_1A5014
-	case 1, FallarborTown_ContestLobby_EventScript_1A5022
-	case 2, FallarborTown_ContestLobby_EventScript_1A5030
-	case 3, FallarborTown_ContestLobby_EventScript_1A4F8F
-	case 127, FallarborTown_ContestLobby_EventScript_1A4F8F
+	case 0, LilycoveCity_ContestLobby_EventScript_ExplainContests
+	case 1, LilycoveCity_ContestLobby_EventScript_ExplainContestTypes
+	case 2, LilycoveCity_ContestLobby_EventScript_ExplainContestRanks
+	case 3, LilycoveCity_ContestLobby_EventScript_AskEnterContest
+	case 127, LilycoveCity_ContestLobby_EventScript_AskEnterContest
 	end
 
-FallarborTown_ContestLobby_EventScript_1A5014:: @ 81A5014
+LilycoveCity_ContestLobby_EventScript_ExplainContests:: @ 81A5014
 	msgbox LilycoveCity_ContestLobby_Text_ExplainContests, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A4FCC
+	goto LilycoveCity_ContestLobby_EventScript_ContestInfo
 	end
 
-FallarborTown_ContestLobby_EventScript_1A5022:: @ 81A5022
+LilycoveCity_ContestLobby_EventScript_ExplainContestTypes:: @ 81A5022
 	msgbox LilycoveCity_ContestLobby_Text_ExplainContestTypes, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A4FCC
+	goto LilycoveCity_ContestLobby_EventScript_ContestInfo
 	end
 
-FallarborTown_ContestLobby_EventScript_1A5030:: @ 81A5030
+LilycoveCity_ContestLobby_EventScript_ExplainContestRanks:: @ 81A5030
 	msgbox LilycoveCity_ContestLobby_Text_ExplainContestRanks, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A4FCC
+	goto LilycoveCity_ContestLobby_EventScript_ContestInfo
 	end
 
-FallarborTown_ContestLobby_EventScript_1A503E:: @ 81A503E
+LilycoveCity_ContestLobby_EventScript_CancelEnterContest:: @ 81A503E
 	msgbox LilycoveCity_ContestLobby_Text_ParticipateAnotherTime, MSGBOX_DEFAULT
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1A5048:: @ 81A5048
-	msgbox FallarborTown_ContestLobby_Text_EnterWhichPokemon1, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_ChooseContestMon:: @ 81A5048
+	msgbox LilycoveCity_ContestLobby_Text_EnterWhichPokemon1, MSGBOX_DEFAULT
 	choosecontestmon
 	compare VAR_0x8004, 255
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A5097
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_ChooseContestType
 	special ScrSpecial_CheckSelectedMonAndInitContest
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A50C8
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CantEnterLowRank
 	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A50D7
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_ConfirmEntry
 	compare VAR_RESULT, 2
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A50FB
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_ConfirmEntryAlreadyWon
 	compare VAR_RESULT, 3
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A511F
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CantEnterEgg
 	compare VAR_RESULT, 4
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A512E
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_CantEnterFainted
 	end
 
-FallarborTown_ContestLobby_EventScript_1A5097:: @ 81A5097
-	message FallarborTown_ContestLobby_Text_1A6623
+LilycoveCity_ContestLobby_EventScript_ChooseContestType:: @ 81A5097
+	message LilycoveCity_ContestLobby_Text_EnterWhichContest1
 	waitmessage
 	multichoice 0, 0, 4, 0
 	switch VAR_RESULT
-	case 5, FallarborTown_ContestLobby_EventScript_1A503E
-	case 127, FallarborTown_ContestLobby_EventScript_1A503E
+	case 5, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	copyvar VAR_CONTEST_CATEGORY, VAR_RESULT
-	goto FallarborTown_ContestLobby_EventScript_1A5048
+	goto LilycoveCity_ContestLobby_EventScript_ChooseContestMon
 	end
 
-FallarborTown_ContestLobby_EventScript_1A50C8:: @ 81A50C8
+LilycoveCity_ContestLobby_EventScript_CantEnterLowRank:: @ 81A50C8
 	msgbox LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A5048
+	goto LilycoveCity_ContestLobby_EventScript_ChooseContestMon
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1A50D7:: @ 81A50D7
+LilycoveCity_ContestLobby_EventScript_ConfirmEntry:: @ 81A50D7
 	msgbox LilycoveCity_ContestLobby_Text_ConfirmContestMon, MSGBOX_YESNO
 	switch VAR_RESULT
-	case NO, FallarborTown_ContestLobby_EventScript_1A5048
-	case YES, FallarborTown_ContestLobby_EventScript_1A513D
+	case NO, LilycoveCity_ContestLobby_EventScript_ChooseContestMon
+	case YES, LilycoveCity_ContestLobby_EventScript_EnterMon
 	end
 
-FallarborTown_ContestLobby_EventScript_1A50FB:: @ 81A50FB
-	msgbox FallarborTown_ContestLobby_Text_1A6724, MSGBOX_YESNO
+LilycoveCity_ContestLobby_EventScript_ConfirmEntryAlreadyWon:: @ 81A50FB
+	msgbox LilycoveCity_ContestLobby_Text_AlreadyWonEnterAnyway, MSGBOX_YESNO
 	switch VAR_RESULT
-	case NO, FallarborTown_ContestLobby_EventScript_1A5048
-	case YES, FallarborTown_ContestLobby_EventScript_1A513D
+	case NO, LilycoveCity_ContestLobby_EventScript_ChooseContestMon
+	case YES, LilycoveCity_ContestLobby_EventScript_EnterMon
 	end
 
-FallarborTown_ContestLobby_EventScript_1A511F:: @ 81A511F
+LilycoveCity_ContestLobby_EventScript_CantEnterEgg:: @ 81A511F
 	msgbox LilycoveCity_ContestLobby_Text_EggCannotTakePart, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A5048
+	goto LilycoveCity_ContestLobby_EventScript_ChooseContestMon
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1A512E:: @ 81A512E
+LilycoveCity_ContestLobby_EventScript_CantEnterFainted:: @ 81A512E
 	msgbox LilycoveCity_ContestLobby_Text_MonInNoConditionForContest, MSGBOX_DEFAULT
-	goto FallarborTown_ContestLobby_EventScript_1A5048
+	goto LilycoveCity_ContestLobby_EventScript_ChooseContestMon
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1A513D:: @ 81A513D
-	msgbox FallarborTown_ContestLobby_Text_1A67C1, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_EnterMon:: @ 81A513D
+	msgbox LilycoveCity_ContestLobby_Text_YourMonIsEntryNum4, MSGBOX_DEFAULT
 	closemessage
 	releaseall
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 1

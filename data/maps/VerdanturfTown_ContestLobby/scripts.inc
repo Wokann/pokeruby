@@ -9,7 +9,7 @@ VerdanturfTown_ContestLobby_OnTransition:: @ 8153D70
 VerdanturfTown_ContestLobby_EventScript_ContestReceptionist:: @ 8153D76
 	setvar VAR_0x800B, 5
 	setvar VAR_CONTEST_RANK, 0
-	call LilycoveCity_ContestLobby_EventScript_1A4E92
+	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call VerdanturfTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId

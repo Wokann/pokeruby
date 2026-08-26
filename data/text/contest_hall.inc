@@ -1,13 +1,13 @@
-FallarborTown_ContestLobby_Text_1A5DFC:: @ 81A5DFC
+LilycoveCity_ContestLobby_Text_ContestReception:: @ 81A5DFC
 	.string "Hello, there!\p"
 	.string "We're accepting registrations for\n"
 	.string "{STR_VAR_1} Rank POKéMON CONTESTS.$"
 
-FallarborTown_ContestLobby_Text_1A5E46:: @ 81A5E46
+LilycoveCity_ContestLobby_Text_EnterContest1:: @ 81A5E46
 	.string "Would you like to enter your POKéMON\n"
 	.string "in our CONTESTS?$"
 
-FallarborTown_ContestLobby_Text_1A5E7C:: @ 81A5E7C
+LilycoveCity_ContestLobby_Text_WhichTopic1:: @ 81A5E7C
 	.string "Which topic would you like?$"
 
 LilycoveCity_ContestLobby_Text_ExplainContests:: @ 81A5E98
@@ -54,10 +54,10 @@ LilycoveCity_ContestLobby_Text_ExplainContestRanks:: @ 81A613F
 	.string "may compete in the MASTER Rank as\l"
 	.string "often as its TRAINER wants.$"
 
-FallarborTown_ContestLobby_Text_EnterWhichPokemon1:: @ 81A6319
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 81A6319
 	.string "Which POKéMON would you like to enter?$"
 
-FallarborTown_ContestLobby_Text_1A6340:: @ 81A6340
+LilycoveCity_ContestLobby_Text_NeedContestPassForNonNormalRank:: @ 81A6340
 	.string "Anyone with a CONTEST PASS may enter.\p"
 	.string "You may obtain a CONTEST PASS at the\n"
 	.string "NORMAL RANK CONTEST HALL in\l"
@@ -75,28 +75,28 @@ LilycoveCity_ContestLobby_Text_RegistrationsFromFourNeedContestPass:: @ 81A63F4
 	.string "Please obtain a CONTEST PASS and\n"
 	.string "come again.$"
 
-FallarborTown_ContestLobby_Text_1A64F4:: @ 81A64F4
+LilycoveCity_ContestLobby_Text_OfferContestPass:: @ 81A64F4
 	.string "Anyone with a CONTEST PASS may enter.\p"
 	.string "If you don't have one, I can issue one\n"
 	.string "for you right now.\p"
 	.string "Would you like me to issue you a\n"
 	.string "CONTEST PASS?$"
 
-FallarborTown_ContestLobby_Text_1A6583:: @ 81A6583
+LilycoveCity_ContestLobby_Text_ContestPassIssued:: @ 81A6583
 	.string "Here you go!$"
 
-FallarborTown_ContestLobby_Text_1A6590:: @ 81A6590
+LilycoveCity_ContestLobby_Text_AlreadyReceivedContestPass:: @ 81A6590
 	.string "Oh?\p"
 	.string "We've already issued you a CONTEST\n"
 	.string "PASS, {PLAYER}.\p"
 	.string "Please come back with your CONTEST\n"
 	.string "PASS.$"
 
-FallarborTown_ContestLobby_Text_1A65EA:: @ 81A65EA
+LilycoveCity_ContestLobby_Text_ComeBackToEnterContest:: @ 81A65EA
 	.string "Please visit whenever you would like\n"
 	.string "to enter a CONTEST.$"
 
-FallarborTown_ContestLobby_Text_1A6623:: @ 81A6623
+LilycoveCity_ContestLobby_Text_EnterWhichContest1:: @ 81A6623
 	.string "Which CONTEST would you like to enter?$"
 
 LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank:: @ 81A664A
@@ -112,7 +112,7 @@ LilycoveCity_ContestLobby_Text_MonInNoConditionForContest:: @ 81A66DC
 	.string "Your POKéMON appears to be in no\n"
 	.string "condition to take part in a CONTEST...$"
 
-FallarborTown_ContestLobby_Text_1A6724:: @ 81A6724
+LilycoveCity_ContestLobby_Text_AlreadyWonEnterAnyway:: @ 81A6724
 	.string "Oh, but that RIBBON...\p"
 	.string "Your POKéMON has won this CONTEST\n"
 	.string "before, hasn't it?\p"
@@ -122,7 +122,7 @@ FallarborTown_ContestLobby_Text_1A6724:: @ 81A6724
 LilycoveCity_ContestLobby_Text_ConfirmContestMon:: @ 81A67A3
 	.string "Is that your CONTEST POKéMON?$"
 
-FallarborTown_ContestLobby_Text_1A67C1:: @ 81A67C1
+LilycoveCity_ContestLobby_Text_YourMonIsEntryNum4:: @ 81A67C1
 	.string "Okay, your POKéMON will be entered\n"
 	.string "in this CONTEST.\p"
 	.string "Your POKéMON is Entry No. 4.\n"
@@ -132,13 +132,13 @@ LilycoveCity_ContestLobby_Text_ComeThroughHere:: @ 81A6832
 	.string "Please come in through here.\n"
 	.string "Good luck!$"
 
-FallarborTown_ContestLobby_Text_1A685A:: @ 81A685A
+LilycoveCity_ContestLobby_Text_PokemonWonWeHavePrize:: @ 81A685A
 	.string "Congratulations! Your POKéMON is the\n"
 	.string "CONTEST winner!\p"
 	.string "We have your prize right here.\n"
 	.string "Please, right this way!$"
 
-FallarborTown_ContestLobby_Text_1A68C6:: @ 81A68C6
+LilycoveCity_ContestLobby_Text_ComeBackForPrizeLater:: @ 81A68C6
 	.string "Please come back for your prize\n"
 	.string "later on.$"
 

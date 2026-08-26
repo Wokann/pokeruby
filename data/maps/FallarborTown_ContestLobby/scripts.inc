@@ -9,7 +9,7 @@ FallarborTown_ContestLobby_OnTransition:: @ 81539C7
 FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD
 	setvar VAR_0x800B, 6
 	setvar VAR_CONTEST_RANK, 1
-	call LilycoveCity_ContestLobby_EventScript_1A4E92
+	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call FallarborTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId

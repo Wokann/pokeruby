@@ -34,7 +34,7 @@ LilycoveCity_ContestLobby_Text_ChooseContestAfterLinking: @ 81886A8
 LilycoveCity_ContestLobby_Text_EnterWhichContest:: @ 81886DC
 	.string "Which CONTEST would you like to enter?$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 8188703
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon3:: @ 8188703
 	.string "Which POKéMON would you like to enter?$"
 
 LilycoveCity_ContestLobby_Text_Transmitting:: @ 818872A

@@ -36,7 +36,7 @@ LilycoveCity_ContestLobby_Text_EnterWhichContest:: @ 81886DC
 	.string "An welchem WETTBEWERB möchtest du\n"
 	.string "teilnehmen?$"
 
-LilycoveCity_ContestLobby_Text_EnterWhichPokemon1:: @ 8188703
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon3:: @ 8188703
 	.string "Welches POKéMON soll teilnehmen?$"
 
 LilycoveCity_ContestLobby_Text_Transmitting:: @ 818872A
