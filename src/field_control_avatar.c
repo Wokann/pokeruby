@@ -80,7 +80,7 @@ extern u8 S_UseDiveUnderwater[];
 extern u8 EventScript_FallDownHole[];
 extern u8 gUnknown_081A14B8[];
 extern u8 EventScript_EggHatch[];
-extern u8 gUnknown_0815FD0D[];
+extern u8 SSTidalCorridor_EventScript_ReachedStepCount[];
 extern u8 EventScript_FallDownHoleMtPyre[];
 
 static void GetPlayerPosition(struct MapPosition *);
@@ -590,7 +590,7 @@ bool8 TryStartStepCountScript(void)
         return TRUE;
     if (CountSSTidalStep(1) == TRUE)
     {
-        ScriptContext_SetupScript(gUnknown_0815FD0D);
+        ScriptContext_SetupScript(SSTidalCorridor_EventScript_ReachedStepCount);
         return TRUE;
     }
     return FALSE;
