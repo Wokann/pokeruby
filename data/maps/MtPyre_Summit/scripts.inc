@@ -70,7 +70,7 @@ MtPyre_Summit_EventScript_EvilTeamStealsOrb:: @ 815D4E1
 
 MtPyre_Summit_EventScript_SetOrbStolenState:: @ 815D57A
 	setflag FLAG_MT_PYRE_ORB_STOLEN
-	setvar VAR_SLATEPORT_STATE, 1
+	setvar VAR_SLATEPORT_CITY_STATE, 1
 	clearflag FLAG_HIDE_STERN_SLATEPORT
 	clearflag FLAG_HIDE_GABBY_AND_TY_SLATEPORT
 	setvar VAR_SLATEPORT_HARBOR_STATE, 1
