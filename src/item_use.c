@@ -48,8 +48,8 @@ extern u8 gPokemonItemUseType;
 extern u8 gLastFieldPokeMenuOpened;
 extern u8 gBattlerInMenuId;
 
-extern u8 S_PlantBerryTreeFromBag[];
-extern u8 S_WaterBerryTreeFromBag[];
+extern u8 BerryTree_EventScript_ItemUsePlantBerry[];
+extern u8 BerryTree_EventScript_ItemUseWailmerPail[];
 
 extern u16 gBattlerPartyIndexes[];
 
@@ -660,7 +660,7 @@ static void ItemUseOnFieldCB_Berry(u8 taskId)
 {
     RemoveBagItem(gSpecialVar_ItemId, 1);
     LockPlayerFieldControls();
-    ScriptContext_SetupScript(S_PlantBerryTreeFromBag);
+    ScriptContext_SetupScript(BerryTree_EventScript_ItemUsePlantBerry);
     DestroyTask(taskId);
 }
 
@@ -680,7 +680,7 @@ void ItemUseOutOfBattle_WailmerPail(u8 taskId)
 static void ItemUseOnFieldCB_WailmerPail(u8 taskId)
 {
     LockPlayerFieldControls();
-    ScriptContext_SetupScript(S_WaterBerryTreeFromBag);
+    ScriptContext_SetupScript(BerryTree_EventScript_ItemUseWailmerPail);
     DestroyTask(taskId);
 }
 

@@ -52,7 +52,7 @@ gSpecials::
 	def_special ChooseHalfPartyForBattle
 	def_special Script_ShowLinkTrainerCard
 	def_special ObjectEventInteractionGetBerryTreeData
-	def_special Berry_FadeAndGoToBerryBagMenu
+	def_special Bag_ChooseBerry
 	def_special ObjectEventInteractionPlantBerryTree
 	def_special ObjectEventInteractionPickBerryTree
 	def_special ObjectEventInteractionRemoveBerryTree

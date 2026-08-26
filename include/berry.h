@@ -19,7 +19,7 @@ u8 ItemIdToBerryType(u16 item);
 void GetBerryNameByBerryType(u8 berry, u8 *string);
 void ResetBerryTreeSparkleFlag(u8 id);
 void ObjectEventInteractionGetBerryTreeData(void);
-void Berry_FadeAndGoToBerryBagMenu(void);
+void Bag_ChooseBerry(void);
 void ObjectEventInteractionPlantBerryTree(void);
 void ObjectEventInteractionPickBerryTree(void);
 void ObjectEventInteractionRemoveBerryTree(void);

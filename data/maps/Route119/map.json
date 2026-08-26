@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "34",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "35",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "36",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -370,7 +370,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "83",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -383,7 +383,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "84",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -396,7 +396,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "85",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -409,7 +409,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "86",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
