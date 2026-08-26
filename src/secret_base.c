@@ -50,7 +50,7 @@ static void sub_80BCB90(u8);
 static void sub_80BCBC0(u8);
 static void sub_80BCBF8(u8 taskId);
 static void sub_80BCC54(u8 taskId);
-static void Task_SecretBasePC_Registry(u8 taskId);
+static void Task_ShowSecretBaseRegistryMenu(u8 taskId);
 static u8 GetSecretBaseOwnerType(u8 secretBaseIndex);
 
 extern u8 SecretBase_EventScript_PCCancel[];
@@ -124,17 +124,17 @@ static const u8 sSecretBaseOwnerGfxIds[] = {
     OBJ_EVENT_GFX_WOMAN_7,
 };
 
-extern u8 gUnknown_081A2E14[];
-extern u8 UnknownString_81A1BB2[];
-extern u8 UnknownString_81A1F67[];
-extern u8 UnknownString_81A2254[];
-extern u8 UnknownString_81A25C3[];
-extern u8 UnknownString_81A2925[];
-extern u8 UnknownString_81A1D74[];
-extern u8 UnknownString_81A20C9[];
-extern u8 UnknownString_81A2439[];
-extern u8 UnknownString_81A2B2A[];
-extern u8 UnknownString_81A2754[];
+extern u8 SecretBase_EventScript_Enter[];
+extern u8 SecretBase_Text_Trainer0Defeated[];
+extern u8 SecretBase_Text_Trainer1Defeated[];
+extern u8 SecretBase_Text_Trainer2Defeated[];
+extern u8 SecretBase_Text_Trainer3Defeated[];
+extern u8 SecretBase_Text_Trainer4Defeated[];
+extern u8 SecretBase_Text_Trainer5Defeated[];
+extern u8 SecretBase_Text_Trainer6Defeated[];
+extern u8 SecretBase_Text_Trainer7Defeated[];
+extern u8 SecretBase_Text_Trainer8Defeated[];
+extern u8 SecretBase_Text_Trainer9Defeated[];
 
 
 void ClearSecretBase(struct SecretBaseRecord *record)
@@ -212,7 +212,7 @@ void CheckPlayerHasSecretBase(void)
         gSpecialVar_Result = 0;
 }
 
-u8 sub_80BB66C(void)
+u8 GetSecretBaseTypeInFrontOfPlayer_(void)
 {
     s16 x, y;
     s16 v0;
@@ -233,9 +233,9 @@ u8 sub_80BB66C(void)
     return 0;
 }
 
-void sub_80BB70C(void)
+void GetSecretBaseTypeInFrontOfPlayer(void)
 {
-    gSpecialVar_0x8007 = sub_80BB66C();
+    gSpecialVar_0x8007 = GetSecretBaseTypeInFrontOfPlayer_();
 }
 
 s16 unref_sub_80BB724(u16 *a0, u8 a1)
@@ -308,7 +308,7 @@ u8 sub_80BB8A8(u8 *arg1)
     return 7;
 }
 
-void sub_80BB8CC(void)
+void SetPlayerSecretBase(void)
 {
     u8 nameLength;
     u16 idx;
@@ -384,7 +384,7 @@ void sub_80BBA48(u8 taskid)
     }
 }
 
-void sub_80BBAF0(void)
+void EnterSecretBase(void)
 {
     CreateTask(sub_80BBA48, 0);
     FadeScreen(1, 0);
@@ -436,7 +436,7 @@ void sub_80BBBEC(u8 taskid)
     }
 }
 
-void sub_80BBC78(void)
+void EnterNewlyCreatedSecretBase(void)
 {
     u8 taskid = CreateTask(sub_80BBBEC, 0);
     gTasks[taskid].data[0] = 0;
@@ -483,7 +483,7 @@ void InitSecretBaseAppearance(u8 flagIn)
     }
 }
 
-void sub_80BBDD0(void)
+void InitSecretBaseDecorationSprites(void)
 {
     u8 *roomdecor;
     u8 *roomdecorpos;
@@ -565,7 +565,7 @@ void sub_80BC038(struct MapPosition *position, const struct MapEvents *events)
 {
     SetCurrentSecretBaseFromPosition(position, events);
     SetCurrentSecretBaseVar();
-    ScriptContext_SetupScript(gUnknown_081A2E14);
+    ScriptContext_SetupScript(SecretBase_EventScript_Enter);
 }
 
 bool8 sub_80BC050(void)
@@ -606,7 +606,7 @@ void sub_80BC0F8(void)
     FadeScreen(1, 0);
 }
 
-void sub_80BC114(void)
+void IsCurSecretBaseOwnedByAnotherPlayer(void)
 {
     if (gSaveBlock1.secretBases[0].secretBaseId != gCurrentSecretBaseId)
         gSpecialVar_Result = 1;
@@ -709,7 +709,7 @@ void SetPlayerSecretBaseRecordMixingParty(void)
     }
 }
 
-void sub_80BC440(void)
+void ClearAndLeaveSecretBase(void)
 {
     u16 backupValue = gSaveBlock1.secretBases[0].numSecretBasesReceived;
     ResetSecretBase(0);
@@ -720,7 +720,7 @@ void sub_80BC440(void)
 void MoveOutOfSecretBase(void)
 {
     IncrementGameStat(GAME_STAT_MOVED_SECRET_BASE);
-    sub_80BC440();
+    ClearAndLeaveSecretBase();
 }
 
 void sub_80BC474(void)
@@ -794,17 +794,17 @@ void ToggleCurSecretBaseRegistry(void)
     FlagSet(FLAG_SECRET_BASE_REGISTRY_ENABLED);
 }
 
-void SecretBasePC_Decoration(void)
+void ShowSecretBaseDecorationMenu(void)
 {
-    CreateTask(Task_SecretBasePC_Decoration, 0);
+    CreateTask(DoSecretBaseDecorationMenu, 0);
 }
 
-void SecretBasePC_Registry(void)
+void ShowSecretBaseRegistryMenu(void)
 {
-    CreateTask(Task_SecretBasePC_Registry, 0);
+    CreateTask(Task_ShowSecretBaseRegistryMenu, 0);
 }
 
-void Task_SecretBasePC_Registry(u8 taskId)
+static void Task_ShowSecretBaseRegistryMenu(u8 taskId)
 {
     s16 *taskData;
 
@@ -1109,16 +1109,16 @@ static u8 GetSecretBaseOwnerType(u8 secretBaseIndex)
 const u8 *GetSecretBaseTrainerLoseText(void)
 {
     u8 param = GetSecretBaseOwnerType(VarGet(VAR_CURRENT_SECRET_BASE));
-    if (param == 0) return UnknownString_81A1BB2;
-    if (param == 1) return UnknownString_81A1F67;
-    if (param == 2) return UnknownString_81A2254;
-    if (param == 3) return UnknownString_81A25C3;
-    if (param == 4) return UnknownString_81A2925;
-    if (param == 5) return UnknownString_81A1D74;
-    if (param == 6) return UnknownString_81A20C9;
-    if (param == 7) return UnknownString_81A2439;
-    if (param == 8) return UnknownString_81A2754;
-    return UnknownString_81A2B2A;
+    if (param == 0) return SecretBase_Text_Trainer0Defeated;
+    if (param == 1) return SecretBase_Text_Trainer1Defeated;
+    if (param == 2) return SecretBase_Text_Trainer2Defeated;
+    if (param == 3) return SecretBase_Text_Trainer3Defeated;
+    if (param == 4) return SecretBase_Text_Trainer4Defeated;
+    if (param == 5) return SecretBase_Text_Trainer5Defeated;
+    if (param == 6) return SecretBase_Text_Trainer6Defeated;
+    if (param == 7) return SecretBase_Text_Trainer7Defeated;
+    if (param == 8) return SecretBase_Text_Trainer8Defeated;
+    return SecretBase_Text_Trainer9Defeated;
 }
 
 // Debugging function to test secret base battles.
@@ -1137,7 +1137,9 @@ void unref_sub_80BCD7C(u8 secretBaseIndex)
     }
 }
 
-void sub_80BCE1C(void)
+// Ruby builds the record-mixed secret-base owner's party here. Emerald's
+// corresponding special configures its different battle flow instead.
+void PrepareSecretBaseTrainerBattle(void)
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 
@@ -1145,12 +1147,12 @@ void sub_80BCE1C(void)
     CreateSecretBaseEnemyParty(&gSaveBlock1.secretBases[curBaseIndex]);
 }
 
-void sub_80BCE4C()
+void SetBattledOwnerFromResult()
 {
     gSaveBlock1.secretBases[VarGet(VAR_CURRENT_SECRET_BASE)].battledOwnerToday = gSpecialVar_Result;
 }
 
-void sub_80BCE90()
+void GetSecretBaseOwnerAndState()
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 

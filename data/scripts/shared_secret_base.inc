@@ -75,11 +75,11 @@ SecretBase_EventScript_PCPackUp:
 	end
 
 SecretBase_EventScript_PCDecorationMenu:
-	special SecretBasePC_Decoration
+	special ShowSecretBaseDecorationMenu
 	end
 
 SecretBase_EventScript_PCRegistryMenu:
-	special SecretBasePC_Registry
+	special ShowSecretBaseRegistryMenu
 	end
 
 SecretBase_EventScript_RecordMixingPC:: @ 815F43A

@@ -1454,7 +1454,7 @@ void DecorationPC(u8 taskId)
     gTasks[taskId].func = Task_DecorationPCProcessMenuInput;
 }
 
-void Task_SecretBasePC_Decoration(u8 taskId)
+void DoSecretBaseDecorationMenu(u8 taskId)
 {
     DecorationPC(taskId);
     sDecorationContext.items = gSaveBlock1.secretBases[0].decorations;
@@ -2149,7 +2149,7 @@ void sub_80FF394(u16 mapX, u16 mapY, u16 decIdx)
     }
 }
 
-void sub_80FF474(void)
+void SetDecoration(void)
 {
     u8 i;
     u8 j;
@@ -2564,7 +2564,7 @@ void sub_81000C4(u8 taskId)
     {
         gUnknown_020391A4 = gTasks[taskId].data[0] - 7;
         gUnknown_020391A6 = gTasks[taskId].data[1] - 7;
-        ScriptContext_SetupScript(gUnknown_081A2F7B);
+        ScriptContext_SetupScript(SecretBase_EventScript_SetDecoration);
     }
     gSprites[gUnknown_020391A8].y += 2;
     sub_810028C(taskId);
@@ -3068,7 +3068,7 @@ void sub_8100A60(u8 a0)
     sDecorationContext.pos[a0] = 0;
 }
 
-void sub_8100A7C(void)
+void PutAwayDecorationIteration(void)
 {
     u16 i;
     gSpecialVar_0x8005 = 0;
@@ -3091,7 +3091,7 @@ void sub_8100A7C(void)
     }
 }
 
-void sub_8100B20(void)
+void GetObjectEventLocalIdByFlag(void)
 {
     u8 i;
     for (i=0; i<gMapHeader.events->objectEventCount; i++)
@@ -3147,7 +3147,7 @@ void sub_8100C88(u8 taskId)
             if (!gPaletteFade.active)
             {
                 DrawWholeMapView();
-                ScriptContext_SetupScript(gUnknown_081A2F8A);
+                ScriptContext_SetupScript(SecretBase_EventScript_PutAwayDecoration);
                 Menu_EraseWindowRect(0, 0, 29, 19);
                 gTasks[taskId].data[2] = 2;
             }

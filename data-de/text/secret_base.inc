@@ -25,7 +25,7 @@ SecretBase_Text_DataUnregistered: @ 81A3A3A
 	.string "Daten wurden aus der Registrierung\n"
 	.string "genommen.$"
 
-UnknownString_81A3A56: @ 81A3A56
+SecretBase_Text_NoDecorations: @ 81A3A56
 	.string "Es sind keine Dekorationen vorhanden.$"
 
 SecretBase_Text_BootUpPC: @ 81A3A72
@@ -63,13 +63,13 @@ SecretBase_Text_SkittyTV: @ 81A3C31
 	.string "wie ein ENECO. Es scheint, als wolle\l"
 	.string "er sich langsam davonschleichen ...$"
 
-UnknownString_81A3C71: @ 81A3C71
+SecretBase_Text_WouldYouLikeToMoveBases: @ 81A3C71
 	.string "Du kannst dir nur eine GEHEIMBASIS\n"
 	.string "einrichten.\p"
 	.string "Möchtest du deine GEHEIMBASIS in der\n"
 	.string "Nähe von {STR_VAR_1} hierher\l"
 	.string "verlegen?$"
 
-UnknownString_81A3CC9: @ 81A3CC9
+SecretBase_Text_MovingCompletedUseSecretPower: @ 81A3CC9
 	.string "Umzug wurde abgeschlossen.\p"
 	.string "Möchtest du GEHEIMPOWER einsetzen?$"

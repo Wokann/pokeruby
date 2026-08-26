@@ -116,8 +116,8 @@ extern const struct SpriteTemplate gSpriteTemplate_83ECA88;
 extern const struct Decoration gDecorations[];
 extern struct UnkStruct_02038900 gUnknown_02038900;
 extern u8 *gUnknown_020388D0;
-extern u8 gUnknown_081A2F7B[];
-extern u8 gUnknown_081A2F8A[];
+extern u8 SecretBase_EventScript_SetDecoration[];
+extern u8 SecretBase_EventScript_PutAwayDecoration[];
 extern struct OamData gUnknown_020391AC;
 
 extern u8 gUnknown_020388D4;
@@ -156,9 +156,9 @@ extern const struct YesNoFuncTable gUnknown_083ECAA0;
 
 extern void sub_8109DAC(u8); // src/trader
 extern void ReshowPlayerPC(u8); // src/player_pc
-void Task_SecretBasePC_Decoration(u8);
+void DoSecretBaseDecorationMenu(u8);
 
-void Task_SecretBasePC_Decoration(u8 taskId);
+void DoSecretBaseDecorationMenu(u8 taskId);
 void sub_80FE2B4(void);
 void Task_DecorationPCProcessMenuInput(u8);
 void sub_80FE394(void);
