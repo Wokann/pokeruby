@@ -1,180 +1,180 @@
-S_BerryTree:: @ 81A14DD
+BerryTreeScript:: @ 81A14DD
 	special ObjectEventInteractionGetBerryTreeData
 	switch VAR_0x8004
-	case 255, BerryTree_EventScript_1A1533
-	case 0, BerryTree_EventScript_1A153D
-	case 1, BerryTree_EventScript_1A1595
-	case 2, BerryTree_EventScript_1A15A2
-	case 3, BerryTree_EventScript_1A15AF
-	case 4, BerryTree_EventScript_1A15BC
-	case 5, BerryTree_EventScript_1A15F9
+	case 255, BerryTree_EventScript_Sparkling
+	case 0, BerryTree_EventScript_CheckSoil
+	case 1, BerryTree_EventScript_CheckBerryStage1
+	case 2, BerryTree_EventScript_CheckBerryStage2
+	case 3, BerryTree_EventScript_CheckBerryStage3
+	case 4, BerryTree_EventScript_CheckBerryStage4
+	case 5, BerryTree_EventScript_CheckBerryFullyGrown
 	end
 
-BerryTree_EventScript_1A1533:: @ 81A1533
+BerryTree_EventScript_Sparkling:: @ 81A1533
 	lockall
-	message Route102_Text_1A1946
+	message BerryTree_Text_ExclamationPoint
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
 
-BerryTree_EventScript_1A153D:: @ 81A153D
+BerryTree_EventScript_CheckSoil:: @ 81A153D
 	lock
 	faceplayer
 	specialvar VAR_RESULT, PlayerHasBerries
 	compare VAR_RESULT, 1
-	goto_if_eq BerryTree_EventScript_1A1558
-	message Route102_Text_1A16B6
+	goto_if_eq BerryTree_EventScript_WantToPlant
+	message BerryTree_Text_ItsSoftLoamySoil
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-BerryTree_EventScript_1A1558:: @ 81A1558
-	msgbox Route102_Text_1A16CD, MSGBOX_YESNO
+BerryTree_EventScript_WantToPlant:: @ 81A1558
+	msgbox BerryTree_Text_WantToPlant, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq BerryTree_EventScript_1A1577
+	goto_if_eq BerryTree_EventScript_ChooseBerryToPlant
 	compare VAR_RESULT, NO
-	goto_if_eq BerryTree_EventScript_1A1593
+	goto_if_eq BerryTree_EventScript_CancelPlanting
 	end
 
-BerryTree_EventScript_1A1577:: @ 81A1577
+BerryTree_EventScript_ChooseBerryToPlant:: @ 81A1577
 	fadescreen FADE_TO_BLACK
 	closemessage
 	special Berry_FadeAndGoToBerryBagMenu
 	waitstate
 	compare VAR_ITEM_ID, 0
-	goto_if_eq BerryTree_EventScript_1A1593
+	goto_if_eq BerryTree_EventScript_CancelPlanting
 	removeitem VAR_ITEM_ID, 1
-	call S_PlantBerryTree
-BerryTree_EventScript_1A1593:: @ 81A1593
+	call BerryTree_EventScript_PlantBerry
+BerryTree_EventScript_CancelPlanting:: @ 81A1593
 	release
 	end
 
-BerryTree_EventScript_1A1595:: @ 81A1595
+BerryTree_EventScript_CheckBerryStage1:: @ 81A1595
 	lockall
-	message Route102_Text_1A172C
+	message BerryTree_Text_BerryGrowthStage1
 	waitmessage
 	waitbuttonpress
-	goto BerryTree_EventScript_1A165F
+	goto BerryTree_EventScript_WantToWater
 
-BerryTree_EventScript_1A15A2:: @ 81A15A2
+BerryTree_EventScript_CheckBerryStage2:: @ 81A15A2
 	lockall
-	message Route102_Text_1A174B
+	message BerryTree_Text_BerryGrowthStage2
 	waitmessage
 	waitbuttonpress
-	goto BerryTree_EventScript_1A165F
+	goto BerryTree_EventScript_WantToWater
 
-BerryTree_EventScript_1A15AF:: @ 81A15AF
+BerryTree_EventScript_CheckBerryStage3:: @ 81A15AF
 	lockall
-	message Route102_Text_1A175C
+	message BerryTree_Text_BerryGrowthStage3
 	waitmessage
 	waitbuttonpress
-	goto BerryTree_EventScript_1A165F
+	goto BerryTree_EventScript_WantToWater
 
-BerryTree_EventScript_1A15BC:: @ 81A15BC
-	call BerryTree_EventScript_1A15CE
+BerryTree_EventScript_CheckBerryStage4:: @ 81A15BC
+	call BerryTree_EventScript_GetCareAdverb
 	lockall
-	message Route102_Text_1A177D
+	message BerryTree_Text_BerryGrowthStage4
 	waitmessage
 	waitbuttonpress
-	goto BerryTree_EventScript_1A165F
+	goto BerryTree_EventScript_WantToWater
 
-BerryTree_EventScript_1A15CE:: @ 81A15CE
+BerryTree_EventScript_GetCareAdverb:: @ 81A15CE
 	compare VAR_0x8005, 0
-	goto_if_eq BerryTree_EventScript_1A15F2
+	goto_if_eq BerryTree_EventScript_SetAdverbPoor
 	compare VAR_0x8005, 4
-	goto_if_eq BerryTree_EventScript_1A15EB
-	bufferstring 1, Route102_Text_1A17B7
+	goto_if_eq BerryTree_EventScript_SetAdverbGreat
+	bufferstring 1, BerryTree_Text_CareAdverbGood
 	return
 
-BerryTree_EventScript_1A15EB:: @ 81A15EB
-	bufferstring 1, Route102_Text_1A179F
+BerryTree_EventScript_SetAdverbGreat:: @ 81A15EB
+	bufferstring 1, BerryTree_Text_CareAdverbGreat
 	return
 
-BerryTree_EventScript_1A15F2:: @ 81A15F2
-	bufferstring 1, Route102_Text_1A17B0
+BerryTree_EventScript_SetAdverbPoor:: @ 81A15F2
+	bufferstring 1, BerryTree_Text_CareAdverbPoor
 	return
 
-BerryTree_EventScript_1A15F9:: @ 81A15F9
+BerryTree_EventScript_CheckBerryFullyGrown:: @ 81A15F9
 	buffernumberstring 1, VAR_0x8006
 	lock
 	faceplayer
-	msgbox Route102_Text_1A17C0, MSGBOX_YESNO
+	msgbox BerryTree_Text_WantToPick, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq BerryTree_EventScript_1A161D
+	goto_if_eq BerryTree_EventScript_PickBerry
 	compare VAR_RESULT, NO
-	goto_if_eq BerryTree_EventScript_1A164B
+	goto_if_eq BerryTree_EventScript_CancelPickingBerry
 
-BerryTree_EventScript_1A161D:: @ 81A161D
+BerryTree_EventScript_PickBerry:: @ 81A161D
 	special ObjectEventInteractionPickBerryTree
 	compare VAR_0x8004, 0
-	goto_if_eq BerryTree_EventScript_1A1642
+	goto_if_eq BerryTree_EventScript_BerryPocketFull
 	special ObjectEventInteractionRemoveBerryTree
-	message Route102_Text_1A17FD
+	message BerryTree_Text_PickedTheBerry
 	playfanfare MUS_OBTAIN_BERRY
 	waitmessage
 	waitfanfare
 	waitbuttonpress
-	message Route102_Text_1A181A
+	message BerryTree_Text_PutAwayBerry
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-BerryTree_EventScript_1A1642:: @ 81A1642
-	message Route102_Text_1A1881
+BerryTree_EventScript_BerryPocketFull:: @ 81A1642
+	message BerryTree_Text_BerryPocketFull
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-BerryTree_EventScript_1A164B:: @ 81A164B
-	message Route102_Text_1A18C5
+BerryTree_EventScript_CancelPickingBerry:: @ 81A164B
+	message BerryTree_Text_BerryLeftUnpicked
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-S_PlantBerryTreeFromBag:: @ 81A1654
+BerryTree_EventScript_ItemUsePlantBerry:: @ 81A1654
 	lockall
 	special ObjectEventInteractionGetBerryTreeData
-	call S_PlantBerryTree
+	call BerryTree_EventScript_PlantBerry
 	releaseall
 	end
 
-BerryTree_EventScript_1A165F:: @ 81A165F
+BerryTree_EventScript_WantToWater:: @ 81A165F
 	checkitem ITEM_WAILMER_PAIL, 1
 	compare VAR_RESULT, 0
-	goto_if_eq BerryTree_EventScript_1A168D
-	msgbox Route102_Text_1A18E6, MSGBOX_YESNO
+	goto_if_eq BerryTree_EventScript_DontWater
+	msgbox BerryTree_Text_WantToWater, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq S_WaterBerryTree
+	goto_if_eq BerryTree_EventScript_WaterBerry
 	compare VAR_RESULT, NO
-	goto_if_eq BerryTree_EventScript_1A168D
-BerryTree_EventScript_1A168D:: @ 81A168D
+	goto_if_eq BerryTree_EventScript_DontWater
+BerryTree_EventScript_DontWater:: @ 81A168D
 	releaseall
 	end
 
-S_WaterBerryTreeFromBag:: @ 81A168F
+BerryTree_EventScript_ItemUseWailmerPail:: @ 81A168F
 	special ObjectEventInteractionGetBerryTreeData
 	lockall
-S_WaterBerryTree:: @ 81A1693
-	message Route102_Text_1A1912
+BerryTree_EventScript_WaterBerry:: @ 81A1693
+	message BerryTree_Text_WateredTheBerry
 	waitmessage
 	special ObjectEventInteractionWaterBerryTree
 	special DoWateringBerryTreeAnim
 	waitstate
-	message Route102_Text_1A1925
+	message BerryTree_Text_PlantIsDelighted
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
 
-S_PlantBerryTree:: @ 81A16A9
+BerryTree_EventScript_PlantBerry:: @ 81A16A9
 	special ObjectEventInteractionPlantBerryTree
 	incrementgamestat GAME_STAT_PLANTED_BERRIES
-	message Route102_Text_1A16FB
+	message BerryTree_Text_PlantedOneBerry
 	waitmessage
 	waitbuttonpress
 	return

@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_WEPEAR",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_PINAP",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -58,7 +58,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_NANAB",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -71,7 +71,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_RAZZ",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -84,7 +84,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_ASPEAR_1",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -97,7 +97,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_ASPEAR_2",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -110,7 +110,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_ASPEAR_3",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -123,7 +123,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_PECHA_1",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -136,7 +136,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_PECHA_2",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {
@@ -149,7 +149,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "BERRY_TREE_ROUTE_120_PECHA_3",
-      "script": "S_BerryTree",
+      "script": "BerryTreeScript",
       "flag": "0"
     },
     {

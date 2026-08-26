@@ -973,7 +973,7 @@ const struct Berry gBerries[] =
 
 static const struct BerryTree gBlankBerryTree = {0};
 
-extern u8 S_BerryTree[];
+extern u8 BerryTreeScript[];
 extern u16 gSpecialVar_LastTalked;
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
@@ -1180,7 +1180,7 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
 
 bool8 IsPlayerFacingUnplantedSoil(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() == S_BerryTree
+    if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
      && GetStageByBerryTreeId(ObjectEventGetBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
         return TRUE;
     else
@@ -1189,7 +1189,7 @@ bool8 IsPlayerFacingUnplantedSoil(void)
 
 bool8 TryToWaterBerryTree(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() != S_BerryTree)
+    if (GetObjectEventScriptPointerPlayerFacing() != BerryTreeScript)
         return FALSE;
     else
         return ObjectEventInteractionWaterBerryTree();
@@ -1495,7 +1495,7 @@ static const u8 gUnknown_Debug_083F7FD3[] = _("");
 
 u8* DebugOpenBerryInfo(void)
 {
-    if (GetObjectEventScriptPointerPlayerFacing() != S_BerryTree)
+    if (GetObjectEventScriptPointerPlayerFacing() != BerryTreeScript)
     {
         return NULL;
     }
