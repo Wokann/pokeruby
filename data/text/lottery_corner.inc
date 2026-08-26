@@ -15,7 +15,7 @@ LilycoveCity_DepartmentStore_1F_Text_ComeBackTomorrow:: @ 81C4C6A
 LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain:: @ 81C4C85
 	.string "Please do visit us again.$"
 
-UnknownString_81C4C9F: @ 81C4C9F
+UnusedText_LotteryCorner_PickTicketWithoutPause: @ 81C4C9F
 	.string "Please pick a LOTO TICKET.\n"
 	.string "... ... ...$"
 
