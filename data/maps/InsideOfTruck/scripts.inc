@@ -1,29 +1,29 @@
 InsideOfTruck_MapScripts:: @ 815FBFF
-	map_script MAP_SCRIPT_ON_LOAD, InsideOfTruck_MapScript1_15FC0A
-	map_script MAP_SCRIPT_ON_RESUME, InsideOfTruck_MapScript1_15FC26
+	map_script MAP_SCRIPT_ON_LOAD, InsideOfTruck_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, InsideOfTruck_OnResume
 	.byte 0
 
-InsideOfTruck_MapScript1_15FC0A:: @ 815FC0A
+InsideOfTruck_OnLoad:: @ 815FC0A
 	setmetatile 4, 1, METATILE_InsideOfTruck_ExitLight_Top, 0
 	setmetatile 4, 2, METATILE_InsideOfTruck_ExitLight_Mid, 0
 	setmetatile 4, 3, METATILE_InsideOfTruck_ExitLight_Bottom, 0
 	end
 
-InsideOfTruck_MapScript1_15FC26:: @ 815FC26
+InsideOfTruck_OnResume:: @ 815FC26
 	setstepcallback 5
 	end
 
-InsideOfTruck_EventScript_15FC29:: @ 815FC29
+InsideOfTruck_EventScript_SetIntroFlags:: @ 815FC29
 	lockall
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	checkplayergender
 	compare VAR_RESULT, 0
-	goto_if_eq InsideOfTruck_EventScript_15FC45
+	goto_if_eq InsideOfTruck_EventScript_SetIntroFlagsMale
 	compare VAR_RESULT, 1
-	goto_if_eq InsideOfTruck_EventScript_15FC68
+	goto_if_eq InsideOfTruck_EventScript_SetIntroFlagsFemale
 	end
 
-InsideOfTruck_EventScript_15FC45:: @ 815FC45
+InsideOfTruck_EventScript_SetIntroFlagsMale:: @ 815FC45
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
 	setvar VAR_LITTLEROOT_INTRO_STATE, 1
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
@@ -35,7 +35,7 @@ InsideOfTruck_EventScript_15FC45:: @ 815FC45
 	releaseall
 	end
 
-InsideOfTruck_EventScript_15FC68:: @ 815FC68
+InsideOfTruck_EventScript_SetIntroFlagsFemale:: @ 815FC68
 	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F
 	setvar VAR_LITTLEROOT_INTRO_STATE, 2
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
@@ -47,6 +47,6 @@ InsideOfTruck_EventScript_15FC68:: @ 815FC68
 	releaseall
 	end
 
-InsideOfTruck_EventScript_15FC8B:: @ 815FC8B
-	msgbox InsideOfTruck_Text_198FAD, MSGBOX_SIGN
+InsideOfTruck_EventScript_MovingBox:: @ 815FC8B
+	msgbox InsideOfTruck_Text_BoxPrintedWithMonLogo, MSGBOX_SIGN
 	end
