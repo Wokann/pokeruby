@@ -34,7 +34,7 @@ BattleTower_BattleRoom_EventScript_OpponentEnter:: @ 81608FA
 	setvar VAR_0x8004, 14
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
-	special sub_810FF60
+	special Script_TryGainNewFanFromCounter
 	warp MAP_BATTLE_TOWER_LOBBY, 255, 6, 6
 	waitstate
 
@@ -100,7 +100,7 @@ BattleTower_BattleRoom_EventScript_WarpToLobbyWon:: @ 8160A56
 	setvar VAR_0x8004, 14
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 3
-	special sub_810FF60
+	special Script_TryGainNewFanFromCounter
 	warp MAP_BATTLE_TOWER_LOBBY, 255, 6, 6
 	waitstate
 

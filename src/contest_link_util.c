@@ -724,7 +724,7 @@ static void sub_80C2DD8(u8 taskId)
 static void sub_80C2E14(u8 taskId)
 {
     sub_80BE284(gContestFinalStandings[gContestPlayerMonIndex]);
-    sub_810FB10(2);
+    TryGainNewFanFromCounter(2);
     Contest_SaveWinner(gSpecialVar_ContestRank);
     Contest_SaveWinner(0xFE);
     eCurContestWinnerIsForArtist = TRUE;

@@ -796,7 +796,7 @@ static void sub_8083958(void)
     Overworld_ResetMapMusic();
     LoadPlayerParty();
     SavePlayerBag();
-    sub_810FEFC();
+    UpdateTrainerFansAfterLinkBattle();
 
     if (gSpecialVar_0x8004 != 5)
         UpdateLinkBattleRecords(gUnknown_03004860 ^ 1);

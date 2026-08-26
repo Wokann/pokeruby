@@ -1141,7 +1141,7 @@ void sub_80BCE1C(void)
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 
-    sub_810FB10(1);
+    TryGainNewFanFromCounter(1);
     CreateSecretBaseEnemyParty(&gSaveBlock1.secretBases[curBaseIndex]);
 }
 
