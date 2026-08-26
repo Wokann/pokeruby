@@ -3,7 +3,7 @@ Route118_MapScripts:: @ 8150F28
 	.byte 0
 
 Route118_OnTransition:: @ 8150F2E
-	call Route118_EventScript_1AE313
+	call GabbyAndTy_EventScript_UpdateLocation
 	end
 
 Route118_EventScript_GoodRodFisherman:: @ 8150F34

@@ -14,7 +14,7 @@ Route111_EventScript_CloseDesertRuins:: @ 814FFA6
 
 Route111_OnTransition:: @ 814FFB9
 	call Route111_EventScript_CheckSetSandstorm
-	call Route111_EventScript_1AE313
+	call GabbyAndTy_EventScript_UpdateLocation
 	goto_if_not_defeated TRAINER_VICKY, Route111_EventScript_SetWinstratesNotDefeated
 	end
 
