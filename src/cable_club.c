@@ -27,10 +27,10 @@
 #include "trainer_card.h"
 
 extern u16 gBattleTypeFlags;
-extern const u8 gUnknown_081A4932[];
-extern const u8 gUnknown_081A4975[];
-extern const u8 gUnknown_081A49B6[];
-extern const u8 gUnknown_081A490C[];
+extern const u8 gText_ConfirmLinkWhenPlayersReady[];
+extern const u8 gText_ConfirmStartLinkWithXPlayers[];
+extern const u8 gText_AwaitingLinkup[];
+extern const u8 gText_PleaseWaitForLink[];
 extern struct
 {
     u8 field0;
@@ -300,13 +300,13 @@ static void sub_8082F68(u8 taskId)
     if (IsLinkMaster() == TRUE)
     {
         PlaySE(SE_PIN);
-        ShowFieldAutoScrollMessage(gUnknown_081A4932);
+        ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
         gTasks[taskId].func = sub_8082FEC;
     }
     else
     {
         PlaySE(SE_BOO);
-        ShowFieldAutoScrollMessage(gUnknown_081A49B6);
+        ShowFieldAutoScrollMessage(gText_AwaitingLinkup);
         gTasks[taskId].func = sub_80831F8;
     }
 }
@@ -347,7 +347,7 @@ static void sub_808303C(u8 taskId)
     sub_80081C8(linkPlayerCount);
     sub_8082D4C();
     ConvertIntToDecimalStringN(gStringVar1, linkPlayerCount, STR_CONV_MODE_LEFT_ALIGN, 1);
-    ShowFieldAutoScrollMessage((u8 *)gUnknown_081A4975);
+    ShowFieldAutoScrollMessage((u8 *)gText_ConfirmStartLinkWithXPlayers);
     gTasks[taskId].func = sub_80830E4;
 #elif GERMAN
     if ((gLinkType == 0x2255 && (u32)linkPlayerCount > 1)
@@ -356,7 +356,7 @@ static void sub_808303C(u8 taskId)
         sub_80081C8(linkPlayerCount);
         sub_8082D4C();
         ConvertIntToDecimalStringN(gStringVar1, linkPlayerCount, STR_CONV_MODE_LEFT_ALIGN, 1);
-        ShowFieldAutoScrollMessage((u8 *)gUnknown_081A4975);
+        ShowFieldAutoScrollMessage((u8 *)gText_ConfirmStartLinkWithXPlayers);
         gTasks[taskId].func = sub_80830E4;
     }
 #endif
@@ -373,12 +373,12 @@ static void sub_80830E4(u8 taskId)
     {
         if (sub_800820C() != GetLinkPlayerCount_2())
         {
-            ShowFieldAutoScrollMessage(gUnknown_081A4932);
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
             gTasks[taskId].func = sub_8082FEC;
         }
         else if (JOY_HELD(B_BUTTON))
         {
-            ShowFieldAutoScrollMessage(gUnknown_081A4932);
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
             gTasks[taskId].func = sub_8082FEC;
         }
         else if (JOY_HELD(A_BUTTON))
@@ -827,7 +827,7 @@ static void sub_80839DC(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        ShowFieldMessage(gUnknown_081A490C);
+        ShowFieldMessage(gText_PleaseWaitForLink);
         task->data[0] = 1;
         break;
     case 1:

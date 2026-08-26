@@ -1115,15 +1115,15 @@ IslandCave_Text_1A13BE:: @ 81A13BE
 SealedChamber_OuterRoom_Text_HoleInWall:: @ 81A13BE
 	.string "In der Wand ist ein großes Loch.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A13DF:: @ 81A13DF
+CableClub_Text_ColosseumUndergoingAdjustments:: @ 81A13DF
 	.string "Tut mir schrecklich Leid. Das KOLOSSEUM\n"
 	.string "wird gerade renoviert.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A141C:: @ 81A141C
+CableClub_Text_TradeCenterUndergoingInspections:: @ 81A141C
 	.string "Tut mir schrecklich Leid. Das\n"
 	.string "HANDELSCENTER wird gerade renoviert.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A145C:: @ 81A145C
+CableClub_Text_RecordCornerUnderPreparation:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 

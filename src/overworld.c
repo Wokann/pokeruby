@@ -62,24 +62,24 @@ extern u16 gTotalCameraPixelOffsetX;
 
 extern u8 EventScript_WhiteOut[];
 extern u8 EventScript_ResetMrBriney[];
-extern u8 SingleBattleColosseum_EventScript_1A436F[];
-extern u8 SingleBattleColosseum_EventScript_1A4379[];
-extern u8 DoubleBattleColosseum_EventScript_1A4383[];
-extern u8 DoubleBattleColosseum_EventScript_1A439E[];
-extern u8 DoubleBattleColosseum_EventScript_1A43B9[];
-extern u8 DoubleBattleColosseum_EventScript_1A43D4[];
-extern u8 TradeCenter_EventScript_1A43F0[];
-extern u8 TradeCenter_EventScript_1A43FA[];
-extern u8 RecordCorner_EventScript_1A4418[];
-extern u8 RecordCorner_EventScript_1A442D[];
-extern u8 RecordCorner_EventScript_1A4442[];
-extern u8 RecordCorner_EventScript_1A4457[];
-extern u8 TradeRoom_ReadTrainerCard1[];
-extern u8 TradeRoom_ReadTrainerCard2[];
-extern u8 TradeRoom_TooBusyToNotice[];
-extern u8 TradeRoom_PromptToCancelLink[];
-extern u8 TradeRoom_TerminateLink[];
-extern u8 gUnknown_081A4508[];
+extern u8 EventScript_BattleColosseum_2P_PlayerSpot0[];
+extern u8 EventScript_BattleColosseum_2P_PlayerSpot1[];
+extern u8 EventScript_BattleColosseum_4P_PlayerSpot0[];
+extern u8 EventScript_BattleColosseum_4P_PlayerSpot1[];
+extern u8 EventScript_BattleColosseum_4P_PlayerSpot2[];
+extern u8 EventScript_BattleColosseum_4P_PlayerSpot3[];
+extern u8 EventScript_TradeCenter_Chair0[];
+extern u8 EventScript_TradeCenter_Chair1[];
+extern u8 EventScript_RecordCenter_Spot0[];
+extern u8 EventScript_RecordCenter_Spot1[];
+extern u8 EventScript_RecordCenter_Spot2[];
+extern u8 EventScript_RecordCenter_Spot3[];
+extern u8 CableClub_EventScript_ReadTrainerCard[];
+extern u8 CableClub_EventScript_ReadTrainerCardColored[];
+extern u8 CableClub_EventScript_TooBusyToNotice[];
+extern u8 EventScript_ConfirmLeaveCableClubRoom[];
+extern u8 EventScript_TerminateLink[];
+extern u8 EventScript_DoLinkRoomExit[];
 
 extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
@@ -2233,7 +2233,7 @@ u16 sub_80554BC(u32 a1)
 {
     if (sub_8054F88(0x83) == TRUE)
     {
-        ScriptContext_SetupScript(gUnknown_081A4508);
+        ScriptContext_SetupScript(EventScript_DoLinkRoomExit);
         sub_80543DC(sub_80554B8);
     }
     return 17;
@@ -2347,13 +2347,13 @@ const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
     if (linkPlayerId != 4)
     {
         if (!a1->b)
-            return TradeRoom_TooBusyToNotice;
+            return CableClub_EventScript_TooBusyToNotice;
         if (gUnknown_03000580[linkPlayerId] != 0x80)
-            return TradeRoom_TooBusyToNotice;
+            return CableClub_EventScript_TooBusyToNotice;
         if (!sub_8083BF4(linkPlayerId))
-            return TradeRoom_ReadTrainerCard1;
+            return CableClub_EventScript_ReadTrainerCard;
         else
-            return TradeRoom_ReadTrainerCard2;
+            return CableClub_EventScript_ReadTrainerCardColored;
     }
 
     return GetInteractedLinkPlayerScript(&unkStruct, a1->field_C, a1->d);
@@ -2361,29 +2361,29 @@ const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
 
 static u16 sub_8055758(const u8 *script)
 {
-    if (script == DoubleBattleColosseum_EventScript_1A4383)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot0)
         return 10;
-    if (script == DoubleBattleColosseum_EventScript_1A439E)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot1)
         return 9;
-    if (script == DoubleBattleColosseum_EventScript_1A43B9)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot2)
         return 10;
-    if (script == DoubleBattleColosseum_EventScript_1A43D4)
+    if (script == EventScript_BattleColosseum_4P_PlayerSpot3)
         return 9;
-    if (script == RecordCorner_EventScript_1A4418)
+    if (script == EventScript_RecordCenter_Spot0)
         return 10;
-    if (script == RecordCorner_EventScript_1A442D)
+    if (script == EventScript_RecordCenter_Spot1)
         return 9;
-    if (script == RecordCorner_EventScript_1A4442)
+    if (script == EventScript_RecordCenter_Spot2)
         return 10;
-    if (script == RecordCorner_EventScript_1A4457)
+    if (script == EventScript_RecordCenter_Spot3)
         return 9;
-    if (script == SingleBattleColosseum_EventScript_1A436F)
+    if (script == EventScript_BattleColosseum_2P_PlayerSpot0)
         return 10;
-    if (script == SingleBattleColosseum_EventScript_1A4379)
+    if (script == EventScript_BattleColosseum_2P_PlayerSpot1)
         return 9;
-    if (script == TradeCenter_EventScript_1A43F0)
+    if (script == EventScript_TradeCenter_Chair0)
         return 10;
-    if (script == TradeCenter_EventScript_1A43FA)
+    if (script == EventScript_TradeCenter_Chair1)
         return 9;
     return 0;
 }
@@ -2410,7 +2410,7 @@ static void sub_8055808(const u8 *script)
 void sub_8055824(void)
 {
     PlaySE(SE_WIN_OPEN);
-    ScriptContext_SetupScript(TradeRoom_PromptToCancelLink);
+    ScriptContext_SetupScript(EventScript_ConfirmLeaveCableClubRoom);
     LockPlayerFieldControls();
 }
 
@@ -2423,7 +2423,7 @@ static void sub_8055840(const u8 *script)
 
 void sub_805585C(void)
 {
-    ScriptContext_SetupScript(TradeRoom_TerminateLink);
+    ScriptContext_SetupScript(EventScript_TerminateLink);
     LockPlayerFieldControls();
 }
 
