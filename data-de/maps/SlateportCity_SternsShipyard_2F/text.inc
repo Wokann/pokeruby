@@ -9,7 +9,7 @@ SlateportCity_SternsShipyard_2F_Text_FloatsBecauseBuoyancy:: @ 817C80C
 	.string "Es schwimmt aufgrund des so genannten\n"
 	.string "Auftriebs.$"
 
-UnknownString_817C882: @ 817C882
+SlateportCity_SternsShipyard_2F_Text_FastRunningTide: @ 817C882
 	.string "Die See zwischen GRAPHITPORT CITY und\n"
 	.string "FLOSSBRUNN hat einen starken Ge- \l"
 	.string "zeitenwechsel.\p"

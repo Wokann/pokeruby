@@ -100,7 +100,7 @@ SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs:: @ 817F352
 	.string "Oh, fast hätte ich vergessen, dass du\n"
 	.string "uns die Teile von DEVON gebracht hast!$"
 
-UnknownString_817F404: @ 817F404
+SlateportCity_OceanicMuseum_2F_Text_PlayerHandedOverDevonGoods: @ 817F404
 	.string "{PLAYER} gibt die DEVON-WAREN an\n"
 	.string "KAPT. BRIGG.$"
 

@@ -1,8 +1,8 @@
 SlateportCity_OceanicMuseum_1F_MapScripts:: @ 8155ACA
-	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_1F_MapScript1_OnTransition
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_1F_OnTransition
 	.byte 0
 
-SlateportCity_OceanicMuseum_1F_MapScript1_OnTransition:: @ 8155AD0
+SlateportCity_OceanicMuseum_1F_OnTransition:: @ 8155AD0
 	.ifdef SAPPHIRE
 	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_AQUA_MEMBER_F
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_AQUA_MEMBER_M

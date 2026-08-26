@@ -16,7 +16,7 @@ SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup:: @ 817E22D
 	.string "Sie sind alle schon drin. Beeil dich,\n"
 	.string "sonst verlierst du die Gruppe.$"
 
-UnknownString_817E2A0: @ 817E2A0
+SlateportCity_OceanicMuseum_1F_Text_PleaseVisitAnotherTime: @ 817E2A0
 	.string "Bitte komm ein anderes Mal wieder!$"
 
 SlateportCity_OceanicMuseum_1F_Text_EvilTeamExistForGoodOfAll:: @ 817E2BB
