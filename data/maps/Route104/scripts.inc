@@ -163,7 +163,7 @@ Route104_EventScript_DeliverLetterReminder:: @ 814F08B
 	end
 
 Route104_EventScript_LandedInDewford:: @ 814F095
-	msgbox Route104_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	releaseall
 	end
 

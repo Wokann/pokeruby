@@ -52,7 +52,7 @@ Route109_EventScript_DoSailToDewford:: @ 814F548
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
 	hideobjectat LOCALID_ROUTE109_BOAT, MAP_ROUTE109
-	msgbox Route109_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE109
