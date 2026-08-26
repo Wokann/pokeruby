@@ -14,7 +14,7 @@ FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD
 	special SetContestTrainerGfxIds
 	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
 	setvar VAR_CONTEST_LOCATION, 2
-	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
+	warp MAP_CONTEST_HALL, 255, 7, 5
 	waitstate
 	end
 

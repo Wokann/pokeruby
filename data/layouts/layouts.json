@@ -712,24 +712,24 @@
       "blockdata_filepath": "data/layouts/LavaridgeTown_PokemonCenter_1F/map.bin"
     },
     {
-      "id": "LAYOUT_CONTEST_LOBBY",
-      "name": "ContestLobby_Layout",
+      "id": "LAYOUT_CONTEST_LOBBY_RUBY_SAPPHIRE",
+      "name": "ContestLobby_RubySapphire_Layout",
       "width": 15,
       "height": 7,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/ContestLobby/border.bin",
-      "blockdata_filepath": "data/layouts/ContestLobby/map.bin"
+      "border_filepath": "data/layouts/ContestLobby_RubySapphire/border.bin",
+      "blockdata_filepath": "data/layouts/ContestLobby_RubySapphire/map.bin"
     },
     {
-      "id": "LAYOUT_CONTEST_HALL",
-      "name": "ContestHall_Layout",
+      "id": "LAYOUT_CONTEST_HALL_RUBY_SAPPHIRE",
+      "name": "ContestHall_RubySapphire_Layout",
       "width": 21,
       "height": 18,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/ContestHall/border.bin",
-      "blockdata_filepath": "data/layouts/ContestHall/map.bin"
+      "border_filepath": "data/layouts/ContestHall_RubySapphire/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHall_RubySapphire/map.bin"
     },
     {
       "id": "LAYOUT_LILYCOVE_CITY_HOUSE2",
@@ -2252,14 +2252,14 @@
       "blockdata_filepath": "data/layouts/BattleColosseum_4P/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM1",
-      "name": "LinkContestRoom1_Layout",
+      "id": "LAYOUT_CONTEST_HALL",
+      "name": "ContestHall_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom1/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom1/map.bin"
+      "border_filepath": "data/layouts/ContestHall/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHall/map.bin"
     },
     {
       "id": "LAYOUT_UNUSED_CONTEST_HALL1",
@@ -2322,54 +2322,54 @@
       "blockdata_filepath": "data/layouts/UnusedContestHall6/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM2",
-      "name": "LinkContestRoom2_Layout",
+      "id": "LAYOUT_CONTEST_HALL_BEAUTY",
+      "name": "ContestHallBeauty_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom2/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom2/map.bin"
+      "border_filepath": "data/layouts/ContestHallBeauty/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHallBeauty/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM3",
-      "name": "LinkContestRoom3_Layout",
+      "id": "LAYOUT_CONTEST_HALL_TOUGH",
+      "name": "ContestHallTough_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom3/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom3/map.bin"
+      "border_filepath": "data/layouts/ContestHallTough/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHallTough/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM4",
-      "name": "LinkContestRoom4_Layout",
+      "id": "LAYOUT_CONTEST_HALL_COOL",
+      "name": "ContestHallCool_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom4/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom4/map.bin"
+      "border_filepath": "data/layouts/ContestHallCool/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHallCool/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM5",
-      "name": "LinkContestRoom5_Layout",
+      "id": "LAYOUT_CONTEST_HALL_SMART",
+      "name": "ContestHallSmart_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom5/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom5/map.bin"
+      "border_filepath": "data/layouts/ContestHallSmart/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHallSmart/map.bin"
     },
     {
-      "id": "LAYOUT_LINK_CONTEST_ROOM6",
-      "name": "LinkContestRoom6_Layout",
+      "id": "LAYOUT_CONTEST_HALL_CUTE",
+      "name": "ContestHallCute_Layout",
       "width": 15,
       "height": 11,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Contest",
-      "border_filepath": "data/layouts/LinkContestRoom6/border.bin",
-      "blockdata_filepath": "data/layouts/LinkContestRoom6/map.bin"
+      "border_filepath": "data/layouts/ContestHallCute/border.bin",
+      "blockdata_filepath": "data/layouts/ContestHallCute/map.bin"
     },
     {
       "id": "LAYOUT_INSIDE_OF_TRUCK",

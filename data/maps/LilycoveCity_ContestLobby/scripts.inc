@@ -477,7 +477,7 @@ LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 8158DD1
 
 LilycoveCity_ContestLobby_EventScript_PrepareLinkContestRoom:: @ 8158DEE
 	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
-	setvar VAR_LINK_CONTEST_ROOM_STATE, 1
+	setvar VAR_CONTEST_HALL_STATE, 1
 	special ScrSpecial_SetLinkContestTrainerGfxIdx
 	setvar VAR_CONTEST_LOCATION, 5
 	setvar VAR_CONTEST_RANK, 3
@@ -598,31 +598,31 @@ LilycoveCity_ContestLobby_EventScript_WarpToContestHall:: @ 8158F08
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCoolContestHall:: @ 8158F45
-	setwarp MAP_LINK_CONTEST_ROOM4, 255, 7, 5
+	setwarp MAP_CONTEST_HALL_COOL, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToBeautyContestHall:: @ 8158F52
-	setwarp MAP_LINK_CONTEST_ROOM2, 255, 7, 5
+	setwarp MAP_CONTEST_HALL_BEAUTY, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToCuteContestHall:: @ 8158F5F
-	setwarp MAP_LINK_CONTEST_ROOM6, 255, 7, 5
+	setwarp MAP_CONTEST_HALL_CUTE, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToSmartContestHall:: @ 8158F6C
-	setwarp MAP_LINK_CONTEST_ROOM5, 255, 7, 5
+	setwarp MAP_CONTEST_HALL_SMART, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_WarpToToughContestHall:: @ 8158F79
-	setwarp MAP_LINK_CONTEST_ROOM3, 255, 7, 5
+	setwarp MAP_CONTEST_HALL_TOUGH, 255, 7, 5
 	special sub_8081334
 	waitstate
 	return

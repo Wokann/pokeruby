@@ -18,7 +18,7 @@ SlateportCity_OnTransition:: @ 814BA3C
 
 SlateportCity_EventScript_EnterSlateport:: @ 814BA5C
 	setflag FLAG_VISITED_SLATEPORT_CITY
-	setvar VAR_LINK_CONTEST_ROOM_STATE, 0
+	setvar VAR_CONTEST_HALL_STATE, 0
 	setflag FLAG_HIDE_CONTEST_REPORTER_SLATEPORT
 	return
 

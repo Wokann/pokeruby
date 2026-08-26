@@ -154,25 +154,25 @@ LilycoveCity_ContestLobby_Text_PokemonWonWeHavePrize:: @ 81A685A
 LilycoveCity_ContestLobby_Text_ComeBackForPrizeLater:: @ 81A68C6
 	.string "Bitte hole deinen Preis später ab.$"
 
-LinkContestRoom1_Text_GettingStartedParticipantsAsFollows:: @ 81A68F0
+ContestHall_Text_GettingStartedParticipantsAsFollows:: @ 81A68F0
 	.string "MC: Hallo! Wir fangen nun mit einem \n"
 	.string "{STR_VAR_3}-KLASSE POKéMON {STR_VAR_2}-\l"
 	.string "WETTBEWERB an!\p"
 	.string "Die folgenden TRAINER und ihre POKéMON\n"
 	.string "nehmen teil:$"
 
-LinkContestRoom1_Text_GettingStartedParticipantsAsFollowsLink:: @ 81A6976
+ContestHall_Text_GettingStartedParticipantsAsFollowsLink:: @ 81A6976
 	.string "MC: Hallo! Wir fangen nun mit einem \n"
 	.string "4-Spieler POKéMON {STR_VAR_2}-\l"
 	.string "WETTBEWERB via Link an!\p"
 	.string "Die folgenden TRAINER und ihre POKéMON\n"
 	.string "nehmen teil:$"
 
-LinkContestRoom1_Text_EntryXTrainersMon:: @ 81A6A04
+ContestHall_Text_EntryXTrainersMon:: @ 81A6A04
 	.string "MC: Teilnehmer Nr. {STR_VAR_2}!\n"
 	.string "{STR_VAR_3} von {STR_VAR_1}!$"
 
-LinkContestRoom1_Text_SeenContestantsAudienceWillVote:: @ 81A6A1F
+ContestHall_Text_SeenContestantsAudienceWillVote:: @ 81A6A1F
 	.string "MC: Nun haben wir alle vier teilnehmenden\n"
 	.string "POKéMON gesehen.\p"
 	.string "Zeit für die erste Bewertung!\p"
@@ -181,10 +181,10 @@ LinkContestRoom1_Text_SeenContestantsAudienceWillVote:: @ 81A6A1F
 	.string "Und ohne weitere Verzögerung kommen\n"
 	.string "wir zu der Bewertung!$"
 
-LinkContestRoom1_Text_VotingUnderWay:: @ 81A6AE1
+ContestHall_Text_VotingUnderWay:: @ 81A6AE1
 	.string "Bewertung läuft...$"
 
-LinkContestRoom1_Text_VotingCompleteLetsAppeal:: @ 81A6AF5
+ContestHall_Text_VotingCompleteLetsAppeal:: @ 81A6AF5
 	.string "Die Bewertung ist nun abgeschlossen!\p"
 	.string "Während diese ausgewertet wird, kommen\n"
 	.string "wir zum zweiten Durchlauf!\p"
@@ -196,51 +196,51 @@ LinkContestRoom1_Text_VotingCompleteLetsAppeal:: @ 81A6AF5
 	.string "Hoffen wir auf Enthusiasmus!\n"
 	.string "Lasst die Vorführung beginnen!$"
 
-LinkContestRoom1_Text_ThatsItForJudging:: @ 81A6C06
+ContestHall_Text_ThatsItForJudging:: @ 81A6C06
 	.string "MC: Die Bewertung ist auch hier beendet!$"
 
-LinkContestRoom1_Text_ThankYouForAppeals:: @ 81A6C21
+ContestHall_Text_ThankYouForAppeals:: @ 81A6C21
 	.string "Herzlichen Dank an die Teilnehmer für\n"
 	.string "ihre wunderbare Vorführung!\p"
 	.string "Damit ist die Bewertung abgeschlossen!\n"
 	.string "Vielen Dank für alles!$"
 
-LinkContestRoom1_Text_JudgeLooksReady:: @ 81A6C9D
+ContestHall_Text_JudgeLooksReady:: @ 81A6C9D
 	.string "Kommen wir nun zu dem, was unseren Puls\n"
 	.string "höher schlagen lässt: Die Bekanntgabe\l"
 	.string "der Gewinner.\p"
 	.string "Der JUROR scheint für die Bekanntgabe\n"
 	.string "bereit zu sein!$"
 
-LinkContestRoom1_Text_WeWillNowDeclareWinner:: @ 81A6D16
+ContestHall_Text_WeWillNowDeclareWinner:: @ 81A6D16
 	.string "JUROR: Ich werde nun den Sieger\n"
 	.string "bekannt geben!$"
 
-LinkContestRoom1_Text_CongratsTrainerXandMon:: @ 81A6D3C
+ContestHall_Text_CongratsTrainerXandMon:: @ 81A6D3C
 	.string "MC: Teilnehmer Nr. {STR_VAR_2}!\p"
 	.string "{STR_VAR_3} und {STR_VAR_1}!\n"
 	.string "Herzlichen Glückwunsch!$"
 
-LinkContestRoom1_Text_ConferRibbonAsPrize:: @ 81A6D6A
+ContestHall_Text_ConferRibbonAsPrize:: @ 81A6D6A
 	.string "Wir überreichen dir hiermit dieses BAND\n"
 	.string "als Zeichen deines Sieges!$"
 
-LinkContestRoom1_Text_ReceivedRibbon:: @ 81A6D96
+ContestHall_Text_ReceivedRibbon:: @ 81A6D96
 	.string "{PLAYER} erhält ein BAND.$"
 
-LinkContestRoom1_Text_PutRibbonOnMon:: @ 81A6DAC
+ContestHall_Text_PutRibbonOnMon:: @ 81A6DAC
 	.string "{PLAYER} steckt {STR_VAR_1} das\n"
 	.string "BAND an.$"
 
-LinkContestRoom1_Text_AcceptYourPrize:: @ 81A6DC5
+ContestHall_Text_AcceptYourPrize:: @ 81A6DC5
 	.string "MC: Bitte schön!\n"
 	.string "Bitte, dies ist dein Preis!$"
 
-LinkContestRoom1_Text_CongratsPleaseCompeteAgain:: @ 81A6DF1
+ContestHall_Text_CongratsPleaseCompeteAgain:: @ 81A6DF1
 	.string "MC: Herzlichen Glückwunsch!\n"
 	.string "Komm bald wieder!$"
 
-LinkContestRoom1_Text_PickUpPrizeAtCounterLater:: @ 81A6E1F
+ContestHall_Text_PickUpPrizeAtCounterLater:: @ 81A6E1F
 	.string "Bitte hole deinen Preis später an der\n"
 	.string "Rezeption ab.\l"
 	.string "Und nimm bald wieder teil!$"
