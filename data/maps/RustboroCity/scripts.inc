@@ -177,7 +177,7 @@ RustboroCity_EventScript_StolenGoodsScene:: @ 814C4F4
 	setobjectxyperm LOCALID_RUSTBORO_DEVON_EMPLOYEE, 30, 10
 	clearflag FLAG_HIDE_DEVON_RUSTBORO
 	setflag FLAG_DEVON_GOODS_STOLEN
-	setvar VAR_RUSTBORO_STATE, 2
+	setvar VAR_RUSTBORO_CITY_STATE, 2
 	setvar VAR_RUSTURF_TUNNEL_STATE, 2
 	setvar VAR_ROUTE116_STATE, 1
 	clearflag FLAG_HIDE_ROUTE_116_MR_BRINEY
@@ -368,7 +368,7 @@ RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
 	compare VAR_TEMP_1, 3
 	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown1
 	setflag FLAG_UNKNOWN_9F
-	setvar VAR_RUSTBORO_STATE, 3
+	setvar VAR_RUSTBORO_CITY_STATE, 3
 	moveobjectoffscreen LOCALID_RUSTBORO_DEVON_EMPLOYEE
 	msgbox RustboroCity_Text_HelpMeIWasRobbed, MSGBOX_DEFAULT
 	releaseall
@@ -471,7 +471,7 @@ RustboroCity_EventScript_ReturnGoods:: @ 814C77D
 	closemessage
 	setflag FLAG_RETURNED_DEVON_GOODS
 	setflag FLAG_HIDE_DEVON_RUSTBORO
-	setvar VAR_RUSTBORO_STATE, 5
+	setvar VAR_RUSTBORO_CITY_STATE, 5
 	delay 30
 	warp MAP_RUSTBORO_CITY_DEVON_CORP_3F, 255, 2, 2
 	waitstate
