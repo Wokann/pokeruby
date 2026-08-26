@@ -44,7 +44,7 @@ gSpecials::
 	def_special sub_8083B5C
 	def_special sub_8083B80
 	def_special sub_8083820
-	def_special sub_8083614
+	def_special TryBerryBlenderLinkup
 	def_special GetLinkPartnerNames
 	def_special SpawnBerryBlenderLinkPlayerSprites
 	def_special SavePlayerParty
@@ -100,7 +100,7 @@ gSpecials::
 	def_special ScrSpecial_GiveContestRibbon
 	def_special sub_80C5044
 	def_special GiveMonArtistRibbon
-	def_special sub_808363C
+	def_special TryContestGModeLinkup
 	def_special SaveGame
 	def_special DoWateringBerryTreeAnim
 	def_special ShowEasyChatScreen

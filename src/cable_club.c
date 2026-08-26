@@ -497,11 +497,11 @@ static void sub_8083314(u8 taskId)
         u16 linkType;
         linkType = gLinkType;
         // FIXME: sub_8082D4C doesn't take any arguments
-        sub_8082D4C(0x4411, linkType);
+        sub_8082D4C(LINKTYPE_BERRY_BLENDER_SETUP, linkType);
 #elif GERMAN
-        if (gLinkType != 0x4411)
+        if (gLinkType != LINKTYPE_BERRY_BLENDER_SETUP)
         {
-            if (gLinkType == 0x6601)
+            if (gLinkType == LINKTYPE_CONTEST_GMODE)
                 deUnkValue2 = 1;
         }
         sub_8082D4C();
@@ -641,16 +641,16 @@ void sub_80835D8(void)
     }
 }
 
-void sub_8083614(void)
+void TryBerryBlenderLinkup(void)
 {
-    gLinkType = 0x4411;
+    gLinkType = LINKTYPE_BERRY_BLENDER_SETUP;
     gBattleTypeFlags = 0;
     sub_8082CD4(2, 4);
 }
 
-void sub_808363C(void)
+void TryContestGModeLinkup(void)
 {
-    gLinkType = 0x6601;
+    gLinkType = LINKTYPE_CONTEST_GMODE;
     gBattleTypeFlags = 0;
     sub_8082CD4(4, 4);
 }

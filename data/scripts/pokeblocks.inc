@@ -228,7 +228,7 @@ BerryBlender_EventScript_TryDoLinkBlender:: @ 81B78A1
 	goto_if_eq BerryBlender_EventScript_CancelLinkBlender
 	message BerryBlender_Text_SearchingForFriends
 	waitmessage
-	special sub_8083614
+	special TryBerryBlenderLinkup
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq BerryBlender_EventScript_SpawnLinkPartners
