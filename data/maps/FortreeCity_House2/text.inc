@@ -36,7 +36,7 @@ FortreeCity_House2_Text_YouGuessedWrong:: @ 8186565
 	.string "No, too bad.\n"
 	.string "You guessed wrong.$"
 
-UnknownString_8186585: @ 8186585
+FortreeCity_House2_Text_FortreeLikeJungle: @ 8186585
 	.string "The area around FORTREE CITY is like\n"
 	.string "a jungle.\p"
 	.string "It gets awfully tiring walking around\n"
