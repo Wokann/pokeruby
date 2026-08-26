@@ -288,7 +288,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -296,7 +296,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -304,7 +304,7 @@
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -312,7 +312,7 @@
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -320,7 +320,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -328,7 +328,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable0"
+      "script": "Roulette_EventScript_Table1"
     },
     {
       "type": "sign",
@@ -336,7 +336,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     },
     {
       "type": "sign",
@@ -344,7 +344,7 @@
       "y": 6,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     },
     {
       "type": "sign",
@@ -352,7 +352,7 @@
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     },
     {
       "type": "sign",
@@ -360,7 +360,7 @@
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     },
     {
       "type": "sign",
@@ -368,7 +368,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     },
     {
       "type": "sign",
@@ -376,7 +376,7 @@
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MauvilleCity_GameCorner_EventScript_RouletteTable1"
+      "script": "Roulette_EventScript_Table2"
     }
   ]
 }

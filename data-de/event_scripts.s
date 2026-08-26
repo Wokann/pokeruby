@@ -1576,34 +1576,7 @@ PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
 	.include "data/scripts/safari_zone.inc"
 	.include "data/text/safari_zone.inc"
 
-MauvilleCity_GameCorner_EventScript_RouletteTable0:: @ 81C407E
-	checkitem ITEM_COIN_CASE, 1
-	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase
-	setvar VAR_0x8004, 0
-	getpricereduction 2
-	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_PlayRoulette
-	addvar VAR_0x8004, 128
-	goto MauvilleCity_GameCorner_EventScript_PlayRoulette
-	end
-
-MauvilleCity_GameCorner_EventScript_RouletteTable1:: @ 81C40AC
-	checkitem ITEM_COIN_CASE, 1
-	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_NoCoinCase
-	setvar VAR_0x8004, 1
-	getpricereduction 2
-	compare VAR_RESULT, 0
-	goto_if_eq MauvilleCity_GameCorner_EventScript_PlayRoulette
-	addvar VAR_0x8004, 128
-	goto MauvilleCity_GameCorner_EventScript_PlayRoulette
-	end
-
-MauvilleCity_GameCorner_EventScript_PlayRoulette:: @ 81C40DA
-	special PlayRoulette
-	waitstate
-	end
+	.include "data/scripts/roulette.inc"
 
 	.include "data/text/roulette.inc"
 	.include "data/text/barboach.inc"

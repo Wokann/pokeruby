@@ -209,13 +209,13 @@ static const struct SpriteTemplate gSpriteTemplate_8401D40[] =
 
 extern u8 unk_203955C;
 
-extern const u8 MauvilleCity_GameCorner_EventScript_RouletteTable0[];
-extern const u8 MauvilleCity_GameCorner_EventScript_RouletteTable1[];
+extern const u8 Roulette_EventScript_Table1[];
+extern const u8 Roulette_EventScript_Table2[];
 
 u8 debug_sub_8138C14(void)
 {
     unk_203955C = 1;
-    ScriptContext_SetupScript(MauvilleCity_GameCorner_EventScript_RouletteTable0);
+    ScriptContext_SetupScript(Roulette_EventScript_Table1);
     CloseMenu();
     return 1;
 }
@@ -223,7 +223,7 @@ u8 debug_sub_8138C14(void)
 u8 debug_sub_8138C34(void)
 {
     unk_203955C = 1;
-    ScriptContext_SetupScript(MauvilleCity_GameCorner_EventScript_RouletteTable1);
+    ScriptContext_SetupScript(Roulette_EventScript_Table2);
     CloseMenu();
     return 1;
 }
