@@ -1075,7 +1075,7 @@ fieldPoisonText_PokemonFainted:: @ 81A1132
 	.string "{STR_VAR_1} wurde besiegt...\p"
 	.string "$"
 
-UnknownString_81A1141: @ 81A1141
+gText_PlayerWhitedOut:: @ 81A1141
 	.string "{PLAYER} hat kein kampffähiges POKéMON\n"
 	.string "mehr!\p"
 	.string "{PLAYER} wird ohnmächtig!$"
@@ -1132,17 +1132,17 @@ Event_NoRegisteredItem:: @ 81A14AF
 	msgbox Text_NoRegisteredItem, MSGBOX_SIGN
 	end
 
-gUnknown_081A14B8:: @ 81A14B8
+EventScript_FieldPoison:: @ 81A14B8
 	lockall
 	special ExecuteWhiteOut
 	waitstate
 	compare VAR_RESULT, 1
-	goto_if_eq EventScript_1A14CA
+	goto_if_eq EventScript_FieldWhiteOut
 	releaseall
 	end
 
-EventScript_1A14CA::
-	message UnknownString_81A1141
+EventScript_FieldWhiteOut::
+	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
 	special sub_8081924

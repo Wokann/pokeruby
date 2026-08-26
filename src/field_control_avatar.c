@@ -78,7 +78,7 @@ extern u8 S_CannotUseWaterfall[];
 extern u8 UseDiveScript[];
 extern u8 S_UseDiveUnderwater[];
 extern u8 EventScript_FallDownHole[];
-extern u8 gUnknown_081A14B8[];
+extern u8 EventScript_FieldPoison[];
 extern u8 EventScript_EggHatch[];
 extern u8 SSTidalCorridor_EventScript_ReachedStepCount[];
 extern u8 EventScript_FallDownHoleMtPyre[];
@@ -577,7 +577,7 @@ bool8 TryStartStepCountScript(void)
     UpdateHappinessStep();
     if (UpdatePoisonStepCounter() == TRUE)
     {
-        ScriptContext_SetupScript(gUnknown_081A14B8);
+        ScriptContext_SetupScript(EventScript_FieldPoison);
         return TRUE;
     }
     if (ShouldEggHatch())
