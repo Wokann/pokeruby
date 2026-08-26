@@ -1,5 +1,3 @@
-.include "data/maps/Route110/trainer_text.inc"
-
 Route111_Text_DrewIntro:: @ 81BAB4B
 	.string "Das WÜSTENGLAS steht dir gut. Aber\n"
 	.string "ich bin sicher, mir steht es besser!\p"

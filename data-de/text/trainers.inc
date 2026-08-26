@@ -14,6 +14,8 @@
 
 .include "data/maps/Route109/trainer_text.inc"
 
+.include "data/maps/Route110/trainer_text.inc"
+
 .include "data/maps/Route111/trainer_text.inc"
 
 .include "data/maps/Route112/trainer_text.inc"
