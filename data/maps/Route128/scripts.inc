@@ -16,7 +16,7 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	lockall
 	delay 20
 	.ifndef SAPPHIRE
-	special sub_807E25C
+	special DoGroudonDroughtFlash
 	waitstate
 	.endif
 	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderLookAround

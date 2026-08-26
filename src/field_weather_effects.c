@@ -285,11 +285,11 @@ int Drought_Finish(void)
     return 0;
 }
 
-void task50_0807B6D4(u8);
+void Task_GroudonDroughtFlash(u8);
 
-void sub_807E25C(void)
+void DoGroudonDroughtFlash(void)
 {
-    CreateTask(task50_0807B6D4, 0x50);
+    CreateTask(Task_GroudonDroughtFlash, 0x50);
 }
 
 #define tState      data[0]
@@ -297,7 +297,7 @@ void sub_807E25C(void)
 #define tBlendDelay data[2]
 #define tWinRange   data[3]
 
-void task50_0807B6D4(u8 taskId)
+void Task_GroudonDroughtFlash(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
