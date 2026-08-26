@@ -547,7 +547,7 @@ static void ProcessRecvCmds(u8 unusedParam)
                 {
                     SetBlockReceivedFlag(i);
 #if DEBUG
-                    debug_sub_808B838(i);
+                    Debug_SetLinkStateFlag(i);
 #endif
                 }
             }

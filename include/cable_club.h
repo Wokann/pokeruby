@@ -3,25 +3,12 @@
 
 #include "task.h"
 
-void sub_808347C(u8 arg0);
-void sub_80834E4(void);
-void sub_808350C(void);
-void sub_80835D8(void);
-void sub_8083614(void);
-void sub_808363C(void);
-u8 sub_8083664(void);
-void sub_8083820(void);
-void sub_80839A4(void);
-void sub_80839D0(void);
-void sub_8083A84(TaskFunc followupFunc);
-void sub_8083B5C(void);
-void sub_8083B80(void);
-void sub_8083B90(void);
-void sub_8083BDC(void);
-bool32 sub_8083BF4(u8 linkPlayerIndex);
-void sub_8083C50(u8 taskId);
+void CreateTask_EnterCableClubSeat(TaskFunc followupFunc);
+u8 CreateTask_ReestablishCableClubLink(void);
+void Task_WaitForLinkPlayerConnection(u8 taskId);
+bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex);
 #if DEBUG
-void debug_sub_808B838(u8);
+void Debug_SetLinkStateFlag(u8 flagId);
 bool8 debug_sub_8138CC4(void);
 #endif
 

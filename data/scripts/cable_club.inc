@@ -198,7 +198,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3EF2:: @ 81A3EF2
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	message OldaleTown_PokemonCenter_2F_Text_1A490C
 	waitmessage
-	special sub_808347C
+	special TryBattleLinkup
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3F5E
@@ -364,7 +364,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A40FA:: @ 81A40FA
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	message OldaleTown_PokemonCenter_2F_Text_1A490C
 	waitmessage
-	special sub_80834E4
+	special TryTradeLinkup
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4166
@@ -457,9 +457,9 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4229:: @ 81A4229
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	message OldaleTown_PokemonCenter_2F_Text_1A490C
 	waitmessage
-	special sub_808350C
+	special TryRecordMixLinkup
 	waitstate
-	special sub_80835D8
+	special ValidateMixingGameLanguage
 	waitstate
 	compare VAR_RESULT, 1
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4294
@@ -602,13 +602,13 @@ gUnknown_081A4363:: @ 81A4363
 
 SingleBattleColosseum_EventScript_1A436F:: @ 81A436F
 	setvar VAR_0x8005, 0
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
 SingleBattleColosseum_EventScript_1A4379:: @ 81A4379
 	setvar VAR_0x8005, 1
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
@@ -619,7 +619,7 @@ DoubleBattleColosseum_EventScript_1A4383:: @ 81A4383
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
 	setvar VAR_0x8005, 0
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
@@ -630,7 +630,7 @@ DoubleBattleColosseum_EventScript_1A439E:: @ 81A439E
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
 	setvar VAR_0x8005, 1
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
@@ -641,7 +641,7 @@ DoubleBattleColosseum_EventScript_1A43B9:: @ 81A43B9
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
 	setvar VAR_0x8005, 2
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
@@ -652,7 +652,7 @@ DoubleBattleColosseum_EventScript_1A43D4:: @ 81A43D4
 	compare VAR_RESULT, 0
 	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
 	setvar VAR_0x8005, 3
-	special sub_8083B90
+	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
@@ -661,25 +661,25 @@ DoubleBattleColosseum_EventScript_1A43EF:: @ 81A43EF
 
 TradeCenter_EventScript_1A43F0:: @ 81A43F0
 	setvar VAR_0x8005, 0
-	special sub_8083B5C
+	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
 TradeCenter_EventScript_1A43FA:: @ 81A43FA
 	setvar VAR_0x8005, 1
-	special sub_8083B5C
+	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
 @ 81A4404
 	setvar VAR_0x8005, 2
-	special sub_8083B5C
+	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
 @ 81A440E
 	setvar VAR_0x8005, 3
-	special sub_8083B5C
+	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
@@ -728,7 +728,7 @@ TradeRoom_ReadTrainerCard1:: @ 81A4479
 	waitmessage
 	waitbuttonpress
 	fadescreen FADE_TO_BLACK
-	special sub_8083BDC
+	special Script_ShowLinkTrainerCard
 	waitstate
 	end
 
@@ -737,7 +737,7 @@ TradeRoom_ReadTrainerCard2:: @ 81A4487
 	waitmessage
 	waitbuttonpress
 	fadescreen FADE_TO_BLACK
-	special sub_8083BDC
+	special Script_ShowLinkTrainerCard
 	waitstate
 	end
 
@@ -796,11 +796,11 @@ TradeRoom_PromptToCancelLink:: @ 81A44E5
 TradeRoom_TerminateLink:: @ 81A44FE
 	messageautoscroll TradeRoom_TerminatingLink
 	waitmessage
-	special sub_80839D0
+	special ExitLinkRoom
 	end
 
 gUnknown_081A4508:: @ 81A4508
-	special sub_80839A4
-	special sub_80810DC
+	special CleanupLinkRoomState
+	special ReturnFromLinkRoom
 	waitstate
 	end

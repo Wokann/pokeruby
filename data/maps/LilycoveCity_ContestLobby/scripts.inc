@@ -414,7 +414,7 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 8158D24
 	message LilycoveCity_ContestLobby_Text_PleaseWaitBButtonCancel
 	waitmessage
 	copyvar VAR_0x8004, VAR_RESULT
-	special sub_808363C
+	special TryContestGModeLinkup
 	waitstate
 	compare VAR_RESULT, 3
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_CancelLinkDifferentChoices

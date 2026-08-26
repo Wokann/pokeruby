@@ -110,7 +110,7 @@ void task_mpl_807DD60(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        task->data[1] = sub_8083664();
+        task->data[1] = CreateTask_ReestablishCableClubLink();
         task->data[0]++;
         break;
     case 1:
@@ -506,7 +506,7 @@ void sub_8081050(u8 taskId)
     }
 }
 
-void sub_80810DC(void)
+void ReturnFromLinkRoom(void)
 {
     CreateTask(sub_8081050, 10);
 }

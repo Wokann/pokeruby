@@ -226,9 +226,9 @@ SYMBOL(gTasks, 640)
 #if DEBUG
 unk_debug_common_1 = .;
 . += 0x4;
-unk_3004E94 = .;
+gDebugLinkTestFlags = .;
 . += 0x4;
-unk_3004E98 = .;
+gDebugLinkTestCounter = .;
 . += 0x8;
 #endif
 
