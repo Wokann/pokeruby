@@ -622,14 +622,14 @@
       "blockdata_filepath": "data/layouts/PokemonCenter_2F/map.bin"
     },
     {
-      "id": "LAYOUT_POKE_MART",
-      "name": "PokeMart_Layout",
+      "id": "LAYOUT_MART",
+      "name": "Mart_Layout",
       "width": 11,
       "height": 8,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_Shop",
-      "border_filepath": "data/layouts/PokeMart/border.bin",
-      "blockdata_filepath": "data/layouts/PokeMart/map.bin"
+      "border_filepath": "data/layouts/Mart/border.bin",
+      "blockdata_filepath": "data/layouts/Mart/map.bin"
     },
     {
       "id": "LAYOUT_HOUSE3",
