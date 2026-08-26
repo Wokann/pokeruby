@@ -1,73 +1,73 @@
-gUnknown_081C340A:: @ 81C340A
+SafariZone_EventScript_OutOfBallsMidBattle:: @ 81C340A
 	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
 	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 255, 2, 5
 	end
 
-EventScript_1C341B: @ 81C341B
+SafariZone_EventScript_Exit: @ 81C341B
 	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
 	warp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 255, 2, 5
 	waitstate
 	end
 
-gUnknown_081C342D:: @ 81C342D
+SafariZone_EventScript_RetirePrompt:: @ 81C342D
 	lockall
-	msgbox UnknownString_81C34B2, MSGBOX_YESNO
+	msgbox SafariZone_Text_WouldYouLikeToExit, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq EventScript_1C3443
+	goto_if_eq SafariZone_EventScript_Retire
 	releaseall
 	end
 
-EventScript_1C3443:
-	goto EventScript_1C341B
+SafariZone_EventScript_Retire:
+	goto SafariZone_EventScript_Exit
 
-gUnknown_081C3448:: @ 81C3448
+SafariZone_EventScript_TimesUp:: @ 81C3448
 	lockall
 	playse SE_DING_DONG
-	message UnknownString_81C34E4
+	message SafariZone_Text_TimesUp
 	waitmessage
 	waitbuttonpress
 	releaseall
-	goto EventScript_1C341B
+	goto SafariZone_EventScript_Exit
 
-gUnknown_081C3459:: @ 81C3459
+SafariZone_EventScript_OutOfBalls:: @ 81C3459
 	lockall
 	playse SE_DING_DONG
-	message UnknownString_81C3514
+	message SafariZone_Text_OutOfBalls
 	waitmessage
 	waitbuttonpress
 	releaseall
-	goto EventScript_1C341B
+	goto SafariZone_EventScript_Exit
 
-gUnknown_081C346A:: @ 81C346A
+EventScript_PokeBlockFeeder:: @ 81C346A
 	lockall
 	special SafariZoneGetPokeblockNameInFeeder
 	compare VAR_RESULT, 0xFFFF
-	goto_if_ne EventScript_1C34A9
-	msgbox UnknownString_81C354E, MSGBOX_YESNO
+	goto_if_ne SafariZone_EventScript_PokeblockPresent
+	msgbox SafariZone_Text_PlacePokeblockOnFeeder, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq EventScript_1C348E
+	goto_if_eq SafariZone_EventScript_ChoosePokeblock
 	releaseall
 	end
 
-EventScript_1C348E:
+SafariZone_EventScript_ChoosePokeblock:
 	fadescreen FADE_TO_BLACK
 	special OpenPokeblockCaseOnFeeder
 	waitstate
 	compare VAR_RESULT, 0xFFFF
-	goto_if_ne EventScript_1C34A0
+	goto_if_ne SafariZone_EventScript_PokeblockPlaced
 	end
 
-EventScript_1C34A0:
-	message UnknownString_81C35A9
+SafariZone_EventScript_PokeblockPlaced:
+	message SafariZone_Text_PokeblockWasPlaced
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
 
-EventScript_1C34A9:
-	message UnknownString_81C3583
+SafariZone_EventScript_PokeblockPresent:
+	message SafariZone_Text_PokeblockStillHere
 	waitmessage
 	waitbuttonpress
 	releaseall

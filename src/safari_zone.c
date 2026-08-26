@@ -31,10 +31,10 @@ EWRAM_DATA static struct PokeblockFeeder gPokeblockFeeders[NUM_POKEBLOCK_FEEDERS
 
 extern void (*gFieldCallback)(void);
 
-extern u8 gUnknown_081C340A;
-extern u8 gUnknown_081C342D;
-extern u8 gUnknown_081C3448;
-extern u8 gUnknown_081C3459;
+extern u8 SafariZone_EventScript_OutOfBallsMidBattle;
+extern u8 SafariZone_EventScript_RetirePrompt;
+extern u8 SafariZone_EventScript_TimesUp;
+extern u8 SafariZone_EventScript_OutOfBalls;
 extern u8 *gPokeblockNames[];
 
 extern u16 gSpecialVar_Result;
@@ -82,7 +82,7 @@ bool8 SafariZoneTakeStep(void)
     gSafariZoneStepCounter--;
     if (gSafariZoneStepCounter == 0)
     {
-        ScriptContext_SetupScript(&gUnknown_081C3448);
+        ScriptContext_SetupScript(&SafariZone_EventScript_TimesUp);
         return TRUE;
     }
     return FALSE;
@@ -90,7 +90,7 @@ bool8 SafariZoneTakeStep(void)
 
 void SafariZoneRetirePrompt(void)
 {
-    ScriptContext_SetupScript(&gUnknown_081C342D);
+    ScriptContext_SetupScript(&SafariZone_EventScript_RetirePrompt);
 }
 
 void sub_80C824C(void)
@@ -101,14 +101,14 @@ void sub_80C824C(void)
     }
     else if (gBattleOutcome == 8)
     {
-        RunScriptImmediately(&gUnknown_081C340A);
+        RunScriptImmediately(&SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
         gFieldCallback = sub_8080E44;
         SetMainCallback2(CB2_LoadMap);
     }
     else if (gBattleOutcome == 7)
     {
-        ScriptContext_SetupScript(&gUnknown_081C3459);
+        ScriptContext_SetupScript(&SafariZone_EventScript_OutOfBalls);
         ScriptContext_Stop();
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
     }

@@ -378,15 +378,15 @@ ScorchedSlab_EventScript_1B18FF:: @ 81B18FF
 	finditem ITEM_TM11_SUNNY_DAY
 	end
 
-SafariZone_Northwest_EventScript_1B190C:: @ 81B190C
+SafariZone_Northwest_EventScript_ItemTMSolarBeam:: @ 81B190C
 	finditem ITEM_TM22_SOLARBEAM
 	end
 
-SafariZone_Northeast_EventScript_1B1919:: @ 81B1919
+SafariZone_Northeast_EventScript_ItemCalcium:: @ 81B1919
 	finditem ITEM_CALCIUM
 	end
 
-SafariZone_Southwest_EventScript_1B1926:: @ 81B1926
+SafariZone_Southwest_EventScript_ItemMaxRevive:: @ 81B1926
 	finditem ITEM_MAX_REVIVE
 	end
 

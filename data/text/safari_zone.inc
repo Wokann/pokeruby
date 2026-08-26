@@ -1,24 +1,24 @@
-UnknownString_81C34B2: @ 81C34B2
+SafariZone_Text_WouldYouLikeToExit: @ 81C34B2
 	.string "Would you like to exit the SAFARI ZONE\n"
 	.string "right now?$"
 
-UnknownString_81C34E4: @ 81C34E4
+SafariZone_Text_TimesUp: @ 81C34E4
 	.string "Ding-dong! Time's up!\n"
 	.string "Your SAFARI Game is over.$"
 
-UnknownString_81C3514: @ 81C3514
+SafariZone_Text_OutOfBalls: @ 81C3514
 	.string "You've run out of SAFARI BALLS.\n"
 	.string "Your SAFARI Game is over.$"
 
-UnknownString_81C354E: @ 81C354E
+SafariZone_Text_PlacePokeblockOnFeeder: @ 81C354E
 	.string "Would you like to place a {POKEBLOCK}\n"
 	.string "on the {POKEBLOCK} FEEDER?$"
 
-UnknownString_81C3583: @ 81C3583
+SafariZone_Text_PokeblockStillHere: @ 81C3583
 	.string "The {STR_VAR_1} you left\n"
 	.string "before is still here.$"
 
-UnknownString_81C35A9: @ 81C35A9
+SafariZone_Text_PokeblockWasPlaced: @ 81C35A9
 	.string "The {STR_VAR_1} was placed\n"
 	.string "on the {POKEBLOCK} FEEDER.$"
 
@@ -89,59 +89,59 @@ Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase:: @ 81C39C3
 	.string "fruitful if you use {POKEBLOCK}S.\p"
 	.string "Please come back with a {POKEBLOCK} CASE.$"
 
-SafariZone_Southeast_Text_1C3A56:: @ 81C3A56
+SafariZone_Southeast_Text_StillHaveTimeExit:: @ 81C3A56
 	.string "You still have time left. Would you like\n"
 	.string "to exit the SAFARI ZONE now?$"
 
-SafariZone_Southeast_Text_1C3A9C:: @ 81C3A9C
+SafariZone_Southeast_Text_EnjoyTheRestOfYourAdventure:: @ 81C3A9C
 	.string "Please enjoy the rest of your wild\n"
 	.string "adventure!$"
 
-SafariZone_Southeast_Text_1C3ACA:: @ 81C3ACA
+SafariZone_Southeast_Text_ExitEarlyThankYouForPlaying:: @ 81C3ACA
 	.string "Okay.\p"
 	.string "I'll take back your remaining SAFARI\n"
 	.string "BALLS.\p"
 	.string "Thank you for playing.\n"
 	.string "We hope to see you again.$"
 
-SafariZone_Southeast_Text_1C3B2D:: @ 81C3B2D
+SafariZone_Southeast_Text_GoodLuck:: @ 81C3B2D
 	.string "Good luck!\p"
 	.string "If you need anything, don't hesitate\n"
 	.string "to tell me, please!$"
 
-SafariZone_Southeast_Text_1C3B71:: @ 81C3B71
+SafariZone_Southeast_Text_Boy:: @ 81C3B71
 	.string "Did you know?\p"
 	.string "If you put a {POKEBLOCK} in that square box,\n"
 	.string "POKéMON gather around.$"
 
-SafariZone_Southeast_Text_1C3BBD:: @ 81C3BBD
+SafariZone_Southeast_Text_Man:: @ 81C3BBD
 	.string "I want to keep going deeper, but I\n"
 	.string "forgot to bring a BIKE.\p"
 	.string "Something tells me that rare POKéMON\n"
 	.string "live in the outlying areas.$"
 
-SafariZone_Southwest_Text_1C3C39:: @ 81C3C39
+SafariZone_Southwest_Text_Woman:: @ 81C3C39
 	.string "Sometimes, when I toss a {POKEBLOCK} at \n"
 	.string "POKéMON, it gets ignored.\p"
 	.string "Do POKéMON have likes and dislikes\n"
 	.string "about what they eat?$"
 
-SafariZone_Northwest_Text_1C3CAE:: @ 81C3CAE
+SafariZone_Northwest_Text_Man:: @ 81C3CAE
 	.string "Gasp... Gasp...\n"
 	.string "I...made it out here...but...\p"
 	.string "I'm exhausted... I don't have the\n"
 	.string "energy to catch POKéMON...$"
 
-SafariZone_Northeast_Text_1C3D19:: @ 81C3D19
+SafariZone_Northeast_Text_Fisherman:: @ 81C3D19
 	.string "I'm on a mission to find WATER POKéMON\n"
 	.string "you don't see in HOENN.\p"
 	.string "Do you have any idea where the lake is?$"
 
-SafariZone_Northeast_Text_1C3D80:: @ 81C3D80
+SafariZone_Northeast_Text_Man:: @ 81C3D80
 	.string "I'm going to catch a lot of rare POKéMON\n"
 	.string "here and trade them with my friends!$"
 
-SafariZone_Southeast_Text_1C3DCE:: @ 81C3DCE
+SafariZone_Southeast_Text_Youngster:: @ 81C3DCE
 	.string "I put a {POKEBLOCK} on the {POKEBLOCK} FEEDER.\n"
 	.string "But it seems to have disappeared.\p"
 	.string "I guess POKéMON must have eaten it\n"
@@ -152,24 +152,24 @@ Route121_SafariZoneEntrance_Text_TrainerTip:: @ 81C3E4B
 	.string "Throw {POKEBLOCK}S at wild POKéMON to make\n"
 	.string "them less likely to flee.$"
 
-SafariZone_Southwest_Text_1C3EA3:: @ 81C3EA3
+SafariZone_Southwest_Text_RestHouseSign:: @ 81C3EA3
 	.string "“Relieve your tired feet.”\n"
 	.string "REST HOUSE$"
 
-SafariZone_RestHouse_Text_1C3EC9:: @ 81C3EC9
+SafariZone_RestHouse_Text_Youngster:: @ 81C3EC9
 	.string "I don't have any {POKEBLOCK}S, but I caught\n"
 	.string "a good number of POKéMON.\p"
 	.string "You can improve your chances of making\n"
 	.string "a catch by getting closer to them\l"
 	.string "before throwing a SAFARI BALL.$"
 
-SafariZone_RestHouse_Text_1C3F71:: @ 81C3F71
+SafariZone_RestHouse_Text_PsychicM:: @ 81C3F71
 	.string "If you use {POKEBLOCK}S, wild POKéMON won't\n"
 	.string "be so quick to run away.\p"
 	.string "It's not much use to give {POKEBLOCK}S to\n"
 	.string "POKéMON that don't flee easily.$"
 
-SafariZone_RestHouse_Text_1C3FF4:: @ 81C3FF4
+SafariZone_RestHouse_Text_FatMan:: @ 81C3FF4
 	.string "If you put a {POKEBLOCK} on the FEEDER,\n"
 	.string "POKéMON are attracted to it.\p"
 	.string "I think POKéMON with the same sort of\n"

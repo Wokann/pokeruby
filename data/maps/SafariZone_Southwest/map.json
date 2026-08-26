@@ -32,7 +32,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southwest_EventScript_160024",
+      "script": "SafariZone_Southwest_EventScript_Woman",
       "flag": "0"
     },
     {
@@ -45,7 +45,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SafariZone_Southwest_EventScript_1B1926",
+      "script": "SafariZone_Southwest_EventScript_ItemMaxRevive",
       "flag": "FLAG_ITEM_SAFARI_ZONE_SOUTHWEST"
     }
   ],
@@ -66,7 +66,7 @@
       "y": 7,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SafariZone_Southwest_EventScript_16002D"
+      "script": "SafariZone_Southwest_EventScript_RestHouseSign"
     }
   ]
 }
