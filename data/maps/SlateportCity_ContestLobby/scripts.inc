@@ -125,7 +125,7 @@ SlateportCity_ContestLobby_EventScript_Boy:: @ 8155536
 	msgbox BerryBlender_Text_LetsGetBlendingAlready, MSGBOX_NPC
 	end
 
-@ 815553F
+SlateportCity_ContestLobby_EventScript_UnusedBerryBlenderSpeedRecords:: @ 815553F
 	lockall
 	special ShowBerryBlenderRecordWindow
 	waitbuttonpress

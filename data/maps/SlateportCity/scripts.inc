@@ -433,19 +433,19 @@ SlateportCity_PokemartDecor1:: @ 814BE40
 	release
 	end
 
-@ 814BE60
+SlateportCity_EventScript_UnusedDecorClerk:: @ 814BE60
 	lock
 	faceplayer
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor2
+	pokemartdecoration SlateportCity_PokemartDecor_Unused
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor2:: @ 814BE80
+SlateportCity_PokemartDecor_Unused:: @ 814BE80
 	.2byte DECOR_MUD_BALL
 	.2byte DECOR_SLIDE
 	.2byte DECOR_FENCE_LENGTH

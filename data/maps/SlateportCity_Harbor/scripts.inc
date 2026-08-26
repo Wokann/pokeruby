@@ -107,7 +107,7 @@ SlateportCity_Harbor_Movement_EvilTeamBoardSub:: @ 815609B
 	set_invisible
 	step_end
 
-@ 81560A0
+SlateportCity_Harbor_Movement_UnusedEvilLeaderBoardSub:: @ 81560A0
 	delay_16
 	delay_16
 	jump_up
