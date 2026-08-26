@@ -76,13 +76,13 @@
 	.byte \function
 	.endm
 
-	@ Executes a script stored in a default RAM location.
-	.macro gotoram
+	@ Equivalent to the 'return' command for a RAM script.
+	.macro returnram
 	.byte 0x0c
 	.endm
 
-	@ Terminates script execution and "resets the script RAM".
-	.macro killscript
+	@ Equivalent to the 'end' command for a RAM script.
+	.macro endram
 	.byte 0x0d
 	.endm
 
@@ -106,17 +106,17 @@
 	.byte \value
 	.endm
 
-	@ Sets the byte at offset to value.
-	.macro writebytetoaddr value:req, offset:req
+	@ Sets the byte at ptr to value.
+	.macro setptr value:req, ptr:req
 	.byte 0x11
 	.byte \value
-	.4byte \offset
+	.4byte \ptr
 	.endm
 
-	@ Copies the byte value at source into the specified script bank.
-	.macro loadbytefromaddr destination:req, source:req
+	@ Copies the byte value at source into the specified script data index.
+	.macro loadbytefromptr destIndex:req, source:req
 	.byte 0x12
-	.byte \destination
+	.byte \destIndex
 	.4byte \source
 	.endm
 
@@ -190,32 +190,32 @@
 	.byte \b
 	.endm
 
-	@ Compares the least-significant byte of the value of script bank a to the byte located at offset b.
-	.macro compare_local_to_addr a:req, b:req
+	@ Compares the least-significant byte of the value of script data a to the byte at ptr b.
+	.macro compare_local_to_ptr local:req, ptr:req
 	.byte 0x1d
-	.byte \a
-	.4byte \b
+	.byte \local
+	.4byte \ptr
 	.endm
 
-	@ Compares the byte located at offset a to the least-significant byte of the value of script bank b.
-	.macro compare_addr_to_local a:req, b:req
+	@ Compares the byte at ptr a to the least-significant byte of the value of script data b.
+	.macro compare_ptr_to_local ptr:req, local:req
 	.byte 0x1e
-	.4byte \a
-	.byte \b
+	.4byte \ptr
+	.byte \local
 	.endm
 
-	@ Compares the byte located at offset a to a fixed byte value (b).
-	.macro compare_addr_to_value a:req, b:req
+	@ Compares the byte at ptr a to a fixed byte value (b).
+	.macro compare_ptr_to_value ptr:req, value:req
 	.byte 0x1f
-	.4byte \a
-	.byte \b
+	.4byte \ptr
+	.byte \value
 	.endm
 
-	@ Compares the byte located at offset a to the byte located at offset b.
-	.macro compare_addr_to_addr a:req, b:req
+	@ Compares the byte at ptr a to the byte at ptr b.
+	.macro compare_ptr_to_ptr ptr1:req, ptr2:req
 	.byte 0x20
-	.4byte \a
-	.4byte \b
+	.4byte \ptr1
+	.4byte \ptr2
 	.endm
 
 	@ Compares the value of `var` to a fixed word value (b).
@@ -703,7 +703,7 @@
 	.endm
 
 	@ Starts a trainer battle using the battle information stored in RAM (usually by trainerbattle, which actually calls this command behind-the-scenes), and blocks script execution until the battle finishes.
-	.macro trainerbattlebegin
+	.macro dotrainerbattle
 	.byte 0x5d
 	.endm
 
@@ -742,9 +742,10 @@
 	.2byte \y
 	.endm
 
-	.macro moveobjectoffscreen index:req
+	@ Copies a live object event's coordinates to its template before it goes off screen.
+	.macro copyobjectxytoperm localId:req
 	.byte 0x64
-	.2byte \index
+	.2byte \localId
 	.endm
 
 	.macro setobjectmovementtype word:req, byte:req
@@ -1099,9 +1100,9 @@
 	.byte \speed
 	.endm
 
-	.macro setflashradius word:req
+	.macro setflashlevel level:req
 	.byte 0x99
-	.2byte \word
+	.2byte \level
 	.endm
 
 	.macro animateflash byte:req
@@ -1187,16 +1188,16 @@
 	.2byte \index
 	.endm
 
-	.macro setobjectpriority index:req, map:req, priority:req
+	.macro setobjectsubpriority localId:req, map:req, subpriority:req
 	.byte 0xa8
-	.2byte \index
+	.2byte \localId
 	map \map
-	.byte \priority
+	.byte \subpriority
 	.endm
 
-	.macro resetobjectpriority index:req, map:req
+	.macro resetobjectsubpriority localId:req, map:req
 	.byte 0xa9
-	.2byte \index
+	.2byte \localId
 	map \map
 	.endm
 
@@ -1319,9 +1320,9 @@
 	.4byte \pointer
 	.endm
 
-	.macro vloadptr pointer:req
+	.macro vbuffermessage text:req
 	.byte 0xbe
-	.4byte \pointer
+	.4byte \text
 	.endm
 
 	.macro vbufferstring byte:req, pointer:req

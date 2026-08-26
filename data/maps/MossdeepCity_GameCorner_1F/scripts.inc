@@ -46,7 +46,7 @@ MossdeepCity_GameCorner_1F_EventScript_15ACD5:: @ 815ACD5
 	waitmovement 0
 	applymovement 1, MossdeepCity_GameCorner_1F_Movement_15AD3F
 	waitmovement 0
-	moveobjectoffscreen 1
+	copyobjectxytoperm 1
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	compare VAR_GAME_CORNER_STATE, 1

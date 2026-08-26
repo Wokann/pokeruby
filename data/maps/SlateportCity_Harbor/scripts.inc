@@ -74,7 +74,7 @@ SlateportCity_Harbor_EventScript_EvilTeamEscapeScene:: @ 8155FD5
 	closemessage
 	setflag FLAG_HIDE_GRUNT_1_BLOCKING_HIDEOUT
 	setflag FLAG_HIDE_GRUNT_2_BLOCKING_HIDEOUT
-	moveobjectoffscreen 4
+	copyobjectxytoperm 4
 	setobjectmovementtype 4, 10
 	releaseall
 	end

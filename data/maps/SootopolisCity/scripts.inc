@@ -273,9 +273,9 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	.else
 	msgbox SootopolisCity_Text_NeverExpectedHoldingRedOrb, MSGBOX_DEFAULT
 	.endif
-	moveobjectoffscreen 5
+	copyobjectxytoperm 5
 	setobjectmovementtype 5, 9
-	moveobjectoffscreen 10
+	copyobjectxytoperm 10
 	setobjectmovementtype 10, 10
 	setvar VAR_SOOTOPOLIS_STATE, 2
 	releaseall

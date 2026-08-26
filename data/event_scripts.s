@@ -1566,7 +1566,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 
 gUnknown_081B694A:: @ 81B694A
 	animateflash 1
-	setflashradius 1
+	setflashlevel 1
 	end
 
 	.include "data/scripts/players_house.inc"

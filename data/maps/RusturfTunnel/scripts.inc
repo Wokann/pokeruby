@@ -283,8 +283,8 @@ RusturfTunnel_EventScript_15C9AB:: @ 815C9AB
 	applymovement 6, RusturfTunnel_Movement_15C9D3
 	applymovement 7, RusturfTunnel_Movement_15C9D3
 	waitmovement 0
-	moveobjectoffscreen 6
-	moveobjectoffscreen 7
+	copyobjectxytoperm 6
+	copyobjectxytoperm 7
 	setvar VAR_RUSTURF_TUNNEL_STATE, 3
 	releaseall
 	end

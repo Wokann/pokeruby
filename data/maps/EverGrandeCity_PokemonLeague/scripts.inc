@@ -66,8 +66,8 @@ EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard:: @ 815BAD2
 	waitmessage
 	waitfanfare
 	closemessage
-	moveobjectoffscreen 3
-	moveobjectoffscreen 4
+	copyobjectxytoperm 3
+	copyobjectxytoperm 4
 	setflag FLAG_ENTERED_ELITE_FOUR
 	releaseall
 	end

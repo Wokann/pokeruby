@@ -3,8 +3,8 @@ Route109_MapScripts:: @ 814F4D2
 
 Route109_EventScript_14F4D3:: @ 814F4D3
 	call EventScript_BackupMrBrineyLocation
-	setobjectpriority 2, MAP_ROUTE109, 0
-	setobjectpriority 255, MAP_ROUTE109, 0
+	setobjectsubpriority 2, MAP_ROUTE109, 0
+	setobjectsubpriority 255, MAP_ROUTE109, 0
 	applymovement 2, Route109_Movement_14F67B
 	waitmovement 0
 	removeobject 2
@@ -46,7 +46,7 @@ Route109_EventScript_14F548:: @ 814F548
 	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
 	setobjectxyperm 2, 12, 8
 	addobject 2
-	setobjectpriority 2, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority 2, MAP_DEWFORD_TOWN, 0
 	applymovement 2, Route109_Movement_14F67D
 	waitmovement 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
@@ -55,9 +55,9 @@ Route109_EventScript_14F548:: @ 814F548
 	msgbox Route109_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
-	resetobjectpriority LOCALID_PLAYER, MAP_ROUTE109
-	resetobjectpriority 2, MAP_DEWFORD_TOWN
-	moveobjectoffscreen 2
+	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109
+	resetobjectsubpriority 2, MAP_DEWFORD_TOWN
+	copyobjectxytoperm 2
 	release
 	end
 

@@ -41,7 +41,7 @@ VictoryRoad_1F_EventScript_WallyApproachPlayer:: @ 815DED3
 	trainerbattle_no_intro TRAINER_WALLY_1, VictoryRoad_1F_Text_WallyEntranceDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostEntranceBattle, MSGBOX_DEFAULT
 	clearflag FLAG_HIDE_WALLY_BATTLE_VICTORY_ROAD
-	moveobjectoffscreen 4
+	copyobjectxytoperm 4
 	setflag FLAG_DEFEATED_WALLY_VICTORY_ROAD
 	setvar VAR_VICTORY_ROAD_1F_STATE, 1
 	releaseall

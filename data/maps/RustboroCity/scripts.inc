@@ -369,7 +369,7 @@ RustboroCity_EventScript_EmployeeAskToGetGoods:: @ 814C650
 	call_if_eq RustboroCity_EventScript_EmployeeApproachPlayerDown1
 	setflag FLAG_UNKNOWN_9F
 	setvar VAR_RUSTBORO_STATE, 3
-	moveobjectoffscreen 9
+	copyobjectxytoperm 9
 	msgbox RustboroCity_Text_HelpMeIWasRobbed, MSGBOX_DEFAULT
 	releaseall
 	end

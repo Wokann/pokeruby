@@ -12,13 +12,13 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_callstd                 @ 0x09
 	.4byte ScrCmd_gotostd_if              @ 0x0A
 	.4byte ScrCmd_callstd_if              @ 0x0B
-	.4byte ScrCmd_gotoram                 @ 0x0C
-	.4byte ScrCmd_killscript              @ 0x0D
+	.4byte ScrCmd_returnram               @ 0x0C
+	.4byte ScrCmd_endram                  @ 0x0D
 	.4byte ScrCmd_setmysteryeventstatus   @ 0x0E
 	.4byte ScrCmd_loadword                @ 0x0F
 	.4byte ScrCmd_loadbyte                @ 0x10
-	.4byte ScrCmd_writebytetoaddr         @ 0x11    
-	.4byte ScrCmd_loadbytefromaddr        @ 0x12
+	.4byte ScrCmd_setptr                  @ 0x11
+	.4byte ScrCmd_loadbytefromptr         @ 0x12
 	.4byte ScrCmd_setptrbyte              @ 0x13
 	.4byte ScrCmd_copylocal               @ 0x14
 	.4byte ScrCmd_copybyte                @ 0x15
@@ -29,10 +29,10 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_setorcopyvar            @ 0x1A
 	.4byte ScrCmd_compare_local_to_local  @ 0x1B
 	.4byte ScrCmd_compare_local_to_value  @ 0x1C
-	.4byte ScrCmd_compare_local_to_addr   @ 0x1D
-	.4byte ScrCmd_compare_addr_to_local   @ 0x1E
-	.4byte ScrCmd_compare_addr_to_value   @ 0x1F
-	.4byte ScrCmd_compare_addr_to_addr    @ 0x20
+	.4byte ScrCmd_compare_local_to_ptr    @ 0x1D
+	.4byte ScrCmd_compare_ptr_to_local    @ 0x1E
+	.4byte ScrCmd_compare_ptr_to_value    @ 0x1F
+	.4byte ScrCmd_compare_ptr_to_ptr      @ 0x20
 	.4byte ScrCmd_compare_var_to_value    @ 0x21
 	.4byte ScrCmd_compare_var_to_var      @ 0x22
 	.4byte ScrCmd_callnative              @ 0x23
@@ -80,27 +80,27 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_checkdecor              @ 0x4D
 	.4byte ScrCmd_checkdecorspace         @ 0x4E
 	.4byte ScrCmd_applymovement           @ 0x4F
-	.4byte ScrCmd_applymovement_at        @ 0x50
+	.4byte ScrCmd_applymovementat         @ 0x50
 	.4byte ScrCmd_waitmovement            @ 0x51
-	.4byte ScrCmd_waitmovement_at         @ 0x52
+	.4byte ScrCmd_waitmovementat          @ 0x52
 	.4byte ScrCmd_removeobject            @ 0x53
-	.4byte ScrCmd_removeobject_at         @ 0x54
+	.4byte ScrCmd_removeobjectat          @ 0x54
 	.4byte ScrCmd_addobject               @ 0x55
-	.4byte ScrCmd_addobject_at            @ 0x56
+	.4byte ScrCmd_addobjectat             @ 0x56
 	.4byte ScrCmd_setobjectxy             @ 0x57
 	.4byte ScrCmd_showobjectat            @ 0x58
 	.4byte ScrCmd_hideobjectat            @ 0x59
 	.4byte ScrCmd_faceplayer              @ 0x5A
 	.4byte ScrCmd_turnobject              @ 0x5B
 	.4byte ScrCmd_trainerbattle           @ 0x5C
-	.4byte ScrCmd_trainerbattlebegin      @ 0x5D
+	.4byte ScrCmd_dotrainerbattle         @ 0x5D
 	.4byte ScrCmd_gotopostbattlescript    @ 0x5E
 	.4byte ScrCmd_gotobeatenscript        @ 0x5F
 	.4byte ScrCmd_checktrainerflag        @ 0x60
 	.4byte ScrCmd_settrainerflag          @ 0x61
 	.4byte ScrCmd_cleartrainerflag        @ 0x62
 	.4byte ScrCmd_setobjectxyperm         @ 0x63
-	.4byte ScrCmd_moveobjectoffscreen     @ 0x64
+	.4byte ScrCmd_copyobjectxytoperm      @ 0x64
 	.4byte ScrCmd_setobjectmovementtype   @ 0x65
 	.4byte ScrCmd_waitmessage             @ 0x66
 	.4byte ScrCmd_message                 @ 0x67
@@ -153,7 +153,7 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_getpricereduction       @ 0x96
 	.4byte ScrCmd_fadescreen              @ 0x97
 	.4byte ScrCmd_fadescreenspeed         @ 0x98
-	.4byte ScrCmd_setflashradius          @ 0x99
+	.4byte ScrCmd_setflashlevel           @ 0x99
 	.4byte ScrCmd_animateflash            @ 0x9A
 	.4byte ScrCmd_messageautoscroll       @ 0x9B
 	.4byte ScrCmd_dofieldeffect           @ 0x9C
@@ -168,8 +168,8 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_doweather               @ 0xA5
 	.4byte ScrCmd_setstepcallback         @ 0xA6
 	.4byte ScrCmd_setmaplayoutindex       @ 0xA7
-	.4byte ScrCmd_setobjectpriority       @ 0xA8
-	.4byte ScrCmd_resetobjectpriority     @ 0xA9
+	.4byte ScrCmd_setobjectsubpriority    @ 0xA8
+	.4byte ScrCmd_resetobjectsubpriority  @ 0xA9
 	.4byte ScrCmd_createvobject           @ 0xAA
 	.4byte ScrCmd_turnvobject             @ 0xAB
 	.4byte ScrCmd_opendoor                @ 0xAC
@@ -190,7 +190,7 @@ gScriptCmdTable:: @ 814AE30
 	.4byte ScrCmd_vgoto_if                @ 0xBB
 	.4byte ScrCmd_vcall_if                @ 0xBC
 	.4byte ScrCmd_vmessage                @ 0xBD
-	.4byte ScrCmd_vloadptr                @ 0xBE
+	.4byte ScrCmd_vbuffermessage          @ 0xBE
 	.4byte ScrCmd_vbufferstring           @ 0xBF
 	.4byte ScrCmd_showcoinsbox            @ 0xC0
 	.4byte ScrCmd_hidecoinsbox            @ 0xC1

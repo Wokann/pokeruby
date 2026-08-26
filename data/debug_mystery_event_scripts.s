@@ -74,7 +74,7 @@ _845DB56:
 	waitbuttonpress
 	release
 _0845DBB4:
-	killscript
+	endram
 _0845DBB5:
 	vmessage _0845DC94
 	waitmessage
@@ -130,17 +130,17 @@ _0845DD0D:
 	checkitemspace ITEM_EON_TICKET, 0x1
 	compare VAR_RESULT, 0x0
 	vgoto_if 0x1, _0845DD5B
-	vloadptr _0845DB16
+	vbuffermessage _0845DB16
 	setmysteryeventstatus 0x2
 	end
 
 _0845DD53:
-	vloadptr _0845DD63
+	vbuffermessage _0845DD63
 	setmysteryeventstatus 0x3
 	end
 
 _0845DD5B:
-	vloadptr _0845DD95
+	vbuffermessage _0845DD95
 	setmysteryeventstatus 0x3
 	end
 
@@ -310,9 +310,9 @@ _0845E683:
 	setorcopyvar VAR_0x8001, 0x1
 	callstd 0x0
 	release
-	killscript
+	endram
 _0845E6BF:
-	gotoram
+	returnram
 
 .ifdef ENGLISH
 _0845E6C0:
@@ -345,12 +345,12 @@ _0845E736:
 	adddecoration DECOR_REGISTEEL_DOLL
 	compare VAR_RESULT, 0x0
 	vgoto_if 0x1, _0845E755
-	vloadptr _0845E75D
+	vbuffermessage _0845E75D
 	setmysteryeventstatus 0x2
 	end
 
 _0845E755:
-	vloadptr _0845E771
+	vbuffermessage _0845E771
 	setmysteryeventstatus 0x3
 	end
 
