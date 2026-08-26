@@ -54,7 +54,7 @@ extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_PC[];
-extern u8 gUnknown_081C6C02[];
+extern u8 EventScript_TestSignpostMsg[];
 extern u8 EventScript_HiddenItem[];
 extern u8 Event_TV[];
 extern u8 ClosedSootopolisDoorScript[];
@@ -406,7 +406,7 @@ static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position
     if (bgEvent == NULL)
         return NULL;
     if (bgEvent->bgUnion.script == NULL)
-        return gUnknown_081C6C02;
+        return EventScript_TestSignpostMsg;
 
     switch (bgEvent->kind)
     {

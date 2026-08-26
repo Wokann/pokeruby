@@ -1621,28 +1621,28 @@ MauvilleCity_GameCorner_EventScript_PlayRoulette:: @ 81C40DA
 	.include "data/text/check_furniture.inc"
 	.include "data/scripts/cave_hole.inc"
 
-@ 81C6BF9
-	msgbox Text_1C6C2B, MSGBOX_NPC
+EventScript_TestNpcMessage:: @ 81C6BF9
+	msgbox Text_ThisIsATestMessage, MSGBOX_NPC
 	end
 
-gUnknown_081C6C02:: @ 81C6C02
-	msgbox Text_1C6C4B, MSGBOX_SIGN
+EventScript_TestSignpostMsg:: @ 81C6C02
+	msgbox Text_ThisIsATestSignpostMsg, MSGBOX_SIGN
 	end
 
-@ 81C6C0B
+EventScript_TestEmpty:: @ 81C6C0B
 	end
 
-@ 81C6C0C
-	msgbox Text_1C6C62, MSGBOX_SIGN
+EventScript_TestCoordEvent:: @ 81C6C0C
+	msgbox Text_ThisIsATestCoordEvent, MSGBOX_SIGN
 	end
 
-@ 81C6C15
+EventScript_TestSetWallClock:: @ 81C6C15
 	lockall
 	call PlayersHouse_2F_EventScript_SetWallClock
 	releaseall
 	end
 
-@ 81C6C1D
+EventScript_TestBrailleMessage:: @ 81C6C1D
 	lockall
 	braillemessage Underwater_SealedChamber_Braille_GoUpHere
 	waitbuttonpress
@@ -1650,19 +1650,19 @@ gUnknown_081C6C02:: @ 81C6C02
 	releaseall
 	end
 
-Text_1C6C2B: @ 81C6C2B
+Text_ThisIsATestMessage:: @ 81C6C2B
 	@ This is a test message!
 	@ Welcome to the world of Pokémon!
 	.string "テストよう　メッセージです！\n"
 	.string "ポケモンの　せかいへ　ようこそ！$"
 
-Text_1C6C4B: @ 81C6C4B
+Text_ThisIsATestSignpostMsg:: @ 81C6C4B
 	@ This is a test message!
 	@ This is a sign.
 	.string "テストよう　メッセージです！\n"
 	.string "かんばん　です$"
 
-Text_1C6C62: @ 81C6C62
+Text_ThisIsATestCoordEvent:: @ 81C6C62
 	@ This is a test message!
 	@ This is a coordinate-check event.
 	.string "テストよう　メッセージです！\n"
