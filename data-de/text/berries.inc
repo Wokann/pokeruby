@@ -99,7 +99,7 @@ SootopolisCity_Text_WhatKindOfWishInYourName:: @ 81C650B
 	.string "Ich frage mich, welcher Wunsch in deinem\n"
 	.string "Namen verborgen ist.$"
 
-SootopolisCity_Text_KiriBornInSeasons:: @ 81C6540
+SootopolisCity_Text_LikeSeasonBornIn:: @ 81C6540
 	.string "Frühling, Sommer, Herbst und Winter.\p"
 	.string "Wenn du im Frühling geboren bist, magst\n"
 	.string "du dann den Frühling? Wenn du im Sommer\l"

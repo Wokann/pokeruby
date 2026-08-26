@@ -99,7 +99,7 @@ SootopolisCity_Text_WhatKindOfWishInYourName:: @ 81C650B
 	.string "I wonder what kind of wish is included\n"
 	.string "in your name.$"
 
-SootopolisCity_Text_KiriBornInSeasons:: @ 81C6540
+SootopolisCity_Text_LikeSeasonBornIn:: @ 81C6540
 	.string "Spring, summer, autumn, and winter.\p"
 	.string "If you're born in springtime, do you like\n"
 	.string "the spring, and if you're born in the\l"

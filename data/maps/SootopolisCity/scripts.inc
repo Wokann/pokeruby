@@ -120,7 +120,7 @@ SootopolisCity_EventScript_GiveIapapaBerry:: @ 814D220
 	end
 
 SootopolisCity_EventScript_KiriReceivedBerry:: @ 814D241
-	msgbox SootopolisCity_Text_KiriBornInSeasons, MSGBOX_YESNO
+	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq SootopolisCity_EventScript_KiriLikeSeasonBornIn
 	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
