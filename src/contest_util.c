@@ -279,7 +279,7 @@ void ShowContestEntryMonPic(void)
     u8 spriteId;
     u8 taskId;
 
-    if(FindTaskIdByFunc(sub_80C5190) == 0xFF)
+    if(FindTaskIdByFunc(Task_ShowContestEntryMonPic) == 0xFF)
     {
         u8 left = CONTEST_ENTRY_PIC_LEFT;
         u8 top = CONTEST_ENTRY_PIC_TOP;
@@ -288,7 +288,7 @@ void ShowContestEntryMonPic(void)
         species = gContestMons[gSpecialVar_0x8006].species;
         var1 = gContestMons[gSpecialVar_0x8006].personality;
         var2 = gContestMons[gSpecialVar_0x8006].otId;
-        taskId = CreateTask(sub_80C5190, 0x50);
+        taskId = CreateTask(Task_ShowContestEntryMonPic, 0x50);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = species;
         HandleLoadSpecialPokePic(
@@ -312,15 +312,15 @@ void ShowContestEntryMonPic(void)
     }
 }
 
-void sub_80C5164(void)
+void HideContestEntryMonPic(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_80C5190);
+    u8 taskId = FindTaskIdByFunc(Task_ShowContestEntryMonPic);
 
     if(taskId != 0xFF)
         gTasks[taskId].data[0]++;
 }
 
-void sub_80C5190(u8 taskId)
+void Task_ShowContestEntryMonPic(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     struct Sprite *sprite;

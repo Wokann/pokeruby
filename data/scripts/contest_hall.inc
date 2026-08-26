@@ -720,7 +720,7 @@ ContestHall_EventScript_ContestantReturn:: @ 81A5880
 	closemessage
 	release
 	removeobject 13
-	special sub_80C5164
+	special HideContestEntryMonPic
 	switch VAR_0x8006
 	case 0, ContestHall_EventScript_Player1WalkBack
 	case 1, ContestHall_EventScript_Player2WalkBack

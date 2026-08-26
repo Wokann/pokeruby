@@ -329,7 +329,7 @@ gSpecials::
 	def_special sp13E_warp_to_last_warp
 	def_special DoFallWarp
 	def_special ShowContestEntryMonPic
-	def_special sub_80C5164
+	def_special HideContestEntryMonPic
 	def_special SetEReaderTrainerGfxId
 	def_special ScrSpecial_StartSouthernIslandBattle
 	def_special SetRoute119Weather
