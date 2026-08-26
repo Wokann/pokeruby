@@ -1138,7 +1138,7 @@ EventScript_FieldWhiteOut::
 	message gText_PlayerWhitedOut
 	waitmessage
 	waitbuttonpress
-	special sub_8081924
+	special Script_FadeOutMapMusic
 	waitstate
 	fadescreen FADE_TO_BLACK
 	special sp0C8_whiteout_maybe

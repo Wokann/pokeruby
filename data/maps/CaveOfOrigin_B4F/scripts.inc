@@ -47,9 +47,9 @@ CaveOfOrigin_B4F_EventScript_AwakenLegendary:: @ 815DDD7
 	setvar VAR_RESULT, 2
 	.endif
 	playse SE_ORB
-	special sub_80818A4
+	special DoOrbEffect
 	waitstate
-	special sub_80818FC
+	special FadeOutOrbEffect
 	waitstate
 	applymovement 1, CaveOfOrigin_B4F_Movement_AwakenedLegendaryDescends
 	waitmovement 0

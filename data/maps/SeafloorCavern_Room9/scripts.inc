@@ -64,7 +64,7 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	.endif
 	setweather WEATHER_NONE
 	doweather
-	special sub_8081924
+	special Script_FadeOutMapMusic
 	waitstate
 	.ifdef SAPPHIRE
 	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
@@ -91,7 +91,7 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	.endif
 	playfanfare MUS_AWAKEN_LEGEND
 	playse SE_ORB
-	special sub_80818A4
+	special DoOrbEffect
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
@@ -102,7 +102,7 @@ SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	delay 60
 	applymovement 1, SeafloorCavern_Room9_Movement_AwakenedMonApproach
 	waitmovement 0
-	special sub_80818FC
+	special FadeOutOrbEffect
 	waitstate
 	setvar VAR_0x8004, 1
 	setvar VAR_0x8005, 1

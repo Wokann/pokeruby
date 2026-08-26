@@ -98,7 +98,7 @@ static void UpdateFlashLevelEffect(u8 taskId)
     }
 }
 
-static void sub_80814E8(u8 taskId)
+static void Task_WaitForFlashUpdate(u8 taskId)
 {
     if (!FuncIsActiveTask(UpdateFlashLevelEffect))
     {
@@ -107,13 +107,13 @@ static void sub_80814E8(u8 taskId)
     }
 }
 
-static void sub_8081510(void)
+static void StartWaitForFlashUpdate(void)
 {
-    if (!FuncIsActiveTask(sub_80814E8))
-        CreateTask(sub_80814E8, 80);
+    if (!FuncIsActiveTask(Task_WaitForFlashUpdate))
+        CreateTask(Task_WaitForFlashUpdate, 80);
 }
 
-static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
+static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
 {
     u8 taskId = CreateTask(UpdateFlashLevelEffect, 80);
     s16 *data = gTasks[taskId].data;
@@ -137,14 +137,14 @@ static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 dest
 #undef tFlashRadiusDelta
 #undef tClearScanlineEffect
 
-void sub_8081594(u8 flashLevel)
+void AnimateFlash(u8 flashLevel)
 {
     u8 curFlashLevel = Overworld_GetFlashLevel();
     u8 value = 0;
     if (!flashLevel)
         value = 1;
-    sub_8081534(120, 80, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
-    sub_8081510();
+    StartUpdateFlashLevelEffect(120, 80, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
+    StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }
 
@@ -157,7 +157,7 @@ void WriteFlashScanlineEffectBuffer(u8 flashLevel)
     }
 }
 
-static void sub_808161C(u8 a1)
+static void LoadOrbEffectPalette(u8 a1)
 {
     int i;
     u16 color[1];
@@ -173,7 +173,7 @@ static void sub_808161C(u8 a1)
     }
 }
 
-static bool8 sub_8081658(u16 a1)
+static bool8 UpdateOrbEffectBlend(u16 a1)
 {
     u8 lo = REG_BLDALPHA & 0xFF;
     u8 hi = REG_BLDALPHA >> 8;
@@ -203,7 +203,7 @@ static bool8 sub_8081658(u16 a1)
     return FALSE;
 }
 
-static void sub_80816A8(u8 taskId)
+static void Task_OrbEffect(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -216,7 +216,7 @@ static void sub_80816A8(u8 taskId)
         data[9] = REG_WININ;
         data[10] = REG_WINOUT;
         REG_DISPCNT &= 0xBFFF;
-        REG_BLDCNT |= gUnknown_081E29E8[0];
+        REG_BLDCNT |= gOrbEffectBackgroundLayerFlags[0];
         REG_BLDALPHA = 1804;
         REG_WININ = 63;
         REG_WINOUT = 30;
@@ -227,8 +227,8 @@ static void sub_80816A8(u8 taskId)
         break;
     case 1:
         Menu_BlankWindowRect(0, 0, 29, 19);
-        sub_808161C(data[1]);
-        sub_8081534(data[2], data[3], 1, 160, 1, 2);
+        LoadOrbEffectPalette(data[1]);
+        StartUpdateFlashLevelEffect(data[2], data[3], 1, 160, 1, 2);
         data[0] = 2;
         break;
     case 2:
@@ -270,7 +270,7 @@ static void sub_80816A8(u8 taskId)
         {
             data[4] = 8;
             data[5] ^= 1;
-            if (sub_8081658(data[5]) == TRUE)
+            if (UpdateOrbEffectBlend(data[5]) == TRUE)
                 data[0] = 5;
         }
         break;
@@ -289,9 +289,9 @@ static void sub_80816A8(u8 taskId)
     }
 }
 
-void sub_80818A4(void)
+void DoOrbEffect(void)
 {
-    u8 taskId = CreateTask(sub_80816A8, 80);
+    u8 taskId = CreateTask(Task_OrbEffect, 80);
     s16 *data = gTasks[taskId].data;
 
     if (gSpecialVar_Result == 0)
@@ -318,21 +318,21 @@ void sub_80818A4(void)
     data[3] = 80;
 }
 
-void sub_80818FC(void)
+void FadeOutOrbEffect(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_80816A8);
+    u8 taskId = FindTaskIdByFunc(Task_OrbEffect);
     gTasks[taskId].data[0] = 6;
 }
 
-static void task50_0807F0C8(u8);
+static void Task_EnableScriptAfterMusicFade(u8);
 
-void sub_8081924(void)
+void Script_FadeOutMapMusic(void)
 {
     Overworld_FadeOutMapMusic();
-    CreateTask(task50_0807F0C8, 80);
+    CreateTask(Task_EnableScriptAfterMusicFade, 80);
 }
 
-static void task50_0807F0C8(u8 taskId)
+static void Task_EnableScriptAfterMusicFade(u8 taskId)
 {
     if (BGMusicStopped() == TRUE)
     {

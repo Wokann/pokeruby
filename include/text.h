@@ -64,7 +64,7 @@ extern vu16 *const gBGVOffsetRegs[];
 
 extern const u16 gUnknown_081E29D8[];
 extern const u16 gUnknown_081E29E0[];
-extern const u16 gUnknown_081E29E8[];
+extern const u16 gOrbEffectBackgroundLayerFlags[];
 
 extern const struct WindowTemplate gWindowTemplate_81E6C3C;
 extern const struct WindowTemplate gWindowTemplate_81E6C58;
