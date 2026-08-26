@@ -184,14 +184,14 @@ CableClub_EventScript_EnterColosseum:: @ 81A3F5E
 	compare VAR_0x8004, 5
 	goto_if_eq CableClub_EventScript_WarpTo4PColosseum
 	special SetCableClubWarp
-	warp MAP_SINGLE_BATTLE_COLOSSEUM, 255, 6, 8
+	warp MAP_BATTLE_COLOSSEUM_2P, 255, 6, 8
 	special DoCableClubWarp
 	waitstate
 	end
 
 CableClub_EventScript_WarpTo4PColosseum:: @ 81A3FCD
 	special SetCableClubWarp
-	warp MAP_DOUBLE_BATTLE_COLOSSEUM, 255, 5, 8
+	warp MAP_BATTLE_COLOSSEUM_4P, 255, 5, 8
 	special DoCableClubWarp
 	waitstate
 	end

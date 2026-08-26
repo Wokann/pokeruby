@@ -63,7 +63,7 @@
       "x": 5,
       "y": 1,
       "elevation": 0,
-      "dest_map": "MAP_SINGLE_BATTLE_COLOSSEUM",
+      "dest_map": "MAP_BATTLE_COLOSSEUM_2P",
       "dest_warp_id": "0"
     },
     {
@@ -84,7 +84,7 @@
       "x": 0,
       "y": 0,
       "elevation": 0,
-      "dest_map": "MAP_DOUBLE_BATTLE_COLOSSEUM",
+      "dest_map": "MAP_BATTLE_COLOSSEUM_4P",
       "dest_warp_id": "0"
     }
   ],
