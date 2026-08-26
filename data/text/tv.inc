@@ -1,4 +1,4 @@
-FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
+LilycoveCity_ContestLobby_Text_InterviewRequest:: @ 81A6F7C
 	.string "Oh, hello! You were in a POKéMON CONTEST,\n"
 	.string "weren't you?\l"
 	.string "It's easy to tell from your POKéMON.\p"
@@ -7,13 +7,13 @@ FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
 	.string "If I may, would you be willing to answer\n"
 	.string "a few questions?$"
 
-FallarborTown_ContestLobby_Text_1A704E:: @ 81A704E
+LilycoveCity_ContestLobby_Text_DescribeContest:: @ 81A704E
 	.string "Oh, you will?\n"
 	.string "Thank you.\p"
 	.string "Briefly, how would you describe the\n"
 	.string "CONTEST you just entered?$"
 
-FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
+LilycoveCity_ContestLobby_Text_WhatImageWhenYouHearX:: @ 81A70A5
 	.string "Ah, I see.\n"
 	.string "That's a very edifying comment.\p"
 	.string "You get a good feel for what the\n"
@@ -22,7 +22,7 @@ FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
 	.string "When you hear the word “{STR_VAR_2},”\n"
 	.string "what image do you get?$"
 
-FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
+LilycoveCity_ContestLobby_Text_ThatsAllForInterview:: @ 81A7153
 	.string "I see!\p"
 	.string "So that's how you imagine the concept\n"
 	.string "of “{STR_VAR_2}” to be.\p"
@@ -34,12 +34,12 @@ FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
 	.string "make it to television.\l"
 	.string "I hope you'll look forward to it!$"
 
-FallarborTown_ContestLobby_Text_1A7256:: @ 81A7256
+LilycoveCity_ContestLobby_Text_PleaseDoShareStoryWithMe:: @ 81A7256
 	.string "Oh, too bad...\p"
 	.string "Well, if you come across a good story,\n"
 	.string "please do share it with me.$"
 
-FallarborTown_ContestLobby_Text_1A72A8:: @ 81A72A8
+LilycoveCity_ContestLobby_Text_LookingForwardToNextContest:: @ 81A72A8
 	.string "I'll be looking forward to your next\n"
 	.string "POKéMON CONTEST.$"
 

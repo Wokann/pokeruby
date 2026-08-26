@@ -1349,21 +1349,21 @@ SlateportCity_ContestLobby_EventScript_Reporter:: @ 81AE0B6
 VerdanturfTown_ContestLobby_EventScript_Reporter:: @ 81AE0B6
 	lock
 	faceplayer
-	goto_if_set FLAG_TEMP_2, FallarborTown_ContestLobby_EventScript_1AE17E
+	goto_if_set FLAG_TEMP_2, LilycoveCity_ContestLobby_EventScript_AlreadyInterviewed
 	setvar VAR_0x8005, 6
 	special InterviewBefore
 	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE17E
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_AlreadyInterviewed
 	copyvar VAR_0x8009, VAR_0x8006
-	msgbox FallarborTown_ContestLobby_Text_1A6F7C, MSGBOX_YESNO
+	msgbox LilycoveCity_ContestLobby_Text_InterviewRequest, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE0F8
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_AcceptInterview
 	compare VAR_RESULT, NO
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_DeclineInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE0F8:: @ 81AE0F8
-	msgbox FallarborTown_ContestLobby_Text_1A704E, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_AcceptInterview:: @ 81AE0F8
+	msgbox LilycoveCity_ContestLobby_Text_DescribeContest, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 11
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
@@ -1371,20 +1371,20 @@ FallarborTown_ContestLobby_EventScript_1AE0F8:: @ 81AE0F8
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE137
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_SubmitResponse
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_DeclineInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE12D:: @ 81AE12D
-	msgbox FallarborTown_ContestLobby_Text_1A7256, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_DeclineInterview:: @ 81AE12D
+	msgbox LilycoveCity_ContestLobby_Text_PleaseDoShareStoryWithMe, MSGBOX_DEFAULT
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE137:: @ 81AE137
+LilycoveCity_ContestLobby_EventScript_SubmitResponse:: @ 81AE137
 	setvar VAR_0x8004, 24
 	special SetContestCategoryStringVarForInterview
-	msgbox FallarborTown_ContestLobby_Text_1A70A5, MSGBOX_DEFAULT
+	msgbox LilycoveCity_ContestLobby_Text_WhatImageWhenYouHearX, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 11
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 1
@@ -1392,15 +1392,15 @@ FallarborTown_ContestLobby_EventScript_1AE137:: @ 81AE137
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
-	msgbox FallarborTown_ContestLobby_Text_1A7153, MSGBOX_DEFAULT
+	goto_if_eq LilycoveCity_ContestLobby_EventScript_DeclineInterview
+	msgbox LilycoveCity_ContestLobby_Text_ThatsAllForInterview, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_2
 	setvar VAR_0x8005, 6
 	goto Interview_EventScript_EndInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE17E:: @ 81AE17E
-	msgbox FallarborTown_ContestLobby_Text_1A72A8, MSGBOX_DEFAULT
+LilycoveCity_ContestLobby_EventScript_AlreadyInterviewed:: @ 81AE17E
+	msgbox LilycoveCity_ContestLobby_Text_LookingForwardToNextContest, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1413,26 +1413,26 @@ LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
 	switch VAR_CONTEST_LOCATION
 	case 0, LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
-	case 2, FallarborTown_ContestLobby_EventScript_ShowFallarborContestReporter
-	case 1, FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter
-	case 3, FallarborTown_ContestLobby_EventScript_ShowSlateportContestReporter
-	case 4, FallarborTown_ContestLobby_EventScript_ShowLilycoveContestReporter
+	case 2, FallarborTown_ContestLobby_EventScript_ShowContestReporter
+	case 1, VerdanturfTown_ContestLobby_EventScript_ShowContestReporter
+	case 3, SlateportCity_ContestLobby_EventScript_ShowContestReporter
+	case 4, LilycoveCity_ContestLobby_EventScript_ShowContestReporter
 	case 5, LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
 	end
 
-FallarborTown_ContestLobby_EventScript_ShowFallarborContestReporter:: @ 81AE1EE
+FallarborTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1EE
 	clearflag FLAG_HIDE_CONTEST_REPORTER_FALLARBOR
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter:: @ 81AE1F2
+VerdanturfTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F2
 	clearflag FLAG_HIDE_CONTEST_REPORTER_VERDANTURF
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowSlateportContestReporter:: @ 81AE1F6
+SlateportCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F6
 	clearflag FLAG_HIDE_CONTEST_REPORTER_SLATEPORT
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowLilycoveContestReporter:: @ 81AE1FA
+LilycoveCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1FA
 	clearflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
 	return
 
