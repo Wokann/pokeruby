@@ -286,37 +286,37 @@ extern u8 gSelectedOrderFromParty[];
 extern u8 gBattleOutcome;
 extern struct BattlePokemon gBattleMons[];
 
-void sub_8134548(void)
+void GetBattleTowerChallengeStatus(void)
 {
-    u8 var1 = 0;
+    u8 pendingChallengeCount = 0;
     s32 levelType;
 
     for (levelType = 0; levelType < 2; levelType++)
     {
-        switch (gSaveBlock2.battleTower.var_4AE[levelType])
+        switch (gSaveBlock2.battleTower.challengeStatus[levelType])
         {
         case 0:
         default:
             ResetBattleTowerStreak(levelType);
-            if (!var1)
-                VarSet(VAR_TEMP_0, 5);
+            if (!pendingChallengeCount)
+                VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5);
             break;
         case 1:
             ResetBattleTowerStreak(levelType);
-            VarSet(VAR_TEMP_0, 1);
-            var1++;
+            VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 1);
+            pendingChallengeCount++;
             break;
         case 4:
-            VarSet(VAR_TEMP_0, 2);
-            var1++;
+            VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 2);
+            pendingChallengeCount++;
             break;
         case 5:
-            VarSet(VAR_TEMP_0, 3);
-            var1++;
+            VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 3);
+            pendingChallengeCount++;
             break;
         case 2:
-            VarSet(VAR_TEMP_0, 4);
-            var1++;
+            VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 4);
+            pendingChallengeCount++;
             break;
         case 3:
         case 6:
@@ -324,16 +324,16 @@ void sub_8134548(void)
         }
     }
 
-    if ((gSaveBlock2.battleTower.var_4AE[0] == 3 || gSaveBlock2.battleTower.var_4AE[0] == 6)
-     && (gSaveBlock2.battleTower.var_4AE[1] == 3 || gSaveBlock2.battleTower.var_4AE[1] == 6))
-        VarSet(VAR_TEMP_0, 5);
+    if ((gSaveBlock2.battleTower.challengeStatus[0] == 3 || gSaveBlock2.battleTower.challengeStatus[0] == 6)
+     && (gSaveBlock2.battleTower.challengeStatus[1] == 3 || gSaveBlock2.battleTower.challengeStatus[1] == 6))
+        VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5);
 
     ValidateBattleTowerRecordChecksums();
 }
 
 void ResetBattleTowerStreak(u8 levelType)
 {
-    gSaveBlock2.battleTower.var_4AE[levelType] = 0;
+    gSaveBlock2.battleTower.challengeStatus[levelType] = 0;
     gSaveBlock2.battleTower.curChallengeBattleNum[levelType] = 1;
     gSaveBlock2.battleTower.curStreakChallengesNum[levelType] = 1;
 }
@@ -1126,8 +1126,8 @@ void SetBattleTowerProperty(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        gBattleStruct->unk160FB = gSaveBlock2.battleTower.var_4AE[battleTowerLevelType];
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gSpecialVar_0x8005;
+        gBattleStruct->unk160FB = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
     case 1:
         gSaveBlock2.battleTower.battleTowerLevelType = gSpecialVar_0x8005;
@@ -1171,11 +1171,11 @@ void SetBattleTowerProperty(void)
         SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
     case 11:
-        if (gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] != 3)
+        if (gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] != 3)
             ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1193,7 +1193,7 @@ void BattleTowerUtil(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        gSpecialVar_Result = gSaveBlock2.battleTower.var_4AE[battleTowerLevelType];
+        gSpecialVar_Result = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
         break;
     case 1:
         gSpecialVar_Result = gSaveBlock2.battleTower.battleTowerLevelType;
@@ -1224,7 +1224,7 @@ void BattleTowerUtil(void)
         ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1327,9 +1327,9 @@ void SaveBattleTowerProgress(void)
     gSaveBlock2.battleTower.battleOutcome = gBattleOutcome;
 
     if (gSpecialVar_0x8004 != 3)
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gSpecialVar_0x8004;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8004;
 
-    VarSet(VAR_TEMP_0, 0);
+    VarSet(VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 0);
     gSaveBlock2.battleTower.unk_554 = 1;
     Save_WriteData(SAVE_EREADER);
 }
@@ -1427,7 +1427,7 @@ void GiveBattleTowerPrize(void)
     else
     {
         gSpecialVar_Result = 0;
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = 6;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = 6;
     }
 }
 
@@ -1594,7 +1594,7 @@ void TryEnableBravoTrainerBattleTower(void)
 
     for (i = 0; i < 2; i++)
     {
-        if (gSaveBlock2.battleTower.var_4AE[i] == 1)
+        if (gSaveBlock2.battleTower.challengeStatus[i] == 1)
             sub_80BFD20();
     }
 }

@@ -48,15 +48,15 @@ BattleTower_Lobby_EventScript_PlayerFaceNorth:: @ 81602F8
 	end
 
 BattleTower_Lobby_OnFrame:: @ 8160302
-	map_script_2 VAR_TEMP_0, 0, BattleTower_Lobby_EventScript_GetChallengeStatus
-	map_script_2 VAR_TEMP_0, 1, BattleTower_Lobby_EventScript_QuitWithoutSaving
-	map_script_2 VAR_TEMP_0, 2, BattleTower_Lobby_EventScript_WonChallenge
-	map_script_2 VAR_TEMP_0, 3, BattleTower_Lobby_EventScript_LostChallenge
-	map_script_2 VAR_TEMP_0, 4, BattleTower_Lobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 0, BattleTower_Lobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 1, BattleTower_Lobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 2, BattleTower_Lobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 3, BattleTower_Lobby_EventScript_LostChallenge
+	map_script_2 VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 4, BattleTower_Lobby_EventScript_ResumeChallenge
 	.2byte 0
 
 BattleTower_Lobby_EventScript_GetChallengeStatus:: @ 816032C
-	special sub_8134548
+	special GetBattleTowerChallengeStatus
 	end
 
 BattleTower_Lobby_EventScript_QuitWithoutSaving:: @ 8160330
@@ -64,7 +64,7 @@ BattleTower_Lobby_EventScript_QuitWithoutSaving:: @ 8160330
 	faceplayer
 	msgbox BattleTower_Lobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	release
 	end
 
@@ -123,7 +123,7 @@ BattleTower_Lobby_EventScript_GivePrize:: @ 81603AD
 BattleTower_Lobby_EventScript_LookForwardToChallenge:: @ 81603F8
 	msgbox BattleTower_Lobby_Text_LookForwardToAnotherChallenge, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	release
 	end
 
@@ -131,7 +131,7 @@ BattleTower_Lobby_EventScript_BagFullMakeRoom:: @ 8160408
 	msgbox BattleTower_Lobby_Text_BagFullMakeRoom, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	release
 	end
 
@@ -150,7 +150,7 @@ BattleTower_Lobby_EventScript_LostChallenge:: @ 8160419
 	waitse
 	msgbox BattleTower_Lobby_Text_LookForwardToAnotherChallenge, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	release
 	end
 
@@ -169,14 +169,14 @@ BattleTower_Lobby_EventScript_ResumeChallenge:: @ 816044B
 	setvar VAR_0x8004, 8
 	setvar VAR_0x8005, 0
 	special SetBattleTowerProperty
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	special SavePlayerParty
 	special SetBattleTowerParty
 	msgbox BattleTower_Lobby_Text_DirectYouToBattleRoom, MSGBOX_DEFAULT
 	closemessage
 	call BattleTower_Lobby_EventScript_EnterElevator
 	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 0
 	waitstate
 
 BattleTower_Lobby_EventScript_SinglesAttendant:: @ 816049E
@@ -228,7 +228,7 @@ BattleTower_Lobby_EventScript_TryEnterSinglesChallenge:: @ 81604FA
 BattleTower_Lobby_EventScript_SaveBeforeSinglesChallenge:: @ 8160587
 	setvar VAR_0x8004, 5
 	special SetBattleTowerProperty
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 0
 	setvar VAR_0x8004, 11
 	special SetBattleTowerProperty
 	setvar VAR_0x8004, 0
@@ -241,7 +241,7 @@ BattleTower_Lobby_EventScript_SaveBeforeSinglesChallenge:: @ 8160587
 	closemessage
 	delay 2
 	call Common_EventScript_SaveGame
-	setvar VAR_TEMP_0, 5
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 5
 	erasebox 0, 0, 15, 10
 	compare VAR_RESULT, 0
 	goto_if_eq BattleTower_Lobby_EventScript_CancelChallengeSaveFailed
@@ -253,7 +253,7 @@ BattleTower_Lobby_EventScript_SaveBeforeSinglesChallenge:: @ 8160587
 	closemessage
 	call BattleTower_Lobby_EventScript_EnterElevator
 	warp MAP_BATTLE_TOWER_ELEVATOR, 255, 1, 6
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS, 0
 	waitstate
 
 BattleTower_Lobby_EventScript_ExplainSinglesChallenge:: @ 8160600

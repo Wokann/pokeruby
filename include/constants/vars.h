@@ -22,6 +22,9 @@
 #define VAR_TEMP_E                 0x400E
 #define VAR_TEMP_F                 0x400F
 
+// Used by the Battle Tower Lobby OnFrame map script.
+#define VAR_TEMP_BATTLE_TOWER_CHALLENGE_STATUS VAR_TEMP_0
+
 // object gfx id vars
 // These 0x10 vars are used to dynamically control an object event's sprite.
 // For example, the rival's sprite id is dynamically set based on the player's gender.

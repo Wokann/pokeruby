@@ -239,7 +239,7 @@ gSpecials::
 	def_special FinishCyclingRoadChallenge
 	def_special UpdateCyclingRoadState
 	def_special GetLeadMonFriendshipScore
-	def_special sub_8134548
+	def_special GetBattleTowerChallengeStatus
 	def_special ChooseNextBattleTowerTrainer
 	def_special CheckPartyBattleTowerBanlist
 	def_special PrintBattleTowerTrainerGreeting

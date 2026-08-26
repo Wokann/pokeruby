@@ -309,7 +309,7 @@ static bool32 sub_8110494(u8 level)
 {
     struct BattleTowerData *battleTower = &gSaveBlock2.battleTower;
 
-    switch (battleTower->var_4AE[level])
+    switch (battleTower->challengeStatus[level])
     {
     case 0:
         return FALSE;

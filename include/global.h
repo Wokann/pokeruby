@@ -823,7 +823,7 @@ struct BattleTowerData
     /*0x04AC, 0x0554*/ u8 battleTowerLevelType:1; // 0 = level 50; 1 = level 100
     /*0x04AC, 0x0554*/ u8 unk_554:1;
     /*0x04AD, 0x0555*/ u8 battleOutcome;
-    /*0x04AE, 0x0556*/ u8 var_4AE[2];
+    /*0x04AE, 0x0556*/ u8 challengeStatus[2];
     /*0x04B0, 0x0558*/ u16 curChallengeBattleNum[2]; // 1-based index of battle in the current challenge. (challenges consist of 7 battles)
     /*0x04B4, 0x055C*/ u16 curStreakChallengesNum[2]; // 1-based index of the current challenge in the current streak.
     /*0x04B8, 0x0560*/ u16 recordWinStreaks[2];
