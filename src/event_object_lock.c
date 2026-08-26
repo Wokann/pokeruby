@@ -9,7 +9,7 @@
 extern u16 gSpecialVar_Facing;
 u8 gSelectedObjectEvent;
 
-bool8 walkrun_is_standing_still(void)
+bool8 IsPlayerStandingStill(void)
 {
     if (gPlayerAvatar.tileTransitionState == T_TILE_TRANSITION)
         return FALSE;
@@ -17,18 +17,18 @@ bool8 walkrun_is_standing_still(void)
         return TRUE;
 }
 
-void sub_8064CDC(u8 taskId)
+void Task_FreezePlayer(u8 taskId)
 {
-    if (walkrun_is_standing_still())
+    if (IsPlayerStandingStill())
     {
         sub_80594C0();
         DestroyTask(taskId);
     }
 }
 
-bool8 sub_8064CFC(void)
+bool8 IsFreezePlayerFinished(void)
 {
-    if (FuncIsActiveTask(sub_8064CDC))
+    if (FuncIsActiveTask(Task_FreezePlayer))
     {
         return FALSE;
     }
@@ -39,17 +39,17 @@ bool8 sub_8064CFC(void)
     }
 }
 
-void ScriptFreezeObjectEvents(void)
+void FreezeObjects_WaitForPlayer(void)
 {
     FreezeObjectEvents();
-    CreateTask(sub_8064CDC, 80);
+    CreateTask(Task_FreezePlayer, 80);
 }
 
-void sub_8064D38(u8 taskId)
+void Task_FreezeSelectedObjectAndPlayer(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    if (!task->data[0] && walkrun_is_standing_still() == TRUE)
+    if (!task->data[0] && IsPlayerStandingStill() == TRUE)
     {
         sub_80594C0();
         task->data[0] = 1;
@@ -63,9 +63,9 @@ void sub_8064D38(u8 taskId)
         DestroyTask(taskId);
 }
 
-bool8 sub_8064DB4(void)
+bool8 IsFreezeSelectedObjectAndPlayerFinished(void)
 {
-    if (FuncIsActiveTask(sub_8064D38))
+    if (FuncIsActiveTask(Task_FreezeSelectedObjectAndPlayer))
     {
         return FALSE;
     }
@@ -76,11 +76,11 @@ bool8 sub_8064DB4(void)
     }
 }
 
-void LockSelectedObjectEvent(void)
+void FreezeObjects_WaitForPlayerAndSelected(void)
 {
     u8 taskId;
     FreezeObjectEventsExceptOne(gSelectedObjectEvent);
-    taskId = CreateTask(sub_8064D38, 80);
+    taskId = CreateTask(Task_FreezeSelectedObjectAndPlayer, 80);
     if (!gObjectEvents[gSelectedObjectEvent].singleMovementActive)
     {
         FreezeObjectEvent(&gObjectEvents[gSelectedObjectEvent]);
@@ -96,7 +96,7 @@ void ScriptUnfreezeObjectEvents(void)
     UnfreezeObjectEvents();
 }
 
-void unref_sub_8064E5C(void)
+void UnlockPlayerAndSelectedObject(void)
 {
     u8 playerObjectId;
 

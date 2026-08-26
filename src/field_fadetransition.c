@@ -239,7 +239,7 @@ void sub_8080B9C(u8 taskId)
         }
         break;
     case 2:
-        if (walkrun_is_standing_still())
+        if (IsPlayerStandingStill())
         {
             u8 objEventId;
             task->data[1] = FieldAnimateDoorClose(*x, *y);
@@ -287,7 +287,7 @@ void task_map_chg_seq_0807E20C(u8 taskId)
         }
         break;
     case 2:
-        if (walkrun_is_standing_still())
+        if (IsPlayerStandingStill())
         {
             UnfreezeObjectEvents();
             task->data[0] = 3;
@@ -581,7 +581,7 @@ void sub_808115C(u8 taskId)
         }
         break;
     case 2:
-        if (walkrun_is_standing_still())
+        if (IsPlayerStandingStill())
         {
             u8 objEventId;
             task->data[1] = FieldAnimateDoorClose(*x, *y - 1);

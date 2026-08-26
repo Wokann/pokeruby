@@ -1,15 +1,15 @@
 #ifndef GUARD_EVENT_OBJECT_LOCK_H
 #define GUARD_EVENT_OBJECT_LOCK_H
 
-bool8 walkrun_is_standing_still(void);
-void sub_8064CDC(u8 taskId);
-bool8 sub_8064CFC(void);
-void ScriptFreezeObjectEvents(void);
-void sub_8064D38(u8 taskId);
-bool8 sub_8064DB4(void);
-void LockSelectedObjectEvent(void);
+bool8 IsPlayerStandingStill(void);
+void Task_FreezePlayer(u8 taskId);
+bool8 IsFreezePlayerFinished(void);
+void FreezeObjects_WaitForPlayer(void);
+void Task_FreezeSelectedObjectAndPlayer(u8 taskId);
+bool8 IsFreezeSelectedObjectAndPlayerFinished(void);
+void FreezeObjects_WaitForPlayerAndSelected(void);
 void ScriptUnfreezeObjectEvents(void);
-void unref_sub_8064E5C(void);
+void UnlockPlayerAndSelectedObject(void);
 void Script_FacePlayer(void);
 void Script_ClearHeldMovement(void);
 
