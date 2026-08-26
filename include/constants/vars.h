@@ -88,7 +88,7 @@
 
 #define VAR_RUSTBORO_STATE         0x405A
 
-#define VAR_SOOTOPOLIS_STATE       0x405E
+#define VAR_SOOTOPOLIS_CITY_STATE  0x405E
 
 #define VAR_ROUTE101_STATE         0x4060
 

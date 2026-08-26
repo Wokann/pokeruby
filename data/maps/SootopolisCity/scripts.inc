@@ -40,7 +40,7 @@ SootopolisCity_EventScript_SetWeather:: @ 814D123
 	call Common_EventScript_SetLegendaryWeather
 	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_1, 29, 19
 	setobjectxyperm LOCALID_SOOTOPOLIS_CAVE_ENTRANCE_WOMAN_2, 33, 19
-	compare VAR_SOOTOPOLIS_STATE, 1
+	compare VAR_SOOTOPOLIS_CITY_STATE, 1
 	call_if_eq SootopolisCity_EventScript_SetStevenWallaceInitialPositions
 	return
 
@@ -277,7 +277,7 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, 9
 	moveobjectoffscreen LOCALID_SOOTOPOLIS_STEVEN
 	setobjectmovementtype LOCALID_SOOTOPOLIS_STEVEN, 10
-	setvar VAR_SOOTOPOLIS_STATE, 2
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 2
 	releaseall
 	end
 

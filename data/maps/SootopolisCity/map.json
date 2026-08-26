@@ -252,7 +252,7 @@
       "x": 25,
       "y": 6,
       "elevation": 3,
-      "var": "VAR_SOOTOPOLIS_STATE",
+      "var": "VAR_SOOTOPOLIS_CITY_STATE",
       "var_value": "1",
       "script": "SootopolisCity_EventScript_LeadPlayerCaveOfOrigin"
     }
