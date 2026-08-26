@@ -532,7 +532,7 @@ EventScript_BattleColosseum_2P_PlayerSpot1:: @ 81A4379
 
 EventScript_BattleColosseum_4P_PlayerSpot0:: @ 81A4383
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
@@ -543,7 +543,7 @@ EventScript_BattleColosseum_4P_PlayerSpot0:: @ 81A4383
 
 EventScript_BattleColosseum_4P_PlayerSpot1:: @ 81A439E
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
@@ -554,7 +554,7 @@ EventScript_BattleColosseum_4P_PlayerSpot1:: @ 81A439E
 
 EventScript_BattleColosseum_4P_PlayerSpot2:: @ 81A43B9
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger
@@ -565,7 +565,7 @@ EventScript_BattleColosseum_4P_PlayerSpot2:: @ 81A43B9
 
 EventScript_BattleColosseum_4P_PlayerSpot3:: @ 81A43D4
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq EventScript_BattleColosseum_4P_CancelSpotTrigger

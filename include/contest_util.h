@@ -2,7 +2,7 @@
 #define GUARD_SCRIPTPOKE80C4_H
 
 void Task_ShowContestEntryMonPic(u8);
-void sub_80C5580(void);
+void CB2_ReturnFromChooseHalfParty(void);
 void SetBattleTowerPlayerParty(void);
 void ReducePlayerPartyToThree(void);
 

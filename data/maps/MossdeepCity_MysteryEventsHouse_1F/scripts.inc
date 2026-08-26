@@ -131,7 +131,7 @@ MossdeepCity_MysteryEventsHouse_EventScript_DeclineEReaderTrainerBattle:: @ 815A
 MossdeepCity_MysteryEventsHouse_EventScript_PrepareEReaderBattle:: @ 815ADF5
 	msgbox MossdeepCity_MysteryEventsHouse_Text_KeepItToA3On3, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
-	special sub_80C5568
+	special ChooseHalfPartyForBattle
 	waitstate
 	return
 

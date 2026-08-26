@@ -49,7 +49,7 @@ gSpecials::
 	def_special SpawnBerryBlenderLinkPlayerSprites
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
-	def_special sub_80C5568
+	def_special ChooseHalfPartyForBattle
 	def_special sub_8083BDC
 	def_special ObjectEventInteractionGetBerryTreeData
 	def_special Berry_FadeAndGoToBerryBagMenu

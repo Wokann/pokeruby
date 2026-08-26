@@ -507,13 +507,13 @@ void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
     SetMonMoveSlot(&gPlayerParty[monIndex], move, slot);
 }
 
-void sub_80C5568(void)
+void ChooseHalfPartyForBattle(void)
 {
-    gMain.savedCallback = sub_80C5580;
-    sub_8121E10();
+    gMain.savedCallback = CB2_ReturnFromChooseHalfParty;
+    InitChooseHalfPartyForBattle();
 }
 
-void sub_80C5580(void)
+void CB2_ReturnFromChooseHalfParty(void)
 {
     u8 var = gSelectedOrderFromParty[0];
 
@@ -533,7 +533,7 @@ void sub_80C5580(void)
 void ChooseBattleTowerPlayerParty(void)
 {
     gMain.savedCallback = SetBattleTowerPlayerParty;
-    sub_8121E34();
+    InitChooseBattleTowerParty();
 }
 
 void SetBattleTowerPlayerParty(void)
