@@ -107,12 +107,12 @@ BattleTower_BattleRoom_EventScript_WarpToLobbyWon:: @ 8160A56
 BattleTower_BattleRoom_EventScript_PauseChallenge:: @ 8160A94
 	setvar VAR_0x8004, 2
 	special SaveBattleTowerProgress
-	message gSaveText_DontTurnOff
+	message gText_SavingDontTurnOff
 	delay 60
 	waitmessage
 	playse SE_SAVE
 	waitse
-	msgbox gSaveText_PlayerSavedTheGame, MSGBOX_DEFAULT
+	msgbox gText_PlayerSavedGame, MSGBOX_DEFAULT
 
 BattleTower_BattleRoom_EventScript_RetireChallenge:: @ 8160AB1
 	fadescreen FADE_TO_BLACK

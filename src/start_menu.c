@@ -68,11 +68,11 @@ EWRAM_DATA static u8 sNumStartMenuActions = 0;
 EWRAM_DATA static u8 sCurrentStartMenuActions[10] = {0};
 
 //Text strings
-extern u8 gSaveText_PlayerSavedTheGame[];
-extern u8 gSaveText_DontTurnOff[];
-extern u8 gSaveText_ThereIsAlreadyAFile[];
-extern u8 gSaveText_ThereIsADifferentFile[];
-extern u8 gSaveText_WouldYouLikeToSave[];
+extern u8 gText_PlayerSavedGame[];
+extern u8 gText_SavingDontTurnOff[];
+extern u8 gText_AlreadySavedFile[];
+extern u8 gText_DifferentSaveFile[];
+extern u8 gText_ConfirmSave[];
 
 static u8 StartMenu_PokedexCallback(void);
 static u8 StartMenu_PokemonCallback(void);
@@ -689,7 +689,7 @@ static u8 SaveDialogCB_DisplayConfirmMessage(void)
 {
     Menu_EraseScreen();
     HandleDrawSaveWindowInfo(0, 0);
-    DisplaySaveMessageWithCallback(gSaveText_WouldYouLikeToSave, SaveDialogCB_DisplayConfirmYesNoMenu);
+    DisplaySaveMessageWithCallback(gText_ConfirmSave, SaveDialogCB_DisplayConfirmYesNoMenu);
     return SAVE_IN_PROGRESS;
 }
 
@@ -734,7 +734,7 @@ static u8 SaveDialogCB_ProcessConfirmYesNoMenu(void)
 static u8 SaveDialogCB_SaveFileExists(void)
 {
     DisplaySaveMessageWithCallback(
-      gDifferentSaveFile == TRUE ? gSaveText_ThereIsADifferentFile : gSaveText_ThereIsAlreadyAFile,
+      gDifferentSaveFile == TRUE ? gText_DifferentSaveFile : gText_AlreadySavedFile,
       SaveDialogCB_DisplayOverwriteYesNoMenu);
     return SAVE_IN_PROGRESS;
 }
@@ -766,7 +766,7 @@ static u8 SaveDialogCB_ProcessOverwriteYesNoMenu(void)
 static u8 SaveDialogCB_DisplaySavingMessage(void)
 {
     //"SAVING... DON'T TURN OFF THE POWER."
-    DisplaySaveMessageWithCallback(gSaveText_DontTurnOff, SaveDialogCB_DoSave);
+    DisplaySaveMessageWithCallback(gText_SavingDontTurnOff, SaveDialogCB_DoSave);
     return SAVE_IN_PROGRESS;
 }
 
@@ -788,7 +788,7 @@ static u8 SaveDialogCB_DoSave(void)
     if (saveStatus == SAVE_STATUS_OK)
     {
         //"(Player) saved the game."
-        DisplaySaveMessageWithCallback(gSaveText_PlayerSavedTheGame, SaveDialogCB_SaveSuccess);
+        DisplaySaveMessageWithCallback(gText_PlayerSavedGame, SaveDialogCB_SaveSuccess);
     }
     else
     {
