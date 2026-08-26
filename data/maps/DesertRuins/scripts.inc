@@ -39,7 +39,7 @@ DesertRuins_EventScript_CaveEntranceMiddle:: @ 815CB56
 	end
 
 DesertRuins_EventScript_BigHoleInWall:: @ 815CB6D
-	msgbox DesertRuins_Text_1A13BE, MSGBOX_DEFAULT
+	msgbox gText_BigHoleInTheWall, MSGBOX_DEFAULT
 	releaseall
 	end
 

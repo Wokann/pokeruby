@@ -116,7 +116,7 @@ SealedChamber_OuterRoom_EventScript_InnerRoomEntranceWall:: @ 815F1B8
 	end
 
 SealedChamber_OuterRoom_EventScript_HoleInWall:: @ 815F1CF
-	msgbox SealedChamber_OuterRoom_Text_HoleInWall, MSGBOX_DEFAULT
+	msgbox gText_BigHoleInTheWall, MSGBOX_DEFAULT
 	releaseall
 	end
 

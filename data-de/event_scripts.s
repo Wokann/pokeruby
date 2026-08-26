@@ -1109,10 +1109,7 @@ SealedChamber_InnerRoom_Text_DoorOpenedFarAway:: @ 81A138B
 	.string "Das hörte sich an, als würde irgendwo\n"
 	.string "eine Tür geöffnet.$"
 
-AncientTomb_Text_1A13BE:: @ 81A13BE
-DesertRuins_Text_1A13BE:: @ 81A13BE
-IslandCave_Text_1A13BE:: @ 81A13BE
-SealedChamber_OuterRoom_Text_HoleInWall:: @ 81A13BE
+gText_BigHoleInTheWall:: @ 81A13BE
 	.string "In der Wand ist ein großes Loch.$"
 
 CableClub_Text_ColosseumUndergoingAdjustments:: @ 81A13DF
