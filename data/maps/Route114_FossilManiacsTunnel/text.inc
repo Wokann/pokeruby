@@ -1,4 +1,4 @@
-Route114_FossilManiacsTunnel_Text_192795:: @ 8192795
+Route114_FossilManiacsTunnel_Text_LookInDesertForFossils:: @ 8192795
 	.string "I'm the FOSSIL MANIAC...\n"
 	.string "I'm a nice guy who loves fossils...\p"
 	.string "Do you want a fossil?\p"
@@ -10,7 +10,7 @@ Route114_FossilManiacsTunnel_Text_192795:: @ 8192795
 	.string "buried in the sand sometimes rise to\l"
 	.string "the surface from sandstorms...$"
 
-Route114_FossilManiacsTunnel_Text_1928DE:: @ 81928DE
+Route114_FossilManiacsTunnel_Text_DevonCorpRevivingFossils:: @ 81928DE
 	.string "You found a FOSSIL, didn't you?\n"
 	.string "That's so nice... It's so dreamy...\p"
 	.string "What are you going to do with that\n"
@@ -21,6 +21,6 @@ Route114_FossilManiacsTunnel_Text_1928DE:: @ 81928DE
 	.string "I love my FOSSILS, so I would never\n"
 	.string "do anything like that...$"
 
-Route114_FossilManiacsTunnel_Text_1929DC:: @ 81929DC
+Route114_FossilManiacsTunnel_Text_FossilsAreWonderful:: @ 81929DC
 	.string "FOSSILS are so... Wonderful...\n"
 	.string "It's so dreamy...$"
