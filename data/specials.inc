@@ -171,14 +171,14 @@ gSpecials::
 	def_special GetFirstFreePokeblockSlot
 	def_special DoBerryBlending
 	def_special PlayRoulette
-	def_special ShouldMoveLilycoveFanClubMember
-	def_special GetNumMovedLilycoveFanClubMembers
-	def_special BufferStreakTrainerText
-	def_special sub_810FA74
-	def_special UpdateMovedLilycoveFanClubMembers
-	def_special sub_810FF48
+	def_special IsFanClubMemberFanOfPlayer
+	def_special GetNumFansOfPlayerInTrainerFanClub
+	def_special BufferFanClubTrainerName
+	def_special TryLoseFansFromPlayTimeAfterLinkBattle
+	def_special TryLoseFansFromPlayTime
+	def_special SetPlayerGotFirstFans
 	def_special UpdateTrainerFanClubGameClear
-	def_special sub_810FF60
+	def_special Script_TryGainNewFanFromCounter
 	def_special ScrSpecial_RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview

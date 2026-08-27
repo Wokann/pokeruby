@@ -947,16 +947,16 @@ bool8 debug_sub_80901E4(void)
 
 bool8 debug_sub_80901F8(void)
 {
-    u8 r0 = sub_810FB9C();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8408[r0] - 8], 14, 7);
+    u8 fanIndex = PlayerGainRandomTrainerFan();
+    Menu_PrintText(gUnknown_Debug_083C4CA8[gFanClubMemberIdsForGainingFans[fanIndex] - 8], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
 }
 
 bool8 debug_sub_8090238(void)
 {
-    u8 r0 = sub_810FC18();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gUnknown_083F8410[r0] - 8], 14, 7);
+    u8 fanIndex = PlayerLoseRandomTrainerFan();
+    Menu_PrintText(gUnknown_Debug_083C4CA8[gFanClubMemberIdsForLosingFans[fanIndex] - 8], 14, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
 }
@@ -974,7 +974,7 @@ bool8 debug_sub_8090278(void)
 
 bool8 debug_sub_809029C(void)
 {
-    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 16, 7);
     gMenuCallback = debug_sub_8090278;
     return FALSE;
@@ -989,28 +989,28 @@ bool8 debug_sub_80902E4(void)
 
 bool8 debug_sub_80902FC(void)
 {
-    sub_810FB10(0);
+    TryGainNewFanFromCounter(0);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090310(void)
 {
-    sub_810FB10(1);
+    TryGainNewFanFromCounter(1);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090324(void)
 {
-    sub_810FB10(2);
+    TryGainNewFanFromCounter(2);
     CloseMenu();
     return TRUE;
 }
 
 bool8 debug_sub_8090338(void)
 {
-    sub_810FB10(3);
+    TryGainNewFanFromCounter(3);
     CloseMenu();
     return TRUE;
 }

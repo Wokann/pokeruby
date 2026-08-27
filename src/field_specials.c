@@ -1941,39 +1941,39 @@ void BufferLottoTicketNumber(void)
     }
 }
 
-const u8 gUnknown_083F8404[] = {2, 1, 2, 1};
-const u8 gUnknown_083F8408[] = {8,  9, 10, 11, 12, 13, 14, 15};
-const u8 gUnknown_083F8410[] = {8, 13, 14, 11, 10, 12, 15,  9};
+const u8 gFanClubCounterIncrements[] = {2, 1, 2, 1};
+const u8 gFanClubMemberIdsForGainingFans[] = {8,  9, 10, 11, 12, 13, 14, 15};
+const u8 gFanClubMemberIdsForLosingFans[] = {8, 13, 14, 11, 10, 12, 15,  9};
 
-bool8 sub_810FF30(void);
-void UpdateMovedLilycoveFanClubMembers(void);
-void sub_810FF48(void);
-void sub_810FD80(void);
-u16 GetNumMovedLilycoveFanClubMembers(void);
-int sub_810FB9C(void);
+bool8 DidPlayerGetFirstFans(void);
+void TryLoseFansFromPlayTime(void);
+void SetPlayerGotFirstFans(void);
+void SetInitialFansOfPlayer(void);
+u16 GetNumFansOfPlayerInTrainerFanClub(void);
+int PlayerGainRandomTrainerFan(void);
 
 void ResetFanClub(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] = 0;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = 0;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = 0;
+    gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = 0;
 }
 
-void sub_810FA74(void)
+void TryLoseFansFromPlayTimeAfterLinkBattle(void)
 {
-    if (sub_810FF30())
+    if (DidPlayerGetFirstFans())
     {
-        UpdateMovedLilycoveFanClubMembers();
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+        TryLoseFansFromPlayTime();
+        gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
     }
 }
 
 void UpdateTrainerFanClubGameClear(void)
 {
-    if (!((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> 7) & 1))
+    if (!((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> 7) & 1))
     {
-        sub_810FF48();
-        sub_810FD80();
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+        SetPlayerGotFirstFans();
+        SetInitialFansOfPlayer();
+        gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
         FlagClear(FLAG_HIDE_FANCLUB_OLD_LADY);
         FlagClear(FLAG_HIDE_FANCLUB_BOY);
         FlagClear(FLAG_HIDE_FANCLUB_LITTLE_BOY);
@@ -1982,137 +1982,137 @@ void UpdateTrainerFanClubGameClear(void)
     }
 }
 
-u8 sub_810FB10(u8 a0)
+u8 TryGainNewFanFromCounter(u8 incrementId)
 {
     if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7f) + gUnknown_083F8404[a0] >= 20)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7f) + gFanClubCounterIncrements[incrementId] >= 20)
         {
-            if (GetNumMovedLilycoveFanClubMembers() < 3)
+            if (GetNumFansOfPlayerInTrainerFanClub() < 3)
             {
-                sub_810FB9C();
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] &= 0xff80;
+                PlayerGainRandomTrainerFan();
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] &= 0xff80;
             }
             else
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] = (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0xff80) | 20;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0xff80) | 20;
             }
         }
         else
         {
-            gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] += gUnknown_083F8404[a0];
+            gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] += gFanClubCounterIncrements[incrementId];
         }
     }
-    return gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] & 0x7f;
+    return gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7f;
 }
 
-int sub_810FB9C(void)
+int PlayerGainRandomTrainerFan(void)
 {
     u8 i;
-    int retval = 0;
+    int fanIndex = 0;
     for (i=0; i<8; i++)
     {
-        if (!((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8408[i]) & 0x01))
+        if (!((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gFanClubMemberIdsForGainingFans[i]) & 0x01))
         {
-            retval = i;
+            fanIndex = i;
             if (Random() & 1)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= (1 << gUnknown_083F8408[i]);
-                return retval;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= (1 << gFanClubMemberIdsForGainingFans[i]);
+                return fanIndex;
             }
         }
     }
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= (1 << gUnknown_083F8408[retval]);
-    return retval;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= (1 << gFanClubMemberIdsForGainingFans[fanIndex]);
+    return fanIndex;
 }
 
-int sub_810FC18(void)
+int PlayerLoseRandomTrainerFan(void)
 {
     u8 i;
-    int retval = 0;
-    if (GetNumMovedLilycoveFanClubMembers() == 1)
+    int fanIndex = 0;
+    if (GetNumFansOfPlayerInTrainerFanClub() == 1)
     {
         return 0;
     }
     for (i=0; i<8; i++)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8410[i]) & 1)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gFanClubMemberIdsForLosingFans[i]) & 1)
         {
-            retval = i;
+            fanIndex = i;
             if (Random() & 1)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] ^= (1 << gUnknown_083F8410[i]);
-                return retval;
+                gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] ^= (1 << gFanClubMemberIdsForLosingFans[i]);
+                return fanIndex;
             }
         }
     }
-    if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gUnknown_083F8410[retval]) & 1)
+    if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gFanClubMemberIdsForLosingFans[fanIndex]) & 1)
     {
-        gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] ^= (1 << gUnknown_083F8410[retval]);
+        gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] ^= (1 << gFanClubMemberIdsForLosingFans[fanIndex]);
     }
-    return retval;
+    return fanIndex;
 }
 
-u16 GetNumMovedLilycoveFanClubMembers(void)
+u16 GetNumFansOfPlayerInTrainerFanClub(void)
 {
     u8 i;
-    u8 retval = 0;
+    u8 numFans = 0;
     for (i = 0; i < 8; i++)
     {
-        if ((gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> (i + 8)) & 1)
+        if ((gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> (i + 8)) & 1)
         {
-            retval++;
+            numFans++;
         }
     }
 
-    return retval;
+    return numFans;
 }
 
-void UpdateMovedLilycoveFanClubMembers(void)
+void TryLoseFansFromPlayTime(void)
 {
     u8 i = 0;
     if (gSaveBlock2.playTimeHours < 999)
     {
         while (1)
         {
-            if (GetNumMovedLilycoveFanClubMembers() < 5)
+            if (GetNumFansOfPlayerInTrainerFanClub() < 5)
             {
-                gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] = gSaveBlock2.playTimeHours;
+                gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = gSaveBlock2.playTimeHours;
                 break;
             }
             else if (i == 8)
             {
                 break;
             }
-            else if (gSaveBlock2.playTimeHours - gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] < 12)
+            else if (gSaveBlock2.playTimeHours - gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] < 12)
             {
                 return;
             }
-            sub_810FC18();
-            gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_2 - VARS_START] += 12;
+            PlayerLoseRandomTrainerFan();
+            gSaveBlock1.vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] += 12;
             i++;
         }
     }
 }
 
-bool8 ShouldMoveLilycoveFanClubMember(void)
+bool8 IsFanClubMemberFanOfPlayer(void)
 {
-    return (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> gSpecialVar_0x8004) & 0x01;
+    return (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> gSpecialVar_0x8004) & 0x01;
 }
 
-void sub_810FD80(void)
+void SetInitialFansOfPlayer(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x2000;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x100;
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x400;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x2000;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x100;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x400;
 }
 
-void sub_810FE1C(void *, u8, u8);
+void BufferFanClubTrainerName_(void *, u8, u8);
 
-void BufferStreakTrainerText(void)
+void BufferFanClubTrainerName(void)
 {
-    u8 a = 0;
-    u8 b = 0;
+    u8 whichLinkTrainer = 0;
+    u8 whichNPCTrainer = 0;
     switch (gSpecialVar_0x8004)
     {
         case 8:
@@ -2120,37 +2120,37 @@ void BufferStreakTrainerText(void)
         case 9:
             break;
         case 10:
-            a = 0;
-            b = 3;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 3;
             break;
         case 11:
-            a = 0;
-            b = 1;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 1;
             break;
         case 12:
-            a = 1;
-            b = 0;
+            whichLinkTrainer = 1;
+            whichNPCTrainer = 0;
             break;
         case 13:
-            a = 0;
-            b = 4;
+            whichLinkTrainer = 0;
+            whichNPCTrainer = 4;
             break;
         case 14:
-            a = 1;
-            b = 5;
+            whichLinkTrainer = 1;
+            whichNPCTrainer = 5;
             break;
         case 15:
             break;
     }
-    sub_810FE1C(gSaveBlock1.linkBattleRecords, a, b);
+    BufferFanClubTrainerName_(gSaveBlock1.linkBattleRecords, whichLinkTrainer, whichNPCTrainer);
 }
 
-void sub_810FE1C(void *linkRecords, u8 a, u8 b)
+void BufferFanClubTrainerName_(void *linkRecords, u8 whichLinkTrainer, u8 whichNPCTrainer)
 {
-    u8 *curRecord = (linkRecords + 16 * a);
-    if (*curRecord == EOS)
+    u8 *record = (linkRecords + 16 * whichLinkTrainer);
+    if (*record == EOS)
     {
-        switch (b)
+        switch (whichNPCTrainer)
         {
             case 0:
                 StringCopy(gStringVar1, gOtherText_Wallace);
@@ -2177,7 +2177,7 @@ void sub_810FE1C(void *linkRecords, u8 a, u8 b)
     }
     else
     {
-        StringCopyN(gStringVar1, curRecord, 7);
+        StringCopyN(gStringVar1, record, 7);
         gStringVar1[7] = EOS;
         if (gStringVar1[0] == 0xfc && gStringVar1[1] == 0x15)
         {
@@ -2186,33 +2186,33 @@ void sub_810FE1C(void *linkRecords, u8 a, u8 b)
     }
 }
 
-void sub_810FEFC(void)
+void UpdateTrainerFansAfterLinkBattle(void)
 {
     if (VarGet(VAR_LILYCOVE_FAN_CLUB_STATE) == 2)
     {
-        sub_810FA74();
+        TryLoseFansFromPlayTimeAfterLinkBattle();
         if (gBattleOutcome == 1)
         {
-            sub_810FB9C();
+            PlayerGainRandomTrainerFan();
         }
         else
         {
-            sub_810FC18();
+            PlayerLoseRandomTrainerFan();
         }
     }
 }
 
-bool8 sub_810FF30(void)
+bool8 DidPlayerGetFirstFans(void)
 {
-    return (gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] >> 7) & 0x01;
+    return (gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] >> 7) & 0x01;
 }
 
-void sub_810FF48(void)
+void SetPlayerGotFirstFans(void)
 {
-    gSaveBlock1.vars[VAR_FANCLUB_UNKNOWN_1 - VARS_START] |= 0x80;
+    gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] |= 0x80;
 }
 
-u8 sub_810FF60(void)
+u8 Script_TryGainNewFanFromCounter(void)
 {
-    return sub_810FB10(gSpecialVar_0x8004);
+    return TryGainNewFanFromCounter(gSpecialVar_0x8004);
 }

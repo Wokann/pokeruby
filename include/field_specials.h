@@ -15,8 +15,8 @@ extern u8 gUnknown_0203925A;
 extern u8 gUnknown_0203925B;
 extern u8 gUnknown_0203925C;
 
-extern const u8 gUnknown_083F8408[];
-extern const u8 gUnknown_083F8410[];
+extern const u8 gFanClubMemberIdsForGainingFans[];
+extern const u8 gFanClubMemberIdsForLosingFans[];
 
 void ResetCyclingRoadChallengeData(void);
 bool32 CountSSTidalStep(u16);
@@ -26,11 +26,11 @@ void ScriptShowElevatorMenu(void);
 void SetShoalItemFlag(u16);
 u8 GetLeadMonIndex(void);
 void ResetFanClub(void);
-u8 sub_810FB10(u8 a0);
-void sub_810FEFC(void);
+u8 TryGainNewFanFromCounter(u8 incrementId);
+void UpdateTrainerFansAfterLinkBattle(void);
 u16 GetSlotMachineId(void);
 void UpdateTrainerFanClubGameClear(void);
-int sub_810FB9C(void);
-int sub_810FC18(void);
+int PlayerGainRandomTrainerFan(void);
+int PlayerLoseRandomTrainerFan(void);
 
 #endif // GUARD_FIELD_SPECIALS_H
