@@ -976,7 +976,7 @@ void EndLotteryCornerComputerEffect(void)
 }
 
 static void sub_810E874(void);
-void DisplayCurrentElevatorFloor(void);
+void ShowDeptStoreElevatorFloorSelect(void);
 void sub_810E984(u8);
 bool8 sub_810EAC8(u8, u8);
 void sub_810EB90(u8, u8);
@@ -1092,11 +1092,11 @@ static void sub_810E874(void)
     {
         Menu_PrintText(gUnknown_083F8380[gUnknown_03000760[i].var0], 1, 2 * i + 1);
     }
-    DisplayCurrentElevatorFloor();
+    ShowDeptStoreElevatorFloorSelect();
     CreateTask(sub_810E984, 8);
 }
 
-void DisplayCurrentElevatorFloor(void)
+void ShowDeptStoreElevatorFloorSelect(void)
 {
     Menu_DrawStdWindowFrame(20, 0, 29, 5);
     MenuPrint_Centered(gOtherText_NowOn, 21, 1, 64);

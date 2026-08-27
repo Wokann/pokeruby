@@ -314,7 +314,7 @@ gSpecials::
 	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special ScriptCheckFreePokemonStorageSpace
 	def_special DoSealedChamberShakingEffect_Long
-	def_special DisplayCurrentElevatorFloor
+	def_special ShowDeptStoreElevatorFloorSelect
 	def_special GetShieldToyTVDecorationInfo
 	def_special IsPokerusInParty
 	def_special SetSootopolisGymCrackedIceMetatiles

@@ -6,7 +6,7 @@ LilycoveCity_DepartmentStoreElevator_EventScript_Attendant:: @ 815A39C
 	faceplayer
 	call_if_unset FLAG_TEMP_2, LilycoveCity_DepartmentStoreElevator_EventScript_SetFloor
 	copyvar VAR_0x8005, VAR_DEPT_STORE_FLOOR
-	special DisplayCurrentElevatorFloor
+	special ShowDeptStoreElevatorFloorSelect
 	message LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike
 	waitmessage
 	multichoice 0, 0, 57, 0
