@@ -321,7 +321,7 @@ gSpecials::
 	def_special ShakeCamera
 	def_special StartGroudonKyogreBattle
 	def_special BattleSetup_StartRayquazaBattle
-	def_special ScrSpecial_StartRegiBattle
+	def_special StartRegiBattle
 	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect_Short
 	def_special FoundBlackGlasses
