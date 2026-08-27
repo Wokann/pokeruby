@@ -3,15 +3,15 @@ Route109_MapScripts:: @ 814F4D2
 
 Route109_EventScript_14F4D3:: @ 814F4D3
 	call EventScript_BackupMrBrineyLocation
-	setobjectsubpriority 2, MAP_ROUTE109, 0
-	setobjectsubpriority 255, MAP_ROUTE109, 0
-	applymovement 2, Route109_Movement_14F67B
+	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
+	setobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109, 0
+	applymovement LOCALID_ROUTE109_BRINEY, Route109_Movement_14F67B
 	waitmovement 0
-	removeobject 2
+	removeobject LOCALID_ROUTE109_BRINEY
 	switch VAR_FACING
-	case 1, Route109_EventScript_14F518
-	case 3, Route109_EventScript_14F538
-	case 4, Route109_EventScript_14F528
+	case DIR_SOUTH, Route109_EventScript_14F518
+	case DIR_WEST, Route109_EventScript_14F538
+	case DIR_EAST, Route109_EventScript_14F528
 	end
 
 Route109_EventScript_14F518:: @ 814F518
@@ -35,29 +35,29 @@ Route109_EventScript_14F538:: @ 814F538
 Route109_EventScript_14F548:: @ 814F548
 	hideobjectat LOCALID_PLAYER, MAP_ROUTE109
 	call Common_EventScript_PlayBrineysBoatMusic
-	applymovement 1, Route109_Movement_14F5BF
+	applymovement LOCALID_ROUTE109_BOAT, Route109_Movement_14F5BF
 	applymovement LOCALID_PLAYER, Route109_Movement_14F5BF
 	waitmovement 0
 	call Common_EventScript_StopBrineysBoatMusic
 	showobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
 	applymovement LOCALID_PLAYER, Route109_Movement_14F670
 	waitmovement 0
-	addobject 4
-	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD
-	setobjectxyperm 2, 12, 8
-	addobject 2
-	setobjectsubpriority 2, MAP_DEWFORD_TOWN, 0
-	applymovement 2, Route109_Movement_14F67D
+	addobject LOCALID_DEWFORD_BOAT
+	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	setobjectxyperm LOCALID_DEWFORD_BRINEY, 12, 8
+	addobject LOCALID_DEWFORD_BRINEY
+	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
+	applymovement LOCALID_DEWFORD_BRINEY, Route109_Movement_14F67D
 	waitmovement 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_MR_BRINEY_BOAT_ROUTE109
-	hideobjectat 1, MAP_ROUTE109
-	msgbox Route109_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
+	hideobjectat LOCALID_ROUTE109_BOAT, MAP_ROUTE109
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109
-	resetobjectsubpriority 2, MAP_DEWFORD_TOWN
-	copyobjectxytoperm 2
+	resetobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
+	copyobjectxytoperm LOCALID_DEWFORD_BRINEY
 	release
 	end
 

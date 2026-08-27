@@ -8,8 +8,10 @@
 #define MULTI_B_PRESSED  127
 
 // Multichoice Ids
+#define MULTI_BRINEY_ON_DEWFORD  0
 #define MULTI_GAME_CORNER_DOLLS 48
 #define MULTI_GAME_CORNER_COINS 49
+#define MULTI_HOWS_FISHING       50
 #define MULTI_GAME_CORNER_TMS   55
 
 // Std String Ids

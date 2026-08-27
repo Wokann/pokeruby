@@ -1425,28 +1425,45 @@
 	goto_if TRUE, \dest
 	.endm
 
-	.macro goto_if_lt dest:req @ LESS THAN
-	goto_if 0, \dest
-	.endm	
-
-	.macro goto_if_eq dest:req @ EQUAL
-	goto_if 1, \dest
+	@ Allows a compare followed by a conditional goto or call to be combined into one statement.
+	@ Both forms remain valid:
+	@ compare VAR_RESULT, TRUE
+	@ goto_if_eq MyScript
+	@ call_if_eq MyScript
+	@ - or -
+	@ goto_if_eq VAR_RESULT, TRUE, MyScript
+	@ call_if_eq VAR_RESULT, TRUE, MyScript
+	.macro trycompare jump:req, condition:req, a:req, b, c
+	.ifnb \c
+		compare \a, \b
+		\jump \condition, \c
+	.else
+		\jump \condition, \a
+	.endif
 	.endm
 
-	.macro goto_if_gt dest:req @ GREATER THAN
-	goto_if 2, \dest
+	.macro goto_if_lt a:req, b, c @ LESS THAN
+	trycompare goto_if, 0, \a, \b, \c
 	.endm
 
-	.macro goto_if_le dest:req @ LESS THAN OR EQUAL
-	goto_if 3, \dest
+	.macro goto_if_eq a:req, b, c @ EQUAL
+	trycompare goto_if, 1, \a, \b, \c
 	.endm
 
-	.macro goto_if_ge dest:req @ GREATER THAN OR EQUAL
-	goto_if 4, \dest
+	.macro goto_if_gt a:req, b, c @ GREATER THAN
+	trycompare goto_if, 2, \a, \b, \c
 	.endm
 
-	.macro goto_if_ne dest:req @ NOT EQUAL
-	goto_if 5, \dest
+	.macro goto_if_le a:req, b, c @ LESS THAN OR EQUAL
+	trycompare goto_if, 3, \a, \b, \c
+	.endm
+
+	.macro goto_if_ge a:req, b, c @ GREATER THAN OR EQUAL
+	trycompare goto_if, 4, \a, \b, \c
+	.endm
+
+	.macro goto_if_ne a:req, b, c @ NOT EQUAL
+	trycompare goto_if, 5, \a, \b, \c
 	.endm
 
 	.macro call_if_unset flag:req, dest:req
@@ -1459,28 +1476,28 @@
 	call_if TRUE, \dest
 	.endm
 
-	.macro call_if_lt dest:req @ LESS THAN
-	call_if 0, \dest
+	.macro call_if_lt a:req, b, c @ LESS THAN
+	trycompare call_if, 0, \a, \b, \c
 	.endm
 
-	.macro call_if_eq dest:req @ EQUAL
-	call_if 1, \dest
+	.macro call_if_eq a:req, b, c @ EQUAL
+	trycompare call_if, 1, \a, \b, \c
 	.endm
 
-	.macro call_if_gt dest:req @ GREATER THAN
-	call_if 2, \dest
+	.macro call_if_gt a:req, b, c @ GREATER THAN
+	trycompare call_if, 2, \a, \b, \c
 	.endm
 
-	.macro call_if_le dest:req @ LESS THAN OR EQUAL
-	call_if 3, \dest
+	.macro call_if_le a:req, b, c @ LESS THAN OR EQUAL
+	trycompare call_if, 3, \a, \b, \c
 	.endm
 
-	.macro call_if_ge dest:req @ GREATER THAN OR EQUAL
-	call_if 4, \dest
+	.macro call_if_ge a:req, b, c @ GREATER THAN OR EQUAL
+	trycompare call_if, 4, \a, \b, \c
 	.endm
 
-	.macro call_if_ne dest:req @ NOT EQUAL
-	call_if 5, \dest
+	.macro call_if_ne a:req, b, c @ NOT EQUAL
+	trycompare call_if, 5, \a, \b, \c
 	.endm
 
 	.macro vgoto_if_eq dest:req

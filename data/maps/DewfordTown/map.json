@@ -36,6 +36,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DEWFORD_BRINEY",
       "graphics_id": "OBJ_EVENT_GFX_OLD_MAN_1",
       "x": 12,
       "y": 9,
@@ -62,6 +63,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_DEWFORD_BOAT",
       "graphics_id": "OBJ_EVENT_GFX_MR_BRINEYS_BOAT",
       "x": 12,
       "y": 8,
@@ -72,7 +74,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD"
+      "flag": "FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BOY_1",
