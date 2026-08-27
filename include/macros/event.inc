@@ -1001,6 +1001,13 @@
 	.4byte \products
 	.endm
 
+	@ Used as the endpoint for a Pokemart item list.
+	.macro pokemartlistend
+	.2byte ITEM_NONE
+	release
+	end
+	.endm
+
 	@ Opens the Pokemart system and treats the list of items as decorations.
 	.macro pokemartdecoration products:req
 	.byte 0x87
