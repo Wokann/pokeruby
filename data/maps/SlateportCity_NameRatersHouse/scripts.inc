@@ -34,7 +34,7 @@ SlateportCity_NameRatersHouse_EventScript_RateMonNickname:: @ 81556C9
 	special IsMonOTIDNotPlayers
 	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
-	specialvar VAR_RESULT, MonOTNameMatchesPlayer
+	specialvar VAR_RESULT, MonOTNameNotPlayer
 	special BufferMonNickname
 	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
