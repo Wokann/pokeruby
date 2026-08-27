@@ -63,7 +63,7 @@ int GameClear(void)
     return 0;
 }
 
-int sp0C8_whiteout_maybe(void)
+bool8 SetCB2WhiteOut(void)
 {
     SetMainCallback2(CB2_WhiteOut);
     return 0;
