@@ -165,7 +165,7 @@ gSpecials::
 	def_special StartWallClock
 	def_special Special_ViewWallClock
 	def_special ChooseStarter
-	def_special ScrSpecial_StartWallyTutorialBattle
+	def_special StartWallyTutorialBattle
 	def_special ChangePokemonNickname
 	def_special SelectMonForNPCTrade
 	def_special GetFirstFreePokeblockSlot

@@ -557,7 +557,7 @@ static void StartTheBattle(void)
 }
 
 //Initiates battle where Wally catches Ralts
-void ScrSpecial_StartWallyTutorialBattle(void)
+void StartWallyTutorialBattle(void)
 {
     CreateMaleMon(&gEnemyParty[0], SPECIES_RALTS, 5);
     LockPlayerFieldControls();
