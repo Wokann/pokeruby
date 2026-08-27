@@ -146,7 +146,7 @@ gSpecials::
 	def_special SaveMuseumContestPainting
 	def_special DoesContestCategoryHaveMuseumPainting
 	def_special CountPlayerMuseumPaintings
-	def_special ShowContestWinner
+	def_special ShowContestPainting
 	def_special MauvilleGymSpecial2
 	def_special MauvilleGymSpecial1
 	def_special ShowFieldMessageStringVar4

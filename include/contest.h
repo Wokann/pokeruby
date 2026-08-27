@@ -300,7 +300,7 @@ void CalculateRound1Points(u8);
 u8 IsSpeciesNotUnown(u16);
 void CalculateFinalScores(void);
 void SortContestants(u8);
-bool8 Contest_SaveWinner(u8);
+bool8 SaveContestWinner(u8);
 u8 GetContestWinnerSaveIdx(u8, u8);
 void Contest_ResetWinners(void);
 s8 Contest_GetMoveExcitement(u16);

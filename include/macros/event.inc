@@ -869,7 +869,7 @@
 	.endm
 
 	@ Draws an image of the winner of the contest. In FireRed, this command is a nop. (The argument is discarded.)
-	.macro showcontestwinner a:req
+	.macro showcontestpainting a:req
 	.byte 0x77
 	.byte \a
 	.endm

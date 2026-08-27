@@ -107,7 +107,7 @@ FallarborTown_ContestLobby_EventScript_Lass:: @ 8153AB2
 FallarborTown_ContestLobby_EventScript_ContestWinner1:: @ 8153ABB
 	lockall
 	fadescreen FADE_TO_BLACK
-	showcontestwinner 2
+	showcontestpainting 2
 	releaseall
 	end
 

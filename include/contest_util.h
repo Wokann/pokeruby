@@ -5,7 +5,7 @@ void SetBattleTowerPlayerParty(void);
 void ReducePlayerPartyToThree(void);
 
 u8 CountPlayerMuseumPaintings(void);
-void ShowContestWinner(void);
+void ShowContestPainting(void);
 void HealPlayerParty(void);
 u8 ScriptGiveMon(u16, u8, u16, u32, u32, u8);
 u8 ScriptGiveEgg(u16);

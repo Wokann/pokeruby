@@ -4056,7 +4056,7 @@ void SelectContestMoveBankTarget(u16 move)
     }
 }
 
-bool8 Contest_SaveWinner(u8 rank)
+bool8 SaveContestWinner(u8 rank)
 {
     s32 i;
     u8 captionId = Random() % 3;

@@ -110,7 +110,7 @@ void DoesContestCategoryHaveMuseumPainting(void)
 
 void SaveMuseumContestPainting(void)
 {
-    Contest_SaveWinner(CONTEST_SAVE_FOR_MUSEUM);
+    SaveContestWinner(CONTEST_SAVE_FOR_MUSEUM);
 }
 
 void ShouldReadyContestArtist(void)
@@ -221,25 +221,25 @@ void GetContestantNamesAtRank(void)
         gSpecialVar_0x8006 = rank + 4;
 }
 
-void ShowContestWinnerCleanup(void)
+void ExitContestPainting(void)
 {
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 // File boundary?
 
-void ShowContestWinner(void)
+void ShowContestPainting(void)
 {
     if(gContestDebugMode)
     {
         sub_80AAF30();
         eCurContestWinnerIsForArtist = TRUE;
         eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
-        Contest_SaveWinner(3);
+        SaveContestWinner(3);
         gContestDebugMode = 0;
     }
     SetMainCallback2(CB2_ContestPainting);
-    gMain.savedCallback = ShowContestWinnerCleanup;
+    gMain.savedCallback = ExitContestPainting;
 }
 
 void SetLinkContestPlayerGfx(void)

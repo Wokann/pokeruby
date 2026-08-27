@@ -959,7 +959,7 @@ void sub_80AAF30(void)
     gContestMonRound1Points[3] = 0x12C;
     gContestMonAppealPointTotals[3] = 0x190;
     gContestMonTotalPoints[3] = 0x190;
-    Contest_SaveWinner(CONTEST_SAVE_FOR_ARTIST);
+    SaveContestWinner(CONTEST_SAVE_FOR_ARTIST);
 }
 
 u8 MatsudaDebugMenu_SetHighScore(void)
@@ -993,7 +993,7 @@ u8 MatsudaDebugMenu_SetArtMuseumItems(void)
     for (i = 3; i > -1; i--)
         gContestFinalStandings[i] = 3 - i;
     for (gSpecialVar_ContestCategory = 0; gSpecialVar_ContestCategory < 5; gSpecialVar_ContestCategory++)
-        Contest_SaveWinner(0xFF);
+        SaveContestWinner(0xFF);
     CloseMenu();
     return 1;
 }

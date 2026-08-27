@@ -1407,13 +1407,13 @@ bool8 ScrCmd_hidemonpic(struct ScriptContext *ctx)
     return TRUE;
 }
 
-bool8 ScrCmd_showcontestwinner(struct ScriptContext *ctx)
+bool8 ScrCmd_showcontestpainting(struct ScriptContext *ctx)
 {
     u8 contestWinnerId = ScriptReadByte(ctx);
 
     if (contestWinnerId)
         SetContestWinnerForPainting(contestWinnerId);
-    ShowContestWinner();
+    ShowContestPainting();
     ScriptContext_Stop();
     return TRUE;
 }
