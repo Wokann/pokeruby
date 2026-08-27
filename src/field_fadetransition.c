@@ -385,7 +385,7 @@ void sub_8080E88(void)
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
 
-void sp13E_warp_to_last_warp(void)
+void DoDiveWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
@@ -404,7 +404,7 @@ void sub_8080EF0(void)
 
 void DoFallWarp(void)
 {
-    sp13E_warp_to_last_warp();
+    DoDiveWarp();
     gFieldCallback = sub_8086748;
 }
 

@@ -740,7 +740,7 @@ bool8 ScrCmd_warpsilent(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     Overworld_SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sp13E_warp_to_last_warp();
+    DoDiveWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }

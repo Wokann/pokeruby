@@ -342,7 +342,7 @@ void Task_HandlePorthole(u8 taskId)
         FlagClear(FLAG_DONT_TRANSITION_MUSIC);
         FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
         copy_saved_warp2_bank_and_enter_x_to_warp1(0);
-        sp13E_warp_to_last_warp();
+        DoDiveWarp();
         DestroyTask(taskId);
         break;
     }

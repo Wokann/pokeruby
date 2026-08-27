@@ -896,7 +896,7 @@ bool8 dive_warp(struct MapPosition *position, u16 metatileBehavior)
         if (SetDiveWarpEmerge(position->x - 7, position->y - 7))
         {
             StoreInitialPlayerAvatarState();
-            sp13E_warp_to_last_warp();
+            DoDiveWarp();
             PlaySE(SE_M_DIVE);
             return TRUE;
         }
@@ -906,7 +906,7 @@ bool8 dive_warp(struct MapPosition *position, u16 metatileBehavior)
         if (SetDiveWarpDive(position->x - 7, position->y - 7))
         {
             StoreInitialPlayerAvatarState();
-            sp13E_warp_to_last_warp();
+            DoDiveWarp();
             PlaySE(SE_M_DIVE);
             return TRUE;
         }
