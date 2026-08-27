@@ -596,7 +596,7 @@ void ScrSpecial_StartRayquazaBattle(void)
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
 }
 
-void ScrSpecial_StartGroudonKyogreBattle(void)
+void StartGroudonKyogreBattle(void)
 {
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;

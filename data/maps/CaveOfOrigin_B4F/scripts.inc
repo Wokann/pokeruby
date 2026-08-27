@@ -60,7 +60,7 @@ CaveOfOrigin_B4F_EventScript_15DDD7:: @ 815DDD7
 	delay 40
 	waitmoncry
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartGroudonKyogreBattle
+	special StartGroudonKyogreBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
