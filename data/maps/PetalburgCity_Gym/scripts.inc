@@ -983,12 +983,12 @@ PetalburgCity_Gym_EventScript_SetOHKORoomDoorMetatiles:: @ 815516F
 	return
 
 PetalburgCity_Gym_EventScript_SlideOpenRoomDoors:: @ 8155182
-	special PetalburgGymSlideOpenDoors
+	special PetalburgGymSlideOpenRoomDoors
 	waitstate
 	return
 
 PetalburgCity_Gym_EventScript_UnlockRoomDoors:: @ 8155187
-	special PetalburgGymOpenDoorsInstantly
+	special PetalburgGymUnlockRoomDoors
 	return
 
 PetalburgCity_Gym_EventScript_GymGuide:: @ 815518B
