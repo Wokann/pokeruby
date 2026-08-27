@@ -1,5 +1,6 @@
 #include "constants/global.h"
 #include "constants/decorations.h"
+#include "constants/easy_chat.h"
 #include "constants/field_effects.h"
 #include "constants/flags.h"
 #include "constants/game_stat.h"
@@ -1558,8 +1559,7 @@ BattleTower_Lobby_EventScript_1AE30F:: @ 81AE30F
 	.include "data/field_move_scripts.inc"
 	.include "data/item_ball_scripts.inc"
 
-	.include "data/scripts/mystery_event_club.inc"
-	.include "data/text/mystery_event_club.inc"
+	.include "data/scripts/profile_man.inc"
 
 	.include "data/scripts/day_care.inc"
 	.include "data/text/day_care.inc"

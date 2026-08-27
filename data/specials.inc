@@ -104,7 +104,7 @@ gSpecials::
 	def_special SaveGame
 	def_special DoWateringBerryTreeAnim
 	def_special ShowEasyChatScreen
-	def_special sub_80EB7C4
+	def_special ShowEasyChatProfile
 	def_special ScrSpecial_GetCurrentMauvilleMan
 	def_special ScrSpecial_HasBardSongBeenChanged
 	def_special ScrSpecial_SaveBardSongLyrics
