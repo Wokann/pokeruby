@@ -8,7 +8,7 @@ FortreeCity_Gym_OnTransition:: @ 8157EDE
 	end
 
 FortreeCity_Gym_OnWarp:: @ 8157EE2
-	map_script_2 VAR_TEMP_0, 16384, FortreeCity_Gym_EventScript_InitRotatingGates
+	map_script_2 VAR_TEMP_0, VAR_TEMP_0, FortreeCity_Gym_EventScript_InitRotatingGates
 	.2byte 0
 
 FortreeCity_Gym_EventScript_InitRotatingGates:: @ 8157EEC
@@ -35,7 +35,7 @@ FortreeCity_Gym_EventScript_WinonaDefeated:: @ 8157F15
 	end
 
 FortreeCity_Gym_EventScript_GiveAerialAce2:: @ 8157F3E
-	giveitem ITEM_TM40_AERIAL_ACE
+	giveitem ITEM_TM_AERIAL_ACE
 	compare VAR_RESULT, 0
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox FortreeCity_Gym_Text_ExplainAerialAce, MSGBOX_DEFAULT

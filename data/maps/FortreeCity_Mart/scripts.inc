@@ -6,13 +6,13 @@ FortreeCity_Mart_EventScript_Clerk:: @ 8158067
 	faceplayer
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemart FortreeCity_Mart_Items
+	pokemart FortreeCity_Mart_Pokemart
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-FortreeCity_Mart_Items:: @ 8158080
+FortreeCity_Mart_Pokemart:: @ 8158080
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_ULTRA_BALL
 	.2byte ITEM_SUPER_POTION

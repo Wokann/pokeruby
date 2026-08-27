@@ -8,7 +8,7 @@ FortreeCity_OnTransition:: @ 814C94E
 	end
 
 FortreeCity_OnResume:: @ 814C952
-	setstepcallback 2
+	setstepcallback STEP_CB_FORTREE_BRIDGE
 	end
 
 FortreeCity_EventScript_Man:: @ 814C955
@@ -56,7 +56,7 @@ FortreeCity_EventScript_Kecleon:: @ 814C9B3
 	lock
 	faceplayer
 	checkitem ITEM_DEVON_SCOPE, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq FortreeCity_EventScript_AskUseDevonScope
 	msgbox FortreeCity_Text_SomethingUnseeable, MSGBOX_DEFAULT
 	release
@@ -75,7 +75,7 @@ FortreeCity_EventScript_UseDevonScope:: @ 814C9E4
 	applymovement VAR_LAST_TALKED, Movement_KecleonAppears
 	waitmovement 0
 	waitse
-	playmoncry SPECIES_KECLEON, 2
+	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
 	applymovement VAR_LAST_TALKED, FortreeCity_Movement_KecleonFlee

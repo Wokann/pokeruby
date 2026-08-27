@@ -7,7 +7,7 @@ FortreeCity_PokemonCenter_1F_OnTransition:: @ 8158017
 	end
 
 FortreeCity_PokemonCenter_1F_EventScript_Nurse:: @ 815801B
-	setvar VAR_0x800B, 1
+	setvar VAR_0x800B, LOCALID_FORTREE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
