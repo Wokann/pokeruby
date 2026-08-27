@@ -21,7 +21,7 @@ BattleTower_BattleRoom_EventScript_1608FA:: @ 81608FA
 	waitmessage
 	closemessage
 	special HealPlayerParty
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, SPECIAL_BATTLE_TOWER
 	setvar VAR_0x8005, 0
 	special DoSpecialTrainerBattle
 	waitstate

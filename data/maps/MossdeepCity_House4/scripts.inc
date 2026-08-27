@@ -18,7 +18,7 @@ MossdeepCity_House4_EventScript_NinjaBoy:: @ 815AB50
 	lock
 	faceplayer
 	special CheckPlayerHasSecretBase
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq MossdeepCity_House4_EventScript_NoSecretBase
 	special GetSecretBaseNearbyMapName
 	msgbox MossdeepCity_House4_Text_YouMadeSecretBaseNearX, MSGBOX_DEFAULT
@@ -34,7 +34,7 @@ MossdeepCity_House4_EventScript_Delcatty:: @ 815AB77
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_SKITTY, 0
+	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
 	msgbox MossdeepCity_House4_Text_Delcatty, MSGBOX_DEFAULT
 	waitmoncry
 	release

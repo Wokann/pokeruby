@@ -3,6 +3,7 @@
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
+#include "constants/battle_setup.h"
 #include "constants/easy_chat.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
@@ -1078,7 +1079,7 @@ void DoSpecialTrainerBattle(void)
 
     switch (gSpecialVar_0x8004)
     {
-    case 0: // battle tower battle
+    case SPECIAL_BATTLE_TOWER: // battle tower battle
         gBattleTypeFlags = (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_TRAINER);
         gTrainerBattleOpponent = 0;
 
@@ -1089,7 +1090,7 @@ void DoSpecialTrainerBattle(void)
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
         break;
-    case 1: // secret base battle
+    case SPECIAL_BATTLE_SECRET_BASE: // secret base battle
         for (i = 0; i < PARTY_SIZE; i++)
         {
             heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
@@ -1101,7 +1102,7 @@ void DoSpecialTrainerBattle(void)
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
         break;
-    case 2: // e-reader trainer battle
+    case SPECIAL_BATTLE_EREADER: // e-reader trainer battle
         ZeroEnemyPartyMons();
 
         for (i = 0; i < 3; i++)
@@ -1444,7 +1445,7 @@ void AwardBattleTowerRibbons(void)
     else
         ribbonType = MON_DATA_WINNING_RIBBON;
 
-    gSpecialVar_Result = 0;
+    gSpecialVar_Result = FALSE;
 
     if (GetCurrentBattleTowerWinStreak(battleTowerLevelType) > 55)
     {
@@ -1541,7 +1542,7 @@ void ValidateEReaderTrainer(void)
 
     if (checksum == 0)
     {
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
         return;
     }
 
@@ -1552,7 +1553,7 @@ void ValidateEReaderTrainer(void)
     if (gSaveBlock2.battleTower.ereaderTrainer.checksum != checksum)
     {
         ClearEReaderTrainer(&gSaveBlock2.battleTower.ereaderTrainer);
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
     }
 }
 

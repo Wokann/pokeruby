@@ -13,27 +13,27 @@ MossdeepCity_House2_EventScript_Wingull:: @ 815A87B
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_WINGULL, 0
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox MossdeepCity_House2_Text_Wingull, MSGBOX_DEFAULT
 	waitmoncry
 	closemessage
 	setflag FLAG_WINGULL_DELIVERED_MAIL
 	clearflag FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL
-	compare VAR_FACING, 2
+	compare VAR_FACING, DIR_NORTH
 	call_if_eq MossdeepCity_House2_EventScript_WingullExitNorth
-	compare VAR_FACING, 3
+	compare VAR_FACING, DIR_WEST
 	call_if_eq MossdeepCity_House2_EventScript_WingullExitWest
-	removeobject 3
+	removeobject LOCALID_MOSSDEEP_HOUSE_WINGULL
 	release
 	end
 
 MossdeepCity_House2_EventScript_WingullExitNorth:: @ 815A8AE
-	applymovement 3, MossdeepCity_House2_Movement_WingullExitNorth
+	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitNorth
 	waitmovement 0
 	return
 
 MossdeepCity_House2_EventScript_WingullExitWest:: @ 815A8B9
-	applymovement 3, MossdeepCity_House2_Movement_WingullExitEast
+	applymovement LOCALID_MOSSDEEP_HOUSE_WINGULL, MossdeepCity_House2_Movement_WingullExitEast
 	waitmovement 0
 	return
 

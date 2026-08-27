@@ -102,8 +102,8 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MossdeepCity_EventScript_1B1745",
-      "flag": "FLAG_ITEM_MOSSDEEP_1"
+      "script": "MossdeepCity_EventScript_ItemNetBall",
+      "flag": "FLAG_ITEM_MOSSDEEP_CITY_NET_BALL"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_1",
@@ -213,7 +213,7 @@
       "x": 36,
       "y": 24,
       "elevation": 0,
-      "dest_map": "MAP_MOSSDEEP_CITY_GAME_CORNER_1F",
+      "dest_map": "MAP_MOSSDEEP_CITY_MYSTERY_EVENTS_HOUSE_1F",
       "dest_warp_id": "0"
     }
   ],
