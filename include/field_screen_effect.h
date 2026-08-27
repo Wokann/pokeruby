@@ -2,6 +2,9 @@
 #define GUARD_FIELD_SCREEN_EFFECT_H
 
 void sub_8081594(u8);
+extern const u16 gOrbEffectBackgroundLayerFlags[];
+void DoOrbEffect(void);
+void FadeOutOrbEffect(void);
 void WriteFlashScanlineEffectBuffer(u8 val);
 
 #endif // GUARD_FIELD_SCREEN_EFFECT_H

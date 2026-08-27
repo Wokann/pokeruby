@@ -225,7 +225,7 @@ vu16 *const gBGVOffsetRegs[] =
 
 const u16 gUnknown_081E29D8[] = { 0x100, 0x200, 0x400, 0x800 };
 const u16 gUnknown_081E29E0[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gUnknown_081E29E8[] = { 1, 2, 4, 8 };
+const u16 gOrbEffectBackgroundLayerFlags[] = { 1, 2, 4, 8 };
 
 static const u8 sFont0LatinGlyphs[] = INCBIN_U8("graphics/fonts/font0_lat.1bpp");
 static const u8 sFont1LatinGlyphs[] = INCBIN_U8("graphics/fonts/font1_lat.1bpp");
