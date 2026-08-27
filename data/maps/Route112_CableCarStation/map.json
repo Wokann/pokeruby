@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_ROUTE112_CABLE_CAR_ATTENDANT",
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
       "x": 6,
       "y": 6,
@@ -21,7 +22,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route112_CableCarStation_EventScript_15C08C",
+      "script": "Route112_CableCarStation_EventScript_Attendant",
       "flag": "0"
     },
     {
