@@ -3122,14 +3122,14 @@
       "blockdata_filepath": "data/layouts/ScorchedSlab/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_082FF894",
-      "name": "UnknownMap_082FF894_Layout",
+      "id": "LAYOUT_CAVE_OF_ORIGIN_B4F_GROUDON",
+      "name": "CaveOfOrigin_B4F_Groudon_Layout",
       "width": 19,
       "height": 19,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_082FF894/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_082FF894/map.bin"
+      "border_filepath": "data/layouts/CaveOfOrigin_B4F_Groudon/border.bin",
+      "blockdata_filepath": "data/layouts/CaveOfOrigin_B4F_Groudon/map.bin"
     },
     {
       "id": "LAYOUT_RUSTBORO_CITY_FLAT1_1F",

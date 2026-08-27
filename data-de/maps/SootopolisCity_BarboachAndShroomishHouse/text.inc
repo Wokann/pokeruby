@@ -18,7 +18,7 @@ SootopolisCity_BarboachAndShroomishHouse_Text_GoshMightBeBiggerThanBarboach:: @ 
 	.string "Danke, dass du es mir gezeigt hast.\n"
 	.string "Hier, ein kleines Dankeschön!$"
 
-SootopolisCity_BarboachAndShroomishHouse_Text_ReceivedPotion1: @ 81902AE
+SootopolisCity_BarboachAndShroomishHouse_Text_UnusedReceivedPotion:: @ 81902AE
 	.string "{PLAYER} erhält einen TRANK.$"
 
 SootopolisCity_BarboachAndShroomishHouse_Text_BagCrammedFull1:: @ 81902C4

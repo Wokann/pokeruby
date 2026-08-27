@@ -18,7 +18,7 @@ SootopolisCity_BarboachAndShroomishHouse_Text_GoshMightBeBiggerThanBarboach:: @ 
 	.string "Thanks for showing me.\n"
 	.string "This is my thanks!$"
 
-SootopolisCity_BarboachAndShroomishHouse_Text_ReceivedPotion1: @ 81902AE
+SootopolisCity_BarboachAndShroomishHouse_Text_UnusedReceivedPotion:: @ 81902AE
 	.string "{PLAYER} received a POTION.$"
 
 SootopolisCity_BarboachAndShroomishHouse_Text_BagCrammedFull1:: @ 81902C4
