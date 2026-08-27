@@ -88,7 +88,7 @@ PlayersHouse_1F_Text_TheresAMovieOnTV: @ 817288C
 	.string "Klaviertasten.\p"
 	.string "Aber es wird Zeit aufzubrechen!$"
 
-UnknownString_81728E3: @ 81728E3
+PlayersHouse_1F_Text_RunningShoesManual: @ 81728E3
 	.string "Das ist die Bedienungsanleitung für\n"
 	.string "die TURBOTRETER.\p"
 	.string "“Halte den B-Knopf gedrückt, um\n"
@@ -155,5 +155,5 @@ PlayersHouse_1F_Text_LatiasEmergencyNewsFlash: @ 8172D30
 	.string "Und damit schalten wir wieder um in\n"
 	.string "unser laufendes Programm.$"
 
-UnknownString_8172E0F: @ 8172E0F
+PlayersHouse_1F_Text_Machoke3: @ 8172E0F
 	.string "Gau gau!$"

@@ -87,5 +87,5 @@ RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:: @ 81739CC
 	.string "Suche treffe, können wir ja einen\l"
 	.string "POKéMON-Kampf austragen.$"
 
-UnknownString_8173A76: @ 8173A76
+RivalsHouse_2F_Text_PictureBookshelf: @ 8173A76
 	.string "Dort stehen POKéMON-Bücher.$"

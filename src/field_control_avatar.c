@@ -49,8 +49,9 @@ extern u8 gSelectedObjectEvent;
 
 //scripts
 extern u8 SecretBase_EventScript_CheckEntrance[];
-extern u8 gUnknown_0815281E[];
-extern u8 gUnknown_08152C39[];
+extern u8 gUnknown_081A2C51[];
+extern u8 LittlerootTown_BrendansHouse_2F_EventScript_PC[];
+extern u8 LittlerootTown_MaysHouse_2F_EventScript_PC[];
 extern u8 SecretBase_EventScript_PC[];
 extern u8 SecretBase_EventScript_RecordMixingPC[];
 extern u8 EventScript_PC[];
@@ -62,7 +63,7 @@ extern u8 gUnknown_081A4363[];
 extern u8 EventScript_PokeBlockFeeder[];
 extern u8 Route110_TrickHousePuzzle_EventScript_Door[];
 extern u8 EventScript_RegionMap[];
-extern u8 S_RunningShoesManual[];
+extern u8 PlayersHouse_1F_EventScript_RunningShoesManual[];
 extern u8 EventScript_PictureBookshelf[];
 extern u8 EventScript_Bookshelf[];
 extern u8 EventScript_PokemonCenterBookshelf[];
@@ -317,8 +318,8 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
         return FALSE;
 
     // Play computer noise for PC-related scripts.
-    if (script != gUnknown_0815281E
-     && script != gUnknown_08152C39
+    if (script != LittlerootTown_BrendansHouse_2F_EventScript_PC
+     && script != LittlerootTown_MaysHouse_2F_EventScript_PC
      && script != SecretBase_EventScript_PC
      && script != SecretBase_EventScript_RecordMixingPC
      && script != EventScript_PC)
@@ -469,7 +470,7 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
     if (MetatileBehavior_IsRegionMap(metatileBehavior) == TRUE)
         return EventScript_RegionMap;
     if (MetatileBehavior_IsRunningShoesManual(metatileBehavior) == TRUE)
-        return S_RunningShoesManual;
+        return PlayersHouse_1F_EventScript_RunningShoesManual;
     if (MetatileBehavior_IsPictureBookShelf(metatileBehavior) == TRUE)
         return EventScript_PictureBookshelf;
     if (MetatileBehavior_IsBookShelf(metatileBehavior) == TRUE)

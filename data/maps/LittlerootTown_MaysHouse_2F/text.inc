@@ -82,5 +82,5 @@ RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:: @ 81739CC
 	.string "catching POKéMON, I can pitch you a\l"
 	.string "battle if you'd like.$"
 
-UnknownString_8173A76: @ 8173A76
+RivalsHouse_2F_Text_PictureBookshelf: @ 8173A76
 	.string "It's lined with POKéMON picture books.$"

@@ -81,7 +81,7 @@ PlayersHouse_1F_Text_TheresAMovieOnTV: @ 817288C
 	.string "keyboard.\p"
 	.string "Better get going!$"
 
-UnknownString_81728E3: @ 81728E3
+PlayersHouse_1F_Text_RunningShoesManual: @ 81728E3
 	.string "It's the instruction booklet for the\n"
 	.string "RUNNING SHOES.\p"
 	.string "“Press the B Button to run while\n"
@@ -138,5 +138,5 @@ PlayersHouse_1F_Text_LatiasEmergencyNewsFlash: @ 8172D30
 	.string "We now return you to your regular\n"
 	.string "movie presentation.$"
 
-UnknownString_8172E0F: @ 8172E0F
+PlayersHouse_1F_Text_Machoke3: @ 8172E0F
 	.string "Gau gau!$"

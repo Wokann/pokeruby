@@ -24,9 +24,9 @@ EverGrandeCity_HallOfFame_EventScript_ShowHM08:: @ 819FC5E
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ReadyReceiveSSTicketEvent:: @ 819FC62
-	setvar VAR_LITTLEROOT_HOUSES_STATE, 3
-	setvar VAR_LITTLEROOT_HOUSES_STATE_2, 3
-	clearflag FLAG_HIDE_NORMAN_LITTLEROOT
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 3
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 3
+	clearflag FLAG_HIDE_PLAYERS_HOUSE_DAD
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ReadyLatiTVEvent:: @ 819FC70
