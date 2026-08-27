@@ -4085,7 +4085,7 @@ u16 GetHoennPokedexCount(u8 caseID)
     return count;
 }
 
-bool8 CompletedHoennPokedex(void)
+bool8 HasAllHoennMons(void)
 {
     u16 i;
 

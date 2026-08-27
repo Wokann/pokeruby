@@ -25,7 +25,7 @@ s8 GetSetPokedexFlag(u16, u8);
 
 u16 GetNationalPokedexCount(u8);
 u16 GetHoennPokedexCount(u8);
-bool8 CompletedHoennPokedex(void);
+bool8 HasAllHoennMons(void);
 bool16 CompletedNationalPokedex(void);
 
 extern bool8 gUnusedPokedexU8;
