@@ -1164,7 +1164,7 @@ void sub_80E9368(u8 a)
     case 5:
     case 7:
     case 8:
-    case 10:
+    case EASY_CHAT_TYPE_GABBY_AND_TY:
     case 11:
     case 12:
         r4 = gOtherText_Interview;

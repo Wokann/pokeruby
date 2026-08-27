@@ -1,4 +1,4 @@
-Route111_Text_1A3520:: @ 81A3520
+Route111_Text_MakingRoomUseTMToMakeYourOwn:: @ 81A3520
 	.string "What's that?\n"
 	.string "What am I doing?\p"
 	.string "I'm thinking about making my own room\n"
@@ -6,7 +6,7 @@ Route111_Text_1A3520:: @ 81A3520
 	.string "I know! I'll give you this TM.\n"
 	.string "Will you use it to make your own room?$"
 
-Route111_Text_1A35C5:: @ 81A35C5
+Route111_Text_ExplainSecretPower:: @ 81A35C5
 	.string "Find a big tree that looks like it might\n"
 	.string "drop some vines.\p"
 	.string "Use SECRET POWER in front of the tree.\n"
@@ -24,11 +24,11 @@ Route111_Text_1A35C5:: @ 81A35C5
 	.string "I'm going to look for other places, too.\n"
 	.string "Okay, bye!$"
 
-Route111_Text_1A37B5:: @ 81A37B5
+Route111_Text_DontWantThis:: @ 81A37B5
 	.string "Oh, you don't want this?\n"
 	.string "If you change your mind, tell me, okay?$"
 
-Route111_Text_1A37F6:: @ 81A37F6
+Route111_Text_DontHaveAnyRoom:: @ 81A37F6
 	.string "Oh, you don't have any room for this.\p"
 	.string "I'll hold on to it, so come back for it\n"
 	.string "another time, okay?$"

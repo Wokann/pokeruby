@@ -246,7 +246,7 @@ void ShowEasyChatScreen(void)
     case 9:
         r1 = NULL;
         break;
-    case 10:
+    case EASY_CHAT_TYPE_GABBY_AND_TY:
         r1 = &gSaveBlock1.gabbyAndTyData.quote;
         *r1 = 0xFFFF;
         r4 = 1;
@@ -640,7 +640,7 @@ void sub_80E69F8(void)
     case 5:
     case 7:
     case 8:
-    case 10:
+    case EASY_CHAT_TYPE_GABBY_AND_TY:
     case 11:
     case 12:
         sub_80E9368(gEasyChatStruct->unk8);

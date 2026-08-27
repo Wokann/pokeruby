@@ -18,7 +18,7 @@ Route104_Text_TrainersOftenMakeMonHoldBerries:: @ 81C5665
 	.string "It's up to you whether to grow BERRIES\n"
 	.string "or use them.$"
 
-Route111_Text_1C56F0:: @ 81C56F0
+Route111_Text_WateredPlantsEveryDayTakeBerry:: @ 81C56F0
 	.string "I watered my plants lots and lots!\n"
 	.string "A whole bunch of flowers bloomed!\p"
 	.string "And then a whole bunch of BERRIES\n"
@@ -26,12 +26,12 @@ Route111_Text_1C56F0:: @ 81C56F0
 	.string "Here you go!\n"
 	.string "You can have this!$"
 
-Route111_Text_1C5781:: @ 81C5781
+Route111_Text_GoingToTryToMakeDifferentColorBerries:: @ 81C5781
 	.string "I'm going to try really hard and make\n"
 	.string "some RED {POKEBLOCK}S!\p"
 	.string "I hope you try hard, too!$"
 
-Route111_Text_1C57D2:: @ 81C57D2
+Route111_Text_WhatColorBerriesToLookForToday:: @ 81C57D2
 	.string "I wonder what color BERRIES I'll look\n"
 	.string "for today?$"
 

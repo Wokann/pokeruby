@@ -230,22 +230,3 @@ Route110_Text_ThereIsNoRecord:: @ 816F57C
 	.string "DAS BESTE ERGEBNIS...\p"
 	.string "Niemand scheint sich bis jetzt der He-\n"
 	.string "rausforderung gestellt zu haben...$"
-
-UnknownString_816F5D7: @ 816F5D7
-	.string "Ich gieße die Pflanzen jeden Tag.\n"
-	.string "Dann bekommen sie viele Blüten.\p"
-	.string "Und daraus werden dann viele BEEREN.\p"
-	.string "Hier, die ist für dich.\n"
-	.string "Du kannst sie haben.$"
-
-UnknownString_816F657: @ 816F657
-	.string "Ich versuche {POKEBLOCK} ROT zu machen!\n"
-	.string "Ich hoffe, das versuchst du auch!$"
-
-UnknownString_816F68A: @ 816F68A
-	.string "Deine BEEREN-TASCHE ist voll.\p"
-	.string "Ich gebe sie dir ein anderes Mal.$"
-
-UnknownString_816F6CF: @ 816F6CF
-	.string "Ich suche nach roten BEEREN, um\n"
-	.string "{POKEBLOCK} ROT herzustellen.$"

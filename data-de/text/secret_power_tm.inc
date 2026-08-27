@@ -1,4 +1,4 @@
-Route111_Text_1A3520:: @ 81A3520
+Route111_Text_MakingRoomUseTMToMakeYourOwn:: @ 81A3520
 	.string "Was das ist?\n"
 	.string "Was ich hier mache?\p"
 	.string "Ich überlege, ob ich mir hier mein\n"
@@ -7,7 +7,7 @@ Route111_Text_1A3520:: @ 81A3520
 	.string "Genau! Ich gebe dir diese TM. Richte\n"
 	.string "dir damit auch dein eigenes Reich ein!$"
 
-Route111_Text_1A35C5:: @ 81A35C5
+Route111_Text_ExplainSecretPower:: @ 81A35C5
 	.string "Suche dir einen Baum, der aussieht, als\n"
 	.string "ob er einige Äste verlieren würde.\p"
 	.string "Setze davor GEHEIMPOWER ein. Einige\n"
@@ -26,11 +26,11 @@ Route111_Text_1A35C5:: @ 81A35C5
 	.string "Ich schaue mich jetzt nach weiteren\n"
 	.string "Orten um. Tschüss!$"
 
-Route111_Text_1A37B5:: @ 81A37B5
+Route111_Text_DontWantThis:: @ 81A37B5
 	.string "Oh, das willst du nicht haben? Wenn du\n"
 	.string "deine Meinung änderst, sag Bescheid.$"
 
-Route111_Text_1A37F6:: @ 81A37F6
+Route111_Text_DontHaveAnyRoom:: @ 81A37F6
 	.string "Oh, dafür hast du keinen Platz mehr.\p"
 	.string "Ich verwahre es für dich. Hol es dir\n"
 	.string "später ab, einverstanden?$"
