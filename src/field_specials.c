@@ -387,7 +387,7 @@ const struct Coords8 sMauvilleGymSwitchCoords[3] = {
     {11, 22}
 };
 
-void MauvilleGymSpecial1(void)
+void MauvilleGymPressSwitch(void)
 {
     u8 i;
     for (i = 0; i < ARRAY_COUNT(sMauvilleGymSwitchCoords); i++)
@@ -403,7 +403,7 @@ void MauvilleGymSpecial1(void)
     }
 }
 
-void MauvilleGymSpecial2(void)
+void MauvilleGymSetDefaultBarriers(void)
 {
     int x, y;
     for (y = 12; y < 24; y++)
@@ -499,7 +499,7 @@ void MauvilleGymSpecial2(void)
     }
 }
 
-void MauvilleGymSpecial3(void)
+void MauvilleGymDeactivatePuzzle(void)
 {
     int i, x, y;
     const struct Coords8 *switchCoords = sMauvilleGymSwitchCoords;

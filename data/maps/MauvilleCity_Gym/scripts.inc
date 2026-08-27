@@ -45,24 +45,24 @@ MauvilleCity_Gym_EventScript_SetAltBarriers:: @ 815649B
 
 MauvilleCity_Gym_EventScript_Switch1Pressed:: @ 815657D
 	setvar VAR_0x8004, 0
-	special MauvilleGymSpecial1
+	special MauvilleGymPressSwitch
 	goto MauvilleCity_Gym_EventScript_UpdateBarriers
 	end
 
 MauvilleCity_Gym_EventScript_Switch2Pressed:: @ 815658B
 	setvar VAR_0x8004, 1
-	special MauvilleGymSpecial1
+	special MauvilleGymPressSwitch
 	goto MauvilleCity_Gym_EventScript_UpdateBarriers
 	end
 
 MauvilleCity_Gym_EventScript_Switch3Pressed:: @ 8156599
 	setvar VAR_0x8004, 2
-	special MauvilleGymSpecial1
+	special MauvilleGymPressSwitch
 	goto MauvilleCity_Gym_EventScript_UpdateBarriers
 	end
 
 MauvilleCity_Gym_EventScript_DeactivatePuzzle:: @ 81565A7
-	special MauvilleGymSpecial3
+	special MauvilleGymDeactivatePuzzle
 	end
 
 MauvilleCity_Gym_EventScript_Wattson:: @ 81565AB
@@ -86,7 +86,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:: @ 81565DB
 	call_if_eq Common_EventScript_ReadyPetalburgGymForBattle
 	setvar VAR_0x8008, 3
 	call Common_EventScript_SetGymTrainers
-	special MauvilleGymSpecial3
+	special MauvilleGymDeactivatePuzzle
 	special DrawWholeMapView
 	playse SE_UNLOCK
 	goto MauvilleCity_Gym_EventScript_GiveShockWave
@@ -137,8 +137,8 @@ MauvilleCity_Gym_EventScript_Switch3:: @ 8156695
 	end
 
 MauvilleCity_Gym_EventScript_PressFloorSwitch:: @ 81566BA
-	special MauvilleGymSpecial2
-	special MauvilleGymSpecial1
+	special MauvilleGymSetDefaultBarriers
+	special MauvilleGymPressSwitch
 	special DrawWholeMapView
 	playse SE_UNLOCK
 	goto_if_set FLAG_MAUVILLE_GYM_BARRIERS_STATE, MauvilleCity_Gym_EventScript_ClearBarriersAltState

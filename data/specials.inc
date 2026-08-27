@@ -147,12 +147,12 @@ gSpecials::
 	def_special DoesContestCategoryHaveMuseumPainting
 	def_special CountPlayerMuseumPaintings
 	def_special ShowContestPainting
-	def_special MauvilleGymSpecial2
-	def_special MauvilleGymSpecial1
+	def_special MauvilleGymSetDefaultBarriers
+	def_special MauvilleGymPressSwitch
 	def_special ShowFieldMessageStringVar4
 	def_special DrawWholeMapView
 	def_special StorePlayerCoordsInVars
-	def_special MauvilleGymSpecial3
+	def_special MauvilleGymDeactivatePuzzle
 	def_special PetalburgGymSlideOpenDoors
 	def_special PetalburgGymOpenDoorsInstantly
 	def_special GetPlayerTrainerIdOnesDigit
