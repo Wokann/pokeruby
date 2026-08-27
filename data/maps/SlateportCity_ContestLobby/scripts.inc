@@ -3,16 +3,16 @@ SlateportCity_ContestLobby_MapScripts:: @ 8155411
 	.byte 0
 
 SlateportCity_ContestLobby_OnTransition:: @ 8155417
-	call LilycoveCity_ContestLobby_EventScript_TryShowContestReporter
+	call Common_EventScript_TryShowContestReporter
 	end
 
 SlateportCity_ContestLobby_EventScript_ContestReceptionist:: @ 815541D
 	setvar VAR_0x800B, 7
 	setvar VAR_CONTEST_RANK, 2
-	call LilycoveCity_ContestLobby_EventScript_1A4E92
+	call Common_EventScript_SpeakToContestReceptionist
 	call SlateportCity_ContestLobby_EventScript_EnterContestRoom
 	special SetContestTrainerGfxIds
-	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
+	call Common_EventScript_SetupContestRivalGfxId
 	setvar VAR_CONTEST_LOCATION, 3
 	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
 	waitstate

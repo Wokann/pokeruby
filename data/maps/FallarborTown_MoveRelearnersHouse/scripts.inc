@@ -3,7 +3,7 @@ FallarborTown_MoveRelearnersHouse_MapScripts:: @ 8153C90
 
 FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
 	lockall
-	applymovement 1, Common_Movement_FacePlayer
+	applymovement LOCALID_MOVE_RELEARNER, Common_Movement_FacePlayer
 	waitmovement 0
 	goto_if_set FLAG_TEMP_1, FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor, MSGBOX_DEFAULT
@@ -12,9 +12,8 @@ FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
 	end
 
 FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove:: @ 8153CB6
-	checkitem ITEM_HEART_SCALE, 1
-	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
+	checkitem ITEM_HEART_SCALE
+	goto_if_eq VAR_RESULT, FALSE, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
@@ -25,13 +24,10 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
 	special ChooseMonForMoveRelearner
 	waitstate
-	compare VAR_0x8004, 255
-	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	special IsSelectedMonEgg
-	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
-	compare VAR_0x8005, 0
-	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon
+	goto_if_eq VAR_RESULT, TRUE, FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
+	goto_if_eq VAR_0x8005, 0, FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove
 	end
 
@@ -39,8 +35,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove:: @ 8153D1A
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
 	special TeachMoveRelearnerMove
 	waitstate
-	compare VAR_0x8004, 0
-	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
+	goto_if_eq VAR_0x8004, 0, FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	msgbox FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale, MSGBOX_DEFAULT
 	removeitem ITEM_HEART_SCALE
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale

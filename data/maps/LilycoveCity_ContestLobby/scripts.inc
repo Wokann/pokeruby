@@ -4,7 +4,7 @@ LilycoveCity_ContestLobby_MapScripts:: @ 8158866
 	.byte 0
 
 LilycoveCity_ContestLobby_OnTransition:: @ 8158871
-	call LilycoveCity_ContestLobby_EventScript_TryShowContestReporter
+	call Common_EventScript_TryShowContestReporter
 	end
 
 LilycoveCity_ContestLobby_OnFrame:: @ 8158877
@@ -569,10 +569,10 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
 	setvar VAR_0x800B, 8
 	setvar VAR_CONTEST_RANK, CONTEST_RANK_MASTER
-	call LilycoveCity_ContestLobby_EventScript_1A4E92
+	call Common_EventScript_SpeakToContestReceptionist
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
-	call LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId
+	call Common_EventScript_SetupContestRivalGfxId
 	setvar VAR_CONTEST_LOCATION, CONTEST_LOCATION_LILYCOVE
 	call LilycoveCity_ContestLobby_EventScript_WarpToContestHall
 	waitstate

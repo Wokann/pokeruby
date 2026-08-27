@@ -409,18 +409,16 @@ LinkContestRoom1_EventScript_15FBD1:: @ 815FBD1
 	waitstate
 	end
 
-LilycoveCity_ContestLobby_EventScript_SetupRivalGfxId:: @ 815FBDB
+Common_EventScript_SetupContestRivalGfxId:: @ 815FBDB
 	checkplayergender
-	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_SetupRivalGfxIdMale
-	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_SetupRivalGfxIdFemale
+	goto_if_eq VAR_RESULT, MALE, Common_EventScript_SetupContestRivalGfxIdBrendan
+	goto_if_eq VAR_RESULT, FEMALE, Common_EventScript_SetupContestRivalGfxIdMay
 	return
 
-FallarborTown_ContestLobby_EventScript_SetupRivalGfxIdMale:: @ 815FBF3
+Common_EventScript_SetupContestRivalGfxIdBrendan:: @ 815FBF3
 	setvar VAR_OBJ_GFX_ID_3, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
 
-FallarborTown_ContestLobby_EventScript_SetupRivalGfxIdFemale:: @ 815FBF9
+Common_EventScript_SetupContestRivalGfxIdMay:: @ 815FBF9
 	setvar VAR_OBJ_GFX_ID_3, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
 	return

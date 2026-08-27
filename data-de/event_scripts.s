@@ -155,7 +155,7 @@ gStdScripts_End::
 	.include "data/maps/FallarborTown_ContestHall/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_2F/scripts.inc"
-	.include "data/maps/FallarborTown_House1/scripts.inc"
+	.include "data/maps/FallarborTown_CozmosHouse/scripts.inc"
 	.include "data/maps/FallarborTown_MoveRelearnersHouse/scripts.inc"
 	.include "data/maps/VerdanturfTown_ContestLobby/scripts.inc"
 	.include "data/maps/VerdanturfTown_ContestHall/scripts.inc"
@@ -508,7 +508,7 @@ gStdScripts_End::
 	.include "data/maps/FallarborTown_ContestLobby/text.inc"
 	.include "data/maps/FallarborTown_ContestHall/text.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/text.inc"
-	.include "data/maps/FallarborTown_House1/text.inc"
+	.include "data/maps/FallarborTown_CozmosHouse/text.inc"
 	.include "data/maps/FallarborTown_MoveRelearnersHouse/text.inc"
 	.include "data/maps/VerdanturfTown_ContestLobby/text.inc"
 	.include "data/maps/VerdanturfTown_ContestHall/text.inc"
@@ -983,7 +983,7 @@ Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 Common_EventScript_PlayerHandedOverTheItem:: @ 81A067F
 	bufferitemname 0, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	message FallarborTown_House1_Text_1A1498
+	message Text_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004, 1
@@ -1149,7 +1149,7 @@ OldaleTown_PokemonCenter_2F_Text_1A145C:: @ 81A145C
 	.string "Tut mir schrecklich Leid. Hier wird\n"
 	.string "für den STATISTIKTAUSCH renoviert.$"
 
-FallarborTown_House1_Text_1A1498:: @ 81A1498
+Text_PlayerHandedOverTheItem:: @ 81A1498
 	.string "{PLAYER} übergibt\n"
 	.string "{STR_VAR_1}.$"
 
@@ -1434,42 +1434,37 @@ FallarborTown_ContestLobby_EventScript_1AE17E:: @ 81AE17E
 	release
 	end
 
-LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
-LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
-LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
-LilycoveCity_ContestLobby_EventScript_TryShowContestReporter:: @ 81AE188
-	compare VAR_LINK_CONTEST_ROOM_STATE, 2
-	goto_if_ne LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
+Common_EventScript_TryShowContestReporter:: @ 81AE188
+	goto_if_ne VAR_LINK_CONTEST_ROOM_STATE, 2, Common_EventScript_DontShowContestReporter
 	setvar VAR_0x8005, 6
 	special InterviewBefore
-	compare VAR_RESULT, 1
-	goto_if_eq LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
+	goto_if_eq VAR_RESULT, TRUE, Common_EventScript_DontShowContestReporter
 	switch VAR_CONTEST_LOCATION
-	case 0, LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
-	case 2, FallarborTown_ContestLobby_EventScript_ShowFallarborContestReporter
-	case 1, FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter
-	case 3, FallarborTown_ContestLobby_EventScript_ShowSlateportContestReporter
-	case 4, FallarborTown_ContestLobby_EventScript_ShowLilycoveContestReporter
-	case 5, LilycoveCity_ContestLobby_EventScript_DontShowContestReporter
+	case 0, Common_EventScript_DontShowContestReporter
+	case 2, FallarborTown_ContestLobby_EventScript_ShowContestReporter
+	case 1, VerdanturfTown_ContestLobby_EventScript_ShowContestReporter
+	case 3, SlateportCity_ContestLobby_EventScript_ShowContestReporter
+	case 4, LilycoveCity_ContestLobby_EventScript_ShowContestReporter
+	case 5, Common_EventScript_DontShowContestReporter
 	end
 
-FallarborTown_ContestLobby_EventScript_ShowFallarborContestReporter:: @ 81AE1EE
-	clearflag FLAG_HIDE_CONTEST_REPORTER_FALLARBOR
+FallarborTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1EE
+	clearflag FLAG_HIDE_FALLARBOR_CONTEST_LOBBY_REPORTER
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowVerdanturfContestReporter:: @ 81AE1F2
+VerdanturfTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F2
 	clearflag FLAG_HIDE_CONTEST_REPORTER_VERDANTURF
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowSlateportContestReporter:: @ 81AE1F6
+SlateportCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F6
 	clearflag FLAG_HIDE_SLATEPORT_CITY_CONTEST_REPORTER
 	return
 
-FallarborTown_ContestLobby_EventScript_ShowLilycoveContestReporter:: @ 81AE1FA
+LilycoveCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1FA
 	clearflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
 	return
 
-LilycoveCity_ContestLobby_EventScript_DontShowContestReporter:: @ 81AE1FE
+Common_EventScript_DontShowContestReporter:: @ 81AE1FE
 	return
 
 BattleTower_Lobby_EventScript_1AE1FF:: @ 81AE1FF

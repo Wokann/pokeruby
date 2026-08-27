@@ -72,7 +72,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "FallarborTown_EventScript_Azurill",
-      "flag": "FLAG_HIDE_AZURILL_FALLARBOR"
+      "flag": "FLAG_HIDE_FALLARBOR_AZURILL"
     }
   ],
   "warp_events": [
@@ -101,7 +101,7 @@
       "x": 6,
       "y": 17,
       "elevation": 0,
-      "dest_map": "MAP_FALLARBOR_TOWN_HOUSE1",
+      "dest_map": "MAP_FALLARBOR_TOWN_COZMOS_HOUSE",
       "dest_warp_id": "0"
     },
     {

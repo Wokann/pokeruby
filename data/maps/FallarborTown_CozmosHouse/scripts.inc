@@ -1,17 +1,16 @@
-FallarborTown_House1_MapScripts:: @ 8153BAE
-	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_House1_OnTransition
+FallarborTown_CozmosHouse_MapScripts:: @ 8153BAE
+	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_CozmosHouse_OnTransition
 	.byte 0
 
-FallarborTown_House1_OnTransition:: @ 8153BB4
+FallarborTown_CozmosHouse_OnTransition:: @ 8153BB4
 	end
 
 FallarborTown_CozmosHouse_EventScript_ProfCozmo:: @ 8153BB5
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_RETURN, FallarborTown_CozmosHouse_EventScript_GaveMeteorite
-	checkitem ITEM_METEORITE, 1
-	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite
+	checkitem ITEM_METEORITE
+	goto_if_eq VAR_RESULT, TRUE, FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite
 	msgbox FallarborTown_CozmosHouse_Text_MeteoriteWillNeverBeMineNow, MSGBOX_DEFAULT
 	release
 	end
@@ -19,12 +18,10 @@ FallarborTown_CozmosHouse_EventScript_ProfCozmo:: @ 8153BB5
 FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite:: @ 8153BDA
 	call_if_unset FLAG_TEMP_2, FallarborTown_CozmosHouse_EventScript_NoticeMeteorite
 	call_if_set FLAG_TEMP_2, FallarborTown_CozmosHouse_EventScript_AskForMeteorite
-	compare VAR_RESULT, NO
-	goto_if_eq FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite
+	goto_if_eq VAR_RESULT, NO, FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite
 	msgbox FallarborTown_CozmosHouse_Text_PleaseUseThisTM, MSGBOX_DEFAULT
 	giveitem ITEM_TM27_RETURN
-	compare VAR_RESULT, 0
-	goto_if_eq Common_EventScript_ShowBagIsFull
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setvar VAR_0x8004, ITEM_METEORITE
 	call Common_EventScript_PlayerHandedOverTheItem
 	setflag FLAG_RECEIVED_TM_RETURN

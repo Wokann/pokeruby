@@ -1,17 +1,14 @@
-LilycoveCity_ContestLobby_EventScript_1A4E92:: @ 81A4E92
+Common_EventScript_SpeakToContestReceptionist:: @ 81A4E92
 	lock
 	faceplayer
-	checkitem ITEM_CONTEST_PASS, 1
-	compare VAR_RESULT, 0
-	call_if_eq FallarborTown_ContestLobby_EventScript_1A4EDD
-	compare VAR_CONTEST_PRIZE_PICKUP, 0
-	goto_if_ne FallarborTown_ContestLobby_EventScript_1A4F4E
+	checkitem ITEM_CONTEST_PASS
+	call_if_eq VAR_RESULT, FALSE, FallarborTown_ContestLobby_EventScript_1A4EDD
+	goto_if_ne VAR_CONTEST_PRIZE_PICKUP, 0, FallarborTown_ContestLobby_EventScript_1A4F4E
 	goto_if_set FLAG_TEMP_1, FallarborTown_ContestLobby_EventScript_1A4F8F
 	bufferstdstring 0, VAR_0x800B
 	msgbox FallarborTown_ContestLobby_Text_1A5DFC, MSGBOX_DEFAULT
-	checkitem ITEM_CONTEST_PASS, 1
-	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1A4EE1
+	checkitem ITEM_CONTEST_PASS
+	goto_if_eq VAR_RESULT, FALSE, FallarborTown_ContestLobby_EventScript_1A4EE1
 	setflag FLAG_TEMP_1
 	goto FallarborTown_ContestLobby_EventScript_1A4F8F
 	end
