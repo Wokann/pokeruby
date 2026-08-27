@@ -21,16 +21,16 @@ LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	special IsSelectedMonEgg
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_EggCantForgetMoves
-	special ScrSpecial_CountPokemonMoves
+	special GetNumMovesSelectedMonHas
 	compare VAR_RESULT, 1
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMoveShouldBeForgotten, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
-	special SelectMove
+	special MoveDeleterChooseMoveToForget
 	fadescreen FADE_FROM_BLACK
 	compare VAR_0x8005, 4
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
-	special ScrSpecial_GetPokemonNicknameAndMoveName
+	special BufferMoveDeleterNicknameAndMove
 	msgbox LilycoveCity_MoveDeletersHouse_Text_MonsMoveShouldBeForgotten, MSGBOX_YESNO
 	switch VAR_RESULT
 	case YES, LilycoveCity_MoveDeletersHouse_EventScript_TryForgetMove
@@ -39,7 +39,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	end
 
 LilycoveCity_MoveDeletersHouse_EventScript_TryForgetMove:: @ 8159B53
-	special DeleteMonMove
+	special MoveDeleterForgetMove
 	playfanfare MUS_MOVE_DELETED
 	waitfanfare
 	msgbox LilycoveCity_MoveDeletersHouse_Text_MonHasForgottenMove, MSGBOX_DEFAULT
@@ -47,7 +47,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_TryForgetMove:: @ 8159B53
 	end
 
 LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove:: @ 8159B64
-	special ScrSpecial_GetPokemonNicknameAndMoveName
+	special BufferMoveDeleterNicknameAndMove
 	msgbox LilycoveCity_MoveDeletersHouse_Text_MonOnlyKnowsOneMove, MSGBOX_DEFAULT
 	releaseall
 	end

@@ -1,4 +1,4 @@
-FallarborTown_House2_MapScripts:: @ 8153C90
+FallarborTown_MoveRelearnersHouse_MapScripts:: @ 8153C90
 	.byte 0
 
 FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 8153C91
@@ -23,7 +23,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove:: @ 8153CB6
 
 FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
-	special SelectMoveTutorMon
+	special ChooseMonForMoveRelearner
 	waitstate
 	compare VAR_0x8004, 255
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
@@ -37,7 +37,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 8153CE4
 
 FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove:: @ 8153D1A
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
-	special DisplayMoveTutorMenu
+	special TeachMoveRelearnerMove
 	waitstate
 	compare VAR_0x8004, 0
 	goto_if_eq FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon

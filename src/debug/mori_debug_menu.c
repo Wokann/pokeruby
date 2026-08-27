@@ -2,7 +2,7 @@
 #include "mori_debug_menu.h"
 #include "data2.h"
 #include "daycare.h"
-#include "move_tutor_menu.h"
+#include "move_relearner.h"
 #include "link.h"
 #include "main.h"
 #include "menu.h"
@@ -55,7 +55,7 @@ const struct MenuAction gMoriDebugMenuActions[] =
     {Text_39B275, MoriDebugMenu_MaleEgg},
     {Text_39B280, MoriDebugMenu_1000Steps},
     {Text_39B28B, MoriDebugMenu_10000Steps},
-    {Text_39B297, MoriDebugMenu_MoveTutor},
+    {Text_39B297, MoriDebugMenu_MoveRelearner},
     {Text_39B2A2, MoriDebugMenu_BreedEgg},
     {Text_39B2AF, MoriDebugMenu_LongName},
     {Text_39B2B9, MoriDebugMenu_PokeblockCase},
@@ -134,9 +134,9 @@ u8 MoriDebugMenu_10000Steps(void)
     return 1;
 }
 
-u8 MoriDebugMenu_MoveTutor(void)
+u8 MoriDebugMenu_MoveRelearner(void)
 {
-    DisplayMoveTutorMenu();
+    TeachMoveRelearnerMove();
     CloseMenu();
     return 1;
 }

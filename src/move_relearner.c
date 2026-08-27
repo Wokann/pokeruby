@@ -6,7 +6,7 @@
 #include "main.h"
 #include "menu.h"
 #include "menu_cursor.h"
-#include "move_tutor_menu.h"
+#include "move_relearner.h"
 #include "overworld.h"
 #include "palette.h"
 #include "pokemon.h"
@@ -26,7 +26,7 @@ extern u16 gSpecialVar_0x8005;
 extern u8 gTileBuffer[];
 
 extern const struct WindowTemplate gMenuTextWindowTemplate;
-extern const struct WindowTemplate gMoveTutorMenuFramesWindowTemplate;
+extern const struct WindowTemplate gMoveRelearnerMenuFramesWindowTemplate;
 extern const u8 *const gContestEffectStrings[];
 extern const u8 *const gMoveDescriptions[];
 extern const u8 gTypeNames[][7];
@@ -36,25 +36,25 @@ extern const u8 *const gContestCategoryNames[];
 extern const u8 deuOtherText_ForgotAndLearned[];
 #endif
 
-static void InitMoveTutorMenuWaitFade(u8);
-static void CB2_InitMoveTutorMenu(void);
-static void CB2_MoveTutorMenu(void);
-static void MoveTutorMain(void);
+static void InitMoveRelearnerMenuWaitFade(u8);
+static void CB2_InitMoveRelearnerMenu(void);
+static void CB2_MoveRelearnerMenu(void);
+static void MoveRelearnerMain(void);
 static void DrawLearnMoveMenuWindow(void);
 static void DrawBattleMoveInfoHeaders(bool8);
 static u8 ChangeToContestMoveInfoWindow(void);
 static void DrawContestMoveInfoHeaders(bool8);
 static u8 ChangeToBattleMoveInfoWindow(void);
-static void ResetMoveTutorMenu(void);
-static void InitMoveTutorMenuSprites(void);
-static void InitMoveTutorMenuStrings(void);
-static void HandleMoveTutorMenuInput(void);
+static void ResetMoveRelearnerMenu(void);
+static void InitMoveRelearnerMenuSprites(void);
+static void InitMoveRelearnerMenuStrings(void);
+static void HandleMoveRelearnerMenuInput(void);
 static void DrawMoveSelectionWindow(void);
 static void DrawMoveInfoWindow(bool8, int);
 static void RedrawMoveInfoWindow(void);
-static void UpdateMoveTutorMenuCursorPosition(struct Sprite *);
+static void UpdateMoveRelearnerMenuCursorPosition(struct Sprite *);
 
-struct MoveTutorMenu
+struct MoveRelearnerMenu
 {
     u8 state;
     u8 filler1;
@@ -68,7 +68,7 @@ struct MoveTutorMenu
     u8 previousCursorPos;
     bool8 redrawCursor;
     bool8 redrawMoveSelectionWindow;
-    u16 movesToLearn[MAX_MOVE_TUTOR_MOVES];
+    u16 movesToLearn[MAX_RELEARNER_MOVES];
     u8 filler48[10];
     u8 moveNames[6][25];
     u8 fillerE8[475];
@@ -78,13 +78,13 @@ struct MoveTutorMenu
     u8 forgetMoveIndex;
 };
 
-static struct MoveTutorMenu *sMoveTutorMenu;
+static struct MoveRelearnerMenu *sMoveRelearnerMenu;
 
-const u16 gMoveTutorMenuArrows_Pal[] = INCBIN_U16("graphics/move_tutor_menu/arrows.gbapal");
+const u16 gMoveRelearnerMenuArrows_Pal[] = INCBIN_U16("graphics/move_relearner/arrows.gbapal");
 
-const u8 gMoveTutorMenuArrows_Gfx[] = INCBIN_U8("graphics/move_tutor_menu/arrows.4bpp");
+const u8 gMoveRelearnerMenuArrows_Gfx[] = INCBIN_U8("graphics/move_relearner/arrows.4bpp");
 
-const u8 gMoveTutorMenuWindowFrameDimensions[][4] =
+const u8 gMoveRelearnerMenuWindowFrameDimensions[][4] =
 {
     { 0,  0,  9, 13},
     {10,  0, 29,  7},
@@ -92,7 +92,7 @@ const u8 gMoveTutorMenuWindowFrameDimensions[][4] =
     {10,  8, 29, 13},
 };
 
-struct MoveTutorMoveInfoHeaders
+struct MoveRelearnerMoveInfoHeaders
 {
     const u8 *text;
     u8 left;
@@ -100,7 +100,7 @@ struct MoveTutorMoveInfoHeaders
     u8 index; // unused
 };
 
-const struct MoveTutorMoveInfoHeaders gMoveTutorMoveInfoHeaders[][4] =
+const struct MoveRelearnerMoveInfoHeaders gMoveRelearnerMoveInfoHeaders[][4] =
 {
     {
         {OtherText_Battle,   1, 1, 0},
@@ -142,8 +142,8 @@ const union AnimCmd *const gSpriteAnimTable_8402D78[] =
     gSpriteAnim_8402D70,
 };
 
-const struct SpriteSheet gMoveTutorMenuArrowsSpriteSheet = {gMoveTutorMenuArrows_Gfx, sizeof(gMoveTutorMenuArrows_Gfx), 5525};
-const struct SpritePalette gMoveTutorMenuArrowsPalette = {gMoveTutorMenuArrows_Pal, 5526};
+const struct SpriteSheet gMoveRelearnerMenuArrowsSpriteSheet = {gMoveRelearnerMenuArrows_Gfx, sizeof(gMoveRelearnerMenuArrows_Gfx), 5525};
+const struct SpritePalette gMoveRelearnerMenuArrowsPalette = {gMoveRelearnerMenuArrows_Pal, 5526};
 
 const struct SpriteTemplate gSpriteTemplate_8402D90 =
 {
@@ -153,7 +153,7 @@ const struct SpriteTemplate gSpriteTemplate_8402D90 =
     .anims = gSpriteAnimTable_8402D78,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = UpdateMoveTutorMenuCursorPosition,
+    .callback = UpdateMoveRelearnerMenuCursorPosition,
 };
 
 const union AnimCmd gSpriteAnim_8402DA8[] =
@@ -182,7 +182,7 @@ const struct SpriteTemplate gSpriteTemplate_8402DC0 =
     .anims = gSpriteAnimTable_8402DB8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = UpdateMoveTutorMenuCursorPosition,
+    .callback = UpdateMoveRelearnerMenuCursorPosition,
 };
 
 const union AnimCmd gSpriteAnim_8402DD8[] =
@@ -225,49 +225,49 @@ const struct SpriteTemplate gSpriteTemplate_8402E08 =
     .anims = gSpriteAnimTable_8402DF8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = UpdateMoveTutorMenuCursorPosition,
+    .callback = UpdateMoveRelearnerMenuCursorPosition,
 };
 
 const u8 gString_AkitoMori[] = _("あきと");  // programmer Akito Mori?
 
-static void VBlankCB_MoveTutorMenu(void)
+static void VBlankCB_MoveRelearnerMenu(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void DisplayMoveTutorMenu(void)
+void TeachMoveRelearnerMove(void)
 {
     LockPlayerFieldControls();
-    CreateTask(InitMoveTutorMenuWaitFade, 10);
+    CreateTask(InitMoveRelearnerMenuWaitFade, 10);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-static void InitMoveTutorMenuWaitFade(u8 taskId)
+static void InitMoveRelearnerMenuWaitFade(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_InitMoveTutorMenu);
+        SetMainCallback2(CB2_InitMoveRelearnerMenu);
         gFieldCallback = sub_8080990;
         DestroyTask(taskId);
     }
 }
 
-static void CB2_InitMoveTutorMenu(void)
+static void CB2_InitMoveRelearnerMenu(void)
 {
     REG_DISPCNT = 0;
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
-    sMoveTutorMenu = eMoveTutorMenu;
-    ResetMoveTutorMenu();
-    sMoveTutorMenu->partyMonIndex = gSpecialVar_0x8004;
-    InitMoveTutorMenuStrings();
-    SetVBlankCallback(VBlankCB_MoveTutorMenu);
+    sMoveRelearnerMenu = eMoveRelearnerMenu;
+    ResetMoveRelearnerMenu();
+    sMoveRelearnerMenu->partyMonIndex = gSpecialVar_0x8004;
+    InitMoveRelearnerMenuStrings();
+    SetVBlankCallback(VBlankCB_MoveRelearnerMenu);
 
-    Text_LoadWindowTemplate(&gMoveTutorMenuFramesWindowTemplate);
-    InitMenuWindow(&gMoveTutorMenuFramesWindowTemplate);
+    Text_LoadWindowTemplate(&gMoveRelearnerMenuFramesWindowTemplate);
+    InitMenuWindow(&gMoveRelearnerMenuFramesWindowTemplate);
     Menu_EraseScreen();
 
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
@@ -279,29 +279,29 @@ static void CB2_InitMoveTutorMenu(void)
     REG_BG1HOFS = 0;
     REG_BG1HOFS = 0;
 
-    LoadSpriteSheet(&gMoveTutorMenuArrowsSpriteSheet);
-    LoadSpritePalette(&gMoveTutorMenuArrowsPalette);
-    InitMoveTutorMenuSprites();
+    LoadSpriteSheet(&gMoveRelearnerMenuArrowsSpriteSheet);
+    LoadSpritePalette(&gMoveRelearnerMenuArrowsPalette);
+    InitMoveRelearnerMenuSprites();
     FillPalette(0, 0, 2);
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
-    SetMainCallback2(CB2_MoveTutorMenu);
+    SetMainCallback2(CB2_MoveRelearnerMenu);
 }
 
-void CB2_ReturnToMoveTutorMenu(void)
+void CB2_ReturnToMoveRelearnerMenu(void)
 {
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
-    sMoveTutorMenu = eMoveTutorMenu;
-    InitMoveTutorMenuStrings();
-    sMoveTutorMenu->forgetMoveIndex = gSpecialVar_0x8005;
-    SetVBlankCallback(VBlankCB_MoveTutorMenu);
+    sMoveRelearnerMenu = eMoveRelearnerMenu;
+    InitMoveRelearnerMenuStrings();
+    sMoveRelearnerMenu->forgetMoveIndex = gSpecialVar_0x8005;
+    SetVBlankCallback(VBlankCB_MoveRelearnerMenu);
 
-    Text_LoadWindowTemplate(&gMoveTutorMenuFramesWindowTemplate);
-    InitMenuWindow(&gMoveTutorMenuFramesWindowTemplate);
+    Text_LoadWindowTemplate(&gMoveRelearnerMenuFramesWindowTemplate);
+    InitMenuWindow(&gMoveRelearnerMenuFramesWindowTemplate);
     Menu_EraseScreen();
 
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
@@ -314,34 +314,34 @@ void CB2_ReturnToMoveTutorMenu(void)
     REG_BG1HOFS = 0;
     REG_BG1HOFS = 0;
 
-    LoadSpriteSheet(&gMoveTutorMenuArrowsSpriteSheet);
-    LoadSpritePalette(&gMoveTutorMenuArrowsPalette);
-    InitMoveTutorMenuSprites();
+    LoadSpriteSheet(&gMoveRelearnerMenuArrowsSpriteSheet);
+    LoadSpritePalette(&gMoveRelearnerMenuArrowsPalette);
+    InitMoveRelearnerMenuSprites();
     FillPalette(0, 0, 2);
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
-    SetMainCallback2(CB2_MoveTutorMenu);
+    SetMainCallback2(CB2_MoveRelearnerMenu);
 }
 
-static void CB2_MoveTutorMenu(void)
+static void CB2_MoveRelearnerMenu(void)
 {
-    MoveTutorMain();
-    if (sMoveTutorMenu->redrawCursor)
+    MoveRelearnerMain();
+    if (sMoveRelearnerMenu->redrawCursor)
     {
-        sMoveTutorMenu->redrawCursor = FALSE;
-        MenuCursor_SetPos814AD7C(0x58, (sMoveTutorMenu->cursorPos * 2 + 1) * 8);
+        sMoveRelearnerMenu->redrawCursor = FALSE;
+        MenuCursor_SetPos814AD7C(0x58, (sMoveRelearnerMenu->cursorPos * 2 + 1) * 8);
     }
-    if (sMoveTutorMenu->redrawMoveSelectionWindow)
+    if (sMoveRelearnerMenu->redrawMoveSelectionWindow)
     {
-        sMoveTutorMenu->redrawMoveSelectionWindow = 0;
+        sMoveRelearnerMenu->redrawMoveSelectionWindow = 0;
         DrawMoveSelectionWindow();
     }
-    if (sMoveTutorMenu->redrawMoveInfoWindow)
+    if (sMoveRelearnerMenu->redrawMoveInfoWindow)
     {
-        DrawMoveInfoWindow(sMoveTutorMenu->showContestInfo, 1);
-        sMoveTutorMenu->redrawMoveInfoWindow = FALSE;
+        DrawMoveInfoWindow(sMoveRelearnerMenu->showContestInfo, 1);
+        sMoveRelearnerMenu->redrawMoveInfoWindow = FALSE;
     }
     RunTasks();
     AnimateSprites();
@@ -349,60 +349,60 @@ static void CB2_MoveTutorMenu(void)
     UpdatePaletteFade();
 }
 
-static void PrintMainMoveTutorMenuText(const u8 *str)
+static void PrintMainMoveRelearnerMenuText(const u8 *str)
 {
     StringExpandPlaceholders(gStringVar4, str);
     MenuPrintMessage(gStringVar4, 3, 15);
 }
 
-static void MoveTutorMain(void)
+static void MoveRelearnerMain(void)
 {
-    switch (sMoveTutorMenu->state)
+    switch (sMoveRelearnerMenu->state)
     {
     case 0:
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->state++;
         DrawLearnMoveMenuWindow();
         DrawBattleMoveInfoHeaders(FALSE);
         DrawMoveSelectionWindow();
         gSprites[1].x = 0x48;
-        sMoveTutorMenu->redrawMoveInfoWindow = TRUE;
+        sMoveRelearnerMenu->redrawMoveInfoWindow = TRUE;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP;
         break;
     case 1:
         if (!gPaletteFade.active)
-            sMoveTutorMenu->state = 4;
+            sMoveRelearnerMenu->state = 4;
         break;
     case 2:
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->state++;
         break;
     case 3:
         DrawBattleMoveInfoHeaders(FALSE);
         DrawMoveSelectionWindow();
-        sMoveTutorMenu->redrawMoveInfoWindow = TRUE;
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->redrawMoveInfoWindow = TRUE;
+        sMoveRelearnerMenu->state++;
         gSprites[1].x = 0x48;
         break;
     case 4:
         if (!ChangeToContestMoveInfoWindow())
-            HandleMoveTutorMenuInput();
+            HandleMoveRelearnerMenuInput();
         return;
     case 5:
         DrawContestMoveInfoHeaders(FALSE);
         DrawMoveSelectionWindow();
-        sMoveTutorMenu->redrawMoveInfoWindow = TRUE;
+        sMoveRelearnerMenu->redrawMoveInfoWindow = TRUE;
         gSprites[1].x = 0x48;
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->state++;
         break;
     case 6:
         if (!ChangeToBattleMoveInfoWindow())
-            HandleMoveTutorMenuInput();
+            HandleMoveRelearnerMenuInput();
         break;
     case 8:
         if (Menu_UpdateWindowText())
         {
             DisplayYesNoMenu(21, 7, 1);
-            sMoveTutorMenu->state++;
+            sMoveRelearnerMenu->state++;
         }
         break;
     case 9:
@@ -411,24 +411,24 @@ static void MoveTutorMain(void)
             if (selection == 0)
             {
                 RedrawMoveInfoWindow();
-                if (GiveMoveToMon(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->movesToLearn[sMoveTutorMenu->menuSelection]) != 0xFFFF)
+                if (GiveMoveToMon(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]) != 0xFFFF)
                 {
-                    PrintMainMoveTutorMenuText(gOtherText_PokeLearnedMove);
+                    PrintMainMoveRelearnerMenuText(gOtherText_PokeLearnedMove);
                     gSpecialVar_0x8004 = 1;
-                    sMoveTutorMenu->state = 31;
+                    sMoveRelearnerMenu->state = 31;
                 }
                 else
                 {
-                    sMoveTutorMenu->state = 16;
+                    sMoveRelearnerMenu->state = 16;
                 }
             }
             else if (selection == -1 || selection == 1)
             {
                 RedrawMoveInfoWindow();
-                if (sMoveTutorMenu->showContestInfo == FALSE)
-                    sMoveTutorMenu->state = 3;
-                if (sMoveTutorMenu->showContestInfo == TRUE)
-                    sMoveTutorMenu->state = 5;
+                if (sMoveRelearnerMenu->showContestInfo == FALSE)
+                    sMoveRelearnerMenu->state = 3;
+                if (sMoveRelearnerMenu->showContestInfo == TRUE)
+                    sMoveRelearnerMenu->state = 5;
             }
         }
         break;
@@ -436,7 +436,7 @@ static void MoveTutorMain(void)
         if (Menu_UpdateWindowText())
         {
             DisplayYesNoMenu(21, 7, 1);
-            sMoveTutorMenu->state++;
+            sMoveRelearnerMenu->state++;
         }
         break;
     case 13:
@@ -447,27 +447,27 @@ static void MoveTutorMain(void)
             {
                 RedrawMoveInfoWindow();
                 gSpecialVar_0x8004 = selection;
-                sMoveTutorMenu->state = 14;
+                sMoveRelearnerMenu->state = 14;
             }
             else if (selection == -1 || selection == 1)
             {
                 RedrawMoveInfoWindow();
-                if (sMoveTutorMenu->showContestInfo == FALSE)
-                    sMoveTutorMenu->state = 3;
-                if (sMoveTutorMenu->showContestInfo == TRUE)
-                    sMoveTutorMenu->state = 5;
+                if (sMoveRelearnerMenu->showContestInfo == FALSE)
+                    sMoveRelearnerMenu->state = 3;
+                if (sMoveRelearnerMenu->showContestInfo == TRUE)
+                    sMoveRelearnerMenu->state = 5;
             }
         }
         break;
     case 16:
-        PrintMainMoveTutorMenuText(gOtherText_DeleteOlderMove);
-        sMoveTutorMenu->state++;
+        PrintMainMoveRelearnerMenuText(gOtherText_DeleteOlderMove);
+        sMoveRelearnerMenu->state++;
         break;
     case 17:
         if (Menu_UpdateWindowText())
         {
             DisplayYesNoMenu(21, 7, 1);
-            sMoveTutorMenu->state = 18;
+            sMoveRelearnerMenu->state = 18;
         }
         break;
     case 18:
@@ -477,24 +477,24 @@ static void MoveTutorMain(void)
             if (var == 0)
             {
                 RedrawMoveInfoWindow();
-                PrintMainMoveTutorMenuText(gOtherText_WhichMoveToForget);
-                sMoveTutorMenu->state = 19;
+                PrintMainMoveRelearnerMenuText(gOtherText_WhichMoveToForget);
+                sMoveRelearnerMenu->state = 19;
             }
             else if (var == -1 || var == 1)
             {
                 RedrawMoveInfoWindow();
-                sMoveTutorMenu->state = 24;
+                sMoveRelearnerMenu->state = 24;
             }
         }
         break;
     case 24:
-        PrintMainMoveTutorMenuText(gOtherText_StopLearningMove);
-        sMoveTutorMenu->state++;
+        PrintMainMoveRelearnerMenuText(gOtherText_StopLearningMove);
+        sMoveRelearnerMenu->state++;
         break;
     case 25:
         if (Menu_UpdateWindowText())
         {
-            sMoveTutorMenu->state = 26;
+            sMoveRelearnerMenu->state = 26;
             DisplayYesNoMenu(21, 7, 1);
         }
         break;
@@ -505,54 +505,54 @@ static void MoveTutorMain(void)
             if (var == 0)
             {
                 RedrawMoveInfoWindow();
-                sMoveTutorMenu->state = 27;
+                sMoveRelearnerMenu->state = 27;
             }
             else if (var == -1 || var == 1)
             {
                 RedrawMoveInfoWindow();
 
                 // What's the point? It gets set to 16, anyway.
-                if (sMoveTutorMenu->showContestInfo == FALSE)
-                    sMoveTutorMenu->state = 3;
-                if (sMoveTutorMenu->showContestInfo == TRUE)
-                    sMoveTutorMenu->state = 5;
-                sMoveTutorMenu->state = 16;
+                if (sMoveRelearnerMenu->showContestInfo == FALSE)
+                    sMoveRelearnerMenu->state = 3;
+                if (sMoveRelearnerMenu->showContestInfo == TRUE)
+                    sMoveRelearnerMenu->state = 5;
+                sMoveRelearnerMenu->state = 16;
             }
         }
         break;
     case 27:
         if (Menu_UpdateWindowText())
         {
-            if (sMoveTutorMenu->showContestInfo == FALSE)
-                sMoveTutorMenu->state = 3;
-            if (sMoveTutorMenu->showContestInfo == TRUE)
-                sMoveTutorMenu->state = 5;
+            if (sMoveRelearnerMenu->showContestInfo == FALSE)
+                sMoveRelearnerMenu->state = 3;
+            if (sMoveRelearnerMenu->showContestInfo == TRUE)
+                sMoveRelearnerMenu->state = 5;
         }
         break;
     case 19:
         if (Menu_UpdateWindowText())
         {
-            sMoveTutorMenu->state = 20;
+            sMoveRelearnerMenu->state = 20;
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         }
         break;
     case 20:
         if (!gPaletteFade.active)
         {
-            ShowSelectMovePokemonSummaryScreen(gPlayerParty, sMoveTutorMenu->partyMonIndex, gPlayerPartyCount - 1, CB2_ReturnToMoveTutorMenu, sMoveTutorMenu->movesToLearn[sMoveTutorMenu->menuSelection]);
-            sMoveTutorMenu->state = 28;
+            ShowSelectMovePokemonSummaryScreen(gPlayerParty, sMoveRelearnerMenu->partyMonIndex, gPlayerPartyCount - 1, CB2_ReturnToMoveRelearnerMenu, sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]);
+            sMoveRelearnerMenu->state = 28;
         }
         break;
     case 21:
         if (Menu_UpdateWindowText())
-            sMoveTutorMenu->state = 14;
+            sMoveRelearnerMenu->state = 14;
         break;
     case 22:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         break;
     case 14:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->state++;
         break;
     case 15:
         if (!gPaletteFade.active)
@@ -560,35 +560,35 @@ static void MoveTutorMain(void)
         break;
     case 28:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        sMoveTutorMenu->state++;
+        sMoveRelearnerMenu->state++;
         DrawLearnMoveMenuWindow();
         DrawMoveSelectionWindow();
-        if (sMoveTutorMenu->showContestInfo == FALSE)
+        if (sMoveRelearnerMenu->showContestInfo == FALSE)
             DrawBattleMoveInfoHeaders(TRUE);
-        if (sMoveTutorMenu->showContestInfo == TRUE)
+        if (sMoveRelearnerMenu->showContestInfo == TRUE)
         {
             gSprites[1].x = 0x48;
             DrawContestMoveInfoHeaders(TRUE);
         }
-        DrawMoveInfoWindow(sMoveTutorMenu->showContestInfo, 1);
+        DrawMoveInfoWindow(sMoveRelearnerMenu->showContestInfo, 1);
         break;
     case 29:
         if (!gPaletteFade.active)
         {
-            if (sMoveTutorMenu->forgetMoveIndex == 4)
+            if (sMoveRelearnerMenu->forgetMoveIndex == 4)
             {
-                sMoveTutorMenu->state = 24;
+                sMoveRelearnerMenu->state = 24;
             }
             else
             {
-                u16 moveId = GetMonData(&gPlayerParty[sMoveTutorMenu->partyMonIndex], MON_DATA_MOVE1 + sMoveTutorMenu->forgetMoveIndex);
+                u16 moveId = GetMonData(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], MON_DATA_MOVE1 + sMoveRelearnerMenu->forgetMoveIndex);
 
                 StringCopy(gStringVar3, gMoveNames[moveId]);
-                RemoveMonPPBonus(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->forgetMoveIndex);
-                SetMonMoveSlot(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->movesToLearn[sMoveTutorMenu->menuSelection], sMoveTutorMenu->forgetMoveIndex);
-                StringCopy(gStringVar2, gMoveNames[sMoveTutorMenu->movesToLearn[sMoveTutorMenu->menuSelection]]);
-                PrintMainMoveTutorMenuText(gOtherText_ForgotMove123);
-                sMoveTutorMenu->state = 30;
+                RemoveMonPPBonus(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->forgetMoveIndex);
+                SetMonMoveSlot(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection], sMoveRelearnerMenu->forgetMoveIndex);
+                StringCopy(gStringVar2, gMoveNames[sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]]);
+                PrintMainMoveRelearnerMenuText(gOtherText_ForgotMove123);
+                sMoveRelearnerMenu->state = 30;
                 gSpecialVar_0x8004 = 1;
             }
         }
@@ -597,11 +597,11 @@ static void MoveTutorMain(void)
         if (Menu_UpdateWindowText())
         {
 #ifdef GERMAN
-            PrintMainMoveTutorMenuText(deuOtherText_ForgotAndLearned);
+            PrintMainMoveRelearnerMenuText(deuOtherText_ForgotAndLearned);
 #else
-            PrintMainMoveTutorMenuText(gOtherText_ForgotOrDidNotLearnMove);
+            PrintMainMoveRelearnerMenuText(gOtherText_ForgotOrDidNotLearnMove);
 #endif
-            sMoveTutorMenu->state = 31;
+            sMoveRelearnerMenu->state = 31;
             PlayFanfare(MUS_LEVEL_UP);
         }
         break;
@@ -609,18 +609,18 @@ static void MoveTutorMain(void)
         if (Menu_UpdateWindowText())
         {
             PlayFanfare(MUS_LEVEL_UP);
-            sMoveTutorMenu->state = 32;
+            sMoveRelearnerMenu->state = 32;
         }
         break;
     case 32:
         if (IsFanfareTaskInactive())
-            sMoveTutorMenu->state = 33;
+            sMoveRelearnerMenu->state = 33;
         break;
     case 33:
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sMoveTutorMenu->state = 14;
+            sMoveRelearnerMenu->state = 14;
         }
         break;
     }
@@ -630,14 +630,14 @@ static void DrawLearnMoveMenuWindow(void)
 {
     u32 i;
 
-    BasicInitMenuWindow(&gMoveTutorMenuFramesWindowTemplate);
+    BasicInitMenuWindow(&gMoveRelearnerMenuFramesWindowTemplate);
     for (i = 0; i < 4; i++)
     {
         Menu_DrawStdWindowFrame(
-          gMoveTutorMenuWindowFrameDimensions[i][0],
-          gMoveTutorMenuWindowFrameDimensions[i][1],
-          gMoveTutorMenuWindowFrameDimensions[i][2],
-          gMoveTutorMenuWindowFrameDimensions[i][3]);
+          gMoveRelearnerMenuWindowFrameDimensions[i][0],
+          gMoveRelearnerMenuWindowFrameDimensions[i][1],
+          gMoveRelearnerMenuWindowFrameDimensions[i][2],
+          gMoveRelearnerMenuWindowFrameDimensions[i][3]);
     }
     BasicInitMenuWindow(&gMenuTextWindowTemplate);
 }
@@ -646,16 +646,16 @@ static void DrawBattleMoveInfoHeaders(bool8 noTeachMoveText)
 {
     s32 i;
 
-    gSprites[sMoveTutorMenu->spriteIDs[0]].invisible = FALSE;
-    gSprites[sMoveTutorMenu->spriteIDs[1]].invisible = FALSE;
+    gSprites[sMoveRelearnerMenu->spriteIDs[0]].invisible = FALSE;
+    gSprites[sMoveRelearnerMenu->spriteIDs[1]].invisible = FALSE;
 
     for (i = 0; i < 16; i++)
-        gSprites[sMoveTutorMenu->spriteIDs[i + 4]].invisible = TRUE;
+        gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]].invisible = TRUE;
 
-    for (i = 0; gMoveTutorMoveInfoHeaders[0][i].text != NULL; i++)
+    for (i = 0; gMoveRelearnerMoveInfoHeaders[0][i].text != NULL; i++)
     {
-        AlignStringInMenuWindow(gTileBuffer, gMoveTutorMoveInfoHeaders[0][i].text, 64, 2);
-        Menu_PrintText(gTileBuffer, gMoveTutorMoveInfoHeaders[0][i].left, gMoveTutorMoveInfoHeaders[0][i].right);
+        AlignStringInMenuWindow(gTileBuffer, gMoveRelearnerMoveInfoHeaders[0][i].text, 64, 2);
+        Menu_PrintText(gTileBuffer, gMoveRelearnerMoveInfoHeaders[0][i].left, gMoveRelearnerMoveInfoHeaders[0][i].right);
     }
 
     if (!noTeachMoveText)
@@ -673,8 +673,8 @@ static u8 ChangeToContestMoveInfoWindow(void)
     if (result != 0)
     {
         PlaySE(SE_SELECT);
-        sMoveTutorMenu->state = 5;
-        sMoveTutorMenu->showContestInfo = TRUE;
+        sMoveRelearnerMenu->state = 5;
+        sMoveRelearnerMenu->showContestInfo = TRUE;
     }
 
     return result;
@@ -684,23 +684,23 @@ static void DrawContestMoveInfoHeaders(bool8 noTeachMoveText)
 {
     s32 i;
 
-    gSprites[sMoveTutorMenu->spriteIDs[0]].invisible = FALSE;
-    gSprites[sMoveTutorMenu->spriteIDs[1]].invisible = FALSE;
+    gSprites[sMoveRelearnerMenu->spriteIDs[0]].invisible = FALSE;
+    gSprites[sMoveRelearnerMenu->spriteIDs[1]].invisible = FALSE;
 
     for (i = 0; i < 16; i++)
-        gSprites[sMoveTutorMenu->spriteIDs[i + 4]].invisible = FALSE;
+        gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]].invisible = FALSE;
 
-    for (i = 0; gMoveTutorMoveInfoHeaders[0][i].text != NULL; i++)
+    for (i = 0; gMoveRelearnerMoveInfoHeaders[0][i].text != NULL; i++)
     {
-        AlignStringInMenuWindow(gTileBuffer, gMoveTutorMoveInfoHeaders[1][i].text, 64, 2);
-        Menu_PrintText(gTileBuffer, gMoveTutorMoveInfoHeaders[1][i].left, gMoveTutorMoveInfoHeaders[1][i].right);
+        AlignStringInMenuWindow(gTileBuffer, gMoveRelearnerMoveInfoHeaders[1][i].text, 64, 2);
+        Menu_PrintText(gTileBuffer, gMoveRelearnerMoveInfoHeaders[1][i].left, gMoveRelearnerMoveInfoHeaders[1][i].right);
         if (i != 0)
         {
             Menu_EraseWindowRect(
-              gMoveTutorMoveInfoHeaders[1][i].left,
-              gMoveTutorMoveInfoHeaders[1][i].right + 2,
-              gMoveTutorMoveInfoHeaders[1][i].left + 7,
-              gMoveTutorMoveInfoHeaders[1][i].right + 3);
+              gMoveRelearnerMoveInfoHeaders[1][i].left,
+              gMoveRelearnerMoveInfoHeaders[1][i].right + 2,
+              gMoveRelearnerMoveInfoHeaders[1][i].left + 7,
+              gMoveRelearnerMoveInfoHeaders[1][i].right + 3);
         }
     }
 
@@ -719,33 +719,33 @@ static u8 ChangeToBattleMoveInfoWindow(void)
     if (result != 0)
     {
         PlaySE(SE_SELECT);
-        sMoveTutorMenu->state = 3;
-        sMoveTutorMenu->showContestInfo = FALSE;
+        sMoveRelearnerMenu->state = 3;
+        sMoveRelearnerMenu->showContestInfo = FALSE;
     }
 
     return result;
 }
 
-static void ResetMoveTutorMenu(void)
+static void ResetMoveRelearnerMenu(void)
 {
     s32 i;
 
-    sMoveTutorMenu->state = 0;
-    sMoveTutorMenu->unk2 = 0;
-    sMoveTutorMenu->curMenuChoice = 0;
-    sMoveTutorMenu->cursorPos = 0;
-    sMoveTutorMenu->previousCursorPos = 0;
-    sMoveTutorMenu->numMenuChoices = 0;
-    sMoveTutorMenu->menuSelection = 0;
-    sMoveTutorMenu->redrawCursor = FALSE;
-    sMoveTutorMenu->redrawMoveSelectionWindow = 0;
-    sMoveTutorMenu->redrawMoveInfoWindow = FALSE;
-    sMoveTutorMenu->showContestInfo = FALSE;
-    for (i = 0; i < MAX_MOVE_TUTOR_MOVES; i++)
-        sMoveTutorMenu->movesToLearn[i] = 0;
+    sMoveRelearnerMenu->state = 0;
+    sMoveRelearnerMenu->unk2 = 0;
+    sMoveRelearnerMenu->curMenuChoice = 0;
+    sMoveRelearnerMenu->cursorPos = 0;
+    sMoveRelearnerMenu->previousCursorPos = 0;
+    sMoveRelearnerMenu->numMenuChoices = 0;
+    sMoveRelearnerMenu->menuSelection = 0;
+    sMoveRelearnerMenu->redrawCursor = FALSE;
+    sMoveRelearnerMenu->redrawMoveSelectionWindow = 0;
+    sMoveRelearnerMenu->redrawMoveInfoWindow = FALSE;
+    sMoveRelearnerMenu->showContestInfo = FALSE;
+    for (i = 0; i < MAX_RELEARNER_MOVES; i++)
+        sMoveRelearnerMenu->movesToLearn[i] = 0;
 }
 
-static void UpdateMoveTutorMenuCursorPosition(struct Sprite *sprite)
+static void UpdateMoveRelearnerMenuCursorPosition(struct Sprite *sprite)
 {
     s16 var = (sprite->data[1] * 10) & 0xFF;
 
@@ -763,112 +763,112 @@ static void UpdateMoveTutorMenuCursorPosition(struct Sprite *sprite)
     sprite->data[1]++;
 }
 
-static void InitMoveTutorMenuSprites(void)
+static void InitMoveRelearnerMenuSprites(void)
 {
     s32 i;
 
-    sMoveTutorMenu->spriteIDs[0] = CreateSprite(&gSpriteTemplate_8402D90, 8, 16, 0);
-    gSprites[sMoveTutorMenu->spriteIDs[0]].data[0] = 1;
-    gSprites[sMoveTutorMenu->spriteIDs[0]].data[2] = -1;
+    sMoveRelearnerMenu->spriteIDs[0] = CreateSprite(&gSpriteTemplate_8402D90, 8, 16, 0);
+    gSprites[sMoveRelearnerMenu->spriteIDs[0]].data[0] = 1;
+    gSprites[sMoveRelearnerMenu->spriteIDs[0]].data[2] = -1;
 
-    sMoveTutorMenu->spriteIDs[1] = CreateSprite(&gSpriteTemplate_8402D90, 72, 16, 0);
-    StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[1]], 1);
-    gSprites[sMoveTutorMenu->spriteIDs[1]].data[0] = 1;
-    gSprites[sMoveTutorMenu->spriteIDs[1]].data[2] = 1;
+    sMoveRelearnerMenu->spriteIDs[1] = CreateSprite(&gSpriteTemplate_8402D90, 72, 16, 0);
+    StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[1]], 1);
+    gSprites[sMoveRelearnerMenu->spriteIDs[1]].data[0] = 1;
+    gSprites[sMoveRelearnerMenu->spriteIDs[1]].data[2] = 1;
 
-    sMoveTutorMenu->spriteIDs[2] = CreateSprite(&gSpriteTemplate_8402DC0, 160, 4, 0);
-    StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[2]], 1);
-    gSprites[sMoveTutorMenu->spriteIDs[2]].data[0] = 2;
-    gSprites[sMoveTutorMenu->spriteIDs[2]].data[2] = -1;
+    sMoveRelearnerMenu->spriteIDs[2] = CreateSprite(&gSpriteTemplate_8402DC0, 160, 4, 0);
+    StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[2]], 1);
+    gSprites[sMoveRelearnerMenu->spriteIDs[2]].data[0] = 2;
+    gSprites[sMoveRelearnerMenu->spriteIDs[2]].data[2] = -1;
 
-    sMoveTutorMenu->spriteIDs[3] = CreateSprite(&gSpriteTemplate_8402DC0, 160, 60, 0);
-    gSprites[sMoveTutorMenu->spriteIDs[3]].data[0] = 2;
-    gSprites[sMoveTutorMenu->spriteIDs[3]].data[2] = 1;
+    sMoveRelearnerMenu->spriteIDs[3] = CreateSprite(&gSpriteTemplate_8402DC0, 160, 60, 0);
+    gSprites[sMoveRelearnerMenu->spriteIDs[3]].data[0] = 2;
+    gSprites[sMoveRelearnerMenu->spriteIDs[3]].data[2] = 1;
 
     for (i = 0; i < 8; i++)
     {
-        sMoveTutorMenu->spriteIDs[i + 4] = CreateSprite(&gSpriteTemplate_8402E08, (i - (i / 4) * 4) * 8 + 0x1C, (i / 4) * 8 + 0x34, 0);
-        StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 4]], 2);
+        sMoveRelearnerMenu->spriteIDs[i + 4] = CreateSprite(&gSpriteTemplate_8402E08, (i - (i / 4) * 4) * 8 + 0x1C, (i / 4) * 8 + 0x34, 0);
+        StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]], 2);
     }
 
     for (i = 0; i < 8; i++)
     {
-        sMoveTutorMenu->spriteIDs[i + 12] = CreateSprite(&gSpriteTemplate_8402E08, (i - (i / 4) * 4) * 8 + 0x1C, (i / 4) * 8 + 0x5C, 0);
-        StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 12]], 2);
+        sMoveRelearnerMenu->spriteIDs[i + 12] = CreateSprite(&gSpriteTemplate_8402E08, (i - (i / 4) * 4) * 8 + 0x1C, (i / 4) * 8 + 0x5C, 0);
+        StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 12]], 2);
     }
 
     for (i = 0; i < 20; i++)
-        gSprites[sMoveTutorMenu->spriteIDs[i]].invisible = TRUE;
+        gSprites[sMoveRelearnerMenu->spriteIDs[i]].invisible = TRUE;
 
     CreateBlendedOutlineCursor(16, 0xFFFF, 12, 0x2D9F, 18);
 }
 
-static void InitMoveTutorMenuStrings(void)
+static void InitMoveRelearnerMenuStrings(void)
 {
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];
 
-    sMoveTutorMenu->numMenuChoices = GetMoveTutorMoves(&gPlayerParty[sMoveTutorMenu->partyMonIndex], sMoveTutorMenu->movesToLearn);
-    for (i = 0; i < sMoveTutorMenu->numMenuChoices; i++)
-        StringCopy(sMoveTutorMenu->moveNames[i], gMoveNames[sMoveTutorMenu->movesToLearn[i]]);
-    GetMonData(&gPlayerParty[sMoveTutorMenu->partyMonIndex], MON_DATA_NICKNAME, nickname);
+    sMoveRelearnerMenu->numMenuChoices = GetMoveRelearnerMoves(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->movesToLearn);
+    for (i = 0; i < sMoveRelearnerMenu->numMenuChoices; i++)
+        StringCopy(sMoveRelearnerMenu->moveNames[i], gMoveNames[sMoveRelearnerMenu->movesToLearn[i]]);
+    GetMonData(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], MON_DATA_NICKNAME, nickname);
     StringCopy10(gStringVar1, nickname);
-    StringCopy(sMoveTutorMenu->moveNames[sMoveTutorMenu->numMenuChoices], gOtherText_Exit);
-    sMoveTutorMenu->numMenuChoices++;
+    StringCopy(sMoveRelearnerMenu->moveNames[sMoveRelearnerMenu->numMenuChoices], gOtherText_Exit);
+    sMoveRelearnerMenu->numMenuChoices++;
 }
 
 static void MoveCursorPos(s8 delta)
 {
-    sMoveTutorMenu->previousCursorPos = sMoveTutorMenu->cursorPos;
-    sMoveTutorMenu->cursorPos += delta;
-    sMoveTutorMenu->redrawCursor = TRUE;
+    sMoveRelearnerMenu->previousCursorPos = sMoveRelearnerMenu->cursorPos;
+    sMoveRelearnerMenu->cursorPos += delta;
+    sMoveRelearnerMenu->redrawCursor = TRUE;
 }
 
-static void HandleMoveTutorMenuInput(void)
+static void HandleMoveRelearnerMenuInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
-        if (sMoveTutorMenu->menuSelection != 0)
+        if (sMoveRelearnerMenu->menuSelection != 0)
         {
             PlaySE(SE_SELECT);
-            sMoveTutorMenu->menuSelection--;
-            sMoveTutorMenu->redrawMoveInfoWindow = TRUE;
-            if (sMoveTutorMenu->cursorPos != 0)
+            sMoveRelearnerMenu->menuSelection--;
+            sMoveRelearnerMenu->redrawMoveInfoWindow = TRUE;
+            if (sMoveRelearnerMenu->cursorPos != 0)
             {
                 MoveCursorPos(-1);
             }
-            else if (sMoveTutorMenu->curMenuChoice != 0)
+            else if (sMoveRelearnerMenu->curMenuChoice != 0)
             {
-                sMoveTutorMenu->curMenuChoice--;
-                sMoveTutorMenu->redrawMoveSelectionWindow++;
+                sMoveRelearnerMenu->curMenuChoice--;
+                sMoveRelearnerMenu->redrawMoveSelectionWindow++;
             }
         }
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
-        if (sMoveTutorMenu->menuSelection < sMoveTutorMenu->numMenuChoices - 1)
+        if (sMoveRelearnerMenu->menuSelection < sMoveRelearnerMenu->numMenuChoices - 1)
         {
             PlaySE(SE_SELECT);
-            sMoveTutorMenu->menuSelection++;
-            sMoveTutorMenu->redrawMoveInfoWindow = TRUE;
-            if (sMoveTutorMenu->cursorPos != 2)
+            sMoveRelearnerMenu->menuSelection++;
+            sMoveRelearnerMenu->redrawMoveInfoWindow = TRUE;
+            if (sMoveRelearnerMenu->cursorPos != 2)
             {
                 MoveCursorPos(1);
             }
-            else if (sMoveTutorMenu->curMenuChoice != sMoveTutorMenu->numMenuChoices - 3)
+            else if (sMoveRelearnerMenu->curMenuChoice != sMoveRelearnerMenu->numMenuChoices - 3)
             {
-                sMoveTutorMenu->curMenuChoice++;
-                sMoveTutorMenu->redrawMoveSelectionWindow++;
+                sMoveRelearnerMenu->curMenuChoice++;
+                sMoveRelearnerMenu->redrawMoveSelectionWindow++;
             }
         }
     }
     else if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (sMoveTutorMenu->menuSelection != sMoveTutorMenu->numMenuChoices - 1)
+        if (sMoveRelearnerMenu->menuSelection != sMoveRelearnerMenu->numMenuChoices - 1)
         {
-            sMoveTutorMenu->state = 8;
-            StringCopy(gStringVar2, sMoveTutorMenu->moveNames[sMoveTutorMenu->menuSelection]);
+            sMoveRelearnerMenu->state = 8;
+            StringCopy(gStringVar2, sMoveRelearnerMenu->moveNames[sMoveRelearnerMenu->menuSelection]);
             StringExpandPlaceholders(gStringVar4, gOtherText_TeachSpecificMove);
             MenuPrintMessage(gStringVar4, 3, 15);
         }
@@ -876,53 +876,53 @@ static void HandleMoveTutorMenuInput(void)
         {
             StringExpandPlaceholders(gStringVar4, gOtherText_GiveUpTeachingMove);
             MenuPrintMessage(gStringVar4, 3, 15);
-            sMoveTutorMenu->state = 12;
+            sMoveRelearnerMenu->state = 12;
         }
     }
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sMoveTutorMenu->state = 12;
+        sMoveRelearnerMenu->state = 12;
         StringExpandPlaceholders(gStringVar4, gOtherText_GiveUpTeachingMove);
         MenuPrintMessage(gStringVar4, 3, 15);
     }
-    if (sMoveTutorMenu->numMenuChoices > 3)
+    if (sMoveRelearnerMenu->numMenuChoices > 3)
     {
         gSprites[2].invisible = FALSE;
         gSprites[3].invisible = FALSE;
-        if (sMoveTutorMenu->curMenuChoice == 0)
+        if (sMoveRelearnerMenu->curMenuChoice == 0)
             gSprites[2].invisible = TRUE;
-        else if (sMoveTutorMenu->curMenuChoice == sMoveTutorMenu->numMenuChoices - 3)
+        else if (sMoveRelearnerMenu->curMenuChoice == sMoveRelearnerMenu->numMenuChoices - 3)
             gSprites[3].invisible = TRUE;
     }
 }
 
 static void DrawMoveSelectionWindow(void)
 {
-    u8 menuChoice = sMoveTutorMenu->curMenuChoice;
+    u8 menuChoice = sMoveRelearnerMenu->curMenuChoice;
     u8 *str = gTileBuffer;
     s32 i;
 
     for (i = 0; i < 3; i++)
     {
-        if (menuChoice >= sMoveTutorMenu->numMenuChoices)
+        if (menuChoice >= sMoveRelearnerMenu->numMenuChoices)
         {
             str = AlignStringInMenuWindow(str, gEmptyString_81E72B0, 0x90, 0);
         }
-        else if (menuChoice == sMoveTutorMenu->numMenuChoices - 1)
+        else if (menuChoice == sMoveRelearnerMenu->numMenuChoices - 1)
         {
             str = AlignStringInMenuWindow(str, gOtherText_Exit, 0x90, 0);
         }
         else
         {
-            u16 moveId = sMoveTutorMenu->movesToLearn[menuChoice];
+            u16 moveId = sMoveRelearnerMenu->movesToLearn[menuChoice];
 
-            if (sMoveTutorMenu->showContestInfo)
+            if (sMoveRelearnerMenu->showContestInfo)
                 str = AlignStringInMenuWindow(str, gContestCategoryNames[gContestMoves[moveId].contestCategory], 0x27, 0);
             else
                 str = AlignStringInMenuWindow(str, gTypeNames[gBattleMoves[moveId].type], 0x27, 0);
 
-            str = AlignStringInMenuWindow(str, sMoveTutorMenu->moveNames[menuChoice], 0x72, 0);
+            str = AlignStringInMenuWindow(str, sMoveRelearnerMenu->moveNames[menuChoice], 0x72, 0);
 
             str[0] = CHAR_P;
             str[1] = CHAR_P;
@@ -986,9 +986,9 @@ void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
         for (i = 0; i < 8; i++)
         {
             if (i < numHearts)
-                StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 4]], 1);
+                StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]], 1);
             else
-                StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 4]], 0);
+                StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]], 0);
         }
         break;
     case 7:
@@ -999,9 +999,9 @@ void PrintMoveInfo(u16 moveId, const u8 *moveInfoCoords)
         for (i = 0; i < 8; i++)
         {
             if (i < numHearts)
-                StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 12]], 3);
+                StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 12]], 3);
             else
-                StartSpriteAnim(&gSprites[sMoveTutorMenu->spriteIDs[i + 12]], 2);
+                StartSpriteAnim(&gSprites[sMoveRelearnerMenu->spriteIDs[i + 12]], 2);
         }
         break;
     }
@@ -1011,14 +1011,14 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
 {
     u16 i;
 
-    if (sMoveTutorMenu->menuSelection != sMoveTutorMenu->numMenuChoices - 1)
+    if (sMoveRelearnerMenu->menuSelection != sMoveRelearnerMenu->numMenuChoices - 1)
     {
-        u16 moveId = sMoveTutorMenu->movesToLearn[sMoveTutorMenu->menuSelection];
+        u16 moveId = sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection];
 
         if (contestInfo)
         {
             for (i = 0; i < 16; i++)
-                gSprites[sMoveTutorMenu->spriteIDs[i + 4]].invisible = FALSE;
+                gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]].invisible = FALSE;
             for (i = 0; i < 3; i++)
                 PrintMoveInfo(moveId, sMoveInfoTextCoords[sContestMoveInfoCoordIds[i]]);
             sub_8072AB0(gContestEffectStrings[gContestMoves[moveId].effect], 0x58, 0x48, 0x90, 32, 1);
@@ -1045,7 +1045,7 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
             Menu_EraseWindowRect(sMoveInfoTextCoords[5][0], sMoveInfoTextCoords[5][1], sMoveInfoTextCoords[5][0], sMoveInfoTextCoords[5][1] + 1);
             Menu_EraseWindowRect(sMoveInfoTextCoords[6][0], sMoveInfoTextCoords[6][1], sMoveInfoTextCoords[6][0], sMoveInfoTextCoords[6][1] + 1);
             for (i = 0; i < 16; i++)
-                gSprites[sMoveTutorMenu->spriteIDs[i + 4]].invisible = TRUE;
+                gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]].invisible = TRUE;
         }
         else
         {
@@ -1059,5 +1059,5 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
 static void RedrawMoveInfoWindow(void)
 {
     Menu_EraseWindowRect(21, 7, 27, 12);
-    DrawMoveInfoWindow(sMoveTutorMenu->showContestInfo, 0);
+    DrawMoveInfoWindow(sMoveRelearnerMenu->showContestInfo, 0);
 }

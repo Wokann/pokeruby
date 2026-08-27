@@ -183,7 +183,7 @@ extern const u8 gEggNickname[];
 extern const u8 gOtherText_HatchedFromEgg[];
 extern const u8 gOtherText_NickHatchPrompt[];
 
-// move_tutor_menu
+// move_relearner
 extern const u8 OtherText_Battle[];
 extern const u8 OtherText_Contest[];
 
@@ -191,7 +191,7 @@ extern const u8 OtherText_Contest[];
 extern const u8 OtherText_Type[];
 extern const u8 OtherText_PP[];
 
-// move_tutor_menu
+// move_relearner
 extern const u8 OtherText_Power[];
 extern const u8 OtherText_Accuracy[];
 extern const u8 OtherText_Appeal[];

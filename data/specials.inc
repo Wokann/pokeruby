@@ -227,12 +227,12 @@ gSpecials::
 	def_special SetDeptStoreFloor
 	def_special DoLotteryCornerComputerEffect
 	def_special EndLotteryCornerComputerEffect
-	def_special SelectMoveTutorMon
-	def_special SelectMove
-	def_special DeleteMonMove
-	def_special ScrSpecial_GetPokemonNicknameAndMoveName
-	def_special ScrSpecial_CountPokemonMoves
-	def_special DisplayMoveTutorMenu
+	def_special ChooseMonForMoveRelearner
+	def_special MoveDeleterChooseMoveToForget
+	def_special MoveDeleterForgetMove
+	def_special BufferMoveDeleterNicknameAndMove
+	def_special GetNumMovesSelectedMonHas
+	def_special TeachMoveRelearnerMove
 	def_special GetRecordedCyclingRoadResults
 	def_special ScrSpecial_BeginCyclingRoadChallenge
 	def_special GetPlayerAvatarBike

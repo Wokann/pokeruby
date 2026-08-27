@@ -13,7 +13,7 @@ void sub_80F9E1C(void);
 void sub_80F99CC(void);
 void HandleSelectPartyMenu(u8 taskId);
 bool8 SetupContestPartyMenu(void);
-void HandleMoveTutorPartyMenu(u8 taskId);
-bool8 SetupMoveTutorPartyMenu(void);
+void HandleMoveRelearnerPartyMenu(u8 taskId);
+bool8 SetupMoveRelearnerPartyMenu(void);
 
 #endif

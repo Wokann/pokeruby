@@ -7,7 +7,7 @@ u8 MoriDebugMenu_Egg(void);
 u8 MoriDebugMenu_MaleEgg(void);
 u8 MoriDebugMenu_1000Steps(void);
 u8 MoriDebugMenu_10000Steps(void);
-u8 MoriDebugMenu_MoveTutor(void);
+u8 MoriDebugMenu_MoveRelearner(void);
 u8 MoriDebugMenu_BreedEgg(void);
 u8 MoriDebugMenu_LongName(void);
 u8 MoriDebugMenu_PokeblockCase(void);

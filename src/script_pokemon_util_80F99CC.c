@@ -49,13 +49,13 @@ void ChoosePartyMon(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void SelectMoveTutorMon(void)
+void ChooseMonForMoveRelearner(void)
 {
     u8 taskId;
 
     LockPlayerFieldControls();
     taskId = CreateTask((void *)OpenPartyMenuFromScriptContext, 0xA);
-    gTasks[taskId].data[0] = PARTY_MENU_TYPE_MOVE_TUTOR;
+    gTasks[taskId].data[0] = PARTY_MENU_TYPE_MOVE_RELEARNER;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
@@ -177,7 +177,7 @@ void HandleSelectPartyMenu(u8 var)
     }
 }
 
-bool8 SetupMoveTutorPartyMenu(void)
+bool8 SetupMoveRelearnerPartyMenu(void)
 {
     switch (ePartyMenu2.pmSetupState)
     {
@@ -254,7 +254,7 @@ void sub_80F9E1C(void)
     }
 }
 
-void HandleMoveTutorPartyMenu(u8 var)
+void HandleMoveRelearnerPartyMenu(u8 var)
 {
     if (!gPaletteFade.active)
     {
@@ -274,14 +274,14 @@ void HandleMoveTutorPartyMenu(u8 var)
     }
 }
 
-void SelectMove(void)
+void MoveDeleterChooseMoveToForget(void)
 {
     ShowSelectMovePokemonSummaryScreen(&gPlayerParty[0], gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField, 0);
     pssData.mode = PSS_MODE_MOVE_DELETER;
     gFieldCallback = sub_8080990;
 }
 
-void ScrSpecial_CountPokemonMoves(void) // count pokemon moves
+void GetNumMovesSelectedMonHas(void)
 {
     u8 i;
 
@@ -292,7 +292,7 @@ void ScrSpecial_CountPokemonMoves(void) // count pokemon moves
             gSpecialVar_Result++;
 }
 
-void ScrSpecial_GetPokemonNicknameAndMoveName(void)
+void BufferMoveDeleterNicknameAndMove(void)
 {
     struct Pokemon *pkmn = &gPlayerParty[gSpecialVar_0x8004];
     u16 data = GetMonData(pkmn, MON_DATA_MOVE1 + gSpecialVar_0x8005);
@@ -323,7 +323,7 @@ static void SwapMoveSlots(struct Pokemon *pkmn, u8 moveIndex1, u8 moveIndex2)
     SetMonData(pkmn, MON_DATA_PP_BONUSES, &bonuses);
 }
 
-void DeleteMonMove(void)
+void MoveDeleterForgetMove(void)
 {
     u16 i;
 
