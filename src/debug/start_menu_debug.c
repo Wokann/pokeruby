@@ -1337,7 +1337,7 @@ const u8 Str_839BF1F[] = DTR("めのまえには\n"
 bool8 DebugMenu_8077B00(void)
 {
     Menu_EraseScreen();
-    if (debug_sub_80C853C())
+    if (GetInFrontFeederPokeblockAndSteps())
         sub_8071F40(Str_839BF14);
     else
         sub_8071F40(Str_839BF1F);

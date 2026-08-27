@@ -13,12 +13,12 @@ void ExitSafariMode(void);
 
 bool8 SafariZoneTakeStep(void);
 void SafariZoneRetirePrompt(void);
-void sub_80C824C(void);
+void CB2_EndSafariBattle(void);
 
-void SafariZoneGetPokeblockNameInFeeder(void);
-struct Pokeblock *unref_sub_80C8418(void);
+void GetPokeblockFeederInFront(void);
+struct Pokeblock *SafariZoneGetPokeblockInFront(void);
 struct Pokeblock *SafariZoneGetActivePokeblock(void);
-void SafariZoneActivatePokeblockFeeder(u8 pokeblock_index);
-bool32 debug_sub_80C853C(void);
+void SafariZoneActivatePokeblockFeeder(u8 pkblId);
+bool32 GetInFrontFeederPokeblockAndSteps(void);
 
 #endif // GUARD_SAFARI_ZONE_H
