@@ -20,7 +20,7 @@ SkyPillar_Top_EventScript_15F316:: @ 815F316
 	waitmoncry
 	setflag FLAG_HIDE_RAYQUAZA
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartRayquazaBattle
+	special BattleSetup_StartRayquazaBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	release

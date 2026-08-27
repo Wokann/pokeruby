@@ -586,7 +586,7 @@ void ScrSpecial_StartSouthernIslandBattle(void)
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
 }
 
-void ScrSpecial_StartRayquazaBattle(void)
+void BattleSetup_StartRayquazaBattle(void)
 {
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;

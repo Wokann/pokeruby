@@ -320,7 +320,7 @@ gSpecials::
 	def_special SetSootopolisGymCrackedIceMetatiles
 	def_special ShakeCamera
 	def_special StartGroudonKyogreBattle
-	def_special ScrSpecial_StartRayquazaBattle
+	def_special BattleSetup_StartRayquazaBattle
 	def_special ScrSpecial_StartRegiBattle
 	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect_Short
