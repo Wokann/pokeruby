@@ -515,7 +515,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
     return 0;
 }
 
-void ScrSpecial_RockSmashWildEncounter(void)
+void RockSmashWildEncounter(void)
 {
     u16 headerNum = GetCurrentMapWildMonHeader();
 

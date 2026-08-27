@@ -179,7 +179,7 @@ gSpecials::
 	def_special SetPlayerGotFirstFans
 	def_special UpdateTrainerFanClubGameClear
 	def_special Script_TryGainNewFanFromCounter
-	def_special ScrSpecial_RockSmashWildEncounter
+	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview
 	def_special GabbyAndTyBeforeInterview
