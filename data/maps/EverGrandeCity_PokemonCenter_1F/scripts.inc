@@ -7,7 +7,7 @@ EverGrandeCity_PokemonCenter_1F_OnTransition:: @ 815BC6C
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_Nurse:: @ 815BC70
-	setvar VAR_0x800B, 1
+	setvar VAR_0x800B, LOCALID_EVER_GRANDE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

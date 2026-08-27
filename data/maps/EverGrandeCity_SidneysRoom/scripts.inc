@@ -23,7 +23,7 @@ EverGrandeCity_SidneysRoom_OnWarp:: @ 815B570
 	.2byte 0
 
 EverGrandeCity_SidneysRoom_EventScript_PlayerTurnNorth:: @ 815B57A
-	turnobject LOCALID_PLAYER, 2
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
 EverGrandeCity_SidneysRoom_OnFrame:: @ 815B57F
@@ -42,7 +42,7 @@ EverGrandeCity_SidneysRoom_EventScript_Sidney:: @ 815B596
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_SYDNEY, EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
-	msgbox EverGrandeCity_SidneysRoom_Text_190728, MSGBOX_DEFAULT
+	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
 	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 	end

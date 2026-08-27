@@ -1162,14 +1162,14 @@
       "blockdata_filepath": "data/layouts/EverGrandeCity_ChampionsRoom/map.bin"
     },
     {
-      "id": "LAYOUT_EVER_GRANDE_CITY_SHORT_CORRIDOR",
-      "name": "EverGrandeCity_ShortCorridor_Layout",
+      "id": "LAYOUT_EVER_GRANDE_CITY_SHORT_HALL",
+      "name": "EverGrandeCity_ShortHall_Layout",
       "width": 11,
       "height": 13,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_EliteFour",
-      "border_filepath": "data/layouts/EverGrandeCity_ShortCorridor/border.bin",
-      "blockdata_filepath": "data/layouts/EverGrandeCity_ShortCorridor/map.bin"
+      "border_filepath": "data/layouts/EverGrandeCity_ShortHall/border.bin",
+      "blockdata_filepath": "data/layouts/EverGrandeCity_ShortHall/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE104_PRETTY_PETAL_FLOWER_SHOP",
@@ -2702,14 +2702,14 @@
       "blockdata_filepath": "data/layouts/RustboroCity_DevonCorp_3F/map.bin"
     },
     {
-      "id": "LAYOUT_EVER_GRANDE_CITY_POKEMON_LEAGUE",
-      "name": "EverGrandeCity_PokemonLeague_Layout",
+      "id": "LAYOUT_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F",
+      "name": "EverGrandeCity_PokemonLeague_1F_Layout",
       "width": 19,
       "height": 12,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_PokemonCenter",
-      "border_filepath": "data/layouts/EverGrandeCity_PokemonLeague/border.bin",
-      "blockdata_filepath": "data/layouts/EverGrandeCity_PokemonLeague/map.bin"
+      "border_filepath": "data/layouts/EverGrandeCity_PokemonLeague_1F/border.bin",
+      "blockdata_filepath": "data/layouts/EverGrandeCity_PokemonLeague_1F/map.bin"
     },
     {
       "id": "LAYOUT_ROUTE119_WEATHER_INSTITUTE_1F",
@@ -3152,14 +3152,14 @@
       "blockdata_filepath": "data/layouts/RustboroCity_Flat1_2F/map.bin"
     },
     {
-      "id": "LAYOUT_EVER_GRANDE_CITY_CORRIDOR4",
-      "name": "EverGrandeCity_Corridor4_Layout",
+      "id": "LAYOUT_EVER_GRANDE_CITY_HALL4",
+      "name": "EverGrandeCity_Hall4_Layout",
       "width": 11,
       "height": 34,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_EliteFour",
-      "border_filepath": "data/layouts/EverGrandeCity_Corridor4/border.bin",
-      "blockdata_filepath": "data/layouts/EverGrandeCity_Corridor4/map.bin"
+      "border_filepath": "data/layouts/EverGrandeCity_Hall4/border.bin",
+      "blockdata_filepath": "data/layouts/EverGrandeCity_Hall4/map.bin"
     },
     {
       "id": "LAYOUT_MAGMA_HIDEOUT_1F",
