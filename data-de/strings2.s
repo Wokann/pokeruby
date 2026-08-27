@@ -282,7 +282,7 @@ OtherText_BoxName::
 OtherText_PokeName::
 	.string "Kosename f. {STR_VAR_1}$"
 
-gOtherText_Marco:: @ 842C9E1
+gText_Marco:: @ 842C9E1
 	.string "MARCO$" @ polo
 
 gOtherText_Coins:: @ 842C9E7

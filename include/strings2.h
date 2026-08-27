@@ -144,9 +144,6 @@ extern const u8 OtherText_YourName[];
 extern const u8 OtherText_BoxName[];
 extern const u8 OtherText_PokeName[];
 
-// pokemon_size_record
-extern const u8 gOtherText_Marco[];
-
 // roulette
 extern const u8 gOtherText_Coins[];
 

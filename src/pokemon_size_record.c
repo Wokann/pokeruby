@@ -3,9 +3,10 @@
 #include "data2.h"
 #include "event_data.h"
 #include "pokedex.h"
+#include "constants/party_menu.h"
 #include "constants/species.h"
+#include "constants/pokemon_size_record.h"
 #include "string_util.h"
-#include "strings2.h"
 #include "text.h"
 
 const u16 Unknown_083D17EC[] = INCBIN_U16("graphics/unknown/unknown_3D17EC.gbapal");
@@ -18,6 +19,9 @@ struct UnknownStruct
 };
 
 extern u16 gSpecialVar_Result;
+extern const u8 gText_Marco[];
+
+#define DEFAULT_MAX_SIZE 0x8100
 
 static const struct UnknownStruct sBigMonSizeTable[] =
 {
@@ -106,9 +110,9 @@ static void FormatMonSizeRecord(u8 *string, u32 size)
 
 static u8 CompareMonSize(u16 species, u16 *sizeRecord)
 {
-    if (gSpecialVar_Result == 0xFF)
+    if (gSpecialVar_Result == PARTY_NOTHING_CHOSEN)
     {
-        return 0;
+        return COMPARE_SIZE_NONE;
     }
     else
     {
@@ -117,7 +121,7 @@ static u8 CompareMonSize(u16 species, u16 *sizeRecord)
         // UB: Too few arguments for function 'GetMonData'
         if (GetMonData(pkmn, MON_DATA_IS_EGG) == TRUE || GetMonData(pkmn, MON_DATA_SPECIES) != species)
         {
-            return 1;
+            return COMPARE_SIZE_INCORRECT_SPECIES;
         }
         else
         {
@@ -131,12 +135,12 @@ static u8 CompareMonSize(u16 species, u16 *sizeRecord)
             FormatMonSizeRecord(gStringVar2, newSize);
             if (newSize <= oldSize)
             {
-                return 2;
+                return COMPARE_SIZE_SMALLER;
             }
             else
             {
                 *sizeRecord = sizeParams;
-                return 3;
+                return COMPARE_SIZE_LARGER;
             }
         }
     }
@@ -149,15 +153,15 @@ static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
 
     FormatMonSizeRecord(gStringVar3, size);
     StringCopy(gStringVar1, gSpeciesNames[species]);
-    if (*sizeRecord == 0x8100)
-        StringCopy(gStringVar2, gOtherText_Marco);
+    if (*sizeRecord == DEFAULT_MAX_SIZE)
+        StringCopy(gStringVar2, gText_Marco);
     else
         StringCopy(gStringVar2, gSaveBlock2.playerName);
 }
 
 void InitShroomishSizeRecord(void)
 {
-    VarSet(VAR_SHROOMISH_SIZE_RECORD, 0x8100);
+    VarSet(VAR_SHROOMISH_SIZE_RECORD, DEFAULT_MAX_SIZE);
 }
 
 void GetShroomishSizeRecordInfo(void)
@@ -176,7 +180,7 @@ void CompareShroomishSize(void)
 
 void InitBarboachSizeRecord(void)
 {
-    VarSet(VAR_BARBOACH_SIZE_RECORD, 0x8100);
+    VarSet(VAR_BARBOACH_SIZE_RECORD, DEFAULT_MAX_SIZE);
 }
 
 void GetBarboachSizeRecordInfo(void)
