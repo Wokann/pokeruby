@@ -52,7 +52,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival:: @ 8152CFA
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival:: @ 8152D19
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou, MSGBOX_DEFAULT
-	clearflag FLAG_HIDE_BOY_ROUTE101
+	clearflag FLAG_HIDE_ROUTE_101_BOY
 	setvar VAR_BIRCH_LAB_STATE, 3
 	releaseall
 	end
