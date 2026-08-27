@@ -164,7 +164,7 @@ gSpecials::
 	def_special Overworld_PlaySpecialMapMusic
 	def_special StartWallClock
 	def_special Special_ViewWallClock
-	def_special ScrSpecial_ChooseStarter
+	def_special ChooseStarter
 	def_special ScrSpecial_StartWallyTutorialBattle
 	def_special ChangePokemonNickname
 	def_special SelectMonForNPCTrade
