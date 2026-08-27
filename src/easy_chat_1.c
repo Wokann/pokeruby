@@ -194,7 +194,7 @@ void sub_80EAECC(void);
 void LoadEasyChatStrings(void);
 void sub_80EB0B0(void);
 u8 *sub_80EB218(u8 *, u16, u16);
-u16 sub_80EB2D4();
+u16 GetEasyChatWordStringLength(u16 easyChatWord);
 bool8 sub_80EB680(u16 *, u16, u16, u16);
 
 void ShowEasyChatScreen(void)
@@ -262,9 +262,9 @@ void ShowEasyChatScreen(void)
         r4 = 1;
         break;
     case 13:
-        gEasyChatStruct->unk9C7C = 0xFFFF;
-        gEasyChatStruct->unk9C7E = -1;
-        r1 = &gEasyChatStruct->unk9C7C;
+        gEasyChatStruct->currentPhrase[0] = 0xFFFF;
+        gEasyChatStruct->currentPhrase[1] = -1;
+        r1 = gEasyChatStruct->currentPhrase;
         break;
     default:
         return;
@@ -280,9 +280,9 @@ void sub_80E62A0(u8 a, u16 *b, void (*c)(void), u8 d)
     gEasyChatStruct->unkB = d;
     if (a == 9)
     {
-        gEasyChatStruct->unk4 = &gEasyChatStruct->unk9C7C;
-        gEasyChatStruct->unk9C7C = gSaveBlock1.easyChatPairs[0].words[0];
-        gEasyChatStruct->unk9C7E = gSaveBlock1.easyChatPairs[0].words[1];
+        gEasyChatStruct->unk4 = gEasyChatStruct->currentPhrase;
+        gEasyChatStruct->currentPhrase[0] = gSaveBlock1.dewfordTrends[0].words[0];
+        gEasyChatStruct->currentPhrase[1] = gSaveBlock1.dewfordTrends[0].words[1];
     }
     SetMainCallback2(sub_80E62F8);
 }
@@ -871,7 +871,7 @@ void sub_80E6D7C(void)
             if (gEasyChatStruct->unk8 == 9)  // dewford trend?
             {
                 sub_80E81C0();
-                gSpecialVar_0x8004 = sub_80FA364(&gEasyChatStruct->unk9C7C);
+                gSpecialVar_0x8004 = TrySetTrendyPhrase(gEasyChatStruct->currentPhrase);
             }
             if (gEasyChatStruct->unk8 == 13)
             {
@@ -1241,7 +1241,7 @@ void sub_80E7574(void)
 {
     if (gEasyChatStruct->unk8 == 1
      && gEasyChatStruct->unk7E[gEasyChatStruct->unk86] == 2
-     && sub_80EB2D4(gEasyChatStruct->unkC[gEasyChatStruct->unk27]) != 7)
+     && GetEasyChatWordStringLength(gEasyChatStruct->unkC[gEasyChatStruct->unk27]) != 7)
         gEasyChatStruct->unk7D = 1;
     else
         gEasyChatStruct->unk7D = 0;
@@ -1587,7 +1587,7 @@ bool8 sub_80E7DD0(void)
 
     if (gEasyChatStruct->unk7D != 0
      && gEasyChatStruct->unk7E[gEasyChatStruct->unk86] > 1
-     && sub_80EB2D4(r4) == 7)
+     && GetEasyChatWordStringLength(r4) == 7)
         return FALSE;
 
     sub_80E7F00(gEasyChatStruct->unk27, r4);
@@ -1617,8 +1617,8 @@ void sub_80E7F00(u16 a, u16 b)
 {
     u16 r5 = a / gEasyChatStruct->unk83;
     u16 r8 = a % gEasyChatStruct->unk83;
-    u16 r4 = sub_80EB2D4(gEasyChatStruct->unkC[a]);
-    u16 r3 = sub_80EB2D4(b);
+    u16 r4 = GetEasyChatWordStringLength(gEasyChatStruct->unkC[a]);
+    u16 r3 = GetEasyChatWordStringLength(b);
 
     if (r4 == 7)
     {
@@ -1729,9 +1729,9 @@ void sub_80E81C0(void)
 {
     u8 *ptr;
 
-    ptr = sub_80EB218(gStringVar2, gEasyChatStruct->unk9C7C, 0);
+    ptr = sub_80EB218(gStringVar2, gEasyChatStruct->currentPhrase[0], 0);
     *ptr++ = CHAR_SPACE;
-    sub_80EB218(ptr, gEasyChatStruct->unk9C7E, 0);
+    sub_80EB218(ptr, gEasyChatStruct->currentPhrase[1], 0);
 }
 
 void sub_80E81FC(void)

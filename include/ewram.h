@@ -92,8 +92,8 @@ extern u8 gSharedMem[];
 // record_mixing.c
 #define eRecordMixTvShows               ((union TVShow (*)[TV_SHOWS_COUNT])(gSharedMem + 0x7000))
 #define eRecordMixPokeNews              ((struct PokeNews (*)[POKE_NEWS_COUNT])(gSharedMem + 0x7000)) // same addr as above
-#define eLinkedDewfordTrendsBuffer      ((struct EasyChatPair *)(gSharedMem + 0x7800))
-#define eSavedDewfordTrendsBuffer       ((struct EasyChatPair *)(gSharedMem + 0x7900))
+#define eLinkedDewfordTrendsBuffer      ((struct DewfordTrend *)(gSharedMem + 0x7800))
+#define eSavedDewfordTrendsBuffer       ((struct DewfordTrend *)(gSharedMem + 0x7900))
 #define eReceivedRecords                (*(struct PlayerRecords *)(gSharedMem + 0x08000))
 #define eSentRecord                     (*(struct PlayerRecords *)(gSharedMem + 0x18000))
 

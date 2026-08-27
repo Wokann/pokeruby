@@ -547,7 +547,7 @@ static void sub_8093688(void)
     gTrainerCardPtr->showColon = 0;
     gTrainerCardPtr->frameCounter = 0;
     for (i = 0; i < 4; i++)
-        EasyChat_GetWordText(gTrainerCardPtr->easyChatPhrase[i], gTrainerCardPtr->displayedCard.var_28[i]);
+        CopyEasyChatWord(gTrainerCardPtr->easyChatPhrase[i], gTrainerCardPtr->displayedCard.var_28[i]);
     TrainerCard_FillFlags();
 }
 

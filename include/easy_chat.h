@@ -98,8 +98,7 @@ struct Shared1000
     u8 filler9C72[2];
     struct Sprite *unk9C74;
     u8 filler9C78[4];
-    u16 unk9C7C;  // this is at 0x9FA8 in German
-    s16 unk9C7E;
+    u16 currentPhrase[2];  // this is at 0x9FA8 in German
     u8 unk9C80[0xC9-0x80];
     u8 unk9CC9[0xD12-0xCC9];
     u8 unk9D12[0x5B-0x12];
@@ -119,13 +118,13 @@ extern struct Shared1000 *const gEasyChatStruct;
 
 void ShowEasyChatScreen(void);
 void sub_80E62A0(u8 arg0, u16 *arg1, void (*arg2)(void), u8 arg3);
-u16 sub_80EB72C(u16 group);
+u16 GetRandomEasyChatWordFromGroup(u16 groupId);
 void sub_80EB6FC(u16 *, u16);
 void InitEasyChatPhrases(void);
 u8 sub_80EAD7C(u8 group);
 u16 EasyChat_GetNumWordsInGroup(u8);
-u8 sub_80EB37C(u16);
-u8* EasyChat_GetWordText(u8 *, u16);
+bool8 IsEasyChatWordInvalid(u16 easyChatWord);
+u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord);
 u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16, u16);
 u16 GetRandomEasyChatWordFromUnlockedGroup(u16 group);
 void UnlockTrendySaying(u8);

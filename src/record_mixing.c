@@ -38,7 +38,7 @@ void *recordMixingSecretBases = &gSaveBlock1.secretBases;
 void *recordMixingTvShows = &gSaveBlock1.tvShows;
 void *recordMixingPokeNews = &gSaveBlock1.pokeNews;
 void *recordMixingOldMan = &gSaveBlock1.oldMan;
-void *recordMixingEasyChatPairs = &gSaveBlock1.easyChatPairs;
+void *recordMixingDewfordTrends = &gSaveBlock1.dewfordTrends;
 struct RecordMixingDayCareMail *gDayCareMailPlayerRecord = &gDayCareMailRecord;
 struct BattleTowerRecord *gBattleTowerPlayerRecord = &gSaveBlock2.battleTower.playerRecord;
 
@@ -55,7 +55,7 @@ struct PlayerRecords
     TVShow tvShows[TV_SHOWS_COUNT];
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
     union OldMan oldMan;
-    struct EasyChatPair easyChatPairs[5];
+    struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
     struct RecordMixingDayCareMail daycareMailRecord;
     struct BattleTowerRecord battleTowerRecord;
     u16 giftItem;
@@ -71,7 +71,7 @@ void RecordMixing_PrepareExchangePacket(void)
     memcpy(eSentRecord.tvShows, recordMixingTvShows, sizeof(eSentRecord.tvShows));
     memcpy(eSentRecord.pokeNews, recordMixingPokeNews, sizeof(eSentRecord.pokeNews));
     memcpy(&eSentRecord.oldMan, recordMixingOldMan, sizeof(eSentRecord.oldMan));
-    memcpy(eSentRecord.easyChatPairs, recordMixingEasyChatPairs, sizeof(eSentRecord.easyChatPairs));
+    memcpy(eSentRecord.dewfordTrends, recordMixingDewfordTrends, sizeof(eSentRecord.dewfordTrends));
     gDayCareMailRecord.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     gDayCareMailRecord.mail[1] = gSaveBlock1.daycare.misc.mail[1];
     InitDaycareMailRecordMixing(gSaveBlock1.daycare.mons, &gDayCareMailRecord);
@@ -88,7 +88,7 @@ void RecordMixing_ReceiveExchangePacket(u32 which)
     ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecords), which);
     ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecords), which);
     ReceiveOldManData((u8 *)&eReceivedRecords.oldMan, sizeof(struct PlayerRecords), which);
-    ReceiveDewfordTrendData(eReceivedRecords.easyChatPairs, sizeof(struct PlayerRecords), which);
+    ReceiveDewfordTrendData(eReceivedRecords.dewfordTrends, sizeof(struct PlayerRecords), which);
     ReceiveDaycareMailData(&eReceivedRecords.daycareMailRecord,
         sizeof(struct PlayerRecords),
         which,

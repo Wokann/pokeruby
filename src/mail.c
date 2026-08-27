@@ -321,7 +321,7 @@ void HandleReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
     {
         sSharedMemPtr->varFF = GAME_LANGUAGE;
         sSharedMemPtr->var100 = gSpecialVar_0x8004;
-        sSharedMemPtr->var104 = (MainCallback)EasyChat_GetWordText;
+        sSharedMemPtr->var104 = (MainCallback)CopyEasyChatWord;
         sSharedMemPtr->var108 = (MainCallback)ConvertEasyChatWordsToString;
         sSharedMemPtr->varFA = gSpecialVar_0x8006;
     }
@@ -330,7 +330,7 @@ void HandleReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
     {
         sSharedMemPtr->varFF = GAME_LANGUAGE;
         sSharedMemPtr->var100 = 1;
-        sSharedMemPtr->var104 = (MainCallback)EasyChat_GetWordText;
+        sSharedMemPtr->var104 = (MainCallback)CopyEasyChatWord;
         sSharedMemPtr->var108 = (MainCallback)ConvertEasyChatWordsToString;
         if (IS_ITEM_MAIL(arg0->itemId))
         {

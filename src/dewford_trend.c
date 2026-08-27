@@ -11,202 +11,208 @@
 extern u16 gSpecialVar_Result;
 extern u16 gSpecialVar_0x8004;
 
-static void sub_80FA46C(struct EasyChatPair *s, u16 b, u8 c);
-static bool8 sub_80FA670(struct EasyChatPair *a, struct EasyChatPair *b, u8 c);
-static void sub_80FA740(struct EasyChatPair *s);
-static bool8 SB1ContainsWords(u16 *a);
+enum {
+    SORT_MODE_NORMAL,
+    SORT_MODE_MAX_FIRST,
+    SORT_MODE_FULL,
+};
+
+static void SortTrends(struct DewfordTrend *trends, u16 numTrends, u8 mode);
+static bool8 CompareTrends(struct DewfordTrend *a, struct DewfordTrend *b, u8 mode);
+static void SeedTrendRng(struct DewfordTrend *trend);
+static bool8 IsPhraseInSavedTrends(u16 *phrase);
 static bool8 IsEasyChatPairEqual(u16 *words1, u16 *words2);
-static s16 GetEqualEasyChatPairIndex(struct EasyChatPair *a, u16 b);
+static s16 GetSavedTrendIndex(struct DewfordTrend *trend, u16 numSaved);
 
 void InitDewfordTrend(void)
 {
     u16 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
     {
-        gSaveBlock1.easyChatPairs[i].words[0] = sub_80EB72C(EC_GROUP_CONDITIONS);
+        gSaveBlock1.dewfordTrends[i].words[0] = GetRandomEasyChatWordFromGroup(EC_GROUP_CONDITIONS);
 
         if (Random() & 1)
-            gSaveBlock1.easyChatPairs[i].words[1] = sub_80EB72C(EC_GROUP_LIFESTYLE);
+            gSaveBlock1.dewfordTrends[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_LIFESTYLE);
         else
-            gSaveBlock1.easyChatPairs[i].words[1] = sub_80EB72C(EC_GROUP_HOBBIES);
+            gSaveBlock1.dewfordTrends[i].words[1] = GetRandomEasyChatWordFromGroup(EC_GROUP_HOBBIES);
 
-        gSaveBlock1.easyChatPairs[i].unk1_6 = Random() & 1;
-        sub_80FA740(&gSaveBlock1.easyChatPairs[i]);
+        gSaveBlock1.dewfordTrends[i].gainingTrendiness = Random() & 1;
+        SeedTrendRng(&gSaveBlock1.dewfordTrends[i]);
     }
-    sub_80FA46C(gSaveBlock1.easyChatPairs, 5, 0);
+    SortTrends(gSaveBlock1.dewfordTrends, SAVED_TRENDS_COUNT, SORT_MODE_NORMAL);
 }
 
-void UpdateDewfordTrendPerDay(u16 a)
+void UpdateDewfordTrendPerDay(u16 days)
 {
     u16 i;
 
-    if (a != 0)
+    if (days != 0)
     {
-        u32 sp0 = a * 5;
+        u32 clockRand = days * 5;
 
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < SAVED_TRENDS_COUNT; i++)
         {
             //_080FA24A
-            u32 r4;
-            u32 r2 = sp0;
-            struct EasyChatPair *r5 = &gSaveBlock1.easyChatPairs[i];
+            u32 trendiness;
+            u32 rand = clockRand;
+            struct DewfordTrend *trend = &gSaveBlock1.dewfordTrends[i];
 
-            if (r5->unk1_6 == 0)
+            if (trend->gainingTrendiness == 0)
             {
-                if (r5->unk0_0 >= (u16)r2)
+                if (trend->trendiness >= (u16)rand)
                 {
-                    r5->unk0_0 -= r2;
-                    if (r5->unk0_0 == 0)
-                        r5->unk1_6 = 1;
+                    trend->trendiness -= rand;
+                    if (trend->trendiness == 0)
+                        trend->gainingTrendiness = 1;
                     continue;
                 }
                 //_080FA290
-                r2 -= r5->unk0_0;
-                r5->unk0_0 = 0;
-                r5->unk1_6 = 1;
+                rand -= trend->trendiness;
+                trend->trendiness = 0;
+                trend->gainingTrendiness = 1;
             }
             //_080FA2A0
-            r4 = r5->unk0_0 + r2;
-            if ((u16)r4 > r5->unk0_7)
+            trendiness = trend->trendiness + rand;
+            if ((u16)trendiness > trend->maxTrendiness)
             {
-                u32 sp4 = r4 % r5->unk0_7;
-                r4 = r4 / r5->unk0_7;
+                u32 newTrendiness = trendiness % trend->maxTrendiness;
+                trendiness = trendiness / trend->maxTrendiness;
 
-                r5->unk1_6 = r4 ^ 1;
-                if (r5->unk1_6)
-                    r5->unk0_0 = sp4;
+                trend->gainingTrendiness = trendiness ^ 1;
+                if (trend->gainingTrendiness)
+                    trend->trendiness = newTrendiness;
                 else
                 //_080FA2FA
-                    r5->unk0_0 = r5->unk0_7 - sp4;
+                    trend->trendiness = trend->maxTrendiness - newTrendiness;
             }
             else
             {
                 //_080FA310
-                r5->unk0_0 = r4;
+                trend->trendiness = trendiness;
 
-                if (r5->unk0_0 == r5->unk0_7)
-                    r5->unk1_6 = 0;
+                if (trend->trendiness == trend->maxTrendiness)
+                    trend->gainingTrendiness = 0;
             }
         }
-        sub_80FA46C(gSaveBlock1.easyChatPairs, 5, 0);
+        SortTrends(gSaveBlock1.dewfordTrends, SAVED_TRENDS_COUNT, SORT_MODE_NORMAL);
     }
     //_080FA34E
 }
 
-bool8 sub_80FA364(u16 *a)
+bool8 TrySetTrendyPhrase(u16 *phrase)
 {
-    struct EasyChatPair s = {0};
+    struct DewfordTrend trend = {0};
     u16 i;
 
-    if (!SB1ContainsWords(a))
+    if (!IsPhraseInSavedTrends(phrase))
     {
         if (!FlagGet(FLAG_SYS_POPWORD_INPUT))
         {
             FlagSet(FLAG_SYS_POPWORD_INPUT);
             if (!FlagGet(FLAG_SYS_MIX_RECORD))
             {
-                gSaveBlock1.easyChatPairs[0].words[0] = a[0];
-                gSaveBlock1.easyChatPairs[0].words[1] = a[1];
+                gSaveBlock1.dewfordTrends[0].words[0] = phrase[0];
+                gSaveBlock1.dewfordTrends[0].words[1] = phrase[1];
                 return TRUE;
             }
         }
 
         //_080FA3C8
-        s.words[0] = a[0];
-        s.words[1] = a[1];
-        s.unk1_6 = 1;
-        sub_80FA740(&s);
+        trend.words[0] = phrase[0];
+        trend.words[1] = phrase[1];
+        trend.gainingTrendiness = 1;
+        SeedTrendRng(&trend);
 
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < SAVED_TRENDS_COUNT; i++)
         {
-            if (sub_80FA670(&s, &gSaveBlock1.easyChatPairs[i], 0))
+            if (CompareTrends(&trend, &gSaveBlock1.dewfordTrends[i], SORT_MODE_NORMAL))
             {
-                u16 r3;
+                u16 j;
 
-                for (r3 = 4; r3 > i; r3--)
+                for (j = SAVED_TRENDS_COUNT - 1; j > i; j--)
                 {
-                    gSaveBlock1.easyChatPairs[r3] = gSaveBlock1.easyChatPairs[r3 - 1];
+                    gSaveBlock1.dewfordTrends[j] = gSaveBlock1.dewfordTrends[j - 1];
                 }
-                gSaveBlock1.easyChatPairs[i] = s;
-                // i == 4 in emerald
+                gSaveBlock1.dewfordTrends[i] = trend;
+                // i == SAVED_TRENDS_COUNT - 1 in Emerald
                 return (i == 0);
             }
             //_080FA450
         }
-        gSaveBlock1.easyChatPairs[4] = s;
+        gSaveBlock1.dewfordTrends[SAVED_TRENDS_COUNT - 1] = trend;
     }
     return FALSE;
 }
 
-static void sub_80FA46C(struct EasyChatPair *s, u16 b, u8 c)
+static void SortTrends(struct DewfordTrend *trends, u16 numTrends, u8 mode)
 {
-    u16 h;
+    u16 i;
 
-    for (h = 0; h < b; h++)
+    for (i = 0; i < numTrends; i++)
     {
-        u16 i;
+        u16 j;
 
-        for (i = h + 1; i < b; i++)
+        for (j = i + 1; j < numTrends; j++)
         {
-            if (sub_80FA670(&s[i], &s[h], c))
+            if (CompareTrends(&trends[j], &trends[i], mode))
             {
-                struct EasyChatPair temp;
+                struct DewfordTrend temp;
 
-                temp = s[i];
-                s[i] = s[h];
-                s[h] = temp;
+                temp = trends[j];
+                trends[j] = trends[i];
+                trends[i] = temp;
             }
         }
     }
 }
 
-void ReceiveDewfordTrendData(void * a, u32 b, u8 unused)
+void ReceiveDewfordTrendData(struct DewfordTrend *linkedTrends, size_t size, u8 unused)
 {
     u16 i;
     u16 j;
-    u16 r7;
-    struct EasyChatPair *src;
-    struct EasyChatPair *dst;
+    u16 numTrends;
+    struct DewfordTrend *src;
+    struct DewfordTrend *dst;
     u16 players = GetLinkPlayerCount();
 
     for (i = 0; i < players; i++)
-        memcpy(&eLinkedDewfordTrendsBuffer[i * 5], (u8 *)a + i * b, 40);
+        memcpy(&eLinkedDewfordTrendsBuffer[i * SAVED_TRENDS_COUNT], (u8 *)linkedTrends + i * size, sizeof(struct DewfordTrend) * SAVED_TRENDS_COUNT);
     src = eLinkedDewfordTrendsBuffer;
     dst = eSavedDewfordTrendsBuffer;
-    r7 = 0;
+    numTrends = 0;
     for (i = 0; i < players; i++)
     {
-        for (j = 0; j < 5; j++)
+        for (j = 0; j < SAVED_TRENDS_COUNT; j++)
         {
-            s16 foo = GetEqualEasyChatPairIndex(src, r7);
-            if (foo < 0)
+            s16 idx = GetSavedTrendIndex(src, numTrends);
+            if (idx < 0)
             {
                 *(dst++) = *src;
-                r7++;
+                numTrends++;
             }
             else
             {
-                if (eSavedDewfordTrendsBuffer[foo].unk0_0 < src->unk0_0)
+                if (eSavedDewfordTrendsBuffer[idx].trendiness < src->trendiness)
                 {
-                    eSavedDewfordTrendsBuffer[foo] = *src;
+                    eSavedDewfordTrendsBuffer[idx] = *src;
                 }
             }
             src++;
         }
     }
-    sub_80FA46C(eSavedDewfordTrendsBuffer, r7, 2);
+    SortTrends(eSavedDewfordTrendsBuffer, numTrends, SORT_MODE_FULL);
     src = eSavedDewfordTrendsBuffer;
-    dst = gSaveBlock1.easyChatPairs;
-    for (i = 0; i < 5; i++)
+    dst = gSaveBlock1.dewfordTrends;
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
         *(dst++) = *(src++);
 }
 
 void BufferTrendyPhraseString(void)
 {
-    struct EasyChatPair *s = &gSaveBlock1.easyChatPairs[gSpecialVar_0x8004];
+    struct DewfordTrend *trend = &gSaveBlock1.dewfordTrends[gSpecialVar_0x8004];
 
-    ConvertEasyChatWordsToString(gStringVar1, s->words, 2, 1);
+    ConvertEasyChatWordsToString(gStringVar1, trend->words, 2, 1);
 }
 
 void IsTrendyPhraseBoring(void)
@@ -215,11 +221,11 @@ void IsTrendyPhraseBoring(void)
 
     do
     {
-        if (gSaveBlock1.easyChatPairs[0].unk0_0 - gSaveBlock1.easyChatPairs[1].unk0_0 > 1)
+        if (gSaveBlock1.dewfordTrends[0].trendiness - gSaveBlock1.dewfordTrends[1].trendiness > 1)
             break;
-        if (gSaveBlock1.easyChatPairs[0].unk1_6)
+        if (gSaveBlock1.dewfordTrends[0].gainingTrendiness)
             break;
-        if (!gSaveBlock1.easyChatPairs[1].unk1_6)
+        if (!gSaveBlock1.dewfordTrends[1].gainingTrendiness)
             break;
         result = 1;
     } while (0);
@@ -229,45 +235,45 @@ void IsTrendyPhraseBoring(void)
 
 void GetDewfordHallPaintingNameIndex(void)
 {
-    gSpecialVar_Result = (gSaveBlock1.easyChatPairs[0].words[0] + gSaveBlock1.easyChatPairs[0].words[1]) & 7;
+    gSpecialVar_Result = (gSaveBlock1.dewfordTrends[0].words[0] + gSaveBlock1.dewfordTrends[0].words[1]) & 7;
 }
 
-static bool8 sub_80FA670(struct EasyChatPair *a, struct EasyChatPair *b, u8 c)
+static bool8 CompareTrends(struct DewfordTrend *a, struct DewfordTrend *b, u8 mode)
 {
-    switch (c)
+    switch (mode)
     {
-    case 0:
-        if (a->unk0_0 > b->unk0_0)
+    case SORT_MODE_NORMAL:
+        if (a->trendiness > b->trendiness)
             return TRUE;
-        if (a->unk0_0 < b->unk0_0)
+        if (a->trendiness < b->trendiness)
             return FALSE;
-        if (a->unk0_7 > b->unk0_7)
+        if (a->maxTrendiness > b->maxTrendiness)
             return TRUE;
-        if (a->unk0_7 < b->unk0_7)
-            return FALSE;
-        break;
-    case 1:
-        if (a->unk0_7 > b->unk0_7)
-            return TRUE;
-        if (a->unk0_7 < b->unk0_7)
-            return FALSE;
-        if (a->unk0_0 > b->unk0_0)
-            return TRUE;
-        if (a->unk0_0 < b->unk0_0)
+        if (a->maxTrendiness < b->maxTrendiness)
             return FALSE;
         break;
-    case 2:
-        if (a->unk0_0 > b->unk0_0)
+    case SORT_MODE_MAX_FIRST:
+        if (a->maxTrendiness > b->maxTrendiness)
             return TRUE;
-        if (a->unk0_0 < b->unk0_0)
+        if (a->maxTrendiness < b->maxTrendiness)
             return FALSE;
-        if (a->unk0_7 > b->unk0_7)
+        if (a->trendiness > b->trendiness)
             return TRUE;
-        if (a->unk0_7 < b->unk0_7)
+        if (a->trendiness < b->trendiness)
             return FALSE;
-        if (a->unk2 > b->unk2)
+        break;
+    case SORT_MODE_FULL:
+        if (a->trendiness > b->trendiness)
             return TRUE;
-        if (a->unk2 < b->unk2)
+        if (a->trendiness < b->trendiness)
+            return FALSE;
+        if (a->maxTrendiness > b->maxTrendiness)
+            return TRUE;
+        if (a->maxTrendiness < b->maxTrendiness)
+            return FALSE;
+        if (a->rand > b->rand)
+            return TRUE;
+        if (a->rand < b->rand)
             return FALSE;
         if (a->words[0] > b->words[0])
             return TRUE;
@@ -282,29 +288,29 @@ static bool8 sub_80FA670(struct EasyChatPair *a, struct EasyChatPair *b, u8 c)
     return Random() & 1;
 }
 
-static void sub_80FA740(struct EasyChatPair *s)
+static void SeedTrendRng(struct DewfordTrend *trend)
 {
-    u16 r4;
+    u16 rand;
 
-    r4 = Random() % 98;
-    if (r4 > 50)
+    rand = Random() % 98;
+    if (rand > 50)
     {
-        r4 = Random() % 98;
-        if (r4 > 80)
-            r4 = Random() % 98;
+        rand = Random() % 98;
+        if (rand > 80)
+            rand = Random() % 98;
     }
-    s->unk0_7 = r4 + 30;
-    s->unk0_0 = (Random() % (r4 + 1)) + 30;
-    s->unk2 = Random();
+    trend->maxTrendiness = rand + 30;
+    trend->trendiness = (Random() % (rand + 1)) + 30;
+    trend->rand = Random();
 }
 
-static bool8 SB1ContainsWords(u16 *a)
+static bool8 IsPhraseInSavedTrends(u16 *phrase)
 {
     u16 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
     {
-        if (IsEasyChatPairEqual(a, gSaveBlock1.easyChatPairs[i].words) != 0)
+        if (IsEasyChatPairEqual(phrase, gSaveBlock1.dewfordTrends[i].words) != 0)
             return TRUE;
     }
     return FALSE;
@@ -322,16 +328,16 @@ static bool8 IsEasyChatPairEqual(u16 *words1, u16 *words2)
     return TRUE;
 }
 
-static s16 GetEqualEasyChatPairIndex(struct EasyChatPair *a, u16 b)
+static s16 GetSavedTrendIndex(struct DewfordTrend *trend, u16 numSaved)
 {
     s16 i;
-    struct EasyChatPair *s = eSavedDewfordTrendsBuffer;
+    struct DewfordTrend *savedTrends = eSavedDewfordTrendsBuffer;
 
-    for (i = 0; i < b; i++)
+    for (i = 0; i < numSaved; i++)
     {
-        if (IsEasyChatPairEqual(a->words, s->words))
+        if (IsEasyChatPairEqual(trend->words, savedTrends->words))
             return i;
-        s++;
+        savedTrends++;
     }
     return -1;
 }

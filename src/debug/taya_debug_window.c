@@ -203,28 +203,28 @@ bool8 TayaDebugMenu_Trend(void)
     u8 sp00[32];
     u8 sp20[8];
     u16 i;
-    struct EasyChatPair *pair;
+    struct DewfordTrend *trend;
 
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 30, 11);
-    pair = gSaveBlock1.easyChatPairs;
+    trend = gSaveBlock1.dewfordTrends;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
     {
         u8 * r4;
 
-        sp00[0] = pair->unk1_6 ? CHAR_0 + 1 : CHAR_0 + 0;
-        EasyChat_GetWordText(sp20, pair->words[0]);
+        sp00[0] = trend->gainingTrendiness ? CHAR_0 + 1 : CHAR_0 + 0;
+        CopyEasyChatWord(sp20, trend->words[0]);
         r4 = StringCopyPadded(sp00 + 1, sp20, CHAR_SPACE, 7);
-        EasyChat_GetWordText(sp20, pair->words[1]);
+        CopyEasyChatWord(sp20, trend->words[1]);
         r4 = StringCopyPadded(r4, sp20, CHAR_SPACE, 8);
-        r4 = ConvertIntToDecimalStringN(r4, pair->unk0_0, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        r4 = ConvertIntToDecimalStringN(r4, trend->trendiness, STR_CONV_MODE_RIGHT_ALIGN, 3);
         *r4++ = CHAR_SPACE;
-        r4 = ConvertIntToDecimalStringN(r4, pair->unk0_7, STR_CONV_MODE_RIGHT_ALIGN, 3);
+        r4 = ConvertIntToDecimalStringN(r4, trend->maxTrendiness, STR_CONV_MODE_RIGHT_ALIGN, 3);
         *r4++ = CHAR_SPACE;
-        ConvertIntToDecimalStringN(r4, pair->unk2, STR_CONV_MODE_RIGHT_ALIGN, 5);
+        ConvertIntToDecimalStringN(r4, trend->rand, STR_CONV_MODE_RIGHT_ALIGN, 5);
         Menu_PrintText(sp00, 1, 2 * i + 1);
-        pair++;
+        trend++;
     }
     gMenuCallback = debug_sub_8090808;
     return FALSE;
@@ -247,11 +247,11 @@ bool8 TayaDebugMenu_TrendR(void)
     u16 i;
     u16 j;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < SAVED_TRENDS_COUNT; i++)
     {
         for (j = 0; j < 2; j++)
         {
-            gSaveBlock1.easyChatPairs[i].words[j] = sub_80EB72C(Random() % 22);
+            gSaveBlock1.dewfordTrends[i].words[j] = GetRandomEasyChatWordFromGroup(Random() % 22);
         }
     }
     Menu_EraseScreen();

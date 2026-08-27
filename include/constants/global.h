@@ -49,6 +49,7 @@
 #define SECRET_BASES_COUNT  20
 #define TV_SHOWS_COUNT      25
 #define POKE_NEWS_COUNT     16
+#define SAVED_TRENDS_COUNT  5
 #define PC_ITEMS_COUNT      50
 #define BAG_ITEMS_COUNT     20
 #define BAG_KEYITEMS_COUNT  20

@@ -230,12 +230,12 @@ struct RamScript
     struct RamScriptData data;
 };
 
-struct EasyChatPair
+struct DewfordTrend
 {
-    u16 unk0_0:7;
-    u16 unk0_7:7;
-    u16 unk1_6:1;
-    u16 unk2;
+    u16 trendiness:7;
+    u16 maxTrendiness:7;
+    u16 gainingTrendiness:1;
+    u16 rand;
     u16 words[2];
 }; /*size = 0x8*/
 
@@ -737,7 +737,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x2D8C*/ u8 unlockedTrendySayings[4];  // Bitfield for unlockable Easy Chat words in EC_GROUP_TRENDY_SAYING.
     /*0x2D90*/ u8 filler_2D90[0x4];
     /*0x2D94*/ union OldMan oldMan;
-    /*0x2DD4*/ struct EasyChatPair easyChatPairs[5]; //Dewford trend [0] and some other stuff
+    /*0x2DD4*/ struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
     /*0x2DFC*/ struct ContestWinner contestWinners[8];
     /*0x2EFC*/ struct ContestWinner museumPortraits[5];
     /*0x2F9C*/ struct DayCare daycare;

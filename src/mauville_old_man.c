@@ -336,7 +336,7 @@ static void PrepareSongText(void)
     // Put three words on each line
     for (lineNum = 0; lineNum < 2; lineNum++)
     {
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -347,7 +347,7 @@ static void PrepareSongText(void)
         str++;
         *(wordEnd++) = CHAR_SPACE;
 
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -358,7 +358,7 @@ static void PrepareSongText(void)
         str++;
         *(wordEnd++) = CHAR_NEWLINE;
 
-        wordEnd = EasyChat_GetWordText(wordEnd, *(lyrics++));
+        wordEnd = CopyEasyChatWord(wordEnd, *(lyrics++));
         while (wordEnd != str)
         {
             if (*str == CHAR_SPACE)
@@ -406,7 +406,7 @@ void HipsterTryTeachWord(void)
     }
     else
     {
-        EasyChat_GetWordText(gStringVar1, word);
+        CopyEasyChatWord(gStringVar1, word);
         gSpecialVar_Result = TRUE;
     }
 }
@@ -439,7 +439,7 @@ void GenerateGiddyLine(void)
         u32 adjective = Random();
 
         adjective %= 8;
-        stringPtr = EasyChat_GetWordText(gStringVar4, giddy->randomWords[giddy->taleCounter]);
+        stringPtr = CopyEasyChatWord(gStringVar4, giddy->randomWords[giddy->taleCounter]);
         stringPtr = StringCopy(stringPtr, gOtherText_Is);
         stringPtr = StringCopy(stringPtr, sGiddyAdjectives[adjective]);
         StringCopy(stringPtr, gOtherText_DontYouAgree);
