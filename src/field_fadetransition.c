@@ -196,7 +196,7 @@ void mapldr_default(void)
     LockPlayerFieldControls();
 }
 
-void sub_8080B60(void)
+void FieldCB_WarpExitFadeFromBlack(void)
 {
     Overworld_PlaySpecialMapMusic();
     pal_fill_black();
@@ -607,7 +607,7 @@ void sub_808115C(u8 taskId)
     }
 }
 
-void sub_80812C8(u8 taskId)
+void Task_DoContestHallWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -626,19 +626,19 @@ void sub_80812C8(u8 taskId)
         break;
     case 2:
         WarpIntoMap();
-        SetMainCallback2(sub_8054534);
+        SetMainCallback2(CB2_ReturnToFieldContestHall);
         DestroyTask(taskId);
         break;
     }
 }
 
-void sub_8081334(void)
+void DoContestHallWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
-    gFieldCallback = sub_8080B60;
-    CreateTask(sub_80812C8, 10);
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    CreateTask(Task_DoContestHallWarp, 10);
 }
