@@ -1735,7 +1735,7 @@ void SetShoalItemFlag(u16 v0)
     FlagSet(0x85f);
 }
 
-void PutZigzagoonInPlayerParty(void)
+void LoadWallyZigzagoon(void)
 {
     u16 monData;
     CreateMon(&gPlayerParty[0], SPECIES_ZIGZAGOON, 7, 0x20, FALSE, 0, FALSE, 0);

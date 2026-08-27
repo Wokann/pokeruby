@@ -27,7 +27,7 @@ PetalburgCity_EventScript_WallyTutorial:: @ 814B747
 	lockall
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	special SavePlayerParty
-	special PutZigzagoonInPlayerParty
+	special LoadWallyZigzagoon
 	applymovement 2, PetalburgCity_Movement_WallyTutorialWally
 	applymovement LOCALID_PLAYER, PetalburgCity_Movement_WallyTutorialPlayer
 	waitmovement 0
