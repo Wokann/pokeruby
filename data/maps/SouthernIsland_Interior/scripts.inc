@@ -64,7 +64,7 @@ SouthernIsland_Interior_EventScript_Lati:: @ 8160BA7
 	setwildbattle SPECIES_LATIAS_OR_LATIOS, 50, ITEM_SOUL_DEW
 	setflag FLAG_HIDE_LATIOS_OR_LATIAS_STATIONARY
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	special ScrSpecial_StartSouthernIslandBattle
+	special BattleSetup_StartLatiBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	releaseall
