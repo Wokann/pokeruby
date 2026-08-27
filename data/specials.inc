@@ -348,7 +348,7 @@ gSpecials::
 	def_special BufferLottoTicketNumber
 	def_special TryEnableBravoTrainerBattleTower
 	def_special DoesPartyHaveEnigmaBerry
-	def_special ScriptRandom
+	def_special GenerateContestRand
 	def_special ValidateMixingGameLanguage
 .ifdef GERMAN
 	def_special nullsub_814B200

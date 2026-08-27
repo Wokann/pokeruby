@@ -127,7 +127,7 @@ LinkContestRoom1_EventScript_SetRandomAudience7:: @ 815F6DB
 
 LinkContestRoom1_EventScript_GetRandomAudienceGfxId:: @ 815F6E6
 	setvar VAR_RESULT, 32
-	special ScriptRandom
+	special GenerateContestRand
 	addvar VAR_RESULT, 1
 	switch VAR_RESULT
 	case 1, LinkContestRoom1_EventScript_RandomAudience5

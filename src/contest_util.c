@@ -361,7 +361,7 @@ void GetContestMultiplayerId(void)
         gSpecialVar_Result = 4;
 }
 
-void ScriptRandom(void)
+void GenerateContestRand(void)
 {
     u16 random;
     u16 *scriptPtr;
