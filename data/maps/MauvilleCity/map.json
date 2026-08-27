@@ -98,6 +98,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_MAUVILLE_WALLY",
       "graphics_id": "OBJ_EVENT_GFX_WALLY",
       "x": 8,
       "y": 6,
@@ -108,9 +109,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MauvilleCity_EventScript_Wally",
-      "flag": "FLAG_HIDE_WALLY_MAUVILLE"
+      "flag": "FLAG_HIDE_MAUVILLE_CITY_WALLY"
     },
     {
+      "local_id": "LOCALID_MAUVILLE_WALLYS_UNCLE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
       "x": 9,
       "y": 6,
@@ -121,7 +123,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MauvilleCity_EventScript_WallysUncle",
-      "flag": "FLAG_HIDE_WALLY_FATHER_MAUVILLE"
+      "flag": "FLAG_HIDE_MAUVILLE_CITY_WALLYS_UNCLE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WATTSON",
@@ -134,7 +136,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MauvilleCity_EventScript_Wattson",
-      "flag": "FLAG_HIDE_WATTSON_MAUVILLE"
+      "flag": "FLAG_HIDE_MAUVILLE_CITY_WATTSON"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",

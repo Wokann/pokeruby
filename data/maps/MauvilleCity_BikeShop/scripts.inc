@@ -71,10 +71,10 @@ MauvilleCity_BikeShop_EventScript_AskSwitchBikes:: @ 815686E
 MauvilleCity_BikeShop_EventScript_SwitchBikes:: @ 815688D
 	msgbox MauvilleCity_BikeShop_Text_IllSwitchBikes, MSGBOX_DEFAULT
 	checkitem ITEM_ACRO_BIKE, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_BikeShop_EventScript_SwitchAcroForMach
 	checkitem ITEM_MACH_BIKE, 1
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq MauvilleCity_BikeShop_EventScript_SwitchMachForAcro
 	msgbox MauvilleCity_BikeShop_Text_OhYourBikeIsInPC, MSGBOX_DEFAULT
 	release

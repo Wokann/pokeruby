@@ -1,4 +1,4 @@
-MauvilleCity_PokemonCenter_2F_Text_182724:: @ 8182724
+MauvilleCity_PokemonCenter_2F_Text_Youngster:: @ 8182724
 	.string "Wusstest du, dass du von hier aus via\n"
 	.string "Link Kämpfe im KOLOSSEUM ausfechten\l"
 	.string "kannst?\p"

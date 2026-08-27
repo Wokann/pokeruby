@@ -8,7 +8,9 @@
 #define MULTI_B_PRESSED  127
 
 // Multichoice Ids
-// TODO
+#define MULTI_GAME_CORNER_DOLLS 48
+#define MULTI_GAME_CORNER_COINS 49
+#define MULTI_GAME_CORNER_TMS   55
 
 // Std String Ids
 #define STDSTRING_COOL             0
