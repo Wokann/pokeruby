@@ -163,7 +163,7 @@ gSpecials::
 	def_special CableCar
 	def_special Overworld_PlaySpecialMapMusic
 	def_special StartWallClock
-	def_special ScrSpecial_ViewWallClock
+	def_special Special_ViewWallClock
 	def_special ScrSpecial_ChooseStarter
 	def_special ScrSpecial_StartWallyTutorialBattle
 	def_special ChangePokemonNickname

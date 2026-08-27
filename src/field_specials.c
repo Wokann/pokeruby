@@ -73,7 +73,7 @@ void ScrSpecial_ShowDiploma(void)
     LockPlayerFieldControls();
 }
 
-void ScrSpecial_ViewWallClock(void)
+void Special_ViewWallClock(void)
 {
     gMain.savedCallback = CB2_ReturnToField;
     SetMainCallback2(CB2_ViewWallClock);
