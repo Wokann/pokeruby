@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_LILYCOVE_HARBOR_ATTENDANT",
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
       "x": 8,
       "y": 10,
@@ -25,6 +26,7 @@
       "flag": "FLAG_HIDE_FERRY_ATTENDANT_LILYCOVE"
     },
     {
+      "local_id": "LOCALID_LILYCOVE_HARBOR_SS_TIDAL",
       "graphics_id": "OBJ_EVENT_GFX_SS_TIDAL",
       "x": 8,
       "y": 9,
@@ -51,6 +53,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR",
       "graphics_id": "OBJ_EVENT_GFX_SAILOR",
       "x": 8,
       "y": 10,

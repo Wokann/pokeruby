@@ -3,253 +3,253 @@ LilycoveCity_ContestHall_MapScripts:: @ 8159099
 
 	.byte 0 @ XXX
 
-LilycoveCity_ContestHall_EventScript_15909B:: @ 815909B
-	msgbox LilycoveCity_ContestHall_Text_1890D4, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_Boy1:: @ 815909B
+	msgbox LilycoveCity_ContestHall_Text_TodayWonSmartnessContest, MSGBOX_NPC
 	end
 
-LilycoveCity_ContestHall_EventScript_1590A4:: @ 81590A4
-	msgbox LilycoveCity_ContestHall_Text_18915F, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_Boy2:: @ 81590A4
+	msgbox LilycoveCity_ContestHall_Text_EnteredBunchOfContests, MSGBOX_NPC
 	end
 
-LilycoveCity_ContestHall_EventScript_1590AD:: @ 81590AD
-	msgbox LilycoveCity_ContestHall_Text_189221, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_Girl:: @ 81590AD
+	msgbox LilycoveCity_ContestHall_Text_ManWhoWonEarlierHadPokeblocks, MSGBOX_NPC
 	end
 
-LilycoveCity_ContestHall_EventScript_1590B6:: @ 81590B6
-	msgbox LilycoveCity_ContestHall_Text_189299, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_Sailor:: @ 81590B6
+	msgbox LilycoveCity_ContestHall_Text_IsntThisPlaceHumongous, MSGBOX_NPC
 	end
 
-LilycoveCity_ContestHall_EventScript_1590BF:: @ 81590BF
-	msgbox LilycoveCity_ContestHall_Text_189301, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestMC:: @ 81590BF
+	msgbox LilycoveCity_ContestHall_Text_GiveItBestSmartAppeal, MSGBOX_NPC
 	lockall
-	applymovement 4, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_MC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1590D4:: @ 81590D4
-	msgbox LilycoveCity_ContestHall_Text_189366, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestJudge:: @ 81590D4
+	msgbox LilycoveCity_ContestHall_Text_AreYouEnjoyingThisContest, MSGBOX_NPC
 	lockall
-	applymovement 5, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_JUDGE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1590E9:: @ 81590E9
-	msgbox LilycoveCity_ContestHall_Text_1893CE, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestant1:: @ 81590E9
+	msgbox LilycoveCity_ContestHall_Text_EnteredWrongContest, MSGBOX_NPC
 	lockall
-	applymovement 6, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_CONTESTANT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1590FE:: @ 81590FE
-	msgbox LilycoveCity_ContestHall_Text_189463, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestant2:: @ 81590FE
+	msgbox LilycoveCity_ContestHall_Text_RaisedMonToBeSmart, MSGBOX_NPC
 	lockall
-	applymovement 7, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_CONTESTANT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159113:: @ 8159113
-	msgbox LilycoveCity_ContestHall_Text_189512, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestant3:: @ 8159113
+	msgbox LilycoveCity_ContestHall_Text_IfMonPullsSmartMoveNext, MSGBOX_NPC
 	lockall
-	applymovement 8, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_CONTESTANT_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159128:: @ 8159128
-	msgbox LilycoveCity_ContestHall_Text_18956B, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestant4:: @ 8159128
+	msgbox LilycoveCity_ContestHall_Text_DontAppreciateCuteLeechLife, MSGBOX_NPC
 	lockall
-	applymovement 9, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_CONTESTANT_4, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15913D:: @ 815913D
-	msgbox LilycoveCity_ContestHall_Text_1895F3, MSGBOX_SIGN
+LilycoveCity_ContestHall_EventScript_SmartContestAudience1:: @ 815913D
+	msgbox LilycoveCity_ContestHall_Text_YoureBeautifulGrandpa, MSGBOX_SIGN
 	end
 
-LilycoveCity_ContestHall_EventScript_159146:: @ 8159146
-	msgbox LilycoveCity_ContestHall_Text_189617, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestAudience2:: @ 8159146
+	msgbox LilycoveCity_ContestHall_Text_AllSeemToUseDifferentMoves, MSGBOX_NPC
 	lockall
-	applymovement 12, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_AUDIENCE_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15915B:: @ 815915B
-	msgbox LilycoveCity_ContestHall_Text_1896BE, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestAudience3:: @ 815915B
+	msgbox LilycoveCity_ContestHall_Text_PokemonSmarterThanTrainers, MSGBOX_NPC
 	lockall
-	applymovement 22, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_AUDIENCE_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159170:: @ 8159170
-	msgbox LilycoveCity_ContestHall_Text_1896FE, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_SmartContestAudience4:: @ 8159170
+	msgbox LilycoveCity_ContestHall_Text_StillLoveSmartnessContests, MSGBOX_NPC
 	lockall
-	applymovement 11, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SMART_AUDIENCE_4, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159185:: @ 8159185
-	msgbox LilycoveCity_ContestHall_Text_189771, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestMC:: @ 8159185
+	msgbox LilycoveCity_ContestHall_Text_AreYouEnteringBeautyContest, MSGBOX_NPC
 	lockall
-	applymovement 13, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_MC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15919A:: @ 815919A
-	msgbox LilycoveCity_ContestHall_Text_1897AA, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestJudge:: @ 815919A
+	msgbox LilycoveCity_ContestHall_Text_EveryPokemonPristineBeauty, MSGBOX_NPC
 	lockall
-	applymovement 14, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_JUDGE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1591AF:: @ 81591AF
-	msgbox LilycoveCity_ContestHall_Text_18980B, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestant1:: @ 81591AF
+	msgbox LilycoveCity_ContestHall_Text_EyesWillBeGluedToMyBeauty, MSGBOX_NPC
 	lockall
-	applymovement 15, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_CONTESTANT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1591C4:: @ 81591C4
-	msgbox LilycoveCity_ContestHall_Text_189874, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestant2:: @ 81591C4
+	msgbox LilycoveCity_ContestHall_Text_OverdidGrooming, MSGBOX_NPC
 	lockall
-	applymovement 16, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_CONTESTANT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1591D9:: @ 81591D9
-	msgbox LilycoveCity_ContestHall_Text_18990A, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestant3:: @ 81591D9
+	msgbox LilycoveCity_ContestHall_Text_JudgeWontSeeAuroraBeam, MSGBOX_NPC
 	lockall
-	applymovement 17, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_CONTESTANT_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1591EE:: @ 81591EE
-	msgbox LilycoveCity_ContestHall_Text_189981, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestant4:: @ 81591EE
+	msgbox LilycoveCity_ContestHall_Text_PokemonLooksLikeYoungerMe, MSGBOX_NPC
 	lockall
-	applymovement 18, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_CONTESTANT_4, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159203:: @ 8159203
-	msgbox LilycoveCity_ContestHall_Text_189A1D, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestAudience1:: @ 8159203
+	msgbox LilycoveCity_ContestHall_Text_WinBeautyContestMakesMeHappy, MSGBOX_NPC
 	lockall
-	applymovement 19, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_AUDIENCE_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159218:: @ 8159218
-	msgbox LilycoveCity_ContestHall_Text_189A82, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestAudience2:: @ 8159218
+	msgbox LilycoveCity_ContestHall_Text_GanderAtAllThosePrettyPokemon, MSGBOX_NPC
 	lockall
-	applymovement 21, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_AUDIENCE_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15922D:: @ 815922D
-	msgbox LilycoveCity_ContestHall_Text_189AE1, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_BeautyContestAudience3:: @ 815922D
+	msgbox LilycoveCity_ContestHall_Text_CantWinOnBeautyAlone, MSGBOX_NPC
 	lockall
-	applymovement 20, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_BEAUTY_AUDIENCE_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159242:: @ 8159242
-	msgbox LilycoveCity_ContestHall_Text_189B4E, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestMC:: @ 8159242
+	msgbox LilycoveCity_ContestHall_Text_InTheMiddleOfContest, MSGBOX_NPC
 	lockall
-	applymovement 23, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_MC, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159257:: @ 8159257
-	msgbox LilycoveCity_ContestHall_Text_189BBF, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestJudge:: @ 8159257
+	msgbox LilycoveCity_ContestHall_Text_SuchCharmingCuteAppeals, MSGBOX_NPC
 	lockall
-	applymovement 24, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_JUDGE, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15926C:: @ 815926C
-	msgbox LilycoveCity_ContestHall_Text_189C29, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestant1:: @ 815926C
+	msgbox LilycoveCity_ContestHall_Text_MyAzurillWasDistracted, MSGBOX_NPC
 	lockall
-	applymovement 25, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_CONTESTANT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159281:: @ 8159281
-	msgbox LilycoveCity_ContestHall_Text_189C67, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestant2:: @ 8159281
+	msgbox LilycoveCity_ContestHall_Text_NeverWonBattleButContest, MSGBOX_NPC
 	lockall
-	applymovement 26, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_CONTESTANT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_159296:: @ 8159296
-	msgbox LilycoveCity_ContestHall_Text_189CB3, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestant3:: @ 8159296
+	msgbox LilycoveCity_ContestHall_Text_PetalDanceIsMarvel, MSGBOX_NPC
 	lockall
-	applymovement 27, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_CONTESTANT_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1592AB:: @ 81592AB
-	msgbox LilycoveCity_ContestHall_Text_189D11, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestant4:: @ 81592AB
+	msgbox LilycoveCity_ContestHall_Text_MyMonAppealSoMuchCuter, MSGBOX_NPC
 	lockall
-	applymovement 28, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_CONTESTANT_4, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1592C0:: @ 81592C0
+LilycoveCity_ContestHall_EventScript_CuteContestAudience1:: @ 81592C0
 	lockall
-	applymovement 29, Common_Movement_FacePlayer
+	applymovement LOCALID_CUTE_AUDIENCE_1, Common_Movement_FacePlayer
 	waitmovement 0
 	delay 25
-	applymovement 29, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_AUDIENCE_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
-	msgbox LilycoveCity_ContestHall_Text_189DA2, MSGBOX_SIGN
+	msgbox LilycoveCity_ContestHall_Text_MyChildIsInContest, MSGBOX_SIGN
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1592E2:: @ 81592E2
-	msgbox LilycoveCity_ContestHall_Text_189E5F, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestAudience2:: @ 81592E2
+	msgbox LilycoveCity_ContestHall_Text_WantCuteMonOfMyOwn, MSGBOX_NPC
 	lockall
-	applymovement 31, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_AUDIENCE_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_1592F7:: @ 81592F7
-	msgbox LilycoveCity_ContestHall_Text_189DF3, MSGBOX_NPC
+LilycoveCity_ContestHall_EventScript_CuteContestAudience3:: @ 81592F7
+	msgbox LilycoveCity_ContestHall_Text_ThatGirlThereIsCutest, MSGBOX_NPC
 	lockall
-	applymovement 30, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_CUTE_AUDIENCE_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
 
-LilycoveCity_ContestHall_EventScript_15930C:: @ 815930C
-	msgbox LilycoveCity_ContestHall_Text_189EF3, MSGBOX_SIGN
+LilycoveCity_ContestHall_EventScript_BeautyStageSign:: @ 815930C
+	msgbox LilycoveCity_ContestHall_Text_BeautyContestStage, MSGBOX_SIGN
 	end
 
-LilycoveCity_ContestHall_EventScript_159315:: @ 8159315
-	msgbox LilycoveCity_ContestHall_Text_189F29, MSGBOX_SIGN
+LilycoveCity_ContestHall_EventScript_CuteStageSign:: @ 8159315
+	msgbox LilycoveCity_ContestHall_Text_CuteContestStage, MSGBOX_SIGN
 	end
 
-LilycoveCity_ContestHall_EventScript_15931E:: @ 815931E
-	msgbox LilycoveCity_ContestHall_Text_189F5C, MSGBOX_SIGN
+LilycoveCity_ContestHall_EventScript_SmartStageSign:: @ 815931E
+	msgbox LilycoveCity_ContestHall_Text_SmartContestStage, MSGBOX_SIGN
 	end

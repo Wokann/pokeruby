@@ -1,4 +1,5 @@
 #include "constants/global.h"
+#include "constants/contest.h"
 #include "constants/decorations.h"
 #include "constants/easy_chat.h"
 #include "constants/field_effects.h"

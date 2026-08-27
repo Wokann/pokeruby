@@ -7,7 +7,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Greeter:: @ 815841C
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_Curator:: @ 8158425
 	lockall
-	applymovement 2, Common_Movement_FacePlayer
+	applymovement LOCALID_MUSEUM_1F_CURATOR, Common_Movement_FacePlayer
 	message LilycoveCity_LilycoveMuseum_1F_Text_ImCuratorHaveYouViewedOurPaintings
 	waitmessage
 	multichoice 20, 8, 16, 1
@@ -36,9 +36,9 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested:: @ 8158477
 
 LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings:: @ 8158481
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ExcellentCanYouComeWithMe, MSGBOX_SIGN
-	applymovement 2, LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs
+	applymovement LOCALID_MUSEUM_1F_CURATOR, LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs
 	waitmovement 0
-	removeobject 2
+	removeobject LOCALID_MUSEUM_1F_CURATOR
 	switch VAR_FACING
 	case 2, LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth
 	case 3, LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest
@@ -151,7 +151,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_PsychicM:: @ 8158585
 LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2:: @ 815858E
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_AimToSeeGreatPaintings, MSGBOX_NPC
 	lockall
-	applymovement 8, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_MUSEUM_1F_ARTIST_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	releaseall
 	end
