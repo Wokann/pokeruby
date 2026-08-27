@@ -29,4 +29,8 @@
 #define BERRY_STAGE_BERRIES     5
 #define BERRY_STAGE_SPARKLING   255
 
+// IDs for berry tree objects, indexes into berryTrees in SaveBlock1.
+// Named for whatever berry is initially planted there on a new game.
+#define BERRY_TREE_ROUTE_102_PECHA    1
+#define BERRY_TREE_ROUTE_102_ORAN     2
 #endif // GUARD_CONSTANTS_BERRY_H

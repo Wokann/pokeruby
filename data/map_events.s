@@ -1,6 +1,7 @@
 #include "constants/flags.h"
 #include "constants/items.h"
 #include "constants/event_bg.h"
+#include "constants/berry.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/maps.h"
