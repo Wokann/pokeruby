@@ -67,7 +67,7 @@ static void RecordCyclingRoadResults(u32, u8);
 
 static struct ElevatorMenu gUnknown_03000760[20];
 
-void ScrSpecial_ShowDiploma(void)
+void Special_ShowDiploma(void)
 {
     SetMainCallback2(CB2_ShowDiploma);
     LockPlayerFieldControls();
