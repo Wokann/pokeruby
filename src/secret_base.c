@@ -649,7 +649,7 @@ u8 *GetSecretBaseMapName(u8 *dest)
     return sub_80BC190(dest, VarGet(VAR_CURRENT_SECRET_BASE));
 }
 
-void BufferSecretBaseOwnerName(void)
+void CopyCurSecretBaseOwnerName_StrVar1(void)
 {
     u8 *var0 = gSaveBlock1.secretBases[(u8)VarGet(VAR_CURRENT_SECRET_BASE)].playerName;
     u8 *var1 = gStringVar1;
