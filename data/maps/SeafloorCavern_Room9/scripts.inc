@@ -64,7 +64,7 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	.endif
 	setweather WEATHER_NONE
 	doweather
-	special sub_8081924
+	special Script_FadeOutMapMusic
 	waitstate
 	.ifdef SAPPHIRE
 	msgbox UnknownString_81B43C4, MSGBOX_DEFAULT

@@ -349,15 +349,15 @@ void FadeOutOrbEffect(void)
 #undef tWinIn
 #undef tWinOut
 
-static void task50_0807F0C8(u8);
+static void Task_EnableScriptAfterMusicFade(u8);
 
-void sub_8081924(void)
+void Script_FadeOutMapMusic(void)
 {
     Overworld_FadeOutMapMusic();
-    CreateTask(task50_0807F0C8, 80);
+    CreateTask(Task_EnableScriptAfterMusicFade, 80);
 }
 
-static void task50_0807F0C8(u8 taskId)
+static void Task_EnableScriptAfterMusicFade(u8 taskId)
 {
     if (BGMusicStopped() == TRUE)
     {
