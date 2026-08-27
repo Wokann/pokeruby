@@ -261,7 +261,7 @@ static u8 GetNumLevelsGainedForDaycareSlot(struct DayCare *daycare, u8 slot)
     return numLevelsGained;
 }
 
-static u16 GetDaycareCostForSelectedMon(struct DayCare *daycare, u8 slot)
+static u16 PrepareDaycareCostStringForSelectedMon(struct DayCare *daycare, u8 slot)
 {
     u16 cost;
 
@@ -272,9 +272,9 @@ static u16 GetDaycareCostForSelectedMon(struct DayCare *daycare, u8 slot)
     return cost;
 }
 
-void GetDaycareCost(void)
+void GetDaycareCostAndPrepareString(void)
 {
-    gSpecialVar_0x8005 = GetDaycareCostForSelectedMon(&gSaveBlock1.daycare, gSpecialVar_0x8004);
+    gSpecialVar_0x8005 = PrepareDaycareCostStringForSelectedMon(&gSaveBlock1.daycare, gSpecialVar_0x8004);
 }
 
 void Debug_AddDaycareSteps(u16 numSteps)

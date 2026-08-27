@@ -309,7 +309,7 @@ void ScriptHatchMon(void)
     AddHatchedMonToParty(gSpecialVar_0x8004);
 }
 
-static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
+static bool8 _CheckDaycareMonReceivedMail(struct DayCare *daycare, u8 slot)
 {
     u8 monNickname[32];
     GetBoxMonNick(&daycare->mons[slot], monNickname);
@@ -329,9 +329,9 @@ static bool8 DaycareMonReceivedMail_(struct DayCare *daycare, u8 slot)
     return FALSE;
 }
 
-bool8 DaycareMonReceivedMail(void)
+bool8 CheckDaycareMonReceivedMail(void)
 {
-    return DaycareMonReceivedMail_(&gSaveBlock1.daycare, gSpecialVar_0x8004);
+    return _CheckDaycareMonReceivedMail(&gSaveBlock1.daycare, gSpecialVar_0x8004);
 }
 
 static u8 EggHatchCreateMonSprite(u8 a0, u8 switchID, u8 pokeID)

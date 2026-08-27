@@ -47,7 +47,7 @@ Route117_EventScript_1B22B2:: @ 81B22B2
 	end
 
 Route117_EventScript_1B22CD:: @ 81B22CD
-	specialvar VAR_RESULT, DaycareMonReceivedMail
+	specialvar VAR_RESULT, CheckDaycareMonReceivedMail
 	compare VAR_RESULT, 1
 	call_if_eq Route117_EventScript_1B22DE
 	return
@@ -188,7 +188,7 @@ Route117_PokemonDayCare_EventScript_1B2469:: @ 81B2469
 	end
 
 Route117_PokemonDayCare_EventScript_1B24A8:: @ 81B24A8
-	special GetDaycareCost
+	special GetDaycareCostAndPrepareString
 	msgbox Route117_PokemonDayCare_Text_1B2B49, MSGBOX_YESNO
 	compare VAR_RESULT, YES
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B24C4
@@ -196,7 +196,7 @@ Route117_PokemonDayCare_EventScript_1B24A8:: @ 81B24A8
 	end
 
 Route117_PokemonDayCare_EventScript_1B24C4:: @ 81B24C4
-	specialvar VAR_RESULT, HasEnoughMoneyFor
+	specialvar VAR_RESULT, IsEnoughForCostInVar0x8005
 	compare VAR_RESULT, 1
 	goto_if_eq Route117_PokemonDayCare_EventScript_1B24DE
 	msgbox Route117_PokemonDayCare_Text_1B2A30, MSGBOX_DEFAULT
@@ -207,7 +207,7 @@ Route117_PokemonDayCare_EventScript_1B24DE:: @ 81B24DE
 	applymovement 1, Route117_PokemonDayCare_Movement_1B2543
 	waitmovement 0
 	specialvar VAR_RESULT, TakePokemonFromDaycare
-	special PayMoneyFor
+	special SubtractMoneyFromVar0x8005
 	playse SE_SHOP
 	msgbox Route117_PokemonDayCare_Text_1B2B75, MSGBOX_DEFAULT
 	waitse

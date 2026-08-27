@@ -318,12 +318,12 @@ void CloseMoneyWindow(u8 x, u8 y)
     Menu_EraseWindowRect(x, y, x + 13, y + 3);
 }
 
-bool8 HasEnoughMoneyFor(void)
+bool8 IsEnoughForCostInVar0x8005(void)
 {
     return IsEnoughMoney(gSaveBlock1.money, gSpecialVar_0x8005);
 }
 
-void PayMoneyFor(void)
+void SubtractMoneyFromVar0x8005(void)
 {
     RemoveMoney(&gSaveBlock1.money, gSpecialVar_0x8005);
 }
