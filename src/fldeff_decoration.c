@@ -331,7 +331,7 @@ void SpriteCB_SandPillar_2(struct Sprite *sprite)
     ScriptContext_Enable();
 }
 
-void GetShieldToyTVDecorationInfo(void)
+void InteractWithShieldOrTVDecoration(void)
 {
     s16 x, y;
     s32 metatileId;

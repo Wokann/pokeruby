@@ -162,7 +162,7 @@ SecretBase_EventScript_SandOrnament:: @ 815F523
 	end
 
 SecretBase_EventScript_ShieldOrToyTV:: @ 815F528
-	special GetShieldToyTVDecorationInfo
+	special InteractWithShieldOrTVDecoration
 	compare VAR_RESULT, 0
 	goto_if_eq SecretBase_EventScript_BattleTowerShield
 	compare VAR_RESULT, 1
