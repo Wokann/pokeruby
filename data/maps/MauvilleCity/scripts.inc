@@ -152,7 +152,7 @@ MauvilleCity_EventScript_WallyAndUncleExitEast:: @ 814C1D9
 MauvilleCity_EventScript_DefeatedWally:: @ 814C22B
 	removeobject LOCALID_MAUVILLE_WALLY
 	removeobject LOCALID_MAUVILLE_WALLYS_UNCLE
-	clearflag FLAG_HIDE_WALLY_WANDAS_HOUSE
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
 	clearflag FLAG_HIDE_WALLY_FATHER_WANDAS_HOUSE
 	setflag FLAG_DEFEATED_WALLY_MAUVILLE
 	releaseall

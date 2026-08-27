@@ -8,13 +8,12 @@ LavaridgeTown_OnTransition:: @ 814E4AE
 	call_if_set FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, LavaridgeTown_EventScript_ShowMtChimneyTrainers
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
-	compare VAR_LAVARIDGE_RIVAL_STATE, 2
-	call_if_eq LavaridgeTown_EventScript_SetRivalPos
+	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 2, LavaridgeTown_EventScript_SetRivalPos
 	end
 
 LavaridgeTown_EventScript_SetRivalPos:: @ 814E4D0
-	setobjectxyperm 8, 11, 9
-	setobjectxyperm 7, 11, 9
+	setobjectxyperm LOCALID_LAVARIDGE_RIVAL, 11, 9
+	setobjectxyperm LOCALID_LAVARIDGE_RIVAL_ON_BIKE, 11, 9
 	return
 
 LavaridgeTown_EventScript_ShowMtChimneyTrainers:: @ 814E4DF
@@ -22,38 +21,33 @@ LavaridgeTown_EventScript_ShowMtChimneyTrainers:: @ 814E4DF
 	return
 
 LavaridgeTown_OnFrame:: @ 814E4E3
-	map_script_2 VAR_LAVARIDGE_RIVAL_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
+	map_script_2 VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
 	.2byte 0
 
 LavaridgeTown_EventScript_RivalGiveGoGoggles:: @ 814E4ED
 	lockall
-	setvar VAR_0x8008, 1
+	setvar VAR_0x8008, TRUE
 	opendoor 12, 15
 	waitdooranim
-	addobject 8
-	applymovement 8, LavaridgeTown_Movement_RivalExitHerbShop
+	addobject LOCALID_LAVARIDGE_RIVAL
+	applymovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalExitHerbShop
 	waitmovement 0
 	closedoor 12, 15
 	waitdooranim
-	applymovement 8, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_WalkInPlaceFastestLeft
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
-	applymovement 8, Common_Movement_ExclamationMark
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 8, Common_Movement_Delay48
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_Delay48
 	waitmovement 0
 	checkplayergender
-	compare VAR_RESULT, 0
-	call_if_eq LavaridgeTown_EventScript_PlayMayMusic
-	compare VAR_RESULT, 1
-	call_if_eq LavaridgeTown_EventScript_PlayBrendanMusic
-	compare VAR_0x8008, 1
-	call_if_eq LavaridgeTown_EventScript_RivalApproachPlayerFromHerbShop
+	call_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_PlayMayMusic
+	call_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_PlayBrendanMusic
+	call_if_eq VAR_0x8008, TRUE, LavaridgeTown_EventScript_RivalApproachPlayerFromHerbShop
 	checkplayergender
-	compare VAR_RESULT, 0
-	goto_if_eq LavaridgeTown_EventScript_MayGiveGoGoggles
-	compare VAR_RESULT, 1
-	goto_if_eq LavaridgeTown_EventScript_BrendanGiveGoGoggles
+	goto_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_MayGiveGoGoggles
+	goto_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_BrendanGiveGoGoggles
 	end
 
 LavaridgeTown_EventScript_PlayMayMusic:: @ 814E56B
@@ -64,20 +58,16 @@ LavaridgeTown_EventScript_PlayBrendanMusic:: @ 814E570
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	return
 
-LavaridgeTown_EventScript_14E575:: @ 814E575
+LavaridgeTown_EventScript_RivalGiveGoGogglesAtHerbShop:: @ 814E575
 	lock
 	faceplayer
-	setvar VAR_0x8008, 0
+	setvar VAR_0x8008, FALSE
 	checkplayergender
-	compare VAR_RESULT, 0
-	call_if_eq LavaridgeTown_EventScript_PlayMayMusic
-	compare VAR_RESULT, 1
-	call_if_eq LavaridgeTown_EventScript_PlayBrendanMusic
+	call_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_PlayMayMusic
+	call_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_PlayBrendanMusic
 	checkplayergender
-	compare VAR_RESULT, 0
-	goto_if_eq LavaridgeTown_EventScript_MayGiveGoGoggles
-	compare VAR_RESULT, 1
-	goto_if_eq LavaridgeTown_EventScript_BrendanGiveGoGoggles
+	goto_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_MayGiveGoGoggles
+	goto_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_BrendanGiveGoGoggles
 	end
 
 LavaridgeTown_EventScript_MayGiveGoGoggles:: @ 814E5AB
@@ -98,89 +88,76 @@ LavaridgeTown_EventScript_BrendanGiveGoGoggles:: @ 814E5D0
 
 LavaridgeTown_EventScript_RivalExit:: @ 814E5F5
 	closemessage
-	compare VAR_0x8008, 1
-	call_if_eq LavaridgeTown_EventScript_14E646
-	compare VAR_0x8008, 0
-	call_if_eq LavaridgeTown_EventScript_14E64E
-	removeobject 8
-	addobject 7
+	call_if_eq VAR_0x8008, TRUE, LavaridgeTown_EventScript_SetRivalOnBikePosition
+	call_if_eq VAR_0x8008, FALSE, LavaridgeTown_EventScript_SetRivalOnBikeFacing
+	removeobject LOCALID_LAVARIDGE_RIVAL
+	addobject LOCALID_LAVARIDGE_RIVAL_ON_BIKE
 	delay 30
-	compare VAR_0x8008, 1
-	call_if_eq LavaridgeTown_EventScript_RivalExit2
-	compare VAR_0x8008, 0
-	call_if_eq LavaridgeTown_EventScript_14E6A5
-	removeobject 7
-	setvar VAR_LAVARIDGE_RIVAL_STATE, 2
+	call_if_eq VAR_0x8008, TRUE, LavaridgeTown_EventScript_RivalExit2
+	call_if_eq VAR_0x8008, FALSE, LavaridgeTown_EventScript_RivalExitBasedOnPlayerFacing
+	removeobject LOCALID_LAVARIDGE_RIVAL_ON_BIKE
+	setvar VAR_LAVARIDGE_TOWN_STATE, 2
 	savebgm 0
 	fadedefaultbgm
-	compare VAR_0x8008, 0
-	goto_if_eq LavaridgeTown_EventScript_14E644
+	goto_if_eq VAR_0x8008, FALSE, LavaridgeTown_EventScript_ReleaseAfterRivalExit
 	releaseall
 	end
 
-LavaridgeTown_EventScript_14E644:: @ 814E644
+LavaridgeTown_EventScript_ReleaseAfterRivalExit:: @ 814E644
 	release
 	end
 
-LavaridgeTown_EventScript_14E646:: @ 814E646
-	setobjectxyperm 7, 6, 16
+LavaridgeTown_EventScript_SetRivalOnBikePosition:: @ 814E646
+	setobjectxyperm LOCALID_LAVARIDGE_RIVAL_ON_BIKE, 6, 16
 	return
 
-LavaridgeTown_EventScript_14E64E:: @ 814E64E
-	compare VAR_FACING, 2
-	call_if_eq LavaridgeTown_EventScript_14E67B
-	compare VAR_FACING, 1
-	call_if_eq LavaridgeTown_EventScript_14E680
-	compare VAR_FACING, 3
-	call_if_eq LavaridgeTown_EventScript_14E685
-	compare VAR_FACING, 4
-	call_if_eq LavaridgeTown_EventScript_14E68A
+LavaridgeTown_EventScript_SetRivalOnBikeFacing:: @ 814E64E
+	call_if_eq VAR_FACING, DIR_NORTH, LavaridgeTown_EventScript_SetRivalOnBikeFaceDown
+	call_if_eq VAR_FACING, DIR_SOUTH, LavaridgeTown_EventScript_SetRivalOnBikeFaceUp
+	call_if_eq VAR_FACING, DIR_WEST, LavaridgeTown_EventScript_SetRivalOnBikeFaceRight
+	call_if_eq VAR_FACING, DIR_EAST, LavaridgeTown_EventScript_SetRivalOnBikeFaceLeft
 	return
 
-LavaridgeTown_EventScript_14E67B:: @ 814E67B
-	setobjectmovementtype 7, 8
+LavaridgeTown_EventScript_SetRivalOnBikeFaceDown:: @ 814E67B
+	setobjectmovementtype LOCALID_LAVARIDGE_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-LavaridgeTown_EventScript_14E680:: @ 814E680
-	setobjectmovementtype 7, 7
+LavaridgeTown_EventScript_SetRivalOnBikeFaceUp:: @ 814E680
+	setobjectmovementtype LOCALID_LAVARIDGE_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_UP
 	return
 
-LavaridgeTown_EventScript_14E685:: @ 814E685
-	setobjectmovementtype 7, 10
+LavaridgeTown_EventScript_SetRivalOnBikeFaceRight:: @ 814E685
+	setobjectmovementtype LOCALID_LAVARIDGE_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
-LavaridgeTown_EventScript_14E68A:: @ 814E68A
-	setobjectmovementtype 7, 9
+LavaridgeTown_EventScript_SetRivalOnBikeFaceLeft:: @ 814E68A
+	setobjectmovementtype LOCALID_LAVARIDGE_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_LEFT
 	return
 
 LavaridgeTown_EventScript_RivalApproachPlayerFromHerbShop:: @ 814E68F
-	applymovement 8, LavaridgeTown_Movement_RivalApproachPlayer2
+	applymovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalApproachPlayer2
 	waitmovement 0
 	return
 
 LavaridgeTown_EventScript_RivalExit2:: @ 814E69A
-	applymovement 7, LavaridgeTown_Movement_RivalExit2
+	applymovement LOCALID_LAVARIDGE_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit2
 	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_14E6A5:: @ 814E6A5
-	compare VAR_FACING, 2
-	call_if_eq LavaridgeTown_EventScript_14E6D2
-	compare VAR_FACING, 1
-	call_if_eq LavaridgeTown_EventScript_14E6D2
-	compare VAR_FACING, 3
-	call_if_eq LavaridgeTown_EventScript_RivalExit1
-	compare VAR_FACING, 4
-	call_if_eq LavaridgeTown_EventScript_14E6D2
+LavaridgeTown_EventScript_RivalExitBasedOnPlayerFacing:: @ 814E6A5
+	call_if_eq VAR_FACING, DIR_NORTH, LavaridgeTown_EventScript_RivalExitEast
+	call_if_eq VAR_FACING, DIR_SOUTH, LavaridgeTown_EventScript_RivalExitEast
+	call_if_eq VAR_FACING, DIR_WEST, LavaridgeTown_EventScript_RivalExit1
+	call_if_eq VAR_FACING, DIR_EAST, LavaridgeTown_EventScript_RivalExitEast
 	return
 
-LavaridgeTown_EventScript_14E6D2:: @ 814E6D2
-	applymovement 7, LavaridgeTown_Movement_14E6FA
+LavaridgeTown_EventScript_RivalExitEast:: @ 814E6D2
+	applymovement LOCALID_LAVARIDGE_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExitEast
 	waitmovement 0
 	return
 
 LavaridgeTown_EventScript_RivalExit1:: @ 814E6DD
-	applymovement 7, LavaridgeTown_Movement_RivalExit1
+	applymovement LOCALID_LAVARIDGE_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit1
 	waitmovement 0
 	return
 
@@ -206,7 +183,7 @@ LavaridgeTown_Movement_RivalExit2:: @ 814E6EF
 	walk_fast_up
 	step_end
 
-LavaridgeTown_Movement_14E6FA:: @ 814E6FA
+LavaridgeTown_Movement_RivalExitEast:: @ 814E6FA
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -236,8 +213,7 @@ LavaridgeTown_Movement_RivalExitHerbShop:: @ 814E70E
 
 LavaridgeTown_EventScript_HotSpringsTrigger:: @ 814E710
 	specialvar VAR_RESULT, GetPlayerFacingDirection
-	compare VAR_RESULT, 1
-	goto_if_eq LavaridgeTown_EventScript_EnteredHotSprings
+	goto_if_eq VAR_RESULT, DIR_SOUTH, LavaridgeTown_EventScript_EnteredHotSprings
 	end
 
 LavaridgeTown_EventScript_EnteredHotSprings:: @ 814E721
@@ -273,11 +249,9 @@ LavaridgeTown_EventScript_EggWoman:: @ 814E75A
 	faceplayer
 	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_ReceivedEgg
 	msgbox LavaridgeTown_Text_HaveEggWillYouTakeIt, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq LavaridgeTown_EventScript_DeclineEgg
+	goto_if_eq VAR_RESULT, NO, LavaridgeTown_EventScript_DeclineEgg
 	getpartysize
-	compare VAR_RESULT, 6
-	goto_if_eq LavaridgeTown_EventScript_NoRoomForEgg
+	goto_if_eq VAR_RESULT, PARTY_SIZE, LavaridgeTown_EventScript_NoRoomForEgg
 	msgbox LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_LAVARIDGE_EGG
 	playfanfare MUS_OBTAIN_ITEM
@@ -311,7 +285,7 @@ LavaridgeTown_EventScript_GymSign:: @ 814E7C5
 	msgbox LavaridgeTown_Text_GymSign, MSGBOX_SIGN
 	end
 
-@ 814E7CE
+LavaridgeTown_EventScript_UnusedHerbShopSign:: @ 814E7CE
 	msgbox LavaridgeTown_Text_HerbShopSign, MSGBOX_SIGN
 	end
 

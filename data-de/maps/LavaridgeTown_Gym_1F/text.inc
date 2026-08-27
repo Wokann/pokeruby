@@ -38,7 +38,7 @@ LavaridgeTown_Gym_1F_Text_AxlePostBattle:: @ 8176537
 	.string "Bleibt man zu lange im heißen Sand,\n"
 	.string "macht einen das ganz schön fertig.$"
 
-LavaridgeTown_Gym_B1F_Text_AndyIntro:: @ 817658D
+LavaridgeTown_Gym_1F_Text_AndyIntro:: @ 817658D
 	.string "Du musst ganz schön müde sein.\n"
 	.string "Willst du dich nicht hier im heißen\l"
 	.string "Sand ausruhen?\p"
@@ -46,10 +46,10 @@ LavaridgeTown_Gym_B1F_Text_AndyIntro:: @ 817658D
 	.string "Willenskraft ganz wichtig für einen\l"
 	.string "TRAINER ist.$"
 
-LavaridgeTown_Gym_B1F_Text_AndyDefeat:: @ 817663F
+LavaridgeTown_Gym_1F_Text_AndyDefeat:: @ 817663F
 	.string "Spiele mit Feuer und du verbrennst dich.$"
 
-LavaridgeTown_Gym_B1F_Text_AndyPostBattle:: @ 8176660
+LavaridgeTown_Gym_1F_Text_AndyPostBattle:: @ 8176660
 	.string "Dein Können ist gut... Aber unsere\n"
 	.string "LEITERIN FLAVIA ist stark.\p"
 	.string "Wenn du nicht aufpasst, verbrennst\n"
