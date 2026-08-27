@@ -7032,7 +7032,7 @@ const struct TrainerMonNoItemCustomMoves gTrainerParty_Wally1[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan1[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute103Mudkip[] = {
     {
 	.iv = 0,
 	.level = 5,
@@ -7076,7 +7076,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan3[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan4[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute103Treecko[] = {
     {
 	.iv = 0,
 	.level = 5,
@@ -7120,7 +7120,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan6[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan7[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_BrendanRoute103Torchic[] = {
     {
 	.iv = 0,
 	.level = 5,
@@ -7164,7 +7164,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_Brendan9[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May1[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute103Mudkip[] = {
     {
 	.iv = 0,
 	.level = 5,
@@ -7208,7 +7208,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_May3[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May4[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute103Treecko[] = {
     {
 	.iv = 0,
 	.level = 5,
@@ -7252,7 +7252,7 @@ const struct TrainerMonNoItemDefaultMoves gTrainerParty_May6[] = {
     }
 };
 
-const struct TrainerMonNoItemDefaultMoves gTrainerParty_May7[] = {
+const struct TrainerMonNoItemDefaultMoves gTrainerParty_MayRoute103Torchic[] = {
     {
 	.iv = 0,
 	.level = 5,

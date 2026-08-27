@@ -16,7 +16,7 @@ DebugScript_081C1D1D:: @ 81C1D1D
 	end
 
 DebugScript_081C1D1E:: @ 81C1D1E
-	goto Route103_EventScript_14ED46
+	goto Route103_EventScript_RivalEnd
 
 DebugScript_081C1D23:: @ 81C1D23
 	end

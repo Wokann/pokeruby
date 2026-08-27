@@ -33,4 +33,7 @@
 // Named for whatever berry is initially planted there on a new game.
 #define BERRY_TREE_ROUTE_102_PECHA    1
 #define BERRY_TREE_ROUTE_102_ORAN     2
+#define BERRY_TREE_ROUTE_103_CHERI_1  5
+#define BERRY_TREE_ROUTE_103_LEPPA    6
+#define BERRY_TREE_ROUTE_103_CHERI_2  7
 #endif // GUARD_CONSTANTS_BERRY_H

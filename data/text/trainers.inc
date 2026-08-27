@@ -59,123 +59,123 @@ Route102_Text_TianaPostBattle:: @ 81B7D11
 	.string "To keep winning my way up, I see that\n"
 	.string "I have to catch more POKéMON.$"
 
-Route103_Text_1B7D55:: @ 81B7D55
+Route103_Text_DaisyIntro:: @ 81B7D55
 	.string "Did you feel the tug of our soul-\n"
 	.string "soothing fragrance?$"
 
-Route103_Text_1B7D8B:: @ 81B7D8B
+Route103_Text_DaisyDefeated:: @ 81B7D8B
 	.string "You weren't led astray by our aroma...$"
 
-Route103_Text_1B7DB2:: @ 81B7DB2
+Route103_Text_DaisyPostBattle:: @ 81B7DB2
 	.string "Aromatherapy is a form of mental\n"
 	.string "healing that works with fragrances.$"
 
-Route103_Text_1B7DF7:: @ 81B7DF7
+Route103_Text_AmyIntro:: @ 81B7DF7
 	.string "AMY: I'm AMY.\n"
 	.string "And this is my little sister LIV.\l"
 	.string "We battle together!$"
 
-Route103_Text_1B7E3B:: @ 81B7E3B
+Route103_Text_AmyDefeated:: @ 81B7E3B
 	.string "AMY: Uh-oh, we lost.$"
 
-Route103_Text_1B7E50:: @ 81B7E50
+Route103_Text_AmyPostBattle:: @ 81B7E50
 	.string "AMY: You have to think about all\n"
 	.string "kinds of things when you're battling\l"
 	.string "against two TRAINERS.$"
 
-Route103_Text_1B7EAC:: @ 81B7EAC
+Route103_Text_AmyNotEnoughPokemon:: @ 81B7EAC
 	.string "AMY: Uh-oh, you have only one\n"
 	.string "POKéMON with you.\l"
 	.string "You can't battle us like that.$"
 
-Route103_Text_1B7EFB:: @ 81B7EFB
+Route103_Text_LivIntro:: @ 81B7EFB
 	.string "LIV: We battle together as one\n"
 	.string "team.$"
 
-Route103_Text_1B7F20:: @ 81B7F20
+Route103_Text_LivDefeated:: @ 81B7F20
 	.string "LIV: Oh, we lost, big sister...$"
 
-Route103_Text_1B7F40:: @ 81B7F40
+Route103_Text_LivPostBattle:: @ 81B7F40
 	.string "LIV: We work perfectly together, me\n"
 	.string "and my big sister...\p"
 	.string "But we still lost...$"
 
-Route103_Text_1B7F8E:: @ 81B7F8E
+Route103_Text_LivNotEnoughPokemon:: @ 81B7F8E
 	.string "LIV: If you want to battle us, you\n"
 	.string "have to have two POKéMON!\l"
 	.string "It's not fair if you don't!$"
 
-Route103_Text_1B7FE7:: @ 81B7FE7
+Route103_Text_AmyRematchIntro:: @ 81B7FE7
 	.string "AMY: I'm AMY.\n"
 	.string "And this is my little sister LIV.\l"
 	.string "We battle together!$"
 
-Route103_Text_1B802B:: @ 81B802B
+Route103_Text_AmyRematchDefeated:: @ 81B802B
 	.string "AMY: Aww, boo!\n"
 	.string "We couldn't win again...$"
 
-Route103_Text_1B8053:: @ 81B8053
+Route103_Text_AmyRematchPostBattle:: @ 81B8053
 	.string "AMY: You have to think about all\n"
 	.string "kinds of things when you're battling\l"
 	.string "against two TRAINERS.$"
 
-Route103_Text_1B80AF:: @ 81B80AF
+Route103_Text_AmyRematchNotEnoughPokemon:: @ 81B80AF
 	.string "AMY: Uh-oh, you have only one\n"
 	.string "POKéMON with you.\l"
 	.string "You can't battle us like that.$"
 
-Route103_Text_1B80FE:: @ 81B80FE
+Route103_Text_LivRematchIntro:: @ 81B80FE
 	.string "LIV: We battle together as one\n"
 	.string "team.$"
 
-Route103_Text_1B8123:: @ 81B8123
+Route103_Text_LivRematchDefeated:: @ 81B8123
 	.string "LIV: Awww, we lost again...\n"
 	.string "Big sister...$"
 
-Route103_Text_1B814D:: @ 81B814D
+Route103_Text_LivRematchPostBattle:: @ 81B814D
 	.string "LIV: We work perfectly together, me\n"
 	.string "and my big sister...\p"
 	.string "But why did we lose again?$"
 
-Route103_Text_1B81A1:: @ 81B81A1
+Route103_Text_LivRematchNotEnoughPokemon:: @ 81B81A1
 	.string "LIV: If you want to battle us, you\n"
 	.string "have to have two POKéMON!\l"
 	.string "It's not fair if you don't!$"
 
-Route103_Text_1B81FA:: @ 81B81FA
+Route103_Text_AndrewIntro:: @ 81B81FA
 	.string "Gah! My fishing line's all snarled up!\n"
 	.string "I'm getting frustrated and mean!\l"
 	.string "That's it! Battle me!$"
 
-Route103_Text_1B8258:: @ 81B8258
+Route103_Text_AndrewDefeated:: @ 81B8258
 	.string "Gah! Lost it!\n"
 	.string "I'm even more annoyed now!$"
 
-Route103_Text_1B8281:: @ 81B8281
+Route103_Text_AndrewPostBattle:: @ 81B8281
 	.string "Gah, I'm still boiling mad...\n"
 	.string "Grrrrr...$"
 
-Route103_Text_1B82A9:: @ 81B82A9
+Route103_Text_MiguelIntro:: @ 81B82A9
 	.string "My POKéMON is delightfully adorable!\n"
 	.string "Don't be shy - I'll show you!$"
 
-Route103_Text_1B82EC:: @ 81B82EC
+Route103_Text_MiguelDefeated:: @ 81B82EC
 	.string "Oh, my gosh!\n"
 	.string "My darling POKéMON!$"
 
-Route103_Text_1B830D:: @ 81B830D
+Route103_Text_MiguelPostBattle:: @ 81B830D
 	.string "My delightful POKéMON looks darling\n"
 	.string "even when it's fainted!$"
 
-Route103_Text_1B8349:: @ 81B8349
+Route103_Text_MiguelRematchIntro:: @ 81B8349
 	.string "Hi, you! My delightfully adorable\n"
 	.string "POKéMON has become more darling!$"
 
-Route103_Text_1B838C:: @ 81B838C
+Route103_Text_MiguelRematchDefeated:: @ 81B838C
 	.string "Oh!\n"
 	.string "My darling POKéMON!$"
 
-Route103_Text_1B83A4:: @ 81B83A4
+Route103_Text_MiguelRematchPostBattle:: @ 81B83A4
 	.string "The more I spend time with it, the\n"
 	.string "more adorable my POKéMON becomes.$"
 

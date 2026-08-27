@@ -2,7 +2,7 @@ Route102_EventScript_ItemPotion:: @ 81B1439
 	finditem ITEM_POTION
 	end
 
-Route103_EventScript_1B1446:: @ 81B1446
+Route103_EventScript_ItemGuardSpec:: @ 81B1446
 	finditem ITEM_GUARD_SPEC
 	end
 

@@ -7279,7 +7279,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemCustomMoves = gTrainerParty_Wally1 }
     },
 
-    [TRAINER_BRENDAN_1] =
+    [TRAINER_BRENDAN_ROUTE_103_MUDKIP] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7290,7 +7290,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Mudkip }
     },
 
     [TRAINER_BRENDAN_2] =
@@ -7321,7 +7321,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Brendan3 }
     },
 
-    [TRAINER_BRENDAN_4] =
+    [TRAINER_BRENDAN_ROUTE_103_TREECKO] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7332,7 +7332,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0xb,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan4 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Treecko }
     },
 
     [TRAINER_BRENDAN_5] =
@@ -7363,7 +7363,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Brendan6 }
     },
 
-    [TRAINER_BRENDAN_7] =
+    [TRAINER_BRENDAN_ROUTE_103_TORCHIC] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7374,7 +7374,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_Brendan7 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_BrendanRoute103Torchic }
     },
 
     [TRAINER_BRENDAN_8] =
@@ -7405,7 +7405,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_Brendan9 }
     },
 
-    [TRAINER_MAY_1] =
+    [TRAINER_MAY_ROUTE_103_MUDKIP] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7416,7 +7416,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May1 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Mudkip }
     },
 
     [TRAINER_MAY_2] =
@@ -7447,7 +7447,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_May3 }
     },
 
-    [TRAINER_MAY_4] =
+    [TRAINER_MAY_ROUTE_103_TREECKO] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7458,7 +7458,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May4 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Treecko }
     },
 
     [TRAINER_MAY_5] =
@@ -7489,7 +7489,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemDefaultMoves = gTrainerParty_May6 }
     },
 
-    [TRAINER_MAY_7] =
+    [TRAINER_MAY_ROUTE_103_TORCHIC] =
     {
         .partyFlags = 0,
         .trainerClass = TRAINER_CLASS_POKEMON_TRAINER_3,
@@ -7500,7 +7500,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = 0x7,
         .partySize = 1,
-        .party = {.NoItemDefaultMoves = gTrainerParty_May7 }
+        .party = {.NoItemDefaultMoves = gTrainerParty_MayRoute103Torchic }
     },
 
     [TRAINER_MAY_8] =
