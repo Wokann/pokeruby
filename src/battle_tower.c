@@ -261,7 +261,7 @@ static const u16 sLongStreakPrizes[] =
 
 static void ResetBattleTowerStreak(u8 levelType);
 static void ValidateBattleTowerRecordChecksums(void);
-static void PrintEReaderTrainerFarewellMessage(void);
+static void CopyEReaderTrainerFarewellMessage(void);
 extern void SetBattleTowerTrainerGfxId(u8);
 static void SaveCurrentWinStreak(void);
 static void sub_8135CFC(void);
@@ -286,7 +286,7 @@ extern u8 gSelectedOrderFromParty[];
 extern u8 gBattleOutcome;
 extern struct BattlePokemon gBattleMons[];
 
-void sub_8134548(void)
+void SetBattleTowerLobbyState(void)
 {
     u8 var1 = 0;
     s32 levelType;
@@ -1021,19 +1021,19 @@ void CheckPartyBattleTowerBanlist(void)
     }
 }
 
-void PrintBattleTowerTrainerMessage(u16 *easyChat)
+void CopyBattleTowerTrainerSpeech(u16 *easyChat)
 {
     sub_80EB544(gStringVar4, easyChat, 2, 3);
 }
 
-void PrintBattleTowerTrainerGreeting(void)
+void CopyBattleTowerTrainerGreeting(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
-        PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.greeting);
+        CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.ereaderTrainer.greeting);
     else if (gSaveBlock2.battleTower.battleTowerTrainerId < BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID)
-        PrintBattleTowerTrainerMessage((u16 *)gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].greeting);
+        CopyBattleTowerTrainerSpeech((u16 *)gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].greeting);
     else
-        PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].greeting);
+        CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].greeting);
 }
 
 void sub_81354CC(void)
@@ -1053,7 +1053,7 @@ void sub_81354CC(void)
         }
         break;
     case 2:
-        PrintEReaderTrainerFarewellMessage();
+        CopyEReaderTrainerFarewellMessage();
         break;
     }
 
@@ -1070,7 +1070,7 @@ void sub_8135534(u8 taskId)
     }
 }
 
-void StartSpecialBattle(void)
+void DoSpecialTrainerBattle(void)
 {
     s32 i;
     u16 heldItem;
@@ -1186,7 +1186,7 @@ void SetBattleTowerProperty(void)
     }
 }
 
-void BattleTowerUtil(void)
+void CallBattleTowerFunc(void)
 {
     u8 battleTowerLevelType = gSaveBlock2.battleTower.battleTowerLevelType;
 
@@ -1242,7 +1242,7 @@ void SetBattleTowerParty(void)
     for (i = 0; i < 3; i++)
         gSelectedOrderFromParty[i] = gSaveBlock2.battleTower.selectedPartyMons[i];
 
-    ReducePlayerPartyToThree();
+    ReducePlayerPartyToSelectedMons();
 }
 
 static void SaveCurrentWinStreak(void)
@@ -1334,7 +1334,7 @@ void SaveBattleTowerProgress(void)
     Save_WriteData(SAVE_EREADER);
 }
 
-void BattleTower_SoftReset(void)
+void BattleTowerSoftReset(void)
 {
     DoSoftReset();
 }
@@ -1573,19 +1573,19 @@ void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer)
         ((u32 *)ereaderTrainer)[i] = 0;
 }
 
-void PrintEReaderTrainerGreeting(void)
+void CopyEReaderTrainerGreeting(void)
 {
-    PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.greeting);
+    CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.ereaderTrainer.greeting);
 }
 
-void PrintEReaderTrainerFarewellMessage(void)
+void CopyEReaderTrainerFarewellMessage(void)
 {
     if (gBattleOutcome == B_OUTCOME_DREW)
         gStringVar4[0] = EOS;
     else if (gBattleOutcome == B_OUTCOME_WON)
-        PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.farewellPlayerWon);
+        CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.ereaderTrainer.farewellPlayerWon);
     else
-        PrintBattleTowerTrainerMessage(gSaveBlock2.battleTower.ereaderTrainer.farewellPlayerLost);
+        CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.ereaderTrainer.farewellPlayerLost);
 }
 
 void TryEnableBravoTrainerBattleTower(void)

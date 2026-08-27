@@ -108,7 +108,7 @@ MossdeepCity_GameCorner_1F_EventScript_15AD59:: @ 815AD59
 	goto_if_eq MossdeepCity_GameCorner_1F_EventScript_15ADE8
 	erasebox 0, 0, 15, 10
 	special SavePlayerParty
-	special ReducePlayerPartyToThree
+	special ReducePlayerPartyToSelectedMons
 	msgbox MossdeepCity_GameCorner_B1F_Text_HopeToSeeAGoodMatch, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_FACING, 2

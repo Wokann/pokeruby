@@ -15,12 +15,12 @@ MossdeepCity_GameCorner_B1F_EventScript_15AE6E:: @ 815AE6E
 	lockall
 	applymovement LOCALID_PLAYER, MossdeepCity_GameCorner_B1F_Movement_15AEF9
 	waitmovement 0
-	special PrintEReaderTrainerGreeting
+	special CopyEReaderTrainerGreeting
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_0x8004, 2
 	setvar VAR_0x8005, 0
-	special StartSpecialBattle
+	special DoSpecialTrainerBattle
 	waitstate
 	compare VAR_RESULT, 3
 	call_if_eq MossdeepCity_GameCorner_B1F_EventScript_15AED5

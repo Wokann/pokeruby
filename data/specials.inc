@@ -239,24 +239,24 @@ gSpecials::
 	def_special FinishCyclingRoadChallenge
 	def_special UpdateCyclingRoadState
 	def_special GetLeadMonFriendshipScore
-	def_special sub_8134548
+	def_special SetBattleTowerLobbyState
 	def_special ChooseNextBattleTowerTrainer
 	def_special CheckPartyBattleTowerBanlist
-	def_special PrintBattleTowerTrainerGreeting
-	def_special PrintEReaderTrainerGreeting
-	def_special StartSpecialBattle
+	def_special CopyBattleTowerTrainerGreeting
+	def_special CopyEReaderTrainerGreeting
+	def_special DoSpecialTrainerBattle
 	def_special SetBattleTowerProperty
-	def_special BattleTowerUtil
+	def_special CallBattleTowerFunc
 	def_special SetBattleTowerParty
 	def_special SaveBattleTowerProgress
-	def_special BattleTower_SoftReset
+	def_special BattleTowerSoftReset
 	def_special DetermineBattleTowerPrize
 	def_special GiveBattleTowerPrize
 	def_special AwardBattleTowerRibbons
-	def_special ChooseBattleTowerPlayerParty
+	def_special ChoosePartyForBattleTower
 	def_special ValidateEReaderTrainer
-	def_special GetBestBattleTowerStreak
-	def_special ReducePlayerPartyToThree
+	def_special GetBattleTowerSinglesStreak
+	def_special ReducePlayerPartyToSelectedMons
 	def_special BedroomPC
 	def_special PlayerPC
 	def_special FieldShowRegionMap

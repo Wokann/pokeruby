@@ -2,7 +2,7 @@
 #define GUARD_CONTEST_UTIL_H
 
 void SetBattleTowerPlayerParty(void);
-void ReducePlayerPartyToThree(void);
+void ReducePlayerPartyToSelectedMons(void);
 
 u8 CountPlayerMuseumPaintings(void);
 void ShowContestPainting(void);

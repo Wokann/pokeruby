@@ -16,14 +16,14 @@ BattleTower_BattleRoom_EventScript_1608FA:: @ 81608FA
 	addobject 1
 	applymovement 1, BattleTower_BattleRoom_Movement_160AC0
 	waitmovement 0
-	special PrintBattleTowerTrainerGreeting
+	special CopyBattleTowerTrainerGreeting
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
 	special HealPlayerParty
 	setvar VAR_0x8004, 0
 	setvar VAR_0x8005, 0
-	special StartSpecialBattle
+	special DoSpecialTrainerBattle
 	waitstate
 	switch VAR_RESULT
 	case 1, BattleTower_BattleRoom_EventScript_160961
@@ -116,7 +116,7 @@ BattleTower_BattleRoom_EventScript_160A94:: @ 8160A94
 
 BattleTower_BattleRoom_EventScript_160AB1:: @ 8160AB1
 	fadescreen FADE_TO_BLACK
-	special BattleTower_SoftReset
+	special BattleTowerSoftReset
 	end
 
 BattleTower_BattleRoom_Movement_160AB7:: @ 8160AB7

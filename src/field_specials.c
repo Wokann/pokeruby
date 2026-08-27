@@ -1617,7 +1617,7 @@ void GetSecretBaseNearbyMapName(void)
     GetMapSectionName(gStringVar1, VarGet(VAR_SECRET_BASE_MAP), 0);
 }
 
-u16 GetBestBattleTowerStreak(void)
+u16 GetBattleTowerSinglesStreak(void)
 {
     return GetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK);
 }

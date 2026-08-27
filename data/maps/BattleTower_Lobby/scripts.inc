@@ -15,7 +15,7 @@ BattleTower_Lobby_EventScript_16029C:: @ 816029C
 	special SetBattleTowerProperty
 	goto_if_set FLAG_RECEIVED_GOLD_SHIELD, BattleTower_Lobby_EventScript_1602E4
 	goto_if_set FLAG_RECEIVED_SILVER_SHIELD, BattleTower_Lobby_EventScript_1602CD
-	specialvar VAR_0x8007, GetBestBattleTowerStreak
+	specialvar VAR_0x8007, GetBattleTowerSinglesStreak
 	compare VAR_0x8007, 50
 	goto_if_lt BattleTower_Lobby_EventScript_1602E4
 	clearflag FLAG_HIDE_AWARD_MAN_BATTLE_TOWER
@@ -23,7 +23,7 @@ BattleTower_Lobby_EventScript_16029C:: @ 816029C
 	return
 
 BattleTower_Lobby_EventScript_1602CD:: @ 81602CD
-	specialvar VAR_0x8007, GetBestBattleTowerStreak
+	specialvar VAR_0x8007, GetBattleTowerSinglesStreak
 	compare VAR_0x8007, 100
 	goto_if_lt BattleTower_Lobby_EventScript_1602E4
 	clearflag FLAG_HIDE_AWARD_MAN_BATTLE_TOWER
@@ -56,7 +56,7 @@ BattleTower_Lobby_MapScript2_160302:: @ 8160302
 	.2byte 0
 
 BattleTower_Lobby_EventScript_16032C:: @ 816032C
-	special sub_8134548
+	special SetBattleTowerLobbyState
 	end
 
 BattleTower_Lobby_EventScript_160330:: @ 8160330
@@ -74,7 +74,7 @@ BattleTower_Lobby_EventScript_160342:: @ 8160342
 	message BattleTower_Lobby_Text_19A487
 	waitmessage
 	setvar VAR_0x8004, 0
-	special BattleTowerUtil
+	special CallBattleTowerFunc
 	compare VAR_RESULT, 6
 	goto_if_eq BattleTower_Lobby_EventScript_16037D
 	special AwardBattleTowerRibbons
@@ -88,7 +88,7 @@ BattleTower_Lobby_EventScript_160342:: @ 8160342
 
 BattleTower_Lobby_EventScript_16037D:: @ 816037D
 	setvar VAR_0x8004, 8
-	special BattleTowerUtil
+	special CallBattleTowerFunc
 	compare VAR_RESULT, 1
 	goto_if_eq BattleTower_Lobby_EventScript_1603AD
 	message BattleTower_Lobby_Text_19A589
@@ -115,7 +115,7 @@ BattleTower_Lobby_EventScript_1603AD:: @ 81603AD
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
 	setvar VAR_0x8004, 9
-	special BattleTowerUtil
+	special CallBattleTowerFunc
 	compare VAR_RESULT, 49
 	goto_if_ne BattleTower_Lobby_EventScript_1603F8
 	msgbox BattleTower_Lobby_Text_19A617, MSGBOX_DEFAULT
@@ -183,7 +183,7 @@ BattleTower_Lobby_EventScript_16049E:: @ 816049E
 	lock
 	faceplayer
 	setvar VAR_0x8004, 0
-	special BattleTowerUtil
+	special CallBattleTowerFunc
 	compare VAR_RESULT, 6
 	goto_if_eq BattleTower_Lobby_EventScript_160342
 	special SavePlayerParty
@@ -215,7 +215,7 @@ BattleTower_Lobby_EventScript_1604FA:: @ 81604FA
 	special SetBattleTowerProperty
 	msgbox BattleTower_Lobby_Text_19A07B, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
-	special ChooseBattleTowerPlayerParty
+	special ChoosePartyForBattleTower
 	waitstate
 	compare VAR_RESULT, 0
 	goto_if_eq BattleTower_Lobby_EventScript_16064F
@@ -398,7 +398,7 @@ BattleTower_Lobby_EventScript_160733:: @ 8160733
 	end
 
 BattleTower_Lobby_EventScript_160773:: @ 8160773
-	specialvar VAR_RESULT, GetBestBattleTowerStreak
+	specialvar VAR_RESULT, GetBattleTowerSinglesStreak
 	compare VAR_RESULT, 100
 	goto_if_lt BattleTower_Lobby_EventScript_1607C5
 	msgbox BattleTower_Lobby_Text_19AAC4, MSGBOX_DEFAULT

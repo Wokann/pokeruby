@@ -533,7 +533,7 @@ static void CB2_ReturnFromChooseHalfParty(void)
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void ChooseBattleTowerPlayerParty(void)
+void ChoosePartyForBattleTower(void)
 {
     gMain.savedCallback = SetBattleTowerPlayerParty;
     InitChooseBattleTowerParty();
@@ -550,7 +550,7 @@ void SetBattleTowerPlayerParty(void)
         gSpecialVar_Result = 0;
         break;
     default: // load battle tower.
-        ReducePlayerPartyToThree();
+        ReducePlayerPartyToSelectedMons();
         gSpecialVar_Result = 1;
         break;
     }
@@ -558,7 +558,7 @@ void SetBattleTowerPlayerParty(void)
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void ReducePlayerPartyToThree(void)
+void ReducePlayerPartyToSelectedMons(void)
 {
     struct Pokemon party[3];
     int i;
