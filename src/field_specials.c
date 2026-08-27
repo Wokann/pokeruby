@@ -1009,7 +1009,7 @@ const u8 *const gUnknown_083F8380[] = {
     OtherText_Rooftop
 };
 
-void SetDepartmentStoreFloorVar(void)
+void SetDeptStoreFloor(void)
 {
     u8 deptStoreFloor;
     switch (gSaveBlock1.dynamicWarp.mapNum)

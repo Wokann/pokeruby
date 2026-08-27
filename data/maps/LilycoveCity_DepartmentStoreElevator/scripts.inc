@@ -79,5 +79,5 @@ LilycoveCity_DepartmentStoreElevator_EventScript_MoveElevator:: @ 815A4B8
 	return
 
 LilycoveCity_DepartmentStoreElevator_EventScript_SetFloor:: @ 815A4CF
-	special SetDepartmentStoreFloorVar
+	special SetDeptStoreFloor
 	return
