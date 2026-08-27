@@ -56,7 +56,7 @@ extern u8 *const gUnknown_083D1464[3];
 
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
-EWRAM_DATA u32 gBikeCyclingTimer = 0;
+static EWRAM_DATA u32 sBikeCyclingTimer = 0;
 static EWRAM_DATA u8 sSlidingDoorNextFrameCounter = 0;
 static EWRAM_DATA u8 sSlidingDoorFrame = 0;
 EWRAM_DATA u8 gUnknown_0203925A = 0;
@@ -84,14 +84,14 @@ void ResetCyclingRoadChallengeData(void)
 {
     gBikeCyclingChallenge = FALSE;
     gBikeCollisions = 0;
-    gBikeCyclingTimer = 0;
+    sBikeCyclingTimer = 0;
 }
 
-void ScrSpecial_BeginCyclingRoadChallenge(void)
+void Special_BeginCyclingRoadChallenge(void)
 {
     gBikeCyclingChallenge = TRUE;
     gBikeCollisions = 0;
-    gBikeCyclingTimer = gMain.vblankCounter1;
+    sBikeCyclingTimer = gMain.vblankCounter1;
 }
 
 u16 GetPlayerAvatarBike(void)
@@ -177,7 +177,7 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
 }
 
 void FinishCyclingRoadChallenge(void) {
-    const u32 numFrames = gMain.vblankCounter1 - gBikeCyclingTimer;
+    const u32 numFrames = gMain.vblankCounter1 - sBikeCyclingTimer;
 
     DetermineCyclingRoadResults(numFrames, gBikeCollisions);
     RecordCyclingRoadResults(numFrames, gBikeCollisions);

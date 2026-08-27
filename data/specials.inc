@@ -234,7 +234,7 @@ gSpecials::
 	def_special GetNumMovesSelectedMonHas
 	def_special TeachMoveRelearnerMove
 	def_special GetRecordedCyclingRoadResults
-	def_special ScrSpecial_BeginCyclingRoadChallenge
+	def_special Special_BeginCyclingRoadChallenge
 	def_special GetPlayerAvatarBike
 	def_special FinishCyclingRoadChallenge
 	def_special UpdateCyclingRoadState
