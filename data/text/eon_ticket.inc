@@ -35,7 +35,7 @@ SouthernIsland_Exterior_Text_1C5281:: @ 81C5281
 SouthernIsland_Exterior_Text_1C52A6:: @ 81C52A6
 	.string "Aye, right, as you like, then.$"
 
-SouthernIsland_Interior_Text_1C52C5:: @ 81C52C5
+SouthernIsland_Interior_Text_Sign:: @ 81C52C5
 	.string "“All dreams are but another reality.\n"
 	.string "Never forget...”$"
 

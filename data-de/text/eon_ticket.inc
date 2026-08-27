@@ -36,7 +36,7 @@ SouthernIsland_Exterior_Text_1C5281:: @ 81C5281
 SouthernIsland_Exterior_Text_1C52A6:: @ 81C52A6
 	.string "Aye, ganz wie du willst.$"
 
-SouthernIsland_Interior_Text_1C52C5:: @ 81C52C5
+SouthernIsland_Interior_Text_Sign:: @ 81C52C5
 	.string "“Alle Träume sind nur eine andere\n"
 	.string "Realität. Vergiss das nicht...”$"
 

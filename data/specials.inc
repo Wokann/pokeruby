@@ -283,8 +283,8 @@ gSpecials::
 	def_special GameClear
 	def_special MoveElevator
 	def_special ShowGlassWorkshopMenu
-	def_special SpawnCameraDummy
-	def_special RemoveCameraDummy
+	def_special SpawnCameraObject
+	def_special RemoveCameraObject
 	def_special GetPokeblockNameByMonNature
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord
