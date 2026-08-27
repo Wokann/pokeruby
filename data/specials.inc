@@ -313,7 +313,7 @@ gSpecials::
 	def_special IsStarterInParty
 	def_special CopyCurSecretBaseOwnerName_StrVar1
 	def_special ScriptCheckFreePokemonStorageSpace
-	def_special DoSealedChamberShakingEffect1
+	def_special DoSealedChamberShakingEffect_Long
 	def_special DisplayCurrentElevatorFloor
 	def_special GetShieldToyTVDecorationInfo
 	def_special IsPokerusInParty
@@ -323,7 +323,7 @@ gSpecials::
 	def_special ScrSpecial_StartRayquazaBattle
 	def_special ScrSpecial_StartRegiBattle
 	def_special SetTrainerFacingDirection
-	def_special DoSealedChamberShakingEffect2
+	def_special DoSealedChamberShakingEffect_Short
 	def_special FoundBlackGlasses
 	def_special sub_807E25C
 	def_special sp13E_warp_to_last_warp

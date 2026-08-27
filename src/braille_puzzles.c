@@ -24,6 +24,8 @@ extern u8 gLastFieldPokeMenuOpened;
 
 extern u8 S_OpenRegiceChamber[]; // regiice event script
 
+static void Task_SealedChamberShakingEffect(u8 taskId);
+
 bool8 ShouldDoBrailleDigEffect(void)
 {
     if (!FlagGet(FLAG_SYS_BRAILLE_DIG)
@@ -218,43 +220,49 @@ bool32 BrailleWait_CheckButtonPress(void)
         return FALSE;
 }
 
-void DoSealedChamberShakingEffect1(void)
-{
-    u8 taskId = CreateTask(SealedChamberShakingEffect, 0x9);
+#define tDelayCounter  data[1]
+#define tShakeCounter  data[2]
+#define tVerticalPan   data[4]
+#define tDelay         data[5]
+#define tNumShakes     data[6]
 
-    gTasks[taskId].data[1] = 0;
-    gTasks[taskId].data[2] = 0;
-    gTasks[taskId].data[4] = 2;
-    gTasks[taskId].data[5] = 5;
-    gTasks[taskId].data[6] = 50;
+void DoSealedChamberShakingEffect_Long(void)
+{
+    u8 taskId = CreateTask(Task_SealedChamberShakingEffect, 9);
+
+    gTasks[taskId].tDelayCounter = 0;
+    gTasks[taskId].tShakeCounter = 0;
+    gTasks[taskId].tVerticalPan = 2;
+    gTasks[taskId].tDelay = 5;
+    gTasks[taskId].tNumShakes = 50;
     SetCameraPanningCallback(0);
 }
 
-void DoSealedChamberShakingEffect2(void)
+void DoSealedChamberShakingEffect_Short(void)
 {
-    u8 taskId = CreateTask(SealedChamberShakingEffect, 0x9);
+    u8 taskId = CreateTask(Task_SealedChamberShakingEffect, 9);
 
-    gTasks[taskId].data[1] = 0;
-    gTasks[taskId].data[2] = 0;
-    gTasks[taskId].data[4] = 3;
-    gTasks[taskId].data[5] = 5;
-    gTasks[taskId].data[6] = 2;
+    gTasks[taskId].tDelayCounter = 0;
+    gTasks[taskId].tShakeCounter = 0;
+    gTasks[taskId].tVerticalPan = 3;
+    gTasks[taskId].tDelay = 5;
+    gTasks[taskId].tNumShakes = 2;
     SetCameraPanningCallback(0);
 }
 
-void SealedChamberShakingEffect(u8 taskId)
+static void Task_SealedChamberShakingEffect(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->data[1]++;
+    task->tDelayCounter++;
 
-    if (!(task->data[1] % task->data[5]))
+    if (task->tDelayCounter % task->tDelay == 0)
     {
-        task->data[1] = 0;
-        task->data[2]++;
-        task->data[4] = -task->data[4];
-        SetCameraPanning(0, task->data[4]);
-        if (task->data[2] == task->data[6])
+        task->tDelayCounter = 0;
+        task->tShakeCounter++;
+        task->tVerticalPan = -task->tVerticalPan;
+        SetCameraPanning(0, task->tVerticalPan);
+        if (task->tShakeCounter == task->tNumShakes)
         {
             DestroyTask(taskId);
             ScriptContext_Enable();
@@ -262,3 +270,9 @@ void SealedChamberShakingEffect(u8 taskId)
         }
     }
 }
+
+#undef tDelayCounter
+#undef tShakeCounter
+#undef tVerticalPan
+#undef tDelay
+#undef tNumShakes
