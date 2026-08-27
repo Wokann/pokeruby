@@ -342,7 +342,7 @@ RusturfTunnel_EventScript_15C9EA:: @ 815C9EA
 	removeobject 7
 	clearflag FLAG_DEVON_GOODS_STOLEN
 	setflag FLAG_RECOVERED_DEVON_GOODS
-	setvar VAR_RUSTBORO_STATE, 4
+	setvar VAR_RUSTBORO_CITY_STATE, 4
 	setvar VAR_BRINEY_HOUSE_STATE, 1
 	setflag FLAG_HIDE_BRINEY_ROUTE116
 	release
