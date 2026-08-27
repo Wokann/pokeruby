@@ -278,7 +278,7 @@ gSpecials::
 	def_special CheckLeadMonCute
 	def_special CheckLeadMonSmart
 	def_special CheckLeadMonTough
-	def_special sub_80C7958
+	def_special LookThroughPorthole
 	def_special DoSoftReset
 	def_special GameClear
 	def_special ShakeScreenInElevator

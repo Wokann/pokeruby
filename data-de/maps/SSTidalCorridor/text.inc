@@ -39,7 +39,7 @@ SSTidalCorridor_Text_199203:: @ 8199203
 SSTidalCorridor_Text_199255:: @ 8199255
 	.string "Genieße die Überfahrt.$"
 
-SSTidalCorridor_Text_199268:: @ 8199268
+SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole:: @ 8199268
 	.string "Durch das Bullauge sieht man\n"
 	.string "den Horizont.$"
 

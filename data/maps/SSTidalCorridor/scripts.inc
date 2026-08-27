@@ -143,18 +143,18 @@ SSTidalCorridor_EventScript_15FE36:: @ 815FE36
 	setflag FLAG_HIDE_TM_49_GIVER_SS_TIDAL
 	return
 
-SSTidalCorridor_EventScript_15FE3A:: @ 815FE3A
+SSTidalCorridor_EventScript_Porthole:: @ 815FE3A
 	lockall
 	compare VAR_PORTHOLE_STATE, 2
-	goto_if_eq SSTidalCorridor_EventScript_15FE5B
+	goto_if_eq SSTidalCorridor_EventScript_LookThroughPorthole
 	compare VAR_PORTHOLE_STATE, 7
-	goto_if_eq SSTidalCorridor_EventScript_15FE5B
-	msgbox SSTidalCorridor_Text_199268, MSGBOX_DEFAULT
+	goto_if_eq SSTidalCorridor_EventScript_LookThroughPorthole
+	msgbox SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SSTidalCorridor_EventScript_15FE5B:: @ 815FE5B
-	special sub_80C7958
+SSTidalCorridor_EventScript_LookThroughPorthole:: @ 815FE5B
+	special LookThroughPorthole
 	waitstate
 	end
 

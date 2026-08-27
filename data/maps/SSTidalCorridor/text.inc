@@ -37,7 +37,7 @@ SSTidalCorridor_Text_199203:: @ 8199203
 SSTidalCorridor_Text_199255:: @ 8199255
 	.string "Enjoy your cruise!$"
 
-SSTidalCorridor_Text_199268:: @ 8199268
+SSTidalCorridor_Text_HorizonSpreadsBeyondPorthole:: @ 8199268
 	.string "The horizon spreads beyond the\n"
 	.string "porthole.$"
 
