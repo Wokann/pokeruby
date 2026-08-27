@@ -749,40 +749,40 @@ TradeRoom_TooBusyToNotice:: @ 81A4495
 	end
 
 SingleBattleColosseum_EventScript_1A449E:: @ 81A449E
-	special sub_8064EAC
+	special Script_FacePlayer
 	message SingleBattleColosseum_Text_1A4D7E
 	waitmessage
 	waitbuttonpress
-	special sub_8064ED4
+	special Script_ClearHeldMovement
 	closemessage
 	end
 
 TradeCenter_EventScript_1A44AD:: @ 81A44AD
-	special sub_8064EAC
+	special Script_FacePlayer
 	message TradeCenter_Text_1A4DAB
 	waitmessage
 	waitbuttonpress
-	special sub_8064ED4
+	special Script_ClearHeldMovement
 	closemessage
 	end
 
 RecordCorner_EventScript_1A44BC:: @ 81A44BC
 	compare VAR_TEMP_0, 0
 	goto_if_ne RecordCorner_EventScript_1A44D6
-	special sub_8064EAC
+	special Script_FacePlayer
 	message RecordCorner_Text_1A4DD7
 	waitmessage
 	waitbuttonpress
-	special sub_8064ED4
+	special Script_ClearHeldMovement
 	closemessage
 	end
 
 RecordCorner_EventScript_1A44D6:: @ 81A44D6
-	special sub_8064EAC
+	special Script_FacePlayer
 	message RecordCorner_Text_1A4DF7
 	waitmessage
 	waitbuttonpress
-	special sub_8064ED4
+	special Script_ClearHeldMovement
 	closemessage
 	end
 

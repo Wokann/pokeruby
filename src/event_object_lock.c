@@ -108,12 +108,12 @@ void unref_sub_8064E5C(void)
     UnfreezeObjectEvents();
 }
 
-void sub_8064EAC(void)
+void Script_FacePlayer(void)
 {
     ObjectEventFaceOppositeDirection(&gObjectEvents[gSelectedObjectEvent], gSpecialVar_Facing);
 }
 
-void sub_8064ED4(void)
+void Script_ClearHeldMovement(void)
 {
     ObjectEventClearHeldMovementIfActive(&gObjectEvents[gSelectedObjectEvent]);
 }
