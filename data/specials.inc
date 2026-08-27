@@ -325,7 +325,7 @@ gSpecials::
 	def_special SetTrainerFacingDirection
 	def_special DoSealedChamberShakingEffect_Short
 	def_special FoundBlackGlasses
-	def_special sub_807E25C
+	def_special StartDroughtWeatherBlend
 	def_special sp13E_warp_to_last_warp
 	def_special DoFallWarp
 	def_special ShowContestEntryMonPic

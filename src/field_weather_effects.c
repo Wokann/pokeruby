@@ -285,11 +285,11 @@ int Drought_Finish(void)
     return 0;
 }
 
-void task50_0807B6D4(u8);
+static void UpdateDroughtBlend(u8 taskId);
 
-void sub_807E25C(void)
+void StartDroughtWeatherBlend(void)
 {
-    CreateTask(task50_0807B6D4, 0x50);
+    CreateTask(UpdateDroughtBlend, 0x50);
 }
 
 #define tState      data[0]
@@ -297,7 +297,7 @@ void sub_807E25C(void)
 #define tBlendDelay data[2]
 #define tWinRange   data[3]
 
-void task50_0807B6D4(u8 taskId)
+static void UpdateDroughtBlend(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
