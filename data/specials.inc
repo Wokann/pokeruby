@@ -347,7 +347,7 @@ gSpecials::
 	def_special MonOTNameNotPlayer
 	def_special BufferLottoTicketNumber
 	def_special TryEnableBravoTrainerBattleTower
-	def_special GetNameOfEnigmaBerryInPlayerParty
+	def_special DoesPartyHaveEnigmaBerry
 	def_special ScriptRandom
 	def_special ValidateMixingGameLanguage
 .ifdef GERMAN

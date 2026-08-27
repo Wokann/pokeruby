@@ -406,7 +406,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A41BB:: @ 81A41BB
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
 	compare VAR_RESULT, 2
 	goto_if_lt OldaleTown_PokemonCenter_2F_EventScript_1A41E1
-	specialvar VAR_RESULT, GetNameOfEnigmaBerryInPlayerParty
+	specialvar VAR_RESULT, DoesPartyHaveEnigmaBerry
 	compare VAR_RESULT, 1
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A41EE
 	setvar VAR_RESULT, 1
