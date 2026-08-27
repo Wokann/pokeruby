@@ -6,8 +6,8 @@ PacifidlogTown_PokemonCenter_1F_OnTransition:: @ 8154105
 	setrespawn HEAL_LOCATION_PACIFIDLOG_TOWN
 	end
 
-@ 8154109
-	setvar VAR_0x800B, 1
+PacifidlogTown_PokemonCenter_1F_EventScript_UnusedNurse:: @ 8154109
+	setvar VAR_0x800B, LOCALID_PACIFIDLOG_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress

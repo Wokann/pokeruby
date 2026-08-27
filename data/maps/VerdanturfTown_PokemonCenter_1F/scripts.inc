@@ -8,6 +8,7 @@ VerdanturfTown_PokemonCenter_1F_OnTransition:: @ 8153F0F
 	end
 
 VerdanturfTown_PokemonCenter_1F_EventScript_Nurse:: @ 8153F18
+PacifidlogTown_PokemonCenter_1F_EventScript_Nurse:: @ 8153F18
 	setvar VAR_0x800B, LOCALID_VERDANTURF_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage

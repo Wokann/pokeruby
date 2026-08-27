@@ -11,10 +11,10 @@ PacifidlogTown_House2_EventScript_FanClubYoungerBrother:: @ 8154168
 	call_if_unset FLAG_MET_FANCLUB_YOUNGER_BROTHER, PacifidlogTown_House2_EventScript_FirstMonAssessment
 	setflag FLAG_MET_FANCLUB_YOUNGER_BROTHER
 	specialvar VAR_RESULT, GetLeadMonFriendshipScore
-	compare VAR_RESULT, 4
+	compare VAR_RESULT, FRIENDSHIP_150_TO_199
 	goto_if_ge PacifidlogTown_House2_EventScript_GiveReturn
 	specialvar VAR_RESULT, GetLeadMonFriendshipScore
-	compare VAR_RESULT, 2
+	compare VAR_RESULT, FRIENDSHIP_50_TO_99
 	goto_if_ge PacifidlogTown_House2_EventScript_PutInEffort
 	goto PacifidlogTown_House2_EventScript_GiveFrustration
 	end
@@ -42,7 +42,7 @@ PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM:: @ 81541E8
 PacifidlogTown_House2_EventScript_GiveReturn:: @ 81541EC
 	msgbox PacifidlogTown_House2_Text_AdoringPokemonTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM27_RETURN
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
@@ -58,7 +58,7 @@ PacifidlogTown_House2_EventScript_PutInEffort:: @ 815421B
 PacifidlogTown_House2_EventScript_GiveFrustration:: @ 8154225
 	msgbox PacifidlogTown_House2_Text_ViciousPokemonTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM21_FRUSTRATION
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
@@ -68,7 +68,7 @@ PacifidlogTown_House2_EventScript_GiveFrustration:: @ 8154225
 
 PacifidlogTown_House2_EventScript_ComeBackInXDays:: @ 8154254
 	specialvar VAR_RESULT, GetDaysUntilPacifidlogTMAvailable
-	buffernumberstring 0, VAR_RESULT
+	buffernumberstring STR_VAR_1, VAR_RESULT
 	msgbox PacifidlogTown_House2_Text_GetGoodTMInXDays, MSGBOX_DEFAULT
 	release
 	end
@@ -77,7 +77,7 @@ PacifidlogTown_House2_EventScript_HappyAzurill:: @ 8154267
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_AZURILL, 0
+	playmoncry SPECIES_AZURILL, CRY_MODE_NORMAL
 	msgbox PacifidlogTown_House2_Text_Rurii, MSGBOX_DEFAULT
 	waitmoncry
 	msgbox PacifidlogTown_House2_Text_VeryFriendlyWithTrainer, MSGBOX_DEFAULT
@@ -88,7 +88,7 @@ PacifidlogTown_House2_EventScript_UnhappyAzurill:: @ 8154282
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_AZURILL, 2
+	playmoncry SPECIES_AZURILL, CRY_MODE_ENCOUNTER
 	msgbox PacifidlogTown_House2_Text_Rururi, MSGBOX_DEFAULT
 	waitmoncry
 	msgbox PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch, MSGBOX_DEFAULT

@@ -5,7 +5,7 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	lock
 	faceplayer
 	goto_if_set FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED, PacifidlogTown_House3_EventScript_TradeCompleted
-	setvar VAR_0x8008, 2
+	setvar VAR_0x8008, INGAME_TRADE_CORSOLA
 	copyvar VAR_0x8004, VAR_0x8008
 	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo
 	copyvar VAR_0x8009, VAR_RESULT
@@ -15,7 +15,7 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	special ChoosePartyMon
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
-	compare VAR_0x8004, 255
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq PacifidlogTown_House3_EventScript_DeclineTrade
 	copyvar VAR_0x8005, VAR_0x800A
 	specialvar VAR_RESULT, GetTradeSpecies
@@ -27,7 +27,7 @@ PacifidlogTown_House3_EventScript_Trader:: @ 815429E
 	special CreateInGameTradePokemon
 	special DoInGameTradeScene
 	waitstate
-	bufferspeciesname 0, VAR_0x8009
+	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox PacifidlogTown_House3_Text_MonIsSoFluffy, MSGBOX_DEFAULT
 	setflag FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED
 	release
@@ -39,7 +39,7 @@ PacifidlogTown_House3_EventScript_DeclineTrade:: @ 8154320
 	end
 
 PacifidlogTown_House3_EventScript_NotRequestedMon:: @ 815432A
-	bufferspeciesname 0, VAR_0x8009
+	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox PacifidlogTown_House3_Text_ThatsNoMon, MSGBOX_DEFAULT
 	release
 	end

@@ -919,65 +919,79 @@
 	.2byte \index
 	.endm
 
+	@ Converts STR_VAR_1, STR_VAR_2, or STR_VAR_3 to its corresponding script string-variable index.
+	@ Other values are emitted directly for compatibility with existing scripts.
+	.macro stringvar id:req
+	.if \id == STR_VAR_1
+		.byte 0
+	.elseif \id == STR_VAR_2
+		.byte 1
+	.elseif \id == STR_VAR_3
+		.byte 2
+	.else
+		.byte \id
+	.endif
+	.endm
+
 	@ Writes the name of the Pokemon at index species to the specified buffer.
 	.macro bufferspeciesname out:req, species:req
 	.byte 0x7d
-	.byte \out
+	stringvar \out
 	.2byte \species
 	.endm
 
 	@ Writes the name of the species of the first Pokemon in the player's party to the specified buffer.
 	.macro bufferleadmonspeciesname out:req
 	.byte 0x7e
-	.byte \out
+	stringvar \out
 	.endm
 
 	@ Writes the nickname of the Pokemon in slot slot (zero-indexed) of the player's party to the specified buffer. If an empty or invalid slot is specified, ten spaces ("") are written to the buffer.
 	.macro bufferpartymonnick out:req, slot:req
 	.byte 0x7f
-	.byte \out
+	stringvar \out
 	.2byte \slot
 	.endm
 
 	@ Writes the name of the item at index item to the specified buffer. If the specified index is larger than the number of items in the game (0x176), the name of item 0 ("????????") is buffered instead.
 	.macro bufferitemname out:req, item:req
 	.byte 0x80
-	.byte \out
+	stringvar \out
 	.2byte \item
 	.endm
 
 	@ Writes the name of the decoration at index decoration to the specified buffer. In FireRed, this command is a nop.
 	.macro bufferdecorationname out:req, decoration:req
 	.byte 0x81
-	.byte \out
+	stringvar \out
 	.2byte \decoration
 	.endm
 
 	@ Writes the name of the move at index move to the specified buffer.
 	.macro buffermovename out:req, move:req
 	.byte 0x82
-	.byte \out
+	stringvar \out
 	.2byte \move
 	.endm
 
 	@ Converts the value of input to a decimal string, and writes that string to the specified buffer.
 	.macro buffernumberstring out:req, input:req
 	.byte 0x83
-	.byte \out
+	stringvar \out
 	.2byte \input
 	.endm
 
 	@ Writes the standard string identified by index to the specified buffer. This command has no protections in place at all, so specifying an invalid standard string (e.x. 0x2B) can and usually will cause data corruption.
 	.macro bufferstdstring out:req, index:req
 	.byte 0x84
-	.byte \out
+	stringvar \out
 	.2byte \index
 	.endm
 
 	@ Copies the string at offset to the specified buffer.
 	.macro bufferstring out:req, offset:req
 	.byte 0x85
-	.byte \out
+	stringvar \out
 	.4byte \offset
 	.endm
 
