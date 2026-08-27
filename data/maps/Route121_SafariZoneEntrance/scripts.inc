@@ -90,7 +90,7 @@ Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon:: @ 815C425
 	getpartysize
 	compare VAR_RESULT, 6
 	goto_if_ne Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
-	specialvar VAR_RESULT, CheckFreePokemonStorageSpace
+	specialvar VAR_RESULT, ScriptCheckFreePokemonStorageSpace
 	compare VAR_RESULT, 1
 	goto_if_eq Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
 	msgbox Route121_SafariZoneEntrance_Text_PCIsFull, MSGBOX_DEFAULT

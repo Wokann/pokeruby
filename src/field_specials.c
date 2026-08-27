@@ -1764,7 +1764,7 @@ bool8 IsStarterInParty(void)
     return FALSE;
 }
 
-bool8 CheckFreePokemonStorageSpace(void)
+bool8 ScriptCheckFreePokemonStorageSpace(void)
 {
     u16 i, j;
     for (i=0; i<14; i++)

@@ -312,7 +312,7 @@ gSpecials::
 	def_special LoadWallyZigzagoon
 	def_special IsStarterInParty
 	def_special CopyCurSecretBaseOwnerName_StrVar1
-	def_special CheckFreePokemonStorageSpace
+	def_special ScriptCheckFreePokemonStorageSpace
 	def_special DoSealedChamberShakingEffect1
 	def_special DisplayCurrentElevatorFloor
 	def_special GetShieldToyTVDecorationInfo
