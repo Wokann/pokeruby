@@ -73,7 +73,7 @@ LilycoveCity_DepartmentStoreElevator_EventScript_MoveElevator:: @ 815A4B8
 	erasebox 0, 0, 29, 19
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
-	special ShakeScreenInElevator
+	special MoveElevator
 	waitstate
 	setflag FLAG_TEMP_2
 	return

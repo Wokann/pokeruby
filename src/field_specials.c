@@ -980,14 +980,14 @@ void DisplayCurrentElevatorFloor(void);
 void sub_810E984(u8);
 bool8 sub_810EAC8(u8, u8);
 void sub_810EB90(u8, u8);
-void ShakeScreenInElevator(void);
-void sub_810EC34(u8);
+void MoveElevator(void);
+static void Task_MoveElevator(u8);
 void sub_810EC9C(u8);
 void sub_810ECB0(void);
 void sub_810ECD4(void);
-void sub_810ECFC(void);
-void sub_810ED40(u8);
-void sub_810ED60(struct Task *);
+static void MoveElevatorWindowLights(void);
+static void Task_MoveElevatorWindowLights(u8);
+static void UpdateElevatorWindowLights(struct Task *);
 void sub_810EEDC(void);
 
 const u8 *const gUnknown_083F8380[] = {
@@ -1134,7 +1134,7 @@ void sub_810E984(u8 taskId)
         {
             gSpecialVar_Result = 1;
             gSpecialVar_0x8005 = gUnknown_0203925B;
-            ShakeScreenInElevator();
+            MoveElevator();
             ObjectEventTurnByLocalIdAndMap(gSpecialVar_LastTalked, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, DIR_SOUTH);
             sub_810EEDC();
             Menu_EraseScreen();
@@ -1218,9 +1218,9 @@ void sub_810EB90(u8 newPos, u8 maxItems)
     }
 }
 
-void ShakeScreenInElevator(void)
+void MoveElevator(void)
 {
-    u8 taskId = CreateTask(sub_810EC34, 9);
+    u8 taskId = CreateTask(Task_MoveElevator, 9);
     gTasks[taskId].data[0] = 1;
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -1228,11 +1228,11 @@ void ShakeScreenInElevator(void)
     gTasks[taskId].data[4] = 1;
     gTasks[taskId].data[5] = 3;
     SetCameraPanningCallback(NULL);
-    sub_810ECFC();
+    MoveElevatorWindowLights();
     PlaySE(SE_ELEVATOR);
 }
 
-void sub_810EC34(u8 taskId)
+static void Task_MoveElevator(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     task->data[1] ++;
@@ -1278,11 +1278,11 @@ void sub_810ECD4(void)
     }
 }
 
-void sub_810ECFC(void)
+static void MoveElevatorWindowLights(void)
 {
-    if (FuncIsActiveTask(sub_810ED40) != TRUE)
+    if (FuncIsActiveTask(Task_MoveElevatorWindowLights) != TRUE)
     {
-        u8 taskId = CreateTask(sub_810ED40, 8);
+        u8 taskId = CreateTask(Task_MoveElevatorWindowLights, 8);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = taskId;
         gTasks[taskId].data[2] = 0;
@@ -1291,12 +1291,12 @@ void sub_810ECFC(void)
     }
 }
 
-void sub_810ED40(u8 taskId)
+static void Task_MoveElevatorWindowLights(u8 taskId)
 {
-    sub_810ED60(&gTasks[taskId]);
+    UpdateElevatorWindowLights(&gTasks[taskId]);
 }
 
-void sub_810ED60(struct Task *task)
+static void UpdateElevatorWindowLights(struct Task *task)
 {
     if (task->data[3] == 8)
     {
