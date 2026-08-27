@@ -103,7 +103,7 @@ s16 GetIndexOfFirstEmptySpaceInBoxN(u8 boxId)
     return -1;
 }
 
-u8 GetNumValidDaycarePartyMons(void)
+u8 CountPartyNonEggMons(void)
 {
     u16 i;
     u16 count;
@@ -117,14 +117,14 @@ u8 GetNumValidDaycarePartyMons(void)
     return count;
 }
 
-u8 CountAlivePartyMonsExceptOne(u8 toSkip)
+u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore)
 {
     u16 i;
     u16 count;
 
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (i != toSkip)
+        if (i != slotToIgnore)
         {
             struct Pokemon *pokemon = gPlayerParty + i;
             if (GetMonData(pokemon, MON_DATA_SPECIES) != 0 && !GetMonData(pokemon, MON_DATA_IS_EGG) && GetMonData(pokemon, MON_DATA_HP) != 0)
@@ -134,12 +134,12 @@ u8 CountAlivePartyMonsExceptOne(u8 toSkip)
     return count;
 }
 
-u8 CountAlivePartyMonsExceptSelectedOne(void)
+u8 CountPartyAliveNonEggMons_IgnoreVar0x8004Slot(void)
 {
-    return CountAlivePartyMonsExceptOne(gSpecialVar_0x8004);
+    return CountPartyAliveNonEggMonsExcept(gSpecialVar_0x8004);
 }
 
-u8 StorageSystemGetPartySize(void)
+u8 CountPartyMons(void)
 {
     u16 i;
     u16 count;
@@ -289,13 +289,13 @@ void Task_PokemonStorageSystem(u8 taskId)
                     DestroyTask(taskId);
                     break;
                 default:
-                    if (task->data[2] == 0 && StorageSystemGetPartySize() == PARTY_SIZE)
+                    if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
                     {
                         StorageSystemClearMessageWindow();
                         Menu_PrintText(gPCText_PartyFull2, 2, 15);
                         task->data[0] = 3;
                     }
-                    else if (task->data[2] == 1 && StorageSystemGetPartySize() == 1)
+                    else if (task->data[2] == 1 && CountPartyMons() == 1)
                     {
                         StorageSystemClearMessageWindow();
                         Menu_PrintText(gPCText_OnlyOne, 2, 15);

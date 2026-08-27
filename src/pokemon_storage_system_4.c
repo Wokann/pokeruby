@@ -1565,7 +1565,7 @@ void sub_809BC18(void)
     {
         gPokemonStorageSystemPtr->unk_2690.pokemon = gPlayerParty;
         gPokemonStorageSystemPtr->unk_268d = sBoxCursorPosition;
-        gPokemonStorageSystemPtr->unk_268c = StorageSystemGetPartySize() - 1;
+        gPokemonStorageSystemPtr->unk_268c = CountPartyMons() - 1;
         gPokemonStorageSystemPtr->unk_268e = 0;
     }
     else
@@ -1623,7 +1623,7 @@ void sub_809BDD8(u8 markings)
 
 bool8 sub_809BE80(void)
 {
-    if (sBoxCursorArea == 1 && !gUnknown_020384E6 && CountAlivePartyMonsExceptOne(sBoxCursorPosition) == 0)
+    if (sBoxCursorArea == 1 && !gUnknown_020384E6 && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         return TRUE;
     return FALSE;
 }
@@ -1632,7 +1632,7 @@ bool8 sub_809BEBC(void)
 {
     if (gUnknown_020384E6)
     {
-        if (sBoxCursorArea == 1 && CountAlivePartyMonsExceptOne(sBoxCursorPosition) == 0)
+        if (sBoxCursorArea == 1 && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
         {
             if (gPokemonStorageSystemPtr->unk_11f9 || GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_HP) == 0)
                 return FALSE;

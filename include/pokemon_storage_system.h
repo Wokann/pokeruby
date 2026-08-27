@@ -236,9 +236,10 @@ extern struct UnkPSSStruct_2002370 *gUnknown_02038478;
 extern struct PokemonStorageSystemData *const gPokemonStorageSystemPtr;
 extern u8 *const gUnknown_083B6DB8;
 
-u8 StorageSystemGetPartySize(void);
+u8 CountPartyMons(void);
 s16 GetIndexOfFirstEmptySpaceInBoxN(u8 boxId);
-u8 CountAlivePartyMonsExceptOne(u8 toSkip);
+u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore);
+u8 CountPartyAliveNonEggMons_IgnoreVar0x8004Slot(void);
 u8 CountPokemonInBoxN(u8 boxId);
 void sub_8096264(struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3);
 void sub_809634C(u8 curBox);
