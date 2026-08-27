@@ -8,7 +8,7 @@ OldaleTown_PokemonCenter_1F_OnTransition:: @ 8152F0E
 	end
 
 OldaleTown_PokemonCenter_1F_EventScript_Nurse:: @ 8152F17
-	setvar VAR_0x800B, 1
+	setvar VAR_0x800B, LOCALID_OLDALE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
@@ -26,12 +26,12 @@ OldaleTown_PokemonCenter_1F_EventScript_Boy:: @ 8152F2E
 OldaleTown_PokemonCenter_1F_EventScript_Girl:: @ 8152F37
 	lock
 	faceplayer
-	goto_if_set FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable
+	goto_if_set FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_1F_EventScript_CableClubAvailable
 	msgbox OldaleTown_PokemonCenter_1F_Text_CableClubNotAvailable, MSGBOX_DEFAULT
 	release
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable:: @ 8152F4C
+OldaleTown_PokemonCenter_1F_EventScript_CableClubAvailable:: @ 8152F4C
 	msgbox OldaleTown_PokemonCenter_1F_Text_TradedInCableClub, MSGBOX_DEFAULT
 	release
 	end
