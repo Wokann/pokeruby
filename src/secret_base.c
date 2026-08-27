@@ -754,7 +754,7 @@ void sub_80BC474(void)
     }
 }
 
-void MoveSecretBase(void)
+void MoveOutOfSecretBaseFromOutside(void)
 {
     u16 backupValue;
     sub_80BC474();

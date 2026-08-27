@@ -189,7 +189,7 @@ SecretBase_EventScript_AlreadyHasSecretBase:
 	compare VAR_RESULT, NO
 	goto_if_eq SecretBase_EventScript_CancelOnEntrance
 	fadescreen FADE_TO_BLACK
-	special MoveSecretBase
+	special MoveOutOfSecretBaseFromOutside
 	closemessage
 	fadescreen FADE_FROM_BLACK
 	msgbox SecretBase_Text_MovingCompletedUseSecretPower, MSGBOX_YESNO

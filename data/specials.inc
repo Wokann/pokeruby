@@ -338,7 +338,7 @@ gSpecials::
 	def_special ScriptGetPartyMonSpecies
 	def_special IsSelectedMonEgg
 	def_special TryInitBattleTowerAwardManObjectEvent
-	def_special MoveSecretBase
+	def_special MoveOutOfSecretBaseFromOutside
 	def_special LoadPlayerBag
 	def_special sub_8081924
 	def_special SetPacifidlogTMReceivedDay
