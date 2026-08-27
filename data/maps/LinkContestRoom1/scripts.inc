@@ -12,7 +12,7 @@ LinkContestRoom1_MapScript1_OnTransition:: @ 815F595
 	end
 
 LinkContestRoom1_EventScript_ReadyContestMusic:: @ 815F5A5
-	special ScriptGetMultiplayerId
+	special GetContestMultiplayerId
 	compare VAR_RESULT, 0
 	call_if_eq LinkContestRoom1_EventScript_SaveContestMusicPlayer1
 	compare VAR_RESULT, 1

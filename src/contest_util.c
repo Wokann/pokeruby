@@ -353,7 +353,7 @@ static void Task_ShowContestEntryMonPic(u8 taskId)
     }
 }
 
-void ScriptGetMultiplayerId(void)
+void GetContestMultiplayerId(void)
 {
     if(gIsLinkContest & 1)
         gSpecialVar_Result = GetMultiplayerId();
