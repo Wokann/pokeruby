@@ -909,7 +909,7 @@ void sub_80BE074(void)
 
 void sub_80BE138(TVShow *show)
 {
-    u32 playerId = GetPlayerTrainerId();
+    u32 playerId = GetPlayerIDAsU32();
 
     show->common.srcTrainerId2Lo = playerId & 0xFF;
     show->common.srcTrainerId2Hi = playerId >> 8;
@@ -921,7 +921,7 @@ void sub_80BE138(TVShow *show)
 
 void sub_80BE160(TVShow *show)
 {
-    u32 playerId = GetPlayerTrainerId();
+    u32 playerId = GetPlayerIDAsU32();
 
     show->common.srcTrainerIdLo = playerId & 0xFF;
     show->common.srcTrainerIdHi = playerId >> 8;
@@ -1037,10 +1037,10 @@ void sub_80BE3BC(void)
     }
 }
 
-void sub_80BE478(void)
+void PutNameRaterShowOnTheAir(void)
 {
     InterviewBefore_NameRater();
-    if (gSpecialVar_Result == 1)
+    if (gSpecialVar_Result == TRUE)
         return;
 
     GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NICKNAME, gStringVar1);
@@ -1049,7 +1049,7 @@ void sub_80BE478(void)
         struct TVShowNameRaterShow *nameRaterShow = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].nameRaterShow;
 
         nameRaterShow->kind = TVSHOW_NAME_RATER_SHOW;
-        nameRaterShow->active = 1;
+        nameRaterShow->active = TRUE;
         nameRaterShow->species = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES, NULL);
         nameRaterShow->random = Random() % 3;
         nameRaterShow->random2 = Random() % 2;
@@ -1407,7 +1407,7 @@ void DoPokeNews(void)
     i = FindAnyPokeNewsOnTheAir();
     if (i == 0xff)
     {
-        gSpecialVar_Result = 0;
+        gSpecialVar_Result = FALSE;
         return;
     }
     if (gSaveBlock1.pokeNews[i].days == 0)
@@ -1608,7 +1608,7 @@ bool8 sub_80BF1B4(u8 showIdx)
     u8 i;
     //TVShow *tvShows;
     TVShow *tvShows = gSaveBlock1.tvShows;
-    u32 trainerId = GetPlayerTrainerId();
+    u32 trainerId = GetPlayerIDAsU32();
 
     for (i = 5; i < 24; i++)
     {
@@ -1730,7 +1730,7 @@ void InterviewBefore_PkmnFanClubOpinions(void)
     {
         StringCopy(gStringVar1, gSpeciesNames[GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES, 0)]);
         GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_NICKNAME, gStringVar2);
-        StringGetEnd10(gStringVar2);
+        StringGet_Nickname(gStringVar2);
         fanclubOpinions = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].fanclubOpinions;
         sub_80EB6FC(fanclubOpinions->var1C, 2);
     }
@@ -1891,7 +1891,7 @@ void sub_80BF6D8(void)
     gUnknown_03005D38.var0 = sub_80BF720(gSaveBlock1.tvShows);
     gSpecialVar_0x8006 = gUnknown_03005D38.var0;
     if (gUnknown_03005D38.var0 == -1)
-        gSpecialVar_Result = 1;
+        gSpecialVar_Result = TRUE;
     else
         gSpecialVar_Result = 0;
 }
@@ -2048,12 +2048,12 @@ bool8 IsTVShowAlreadyInQueue(void)
     return FALSE;
 }
 
-bool8 TV_PutNameRaterShowOnTheAirIfNicnkameChanged(void)
+bool8 TryPutNameRaterShowOnTheAir(void)
 {
     GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_NICKNAME, &gStringVar1);
     if (!StringCompareWithoutExtCtrlCodes(gStringVar3, gStringVar1))
         return FALSE;
-    sub_80BE478();
+    PutNameRaterShowOnTheAir();
     return TRUE;
 }
 
@@ -2079,15 +2079,15 @@ void ChangePokemonNickname_CB(void)
     CB2_ReturnToFieldContinueScriptPlayMapMusic();
 }
 
-void TV_CopyNicknameToStringVar1AndEnsureTerminated(void)
+void BufferMonNickname(void)
 {
     GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_NICKNAME, &gStringVar1);
-    StringGetEnd10(gStringVar1);
+    StringGet_Nickname(gStringVar1);
 }
 
-void TV_CheckMonOTIDEqualsPlayerID(void)
+void IsMonOTIDNotPlayers(void)
 {
-    if (GetPlayerTrainerId() == GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_OT_ID, 0))
+    if (GetPlayerIDAsU32() == GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_OT_ID, 0))
         gSpecialVar_Result = 0;
     else
         gSpecialVar_Result = 1;
@@ -2107,7 +2107,7 @@ u8 GetTVGroupByShowId(u8 kind)
         return 0;
 }
 
-u32 GetPlayerTrainerId(void)
+u32 GetPlayerIDAsU32(void)
 {
     return (gSaveBlock2.playerTrainerId[3] << 24) | (gSaveBlock2.playerTrainerId[2] << 16) | (gSaveBlock2.playerTrainerId[1] << 8) | (gSaveBlock2.playerTrainerId[0]);
 }

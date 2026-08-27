@@ -2488,7 +2488,7 @@ bool8 PokemonSummaryScreen_CheckOT(struct Pokemon *mon)
     }
     else
     {
-        trainerId = GetPlayerTrainerId() & 0xFFFF;
+        trainerId = GetPlayerIDAsU32() & 0xFFFF;
         StringCopy(gStringVar1, gSaveBlock2.playerName);
     }
 

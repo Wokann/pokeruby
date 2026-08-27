@@ -1,4 +1,4 @@
-SlateportCity_House1_MapScripts:: @ 815567A
+SlateportCity_NameRatersHouse_MapScripts:: @ 815567A
 	.byte 0
 
 SlateportCity_NameRatersHouse_EventScript_NameRater:: @ 815567B
@@ -15,9 +15,9 @@ SlateportCity_NameRatersHouse_EventScript_ChooseMonToRate:: @ 815569C
 	msgbox SlateportCity_NameRatersHouse_Text_CritiqueWhichMonNickname, MSGBOX_DEFAULT
 	special SelectMonForNPCTrade
 	waitstate
-	compare VAR_0x8004, 255
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_ne SlateportCity_NameRatersHouse_EventScript_RateMonNickname
-	compare VAR_0x8004, 255
+	compare VAR_0x8004, PARTY_NOTHING_CHOSEN
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_DeclineNameRate
 	end
 
@@ -30,13 +30,13 @@ SlateportCity_NameRatersHouse_EventScript_RateMonNickname:: @ 81556C9
 	specialvar VAR_RESULT, ScriptGetPartyMonSpecies
 	compare VAR_RESULT, SPECIES_EGG
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_CantRateEgg
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	special TV_CheckMonOTIDEqualsPlayerID
-	compare VAR_RESULT, 1
+	special BufferMonNickname
+	special IsMonOTIDNotPlayers
+	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
 	specialvar VAR_RESULT, MonOTNameMatchesPlayer
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	compare VAR_RESULT, 1
+	special BufferMonNickname
+	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT
 	msgbox SlateportCity_NameRatersHouse_Text_FineNameSuggestBetterOne, MSGBOX_YESNO
 	compare VAR_RESULT, YES
@@ -58,9 +58,9 @@ SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT:: @ 8155726
 SlateportCity_NameRatersHouse_EventScript_ChangeNickname:: @ 8155730
 	msgbox SlateportCity_NameRatersHouse_Text_WhatShallNewNameBe, MSGBOX_DEFAULT
 	call Common_EventScript_NameReceivedPartyMon
-	specialvar VAR_RESULT, TV_PutNameRaterShowOnTheAirIfNicnkameChanged
-	special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	compare VAR_RESULT, 1
+	specialvar VAR_RESULT, TryPutNameRaterShowOnTheAir
+	special BufferMonNickname
+	compare VAR_RESULT, TRUE
 	goto_if_eq SlateportCity_NameRatersHouse_EventScript_NewNameDifferent
 	msgbox SlateportCity_NameRatersHouse_Text_NameNoDifferentYetSuperior, MSGBOX_DEFAULT
 	release

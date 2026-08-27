@@ -71,7 +71,7 @@ s8 sub_80BF720(TVShow *);
 s8 sub_80BF74C(TVShow tvShow[]);
 bool8 sub_80BF77C(u16);
 bool8 sub_80BF77C(u16);
-u32 GetPlayerTrainerId(void);
+u32 GetPlayerIDAsU32(void);
 void ReceiveTvShowsData(u8 *, u32, u8);
 u8 sub_80C004C(TVShow *tv1, TVShow *tv2, u8 idx);
 u8 sub_80C00B4(TVShow *tv1, TVShow *tv2, u8 idx);

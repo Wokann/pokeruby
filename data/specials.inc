@@ -131,9 +131,9 @@ gSpecials::
 	def_special CompareShroomishSize
 	def_special GetBarboachSizeRecordInfo
 	def_special CompareBarboachSize
-	def_special TV_PutNameRaterShowOnTheAirIfNicnkameChanged
-	def_special TV_CopyNicknameToStringVar1AndEnsureTerminated
-	def_special TV_CheckMonOTIDEqualsPlayerID
+	def_special TryPutNameRaterShowOnTheAir
+	def_special BufferMonNickname
+	def_special IsMonOTIDNotPlayers
 	def_special BufferTrendyPhraseString
 	def_special IsTrendyPhraseBoring
 	def_special BufferRandomHobbyOrLifestyleString
