@@ -301,8 +301,8 @@ gSpecials::
 	def_special FoundAbandonedShipRoom4Key
 	def_special FoundAbandonedShipRoom6Key
 	def_special LeadMonHasEffortRibbon
-	def_special GivLeadMonEffortRibbon
-	def_special ScrSpecial_AreLeadMonEVsMaxedOut
+	def_special GiveLeadMonEffortRibbon
+	def_special Special_AreLeadMonEVsMaxedOut
 	def_special sub_8064EAC
 	def_special sub_8064ED4
 	def_special InitRoamer

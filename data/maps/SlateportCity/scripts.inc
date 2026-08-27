@@ -69,7 +69,7 @@ SlateportCity_EventScript_EffortRibbonWoman:: @ 814BAE0
 	specialvar VAR_RESULT, LeadMonHasEffortRibbon
 	compare VAR_RESULT, 1
 	call_if_eq SlateportCity_EventScript_MonHasEffortRibbon
-	specialvar VAR_RESULT, ScrSpecial_AreLeadMonEVsMaxedOut
+	specialvar VAR_RESULT, Special_AreLeadMonEVsMaxedOut
 	compare VAR_RESULT, 0
 	call_if_eq SlateportCity_EventScript_MonEVsNotMaxed
 	msgbox SlateportCity_Text_PleaseGiveItThisEffortRibbon, MSGBOX_DEFAULT
@@ -78,7 +78,7 @@ SlateportCity_EventScript_EffortRibbonWoman:: @ 814BAE0
 	waitfanfare
 	waitmessage
 	msgbox SlateportCity_Text_PutEffortRibbonOnMon, MSGBOX_DEFAULT
-	special GivLeadMonEffortRibbon
+	special GiveLeadMonEffortRibbon
 	release
 	end
 

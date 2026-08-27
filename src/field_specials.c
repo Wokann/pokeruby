@@ -1694,7 +1694,7 @@ bool8 LeadMonHasEffortRibbon(void)
     return GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_EFFORT_RIBBON, NULL);
 }
 
-void GivLeadMonEffortRibbon(void)
+void GiveLeadMonEffortRibbon(void)
 {
     bool8 ribbonSet;
     IncrementGameStat(GAME_STAT_RECEIVED_RIBBONS);
@@ -1703,7 +1703,7 @@ void GivLeadMonEffortRibbon(void)
     SetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_EFFORT_RIBBON, &ribbonSet);
 }
 
-bool8 ScrSpecial_AreLeadMonEVsMaxedOut(void)
+bool8 Special_AreLeadMonEVsMaxedOut(void)
 {
     if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= 510)
     {
