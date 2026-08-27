@@ -11,14 +11,14 @@ SlateportCity_Harbor_OnTransition:: @ 8155F63
 	end
 
 SlateportCity_Harbor_EventScript_ShowSSTidal:: @ 8155F85
-	clearflag FLAG_HIDE_SS_TIDAL_SLATEPORT_HARBOR
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL
 	return
 
 SlateportCity_Harbor_EventScript_ReadyEvilTeamEscapeScene:: @ 8155F89
 	savebgm MUS_EVIL_TEAM
-	setobjectxyperm 4, 12, 13
-	setobjectmovementtype 4, 9
-	setflag FLAG_HIDE_WORKERS_SLATEPORT_HARBOR
+	setobjectxyperm LOCALID_SLATEPORT_HARBOR_CAPT_STERN, 12, 13
+	setobjectmovementtype LOCALID_SLATEPORT_HARBOR_CAPT_STERN, MOVEMENT_TYPE_FACE_LEFT
+	setflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_PATRONS
 	return
 
 SlateportCity_Harbor_EventScript_EvilTeamEscapeTrigger0:: @ 8155F9B
@@ -48,19 +48,19 @@ SlateportCity_Harbor_EventScript_EvilTeamEscapeTrigger3:: @ 8155FBF
 	end
 
 SlateportCity_Harbor_EventScript_EvilTeamEscapeScene:: @ 8155FD5
-	applymovement 7, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_SLATEPORT_HARBOR_EVIL_LEADER, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox SlateportCity_Harbor_Text_YouAgainHideoutInLilycove, MSGBOX_DEFAULT
 	closemessage
-	applymovement 6, SlateportCity_Harbor_Movement_EvilTeamBoardSub
-	applymovement 7, SlateportCity_Harbor_Movement_EvilTeamBoardSub
-	applymovement 8, SlateportCity_Harbor_Movement_SubmarineExit
+	applymovement LOCALID_SLATEPORT_HARBOR_GRUNT, SlateportCity_Harbor_Movement_EvilTeamBoardSub
+	applymovement LOCALID_SLATEPORT_HARBOR_EVIL_LEADER, SlateportCity_Harbor_Movement_EvilTeamBoardSub
+	applymovement LOCALID_SLATEPORT_HARBOR_SUBMARINE, SlateportCity_Harbor_Movement_SubmarineExit
 	waitmovement 0
-	removeobject 6
-	removeobject 7
-	removeobject 8
+	removeobject LOCALID_SLATEPORT_HARBOR_GRUNT
+	removeobject LOCALID_SLATEPORT_HARBOR_EVIL_LEADER
+	removeobject LOCALID_SLATEPORT_HARBOR_SUBMARINE
 	setvar VAR_SLATEPORT_HARBOR_STATE, 2
 	compare VAR_0x8008, 0
 	call_if_eq SlateportCity_Harbor_EventScript_SternApproachPlayer0
@@ -74,27 +74,27 @@ SlateportCity_Harbor_EventScript_EvilTeamEscapeScene:: @ 8155FD5
 	closemessage
 	setflag FLAG_HIDE_GRUNT_1_BLOCKING_HIDEOUT
 	setflag FLAG_HIDE_GRUNT_2_BLOCKING_HIDEOUT
-	copyobjectxytoperm 4
-	setobjectmovementtype 4, 10
+	copyobjectxytoperm LOCALID_SLATEPORT_HARBOR_CAPT_STERN
+	setobjectmovementtype LOCALID_SLATEPORT_HARBOR_CAPT_STERN, MOVEMENT_TYPE_FACE_RIGHT
 	releaseall
 	end
 
 SlateportCity_Harbor_EventScript_SternApproachPlayer0:: @ 815605C
-	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer0
+	applymovement LOCALID_SLATEPORT_HARBOR_CAPT_STERN, SlateportCity_Harbor_Movement_SternApproachPlayer0
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	return
 
 SlateportCity_Harbor_EventScript_SternApproachPlayer1:: @ 8156071
-	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer1
+	applymovement LOCALID_SLATEPORT_HARBOR_CAPT_STERN, SlateportCity_Harbor_Movement_SternApproachPlayer1
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	return
 
 SlateportCity_Harbor_EventScript_SternApproachPlayer:: @ 8156086
-	applymovement 4, SlateportCity_Harbor_Movement_SternApproachPlayer
+	applymovement LOCALID_SLATEPORT_HARBOR_CAPT_STERN, SlateportCity_Harbor_Movement_SternApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
@@ -107,7 +107,7 @@ SlateportCity_Harbor_Movement_EvilTeamBoardSub:: @ 815609B
 	set_invisible
 	step_end
 
-@ 81560A0
+SlateportCity_Harbor_Movement_UnusedEvilLeaderBoardSub:: @ 81560A0
 	delay_16
 	delay_16
 	jump_up
@@ -227,7 +227,7 @@ SlateportCity_Harbor_EventScript_BoardFerry:: @ 8156196
 	call_if_eq SlateportCity_Harbor_EventScript_BoardFerryEast
 	delay 30
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
-	setvar VAR_0x8004, 5
+	setvar VAR_0x8004, LOCALID_SLATEPORT_HARBOR_SS_TIDAL
 	call Common_EventScript_FerryDepart
 	return
 

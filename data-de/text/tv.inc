@@ -281,7 +281,7 @@ gTVBravoTrainerBattleTowerText15:: @ 81A8267
 	.string "Das war's für den Moment!\n"
 	.string "Bis zur nächsten Sendung!$"
 
-SlateportCity_PokemonFanClub_Text_1A82F1:: @ 81A82F1
+SlateportCity_PokemonFanClub_Text_InterviewRequestHasName:: @ 81A82F1
 	.string "Wow!\p"
 	.string "Es ist ganz offensichtlich, dass du\n"
 	.string "deine Liebe {STR_VAR_1} schenkst.\p"
@@ -292,37 +292,37 @@ SlateportCity_PokemonFanClub_Text_1A82F1:: @ 81A82F1
 	.string "Würdest du mir bitte ein paar einfache\n"
 	.string "Fragen beantworten?$"
 
-SlateportCity_PokemonFanClub_Text_1A83D0:: @ 81A83D0
+SlateportCity_PokemonFanClub_Text_HereGoesQuickAnswers:: @ 81A83D0
 	.string "Großartig! Danke schön!\p"
 	.string "Okay, los geht's. Ich brauche\n"
 	.string "kurze, knappe Antworten, okay?$"
 
-SlateportCity_PokemonFanClub_Text_1A8414:: @ 81A8414
+SlateportCity_PokemonFanClub_Text_DescribeFeelingsFirstMetMon:: @ 81A8414
 	.string "Als du {STR_VAR_1} zum ersten Mal ge-\n"
 	.string "sehen hast, was war das für\l"
 	.string "ein Gefühl?\p"
 	.string "Wie würdest du die Gefühle zu dem\n"
 	.string "Zeitpunkt beschreiben?$"
 
-SlateportCity_PokemonFanClub_Text_1A8470:: @ 81A8470
+SlateportCity_PokemonFanClub_Text_LikenMonToSomethingYouLike:: @ 81A8470
 	.string "Du kümmerst dich liebevoll um\n"
 	.string "{STR_VAR_1}.\p"
 	.string "Wenn du es mit etwas vergleichen\n"
 	.string "würdest, das du magst, was wäre das?$"
 
-SlateportCity_PokemonFanClub_Text_1A84D5:: @ 81A84D5
+SlateportCity_PokemonFanClub_Text_WhatAttractedYouAboutMon:: @ 81A84D5
 	.string "Diese Frage bezieht sich auch auf dein\n"
 	.string "geliebtes {STR_VAR_1}.\p"
 	.string "Was hat dich an {STR_VAR_1} angezogen?$"
 
-SlateportCity_PokemonFanClub_Text_1A852D:: @ 81A852D
+SlateportCity_PokemonFanClub_Text_WhatDoPokemonMeanToYou:: @ 81A852D
 	.string "Okay, das ergibt einen Sinn.\p"
 	.string "Diese Frage mag vielleicht etwas schwer\n"
 	.string "sein, um sie kurz zu beantworten.\p"
 	.string "Also...\p"
 	.string "Was bedeuten POKéMON für dich?$"
 
-SlateportCity_PokemonFanClub_Text_1A85A6:: @ 81A85A6
+SlateportCity_PokemonFanClub_Text_ThatsAllForInterview:: @ 81A85A6
 	.string "Ich verstehe!\p"
 	.string "Hmhm...\p"
 	.string "Das war's! Danke, dass du mir deine\n"
@@ -334,16 +334,16 @@ SlateportCity_PokemonFanClub_Text_1A85A6:: @ 81A85A6
 	.string "Okay, das ist alles.\n"
 	.string "Vielen Dank und leb wohl.$"
 
-SlateportCity_PokemonFanClub_Text_1A8667:: @ 81A8667
+SlateportCity_PokemonFanClub_Text_HereIfYouGetUrgeToTellMe:: @ 81A8667
 	.string "Oh, okay...\p"
 	.string "Nun, wenn du mir doch etwas über\n"
 	.string "POKéMON erzählen willst, ich bin hier.$"
 
-SlateportCity_PokemonFanClub_Text_1A86B5:: @ 81A86B5
+SlateportCity_PokemonFanClub_Text_EnjoyDoingInterviews:: @ 81A86B5
 	.string "Ich liebe meinen Job - ich lerne so viel\n"
 	.string "über POKéMON während der Interviews.$"
 
-SlateportCity_PokemonFanClub_Text_1A8704:: @ 81A8704
+SlateportCity_PokemonFanClub_Text_InterviewRequest:: @ 81A8704
 	.string "Hallo, du scheinst deinem {STR_VAR_1}\n"
 	.string "sehr nahe zu stehen.\p"
 	.string "Weißt du was?\n"
@@ -353,12 +353,12 @@ SlateportCity_PokemonFanClub_Text_1A8704:: @ 81A8704
 	.string "Darf ich dich auch etwas über dein\n"
 	.string "{STR_VAR_1} fragen?$"
 
-SlateportCity_PokemonFanClub_Text_1A87CA:: @ 81A87CA
+SlateportCity_PokemonFanClub_Text_TellMeAnythingAboutYourMon:: @ 81A87CA
 	.string "Wow, danke schön!\p"
 	.string "Dann erzähl mir doch einfach alles, was\n"
 	.string "dir an {STR_VAR_1} gefällt.$"
 
-SlateportCity_PokemonFanClub_Text_1A8818:: @ 81A8818
+SlateportCity_PokemonFanClub_Text_ThatsAllForInterview2:: @ 81A8818
 	.string "Wow...\n"
 	.string "Das ist ja ein interessanter Bericht.\p"
 	.string "Du stehst deinem {STR_VAR_1} sehr nahe,\n"
@@ -500,7 +500,7 @@ gTVFanClubText8:: @ 81A91C6
 	.string "Für heute sage ich Tschüss. Bis zum\l"
 	.string "nächsten Mal.$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A927F:: @ 81A927F
+SlateportCity_OceanicMuseum_1F_Text_InterviewRequest:: @ 81A927F
 	.string "Ach!\n"
 	.string "Magst du vielleicht POKéMON?\p"
 	.string "Ich habe einen Vertrag mit einem Fern-\n"
@@ -510,32 +510,32 @@ SlateportCity_OceanicMuseum_1F_Text_1A927F:: @ 81A927F
 	.string "Hättest du Lust, mir etwas von dir zu\n"
 	.string "erzählen?$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A934C:: @ 81A934C
+SlateportCity_OceanicMuseum_1F_Text_InterviewRequestShort:: @ 81A934C
 	.string "Ich sammle aktuelle Geschichten von\n"
 	.string "POKéMON und ihren TRAINERN.\p"
 	.string "Hättest du Lust, mir etwas von dir zu\n"
 	.string "erzählen?$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A93D1:: @ 81A93D1
+SlateportCity_OceanicMuseum_1F_Text_TellMeExperienceInvolvingPokemon:: @ 81A93D1
 	.string "Oh, du hast Lust dazu?!?\n"
 	.string "Wunderbar! Danke schön!\p"
 	.string "Dann erzähl mir doch bitte von\n"
 	.string "interessanten Begebenheiten, in denen\l"
 	.string "POKéMON eine Rolle spielen.$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A9446:: @ 81A9446
+SlateportCity_OceanicMuseum_1F_Text_LetMeKnowIfYouHaveStory:: @ 81A9446
 	.string "Oh, ich versteh' schon...\p"
 	.string "Nun, wenn du mir eine interessante\n"
 	.string "Geschichte erzählen kannst, sag es mir.$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A949A:: @ 81A949A
+SlateportCity_OceanicMuseum_1F_Text_ThatsAllForInterview:: @ 81A949A
 	.string "Hach, eine erhebende Geschichte!\p"
 	.string "Ich bin sicher, deine Geschichte wird\n"
 	.string "im Fernsehen ausgestrahlt.\p"
 	.string "Irgendwann bestimmt. Also, verpasse\n"
 	.string "sie nicht!$"
 
-SlateportCity_OceanicMuseum_1F_Text_1A952E:: @ 81A952E
+SlateportCity_OceanicMuseum_1F_Text_BetterWriteUpStory:: @ 81A952E
 	.string "Hmmm... Da habe ich eine wirklich gute\n"
 	.string "Geschichte für das Fernsehprogramm.\p"
 	.string "Ich sollte sie schnell aufschreiben!$"

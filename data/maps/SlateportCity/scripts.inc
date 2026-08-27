@@ -12,31 +12,31 @@ SlateportCity_OnTransition:: @ 814BA3C
 	.endif
 	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 0
 	call SlateportCity_EventScript_EnterSlateport
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_MovePeopleForSternInterview
 	end
 
 SlateportCity_EventScript_EnterSlateport:: @ 814BA5C
 	setflag FLAG_VISITED_SLATEPORT_CITY
 	setvar VAR_LINK_CONTEST_ROOM_STATE, 0
-	setflag FLAG_HIDE_CONTEST_REPORTER_SLATEPORT
+	setflag FLAG_HIDE_SLATEPORT_CITY_CONTEST_REPORTER
 	return
 
 SlateportCity_EventScript_MovePeopleForSternInterview:: @ 814BA68
-	setobjectxyperm 11, 28, 13
-	setobjectxyperm 7, 25, 13
-	setobjectxyperm 3, 25, 14
-	setobjectxyperm 6, 27, 16
-	setobjectxyperm 8, 28, 16
-	setobjectxyperm 1, 29, 16
-	setobjectxyperm 2, 31, 14
-	setobjectmovementtype 11, 8
-	setobjectmovementtype 7, 18
-	setobjectmovementtype 3, 16
-	setobjectmovementtype 6, 7
-	setobjectmovementtype 8, 7
-	setobjectmovementtype 1, 7
-	setobjectmovementtype 2, 9
+	setobjectxyperm LOCALID_SLATEPORT_CAPT_STERN, 28, 13
+	setobjectxyperm LOCALID_SLATEPORT_OLD_WOMAN, 25, 13
+	setobjectxyperm LOCALID_SLATEPORT_RICH_BOY, 25, 14
+	setobjectxyperm LOCALID_SLATEPORT_COOK, 27, 16
+	setobjectxyperm LOCALID_SLATEPORT_GIRL, 28, 16
+	setobjectxyperm LOCALID_SLATEPORT_FAT_MAN, 29, 16
+	setobjectxyperm LOCALID_SLATEPORT_MAN_1, 31, 14
+	setobjectmovementtype LOCALID_SLATEPORT_CAPT_STERN, MOVEMENT_TYPE_FACE_DOWN
+	setobjectmovementtype LOCALID_SLATEPORT_OLD_WOMAN, MOVEMENT_TYPE_FACE_DOWN_AND_RIGHT
+	setobjectmovementtype LOCALID_SLATEPORT_RICH_BOY, MOVEMENT_TYPE_FACE_UP_AND_RIGHT
+	setobjectmovementtype LOCALID_SLATEPORT_COOK, MOVEMENT_TYPE_FACE_UP
+	setobjectmovementtype LOCALID_SLATEPORT_GIRL, MOVEMENT_TYPE_FACE_UP
+	setobjectmovementtype LOCALID_SLATEPORT_FAT_MAN, MOVEMENT_TYPE_FACE_UP
+	setobjectmovementtype LOCALID_SLATEPORT_MAN_1, MOVEMENT_TYPE_FACE_LEFT
 	return
 
 SlateportCity_EventScript_EnergyGuru:: @ 814BAB6
@@ -95,7 +95,7 @@ SlateportCity_EventScript_MonHasEffortRibbon:: @ 814BB35
 SlateportCity_EventScript_Cook:: @ 814BB3F
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_CookSternInterview
 	msgbox SlateportCity_Text_SeaweedFullOfLife, MSGBOX_DEFAULT
 	release
@@ -109,7 +109,7 @@ SlateportCity_EventScript_CookSternInterview:: @ 814BB56
 SlateportCity_EventScript_OldWoman:: @ 814BB60
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_OldWomanSternInterview
 	msgbox SlateportCity_Text_HowTownIsBornAndGrows, MSGBOX_DEFAULT
 	release
@@ -123,7 +123,7 @@ SlateportCity_EventScript_OldWomanSternInterview:: @ 814BB77
 SlateportCity_EventScript_Girl:: @ 814BB81
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_GirlSternInterview
 	goto_if_set FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_GirlSecretBase
 	msgbox SlateportCity_Text_SlateportWonderfulPlace, MSGBOX_DEFAULT
@@ -143,7 +143,7 @@ SlateportCity_EventScript_GirlSecretBase:: @ 814BBAB
 SlateportCity_EventScript_RichBoy:: @ 814BBB5
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_RichBoySternInterview
 	msgbox SlateportCity_Text_GoingToCompeteInPokemonContest, MSGBOX_DEFAULT
 	release
@@ -155,7 +155,7 @@ SlateportCity_EventScript_RichBoySternInterview:: @ 814BBCC
 	end
 
 SlateportCity_EventScript_FatMan:: @ 814BBD6
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	goto_if_eq SlateportCity_EventScript_FatManSternInterview
 	msgbox SlateportCity_Text_BushedHikingFromMauville, MSGBOX_NPC
 	end
@@ -167,7 +167,7 @@ SlateportCity_EventScript_FatManSternInterview:: @ 814BBEA
 SlateportCity_EventScript_Man1:: @ 814BBF3
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_Man1SternInterview
 	msgbox SlateportCity_Text_EveryoneCallsHimCaptStern, MSGBOX_DEFAULT
 	release
@@ -248,7 +248,7 @@ SlateportCity_EventScript_NameRatersHouseSign:: @ 814BCAF
 SlateportCity_EventScript_Maniac:: @ 814BCB8
 	lock
 	faceplayer
-	compare VAR_SLATEPORT_STATE, 1
+	compare VAR_SLATEPORT_CITY_STATE, 1
 	call_if_eq SlateportCity_EventScript_ManiacSternInterview
 	msgbox SlateportCity_Text_GetNameRaterToHelpYou, MSGBOX_DEFAULT
 	release
@@ -303,7 +303,7 @@ SlateportCity_EventScript_EvilTeamGrunt1:: @ 814BD3A
 	faceplayer
 	msgbox SlateportCity_Text_QuitPushing, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -313,7 +313,7 @@ SlateportCity_EventScript_EvilTeamGrunt2:: @ 814BD51
 	faceplayer
 	msgbox SlateportCity_Text_EvilTeamHasPolicy, MSGBOX_DEFAULT
 	closemessage
-	applymovement 19, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_2, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -323,7 +323,7 @@ SlateportCity_EventScript_EvilTeamGrunt3:: @ 814BD68
 	faceplayer
 	msgbox SlateportCity_Text_BossIsBrilliant, MSGBOX_DEFAULT
 	closemessage
-	applymovement 20, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_3, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -333,7 +333,7 @@ SlateportCity_EventScript_EvilTeamGrunt4:: @ 814BD7F
 	faceplayer
 	msgbox SlateportCity_Text_WhatsNewSchemeIWonder, MSGBOX_DEFAULT
 	closemessage
-	applymovement 27, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_4, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -343,7 +343,7 @@ SlateportCity_EventScript_EvilTeamGrunt5:: @ 814BD96
 	faceplayer
 	msgbox SlateportCity_Text_ShouldTakeItAll, MSGBOX_DEFAULT
 	closemessage
-	applymovement 28, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_5, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -353,7 +353,7 @@ SlateportCity_EventScript_EvilTeamGrunt6:: @ 814BDAD
 	faceplayer
 	msgbox SlateportCity_Text_DontButtIn, MSGBOX_DEFAULT
 	closemessage
-	applymovement 29, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_6, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -363,7 +363,7 @@ SlateportCity_EventScript_EvilTeamGrunt7:: @ 814BDC4
 	faceplayer
 	msgbox SlateportCity_Text_RemindsMeOfLongLineForGames, MSGBOX_DEFAULT
 	closemessage
-	applymovement 30, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_7, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -373,7 +373,7 @@ SlateportCity_EventScript_EvilTeamGrunt8:: @ 814BDDB
 	faceplayer
 	msgbox SlateportCity_Text_WhyAreWeLiningUp, MSGBOX_DEFAULT
 	closemessage
-	applymovement 31, Common_Movement_FaceOriginalDirection
+	applymovement LOCALID_SLATEPORT_GRUNT_8, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
 	end
@@ -383,13 +383,13 @@ SlateportCity_EventScript_DollClerk:: @ 814BDF2
 	faceplayer
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor1_Dolls
+	pokemartdecoration SlateportCity_PokemartDecor_Dolls
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor1_Dolls:: @ 814BE0C
+SlateportCity_PokemartDecor_Dolls:: @ 814BE0C
 	.2byte DECOR_AZURILL_DOLL
 	.2byte DECOR_MARILL_DOLL
 	.2byte DECOR_SKITTY_DOLL
@@ -408,13 +408,13 @@ SlateportCity_EventScript_DecorClerk:: @ 814BE20
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor1
+	pokemartdecoration SlateportCity_PokemartDecor
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor1:: @ 814BE40
+SlateportCity_PokemartDecor:: @ 814BE40
 	.2byte DECOR_RED_BRICK
 	.2byte DECOR_BLUE_BRICK
 	.2byte DECOR_YELLOW_BRICK
@@ -433,19 +433,19 @@ SlateportCity_PokemartDecor1:: @ 814BE40
 	release
 	end
 
-@ 814BE60
+SlateportCity_EventScript_UnusedDecorClerk:: @ 814BE60
 	lock
 	faceplayer
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
 	message Text_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor2
+	pokemartdecoration SlateportCity_PokemartDecor_Unused
 	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor2:: @ 814BE80
+SlateportCity_PokemartDecor_Unused:: @ 814BE80
 	.2byte DECOR_MUD_BALL
 	.2byte DECOR_SLIDE
 	.2byte DECOR_FENCE_LENGTH
@@ -484,53 +484,53 @@ SlateportCity_EventScript_CaptStern:: @ 814BEBC
 	msgbox SlateportCity_Text_SternMoveAheadWithExploration, MSGBOX_DEFAULT
 	msgbox SlateportCity_Text_GabbyWonderfulThanksForInterview, MSGBOX_DEFAULT
 	closemessage
-	applymovement 10, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_SLATEPORT_GABBY, Common_Movement_WalkInPlaceFastestRight
 	waitmovement 0
 	delay 10
-	applymovement 9, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_SLATEPORT_TY, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	delay 25
-	applymovement 11, SlateportCity_Movement_SternWatchGabbyAndTyExit
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, SlateportCity_Movement_SternWatchGabbyAndTyExit
 	applymovement LOCALID_PLAYER, SlateportCity_Movement_PlayerFaceStern
-	applymovement 10, SlateportCity_Movement_GabbyExit
-	applymovement 9, SlateportCity_Movement_TyExit
+	applymovement LOCALID_SLATEPORT_GABBY, SlateportCity_Movement_GabbyExit
+	applymovement LOCALID_SLATEPORT_TY, SlateportCity_Movement_TyExit
 	waitmovement 0
-	removeobject 10
-	removeobject 9
+	removeobject LOCALID_SLATEPORT_GABBY
+	removeobject LOCALID_SLATEPORT_TY
 	msgbox SlateportCity_Text_SternWhewFirstInterview, MSGBOX_DEFAULT
-	applymovement 11, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, Common_Movement_WalkInPlaceFastestUp
 	waitmovement 0
 	msgbox SlateportCity_Text_OhPlayerWeMadeDiscovery, MSGBOX_DEFAULT
 	playbgm MUS_EVIL_TEAM, FALSE
 	msgbox SlateportCity_Text_EvilTeamWillAssumeControlOfSubmarine, MSGBOX_DEFAULT
-	applymovement 6, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 1, Common_Movement_WalkInPlaceFastestLeft
-	applymovement 7, SlateportCity_Movement_OldWomanConcern
-	applymovement 3, Common_Movement_QuestionMark
-	applymovement 2, SlateportCity_Movement_ManConcern
+	applymovement LOCALID_SLATEPORT_COOK, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_SLATEPORT_FAT_MAN, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_SLATEPORT_OLD_WOMAN, SlateportCity_Movement_OldWomanConcern
+	applymovement LOCALID_SLATEPORT_RICH_BOY, Common_Movement_QuestionMark
+	applymovement LOCALID_SLATEPORT_MAN_1, SlateportCity_Movement_ManConcern
 	waitmovement 0
-	applymovement 11, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, Common_Movement_WalkInPlaceFastestDown
 	waitmovement 0
 	msgbox SlateportCity_Text_SternWhatWasAllThat, MSGBOX_DEFAULT
 	playse SE_PIN
-	applymovement 11, Common_Movement_ExclamationMark
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 11, Common_Movement_Delay48
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, Common_Movement_Delay48
 	waitmovement 0
 	msgbox SlateportCity_Text_FromHarborTryingToTakeSub, MSGBOX_DEFAULT
-	applymovement 11, Common_Movement_FacePlayer
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox SlateportCity_Text_PleaseComeWithMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement 11, SlateportCity_Movement_SternEnterHarbor
+	applymovement LOCALID_SLATEPORT_CAPT_STERN, SlateportCity_Movement_SternEnterHarbor
 	applymovement LOCALID_PLAYER, SlateportCity_Movement_PlayerEnterHarbor
 	waitmovement 0
-	removeobject 11
-	clearflag FLAG_HIDE_STERN_SLATEPORT_HARBOR
-	clearflag FLAG_HIDE_SUBMARINE_SHADOW_SLATEPORT_HARBOR
-	clearflag FLAG_HIDE_GRUNT_1_SLATEPORT_HARBOR
-	clearflag FLAG_HIDE_GRUNT_2_SLATEPORT_HARBOR
-	setvar VAR_SLATEPORT_STATE, 2
+	removeobject LOCALID_SLATEPORT_CAPT_STERN
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_CAPTAIN_STERN
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SUBMARINE_SHADOW
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_EVIL_TEAM_GRUNT
+	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_EVIL_TEAM_LEADER
+	setvar VAR_SLATEPORT_CITY_STATE, 2
 	warp MAP_SLATEPORT_CITY_HARBOR, 255, 11, 14
 	waitstate
 	releaseall

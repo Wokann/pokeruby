@@ -757,7 +757,7 @@ LilycoveCity_ContestLobby_EventScript_Blender2Girl:: @ 8159084
 	end
 
 LilycoveCity_ContestLobby_EventScript_ContestWinner4:: @ 815908D
-SlateportCity_ContestLobby_EventScript_15908D:: @ 815908D
+SlateportCity_ContestLobby_EventScript_BerryBlenderSpeedRecords:: @ 815908D
 	lockall
 	special ShowBerryBlenderRecordWindow
 	waitbuttonpress

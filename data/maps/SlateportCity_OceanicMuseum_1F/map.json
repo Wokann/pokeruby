@@ -35,7 +35,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt3",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -48,7 +48,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt4",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -61,7 +61,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt2",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_0",
@@ -74,7 +74,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt1",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
@@ -87,7 +87,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt5",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
@@ -113,7 +113,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt6",
-      "flag": "FLAG_HIDE_EVIL_TEAM_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_EVIL_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_7",
@@ -126,7 +126,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron1",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_VISITORS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MANIAC",
@@ -139,7 +139,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron2",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_VISITORS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
@@ -152,7 +152,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron3",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_VISITORS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LITTLE_GIRL_2",
@@ -165,9 +165,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron4",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_VISITORS"
     },
     {
+      "local_id": "LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT",
       "graphics_id": "OBJ_EVENT_GFX_VAR_1",
       "x": 9,
       "y": 4,
@@ -178,7 +179,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt",
-      "flag": "FLAG_HIDE_SCARED_GRUNT_OCEANIC_MUSEUM"
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_FAMILIAR_EVIL_TEAM_GRUNT"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_REPORTER_M",
@@ -190,8 +191,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SlateportCity_OceanicMuseum_1F_EventScript_1ADEE0",
-      "flag": "FLAG_HIDE_OCEANIC_MUSEUM_VISITORS"
+      "script": "SlateportCity_OceanicMuseum_1F_EventScript_Reporter",
+      "flag": "FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_VISITORS"
     }
   ],
   "warp_events": [

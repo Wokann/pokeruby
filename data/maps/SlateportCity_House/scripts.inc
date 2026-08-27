@@ -1,4 +1,4 @@
-SlateportCity_House2_MapScripts:: @ 815638F
+SlateportCity_House_MapScripts:: @ 815638F
 	.byte 0
 
 SlateportCity_House_EventScript_PokefanM:: @ 8156390

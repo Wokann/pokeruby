@@ -1,3 +1,4 @@
+CableClub_OnWarp:: @ 81A3D03
 DewfordTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
 EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
 FallarborTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
@@ -24,6 +25,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3D2D:: @ 81A3D2D
 	turnobject VAR_0x8007, 4
 	end
 
+CableClub_OnLoad:: @ 81A3D32
 DewfordTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
 EverGrandeCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
 FallarborTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
@@ -63,6 +65,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3D7E:: @ 81A3D7E
 	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	end
 
+CableClub_OnFrame:: @ 81A3D88
 DewfordTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
 EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
 FallarborTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
@@ -160,6 +163,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3E8D:: @ 81A3E8D
 	releaseall
 	end
 
+CableClub_EventScript_Colosseum:: @ 81A3EA6
 DewfordTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
 EverGrandeCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
 FallarborTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
@@ -331,6 +335,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A40C0:: @ 81A40C0
 	release
 	end
 
+CableClub_EventScript_TradeCenter:: @ 81A40CC
 DewfordTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
 EverGrandeCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
 FallarborTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
@@ -426,6 +431,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A41EE:: @ 81A41EE
 	setvar VAR_RESULT, 0
 	return
 
+CableClub_EventScript_RecordCorner:: @ 81A41FB
 DewfordTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
 EverGrandeCity_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB
 FallarborTown_PokemonCenter_2F_EventScript_1A41FB:: @ 81A41FB

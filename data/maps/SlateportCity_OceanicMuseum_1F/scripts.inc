@@ -1,8 +1,8 @@
 SlateportCity_OceanicMuseum_1F_MapScripts:: @ 8155ACA
-	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_1F_MapScript1_OnTransition
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_OceanicMuseum_1F_OnTransition
 	.byte 0
 
-SlateportCity_OceanicMuseum_1F_MapScript1_OnTransition:: @ 8155AD0
+SlateportCity_OceanicMuseum_1F_OnTransition:: @ 8155AD0
 	.ifdef SAPPHIRE
 	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_AQUA_MEMBER_F
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_AQUA_MEMBER_M
@@ -158,9 +158,9 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 8155C3A
 	faceplayer
 	delay 8
 	playse SE_PIN
-	applymovement 13, Common_Movement_ExclamationMark
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 13, Common_Movement_Delay48
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_Delay48
 	waitmovement 0
 	msgbox SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis, MSGBOX_DEFAULT
 	giveitem ITEM_TM46_THIEF
@@ -176,20 +176,20 @@ SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt:: @ 8155C3A
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth:: @ 8155C98
-	applymovement 13, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth
 	waitmovement 0
-	setflag FLAG_HIDE_SCARED_GRUNT_OCEANIC_MUSEUM
+	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_FAMILIAR_EVIL_TEAM_GRUNT
 	playse SE_EXIT
-	removeobject 13
+	removeobject LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT
 	release
 	end
 
 SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth:: @ 8155CAD
-	applymovement 13, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
 	waitmovement 0
-	setflag FLAG_HIDE_SCARED_GRUNT_OCEANIC_MUSEUM
+	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_FAMILIAR_EVIL_TEAM_GRUNT
 	playse SE_EXIT
-	removeobject 13
+	removeobject LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT
 	release
 	end
 
