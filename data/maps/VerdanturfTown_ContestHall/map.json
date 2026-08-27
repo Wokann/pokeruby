@@ -21,7 +21,7 @@
       "movement_range_y": 3,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "VerdanturfTown_ContestHall_EventScript_153EA9",
+      "script": "VerdanturfTown_ContestHall_EventScript_BoyPokemonRules",
       "flag": "0"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "VerdanturfTown_ContestHall_EventScript_153E97",
+      "script": "VerdanturfTown_ContestHall_EventScript_BoyContestAdvice",
       "flag": "0"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "VerdanturfTown_ContestHall_EventScript_153EA0",
+      "script": "VerdanturfTown_ContestHall_EventScript_LittleGirlCutePokemon",
       "flag": "0"
     }
   ],
@@ -75,7 +75,7 @@
       "y": 14,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "VerdanturfTown_ContestHall_EventScript_153EB2"
+      "script": "VerdanturfTown_ContestHall_EventScript_NormalRankSign"
     },
     {
       "type": "sign",
@@ -83,7 +83,7 @@
       "y": 14,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "VerdanturfTown_ContestHall_EventScript_153EB2"
+      "script": "VerdanturfTown_ContestHall_EventScript_NormalRankSign"
     }
   ]
 }

@@ -938,10 +938,10 @@ EventScript_HideMrBriney:: @ 81A0424
 	return
 
 RusturfTunnel_EventScript_SetRusturfTunnelOpen:: @ 81A0442
-	removeobject 1
-	removeobject 10
-	clearflag FLAG_HIDE_BOYFRIEND_WANDAS_HOUSE
-	clearflag FLAG_HIDE_GIRLFRIEND_WANDAS_HOUSE
+	removeobject LOCALID_RUSTURF_TUNNEL_WANDAS_BF
+	removeobject LOCALID_RUSTURF_TUNNEL_WANDA
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDA
 	setvar VAR_RUSTURF_TUNNEL_STATE, 6
 	setflag FLAG_RUSTURF_TUNNEL_OPENED
 	return
@@ -1376,7 +1376,7 @@ SlateportCity_PokemonFanClub_EventScript_AlreadyInterviewed:: @ 81AE0AC
 FallarborTown_ContestLobby_EventScript_Reporter:: @ 81AE0B6
 LilycoveCity_ContestLobby_EventScript_Reporter:: @ 81AE0B6
 SlateportCity_ContestLobby_EventScript_Reporter:: @ 81AE0B6
-VerdanturfTown_ContestLobby_EventScript_1AE0B6:: @ 81AE0B6
+VerdanturfTown_ContestLobby_EventScript_Reporter:: @ 81AE0B6
 	lock
 	faceplayer
 	goto_if_set FLAG_TEMP_2, FallarborTown_ContestLobby_EventScript_1AE17E
@@ -1453,7 +1453,7 @@ FallarborTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1EE
 	return
 
 VerdanturfTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F2
-	clearflag FLAG_HIDE_CONTEST_REPORTER_VERDANTURF
+	clearflag FLAG_HIDE_VERDANTURF_CONTEST_LOBBY_REPORTER
 	return
 
 SlateportCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1F6

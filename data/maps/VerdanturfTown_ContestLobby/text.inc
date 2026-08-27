@@ -1,10 +1,10 @@
-VerdanturfTown_ContestLobby_Text_177D6C:: @ 8177D6C
+VerdanturfTown_ContestLobby_Text_VisitedContestHall:: @ 8177D6C
 	.string "I went in through the entrance and\n"
 	.string "took a look around the CONTEST hall.\p"
 	.string "Getting up on that big stage...\n"
 	.string "It's going to be tense!$"
 
-VerdanturfTown_ContestLobby_Text_177DEC:: @ 8177DEC
+VerdanturfTown_ContestLobby_Text_GirlGivesTM45:: @ 8177DEC
 	.string "Oh, my love for POKéMON...\n"
 	.string "The attraction they evoke in me...\p"
 	.string "Whoops!\n"
@@ -13,11 +13,11 @@ VerdanturfTown_ContestLobby_Text_177DEC:: @ 8177DEC
 	.string "If you're entering a CONTEST, try this\n"
 	.string "move on for size.$"
 
-VerdanturfTown_ContestLobby_Text_177E98:: @ 8177E98
+VerdanturfTown_ContestLobby_Text_GirlAfterGivingTM45:: @ 8177E98
 	.string "My feelings for POKéMON...\n"
 	.string "Oh, they attract me so...$"
 
-VerdanturfTown_ContestLobby_Text_177ECD:: @ 8177ECD
+VerdanturfTown_ContestLobby_Text_ContestAdvice:: @ 8177ECD
 	.string "Which CONTEST are you planning on\n"
 	.string "entering?\p"
 	.string "If you're entering a COOL CONTEST,\n"

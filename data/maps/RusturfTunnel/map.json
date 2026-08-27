@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_RUSTURF_TUNNEL_WANDAS_BF",
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
       "x": 23,
       "y": 5,
@@ -129,6 +130,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_RUSTURF_TUNNEL_WANDA",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
       "x": 25,
       "y": 4,

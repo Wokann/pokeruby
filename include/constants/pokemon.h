@@ -128,6 +128,15 @@
 #define FRIENDSHIP_EVENT_FAINT_OUTSIDE_BATTLE 0x7
 #define FRIENDSHIP_EVENT_FAINT_LARGE          0x8
 
+// Constants for GetLeadMonFriendshipScore
+#define FRIENDSHIP_NONE        0
+#define FRIENDSHIP_1_TO_49     1
+#define FRIENDSHIP_50_TO_99    2
+#define FRIENDSHIP_100_TO_149  3
+#define FRIENDSHIP_150_TO_199  4
+#define FRIENDSHIP_200_TO_254  5
+#define FRIENDSHIP_MAX         6
+
 #define STATUS_PRIMARY_NONE      0x0
 #define STATUS_PRIMARY_POISON    0x1
 #define STATUS_PRIMARY_PARALYSIS 0x2
