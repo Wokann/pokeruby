@@ -39,7 +39,7 @@ void sub_80F99CC(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void SelectMonForNPCTrade(void)
+void ChoosePartyMon(void)
 {
     u8 taskId;
 

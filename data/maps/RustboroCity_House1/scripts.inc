@@ -12,7 +12,7 @@ RustboroCity_House1_EventScript_Trader:: @ 8157C7D
 	msgbox RustboroCity_House1_Text_IllTradeIfYouWant, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq RustboroCity_House1_EventScript_DeclineTrade
-	special SelectMonForNPCTrade
+	special ChoosePartyMon
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	compare VAR_0x8004, 255

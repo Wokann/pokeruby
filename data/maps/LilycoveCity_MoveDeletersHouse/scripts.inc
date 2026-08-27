@@ -14,7 +14,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_MoveDeleter:: @ 8159AAE
 
 LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 8159ADE
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget, MSGBOX_DEFAULT
-	special SelectMonForNPCTrade
+	special ChoosePartyMon
 	waitstate
 	compare VAR_0x8004, 255
 	goto_if_eq LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
