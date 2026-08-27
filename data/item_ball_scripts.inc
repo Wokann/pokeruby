@@ -34,11 +34,11 @@ Route109_EventScript_ItemPPUp:: @ 81B14A1
 	finditem ITEM_PP_UP
 	end
 
-Route110_EventScript_1B14AE:: @ 81B14AE
+Route110_EventScript_ItemRareCandy:: @ 81B14AE
 	finditem ITEM_RARE_CANDY
 	end
 
-Route110_EventScript_1B14BB:: @ 81B14BB
+Route110_EventScript_ItemDireHit:: @ 81B14BB
 	finditem ITEM_DIRE_HIT
 	end
 

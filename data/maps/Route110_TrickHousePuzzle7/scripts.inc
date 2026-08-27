@@ -68,8 +68,7 @@ Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOff:: @ 8163240
 	return
 
 Route110_TrickHousePuzzle7_OnTransition:: @ 8163253
-	compare VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
-	goto_if_eq Route110_TrickHousePuzzle7_EventScript_TeleportedTransition
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_TeleportedTransition
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2
 	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3
@@ -81,8 +80,7 @@ Route110_TrickHousePuzzle7_EventScript_TeleportedTransition:: @ 816326E
 	end
 
 Route110_TrickHousePuzzle7_OnLoad:: @ 816326F
-	compare VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
-	call_if_eq Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles
+	call_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles
 	end
 
 Route110_TrickHousePuzzle7_OnFrame:: @ 816327B
@@ -93,19 +91,18 @@ Route110_TrickHousePuzzle7_EventScript_ClearState2:: @ 8163285
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 0
 	end
 
-Route110_TrickHousePuzzle7_EventScript_16328B:: @ 816328B
+Route110_TrickHousePuzzle7_EventScript_Scroll:: @ 816328B
 	lockall
-	compare VAR_TRICK_HOUSE_PUZZLE_7_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle7_EventScript_16329D
-	goto Route110_TrickHousePuzzle7_EventScript_ReadScrollAgain
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE, 0, Route110_TrickHousePuzzle7_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle7_EventScript_16329D:: @ 816329D
+Route110_TrickHousePuzzle7_EventScript_FoundScroll:: @ 816329D
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE, 1
-	goto Route110_TrickHousePuzzle7_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
-Route110_TrickHousePuzzle7_EventScript_1632A8:: @ 81632A8
+Route110_TrickHousePuzzle7_EventScript_TeleportPad:: @ 81632A8
 	lockall
 	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
 	warpteleport MAP_ROUTE110_TRICK_HOUSE_PUZZLE7, 255, 3, 19

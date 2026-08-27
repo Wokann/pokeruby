@@ -3,8 +3,7 @@ Route110_TrickHousePuzzle1_MapScripts:: @ 8161CF8
 	.byte 0
 
 Route110_TrickHousePuzzle1_OnLoad:: @ 8161CFE
-	compare VAR_TRICK_HOUSE_PUZZLE_1_STATE, 2
-	goto_if_eq Route110_TrickHousePuzzle1_EventScript_OpenDoor
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_1_STATE, 2, Route110_TrickHousePuzzle1_EventScript_OpenDoor
 	end
 
 Route110_TrickHousePuzzle1_EventScript_OpenDoor:: @ 8161D0A
@@ -13,14 +12,13 @@ Route110_TrickHousePuzzle1_EventScript_OpenDoor:: @ 8161D0A
 
 Route110_TrickHousePuzzle1_EventScript_Scroll:: @ 8161D14
 	lockall
-	compare VAR_TRICK_HOUSE_PUZZLE_1_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle1_EventScript_ReadScroll
-	goto Route110_TrickHousePuzzle1_EventScript_ReadScrollAgain
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_1_STATE, 0, Route110_TrickHousePuzzle1_EventScript_ReadScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
 Route110_TrickHousePuzzle1_EventScript_ReadScroll:: @ 8161D26
 	setvar VAR_TRICK_HOUSE_PUZZLE_1_STATE, 1
-	goto Route110_TrickHousePuzzle1_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
 Route110_TrickHousePuzzle1_EventScript_Sally:: @ 8161D31

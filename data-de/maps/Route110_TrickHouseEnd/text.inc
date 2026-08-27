@@ -17,7 +17,7 @@ Route110_TrickHouseEnd_Text_AllNightToMakeMaze:: @ 819C333
 	.string "bis auf ein, zwei, drei, vier, fünf \l"
 	.string "Punkte!$"
 
-Route110_TrickHouseEnd_Text_19C3A7:: @ 819C3A7
+Route110_TrickHouseEnd_Text_AllNightToArrangeBoulders:: @ 819C3A7
 	.string "Ich habe die ganze Nacht gebraucht,\n"
 	.string "die Felsen zu platzieren...\p"
 	.string "Du bist meiner Größe fast ebenbürtig,\n"
@@ -111,10 +111,3 @@ Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou:: @ 819C9BD
 Route110_TrickHouseEnd_Text_YoureIgnoringMe:: @ 819CA8B
 	.string "Nun, nun! Du ignorierst mich?\n"
 	.string "Das bricht mir glatt das Herz!$"
-
-UnknownString_819CAD1: @ 819CAD1
-	.string "{PLAYER} hat den geheimen Code auf die\n"
-	.string "Tür geschrieben.\p"
-	.string "“RÄTSELMEISTER ist sagenhaft.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "Das Schloss geht klickend auf.$"

@@ -4,14 +4,10 @@ Route110_TrickHousePuzzle2_MapScripts:: @ 8161D76
 	.byte 0
 
 Route110_TrickHousePuzzle2_OnResume:: @ 8161D81
-	compare VAR_TEMP_1, 1
-	call_if_eq Route110_TrickHousePuzzle2_EventScript_PressButton1
-	compare VAR_TEMP_2, 1
-	call_if_eq Route110_TrickHousePuzzle2_EventScript_PressButton2
-	compare VAR_TEMP_3, 1
-	call_if_eq Route110_TrickHousePuzzle2_EventScript_PressButton3
-	compare VAR_TEMP_4, 1
-	call_if_eq Route110_TrickHousePuzzle2_EventScript_PressButton4
+	call_if_eq VAR_TEMP_1, 1, Route110_TrickHousePuzzle2_EventScript_PressButton1
+	call_if_eq VAR_TEMP_2, 1, Route110_TrickHousePuzzle2_EventScript_PressButton2
+	call_if_eq VAR_TEMP_3, 1, Route110_TrickHousePuzzle2_EventScript_PressButton3
+	call_if_eq VAR_TEMP_4, 1, Route110_TrickHousePuzzle2_EventScript_PressButton4
 	end
 
 Route110_TrickHousePuzzle2_OnTransition:: @ 8161DAE
@@ -23,14 +19,13 @@ Route110_TrickHousePuzzle2_OnTransition:: @ 8161DAE
 
 Route110_TrickHousePuzzle2_EventScript_Scroll:: @ 8161DC3
 	lockall
-	compare VAR_TRICK_HOUSE_PUZZLE_2_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle2_EventScript_ReadScroll
-	goto Route110_TrickHousePuzzle2_EventScript_ReadScrollAgain
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_2_STATE, 0, Route110_TrickHousePuzzle2_EventScript_ReadScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
 Route110_TrickHousePuzzle2_EventScript_ReadScroll:: @ 8161DD5
 	setvar VAR_TRICK_HOUSE_PUZZLE_2_STATE, 1
-	goto Route110_TrickHousePuzzle2_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
 Route110_TrickHousePuzzle2_EventScript_Button1:: @ 8161DE0

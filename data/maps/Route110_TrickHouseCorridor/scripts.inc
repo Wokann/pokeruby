@@ -3,5 +3,5 @@ Route110_TrickHouseCorridor_MapScripts:: @ 8161CEC
 	.byte 0
 
 Route110_TrickHouseCorridor_OnTransition:: @ 8161CF2
-	setvar VAR_TRICK_HOUSE_STATE, 1
+	setvar VAR_TRICK_HOUSE_ENTER_FROM_CORRIDOR, 1
 	end

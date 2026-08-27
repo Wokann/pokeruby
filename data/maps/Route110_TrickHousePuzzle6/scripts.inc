@@ -17,14 +17,13 @@ Route110_TrickHousePuzzle6_EventScript_InitPuzzle:: @ 81630E6
 
 Route110_TrickHousePuzzle6_EventScript_Scroll:: @ 81630EA
 	lockall
-	compare VAR_TRICK_HOUSE_PUZZLE_6_STATE, 0
-	goto_if_eq Route110_TrickHousePuzzle6_EventScript_ReadScroll
-	goto Route110_TrickHousePuzzle6_EventScript_ReadScrollAgain
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_6_STATE, 0, Route110_TrickHousePuzzle6_EventScript_ReadScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
 Route110_TrickHousePuzzle6_EventScript_ReadScroll:: @ 81630FC
 	setvar VAR_TRICK_HOUSE_PUZZLE_6_STATE, 1
-	goto Route110_TrickHousePuzzle6_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
 
 Route110_TrickHousePuzzle6_EventScript_Sophia:: @ 8163107

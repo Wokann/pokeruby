@@ -14,7 +14,7 @@ Route110_TrickHouseEnd_Text_AllNightToMakeMaze:: @ 819C333
 	.string "You're almost my equal in greatness by\n"
 	.string "one, two, three, four, five places!$"
 
-Route110_TrickHouseEnd_Text_19C3A7:: @ 819C3A7
+Route110_TrickHouseEnd_Text_AllNightToArrangeBoulders:: @ 819C3A7
 	.string "It took me all night to bring in those\n"
 	.string "boulders...\p"
 	.string "You're almost my equal in greatness by\n"
@@ -101,10 +101,3 @@ Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou:: @ 819C9BD
 Route110_TrickHouseEnd_Text_YoureIgnoringMe:: @ 819CA8B
 	.string "Now, now! You're ignoring me now?\n"
 	.string "Now that, I consider heartbreaking!$"
-
-UnknownString_819CAD1: @ 819CAD1
-	.string "{PLAYER} wrote down the secret code\n"
-	.string "on the door.\p"
-	.string "“TRICK MASTER is fabulous.”\n"
-	.string "... ... ... ... ... ... ... ...\p"
-	.string "The lock clicked open!$"
