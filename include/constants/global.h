@@ -65,6 +65,12 @@
 #define NUM_STATS 6
 #define PARTY_SIZE 6
 
+#define NUM_BARD_SONG_WORDS    6
+#define NUM_STORYTELLER_TALES  4
+#define NUM_TRADER_ITEMS       4
+#define GIDDY_MAX_TALES       10
+#define GIDDY_MAX_QUESTIONS    8
+
 #define MALE 0
 #define FEMALE 1
 #define GENDER_COUNT 2

@@ -4,7 +4,7 @@
 #include "decoration_inventory.h"
 #include "event_data.h"
 #include "main.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "script.h"
@@ -18,7 +18,7 @@ extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 extern u16 gSpecialVar_0x8006;
 
-static const u8 * const gUnknown_083F62D8[] =
+static const u8 * const sDefaultTraderNames[] =
 {
     SecretBaseText_Tristan,
     SecretBaseText_Philip,
@@ -26,7 +26,7 @@ static const u8 * const gUnknown_083F62D8[] =
     SecretBaseText_Roberto,
 };
 
-static const u8 gTraderDecorations[] =
+static const u8 sDefaultTraderDecorations[] =
 {
     DECOR_DUSKULL_DOLL,
     DECOR_BALL_CUSHION,
@@ -34,24 +34,24 @@ static const u8 gTraderDecorations[] =
     DECOR_PRETTY_FLOWERS,
 };
 
-void sub_810993C(void)
+static void SortTraderDecorations(void)
 {
     u8 i, j;
     u8 buffer[12];
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < NUM_TRADER_ITEMS - 1; i++)
     {
-        for (j = i + 1; j < 4; j++)
+        for (j = i + 1; j < NUM_TRADER_ITEMS; j++)
         {
-            if (trader->unk1[i] == 0)
+            if (trader->decorations[i] == 0)
             {
-                u8 temp = trader->unk1[i];
-                trader->unk1[i] = trader->unk1[j];
-                trader->unk1[j] = temp;
-                StringCopy(buffer, trader->unk5[i]);
-                StringCopy(trader->unk5[i], trader->unk5[j]);
-                StringCopy(trader->unk5[j], buffer);
+                u8 temp = trader->decorations[i];
+                trader->decorations[i] = trader->decorations[j];
+                trader->decorations[j] = temp;
+                StringCopy(buffer, trader->playerNames[i]);
+                StringCopy(trader->playerNames[i], trader->playerNames[j]);
+                StringCopy(trader->playerNames[j], buffer);
             }
         }
     }
@@ -60,29 +60,29 @@ void sub_810993C(void)
 void TraderSetup(void)
 {
     u8 i;
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     trader->id = MAUVILLE_MAN_TRADER;
     trader->alreadyTraded = FALSE;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < NUM_TRADER_ITEMS; i++)
     {
-        StringCopy(trader->unk5[i], gUnknown_083F62D8[i]);
-        trader->unk1[i] = gTraderDecorations[i];
+        StringCopy(trader->playerNames[i], sDefaultTraderNames[i]);
+        trader->decorations[i] = sDefaultTraderDecorations[i];
     }
 
-    sub_810993C();
+    SortTraderDecorations();
 }
 
-void sub_8109A20(void)
+void Trader_ResetFlag(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
     trader->alreadyTraded = FALSE;
 }
 
-void sub_8109A30(u8 value)
+void SetRecycledDecoration(u8 decoration)
 {
-    VarSet(VAR_RECYCLE_GOODS, value);
+    VarSet(VAR_RECYCLE_GOODS, decoration);
 }
 
 void CreateAvailableDecorationsMenu(u8 taskId)
@@ -90,11 +90,11 @@ void CreateAvailableDecorationsMenu(u8 taskId)
     u8 i;
     u8 numChoices = 1;
     u8 numDecorations = 0;
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < NUM_TRADER_ITEMS; i++)
     {
-        if (trader->unk1[i])
+        if (trader->decorations[i])
         {
             numChoices++;
         }
@@ -102,17 +102,17 @@ void CreateAvailableDecorationsMenu(u8 taskId)
 
     Menu_DrawStdWindowFrame(0, 1, 12, numChoices * 2 + 2);
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < NUM_TRADER_ITEMS; i++)
     {
-        if (trader->unk1[i])
+        if (trader->decorations[i])
         {
-            if (trader->unk1[i] > DECOR_REGISTEEL_DOLL)
+            if (trader->decorations[i] > DECOR_REGISTEEL_DOLL)
             {
                 Menu_PrintText(gOtherText_FiveQuestions, 1, numDecorations * 2 + 2);
             }
             else
             {
-                Menu_PrintText(gDecorations[trader->unk1[i]].name, 1, numDecorations * 2 + 2);
+                Menu_PrintText(gDecorations[trader->decorations[i]].name, 1, numDecorations * 2 + 2);
             }
 
             numDecorations++;
@@ -124,7 +124,7 @@ void CreateAvailableDecorationsMenu(u8 taskId)
     gTasks[taskId].data[1] = numDecorations;
 }
 
-void sub_8109B34(u8 taskId, u8 decorationId)
+void Task_BufferDecorSelectionAndCloseWindow(u8 taskId, u8 decorationId)
 {
     if (decorationId > DECOR_REGISTEEL_DOLL)
     {
@@ -143,7 +143,7 @@ void sub_8109B34(u8 taskId, u8 decorationId)
 
 void Task_HandleGetDecorationMenuInput(u8 taskId)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     if (JOY_NEW(DPAD_UP))
     {
@@ -161,28 +161,28 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
         gSpecialVar_0x8005 = Menu_GetCursorPos();
         if (gTasks[taskId].data[1] == gSpecialVar_0x8005)
         {
-            sub_8109B34(taskId, 0);
+            Task_BufferDecorSelectionAndCloseWindow(taskId, 0);
         }
         else
         {
-            StringCopy(gStringVar1, trader->unk5[gSpecialVar_0x8005]);
-            sub_8109B34(taskId, trader->unk1[gSpecialVar_0x8005]);
+            StringCopy(gStringVar1, trader->playerNames[gSpecialVar_0x8005]);
+            Task_BufferDecorSelectionAndCloseWindow(taskId, trader->decorations[gSpecialVar_0x8005]);
         }
     }
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sub_8109B34(taskId, 0);
+        Task_BufferDecorSelectionAndCloseWindow(taskId, 0);
     }
 }
 
-void ScrSpecial_GetTraderTradedFlag(void)
+void GetTraderTradedFlag(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
     gSpecialVar_Result = trader->alreadyTraded;
 }
 
-void ScrSpecial_DoesPlayerHaveNoDecorations(void)
+void DoesPlayerHaveNoDecorations(void)
 {
     u8 i;
 
@@ -197,7 +197,7 @@ void ScrSpecial_DoesPlayerHaveNoDecorations(void)
     gSpecialVar_Result = TRUE;
 }
 
-void ScrSpecial_IsDecorationFull(void)
+void IsDecorationCategoryFull(void)
 {
     gSpecialVar_Result = FALSE;
     if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category
@@ -208,12 +208,12 @@ void ScrSpecial_IsDecorationFull(void)
     }
 }
 
-void ScrSpecial_TraderMenuGiveDecoration(void)
+void TraderShowDecorationMenu(void)
 {
     CreateTask(sub_80FE7A8, 0);
 }
 
-void sub_8109D04(u8 taskId)
+void DecorationItemsMenuAction_Trade(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
@@ -235,7 +235,7 @@ void sub_8109D04(u8 taskId)
     ScriptContext_Enable();
 }
 
-void sub_8109DAC(u8 taskId)
+void ExitTraderMenu(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
@@ -244,19 +244,19 @@ void sub_8109DAC(u8 taskId)
     ScriptContext_Enable();
 }
 
-void ScrSpecial_TraderDoDecorationTrade(void)
+void TraderDoDecorationTrade(void)
 {
-    struct MauvilleManTrader *trader = &gSaveBlock1.mauvilleMan.trader;
+    struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     RemoveDecorationFromInventory(gSpecialVar_0x8006);
     AddDecoration(gSpecialVar_0x8004);
-    StringCopy(trader->unk5[gSpecialVar_0x8005], gSaveBlock2.playerName);
-    trader->unk1[gSpecialVar_0x8005] = gSpecialVar_0x8006;
-    sub_810993C();
+    StringCopy(trader->playerNames[gSpecialVar_0x8005], gSaveBlock2.playerName);
+    trader->decorations[gSpecialVar_0x8005] = gSpecialVar_0x8006;
+    SortTraderDecorations();
     trader->alreadyTraded = TRUE;
 }
 
-void ScrSpecial_TraderMenuGetDecoration(void)
+void TraderMenuGetDecoration(void)
 {
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);

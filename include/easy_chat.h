@@ -123,15 +123,13 @@ u16 sub_80EB72C(u16 group);
 void sub_80EB6FC(u16 *, u16);
 void InitEasyChatPhrases(void);
 u8 sub_80EAD7C(u8 group);
-u16 sub_80EAE88(u8);
+u16 EasyChat_GetNumWordsInGroup(u8);
 u8 sub_80EB37C(u16);
 u8* EasyChat_GetWordText(u8 *, u16);
 u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16, u16);
-u16 sub_80EB784(u16 group);
-u8 sub_80EB868(u8);
+u16 GetRandomEasyChatWordFromUnlockedGroup(u16 group);
 void UnlockTrendySaying(u8);
-u8 sub_80EB8C0(void);
-u16 sub_80EB8EC(void);
+u16 UnlockRandomTrendySaying(void);
 u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3);
 
 #if GERMAN

@@ -15,7 +15,7 @@
 #include "item_menu.h"
 #include "lottery_corner.h"
 #include "mail_data.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "overworld.h"
 #include "play_time.h"
 #include "player_pc.h"
@@ -197,7 +197,7 @@ void NewGameInitData(void)
     ClearPokeblocks();
     ClearDecorationInventories();
     InitEasyChatPhrases();
-    SetupMauvilleOldMan();
+    SetMauvilleOldMan();
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();
@@ -229,7 +229,7 @@ void debug_sub_8057508(bool32 arg0)
     debug_sub_80A3714();
     debug_sub_8120F98();
     FlagSet(FLAG_SYS_HIPSTER_MEET);
-    sub_80EB8EC();
+    UnlockRandomTrendySaying();
     unref_sub_8070F90();
     InitTimeBasedEvents();
 }

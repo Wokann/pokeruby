@@ -1,12 +1,12 @@
 #ifndef GUARD_MAUVILLE_OLD_MAN_H
 #define GUARD_MAUVILLE_OLD_MAN_H
 
-#include "constants/mauville_man.h"
+#include "constants/mauville_old_man.h"
 
-void SetupMauvilleOldMan(void);
-void sub_80F7F30(void);
+void SetMauvilleOldMan(void);
+void ResetMauvilleOldManFlag(void);
 void SetMauvilleOldManObjEventGfx(void);
-void debug_sub_810B32C(u8);
+void DebugSetMauvilleOldMan(u8);
 u8 GetCurrentMauvilleOldMan(void);
 
 #endif // GUARD_MAUVILLE_OLD_MAN_H

@@ -219,13 +219,13 @@ void ShowEasyChatScreen(void)
     case 4:
         r1 = gSaveBlock1.mail[gSpecialVar_0x8005].words;
         break;
-    case 6:
+    case EASY_CHAT_TYPE_BARD_SONG:
         {
-            struct MauvilleManBard *bard = &gSaveBlock1.mauvilleMan.bard;
+            struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
             u16 i;
             for (i = 0; i < 6; i++)
-                bard->temporaryLyrics[i] = bard->songLyrics[i];
-            r1 = bard->temporaryLyrics;
+                bard->newSongLyrics[i] = bard->songLyrics[i];
+            r1 = bard->newSongLyrics;
         }
         break;
     case 5:
@@ -322,7 +322,7 @@ void sub_80E62F8(void)
         sub_80E8218();
         sub_80E8CEC();
         break;
-    case 6:
+    case EASY_CHAT_TYPE_BARD_SONG:
         sub_80E69F8();
         sub_80E682C(sub_80E6AA8);
         SetVBlankCallback(sub_80E6A6C);
@@ -550,7 +550,7 @@ void InitEasyChatPhrases(void)
     }
 
     for (i = 0; i < 64; i++)
-        gSaveBlock1.unk2D8C[i] = 0;
+        gSaveBlock1.unlockedTrendySayings[i] = 0;
 }
 
 void sub_80E682C(void (*func)(void))
@@ -631,7 +631,7 @@ void sub_80E69F8(void)
     case 2:
     case 3:
     case 4:
-    case 6:
+    case EASY_CHAT_TYPE_BARD_SONG:
     case 9:
     case 13:
     default:

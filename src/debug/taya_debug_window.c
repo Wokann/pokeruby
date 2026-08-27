@@ -1,5 +1,6 @@
 #if DEBUG
 #include "global.h"
+#include "constants/easy_chat.h"
 #include "constants/species.h"
 #include "constants/opponents.h"
 #include "random.h"
@@ -12,7 +13,7 @@
 #include "main.h"
 #include "start_menu.h"
 #include "field_weather.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "pokemon_storage_system.h"
 #include "lottery_corner.h"
 #include "battle_setup.h"
@@ -321,7 +322,7 @@ bool8 debug_sub_8090984(void)
         default:
             if (input < 5)
             {
-                debug_sub_810B32C(input);
+                DebugSetMauvilleOldMan(input);
                 CloseMenu();
                 return TRUE;
             }
@@ -332,7 +333,7 @@ bool8 debug_sub_8090984(void)
 
     if (input == 5)
     {
-        sub_80F7F30();
+        ResetMauvilleOldManFlag();
     }
     else if (input == 6)
     {
@@ -340,9 +341,9 @@ bool8 debug_sub_8090984(void)
 
         for (i = 0; i < 3; i++)
         {
-            union MauvilleMan *mauvilleMan = &gSaveBlock1.mauvilleMan;
-            mauvilleMan->bard.songLyrics[i] = gUnknown_Debug_083C4F08[i];
-            mauvilleMan->bard.temporaryLyrics[i] = gUnknown_Debug_083C4F08[i];
+            union OldMan *oldMan = &gSaveBlock1.oldMan;
+            oldMan->bard.songLyrics[i] = gUnknown_Debug_083C4F08[i];
+            oldMan->bard.newSongLyrics[i] = gUnknown_Debug_083C4F08[i];
             gSaveBlock1.easyChats.unk2B28[i] = gUnknown_Debug_083C4F08[i];
         }
     }
@@ -350,7 +351,7 @@ bool8 debug_sub_8090984(void)
     {
         u16 i;
 
-        for (i = 0; i < 33; i++)
+        for (i = 0; i < NUM_TRENDY_SAYINGS; i++)
         {
             UnlockTrendySaying(i);
         }

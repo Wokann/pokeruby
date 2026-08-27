@@ -1,7 +1,10 @@
 #ifndef GUARD_CONSTANTS_EASY_CHAT_H
 #define GUARD_CONSTANTS_EASY_CHAT_H
 
-#define EASY_CHAT_TYPE_PROFILE 0
+#define EASY_CHAT_TYPE_PROFILE   0
+#define EASY_CHAT_TYPE_BARD_SONG 6
+
+#define NUM_TRENDY_SAYINGS 33
 
 #define EC_GROUP_POKEMON_1      0x0
 #define EC_GROUP_TRAINER        0x1
@@ -1062,5 +1065,7 @@
 
 #define EC_GROUP(word) ((word) >> 9)
 #define EC_INDEX(word) ((word) & 0x1FF)
+
+#define EC_EMPTY_WORD 0xFFFF
 
 #endif  // GUARD_CONSTANTS_EASY_CHAT_H

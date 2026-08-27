@@ -1425,7 +1425,7 @@ const struct YesNoFuncTable gUnknown_083EC634[] = {
     {sub_80FF5BC, sub_80FF058},
     {sub_81017A0, sub_80FF058},
     {sub_81017A0, sub_80FF058},
-    {sub_8109D04, sub_80FF058}
+    {DecorationItemsMenuAction_Trade, sub_80FF058}
 };
 
 // text
@@ -1645,7 +1645,7 @@ void sub_80FE728(u8 taskId)
         sub_80FE758(taskId);
     } else
     {
-        sub_8109DAC(taskId);
+        ExitTraderMenu(taskId);
     }
 }
 
@@ -3612,7 +3612,7 @@ void sub_8101824(u8 taskId)
 void sub_8101848(u8 taskId)
 {
     Menu_EraseWindowRect(20, 8, 26, 14);
-    sub_8109A30(gUnknown_020388D0[gUnknown_020388F5]);
+    SetRecycledDecoration(gUnknown_020388D0[gUnknown_020388F5]);
     gUnknown_020388D0[gUnknown_020388F5] = DECOR_NONE;
     sub_80FF098(taskId);
     DisplayItemMessageOnField(taskId, gSecretBaseText_DecorThrownAway, sub_80FEFF4, 0);

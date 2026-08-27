@@ -71,8 +71,9 @@ u8 *CopyEasyChatGroupName(u8 *, u8, int);
 u8 *sub_80EB218(u8 *, u16, u16);
 u16 sub_80EB2D4(u16);
 bool8 sub_80EB37C(u16);
-bool8 sub_80EB868(u8);
-static u16 sub_80EB960(void);
+static bool8 IsTrendySayingUnlocked(u8);
+static u8 GetNumTrendySayingsUnlocked(void);
+static u16 GetRandomUnlockedTrendySaying(void);
 u8 sub_80EB9C8(void);
 static u16 sub_80EB9D8(void);
 
@@ -2102,7 +2103,7 @@ bool8 sub_80EADC0(u8 group, u16 word)
     case EC_GROUP_TRENDY_SAYING:
         if (gEasyChatStruct->unk40[2][11 + group] == 0)
             return FALSE;
-        return sub_80EB868(word);
+        return IsTrendySayingUnlocked(word);
     case EC_GROUP_POKEMON_1:
         return GetSetPokedexFlag(SpeciesToNationalPokedexNum(word), 0);
     case EC_GROUP_EVENTS:
@@ -2118,14 +2119,14 @@ bool8 sub_80EADC0(u8 group, u16 word)
     }
 }
 
-u16 sub_80EAE88(u8 group)
+u16 EasyChat_GetNumWordsInGroup(u8 group)
 {
     switch (group)
     {
     case EC_GROUP_POKEMON_1:
         return GetHoennPokedexCount(0);
     case EC_GROUP_TRENDY_SAYING:
-        return sub_80EB8C0();
+        return GetNumTrendySayingsUnlocked();
     default:
         if (sub_80EAD7C(group))
             return gEasyChatGroupSizes[group];
@@ -2841,7 +2842,7 @@ u16 sub_80EB72C(u16 group)
     return ((group & 0x7F) << 9) | (local1 & 0x1FF);
 }
 
-u16 sub_80EB784(u16 group)
+u16 GetRandomEasyChatWordFromUnlockedGroup(u16 group)
 {
     if (!sub_80EAD7C(group))
         return -1;
@@ -2849,7 +2850,7 @@ u16 sub_80EB784(u16 group)
     if (group != EC_GROUP_POKEMON_1)
     {
         if (group == EC_GROUP_TRENDY_SAYING)
-            return sub_80EB960();
+            return GetRandomUnlockedTrendySaying();
     }
     else
     {
@@ -2912,87 +2913,89 @@ void BufferRandomHobbyOrLifestyleString(void)
     else
         group = EC_GROUP_LIFESTYLE;
 
-    local2 = sub_80EB784(group);
+    local2 = GetRandomEasyChatWordFromUnlockedGroup(group);
     EasyChat_GetWordText(gStringVar2, local2);
 }
 
-u8 sub_80EB868(u8 arg0)
+static bool8 IsTrendySayingUnlocked(u8 wordIndex)
 {
-    int offset;
-    int index;
+    int byteOffset;
+    int shift;
 
-    index = arg0 / 8;
-    offset = arg0 % 8;
-    return (gSaveBlock1.unk2D8C[index] >> offset) & 1;
+    byteOffset = wordIndex / 8;
+    shift = wordIndex % 8;
+    return (gSaveBlock1.unlockedTrendySayings[byteOffset] >> shift) & 1;
 }
 
-void UnlockTrendySaying(u8 arg0)
+void UnlockTrendySaying(u8 wordIndex)
 {
-    int offset;
-    int index;
+    int byteOffset;
+    int shift;
 
-    if (arg0 < 33)
+    if (wordIndex < NUM_TRENDY_SAYINGS)
     {
-        index = arg0 / 8;
-        offset = arg0 % 8;
-        gSaveBlock1.unk2D8C[index] |= 1 << offset;
+        byteOffset = wordIndex / 8;
+        shift = wordIndex % 8;
+        gSaveBlock1.unlockedTrendySayings[byteOffset] |= 1 << shift;
     }
 }
 
-u8 sub_80EB8C0(void)
+static u8 GetNumTrendySayingsUnlocked(void)
 {
-    u8 i, count;
+    u8 i;
+    u8 numUnlocked;
 
-    for (i = 0, count = 0; i < 33; i++)
+    for (i = 0, numUnlocked = 0; i < NUM_TRENDY_SAYINGS; i++)
     {
-        if (sub_80EB868(i))
-            count++;
+        if (IsTrendySayingUnlocked(i))
+            numUnlocked++;
     }
-    return count;
+    return numUnlocked;
 }
 
-u16 sub_80EB8EC(void)
+u16 UnlockRandomTrendySaying(void)
 {
     u16 i;
-    u16 local1, local2;
+    u16 numUnlocked;
+    u16 numToSkip;
 
-    local1 = sub_80EB8C0();
-    if (local1 == 33)
+    numUnlocked = GetNumTrendySayingsUnlocked();
+    if (numUnlocked == NUM_TRENDY_SAYINGS)
         return -1;
 
-    local2 = Random() % (33 - local1);
-    for (i = 0; i < 33; i++)
+    numToSkip = Random() % (NUM_TRENDY_SAYINGS - numUnlocked);
+    for (i = 0; i < NUM_TRENDY_SAYINGS; i++)
     {
-        if (sub_80EB868(i) == 0)
+        if (IsTrendySayingUnlocked(i) == 0)
         {
-            if (local2 == 0)
+            if (numToSkip == 0)
             {
                 UnlockTrendySaying(i);
                 return (i & 0x1FF) | 0x2800;
             }
-            local2--;
+            numToSkip--;
         }
     }
     return -1;
 }
 
-static u16 sub_80EB960(void)
+static u16 GetRandomUnlockedTrendySaying(void)
 {
     u16 i;
-    u16 local1;
+    u16 numUnlocked;
 
-    local1 = sub_80EB8C0();
-    if (local1 == 0)
+    numUnlocked = GetNumTrendySayingsUnlocked();
+    if (numUnlocked == 0)
         return -1;
 
-    local1 = Random() % local1;
-    for (i = 0; i < 33; i++)
+    numUnlocked = Random() % numUnlocked;
+    for (i = 0; i < NUM_TRENDY_SAYINGS; i++)
     {
-        if (sub_80EB868(i))
+        if (IsTrendySayingUnlocked(i))
         {
-            if (local1 == 0)
+            if (numUnlocked == 0)
                 return (i & 0x1FF) | 0x2800;
-            local1--;
+            numUnlocked--;
         }
     }
 
@@ -3011,7 +3014,7 @@ static u16 sub_80EB9D8(void)
     u16 i;
     u8 topsize;
 
-    local1 = sub_80EAE88(0);
+    local1 = EasyChat_GetNumWordsInGroup(0);
 
     if (local1 == 0)
         return -1;

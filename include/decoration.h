@@ -154,7 +154,7 @@ extern const struct YesNoFuncTable gUnknown_083EC9CC;
 extern const struct YesNoFuncTable gUnknown_083EC9D4;
 extern const struct YesNoFuncTable gUnknown_083ECAA0;
 
-extern void sub_8109DAC(u8); // src/trader
+void ExitTraderMenu(u8); // src/trader
 extern void ReshowPlayerPC(u8); // src/player_pc
 void DoSecretBaseDecorationMenu(u8);
 
@@ -218,7 +218,7 @@ void sub_8101698(struct Sprite *);
 void sub_81016C8(void);
 void sub_81016F4(void);
 void sub_8101824(u8);
-void sub_8109A30(u8);
+void SetRecycledDecoration(u8);
 
 void sub_80FF160(u8);
 void sub_80FF5BC(u8);
@@ -226,7 +226,7 @@ void sub_80FF058(u8);
 void sub_8100A0C(u8);
 void sub_8101700(u8);
 void sub_81017A0(u8);
-void sub_8109D04(u8);
+void DecorationItemsMenuAction_Trade(u8);
 
 void sub_80FED3C(u8);
 void sub_80FFAB0(u8);

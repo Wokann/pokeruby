@@ -471,25 +471,25 @@ struct MauvilleManCommon
 struct MauvilleManBard
 {
     /*0x00*/ u8 id;
-    /*0x02*/ u16 songLyrics[6];
-    /*0x0E*/ u16 temporaryLyrics[6];
+    /*0x02*/ u16 songLyrics[NUM_BARD_SONG_WORDS];
+    /*0x0E*/ u16 newSongLyrics[NUM_BARD_SONG_WORDS];
     /*0x1A*/ u8 playerName[8];
     /*0x22*/ u8 filler_2DB6[0x3];
-    /*0x25*/ u8 playerTrainerId[4];
+    /*0x25*/ u8 playerTrainerId[TRAINER_ID_LENGTH];
     /*0x29*/ bool8 hasChangedSong;
 }; /*size = 0x2C*/
 
 struct MauvilleManHipster
 {
     u8 id;
-    bool8 alreadySpoken;
+    bool8 taughtWord;
 };
 
-struct MauvilleManTrader
+struct MauvilleOldManTrader
 {
     u8 id;
-    u8 unk1[4];
-    u8 unk5[4][11];
+    u8 decorations[NUM_TRADER_ITEMS];
+    u8 playerNames[NUM_TRADER_ITEMS][11];
     bool8 alreadyTraded;
 };
 
@@ -498,9 +498,9 @@ struct MauvilleManStoryteller
     u8 id;
     bool8 alreadyRecorded;
     u8 filler2[2];
-    u8 gameStatIDs[4];
-    u8 trainerNames[4][7];
-    u8 statValues[4][4];
+    u8 gameStatIDs[NUM_STORYTELLER_TALES];
+    u8 trainerNames[NUM_STORYTELLER_TALES][7];
+    u8 statValues[NUM_STORYTELLER_TALES][4];
 };
 
 struct MauvilleManGiddy
@@ -508,17 +508,17 @@ struct MauvilleManGiddy
     /*0x00*/ u8 id;
     /*0x01*/ u8 taleCounter;
     /*0x02*/ u8 questionNum;
-    /*0x04*/ u16 randomWords[10];
+    /*0x04*/ u16 randomWords[GIDDY_MAX_TALES];
     /*0x18*/ u8 questionList[12];
 }; /*size = 0x2C*/
 
 
-union MauvilleMan
+union OldMan
 {
     struct MauvilleManCommon common;
     struct MauvilleManBard bard;
     struct MauvilleManHipster hipster;
-    struct MauvilleManTrader trader;
+    struct MauvilleOldManTrader trader;
     struct MauvilleManStoryteller storyteller;
     struct MauvilleManGiddy giddy;
     u8 filler[0x40];  // needed to pad out the struct
@@ -734,9 +734,9 @@ struct SaveBlock1 /* 0x02025734 */
         /*0x2B40*/ u16 unk2B40[6];
     } easyChats;
     /*0x2B4C*/ struct MailStruct mail[MAIL_COUNT];
-    /*0x2D8C*/ u8 unk2D8C[4];  // What is this? Apparently it's supposed to be 64 bytes in size.
+    /*0x2D8C*/ u8 unlockedTrendySayings[4];  // Bitfield for unlockable Easy Chat words in EC_GROUP_TRENDY_SAYING.
     /*0x2D90*/ u8 filler_2D90[0x4];
-    /*0x2D94*/ union MauvilleMan mauvilleMan;
+    /*0x2D94*/ union OldMan oldMan;
     /*0x2DD4*/ struct EasyChatPair easyChatPairs[5]; //Dewford trend [0] and some other stuff
     /*0x2DFC*/ struct ContestWinner contestWinners[8];
     /*0x2EFC*/ struct ContestWinner museumPortraits[5];

@@ -10,7 +10,7 @@
 #include "constants/items.h"
 #include "load_save.h"
 #include "link.h"
-#include "mauville_man.h"
+#include "mauville_old_man.h"
 #include "menu.h"
 #include "mystery_event_script.h"
 #include "random.h"
@@ -37,7 +37,7 @@ static u8 gUnknown_0300071C[4];
 void *recordMixingSecretBases = &gSaveBlock1.secretBases;
 void *recordMixingTvShows = &gSaveBlock1.tvShows;
 void *recordMixingPokeNews = &gSaveBlock1.pokeNews;
-void *recordMixingMauvilleMan = &gSaveBlock1.mauvilleMan;
+void *recordMixingOldMan = &gSaveBlock1.oldMan;
 void *recordMixingEasyChatPairs = &gSaveBlock1.easyChatPairs;
 struct RecordMixingDayCareMail *gDayCareMailPlayerRecord = &gDayCareMailRecord;
 struct BattleTowerRecord *gBattleTowerPlayerRecord = &gSaveBlock2.battleTower.playerRecord;
@@ -54,7 +54,7 @@ struct PlayerRecords
     struct SecretBaseRecord secretBases[SECRET_BASES_COUNT];
     TVShow tvShows[TV_SHOWS_COUNT];
     struct PokeNews pokeNews[POKE_NEWS_COUNT];
-    union MauvilleMan mauvilleMan;
+    union OldMan oldMan;
     struct EasyChatPair easyChatPairs[5];
     struct RecordMixingDayCareMail daycareMailRecord;
     struct BattleTowerRecord battleTowerRecord;
@@ -70,7 +70,7 @@ void RecordMixing_PrepareExchangePacket(void)
     memcpy(eSentRecord.secretBases, recordMixingSecretBases, sizeof(eSentRecord.secretBases));
     memcpy(eSentRecord.tvShows, recordMixingTvShows, sizeof(eSentRecord.tvShows));
     memcpy(eSentRecord.pokeNews, recordMixingPokeNews, sizeof(eSentRecord.pokeNews));
-    memcpy(&eSentRecord.mauvilleMan, recordMixingMauvilleMan, sizeof(eSentRecord.mauvilleMan));
+    memcpy(&eSentRecord.oldMan, recordMixingOldMan, sizeof(eSentRecord.oldMan));
     memcpy(eSentRecord.easyChatPairs, recordMixingEasyChatPairs, sizeof(eSentRecord.easyChatPairs));
     gDayCareMailRecord.mail[0] = gSaveBlock1.daycare.misc.mail[0];
     gDayCareMailRecord.mail[1] = gSaveBlock1.daycare.misc.mail[1];
@@ -87,7 +87,7 @@ void RecordMixing_ReceiveExchangePacket(u32 which)
     ReceiveSecretBasesData(eReceivedRecords.secretBases, sizeof(struct PlayerRecords), which);
     ReceiveTvShowsData((u8 *)eReceivedRecords.tvShows, sizeof(struct PlayerRecords), which);
     ReceivePokeNewsData(eReceivedRecords.pokeNews, sizeof(struct PlayerRecords), which);
-    ReceiveOldManData((u8 *)&eReceivedRecords.mauvilleMan, sizeof(struct PlayerRecords), which);
+    ReceiveOldManData((u8 *)&eReceivedRecords.oldMan, sizeof(struct PlayerRecords), which);
     ReceiveDewfordTrendData(eReceivedRecords.easyChatPairs, sizeof(struct PlayerRecords), which);
     ReceiveDaycareMailData(&eReceivedRecords.daycareMailRecord,
         sizeof(struct PlayerRecords),
@@ -443,9 +443,9 @@ void ReceiveOldManData(u8 *a, size_t size, u8 index)
 
     sub_80B9A88(arr);
     //Probably not how it was originally written, but this matches.
-    memcpy(a + index * size, (ptr = recordMixingMauvilleMan), 0x40);
+    memcpy(a + index * size, (ptr = recordMixingOldMan), 0x40);
     memcpy(ptr, a + arr[index] * size, 0x40);
-    sub_80F7F30();
+    ResetMauvilleOldManFlag();
 }
 
 void ReceiveBattleTowerData(void *battleTowerRecord, u32 size, u8 index)
