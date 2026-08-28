@@ -1,13 +1,13 @@
-Route128_Text_171EE0:: @ 8171EE0
+Route128_Text_EvilLeaderWhatHappened:: @ 8171EE0
 	.string "{EVIL_LEADER}: What happened...\n"
 	.string "What is this wretched scene...\p"
 	.string "Did I...make a horrible mistake?$"
 
-Route128_Text_171F35:: @ 8171F35
+Route128_Text_EvilLeaderIOnlyWanted:: @ 8171F35
 	.string "I...\n"
 	.string "I only wanted...$"
 
-Route128_Text_171F4B:: @ 8171F4B
+Route128_Text_GoodLeaderDoYouUnderstandNow:: @ 8171F4B
 	.string "{GOOD_LEADER}: Do you understand now,\n"
 	.string "{EVIL_LEADER}?\p"
 	.string "Do you finally see how disastrous\n"
@@ -16,7 +16,7 @@ Route128_Text_171F4B:: @ 8171F4B
 	.string "something before the situation goes\l"
 	.string "completely out of control!$"
 
-Route128_Text_172008:: @ 8172008
+Route128_Text_GoodLeaderLeaveThingsToUs:: @ 8172008
 	.string "{GOOD_LEADER}: {PLAYER}{KUN}...\p"
 	.string "We, TEAM {GOOD_TEAM}, had been pursuing TEAM\n"
 	.string "{EVIL_TEAM} to prevent this from happening.\p"
@@ -27,17 +27,17 @@ Route128_Text_172008:: @ 8172008
 	.string "Leave things to us, and get out of\n"
 	.string "here while you still can!$"
 
-Route128_Text_17210B:: @ 817210B
+Route128_Text_GoodLeaderThisDefiesBelief:: @ 817210B
 	.string "{GOOD_LEADER}: This defies belief...\p"
 	.string "A super-ancient POKéMON...\p"
 	.string "Its power is unbelievable.\n"
 	.string "It has upset the balance of nature...$"
 
-Route128_Text_172181:: @ 8172181
+Route128_Text_StevenWhatIsHappening:: @ 8172181
 	.string "STEVEN: {PLAYER}{KUN}!\n"
 	.string "What is happening?$"
 
-Route128_Text_1721A2:: @ 81721A2
+Route128_Text_StevenWholeWorldWillDrown:: @ 81721A2
 	.string "This is terrible...\p"
 	.string "If this doesn't stop, all HOENN...\n"
 	.string "No, the whole world will drown.\p"
@@ -47,7 +47,7 @@ Route128_Text_1721A2:: @ 81721A2
 	.string "There's no point arguing here...\n"
 	.string "SOOTOPOLIS should provide answers...$"
 
-Route128_Text_1722A1:: @ 81722A1
+Route128_Text_StevenWholeWorldWillBeParched:: @ 81722A1
 	.string "This is terrible...\p"
 	.string "If this doesn't stop, all of HOENN...\n"
 	.string "No, the whole world will be parched.\p"
@@ -57,7 +57,7 @@ Route128_Text_1722A1:: @ 81722A1
 	.string "There's no point arguing here...\n"
 	.string "SOOTOPOLIS should provide answers...$"
 
-Route128_Text_1723BE:: @ 81723BE
+Route128_Text_StevenImGoingToSootopolis:: @ 81723BE
 	.string "{PLAYER}{KUN}...\n"
 	.string "I don't know what you intend to do,\l"
 	.string "but don't do anything reckless.\p"
