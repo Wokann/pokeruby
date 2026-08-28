@@ -956,6 +956,7 @@ Common_EventScript_FerryDepartIsland:: @ 81A047C
 
 	.include "data/scripts/cave_of_origin.inc"
 	.include "data/scripts/static_pokemon.inc"
+	.include "data/scripts/kecleon.inc"
 
 Common_EventScript_NameReceivedPartyMon:: @ 81A0678
 	fadescreen FADE_TO_BLACK

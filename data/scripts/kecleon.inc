@@ -1,0 +1,138 @@
+Route120_EventScript_Kecleon1:: @ 81A0539
+	lock
+	faceplayer
+	setvar VAR_0x8004, 1
+	goto EventScript_Kecleon
+	end
+
+Route120_EventScript_Kecleon2:: @ 81A0546
+	lock
+	faceplayer
+	setvar VAR_0x8004, 2
+	goto EventScript_Kecleon
+	end
+
+Route120_EventScript_Kecleon3:: @ 81A0553
+	lock
+	faceplayer
+	setvar VAR_0x8004, 3
+	goto EventScript_Kecleon
+	end
+
+Route120_EventScript_Kecleon4:: @ 81A0560
+	lock
+	faceplayer
+	setvar VAR_0x8004, 4
+	goto EventScript_Kecleon
+	end
+
+Route120_EventScript_Kecleon5:: @ 81A056D
+	lock
+	faceplayer
+	setvar VAR_0x8004, 5
+	goto EventScript_Kecleon
+	end
+
+Route119_EventScript_Kecleon1:: @ 81A057A
+	lock
+	faceplayer
+	setvar VAR_0x8004, 6
+	goto EventScript_Kecleon
+	end
+
+Route119_EventScript_Kecleon2:: @ 81A0587
+	lock
+	faceplayer
+	setvar VAR_0x8004, 7
+	goto EventScript_Kecleon
+	end
+
+EventScript_Kecleon:: @ 81A0594
+	checkitem ITEM_DEVON_SCOPE, 1
+	goto_if_eq VAR_RESULT, TRUE, EventScript_AskUseDevonScope
+	msgbox Kecleon_Text_SomethingUnseeable, MSGBOX_DEFAULT
+	release
+	end
+
+EventScript_AskUseDevonScope:: @ 81A05AE
+	msgbox Kecleon_Text_WantToUseDevonScope, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, EventScript_BattleKecleon
+	release
+	end
+
+EventScript_BattleKecleon:: @ 81A05C3
+	msgbox Kecleon_Text_UseDevonScopeMonAttacked, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	applymovement VAR_LAST_TALKED, Movement_KecleonAppears
+	waitmovement 0
+	waitse
+	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setwildbattle SPECIES_KECLEON, 30, ITEM_NONE
+	call_if_eq VAR_0x8004, 1, Route120_EventScript_HideKecleon1
+	call_if_eq VAR_0x8004, 2, Route120_EventScript_HideKecleon2
+	call_if_eq VAR_0x8004, 3, Route120_EventScript_HideKecleon3
+	call_if_eq VAR_0x8004, 4, Route120_EventScript_HideKecleon4
+	call_if_eq VAR_0x8004, 5, Route120_EventScript_HideKecleon5
+	call_if_eq VAR_0x8004, 6, Route119_EventScript_HideKecleon1
+	call_if_eq VAR_0x8004, 7, Route119_EventScript_HideKecleon2
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	dowildbattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	release
+	end
+
+Route120_EventScript_HideKecleon1:: @ 81A0646
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_1
+	return
+
+Route120_EventScript_HideKecleon2:: @ 81A064A
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_2
+	return
+
+Route120_EventScript_HideKecleon3:: @ 81A064E
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_3
+	return
+
+Route120_EventScript_HideKecleon4:: @ 81A0652
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_4
+	return
+
+Route120_EventScript_HideKecleon5:: @ 81A0656
+	setflag FLAG_HIDE_ROUTE_120_KECLEON_5
+	return
+
+Route119_EventScript_HideKecleon1:: @ 81A065A
+	setflag FLAG_HIDE_ROUTE_119_KECLEON_1
+	return
+
+Route119_EventScript_HideKecleon2:: @ 81A065E
+	setflag FLAG_HIDE_ROUTE_119_KECLEON_2
+	return
+
+Movement_KecleonAppears:: @ 81A0662
+	set_visible
+	delay_4
+	set_invisible
+	delay_4
+	set_visible
+	delay_4
+	set_invisible
+	delay_4
+	set_visible
+	delay_8
+	set_invisible
+	delay_8
+	set_visible
+	delay_8
+	set_invisible
+	delay_8
+	set_visible
+	delay_16
+	set_invisible
+	delay_16
+	set_visible
+	step_end
