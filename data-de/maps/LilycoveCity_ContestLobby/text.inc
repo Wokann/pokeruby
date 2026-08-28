@@ -10,7 +10,7 @@ LilycoveCity_ContestLobby_Text_ProgressWillBeSaved:: @ 8188521
 	.string "Bevor du an einem WETTBEWERB teil-\n"
 	.string "nimmst, wird dein Spiel gespeichert.$"
 
-LilycoveCity_ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
+ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
 	.string "Wir hoffen, du nimmst ein anderes Mal\n"
 	.string "teil.$"
 

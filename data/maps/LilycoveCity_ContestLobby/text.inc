@@ -9,7 +9,7 @@ LilycoveCity_ContestLobby_Text_ProgressWillBeSaved:: @ 8188521
 	.string "Before entering a CONTEST, your\n"
 	.string "progress will be saved.$"
 
-LilycoveCity_ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
+ContestLobby_Text_ParticipateAnotherTime:: @ 8188559
 	.string "We hope you will participate another\n"
 	.string "time.$"
 

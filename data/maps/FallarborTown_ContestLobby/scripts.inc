@@ -7,13 +7,13 @@ FallarborTown_ContestLobby_OnTransition:: @ 81539C7
 	end
 
 FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD
-	setvar VAR_0x800B, 6
-	setvar VAR_CONTEST_RANK, 1
-	call Common_EventScript_SpeakToContestReceptionist
+	setvar VAR_0x800B, STDSTRING_SUPER
+	setvar VAR_CONTEST_RANK, CONTEST_RANK_SUPER
+	call ContestLobby_EventScript_SpeakToContestReceptionist
 	call FallarborTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call Common_EventScript_SetupContestRivalGfxId
-	setvar VAR_CONTEST_LOCATION, 2
+	setvar VAR_CONTEST_LOCATION, CONTEST_LOCATION_FALLARBOR
 	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
 	waitstate
 	end
@@ -37,7 +37,7 @@ FallarborTown_ContestLobby_EventScript_LeadToContestHall:: @ 81539F8
 	waitmovement 0
 	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
-	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_FALLARBOR_CONTEST_LOBBY_RECEPTIONIST, FallarborTown_ContestLobby_Movement_ReceptionistWalkToContestHall
 	applymovement LOCALID_PLAYER, FallarborTown_ContestLobby_Movement_PlayerWalkToContestHall

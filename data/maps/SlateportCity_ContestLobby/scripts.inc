@@ -7,13 +7,13 @@ SlateportCity_ContestLobby_OnTransition:: @ 8155417
 	end
 
 SlateportCity_ContestLobby_EventScript_ContestReceptionist:: @ 815541D
-	setvar VAR_0x800B, 7
-	setvar VAR_CONTEST_RANK, 2
-	call Common_EventScript_SpeakToContestReceptionist
+	setvar VAR_0x800B, STDSTRING_HYPER
+	setvar VAR_CONTEST_RANK, CONTEST_RANK_HYPER
+	call ContestLobby_EventScript_SpeakToContestReceptionist
 	call SlateportCity_ContestLobby_EventScript_EnterContestRoom
 	special SetContestTrainerGfxIds
 	call Common_EventScript_SetupContestRivalGfxId
-	setvar VAR_CONTEST_LOCATION, 3
+	setvar VAR_CONTEST_LOCATION, CONTEST_LOCATION_SLATEPORT
 	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
 	waitstate
 	end
@@ -23,21 +23,21 @@ SlateportCity_ContestLobby_EventScript_EnterContestRoom:: @ 8155448
 	applymovement LOCALID_SLATEPORT_CONTEST_LOBBY_RECEPTIONIST, SlateportCity_ContestLobby_Movement_ReceptionistApproachCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_WallShadow, 1
-	setmetatile 4, 3, METATILE_Contest_FloorShadow, 1
+	setmetatile 4, 2, METATILE_Contest_WallShadow, TRUE
+	setmetatile 4, 3, METATILE_Contest_FloorShadow, TRUE
 	special DrawWholeMapView
 	applymovement LOCALID_SLATEPORT_CONTEST_LOBBY_RECEPTIONIST, SlateportCity_ContestLobby_Movement_ReceptionistOpenCounter
 	waitmovement 0
 	playse SE_BRIDGE_WALK
-	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, 1
-	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, 1
+	setmetatile 4, 2, METATILE_Contest_CounterFlap_Top, TRUE
+	setmetatile 4, 3, METATILE_Contest_CounterFlap_Bottom, TRUE
 	special DrawWholeMapView
 	delay 20
 	applymovement LOCALID_SLATEPORT_CONTEST_LOBBY_RECEPTIONIST, SlateportCity_ContestLobby_Movement_ReceptionistFacePlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, SlateportCity_ContestLobby_Movement_PlayerFaceReceptionist
 	waitmovement 0
-	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_SLATEPORT_CONTEST_LOBBY_RECEPTIONIST, SlateportCity_ContestLobby_Movement_ReceptionistEnterContestRoom
 	applymovement LOCALID_PLAYER, SlateportCity_ContestLobby_Movement_PlayerEnterContestRoom

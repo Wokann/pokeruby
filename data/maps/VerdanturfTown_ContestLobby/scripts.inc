@@ -7,13 +7,13 @@ VerdanturfTown_ContestLobby_OnTransition:: @ 8153D70
 	end
 
 VerdanturfTown_ContestLobby_EventScript_ContestReceptionist:: @ 8153D76
-	setvar VAR_0x800B, 5
-	setvar VAR_CONTEST_RANK, 0
-	call Common_EventScript_SpeakToContestReceptionist
+	setvar VAR_0x800B, STDSTRING_NORMAL
+	setvar VAR_CONTEST_RANK, CONTEST_RANK_NORMAL
+	call ContestLobby_EventScript_SpeakToContestReceptionist
 	call VerdanturfTown_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call Common_EventScript_SetupContestRivalGfxId
-	setvar VAR_CONTEST_LOCATION, 1
+	setvar VAR_CONTEST_LOCATION, CONTEST_LOCATION_VERDANTURF
 	warp MAP_LINK_CONTEST_ROOM1, 255, 7, 5
 	waitstate
 	end
@@ -37,7 +37,7 @@ VerdanturfTown_ContestLobby_EventScript_LeadToContestHall:: @ 8153DA1
 	waitmovement 0
 	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
-	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_VERDANTURF_CONTEST_LOBBY_RECEPTIONIST, VerdanturfTown_ContestLobby_Movement_ReceptionistWalkToContestHall
 	applymovement LOCALID_PLAYER, VerdanturfTown_ContestLobby_Movement_PlayerWalkToContestHall

@@ -349,7 +349,7 @@ LilycoveCity_ContestLobby_EventScript_ExplainLinkContest:: @ 8158C27
 	end
 
 LilycoveCity_ContestLobby_EventScript_CancelEnterContest:: @ 8158C35
-	msgbox LilycoveCity_ContestLobby_Text_ParticipateAnotherTime, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_ParticipateAnotherTime, MSGBOX_DEFAULT
 	releaseall
 	clearflag FLAG_TEMP_3
 	end
@@ -374,23 +374,23 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon:: @ 8158C42
 	end
 
 LilycoveCity_ContestLobby_EventScript_LinkCantEnterLowRank:: @ 8158C96
-	msgbox LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_MonNotQualifiedForRank, MSGBOX_DEFAULT
 	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon
 	end
 
 LilycoveCity_ContestLobby_EventScript_LinkCantEnterEgg:: @ 8158CA4
-	msgbox LilycoveCity_ContestLobby_Text_EggCannotTakePart, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_EggCannotTakePart, MSGBOX_DEFAULT
 	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon
 	end
 
 LilycoveCity_ContestLobby_EventScript_LinkCantEnterFainted:: @ 8158CB2
-	msgbox LilycoveCity_ContestLobby_Text_MonInNoConditionForContest, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_MonInNoConditionForContest, MSGBOX_DEFAULT
 	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon
 	end
 
 LilycoveCity_ContestLobby_EventScript_EnterMonForLinkContest:: @ 8158CC0
 	copyvar VAR_0x8008, VAR_0x8004
-	message LilycoveCity_ContestLobby_Text_ConfirmContestMon
+	message ContestLobby_Text_ConfirmContestMon
 	waitmessage
 	yesnobox 20, 8
 	switch VAR_RESULT
@@ -507,7 +507,7 @@ LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall:: @ 8158E0B
 	waitmovement 0
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist
 	waitmovement 0
-	messageautoscroll LilycoveCity_ContestLobby_Text_ComeThroughHere
+	messageautoscroll ContestLobby_Text_ComeThroughHere
 	waitmessage
 	delay 20
 	closemessage
@@ -567,9 +567,9 @@ LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
 	specialvar VAR_RESULT, IsContestDebugActive
 	compare VAR_RESULT, TRUE
 	goto_if_eq LilycoveCity_ContestLobby_EventScript_SetDebug
-	setvar VAR_0x800B, 8
+	setvar VAR_0x800B, STDSTRING_MASTER
 	setvar VAR_CONTEST_RANK, CONTEST_RANK_MASTER
-	call Common_EventScript_SpeakToContestReceptionist
+	call ContestLobby_EventScript_SpeakToContestReceptionist
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
 	special SetContestTrainerGfxIds
 	call Common_EventScript_SetupContestRivalGfxId
@@ -582,7 +582,7 @@ LilycoveCity_ContestLobby_EventScript_SetDebug:: @ 8158EE8
 	setflag FLAG_HIDE_LILYCOVE_MUSEUM_CURATOR
 	copyvar VAR_LILYCOVE_MUSEUM_2F_STATE, TRUE
 	additem ITEM_CONTEST_PASS
-	setvar VAR_0x800B, 8
+	setvar VAR_0x800B, STDSTRING_MASTER
 	setvar VAR_CONTEST_RANK, CONTEST_RANK_MASTER
 	setvar VAR_LILYCOVE_CONTEST_LOBBY_STATE, LILYCOVE_CONTEST_LOBBY_STATE_CONTEST_ARTIST
 	setflag FLAG_SYS_RIBBON_GET
@@ -646,7 +646,7 @@ LilycoveCity_ContestLobby_EventScript_LeadToContestHall:: @ 8158F86
 	waitmovement 0
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachReceptionist
 	waitmovement 0
-	msgbox LilycoveCity_ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
+	msgbox ContestLobby_Text_ComeThroughHere, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_CONTEST_LOBBY_RECEPTIONIST, LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall
