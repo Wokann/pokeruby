@@ -206,7 +206,7 @@ Route127_EventScript_ItemCarbos:: @ 81B16D0
 	finditem ITEM_CARBOS
 	end
 
-Route132_EventScript_1B16DD:: @ 81B16DD
+Route132_EventScript_ItemRareCandy:: @ 81B16DD
 	finditem ITEM_RARE_CANDY
 	end
 
