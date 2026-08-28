@@ -40,8 +40,8 @@ static u8 gPcItemMenuOptionsNum;
 extern u8 gPokemonItemUseType;
 
 // event scripts
-extern u8 gBrendanHouse_TurnPCOff[];
-extern u8 gMayHouse_TurnPCOff[];
+extern u8 LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC[];
+extern u8 LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC[];
 
 extern void (*gFieldCallback)(void);
 
@@ -184,9 +184,6 @@ extern u8 gUnknown_08406318[];
 extern u8 gUnknown_030007B4;
 extern u8 unk_201FE00[];
 
-extern u8 gUnknown_08152850;
-extern u8 gUnknown_08152C75;
-
 extern u32 gUnknown_08406288[];
 extern const struct MenuAction gUnknown_084062C0[];
 extern const struct YesNoFuncTable gUnknown_084062E0;
@@ -291,9 +288,9 @@ static void PlayerPC_TurnOff(u8 taskId)
         Menu_EraseWindowRect(0, 0, 0x1D, 0x13);
 
         if (gSaveBlock2.playerGender == MALE)
-            ScriptContext_SetupScript(gBrendanHouse_TurnPCOff);
+            ScriptContext_SetupScript(LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC);
         else
-            ScriptContext_SetupScript(gMayHouse_TurnPCOff);
+            ScriptContext_SetupScript(LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC);
     }
     else
     {

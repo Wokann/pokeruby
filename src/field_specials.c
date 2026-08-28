@@ -35,6 +35,7 @@
 #include "constants/abilities.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
+#include "constants/field_specials.h"
 #include "constants/metatile_labels.h"
 #include "constants/moves.h"
 #include "constants/species.h"
@@ -845,30 +846,30 @@ static void PCTurnOffEffect_1(s16 flag, s8 dx, s8 dy)
     u16 tileId = 0;
     if (flag != 0)
     {
-        if (gSpecialVar_0x8004 == 0)
+        if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
         {
             tileId = METATILE_ID(Building, PC_Off);
         }
-        else if (gSpecialVar_0x8004 == 1)
+        else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
         {
             tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
         }
-        else if (gSpecialVar_0x8004 == 2)
+        else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
         {
             tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
         }
     }
     else
     {
-        if (gSpecialVar_0x8004 == 0)
+        if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
         {
             tileId = METATILE_ID(Building, PC_On);
         }
-        else if (gSpecialVar_0x8004 == 1)
+        else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
         {
             tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_On);
         }
-        else if (gSpecialVar_0x8004 == 2)
+        else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
         {
             tileId = METATILE_ID(BrendansMaysHouse, MayPC_On);
         }
@@ -902,15 +903,15 @@ static void PCTurnOffEffect(void)
             dy = -1;
             break;
     }
-    if (gSpecialVar_0x8004 == 0)
+    if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
     {
         tileId = METATILE_ID(Building, PC_Off);
     }
-    else if (gSpecialVar_0x8004 == 1)
+    else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
     {
         tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
     }
-    else if (gSpecialVar_0x8004 == 2)
+    else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
     {
         tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
     }

@@ -55,7 +55,7 @@ LittlerootTown_BrendansHouse_2F_EventScript_PC:: @ 815281E
 	end
 
 LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC:: @ 8152837
-	setvar VAR_0x8004, 1
+	setvar VAR_0x8004, PC_LOCATION_BRENDANS_HOUSE
 	special DoPCTurnOnEffect
 	playse SE_PC_ON
 	msgbox gText_PlayerHouseBootPC, MSGBOX_DEFAULT
@@ -64,8 +64,8 @@ LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC:: @ 8152837
 	releaseall
 	end
 
-gBrendanHouse_TurnPCOff:: @ 8152850
-	setvar VAR_0x8004, 1
+LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC:: @ 8152850
+	setvar VAR_0x8004, PC_LOCATION_BRENDANS_HOUSE
 	playse SE_PC_OFF
 	special DoPCTurnOffEffect
 	releaseall

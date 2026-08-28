@@ -1,6 +1,10 @@
 	.set TRUE, 1
 	.set FALSE, 0
 
+	.equiv PC_LOCATION_OTHER,           0
+	.equiv PC_LOCATION_BRENDANS_HOUSE,  1
+	.equiv PC_LOCATION_MAYS_HOUSE,      2
+
 	.set NULL, 0
 
 	.set POKEMON_NAME_LENGTH, 11
