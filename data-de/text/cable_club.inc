@@ -124,45 +124,45 @@ CableClub_Text_PleaseConfirmNumberAndRestart:: @ 81A4C38
 	.string "Bitte überprüfe die Anzahl der Spieler\n"
 	.string "und fange noch einmal an.$"
 
-TradeRoom_WillLinkBeTerminated: @ 81A4C6E
+Text_TerminateLinkConfirmation:: @ 81A4C6E
 	.string "Wenn du den Raum verlässt, wird die Ver-\n"
 	.string "bindung abgebrochen. Einverstanden?$"
 
-TradeRoom_TerminatingLink: @ 81A4CAF
+Text_TerminateLinkPleaseWait:: @ 81A4CAF
 	.string "Verbindung wird abgebrochen... Du wirst\n"
 	.string "aus dem Raum begleitet. Bitte warten.$"
 
-CableClub_TooBusyToNotice: @ 81A4CF6
+CableClub_Text_TooBusyToNotice:: @ 81A4CF6
 	.string "Dieser TRAINER ist zu beschäftigt...$"
 
-CableClub_LookAtTrainerCard1: @ 81A4D1C
+CableClub_Text_GotToLookAtTrainerCard:: @ 81A4D1C
 	.string "Hey! Schau dir mal den TRAINERPASS\n"
 	.string "von {STR_VAR_1} an!$"
 
-CableClub_LookAtTrainerCard2: @ 81A4D45
+CableClub_Text_GotToLookAtColoredTrainerCard:: @ 81A4D45
 	.string "Hey! Schau dir mal den TRAINERPASS\n"
 	.string "von {STR_VAR_1} an! Es ist ein\l"
 	.string "{STR_VAR_2}PASS.$"
 
-SingleBattleColosseum_Text_1A4D7E:: @ 81A4D7E
+SingleBattleColosseum_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Kampf.$"
 
-TradeCenter_Text_1A4DAB:: @ 81A4DAB
+TradeCenter_Text_TakeSeatStartTrade:: @ 81A4DAB
 	.string "Bitte geh in Position und beginne mit\n"
 	.string "dem Tausch.$"
 
-RecordCorner_Text_1A4DD7:: @ 81A4DD7
+RecordCorner_Text_TakeSeatAndWait:: @ 81A4DD7
 	.string "Bitte geh in Position und warte.$"
 
-RecordCorner_Text_1A4DF7:: @ 81A4DF7
+RecordCorner_Text_ThanksForComing:: @ 81A4DF7
 	.string "Danke für den Besuch!$"
 
 UnknownString_81A4E0A: @ 81A4E0A
 	.string "Bitte wähle die POKéMON für den\n"
 	.string "MULTIKAMPF.$"
 
-RecordCorner_Text_1A4E3B:: @ 81A4E3B
+RecordCorner_Text_PlayerSentOverOneX:: @ 81A4E3B
 	.string "{STR_VAR_1} hat ein {STR_VAR_2}\n"
 	.string "versendet.$"
 

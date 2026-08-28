@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "RecordCorner_EventScript_1A44BC",
+      "script": "RecordCorner_EventScript_Attendant",
       "flag": "0"
     }
   ],
@@ -63,7 +63,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_0",
       "var_value": "0",
-      "script": "RecordCorner_EventScript_1A4418"
+      "script": "RecordCorner_EventScript_PlayerSpot0"
     },
     {
       "type": "trigger",
@@ -72,7 +72,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_0",
       "var_value": "0",
-      "script": "RecordCorner_EventScript_1A4442"
+      "script": "RecordCorner_EventScript_PlayerSpot2"
     },
     {
       "type": "trigger",
@@ -81,7 +81,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_0",
       "var_value": "0",
-      "script": "RecordCorner_EventScript_1A442D"
+      "script": "RecordCorner_EventScript_PlayerSpot1"
     },
     {
       "type": "trigger",
@@ -90,7 +90,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_0",
       "var_value": "0",
-      "script": "RecordCorner_EventScript_1A4457"
+      "script": "RecordCorner_EventScript_PlayerSpot3"
     }
   ],
   "bg_events": []

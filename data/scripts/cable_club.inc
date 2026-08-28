@@ -510,7 +510,7 @@ CableClub_Movement_PlayerFaceAttendantLeft:: @ 81A4361
 	face_left
 	step_end
 
-gUnknown_081A4363:: @ 81A4363
+EventScript_CableBoxResults:: @ 81A4363
 	lockall
 	special ShowLinkBattleRecords
 	waitbuttonpress
@@ -518,131 +518,131 @@ gUnknown_081A4363:: @ 81A4363
 	releaseall
 	end
 
-SingleBattleColosseum_EventScript_1A436F:: @ 81A436F
+SingleBattleColosseum_EventScript_PlayerSpot0:: @ 81A436F
 	setvar VAR_0x8005, 0
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-SingleBattleColosseum_EventScript_1A4379:: @ 81A4379
+SingleBattleColosseum_EventScript_PlayerSpot1:: @ 81A4379
 	setvar VAR_0x8005, 1
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A4383:: @ 81A4383
+DoubleBattleColosseum_EventScript_PlayerSpot0:: @ 81A4383
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
-	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	compare VAR_RESULT, FALSE
+	goto_if_eq DoubleBattleColosseum_EventScript_CancelPlayerSpotTrigger
 	setvar VAR_0x8005, 0
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A439E:: @ 81A439E
+DoubleBattleColosseum_EventScript_PlayerSpot1:: @ 81A439E
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
-	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	compare VAR_RESULT, FALSE
+	goto_if_eq DoubleBattleColosseum_EventScript_CancelPlayerSpotTrigger
 	setvar VAR_0x8005, 1
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43B9:: @ 81A43B9
+DoubleBattleColosseum_EventScript_PlayerSpot2:: @ 81A43B9
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
-	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	compare VAR_RESULT, FALSE
+	goto_if_eq DoubleBattleColosseum_EventScript_CancelPlayerSpotTrigger
 	setvar VAR_0x8005, 2
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43D4:: @ 81A43D4
+DoubleBattleColosseum_EventScript_PlayerSpot3:: @ 81A43D4
 	fadescreen FADE_TO_BLACK
 	special ChooseHalfPartyForBattle
 	waitstate
-	compare VAR_RESULT, 0
-	goto_if_eq DoubleBattleColosseum_EventScript_1A43EF
+	compare VAR_RESULT, FALSE
+	goto_if_eq DoubleBattleColosseum_EventScript_CancelPlayerSpotTrigger
 	setvar VAR_0x8005, 3
 	special ColosseumPlayerSpotTriggered
 	waitstate
 	end
 
-DoubleBattleColosseum_EventScript_1A43EF:: @ 81A43EF
+DoubleBattleColosseum_EventScript_CancelPlayerSpotTrigger:: @ 81A43EF
 	end
 
-TradeCenter_EventScript_1A43F0:: @ 81A43F0
+TradeCenter_EventScript_Chair0:: @ 81A43F0
 	setvar VAR_0x8005, 0
 	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
-TradeCenter_EventScript_1A43FA:: @ 81A43FA
+TradeCenter_EventScript_Chair1:: @ 81A43FA
 	setvar VAR_0x8005, 1
 	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
-@ 81A4404
+TradeCenter_EventScript_Chair2:: @ 81A4404
 	setvar VAR_0x8005, 2
 	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
-@ 81A440E
+TradeCenter_EventScript_Chair3:: @ 81A440E
 	setvar VAR_0x8005, 3
 	special PlayerEnteredTradeSeat
 	waitstate
 	end
 
-RecordCorner_EventScript_1A4418:: @ 81A4418
+RecordCorner_EventScript_PlayerSpot0:: @ 81A4418
 	setvar VAR_0x8005, 0
 	special RecordMixingPlayerSpotTriggered
 	waitstate
-	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	compare VAR_TEMP_1, ITEM_NONE
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A442D:: @ 81A442D
+RecordCorner_EventScript_PlayerSpot1:: @ 81A442D
 	setvar VAR_0x8005, 1
 	special RecordMixingPlayerSpotTriggered
 	waitstate
-	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	compare VAR_TEMP_1, ITEM_NONE
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A4442:: @ 81A4442
+RecordCorner_EventScript_PlayerSpot2:: @ 81A4442
 	setvar VAR_0x8005, 2
 	special RecordMixingPlayerSpotTriggered
 	waitstate
-	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	compare VAR_TEMP_1, ITEM_NONE
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A4457:: @ 81A4457
+RecordCorner_EventScript_PlayerSpot3:: @ 81A4457
 	setvar VAR_0x8005, 3
 	special RecordMixingPlayerSpotTriggered
 	waitstate
-	compare VAR_TEMP_1, 0
-	goto_if_ne RecordCorner_EventScript_1A446C
+	compare VAR_TEMP_1, ITEM_NONE
+	goto_if_ne RecordCorner_EventScript_ReceivedGiftItem
 	end
 
-RecordCorner_EventScript_1A446C:: @ 81A446C
+RecordCorner_EventScript_ReceivedGiftItem:: @ 81A446C
 	bufferitemname 1, VAR_TEMP_1
-	message RecordCorner_Text_1A4E3B
+	message RecordCorner_Text_PlayerSentOverOneX
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
 
-TradeRoom_ReadTrainerCard1:: @ 81A4479
-	message CableClub_LookAtTrainerCard1
+CableClub_EventScript_ReadTrainerCard:: @ 81A4479
+	message CableClub_Text_GotToLookAtTrainerCard
 	waitmessage
 	waitbuttonpress
 	fadescreen FADE_TO_BLACK
@@ -650,8 +650,8 @@ TradeRoom_ReadTrainerCard1:: @ 81A4479
 	waitstate
 	end
 
-TradeRoom_ReadTrainerCard2:: @ 81A4487
-	message CableClub_LookAtTrainerCard2
+CableClub_EventScript_ReadTrainerCardColored:: @ 81A4487
+	message CableClub_Text_GotToLookAtColoredTrainerCard
 	waitmessage
 	waitbuttonpress
 	fadescreen FADE_TO_BLACK
@@ -659,65 +659,65 @@ TradeRoom_ReadTrainerCard2:: @ 81A4487
 	waitstate
 	end
 
-TradeRoom_TooBusyToNotice:: @ 81A4495
-	message CableClub_TooBusyToNotice
+CableClub_EventScript_TooBusyToNotice:: @ 81A4495
+	message CableClub_Text_TooBusyToNotice
 	waitmessage
 	waitbuttonpress
 	closemessage
 	end
 
-SingleBattleColosseum_EventScript_1A449E:: @ 81A449E
+SingleBattleColosseum_EventScript_Attendant:: @ 81A449E
 	special Script_FacePlayer
-	message SingleBattleColosseum_Text_1A4D7E
+	message SingleBattleColosseum_Text_TakePlaceStartBattle
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
-TradeCenter_EventScript_1A44AD:: @ 81A44AD
+TradeCenter_EventScript_Attendant:: @ 81A44AD
 	special Script_FacePlayer
-	message TradeCenter_Text_1A4DAB
+	message TradeCenter_Text_TakeSeatStartTrade
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
-RecordCorner_EventScript_1A44BC:: @ 81A44BC
-	compare VAR_TEMP_0, 0
-	goto_if_ne RecordCorner_EventScript_1A44D6
+RecordCorner_EventScript_Attendant:: @ 81A44BC
+	compare VAR_TEMP_0, FALSE
+	goto_if_ne RecordCorner_EventScript_AlreadyMixed
 	special Script_FacePlayer
-	message RecordCorner_Text_1A4DD7
+	message RecordCorner_Text_TakeSeatAndWait
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
-RecordCorner_EventScript_1A44D6:: @ 81A44D6
+RecordCorner_EventScript_AlreadyMixed:: @ 81A44D6
 	special Script_FacePlayer
-	message RecordCorner_Text_1A4DF7
+	message RecordCorner_Text_ThanksForComing
 	waitmessage
 	waitbuttonpress
 	special Script_ClearHeldMovement
 	closemessage
 	end
 
-TradeRoom_PromptToCancelLink:: @ 81A44E5
-	msgbox TradeRoom_WillLinkBeTerminated, MSGBOX_YESNO
+EventScript_ConfirmLeaveCableClubRoom:: @ 81A44E5
+	msgbox Text_TerminateLinkConfirmation, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq TradeRoom_TerminateLink
+	goto_if_eq EventScript_TerminateLink
 	erasebox 0, 0, 29, 19
 	end
 
-TradeRoom_TerminateLink:: @ 81A44FE
-	messageautoscroll TradeRoom_TerminatingLink
+EventScript_TerminateLink:: @ 81A44FE
+	messageautoscroll Text_TerminateLinkPleaseWait
 	waitmessage
 	special ExitLinkRoom
 	end
 
-gUnknown_081A4508:: @ 81A4508
+EventScript_DoLinkRoomExit:: @ 81A4508
 	special CleanupLinkRoomState
 	special ReturnFromLinkRoom
 	waitstate

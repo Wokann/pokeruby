@@ -123,44 +123,44 @@ CableClub_Text_PleaseConfirmNumberAndRestart:: @ 81A4C38
 	.string "Please confirm the number of players\n"
 	.string "and start again.$"
 
-TradeRoom_WillLinkBeTerminated: @ 81A4C6E
+Text_TerminateLinkConfirmation:: @ 81A4C6E
 	.string "The link will be terminated if you\n"
 	.string "leave the room. Is that okay?$"
 
-TradeRoom_TerminatingLink: @ 81A4CAF
+Text_TerminateLinkPleaseWait:: @ 81A4CAF
 	.string "Terminating link... You will be\n"
 	.string "escorted out of the room. Please wait.$"
 
-CableClub_TooBusyToNotice: @ 81A4CF6
+CableClub_Text_TooBusyToNotice:: @ 81A4CF6
 	.string "This TRAINER is too busy to notice...$"
 
-CableClub_LookAtTrainerCard1: @ 81A4D1C
+CableClub_Text_GotToLookAtTrainerCard:: @ 81A4D1C
 	.string "Score! Got to look at {STR_VAR_1}'s\n"
 	.string "TRAINER CARD!$"
 
-CableClub_LookAtTrainerCard2: @ 81A4D45
+CableClub_Text_GotToLookAtColoredTrainerCard:: @ 81A4D45
 	.string "Score! Got to look at {STR_VAR_1}'s\n"
 	.string "TRAINER CARD! It's a {STR_VAR_2} card!$"
 
-SingleBattleColosseum_Text_1A4D7E:: @ 81A4D7E
+SingleBattleColosseum_Text_TakePlaceStartBattle:: @ 81A4D7E
 	.string "Please take your seat and start\n"
 	.string "your battle.$"
 
-TradeCenter_Text_1A4DAB:: @ 81A4DAB
+TradeCenter_Text_TakeSeatStartTrade:: @ 81A4DAB
 	.string "Please take your seat and start\n"
 	.string "your trade.$"
 
-RecordCorner_Text_1A4DD7:: @ 81A4DD7
+RecordCorner_Text_TakeSeatAndWait:: @ 81A4DD7
 	.string "Please take your seat and wait.$"
 
-RecordCorner_Text_1A4DF7:: @ 81A4DF7
+RecordCorner_Text_ThanksForComing:: @ 81A4DF7
 	.string "Thanks for coming.$"
 
 UnknownString_81A4E0A: @ 81A4E0A
 	.string "Please choose your POKéMON for the\n"
 	.string "MULTI BATTLE.$"
 
-RecordCorner_Text_1A4E3B:: @ 81A4E3B
+RecordCorner_Text_PlayerSentOverOneX:: @ 81A4E3B
 	.string "{STR_VAR_1} sent over one\n"
 	.string "{STR_VAR_2}.$"
 
