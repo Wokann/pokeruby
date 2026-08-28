@@ -90,7 +90,7 @@ LilycoveCity_Text_PokeblocksSuitPokemon:: @ 81C5B5D
 	.string "So wie die würdevolle Einfachheit mich\n"
 	.string "ziert, zieren {POKEBLOCK} POKéMON.$"
 
-Route123_BerryMastersHouse_Text_1C5BC4:: @ 81C5BC4
+Route123_BerryMastersHouse_Text_YoureDeservingOfBerry:: @ 81C5BC4
 	.string "Du kannst mich BEERENMEISTER\n"
 	.string "nennen.\p"
 	.string "Ich träume davon, die Welt mit hübschen\n"
@@ -98,44 +98,44 @@ Route123_BerryMastersHouse_Text_1C5BC4:: @ 81C5BC4
 	.string "BEEREN und gebe sie an andere weiter.\p"
 	.string "Du hast dir auch eine verdient!$"
 
-Route123_BerryMastersHouse_Text_1C5C66:: @ 81C5C66
+Route123_BerryMastersHouse_Text_WhyBeStingyTakeAnother:: @ 81C5C66
 	.string "Sei nicht so schüchtern.\n"
 	.string "Nimm dir noch eine!$"
 
-Route123_BerryMastersHouse_Text_1C5C83:: @ 81C5C83
+Route123_BerryMastersHouse_Text_VisitPrettyPetalFlowerShop:: @ 81C5C83
 	.string "Besuch unbedingt den BLÜTENTRAUM\n"
 	.string "BLUMENLADEN bei METAROST CITY.\p"
 	.string "Lasst die Welt in Blumen schwelgen.$"
 
-Route123_BerryMastersHouse_Text_1C5CDC:: @ 81C5CDC
+Route123_BerryMastersHouse_Text_DoneForToday:: @ 81C5CDC
 	.string "Für heute bin ich fertig.\n"
 	.string "Komm ein anderes Mal wieder.\p"
 	.string "Lasst die Welt in Blumen schwelgen!$"
 
-Route123_BerryMastersHouse_Text_1C5D24:: @ 81C5D24
+Route123_BerryMastersHouse_Text_HeardAGoodSayingLately:: @ 81C5D24
 	.string "Mein Mann züchtet BEEREN. Er ist be-\n"
 	.string "stimmt der beste Züchter der Welt.\p"
 	.string "Er macht mich unglaublich stolz.\p"
 	.string "Sag mal, Kind, du kennst nicht zufällig\n"
 	.string "einen guten Spruch?$"
 
-Route123_BerryMastersHouse_Text_1C5DC1:: @ 81C5DC1
+Route123_BerryMastersHouse_Text_InspirationalTakeThis:: @ 81C5DC1
 	.string "Ah! Was für ein wunderbarer Spruch!\n"
 	.string "So inspirierend!\p"
 	.string "Das hier möchte ich dir schenken.$"
 
-Route123_BerryMastersHouse_Text_1C5E0E:: @ 81C5E0E
+Route123_BerryMastersHouse_Text_GoodSayingTakeThis:: @ 81C5E0E
 	.string "Oh! Das ist ein guter Spruch!\n"
 	.string "Du bist bemerkenswert!\p"
 	.string "Das hier möchte ich dir schenken.$"
 
-Route123_BerryMastersHouse_Text_1C5E59:: @ 81C5E59
+Route123_BerryMastersHouse_Text_JoyNeverGoesOutOfMyLife:: @ 81C5E59
 	.string "Unsere vier Enkelkinder sollten noch\n"
 	.string "begabter als mein Mann werden.\p"
 	.string "Das Leben erfüllt einen immer wieder mit\n"
 	.string "Freude!$"
 
-Route123_BerryMastersHouse_Text_1C5EC0:: @ 81C5EC0
+Route123_BerryMastersHouse_Text_Ah:: @ 81C5EC0
 	.string "Ah...$"
 
 Route104_PrettyPetalFlowerShop_Text_ThisIsPrettyPetalFlowerShop:: @ 81C5EC6

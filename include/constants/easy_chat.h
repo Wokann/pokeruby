@@ -5,6 +5,7 @@
 #define EASY_CHAT_TYPE_BARD_SONG 6
 #define EASY_CHAT_TYPE_TRENDY_PHRASE 9
 #define EASY_CHAT_TYPE_GABBY_AND_TY 10
+#define EASY_CHAT_TYPE_GOOD_SAYING  13
 
 #define NUM_TRENDY_SAYINGS 33
 
@@ -1059,6 +1060,14 @@
 #define EC_WORD_OLD            (EC_GROUP_TRENDY_SAYING << 9) | 0x1e
 #define EC_WORD_YOUNG          (EC_GROUP_TRENDY_SAYING << 9) | 0x1f
 #define EC_WORD_UGLY           (EC_GROUP_TRENDY_SAYING << 9) | 0x20
+
+// Special Berry Master's Wife phrases
+#define NOT_SPECIAL_PHRASE          0
+#define PHRASE_GREAT_BATTLE         1
+#define PHRASE_CHALLENGE_CONTEST    2
+#define PHRASE_OVERWHELMING_LATIAS  3
+#define PHRASE_COOL_LATIOS          4
+#define PHRASE_SUPER_HUSTLE         5
 
 #define EC_POKEMON(mon) ((EC_GROUP_POKEMON_1 << 9) | SPECIES_##mon)
 #define EC_POKEMON2(mon) ((EC_GROUP_POKEMON_2 << 9) | SPECIES_##mon)

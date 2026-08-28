@@ -166,19 +166,19 @@ Route121_EventScript_ItemCarbos:: @ 81B164E
 	finditem ITEM_CARBOS
 	end
 
-Route123_EventScript_1B165B:: @ 81B165B
+Route123_EventScript_ItemCalcium:: @ 81B165B
 	finditem ITEM_CALCIUM
 	end
 
-Route123_EventScript_1B1668:: @ 81B1668
+Route123_EventScript_ItemRareCandy:: @ 81B1668
 	finditem ITEM_RARE_CANDY
 	end
 
-Route123_EventScript_1B1675:: @ 81B1675
+Route123_EventScript_ItemUltraBall:: @ 81B1675
 	finditem ITEM_ULTRA_BALL
 	end
 
-Route123_EventScript_1B1682:: @ 81B1682
+Route123_EventScript_ItemElixir:: @ 81B1682
 	finditem ITEM_ELIXIR
 	end
 
