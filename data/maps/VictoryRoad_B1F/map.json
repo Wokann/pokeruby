@@ -112,7 +112,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_19"
     },
     {
@@ -125,7 +125,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_1A"
     },
     {
@@ -138,7 +138,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_1B"
     },
     {
@@ -151,7 +151,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_1C"
     },
     {
@@ -164,7 +164,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_1D"
     },
     {
@@ -229,7 +229,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "S_BreakableRock",
+      "script": "EventScript_RockSmash",
       "flag": "FLAG_VICTORY_ROAD_ROCK"
     },
     {

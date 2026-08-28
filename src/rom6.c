@@ -21,7 +21,7 @@ extern u16 gSpecialVar_LastTalked;
 extern void (*gFieldCallback)(void);
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gPostMenuFieldCallback)(void);
-extern u8 S_UseRockSmash[];
+extern u8 EventScript_UseRockSmash[];
 
 EWRAM_DATA struct MapPosition gPlayerFacingPosition = {0};
 
@@ -152,7 +152,7 @@ bool8 SetUpFieldMove_RockSmash(void)
 static void sub_810B53C(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(S_UseRockSmash);
+    ScriptContext_SetupScript(EventScript_UseRockSmash);
 }
 
 int FldEff_RockSmash(void)

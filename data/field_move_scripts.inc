@@ -10,7 +10,7 @@ S_CuttableTree:: @ 81B0DCC
 	msgbox UseCutPromptText, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq Cut_ChoseNo
-	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
@@ -49,75 +49,73 @@ UseCutPromptText: @ 81B0E3F
 	.string "This tree looks like it can be CUT down.\p"
 	.string "Would you like to CUT it?$"
 
-UsedCutRockSmashText: @ 81B0E82
+Text_MonUsedFieldMove: @ 81B0E82
 	.string "{STR_VAR_1} used {STR_VAR_2}.$"
 
 CannotUseCutText: @ 81B0E8E
 	.string "This tree looks like it can be CUT down.$"
 
-S_BreakableRock:: @ 81B0EB7
+@ Interact with smashable rock
+EventScript_RockSmash:: @ 81B0EB7
 	lockall
-	goto_if_unset FLAG_BADGE03_GET, CannotUseRockSmash
+	goto_if_unset FLAG_BADGE03_GET, EventScript_CantSmashRock
 	checkpartymove MOVE_ROCK_SMASH
-	compare VAR_RESULT, 6
-	goto_if_eq CannotUseRockSmash
+	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
 	setfieldeffectargument 0, VAR_RESULT
-	bufferpartymonnick 0, VAR_RESULT
-	buffermovename 1, MOVE_ROCK_SMASH
-	msgbox UseRockSmashPromptText, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq RockSmash_ChoseNo
-	msgbox UsedCutRockSmashText, MSGBOX_DEFAULT
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	buffermovename STR_VAR_2, MOVE_ROCK_SMASH
+	msgbox Text_WantToSmash, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CancelSmash
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
-	goto DoRockSmashMovement
+	goto EventScript_SmashRock
 	end
 
-S_UseRockSmash:: @ 81B0F01
+@ Use rock smash from party menu
+EventScript_UseRockSmash:: @ 81B0F01
 	lockall
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
-	goto DoRockSmashMovement
+	goto EventScript_SmashRock
 	end
 
-DoRockSmashMovement: @ 81B0F0C
-	applymovement VAR_LAST_TALKED, RockSmashMovement
+EventScript_SmashRock:: @ 81B0F0C
+	applymovement VAR_LAST_TALKED, Movement_SmashRock
 	waitmovement 0
 	removeobject VAR_LAST_TALKED
 	specialvar VAR_RESULT, TryUpdateRusturfTunnelState
-	compare VAR_RESULT, 1
-	goto_if_eq DoRockSmashMovement_Done
+	goto_if_eq VAR_RESULT, TRUE, EventScript_EndSmash
 	special RockSmashWildEncounter
-	compare VAR_RESULT, 0
-	goto_if_eq DoRockSmashMovement_Done
+	goto_if_eq VAR_RESULT, FALSE, EventScript_EndSmash
 	waitstate
 	releaseall
 	end
 
-DoRockSmashMovement_Done: @ 81B0F3A
+EventScript_EndSmash:: @ 81B0F3A
 	releaseall
 	end
 
-RockSmashMovement: @ 81B0F3C
+Movement_SmashRock: @ 81B0F3C
 	rock_smash_break
 	step_end
 
-CannotUseRockSmash: @ 81B0F3E
-	msgbox CannotUseRockSmashText, MSGBOX_SIGN
+EventScript_CantSmashRock:: @ 81B0F3E
+	msgbox Text_CantSmash, MSGBOX_SIGN
 	releaseall
 	end
 
-RockSmash_ChoseNo: @ 81B0F48
+EventScript_CancelSmash:: @ 81B0F48
 	closemessage
 	releaseall
 	end
 
-UseRockSmashPromptText: @ 81B0F4B
+Text_WantToSmash: @ 81B0F4B
 	.string "This rock appears to be breakable.\n"
 	.string "Would you like to use ROCK SMASH?$"
 
-CannotUseRockSmashText: @ 81B0F90
+Text_CantSmash: @ 81B0F90
 	.string "It's a rugged rock, but a POKéMON\n"
 	.string "may be able to smash it.$"
 

@@ -74,19 +74,19 @@ Route114_EventScript_ItemProtein:: @ 81B1523
 	finditem ITEM_PROTEIN
 	end
 
-Route115_EventScript_1B1530:: @ 81B1530
+Route115_EventScript_ItemSuperPotion:: @ 81B1530
 	finditem ITEM_SUPER_POTION
 	end
 
-Route115_EventScript_1B153D:: @ 81B153D
+Route115_EventScript_ItemTMFocusPunch:: @ 81B153D
 	finditem ITEM_TM01_FOCUS_PUNCH
 	end
 
-Route115_EventScript_1B154A:: @ 81B154A
+Route115_EventScript_ItemIron:: @ 81B154A
 	finditem ITEM_IRON
 	end
 
-Route115_EventScript_1B1557:: @ 81B1557
+Route115_EventScript_ItemGreatBall:: @ 81B1557
 	finditem ITEM_GREAT_BALL
 	end
 
