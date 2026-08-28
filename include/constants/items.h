@@ -354,7 +354,7 @@
 #define ITEM_HM01_CUT 339
 #define ITEM_HM02_FLY 340
 #define ITEM_HM03_SURF 341
-#define ITEM_HM04_STRENGTH 342
+#define ITEM_HM04 342
 #define ITEM_HM05_FLASH 343
 #define ITEM_HM06_ROCK_SMASH 344
 #define ITEM_HM07_WATERFALL 345
@@ -388,5 +388,7 @@
 #define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
 
 #define IS_ITEM_MAIL(item) ((item) >= ITEM_ORANGE_MAIL && (item) <= ITEM_RETRO_MAIL)
+
+#include "constants/tms_hms.h"
 
 #endif  // GUARD_CONSTANTS_ITEMS_H

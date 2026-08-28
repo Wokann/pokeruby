@@ -1,6 +1,9 @@
 #ifndef GUARD_ITEM_H
 #define GUARD_ITEM_H
 
+#include "constants/items.h"
+#include "constants/tms_hms.h"
+
 // These constants are used in gItems
 enum
 {
