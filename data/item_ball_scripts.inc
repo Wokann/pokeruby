@@ -210,11 +210,11 @@ Route132_EventScript_ItemRareCandy:: @ 81B16DD
 	finditem ITEM_RARE_CANDY
 	end
 
-Route133_EventScript_1B16EA:: @ 81B16EA
+Route133_EventScript_ItemBigPearl:: @ 81B16EA
 	finditem ITEM_BIG_PEARL
 	end
 
-Route133_EventScript_1B16F7:: @ 81B16F7
+Route133_EventScript_ItemStarPiece:: @ 81B16F7
 	finditem ITEM_STAR_PIECE
 	end
 
