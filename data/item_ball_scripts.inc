@@ -114,7 +114,7 @@ Route117_EventScript_ItemRevive:: @ 81B15A5
 	finditem ITEM_REVIVE
 	end
 
-Route118_EventScript_1B15B2:: @ 81B15B2
+Route118_EventScript_ItemHyperPotion:: @ 81B15B2
 	finditem ITEM_HYPER_POTION
 	end
 

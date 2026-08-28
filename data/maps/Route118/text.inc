@@ -1,4 +1,4 @@
-Route118_Text_170D66:: @ 8170D66
+Route118_Text_StevenQuestions:: @ 8170D66
 	.string "STEVEN: Hi!\p"
 	.string "You're that TRAINER I met in DEWFORD!\p"
 	.string "... ... ... ... ... ... ... ...\n"
@@ -17,39 +17,39 @@ Route118_Text_170D66:: @ 8170D66
 	.string "Well, anyway, I hope to see you\n"
 	.string "again.$"
 
-Route118_Text_170F12:: @ 8170F12
+Route118_Text_YouAgreeGoodRodIsGood:: @ 8170F12
 	.string "Hmm!\n"
 	.string "A GOOD ROD is really good!\p"
 	.string "Wouldn't you agree?$"
 
-Route118_Text_170F46:: @ 8170F46
+Route118_Text_IdenticalMindsTakeThis:: @ 8170F46
 	.string "Hmm!\n"
 	.string "We're of identical minds!\p"
 	.string "Hmm!\n"
 	.string "Take this GOOD ROD!$"
 
-Route118_Text_170F7E:: @ 8170F7E
+Route118_Text_TryYourLuckFishing:: @ 8170F7E
 	.string "Wherever there's water, try your luck\n"
 	.string "at fishing.$"
 
-Route118_Text_170FB0:: @ 8170FB0
+Route118_Text_DontYouLikeToFish:: @ 8170FB0
 	.string "Don't you like to fish?$"
 
-Route118_Text_170FC8:: @ 8170FC8
+Route118_Text_TryCatchingMonWithGoodRod:: @ 8170FC8
 	.string "Try catching all sorts of POKéMON\n"
 	.string "with your GOOD ROD.$"
 
-Route118_Text_170FFE:: @ 8170FFE
+Route118_Text_CanCrossRiversWithSurf:: @ 8170FFE
 	.string "Even if there isn't a boat, you can\n"
 	.string "cross rivers and the sea if you have\l"
 	.string "a POKéMON that knows SURF.\p"
 	.string "POKéMON can be counted on to do so\n"
 	.string "much!$"
 
-Route118_Text_17108B:: @ 817108B
+Route118_Text_RouteSignMauville:: @ 817108B
 	.string "ROUTE 118\n"
 	.string "{0x7B} MAUVILLE CITY$"
 
-Route118_Text_1710A5:: @ 81710A5
+Route118_Text_RouteSign119:: @ 81710A5
 	.string "ROUTE 118\n"
 	.string "{0x79} ROUTE 119$"
