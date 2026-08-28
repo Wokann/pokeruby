@@ -5442,7 +5442,7 @@ const struct Item gItems[] =
     },
     {
         .name = _("VM02"),
-        .itemId = ITEM_HM02_FLY,
+        .itemId = ITEM_HM_FLY,
         .price = 0,
         .holdEffect = HOLD_EFFECT_NONE,
         .holdEffectParam = 0,

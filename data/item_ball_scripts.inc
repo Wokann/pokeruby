@@ -118,31 +118,31 @@ Route118_EventScript_ItemHyperPotion:: @ 81B15B2
 	finditem ITEM_HYPER_POTION
 	end
 
-Route119_EventScript_1B15BF:: @ 81B15BF
+Route119_EventScript_ItemSuperRepel:: @ 81B15BF
 	finditem ITEM_SUPER_REPEL
 	end
 
-Route119_EventScript_1B15CC:: @ 81B15CC
+Route119_EventScript_ItemZinc:: @ 81B15CC
 	finditem ITEM_ZINC
 	end
 
-Route119_EventScript_1B15D9:: @ 81B15D9
+Route119_EventScript_ItemElixir:: @ 81B15D9
 	finditem ITEM_ELIXIR
 	end
 
-Route119_EventScript_1B15E6:: @ 81B15E6
+Route119_EventScript_ItemLeafStone:: @ 81B15E6
 	finditem ITEM_LEAF_STONE
 	end
 
-Route119_EventScript_1B15F3:: @ 81B15F3
+Route119_EventScript_ItemRareCandy:: @ 81B15F3
 	finditem ITEM_RARE_CANDY
 	end
 
-Route119_EventScript_1B1600:: @ 81B1600
+Route119_EventScript_ItemHyperPotion:: @ 81B1600
 	finditem ITEM_HYPER_POTION
 	end
 
-Route119_EventScript_1B160D:: @ 81B160D
+Route119_EventScript_ItemHyperPotion2:: @ 81B160D
 	finditem ITEM_HYPER_POTION
 	end
 

@@ -145,11 +145,11 @@ Route120_EventScript_HideKecleon5:: @ 81A0656
 	return
 
 Route119_EventScript_HideKecleon1:: @ 81A065A
-	setflag FLAG_HIDE_KECLEON_ROUTE119_1
+	setflag FLAG_HIDE_ROUTE_119_KECLEON_1
 	return
 
 Route119_EventScript_HideKecleon2:: @ 81A065E
-	setflag FLAG_HIDE_KECLEON_ROUTE119_2
+	setflag FLAG_HIDE_ROUTE_119_KECLEON_2
 	return
 
 Movement_KecleonAppears:: @ 81A0662
