@@ -64,11 +64,11 @@ static const u8 sRegionMapBkgnd_TilemapLZ[] = INCBIN_U8("graphics/pokenav/region
 static const u16 sUnderwaterMaps[][2] =
 {
     {MAPSEC_UNDERWATER_124,       MAPSEC_ROUTE_124},
-    {MAPSEC_UNDERWATER_125,       MAPSEC_ROUTE_126},
-    {MAPSEC_UNDERWATER_126,       MAPSEC_ROUTE_127},
-    {MAPSEC_UNDERWATER_127,       MAPSEC_ROUTE_128},
-    {MAPSEC_UNDERWATER_SOOTOPOLIS,       MAPSEC_SOOTOPOLIS_CITY},
+    {MAPSEC_UNDERWATER_126,       MAPSEC_ROUTE_126},
+    {MAPSEC_UNDERWATER_127,       MAPSEC_ROUTE_127},
     {MAPSEC_UNDERWATER_128,       MAPSEC_ROUTE_128},
+    {MAPSEC_UNDERWATER_SOOTOPOLIS,       MAPSEC_SOOTOPOLIS_CITY},
+    {MAPSEC_UNDERWATER_SEAFLOOR_CAVERN, MAPSEC_ROUTE_128},
     {MAPSEC_EVIL_TEAM_HIDEOUT, MAPSEC_LILYCOVE_CITY},
     {MAPSEC_UNDERWATER_SEALED_CHAMBER,       MAPSEC_ROUTE_134},
     {MAPSEC_PETALBURG_WOODS,   MAPSEC_ROUTE_104},
@@ -542,7 +542,7 @@ static void InitializeCursorPosition(void)
         mapHeight = gMapHeader.mapLayout->height;
         x = gSaveBlock1.pos.x;
         y = gSaveBlock1.pos.y;
-        if (gRegionMap->mapSectionId == MAPSEC_UNDERWATER_128)
+        if (gRegionMap->mapSectionId == MAPSEC_UNDERWATER_SEAFLOOR_CAVERN)
             gRegionMap->playerIsInCave = TRUE;
         break;
     case 3:
@@ -612,7 +612,7 @@ static void InitializeCursorPosition(void)
             x = 0;
         break;
     case MAPSEC_ROUTE_126:
-    case MAPSEC_UNDERWATER_125:
+    case MAPSEC_UNDERWATER_126:
         x = 0;
         if (gSaveBlock1.pos.x > 32)
             x = 1;
@@ -1773,4 +1773,3 @@ void debug_sub_8110F28(void)
 }
 
 #endif
-
