@@ -1,160 +1,118 @@
 CableClub_OnWarp:: @ 81A3D03
-DewfordTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-FallarborTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-FortreeCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-LavaridgeTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-LilycoveCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-MauvilleCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-OldaleTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-PacifidlogTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-PetalburgCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-RustboroCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-SlateportCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-SootopolisCity_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-VerdanturfTown_PokemonCenter_2F_MapScript2_1A3D03:: @ 81A3D03
-	map_script_2 VAR_CABLE_CLUB_STATE, 1, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
-	map_script_2 VAR_CABLE_CLUB_STATE, 2, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
-	map_script_2 VAR_CABLE_CLUB_STATE, 5, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
-	map_script_2 VAR_CABLE_CLUB_STATE, 3, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
-	map_script_2 VAR_CABLE_CLUB_STATE, 4, OldaleTown_PokemonCenter_2F_EventScript_1A3D2D
+	map_script_2 VAR_CABLE_CLUB_STATE, 1, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, 2, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, 5, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, 3, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, 4, CableClub_EventScript_CheckTurnAttendant
 	.2byte 0
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3D2D:: @ 81A3D2D
-	turnobject VAR_0x8007, 4
+CableClub_EventScript_CheckTurnAttendant:: @ 81A3D2D
+	turnobject VAR_0x8007, DIR_EAST
 	end
 
 CableClub_OnLoad:: @ 81A3D32
-DewfordTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-EverGrandeCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-FallarborTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-FortreeCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-LavaridgeTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-LilycoveCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-MauvilleCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-OldaleTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-PacifidlogTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-PetalburgCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-RustboroCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-SlateportCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-SootopolisCity_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
-VerdanturfTown_PokemonCenter_2F_MapScript1_1A3D32:: @ 81A3D32
 	compare VAR_CABLE_CLUB_STATE, 1
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D6A
+	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
 	compare VAR_CABLE_CLUB_STATE, 2
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D6A
+	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
 	compare VAR_CABLE_CLUB_STATE, 5
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D6A
+	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
 	compare VAR_CABLE_CLUB_STATE, 3
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D74
+	goto_if_eq CableClub_EventScript_OpenTradeCenterBarrier
 	compare VAR_CABLE_CLUB_STATE, 4
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3D7E
+	goto_if_eq CableClub_EventScript_OpenRecordCornerBarrier
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3D6A:: @ 81A3D6A
-	setmetatile 5, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
+CableClub_EventScript_OpenColosseumBarrier:: @ 81A3D6A
+	setmetatile 5, 3, METATILE_PokemonCenter_Floor_Plain_Alt, FALSE
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3D74:: @ 81A3D74
-	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
+CableClub_EventScript_OpenTradeCenterBarrier:: @ 81A3D74
+	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, FALSE
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3D7E:: @ 81A3D7E
-	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
+CableClub_EventScript_OpenRecordCornerBarrier:: @ 81A3D7E
+	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, FALSE
 	end
 
 CableClub_OnFrame:: @ 81A3D88
-DewfordTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-EverGrandeCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-FallarborTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-FortreeCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-LavaridgeTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-LilycoveCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-MauvilleCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-OldaleTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-PacifidlogTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-PetalburgCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-RustboroCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-SlateportCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-SootopolisCity_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-VerdanturfTown_PokemonCenter_2F_MapScript2_1A3D88:: @ 81A3D88
-	map_script_2 VAR_CABLE_CLUB_STATE, 1, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
-	map_script_2 VAR_CABLE_CLUB_STATE, 2, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
-	map_script_2 VAR_CABLE_CLUB_STATE, 5, OldaleTown_PokemonCenter_2F_EventScript_1A3E8D
-	map_script_2 VAR_CABLE_CLUB_STATE, 3, OldaleTown_PokemonCenter_2F_EventScript_1A3E17
-	map_script_2 VAR_CABLE_CLUB_STATE, 4, OldaleTown_PokemonCenter_2F_EventScript_1A3E7B
+	map_script_2 VAR_CABLE_CLUB_STATE, 1, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, 2, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, 5, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, 3, CableClub_EventScript_ExitTradeCenter
+	map_script_2 VAR_CABLE_CLUB_STATE, 4, CableClub_EventScript_ExitRecordCorner
 	.2byte 0
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3DB2:: @ 81A3DB2
+CableClub_EventScript_CloseLinkAndExitRecordCorner:: @ 81A3DB2
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A4358
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerExitLinkRoom
 	waitmovement 0
 	compare VAR_0x8007, 0
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3DD9
-	applymovement VAR_0x8007, OldaleTown_PokemonCenter_2F_Movement_1A4354
+	goto_if_eq CableClub_EventScript_ExitRecordCornerReturn
+	applymovement VAR_0x8007, CableClub_Movement_AttendantFaceDown
 	waitmovement 0
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3DD9:: @ 81A3DD9
+CableClub_EventScript_ExitRecordCornerReturn:: @ 81A3DD9
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3DDA:: @ 81A3DDA
+CableClub_EventScript_CloseLinkAndExitColosseum:: @ 81A3DDA
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
 	compare VAR_0x8007, 0
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3E0C
-	applymovement VAR_0x8007, OldaleTown_PokemonCenter_2F_Movement_1A4356
+	goto_if_eq CableClub_EventScript_PlayerExitLinkRoom
+	applymovement VAR_0x8007, CableClub_Movement_AttendantFaceRight
 	waitmovement 0
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A4358
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerExitLinkRoom
 	waitmovement 0
-	applymovement VAR_0x8007, OldaleTown_PokemonCenter_2F_Movement_1A4354
-	waitmovement 0
-	return
-
-OldaleTown_PokemonCenter_2F_EventScript_1A3E0C:: @ 81A3E0C
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A4358
+	applymovement VAR_0x8007, CableClub_Movement_AttendantFaceDown
 	waitmovement 0
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3E17:: @ 81A3E17
+CableClub_EventScript_PlayerExitLinkRoom:: @ 81A3E0C
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerExitLinkRoom
+	waitmovement 0
+	return
+
+CableClub_EventScript_ExitTradeCenter:: @ 81A3E17
 	lockall
-	call OldaleTown_PokemonCenter_2F_EventScript_1A3E30
-	setmetatile 8, 3, METATILE_PokemonCenter_CounterBarrier, 1
+	call CableClub_EventScript_CloseLinkAndExitTradeCenter
+	setmetatile 8, 3, METATILE_PokemonCenter_CounterBarrier, TRUE
 	special DrawWholeMapView
 	erasebox 0, 0, 29, 19
 	releaseall
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3E30:: @ 81A3E30
+CableClub_EventScript_CloseLinkAndExitTradeCenter:: @ 81A3E30
 	special CloseLink
 	setvar VAR_CABLE_CLUB_STATE, 0
 	compare VAR_0x8007, 0
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3E0C
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A4361
+	goto_if_eq CableClub_EventScript_PlayerExitLinkRoom
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerFaceAttendantLeft
 	waitmovement 0
-	applymovement VAR_0x8007, OldaleTown_PokemonCenter_2F_Movement_1A4356
+	applymovement VAR_0x8007, CableClub_Movement_AttendantFaceRight
 	waitmovement 0
-	message OldaleTown_PokemonCenter_2F_Text_1A4E50
+	message CableClub_Text_TrainerCardDataRewritten
 	waitmessage
 	playse SE_PIN
-	message OldaleTown_PokemonCenter_2F_Text_1A4E79
+	message CableClub_Text_HopeToSeeYouAgain
 	waitmessage
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A4358
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerExitLinkRoom
 	waitmovement 0
-	applymovement VAR_0x8007, OldaleTown_PokemonCenter_2F_Movement_1A4354
+	applymovement VAR_0x8007, CableClub_Movement_AttendantFaceDown
 	waitmovement 0
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3E7B:: @ 81A3E7B
-	call OldaleTown_PokemonCenter_2F_EventScript_1A3DB2
-	setmetatile 11, 3, METATILE_PokemonCenter_CounterBarrier, 1
+CableClub_EventScript_ExitRecordCorner:: @ 81A3E7B
+	call CableClub_EventScript_CloseLinkAndExitRecordCorner
+	setmetatile 11, 3, METATILE_PokemonCenter_CounterBarrier, TRUE
 	special DrawWholeMapView
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3E8D:: @ 81A3E8D
+CableClub_EventScript_ExitColosseum:: @ 81A3E8D
 	lockall
-	call OldaleTown_PokemonCenter_2F_EventScript_1A3DDA
-	setmetatile 5, 3, METATILE_PokemonCenter_CounterBarrier, 1
+	call CableClub_EventScript_CloseLinkAndExitColosseum
+	setmetatile 5, 3, METATILE_PokemonCenter_CounterBarrier, TRUE
 	special DrawWholeMapView
 	erasebox 0, 0, 29, 19
 	releaseall
@@ -223,14 +181,14 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
 	setmetatile 5, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	special DrawWholeMapView
 	delay 60
-	applymovement VAR_LAST_TALKED, OldaleTown_PokemonCenter_2F_Movement_1A4356
+	applymovement VAR_LAST_TALKED, CableClub_Movement_AttendantFaceRight
 	waitmovement 0
 	closemessage
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435B
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerApproachLinkRoomRight
 	waitmovement 0
 	opendoor 5, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435F
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	closedoor 5, 1
@@ -387,14 +345,14 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4166:: @ 81A4166
 	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	special DrawWholeMapView
 	delay 60
-	applymovement VAR_LAST_TALKED, OldaleTown_PokemonCenter_2F_Movement_1A4356
+	applymovement VAR_LAST_TALKED, CableClub_Movement_AttendantFaceRight
 	waitmovement 0
 	closemessage
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435B
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerApproachLinkRoomRight
 	waitmovement 0
 	opendoor 8, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435F
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	closedoor 8, 1
@@ -484,14 +442,14 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4294:: @ 81A4294
 	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	special DrawWholeMapView
 	delay 60
-	applymovement VAR_LAST_TALKED, OldaleTown_PokemonCenter_2F_Movement_1A4356
+	applymovement VAR_LAST_TALKED, CableClub_Movement_AttendantFaceRight
 	waitmovement 0
 	closemessage
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435B
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerApproachLinkRoomRight
 	waitmovement 0
 	opendoor 11, 1
 	waitdooranim
-	applymovement LOCALID_PLAYER, OldaleTown_PokemonCenter_2F_Movement_1A435F
+	applymovement LOCALID_PLAYER, CableClub_Movement_PlayerEnterLinkRoom
 	waitmovement 0
 	hideobjectat LOCALID_PLAYER, MAP_PETALBURG_CITY
 	closedoor 11, 1
@@ -565,30 +523,30 @@ OldaleTown_PokemonCenter_2F_EventScript_1A434B:: @ 81A434B
 	msgbox OldaleTown_PokemonCenter_2F_Text_1A145C, MSGBOX_NPC
 	end
 
-OldaleTown_PokemonCenter_2F_Movement_1A4354:: @ 81A4354
+CableClub_Movement_AttendantFaceDown:: @ 81A4354
 	face_down
 	step_end
 
-OldaleTown_PokemonCenter_2F_Movement_1A4356:: @ 81A4356
+CableClub_Movement_AttendantFaceRight:: @ 81A4356
 	face_right
 	step_end
 
-OldaleTown_PokemonCenter_2F_Movement_1A4358:: @ 81A4358
+CableClub_Movement_PlayerExitLinkRoom:: @ 81A4358
 	walk_down
 	walk_down
 	step_end
 
-OldaleTown_PokemonCenter_2F_Movement_1A435B:: @ 81A435B
+CableClub_Movement_PlayerApproachLinkRoomRight:: @ 81A435B
 	walk_right
 	walk_up
 	walk_up
 	step_end
 
-OldaleTown_PokemonCenter_2F_Movement_1A435F:: @ 81A435F
+CableClub_Movement_PlayerEnterLinkRoom:: @ 81A435F
 	walk_up
 	step_end
 
-OldaleTown_PokemonCenter_2F_Movement_1A4361:: @ 81A4361
+CableClub_Movement_PlayerFaceAttendantLeft:: @ 81A4361
 	face_left
 	step_end
 

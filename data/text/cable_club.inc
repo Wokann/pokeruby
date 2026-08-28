@@ -168,9 +168,9 @@ RecordCorner_Text_1A4E3B:: @ 81A4E3B
 	.string "{STR_VAR_1} sent over one\n"
 	.string "{STR_VAR_2}.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4E50:: @ 81A4E50
+CableClub_Text_TrainerCardDataRewritten:: @ 81A4E50
 	.string "The TRAINER CARD data will\n"
 	.string "be rewritten.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4E79:: @ 81A4E79
+CableClub_Text_HopeToSeeYouAgain:: @ 81A4E79
 	.string "I hope to see you again!$"

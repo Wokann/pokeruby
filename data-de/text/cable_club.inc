@@ -170,9 +170,9 @@ RecordCorner_Text_1A4E3B:: @ 81A4E3B
 	.string "{STR_VAR_1} hat ein {STR_VAR_2}\n"
 	.string "versendet.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4E50:: @ 81A4E50
+CableClub_Text_TrainerCardDataRewritten:: @ 81A4E50
 	.string "Der Eintrag auf dem TRAINERPASS wird\n"
 	.string "geändert.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4E79:: @ 81A4E79
+CableClub_Text_HopeToSeeYouAgain:: @ 81A4E79
 	.string "Ich hoffe, du kommst bald wieder vorbei.$"
