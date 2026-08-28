@@ -1,4 +1,4 @@
-OldaleTown_PokemonCenter_2F_Text_1A4510:: @ 81A4510
+CableClub_Text_WelcomeToColosseum:: @ 81A4510
 	.string "Welcome to the POKéMON CABLE CLUB\n"
 	.string "COLOSSEUM.\p"
 	.string "You may battle with your friends here.\p"
@@ -22,7 +22,7 @@ OldaleTown_PokemonCenter_2F_Text_1A45FE:: @ 81A45FE
 	.string "with the records of your friends.\p"
 	.string "Would you like to mix records?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4696:: @ 81A4696
+CableClub_Text_ExplainBattleModes:: @ 81A4696
 	.string "There are three link battle modes.\p"
 	.string "SINGLE BATTLE is for two TRAINERS\n"
 	.string "with one or more POKéMON each.\p"
@@ -37,14 +37,14 @@ OldaleTown_PokemonCenter_2F_Text_1A4696:: @ 81A4696
 	.string "Each TRAINER can have one POKéMON\n"
 	.string "in battle at a time.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4826:: @ 81A4826
+CableClub_Text_WouldYouLikeToBattle:: @ 81A4826
 	.string "Would you like to battle?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4840:: @ 81A4840
+CableClub_Text_PlayWhichBattleMode:: @ 81A4840
 	.string "Which Battle Mode would you like\n"
 	.string "to play?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A486A:: @ 81A486A
+CableClub_Text_NeedTwoMonsForDoubleBattle:: @ 81A486A
 	.string "For a DOUBLE BATTLE, you must have\n"
 	.string "at least two POKéMON.$"
 
@@ -56,8 +56,7 @@ OldaleTown_PokemonCenter_2F_Text_1A48DD:: @ 81A48DD
 	.string "Your {STR_VAR_1} BERRY-holding POKéMON\n"
 	.string "can't be traded.$"
 
-gUnknown_081A490C:: @ 81A490C
-OldaleTown_PokemonCenter_2F_Text_1A490C:: @ 81A490C
+gText_PleaseWaitForLink:: @ 81A490C
 	.string "Please wait.\n"
 	.string "... ... B Button: Cancel$"
 
@@ -80,7 +79,7 @@ UnknownString_81A49E2: @ 81A49E2
 	.string "Your progress must be saved before\n"
 	.string "linking. Is it okay to save?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4A22:: @ 81A4A22
+CableClub_Text_PleaseEnter:: @ 81A4A22
 	.string "Please enter.$"
 
 FallarborTown_ContestLobby_Text_1A4A30:: @ 81A4A30
@@ -107,23 +106,23 @@ OldaleTown_PokemonCenter_2F_Text_1A4B1D:: @ 81A4B1D
 OldaleTown_PokemonCenter_2F_Text_1A4B59:: @ 81A4B59
 	.string "Please come again.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B6C:: @ 81A4B6C
+CableClub_Text_IncorrectNumberOfParticipants:: @ 81A4B6C
 	.string "The number of participants is\n"
 	.string "incorrect.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B95:: @ 81A4B95
+CableClub_Text_CantSingleBattleWithXPlayers:: @ 81A4B95
 	.string "The SINGLE Battle Mode cannot be\n"
 	.string "played by {STR_VAR_1} players.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4BCC:: @ 81A4BCC
+CableClub_Text_CantDoubleBattleWithXPlayers:: @ 81A4BCC
 	.string "The DOUBLE Battle Mode cannot be\n"
 	.string "played by {STR_VAR_1} players.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4C03:: @ 81A4C03
+CableClub_Text_NeedFourPlayers:: @ 81A4C03
 	.string "There must be four players to play\n"
 	.string "this Battle Mode.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4C38:: @ 81A4C38
+CableClub_Text_PleaseConfirmNumberAndRestart:: @ 81A4C38
 	.string "Please confirm the number of players\n"
 	.string "and start again.$"
 

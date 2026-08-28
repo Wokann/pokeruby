@@ -5,7 +5,7 @@ PetalburgCity_PokemonCenter_2F_MapScripts:: @ 815528D
 	.byte 0
 
 PetalburgCity_PokemonCenter_2F_EventScript_15529D:: @ 815529D
-	call PetalburgCity_PokemonCenter_2F_EventScript_1A3EA6
+	call CableClub_EventScript_Colosseum
 	end
 
 PetalburgCity_PokemonCenter_2F_EventScript_1552A3:: @ 81552A3

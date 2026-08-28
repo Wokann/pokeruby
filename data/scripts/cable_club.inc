@@ -1,9 +1,9 @@
 CableClub_OnWarp:: @ 81A3D03
-	map_script_2 VAR_CABLE_CLUB_STATE, 1, CableClub_EventScript_CheckTurnAttendant
-	map_script_2 VAR_CABLE_CLUB_STATE, 2, CableClub_EventScript_CheckTurnAttendant
-	map_script_2 VAR_CABLE_CLUB_STATE, 5, CableClub_EventScript_CheckTurnAttendant
-	map_script_2 VAR_CABLE_CLUB_STATE, 3, CableClub_EventScript_CheckTurnAttendant
-	map_script_2 VAR_CABLE_CLUB_STATE, 4, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_SINGLE_BATTLE, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_DOUBLE_BATTLE, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_MULTI_BATTLE, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_TRADE_CENTER, CableClub_EventScript_CheckTurnAttendant
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_RECORD_CORNER, CableClub_EventScript_CheckTurnAttendant
 	.2byte 0
 
 CableClub_EventScript_CheckTurnAttendant:: @ 81A3D2D
@@ -11,15 +11,15 @@ CableClub_EventScript_CheckTurnAttendant:: @ 81A3D2D
 	end
 
 CableClub_OnLoad:: @ 81A3D32
-	compare VAR_CABLE_CLUB_STATE, 1
+	compare VAR_CABLE_CLUB_STATE, USING_SINGLE_BATTLE
 	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
-	compare VAR_CABLE_CLUB_STATE, 2
+	compare VAR_CABLE_CLUB_STATE, USING_DOUBLE_BATTLE
 	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
-	compare VAR_CABLE_CLUB_STATE, 5
+	compare VAR_CABLE_CLUB_STATE, USING_MULTI_BATTLE
 	goto_if_eq CableClub_EventScript_OpenColosseumBarrier
-	compare VAR_CABLE_CLUB_STATE, 3
+	compare VAR_CABLE_CLUB_STATE, USING_TRADE_CENTER
 	goto_if_eq CableClub_EventScript_OpenTradeCenterBarrier
-	compare VAR_CABLE_CLUB_STATE, 4
+	compare VAR_CABLE_CLUB_STATE, USING_RECORD_CORNER
 	goto_if_eq CableClub_EventScript_OpenRecordCornerBarrier
 	end
 
@@ -36,11 +36,11 @@ CableClub_EventScript_OpenRecordCornerBarrier:: @ 81A3D7E
 	end
 
 CableClub_OnFrame:: @ 81A3D88
-	map_script_2 VAR_CABLE_CLUB_STATE, 1, CableClub_EventScript_ExitColosseum
-	map_script_2 VAR_CABLE_CLUB_STATE, 2, CableClub_EventScript_ExitColosseum
-	map_script_2 VAR_CABLE_CLUB_STATE, 5, CableClub_EventScript_ExitColosseum
-	map_script_2 VAR_CABLE_CLUB_STATE, 3, CableClub_EventScript_ExitTradeCenter
-	map_script_2 VAR_CABLE_CLUB_STATE, 4, CableClub_EventScript_ExitRecordCorner
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_SINGLE_BATTLE, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_DOUBLE_BATTLE, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_MULTI_BATTLE, CableClub_EventScript_ExitColosseum
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_TRADE_CENTER, CableClub_EventScript_ExitTradeCenter
+	map_script_2 VAR_CABLE_CLUB_STATE, USING_RECORD_CORNER, CableClub_EventScript_ExitRecordCorner
 	.2byte 0
 
 CableClub_EventScript_CloseLinkAndExitRecordCorner:: @ 81A3DB2
@@ -119,66 +119,53 @@ CableClub_EventScript_ExitColosseum:: @ 81A3E8D
 	end
 
 CableClub_EventScript_Colosseum:: @ 81A3EA6
-DewfordTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-EverGrandeCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-FallarborTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-FortreeCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-LavaridgeTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-LilycoveCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-MauvilleCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-OldaleTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-PetalburgCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-RustboroCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-SlateportCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-SootopolisCity_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
-VerdanturfTown_PokemonCenter_2F_EventScript_1A3EA6:: @ 81A3EA6
 	goto_if_unset FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_2F_EventScript_1A4342
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	lock
 	faceplayer
-	message OldaleTown_PokemonCenter_2F_Text_1A4510
+	message CableClub_Text_WelcomeToColosseum
 	waitmessage
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3EBC:: @ 81A3EBC
+CableClub_EventScript_SelectColosseumAction:: @ 81A3EBC
 	multichoice 17, 6, 17, 0
 	switch VAR_RESULT
-	case 0, OldaleTown_PokemonCenter_2F_EventScript_1A3EF2
+	case 0, CableClub_EventScript_TryEnterColosseum
 	case 1, OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	case 2, OldaleTown_PokemonCenter_2F_EventScript_1A3FDD
+	case 2, CableClub_EventScript_ExplainBattleModes
 	case 127, OldaleTown_PokemonCenter_2F_EventScript_1A4319
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3EF2:: @ 81A3EF2
+CableClub_EventScript_TryEnterColosseum:: @ 81A3EF2
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	call OldaleTown_PokemonCenter_2F_EventScript_1A3FEF
+	call CableClub_EventScript_SelectBattleMode
 	compare VAR_0x8004, 0
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	message OldaleTown_PokemonCenter_2F_Text_1A490C
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryBattleLinkup
 	waitstate
-	compare VAR_RESULT, 1
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3F5E
-	compare VAR_RESULT, 2
+	compare VAR_RESULT, LINKUP_SUCCESS
+	goto_if_eq CableClub_EventScript_EnterColosseum
+	compare VAR_RESULT, LINKUP_SOMEONE_NOT_READY
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4301
-	compare VAR_RESULT, 3
+	compare VAR_RESULT, LINKUP_DIFF_SELECTIONS
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A430D
-	compare VAR_RESULT, 4
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4068
-	compare VAR_RESULT, 5
+	compare VAR_RESULT, LINKUP_WRONG_NUM_PLAYERS
+	goto_if_eq CableClub_EventScript_AbortLinkIncorrectNumberOfBattlers
+	compare VAR_RESULT, LINKUP_FAILED
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, LINKUP_CONNECTION_ERROR
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A42F5
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
+CableClub_EventScript_EnterColosseum:: @ 81A3F5E
 	special HealPlayerParty
 	special SavePlayerParty
 	special LoadPlayerBag
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll OldaleTown_PokemonCenter_2F_Text_1A4A22
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
-	setmetatile 5, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
+	setmetatile 5, 3, METATILE_PokemonCenter_Floor_Plain_Alt, FALSE
 	special DrawWholeMapView
 	delay 60
 	applymovement VAR_LAST_TALKED, CableClub_Movement_AttendantFaceRight
@@ -194,96 +181,96 @@ OldaleTown_PokemonCenter_2F_EventScript_1A3F5E:: @ 81A3F5E
 	closedoor 5, 1
 	waitdooranim
 	release
-	compare VAR_0x8004, 5
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A3FCD
+	compare VAR_0x8004, USING_MULTI_BATTLE
+	goto_if_eq CableClub_EventScript_WarpTo4PColosseum
 	special SetCableClubWarp
 	warp MAP_SINGLE_BATTLE_COLOSSEUM, 255, 6, 8
 	special DoCableClubWarp
 	waitstate
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3FCD:: @ 81A3FCD
+CableClub_EventScript_WarpTo4PColosseum:: @ 81A3FCD
 	special SetCableClubWarp
 	warp MAP_DOUBLE_BATTLE_COLOSSEUM, 255, 5, 8
 	special DoCableClubWarp
 	waitstate
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3FDD:: @ 81A3FDD
-	message OldaleTown_PokemonCenter_2F_Text_1A4696
+CableClub_EventScript_ExplainBattleModes:: @ 81A3FDD
+	message CableClub_Text_ExplainBattleModes
 	waitmessage
 	waitbuttonpress
-	message OldaleTown_PokemonCenter_2F_Text_1A4826
+	message CableClub_Text_WouldYouLikeToBattle
 	waitmessage
-	goto OldaleTown_PokemonCenter_2F_EventScript_1A3EBC
+	goto CableClub_EventScript_SelectColosseumAction
 
-OldaleTown_PokemonCenter_2F_EventScript_1A3FEF:: @ 81A3FEF
-	message OldaleTown_PokemonCenter_2F_Text_1A4840
+CableClub_EventScript_SelectBattleMode:: @ 81A3FEF
+	message CableClub_Text_PlayWhichBattleMode
 	waitmessage
 	multichoice 0, 0, 18, 0
 	switch VAR_RESULT
-	case 0, OldaleTown_PokemonCenter_2F_EventScript_1A4062
-	case 1, OldaleTown_PokemonCenter_2F_EventScript_1A4042
-	case 2, OldaleTown_PokemonCenter_2F_EventScript_1A403C
-	case 3, OldaleTown_PokemonCenter_2F_EventScript_1A4036
-	case 127, OldaleTown_PokemonCenter_2F_EventScript_1A4036
+	case 0, CableClub_EventScript_SelectSingleBattle
+	case 1, CableClub_EventScript_SelectDoubleBattle
+	case 2, CableClub_EventScript_SelectMultiBattle
+	case 3, CableClub_EventScript_CancelBattleTypeSelection
+	case 127, CableClub_EventScript_CancelBattleTypeSelection
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4036:: @ 81A4036
+CableClub_EventScript_CancelBattleTypeSelection:: @ 81A4036
 	setvar VAR_0x8004, 0
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A403C:: @ 81A403C
-	setvar VAR_0x8004, 5
+CableClub_EventScript_SelectMultiBattle:: @ 81A403C
+	setvar VAR_0x8004, USING_MULTI_BATTLE
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4042:: @ 81A4042
+CableClub_EventScript_SelectDoubleBattle:: @ 81A4042
 	special HasEnoughMonsForDoubleBattle
 	compare VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS
-	goto_if_ne OldaleTown_PokemonCenter_2F_EventScript_1A4056
-	setvar VAR_0x8004, 2
+	goto_if_ne CableClub_EventScript_NeedTwoMonsForDoubleBattle
+	setvar VAR_0x8004, USING_DOUBLE_BATTLE
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4056:: @ 81A4056
-	message OldaleTown_PokemonCenter_2F_Text_1A486A
+CableClub_EventScript_NeedTwoMonsForDoubleBattle:: @ 81A4056
+	message CableClub_Text_NeedTwoMonsForDoubleBattle
 	waitmessage
 	waitbuttonpress
-	goto OldaleTown_PokemonCenter_2F_EventScript_1A3FEF
+	goto CableClub_EventScript_SelectBattleMode
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4062:: @ 81A4062
-	setvar VAR_0x8004, 1
+CableClub_EventScript_SelectSingleBattle:: @ 81A4062
+	setvar VAR_0x8004, USING_SINGLE_BATTLE
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4068:: @ 81A4068
+CableClub_EventScript_AbortLinkIncorrectNumberOfBattlers:: @ 81A4068
 	switch VAR_0x8004
-	case 1, OldaleTown_PokemonCenter_2F_EventScript_1A40B1
-	case 2, OldaleTown_PokemonCenter_2F_EventScript_1A40A2
-	case 5, OldaleTown_PokemonCenter_2F_EventScript_1A4093
+	case USING_SINGLE_BATTLE, CableClub_EventScript_CantSingleBattleWithXPlayers
+	case USING_DOUBLE_BATTLE, CableClub_EventScript_CantDoubleBattleWithXPlayers
+	case USING_MULTI_BATTLE, CableClub_EventScript_NeedFourPlayers
 	goto OldaleTown_PokemonCenter_2F_EventScript_1A432D
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4093:: @ 81A4093
+CableClub_EventScript_NeedFourPlayers:: @ 81A4093
 	special CloseLink
-	message OldaleTown_PokemonCenter_2F_Text_1A4C03
+	message CableClub_Text_NeedFourPlayers
 	waitmessage
 	waitbuttonpress
-	goto OldaleTown_PokemonCenter_2F_EventScript_1A40C0
+	goto CableClub_EventScript_PleaseConfirmNumberAndRestart
 
-OldaleTown_PokemonCenter_2F_EventScript_1A40A2:: @ 81A40A2
+CableClub_EventScript_CantDoubleBattleWithXPlayers:: @ 81A40A2
 	special CloseLink
-	message OldaleTown_PokemonCenter_2F_Text_1A4BCC
+	message CableClub_Text_CantDoubleBattleWithXPlayers
 	waitmessage
 	waitbuttonpress
-	goto OldaleTown_PokemonCenter_2F_EventScript_1A40C0
+	goto CableClub_EventScript_PleaseConfirmNumberAndRestart
 
-OldaleTown_PokemonCenter_2F_EventScript_1A40B1:: @ 81A40B1
+CableClub_EventScript_CantSingleBattleWithXPlayers:: @ 81A40B1
 	special CloseLink
-	message OldaleTown_PokemonCenter_2F_Text_1A4B95
+	message CableClub_Text_CantSingleBattleWithXPlayers
 	waitmessage
 	waitbuttonpress
-	goto OldaleTown_PokemonCenter_2F_EventScript_1A40C0
+	goto CableClub_EventScript_PleaseConfirmNumberAndRestart
 
-OldaleTown_PokemonCenter_2F_EventScript_1A40C0:: @ 81A40C0
+CableClub_EventScript_PleaseConfirmNumberAndRestart:: @ 81A40C0
 	special CloseLink
-	message OldaleTown_PokemonCenter_2F_Text_1A4C38
+	message CableClub_Text_PleaseConfirmNumberAndRestart
 	waitmessage
 	waitbuttonpress
 	release
@@ -320,7 +307,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A40FA:: @ 81A40FA
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	message OldaleTown_PokemonCenter_2F_Text_1A490C
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryTradeLinkup
 	waitstate
@@ -340,7 +327,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A40FA:: @ 81A40FA
 OldaleTown_PokemonCenter_2F_EventScript_1A4166:: @ 81A4166
 	setvar VAR_0x8004, 3
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll OldaleTown_PokemonCenter_2F_Text_1A4A22
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
 	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	special DrawWholeMapView
@@ -413,7 +400,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4229:: @ 81A4229
 	call Common_EventScript_SaveGame
 	compare VAR_RESULT, 0
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	message OldaleTown_PokemonCenter_2F_Text_1A490C
+	message gText_PleaseWaitForLink
 	waitmessage
 	special TryRecordMixLinkup
 	waitstate
@@ -437,7 +424,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4229:: @ 81A4229
 OldaleTown_PokemonCenter_2F_EventScript_1A4294:: @ 81A4294
 	setvar VAR_0x8004, 4
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
-	messageautoscroll OldaleTown_PokemonCenter_2F_Text_1A4A22
+	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
 	setmetatile 11, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
 	special DrawWholeMapView
@@ -505,7 +492,7 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4325:: @ 81A4325
 
 OldaleTown_PokemonCenter_2F_EventScript_1A432D:: @ 81A432D
 	special CloseLink
-	message OldaleTown_PokemonCenter_2F_Text_1A4B6C
+	message CableClub_Text_IncorrectNumberOfParticipants
 	waitmessage
 	waitbuttonpress
 	release

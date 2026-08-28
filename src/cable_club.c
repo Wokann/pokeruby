@@ -30,7 +30,7 @@ extern u16 gBattleTypeFlags;
 extern const u8 gUnknown_081A4932[];
 extern const u8 gUnknown_081A4975[];
 extern const u8 gUnknown_081A49B6[];
-extern const u8 gUnknown_081A490C[];
+extern const u8 gText_PleaseWaitForLink[];
 extern struct
 {
     u8 field0;
@@ -828,7 +828,7 @@ static void Task_EnterCableClubSeat(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        ShowFieldMessage(gUnknown_081A490C);
+        ShowFieldMessage(gText_PleaseWaitForLink);
         task->data[0] = 1;
         break;
     case 1:

@@ -5,7 +5,7 @@ RustboroCity_PokemonCenter_2F_MapScripts:: @ 8157BB1
 	.byte 0
 
 RustboroCity_PokemonCenter_2F_EventScript_157BC1:: @ 8157BC1
-	call RustboroCity_PokemonCenter_2F_EventScript_1A3EA6
+	call CableClub_EventScript_Colosseum
 	end
 
 RustboroCity_PokemonCenter_2F_EventScript_157BC7:: @ 8157BC7

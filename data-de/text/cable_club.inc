@@ -1,4 +1,4 @@
-OldaleTown_PokemonCenter_2F_Text_1A4510:: @ 81A4510
+CableClub_Text_WelcomeToColosseum:: @ 81A4510
 	.string "Willkommen im POKéMON KABEL-CLUB-\n"
 	.string "KOLOSSEUM.\p"
 	.string "Hier kannst du mit deinen Freunden\n"
@@ -19,7 +19,7 @@ OldaleTown_PokemonCenter_2F_Text_1A45FE:: @ 81A45FE
 	.string "die Rekorde als TRAINER austauschen.\p"
 	.string "Möchtest du Rekorde austauschen?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4696:: @ 81A4696
+CableClub_Text_ExplainBattleModes:: @ 81A4696
 	.string "Es gibt drei Arten des Kampfes\n"
 	.string "via Verbindungskabel.\p"
 	.string "EINZELKAMPF ist für zwei TRAINER, die\n"
@@ -36,13 +36,13 @@ OldaleTown_PokemonCenter_2F_Text_1A4696:: @ 81A4696
 	.string "Jeder TRAINER schickt pro Runde ein\n"
 	.string "POKéMON in den Kampf.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4826:: @ 81A4826
+CableClub_Text_WouldYouLikeToBattle:: @ 81A4826
 	.string "Möchtest du kämpfen?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4840:: @ 81A4840
+CableClub_Text_PlayWhichBattleMode:: @ 81A4840
 	.string "Welche Art des Kampfes?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A486A:: @ 81A486A
+CableClub_Text_NeedTwoMonsForDoubleBattle:: @ 81A486A
 	.string "Für einen DOPPELKAMPF brauchst du\n"
 	.string "mindestens zwei POKéMON.$"
 
@@ -54,8 +54,7 @@ OldaleTown_PokemonCenter_2F_Text_1A48DD:: @ 81A48DD
 	.string "Dein POKéMON trägt eine {STR_VAR_1}-\n"
 	.string "BEERE und kann nicht getauscht werden.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A490C:: @ 81A490C
-gUnknown_081A490C:: @ 81A490C
+gText_PleaseWaitForLink:: @ 81A490C
 	.string "Bitte warten.\n"
 	.string "... ... B-Knopf: Abbruch$"
 
@@ -78,7 +77,7 @@ UnknownString_81A49E2: @ 81A49E2
 	.string "Dein Spiel muss vor Verbindungsaufbau\n"
 	.string "gespeichert werden. Speichern?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4A22:: @ 81A4A22
+CableClub_Text_PleaseEnter:: @ 81A4A22
 	.string "Bitte eintreten.$"
 
 FallarborTown_ContestLobby_Text_1A4A30:: @ 81A4A30
@@ -108,23 +107,23 @@ OldaleTown_PokemonCenter_2F_Text_1A4B1D:: @ 81A4B1D
 OldaleTown_PokemonCenter_2F_Text_1A4B59:: @ 81A4B59
 	.string "Bitte komm bald wieder.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B6C:: @ 81A4B6C
+CableClub_Text_IncorrectNumberOfParticipants:: @ 81A4B6C
 	.string "Die Anzahl der Teilnehmer ist nicht\n"
 	.string "korrekt.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B95:: @ 81A4B95
+CableClub_Text_CantSingleBattleWithXPlayers:: @ 81A4B95
 	.string "Ein EINZELKAMPF kann nicht von\n"
 	.string "{STR_VAR_1} Spielern geführt werden.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4BCC:: @ 81A4BCC
+CableClub_Text_CantDoubleBattleWithXPlayers:: @ 81A4BCC
 	.string "Ein DOPPELKAMPF kann nicht von\n"
 	.string "{STR_VAR_1} Spielern geführt werden.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4C03:: @ 81A4C03
+CableClub_Text_NeedFourPlayers:: @ 81A4C03
 	.string "Für diesen Kampfmodus werden vier\n"
 	.string "Spieler benötigt.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4C38:: @ 81A4C38
+CableClub_Text_PleaseConfirmNumberAndRestart:: @ 81A4C38
 	.string "Bitte überprüfe die Anzahl der Spieler\n"
 	.string "und fange noch einmal an.$"
 
