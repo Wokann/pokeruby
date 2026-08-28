@@ -4,7 +4,7 @@ CableClub_Text_WelcomeToColosseum:: @ 81A4510
 	.string "You may battle with your friends here.\p"
 	.string "Would you like to battle?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A457E:: @ 81A457E
+CableClub_Text_WelcomeToTradeCenter:: @ 81A457E
 	.string "Welcome to the POKéMON CABLE CLUB\n"
 	.string "TRADE CENTER.\p"
 	.string "You may trade your POKéMON here\n"
@@ -48,11 +48,11 @@ CableClub_Text_NeedTwoMonsForDoubleBattle:: @ 81A486A
 	.string "For a DOUBLE BATTLE, you must have\n"
 	.string "at least two POKéMON.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A48A3:: @ 81A48A3
+CableClub_Text_NeedTwoMonsToTrade:: @ 81A48A3
 	.string "For trading, you must have at least\n"
 	.string "two POKéMON with you.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A48DD:: @ 81A48DD
+CableClub_Text_CantTradeEnigmaBerry:: @ 81A48DD
 	.string "Your {STR_VAR_1} BERRY-holding POKéMON\n"
 	.string "can't be traded.$"
 

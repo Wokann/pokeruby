@@ -277,59 +277,46 @@ CableClub_EventScript_PleaseConfirmNumberAndRestart:: @ 81A40C0
 	end
 
 CableClub_EventScript_TradeCenter:: @ 81A40CC
-DewfordTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-EverGrandeCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-FallarborTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-FortreeCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-LavaridgeTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-LilycoveCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-MauvilleCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-OldaleTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-PetalburgCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-RustboroCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-SlateportCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-SootopolisCity_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
-VerdanturfTown_PokemonCenter_2F_EventScript_1A40CC:: @ 81A40CC
 	goto_if_unset FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_2F_EventScript_1A4339
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	lock
 	faceplayer
-	msgbox OldaleTown_PokemonCenter_2F_Text_1A457E, MSGBOX_YESNO
+	msgbox CableClub_Text_WelcomeToTradeCenter, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	compare VAR_RESULT, YES
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A40FA
+	goto_if_eq CableClub_EventScript_TryEnterTradeCenter
 
-OldaleTown_PokemonCenter_2F_EventScript_1A40FA:: @ 81A40FA
-	call OldaleTown_PokemonCenter_2F_EventScript_1A41BB
-	compare VAR_RESULT, 0
+CableClub_EventScript_TryEnterTradeCenter:: @ 81A40FA
+	call CableClub_EventScript_CheckPartyTradeRequirements
+	compare VAR_RESULT, FALSE
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	call Common_EventScript_SaveGame
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
 	message gText_PleaseWaitForLink
 	waitmessage
 	special TryTradeLinkup
 	waitstate
-	compare VAR_RESULT, 1
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4166
-	compare VAR_RESULT, 2
+	compare VAR_RESULT, LINKUP_SUCCESS
+	goto_if_eq CableClub_EventScript_EnterTradeCenter
+	compare VAR_RESULT, LINKUP_SOMEONE_NOT_READY
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4301
-	compare VAR_RESULT, 3
+	compare VAR_RESULT, LINKUP_DIFF_SELECTIONS
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A430D
-	compare VAR_RESULT, 4
+	compare VAR_RESULT, LINKUP_WRONG_NUM_PLAYERS
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A432D
-	compare VAR_RESULT, 5
+	compare VAR_RESULT, LINKUP_FAILED
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A4319
-	compare VAR_RESULT, 6
+	compare VAR_RESULT, LINKUP_CONNECTION_ERROR
 	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A42F5
 
-OldaleTown_PokemonCenter_2F_EventScript_1A4166:: @ 81A4166
-	setvar VAR_0x8004, 3
+CableClub_EventScript_EnterTradeCenter:: @ 81A4166
+	setvar VAR_0x8004, USING_TRADE_CENTER
 	copyvar VAR_CABLE_CLUB_STATE, VAR_0x8004
 	messageautoscroll CableClub_Text_PleaseEnter
 	waitmessage
-	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, 0
+	setmetatile 8, 3, METATILE_PokemonCenter_Floor_Plain_Alt, FALSE
 	special DrawWholeMapView
 	delay 60
 	applymovement VAR_LAST_TALKED, CableClub_Movement_AttendantFaceRight
@@ -347,28 +334,28 @@ OldaleTown_PokemonCenter_2F_EventScript_1A4166:: @ 81A4166
 	release
 	goto OldaleTown_PokemonCenter_2F_EventScript_1A4325
 
-OldaleTown_PokemonCenter_2F_EventScript_1A41BB:: @ 81A41BB
+CableClub_EventScript_CheckPartyTradeRequirements:: @ 81A41BB
 	specialvar VAR_RESULT, CalculatePlayerPartyCount
 	compare VAR_RESULT, 2
-	goto_if_lt OldaleTown_PokemonCenter_2F_EventScript_1A41E1
+	goto_if_lt CableClub_EventScript_NeedTwoMonsToTrade
 	specialvar VAR_RESULT, DoesPartyHaveEnigmaBerry
-	compare VAR_RESULT, 1
-	goto_if_eq OldaleTown_PokemonCenter_2F_EventScript_1A41EE
-	setvar VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq CableClub_EventScript_CantTradeEnigmaBerry
+	setvar VAR_RESULT, TRUE
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A41E1:: @ 81A41E1
-	message OldaleTown_PokemonCenter_2F_Text_1A48A3
+CableClub_EventScript_NeedTwoMonsToTrade:: @ 81A41E1
+	message CableClub_Text_NeedTwoMonsToTrade
 	waitmessage
 	waitbuttonpress
-	setvar VAR_RESULT, 0
+	setvar VAR_RESULT, FALSE
 	return
 
-OldaleTown_PokemonCenter_2F_EventScript_1A41EE:: @ 81A41EE
-	message OldaleTown_PokemonCenter_2F_Text_1A48DD
+CableClub_EventScript_CantTradeEnigmaBerry:: @ 81A41EE
+	message CableClub_Text_CantTradeEnigmaBerry
 	waitmessage
 	waitbuttonpress
-	setvar VAR_RESULT, 0
+	setvar VAR_RESULT, FALSE
 	return
 
 CableClub_EventScript_RecordCorner:: @ 81A41FB

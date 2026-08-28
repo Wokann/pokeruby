@@ -9,7 +9,7 @@ RustboroCity_PokemonCenter_2F_EventScript_157BC1:: @ 8157BC1
 	end
 
 RustboroCity_PokemonCenter_2F_EventScript_157BC7:: @ 8157BC7
-	call RustboroCity_PokemonCenter_2F_EventScript_1A40CC
+	call CableClub_EventScript_TradeCenter
 	end
 
 RustboroCity_PokemonCenter_2F_EventScript_157BCD:: @ 8157BCD

@@ -9,7 +9,7 @@ PetalburgCity_PokemonCenter_2F_EventScript_15529D:: @ 815529D
 	end
 
 PetalburgCity_PokemonCenter_2F_EventScript_1552A3:: @ 81552A3
-	call PetalburgCity_PokemonCenter_2F_EventScript_1A40CC
+	call CableClub_EventScript_TradeCenter
 	end
 
 PetalburgCity_PokemonCenter_2F_EventScript_1552A9:: @ 81552A9
