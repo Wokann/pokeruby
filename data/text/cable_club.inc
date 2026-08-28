@@ -11,7 +11,7 @@ CableClub_Text_WelcomeToTradeCenter:: @ 81A457E
 	.string "with a friend.\p"
 	.string "Would you like to trade POKéMON?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A45FE:: @ 81A45FE
+CableClub_Text_WelcomeToRecordCorner:: @ 81A45FE
 	.string "Welcome to the POKéMON CABLE CLUB\n"
 	.if REVISION >= 1
 	.string "RECORD CORNER.\p"
@@ -82,28 +82,25 @@ UnknownString_81A49E2: @ 81A49E2
 CableClub_Text_PleaseEnter:: @ 81A4A22
 	.string "Please enter.$"
 
-FallarborTown_ContestLobby_Text_1A4A30:: @ 81A4A30
-OldaleTown_PokemonCenter_2F_Text_1A4A30:: @ 81A4A30
+Text_SomeoneIsNotReadyToLink:: @ 81A4A30
 	.string "Someone is not ready to link.\p"
 	.string "Please come back after everyone has\n"
 	.string "made preparations.$"
 
-FallarborTown_ContestLobby_Text_1A4A85:: @ 81A4A85
-OldaleTown_PokemonCenter_2F_Text_1A4A85:: @ 81A4A85
+Text_LinkErrorPleaseReset:: @ 81A4A85
 	.string "Sorry, we have a transmission error...\n"
 	.string "Please reset and try again.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4AC8:: @ 81A4AC8
+CableClub_Text_CantMixRecordsWithDifferentLanguages:: @ 81A4AC8
 	.string "Sorry, we have a transmission error.\n"
 	.string "You may not mix records in different\l"
 	.string "languages.$"
 
-FallarborTown_ContestLobby_Text_1A4B1D:: @ 81A4B1D
-OldaleTown_PokemonCenter_2F_Text_1A4B1D:: @ 81A4B1D
+Text_PlayersMadeDifferentSelections:: @ 81A4B1D
 	.string "The link partners appear to have made\n"
 	.string "different selections.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B59:: @ 81A4B59
+CableClub_Text_PleaseVisitAgain:: @ 81A4B59
 	.string "Please come again.$"
 
 CableClub_Text_IncorrectNumberOfParticipants:: @ 81A4B6C

@@ -12,7 +12,7 @@ CableClub_Text_WelcomeToTradeCenter:: @ 81A457E
 	.string "POKéMON tauschen.\p"
 	.string "Möchtest du jetzt POKéMON tauschen?$"
 
-OldaleTown_PokemonCenter_2F_Text_1A45FE:: @ 81A45FE
+CableClub_Text_WelcomeToRecordCorner:: @ 81A45FE
 	.string "Willkommen beim POKéMON KABEL-CLUB-\n"
 	.string "STATISTIKTAUSCH.\p"
 	.string "Hier kannst du mit deinen Freunden\n"
@@ -80,31 +80,28 @@ UnknownString_81A49E2: @ 81A49E2
 CableClub_Text_PleaseEnter:: @ 81A4A22
 	.string "Bitte eintreten.$"
 
-FallarborTown_ContestLobby_Text_1A4A30:: @ 81A4A30
-OldaleTown_PokemonCenter_2F_Text_1A4A30:: @ 81A4A30
+Text_SomeoneIsNotReadyToLink:: @ 81A4A30
 	.string "Ein Spieler ist noch nicht bereit\n"
 	.string "für den Link.\p"
 	.string "Bitte kommt wieder, wenn jeder seine\n"
 	.string "Vorbereitungen getroffen hat.$"
 
-FallarborTown_ContestLobby_Text_1A4A85:: @ 81A4A85
-OldaleTown_PokemonCenter_2F_Text_1A4A85:: @ 81A4A85
+Text_LinkErrorPleaseReset:: @ 81A4A85
 	.string "Verbindungsfehler...\n"
 	.string "Die Kabelverbindungen überprüfen und\l"
 	.string "die Geräte aus- und wieder einschalten.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4AC8:: @ 81A4AC8
+CableClub_Text_CantMixRecordsWithDifferentLanguages:: @ 81A4AC8
 	.string "Tut uns Leid. Hier liegt ein Über-\n"
 	.string "tragungsfehler vor. Rekorde können\l"
 	.string "nicht in unterschiedlichen Sprachen\l"
 	.string "ausgetauscht werden.$"
 
-FallarborTown_ContestLobby_Text_1A4B1D:: @ 81A4B1D
-OldaleTown_PokemonCenter_2F_Text_1A4B1D:: @ 81A4B1D
+Text_PlayersMadeDifferentSelections:: @ 81A4B1D
 	.string "Die Link-Partner haben eine unter-\n"
 	.string "schiedliche Auswahl getroffen.$"
 
-OldaleTown_PokemonCenter_2F_Text_1A4B59:: @ 81A4B59
+CableClub_Text_PleaseVisitAgain:: @ 81A4B59
 	.string "Bitte komm bald wieder.$"
 
 CableClub_Text_IncorrectNumberOfParticipants:: @ 81A4B6C
