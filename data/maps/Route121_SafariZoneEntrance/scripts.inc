@@ -34,8 +34,7 @@ Route121_SafariZoneEntrance_EventScript_InfoAttendant:: @ 815C35A
 	lock
 	faceplayer
 	msgbox Route121_SafariZoneEntrance_Text_WelcomeFirstTime, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq Route121_SafariZoneEntrance_EventScript_FirstTimeInfo
+	goto_if_eq VAR_RESULT, YES, Route121_SafariZoneEntrance_EventScript_FirstTimeInfo
 	msgbox Route121_SafariZoneEntrance_Text_ComeInAndEnjoy, MSGBOX_DEFAULT
 	release
 	end
@@ -52,20 +51,17 @@ Route121_SafariZoneEntrance_EventScript_EntranceCounterTrigger:: @ 815C383
 	showmoneybox 0, 0
 	nop
 	msgbox Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone
+	goto_if_eq VAR_RESULT, YES, Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone
 	msgbox Route121_SafariZoneEntrance_Text_PlayAnotherTime, MSGBOX_DEFAULT
 	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
 
 Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 815C3B3
 	checkitem ITEM_POKEBLOCK_CASE, 1
-	compare VAR_RESULT, 0
-	goto_if_eq Route121_SafariZoneEntrance_EventScript_NoPokeblockCase
+	goto_if_eq VAR_RESULT, FALSE, Route121_SafariZoneEntrance_EventScript_NoPokeblockCase
 	call Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon
 	checkmoney 500, 0
-	compare VAR_RESULT, 0
-	goto_if_eq Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
+	goto_if_eq VAR_RESULT, FALSE, Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
 	msgbox Route121_SafariZoneEntrance_Text_ThatWillBe500Please, MSGBOX_DEFAULT
 	removemoney 500, 0
 	updatemoneybox 0, 0
@@ -88,11 +84,9 @@ Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 815C3B3
 
 Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon:: @ 815C425
 	getpartysize
-	compare VAR_RESULT, 6
-	goto_if_ne Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
+	goto_if_ne VAR_RESULT, PARTY_SIZE, Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
 	specialvar VAR_RESULT, ScriptCheckFreePokemonStorageSpace
-	compare VAR_RESULT, 1
-	goto_if_eq Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
+	goto_if_eq VAR_RESULT, TRUE, Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
 	msgbox Route121_SafariZoneEntrance_Text_PCIsFull, MSGBOX_DEFAULT
 	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
