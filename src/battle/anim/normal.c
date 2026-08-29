@@ -47,8 +47,8 @@ static void AnimSimplePaletteBlend(struct Sprite *sprite);
 static void AnimComplexPaletteBlend(struct Sprite *sprite);
 static void sub_80E1F3C(struct Sprite *sprite);
 static void sub_80E24B8(struct Sprite *sprite);
-static void sub_80E27A0(struct Sprite *sprite);
-static void sub_80E2838(struct Sprite *sprite);
+static void AnimHitSplatBasic(struct Sprite *sprite);
+static void AnimHitSplatHandleInvert(struct Sprite *sprite);
 static void sub_80E2870(struct Sprite *sprite);
 static void sub_80E2908(struct Sprite *sprite);
 static void sub_80E2978(struct Sprite *sprite);
@@ -220,10 +220,10 @@ const struct SpriteTemplate gBasicHitSplatSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
-    .callback = sub_80E27A0,
+    .callback = AnimHitSplatBasic,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4C0 =
+const struct SpriteTemplate gHandleInvertHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
@@ -231,7 +231,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4C0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
-    .callback = sub_80E2838,
+    .callback = AnimHitSplatHandleInvert,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8 =
@@ -242,7 +242,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
-    .callback = sub_80E27A0,
+    .callback = AnimHitSplatBasic,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
@@ -860,7 +860,7 @@ static void sub_80E2710(u8 taskId)
     }
 }
 
-static void sub_80E27A0(struct Sprite *sprite)
+static void AnimHitSplatBasic(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
@@ -885,12 +885,12 @@ static void sub_80E27E8(struct Sprite *sprite)
     StoreSpriteCallbackInData(sprite, sub_80DA48C);
 }
 
-static void sub_80E2838(struct Sprite *sprite)
+static void AnimHitSplatHandleInvert(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER && !IsContest())
         gBattleAnimArgs[1] = -gBattleAnimArgs[1];
     
-    sub_80E27A0(sprite);
+    AnimHitSplatBasic(sprite);
 }
 
 static void sub_80E2870(struct Sprite *sprite)

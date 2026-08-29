@@ -846,10 +846,10 @@ Move_TWINEEDLE: @ 81C82E2
 	createsprite gLinearStingerSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 12, 10, 12, 20
 	delay 20
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 5, 1
-	createsprite gBattleAnimSpriteTemplate_83DB4C0, ANIM_BATTLER_ATTACKER, 3, 0, -4, 1, 3
+	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -4, ANIM_BATTLER_TARGET, 3
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 2
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB4C0, ANIM_BATTLER_ATTACKER, 3, 10, 12, 1, 3
+	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 12, ANIM_BATTLER_TARGET, 3
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -1312,9 +1312,9 @@ Move_SPIKE_CANNON: @ 81C8DF1
 	createsprite gLinearStingerSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 0, 0, 20
 	createsprite gLinearStingerSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 26, 8, 8, 8, 20
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DB4C0, ANIM_BATTLER_ATTACKER, 3, -8, -8, 1, 2
-	createsprite gBattleAnimSpriteTemplate_83DB4C0, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 2
-	createsprite gBattleAnimSpriteTemplate_83DB4C0, ANIM_BATTLER_ATTACKER, 3, 8, 8, 1, 2
+	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -8, -8, ANIM_BATTLER_TARGET, 2
+	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, ANIM_BATTLER_TARGET, 2
+	createsprite gHandleInvertHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 8, 8, ANIM_BATTLER_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 7, 1
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 5, 3
 	waitforvisualfinish
