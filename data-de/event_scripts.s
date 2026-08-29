@@ -1557,10 +1557,7 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	.include "data/maps/MtPyre_Summit/aqua_text.inc"
 	.include "data/maps/MtPyre_Summit/magma_text.inc"
 
-gUnknown_081B694A:: @ 81B694A
-	animateflash 1
-	setflashlevel 1
-	end
+	.include "data/scripts/flash.inc"
 
 	.include "data/scripts/players_house.inc"
 
