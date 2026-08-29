@@ -1033,21 +1033,21 @@ Move_SONIC_BOOM: @ 81C873B
 	monbg ANIM_BATTLER_DEF_PARTNER
 	monbgprio_28 1
 	setalpha 12, 8
-	call Move_SONIC_BOOM_CreateBlast
-	call Move_SONIC_BOOM_CreateBlast
-	call Move_SONIC_BOOM_CreateBlast
+	call SonicBoomProjectile
+	call SonicBoomProjectile
+	call SonicBoomProjectile
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 10, 1
-	call Move_SONIC_BOOM_CreateHitSplat
+	call SonicBoomHit
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-Move_SONIC_BOOM_CreateBlast:
+SonicBoomProjectile:
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
 	createsprite gSonicBoomSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 15
 	delay 4
 	return
-Move_SONIC_BOOM_CreateHitSplat:
+SonicBoomHit:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 2
 	delay 4
 	return
