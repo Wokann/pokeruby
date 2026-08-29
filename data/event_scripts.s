@@ -1537,11 +1537,11 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	.include "data/scripts/day_care.inc"
 	.include "data/text/day_care.inc"
 
-	.include "data/scripts/magma_chimney.inc"
+	.include "data/maps/MtChimney/late_scripts.inc"
 	.include "data/scripts/magma_summit.inc"
 
-	.include "data/text/aqua_chimney.inc"
-	.include "data/text/magma_chimney.inc"
+	.include "data/maps/MtChimney/aqua_text.inc"
+	.include "data/maps/MtChimney/magma_text.inc"
 	.include "data/text/aqua_awakening.inc"
 	.include "data/text/magma_awakening.inc"
 	.include "data/text/aqua_settled.inc"
