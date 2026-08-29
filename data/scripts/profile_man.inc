@@ -8,12 +8,12 @@ ProfileMan_EventScript_Man:: @ 81B1B14
 
 ProfileMan_EventScript_AskToSeeProfile:: @ 81B1B2D
 	msgbox ProfileMan_Text_MayISeeYourProfile, MSGBOX_DEFAULT
-	multichoice 17, 6, 20, 0
+	multichoice 17, 6, MULTI_YESNOINFO_2, FALSE
 	switch VAR_RESULT
 	case 0, ProfileMan_EventScript_CreateProfile
 	case 1, ProfileMan_EventScript_DeclineShowProfile
 	case 2, ProfileMan_EventScript_Info
-	case 127, ProfileMan_EventScript_DeclineShowProfile
+	case MULTI_B_PRESSED, ProfileMan_EventScript_DeclineShowProfile
 	end
 
 ProfileMan_EventScript_Info:: @ 81B1B6C
@@ -28,11 +28,11 @@ ProfileMan_EventScript_CreateProfile:: @ 81B1B7A
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	call_if_eq ProfileMan_EventScript_TryEnableMysteryEventClub
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq ProfileMan_EventScript_CancelShowProfile
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq ProfileMan_EventScript_ShowProfile
 	end
 
@@ -62,12 +62,12 @@ ProfileMan_EventScript_GivenProfileBefore:: @ 81B1BDB
 
 ProfileMan_EventScript_AskToSeeNewProfile:: @ 81B1BE9
 	msgbox ProfileMan_Text_MayISeeYourNewProfile, MSGBOX_DEFAULT
-	multichoice 17, 6, 20, 0
+	multichoice 17, 6, MULTI_YESNOINFO_2, FALSE
 	switch VAR_RESULT
 	case 0, ProfileMan_EventScript_CreateNewProfile
 	case 1, ProfileMan_EventScript_DeclineNewProfile
 	case 2, ProfileMan_EventScript_InfoNewProfile
-	case 127, ProfileMan_EventScript_DeclineNewProfile
+	case MULTI_B_PRESSED, ProfileMan_EventScript_DeclineNewProfile
 	end
 
 ProfileMan_EventScript_InfoNewProfile:: @ 81B1C28
@@ -82,11 +82,11 @@ ProfileMan_EventScript_CreateNewProfile:: @ 81B1C36
 	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_0x8004, 1
+	compare VAR_0x8004, TRUE
 	call_if_eq ProfileMan_EventScript_TryEnableMysteryEventClub
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq ProfileMan_EventScript_CancelShowProfile
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq ProfileMan_EventScript_ShowProfile
 	end
 

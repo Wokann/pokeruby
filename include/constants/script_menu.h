@@ -11,6 +11,7 @@
 #define MULTI_ENTERINFO          2
 #define MULTI_CONTEST_INFO       3
 #define MULTI_CONTEST_TYPE       4
+#define MULTI_YESNOINFO_2        20
 #define MULTI_BRINEY_ON_DEWFORD  0
 #define MULTI_BRINEY_OFF_DEWFORD 14
 #define MULTI_MECHADOLL1_Q1      25
