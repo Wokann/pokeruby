@@ -35,7 +35,7 @@ BattleTower_Lobby_EventScript_1602E4:: @ 81602E4
 	return
 
 BattleTower_Lobby_MapScript1_1602E8:: @ 81602E8
-	call BattleTower_Lobby_EventScript_1AE2ED
+	call BattleTower_Lobby_EventScript_ShowOrHideReporter
 	end
 
 BattleTower_Lobby_MapScript2_1602EE:: @ 81602EE

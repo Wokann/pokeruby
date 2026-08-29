@@ -22,6 +22,7 @@
 #include "battle.h"
 #include "link.h"
 #include "constants/easy_chat.h"
+#include "constants/tv.h"
 #include "event_object_movement.h"
 #include "field_specials.h"
 #include "item.h"
@@ -183,21 +184,21 @@ extern const u8 gTVBravoTrainerText05[];
 extern const u8 gTVBravoTrainerText06[];
 extern const u8 gTVBravoTrainerText07[];
 extern const u8 gTVBravoTrainerText08[];
-extern const u8 gTVBravoTrainerBattleTowerText1[];
-extern const u8 gTVBravoTrainerBattleTowerText2[];
-extern const u8 gTVBravoTrainerBattleTowerText3[];
-extern const u8 gTVBravoTrainerBattleTowerText4[];
-extern const u8 gTVBravoTrainerBattleTowerText5[];
-extern const u8 gTVBravoTrainerBattleTowerText6[];
-extern const u8 gTVBravoTrainerBattleTowerText7[];
-extern const u8 gTVBravoTrainerBattleTowerText8[];
-extern const u8 gTVBravoTrainerBattleTowerText9[];
-extern const u8 gTVBravoTrainerBattleTowerText10[];
-extern const u8 gTVBravoTrainerBattleTowerText11[];
-extern const u8 gTVBravoTrainerBattleTowerText12[];
-extern const u8 gTVBravoTrainerBattleTowerText13[];
-extern const u8 gTVBravoTrainerBattleTowerText14[];
-extern const u8 gTVBravoTrainerBattleTowerText15[];
+extern const u8 BravoTrainerBattleTower_Text_Intro[];
+extern const u8 BravoTrainerBattleTower_Text_NewRecord[];
+extern const u8 BravoTrainerBattleTower_Text_Lost[];
+extern const u8 BravoTrainerBattleTower_Text_Won[];
+extern const u8 BravoTrainerBattleTower_Text_LostFinal[];
+extern const u8 BravoTrainerBattleTower_Text_Satisfied[];
+extern const u8 BravoTrainerBattleTower_Text_Unsatisfied[];
+extern const u8 BravoTrainerBattleTower_Text_None1[];
+extern const u8 BravoTrainerBattleTower_Text_None2[];
+extern const u8 BravoTrainerBattleTower_Text_None3[];
+extern const u8 BravoTrainerBattleTower_Text_None4[];
+extern const u8 BravoTrainerBattleTower_Text_Response[];
+extern const u8 BravoTrainerBattleTower_Text_ResponseSatisfied[];
+extern const u8 BravoTrainerBattleTower_Text_ResponseUnsatisfied[];
+extern const u8 BravoTrainerBattleTower_Text_Outro[];
 extern const u8 gTVNameRaterText1[];
 extern const u8 gTVNameRaterText2[];
 extern const u8 gTVNameRaterText3[];
@@ -352,23 +353,23 @@ const u8 *const gTVBravoTrainerTextGroup[] =
     gTVBravoTrainerText08,
 };
 
-const u8 *const gTVBravoTrainerBattleTowerTextGroup[] =
+static const u8 *const sTVBravoTrainerBattleTowerTextGroup[] =
 {
-    gTVBravoTrainerBattleTowerText1,
-    gTVBravoTrainerBattleTowerText2,
-    gTVBravoTrainerBattleTowerText3,
-    gTVBravoTrainerBattleTowerText4,
-    gTVBravoTrainerBattleTowerText5,
-    gTVBravoTrainerBattleTowerText6,
-    gTVBravoTrainerBattleTowerText7,
-    gTVBravoTrainerBattleTowerText8,
-    gTVBravoTrainerBattleTowerText9,
-    gTVBravoTrainerBattleTowerText10,
-    gTVBravoTrainerBattleTowerText11,
-    gTVBravoTrainerBattleTowerText12,
-    gTVBravoTrainerBattleTowerText13,
-    gTVBravoTrainerBattleTowerText14,
-    gTVBravoTrainerBattleTowerText15,
+    [BRAVOTOWER_STATE_INTRO]                = BravoTrainerBattleTower_Text_Intro,
+    [BRAVOTOWER_STATE_NEW_RECORD]           = BravoTrainerBattleTower_Text_NewRecord,
+    [BRAVOTOWER_STATE_LOST]                 = BravoTrainerBattleTower_Text_Lost,
+    [BRAVOTOWER_STATE_WON]                  = BravoTrainerBattleTower_Text_Won,
+    [BRAVOTOWER_STATE_LOST_FINAL]           = BravoTrainerBattleTower_Text_LostFinal,
+    [BRAVOTOWER_STATE_SATISFIED]            = BravoTrainerBattleTower_Text_Satisfied,
+    [BRAVOTOWER_STATE_UNSATISFIED]          = BravoTrainerBattleTower_Text_Unsatisfied,
+    [BRAVOTOWER_STATE_UNUSED_1]             = BravoTrainerBattleTower_Text_None1,
+    [BRAVOTOWER_STATE_UNUSED_2]             = BravoTrainerBattleTower_Text_None2,
+    [BRAVOTOWER_STATE_UNUSED_3]             = BravoTrainerBattleTower_Text_None3,
+    [BRAVOTOWER_STATE_UNUSED_4]             = BravoTrainerBattleTower_Text_None4,
+    [BRAVOTOWER_STATE_RESPONSE]             = BravoTrainerBattleTower_Text_Response,
+    [BRAVOTOWER_STATE_RESPONSE_SATISFIED]   = BravoTrainerBattleTower_Text_ResponseSatisfied,
+    [BRAVOTOWER_STATE_RESPONSE_UNSATISFIED] = BravoTrainerBattleTower_Text_ResponseUnsatisfied,
+    [BRAVOTOWER_STATE_OUTRO]                = BravoTrainerBattleTower_Text_Outro,
 };
 
 const u8 *const gTVNameRaterTextGroup[] =
@@ -2817,7 +2818,7 @@ void DoTVShowBravoTrainerBattleTowerProfile(void)
         TVShowDone();
         break;
     }
-    ShowFieldMessage(gTVBravoTrainerBattleTowerTextGroup[state]);
+    ShowFieldMessage(sTVBravoTrainerBattleTowerTextGroup[state]);
 }
 
 void DoTVShowTodaysSmartShopper(void)

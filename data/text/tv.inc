@@ -108,7 +108,7 @@ gTVBravoTrainerText07:: @ 81A76C5
 gTVBravoTrainerText08:: @ 81A774F
 	.string "Introducing the TRAINER's {STR_VAR_1}!$"
 
-BattleTower_Lobby_Text_1A776D:: @ 81A776D
+BattleTower_Lobby_Text_InterviewRequest:: @ 81A776D
 	.string "Hello! You're the TRAINER who just had\n"
 	.string "a battle, right?\p"
 	.string "I'm gathering interviews with TRAINERS\n"
@@ -116,7 +116,7 @@ BattleTower_Lobby_Text_1A776D:: @ 81A776D
 	.string "May I get a few words from you about\n"
 	.string "your impressions on battling?$"
 
-BattleTower_Lobby_Text_1A7823:: @ 81A7823
+BattleTower_Lobby_Text_HowDidBattleTowerTurnOut:: @ 81A7823
 	.string "You will? Really?\n"
 	.string "Thank you!\l"
 	.string "Then, uh...\p"
@@ -125,48 +125,48 @@ BattleTower_Lobby_Text_1A7823:: @ 81A7823
 	.string "Were you satisfied with the battle?\n"
 	.string "Or are you unhappy?$"
 
-BattleTower_Lobby_Text_1A78B7:: @ 81A78B7
+BattleTower_Lobby_Text_SorryWeDisturbedYou:: @ 81A78B7
 	.string "Oh...\n"
 	.string "Sorry we disturbed you.\p"
 	.string "Please give us an interview the next\n"
 	.string "time you visit the BATTLE TOWER.$"
 
-BattleTower_Lobby_Text_1A791B:: @ 81A791B
+BattleTower_Lobby_Text_ObviousYouHadGreatBattle:: @ 81A791B
 	.string "Well, of course!\p"
 	.string "That unmistakable look of satisfaction\n"
 	.string "on your face...\p"
 	.string "It's obvious that you've had a great\n"
 	.string "battle.$"
 
-BattleTower_Lobby_Text_1A7990:: @ 81A7990
+BattleTower_Lobby_Text_DifficultToMakeBattleTurnOutAsPlanned:: @ 81A7990
 	.string "Oh, I see...\p"
 	.string "Well, it certainly is difficult to make a\n"
 	.string "battle turn out exactly as planned.$"
 
-BattleTower_Lobby_Text_1A79EB:: @ 81A79EB
+BattleTower_Lobby_Text_DescribeYourBattle:: @ 81A79EB
 	.string "Oh, oh, may I ask one more question?\p"
 	.string "If you were to describe your\n"
 	.string "impressions about this battle with one\l"
 	.string "saying, what would it be?$"
 
-BattleTower_Lobby_Text_1A7A6E:: @ 81A7A6E
+BattleTower_Lobby_Text_ThatsGreatLine:: @ 81A7A6E
 	.string "Oh, that is stunningly cool!\p"
 	.string "That's a great line!\n"
 	.string "I hope you'll do great next time, too.\p"
 	.string "I hope to see you again!$"
 
-BattleTower_Lobby_Text_1A7AE0:: @ 81A7AE0
+BattleTower_Lobby_Text_SilentType:: @ 81A7AE0
 	.string "Oh, I see...\p"
 	.string "Still, being the silent type is also cool,\n"
 	.string "isn't it?\p"
 	.string "I hope you'll give me the opportunity to\n"
 	.string "share your thoughts again!$"
 
-BattleTower_Lobby_Text_1A7B66:: @ 81A7B66
+BattleTower_Lobby_Text_LookingForwardToNextBattle:: @ 81A7B66
 	.string "I'll be looking forward to your next\n"
 	.string "battle!$"
 
-gTVBravoTrainerBattleTowerText1:: @ 81A7B93
+BravoTrainerBattleTower_Text_Intro:: @ 81A7B93
 	.string "Yeah!\n"
 	.string "It's BRAVO TRAINER time!\p"
 	.string "Today, we're going to profile {STR_VAR_1},\n"
@@ -174,12 +174,12 @@ gTVBravoTrainerBattleTowerText1:: @ 81A7B93
 	.string "For the challenge, {STR_VAR_1} entered one\n"
 	.string "wicked {STR_VAR_2}.$"
 
-gTVBravoTrainerBattleTowerText2:: @ 81A7C26
+BravoTrainerBattleTower_Text_NewRecord:: @ 81A7C26
 	.string "The pair set a new record of {STR_VAR_2} wins\n"
 	.string "in a row in Level {STR_VAR_1} competition!\l"
 	.string "Bravo, TRAINER!$"
 
-gTVBravoTrainerBattleTowerText3:: @ 81A7C7D
+BravoTrainerBattleTower_Text_Lost:: @ 81A7C7D
 	.string "The twosome finally succumbed to\n"
 	.string "{STR_VAR_1} in match number {STR_VAR_2}.\l"
 	.string "Nice try, TRAINER!\p"
@@ -188,7 +188,7 @@ gTVBravoTrainerBattleTowerText3:: @ 81A7C7D
 	.string "We asked the TRAINER for impressions\n"
 	.string "on the match with {STR_VAR_1}.$"
 
-gTVBravoTrainerBattleTowerText4:: @ 81A7D4A
+BravoTrainerBattleTower_Text_Won:: @ 81A7D4A
 	.string "The twosome won it all by defeating\n"
 	.string "{STR_VAR_1}'s {STR_VAR_2} thoroughly.\l"
 	.string "Bravo, TRAINER!\p"
@@ -197,7 +197,7 @@ gTVBravoTrainerBattleTowerText4:: @ 81A7D4A
 	.string "We asked the TRAINER for impressions\n"
 	.string "on the moment of glory.$"
 
-gTVBravoTrainerBattleTowerText5:: @ 81A7E0C
+BravoTrainerBattleTower_Text_LostFinal:: @ 81A7E0C
 	.string "After a string of wins, the pair finally\n"
 	.string "succumbed to {STR_VAR_1}'s {STR_VAR_2},\l"
 	.string "their final hurdle.\p"
@@ -208,7 +208,7 @@ gTVBravoTrainerBattleTowerText5:: @ 81A7E0C
 	.string "We asked the TRAINER for impressions\n"
 	.string "on battling the celebrity pair.$"
 
-gTVBravoTrainerBattleTowerText6:: @ 81A7F0E
+BravoTrainerBattleTower_Text_Satisfied:: @ 81A7F0E
 	.string "This is what the TRAINER had to say:\n"
 	.string "“I'm satisfied!”\p"
 	.string "Now isn't that a refreshing reply?\n"
@@ -218,7 +218,7 @@ gTVBravoTrainerBattleTowerText6:: @ 81A7F0E
 	.string "I found out exactly how satisfied\n"
 	.string "when I heard the TRAINER say this:$"
 
-gTVBravoTrainerBattleTowerText7:: @ 81A8004
+BravoTrainerBattleTower_Text_Unsatisfied:: @ 81A8004
 	.string "This is what the TRAINER had to say:\n"
 	.string "“I'm not satisfied...”\p"
 	.string "Our TRAINER was obviously a little down\n"
@@ -228,22 +228,22 @@ gTVBravoTrainerBattleTowerText7:: @ 81A8004
 	.string "Anyway, I found out how dissatisfied\n"
 	.string "our TRAINER was when I heard this:$"
 
-gTVBravoTrainerBattleTowerText8:: @ 81A8119
+BravoTrainerBattleTower_Text_None1:: @ 81A8119
 	.string "None$"
 
-gTVBravoTrainerBattleTowerText9:: @ 81A811E
+BravoTrainerBattleTower_Text_None2:: @ 81A811E
 	.string "None$"
 
-gTVBravoTrainerBattleTowerText10:: @ 81A8123
+BravoTrainerBattleTower_Text_None3:: @ 81A8123
 	.string "None$"
 
-gTVBravoTrainerBattleTowerText11:: @ 81A8128
+BravoTrainerBattleTower_Text_None4:: @ 81A8128
 	.string "None$"
 
-gTVBravoTrainerBattleTowerText12:: @ 81A812D
+BravoTrainerBattleTower_Text_Response:: @ 81A812D
 	.string "“{STR_VAR_1}.”$"
 
-gTVBravoTrainerBattleTowerText13:: @ 81A8133
+BravoTrainerBattleTower_Text_ResponseSatisfied:: @ 81A8133
 	.string "“{STR_VAR_1}.”\n"
 	.string "Now isn't that great?\p"
 	.string "It really expresses {STR_VAR_2}'s joy,\n"
@@ -252,7 +252,7 @@ gTVBravoTrainerBattleTowerText13:: @ 81A8133
 	.string "end... It really was what you'd call\l"
 	.string "“{STR_VAR_1}”!$"
 
-gTVBravoTrainerBattleTowerText14:: @ 81A81BC
+BravoTrainerBattleTower_Text_ResponseUnsatisfied:: @ 81A81BC
 	.string "“{STR_VAR_1}.”\n"
 	.string "Now isn't that fitting?\p"
 	.string "That battle with {STR_VAR_3} at the\n"
@@ -261,7 +261,7 @@ gTVBravoTrainerBattleTowerText14:: @ 81A81BC
 	.string "{STR_VAR_2}'s disappointment comes across\n"
 	.string "loud and clear, I'd say!$"
 
-gTVBravoTrainerBattleTowerText15:: @ 81A8267
+BravoTrainerBattleTower_Text_Outro:: @ 81A8267
 	.string "Bravo, {STR_VAR_1}!\n"
 	.string "Bravo, {STR_VAR_2}!\p"
 	.string "I hope we can count on seeing\n"
