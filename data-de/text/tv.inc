@@ -1,4 +1,4 @@
-FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
+ContestLobby_Text_InterviewRequest:: @ 81A6F7C
 	.string "Du hast an einem POKéMON WETTBEWERB\n"
 	.string "teilgenommen, stimmt's?\p"
 	.string "Da kannst du mir doch etwas über\n"
@@ -8,14 +8,14 @@ FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
 	.string "Würdest du mir wohl einige Fragen\n"
 	.string "beantworten?$"
 
-FallarborTown_ContestLobby_Text_1A704E:: @ 81A704E
+ContestLobby_Text_DescribeContest:: @ 81A704E
 	.string "Oh, das machst du?\n"
 	.string "Herzlichen Dank.\p"
 	.string "Beschreibe mir doch kurz den WETTBE-\n"
 	.string "WERB, an dem du gerade teilgenommen\l"
 	.string "hast.$"
 
-FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
+ContestLobby_Text_WhatImageWhenYouHearX:: @ 81A70A5
 	.string "Ah, ich verstehe.\n"
 	.string "Das ist ein bewegender Kommentar.\p"
 	.string "Man bekommt ein gutes Bild davon,\n"
@@ -24,7 +24,7 @@ FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
 	.string "Wenn du das Wort “{STR_VAR_2}” hörst,\n"
 	.string "was für ein Bild hast du dann vor Augen?$"
 
-FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
+ContestLobby_Text_ThatsAllForInterview:: @ 81A7153
 	.string "Oh, hm.\p"
 	.string "Das stellst du dir also unter dem\n"
 	.string "Begriff “{STR_VAR_2}” vor.\p"
@@ -37,16 +37,16 @@ FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
 	.string "sie auch ihren Weg ins Fernsehen.\l"
 	.string "Ich hoffe, du schaltest dann ein!$"
 
-FallarborTown_ContestLobby_Text_1A7256:: @ 81A7256
+ContestLobby_Text_PleaseDoShareStoryWithMe:: @ 81A7256
 	.string "Oh, das ist wirklich schade...\p"
 	.string "Nun, wenn du eine gute Geschichte auf\n"
 	.string "Lager hast, melde dich wieder bei mir.$"
 
-FallarborTown_ContestLobby_Text_1A72A8:: @ 81A72A8
+ContestLobby_Text_LookingForwardToNextContest:: @ 81A72A8
 	.string "Ich freue mich schon auf deinen\n"
 	.string "nächsten POKéMON-WETTBEWERB.$"
 
-gTVBravoTrainerText1:: @ 81A72DE
+gTVBravoTrainerText00:: @ 81A72DE
 	.string "Yeah!\n"
 	.string "Es ist BRAVO TRAINER Zeit!\p"
 	.string "Heute stellen wir ein POKéMON vor,\n"
@@ -54,20 +54,20 @@ gTVBravoTrainerText1:: @ 81A72DE
 	.string "Dieses POKéMON hat eine {STR_VAR_2}-\n"
 	.string "Wertung in der {STR_VAR_3} Klasse bekommen.$"
 
-gTVBravoTrainerText2:: @ 81A736B
+gTVBravoTrainerText01:: @ 81A736B
 	.string "Begrüßt {STR_VAR_2},\n"
 	.string "das {STR_VAR_1}!\p"
 	.string "Der Kosename {STR_VAR_2}...\p"
 	.string "Selbst dieser Kosename strahlt die\n"
 	.string "Aura von “{STR_VAR_3}” aus!$"
 
-gTVBravoTrainerText3:: @ 81A73CA
+gTVBravoTrainerText02:: @ 81A73CA
 	.string "Als der TRAINER {STR_VAR_1} sein POKéMON\n"
 	.string "in einem WETTBEWERB antreten ließ,\l"
 	.string "haben wir es geschafft, einige leiden-\l"
 	.string "schaftliche Aussagen zu erhalten.$"
 
-gTVBravoTrainerText4:: @ 81A744D
+gTVBravoTrainerText03:: @ 81A744D
 	.string "Als {STR_VAR_1} nach dem WETTBEWERB über\n"
 	.string "diesen befragt wurde, bekamen wir ein\l"
 	.string "breites Grinsen und folgende Antwort:\l"
@@ -77,7 +77,7 @@ gTVBravoTrainerText4:: @ 81A744D
 	.string "Die Aussage passt absolut zu {STR_VAR_1},\n"
 	.string "das ist meine Meinung!$"
 
-gTVBravoTrainerText5:: @ 81A7508
+gTVBravoTrainerText04:: @ 81A7508
 	.string "Als {STR_VAR_1} nach dem WETTBEWERB über\n"
 	.string "diesen befragt wurde, bekamen wir die\l"
 	.string "bittere Antwort: “{STR_VAR_2}!”\p"
@@ -86,7 +86,7 @@ gTVBravoTrainerText5:: @ 81A7508
 	.string "Die Enttäuschung von {STR_VAR_1} wird hier\n"
 	.string "mehr als deutlich, das ist meine Meinung.$"
 
-gTVBravoTrainerText6:: @ 81A75CE
+gTVBravoTrainerText05:: @ 81A75CE
 	.string "Möchtet ihr auch wissen, was {STR_VAR_1}\n"
 	.string "sich unter {STR_VAR_2} vorstellt?\p"
 	.string "Ihr könnt darauf wetten, dass wir\n"
@@ -96,12 +96,12 @@ gTVBravoTrainerText6:: @ 81A75CE
 	.string "Das ist es, was {STR_VAR_2} für {STR_VAR_1}\n"
 	.string "repräsentiert!$"
 
-gTVBravoTrainerText7:: @ 81A768D
+gTVBravoTrainerText06:: @ 81A768D
 	.string "Die letzte Attacke, {STR_VAR_2}, die\n"
 	.string "von {STR_VAR_1} eingesetzt wurde,\l"
 	.string "ist ganz klar “{STR_VAR_3}!”$"
 
-gTVBravoTrainerText8:: @ 81A76C5
+gTVBravoTrainerText07:: @ 81A76C5
 	.string "Bravo, {STR_VAR_1}!\n"
 	.string "Bravo, {STR_VAR_2}!\p"
 	.string "Wir hoffen, dass {STR_VAR_1} noch höhere\n"
@@ -109,7 +109,7 @@ gTVBravoTrainerText8:: @ 81A76C5
 	.string "Unsere Zeit ist mal wieder abgelaufen!\n"
 	.string "Bis zum nächsten Mal! Tschüss!$"
 
-gTVBravoTrainerText9:: @ 81A774F
+gTVBravoTrainerText08:: @ 81A774F
 	.string "Wir stellen vor: TRAINERS {STR_VAR_1}!$"
 
 BattleTower_Lobby_Text_1A776D:: @ 81A776D

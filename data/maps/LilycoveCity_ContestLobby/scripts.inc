@@ -4,7 +4,7 @@ LilycoveCity_ContestLobby_MapScripts:: @ 8158866
 	.byte 0
 
 LilycoveCity_ContestLobby_OnTransition:: @ 8158871
-	call Common_EventScript_TryShowContestReporter
+	call ContestLobby_EventScript_TryShowReporter
 	end
 
 LilycoveCity_ContestLobby_OnFrame:: @ 8158877

@@ -3,7 +3,7 @@ FallarborTown_ContestLobby_MapScripts:: @ 81539C1
 	.byte 0
 
 FallarborTown_ContestLobby_OnTransition:: @ 81539C7
-	call Common_EventScript_TryShowContestReporter
+	call ContestLobby_EventScript_TryShowReporter
 	end
 
 FallarborTown_ContestLobby_EventScript_ContestReceptionist:: @ 81539CD

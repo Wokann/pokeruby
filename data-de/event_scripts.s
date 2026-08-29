@@ -1358,79 +1358,76 @@ SlateportCity_PokemonFanClub_EventScript_AlreadyInterviewed:: @ 81AE0AC
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_Reporter:: @ 81AE0B6
-LilycoveCity_ContestLobby_EventScript_Reporter:: @ 81AE0B6
-SlateportCity_ContestLobby_EventScript_Reporter:: @ 81AE0B6
-VerdanturfTown_ContestLobby_EventScript_Reporter:: @ 81AE0B6
+ContestLobby_EventScript_Reporter:: @ 81AE0B6
 	lock
 	faceplayer
-	goto_if_set FLAG_TEMP_2, FallarborTown_ContestLobby_EventScript_1AE17E
-	setvar VAR_0x8005, 6
+	goto_if_set FLAG_TEMP_2, ContestLobby_EventScript_AlreadyInterviewedByReporter
+	setvar VAR_0x8005, TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE
 	special InterviewBefore
-	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE17E
+	compare VAR_RESULT, TRUE
+	goto_if_eq ContestLobby_EventScript_AlreadyInterviewedByReporter
 	copyvar VAR_0x8009, VAR_0x8006
-	msgbox FallarborTown_ContestLobby_Text_1A6F7C, MSGBOX_YESNO
+	msgbox ContestLobby_Text_InterviewRequest, MSGBOX_YESNO
 	compare VAR_RESULT, YES
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE0F8
+	goto_if_eq ContestLobby_EventScript_AcceptReporterInterview
 	compare VAR_RESULT, NO
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
+	goto_if_eq ContestLobby_EventScript_DeclineReporterInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE0F8:: @ 81AE0F8
-	msgbox FallarborTown_ContestLobby_Text_1A704E, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 11
+ContestLobby_EventScript_AcceptReporterInterview:: @ 81AE0F8
+	msgbox ContestLobby_Text_DescribeContest, MSGBOX_DEFAULT
+	setvar VAR_0x8004, EASY_CHAT_TYPE_CONTEST_INTERVIEW
 	copyvar VAR_0x8005, VAR_0x8009
-	setvar VAR_0x8006, 0
+	setvar VAR_0x8006, FALSE
 	call Common_EventScript_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_RESULT, 1
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE137
-	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
+	compare VAR_RESULT, TRUE
+	goto_if_eq ContestLobby_EventScript_SubmitReporterAnswer
+	compare VAR_RESULT, FALSE
+	goto_if_eq ContestLobby_EventScript_DeclineReporterInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE12D:: @ 81AE12D
-	msgbox FallarborTown_ContestLobby_Text_1A7256, MSGBOX_DEFAULT
+ContestLobby_EventScript_DeclineReporterInterview:: @ 81AE12D
+	msgbox ContestLobby_Text_PleaseDoShareStoryWithMe, MSGBOX_DEFAULT
 	release
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE137:: @ 81AE137
+ContestLobby_EventScript_SubmitReporterAnswer:: @ 81AE137
 	setvar VAR_0x8004, 24
 	special SetContestCategoryStringVarForInterview
-	msgbox FallarborTown_ContestLobby_Text_1A70A5, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 11
+	msgbox ContestLobby_Text_WhatImageWhenYouHearX, MSGBOX_DEFAULT
+	setvar VAR_0x8004, EASY_CHAT_TYPE_CONTEST_INTERVIEW
 	copyvar VAR_0x8005, VAR_0x8009
-	setvar VAR_0x8006, 1
+	setvar VAR_0x8006, TRUE
 	call Common_EventScript_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare VAR_RESULT, 0
-	goto_if_eq FallarborTown_ContestLobby_EventScript_1AE12D
-	msgbox FallarborTown_ContestLobby_Text_1A7153, MSGBOX_DEFAULT
+	compare VAR_RESULT, FALSE
+	goto_if_eq ContestLobby_EventScript_DeclineReporterInterview
+	msgbox ContestLobby_Text_ThatsAllForInterview, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_2
-	setvar VAR_0x8005, 6
+	setvar VAR_0x8005, TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE
 	goto Interview_EventScript_EndInterview
 	end
 
-FallarborTown_ContestLobby_EventScript_1AE17E:: @ 81AE17E
-	msgbox FallarborTown_ContestLobby_Text_1A72A8, MSGBOX_DEFAULT
+ContestLobby_EventScript_AlreadyInterviewedByReporter:: @ 81AE17E
+	msgbox ContestLobby_Text_LookingForwardToNextContest, MSGBOX_DEFAULT
 	release
 	end
 
-Common_EventScript_TryShowContestReporter:: @ 81AE188
-	goto_if_ne VAR_LINK_CONTEST_ROOM_STATE, 2, Common_EventScript_DontShowContestReporter
-	setvar VAR_0x8005, 6
+ContestLobby_EventScript_TryShowReporter:: @ 81AE188
+	goto_if_ne VAR_LINK_CONTEST_ROOM_STATE, 2, ContestLobby_EventScript_DontShowReporter
+	setvar VAR_0x8005, TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE
 	special InterviewBefore
-	goto_if_eq VAR_RESULT, TRUE, Common_EventScript_DontShowContestReporter
+	goto_if_eq VAR_RESULT, TRUE, ContestLobby_EventScript_DontShowReporter
 	switch VAR_CONTEST_LOCATION
-	case 0, Common_EventScript_DontShowContestReporter
-	case 2, FallarborTown_ContestLobby_EventScript_ShowContestReporter
-	case 1, VerdanturfTown_ContestLobby_EventScript_ShowContestReporter
-	case 3, SlateportCity_ContestLobby_EventScript_ShowContestReporter
-	case 4, LilycoveCity_ContestLobby_EventScript_ShowContestReporter
-	case 5, Common_EventScript_DontShowContestReporter
+	case CONTEST_LOCATION_NONE, ContestLobby_EventScript_DontShowReporter
+	case CONTEST_LOCATION_FALLARBOR, FallarborTown_ContestLobby_EventScript_ShowContestReporter
+	case CONTEST_LOCATION_VERDANTURF, VerdanturfTown_ContestLobby_EventScript_ShowContestReporter
+	case CONTEST_LOCATION_SLATEPORT, SlateportCity_ContestLobby_EventScript_ShowContestReporter
+	case CONTEST_LOCATION_LILYCOVE, LilycoveCity_ContestLobby_EventScript_ShowContestReporter
+	case CONTEST_LOCATION_LINK, ContestLobby_EventScript_DontShowReporter
 	end
 
 FallarborTown_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1EE
@@ -1449,7 +1446,7 @@ LilycoveCity_ContestLobby_EventScript_ShowContestReporter:: @ 81AE1FA
 	clearflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
 	return
 
-Common_EventScript_DontShowContestReporter:: @ 81AE1FE
+ContestLobby_EventScript_DontShowReporter:: @ 81AE1FE
 	return
 
 BattleTower_Lobby_EventScript_1AE1FF:: @ 81AE1FF

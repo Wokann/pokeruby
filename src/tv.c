@@ -174,15 +174,15 @@ extern const u8 gTVSmartShopperText10[];
 extern const u8 gTVSmartShopperText11[];
 extern const u8 gTVSmartShopperText12[];
 extern const u8 gTVSmartShopperText13[];
-extern const u8 gTVBravoTrainerText1[];
-extern const u8 gTVBravoTrainerText2[];
-extern const u8 gTVBravoTrainerText3[];
-extern const u8 gTVBravoTrainerText4[];
-extern const u8 gTVBravoTrainerText5[];
-extern const u8 gTVBravoTrainerText6[];
-extern const u8 gTVBravoTrainerText7[];
-extern const u8 gTVBravoTrainerText8[];
-extern const u8 gTVBravoTrainerText9[];
+extern const u8 gTVBravoTrainerText00[];
+extern const u8 gTVBravoTrainerText01[];
+extern const u8 gTVBravoTrainerText02[];
+extern const u8 gTVBravoTrainerText03[];
+extern const u8 gTVBravoTrainerText04[];
+extern const u8 gTVBravoTrainerText05[];
+extern const u8 gTVBravoTrainerText06[];
+extern const u8 gTVBravoTrainerText07[];
+extern const u8 gTVBravoTrainerText08[];
 extern const u8 gTVBravoTrainerBattleTowerText1[];
 extern const u8 gTVBravoTrainerBattleTowerText2[];
 extern const u8 gTVBravoTrainerBattleTowerText3[];
@@ -341,15 +341,15 @@ const u8 *const gTVSmartShopperTextGroup[] =
 
 const u8 *const gTVBravoTrainerTextGroup[] =
 {
-    gTVBravoTrainerText1,
-    gTVBravoTrainerText2,
-    gTVBravoTrainerText3,
-    gTVBravoTrainerText4,
-    gTVBravoTrainerText5,
-    gTVBravoTrainerText6,
-    gTVBravoTrainerText7,
-    gTVBravoTrainerText8,
-    gTVBravoTrainerText9,
+    gTVBravoTrainerText00,
+    gTVBravoTrainerText01,
+    gTVBravoTrainerText02,
+    gTVBravoTrainerText03,
+    gTVBravoTrainerText04,
+    gTVBravoTrainerText05,
+    gTVBravoTrainerText06,
+    gTVBravoTrainerText07,
+    gTVBravoTrainerText08,
 };
 
 const u8 *const gTVBravoTrainerBattleTowerTextGroup[] =

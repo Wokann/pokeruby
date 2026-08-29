@@ -3,7 +3,7 @@ SlateportCity_ContestLobby_MapScripts:: @ 8155411
 	.byte 0
 
 SlateportCity_ContestLobby_OnTransition:: @ 8155417
-	call Common_EventScript_TryShowContestReporter
+	call ContestLobby_EventScript_TryShowReporter
 	end
 
 SlateportCity_ContestLobby_EventScript_ContestReceptionist:: @ 815541D

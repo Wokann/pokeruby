@@ -3,7 +3,7 @@ VerdanturfTown_ContestLobby_MapScripts:: @ 8153D6A
 	.byte 0
 
 VerdanturfTown_ContestLobby_OnTransition:: @ 8153D70
-	call Common_EventScript_TryShowContestReporter
+	call ContestLobby_EventScript_TryShowReporter
 	end
 
 VerdanturfTown_ContestLobby_EventScript_ContestReceptionist:: @ 8153D76

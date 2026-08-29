@@ -1,4 +1,4 @@
-FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
+ContestLobby_Text_InterviewRequest:: @ 81A6F7C
 	.string "Oh, hello! You were in a POKéMON CONTEST,\n"
 	.string "weren't you?\l"
 	.string "It's easy to tell from your POKéMON.\p"
@@ -7,13 +7,13 @@ FallarborTown_ContestLobby_Text_1A6F7C:: @ 81A6F7C
 	.string "If I may, would you be willing to answer\n"
 	.string "a few questions?$"
 
-FallarborTown_ContestLobby_Text_1A704E:: @ 81A704E
+ContestLobby_Text_DescribeContest:: @ 81A704E
 	.string "Oh, you will?\n"
 	.string "Thank you.\p"
 	.string "Briefly, how would you describe the\n"
 	.string "CONTEST you just entered?$"
 
-FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
+ContestLobby_Text_WhatImageWhenYouHearX:: @ 81A70A5
 	.string "Ah, I see.\n"
 	.string "That's a very edifying comment.\p"
 	.string "You get a good feel for what the\n"
@@ -22,7 +22,7 @@ FallarborTown_ContestLobby_Text_1A70A5:: @ 81A70A5
 	.string "When you hear the word “{STR_VAR_2},”\n"
 	.string "what image do you get?$"
 
-FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
+ContestLobby_Text_ThatsAllForInterview:: @ 81A7153
 	.string "I see!\p"
 	.string "So that's how you imagine the concept\n"
 	.string "of “{STR_VAR_2}” to be.\p"
@@ -34,16 +34,16 @@ FallarborTown_ContestLobby_Text_1A7153:: @ 81A7153
 	.string "make it to television.\l"
 	.string "I hope you'll look forward to it!$"
 
-FallarborTown_ContestLobby_Text_1A7256:: @ 81A7256
+ContestLobby_Text_PleaseDoShareStoryWithMe:: @ 81A7256
 	.string "Oh, too bad...\p"
 	.string "Well, if you come across a good story,\n"
 	.string "please do share it with me.$"
 
-FallarborTown_ContestLobby_Text_1A72A8:: @ 81A72A8
+ContestLobby_Text_LookingForwardToNextContest:: @ 81A72A8
 	.string "I'll be looking forward to your next\n"
 	.string "POKéMON CONTEST.$"
 
-gTVBravoTrainerText1:: @ 81A72DE
+gTVBravoTrainerText00:: @ 81A72DE
 	.string "Yeah!\n"
 	.string "It's BRAVO TRAINER time!\p"
 	.string "Today, we're going to profile a POKéMON\n"
@@ -51,20 +51,20 @@ gTVBravoTrainerText1:: @ 81A72DE
 	.string "Now, this POKéMON boasts a {STR_VAR_2}\n"
 	.string "rating in the {STR_VAR_3} Rank.$"
 
-gTVBravoTrainerText2:: @ 81A736B
+gTVBravoTrainerText01:: @ 81A736B
 	.string "Introducing {STR_VAR_2} the\n"
 	.string "{STR_VAR_1}!\p"
 	.string "The nickname {STR_VAR_2}...\p"
 	.string "Even the nickname exudes an air that\n"
 	.string "proclaims “{STR_VAR_3}”!$"
 
-gTVBravoTrainerText3:: @ 81A73CA
+gTVBravoTrainerText02:: @ 81A73CA
 	.string "Anyway, when the TRAINER {STR_VAR_1}\n"
 	.string "entered the POKéMON in a CONTEST,\l"
 	.string "we managed to get a few impassioned\l"
 	.string "quotes about the trusty partner.$"
 
-gTVBravoTrainerText4:: @ 81A744D
+gTVBravoTrainerText03:: @ 81A744D
 	.string "Asked about the CONTEST afterwards,\n"
 	.string "{STR_VAR_1} happily replied with a huge\l"
 	.string "grin, “{STR_VAR_2}!”\p"
@@ -73,7 +73,7 @@ gTVBravoTrainerText4:: @ 81A744D
 	.string "That line perfectly suits {STR_VAR_1}\n"
 	.string "right now, I'd say!$"
 
-gTVBravoTrainerText5:: @ 81A7508
+gTVBravoTrainerText04:: @ 81A7508
 	.string "Asked about the CONTEST afterwards,\n"
 	.string "{STR_VAR_1} replied with a tinge of\l"
 	.string "bitterness, “{STR_VAR_2}.”\p"
@@ -82,7 +82,7 @@ gTVBravoTrainerText5:: @ 81A7508
 	.string "{STR_VAR_1}'s disappointment comes across\n"
 	.string "loud and clear, I'd say!$"
 
-gTVBravoTrainerText6:: @ 81A75CE
+gTVBravoTrainerText05:: @ 81A75CE
 	.string "Wouldn't you also like to know what\n"
 	.string "{STR_VAR_1} imagines {STR_VAR_2} to be?\p"
 	.string "You bet we did!\n"
@@ -92,12 +92,12 @@ gTVBravoTrainerText6:: @ 81A75CE
 	.string "That's what the concept of {STR_VAR_2}\n"
 	.string "represents to {STR_VAR_1}!$"
 
-gTVBravoTrainerText7:: @ 81A768D
+gTVBravoTrainerText06:: @ 81A768D
 	.string "The last move {STR_VAR_2} used by\n"
 	.string "the {STR_VAR_1} is entirely about\l"
 	.string "“{STR_VAR_3}”!$"
 
-gTVBravoTrainerText8:: @ 81A76C5
+gTVBravoTrainerText07:: @ 81A76C5
 	.string "Bravo, {STR_VAR_1}!\n"
 	.string "Bravo, {STR_VAR_2}!\p"
 	.string "I hope we can count on seeing\n"
@@ -105,7 +105,7 @@ gTVBravoTrainerText8:: @ 81A76C5
 	.string "That's all the time we have!\n"
 	.string "Until next time, see you!$"
 
-gTVBravoTrainerText9:: @ 81A774F
+gTVBravoTrainerText08:: @ 81A774F
 	.string "Introducing the TRAINER's {STR_VAR_1}!$"
 
 BattleTower_Lobby_Text_1A776D:: @ 81A776D
