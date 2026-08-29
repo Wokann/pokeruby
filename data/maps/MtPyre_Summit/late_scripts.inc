@@ -1,0 +1,29 @@
+MtPyre_Summit_EventScript_EvilTeamGrunt1:: @ 81B2DA9
+	.ifdef SAPPHIRE
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_1, MtPyre_Summit_Text_TeamAquaGrunt1Intro, MtPyre_Summit_Text_TeamAquaGrunt1Defeat
+	msgbox MtPyre_Summit_Text_TeamAquaGrunt1PostBattle, MSGBOX_AUTOCLOSE
+	.else
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_1, MtPyre_Summit_Text_TeamMagmaGrunt1Intro, MtPyre_Summit_Text_TeamMagmaGrunt1Defeat
+	msgbox MtPyre_Summit_Text_TeamMagmaGrunt1PostBattle, MSGBOX_AUTOCLOSE
+	.endif
+	end
+
+MtPyre_Summit_EventScript_EvilTeamGrunt2:: @ 81B2DC0
+	.ifdef SAPPHIRE
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_2, MtPyre_Summit_Text_TeamAquaGrunt2Intro, MtPyre_Summit_Text_TeamAquaGrunt2Defeat
+	msgbox MtPyre_Summit_Text_TeamAquaGrunt2PostBattle, MSGBOX_AUTOCLOSE
+	.else
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_2, MtPyre_Summit_Text_TeamMagmaGrunt2Intro, MtPyre_Summit_Text_TeamMagmaGrunt2Defeat
+	msgbox MtPyre_Summit_Text_TeamMagmaGrunt2PostBattle, MSGBOX_AUTOCLOSE
+	.endif
+	end
+
+MtPyre_Summit_EventScript_EvilTeamGrunt3:: @ 81B2DD7
+	.ifdef SAPPHIRE
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_3, MtPyre_Summit_Text_TeamAquaGrunt3Intro, MtPyre_Summit_Text_TeamAquaGrunt3Defeat
+	msgbox MtPyre_Summit_Text_TeamAquaGrunt3PostBattle, MSGBOX_AUTOCLOSE
+	.else
+	trainerbattle_single TRAINER_MT_PYRE_SUMMIT_GRUNT_3, MtPyre_Summit_Text_TeamMagmaGrunt3Intro, MtPyre_Summit_Text_TeamMagmaGrunt3Defeat
+	msgbox MtPyre_Summit_Text_TeamMagmaGrunt3PostBattle, MSGBOX_AUTOCLOSE
+	.endif
+	end

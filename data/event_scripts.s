@@ -1538,7 +1538,7 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	.include "data/text/day_care.inc"
 
 	.include "data/maps/MtChimney/late_scripts.inc"
-	.include "data/scripts/magma_summit.inc"
+	.include "data/maps/MtPyre_Summit/late_scripts.inc"
 
 	.include "data/maps/MtChimney/aqua_text.inc"
 	.include "data/maps/MtChimney/magma_text.inc"
@@ -1546,8 +1546,8 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 	.include "data/text/magma_awakening.inc"
 	.include "data/text/aqua_settled.inc"
 	.include "data/text/magma_settled.inc"
-	.include "data/text/aqua_summit.inc"
-	.include "data/text/magma_summit.inc"
+	.include "data/maps/MtPyre_Summit/aqua_text.inc"
+	.include "data/maps/MtPyre_Summit/magma_text.inc"
 
 gUnknown_081B694A:: @ 81B694A
 	animateflash 1

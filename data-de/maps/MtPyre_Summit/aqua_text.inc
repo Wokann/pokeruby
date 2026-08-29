@@ -1,120 +1,119 @@
-MtPyre_Summit_Text_1B5CFD:: @ 81B5CFD
-	.string "Ich werde dir zeigen, wie unheimlich\n"
-	.string "gruselig TEAM MAGMA sein kann!$"
+MtPyre_Summit_Text_TeamAquaGrunt1Intro: @ 81B50C3
+	.string "Ich zeige dir, wie unheimlich gruselig\n"
+	.string "TEAM AQUA sein kann!$"
 
-MtPyre_Summit_Text_1B5D30:: @ 81B5D30
+MtPyre_Summit_Text_TeamAquaGrunt1Defeat: @ 81B50F5
 	.string "Und du glaubst wirklich, du bist der\n"
-	.string "Stärke TEAM MAGMAS gewachsen?!?$"
+	.string "Stärke TEAM AQUAS gewachsen?!?$"
 
-MtPyre_Summit_Text_1B5D6D:: @ 81B5D6D
+MtPyre_Summit_Text_TeamAquaGrunt1PostBattle: @ 81B5131
 	.string "Ja, du bist ganz schön stark...\n"
 	.string "Aber wir sind viele...$"
 
-MtPyre_Summit_Text_1B5DA2:: @ 81B5DA2
-	.string "Was ist los mit dir? Was kann ein kleines\n"
-	.string "Kind schon gegen uns ausrichten?$"
+MtPyre_Summit_Text_TeamAquaGrunt2Intro: @ 81B5166
+	.string "Was ist los mit dir? Was kann ein\n"
+	.string "kleines Kind schon ausrichten?$"
 
-MtPyre_Summit_Text_1B5DDB:: @ 81B5DDB
+MtPyre_Summit_Text_TeamAquaGrunt2Defeat: @ 81B519F
 	.string "Bumms...\n"
 	.string "Zu stark... Viel zu stark...$"
 
-MtPyre_Summit_Text_1B5DF1:: @ 81B5DF1
+MtPyre_Summit_Text_TeamAquaGrunt2PostBattle: @ 81B51B5
 	.string "Du weißt doch gar nichts! Misch dich\n"
 	.string "besser nicht in unsere Sachen ein!$"
 
-MtPyre_Summit_Text_1B5E27:: @ 81B5E27
+MtPyre_Summit_Text_TeamAquaGrunt3Intro: @ 81B51EB
 	.string "Hey, ich kenne dich vom SCHLOTBERG!\n"
 	.string "Der Tag der Abrechnung ist gekommen!$"
 
-MtPyre_Summit_Text_1B5E60:: @ 81B5E60
+MtPyre_Summit_Text_TeamAquaGrunt3Defeat: @ 81B5224
 	.string "Aaaaargh!\n"
 	.string "Schon wieder von einem Kind besiegt...$"
 
-MtPyre_Summit_Text_1B5E84:: @ 81B5E84
+MtPyre_Summit_Text_TeamAquaGrunt3PostBattle: @ 81B5248
 	.string "Ach, das spielt keine Rolle.\n"
 	.string "Wir haben Zeit herausgeschlagen!\p"
 	.string "Der BOSS müsste mittlerweile haben, was\n"
 	.string "er besorgen wollte!$"
 
-MtPyre_Summit_Text_1B5EEC:: @ 81B5EEC
-	.string "MARC: Nicht du schon wieder!\p"
+MtPyre_Summit_Text_ArchieClaimsRedOrb: @ 81B52B0
+	.string "ADRIAN: Nicht du schon wieder...\p"
 	.string "Du bist uns ja sehr schnell auf die Spur\n"
 	.string "gekommen, aber es ist schon zu spät.\p"
-	.string "Die BLAUE KUGEL, die sich oben\n"
+	.string "Die ROTE KUGEL, die sich oben\n"
 	.string "auf dem PYROBERG befindet...\l"
-	.string "Ich, MARC, sage, sie gehört mir!\p"
+	.string "Ich, ADRIAN, sage, sie gehört mir!\p"
 	.string "Hahaha... Jetzt werden meine\n"
 	.string "Visionen Wirklichkeit!\p"
 	.string "Los, Mannschaft!\n"
 	.string "GRAPHITPORT CITY heißt unser Ziel.$"
 
-MtPyre_Summit_Text_1B5FE6:: @ 81B5FE6
+MtPyre_Summit_Text_OldLadyGivesBlueOrb: @ 81B53AB
 	.string "Oh, neeeeiiinnn...\n"
 	.string "Das darf nicht wahr sein!\p"
-	.string "Wie konnten sie nur an die\n"
-	.string "BLAUE KUGEL gelangen?!?\p"
-	.string "Die BLAUE und die ROTE KUGEL dürfen nie\n"
-	.string "getrennt sein. Sie gehören zusammen!!!\p"
+	.string "Wie konnten sie nur an die ROTE\n"
+	.string "KUGEL gelangen?!?\p"
+	.string "Die BLAUE KUGEL und die ROTE KUGEL\n"
+	.string "dürfen nie getrennt sein.\l"
+	.string "Sie gehören zusammen!!!\p"
 	.string "... ... ... ... ... ... ... ...\n"
 	.string "Hmm...\p"
-	.string "Gut! Nimm die verbliebene\n"
-	.string "ROTE KUGEL an dich.\p"
+	.string "Gut! Nimm die verbliebene BLAUE\n"
+	.string "KUGEL an dich.\p"
 	.string "Bitte folge diesem Schurken und bring\n"
 	.string "die KUGEL zurück!$"
 
-MtPyre_Summit_Text_1B60F9:: @ 81B60F9
-	.string "Die ROTE KUGEL, die dir anvertraut\n"
-	.string "wurde, und die gestohlene\l"
-	.string "BLAUE KUGEL...\p"
+MtPyre_Summit_Text_OldLadyWarnsRedOrbStolen: @ 81B54BE
+	.string "Die BLAUE KUGEL, die dir anvertraut\n"
+	.string "wurde, und die gestohlene ROTE KUGEL...\p"
 	.string "Sie dürfen niemals getrennt werden...\n"
 	.string "Sonst passiert etwas Schreckliches!$"
 
-MtPyre_Summit_Text_1B617B:: @ 81B617B
+MtPyre_Summit_Text_OldLadyKyogreAwakened: @ 81B5540
 	.string "So...\n"
-	.string "GROUDON wurde erweckt...\p"
-	.string "Von der wundersamen KUGEL sagt\n"
-	.string "man, dass sie das wütende GROUDON\l"
-	.string "beruhigt.\p"
-	.string "Es handelt sich um die ROTE KUGEL,\n"
+	.string "KYOGRE wurde erweckt...\p"
+	.string "Von der wundersamen KUGEL sagt man,\n"
+	.string "dass sie das wütende KYOGRE beruhigt.\p"
+	.string "Es handelt sich um die BLAUE KUGEL,\n"
 	.string "die du bei dir trägst...\p"
 	.string "Diese ROTE KUGEL fand man in der\n"
 	.string "URZEITHÖHLE in XENEROVILLE...\p"
 	.string "Es gibt anscheinend eine Verbindung\n"
-	.string "zwischen GROUDON und der\l"
+	.string "zwischen KYOGRE und der \l"
 	.string "URZEITHÖHLE...$"
 
-MtPyre_Summit_Text_1B6283:: @ 81B6283
-	.string "Dieser Mann - er hat die BLAUE KUGEL\n"
+MtPyre_Summit_Text_OldLadyAskReturnBlueOrb: @ 81B5647
+	.string "Dieser Mann - er hat die ROTE KUGEL\n"
 	.string "zurückgebracht.\p"
-	.string "Bringst du die ROTE KUGEL auch an ihren\n"
-	.string "angestammten Platz zurück?$"
+	.string "Bringst du die BLAUE KUGEL auch an\n"
+	.string "ihren angestammten Platz zurück?$"
 
-MtPyre_Summit_Text_1B62E7:: @ 81B62E7
+MtPyre_Summit_Text_OldLadyAskAgainReturnBlueOrb: @ 81B56AB
 	.string "Was soll das?\p"
 	.string "Wenn das Gleichgewicht nicht wiederher-\n"
 	.string "gestellt wird, weiß niemand, was\l"
 	.string "passieren wird!\p"
-	.string "Du wirst die ROTE KUGEL an ihren Platz\n"
+	.string "Du wirst die BLAUE KUGEL an ihren Platz\n"
 	.string "zurückbringen, ja?$"
 
-UnknownString_81B6374: @ 81B6374
+MtPyre_Summit_Text_PlayerHandsBlueOrbToOldLady: @ 81B5739
 	.string "{PLAYER} gibt der alten Frau die\n"
-	.string "ROTE KUGEL.$"
+	.string "BLAUE KUGEL.$"
 
-MtPyre_Summit_Text_1B639C:: @ 81B639C
+MtPyre_Summit_Text_OldLadyThanksForReturningBlueOrb: @ 81B5762
 	.string "Ja...\n"
 	.string "Die beiden KUGELN müssen hier bleiben.\p"
 	.string "So soll es sein, zum Wohle aller in HOENN.$"
 
-MtPyre_Summit_Text_1B63F8:: @ 81B63F8
-	.string "Der Geist des Landes...\p"
-	.string "Das, so heißt es, ist GROUDON in\n"
+MtPyre_Summit_Text_OldLadyExplainsKyogre: @ 81B57BE
+	.string "Der Geist des Meeres...\p"
+	.string "Das, so heißt es, ist KYOGRE in\n"
 	.string "POKéMON-Gestalt...\p"
 	.string "So wie wir und die POKéMON leben, ist\n"
-	.string "auch dieses Land lebendig...\p"
-	.string "GROUDON hat uns das gelehrt.$"
+	.string "auch das Meer lebendig...\p"
+	.string "KYOGRE hat uns das gelehrt.$"
 
-MtPyre_Summit_Text_1B64B3:: @ 81B64B3
+MtPyre_Summit_Text_AquaOldManWillYouHearOutMyTale: @ 81B586F
 	.string "Am PYROBERG legen wir die Geister der\n"
 	.string "POKéMON, die von uns gegangen sind, zur\l"
 	.string "Ruhe...\p"
@@ -127,15 +126,15 @@ MtPyre_Summit_Text_1B64B3:: @ 81B64B3
 	.string "Eine lange, sehr alte Geschichte der\l"
 	.string "HOENN-Region?$"
 
-MtPyre_Summit_Text_1B65D6:: @ 81B65D6
+MtPyre_Summit_Text_AquaOldManSeaAndLandTale: @ 81B5992
 	.string "Es geschah vor langer, langer Zeit...\p"
 	.string "Die Welt erbebte unter der Auseinander-\n"
-	.string "setzung der POKéMON des Landes mit den\l"
-	.string "POKéMON des Meeres...\p"
-	.string "Die POKéMON des Landes erschufen\n"
-	.string "Berge und Kontinente...\p"
+	.string "setzung der POKéMON des Meeres mit den\l"
+	.string "POKéMON des Landes...\p"
 	.string "Die POKéMON des Meeres erschufen hohe\n"
 	.string "Wellen und tiefe Meeresbecken...\p"
+	.string "Die POKéMON des Landes erschufen\n"
+	.string "Berge und Kontinente...\p"
 	.string "Das Duell wütete ohne absehbares Ende.\p"
 	.string "Die Welt wurde von erbarmungslosen\n"
 	.string "Stürmen und unglaublichen Infernos\l"
@@ -145,21 +144,21 @@ MtPyre_Summit_Text_1B65D6:: @ 81B65D6
 	.string "Licht strahlte von den beiden KUGELN\n"
 	.string "und beruhigte die Kontrahenten.\p"
 	.string "Die beruhigten POKéMON verbargen sich\n"
-	.string "in den Tiefen des Meeres und der Erde,\l"
+	.string "in den Tiefen des Meeres und der Erde\l"
 	.string "und eines Tages verschwanden sie.$"
 
-MtPyre_Summit_Text_1B6823:: @ 81B6823
+MtPyre_Summit_Text_AquaOldManDeclineTale: @ 81B5BD7
 	.string "Ich verstehe...\n"
 	.string "Nun, das ist auch in Ordnung...$"
 
-MtPyre_Summit_Text_1B6848:: @ 81B6848
-	.string "MARC: Du...\n"
-	.string "Du hast GROUDON aufgehalten...\p"
+MtPyre_Summit_Text_ArchieReturnsRedOrb: @ 81B5BFC
+	.string "ADRIAN: Du...\n"
+	.string "Du hast KYOGRE aufgehalten...\p"
 	.string "Das sollte mich nicht überraschen...\p"
 	.string "Nun habe ich verstanden, dass es nicht\n"
 	.string "an den Menschen ist, das Gleichgewicht\l"
 	.string "zwischen Land und Meer zu stören...\p"
-	.string "Daher bin ich hier, um die\n"
-	.string "BLAUE KUGEL zurückzubringen...\p"
+	.string "Daher bin ich hier, um die ROTE KUGEL\n"
+	.string "zurückzubringen...\p"
 	.string "Ich glaube nicht, dass wir uns wieder\n"
 	.string "sehen werden... Leb wohl...$"

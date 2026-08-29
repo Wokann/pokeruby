@@ -75,7 +75,7 @@ CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	clearflag FLAG_HIDE_SOOTOPOLIS_RESIDENTS
 	clearflag FLAG_SYS_WEATHER_CTRL
 	setvar VAR_MT_PYRE_STATE, 2
-	clearflag FLAG_HIDE_LEADER_MT_PYRE_SUMMIT
+	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_EVIL_TEAM_LEADER
 	releaseall
 	end
 
