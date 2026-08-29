@@ -9,10 +9,10 @@ SouthernIsland_Exterior_MapScript1_160ADC:: @ 8160ADC
 SouthernIsland_Exterior_EventScript_160AE0:: @ 8160AE0
 	lock
 	faceplayer
-	msgbox SouthernIsland_Exterior_Text_1C5215, MSGBOX_YESNO
+	msgbox EventTicket_Text_SouthernIslandSailBack, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq SouthernIsland_Exterior_EventScript_160B25
-	msgbox SouthernIsland_Exterior_Text_1C5281, MSGBOX_DEFAULT
+	msgbox EventTicket_Text_SailHome, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
@@ -26,7 +26,7 @@ SouthernIsland_Exterior_EventScript_160AE0:: @ 8160AE0
 	end
 
 SouthernIsland_Exterior_EventScript_160B25:: @ 8160B25
-	msgbox SouthernIsland_Exterior_Text_1C52A6, MSGBOX_DEFAULT
+	msgbox EventTicket_Text_AsYouLike, MSGBOX_DEFAULT
 	release
 	end
 
@@ -50,5 +50,5 @@ BattleTower_Outside_Movement_160B47:: @ 8160B47
 	step_end
 
 SouthernIsland_Exterior_EventScript_160B4A:: @ 8160B4A
-	msgbox SouthernIsland_Exterior_Text_1C52FB, MSGBOX_SIGN
+	msgbox SouthernIsland_Exterior_Text_Sign, MSGBOX_SIGN
 	end

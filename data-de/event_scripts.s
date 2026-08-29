@@ -1580,7 +1580,7 @@ PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
 	.include "data/text/barboach.inc"
 	.include "data/text/pokedex_rating.inc"
 	.include "data/text/lottery_corner.inc"
-	.include "data/text/eon_ticket.inc"
+	.include "data/text/event_ticket_1.inc"
 	.include "data/text/braille.inc"
 	.include "data/text/berries.inc"
 	.include "data/text/shoal_cave.inc"
