@@ -76,7 +76,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9614 =
     .callback = sub_80D5210,
 };
 
-const struct SpriteTemplate gFireRingSpriteTemplate =
+const struct SpriteTemplate gFireBlastRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -117,7 +117,7 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9674[] =
     gSpriteAffineAnim_83D9664,
 };
 
-const struct SpriteTemplate gFireCrossSpriteTemplate =
+const struct SpriteTemplate gFireBlastCrossSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,

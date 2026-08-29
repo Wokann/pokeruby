@@ -857,50 +857,50 @@ Move_TWINEEDLE: @ 81C82E2
 
 Move_FIRE_BLAST: @ 81C8355
 	loadspritegfx ANIM_TAG_SMALL_EMBER
-	createsoundtask sub_812AF30, 144, 145
-	call Move_FIRE_BLAST_CreateFireRing
-	call Move_FIRE_BLAST_CreateFireRing
-	call Move_FIRE_BLAST_CreateFireRing
+	createsoundtask SoundTask_FireBlast, 144, 145
+	call FireBlastRing
+	call FireBlastRing
+	call FireBlastRing
 	delay 24
-	createvisualtask sub_80E2A38, 10, 1, 3, 0, 8, rgb(0, 0, 0)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 0, 8, rgb(0, 0, 0)
 	waitforvisualfinish
 	delay 19
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 20, 1
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	delay 3
-	call Move_FIRE_BLAST_CreateFireCross
+	call FireBlastCross
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1, 2, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 2, 8, 0, 0
 	waitforvisualfinish
 	end
-Move_FIRE_BLAST_CreateFireRing:
-	createsprite gFireRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 0
-	createsprite gFireRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 51
-	createsprite gFireRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 102
-	createsprite gFireRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 153
-	createsprite gFireRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 204
+FireBlastRing:
+	createsprite gFireBlastRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 0
+	createsprite gFireBlastRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 51
+	createsprite gFireBlastRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 102
+	createsprite gFireBlastRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 153
+	createsprite gFireBlastRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 204
 	delay 5
 	return
-Move_FIRE_BLAST_CreateFireCross:
-	createsprite gFireCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 10, 0, -2
-	createsprite gFireCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 13, -2, 0
-	createsprite gFireCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 13, 2, 0
-	createsprite gFireCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 15, -2, 2
-	createsprite gFireCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 15, 2, 2
+FireBlastCross:
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 10, 0, -2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 13, -2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 13, 2, 0
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 15, -2, 2
+	createsprite gFireBlastCrossSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 15, 2, 2
 	return
 
 Move_LEECH_SEED: @ 81C8483
@@ -946,12 +946,12 @@ Move_MEGA_PUNCH: @ 81C854D
 	setalpha 12, 8
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
 	createsprite gMegaPunchKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 0, 50
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 7, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
 	delay 50
 	call _81C85E9
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 22, 1
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -989,13 +989,13 @@ Move_MEGA_KICK: @ 81C8627
 	setalpha 12, 8
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
 	createsprite gMegaPunchKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 50
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 7, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
 	delay 50
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	call _81C85E9
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 22, 1
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
@@ -1055,21 +1055,21 @@ Move_SONIC_BOOM_CreateHitSplat:
 Move_THUNDER_SHOCK: @ 81C879C
 	loadspritegfx ANIM_TAG_SPARK
 	loadspritegfx ANIM_TAG_SPARK_2
-	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
 	createvisualtask sub_80D681C, 5, 0, -44, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
-	createvisualtask sub_80E2A38, 10, 4, 0, 0, 13, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 0, 13, 0
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 4, 0, 13, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 13, 0, 0
 	waitforvisualfinish
 	delay 20
 	call ElectricityEffect
 	waitforvisualfinish
 	delay 20
-	createvisualtask sub_80E2A38, 10, 1, 0, 6, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 6, 0, 0
 	waitforvisualfinish
 	end
 
@@ -1077,7 +1077,7 @@ Move_THUNDERBOLT: @ 81C880A
 	loadspritegfx ANIM_TAG_SPARK
 	loadspritegfx ANIM_TAG_SHOCK_3
 	loadspritegfx ANIM_TAG_SPARK_2
-	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
 	createvisualtask sub_80D681C, 5, 24, -52, 0
@@ -1089,9 +1089,9 @@ Move_THUNDERBOLT: @ 81C880A
 	createvisualtask sub_80D681C, 5, 0, -60, 1
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
-	createvisualtask sub_80E2A38, 10, 4, 0, 0, 13, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 0, 13, 0
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 4, 0, 13, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 13, 0, 0
 	waitforvisualfinish
 	delay 20
 	createsprite gBattleAnimSpriteTemplate_83D98F0, ANIM_BATTLER_TARGET, 3, 44, 0, 0, 3
@@ -1105,20 +1105,20 @@ Move_THUNDERBOLT: @ 81C880A
 	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 224, 40, 2, -32765
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
 	delay 0
-	createvisualtask sub_80E2A38, 10, 1, 0, 2, 2, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 2, 2, 0
 	delay 6
-	createvisualtask sub_80E2A38, 10, 1, 0, 6, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 6, 6, 0
 	delay 6
-	createvisualtask sub_80E2A38, 10, 1, 0, 2, 2, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 2, 2, 0
 	delay 6
-	createvisualtask sub_80E2A38, 10, 1, 0, 6, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 6, 6, 0
 	waitforvisualfinish
 	delay 20
 	waitplaysewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET, 19
 	call ElectricityEffect
 	waitforvisualfinish
 	delay 20
-	createvisualtask sub_80E2A38, 10, 1, 0, 6, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 6, 0, 0
 	waitforvisualfinish
 	end
 
@@ -1126,7 +1126,7 @@ Move_THUNDER_WAVE: @ 81C89C0
 	loadspritegfx ANIM_TAG_SPARK
 	loadspritegfx ANIM_TAG_SPARK_2
 	loadspritegfx ANIM_TAG_SPARK_H
-	createvisualtask sub_80E2A38, 10, 1, 0, 0, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
 	createvisualtask sub_80D681C, 5, 0, -48, 0
@@ -1139,7 +1139,7 @@ Move_THUNDER_WAVE: @ 81C89C0
 	delay 4
 	createsprite gBattleAnimSpriteTemplate_83D9950, ANIM_BATTLER_TARGET, 2, -16, 16
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1, 0, 6, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 6, 0, 0
 	waitforvisualfinish
 	end
 
@@ -1349,7 +1349,7 @@ Move_PSYCH_UP: @ 81C8EEA
 	delay 4
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_BATTLER_ATTACKER, 1
-	createvisualtask sub_80E2A38, 9, 2, 2, 10, 0, 1023
+	createvisualtask AnimTask_BlendBattleAnimPal, 9, 2, 2, 10, 0, 1023
 	delay 30
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
@@ -1457,7 +1457,7 @@ _81C91FF:
 
 Move_SELF_DESTRUCT: @ 81C9219
 	loadspritegfx ANIM_TAG_EXPLOSION
-	createvisualtask sub_80E2A38, 10, 2, 1, 0, 9, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 9, 31
 	createvisualtask AnimTask_ShakeMon2, 5, 4, 6, 0, 38, 1
 	createvisualtask AnimTask_ShakeMon2, 5, 5, 6, 0, 38, 1
 	createvisualtask AnimTask_ShakeMon2, 5, 6, 6, 0, 38, 1
@@ -1466,7 +1466,7 @@ Move_SELF_DESTRUCT: @ 81C9219
 	call _81C929F
 	call _81C929F
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 2, 1, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 9, 0, 31
 	end
 _81C929F:
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_ATTACKER
@@ -1631,9 +1631,9 @@ Move_EXPLOSION: @ 81C9675
 	call _81C9712
 	call _81C9712
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1, 1, 16, 16, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 1, 16, 16, 32767
 	delay 50
-	createvisualtask sub_80E2A38, 10, 1, 3, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 16, 0, 32767
 	end
 _81C9712:
 	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
@@ -1679,14 +1679,14 @@ Move_DETECT: @ 81C97D2
 	loadspritegfx ANIM_TAG_SPARKLE_4
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 9, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 2, 1, 0, 9, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 9, 32767
 	delay 18
 	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
 	createsprite gBattleAnimSpriteTemplate_83930F4, ANIM_BATTLER_ATTACKER, 13, 20, -20
 	waitforvisualfinish
 	delay 10
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 9, 0, rgb(0, 0, 0)
-	createvisualtask sub_80E2A38, 10, 2, 2, 9, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 2, 9, 0, 32767
 	waitforvisualfinish
 	end
 
@@ -1708,7 +1708,7 @@ _81C985F:
 _81C9864:
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ShakeMon2, 5, 0, 1, 0, 15, 1
-	createvisualtask sub_80E2A38, 10, 2, 3, 0, 9, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 3, 0, 9, 31
 	waitforvisualfinish
 	delay 20
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
@@ -1739,12 +1739,12 @@ _81C9864:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 18, -18, 1, 0
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 2, 3, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 3, 9, 0, 31
 	goto _81C985F
 _81C996A:
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ShakeMon2, 5, 0, 1, 0, 15, 1
-	createvisualtask sub_80E2A38, 10, 2, 3, 0, 9, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 3, 0, 9, 31
 	waitforvisualfinish
 	delay 20
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
@@ -1765,7 +1765,7 @@ _81C996A:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -12, -6, 1, 1
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 4, 0, 6, 1
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 2, 3, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 3, 9, 0, 31
 	goto _81C985F
 _81C9A37:
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
@@ -1863,7 +1863,7 @@ Move_GUILLOTINE: @ 81C9C29
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83D76DC, ANIM_BATTLER_ATTACKER, 2, 0
 	createsprite gBattleAnimSpriteTemplate_83D76DC, ANIM_BATTLER_ATTACKER, 2, 1
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 16, 0
 	delay 9
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 23, 1
 	delay 46
@@ -2227,7 +2227,7 @@ Move_ICY_WIND: @ 81CA650
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	loadspritegfx ANIM_TAG_ICE_SPIKES
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80E2A38, 10, 11, 4, 0, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 11, 4, 0, 4, 0
 	fadetobg BG_ICE
 	waitbgfadeout
 	playsewithpan SE_M_ICY_WIND, 0
@@ -2244,7 +2244,7 @@ Move_ICY_WIND: @ 81CA650
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	restorebg
 	waitbgfadeout
-	createvisualtask sub_80E2A38, 10, 11, 4, 4, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 11, 4, 4, 0, 0
 	waitbgfadein
 	end
 _81CA6A8:
@@ -2885,7 +2885,7 @@ Move_GLARE: @ 81CB4CA
 	createvisualtask sub_81301EC, 5, 0
 	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 5, 1, 0, 0, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 0, 0, 16, 0
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, -16, -8
 	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, 16, -8
@@ -2894,7 +2894,7 @@ Move_GLARE: @ 81CB4CA
 	delay 2
 	createvisualtask sub_80D60B4, 3, 20, 1, 0
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 5, 1, 0, 16, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 0, 16, 0, 0
 	end
 
 Move_BARRAGE: @ 81CB533
@@ -2919,17 +2919,17 @@ _81CB585:
 	jumpargeq 7, 0, _81CB5A0
 	goto _81CB617
 _81CB5A0:
-	createvisualtask sub_80E2A38, 10, 27, 1, 0, 12, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 27, 1, 0, 12, 0
 	waitforvisualfinish
 	delay 12
-	createvisualtask sub_80E2A38, 10, 2, 1, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 8, 0, 0
 	createvisualtask sub_80E1864, 5, 0, 2, 16
 	loopsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER, 4, 8
-	createvisualtask sub_80E2A38, 10, 2, 1, 0, 15, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 15, 32767
 	delay 20
-	createvisualtask sub_80E2A38, 10, 2, 1, 15, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 15, 0, 32767
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 25, 1, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 25, 1, 8, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
@@ -2938,13 +2938,13 @@ _81CB617:
 	createvisualtask sub_80E2A7C, 10, 1, 1, 0, 12, 0
 	waitforvisualfinish
 	delay 12
-	createvisualtask sub_80E2A38, 10, 2, 1, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 8, 0, 0
 	createvisualtask sub_80E1864, 5, 0, 2, 16
 	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
 	delay 8
-	createvisualtask sub_80E2A38, 10, 2, 1, 0, 15, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 15, 32767
 	delay 20
-	createvisualtask sub_80E2A38, 10, 2, 1, 15, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 15, 0, 32767
 	waitforvisualfinish
 	createvisualtask sub_80E2A7C, 10, 4, 1, 8, 0, 0
 	waitforvisualfinish
@@ -2956,7 +2956,7 @@ _81CB68E:
 	loadspritegfx ANIM_TAG_BIRD
 	call Unknown_81D61FB
 	monbg ANIM_BATTLER_ATTACKER
-	createvisualtask sub_80E2A38, 10, 2, 0, 0, 16, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	delay 4
 	createvisualtask sub_80DFC24, 5, 0
 	waitforvisualfinish
@@ -2968,7 +2968,7 @@ _81CB68E:
 	delay 20
 	createvisualtask sub_80DFD24, 5, 1
 	delay 2
-	createvisualtask sub_80E2A38, 10, 2, 0, 15, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 15, 0, 32767
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	call Unknown_81D622B
@@ -3476,12 +3476,12 @@ Move_HEAT_WAVE: @ 81CBFC6
 Move_HAIL: @ 81CC076
 	loadspritegfx ANIM_TAG_HAIL
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	createvisualtask sub_80E2A38, 10, 1, 3, 0, 6, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 0, 6, 0
 	waitforvisualfinish
 	createvisualtask AnimTask_Hail1, 5
 	loopsewithpan SE_M_HAIL, 0, 8, 10
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1, 3, 6, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 6, 0, 0
 	end
 
 Move_TORMENT: @ 81CC0AE
@@ -3955,11 +3955,11 @@ Move_MIST_BALL: @ 81CCA72
 	delay 0
 	playsewithpan SE_M_HAZE, 0
 	createvisualtask AnimTask_LoadMistTiles, 5
-	createvisualtask sub_80E2A38, 10, 4, 3, 0, 16, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 3, 0, 16, 32767
 	delay 8
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 4, 0, 70, 0
 	delay 70
-	createvisualtask sub_80E2A38, 10, 4, 2, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 16, 0, 32767
 	end
 
 Move_FEATHER_DANCE: @ 81CCB01
@@ -4411,7 +4411,7 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	loadspritegfx ANIM_TAG_ELECTRICITY
 	monbg ANIM_BATTLER_ATTACKER
 	setalpha 12, 8
-	createvisualtask sub_80E2A38, 10, 1, 0, 0, 8, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 8, 0
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83D9AB4, ANIM_BATTLER_ATTACKER, 1
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
@@ -4448,7 +4448,7 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	delay 2
 	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1, 0, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 8, 0, 0
 	waitforvisualfinish
 	end
 
@@ -4558,10 +4558,10 @@ Move_SHOCK_WAVE: @ 81CD867
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 6, 18, 1
-	createvisualtask sub_80E2A38, 5, 1, 3, 16, 0, 32767
-	createvisualtask sub_80E2A38, 5, 4, 0, 16, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 3, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, 4, 0, 16, 16, 0
 	delay 4
-	createvisualtask sub_80E2A38, 5, 4, 0, 0, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, 4, 0, 0, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff
@@ -4660,7 +4660,7 @@ Move_ICE_PUNCH: @ 81CDB3E
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 7, rgb(0, 0, 0)
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 9, 32588
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 9, 32588
 	delay 20
 	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
 	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
@@ -4682,7 +4682,7 @@ Move_ICE_PUNCH: @ 81CDB3E
 	delay 15
 	call Effect_LightIceDamage
 	delay 5
-	createvisualtask sub_80E2A38, 10, 4, 2, 9, 0, 32588
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 9, 0, 32588
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 7, 0, rgb(0, 0, 0)
 	waitforvisualfinish
@@ -4941,7 +4941,7 @@ Move_DRAGON_BREATH: @ 81CE20A
 	delay 2
 	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
-	createvisualtask sub_80E2A38, 10, 4, 1, 0, 9, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 0, 9, 31
 	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
 	delay 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 21, 1
@@ -4961,7 +4961,7 @@ Move_DRAGON_BREATH: @ 81CE20A
 	delay 2
 	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 4, 1, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 9, 0, 31
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
@@ -5275,14 +5275,14 @@ Move_DRAGON_RAGE: @ 81CE8BA
 Move_RAIN_DANCE: @ 81CE997
 	loadspritegfx ANIM_TAG_RAIN_DROPS
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E2A38, 10, 1921, 2, 0, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 0, 4, 0
 	waitforvisualfinish
 	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
 	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
 	delay 120
 	delay 30
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1921, 2, 4, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 4, 0, 0
 	waitforvisualfinish
 	end
 
@@ -5488,7 +5488,7 @@ _81CEE70:
 	delay 4
 	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 1
 	delay 4
-	createvisualtask sub_80E2A38, 10, 4, 1, 0, 10, 1017
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 0, 10, 1017
 	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 2
 	delay 4
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 65, 1
@@ -5503,7 +5503,7 @@ _81CEE70:
 	call _81CEF42
 	call _81CEF42
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 4, 1, 10, 0, 1017
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 10, 0, 1017
 	call Unknown_81D626D
 	goto _81CED71
 _81CEF42:
@@ -6712,7 +6712,7 @@ Move_SUNNY_DAY: @ 81D0B91
 	loadspritegfx ANIM_TAG_SUNLIGHT
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 13, 3
-	createvisualtask sub_80E2A38, 10, 1921, 1, 0, 6, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 1, 0, 6, 32767
 	waitforvisualfinish
 	panse_26 SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
 	call _81D0BDD
@@ -6720,7 +6720,7 @@ Move_SUNNY_DAY: @ 81D0B91
 	call _81D0BDD
 	call _81D0BDD
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1921, 1, 6, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 1, 6, 0, 32767
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
@@ -6929,9 +6929,9 @@ Move_HAZE: @ 81D10D4
 	playsewithpan SE_M_HAZE, 0
 	createvisualtask AnimTask_Haze1, 5
 	delay 30
-	createvisualtask sub_80E2A38, 10, 1920, 2, 0, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1920, 2, 0, 16, 0
 	delay 90
-	createvisualtask sub_80E2A38, 10, 1920, 1, 16, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1920, 1, 16, 0, 0
 	end
 
 Move_FIRE_PUNCH: @ 81D1107
@@ -6940,7 +6940,7 @@ Move_FIRE_PUNCH: @ 81D1107
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 9, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 9, 31
 	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 0
 	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 64
 	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 128
@@ -6954,7 +6954,7 @@ Move_FIRE_PUNCH: @ 81D1107
 	delay 4
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 4, 0, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 9, 0, 31
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
@@ -7380,7 +7380,7 @@ _81D1BCF:
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 9, 2
-	createvisualtask sub_80E2A38, 10, 2, 2, 0, 11, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 2, 0, 11, 31
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 4
@@ -7399,7 +7399,7 @@ _81D1BCF:
 	delay 5
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 7
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 2, 2, 11, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 2, 11, 0, 31
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
@@ -7679,7 +7679,7 @@ Move_HEAL_BELL: @ 81D21BD
 	loadspritegfx ANIM_TAG_MUSIC_NOTES_2
 	loadspritegfx ANIM_TAG_THIN_RING
 	loadspritegfx ANIM_TAG_SPARKLE_2
-	createvisualtask sub_80E2A38, 10, 10, 0, 0, 10, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 0, 0, 10, 32767
 	waitforvisualfinish
 	createvisualtask sub_80D1ADC, 5
 	createsprite gBattleAnimSpriteTemplate_83D7A44, ANIM_BATTLER_ATTACKER, 2, 0, -24, 0, 1
@@ -7711,12 +7711,12 @@ Move_HEAL_BELL: @ 81D21BD
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
 	createvisualtask sub_80E2A7C, 10, 4, 3, 10, 0, 31500
-	createvisualtask sub_80E2A38, 10, 10, 3, 10, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 3, 10, 0, 32767
 	createsprite gBattleAnimSpriteTemplate_83D7974, ANIM_BATTLER_ATTACKER, 16, 0, 0, 0, 1
 	end
 _81D2372:
 	createvisualtask sub_80E2A7C, 10, 4, 3, 8, 0, 31500
-	createvisualtask sub_80E2A38, 10, 10, 3, 2, 10, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 3, 2, 10, 32767
 	createsprite gBattleAnimSpriteTemplate_83D7928, ANIM_BATTLER_ATTACKER, 40, 0, -24, 0, 1
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER
 	return
@@ -8256,7 +8256,7 @@ Move_MORNING_SUN: @ 81D306C
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	createvisualtask sub_812DB84, 5
 	delay 8
-	createvisualtask sub_80E2A38, 10, 1921, 8, 0, 12, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 8, 0, 12, 32767
 	delay 14
 	call _81D30F2
 	call _81D30F2
@@ -8273,7 +8273,7 @@ Move_MORNING_SUN: @ 81D306C
 	call _81D30F2
 	call _81D30F2
 	call _81D30F2
-	createvisualtask sub_80E2A38, 10, 1921, 3, 12, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 3, 12, 0, 32767
 	waitforvisualfinish
 	waitsound
 	call Unknown_81D5EF5
@@ -8339,7 +8339,7 @@ Move_HYPER_BEAM: @ 81D31EA
 	call _81D331B
 	call _81D331B
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 50, 1
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 11, 26425
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 11, 26425
 	call _81D331B
 	call _81D331B
 	call _81D331B
@@ -8361,7 +8361,7 @@ Move_HYPER_BEAM: @ 81D31EA
 	call _81D331B
 	call _81D331B
 	call _81D331B
-	createvisualtask sub_80E2A38, 10, 4, 2, 11, 0, 26425
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 11, 0, 26425
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 4, 16, 0, rgb(0, 0, 0)
 	end
@@ -8418,7 +8418,7 @@ _81D3415:
 
 Move_ROLE_PLAY: @ 81D3428
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 16, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 16, 32767
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 10, rgb(0, 0, 0)
 	waitforvisualfinish
 	playsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER
@@ -8426,7 +8426,7 @@ Move_ROLE_PLAY: @ 81D3428
 	createvisualtask AnimTask_RolePlaySilhouette, 2
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask sub_80E2A38, 10, 4, 2, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 16, 0, 32767
 	delay 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 10, 0, rgb(0, 0, 0)
 	end
@@ -8453,12 +8453,12 @@ Move_BLAZE_KICK: @ 81D34C8
 	setalpha 12, 8
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DA024, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 30
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 7, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
 	delay 30
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 14, 1
-	createvisualtask sub_80E2A38, 10, 4, 2, 0, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
 	call FireSpreadEffect
 	waitforvisualfinish
@@ -8591,7 +8591,7 @@ Move_DRAGON_CLAW: @ 81D380C
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	loadspritegfx ANIM_TAG_CLAW_SLASH
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E2A38, 10, 2, 4, 0, 8, 639
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 4, 0, 8, 639
 	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 15, 1
 	call _81D39E9
 	call _81D39E9
@@ -8628,7 +8628,7 @@ Move_DRAGON_CLAW: @ 81D380C
 	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
 	delay 2
 	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
-	createvisualtask sub_80E2A38, 10, 2, 4, 8, 0, 639
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 4, 8, 0, 639
 	waitforvisualfinish
 	end
 _81D39E9:
@@ -9136,7 +9136,7 @@ Move_SILVER_WIND: @ 81D4773
 	createvisualtask sub_80E3A58, 5, 1536, 0, 0, -1
 _81D47BA:
 	delay 0
-	createvisualtask sub_80E2A38, 10, 1, 0, 4, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 4, 4, 0
 	waitbgfadein
 	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
 	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
@@ -10319,13 +10319,13 @@ General_StatsChange: @ 81D63EA
 General_SubstituteFade: @ 81D63F3
 	monbg ANIM_BATTLER_ATTACKER
 	createvisualtask sub_81416C4, 5
-	createvisualtask sub_80E2A38, 10, 2, 0, 0, 16, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	waitforvisualfinish
 	delay 1
 	clearmonbg ANIM_BATTLER_ATTACKER
 	delay 2
 	blendoff
-	createvisualtask sub_80E2A38, 10, 2, 0, 0, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 0, 32767
 	createvisualtask sub_814151C, 2, 1
 	end
 
@@ -10501,13 +10501,13 @@ General_HangedOn: @ 81D676E
 General_Rain: @ 81D67BB
 	loadspritegfx ANIM_TAG_RAIN_DROPS
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E2A38, 10, 1921, 2, 0, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 0, 4, 0
 	waitforvisualfinish
 	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
 	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
 	delay 50
 	waitforvisualfinish
-	createvisualtask sub_80E2A38, 10, 1921, 2, 4, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 4, 0, 0
 	waitforvisualfinish
 	end
 

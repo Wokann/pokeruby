@@ -13,14 +13,14 @@ extern u16 gBattlerPartyIndexes[];
 extern u16 gAnimSpeciesByBanks[];
 extern u8 gUnknown_0202F7D2;
 
-static void sub_812AF98(u8 taskId);
-static void sub_812B004(u8 taskId);
+static void SoundTask_FireBlast_Step1(u8 taskId);
+static void SoundTask_FireBlast_Step2(u8 taskId);
 static void sub_812B108(u8 taskId);
 static void sub_812B404(u8 taskId);
 
 // used in 1 move:
 //         Move_FIRE_BLAST
-void sub_812AF30(u8 taskId)
+void SoundTask_FireBlast(u8 taskId)
 {
     s8 sourcePan, targetPan, panIncrement;
     
@@ -36,10 +36,10 @@ void sub_812AF30(u8 taskId)
     TASK.data[4] = panIncrement;
     TASK.data[10] = 10;
 
-    TASK.func = sub_812AF98;
+    TASK.func = SoundTask_FireBlast_Step1;
 }
 
-static void sub_812AF98(u8 taskId)
+static void SoundTask_FireBlast_Step1(u8 taskId)
 {
     s16 pan = TASK.data[2];
     s8 dPan = TASK.data[4];
@@ -48,7 +48,7 @@ static void sub_812AF98(u8 taskId)
     {
         TASK.data[10] = 5;
         TASK.data[11] = 0;
-        TASK.func = sub_812B004;
+        TASK.func = SoundTask_FireBlast_Step2;
     } 
     else
     {
@@ -62,7 +62,7 @@ static void sub_812AF98(u8 taskId)
     }
 }
 
-static void sub_812B004(u8 taskId)
+static void SoundTask_FireBlast_Step2(u8 taskId)
 {
     s8 pan;
 

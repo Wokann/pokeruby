@@ -953,7 +953,7 @@ static void sub_80E29FC(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80E2A38(u8 taskId)
+void AnimTask_BlendBattleAnimPal(u8 taskId)
 {
     u32 selectedPalettes = UnpackSelectedBattleAnimPalettes(gBattleAnimArgs[0]);
     selectedPalettes |= sub_80792C0(
