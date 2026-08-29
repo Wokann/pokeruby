@@ -44,7 +44,7 @@ extern void sub_80DA48C(struct Sprite *);
 
 static void AnimConfusionDuck(struct Sprite *sprite);
 static void AnimSimplePaletteBlend(struct Sprite *sprite);
-static void sub_80E1E2C(struct Sprite *sprite);
+static void AnimComplexPaletteBlend(struct Sprite *sprite);
 static void sub_80E1F3C(struct Sprite *sprite);
 static void sub_80E24B8(struct Sprite *sprite);
 static void sub_80E27A0(struct Sprite *sprite);
@@ -57,8 +57,8 @@ static void sub_80E27E8(struct Sprite *sprite);
 static void AnimConfusionDuckStep(struct Sprite *sprite);
 static u32 UnpackSelectedBattleAnimPalettes(s16);
 static void AnimSimplePaletteBlendStep(struct Sprite *sprite);
-static void sub_80E1E80(struct Sprite *sprite);
-static void sub_80E1F0C(struct Sprite *sprite);
+static void AnimComplexPaletteBlend_Step1(struct Sprite *sprite);
+static void AnimComplexPaletteBlend_Step2(struct Sprite *sprite);
 static void sub_80E1FDC(u8, u8, u8);
 static void sub_80E202C(u8 taskId);
 static void sub_80E20E4(u8, u8, u8);
@@ -129,7 +129,7 @@ const struct SpriteTemplate gSimplePaletteBlendSpriteTemplate =
     .callback = AnimSimplePaletteBlend,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB3DC =
+const struct SpriteTemplate gComplexPaletteBlendSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -137,7 +137,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB3DC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80E1E2C,
+    .callback = AnimComplexPaletteBlend,
 };
 
 const union AnimCmd gSpriteAnim_83DB3F4[] =
@@ -386,7 +386,7 @@ static void AnimSimplePaletteBlendStep(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_80E1E2C(struct Sprite *sprite)
+static void AnimComplexPaletteBlend(struct Sprite *sprite)
 {
     u32 selectedPalettes;
 
@@ -402,10 +402,10 @@ static void sub_80E1E2C(struct Sprite *sprite)
     selectedPalettes = UnpackSelectedBattleAnimPalettes(sprite->data[7]);
     BlendPalettes(selectedPalettes, gBattleAnimArgs[4], gBattleAnimArgs[3]);
     sprite->invisible = TRUE;
-    sprite->callback = sub_80E1E80;
+    sprite->callback = AnimComplexPaletteBlend_Step1;
 }
 
-static void sub_80E1E80(struct Sprite *sprite)
+static void AnimComplexPaletteBlend_Step1(struct Sprite *sprite)
 {
     u32 selectedPalettes;
 
@@ -420,7 +420,7 @@ static void sub_80E1E80(struct Sprite *sprite)
 
     if (sprite->data[2] == 0)
     {
-        sprite->callback = sub_80E1F0C;
+        sprite->callback = AnimComplexPaletteBlend_Step2;
         return;
     }
 
@@ -435,7 +435,7 @@ static void sub_80E1E80(struct Sprite *sprite)
     sprite->data[2]--;
 }
 
-static void sub_80E1F0C(struct Sprite *sprite)
+static void AnimComplexPaletteBlend_Step2(struct Sprite *sprite)
 {
     u32 selectedPalettes;
 
