@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "CaveOfOrigin_B3F_EventScript_1B1A44",
+      "script": "CaveOfOrigin_B3F_EventScript_ItemHMWaterfall",
       "flag": "FLAG_ITEM_CAVE_OF_ORIGIN_B3F_1"
     }
   ],

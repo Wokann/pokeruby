@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B183C",
+      "script": "NewMauville_Inside_EventScript_ItemUltraBall",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_1"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1849",
+      "script": "NewMauville_Inside_EventScript_ItemEscapeRope",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_2"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1856",
+      "script": "NewMauville_Inside_EventScript_ItemThunderStone",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_3"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1863",
+      "script": "NewMauville_Inside_EventScript_ItemFullHeal",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_4"
     },
     {
@@ -73,7 +73,7 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NewMauville_Inside_EventScript_1B1870",
+      "script": "NewMauville_Inside_EventScript_ItemParalyzeHeal",
       "flag": "FLAG_ITEM_NEW_MAUVILLE_INSIDE_5"
     },
     {

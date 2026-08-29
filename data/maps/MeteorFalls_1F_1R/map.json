@@ -21,7 +21,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B17FB",
+      "script": "MeteorFalls_1F_1R_EventScript_ItemTMIronTail",
       "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_1"
     },
     {
@@ -34,7 +34,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1815",
+      "script": "MeteorFalls_1F_1R_EventScript_ItemMoonStone",
       "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_3"
     },
     {
@@ -47,7 +47,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1808",
+      "script": "MeteorFalls_1F_1R_EventScript_ItemFullHeal",
       "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_2"
     },
     {
@@ -60,7 +60,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "MeteorFalls_1F_1R_EventScript_1B1822",
+      "script": "MeteorFalls_1F_1R_EventScript_ItemPPUP",
       "flag": "FLAG_ITEM_METEOR_FALLS_1F_1R_4"
     },
     {
