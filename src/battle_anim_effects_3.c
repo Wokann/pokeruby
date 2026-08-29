@@ -1528,12 +1528,12 @@ static void sub_812C908(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_812C924(u8 taskId)
+void AnimTask_IsTargetPlayerSide(u8 taskId)
 {
     if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
-        gBattleAnimArgs[7] = 0;
+        gBattleAnimArgs[ARG_RET_ID] = FALSE;
     else
-        gBattleAnimArgs[7] = 1;
+        gBattleAnimArgs[ARG_RET_ID] = TRUE;
 
     DestroyAnimVisualTask(taskId);
 }

@@ -1884,12 +1884,12 @@ void sub_80E4178(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4200(u8 taskId)
+void AnimTask_IsContest(u8 taskId)
 {
     if (IsContest())
-        gBattleAnimArgs[7] = 1;
+        gBattleAnimArgs[ARG_RET_ID] = TRUE;
     else
-        gBattleAnimArgs[7] = 0;
+        gBattleAnimArgs[ARG_RET_ID] = FALSE;
 
     DestroyAnimVisualTask(taskId);
 }

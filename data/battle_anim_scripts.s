@@ -948,7 +948,7 @@ Move_MEGA_PUNCH: @ 81C854D
 	createsprite gMegaPunchKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 0, 50
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
 	delay 50
-	call _81C85E9
+	call SetImpactBackground
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 22, 1
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
@@ -961,24 +961,24 @@ Move_MEGA_PUNCH: @ 81C854D
 	restorebg
 	waitbgfadein
 	end
-_81C85E9:
+SetImpactBackground:
 	delay 2
-	createvisualtask sub_80E4200, 2
-	jumpargeq 7, 1, _81C8620
-	createvisualtask sub_812C924, 2
-	jumpargeq 7, 0, _81C8612
-	jumpargeq 7, 1, _81C8619
-_81C8611:
+	createvisualtask AnimTask_IsContest, 2
+	jumprettrue SetImpactContestsBG
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
+	jumpretfalse SetImpactOpponentBG
+	jumprettrue SetImpactPlayerBG
+SetImpactBackgroundRet:
 	return
-_81C8612:
+SetImpactOpponentBG:
 	changebg BG_IMPACT_OPPONENT
-	goto _81C8611
-_81C8619:
+	goto SetImpactBackgroundRet
+SetImpactPlayerBG:
 	changebg BG_IMPACT_PLAYER
-	goto _81C8611
-_81C8620:
+	goto SetImpactBackgroundRet
+SetImpactContestsBG:
 	changebg BG_IMPACT_CONTESTS
-	goto _81C8611
+	goto SetImpactBackgroundRet
 
 Move_MEGA_KICK: @ 81C8627
 	loadspritegfx ANIM_TAG_IMPACT
@@ -992,7 +992,7 @@ Move_MEGA_KICK: @ 81C8627
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
 	delay 50
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
-	call _81C85E9
+	call SetImpactBackground
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 22, 1
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
@@ -7960,9 +7960,9 @@ Move_HYPER_FANG: @ 81D29A8
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
 	delay 1
 	delay 2
-	createvisualtask sub_80E4200, 2
+	createvisualtask AnimTask_IsContest, 2
 	jumpargeq 7, 1, _81D2A08
-	createvisualtask sub_812C924, 2
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
 	jumpargeq 7, 0, _81D29FA
 	goto _81D2A01
 _81D29D6:
@@ -8842,9 +8842,9 @@ _81D3E76:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	delay 1
-	createvisualtask sub_80E4200, 2
+	createvisualtask AnimTask_IsContest, 2
 	jumpargeq 7, 1, _81D3F2F
-	createvisualtask sub_812C924, 2
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
 	jumpargeq 7, 0, _81D3F21
 	jumpargeq 7, 1, _81D3F28
 _81D3EA4:
@@ -10187,9 +10187,9 @@ Unknown_81D622B: @ 81D622B
 	return
 
 Unknown_81D6233: @ 81D6233
-	createvisualtask sub_80E4200, 2
+	createvisualtask AnimTask_IsContest, 2
 	jumpargeq 7, 1, Unknown_81D6258
-	createvisualtask sub_812C924, 2
+	createvisualtask AnimTask_IsTargetPlayerSide, 2
 	jumpargeq 7, 0, Unknown_81D6266
 	goto Unknown_81D625F
 

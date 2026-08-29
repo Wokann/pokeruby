@@ -191,6 +191,19 @@
 	.4byte \addr
 	.endm
 
+@ useful macros
+	.macro jumpreteq value, addr
+	jumpargeq ARG_RET_ID, \value, \addr
+	.endm
+
+	.macro jumprettrue addr
+	jumpreteq TRUE, \addr
+	.endm
+
+	.macro jumpretfalse addr
+	jumpreteq FALSE, \addr
+	.endm
+
 	.macro monbg_22 bank
 	.byte 0x22
 	.byte \bank
