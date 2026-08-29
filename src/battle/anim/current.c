@@ -15,8 +15,8 @@ extern u8 gAnimVisualTaskCount;
 extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83D97D0;
 
 void sub_80D648C(struct Sprite *sprite);
-void sub_80D65DC(struct Sprite *sprite);
-void sub_80D6658(struct Sprite *sprite);
+void AnimThunderboltOrb(struct Sprite *sprite);
+void AnimSparkElectricityFlashing(struct Sprite *sprite);
 void sub_80D679C(struct Sprite *sprite);
 void AnimElectricBoltSegment(struct Sprite *sprite);
 void sub_80D6A6C(struct Sprite *sprite);
@@ -27,7 +27,7 @@ void sub_80D7230(struct Sprite *sprite);
 void sub_80D727C(struct Sprite *sprite);
 void sub_80D755C(struct Sprite *sprite);
 static void sub_80D6514(struct Sprite *sprite);
-static void sub_80D672C(struct Sprite *sprite);
+static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite);
 static void AnimTask_ElectricBolt_Step(u8 taskId);
 static void sub_80D6AF0(struct Sprite *sprite);
 static void sub_80D6BB8(u8 taskId);
@@ -86,7 +86,7 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83D98EC[] =
     gSpriteAffineAnim_83D98CC,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D98F0 =
+const struct SpriteTemplate gThunderboltOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHOCK_3,
     .paletteTag = ANIM_TAG_SHOCK_3,
@@ -94,10 +94,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D98F0 =
     .anims = gSpriteAnimTable_83D98C8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D98EC,
-    .callback = sub_80D65DC,
+    .callback = AnimThunderboltOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9908 =
+const struct SpriteTemplate gSparkElectricityFlashingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
@@ -105,7 +105,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9908 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D989C,
-    .callback = sub_80D6658,
+    .callback = AnimSparkElectricityFlashing,
 };
 
 const struct SpriteTemplate gElectricitySpriteTemplate =
@@ -395,7 +395,7 @@ static void sub_80D6514(struct Sprite *sprite)
     }
 }
 
-static void sub_80D658C(struct Sprite *sprite)
+static void AnimThunderboltOrb_Step(struct Sprite *sprite)
 {
     if (--sprite->data[5] == -1)
     {
@@ -409,34 +409,34 @@ static void sub_80D658C(struct Sprite *sprite)
     }
 }
 
-void sub_80D65DC(struct Sprite *sprite)
+void AnimThunderboltOrb(struct Sprite *sprite)
 {
     if (!gMain.inBattle || GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         gBattleAnimArgs[1] = -gBattleAnimArgs[1];
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[1];
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[2];
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
     sprite->data[3] = gBattleAnimArgs[0];
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[3];
-    sprite->callback = sub_80D658C;
+    sprite->callback = AnimThunderboltOrb_Step;
 }
 
-void sub_80D6658(struct Sprite *sprite)
+void AnimSparkElectricityFlashing(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
 
     sprite->data[0] = gBattleAnimArgs[3];
     if (gBattleAnimArgs[7] & 0x8000)
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
     else
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
 
-    if (!gMain.inBattle || GetBattlerSide(bank) == B_SIDE_PLAYER)
+    if (!gMain.inBattle || GetBattlerSide(battler) == B_SIDE_PLAYER)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
 
-    sprite->x = GetBattlerSpriteCoord(bank, 2) + gBattleAnimArgs[0];
-    sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
 
     sprite->data[4] = gBattleAnimArgs[7] & 0x7FFF;
     sprite->data[5] = gBattleAnimArgs[2];
@@ -444,11 +444,11 @@ void sub_80D6658(struct Sprite *sprite)
     sprite->data[7] = gBattleAnimArgs[4];
 
     sprite->oam.tileNum += gBattleAnimArgs[6] * 4;
-    sprite->callback = sub_80D672C;
+    sprite->callback = AnimSparkElectricityFlashing_Step;
     sprite->callback(sprite);
 }
 
-static void sub_80D672C(struct Sprite *sprite)
+static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite)
 {
     sprite->x2 = Sin(sprite->data[7], sprite->data[5]);
     sprite->y2 = Cos(sprite->data[7], sprite->data[5]);

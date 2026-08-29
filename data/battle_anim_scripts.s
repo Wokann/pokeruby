@@ -1094,15 +1094,15 @@ Move_THUNDERBOLT: @ 81C880A
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 13, 0, 0
 	waitforvisualfinish
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D98F0, ANIM_BATTLER_TARGET, 3, 44, 0, 0, 3
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 0, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 64, 40, 1, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 128, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 192, 40, 2, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 32, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 96, 40, 1, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 160, 40, 0, -32765
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 224, 40, 2, -32765
+	createsprite gThunderboltOrbSpriteTemplate, ANIM_BATTLER_TARGET, 3, 44, 0, 0, 3
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 0, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 64, 40, 1, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 128, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 32, 44, 192, 40, 2, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 32, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 96, 40, 1, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 160, 40, 0, -32765
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 16, 44, 224, 40, 2, -32765
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
 	delay 0
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 2, 2, 0
@@ -1965,14 +1965,14 @@ Move_SPARK: @ 81C9EA3
 	delay 20
 	createvisualtask sub_80E1F8C, 2, 3, -31, 1, 7, 7, 23551
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 0, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 64, 20, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 128, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 192, 20, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 32, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 96, 20, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 160, 20, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9908, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 224, 20, 2, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 0, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 64, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 128, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 32, 12, 192, 20, 2, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 32, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 96, 20, 1, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 160, 20, 0, 0
+	createsprite gSparkElectricityFlashingSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 16, 12, 224, 20, 2, 0
 	delay 4
 	waitforvisualfinish
 	createvisualtask sub_80E1F8C, 2, 3, -31, 1, 0, 0, 23551
