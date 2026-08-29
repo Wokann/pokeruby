@@ -76,7 +76,7 @@ static void sub_812E7F0(struct Sprite *sprite);
 static void sub_812E8B4(u8 taskId);
 static void sub_812ED24(struct Sprite *sprite);
 static void sub_812EE00(struct Sprite *sprite);
-static void sub_812EEEC(struct Sprite *sprite);
+static void AnimReversalOrb_Step(struct Sprite *sprite);
 static void AnimTask_RolePlaySilhouetteStep1(u8 taskId);
 static void sub_812F290(u8 taskId);
 static void sub_812F474(u8 taskId);
@@ -122,7 +122,7 @@ static void sub_812E7A0(struct Sprite *sprite);
 static void sub_812EA4C(struct Sprite *sprite);
 static void sub_812EC78(struct Sprite *sprite);
 static void sub_812ED84(struct Sprite *sprite);
-static void sub_812EEA4(struct Sprite *sprite);
+static void AnimReversalOrb(struct Sprite *sprite);
 static void sub_812F88C(struct Sprite *sprite);
 static void sub_812F948(struct Sprite *sprite);
 static void sub_812FF94(struct Sprite *sprite);
@@ -789,7 +789,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402720 =
     .callback = sub_812ED84,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402738 =
+const struct SpriteTemplate gReversalOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_ORB,
     .paletteTag = ANIM_TAG_BLUE_ORB,
@@ -797,7 +797,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402738 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812EEA4,
+    .callback = AnimReversalOrb,
 };
 
 const union AffineAnimCmd gUnknown_08402750[] =
@@ -3129,17 +3129,17 @@ static void sub_812EE00(struct Sprite *sprite)
     }
 }
 
-static void sub_812EEA4(struct Sprite *sprite)
+static void AnimReversalOrb(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[0] = gBattleAnimArgs[0];
     sprite->data[1] = gBattleAnimArgs[1];
-    sprite->callback = sub_812EEEC;
+    sprite->callback = AnimReversalOrb_Step;
     sprite->callback(sprite);
 }
 
-static void sub_812EEEC(struct Sprite *sprite)
+static void AnimReversalOrb_Step(struct Sprite *sprite)
 {
     sprite->x2 = Sin(sprite->data[1], sprite->data[2] >> 8);
     sprite->y2 = Cos(sprite->data[1], sprite->data[3] >> 8);

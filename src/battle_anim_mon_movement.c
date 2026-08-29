@@ -35,7 +35,7 @@ static void AnimTask_WindUpLungePart2(u8 taskId);
 static void AnimTask_SwayMonStep(u8 taskId);
 static void AnimTask_ScaleMonAndRestoreStep(u8 taskId);
 static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId);
-static void sub_80A913C(u8 taskId);
+static void AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step(u8 taskId);
 
 const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
 {
@@ -992,7 +992,7 @@ static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId)
     }
 }
 
-void sub_80A9058(u8 taskId)
+void AnimTask_ShakeTargetBasedOnMovePowerOrDmg(u8 taskId)
 {
     if (!gBattleAnimArgs[0])
     {
@@ -1023,16 +1023,16 @@ void sub_80A9058(u8 taskId)
     TASK.data[12] = 0;
     TASK.data[10] = gBattleAnimArgs[3];
     TASK.data[11] = gBattleAnimArgs[4];
-    TASK.data[7] = GetAnimBattlerSpriteId(1);
+    TASK.data[7] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
     TASK.data[8] = gSprites[TASK.data[7]].x2;
     TASK.data[9] = gSprites[TASK.data[7]].y2;
     TASK.data[0] = 0;
     TASK.data[1] = gBattleAnimArgs[1];
     TASK.data[2] = gBattleAnimArgs[2];
-    TASK.func = sub_80A913C;
+    TASK.func = AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step;
 }
 
-static void sub_80A913C(u8 taskId)
+static void AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     if (++task->data[0] > task->data[1])

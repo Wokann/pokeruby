@@ -59,8 +59,8 @@ static u32 UnpackSelectedBattleAnimPalettes(s16);
 static void AnimSimplePaletteBlendStep(struct Sprite *sprite);
 static void AnimComplexPaletteBlend_Step1(struct Sprite *sprite);
 static void AnimComplexPaletteBlend_Step2(struct Sprite *sprite);
-static void sub_80E1FDC(u8, u8, u8);
-static void sub_80E202C(u8 taskId);
+static void BlendColorCycle(u8, u8, u8);
+static void AnimTask_BlendColorCycleLoop(u8 taskId);
 static void sub_80E20E4(u8, u8, u8);
 static void sub_80E2140(u8 taskId);
 static void sub_80E2214(u8 taskId);
@@ -462,7 +462,7 @@ static void sub_80E1F3C(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void sub_80E1F8C(u8 taskId)
+void AnimTask_BlendColorCycle(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
     gTasks[taskId].data[1] = gBattleAnimArgs[1];
@@ -471,17 +471,17 @@ void sub_80E1F8C(u8 taskId)
     gTasks[taskId].data[4] = gBattleAnimArgs[4];
     gTasks[taskId].data[5] = gBattleAnimArgs[5];
     gTasks[taskId].data[8] = 0;
-    sub_80E1FDC(taskId, 0, gTasks[taskId].data[4]);
-    gTasks[taskId].func = sub_80E202C;
+    BlendColorCycle(taskId, 0, gTasks[taskId].data[4]);
+    gTasks[taskId].func = AnimTask_BlendColorCycleLoop;
 }
 
-static void sub_80E1FDC(u8 taskId, u8 initialBlendAmount, u8 targetBlendAmount)
+static void BlendColorCycle(u8 taskId, u8 startBlendAmount, u8 targetBlendAmount)
 {
     u32 selectedPalettes = UnpackSelectedBattleAnimPalettes(gTasks[taskId].data[0]);
     BeginNormalPaletteFade(
         selectedPalettes,
         gTasks[taskId].data[1],
-        initialBlendAmount,
+        startBlendAmount,
         targetBlendAmount,
         gTasks[taskId].data[5]);
 
@@ -489,28 +489,28 @@ static void sub_80E1FDC(u8 taskId, u8 initialBlendAmount, u8 targetBlendAmount)
     gTasks[taskId].data[8] ^= 1;
 }
 
-static void sub_80E202C(u8 taskId)
+static void AnimTask_BlendColorCycleLoop(u8 taskId)
 {
-    u8 initialBlendAmount, targetBlendAmount;
+    u8 startBlendAmount, targetBlendAmount;
     if (!gPaletteFade.active)
     {
         if (gTasks[taskId].data[2] > 0)
         {
             if (gTasks[taskId].data[8] == 0)
             {
-                initialBlendAmount = gTasks[taskId].data[3];
+                startBlendAmount = gTasks[taskId].data[3];
                 targetBlendAmount = gTasks[taskId].data[4];
             }
             else
             {
-                initialBlendAmount = gTasks[taskId].data[4];
+                startBlendAmount = gTasks[taskId].data[4];
                 targetBlendAmount = gTasks[taskId].data[3];
             }
 
             if (gTasks[taskId].data[2] == 1)
                 targetBlendAmount = 0;
 
-            sub_80E1FDC(taskId, initialBlendAmount, targetBlendAmount);
+            BlendColorCycle(taskId, startBlendAmount, targetBlendAmount);
         }
         else
         {
