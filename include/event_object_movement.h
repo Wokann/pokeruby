@@ -423,7 +423,7 @@ u8 GetJumpSpecialMovementAction(u32);
 u8 GetWalkInPlaceSlowMovementAction(u32);
 u8 GetWalkInPlaceNormalMovementAction(u32);
 u8 GetWalkInPlaceFastMovementAction(u32);
-u8 GetWalkInPlaceFastestMovementAction(u32);
+u8 GetWalkInPlaceFasterMovementAction(u32);
 u8 ObjectEventFaceOppositeDirection(struct ObjectEvent *, u8);
 u8 GetAcroWheelieFaceDirectionMovementAction(u8);
 u8 GetAcroPopWheelieFaceDirectionMovementAction(u8);

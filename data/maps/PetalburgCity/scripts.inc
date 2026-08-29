@@ -35,7 +35,7 @@ PetalburgCity_EventScript_WallyTutorial:: @ 814B747
 	special StartWallyTutorialBattle
 	waitstate
 	msgbox Route102_Text_WallyIDidIt, MSGBOX_DEFAULT
-	applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFastestLeft, MAP_PETALBURG_CITY
+	applymovement LOCALID_PETALBURG_WALLY, Common_Movement_WalkInPlaceFasterLeft, MAP_PETALBURG_CITY
 	@ Local id and map num were swapped here (0, 0, 2 vs 2, 0, 0). Fixed to waitmovement 2, MAP_PETALBURG_CITY in Emerald
 	waitmovement 0, MAP_MAUVILLE_CITY
 	msgbox Route102_Text_LetsGoBack, MSGBOX_DEFAULT
@@ -97,7 +97,7 @@ PetalburgCity_Movement_WallyTutorialPlayer:: @ 814B7CC
 	walk_right
 	walk_up
 	walk_up
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgCity_Movement_WallyTutorialWally:: @ 814B7ED
@@ -133,10 +133,10 @@ PetalburgCity_Movement_WallyTutorialWally:: @ 814B7ED
 	walk_up
 	walk_right
 	delay_16
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgCity_EventScript_GymSign:: @ 814B812
@@ -207,8 +207,8 @@ PetalburgCity_EventScript_ShowGymToPlayer:: @ 814B866
 	compare VAR_0x8008, 3
 	call_if_eq PetalburgCity_EventScript_LeadPlayerToGym3
 	msgbox PetalburgCity_Text_ThisIsPetalburgGym, MSGBOX_DEFAULT
-	applymovement LOCALID_GYM_BOY, Common_Movement_WalkInPlaceFastestRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_GYM_BOY, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox PetalburgCity_Text_ThisIsGymSign, MSGBOX_DEFAULT
 	closemessage
@@ -221,7 +221,7 @@ PetalburgCity_EventScript_ShowGymToPlayer:: @ 814B866
 PetalburgCity_EventScript_BoyApproachPlayer0:: @ 814B91B
 	applymovement LOCALID_GYM_BOY, PetalburgCity_Movement_BoyApproachPlayer0
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	return
 
@@ -233,14 +233,14 @@ PetalburgCity_EventScript_BoyApproachPlayer1:: @ 814B930
 PetalburgCity_EventScript_BoyApproachPlayer2:: @ 814B93B
 	applymovement LOCALID_GYM_BOY, PetalburgCity_Movement_BoyApproachPlayer2
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
 PetalburgCity_EventScript_BoyApproachPlayer3:: @ 814B950
 	applymovement LOCALID_GYM_BOY, PetalburgCity_Movement_BoyApproachPlayer3
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	return
 
@@ -278,7 +278,7 @@ PetalburgCity_Movement_BoyApproachPlayer0:: @ 814B9B1
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyApproachPlayer1:: @ 814B9B6
@@ -290,7 +290,7 @@ PetalburgCity_Movement_BoyApproachPlayer2:: @ 814B9B9
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PetalburgCity_Movement_BoyApproachPlayer3:: @ 814B9BE
@@ -298,7 +298,7 @@ PetalburgCity_Movement_BoyApproachPlayer3:: @ 814B9BE
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym0:: @ 814B9C4
@@ -311,7 +311,7 @@ PetalburgCity_Movement_BoyWalkToGym0:: @ 814B9C4
 	walk_right
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym1:: @ 814B9CF
@@ -327,7 +327,7 @@ PetalburgCity_Movement_BoyWalkToGym1:: @ 814B9CF
 	walk_up
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym2:: @ 814B9DD
@@ -340,7 +340,7 @@ PetalburgCity_Movement_BoyWalkToGym2:: @ 814B9DD
 	walk_right
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkToGym3:: @ 814B9E8
@@ -354,7 +354,7 @@ PetalburgCity_Movement_BoyWalkToGym3:: @ 814B9E8
 	walk_up
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgCity_Movement_BoyWalkAway:: @ 814B9F4

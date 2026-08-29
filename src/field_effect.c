@@ -1780,7 +1780,7 @@ bool8 sub_80876F8(struct Task *task, struct ObjectEvent *objectEvent, struct Spr
         } else
         {
             task->data[1]++;
-            ObjectEventSetHeldMovement(objectEvent, GetWalkInPlaceFastestMovementAction(objectEvent->facingDirection));
+            ObjectEventSetHeldMovement(objectEvent, GetWalkInPlaceFasterMovementAction(objectEvent->facingDirection));
             PlaySE(SE_LAVARIDGE_FALL_WARP);
         }
     }

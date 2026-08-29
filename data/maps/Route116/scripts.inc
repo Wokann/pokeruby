@@ -127,8 +127,8 @@ Route116_EventScript_Briney:: @ 8150B5D
 
 Route116_EventScript_BrineyTrigger:: @ 8150B6E
 	lockall
-	applymovement LOCALID_ROUTE116_BRINEY, Common_Movement_WalkInPlaceFastestRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_ROUTE116_BRINEY, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
 	setvar VAR_ROUTE116_STATE, 2

@@ -59,7 +59,7 @@ MtChimney_CableCarStation_Movement_LeadPlayerToCableCar:: @ 815C1A5
 	walk_up
 	walk_up
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 MtChimney_CableCarStation_Movement_FollowPlayerOutFromCableCar:: @ 815C1AA

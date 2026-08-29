@@ -48,7 +48,7 @@ Route118_EventScript_RouteSign119:: @ 8150FA5
 Route118_EventScript_StevenTrigger0:: @ 8150FAE
 	lockall
 	setvar VAR_0x8008, 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge0
 	waitmovement 0
@@ -58,7 +58,7 @@ Route118_EventScript_StevenTrigger0:: @ 8150FAE
 Route118_EventScript_StevenTrigger1:: @ 8150FCE
 	lockall
 	setvar VAR_0x8008, 1
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
@@ -66,7 +66,7 @@ Route118_EventScript_StevenTrigger1:: @ 8150FCE
 Route118_EventScript_StevenTrigger2:: @ 8150FE4
 	lockall
 	setvar VAR_0x8008, 2
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge2
 	waitmovement 0

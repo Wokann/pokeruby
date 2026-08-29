@@ -47,7 +47,7 @@ MossdeepCity_MysteryEventsHouse_EventScript_ResolveEReaderBattle:: @ 815ACD5
 	applymovement LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN, MossdeepCity_MysteryEventsHouse_Movement_OldManExit
 	waitmovement 0
 	copyobjectxytoperm LOCALID_MYSTERY_EVENTS_HOUSE_OLD_MAN
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	compare VAR_E_READER_TRAINER_BATTLE_RESULT, B_OUTCOME_WON
 	call_if_eq MossdeepCity_MysteryEventsHouse_EventScript_ShowEReaderBattleWon
@@ -78,7 +78,7 @@ MossdeepCity_MysteryEventsHouse_Movement_PlayerStepAway:: @ 815AD3D
 
 MossdeepCity_MysteryEventsHouse_Movement_OldManExit:: @ 815AD3F
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MossdeepCity_MysteryEventsHouse_EventScript_OldMan:: @ 815AD42
@@ -173,12 +173,12 @@ MossdeepCity_MysteryEventsHouse_Movement_PlayerMoveForBattleFacingWest:: @ 815AE
 
 MossdeepCity_MysteryEventsHouse_Movement_OldManMoveLeft:: @ 815AE46
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 MossdeepCity_MysteryEventsHouse_Movement_OldManMoveRight:: @ 815AE49
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 MossdeepCity_MysteryEventsHouse_EventScript_DoorIsLocked:: @ 815AE4C

@@ -246,7 +246,7 @@ Route110_EventScript_Timmy:: @ 814FC10
 
 Route110_EventScript_CyclingChallengeEnd:: @ 814FC27
 	lockall
-	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	call Route110_EventScript_CyclingChallengeResults
 	releaseall
@@ -320,7 +320,7 @@ Route110_EventScript_RivalScene:: @ 814FD34
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route110_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, Route110_EventScript_PlayBrendanMusic
-	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -473,7 +473,7 @@ Route110_EventScript_MoveRival3:: @ 814FF66
 Route110_Movement_RivalApproachPlayer1:: @ 814FF6E
 	walk_down
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route110_Movement_RivalApproachPlayer2:: @ 814FF72
@@ -483,7 +483,7 @@ Route110_Movement_RivalApproachPlayer2:: @ 814FF72
 Route110_Movement_RivalApproachPlayer3:: @ 814FF74
 	walk_down
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route110_Movement_RivalExit1:: @ 814FF78

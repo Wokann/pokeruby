@@ -94,7 +94,7 @@ LittlerootTown_MaysHouse_1F_EventScript_YoureNewNeighbor:: @ 8152982
 	waitmovement 0
 	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach
 	waitmovement 0
 	special GetRivalSonDaughterString
@@ -161,7 +161,7 @@ LittlerootTown_MaysHouse_1F_EventScript_GoSeeRoom:: @ 8152A35
 	lockall
 	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
 	setvar VAR_0x8005, FEMALE
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestRight
+	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_MomGoSeeRoom
 	end

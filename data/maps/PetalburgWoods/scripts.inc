@@ -20,7 +20,7 @@ PetalburgWoods_EventScript_15CCA8:: @ 815CCA8
 	closemessage
 	applymovement 3, PetalburgWoods_Movement_15CEB0
 	waitmovement 0
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement 4, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194E6B, MSGBOX_DEFAULT
 	closemessage
@@ -44,7 +44,7 @@ PetalburgWoods_EventScript_15CD42:: @ 815CD42
 	call PetalburgWoods_EventScript_15CDE6
 	applymovement 4, PetalburgWoods_Movement_15CE8E
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194D92, MSGBOX_DEFAULT
 	closemessage
@@ -55,14 +55,14 @@ PetalburgWoods_EventScript_15CD42:: @ 815CD42
 	closemessage
 	applymovement 3, PetalburgWoods_Movement_15CEBF
 	waitmovement 0
-	applymovement 4, Common_Movement_WalkInPlaceFastestUp
+	applymovement 4, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194E6B, MSGBOX_DEFAULT
 	closemessage
 	applymovement 4, PetalburgWoods_Movement_15CEA4
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194E9A, MSGBOX_DEFAULT
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PetalburgWoods_Text_194EE8, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_PETALBURG_WOODS_GRUNT, PetalburgWoods_Text_194F83
@@ -87,7 +87,7 @@ PetalburgWoods_EventScript_15CDFA:: @ 815CDFA
 	applymovement 3, PetalburgWoods_Movement_15CEB7
 	waitmovement 0
 	removeobject 3
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox PetalburgWoods_Text_19507E, MSGBOX_DEFAULT
 	giveitem ITEM_GREAT_BALL
@@ -154,7 +154,7 @@ PetalburgWoods_Movement_15CE8E:: @ 815CE8E
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PetalburgWoods_Movement_15CE95:: @ 815CE95
@@ -173,17 +173,17 @@ PetalburgWoods_Movement_15CE9E:: @ 815CE9E
 	walk_fast_down
 	walk_fast_down
 	walk_fast_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgWoods_Movement_15CEA4:: @ 815CEA4
 	walk_fast_down
 	walk_fast_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 PetalburgWoods_Movement_15CEA8:: @ 815CEA8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	delay_16
 	delay_16
 	delay_16

@@ -98,7 +98,7 @@ OldaleTown_Movement_EmployeeEast:: @ 814DE8E
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_EmployeeSouth:: @ 814DE97
@@ -111,7 +111,7 @@ OldaleTown_Movement_EmployeeSouth:: @ 814DE97
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
@@ -122,7 +122,7 @@ OldaleTown_Movement_EmployeeNorth:: @ 814DEA2
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_Unknown1:: @ 814DEAB
@@ -138,7 +138,7 @@ OldaleTown_Movement_Unknown1:: @ 814DEAB
 	walk_up
 	walk_up
 	delay_8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 OldaleTown_Movement_PlayerEast:: @ 814DEB9
@@ -226,7 +226,7 @@ OldaleTown_EventScript_RivalTrigger1:: @ 814DF41
 	lockall
 	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer1
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
@@ -235,7 +235,7 @@ OldaleTown_EventScript_RivalTrigger2:: @ 814DF5C
 	lockall
 	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer2
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
@@ -244,7 +244,7 @@ OldaleTown_EventScript_RivalTrigger3:: @ 814DF77
 	lockall
 	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer3
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	goto OldaleTown_EventScript_ShowRivalMessage
 	end
@@ -306,7 +306,7 @@ OldaleTown_Movement_PlayerStepBack:: @ 814DFEC
 
 OldaleTown_Movement_BackUp:: @ 814DFEF
 	walk_fast_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	lock_facing_direction
 	walk_right
 	unlock_facing_direction

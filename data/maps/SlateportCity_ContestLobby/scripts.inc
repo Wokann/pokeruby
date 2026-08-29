@@ -58,18 +58,18 @@ SlateportCity_ContestLobby_Movement_PlayerEnterContestRoom:: @ 81554C0
 	step_end
 
 SlateportCity_ContestLobby_Movement_PlayerFaceReceptionist:: @ 81554CA
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 SlateportCity_ContestLobby_Movement_ReceptionistApproachCounter:: @ 81554CC
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SlateportCity_ContestLobby_Movement_ReceptionistOpenCounter:: @ 81554CF
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SlateportCity_ContestLobby_Movement_ReceptionistEnterContestRoom:: @ 81554D3
@@ -84,7 +84,7 @@ SlateportCity_ContestLobby_Movement_ReceptionistEnterContestRoom:: @ 81554D3
 	step_end
 
 SlateportCity_ContestLobby_Movement_ReceptionistFacePlayer:: @ 81554DC
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 SlateportCity_ContestLobby_EventScript_Man:: @ 81554DE

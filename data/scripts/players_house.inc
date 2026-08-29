@@ -14,18 +14,18 @@ PlayersHouse_1F_EventScript_EnterHouseMovingIn:: @ 81B6956
 	closemessage
 	setvar VAR_LITTLEROOT_INTRO_STATE, 4
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerWalkIn
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	releaseall
 	end
 
 PlayersHouse_1F_EventScript_MomFacePlayerMovingInMale:: @ 81B699F
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
 PlayersHouse_1F_EventScript_MomFacePlayerMovingInFemale:: @ 81B69AA
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
@@ -36,7 +36,7 @@ PlayersHouse_1F_Movement_PlayerWalkIn:: @ 81B69B5
 PlayersHouse_1F_EventScript_MomGoSeeRoom:: @ 81B69B7
 	msgbox PlayersHouse_1F_Text_ArentYouInterestedInRoom, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_MovePlayerAwayFromDoor
 	waitmovement 0
 	releaseall
@@ -78,7 +78,7 @@ PlayersHouse_2F_EventScript_MomComesUpstairsMale:: @ 81B6A31
 	addobject VAR_0x8008
 	applymovement VAR_0x8008, PlayersHouse_2F_Movement_MomEntersMale
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox PlayersHouse_2F_Text_HowDoYouLikeYourRoom, MSGBOX_DEFAULT
 	closemessage
@@ -91,7 +91,7 @@ PlayersHouse_2F_EventScript_MomComesUpstairsFemale:: @ 81B6A61
 	addobject VAR_0x8008
 	applymovement VAR_0x8008, PlayersHouse_2F_Movement_MomEntersFemale
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox PlayersHouse_2F_Text_HowDoYouLikeYourRoom, MSGBOX_DEFAULT
 	closemessage
@@ -116,7 +116,7 @@ PlayersHouse_2F_EventScript_SetWallClock:: @ 81B6A9B
 PlayersHouse_2F_Movement_MomEntersMale:: @ 81B6AA2
 	delay_8
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
 	delay_8
 	walk_left
@@ -131,7 +131,7 @@ PlayersHouse_2F_Movement_MomExitsMale:: @ 81B6AA9
 PlayersHouse_2F_Movement_MomEntersFemale:: @ 81B6AAD
 	delay_8
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	delay_8
 	walk_right
@@ -149,7 +149,7 @@ PlayersHouse_1F_EventScript_SetWatchedBroadcast:: @ 81B6AB8
 	end
 
 PlayersHouse_1F_EventScript_PetalburgGymReportMale:: @ 81B6ABF
-	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFastestRight
+	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	call PlayersHouse_1F_EventScript_MomNoticeGymBroadcast
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerApproachTVForGymMale
@@ -162,7 +162,7 @@ PlayersHouse_1F_EventScript_PetalburgGymReportMale:: @ 81B6ABF
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerMoveToTVMale
 	waitmovement 0
 	call PlayersHouse_1F_EventScript_WatchGymBroadcast
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	msgbox PlayersHouse_1F_Text_ItsOverWeMissedHim, MSGBOX_DEFAULT
 	msgbox PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor, MSGBOX_DEFAULT
@@ -174,7 +174,7 @@ PlayersHouse_1F_EventScript_PetalburgGymReportMale:: @ 81B6ABF
 	end
 
 PlayersHouse_1F_EventScript_PetalburgGymReportFemale:: @ 81B6B2E
-	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFastestLeft
+	applymovement VAR_0x8005, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	call PlayersHouse_1F_EventScript_MomNoticeGymBroadcast
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerApproachTVForGymFemale
@@ -187,7 +187,7 @@ PlayersHouse_1F_EventScript_PetalburgGymReportFemale:: @ 81B6B2E
 	applymovement LOCALID_PLAYER, PlayersHouse_1F_Movement_PlayerMoveToTVFemale
 	waitmovement 0
 	call PlayersHouse_1F_EventScript_WatchGymBroadcast
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox PlayersHouse_1F_Text_ItsOverWeMissedHim, MSGBOX_DEFAULT
 	msgbox PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor, MSGBOX_DEFAULT
@@ -209,7 +209,7 @@ PlayersHouse_1F_EventScript_MomNoticeGymBroadcast:: @ 81B6B9D
 	return
 
 PlayersHouse_1F_EventScript_WatchGymBroadcast:: @ 81B6BBE
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox PlayersHouse_1F_Text_ReportFromPetalburgGym, MSGBOX_DEFAULT
 	fadedefaultbgm
@@ -220,24 +220,24 @@ PlayersHouse_1F_EventScript_WatchGymBroadcast:: @ 81B6BBE
 
 PlayersHouse_1F_Movement_MomMakeRoomToSeeTVMale:: @ 81B6BDB
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PlayersHouse_1F_Movement_MomMakeRoomToSeeTVFemale:: @ 81B6BDE
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 PlayersHouse_1F_Movement_MomReturnToSeatMale:: @ 81B6BE1
 	walk_left
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 PlayersHouse_1F_Movement_MomReturnToSeatFemale:: @ 81B6BE5
 	walk_right
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 PlayersHouse_1F_EventScript_Mom:: @ 81B6BE9
@@ -482,14 +482,14 @@ PlayersHouse_1F_Movement_PlayerEnterRoomMale:: @ 81B6E49
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 PlayersHouse_1F_Movement_PlayerWatchDadExit:: @ 81B6E4F
 	delay_16
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 PlayersHouse_1F_Movement_PlayerEnterRoomFemale:: @ 81B6E54
@@ -497,5 +497,5 @@ PlayersHouse_1F_Movement_PlayerEnterRoomFemale:: @ 81B6E54
 	walk_down
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end

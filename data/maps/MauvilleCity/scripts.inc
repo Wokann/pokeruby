@@ -84,7 +84,7 @@ MauvilleCity_EventScript_UncleAskPlayerToBattleWally:: @ 814C0E4
 MauvilleCity_EventScript_Wally:: @ 814C0F9
 	lockall
 	goto_if_set FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, MauvilleCity_EventScript_WallyRequestBattleAgain
-	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox MauvilleCity_Text_WallyWantToChallengeGym, MSGBOX_DEFAULT
 	msgbox MauvilleCity_Text_UncleYourePushingIt, MSGBOX_DEFAULT
@@ -115,12 +115,12 @@ MauvilleCity_EventScript_WallyAndUncleExitNorth:: @ 814C187
 	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitNorth1
 	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitNorth1
 	waitmovement 0
-	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 30
 	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleApproachPlayerNorth
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
@@ -134,12 +134,12 @@ MauvilleCity_EventScript_WallyAndUncleExitEast:: @ 814C1D9
 	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitEast1
 	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitEast1
 	waitmovement 0
-	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 30
 	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleApproachPlayerEast
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
@@ -161,13 +161,13 @@ MauvilleCity_EventScript_DefeatedWally:: @ 814C22B
 MauvilleCity_EventScript_BattleWally:: @ 814C23C
 	msgbox MauvilleCity_Text_WallyHereICome, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLY_2, MauvilleCity_Text_WallyDefeat
-	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox MauvilleCity_Text_WallyIllGoBackToVerdanturf, MSGBOX_DEFAULT
 	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox MauvilleCity_Text_ThankYouNotEnoughToBattle, MSGBOX_DEFAULT
-	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleNoNeedToBeDown, MSGBOX_DEFAULT
 	return
@@ -246,7 +246,7 @@ MauvilleCity_Movement_WallysUncleExitEast1:: @ 814C2D2
 MauvilleCity_Movement_WallysUncleApproachPlayerNorth:: @ 814C2D8
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 MauvilleCity_Movement_WallysUncleApproachPlayerEast:: @ 814C2DC

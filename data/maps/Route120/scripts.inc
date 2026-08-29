@@ -190,12 +190,12 @@ Route120_EventScript_StevenBattleKecleon:: @ 815189D
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, Route120_EventScript_PlayerApproachKecleonNorth
 	call_if_eq VAR_FACING, DIR_WEST, Route120_EventScript_PlayerApproachKecleonWest
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	delay 20
 	msgbox Route120_Text_StevenUsedDevonScope, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_BRIDGE_KECLEON, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_BRIDGE_KECLEON, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement LOCALID_BRIDGE_KECLEON, Movement_KecleonAppears
 	waitmovement 0
@@ -212,15 +212,15 @@ Route120_EventScript_StevenBattleKecleon:: @ 815189D
 	end
 
 Route120_EventScript_StevenGiveDevonScope:: @ 8151908
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestDown
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route120_Text_StevenGiveDevonScope, MSGBOX_DEFAULT
 	giveitem ITEM_DEVON_SCOPE
 	setflag FLAG_RECEIVED_DEVON_SCOPE
 	msgbox Route120_Text_StevenGoodbye, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE120_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
@@ -237,7 +237,7 @@ Route120_EventScript_StevenGiveDevonScope:: @ 8151908
 	end
 
 Route120_EventScript_PlayerApproachKecleonNorth:: @ 815197F
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 

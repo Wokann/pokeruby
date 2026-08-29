@@ -374,7 +374,7 @@ Route104_Movement_PlayerExitBoat:: @ 814F166
 Route104_Movement_PlayerMoveForBriney:: @ 814F168
 	walk_down
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route104_Movement_BrineyBoardBoat:: @ 814F16C
@@ -384,7 +384,7 @@ Route104_Movement_BrineyBoardBoat:: @ 814F16C
 
 Route104_Movement_BrineyExitBoat:: @ 814F16F
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Route104_EventScript_Ivan:: @ 814F172

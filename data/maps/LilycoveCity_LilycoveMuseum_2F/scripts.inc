@@ -81,7 +81,7 @@ LilycoveCity_LilycoveMuseum_2F_EventScript_ShowExhibitHall:: @ 815867A
 	end
 
 LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft:: @ 81586D3
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall:: @ 81586D5

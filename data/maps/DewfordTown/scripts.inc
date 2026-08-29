@@ -573,7 +573,7 @@ DewfordTown_Movement_ExitBoatSlateport:: @ 814E409
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 DewfordTown_Movement_BrineyBoardBoat:: @ 814E40E

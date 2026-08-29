@@ -62,7 +62,7 @@ Route109_EventScript_DoSailToDewford:: @ 814F548
 	end
 
 Route109_Movement_SailToDewford:: @ 814F5BF
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	walk_down
 	walk_down
 	walk_fast_down
@@ -234,7 +234,7 @@ Route109_Movement_SailToDewford:: @ 814F5BF
 	walk_fast_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route109_Movement_PlayerEnterBoatSouth:: @ 814F66D
@@ -246,7 +246,7 @@ Route109_Movement_PlayerExitBoat:: @ 814F670
 	walk_down
 	walk_down
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route109_Movement_PlayerEnterBoatEast:: @ 814F675
@@ -265,7 +265,7 @@ Route109_Movement_BrineyEnterBoat:: @ 814F67B
 
 Route109_Movement_BrineyExitBoat:: @ 814F67D
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Route109_EventScript_MrBriney:: @ 814F680

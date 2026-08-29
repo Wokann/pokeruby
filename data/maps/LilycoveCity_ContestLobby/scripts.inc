@@ -166,7 +166,7 @@ LilycoveCity_ContestLobby_Movement_ArtistExit:: @ 8158A43
 	step_end
 
 LilycoveCity_ContestLobby_Movement_PlayerFaceArtist:: @ 8158A4C
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LilycoveCity_ContestLobby_Movement_ArtistBeginToExit:: @ 8158A4E
@@ -183,7 +183,7 @@ LilycoveCity_ContestLobby_Movement_ArtistReturnToPlayer:: @ 8158A52
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_TryDoLinkContestArtist:: @ 8158A5B
@@ -280,7 +280,7 @@ LilycoveCity_ContestLobby_Movement_LinkArtistExit:: @ 8158B6D
 	step_end
 
 LilycoveCity_ContestLobby_Movement_PlayerFaceLinkArtist:: @ 8158B76
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LilycoveCity_ContestLobby_Movement_LinkArtistBeginExit:: @ 8158B78
@@ -297,7 +297,7 @@ LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer:: @ 8158B7C
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_LinkContestReceptionist:: @ 8158B85
@@ -531,20 +531,20 @@ LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall:: @ 8158E8E
 	step_end
 
 LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist:: @ 8158E99
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	walk_right
 	step_end
 
 LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter:: @ 8158E9C
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter:: @ 8158EA0
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall:: @ 8158EA4
@@ -560,7 +560,7 @@ LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall:: @ 8158EA4
 	step_end
 
 LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer:: @ 8158EAE
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 8158EB0
@@ -667,20 +667,20 @@ LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall:: @ 8158FFE
 	step_end
 
 LilycoveCity_ContestLobby_Movement_PlayerApproachReceptionist:: @ 8159008
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	walk_left
 	step_end
 
 LilycoveCity_ContestLobby_Movement_ReceptionistApproachCounter:: @ 815900B
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LilycoveCity_ContestLobby_Movement_ReceptionistExitCounter:: @ 815900F
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8159013
@@ -695,7 +695,7 @@ LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8159013
 	step_end
 
 LilycoveCity_ContestLobby_Movement_ReceptionistFacePlayer:: @ 815901C
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LilycoveCity_ContestLobby_EventScript_BlackBelt:: @ 815901E

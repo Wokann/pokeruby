@@ -72,7 +72,7 @@ RustboroCity_DevonCorp_3F_Movement_Unused:: @ 81577FE
 	walk_up
 	walk_up
 	walk_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident:: @ 8157803
@@ -89,12 +89,12 @@ RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident:: @ 8157803
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk:: @ 8157812
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen:: @ 8157815
@@ -140,7 +140,7 @@ RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk:: @ 8157835
 	delay_16
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 RustboroCity_DevonCorp_3F_EventScript_MrStone:: @ 815783B

@@ -119,7 +119,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex:: @ 8152DBA
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
 	applymovement LOCALID_BIRCHS_LAB_RIVAL, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	checkplayergender
 	compare VAR_RESULT, MALE
@@ -175,7 +175,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls:: @ 8152
 
 LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer:: @ 8152E97
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_Machine:: @ 8152E9A

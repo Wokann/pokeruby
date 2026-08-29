@@ -14,7 +14,7 @@ SouthernIsland_Exterior_EventScript_160AE0:: @ 8160AE0
 	goto_if_eq SouthernIsland_Exterior_EventScript_160B25
 	msgbox SouthernIsland_Exterior_Text_1C5281, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
 	hideobjectat 1, MAP_SOUTHERN_ISLAND_EXTERIOR
@@ -46,7 +46,7 @@ BattleTower_Outside_Movement_160B45:: @ 8160B45
 
 BattleTower_Outside_Movement_160B47:: @ 8160B47
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SouthernIsland_Exterior_EventScript_160B4A:: @ 8160B4A

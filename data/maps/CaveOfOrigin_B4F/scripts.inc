@@ -23,7 +23,7 @@ CaveOfOrigin_B4F_OnTransition:: @ 815DDC5
 
 CaveOfOrigin_B4F_EventScript_StartLegendaryBattle:: @ 815DDD7
 	lockall
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox CaveOfOrigin_B4F_Text_BlueOrbBeginsGlowing, MSGBOX_DEFAULT

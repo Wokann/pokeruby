@@ -75,7 +75,7 @@ LilycoveCity_Harbor_EventScript_FerryDestinationChangeMind:: @ 815997E
 LilycoveCity_Harbor_EventScript_BoardFerry:: @ 815998A
 	msgbox LilycoveCity_Harbor_Text_PleaseBoard, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_LILYCOVE_CITY_HARBOR
@@ -110,7 +110,7 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 	goto_if_unset FLAG_SYS_HAS_EON_TICKET, LilycoveCity_Harbor_EventScript_FerryUnavailable
 	msgbox EventTicket_Text_ThatPass, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 30
 	hideobjectat VAR_LAST_TALKED, MAP_LILYCOVE_CITY_HARBOR
@@ -121,7 +121,7 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 	waitmovement 0
 	msgbox EventTicket_Text_ShowEonTicket, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 30
 	removeobject LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR
@@ -141,7 +141,7 @@ LilycoveCity_Harbor_EventScript_FerryAttendantLocationAndBoarding:: @ 81599EE
 
 LilycoveCity_Harbor_Movement_PlayerBoardFerryEast:: @ 8159A86
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LilycoveCity_Harbor_Movement_PlayerBoardFerryNorth:: @ 8159A89

@@ -34,7 +34,7 @@ SafariZone_Southeast_Movement_PlayerEnter:: @ 8160087
 
 SafariZone_Southeast_Movement_ExitAttendantBlockDoor:: @ 8160089
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SafariZone_Southeast_EventScript_Boy:: @ 816008C
@@ -104,15 +104,15 @@ SafariZone_Southeast_Movement_PlayerExitNorth:: @ 816014B
 
 SafariZone_Southeast_Movement_PlayerExitEast:: @ 816014D
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 SafariZone_Southeast_Movement_MoveExitAttendantNorth:: @ 8160150
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 SafariZone_Southeast_Movement_MoveExitAttendantEast:: @ 8160153
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end

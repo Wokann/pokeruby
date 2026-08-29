@@ -58,18 +58,18 @@ VerdanturfTown_ContestLobby_Movement_PlayerWalkToContestHall:: @ 8153E19
 	step_end
 
 VerdanturfTown_ContestLobby_Movement_PlayerApproachReceptionist:: @ 8153E23
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 VerdanturfTown_ContestLobby_Movement_ReceptionistApproachCounter:: @ 8153E25
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 VerdanturfTown_ContestLobby_Movement_ReceptionistExitCounter:: @ 8153E28
 	walk_down
 	walk_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 VerdanturfTown_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8153E2C
@@ -84,7 +84,7 @@ VerdanturfTown_ContestLobby_Movement_ReceptionistWalkToContestHall:: @ 8153E2C
 	step_end
 
 VerdanturfTown_ContestLobby_Movement_ReceptionistFacePlayer:: @ 8153E35
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 VerdanturfTown_ContestLobby_EventScript_ShowContestPainting:: @ 8153E37

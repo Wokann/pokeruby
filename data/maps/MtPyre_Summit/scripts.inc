@@ -25,9 +25,9 @@ MtPyre_Summit_EventScript_15D4D5:: @ 815D4D5
 	end
 
 MtPyre_Summit_EventScript_15D4E1:: @ 815D4E1
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	applymovement 2, Common_Movement_WalkInPlaceFastestDown
+	applymovement 2, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	compare VAR_0x8008, 0
@@ -93,7 +93,7 @@ MtPyre_Summit_EventScript_15D59F:: @ 815D59F
 MtPyre_Summit_EventScript_15D5AA:: @ 815D5AA
 	applymovement 3, MtPyre_Summit_Movement_15D5DF
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	return
 
@@ -105,14 +105,14 @@ MtPyre_Summit_EventScript_15D5BF:: @ 815D5BF
 MtPyre_Summit_EventScript_15D5CA:: @ 815D5CA
 	applymovement 3, MtPyre_Summit_Movement_15D5E5
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
 MtPyre_Summit_Movement_15D5DF:: @ 815D5DF
 	walk_down
 	walk_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
@@ -122,17 +122,17 @@ MtPyre_Summit_Movement_15D5E3:: @ 815D5E3
 MtPyre_Summit_Movement_15D5E5:: @ 815D5E5
 	walk_down
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 MtPyre_Summit_Movement_15D5E9:: @ 815D5E9
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D5EC:: @ 815D5EC
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_EventScript_15D5EF:: @ 815D5EF
@@ -196,7 +196,7 @@ MtPyre_Summit_EventScript_15D669:: @ 815D669
 	setvar VAR_0x8004, ITEM_RED_OR_BLUE_ORB
 	call Common_EventScript_PlayerHandedOverTheItem
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestUp
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 40
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
@@ -260,9 +260,9 @@ MtPyre_Summit_EventScript_15D6E6:: @ 815D6E6
 	end
 
 MtPyre_Summit_EventScript_15D6F2:: @ 815D6F2
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	applymovement 2, Common_Movement_WalkInPlaceFastestDown
+	applymovement 2, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	compare VAR_0x8008, 0
@@ -320,7 +320,7 @@ MtPyre_Summit_EventScript_15D795:: @ 815D795
 
 MtPyre_Summit_Movement_15D7A0:: @ 815D7A0
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D7A3:: @ 815D7A3
@@ -328,7 +328,7 @@ MtPyre_Summit_Movement_15D7A3:: @ 815D7A3
 
 MtPyre_Summit_Movement_15D7A4:: @ 815D7A4
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 MtPyre_Summit_Movement_15D7A7:: @ 815D7A7

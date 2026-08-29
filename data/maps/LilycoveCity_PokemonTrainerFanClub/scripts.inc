@@ -9,18 +9,18 @@ LilycoveCity_PokemonTrainerFanClub_OnFrame:: @ 8159395
 
 LilycoveCity_PokemonTrainerFanClub_EventScript_MeetFirstFans:: @ 815939F
 	lockall
-	applymovement LOCALID_TRAINER_FAN_CLUB_LASS, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_TRAINER_FAN_CLUB_LASS, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_OhWowItsPlayer, MSGBOX_DEFAULT
 	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer
 	applymovement LOCALID_TRAINER_FAN_CLUB_MAN, LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox LilycoveCity_PokemonTrainerFanClub_Text_HeardAboutYouImYourFan, MSGBOX_DEFAULT
 	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	applymovement LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL, LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer
 	waitmovement 0
@@ -30,7 +30,7 @@ LilycoveCity_PokemonTrainerFanClub_EventScript_MeetFirstFans:: @ 815939F
 
 LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer:: @ 81593FA
 	delay_8
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	walk_down
 	walk_down
 	walk_down
@@ -49,7 +49,7 @@ LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer:: @ 8159402
 
 LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer:: @ 8159409
 	walk_down
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer:: @ 815940C
@@ -57,7 +57,7 @@ LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer:: @ 815940C
 	walk_fast_up
 	walk_fast_up
 	walk_fast_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LilycoveCity_PokemonTrainerFanClub_OnTransition:: @ 8159412

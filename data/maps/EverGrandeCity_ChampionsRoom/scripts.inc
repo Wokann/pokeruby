@@ -105,26 +105,26 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF:: @ 815B8F0
 	addobject LOCALID_CHAMPIONS_ROOM_BIRCH
 	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, EverGrandeCity_ChampionsRoom_Movement_BirchArrives
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchArriveRatePokedex, MSGBOX_DEFAULT
 	call ProfBirch_EventScript_RatePokedex
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchCongratulations, MSGBOX_DEFAULT
-	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 20
-	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_StevenComeWithMe, MSGBOX_DEFAULT
 	closemessage
 	delay 30
 	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExitStart
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart
-	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalFollows
 	waitmovement 0
 	delay 20
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox EverGrandeCity_ChampionsRoom_Text_StevenWaitOutside, MSGBOX_DEFAULT
 	checkplayergender
@@ -153,7 +153,7 @@ EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations:: @ 815B9B4
 EverGrandeCity_ChampionsRoom_EventScript_RivalApproachPlayer:: @ 815B9BD
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	return
 
@@ -183,17 +183,17 @@ EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer:: @ 815B9E6
 	walk_up
 	walk_left
 	walk_up
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 EverGrandeCity_ChampionsRoom_Movement_RivalLookBackAndForth:: @ 815B9EF
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	delay_8
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	step_end
 
@@ -205,7 +205,7 @@ EverGrandeCity_ChampionsRoom_Movement_RivalFollows:: @ 815B9F8
 EverGrandeCity_ChampionsRoom_Movement_StevenExitStart:: @ 815B9FB
 	walk_up
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 EverGrandeCity_ChampionsRoom_Movement_StevenExit:: @ 815B9FF
@@ -222,5 +222,5 @@ EverGrandeCity_ChampionsRoom_Movement_BirchArrives:: @ 815BA03
 	walk_up
 	walk_right
 	walk_up
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end

@@ -60,7 +60,7 @@ Route112_CableCarStation_Movement_LeadPlayerToCableCar:: @ 815C0E6
 	walk_up
 	walk_up
 	walk_right
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar:: @ 815C0EB

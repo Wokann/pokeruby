@@ -1156,7 +1156,7 @@ LinkContestRoom1_Movement_1A5D87:: @ 81A5D87
 	step_end
 
 LinkContestRoom1_Movement_1A5D8B:: @ 81A5D8B
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LinkContestRoom1_Movement_1A5D8D:: @ 81A5D8D
@@ -1164,24 +1164,24 @@ LinkContestRoom1_Movement_1A5D8D:: @ 81A5D8D
 	step_end
 
 LinkContestRoom1_Movement_1A5D8F:: @ 81A5D8F
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5D91:: @ 81A5D91
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5D95:: @ 81A5D95
 	walk_right
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5D99:: @ 81A5D99
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5D9C:: @ 81A5D9C
@@ -1190,15 +1190,15 @@ LinkContestRoom1_Movement_1A5D9C:: @ 81A5D9C
 	step_end
 
 LinkContestRoom1_Movement_1A5D9F:: @ 81A5D9F
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LinkContestRoom1_Movement_1A5DA1:: @ 81A5DA1
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	step_end
 
 LinkContestRoom1_Movement_1A5DA3:: @ 81A5DA3
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5DA5:: @ 81A5DA5
@@ -1246,20 +1246,20 @@ LinkContestRoom1_Movement_1A5DBF:: @ 81A5DBF
 LinkContestRoom1_Movement_1A5DC1:: @ 81A5DC1
 	face_up
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 LinkContestRoom1_Movement_1A5DC5:: @ 81A5DC5
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5DCA:: @ 81A5DCA
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 LinkContestRoom1_Movement_1A5DCE:: @ 81A5DCE
@@ -1267,7 +1267,7 @@ LinkContestRoom1_Movement_1A5DCE:: @ 81A5DCE
 	walk_right
 	walk_right
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DD4:: @ 81A5DD4
@@ -1275,31 +1275,31 @@ LinkContestRoom1_Movement_1A5DD4:: @ 81A5DD4
 	walk_fast_left
 	walk_fast_left
 	walk_fast_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DDA:: @ 81A5DDA
 	walk_up
 	walk_right
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DDE:: @ 81A5DDE
 	walk_fast_left
 	walk_fast_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DE2:: @ 81A5DE2
 	walk_up
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DE6:: @ 81A5DE6
 	walk_fast_right
 	walk_fast_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DEA:: @ 81A5DEA
@@ -1307,7 +1307,7 @@ LinkContestRoom1_Movement_1A5DEA:: @ 81A5DEA
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DF0:: @ 81A5DF0
@@ -1315,7 +1315,7 @@ LinkContestRoom1_Movement_1A5DF0:: @ 81A5DF0
 	walk_fast_right
 	walk_fast_right
 	walk_fast_down
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	step_end
 
 LinkContestRoom1_Movement_1A5DF6:: @ 81A5DF6

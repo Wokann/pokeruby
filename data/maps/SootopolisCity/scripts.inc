@@ -202,8 +202,8 @@ ClosedSootopolisDoorScript:: @ 814D2FF
 
 SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	lockall
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFastestLeft
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	playse SE_PIN
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_ExclamationMark
@@ -242,11 +242,11 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartFollowPlayerToCave
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartFollowWallaceToCave
 	waitmovement 0
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFastestRight
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	delay 30
-	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_PeopleNeedRainToLive, MSGBOX_DEFAULT
@@ -259,14 +259,14 @@ SootopolisCity_EventScript_LeadPlayerCaveOfOrigin:: @ 814D308
 	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerContinueFollowWallaceToCave
 	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenContinueFollowPlayerToCave
 	waitmovement 0
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_CaveOfOriginWithBlueOrb, MSGBOX_DEFAULT
 	.else
 	msgbox SootopolisCity_Text_CaveOfOriginWithRedOrb, MSGBOX_DEFAULT
 	.endif
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox SootopolisCity_Text_NeverExpectedHoldingBlueOrb, MSGBOX_DEFAULT
@@ -292,7 +292,7 @@ SootopolisCity_Movement_StevenLeadPlayerToWallace:: @ 814D417
 	walk_right
 	walk_right
 	walk_up
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 SootopolisCity_Movement_StevenStartFollowPlayerToCave:: @ 814D41D
@@ -446,7 +446,7 @@ SootopolisCity_EventScript_YoullBeOkay:: @ 814D498
 SootopolisCity_EventScript_StevenLeaveAfterLegendary:: @ 814D4AD
 	msgbox SootopolisCity_Text_WeOweItAllToYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFastestDown
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1

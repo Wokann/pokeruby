@@ -233,7 +233,7 @@ MtChimney_Movement_15D03E:: @ 815D03E
 	walk_left
 	walk_left
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 @ 815D0BF
@@ -269,7 +269,7 @@ MtChimney_Movement_15D03E:: @ 815D03E
 @ 815D0D7
 	delay_16
 	delay_16
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
 	walk_down
 	walk_down
@@ -285,7 +285,7 @@ MtChimney_Movement_15D03E:: @ 815D03E
 	delay_16
 	delay_16
 	delay_16
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
 	walk_down
 	walk_down
@@ -300,7 +300,7 @@ MtChimney_Movement_15D03E:: @ 815D03E
 
 @ 815D0F1
 	walk_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	step_end
 

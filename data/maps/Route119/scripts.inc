@@ -53,7 +53,7 @@ Route119_EventScript_RivalEncounter:: @ 81511DB
 	delay 65
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_RivalEnter1
 	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_RivalEnter2
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
 	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetRivalPos1

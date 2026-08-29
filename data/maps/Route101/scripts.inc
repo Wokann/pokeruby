@@ -30,7 +30,7 @@ Route101_EventScript_StartBirchRescue:: @ 814E948
 	applymovement LOCALID_ROUTE101_POOCHYENA, Route101_Movement_PoochyenaChaseInCircles
 	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunInCircles
 	waitmovement 0
-	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	applymovement LOCALID_ROUTE101_POOCHYENA, Route101_Movement_PoochyenaFaceBirch
 	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchFacePoochyena
@@ -224,7 +224,7 @@ Route101_EventScript_BirchsBag:: @ 814EA7F
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_ROUTE101_POOCHYENA
 	setobjectxy LOCALID_PLAYER, 6, 13
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	special ChooseStarter
 	waitstate

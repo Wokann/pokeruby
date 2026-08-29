@@ -233,7 +233,7 @@ Route111_EventScript_Victor:: @ 81501D1
 Route111_EventScript_BattleWinstrates:: @ 81501F3
 	msgbox Route111_Text_VictorIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTOR, Route111_Text_VictorDefeat
-	applymovement LOCALID_ROUTE111_VICTOR, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE111_VICTOR, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictorPostBattle, MSGBOX_DEFAULT
@@ -251,7 +251,7 @@ Route111_EventScript_BattleWinstrates:: @ 81501F3
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_VictoriaIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VICTORIA, Route111_Text_VictoriaDefeat
-	applymovement LOCALID_ROUTE111_VICTORIA, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE111_VICTORIA, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_VictoriaPostBattle, MSGBOX_DEFAULT
@@ -269,7 +269,7 @@ Route111_EventScript_BattleWinstrates:: @ 81501F3
 	call Route111_EventScript_CloseWinstrateDoor
 	msgbox Route111_Text_ViviIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_VIVI, Route111_Text_ViviDefeat
-	applymovement LOCALID_ROUTE111_VIVI, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE111_VIVI, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	msgbox Route111_Text_ViviPostBattle, MSGBOX_DEFAULT
@@ -289,7 +289,7 @@ Route111_EventScript_BattleWinstrates:: @ 81501F3
 	trainerbattle_no_intro TRAINER_VICKY, Route111_Text_VickyDefeat
 	msgbox Route111_Text_VickyPostBattle, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE111_VICKY, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE111_VICKY, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	call Route111_EventScript_OpenWinstrateDoor
 	applymovement LOCALID_ROUTE111_VICKY, Route111_Movement_WinstrateEnterHouse
@@ -310,7 +310,7 @@ Route111_EventScript_CloseWinstrateDoor:: @ 815034F
 	return
 
 Route111_Movement_WinstrateEnterHouse:: @ 8150356
-	walk_in_place_fastest_up
+	walk_in_place_faster_up
 	walk_up
 	step_end
 

@@ -28,18 +28,18 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	closemessage
 	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderApproachEvilLeader
 	waitmovement 0
-	applymovement LOCALID_ROUTE128_EVIL_LEADER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_ROUTE128_EVIL_LEADER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderDoYouUnderstandNow, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderLeaveThingsToUs, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_EVIL_LEADER, Route128_Movement_EvilLeaderRunLeft
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestLeft
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_ROUTE128_GOOD_LEADER, Route128_Movement_GoodLeaderWalkLeft
 	waitmovement 0
 	msgbox Route128_Text_GoodLeaderThisDefiesBelief, MSGBOX_DEFAULT
@@ -57,23 +57,23 @@ Route128_EventScript_LegendaryAwakenedScene:: @ 815213F
 	addobject LOCALID_ROUTE128_STEVEN
 	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenApproachPlayer
 	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFastestUp
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
 	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
 	.else
 	msgbox Route128_Text_StevenWholeWorldWillBeParched, MSGBOX_DEFAULT
 	.endif
-	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFastestDown
+	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 50
 	setfieldeffectargument 0, 1
@@ -114,12 +114,12 @@ Route128_Movement_StevenApproachPlayer:: @ 815226F
 
 Route128_Movement_EvilLeaderLookAround:: @ 8152271
 	walk_fast_down
-	walk_in_place_fastest_left
+	walk_in_place_faster_left
 	delay_16
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	delay_16
 	delay_16
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_Movement_EvilLeaderBackUp:: @ 8152279
@@ -133,7 +133,7 @@ Route128_Movement_EvilLeaderRunLeft:: @ 815227E
 	walk_fast_left
 	walk_fast_left
 	walk_fast_left
-	walk_in_place_fastest_right
+	walk_in_place_faster_right
 	step_end
 
 Route128_Movement_EvilLeaderExit:: @ 8152283
@@ -158,7 +158,7 @@ Route128_Movement_GoodLeaderWalkLeft:: @ 8152290
 
 Route128_Movement_GoodLeaderApproachEvilLeader:: @ 8152293
 	walk_left
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_Movement_GoodLeaderExit:: @ 8152296
@@ -176,7 +176,7 @@ Route128_Movement_GoodLeaderExit:: @ 8152296
 
 Route128_Movement_GoodLeaderApproachPlayer:: @ 81522A1
 	walk_right
-	walk_in_place_fastest_down
+	walk_in_place_faster_down
 	step_end
 
 Route128_EventScript_Isaiah:: @ 81522A4
