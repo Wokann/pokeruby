@@ -749,7 +749,7 @@ LilycoveCity_ContestLobby_EventScript_ContestWinner3:: @ 8159074
 	end
 
 LilycoveCity_ContestLobby_EventScript_Blender2Boy:: @ 815907B
-	msgbox SlateportCity_ContestLobby_Text_LetsGetBlendingAlready, MSGBOX_NPC
+	msgbox BerryBlender_Text_LetsGetBlendingAlready, MSGBOX_NPC
 	end
 
 LilycoveCity_ContestLobby_EventScript_Blender2Girl:: @ 8159084

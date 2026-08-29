@@ -1066,7 +1066,7 @@ gText_PokemonTrainerSchoolEmail:: @ 81A100C
 gText_PlayerHouseBootPC:: @ 81A10D6
 	.string "{PLAYER} booted up the PC.$"
 
-FallarborTown_ContestLobby_Text_1A10EB:: @ 81A10EB
+gText_PokeblockLinkCanceled:: @ 81A10EB
 	.string "The link was canceled.$"
 
 gText_NicknameReceivedPokemon:: @ 81A1102
@@ -1557,8 +1557,8 @@ PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
 	msgbox PlayersHouse_1F_Text_RunningShoesManual, MSGBOX_SIGN
 	end
 
-	.include "data/text/pokeblocks.inc"
-	.include "data/scripts/pokeblocks.inc"
+	.include "data/text/berry_blender.inc"
+	.include "data/scripts/berry_blender.inc"
 
 	.include "data/text/trainers.inc"
 
