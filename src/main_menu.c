@@ -29,15 +29,15 @@
 
 extern struct PaletteFadeControl gPaletteFade;
 
-extern const u8 gBirchSpeech_Welcome[];
-extern const u8 gBirchSpeech_ThisIsPokemon[];
-extern const u8 gBirchSpeech_WorldInhabitedByPokemon[];
-extern const u8 gBirchSpeech_AndYouAre[];
-extern const u8 gBirchSpeech_AreYouBoyOrGirl[];
-extern const u8 gBirchSpeech_WhatsYourName[];
-extern u8 gBirchSpeech_SoItsPlayer[];
-extern u8 gBirchSpeech_AhOkayYouArePlayer[];
-extern u8 gBirchSpeech_AreYouReady[];
+extern const u8 gText_Birch_Welcome[];
+extern const u8 gText_Birch_Pokemon[];
+extern const u8 gText_Birch_MainSpeech[];
+extern const u8 gText_Birch_AndYouAre[];
+extern const u8 gText_Birch_BoyOrGirl[];
+extern const u8 gText_Birch_WhatsYourName[];
+extern u8 gText_Birch_SoItsPlayer[];
+extern u8 gText_Birch_YourePlayer[];
+extern u8 gText_Birch_AreYouReady[];
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 
@@ -805,7 +805,7 @@ static void Task_NewGameSpeech3(u8 taskId)
             Menu_DrawStdWindowFrame(2, 13, 27, 18);
             //"Hi! Sorry to keep you waiting...
             //...But everyone calls me the POKEMON PROFESSOR."
-            MenuPrintMessage(gBirchSpeech_Welcome, 3, 14);
+            MenuPrintMessage(gText_Birch_Welcome, 3, 14);
             gTasks[taskId].func = Task_NewGameSpeech4;
         }
     }
@@ -817,7 +817,7 @@ static void Task_NewGameSpeech4(u8 taskId)
     {
         gTasks[taskId].func = Task_NewGameSpeech5;
         //"This is what we call a POKEMON."
-        MenuPrintMessage(gBirchSpeech_ThisIsPokemon, 3, 14);
+        MenuPrintMessage(gText_Birch_Pokemon, 3, 14);
     }
 }
 
@@ -867,7 +867,7 @@ static void Task_NewGameSpeech8(u8 taskId)
     {
         //"This world is widely inhabited by POKEMON...
         //...That's what I do."
-        MenuPrintMessage(gBirchSpeech_WorldInhabitedByPokemon, 3, 14);
+        MenuPrintMessage(gText_Birch_MainSpeech, 3, 14);
         gTasks[taskId].func = Task_NewGameSpeech9;
     }
 }
@@ -878,7 +878,7 @@ static void Task_NewGameSpeech9(u8 taskId)
     {
         Menu_DrawStdWindowFrame(2, 13, 27, 18);
         //"And you are?"
-        MenuPrintMessage(gBirchSpeech_AndYouAre, 3, 14);
+        MenuPrintMessage(gText_Birch_AndYouAre, 3, 14);
         gTasks[taskId].func = Task_NewGameSpeech10;
     }
 }
@@ -954,7 +954,7 @@ static void Task_NewGameSpeech14(u8 taskId)
 {
     Menu_DrawStdWindowFrame(2, 13, 27, 18);
     //"Are you a boy? Or are you a girl?"
-    MenuPrintMessage(gBirchSpeech_AreYouBoyOrGirl, 3, 14);
+    MenuPrintMessage(gText_Birch_BoyOrGirl, 3, 14);
     gTasks[taskId].func = Task_NewGameSpeech15;
 }
 
@@ -1054,7 +1054,7 @@ static void Task_NewGameSpeech19(u8 taskId)
 {
     Menu_DrawStdWindowFrame(2, 13, 27, 18);
     //"All right. What's your name?"
-    MenuPrintMessage(gBirchSpeech_WhatsYourName, 3, 14);
+    MenuPrintMessage(gText_Birch_WhatsYourName, 3, 14);
     gTasks[taskId].func = Task_NewGameSpeech20;
 }
 
@@ -1112,7 +1112,7 @@ static void Task_NewGameSpeech23(u8 taskId)
 {
     Menu_DrawStdWindowFrame(2, 13, 27, 18);
     //"So it's (PLAYER)?"
-    StringExpandPlaceholders(gStringVar4, gBirchSpeech_SoItsPlayer);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_SoItsPlayer);
     MenuPrintMessage(gStringVar4, 3, 14);
     gTasks[taskId].func = Task_NewGameSpeech24;
 }
@@ -1188,7 +1188,7 @@ static void Task_NewGameSpeech27(u8 taskId)
         StartSpriteFadeIn(taskId, 2);
         StartBackgroundFadeIn(taskId, 1);
         Menu_DrawStdWindowFrame(2, 13, 27, 18);
-        StringExpandPlaceholders(gStringVar4, gBirchSpeech_AhOkayYouArePlayer);
+        StringExpandPlaceholders(gStringVar4, gText_Birch_YourePlayer);
         //"Ah, okay! You're (PLAYER) who's moving...
         //...I get it now!"
         MenuPrintMessage(gStringVar4, 3, 14);
@@ -1258,7 +1258,7 @@ static void Task_NewGameSpeech29(u8 taskId)
             StartSpriteFadeIn(taskId, 2);
             StartBackgroundFadeIn(taskId, 1);
             Menu_DrawStdWindowFrame(2, 13, 27, 18);
-            MenuPrintMessage(gBirchSpeech_AreYouReady, 3, 14);
+            MenuPrintMessage(gText_Birch_AreYouReady, 3, 14);
             gTasks[taskId].func = Task_NewGameSpeech30;
         }
     }
