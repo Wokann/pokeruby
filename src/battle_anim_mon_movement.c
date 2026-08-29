@@ -34,7 +34,7 @@ static void AnimTask_WindUpLungePart1(u8 taskId);
 static void AnimTask_WindUpLungePart2(u8 taskId);
 static void AnimTask_SwayMonStep(u8 taskId);
 static void AnimTask_ScaleMonAndRestoreStep(u8 taskId);
-static void sub_80A8FD8(u8 taskId);
+static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId);
 static void sub_80A913C(u8 taskId);
 
 const struct SpriteTemplate gHorizontalLungeSpriteTemplate =
@@ -883,7 +883,7 @@ static void AnimTask_ScaleMonAndRestoreStep(u8 taskId)
     }
 }
 
-void sub_80A8E04(u8 taskId)
+void AnimTask_RotateMonSpriteToSide(u8 taskId)
 {
     u8 spriteId;
     spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[2]);
@@ -924,7 +924,7 @@ void sub_80A8E04(u8 taskId)
             TASK.data[4] *= -1;
         }
     }
-    TASK.func = sub_80A8FD8;
+    TASK.func = AnimTask_RotateMonSpriteToSide_Step;
 }
 
 void sub_80A8EFC(u8 taskId)
@@ -962,10 +962,10 @@ void sub_80A8EFC(u8 taskId)
     TASK.data[7] = 1;
     TASK.data[3] *= -1;
     TASK.data[4] *= -1;
-    TASK.func = sub_80A8FD8;
+    TASK.func = AnimTask_RotateMonSpriteToSide_Step;
 }
 
-static void sub_80A8FD8(u8 taskId)
+static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId)
 {
     TASK.data[3] += TASK.data[4];
     obj_id_set_rotscale(TASK.data[5], 0x100, 0x100, TASK.data[3]);
