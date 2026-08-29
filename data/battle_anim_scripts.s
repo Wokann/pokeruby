@@ -928,11 +928,11 @@ Move_EMBER: @ 81C84D9
 	createsprite gEmberSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 16, 24, 20, 1
 	delay 16
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
-	call Move_EMBER_CreateFlare
-	call Move_EMBER_CreateFlare
-	call Move_EMBER_CreateFlare
+	call EmberFireHit
+	call EmberFireHit
+	call EmberFireHit
 	end
-Move_EMBER_CreateFlare:
+EmberFireHit:
 	createsprite gEmberFlareSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
 	delay 4
 	return
