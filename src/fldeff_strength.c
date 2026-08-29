@@ -20,7 +20,7 @@ extern u16 gSpecialVar_Result;
 extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
 
-extern u8 S_UseStrength[];
+extern u8 EventScript_UseStrength[];
 
 #if DEBUG
 void debug_sub_8130318(void)
@@ -67,7 +67,7 @@ bool8 SetUpFieldMove_Strength(void)
 static void sub_811AA18(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(S_UseStrength);
+    ScriptContext_SetupScript(EventScript_UseStrength);
 }
 
 static void sub_811AA38(void)

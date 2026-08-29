@@ -21,7 +21,7 @@ extern u8 gLastFieldPokeMenuOpened;
 extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
 
-extern u8 SweetScentNothingHereScript[];
+extern u8 EventScript_FailSweetScent[];
 
 bool8 SetUpFieldMove_SweetScent(void)
 {
@@ -84,7 +84,7 @@ static void FailSweetScentEncounter(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        ScriptContext_SetupScript(SweetScentNothingHereScript);
+        ScriptContext_SetupScript(EventScript_FailSweetScent);
         DestroyTask(taskId);
     }
 }

@@ -25,7 +25,7 @@ extern void (*gFieldCallback)(void);
 extern void (*gPostMenuFieldCallback)(void);
 extern u8 gLastFieldPokeMenuOpened;
 
-extern const u8 DoCutFieldEffectScript[];
+extern const u8 EventScript_UseCut[];
 
 // this file's functions
 static void FieldCallback_CutTree(void);
@@ -186,7 +186,7 @@ bool8 FldEff_UseCutOnGrass(void)
 static void FieldCallback_CutTree(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
-    ScriptContext_SetupScript(DoCutFieldEffectScript);
+    ScriptContext_SetupScript(EventScript_UseCut);
 }
 
 bool8 FldEff_UseCutOnTree(void)

@@ -1,58 +1,58 @@
-S_CuttableTree:: @ 81B0DCC
+EventScript_CutTree:: @ 81B0DCC
 	lockall
-	goto_if_unset FLAG_BADGE01_GET, CannotUseCut
+	goto_if_unset FLAG_BADGE01_GET, EventScript_CheckTreeCantCut
 	checkpartymove MOVE_CUT
-	compare VAR_RESULT, 6
-	goto_if_eq CannotUseCut
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq EventScript_CheckTreeCantCut
 	setfieldeffectargument 0, VAR_RESULT
-	bufferpartymonnick 0, VAR_RESULT
-	buffermovename 1, MOVE_CUT
-	msgbox UseCutPromptText, MSGBOX_YESNO
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	buffermovename STR_VAR_2, MOVE_CUT
+	msgbox Text_WantToCut, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq Cut_ChoseNo
+	goto_if_eq EventScript_CancelCut
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	closemessage
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
-	goto DoTreeCutMovement
+	goto EventScript_CutTreeDown
 	end
 
-DoCutFieldEffectScript:: @ 81B0E16
+EventScript_UseCut:: @ 81B0E16
 	lockall
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
-	goto DoTreeCutMovement
+	goto EventScript_CutTreeDown
 	end
 
-DoTreeCutMovement: @ 81B0E21
-	applymovement VAR_LAST_TALKED, TreeCutMovement @ tree cut animation
+EventScript_CutTreeDown: @ 81B0E21
+	applymovement VAR_LAST_TALKED, Movement_CutTreeDown @ tree cut animation
 	waitmovement 0
 	removeobject VAR_LAST_TALKED @ tree disappears
 	releaseall
 	end
 
-TreeCutMovement: @ 81B0E30
+Movement_CutTreeDown: @ 81B0E30
 	cut_tree
 	step_end
 
-CannotUseCut: @ 81B0E32
-	msgbox CannotUseCutText, MSGBOX_SIGN
+EventScript_CheckTreeCantCut: @ 81B0E32
+	msgbox Text_CantCut, MSGBOX_SIGN
 	releaseall
 	end
 
-Cut_ChoseNo: @ 81B0E3C
+EventScript_CancelCut: @ 81B0E3C
 	closemessage
 	releaseall
 	end
 
-UseCutPromptText: @ 81B0E3F
+Text_WantToCut: @ 81B0E3F
 	.string "This tree looks like it can be CUT down.\p"
 	.string "Would you like to CUT it?$"
 
 Text_MonUsedFieldMove: @ 81B0E82
 	.string "{STR_VAR_1} used {STR_VAR_2}.$"
 
-CannotUseCutText: @ 81B0E8E
+Text_CantCut: @ 81B0E8E
 	.string "This tree looks like it can be CUT down.$"
 
 @ Interact with smashable rock
@@ -119,180 +119,180 @@ Text_CantSmash: @ 81B0F90
 	.string "It's a rugged rock, but a POKéMON\n"
 	.string "may be able to smash it.$"
 
-S_PushableBoulder:: @ 81B0FCB
+EventScript_StrengthBoulder:: @ 81B0FCB
 	lockall
-	goto_if_unset FLAG_BADGE04_GET, CannotUseStrength
-	goto_if_set FLAG_SYS_USE_STRENGTH, AlreadyUsedStrength
-	checkpartymove 70
-	compare VAR_RESULT, 6
-	goto_if_eq CannotUseStrength
+	goto_if_unset FLAG_BADGE04_GET, EventScript_CantStrength
+	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_CheckActivatedBoulder
+	checkpartymove MOVE_STRENGTH
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq EventScript_CantStrength
 	setfieldeffectargument 0, VAR_RESULT
-	msgbox UseStrengthPromptText, MSGBOX_YESNO
+	msgbox Text_WantToStrength, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq Strength_ChoseNo
+	goto_if_eq EventScript_CancelStrength
 	closemessage
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate
-	goto UsedStrength
+	goto EventScript_ActivateStrength
 	end
 
-S_UseStrength:: @ 81B100E
+EventScript_UseStrength:: @ 81B100E
 	lockall
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate
-	goto UsedStrength
+	goto EventScript_ActivateStrength
 	end
 
-UsedStrength: @ 81B1019
+EventScript_ActivateStrength: @ 81B1019
 	setflag FLAG_SYS_USE_STRENGTH
-	msgbox UsedStrengthText, MSGBOX_SIGN
+	msgbox Text_MonUsedStrength, MSGBOX_SIGN
 	releaseall
 	end
 
-CannotUseStrength: @ 81B1026
-	msgbox CannotUseStrengthText, MSGBOX_SIGN
+EventScript_CantStrength: @ 81B1026
+	msgbox Text_CantStrength, MSGBOX_SIGN
 	releaseall
 	end
 
-AlreadyUsedStrength: @ 81B1030
-	msgbox AlreadyUsedStrengthText, MSGBOX_SIGN
+EventScript_CheckActivatedBoulder: @ 81B1030
+	msgbox Text_StrengthActivated, MSGBOX_SIGN
 	releaseall
 	end
 
-Strength_ChoseNo: @ 81B103A
+EventScript_CancelStrength: @ 81B103A
 	closemessage
 	releaseall
 	end
 
-UseStrengthPromptText: @ 81B103D
+Text_WantToStrength: @ 81B103D
 	.string "It's a big boulder, but a POKéMON\n"
 	.string "may be able to push it aside.\p"
 	.string "Would you like to use STRENGTH?$"
 
-UsedStrengthText: @ 81B109D
+Text_MonUsedStrength: @ 81B109D
 	.string "{STR_VAR_1} used STRENGTH.\p"
 	.string "{STR_VAR_1}'s STRENGTH made it possible\n"
 	.string "to move boulders around.$"
 
-CannotUseStrengthText: @ 81B10E7
+Text_CantStrength: @ 81B10E7
 	.string "It's a big boulder, but a POKéMON\n"
 	.string "may be able to push it aside.$"
 
-AlreadyUsedStrengthText: @ 81B1127
+Text_StrengthActivated: @ 81B1127
 	.string "STRENGTH made it possible to move\n"
 	.string "boulders around.$"
 
-S_UseWaterfall:: @ 81B115A
+EventScript_UseWaterfall:: @ 81B115A
 	lockall
 	checkpartymove MOVE_WATERFALL
-	compare VAR_RESULT, 6
-	goto_if_eq Waterfall_NoMonKnows
-	bufferpartymonnick 0, VAR_RESULT
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq EventScript_CantWaterfall
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
-	msgbox UseWaterfallPromptText, MSGBOX_YESNO
+	msgbox Text_WantToWaterfall, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq Waterfall_Done
-	msgbox UsedWaterfallText, MSGBOX_DEFAULT
+	goto_if_eq EventScript_EndWaterfall
+	msgbox Text_MonUsedWaterfall, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_WATERFALL
-	goto Waterfall_Done
+	goto EventScript_EndWaterfall
 
-S_CannotUseWaterfall:: @ 81B1194
+EventScript_CannotUseWaterfall:: @ 81B1194
 	lockall
-Waterfall_NoMonKnows: @ 81B1195
-	msgbox CannotUseWaterfallText, MSGBOX_DEFAULT
-Waterfall_Done:  @ 81B119D
+EventScript_CantWaterfall: @ 81B1195
+	msgbox Text_CantWaterfall, MSGBOX_DEFAULT
+EventScript_EndWaterfall:  @ 81B119D
 	releaseall
 	end
 
-CannotUseWaterfallText: @ 81B119F
+Text_CantWaterfall: @ 81B119F
 	.string "A wall of water is crashing down with\n"
 	.string "a mighty roar.$"
 
-UseWaterfallPromptText: @ 81B11D4
+Text_WantToWaterfall: @ 81B11D4
 	.string "It's a large waterfall.\n"
 	.string "Would you like to use WATERFALL?$"
 
-UsedWaterfallText: @ 81B120D
+Text_MonUsedWaterfall: @ 81B120D
 	.string "{STR_VAR_1} used WATERFALL.$"
 
-UseDiveScript:: @ 81B1220
+EventScript_UseDive:: @ 81B1220
 	lockall
 	checkpartymove MOVE_DIVE
-	compare VAR_RESULT, 6
-	goto_if_eq CannotUseDive
-	bufferpartymonnick 0, VAR_RESULT
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq EventScript_CantDive
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
 	setfieldeffectargument 1, 1
-	msgbox UseDivePromptText, MSGBOX_YESNO
+	msgbox Text_WantToDive, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq Dive_Done
-	msgbox UsedDiveText, MSGBOX_DEFAULT
+	goto_if_eq EventScript_EndDive
+	msgbox Text_MonUsedDive, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_DIVE
-	goto Dive_Done
+	goto EventScript_EndDive
 	lockall
 
-CannotUseDive: @ 81B125F
-	msgbox CannotUseDiveText, MSGBOX_DEFAULT
+EventScript_CantDive: @ 81B125F
+	msgbox Text_CantDive, MSGBOX_DEFAULT
 
-Dive_Done: @ 81B1267
+EventScript_EndDive: @ 81B1267
 	releaseall
 	end
 
-S_UseDiveUnderwater:: @ 81B1269
+EventScript_UseDiveUnderwater:: @ 81B1269
 	lockall
 	checkpartymove MOVE_DIVE
-	compare VAR_RESULT, 6
-	goto_if_eq UnderwaterCannotUseDive
-	bufferpartymonnick 0, VAR_RESULT
+	compare VAR_RESULT, PARTY_SIZE
+	goto_if_eq EventScript_CantSurface
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
 	setfieldeffectargument 1, 1
-	msgbox UnderwaterUseDivePromptText, MSGBOX_YESNO
+	msgbox Text_WantToSurface, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq UnderwaterDive_Done
-	msgbox UsedDiveText, MSGBOX_DEFAULT
+	goto_if_eq EventScript_EndSurface
+	msgbox Text_MonUsedDive, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_DIVE
-	goto UnderwaterDive_Done
+	goto EventScript_EndSurface
 
-UnderwaterCannotUseDive: @ 81B12A7
+EventScript_CantSurface: @ 81B12A7
 	lockall
-	msgbox UnderwaterCannotUseDiveText, MSGBOX_DEFAULT
-	goto UnderwaterDive_Done
+	msgbox Text_CantSurface, MSGBOX_DEFAULT
+	goto EventScript_EndSurface
 
 @ not used
-SurfacingBlocked: @ 81B12B5
+EventScript_SurfacingBlocked: @ 81B12B5
 	lockall
-	msgbox SurfacingBlockedText, MSGBOX_DEFAULT
+	msgbox Text_SurfacingBlocked, MSGBOX_DEFAULT
 
-UnderwaterDive_Done: @ 81B12BE
+EventScript_EndSurface: @ 81B12BE
 	releaseall
 	end
 
-CannotUseDiveText: @ 81B12C0
+Text_CantDive: @ 81B12C0
 	.string "The sea is deep here. A POKéMON may be\n"
 	.string "able to go underwater here.$"
 
-UseDivePromptText: @ 81B1303
+Text_WantToDive: @ 81B1303
 	.string "The sea is deep here.\n"
 	.string "Would you like to use DIVE?$"
 
-UsedDiveText: @ 81B1335
+Text_MonUsedDive: @ 81B1335
 	.string "{STR_VAR_1} used DIVE.$"
 
-UnderwaterCannotUseDiveText: @ 81B1343
+Text_CantSurface: @ 81B1343
 	.string "Light is filtering down from above.\n"
 	.string "A POKéMON may be able to surface here.$"
 
-UnderwaterUseDivePromptText: @ 81B138E
+Text_WantToSurface: @ 81B138E
 	.string "Light is filtering down from above.\n"
 	.string "Would you like to use DIVE?$"
 
-SurfacingBlockedText: @ 81B13CE
+Text_SurfacingBlocked: @ 81B13CE
 	.string "There is something in the way above.\n"
 	.string "DIVE can't be used here.$"
 
-SweetScentNothingHereScript:: @ 81B140C
-	msgbox SweetScentNothingHereText, MSGBOX_SIGN
+EventScript_FailSweetScent:: @ 81B140C
+	msgbox Text_FailSweetScent, MSGBOX_SIGN
 	end
 
-SweetScentNothingHereText: @ 81B1415
+Text_FailSweetScent: @ 81B1415
 	.string "There appears to be nothing here...$"
