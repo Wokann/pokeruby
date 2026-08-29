@@ -829,7 +829,7 @@ Move_POISON_STING: @ 81C828D
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 5, 1
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
 	waitforvisualfinish
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -5925,7 +5925,7 @@ Move_TOXIC: @ 81CF983
 	call _81CF99D
 	waitforvisualfinish
 	delay 15
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 _81CF99D:
@@ -5950,7 +5950,7 @@ Move_SLUDGE: @ 81CF9F2
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 5, 1
 	createvisualtask sub_80E1F8C, 2, 4, 1, 2, 0, 12, 31774
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 
@@ -5988,7 +5988,7 @@ Move_SLUDGE_BOMB: @ 81CFA34
 	delay 0
 	waitsound
 	waitforvisualfinish
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 _81CFB44:
@@ -7260,7 +7260,7 @@ Move_POISON_TAIL: @ 81D1914
 	createvisualtask sub_80E0E24, 5, 0, 1
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 
@@ -8744,7 +8744,7 @@ Move_POISON_FANG: @ 81D3C30
 	createvisualtask AnimTask_ShakeMon, 3, 1, 3, 0, 10, 1
 	waitforvisualfinish
 	createvisualtask sub_80E1F8C, 2, 4, 0, 4, 0, 12, 26650
-	call PoisonBubblesAnim
+	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 
@@ -10057,7 +10057,7 @@ Unknown_81D5F3E: @ 81D5F3E
 	delay 7
 	return
 
-PoisonBubblesAnim: @ 81D5F87
+PoisonBubblesEffect: @ 81D5F87
 	createsprite gPoisonBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 0
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	delay 6
