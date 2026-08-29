@@ -1587,57 +1587,7 @@ PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
 	.include "data/text/check_furniture.inc"
 	.include "data/scripts/cave_hole.inc"
 
-@ 81C6BF9
-	msgbox Text_1C6C2B, MSGBOX_NPC
-	end
-
-gUnknown_081C6C02:: @ 81C6C02
-	msgbox Text_1C6C4B, MSGBOX_SIGN
-	end
-
-@ 81C6C0B
-	end
-
-@ 81C6C0C
-	msgbox Text_1C6C62, MSGBOX_SIGN
-	end
-
-@ 81C6C15
-	lockall
-	call PlayersHouse_2F_EventScript_SetWallClock
-	releaseall
-	end
-
-@ 81C6C1D
-	lockall
-	braillemessage Underwater_SealedChamber_Braille_GoUpHere
-	waitbuttonpress
-	erasebox 0, 0, 29, 19
-	releaseall
-	end
-
-Text_1C6C2B: @ 81C6C2B
-	@ This is a test message!
-	@ Welcome to the world of Pokémon!
-	.string "テストよう　メッセージです！\n"
-	.string "ポケモンの　せかいへ　ようこそ！$"
-
-Text_1C6C4B: @ 81C6C4B
-	@ This is a test message!
-	@ This is a sign.
-	.string "テストよう　メッセージです！\n"
-	.string "かんばん　です$"
-
-Text_1C6C62: @ 81C6C62
-	@ This is a test message!
-	@ This is a coordinate-check event.
-	.string "テストよう　メッセージです！\n"
-	.string "ざひょう　チェックの　イベントです$"
-
-@ 81C6C84
-@ object file boundary?
-	.align 2
-	.string "$"
+	.include "data/scripts/test_signpost.inc"
 
 	.include "data/text/save.inc"
 	.include "data/text/birch_speech.inc"
