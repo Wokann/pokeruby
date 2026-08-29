@@ -1542,8 +1542,8 @@ BattleTower_Lobby_EventScript_HideReporter:: @ 81AE30F
 
 	.include "data/maps/MtChimney/aqua_text.inc"
 	.include "data/maps/MtChimney/magma_text.inc"
-	.include "data/text/aqua_awakening.inc"
-	.include "data/text/magma_awakening.inc"
+	.include "data/maps/SeafloorCavern_Room9/aqua_text.inc"
+	.include "data/maps/SeafloorCavern_Room9/magma_text.inc"
 	.include "data/text/aqua_settled.inc"
 	.include "data/text/magma_settled.inc"
 	.include "data/maps/MtPyre_Summit/aqua_text.inc"

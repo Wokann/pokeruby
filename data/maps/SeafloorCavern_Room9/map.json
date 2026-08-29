@@ -12,6 +12,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY",
       "graphics_id": "OBJ_EVENT_GFX_VAR_8",
       "x": 17,
       "y": 38,
@@ -22,9 +23,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_AWAKENED_MON_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_AWAKENED_LEGENDARY"
     },
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER",
       "graphics_id": "OBJ_EVENT_GFX_VAR_6",
       "x": 9,
       "y": 42,
@@ -35,9 +37,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_EVIL_LEADER_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_EVIL_TEAM_LEADER"
     },
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_LEADER",
       "graphics_id": "OBJ_EVENT_GFX_VAR_7",
       "x": 9,
       "y": 42,
@@ -48,9 +51,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_OTHER_LEADER_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_OTHER_TEAM_LEADER"
     },
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_1",
       "graphics_id": "OBJ_EVENT_GFX_VAR_4",
       "x": 8,
       "y": 41,
@@ -61,9 +65,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_OTHER_TEAM_GRUNTS_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_OTHER_TEAM_GRUNTS"
     },
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_2",
       "graphics_id": "OBJ_EVENT_GFX_VAR_5",
       "x": 8,
       "y": 42,
@@ -74,7 +79,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_OTHER_TEAM_GRUNTS_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_OTHER_TEAM_GRUNTS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -87,9 +92,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SeafloorCavern_Room9_EventScript_ItemTMEarthquake",
-      "flag": "FLAG_ITEM_SEAFLOOR_CAVERN_ROOM_9_1"
+      "flag": "FLAG_ITEM_SEAFLOOR_CAVERN_ROOM_9_TM_EARTHQUAKE"
     },
     {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_SLEEPING_LEGENDARY",
       "graphics_id": "OBJ_EVENT_GFX_VAR_9",
       "x": 17,
       "y": 38,
@@ -100,7 +106,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
-      "flag": "FLAG_HIDE_SLEEPING_MON_SEAFLOOR_CAVERN"
+      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_SLEEPING_LEGENDARY"
     }
   ],
   "warp_events": [
@@ -120,7 +126,7 @@
       "elevation": 3,
       "var": "VAR_SEAFLOOR_CAVERN_STATE",
       "var_value": "0",
-      "script": "SeafloorCavern_Room9_EventScript_15DAFA"
+      "script": "SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary"
     }
   ],
   "bg_events": []

@@ -1,8 +1,8 @@
 SeafloorCavern_Room9_MapScripts:: @ 815DAE6
-	map_script MAP_SCRIPT_ON_TRANSITION, SeafloorCavern_Room9_MapScript1_15DAEC
+	map_script MAP_SCRIPT_ON_TRANSITION, SeafloorCavern_Room9_OnTransition
 	.byte 0
 
-SeafloorCavern_Room9_MapScript1_15DAEC:: @ 815DAEC
+SeafloorCavern_Room9_OnTransition:: @ 815DAEC
 	call Common_EventScript_SetupEvilTeamGfxIds
 	call Common_EventScript_SetupLegendaryGfxIds
 	.ifdef SAPPHIRE
@@ -12,64 +12,64 @@ SeafloorCavern_Room9_MapScript1_15DAEC:: @ 815DAEC
 	.endif
 	end
 
-SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
+SeafloorCavern_Room9_EventScript_EvilTeamLeaderAwakensLegendary:: @ 815DAFA
 	lockall
-	setvar VAR_0x8004, 2
-	setvar VAR_0x8005, 3
-	setvar VAR_0x8006, 4
-	setvar VAR_0x8007, 5
+	setvar VAR_0x8004, LOCALID_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER
+	setvar VAR_0x8005, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_LEADER
+	setvar VAR_0x8006, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_1
+	setvar VAR_0x8007, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_2
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_15DD68
+	applymovement LOCALID_PLAYER, SeafloorCavern_Room9_Movement_Delay32
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B41B8, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieHoldItRightThere, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4850, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieHoldItRightThere, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	addobject VAR_0x8004
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD36
+	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_EvilTeamLeaderApproachPlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B41D5, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieSoItWasYou, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B486C, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieSoItWasYou, MSGBOX_DEFAULT
 	.endif
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4201, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieBeholdKyogre, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4897, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieBeholdGroudon, MSGBOX_DEFAULT
 	.endif
 	applymovement VAR_0x8004, Common_Movement_FacePlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4289, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieYouMustDisappear, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B491F, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieYouMustDisappear, MSGBOX_DEFAULT
 	.endif
 	.ifdef SAPPHIRE
-	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_GRUNT_5, UnknownString_81B4319
+	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER, SeafloorCavern_Room9_Text_ArchieDefeat
 	.else
-	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_GRUNT_5, SeafloorCavern_Room9_Text_1B49AE
+	trainerbattle_no_intro TRAINER_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER, SeafloorCavern_Room9_Text_MaxieDefeat
 	.endif
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B432C, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWithThisRedOrb, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B49C1, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWithThisBlueOrb, MSGBOX_DEFAULT
 	.endif
 	setweather WEATHER_NONE
 	doweather
 	special Script_FadeOutMapMusic
 	waitstate
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B43C4, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_RedOrbShinesByItself, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4A5A, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_BlueOrbShinesByItself, MSGBOX_DEFAULT
 	.endif
 	special WaitWeather
 	waitstate
@@ -96,51 +96,51 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 150
-	removeobject 7
-	addobject 1
+	removeobject LOCALID_SEAFLOOR_CAVERN_SLEEPING_LEGENDARY
+	addobject LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY
 	waitstate
 	delay 60
-	applymovement 1, SeafloorCavern_Room9_Movement_15DD4C
+	applymovement LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY, SeafloorCavern_Room9_Movement_AwakenedLegendaryApproach
 	waitmovement 0
 	special FadeOutOrbEffect
 	waitstate
-	setvar VAR_0x8004, 1
-	setvar VAR_0x8005, 1
+	setvar VAR_0x8004, 1 @ vertical pan
+	setvar VAR_0x8005, 1 @ horizontal pan
 	special ShakeCamera
 	waitstate
-	applymovement 1, SeafloorCavern_Room9_Movement_15DD57
+	applymovement LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY, SeafloorCavern_Room9_Movement_AwakenedLegendaryExit
 	waitmovement 0
-	removeobject 1
+	removeobject LOCALID_SEAFLOOR_CAVERN_AWAKENED_LEGENDARY
 	delay 4
-	setvar VAR_0x8004, 2
-	setvar VAR_0x8005, 2
+	setvar VAR_0x8004, 2 @ vertical pan
+	setvar VAR_0x8005, 2 @ horizontal pan
 	special ShakeCamera
 	waitstate
 	delay 30
-	setvar VAR_0x8004, 2
-	setvar VAR_0x8005, 3
-	setvar VAR_0x8006, 4
-	setvar VAR_0x8007, 5
+	setvar VAR_0x8004, LOCALID_SEAFLOOR_CAVERN_EVIL_TEAM_LEADER
+	setvar VAR_0x8005, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_LEADER
+	setvar VAR_0x8006, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_1
+	setvar VAR_0x8007, LOCALID_SEAFLOOR_CAVERN_OTHER_TEAM_GRUNT_2
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B43F2, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4A89, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWhereDidGroudonGo, MSGBOX_DEFAULT
 	.endif
 	playse SE_PC_LOGIN
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4443, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieAMessageFromOutside, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4ADB, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieAMessageFromOutside, MSGBOX_DEFAULT
 	.endif
 	closemessage
-	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD41
+	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_EvilTeamLeaderListenMessage
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B447A, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4B11, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWhatSunIsTooBright, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	playse SE_PC_OFF
@@ -148,24 +148,24 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B45C6, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4C79, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWhyDidGroudonDisappear, MSGBOX_DEFAULT
 	.endif
 	closemessage
 	addobject VAR_0x8005
 	addobject VAR_0x8006
 	addobject VAR_0x8007
-	applymovement VAR_0x8007, SeafloorCavern_Room9_Movement_15DD63
-	applymovement VAR_0x8006, SeafloorCavern_Room9_Movement_15DD63
-	applymovement VAR_0x8005, SeafloorCavern_Room9_Movement_15DD5A
+	applymovement VAR_0x8007, SeafloorCavern_Room9_Movement_OtherTeamGruntsArrive
+	applymovement VAR_0x8006, SeafloorCavern_Room9_Movement_OtherTeamGruntsArrive
+	applymovement VAR_0x8005, SeafloorCavern_Room9_Movement_OtherTeamLeaderArrive
 	waitmovement 0
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B464D, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4D02, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWhatHaveYouWrought, MSGBOX_DEFAULT
 	.endif
 	playse SE_PIN
 	applymovement VAR_0x8004, Common_Movement_ExclamationMark
@@ -173,23 +173,23 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	applymovement VAR_0x8004, Common_Movement_Delay48
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4723, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieDoubtsRedOrbFailure, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4DD3, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieDoubtsBlueOrbFailure, MSGBOX_DEFAULT
 	.endif
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4786, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4E37, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieWeDontHaveTimeToArgue, MSGBOX_DEFAULT
 	.endif
 	closemessage
-	applymovement VAR_0x8005, SeafloorCavern_Room9_Movement_15DD60
-	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_15DD46
+	applymovement VAR_0x8005, SeafloorCavern_Room9_Movement_OtherTeamLeaderExit
+	applymovement VAR_0x8004, SeafloorCavern_Room9_Movement_EvilTeamLeaderExit
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox UnknownString_81B4818, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_MaxieComeOnPlayer, MSGBOX_DEFAULT
 	.else
-	msgbox SeafloorCavern_Room9_Text_1B4ECA, MSGBOX_DEFAULT
+	msgbox SeafloorCavern_Room9_Text_ArchieComeOnPlayer, MSGBOX_DEFAULT
 	.endif
 	setvar VAR_ROUTE128_STATE, 1
 	clearflag FLAG_HIDE_CAVE_OF_ORIGIN_ENTRANCE_WOMAN_1
@@ -205,17 +205,17 @@ SeafloorCavern_Room9_EventScript_15DAFA:: @ 815DAFA
 	setflag FLAG_HIDE_STEVEN_STEVENS_HOUSE
 	setvar VAR_STEVENS_HOUSE_STATE, 1
 	setvar VAR_SEAFLOOR_CAVERN_STATE, 1
-	setflag FLAG_HIDE_EVIL_LEADER_SEAFLOOR_CAVERN
-	setflag FLAG_HIDE_OTHER_LEADER_SEAFLOOR_CAVERN
-	setflag FLAG_HIDE_OTHER_TEAM_GRUNTS_SEAFLOOR_CAVERN
-	setflag FLAG_HIDE_AWAKENED_MON_SEAFLOOR_CAVERN
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_EVIL_TEAM_LEADER
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_OTHER_TEAM_LEADER
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_OTHER_TEAM_GRUNTS
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_AWAKENED_LEGENDARY
 	setflag FLAG_HIDE_EVIL_TEAM_GRUNTS_SEAFLOOR_CAVERN
 	warp MAP_ROUTE128, 255, 38, 22
 	waitstate
 	releaseall
 	end
 
-SeafloorCavern_Room9_Movement_15DD36:: @ 815DD36
+SeafloorCavern_Room9_Movement_EvilTeamLeaderApproachPlayer:: @ 815DD36
 	walk_right
 	walk_right
 	walk_right
@@ -225,21 +225,21 @@ SeafloorCavern_Room9_Movement_15DD36:: @ 815DD36
 	walk_right
 	step_end
 
-@ 815DD3E
+SeafloorCavern_Room9_Movement_Unused1:: @ 815DD3E
 	walk_left
 	walk_left
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD41:: @ 815DD41
+SeafloorCavern_Room9_Movement_EvilTeamLeaderListenMessage:: @ 815DD41
 	walk_left
 	delay_16
 	step_end
 
-@ 815DD44
+SeafloorCavern_Room9_Movement_Unused2:: @ 815DD44
 	walk_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD46:: @ 815DD46
+SeafloorCavern_Room9_Movement_EvilTeamLeaderExit:: @ 815DD46
 	face_up
 	lock_facing_direction
 	walk_down
@@ -247,7 +247,7 @@ SeafloorCavern_Room9_Movement_15DD46:: @ 815DD46
 	walk_in_place_faster_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD4C:: @ 815DD4C
+SeafloorCavern_Room9_Movement_AwakenedLegendaryApproach:: @ 815DD4C
 	delay_16
 	delay_16
 	walk_slow_down
@@ -260,12 +260,12 @@ SeafloorCavern_Room9_Movement_15DD4C:: @ 815DD4C
 	delay_16
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD57:: @ 815DD57
+SeafloorCavern_Room9_Movement_AwakenedLegendaryExit:: @ 815DD57
 	slide_up
 	slide_up
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD5A:: @ 815DD5A
+SeafloorCavern_Room9_Movement_OtherTeamLeaderArrive:: @ 815DD5A
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -273,19 +273,19 @@ SeafloorCavern_Room9_Movement_15DD5A:: @ 815DD5A
 	walk_fast_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD60:: @ 815DD60
+SeafloorCavern_Room9_Movement_OtherTeamLeaderExit:: @ 815DD60
 	walk_right
 	walk_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD63:: @ 815DD63
+SeafloorCavern_Room9_Movement_OtherTeamGruntsArrive:: @ 815DD63
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	step_end
 
-SeafloorCavern_Room9_Movement_15DD68:: @ 815DD68
+SeafloorCavern_Room9_Movement_Delay32:: @ 815DD68
 	delay_16
 	delay_16
 	step_end

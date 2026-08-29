@@ -1,29 +1,29 @@
-UnknownString_81B41B8: @ 81B41B8
+SeafloorCavern_Room9_Text_ArchieHoldItRightThere:: @ 81B41B8
 	.string "ADRIAN: Bleib sofort stehen!$"
 
-UnknownString_81B41D5: @ 81B41D5
+SeafloorCavern_Room9_Text_ArchieSoItWasYou:: @ 81B41D5
 	.string "ADRIAN: Hahahaha...\n"
 	.string "Du warst das also die ganze Zeit.$"
 
-UnknownString_81B4201: @ 81B4201
+SeafloorCavern_Room9_Text_ArchieBeholdKyogre:: @ 81B4201
 	.string "ADRIAN: Schau nur, schau nur!\p"
 	.string "Schau, wie schön die schlafende Gestalt\n"
 	.string "des antiken POKéMON KYOGRE ist!\p"
 	.string "Ich habe so lange auf diesen Tag\n"
 	.string "gewartet...$"
 
-UnknownString_81B4289: @ 81B4289
+SeafloorCavern_Room9_Text_ArchieYouMustDisappear:: @ 81B4289
 	.string "ADRIAN: Es überrascht mich, wie du es\n"
 	.string "geschafft hast, mir zu folgen.\p"
 	.string "Aber das ist nun alles Nebensache.\p"
 	.string "Damit meine Träume wahr werden, musst\n"
 	.string "du leider verschwinden!$"
 
-UnknownString_81B4319: @ 81B4319
+SeafloorCavern_Room9_Text_ArchieDefeat:: @ 81B4319
 	.string "Ich...\n"
 	.string "Ich habe wieder verloren?$"
 
-UnknownString_81B432C: @ 81B432C
+SeafloorCavern_Room9_Text_ArchieWithThisRedOrb:: @ 81B432C
 	.string "ADRIAN: Hahahaha...\p"
 	.string "Ich empfehle mich. Ich muss sagen, du\n"
 	.string "bist wirklich sehr talentiert.\p"
@@ -32,21 +32,21 @@ UnknownString_81B432C: @ 81B432C
 	.string "Mit dieser ROTEN KUGEL kann ich\n"
 	.string "KYOGRE...$"
 
-UnknownString_81B43C4: @ 81B43C4
+SeafloorCavern_Room9_Text_RedOrbShinesByItself:: @ 81B43C4
 	.string "Die ROTE KUGEL beginnt plötzlich von\n"
 	.string "innen heraus zu leuchten!$"
 
-UnknownString_81B43F2: @ 81B43F2
+SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo:: @ 81B43F2
 	.string "ADRIAN: Was?!?\p"
 	.string "Ich habe doch gar nichts gemacht.\n"
 	.string "Die ROTE KUGEL... Warum...\p"
 	.string "Wo ist KYOGRE geblieben?$"
 
-UnknownString_81B4443: @ 81B4443
+SeafloorCavern_Room9_Text_ArchieAMessageFromOutside:: @ 81B4443
 	.string "ADRIAN: Hm? Dies ist eine Nachricht\n"
 	.string "unserer Mitglieder draußen...$"
 
-UnknownString_81B447A: @ 81B447A
+SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard:: @ 81B447A
 	.string "ADRIAN: Ja, was ist denn jetzt los?\p"
 	.string "Hm...\n"
 	.string "Es regnet? So heftig?\p"
@@ -62,7 +62,7 @@ UnknownString_81B447A: @ 81B447A
 	.string "Bleib wo du bist und behalte die\n"
 	.string "Situation im Auge!$"
 
-UnknownString_81B45C6: @ 81B45C6
+SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear:: @ 81B45C6
 	.string "ADRIAN: Irgendetwas stimmt da ganz und\n"
 	.string "gar nicht...\p"
 	.string "Die ROTE KUGEL sollte KYOGRE auf-\n"
@@ -71,7 +71,7 @@ UnknownString_81B45C6: @ 81B45C6
 	.string "Warum ist KYOGRE verschwunden?\p"
 	.string "Warum?!?$"
 
-UnknownString_81B464D: @ 81B464D
+SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought:: @ 81B464D
 	.string "MARC: Was hast du da nur herauf-\n"
 	.string "beschworen?\p"
 	.string "ADRIAN... Du hast KYOGRE aufge-\n"
@@ -81,13 +81,13 @@ UnknownString_81B464D: @ 81B464D
 	.string "Das Land wird untergehen und im\n"
 	.string "Meer verschwinden...$"
 
-UnknownString_81B4723: @ 81B4723
+SeafloorCavern_Room9_Text_ArchieDoubtsRedOrbFailure:: @ 81B4723
 	.string "ADRIAN: Was sagst du da?\p"
 	.string "Die ROTE KUGEL sollte mir die Kontrolle\n"
 	.string "über KYOGRE verschaffen...\l"
 	.string "Das kann einfach nicht wahr sein...$"
 
-UnknownString_81B4786: @ 81B4786
+SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue:: @ 81B4786
 	.string "MARC: Wir haben keine Zeit für\n"
 	.string "Diskussionen!\p"
 	.string "Geh nach draußen und sieh es dir\n"
@@ -95,6 +95,6 @@ UnknownString_81B4786: @ 81B4786
 	.string "Sieh, ob das, was du heraufbeschworen\n"
 	.string "hast, das ist, was du wolltest!$"
 
-UnknownString_81B4818: @ 81B4818
+SeafloorCavern_Room9_Text_MaxieComeOnPlayer:: @ 81B4818
 	.string "MARC: {PLAYER}{KUN}, komm, du musst\n"
 	.string "ebenfalls von hier verschwinden!$"
