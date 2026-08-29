@@ -3,14 +3,14 @@ EventScript_TV:: @ 81A6E72
 	incrementgamestat GAME_STAT_WATCHED_TV
 	special ResetTVShowState
 	specialvar VAR_RESULT, CheckForPlayersHouseNews
-	compare VAR_RESULT, 2
+	compare VAR_RESULT, PLAYERS_HOUSE_TV_MOVIE
 	goto_if_eq EventScript_PlayersHouseMovie
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, PLAYERS_HOUSE_TV_LATI
 	goto_if_eq EventScript_PlayersHouseLatiNewsFlash
 	goto_if_unset FLAG_SYS_TV_START, EventScript_MomDadMightLikeThis1
 	goto_if_set FLAG_SYS_TV_WATCH, EventScript_MomDadMightLikeThis1
 	specialvar VAR_RESULT, IsGabbyAndTyShowOnTheAir
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_eq EventScript_DoInSearchOfTrainers
 	goto EventScript_TryDoPokeNews
 	end
@@ -57,7 +57,7 @@ EventScript_DoTVShow:
 	special DoTVShow
 	waitmessage
 	waitbuttonpress
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, TRUE
 	goto_if_ne EventScript_DoTVShow
 	goto EventScript_TurnOffTV
 	end
@@ -76,7 +76,7 @@ EventScript_MomDadMightLikeThis2:
 
 EventScript_TryDoPokeNews:
 	special DoPokeNews
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_TryDoTVShow
 	waitmessage
 	waitbuttonpress
@@ -87,7 +87,7 @@ EventScript_DoInSearchOfTrainers:
 	special DoTVShowInSearchOfTrainers
 	waitmessage
 	waitbuttonpress
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_DoInSearchOfTrainers
 	goto EventScript_TurnOffTV
 	end

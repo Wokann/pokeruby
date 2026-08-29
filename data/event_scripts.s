@@ -21,6 +21,7 @@
 #include "constants/sound.h"
 #include "constants/species.h"
 #include "constants/trade.h"
+#include "constants/tv.h"
 #include "constants/weather.h"
 #include "constants/heal_locations.h"
 #include "constants/vars.h"
