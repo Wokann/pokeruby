@@ -60,7 +60,7 @@ const struct SpriteTemplate gSpriteTemplate_83D7410 =
     .anims = gSpriteAnimTable_83D73F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D740C,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 void sub_80CF458(struct Sprite* sprite)

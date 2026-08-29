@@ -40,7 +40,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7038 =
     .anims = gSpriteAnimTable_83D7034,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7050 =

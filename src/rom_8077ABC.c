@@ -1367,20 +1367,20 @@ u8 unref_sub_80793B0(u8 a1)
     return GetBattlerAtPosition(a1);
 }
 
-void sub_80793C4(struct Sprite *sprite)
+void AnimSpriteOnMonPos(struct Sprite *sprite)
 {
-    bool8 var;
+    bool8 respectMonPicOffsets;
 
     if (!sprite->data[0])
     {
         if (!gBattleAnimArgs[3])
-            var = TRUE;
+            respectMonPicOffsets = TRUE;
         else
-            var = FALSE;
+            respectMonPicOffsets = FALSE;
         if (!gBattleAnimArgs[2])
-            InitAnimSpritePos(sprite, var);
+            InitAnimSpritePos(sprite, respectMonPicOffsets);
         else
-            sub_8078764(sprite, var);
+            sub_8078764(sprite, respectMonPicOffsets);
         sprite->data[0]++;
 
     }

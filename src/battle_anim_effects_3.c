@@ -167,7 +167,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402180 =
     .anims = gSpriteAnimTable_840217C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402198 =
@@ -213,7 +213,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021DC =
     .anims = gSpriteAnimTable_84021D8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_84021F4 =
@@ -525,7 +525,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402498 =
     .anims = gSpriteAnimTable_8402494,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gUnknown_084024B0[] =

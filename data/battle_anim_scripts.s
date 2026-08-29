@@ -1343,7 +1343,7 @@ Move_PSYCH_UP: @ 81C8EEA
 	createvisualtask AnimTask_BlendColorCycle, 2, 25, 2, 6, 1, 11, 0
 	setalpha 12, 8
 	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 5, 10
-	createsprite gBattleAnimSpriteTemplate_83DA690, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, 0
+	createsprite gPsychUpSpiralSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, 0
 	createvisualtask AnimTask_SwayMon, 5, 0, 5, 2560, 8, 0
 	delay 127
 	delay 4

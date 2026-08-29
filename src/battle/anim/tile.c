@@ -52,7 +52,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F3C =
     .anims = gSpriteAnimTable_83D6F38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AnimCmd gSpriteAnim_83D6F54[] =

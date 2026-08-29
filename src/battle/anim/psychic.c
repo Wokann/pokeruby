@@ -36,27 +36,27 @@ static void sub_80DC1FC(u8 taskId);
 static void sub_80DC3F4(u8 taskId);
 void sub_80DC5F4(u8 taskId);
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA674[] =
+static const union AffineAnimCmd sAffineAnim_PsychUpSpiral[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFFE, 0xFFFE, -10, 120),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA68C[] =
+static const union AffineAnimCmd *const sAffineAnims_PsychUpSpiral[] =
 {
-    gSpriteAffineAnim_83DA674,
+    sAffineAnim_PsychUpSpiral,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA690 =
+const struct SpriteTemplate gPsychUpSpiralSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPIRAL,
     .paletteTag = ANIM_TAG_SPIRAL,
     .oam = &gOamData_837E0BC,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA68C,
-    .callback = sub_80793C4,
+    .affineAnims = sAffineAnims_PsychUpSpiral,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6A8 =
@@ -385,7 +385,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA9E0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA9DC,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA9F8[] =

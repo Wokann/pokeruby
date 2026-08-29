@@ -9,7 +9,7 @@ extern u8 gBattleAnimTarget;
 
 extern const union AnimCmd *const gSpriteAnimTable_83D9310[];
 
-void sub_80793C4(struct Sprite *sprite);
+void AnimSpriteOnMonPos(struct Sprite *sprite);
 void sub_80D9D70(struct Sprite *sprite);
 void sub_80D9DF0(struct Sprite *sprite);
 void sub_80D9E94(struct Sprite *sprite);
@@ -42,7 +42,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA244 =
     .anims = gSpriteAnimTable_83DA240,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AnimCmd gSpriteAnim_83DA25C[] =

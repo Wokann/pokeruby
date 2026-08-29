@@ -61,7 +61,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7828 =
     .anims = gSpriteAnimTable_83D7824,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83D7840[] =
@@ -148,7 +148,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7928 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83D7940[] =
@@ -171,7 +171,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D795C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7958,
-    .callback = sub_80793C4,
+    .callback = AnimSpriteOnMonPos,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7974 =
@@ -234,8 +234,8 @@ void sub_80D0FD8(struct Sprite* sprite)
             gBattleAnimArgs[0] = sp0 - r4;
     }
 
-    sprite->callback = sub_80793C4;
-    sub_80793C4(sprite);
+    sprite->callback = AnimSpriteOnMonPos;
+    AnimSpriteOnMonPos(sprite);
 }
 
 void sub_80D1098(struct Sprite* sprite)
@@ -341,8 +341,8 @@ void sub_80D1318(struct Sprite* sprite)
     }
 
     StartSpriteAffineAnim(sprite, 1);
-    sprite->callback = sub_80793C4;
-    sub_80793C4(sprite);
+    sprite->callback = AnimSpriteOnMonPos;
+    AnimSpriteOnMonPos(sprite);
 }
 
 void sub_80D1368(struct Sprite* sprite)
