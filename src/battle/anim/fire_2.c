@@ -14,15 +14,15 @@ void AnimEmberFlare(struct Sprite *sprite);
 void sub_80D5210(struct Sprite *sprite);
 void AnimFireRing(struct Sprite *sprite);
 void AnimFireCross(struct Sprite *sprite);
-void sub_80D53B4(struct Sprite *sprite);
+void AnimFireSpiralOutward(struct Sprite *sprite);
 void sub_80D58FC(struct Sprite *sprite);
 void sub_80D5A20(struct Sprite *sprite);
 static void AnimFireRingStep1(struct Sprite *);
 static void UpdateFireRingCircleOffset(struct Sprite *);
 static void AnimFireRingStep2(struct Sprite *);
 static void AnimFireRingStep3(struct Sprite *);
-static void sub_80D53F4(struct Sprite *);
-static void sub_80D541C(struct Sprite *);
+static void AnimFireSpiralOutward_Step1(struct Sprite *);
+static void AnimFireSpiralOutward_Step2(struct Sprite *);
 static void sub_80D54E0(u8 taskId);
 static void sub_80D57C4(u8 spriteId, u8 taskId, u8 a3);
 static void sub_80D59B0(struct Sprite *);
@@ -128,7 +128,7 @@ const struct SpriteTemplate gFireCrossSpriteTemplate =
     .callback = AnimFireCross,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9694 =
+const struct SpriteTemplate gFireSpiralOutwardSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -136,7 +136,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9694 =
     .anims = gSpriteAnimTable_83D95E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D53B4,
+    .callback = AnimFireSpiralOutward,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D96AC =
@@ -305,7 +305,7 @@ void AnimFireCross(struct Sprite *sprite)
     sprite->callback = TranslateSpriteOverDuration;
 }
 
-void sub_80D53B4(struct Sprite *sprite)
+void AnimFireSpiralOutward(struct Sprite *sprite)
 {
     InitAnimSpritePos(sprite, 1);
 
@@ -315,21 +315,21 @@ void sub_80D53B4(struct Sprite *sprite)
     sprite->invisible = TRUE;
     sprite->callback = WaitAnimForDuration;
 
-    StoreSpriteCallbackInData(sprite, sub_80D53F4);
+    StoreSpriteCallbackInData(sprite, AnimFireSpiralOutward_Step1);
 }
 
-static void sub_80D53F4(struct Sprite *sprite)
+static void AnimFireSpiralOutward_Step1(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
 
     sprite->data[0] = sprite->data[1];
     sprite->data[1] = 0;
 
-    sprite->callback = sub_80D541C;
-    sub_80D541C(sprite);
+    sprite->callback = AnimFireSpiralOutward_Step2;
+    AnimFireSpiralOutward_Step2(sprite);
 }
 
-static void sub_80D541C(struct Sprite *sprite)
+static void AnimFireSpiralOutward_Step2(struct Sprite *sprite)
 {
     sprite->x2 = Sin(sprite->data[1], sprite->data[2] >> 8);
     sprite->y2 = Cos(sprite->data[1], sprite->data[2] >> 8);

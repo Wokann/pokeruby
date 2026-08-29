@@ -662,25 +662,25 @@ Move_FLAME_WHEEL: @ 81C7E62
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	monbg ANIM_BATTLER_DEF_PARTNER
 	monbgprio_2A ANIM_BATTLER_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 0
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 0
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 4
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 4
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 8
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 8
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 12
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 12
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 16
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 16
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 20
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 20
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 24
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 24
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 6
@@ -688,15 +688,15 @@ Move_FLAME_WHEEL: @ 81C7E62
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 8, 1
 	createvisualtask AnimTask_BlendMonInAndOut, 3, ANIM_BATTLER_TARGET, 31, 12, 1, 1
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
-	call _81D11A2
+	call FireSpreadEffect
 	delay 7
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 9
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
 
-Unknown_81C7F4C: @ 81C7F4C
-	createsprite gBattleAnimSpriteTemplate_83D9694, ANIM_BATTLER_ATTACKER, 3, 0, 0, 50
+FlameWheel1: @ 81C7F4C
+	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 50
 	delay 4
 	return
 
@@ -6950,7 +6950,7 @@ Move_FIRE_PUNCH: @ 81D1107
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 8, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 15, 1
-	call _81D11A2
+	call FireSpreadEffect
 	delay 4
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -6959,14 +6959,14 @@ Move_FIRE_PUNCH: @ 81D1107
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D11A2:
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, 192, 176, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, -192, 240, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, 192, -160, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, -192, -112, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, 160, 48, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, -224, -32, 40
-	createsprite gBattleAnimSpriteTemplate_83D9490, ANIM_BATTLER_TARGET, 1, 0, 10, 112, -128, 40
+FireSpreadEffect:
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, 192, 176, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, -192, 240, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, 192, -160, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, -192, -112, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, 160, 48, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, -224, -32, 40
+	createsprite gFireSpreadSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0, 10, 112, -128, 40
 	return
 
 Move_LEER: @ 81D121A
@@ -8460,7 +8460,7 @@ Move_BLAZE_KICK: @ 81D34C8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 14, 1
 	createvisualtask sub_80E2A38, 10, 4, 2, 0, 0, 32767
 	createsprite gBattleAnimSpriteTemplate_83DB3DC, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
-	call _81D11A2
+	call FireSpreadEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff

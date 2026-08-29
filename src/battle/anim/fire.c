@@ -7,7 +7,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 
 void sub_80D4ED8(struct Sprite *sprite);
-void sub_80D4F18(struct Sprite *sprite);
+void AnimFireSpread(struct Sprite *sprite);
 void sub_80D4FCC(struct Sprite *sprite);
 void sub_80D4F5C(struct Sprite *sprite);
 void sub_80D5074(struct Sprite *sprite);
@@ -47,7 +47,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9478 =
     .callback = sub_80D4ED8,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9490 =
+const struct SpriteTemplate gFireSpreadSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -55,7 +55,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9490 =
     .anims = gSpriteAnimTable_83D9470,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D4F18,
+    .callback = AnimFireSpread,
 };
 
 const union AnimCmd gSpriteAnim_83D94A8[] =
@@ -185,7 +185,7 @@ void sub_80D4ED8(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void sub_80D4F18(struct Sprite *sprite)
+void AnimFireSpread(struct Sprite *sprite)
 {
     sub_807867C(sprite, gBattleAnimArgs[0]);
 
