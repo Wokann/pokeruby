@@ -1148,13 +1148,13 @@ Move_BEAT_UP: @ 81C8A2F
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	choosetwoturnanim Move_BEAT_UP_Even, Move_BEAT_UP_Odd
-Move_BEAT_UP_End:
+	choosetwoturnanim BeatUpLeft, BeatUpRight
+BeatUpContinue:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	end
-Move_BEAT_UP_Even:
+BeatUpLeft:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, -20, 1, 2
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, -20, -12, 8, 1, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
@@ -1164,8 +1164,8 @@ Move_BEAT_UP_Even:
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 8, 8, 8, 1, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	goto Move_BEAT_UP_End
-Move_BEAT_UP_Odd:
+	goto BeatUpContinue
+BeatUpRight:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 12, -20, 1, 2
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 12, -12, 8, 1, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
@@ -1175,7 +1175,7 @@ Move_BEAT_UP_Odd:
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, -12, 8, 8, 1, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	goto Move_BEAT_UP_End
+	goto BeatUpContinue
 
 Move_STOMP: @ 81C8B2A
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
