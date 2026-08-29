@@ -6,9 +6,9 @@ PlayersHouse_1F_EventScript_EnterHouseMovingIn:: @ 81B6956
 	msgbox PlayersHouse_1F_Text_IsntItNiceInHere, MSGBOX_DEFAULT
 	applymovement VAR_0x8004, Common_Movement_FacePlayer
 	waitmovement 0
-	compare VAR_0x8005, 0
+	compare VAR_0x8005, MALE
 	call_if_eq PlayersHouse_1F_EventScript_MomFacePlayerMovingInMale
-	compare VAR_0x8005, 1
+	compare VAR_0x8005, FEMALE
 	call_if_eq PlayersHouse_1F_EventScript_MomFacePlayerMovingInFemale
 	msgbox PlayersHouse_1F_Text_MoversPokemonGoSetClock, MSGBOX_DEFAULT
 	closemessage
@@ -44,13 +44,13 @@ PlayersHouse_1F_EventScript_MomGoSeeRoom:: @ 81B69B7
 
 LittlerootTown_BrendansHouse_2F_EventScript_WallClock:: @ 81B69D3
 	lockall
-	setvar VAR_0x8004, 0
+	setvar VAR_0x8004, MALE
 	goto PlayersHouse_2F_EventScript_WallClock
 	end
 
 LittlerootTown_MaysHouse_2F_EventScript_WallClock:: @ 81B69DF
 	lockall
-	setvar VAR_0x8004, 1
+	setvar VAR_0x8004, FEMALE
 	goto PlayersHouse_2F_EventScript_WallClock
 	end
 
@@ -167,7 +167,7 @@ PlayersHouse_1F_EventScript_PetalburgGymReportMale:: @ 81B6ABF
 	msgbox PlayersHouse_1F_Text_ItsOverWeMissedHim, MSGBOX_DEFAULT
 	msgbox PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_1, 1
+	setvar VAR_TEMP_1, TRUE
 	applymovement VAR_0x8005, PlayersHouse_1F_Movement_MomReturnToSeatMale
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_SetWatchedBroadcast
@@ -192,7 +192,7 @@ PlayersHouse_1F_EventScript_PetalburgGymReportFemale:: @ 81B6B2E
 	msgbox PlayersHouse_1F_Text_ItsOverWeMissedHim, MSGBOX_DEFAULT
 	msgbox PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_1, 1
+	setvar VAR_TEMP_1, TRUE
 	applymovement VAR_0x8005, PlayersHouse_1F_Movement_MomReturnToSeatFemale
 	waitmovement 0
 	goto PlayersHouse_1F_EventScript_SetWatchedBroadcast
@@ -249,7 +249,7 @@ PlayersHouse_1F_EventScript_Mom:: @ 81B6BE9
 	goto_if_eq PlayersHouse_1F_EventScript_DadShouldStayLonger
 	goto_if_set FLAG_BADGE05_GET, PlayersHouse_1F_EventScript_TryGiveAmuletCoin
 	goto_if_set FLAG_RESCUED_BIRCH, PlayersHouse_1F_EventScript_MomHealsParty
-	compare VAR_TEMP_1, 1
+	compare VAR_TEMP_1, TRUE
 	goto_if_eq PlayersHouse_1F_EventScript_SeeYouHoney
 	compare VAR_LITTLEROOT_INTRO_STATE, 7
 	goto_if_ge PlayersHouse_1F_EventScript_DidYouMeetProfBirch
@@ -266,7 +266,7 @@ PlayersHouse_1F_EventScript_TryGiveAmuletCoin:: @ 81B6C3D
 	goto_if_set FLAG_RECEIVED_AMULET_COIN, PlayersHouse_1F_EventScript_MomHealsParty
 	msgbox PlayersHouse_1F_Text_GotDadsBadgeHeresSomethingFromMom, MSGBOX_DEFAULT
 	giveitem ITEM_AMULET_COIN
-	compare VAR_RESULT, 0
+	compare VAR_RESULT, FALSE
 	goto_if_eq Common_EventScript_ShowBagIsFull
 	msgbox PlayersHouse_1F_Text_DontPushYourselfTooHard, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_AMULET_COIN
@@ -300,7 +300,7 @@ PlayersHouse_1F_EventScript_Machoke1:: @ 81B6CA6
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_MACHOKE, 0
+	playmoncry SPECIES_MACHOKE, CRY_MODE_NORMAL
 	msgbox PlayersHouse_1F_Text_Machoke1, MSGBOX_DEFAULT
 	waitmoncry
 	release
@@ -310,7 +310,7 @@ PlayersHouse_1F_EventScript_Machoke2:: @ 81B6CB9
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_MACHOKE, 0
+	playmoncry SPECIES_MACHOKE, CRY_MODE_NORMAL
 	msgbox PlayersHouse_1F_Text_Machoke2, MSGBOX_DEFAULT
 	waitmoncry
 	release
