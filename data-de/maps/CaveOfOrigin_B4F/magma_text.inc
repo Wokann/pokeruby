@@ -7,10 +7,10 @@ CaveOfOrigin_B4F_Text_GroudonSettled:: @ 81B5009
 	.string "GROUDON wurde offensichtlich\n"
 	.string "wieder in Schlaf versetzt...$"
 
-MagmaLeader_Text_This: @ 81B503D
+CaveOfOrigin_B4F_Text_MaxieThis:: @ 81B503D
 	.string "MARC: Das...$"
 
-MagmaLeader_Text_Farewell: @ 81B504C
+CaveOfOrigin_B4F_Text_MaxieFarewell:: @ 81B504C
 	.string "MARC: ... ... ... ... ... ...\n"
 	.string "... ... ... ... ... ... ... ...\p"
 	.string "Das heißt wohl Goodbye. Das ist das\n"
