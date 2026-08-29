@@ -1010,22 +1010,22 @@ Move_COMET_PUNCH: @ 81C86C3
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	choosetwoturnanim Move_COMET_PUNCH_Even, Move_COMET_PUNCH_Odd
-Move_COMET_PUNCH_End:
+	choosetwoturnanim CometPunchLeft, CometPunchRight
+CometPunchContinue:
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	end
-Move_COMET_PUNCH_Even:
+CometPunchLeft:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -8, -8, 1, 2
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -8, 0, 8, 1, 0
-	goto Move_COMET_PUNCH_End
-Move_COMET_PUNCH_Odd:
+	goto CometPunchContinue
+CometPunchRight:
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, -8, 1, 2
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 8, 0, 8, 1, 0
-	goto Move_COMET_PUNCH_End
+	goto CometPunchContinue
 
 Move_SONIC_BOOM: @ 81C873B
 	loadspritegfx ANIM_TAG_AIR_WAVE
