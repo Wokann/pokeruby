@@ -19,7 +19,7 @@ void AnimThunderboltOrb(struct Sprite *sprite);
 void AnimSparkElectricityFlashing(struct Sprite *sprite);
 void sub_80D679C(struct Sprite *sprite);
 void AnimElectricBoltSegment(struct Sprite *sprite);
-void sub_80D6A6C(struct Sprite *sprite);
+void AnimThunderWave(struct Sprite *sprite);
 void sub_80D6D18(struct Sprite *sprite);
 void sub_80D6D70(struct Sprite *sprite);
 void sub_80D6DD8(struct Sprite *sprite);
@@ -29,7 +29,7 @@ void sub_80D755C(struct Sprite *sprite);
 static void sub_80D6514(struct Sprite *sprite);
 static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite);
 static void AnimTask_ElectricBolt_Step(u8 taskId);
-static void sub_80D6AF0(struct Sprite *sprite);
+static void AnimThunderWave_Step(struct Sprite *sprite);
 static void sub_80D6BB8(u8 taskId);
 static void sub_80D6D00(struct Sprite *sprite);
 static void sub_80D6E38(struct Sprite *sprite);
@@ -130,7 +130,7 @@ const struct SpriteTemplate gElectricBoltSegmentSpriteTemplate =
     .callback = AnimElectricBoltSegment,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9950 =
+const struct SpriteTemplate gThunderWaveSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_H,
     .paletteTag = ANIM_TAG_SPARK_H,
@@ -138,7 +138,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9950 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6A6C,
+    .callback = AnimThunderWave,
 };
 
 const s8 gUnknown_083D9968[][2] =
@@ -570,20 +570,20 @@ void AnimElectricBoltSegment(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-void sub_80D6A6C(struct Sprite *sprite)
+void AnimThunderWave(struct Sprite *sprite)
 {
     u8 spriteId;
 
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
-    spriteId = CreateSprite(&gBattleAnimSpriteTemplate_83D9950, sprite->x + 32, sprite->y, sprite->subpriority);
+    spriteId = CreateSprite(&gThunderWaveSpriteTemplate, sprite->x + 32, sprite->y, sprite->subpriority);
     gSprites[spriteId].oam.tileNum += 8;
     gAnimVisualTaskCount++;
-    gSprites[spriteId].callback = sub_80D6AF0;
-    sprite->callback = sub_80D6AF0;
+    gSprites[spriteId].callback = AnimThunderWave_Step;
+    sprite->callback = AnimThunderWave_Step;
 }
 
-static void sub_80D6AF0(struct Sprite *sprite)
+static void AnimThunderWave_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] == 3)
     {
