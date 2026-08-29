@@ -18,7 +18,7 @@ void sub_80D648C(struct Sprite *sprite);
 void sub_80D65DC(struct Sprite *sprite);
 void sub_80D6658(struct Sprite *sprite);
 void sub_80D679C(struct Sprite *sprite);
-void sub_80D6A1C(struct Sprite *sprite);
+void AnimElectricBoltSegment(struct Sprite *sprite);
 void sub_80D6A6C(struct Sprite *sprite);
 void sub_80D6D18(struct Sprite *sprite);
 void sub_80D6D70(struct Sprite *sprite);
@@ -28,7 +28,7 @@ void sub_80D727C(struct Sprite *sprite);
 void sub_80D755C(struct Sprite *sprite);
 static void sub_80D6514(struct Sprite *sprite);
 static void sub_80D672C(struct Sprite *sprite);
-static void sub_80D6874(u8 taskId);
+static void AnimTask_ElectricBolt_Step(u8 taskId);
 static void sub_80D6AF0(struct Sprite *sprite);
 static void sub_80D6BB8(u8 taskId);
 static void sub_80D6D00(struct Sprite *sprite);
@@ -119,7 +119,7 @@ const struct SpriteTemplate gElectricitySpriteTemplate =
     .callback = sub_80D679C,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9938 =
+const struct SpriteTemplate gElectricBoltSegmentSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK,
     .paletteTag = ANIM_TAG_SPARK,
@@ -127,7 +127,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9938 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6A1C,
+    .callback = AnimElectricBoltSegment,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9950 =
@@ -476,15 +476,15 @@ void sub_80D679C(struct Sprite *sprite)
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 
-void sub_80D681C(u8 taskId)
+void AnimTask_ElectricBolt(u8 taskId)
 {
-    gTasks[taskId].data[0] = GetBattlerSpriteCoord(gBattleAnimTarget, 0) + gBattleAnimArgs[0];
-    gTasks[taskId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[1];
+    gTasks[taskId].data[0] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[0];
+    gTasks[taskId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[1];
     gTasks[taskId].data[2] = gBattleAnimArgs[2];
-    gTasks[taskId].func = sub_80D6874;
+    gTasks[taskId].func = AnimTask_ElectricBolt_Step;
 }
 
-static void sub_80D6874(u8 taskId)
+static void AnimTask_ElectricBolt_Step(u8 taskId)
 {
     u16 r8;
     u16 r2;
@@ -492,8 +492,8 @@ static void sub_80D6874(u8 taskId)
     u8 spriteId = 0;
     u8 r7 = 0;
     u8 sp = gTasks[taskId].data[2];
-    s16 r4 = gTasks[taskId].data[0];
-    s16 r6 = gTasks[taskId].data[1];
+    s16 x = gTasks[taskId].data[0];
+    s16 y = gTasks[taskId].data[1];
 
     if (gTasks[taskId].data[2] == 0)
     {
@@ -512,30 +512,30 @@ static void sub_80D6874(u8 taskId)
     {
     case 0:
         r12 *= 1;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9938, r4, r6 + r12, 2);
+        spriteId = CreateSprite(&gElectricBoltSegmentSpriteTemplate, x, y + r12, 2);
         r7++;
         break;
     case 2:
         r12 *= 2;
         r8 += r2;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9938, r4, r6 + r12, 2);
+        spriteId = CreateSprite(&gElectricBoltSegmentSpriteTemplate, x, y + r12, 2);
         r7++;
         break;
     case 4:
         r12 *= 3;
         r8 += r2 * 2;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9938, r4, r6 + r12, 2);
+        spriteId = CreateSprite(&gElectricBoltSegmentSpriteTemplate, x, y + r12, 2);
         r7++;
         break;
     case 6:
         r12 *= 4;
         r8 += r2 * 3;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9938, r4, r6 + r12, 2);
+        spriteId = CreateSprite(&gElectricBoltSegmentSpriteTemplate, x, y + r12, 2);
         r7++;
         break;
     case 8:
         r12 *= 5;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9938, r4, r6 + r12, 2);
+        spriteId = CreateSprite(&gElectricBoltSegmentSpriteTemplate, x, y + r12, 2);
         r7++;
         break;
     case 10:
@@ -553,7 +553,7 @@ static void sub_80D6874(u8 taskId)
     gTasks[taskId].data[10]++;
 }
 
-void sub_80D6A1C(struct Sprite *sprite)
+void AnimElectricBoltSegment(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {

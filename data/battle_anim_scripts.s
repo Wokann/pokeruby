@@ -1058,7 +1058,7 @@ Move_THUNDER_SHOCK: @ 81C879C
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 0, -44, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -44, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 0, 13, 0
@@ -1080,13 +1080,13 @@ Move_THUNDERBOLT: @ 81C880A
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 24, -52, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 24, -52, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 7
-	createvisualtask sub_80D681C, 5, -24, -52, 0
+	createvisualtask AnimTask_ElectricBolt, 5, -24, -52, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 7
-	createvisualtask sub_80D681C, 5, 0, -60, 1
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -60, 1
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	delay 9
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 0, 13, 0
@@ -1129,7 +1129,7 @@ Move_THUNDER_WAVE: @ 81C89C0
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 6, 0
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_80D681C, 5, 0, -48, 0
+	createvisualtask AnimTask_ElectricBolt, 5, 0, -48, 0
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 20
 	loopsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_TARGET, 10, 4
