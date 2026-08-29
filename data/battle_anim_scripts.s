@@ -1278,8 +1278,8 @@ Move_PURSUIT: @ 81C8D80
 	waitbgfadein
 	delay 0
 	setalpha 12, 8
-	choosetwoturnanim _81C8D9F, _81C8DC8
-_81C8D96:
+	choosetwoturnanim PursuitNormal, PursuitOnSwitchout
+PursuitContinue:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -1287,16 +1287,16 @@ _81C8D96:
 	restorebg
 	waitbgfadein
 	end
-_81C8D9F:
+PursuitNormal:
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
-	goto _81C8D96
-_81C8DC8:
+	goto PursuitContinue
+PursuitOnSwitchout:
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
-	goto _81C8D96
+	goto PursuitContinue
 
 Move_SPIKE_CANNON: @ 81C8DF1
 	loadspritegfx ANIM_TAG_NEEDLE
