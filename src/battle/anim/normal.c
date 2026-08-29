@@ -63,8 +63,8 @@ static void BlendColorCycle(u8, u8, u8);
 static void AnimTask_BlendColorCycleLoop(u8 taskId);
 static void sub_80E20E4(u8, u8, u8);
 static void sub_80E2140(u8 taskId);
-static void sub_80E2214(u8 taskId);
-static void sub_80E22CC(u8 taskId);
+static void AnimTask_FlashAnimTagWithColor_Step1(u8 taskId);
+static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId);
 static void sub_80E260C(void);
 static void sub_80E255C(struct Sprite *sprite);
 static void sub_80E2710(u8 taskId);
@@ -576,7 +576,7 @@ static void sub_80E2140(u8 taskId)
     }
 }
 
-void sub_80E21A8(u8 taskId)
+void AnimTask_FlashAnimTagWithColor(u8 taskId)
 {
     u8 paletteIndex;
 
@@ -597,10 +597,10 @@ void sub_80E21A8(u8 taskId)
         gBattleAnimArgs[4],
         gBattleAnimArgs[3]);
 
-    gTasks[taskId].func = sub_80E2214;
+    gTasks[taskId].func = AnimTask_FlashAnimTagWithColor_Step1;
 }
 
-static void sub_80E2214(u8 taskId)
+static void AnimTask_FlashAnimTagWithColor_Step1(u8 taskId)
 {
     u32 selectedPalettes;
 
@@ -615,7 +615,7 @@ static void sub_80E2214(u8 taskId)
 
     if (gTasks[taskId].data[2] == 0)
     {
-        gTasks[taskId].func = sub_80E22CC;
+        gTasks[taskId].func = AnimTask_FlashAnimTagWithColor_Step2;
         return;
     }
 
@@ -644,7 +644,7 @@ static void sub_80E2214(u8 taskId)
     gTasks[taskId].data[2]--;
 }
 
-static void sub_80E22CC(u8 taskId)
+static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId)
 {
     u32 selectedPalettes;
 

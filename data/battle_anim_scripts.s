@@ -1328,9 +1328,9 @@ Move_SWORDS_DANCE: @ 81C8EA4
 	setalpha 12, 8
 	playsewithpan SE_M_SWORDS_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 16, 6, 1, 4
-	createsprite gBattleAnimSpriteTemplate_83D748C, ANIM_BATTLER_ATTACKER, 2, 0, 0
+	createsprite gSwordsDanceBladeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0
 	delay 22
-	createvisualtask sub_80E21A8, 2, ANIM_TAG_SWORD, 2, 2, 32754, 16, 0, 0
+	createvisualtask AnimTask_FlashAnimTagWithColor, 2, ANIM_TAG_SWORD, 2, 2, 32754, 16, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff
@@ -2326,7 +2326,7 @@ Move_CONVERSION: @ 81CA809
 	createsprite gBattleAnimSpriteTemplate_83D6F80, ANIM_BATTLER_ATTACKER, 2, 24, 24
 	delay 20
 	playsewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E21A8, 2, 10018, 1, 1, 14335, 12, 0, 0
+	createvisualtask AnimTask_FlashAnimTagWithColor, 2, 10018, 1, 1, 14335, 12, 0, 0
 	delay 6
 	createvisualtask sub_80CE108, 5
 	waitforvisualfinish
@@ -8332,7 +8332,7 @@ Move_HYPER_BEAM: @ 81D31EA
 	delay 30
 	createsoundtask sub_812B058, 247, -64, 63, 1, 15, 0, 5
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 4, 50, 1
-	createvisualtask sub_80E21A8, 2, 10147, 1, 12, 31, 16, 0, 0
+	createvisualtask AnimTask_FlashAnimTagWithColor, 2, 10147, 1, 12, 31, 16, 0, 0
 	call _81D331B
 	call _81D331B
 	call _81D331B
