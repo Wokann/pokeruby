@@ -40,7 +40,7 @@ Route123_BerryMastersHouse_EventScript_BerryMastersWife:: @ 8163A64
 	goto_if_set FLAG_DAILY_BERRY_MASTERS_WIFE, Route123_BerryMastersHouse_EventScript_ReceivedWifeBerryToday
 	msgbox Route123_BerryMastersHouse_Text_HeardAGoodSayingLately, MSGBOX_DEFAULT
 	setvar VAR_0x8004, EASY_CHAT_TYPE_GOOD_SAYING
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	goto_if_eq VAR_RESULT, TRUE, Route123_BerryMastersHouse_EventScript_GavePhrase

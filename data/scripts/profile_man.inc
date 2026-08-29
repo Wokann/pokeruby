@@ -25,7 +25,7 @@ ProfileMan_EventScript_CreateProfile:: @ 81B1B7A
 	msgbox ProfileMan_Text_LetsSeeItThen, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_0x8004, EASY_CHAT_TYPE_PROFILE
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_0x8004, 1
@@ -79,7 +79,7 @@ ProfileMan_EventScript_CreateNewProfile:: @ 81B1C36
 	msgbox ProfileMan_Text_EvenBetterThanLastProfile, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_0x8004, EASY_CHAT_TYPE_PROFILE
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_0x8004, 1

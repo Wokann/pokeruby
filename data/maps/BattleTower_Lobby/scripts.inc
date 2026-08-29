@@ -342,7 +342,7 @@ BattleTower_Lobby_EventScript_1606A5:: @ 81606A5
 BattleTower_Lobby_EventScript_1606CC:: @ 81606CC
 	msgbox BattleTower_Lobby_Text_19A7C3, MSGBOX_DEFAULT
 	setvar VAR_0x8004, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0

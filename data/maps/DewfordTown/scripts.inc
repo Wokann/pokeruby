@@ -602,7 +602,7 @@ DewfordTown_EventScript_ConfirmTrendyPhrase:: @ 814E439
 DewfordTown_EventScript_RejectTrendyPhrase:: @ 814E443
 	msgbox DewfordTown_Text_TellMeWhatsNewAndIn, MSGBOX_DEFAULT
 	setvar VAR_0x8004, EASY_CHAT_TYPE_TRENDY_PHRASE
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	goto_if_eq VAR_RESULT, TRUE, DewfordTown_EventScript_GiveNewTrendyPhrase

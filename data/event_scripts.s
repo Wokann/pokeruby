@@ -808,7 +808,7 @@ Common_EventScript_PokemonCenterSign:: @ 81A00EA
 	msgbox Text_PokemonCenterSign, MSGBOX_SIGN
 	end
 
-Common_EventScript_ShowEasyChatScreen:: @ 81A00F3
+Common_ShowEasyChatScreen:: @ 81A00F3
 	fadescreen FADE_TO_BLACK
 	special ShowEasyChatScreen
 	fadescreen FADE_FROM_BLACK
@@ -1195,7 +1195,7 @@ SlateportCity_PokemonFanClub_EventScript_AcceptInterview2:: @ 81ADE84
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
@@ -1250,7 +1250,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_AcceptInterview:: @ 81ADF44
 	setvar VAR_0x8004, 5
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 1
@@ -1322,14 +1322,14 @@ SlateportCity_PokemonFanClub_EventScript_ContinueInterview:: @ 81AE04A
 	setvar VAR_0x8004, 7
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, 0
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
 	goto_if_eq SlateportCity_PokemonFanClub_EventScript_DeclineInterview
 	msgbox SlateportCity_PokemonFanClub_Text_WhatDoPokemonMeanToYou, MSGBOX_DEFAULT
 	setvar VAR_0x8006, 1
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, 0
@@ -1371,7 +1371,7 @@ ContestLobby_EventScript_AcceptReporterInterview:: @ 81AE0F8
 	setvar VAR_0x8004, EASY_CHAT_TYPE_CONTEST_INTERVIEW
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, FALSE
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, TRUE
@@ -1392,7 +1392,7 @@ ContestLobby_EventScript_SubmitReporterAnswer:: @ 81AE137
 	setvar VAR_0x8004, EASY_CHAT_TYPE_CONTEST_INTERVIEW
 	copyvar VAR_0x8005, VAR_0x8009
 	setvar VAR_0x8006, TRUE
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, FALSE
@@ -1469,7 +1469,7 @@ BattleTower_Lobby_EventScript_AcceptInterview:: @ 81AE241
 	msgbox BattleTower_Lobby_Text_DescribeYourBattle, MSGBOX_DEFAULT
 	setvar VAR_0x8004, EASY_CHAT_TYPE_BATTLE_TOWER_INTERVIEW
 	copyvar VAR_0x8005, VAR_0x8009
-	call Common_EventScript_ShowEasyChatScreen
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
 	compare VAR_RESULT, TRUE
