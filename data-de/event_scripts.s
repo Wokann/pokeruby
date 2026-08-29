@@ -1570,12 +1570,8 @@ PlayersHouse_1F_EventScript_RunningShoesManual:: @ 81B6E5A
 
 	.include "data/text/trainers.inc"
 
-S_RepelWoreOff:: @ 81C33E6
-	msgbox Text_RepelWoreOff, MSGBOX_SIGN
-	end
-
-Text_RepelWoreOff: @ 81C33EF
-	.string "SCHUTZ wirkt nicht mehr...$"
+	.include "data/scripts/repel.inc"
+	.include "data/text/repel.inc"
 
 	.include "data/scripts/safari_zone.inc"
 	.include "data/text/safari_zone.inc"
