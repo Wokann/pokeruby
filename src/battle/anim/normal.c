@@ -111,7 +111,7 @@ const struct SpriteTemplate gConfusionDuckSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DUCK,
     .paletteTag = ANIM_TAG_DUCK,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gConfusionDuckSpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

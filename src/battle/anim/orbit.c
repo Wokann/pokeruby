@@ -36,7 +36,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D63F8 =
 {
     .tileTag = 10158,
     .paletteTag = 10158,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D63F0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -69,7 +69,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6420,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -155,7 +155,7 @@ const struct SpriteTemplate gSpriteTemplate_83D96C4 =
 {
     .tileTag = ANIM_TAG_WARM_ROCK,
     .paletteTag = ANIM_TAG_WARM_ROCK,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -392,7 +392,7 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
 
         if(!sub_8079C74(task))
         {
-            sub_8079A64(task->data[15]);
+            SetBattlerSpriteYOffsetFromYScale(task->data[15]);
             gSprites[task->data[15]].x2 = 0;
 
             task->data[1] = 0;
@@ -455,7 +455,7 @@ static void sub_80D54E0(u8 taskId) // animate Move_ERUPTION?
         if (!sub_8079C74(task))
         {
             gSprites[task->data[15]].y = task->data[4];
-            sub_8078F40(task->data[15]);
+            ResetSpriteRotScale(task->data[15]);
 
             task->data[2] = 0;
             task->data[0]++;

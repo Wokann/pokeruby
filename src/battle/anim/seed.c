@@ -34,7 +34,7 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SEED,
     .paletteTag = ANIM_TAG_SEED,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D63C0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -1129,7 +1129,7 @@ void sub_8078D8C(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void obj_id_set_rotscale(u8 sprite, s16 xScale, s16 yScale, u16 rotation)
+void SetSpriteRotScale(u8 spriteId, s16 xScale, s16 yScale, u16 rotation)
 {
     int i;
     struct ObjAffineSrcData src;
@@ -1138,9 +1138,9 @@ void obj_id_set_rotscale(u8 sprite, s16 xScale, s16 yScale, u16 rotation)
     src.xScale = xScale;
     src.yScale = yScale;
     src.rotation = rotation;
-    if (sub_8078E38())
+    if (ShouldRotScaleSpeciesBeFlipped())
         src.xScale = -src.xScale;
-    i = gSprites[sprite].oam.matrixNum;
+    i = gSprites[spriteId].oam.matrixNum;
     ObjAffineSet(&src, &matrix, 1, 2);
     gOamMatrices[i].a = matrix.a;
     gOamMatrices[i].b = matrix.b;
@@ -1148,52 +1148,52 @@ void obj_id_set_rotscale(u8 sprite, s16 xScale, s16 yScale, u16 rotation)
     gOamMatrices[i].d = matrix.d;
 }
 
-bool8 sub_8078E38()
+bool8 ShouldRotScaleSpeciesBeFlipped(void)
 {
     if (IsContest())
     {
-        if (gSprites[GetAnimBattlerSpriteId(0)].data[2] == 0xc9 /* XXX SPECIES_UNOWN? */)
+        if (gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].data[2] == SPECIES_UNOWN)
             return FALSE;
         return TRUE;
     }
     return FALSE;
 }
 
-void PrepareBattlerSpriteForRotScale(u8 sprite, u8 objMode)
+void PrepareBattlerSpriteForRotScale(u8 spriteId, u8 objMode)
 {
-    u8 r7 = gSprites[sprite].data[0];
+    u8 battler = gSprites[spriteId].data[0];
 
-    if (IsContest() || IsAnimBankSpriteVisible(r7))
-        gSprites[sprite].invisible = FALSE;
-    gSprites[sprite].oam.objMode = objMode;
-    gSprites[sprite].affineAnimPaused = TRUE;
-    if (!IsContest() && !gSprites[sprite].oam.affineMode)
-        gSprites[sprite].oam.matrixNum = gBattleHealthBoxInfo[r7].unk6;
-    gSprites[sprite].oam.affineMode = 3;
-    CalcCenterToCornerVec(&gSprites[sprite], gSprites[sprite].oam.shape, gSprites[sprite].oam.size, gSprites[sprite].oam.affineMode);
+    if (IsContest() || IsAnimBankSpriteVisible(battler))
+        gSprites[spriteId].invisible = FALSE;
+    gSprites[spriteId].oam.objMode = objMode;
+    gSprites[spriteId].affineAnimPaused = TRUE;
+    if (!IsContest() && !gSprites[spriteId].oam.affineMode)
+        gSprites[spriteId].oam.matrixNum = gBattleHealthBoxInfo[battler].unk6;
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
 }
 
-void sub_8078F40(u8 sprite)
+void ResetSpriteRotScale(u8 spriteId)
 {
-    obj_id_set_rotscale(sprite, 0x100, 0x100, 0);
-    gSprites[sprite].oam.affineMode = 1;
-    gSprites[sprite].oam.objMode = 0;
-    gSprites[sprite].affineAnimPaused = FALSE;
-    CalcCenterToCornerVec(&gSprites[sprite], gSprites[sprite].oam.shape, gSprites[sprite].oam.size, gSprites[sprite].oam.affineMode);
+    SetSpriteRotScale(spriteId, 0x100, 0x100, 0);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[spriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[spriteId].affineAnimPaused = FALSE;
+    CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
 }
 
-void sub_8078F9C(u8 sprite)
+void SetBattlerSpriteYOffsetFromRotation(u8 spriteId)
 {
-    u16 matrix = gSprites[sprite].oam.matrixNum;
-    s16 c = gOamMatrices[matrix].c;
+    u16 matrixNum = gSprites[spriteId].oam.matrixNum;
+    s16 c = gOamMatrices[matrixNum].c;
 
     if (c < 0)
         c = -c;
-    gSprites[sprite].y2 = c >> 3;
+    gSprites[spriteId].y2 = c >> 3;
 }
 
-// related to obj_id_set_rotscale
-void sub_8078FDC(struct Sprite *sprite, bool8 a2, s16 xScale, s16 yScale, u16 rotation)
+// related to SetSpriteRotScale
+void TrySetSpriteRotScale(struct Sprite *sprite, bool8 recalcCenterVector, s16 xScale, s16 yScale, u16 rotation)
 {
     int i;
     struct ObjAffineSrcData src;
@@ -1202,12 +1202,12 @@ void sub_8078FDC(struct Sprite *sprite, bool8 a2, s16 xScale, s16 yScale, u16 ro
     if (sprite->oam.affineMode & 1)
     {
         sprite->affineAnimPaused = TRUE;
-        if (a2)
+        if (recalcCenterVector)
             CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
         src.xScale = xScale;
         src.yScale = yScale;
         src.rotation = rotation;
-        if (sub_8078E38())
+        if (ShouldRotScaleSpeciesBeFlipped())
             src.xScale = -src.xScale;
         i = sprite->oam.matrixNum;
         ObjAffineSet(&src, &matrix, 1, 2);
@@ -1218,9 +1218,9 @@ void sub_8078FDC(struct Sprite *sprite, bool8 a2, s16 xScale, s16 yScale, u16 ro
     }
 }
 
-void sub_8079098(struct Sprite *sprite)
+void ResetSpriteRotScale_PreserveAffine(struct Sprite *sprite)
 {
-    sub_8078FDC(sprite, TRUE, 0x100, 0x100, 0);
+    TrySetSpriteRotScale(sprite, TRUE, 0x100, 0x100, 0);
     sprite->affineAnimPaused = FALSE;
     CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
 }
@@ -1668,8 +1668,8 @@ bool8 RunAffineAnimFromTaskData(struct Task *task)
         task->data[10] += gUnknown_0202F7D4->frame.xScale;
         task->data[11] += gUnknown_0202F7D4->frame.yScale;
         task->data[12] += gUnknown_0202F7D4->frame.rotation;
-        obj_id_set_rotscale(task->data[15], task->data[10], task->data[11], task->data[12]);
-        sub_8079A64(task->data[15]);
+        SetSpriteRotScale(task->data[15], task->data[10], task->data[11], task->data[12]);
+        SetBattlerSpriteYOffsetFromYScale(task->data[15]);
         if (++task->data[8] >= gUnknown_0202F7D4->frame.duration)
         {
             task->data[8] = 0;
@@ -1715,45 +1715,45 @@ bool8 RunAffineAnimFromTaskData(struct Task *task)
         break;
     case 0x7fff:
         gSprites[task->data[15]].y2 = 0;
-        sub_8078F40(task->data[15]);
+        ResetSpriteRotScale(task->data[15]);
         return FALSE;
     }
 
     return TRUE;
 }
 
-void sub_8079A64(u8 sprite)
+void SetBattlerSpriteYOffsetFromYScale(u8 spriteId)
 {
-    int var = 0x40 - sub_8079B10(sprite) * 2;
-    u16 matrix = gSprites[sprite].oam.matrixNum;
-    int var2 = (var << 8) / gOamMatrices[matrix].d;
+    int var = 0x40 - GetBattlerYDeltaFromSpriteId(spriteId) * 2;
+    u16 matrixNum = gSprites[spriteId].oam.matrixNum;
+    int var2 = (var << 8) / gOamMatrices[matrixNum].d;
 
     if (var2 > 0x80)
         var2 = 0x80;
-    gSprites[sprite].y2 = (var - var2) / 2;
+    gSprites[spriteId].y2 = (var - var2) / 2;
 }
 
-void sub_8079AB8(u8 sprite, u8 sprite2)
+void SetBattlerSpriteYOffsetFromOtherYScale(u8 spriteId, u8 otherSpriteId)
 {
-    int var = 0x40 - sub_8079B10(sprite2) * 2;
-    u16 matrix = gSprites[sprite].oam.matrixNum;
-    int var2 = (var << 8) / gOamMatrices[matrix].d;
+    int var = 0x40 - GetBattlerYDeltaFromSpriteId(otherSpriteId) * 2;
+    u16 matrixNum = gSprites[spriteId].oam.matrixNum;
+    int var2 = (var << 8) / gOamMatrices[matrixNum].d;
 
     if (var2 > 0x80)
         var2 = 0x80;
-    gSprites[sprite].y2 = (var - var2) / 2;
+    gSprites[spriteId].y2 = (var - var2) / 2;
 }
 
-u16 sub_8079B10(u8 sprite)
+u16 GetBattlerYDeltaFromSpriteId(u8 spriteId)
 {
-    struct BattleSpriteInfo *transform;
-    u8 slot = gSprites[sprite].data[0];
+    struct BattleSpriteInfo *spriteInfo;
+    u8 battler = gSprites[spriteId].data[0];
     u16 species;
     u16 i;
 
     for (i = 0; i < (sizeof(gBattleMonSprites) / sizeof(u8)); i++)
     {
-        if (gBattleMonSprites[i] == sprite)
+        if (gBattleMonSprites[i] == spriteId)
         {
             if (IsContest())
             {
@@ -1764,20 +1764,20 @@ u16 sub_8079B10(u8 sprite)
             {
                 if (!GetBattlerSide(i))
                 {
-                    transform = &gBattleSpriteInfo[slot];
-                    if (!transform->transformSpecies)
+                    spriteInfo = &gBattleSpriteInfo[battler];
+                    if (!spriteInfo->transformSpecies)
                         species = GetMonData(&gPlayerParty[gBattleMonPartyPositions[i]], MON_DATA_SPECIES);
                     else
-                        species = transform->transformSpecies;
+                        species = spriteInfo->transformSpecies;
                     return gMonBackPicCoords[species].y_offset;
                 }
                 else
                 {
-                    transform = &gBattleSpriteInfo[slot];
-                    if (!transform->transformSpecies)
+                    spriteInfo = &gBattleSpriteInfo[battler];
+                    if (!spriteInfo->transformSpecies)
                         species = GetMonData(&gEnemyParty[gBattleMonPartyPositions[i]], MON_DATA_SPECIES);
                     else
-                        species = transform->transformSpecies;
+                        species = spriteInfo->transformSpecies;
                     return gMonFrontPicCoords[species].y_offset;
                 }
             }
@@ -1827,9 +1827,9 @@ u8 sub_8079C74(struct Task *task)
         task->data[9] = task->data[13];
         task->data[10] = task->data[14];
     }
-    obj_id_set_rotscale(task->data[15], task->data[9], task->data[10], 0);
+    SetSpriteRotScale(task->data[15], task->data[9], task->data[10], 0);
     if (task->data[8])
-        sub_8079A64(task->data[15]);
+        SetBattlerSpriteYOffsetFromYScale(task->data[15]);
     else
         gSprites[task->data[15]].y2 = 0;
     return task->data[8];

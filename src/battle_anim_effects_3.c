@@ -119,7 +119,7 @@ static void sub_812DEAC(struct Sprite *sprite);
 static void sub_812D724(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void sub_812E7A0(struct Sprite *sprite);
-static void sub_812EA4C(struct Sprite *sprite);
+static void AnimPainSplitProjectile(struct Sprite *sprite);
 static void sub_812EC78(struct Sprite *sprite);
 static void sub_812ED84(struct Sprite *sprite);
 static void AnimReversalOrb(struct Sprite *sprite);
@@ -274,7 +274,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840227C =
 {
     .tileTag = ANIM_TAG_SPIKES,
     .paletteTag = ANIM_TAG_SPIKES,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -540,7 +540,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84024D0 =
 {
     .tileTag = ANIM_TAG_POKEBALL,
     .paletteTag = ANIM_TAG_POKEBALL,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -551,7 +551,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8 =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -648,7 +648,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84025EC =
 {
     .tileTag = ANIM_TAG_GREEN_STAR,
     .paletteTag = ANIM_TAG_GREEN_STAR,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_84025E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -684,7 +684,7 @@ const struct SpriteTemplate gWeakFrustrationAngerMarkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ANGER,
     .paletteTag = ANIM_TAG_ANGER,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -743,7 +743,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84026A4 =
 
 const u16 gUnknown_4026BC[] = INCBIN_U16("graphics/unknown/unknown_4026BC.gbapal");
 
-const union AnimCmd gSpriteAnim_84026DC[] =
+const union AnimCmd gPainSplitAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(4, 9),
@@ -751,20 +751,20 @@ const union AnimCmd gSpriteAnim_84026DC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_84026EC[] =
+const union AnimCmd *const gPainSplitAnimCmdTable[] =
 {
-    gSpriteAnim_84026DC,
+    gPainSplitAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84026F0 =
+const struct SpriteTemplate gPainSplitProjectileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PAIN_SPLIT,
     .paletteTag = ANIM_TAG_PAIN_SPLIT,
-    .oam = &gOamData_837DF2C,
-    .anims = gSpriteAnimTable_84026EC,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gPainSplitAnimCmdTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812EA4C,
+    .callback = AnimPainSplitProjectile,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402708 =
@@ -1066,7 +1066,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A3C =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -1077,7 +1077,7 @@ const struct SpriteTemplate gSpriteTemplate_8402A54 =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -1260,7 +1260,7 @@ static void sub_812C2BC(struct Sprite *sprite)
     if (IsContest())
         rotation += 0x4000;
 
-    sub_8078FDC(sprite, 0, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, rotation);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = x;
@@ -2082,7 +2082,7 @@ static void sub_812D3AC(struct Sprite *sprite)
     case 1:
         sprite->data[1] += 96;
         sprite->data[2] -= 26;
-        obj_id_set_rotscale(spriteId, sprite->data[1], sprite->data[2], 0);
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
 
         if (++sprite->data[3] == 5)
             sprite->data[0]++;
@@ -2090,13 +2090,13 @@ static void sub_812D3AC(struct Sprite *sprite)
     case 2:
         sprite->data[1] += 96;
         sprite->data[2] += 48;
-        obj_id_set_rotscale(spriteId, sprite->data[1], sprite->data[2], 0);
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
 
         if (++sprite->data[3] == 9)
         {
             sprite->data[3] = 0;
             gSprites[spriteId].invisible = TRUE;
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             sprite->data[0]++;
         }
         break;
@@ -2762,8 +2762,8 @@ static void sub_812E638(u8 taskId)
     case 0:
         gSprites[task->data[15]].x2 += task->data[5];
         task->data[2] -= task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3])
         {
             task->data[1] = 0;
@@ -2773,8 +2773,8 @@ static void sub_812E638(u8 taskId)
     case 1:
         gSprites[task->data[15]].x2 -= task->data[5];
         task->data[2] += task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3] * 2)
         {
             task->data[1] = 0;
@@ -2784,8 +2784,8 @@ static void sub_812E638(u8 taskId)
     case 2:
         gSprites[task->data[15]].x2 += task->data[5];
         task->data[2] -= task->data[4];
-        obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-        sub_8078F9C(task->data[15]);
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
         if (++task->data[1] >= task->data[3])
         {
             if (task->data[6])
@@ -2801,7 +2801,7 @@ static void sub_812E638(u8 taskId)
         }
         break;
     case 3:
-        sub_8078F40(task->data[15]);
+        ResetSpriteRotScale(task->data[15]);
         DestroyAnimVisualTask(taskId);
         break;
     }
@@ -2913,13 +2913,13 @@ static void sub_812E8B4(u8 taskId)
         }
         break;
     case 2:
-        sub_8078F40(task->data[15]);
+        ResetSpriteRotScale(task->data[15]);
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    obj_id_set_rotscale(task->data[15], 0x100, 0x100, task->data[2]);
-    sub_8078F9C(task->data[15]);
+    SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+    SetBattlerSpriteYOffsetFromRotation(task->data[15]);
     gSprites[task->data[15]].x2 = -(((temp = task->data[2]) >= 0 ? task->data[2] : temp + 63) >> 6);
     
     if (++task->data[1] > 8)
@@ -2938,14 +2938,14 @@ static void sub_812E8B4(u8 taskId)
     }
 }
 
-static void sub_812EA4C(struct Sprite *sprite)
+static void AnimPainSplitProjectile(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        if (gBattleAnimArgs[2] == 0)
+        if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
         {
-            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
         }
 
         sprite->x += gBattleAnimArgs[0];
@@ -2972,36 +2972,36 @@ static void sub_812EA4C(struct Sprite *sprite)
     }
 }
 
-void sub_812EB10(u8 taskId)
+void AnimTask_PainSplitMovement(u8 taskId)
 {
     u8 spriteId;
 
     if (gTasks[taskId].data[0] == 0)
     {
-        if (gBattleAnimArgs[0] == 0)
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
             gTasks[taskId].data[11] = gBattleAnimAttacker;
         else
             gTasks[taskId].data[11] = gBattleAnimTarget;
 
         spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
         gTasks[taskId].data[10] = spriteId;
-        PrepareBattlerSpriteForRotScale(spriteId, 0);
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
 
         switch (gBattleAnimArgs[1])
         {
         case 0:
-            obj_id_set_rotscale(spriteId, 0xE0, 0x140, 0);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xE0, 0x140, 0);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             break;
         case 1:
-            obj_id_set_rotscale(spriteId, 0xD0, 0x130, 0xF00);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF00);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
                 gSprites[spriteId].y2 += 16;
             break;
         case 2:
-            obj_id_set_rotscale(spriteId, 0xD0, 0x130, 0xF100);
-            sub_8079A64(spriteId);
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF100);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
             if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
                 gSprites[spriteId].y2 += 16;
             break;
@@ -3021,7 +3021,7 @@ void sub_812EB10(u8 taskId)
 
         if (++gTasks[taskId].data[1] == 13)
         {
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             gSprites[spriteId].x2 = 0;
             gSprites[spriteId].y2 = 0;
             DestroyAnimVisualTask(taskId);
@@ -3274,10 +3274,10 @@ static void sub_812F290(u8 taskId)
     gTasks[taskId].data[10] -= 16;
     gTasks[taskId].data[11] += 128;
     gSprites[spriteId].oam.affineMode |= 2;
-    sub_8078FDC(&gSprites[spriteId], 1, gTasks[taskId].data[10], gTasks[taskId].data[11], 0);
+    TrySetSpriteRotScale(&gSprites[spriteId], 1, gTasks[taskId].data[10], gTasks[taskId].data[11], 0);
     if (++gTasks[taskId].data[12] == 9)
     {
-        sub_8079098(&gSprites[spriteId]);
+        ResetSpriteRotScale_PreserveAffine(&gSprites[spriteId]);
         DestroySpriteAndFreeResources_(&gSprites[spriteId]);
         gTasks[taskId].func = sub_8078634;
     }
@@ -4653,11 +4653,11 @@ void sub_81312E4(u8 taskId)
     {
         gTasks[taskId].data[1] += 0x60;
         gTasks[taskId].data[2] -= 0xD;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[1], gTasks[taskId].data[2], 0);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[1], gTasks[taskId].data[2], 0);
         if (++gTasks[taskId].data[3] == 9)
         {
             gTasks[taskId].data[3] = 0;
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             gSprites[spriteId].invisible = TRUE;
             gTasks[taskId].data[0]++;
         }

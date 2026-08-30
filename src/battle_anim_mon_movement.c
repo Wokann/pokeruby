@@ -865,7 +865,7 @@ static void AnimTask_ScaleMonAndRestoreStep(u8 taskId)
     TASK.data[10] += TASK.data[0];
     TASK.data[11] += TASK.data[1];
     spriteId = TASK.data[4];
-    obj_id_set_rotscale(spriteId, TASK.data[10], TASK.data[11], 0);
+    SetSpriteRotScale(spriteId, TASK.data[10], TASK.data[11], 0);
     if (--TASK.data[2] == 0)
     {
         if (TASK.data[3] > 0)
@@ -877,7 +877,7 @@ static void AnimTask_ScaleMonAndRestoreStep(u8 taskId)
         }
         else
         {
-            sub_8078F40(spriteId);
+            ResetSpriteRotScale(spriteId);
             DestroyAnimVisualTask(taskId);
             return;
         }
@@ -969,17 +969,17 @@ void sub_80A8EFC(u8 taskId)
 static void AnimTask_RotateMonSpriteToSide_Step(u8 taskId)
 {
     TASK.data[3] += TASK.data[4];
-    obj_id_set_rotscale(TASK.data[5], 0x100, 0x100, TASK.data[3]);
+    SetSpriteRotScale(TASK.data[5], 0x100, 0x100, TASK.data[3]);
     if (TASK.data[7])
     {
-        sub_8078F9C(TASK.data[5]);
+        SetBattlerSpriteYOffsetFromRotation(TASK.data[5]);
     }
     if (++TASK.data[1] >= TASK.data[2])
     {
         switch (TASK.data[6])
         {
         case 1:
-            sub_8078F40(TASK.data[5]);
+            ResetSpriteRotScale(TASK.data[5]);
         case 0:
         default:
             DestroyAnimVisualTask(taskId);

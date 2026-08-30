@@ -350,7 +350,7 @@ void sub_80DDDF0(u8 taskId)
     REG_BLDALPHA = 0x1000;
     spriteId = GetAnimBattlerSpriteId(0);
     PrepareBattlerSpriteForRotScale(spriteId, 1);
-    obj_id_set_rotscale(spriteId, 128, 128, 0);
+    SetSpriteRotScale(spriteId, 128, 128, 0);
     gSprites[spriteId].invisible = FALSE;
     gTasks[taskId].data[0] = 128;
     gTasks[taskId].data[1] = *gBattleAnimArgs;
@@ -388,11 +388,11 @@ static void sub_80DDED0(u8 taskId)
     gTasks[taskId].data[0] += 8;
     if (gTasks[taskId].data[0] <= 0xFF)
     {
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[0], gTasks[taskId].data[0], 0);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[0], gTasks[taskId].data[0], 0);
     }
     else
     {
-        sub_8078F40(spriteId);
+        ResetSpriteRotScale(spriteId);
         DestroyAnimVisualTask(taskId);
         REG_BLDCNT = 0;
         REG_BLDALPHA = 0;

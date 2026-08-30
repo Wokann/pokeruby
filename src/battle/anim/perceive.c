@@ -32,7 +32,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7B94 =
 {
     .tileTag = ANIM_TAG_EYE_SPARKLE,
     .paletteTag = ANIM_TAG_EYE_SPARKLE,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D7B90,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

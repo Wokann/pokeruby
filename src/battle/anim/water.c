@@ -23,8 +23,8 @@ extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA318[];
 extern const union AnimCmd *const gAnims_SmallBubblePair[];
 
 void PrepareBattlerSpriteForRotScale(u8, u8);
-void sub_8078F40(u8);
-void sub_8079A64(u8);
+void ResetSpriteRotScale(u8);
+void SetBattlerSpriteYOffsetFromYScale(u8);
 void sub_80D37FC(struct Sprite *sprite);
 void AnimSmallBubblePair(struct Sprite *sprite);
 void sub_80D3B60(u8 taskId);
@@ -563,7 +563,7 @@ void sub_80D4150(u8 taskId)
             }
             if (sub_8079C74(task) == 0)
             {
-                sub_8079A64(task->data[15]);
+                SetBattlerSpriteYOffsetFromYScale(task->data[15]);
                 gSprites[task->data[15]].x2 = 0;
                 task->data[3] = 0;
                 task->data[4] = 0;
@@ -610,7 +610,7 @@ void sub_80D4150(u8 taskId)
             gSprites[task->data[15]].y--;
             if (sub_8079C74(task) == 0)
             {
-                sub_8078F40(task->data[15]);
+                ResetSpriteRotScale(task->data[15]);
                 gSprites[task->data[15]].y = task->data[5];
                 task->data[4] = 0;
                 task->data[0]++;

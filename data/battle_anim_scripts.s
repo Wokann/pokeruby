@@ -1815,26 +1815,26 @@ Move_SAFEGUARD: @ 81C9AF7
 
 Move_PAIN_SPLIT: @ 81C9B39
 	loadspritegfx ANIM_TAG_PAIN_SPLIT
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_ATTACKER, 2, -8, -42, 0
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_TARGET, 2, -8, -42, 1
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -8, -42, ANIM_BATTLER_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, -42, ANIM_BATTLER_TARGET
 	delay 10
 	playsewithpan SE_M_SWAGGER2, 0
-	createvisualtask sub_812EB10, 2, 0, 0
-	createvisualtask sub_812EB10, 2, 1, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_ATTACKER, 0
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_TARGET, 0
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_ATTACKER, 2, -24, -42, 0
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_TARGET, 2, -24, -42, 1
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -24, -42, ANIM_BATTLER_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, -42, ANIM_BATTLER_TARGET
 	delay 10
 	playsewithpan SE_M_SWAGGER2, 0
-	createvisualtask sub_812EB10, 2, 0, 1
-	createvisualtask sub_812EB10, 2, 1, 1
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_ATTACKER, 1
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_TARGET, 1
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_ATTACKER, 2, 8, -42, 0
-	createsprite gBattleAnimSpriteTemplate_84026F0, ANIM_BATTLER_TARGET, 2, 8, -42, 1
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, -42, ANIM_BATTLER_ATTACKER
+	createsprite gPainSplitProjectileSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, -42, ANIM_BATTLER_TARGET
 	delay 10
 	playsewithpan SE_M_SWAGGER2, 0
-	createvisualtask sub_812EB10, 2, 0, 2
-	createvisualtask sub_812EB10, 2, 1, 2
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_ATTACKER, 2
+	createvisualtask AnimTask_PainSplitMovement, 2, ANIM_BATTLER_TARGET, 2
 	end
 
 Move_VICE_GRIP: @ 81C9BE1

@@ -158,7 +158,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA76C =
 {
     .tileTag = ANIM_TAG_SPARKLE_3,
     .paletteTag = ANIM_TAG_SPARKLE_3,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA768,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -723,7 +723,7 @@ static void sub_80DBD58(u8 taskId)
         {
             gSprites[task->data[0]].invisible = TRUE;
             gSprites[task->data[0]].x = 272;
-            sub_8078F40(task->data[0]);
+            ResetSpriteRotScale(task->data[0]);
             DestroyAnimVisualTask(taskId);
         }
         break;
@@ -1068,7 +1068,7 @@ void sub_80DC4F4(u8 taskId)
     gSprites[spriteId].oam.matrixNum = matrixNum;
     gSprites[spriteId].affineAnimPaused = 1;
     gSprites[spriteId].subpriority++;
-    obj_id_set_rotscale(spriteId, 256, 256, 0);
+    SetSpriteRotScale(spriteId, 256, 256, 0);
     CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
 
     task->data[13] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
@@ -1086,16 +1086,16 @@ void sub_80DC5F4(u8 taskId)
     case 0:
         task->data[1] += 4;
         task->data[2] = 256 - (gSineTable[task->data[1]] >> 1);
-        obj_id_set_rotscale(task->data[15], task->data[2], task->data[2], 0);
-        sub_8079AB8(task->data[15], task->data[13]);
+        SetSpriteRotScale(task->data[15], task->data[2], task->data[2], 0);
+        SetBattlerSpriteYOffsetFromOtherYScale(task->data[15], task->data[13]);
         if (task->data[1] == 48)
             task->data[0]++;
         break;
     case 1:
         task->data[1] -= 4;
         task->data[2] = 256 - (gSineTable[task->data[1]] >> 1);;
-        obj_id_set_rotscale(task->data[15], task->data[2], task->data[2], 0);
-        sub_8079AB8(task->data[15], task->data[13]);
+        SetSpriteRotScale(task->data[15], task->data[2], task->data[2], 0);
+        SetBattlerSpriteYOffsetFromOtherYScale(task->data[15], task->data[13]);
         if (task->data[1] == 0)
             task->data[0]++;
         break;

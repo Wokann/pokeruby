@@ -42,7 +42,7 @@ const struct SpriteTemplate gSpriteTemplate_83D79E8 =
 {
     .tileTag = ANIM_TAG_SPEED_DUST,
     .paletteTag = ANIM_TAG_SPEED_DUST,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D79E4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

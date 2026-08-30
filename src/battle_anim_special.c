@@ -353,7 +353,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840B4FC =
 {
     .tileTag = ANIM_TAG_UNUSED_RED_BRICK,
     .paletteTag = ANIM_TAG_UNUSED_RED_BRICK,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -575,13 +575,13 @@ void sub_813F798(u8 taskId)
         break;
     case 1:
         gTasks[taskId].data[10] += 0x30;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
-        sub_8079A64(spriteId);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        SetBattlerSpriteYOffsetFromYScale(spriteId);
         if (gTasks[taskId].data[10] >= 0x2D0)
             gTasks[taskId].data[0]++;
         break;
     case 2:
-        sub_8078F40(spriteId);
+        ResetSpriteRotScale(spriteId);
         gSprites[spriteId].invisible = TRUE;
         DestroyAnimVisualTask(taskId);
         break;
@@ -839,14 +839,14 @@ static void sub_813FEC8(struct Sprite *sprite)
         break;
     case 1:
         gTasks[taskId].data[10] += 0x20;
-        obj_id_set_rotscale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[10], gTasks[taskId].data[10], 0);
         gTasks[taskId].data[3] += gTasks[taskId].data[2];
         gSprites[spriteId].y2 = -gTasks[taskId].data[3] >> 8;
         if (gTasks[taskId].data[10] >= 0x480)
             gTasks[taskId].data[0]++;
         break;
     case 2:
-        sub_8078F40(spriteId);
+        ResetSpriteRotScale(spriteId);
         gSprites[spriteId].invisible = TRUE;
         gTasks[taskId].data[0]++;
         break;

@@ -195,7 +195,7 @@ const struct SpriteTemplate gSpriteTemplate_83DA4D0 =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -1153,7 +1153,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         sprite->data[1] = 512;
 
-        sub_8078FDC(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
         sprite->data[0]++;
         break;
     case 1:
@@ -1164,7 +1164,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         sprite->data[2]++;
 
-        sub_8078FDC(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
 
         matrixNum = sprite->oam.matrixNum;
 
@@ -1179,7 +1179,7 @@ static void sub_80DB374(struct Sprite *sprite)
 
         if (sprite->data[2] == 24)
         {
-            sub_8079098(sprite);
+            ResetSpriteRotScale_PreserveAffine(sprite);
             DestroyAnimSprite(sprite);
         }
         break;
@@ -1306,7 +1306,7 @@ static void sub_80DB5E4(struct Sprite *sprite)
     rotation = ArcTan2Neg(posx - sprite->x, posy - sprite->y);
     rotation += 0xc000;
 
-    sub_8078FDC(sprite, 1, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, 1, 0x100, 0x100, rotation);
 
     sprite->callback = sub_80DB6A0;
 }

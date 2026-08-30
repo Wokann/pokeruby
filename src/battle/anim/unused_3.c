@@ -49,7 +49,7 @@ const struct SpriteTemplate gSpriteTemplate_83D6D08 =
 {
     .tileTag = ANIM_TAG_UNUSED_BUBBLE_BURST,
     .paletteTag = ANIM_TAG_UNUSED_BUBBLE_BURST,
-    .oam = &gOamData_837DF2C,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D6D00,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
