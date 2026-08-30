@@ -104,7 +104,7 @@ static void sub_812C2BC(struct Sprite *sprite);
 static void AnimMeanLookEye(struct Sprite *sprite);
 static void sub_812C720(struct Sprite *sprite);
 static void sub_812C80C(struct Sprite *sprite);
-static void sub_812C848(struct Sprite *sprite);
+static void AnimLetterZ(struct Sprite *sprite);
 static void sub_812C908(struct Sprite *sprite);
 static void sub_812C990(struct Sprite *sprite);
 static void sub_812CAFC(struct Sprite *sprite);
@@ -230,7 +230,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840220C =
 {
     .tileTag = ANIM_TAG_TEAL_ALERT,
     .paletteTag = ANIM_TAG_TEAL_ALERT,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -306,38 +306,38 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84022B0 =
     .callback = sub_812C80C,
 };
 
-const union AnimCmd gSpriteAnim_84022C8[] =
+const union AnimCmd gLetterZAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_84022D0[] =
+const union AnimCmd *const gLetterZAnimTable[] =
 {
-    gSpriteAnim_84022C8,
+    gLetterZAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_84022D4[] =
+const union AffineAnimCmd gLetterZAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0xFFF9, 0xFFF9, -3, 16),
     AFFINEANIMCMD_FRAME(0x7, 0x7, 3, 16),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_84022EC[] =
+const union AffineAnimCmd *const gLetterZAffineAnimTable[] =
 {
-    gSpriteAffineAnim_84022D4,
+    gLetterZAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84022F0 =
+const struct SpriteTemplate gLetterZSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LETTER_Z,
     .paletteTag = ANIM_TAG_LETTER_Z,
-    .oam = &gOamData_837DF94,
-    .anims = gSpriteAnimTable_84022D0,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gLetterZAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_84022EC,
-    .callback = sub_812C848,
+    .affineAnims = gLetterZAffineAnimTable,
+    .callback = AnimLetterZ,
 };
 
 const union AnimCmd gSpriteAnim_8402308[] =
@@ -844,7 +844,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84027EC =
 {
     .tileTag = ANIM_TAG_PINK_CLOUD,
     .paletteTag = ANIM_TAG_PINK_CLOUD,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_84027E0,
@@ -1003,7 +1003,7 @@ const struct SpriteTemplate gSpriteTemplate_84029AC =
 {
     .tileTag = ANIM_TAG_RED_BALL,
     .paletteTag = ANIM_TAG_RED_BALL,
-    .oam = &gOamData_837DF94,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_84029A4,
@@ -1478,7 +1478,7 @@ static void sub_812C80C(struct Sprite *sprite)
 }
 
 // This is likely fakematching due to some strange type casting behavior.
-static void sub_812C848(struct Sprite *sprite)
+static void AnimLetterZ(struct Sprite *sprite)
 {
     int var0;
     int var1;

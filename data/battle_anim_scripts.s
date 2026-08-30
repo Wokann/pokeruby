@@ -7930,28 +7930,28 @@ Move_PERISH_SONG: @ 81D2784
 
 Move_SLEEP_TALK: @ 81D28ED
 	loadspritegfx ANIM_TAG_LETTER_Z
-	createvisualtask AnimTask_SwayMon, 5, 0, 4, 4096, 2, 0
+	createvisualtask AnimTask_SwayMon, 5, 0, 4, 4096, 2, ANIM_BATTLER_ATTACKER
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -1
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -5
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_84022F0, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
+	createsprite gLetterZSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 20, 5, -3
 	waitforvisualfinish
 	end
 
