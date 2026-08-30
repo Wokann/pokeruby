@@ -570,9 +570,9 @@ const u8 gBattleAnimSpritePalette_219[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpritePalette_210[] = INCBIN_U8("graphics/battle_anims/sprites/210.gbapal.lz");
 const u8 gBattleAnimSpritePalette_216[] = INCBIN_U8("graphics/battle_anims/sprites/216.gbapal.lz");
 
-const u8 gAttractGfx[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.4bpp.lz");
-const u8 gAttractPal[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.gbapal.lz");
-const u8 gAttractTilemap[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.bin.lz");
+const u8 gBattleAnimBgImage_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.4bpp.lz");
+const u8 gBattleAnimBgPalette_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.gbapal.lz");
+const u8 gBattleAnimBgTilemap_Attract[] = INCBIN_U8("graphics/battle_anims/backgrounds/attract.bin.lz");
 
 const u8 gBattleAnimSpriteSheet_217[] = INCBIN_U8("graphics/battle_anims/sprites/217.4bpp.lz");
 const u8 gBattleAnimSpritePalette_217[] = INCBIN_U8("graphics/battle_anims/sprites/217.gbapal.lz");

@@ -133,7 +133,7 @@ static void sub_8130A2C(struct Sprite *sprite);
 static void sub_8130AEC(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
 static void sub_8131264(struct Sprite *sprite);
-extern void sub_80D1FDC(struct Sprite *sprite);// kiss_fountain.c
+extern void AnimParticleBurst(struct Sprite *sprite);// kiss_fountain.c
 static void sub_8131564(struct Sprite *sprite);
 static void AnimTask_TeeterDanceMovementStep(u8);
 
@@ -1080,7 +1080,7 @@ const struct SpriteTemplate gSpriteTemplate_8402A54 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D1FDC,
+    .callback = AnimParticleBurst,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A6C =

@@ -8,12 +8,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D1FDC(struct Sprite* sprite);
+void AnimParticleBurst(struct Sprite* sprite);
 
 // kiss_fountain (a series of hearts pour out of a target Pokemon.)
 // Used in Attract and Sweet Kiss.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7AC8 =
+const struct SpriteTemplate gRedHeartBurstSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RED_HEART,
     .paletteTag = ANIM_TAG_RED_HEART,
@@ -21,10 +21,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7AC8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D1FDC,
+    .callback = AnimParticleBurst,
 };
 
-void sub_80D1FDC(struct Sprite* sprite)
+void AnimParticleBurst(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
