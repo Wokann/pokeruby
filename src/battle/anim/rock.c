@@ -412,7 +412,7 @@ static void AnimParticleInVortex_Step(struct Sprite *sprite)
 
 void do_boulder_dust(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     int var0 = 0;
 
     REG_BLDCNT = 0x3F42;
@@ -428,14 +428,14 @@ void do_boulder_dust(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gBattleAnimBackgroundTilemap_SandstormBrew, subStruct.field_4);
-    LZDecompressVram(&gBattleAnimBackgroundImage_SandstormBrew, subStruct.field_0);
-    LoadCompressedPalette(&gBattleAnimSpritePalette_261, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    LZDecompressVram(&gBattleAnimBackgroundTilemap_SandstormBrew, animBg.bgTilemap);
+    LZDecompressVram(&gBattleAnimBackgroundImage_SandstormBrew, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimSpritePalette_261, animBg.paletteId << 4, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
     if (gBattleAnimArgs[0] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         var0 = 1;
@@ -446,7 +446,7 @@ void do_boulder_dust(u8 taskId)
 
 static void sub_80DD190(u8 taskId)
 {    
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     if (gTasks[taskId].data[0] == 0)
         gBattle_BG1_X += 0xFFFA;
@@ -491,9 +491,9 @@ static void sub_80DD190(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 

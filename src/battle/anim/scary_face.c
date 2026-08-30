@@ -26,7 +26,7 @@ static void sub_80D24E0(u8 taskId);
 
 void sub_80D23B4(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -39,26 +39,26 @@ void sub_80D23B4(u8 taskId)
     gBattle_BG1_Y = 0;
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     if (IsContest())
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceContest, subStruct.field_4);
+        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceContest, animBg.bgTilemap);
     else if (GetBattlerSide(gBattleAnimTarget) == 1)
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFacePlayer, subStruct.field_4);
+        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFacePlayer, animBg.bgTilemap);
     else
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceOpponent, subStruct.field_4);
+        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceOpponent, animBg.bgTilemap);
 
-    LZDecompressVram(&gBattleAnimBackgroundImage_ScaryFace, subStruct.field_0);
-    LoadCompressedPalette(&gBattleAnimBackgroundPalette_ScaryFace, subStruct.field_8 << 4, 32);
+    LZDecompressVram(&gBattleAnimBackgroundImage_ScaryFace, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimBackgroundPalette_ScaryFace, animBg.paletteId << 4, 32);
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
     gTasks[taskId].func = sub_80D24E0;
 }
 
 void sub_80D24E0(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     switch (gTasks[taskId].data[12])
     {
@@ -96,9 +96,9 @@ void sub_80D24E0(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 

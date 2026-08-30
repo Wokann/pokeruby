@@ -362,7 +362,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840B4FC =
 
 void unref_sub_813F0F4(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u8 healthBoxSpriteId;
     u8 battler;
     u8 spriteId1, spriteId2, spriteId3, spriteId4;
@@ -395,11 +395,11 @@ void unref_sub_813F0F4(u8 taskId)
     gSprites[spriteId3].callback = SpriteCallbackDummy;
     gSprites[spriteId4].callback = SpriteCallbackDummy;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D2EE48, subStruct.field_4);
-    LZDecompressVram(&gUnknown_08D2EDFC, subStruct.field_0);
-    LoadCompressedPalette(gUnknown_08D2E150, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D2EE48, animBg.bgTilemap);
+    LZDecompressVram(&gUnknown_08D2EDFC, animBg.bgTiles);
+    LoadCompressedPalette(gUnknown_08D2E150, animBg.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId3].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId3].y - 32;
@@ -411,7 +411,7 @@ void unref_sub_813F0F4(u8 taskId)
 
 static void sub_813F300(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u8 spriteId1, spriteId2;
     u8 battler;
 
@@ -444,7 +444,7 @@ static void sub_813F300(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;
@@ -457,8 +457,8 @@ static void sub_813F300(u8 taskId)
                 REG_BLDALPHA = 0;
                 DestroySprite(&gSprites[gTasks[taskId].data[0]]);
                 DestroySprite(&gSprites[gTasks[taskId].data[2]]);
-                sub_8078914(&subStruct);
-                DmaFill32Defvars(3, 0, subStruct.field_4, 0x800);
+                GetBattleAnimBg1Data(&animBg);
+                DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x800);
                 REG_BG1CNT_BITFIELD.areaOverflowMode = 0;
                 spriteId1 = gSprites[gHealthboxSpriteIds[battler]].oam.affineParam;
                 spriteId2 = gSprites[gHealthboxSpriteIds[battler]].data[5];

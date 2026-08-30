@@ -4357,7 +4357,7 @@ Move_AERIAL_ACE: @ 81CD499
 
 Move_IRON_DEFENSE: @ 81CD503
 	loopsewithpan SE_SHINY, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 0, 0, 0
+	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 8, 2, -1, 14, -1, 0
 	waitforvisualfinish
 	end
@@ -4569,7 +4569,7 @@ Move_SHOCK_WAVE: @ 81CD867
 
 Move_HARDEN: @ 81CD909
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 0, 0, 0
+	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
 	waitforvisualfinish
 	end
 
@@ -6153,7 +6153,7 @@ Move_GUST: @ 81CFE9A
 	setalpha 12, 8
 	playsewithpan SE_M_GUST, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_83DA380, ANIM_BATTLER_ATTACKER, 2, 0, -16
-	createvisualtask sub_80DA09C, 5, 1, 70
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 1, 0, 7, 1
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
@@ -6171,9 +6171,9 @@ Move_WING_ATTACK: @ 81CFEEB
 	setalpha 12, 8
 	loopsewithpan SE_M_WING_ATTACK, SOUND_PAN_ATTACKER, 20, 2
 	createvisualtask AnimTask_TranslateMonElliptical, 2, ANIM_BATTLER_ATTACKER, 12, 4, 1, 4
-	createvisualtask sub_80DA09C, 5, 1, 70
-	createsprite gBattleAnimSpriteTemplate_83DA3B4, ANIM_BATTLER_ATTACKER, 2, -25, 0, 0, 0, 20
-	createsprite gBattleAnimSpriteTemplate_83DA3B4, ANIM_BATTLER_ATTACKER, 2, 25, 0, 0, 0, 20
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
+	createsprite gGustToTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -25, 0, 0, 0, 20
+	createsprite gGustToTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 25, 0, 0, 0, 20
 	delay 24
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 9
 	delay 17
@@ -7201,16 +7201,16 @@ Move_STEEL_WING: @ 81D1807
 	loadspritegfx ANIM_TAG_GUST
 	loadspritegfx ANIM_TAG_IMPACT
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 0, 0, 0
+	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
 	waitforvisualfinish
 	monbg ANIM_BATTLER_DEF_PARTNER
 	monbgprio_28 1
 	setalpha 12, 8
 	loopsewithpan SE_M_WING_ATTACK, SOUND_PAN_ATTACKER, 20, 2
 	createvisualtask AnimTask_TranslateMonElliptical, 2, ANIM_BATTLER_ATTACKER, 12, 4, 1, 4
-	createvisualtask sub_80DA09C, 5, 1, 70
-	createsprite gBattleAnimSpriteTemplate_83DA3B4, ANIM_BATTLER_ATTACKER, 2, -25, 0, 0, 0, 20
-	createsprite gBattleAnimSpriteTemplate_83DA3B4, ANIM_BATTLER_ATTACKER, 2, 25, 0, 0, 0, 20
+	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
+	createsprite gGustToTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -25, 0, 0, 0, 20
+	createsprite gGustToTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 25, 0, 0, 0, 20
 	delay 24
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 9
 	delay 17
@@ -7227,7 +7227,7 @@ Move_STEEL_WING: @ 81D1807
 Move_IRON_TAIL: @ 81D18B6
 	loadspritegfx ANIM_TAG_IMPACT
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 1, 0, 0
+	createvisualtask AnimTask_MetallicShine, 5, 1, 0, 0
 	waitforvisualfinish
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
@@ -7247,7 +7247,7 @@ Move_POISON_TAIL: @ 81D1914
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 1, 1, 23768
+	createvisualtask AnimTask_MetallicShine, 5, 1, 1, 23768
 	waitforvisualfinish
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
@@ -7267,7 +7267,7 @@ Move_POISON_TAIL: @ 81D1914
 Move_METAL_CLAW: @ 81D197A
 	loadspritegfx ANIM_TAG_CLAW_SLASH
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask sub_80E0A4C, 5, 0, 0, 0
+	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
 	waitforvisualfinish
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2

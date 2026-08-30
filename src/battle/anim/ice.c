@@ -996,7 +996,7 @@ static void AnimSwirlingFogAnim(struct Sprite *sprite)
 // Fades mons to black and places foggy overlay in Haze.
 void AnimTask_Haze1(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -1011,21 +1011,21 @@ void AnimTask_Haze1(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.field_0, 0x800);
-    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.field_4);
-    LoadPalette(&gUnknown_083970E8, subStruct.field_8 * 16, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    DmaCopy16Defvars(3, &gWeatherFog1Tiles, animBg.bgTiles, 0x800);
+    LZDecompressVram(&gBattleAnimFogTilemap, animBg.bgTilemap);
+    LoadPalette(&gUnknown_083970E8, animBg.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
     
     gTasks[taskId].func = AnimTask_Haze2;
 }
 
 static void AnimTask_Haze2(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     gBattle_BG1_X += 0xFFFF;
     gBattle_BG1_Y += 0;
@@ -1069,9 +1069,9 @@ static void AnimTask_Haze2(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
@@ -1105,7 +1105,7 @@ static void AnimThrowMistBall(struct Sprite *sprite)
 // Displays misty background in Mist Ball.
 void AnimTask_LoadMistTiles(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -1120,14 +1120,14 @@ void AnimTask_LoadMistTiles(u8 taskId)
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
 
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, subStruct.field_0, 0x800);
-    LZDecompressVram(&gBattleAnimFogTilemap, subStruct.field_4);
-    LoadPalette(&gUnknown_083970E8, subStruct.field_8 * 16, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    DmaCopy16Defvars(3, &gWeatherFog1Tiles, animBg.bgTiles, 0x800);
+    LZDecompressVram(&gBattleAnimFogTilemap, animBg.bgTilemap);
+    LoadPalette(&gUnknown_083970E8, animBg.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
     gTasks[taskId].data[15] = -1;
     gTasks[taskId].func = AnimTask_OverlayFogTiles;
@@ -1135,7 +1135,7 @@ void AnimTask_LoadMistTiles(u8 taskId)
 
 static void AnimTask_OverlayFogTiles(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     gBattle_BG1_X += gTasks[taskId].data[15];
     gBattle_BG1_Y += 0;
@@ -1173,9 +1173,9 @@ static void AnimTask_OverlayFogTiles(u8 taskId)
         }
         break;
     case 3:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;

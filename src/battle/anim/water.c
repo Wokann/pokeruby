@@ -265,7 +265,7 @@ static void AnimSmallBubblePair_Step(struct Sprite *sprite)
 
 void AnimTask_CreateSurfWave(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u8 taskId2;
     u16 *BGptrX = &gBattle_BG1_X;
     u16 *BGptrY = &gBattle_BG1_Y;
@@ -275,10 +275,10 @@ void AnimTask_CreateSurfWave(u8 taskId)
     REG_BLDALPHA = 0x1000;
     REG_BG1CNT_BITFIELD.priority = 1;
     REG_BG1CNT_BITFIELD.screenSize = 1;
-    sub_8078914(&subStruct);
+    GetBattleAnimBg1Data(&animBg);
 
     // This is gone in FireRed and Emerald.
-    Dma3FillLarge32_(0, subStruct.field_0, 0x2000); // !
+    Dma3FillLarge32_(0, animBg.bgTiles, 0x2000); // !
     /*
         Many games use wasteful NOPs; some of which are
         even moreso than regular ones. This is so that
@@ -290,26 +290,26 @@ void AnimTask_CreateSurfWave(u8 taskId)
     */
     cpuDelay = 0; // stall the CPU
     cpuDelay = 0; // stall the CPU
-    Dma3FillLarge32_(0, subStruct.field_4, 0x1000); // !
+    Dma3FillLarge32_(0, animBg.bgTilemap, 0x1000); // !
 
     if (!IsContest())
     {
         REG_BG1CNT_BITFIELD.charBaseBlock = 1;
         if (GetBattlerSide(gBattleAnimAttacker) == 1)
-            LZDecompressVram(&gUnknown_08E70968, subStruct.field_4);
+            LZDecompressVram(&gUnknown_08E70968, animBg.bgTilemap);
         else
-            LZDecompressVram(&gUnknown_08E70C38, subStruct.field_4);
+            LZDecompressVram(&gUnknown_08E70C38, animBg.bgTilemap);
     }
     else
     {
-        LZDecompressVram(&gUnknown_08E70F0C, subStruct.field_4);
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 1);
+        LZDecompressVram(&gUnknown_08E70F0C, animBg.bgTilemap);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 1);
     }
-    LZDecompressVram(&gBattleAnimBackgroundImage_Surf, subStruct.field_0);
+    LZDecompressVram(&gBattleAnimBackgroundImage_Surf, animBg.bgTiles);
     if (gBattleAnimArgs[0] == 0)
-        LoadCompressedPalette(&gBattleAnimBackgroundPalette_Surf, 16 * subStruct.field_8, 32);
+        LoadCompressedPalette(&gBattleAnimBackgroundPalette_Surf, 16 * animBg.paletteId, 32);
     else
-        LoadCompressedPalette(&gBattleAnimBackgroundImageMuddyWater_Pal, 16 * subStruct.field_8, 32);
+        LoadCompressedPalette(&gBattleAnimBackgroundImageMuddyWater_Pal, 16 * animBg.paletteId, 32);
     taskId2 = CreateTask(sub_80D3D68, gTasks[taskId].priority + 1);
     gTasks[taskId].data[15] = taskId2;
     gTasks[taskId2].data[0] = 0;
@@ -359,7 +359,7 @@ void sub_80D3B60(u8 taskId)
 {
 
     vu8 cpuDelay; // yet again
-    struct Struct_sub_8078914 unk;
+    struct BattleAnimBgData animBg;
     u8 i;
     u16 rgbBuffer;
     u16 *BGptrX = &gBattle_BG1_X;
@@ -367,16 +367,16 @@ void sub_80D3B60(u8 taskId)
 
     *BGptrX += gTasks[taskId].data[0];
     *BGptrY += gTasks[taskId].data[1];
-    sub_8078914(&unk);
+    GetBattleAnimBg1Data(&animBg);
     gTasks[taskId].data[2] += gTasks[taskId].data[1];
     if (++gTasks[taskId].data[5] == 4)
     {
-        rgbBuffer = gPlttBufferFaded[unk.field_8 * 16 + 7];
+        rgbBuffer = gPlttBufferFaded[animBg.paletteId * 16 + 7];
         for (i = 6; i != 0; i--)
         {
-            gPlttBufferFaded[unk.field_8 * 16 + 1 + i] = gPlttBufferFaded[unk.field_8 * 16 + 1 + i - 1];
+            gPlttBufferFaded[animBg.paletteId * 16 + 1 + i] = gPlttBufferFaded[animBg.paletteId * 16 + 1 + i - 1];
         }
-        gPlttBufferFaded[unk.field_8 * 16 + 1] = rgbBuffer;
+        gPlttBufferFaded[animBg.paletteId * 16 + 1] = rgbBuffer;
         gTasks[taskId].data[5] = 0;
     }
     if (++gTasks[taskId].data[6] > 1)
@@ -396,10 +396,10 @@ void sub_80D3B60(u8 taskId)
     }
     if (!(gTasks[gTasks[taskId].data[15]].data[1] & 0x1F))
     {
-        Dma3FillLarge32_(0, unk.field_0, 0x2000); // !
+        Dma3FillLarge32_(0, animBg.bgTiles, 0x2000); // !
         cpuDelay = 0; // stall the CPU
         cpuDelay = 0; // stall the CPU
-        Dma3FillLarge32_(0, unk.field_4, 0x1000); // !
+        Dma3FillLarge32_(0, animBg.bgTilemap, 0x1000); // !
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
         *BGptrX = 0;

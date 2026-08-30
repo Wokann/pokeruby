@@ -224,7 +224,7 @@ const struct OamData gOamData_837DFD4 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837DFDC =
+const struct OamData gOamData_AffineNormal_ObjNormal_32x64 =
 {
     .affineMode = 1,
     .objMode = 0,
@@ -1925,14 +1925,14 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
     if (toBG_2 == 0)
     {
         volatile u8 pointlessZero;
-        struct Struct_sub_8078914 s;
+        struct BattleAnimBgData animBg;
         u8 r2;
 
-        sub_8078914(&s);
-        DmaFill32Large(3, 0, s.field_0, 0x2000, 0x1000);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
         pointlessZero = 0; // is there a stubbed out Dma macro here that left the 0 load in?
         pointlessZero = 0; // is there a stubbed out Dma macro here that left the 0 load in?
-        DmaFill16Defvars(3, 0xFF, (void *)s.field_4, 0x1000);
+        DmaFill16Defvars(3, 0xFF, (void *)animBg.bgTilemap, 0x1000);
 
         REG_BG1CNT_BITFIELD.priority = 2;
         REG_BG1CNT_BITFIELD.screenSize = 1;
@@ -1948,14 +1948,14 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
         REG_BG1HOFS = gBattle_BG1_X;
         REG_BG1VOFS = gBattle_BG1_Y;
 
-        LoadPalette(gPlttBufferUnfaded + 0x100 + bank * 16, s.field_8 * 16, 32);
-        DmaCopy32Defvars(3, gPlttBufferUnfaded + 0x100 + bank * 16, (u16 *)PLTT + s.field_8 * 16, 32);
+        LoadPalette(gPlttBufferUnfaded + 0x100 + bank * 16, animBg.paletteId * 16, 32);
+        DmaCopy32Defvars(3, gPlttBufferUnfaded + 0x100 + bank * 16, (u16 *)PLTT + animBg.paletteId * 16, 32);
 
         if (IsContest())
             r2 = 0;
         else
             r2 = GetBattlerPosition(bank);
-        sub_80E4EF8(0, 0, r2, s.field_8, (u32)s.field_0, (((s32)s.field_4 - VRAM) / 2048), REG_BG1CNT_BITFIELD.charBaseBlock);
+        sub_80E4EF8(0, 0, r2, animBg.paletteId, (u32)animBg.bgTiles, (((s32)animBg.bgTilemap - VRAM) / 2048), REG_BG1CNT_BITFIELD.charBaseBlock);
         if (IsContest())
             sub_8076380();
     }
@@ -1991,13 +1991,13 @@ static void sub_8076380(void)
 {
     int i;
     int j;
-    struct Struct_sub_8078914 s;
+    struct BattleAnimBgData animBg;
     u16 *ptr;
 
     if (IsSpeciesNotUnown(gContestResources__moveAnim.species))
     {
-        sub_8078914(&s);
-        ptr = (u16 *)s.field_4;
+        GetBattleAnimBg1Data(&animBg);
+        ptr = (u16 *)animBg.bgTilemap;
         for (i = 0; i < 8; i++)
         {
             for (j = 0; j < 4; j++)
@@ -2034,18 +2034,18 @@ void sub_80763FC(u16 a, u16 *b, u32 c, u8 d)
     }
 }
 
-void sub_8076464(u8 a)
+void ResetBattleAnimBg(u8 toBG2)
 {
     volatile u8 pointlessZero;
-    struct Struct_sub_8078914 s;
+    struct BattleAnimBgData animBg;
 
-    sub_8078914(&s);
-    if (a == 0 || IsContest())
+    GetBattleAnimBg1Data(&animBg);
+    if (toBG2 == FALSE || IsContest())
     {
-        DmaFill32Large(3, 0, s.field_0, 0x2000, 0x1000);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
         pointlessZero = 0; // is there a stubbed out Dma macro here that left the 0 load in?
         pointlessZero = 0; // is there a stubbed out Dma macro here that left the 0 load in?
-        DmaFill32Defvars(3, 0, s.field_4, 0x800);
+        DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x800);
         gBattle_BG1_X = 0;
         gBattle_BG1_Y = 0;
     }
@@ -2064,11 +2064,11 @@ static void task_pA_ma0A_obj_to_bg_pal(u8 taskId)
 {
     u8 spriteId, palIndex;
     s16 x, y;
-    struct Struct_sub_8078914 s;
+    struct BattleAnimBgData animBg;
 
     spriteId = gTasks[taskId].data[0];
     palIndex = gTasks[taskId].data[6];
-    sub_8078914(&s);
+    GetBattleAnimBg1Data(&animBg);
     x = gTasks[taskId].data[1] - (gSprites[spriteId].x + gSprites[spriteId].x2);
     y = gTasks[taskId].data[2] - (gSprites[spriteId].y + gSprites[spriteId].y2);
 
@@ -2076,7 +2076,7 @@ static void task_pA_ma0A_obj_to_bg_pal(u8 taskId)
     {
         gBattle_BG1_X = x + gTasks[taskId].data[3];
         gBattle_BG1_Y = y + gTasks[taskId].data[4];
-        DmaCopy32Defvars(3, gPlttBufferFaded + 0x100 + palIndex * 16, gPlttBufferFaded + 0x100 + s.field_8 * 16 - 256, 32);
+        DmaCopy32Defvars(3, gPlttBufferFaded + 0x100 + palIndex * 16, gPlttBufferFaded + 0x100 + animBg.paletteId * 16 - 256, 32);
     }
     else
     {
@@ -2134,13 +2134,13 @@ static void sub_807672C(u8 taskId)
             to_BG2 = 1;
         if (gMonAnimTaskIdArray[0] != 0xFF)
         {
-            sub_8076464(to_BG2);
+            ResetBattleAnimBg(to_BG2);
             DestroyTask(gMonAnimTaskIdArray[0]);
             gMonAnimTaskIdArray[0] = 0xFF;
         }
         if (gTasks[taskId].data[0] > 1)
         {
-            sub_8076464(to_BG2 ^ 1);
+            ResetBattleAnimBg(to_BG2 ^ 1);
             DestroyTask(gMonAnimTaskIdArray[1]);
             gMonAnimTaskIdArray[1] = 0xFF;
         }
@@ -2245,9 +2245,9 @@ static void sub_80769A4(u8 taskId)
         else
             toBG_2 = 1;
         if (IsAnimBankSpriteVisible(bank))
-            sub_8076464(toBG_2);
+            ResetBattleAnimBg(toBG_2);
         if (gTasks[taskId].data[0] > 1 && IsAnimBankSpriteVisible(bank ^ 2))
-            sub_8076464(toBG_2 ^ 1);
+            ResetBattleAnimBg(toBG_2 ^ 1);
         DestroyTask(taskId);
     }
 }
@@ -3064,9 +3064,9 @@ static void ScriptCmd_doublebattle_2D(void)
             if (r4 == 2)
                 gSprites[spriteId].oam.priority = 3;
             if (r4 == 1)
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
             else
-                sub_8076464(1);
+                ResetBattleAnimBg(1);
         }
     }
 }

@@ -1192,7 +1192,7 @@ void sub_80E2F2C(u8 taskId)
     u16 species;
     int spriteId, newSpriteId;
     u16 var0;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     var0 = 0;
     gBattle_WIN0H = 0;
@@ -1236,15 +1236,15 @@ void sub_80E2F2C(u8 taskId)
     }
 
     spriteId = GetAnimBattlerSpriteId(0);
-    newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
-    sub_8078914(&subStruct);
-    DmaFill32Defvars(3, 0, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D20A30, subStruct.field_4);
+    newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
+    GetBattleAnimBg1Data(&animBg);
+    DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D20A30, animBg.bgTilemap);
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
     
-    LZDecompressVram(&gUnknown_08D20A14, subStruct.field_0);
-    LoadPalette(&gUnknown_083DB568, subStruct.field_8 * 16 + 1, 2);
+    LZDecompressVram(&gUnknown_08D20A14, animBg.bgTiles);
+    LoadPalette(&gUnknown_083DB568, animBg.paletteId * 16 + 1, 2);
 
     gBattle_BG1_X = -gSprites[spriteId].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
@@ -1255,7 +1255,7 @@ void sub_80E2F2C(u8 taskId)
 
 static void sub_80E3194(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     struct Sprite *sprite;
 
     gTasks[taskId].data[10] += 4;
@@ -1266,7 +1266,7 @@ static void sub_80E3194(u8 taskId)
         gBattle_BG1_Y += 64;
         if (++gTasks[taskId].data[11] == 4)
         {
-            sub_8076464(0);
+            ResetBattleAnimBg(0);
             gBattle_WIN0H = 0;
             gBattle_WIN0V = 0;
             REG_WININ = 0x3F3F;
@@ -1282,8 +1282,8 @@ static void sub_80E3194(u8 taskId)
             sprite = &gSprites[gTasks[taskId].data[0]];
             DestroySprite(sprite);
 
-            sub_8078914(&subStruct);
-            DmaFill32Defvars(3, 0, subStruct.field_4, 0x800);
+            GetBattleAnimBg1Data(&animBg);
+            DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x800);
             if (gTasks[taskId].data[6] == 1)
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority++;
 
@@ -1312,7 +1312,7 @@ static void sub_80E3338(u8 taskId)
     u16 species;
     u8 spriteId, spriteId2;
     u16 var0;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     s16 taskData[8];
 
     spriteId2 = 0;
@@ -1372,37 +1372,37 @@ static void sub_80E3338(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
     }
 
-    spriteId = sub_807A4A0(battler1, gBattlerSpriteIds[battler1], species);
+    spriteId = CreateInvisibleSpriteCopy(battler1, gBattlerSpriteIds[battler1], species);
     if (taskData[3])
-        spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
+        spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
     
-    sub_8078914(&subStruct);
+    GetBattleAnimBg1Data(&animBg);
     if (taskData[0] == 0)
-        LZDecompressVram(&gBattleStatMask1_Tilemap, subStruct.field_4);
+        LZDecompressVram(&gBattleStatMask1_Tilemap, animBg.bgTilemap);
     else
-        LZDecompressVram(&gBattleStatMask2_Tilemap, subStruct.field_4);
+        LZDecompressVram(&gBattleStatMask2_Tilemap, animBg.bgTilemap);
 
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    LZDecompressVram(&gBattleStatMask_Gfx, subStruct.field_0);
+    LZDecompressVram(&gBattleStatMask_Gfx, animBg.bgTiles);
 
     if (taskData[1] == 0)
-        LoadCompressedPalette(gBattleStatMask2_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask2_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 1)
-        LoadCompressedPalette(gBattleStatMask1_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask1_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 2)
-        LoadCompressedPalette(gBattleStatMask3_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask3_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 3)
-        LoadCompressedPalette(gBattleStatMask4_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask4_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 4)
-        LoadCompressedPalette(gBattleStatMask6_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask6_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 5)
-        LoadCompressedPalette(gBattleStatMask7_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask7_Pal, animBg.paletteId << 4, 32);
     else if (taskData[1] == 6)
-        LoadCompressedPalette(gBattleStatMask8_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask8_Pal, animBg.paletteId << 4, 32);
     else
-        LoadCompressedPalette(gBattleStatMask5_Pal, subStruct.field_8 << 4, 32);
+        LoadCompressedPalette(gBattleStatMask5_Pal, animBg.paletteId << 4, 32);
 
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
@@ -1469,7 +1469,7 @@ static void sub_80E3704(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;
@@ -1668,7 +1668,7 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
 {
     u16 species;
     u8 spriteId, spriteId2;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u8 battler2;
 
     spriteId2 = 0;
@@ -1702,17 +1702,17 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
     }
 
-    spriteId = sub_807A4A0(battler1, gBattlerSpriteIds[battler1], species);
+    spriteId = CreateInvisibleSpriteCopy(battler1, gBattlerSpriteIds[battler1], species);
     if (arg4)
-        spriteId2 = sub_807A4A0(battler2, gBattlerSpriteIds[battler2], species);
+        spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
 
-    sub_8078914(&subStruct);
-    LZDecompressVram(arg9, subStruct.field_4);
+    GetBattleAnimBg1Data(&animBg);
+    LZDecompressVram(arg9, animBg.bgTilemap);
     if (IsContest())
-        sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    LZDecompressVram(arg8, subStruct.field_0);
-    LoadCompressedPalette(palette, subStruct.field_8 << 4, 32);
+    LZDecompressVram(arg8, animBg.bgTiles);
+    LoadCompressedPalette(palette, animBg.paletteId << 4, 32);
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
     gTasks[taskId].data[1] = arg2;
@@ -1758,7 +1758,7 @@ static void sub_80E3E64(u8 taskId)
             REG_BLDALPHA = ((16 - gTasks[taskId].data[12]) << 8) | gTasks[taskId].data[12];
             if (gTasks[taskId].data[12] == 0)
             {
-                sub_8076464(0);
+                ResetBattleAnimBg(0);
                 gBattle_WIN0H = 0;
                 gBattle_WIN0V = 0;
                 REG_WININ = 0x3F3F;

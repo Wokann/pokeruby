@@ -2257,7 +2257,7 @@ void sub_812D7E8(u8 taskId)
 {
     int i, j;
     u8 position;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u8 *dest;
     u8 *src;
     u16 *field_4;
@@ -2288,7 +2288,7 @@ void sub_812D7E8(u8 taskId)
         break;
     case 2:
         sub_8031FC4(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
-        sub_8078954(&subStruct, gBattleAnimAttacker);
+        GetBgDataForTransform(&animBg, gBattleAnimAttacker);
 
         if (IsContest())
             position = 0;
@@ -2296,14 +2296,14 @@ void sub_812D7E8(u8 taskId)
             position = GetBattlerPosition(gBattleAnimAttacker);
 
         dest = gMonSpriteGfx_Sprite_ptr[position] + (gBattleMonForms[gBattleAnimAttacker] << 11);
-        src = subStruct.field_0;
+        src = animBg.bgTiles;
         DmaCopy32(3, dest, src, 0x800);
 
         if (IsContest())
         {
             if (IsSpeciesNotUnown(gContestResources__moveAnim.species) != IsSpeciesNotUnown(gContestResources__moveAnim.targetSpecies))
             {
-                field_4 = (u16 *)subStruct.field_4;
+                field_4 = (u16 *)animBg.bgTilemap;
                 for (i = 0; i < 8; i++)
                 {
                     for (j = 0; j < 4; j++)
@@ -2382,7 +2382,7 @@ void sub_812DB58(u8 taskId)
 
 void sub_812DB84(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     switch (gTasks[taskId].data[0])
     {
@@ -2395,14 +2395,14 @@ void sub_812DB84(u8 taskId)
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 1;
 
-        sub_8078914(&subStruct);
-        DmaClear32(3, subStruct.field_4, 0x1000);
-        LZDecompressVram(gUnknown_08D2AA98, subStruct.field_4);
-        LZDecompressVram(gUnknown_08D2A9E0, subStruct.field_0);
-        LoadCompressedPalette(gUnknown_08D2AA80, subStruct.field_8 * 16, 32);
+        GetBattleAnimBg1Data(&animBg);
+        DmaClear32(3, animBg.bgTilemap, 0x1000);
+        LZDecompressVram(gUnknown_08D2AA98, animBg.bgTilemap);
+        LZDecompressVram(gUnknown_08D2A9E0, animBg.bgTiles);
+        LoadCompressedPalette(gUnknown_08D2AA80, animBg.paletteId * 16, 32);
         if (IsContest())
         {
-            sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+            sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
             gBattle_BG1_X = -56;
             gBattle_BG1_Y = 0;
         }
@@ -2459,9 +2459,9 @@ void sub_812DB84(u8 taskId)
         }
         break;
     case 4:
-        sub_8078914(&subStruct);
-        DmaFill32Large(3, 0, subStruct.field_0, 0x2000, 0x1000);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaFill32Large(3, 0, animBg.bgTiles, 0x2000, 0x1000);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
@@ -2569,7 +2569,7 @@ static void sub_812E0F8(struct Sprite *sprite)
 
 void sub_812E14C(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
 
     switch (gTasks[taskId].data[0])
     {
@@ -2583,15 +2583,15 @@ void sub_812E14C(u8 taskId)
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 1;
 
-        sub_8078914(&subStruct);
-        DmaClear32(3, subStruct.field_4, 0x1000);
-        LZDecompressVram(gUnknown_08D2AA98, subStruct.field_4);
-        LZDecompressVram(gUnknown_08D2A9E0, subStruct.field_0);
-        LoadCompressedPalette(gUnknown_08D2AA80, subStruct.field_8 * 16, 32);
+        GetBattleAnimBg1Data(&animBg);
+        DmaClear32(3, animBg.bgTilemap, 0x1000);
+        LZDecompressVram(gUnknown_08D2AA98, animBg.bgTilemap);
+        LZDecompressVram(gUnknown_08D2A9E0, animBg.bgTiles);
+        LoadCompressedPalette(gUnknown_08D2AA80, animBg.paletteId * 16, 32);
 
         if (IsContest())
         {
-            sub_80763FC(subStruct.field_8, (u16 *)subStruct.field_4, 0, 0);
+            sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
             gBattle_BG1_X = -56;
             gBattle_BG1_Y = 0;
         }
@@ -2657,8 +2657,8 @@ void sub_812E14C(u8 taskId)
             gTasks[taskId].data[0] = 1;
         break;
     case 5:
-        sub_8078914(&subStruct);
-        DmaClear32(3, subStruct.field_4, 0x800);
+        GetBattleAnimBg1Data(&animBg);
+        DmaClear32(3, animBg.bgTilemap, 0x800);
 
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;

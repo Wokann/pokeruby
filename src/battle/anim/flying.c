@@ -18,8 +18,8 @@ extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
 static void sub_80DA034(struct Sprite *sprite);
 static void sub_80DA05C(struct Sprite *sprite);
-static void sub_80DA16C(struct Sprite *sprite);
-static void sub_80DA1EC(struct Sprite *sprite);
+static void AnimGustToTarget(struct Sprite *sprite);
+static void AnimGustToTarget_Step(struct Sprite *sprite);
 static void sub_80DA208(struct Sprite *sprite);
 static void sub_80DA300(struct Sprite *sprite);
 static void sub_80DA348(struct Sprite *sprite);
@@ -45,7 +45,7 @@ static void sub_80DB578(struct Sprite *sprite);
 static void sub_80DB5E4(struct Sprite *sprite);
 static void sub_80DB6A0(struct Sprite *sprite);
 
-static void sub_80DA0DC(u8 taskId);
+static void AnimTask_AnimateGustTornadoPalette_Step(u8 taskId);
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA380 =
 {
@@ -58,27 +58,27 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA380 =
     .callback = sub_80DA034,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA398[] =
+static const union AffineAnimCmd sAffineAnim_GustToTarget[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xA, 0x0, 0, 24),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA3B0[] =
+static const union AffineAnimCmd *const sAffineAnims_GustToTarget[] =
 {
-    gSpriteAffineAnim_83DA398,
+    sAffineAnim_GustToTarget,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA3B4 =
+const struct SpriteTemplate gGustToTargetSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GUST,
     .paletteTag = ANIM_TAG_GUST,
-    .oam = &gOamData_837DFDC,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA3B0,
-    .callback = sub_80DA16C,
+    .affineAnims = sAffineAnims_GustToTarget,
+    .callback = AnimGustToTarget,
 };
 
 const union AnimCmd gSpriteAnim_83DA3CC[] =
@@ -387,15 +387,15 @@ static void sub_80DA05C(struct Sprite *sprite) {
     }
 }
 
-void sub_80DA09C(u8 taskId)
+void AnimTask_AnimateGustTornadoPalette(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[1];
     gTasks[taskId].data[1] = gBattleAnimArgs[0];
-    gTasks[taskId].data[2] = IndexOfSpritePaletteTag(0x2719);
-    gTasks[taskId].func = sub_80DA0DC;
+    gTasks[taskId].data[2] = IndexOfSpritePaletteTag(ANIM_TAG_GUST);
+    gTasks[taskId].func = AnimTask_AnimateGustTornadoPalette_Step;
 }
 
-static void sub_80DA0DC(u8 taskId)
+static void AnimTask_AnimateGustTornadoPalette_Step(u8 taskId)
 {
     u8 data2;
     u16 temp;
@@ -427,24 +427,24 @@ static void sub_80DA0DC(u8 taskId)
     }
 }
 
-static void sub_80DA16C(struct Sprite *sprite)
+static void AnimGustToTarget(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
     }
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     InitAnimLinearTranslation(sprite);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
-    StoreSpriteCallbackInData6(sprite, sub_80DA1EC);
+    StoreSpriteCallbackInData6(sprite, AnimGustToTarget_Step);
 }
 
-static void sub_80DA1EC(struct Sprite *sprite)
+static void AnimGustToTarget_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite) != 0)
     {

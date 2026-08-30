@@ -42,7 +42,7 @@ static void sub_80E02A4(u8 taskId);
 static void sub_80E0620(u8 taskId);
 static void sub_80E08CC(u8 priority);
 static void sub_80E079C(struct Task *task);
-static void sub_80E0CD0(u8 taskId);
+static void AnimTask_MetallicShine_Step(u8 taskId);
 
 const struct SpriteTemplate gSpriteTemplate_83DB118 =
 {
@@ -415,7 +415,7 @@ static void sub_80E00D0(struct Sprite *sprite)
 void sub_80E00EC(u8 taskId)
 {
     struct ScanlineEffectParams scanlineParams;
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u16 i;
     u8 pos;
     int var0;
@@ -439,10 +439,10 @@ void sub_80E00EC(u8 taskId)
     task->data[3] = GetBattlerPosition_permutated(gBattleAnimAttacker);
     if (task->data[3] == 1)
     {
-        sub_8078914(&subStruct);
+        GetBattleAnimBg1Data(&animBg);
         task->data[10] = gBattle_BG1_Y;
         REG_BLDCNT = 0x3F42;
-        FillPalette(0, subStruct.field_8 << 4, 32);
+        FillPalette(0, animBg.paletteId << 4, 32);
         scanlineParams.dmaDest = &REG_BG1VOFS;
         var0 = 2;
 
@@ -548,7 +548,7 @@ static void sub_80E02A4(u8 taskId)
 
 void sub_80E03BC(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     struct ScanlineEffectParams scanlineParams;
     u8 pos;
     u16 i;
@@ -585,9 +585,9 @@ void sub_80E03BC(u8 taskId)
     case 1:
         if (task->data[3] == 1)
         {
-            sub_8078914(&subStruct);
+            GetBattleAnimBg1Data(&animBg);
             task->data[10] = gBattle_BG1_Y;
-            FillPalette(0, subStruct.field_8 << 4, 32);
+            FillPalette(0, animBg.paletteId << 4, 32);
         }
         else
         {
@@ -811,10 +811,10 @@ void sub_80E0918(u8 taskId)
 void sub_80E09C4(u8 taskId)
 {
     u8 toBG2 = GetBattlerPosition_permutated(gBattleAnimAttacker) ^ 1 ? 1 : 0;
-    sub_8076464(toBG2);
+    ResetBattleAnimBg(toBG2);
 
     if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
-        sub_8076464(toBG2 ^ 1);
+        ResetBattleAnimBg(toBG2 ^ 1);
 
     DestroyAnimVisualTask(taskId);
 }
@@ -828,17 +828,17 @@ void sub_80E0A10(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80E0A4C(u8 taskId)
+void AnimTask_MetallicShine(u8 taskId)
 {
     u16 species;
     u8 spriteId;
     u8 newSpriteId;
     u16 paletteNum;
-    struct Struct_sub_8078914 subStruct;
-    int var0 = 0;
+    struct BattleAnimBgData animBg;
+    int priorityChanged = FALSE;
 
-    gBattle_WIN0H = var0;
-    gBattle_WIN0V = var0;
+    gBattle_WIN0H = priorityChanged;
+    gBattle_WIN0V = priorityChanged;
     REG_WININ = 0x3F3F;
     REG_WINOUT = 0x3F3D;
     REG_DISPCNT |= DISPCNT_OBJWIN_ON;
@@ -851,13 +851,14 @@ void sub_80E0A4C(u8 taskId)
 
     if (IsDoubleBattle() && !IsContest())
     {
-        if (GetBattlerPosition(gBattleAnimAttacker) == 3 || GetBattlerPosition(gBattleAnimAttacker) == 0)
+        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT
+         || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
         {
             if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority--;
                 REG_BG1CNT_BITFIELD.priority = 1;
-                var0 = 1;
+                priorityChanged = TRUE;
             }
         }
     }
@@ -874,14 +875,14 @@ void sub_80E0A4C(u8 taskId)
             species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
     }
 
-    spriteId = GetAnimBattlerSpriteId(0);
-    newSpriteId = sub_807A4A0(gBattleAnimAttacker, spriteId, species);
+    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    newSpriteId = CreateInvisibleSpriteCopy(gBattleAnimAttacker, spriteId, species);
 
-    sub_8078914(&subStruct);
-    DmaClear32(3, subStruct.field_4, 0x1000);
-    LZDecompressVram(&gUnknown_08D1D574, subStruct.field_4);
-    LZDecompressVram(&gUnknown_08D1D410, subStruct.field_0);
-    LoadCompressedPalette(&gUnknown_08D1D54C, subStruct.field_8 << 4, 32);
+    GetBattleAnimBg1Data(&animBg);
+    DmaClear32(3, animBg.bgTilemap, 0x1000);
+    LZDecompressVram(&gUnknown_08D1D574, animBg.bgTilemap);
+    LZDecompressVram(&gUnknown_08D1D410, animBg.bgTiles);
+    LoadCompressedPalette(&gUnknown_08D1D54C, animBg.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId].x + 96;
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
@@ -896,13 +897,13 @@ void sub_80E0A4C(u8 taskId)
     gTasks[taskId].data[1] = gBattleAnimArgs[0];
     gTasks[taskId].data[2] = gBattleAnimArgs[1];
     gTasks[taskId].data[3] = gBattleAnimArgs[2];
-    gTasks[taskId].data[6] = var0;
-    gTasks[taskId].func = sub_80E0CD0;
+    gTasks[taskId].data[6] = priorityChanged;
+    gTasks[taskId].func = AnimTask_MetallicShine_Step;
 }
 
-static void sub_80E0CD0(u8 taskId)
+static void AnimTask_MetallicShine_Step(u8 taskId)
 {
-    struct Struct_sub_8078914 subStruct;
+    struct BattleAnimBgData animBg;
     u16 paletteNum;
     u8 spriteId;
     u8 taskIdCopy = taskId;
@@ -917,7 +918,7 @@ static void sub_80E0CD0(u8 taskId)
 
         if (++gTasks[taskIdCopy].data[11] == 2)
         {
-            sub_8076464(0);
+            ResetBattleAnimBg(0);
             gBattle_WIN0H = 0;
             gBattle_WIN0V = 0;
             REG_WININ = 0x3F3F;
@@ -936,8 +937,8 @@ static void sub_80E0CD0(u8 taskId)
                 SetGrayscaleOrOriginalPalette(paletteNum, TRUE);
 
             DestroySprite(&gSprites[gTasks[taskIdCopy].data[0]]);
-            sub_8078914(&subStruct);
-            DmaClear32(3, subStruct.field_4, 0x800);
+            GetBattleAnimBg1Data(&animBg);
+            DmaClear32(3, animBg.bgTilemap, 0x800);
 
             if (gTasks[taskIdCopy].data[6] == 1)
             {

@@ -81,7 +81,7 @@ extern const struct OamData gOamData_837DFBC;
 extern const struct OamData gOamData_837DFC4;
 extern const struct OamData gOamData_837DFCC;
 extern const struct OamData gOamData_837DFD4;
-extern const struct OamData gOamData_837DFDC;
+extern const struct OamData gOamData_AffineNormal_ObjNormal_32x64;
 extern const struct OamData gOamData_837DFE4;
 extern const struct OamData gOamData_837DFEC;
 extern const struct OamData gOamData_837DFF4;
@@ -147,7 +147,7 @@ void sub_80763FC(u16 a, u16 *b, u32 c, u8 d);
 s16 CalculatePanIncrement(s16 sourcePan, s16 targetPan, s16 incrementPan);
 s16 sub_8077104(s16 newPan, int oldPan);
 void DestroyAnimSoundTask(u8 taskId);
-void sub_8076464(u8 a);
+void ResetBattleAnimBg(u8 toBG2);
 s8 BattleAnimAdjustPanning2(s8);
 
 #endif

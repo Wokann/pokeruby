@@ -868,41 +868,41 @@ bool8 IsDoubleBattle()
     return IS_DOUBLE_BATTLE();
 }
 
-void sub_8078914(struct Struct_sub_8078914 *unk)
+void GetBattleAnimBg1Data(struct BattleAnimBgData *animBg)
 {
     if (IsContest())
     {
-        unk->field_0 = (u8 *)(VRAM + 0x8000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0xe;
+        animBg->bgTiles = (u8 *)(VRAM + 0x8000);
+        animBg->bgTilemap = (u8 *)(VRAM + 0xf000);
+        animBg->paletteId = 0xe;
     }
     else
     {
-        unk->field_0 = (u8 *)(VRAM + 0x4000);
-        unk->field_4 = (u8 *)(VRAM + 0xe000);
-        unk->field_8 = 0x8;
+        animBg->bgTiles = (u8 *)(VRAM + 0x4000);
+        animBg->bgTilemap = (u8 *)(VRAM + 0xe000);
+        animBg->paletteId = 0x8;
     }
 }
 
-void sub_8078954(struct Struct_sub_8078914 *unk, u8 b)
+void GetBgDataForTransform(struct BattleAnimBgData *animBg, u8 battler)
 {
     if (IsContest())
     {
-        unk->field_0 = (u8 *)(VRAM + 0x8000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0xe;
+        animBg->bgTiles = (u8 *)(VRAM + 0x8000);
+        animBg->bgTilemap = (u8 *)(VRAM + 0xf000);
+        animBg->paletteId = 0xe;
     }
     else if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
     {
-        unk->field_0 = (u8 *)(VRAM + 0x4000);
-        unk->field_4 = (u8 *)(VRAM + 0xe000);
-        unk->field_8 = 0x8;
+        animBg->bgTiles = (u8 *)(VRAM + 0x4000);
+        animBg->bgTilemap = (u8 *)(VRAM + 0xe000);
+        animBg->paletteId = 0x8;
     }
     else
     {
-        unk->field_0 = (u8 *)(VRAM + 0x6000);
-        unk->field_4 = (u8 *)(VRAM + 0xf000);
-        unk->field_8 = 0x9;
+        animBg->bgTiles = (u8 *)(VRAM + 0x6000);
+        animBg->bgTilemap = (u8 *)(VRAM + 0xf000);
+        animBg->paletteId = 0x9;
     }
 }
 
@@ -2154,16 +2154,16 @@ void SetAverageBattlerPositions(u8 slot, bool8 a2, s16 *x, s16 *y)
     *y = (v4 + v6) / 2;
 }
 
-u8 sub_807A4A0(int bank, u8 sprite, int species)
+u8 CreateInvisibleSpriteCopy(int battler, u8 spriteId, int species)
 {
-    u8 new_sprite = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
-    gSprites[new_sprite] = gSprites[sprite];
-    gSprites[new_sprite].usingSheet = TRUE;
-    gSprites[new_sprite].oam.priority = 0;
-    gSprites[new_sprite].oam.objMode = 2;
-    gSprites[new_sprite].oam.tileNum = gSprites[sprite].oam.tileNum;
-    gSprites[new_sprite].callback = SpriteCallbackDummy;
-    return new_sprite;
+    u8 newSpriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
+    gSprites[newSpriteId] = gSprites[spriteId];
+    gSprites[newSpriteId].usingSheet = TRUE;
+    gSprites[newSpriteId].oam.priority = 0;
+    gSprites[newSpriteId].oam.objMode = 2;
+    gSprites[newSpriteId].oam.tileNum = gSprites[spriteId].oam.tileNum;
+    gSprites[newSpriteId].callback = SpriteCallbackDummy;
+    return newSpriteId;
 }
 
 // unused_orb

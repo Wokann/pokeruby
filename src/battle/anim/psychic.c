@@ -547,11 +547,11 @@ static void sub_80DB9E4(struct Sprite *sprite)
         u8 toBG_2 = (identity ^ var0) != 0;
 
         if (IsAnimBankSpriteVisible(bank))
-            sub_8076464(toBG_2);
+            ResetBattleAnimBg(toBG_2);
 
         bank = bankCopy ^ 2;
         if (IsAnimBankSpriteVisible(bank))
-            sub_8076464(toBG_2 ^ var0);
+            ResetBattleAnimBg(toBG_2 ^ var0);
     }
 
     sprite->callback = DestroyAnimSprite;
