@@ -39,7 +39,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77F8 =
     .callback = sub_8079534,
 };
 
-const union AnimCmd gSpriteAnim_83D7810[] =
+const union AnimCmd gExplosionAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -48,17 +48,17 @@ const union AnimCmd gSpriteAnim_83D7810[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7824[] =
+const union AnimCmd *const gExplosionAnimTable[] =
 {
-    gSpriteAnim_83D7810,
+    gExplosionAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7828 =
+const struct SpriteTemplate gExplosionSpriteTemplate =
 {
     .tileTag = ANIM_TAG_EXPLOSION,
     .paletteTag = ANIM_TAG_EXPLOSION,
     .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_83D7824,
+    .anims = gExplosionAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,

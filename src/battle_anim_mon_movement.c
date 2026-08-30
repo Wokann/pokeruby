@@ -17,7 +17,7 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 static void AnimTask_ShakeMonStep(u8 taskId);
-static void AnimTask_ShakeMon2Step(u8 taskId);
+static void AnimTask_ShakeMon2_Step(u8 taskId);
 static void AnimTask_ShakeMonInPlaceStep(u8 taskId);
 static void AnimTask_ShakeAndSinkMonStep(u8 taskId);
 static void sub_80A8488(u8 taskId);
@@ -164,67 +164,68 @@ static void AnimTask_ShakeMonStep(u8 taskId)
 // arg 4: frame delay
 void AnimTask_ShakeMon2(u8 taskId)
 {
-    u8 sprite;
-    bool8 destroy;
-    u8 side;
-    destroy = FALSE;
-    if (gBattleAnimArgs[0] < 4)
+    u8 spriteId;
+    bool8 abort;
+    u8 battler;
+
+    abort = FALSE;
+    if (gBattleAnimArgs[0] < MAX_BATTLERS_COUNT)
     {
-        sprite = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        if (sprite == 0xff)
+        spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+        if (spriteId == 0xff)
         {
             DestroyAnimVisualTask(taskId);
             return;
         }
     }
-    else if (gBattleAnimArgs[0] != 8)
+    else if (gBattleAnimArgs[0] != ANIM_ATTACKER_FORCE)
     {
         switch (gBattleAnimArgs[0])
         {
-        case 4:
-            side = GetBattlerAtPosition(0);
+        case ANIM_PLAYER_LEFT:
+            battler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
             break;
-        case 5:
-            side = GetBattlerAtPosition(2);
+        case ANIM_PLAYER_RIGHT:
+            battler = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
             break;
-        case 6:
-            side = GetBattlerAtPosition(1);
+        case ANIM_OPPONENT_LEFT:
+            battler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
             break;
-        case 7:
+        case ANIM_OPPONENT_RIGHT:
         default:
-            side = GetBattlerAtPosition(3);
+            battler = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
             break;
         }
 
-        if (IsAnimBankSpriteVisible(side) == FALSE)
-            destroy = TRUE;
+        if (IsAnimBankSpriteVisible(battler) == FALSE)
+            abort = TRUE;
 
-        sprite = gBattlerSpriteIds[side];
+        spriteId = gBattlerSpriteIds[battler];
     }
     else
     {
-        sprite = gBattlerSpriteIds[gBattleAnimAttacker];
+        spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
     }
 
-    if (destroy)
+    if (abort)
     {
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    gSprites[sprite].x2 = gBattleAnimArgs[1];
-    gSprites[sprite].y2 = gBattleAnimArgs[2];
-    TASK.data[0] = sprite;
+    gSprites[spriteId].x2 = gBattleAnimArgs[1];
+    gSprites[spriteId].y2 = gBattleAnimArgs[2];
+    TASK.data[0] = spriteId;
     TASK.data[1] = gBattleAnimArgs[3];
     TASK.data[2] = gBattleAnimArgs[4];
     TASK.data[3] = gBattleAnimArgs[4];
     TASK.data[4] = gBattleAnimArgs[1];
     TASK.data[5] = gBattleAnimArgs[2];
-    TASK.func = AnimTask_ShakeMon2Step;
+    TASK.func = AnimTask_ShakeMon2_Step;
     TASK.func(taskId);
 }
 
-static void AnimTask_ShakeMon2Step(u8 taskId)
+static void AnimTask_ShakeMon2_Step(u8 taskId)
 {
     if (TASK.data[3] == 0)
     {
