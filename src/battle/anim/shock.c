@@ -9,8 +9,7 @@ extern u8 gBattleAnimTarget;
 extern struct OamMatrix gOamMatrices[];
 
 void sub_80D6294(struct Sprite *sprite);
-void sub_80D6328(struct Sprite *sprite);
-extern void sub_80DA48C(struct Sprite *);
+static void AnimSparkElectricity(struct Sprite *sprite);
 
 // shock (moves the little electricity lines)
 // Used in Shock.
@@ -42,7 +41,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9844 =
     .callback = sub_80D6294,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D985C =
+const struct SpriteTemplate gSparkElectricitySpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
@@ -50,7 +49,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D985C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6328,
+    .callback = AnimSparkElectricity,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9874 =
@@ -89,52 +88,52 @@ void sub_80D6294(struct Sprite *sprite)
     sprite->callback = sub_8078114;
 }
 
-void sub_80D6328(struct Sprite *sprite)
+static void AnimSparkElectricity(struct Sprite *sprite)
 {
-    u8 slot;
+    u8 battler;
     u32 matrixNum;
     s16 sineVal;
 
     switch (gBattleAnimArgs[4])
     {
-    case 0:
-        slot = gBattleAnimAttacker;
+    case ANIM_BATTLER_ATTACKER:
+        battler = gBattleAnimAttacker;
         break;
-    case 1:
+    case ANIM_BATTLER_TARGET:
     default:
-        slot = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
         break;
-    case 2:
+    case ANIM_BATTLER_ATK_PARTNER:
         if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
         {
-            slot = gBattleAnimAttacker;
+            battler = gBattleAnimAttacker;
         }
         else
         {
-            slot = gBattleAnimAttacker ^ 2;
+            battler = gBattleAnimAttacker ^ 2;
         }
         break;
-    case 3:
+    case ANIM_BATTLER_DEF_PARTNER:
         if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
         {
-            slot = gBattleAnimTarget ^ 2;
+            battler = gBattleAnimTarget ^ 2;
         }
         else
         {
-            slot = gBattleAnimTarget;
+            battler = gBattleAnimTarget;
         }
         break;
     }
 
     if (gBattleAnimArgs[5] == 0)
     {
-        sprite->x = GetBattlerSpriteCoord(slot, 0);
-        sprite->y = GetBattlerSpriteCoord(slot, 1);
+        sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(slot, 2);
-        sprite->y = GetBattlerSpriteCoord(slot, 3);
+        sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET);
     }
 
     sprite->x2 = (gSineTable[gBattleAnimArgs[0]] * gBattleAnimArgs[1]) >> 8;
@@ -142,7 +141,7 @@ void sub_80D6328(struct Sprite *sprite)
 
     if (gBattleAnimArgs[6] & 1)
     {
-        sprite->oam.priority = GetBattlerSpriteBGPriority(slot) + 1;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
     }
 
     matrixNum = sprite->oam.matrixNum;
@@ -153,5 +152,5 @@ void sub_80D6328(struct Sprite *sprite)
     gOamMatrices[matrixNum].c = -sineVal;
 
     sprite->data[0] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DA48C;
+    sprite->callback = DestroyAnimSpriteAfterTimer;
 }

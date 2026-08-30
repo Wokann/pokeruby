@@ -40,8 +40,6 @@ extern const u16 gBattleStatMask6_Pal[];
 extern const u16 gBattleStatMask7_Pal[];
 extern const u16 gBattleStatMask8_Pal[];
 
-extern void sub_80DA48C(struct Sprite *);
-
 static void AnimConfusionDuck(struct Sprite *sprite);
 static void AnimSimplePaletteBlend(struct Sprite *sprite);
 static void AnimComplexPaletteBlend(struct Sprite *sprite);
@@ -882,7 +880,7 @@ static void sub_80E27E8(struct Sprite *sprite)
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
-    StoreSpriteCallbackInData6(sprite, sub_80DA48C);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSpriteAfterTimer);
 }
 
 static void AnimHitSplatHandleInvert(struct Sprite *sprite)

@@ -1947,19 +1947,19 @@ Move_SPARK: @ 81C9EA3
 	delay 0
 	createvisualtask AnimTask_BlendColorCycle, 2, 3, -31, 1, 5, 5, 23551
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 32, 24, 190, 12, 0, 1, 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 32, 24, 190, 12, 0, 1, 0
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 80, 24, 22, 12, 0, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 156, 24, 121, 13, 0, 1, 1
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 80, 24, 22, 12, 0, 1, 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 156, 24, 121, 13, 0, 1, 1
 	delay 0
 	createvisualtask AnimTask_BlendColorCycle, 2, 3, -31, 1, 0, 0, 23551
 	delay 10
 	createvisualtask AnimTask_BlendColorCycle, 2, 3, -31, 1, 5, 5, 23551
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 100, 24, 60, 10, 0, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 170, 24, 42, 11, 0, 1, 1
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 100, 24, 60, 10, 0, 1, 0
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 170, 24, 42, 11, 0, 1, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D985C, ANIM_BATTLER_ATTACKER, 0, 238, 24, 165, 10, 0, 1, 1
+	createsprite gSparkElectricitySpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 238, 24, 165, 10, 0, 1, 1
 	delay 0
 	createvisualtask AnimTask_BlendColorCycle, 2, 3, -31, 1, 0, 0, 23551
 	delay 20

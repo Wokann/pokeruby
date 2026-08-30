@@ -26,7 +26,7 @@ static void sub_80DA348(struct Sprite *sprite);
 static void sub_80DA38C(struct Sprite *sprite);
 static void AnimFallingFeather(struct Sprite *sprite);
 static void sub_80DA410(struct Sprite *sprite);
-static void DestroyAnimSpriteAfterTimer(struct Sprite *sprite);
+static void AnimFallingFeather_Step(struct Sprite *sprite);
 static void sub_80DAD30(struct Sprite *sprite);
 static void sub_80DAD84(struct Sprite *sprite);
 static void sub_80DAF0C(struct Sprite *sprite);
@@ -563,7 +563,7 @@ static void sub_80DA410(struct Sprite *sprite)
     }
 }
 
-void sub_80DA48C(struct Sprite *sprite)
+void DestroyAnimSpriteAfterTimer(struct Sprite *sprite)
 {
     if (sprite->data[0]-- > 0)
         return;
@@ -704,10 +704,10 @@ static void AnimFallingFeather(struct Sprite *sprite)
     gOamMatrices[matrixNum].b = sinVal;
     gOamMatrices[matrixNum].c = -sinVal;
 
-    sprite->callback = DestroyAnimSpriteAfterTimer;
+    sprite->callback = AnimFallingFeather_Step;
 }
 
-static void DestroyAnimSpriteAfterTimer(struct Sprite *sprite)
+static void AnimFallingFeather_Step(struct Sprite *sprite)
 {
     // (Probably) Functionally equivalent
 
@@ -827,7 +827,7 @@ static void DestroyAnimSpriteAfterTimer(struct Sprite *sprite)
     if (sprite->y + sprite->y2 >= data->unkE_1)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80DA48C;
+        sprite->callback = DestroyAnimSpriteAfterTimer;
     }
 }
 
@@ -965,7 +965,7 @@ static void sub_80DAF0C(struct Sprite *sprite)
     data->unkC[1] = data->unkC[0] - 2;
     data->unkE_1 = dataCpy[7];
 
-    sprite->callback = DestroyAnimSpriteAfterTimer;
+    sprite->callback = AnimFallingFeather_Step;
 }
 
 static void sub_80DB000(struct Sprite *sprite)

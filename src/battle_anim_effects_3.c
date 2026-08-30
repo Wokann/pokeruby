@@ -45,7 +45,6 @@ extern u8 gBattlerSpriteIds[];
 extern u16 gBattlerPartyIndexes[];
 
 extern u8 sub_8046234(s16 x, s16 y, u8 a3);
-extern void sub_80DA48C(struct Sprite *);
 extern void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5, u8 arg6, u8 arg7, const u8 *arg8, const u8 *arg9, const u16 *palette);
 
 static void sub_812C184(struct Sprite *sprite);
@@ -3557,7 +3556,7 @@ static void sub_812F948(struct Sprite *sprite)
 
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[1];
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
-    sprite->callback = sub_80DA48C;
+    sprite->callback = DestroyAnimSpriteAfterTimer;
 }
 
 static void sub_812F9B0(u8 taskId)
