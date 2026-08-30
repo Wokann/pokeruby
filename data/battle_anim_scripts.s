@@ -2086,7 +2086,7 @@ Move_MEAN_LOOK: @ 81CA31A
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 16, rgb(0, 0, 0)
 	loopsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_TARGET, 15, 4
 	waitplaysewithpan SE_M_LEER, SOUND_PAN_TARGET, 85
-	createsprite gBattleAnimSpriteTemplate_8402264, ANIM_BATTLER_ATTACKER, 2
+	createsprite gMeanLookEyeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	delay 120
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 16, 0, rgb(0, 0, 0)
 	delay 30

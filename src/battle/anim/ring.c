@@ -167,7 +167,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D795C =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7958,
@@ -178,7 +178,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7974 =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,
@@ -189,7 +189,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D798C =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7924,
@@ -200,7 +200,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D79A4 =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D791C,

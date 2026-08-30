@@ -50,10 +50,10 @@ extern void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u
 static void sub_812C184(struct Sprite *sprite);
 static void sub_812C268(struct Sprite *sprite);
 static void sub_812C2A4(struct Sprite *sprite);
-static void sub_812C380(struct Sprite *sprite);
-static void sub_812C40C(struct Sprite *sprite);
-static void sub_812C450(struct Sprite *sprite);
-static void sub_812C4FC(struct Sprite *sprite);
+static void AnimMeanLookEye_Step1(struct Sprite *sprite);
+static void AnimMeanLookEye_Step2(struct Sprite *sprite);
+static void AnimMeanLookEye_Step3(struct Sprite *sprite);
+static void AnimMeanLookEye_Step4(struct Sprite *sprite);
 static void sub_812C588(u8 taskId);
 static void sub_812C64C(u8 taskId);
 static void sub_812C798(struct Sprite *sprite);
@@ -101,7 +101,7 @@ static void sub_8131838(struct Sprite *sprite);
 static void sub_812C144(struct Sprite *sprite);
 static void sub_812C220(struct Sprite *sprite);
 static void sub_812C2BC(struct Sprite *sprite);
-static void sub_812C358(struct Sprite *sprite);
+static void AnimMeanLookEye(struct Sprite *sprite);
 static void sub_812C720(struct Sprite *sprite);
 static void sub_812C80C(struct Sprite *sprite);
 static void sub_812C848(struct Sprite *sprite);
@@ -237,7 +237,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840220C =
     .callback = sub_812C2BC,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402224[] =
+const union AffineAnimCmd gMeanLookEyeAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x180, 0x180, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFE0, 0x18, 0, 5),
@@ -245,28 +245,28 @@ const union AffineAnimCmd gSpriteAffineAnim_8402224[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402244[] =
+const union AffineAnimCmd gMeanLookEyeAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x30, 0x30, 0, 0),
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 6),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_840225C[] =
+const union AffineAnimCmd *const gMeanLookEyeAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402224,
-    gSpriteAffineAnim_8402244,
+    gMeanLookEyeAffineAnimCmds1,
+    gMeanLookEyeAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402264 =
+const struct SpriteTemplate gMeanLookEyeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_EYE,
     .paletteTag = ANIM_TAG_EYE,
-    .oam = &gOamData_837E11C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_840225C,
-    .callback = sub_812C358,
+    .affineAnims = gMeanLookEyeAffineAnimTable,
+    .callback = AnimMeanLookEye,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_840227C =
@@ -1268,15 +1268,15 @@ static void sub_812C2BC(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-static void sub_812C358(struct Sprite *sprite)
+static void AnimMeanLookEye(struct Sprite *sprite)
 {
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = 0x1000;
     sprite->data[0] = 4;
-    sprite->callback = sub_812C380;
+    sprite->callback = AnimMeanLookEye_Step1;
 }
 
-static void sub_812C380(struct Sprite *sprite)
+static void AnimMeanLookEye_Step1(struct Sprite *sprite)
 {
     REG_BLDALPHA = ((16 - sprite->data[0]) << 8) | sprite->data[0];
 
@@ -1296,22 +1296,22 @@ static void sub_812C380(struct Sprite *sprite)
         sprite->data[2] = 0;
         sprite->invisible = TRUE;
         sprite->affineAnimPaused = 1;
-        sprite->callback = sub_812C40C;
+        sprite->callback = AnimMeanLookEye_Step2;
     }
 }
 
-static void sub_812C40C(struct Sprite *sprite)
+static void AnimMeanLookEye_Step2(struct Sprite *sprite)
 {
     if (sprite->data[2]++ > 9)
     {
         sprite->invisible = FALSE;
         sprite->affineAnimPaused = 0;
         if (sprite->affineAnimEnded)
-            sprite->callback = sub_812C450;
+            sprite->callback = AnimMeanLookEye_Step3;
     }
 }
 
-static void sub_812C450(struct Sprite *sprite)
+static void AnimMeanLookEye_Step3(struct Sprite *sprite)
 {
     switch (sprite->data[3])
     {
@@ -1346,11 +1346,11 @@ static void sub_812C450(struct Sprite *sprite)
         sprite->data[1] = 0;
         REG_BLDCNT = 0x3F40;
         REG_BLDALPHA = sprite->data[0];
-        sprite->callback = sub_812C4FC;
+        sprite->callback = AnimMeanLookEye_Step4;
     }
 }
 
-static void sub_812C4FC(struct Sprite *sprite)
+static void AnimMeanLookEye_Step4(struct Sprite *sprite)
 {
     REG_BLDALPHA = ((16 - sprite->data[0]) << 8) | sprite->data[0];
 
