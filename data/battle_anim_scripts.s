@@ -1843,8 +1843,8 @@ Move_VICE_GRIP: @ 81C9BE1
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D769C, ANIM_BATTLER_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D769C, ANIM_BATTLER_ATTACKER, 2, 1
+	createsprite gViceGripSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gViceGripSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1
 	delay 9
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 5, 1

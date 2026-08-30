@@ -8,13 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D0178(struct Sprite* sprite);
-static void sub_80D020C(struct Sprite* sprite);
+static void AnimViceGripPincer(struct Sprite *sprite);
+static void AnimViceGripPincer_Step(struct Sprite *sprite);
 
 // grip (does a slash which is capable of mirroring for the effect of "gripping".)
 // Used in Vice Grip.
 
-const union AnimCmd gSpriteAnim_83D7674[] =
+const union AnimCmd gViceGripAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -22,7 +22,7 @@ const union AnimCmd gSpriteAnim_83D7674[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D7684[] =
+const union AnimCmd gViceGripAnimCmds2[] =
 {
     ANIMCMD_FRAME(0, 3, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 3, .vFlip = TRUE, .hFlip = TRUE),
@@ -30,49 +30,49 @@ const union AnimCmd gSpriteAnim_83D7684[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7694[] =
+const union AnimCmd *const gViceGripAnimTable[] =
 {
-    gSpriteAnim_83D7674,
-    gSpriteAnim_83D7684,
+    gViceGripAnimCmds1,
+    gViceGripAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D769C =
+const struct SpriteTemplate gViceGripSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
-    .oam = &gOamData_837E054,
-    .anims = gSpriteAnimTable_83D7694,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
+    .anims = gViceGripAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D0178,
+    .callback = AnimViceGripPincer,
 };
 
-void sub_80D0178(struct Sprite* sprite)
+static void AnimViceGripPincer(struct Sprite *sprite)
 {
-    s16 r7 = 32;
-    s16 r4 = -32;
-    s16 r8 = 16;
-    s16 r6 = -16;
-    if (gBattleAnimArgs[0] != 0)
+    s16 startXOffset = 32;
+    s16 startYOffset = -32;
+    s16 endXOffset = 16;
+    s16 endYOffset = -16;
+    if (gBattleAnimArgs[0])
     {
-        r7 = r4;
-        r4 = 32;
-        r8 = r6;
-        r6 = 16;
+        startXOffset = -32;
+        startYOffset = 32;
+        endXOffset = -16;
+        endYOffset = 16;
         StartSpriteAnim(sprite, 1);
     }
 
-    sprite->x += r7;
-    sprite->y += r4;
+    sprite->x += startXOffset;
+    sprite->y += startYOffset;
     sprite->data[0] = 6;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + r8;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + r6;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + endXOffset;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + endYOffset;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData6(sprite, sub_80D020C);
+    StoreSpriteCallbackInData6(sprite, AnimViceGripPincer_Step);
 }
 
-static void sub_80D020C(struct Sprite* sprite)
+static void AnimViceGripPincer_Step(struct Sprite *sprite)
 {
-    if (sprite->animEnded == 1)
+    if (sprite->animEnded)
         DestroyAnimSprite(sprite);
 }

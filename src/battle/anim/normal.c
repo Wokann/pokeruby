@@ -271,7 +271,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
 {
     .tileTag = ANIM_TAG_CROSS_IMPACT,
     .paletteTag = ANIM_TAG_CROSS_IMPACT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

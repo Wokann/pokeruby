@@ -30,7 +30,7 @@ const struct SpriteTemplate gCuttingSliceSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gSpriteAnimTable_83D6B24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -41,7 +41,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
-    .oam = &gOamData_837E054,
+    .oam = &gOamData_AffineOff_ObjBlend_32x32,
     .anims = gSpriteAnimTable_83D6B24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
