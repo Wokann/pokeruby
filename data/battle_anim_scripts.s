@@ -1396,24 +1396,24 @@ DizzyPunchLunge:
 Move_FIRE_SPIN: @ 81C9096
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 47, 1
-	call _81C90BF
-	call _81C90BF
-	call _81C90BF
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 47, 1
+	call FireSpinEffect
+	call FireSpinEffect
+	call FireSpinEffect
 	waitforvisualfinish
 	end
-_81C90BF:
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 28, 528, 30, 13, 50, 1
+FireSpinEffect:
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 28, 528, 30, 13, 50, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 32, 480, 20, 16, -46, 1
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 32, 480, 20, 16, -46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 33, 576, 20, 8, 42, 1
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 33, 576, 20, 8, 42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 31, 400, 25, 11, -42, 1
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 31, 400, 25, 11, -42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 28, 512, 25, 16, 46, 1
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 28, 512, 25, 16, 46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_TARGET, 2, 0, 33, 464, 30, 15, -50, 1
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 33, 464, 30, 15, -50, ANIM_BATTLER_TARGET
 	delay 2
 	return
 
@@ -8596,53 +8596,53 @@ Move_DRAGON_CLAW: @ 81D380C
 	call _81D39E9
 	call _81D39E9
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
 	delay 2
 	createvisualtask sub_812B30C, 5, 136, 63
 	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, -10, 0
 	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, 10, 0
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
 	delay 2
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
 	delay 2
 	createvisualtask sub_812B30C, 5, 136, 63
 	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, -10, 1
 	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, 10, 1
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 4, 8, 0, 639
 	waitforvisualfinish
 	end
 _81D39E9:
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACD0, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
 	delay 2
 	return
 
@@ -10374,9 +10374,9 @@ WrapHit:
 FireSpinHit:
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 30, 1
-	call _81C90BF
-	call _81C90BF
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 30, 1
+	call FireSpinEffect
+	call FireSpinEffect
 	waitforvisualfinish
 	stopsound
 	end

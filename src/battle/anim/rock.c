@@ -27,7 +27,7 @@ extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 
 void sub_80DCE9C(struct Sprite *sprite);
 void sub_80DCF60(struct Sprite *sprite);
-void sub_80DCFE4(struct Sprite *sprite);
+void AnimParticleInVortex(struct Sprite *sprite);
 void AnimDirtParticleAcrossScreen(struct Sprite *sprite);
 void AnimRaiseSprite(struct Sprite *sprite);
 void sub_80DD87C(struct Sprite *sprite);
@@ -35,7 +35,7 @@ void sub_80DD8E8(struct Sprite *sprite);
 void sub_80DD978(struct Sprite *sprite);
 void sub_80DD9A4(struct Sprite *sprite);
 static void sub_80DCF1C(struct Sprite *sprite);
-static void sub_80DD02C(struct Sprite *sprite);
+static void AnimParticleInVortex_Step(struct Sprite *sprite);
 static void sub_80DD190(u8 taskId);
 static void sub_80DD604(u8 taskId);
 static void sub_80DD774(struct Task *task);
@@ -98,7 +98,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC7C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DCFE4,
+    .callback = AnimParticleInVortex,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DAC94[] =
@@ -122,10 +122,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACB8 =
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DACB4,
-    .callback = sub_80DCFE4,
+    .callback = AnimParticleInVortex,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACD0 =
+const struct SpriteTemplate gFireSpinSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -133,7 +133,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACD0 =
     .anims = gSpriteAnimTable_83D95E0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DCFE4,
+    .callback = AnimParticleInVortex,
 };
 
 const struct SpriteTemplate gFlyingDirtSpriteTemplate =
@@ -382,9 +382,9 @@ void sub_80DCF60(struct Sprite *sprite)
     StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
 }
 
-void sub_80DCFE4(struct Sprite *sprite)
+void AnimParticleInVortex(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[6] == 0)
+    if (gBattleAnimArgs[6] == ANIM_BATTLER_ATTACKER)
         InitAnimSpritePos(sprite, 0);
     else
         sub_8078764(sprite, FALSE);
@@ -394,10 +394,10 @@ void sub_80DCFE4(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[4];
     sprite->data[3] = gBattleAnimArgs[5];
 
-    sprite->callback = sub_80DD02C;
+    sprite->callback = AnimParticleInVortex_Step;
 }
 
-static void sub_80DD02C(struct Sprite *sprite)
+static void AnimParticleInVortex_Step(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[1];
     sprite->y2 = -(sprite->data[4] >> 8);
