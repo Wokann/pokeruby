@@ -8,53 +8,53 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern u16 gBattleTypeFlags;
 
-void sub_80D3014(struct Sprite *sprite);
+static void AnimGuardRing(struct Sprite *sprite);
 
 // guard (moves guard rings upwards)
 // Used in Safeguard.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7D4C[] =
+const union AffineAnimCmd gGuardRingAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7D5C[] =
+const union AffineAnimCmd gGuardRingAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7D6C[] =
+const union AffineAnimCmd *const gGuardRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7D4C,
-    gSpriteAffineAnim_83D7D5C,
+    gGuardRingAffineAnimCmds1,
+    gGuardRingAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D74 =
+const struct SpriteTemplate gGuardRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GUARD_RING,
     .paletteTag = ANIM_TAG_GUARD_RING,
-    .oam = &gOamData_837E13C,
+    .oam = &gOamData_AffineDouble_ObjBlend_64x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7D6C,
-    .callback = sub_80D3014,
+    .affineAnims = gGuardRingAffineAnimTable,
+    .callback = AnimGuardRing,
 };
 
-void sub_80D3014(struct Sprite *sprite)
+static void AnimGuardRing(struct Sprite *sprite)
 {
-    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
     {
-        SetAverageBattlerPositions(gBattleAnimAttacker, 0, &sprite->x, &sprite->y);
+        SetAverageBattlerPositions(gBattleAnimAttacker, FALSE, &sprite->x, &sprite->y);
         sprite->y += 40;
 
         StartSpriteAffineAnim(sprite, 1);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + 40;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + 40;
     }
 
     sprite->data[0] = 13;

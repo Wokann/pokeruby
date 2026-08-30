@@ -620,7 +620,7 @@ const struct OamData gOamData_837E134 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E13C =
+const struct OamData gOamData_AffineDouble_ObjBlend_64x32 =
 {
     .affineMode = 3,
     .objMode = 1,
