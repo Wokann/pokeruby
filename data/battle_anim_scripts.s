@@ -1516,7 +1516,7 @@ Move_VINE_WHIP: @ 81C9391
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 6
 	delay 6
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D69F4, ANIM_BATTLER_TARGET, 2, 0, 0
+	createsprite gVineWhipSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0
 	delay 6
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 6, 1
 	end

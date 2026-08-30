@@ -49,7 +49,7 @@ const struct SpriteTemplate gSlamHitSpriteTemplate =
     .callback = AnimWhipHit,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69F4 =
+const struct SpriteTemplate gVineWhipSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHIP_HIT,
     .paletteTag = ANIM_TAG_WHIP_HIT,
