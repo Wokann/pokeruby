@@ -36,7 +36,7 @@ void sub_80D9378(struct Sprite *sprite);
 void AnimSpinningKickOrPunch(struct Sprite *sprite);
 void AnimSpinningKickOrPunch(struct Sprite *sprite);
 void AnimStompFoot(struct Sprite *sprite);
-void sub_80D9540(struct Sprite *sprite);
+void AnimDizzyPunchDuck(struct Sprite *sprite);
 void sub_80D95D0(struct Sprite *sprite);
 void sub_80D96B8(struct Sprite *sprite);
 void sub_80D97CC(struct Sprite *sprite);
@@ -238,7 +238,7 @@ const struct SpriteTemplate gStompFootSpriteTemplate =
     .callback = AnimStompFoot,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA088 =
+const struct SpriteTemplate gDizzyPunchDuckSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DUCK,
     .paletteTag = ANIM_TAG_DUCK,
@@ -246,7 +246,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA088 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D9540,
+    .callback = AnimDizzyPunchDuck,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0A0 =
@@ -685,7 +685,7 @@ static void AnimStompFootEnd(struct Sprite *sprite)
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 
-void sub_80D9540(struct Sprite *sprite)
+void AnimDizzyPunchDuck(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {

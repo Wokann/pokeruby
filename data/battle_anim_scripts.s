@@ -1362,32 +1362,32 @@ Move_DIZZY_PUNCH: @ 81C8F5C
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	call _81C9077
+	call DizzyPunchLunge
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 5, 16, 8, 20, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, 16, 0, 1, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, 160, -32
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, -256, -40
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, 128, -16
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, -128, -22
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, 16, 8, -384, -31
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, 160, -32
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, -256, -40
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, 128, -16
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, 416, -38
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, -128, -22
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, 16, 8, -384, -31
 	delay 10
-	call _81C9077
+	call DizzyPunchLunge
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 5, -16, -8, 20, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, -16, -16, 1, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, 160, -32
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, -256, -40
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, 128, -16
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, -128, -22
-	createsprite gBattleAnimSpriteTemplate_83DA088, ANIM_BATTLER_TARGET, 3, -16, -8, -384, -31
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, 160, -32
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, -256, -40
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, 128, -16
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, 416, -38
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, -128, -22
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -8, -384, -31
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	end
-_81C9077:
+DizzyPunchLunge:
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 6
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 7, 1
