@@ -217,8 +217,8 @@ void sub_80DC824(struct Sprite *sprite)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[4];
 
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
@@ -242,8 +242,8 @@ void sub_80DC8F4(struct Sprite *sprite)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[2];
 
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);

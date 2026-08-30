@@ -282,7 +282,7 @@ static void sub_80DDC4C(struct Sprite *sprite)
     if (sprite->data[6] == 0)
     {
         sprite->invisible = TRUE; 
-        sprite->callback = sub_807861C;
+        sprite->callback = DestroyAnimSpriteAndDisableBlend;
     }
     else
         sub_80DDCC8(sprite);

@@ -220,8 +220,8 @@ static void AnimDirtScatter(struct Sprite *sprite)
 
     InitAnimSpritePos(sprite, 1);
 
-    targetXPos = sub_8077EE4(gBattleAnimTarget, 2);
-    targetYPos = sub_8077EE4(gBattleAnimTarget, 3);
+    targetXPos = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X_2);
+    targetYPos = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
     xOffset = Random() & 0x1F;
     yOffset = Random() & 0x1F;

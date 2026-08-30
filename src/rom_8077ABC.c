@@ -327,11 +327,11 @@ u8 GetBattlerSpriteFinal_Y(u8 slot, u16 species, u8 a3)
     return y;
 }
 
-u8 sub_8077EE4(u8 slot, u8 a2)
+u8 GetBattlerSpriteCoord2(u8 battler, u8 coordType)
 {
     u16 species;
-    struct BattleSpriteInfo *transform;
-    if (a2 == 3 || a2 == 4)
+    struct BattleSpriteInfo *spriteInfo;
+    if (coordType == BATTLER_COORD_Y_PIC_OFFSET || coordType == BATTLER_COORD_Y_PIC_OFFSET_DEFAULT)
     {
         if (IsContest())
         {
@@ -342,20 +342,20 @@ u8 sub_8077EE4(u8 slot, u8 a2)
         }
         else
         {
-            transform = &gBattleSpriteInfo[slot];
-            if (!transform->transformSpecies)
-                species = gAnimSpeciesByBanks[slot];
+            spriteInfo = &gBattleSpriteInfo[battler];
+            if (!spriteInfo->transformSpecies)
+                species = gAnimSpeciesByBanks[battler];
             else
-                species = transform->transformSpecies;
+                species = spriteInfo->transformSpecies;
         }
-        if (a2 == 3)
-            return GetBattlerSpriteFinal_Y(slot, species, 1);
+        if (coordType == BATTLER_COORD_Y_PIC_OFFSET)
+            return GetBattlerSpriteFinal_Y(battler, species, TRUE);
         else
-            return GetBattlerSpriteFinal_Y(slot, species, 0);
+            return GetBattlerSpriteFinal_Y(battler, species, FALSE);
     }
     else
     {
-        return GetBattlerSpriteCoord(slot, a2);
+        return GetBattlerSpriteCoord(battler, coordType);
     }
 }
 
@@ -718,7 +718,7 @@ void sub_8078600(struct Sprite *sprite)
         SetCallbackToStoredInData(sprite);
 }
 
-void sub_807861C(struct Sprite *sprite)
+void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
@@ -790,8 +790,8 @@ void sub_8078764(struct Sprite *sprite, bool8 a2)
 {
     if (!a2)
     {
-        sprite->x = sub_8077EE4(gBattleAnimTarget, 0);
-        sprite->y = sub_8077EE4(gBattleAnimTarget, 1);
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y);
     }
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
@@ -801,13 +801,13 @@ void InitAnimSpritePos(struct Sprite *sprite, u8 a2)
 {
     if (!a2)
     {
-        sprite->x = sub_8077EE4(gBattleAnimAttacker, 0);
-        sprite->y = sub_8077EE4(gBattleAnimAttacker, 1);
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y);
     }
     else
     {
-        sprite->x = sub_8077EE4(gBattleAnimAttacker, 2);
-        sprite->y = sub_8077EE4(gBattleAnimAttacker, 3);
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     }
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];

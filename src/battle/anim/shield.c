@@ -9,13 +9,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CCD24(struct Sprite* sprite);
-static void sub_80CCE0C(struct Sprite* sprite);
+void AnimProtect(struct Sprite* sprite);
+static void AnimProtect_Step(struct Sprite* sprite);
 
 // shield
 // Used by Protect.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6BE8 =
+const struct SpriteTemplate gProtectSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PROTECT,
     .paletteTag = ANIM_TAG_PROTECT,
@@ -23,34 +23,34 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6BE8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CCD24,
+    .callback = AnimProtect,
 };
 
-void sub_80CCD24(struct Sprite* sprite)
+void AnimProtect(struct Sprite* sprite)
 {
-    if (IsContest() != 0)
+    if (IsContest())
     {
         gBattleAnimArgs[1] += 8;
     }
 
-    sprite->x = sub_8077EE4(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
-    sprite->y = sub_8077EE4(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
     if (GetBattlerSide(gBattleAnimAttacker) == 0 || IsContest())
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker) + 1;
     else
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
 
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[2] = (IndexOfSpritePaletteTag(0x2828) << 4) + 0x100;
+    sprite->data[2] = (IndexOfSpritePaletteTag(ANIM_TAG_PROTECT) << 4) + 0x100;
     sprite->data[7] = 16;
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = (sprite->data[7] << 8) | (16 - sprite->data[7]);
-    sprite->callback = sub_80CCE0C;
+    sprite->callback = AnimProtect_Step;
 }
 
-static void sub_80CCE0C(struct Sprite* sprite)
+static void AnimProtect_Step(struct Sprite* sprite)
 {
-    int a;
+    int savedPal;
     int i;
     sprite->data[5] += 0x60;
     sprite->x2 = -(sprite->data[5] >> 8);
@@ -58,14 +58,14 @@ static void sub_80CCE0C(struct Sprite* sprite)
     if (sprite->data[1] > 1)
     {
         sprite->data[1] = 0;
-        a = gPlttBufferFaded[sprite->data[2] + 1];
+        savedPal = gPlttBufferFaded[sprite->data[2] + 1];
         i = 0;
         do
         {
             gPlttBufferFaded[sprite->data[2] + ++i] = gPlttBufferFaded[sprite->data[2] + i + 1];
         } while ( i <= 5 );
 
-        gPlttBufferFaded[sprite->data[2] + 7] = a;
+        gPlttBufferFaded[sprite->data[2] + 7] = savedPal;
     }
 
     if (sprite->data[7] > 6 && sprite->data[0] >0 && ++sprite->data[6] > 1)
@@ -87,7 +87,7 @@ static void sub_80CCE0C(struct Sprite* sprite)
         if (sprite->data[7] == 16)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_807861C;
+            sprite->callback = DestroyAnimSpriteAndDisableBlend;
         }
     }
 }
