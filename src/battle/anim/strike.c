@@ -14,7 +14,7 @@ static void sub_80CE798(struct Sprite* sprite);
 // strike (A red strike towards the opponent.)
 // Used in Horn Attack, Fury Attack, and Horn Drill.
 
-const union AnimCmd gSpriteAnim_83D7010[] =
+const union AnimCmd gHealingBlueStarAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(16, 2),
@@ -27,17 +27,17 @@ const union AnimCmd gSpriteAnim_83D7010[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7034[] =
+const union AnimCmd *const gHealingBlueStarAnimTable[] =
 {
-    gSpriteAnim_83D7010,
+    gHealingBlueStarAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7038 =
+const struct SpriteTemplate gHealingBlueStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_STAR,
     .paletteTag = ANIM_TAG_BLUE_STAR,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7034,
+    .anims = gHealingBlueStarAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,

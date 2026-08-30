@@ -7,12 +7,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CBAA4(struct Sprite* sprite);
+void AnimPresentHealParticle(struct Sprite* sprite);
 
 // heal (healing sparkles on a Pokemon)
 // Used in Present, if the move heals instead of damages.
 
-const union AnimCmd gSpriteAnim_83D674C[] =
+const union AnimCmd gPresentHealParticleAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(4, 4),
@@ -21,23 +21,23 @@ const union AnimCmd gSpriteAnim_83D674C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6760[] =
+const union AnimCmd *const gPresentHealParticleAnimTable[] =
 {
-    gSpriteAnim_83D674C,
+    gPresentHealParticleAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6764 =
+const struct SpriteTemplate gPresentHealParticleSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_SPARKLE_5,
-    .paletteTag = ANIM_TAG_SPARKLE_5,
+    .tileTag = ANIM_TAG_GREEN_SPARKLE,
+    .paletteTag = ANIM_TAG_GREEN_SPARKLE,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6760,
+    .anims = gPresentHealParticleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CBAA4,
+    .callback = AnimPresentHealParticle,
 };
 
-void sub_80CBAA4(struct Sprite* sprite)
+void AnimPresentHealParticle(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {

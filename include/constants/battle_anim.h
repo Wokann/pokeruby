@@ -205,7 +205,7 @@
 #define ANIM_TAG_FANG_ATTACK                (ANIM_SPRITES_START + 192) 
 #define ANIM_TAG_PURPLE_HAND_OUTLINE        (ANIM_SPRITES_START + 193) 
 #define ANIM_TAG_MOON                       (ANIM_SPRITES_START + 194) 
-#define ANIM_TAG_SPARKLE_5                  (ANIM_SPRITES_START + 195) 
+#define ANIM_TAG_GREEN_SPARKLE              (ANIM_SPRITES_START + 195)
 #define ANIM_TAG_SPIRAL                     (ANIM_SPRITES_START + 196) 
 #define ANIM_TAG_SNORE_Z                    (ANIM_SPRITES_START + 197) 
 #define ANIM_TAG_EXPLOSION                  (ANIM_SPRITES_START + 198) 

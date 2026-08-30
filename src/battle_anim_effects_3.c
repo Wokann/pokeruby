@@ -1537,12 +1537,12 @@ void AnimTask_IsTargetPlayerSide(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_812C960(u8 taskId)
+void AnimTask_IsHealingMove(u8 taskId)
 {
     if (gAnimMoveDmg > 0)
-        gBattleAnimArgs[7] = 0;
+        gBattleAnimArgs[ARG_RET_ID] = FALSE;
     else
-        gBattleAnimArgs[7] = 1;
+        gBattleAnimArgs[ARG_RET_ID] = TRUE;
 
     DestroyAnimVisualTask(taskId);
 }

@@ -7,9 +7,9 @@
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern const union AffineAnimCmd gSpriteAffineAnim_83D66BC[];
-extern const union AffineAnimCmd gSpriteAffineAnim_83D66DC[];
-extern const union AnimCmd *const gSpriteAnimTable_83D66B8[];
+extern const union AffineAnimCmd gFallingBagAffineAnimCmds1[];
+extern const union AffineAnimCmd gFallingBagAffineAnimCmds2[];
+extern const union AnimCmd *const gFallingBagAnimTable[];
 
 void sub_80CBBF0(struct Sprite* sprite);
 static void sub_80CBC8C(struct Sprite* sprite);
@@ -39,8 +39,8 @@ const union AffineAnimCmd gSpriteAffineAnim_83D67A4[] = {
 const union AffineAnimCmd *const gSpriteAffineAnimTable_83D67E4[] = {
     gSpriteAffineAnim_83D6794,
     gSpriteAffineAnim_83D67A4,
-    gSpriteAffineAnim_83D66BC,
-    gSpriteAffineAnim_83D66DC,
+    gFallingBagAffineAnimCmds1,
+    gFallingBagAffineAnimCmds2,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D67F4 =
@@ -48,7 +48,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D67F4 =
     .tileTag = ANIM_TAG_ITEM_BAG,
     .paletteTag = ANIM_TAG_ITEM_BAG,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D66B8,
+    .anims = gFallingBagAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D67E4,
     .callback = sub_80CBBF0,
