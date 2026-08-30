@@ -401,7 +401,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840238C =
 {
     .tileTag = ANIM_TAG_SPOTLIGHT,
     .paletteTag = ANIM_TAG_SPOTLIGHT,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402384,
@@ -491,7 +491,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402458 =
 {
     .tileTag = ANIM_TAG_TRI_FORCE_TRIANGLE,
     .paletteTag = ANIM_TAG_TRI_FORCE_TRIANGLE,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gSpriteAnimTable_8402428,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402454,
@@ -781,7 +781,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402720 =
 {
     .tileTag = ANIM_TAG_SPOTLIGHT,
     .paletteTag = ANIM_TAG_SPOTLIGHT,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402384,

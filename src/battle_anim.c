@@ -260,7 +260,7 @@ const struct OamData gOamData_837DFF4 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837DFFC =
+const struct OamData gOamData_AffineDouble_ObjNormal_64x64 =
 {
     .affineMode = 3,
     .objMode = 0,
@@ -1166,7 +1166,7 @@ const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
     { gBattleAnimSpritePalette_203, ANIM_TAG_THIN_RING },
     { gBattleAnimSpritePalette_204, ANIM_TAG_UNUSED_PUNCH_IMPACT },
     { gBattleAnimSpritePalette_205, ANIM_TAG_BELL },
-    { gBattleAnimSpritePalette_206, ANIM_TAG_MUSIC_NOTES_2 },
+    { gBattleAnimSpritePal_MusicNotes2, ANIM_TAG_MUSIC_NOTES_2 },
     { gBattleAnimSpritePalette_207, ANIM_TAG_SPEED_DUST },
     { gBattleAnimSpritePalette_167, ANIM_TAG_TORN_METAL },
     { gBattleAnimSpritePalette_209, ANIM_TAG_THOUGHT_BUBBLE },

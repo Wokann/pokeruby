@@ -12,11 +12,11 @@ extern u8 gBattleAnimTarget;
 
 extern u8 gBattlerSpriteIds[];
 
-void sub_80D0FD8(struct Sprite* sprite);
-void sub_80D10B8(struct Sprite* sprite);
-void sub_80D1318(struct Sprite* sprite);
+static void AnimBlendThinRing(struct Sprite* sprite);
+static void AnimHyperVoiceRing(struct Sprite* sprite);
+static void AnimUproarRing(struct Sprite* sprite);
 void sub_80D1368(struct Sprite* sprite);
-static void sub_80D1098(struct Sprite* sprite);
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite* sprite);
 static void sub_80D13AC(struct Sprite* sprite);
 static void sub_80D1424(struct Sprite* sprite);
 static void sub_80D144C(struct Sprite* sprite);
@@ -108,106 +108,106 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D78BC =
     .callback = sub_80D1368,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D78D4[] =
+const union AffineAnimCmd gThinRingExpandingAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 30),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D78EC[] =
+const union AffineAnimCmd gThinRingExpandingAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 15),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7904[] =
+const union AffineAnimCmd gHyperVoiceRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0xB, 0xB, 0, 45),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D791C[] =
+const union AffineAnimCmd *const gThinRingExpandingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D78D4,
-    gSpriteAffineAnim_83D78EC,
+    gThinRingExpandingAffineAnimCmds1,
+    gThinRingExpandingAffineAnimCmds2,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7924[] =
+const union AffineAnimCmd *const gHyperVoiceRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7904,
+    gHyperVoiceRingAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7928 =
+const struct SpriteTemplate gThinRingExpandingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7940[] =
+const union AffineAnimCmd gThinRingShrinkingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF0, 0xFFF0, 0, 30),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7958[] =
+const union AffineAnimCmd *const gThinRingShrinkingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7940,
+    gThinRingShrinkingAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D795C =
+const struct SpriteTemplate gThinRingShrinkingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7958,
+    .affineAnims = gThinRingShrinkingAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7974 =
+const struct SpriteTemplate gBlendThinRingExpandingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
-    .callback = sub_80D0FD8,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
+    .callback = AnimBlendThinRing,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D798C =
+const struct SpriteTemplate gHyperVoiceRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7924,
-    .callback = sub_80D10B8,
+    .affineAnims = gHyperVoiceRingAffineAnimTable,
+    .callback = AnimHyperVoiceRing,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D79A4 =
+const struct SpriteTemplate gUproarRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THIN_RING,
     .paletteTag = ANIM_TAG_THIN_RING,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D791C,
-    .callback = sub_80D1318,
+    .affineAnims = gThinRingExpandingAffineAnimTable,
+    .callback = AnimUproarRing,
 };
 
-void sub_80D0FD8(struct Sprite* sprite)
+static void AnimBlendThinRing(struct Sprite* sprite)
 {
     u8 bank = 0;
     u16 sp0 = 0;
@@ -238,7 +238,7 @@ void sub_80D0FD8(struct Sprite* sprite)
     AnimSpriteOnMonPos(sprite);
 }
 
-void sub_80D1098(struct Sprite* sprite)
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite* sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -247,7 +247,7 @@ void sub_80D1098(struct Sprite* sprite)
     }
 }
 
-void sub_80D10B8(struct Sprite* sprite)
+static void AnimHyperVoiceRing(struct Sprite* sprite)
 {
     u16 r9 = 0;
     u16 r6 = 0;
@@ -328,11 +328,11 @@ void sub_80D10B8(struct Sprite* sprite)
     sprite->data[4] = sp1;
     sprite->data[0] = gBattleAnimArgs[0];
     InitAnimLinearTranslation(sprite);
-    sprite->callback = sub_80D1098;
-    sub_80D1098(sprite);
+    sprite->callback = AnimHyperVoiceRing_WaitEnd;
+    AnimHyperVoiceRing_WaitEnd(sprite);
 }
 
-void sub_80D1318(struct Sprite* sprite)
+static void AnimUproarRing(struct Sprite* sprite)
 {
     u8 index = IndexOfSpritePaletteTag(0x27DB);
     if (index != 0xFF)

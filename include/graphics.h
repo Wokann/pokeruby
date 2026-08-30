@@ -3234,7 +3234,7 @@ extern const u8 gBattleAnimSpritePalette_202[];
 extern const u8 gBattleAnimSpritePalette_203[];
 extern const u8 gBattleAnimSpritePalette_204[];
 extern const u8 gBattleAnimSpritePalette_205[];
-extern const u8 gBattleAnimSpritePalette_206[];
+extern const u8 gBattleAnimSpritePal_MusicNotes2[];
 extern const u8 gBattleAnimSpritePalette_207[];
 extern const u8 gBattleAnimSpritePalette_209[];
 extern const u8 gBattleAnimSpritePalette_210[];

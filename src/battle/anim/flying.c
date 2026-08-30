@@ -142,7 +142,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA450 =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA424,
@@ -258,7 +258,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA568 =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA564,
@@ -280,7 +280,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA594 =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA590,
@@ -305,7 +305,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA5D8 =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA5D4,
@@ -329,7 +329,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA614 =
 {
     .tileTag = ANIM_TAG_SPLASH,
     .paletteTag = ANIM_TAG_SPLASH,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -362,7 +362,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
 {
     .tileTag = ANIM_TAG_BIRD,
     .paletteTag = ANIM_TAG_BIRD,
-    .oam = &gOamData_837DFFC,
+    .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -963,7 +963,7 @@ void AnimTask_BlendBattleAnimPal(u8 taskId)
     AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
 }
 
-void sub_80E2A7C(u8 taskId)
+void AnimTask_BlendBattleAnimPalExclude(u8 taskId)
 {
     u8 battler;
     u32 selectedPalettes;

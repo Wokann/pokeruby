@@ -8,13 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CD140(struct Sprite* sprite);
-void sub_80CD190(struct Sprite* sprite);
+static void AnimGrantingStars(struct Sprite* sprite);
+static void AnimSparklingStars(struct Sprite* sprite);
 
 // glitter (the sparkling effect seen on Pokemon, usually after healing or a beneficial effect.)
 // Used by Heal Bell, Cosmic Power, and Aromatherapy.
 
-const union AnimCmd gSpriteAnim_83D6C60[] =
+const union AnimCmd gGrantingStarsAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 7),
     ANIMCMD_FRAME(16, 7),
@@ -27,34 +27,34 @@ const union AnimCmd gSpriteAnim_83D6C60[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6C84[] =
+const union AnimCmd *const gGrantingStarsAnimTable[] =
 {
-    gSpriteAnim_83D6C60,
+    gGrantingStarsAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6C88 =
-{
-    .tileTag = ANIM_TAG_SPARKLE_2,
-    .paletteTag = ANIM_TAG_SPARKLE_2,
-    .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D6C84,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD140,
-};
-
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6CA0 =
+const struct SpriteTemplate gGrantingStarsSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_2,
     .paletteTag = ANIM_TAG_SPARKLE_2,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D6C84,
+    .anims = gGrantingStarsAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD190,
+    .callback = AnimGrantingStars,
 };
 
-void sub_80CD140(struct Sprite* sprite)
+const struct SpriteTemplate gSparklingStarsSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SPARKLE_2,
+    .paletteTag = ANIM_TAG_SPARKLE_2,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gGrantingStarsAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSparklingStars,
+};
+
+static void AnimGrantingStars(struct Sprite* sprite)
 {
     if (!gBattleAnimArgs[2])
         SetSpriteCoordsToAnimAttackerCoords(sprite);
@@ -68,7 +68,7 @@ void sub_80CD140(struct Sprite* sprite)
     sprite->callback = sub_8078394;
 }
 
-void sub_80CD190(struct Sprite* sprite)
+static void AnimSparklingStars(struct Sprite* sprite)
 {
     u8 bank;
     if (!gBattleAnimArgs[2])
