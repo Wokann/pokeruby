@@ -17,20 +17,20 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern u16 gBattlerPartyIndexes[];
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8;
+extern const struct SpriteTemplate gWaterHitSplatSpriteTemplate;
 
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA318[];
-extern const union AnimCmd *const gSpriteAnimTable_83D9BC8[];
+extern const union AnimCmd *const gAnims_SmallBubblePair[];
 
 void PrepareBattlerSpriteForRotScale(u8, u8);
 void sub_8078F40(u8);
 void sub_8079A64(u8);
 void sub_80D37FC(struct Sprite *sprite);
-void sub_80D3838(struct Sprite *sprite);
+void AnimSmallBubblePair(struct Sprite *sprite);
 void sub_80D3B60(u8 taskId);
 void sub_80D3D68(u8 taskId);
-void sub_80D4044(struct Sprite *sprite);
-void sub_80D40A8(struct Sprite *);
+void AnimSmallDriftingBubbles(struct Sprite *sprite);
+void AnimSmallDriftingBubbles_Step(struct Sprite *);
 void sub_80D4150(u8);
 u8 sub_80D4394(void);
 void sub_80D4418(struct Task *, u8);
@@ -49,7 +49,7 @@ void sub_80D4CEC(struct Sprite *);
 void sub_80D4C64(struct Sprite *sprite);
 void sub_80D4D64(struct Sprite*, s32, s32);
 void sub_80E1864(u8);
-static void sub_80D3874(struct Sprite *sprite);
+static void AnimSmallBubblePair_Step(struct Sprite *sprite);
 
 const union AnimCmd gSpriteAnim_83D9300[] =
 {
@@ -95,18 +95,18 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9330 =
     .callback = sub_80D37FC,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9348 =
+const struct SpriteTemplate gSmallBubblePairSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_837DF24,
-    .anims = gSpriteAnimTable_83D9BC8,
+    .anims = gAnims_SmallBubblePair,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D3838,
+    .callback = AnimSmallBubblePair,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9360 =
+const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
@@ -114,7 +114,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9360 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D4044,
+    .callback = AnimSmallDriftingBubbles,
 };
 
 const struct SpriteTemplate gSpriteTemplate_83D9378 =
@@ -234,9 +234,9 @@ void sub_80D37FC(struct Sprite *sprite)
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 
-void sub_80D3838(struct Sprite *sprite)
+void AnimSmallBubblePair(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[3] != 0)
+    if (gBattleAnimArgs[3] != ANIM_BATTLER_ATTACKER)
     {
         sub_8078764(sprite, TRUE);
     }
@@ -246,10 +246,10 @@ void sub_80D3838(struct Sprite *sprite)
     }
 
     sprite->data[7] = gBattleAnimArgs[2];
-    sprite->callback = sub_80D3874;
+    sprite->callback = AnimSmallBubblePair_Step;
 }
 
-static void sub_80D3874(struct Sprite *sprite)
+static void AnimSmallBubblePair_Step(struct Sprite *sprite)
 {
     sprite->data[0] = (sprite->data[0] + 11) & 0xFF;
     sprite->x2 = Sin(sprite->data[0], 4);
@@ -498,7 +498,7 @@ void sub_80D3D68(u8 taskId)
     }
 }
 
-void sub_80D4044(struct Sprite *sprite)
+void AnimSmallDriftingBubbles(struct Sprite *sprite)
 {
     s16 randData;
     s16 randData2;
@@ -511,10 +511,10 @@ void sub_80D4044(struct Sprite *sprite)
         randData2 = 256 - randData2;
     sprite->data[1] = randData;
     sprite->data[2] = randData2;
-    sprite->callback = sub_80D40A8;
+    sprite->callback = AnimSmallDriftingBubbles_Step;
 }
 
-void sub_80D40A8(struct Sprite *sprite)
+void AnimSmallDriftingBubbles_Step(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
@@ -800,7 +800,7 @@ void sub_80D47D0(struct Sprite *sprite)
         if (sprite->y >= sprite->data[5])
         {
             gTasks[sprite->data[6]].data[10] = 1;
-            sprite->data[1] = CreateSprite(&gBattleAnimSpriteTemplate_83DB4D8, sprite->x, sprite->y, 1);
+            sprite->data[1] = CreateSprite(&gWaterHitSplatSpriteTemplate, sprite->x, sprite->y, 1);
             if (sprite->data[1] != MAX_SPRITES)
             {
                 StartSpriteAffineAnim(&gSprites[sprite->data[1]], 3);

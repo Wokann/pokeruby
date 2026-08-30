@@ -1546,78 +1546,78 @@ Move_WATERFALL: @ 81C9421
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 23, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 23, 1
 	delay 5
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 10, 10, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -15, 0, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 0, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 20, 10, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 10, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 0, -10, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -10, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -10, 15, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, 15, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 25, 20, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 25, 20, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -20, 20, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -20, 20, 25, ANIM_BATTLER_ATTACKER
 	delay 4
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 12, 0, 25, 0
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 12, 0, 25, ANIM_BATTLER_ATTACKER
 	waitforvisualfinish
 	delay 10
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 5
 	delay 6
-	call _81C9502
+	call RisingWaterHitEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81C9502:
+RisingWaterHitEffect:
 	playsewithpan SE_M_WATERFALL, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 4, 0, 17, 1
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, 20, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 20
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 20
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 4, 0, 17, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 20, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 20
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, 15, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 15
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 15
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 15, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 15
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, 10, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 10
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 10, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 10
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, 5, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 5
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 5
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 5
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 5
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, -5, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -5
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -5
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -5, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -5
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -5
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, -10, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -10
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -10
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -10, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -10
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, -15, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -15
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -15
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -15, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -15
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 3, 0, -20, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -20
-	createsprite gBattleAnimSpriteTemplate_83D9360, ANIM_BATTLER_ATTACKER, 4, 0, -20
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -20, ANIM_BATTLER_TARGET, 1
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -20
+	createsprite gSmallDriftingBubblesSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -20
 	return
 
 Move_EXPLOSION: @ 81C9675
@@ -5652,8 +5652,8 @@ _81CF2DF:
 	delay 1
 	return
 _81CF320:
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 4, 0, 15, 1, 1
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 4, 0, -15, 1, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 15, 1, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -15, 1, 1
 	return
 
 Move_SIGNAL_BEAM: @ 81CF33F
@@ -6246,7 +6246,7 @@ Move_WATER_GUN: @ 81D00CC
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 1, 0, 8, 1
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 2
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 2
 	createsprite gBattleAnimSpriteTemplate_83D9330, ANIM_BATTLER_ATTACKER, 2, 0, -15, 0, 15, 55
 	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET
 	delay 10
@@ -6265,7 +6265,7 @@ Move_CRABHAMMER: @ 81D0159
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 32429, 10, 0, 0
@@ -6277,21 +6277,21 @@ Move_CRABHAMMER: @ 81D0159
 	waitforvisualfinish
 	loopsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET, 20, 3
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 4, 8, 1
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 10, 10, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 20, -20, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -20, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -15, 15, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 15, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -10, -20, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -20, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 16, -8, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, -8, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, 5, 8, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 8, 20, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9348, ANIM_BATTLER_ATTACKER, 2, -16, 0, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 0, 20, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
@@ -9216,7 +9216,7 @@ _81D4A09:
 	call _81D4A48
 	call _81D4A48
 	delay 12
-	call _81C9502
+	call RisingWaterHitEffect
 	waitforvisualfinish
 	visible ANIM_BATTLER_ATTACKER
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -9335,17 +9335,17 @@ Move_HYDRO_CANNON: @ 81D4DDE
 	panse_1B SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	call _81D4EA8
 	createvisualtask AnimTask_ShakeMon, 5, 1, 10, 0, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	call _81D4EA8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	call _81D4EA8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	call _81D4EA8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	call _81D4EA8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	call _81D4EA8
-	createsprite gBattleAnimSpriteTemplate_83DB4D8, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
 	waitforvisualfinish
 	createvisualtask sub_80E2324, 2, 257, 257, 257
 	waitforvisualfinish

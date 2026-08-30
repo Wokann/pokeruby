@@ -118,7 +118,7 @@ const union AnimCmd gSpriteAnim_83D9BA0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9BA8[] =
+const union AnimCmd sAnim_SmallBubblePair[] =
 {
     ANIMCMD_FRAME(12, 6),
     ANIMCMD_FRAME(13, 6),
@@ -150,9 +150,9 @@ const union AnimCmd *const gSpriteAnimTable_83D9BC4[] =
     gSpriteAnim_83D9BA0,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9BC8[] =
+const union AnimCmd *const gAnims_SmallBubblePair[] =
 {
-    gSpriteAnim_83D9BA8,
+    sAnim_SmallBubblePair,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83D9BCC[] =

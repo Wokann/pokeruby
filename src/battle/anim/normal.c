@@ -234,7 +234,7 @@ const struct SpriteTemplate gHandleInvertHitSplatSpriteTemplate =
     .callback = AnimHitSplatHandleInvert,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4D8 =
+const struct SpriteTemplate gWaterHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_IMPACT,
     .paletteTag = ANIM_TAG_WATER_IMPACT,
