@@ -3,102 +3,103 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CFE9C(struct Sprite* sprite);
-void sub_80CFF50(struct Sprite* sprite);
-static void sub_80CFF68(struct Sprite* sprite);
+static void AnimCoinThrow(struct Sprite *sprite);
+static void AnimFallingCoin(struct Sprite *sprite);
+static void AnimFallingCoin_Step(struct Sprite *sprite);
 
 // money
 // Used by Pay Day.
 
-const union AnimCmd gSpriteAnim_83D75C4[] =
+const union AnimCmd gCoinAnimCmds[] =
 {
     ANIMCMD_FRAME(8, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D75CC[] =
+const union AnimCmd *const gCoinAnimTable[] =
 {
-    gSpriteAnim_83D75C4,
+    gCoinAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D75D0[] =
+const union AffineAnimCmd gFallingCoinAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D75E0[] =
+const union AffineAnimCmd *const gFallingCoinAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D75D0,
+    gFallingCoinAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75E4 =
+const struct SpriteTemplate gCoinThrowSpriteTemplate =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
-    .oam = &gOamData_837DF8C,
-    .anims = gSpriteAnimTable_83D75CC,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gCoinAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CFE9C,
+    .callback = AnimCoinThrow,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D75FC =
+const struct SpriteTemplate gFallingCoinSpriteTemplate =
 {
     .tileTag = ANIM_TAG_COIN,
     .paletteTag = ANIM_TAG_COIN,
-    .oam = &gOamData_837DF8C,
-    .anims = gSpriteAnimTable_83D75CC,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gCoinAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D75E0,
-    .callback = sub_80CFF50,
+    .affineAnims = gFallingCoinAffineAnimTable,
+    .callback = AnimFallingCoin,
 };
 
-void sub_80CFE9C(struct Sprite* sprite)
+static void AnimCoinThrow(struct Sprite *sprite)
 {
-    s16 r6;
-    s16 r7;
-    u16 var;
+    s16 targetX;
+    s16 targetY;
+    u16 angle;
 
-    InitAnimSpritePos(sprite, 1);
-    r6 = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    r7 = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    r6 += gBattleAnimArgs[2];
-    var = ArcTan2Neg(r6 - sprite->x, r7 - sprite->y);
-    var += 0xC000;
-    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, var);
+    targetX += gBattleAnimArgs[2];
+    angle = ArcTan2Neg(targetX - sprite->x, targetY - sprite->y);
+    angle += 0xC000;
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, angle);
     sprite->data[0] = gBattleAnimArgs[4];
-    sprite->data[2] = r6;
-    sprite->data[4] = r7;
-    sprite->callback = sub_8078C00;
+    sprite->data[2] = targetX;
+    sprite->data[4] = targetY;
+    sprite->callback = InitAnimLinearTranslationWithSpeedAndPos;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80CFF50(struct Sprite* sprite)
+static void AnimFallingCoin(struct Sprite *sprite)
 {
     sprite->data[2] = -16;
     sprite->y += 8;
-    sprite->callback = sub_80CFF68;
+    sprite->callback = AnimFallingCoin_Step;
 }
 
-static void sub_80CFF68(struct Sprite* sprite)
+static void AnimFallingCoin_Step(struct Sprite *sprite)
 {
     sprite->data[0] += 0x80;
     sprite->x2 = sprite->data[0] >> 8;
-    if (GetBattlerSide(gBattleAnimAttacker) == 0)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
         sprite->x2 = -sprite->x2;
 
     sprite->y2 = Sin(sprite->data[1], sprite->data[2]);
     sprite->data[1] += 5;
-    if (sprite->data[1] > 0x7E)
+    if (sprite->data[1] > 126)
     {
         sprite->data[1] = 0;
         sprite->data[2] /= 2;

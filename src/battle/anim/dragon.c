@@ -260,7 +260,7 @@ void sub_80DF6F0(struct Sprite *sprite)
         sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
     }
-    sub_807867C(sprite, gBattleAnimArgs[1]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[1]);
     sprite->y += gBattleAnimArgs[2];
     sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);

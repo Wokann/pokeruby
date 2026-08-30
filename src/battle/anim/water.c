@@ -215,7 +215,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9438 =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D93B0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9404,
@@ -242,7 +242,7 @@ void AnimSmallBubblePair(struct Sprite *sprite)
     }
     else
     {
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     }
 
     sprite->data[7] = gBattleAnimArgs[2];
@@ -1004,7 +1004,7 @@ void sub_80D4C64(struct Sprite *sprite)
 
 void sub_80D4CA4(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, TRUE);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     sprite->data[3] = gBattleAnimArgs[2];

@@ -435,7 +435,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA214 =
 
 void sub_080B08A0(struct Sprite *sprite)
 {
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = 15;
     sprite->callback = WaitAnimForDuration;
@@ -478,7 +478,7 @@ void AnimBasicFistOrFoot(struct Sprite *sprite)
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
 
     if (gBattleAnimArgs[3] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 
@@ -984,7 +984,7 @@ void sub_80D9B48(struct Sprite *sprite)
 void sub_80D9BD4(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     else
         sub_8078764(sprite, FALSE);
 

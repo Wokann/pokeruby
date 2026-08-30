@@ -87,7 +87,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB10 =
 {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DAB04,
@@ -143,7 +143,7 @@ const struct SpriteTemplate gLinearStingerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -154,7 +154,7 @@ const struct SpriteTemplate gPinMissileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -260,7 +260,7 @@ void sub_80DC9A0(struct Sprite *sprite)
     if (IsContest())
         gBattleAnimArgs[2] /= 2;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
@@ -275,7 +275,7 @@ void sub_80DC9A0(struct Sprite *sprite)
         SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->data[2], &sprite->data[4]);
     }
 
-    sub_8078BD4(sprite);
+    InitAnimLinearTranslationWithSpeed(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
     sprite->callback = sub_80DCA38;
 }
@@ -402,7 +402,7 @@ void AnimTranslateStinger(struct Sprite *sprite)
         }
     }
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     lVarX = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     lVarY = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
@@ -429,7 +429,7 @@ void AnimTranslateStinger(struct Sprite *sprite)
 // arg 5: wave amplitude
 void AnimMissileArc(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     if (GetBattlerSide(gBattleAnimAttacker))
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];

@@ -126,6 +126,6 @@ void AnimWhipHit(struct Sprite* sprite)
         StartSpriteAnim(sprite, 1);
 
     sprite->callback = AnimWhipHit_WaitEnd;
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
 }

@@ -30,7 +30,7 @@ const struct SpriteTemplate gAngerMarkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ANGER,
     .paletteTag = ANIM_TAG_ANGER,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gAngerMarkAffineAnimTable,

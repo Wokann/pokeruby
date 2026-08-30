@@ -437,7 +437,7 @@ const struct SpriteTemplate gHailSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E2C,
@@ -448,7 +448,7 @@ const struct SpriteTemplate gWeatherBallHailSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E38,
@@ -617,7 +617,7 @@ static void AnimIcePunchSwirlingParticle(struct Sprite *sprite)
 // arg 4: duration
 static void AnimIceBeamParticle(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
@@ -676,7 +676,7 @@ static void AnimSwirlingSnowball_Step1(struct Sprite *sprite)
     int i;
     s16 tempDataHolder[8];
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
@@ -796,7 +796,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
     int i;
     s16 tempDataHolder[8];
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
@@ -914,7 +914,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[5] == 0)
         {
-            InitAnimSpritePos(sprite, 0);
+            InitSpritePosToAnimAttacker(sprite, 0);
         }
         else
         {
@@ -1329,7 +1329,7 @@ static void sub_80D8874(struct Sprite *sprite)
 
             sprite->data[7]++;
             sprite->x2 = sprite->y2 = 0;
-            sub_8078BD4(sprite);
+            InitAnimLinearTranslationWithSpeed(sprite);
         }
         break;
     case 2:
@@ -1518,7 +1518,7 @@ static void InitIceBallAnim(struct Sprite *sprite)
         animNum = 4;
 
     StartSpriteAffineAnim(sprite, animNum);
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[4];
 

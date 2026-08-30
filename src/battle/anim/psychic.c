@@ -358,7 +358,7 @@ const struct SpriteTemplate gSpriteTemplate_83DA9AC =
 {
     .tileTag = ANIM_TAG_BLUEGREEN_ORB,
     .paletteTag = ANIM_TAG_BLUEGREEN_ORB,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA99C,
@@ -582,7 +582,7 @@ void sub_80DBA4C(struct Sprite *sprite)
         else
         {
             if (gBattleAnimArgs[2] == 0)
-                InitAnimSpritePos(sprite, var0);
+                InitSpritePosToAnimAttacker(sprite, var0);
             else
                 sub_8078764(sprite, var0);
         }

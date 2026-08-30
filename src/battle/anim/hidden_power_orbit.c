@@ -29,7 +29,7 @@ const struct SpriteTemplate gHiddenPowerOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RED_ORB,
     .paletteTag = ANIM_TAG_RED_ORB,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7B10,

@@ -134,7 +134,7 @@ const struct OamData gOamData_837DF84 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837DF8C =
+const struct OamData gOamData_AffineNormal_ObjNormal_16x16 =
 {
     .affineMode = 1,
     .objMode = 0,

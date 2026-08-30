@@ -40,7 +40,7 @@ const struct SpriteTemplate gSwordsDanceBladeSpriteTemplate =
 
 void AnimSwordsDanceBlade(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, 0);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, AnimSwordsDanceBlade_Step);
 }

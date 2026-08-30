@@ -68,7 +68,7 @@ void sub_80D5B0C(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         StartSpriteAnim(sprite, gBattleAnimArgs[2]);
         sprite->data[7] = gBattleAnimArgs[2];
 
@@ -121,7 +121,7 @@ void sub_80D5B0C(struct Sprite *sprite)
             sprite->data[3] = sprite->y;
             sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
-            sub_8078BD4(sprite);
+            InitAnimLinearTranslationWithSpeed(sprite);
             sprite->callback = sub_80D5C5C;
         }
         break;

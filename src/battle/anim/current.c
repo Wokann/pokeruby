@@ -53,7 +53,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D98A0 =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D989C,
@@ -101,7 +101,7 @@ const struct SpriteTemplate gSparkElectricityFlashingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D989C,
@@ -358,7 +358,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9B40 =
 
 void sub_80D648C(struct Sprite *sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;

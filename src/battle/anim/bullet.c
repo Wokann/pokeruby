@@ -31,7 +31,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7628 =
 {
     .tileTag = ANIM_TAG_SEED,
     .paletteTag = ANIM_TAG_SEED,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7624,
@@ -40,7 +40,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7628 =
 
 void sub_80CFFD8(struct Sprite* sprite)
 {
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = 20;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);

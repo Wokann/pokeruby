@@ -128,7 +128,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA2E8 =
 {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA27C,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA2B4,
@@ -174,7 +174,7 @@ const struct SpriteTemplate gPoisonBubbleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
-    .oam = &gOamData_837DF8C,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA274,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA34C,
@@ -197,7 +197,7 @@ void sub_80D9D70(struct Sprite *sprite)
     if (!gBattleAnimArgs[3])
         StartSpriteAnim(sprite, 2);
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -221,7 +221,7 @@ void sub_80D9DF0(struct Sprite *sprite)
     if (!gBattleAnimArgs[3])
         StartSpriteAnim(sprite, 2);
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     SetAverageBattlerPositions(gBattleAnimTarget, 1, &l1, &l2);
 
     if (GetBattlerSide(gBattleAnimAttacker))

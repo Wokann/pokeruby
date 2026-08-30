@@ -864,7 +864,7 @@ static void AnimHitSplatBasic(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 
@@ -876,7 +876,7 @@ static void sub_80E27E8(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 
@@ -900,7 +900,7 @@ static void sub_80E2870(struct Sprite *sprite)
 
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[1]);
     if (gBattleAnimArgs[0] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
     else
         sub_8078764(sprite, FALSE);
 
@@ -926,7 +926,7 @@ static void sub_80E2908(struct Sprite *sprite)
 static void sub_80E2978(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 
@@ -939,7 +939,7 @@ static void AnimFlashingHitSplat(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 

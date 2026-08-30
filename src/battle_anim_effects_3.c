@@ -1434,7 +1434,7 @@ static void sub_812C720(struct Sprite *sprite)
     u16 x;
     u16 y;
 
-    InitAnimSpritePos(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, 1);
     SetAverageBattlerPositions(gBattleAnimTarget, 0, &x, &y);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
@@ -1472,7 +1472,7 @@ static void sub_812C7C8(struct Sprite *sprite)
 static void sub_812C80C(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
-    sub_807867C(sprite, gBattleAnimArgs[0]);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
@@ -1486,7 +1486,7 @@ static void sub_812C848(struct Sprite *sprite)
     if (sprite->data[0] == 0)
     {
         SetSpriteCoordsToAnimAttackerCoords(sprite);
-        sub_807867C(sprite, gBattleAnimArgs[0]);
+        SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
 
         if (!IsContest())
         {
@@ -2021,7 +2021,7 @@ static void sub_812D254(struct Sprite *sprite)
 static void sub_812D294(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
 
     sprite->data[0]++;
     if (sprite->data[0] < 40)
@@ -2226,7 +2226,7 @@ static void sub_812D724(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         sprite->data[1] = 0x900;
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
         sprite->data[0]++;
@@ -2694,7 +2694,7 @@ static void AnimWeakFrustrationAngerMark(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        InitAnimSpritePos(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, 0);
         sprite->data[0]++;
     }
     else if (sprite->data[0]++ > 20)
@@ -4477,7 +4477,7 @@ static void sub_8130F5C(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == 0)
     {
-        InitAnimSpritePos(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, 1);
         sprite->data[7] = gBattleAnimAttacker;
     }
     else
