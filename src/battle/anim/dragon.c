@@ -223,7 +223,7 @@ void sub_80DF5A0(struct Sprite *sprite)
 
 void sub_80DF63C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     if (GetBattlerSide(gBattleAnimAttacker))
@@ -262,7 +262,7 @@ void sub_80DF6F0(struct Sprite *sprite)
     }
     sub_807867C(sprite, gBattleAnimArgs[1]);
     sprite->y += gBattleAnimArgs[2];
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
 }
 

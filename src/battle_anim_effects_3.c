@@ -1471,10 +1471,10 @@ static void sub_812C7C8(struct Sprite *sprite)
 
 static void sub_812C80C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 
@@ -1485,7 +1485,7 @@ static void sub_812C848(struct Sprite *sprite)
     int var1;
     if (sprite->data[0] == 0)
     {
-        sub_8078650(sprite);
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
         sub_807867C(sprite, gBattleAnimArgs[0]);
 
         if (!IsContest())
@@ -3520,7 +3520,7 @@ static void sub_812F88C(struct Sprite *sprite)
     s16 x = sprite->x;
     s16 y = sprite->y;
 
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[0]);
     sub_812F804(sprite, sprite->x, sprite->y, x, y, 64);
     sprite->data[0] = 0;

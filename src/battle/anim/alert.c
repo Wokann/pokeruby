@@ -44,7 +44,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7450 =
 
 void sub_80CF610(struct Sprite* sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     if (GetBattlerSide(gBattleAnimAttacker) != 0)
@@ -59,6 +59,6 @@ void sub_80CF610(struct Sprite* sprite)
             sprite->vFlip = 1;
     }
 
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }

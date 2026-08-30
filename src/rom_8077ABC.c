@@ -712,7 +712,7 @@ void sub_80785E4(struct Sprite *sprite)
         SetCallbackToStoredInData(sprite);
 }
 
-void sub_8078600(struct Sprite *sprite)
+void RunStoredCallbackWhenAnimEnds(struct Sprite *sprite)
 {
     if (sprite->animEnded)
         SetCallbackToStoredInData(sprite);
@@ -732,10 +732,10 @@ void sub_8078634(u8 task)
     DestroyAnimVisualTask(task);
 }
 
-void sub_8078650(struct Sprite *sprite)
+void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
 }
 
 void sub_807867C(struct Sprite *sprite, s16 a2)
@@ -2170,7 +2170,7 @@ u8 sub_807A4A0(int bank, u8 sprite, int species)
 
 void sub_807A544(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     if (GetBattlerSide(gBattleAnimAttacker))
     {
         sprite->x -= gBattleAnimArgs[0];
@@ -2213,15 +2213,15 @@ void sub_807A5C4(struct Sprite *sprite)
 
 // file_2
 
-void sub_807A63C(struct Sprite *sprite)
+void AnimSpinningSparkle(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
     if (GetBattlerSide(gBattleAnimAttacker))
         sprite->x -= gBattleAnimArgs[0];
     else
         sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
-    sprite->callback = sub_8078600;
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 

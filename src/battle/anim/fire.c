@@ -200,7 +200,7 @@ void AnimFireSpread(struct Sprite *sprite)
 
 void sub_80D4F5C(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
 
     if (GetBattlerSide(gBattleAnimAttacker))
     {
@@ -258,7 +258,7 @@ static void sub_80D5038(struct Sprite *sprite)
 
 void sub_80D5074(struct Sprite *sprite)
 {
-    sub_8078650(sprite);
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
 
     if (GetBattlerSide(gBattleAnimAttacker))
     {

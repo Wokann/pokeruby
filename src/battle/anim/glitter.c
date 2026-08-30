@@ -57,7 +57,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6CA0 =
 void sub_80CD140(struct Sprite* sprite)
 {
     if (!gBattleAnimArgs[2])
-        sub_8078650(sprite);
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
 
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];

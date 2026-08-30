@@ -1682,7 +1682,7 @@ Move_DETECT: @ 81C97D2
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 9, 32767
 	delay 18
 	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83930F4, ANIM_BATTLER_ATTACKER, 13, 20, -20
+	createsprite gSpinningSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 13, 20, -20
 	waitforvisualfinish
 	delay 10
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 9, 0, rgb(0, 0, 0)
@@ -7527,7 +7527,7 @@ Move_DISABLE: @ 81D1EF1
 	monbgprio_28 1
 	setalpha 8, 8
 	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83930F4, ANIM_BATTLER_ATTACKER, 13, 24, -16
+	createsprite gSpinningSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 13, 24, -16
 	waitforvisualfinish
 	createvisualtask sub_80D03C4, 5
 	loopsewithpan SE_M_BIND, SOUND_PAN_TARGET, 15, 4
