@@ -23,7 +23,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D95B0 =
 {
     .tileTag = ANIM_TAG_SUNLIGHT,
     .paletteTag = ANIM_TAG_SUNLIGHT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D95AC,

@@ -210,11 +210,11 @@ void sub_812B2B8(u8 taskId)
 // used in 6 moves:
 //         Move_SKY_ATTACK, Move_LUSTER_PURGE, Move_FLATTER,
 //         Move_DRAGON_CLAW, Move_RETURN, Move_COSMIC_POWER,
-void sub_812B30C(u8 taskId)
+void SoundTask_PlaySE1WithPanning(u8 taskId)
 {
-    u16 songNum = gBattleAnimArgs[0];
+    u16 songId = gBattleAnimArgs[0];
     s8 pan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
-    PlaySE1WithPanning(songNum, pan);
+    PlaySE1WithPanning(songId, pan);
 
     DestroyAnimVisualTask(taskId);
 }
@@ -222,11 +222,11 @@ void sub_812B30C(u8 taskId)
 // used in 6 moves:
 //         Move_SKY_ATTACK, Move_SUPERPOWER, Move_ENCORE,
 //         Move_FLATTER, Move_RETURN, Move_COSMIC_POWER
-void sub_812B340(u8 taskId)
+void SoundTask_PlaySE2WithPanning(u8 taskId)
 {
-    u16 songNum = gBattleAnimArgs[0];
+    u16 songId = gBattleAnimArgs[0];
     s8 pan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
-    PlaySE2WithPanning(songNum, pan);
+    PlaySE2WithPanning(songId, pan);
 
     DestroyAnimVisualTask(taskId);
 }

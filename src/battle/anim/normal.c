@@ -70,8 +70,8 @@ static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
 static void AnimTask_BlendSpriteColor_Step1(u8 taskId, u32 selectedPalettes);
 static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
 static void sub_80E2DB8(u8 taskId);
-static void sub_80E2E10(u8 taskId);
-static void sub_80E2EE8(struct Sprite *sprite);
+static void AnimTask_TraceMonBlended_Step(u8 taskId);
+static void AnimMonTrace(struct Sprite *sprite);
 static void sub_80E3194(u8 taskId);
 static void sub_80E3338(u8 taskId);
 static void sub_80E3704(u8 taskId);
@@ -175,49 +175,49 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB428 =
     .callback = sub_80E24B8,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB440[] =
+static const union AffineAnimCmd sAffineAnim_HitSplat_0[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB450[] =
+static const union AffineAnimCmd sAffineAnim_HitSplat_1[] =
 {
     AFFINEANIMCMD_FRAME(0xD8, 0xD8, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB468[] =
+static const union AffineAnimCmd sAffineAnim_HitSplat_2[] =
 {
     AFFINEANIMCMD_FRAME(0xB0, 0xB0, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB480[] =
+static const union AffineAnimCmd sAffineAnim_HitSplat_3[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB498[] =
+static const union AffineAnimCmd *const sAffineAnims_HitSplat[] =
 {
-    gSpriteAffineAnim_83DB440,
-    gSpriteAffineAnim_83DB450,
-    gSpriteAffineAnim_83DB468,
-    gSpriteAffineAnim_83DB480,
+    sAffineAnim_HitSplat_0,
+    sAffineAnim_HitSplat_1,
+    sAffineAnim_HitSplat_2,
+    sAffineAnim_HitSplat_3,
 };
 
 const struct SpriteTemplate gBasicHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = AnimHitSplatBasic,
 };
 
@@ -225,10 +225,10 @@ const struct SpriteTemplate gHandleInvertHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = AnimHitSplatHandleInvert,
 };
 
@@ -236,10 +236,10 @@ const struct SpriteTemplate gWaterHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_IMPACT,
     .paletteTag = ANIM_TAG_WATER_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = AnimHitSplatBasic,
 };
 
@@ -247,10 +247,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = sub_80E2870,
 };
 
@@ -258,10 +258,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB508 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = sub_80E2908,
 };
 
@@ -283,7 +283,7 @@ const struct SpriteTemplate gFlashingHitSplatSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = AnimFlashingHitSplat,
 };
 
@@ -291,10 +291,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB550 =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
-    .oam = &gOamData_837E0B4,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB498,
+    .affineAnims = sAffineAnims_HitSplat,
     .callback = sub_80E27E8,
 };
 
@@ -1128,7 +1128,7 @@ static void sub_80E2DB8(u8 taskId)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E2DD8(u8 taskId)
+void AnimTask_TraceMonBlended(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -1138,10 +1138,10 @@ void sub_80E2DD8(u8 taskId)
     task->data[3] = gBattleAnimArgs[2];
     task->data[4] = gBattleAnimArgs[3];
     task->data[5] = 0;
-    task->func = sub_80E2E10;
+    task->func = AnimTask_TraceMonBlended_Step;
 }
 
-static void sub_80E2E10(u8 taskId)
+static void AnimTask_TraceMonBlended_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -1160,7 +1160,7 @@ static void sub_80E2E10(u8 taskId)
                 gSprites[task->data[6]].data[0] = task->data[3];
                 gSprites[task->data[6]].data[1] = taskId;
                 gSprites[task->data[6]].data[2] = 5;
-                gSprites[task->data[6]].callback = sub_80E2EE8;
+                gSprites[task->data[6]].callback = AnimMonTrace;
                 task->data[5]++;
             }
 
@@ -1174,7 +1174,7 @@ static void sub_80E2E10(u8 taskId)
     }
 }
 
-static void sub_80E2EE8(struct Sprite *sprite)
+static void AnimMonTrace(struct Sprite *sprite)
 {
     if (sprite->data[0])
     {
