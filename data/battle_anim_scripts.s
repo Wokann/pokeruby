@@ -1494,7 +1494,7 @@ Move_SLAM: @ 81C9309
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_ATTACKER
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 20, 3, 0, 4
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D69DC, ANIM_BATTLER_ATTACKER, 2, 0, 0
+	createsprite gSlamHitSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0
 	delay 3
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1

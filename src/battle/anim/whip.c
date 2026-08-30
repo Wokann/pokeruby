@@ -9,12 +9,12 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 void sub_80CC82C(struct Sprite* sprite);
-void sub_80CC884(struct Sprite* sprite);
+void AnimWhipHit(struct Sprite* sprite);
 
 // whip (does a hitting animation that uses a rotating sprite to invoke the sprite getting hit.)
 // Used by Slam and Vine Whip.
 
-const union AnimCmd gSpriteAnim_83D69AC[] =
+const union AnimCmd gWhipAnimCmds[] =
 {
     ANIMCMD_FRAME(64, 3),
     ANIMCMD_FRAME(80, 3),
@@ -23,7 +23,7 @@ const union AnimCmd gSpriteAnim_83D69AC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D69C0[] =
+const union AnimCmd gWhipAnimCmds_Flipped[] =
 {
     ANIMCMD_FRAME(64, 3, .hFlip = TRUE),
     ANIMCMD_FRAME(80, 3, .hFlip = TRUE),
@@ -32,21 +32,21 @@ const union AnimCmd gSpriteAnim_83D69C0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D69D4[] =
+const union AnimCmd *const gWhipAnimTable[] =
 {
-    gSpriteAnim_83D69AC,
-    gSpriteAnim_83D69C0,
+    gWhipAnimCmds,
+    gWhipAnimCmds_Flipped,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69DC =
+const struct SpriteTemplate gSlamHitSpriteTemplate =
 {
-    .tileTag = 10056,
-    .paletteTag = 10056,
+    .tileTag = ANIM_TAG_SLAM_HIT,
+    .paletteTag = ANIM_TAG_SLAM_HIT,
     .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_83D69D4,
+    .anims = gWhipAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC884,
+    .callback = AnimWhipHit,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69F4 =
@@ -54,10 +54,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D69F4 =
     .tileTag = ANIM_TAG_WHIP_HIT,
     .paletteTag = ANIM_TAG_WHIP_HIT,
     .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_83D69D4,
+    .anims = gWhipAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC884,
+    .callback = AnimWhipHit,
 };
 
 const union AnimCmd gSpriteAnim_83D6A0C[] =
@@ -97,7 +97,7 @@ const struct SpriteTemplate gSpriteTemplate_83D6A40 =
     .callback = sub_80CC82C,
 };
 
-static void sub_80CC810(struct Sprite* sprite)
+static void AnimWhipHit_WaitEnd(struct Sprite* sprite)
 {
     if (sprite->animEnded)
         DestroyAnimSprite(sprite);
@@ -120,12 +120,12 @@ void sub_80CC82C(struct Sprite* sprite)
     StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
 }
 
-void sub_80CC884(struct Sprite* sprite)
+void AnimWhipHit(struct Sprite* sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == 0)
         StartSpriteAnim(sprite, 1);
 
-    sprite->callback = sub_80CC810;
+    sprite->callback = AnimWhipHit_WaitEnd;
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
 }
