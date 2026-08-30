@@ -41,8 +41,8 @@ const struct SpriteTemplate gSwordsDanceBladeSpriteTemplate =
 void AnimSwordsDanceBlade(struct Sprite* sprite)
 {
     InitAnimSpritePos(sprite, 0);
-    sprite->callback = sub_80785E4;
-    StoreSpriteCallbackInData(sprite, AnimSwordsDanceBlade_Step);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+    StoreSpriteCallbackInData6(sprite, AnimSwordsDanceBlade_Step);
 }
 
 static void AnimSwordsDanceBlade_Step(struct Sprite* sprite)
@@ -51,5 +51,5 @@ static void AnimSwordsDanceBlade_Step(struct Sprite* sprite)
     sprite->data[2] = sprite->x;
     sprite->data[4] = sprite->y - 32;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

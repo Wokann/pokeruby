@@ -300,7 +300,7 @@ void AnimFireCross(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
     sprite->callback = TranslateSpriteOverDuration;
 }
@@ -315,7 +315,7 @@ void AnimFireSpiralOutward(struct Sprite *sprite)
     sprite->invisible = TRUE;
     sprite->callback = WaitAnimForDuration;
 
-    StoreSpriteCallbackInData(sprite, AnimFireSpiralOutward_Step1);
+    StoreSpriteCallbackInData6(sprite, AnimFireSpiralOutward_Step1);
 }
 
 static void AnimFireSpiralOutward_Step1(struct Sprite *sprite)

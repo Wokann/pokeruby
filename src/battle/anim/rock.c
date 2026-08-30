@@ -336,7 +336,7 @@ void sub_80DCE9C(struct Sprite *sprite)
     sprite->data[4] = -70;
     sprite->data[5] = gBattleAnimArgs[2];
 
-    StoreSpriteCallbackInData(sprite, sub_80DCF1C);
+    StoreSpriteCallbackInData6(sprite, sub_80DCF1C);
     sprite->callback = sub_8078278;
     sprite->callback(sprite);
 }
@@ -351,7 +351,7 @@ static void sub_80DCF1C(struct Sprite *sprite)
     sprite->data[3] = 32;
     sprite->data[4] = -24;
 
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078278;
     sprite->callback(sprite);
 }
@@ -379,7 +379,7 @@ void sub_80DCF60(struct Sprite *sprite)
     sprite->data[4] = 0;
 
     sprite->callback = sub_8078394;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 void AnimParticleInVortex(struct Sprite *sprite)
@@ -577,7 +577,7 @@ void AnimRaiseSprite(struct Sprite *sprite)
     sprite->data[4] = sprite->y + gBattleAnimArgs[2];
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80DD4D4(u8 taskId)

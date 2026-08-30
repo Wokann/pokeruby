@@ -450,7 +450,7 @@ static void DoHorizontalLunge(struct Sprite *sprite)
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
     sprite->data[4] = gBattleAnimArgs[0];
-    StoreSpriteCallbackInData(sprite, ReverseHorizontalLungeDirection);
+    StoreSpriteCallbackInData6(sprite, ReverseHorizontalLungeDirection);
     sprite->callback = TranslateMonBGUntil;
 }
 
@@ -459,7 +459,7 @@ static void ReverseHorizontalLungeDirection(struct Sprite *sprite)
     sprite->data[0] = sprite->data[4];
     sprite->data[1] = -sprite->data[1];
     sprite->callback = TranslateMonBGUntil;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Performs a simple vertical dipping motion, where moves vertically, and then
@@ -477,7 +477,7 @@ static void DoVerticalDip(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[1];
     sprite->data[3] = spriteId;
     sprite->data[4] = gBattleAnimArgs[0];
-    StoreSpriteCallbackInData(sprite, ReverseVerticalDipDirection);
+    StoreSpriteCallbackInData6(sprite, ReverseVerticalDipDirection);
     sprite->callback = TranslateMonBGUntil;
 }
 
@@ -486,7 +486,7 @@ static void ReverseVerticalDipDirection(struct Sprite *sprite)
     sprite->data[0] = sprite->data[4];
     sprite->data[2] = -sprite->data[2];
     sprite->callback = TranslateMonBGUntil;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Linearly slides a mon's bg picture back to its original sprite position.
@@ -592,7 +592,7 @@ static void SlideMonToOffset(struct Sprite *sprite)
     sprite->data[4] = 0;
     sprite->data[5] = monSpriteId;
     sprite->invisible = TRUE;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = TranslateMonBGSubPixelUntil;
 }
 
@@ -630,11 +630,11 @@ static void sub_80A8818(struct Sprite *sprite)
     sprite->data[6] = gBattleAnimArgs[5];
     if (!gBattleAnimArgs[5])
     {
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     }
     else
     {
-        StoreSpriteCallbackInData(sprite, sub_80A88F0);
+        StoreSpriteCallbackInData6(sprite, sub_80A88F0);
     }
     sprite->callback = TranslateMonBGSubPixelUntil;
 }

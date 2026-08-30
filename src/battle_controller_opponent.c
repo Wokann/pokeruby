@@ -85,7 +85,7 @@ extern void sub_8032B84(void);
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_8032BBC(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
-extern void StoreSpriteCallbackInData();
+extern void StoreSpriteCallbackInData6();
 extern void sub_803311C(void);
 extern void sub_8010384(struct Sprite *);
 extern bool8 mplay_80342A4(u8);
@@ -1280,7 +1280,7 @@ void OpponentHandleTrainerSlideBack(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 280;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], SpriteCallbackDummy);
     gBattlerControllerFuncs[gActiveBattler] = sub_8032BBC;
 }
 
@@ -1775,7 +1775,7 @@ void OpponentHandleTrainerBallThrow(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 280;
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[4] = gSprites[gBattlerSpriteIds[gActiveBattler]].y;
     gSprites[gBattlerSpriteIds[gActiveBattler]].callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_8035C10);
+    StoreSpriteCallbackInData6(&gSprites[gBattlerSpriteIds[gActiveBattler]], sub_8035C10);
     taskId = CreateTask(sub_8035C44, 5);
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)

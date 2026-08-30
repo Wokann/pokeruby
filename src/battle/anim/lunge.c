@@ -74,7 +74,7 @@ static void AnimBowMon_Step1(struct Sprite* sprite)
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? 2 : -2;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, AnimBowMon_Step1_Callback);
+    StoreSpriteCallbackInData6(sprite, AnimBowMon_Step1_Callback);
     sprite->callback = TranslateMonBGUntil;
 }
 
@@ -104,7 +104,7 @@ static void AnimBowMon_Step2(struct Sprite* sprite)
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -3 : 3;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, AnimBowMon_Step4);
+    StoreSpriteCallbackInData6(sprite, AnimBowMon_Step4);
     sprite->callback = TranslateMonBGUntil;
 }
 

@@ -215,7 +215,7 @@ void sub_80DF5A0(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
     sprite->invisible = TRUE;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078504;
 }
 
@@ -243,7 +243,7 @@ void sub_80DF63C(struct Sprite *sprite)
     }
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 // Dragon Rage
@@ -263,7 +263,7 @@ void sub_80DF6F0(struct Sprite *sprite)
     sub_807867C(sprite, gBattleAnimArgs[1]);
     sprite->y += gBattleAnimArgs[2];
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 // Dragon Breath init

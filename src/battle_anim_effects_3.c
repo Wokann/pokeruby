@@ -117,7 +117,7 @@ static void sub_812D4B4(struct Sprite *sprite);
 static void sub_812D588(struct Sprite *sprite);
 static void sub_812DEAC(struct Sprite *sprite);
 static void sub_812D724(struct Sprite *sprite);
-static void sub_812E4F0(struct Sprite *sprite);
+static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void sub_812E7A0(struct Sprite *sprite);
 static void sub_812EA4C(struct Sprite *sprite);
 static void sub_812EC78(struct Sprite *sprite);
@@ -672,7 +672,7 @@ const u8 gUnknown_08402608[] =
     50,
 };
 
-const union AffineAnimCmd gUnknown_08402610[] =
+const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0, -15, 0, 7),
     AFFINEANIMCMD_FRAME(0, 15, 0, 7),
@@ -680,7 +680,7 @@ const union AffineAnimCmd gUnknown_08402610[] =
     AFFINEANIMCMD_END,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402630 =
+const struct SpriteTemplate gWeakFrustrationAngerMarkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ANGER,
     .paletteTag = ANIM_TAG_ANGER,
@@ -688,7 +688,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402630 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812E4F0,
+    .callback = AnimWeakFrustrationAngerMark,
 };
 
 const union AnimCmd gSpriteAnim_8402648[] =
@@ -1225,7 +1225,7 @@ static void sub_812C220(struct Sprite *sprite)
     sprite->data[0] = 90;
     sprite->callback = WaitAnimForDuration;
     sprite->data[1] = 7;
-    StoreSpriteCallbackInData(sprite, sub_812C268);
+    StoreSpriteCallbackInData6(sprite, sub_812C268);
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
 }
@@ -1266,7 +1266,7 @@ static void sub_812C2BC(struct Sprite *sprite)
     sprite->data[2] = x;
     sprite->data[4] = y;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 static void sub_812C358(struct Sprite *sprite)
@@ -1456,7 +1456,7 @@ static void sub_812C798(struct Sprite *sprite)
         sprite->data[0] = 30;
         sprite->data[1] = 0;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, sub_812C7C8);
+        StoreSpriteCallbackInData6(sprite, sub_812C7C8);
     }
 }
 
@@ -1475,7 +1475,7 @@ static void sub_812C80C(struct Sprite *sprite)
     sub_807867C(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // This is likely fakematching due to some strange type casting behavior.
@@ -2038,7 +2038,7 @@ static void sub_812D294(struct Sprite *sprite)
 
     if (sprite->data[0] == 61)
     {
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
         sprite->x2 = 0;
@@ -2674,11 +2674,11 @@ void sub_812E14C(u8 taskId)
     }
 }
 
-void sub_812E498(u8 taskId)
+void AnimTask_StrongFrustrationGrowAndShrink(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402610);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), &gStrongFrustrationAffineAnimCmds);
         gTasks[taskId].data[0]++;
     }
     else
@@ -2690,7 +2690,7 @@ void sub_812E498(u8 taskId)
     }
 }
 
-static void sub_812E4F0(struct Sprite *sprite)
+static void AnimWeakFrustrationAngerMark(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -4033,7 +4033,7 @@ static void sub_813051C(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[2];
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = sub_8078CC0;
 }
 

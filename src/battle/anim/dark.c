@@ -825,7 +825,7 @@ void sub_80E0A10(struct Sprite *sprite)
     sprite->y += gBattleAnimArgs[1];
     StartSpriteAnim(sprite, gBattleAnimArgs[2]);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80E0A4C(u8 taskId)

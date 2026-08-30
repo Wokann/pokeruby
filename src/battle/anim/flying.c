@@ -15,7 +15,7 @@ extern struct OamMatrix gOamMatrices[];
 extern u8 gBattlerPositions[];
 extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 
-void sub_80785E4(struct Sprite *sprite);
+void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
 static void sub_80DA034(struct Sprite *sprite);
 static void sub_80DA05C(struct Sprite *sprite);
 static void sub_80DA16C(struct Sprite *sprite);
@@ -440,8 +440,8 @@ static void sub_80DA16C(struct Sprite *sprite)
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     InitAnimLinearTranslation(sprite);
-    sprite->callback = sub_80785E4;
-    StoreSpriteCallbackInData(sprite, sub_80DA1EC);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+    StoreSpriteCallbackInData6(sprite, sub_80DA1EC);
 }
 
 static void sub_80DA1EC(struct Sprite *sprite)
@@ -488,7 +488,7 @@ static void sub_80DA208(struct Sprite *sprite)
     sprite->data[4] = sprite->data[4] + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     SeekSpriteAnim(sprite, gBattleAnimArgs[5]);
 }
 

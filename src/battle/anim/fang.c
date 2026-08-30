@@ -41,6 +41,6 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7080 =
 
 void sub_80CEA04(struct Sprite* sprite)
 {
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }

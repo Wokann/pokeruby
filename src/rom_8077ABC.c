@@ -450,13 +450,13 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
     }
 }
 
-void StoreSpriteCallbackInData(struct Sprite *sprite, void (*callback)(struct Sprite*))
+void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite*))
 {
     sprite->data[6] = (u32)(callback) & 0xffff;
     sprite->data[7] = (u32)(callback) >> 16;
 }
 
-void SetCallbackToStoredInData(struct Sprite *sprite)
+void SetCallbackToStoredInData6(struct Sprite *sprite)
 {
     u32 callback = (u16)sprite->data[6] | (sprite->data[7] << 16);
     sprite->callback = (void (*)(struct Sprite *))callback;
@@ -477,7 +477,7 @@ void sub_8078114(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -497,7 +497,7 @@ void sub_8078174(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -521,7 +521,7 @@ void unref_sub_80781F0(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -540,7 +540,7 @@ void sub_8078278(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -552,7 +552,7 @@ void WaitAnimForDuration(struct Sprite *sprite)
     if (sprite->data[0] > 0)
         sprite->data[0]--;
     else
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
 }
 
 void sub_80782F8(struct Sprite *sprite)
@@ -586,7 +586,7 @@ void TranslateSpriteOverDuration(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -602,7 +602,7 @@ void sub_8078394(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -618,7 +618,7 @@ void sub_80783D0(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
     UpdateMonIconFrame(sprite);
 }
@@ -642,7 +642,7 @@ void TranslateMonBGUntil(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -660,7 +660,7 @@ void TranslateMonBGSubPixelUntil(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -681,7 +681,7 @@ void sub_8078504(struct Sprite *sprite)
     }
     else
     {
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
     }
 }
 
@@ -706,16 +706,16 @@ void unref_sub_80785CC(struct Sprite *sprite)
     DestroySpriteAndMatrix(sprite);
 }
 
-void sub_80785E4(struct Sprite *sprite)
+void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
 }
 
 void RunStoredCallbackWhenAnimEnds(struct Sprite *sprite)
 {
     if (sprite->animEnded)
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
 }
 
 void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite)
@@ -1021,7 +1021,7 @@ bool8 TranslateAnimLinear(struct Sprite *sprite)
 void TranslateAnimLinearUntil(struct Sprite *sprite)
 {
     if (TranslateAnimLinear(sprite))
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
 }
 
 void sub_8078BD4(struct Sprite *sprite)
@@ -1110,7 +1110,7 @@ bool8 sub_8078CE8(struct Sprite *sprite)
 void sub_8078D44(struct Sprite *sprite)
 {
     if (sub_8078CE8(sprite))
-        SetCallbackToStoredInData(sprite);
+        SetCallbackToStoredInData6(sprite);
 }
 
 void sub_8078D60(struct Sprite *sprite)
@@ -1422,7 +1422,7 @@ void TranslateAnimSpriteToTargetMonLocation(struct Sprite *sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, v2) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80794A8(struct Sprite *sprite)
@@ -1476,7 +1476,7 @@ void sub_8079534(struct Sprite *sprite)
     sprite->data[2] = GetBattlerSpriteCoord(slot, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(slot, r7) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 s16 duplicate_obj_of_side_rel2move_in_transparent_mode(u8 a1)
@@ -1835,20 +1835,20 @@ u8 sub_8079C74(struct Task *task)
     return task->data[8];
 }
 
-void sub_8079CEC(u8 task)
+void AnimTask_GetFrustrationPowerLevel(u8 taskId)
 {
-    u16 v1;
+    u16 powerLevel;
 
     if (gAnimFriendship <= 30)
-        v1 = 0;
+        powerLevel = 0;
     else if (gAnimFriendship <= 100)
-        v1 = 1;
+        powerLevel = 1;
     else if (gAnimFriendship <= 200)
-        v1 = 2;
+        powerLevel = 2;
     else
-        v1 = 3;
-    gBattleAnimArgs[7] = v1;
-    DestroyAnimVisualTask(task);
+        powerLevel = 3;
+    gBattleAnimArgs[ARG_RET_ID] = powerLevel;
+    DestroyAnimVisualTask(taskId);
 }
 
 void unref_sub_8079D20(u8 priority)
@@ -2186,7 +2186,7 @@ void sub_807A544(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078504;
 }
 
@@ -2207,7 +2207,7 @@ void sub_807A5C4(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
     StartSpriteAnim(sprite, gBattleAnimArgs[6]);
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = sub_8078504;
 }
 
@@ -2222,7 +2222,7 @@ void AnimSpinningSparkle(struct Sprite *sprite)
         sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // file_3 (punch effect?)
@@ -2354,5 +2354,5 @@ void sub_807A9BC(struct Sprite *sprite)
         sprite->y = gBattleAnimArgs[5] - 80;
     }
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

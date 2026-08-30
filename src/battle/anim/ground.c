@@ -204,7 +204,7 @@ static void AnimBoneHitProjectile(struct Sprite *sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Moves a small dirt projectile towards the target mon.
@@ -234,7 +234,7 @@ static void AnimDirtScatter(struct Sprite *sprite)
     sprite->data[2] = targetXPos + xOffset;
     sprite->data[4] = targetYPos + yOffset;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 // Moves a particle of dirt in the Mud Sport animation.
@@ -565,7 +565,7 @@ static void AnimDigDirtMound(struct Sprite *sprite)
     sprite->x = GetBattlerSpriteCoord(battler, 0) - 16 + (gBattleAnimArgs[1] * 32);
     sprite->y = sub_8077FC0(battler) + 32;
     sprite->oam.tileNum += gBattleAnimArgs[1] * 8;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
 }

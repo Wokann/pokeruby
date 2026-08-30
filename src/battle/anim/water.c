@@ -231,7 +231,7 @@ void sub_80D37FC(struct Sprite *sprite)
     sprite->data[4] = sprite->y + gBattleAnimArgs[4];
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void AnimSmallBubblePair(struct Sprite *sprite)

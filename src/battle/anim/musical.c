@@ -345,7 +345,7 @@ void sub_80CEDF0(struct Sprite* sprite)
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + 8;
     sprite->data[0] = 8;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // note_scatter_2 (slower scatter of notes.)

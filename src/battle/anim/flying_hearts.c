@@ -32,7 +32,7 @@ void sub_80D2064(struct Sprite* sprite)
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, sub_80D2094);
+    StoreSpriteCallbackInData6(sprite, sub_80D2094);
 }
 
 static void sub_80D2094(struct Sprite* sprite)

@@ -93,7 +93,7 @@ void sub_80CEF9C(struct Sprite* sprite)
     sprite->data[0] = gBattleAnimArgs[1];
     sprite->data[1] = a + 2;
     StartSpriteAnim(sprite, a);
-    StoreSpriteCallbackInData(sprite, sub_80CF008);
+    StoreSpriteCallbackInData6(sprite, sub_80CF008);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
@@ -101,7 +101,7 @@ static void sub_80CF008(struct Sprite* sprite)
 {
     if (--sprite->data[0] == 0)
     {
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
         StartSpriteAnim(sprite, sprite->data[1]);
         sprite->callback = RunStoredCallbackWhenAnimEnds;
     }

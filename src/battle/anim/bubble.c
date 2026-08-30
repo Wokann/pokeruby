@@ -128,12 +128,12 @@ static void sub_80D3370(struct Sprite *sprite)
 {
     sprite->animPaused = 0;
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, sub_80D3398);
+    StoreSpriteCallbackInData6(sprite, sub_80D3398);
 }
 
 static void sub_80D3398(struct Sprite *sprite)
 {
     sprite->data[0] = 10;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }

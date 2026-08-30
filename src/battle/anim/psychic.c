@@ -615,7 +615,7 @@ void sub_80DBAF4(struct Sprite *sprite)
         sprite->data[1] = 1;
     }
 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
@@ -637,7 +637,7 @@ void sub_80DBB70(struct Sprite *sprite)
         sprite->y = 16;
     }
 
-    StoreSpriteCallbackInData(sprite, sub_80DBC00);
+    StoreSpriteCallbackInData6(sprite, sub_80DBC00);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 

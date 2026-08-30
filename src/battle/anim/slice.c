@@ -144,7 +144,7 @@ static void AnimSliceStep(struct Sprite* sprite)
     sprite->data[0]++;
     if (sprite->data[0] == 20)
     {
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
         sprite->data[0] = 3;
         sprite->callback = WaitAnimForDuration;
     }

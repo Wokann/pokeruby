@@ -144,8 +144,8 @@ void sub_80CF040(struct Sprite* sprite)
 
     sub_80CEF44(bank, sprite);
     sprite->data[0] = 0;
-    StoreSpriteCallbackInData(sprite, sub_80CF088);
-    sprite->callback = sub_80785E4;
+    StoreSpriteCallbackInData6(sprite, sub_80CF088);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void sub_80CF088(struct Sprite* sprite)
@@ -153,8 +153,8 @@ static void sub_80CF088(struct Sprite* sprite)
     if (++sprite->data[0] > 16)
     {
         StartSpriteAffineAnim(sprite, 1);
-        StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
-        sprite->callback = sub_80785E4;
+        StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+        sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     }
 }
 
@@ -176,8 +176,8 @@ void sub_80CF0BC(struct Sprite* sprite)
     sprite->data[2] = sprite->subpriority;
     sprite->data[3] = sprite->subpriority + 4;
     sprite->data[4] = 0;
-    StoreSpriteCallbackInData(sprite, sub_80CF138);
-    sprite->callback = sub_80785E4;
+    StoreSpriteCallbackInData6(sprite, sub_80CF138);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void sub_80CF138(struct Sprite* sprite)
@@ -244,7 +244,7 @@ static void sub_80CF228(struct Sprite* sprite)
     {
         sprite->data[1] = 0;
         StartSpriteAnim(sprite, sprite->data[0]);
-        StoreSpriteCallbackInData(sprite, sub_80CF264);
+        StoreSpriteCallbackInData6(sprite, sub_80CF264);
         sprite->callback = RunStoredCallbackWhenAnimEnds;
     }
 }

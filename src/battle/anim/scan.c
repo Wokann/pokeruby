@@ -57,7 +57,7 @@ void sub_80CD3E0(struct Sprite* sprite)
     sprite->y -= 32;
     sprite->data[0] = 20;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, sub_80CD408);
+    StoreSpriteCallbackInData6(sprite, sub_80CD408);
 }
 
 static void sub_80CD408(struct Sprite* sprite)
@@ -67,7 +67,7 @@ static void sub_80CD408(struct Sprite* sprite)
     case 0:
         sprite->data[0] = 1;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, sub_80CD408);
+        StoreSpriteCallbackInData6(sprite, sub_80CD408);
         break;
     case 1:
         sprite->x += sprite->x2;
@@ -78,7 +78,7 @@ static void sub_80CD408(struct Sprite* sprite)
         sprite->data[2] = sprite->x + gUnknown_083D6DDC[sprite->data[5] >> 8][0];
         sprite->data[4] = sprite->y + gUnknown_083D6DDC[sprite->data[5] >> 8][1];
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData(sprite, sub_80CD4B8);
+        StoreSpriteCallbackInData6(sprite, sub_80CD4B8);
         sprite->data[5] += 0x100;
         PlaySE12WithPanning(0xD2, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
         break;
@@ -93,7 +93,7 @@ static void sub_80CD4B8(struct Sprite* sprite)
     {
         sprite->data[0] = 10;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, sub_80CD4EC);
+        StoreSpriteCallbackInData6(sprite, sub_80CD4EC);
     }
     else
     {
@@ -111,7 +111,7 @@ static void sub_80CD4EC(struct Sprite* sprite)
         sprite->data[1] = 0;
         sprite->data[2] = 0;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData(sprite, sub_80CD5A8);
+        StoreSpriteCallbackInData6(sprite, sub_80CD5A8);
     }
     else
     {
@@ -143,7 +143,7 @@ static void sub_80CD4EC(struct Sprite* sprite)
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + a;
         sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + b;
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData(sprite, sub_80CD654);
+        StoreSpriteCallbackInData6(sprite, sub_80CD654);
     }
 }
 

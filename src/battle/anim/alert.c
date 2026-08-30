@@ -60,5 +60,5 @@ void sub_80CF610(struct Sprite* sprite)
     }
 
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

@@ -127,6 +127,6 @@ void sub_80D1C08(struct Sprite* sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sub_80D1BA8(sprite, gBattleAnimArgs[5], gBattleAnimArgs[6]);
 }

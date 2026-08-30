@@ -439,7 +439,7 @@ void sub_080B08A0(struct Sprite *sprite)
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = 15;
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D902C(struct Sprite *sprite)
@@ -484,7 +484,7 @@ void AnimBasicFistOrFoot(struct Sprite *sprite)
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D90F4(struct Sprite *sprite)
@@ -568,7 +568,7 @@ void sub_80D92D0(struct Sprite *sprite)
 
     sprite->data[4] = sprite->y - 20;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, sub_80D9328);
+    StoreSpriteCallbackInData6(sprite, sub_80D9328);
 }
 
 static void sub_80D9328(struct Sprite *sprite)
@@ -584,7 +584,7 @@ static void sub_80D9328(struct Sprite *sprite)
         sprite->x2 = 0;
 
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     }
 }
 
@@ -639,7 +639,7 @@ void AnimSpinningKickOrPunch(struct Sprite *sprite)
     sprite->data[0] = gBattleAnimArgs[3];
 
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, AnimSpinningKickOrPunchFinish);
+    StoreSpriteCallbackInData6(sprite, AnimSpinningKickOrPunchFinish);
 }
 
 static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite)
@@ -649,7 +649,7 @@ static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite)
     sprite->data[0] = 20;
 
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Animates MOVE_STOMP's foot that slides downward.
@@ -673,7 +673,7 @@ static void AnimStompFootStep(struct Sprite *sprite)
         sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
         sprite->callback = StartAnimLinearTranslation;
-        StoreSpriteCallbackInData(sprite, AnimStompFootEnd);
+        StoreSpriteCallbackInData6(sprite, AnimStompFootEnd);
     }
 }
 
@@ -682,7 +682,7 @@ static void AnimStompFootEnd(struct Sprite *sprite)
     sprite->data[0] = 15;
 
     sprite->callback = WaitAnimForDuration;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void AnimDizzyPunchDuck(struct Sprite *sprite)
@@ -847,7 +847,7 @@ static void sub_80D986C(struct Sprite *sprite)
         sprite->data[4] = GetBattlerSpriteCoord(sprite->data[7], 3);
 
         InitAnimLinearTranslation(sprite);
-        StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
+        StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
         sprite->callback = TranslateAnimLinearUntil;
     }
 }
@@ -942,7 +942,7 @@ void sub_80D9A38(struct Sprite *sprite)
     sprite->data[4] = GetBattlerSpriteCoord(bank, 3);
 
     InitAnimLinearTranslation(sprite);
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = TranslateAnimLinearUntil;
 }
 
@@ -998,7 +998,7 @@ void sub_80D9BD4(struct Sprite *sprite)
     }
 
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D9C40(struct Sprite *sprite)

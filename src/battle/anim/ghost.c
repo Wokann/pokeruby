@@ -550,7 +550,7 @@ void sub_80DE1B0(u8 taskId)
     }
     gSprites[task->data[0]].data[3] = 0;
     gSprites[task->data[0]].data[4] = 0;
-    StoreSpriteCallbackInData(&gSprites[task->data[0]], SpriteCallbackDummy);
+    StoreSpriteCallbackInData6(&gSprites[task->data[0]], SpriteCallbackDummy);
     gSprites[task->data[0]].callback = sub_8078394;
     task->func = sub_80DE2DC;
 }
@@ -1071,7 +1071,7 @@ static void sub_80DEF98(struct Sprite *sprite)
             {
                 sprite->data[0] = 30;
                 sprite->callback = WaitAnimForDuration;
-                StoreSpriteCallbackInData(sprite, sub_80DF018);
+                StoreSpriteCallbackInData6(sprite, sub_80DF018);
             }
             else
             {

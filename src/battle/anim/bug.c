@@ -225,7 +225,7 @@ void sub_80DC824(struct Sprite *sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // used in Move_LEECH_LIFE
@@ -250,7 +250,7 @@ void sub_80DC8F4(struct Sprite *sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // used in 2 moves:
@@ -415,7 +415,7 @@ void AnimTranslateStinger(struct Sprite *sprite)
     sprite->data[4] = lVarY;
 
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // used in 2 moves:
@@ -494,6 +494,6 @@ void sub_80DCE40(struct Sprite *sprite)
         sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + 18;
     }
 
-    StoreSpriteCallbackInData(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_80785E4;
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }

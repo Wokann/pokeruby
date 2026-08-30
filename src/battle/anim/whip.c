@@ -117,7 +117,7 @@ void sub_80CC82C(struct Sprite* sprite)
     }
 
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void AnimWhipHit(struct Sprite* sprite)

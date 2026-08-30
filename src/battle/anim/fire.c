@@ -179,7 +179,7 @@ void sub_80D4ED8(struct Sprite *sprite)
     sprite->data[3] = 0x1E;
     sprite->data[4] = 0xFE00;
 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
     sprite->callback = sub_8078174;
     sprite->callback(sprite);
@@ -195,7 +195,7 @@ void AnimFireSpread(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[3];
 
     sprite->callback = sub_8078394;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 void sub_80D4F5C(struct Sprite *sprite)

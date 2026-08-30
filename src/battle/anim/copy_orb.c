@@ -69,7 +69,7 @@ void sub_80CB4CC(struct Sprite* sprite)
             sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
             sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
             sprite->callback = sub_8078CC0;
-            StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+            StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
             break;
         }
     }

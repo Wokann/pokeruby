@@ -604,7 +604,7 @@ static void AnimIcePunchSwirlingParticle(struct Sprite *sprite)
     sprite->data[2] = 9; 
     sprite->data[3] = 30; 
     sprite->data[4] = 65024; 
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = sub_8078174;
     sub_8078174(sprite);
 }
@@ -627,7 +627,7 @@ static void AnimIceBeamParticle(struct Sprite *sprite)
 
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = StartAnimLinearTranslation;
 }
 
@@ -652,8 +652,8 @@ static void AnimIceEffectParticle(struct Sprite *sprite)
         sprite->y += gBattleAnimArgs[1];
     }
 
-    StoreSpriteCallbackInData(sprite, AnimFlickerIceEffectParticle);
-    sprite->callback = sub_80785E4;
+    StoreSpriteCallbackInData6(sprite, AnimFlickerIceEffectParticle);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
 static void AnimFlickerIceEffectParticle(struct Sprite *sprite)
@@ -724,7 +724,7 @@ static void AnimSwirlingSnowball_Step1(struct Sprite *sprite)
         sprite->data[i] = tempDataHolder[i];
 
     sprite->callback = sub_8078D8C;
-    StoreSpriteCallbackInData(sprite, AnimSwirlingSnowball_Step2);
+    StoreSpriteCallbackInData6(sprite, AnimSwirlingSnowball_Step2);
 }
 
 static void AnimSwirlingSnowball_Step2(struct Sprite *sprite)
@@ -1542,7 +1542,7 @@ static void AnimThrowIceBall(struct Sprite *sprite)
 
     StartSpriteAnim(sprite, 1);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData(sprite, DestroyAnimSprite);
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 // Initializes the particles that scatter at the end of the Ice Ball animation.

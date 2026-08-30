@@ -2259,7 +2259,7 @@ static void sub_8049ED4(u8 a0)
             gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]].data[0] = 20;
             gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]].data[2] = (gTradeMonSpriteCoords[6 * whichParty + whichPokemon][0] + gTradeMonSpriteCoords[6 * whichParty + whichPokemon + 1][0]) / 2 * 8 + 14;
             gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]].data[4] = gTradeMonSpriteCoords[6 * whichParty + whichPokemon][1] * 8 - 12;
-            StoreSpriteCallbackInData(&gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
+            StoreSpriteCallbackInData6(&gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
             gUnknown_03004824->unk_0080[a0] ++;
             sub_8078A34(&gSprites[gUnknown_03004824->partyIcons[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
@@ -2473,7 +2473,7 @@ static void sub_8049ED4(u8 a0)
                     "\tlsls r0, 2\n"
                     "\tadds r0, r7\n"
                     "\tldr r1, _0804A0A0 @ =SpriteCB_PokemonIcon\n"
-                    "\tbl StoreSpriteCallbackInData\n"
+                    "\tbl StoreSpriteCallbackInData6\n"
                     "\tldr r2, _0804A09C @ =gUnknown_03004824\n"
                     "\tldr r1, [r2]\n"
                     "\tadds r1, 0x80\n"
