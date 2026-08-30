@@ -8,15 +8,15 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D0228(struct Sprite* sprite);
-static void sub_80D02D0(struct Sprite* sprite);
-static void sub_80D0344(struct Sprite* sprite);
-static void sub_80D03A8(struct Sprite* sprite);
+static void AnimGuillotinePincer(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step1(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step2(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step3(struct Sprite *sprite);
 
 // guillotine (does a reverse grip where the slices can reverse at a given period.)
 // Used in Guillotine.
 
-const union AnimCmd gSpriteAnim_83D76B4[] =
+const union AnimCmd gGuillotineAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(16, 2),
@@ -24,7 +24,7 @@ const union AnimCmd gSpriteAnim_83D76B4[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D76C4[] =
+const union AnimCmd gGuillotineAnimCmds2[] =
 {
     ANIMCMD_FRAME(0, 2, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 2, .vFlip = TRUE, .hFlip = TRUE),
@@ -32,54 +32,54 @@ const union AnimCmd gSpriteAnim_83D76C4[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D76D4[] =
+const union AnimCmd *const gGuillotineAnimTable[] =
 {
-    gSpriteAnim_83D76B4,
-    gSpriteAnim_83D76C4,
+    gGuillotineAnimCmds1,
+    gGuillotineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D76DC =
+const struct SpriteTemplate gGuillotineSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
-    .anims = gSpriteAnimTable_83D76D4,
+    .anims = gGuillotineAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D0228,
+    .callback = AnimGuillotinePincer,
 };
 
-void sub_80D0228(struct Sprite* sprite)
+static void AnimGuillotinePincer(struct Sprite *sprite)
 {
-    s16 r8 = 32;
-    s16 r4 = -32;
-    s16 r9 = 16;
-    s16 r6 = -16;
-    if (gBattleAnimArgs[0] != 0)
+    s16 startXOffset = 32;
+    s16 startYOffset = -32;
+    s16 endXOffset = 16;
+    s16 endYOffset = -16;
+    if (gBattleAnimArgs[0])
     {
-        r8 = r4;
-        r4 = 32;
-        r9 = r6;
-        r6 = 16;
+        startXOffset = -32;
+        startYOffset = 32;
+        endXOffset = -16;
+        endYOffset = 16;
         StartSpriteAnim(sprite, gBattleAnimArgs[0]);
     }
 
-    sprite->x += r8;
-    sprite->y += r4;
+    sprite->x += startXOffset;
+    sprite->y += startYOffset;
     sprite->data[0] = 6;
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + r9;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + endXOffset;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + r6;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + endYOffset;
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = gBattleAnimArgs[0];
     sprite->data[6] = sprite->data[0];
-    sprite->callback = sub_80D02D0;
+    sprite->callback = AnimGuillotinePincer_Step1;
 }
 
-static void sub_80D02D0(struct Sprite* sprite)
+static void AnimGuillotinePincer_Step1(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite) && sprite->animEnded == 1)
+    if (AnimTranslateLinear(sprite) && sprite->animEnded)
     {
         SeekSpriteAnim(sprite, 0);
         sprite->animPaused = 1;
@@ -92,11 +92,11 @@ static void sub_80D02D0(struct Sprite* sprite)
         sprite->data[2] ^= 1;
         sprite->data[4] = 0;
         sprite->data[3] = 0;
-        sprite->callback = sub_80D0344;
+        sprite->callback = AnimGuillotinePincer_Step2;
     }
 }
 
-static void sub_80D0344(struct Sprite* sprite)
+static void AnimGuillotinePincer_Step2(struct Sprite *sprite)
 {
     if (sprite->data[3])
     {
@@ -105,7 +105,7 @@ static void sub_80D0344(struct Sprite* sprite)
     }
 
     sprite->data[3] ^= 1;
-    if (++sprite->data[4] == 0x33)
+    if (++sprite->data[4] == 51)
     {
         sprite->y2 = 0;
         sprite->x2 = 0;
@@ -113,12 +113,12 @@ static void sub_80D0344(struct Sprite* sprite)
         sprite->data[3] = 0;
         sprite->animPaused = 0;
         StartSpriteAnim(sprite, sprite->data[5] ^ 1);
-        sprite->callback = sub_80D03A8;
+        sprite->callback = AnimGuillotinePincer_Step3;
     }
 }
 
-static void sub_80D03A8(struct Sprite* sprite)
+static void AnimGuillotinePincer_Step3(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite))
         DestroyAnimSprite(sprite);
 }

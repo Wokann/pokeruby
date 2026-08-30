@@ -4542,7 +4542,7 @@ static void sub_8130FE0(struct Sprite *sprite)
         sprite->data[5]++;
         break;
     case 1:
-        if (TranslateAnimLinear(sprite))
+        if (AnimTranslateLinear(sprite))
         {
             switch (sprite->data[6])
             {

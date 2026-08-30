@@ -375,7 +375,7 @@ void sub_80CEE60(struct Sprite* sprite)
 
 static void sub_80CEEE8(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite) == 0)
+    if (AnimTranslateLinear(sprite) == 0)
     {
         s16 a;
         a = Sin(sprite->data[5], 8);

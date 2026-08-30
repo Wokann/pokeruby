@@ -240,7 +240,7 @@ void sub_80D0FD8(struct Sprite* sprite)
 
 void sub_80D1098(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         FreeSpriteOamMatrix(sprite);
         DestroyAnimSprite(sprite);

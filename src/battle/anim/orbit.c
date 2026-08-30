@@ -166,7 +166,7 @@ void sub_80CAD54(struct Sprite* sprite)
 
 static void sub_80CADA8(struct Sprite* sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], 32);
         sprite->y2 += Cos(sprite->data[5], -5);
@@ -203,7 +203,7 @@ void sub_80CAE20(struct Sprite* sprite)
 
 static void sub_80CAE74(struct Sprite* sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], 8);
         if ((u16)(sprite->data[5] - 0x3B) < 5 || (u16)(sprite->data[5] - 0xBB) < 5)

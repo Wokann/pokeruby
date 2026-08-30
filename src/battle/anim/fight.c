@@ -615,7 +615,7 @@ void sub_80D9378(struct Sprite *sprite)
 
 static void sub_80D9404(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->y2 += Sin(sprite->data[7] >> 8, sprite->data[5]);
         sprite->data[7] += sprite->data[6];
@@ -848,7 +848,7 @@ static void sub_80D986C(struct Sprite *sprite)
 
         InitAnimLinearTranslation(sprite);
         StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-        sprite->callback = TranslateAnimLinearUntil;
+        sprite->callback = AnimTranslateLinear_WithFollowup;
     }
 }
 
@@ -943,7 +943,7 @@ void sub_80D9A38(struct Sprite *sprite)
 
     InitAnimLinearTranslation(sprite);
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = TranslateAnimLinearUntil;
+    sprite->callback = AnimTranslateLinear_WithFollowup;
 }
 
 static void sub_80D9B24(struct Sprite *sprite)

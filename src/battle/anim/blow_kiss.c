@@ -39,7 +39,7 @@ void sub_80D1F58(struct Sprite* sprite)
 
 static void sub_80D1FA4(struct Sprite* sprite)
 {
-    if (TranslateAnimLinear(sprite) == 0)
+    if (AnimTranslateLinear(sprite) == 0)
     {
         sprite->y2 += Sin(sprite->data[5], 14);
         sprite->data[5] = (sprite->data[5] + 4) & 0xFF;

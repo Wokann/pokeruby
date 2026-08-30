@@ -975,7 +975,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
 // Animates swirling fog initialized by InitSwirlingFogAnim.
 static void AnimSwirlingFogAnim(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[5], sprite->data[6]);
         sprite->y2 += Cos(sprite->data[5], -6);
@@ -1256,7 +1256,7 @@ static void sub_80D8874(struct Sprite *sprite)
     switch (sprite->data[7] & 0xFF)
     {
     case 0:
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         value = gSineTable[sprite->data[5]];
         sprite->x2 += value >> 4;
         if (sprite->data[6])
@@ -1289,7 +1289,7 @@ static void sub_80D8874(struct Sprite *sprite)
         }
         break;
     case 1:
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         value = gSineTable[sprite->data[5]];
         sprite->x2 += value >> 3;
         sprite->y2 += (gSineTable[sprite->data[5] + 0x40] * -3) >> 8;
@@ -1333,7 +1333,7 @@ static void sub_80D8874(struct Sprite *sprite)
         }
         break;
     case 2:
-        if (TranslateAnimLinear(sprite))
+        if (AnimTranslateLinear(sprite))
         {
             if (sprite->oam.affineMode & 1)
             {

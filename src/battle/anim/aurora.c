@@ -90,7 +90,7 @@ static void AnimGrowAuroraRings(struct Sprite *sprite)
         StartSpriteAnim(sprite, 1);
         sprite->affineAnimPaused = FALSE;
     }
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite) != 0)
         DestroyAnimSprite(sprite);
 }
 

@@ -866,7 +866,7 @@ static void SendOutPlayerMonAnimation_Step1(struct Sprite *sprite)
         }
 
         r4 = sprite->data[0];
-        TranslateAnimLinear(sprite);
+        AnimTranslateLinear(sprite);
         sprite->data[7] += sprite->data[6] / 3;
         sprite->y2 += Sin(HIBYTE(sprite->data[7]), sprite->data[5]);
         sprite->oam.affineParam += 0x100;

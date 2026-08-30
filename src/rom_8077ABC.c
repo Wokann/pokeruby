@@ -771,7 +771,7 @@ void InitAnimArcTranslation(struct Sprite *sprite)
 
 bool8 TranslateAnimArc(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
         return TRUE;
     sprite->data[7] += sprite->data[6];
     sprite->y2 += Sin((u8)(sprite->data[7] >> 8), sprite->data[5]);
@@ -984,11 +984,11 @@ void StartAnimLinearTranslation(struct Sprite *sprite)
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
     InitAnimLinearTranslation(sprite);
-    sprite->callback = TranslateAnimLinearUntil;
+    sprite->callback = AnimTranslateLinear_WithFollowup;
     sprite->callback(sprite);
 }
 
-bool8 TranslateAnimLinear(struct Sprite *sprite)
+bool8 AnimTranslateLinear(struct Sprite *sprite)
 {
     u16 v1, v2, x, y;
 
@@ -1018,9 +1018,9 @@ bool8 TranslateAnimLinear(struct Sprite *sprite)
     return FALSE;
 }
 
-void TranslateAnimLinearUntil(struct Sprite *sprite)
+void AnimTranslateLinear_WithFollowup(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
         SetCallbackToStoredInData6(sprite);
 }
 
@@ -1036,7 +1036,7 @@ void sub_8078C00(struct Sprite *sprite)
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
     sub_8078BD4(sprite);
-    sprite->callback = TranslateAnimLinearUntil;
+    sprite->callback = AnimTranslateLinear_WithFollowup;
     sprite->callback(sprite);
 }
 

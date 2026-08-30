@@ -378,7 +378,7 @@ void sub_80D648C(struct Sprite *sprite)
 
 static void sub_80D6514(struct Sprite *sprite)
 {
-    if (!TranslateAnimLinear(sprite))
+    if (!AnimTranslateLinear(sprite))
     {
         sprite->x2 += Sin(sprite->data[7], sprite->data[5]);
         sprite->y2 += Cos(sprite->data[7], sprite->data[5]);
@@ -675,7 +675,7 @@ static void sub_80D6BB8(u8 taskId)
 
 static void sub_80D6CCC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         gTasks[sprite->data[5]].data[7]--;
         DestroySprite(sprite);

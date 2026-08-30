@@ -249,7 +249,7 @@ static void AnimFireRingStep1(struct Sprite *sprite)
 
 static void AnimFireRingStep2(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         sprite->data[0] = 0;
 

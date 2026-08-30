@@ -242,7 +242,7 @@ static void sub_80DDBD8(struct Sprite *sprite)
     s16 r0;
     s16 r2;
     sub_80DDCC8(sprite);
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         sprite->callback = sub_80DDC4C;
         return;
@@ -265,7 +265,7 @@ static void sub_80DDC4C(struct Sprite *sprite)
     s16 r2;
     s16 r0;
     sprite->data[0] = 1;
-    TranslateAnimLinear(sprite);
+    AnimTranslateLinear(sprite);
     sprite->x2 += Sin(sprite->data[5], 10);
     sprite->y2 += Cos(sprite->data[5], 15);
     

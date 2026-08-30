@@ -446,7 +446,7 @@ static void sub_80DA16C(struct Sprite *sprite)
 
 static void sub_80DA1EC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite) != 0)
     {
         DestroyAnimSprite(sprite);
     }
@@ -546,7 +546,7 @@ static void sub_80DA38C(struct Sprite *sprite)
 static void sub_80DA410(struct Sprite *sprite)
 {
     sprite->data[0] = 1;
-    TranslateAnimLinear(sprite);
+    AnimTranslateLinear(sprite);
 
     if (((u16) sprite->data[3] >> 8) > 200)
     {

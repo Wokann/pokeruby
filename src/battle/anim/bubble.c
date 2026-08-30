@@ -106,7 +106,7 @@ static void sub_80D32E8(struct Sprite *sprite)
     u16 index = gSprites[spriteId].data[3];
 
     sprite->data[0] = 1;
-    TranslateAnimLinear(sprite);
+    AnimTranslateLinear(sprite);
 
     sprite->x2 += Sin(index / 256, gSprites[spriteId].data[0]);
     sprite->y2 += Cos(index / 256, gSprites[spriteId].data[1]);

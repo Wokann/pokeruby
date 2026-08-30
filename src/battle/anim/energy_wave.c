@@ -191,7 +191,7 @@ void sub_80D3554(struct Sprite *sprite)
 
 static void sub_80D35DC(struct Sprite *sprite)
 {
-    if (TranslateAnimLinear(sprite))
+    if (AnimTranslateLinear(sprite))
     {
         DestroyAnimSprite(sprite);
     }
