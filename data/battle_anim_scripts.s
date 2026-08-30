@@ -1422,16 +1422,16 @@ Move_FURY_CUTTER: @ 81C914A
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createvisualtask UpdateFuryCutterAnimDirection, 2
-	jumpargeq 7, 0, _81C91A7
-	goto _81C91B9
-_81C916A:
-	createvisualtask UpdateFuryCutterAnimCount, 2
-	jumpargeq 7, 1, _81C918E
-	jumpargeq 7, 2, _81C91CB
-	jumpargeq 7, 3, _81C91E5
-	goto _81C91FF
-_81C918E:
+	createvisualtask AnimTask_IsFuryCutterHitRight, 2
+	jumpretfalse FuryCutterLeft
+	goto FuryCutterRight
+FuryCutterContinue:
+	createvisualtask AnimTask_GetFuryCutterHitCount, 2
+	jumpreteq 1, FuryCutterContinue2
+	jumpreteq 2, FuryCutterMedium
+	jumpreteq 3, FuryCutterStrong
+	goto FuryCutterStrongest
+FuryCutterContinue2:
 	delay 5
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 10, 1
 	waitforvisualfinish
@@ -1439,21 +1439,21 @@ _81C918E:
 	blendoff
 	waitforvisualfinish
 	end
-_81C91A7:
+FuryCutterLeft:
 	createsprite gCuttingSliceSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -32, 0
-	goto _81C916A
-_81C91B9:
+	goto FuryCutterContinue
+FuryCutterRight:
 	createsprite gCuttingSliceSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -32, 1
-	goto _81C916A
-_81C91CB:
+	goto FuryCutterContinue
+FuryCutterMedium:
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 10505, 4, 0, 0
-	goto _81C918E
-_81C91E5:
+	goto FuryCutterContinue2
+FuryCutterStrong:
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 3, 10505, 4, 0, 0
-	goto _81C918E
-_81C91FF:
+	goto FuryCutterContinue2
+FuryCutterStrongest:
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 3, 10505, 4, 0, 0
-	goto _81C918E
+	goto FuryCutterContinue2
 
 Move_SELF_DESTRUCT: @ 81C9219
 	loadspritegfx ANIM_TAG_EXPLOSION
