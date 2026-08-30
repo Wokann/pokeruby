@@ -48,7 +48,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F3C =
 {
     .tileTag = ANIM_TAG_GRAY_SMOKE,
     .paletteTag = ANIM_TAG_GRAY_SMOKE,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6F38,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

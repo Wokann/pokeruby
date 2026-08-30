@@ -4,6 +4,7 @@
 #include "battle_anim.h"
 #include "sound.h"
 #include "scanline_effect.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -14,7 +15,7 @@ extern u16 gBattle_BG2_X;
 extern u16 gUnknown_03000730[];
 extern u8 gBattlerSpriteIds[];
 
-void sub_80DF5A0(struct Sprite *sprite);
+static void AnimOutrageFlame(struct Sprite *sprite);
 void sub_80DF760(struct Sprite *sprite);
 void sub_80DF6F0(struct Sprite *sprite);
 void sub_80DF760(struct Sprite *sprite);
@@ -25,7 +26,7 @@ static void sub_80DFBD8(struct Sprite *sprite);
 static void sub_80DF9F4(u8 taskId);
 static void sub_80DFAB0(struct Task *task);
 
-const union AnimCmd gSpriteAnim_83DAFB0[] =
+static const union AnimCmd sAnim_OutrageOverheatFire_0[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
@@ -35,20 +36,20 @@ const union AnimCmd gSpriteAnim_83DAFB0[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAFC8[] =
+static const union AnimCmd *const sAnims_OutrageOverheatFire[] =
 {
-    gSpriteAnim_83DAFB0,
+    sAnim_OutrageOverheatFire_0,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAFCC =
+const struct SpriteTemplate gOutrageFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_83DAFC8,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_OutrageOverheatFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DF5A0,
+    .callback = AnimOutrageFlame,
 };
 
 const union AnimCmd gSpriteAnim_83DAFE4[] =
@@ -123,7 +124,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB078 =
 {
     .tileTag = ANIM_TAG_FIRE_PLUME,
     .paletteTag = ANIM_TAG_FIRE_PLUME,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB074,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -188,8 +189,8 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_83DAFC8,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_OutrageOverheatFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80DFB28,
@@ -197,11 +198,11 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
 
 // Outrage
 
-void sub_80DF5A0(struct Sprite *sprite)
+static void AnimOutrageFlame(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-    if (GetBattlerSide(gBattleAnimAttacker))
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= gBattleAnimArgs[0];
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
@@ -216,7 +217,7 @@ void sub_80DF5A0(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[5];
     sprite->invisible = TRUE;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }
 
 // part of Dragon Breath

@@ -1902,43 +1902,43 @@ Move_OUTRAGE: @ 81C9D08
 	createvisualtask AnimTask_BlendColorCycle, 2, 7, 2, 5, 3, 8, 430
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 12, 6, 5, 4
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, 0, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, 0, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, 1280, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, 5, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, -1280, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, -5, 3
 	delay 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, 768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, 3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, 768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, 3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, -768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, -3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, -768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, -3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, 0, 3
-	call _81C9E0F
-	call _81C9E0F
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, 0, 3
+	call OutrageFlames
+	call OutrageFlames
 	waitforvisualfinish
 	end
-_81C9E0F:
+OutrageFlames:
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, 0, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, 0, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, 1280, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, 5, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, -1280, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 0, -5, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, 768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, 3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, 768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, 3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 1280, -768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, 5, -3, 3
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DAFCC, ANIM_BATTLER_TARGET, 2, 0, 0, 30, -1280, -768, 3
+	create_outrage_flame_sprite ANIM_BATTLER_TARGET, 2, 0, 0, 30, -5, -3, 3
 	return
 
 Move_SPARK: @ 81C9EA3

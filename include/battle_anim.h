@@ -60,7 +60,7 @@ extern struct DisableStruct *gAnimDisableStructPtr;
 
 extern const struct OamData gOamData_837DF24;
 extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
-extern const struct OamData gOamData_837DF34;
+extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
 extern const struct OamData gOamData_837DF3C;
 extern const struct OamData gOamData_837DF44;
 extern const struct OamData gOamData_837DF4C;

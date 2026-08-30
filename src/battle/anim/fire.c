@@ -40,7 +40,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9478 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9470,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -51,7 +51,7 @@ const struct SpriteTemplate gFireSpreadSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9470,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -118,7 +118,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9520 =
 {
     .tileTag = ANIM_TAG_FIRE,
     .paletteTag = ANIM_TAG_FIRE,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D94CC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -129,7 +129,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9538 =
 {
     .tileTag = ANIM_TAG_FIRE_PLUME,
     .paletteTag = ANIM_TAG_FIRE_PLUME,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D94E8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -140,7 +140,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9550 =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D94E8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -164,7 +164,7 @@ const struct SpriteTemplate gSpriteTemplate_83D957C =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9578,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

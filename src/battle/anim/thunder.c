@@ -32,7 +32,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D97D0 =
 {
     .tileTag = ANIM_TAG_LIGHTNING,
     .paletteTag = ANIM_TAG_LIGHTNING,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D97CC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

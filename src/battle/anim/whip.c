@@ -42,7 +42,7 @@ const struct SpriteTemplate gSlamHitSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SLAM_HIT,
     .paletteTag = ANIM_TAG_SLAM_HIT,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gWhipAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -53,7 +53,7 @@ const struct SpriteTemplate gVineWhipSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHIP_HIT,
     .paletteTag = ANIM_TAG_WHIP_HIT,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gWhipAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -79,7 +79,7 @@ const struct SpriteTemplate gSpriteTemplate_83D6A28 =
 {
     .tileTag = ANIM_TAG_UNUSED_HIT,
     .paletteTag = ANIM_TAG_UNUSED_HIT,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6A24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -90,7 +90,7 @@ const struct SpriteTemplate gSpriteTemplate_83D6A40 =
 {
     .tileTag = ANIM_TAG_UNUSED_HIT_2,
     .paletteTag = ANIM_TAG_UNUSED_HIT_2,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D6A24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

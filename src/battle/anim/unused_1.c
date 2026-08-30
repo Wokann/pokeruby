@@ -85,5 +85,5 @@ void sub_80CC8C8(struct Sprite* sprite)
     sprite->data[5] = gBattleAnimArgs[5];
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[6]);
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }

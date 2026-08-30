@@ -16,7 +16,7 @@ const struct SpriteTemplate gSpriteTemplate_83D7370 =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

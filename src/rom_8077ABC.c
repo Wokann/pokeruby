@@ -664,7 +664,7 @@ void TranslateMonBGSubPixelUntil(struct Sprite *sprite)
     }
 }
 
-void sub_8078504(struct Sprite *sprite)
+void TranslateSpriteLinearAndFlicker(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
@@ -2187,7 +2187,7 @@ void sub_807A544(struct Sprite *sprite)
     sprite->data[3] = gBattleAnimArgs[4];
     sprite->data[5] = gBattleAnimArgs[5];
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }
 
 void sub_807A5C4(struct Sprite *sprite)
@@ -2208,7 +2208,7 @@ void sub_807A5C4(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[5];
     StartSpriteAnim(sprite, gBattleAnimArgs[6]);
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078504;
+    sprite->callback = TranslateSpriteLinearAndFlicker;
 }
 
 // file_2

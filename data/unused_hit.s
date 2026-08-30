@@ -26,4 +26,4 @@ gSpriteAnimTable_839313C:: @ 839313C
 
 	.align 2
 gSpriteTemplate_8393148:: @ 8393148
-	spr_template 10135, 10135, gOamData_837DF34, gSpriteAnimTable_839313C, NULL, gDummySpriteAffineAnimTable, sub_807A5C4
+	spr_template 10135, 10135, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_839313C, NULL, gDummySpriteAffineAnimTable, sub_807A5C4

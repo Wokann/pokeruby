@@ -16,7 +16,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7CC8 =
 {
     .tileTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
     .paletteTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

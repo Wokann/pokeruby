@@ -159,7 +159,7 @@ const struct SpriteTemplate gSpriteTemplate_83DB410 =
 {
     .tileTag = ANIM_TAG_SPARKLE_4,
     .paletteTag = ANIM_TAG_SPARKLE_4,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DB40C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

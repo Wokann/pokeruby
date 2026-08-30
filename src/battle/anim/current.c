@@ -262,7 +262,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9A9C =
 {
     .tileTag = ANIM_TAG_ELECTRICITY,
     .paletteTag = ANIM_TAG_ELECTRICITY,
-    .oam = &gOamData_837DF34,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9A98,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -79,7 +79,7 @@ void sub_8078D8C(struct Sprite *sprite);
 void WaitAnimForDuration(struct Sprite *sprite);
 void sub_8078CC0(struct Sprite *sprite);
 void RunStoredCallbackWhenAnimEnds(struct Sprite *sprite);
-void sub_8078504(struct Sprite *sprite);
+void TranslateSpriteLinearAndFlicker(struct Sprite *sprite);
 void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite);
 void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite);
 void sub_8078394(struct Sprite *sprite);

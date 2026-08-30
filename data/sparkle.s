@@ -18,4 +18,4 @@ sAnims_SpinningSparkle:: @ 83930F0
 
 	.align 2
 gSpinningSparkleSpriteTemplate:: @ 83930F4
-	spr_template 10071, 10071, gOamData_837DF34, sAnims_SpinningSparkle, NULL, gDummySpriteAffineAnimTable, AnimSpinningSparkle
+	spr_template 10071, 10071, gOamData_AffineOff_ObjNormal_32x32, sAnims_SpinningSparkle, NULL, gDummySpriteAffineAnimTable, AnimSpinningSparkle
