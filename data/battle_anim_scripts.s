@@ -1623,19 +1623,19 @@ RisingWaterHitEffect:
 Move_EXPLOSION: @ 81C9675
 	loadspritegfx ANIM_TAG_EXPLOSION
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 8, 9, 8474, 8, 0, 8
-	createvisualtask AnimTask_ShakeMon2, 5, 4, 8, 0, 40, 1
-	createvisualtask AnimTask_ShakeMon2, 5, 5, 8, 0, 40, 1
-	createvisualtask AnimTask_ShakeMon2, 5, 6, 8, 0, 40, 1
-	createvisualtask AnimTask_ShakeMon2, 5, 7, 8, 0, 40, 1
-	createvisualtask AnimTask_ShakeMon2, 5, 8, 8, 0, 40, 1
-	call _81C9712
-	call _81C9712
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_PLAYER_LEFT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_PLAYER_RIGHT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_OPPONENT_LEFT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_OPPONENT_RIGHT, 8, 0, 40, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_ATTACKER_FORCE, 8, 0, 40, 1
+	call Explosion1
+	call Explosion1
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 1, 16, 16, 32767
 	delay 50
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 16, 0, 32767
 	end
-_81C9712:
+Explosion1:
 	playsewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER
 	createsprite gExplosionSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 0, 1
 	delay 6
