@@ -100,7 +100,7 @@ u32 sub_80791A8(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
 u32 sub_80792C0(u8 a1, u8 a2, u8 a3, u8 a4);
 s16 duplicate_obj_of_side_rel2move_in_transparent_mode(u8 a1);
 void obj_delete_but_dont_free_vram(struct Sprite *sprite);
-void sub_8079108(u16 a1, bool8 a2);
+void SetGrayscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
 void PrepareAffineAnimInTaskData(struct Task *task, u8 a2, const void *a3);
 bool8 RunAffineAnimFromTaskData(struct Task *task);
 u8 sub_8077FC0(u8 slot);

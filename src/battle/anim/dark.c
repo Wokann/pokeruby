@@ -888,7 +888,7 @@ void sub_80E0A4C(u8 taskId)
     paletteNum = 16 + gSprites[spriteId].oam.paletteNum;
 
     if (gBattleAnimArgs[1]  == 0)
-        sub_8079108(paletteNum, FALSE);
+        SetGrayscaleOrOriginalPalette(paletteNum, FALSE);
     else
         BlendPalette(paletteNum * 16, 16, 11, gBattleAnimArgs[2]);
 
@@ -933,7 +933,7 @@ static void sub_80E0CD0(u8 taskId)
             spriteId = GetAnimBattlerSpriteId(0);
             paletteNum = 16 + gSprites[spriteId].oam.paletteNum;
             if (gTasks[taskIdCopy].data[1] == 0)
-                sub_8079108(paletteNum, 1);
+                SetGrayscaleOrOriginalPalette(paletteNum, TRUE);
 
             DestroySprite(&gSprites[gTasks[taskIdCopy].data[0]]);
             sub_8078914(&subStruct);
@@ -949,35 +949,35 @@ static void sub_80E0CD0(u8 taskId)
     }
 }
 
-void sub_80E0E24(u8 taskId)
+void AnimTask_SetGrayscaleOrOriginalPal(u8 taskId)
 {
     u8 spriteId;
-    u8 bank;
+    u8 battler;
     bool8 calcSpriteId = FALSE;
-    u8 identity = 0;
+    u8 position = B_POSITION_PLAYER_LEFT;
 
     switch (gBattleAnimArgs[0])
     {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
+    case ANIM_BATTLER_ATTACKER:
+    case ANIM_BATTLER_TARGET:
+    case ANIM_BATTLER_ATK_PARTNER:
+    case ANIM_BATTLER_DEF_PARTNER:
         spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
         break;
-    case 4:
-        identity = B_POSITION_PLAYER_LEFT;
+    case ANIM_PLAYER_LEFT:
+        position = B_POSITION_PLAYER_LEFT;
         calcSpriteId = TRUE;
         break;
-    case 5:
-        identity = B_POSITION_PLAYER_RIGHT;
+    case ANIM_PLAYER_RIGHT:
+        position = B_POSITION_PLAYER_RIGHT;
         calcSpriteId = TRUE;
         break;
-    case 6:
-        identity = B_POSITION_OPPONENT_LEFT;
+    case ANIM_OPPONENT_LEFT:
+        position = B_POSITION_OPPONENT_LEFT;
         calcSpriteId = TRUE;
         break;
-    case 7:
-        identity = B_POSITION_OPPONENT_RIGHT;
+    case ANIM_OPPONENT_RIGHT:
+        position = B_POSITION_OPPONENT_RIGHT;
         calcSpriteId = TRUE;
         break;
     default:
@@ -987,15 +987,15 @@ void sub_80E0E24(u8 taskId)
 
     if (calcSpriteId)
     {
-        bank = GetBattlerAtPosition(identity);
-        if (IsAnimBankSpriteVisible(bank))
-            spriteId = gBattlerSpriteIds[bank];
+        battler = GetBattlerAtPosition(position);
+        if (IsAnimBankSpriteVisible(battler))
+            spriteId = gBattlerSpriteIds[battler];
         else
             spriteId = 0xFF;
     }
 
     if (spriteId != 0xFF)
-        sub_8079108(gSprites[spriteId].oam.paletteNum + 16, gBattleAnimArgs[1]);
+        SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, gBattleAnimArgs[1]);
 
     DestroyAnimVisualTask(taskId);
 }

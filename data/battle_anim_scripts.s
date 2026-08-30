@@ -1656,12 +1656,12 @@ Explosion1:
 Move_DEFENSE_CURL: @ 81C977C
 	loadspritegfx ANIM_TAG_ECLIPSING_ORB
 	loopsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER, 18, 3
-	createvisualtask sub_80E0E24, 5, 0, 0
-	createvisualtask sub_812D350, 5
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_ATTACKER, FALSE
+	createvisualtask AnimTask_DefenseCurlDeformMon, 5
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_8402498, ANIM_BATTLER_ATTACKER, 2, 0, 6, 0, 1
+	createsprite gEclipsingOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 6, 0, 1
 	waitforvisualfinish
-	createvisualtask sub_80E0E24, 5, 0, 1
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_ATTACKER, TRUE
 	waitforvisualfinish
 	end
 
@@ -7237,7 +7237,7 @@ Move_IRON_TAIL: @ 81D18B6
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80E0E24, 5, 0, 1
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_ATTACKER, TRUE
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	waitforvisualfinish
@@ -7257,7 +7257,7 @@ Move_POISON_TAIL: @ 81D1914
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80E0E24, 5, 0, 1
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_ATTACKER, TRUE
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	call PoisonBubblesEffect
@@ -7915,16 +7915,16 @@ Move_PERISH_SONG: @ 81D2784
 	panse_1B SE_M_PERISH_SONG, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 80
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 16, rgb(0, 0, 0)
-	createvisualtask sub_80E0E24, 5, 4, 0
-	createvisualtask sub_80E0E24, 5, 5, 0
-	createvisualtask sub_80E0E24, 5, 6, 0
-	createvisualtask sub_80E0E24, 5, 7, 0
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_LEFT, FALSE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_RIGHT, FALSE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_LEFT, FALSE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_RIGHT, FALSE
 	delay 100
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 16, 0, rgb(0, 0, 0)
-	createvisualtask sub_80E0E24, 5, 4, 1
-	createvisualtask sub_80E0E24, 5, 5, 1
-	createvisualtask sub_80E0E24, 5, 6, 1
-	createvisualtask sub_80E0E24, 5, 7, 1
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_LEFT, TRUE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_RIGHT, TRUE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_LEFT, TRUE
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_RIGHT, TRUE
 	waitforvisualfinish
 	end
 
@@ -9537,7 +9537,7 @@ Move_DOOM_DESIRE: @ 81D52CB
 	createvisualtask sub_80E0EE8, 2
 	delay 1
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask sub_80E0E24, 5, 1, 0
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_TARGET, FALSE
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
 	setalpha 8, 8
@@ -9545,7 +9545,7 @@ Move_DOOM_DESIRE: @ 81D52CB
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -4, -4, 15, ANIM_BATTLER_ATTACKER, 1
 	waitforvisualfinish
 	delay 20
-	createvisualtask sub_80E0E24, 5, 1, 1
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_TARGET, TRUE
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 4, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER

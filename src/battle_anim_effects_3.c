@@ -499,7 +499,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402458 =
     .callback = sub_812D294,
 };
 
-const union AnimCmd gSpriteAnim_8402470[] =
+const union AnimCmd gEclipsingOrbAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -512,23 +512,23 @@ const union AnimCmd gSpriteAnim_8402470[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_8402494[] =
+const union AnimCmd *const gEclipsingOrbAnimTable[] =
 {
-    gSpriteAnim_8402470,
+    gEclipsingOrbAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402498 =
+const struct SpriteTemplate gEclipsingOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ECLIPSING_ORB,
     .paletteTag = ANIM_TAG_ECLIPSING_ORB,
     .oam = &gOamData_837DF34,
-    .anims = gSpriteAnimTable_8402494,
+    .anims = gEclipsingOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gUnknown_084024B0[] =
+const union AffineAnimCmd DefenseCurlDeformMonAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(-12, 20, 0, 8),
     AFFINEANIMCMD_FRAME(12, -20, 0, 8),
@@ -2050,12 +2050,12 @@ static void sub_812D294(struct Sprite *sprite)
     }
 }
 
-void sub_812D350(u8 taskId)
+void AnimTask_DefenseCurlDeformMon(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
     case 0:
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_084024B0);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), &DefenseCurlDeformMonAffineAnimCmds);
         gTasks[taskId].data[0]++;
         break;
     case 1:

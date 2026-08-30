@@ -18,7 +18,7 @@ void sub_80D03C4(u8 taskId)
     u8 spriteId = GetAnimBattlerSpriteId(1);
     PrepareBattlerSpriteForRotScale(spriteId, 1);
     obj_id_set_rotscale(spriteId, 0xD0, 0xD0, 0);
-    sub_8079108(gSprites[spriteId].oam.paletteNum + 16, 0);
+    SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, FALSE);
     gTasks[taskId].data[0] = 0x50;
     gTasks[taskId].func = sub_80D0428;
 }
@@ -29,7 +29,7 @@ void sub_80D0428(u8 taskId)
     {
         u8 spriteId = GetAnimBattlerSpriteId(1);
         sub_8078F40(spriteId);
-        sub_8079108(gSprites[spriteId].oam.paletteNum + 16, 1);
+        SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, TRUE);
         DestroyAnimVisualTask(taskId);
     }
 }

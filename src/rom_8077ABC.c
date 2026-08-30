@@ -1236,32 +1236,33 @@ u16 ArcTan2Neg(s16 a, s16 b)
     return -var;
 }
 
-void sub_8079108(u16 a1, bool8 a2)
+void SetGrayscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor)
 {
     int i;
-    struct PlttData *c;
-    struct PlttData *c2;
+    struct PlttData *originalColor;
+    struct PlttData *destColor;
     u16 average;
+    u16 paletteOffset;
 
-    a1 *= 0x10;
+    paletteOffset = paletteNum * 0x10;
 
-    if (!a2)
+    if (!restoreOriginalColor)
     {
         for (i = 0; i < 0x10; i++)
         {
-            c = (struct PlttData *)&gPlttBufferUnfaded[a1 + i];
-            average = c->r + c->g + c->b;
+            originalColor = (struct PlttData *)&gPlttBufferUnfaded[paletteOffset + i];
+            average = originalColor->r + originalColor->g + originalColor->b;
             average /= 3;
 
-            c2 = (struct PlttData *)&gPlttBufferFaded[a1 + i];
-            c2->r = average;
-            c2->g = average;
-            c2->b = average;
+            destColor = (struct PlttData *)&gPlttBufferFaded[paletteOffset + i];
+            destColor->r = average;
+            destColor->g = average;
+            destColor->b = average;
         }
     }
     else
     {
-        CpuCopy32(&gPlttBufferUnfaded[a1], &gPlttBufferFaded[a1], 0x20);
+        CpuCopy32(&gPlttBufferUnfaded[paletteOffset], &gPlttBufferFaded[paletteOffset], 0x20);
     }
 }
 

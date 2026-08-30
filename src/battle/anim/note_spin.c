@@ -74,7 +74,7 @@ void sub_80D2E68(struct Sprite *sprite)
 
     if (++sprite->data[0] == sprite->data[1])
     {
-        sub_8079108(sprite->oam.paletteNum + 16, 0);
+        SetGrayscaleOrOriginalPalette(sprite->oam.paletteNum + 16, FALSE);
     }
 
     if (sprite->data[0] == sprite->data[1] + 80)
