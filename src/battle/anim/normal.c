@@ -52,7 +52,7 @@ static void AnimHitSplatHandleInvert(struct Sprite *sprite);
 static void sub_80E2870(struct Sprite *sprite);
 static void sub_80E2908(struct Sprite *sprite);
 static void sub_80E2978(struct Sprite *sprite);
-static void sub_80E29C0(struct Sprite *sprite);
+static void AnimFlashingHitSplat(struct Sprite *sprite);
 static void sub_80E27E8(struct Sprite *sprite);
 static void AnimConfusionDuckStep(struct Sprite *sprite);
 static u32 UnpackSelectedBattleAnimPalettes(s16);
@@ -68,7 +68,7 @@ static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId);
 static void sub_80E260C(void);
 static void sub_80E255C(struct Sprite *sprite);
 static void sub_80E2710(u8 taskId);
-static void sub_80E29FC(struct Sprite *sprite);
+static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
 static void AnimTask_BlendSpriteColor_Step1(u8 taskId, u32 selectedPalettes);
 static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
 static void sub_80E2DB8(u8 taskId);
@@ -278,7 +278,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
     .callback = sub_80E2978,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB538 =
+const struct SpriteTemplate gFlashingHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
@@ -286,7 +286,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB538 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB498,
-    .callback = sub_80E29C0,
+    .callback = AnimFlashingHitSplat,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB550 =
@@ -935,18 +935,18 @@ static void sub_80E2978(struct Sprite *sprite)
     sprite->callback = WaitAnimForDuration;
 }
 
-static void sub_80E29C0(struct Sprite *sprite)
+static void AnimFlashingHitSplat(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
-    if (gBattleAnimArgs[2] == 0)
+    if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
         InitAnimSpritePos(sprite, 1);
     else
         sub_8078764(sprite, TRUE);
 
-    sprite->callback = sub_80E29FC;
+    sprite->callback = AnimFlashingHitSplat_Step;
 }
 
-static void sub_80E29FC(struct Sprite *sprite)
+static void AnimFlashingHitSplat_Step(struct Sprite *sprite)
 {
     sprite->invisible ^= 1;
     if (sprite->data[0]++ > 12)

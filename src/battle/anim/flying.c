@@ -13,7 +13,7 @@ extern u8 gBattleAnimTarget;
 extern u8 gAnimVisualTaskCount;
 extern struct OamMatrix gOamMatrices[];
 extern u8 gBattlerPositions[];
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB538;
+extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 
 void sub_80785E4(struct Sprite *sprite);
 static void sub_80DA034(struct Sprite *sprite);
@@ -1017,29 +1017,30 @@ static void sub_80DB0A0(struct Sprite *sprite)
     }
 }
 
-void sub_80DB0E8(u8 task)
+void AnimTask_DrillPeckHitSplats(u8 taskId)
 {
-    u16 data = gTasks[task].data[0];
-    if ((data & 31) == 0)
+    u16 angle = gTasks[taskId].data[0];
+
+    if ((angle & 31) == 0)
     {
         ++gAnimVisualTaskCount;
 
-        gBattleAnimArgs[0] = Sin(gTasks[task].data[0], -13);
-        gBattleAnimArgs[1] = Cos(gTasks[task].data[0], -13);
-        gBattleAnimArgs[2] = 1;
+        gBattleAnimArgs[0] = Sin(gTasks[taskId].data[0], -13);
+        gBattleAnimArgs[1] = Cos(gTasks[taskId].data[0], -13);
+        gBattleAnimArgs[2] = ANIM_BATTLER_TARGET;
         gBattleAnimArgs[3] = 3;
 
-        CreateSpriteAndAnimate(&gBattleAnimSpriteTemplate_83DB538,
-                               GetBattlerSpriteCoord(gBattleAnimTarget, 2),
-                               GetBattlerSpriteCoord(gBattleAnimTarget, 3),
+        CreateSpriteAndAnimate(&gFlashingHitSplatSpriteTemplate,
+                               GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2),
+                               GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET),
                                3);
     }
 
-    gTasks[task].data[0] += 8;
+    gTasks[taskId].data[0] += 8;
 
-    if (gTasks[task].data[0] > 0xff)
+    if (gTasks[taskId].data[0] > 0xff)
     {
-        DestroyAnimVisualTask(task);
+        DestroyAnimVisualTask(taskId);
     }
 }
 

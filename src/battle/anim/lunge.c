@@ -10,14 +10,14 @@ extern u8 gBattleAnimTarget;
 
 extern u8 gBattlerSpriteIds[];
 
-void sub_80CD774(struct Sprite* sprite);
+void AnimBowMon(struct Sprite* sprite);
 void sub_80CD9C4(struct Sprite* sprite);
-static void sub_80CD7CC(struct Sprite* sprite);
-static void sub_80CD81C(struct Sprite* sprite);
-static void sub_80CD8A8(struct Sprite* sprite);
-static void sub_80CD8F8(struct Sprite* sprite);
-static void sub_80CD91C(struct Sprite* sprite);
-static void sub_80CD9B8(struct Sprite* sprite);
+static void AnimBowMon_Step1(struct Sprite* sprite);
+static void AnimBowMon_Step1_Callback(struct Sprite* sprite);
+static void AnimBowMon_Step2(struct Sprite* sprite);
+static void AnimBowMon_Step3(struct Sprite* sprite);
+static void AnimBowMon_Step3_Callback(struct Sprite* sprite);
+static void AnimBowMon_Step4(struct Sprite* sprite);
 static void sub_80CD9D4(struct Sprite* sprite);
 static void sub_80CDB60(u8 taskId);
 static void sub_80CDD20(u8 taskId);
@@ -25,7 +25,7 @@ static void sub_80CDD20(u8 taskId);
 // lunge_1 (makes the pokemon sprite do a "lunge" where it leans back to attack, usually with its head or horn.)
 // Used in Drill Peck, Headbutt, Horn Attack, and Horn Drill.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DE4 =
+const struct SpriteTemplate gBowMonSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -33,7 +33,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6DE4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD774,
+    .callback = AnimBowMon,
 };
 
 const struct SpriteTemplate gSpriteTemplate_83D6DFC =
@@ -47,38 +47,38 @@ const struct SpriteTemplate gSpriteTemplate_83D6DFC =
     .callback = sub_80CD9C4,
 };
 
-void sub_80CD774(struct Sprite* sprite)
+void AnimBowMon(struct Sprite* sprite)
 {
     sprite->invisible = TRUE;
     sprite->data[0] = 0;
     switch (gBattleAnimArgs[0])
     {
     case 0:
-        sprite->callback = sub_80CD7CC;
+        sprite->callback = AnimBowMon_Step1;
         break;
     case 1:
-        sprite->callback = sub_80CD8A8;
+        sprite->callback = AnimBowMon_Step2;
         break;
     case 2:
-        sprite->callback = sub_80CD8F8;
+        sprite->callback = AnimBowMon_Step3;
         break;
     default:
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
         break;
     }
 }
 
-static void sub_80CD7CC(struct Sprite* sprite)
+static void AnimBowMon_Step1(struct Sprite* sprite)
 {
     sprite->data[0] = 6;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? 2 : -2;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, sub_80CD81C);
+    StoreSpriteCallbackInData(sprite, AnimBowMon_Step1_Callback);
     sprite->callback = TranslateMonBGUntil;
 }
 
-static void sub_80CD81C(struct Sprite* sprite)
+static void AnimBowMon_Step1_Callback(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -94,30 +94,30 @@ static void sub_80CD81C(struct Sprite* sprite)
     if (++sprite->data[0] > 3)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
     }
 }
 
-static void sub_80CD8A8(struct Sprite* sprite)
+static void AnimBowMon_Step2(struct Sprite* sprite)
 {
     sprite->data[0] = 4;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -3 : 3;
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-    StoreSpriteCallbackInData(sprite, sub_80CD9B8);
+    StoreSpriteCallbackInData(sprite, AnimBowMon_Step4);
     sprite->callback = TranslateMonBGUntil;
 }
 
-static void sub_80CD8F8(struct Sprite* sprite)
+static void AnimBowMon_Step3(struct Sprite* sprite)
 {
     if (++sprite->data[0] > 8)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80CD91C;
+        sprite->callback = AnimBowMon_Step3_Callback;
     }
 }
 
-static void sub_80CD91C(struct Sprite* sprite)
+static void AnimBowMon_Step3_Callback(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -141,11 +141,11 @@ static void sub_80CD91C(struct Sprite* sprite)
     if (++sprite->data[0] > 2)
     {
         sub_8078F40(sprite->data[3]);
-        sprite->callback = sub_80CD9B8;
+        sprite->callback = AnimBowMon_Step4;
     }
 }
 
-static void sub_80CD9B8(struct Sprite* sprite)
+static void AnimBowMon_Step4(struct Sprite* sprite)
 {
     DestroyAnimSprite(sprite);
 }
