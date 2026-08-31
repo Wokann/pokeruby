@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/battle.h"
 #include "rom_8077ABC.h"
 #include "battle_anim.h"
 
@@ -6,13 +7,13 @@ extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D2D68(struct Sprite* sprite);
-static void sub_80D2E30(struct Sprite *);
+static void AnimJaggedMusicNote(struct Sprite *sprite);
+static void AnimJaggedMusicNote_Step(struct Sprite *sprite);
 
 // noise (moving music note)
 // Used in Uproar.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7CC8 =
+const struct SpriteTemplate gJaggedMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
     .paletteTag = ANIM_TAG_JAGGED_MUSIC_NOTE,
@@ -20,21 +21,21 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7CC8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2D68,
+    .callback = AnimJaggedMusicNote,
 };
 
-void sub_80D2D68(struct Sprite* sprite)
+static void AnimJaggedMusicNote(struct Sprite *sprite)
 {
     int var1;
-    u8 slot = gBattleAnimArgs[0] == 0 ? gBattleAnimAttacker : gBattleAnimTarget;
+    u8 battler = gBattleAnimArgs[0] == 0 ? gBattleAnimAttacker : gBattleAnimTarget;
 
-    if (GetBattlerSide(slot) == 1)
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
     {
         gBattleAnimArgs[1] *= -1;
     }
 
-    sprite->x = GetBattlerSpriteCoord(slot, 2)  + gBattleAnimArgs[1];
-    sprite->y = GetBattlerSpriteCoord(slot, 3) + gBattleAnimArgs[2];
+    sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
     sprite->data[0] = 0;
     sprite->data[1] = (u16)sprite->x << 3;
     sprite->data[2] = (u16)sprite->y << 3;
@@ -50,10 +51,10 @@ void sub_80D2D68(struct Sprite* sprite)
     sprite->data[4] = var1 >> 3;
 
     sprite->oam.tileNum += gBattleAnimArgs[3] * 16;
-    sprite->callback = sub_80D2E30;
+    sprite->callback = AnimJaggedMusicNote_Step;
 }
 
-static void sub_80D2E30(struct Sprite *sprite)
+static void AnimJaggedMusicNote_Step(struct Sprite *sprite)
 {
     sprite->data[1] += sprite->data[3];
     sprite->data[2] += sprite->data[4];
