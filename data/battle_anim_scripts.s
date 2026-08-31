@@ -4469,9 +4469,9 @@ Move_WATER_SPORT: @ 81CD6D1
 Move_CALM_MIND: @ 81CD6F7
 	loadspritegfx ANIM_TAG_THIN_RING
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 0, 0, 0, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, ANIM_BATTLER_ATTACKER, 0, 0, 16, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80E3BDC, 5, 1
+	createvisualtask AnimTask_SetAllNonAttackersInvisiblity, 5, TRUE
 	waitforvisualfinish
 	createsprite gThinRingShrinkingSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
@@ -4482,9 +4482,9 @@ Move_CALM_MIND: @ 81CD6F7
 	createsprite gThinRingShrinkingSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80E3BDC, 5, 0
+	createvisualtask AnimTask_SetAllNonAttackersInvisiblity, 5, FALSE
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 0, 0, 16, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, ANIM_BATTLER_ATTACKER, 0, 16, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	end

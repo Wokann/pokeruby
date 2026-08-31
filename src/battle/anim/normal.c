@@ -1651,14 +1651,15 @@ void sub_80E3BA4(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E3BDC(u8 taskId)
+// For hiding or subsequently revealing all other battlers.
+void AnimTask_SetAllNonAttackersInvisiblity(u8 taskId)
 {
-    u16 i;
+    u16 battler;
 
-    for (i = 0; i < 4; i++)
+    for (battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
     {
-        if (i != gBattleAnimAttacker && IsAnimBankSpriteVisible(i))
-            gSprites[gBattlerSpriteIds[i]].invisible = gBattleAnimArgs[0];
+        if (battler != gBattleAnimAttacker && IsAnimBankSpriteVisible(battler))
+            gSprites[gBattlerSpriteIds[battler]].invisible = gBattleAnimArgs[0];
     }
 
     DestroyAnimVisualTask(taskId);
