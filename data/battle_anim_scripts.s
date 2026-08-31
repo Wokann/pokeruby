@@ -3697,8 +3697,8 @@ Move_BRICK_BREAK: @ 81CC492
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loadspritegfx ANIM_TAG_TORN_METAL
-	choosetwoturnanim _81CC4A7, _81CC576
-_81CC4A7:
+	choosetwoturnanim BrickBreakNormal, BrickBreakShatteredWall
+BrickBreakNormal:
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, 8
@@ -3725,12 +3725,12 @@ _81CC4A7:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	end
-_81CC576:
+BrickBreakShatteredWall:
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, 8
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DA0A0, ANIM_BATTLER_ATTACKER, 3, 1, 0, 0, 90, 10
+	createsprite gBrickBreakWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, ANIM_BATTLER_TARGET, 0, 0, 90, 10
 	delay 1
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -18, -18, 1, 1
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -18, -18, 10, 1, 0
@@ -3749,10 +3749,10 @@ _81CC576:
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 10, 1, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DA0B8, ANIM_BATTLER_ATTACKER, 2, 1, 0, -8, -12
-	createsprite gBattleAnimSpriteTemplate_83DA0B8, ANIM_BATTLER_ATTACKER, 2, 1, 1, 8, -12
-	createsprite gBattleAnimSpriteTemplate_83DA0B8, ANIM_BATTLER_ATTACKER, 2, 1, 2, -8, 12
-	createsprite gBattleAnimSpriteTemplate_83DA0B8, ANIM_BATTLER_ATTACKER, 2, 1, 3, 8, 12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_TARGET, 0, -8, -12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_TARGET, 1, 8, -12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_TARGET, 2, -8, 12
+	createsprite gBrickBreakWallShardSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_TARGET, 3, 8, 12
 	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 6, 0, rgb(0, 0, 0)

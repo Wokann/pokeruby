@@ -37,8 +37,8 @@ void AnimSpinningKickOrPunch(struct Sprite *sprite);
 void AnimSpinningKickOrPunch(struct Sprite *sprite);
 void AnimStompFoot(struct Sprite *sprite);
 void AnimDizzyPunchDuck(struct Sprite *sprite);
-void sub_80D95D0(struct Sprite *sprite);
-void sub_80D96B8(struct Sprite *sprite);
+static void AnimBrickBreakWall(struct Sprite *sprite);
+static void AnimBrickBreakWallShard(struct Sprite *sprite);
 static void AnimSuperpowerOrb(struct Sprite *sprite);
 static void AnimSuperpowerRock(struct Sprite *sprite);
 static void AnimSuperpowerFireball(struct Sprite *sprite);
@@ -51,8 +51,8 @@ static void sub_80D9404(struct Sprite *sprite);
 static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite);
 static void AnimStompFootStep(struct Sprite *sprite);
 static void AnimStompFootEnd(struct Sprite *sprite);
-static void sub_80D9640(struct Sprite *sprite);
-static void sub_80D97A0(struct Sprite *sprite);
+static void AnimBrickBreakWall_Step(struct Sprite *sprite);
+static void AnimBrickBreakWallShard_Step(struct Sprite *sprite);
 static void AnimSuperpowerOrb_Step(struct Sprite *sprite);
 static void AnimSuperpowerRock_Step1(struct Sprite *sprite);
 static void AnimSuperpowerRock_Step2(struct Sprite *sprite);
@@ -249,7 +249,7 @@ const struct SpriteTemplate gDizzyPunchDuckSpriteTemplate =
     .callback = AnimDizzyPunchDuck,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0A0 =
+const struct SpriteTemplate gBrickBreakWallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_LIGHT_WALL,
     .paletteTag = ANIM_TAG_BLUE_LIGHT_WALL,
@@ -257,10 +257,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0A0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D95D0,
+    .callback = AnimBrickBreakWall,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0B8 =
+const struct SpriteTemplate gBrickBreakWallShardSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TORN_METAL,
     .paletteTag = ANIM_TAG_TORN_METAL,
@@ -268,7 +268,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0B8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D96B8,
+    .callback = AnimBrickBreakWallShard,
 };
 
 static const union AffineAnimCmd sAffineAnim_SuperpowerOrb[] =
@@ -709,17 +709,17 @@ void AnimDizzyPunchDuck(struct Sprite *sprite)
     }
 }
 
-void sub_80D95D0(struct Sprite *sprite)
+static void AnimBrickBreakWall(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
     }
 
     sprite->x += gBattleAnimArgs[1];
@@ -729,10 +729,10 @@ void sub_80D95D0(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
     sprite->data[3] = 0;
-    sprite->callback = sub_80D9640;
+    sprite->callback = AnimBrickBreakWall_Step;
 }
 
-static void sub_80D9640(struct Sprite *sprite)
+static void AnimBrickBreakWall_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -762,17 +762,17 @@ static void sub_80D9640(struct Sprite *sprite)
     }
 }
 
-void sub_80D96B8(struct Sprite *sprite)
+static void AnimBrickBreakWallShard(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[2];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[3];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[2];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[3];
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0) + gBattleAnimArgs[2];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[3];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[2];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[3];
     }
 
     sprite->oam.tileNum += gBattleAnimArgs[1] * 16;
@@ -801,10 +801,10 @@ void sub_80D96B8(struct Sprite *sprite)
         return;
     }
 
-    sprite->callback = sub_80D97A0;
+    sprite->callback = AnimBrickBreakWallShard_Step;
 }
 
-static void sub_80D97A0(struct Sprite *sprite)
+static void AnimBrickBreakWallShard_Step(struct Sprite *sprite)
 {
     sprite->x += sprite->data[6];
     sprite->y += sprite->data[7];
