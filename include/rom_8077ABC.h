@@ -60,9 +60,8 @@ void SetBattlerSpriteYOffsetFromYScale(u8 spriteId);
 u16 GetBattlerYDeltaFromSpriteId(u8 spriteId);
 void StorePointerInVars(s16 *lo, s16 *hi, const void *ptr);
 void *LoadPointerFromVars(s16 lo, s16 hi);
-// u8 a2 := u8 sprite
-void sub_8079C08(struct Task *task, u8 a2, s16 a3, s16 a4, s16 a5, s16 a6, u16 a7);
-u8 sub_8079C74(struct Task *task);
+void PrepareEruptAnimTaskData(struct Task *task, u8 spriteId, s16 xScaleStart, s16 yScaleStart, s16 xScaleEnd, s16 yScaleEnd, u16 duration);
+u8 UpdateEruptAnimTask(struct Task *task);
 void UpdateBattlerSpritePriorities();
 u8 GetBattlerSpriteSubpriority(u8 bank);
 u8 GetBattlerSpriteBGPriorityRank(u8 battler);

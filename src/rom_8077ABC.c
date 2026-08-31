@@ -1802,19 +1802,19 @@ void *LoadPointerFromVars(s16 lo, s16 hi)
 
 // possible new file
 
-void sub_8079C08(struct Task *task, u8 a2, s16 a3, s16 a4, s16 a5, s16 a6, u16 a7)
+void PrepareEruptAnimTaskData(struct Task *task, u8 spriteId, s16 xScaleStart, s16 yScaleStart, s16 xScaleEnd, s16 yScaleEnd, u16 duration)
 {
-    task->data[8] = a7;
-    task->data[15] = a2; // spriteId
-    task->data[9] = a3;
-    task->data[10] = a4;
-    task->data[13] = a5;
-    task->data[14] = a6;
-    task->data[11] = (a5 - a3) / a7;
-    task->data[12] = (a6 - a4) / a7;
+    task->data[8] = duration;
+    task->data[15] = spriteId;
+    task->data[9] = xScaleStart;
+    task->data[10] = yScaleStart;
+    task->data[13] = xScaleEnd;
+    task->data[14] = yScaleEnd;
+    task->data[11] = (xScaleEnd - xScaleStart) / duration;
+    task->data[12] = (yScaleEnd - yScaleStart) / duration;
 }
 
-u8 sub_8079C74(struct Task *task)
+u8 UpdateEruptAnimTask(struct Task *task)
 {
     if (!task->data[8])
         return 0;

@@ -3796,19 +3796,19 @@ Move_ERUPTION: @ 81CC74F
 	loadspritegfx ANIM_TAG_WARM_ROCK
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 2, 0, 4, rgb(31, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D5470, 2
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
 	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
 	waitforvisualfinish
-	createvisualtask sub_80D5470, 2
+	createvisualtask AnimTask_EruptionLaunchRocks, 2
 	waitplaysewithpan SE_M_EXPLOSION, SOUND_PAN_ATTACKER, 60
 	waitforvisualfinish
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 200, -32, 0, 100, 0
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 30, -32, 16, 90, 1
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 150, -32, 32, 60, 2
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 90, -32, 48, 80, 3
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 110, -32, 64, 50, 0
-	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 60, -32, 80, 70, 1
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 200, -32, 0, 100, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 30, -32, 16, 90, 1
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 150, -32, 32, 60, 2
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 90, -32, 48, 80, 3
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 110, -32, 64, 50, 0
+	createsprite gEruptionFallingRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 60, -32, 80, 70, 1
 	delay 22
 	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 8, 60
 	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 8, 60

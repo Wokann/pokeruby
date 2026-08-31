@@ -1,10 +1,9 @@
 #ifndef GUARD_HEATED_ROCK_H
 #define GUARD_HEATED_ROCK_H
 
-// heated_rock (moves heated rock sprites)
-// Used in Eruption.
+// Eruption launch rock helpers.
 
-u16 sub_80D5940(u8 spriteId);
-void sub_80D5994(struct Sprite *sprite, s16 x, s16 y);
+u16 GetEruptionLaunchRockInitialYPos(u8 spriteId);
+void InitEruptionLaunchRockCoordData(struct Sprite *sprite, s16 speedX, s16 speedY);
 
 #endif // GUARD_HEATED_ROCK_H

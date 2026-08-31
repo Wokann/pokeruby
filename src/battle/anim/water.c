@@ -545,7 +545,7 @@ void sub_80D4150(u8 taskId)
     switch (task->data[0])
     {
         case 0:
-            sub_8079C08(task, task->data[15], 0x100, 0x100, 224, 0x200, 32);
+            PrepareEruptAnimTaskData(task, task->data[15], 0x100, 0x100, 224, 0x200, 32);
             task->data[0]++;
         case 1:
             if (++task->data[3] > 1)
@@ -561,7 +561,7 @@ void sub_80D4150(u8 taskId)
                     gSprites[task->data[15]].x2 = -3;
                 }
             }
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
                 SetBattlerSpriteYOffsetFromYScale(task->data[15]);
                 gSprites[task->data[15]].x2 = 0;
@@ -573,13 +573,13 @@ void sub_80D4150(u8 taskId)
         case 2:
             if (++task->data[3] > 4)
             {
-                sub_8079C08(task, task->data[15], 224, 0x200, 384, 224, 8);
+                PrepareEruptAnimTaskData(task, task->data[15], 224, 0x200, 384, 224, 8);
                 task->data[3] = 0;
                 task->data[0]++;
             }
             break;
         case 3:
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
                 task->data[3] = 0;
                 task->data[4] = 0;
@@ -599,7 +599,7 @@ void sub_80D4150(u8 taskId)
                     gSprites[task->data[15]].y2 -= 2;
                 if (task->data[4] == 10)
                 {
-                    sub_8079C08(task, task->data[15], 384, 224, 0x100, 0x100, 8);
+                    PrepareEruptAnimTaskData(task, task->data[15], 384, 224, 0x100, 0x100, 8);
                     task->data[3] = 0;
                     task->data[4] = 0;
                     task->data[0]++;
@@ -608,7 +608,7 @@ void sub_80D4150(u8 taskId)
             break;
         case 6:
             gSprites[task->data[15]].y--;
-            if (sub_8079C74(task) == 0)
+            if (UpdateEruptAnimTask(task) == 0)
             {
                 ResetSpriteRotScale(task->data[15]);
                 gSprites[task->data[15]].y = task->data[5];
