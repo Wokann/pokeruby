@@ -4135,24 +4135,24 @@ Move_AROMATHERAPY: @ 81CCFAB
 	delay 1
 	monbg ANIM_BATTLER_ATTACKER
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 0, 24, 16, 0, 2, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 66, 64, 24, 0, 3, 1, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68D0, ANIM_BATTLER_ATTACKER, 0, 16, 24, 0, 2, 1, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 24, 16, 0, 2, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 64, 24, 0, 3, 1, 1, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 16, 24, 0, 2, 1, 0, 0
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 66, 48, 12, 0, 4, 3, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 0, 100, 16, 0, 3, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 0, 74, 24, 180, 3, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 48, 12, 0, 4, 3, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 100, 16, 0, 3, 2, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 74, 24, 180, 3, 2, 0, 0
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 66, 80, 30, 0, 4, 1, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D68B8, ANIM_BATTLER_ATTACKER, 0, 128, 12, 0, 3, 3, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D68D0, ANIM_BATTLER_ATTACKER, 0, 90, 16, 0, 2, 1, 0, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 80, 30, 0, 4, 1, 1, 0
+	createsprite gAromatherapySmallFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 128, 12, 0, 3, 3, 0, 0
+	createsprite gAromatherapyBigFlowerSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 90, 16, 0, 2, 1, 0, 0
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	delay 1
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 1, 0, 7, 0, rgb(13, 31, 12)
 	delay 1
 	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
-	createvisualtask sub_81300A4, 2, 1
+	createvisualtask AnimTask_StatusClearedEffect, 2, 1
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
 	createsprite gSparklingStarsSpriteTemplate, ANIM_BATTLER_ATTACKER, 16, -15, 0, 0, 0, 32, 60, 1
@@ -8436,7 +8436,7 @@ Move_REFRESH: @ 81D3485
 	loadspritegfx ANIM_TAG_THIN_RING
 	loadspritegfx ANIM_TAG_SPARKLE_2
 	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
-	createvisualtask sub_81300A4, 2, 0
+	createvisualtask AnimTask_StatusClearedEffect, 2, 0
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
 	call GrantingStarsEffect

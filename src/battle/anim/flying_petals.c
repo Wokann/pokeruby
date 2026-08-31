@@ -7,45 +7,45 @@
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern const union AnimCmd *const gSpriteAnimTable_83D6424[];
-extern const union AnimCmd *const gSpriteAnimTable_83D6420[];
+extern const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[];
+extern const union AnimCmd *const gPetalDanceBigFlowerAnimTable[];
 
-void sub_80CC474(struct Sprite* sprite);
-static void sub_80CC580(struct Sprite* sprite);
+void AnimFlyingParticle(struct Sprite* sprite);
+static void AnimFlyingParticle_Step(struct Sprite* sprite);
 
 // flying_petals (petals fly across the screen.)
 // Used by Aromatherapy.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D689C[] = {
+const union AffineAnimCmd gAromatherapyBigFlowerAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, 4, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D68B4[] = {
-    gSpriteAffineAnim_83D689C,
+const union AffineAnimCmd *const gAromatherapyBigFlowerAffineAnimTable[] = {
+    gAromatherapyBigFlowerAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68B8 =
+const struct SpriteTemplate gAromatherapySmallFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_837DF24,
-    .anims = gSpriteAnimTable_83D6424,
+    .anims = gPetalDanceSmallFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC474,
+    .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D68D0 =
+const struct SpriteTemplate gAromatherapyBigFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6420,
+    .anims = gPetalDanceBigFlowerAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D68B4,
-    .callback = sub_80CC474,
+    .affineAnims = gAromatherapyBigFlowerAffineAnimTable,
+    .callback = AnimFlyingParticle,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83D68E8[] = {
@@ -86,7 +86,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D693C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6930,
-    .callback = sub_80CC474,
+    .callback = AnimFlyingParticle,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6954 =
@@ -97,7 +97,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6954 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6934,
-    .callback = sub_80CC474,
+    .callback = AnimFlyingParticle,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D696C =
@@ -108,10 +108,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D696C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6938,
-    .callback = sub_80CC474,
+    .callback = AnimFlyingParticle,
 };
 
-void sub_80CC474(struct Sprite* sprite)
+void AnimFlyingParticle(struct Sprite* sprite)
 {
     u8 bank;
     if (!gBattleAnimArgs[6])
@@ -156,10 +156,10 @@ void sub_80CC474(struct Sprite* sprite)
         break;
     }
 
-    sprite->callback = sub_80CC580;
+    sprite->callback = AnimFlyingParticle_Step;
 }
 
-static void sub_80CC580(struct Sprite* sprite)
+static void AnimFlyingParticle_Step(struct Sprite* sprite)
 {
     int a = sprite->data[7];
     sprite->data[7]++;

@@ -3867,7 +3867,7 @@ static void AnimTask_FacadeColorBlend_Step(u8 taskId)
     }
 }
 
-void sub_81300A4(u8 taskId)
+void AnimTask_StatusClearedEffect(u8 taskId)
 {
     sub_80E3C4C(
         taskId,

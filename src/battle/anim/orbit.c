@@ -43,26 +43,26 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D63F8 =
     .callback = sub_80CABF8,
 };
 
-const union AnimCmd gSpriteAnim_83D6410[] =
+const union AnimCmd gPetalDanceBigFlowerAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D6418[] =
+const union AnimCmd gPetalDanceSmallFlowerAnimCmds[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6420[] =
+const union AnimCmd *const gPetalDanceBigFlowerAnimTable[] =
 {
-    gSpriteAnim_83D6410,
+    gPetalDanceBigFlowerAnimCmds,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6424[] =
+const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[] =
 {
-    gSpriteAnim_83D6418,
+    gPetalDanceSmallFlowerAnimCmds,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
@@ -70,7 +70,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6420,
+    .anims = gPetalDanceBigFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80CAD54,
@@ -81,7 +81,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
     .oam = &gOamData_837DF24,
-    .anims = gSpriteAnimTable_83D6424,
+    .anims = gPetalDanceSmallFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80CAE20,
