@@ -4455,7 +4455,7 @@ Move_VOLT_TACKLE: @ 81CD5D9
 
 Move_WATER_SPORT: @ 81CD6D1
 	loadspritegfx ANIM_TAG_GLOWY_BLUE_ORB
-	createvisualtask sub_80D48F4, 5
+	createvisualtask AnimTask_WaterSport, 5
 	delay 8
 	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
 	delay 44
