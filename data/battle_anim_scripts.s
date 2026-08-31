@@ -3523,8 +3523,8 @@ Move_MEMENTO: @ 81CC0F2
 
 Move_FACADE: @ 81CC136
 	loadspritegfx ANIM_TAG_SWEAT_DROP
-	createvisualtask sub_812FD7C, 2, 0, 3
-	createvisualtask sub_812FFE4, 2, 0, 72
+	createvisualtask AnimTask_SquishAndSweatDroplets, 2, ANIM_BATTLER_ATTACKER, 3
+	createvisualtask AnimTask_FacadeColorBlend, 2, ANIM_BATTLER_ATTACKER, 72
 	loopsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER, 24, 3
 	end
 
@@ -3779,7 +3779,7 @@ Move_YAWN: @ 81CC697
 Move_ENDEAVOR: @ 81CC6DA
 	loadspritegfx ANIM_TAG_SWEAT_DROP
 	loadspritegfx ANIM_TAG_IMPACT
-	createvisualtask sub_812FD7C, 2, 0, 2
+	createvisualtask AnimTask_SquishAndSweatDroplets, 2, ANIM_BATTLER_ATTACKER, 2
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 24, 2
 	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 703, 12, 1, 2
 	delay 6
