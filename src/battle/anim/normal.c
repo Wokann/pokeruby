@@ -47,7 +47,7 @@ static void sub_80E1F3C(struct Sprite *sprite);
 static void sub_80E24B8(struct Sprite *sprite);
 static void AnimHitSplatBasic(struct Sprite *sprite);
 static void AnimHitSplatHandleInvert(struct Sprite *sprite);
-static void sub_80E2870(struct Sprite *sprite);
+static void AnimHitSplatRandom(struct Sprite *sprite);
 static void AnimHitSplatOnMonEdge(struct Sprite *sprite);
 static void sub_80E2978(struct Sprite *sprite);
 static void AnimFlashingHitSplat(struct Sprite *sprite);
@@ -243,7 +243,7 @@ const struct SpriteTemplate gWaterHitSplatSpriteTemplate =
     .callback = AnimHitSplatBasic,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
+const struct SpriteTemplate gRandomPosHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
@@ -251,7 +251,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sAffineAnims_HitSplat,
-    .callback = sub_80E2870,
+    .callback = AnimHitSplatRandom,
 };
 
 const struct SpriteTemplate gMonEdgeHitSplatSpriteTemplate =
@@ -891,7 +891,7 @@ static void AnimHitSplatHandleInvert(struct Sprite *sprite)
     AnimHitSplatBasic(sprite);
 }
 
-static void sub_80E2870(struct Sprite *sprite)
+static void AnimHitSplatRandom(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[1] == -1)
         gBattleAnimArgs[1] = Random() & 3;

@@ -366,26 +366,26 @@ const struct SpriteTemplate gSkillSwapOrbSpriteTemplate =
     .callback = AnimSkillSwapOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA9C4[] =
+static const union AffineAnimCmd sAffineAnim_LusterPurgeCircle[] =
 {
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
     AFFINEANIMCMD_FRAME(0x4, 0x4, 0, 120),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA9DC[] =
+static const union AffineAnimCmd *const sAffineAnims_LusterPurgeCircle[] =
 {
-    gSpriteAffineAnim_83DA9C4,
+    sAffineAnim_LusterPurgeCircle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA9E0 =
+const struct SpriteTemplate gLusterPurgeCircleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_WHITE_CIRCLE_OF_LIGHT,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA9DC,
+    .affineAnims = sAffineAnims_LusterPurgeCircle,
     .callback = AnimSpriteOnMonPos,
 };
 

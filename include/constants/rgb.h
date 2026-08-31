@@ -9,5 +9,9 @@
 #define IS_ALPHA(color) ((color) & RGB_ALPHA)
 
 #define RGB2(r, g, b) (((b) << 10) | ((g) << 5) | (r))
+#define RGB(r, g, b)  ((r) | ((g) << 5) | ((b) << 10))
+
+#define RGB_WHITE      RGB(31, 31, 31)
+#define RGB_WHITEALPHA (RGB_WHITE | RGB_ALPHA)
 
 #endif // POKERUBY_CONSTANTS_RGB_H

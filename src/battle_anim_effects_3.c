@@ -55,7 +55,7 @@ static void AnimMeanLookEye_Step2(struct Sprite *sprite);
 static void AnimMeanLookEye_Step3(struct Sprite *sprite);
 static void AnimMeanLookEye_Step4(struct Sprite *sprite);
 static void sub_812C588(u8 taskId);
-static void sub_812C64C(u8 taskId);
+static void FadeScreenToWhite_Step(u8 taskId);
 static void sub_812C798(struct Sprite *sprite);
 static void sub_812C7C8(struct Sprite *sprite);
 static void sub_812CA04(struct Sprite *sprite);
@@ -1397,13 +1397,13 @@ static void sub_812C588(u8 taskId)
         DestroyTask(taskId);
 }
 
-void sub_812C624(u8 taskId)
+void AnimTask_FadeScreenToWhite(u8 taskId)
 {
-    gTasks[taskId].func = sub_812C64C;
+    gTasks[taskId].func = FadeScreenToWhite_Step;
     gAnimVisualTaskCount--;
 }
 
-static void sub_812C64C(u8 taskId)
+static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;
     u16 lastColor;
