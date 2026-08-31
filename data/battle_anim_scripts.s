@@ -4322,16 +4322,16 @@ Move_EXTRASENSORY: @ 81CD431
 	call SetPsychicBackground
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 891, 12, 1, 1
-	createvisualtask sub_80DC2D4, 5, 0
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, rgb(27, 27, 0), 12, 1, 1
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 0
 	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 891, 12, 1, 1
-	createvisualtask sub_80DC2D4, 5, 1
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, rgb(27, 27, 0), 12, 1, 1
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 1
 	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80DC4F4, 5, 0
-	createvisualtask sub_80DC2D4, 5, 2
+	createvisualtask AnimTask_TransparentCloneGrowAndShrink, 5, ANIM_BATTLER_ATTACKER
+	createvisualtask AnimTask_ExtrasensoryDistortion, 5, 2
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	blendoff
@@ -10155,7 +10155,7 @@ ConfusionEffect: @ 81D618B
 SetPsychicBackground: @ 81D61E7
 	fadetobg BG_PSYCHIC
 	waitbgfadeout
-	createvisualtask sub_812C560, 5
+	createvisualtask AnimTask_SetPsychicBackground, 5
 	waitbgfadein
 	return
 

@@ -906,7 +906,7 @@ void GetBgDataForTransform(struct BattleAnimBgData *animBg, u8 battler)
     }
 }
 
-u8 sub_80789BC()
+u8 GetBattleBgPaletteNum(void)
 {
     if (IsContest())
         return 1;
@@ -1276,7 +1276,7 @@ u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, 
         if (!IsContest())
             selectedPalettes = 0xe;
         else
-            selectedPalettes = 1 << sub_80789BC();
+            selectedPalettes = 1 << GetBattleBgPaletteNum();
     }
     if (attacker)
     {

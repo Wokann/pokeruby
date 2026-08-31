@@ -34,8 +34,8 @@ static void sub_80DBD58(u8 taskId);
 static void AnimTask_ImprisonOrbs_Step(u8 taskId);
 static void AnimRedX_Step(struct Sprite *sprite);
 static void AnimTask_SkillSwap_Step(u8 taskId);
-static void sub_80DC3F4(u8 taskId);
-void sub_80DC5F4(u8 taskId);
+static void AnimTask_ExtrasensoryDistortion_Step(u8 taskId);
+static void AnimTask_TransparentCloneGrowAndShrink_Step(u8 taskId);
 
 static const union AffineAnimCmd sAffineAnim_PsychUpSpiral[] =
 {
@@ -937,15 +937,17 @@ static void AnimSkillSwapOrb(struct Sprite *sprite)
     }
 }
 
-void sub_80DC2D4(u8 taskId)
+// The scanline effect that distorts the target during Extrasensory by segmenting the mon vertically and shifting the slices
+// arg0: Stage. Stage 0 is a slight right distortion, 1 is a medium left distortion, and 2 is a severe right distortion
+void AnimTask_ExtrasensoryDistortion(u8 taskId)
 {
     s16 i;
-    u8 var1;
+    u8 yOffset;
     struct ScanlineEffectParams scanlineParams;
     struct Task *task = &gTasks[taskId];
     
-    var1 = GetBattlerYCoordWithElevation(gBattleAnimTarget);
-    task->data[14] = var1 - 32;
+    yOffset = GetBattlerYCoordWithElevation(gBattleAnimTarget);
+    task->data[14] = yOffset - 32;
 
     switch (gBattleAnimArgs[0])
     {
@@ -953,19 +955,19 @@ void sub_80DC2D4(u8 taskId)
         task->data[11] = 2;
         task->data[12] = 5;
         task->data[13] = 64;
-        task->data[15] = var1 + 32;
+        task->data[15] = yOffset + 32;
         break;
     case 1:
         task->data[11] = 2;
         task->data[12] = 5;
         task->data[13] = 192;
-        task->data[15] = var1 + 32;
+        task->data[15] = yOffset + 32;
         break;
     case 2:
         task->data[11] = 4;
         task->data[12] = 4;
         task->data[13] = 0;
-        task->data[15] = var1 + 32;
+        task->data[15] = yOffset + 32;
         break;
     }
 
@@ -991,15 +993,15 @@ void sub_80DC2D4(u8 taskId)
         i++;
     }
 
-    scanlineParams.dmaControl = 0XA2600001;
+    scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
     scanlineParams.initState = 1;
     scanlineParams.unused9 = 0;
     ScanlineEffect_SetParams(scanlineParams);
 
-    task->func = sub_80DC3F4;
+    task->func = AnimTask_ExtrasensoryDistortion_Step;
 }
 
-static void sub_80DC3F4(u8 taskId)
+static void AnimTask_ExtrasensoryDistortion_Step(u8 taskId)
 {
     s16 sineIndex, i;
     struct Task *task = &gTasks[taskId];
@@ -1043,7 +1045,9 @@ static void sub_80DC3F4(u8 taskId)
     }
 }
 
-void sub_80DC4F4(u8 taskId)
+// Creates a cloned transparent sprite of the battler that grows and then shrinks back to original size. Used by Extrasensory
+// arg0: battler
+void AnimTask_TransparentCloneGrowAndShrink(u8 taskId)
 {
     s16 spriteId;
     s16 matrixNum;
@@ -1075,10 +1079,10 @@ void sub_80DC4F4(u8 taskId)
     task->data[13] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
     task->data[14] = matrixNum;
     task->data[15] = spriteId;
-    task->func = sub_80DC5F4;
+    task->func = AnimTask_TransparentCloneGrowAndShrink_Step;
 }
 
-void sub_80DC5F4(u8 taskId)
+static void AnimTask_TransparentCloneGrowAndShrink_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 

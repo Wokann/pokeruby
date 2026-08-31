@@ -40,7 +40,7 @@ bool8 IsDoubleBattle();
 u8 IsDoubleBattle(void);
 bool8 IsDoubleBattle(void);
 void GetBattleAnimBg1Data(struct BattleAnimBgData *animBg);
-u8 sub_80789BC();
+u8 GetBattleBgPaletteNum(void);
 void InitSpriteDataForLinearTranslation(struct Sprite *sprite);
 void InitAnimLinearTranslation(struct Sprite *sprite);
 bool8 AnimTranslateLinear(struct Sprite *sprite);

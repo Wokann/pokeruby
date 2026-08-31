@@ -54,7 +54,7 @@ static void AnimMeanLookEye_Step1(struct Sprite *sprite);
 static void AnimMeanLookEye_Step2(struct Sprite *sprite);
 static void AnimMeanLookEye_Step3(struct Sprite *sprite);
 static void AnimMeanLookEye_Step4(struct Sprite *sprite);
-static void sub_812C588(u8 taskId);
+static void SetPsychicBackground_Step(u8 taskId);
 static void FadeScreenToWhite_Step(u8 taskId);
 static void sub_812C798(struct Sprite *sprite);
 static void sub_812C7C8(struct Sprite *sprite);
@@ -1371,17 +1371,17 @@ static void AnimMeanLookEye_Step4(struct Sprite *sprite)
     }
 }
 
-void sub_812C560(u8 taskId)
+void AnimTask_SetPsychicBackground(u8 taskId)
 {
-    gTasks[taskId].func = sub_812C588;
+    gTasks[taskId].func = SetPsychicBackground_Step;
     gAnimVisualTaskCount--;
 }
 
-static void sub_812C588(u8 taskId)
+static void SetPsychicBackground_Step(u8 taskId)
 {
     int i;
     u16 lastColor;
-    u8 paletteIndex = sub_80789BC();
+    u8 paletteIndex = GetBattleBgPaletteNum();
 
     if (++gTasks[taskId].data[5] == 4)
     {
@@ -1407,7 +1407,7 @@ static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;
     u16 lastColor;
-    u8 paletteIndex = sub_80789BC();
+    u8 paletteIndex = GetBattleBgPaletteNum();
 
     if (++gTasks[taskId].data[5] == 4)
     {
