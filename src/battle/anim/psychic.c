@@ -438,7 +438,7 @@ void sub_80DB74C(struct Sprite *sprite)
     {
         u8 bankCopy;
         u8 bank = bankCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-        u8 identity = GetBattlerPosition_permutated(bank);
+        u8 identity = GetBattlerSpriteBGPriorityRank(bank);
         int var0 = 1;
         u8 toBG_2 = (identity ^ var0) != 0;
 
@@ -542,7 +542,7 @@ static void sub_80DB9E4(struct Sprite *sprite)
     {
         u8 bankCopy;
         u8 bank = bankCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-        u8 identity = GetBattlerPosition_permutated(bank);
+        u8 identity = GetBattlerSpriteBGPriorityRank(bank);
         int var0 = 1;
         u8 toBG_2 = (identity ^ var0) != 0;
 
@@ -943,7 +943,7 @@ void sub_80DC2D4(u8 taskId)
     struct ScanlineEffectParams scanlineParams;
     struct Task *task = &gTasks[taskId];
     
-    var1 = sub_8077FC0(gBattleAnimTarget);
+    var1 = GetBattlerYCoordWithElevation(gBattleAnimTarget);
     task->data[14] = var1 - 32;
 
     switch (gBattleAnimArgs[0])
@@ -971,7 +971,7 @@ void sub_80DC2D4(u8 taskId)
     if (task->data[14] < 0)
         task->data[14] = 0;
 
-    if (GetBattlerPosition_permutated(gBattleAnimTarget) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
     {
         task->data[10] = gBattle_BG1_X;
         scanlineParams.dmaDest = &REG_BG1HOFS;

@@ -374,34 +374,34 @@ u8 sub_8077F7C(u8 slot)
     return var;
 }
 
-u8 sub_8077FC0(u8 slot)
+u8 GetBattlerYCoordWithElevation(u8 battler)
 {
     u16 var;
     u8 r6;
     struct BattleSpriteInfo *transform;
 
-    r6 = GetBattlerSpriteCoord(slot, 1);
+    r6 = GetBattlerSpriteCoord(battler, 1);
     if (!IsContest())
     {
-        if (GetBattlerSide(slot) != 0)
+        if (GetBattlerSide(battler) != 0)
         {
-            transform = &gBattleSpriteInfo[slot];
+            transform = &gBattleSpriteInfo[battler];
             if (!transform->transformSpecies) {
-                var = GetMonData(&gEnemyParty[gBattleMonPartyPositions[slot]], MON_DATA_SPECIES);
+                var = GetMonData(&gEnemyParty[gBattleMonPartyPositions[battler]], MON_DATA_SPECIES);
             } else {
                 var = transform->transformSpecies;
             }
         }
         else
         {
-            transform = &gBattleSpriteInfo[slot];
+            transform = &gBattleSpriteInfo[battler];
             if (!transform->transformSpecies)
-                var = GetMonData(&gPlayerParty[gBattleMonPartyPositions[slot]], MON_DATA_SPECIES);
+                var = GetMonData(&gPlayerParty[gBattleMonPartyPositions[battler]], MON_DATA_SPECIES);
             else
                 var = transform->transformSpecies;
         }
-        if (GetBattlerSide(slot) != 0)
-            r6 -= sub_8077DD8(slot, var);
+        if (GetBattlerSide(battler) != 0)
+            r6 -= sub_8077DD8(battler, var);
     }
     return r6;
 }
@@ -892,7 +892,7 @@ void GetBgDataForTransform(struct BattleAnimBgData *animBg, u8 battler)
         animBg->bgTilemap = (u8 *)(VRAM + 0xf000);
         animBg->paletteId = 0xe;
     }
-    else if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    else if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
         animBg->bgTiles = (u8 *)(VRAM + 0x4000);
         animBg->bgTilemap = (u8 *)(VRAM + 0xe000);
@@ -1916,13 +1916,13 @@ u8 GetBattlerSpriteBGPriority(u8 slot)
         return BG1CNT.priority;
 }
 
-u8 GetBattlerPosition_permutated(u8 slot)
+u8 GetBattlerSpriteBGPriorityRank(u8 battler)
 {
     u8 status;
 
     if (!IsContest())
     {
-        status = GetBattlerPosition(slot);
+        status = GetBattlerPosition(battler);
         if (status == 0 || status == 3)
             return 2;
         else

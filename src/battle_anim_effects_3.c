@@ -61,8 +61,8 @@ static void sub_812C7C8(struct Sprite *sprite);
 static void sub_812CA04(struct Sprite *sprite);
 static void sub_812CAD0(struct Sprite *sprite);
 static void sub_812CBB4(struct Sprite *sprite);
-static void sub_812CD64(struct Sprite *sprite);
-static void sub_812CEF0(u8 taskId);
+static void AnimRapidSpin_Step(struct Sprite *sprite);
+static void RapinSpinMonElevation_Step(u8 taskId);
 static void sub_812D06C(u8 taskId);
 static void sub_812D254(struct Sprite *sprite);
 static void sub_812D4EC(struct Sprite *sprite);
@@ -109,7 +109,7 @@ static void sub_812C908(struct Sprite *sprite);
 static void sub_812C990(struct Sprite *sprite);
 static void sub_812CAFC(struct Sprite *sprite);
 static void sub_812CC28(struct Sprite *sprite);
-static void sub_812CCE8(struct Sprite *sprite);
+static void AnimRapidSpin(struct Sprite *sprite);
 static void sub_812D294(struct Sprite *sprite);
 static void sub_812D3AC(struct Sprite *sprite);
 static void sub_812D4B4(struct Sprite *sprite);
@@ -173,7 +173,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402198 =
 {
     .tileTag = ANIM_TAG_BLACK_SMOKE,
     .paletteTag = ANIM_TAG_BLACK_SMOKE,
-    .oam = &gOamData_837DF54,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -430,7 +430,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84023BC =
     .callback = sub_812CC28,
 };
 
-const union AnimCmd gSpriteAnim_84023D4[] =
+const union AnimCmd gRapidSpinAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
@@ -438,20 +438,20 @@ const union AnimCmd gSpriteAnim_84023D4[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_84023E4[] =
+const union AnimCmd *const gRapidSpinAnimTable[] =
 {
-    gSpriteAnim_84023D4,
+    gRapidSpinAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84023E8 =
+const struct SpriteTemplate gRapidSpinSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RAPID_SPIN,
     .paletteTag = ANIM_TAG_RAPID_SPIN,
-    .oam = &gOamData_837DF54,
-    .anims = gSpriteAnimTable_84023E4,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
+    .anims = gRapidSpinAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812CCE8,
+    .callback = AnimRapidSpin,
 };
 
 const union AffineAnimCmd gUnknown_08402400[] =
@@ -1706,10 +1706,11 @@ void sub_812CCA8(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void sub_812CCE8(struct Sprite *sprite)
+static void AnimRapidSpin(struct Sprite *sprite)
 {
-    int var0;
-    if (gBattleAnimArgs[0] == 0)
+    int movesDown;
+
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[1];
         sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
@@ -1721,19 +1722,19 @@ static void sub_812CCE8(struct Sprite *sprite)
     }
 
     sprite->y2 = gBattleAnimArgs[2];
-    var0 = 0;
+    movesDown = FALSE;
     if (sprite->y2 > gBattleAnimArgs[3])
-        var0 = 1;
+        movesDown = TRUE;
 
-    sprite->data[0] = var0;
+    sprite->data[0] = movesDown;
     sprite->data[1] = 0;
     sprite->data[2] = gBattleAnimArgs[4];
     sprite->data[3] = gBattleAnimArgs[5];
     sprite->data[4] = gBattleAnimArgs[3];
-    sprite->callback = sub_812CD64;
+    sprite->callback = AnimRapidSpin_Step;
 }
 
-static void sub_812CD64(struct Sprite *sprite)
+static void AnimRapidSpin_Step(struct Sprite *sprite)
 {
     sprite->data[1] = (sprite->data[1] + sprite->data[2]) & 0xFF;
     sprite->x2 = gSineTable[sprite->data[1]] >> 4;
@@ -1751,31 +1752,31 @@ static void sub_812CD64(struct Sprite *sprite)
     }
 }
 
-void sub_812CDC8(u8 taskId)
+void AnimTask_RapinSpinMonElevation(u8 taskId)
 {
-    s16 var0;
-    u8 toBG2;
-    s16 var2;
-    int var3;
-    int var4;
-    s16 i;
+    s16 battlerY;
+    u8 bgPriorityRank;
+    s16 initialBgX;
+    int bgX;
+    int otherBgX;
+    s16 scanline;
     struct ScanlineEffectParams scanlineParams;
     struct Task *task = &gTasks[taskId];
 
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        var0 = sub_8077FC0(gBattleAnimAttacker);
-        toBG2 = GetBattlerPosition_permutated(gBattleAnimAttacker);
+        battlerY = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
+        bgPriorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
     }
     else
     {
-        var0 = sub_8077FC0(gBattleAnimTarget);
-        toBG2 = GetBattlerPosition_permutated(gBattleAnimTarget);
+        battlerY = GetBattlerYCoordWithElevation(gBattleAnimTarget);
+        bgPriorityRank = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
     }
 
-    task->data[0] = var0 + 36;
+    task->data[0] = battlerY + 36;
     task->data[1] = task->data[0];
-    task->data[2] = var0 - 33;
+    task->data[2] = battlerY - 33;
     if (task->data[2] < 0)
         task->data[2] = 0;
 
@@ -1785,59 +1786,59 @@ void sub_812CDC8(u8 taskId)
     task->data[6] = 0;
     task->data[7] = 0;
 
-    if (toBG2 == 1)
+    if (bgPriorityRank == 1)
     {
-        var3 = gBattle_BG1_X;
-        task->data[8] = var3;
-        var4 = var3 + 240;
+        bgX = gBattle_BG1_X;
+        task->data[8] = bgX;
+        otherBgX = bgX + DISPLAY_WIDTH;
     }
     else
     {
-        var3 = gBattle_BG2_X;
-        task->data[8] = var3;
-        var4 = var3 + 240;
+        bgX = gBattle_BG2_X;
+        task->data[8] = bgX;
+        otherBgX = bgX + DISPLAY_WIDTH;
     }
 
-    task->data[9] = var4;
+    task->data[9] = otherBgX;
     task->data[10] = gBattleAnimArgs[2];
 
-    if (gBattleAnimArgs[2] == 0)
+    if (gBattleAnimArgs[2] == FALSE)
     {
-        task->data[11] = var4;
-        var2 = task->data[8];
+        task->data[11] = otherBgX;
+        initialBgX = task->data[8];
     }
     else
     {
-        task->data[11] = var3;
-        var2 = task->data[9];
+        task->data[11] = bgX;
+        initialBgX = task->data[9];
     }
 
     task->data[15] = 0;
 
-    i = task->data[2];
-    while (i <= task->data[3])
+    scanline = task->data[2];
+    while (scanline <= task->data[3])
     {
-        gScanlineEffectRegBuffers[0][i] = var2;
-        gScanlineEffectRegBuffers[1][i] = var2;
-        i++;
+        gScanlineEffectRegBuffers[0][scanline] = initialBgX;
+        gScanlineEffectRegBuffers[1][scanline] = initialBgX;
+        scanline++;
     }
 
-    if (toBG2 == 1)
+    if (bgPriorityRank == 1)
         scanlineParams.dmaDest = &REG_BG1HOFS;
     else
         scanlineParams.dmaDest = &REG_BG2HOFS;
 
-    scanlineParams.dmaControl = 0xA2600001;
+    scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
     scanlineParams.initState = 1;
     scanlineParams.unused9 = 0;
     ScanlineEffect_SetParams(scanlineParams);
 
-    task->func = sub_812CEF0;
+    task->func = RapinSpinMonElevation_Step;
 }
 
-static void sub_812CEF0(u8 taskId)
+static void RapinSpinMonElevation_Step(u8 taskId)
 {
-    s16 i;
+    s16 scanline;
     struct Task *task = &gTasks[taskId];
 
     task->data[0] -= task->data[5];
@@ -1869,20 +1870,20 @@ static void sub_812CEF0(u8 taskId)
             task->data[12] = task->data[9];        
     }
 
-    i = task->data[0];
-    while (i < task->data[1])
+    scanline = task->data[0];
+    while (scanline < task->data[1])
     {
-        gScanlineEffectRegBuffers[0][i] = task->data[12];
-        gScanlineEffectRegBuffers[1][i] = task->data[12];
-        i++;
+        gScanlineEffectRegBuffers[0][scanline] = task->data[12];
+        gScanlineEffectRegBuffers[1][scanline] = task->data[12];
+        scanline++;
     }
 
-    i = task->data[1];
-    while (i <= task->data[3])
+    scanline = task->data[1];
+    while (scanline <= task->data[3])
     {
-        gScanlineEffectRegBuffers[0][i] = task->data[11];
-        gScanlineEffectRegBuffers[1][i] = task->data[11];
-        i++;
+        gScanlineEffectRegBuffers[0][scanline] = task->data[11];
+        gScanlineEffectRegBuffers[1][scanline] = task->data[11];
+        scanline++;
     }
 
     if (task->data[15])
@@ -2267,7 +2268,7 @@ void sub_812D7E8(u8 taskId)
     {
     case 0:
         REG_MOSAIC = 0;
-        if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
             REG_BG1CNT_BITFIELD.mosaic = 1;
         else
             REG_BG2CNT_BITFIELD.mosaic = 1;
@@ -2349,7 +2350,7 @@ void sub_812D7E8(u8 taskId)
         break;
     case 4:
         REG_MOSAIC = 0;
-        if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
             REG_BG1CNT_BITFIELD.mosaic = 0;
         else
             REG_BG2CNT_BITFIELD.mosaic = 0;
@@ -3308,13 +3309,13 @@ void sub_812F314(u8 taskId)
     if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
         task->data[8] *= -1;
 
-    task->data[13] = sub_8077FC0(battler) - 34;
+    task->data[13] = GetBattlerYCoordWithElevation(battler) - 34;
     if (task->data[13] < 0)
         task->data[13] = 0;
 
     task->data[14] = task->data[13] + 66;
     task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-    if (GetBattlerPosition_permutated(battler) == 1)
+    if (GetBattlerSpriteBGPriorityRank(battler) == 1)
     {
         scanlineParams.dmaDest = &REG_BG1HOFS;
         REG_BLDCNT = 0x3F42;
@@ -3357,7 +3358,7 @@ static void sub_812F474(u8 taskId)
     s16 var3;
 
     task = &gTasks[taskId];
-    if (GetBattlerPosition_permutated(task->data[5]) == 1)
+    if (GetBattlerSpriteBGPriorityRank(task->data[5]) == 1)
     {
         bgX = gBattle_BG1_X;
         bgY = gBattle_BG1_Y;

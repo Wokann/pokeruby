@@ -344,7 +344,7 @@ void sub_80DF924(u8 taskId)
     struct Task *task = &gTasks[taskId];
     u16 i;
     u8 r1;
-    if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
         sp.dmaDest = &REG_BG1HOFS;
         task->data[2] = gBattle_BG1_X;
@@ -357,7 +357,7 @@ void sub_80DF924(u8 taskId)
     sp.dmaControl = 0xA2600001;
     sp.initState = 1;
     sp.unused9 = 0;
-    r1 = sub_8077FC0(gBattleAnimAttacker);
+    r1 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
     task->data[3] = r1 - 32;
     task->data[4] = r1 + 32;
     if (task->data[3] < 0)

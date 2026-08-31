@@ -1814,7 +1814,7 @@ void sub_81416C4(u8 taskId)
     switch (gTasks[taskId].data[15])
     {
     case 0:
-        if (GetBattlerPosition_permutated(gBattleAnimAttacker) == 1)
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
             REG_BLDCNT = 0x3F42;
         else
             REG_BLDCNT = 0x3F44;

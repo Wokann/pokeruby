@@ -71,7 +71,7 @@ const struct OamData gOamData_837DF4C =
     .priority = 2,
 };
 
-const struct OamData gOamData_837DF54 =
+const struct OamData gOamData_AffineOff_ObjNormal_32x16 =
 {
     .affineMode = 0,
     .objMode = 0,
@@ -3050,12 +3050,12 @@ static void ScriptCmd_doublebattle_2D(void)
     {
         if (wantedBank == 0)
         {
-            r4 = GetBattlerPosition_permutated(gBattleAnimAttacker);
+            r4 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
             spriteId = GetAnimBattlerSpriteId(0);
         }
         else
         {
-            r4 = GetBattlerPosition_permutated(gBattleAnimTarget);
+            r4 = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
             spriteId = GetAnimBattlerSpriteId(1);
         }
         if (spriteId != 0xFF)
@@ -3084,12 +3084,12 @@ static void ScriptCmd_doublebattle_2E(void)
     {
         if (wantedBank == 0)
         {
-            r4 = GetBattlerPosition_permutated(gBattleAnimAttacker);
+            r4 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
             spriteId = GetAnimBattlerSpriteId(0);
         }
         else
         {
-            r4 = GetBattlerPosition_permutated(gBattleAnimTarget);
+            r4 = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
             spriteId = GetAnimBattlerSpriteId(1);
         }
         if (spriteId != 0xFF && r4 == 2)

@@ -65,7 +65,7 @@ void sub_8079C08(struct Task *task, u8 a2, s16 a3, s16 a4, s16 a5, s16 a6, u16 a
 u8 sub_8079C74(struct Task *task);
 void UpdateBattlerSpritePriorities();
 u8 GetBattlerSpriteSubpriority(u8 bank);
-u8 GetBattlerPosition_permutated(u8 slot);
+u8 GetBattlerSpriteBGPriorityRank(u8 battler);
 void sub_807A784(u8 taskId);
 void sub_807A850(struct Task *task, u8 taskId);
 void sub_807A8D4(struct Sprite *sprite);
@@ -104,7 +104,7 @@ void obj_delete_but_dont_free_vram(struct Sprite *sprite);
 void SetGrayscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
 void PrepareAffineAnimInTaskData(struct Task *task, u8 a2, const void *a3);
 bool8 RunAffineAnimFromTaskData(struct Task *task);
-u8 sub_8077FC0(u8 slot);
+u8 GetBattlerYCoordWithElevation(u8 battler);
 void DestroySpriteAndMatrix(struct Sprite *sprite);
 bool8 TranslateAnimArc(struct Sprite *sprite);
 bool8 sub_8078CE8(struct Sprite *sprite);

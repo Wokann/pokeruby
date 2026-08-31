@@ -605,7 +605,7 @@ static void sub_80DE3D4(u8 taskId)
 {
     s16 startLine;
     struct Task *task = &gTasks[taskId];
-    u8 position = GetBattlerPosition_permutated(gBattleAnimTarget);
+    u8 position = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
 
     switch (task->data[15])
     {
@@ -707,7 +707,7 @@ static void sub_80DE61C(u8 taskId)
 static void sub_80DE6B0(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 position = GetBattlerPosition_permutated(gBattleAnimTarget);
+    u8 position = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
 
     switch (task->data[15])
     {
@@ -1173,7 +1173,7 @@ void sub_80DF1A4(u8 taskId)
     task->data[0] = 0;
     task->data[1] = 16;
     task->data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    task->data[10] = sub_8077FC0(gBattleAnimAttacker);
+    task->data[10] = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
     task->data[11] = (GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 1) / 2) + 8;
     task->data[7] = 0;
     task->data[5] = GetBattlerSpriteBGPriority(gBattleAnimAttacker);

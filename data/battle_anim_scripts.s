@@ -3334,8 +3334,8 @@ Move_RAPID_SPIN: @ 81CBD41
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_RAPID_SPIN
 	monbg ANIM_BATTLER_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_84023E8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 32, -32, 40, -2
-	createvisualtask sub_812CDC8, 2, 0, 2, 0
+	createsprite gRapidSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 0, 32, -32, 40, -2
+	createvisualtask AnimTask_RapinSpinMonElevation, 2, ANIM_BATTLER_ATTACKER, 2, FALSE
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 4
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 2
@@ -3343,7 +3343,7 @@ Move_RAPID_SPIN: @ 81CBD41
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	waitforvisualfinish
 	delay 8
-	createvisualtask sub_812CDC8, 2, 0, 2, 1
+	createvisualtask AnimTask_RapinSpinMonElevation, 2, ANIM_BATTLER_ATTACKER, 2, TRUE
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 4
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
