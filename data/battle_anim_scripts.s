@@ -4365,7 +4365,7 @@ Move_IRON_DEFENSE: @ 81CD503
 
 Move_BLOCK: @ 81CD52D
 	loadspritegfx ANIM_TAG_X_SIGN
-	createsprite gBattleAnimSpriteTemplate_8402A6C, ANIM_BATTLER_TARGET, 66
+	createsprite gBlockXSpriteTemplate, ANIM_BATTLER_TARGET, 66
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
 	end
 

@@ -95,7 +95,7 @@ static void AnimHelpingHandClap_Step(struct Sprite *sprite);
 static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
 static void sub_8130FE0(struct Sprite *sprite);
 static void sub_8131408(u8 taskId);
-static void sub_81315C8(struct Sprite *sprite);
+static void AnimBlockX_Step(struct Sprite *sprite);
 static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
 static void MoveOdorSleuthClone(struct Sprite *sprite);
 static void sub_812C144(struct Sprite *sprite);
@@ -134,7 +134,7 @@ static void AnimHelpingHandClap(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
 static void sub_8131264(struct Sprite *sprite);
 extern void AnimParticleBurst(struct Sprite *sprite);// kiss_fountain.c
-static void sub_8131564(struct Sprite *sprite);
+static void AnimBlockX(struct Sprite *sprite);
 static void AnimTask_TeeterDanceMovementStep(u8);
 
 /*static*/ void sub_8131EB8(struct Sprite *sprite);// rest not yet decompiled
@@ -1083,15 +1083,15 @@ const struct SpriteTemplate gSpriteTemplate_8402A54 =
     .callback = AnimParticleBurst,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A6C =
+const struct SpriteTemplate gBlockXSpriteTemplate =
 {
     .tileTag = ANIM_TAG_X_SIGN,
     .paletteTag = ANIM_TAG_X_SIGN,
-    .oam = &gOamData_837DF3C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8131564,
+    .callback = AnimBlockX,
 };
 
 const struct SpriteTemplate gSpriteTemplate_8402A84 =
@@ -4762,27 +4762,27 @@ static void sub_8131408(u8 taskId)
     }
 }
 
-static void sub_8131564(struct Sprite *sprite)
+static void AnimBlockX(struct Sprite *sprite)
 {
-    s16 y2;
+    s16 y;
 
     if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
     {
         sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimTarget) - 2;
-        y2 = -144;
+        y = -144;
     }
     else
     {
         sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimTarget) + 2;
-        y2 = -96;
+        y = -96;
     }
 
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
-    sprite->y2 = y2;
-    sprite->callback = sub_81315C8;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->y2 = y;
+    sprite->callback = AnimBlockX_Step;
 }
 
-static void sub_81315C8(struct Sprite *sprite)
+static void AnimBlockX_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {

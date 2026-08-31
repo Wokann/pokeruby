@@ -311,7 +311,7 @@ const struct SpriteTemplate gSuperpowerFireballSpriteTemplate =
 {
     .tileTag = ANIM_TAG_METEOR,
     .paletteTag = ANIM_TAG_METEOR,
-    .oam = &gOamData_837DF3C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -403,7 +403,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA1E0 =
 {
     .tileTag = ANIM_TAG_PURPLE_SWIPE,
     .paletteTag = ANIM_TAG_PURPLE_SWIPE,
-    .oam = &gOamData_837DF3C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gSpriteAnimTable_83DA1D4,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

@@ -306,7 +306,7 @@ const struct SpriteTemplate gRedXSpriteTemplate =
 {
     .tileTag = 10250,
     .paletteTag = 10250,
-    .oam = &gOamData_837DF3C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
