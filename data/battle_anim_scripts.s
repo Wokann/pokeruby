@@ -3487,7 +3487,7 @@ Move_HAIL: @ 81CC076
 Move_TORMENT: @ 81CC0AE
 	loadspritegfx ANIM_TAG_ANGER
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
-	createvisualtask sub_812D008, 2
+	createvisualtask AnimTask_TormentAttacker, 2
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendMonInAndOut, 2, ANIM_BATTLER_TARGET, 31, 10, 1, 1
 	createsprite gAngerMarkSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, -20, -28

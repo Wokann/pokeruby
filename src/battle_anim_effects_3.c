@@ -63,7 +63,7 @@ static void sub_812CAD0(struct Sprite *sprite);
 static void sub_812CBB4(struct Sprite *sprite);
 static void AnimRapidSpin_Step(struct Sprite *sprite);
 static void RapinSpinMonElevation_Step(u8 taskId);
-static void sub_812D06C(u8 taskId);
+static void TormentAttacker_Step(u8 taskId);
 static void sub_812D254(struct Sprite *sprite);
 static void sub_812D4EC(struct Sprite *sprite);
 static void sub_812D5E8(struct Sprite *sprite);
@@ -1895,22 +1895,22 @@ static void RapinSpinMonElevation_Step(u8 taskId)
     }
 }
 
-void sub_812D008(u8 taskId)
+void AnimTask_TormentAttacker(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     task->data[0] = 0;
     task->data[1] = 0;
-    task->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    task->data[3] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    task->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    task->data[3] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     task->data[4] = 32;
     task->data[5] = -20;
     task->data[6] = 0;
-    task->data[15] = GetAnimBattlerSpriteId(0);
-    task->func = sub_812D06C;
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->func = TormentAttacker_Step;
 }
 
-static void sub_812D06C(u8 taskId)
+static void TormentAttacker_Step(u8 taskId)
 {
     int var0, var1;
     s16 x, y;
