@@ -3781,7 +3781,7 @@ Move_ENDEAVOR: @ 81CC6DA
 	loadspritegfx ANIM_TAG_IMPACT
 	createvisualtask AnimTask_SquishAndSweatDroplets, 2, ANIM_BATTLER_ATTACKER, 2
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 24, 2
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 703, 12, 1, 2
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, rgb(31, 21, 0), 12, 1, 2
 	delay 6
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 8, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 12, -12, 1, 2
