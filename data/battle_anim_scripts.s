@@ -2806,7 +2806,7 @@ Move_MINIMIZE: @ 81CB352
 Move_METRONOME: @ 81CB365
 	loadspritegfx ANIM_TAG_FINGER
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
-	createsprite gBattleAnimSpriteTemplate_83D7220, ANIM_BATTLER_ATTACKER, 11, 0, 100
+	createsprite gThoughtBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 11, 0, 100
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 6
 	createsprite gBattleAnimSpriteTemplate_83D72C8, ANIM_BATTLER_ATTACKER, 12, 0
@@ -3592,10 +3592,10 @@ Move_TAUNT: @ 81CC26B
 	loadspritegfx ANIM_TAG_FINGER_2
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
 	loadspritegfx ANIM_TAG_ANGER
-	createsprite gBattleAnimSpriteTemplate_83D7220, ANIM_BATTLER_ATTACKER, 11, 0, 45
+	createsprite gThoughtBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 11, 0, 45
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D7358, ANIM_BATTLER_ATTACKER, 12, 0
+	createsprite gTauntFingerSpriteTemplate, ANIM_BATTLER_ATTACKER, 12, 0
 	delay 4
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 16, 2
 	waitforvisualfinish

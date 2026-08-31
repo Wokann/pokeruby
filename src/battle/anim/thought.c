@@ -3,13 +3,14 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CEF9C(struct Sprite* sprite);
-static void sub_80CF008(struct Sprite* sprite);
+static void AnimThoughtBubble(struct Sprite* sprite);
+static void AnimThoughtBubble_Step(struct Sprite* sprite);
 
 // thought (thought bubble)
 // Used in Metronome and Taunt.
@@ -58,7 +59,7 @@ const union AnimCmd *const gSpriteAnimTable_83D7210[] =
     gSpriteAnim_83D71FC,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7220 =
+const struct SpriteTemplate gThoughtBubbleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_THOUGHT_BUBBLE,
     .paletteTag = ANIM_TAG_THOUGHT_BUBBLE,
@@ -66,38 +67,38 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7220 =
     .anims = gSpriteAnimTable_83D7210,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CEF9C,
+    .callback = AnimThoughtBubble,
 };
 
-void sub_80CEF44(u8 bank, struct Sprite* sprite)
+void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite)
 {
-    if (GetBattlerSide(bank) == 0)
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 5) + 8;
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) + 8;
     else
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 4) - 8;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) - 8;
 
-    sprite->y = GetBattlerSpriteCoord(bank, 3) - (s16)GetBattlerSpriteCoordAttr(bank, 0) / 4;
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) - (s16)GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_HEIGHT) / 4;
 }
 
-void sub_80CEF9C(struct Sprite* sprite)
+static void AnimThoughtBubble(struct Sprite* sprite)
 {
-    u8 a;
-    u8 bank;
-    if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+    u8 animNum;
+    u8 battler;
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    sub_80CEF44(bank, sprite);
-    a = (GetBattlerSide(bank) == 0) ? 0 : 1;
+    SetSpriteNextToMonHead(battler, sprite);
+    animNum = (GetBattlerSide(battler) == B_SIDE_PLAYER) ? 0 : 1;
     sprite->data[0] = gBattleAnimArgs[1];
-    sprite->data[1] = a + 2;
-    StartSpriteAnim(sprite, a);
-    StoreSpriteCallbackInData6(sprite, sub_80CF008);
+    sprite->data[1] = animNum + 2;
+    StartSpriteAnim(sprite, animNum);
+    StoreSpriteCallbackInData6(sprite, AnimThoughtBubble_Step);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
-static void sub_80CF008(struct Sprite* sprite)
+static void AnimThoughtBubble_Step(struct Sprite* sprite)
 {
     if (--sprite->data[0] == 0)
     {
