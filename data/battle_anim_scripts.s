@@ -4285,13 +4285,13 @@ Move_WATER_SPOUT: @ 81CD3A8
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask sub_80D40F4, 5
+	createvisualtask AnimTask_WaterSpoutLaunch, 5
 	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
 	delay 44
 	playsewithpan SE_M_DIVE, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	delay 16
-	createvisualtask sub_80D45D8, 5
+	createvisualtask AnimTask_WaterSpoutRain, 5
 	playsewithpan SE_M_SURF, SOUND_PAN_TARGET
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff

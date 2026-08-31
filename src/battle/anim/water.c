@@ -31,14 +31,14 @@ void sub_80D3B60(u8 taskId);
 void sub_80D3D68(u8 taskId);
 void AnimSmallDriftingBubbles(struct Sprite *sprite);
 void AnimSmallDriftingBubbles_Step(struct Sprite *);
-void sub_80D4150(u8);
-u8 sub_80D4394(void);
-void sub_80D4418(struct Task *, u8);
-void sub_80D452C(struct Sprite *sprite);
-void sub_80D463C(u8);
-void sub_80D472C(struct Task *, u8);
-void sub_80D47D0(struct Sprite *);
-void sub_80D487C(struct Sprite *);
+static void AnimTask_WaterSpoutLaunch_Step(u8);
+static u8 GetWaterSpoutPowerForAnim(void);
+static void CreateWaterSpoutLaunchDroplets(struct Task *, u8);
+static void AnimSmallWaterOrb(struct Sprite *sprite);
+static void AnimTask_WaterSpoutRain_Step(u8);
+static void CreateWaterSpoutRainDroplet(struct Task *, u8);
+static void AnimWaterSpoutRain(struct Sprite *);
+static void AnimWaterSpoutRainHit(struct Sprite *);
 void sub_80D4988(u8);
 void sub_80D4AD0(struct Task *);
 void sub_80D4B3C(struct Sprite *);
@@ -117,7 +117,8 @@ const struct SpriteTemplate gSmallDriftingBubblesSpriteTemplate =
     .callback = AnimSmallDriftingBubbles,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9378 =
+// Used by Water Spout / Water Sport
+const struct SpriteTemplate gSmallWaterOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GLOWY_BLUE_ORB,
     .paletteTag = ANIM_TAG_GLOWY_BLUE_ORB,
@@ -125,7 +126,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9378 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D452C,
+    .callback = AnimSmallWaterOrb,
 };
 
 const union AnimCmd gSpriteAnim_83D9390[] =
@@ -527,18 +528,18 @@ void AnimSmallDriftingBubbles_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D40F4(u8 taskId)
+void AnimTask_WaterSpoutLaunch(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[5] = gSprites[task->data[15]].y;
-    task->data[1] = sub_80D4394();
+    task->data[1] = GetWaterSpoutPowerForAnim();
     PrepareBattlerSpriteForRotScale(task->data[15], ST_OAM_OBJ_NORMAL);
-    task->func = sub_80D4150;
+    task->func = AnimTask_WaterSpoutLaunch_Step;
 }
 
-void sub_80D4150(u8 taskId)
+static void AnimTask_WaterSpoutLaunch_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -587,7 +588,7 @@ void sub_80D4150(u8 taskId)
             }
             break;
         case 4:
-            sub_80D4418(task, taskId);
+            CreateWaterSpoutLaunchDroplets(task, taskId);
             task->data[0]++;
         case 5:
             if (++task->data[3] > 1)
@@ -623,7 +624,7 @@ void sub_80D4150(u8 taskId)
     }
 }
 
-u8 sub_80D4394(void)
+static u8 GetWaterSpoutPowerForAnim(void)
 {
     u8 i;
     u16 hp;
@@ -655,7 +656,7 @@ u8 sub_80D4394(void)
     return 3;
 }
 
-void sub_80D4418(struct Task *task, u8 taskId)
+static void CreateWaterSpoutLaunchDroplets(struct Task *task, u8 taskId)
 {
     s16 i;
     s16 attackerCoordX = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
@@ -669,7 +670,7 @@ void sub_80D4418(struct Task *task, u8 taskId)
         increment = 1;
     for (i = 0; i < 20; i += increment)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_83D9378, attackerCoordX, attackerCoordY, subpriority);
+        spriteId = CreateSprite(&gSmallWaterOrbSpriteTemplate, attackerCoordX, attackerCoordY, subpriority);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].data[1] = i;
@@ -680,7 +681,7 @@ void sub_80D4418(struct Task *task, u8 taskId)
             gSprites[spriteId].data[6] = taskId;
             gSprites[spriteId].data[7] = 2;
             if (task->data[2] & 1)
-                sub_80D452C(&gSprites[spriteId]);
+                AnimSmallWaterOrb(&gSprites[spriteId]);
             task->data[2]++;
         }
         trigIndex = (trigIndex + increment * 2);
@@ -688,7 +689,7 @@ void sub_80D4418(struct Task *task, u8 taskId)
     }
 }
 
-void sub_80D452C(struct Sprite *sprite)
+static void AnimSmallWaterOrb(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -710,11 +711,11 @@ void sub_80D452C(struct Sprite *sprite)
     }
 }
 
-void sub_80D45D8(u8 taskId)
+void AnimTask_WaterSpoutRain(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->data[1] = sub_80D4394();
+    task->data[1] = GetWaterSpoutPowerForAnim();
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         task->data[4] = 136;
@@ -728,10 +729,10 @@ void sub_80D45D8(u8 taskId)
     task->data[5] = 98;
     task->data[7] = task->data[4] + 49;
     task->data[12] = task->data[1] * 5 + 5;
-    task->func = sub_80D463C;
+    task->func = AnimTask_WaterSpoutRain_Step;
 }
 
-void sub_80D463C(u8 taskId)
+static void AnimTask_WaterSpoutRain_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     u8 taskId2;
@@ -742,7 +743,7 @@ void sub_80D463C(u8 taskId)
             if (++task->data[2] > 2)
             {
                 task->data[2] = 0;
-                sub_80D472C(task, taskId);
+                CreateWaterSpoutRainDroplet(task, taskId);
             }
             if (task->data[10] != 0 && task->data[13] == 0)
             {
@@ -774,14 +775,14 @@ void sub_80D463C(u8 taskId)
     }
 }
 
-void sub_80D472C(struct Task *task, u8 taskId)
+static void CreateWaterSpoutRainDroplet(struct Task *task, u8 taskId)
 {
     u16 yPosArg = ((gSineTable[task->data[8]] + 3) >> 4) + task->data[6];
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83D9378, task->data[7], 0, 0);
+    u8 spriteId = CreateSprite(&gSmallWaterOrbSpriteTemplate, task->data[7], 0, 0);
 
     if (spriteId != MAX_SPRITES)
     {
-        gSprites[spriteId].callback = sub_80D47D0;
+        gSprites[spriteId].callback = AnimWaterSpoutRain;
         gSprites[spriteId].data[5] = yPosArg;
         gSprites[spriteId].data[6] = taskId;
         gSprites[spriteId].data[7] = 9;
@@ -792,7 +793,7 @@ void sub_80D472C(struct Task *task, u8 taskId)
     task->data[7] = ((task->data[7] * 0x41c64e6d + 0x3039) % task->data[5]) + task->data[4];
 }
 
-void sub_80D47D0(struct Sprite *sprite)
+static void AnimWaterSpoutRain(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -806,14 +807,14 @@ void sub_80D47D0(struct Sprite *sprite)
                 StartSpriteAffineAnim(&gSprites[sprite->data[1]], 3);
                 gSprites[sprite->data[1]].data[6] = sprite->data[6];
                 gSprites[sprite->data[1]].data[7] = sprite->data[7];
-                gSprites[sprite->data[1]].callback = sub_80D487C;
+                gSprites[sprite->data[1]].callback = AnimWaterSpoutRainHit;
             }
             DestroySprite(sprite);
         }
     }
 }
 
-void sub_80D487C(struct Sprite *sprite)
+static void AnimWaterSpoutRainHit(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 1)
     {
@@ -921,7 +922,7 @@ void sub_80D4AD0(struct Task *task)
     if (++task->data[2] > 1)
     {
         task->data[2] = 0;
-        spriteId = CreateSprite(&gSpriteTemplate_83D9378, task->data[3], task->data[4], 10);
+        spriteId = CreateSprite(&gSmallWaterOrbSpriteTemplate, task->data[3], task->data[4], 10);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].data[0] = 16;
