@@ -249,7 +249,7 @@
 	.byte \bank
 	.endm
 
-	.macro monbgprio_29
+	.macro splitbgprio_all
 	.byte 0x29
 	.endm
 

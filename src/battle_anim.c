@@ -1372,7 +1372,7 @@ static void ScriptCmd_waitsound(void);
 static void ScriptCmd_jumpargeq(void);
 static void ScriptCmd_jumpifcontest(void);
 static void ScriptCmd_monbgprio_28(void);
-static void ScriptCmd_monbgprio_29(void);
+static void ScriptCmd_splitbgprio_all(void);
 static void ScriptCmd_monbgprio_2A(void);
 static void ScriptCmd_invisible(void);
 static void ScriptCmd_visible(void);
@@ -1422,7 +1422,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_panse_26,
     ScriptCmd_panse_27,
     ScriptCmd_monbgprio_28,
-    ScriptCmd_monbgprio_29,
+    ScriptCmd_splitbgprio_all,
     ScriptCmd_monbgprio_2A,
     ScriptCmd_invisible,
     ScriptCmd_visible,
@@ -2978,7 +2978,7 @@ static void ScriptCmd_monbgprio_28(void)
     }
 }
 
-static void ScriptCmd_monbgprio_29(void)
+static void ScriptCmd_splitbgprio_all(void)
 {
     sBattleAnimScriptPtr++;
     if (!IsContest())

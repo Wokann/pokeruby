@@ -3851,7 +3851,7 @@ Move_IMPRISON: @ 81CC867
 Move_GRUDGE: @ 81CC8AA
 	loadspritegfx ANIM_TAG_PURPLE_FLAME
 	monbg ANIM_BATTLER_ATTACKER
-	monbgprio_29
+	splitbgprio_all
 	fadetobg BG_GHOST
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	waitbgfadein
@@ -3966,21 +3966,21 @@ Move_MIST_BALL: @ 81CCA72
 Move_FEATHER_DANCE: @ 81CCB01
 	loadspritegfx ANIM_TAG_WHITE_FEATHER
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_29
+	splitbgprio_all
 	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_TARGET
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 64, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 64, 2, 104, 11304, 32, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 32, 2, 104, 11304, 32, 1
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 0, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 32, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 0, 2, 104, 11304, 32, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 224, 2, 104, 11304, 32, 1
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 128, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 224, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 128, 2, 104, 11304, 32, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 192, 2, 104, 11304, 32, 1
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 160, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 192, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 160, 2, 104, 11304, 32, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA498, ANIM_BATTLER_TARGET, 0, 0, -16, 96, 2, 104, 11304, 32, 1
+	createsprite gFallingFeatherSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, -16, 96, 2, 104, 11304, 32, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
@@ -5130,7 +5130,7 @@ Move_BUBBLE: @ 81CE59C
 Move_SMOG: @ 81CE672
 	loadspritegfx ANIM_TAG_PURPLE_GAS_CLOUD
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_29
+	splitbgprio_all
 	setalpha 12, 8
 	loopsewithpan SE_M_MIST, SOUND_PAN_TARGET, 17, 10
 	call _81CE6D7
@@ -7061,7 +7061,7 @@ Move_POISON_GAS: @ 81D1474
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	delay 0
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_29
+	splitbgprio_all
 	setalpha 12, 8
 	delay 0
 	playsewithpan SE_M_MIST, SOUND_PAN_ATTACKER
@@ -8054,7 +8054,7 @@ Move_WILL_O_WISP: @ 81D2B83
 	delay 40
 	createvisualtask sub_812B374, 2, -64, 63, 2, 0
 	waitforvisualfinish
-	monbgprio_29
+	splitbgprio_all
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 13, 1
 	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 0
@@ -9127,7 +9127,7 @@ Move_SILVER_WIND: @ 81D4773
 	playsewithpan SE_M_MORNING_SUN, 0
 	delay 0
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_29
+	splitbgprio_all
 	delay 0
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 1, 0, 0, 4, 0
 	createvisualtask sub_80E3B78, 2

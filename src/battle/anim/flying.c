@@ -160,30 +160,30 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA468 =
     .callback = sub_80DA38C,
 };
 
-const union AnimCmd gSpriteAnim_83DA480[] =
+static const union AnimCmd sAnim_FallingFeather_0[] =
 {
     ANIMCMD_FRAME(0, 0),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA488[] =
+static const union AnimCmd sAnim_FallingFeather_1[] =
 {
     ANIMCMD_FRAME(16, 0, .hFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA490[] =
+static const union AnimCmd *const sAnims_FallingFeather[] =
 {
-    gSpriteAnim_83DA480,
-    gSpriteAnim_83DA488,
+    sAnim_FallingFeather_0,
+    sAnim_FallingFeather_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA498 =
+const struct SpriteTemplate gFallingFeatherSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHITE_FEATHER,
     .paletteTag = ANIM_TAG_WHITE_FEATHER,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DA490,
+    .anims = sAnims_FallingFeather,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimFallingFeather,
@@ -207,7 +207,7 @@ const struct SpriteTemplate gSpriteTemplate_83DA4E8 =
     .tileTag = ANIM_TAG_WHITE_FEATHER,
     .paletteTag = ANIM_TAG_WHITE_FEATHER,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DA490,
+    .anims = sAnims_FallingFeather,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80DAD84,
