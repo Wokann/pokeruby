@@ -3478,7 +3478,7 @@ Move_HAIL: @ 81CC076
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 0, 6, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_Hail1, 5
+	createvisualtask AnimTask_Hail, 5
 	loopsewithpan SE_M_HAIL, 0, 8, 10
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 3, 6, 0, 0

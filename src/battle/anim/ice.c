@@ -54,14 +54,21 @@ static void AnimIceBallParticle(struct Sprite *sprite);
 static void AnimTask_Haze2(u8 taskId);
 static void AnimTask_OverlayFogTiles(u8 taskId);
 static void AnimTask_Hail2(u8 taskId);
-bool8 sub_80D8BA8(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c);
+static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 spriteCountField);
+
+enum
+{
+    HAILSTRUCTTYPE_NEGATIVE_POS_MOD = 0,
+    HAILSTRUCTTYPE_POSITIVE_POS_MOD = 1,
+    HAILSTRUCTTYPE_FIXED_POSITION = 2,
+};
 
 struct HailStruct
 {
     s32 x:10;
     s32 y:10;
     s32 bPosition:8;
-    s32 unk3:4;
+    s32 type:4;
 };
 
 const union AnimCmd gSpriteAnim_83D9B58[] =
@@ -383,33 +390,33 @@ const struct SpriteTemplate gPoisonGasCloudSpriteTemplate =
     .callback = InitPoisonGasCloudAnim,
 };
 
-const struct HailStruct gUnknown_083D9DC4[] =
+static const struct HailStruct sHailCoordData[] =
 {
-    {.x = 100, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 2},
-    {.x = 85,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 0},
-    {.x = 242, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .unk3 = 1},
-    {.x = 66,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .unk3 = 1},
-    {.x = 182, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 0},
-    {.x = 60,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 2},
-    {.x = 214, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .unk3 = 0},
-    {.x = 113, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .unk3 = 1},
-    {.x = 210, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .unk3 = 1},
-    {.x = 38,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .unk3 = 0},
+    {.x = 100, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_FIXED_POSITION},
+    {.x = 85,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 242, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 66,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 182, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 60,  .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_FIXED_POSITION},
+    {.x = 214, .y = 120, .bPosition = B_POSITION_OPPONENT_LEFT,  .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
+    {.x = 113, .y = 120, .bPosition = B_POSITION_PLAYER_LEFT,    .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 210, .y = 120, .bPosition = B_POSITION_OPPONENT_RIGHT, .type = HAILSTRUCTTYPE_POSITIVE_POS_MOD},
+    {.x = 38,  .y = 120, .bPosition = B_POSITION_PLAYER_RIGHT,   .type = HAILSTRUCTTYPE_NEGATIVE_POS_MOD},
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9DEC[] =
+static const union AffineAnimCmd sAffineAnim_HailParticle_0[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9DFC[] =
+static const union AffineAnimCmd sAffineAnim_HailParticle_1[] =
 {
     AFFINEANIMCMD_FRAME(0xF0, 0xF0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9E0C[] =
+static const union AffineAnimCmd sAffineAnim_HailParticle_2[] =
 {
     AFFINEANIMCMD_FRAME(0xE0, 0xE0, 0, 0),
     AFFINEANIMCMD_END,
@@ -421,11 +428,11 @@ const union AffineAnimCmd gSpriteAffineAnim_83D9E1C[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9E2C[] =
+static const union AffineAnimCmd *const sAffineAnims_HailParticle[] =
 {
-    gSpriteAffineAnim_83D9DEC,
-    gSpriteAffineAnim_83D9DFC,
-    gSpriteAffineAnim_83D9E0C,
+    sAffineAnim_HailParticle_0,
+    sAffineAnim_HailParticle_1,
+    sAffineAnim_HailParticle_2,
 };
 
 const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9E38[] =
@@ -433,14 +440,14 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9E38[] =
     gSpriteAffineAnim_83D9E1C,
 };
 
-const struct SpriteTemplate gHailSpriteTemplate =
+const struct SpriteTemplate gHailParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9E2C,
+    .affineAnims = sAffineAnims_HailParticle,
     .callback = AnimHailBegin,
 };
 
@@ -1348,8 +1355,15 @@ static void sub_80D8874(struct Sprite *sprite)
     }
 }
 
+#define tState             data[0]
+#define tSpriteCount       data[1]
+#define tHailAffineAnimNum data[2]
+#define tHailStructId      data[3]
+#define tInitialDelayTimer data[4]
+#define tHailSpawnTimer    data[5]
+
 // Creates Hail.
-void AnimTask_Hail1(u8 taskId)
+void AnimTask_Hail(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -1359,71 +1373,85 @@ void AnimTask_Hail1(u8 taskId)
 static void AnimTask_Hail2(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
-        if (++task->data[4] > 2)
+        if (++task->tInitialDelayTimer > 2)
         {
-            task->data[4] = 0;
-            task->data[5] = 0;
-            task->data[2] = 0;
-            task->data[0]++;
+            task->tInitialDelayTimer = 0;
+            task->tHailSpawnTimer = 0;
+            task->tHailAffineAnimNum = 0;
+            task->tState++;
         }
         break;
     case 1:
-        if (task->data[5] == 0)
+        if (task->tHailSpawnTimer == 0)
         {
-            if (sub_80D8BA8(task->data[3], task->data[2], taskId, 1))
-                task->data[1]++;
+            if (GenerateHailParticle(task->tHailStructId, task->tHailAffineAnimNum, taskId, 1))
+                task->tSpriteCount++;
             
-            if (++task->data[2] == 3)
+            if (++task->tHailAffineAnimNum == 3)
             {
-                if (++task->data[3] == 10)
-                    task->data[0]++;
+                if (++task->tHailStructId == 10)
+                    task->tState++;
                 else
-                    task->data[0]--;
+                    task->tState--;
             }
             else
             {
-                task->data[5] = 1;
+                task->tHailSpawnTimer = 1;
             }
 
         }
         else
         {
-            task->data[5]--;
+            task->tHailSpawnTimer--;
         }
         break;
     case 2:
-        if (task->data[1] == 0)
+        if (task->tSpriteCount == 0)
             DestroyAnimVisualTask(taskId);
         break;
     }
 }
 
-bool8 sub_80D8BA8(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c)
+#undef tState
+#undef tSpriteCount
+#undef tHailAffineAnimNum
+#undef tHailStructId
+#undef tInitialDelayTimer
+#undef tHailSpawnTimer
+
+#define sSpawnImpactEffect data[0]
+#define sTargetX data[3]
+#define sTargetY data[4]
+#define sAffineAnimNum data[5]
+#define sOwnerTaskId data[6]
+#define sOwnerTaskSpriteCountField data[7]
+
+static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 spriteCountField)
 {
     u8 id;
     s16 battlerX, battlerY;
     s16 spriteX;
-    bool8 possibleBool = FALSE;
-    s8 unk = gUnknown_083D9DC4[hailStructId].unk3;
+    bool8 shouldSpawnImpactEffect = FALSE;
+    s8 type = sHailCoordData[hailStructId].type;
 
-    if (unk != 2)
+    if (type != HAILSTRUCTTYPE_FIXED_POSITION)
     {
-        id = GetBattlerAtPosition(gUnknown_083D9DC4[hailStructId].bPosition);
+        id = GetBattlerAtPosition(sHailCoordData[hailStructId].bPosition);
         if (IsAnimBankSpriteVisible(id))
         {
-            possibleBool = TRUE;
+            shouldSpawnImpactEffect = TRUE;
             battlerX = GetBattlerSpriteCoord(id, BATTLER_COORD_X_2);
             battlerY = GetBattlerSpriteCoord(id, BATTLER_COORD_Y_PIC_OFFSET);
-            switch (unk)
+            switch (type)
             {
-            case 0:
+            case HAILSTRUCTTYPE_NEGATIVE_POS_MOD:
                 battlerX -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
                 battlerY -= GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
                 break;
-            case 1:
+            case HAILSTRUCTTYPE_POSITIVE_POS_MOD:
                 battlerX += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_WIDTH) / 6;
                 battlerY += GetBattlerSpriteCoordAttr(id, BATTLER_COORD_ATTR_HEIGHT) / 6;
                 break;
@@ -1431,17 +1459,17 @@ bool8 sub_80D8BA8(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c)
         }
         else
         {
-            battlerX = (gUnknown_083D9DC4[hailStructId].x);
-            battlerY = (gUnknown_083D9DC4[hailStructId].y);
+            battlerX = sHailCoordData[hailStructId].x;
+            battlerY = sHailCoordData[hailStructId].y;
         }
     }
     else
     {
-        battlerX = (gUnknown_083D9DC4[hailStructId].x);
-        battlerY = (gUnknown_083D9DC4[hailStructId].y);
+        battlerX = sHailCoordData[hailStructId].x;
+        battlerY = sHailCoordData[hailStructId].y;
     }
     spriteX = battlerX - ((battlerY + 8) / 2);
-    id = CreateSprite(&gHailSpriteTemplate, spriteX, -8, 18);
+    id = CreateSprite(&gHailParticleSpriteTemplate, spriteX, -8, 18);
     if (id == MAX_SPRITES)
     {
         return FALSE;
@@ -1449,12 +1477,12 @@ bool8 sub_80D8BA8(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c)
     else
     {
         StartSpriteAffineAnim(&gSprites[id], affineAnimNum);
-        gSprites[id].data[0] = possibleBool;
-        gSprites[id].data[3] = battlerX;
-        gSprites[id].data[4] = battlerY;
-        gSprites[id].data[5] = affineAnimNum;
-        gSprites[id].data[6] = taskId;
-        gSprites[id].data[7] = c;
+        gSprites[id].sSpawnImpactEffect = shouldSpawnImpactEffect;
+        gSprites[id].sTargetX = battlerX;
+        gSprites[id].sTargetY = battlerY;
+        gSprites[id].sAffineAnimNum = affineAnimNum;
+        gSprites[id].sOwnerTaskId = taskId;
+        gSprites[id].sOwnerTaskSpriteCountField = spriteCountField;
         return TRUE;
     }
 }
@@ -1466,20 +1494,20 @@ static void AnimHailBegin(struct Sprite *sprite)
     sprite->x += 4;
     sprite->y += 8;
 
-    if (sprite->x < sprite->data[3] && sprite->y < sprite->data[4])
+    if (sprite->x < sprite->sTargetX && sprite->y < sprite->sTargetY)
         return;
 
-    if (sprite->data[0] == 1 && sprite->data[5] == 0)
+    if (sprite->sSpawnImpactEffect == 1 && sprite->sAffineAnimNum == 0)
     {
         spriteId = CreateSprite(&gLargeIceEffectParticleSpriteTemplate, 
-                                sprite->data[3], sprite->data[4], sprite->subpriority);
+                                sprite->sTargetX, sprite->sTargetY, sprite->subpriority);
 
         sprite->data[0] = spriteId;
-        if (spriteId != 64)
+        if (spriteId != MAX_SPRITES)
         {
             gSprites[sprite->data[0]].callback = AnimHailContinue;
-            gSprites[sprite->data[0]].data[6] = sprite->data[6];
-            gSprites[sprite->data[0]].data[7] = sprite->data[7];
+            gSprites[sprite->data[0]].sOwnerTaskId = sprite->sOwnerTaskId;
+            gSprites[sprite->data[0]].sOwnerTaskSpriteCountField = sprite->sOwnerTaskSpriteCountField;
         }
 
         FreeOamMatrix(sprite->oam.matrixNum);
@@ -1487,7 +1515,7 @@ static void AnimHailBegin(struct Sprite *sprite)
     }
     else
     {
-        gTasks[sprite->data[6]].data[sprite->data[7]]--;
+        gTasks[sprite->sOwnerTaskId].data[sprite->sOwnerTaskSpriteCountField]--;
         FreeOamMatrix(sprite->oam.matrixNum);
         DestroySprite(sprite);
     }
@@ -1497,11 +1525,18 @@ static void AnimHailContinue(struct Sprite *sprite)
 {
     if (++sprite->data[0] == 20)
     {
-        gTasks[sprite->data[6]].data[sprite->data[7]]--;
+        gTasks[sprite->sOwnerTaskId].data[sprite->sOwnerTaskSpriteCountField]--;
         FreeOamMatrix(sprite->oam.matrixNum);
         DestroySprite(sprite);
     }
 }
+
+#undef sSpawnImpactEffect
+#undef sTargetX
+#undef sTargetY
+#undef sAffineAnimNum
+#undef sOwnerTaskId
+#undef sOwnerTaskSpriteCountField
 
 // Initializes the animation for Ice Ball.
 // arg 0: initial x pixel offset
