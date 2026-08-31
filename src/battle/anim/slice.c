@@ -3,13 +3,14 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 void AnimCuttingSlice(struct Sprite* sprite);
-void sub_80CC9BC(struct Sprite* sprite);
+static void AnimAirCutterSlice(struct Sprite* sprite);
 static void AnimSliceStep(struct Sprite* sprite);
 
 const union AnimCmd gSpriteAnim_83D6B10[] =
@@ -37,7 +38,7 @@ const struct SpriteTemplate gCuttingSliceSpriteTemplate =
     .callback = AnimCuttingSlice,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
+const struct SpriteTemplate gAirCutterSliceSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
@@ -45,7 +46,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6B40 =
     .anims = gSpriteAnimTable_83D6B24,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC9BC,
+    .callback = AnimAirCutterSlice,
 };
 
 // Moves the sprite in a diagonally slashing motion across the target mon.
@@ -79,35 +80,35 @@ void AnimCuttingSlice(struct Sprite* sprite)
         sprite->data[1] = -sprite->data[1];
 }
 
-void sub_80CC9BC(struct Sprite* sprite)
+static void AnimAirCutterSlice(struct Sprite* sprite)
 {
-    u8 a;
-    u8 b;
+    u8 x;
+    u8 y;
     switch (gBattleAnimArgs[3])
     {
     case 1:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1);
+        x = GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_Y);
         break;
     case 2:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+        if (IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
         {
-            a = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 0) + a) / 2;
-            b = (GetBattlerSpriteCoord(gBattleAnimTarget ^ 2, 1) + b) / 2;
+            x = (GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_X) + x) / 2;
+            y = (GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_Y) + y) / 2;
         }
         break;
     case 0:
     default:
-        a = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
         break;
     }
 
-    sprite->x = a;
-    sprite->y = b;
-    if (GetBattlerSide(gBattleAnimTarget) == 0)
+    sprite->x = x;
+    sprite->y = y;
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         sprite->y += 8;
 
     sprite->callback = AnimSliceStep;

@@ -4196,10 +4196,10 @@ Move_AIR_CUTTER: @ 81CD19D
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	delay 0
-	createvisualtask sub_80CFB04, 2, 32, -24, 1536, 2, 128
+	createvisualtask AnimTask_AirCutterProjectile, 2, 32, -24, 1536, 2, 128
 	waitforvisualfinish
 	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6B40, ANIM_BATTLER_ATTACKER, 2, 40, -32, 0, 2
+	createsprite gAirCutterSliceSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -32, 0, 2
 	delay 5
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_DEF_PARTNER, 2, 0, 8, 1

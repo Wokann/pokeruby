@@ -15,7 +15,11 @@ extern u16 gBattleTypeFlags;
 extern void sub_80D4CA4(struct Sprite *sprite);
 
 void AnimSonicBoomProjectile(struct Sprite* sprite);
-void sub_80CF8B8(struct Sprite* sprite);
+static void AnimAirWaveProjectile(struct Sprite* sprite);
+static void AnimAirWaveProjectile_Step1(struct Sprite* sprite);
+static void AnimAirWaveProjectile_Step2(struct Sprite* sprite);
+static void AirCutterProjectileStep1(u8 taskId);
+static void AirCutterProjectileStep2(u8 taskId);
 
 const struct SpriteTemplate gSonicBoomSpriteTemplate =
 {
@@ -28,7 +32,7 @@ const struct SpriteTemplate gSonicBoomSpriteTemplate =
     .callback = AnimSonicBoomProjectile,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D74BC =
+const struct SpriteTemplate gAirWaveProjectileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AIR_WAVE,
     .paletteTag = ANIM_TAG_AIR_WAVE,
@@ -36,7 +40,7 @@ const struct SpriteTemplate gSpriteTemplate_83D74BC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF8B8,
+    .callback = AnimAirWaveProjectile,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83D74D4[] =
@@ -152,7 +156,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80CF7E0(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step2(struct Sprite* sprite)
 {
     if (sprite->data[0]-- <= 0)
     {
@@ -161,7 +165,7 @@ void sub_80CF7E0(struct Sprite* sprite)
     }
 }
 
-void sub_80CF814(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step1(struct Sprite* sprite)
 {
     struct Task* task = &gTasks[sprite->data[7]];
     if (sprite->data[0] > task->data[5])
@@ -190,11 +194,11 @@ void sub_80CF814(struct Sprite* sprite)
     if (sprite->data[0]-- <= 0)
     {
         sprite->data[0] = 30;
-        sprite->callback = sub_80CF7E0;
+        sprite->callback = AnimAirWaveProjectile_Step2;
     }
 }
 
-void sub_80CF8B8(struct Sprite* sprite)
+static void AnimAirWaveProjectile(struct Sprite* sprite)
 {
     s16 a;
     s16 b;
@@ -238,23 +242,23 @@ void sub_80CF8B8(struct Sprite* sprite)
         sprite->data[5] = 0;
         sprite->data[3] = sub_81174C4(sub_81174C4(b, a), sub_81174E0(0x1C0));
         sprite->data[4] = sub_81174C4(sub_81174C4(c, a), sub_81174E0(0x1C0));
-        sprite->callback = sub_80CF814;
+        sprite->callback = AnimAirWaveProjectile_Step1;
     } 
 }
 
-void sub_80CF9F8(u8 taskId)
+static void AirCutterProjectileStep2(u8 taskId)
 {
     if (gTasks[taskId].data[1] == 0)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_80CFA20(u8 taskId)
+static void AirCutterProjectileStep1(u8 taskId)
 {
     if (gTasks[taskId].data[0]-- <= 0)
     {
         u8 spriteId;
         struct Sprite* sprite;
-        spriteId = CreateSprite(&gSpriteTemplate_83D74BC, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
+        spriteId = CreateSprite(&gAirWaveProjectileSpriteTemplate, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
         sprite = &gSprites[spriteId];
         switch (gTasks[taskId].data[4])
         {
@@ -273,17 +277,17 @@ void sub_80CFA20(u8 taskId)
         gTasks[taskId].data[1]++;
         PlaySE12WithPanning(0x9A, BattleAnimAdjustPanning(-0x3F));
         if (gTasks[taskId].data[1] > 2)
-            gTasks[taskId].func = sub_80CF9F8;
+            gTasks[taskId].func = AirCutterProjectileStep2;
     }
 }
 
-void sub_80CFB04(u8 taskId)
+void AnimTask_AirCutterProjectile(u8 taskId)
 {
-    s16 r9 = 0;
-    s16 r6 = 0;
-    s16 sp1 = 0;
-    s16 sp2 = 0;
-    s16 r4;
+    s16 attackerY = 0;
+    s16 attackerX = 0;
+    s16 targetX = 0;
+    s16 targetY = 0;
+    s16 xDiff;
 
     if (IsContest())
     {
@@ -296,7 +300,7 @@ void sub_80CFB04(u8 taskId)
     }
     else
     {
-        if ((gBattlerPositions[gBattleAnimTarget] & 1) == 0)
+        if (GET_BATTLER_SIDE2(gBattleAnimTarget) == B_SIDE_PLAYER)
         {
             gTasks[taskId].data[4] = 1;
             gBattleAnimArgs[0] = -gBattleAnimArgs[0];
@@ -307,38 +311,36 @@ void sub_80CFB04(u8 taskId)
                 gBattleAnimArgs[2] |= 1;
         }
     }
-    r6 = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-    r9 = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+    attackerX = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    attackerY = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
     if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-        && IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        && IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 0, &sp1, &sp2);
+        SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &targetX, &targetY);
     }
     else
     {
-        sp1 = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        sp2 = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
     }
 
-    sp1 = gTasks[taskId].data[11] = sp1 + gBattleAnimArgs[0];
-    sp2 = gTasks[taskId].data[12] = sp2 + gBattleAnimArgs[1];
-    if (sp1 >= r6)
-        r4 = sp1 - r6;
+    targetX = gTasks[taskId].data[11] = targetX + gBattleAnimArgs[0];
+    targetY = gTasks[taskId].data[12] = targetY + gBattleAnimArgs[1];
+    if (targetX >= attackerX)
+        xDiff = targetX - attackerX;
     else
-        r4 = r6 - sp1;
+        xDiff = attackerX - targetX;
 
-    gTasks[taskId].data[5] = sub_81174C4(r4, sub_81174E0(gBattleAnimArgs[2] & ~1));
+    gTasks[taskId].data[5] = sub_81174C4(xDiff, sub_81174E0(gBattleAnimArgs[2] & ~1));
     gTasks[taskId].data[6] = sub_81174C4(gTasks[taskId].data[5], 0x80);
     gTasks[taskId].data[7] = gBattleAnimArgs[2];
-    if (sp2 >= r9)
+    if (targetY >= attackerY)
     {
-        r4 = sp2 - r9;
-        gTasks[taskId].data[8] = sub_81174C4(r4, sub_81174E0(gTasks[taskId].data[5])) & ~1;
+        gTasks[taskId].data[8] = sub_81174C4(targetY - attackerY, sub_81174E0(gTasks[taskId].data[5])) & ~1;
     }
     else
     {
-        r4 = r9 - sp2;
-        gTasks[taskId].data[8] = sub_81174C4(r4, sub_81174E0(gTasks[taskId].data[5])) | 1;
+        gTasks[taskId].data[8] = sub_81174C4(attackerY - targetY, sub_81174E0(gTasks[taskId].data[5])) | 1;
     }
 
     gTasks[taskId].data[3] = gBattleAnimArgs[3];
@@ -373,5 +375,5 @@ void sub_80CFB04(u8 taskId)
     if (gTasks[taskId].data[2] < 3)
         gTasks[taskId].data[2] = 3;
 
-    gTasks[taskId].func = sub_80CFA20;
+    gTasks[taskId].func = AirCutterProjectileStep1;
 }
