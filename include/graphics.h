@@ -3280,7 +3280,7 @@ extern const u8 gBattleAnimSpritePalette_257[];
 extern const u8 gBattleAnimSpritePalette_258[];
 extern const u8 gBattleAnimSpritePalette_259[];
 extern const u8 gBattleAnimSpritePalette_260[];
-extern const u8 gBattleAnimSpritePalette_261[];
+extern const u8 gBattleAnimSpritePal_FlyingDirt[];
 extern const u8 gBattleAnimSpritePalette_262[];
 extern const u8 gBattleAnimSpritePalette_263[];
 extern const u8 gBattleAnimSpritePalette_264[];

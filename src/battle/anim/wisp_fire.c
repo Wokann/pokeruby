@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/battle.h"
 #include "battle_anim.h"
 #include "blend_palette.h"
 #include "main.h"
@@ -12,7 +13,7 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattlerSpriteIds[];
 
 void sub_80D5CC0(struct Sprite *sprite);
-static void sub_80D5E4C(u8 taskId);
+static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId);
 
 const union AnimCmd gSpriteAnim_83D9764[] =
 {
@@ -87,19 +88,19 @@ void sub_80D5CC0(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D5DDC(u8 taskId)
+void AnimTask_MoveHeatWaveTargets(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->data[12] = !GetBattlerSide(gBattleAnimAttacker) ? 1 : -1;
-    task->data[13] = IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2) + 1;
-    task->data[14] = GetAnimBattlerSpriteId(1);
-    task->data[15] = GetAnimBattlerSpriteId(3);
+    task->data[12] = GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER ? 1 : -1;
+    task->data[13] = IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)) + 1;
+    task->data[14] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_DEF_PARTNER);
 
-    task->func = sub_80D5E4C;
+    task->func = AnimTask_MoveHeatWaveTargets_Step;
 }
 
-static void sub_80D5E4C(u8 taskId)
+static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -189,7 +190,7 @@ static void sub_80D5E4C(u8 taskId)
 // Used to add a color mask to the battle interface / HUD in Heat Wave.
 // arg 0: opacity
 // arg 1: color code
-void AnimTask_BlendInterfaceColor(u8 taskId)
+void AnimTask_BlendBackground(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     GetBattleAnimBg1Data(&animBg);

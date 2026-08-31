@@ -3451,26 +3451,26 @@ Move_UPROAR: @ 81CBEFC
 
 Move_HEAT_WAVE: @ 81CBFC6
 	loadspritegfx ANIM_TAG_FLYING_DIRT
-	createvisualtask AnimTask_BlendSpriteColor, 5, 10261, 0, 6, 6, rgb(31, 0, 0)
-	createvisualtask do_boulder_dust, 5, 1
-	createvisualtask AnimTask_BlendInterfaceColor, 6, 6, 31
+	createvisualtask AnimTask_BlendParticle, 5, 10261, 0, 6, 6, rgb(31, 0, 0)
+	createvisualtask AnimTask_LoadSandstormBackground, 5, 1
+	createvisualtask AnimTask_BlendBackground, 6, 6, 31
 	panse_1B SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 4
-	createvisualtask sub_80D5DDC, 5
+	createvisualtask AnimTask_MoveHeatWaveTargets, 5
 	delay 12
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 10, 2304, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 10, 2304, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 90, 2048, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 90, 2048, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 50, 2560, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 50, 2560, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 20, 2304, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 20, 2304, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 70, 1984, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 70, 1984, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 2816, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 2816, 96, 1
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 60, 2560, 96, 1
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 60, 2560, 96, 1
 	end
 
 Move_HAIL: @ 81CC076
@@ -3912,9 +3912,9 @@ Move_LUSTER_PURGE: @ 81CC95B
 	createsprite gBattleAnimSpriteTemplate_83DA9E0, ANIM_BATTLER_ATTACKER, 41, 0, 0, 0, 0
 	delay 20
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, -1
-	createvisualtask AnimTask_BlendSpriteColor, 5, 10267, 2, 0, 16, 0xFFFF
+	createvisualtask AnimTask_BlendParticle, 5, 10267, 2, 0, 16, 0xFFFF
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendSpriteColor, 5, 10135, 0, 12, 12, rgb(0, 0, 23)
+	createvisualtask AnimTask_BlendParticle, 5, 10135, 0, 12, 12, rgb(0, 0, 23)
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_83DB4F0, ANIM_BATTLER_TARGET, 3, 1, 2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 215, SOUND_PAN_TARGET
@@ -4168,7 +4168,7 @@ Move_FAKE_TEARS: @ 81CD10D
 	loadspritegfx ANIM_TAG_SMALL_BUBBLES
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
-	createvisualtask AnimTask_BlendSpriteColor, 5, 10155, 0, 4, 4, rgb(12, 11, 31)
+	createvisualtask AnimTask_BlendParticle, 5, 10155, 0, 4, 4, rgb(12, 11, 31)
 	waitforvisualfinish
 	createvisualtask sub_812E568, 5, 0, 2, 1
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 12, 4
@@ -6339,21 +6339,21 @@ _81D02E1:
 Move_SANDSTORM: @ 81D0304
 	loadspritegfx ANIM_TAG_FLYING_DIRT
 	playsewithpan SE_M_SANDSTORM, 0
-	createvisualtask do_boulder_dust, 5, 0
+	createvisualtask AnimTask_LoadSandstormBackground, 5, 0
 	delay 16
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 10, 2304, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 10, 2304, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 90, 2048, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 90, 2048, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 50, 2560, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 50, 2560, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 20, 2304, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 20, 2304, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 70, 1984, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 70, 1984, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 2816, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 2816, 96, 0
 	delay 10
-	createsprite gFlyingDirtSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 60, 2560, 96, 0
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 60, 2560, 96, 0
 	end
 
 Move_WHIRLPOOL: @ 81D038C

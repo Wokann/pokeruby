@@ -17,9 +17,9 @@ extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG3_Y;
 
-extern const u8 gBattleAnimBackgroundTilemap_SandstormBrew[];
-extern const u8 gBattleAnimBackgroundImage_SandstormBrew[];
-extern const u16 gBattleAnimSpritePalette_261[];
+extern const u8 gBattleAnimBgTilemap_Sandstorm[];
+extern const u8 gBattleAnimBgImage_Sandstorm[];
+extern const u16 gBattleAnimSpritePal_FlyingDirt[];
 extern const union AnimCmd *const gSpriteAnimTable_83D91F0[];
 extern const union AnimCmd *const gSpriteAnimTable_83D95E0[];
 
@@ -28,7 +28,7 @@ extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 void sub_80DCE9C(struct Sprite *sprite);
 void sub_80DCF60(struct Sprite *sprite);
 void AnimParticleInVortex(struct Sprite *sprite);
-void AnimDirtParticleAcrossScreen(struct Sprite *sprite);
+static void AnimFlyingSandCrescent(struct Sprite *sprite);
 void AnimRaiseSprite(struct Sprite *sprite);
 void sub_80DD87C(struct Sprite *sprite);
 void sub_80DD8E8(struct Sprite *sprite);
@@ -36,7 +36,7 @@ void sub_80DD978(struct Sprite *sprite);
 void sub_80DD9A4(struct Sprite *sprite);
 static void sub_80DCF1C(struct Sprite *sprite);
 static void AnimParticleInVortex_Step(struct Sprite *sprite);
-static void sub_80DD190(u8 taskId);
+static void AnimTask_LoadSandstormBackground_Step(u8 taskId);
 static void sub_80DD604(u8 taskId);
 static void sub_80DD774(struct Task *task);
 static u8 sub_80DD8BC(void);
@@ -136,7 +136,7 @@ const struct SpriteTemplate gFireSpinSpriteTemplate =
     .callback = AnimParticleInVortex,
 };
 
-const struct SpriteTemplate gFlyingDirtSpriteTemplate =
+const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLYING_DIRT,
     .paletteTag = ANIM_TAG_FLYING_DIRT,
@@ -144,18 +144,18 @@ const struct SpriteTemplate gFlyingDirtSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = AnimDirtParticleAcrossScreen,
+    .callback = AnimFlyingSandCrescent,
 };
 
-const struct Subsprite gSubspriteTable_83DAD00[] =
+static const struct Subsprite sFlyingSandSubsprites[] =
 {
     {.x = -16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = 2, .tileOffset = 0, .priority = 1},
     {.x =  16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = 2, .tileOffset = 8, .priority = 1},
 };
 
-const struct SubspriteTable gSubspriteTables_83DAD10[] =
+static const struct SubspriteTable sFlyingSandSubspriteTable[] =
 {
-    {ARRAY_COUNT(gSubspriteTable_83DAD00), gSubspriteTable_83DAD00},
+    {ARRAY_COUNT(sFlyingSandSubsprites), sFlyingSandSubsprites},
 };
 
 const union AnimCmd gSpriteAnim_83DAD18[] =
@@ -410,7 +410,7 @@ static void AnimParticleInVortex_Step(struct Sprite *sprite)
     }
 }
 
-void do_boulder_dust(u8 taskId)
+void AnimTask_LoadSandstormBackground(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     int var0 = 0;
@@ -430,9 +430,9 @@ void do_boulder_dust(u8 taskId)
 
     GetBattleAnimBg1Data(&animBg);
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
-    LZDecompressVram(&gBattleAnimBackgroundTilemap_SandstormBrew, animBg.bgTilemap);
-    LZDecompressVram(&gBattleAnimBackgroundImage_SandstormBrew, animBg.bgTiles);
-    LoadCompressedPalette(&gBattleAnimSpritePalette_261, animBg.paletteId << 4, 32);
+    LZDecompressVram(&gBattleAnimBgTilemap_Sandstorm, animBg.bgTilemap);
+    LZDecompressVram(&gBattleAnimBgImage_Sandstorm, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimSpritePal_FlyingDirt, animBg.paletteId << 4, 32);
 
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
@@ -441,10 +441,10 @@ void do_boulder_dust(u8 taskId)
         var0 = 1;
 
     gTasks[taskId].data[0] = var0;
-    gTasks[taskId].func = sub_80DD190;
+    gTasks[taskId].func = AnimTask_LoadSandstormBackground_Step;
 }
 
-static void sub_80DD190(u8 taskId)
+static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
 {    
     struct BattleAnimBgData animBg;
 
@@ -516,7 +516,7 @@ static void sub_80DD190(u8 taskId)
 // arg 1: projectile speed
 // arg 2: y pixel drop
 // arg 3: ??? unknown (possibly a color bit)
-void AnimDirtParticleAcrossScreen(struct Sprite *sprite)
+static void AnimFlyingSandCrescent(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -533,7 +533,7 @@ void AnimDirtParticleAcrossScreen(struct Sprite *sprite)
         }
 
         sprite->y = gBattleAnimArgs[0];
-        SetSubspriteTables(sprite, gSubspriteTables_83DAD10);
+        SetSubspriteTables(sprite, sFlyingSandSubspriteTable);
         sprite->data[1] = gBattleAnimArgs[1];
         sprite->data[2] = gBattleAnimArgs[2];
         sprite->data[0]++;

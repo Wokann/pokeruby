@@ -1221,7 +1221,7 @@ const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
     { gBattleAnimSpritePalette_258, ANIM_TAG_MAGNIFYING_GLASS },
     { gBattleAnimSpritePalette_259, ANIM_TAG_BROWN_ORB },
     { gBattleAnimSpritePalette_260, ANIM_TAG_METAL_SOUND_WAVES },
-    { gBattleAnimSpritePalette_261, ANIM_TAG_FLYING_DIRT },
+    { gBattleAnimSpritePal_FlyingDirt, ANIM_TAG_FLYING_DIRT },
     { gBattleAnimSpritePalette_262, ANIM_TAG_ICICLE_SPEAR },
     { gBattleAnimSpritePalette_263, ANIM_TAG_HAIL },
     { gBattleAnimSpritePalette_264, ANIM_TAG_GLOWY_RED_ORB },

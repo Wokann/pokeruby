@@ -67,7 +67,7 @@ static void sub_80E260C(void);
 static void sub_80E255C(struct Sprite *sprite);
 static void sub_80E2710(u8 taskId);
 static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
-static void AnimTask_BlendSpriteColor_Step1(u8 taskId, u32 selectedPalettes);
+static void StartBlendAnimSpriteColor(u8 taskId, u32 selectedPalettes);
 static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
 static void sub_80E2DB8(u8 taskId);
 static void AnimTask_TraceMonBlended_Step(u8 taskId);
@@ -960,7 +960,7 @@ void AnimTask_BlendBattleAnimPal(u8 taskId)
         (gBattleAnimArgs[0] >> 9)  & 1,
         (gBattleAnimArgs[0] >> 10) & 1);
 
-    AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
+    StartBlendAnimSpriteColor(taskId, selectedPalettes);
 }
 
 void AnimTask_BlendBattleAnimPalExclude(u8 taskId)
@@ -1011,7 +1011,7 @@ void AnimTask_BlendBattleAnimPalExclude(u8 taskId)
         }
     }
 
-    AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
+    StartBlendAnimSpriteColor(taskId, selectedPalettes);
 }
 
 void sub_80E2B74(u8 taskId)
@@ -1052,7 +1052,7 @@ void sub_80E2B74(u8 taskId)
         break;
     }
 
-    AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
+    StartBlendAnimSpriteColor(taskId, selectedPalettes);
 }
 
 // Used to add a color mask to a Sprite.
@@ -1061,13 +1061,13 @@ void sub_80E2B74(u8 taskId)
 // arg 2: ??? unknown
 // arg 3: coefficient
 // arg 4: color code
-void AnimTask_BlendSpriteColor(u8 taskId)
+void AnimTask_BlendParticle(u8 taskId)
 {
     u8 paletteIndex = IndexOfSpritePaletteTag(gBattleAnimArgs[0]);
-    AnimTask_BlendSpriteColor_Step1(taskId, 1 << (paletteIndex + 16));
+    StartBlendAnimSpriteColor(taskId, 1 << (paletteIndex + 16));
 }
 
-static void AnimTask_BlendSpriteColor_Step1(u8 taskId, u32 selectedPalettes)
+static void StartBlendAnimSpriteColor(u8 taskId, u32 selectedPalettes)
 {
     gTasks[taskId].data[0] = selectedPalettes;
     gTasks[taskId].data[1] = selectedPalettes >> 16;
@@ -1593,7 +1593,7 @@ void sub_80E3A08(u8 taskId)
     for (j = 5; j != 0; j--)
         gBattleAnimArgs[j] = gBattleAnimArgs[j - 1];
 
-    AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
+    StartBlendAnimSpriteColor(taskId, selectedPalettes);
 }
 
 void AnimTask_StartSlidingBg(u8 taskId)
