@@ -3681,7 +3681,7 @@ Move_RECYCLE: @ 81CC45E
 	monbg ANIM_BATTLER_ATTACKER
 	setalpha 0, 16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_8402B10, ANIM_BATTLER_ATTACKER, 2
+	createsprite gRecycleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 24, 3
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 32767, 12, 2, 1

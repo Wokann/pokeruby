@@ -139,8 +139,8 @@ static void AnimTask_TeeterDanceMovementStep(u8);
 
 /*static*/ void sub_8131EB8(struct Sprite *sprite);// rest not yet decompiled
 void AnimKnockOffStrike(struct Sprite *sprite);
-void AnimRecycle(struct Sprite *sprite);
-static void AnimRecycleStep(struct Sprite *sprite);
+static void AnimRecycle(struct Sprite *sprite);
+static void AnimRecycle_Step(struct Sprite *sprite);
 static void AnimTask_SlackOffSquishStep(u8 taskId);
 
 const union AnimCmd gSpriteAnim_8402164[] =
@@ -1148,25 +1148,25 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402AE4 =
     .callback = AnimKnockOffStrike,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402AFC[] =
+const union AffineAnimCmd gRecycleSpriteAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 64),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402B0C[] =
+const union AffineAnimCmd *const gRecycleSpriteAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402AFC,
+    gRecycleSpriteAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402B10 =
+const struct SpriteTemplate gRecycleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RECYCLE,
     .paletteTag = ANIM_TAG_RECYCLE,
     .oam = &gOamData_837E0BC,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402B0C,
+    .affineAnims = gRecycleSpriteAffineAnimTable,
     .callback = AnimRecycle,
 };
 
@@ -5962,7 +5962,7 @@ void AnimKnockOffStrike(struct Sprite *sprite)
 
 // Gradually fades a rotating recyle arrow sprite in and back out.
 // No args.
-void AnimRecycle(struct Sprite *sprite)
+static void AnimRecycle(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP);
@@ -5971,11 +5971,11 @@ void AnimRecycle(struct Sprite *sprite)
 
     sprite->data[6] = 0;
     sprite->data[7] = 16;
-    sprite->callback = AnimRecycleStep;
+    sprite->callback = AnimRecycle_Step;
     REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[6], sprite->data[7]);
 }
 
-static void AnimRecycleStep(struct Sprite *sprite)
+static void AnimRecycle_Step(struct Sprite *sprite)
 {
     switch (sprite->data[2])
     {
