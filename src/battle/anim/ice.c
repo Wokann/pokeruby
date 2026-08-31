@@ -20,10 +20,10 @@ extern u8  gBattlerSpriteIds[];
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 
-extern const u8 gUnknown_083970E8[];
+extern const u16 gFogPalette[];
 
 extern struct INCBIN_U8 gBattleAnimFogTilemap;
-extern struct INCBIN_U8 gWeatherFog1Tiles;
+extern struct INCBIN_U8 gWeatherFogHorizontalTiles;
 
 static void sub_80D7704(struct Sprite *sprite);
 static void sub_80D7888(struct Sprite *sprite);
@@ -52,7 +52,7 @@ static void AnimThrowIceBall(struct Sprite *sprite);
 static void AnimIceBallParticle(struct Sprite *sprite);
 
 static void AnimTask_Haze2(u8 taskId);
-static void AnimTask_OverlayFogTiles(u8 taskId);
+static void AnimTask_MistBallFog_Step(u8 taskId);
 static void AnimTask_Hail2(u8 taskId);
 static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 spriteCountField);
 
@@ -374,7 +374,7 @@ const struct SpriteTemplate gMistBallSpriteTemplate =
     .callback = AnimThrowMistBall,
 };
 
-const u8 gUnknown_083D9D98[] =
+static const u8 sMistBlendAmounts[] =
 {
     0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5,
 };
@@ -1020,9 +1020,9 @@ void AnimTask_Haze1(u8 taskId)
 
     GetBattleAnimBg1Data(&animBg);
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, animBg.bgTiles, 0x800);
+    DmaCopy16Defvars(3, &gWeatherFogHorizontalTiles, animBg.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, animBg.bgTilemap);
-    LoadPalette(&gUnknown_083970E8, animBg.paletteId * 16, 32);
+    LoadPalette(&gFogPalette, animBg.paletteId * 16, 32);
 
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
@@ -1110,7 +1110,7 @@ static void AnimThrowMistBall(struct Sprite *sprite)
 }
 
 // Displays misty background in Mist Ball.
-void AnimTask_LoadMistTiles(u8 taskId)
+void AnimTask_MistBallFog(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
@@ -1129,18 +1129,18 @@ void AnimTask_LoadMistTiles(u8 taskId)
 
     GetBattleAnimBg1Data(&animBg);
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
-    DmaCopy16Defvars(3, &gWeatherFog1Tiles, animBg.bgTiles, 0x800);
+    DmaCopy16Defvars(3, &gWeatherFogHorizontalTiles, animBg.bgTiles, 0x800);
     LZDecompressVram(&gBattleAnimFogTilemap, animBg.bgTilemap);
-    LoadPalette(&gUnknown_083970E8, animBg.paletteId * 16, 32);
+    LoadPalette(&gFogPalette, animBg.paletteId * 16, 32);
 
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
     gTasks[taskId].data[15] = -1;
-    gTasks[taskId].func = AnimTask_OverlayFogTiles;
+    gTasks[taskId].func = AnimTask_MistBallFog_Step;
 }
 
-static void AnimTask_OverlayFogTiles(u8 taskId)
+static void AnimTask_MistBallFog_Step(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
@@ -1151,7 +1151,7 @@ static void AnimTask_OverlayFogTiles(u8 taskId)
     {
     case 0:
         gTasks[taskId].data[9] += 1;
-        gTasks[taskId].data[11] = gUnknown_083D9D98[gTasks[taskId].data[9]];
+        gTasks[taskId].data[11] = sMistBlendAmounts[gTasks[taskId].data[9]];
         REG_BLDALPHA = gTasks[taskId].data[11] | ((17 - gTasks[taskId].data[11]) << 8);
         if (gTasks[taskId].data[11] == 5)
         {

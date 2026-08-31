@@ -16,7 +16,7 @@ extern struct Weather *const gWeatherPtr;
 const u16 gUnknown_08397108[] = INCBIN_U16("graphics/weather/1.gbapal");
 const u16 gUnknown_08397128[] = INCBIN_U16("graphics/weather/2.gbapal");
 const u8 gWeatherFog2Tiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
-const u8 gWeatherFog1Tiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
+const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
 const u8 gWeatherCloudTiles[] = INCBIN_U8("graphics/weather/cloud.4bpp");
 const u8 gWeatherSnow1Tiles[] = INCBIN_U8("graphics/weather/snow0.4bpp");
 const u8 gWeatherSnow2Tiles[] = INCBIN_U8("graphics/weather/snow1.4bpp");
@@ -1387,7 +1387,7 @@ static void CreateFog1Sprites(void)
 
     if (!gWeatherPtr->fog1SpritesCreated)
     {
-        struct SpriteSheet fog1SpriteSheet = {gWeatherFog1Tiles, sizeof(gWeatherFog1Tiles), 0x1201};
+        struct SpriteSheet fog1SpriteSheet = {gWeatherFogHorizontalTiles, sizeof(gWeatherFogHorizontalTiles), 0x1201};
 
         LoadSpriteSheet(&fog1SpriteSheet);
         for (i = 0; i < 20; i++)

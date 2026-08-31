@@ -3952,15 +3952,15 @@ Move_MIST_BALL: @ 81CCA72
 	waitforvisualfinish
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 10, 0
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 1, 1, 1, 32279, 16, 32767, 16
+	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, F_PAL_BG, 1, 1, RGB(23, 16, 31), 16, RGB_WHITE, 16
 	delay 0
 	playsewithpan SE_M_HAZE, 0
-	createvisualtask AnimTask_LoadMistTiles, 5
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 3, 0, 16, 32767
+	createvisualtask AnimTask_MistBallFog, 5
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 3, 0, 16, RGB_WHITE
 	delay 8
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 4, 0, 70, 0
 	delay 70
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 16, 0, RGB_WHITE
 	end
 
 Move_FEATHER_DANCE: @ 81CCB01

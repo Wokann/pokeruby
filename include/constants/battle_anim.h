@@ -424,4 +424,8 @@
 #define ANIM_WEATHER_SANDSTORM 3
 #define ANIM_WEATHER_HAIL 4
 
+// Palette-selection flags used by battle animation blend tasks.
+#define F_PAL_BG     (1 << 0)
+#define F_PAL_TARGET (1 << 2)
+
 #endif
