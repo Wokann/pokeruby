@@ -3545,7 +3545,7 @@ Move_SMELLING_SALT: @ 81CC156
 
 Move_FOLLOW_ME: @ 81CC1B1
 	loadspritegfx ANIM_TAG_FINGER
-	createsprite gBattleAnimSpriteTemplate_83D72E0, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gFollowMeFingerSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
 	delay 18
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_ATTACKER

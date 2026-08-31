@@ -11,11 +11,11 @@ extern u8 gBattleAnimTarget;
 extern void sub_80CEF44(u8 bank, struct Sprite* sprite);
 
 void sub_80CF040(struct Sprite* sprite);
-void sub_80CF0BC(struct Sprite* sprite);
+void AnimFollowMeFinger(struct Sprite* sprite);
 void sub_80CF1C8(struct Sprite* sprite);
 static void sub_80CF088(struct Sprite* sprite);
-static void sub_80CF138(struct Sprite* sprite);
-static void sub_80CF158(struct Sprite* sprite);
+static void AnimFollowMeFinger_Step1(struct Sprite* sprite);
+static void AnimFollowMeFinger_Step2(struct Sprite* sprite);
 static void sub_80CF228(struct Sprite* sprite);
 static void sub_80CF264(struct Sprite* sprite);
 
@@ -68,7 +68,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72C8 =
     .callback = sub_80CF040,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72E0 =
+const struct SpriteTemplate gFollowMeFingerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
@@ -76,7 +76,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72E0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D72C0,
-    .callback = sub_80CF0BC,
+    .callback = AnimFollowMeFinger,
 };
 
 const union AnimCmd gSpriteAnim_83D72F8[] =
@@ -158,16 +158,16 @@ static void sub_80CF088(struct Sprite* sprite)
     }
 }
 
-void sub_80CF0BC(struct Sprite* sprite)
+void AnimFollowMeFinger(struct Sprite* sprite)
 {
-    u8 bank;
-    if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+    u8 battler;
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    sprite->x = GetBattlerSpriteCoord(bank, 0);
-    sprite->y = GetBattlerSpriteCoordAttr(bank, 2);
+    sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP);
     if (sprite->y <= 9)
         sprite->y = 10;
 
@@ -176,20 +176,20 @@ void sub_80CF0BC(struct Sprite* sprite)
     sprite->data[2] = sprite->subpriority;
     sprite->data[3] = sprite->subpriority + 4;
     sprite->data[4] = 0;
-    StoreSpriteCallbackInData6(sprite, sub_80CF138);
+    StoreSpriteCallbackInData6(sprite, AnimFollowMeFinger_Step1);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-static void sub_80CF138(struct Sprite* sprite)
+static void AnimFollowMeFinger_Step1(struct Sprite* sprite)
 {
     if (++sprite->data[4] > 12)
-        sprite->callback = sub_80CF158;
+        sprite->callback = AnimFollowMeFinger_Step2;
 }
 
-static void sub_80CF158(struct Sprite* sprite)
+static void AnimFollowMeFinger_Step2(struct Sprite* sprite)
 {
-    s16 temp;
-    s16 temp2;
+    s16 x1;
+    s16 x2;
     sprite->data[1] += 4;
     if (sprite->data[1] > 0xFE)
     {
@@ -211,8 +211,9 @@ static void sub_80CF158(struct Sprite* sprite)
     if (sprite->data[1] > 0x9F)
         sprite->subpriority = sprite->data[2];
 
-    temp = gSineTable[sprite->data[1]];
-    sprite->x2 = (temp2 = temp >> 3) + (temp2 >> 1);
+    x1 = gSineTable[sprite->data[1]];
+    x2 = x1 >> 3;
+    sprite->x2 = (x1 >> 3) + (x2 >> 1);
 }
 
 void sub_80CF1C8(struct Sprite* sprite)
