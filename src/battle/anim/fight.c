@@ -253,7 +253,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA0A0 =
 {
     .tileTag = ANIM_TAG_BLUE_LIGHT_WALL,
     .paletteTag = ANIM_TAG_BLUE_LIGHT_WALL,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -858,7 +858,7 @@ void sub_80D98D8(struct Sprite *sprite)
     sprite->y = 120;
 
     sprite->data[0] = gBattleAnimArgs[3];
-    sub_8079BF4(&sprite->data[4], &sprite->data[5], (void *)(sprite->y << 8));
+    StorePointerInVars(&sprite->data[4], &sprite->data[5], (void *)(sprite->y << 8));
 
     sprite->data[6] = gBattleAnimArgs[1];
     sprite->oam.tileNum += gBattleAnimArgs[2] * 4;
@@ -872,9 +872,9 @@ static void sub_80D9934(struct Sprite *sprite)
 
     if (sprite->data[0] != 0)
     {
-        var0 = sub_8079BFC(sprite->data[4], sprite->data[5]);
+        var0 = LoadPointerFromVars(sprite->data[4], sprite->data[5]);
         var0 -= sprite->data[6];
-        sub_8079BF4(&sprite->data[4], &sprite->data[5], var0);
+        StorePointerInVars(&sprite->data[4], &sprite->data[5], var0);
 
         var0 = (void *)(((intptr_t)var0) >> 8);
         sprite->y = (intptr_t)var0;

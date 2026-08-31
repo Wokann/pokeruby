@@ -1266,96 +1266,96 @@ void SetGrayscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor)
     }
 }
 
-u32 sub_80791A8(u8 a1, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7)
+u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, bool8 attackerPartner, bool8 targetPartner, bool8 anim1, bool8 anim2)
 {
-    u32 var = 0;
+    u32 selectedPalettes = 0;
     u32 shift;
 
-    if (a1)
+    if (battleBackground)
     {
         if (!IsContest())
-            var = 0xe;
+            selectedPalettes = 0xe;
         else
-            var = 1 << sub_80789BC();
+            selectedPalettes = 1 << sub_80789BC();
     }
-    if (a2)
+    if (attacker)
     {
         shift = gBattleAnimAttacker + 16;
-        var |= 1 << shift;
+        selectedPalettes |= 1 << shift;
     }
-    if (a3) {
+    if (target) {
         shift = gBattleAnimTarget + 16;
-        var |= 1 << shift;
+        selectedPalettes |= 1 << shift;
     }
-    if (a4)
+    if (attackerPartner)
     {
         if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             shift = (gBattleAnimAttacker ^ 2) + 16;
-            var |= 1 << shift;
+            selectedPalettes |= 1 << shift;
         }
     }
-    if (a5)
+    if (targetPartner)
     {
         if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
         {
             shift = (gBattleAnimTarget ^ 2) + 16;
-            var |= 1 << shift;
+            selectedPalettes |= 1 << shift;
         }
     }
-    if (a6)
+    if (anim1)
     {
         if (!IsContest())
-            var |= 0x100;
+            selectedPalettes |= 0x100;
         else
-            var |= 0x4000;
+            selectedPalettes |= 0x4000;
     }
-    if (a7)
+    if (anim2)
     {
         if (!IsContest())
-            var |= 0x200;
+            selectedPalettes |= 0x200;
     }
-    return var;
+    return selectedPalettes;
 }
 
-u32 sub_80792C0(u8 a1, u8 a2, u8 a3, u8 a4)
+u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLeft, u8 opponentRight)
 {
-    u32 var = 0;
+    u32 selectedPalettes = 0;
     u32 shift;
 
     if (IsContest())
     {
-        if (a1)
+        if (playerLeft)
         {
-            var |= 1 << 18;
-            return var;
+            selectedPalettes |= 1 << 18;
+            return selectedPalettes;
         }
     } else {
-        if (a1) {
+        if (playerLeft) {
             if (IsAnimBankSpriteVisible(GetBattlerAtPosition(0))) {
-                var |= 1 << (GetBattlerAtPosition(0) + 16);
+                selectedPalettes |= 1 << (GetBattlerAtPosition(0) + 16);
             }
         }
-        if (a2) {
+        if (playerRight) {
             if (IsAnimBankSpriteVisible(GetBattlerAtPosition(2))) {
                 shift = GetBattlerAtPosition(2) + 16;
-                var |= 1 << shift;
+                selectedPalettes |= 1 << shift;
             }
         }
-        if (a3) {
+        if (opponentLeft) {
             if (IsAnimBankSpriteVisible(GetBattlerAtPosition(1))) {
                 shift = GetBattlerAtPosition(1) + 16;
-                var |= 1 << shift;
+                selectedPalettes |= 1 << shift;
             }
         }
-        if (a4) {
+        if (opponentRight) {
             if (IsAnimBankSpriteVisible(GetBattlerAtPosition(3))) {
                 shift = GetBattlerAtPosition(3) + 16;
-                var |= 1 << shift;
+                selectedPalettes |= 1 << shift;
             }
         }
     }
-    return var;
+    return selectedPalettes;
 }
 
 u8 sub_80793A8(u8 a1)
@@ -1506,7 +1506,9 @@ void obj_delete_but_dont_free_vram(struct Sprite *sprite)
     DestroySprite(sprite);
 }
 
-void sub_8079670(u8 task)
+static void AnimTask_AlphaFadeIn_Step(u8 taskId);
+
+void AnimTask_AlphaFadeIn(u8 taskId)
 {
     s16 v1 = 0;
     s16 v2 = 0;
@@ -1520,20 +1522,20 @@ void sub_8079670(u8 task)
     if (gBattleAnimArgs[3] < gBattleAnimArgs[1])
         v1 = -1;
 
-    gTasks[task].data[0] = 0;
-    gTasks[task].data[1] = gBattleAnimArgs[4];
-    gTasks[task].data[2] = 0;
-    gTasks[task].data[3] = gBattleAnimArgs[0];
-    gTasks[task].data[4] = gBattleAnimArgs[1];
-    gTasks[task].data[5] = v2;
-    gTasks[task].data[6] = v1;
-    gTasks[task].data[7] = gBattleAnimArgs[2];
-    gTasks[task].data[8] = gBattleAnimArgs[3];
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = gBattleAnimArgs[4];
+    gTasks[taskId].data[2] = 0;
+    gTasks[taskId].data[3] = gBattleAnimArgs[0];
+    gTasks[taskId].data[4] = gBattleAnimArgs[1];
+    gTasks[taskId].data[5] = v2;
+    gTasks[taskId].data[6] = v1;
+    gTasks[taskId].data[7] = gBattleAnimArgs[2];
+    gTasks[taskId].data[8] = gBattleAnimArgs[3];
     REG_BLDALPHA = (gBattleAnimArgs[1] << 8) | gBattleAnimArgs[0];
-    gTasks[task].func = sub_80796F8;
+    gTasks[taskId].func = AnimTask_AlphaFadeIn_Step;
 }
 
-void sub_80796F8(u8 taskId)
+static void AnimTask_AlphaFadeIn_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -1647,13 +1649,13 @@ void PrepareAffineAnimInTaskData(struct Task *task, u8 a2, const void *a3)
     task->data[10] = 0x100;
     task->data[11] = 0x100;
     task->data[12] = 0;
-    sub_8079BF4(&task->data[13], &task->data[14], a3);
+    StorePointerInVars(&task->data[13], &task->data[14], a3);
     PrepareBattlerSpriteForRotScale(a2, 0);
 }
 
 bool8 RunAffineAnimFromTaskData(struct Task *task)
 {
-    gUnknown_0202F7D4 = sub_8079BFC(task->data[13], task->data[14]) + (task->data[7] << 3);
+    gUnknown_0202F7D4 = LoadPointerFromVars(task->data[13], task->data[14]) + (task->data[7] << 3);
     switch (gUnknown_0202F7D4->type)
     {
     default:
@@ -1786,15 +1788,15 @@ u16 GetBattlerYDeltaFromSpriteId(u8 spriteId)
     return 0x40;
 }
 
-void sub_8079BF4(s16 *bottom, s16 *top, const void *ptr)
+void StorePointerInVars(s16 *lo, s16 *hi, const void *ptr)
 {
-    *bottom = ((intptr_t) ptr) & 0xffff;
-    *top = (((intptr_t) ptr) >> 16) & 0xffff;
+    *lo = ((intptr_t) ptr) & 0xffff;
+    *hi = (((intptr_t) ptr) >> 16) & 0xffff;
 }
 
-void *sub_8079BFC(s16 bottom, s16 top)
+void *LoadPointerFromVars(s16 lo, s16 hi)
 {
-    return (void *)((u16)bottom | ((u16)top << 16));
+    return (void *)((u16)lo | ((u16)hi << 16));
 }
 
 

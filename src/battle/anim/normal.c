@@ -375,7 +375,7 @@ static u32 UnpackSelectedBattleAnimPalettes(s16 selector)
     u8 arg4 = (selector >> 4) & 1;
     u8 arg5 = (selector >> 5) & 1;
     u8 arg6 = (selector >> 6) & 1;
-    return sub_80791A8(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+    return GetBattlePalettesMask(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 }
 
 static void AnimSimplePaletteBlendStep(struct Sprite *sprite)
@@ -661,7 +661,7 @@ void AnimTask_InvertScreenColor(u8 taskId)
     u8 targetBattler = gBattleAnimTarget;
 
     if (gBattleAnimArgs[0] & 0x100)
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
 
     if (gBattleAnimArgs[1] & 0x100)
         selectedPalettes |= (0x10000 << attackerBattler);
@@ -954,7 +954,7 @@ static void AnimFlashingHitSplat_Step(struct Sprite *sprite)
 void AnimTask_BlendBattleAnimPal(u8 taskId)
 {
     u32 selectedPalettes = UnpackSelectedBattleAnimPalettes(gBattleAnimArgs[0]);
-    selectedPalettes |= sub_80792C0(
+    selectedPalettes |= GetBattleMonSpritePalettesMask(
         (gBattleAnimArgs[0] >> 7)  & 1,
         (gBattleAnimArgs[0] >> 8)  & 1,
         (gBattleAnimArgs[0] >> 9)  & 1,
@@ -1498,11 +1498,11 @@ static void sub_80E3704(u8 taskId)
 
 void sub_80E388C(u8 taskId)
 {
-    u32 selectedPalettes = sub_80792C0(1, 1, 1, 1);
+    u32 selectedPalettes = GetBattleMonSpritePalettesMask(1, 1, 1, 1);
     sub_80E39BC(selectedPalettes, 0);
     gTasks[taskId].data[14] = selectedPalettes >> 16;
 
-    selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
+    selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE) & 0xFFFF;
     sub_80E39BC(selectedPalettes, 0xFFFF);
     gTasks[taskId].data[15] = selectedPalettes;
 
@@ -1797,7 +1797,7 @@ void sub_80E4028(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;
@@ -1831,7 +1831,7 @@ void sub_80E40D0(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;
@@ -1862,7 +1862,7 @@ void sub_80E4178(u8 taskId)
 
     if (gBattleAnimArgs[0] == 0)
     {
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         while ((selectedPalettes & 1) == 0)
         {
             selectedPalettes >>= 1;

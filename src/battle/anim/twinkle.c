@@ -8,13 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CE36C(struct Sprite* sprite);
-static void sub_80CE3B0(struct Sprite* sprite);
+static void AnimMoonlightSparkle(struct Sprite *sprite);
+static void AnimMoonlightSparkle_Step(struct Sprite *sprite);
 
 // twinkle (a tiny twinkling star appears above the Pokemon and descends toward the Pokemon.)
 // Used in Moonlight.
 
-const union AnimCmd gSpriteAnim_83D6FE0[] =
+const union AnimCmd gMoonlightSparkleAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(4, 8),
@@ -23,23 +23,23 @@ const union AnimCmd gSpriteAnim_83D6FE0[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6FF4[] =
+const union AnimCmd *const gMoonlightSparkleAnimTable[] =
 {
-    gSpriteAnim_83D6FE0,
+    gMoonlightSparkleAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FF8 =
+const struct SpriteTemplate gMoonlightSparkleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GREEN_SPARKLE,
     .paletteTag = ANIM_TAG_GREEN_SPARKLE,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6FF4,
+    .anims = gMoonlightSparkleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CE36C,
+    .callback = AnimMoonlightSparkle,
 };
 
-void sub_80CE36C(struct Sprite* sprite)
+static void AnimMoonlightSparkle(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[0];
     sprite->y = gBattleAnimArgs[1];
@@ -48,15 +48,15 @@ void sub_80CE36C(struct Sprite* sprite)
     sprite->data[2] = 0;
     sprite->data[3] = 0;
     sprite->data[4] = 1;
-    sprite->callback = sub_80CE3B0;
+    sprite->callback = AnimMoonlightSparkle_Step;
 }
 
-static void sub_80CE3B0(struct Sprite* sprite)
+static void AnimMoonlightSparkle_Step(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 1)
     {
         sprite->data[1] = 0;
-        if (sprite->data[2] <= 0x77)
+        if (sprite->data[2] < 120)
         {
             sprite->y++;
             sprite->data[2]++;

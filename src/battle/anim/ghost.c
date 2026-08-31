@@ -1003,7 +1003,7 @@ static void sub_80DED60(u8 taskId)
         right = 240;
         top = 0;
         bottom = 112;
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         BeginNormalPaletteFade(selectedPalettes, 0, 16, 16, RGB(0, 0, 0));
         gTasks[taskId].func = sub_80DEEE8;
     }

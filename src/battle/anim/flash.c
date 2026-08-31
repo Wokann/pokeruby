@@ -9,17 +9,17 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FC8;
-extern struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FF8;
+extern const struct SpriteTemplate gMoonSpriteTemplate;
+extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 
-static void sub_80CE4D4(u8 taskId);
+static void AnimTask_MoonlightEndFade_Step(u8 taskId);
 
 // flash (a "ting!" flash effect.)
 // Used in Moonlight.
 
-void sub_80CE3EC(u8 taskId)
+void AnimTask_MoonlightEndFade(u8 taskId)
 {
-    int a = sub_80791A8(1, 0, 0, 0, 0, 0, 0) & 0xFFFF;
+    int a = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE) & 0xFFFF;
     int b;
     int c;
     int d;
@@ -34,17 +34,17 @@ void sub_80CE3EC(u8 taskId)
     gTasks[taskId].data[7] = 13;
     gTasks[taskId].data[8] = 14;
     gTasks[taskId].data[9] = 15;
-    b = sub_80792C0(1, 1, 1, 1);
+    b = GetBattleMonSpritePalettesMask(1, 1, 1, 1);
     c = a | b;
-    sub_8079BF4(&gTasks[taskId].data[14], &gTasks[taskId].data[15], (void*)c);
-    b = b | (0x10000 << IndexOfSpritePaletteTag(0x27D2));
-    d = IndexOfSpritePaletteTag(0x27D3);
+    StorePointerInVars(&gTasks[taskId].data[14], &gTasks[taskId].data[15], (void *)c);
+    b = b | (0x10000 << IndexOfSpritePaletteTag(ANIM_TAG_MOON));
+    d = IndexOfSpritePaletteTag(ANIM_TAG_GREEN_SPARKLE);
     BeginNormalPaletteFade((0x10000 << d) | b, 0, 0, 16, RGB(27, 29, 31));
-    gTasks[taskId].func = sub_80CE4D4;
-    sub_80CE4D4(taskId);
+    gTasks[taskId].func = AnimTask_MoonlightEndFade_Step;
+    AnimTask_MoonlightEndFade_Step(taskId);
 }
 
-void sub_80CE4D4(u8 taskId)
+static void AnimTask_MoonlightEndFade_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     switch (task->data[0])
@@ -100,7 +100,7 @@ void sub_80CE4D4(u8 taskId)
             u8 spriteId;
             for (spriteId = 0; spriteId < MAX_SPRITES; spriteId++)
             {
-                if (gSprites[spriteId].template == &gBattleAnimSpriteTemplate_83D6FC8 || gSprites[spriteId].template == &gBattleAnimSpriteTemplate_83D6FF8)
+                if (gSprites[spriteId].template == &gMoonSpriteTemplate || gSprites[spriteId].template == &gMoonlightSparkleSpriteTemplate)
                     gSprites[spriteId].data[0] = 1;
             }
 
@@ -111,7 +111,7 @@ void sub_80CE4D4(u8 taskId)
     case 2:
         if (++task->data[1] > 30)
         {
-            BeginNormalPaletteFade((u32)sub_8079BFC(task->data[14], task->data[15]), 0, 16, 0, RGB(27, 29, 31));
+            BeginNormalPaletteFade((u32)LoadPointerFromVars(task->data[14], task->data[15]), 0, 16, 0, RGB(27, 29, 31));
             task->data[0]++;
         }
         break;

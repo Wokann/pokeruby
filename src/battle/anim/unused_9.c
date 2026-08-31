@@ -19,7 +19,7 @@ const struct SpriteTemplate gSpriteTemplate_83D75AC =
 {
     .tileTag = ANIM_TAG_UNUSED_VOID_LINES,
     .paletteTag = ANIM_TAG_UNUSED_VOID_LINES,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

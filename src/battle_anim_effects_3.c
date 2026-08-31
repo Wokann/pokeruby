@@ -219,7 +219,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021F4 =
 {
     .tileTag = ANIM_TAG_ROUND_WHITE_HALO,
     .paletteTag = ANIM_TAG_ROUND_WHITE_HALO,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

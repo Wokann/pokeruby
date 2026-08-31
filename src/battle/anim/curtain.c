@@ -67,7 +67,7 @@ void sub_80D1D9C(u8 taskId)
     {
         gTasks[taskId].data[11] = 0x88;
         RequestSpriteCopy((u8 *)(&gTasks[taskId].data[11]), (u8 *)(&REG_BLDCNT), 2);
-        BlendPalettes(sub_80791A8(1, 0, 0, 0, 0, 0, 0), 16, RGB(31, 31, 31));
+        BlendPalettes(GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE), 16, RGB(31, 31, 31));
     }
     else if (gTasks[taskId].data[10] > 4)
     {

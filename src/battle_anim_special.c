@@ -612,7 +612,7 @@ void sub_813F844(u8 taskId)
         priority = gSprites[spriteId].oam.priority;
         subpriority = gSprites[spriteId].subpriority;
         gTasks[taskId].data[10] = AnimateBallOpenParticles(x, y + 32, priority, subpriority, ballIndex);
-        selectedPalettes = sub_80791A8(1, 0, 0, 0, 0, 0, 0);
+        selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         gTasks[taskId].data[11] = sub_8141314(0, gBattleAnimAttacker, selectedPalettes, ballIndex);
         gTasks[taskId].data[0]++;
         break;

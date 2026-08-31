@@ -8,29 +8,29 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CE30C(struct Sprite* sprite);
-static void sub_80CE354(struct Sprite* sprite);
+static void AnimMoon(struct Sprite *sprite);
+static void AnimMoon_Step(struct Sprite *sprite);
 
 // moon (shows a moon image.)
 // Used in Moonlight.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FC8 =
+const struct SpriteTemplate gMoonSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MOON,
     .paletteTag = ANIM_TAG_MOON,
-    .oam = &gOamData_837E05C,
+    .oam = &gOamData_AffineOff_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CE30C,
+    .callback = AnimMoon,
 };
 
-void sub_80CE30C(struct Sprite* sprite)
+static void AnimMoon(struct Sprite *sprite)
 {
     if (IsContest())
     {
-        sprite->x = 0x30;
-        sprite->y = 0x28;
+        sprite->x = 48;
+        sprite->y = 40;
     }
     else
     {
@@ -38,13 +38,13 @@ void sub_80CE30C(struct Sprite* sprite)
         sprite->y = gBattleAnimArgs[1];
     }
 
-    sprite->oam.shape = 0;
-    sprite->oam.size = 3;
+    sprite->oam.shape = SPRITE_SHAPE(64x64);
+    sprite->oam.size = SPRITE_SIZE(64x64);
     sprite->data[0] = 0;
-    sprite->callback = sub_80CE354;
+    sprite->callback = AnimMoon_Step;
 }
 
-static void sub_80CE354(struct Sprite* sprite)
+static void AnimMoon_Step(struct Sprite *sprite)
 {
     if (sprite->data[0])
         DestroyAnimSprite(sprite);

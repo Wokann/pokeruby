@@ -159,7 +159,7 @@ static void sub_80CD5A8(struct Sprite* sprite)
         sprite->data[1] = 0;
     }
 
-    BlendPalettes(sub_80791A8(1, 1, 1, 1, 1, 0, 0), sprite->data[1], RGB(31, 31, 31));
+    BlendPalettes(GetBattlePalettesMask(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE), sprite->data[1], RGB(31, 31, 31));
     if (sprite->data[1] == 16)
     {
         int pal;
