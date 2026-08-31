@@ -3561,13 +3561,13 @@ Move_CHARGE: @ 81CC1D0
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D6B3C, 2, 0, 60, 2, 12
+	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_BATTLER_ATTACKER, 60, 2, 12
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 30
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 30
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9A6C, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gGrowingChargeOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
 	delay 25
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 20
@@ -3578,9 +3578,9 @@ Move_CHARGE: @ 81CC1D0
 	delay 6
 	loopsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER, 6, 5
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 0, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 4, 4, 0, rgb(0, 0, 0)
@@ -4436,17 +4436,17 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	delay 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 10, 0, 18, 1
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 1, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 1, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -16, -16
 	delay 8
 	createvisualtask sub_80D6E9C, 5
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 3, 0, 9, 1
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 0, 16, 16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9A9C, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
+	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 8, 0, 0
 	waitforvisualfinish
@@ -4546,7 +4546,7 @@ Move_SHOCK_WAVE: @ 81CD867
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80D6B3C, 2, 0, 20, 0, 2
+	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_BATTLER_ATTACKER, 20, 0, 2
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 12
 	createsprite gBattleAnimSpriteTemplate_83D9B28, ANIM_BATTLER_ATTACKER, 2

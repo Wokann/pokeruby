@@ -20,8 +20,8 @@ void AnimSparkElectricityFlashing(struct Sprite *sprite);
 void sub_80D679C(struct Sprite *sprite);
 void AnimElectricBoltSegment(struct Sprite *sprite);
 void AnimThunderWave(struct Sprite *sprite);
-void sub_80D6D18(struct Sprite *sprite);
-void sub_80D6D70(struct Sprite *sprite);
+void AnimGrowingChargeOrb(struct Sprite *sprite);
+void AnimElectricPuff(struct Sprite *sprite);
 void sub_80D6DD8(struct Sprite *sprite);
 void sub_80D7230(struct Sprite *sprite);
 void sub_80D727C(struct Sprite *sprite);
@@ -30,8 +30,8 @@ static void sub_80D6514(struct Sprite *sprite);
 static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite);
 static void AnimTask_ElectricBolt_Step(u8 taskId);
 static void AnimThunderWave_Step(struct Sprite *sprite);
-static void sub_80D6BB8(u8 taskId);
-static void sub_80D6D00(struct Sprite *sprite);
+static void AnimTask_ElectricChargingParticles_Step(u8 taskId);
+static void AnimElectricChargingParticles(struct Sprite *sprite);
 static void sub_80D6E38(struct Sprite *sprite);
 static bool8 sub_80D7194(struct Task *task, u8 taskId);
 static bool8 sub_80D7470(struct Task *task, u8 taskId);
@@ -141,7 +141,7 @@ const struct SpriteTemplate gThunderWaveSpriteTemplate =
     .callback = AnimThunderWave,
 };
 
-const s8 gUnknown_083D9968[][2] =
+static const s8 sElectricChargingParticleCoordOffsets[][2] =
 {
     { 58, -60},
     {-56, -36},
@@ -185,7 +185,7 @@ const union AnimCmd *const gSpriteAnimTable_83D99B0[] =
     gSpriteAnim_83D999C,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D99B8 =
+const struct SpriteTemplate gElectricChargingParticlesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ELECTRIC_ORBS,
     .paletteTag = ANIM_TAG_ELECTRIC_ORBS,
@@ -233,7 +233,7 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9A60[] =
     gSpriteAffineAnim_83D9A40,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9A6C =
+const struct SpriteTemplate gGrowingChargeOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
@@ -241,7 +241,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9A6C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9A60,
-    .callback = sub_80D6D18,
+    .callback = AnimGrowingChargeOrb,
 };
 
 const union AnimCmd gSpriteAnim_83D9A84[] =
@@ -258,7 +258,7 @@ const union AnimCmd *const gSpriteAnimTable_83D9A98[] =
     gSpriteAnim_83D9A84,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9A9C =
+const struct SpriteTemplate gElectricPuffSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ELECTRICITY,
     .paletteTag = ANIM_TAG_ELECTRICITY,
@@ -266,7 +266,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9A9C =
     .anims = gSpriteAnimTable_83D9A98,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6D70,
+    .callback = AnimElectricPuff,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9AB4 =
@@ -595,19 +595,19 @@ static void AnimThunderWave_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D6B3C(u8 taskId)
+void AnimTask_ElectricChargingParticles(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    if (gBattleAnimArgs[0] == 0) 
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+        task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     }
     else
     {
-        task->data[14] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        task->data[15] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        task->data[14] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        task->data[15] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
 
     task->data[6] = gBattleAnimArgs[1];
@@ -618,10 +618,10 @@ void sub_80D6B3C(u8 taskId)
     task->data[11] = gBattleAnimArgs[3];
     task->data[12] = 0;
     task->data[13] = gBattleAnimArgs[2];
-    task->func = sub_80D6BB8;
+    task->func = AnimTask_ElectricChargingParticles_Step;
 }
 
-static void sub_80D6BB8(u8 taskId)
+static void AnimTask_ElectricChargingParticles_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -631,12 +631,12 @@ static void sub_80D6BB8(u8 taskId)
         {
             u8 spriteId;
             task->data[12] = 0;
-            spriteId = CreateSprite(&gSpriteTemplate_83D99B8, task->data[14], task->data[15], 2);
+            spriteId = CreateSprite(&gElectricChargingParticlesSpriteTemplate, task->data[14], task->data[15], 2);
             if (spriteId != MAX_SPRITES)
             {
                 struct Sprite *sprite = &gSprites[spriteId];
-                sprite->x += gUnknown_083D9968[task->data[9]][0];
-                sprite->y += gUnknown_083D9968[task->data[9]][1];
+                sprite->x += sElectricChargingParticleCoordOffsets[task->data[9]][0];
+                sprite->y += sElectricChargingParticleCoordOffsets[task->data[9]][1];
 
                 sprite->data[0] = 40 - task->data[8] * 5;
                 sprite->data[1] = sprite->x;
@@ -646,7 +646,7 @@ static void sub_80D6BB8(u8 taskId)
                 sprite->data[5] = taskId;
 
                 InitAnimLinearTranslation(sprite);
-                StoreSpriteCallbackInData6(sprite, sub_80D6D00);
+                StoreSpriteCallbackInData6(sprite, AnimElectricChargingParticles);
                 sprite->callback = RunStoredCallbackWhenAnimEnds;
 
                 if (++task->data[9] > 15)
@@ -673,7 +673,7 @@ static void sub_80D6BB8(u8 taskId)
     }
 }
 
-static void sub_80D6CCC(struct Sprite *sprite)
+static void AnimElectricChargingParticles_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -682,40 +682,40 @@ static void sub_80D6CCC(struct Sprite *sprite)
     }
 }
 
-static void sub_80D6D00(struct Sprite *sprite)
+static void AnimElectricChargingParticles(struct Sprite *sprite)
 {
     StartSpriteAnim(sprite, 1);
-    sprite->callback = sub_80D6CCC;
+    sprite->callback = AnimElectricChargingParticles_Step;
 }
 
-void sub_80D6D18(struct Sprite *sprite)
+void AnimGrowingChargeOrb(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-void sub_80D6D70(struct Sprite *sprite)
+void AnimElectricPuff(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
 
     sprite->x2 = gBattleAnimArgs[1];
