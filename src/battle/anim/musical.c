@@ -9,104 +9,104 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CEB0C(struct Sprite* sprite);
+void AnimWavyMusicNotes(struct Sprite* sprite);
 void AnimFlyingMusicNotes(struct Sprite* sprite);
-void sub_80CEDF0(struct Sprite* sprite);
-void sub_80CEE60(struct Sprite* sprite);
-static void sub_80CEBC4(s16 a, s16 b, s16* c, s16* d, s8 e);
-static void sub_80CEC1C(struct Sprite* sprite);
+void AnimBellyDrumHand(struct Sprite* sprite);
+void AnimSlowFlyingMusicNotes(struct Sprite* sprite);
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16* velocX, s16* velocY, s8 xSpeedFactor);
+static void AnimWavyMusicNotes_Step(struct Sprite* sprite);
 static void AnimFlyingMusicNotes_Step(struct Sprite* sprite);
-static void sub_80CEEE8(struct Sprite* sprite);
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite* sprite);
 
-const union AnimCmd gSpriteAnim_83D7098[] =
+const union AnimCmd gWavyMusicNotesAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 10),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70A0[] =
+const union AnimCmd gWavyMusicNotesAnimCmds2[] =
 {
     ANIMCMD_FRAME(4, 10),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70A8[] =
+const union AnimCmd gWavyMusicNotesAnimCmds3[] =
 {
     ANIMCMD_FRAME(8, 41),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70B0[] =
+const union AnimCmd gWavyMusicNotesAnimCmds4[] =
 {
     ANIMCMD_FRAME(12, 10),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70B8[] =
+const union AnimCmd gWavyMusicNotesAnimCmds5[] =
 {
     ANIMCMD_FRAME(16, 10),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70C0[] =
+const union AnimCmd gWavyMusicNotesAnimCmds6[] =
 {
     ANIMCMD_FRAME(20, 10),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70C8[] =
+const union AnimCmd gWavyMusicNotesAnimCmds7[] =
 {
     ANIMCMD_FRAME(0, 10, .vFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D70D0[] =
+const union AnimCmd gWavyMusicNotesAnimCmds8[] =
 {
     ANIMCMD_FRAME(4, 10, .vFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D70D8[] =
+const union AnimCmd *const gMusicNotesAnimTable[] =
 {
-    gSpriteAnim_83D7098,
-    gSpriteAnim_83D70A0,
-    gSpriteAnim_83D70A8,
-    gSpriteAnim_83D70B0,
-    gSpriteAnim_83D70B8,
-    gSpriteAnim_83D70C0,
-    gSpriteAnim_83D70C8,
-    gSpriteAnim_83D70D0,
+    gWavyMusicNotesAnimCmds1,
+    gWavyMusicNotesAnimCmds2,
+    gWavyMusicNotesAnimCmds3,
+    gWavyMusicNotesAnimCmds4,
+    gWavyMusicNotesAnimCmds5,
+    gWavyMusicNotesAnimCmds6,
+    gWavyMusicNotesAnimCmds7,
+    gWavyMusicNotesAnimCmds8,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D70F8[] =
+const union AffineAnimCmd gWavyMusicNotesAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0xC, 0xC, 0, 16),
     AFFINEANIMCMD_FRAME(0xFFF4, 0xFFF4, 0, 16),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7110[] =
+const union AffineAnimCmd *const gMusicNotesAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D70F8,
+    gWavyMusicNotesAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7114 =
+const struct SpriteTemplate gWavyMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
     .oam = &gOamData_837DFEC,
-    .anims = gSpriteAnimTable_83D70D8,
+    .anims = gMusicNotesAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7110,
-    .callback = sub_80CEB0C,
+    .affineAnims = gMusicNotesAffineAnimTable,
+    .callback = AnimWavyMusicNotes,
 };
 
-const u16 gUnknown_083D712C[][6] =
+const u16 gParticlesColorBlendTable[][6] =
 {
-    {10072, RGB(31, 31, 31), RGB(31, 26, 28), RGB(31, 22, 26), RGB(31, 17, 24), RGB(31, 13, 22)},
-    {10097, RGB(31, 31, 31), RGB(25, 31, 26), RGB(20, 31, 21), RGB(15, 31, 16), RGB(10, 31, 12)},
-    {10185, RGB(31, 31, 31), RGB(31, 31, 24), RGB(31, 31, 17), RGB(31, 31, 10), RGB(31, 31, 3)},
-    {10175, RGB(31, 31, 31), RGB(26, 28, 31), RGB(21, 26, 31), RGB(16, 24, 31), RGB(12, 22, 31)},
+    {ANIM_TAG_MUSIC_NOTES,     RGB_WHITE, RGB(31, 26, 28), RGB(31, 22, 26), RGB(31, 17, 24), RGB(31, 13, 22)},
+    {ANIM_TAG_BENT_SPOON,      RGB_WHITE, RGB(25, 31, 26), RGB(20, 31, 21), RGB(15, 31, 16), RGB(10, 31, 12)},
+    {ANIM_TAG_SPHERE_TO_CUBE,  RGB_WHITE, RGB(31, 31, 24), RGB(31, 31, 17), RGB(31, 31, 10), RGB(31, 31, 3)},
+    {ANIM_TAG_LARGE_FRESH_EGG, RGB_WHITE, RGB(26, 28, 31), RGB(21, 26, 31), RGB(16, 24, 31), RGB(12, 22, 31)},
 };
 
 const struct SpriteTemplate gFastFlyingMusicNotesSpriteTemplate =
@@ -114,13 +114,13 @@ const struct SpriteTemplate gFastFlyingMusicNotesSpriteTemplate =
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
     .oam = &gOamData_837DFEC,
-    .anims = gSpriteAnimTable_83D70D8,
+    .anims = gMusicNotesAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7110,
+    .affineAnims = gMusicNotesAffineAnimTable,
     .callback = AnimFlyingMusicNotes,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7174 =
+const struct SpriteTemplate gBellyDrumHandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_HAND_OUTLINE,
     .paletteTag = ANIM_TAG_PURPLE_HAND_OUTLINE,
@@ -128,61 +128,61 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7174 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CEDF0,
+    .callback = AnimBellyDrumHand,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D718C[] =
+const union AffineAnimCmd gSlowFlyingMusicNotesAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0xA0, 0xA0, 0, 0),
     AFFINEANIMCMD_FRAME(0x4, 0x4, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D71A4[] =
+const union AffineAnimCmd *const gSlowFlyingMusicNotesAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D718C,
+    gSlowFlyingMusicNotesAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D71A8 =
+const struct SpriteTemplate gSlowFlyingMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
     .oam = &gOamData_837DFEC,
-    .anims = gSpriteAnimTable_83D70D8,
+    .anims = gMusicNotesAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D71A4,
-    .callback = sub_80CEE60,
+    .affineAnims = gSlowFlyingMusicNotesAffineAnimTable,
+    .callback = AnimSlowFlyingMusicNotes,
 };
 
 // musical (music notes, drum)
 // Used by Grasswhistle, Belly Drum, and Sing.
 
 // rainbow effect for musical notes
-void sub_80CEA20(u8 taskId)
+void AnimTask_MusicNotesRainbowBlend(u8 taskId)
 {
     u16 i;
     u16 j;
     u16 index;
 
-    index = IndexOfSpritePaletteTag(gUnknown_083D712C[0][0]);
+    index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[0][0]);
     if (index != 0xFF)
     {
         index = (index << 4) + 0x100;
         for (i = 1; i < 6; i++)
         {
-            gPlttBufferFaded[index + i] = gUnknown_083D712C[0][i];
+            gPlttBufferFaded[index + i] = gParticlesColorBlendTable[0][i];
         }
     }
 
     for (j = 1; j < 4; j++)
     {
-        index = AllocSpritePalette(gUnknown_083D712C[j][0]);
+        index = AllocSpritePalette(gParticlesColorBlendTable[j][0]);
         if (index != 0xFF)
         {
             index = (index << 4) + 0x100;
             for (i = 1; i < 6; i++)
             {
-                gPlttBufferFaded[index + i] = gUnknown_083D712C[j][i];
+                gPlttBufferFaded[index + i] = gParticlesColorBlendTable[j][i];
             }
         }
     }
@@ -190,80 +190,80 @@ void sub_80CEA20(u8 taskId)
 }
 
 // clears the rainbow effect for musical notes.
-void sub_80CEAD8(u8 taskId)
+void AnimTask_MusicNotesClearRainbowBlend(u8 taskId)
 {
     u16 i;
     for (i = 1; i < 4; i++)
     {
-        FreeSpritePaletteByTag(gUnknown_083D712C[i][0]);
+        FreeSpritePaletteByTag(gParticlesColorBlendTable[i][0]);
     }
 
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80CEB0C(struct Sprite* sprite)
+void AnimWavyMusicNotes(struct Sprite* sprite)
 {
-    u8 index;
-    u8 a;
-    u8 b;
+    u8 paletteIndex;
+    u8 targetX;
+    u8 targetY;
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     StartSpriteAnim(sprite, gBattleAnimArgs[0]);
-    if ((index = IndexOfSpritePaletteTag(gUnknown_083D712C[gBattleAnimArgs[1]][0])) != 0xFF)
-        sprite->oam.paletteNum = index;
+    if ((paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[gBattleAnimArgs[1]][0])) != 0xFF)
+        sprite->oam.paletteNum = paletteIndex;
 
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->data[2] = 0;
     sprite->data[3] = gBattleAnimArgs[2];
     if (IsContest())
     {
-        a = 0x30;
-        b = 0x28;
+        targetX = 0x30;
+        targetY = 0x28;
     }
     else
     {
-        a = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        b = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
     }
 
     sprite->data[4] = sprite->x << 4;
     sprite->data[5] = sprite->y << 4;
-    sub_80CEBC4(a - sprite->x, b - sprite->y, &sprite->data[6], &sprite->data[7], 0x28);
-    sprite->callback = sub_80CEC1C;
+    AnimWavyMusicNotes_CalcVelocity(targetX - sprite->x, targetY - sprite->y, &sprite->data[6], &sprite->data[7], 0x28);
+    sprite->callback = AnimWavyMusicNotes_Step;
 }
 
-static void sub_80CEBC4(s16 a, s16 b, s16* c, s16* d, s8 e)
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16* velocX, s16* velocY, s8 xSpeedFactor)
 {
-    int f;
-    int g;
-    if (a < 0)
-        e = -e;
+    int scaledX;
+    int duration;
+    if (x < 0)
+        xSpeedFactor = -xSpeedFactor;
 
-    f = a << 8;
-    g = f / e;
-    if (g == 0)
-        g = 1;
+    scaledX = x << 8;
+    duration = scaledX / xSpeedFactor;
+    if (duration == 0)
+        duration = 1;
 
-    *c = f / g;
-    *d = (b << 8) / g;
+    *velocX = scaledX / duration;
+    *velocY = (y << 8) / duration;
 }
 
-static void sub_80CEC1C(struct Sprite* sprite)
+static void AnimWavyMusicNotes_Step(struct Sprite* sprite)
 {
-    int b;
-    s16 a;
-    int c;
-    u8 index;
+    int trigIdx;
+    s16 y;
+    int x;
+    u8 paletteIndex;
     sprite->data[0]++;
-    b = sprite->data[0] * 5 - ((sprite->data[0] * 5 / 256) << 8);
+    trigIdx = sprite->data[0] * 5 - ((sprite->data[0] * 5 / 256) << 8);
     sprite->data[4] += sprite->data[6];
     sprite->data[5] += sprite->data[7];
     sprite->x = sprite->data[4] >> 4;
     sprite->y = sprite->data[5] >> 4;
-    sprite->y2 = Sin(b, 15);
-    a = (u16)sprite->y;
-    c = (u16)sprite->x;
+    sprite->y2 = Sin(trigIdx, 15);
+    y = (u16)sprite->y;
+    x = (u16)sprite->x;
 
-    if ((u32)((c + 16) << 16) > (0x110) << 16 || a < -16 || a > 0x80)
+    if ((u32)((x + 16) << 16) > (0x110) << 16 || y < -16 || y > 0x80)
     {
         DestroySpriteAndMatrix(sprite);
     }
@@ -275,9 +275,9 @@ static void sub_80CEC1C(struct Sprite* sprite)
             if (++sprite->data[1] > 3)
                 sprite->data[1] = 0;
 
-            index = IndexOfSpritePaletteTag(gUnknown_083D712C[sprite->data[1]][0]);
-            if (index != 0xFF)
-                sprite->oam.paletteNum = index;
+            paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[sprite->data[1]][0]);
+            if (paletteIndex != 0xFF)
+                sprite->oam.paletteNum = paletteIndex;
         }
     }
 }
@@ -287,11 +287,11 @@ static void sub_80CEC1C(struct Sprite* sprite)
 
 void AnimFlyingMusicNotes(struct Sprite* sprite)
 {
-    int a; 
+    int xOffset;
     if (GetBattlerSide(gBattleAnimAttacker) == 1)
     {
-        a = gBattleAnimArgs[1]; 
-        *(u16*)&gBattleAnimArgs[1] = -a;
+        xOffset = gBattleAnimArgs[1];
+        *(u16*)&gBattleAnimArgs[1] = -xOffset;
     }
 
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[1];
@@ -328,20 +328,20 @@ static void AnimFlyingMusicNotes_Step(struct Sprite* sprite)
 // drum (using hands to slap the Pokemon's belly in a rhythm.)
 // Used in Belly Drum.
 
-void sub_80CEDF0(struct Sprite* sprite)
+void AnimBellyDrumHand(struct Sprite* sprite)
 {
-    s16 a;
+    s16 xOffset;
     if (gBattleAnimArgs[0] == 1)
     {
         sprite->oam.matrixNum = 8;
-        a = 16;
+        xOffset = 16;
     }
     else
     {
-        a = -16;
+        xOffset = -16;
     }
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + a;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + xOffset;
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + 8;
     sprite->data[0] = 8;
     sprite->callback = WaitAnimForDuration;
@@ -351,38 +351,38 @@ void sub_80CEDF0(struct Sprite* sprite)
 // note_scatter_2 (slower scatter of notes.)
 // Used in Belly Drum.
 
-void sub_80CEE60(struct Sprite* sprite)
+void AnimSlowFlyingMusicNotes(struct Sprite* sprite)
 {
-    s16 a;
-    u8 index;
+    s16 xDiff;
+    u8 paletteIndex;
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     sprite->y += 8;
     StartSpriteAnim(sprite, gBattleAnimArgs[1]);
-    index = IndexOfSpritePaletteTag(gUnknown_083D712C[gBattleAnimArgs[2]][0]);
-    if (index != 0xFF)
-        sprite->oam.paletteNum = index;
+    paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[gBattleAnimArgs[2]][0]);
+    if (paletteIndex != 0xFF)
+        sprite->oam.paletteNum = paletteIndex;
 
-    a = (gBattleAnimArgs[0] == 0) ? 0xFFE0 : 0x20;
+    xDiff = (gBattleAnimArgs[0] == 0) ? 0xFFE0 : 0x20;
     sprite->data[0] = 40;
     sprite->data[1] = sprite->x;
-    sprite->data[2] = a + sprite->data[1];
+    sprite->data[2] = xDiff + sprite->data[1];
     sprite->data[3] = sprite->y;
     sprite->data[4] = sprite->data[3] - 40;
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
-    sprite->callback = sub_80CEEE8;
+    sprite->callback = AnimSlowFlyingMusicNotes_Step;
 }
 
-static void sub_80CEEE8(struct Sprite* sprite)
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite* sprite)
 {
     if (AnimTranslateLinear(sprite) == 0)
     {
-        s16 a;
-        a = Sin(sprite->data[5], 8);
+        s16 xOffset;
+        xOffset = Sin(sprite->data[5], 8);
         if (sprite->x2 < 0)
-            a = -a;
+            xOffset = -xOffset;
 
-        sprite->x2 += a;
+        sprite->x2 += xOffset;
         sprite->y2 += Sin(sprite->data[5], 4);
         sprite->data[5] = (sprite->data[5] + 8) & 0xFF;
     }

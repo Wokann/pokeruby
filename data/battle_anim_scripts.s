@@ -2546,36 +2546,36 @@ Move_THRASH: @ 81CAD81
 Move_SING: @ 81CAE00
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80CEA20, 2
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
 	waitforvisualfinish
 	panse_1B SE_M_SING, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 7, 0, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 7, 0, 12
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 6, 1, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 12
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 1, 2, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 2, 12
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 3, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 3, 12
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 3, 0, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 3, 0, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 5, 2, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 2, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 6, 3, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 3, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 0, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 0, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 1, 2, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 2, 12
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 5, 3, 12
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 3, 12
 	delay 4
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80CEAD8, 2
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
 	waitforvisualfinish
 	end
 
@@ -4229,35 +4229,35 @@ Move_GRASS_WHISTLE: @ 81CD249
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 4, rgb(18, 31, 12)
 	waitforvisualfinish
-	createvisualtask sub_80CEA20, 2
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
 	waitforvisualfinish
 	panse_1B SE_M_GRASSWHISTLE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 7, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 7, 1, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 6, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 1, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 3, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 3, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 5, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 6, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 2, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 2, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 1, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D7114, ANIM_BATTLER_TARGET, 2, 5, 1, 0
+	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 1, 0
 	delay 4
 	waitforvisualfinish
-	createvisualtask sub_80CEAD8, 2
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 4, 4, 0, rgb(18, 31, 12)
 	waitforvisualfinish
 	end
@@ -4577,41 +4577,41 @@ Move_HARDEN: @ 81CD909
 Move_BELLY_DRUM: @ 81CD91E
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
 	loadspritegfx ANIM_TAG_PURPLE_HAND_OUTLINE
-	createvisualtask sub_80CEA20, 2
+	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
 	waitforvisualfinish
 	call _81CD9EB
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, 0
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, 0
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	delay 15
 	call _81CD9D0
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 1, 1, 1, 0
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 1, 0
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	delay 15
 	call _81CD9EB
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 0, 3, 3, 128
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 3, 3, 128
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	delay 7
 	call _81CD9D0
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 128
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 128
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	delay 7
 	call _81CD9EB
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 0, 1, 1, 0
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 1, 1, 0
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	delay 7
 	call _81CD9D0
-	createsprite gBattleAnimSpriteTemplate_83D71A8, ANIM_BATTLER_ATTACKER, 2, 1, 0, 3, 0
+	createsprite gSlowFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 3, 0
 	playsewithpan SE_M_BELLY_DRUM, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80CEAD8, 2
+	createvisualtask AnimTask_MusicNotesClearRainbowBlend, 2
 	waitforvisualfinish
 	end
 _81CD9D0:
-	createsprite gBattleAnimSpriteTemplate_83D7174, ANIM_BATTLER_ATTACKER, 3, 0
+	createsprite gBellyDrumHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 8, 2, 1
 	return
 _81CD9EB:
-	createsprite gBattleAnimSpriteTemplate_83D7174, ANIM_BATTLER_ATTACKER, 3, 1
+	createsprite gBellyDrumHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 8, 2, 1
 	return
 
