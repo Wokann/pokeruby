@@ -2592,8 +2592,8 @@ Move_LOW_KICK: @ 81CAED4
 	end
 
 Move_EARTHQUAKE: @ 81CAF31
-	createvisualtask sub_80E1864, 5, 5, 10, 50
-	createvisualtask sub_80E1864, 5, 4, 10, 50
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 10, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 10, 50
 	playsewithpan SE_M_EARTHQUAKE, 0
 	delay 10
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 1, 0, 14, 32767, 14
@@ -2603,8 +2603,8 @@ Move_EARTHQUAKE: @ 81CAF31
 
 Move_FISSURE: @ 81CAF7E
 	loadspritegfx ANIM_TAG_MUD_SAND
-	createvisualtask sub_80E1864, 3, 5, 10, 50
-	createvisualtask sub_80E1864, 3, 1, 10, 50
+	createvisualtask AnimTask_HorizontalShake, 3, (MAX_BATTLERS_COUNT + 1), 10, 50
+	createvisualtask AnimTask_HorizontalShake, 3, ANIM_BATTLER_TARGET, 10, 50
 	playsewithpan SE_M_EARTHQUAKE, SOUND_PAN_TARGET
 	delay 8
 	call _81CAFFF
@@ -2923,7 +2923,7 @@ _81CB5A0:
 	waitforvisualfinish
 	delay 12
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 8, 0, 0
-	createvisualtask sub_80E1864, 5, 0, 2, 16
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_BATTLER_ATTACKER, 2, 16
 	loopsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER, 4, 8
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 15, 32767
 	delay 20
@@ -2939,7 +2939,7 @@ _81CB617:
 	waitforvisualfinish
 	delay 12
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 8, 0, 0
-	createvisualtask sub_80E1864, 5, 0, 2, 16
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_BATTLER_ATTACKER, 2, 16
 	playsewithpan SE_M_STAT_INCREASE, SOUND_PAN_ATTACKER
 	delay 8
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 1, 0, 15, 32767
@@ -3309,26 +3309,26 @@ Move_MILK_DRINK: @ 81CBC6E
 	end
 
 Move_MAGNITUDE: @ 81CBCB0
-	createvisualtask sub_80E1B88, 2
+	createvisualtask AnimTask_IsPowerOver99, 2
 	waitforvisualfinish
-	jumpargeq 15, 0, _81CBCC9
-	jumpargeq 15, 1, _81CBCEE
-_81CBCC8:
+	jumpargeq ARG_MAGNITUDE_POWER_RESULT, FALSE, MagnitudeRegular
+	jumpargeq ARG_MAGNITUDE_POWER_RESULT, TRUE, MagnitudeIntense
+MagnitudeEnd:
 	end
-_81CBCC9:
-	createvisualtask sub_80E1864, 5, 5, 0, 50
-	createvisualtask sub_80E1864, 5, 4, 0, 50
+MagnitudeRegular:
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 0, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 0, 50
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 10
-	goto _81CBCC8
-_81CBCEE:
-	createvisualtask sub_80E1864, 5, 5, 0, 50
-	createvisualtask sub_80E1864, 5, 4, 0, 50
+	goto MagnitudeEnd
+MagnitudeIntense:
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 0, 50
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 0, 50
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 10
 	delay 10
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 1, 0, 14, 32767, 14
 	delay 16
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 1, 0, 14, 32767, 14
-	goto _81CBCC8
+	goto MagnitudeEnd
 
 Move_RAPID_SPIN: @ 81CBD41
 	loadspritegfx ANIM_TAG_IMPACT
@@ -3810,8 +3810,8 @@ Move_ERUPTION: @ 81CC74F
 	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 110, -32, 64, 50, 0
 	createsprite gBattleAnimSpriteTemplate_83D96F8, ANIM_BATTLER_ATTACKER, 40, 60, -32, 80, 70, 1
 	delay 22
-	createvisualtask sub_80E1864, 5, 5, 8, 60
-	createvisualtask sub_80E1864, 5, 4, 8, 60
+	createvisualtask AnimTask_HorizontalShake, 5, (MAX_BATTLERS_COUNT + 1), 8, 60
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 8, 60
 	loopsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET, 16, 12
 	delay 80
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 31, 4, 4, 0, rgb(31, 0, 0)
@@ -3841,7 +3841,7 @@ Move_IMPRISON: @ 81CC867
 	waitforvisualfinish
 	delay 4
 	createsprite gBattleAnimSpriteTemplate_83DA8F4, ANIM_BATTLER_ATTACKER, 5, 0, 40
-	createvisualtask sub_80E1864, 5, 4, 1, 10
+	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 1, 10
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	call BackgroundRestore
@@ -3935,7 +3935,7 @@ Move_LUSTER_PURGE: @ 81CC95B
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 215, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 16, 0, -1
-	createvisualtask sub_80E1864, 5, 1, 5, 14
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_BATTLER_TARGET, 5, 14
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff

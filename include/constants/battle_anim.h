@@ -406,6 +406,9 @@
 // Most tasks return a value to gBattleAnimArgs[7].
 #define ARG_RET_ID 0x7
 
+// Ruby's Magnitude power check stores its result in argument 15.
+#define ARG_MAGNITUDE_POWER_RESULT 0xF
+
 // Trapping Wrap-like moves end turn animation.
 #define TRAP_ANIM_BIND 0
 #define TRAP_ANIM_WRAP 0

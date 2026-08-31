@@ -48,7 +48,7 @@ void sub_80D4C18(struct Sprite *);
 void sub_80D4CEC(struct Sprite *);
 void sub_80D4C64(struct Sprite *sprite);
 void sub_80D4D64(struct Sprite*, s32, s32);
-void sub_80E1864(u8);
+void AnimTask_HorizontalShake(u8);
 static void AnimSmallBubblePair_Step(struct Sprite *sprite);
 
 const union AnimCmd gSpriteAnim_83D9300[] =
@@ -746,17 +746,17 @@ void sub_80D463C(u8 taskId)
             }
             if (task->data[10] != 0 && task->data[13] == 0)
             {
-                gBattleAnimArgs[0] = 1;
+                gBattleAnimArgs[0] = ANIM_BATTLER_TARGET;
                 gBattleAnimArgs[1] = 0;
                 gBattleAnimArgs[2] = 12;
-                taskId2 = CreateTask(sub_80E1864, 80);
+                taskId2 = CreateTask(AnimTask_HorizontalShake, 80);
                 if (taskId2 != 0xFF)
                 {
                     gTasks[taskId2].func(taskId2);
                     gAnimVisualTaskCount++;
                 }
-                gBattleAnimArgs[0] = 3;
-                taskId2 = CreateTask(sub_80E1864, 80);
+                gBattleAnimArgs[0] = ANIM_BATTLER_DEF_PARTNER;
+                taskId2 = CreateTask(AnimTask_HorizontalShake, 80);
                 if (taskId2 != 0xFF)
                 {
                     gTasks[taskId2].func(taskId2);

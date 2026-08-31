@@ -35,9 +35,9 @@ static void sub_80E1560(u8 taskId);
 static void AnimFissureDirtPlumeParticle(struct Sprite *sprite);
 static void AnimFissureDirtPlumeParticleStep(struct Sprite *sprite);
 static void AnimDigDirtMound(struct Sprite *sprite);
-static void sub_80E1934(u8 taskId);
-static void sub_80E1A2C(u8 taskId);
-static void sub_80E1B10(struct Task *task);
+static void AnimTask_ShakePlatforms(u8 taskId);
+static void AnimTask_ShakeBattlers(u8 taskId);
+static void SetBattlersXOffsetForShake(struct Task *task);
 static void sub_80E1C58(u8 taskId);
 
 const union AffineAnimCmd gBonemerangSpriteAffineAnim[] =
@@ -570,161 +570,186 @@ static void AnimDigDirtMound(struct Sprite *sprite)
     sprite->callback = WaitAnimForDuration;
 }
 
-void sub_80E1864(u8 taskId)
+#define tState               data[0]
+#define tDelay               data[1]
+#define tTimer               data[2]
+#define tMaxTime             data[3]
+#define tbattlerSpriteIds(i) data[9 + (i)]
+#define tNumBattlers         data[13]
+#define tInitialX            data[13]
+#define tHorizOffset         data[14]
+#define tInitHorizOffset     data[15]
+
+// Shakes battler(s) or the battle platforms back and forth horizontally.
+// arg0: battler (0-3), all battlers (MAX_BATTLERS_COUNT), or platforms
+//       (MAX_BATTLERS_COUNT + 1)
+// arg1: shake intensity (0 uses move power)
+// arg2: shake duration
+void AnimTask_HorizontalShake(u8 taskId)
 {
     u16 i;
     struct Task *task = &gTasks[taskId];
 
     if (gBattleAnimArgs[1])
-        task->data[14] = task->data[15] = gBattleAnimArgs[1] + 3;
+        task->tHorizOffset = task->tInitHorizOffset = gBattleAnimArgs[1] + 3;
     else
-        task->data[14] = task->data[15] = (gAnimMovePower / 10) + 3;
+        task->tHorizOffset = task->tInitHorizOffset = (gAnimMovePower / 10) + 3;
 
-    task->data[3] = gBattleAnimArgs[2];
+    task->tMaxTime = gBattleAnimArgs[2];
     switch (gBattleAnimArgs[0])
     {
-    case 5:
-        task->data[13] = gBattle_BG3_X;
-        task->func = sub_80E1934;
+    case MAX_BATTLERS_COUNT + 1:
+        task->tInitialX = gBattle_BG3_X;
+        task->func = AnimTask_ShakePlatforms;
         break;
-    case 4:
-        task->data[13] = 0;
-        for (i = 0; i < 4; i++)
+    case MAX_BATTLERS_COUNT:
+        task->tNumBattlers = 0;
+        for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         {
             if (IsAnimBankSpriteVisible(i))
             {
-                task->data[task->data[13] + 9] = gBattlerSpriteIds[i];
-                task->data[13]++;
+                task->tbattlerSpriteIds(task->tNumBattlers) = gBattlerSpriteIds[i];
+                task->tNumBattlers++;
             }
         }
-        task->func = sub_80E1A2C;
+        task->func = AnimTask_ShakeBattlers;
         break;
     default:
-        task->data[9] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        if (task->data[9] == 0xFF)
+        task->tbattlerSpriteIds(0) = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+        if (task->tbattlerSpriteIds(0) == 0xFF)
         {
             DestroyAnimVisualTask(taskId);
         }
         else
         {
-            task->data[13] = 1;
-            task->func = sub_80E1A2C;
+            task->tNumBattlers = 1;
+            task->func = AnimTask_ShakeBattlers;
         }
 
         break;
     }
 }
 
-static void sub_80E1934(u8 taskId)
+static void AnimTask_ShakePlatforms(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
-        if (++task->data[1] > 1)
+        if (++task->tDelay > 1)
         {
-            task->data[1] = 0;
-            if ((task->data[2] & 1) == 0)
-                gBattle_BG3_X = task->data[13] + task->data[15];
+            task->tDelay = 0;
+            if ((task->tTimer & 1) == 0)
+                gBattle_BG3_X = task->tInitialX + task->tInitHorizOffset;
             else
-                gBattle_BG3_X = task->data[13] - task->data[15];
+                gBattle_BG3_X = task->tInitialX - task->tInitHorizOffset;
 
-            if (++task->data[2] == task->data[3])
+            if (++task->tTimer == task->tMaxTime)
             {
-                task->data[2] = 0;
-                task->data[14]--;
-                task->data[0]++;
+                task->tTimer = 0;
+                task->tHorizOffset--;
+                task->tState++;
             }
         }
         break;
     case 1:
-        if (++task->data[1] > 1)
+        if (++task->tDelay > 1)
         {
-            task->data[1] = 0;
-            if ((task->data[2] & 1) == 0)
-                gBattle_BG3_X = task->data[13] + task->data[14];
+            task->tDelay = 0;
+            if ((task->tTimer & 1) == 0)
+                gBattle_BG3_X = task->tInitialX + task->tHorizOffset;
             else
-                gBattle_BG3_X = task->data[13] - task->data[14];
+                gBattle_BG3_X = task->tInitialX - task->tHorizOffset;
 
-            if (++task->data[2] == 4)
+            if (++task->tTimer == 4)
             {
-                task->data[2] = 0;
-                if (--task->data[14] == 0)
-                    task->data[0]++;
+                task->tTimer = 0;
+                if (--task->tHorizOffset == 0)
+                    task->tState++;
             }
         }
         break;
     case 2:
-        gBattle_BG3_X = task->data[13];
+        gBattle_BG3_X = task->tInitialX;
         DestroyAnimVisualTask(taskId);
         break;
     }
 }
 
-static void sub_80E1A2C(u8 taskId)
+static void AnimTask_ShakeBattlers(u8 taskId)
 {
     u16 i;
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
-        if (++task->data[1] > 1)
+        if (++task->tDelay > 1)
         {
-            task->data[1] = 0;
-            sub_80E1B10(task);
-            if (++task->data[2] == task->data[3])
+            task->tDelay = 0;
+            SetBattlersXOffsetForShake(task);
+            if (++task->tTimer == task->tMaxTime)
             {
-                task->data[2] = 0;
-                task->data[14]--;
-                task->data[0]++;
+                task->tTimer = 0;
+                task->tHorizOffset--;
+                task->tState++;
             }
         }
         break;
     case 1:
-        if (++task->data[1] > 1)
+        if (++task->tDelay > 1)
         {
-            task->data[1] = 0;
-            sub_80E1B10(task);
-            if (++task->data[2] == 4)
+            task->tDelay = 0;
+            SetBattlersXOffsetForShake(task);
+            if (++task->tTimer == 4)
             {
-                task->data[2] = 0;
-                if (--task->data[14] == 0)
-                    task->data[0]++;
+                task->tTimer = 0;
+                if (--task->tHorizOffset == 0)
+                    task->tState++;
             }
         }
         break;
     case 2:
-        for (i = 0; i < task->data[13]; i++)
-            gSprites[task->data[9 + i]].x2 = 0;
+        for (i = 0; i < task->tNumBattlers; i++)
+            gSprites[task->tbattlerSpriteIds(i)].x2 = 0;
 
         DestroyAnimVisualTask(taskId);
         break;
     }
 }
 
-static void sub_80E1B10(struct Task *task)
+static void SetBattlersXOffsetForShake(struct Task *task)
 {
     u16 i;
     u16 xOffset;
 
-    if ((task->data[2] & 1) == 0)
-        xOffset = (task->data[14] / 2) + (task->data[14] & 1);
+    if ((task->tTimer & 1) == 0)
+        xOffset = (task->tHorizOffset / 2) + (task->tHorizOffset & 1);
     else
-        xOffset = -(task->data[14] / 2);
+        xOffset = -(task->tHorizOffset / 2);
 
-    for (i = 0; i < task->data[13]; i++)
+    for (i = 0; i < task->tNumBattlers; i++)
     {
-        gSprites[task->data[9 + i]].x2 = xOffset;
+        gSprites[task->tbattlerSpriteIds(i)].x2 = xOffset;
     }
 }
 
-void sub_80E1B88(u8 taskId)
+void AnimTask_IsPowerOver99(u8 taskId)
 {
-    gBattleAnimArgs[15] = gAnimMovePower > 99;
+    gBattleAnimArgs[ARG_MAGNITUDE_POWER_RESULT] = gAnimMovePower > 99;
     DestroyAnimVisualTask(taskId);
 }
+
+#undef tState
+#undef tDelay
+#undef tTimer
+#undef tMaxTime
+#undef tbattlerSpriteIds
+#undef tNumBattlers
+#undef tInitialX
+#undef tHorizOffset
+#undef tInitHorizOffset
 
 void sub_80E1BB0(u8 taskId)
 {
