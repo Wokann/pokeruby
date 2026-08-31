@@ -58,7 +58,7 @@ static void SoundTask_FireBlast_Step1(u8 taskId)
             PlaySE12WithPanning(TASK.data[0], pan);
         }
         pan += dPan;
-        TASK.data[2] = sub_8077104(pan, dPan);
+        TASK.data[2] = KeepPanInRange(pan, dPan);
     }
 }
 
@@ -133,49 +133,48 @@ static void sub_812B108(u8 taskId)
         dPan = TASK.data[3];
         oldPan = TASK.data[11];
         TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = sub_8077104(TASK.data[11], oldPan);
+        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 }
 
-// used in 3 moves:
-//         Move_HOWL, Move_ROAR, Move_GROWL
-void sub_812B18C(u8 taskId)
+// Used by Move_HOWL, Move_ROAR, and Move_GROWL.
+void SoundTask_PlayCryWithMode(u8 taskId)
 {
     u16 species = 0;
     s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
 
     if (IsContest())
     {
-        if (!gBattleAnimArgs[0])
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
             species = gContestResources__moveAnim.species;
         else
             DestroyAnimVisualTask(taskId);
     }
     else
     {
-        u8 bank;
-        if (gBattleAnimArgs[0] == 0)
-            bank = gBattleAnimAttacker;
-        else if (gBattleAnimArgs[0] == 1)
-            bank = gBattleAnimTarget;
-        else if (gBattleAnimArgs[0] == 2)
-            bank = gBattleAnimAttacker ^ 0x2;
+        u8 battler;
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
+            battler = gBattleAnimAttacker;
+        else if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
+            battler = gBattleAnimTarget;
+        else if (gBattleAnimArgs[0] == ANIM_BATTLER_ATK_PARTNER)
+            battler = gBattleAnimAttacker ^ 0x2;
         else
-            bank = gBattleAnimTarget ^ 0x2;
+            battler = gBattleAnimTarget ^ 0x2;
 
-        if (gBattleAnimArgs[0] == 1 || gBattleAnimArgs[0] == 3)
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET || gBattleAnimArgs[0] == ANIM_BATTLER_DEF_PARTNER)
         {
-            if (!IsAnimBankSpriteVisible(bank))
+            if (!IsAnimBankSpriteVisible(battler))
             {
                 DestroyAnimVisualTask(taskId);
                 return;
             }
         }
 
-        if (GetBattlerSide(bank))
-            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[bank]], 0xB);
+        if (GetBattlerSide(battler))
+            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
         else
-            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[bank]], 0xB);
+            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
     }
 
     if (species != 0)
@@ -265,7 +264,7 @@ static void sub_812B404(u8 taskId)
         TASK.data[10] = 0;
         oldPan = TASK.data[11];
         TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = sub_8077104(TASK.data[11], oldPan);
+        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 
     gUnknown_0202F7D2 = TASK.data[11];

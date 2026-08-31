@@ -4373,8 +4373,8 @@ Move_HOWL: @ 81CD53C
 	loadspritegfx ANIM_TAG_NOISE_LINE
 	createvisualtask AnimTask_DeepInhale, 2, ANIM_BATTLER_ATTACKER
 	delay 12
-	call _81CE35E
-	createvisualtask sub_812B18C, 2, 0, 3
+	call RoarEffect
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, 3
 	waitforvisualfinish
 	delay 30
 	end
@@ -4972,9 +4972,9 @@ Move_ROAR: @ 81CE31E
 	monbg ANIM_BATTLER_ATTACKER
 	monbgprio_28 0
 	setalpha 8, 8
-	createvisualtask sub_812B18C, 2, 0, 2
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, 2
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_BATTLER_ATTACKER, 1
-	call _81CE35E
+	call RoarEffect
 	delay 20
 	createvisualtask sub_80A8A80, 5, 1, 2
 	waitforvisualfinish
@@ -4983,20 +4983,20 @@ Move_ROAR: @ 81CE31E
 	waitforvisualfinish
 	delay 20
 	end
-_81CE35E:
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, -8, 0
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, 0, 2
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, 8, 1
+RoarEffect:
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, -8, 0
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, 0, 2
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, 8, 1
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, -8, 0
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, 0, 2
-	createsprite gBattleAnimSpriteTemplate_8402934, ANIM_BATTLER_ATTACKER, 2, 24, 8, 1
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, -8, 0
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, 0, 2
+	createsprite gRoarNoiseLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, 8, 1
 	return
 
 Move_GROWL: @ 81CE3AF
 	loadspritegfx ANIM_TAG_NOISE_LINE
-	createvisualtask sub_812B18C, 2, 0, 255
-	call _81CE35E
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, 255
+	call RoarEffect
 	delay 10
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 1, 0, 9, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_DEF_PARTNER, 1, 0, 9, 1

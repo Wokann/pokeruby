@@ -84,7 +84,7 @@ static void AnimYawnCloud_Step(struct Sprite *sprite);
 static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId);
 static void CreateSweatDroplets(u8, bool8);
 static void AnimTask_FacadeColorBlend_Step(u8 taskId);
-static void sub_81301B4(struct Sprite *sprite);
+static void AnimRoarNoiseLine_Step(struct Sprite *sprite);
 static void sub_81302E4(u8 taskId);
 static void sub_8130424(s16, s16, s16, s16, u8, u8, s16*, s16*);
 static void sub_81306A4(u8 taskId);
@@ -125,7 +125,7 @@ static void AnimReversalOrb(struct Sprite *sprite);
 static void AnimYawnCloud(struct Sprite *sprite);
 static void sub_812F948(struct Sprite *sprite);
 static void AnimFacadeSweatDrop(struct Sprite *sprite);
-static void sub_81300F4(struct Sprite *sprite);
+static void AnimRoarNoiseLine(struct Sprite *sprite);
 static void sub_81304DC(struct Sprite *sprite);
 static void AnimAssistPawprint(struct Sprite *sprite);
 static void AnimSmellingSaltsHand(struct Sprite *sprite);
@@ -927,35 +927,35 @@ const struct SpriteTemplate gFacadeSweatDropSpriteTemplate =
 
 const u16 gFacadeBlendColors[] = INCBIN_U16("graphics/battle_anims/sprites/effect.gbapal");
 
-const union AnimCmd gSpriteAnim_8402914[] =
+const union AnimCmd gRoarNoiseLineAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_8402920[] =
+const union AnimCmd gRoarNoiseLineAnimCmds2[] =
 {
     ANIMCMD_FRAME(32, 3),
     ANIMCMD_FRAME(48, 3),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_840292C[] =
+const union AnimCmd *const gRoarNoiseLineAnimTable[] =
 {
-    gSpriteAnim_8402914,
-    gSpriteAnim_8402920,
+    gRoarNoiseLineAnimCmds1,
+    gRoarNoiseLineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402934 =
+const struct SpriteTemplate gRoarNoiseLineSpriteTemplate =
 {
     .tileTag = ANIM_TAG_NOISE_LINE,
     .paletteTag = ANIM_TAG_NOISE_LINE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_840292C,
+    .anims = gRoarNoiseLineAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_81300F4,
+    .callback = AnimRoarNoiseLine,
 };
 
 const struct SpriteTemplate gSpriteTemplate_840294C =
@@ -3883,13 +3883,13 @@ void AnimTask_StatusClearedEffect(u8 taskId)
         gUnknown_08D2E150);
 }
 
-static void sub_81300F4(struct Sprite *sprite)
+static void AnimRoarNoiseLine(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
     if (gBattleAnimArgs[2] == 0)
     {
         sprite->data[0] = 640;
@@ -3913,10 +3913,10 @@ static void sub_81300F4(struct Sprite *sprite)
         sprite->hFlip = 1;
     }
 
-    sprite->callback = sub_81301B4;
+    sprite->callback = AnimRoarNoiseLine_Step;
 }
 
-static void sub_81301B4(struct Sprite *sprite)
+static void AnimRoarNoiseLine_Step(struct Sprite *sprite)
 {
     sprite->data[6] += sprite->data[0];
     sprite->data[7] += sprite->data[1];
