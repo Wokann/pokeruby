@@ -261,7 +261,7 @@ void sub_80D9E94(struct Sprite *sprite)
 
 static void sub_80D9EE8(struct Sprite *sprite)
 {
-    sub_8078394(sprite);
+    TranslateSpriteLinearFixedPoint(sprite);
 
     sprite->data[1] -= sprite->data[5];
     sprite->data[2] -= sprite->data[6];

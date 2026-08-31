@@ -590,7 +590,7 @@ void TranslateSpriteOverDuration(struct Sprite *sprite)
     }
 }
 
-void sub_8078394(struct Sprite *sprite)
+void TranslateSpriteLinearFixedPoint(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {

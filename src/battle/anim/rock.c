@@ -378,7 +378,7 @@ void sub_80DCF60(struct Sprite *sprite)
     sprite->data[3] = 0;
     sprite->data[4] = 0;
 
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 

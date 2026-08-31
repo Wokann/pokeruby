@@ -65,7 +65,7 @@ static void AnimGrantingStars(struct Sprite* sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
 }
 
 static void AnimSparklingStars(struct Sprite* sprite)
@@ -102,5 +102,5 @@ static void AnimSparklingStars(struct Sprite* sprite)
     sprite->data[1] = gBattleAnimArgs[3];
     sprite->data[2] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
 }

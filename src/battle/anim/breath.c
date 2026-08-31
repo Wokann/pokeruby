@@ -8,12 +8,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D0930(struct Sprite* sprite);
+void AnimBreathPuff(struct Sprite *sprite);
 
 // breath (a puff of smoke, usually from the mouth or nose of the Pokemon.)
 // Used in Swagger and Bulk Up.
 
-const union AnimCmd gSpriteAnim_83D7734[] =
+const union AnimCmd gBreathPuffAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(4, 40, .hFlip = TRUE),
@@ -22,7 +22,7 @@ const union AnimCmd gSpriteAnim_83D7734[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D7748[] =
+const union AnimCmd gBreathPuffAnimCmds2[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(4, 40),
@@ -31,43 +31,43 @@ const union AnimCmd gSpriteAnim_83D7748[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D775C[] =
+const union AnimCmd *const gBreathPuffAnimTable[] =
 {
-    gSpriteAnim_83D7734,
-    gSpriteAnim_83D7748,
+    gBreathPuffAnimCmds1,
+    gBreathPuffAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7764 =
+const struct SpriteTemplate gBreathPuffSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BREATH,
     .paletteTag = ANIM_TAG_BREATH,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D775C,
+    .anims = gBreathPuffAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D0930,
+    .callback = AnimBreathPuff,
 };
 
-void sub_80D0930(struct Sprite* sprite)
+void AnimBreathPuff(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == 0)
     {
         StartSpriteAnim(sprite, 0);
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + 32;
-        sprite->data[1] = 0x40;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + 32;
+        sprite->data[1] = 64;
     }
     else
     {
         StartSpriteAnim(sprite, 1);
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) - 32;
-        sprite->data[1] = -0x40;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) - 32;
+        sprite->data[1] = -64;
     }
 
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-    sprite->data[0] = 0x34;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->data[0] = 52;
     sprite->data[2] = 0;
     sprite->data[3] = 0;
     sprite->data[4] = 0;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
 }

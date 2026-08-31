@@ -79,7 +79,7 @@ void RunStoredCallbackWhenAnimEnds(struct Sprite *sprite);
 void TranslateSpriteLinearAndFlicker(struct Sprite *sprite);
 void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite);
 void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite);
-void sub_8078394(struct Sprite *sprite);
+void TranslateSpriteLinearFixedPoint(struct Sprite *sprite);
 void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
 void sub_8078278(struct Sprite *sprite);
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);

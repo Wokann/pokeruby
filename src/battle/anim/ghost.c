@@ -551,7 +551,7 @@ void sub_80DE1B0(u8 taskId)
     gSprites[task->data[0]].data[3] = 0;
     gSprites[task->data[0]].data[4] = 0;
     StoreSpriteCallbackInData6(&gSprites[task->data[0]], SpriteCallbackDummy);
-    gSprites[task->data[0]].callback = sub_8078394;
+    gSprites[task->data[0]].callback = TranslateSpriteLinearFixedPoint;
     task->func = sub_80DE2DC;
 }
 

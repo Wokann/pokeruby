@@ -195,7 +195,7 @@ void AnimFireSpread(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[2] = gBattleAnimArgs[3];
 
-    sprite->callback = sub_8078394;
+    sprite->callback = TranslateSpriteLinearFixedPoint;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
