@@ -54,8 +54,6 @@ void SetBattlerSpriteYOffsetFromRotation(u8 spriteId);
 void sub_8079518(struct Sprite *sprite);
 void sub_8079534(struct Sprite *sprite);
 void AnimTask_AlphaFadeIn(u8 taskId);
-void AnimTask_BlendMonInAndOutSetup(struct Task *task);
-void AnimTask_BlendMonInAndOutStep(u8 taskId);
 void SetBattlerSpriteYOffsetFromYScale(u8 spriteId);
 u16 GetBattlerYDeltaFromSpriteId(u8 spriteId);
 void StorePointerInVars(s16 *lo, s16 *hi, const void *ptr);

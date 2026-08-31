@@ -70,6 +70,9 @@ extern u8 gAnimFriendship;
 
 extern u8 UpdateMonIconFrame(struct Sprite *sprite);
 
+static void AnimTask_BlendPalInAndOutSetup(struct Task *task);
+static void AnimTask_BlendMonInAndOut_Step(u8 taskId);
+
 EWRAM_DATA union AffineAnimCmd *gUnknown_0202F7D4 = NULL;
 EWRAM_DATA u32 filler_0202F7D8[3] = {0};
 
@@ -1577,10 +1580,10 @@ void AnimTask_BlendMonInAndOut(u8 task)
         return;
     }
     gTasks[task].data[0] = (gSprites[spriteId].oam.paletteNum * 0x10) + 0x101;
-    AnimTask_BlendMonInAndOutSetup(&gTasks[task]);
+    AnimTask_BlendPalInAndOutSetup(&gTasks[task]);
 }
 
-void AnimTask_BlendMonInAndOutSetup(struct Task *task)
+static void AnimTask_BlendPalInAndOutSetup(struct Task *task)
 {
     task->data[1] = gBattleAnimArgs[1];
     task->data[2] = 0;
@@ -1589,10 +1592,10 @@ void AnimTask_BlendMonInAndOutSetup(struct Task *task)
     task->data[5] = gBattleAnimArgs[3];
     task->data[6] = 0;
     task->data[7] = gBattleAnimArgs[4];
-    task->func = AnimTask_BlendMonInAndOutStep;
+    task->func = AnimTask_BlendMonInAndOut_Step;
 }
 
-void AnimTask_BlendMonInAndOutStep(u8 taskId)
+static void AnimTask_BlendMonInAndOut_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -1627,7 +1630,7 @@ void AnimTask_BlendMonInAndOutStep(u8 taskId)
     }
 }
 
-void sub_80798AC(u8 task)
+void AnimTask_BlendPalInAndOutByTag(u8 task)
 {
     u8 palette = IndexOfSpritePaletteTag(gBattleAnimArgs[0]);
 
@@ -1637,7 +1640,7 @@ void sub_80798AC(u8 task)
         return;
     }
     gTasks[task].data[0] = (palette * 0x10) + 0x101;
-    AnimTask_BlendMonInAndOutSetup(&gTasks[task]);
+    AnimTask_BlendPalInAndOutSetup(&gTasks[task]);
 }
 
 void PrepareAffineAnimInTaskData(struct Task *task, u8 a2, const void *a3)

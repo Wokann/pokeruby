@@ -4519,16 +4519,16 @@ Move_DRAGON_DANCE: @ 81CD7F8
 	monbg ANIM_BATTLER_ATTACKER
 	monbgprio_28 0
 	delay 1
-	createvisualtask sub_80DF924, 5
+	createvisualtask AnimTask_DragonDanceWaver, 5
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 8
-	createvisualtask sub_80798AC, 5, 10249, 19456, 14, 0, 3
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 43
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 85
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 128
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 170
-	createsprite gBattleAnimSpriteTemplate_83DB0E8, ANIM_BATTLER_ATTACKER, 2, 213
+	createvisualtask AnimTask_BlendPalInAndOutByTag, 5, ANIM_TAG_HOLLOW_ORB, rgb(0, 0, 19), 14, 0, 3
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 43
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 85
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 128
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 170
+	createsprite gDragonDanceOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 213
 	delay 30
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 30

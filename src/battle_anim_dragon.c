@@ -19,12 +19,12 @@ static void AnimOutrageFlame(struct Sprite *sprite);
 void sub_80DF760(struct Sprite *sprite);
 void sub_80DF6F0(struct Sprite *sprite);
 void sub_80DF760(struct Sprite *sprite);
-void sub_80DF78C(struct Sprite *sprite);
 void sub_80DFB28(struct Sprite *sprite);
-static void sub_80DF81C(struct Sprite *sprite);
 static void sub_80DFBD8(struct Sprite *sprite);
-static void sub_80DF9F4(u8 taskId);
-static void sub_80DFAB0(struct Task *task);
+static void AnimDragonDanceOrb(struct Sprite *sprite);
+static void AnimDragonDanceOrb_Step(struct Sprite *sprite);
+static void AnimTask_DragonDanceWaver_Step(u8 taskId);
+static void UpdateDragonDanceScanlineEffect(struct Task *task);
 
 static const union AnimCmd sAnim_OutrageOverheatFire_0[] =
 {
@@ -174,7 +174,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0D0 =
     .callback = sub_80DF760,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0E8 =
+const struct SpriteTemplate gDragonDanceOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HOLLOW_ORB,
     .paletteTag = ANIM_TAG_HOLLOW_ORB,
@@ -182,7 +182,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0E8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DF78C,
+    .callback = AnimDragonDanceOrb,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
@@ -276,29 +276,27 @@ void sub_80DF760(struct Sprite *sprite)
     sub_80DF63C(sprite);
 }
 
-//next 2 tasks might be Dragon Dance orbs?
-
-void sub_80DF78C(struct Sprite *sprite)
+static void AnimDragonDanceOrb(struct Sprite *sprite)
 {
     u16 r5;
     u16 r0;
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[4] = 0;
     sprite->data[5] = 1;
     sprite->data[6] = gBattleAnimArgs[0];
-    r5 = GetBattlerSpriteCoordAttr(gBattlerAttacker, 0);
-    r0 = GetBattlerSpriteCoordAttr(gBattlerAttacker, 1);
+    r5 = GetBattlerSpriteCoordAttr(gBattlerAttacker, BATTLER_COORD_ATTR_HEIGHT);
+    r0 = GetBattlerSpriteCoordAttr(gBattlerAttacker, BATTLER_COORD_ATTR_WIDTH);
     if (r5 > r0)
         sprite->data[7] = r5 / 2;
     else
         sprite->data[7] = r0 / 2;
     sprite->x2 = Cos(sprite->data[6], sprite->data[7]);
     sprite->y2 = Sin(sprite->data[6], sprite->data[7]);
-    sprite->callback = sub_80DF81C;
+    sprite->callback = AnimDragonDanceOrb_Step;
 }
 
-static void sub_80DF81C(struct Sprite *sprite)
+static void AnimDragonDanceOrb_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -336,9 +334,9 @@ static void sub_80DF81C(struct Sprite *sprite)
     }
 }
 
-// Dragon Dance scanline eff
-
-void sub_80DF924(u8 taskId)
+// Wavers the attacker back and forth. Progressing vertical wave of scanline shifts.
+// Used by Dragon Dance.
+void AnimTask_DragonDanceWaver(u8 taskId)
 {
     struct ScanlineEffectParams sp;
     struct Task *task = &gTasks[taskId];
@@ -354,7 +352,7 @@ void sub_80DF924(u8 taskId)
         sp.dmaDest = &REG_BG2HOFS;
         task->data[2] = gBattle_BG2_X;
     }
-    sp.dmaControl = 0xA2600001;
+    sp.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
     sp.initState = 1;
     sp.unused9 = 0;
     r1 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
@@ -362,16 +360,16 @@ void sub_80DF924(u8 taskId)
     task->data[4] = r1 + 32;
     if (task->data[3] < 0)
         task->data[3] = 0;
-    for(i = task->data[3];i <= task->data[4];i++)
+    for (i = task->data[3]; i <= task->data[4]; i++)
     {
         gScanlineEffectRegBuffers[0][i] = task->data[2];
         gScanlineEffectRegBuffers[1][i] = task->data[2];
     }
     ScanlineEffect_SetParams(sp);
-    task->func = sub_80DF9F4;
+    task->func = AnimTask_DragonDanceWaver_Step;
 }
 
-static void sub_80DF9F4(u8 taskId)
+static void AnimTask_DragonDanceWaver_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     switch (task->data[0])
@@ -383,12 +381,12 @@ static void sub_80DF9F4(u8 taskId)
             if (++task->data[6] == 3)
                 task->data[0]++;
         }
-        sub_80DFAB0(task);
+        UpdateDragonDanceScanlineEffect(task);
         break;
     case 1:
         if (++task->data[1] > 0x3C)
             task->data[0]++;
-        sub_80DFAB0(task);
+        UpdateDragonDanceScanlineEffect(task);
         break;
     case 2:
         if (++task->data[7] > 1)
@@ -397,7 +395,7 @@ static void sub_80DF9F4(u8 taskId)
             if (--task->data[6] == 0)
                 task->data[0]++;
         }
-        sub_80DFAB0(task);
+        UpdateDragonDanceScanlineEffect(task);
         break;
     case 3:
         gScanlineEffect.state = 3;
@@ -409,7 +407,7 @@ static void sub_80DF9F4(u8 taskId)
     }
 }
 
-static void sub_80DFAB0(struct Task *task)
+static void UpdateDragonDanceScanlineEffect(struct Task *task)
 {
     u16 r3 = task->data[5];
     u16 i;
