@@ -38,10 +38,10 @@ static void sub_80DFD58(u8 taskId);
 static void sub_80DFF58(struct Sprite *sprite);
 static void sub_80DFF98(struct Sprite *sprite);
 static void sub_80E00D0(struct Sprite *sprite);
-static void sub_80E02A4(u8 taskId);
-static void sub_80E0620(u8 taskId);
-static void sub_80E08CC(u8 priority);
-static void sub_80E079C(struct Task *task);
+static void AnimTask_MoveAttackerMementoShadow_Step(u8 taskId);
+static void AnimTask_MoveTargetMementoShadow_Step(u8 taskId);
+static void SetAllBattlersSpritePriority(u8 priority);
+static void DoMementoShadowEffect(struct Task *task);
 static void AnimTask_MetallicShine_Step(u8 taskId);
 
 const struct SpriteTemplate gSpriteTemplate_83DB118 =
@@ -412,7 +412,7 @@ static void sub_80E00D0(struct Sprite *sprite)
         DestroySpriteAndMatrix(sprite);
 }
 
-void sub_80E00EC(u8 taskId)
+void AnimTask_MoveAttackerMementoShadow(u8 taskId)
 {
     struct ScanlineEffectParams scanlineParams;
     struct BattleAnimBgData animBg;
@@ -421,13 +421,13 @@ void sub_80E00EC(u8 taskId)
     int var0;
     struct Task *task = &gTasks[taskId];
 
-    task->data[7] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + 31;
-    task->data[6] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 2) - 7;
+    task->data[7] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + 31;
+    task->data[6] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP) - 7;
     task->data[5] = task->data[7];
     task->data[4] = task->data[6];
     task->data[13] = (task->data[7] - task->data[6]) << 8;
 
-    pos = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
+    pos = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
     task->data[14] = pos - 32;
     task->data[15] = pos + 32;
 
@@ -470,7 +470,7 @@ void sub_80E00EC(u8 taskId)
     task->data[1] = 0;
     task->data[2] = 0;
 
-    sub_80E08CC(3);
+    SetAllBattlersSpritePriority(3);
 
     for (i = 0; i < 112; i++)
     {
@@ -485,10 +485,10 @@ void sub_80E00EC(u8 taskId)
     gBattle_WIN0H = (task->data[14] << 8) | task->data[15];
     gBattle_WIN0V = 160;
 
-    task->func = sub_80E02A4;
+    task->func = AnimTask_MoveAttackerMementoShadow_Step;
 }
 
-static void sub_80E02A4(u8 taskId)
+static void AnimTask_MoveAttackerMementoShadow_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -517,14 +517,14 @@ static void sub_80E02A4(u8 taskId)
         break;
     case 1:
         task->data[4] -= 8;
-        sub_80E079C(task);
+        DoMementoShadowEffect(task);
 
         if (task->data[4] < task->data[8])
             task->data[0]++;
         break;
     case 2:
         task->data[4] -= 8;
-        sub_80E079C(task);
+        DoMementoShadowEffect(task);
         task->data[14] += 4;
         task->data[15] -= 4;
 
@@ -546,7 +546,7 @@ static void sub_80E02A4(u8 taskId)
     }
 }
 
-void sub_80E03BC(u8 taskId)
+void AnimTask_MoveTargetMementoShadow(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     struct ScanlineEffectParams scanlineParams;
@@ -595,14 +595,14 @@ void sub_80E03BC(u8 taskId)
             FillPalette(0, 144, 32);
         }
 
-        sub_80E08CC(3);
+        SetAllBattlersSpritePriority(3);
         task->data[0]++;
         break;
     case 2:
-        task->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + 31;
-        task->data[6] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 2) - 7;
+        task->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 31;
+        task->data[6] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP) - 7;
         task->data[13] = (task->data[7] - task->data[6]) << 8;
-        pos = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
+        pos = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
         task->data[14] = pos - 4;
         task->data[15] = pos + 4;
 
@@ -649,12 +649,12 @@ void sub_80E03BC(u8 taskId)
         task->data[1] = 0;
         task->data[2] = 0;
         REG_BLDALPHA = 0x80C;
-        task->func = sub_80E0620;
+        task->func = AnimTask_MoveTargetMementoShadow_Step;
         break;
     }
 }
 
-static void sub_80E0620(u8 taskId)
+static void AnimTask_MoveTargetMementoShadow_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -665,7 +665,7 @@ static void sub_80E0620(u8 taskId)
         if (task->data[5] >= task->data[7])
             task->data[5] = task->data[7];
 
-        sub_80E079C(task);
+        DoMementoShadowEffect(task);
 
         if (task->data[5] == task->data[7])
             task->data[0]++;
@@ -687,7 +687,7 @@ static void sub_80E0620(u8 taskId)
         if (task->data[4] >= task->data[6])
             task->data[4] = task->data[6];
 
-        sub_80E079C(task);
+        DoMementoShadowEffect(task);
 
         if (task->data[4] == task->data[6] && task->data[1] != 0)
         {
@@ -730,7 +730,7 @@ static void sub_80E0620(u8 taskId)
     }
 }
 
-static void sub_80E079C(struct Task *task)
+static void DoMementoShadowEffect(struct Task *task)
 {
     int var0, var1;
     s16 var2;
@@ -781,11 +781,11 @@ static void sub_80E079C(struct Task *task)
     }
 }
 
-static void sub_80E08CC(u8 priority)
+static void SetAllBattlersSpritePriority(u8 priority)
 {
     u16 i;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < MAX_BATTLERS_COUNT; i++)
     {
         u8 spriteId = GetAnimBattlerSpriteId(i);
         if (spriteId != 0xFF)
@@ -793,27 +793,27 @@ static void sub_80E08CC(u8 priority)
     }
 }
 
-void sub_80E0918(u8 taskId)
+void AnimTask_InitMementoShadow(u8 taskId)
 {
     u8 toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) ^ 1 ? 1 : 0;
     MoveBattlerSpriteToBG(gBattleAnimAttacker, toBG2);
     gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].invisible = FALSE;
 
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if (IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
     {
-        MoveBattlerSpriteToBG(gBattleAnimAttacker ^ 2, toBG2 ^ 1);
-        gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].invisible = FALSE;
+        MoveBattlerSpriteToBG(BATTLE_PARTNER(gBattleAnimAttacker), toBG2 ^ 1);
+        gSprites[gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)]].invisible = FALSE;
     }
 
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E09C4(u8 taskId)
+void AnimTask_MementoHandleBg(u8 taskId)
 {
     u8 toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) ^ 1 ? 1 : 0;
     ResetBattleAnimBg(toBG2);
 
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if (IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
         ResetBattleAnimBg(toBG2 ^ 1);
 
     DestroyAnimVisualTask(taskId);
