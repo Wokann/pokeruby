@@ -2888,8 +2888,8 @@ Move_GLARE: @ 81CB4CA
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 0, 0, 16, 0
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, -16, -8
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, 16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 16, -8
 	createvisualtask sub_80D23B4, 5
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	delay 2
@@ -4266,8 +4266,8 @@ Move_TICKLE: @ 81CD33C
 	loadspritegfx ANIM_TAG_EYE_SPARKLE
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 0, 0, 16, rgb(0, 0, 0)
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, -16, -8
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, 16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 16, -8
 	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 0, 16, 0, rgb(0, 0, 0)
@@ -7742,8 +7742,8 @@ Move_SCARY_FACE: @ 81D23E3
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	createvisualtask sub_80D23B4, 5
 	delay 13
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, -16, -8
-	createsprite gBattleAnimSpriteTemplate_83D7B94, ANIM_BATTLER_ATTACKER, 0, 16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, -16, -8
+	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 16, -8
 	waitforvisualfinish
 	createvisualtask sub_80D60B4, 3, 20, 1, 0
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET

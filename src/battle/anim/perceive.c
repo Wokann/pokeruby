@@ -8,12 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D2920(struct Sprite* sprite);
+static void AnimEyeSparkle(struct Sprite* sprite);
+static void AnimEyeSparkle_Step(struct Sprite* sprite);
 
 // perceive (shows a sparkle in a set of eyes, usually for heightened perception.)
 // Used in Glare, Tickle, and Scary Face.
 
-const union AnimCmd gSpriteAnim_83D7B78[] =
+const union AnimCmd gEyeSparkleAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(4, 4),
@@ -23,30 +24,30 @@ const union AnimCmd gSpriteAnim_83D7B78[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7B90[] =
+const union AnimCmd *const gEyeSparkleAnimTable[] =
 {
-    gSpriteAnim_83D7B78,
+    gEyeSparkleAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7B94 =
+const struct SpriteTemplate gEyeSparkleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_EYE_SPARKLE,
     .paletteTag = ANIM_TAG_EYE_SPARKLE,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D7B90,
+    .anims = gEyeSparkleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2920,
+    .callback = AnimEyeSparkle,
 };
 
-static void sub_80D2904(struct Sprite* sprite)
+static void AnimEyeSparkle_Step(struct Sprite* sprite)
 {
     if (sprite->animEnded)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D2920(struct Sprite* sprite)
+static void AnimEyeSparkle(struct Sprite* sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
-    sprite->callback = sub_80D2904;
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    sprite->callback = AnimEyeSparkle_Step;
 }
