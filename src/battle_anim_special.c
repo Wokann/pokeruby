@@ -217,7 +217,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55020,
         .paletteTag = 55020,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -226,7 +226,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55021,
         .paletteTag = 55021,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -235,7 +235,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55022,
         .paletteTag = 55022,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -244,7 +244,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55023,
         .paletteTag = 55023,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -253,7 +253,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55024,
         .paletteTag = 55024,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -262,7 +262,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55025,
         .paletteTag = 55025,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -271,7 +271,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55026,
         .paletteTag = 55026,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -280,7 +280,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55027,
         .paletteTag = 55027,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -289,7 +289,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55028,
         .paletteTag = 55028,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -298,7 +298,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55029,
         .paletteTag = 55029,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -307,7 +307,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55030,
         .paletteTag = 55030,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -316,7 +316,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     {
         .tileTag = 55031,
         .paletteTag = 55031,
-        .oam = &gOamData_837DF24,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
         .anims = gSpriteAnimTable_840B360,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,

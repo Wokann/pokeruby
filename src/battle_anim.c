@@ -17,7 +17,7 @@
 #include "constants/battle_anim.h"
 #include "constants/songs.h"
 
-const struct OamData gOamData_837DF24 =
+const struct OamData gOamData_AffineOff_ObjNormal_8x8 =
 {
     .affineMode = 0,
     .objMode = 0,

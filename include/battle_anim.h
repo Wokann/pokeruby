@@ -58,7 +58,7 @@ extern u8 gAnimFriendship;
 extern u8 gAnimMoveTurn;
 extern struct DisableStruct *gAnimDisableStructPtr;
 
-extern const struct OamData gOamData_837DF24;
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
 extern const struct OamData gOamData_AffineOff_ObjNormal_32x32;
 extern const struct OamData gOamData_AffineOff_ObjNormal_64x64;

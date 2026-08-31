@@ -20,7 +20,7 @@ extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 extern const u8 *const gBattleAnims_StatusConditions[];
 extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
-extern const struct OamData gOamData_837DF24;
+extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
 extern u8 GetBattlerSpriteCoord(u8, u8);
 extern void sub_80E32E0(u8);
@@ -55,7 +55,7 @@ static const struct SpriteTemplate gSpriteTemplate_83931F8 =
 {
     .tileTag = ANIM_TAG_CIRCLE_IMPACT,
     .paletteTag = ANIM_TAG_CIRCLE_IMPACT,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

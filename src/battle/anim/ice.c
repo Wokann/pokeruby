@@ -88,7 +88,7 @@ const struct SpriteTemplate gSpriteTemplate_83D9B68 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -267,7 +267,7 @@ const struct SpriteTemplate gSmallSnowballSpriteTemplate1 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BC0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -289,7 +289,7 @@ const struct SpriteTemplate gSmallSnowballSpriteTemplate2 =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BC0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -537,7 +537,7 @@ const struct SpriteTemplate gIceBallParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837DF24,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gSpriteAnimTable_83D9BBC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

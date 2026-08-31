@@ -4550,19 +4550,19 @@ Move_SHOCK_WAVE: @ 81CD867
 	createvisualtask AnimTask_ElectricChargingParticles, 2, ANIM_BATTLER_ATTACKER, 20, 0, 2
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83D9B28, ANIM_BATTLER_ATTACKER, 2
+	createsprite gGrowingShockWaveOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	delay 30
-	createvisualtask sub_80D72DC, 5
+	createvisualtask AnimTask_ShockWaveProgressingBolt, 5
 	delay 12
 	waitforvisualfinish
-	createvisualtask sub_80D759C, 5
+	createvisualtask AnimTask_ShockWaveLightning, 5
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 6, 18, 1
-	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 3, 16, 0, 32767
-	createvisualtask AnimTask_BlendBattleAnimPal, 5, 4, 0, 16, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_BG, 3, 16, 0, rgb(31, 31, 31)
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 16, 16, rgb(0, 0, 0)
 	delay 4
-	createvisualtask AnimTask_BlendBattleAnimPal, 5, 4, 0, 0, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 5, F_PAL_TARGET, 0, 0, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff
@@ -4783,38 +4783,38 @@ Move_THUNDER: @ 81CDDCE
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 16, -36
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -36
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 16, -20
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -20
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 16, 12
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 12
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 6, -16, -32
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 6, -16, -32
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 6, -16, -16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 6, -16, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 6, -16, 16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 6, -16, 16
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 5
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 24, -32
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, -32
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 24, -16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 24, 16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 16
 	delay 30
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 5
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, -32
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -32
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 16
 	delay 10
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 1
@@ -4844,11 +4844,11 @@ Move_THUNDER_PUNCH: @ 81CDF28
 	delay 1
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, -48
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -48
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_ATTACKER, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_ATTACKER, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16
 	delay 1
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
@@ -8020,11 +8020,11 @@ Move_TRI_ATTACK: @ 81D2A0F
 	loadspritegfx ANIM_TAG_LIGHTNING
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, -48
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -48
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, -16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D97D0, ANIM_BATTLER_TARGET, 2, 0, 16
+	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 16
 	delay 20
 	createvisualtask sub_80D60B4, 2, 20, 3, 1, 0
 	delay 2

@@ -1,19 +1,20 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "rom_8077ABC.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern u16 gBattleTypeFlags;
 
-void sub_80D61C8(struct Sprite *sprite);
-static void sub_80D6218(struct Sprite *);
+static void AnimLightning(struct Sprite *sprite);
+static void AnimLightning_Step(struct Sprite *sprite);
 
 // thunder (positions the lightning bolts)
 // Used in Thunder, Thunder Punch, and Tri Attack.
 
-const union AnimCmd gSpriteAnim_83D97B4[] =
+static const union AnimCmd sAnim_Lightning[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -23,25 +24,25 @@ const union AnimCmd gSpriteAnim_83D97B4[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D97CC[] =
+static const union AnimCmd *const sAnims_Lightning[] =
 {
-    gSpriteAnim_83D97B4,
+    sAnim_Lightning,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D97D0 =
+const struct SpriteTemplate gLightningSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LIGHTNING,
     .paletteTag = ANIM_TAG_LIGHTNING,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D97CC,
+    .anims = sAnims_Lightning,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D61C8,
+    .callback = AnimLightning,
 };
 
-void sub_80D61C8(struct Sprite *sprite)
+static void AnimLightning(struct Sprite *sprite)
 {
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= gBattleAnimArgs[0];
     }
@@ -51,10 +52,10 @@ void sub_80D61C8(struct Sprite *sprite)
     }
 
     sprite->y += gBattleAnimArgs[1];
-    sprite->callback = sub_80D6218;
+    sprite->callback = AnimLightning_Step;
 }
 
-static void sub_80D6218(struct Sprite *sprite)
+static void AnimLightning_Step(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
