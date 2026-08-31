@@ -30,14 +30,14 @@ extern const u16 gUnknown_08D1D54C[];
 
 void sub_80DFE14(struct Sprite *sprite);
 void sub_80DFF1C(struct Sprite *sprite);
-void sub_80DFFD0(struct Sprite *sprite);
+static void AnimTearDrop(struct Sprite *sprite);
 void AnimClawSlash(struct Sprite *sprite);
 static void sub_80DFE90(struct Sprite *sprite);
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
 static void sub_80DFF58(struct Sprite *sprite);
 static void sub_80DFF98(struct Sprite *sprite);
-static void sub_80E00D0(struct Sprite *sprite);
+static void AnimTearDrop_Step(struct Sprite *sprite);
 static void AnimTask_MoveAttackerMementoShadow_Step(u8 taskId);
 static void AnimTask_MoveTargetMementoShadow_Step(u8 taskId);
 static void SetAllBattlersSpritePriority(u8 priority);
@@ -137,35 +137,35 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
     .callback = sub_80DFF1C,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB200[] =
+static const union AffineAnimCmd sAffineAnim_TearDrop_0[] =
 {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 80, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, -2, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB218[] =
+static const union AffineAnimCmd sAffineAnim_TearDrop_1[] =
 {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, -80, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 2, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB230[] =
+static const union AffineAnimCmd *const sAffineAnims_TearDrop[] =
 {
-    gSpriteAffineAnim_83DB200,
-    gSpriteAffineAnim_83DB218,
+    sAffineAnim_TearDrop_0,
+    sAffineAnim_TearDrop_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB238 =
+const struct SpriteTemplate gTearDropSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB230,
-    .callback = sub_80DFFD0,
+    .affineAnims = sAffineAnims_TearDrop,
+    .callback = AnimTearDrop,
 };
 
 static const union AnimCmd sAnim_ClawSlash_0[] =
@@ -359,15 +359,15 @@ static void sub_80DFF98(struct Sprite *sprite)
         DestroySpriteAndMatrix(sprite);
 }
 
-void sub_80DFFD0(struct Sprite *sprite)
+static void AnimTearDrop(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     s8 xOffset;
 
     if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
     xOffset = 20;
     sprite->oam.tileNum += 4;
@@ -375,22 +375,22 @@ void sub_80DFFD0(struct Sprite *sprite)
     switch (gBattleAnimArgs[1])
     {
     case 0:
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 5) - 8;
-        sprite->y = GetBattlerSpriteCoordAttr(bank, 2) + 8;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 8;
+        sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
         break;
     case 1:
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 5) - 14;
-        sprite->y = GetBattlerSpriteCoordAttr(bank, 2) + 16;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) - 14;
+        sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
         break;
     case 2:
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 4) + 8;
-        sprite->y = GetBattlerSpriteCoordAttr(bank, 2) + 8;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 8;
+        sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 8;
         StartSpriteAffineAnim(sprite, 1);
         xOffset = -20;
         break;
     case 3:
-        sprite->x = GetBattlerSpriteCoordAttr(bank, 4) + 14;
-        sprite->y = GetBattlerSpriteCoordAttr(bank, 2) + 16;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) + 14;
+        sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP) + 16;
         StartSpriteAffineAnim(sprite, 1);
         xOffset = -20;
         break;
@@ -402,10 +402,10 @@ void sub_80DFFD0(struct Sprite *sprite)
     sprite->data[5] = -12;
 
     InitAnimArcTranslation(sprite);
-    sprite->callback = sub_80E00D0;
+    sprite->callback = AnimTearDrop_Step;
 }
 
-static void sub_80E00D0(struct Sprite *sprite)
+static void AnimTearDrop_Step(struct Sprite *sprite)
 {
     if (TranslateAnimArc(sprite))
         DestroySpriteAndMatrix(sprite);

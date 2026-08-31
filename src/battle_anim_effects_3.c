@@ -70,7 +70,7 @@ static void sub_812D5E8(struct Sprite *sprite);
 static void sub_812DFEC(struct Sprite *sprite);
 static void sub_812E09C(struct Sprite *sprite);
 static void sub_812E0F8(struct Sprite *sprite);
-static void sub_812E638(u8 taskId);
+static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 static void sub_812E7F0(struct Sprite *sprite);
 static void sub_812E8B4(u8 taskId);
 static void sub_812ED24(struct Sprite *sprite);
@@ -2713,7 +2713,7 @@ static void AnimWeakFrustrationAngerMark(struct Sprite *sprite)
     }
 }
 
-void sub_812E568(u8 taskId)
+void AnimTask_RockMonBackAndForth(u8 taskId)
 {
     u8 side;
     struct Task *task = &gTasks[taskId];
@@ -2750,10 +2750,10 @@ void sub_812E568(u8 taskId)
     }
 
     PrepareBattlerSpriteForRotScale(task->data[15], 0);
-    task->func = sub_812E638;
+    task->func = AnimTask_RockMonBackAndForth_Step;
 }
 
-static void sub_812E638(u8 taskId)
+static void AnimTask_RockMonBackAndForth_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 

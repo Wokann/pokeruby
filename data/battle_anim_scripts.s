@@ -3214,7 +3214,7 @@ EndureFlamesAnim:
 
 Move_CHARM: @ 81CBB1B
 	loadspritegfx ANIM_TAG_MAGENTA_HEART
-	createvisualtask sub_812E568, 5, 0, 2, 0
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_BATTLER_ATTACKER, 2, 0
 	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_BATTLER_ATTACKER, 3, 0, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
@@ -4169,22 +4169,22 @@ Move_FAKE_TEARS: @ 81CD10D
 	loadspritegfx ANIM_TAG_SMALL_BUBBLES
 	loadspritegfx ANIM_TAG_THOUGHT_BUBBLE
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
-	createvisualtask AnimTask_BlendParticle, 5, 10155, 0, 4, 4, rgb(12, 11, 31)
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_SMALL_BUBBLES, 0, 4, 4, rgb(12, 11, 31)
 	waitforvisualfinish
-	createvisualtask sub_812E568, 5, 0, 2, 1
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_BATTLER_ATTACKER, 2, 1
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 12, 4
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 1
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 0
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 1
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 3
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 2
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 3
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 1
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 0
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 1
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 2
-	createsprite gBattleAnimSpriteTemplate_83DB238, ANIM_BATTLER_ATTACKER, 2, 0, 3
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 2
+	createsprite gTearDropSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, ANIM_BATTLER_ATTACKER, 3
 	waitforvisualfinish
 	end
 
@@ -4275,7 +4275,7 @@ Move_TICKLE: @ 81CD33C
 	delay 20
 	createvisualtask AnimTask_SwayMon, 3, 0, 6, 1280, 3, 0
 	delay 12
-	createvisualtask sub_812E568, 3, 1, 6, 2
+	createvisualtask AnimTask_RockMonBackAndForth, 3, ANIM_BATTLER_TARGET, 6, 2
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 8, 8
 	waitforvisualfinish
 	end
@@ -4392,7 +4392,7 @@ Move_BULK_UP: @ 81CD55E
 Move_COVET: @ 81CD57C
 	loadspritegfx ANIM_TAG_MAGENTA_HEART
 	loadspritegfx ANIM_TAG_ITEM_BAG
-	createvisualtask sub_812E568, 5, 0, 2, 0
+	createvisualtask AnimTask_RockMonBackAndForth, 5, ANIM_BATTLER_ATTACKER, 2, 0
 	createsprite gBattleAnimSpriteTemplate_83D7A80, ANIM_BATTLER_ATTACKER, 3, 0, 20
 	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
 	delay 15
