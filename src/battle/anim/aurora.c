@@ -48,7 +48,7 @@ const struct SpriteTemplate RainbowRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RAINBOW_RINGS,
     .paletteTag = ANIM_TAG_RAINBOW_RINGS,
-    .oam = &gOamData_837E024,
+    .oam = &gOamData_AffineDouble_ObjNormal_8x16,
     .anims = gSpriteAnimTable_83D91A0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D91C0,

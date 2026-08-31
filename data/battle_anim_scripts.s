@@ -4412,27 +4412,27 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	loadspritegfx ANIM_TAG_ELECTRICITY
 	monbg ANIM_BATTLER_ATTACKER
 	setalpha 12, 8
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 0, 8, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 0, 8, rgb(0, 0, 0)
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83D9AB4, ANIM_BATTLER_ATTACKER, 1
+	createsprite gVoltTackleOrbSlideSpriteTemplate, ANIM_BATTLER_ATTACKER, 1
 	playsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff
 	delay 8
-	createvisualtask sub_80D700C, 5, 0
+	createvisualtask AnimTask_VoltTackleBolt, 5, 0
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 1
+	createvisualtask AnimTask_VoltTackleBolt, 5, 1
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 2
+	createvisualtask AnimTask_VoltTackleBolt, 5, 2
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 3
+	createvisualtask AnimTask_VoltTackleBolt, 5, 3
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80D700C, 5, 4
+	createvisualtask AnimTask_VoltTackleBolt, 5, 4
 	playsewithpan SE_M_THUNDERBOLT, SOUND_PAN_ATTACKER
 	delay 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 10, 0, 18, 1
@@ -4441,7 +4441,7 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	delay 2
 	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -16, -16
 	delay 8
-	createvisualtask sub_80D6E9C, 5
+	createvisualtask AnimTask_VoltTackleAttackerReappear, 5
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 3, 0, 9, 1
 	playsewithpan SE_M_THUNDERBOLT2, SOUND_PAN_ATTACKER
@@ -4449,7 +4449,7 @@ Move_VOLT_TACKLE: @ 81CD5D9
 	delay 2
 	createsprite gElectricPuffSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16, -16
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 8, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	end
 
