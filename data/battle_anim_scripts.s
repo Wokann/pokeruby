@@ -2958,7 +2958,7 @@ _81CB68E:
 	monbg ANIM_BATTLER_ATTACKER
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	delay 4
-	createvisualtask sub_80DFC24, 5, 0
+	createvisualtask AnimTask_AttackerFadeToInvisible, 5, 0
 	waitforvisualfinish
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, 238, -64
 	createsprite gBattleAnimSpriteTemplate_83DA65C, ANIM_BATTLER_TARGET, 2
@@ -2966,7 +2966,7 @@ _81CB68E:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 10, 0, 18, 1
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 141, 63
 	delay 20
-	createvisualtask sub_80DFD24, 5, 1
+	createvisualtask AnimTask_AttackerFadeFromInvisible, 5, 1
 	delay 2
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 15, 0, 32767
 	waitforvisualfinish
@@ -3869,15 +3869,15 @@ Move_CAMOUFLAGE: @ 81CC8D2
 	monbg ANIM_BATTLER_ATK_PARTNER
 	monbgprio_28 0
 	setalpha 16, 0
-	createvisualtask sub_80E2B74, 5, 2, 3, 0, 14
+	createvisualtask AnimTask_SetCamouflageBlend, 5, 2, 3, 0, 14
 	delay 16
-	createvisualtask sub_80DFC24, 2, 4
+	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 4
 	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	delay 8
-	createvisualtask sub_80E2B74, 5, 2, 0, 0, 0
+	createvisualtask AnimTask_SetCamouflageBlend, 5, 2, 0, 0, 0
 	waitforvisualfinish
-	createvisualtask sub_80DFD24, 2, 1
+	createvisualtask AnimTask_AttackerFadeFromInvisible, 2, 1
 	waitforvisualfinish
 	blendoff
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
@@ -5161,7 +5161,7 @@ Move_FAINT_ATTACK: @ 81CE6ED
 	delay 0
 	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 18, 6, 1, 3
-	createvisualtask sub_80DFC24, 2, 1
+	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	invisible ANIM_BATTLER_ATTACKER
@@ -5181,7 +5181,7 @@ Move_FAINT_ATTACK: @ 81CE6ED
 	delay 32
 	createvisualtask sub_80DFDC0, 2
 	monbg ANIM_BATTLER_ATTACKER
-	createvisualtask sub_80DFD24, 2, 1
+	createvisualtask AnimTask_AttackerFadeFromInvisible, 2, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	delay 1
@@ -10467,7 +10467,7 @@ General_SmokeballEscape: @ 81D6690
 	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 124, 2, 14, -20, 30
 	delay 4
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createvisualtask sub_80DFC24, 2, 2
+	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 2
 	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 123, 3, 4, 4, 30
 	delay 14
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET

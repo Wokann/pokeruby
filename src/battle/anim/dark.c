@@ -33,8 +33,8 @@ void sub_80DFF1C(struct Sprite *sprite);
 void sub_80DFFD0(struct Sprite *sprite);
 void sub_80E0A10(struct Sprite *sprite);
 static void sub_80DFE90(struct Sprite *sprite);
-static void sub_80DFC9C(u8 taskId);
-static void sub_80DFD58(u8 taskId);
+static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
+static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
 static void sub_80DFF58(struct Sprite *sprite);
 static void sub_80DFF98(struct Sprite *sprite);
 static void sub_80E00D0(struct Sprite *sprite);
@@ -205,33 +205,32 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB288 =
     .callback = sub_80E0A10,
 };
 
-// used in Smoke Ball escape, Sky Attack, Feint Attack and Camouflage
-void sub_80DFC24(u8 taskId)
+void AnimTask_AttackerFadeToInvisible(u8 taskId)
 {
-    int bank;
+    int battler;
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
-    bank = gBattleAnimAttacker;
+    battler = gBattleAnimAttacker;
     gTasks[taskId].data[1] = 16;
-    REG_BLDALPHA = 16;
-    if (GetBattlerSpriteBGPriorityRank(bank) == 1)
-        REG_BLDCNT = 0x3F42;
+    REG_BLDALPHA = BLDALPHA_BLEND(16, 0);
+    if (GetBattlerSpriteBGPriorityRank(battler) == 1)
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1;
     else
-        REG_BLDCNT = 0x3F44;
-    gTasks[taskId].func = sub_80DFC9C;
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2;
+    gTasks[taskId].func = AnimTask_AttackerFadeToInvisible_Step;
 }
 
-static void sub_80DFC9C(u8 taskId)
+static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId)
 {
-    u8 r2 = gTasks[taskId].data[1] >> 8;
-    u8 r1 = gTasks[taskId].data[1];
+    u8 blendB = gTasks[taskId].data[1] >> 8;
+    u8 blendA = gTasks[taskId].data[1];
     if (gTasks[taskId].data[2] == (u8)gTasks[taskId].data[0])
     {
-        r2++;
-        r1--;
-        gTasks[taskId].data[1] = (r2 << 8) | r1;
-        REG_BLDALPHA = (r2 << 8) | r1;
+        blendB++;
+        blendA--;
+        gTasks[taskId].data[1] = BLDALPHA_BLEND(blendA, blendB);
+        REG_BLDALPHA = BLDALPHA_BLEND(blendA, blendB);
         gTasks[taskId].data[2] = 0;
-        if (r2 == 16)
+        if (blendB == 16)
         {
             gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].invisible = TRUE;
             DestroyAnimVisualTask(taskId);
@@ -241,26 +240,26 @@ static void sub_80DFC9C(u8 taskId)
         gTasks[taskId].data[2]++;
 }
 
-void sub_80DFD24(u8 taskId)
+void AnimTask_AttackerFadeFromInvisible(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
-    gTasks[taskId].data[1] = 0x1000;
-    gTasks[taskId].func = sub_80DFD58;
-    REG_BLDALPHA = 0x1000;
+    gTasks[taskId].data[1] = BLDALPHA_BLEND(0, 16);
+    gTasks[taskId].func = AnimTask_AttackerFadeFromInvisible_Step;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
 }
 
-void sub_80DFD58(u8 taskId)
+static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId)
 {
-    u8 r1 = gTasks[taskId].data[1] >> 8;
-    u8 r5 = gTasks[taskId].data[1];
+    u8 blendB = gTasks[taskId].data[1] >> 8;
+    u8 blendA = gTasks[taskId].data[1];
     if (gTasks[taskId].data[2] == (u8)gTasks[taskId].data[0])
     {
-        r1--;
-        r5++;
-        gTasks[taskId].data[1] = (r1 << 8) | r5;
-        REG_BLDALPHA = (r1 << 8) | r5;
+        blendB--;
+        blendA++;
+        gTasks[taskId].data[1] = BLDALPHA_BLEND(blendA, blendB);
+        REG_BLDALPHA = BLDALPHA_BLEND(blendA, blendB);
         gTasks[taskId].data[2] = 0;
-        if (r1 == 0)
+        if (blendB == 0)
         {
             REG_BLDCNT = 0;
             REG_BLDALPHA = 0;
