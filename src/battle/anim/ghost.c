@@ -33,7 +33,7 @@ static void sub_80DE3D4(u8 taskId);
 static void sub_80DE7B8(struct Sprite *sprite);
 static void sub_80DEF3C(struct Sprite *sprite);
 static void sub_80DF0B8(struct Sprite *sprite);
-static void sub_80DF3D8(struct Sprite *sprite);
+static void AnimGrudgeFlame(struct Sprite *sprite);
 static void sub_80DF49C(struct Sprite *sprite);
 static void sub_80DE61C(u8 taskId);
 static void sub_80DE6B0(u8 taskId);
@@ -45,7 +45,7 @@ static void sub_80DEF98(struct Sprite *sprite);
 static void sub_80DF018(struct Sprite *sprite);
 static void sub_80DF090(struct Sprite *sprite);
 static void sub_80DF18C(struct Sprite *sprite);
-static void sub_80DF24C(u8 taskId);
+static void AnimTask_GrudgeFlames_Step(u8 taskId);
 static void sub_80DF4F4(struct Sprite *sprite);
 
 
@@ -186,7 +186,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF50 =
     .callback = sub_80DF0B8,
 };
 
-const union AnimCmd gSpriteAnim_83DAF68[] =
+static const union AnimCmd sAnim_GrudgeFlame[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(8, 4),
@@ -195,20 +195,20 @@ const union AnimCmd gSpriteAnim_83DAF68[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAF7C[] =
+static const union AnimCmd *const sAnims_GrudgeFlame[] =
 {
-    gSpriteAnim_83DAF68,
+    sAnim_GrudgeFlame,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DAF80 =
+const struct SpriteTemplate gGrudgeFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_FLAME,
     .paletteTag = ANIM_TAG_PURPLE_FLAME,
     .oam = &gOamData_837E094,
-    .anims = gSpriteAnimTable_83DAF7C,
+    .anims = sAnims_GrudgeFlame,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DF3D8,
+    .callback = AnimGrudgeFlame,
 };
 
 const struct SpriteTemplate gSpriteTemplate_83DAF98 =
@@ -1166,27 +1166,27 @@ static void sub_80DF18C(struct Sprite *sprite)
     DestroyAnimSprite(sprite);
 }
 
-void sub_80DF1A4(u8 taskId)
+void AnimTask_GrudgeFlames(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     task->data[0] = 0;
     task->data[1] = 16;
-    task->data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
+    task->data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     task->data[10] = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
-    task->data[11] = (GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 1) / 2) + 8;
+    task->data[11] = (GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_WIDTH) / 2) + 8;
     task->data[7] = 0;
     task->data[5] = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
     task->data[6] = GetBattlerSpriteSubpriority(gBattleAnimAttacker) - 2;
     task->data[3] = 0;
     task->data[4] = 16;
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     task->data[8] = 0;
-    task->func = sub_80DF24C;
+    task->func = AnimTask_GrudgeFlames_Step;
 }
 
-static void sub_80DF24C(u8 taskId)
+static void AnimTask_GrudgeFlames_Step(u8 taskId)
 {
     u16 i;
     u8 spriteId;
@@ -1197,7 +1197,7 @@ static void sub_80DF24C(u8 taskId)
     case 0:
         for (i = 0; i < 6; i++)
         {
-            spriteId = CreateSprite(&gSpriteTemplate_83DAF80, task->data[9], task->data[10], task->data[6]);
+            spriteId = CreateSprite(&gGrudgeFlameSpriteTemplate, task->data[9], task->data[10], task->data[6]);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].data[0] = taskId;
@@ -1230,7 +1230,7 @@ static void sub_80DF24C(u8 taskId)
             task->data[0]++;
         }
 
-        REG_BLDALPHA = (task->data[4] << 8) | task->data[3];
+        REG_BLDALPHA = BLDALPHA_BLEND(task->data[3], task->data[4]);
         break;
     case 2:
         if (++task->data[1] > 30)
@@ -1257,7 +1257,7 @@ static void sub_80DF24C(u8 taskId)
             task->data[0]++;
         }
 
-        REG_BLDALPHA = (task->data[4] << 8) | task->data[3];
+        REG_BLDALPHA = BLDALPHA_BLEND(task->data[3], task->data[4]);
         break;
     case 4:
         if (task->data[7] == 0)
@@ -1271,7 +1271,7 @@ static void sub_80DF24C(u8 taskId)
     }
 }
 
-static void sub_80DF3D8(struct Sprite *sprite)
+static void AnimGrudgeFlame(struct Sprite *sprite)
 {
     u16 index;
 

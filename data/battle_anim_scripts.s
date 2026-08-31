@@ -3854,7 +3854,7 @@ Move_GRUDGE: @ 81CC8AA
 	fadetobg BG_GHOST
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	waitbgfadein
-	createvisualtask sub_80DF1A4, 3
+	createvisualtask AnimTask_GrudgeFlames, 3
 	loopsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 16, 4
 	delay 10
 	delay 80
