@@ -8,13 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CC6CC(struct Sprite* sprite);
-static void sub_80CC7D4(struct Sprite* sprite);
+void AnimNeedleArmSpike(struct Sprite* sprite);
+static void AnimNeedleArmSpike_Step(struct Sprite* sprite);
 
 // homing (the spinning effect of sprites going inward in a static rotation.)
 // Used by Needle Arm.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6994 =
+const struct SpriteTemplate gNeedleArmSpikeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GREEN_SPIKE,
     .paletteTag = ANIM_TAG_GREEN_SPIKE,
@@ -22,10 +22,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6994 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CC6CC,
+    .callback = AnimNeedleArmSpike,
 };
 
-void sub_80CC6CC(struct Sprite* sprite)
+void AnimNeedleArmSpike(struct Sprite* sprite)
 {
     u8 a;
     u8 b;
@@ -77,11 +77,11 @@ void sub_80CC6CC(struct Sprite* sprite)
             c -= 0x8000;
 
         TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, c);
-        sprite->callback = sub_80CC7D4;
+        sprite->callback = AnimNeedleArmSpike_Step;
     }
 }
 
-static void sub_80CC7D4(struct Sprite* sprite)
+static void AnimNeedleArmSpike_Step(struct Sprite* sprite)
 {
     if (sprite->data[0])
     {

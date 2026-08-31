@@ -4057,42 +4057,42 @@ Move_NEEDLE_ARM: @ 81CCD73
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 2, 16
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 0, -32, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 0, -32, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 22, -22, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 22, -22, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 30, 0, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 30, 0, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 20, 20, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 20, 20, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 0, 28, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 0, 28, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, -19, 19, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, -19, 19, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, -27, 0, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, -27, 0, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, -18, -18, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, -18, -18, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 0, -25, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 0, -25, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 17, -17, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 17, -17, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 23, 0, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 23, 0, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 0, 16, 16, 16
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 16, 16, 16
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 18, 1
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
 	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 8, 1, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, 0, -24, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, 17, -17, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, 24, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, 17, 17, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, 0, 24, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, -17, 17, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, -24, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83D6994, ANIM_BATTLER_TARGET, 2, 1, 1, -17, -17, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 0, -24, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 17, -17, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 24, 0, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 17, 17, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 0, 24, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, -17, 17, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, -24, 0, 10
+	createsprite gNeedleArmSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, -17, -17, 10
 	end
 
 Move_SLACK_OFF: @ 81CCF23
