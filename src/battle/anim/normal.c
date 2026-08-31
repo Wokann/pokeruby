@@ -654,7 +654,7 @@ static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId)
     }
 }
 
-void sub_80E2324(u8 taskId)
+void AnimTask_InvertScreenColor(u8 taskId)
 {
     u32 selectedPalettes = 0;
     u8 attackerBattler = gBattleAnimAttacker;
