@@ -21,7 +21,7 @@ void sub_80DBA4C(struct Sprite *sprite);
 void sub_80DBAF4(struct Sprite *sprite);
 void sub_80DBB70(struct Sprite *sprite);
 void sub_80DC068(struct Sprite *sprite);
-void sub_80DC2B0(struct Sprite *sprite);
+static void AnimSkillSwapOrb(struct Sprite *sprite);
 void sub_80DC700(struct Sprite *sprite);
 static void sub_80DB88C(struct Sprite *sprite);
 static void sub_80DB8C0(struct Sprite *sprite);
@@ -32,7 +32,7 @@ static void sub_80DBC34(struct Sprite *sprite);
 static void sub_80DBCD0(u8 taskId);
 static void sub_80DBD58(u8 taskId);
 static void sub_80DBE98(u8 taskId);
-static void sub_80DC1FC(u8 taskId);
+static void AnimTask_SkillSwap_Step(u8 taskId);
 static void sub_80DC3F4(u8 taskId);
 void sub_80DC5F4(u8 taskId);
 
@@ -312,14 +312,14 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA8F4 =
     .callback = sub_80DC068,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA90C[] =
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_0[] =
 {
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 8),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA924[] =
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_1[] =
 {
     AFFINEANIMCMD_FRAME(0xF0, 0xF0, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 6),
@@ -328,7 +328,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA924[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA94C[] =
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_2[] =
 {
     AFFINEANIMCMD_FRAME(0xD0, 0xD0, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 4),
@@ -337,7 +337,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA94C[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA974[] =
+static const union AffineAnimCmd sAffineAnim_SkillSwapOrb_3[] =
 {
     AFFINEANIMCMD_FRAME(0xB0, 0xB0, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 2),
@@ -346,23 +346,23 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA974[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA99C[] =
+static const union AffineAnimCmd *const sAffineAnims_SkillSwapOrb[] =
 {
-    gSpriteAffineAnim_83DA90C,
-    gSpriteAffineAnim_83DA924,
-    gSpriteAffineAnim_83DA94C,
-    gSpriteAffineAnim_83DA974,
+    sAffineAnim_SkillSwapOrb_0,
+    sAffineAnim_SkillSwapOrb_1,
+    sAffineAnim_SkillSwapOrb_2,
+    sAffineAnim_SkillSwapOrb_3,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DA9AC =
+const struct SpriteTemplate gSkillSwapOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUEGREEN_ORB,
     .paletteTag = ANIM_TAG_BLUEGREEN_ORB,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA99C,
-    .callback = sub_80DC2B0,
+    .affineAnims = sAffineAnims_SkillSwapOrb,
+    .callback = AnimSkillSwapOrb,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA9C4[] =
@@ -846,54 +846,54 @@ void sub_80DC068(struct Sprite *sprite)
     sprite->callback = sub_80DC020;
 }
 
-void sub_80DC0B0(u8 taskId)
+void AnimTask_SkillSwap(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     if (IsContest())
     {
-        if (gBattleAnimArgs[0] == 1)
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
         {
             task->data[10] = -10;
-            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 5) - 8;
-            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 2) + 8;
-            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 5) - 8;
-            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 2) + 8;
+            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_RIGHT) - 8;
+            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP) + 8;
+            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_RIGHT) - 8;
+            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP) + 8;
         }
         else
         {
             task->data[10] = 10;
-            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 4) + 8;
-            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 3) - 8;
-            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 4) + 8;
-            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 3) - 8;
+            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_LEFT) + 8;
+            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_BOTTOM) - 8;
+            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_LEFT) + 8;
+            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_BOTTOM) - 8;
         }
     }
     else
     {
-        if (gBattleAnimArgs[0] == 1)
+        if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET)
         {
             task->data[10] = -10;
-            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 4) + 8;
-            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 2) + 8;
-            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 4) + 8;
-            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 2) + 8;
+            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_LEFT) + 8;
+            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP) + 8;
+            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_LEFT) + 8;
+            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP) + 8;
         }
         else
         {
             task->data[10] = 10;
-            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 5) - 8;
-            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 3) - 8;
-            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 5) - 8;
-            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 3) - 8;
+            task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_RIGHT) - 8;
+            task->data[12] = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_BOTTOM) - 8;
+            task->data[13] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_RIGHT) - 8;
+            task->data[14] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_BOTTOM) - 8;
         }
     }
 
     task->data[1] = 6;
-    task->func = sub_80DC1FC;
+    task->func = AnimTask_SkillSwap_Step;
 }
 
-static void sub_80DC1FC(u8 taskId)
+static void AnimTask_SkillSwap_Step(u8 taskId)
 {
     u8 spriteId;
     struct Task *task = &gTasks[taskId];
@@ -904,8 +904,8 @@ static void sub_80DC1FC(u8 taskId)
         if (++task->data[1] > 6)
         {
             task->data[1] = 0;
-            spriteId = CreateSprite(&gSpriteTemplate_83DA9AC, task->data[11], task->data[12], 0);
-            if (spriteId != 64)
+            spriteId = CreateSprite(&gSkillSwapOrbSpriteTemplate, task->data[11], task->data[12], 0);
+            if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].data[0] = 16;
                 gSprites[spriteId].data[2] = task->data[13];
@@ -927,7 +927,7 @@ static void sub_80DC1FC(u8 taskId)
     }
 }
 
-void sub_80DC2B0(struct Sprite *sprite)
+static void AnimSkillSwapOrb(struct Sprite *sprite)
 {
     if (TranslateAnimArc(sprite))
     {

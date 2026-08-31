@@ -3820,12 +3820,12 @@ Move_ERUPTION: @ 81CC74F
 Move_SKILL_SWAP: @ 81CC81C
 	loadspritegfx ANIM_TAG_BLUEGREEN_ORB
 	call SetPsychicBackground
-	createvisualtask sub_80DC0B0, 3, 1
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_TARGET, 32767, 12, 3, 1
+	createvisualtask AnimTask_SkillSwap, 3, ANIM_BATTLER_TARGET
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_TARGET, rgb(31, 31, 31), 12, 3, 1
 	loopsewithpan SE_M_REVERSAL, SOUND_PAN_ATTACKER, 24, 3
 	delay 16
-	createvisualtask sub_80DC0B0, 3, 0
-	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, 32767, 12, 3, 1
+	createvisualtask AnimTask_SkillSwap, 3, ANIM_BATTLER_ATTACKER
+	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, rgb(31, 31, 31), 12, 3, 1
 	waitforvisualfinish
 	call BackgroundRestore
 	end
