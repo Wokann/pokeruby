@@ -15,7 +15,7 @@ void sub_80DCA70(struct Sprite *sprite);
 void sub_80DCB38(struct Sprite *sprite);
 void AnimTranslateStinger(struct Sprite *sprite);
 void AnimMissileArc(struct Sprite *sprite);
-void sub_80DCE40(struct Sprite *sprite);
+static void AnimTailGlowOrb(struct Sprite *sprite);
 static void sub_80DCA38(struct Sprite *sprite);
 static void sub_80DCAEC(struct Sprite *sprite);
 static void sub_80DCB5C(struct Sprite *sprite);
@@ -172,7 +172,7 @@ const struct SpriteTemplate gIcicleSpearSpriteTemplate =
     .callback = AnimMissileArc,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DABD4[] =
+static const union AffineAnimCmd sAffineAnim_TailGlowOrb[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 18),
@@ -183,20 +183,20 @@ const union AffineAnimCmd gSpriteAffineAnim_83DABD4[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAC0C[] =
+static const union AffineAnimCmd *const sAffineAnims_TailGlowOrb[] =
 {
-    gSpriteAffineAnim_83DABD4,
+    sAffineAnim_TailGlowOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC10 =
+const struct SpriteTemplate gTailGlowOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .oam = &gOamData_837E0BC,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAC0C,
-    .callback = sub_80DCE40,
+    .affineAnims = sAffineAnims_TailGlowOrb,
+    .callback = AnimTailGlowOrb,
 };
 
 // used in Move_MEGAHORN
@@ -481,17 +481,17 @@ static void AnimMissileArcStep(struct Sprite *sprite)
     }
 }
 
-void sub_80DCE40(struct Sprite *sprite)
+static void AnimTailGlowOrb(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + 18;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + 18;
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + 18;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 18;
     }
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);

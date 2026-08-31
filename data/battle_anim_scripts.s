@@ -3889,7 +3889,7 @@ Move_TAIL_GLOW: @ 81CC918
 	setalpha 12, 8
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DAC10, ANIM_BATTLER_ATTACKER, 66, 0
+	createsprite gTailGlowOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, ANIM_BATTLER_ATTACKER
 	delay 18
 	loopsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER, 16, 6
 	waitforvisualfinish
