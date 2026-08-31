@@ -10,12 +10,12 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 void sub_80CEB0C(struct Sprite* sprite);
-void sub_80CECE8(struct Sprite* sprite);
+void AnimFlyingMusicNotes(struct Sprite* sprite);
 void sub_80CEDF0(struct Sprite* sprite);
 void sub_80CEE60(struct Sprite* sprite);
 static void sub_80CEBC4(s16 a, s16 b, s16* c, s16* d, s8 e);
 static void sub_80CEC1C(struct Sprite* sprite);
-static void sub_80CED78(struct Sprite* sprite);
+static void AnimFlyingMusicNotes_Step(struct Sprite* sprite);
 static void sub_80CEEE8(struct Sprite* sprite);
 
 const union AnimCmd gSpriteAnim_83D7098[] =
@@ -109,7 +109,7 @@ const u16 gUnknown_083D712C[][6] =
     {10175, RGB(31, 31, 31), RGB(26, 28, 31), RGB(21, 26, 31), RGB(16, 24, 31), RGB(12, 22, 31)},
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D715C =
+const struct SpriteTemplate gFastFlyingMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
@@ -117,7 +117,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D715C =
     .anims = gSpriteAnimTable_83D70D8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D7110,
-    .callback = sub_80CECE8,
+    .callback = AnimFlyingMusicNotes,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7174 =
@@ -285,7 +285,7 @@ static void sub_80CEC1C(struct Sprite* sprite)
 // note_scatter
 // Used by Teeter Dance.
 
-void sub_80CECE8(struct Sprite* sprite)
+void AnimFlyingMusicNotes(struct Sprite* sprite)
 {
     int a; 
     if (GetBattlerSide(gBattleAnimAttacker) == 1)
@@ -303,10 +303,10 @@ void sub_80CECE8(struct Sprite* sprite)
     sprite->data[5] = sprite->y << 4;
     sprite->data[6] = (gBattleAnimArgs[1] << 4) / 5;
     sprite->data[7] = (gBattleAnimArgs[2] << 7) / 5;
-    sprite->callback = sub_80CED78;
+    sprite->callback = AnimFlyingMusicNotes_Step;
 }
 
-static void sub_80CED78(struct Sprite* sprite)
+static void AnimFlyingMusicNotes_Step(struct Sprite* sprite)
 {
     sprite->data[4] += sprite->data[6];
     sprite->data[5] += sprite->data[7];

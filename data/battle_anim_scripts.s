@@ -3989,19 +3989,19 @@ Move_TEETER_DANCE: @ 81CCBD1
 	loadspritegfx ANIM_TAG_MUSIC_NOTES
 	loadspritegfx ANIM_TAG_DUCK
 	createvisualtask AnimTask_TeeterDanceMovement, 5
-	createsprite gBattleAnimSpriteTemplate_83D715C, ANIM_BATTLER_ATTACKER, 2, 0, 16, -2
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16, -2
 	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83D715C, ANIM_BATTLER_ATTACKER, 2, 0, 0, -2
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, -2
 	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83D715C, ANIM_BATTLER_ATTACKER, 2, 0, -16, -2
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16, -2
 	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83D715C, ANIM_BATTLER_ATTACKER, 2, 1, -8, -2
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -8, -2
 	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83D715C, ANIM_BATTLER_ATTACKER, 2, 2, 8, -2
+	createsprite gFastFlyingMusicNotesSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 8, -2
 	playsewithpan SE_M_TEETER_DANCE, SOUND_PAN_ATTACKER
 	end
 
