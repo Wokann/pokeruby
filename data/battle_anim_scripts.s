@@ -3649,23 +3649,23 @@ Move_SUPERPOWER: @ 81CC3A3
 	monbg ANIM_BATTLER_ATK_PARTNER
 	monbgprio_28 0
 	setalpha 12, 8
-	createsprite gBattleAnimSpriteTemplate_83DA0FC, ANIM_BATTLER_TARGET, 2, 0
+	createsprite gSuperpowerOrbSpriteTemplate, ANIM_BATTLER_TARGET, 2, ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
 	delay 20
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 4, 1, 180, 1
-	createvisualtask SoundTask_PlaySE2WithPanning, 5, 234, 0
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_EARTHQUAKE, 0
 	delay 40
-	createsprite gBattleAnimSpriteTemplate_83DA114, ANIM_BATTLER_ATTACKER, 41, 200, 96, 1, 120
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 200, 96, 1, 120
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DA114, ANIM_BATTLER_ATTACKER, 41, 20, 248, 4, 112
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 20, 248, 4, 112
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DA114, ANIM_BATTLER_ATTACKER, 41, 130, 160, 2, 104
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 130, 160, 2, 104
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DA114, ANIM_BATTLER_ATTACKER, 41, 160, 192, 0, 96
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 160, 192, 0, 96
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DA114, ANIM_BATTLER_ATTACKER, 41, 60, 288, 3, 88
+	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 60, 288, 3, 88
 	delay 74
-	createsprite gBattleAnimSpriteTemplate_83DA12C, ANIM_BATTLER_TARGET, 3, 0
+	createsprite gSuperpowerFireballSpriteTemplate, ANIM_BATTLER_TARGET, 3, ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	delay 16
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 8, 0, 16, 1
