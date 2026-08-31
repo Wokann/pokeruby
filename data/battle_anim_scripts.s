@@ -4211,7 +4211,7 @@ Move_AIR_CUTTER: @ 81CD19D
 
 Move_ODOR_SLEUTH: @ 81CD1FF
 	monbg ANIM_BATTLER_TARGET
-	createvisualtask sub_81316F8, 5
+	createvisualtask AnimTask_OdorSleuthMovement, 5
 	delay 24
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER

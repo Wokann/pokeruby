@@ -96,8 +96,8 @@ static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
 static void sub_8130FE0(struct Sprite *sprite);
 static void sub_8131408(u8 taskId);
 static void sub_81315C8(struct Sprite *sprite);
-static void sub_8131810(u8 taskId);
-static void sub_8131838(struct Sprite *sprite);
+static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
+static void MoveOdorSleuthClone(struct Sprite *sprite);
 static void sub_812C144(struct Sprite *sprite);
 static void sub_812C220(struct Sprite *sprite);
 static void sub_812C2BC(struct Sprite *sprite);
@@ -4837,7 +4837,7 @@ static void sub_81315C8(struct Sprite *sprite)
     }
 }
 
-void sub_81316F8(u8 taskId)
+void AnimTask_OdorSleuthMovement(u8 taskId)
 {
     s16 spriteId1, spriteId2;
 
@@ -4847,14 +4847,14 @@ void sub_81316F8(u8 taskId)
         return;
     }
 
-    spriteId1 = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+    spriteId1 = duplicate_obj_of_side_rel2move_in_transparent_mode(ANIM_BATTLER_TARGET);
     if (spriteId1 < 0)
     {
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    spriteId2 = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+    spriteId2 = duplicate_obj_of_side_rel2move_in_transparent_mode(ANIM_BATTLER_TARGET);
     if (spriteId2 < 0)
     {
         obj_delete_but_dont_free_vram(&gSprites[spriteId1]);
@@ -4885,18 +4885,18 @@ void sub_81316F8(u8 taskId)
     gSprites[spriteId1].invisible = TRUE;
     gSprites[spriteId2].oam.objMode = ST_OAM_OBJ_NORMAL;
     gSprites[spriteId1].oam.objMode = ST_OAM_OBJ_NORMAL;
-    gSprites[spriteId2].callback = sub_8131838;
-    gSprites[spriteId1].callback = sub_8131838;
-    gTasks[taskId].func = sub_8131810;
+    gSprites[spriteId2].callback = MoveOdorSleuthClone;
+    gSprites[spriteId1].callback = MoveOdorSleuthClone;
+    gTasks[taskId].func = AnimTask_OdorSleuthMovementWaitFinish;
 }
 
-static void sub_8131810(u8 taskId)
+static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
         DestroyAnimVisualTask(taskId);
 }
 
-static void sub_8131838(struct Sprite *sprite)
+static void MoveOdorSleuthClone(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 1)
     {
