@@ -3531,15 +3531,15 @@ Move_FACADE: @ 81CC136
 Move_SMELLING_SALT: @ 81CC156
 	loadspritegfx ANIM_TAG_TAG_HAND
 	loadspritegfx ANIM_TAG_SMELLINGSALT_EFFECT
-	createsprite gBattleAnimSpriteTemplate_84029C4, ANIM_BATTLER_TARGET, 2, 1, 0, 2
-	createsprite gBattleAnimSpriteTemplate_84029C4, ANIM_BATTLER_TARGET, 2, 1, 1, 2
+	createsprite gSmellingSaltsHandSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 2
+	createsprite gSmellingSaltsHandSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 1, 2
 	delay 32
-	createvisualtask sub_8130918, 3, 1, 2
+	createvisualtask AnimTask_SmellingSaltsSquish, 3, 1, 2
 	loopsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET, 12, 2
 	waitforvisualfinish
 	delay 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 6, 2
-	createsprite gBattleAnimSpriteTemplate_84029F4, ANIM_BATTLER_TARGET, 2, 1, 8, 3
+	createsprite gSmellingSaltExclamationSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 8, 3
 	loopsewithpan SE_M_SWAGGER2, SOUND_PAN_TARGET, 16, 3
 	end
 

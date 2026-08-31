@@ -88,9 +88,9 @@ static void sub_81301B4(struct Sprite *sprite);
 static void sub_81302E4(u8 taskId);
 static void sub_8130424(s16, s16, s16, s16, u8, u8, s16*, s16*);
 static void sub_81306A4(u8 taskId);
-static void sub_813085C(struct Sprite *sprite);
-static void sub_8130970(u8 taskId);
-static void sub_8130A94(struct Sprite *sprite);
+static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
+static void AnimTask_SmellingSaltsSquish_Step(u8 taskId);
+static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
 static void sub_8130B38(struct Sprite *sprite);
 static void sub_8130DBC(u8 taskId);
 static void sub_8130FE0(struct Sprite *sprite);
@@ -128,8 +128,8 @@ static void AnimFacadeSweatDrop(struct Sprite *sprite);
 static void sub_81300F4(struct Sprite *sprite);
 static void sub_81304DC(struct Sprite *sprite);
 static void sub_813051C(struct Sprite *sprite);
-static void sub_81307B0(struct Sprite *sprite);
-static void sub_8130A2C(struct Sprite *sprite);
+static void AnimSmellingSaltsHand(struct Sprite *sprite);
+static void AnimSmellingSaltExclamation(struct Sprite *sprite);
 static void sub_8130AEC(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
 static void sub_8131264(struct Sprite *sprite);
@@ -1010,7 +1010,7 @@ const struct SpriteTemplate gSpriteTemplate_84029AC =
     .callback = SpriteCallbackDummy,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84029C4 =
+const struct SpriteTemplate gSmellingSaltsHandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TAG_HAND,
     .paletteTag = ANIM_TAG_TAG_HAND,
@@ -1018,17 +1018,17 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84029C4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_81307B0,
+    .callback = AnimSmellingSaltsHand,
 };
 
-const union AffineAnimCmd gUnknown_084029DC[] =
+const union AffineAnimCmd gSmellingSaltsSquishAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0, -16, 0, 6),
     AFFINEANIMCMD_FRAME(0, 16, 0, 6),
     AFFINEANIMCMD_END,//0
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84029F4 =
+const struct SpriteTemplate gSmellingSaltExclamationSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMELLINGSALT_EFFECT,
     .paletteTag = ANIM_TAG_SMELLINGSALT_EFFECT,
@@ -1036,7 +1036,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84029F4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8130A2C,
+    .callback = AnimSmellingSaltExclamation,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A0C =
@@ -4138,11 +4138,11 @@ static void sub_81306A4(u8 taskId)
     }
 }
 
-static void sub_81307B0(struct Sprite *sprite)
+static void AnimSmellingSaltsHand(struct Sprite *sprite)
 {
     u8 battler;
 
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
         battler = gBattleAnimAttacker;
     else
         battler = gBattleAnimTarget;
@@ -4150,21 +4150,21 @@ static void sub_81307B0(struct Sprite *sprite)
     sprite->oam.tileNum += 16;
     sprite->data[6] = gBattleAnimArgs[2];
     sprite->data[7] = gBattleAnimArgs[1] == 0 ? -1 : 1;
-    sprite->y = GetBattlerSpriteCoord(battler, 3);
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET);
     if (gBattleAnimArgs[1] == 0)
     {
         sprite->oam.matrixNum |= 0x8;
-        sprite->x = GetBattlerSpriteCoordAttr(battler, 4) - 8;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) - 8;
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoordAttr(battler, 5) + 8;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) + 8;
     }
 
-    sprite->callback = sub_813085C;
+    sprite->callback = AnimSmellingSaltsHand_Step;
 }
 
-static void sub_813085C(struct Sprite *sprite)
+static void AnimSmellingSaltsHand_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -4210,9 +4210,9 @@ static void sub_813085C(struct Sprite *sprite)
     }
 }
 
-void sub_8130918(u8 taskId)
+void AnimTask_SmellingSaltsSquish(u8 taskId)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
         DestroyAnimVisualTask(taskId);
     }
@@ -4220,12 +4220,12 @@ void sub_8130918(u8 taskId)
     {
         gTasks[taskId].data[0] = gBattleAnimArgs[1];
         gTasks[taskId].data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-        PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], &gUnknown_084029DC);
-        gTasks[taskId].func = sub_8130970;
+        PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gSmellingSaltsSquishAffineAnimCmds);
+        gTasks[taskId].func = AnimTask_SmellingSaltsSquish_Step;
     }
 }
 
-static void sub_8130970(u8 taskId)
+static void AnimTask_SmellingSaltsSquish_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -4243,7 +4243,7 @@ static void sub_8130970(u8 taskId)
         gSprites[task->data[15]].x2 = 0;
         if (--task->data[0])
         {
-            PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], &gUnknown_084029DC);
+            PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gSmellingSaltsSquishAffineAnimCmds);
             task->data[1] = 0;
             task->data[2] = 0;
         }
@@ -4254,17 +4254,17 @@ static void sub_8130970(u8 taskId)
     }
 }
 
-static void sub_8130A2C(struct Sprite *sprite)
+static void AnimSmellingSaltExclamation(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[0] == 0)
+    if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 2);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP);
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 2);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP);
     }
 
     if (sprite->y < 8)
@@ -4274,10 +4274,10 @@ static void sub_8130A2C(struct Sprite *sprite)
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->data[2] = 0;
     sprite->data[3] = gBattleAnimArgs[2];
-    sprite->callback = sub_8130A94;
+    sprite->callback = AnimSmellingSaltExclamation_Step;
 }
 
-static void sub_8130A94(struct Sprite *sprite)
+static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] >= sprite->data[1])
     {
