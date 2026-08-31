@@ -525,7 +525,7 @@ void sub_80DE1B0(u8 taskId)
     struct Task *task;
     
     task = &gTasks[taskId];
-    task->data[0] = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+    task->data[0] = CloneBattlerSpriteWithBlend(1);
     if (task->data[0] < 0)
     {
         DestroyAnimVisualTask(taskId);
@@ -576,7 +576,7 @@ static void sub_80DE2DC(u8 taskId)
             break;
         if (task->data[1] <= 80)
             break;
-        obj_delete_but_dont_free_vram(&gSprites[task->data[0]]);
+        DestroySpriteWithActiveSheet(&gSprites[task->data[0]]);
         task->data[4] = 1;
         break;
     case 1:
@@ -617,7 +617,7 @@ static void sub_80DE3D4(u8 taskId)
         }
         else
         {
-            task->data[0] = duplicate_obj_of_side_rel2move_in_transparent_mode(1);
+            task->data[0] = CloneBattlerSpriteWithBlend(1);
             if (task->data[0] < 0)
             {
                 FreeSpritePaletteByTag(0x2771);
@@ -724,7 +724,7 @@ static void sub_80DE6B0(u8 taskId)
         break;
     case 2:
         gSprites[task->data[14]].invisible = TRUE;
-        obj_delete_but_dont_free_vram(&gSprites[task->data[0]]);
+        DestroySpriteWithActiveSheet(&gSprites[task->data[0]]);
         FreeSpritePaletteByTag(0x2771);
         REG_BLDCNT = 0;
         REG_BLDALPHA = 0;

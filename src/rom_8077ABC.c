@@ -1479,18 +1479,18 @@ void sub_8079534(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-s16 duplicate_obj_of_side_rel2move_in_transparent_mode(u8 a1)
+s16 CloneBattlerSpriteWithBlend(u8 animBattler)
 {
     u16 i;
-    u8 sprite = GetAnimBattlerSpriteId(a1);
+    u8 spriteId = GetAnimBattlerSpriteId(animBattler);
 
-    if (sprite != 0xff)
+    if (spriteId != 0xff)
     {
         for (i = 0; i < 0x40; i++)
         {
             if (!gSprites[i].inUse)
             {
-                gSprites[i] = gSprites[sprite];
+                gSprites[i] = gSprites[spriteId];
                 gSprites[i].oam.objMode = 1;
                 gSprites[i].invisible = FALSE;
                 return i;
@@ -1500,7 +1500,7 @@ s16 duplicate_obj_of_side_rel2move_in_transparent_mode(u8 a1)
     return -1;
 }
 
-void obj_delete_but_dont_free_vram(struct Sprite *sprite)
+void DestroySpriteWithActiveSheet(struct Sprite *sprite)
 {
     sprite->usingSheet = TRUE;
     DestroySprite(sprite);
@@ -2227,90 +2227,123 @@ void AnimSpinningSparkle(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-// file_3 (punch effect?)
+// Task and sprite data for AnimTask_AttackerPunchWithTrace
 
-void sub_807A69C(u8 taskId)
+#define tBattlerSpriteId data[0]
+#define tMoveSpeed       data[1]
+#define tState           data[2]
+#define tCounter         data[3]
+#define tPaletteNum      data[4]
+#define tNumTracesActive data[5]
+#define tPriority        data[6]
+
+#define sActiveTime data[0]
+#define sTaskId     data[1]
+#define sSpriteId   data[2]
+
+static void AnimTask_AttackerPunchWithTrace_Step(u8 taskId);
+static void CreateBattlerTrace(struct Task *task, u8 taskId);
+static void AnimBattlerTrace(struct Sprite *sprite);
+
+// Slides attacker to the right and back with a cloned trace of the specified color
+// arg0: Trace palette blend color
+// arg1: Trace palette blend coefficient
+
+void AnimTask_AttackerPunchWithTrace(u8 taskId)
 {
     u16 src;
     u16 dest;
     struct Task *task = &gTasks[taskId];
-    task->data[0] = GetAnimBattlerSpriteId(0);
-    task->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -8 : 8;
-    task->data[2] = 0;
-    task->data[3] = 0;
-    gSprites[task->data[0]].x2 -= task->data[0];
-    task->data[4] = AllocSpritePalette(10097);
-    task->data[5] = 0;
 
-    dest = (task->data[4] + 0x10) * 0x10;
-    src = (gSprites[task->data[0]].oam.paletteNum + 0x10) * 0x10;
-    task->data[6] = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
-    if (task->data[6] == 20 || task->data[6] == 40)
-        task->data[6] = 2;
+    task->tBattlerSpriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->tMoveSpeed = (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER) ? -8 : 8;
+    task->tState = 0;
+    task->tCounter = 0;
+    gSprites[task->tBattlerSpriteId].x2 -= task->tBattlerSpriteId;
+    task->tPaletteNum = AllocSpritePalette(ANIM_TAG_BENT_SPOON);
+    task->tNumTracesActive = 0;
+
+    dest = (task->tPaletteNum + 0x10) * 0x10;
+    src = (gSprites[task->tBattlerSpriteId].oam.paletteNum + 0x10) * 0x10;
+    task->tPriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
+    if (task->tPriority == 20 || task->tPriority == 40)
+        task->tPriority = 2;
     else
-        task->data[6] = 3;
+        task->tPriority = 3;
     CpuCopy32(&gPlttBufferUnfaded[src], &gPlttBufferFaded[dest], 0x20);
     BlendPalette(dest, 16, gBattleAnimArgs[1], gBattleAnimArgs[0]);
-    task->func = sub_807A784;
+    task->func = AnimTask_AttackerPunchWithTrace_Step;
 }
 
-void sub_807A784(u8 taskId)
+static void AnimTask_AttackerPunchWithTrace_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    switch (task->data[2])
+    switch (task->tState)
     {
     case 0:
-        sub_807A850(task, taskId);
-        gSprites[task->data[0]].x2 += task->data[1];
-        if (++task->data[3] == 5)
+        CreateBattlerTrace(task, taskId);
+        gSprites[task->tBattlerSpriteId].x2 += task->tMoveSpeed;
+        if (++task->tCounter == 5)
         {
-            task->data[3]--;
-            task->data[2]++;
+            task->tCounter--;
+            task->tState++;
         }
         break;
     case 1:
-        sub_807A850(task, taskId);
-        gSprites[task->data[0]].x2 -= task->data[1];
-        if (--task->data[3] == 0)
+        CreateBattlerTrace(task, taskId);
+        gSprites[task->tBattlerSpriteId].x2 -= task->tMoveSpeed;
+        if (--task->tCounter == 0)
         {
-            gSprites[task->data[0]].x2 = 0;
-            task->data[2]++;
+            gSprites[task->tBattlerSpriteId].x2 = 0;
+            task->tState++;
         }
         break;
     case 2:
-        if (!task->data[5])
+        if (!task->tNumTracesActive)
         {
-            FreeSpritePaletteByTag(10097);
+            FreeSpritePaletteByTag(ANIM_TAG_BENT_SPOON);
             DestroyAnimVisualTask(taskId);
         }
         break;
     }
 }
 
-void sub_807A850(struct Task *task, u8 taskId)
+static void CreateBattlerTrace(struct Task *task, u8 taskId)
 {
-    s16 sprite = duplicate_obj_of_side_rel2move_in_transparent_mode(0);
-    if (sprite >= 0)
+    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_BATTLER_ATTACKER);
+    if (spriteId >= 0)
     {
-        gSprites[sprite].oam.priority = task->data[6];
-        gSprites[sprite].oam.paletteNum = task->data[4];
-        gSprites[sprite].data[0] = 8;
-        gSprites[sprite].data[1] = taskId;
-        gSprites[sprite].data[2] = sprite;
-        gSprites[sprite].x2 = gSprites[task->data[0]].x2;
-        gSprites[sprite].callback = sub_807A8D4;
-        task->data[5]++;
+        gSprites[spriteId].oam.priority = task->tPriority;
+        gSprites[spriteId].oam.paletteNum = task->tPaletteNum;
+        gSprites[spriteId].sActiveTime = 8;
+        gSprites[spriteId].sTaskId = taskId;
+        gSprites[spriteId].sSpriteId = spriteId;
+        gSprites[spriteId].x2 = gSprites[task->tBattlerSpriteId].x2;
+        gSprites[spriteId].callback = AnimBattlerTrace;
+        task->tNumTracesActive++;
     }
 }
 
-void sub_807A8D4(struct Sprite *sprite)
+static void AnimBattlerTrace(struct Sprite *sprite)
 {
-    if (--sprite->data[0] == 0)
+    if (--sprite->sActiveTime == 0)
     {
-        gTasks[sprite->data[1]].data[5]--;
-        obj_delete_but_dont_free_vram(sprite);
+        gTasks[sprite->sTaskId].tNumTracesActive--;
+        DestroySpriteWithActiveSheet(sprite);
     }
 }
+
+#undef tBattlerSpriteId
+#undef tMoveSpeed
+#undef tState
+#undef tCounter
+#undef tPaletteNum
+#undef tNumTracesActive
+#undef tPriority
+
+#undef sActiveTime
+#undef sTaskId
+#undef sSpriteId
 
 // file_4
 

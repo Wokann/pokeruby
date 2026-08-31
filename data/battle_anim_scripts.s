@@ -3129,7 +3129,7 @@ _81CB97E:
 	waitbgfadein
 	delay 0
 	setalpha 9, 8
-	createvisualtask sub_807A69C, 2, 28968, 10
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, rgb(8, 9, 28), 10
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
 	delay 6
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
@@ -4304,7 +4304,7 @@ Move_SHADOW_PUNCH: @ 81CD3D6
 	waitbgfadein
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 9, 8
-	createvisualtask sub_807A69C, 2, 0, 13
+	createvisualtask AnimTask_AttackerPunchWithTrace, 2, rgb(0, 0, 0), 13
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
 	delay 6
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1

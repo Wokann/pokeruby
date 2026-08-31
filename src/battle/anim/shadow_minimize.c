@@ -100,14 +100,14 @@ void AnimTask_Minimize_Step(u8 taskId)
 void CreateMinimizeSprite(struct Task* task, u8 taskId)
 {
     s16 matrixNum; // u16 in Emerald
-    s16 spriteId = duplicate_obj_of_side_rel2move_in_transparent_mode(0);
+    s16 spriteId = CloneBattlerSpriteWithBlend(0);
 
     if (spriteId >= 0)
     {
         matrixNum = AllocOamMatrix();
         if (matrixNum == 0xFF)
         {
-            obj_delete_but_dont_free_vram(&gSprites[spriteId]);
+            DestroySpriteWithActiveSheet(&gSprites[spriteId]);
             return;
         }
         else
@@ -136,6 +136,6 @@ void ClonedMinimizeSprite_Step(struct Sprite* sprite)
     {
         gTasks[sprite->data[1]].data[sprite->data[2]]--;
         FreeOamMatrix(sprite->oam.matrixNum);
-        obj_delete_but_dont_free_vram(sprite);
+        DestroySpriteWithActiveSheet(sprite);
     }
 }

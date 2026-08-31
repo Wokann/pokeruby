@@ -1056,7 +1056,7 @@ void sub_80DC4F4(u8 taskId)
         return;
     }
 
-    spriteId = duplicate_obj_of_side_rel2move_in_transparent_mode(gBattleAnimArgs[0]);
+    spriteId = CloneBattlerSpriteWithBlend(gBattleAnimArgs[0]);
     if (spriteId < 0)
     {
         FreeOamMatrix(matrixNum);
@@ -1101,7 +1101,7 @@ void sub_80DC5F4(u8 taskId)
             task->data[0]++;
         break;
     case 2:
-        obj_delete_but_dont_free_vram(&gSprites[task->data[15]]);
+        DestroySpriteWithActiveSheet(&gSprites[task->data[15]]);
         task->data[0]++;
         break;
     case 3:

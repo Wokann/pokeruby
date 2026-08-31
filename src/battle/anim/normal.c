@@ -1153,7 +1153,7 @@ static void AnimTask_TraceMonBlended_Step(u8 taskId)
         }
         else
         {
-            task->data[6] = duplicate_obj_of_side_rel2move_in_transparent_mode(task->data[0]);
+            task->data[6] = CloneBattlerSpriteWithBlend(task->data[0]);
             if (task->data[6] >= 0)
             {
                 gSprites[task->data[6]].oam.priority = task->data[0] ? 1 : 2;
@@ -1183,7 +1183,7 @@ static void AnimMonTrace(struct Sprite *sprite)
     else
     {
         gTasks[sprite->data[1]].data[sprite->data[2]]--;
-        obj_delete_but_dont_free_vram(sprite);
+        DestroySpriteWithActiveSheet(sprite);
     }
 }
 

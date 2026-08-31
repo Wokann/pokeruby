@@ -4847,17 +4847,17 @@ void AnimTask_OdorSleuthMovement(u8 taskId)
         return;
     }
 
-    spriteId1 = duplicate_obj_of_side_rel2move_in_transparent_mode(ANIM_BATTLER_TARGET);
+    spriteId1 = CloneBattlerSpriteWithBlend(ANIM_BATTLER_TARGET);
     if (spriteId1 < 0)
     {
         DestroyAnimVisualTask(taskId);
         return;
     }
 
-    spriteId2 = duplicate_obj_of_side_rel2move_in_transparent_mode(ANIM_BATTLER_TARGET);
+    spriteId2 = CloneBattlerSpriteWithBlend(ANIM_BATTLER_TARGET);
     if (spriteId2 < 0)
     {
-        obj_delete_but_dont_free_vram(&gSprites[spriteId1]);
+        DestroySpriteWithActiveSheet(&gSprites[spriteId1]);
         DestroyAnimVisualTask(taskId);
         return;
     }
@@ -4923,7 +4923,7 @@ static void MoveOdorSleuthClone(struct Sprite *sprite)
             if (sprite->data[5] < 0)
             {
                 gTasks[sprite->data[6]].data[sprite->data[7]]--;
-                obj_delete_but_dont_free_vram(sprite);
+                DestroySpriteWithActiveSheet(sprite);
             }
         }
         break;
