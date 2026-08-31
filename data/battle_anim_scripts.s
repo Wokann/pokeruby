@@ -3835,12 +3835,12 @@ Move_IMPRISON: @ 81CC867
 	loadspritegfx ANIM_TAG_X_SIGN
 	call SetPsychicBackground
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80DBE00, 5
+	createvisualtask AnimTask_ImprisonOrbs, 5
 	delay 8
 	loopsewithpan SE_M_HORN_ATTACK, SOUND_PAN_ATTACKER, 8, 5
 	waitforvisualfinish
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DA8F4, ANIM_BATTLER_ATTACKER, 5, 0, 40
+	createsprite gRedXSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, ANIM_BATTLER_ATTACKER, 40
 	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 1, 10
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -9114,7 +9114,7 @@ Move_ROCK_TOMB: @ 81D468C
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	delay 24
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA8F4, ANIM_BATTLER_TARGET, 5, 1, 50
+	createsprite gRedXSpriteTemplate, ANIM_BATTLER_TARGET, 5, ANIM_BATTLER_TARGET, 50
 	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 20, 1
 	createvisualtask sub_80E26BC, 2, 2, 0, 10, 1
 	waitforvisualfinish
