@@ -1022,7 +1022,7 @@ void sub_80D9C80(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(FALSE);
         task->data[8] = gBattleAnimArgs[0];
         task->data[0]++;
         break;
@@ -1052,7 +1052,7 @@ void sub_80D9C80(u8 taskId)
     {
         gBattle_BG3_X = 0;
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(TRUE);
         DestroyAnimVisualTask(taskId);
     }
 }

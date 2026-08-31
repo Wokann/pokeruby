@@ -8,22 +8,22 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D1A70(struct Sprite* sprite);
-static void sub_80D15E0(u8 taskId);
-static void sub_80D16A0(u8 taskId);
-static void sub_80D1808(u8 taskId);
-static void sub_80D1930(u8 taskId);
+static void AnimSpeedDust(struct Sprite *sprite);
+static void AnimTask_AttackerStretchAndDisappear_Step(u8 taskId);
+static void AnimTask_ExtremeSpeedImpact_Step(u8 taskId);
+static void AnimTask_ExtremeSpeedMonReappear_Step(u8 taskId);
+static void AnimTask_SpeedDust_Step(u8 taskId);
 
 // espeed (the Pokemon's width decreases as the sprite becomes vertically compressed)
 // Used in Extremespeed.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D79BC[] =
+const union AffineAnimCmd gStretchAttackerAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(96, -13, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D79CC[] =
+const union AnimCmd gSpeedDustAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(4, 3),
@@ -33,23 +33,23 @@ const union AnimCmd gSpriteAnim_83D79CC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D79E4[] =
+const union AnimCmd *const gSpeedDustAnimTable[] =
 {
-    gSpriteAnim_83D79CC,
+    gSpeedDustAnimCmds,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D79E8 =
+const struct SpriteTemplate gSpeedDustSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPEED_DUST,
     .paletteTag = ANIM_TAG_SPEED_DUST,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D79E4,
+    .anims = gSpeedDustAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D1A70,
+    .callback = AnimSpeedDust,
 };
 
-const s8 gUnknown_083D7A00[][2] =
+const s8 gSpeedDustPosTable[][2] =
 {
     {30, 28},
     {-20, 24},
@@ -58,16 +58,16 @@ const s8 gUnknown_083D7A00[][2] =
 };
 
 // apply espeed
-void sub_80D15A4(u8 taskId)
+void AnimTask_AttackerStretchAndDisappear(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[0] = spriteId;
-    PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_83D79BC);
-    task->func = sub_80D15E0;
+    PrepareAffineAnimInTaskData(task, spriteId, gStretchAttackerAffineAnimCmds);
+    task->func = AnimTask_AttackerStretchAndDisappear_Step;
 }
 
-void sub_80D15E0(u8 taskId)
+static void AnimTask_AttackerStretchAndDisappear_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     if (RunAffineAnimFromTaskData(task) == 0)
@@ -79,7 +79,7 @@ void sub_80D15E0(u8 taskId)
 }
 
 // espeed hit effect
-void sub_80D1638(u8 taskId)
+void AnimTask_ExtremeSpeedImpact(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     task->data[0] = 0;
@@ -98,11 +98,11 @@ void sub_80D1638(u8 taskId)
         task->data[14] = -8;
     }
 
-    task->data[15] = GetAnimBattlerSpriteId(1);
-    task->func = sub_80D16A0;
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    task->func = AnimTask_ExtremeSpeedImpact_Step;
 }
 
-void sub_80D16A0(u8 taskId)
+static void AnimTask_ExtremeSpeedImpact_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
 
@@ -149,7 +149,7 @@ void sub_80D16A0(u8 taskId)
 }
 
 // espeed poke flicker in
-void sub_80D17C4(u8 taskId)
+void AnimTask_ExtremeSpeedMonReappear(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     task->data[0] = 0;
@@ -159,11 +159,11 @@ void sub_80D17C4(u8 taskId)
     task->data[4] = 1;
     task->data[13] = 14;
     task->data[14] = 2;
-    task->data[15] = GetAnimBattlerSpriteId(0);
-    task->func = sub_80D1808;
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
+    task->func = AnimTask_ExtremeSpeedMonReappear_Step;
 }
 
-void sub_80D1808(u8 taskId)
+static void AnimTask_ExtremeSpeedMonReappear_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     if (task->data[0] == 0 && ++task->data[1] > task->data[4])
@@ -192,7 +192,7 @@ void sub_80D1808(u8 taskId)
 }
 
 // espeed smoke flicker
-void sub_80D18D4(u8 taskId)
+void AnimTask_SpeedDust(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     task->data[0] = 0;
@@ -205,12 +205,12 @@ void sub_80D18D4(u8 taskId)
     task->data[7] = 0;
     task->data[8] = 0;
     task->data[13] = 0;
-    task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-    task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
-    task->func = sub_80D1930;
+    task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    task->func = AnimTask_SpeedDust_Step;
 }
 
-void sub_80D1930(u8 taskId)
+static void AnimTask_SpeedDust_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     switch (task->data[8])
@@ -252,13 +252,13 @@ void sub_80D1930(u8 taskId)
         {
             u8 spriteId;
             task->data[1] = 0;
-            spriteId = CreateSprite(&gSpriteTemplate_83D79E8, task->data[14], task->data[15], 0);
+            spriteId = CreateSprite(&gSpeedDustSpriteTemplate, task->data[14], task->data[15], 0);
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].data[0] = taskId;
                 gSprites[spriteId].data[1] = 13;
-                gSprites[spriteId].x2 = gUnknown_083D7A00[task->data[2]][0];
-                gSprites[spriteId].y2 = gUnknown_083D7A00[task->data[2]][1];
+                gSprites[spriteId].x2 = gSpeedDustPosTable[task->data[2]][0];
+                gSprites[spriteId].y2 = gSpeedDustPosTable[task->data[2]][1];
                 task->data[13]++;
                 if (++task->data[2] > 3)
                 {
@@ -276,7 +276,7 @@ void sub_80D1930(u8 taskId)
     }
 }
 
-void sub_80D1A70(struct Sprite* sprite)
+static void AnimSpeedDust(struct Sprite *sprite)
 {
     sprite->invisible = gTasks[sprite->data[0]].data[5];
     if (sprite->animEnded)

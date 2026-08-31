@@ -111,7 +111,7 @@ bool8 sub_8078CE8(struct Sprite *sprite);
 void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite);
 void InitAnimLinearTranslationWithSpeed(struct Sprite *sprite);
 void TranslateAnimSpriteToTargetMonLocation(struct Sprite *sprite);
-void sub_80789D4(bool8 a1);
+void UpdateAnimBg3ScreenSize(bool8 largeScreenSize);
 void SetBattlerSpriteYOffsetFromOtherYScale(u8 spriteId, u8 otherSpriteId);
 u8 CreateInvisibleSpriteCopy(int battler, u8 spriteId, int species);
 void sub_80794A8(struct Sprite *sprite);

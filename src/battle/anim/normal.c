@@ -48,7 +48,7 @@ static void sub_80E24B8(struct Sprite *sprite);
 static void AnimHitSplatBasic(struct Sprite *sprite);
 static void AnimHitSplatHandleInvert(struct Sprite *sprite);
 static void sub_80E2870(struct Sprite *sprite);
-static void sub_80E2908(struct Sprite *sprite);
+static void AnimHitSplatOnMonEdge(struct Sprite *sprite);
 static void sub_80E2978(struct Sprite *sprite);
 static void AnimFlashingHitSplat(struct Sprite *sprite);
 static void sub_80E27E8(struct Sprite *sprite);
@@ -77,9 +77,9 @@ static void sub_80E3338(u8 taskId);
 static void sub_80E3704(u8 taskId);
 static void sub_80E38F8(u8 taskId);
 static void sub_80E39BC(u32, u16);
-static void sub_80E3AD0(u8 taskId);
+static void AnimTask_UpdateSlidingBg(u8 taskId);
 static void sub_80E3E64(u8 taskId);
-static void sub_80E4368(u8 taskId);
+static void AnimTask_WaitAndRestoreVisibility(u8 taskId);
 
 const union AnimCmd gConfusionDuckSpriteAnim1[] =
 {
@@ -254,7 +254,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB4F0 =
     .callback = sub_80E2870,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB508 =
+const struct SpriteTemplate gMonEdgeHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
@@ -262,7 +262,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB508 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sAffineAnims_HitSplat,
-    .callback = sub_80E2908,
+    .callback = AnimHitSplatOnMonEdge,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
@@ -909,7 +909,7 @@ static void sub_80E2870(struct Sprite *sprite)
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-static void sub_80E2908(struct Sprite *sprite)
+static void AnimHitSplatOnMonEdge(struct Sprite *sprite)
 {
     sprite->data[0] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
     sprite->x = gSprites[sprite->data[0]].x + gSprites[sprite->data[0]].x2;
@@ -1596,12 +1596,12 @@ void sub_80E3A08(u8 taskId)
     AnimTask_BlendSpriteColor_Step1(taskId, selectedPalettes);
 }
 
-void sub_80E3A58(u8 taskId)
+void AnimTask_StartSlidingBg(u8 taskId)
 {
     u8 newTaskId;
 
-    sub_80789D4(0);
-    newTaskId = CreateTask(sub_80E3AD0, 5);
+    UpdateAnimBg3ScreenSize(FALSE);
+    newTaskId = CreateTask(AnimTask_UpdateSlidingBg, 5);
     if (gBattleAnimArgs[2] && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
@@ -1615,7 +1615,7 @@ void sub_80E3A58(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void sub_80E3AD0(u8 taskId)
+static void AnimTask_UpdateSlidingBg(u8 taskId)
 {
     gTasks[taskId].data[10] += gTasks[taskId].data[1];
     gTasks[taskId].data[11] += gTasks[taskId].data[2];
@@ -1628,14 +1628,14 @@ static void sub_80E3AD0(u8 taskId)
     {
         gBattle_BG3_X = 0;
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(TRUE);
         DestroyTask(taskId);
     }
 }
 
-void sub_80E3B4C(u8 taskId)
+void AnimTask_GetAttackerSide(u8 taskId)
 {
-    gBattleAnimArgs[7] = GetBattlerSide(gBattleAnimAttacker);
+    gBattleAnimArgs[ARG_RET_ID] = GetBattlerSide(gBattleAnimAttacker);
     DestroyAnimVisualTask(taskId);
 }
 
@@ -1922,7 +1922,7 @@ void sub_80E42D0(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4300(u8 taskId)
+void AnimTask_SetAttackerInvisibleWaitForSignal(u8 taskId)
 {
     if (IsContest())
     {
@@ -1932,12 +1932,12 @@ void sub_80E4300(u8 taskId)
     {
         gTasks[taskId].data[0] = gBattleSpriteInfo[gBattleAnimAttacker].invisible;
         gBattleSpriteInfo[gBattleAnimAttacker].invisible = TRUE;
-        gTasks[taskId].func = sub_80E4368;
+        gTasks[taskId].func = AnimTask_WaitAndRestoreVisibility;
         gAnimVisualTaskCount--;
     }
 }
 
-static void sub_80E4368(u8 taskId)
+static void AnimTask_WaitAndRestoreVisibility(u8 taskId)
 {
     if (gBattleAnimArgs[7] == 0x1000)
     {

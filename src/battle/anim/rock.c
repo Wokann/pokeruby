@@ -859,7 +859,7 @@ void sub_80DDA8C(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(FALSE);
         gTasks[taskId].data[1] = 200;
     }
 
@@ -868,7 +868,7 @@ void sub_80DDA8C(u8 taskId)
 
     if (gTasks[taskId].data[0] == 120)
     {
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(TRUE);
         DestroyAnimVisualTask(taskId);
     }
 
@@ -879,7 +879,7 @@ void sub_80DDAF0(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        sub_80789D4(0);
+        UpdateAnimBg3ScreenSize(FALSE);
         gTasks[taskId].data[0]++;
         gTasks[taskId].data[2] = gBattle_BG3_Y;
     }
@@ -891,7 +891,7 @@ void sub_80DDAF0(u8 taskId)
     if (gBattleAnimArgs[7] == 0xFFF)
     {
         gBattle_BG3_Y = 0;
-        sub_80789D4(1);
+        UpdateAnimBg3ScreenSize(TRUE);
         DestroyAnimVisualTask(taskId);
     }
 }

@@ -913,9 +913,9 @@ u8 sub_80789BC()
     return 2;
 }
 
-void sub_80789D4(bool8 a1)
+void UpdateAnimBg3ScreenSize(bool8 largeScreenSize)
 {
-    if (!a1)
+    if (!largeScreenSize)
     {
         BG3CNT.screenSize = 0;
         BG3CNT.areaOverflowMode = 1;

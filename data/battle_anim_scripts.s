@@ -2464,7 +2464,7 @@ Move_HORN_DRILL: @ 81CAC04
 	jumpifcontest _81CAD6A
 	fadetobg BG_DRILL
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 768, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
 _81CAC21:
 	waitbgfadein
 	setalpha 12, 8
@@ -2521,7 +2521,7 @@ _81CAC21:
 _81CAD6A:
 	fadetobg BG_DRILL_CONTESTS
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, 2304, 768, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
 	goto _81CAC21
 
 Move_THRASH: @ 81CAD81
@@ -3119,12 +3119,12 @@ Move_MACH_PUNCH: @ 81CB965
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask sub_80E3B4C, 2
+	createvisualtask AnimTask_GetAttackerSide, 2
 	jumpargeq 7, 1, _81CB9E6
 	fadetobg BG_HIGHSPEED_OPPONENT
 _81CB97E:
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 0, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
 	waitbgfadein
 	delay 0
 	setalpha 9, 8
@@ -3379,50 +3379,50 @@ Move_MOONLIGHT: @ 81CBDAE
 Move_EXTREME_SPEED: @ 81CBE3E
 	loadspritegfx ANIM_TAG_SPEED_DUST
 	loadspritegfx ANIM_TAG_IMPACT
-	createvisualtask sub_80E3B4C, 2
-	jumpargeq 7, 1, _81CBEF5
+	createvisualtask AnimTask_GetAttackerSide, 2
+	jumprettrue ExtremeSpeedAgainstPlayer
 	fadetobg BG_HIGHSPEED_OPPONENT
-_81CBE55:
+ExtremeSpeedContinue:
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 0, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
 	waitbgfadein
-	createvisualtask sub_80D15A4, 2
+	createvisualtask AnimTask_AttackerStretchAndDisappear, 2
 	loopsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER, 8, 3
 	waitforvisualfinish
 	delay 1
-	createvisualtask sub_80E4300, 2
+	createvisualtask AnimTask_SetAttackerInvisibleWaitForSignal, 2
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 18
-	createvisualtask sub_80D1638, 2
+	createvisualtask AnimTask_ExtremeSpeedImpact, 2
 	delay 2
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB508, ANIM_BATTLER_TARGET, 2, 1, 0, -12, 3
+	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, -12, 3
 	delay 10
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB508, ANIM_BATTLER_TARGET, 2, 1, 0, 12, 3
+	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 12, 3
 	delay 10
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB508, ANIM_BATTLER_TARGET, 2, 1, 0, 0, 3
+	createsprite gMonEdgeHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 0, 0, 3
 	waitforvisualfinish
-	createvisualtask sub_80D18D4, 2
+	createvisualtask AnimTask_SpeedDust, 2
 	delay 10
-	createvisualtask sub_80D17C4, 2
+	createvisualtask AnimTask_ExtremeSpeedMonReappear, 2
 	loopsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER, 8, 4
 	waitforvisualfinish
 	restorebg
 	waitbgfadeout
-	setarg ARG_RET_ID, -1
+	setarg ARG_RET_ID, 0xFFFF
 	waitbgfadein
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	delay 1
-	setarg ARG_RET_ID, 4096
+	setarg ARG_RET_ID, 0x1000
 	delay 1
 	end
-_81CBEF5:
+ExtremeSpeedAgainstPlayer:
 	fadetobg BG_HIGHSPEED_PLAYER
-	goto _81CBE55
+	goto ExtremeSpeedContinue
 
 Move_UPROAR: @ 81CBEFC
 	loadspritegfx ANIM_TAG_JAGGED_MUSIC_NOTE
@@ -4775,7 +4775,7 @@ Move_THUNDER: @ 81CDDCE
 	loadspritegfx ANIM_TAG_LIGHTNING
 	fadetobg BG_THUNDER
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -256, 0, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -256, 0, 1, -1
 	waitbgfadein
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 16, rgb(0, 0, 0)
 	delay 16
@@ -5166,7 +5166,7 @@ Move_FAINT_ATTACK: @ 81CE6ED
 	clearmonbg ANIM_BATTLER_ATTACKER
 	invisible ANIM_BATTLER_ATTACKER
 	delay 1
-	createvisualtask sub_80E4300, 2
+	createvisualtask AnimTask_SetAttackerInvisibleWaitForSignal, 2
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 1
@@ -5526,12 +5526,12 @@ _81CEF42:
 Move_BLIZZARD: @ 81CEFBA
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80E3B4C, 2
+	createvisualtask AnimTask_GetAttackerSide, 2
 	jumpargeq 7, 1, _81CF13F
 	fadetobg BG_HIGHSPEED_OPPONENT
 _81CEFD0:
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 0, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
 	waitbgfadein
 	waitforvisualfinish
 	panse_1B SE_M_BLIZZARD, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
@@ -6109,7 +6109,7 @@ Move_MEGAHORN: @ 81CFDAC
 	jumpifcontest _81CFE83
 	fadetobg BG_DRILL
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 768, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
 _81CFDCF:
 	waitbgfadein
 	setalpha 12, 8
@@ -6142,7 +6142,7 @@ _81CFDCF:
 _81CFE83:
 	fadetobg BG_DRILL_CONTESTS
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, 2304, 768, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
 	goto _81CFDCF
 
 Move_GUST: @ 81CFE9A
@@ -9026,7 +9026,7 @@ Move_COSMIC_POWER: @ 81D43C5
 	waitforvisualfinish
 	fadetobg BG_COSMIC
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 2, 0, 128, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 2, 0, 128, 0, -1
 	waitbgfadein
 	delay 70
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 228, -64
@@ -9133,7 +9133,7 @@ Move_SILVER_WIND: @ 81D4773
 	jumpargeq 7, 1, _81D4974
 	fadetobg BG_BUG_OPPONENT
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, 1536, 0, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, 1536, 0, 0, -1
 _81D47BA:
 	delay 0
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 4, 4, 0
@@ -9174,7 +9174,7 @@ _81D47BA:
 _81D4974:
 	fadetobg BG_BUG_PLAYER
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -1536, 0, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -1536, 0, 0, -1
 	goto _81D47BA
 
 Move_SNATCH: @ 81D498B
@@ -10169,14 +10169,14 @@ Unknown_81D61FB: @ 81D61FB
 	jumpifcontest _81D6214
 	fadetobg BG_FLYING
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, -2304, 768, 1, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
 _81D6212:
 	waitbgfadein
 	return
 _81D6214:
 	fadetobg BG_FLYING_CONTESTS
 	waitbgfadeout
-	createvisualtask sub_80E3A58, 5, 2304, 768, 0, -1
+	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
 	goto _81D6212
 
 Unknown_81D622B: @ 81D622B
