@@ -117,7 +117,7 @@ const struct SpriteTemplate gMudSlapDirtSpriteTemplate =
     .callback = AnimDirtScatter,
 };
 
-const struct SpriteTemplate gMudSportDirtSpriteTemplate =
+const struct SpriteTemplate gMudsportMudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,

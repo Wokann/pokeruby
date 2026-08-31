@@ -4009,46 +4009,46 @@ Move_MUD_SPORT: @ 81CCC3C
 	loadspritegfx ANIM_TAG_MUD_SAND
 	createvisualtask AnimTask_Splash, 2, 0, 6
 	delay 24
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -4, -16
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 4, -12
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -4, -16
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 4, -12
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 32
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -3, -12
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 5, -14
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -3, -12
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 5, -14
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 32
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -5, -18
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 3, -14
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -5, -18
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 3, -14
 	playsewithpan SE_M_DIG, SOUND_PAN_ATTACKER
 	delay 16
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 220, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 220, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 60, 100
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 60, 100
 	waitplaysewithpan SE_M_BUBBLE2, 0, 25
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 140, 55
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 140, 55
 	waitplaysewithpan SE_M_BUBBLE2, 0, 14
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 180, 50
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 180, 50
 	waitplaysewithpan SE_M_BUBBLE2, 0, 10
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 20, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 20, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 90, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 90, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 160, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 160, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 30, 90
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 30, 90
 	waitplaysewithpan SE_M_BUBBLE2, 0, 22
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 120, 60
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 120, 60
 	waitplaysewithpan SE_M_BUBBLE2, 0, 15
 	delay 2
-	createsprite gMudSportDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 200, 40
+	createsprite gMudsportMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 200, 40
 	waitplaysewithpan SE_M_BUBBLE2, 0, 10
 	end
 
