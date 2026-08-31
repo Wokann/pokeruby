@@ -4097,7 +4097,7 @@ Move_NEEDLE_ARM: @ 81CCD73
 
 Move_SLACK_OFF: @ 81CCF23
 	loadspritegfx ANIM_TAG_BLUE_STAR
-	createvisualtask AnimTask_SlackOffSquish, 2, 0
+	createvisualtask AnimTask_SlackOffSquish, 2, ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_YAWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	call HealingEffect
