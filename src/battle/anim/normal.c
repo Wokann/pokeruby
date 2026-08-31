@@ -49,7 +49,7 @@ static void AnimHitSplatBasic(struct Sprite *sprite);
 static void AnimHitSplatHandleInvert(struct Sprite *sprite);
 static void AnimHitSplatRandom(struct Sprite *sprite);
 static void AnimHitSplatOnMonEdge(struct Sprite *sprite);
-static void sub_80E2978(struct Sprite *sprite);
+static void AnimCrossImpact(struct Sprite *sprite);
 static void AnimFlashingHitSplat(struct Sprite *sprite);
 static void sub_80E27E8(struct Sprite *sprite);
 static void AnimConfusionDuckStep(struct Sprite *sprite);
@@ -265,7 +265,7 @@ const struct SpriteTemplate gMonEdgeHitSplatSpriteTemplate =
     .callback = AnimHitSplatOnMonEdge,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
+const struct SpriteTemplate gCrossImpactSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CROSS_IMPACT,
     .paletteTag = ANIM_TAG_CROSS_IMPACT,
@@ -273,7 +273,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB520 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80E2978,
+    .callback = AnimCrossImpact,
 };
 
 const struct SpriteTemplate gFlashingHitSplatSpriteTemplate =
@@ -921,7 +921,7 @@ static void AnimHitSplatOnMonEdge(struct Sprite *sprite)
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-static void sub_80E2978(struct Sprite *sprite)
+static void AnimCrossImpact(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 1);

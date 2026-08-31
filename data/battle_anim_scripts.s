@@ -4492,7 +4492,7 @@ Move_CALM_MIND: @ 81CD6F7
 Move_LEAF_BLADE: @ 81CD775
 	loadspritegfx ANIM_TAG_LEAF
 	loadspritegfx ANIM_TAG_CROSS_IMPACT
-	createvisualtask sub_80CBDF4, 5
+	createvisualtask AnimTask_LeafBlade, 5
 	delay 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
 	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
@@ -4507,7 +4507,7 @@ Move_LEAF_BLADE: @ 81CD775
 	setalpha 12, 8
 	delay 12
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 8, 0, 18, 1
-	createsprite gBattleAnimSpriteTemplate_83DB520, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 36
+	createsprite gCrossImpactSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 36
 	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
@@ -6466,7 +6466,7 @@ Move_CROSS_CHOP: @ 81D058E
 	delay 40
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 32767, 10, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83DB520, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 20
+	createsprite gCrossImpactSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 20
 	createvisualtask AnimTask_ShakeMon, 5, 1, 7, 0, 9, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
