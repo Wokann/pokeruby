@@ -3627,18 +3627,18 @@ Move_HELPING_HAND: @ 81CC2BF
 
 Move_ASSIST: @ 81CC332
 	loadspritegfx ANIM_TAG_PAW_PRINT
-	createsprite gBattleAnimSpriteTemplate_8402964, ANIM_BATTLER_ATTACKER, 50, 112, -16, 140, 128, 36
+	createsprite gAssistPawprintSpriteTemplate, ANIM_BATTLER_ATTACKER, 50, 112, -16, 140, 128, 36
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_8402964, ANIM_BATTLER_ATTACKER, 50, 208, 128, -16, 48, 36
+	createsprite gAssistPawprintSpriteTemplate, ANIM_BATTLER_ATTACKER, 50, 208, 128, -16, 48, 36
 	playsewithpan SE_M_SCRATCH, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_8402964, ANIM_BATTLER_ATTACKER, 50, -16, 112, 256, -16, 36
+	createsprite gAssistPawprintSpriteTemplate, ANIM_BATTLER_ATTACKER, 50, -16, 112, 256, -16, 36
 	playsewithpan SE_M_SCRATCH, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_8402964, ANIM_BATTLER_ATTACKER, 50, 108, 128, 84, -16, 36
+	createsprite gAssistPawprintSpriteTemplate, ANIM_BATTLER_ATTACKER, 50, 108, 128, 84, -16, 36
 	playsewithpan SE_M_SCRATCH, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_8402964, ANIM_BATTLER_ATTACKER, 50, -16, 56, 256, 56, 36
+	createsprite gAssistPawprintSpriteTemplate, ANIM_BATTLER_ATTACKER, 50, -16, 56, 256, 56, 36
 	playsewithpan SE_M_SCRATCH, 0
 	end
 

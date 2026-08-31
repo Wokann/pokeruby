@@ -127,7 +127,7 @@ static void sub_812F948(struct Sprite *sprite);
 static void AnimFacadeSweatDrop(struct Sprite *sprite);
 static void sub_81300F4(struct Sprite *sprite);
 static void sub_81304DC(struct Sprite *sprite);
-static void sub_813051C(struct Sprite *sprite);
+static void AnimAssistPawprint(struct Sprite *sprite);
 static void AnimSmellingSaltsHand(struct Sprite *sprite);
 static void AnimSmellingSaltExclamation(struct Sprite *sprite);
 static void AnimHelpingHandClap(struct Sprite *sprite);
@@ -969,7 +969,7 @@ const struct SpriteTemplate gSpriteTemplate_840294C =
     .callback = sub_81304DC,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402964 =
+const struct SpriteTemplate gAssistPawprintSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PAW_PRINT,
     .paletteTag = ANIM_TAG_PAW_PRINT,
@@ -977,7 +977,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402964 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813051C,
+    .callback = AnimAssistPawprint,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_840297C[] =
@@ -4057,7 +4057,7 @@ static void sub_81304DC(struct Sprite *sprite)
     }
 }
 
-static void sub_813051C(struct Sprite *sprite)
+static void AnimAssistPawprint(struct Sprite *sprite)
 {
     sprite->x = gBattleAnimArgs[0];
     sprite->y = gBattleAnimArgs[1];
