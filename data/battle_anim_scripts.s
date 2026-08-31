@@ -4113,12 +4113,12 @@ Move_CRUSH_CLAW: @ 81CCF3B
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 18, 1
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, -10, 0
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, 10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	delay 12
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, -10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, 10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	waitforvisualfinish
@@ -7273,15 +7273,15 @@ Move_METAL_CLAW: @ 81D197A
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, -10, 0
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, 10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	delay 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, -10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, 10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	waitforvisualfinish
 	end
@@ -8600,8 +8600,8 @@ Move_DRAGON_CLAW: @ 81D380C
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
 	delay 2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, -10, 0
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, -10, 10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
 	delay 2
@@ -8613,8 +8613,8 @@ Move_DRAGON_CLAW: @ 81D380C
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
 	delay 2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, -10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB288, ANIM_BATTLER_TARGET, 2, 10, 10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
+	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
 	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
 	delay 2

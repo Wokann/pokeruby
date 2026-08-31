@@ -31,7 +31,7 @@ extern const u16 gUnknown_08D1D54C[];
 void sub_80DFE14(struct Sprite *sprite);
 void sub_80DFF1C(struct Sprite *sprite);
 void sub_80DFFD0(struct Sprite *sprite);
-void sub_80E0A10(struct Sprite *sprite);
+void AnimClawSlash(struct Sprite *sprite);
 static void sub_80DFE90(struct Sprite *sprite);
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
@@ -168,7 +168,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB238 =
     .callback = sub_80DFFD0,
 };
 
-const union AnimCmd gSpriteAnim_83DB250[] =
+static const union AnimCmd sAnim_ClawSlash_0[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
@@ -178,7 +178,7 @@ const union AnimCmd gSpriteAnim_83DB250[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DB268[] =
+static const union AnimCmd sAnim_ClawSlash_1[] =
 {
     ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 4, .hFlip = TRUE),
@@ -188,21 +188,21 @@ const union AnimCmd gSpriteAnim_83DB268[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DB280[] =
+static const union AnimCmd *const sAnims_ClawSlash[] =
 {
-    gSpriteAnim_83DB250,
-    gSpriteAnim_83DB268,
+    sAnim_ClawSlash_0,
+    sAnim_ClawSlash_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB288 =
+const struct SpriteTemplate gClawSlashSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CLAW_SLASH,
     .paletteTag = ANIM_TAG_CLAW_SLASH,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DB280,
+    .anims = sAnims_ClawSlash,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80E0A10,
+    .callback = AnimClawSlash,
 };
 
 void AnimTask_AttackerFadeToInvisible(u8 taskId)
@@ -818,7 +818,7 @@ void AnimTask_MementoHandleBg(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E0A10(struct Sprite *sprite)
+void AnimClawSlash(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
