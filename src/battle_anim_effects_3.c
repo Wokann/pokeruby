@@ -91,8 +91,8 @@ static void sub_81306A4(u8 taskId);
 static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
 static void AnimTask_SmellingSaltsSquish_Step(u8 taskId);
 static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
-static void sub_8130B38(struct Sprite *sprite);
-static void sub_8130DBC(u8 taskId);
+static void AnimHelpingHandClap_Step(struct Sprite *sprite);
+static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
 static void sub_8130FE0(struct Sprite *sprite);
 static void sub_8131408(u8 taskId);
 static void sub_81315C8(struct Sprite *sprite);
@@ -130,7 +130,7 @@ static void sub_81304DC(struct Sprite *sprite);
 static void sub_813051C(struct Sprite *sprite);
 static void AnimSmellingSaltsHand(struct Sprite *sprite);
 static void AnimSmellingSaltExclamation(struct Sprite *sprite);
-static void sub_8130AEC(struct Sprite *sprite);
+static void AnimHelpingHandClap(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
 static void sub_8131264(struct Sprite *sprite);
 extern void AnimParticleBurst(struct Sprite *sprite);// kiss_fountain.c
@@ -1039,7 +1039,7 @@ const struct SpriteTemplate gSmellingSaltExclamationSpriteTemplate =
     .callback = AnimSmellingSaltExclamation,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A0C =
+const struct SpriteTemplate gHelpingHandClapSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TAG_HAND,
     .paletteTag = ANIM_TAG_TAG_HAND,
@@ -1047,7 +1047,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A0C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8130AEC,
+    .callback = AnimHelpingHandClap,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A24 =
@@ -4289,7 +4289,7 @@ static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite)
     }
 }
 
-static void sub_8130AEC(struct Sprite *sprite)
+static void AnimHelpingHandClap(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == 0)
     {
@@ -4304,10 +4304,10 @@ static void sub_8130AEC(struct Sprite *sprite)
     }
 
     sprite->y = 56;
-    sprite->callback = sub_8130B38;
+    sprite->callback = AnimHelpingHandClap_Step;
 }
 
-static void sub_8130B38(struct Sprite *sprite)
+static void AnimHelpingHandClap_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -4390,18 +4390,18 @@ static void sub_8130B38(struct Sprite *sprite)
     }
 }
 
-void sub_8130D20(u8 taskId)
+void AnimTask_HelpingHandAttackerMovement(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    task->data[15] = GetAnimBattlerSpriteId(0);
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     if (!IsContest())
     {
         if (IsDoubleBattle() == TRUE)
         {
-            int x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-            int y = GetBattlerSpriteCoord(gBattleAnimAttacker ^ 2, 0);
-            if (x > y)
+            int attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+            int partnerX = GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimAttacker), BATTLER_COORD_X);
+            if (attackerX > partnerX)
                 task->data[14] = 1;
             else
                 task->data[14] = -1;
@@ -4419,10 +4419,10 @@ void sub_8130D20(u8 taskId)
         task->data[14] = 1;
     }
 
-    task->func = sub_8130DBC;
+    task->func = AnimTask_HelpingHandAttackerMovement_Step;
 }
 
-static void sub_8130DBC(u8 taskId)
+static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 

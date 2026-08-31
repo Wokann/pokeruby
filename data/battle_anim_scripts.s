@@ -3610,9 +3610,9 @@ Move_TAUNT: @ 81CC26B
 
 Move_HELPING_HAND: @ 81CC2BF
 	loadspritegfx ANIM_TAG_TAG_HAND
-	createvisualtask sub_8130D20, 5
-	createsprite gBattleAnimSpriteTemplate_8402A0C, ANIM_BATTLER_ATTACKER, 40, 0
-	createsprite gBattleAnimSpriteTemplate_8402A0C, ANIM_BATTLER_ATTACKER, 40, 1
+	createvisualtask AnimTask_HelpingHandAttackerMovement, 5
+	createsprite gHelpingHandClapSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0
+	createsprite gHelpingHandClapSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 1
 	delay 19
 	playsewithpan SE_M_ENCORE, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATK_PARTNER, 2, 0, 5, 1
