@@ -3762,17 +3762,17 @@ BrickBreakShatteredWall:
 
 Move_YAWN: @ 81CC697
 	loadspritegfx ANIM_TAG_PINK_CLOUD
-	createvisualtask sub_812F724, 2, 0
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_YAWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_84027EC, ANIM_BATTLER_TARGET, 5, 2
+	createsprite gYawnCloudSpriteTemplate, ANIM_BATTLER_TARGET, 5, 2
 	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_84027EC, ANIM_BATTLER_TARGET, 5, 1
+	createsprite gYawnCloudSpriteTemplate, ANIM_BATTLER_TARGET, 5, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_84027EC, ANIM_BATTLER_TARGET, 5, 0
+	createsprite gYawnCloudSpriteTemplate, ANIM_BATTLER_TARGET, 5, 0
 	waitforvisualfinish
-	createvisualtask sub_812F724, 2, 1
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_BATTLER_TARGET
 	playsewithpan SE_M_YAWN, SOUND_PAN_TARGET
 	end
 
@@ -4370,7 +4370,7 @@ Move_BLOCK: @ 81CD52D
 
 Move_HOWL: @ 81CD53C
 	loadspritegfx ANIM_TAG_NOISE_LINE
-	createvisualtask sub_812F724, 2, 0
+	createvisualtask AnimTask_DeepInhale, 2, ANIM_BATTLER_ATTACKER
 	delay 12
 	call _81CE35E
 	createvisualtask sub_812B18C, 2, 0, 3

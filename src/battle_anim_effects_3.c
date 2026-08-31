@@ -79,8 +79,8 @@ static void AnimReversalOrb_Step(struct Sprite *sprite);
 static void AnimTask_RolePlaySilhouetteStep1(u8 taskId);
 static void sub_812F290(u8 taskId);
 static void sub_812F474(u8 taskId);
-static void sub_812F76C(u8 taskId);
-static void sub_812F8DC(struct Sprite *sprite);
+static void AnimTask_DeepInhale_Step(u8 taskId);
+static void AnimYawnCloud_Step(struct Sprite *sprite);
 static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId);
 static void CreateSweatDroplets(u8, bool8);
 static void AnimTask_FacadeColorBlend_Step(u8 taskId);
@@ -122,7 +122,7 @@ static void AnimPainSplitProjectile(struct Sprite *sprite);
 static void sub_812EC78(struct Sprite *sprite);
 static void sub_812ED84(struct Sprite *sprite);
 static void AnimReversalOrb(struct Sprite *sprite);
-static void sub_812F88C(struct Sprite *sprite);
+static void AnimYawnCloud(struct Sprite *sprite);
 static void sub_812F948(struct Sprite *sprite);
 static void AnimFacadeSweatDrop(struct Sprite *sprite);
 static void sub_81300F4(struct Sprite *sprite);
@@ -799,7 +799,7 @@ const struct SpriteTemplate gReversalOrbSpriteTemplate =
     .callback = AnimReversalOrb,
 };
 
-const union AffineAnimCmd gUnknown_08402750[] =
+const union AffineAnimCmd gDeepInhaleAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(16, 0, 0, 4),
     AFFINEANIMCMD_FRAME(0, -3, 0, 16),
@@ -809,7 +809,7 @@ const union AffineAnimCmd gUnknown_08402750[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402780[] =
+const union AffineAnimCmd gYawnCloudAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 8),
@@ -817,7 +817,7 @@ const union AffineAnimCmd gSpriteAffineAnim_8402780[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_84027A0[] =
+const union AffineAnimCmd gYawnCloudAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
@@ -825,7 +825,7 @@ const union AffineAnimCmd gSpriteAffineAnim_84027A0[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_84027C0[] =
+const union AffineAnimCmd gYawnCloudAffineAnimCmds3[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 8),
@@ -833,22 +833,22 @@ const union AffineAnimCmd gSpriteAffineAnim_84027C0[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_84027E0[] =
+const union AffineAnimCmd *const gYawnCloudAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402780,
-    gSpriteAffineAnim_84027A0,
-    gSpriteAffineAnim_84027C0,
+    gYawnCloudAffineAnimCmds1,
+    gYawnCloudAffineAnimCmds2,
+    gYawnCloudAffineAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84027EC =
+const struct SpriteTemplate gYawnCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PINK_CLOUD,
     .paletteTag = ANIM_TAG_PINK_CLOUD,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_84027E0,
-    .callback = sub_812F88C,
+    .affineAnims = gYawnCloudAffineAnimTable,
+    .callback = AnimYawnCloud,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_8402804[] =
@@ -3459,16 +3459,16 @@ static void sub_812F474(u8 taskId)
     }
 }
 
-void sub_812F724(u8 taskId)
+void AnimTask_DeepInhale(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     task->data[0] = 0;
     task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
-    PrepareAffineAnimInTaskData(&gTasks[taskId], task->data[15], &gUnknown_08402750);
-    task->func = sub_812F76C;
+    PrepareAffineAnimInTaskData(&gTasks[taskId], task->data[15], &gDeepInhaleAffineAnimCmds);
+    task->func = AnimTask_DeepInhale_Step;
 }
 
-static void sub_812F76C(u8 taskId)
+static void AnimTask_DeepInhale_Step(u8 taskId)
 {
     u16 var0;
 
@@ -3497,17 +3497,17 @@ static void sub_812F76C(u8 taskId)
         DestroyAnimVisualTask(taskId);
 }
 
-static void sub_812F804(struct Sprite *sprite, s16 b, s16 c, s16 d, s16 e, u16 f)
+static void InitYawnCloudPosition(struct Sprite *sprite, s16 startX, s16 startY, s16 destX, s16 destY, u16 duration)
 {
-    sprite->x = b;
-    sprite->y = c;
-    sprite->data[4] = b << 4;
-    sprite->data[5] = c << 4;
-    sprite->data[6] = ((d - b) << 4) / f;
-    sprite->data[7] = ((e - c) << 4) / f;
+    sprite->x = startX;
+    sprite->y = startY;
+    sprite->data[4] = startX << 4;
+    sprite->data[5] = startY << 4;
+    sprite->data[6] = ((destX - startX) << 4) / duration;
+    sprite->data[7] = ((destY - startY) << 4) / duration;
 }
 
-void sub_812F86C(struct Sprite *sprite)
+static void UpdateYawnCloudPosition(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[6];
     sprite->data[5] += sprite->data[7];
@@ -3515,25 +3515,25 @@ void sub_812F86C(struct Sprite *sprite)
     sprite->y = sprite->data[5] >> 4;
 }
 
-static void sub_812F88C(struct Sprite *sprite)
+static void AnimYawnCloud(struct Sprite *sprite)
 {
     s16 x = sprite->x;
     s16 y = sprite->y;
 
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[0]);
-    sub_812F804(sprite, sprite->x, sprite->y, x, y, 64);
+    InitYawnCloudPosition(sprite, sprite->x, sprite->y, x, y, 64);
     sprite->data[0] = 0;
-    sprite->callback = sub_812F8DC;
+    sprite->callback = AnimYawnCloud_Step;
 }
 
-static void sub_812F8DC(struct Sprite *sprite)
+static void AnimYawnCloud_Step(struct Sprite *sprite)
 {
     int index;
 
     sprite->data[0]++;
     index = (sprite->data[0] * 8) & 0xFF;
-    sub_812F86C(sprite);
+    UpdateYawnCloudPosition(sprite);
     sprite->y2 = Sin(index, 8);
     if (sprite->data[0] > 58)
     {
