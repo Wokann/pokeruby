@@ -4836,13 +4836,13 @@ Move_THUNDER_PUNCH: @ 81CDF28
 	loadspritegfx ANIM_TAG_LIGHTNING
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 16, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=16, color=rgb(0, 0, 0)
 	waitforvisualfinish
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 8, 1, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
+	create_fist_sprite ANIM_BATTLER_TARGET, 4, x=0, y=0, duration=8
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 1
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -48
 	delay 1
@@ -4851,12 +4851,12 @@ Move_THUNDER_PUNCH: @ 81CDF28
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16
 	delay 1
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 15, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 16, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=16, target_blend_y=0, color=rgb(0, 0, 0)
 	delay 20
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
