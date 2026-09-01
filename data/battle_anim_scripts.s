@@ -4879,12 +4879,12 @@ Move_SACRED_FIRE: @ 81CDFF1
 	delay 1
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 10, 50, 5, 1, 1
 	delay 1
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16, 50, 5, 0, 1
 	delay 1
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -20, 10, 50, 5, -1, 1
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	waitforvisualfinish
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
@@ -4896,10 +4896,10 @@ Move_SACRED_FIRE: @ 81CDFF1
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
 	createsprite gLargeFlameSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 80, 16, 0, 1
 	delay 1
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	waitforvisualfinish
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
 	createsprite gLargeFlameScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 30, -1, 0
