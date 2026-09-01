@@ -2249,15 +2249,15 @@ Move_ICY_WIND: @ 81CA650
 	waitbgfadein
 	end
 _81CA6A8:
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_TARGET, 40, 0, 0, 0, 0, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_TARGET, 40, 0, 0, 0, 0, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_TARGET, 40, 0, 10, 0, 10, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_TARGET, 40, 0, 10, 0, 10, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_TARGET, 40, 0, -10, 0, -10, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_TARGET, 40, 0, -10, 0, -10, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_TARGET, 40, 0, 15, 0, 15, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_TARGET, 40, 0, 15, 0, 15, 72, 1
 	delay 5
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_TARGET, 40, 0, -5, 0, -5, 72, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_TARGET, 40, 0, -5, 0, -5, 72, 1
 	return
 
 Move_SMOKESCREEN: @ 81CA710
@@ -5528,19 +5528,19 @@ Move_BLIZZARD: @ 81CEFBA
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	monbg ANIM_BATTLER_DEF_PARTNER
 	createvisualtask AnimTask_GetAttackerSide, 2
-	jumpargeq 7, 1, _81CF13F
+	jumprettrue BlizzardAgainstPlayer
 	fadetobg BG_HIGHSPEED_OPPONENT
-_81CEFD0:
+BlizzardContinue:
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
 	waitbgfadein
 	waitforvisualfinish
-	panse_1B SE_M_BLIZZARD, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	call _81CF00A
-	call _81CF00A
+	panse SE_M_BLIZZARD, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call BlizzardIceCrystals
+	call BlizzardIceCrystals
 	playsewithpan SE_M_BLIZZARD2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	call Effect_HeavyIceDamage
+	call IceCrystalEffectLong
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 20
@@ -5549,32 +5549,32 @@ _81CEFD0:
 	setarg ARG_RET_ID, -1
 	waitbgfadein
 	end
-_81CF00A:
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0, 80, 0, 0, 1
+BlizzardIceCrystals:
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -15, 0, -15, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -5, 0, -5, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 10, 0, 10, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -5, 0, -5, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 10, 0, 10, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 15, 0, 15, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 15, 0, 15, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -15, 0, -15, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -15, 0, -15, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 80, 0, 0, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate1, ANIM_BATTLER_ATTACKER, 40, 0, -25, 0, -25, 72, 1
-	createsprite gLargeSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 20, 0, 20, 80, 0, 0, 1
+	createsprite gSwirlingSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -25, 0, -25, 72, 1
+	createsprite gBlizzardIceCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 20, 0, 20, 80, 0, 0, 1
 	delay 3
 	return
-_81CF13F:
+BlizzardAgainstPlayer:
 	fadetobg BG_HIGHSPEED_PLAYER
-	goto _81CEFD0
+	goto BlizzardContinue
 
 Move_POWDER_SNOW: @ 81CF146
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
@@ -5587,7 +5587,7 @@ Move_POWDER_SNOW: @ 81CF146
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	waitsound
-	call Effect_HeavyIceDamage
+	call IceCrystalEffectLong
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 20
@@ -9952,7 +9952,7 @@ IceCrystalEffectShort: @ 81D5C36
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
-Effect_HeavyIceDamage: @ 81D5CBA
+IceCrystalEffectLong: @ 81D5CBA
 	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
