@@ -4925,7 +4925,7 @@ Move_SCRATCH: @ 81CE1D8
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_8402180, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
+	createsprite gScratchSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
