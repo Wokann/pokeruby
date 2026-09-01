@@ -5437,90 +5437,90 @@ AuroraBeamCreateRings:
 
 Move_SOLAR_BEAM: @ 81CED65
 	loadspritegfx ANIM_TAG_ORBS
-	choosetwoturnanim _81CED73, _81CEE70
-_81CED71:
+	choosetwoturnanim SolarBeamSetUp, SolarBeamUnleash
+SolarBeamEnd:
 	waitforvisualfinish
 	end
-_81CED73:
+SolarBeamSetUp:
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 12, 8
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 1, 4, 0, 11, 12287
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=1, num_blends=4, initial_blend_y=0, target_blend_y=11, color=rgb(31, 31, 11)
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
-	call _81CED9D
+	call SolarBeamAbsorbEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
-	goto _81CED71
-_81CED9D:
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 40, 40, 16
+	goto SolarBeamEnd
+SolarBeamAbsorbEffect:
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=40, y=40, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -40, -40, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-40, y=-40, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 0, 40, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=40, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 0, -40, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=-40, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 40, -20, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=40, y=-20, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 40, 20, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=40, y=20, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -40, -20, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-40, y=-20, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -40, 20, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-40, y=20, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -20, 30, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-20, y=30, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 20, -30, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=20, y=-30, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -20, -30, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-20, y=-30, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 20, 30, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=20, y=30, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -40, 0, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-40, y=0, duration=16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 40, 0, 16
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=40, y=0, duration=16
 	delay 2
 	return
-_81CEE70:
-	call Unknown_81D6233
-	panse_1B SE_M_SOLAR_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	createvisualtask sub_80CA928, 5
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 0
+SolarBeamUnleash:
+	call SetSolarBeamBg
+	panse SE_M_SOLAR_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createvisualtask AnimTask_CreateSmallSolarBeamOrbs, 5
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 1
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=1
 	delay 4
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 0, 10, 1017
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 2
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 0, 10, rgb(25, 31, 0)
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=2
 	delay 4
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 65, 1
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 3
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 2, 0, 65, 1
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=3
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 4
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=4
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 5
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=5
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 6
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=6
 	delay 4
-	call _81CEF42
-	call _81CEF42
+	call SolarBeamUnleash1
+	call SolarBeamUnleash1
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 10, 0, 1017
-	call Unknown_81D626D
-	goto _81CED71
-_81CEF42:
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 10, 0, rgb(25, 31, 0)
+	call UnsetSolarBeamBg
+	goto SolarBeamEnd
+SolarBeamUnleash1:
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=0
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 1
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 2
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 3
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=3
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 4
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=4
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 5
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=5
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6304, ANIM_BATTLER_TARGET, 3, 15, 0, 20, 6
+	create_solar_beam_big_orb_sprite ANIM_BATTLER_TARGET, 3, x=15, y=0, duration=20, animation=6
 	delay 4
 	return
 
@@ -7556,19 +7556,19 @@ Move_RECOVER: @ 81D1F1F
 	waitforvisualfinish
 	end
 _81D1F5F:
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 40, -10, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -10, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -35, -10, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -35, -10, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 15, -40, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 15, -40, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -10, -32, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -32, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 25, -20, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 25, -20, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, -40, -20, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -40, -20, 13
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D62EC, ANIM_BATTLER_ATTACKER, 2, 5, -40, 13
+	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, -40, 13
 	delay 3
 	return
 
@@ -10187,30 +10187,30 @@ Unknown_81D622B: @ 81D622B
 	waitbgfadein
 	return
 
-Unknown_81D6233: @ 81D6233
+SetSolarBeamBg: @ 81D6233
 	createvisualtask AnimTask_IsContest, 2
-	jumpargeq 7, 1, Unknown_81D6258
+	jumprettrue SetSolarBeamBgContest
 	createvisualtask AnimTask_IsTargetPlayerSide, 2
-	jumpargeq 7, 0, Unknown_81D6266
-	goto Unknown_81D625F
+	jumpretfalse SetSolarBeamBgOpponent
+	goto SetSolarBeamBgPlayer
 
-Unknown_81D6256: @ 81D6256
+SetSolarBeamBgContinue: @ 81D6256
 	waitbgfadein
 	return
 
-Unknown_81D6258: @ 81D6258
-	fadetobg BG_SOLARBEAM_CONTESTS
-	goto Unknown_81D6256
+SetSolarBeamBgContest: @ 81D6258
+	fadetobg BG_SOLAR_BEAM_CONTESTS
+	goto SetSolarBeamBgContinue
 
-Unknown_81D625F: @ 81D625F
-	fadetobg BG_SOLARBEAM_PLAYER
-	goto Unknown_81D6256
+SetSolarBeamBgPlayer: @ 81D625F
+	fadetobg BG_SOLAR_BEAM_PLAYER
+	goto SetSolarBeamBgContinue
 
-Unknown_81D6266: @ 81D6266
-	fadetobg BG_SOLARBEAM_OPPONENT
-	goto Unknown_81D6256
+SetSolarBeamBgOpponent: @ 81D6266
+	fadetobg BG_SOLAR_BEAM_OPPONENT
+	goto SetSolarBeamBgContinue
 
-Unknown_81D626D: @ 81D626D
+UnsetSolarBeamBg: @ 81D626D
 	restorebg
 	waitbgfadein
 	return

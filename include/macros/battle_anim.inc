@@ -151,6 +151,15 @@
 	.byte \delay
 	.endm
 
+	.macro panse se:req, currentPan:req, targetPan:req, incrementPan:req, delay:req
+	.byte 0x1B
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
+	.byte \delay
+	.endm
+
 	.macro loopsewithpan id, pan, delay, count
 	.byte 0x1C
 	.2byte \id
@@ -365,4 +374,12 @@
 
 	.macro create_dragon_rage_fire_plume_sprite anim_battler:req, subpriority_offset:req, relative_to:req, x:req, y:req
 	createsprite gDragonRageFirePlumeSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \x, \y
+	.endm
+
+	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
+	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
+	.macro create_solar_beam_big_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, animation:req
+	createsprite gSolarBeamBigOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \animation
 	.endm
