@@ -2893,7 +2893,7 @@ Move_GLARE: @ 81CB4CA
 	createvisualtask sub_80D23B4, 5
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
 	delay 2
-	createvisualtask sub_80D60B4, 3, 20, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, FALSE
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 0, 16, 0, 0
 	end
@@ -4778,9 +4778,9 @@ Move_THUNDER: @ 81CDDCE
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, -256, 0, 1, -1
 	waitbgfadein
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 16, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=16, color=rgb(0, 0, 0)
 	delay 16
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -36
@@ -4797,7 +4797,7 @@ Move_THUNDER: @ 81CDDCE
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 6, -16, 16
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_TARGET
 	delay 5
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, -32
 	delay 1
@@ -4805,9 +4805,9 @@ Move_THUNDER: @ 81CDDCE
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 16
 	delay 30
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 5
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -32
 	playsewithpan SE_M_TRI_ATTACK2, SOUND_PAN_TARGET
@@ -4816,13 +4816,13 @@ Move_THUNDER: @ 81CDDCE
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 16
 	delay 10
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
-	createvisualtask sub_80D60B4, 2, 30, 3, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 30, 3, TRUE, FALSE
 	delay 2
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 2, 16, 0, rgb(0, 0, 0)
+	simple_palette_blend unused_anim_battler=ANIM_BATTLER_TARGET, selector=F_PAL_BG, delay=2, initial_blend_y=16, target_blend_y=0, color=rgb(0, 0, 0)
 	waitforvisualfinish
 	restorebg
 	waitbgfadeout
@@ -7745,7 +7745,7 @@ Move_SCARY_FACE: @ 81D23E3
 	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, -16, -8
 	createsprite gEyeSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 16, -8
 	waitforvisualfinish
-	createvisualtask sub_80D60B4, 3, 20, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 3, 20, 1, FALSE
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 27, 3, 16, 0, rgb(0, 0, 0)
 	waitforvisualfinish
@@ -8015,7 +8015,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	delay 1
 	createsprite gLargeFlameScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 30, 30, 3, 1
 	delay 2
-	createvisualtask sub_80D60B4, 2, 20, 3, 1, 1
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 20, 3, TRUE, TRUE
 	waitforvisualfinish
 	loadspritegfx ANIM_TAG_LIGHTNING
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
@@ -8026,7 +8026,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	delay 1
 	createsprite gLightningSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 16
 	delay 20
-	createvisualtask sub_80D60B4, 2, 20, 3, 1, 0
+	createvisualtask AnimTask_ShakeTargetInPattern, 2, 20, 3, TRUE, FALSE
 	delay 2
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	waitforvisualfinish

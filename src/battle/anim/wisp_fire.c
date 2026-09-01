@@ -198,7 +198,7 @@ void AnimTask_BlendBackground(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80D60B4(u8 taskId)
+void AnimTask_ShakeTargetInPattern(u8 taskId)
 {
     s8 unk;
     u8 spriteId;
