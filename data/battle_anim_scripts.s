@@ -5911,7 +5911,7 @@ Move_LEECH_LIFE: @ 81CF8D7
 Move_SYNTHESIS: @ 81CF959
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	loadspritegfx ANIM_TAG_SPARKLE_2
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 2, 0, 16, 19451
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=16, color=RGB(27, 31, 18)
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
 	call GrantingStarsEffect
 	waitforvisualfinish
