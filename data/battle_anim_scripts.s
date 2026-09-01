@@ -6168,7 +6168,7 @@ Move_WING_ATTACK: @ 81CFEEB
 	loadspritegfx ANIM_TAG_GUST
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	loopsewithpan SE_M_WING_ATTACK, SOUND_PAN_ATTACKER, 20, 2
 	createvisualtask AnimTask_TranslateMonElliptical, 2, ANIM_BATTLER_ATTACKER, 12, 4, 1, 4
@@ -6178,8 +6178,8 @@ Move_WING_ATTACK: @ 81CFEEB
 	delay 24
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 9
 	delay 17
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, 0, 1, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=16, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-16, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	loopsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET, 5, 2
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 11
