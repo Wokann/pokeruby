@@ -48,8 +48,8 @@ extern u8 sub_8046234(s16 x, s16 y, u8 a3);
 extern void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5, u8 arg6, u8 arg7, const u8 *arg8, const u8 *arg9, const u16 *palette);
 
 static void sub_812C184(struct Sprite *sprite);
-static void sub_812C268(struct Sprite *sprite);
-static void sub_812C2A4(struct Sprite *sprite);
+static void AnimWhiteHalo_Step1(struct Sprite *sprite);
+static void AnimWhiteHalo_Step2(struct Sprite *sprite);
 static void AnimMeanLookEye_Step1(struct Sprite *sprite);
 static void AnimMeanLookEye_Step2(struct Sprite *sprite);
 static void AnimMeanLookEye_Step3(struct Sprite *sprite);
@@ -99,8 +99,8 @@ static void AnimBlockX_Step(struct Sprite *sprite);
 static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
 static void MoveOdorSleuthClone(struct Sprite *sprite);
 static void sub_812C144(struct Sprite *sprite);
-static void sub_812C220(struct Sprite *sprite);
-static void sub_812C2BC(struct Sprite *sprite);
+static void AnimWhiteHalo(struct Sprite *sprite);
+static void AnimTealAlert(struct Sprite *sprite);
 static void AnimMeanLookEye(struct Sprite *sprite);
 static void sub_812C720(struct Sprite *sprite);
 static void sub_812C80C(struct Sprite *sprite);
@@ -191,7 +191,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021B0 =
     .callback = sub_80794A8,
 };
 
-const union AnimCmd gSpriteAnim_84021C8[] =
+const union AnimCmd gOpeningEyeAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 40),
     ANIMCMD_FRAME(16, 8),
@@ -199,23 +199,23 @@ const union AnimCmd gSpriteAnim_84021C8[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_84021D8[] =
+const union AnimCmd *const gOpeningEyeAnimTable[] =
 {
-    gSpriteAnim_84021C8,
+    gOpeningEyeAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84021DC =
+const struct SpriteTemplate gOpeningEyeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_OPENING_EYE,
     .paletteTag = ANIM_TAG_OPENING_EYE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_84021D8,
+    .anims = gOpeningEyeAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84021F4 =
+const struct SpriteTemplate gWhiteHaloSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROUND_WHITE_HALO,
     .paletteTag = ANIM_TAG_ROUND_WHITE_HALO,
@@ -223,10 +223,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021F4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812C220,
+    .callback = AnimWhiteHalo,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_840220C =
+const struct SpriteTemplate gTealAlertSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TEAL_ALERT,
     .paletteTag = ANIM_TAG_TEAL_ALERT,
@@ -234,7 +234,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840220C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812C2BC,
+    .callback = AnimTealAlert,
 };
 
 const union AffineAnimCmd gMeanLookEyeAffineAnimCmds1[] =
@@ -1219,34 +1219,34 @@ void sub_812C1D0(u8 taskId)
 
 }
 
-static void sub_812C220(struct Sprite *sprite)
+static void AnimWhiteHalo(struct Sprite *sprite)
 {
     sprite->data[0] = 90;
     sprite->callback = WaitAnimForDuration;
     sprite->data[1] = 7;
-    StoreSpriteCallbackInData6(sprite, sub_812C268);
+    StoreSpriteCallbackInData6(sprite, AnimWhiteHalo_Step1);
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
 }
 
-static void sub_812C268(struct Sprite *sprite)
+static void AnimWhiteHalo_Step1(struct Sprite *sprite)
 {
     REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
     if (--sprite->data[1] < 0)
     {
         sprite->invisible = TRUE;
-        sprite->callback = sub_812C2A4;
+        sprite->callback = AnimWhiteHalo_Step2;
     }
 }
 
-static void sub_812C2A4(struct Sprite *sprite)
+static void AnimWhiteHalo_Step2(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
     DestroyAnimSprite(sprite);
 }
 
-static void sub_812C2BC(struct Sprite *sprite)
+static void AnimTealAlert(struct Sprite *sprite)
 {
     u16 rotation;
     u8 x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);

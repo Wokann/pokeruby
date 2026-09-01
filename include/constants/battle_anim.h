@@ -305,6 +305,8 @@
 #define ANIM_BATTLER_TARGET      1
 #define ANIM_BATTLER_ATK_PARTNER 2
 #define ANIM_BATTLER_DEF_PARTNER 3
+// Ruby's legacy monbg selector for the target and its partner.
+#define ANIM_BATTLER_TARGET_AND_PARTNER 4
 
 // Below are used by AnimTask_ShakeMon2 and AnimTask_SetGrayscaleOrOriginalPal
 #define ANIM_PLAYER_LEFT      (MAX_BATTLERS_COUNT + 0)

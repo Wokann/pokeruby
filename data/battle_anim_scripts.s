@@ -4619,38 +4619,38 @@ Move_MIND_READER: @ 81CDA06
 	loadspritegfx ANIM_TAG_TEAL_ALERT
 	loadspritegfx ANIM_TAG_OPENING_EYE
 	loadspritegfx ANIM_TAG_ROUND_WHITE_HALO
-	monbg 4
+	monbg ANIM_BATTLER_TARGET_AND_PARTNER
 	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_84021DC, ANIM_BATTLER_ATTACKER, 5, 0, 0, 1, 0
-	createsprite gBattleAnimSpriteTemplate_84021F4, ANIM_BATTLER_ATTACKER, 5
+	createsprite gOpeningEyeSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 0, 0, 1, 0
+	createsprite gWhiteHaloSpriteTemplate, ANIM_BATTLER_ATTACKER, 5
 	delay 40
 	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
-	createvisualtask AnimTask_BlendColorCycle, 2, 1, 1, 2, 0, 10, 0
-	call _81CDA4D
+	blend_color_cycle priority=2, selector=F_PAL_BG, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=10, color=rgb(0, 0, 0)
+	call MindReaderEyeSpikeEffect
 	waitforvisualfinish
-	clearmonbg 4
+	clearmonbg ANIM_BATTLER_TARGET_AND_PARTNER
 	end
-_81CDA4D:
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 70, 0, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 40, 40, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 10, -60, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -50, -40, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -40, 40, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 50, -50, 6
+MindReaderEyeSpikeEffect:
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 70, 0, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 40, 40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 10, -60, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -50, -40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -40, 40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 50, -50, 6
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 50, -30, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 60, 10, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 0, 60, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 0, -40, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -60, 20, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -60, -30, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 50, -30, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 60, 10, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 60, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -60, 20, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -60, -30, 6
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -50, 50, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -60, 20, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, -40, -40, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 20, -60, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 50, -50, 6
-	createsprite gBattleAnimSpriteTemplate_840220C, ANIM_BATTLER_ATTACKER, 4, 35, 40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -50, 50, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -60, 20, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, -40, -40, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 20, -60, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 50, -50, 6
+	createsprite gTealAlertSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 35, 40, 6
 	delay 2
 	return
 

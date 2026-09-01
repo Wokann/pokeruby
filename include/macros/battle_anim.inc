@@ -291,6 +291,10 @@
 	.endif
 	.endm
 
+	.macro blend_color_cycle priority=2, selector:req, delay:req, num_blends:req, initial_blend_y:req, target_blend_y:req, color:req
+	createvisualtask AnimTask_BlendColorCycle, \priority, \selector, \delay, \num_blends, \initial_blend_y, \target_blend_y, \color
+	.endm
+
 	.macro create_outrage_flame_sprite anim_battler, subpriority_offset, x, y, duration, x_velocity, y_velocity, flicker_duration
 	createsprite gOutrageFlameSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, 256 * \x_velocity, 256 * \y_velocity, \flicker_duration
 	.endm
