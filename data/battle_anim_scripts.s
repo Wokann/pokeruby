@@ -5757,56 +5757,56 @@ Move_MEGA_DRAIN: @ 81CF53F
 	monbg ANIM_BATTLER_DEF_PARTNER
 	monbgprio_2A ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 8, rgb(13, 31, 12)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=8, color=RGB(13, 31, 12)
 	waitforvisualfinish
 	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, 0, 0, ANIM_BATTLER_TARGET, 1
 	delay 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 5, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 5, 5, 1
 	waitforvisualfinish
 	delay 3
-	call _81CF5AE
+	call MegaDrainAbsorbEffect
 	waitforvisualfinish
 	delay 15
 	call HealingEffect
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 8, 0, rgb(13, 31, 12)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=8, target_blend_y=0, color=RGB(13, 31, 12)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81CF5AE:
+MegaDrainAbsorbEffect:
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 5, -18, -20, 35
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 5, -18, -20, 35
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
 	delay 4
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 5, -18, -20, 35
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, 5, -18, -20, 35
 	delay 4
 	return
 
