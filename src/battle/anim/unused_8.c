@@ -7,7 +7,7 @@
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB1B0[];
+extern const union AffineAnimCmd *const gAffineAnims_Bite[];
 
 void sub_80CF458(struct Sprite* sprite);
 static void sub_80CF490(struct Sprite* sprite);
@@ -22,7 +22,7 @@ const struct SpriteTemplate gSpriteTemplate_83D73C4 =
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
+    .affineAnims = gAffineAnims_Bite,
     .callback = sub_80CF458,
 };
 

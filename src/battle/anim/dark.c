@@ -29,14 +29,14 @@ extern const u8 gUnknown_08D1D410[];
 extern const u16 gUnknown_08D1D54C[];
 
 void sub_80DFE14(struct Sprite *sprite);
-void sub_80DFF1C(struct Sprite *sprite);
+static void AnimBite(struct Sprite *sprite);
 static void AnimTearDrop(struct Sprite *sprite);
 void AnimClawSlash(struct Sprite *sprite);
 static void sub_80DFE90(struct Sprite *sprite);
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
-static void sub_80DFF58(struct Sprite *sprite);
-static void sub_80DFF98(struct Sprite *sprite);
+static void AnimBite_Step1(struct Sprite *sprite);
+static void AnimBite_Step2(struct Sprite *sprite);
 static void AnimTearDrop_Step(struct Sprite *sprite);
 static void AnimTask_MoveAttackerMementoShadow_Step(u8 taskId);
 static void AnimTask_MoveTargetMementoShadow_Step(u8 taskId);
@@ -55,75 +55,75 @@ const struct SpriteTemplate gSpriteTemplate_83DB118 =
     .callback = sub_80DFE14,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB130[] =
+static const union AffineAnimCmd sAffineAnim_Bite_0[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB140[] =
+static const union AffineAnimCmd sAffineAnim_Bite_1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 32, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB150[] =
+static const union AffineAnimCmd sAffineAnim_Bite_2[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 64, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB160[] =
+static const union AffineAnimCmd sAffineAnim_Bite_3[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB170[] =
+static const union AffineAnimCmd sAffineAnim_Bite_4[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -128, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB180[] =
+static const union AffineAnimCmd sAffineAnim_Bite_5[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB190[] =
+static const union AffineAnimCmd sAffineAnim_Bite_6[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -64, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB1A0[] =
+static const union AffineAnimCmd sAffineAnim_Bite_7[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -32, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB1B0[] =
+const union AffineAnimCmd *const gAffineAnims_Bite[] =
 {
-    gSpriteAffineAnim_83DB130,
-    gSpriteAffineAnim_83DB140,
-    gSpriteAffineAnim_83DB150,
-    gSpriteAffineAnim_83DB160,
-    gSpriteAffineAnim_83DB170,
-    gSpriteAffineAnim_83DB180,
-    gSpriteAffineAnim_83DB190,
-    gSpriteAffineAnim_83DB1A0,
+    sAffineAnim_Bite_0,
+    sAffineAnim_Bite_1,
+    sAffineAnim_Bite_2,
+    sAffineAnim_Bite_3,
+    sAffineAnim_Bite_4,
+    sAffineAnim_Bite_5,
+    sAffineAnim_Bite_6,
+    sAffineAnim_Bite_7,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1D0 =
+const struct SpriteTemplate gSharpTeethSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHARP_TEETH,
     .paletteTag = ANIM_TAG_SHARP_TEETH,
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
-    .callback = sub_80DFF1C,
+    .affineAnims = gAffineAnims_Bite,
+    .callback = AnimBite,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
@@ -133,8 +133,8 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
     .oam = &gOamData_AffineNormal_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB1B0,
-    .callback = sub_80DFF1C,
+    .affineAnims = gAffineAnims_Bite,
+    .callback = AnimBite,
 };
 
 static const union AffineAnimCmd sAffineAnim_TearDrop_0[] =
@@ -325,7 +325,7 @@ static void sub_80DFE90(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80DFF1C(struct Sprite *sprite)
+static void AnimBite(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
@@ -334,10 +334,10 @@ void sub_80DFF1C(struct Sprite *sprite)
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = gBattleAnimArgs[4];
     sprite->data[2] = gBattleAnimArgs[5];
-    sprite->callback = sub_80DFF58;
+    sprite->callback = AnimBite_Step1;
 }
 
-static void sub_80DFF58(struct Sprite *sprite)
+static void AnimBite_Step1(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[0];
     sprite->data[5] += sprite->data[1];
@@ -345,10 +345,10 @@ static void sub_80DFF58(struct Sprite *sprite)
     sprite->y2 = sprite->data[5] >> 8;
 
     if (++sprite->data[3] == sprite->data[2])
-        sprite->callback = sub_80DFF98;
+        sprite->callback = AnimBite_Step2;
 }
 
-static void sub_80DFF98(struct Sprite *sprite)
+static void AnimBite_Step2(struct Sprite *sprite)
 {
     sprite->data[4] -= sprite->data[0];
     sprite->data[5] -= sprite->data[1];

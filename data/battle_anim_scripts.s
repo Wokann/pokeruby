@@ -5293,11 +5293,11 @@ Move_BITE: @ 81CE9E2
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, 0, -32, 0, 0, 819, 10
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, 0, 32, 4, 0, -819, 10
+	create_sharp_teeth_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=-32, animation=0, x_velocity=0, y_velocity=32/10, half_duration=10
+	create_sharp_teeth_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=32, animation=4, x_velocity=0, y_velocity=-32/10, half_duration=10
 	delay 10
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 4, 7, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 4, 7, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -5312,15 +5312,15 @@ Move_CRUNCH: @ 81CEA40
 	waitbgfadein
 	setalpha 12, 8
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, -32, -32, 1, 819, 819, 10
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, 32, 32, 5, -819, -819, 10
+	createsprite gSharpTeethSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -32, -32, 1, 819, 819, 10
+	createsprite gSharpTeethSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 32, 5, -819, -819, 10
 	delay 10
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -8, 0, 1, 1
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 7, 5, 2
 	waitforvisualfinish
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, 32, -32, 7, -819, 819, 10
-	createsprite gBattleAnimSpriteTemplate_83DB1D0, ANIM_BATTLER_ATTACKER, 2, -32, 32, 3, 819, -819, 10
+	createsprite gSharpTeethSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, -32, 7, -819, 819, 10
+	createsprite gSharpTeethSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -32, 32, 3, 819, -819, 10
 	delay 10
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, 0, 1, 1
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 8, 4, 2
