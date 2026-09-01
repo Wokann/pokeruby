@@ -411,6 +411,9 @@
 // Ruby's Magnitude power check stores its result in argument 15.
 #define ARG_MAGNITUDE_POWER_RESULT 0xF
 
+// Use PlayCry_Normal instead of a numbered PlayCry3 mode.
+#define ANIM_CRY_MODE_DEFAULT 0xFF
+
 // Trapping Wrap-like moves end turn animation.
 #define TRAP_ANIM_BIND 0
 #define TRAP_ANIM_WRAP 0

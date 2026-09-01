@@ -4995,7 +4995,7 @@ RoarEffect:
 
 Move_GROWL: @ 81CE3AF
 	loadspritegfx ANIM_TAG_NOISE_LINE
-	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, 255
+	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, ANIM_CRY_MODE_DEFAULT
 	call RoarEffect
 	delay 10
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 1, 0, 9, 1

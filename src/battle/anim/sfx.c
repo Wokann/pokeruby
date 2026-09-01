@@ -180,7 +180,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
     if (species != 0)
     {
         s16 mode = gBattleAnimArgs[1];
-        if (mode == 0xFF)
+        if (mode == ANIM_CRY_MODE_DEFAULT)
             PlayCry_Normal(species, pan);
         else
             PlayCry3(species, pan, mode);
