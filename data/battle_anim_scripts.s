@@ -5133,23 +5133,23 @@ Move_SMOG: @ 81CE672
 	splitbgprio_all
 	setalpha 12, 8
 	loopsewithpan SE_M_MIST, SOUND_PAN_TARGET, 17, 10
-	call _81CE6D7
-	call _81CE6D7
-	call _81CE6D7
-	call _81CE6D7
-	call _81CE6D7
-	call _81CE6D7
-	call _81CE6D7
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
+	call SmogCloud
 	delay 120
 	loopsewithpan SE_M_TOXIC, SOUND_PAN_TARGET, 18, 2
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 2, 2, 0, 12, 26650
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(26, 0, 26)
 	delay 10
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 15, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81CE6D7:
+SmogCloud:
 	createsprite gSmogCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -24, 48, 240, 1, 0
 	delay 7
 	return

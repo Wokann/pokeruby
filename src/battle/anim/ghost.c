@@ -157,7 +157,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF20 =
 {
     .tileTag = ANIM_TAG_NAIL,
     .paletteTag = ANIM_TAG_NAIL,
-    .oam = &gOamData_837E074,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

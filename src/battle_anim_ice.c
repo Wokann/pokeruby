@@ -324,24 +324,24 @@ const struct SpriteTemplate gIceSpikeSpriteTemplate =
     .callback = AnimWaveFromCenterOfTarget,
 };
 
-const union AnimCmd gSpriteAnim_83D9D2C[] =
+static const union AnimCmd sAnim_Cloud[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(8, 8),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9D38[] =
+static const union AnimCmd *const sAnims_Cloud[] =
 {
-    gSpriteAnim_83D9D2C,
+    sAnim_Cloud,
 };
 
 const struct SpriteTemplate gMistCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MIST_CLOUD,
     .paletteTag = ANIM_TAG_MIST_CLOUD,
-    .oam = &gOamData_837E074,
-    .anims = gSpriteAnimTable_83D9D38,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = InitSwirlingFogAnim,
@@ -351,8 +351,8 @@ const struct SpriteTemplate gSmogCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
-    .oam = &gOamData_837E074,
-    .anims = gSpriteAnimTable_83D9D38,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = InitSwirlingFogAnim,
@@ -383,8 +383,8 @@ const struct SpriteTemplate gPoisonGasCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_GAS_CLOUD,
     .paletteTag = ANIM_TAG_PURPLE_GAS_CLOUD,
-    .oam = &gOamData_837E074,
-    .anims = gSpriteAnimTable_83D9D38,
+    .oam = &gOamData_AffineOff_ObjBlend_32x16,
+    .anims = sAnims_Cloud,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = InitPoisonGasCloudAnim,
