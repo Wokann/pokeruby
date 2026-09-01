@@ -19,7 +19,6 @@ extern u8 gBattleAnimTarget;
 extern u16 gBattlerPartyIndexes[];
 extern const struct SpriteTemplate gWaterHitSplatSpriteTemplate;
 
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA318[];
 extern const union AnimCmd *const gAnims_SmallBubblePair[];
 
 void PrepareBattlerSpriteForRotScale(u8, u8);
@@ -91,7 +90,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9330 =
     .oam = &gOamData_837E10C,
     .anims = gSpriteAnimTable_83D9314,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA318,
+    .affineAnims = gAffineAnims_Droplet,
     .callback = sub_80D37FC,
 };
 

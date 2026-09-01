@@ -5947,44 +5947,44 @@ ToxicBubbles:
 Move_SLUDGE: @ 81CF9F2
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA2B8, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 0
+	createsprite gSludgeProjectileSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 5, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 1, 2, 0, 12, 31774
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 5, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
 	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
 
 Move_SLUDGE_BOMB: @ 81CFA34
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
-	call _81CFB44
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
+	call SludgeBombProjectile
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 3, 0, 15, 1
 	createvisualtask AnimTask_BlendColorCycle, 2, 4, 1, 2, 0, 12, 31774
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 42, 27, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -27, 44, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 39, -28, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -42, -42, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 42, 27, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -27, 44, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 39, -28, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -42, -42, 20
 	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 0, 40, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -8, -44, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -46, -28, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 46, 9, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 40, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, -44, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -46, -28, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 46, 9, 20
 	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 42, 0, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -43, -12, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, 16, -46, 20
-	createsprite gBattleAnimSpriteTemplate_83DA2E8, ANIM_BATTLER_TARGET, 2, -16, 44, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 42, 0, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -43, -12, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -46, 20
+	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 44, 20
 	playsewithpan SE_M_DIG, SOUND_PAN_TARGET
 	delay 0
 	waitsound
@@ -5992,40 +5992,40 @@ Move_SLUDGE_BOMB: @ 81CFA34
 	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
-_81CFB44:
+SludgeBombProjectile:
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA2B8, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 0
+	createsprite gSludgeProjectileSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 0
 	delay 3
 	return
 
 Move_ACID: @ 81CFB5A
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createsprite gBattleAnimSpriteTemplate_83DA2D0, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, 0, 0
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, 0, 0
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DA2D0, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, 24, 0
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, 24, 0
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DA2D0, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, -24, 0
+	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, -24, 0
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 15
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 10, 1
 	createvisualtask AnimTask_ShakeMon2, 5, 3, 2, 0, 10, 1
 	createvisualtask AnimTask_BlendColorCycle, 2, 20, 2, 2, 0, 12, 31774
-	createsprite gBattleAnimSpriteTemplate_83DA31C, ANIM_BATTLER_TARGET, 2, 0, -22, 0, 15, 55
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -22, 0, 15, 55
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83DA31C, ANIM_BATTLER_TARGET, 2, -26, -24, 0, 15, 55
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, -26, -24, 0, 15, 55
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83DA31C, ANIM_BATTLER_TARGET, 2, 15, -27, 0, 15, 50
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, -27, 0, 15, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83DA31C, ANIM_BATTLER_TARGET, 2, -15, -17, 0, 10, 45
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, -17, 0, 10, 45
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83DA31C, ANIM_BATTLER_TARGET, 2, 27, -22, 0, 15, 50
+	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, 27, -22, 0, 15, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER

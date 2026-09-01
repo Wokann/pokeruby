@@ -131,6 +131,8 @@ extern const struct OamData gOamData_837E14C;
 extern const struct OamData gOamData_837E154;
 extern const struct OamData gOamData_837E15C;
 
+extern const union AffineAnimCmd *const gAffineAnims_Droplet[];
+
 void DoMoveAnim(u16 move);
 void LaunchBattleAnimation(const u8 *const moveAnims[], u16 b, u8 c);
 bool8 IsAnimBankSpriteVisible(u8 a);
