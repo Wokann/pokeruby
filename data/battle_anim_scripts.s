@@ -5030,25 +5030,25 @@ Move_LIGHT_SCREEN: @ 81CE47A
 	loadspritegfx ANIM_TAG_GREEN_LIGHT_WALL
 	setalpha 0, 16
 	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 15
-	createsprite gBattleAnimSpriteTemplate_83DA6A8, ANIM_BATTLER_ATTACKER, 1, 40, 0, 10166
+	createsprite gLightScreenWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 40, 0, ANIM_TAG_GREEN_LIGHT_WALL
 	delay 10
-	call _81CE4A1
+	call SpecialScreenSparkle
 	waitforvisualfinish
 	delay 1
 	blendoff
 	end
-_81CE4A1:
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 23, 0, 0, 1
+SpecialScreenSparkle:
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 23, 0, ANIM_BATTLER_ATTACKER, TRUE
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 31, -8, 0, 1
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, -8, ANIM_BATTLER_ATTACKER, TRUE
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 30, 20, 0, 1
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 30, 20, ANIM_BATTLER_ATTACKER, TRUE
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 10, -15, 0, 1
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, -15, ANIM_BATTLER_ATTACKER, TRUE
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 20, 10, 0, 1
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 10, ANIM_BATTLER_ATTACKER, TRUE
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DA76C, ANIM_BATTLER_ATTACKER, 2, 10, 18, 0, 1
+	createsprite gSpecialScreenSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 18, ANIM_BATTLER_ATTACKER, TRUE
 	return
 
 Move_MIRROR_COAT: @ 81CE506
@@ -5058,7 +5058,7 @@ Move_MIRROR_COAT: @ 81CE506
 	createsprite gBattleAnimSpriteTemplate_83DA6D8, ANIM_BATTLER_ATTACKER, 1, 40, 0, 10168
 	delay 10
 	playsewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER
-	call _81CE4A1
+	call SpecialScreenSparkle
 	waitforvisualfinish
 	delay 1
 	blendoff
