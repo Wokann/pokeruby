@@ -2044,7 +2044,7 @@ Move_WHIRLWIND: @ 81CA1E9
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_TARGET, 12, 6, 1, 5
 	delay 7
 	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
-	createvisualtask sub_80A8A80, 5, 1, 8
+	createvisualtask AnimTask_SlideOffScreen, 5, ANIM_BATTLER_TARGET, 8
 	waitforvisualfinish
 	end
 
@@ -4970,13 +4970,13 @@ Move_DRAGON_BREATH: @ 81CE20A
 Move_ROAR: @ 81CE31E
 	loadspritegfx ANIM_TAG_NOISE_LINE
 	monbg ANIM_BATTLER_ATTACKER
-	monbgprio_28 0
+	splitbgprio ANIM_BATTLER_ATTACKER
 	setalpha 8, 8
 	createvisualtask SoundTask_PlayCryWithMode, 2, ANIM_BATTLER_ATTACKER, 2
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_BATTLER_ATTACKER, 1
 	call RoarEffect
 	delay 20
-	createvisualtask sub_80A8A80, 5, 1, 2
+	createvisualtask AnimTask_SlideOffScreen, 5, ANIM_BATTLER_TARGET, 2
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff

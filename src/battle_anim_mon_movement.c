@@ -710,9 +710,9 @@ static void AnimTask_WindUpLungePart2(u8 taskId)
     }
 }
 
-static void sub_80A8B3C(u8 taskId);
+static void AnimTask_SlideOffScreen_Step(u8 taskId);
 
-void sub_80A8A80(u8 taskId)
+void AnimTask_SlideOffScreen(u8 taskId)
 {
     u8 spriteId;
     switch (gBattleAnimArgs[0])
@@ -750,10 +750,10 @@ void sub_80A8A80(u8 taskId)
     {
         TASK.data[1] = -gBattleAnimArgs[1];
     }
-    TASK.func = sub_80A8B3C;
+    TASK.func = AnimTask_SlideOffScreen_Step;
 }
 
-static void sub_80A8B3C(u8 taskId)
+static void AnimTask_SlideOffScreen_Step(u8 taskId)
 {
     u8 spriteId = TASK.data[0];
     gSprites[spriteId].x2 += TASK.data[1];
