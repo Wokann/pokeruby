@@ -2,6 +2,7 @@
 #include "battle_anim.h"
 #include "rom_8077ABC.h"
 #include "trig.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -213,8 +214,8 @@ static void AnimAcidPoisonBubble(struct Sprite *sprite)
     if (!gBattleAnimArgs[3])
         StartSpriteAnim(sprite, 2);
 
-    InitSpritePosToAnimAttacker(sprite, 1);
-    SetAverageBattlerPositions(gBattleAnimTarget, 1, &l1, &l2);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &l1, &l2);
 
     if (GetBattlerSide(gBattleAnimAttacker))
         gBattleAnimArgs[4] = -gBattleAnimArgs[4];
@@ -266,7 +267,7 @@ static void AnimAcidPoisonDroplet(struct Sprite *sprite)
 {
     SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->x, &sprite->y);
 
-    if (GetBattlerSide(gBattleAnimAttacker))
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[0] = -gBattleAnimArgs[0];
 
     sprite->x += gBattleAnimArgs[0];

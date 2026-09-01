@@ -6010,9 +6010,9 @@ Move_ACID: @ 81CFB5A
 	createsprite gAcidPoisonBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 40, 1, -24, 0
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
 	delay 15
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 10, 1
-	createvisualtask AnimTask_ShakeMon2, 5, 3, 2, 0, 10, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 20, 2, 2, 0, 12, 31774
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 2, 0, 10, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_DEF_PARTNER, 2, 0, 10, 1
+	blend_color_cycle priority=2, selector=F_PAL_DEF_SIDE, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
 	createsprite gAcidPoisonDropletSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -22, 0, 15, 55
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_TARGET
 	delay 10
