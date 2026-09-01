@@ -16,9 +16,9 @@ extern u16 gUnknown_03000730[];
 extern u8 gBattlerSpriteIds[];
 
 static void AnimOutrageFlame(struct Sprite *sprite);
-void sub_80DF760(struct Sprite *sprite);
+static void StartDragonFireTranslation(struct Sprite *sprite);
+static void AnimDragonFireToTarget(struct Sprite *sprite);
 void sub_80DF6F0(struct Sprite *sprite);
-void sub_80DF760(struct Sprite *sprite);
 void sub_80DFB28(struct Sprite *sprite);
 static void sub_80DFBD8(struct Sprite *sprite);
 static void AnimDragonDanceOrb(struct Sprite *sprite);
@@ -52,7 +52,7 @@ const struct SpriteTemplate gOutrageFlameSpriteTemplate =
     .callback = AnimOutrageFlame,
 };
 
-const union AnimCmd gSpriteAnim_83DAFE4[] =
+static const union AnimCmd sAnim_DragonBreathFire_0[] =
 {
     ANIMCMD_FRAME(16, 3),
     ANIMCMD_FRAME(32, 3),
@@ -60,7 +60,7 @@ const union AnimCmd gSpriteAnim_83DAFE4[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83DAFF4[] =
+static const union AnimCmd sAnim_DragonBreathFire_1[] =
 {
     ANIMCMD_FRAME(16, 3, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 3, .vFlip = TRUE, .hFlip = TRUE),
@@ -68,41 +68,41 @@ const union AnimCmd gSpriteAnim_83DAFF4[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DB004[] =
+static const union AnimCmd *const sAnims_DragonBreathFire[] =
 {
-    gSpriteAnim_83DAFE4,
-    gSpriteAnim_83DAFF4,
+    sAnim_DragonBreathFire_0,
+    sAnim_DragonBreathFire_1,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB00C[] =
+static const union AffineAnimCmd sAffineAnim_DragonBreathFire_0[] =
 {
     AFFINEANIMCMD_FRAME(0x50, 0x50, 127, 0),
     AFFINEANIMCMD_FRAME(0xD, 0xD, 0, 100),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DB024[] =
+static const union AffineAnimCmd sAffineAnim_DragonBreathFire_1[] =
 {
     AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
     AFFINEANIMCMD_FRAME(0xD, 0xD, 0, 100),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DB03C[] =
+static const union AffineAnimCmd *const sAffineAnims_DragonBreathFire[] =
 {
-    gSpriteAffineAnim_83DB00C,
-    gSpriteAffineAnim_83DB024,
+    sAffineAnim_DragonBreathFire_0,
+    sAffineAnim_DragonBreathFire_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB044 =
+const struct SpriteTemplate gDragonBreathFireSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_837DFF4,
-    .anims = gSpriteAnimTable_83DB004,
+    .anims = sAnims_DragonBreathFire,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DB03C,
-    .callback = sub_80DF760,
+    .affineAnims = sAffineAnims_DragonBreathFire,
+    .callback = AnimDragonFireToTarget,
 };
 
 const union AnimCmd gSpriteAnim_83DB05C[] =
@@ -171,7 +171,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB0D0 =
     .anims = gSpriteAnimTable_83DB0A0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DB0C8,
-    .callback = sub_80DF760,
+    .callback = AnimDragonFireToTarget,
 };
 
 const struct SpriteTemplate gDragonDanceOrbSpriteTemplate =
@@ -222,7 +222,7 @@ static void AnimOutrageFlame(struct Sprite *sprite)
 
 // part of Dragon Breath
 
-void sub_80DF63C(struct Sprite *sprite)
+static void StartDragonFireTranslation(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
@@ -269,11 +269,11 @@ void sub_80DF6F0(struct Sprite *sprite)
 
 // Dragon Breath init
 
-void sub_80DF760(struct Sprite *sprite)
+static void AnimDragonFireToTarget(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker))
         StartSpriteAffineAnim(sprite, 1);
-    sub_80DF63C(sprite);
+    StartDragonFireTranslation(sprite);
 }
 
 static void AnimDragonDanceOrb(struct Sprite *sprite)

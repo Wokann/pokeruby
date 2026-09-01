@@ -4936,33 +4936,33 @@ Move_SCRATCH: @ 81CE1D8
 Move_DRAGON_BREATH: @ 81CE20A
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	loopsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER, 7, 7
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 0, 9, 31
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 0, 9, rgb(31, 0, 0)
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 21, 1
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DB044, ANIM_BATTLER_TARGET, 2, 0, 0, 0, 0, 20
+	create_dragon_breath_fire_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=0, target_x=0, target_y=0, duration=20
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 1, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 9, 0, rgb(31, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end

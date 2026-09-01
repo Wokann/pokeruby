@@ -244,6 +244,11 @@
 	.byte \delay
 	.endm
 
+	.macro splitbgprio battler:req
+	.byte 0x28
+	.byte \battler
+	.endm
+
 	.macro monbgprio_28 bank
 	.byte 0x28
 	.byte \bank
@@ -315,4 +320,8 @@
 
 	.macro create_outrage_flame_sprite anim_battler, subpriority_offset, x, y, duration, x_velocity, y_velocity, flicker_duration
 	createsprite gOutrageFlameSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, 256 * \x_velocity, 256 * \y_velocity, \flicker_duration
+	.endm
+
+	.macro create_dragon_breath_fire_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_x:req, target_y:req, duration:req
+	createsprite gDragonBreathFireSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration
 	.endm
