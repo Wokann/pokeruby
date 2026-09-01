@@ -5069,13 +5069,13 @@ Move_REFLECT: @ 81CE52C
 	loadspritegfx ANIM_TAG_BLUE_LIGHT_WALL
 	setalpha 0, 16
 	waitplaysewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER, 15
-	createsprite gBattleAnimSpriteTemplate_83DA6C0, ANIM_BATTLER_ATTACKER, 1, 40, 0, 10167
+	createsprite gReflectWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 40, 0, ANIM_TAG_BLUE_LIGHT_WALL
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83DA73C, ANIM_BATTLER_ATTACKER, 2, 30, 0, 0, 1
+	createsprite gReflectSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 30, 0, ANIM_BATTLER_ATTACKER, TRUE
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83DA73C, ANIM_BATTLER_ATTACKER, 2, 19, -12, 0, 1
+	createsprite gReflectSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 19, -12, ANIM_BATTLER_ATTACKER, TRUE
 	delay 7
-	createsprite gBattleAnimSpriteTemplate_83DA73C, ANIM_BATTLER_ATTACKER, 2, 10, 20, 0, 1
+	createsprite gReflectSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 20, ANIM_BATTLER_ATTACKER, TRUE
 	waitforvisualfinish
 	delay 1
 	blendoff

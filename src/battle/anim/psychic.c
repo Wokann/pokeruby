@@ -71,7 +71,7 @@ const struct SpriteTemplate gLightScreenWallSpriteTemplate =
     .callback = AnimDefensiveWall,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6C0 =
+const struct SpriteTemplate gReflectWallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_LIGHT_WALL,
     .paletteTag = ANIM_TAG_BLUE_LIGHT_WALL,
@@ -115,7 +115,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA708 =
     .callback = AnimDefensiveWall,
 };
 
-const union AnimCmd gSpriteAnim_83DA720[] =
+static const union AnimCmd sAnim_ReflectSparkle[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -125,17 +125,17 @@ const union AnimCmd gSpriteAnim_83DA720[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA738[] =
+static const union AnimCmd *const sAnims_ReflectSparkle[] =
 {
-    gSpriteAnim_83DA720,
+    sAnim_ReflectSparkle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA73C =
+const struct SpriteTemplate gReflectSparkleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_4,
     .paletteTag = ANIM_TAG_SPARKLE_4,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DA738,
+    .anims = sAnims_ReflectSparkle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimWallSparkle,
