@@ -5922,24 +5922,24 @@ Move_SYNTHESIS: @ 81CF959
 Move_TOXIC: @ 81CF983
 	loadspritegfx ANIM_TAG_TOXIC_BUBBLE
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
-	call _81CF99D
-	call _81CF99D
+	call ToxicBubbles
+	call ToxicBubbles
 	waitforvisualfinish
 	delay 15
 	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
-_81CF99D:
-	createsprite gBattleAnimSpriteTemplate_83DA244, ANIM_BATTLER_TARGET, 2, -24, 16, 1, 1
+ToxicBubbles:
+	createsprite gToxicBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 16, 1, 1
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83DA244, ANIM_BATTLER_TARGET, 2, 8, 16, 1, 1
+	createsprite gToxicBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 16, 1, 1
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83DA244, ANIM_BATTLER_TARGET, 2, -8, 16, 1, 1
+	createsprite gToxicBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 16, 1, 1
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83DA244, ANIM_BATTLER_TARGET, 2, 24, 16, 1, 1
+	createsprite gToxicBubbleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 16, 1, 1
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	delay 15
 	return

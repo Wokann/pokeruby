@@ -20,7 +20,7 @@ static void sub_80D9E78(struct Sprite *sprite);
 static void sub_80D9EE8(struct Sprite *sprite);
 static void AnimBubbleEffectStep(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83DA22C[] =
+static const union AnimCmd sAnim_ToxicBubble[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(8, 5),
@@ -29,17 +29,17 @@ const union AnimCmd gSpriteAnim_83DA22C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA240[] =
+static const union AnimCmd *const sAnims_ToxicBubble[] =
 {
-    gSpriteAnim_83DA22C,
+    sAnim_ToxicBubble,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA244 =
+const struct SpriteTemplate gToxicBubbleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TOXIC_BUBBLE,
     .paletteTag = ANIM_TAG_TOXIC_BUBBLE,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
-    .anims = gSpriteAnimTable_83DA240,
+    .anims = sAnims_ToxicBubble,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,
