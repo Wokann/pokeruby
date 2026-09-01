@@ -5351,45 +5351,45 @@ Move_CLAMP: @ 81CEAF0
 
 Move_ICE_BEAM: @ 81CEB4D
 	monbg ANIM_BATTLER_TARGET
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 7, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=rgb(0, 0, 0)
 	waitforvisualfinish
-	createsoundtask sub_812B058, 183, -64, 63, 4, 4, 0, 10
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 12, 0, 12, 20
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -12, 0, -12, 20
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_BUBBLE_BEAM2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 4, 4, 0, 10
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -12, 0, -12, 20
 	delay 1
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -31, 0, 7, rgb(0, 20, 31)
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	simple_palette_blend selector=F_PAL_TARGET, delay=-31, initial_blend_y=0, target_blend_y=7, color=rgb(0, 20, 31)
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 25, 1
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	call _81CEC4E
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	call IceBeamCreateCrystals
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
 	delay 1
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
 	waitforvisualfinish
 	delay 20
 	call IceCrystalEffectShort
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 5, 7, 0, rgb(0, 20, 31)
+	simple_palette_blend selector=F_PAL_TARGET, delay=5, initial_blend_y=7, target_blend_y=0, color=rgb(0, 20, 31)
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 7, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=rgb(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	end
-_81CEC4E:
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 12, 0, 12, 20
-	createsprite gIceBeamOuterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -12, 0, -12, 20
-	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
+IceBeamCreateCrystals:
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 12, 0, 12, 20
+	createsprite gIceBeamOuterCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -12, 0, -12, 20
+	createsprite gIceBeamInnerCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
 	delay 1
 	return
 
@@ -5412,7 +5412,7 @@ Move_AURORA_BEAM: @ 81CEC91
 	call _81CED18
 	call _81CED18
 	setarg ARG_RET_ID, -1
-	createsoundtask sub_812B058, 183, -64, 63, 3, 6, 0, 10
+	createsoundtask SoundTask_LoopSEAdjustPanning, 183, -64, 63, 3, 6, 0, 10
 	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 40, 1
 	call _81CED18
 	call _81CED18
@@ -7112,7 +7112,7 @@ Move_PSYBEAM: @ 81D15A2
 	loadspritegfx ANIM_TAG_GOLD_RING
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
-	createsoundtask sub_812B058, 200, -64, 63, 3, 4, 0, 15
+	createsoundtask SoundTask_LoopSEAdjustPanning, 200, -64, 63, 3, 4, 0, 15
 	call _81D1626
 	call _81D1626
 	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 4, 1
@@ -7158,7 +7158,7 @@ Move_PSYWAVE: @ 81D169C
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
 	createvisualtask sub_80D3630, 5, 100
-	createsoundtask sub_812B058, 203, -64, 63, 2, 9, 0, 10
+	createsoundtask SoundTask_LoopSEAdjustPanning, 203, -64, 63, 2, 9, 0, 10
 	call _81D16FF
 	call _81D16FF
 	createvisualtask AnimTask_BlendColorCycle, 2, 4, 1, 4, 0, 12, 32351
@@ -7335,7 +7335,7 @@ Move_SHADOW_BALL: @ 81D1AEF
 	fadetobg BG_GHOST
 	waitbgfadein
 	delay 15
-	createsoundtask sub_812B058, 168, -64, 63, 5, 5, 0, 5
+	createsoundtask SoundTask_LoopSEAdjustPanning, 168, -64, 63, 5, 5, 0, 5
 	createsprite gShadowBallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 16, 8
 	waitforvisualfinish
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
@@ -7994,7 +7994,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	delay 20
 	playsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER
 	delay 20
-	createsoundtask sub_812B058, 220, -64, 63, 5, 6, 0, 7
+	createsoundtask SoundTask_LoopSEAdjustPanning, 220, -64, 63, 5, 6, 0, 7
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 16, rgb(0, 0, 0)
 	delay 16
@@ -8331,7 +8331,7 @@ Move_HYPER_BEAM: @ 81D31EA
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 4, 1
 	waitforvisualfinish
 	delay 30
-	createsoundtask sub_812B058, 247, -64, 63, 1, 15, 0, 5
+	createsoundtask SoundTask_LoopSEAdjustPanning, 247, -64, 63, 1, 15, 0, 5
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 4, 50, 1
 	createvisualtask AnimTask_FlashAnimTagWithColor, 2, 10147, 1, 12, 31, 16, 0, 0
 	call _81D331B
