@@ -430,8 +430,17 @@
 #define ANIM_WEATHER_HAIL 4
 
 // Palette-selection flags used by battle animation blend tasks.
-#define F_PAL_BG       (1 << 0)
-#define F_PAL_ATTACKER (1 << 1)
-#define F_PAL_TARGET   (1 << 2)
+#define F_PAL_BG          (1 << 0)
+#define F_PAL_ATTACKER    (1 << 1)
+#define F_PAL_TARGET      (1 << 2)
+#define F_PAL_ATK_PARTNER (1 << 3)
+#define F_PAL_DEF_PARTNER (1 << 4)
+#define F_PAL_ANIM_1      (1 << 5)
+#define F_PAL_ANIM_2      (1 << 6)
+#define F_PAL_ATK_SIDE    (F_PAL_ATTACKER | F_PAL_ATK_PARTNER)
+#define F_PAL_DEF_SIDE    (F_PAL_TARGET | F_PAL_DEF_PARTNER)
+#define F_PAL_BATTLERS    (F_PAL_ATK_SIDE | F_PAL_DEF_SIDE)
+// Only used by AnimTask_BlendBattleAnimPal to get battler sprite palettes by position.
+#define F_PAL_BATTLERS_2  (1 << 7 | 1 << 8 | 1 << 9 | 1 << 10)
 
 #endif

@@ -38,7 +38,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA244 =
 {
     .tileTag = ANIM_TAG_TOXIC_BUBBLE,
     .paletteTag = ANIM_TAG_TOXIC_BUBBLE,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83DA240,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

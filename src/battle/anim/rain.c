@@ -6,16 +6,16 @@
 
 extern s16 gBattleAnimArgs[8];
 
-void SetAnimRaindropCallback(struct Sprite *sprite);
-static void MoveAnimRaindrop(struct Sprite *sprite);
+static void AnimRainDrop(struct Sprite *sprite);
+static void AnimRainDrop_Step(struct Sprite *sprite);
 
 // rain (spawns and animates raindrops)
 // Used in Rain Dance and general rain animation.
 
- const u8 gUnknown_3D7D8C[] = INCBIN_U8("graphics/unknown/unknown_3D7D8C.4bpp");
- const u8 gUnknown_3D810C[] = INCBIN_U8("graphics/unknown/unknown_3D810C.bin");
+static const u8 sUnusedWater_Gfx[] = INCBIN_U8("graphics/unknown/unknown_3D7D8C.4bpp");
+static const u8 sUnusedWater[] = INCBIN_U8("graphics/unknown/unknown_3D810C.bin");
 
- const union AnimCmd gSpriteAnim_83D910C[] =
+static const union AnimCmd sAnim_RainDrop[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
@@ -27,52 +27,62 @@ static void MoveAnimRaindrop(struct Sprite *sprite);
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D912C[] =
+static const union AnimCmd *const sAnims_RainDrop[] =
 {
-    gSpriteAnim_83D910C,
+    sAnim_RainDrop,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9130 =
+const struct SpriteTemplate gRainDropSpriteTemplate =
 {
-    .tileTag = 10115,
-    .paletteTag = 10115,
-    .oam = &gOamData_837DF74,
-    .anims = gSpriteAnimTable_83D912C,
+    .tileTag = ANIM_TAG_RAIN_DROPS,
+    .paletteTag = ANIM_TAG_RAIN_DROPS,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_RainDrop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SetAnimRaindropCallback,
+    .callback = AnimRainDrop,
 };
 
-void CreateAnimRaindrops(u8 taskId)
+#define tRaindropSpawnTimer    data[0]
+#define tRaindropUnused        data[1]
+#define tRaindropSpawnInterval data[2]
+#define tRaindropSpawnDuration data[3]
+
+void AnimTask_CreateRaindrops(u8 taskId)
 {
-    if (gTasks[taskId].data[0] == 0)
+    if (gTasks[taskId].tRaindropSpawnTimer == 0)
     {
-        gTasks[taskId].data[1] = gBattleAnimArgs[0];
-        gTasks[taskId].data[2] = gBattleAnimArgs[1];
-        gTasks[taskId].data[3] = gBattleAnimArgs[2];
+        gTasks[taskId].tRaindropUnused = gBattleAnimArgs[0];
+        gTasks[taskId].tRaindropSpawnInterval = gBattleAnimArgs[1];
+        gTasks[taskId].tRaindropSpawnDuration = gBattleAnimArgs[2];
     }
 
-    gTasks[taskId].data[0]++;
+    gTasks[taskId].tRaindropSpawnTimer++;
 
-    if (gTasks[taskId].data[0] % gTasks[taskId].data[2] == 1)
+    if (gTasks[taskId].tRaindropSpawnTimer % gTasks[taskId].tRaindropSpawnInterval == 1)
     {
-        u8 x = Random() % 240;
-        u8 y = Random() % 80;
-        CreateSprite(&gSpriteTemplate_83D9130, x,  y, 4);
+        u8 x = Random() % DISPLAY_WIDTH;
+        u8 y = Random() % (DISPLAY_HEIGHT / 2);
+        CreateSprite(&gRainDropSpriteTemplate, x, y, 4);
     }
 
-    if (gTasks[taskId].data[0] == gTasks[taskId].data[3])
+    if (gTasks[taskId].tRaindropSpawnTimer == gTasks[taskId].tRaindropSpawnDuration)
     {
         DestroyAnimVisualTask(taskId);
     }
 }
 
-void SetAnimRaindropCallback(struct Sprite *sprite)
+#undef tRaindropSpawnTimer
+#undef tRaindropUnused
+#undef tRaindropSpawnInterval
+#undef tRaindropSpawnDuration
+
+static void AnimRainDrop(struct Sprite *sprite)
 {
-    sprite->callback = MoveAnimRaindrop;
+    sprite->callback = AnimRainDrop_Step;
 }
 
-static void MoveAnimRaindrop(struct Sprite *sprite)
+static void AnimRainDrop_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] <= 13)
     {

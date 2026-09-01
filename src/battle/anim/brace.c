@@ -32,7 +32,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_EndureFlame =
 {
     .tileTag = ANIM_TAG_FOCUS_ENERGY,
     .paletteTag = ANIM_TAG_FOCUS_ENERGY,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83D6E94,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

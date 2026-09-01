@@ -170,7 +170,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA784 =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -227,7 +227,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA824 =
 {
     .tileTag = ANIM_TAG_BENT_SPOON,
     .paletteTag = ANIM_TAG_BENT_SPOON,
-    .oam = &gOamData_837DF74,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
     .anims = gSpriteAnimTable_83DA81C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,

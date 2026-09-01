@@ -5276,14 +5276,14 @@ Move_DRAGON_RAGE: @ 81CE8BA
 Move_RAIN_DANCE: @ 81CE997
 	loadspritegfx ANIM_TAG_RAIN_DROPS
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 0, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 0, 4, rgb(0, 0, 0)
 	waitforvisualfinish
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 120
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 120
 	delay 120
 	delay 30
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 4, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 2, 4, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	end
 
@@ -10504,8 +10504,8 @@ General_Rain: @ 81D67BB
 	playsewithpan SE_M_RAIN_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 0, 4, 0
 	waitforvisualfinish
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
-	createvisualtask CreateAnimRaindrops, 2, 0, 3, 60
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
+	createvisualtask AnimTask_CreateRaindrops, 2, 0, 3, 60
 	delay 50
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 2, 4, 0, 0
