@@ -5193,23 +5193,23 @@ Move_FAINT_ATTACK: @ 81CE6ED
 Move_SAND_ATTACK: @ 81CE774
 	loadspritegfx ANIM_TAG_MUD_SAND
 	monbg ANIM_BATTLER_ATK_PARTNER
-	monbgprio_28 0
+	splitbgprio ANIM_BATTLER_ATTACKER
 	setalpha 12, 8
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_ATTACKER
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -10, 0, 0, 3
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 2
-	call Move_SAND_ATTACK_CreateDirtSpray
-	call Move_SAND_ATTACK_CreateDirtSpray
-	call Move_SAND_ATTACK_CreateDirtSpray
-	call Move_SAND_ATTACK_CreateDirtSpray
-	call Move_SAND_ATTACK_CreateDirtSpray
-	call Move_SAND_ATTACK_CreateDirtSpray
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
+	call SandAttackDirt
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
 	end
-Move_SAND_ATTACK_CreateDirtSpray:
+SandAttackDirt:
 	createsprite gSandAttackDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 0, 0
 	createsprite gSandAttackDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 10, 10
 	createsprite gSandAttackDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, -10, -10
