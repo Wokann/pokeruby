@@ -2955,7 +2955,7 @@ _81CB617:
 _81CB68E:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_BIRD
-	call Unknown_81D61FB
+	call SetSkyBg
 	monbg ANIM_BATTLER_ATTACKER
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	delay 4
@@ -2972,7 +2972,7 @@ _81CB68E:
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 15, 0, 32767
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
-	call Unknown_81D622B
+	call UnsetSkyBg
 	goto _81CB584
 
 Move_FLASH: @ 81CB713
@@ -6200,40 +6200,40 @@ Move_AEROBLAST: @ 81CFFAF
 	loadspritegfx ANIM_TAG_AIR_WAVE_2
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	call Unknown_81D61FB
-	monbgprio_28 1
+	call SetSkyBg
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	call _81D000B
-	createvisualtask AnimTask_ShakeMon, 5, 1, 5, 0, 50, 1
-	call _81D000B
-	call _81D000B
-	call _81D000B
-	call _81D000B
+	call AeroblastBeam
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 5, 0, 50, 1
+	call AeroblastBeam
+	call AeroblastBeam
+	call AeroblastBeam
+	call AeroblastBeam
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	delay 0
-	call Unknown_81D622B
+	call UnsetSkyBg
 	end
-_81D000B:
+AeroblastBeam:
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 0, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 0, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 0, 0
 	delay 3
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 1, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 1, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 1, 0
 	delay 3
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 2, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 2, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 2, 0
 	delay 3
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 3, 0
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 3, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, -12, 0, -12, 15, 3, 0
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 26, 8, 12, 8, 15, 3, 0
 	delay 3
 	return
 
@@ -7506,13 +7506,13 @@ _81D1E66:
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, 8, 0, 0, 22, 2, 1
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, 8, 0, 0, 22, 2, 1
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, -8, 16, 14, 22, 1, 1
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, -8, 16, 14, 22, 1, 1
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA3E4, ANIM_BATTLER_ATTACKER, 2, 14, 12, -16, -14, 22, 0, 1
+	createsprite gAirWaveCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 14, 12, -16, -14, 22, 0, 1
 	delay 17
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 10, 1
@@ -10166,21 +10166,21 @@ UnsetPsychicBackground: @ 81D61F3
 	waitbgfadein
 	return
 
-Unknown_81D61FB: @ 81D61FB
-	jumpifcontest _81D6214
-	fadetobg BG_FLYING
+SetSkyBg: @ 81D61FB
+	jumpifcontest SetSkyBgContest
+	fadetobg BG_SKY
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
-_81D6212:
+SetSkyBgContinue:
 	waitbgfadein
 	return
-_81D6214:
-	fadetobg BG_FLYING_CONTESTS
+SetSkyBgContest:
+	fadetobg BG_SKY_CONTESTS
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
-	goto _81D6212
+	goto SetSkyBgContinue
 
-Unknown_81D622B: @ 81D622B
+UnsetSkyBg: @ 81D622B
 	restorebg
 	waitbgfadeout
 	setarg ARG_RET_ID, -1

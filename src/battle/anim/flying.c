@@ -20,7 +20,7 @@ static void AnimEllipticalGust(struct Sprite *sprite);
 static void AnimEllipticalGust_Step(struct Sprite *sprite);
 static void AnimGustToTarget(struct Sprite *sprite);
 static void AnimGustToTarget_Step(struct Sprite *sprite);
-static void sub_80DA208(struct Sprite *sprite);
+static void AnimAirWaveCrescent(struct Sprite *sprite);
 static void sub_80DA300(struct Sprite *sprite);
 static void sub_80DA348(struct Sprite *sprite);
 static void sub_80DA38C(struct Sprite *sprite);
@@ -81,7 +81,7 @@ const struct SpriteTemplate gGustToTargetSpriteTemplate =
     .callback = AnimGustToTarget,
 };
 
-const union AnimCmd gSpriteAnim_83DA3CC[] =
+static const union AnimCmd sAffineAnim_AirWaveCrescent[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(0, 3, .hFlip = TRUE),
@@ -90,20 +90,20 @@ const union AnimCmd gSpriteAnim_83DA3CC[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA3E0[] =
+static const union AnimCmd *const sAffineAnims_AirWaveCrescent[] =
 {
-    gSpriteAnim_83DA3CC,
+    sAffineAnim_AirWaveCrescent,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA3E4 =
+const struct SpriteTemplate gAirWaveCrescentSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AIR_WAVE_2,
     .paletteTag = ANIM_TAG_AIR_WAVE_2,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
-    .anims = gSpriteAnimTable_83DA3E0,
+    .anims = sAffineAnims_AirWaveCrescent,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DA208,
+    .callback = AnimAirWaveCrescent,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA3FC[] =
@@ -453,7 +453,7 @@ static void AnimGustToTarget_Step(struct Sprite *sprite)
     }
 }
 
-static void sub_80DA208(struct Sprite *sprite)
+static void AnimAirWaveCrescent(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
@@ -469,20 +469,20 @@ static void sub_80DA208(struct Sprite *sprite)
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
     }
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[4];
 
-    if (gBattleAnimArgs[6] == 0)
+    if (gBattleAnimArgs[6] == FALSE)
     {
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
     else
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->data[2], &sprite->data[4]);
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->data[2], &sprite->data[4]);
     }
 
     sprite->data[2] = sprite->data[2] + gBattleAnimArgs[2];
