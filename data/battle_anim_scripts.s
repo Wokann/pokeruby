@@ -5085,7 +5085,7 @@ Move_BARRIER: @ 81CE57F
 	loadspritegfx ANIM_TAG_GRAY_LIGHT_WALL
 	setalpha 0, 16
 	waitplaysewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER, 15
-	createsprite gBattleAnimSpriteTemplate_83DA6F0, ANIM_BATTLER_ATTACKER, 3, 40, 0, 10169
+	createsprite gBarrierWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 40, 0, ANIM_TAG_GRAY_LIGHT_WALL
 	waitforvisualfinish
 	delay 1
 	blendoff
