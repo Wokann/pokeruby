@@ -5967,8 +5967,8 @@ Move_SLUDGE_BOMB: @ 81CFA34
 	call SludgeBombProjectile
 	call SludgeBombProjectile
 	call SludgeBombProjectile
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 3, 0, 15, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 1, 2, 0, 12, 31774
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 3, 0, 15, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(30, 0, 31)
 	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 42, 27, 20
 	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -27, 44, 20
 	createsprite gSludgeBombHitParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 39, -28, 20
