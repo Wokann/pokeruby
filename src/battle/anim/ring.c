@@ -28,7 +28,7 @@ static void sub_80D158C(struct Sprite* sprite);
 // ring (a ring that stretches outward from the Pokemon.)
 // Used in Aromatherapy and Heal Bell.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77F8 =
+const struct SpriteTemplate gSnoreZSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SNORE_Z,
     .paletteTag = ANIM_TAG_SNORE_Z,

@@ -45,6 +45,19 @@
 .equiv BATTLE_WEATHER_SANDSTORM, 2
 .equiv BATTLE_WEATHER_HAIL, 3
 
+
+@ Battle animation shake types. Keep in sync with include/constants/battle_anim.h.
+	enum_start
+	enum SHAKE_BG_X
+	enum SHAKE_BG_Y
+	enum SHAKE_MON_X
+	enum SHAKE_MON_Y
+
+	enum_start
+	enum SHAKE_MON_ATTACKER
+	enum SHAKE_MON_TARGET
+	enum SHAKE_MON_BOTH
+
 	enum_start 1
 	enum ATTACK
 	enum DEFENSE

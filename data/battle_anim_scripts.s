@@ -2097,7 +2097,7 @@ Move_MEAN_LOOK: @ 81CA31A
 
 Move_ROCK_THROW: @ 81CA35F
 	loadspritegfx ANIM_TAG_ROCKS
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_TARGET, 2, 6, 1, 15, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 15, 1
 	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 0, 1, 0, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 6
@@ -2119,7 +2119,7 @@ Move_ROCK_THROW: @ 81CA35F
 Move_ROCK_SLIDE: @ 81CA3EB
 	loadspritegfx ANIM_TAG_ROCKS
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 7, 1, 11, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 7, 1, 11, 1
 	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -5, 1, -5, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
@@ -2903,7 +2903,7 @@ Move_BARRAGE: @ 81CB533
 	createvisualtask sub_8130554, 3
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	delay 24
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 8, 1, 40, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, 1, 40, 1
 	createvisualtask AnimTask_ShakeMon, 3, 1, 0, 4, 20, 1
 	createvisualtask AnimTask_ShakeMon, 3, 3, 0, 4, 20, 1
 	loopsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 8, 2
@@ -3653,7 +3653,7 @@ Move_SUPERPOWER: @ 81CC3A3
 	createsprite gSuperpowerOrbSpriteTemplate, ANIM_BATTLER_TARGET, 2, ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 4, 1, 180, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 1, 180, 1
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_EARTHQUAKE, 0
 	delay 40
 	createsprite gSuperpowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 41, 200, 96, 1, 120
@@ -5008,21 +5008,21 @@ Move_SNORE: @ 81CE3EA
 	loadspritegfx ANIM_TAG_SNORE_Z
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 8, 8
-	call _81CE403
+	call SnoreEffect
 	delay 30
-	call _81CE403
+	call SnoreEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
 	end
-_81CE403:
+SnoreEffect:
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -7, -7, 7, ANIM_BATTLER_ATTACKER, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 7, 1
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 6, 1, 14, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D77F8, ANIM_BATTLER_ATTACKER, 2, 0, 0, -42, -38, 24, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D77F8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, -42, 24, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D77F8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 42, -38, 24, 0, 0
+	shake_mon_or_platform velocity=6, shake_timer=1, shake_duration=14, type=SHAKE_BG_X, battler_selector=SHAKE_MON_ATTACKER
+	createsprite gSnoreZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, -42, -38, 24, 0, 0
+	createsprite gSnoreZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0, -42, 24, 0, 0
+	createsprite gSnoreZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 42, -38, 24, 0, 0
 	return
 
 Move_LIGHT_SCREEN: @ 81CE47A
@@ -6857,7 +6857,7 @@ Move_ANCIENT_POWER: @ 81D0EE5
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, 4, 1, 10, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 1, 10, 1
 	createsprite gAncientPowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 32, -48, 50, 2
 	createsprite gAncientPowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, -38, 25, 5
 	createsprite gAncientPowerRockSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 32, -28, 40, 3
@@ -7275,14 +7275,14 @@ Move_METAL_CLAW: @ 81D197A
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	delay 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	waitforvisualfinish
 	end
 
@@ -8602,7 +8602,7 @@ Move_DRAGON_CLAW: @ 81D380C
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
 	delay 2
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
@@ -8615,7 +8615,7 @@ Move_DRAGON_CLAW: @ 81D380C
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
 	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB428, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
 	delay 2
 	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0

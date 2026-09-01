@@ -44,7 +44,7 @@ static void AnimConfusionDuck(struct Sprite *sprite);
 static void AnimSimplePaletteBlend(struct Sprite *sprite);
 static void AnimComplexPaletteBlend(struct Sprite *sprite);
 static void sub_80E1F3C(struct Sprite *sprite);
-static void sub_80E24B8(struct Sprite *sprite);
+static void AnimShakeMonOrBattlePlatforms(struct Sprite *sprite);
 static void AnimHitSplatBasic(struct Sprite *sprite);
 static void AnimHitSplatHandleInvert(struct Sprite *sprite);
 static void AnimHitSplatRandom(struct Sprite *sprite);
@@ -63,8 +63,8 @@ static void sub_80E20E4(u8, u8, u8);
 static void sub_80E2140(u8 taskId);
 static void AnimTask_FlashAnimTagWithColor_Step1(u8 taskId);
 static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId);
-static void sub_80E260C(void);
-static void sub_80E255C(struct Sprite *sprite);
+static void AnimShakeMonOrBattlePlatforms_UpdateCoordOffsetEnabled(void);
+static void AnimShakeMonOrBattlePlatforms_Step(struct Sprite *sprite);
 static void sub_80E2710(u8 taskId);
 static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
 static void StartBlendAnimSpriteColor(u8 taskId, u32 selectedPalettes);
@@ -164,7 +164,7 @@ const struct SpriteTemplate gSpriteTemplate_83DB410 =
     .callback = sub_80E1F3C,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB428 =
+const struct SpriteTemplate gShakeMonOrPlatformSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -172,7 +172,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB428 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80E24B8,
+    .callback = AnimShakeMonOrBattlePlatforms,
 };
 
 static const union AffineAnimCmd sAffineAnim_HitSplat_0[] =
@@ -718,7 +718,7 @@ void unref_sub_80E23A8(u8 taskId)
     }
 }
 
-static void sub_80E24B8(struct Sprite *sprite)
+static void AnimShakeMonOrBattlePlatforms(struct Sprite *sprite)
 {
     u16 var0;
 
@@ -752,12 +752,12 @@ static void sub_80E24B8(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[3];
     var0 = sprite->data[5] - 2;
     if (var0 < 2)
-        sub_80E260C();
+        AnimShakeMonOrBattlePlatforms_UpdateCoordOffsetEnabled();
 
-    sprite->callback = sub_80E255C;
+    sprite->callback = AnimShakeMonOrBattlePlatforms_Step;
 }
 
-static void sub_80E255C(struct Sprite *sprite)
+static void AnimShakeMonOrBattlePlatforms_Step(struct Sprite *sprite)
 {
     u8 i;
     u16 var0;
@@ -798,7 +798,7 @@ static void sub_80E255C(struct Sprite *sprite)
     }
 }
 
-static void sub_80E260C(void)
+static void AnimShakeMonOrBattlePlatforms_UpdateCoordOffsetEnabled(void)
 {
     gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].coordOffsetEnabled = 0;
     gSprites[gBattlerSpriteIds[gBattleAnimTarget]].coordOffsetEnabled = 0;
