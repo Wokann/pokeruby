@@ -16,8 +16,8 @@ extern u8 gBattlerPositions[];
 extern const struct SpriteTemplate gFlashingHitSplatSpriteTemplate;
 
 void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
-static void sub_80DA034(struct Sprite *sprite);
-static void sub_80DA05C(struct Sprite *sprite);
+static void AnimEllipticalGust(struct Sprite *sprite);
+static void AnimEllipticalGust_Step(struct Sprite *sprite);
 static void AnimGustToTarget(struct Sprite *sprite);
 static void AnimGustToTarget_Step(struct Sprite *sprite);
 static void sub_80DA208(struct Sprite *sprite);
@@ -47,15 +47,15 @@ static void sub_80DB6A0(struct Sprite *sprite);
 
 static void AnimTask_AnimateGustTornadoPalette_Step(u8 taskId);
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA380 =
+const struct SpriteTemplate gEllipticalGustSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GUST,
     .paletteTag = ANIM_TAG_GUST,
-    .oam = &gOamData_837DF7C,
+    .oam = &gOamData_AffineOff_ObjNormal_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DA034,
+    .callback = AnimEllipticalGust,
 };
 
 static const union AffineAnimCmd sAffineAnim_GustToTarget[] =
@@ -369,16 +369,17 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
     .callback = sub_80DB5E4,
 };
 
-static void sub_80DA034(struct Sprite *sprite)
+static void AnimEllipticalGust(struct Sprite *sprite)
 {
     sub_8078764(sprite, FALSE);
     sprite->y += 20;
     sprite->data[1] = 0xBF;
-    sprite->callback = sub_80DA05C;
-    sub_80DA05C(sprite);
+    sprite->callback = AnimEllipticalGust_Step;
+    AnimEllipticalGust_Step(sprite);
 }
 
-static void sub_80DA05C(struct Sprite *sprite) {
+static void AnimEllipticalGust_Step(struct Sprite *sprite)
+{
     sprite->x2 = Sin(sprite->data[1], 0x20);
     sprite->y2 = Cos(sprite->data[1], 0x8);
     sprite->data[1] = (sprite->data[1] + 5) & 0xFF;

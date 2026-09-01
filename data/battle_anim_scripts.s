@@ -6150,14 +6150,14 @@ Move_GUST: @ 81CFE9A
 	loadspritegfx ANIM_TAG_GUST
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_GUST, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA380, ANIM_BATTLER_ATTACKER, 2, 0, -16
+	createsprite gEllipticalGustSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -16
 	createvisualtask AnimTask_AnimateGustTornadoPalette, 5, 1, 70
 	waitforvisualfinish
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 1, 0, 7, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 1, 0, 7, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
