@@ -82,7 +82,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6C0 =
     .callback = AnimDefensiveWall,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA6D8 =
+const struct SpriteTemplate gMirrorCoatWallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RED_LIGHT_WALL,
     .paletteTag = ANIM_TAG_RED_LIGHT_WALL,

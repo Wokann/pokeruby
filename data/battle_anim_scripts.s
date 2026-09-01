@@ -5055,7 +5055,7 @@ Move_MIRROR_COAT: @ 81CE506
 	loadspritegfx ANIM_TAG_SPARKLE_3
 	loadspritegfx ANIM_TAG_RED_LIGHT_WALL
 	setalpha 0, 16
-	createsprite gBattleAnimSpriteTemplate_83DA6D8, ANIM_BATTLER_ATTACKER, 1, 40, 0, 10168
+	createsprite gMirrorCoatWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 40, 0, ANIM_TAG_RED_LIGHT_WALL
 	delay 10
 	playsewithpan SE_M_REFLECT, SOUND_PAN_ATTACKER
 	call SpecialScreenSparkle
