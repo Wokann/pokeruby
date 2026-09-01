@@ -57,7 +57,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D920C =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9224 =
+const struct SpriteTemplate gSignalBeamRedOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GLOWY_RED_ORB,
     .paletteTag = ANIM_TAG_GLOWY_RED_ORB,
@@ -68,7 +68,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9224 =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D923C =
+const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GLOWY_GREEN_ORB,
     .paletteTag = ANIM_TAG_GLOWY_GREEN_ORB,

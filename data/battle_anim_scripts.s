@@ -5661,40 +5661,40 @@ Move_SIGNAL_BEAM: @ 81CF33F
 	loadspritegfx ANIM_TAG_GLOWY_RED_ORB
 	loadspritegfx ANIM_TAG_GLOWY_GREEN_ORB
 	loadspritegfx ANIM_TAG_DUCK
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 25, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 25, 1
 	delay 6
-	panse_1B SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
+	panse SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
 	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 25, 1
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 8, 5, 31, 8, 961, 8
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
-	call _81CF406
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 25, 1
+	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, F_PAL_TARGET, 8, 5, RGB(31, 0, 0), 8, RGB(1, 30, 0), 8
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
+	call SignalBeamOrbs
 	waitforvisualfinish
 	end
-_81CF406:
-	createsprite gBattleAnimSpriteTemplate_83D9224, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
-	createsprite gBattleAnimSpriteTemplate_83D923C, ANIM_BATTLER_TARGET, 3, 10, 10, 0, -16
+SignalBeamOrbs:
+	createsprite gSignalBeamRedOrbSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
+	createsprite gSignalBeamGreenOrbSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 10, 0, -16
 	delay 1
 	return
 
