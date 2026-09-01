@@ -285,7 +285,7 @@ const struct SpriteTemplate gBlizzardIceCrystalSpriteTemplate =
     .callback = AnimMoveParticleBeyondTarget,
 };
 
-const struct SpriteTemplate gSmallSnowballSpriteTemplate2 =
+const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,

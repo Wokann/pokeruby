@@ -5579,11 +5579,11 @@ BlizzardAgainstPlayer:
 Move_POWDER_SNOW: @ 81CF146
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 1, 0, 3, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=1, initial_blend_y=0, target_blend_y=3, color=rgb(0, 0, 0)
 	waitforvisualfinish
-	panse_1B SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	call _81CF190
-	call _81CF190
+	panse SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call PowderSnowSnowballs
+	call PowderSnowSnowballs
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	waitsound
@@ -5591,22 +5591,22 @@ Move_POWDER_SNOW: @ 81CF146
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 20
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 1, 3, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=1, initial_blend_y=3, target_blend_y=0, color=rgb(0, 0, 0)
 	end
-_81CF190:
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0, 56, 4, 4, 1
+PowderSnowSnowballs:
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 0, 0, 0, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -10, 0, -10, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, 10, 0, 10, 56, -4, 3, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 10, 0, 10, 56, -4, 3, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 56, -4, 5, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 56, -4, 5, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, 15, 0, 15, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 15, 0, 15, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -20, 0, -20, 56, 4, 4, 1
 	delay 3
-	createsprite gSmallSnowballSpriteTemplate2, ANIM_BATTLER_ATTACKER, 40, 0, 20, 0, 20, 56, 4, 4, 1
+	createsprite gPowderSnowSnowballSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, 20, 0, 20, 56, 4, 4, 1
 	delay 3
 	return
 
