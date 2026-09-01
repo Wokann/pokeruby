@@ -4358,7 +4358,7 @@ Move_AERIAL_ACE: @ 81CD499
 
 Move_IRON_DEFENSE: @ 81CD503
 	loopsewithpan SE_SHINY, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
+	metallic_shine permanent=FALSE
 	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 8, 2, -1, 14, -1, 0
 	waitforvisualfinish
 	end
@@ -4570,7 +4570,7 @@ Move_SHOCK_WAVE: @ 81CD867
 
 Move_HARDEN: @ 81CD909
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
+	metallic_shine permanent=FALSE
 	waitforvisualfinish
 	end
 
@@ -7202,7 +7202,7 @@ Move_STEEL_WING: @ 81D1807
 	loadspritegfx ANIM_TAG_GUST
 	loadspritegfx ANIM_TAG_IMPACT
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
+	metallic_shine permanent=FALSE
 	waitforvisualfinish
 	monbg ANIM_BATTLER_DEF_PARTNER
 	monbgprio_28 1
@@ -7228,7 +7228,7 @@ Move_STEEL_WING: @ 81D1807
 Move_IRON_TAIL: @ 81D18B6
 	loadspritegfx ANIM_TAG_IMPACT
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 1, 0, 0
+	metallic_shine permanent=TRUE
 	waitforvisualfinish
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
@@ -7248,7 +7248,7 @@ Move_POISON_TAIL: @ 81D1914
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 1, 1, 23768
+	metallic_shine permanent=TRUE, color=rgb(24, 6, 23)
 	waitforvisualfinish
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
@@ -7268,7 +7268,7 @@ Move_POISON_TAIL: @ 81D1914
 Move_METAL_CLAW: @ 81D197A
 	loadspritegfx ANIM_TAG_CLAW_SLASH
 	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
-	createvisualtask AnimTask_MetallicShine, 5, 0, 0, 0
+	metallic_shine permanent=FALSE
 	waitforvisualfinish
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
