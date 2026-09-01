@@ -270,15 +270,15 @@ static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId)
         gTasks[taskId].data[2]++;
 }
 
-// unlike the above is only used in Feint Attack
+// Only used in Faint Attack.
 
-void sub_80DFDC0(u8 taskId)
+void AnimTask_InitAttackerFadeFromInvisible(u8 taskId)
 {
-    REG_BLDALPHA = 0x1000;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
-        REG_BLDCNT = 0x3F42;
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1;
     else
-        REG_BLDCNT = 0x3F44;
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2;
     DestroyAnimVisualTask(taskId);
 }
 

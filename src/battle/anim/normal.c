@@ -1940,7 +1940,7 @@ void AnimTask_SetAttackerInvisibleWaitForSignal(u8 taskId)
 
 static void AnimTask_WaitAndRestoreVisibility(u8 taskId)
 {
-    if (gBattleAnimArgs[7] == 0x1000)
+    if (gBattleAnimArgs[ARG_RET_ID] == 0x1000)
     {
         gBattleSpriteInfo[gBattleAnimAttacker].invisible = gTasks[taskId].data[0] & 1;
         DestroyTask(taskId);

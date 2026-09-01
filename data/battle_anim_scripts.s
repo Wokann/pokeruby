@@ -5162,7 +5162,7 @@ Move_FAINT_ATTACK: @ 81CE6ED
 	delay 0
 	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 18, 6, 1, 3
-	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 1
+	attacker_fade_to_invisible step_delay=1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	invisible ANIM_BATTLER_ATTACKER
@@ -5172,17 +5172,17 @@ Move_FAINT_ATTACK: @ 81CE6ED
 	setalpha 12, 8
 	delay 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 9, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	delay 1
-	setarg ARG_RET_ID, 4096
+	setarg ARG_RET_ID, 0x1000
 	delay 32
-	createvisualtask sub_80DFDC0, 2
+	createvisualtask AnimTask_InitAttackerFadeFromInvisible, 2
 	monbg ANIM_BATTLER_ATTACKER
-	createvisualtask AnimTask_AttackerFadeFromInvisible, 2, 1
+	attacker_fade_from_invisible step_delay=1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	delay 1

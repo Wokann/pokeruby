@@ -326,6 +326,14 @@
 	.endif
 	.endm
 
+	.macro attacker_fade_to_invisible priority=2, step_delay:req
+	createvisualtask AnimTask_AttackerFadeToInvisible, \priority, \step_delay
+	.endm
+
+	.macro attacker_fade_from_invisible priority=2, step_delay:req
+	createvisualtask AnimTask_AttackerFadeFromInvisible, \priority, \step_delay
+	.endm
+
 	.macro blend_color_cycle priority=2, selector:req, delay:req, num_blends:req, initial_blend_y:req, target_blend_y:req, color:req
 	createvisualtask AnimTask_BlendColorCycle, \priority, \selector, \delay, \num_blends, \initial_blend_y, \target_blend_y, \color
 	.endm
