@@ -6035,14 +6035,14 @@ Move_BONEMERANG: @ 81CFC54
 	loadspritegfx ANIM_TAG_BONE
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_BONEMERANG, SOUND_PAN_ATTACKER
 	createsprite gBonemerangSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	delay 20
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 5, 0, 5, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 5, 0, 5, 1
 	delay 17
 	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_ATTACKER
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, -4
