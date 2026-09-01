@@ -9,7 +9,7 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 void sub_80DC824(struct Sprite *sprite);
-void sub_80DC8F4(struct Sprite *sprite);
+static void AnimLeechLifeNeedle(struct Sprite *sprite);
 void sub_80DC9A0(struct Sprite *sprite);
 void sub_80DCA70(struct Sprite *sprite);
 void sub_80DCB38(struct Sprite *sprite);
@@ -58,40 +58,40 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAABC =
     .callback = sub_80DC824,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAAD4[] =
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_0[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -33, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAAE4[] =
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 96, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAAF4[] =
+static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_2[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -96, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAB04[] =
+static const union AffineAnimCmd *const sAffineAnims_LeechLifeNeedle[] =
 {
-    gSpriteAffineAnim_83DAAD4,
-    gSpriteAffineAnim_83DAAE4,
-    gSpriteAffineAnim_83DAAF4,
+    sAffineAnim_LeechLifeNeedle_0,
+    sAffineAnim_LeechLifeNeedle_1,
+    sAffineAnim_LeechLifeNeedle_2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB10 =
+const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_NEEDLE,
     .paletteTag = ANIM_TAG_NEEDLE,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAB04,
-    .callback = sub_80DC8F4,
+    .affineAnims = sAffineAnims_LeechLifeNeedle,
+    .callback = AnimLeechLifeNeedle,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB28 =
@@ -229,7 +229,7 @@ void sub_80DC824(struct Sprite *sprite)
 }
 
 // used in Move_LEECH_LIFE
-void sub_80DC8F4(struct Sprite *sprite)
+static void AnimLeechLifeNeedle(struct Sprite *sprite)
 {
     if (IsContest())
     {

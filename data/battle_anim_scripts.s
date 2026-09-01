@@ -5888,21 +5888,21 @@ Move_LEECH_LIFE: @ 81CF8D7
 	monbgprio_2A ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DAB10, ANIM_BATTLER_ATTACKER, 2, -20, 15, 12
+	create_leech_life_needle_sprite ANIM_BATTLER_ATTACKER, 2, -20, 15, 12
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, 0, 0, ANIM_BATTLER_TARGET, 2
 	playsewithpan SE_M_ABSORB, SOUND_PAN_TARGET
 	delay 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 5, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 5, 5, 1
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 7, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=RGB(0, 0, 0)
 	waitforvisualfinish
 	call AbsorbEffect
 	waitforvisualfinish
 	delay 15
 	call HealingEffect
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 7, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=RGB(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
