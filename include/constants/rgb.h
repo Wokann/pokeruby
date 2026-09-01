@@ -11,6 +11,7 @@
 #define RGB2(r, g, b) (((b) << 10) | ((g) << 5) | (r))
 #define RGB(r, g, b)  ((r) | ((g) << 5) | ((b) << 10))
 
+#define RGB_BLACK      RGB(0, 0, 0)
 #define RGB_WHITE      RGB(31, 31, 31)
 #define RGB_WHITEALPHA (RGB_WHITE | RGB_ALPHA)
 

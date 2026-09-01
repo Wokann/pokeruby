@@ -6055,14 +6055,14 @@ Move_BONE_CLUB: @ 81CFCA8
 	loadspritegfx ANIM_TAG_BONE
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
-	createsprite gBoneHitSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -42, -25, 0, 0, 15
+	createsprite gSpinningBoneSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -42, -25, 0, 0, 15
 	delay 12
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 5, 1
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 7, 5, 1, 0, 10, 0, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 5, 5, 1
+	complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_ATTACKER | F_PAL_TARGET, delay=5, num_blends=1, color1=RGB_BLACK, blend_y1=10, color2=RGB_BLACK, blend_y2=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -6075,7 +6075,7 @@ Move_BONE_RUSH: @ 81CFD0A
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_BONEMERANG, SOUND_PAN_TARGET
-	createsprite gBoneHitSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -42, -25, 0, 0, 15
+	createsprite gSpinningBoneSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -42, -25, 0, 0, 15
 	delay 12
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 3, 5, 1
