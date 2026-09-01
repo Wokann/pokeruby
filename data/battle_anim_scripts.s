@@ -5614,45 +5614,45 @@ Move_HYDRO_PUMP: @ 81CF240
 	loadspritegfx ANIM_TAG_WATER_ORB
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 40, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 40, 1
 	delay 6
-	panse_1B SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	createvisualtask sub_80D3630, 5, 100
-	call _81CF2DF
-	call _81CF2DF
-	call _81CF2DF
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 37, 1
-	call _81CF320
-	call _81CF2DF
-	call _81CF2DF
-	call _81CF320
-	call _81CF2DF
-	call _81CF2DF
-	call _81CF320
-	call _81CF2DF
-	call _81CF2DF
-	call _81CF320
-	call _81CF2DF
-	call _81CF2DF
-	call _81CF320
+	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpBeams
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 37, 1
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
+	call HydroPumpBeams
+	call HydroPumpBeams
+	call HydroPumpHitSplats
 	delay 1
 	delay 1
-	call _81CF320
+	call HydroPumpHitSplats
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81CF2DF:
-	createsprite gBattleAnimSpriteTemplate_83D91F4, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
-	createsprite gBattleAnimSpriteTemplate_83D91F4, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, -16
+HydroPumpBeams:
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, -16
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D91F4, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
-	createsprite gBattleAnimSpriteTemplate_83D91F4, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, -16
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gHydroPumpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, -16
 	delay 1
 	return
-_81CF320:
+HydroPumpHitSplats:
 	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 15, 1, 1
 	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -15, 1, 1
 	return
@@ -5664,7 +5664,7 @@ Move_SIGNAL_BEAM: @ 81CF33F
 	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 25, 1
 	delay 6
 	panse_1B SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
-	createvisualtask sub_80D3630, 5, 100
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
 	call _81CF406
 	call _81CF406
 	call _81CF406
@@ -6312,7 +6312,7 @@ Move_FLAMETHROWER: @ 81D0267
 	setalpha 12, 8
 	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 46, 1
 	delay 6
-	createvisualtask sub_80D3630, 5, 100
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
 	panse_1B SE_M_FLAMETHROWER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	call _81D02E1
 	call _81D02E1
@@ -7157,7 +7157,7 @@ Move_PSYWAVE: @ 81D169C
 	loadspritegfx ANIM_TAG_BLUE_RING
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
-	createvisualtask sub_80D3630, 5, 100
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
 	createsoundtask SoundTask_LoopSEAdjustPanning, 203, -64, 63, 2, 9, 0, 10
 	call _81D16FF
 	call _81D16FF
@@ -8657,7 +8657,7 @@ Move_MUD_SHOT: @ 81D3A75
 	setalpha 12, 8
 	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 46, 1
 	delay 6
-	createvisualtask sub_80D3630, 5, 100
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
 	panse_1B SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
 	call _81D3AEF
 	call _81D3AEF
