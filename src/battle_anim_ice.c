@@ -101,13 +101,13 @@ const union AnimCmd gSpriteAnim_83D9B80[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9B88[] =
+const union AnimCmd sAnim_IceCrystalLarge[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9B90[] =
+const union AnimCmd sAnim_IceCrystalSmall[] =
 {
     ANIMCMD_FRAME(6, 1),
     ANIMCMD_END,
@@ -137,14 +137,14 @@ const union AnimCmd *const gSpriteAnimTable_83D9BB4[] =
     gSpriteAnim_83D9B80,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9BB8[] =
+const union AnimCmd *const sAnims_IceCrystalLarge[] =
 {
-    gSpriteAnim_83D9B88,
+    sAnim_IceCrystalLarge,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9BBC[] =
+const union AnimCmd *const sAnims_IceCrystalSmall[] =
 {
-    gSpriteAnim_83D9B90,
+    sAnim_IceCrystalSmall,
 };
 
 const union AnimCmd *const gSpriteAnimTable_83D9BC0[] =
@@ -162,34 +162,34 @@ const union AnimCmd *const gAnims_SmallBubblePair[] =
     sAnim_SmallBubblePair,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9BCC[] =
+const union AffineAnimCmd sAffineAnim_IceCrystalSpiralInwardLarge[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 40, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9BDC[] =
+const union AffineAnimCmd *const sAffineAnims_IceCrystalSpiralInwardLarge[] =
 {
-    gSpriteAffineAnim_83D9BCC,
+    sAffineAnim_IceCrystalSpiralInwardLarge,
 };
 
-const struct SpriteTemplate gLargeIcePunchCrystalSpriteTemplate =
+const struct SpriteTemplate gIceCrystalSpiralInwardLarge =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E144,
-    .anims = gSpriteAnimTable_83D9BB8,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x16,
+    .anims = sAnims_IceCrystalLarge,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9BDC,
+    .affineAnims = sAffineAnims_IceCrystalSpiralInwardLarge,
     .callback = AnimIcePunchSwirlingParticle,
 };
 
-const struct SpriteTemplate gSmallIcePunchCrystalSpriteTemplate =
+const struct SpriteTemplate gIceCrystalSpiralInwardSmall =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E044,
-    .anims = gSpriteAnimTable_83D9BBC,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
+    .anims = sAnims_IceCrystalSmall,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimIcePunchSwirlingParticle,
@@ -211,7 +211,7 @@ const struct SpriteTemplate IceBeamCenterParticleSpriteTemplate =
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_837E0E4,
-    .anims = gSpriteAnimTable_83D9BB8,
+    .anims = sAnims_IceCrystalLarge,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9C20,
     .callback = AnimIceBeamParticle,
@@ -221,14 +221,14 @@ const struct SpriteTemplate gIceBeamOuterParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
-    .oam = &gOamData_837E044,
-    .anims = gSpriteAnimTable_83D9BBC,
+    .oam = &gOamData_AffineOff_ObjBlend_8x8,
+    .anims = sAnims_IceCrystalSmall,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimIceBeamParticle,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9C54[] =
+const union AffineAnimCmd sAffineAnim_IceCrystalHit[] =
 {
     AFFINEANIMCMD_FRAME(0xCE, 0xCE, 0, 0),
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
@@ -236,30 +236,30 @@ const union AffineAnimCmd gSpriteAffineAnim_83D9C54[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9C74[] =
+const union AffineAnimCmd *const sAffineAnims_IceCrystalHit[] =
 {
-    gSpriteAffineAnim_83D9C54,
+    sAffineAnim_IceCrystalHit,
 };
 
-const struct SpriteTemplate gLargeIceEffectParticleSpriteTemplate =
+const struct SpriteTemplate gIceCrystalHitLargeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_837E0E4,
-    .anims = gSpriteAnimTable_83D9BB8,
+    .anims = sAnims_IceCrystalLarge,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9C74,
+    .affineAnims = sAffineAnims_IceCrystalHit,
     .callback = AnimIceEffectParticle,
 };
 
-const struct SpriteTemplate gSmallIceEffectParticleSpriteTemplate =
+const struct SpriteTemplate gIceCrystalHitSmallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_837E0A4,
-    .anims = gSpriteAnimTable_83D9BBC,
+    .anims = sAnims_IceCrystalSmall,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9C74,
+    .affineAnims = sAffineAnims_IceCrystalHit,
     .callback = AnimIceEffectParticle,
 };
 
@@ -538,7 +538,7 @@ const struct SpriteTemplate gIceBallParticleSpriteTemplate =
     .tileTag = ANIM_TAG_ICE_CRYSTALS,
     .paletteTag = ANIM_TAG_ICE_CRYSTALS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D9BBC,
+    .anims = sAnims_IceCrystalSmall,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = InitIceBallParticle,
@@ -1499,7 +1499,7 @@ static void AnimHailBegin(struct Sprite *sprite)
 
     if (sprite->sSpawnImpactEffect == 1 && sprite->sAffineAnimNum == 0)
     {
-        spriteId = CreateSprite(&gLargeIceEffectParticleSpriteTemplate, 
+        spriteId = CreateSprite(&gIceCrystalHitLargeSpriteTemplate,
                                 sprite->sTargetX, sprite->sTargetY, sprite->subpriority);
 
         sprite->data[0] = spriteId;

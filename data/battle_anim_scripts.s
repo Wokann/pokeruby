@@ -4660,32 +4660,32 @@ Move_ICE_PUNCH: @ 81CDB3E
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 7, rgb(0, 0, 0)
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 9, 32588
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=rgb(0, 0, 0)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, rgb(12, 26, 31)
 	delay 20
 	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 64
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 128
-	createsprite gSmallIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 192
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_BATTLER_ATTACKER, 2, 64
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_BATTLER_ATTACKER, 2, 128
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_BATTLER_ATTACKER, 2, 192
 	delay 5
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 96
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 160
-	createsprite gLargeIcePunchCrystalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 224
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_BATTLER_ATTACKER, 2, 32
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_BATTLER_ATTACKER, 2, 96
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_BATTLER_ATTACKER, 2, 160
+	createsprite gIceCrystalSpiralInwardLarge, ANIM_BATTLER_ATTACKER, 2, 224
 	delay 17
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, -10, 8, 1, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -10, 1, 1
+	create_fist_sprite ANIM_BATTLER_ATTACKER, 4, x=0, y=-10, duration=8, initPosition=ANIM_BATTLER_TARGET
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=-10, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	delay 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 3, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 5, 3, 1
 	waitforvisualfinish
 	delay 15
-	call Effect_LightIceDamage
+	call IceCrystalEffectShort
 	delay 5
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 9, 0, 32588
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 9, 0, rgb(12, 26, 31)
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 7, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=rgb(0, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
@@ -5378,7 +5378,7 @@ Move_ICE_BEAM: @ 81CEB4D
 	createsprite IceBeamCenterParticleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, 0, 0, 0, 11
 	waitforvisualfinish
 	delay 20
-	call Effect_LightIceDamage
+	call IceCrystalEffectShort
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 5, 7, 0, rgb(0, 20, 31)
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 7, 0, rgb(0, 0, 0)
@@ -8031,7 +8031,7 @@ Move_TRI_ATTACK: @ 81D2A0F
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	waitforvisualfinish
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	call Effect_LightIceDamage
+	call IceCrystalEffectShort
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 16, 0, rgb(0, 0, 0)
 	waitforvisualfinish
 	end
@@ -9913,7 +9913,7 @@ _81D5B99:
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
-	call Effect_LightIceDamage
+	call IceCrystalEffectShort
 	waitforvisualfinish
 	end
 
@@ -9929,61 +9929,61 @@ PoundCopy: @ 81D5C05
 	blendoff
 	end
 
-Effect_LightIceDamage: @ 81D5C36
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
+IceCrystalEffectShort: @ 81D5C36
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 20, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 20, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 10, 0
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 10, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 17, -12, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 17, -12, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, 15, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, 15, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 0
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 2, 0
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 2, 0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
 Effect_HeavyIceDamage: @ 81D5CBA
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 20, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 20, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -29, 0, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -29, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 29, -20, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 29, -20, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 10, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 10, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 17, -12, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 17, -12, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, 0, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, 15, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, 15, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 26, -5, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 26, -5, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gSmallIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1
+	createsprite gIceCrystalHitSmallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gLargeIceEffectParticleSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 2, 1
+	createsprite gIceCrystalHitLargeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 2, 1
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
