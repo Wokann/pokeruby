@@ -34,7 +34,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65E8 =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83D62D4,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D65E0,

@@ -94,7 +94,7 @@ const struct SpriteTemplate gWavyMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gMusicNotesAnimTable,
     .images = NULL,
     .affineAnims = gMusicNotesAffineAnimTable,
@@ -113,7 +113,7 @@ const struct SpriteTemplate gFastFlyingMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gMusicNotesAnimTable,
     .images = NULL,
     .affineAnims = gMusicNotesAffineAnimTable,
@@ -147,7 +147,7 @@ const struct SpriteTemplate gSlowFlyingMusicNotesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gMusicNotesAnimTable,
     .images = NULL,
     .affineAnims = gSlowFlyingMusicNotesAffineAnimTable,

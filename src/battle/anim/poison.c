@@ -106,7 +106,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA2B8 =
 {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA274,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA2B0,
@@ -117,7 +117,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA2D0 =
 {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA274,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA2B0,
@@ -151,7 +151,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA31C =
 {
     .tileTag = ANIM_TAG_POISON_BUBBLE,
     .paletteTag = ANIM_TAG_POISON_BUBBLE,
-    .oam = &gOamData_837DFEC,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
     .anims = gSpriteAnimTable_83DA278,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA318,
