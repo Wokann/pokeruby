@@ -197,7 +197,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA024 =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9F64,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA020,
@@ -220,7 +220,7 @@ const struct SpriteTemplate gMegaPunchKickSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9F64,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA054,
@@ -426,7 +426,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA214 =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9F64,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA210,

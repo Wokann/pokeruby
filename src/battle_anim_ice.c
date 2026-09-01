@@ -526,7 +526,7 @@ const struct SpriteTemplate gIceBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_CHUNK,
     .paletteTag = ANIM_TAG_ICE_CHUNK,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83D9E88,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9EE0,

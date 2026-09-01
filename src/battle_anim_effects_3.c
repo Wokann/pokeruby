@@ -370,7 +370,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840233C =
 {
     .tileTag = ANIM_TAG_FANG_ATTACK,
     .paletteTag = ANIM_TAG_FANG_ATTACK,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gSpriteAnimTable_840231C,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402338,
@@ -899,7 +899,7 @@ const struct SpriteTemplate gPinkSmokeTemplate =
 {
     .tileTag = ANIM_TAG_PINK_CLOUD,
     .paletteTag = ANIM_TAG_PINK_CLOUD,
-    .oam = &gOamData_837DFF4,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402884,

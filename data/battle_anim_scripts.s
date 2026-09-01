@@ -5245,29 +5245,29 @@ Move_DRAGON_RAGE: @ 81CE8BA
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	loadspritegfx ANIM_TAG_FIRE_PLUME
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 40, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 40, 1
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 15, 0, 0, 4
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DB0D0, ANIM_BATTLER_TARGET, 2, 30, 15, 0, 10, 10
+	create_dragon_rage_fire_spit_sprite ANIM_BATTLER_TARGET, 2, initial_x=30, initial_y=15, target_x=0, target_y=10, duration=10
 	waitforvisualfinish
 	loopsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET, 11, 3
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 3, 25, 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 66, 1, 5, 0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 3, 25, 1
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 66, relative_to=ANIM_BATTLER_TARGET, x=5, y=0
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 66, 1, -10, -15
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 66, relative_to=ANIM_BATTLER_TARGET, x=-10, y=-15
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 2, 1, 0, 25
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 2, relative_to=ANIM_BATTLER_TARGET, x=0, y=25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 66, 1, 15, 5
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 66, relative_to=ANIM_BATTLER_TARGET, x=15, y=5
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 66, 1, -25, 0
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 66, relative_to=ANIM_BATTLER_TARGET, x=-25, y=0
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 2, 1, 30, 30
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 2, relative_to=ANIM_BATTLER_TARGET, x=30, y=30
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 2, 1, -27, 25
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 2, relative_to=ANIM_BATTLER_TARGET, x=-27, y=25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83DB078, ANIM_BATTLER_TARGET, 66, 1, 0, 8
+	create_dragon_rage_fire_plume_sprite ANIM_BATTLER_TARGET, 66, relative_to=ANIM_BATTLER_TARGET, x=0, y=8
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_TARGET, 66, 0, 0, 4
 	waitforvisualfinish
