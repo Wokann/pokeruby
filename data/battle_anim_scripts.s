@@ -2698,7 +2698,7 @@ Move_MEDITATE: @ 81CB1BD
 	delay 16
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_AGILITY: @ 81CB1DA
@@ -2765,7 +2765,7 @@ Move_TELEPORT: @ 81CB2F2
 	createvisualtask sub_80DBCFC, 2
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 15
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	waitforvisualfinish
 	end
 
@@ -2858,7 +2858,7 @@ Move_AMNESIA: @ 81CB455
 	delay 54
 	loopsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER, 16, 3
 	waitforvisualfinish
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_KINESIS: @ 81CB479
@@ -2877,7 +2877,7 @@ Move_KINESIS: @ 81CB479
 	delay 70
 	playsewithpan SE_M_SWAGGER2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_GLARE: @ 81CB4CA
@@ -3828,7 +3828,7 @@ Move_SKILL_SWAP: @ 81CC81C
 	createvisualtask AnimTask_SkillSwap, 3, ANIM_BATTLER_ATTACKER
 	createvisualtask AnimTask_BlendMonInAndOut, 5, ANIM_BATTLER_ATTACKER, rgb(31, 31, 31), 12, 3, 1
 	waitforvisualfinish
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_IMPRISON: @ 81CC867
@@ -3845,7 +3845,7 @@ Move_IMPRISON: @ 81CC867
 	createvisualtask AnimTask_HorizontalShake, 5, MAX_BATTLERS_COUNT, 1, 10
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_GRUDGE: @ 81CC8AA
@@ -3940,7 +3940,7 @@ Move_LUSTER_PURGE: @ 81CC95B
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	blendoff
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_MIST_BALL: @ 81CCA72
@@ -4336,7 +4336,7 @@ Move_EXTRASENSORY: @ 81CD431
 	waitforvisualfinish
 	blendoff
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_AERIAL_ACE: @ 81CD499
@@ -4716,7 +4716,7 @@ Move_CONFUSION: @ 81CDC69
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_PSYCHIC: @ 81CDCCA
@@ -4724,7 +4724,7 @@ Move_PSYCHIC: @ 81CDCCA
 	call SetPsychicBackground
 	setalpha 8, 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 10, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 0, 2, 0, 8, 767
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=8, color=RGB(31, 23, 0)
 	waitforvisualfinish
 	loopsewithpan SE_M_SUPERSONIC, SOUND_PAN_TARGET, 10, 3
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 15, 1
@@ -4733,7 +4733,7 @@ Move_PSYCHIC: @ 81CDCCA
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_FUTURE_SIGHT: @ 81CDD2D
@@ -4741,7 +4741,7 @@ Move_FUTURE_SIGHT: @ 81CDD2D
 _81CDD32:
 	waitforvisualfinish
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 _81CDD3B:
 	monbg ANIM_BATTLER_ATK_PARTNER
@@ -7011,7 +7011,7 @@ Move_DREAM_EATER: @ 81D1271
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 _81D12DB:
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
@@ -7128,7 +7128,7 @@ Move_PSYBEAM: @ 81D15A2
 	call _81D1626
 	waitforvisualfinish
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 _81D1626:
 	createsprite gBattleAnimSpriteTemplate_83DA784, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 13, 0
@@ -7144,7 +7144,7 @@ Move_HYPNOSIS: @ 81D163C
 	createvisualtask AnimTask_BlendColorCycle, 2, 4, 2, 2, 0, 12, 32351
 	waitforvisualfinish
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 _81D166F:
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
@@ -7168,7 +7168,7 @@ Move_PSYWAVE: @ 81D169C
 	call _81D16FF
 	waitforvisualfinish
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 _81D16FF:
 	createsprite gBattleAnimSpriteTemplate_83D9280, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
@@ -9510,7 +9510,7 @@ Move_PSYCHO_BOOST: @ 81D51C7
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 Move_KNOCK_OFF: @ 81D523B
@@ -10159,7 +10159,7 @@ SetPsychicBackground: @ 81D61E7
 	waitbgfadein
 	return
 
-BackgroundRestore: @ 81D61F3
+UnsetPsychicBackground: @ 81D61F3
 	restorebg
 	waitbgfadeout
 	setarg ARG_RET_ID, -1
@@ -10586,7 +10586,7 @@ General_FutureSightHit: @ 81D68D5
 	blendoff
 	waitforvisualfinish
 	delay 1
-	call BackgroundRestore
+	call UnsetPsychicBackground
 	end
 
 General_DoomDesireHit: @ 81D6934
