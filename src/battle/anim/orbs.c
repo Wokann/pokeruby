@@ -11,10 +11,10 @@ extern u8 gBattleAnimTarget;
 static void AnimPowerAbsorptionOrb(struct Sprite *sprite);
 static void AnimSolarBeamBigOrb(struct Sprite *sprite);
 static void AnimSolarBeamSmallOrb(struct Sprite *sprite);
-void sub_80CA9A8(struct Sprite* sprite);
+void AnimAbsorptionOrb(struct Sprite* sprite);
 void sub_80CAA14(struct Sprite* sprite);
 static void AnimSolarBeamSmallOrb_Step(struct Sprite *sprite);
-static void sub_80CA9F8(struct Sprite* sprite);
+static void AnimAbsorptionOrb_Step(struct Sprite* sprite);
 static void sub_80CAACC(struct Sprite* sprite);
 
 const union AnimCmd gSolarBeamBigOrbAnimCmds1[] =
@@ -155,24 +155,24 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6350 =
     .callback = AnimPowerAbsorptionOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6368[] = {
+const union AffineAnimCmd gAbsorptionOrbAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(-5, -5, 0, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6378[] = {
-    gSpriteAffineAnim_83D6368,
+const union AffineAnimCmd *const gAbsorptionOrbAffineAnimTable[] = {
+    gAbsorptionOrbAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D637C =
+const struct SpriteTemplate gAbsorptionOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gPowerAbsorptionOrbAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6378,
-    .callback = sub_80CA9A8,
+    .affineAnims = gAbsorptionOrbAffineAnimTable,
+    .callback = AnimAbsorptionOrb,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
@@ -265,7 +265,7 @@ void AnimTask_CreateSmallSolarBeamOrbs(u8 taskId)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_80CA9A8(struct Sprite* sprite)
+void AnimAbsorptionOrb(struct Sprite* sprite)
 {
     sub_8078764(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[3];
@@ -273,10 +273,10 @@ void sub_80CA9A8(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     sprite->data[5] = gBattleAnimArgs[2];
     InitAnimArcTranslation(sprite);
-    sprite->callback = sub_80CA9F8;
+    sprite->callback = AnimAbsorptionOrb_Step;
 }
 
-static void sub_80CA9F8(struct Sprite* sprite)
+static void AnimAbsorptionOrb_Step(struct Sprite* sprite)
 {
     if (TranslateAnimArc(sprite))
         DestroyAnimSprite(sprite);
