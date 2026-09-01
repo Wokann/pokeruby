@@ -5224,20 +5224,20 @@ Move_MUD_SLAP: @ 81CE81C
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -10, 0, 0, 3
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 2
-	call Move_MUD_SLAP_CreateMudSpray
-	call Move_MUD_SLAP_CreateMudSpray
-	call Move_MUD_SLAP_CreateMudSpray
-	call Move_MUD_SLAP_CreateMudSpray
-	call Move_MUD_SLAP_CreateMudSpray
-	call Move_MUD_SLAP_CreateMudSpray
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
+	call MudSlapMud
 	waitforvisualfinish
 	end
-Move_MUD_SLAP_CreateMudSpray:
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 0, 0
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 10, 5
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, -10, -5
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 20, 10
-	createsprite gMudSlapDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, -20, -10
+MudSlapMud:
+	createsprite gMudSlapMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 0, 0
+	createsprite gMudSlapMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 10, 5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, -10, -5
+	createsprite gMudSlapMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, 20, 10
+	createsprite gMudSlapMudSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 15, 20, -20, -10
 	delay 2
 	return
 
