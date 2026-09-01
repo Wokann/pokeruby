@@ -2198,28 +2198,28 @@ Move_BUBBLE_BEAM: @ 81CA573
 	call _81CA5AD
 	call _81CA5AD
 	waitforvisualfinish
-	call WaterBubbleEffect
+	call WaterBubblesEffectShort
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	end
 _81CA5AD:
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 35, 70, 0, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 35, 70, 0, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 20, 40, -10, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 20, 40, -10, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 10, -60, 0, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 10, -60, 0, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 15, -15, 10, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 15, -15, 10, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 30, 10, -10, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 30, 10, -10, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 25, -30, 10, 256, 50
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 25, -30, 10, 256, 50
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	delay 3
 	return
@@ -5097,31 +5097,31 @@ Move_BUBBLE: @ 81CE59C
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 15, -15, 10, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 15, -15, 10, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 35, 37, 40, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 35, 37, 40, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 10, -37, 30, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 10, -37, 30, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 30, 10, 15, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 30, 10, 15, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 20, 33, 20, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 20, 33, 20, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D9178, ANIM_BATTLER_ATTACKER, 2, 18, 0, 25, -30, 10, 128, 100
+	createsprite gWaterBubbleProjectileSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 18, 0, 25, -30, 10, 128, 100
 	playsewithpan SE_M_BUBBLE, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_BUBBLE2, SOUND_PAN_TARGET, 100
 	waitforvisualfinish
-	call WaterBubbleEffect2
+	call WaterBubblesEffectLong
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -10078,7 +10078,7 @@ PoisonBubblesEffect: @ 81D5F87
 	playsewithpan SE_M_TOXIC, SOUND_PAN_TARGET
 	return
 
-WaterBubbleEffect: @ 81D5FF8
+WaterBubblesEffectShort: @ 81D5FF8
 	createsprite gWaterBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 0
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
 	delay 6
@@ -10098,7 +10098,7 @@ WaterBubbleEffect: @ 81D5FF8
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
 	return
 
-WaterBubbleEffect2: @ 81D6069
+WaterBubblesEffectLong: @ 81D6069
 	createsprite gWaterBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 1
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
 	delay 6

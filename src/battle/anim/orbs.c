@@ -105,7 +105,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D62EC =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D62D4,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D62E8,
@@ -168,7 +168,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D637C =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D62D4,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D6378,

@@ -118,7 +118,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACB8 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D91F0,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DACB4,

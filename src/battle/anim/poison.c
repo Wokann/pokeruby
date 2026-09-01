@@ -185,7 +185,7 @@ const struct SpriteTemplate gWaterBubbleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837E0AC,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gSpriteAnimTable_83D9310,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA34C,

@@ -3,32 +3,32 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "util.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D31C8(struct Sprite* sprite);
-static void sub_80D32E8(struct Sprite *sprite);
-static void sub_80D3370(struct Sprite *sprite);
-static void sub_80D3398(struct Sprite *sprite);
+static void AnimWaterBubbleProjectile(struct Sprite *);
+static void AnimWaterBubbleProjectile_Step1(struct Sprite *);
+static void AnimWaterBubbleProjectile_Step2(struct Sprite *);
+static void AnimWaterBubbleProjectile_Step3(struct Sprite *);
 
-// bubble (indidivual bubble that floats around)
-// Used in Bubble and Bubblebeam
+// For water bubbles that move to a dest, as in Bubble/Bubblebeam
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9148[] =
+static const union AffineAnimCmd sAffineAnim_WaterBubbleProjectile[] =
 {
     AFFINEANIMCMD_FRAME(0xFFFB, 0xFFFB, 0, 10),
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9160[] =
+static const union AffineAnimCmd *const sAffineAnims_WaterBubbleProjectile[] =
 {
-    gSpriteAffineAnim_83D9148,
+    sAffineAnim_WaterBubbleProjectile,
 };
 
-const union AnimCmd gSpriteAnim_83D9164[] =
+static const union AnimCmd sAnim_WaterBubbleProjectile[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(4, 5),
@@ -36,102 +36,102 @@ const union AnimCmd gSpriteAnim_83D9164[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9174[] =
+static const union AnimCmd *const sAnims_WaterBubbleProjectile[] =
 {
-    gSpriteAnim_83D9164,
+    sAnim_WaterBubbleProjectile,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9178 =
+const struct SpriteTemplate gWaterBubbleProjectileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BUBBLE,
     .paletteTag = ANIM_TAG_BUBBLE,
-    .oam = &gOamData_837E0AC,
-    .anims = gSpriteAnimTable_83D9174,
+    .oam = &gOamData_AffineNormal_ObjBlend_16x16,
+    .anims = sAnims_WaterBubbleProjectile,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9160,
-    .callback = sub_80D31C8,
+    .affineAnims = sAffineAnims_WaterBubbleProjectile,
+    .callback = AnimWaterBubbleProjectile,
 };
 
-void sub_80D31C8(struct Sprite* sprite)
+static void AnimWaterBubbleProjectile(struct Sprite *sprite)
 {
-    u8 newSpriteId;
+    u8 spriteId;
 
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) - gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) - gBattleAnimArgs[0];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
     }
 
-    sprite->animPaused = 1;
+    sprite->animPaused = TRUE;
 
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
     }
 
     sprite->data[0] = gBattleAnimArgs[6];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
     InitAnimLinearTranslation(sprite);
 
-    newSpriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
-    sprite->data[5] = newSpriteId;
+    spriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
+    sprite->data[5] = spriteId;
 
     sprite->x -= Sin((u8)gBattleAnimArgs[4], gBattleAnimArgs[2]);
     sprite->y -= Cos((u8)gBattleAnimArgs[4], gBattleAnimArgs[3]);
 
-    gSprites[newSpriteId].data[0] = gBattleAnimArgs[2];
-    gSprites[newSpriteId].data[1] = gBattleAnimArgs[3];
-    gSprites[newSpriteId].data[2] = gBattleAnimArgs[5];
-    gSprites[newSpriteId].data[3] = (u8)gBattleAnimArgs[4] * 256;
-    gSprites[newSpriteId].data[4] = gBattleAnimArgs[6];
+    gSprites[spriteId].data[0] = gBattleAnimArgs[2];
+    gSprites[spriteId].data[1] = gBattleAnimArgs[3];
+    gSprites[spriteId].data[2] = gBattleAnimArgs[5];
+    gSprites[spriteId].data[3] = (u8)gBattleAnimArgs[4] * 256;
+    gSprites[spriteId].data[4] = gBattleAnimArgs[6];
 
-    sprite->callback = sub_80D32E8;
+    sprite->callback = AnimWaterBubbleProjectile_Step1;
     sprite->callback(sprite);
 }
 
-static void sub_80D32E8(struct Sprite *sprite)
+static void AnimWaterBubbleProjectile_Step1(struct Sprite *sprite)
 {
-    u8 spriteId = sprite->data[5];
+    u8 otherSpriteId = sprite->data[5];
 
-    u8 counter = gSprites[spriteId].data[4];
-    u16 index = gSprites[spriteId].data[3];
+    u8 timer = gSprites[otherSpriteId].data[4];
+    u16 trigIndex = gSprites[otherSpriteId].data[3];
 
     sprite->data[0] = 1;
     AnimTranslateLinear(sprite);
 
-    sprite->x2 += Sin(index / 256, gSprites[spriteId].data[0]);
-    sprite->y2 += Cos(index / 256, gSprites[spriteId].data[1]);
+    sprite->x2 += Sin(trigIndex >> 8, gSprites[otherSpriteId].data[0]);
+    sprite->y2 += Cos(trigIndex >> 8, gSprites[otherSpriteId].data[1]);
 
-    gSprites[spriteId].data[3] = gSprites[spriteId].data[2] + index;
+    gSprites[otherSpriteId].data[3] = gSprites[otherSpriteId].data[2] + trigIndex;
 
-    if (--counter != 0)
+    if (--timer != 0)
     {
-        gSprites[spriteId].data[4] = counter;
+        gSprites[otherSpriteId].data[4] = timer;
     }
     else
     {
-        sprite->callback = sub_80D3370;
-        DestroySprite(&gSprites[spriteId]);
+        sprite->callback = AnimWaterBubbleProjectile_Step2;
+        DestroySprite(&gSprites[otherSpriteId]);
     }
 }
 
-static void sub_80D3370(struct Sprite *sprite)
+static void AnimWaterBubbleProjectile_Step2(struct Sprite *sprite)
 {
-    sprite->animPaused = 0;
+    sprite->animPaused = FALSE;
     sprite->callback = RunStoredCallbackWhenAnimEnds;
-    StoreSpriteCallbackInData6(sprite, sub_80D3398);
+    StoreSpriteCallbackInData6(sprite, AnimWaterBubbleProjectile_Step3);
 }
 
-static void sub_80D3398(struct Sprite *sprite)
+static void AnimWaterBubbleProjectile_Step3(struct Sprite *sprite)
 {
     sprite->data[0] = 10;
     sprite->callback = WaitAnimForDuration;

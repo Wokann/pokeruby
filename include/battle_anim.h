@@ -107,7 +107,7 @@ extern const struct OamData gOamData_837E08C;
 extern const struct OamData gOamData_837E094;
 extern const struct OamData gOamData_837E09C;
 extern const struct OamData gOamData_837E0A4;
-extern const struct OamData gOamData_837E0AC;
+extern const struct OamData gOamData_AffineNormal_ObjBlend_16x16;
 extern const struct OamData gOamData_AffineNormal_ObjBlend_32x32;
 extern const struct OamData gOamData_AffineNormal_ObjBlend_64x64;
 extern const struct OamData gOamData_837E0C4;
