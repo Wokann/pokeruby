@@ -56,8 +56,8 @@ static void AnimMeanLookEye_Step3(struct Sprite *sprite);
 static void AnimMeanLookEye_Step4(struct Sprite *sprite);
 static void SetPsychicBackground_Step(u8 taskId);
 static void FadeScreenToWhite_Step(u8 taskId);
-static void sub_812C798(struct Sprite *sprite);
-static void sub_812C7C8(struct Sprite *sprite);
+static void AnimSpikes_Step1(struct Sprite *sprite);
+static void AnimSpikes_Step2(struct Sprite *sprite);
 static void sub_812CA04(struct Sprite *sprite);
 static void sub_812CAD0(struct Sprite *sprite);
 static void sub_812CBB4(struct Sprite *sprite);
@@ -102,7 +102,7 @@ static void sub_812C144(struct Sprite *sprite);
 static void AnimWhiteHalo(struct Sprite *sprite);
 static void AnimTealAlert(struct Sprite *sprite);
 static void AnimMeanLookEye(struct Sprite *sprite);
-static void sub_812C720(struct Sprite *sprite);
+static void AnimSpikes(struct Sprite *sprite);
 static void sub_812C80C(struct Sprite *sprite);
 static void AnimLetterZ(struct Sprite *sprite);
 static void sub_812C908(struct Sprite *sprite);
@@ -269,7 +269,7 @@ const struct SpriteTemplate gMeanLookEyeSpriteTemplate =
     .callback = AnimMeanLookEye,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_840227C =
+const struct SpriteTemplate gSpikesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPIKES,
     .paletteTag = ANIM_TAG_SPIKES,
@@ -277,7 +277,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_840227C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812C720,
+    .callback = AnimSpikes,
 };
 
 const union AnimCmd gSpriteAnim_8402294[] =
@@ -1428,13 +1428,13 @@ static void FadeScreenToWhite_Step(u8 taskId)
         DestroyTask(taskId);
 }
 
-static void sub_812C720(struct Sprite *sprite)
+static void AnimSpikes(struct Sprite *sprite)
 {
-    u16 x;
-    u16 y;
+    s16 x;
+    s16 y;
 
-    InitSpritePosToAnimAttacker(sprite, 1);
-    SetAverageBattlerPositions(gBattleAnimTarget, 0, &x, &y);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &x, &y);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -1445,21 +1445,21 @@ static void sub_812C720(struct Sprite *sprite)
     sprite->data[5] = -50;
 
     InitAnimArcTranslation(sprite);
-    sprite->callback = sub_812C798;
+    sprite->callback = AnimSpikes_Step1;
 }
 
-static void sub_812C798(struct Sprite *sprite)
+static void AnimSpikes_Step1(struct Sprite *sprite)
 {
     if (TranslateAnimArc(sprite))
     {
         sprite->data[0] = 30;
         sprite->data[1] = 0;
         sprite->callback = WaitAnimForDuration;
-        StoreSpriteCallbackInData6(sprite, sub_812C7C8);
+        StoreSpriteCallbackInData6(sprite, AnimSpikes_Step2);
     }
 }
 
-static void sub_812C7C8(struct Sprite *sprite)
+static void AnimSpikes_Step2(struct Sprite *sprite)
 {
     if (sprite->data[1] & 1)
         sprite->invisible ^= 1;
