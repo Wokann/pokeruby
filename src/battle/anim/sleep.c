@@ -8,69 +8,69 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CD328(struct Sprite* sprite);
-static void sub_80CD394(struct Sprite* sprite);
+static void AnimSleepLetterZ(struct Sprite* sprite);
+static void AnimSleepLetterZ_Step(struct Sprite* sprite);
 
 // sleep (the "ZZZ" graphical effect)
 // Used by Rest and the sleep turn when the Pokemon is still asleep.
 
-const union AnimCmd gSpriteAnim_83D6D20[] =
+const union AnimCmd gSleepLetterZAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 40),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6D28[] =
+const union AnimCmd *const gSleepLetterZAnimTable[] =
 {
-    gSpriteAnim_83D6D20,
+    gSleepLetterZAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6D2C[] =
+const union AffineAnimCmd gSleepLetterZAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x14, 0x14, -30, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, 1, 24),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6D44[] =
+const union AffineAnimCmd gSleepLetterZAffineAnimCmds1_2[] =
 {
     AFFINEANIMCMD_LOOP(0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 1, 24),
     AFFINEANIMCMD_LOOP(10),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6D5C[] =
+const union AffineAnimCmd gSleepLetterZAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x14, 0x14, 30, 0),
     AFFINEANIMCMD_FRAME(0x8, 0x8, -1, 24),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6D74[] =
+const union AffineAnimCmd gSleepLetterZAffineAnimCmds2_2[] =
 {
     AFFINEANIMCMD_LOOP(0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, -1, 24),
     AFFINEANIMCMD_LOOP(10),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6D8C[] =
+const union AffineAnimCmd *const gSleepLetterZAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D6D2C,
-    gSpriteAffineAnim_83D6D5C,
+    gSleepLetterZAffineAnimCmds1,
+    gSleepLetterZAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6D94 =
+const struct SpriteTemplate gSleepLetterZSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LETTER_Z,
     .paletteTag = ANIM_TAG_LETTER_Z,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D6D28,
+    .anims = gSleepLetterZAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6D8C,
-    .callback = sub_80CD328,
+    .affineAnims = gSleepLetterZAffineAnimTable,
+    .callback = AnimSleepLetterZ,
 };
 
-void sub_80CD328(struct Sprite* sprite)
+static void AnimSleepLetterZ(struct Sprite* sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     if (GetBattlerSide(gBattleAnimAttacker) == 0)
@@ -87,10 +87,10 @@ void sub_80CD328(struct Sprite* sprite)
         StartSpriteAffineAnim(sprite, 1);
     }
 
-    sprite->callback = sub_80CD394;
+    sprite->callback = AnimSleepLetterZ_Step;
 }
 
-static void sub_80CD394(struct Sprite* sprite)
+static void AnimSleepLetterZ_Step(struct Sprite* sprite)
 {
     sprite->y2 = -(sprite->data[0] / 0x28);
     sprite->x2 = sprite->data[4] / 10;

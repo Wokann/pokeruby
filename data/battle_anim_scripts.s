@@ -4694,11 +4694,11 @@ Move_ICE_PUNCH: @ 81CDB3E
 Move_REST: @ 81CDC29
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
 	loadspritegfx ANIM_TAG_LETTER_Z
-	createsprite gBattleAnimSpriteTemplate_83D6D94, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
+	createsprite gSleepLetterZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D6D94, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
+	createsprite gSleepLetterZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83D6D94, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
+	createsprite gSleepLetterZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
 	waitforvisualfinish
 	end
 
@@ -10254,9 +10254,9 @@ StatusCondition_Love: @ 81D62D4
 StatusCondition_Sleep: @ 81D6309
 	loadspritegfx ANIM_TAG_LETTER_Z
 	playsewithpan SE_M_SNORE, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6D94, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
+	createsprite gSleepLetterZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D6D94, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
+	createsprite gSleepLetterZSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, -10, 16, 0, 0
 	end
 
 StatusCondition_Paralysis: @ 81D6335
