@@ -12,5 +12,5 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7594 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };

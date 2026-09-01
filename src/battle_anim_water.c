@@ -24,7 +24,7 @@ extern const union AnimCmd *const gAnims_SmallBubblePair[];
 void PrepareBattlerSpriteForRotScale(u8, u8);
 void ResetSpriteRotScale(u8);
 void SetBattlerSpriteYOffsetFromYScale(u8);
-void sub_80D37FC(struct Sprite *sprite);
+static void AnimWaterGunDroplet(struct Sprite *sprite);
 void AnimSmallBubblePair(struct Sprite *sprite);
 void sub_80D3B60(u8 taskId);
 void sub_80D3D68(u8 taskId);
@@ -50,48 +50,48 @@ void sub_80D4D64(struct Sprite*, s32, s32);
 void AnimTask_HorizontalShake(u8);
 static void AnimSmallBubblePair_Step(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D9300[] =
+static const union AnimCmd sAnim_WaterBubble[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9308[] =
+static const union AnimCmd sAnim_WaterGunDroplet[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9310[] =
+const union AnimCmd *const gAnims_WaterBubble[] =
 {
-    gSpriteAnim_83D9300,
+    sAnim_WaterBubble,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9314[] =
+static const union AnimCmd *const sAnims_WaterGunDroplet[] =
 {
-    gSpriteAnim_83D9308,
+    sAnim_WaterGunDroplet,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9318 =
+const struct SpriteTemplate gWaterGunProjectileSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837E04C,
-    .anims = gSpriteAnimTable_83D9310,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
+    .anims = gAnims_WaterBubble,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9330 =
+const struct SpriteTemplate gWaterGunDropletSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837E10C,
-    .anims = gSpriteAnimTable_83D9314,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
+    .anims = sAnims_WaterGunDroplet,
     .images = NULL,
     .affineAnims = gAffineAnims_Droplet,
-    .callback = sub_80D37FC,
+    .callback = AnimWaterGunDroplet,
 };
 
 const struct SpriteTemplate gSmallBubblePairSpriteTemplate =
@@ -222,7 +222,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9438 =
     .callback = sub_807A9BC,
 };
 
-void sub_80D37FC(struct Sprite *sprite)
+static void AnimWaterGunDroplet(struct Sprite *sprite)
 {
     sub_8078764(sprite, TRUE);
 

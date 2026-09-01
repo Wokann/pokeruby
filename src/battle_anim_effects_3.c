@@ -188,7 +188,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84021B0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80794A8,
+    .callback = AnimThrowProjectile,
 };
 
 const union AnimCmd gOpeningEyeAnimCmds[] =

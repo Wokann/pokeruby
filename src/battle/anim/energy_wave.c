@@ -39,7 +39,7 @@ const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -50,7 +50,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D920C =
 {
     .tileTag = ANIM_TAG_BROWN_ORB,
     .paletteTag = ANIM_TAG_BROWN_ORB,
-    .oam = &gOamData_837E04C,
+    .oam = &gOamData_AffineOff_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -142,7 +142,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92D0 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E10C,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D92C8,
@@ -153,7 +153,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92E8 =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
-    .oam = &gOamData_837E10C,
+    .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D92CC,

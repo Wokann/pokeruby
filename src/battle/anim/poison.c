@@ -8,7 +8,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern const union AnimCmd *const gSpriteAnimTable_83D9310[];
+extern const union AnimCmd *const gAnims_WaterBubble[];
 
 void AnimSpriteOnMonPos(struct Sprite *sprite);
 static void AnimSludgeProjectile(struct Sprite *sprite);
@@ -179,7 +179,7 @@ const struct SpriteTemplate gWaterBubbleSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
-    .anims = gSpriteAnimTable_83D9310,
+    .anims = gAnims_WaterBubble,
     .images = NULL,
     .affineAnims = sAffineAnims_Bubble,
     .callback = AnimBubbleEffect,
