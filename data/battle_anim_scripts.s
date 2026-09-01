@@ -5338,11 +5338,11 @@ Move_CLAMP: @ 81CEAF0
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB1E8, ANIM_BATTLER_ATTACKER, 2, -32, 0, 2, 819, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83DB1E8, ANIM_BATTLER_ATTACKER, 2, 32, 0, 6, -819, 0, 10
+	create_clamp_jaw_sprite ANIM_BATTLER_ATTACKER, 2, x=-32, y=0, animation=2, x_velocity=32/10, y_velocity=0, half_duration=10
+	create_clamp_jaw_sprite ANIM_BATTLER_ATTACKER, 2, x=32, y=0, animation=6, x_velocity=-32/10, y_velocity=0, half_duration=10
 	delay 10
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 5, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 5, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
@@ -10404,8 +10404,8 @@ ClampHit:
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DB1E8, ANIM_BATTLER_ATTACKER, 2, -32, 0, 2, 819, 0, 10
-	createsprite gBattleAnimSpriteTemplate_83DB1E8, ANIM_BATTLER_ATTACKER, 2, 32, 0, 6, -819, 0, 10
+	createsprite gClampJawSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -32, 0, 2, 819, 0, 10
+	createsprite gClampJawSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 0, 6, -819, 0, 10
 	delay 10
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 5, 1

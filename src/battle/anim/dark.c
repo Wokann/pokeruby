@@ -126,7 +126,7 @@ const struct SpriteTemplate gSharpTeethSpriteTemplate =
     .callback = AnimBite,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB1E8 =
+const struct SpriteTemplate gClampJawSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CLAMP,
     .paletteTag = ANIM_TAG_CLAMP,
