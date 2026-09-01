@@ -6107,26 +6107,26 @@ Move_MEGAHORN: @ 81CFDAC
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	jumpifcontest _81CFE83
+	jumpifcontest MegahornInContest
 	fadetobg BG_DRILL
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 768, 1, -1
-_81CFDCF:
+MegahornContinue:
 	waitbgfadein
 	setalpha 12, 8
-	createvisualtask AnimTask_ShakeMon, 5, 0, 2, 0, 15, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 2, 0, 15, 1
 	waitforvisualfinish
 	delay 10
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 6
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAABC, ANIM_BATTLER_ATTACKER, 3, -42, 25, 0, 0, 6
+	create_megahorn_horn_sprite ANIM_BATTLER_ATTACKER, 3, x1=-42, y1=25, x2=0, y2=0, duration=6
 	delay 4
 	playsewithpan SE_M_VICEGRIP, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -16, 4, 1, 4
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, -4, 1, 12, 1
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 7, 5, 1, 32767, 10, 0, 0
+	complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_ATTACKER | F_PAL_TARGET, delay=5, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=0
 	delay 10
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 11
 	delay 3
@@ -6140,11 +6140,11 @@ _81CFDCF:
 	setarg ARG_RET_ID, -1
 	waitbgfadein
 	end
-_81CFE83:
+MegahornInContest:
 	fadetobg BG_DRILL_CONTESTS
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, 2304, 768, 0, -1
-	goto _81CFDCF
+	goto MegahornContinue
 
 Move_GUST: @ 81CFE9A
 	loadspritegfx ANIM_TAG_GUST

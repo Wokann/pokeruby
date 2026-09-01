@@ -8,7 +8,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80DC824(struct Sprite *sprite);
+static void AnimMegahornHorn(struct Sprite *sprite);
 static void AnimLeechLifeNeedle(struct Sprite *sprite);
 void sub_80DC9A0(struct Sprite *sprite);
 void sub_80DCA70(struct Sprite *sprite);
@@ -22,40 +22,40 @@ static void sub_80DCB5C(struct Sprite *sprite);
 static void sub_80DCBB4(struct Sprite *sprite);
 static void AnimMissileArcStep(struct Sprite *sprite);
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAA80[] =
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_0[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 30, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAA90[] =
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_1[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, -99, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAAA0[] =
+static const union AffineAnimCmd sAffineAnim_MegahornHorn_2[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 94, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAAB0[] =
+static const union AffineAnimCmd *const sAffineAnims_MegahornHorn[] =
 {
-    gSpriteAffineAnim_83DAA80,
-    gSpriteAffineAnim_83DAA90,
-    gSpriteAffineAnim_83DAAA0,
+    sAffineAnim_MegahornHorn_0,
+    sAffineAnim_MegahornHorn_1,
+    sAffineAnim_MegahornHorn_2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAABC =
+const struct SpriteTemplate gMegahornHornSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HORN_HIT_2,
     .paletteTag = ANIM_TAG_HORN_HIT_2,
-    .oam = &gOamData_837E014,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAAB0,
-    .callback = sub_80DC824,
+    .affineAnims = sAffineAnims_MegahornHorn,
+    .callback = AnimMegahornHorn,
 };
 
 static const union AffineAnimCmd sAffineAnim_LeechLifeNeedle_0[] =
@@ -200,7 +200,7 @@ const struct SpriteTemplate gTailGlowOrbSpriteTemplate =
 };
 
 // used in Move_MEGAHORN
-void sub_80DC824(struct Sprite *sprite)
+static void AnimMegahornHorn(struct Sprite *sprite)
 {
     if (IsContest())
     {

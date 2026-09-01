@@ -88,7 +88,7 @@ extern const struct OamData gOamData_AffineDouble_ObjNormal_32x32;
 extern const struct OamData gOamData_AffineDouble_ObjNormal_64x64;
 extern const struct OamData gOamData_837D004;
 extern const struct OamData gOamData_837D00C;
-extern const struct OamData gOamData_837E014;
+extern const struct OamData gOamData_AffineDouble_ObjNormal_32x16;
 extern const struct OamData gOamData_837E01C;
 extern const struct OamData gOamData_AffineDouble_ObjNormal_8x16;
 extern const struct OamData gOamData_837E02C;
