@@ -5395,7 +5395,7 @@ IceBeamCreateCrystals:
 
 Move_WITHDRAW: @ 81CEC84
 	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
-	createvisualtask sub_80CF4D8, 5
+	createvisualtask AnimTask_Withdraw, 5
 	waitforvisualfinish
 	end
 
