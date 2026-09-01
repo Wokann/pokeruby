@@ -4,55 +4,56 @@
 #include "rom_8077ABC.h"
 #include "sprite.h"
 #include "task.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimAuroraRings(struct Sprite *sprite);
-static void AnimGrowAuroraRings(struct Sprite *);
-static void AnimTask_RotateMonPalette2(u8);
+static void AnimAuroraBeamRings(struct Sprite *sprite);
+static void AnimAuroraBeamRings_Step(struct Sprite *sprite);
+static void AnimTask_RotateAuroraRingColors_Step(u8 taskId);
 
-const union AnimCmd gSpriteAnim_83D9190[] =
+static const union AnimCmd sAnim_AuroraBeamRing_0[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9198[] =
+static const union AnimCmd sAnim_AuroraBeamRing_1[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D91A0[] =
+static const union AnimCmd *const sAnims_AuroraBeamRing[] =
 {
-    gSpriteAnim_83D9190,
-    gSpriteAnim_83D9198,
+    sAnim_AuroraBeamRing_0,
+    sAnim_AuroraBeamRing_1,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D91A8[] =
+static const union AffineAnimCmd sAffineAnim_AuroraBeamRing[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
     AFFINEANIMCMD_FRAME(0x60, 0x60, 0, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D91C0[] =
+static const union AffineAnimCmd *const sAffineAnims_AuroraBeamRing[] =
 {
-    gSpriteAffineAnim_83D91A8,
+    sAffineAnim_AuroraBeamRing,
 };
 
 // Multi-colored rings used in Aurora Beam.
-const struct SpriteTemplate RainbowRingSpriteTemplate =
+const struct SpriteTemplate gAuroraBeamRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RAINBOW_RINGS,
     .paletteTag = ANIM_TAG_RAINBOW_RINGS,
     .oam = &gOamData_AffineDouble_ObjNormal_8x16,
-    .anims = gSpriteAnimTable_83D91A0,
+    .anims = sAnims_AuroraBeamRing,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D91C0,
-    .callback = AnimAuroraRings,
+    .affineAnims = sAffineAnims_AuroraBeamRing,
+    .callback = AnimAuroraBeamRings,
 };
 
 // Animates the colorful rings in Aurora Beam linearly towards the target mon.
@@ -61,66 +62,63 @@ const struct SpriteTemplate RainbowRingSpriteTemplate =
 // arg 2: target x offset
 // arg 3: target y offset
 // arg 4: duration
-void AnimAuroraRings(struct Sprite *sprite)
+static void AnimAuroraBeamRings(struct Sprite *sprite)
 {
-    s16 r6;
+    s16 unkArg;
 
-    InitSpritePosToAnimAttacker(sprite, 1);
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
-        r6 = -gBattleAnimArgs[2];
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        unkArg = -gBattleAnimArgs[2];
     else
-        r6 = gBattleAnimArgs[2];
+        unkArg = gBattleAnimArgs[2];
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + r6;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + unkArg;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     InitAnimLinearTranslation(sprite);
-    sprite->callback = AnimGrowAuroraRings;
+    sprite->callback = AnimAuroraBeamRings_Step;
     sprite->affineAnimPaused = TRUE;
     sprite->callback(sprite);
 }
 
 // Grows the rings in Aurora Beam.
 // arg 7: if -1, grow the rings
-static void AnimGrowAuroraRings(struct Sprite *sprite)
+static void AnimAuroraBeamRings_Step(struct Sprite *sprite)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         StartSpriteAnim(sprite, 1);
         sprite->affineAnimPaused = FALSE;
     }
-    if (AnimTranslateLinear(sprite) != 0)
+    if (AnimTranslateLinear(sprite))
         DestroyAnimSprite(sprite);
 }
 
-// This seems to rotate the palette of the attacking mon, but the visual 
-// effect is not noticeable in-game.
-// arg 0: duration
-void AnimTask_RotateMonPalette1(u8 taskId)
+// Updates the palette on the rainbow rings used in Aurora Beam to make them appear to be rotating counterclockwise
+void AnimTask_RotateAuroraRingColors(u8 taskId)
 {
     gTasks[taskId].data[0] = gBattleAnimArgs[0];
-    gTasks[taskId].data[2] = 0x100 + IndexOfSpritePaletteTag(0x279C) * 16;
-    gTasks[taskId].func = AnimTask_RotateMonPalette2;
+    gTasks[taskId].data[2] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_RAINBOW_RINGS));
+    gTasks[taskId].func = AnimTask_RotateAuroraRingColors_Step;
 }
 
-static void AnimTask_RotateMonPalette2(u8 taskId)
+static void AnimTask_RotateAuroraRingColors_Step(u8 taskId)
 {
-    gTasks[taskId].data[10]++;
-    if (gTasks[taskId].data[10] == 3)
+    int i;
+    u16 palIndex;
+
+    if (++gTasks[taskId].data[10] == 3)
     {
-        u16 r5;
-        u16 r6;
-        s32 i;
+        u16 rgbBuffer;
 
         gTasks[taskId].data[10] = 0;
-        r5 = gTasks[taskId].data[2] + 1;
-        r6 = gPlttBufferFaded[r5];
+        palIndex = gTasks[taskId].data[2] + 1;
+        rgbBuffer = gPlttBufferFaded[palIndex];
         for (i = 1; i < 8; i++)
-            gPlttBufferFaded[r5 + i - 1] = gPlttBufferFaded[r5 + i];
-        gPlttBufferFaded[r5 + 7] = r6;
+            gPlttBufferFaded[palIndex + i - 1] = gPlttBufferFaded[palIndex + i];
+        gPlttBufferFaded[palIndex + 7] = rgbBuffer;
     }
-    gTasks[taskId].data[11]++;
-    if (gTasks[taskId].data[11] == gTasks[taskId].data[0])
+    if (++gTasks[taskId].data[11] == gTasks[taskId].data[0])
         DestroyAnimVisualTask(taskId);
 }

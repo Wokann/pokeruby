@@ -5401,37 +5401,37 @@ Move_WITHDRAW: @ 81CEC84
 
 Move_AURORA_BEAM: @ 81CEC91
 	loadspritegfx ANIM_TAG_RAINBOW_RINGS
-	fadetobg BG_AURORABEAM
+	fadetobg BG_AURORA
 	waitbgfadein
 	playsewithpan SE_M_BUBBLE_BEAM, SOUND_PAN_ATTACKER
 	setarg ARG_RET_ID, 0
-	createvisualtask AnimTask_RotateMonPalette1, 10, 130
-	call _81CED18
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 1, 0, 17, 1
-	call _81CED18
-	call _81CED18
-	call _81CED18
+	createvisualtask AnimTask_RotateAuroraRingColors, 10, 130
+	call AuroraBeamCreateRings
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 1, 0, 17, 1
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
 	setarg ARG_RET_ID, -1
-	createsoundtask SoundTask_LoopSEAdjustPanning, 183, -64, 63, 3, 6, 0, 10
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 2, 0, 40, 1
-	call _81CED18
-	call _81CED18
-	call _81CED18
-	call _81CED18
-	call _81CED18
-	call _81CED18
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_BUBBLE_BEAM2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 3, 6, 0, 10
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 2, 0, 40, 1
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
+	call AuroraBeamCreateRings
 	waitforvisualfinish
 	restorebg
 	waitbgfadein
 	end
-_81CED18:
-	createsprite RainbowRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
+AuroraBeamCreateRings:
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
-	createsprite RainbowRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
+	createsprite gAuroraBeamRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 17
 	delay 1
 	return
 
