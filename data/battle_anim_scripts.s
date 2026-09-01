@@ -6191,8 +6191,8 @@ Move_WING_ATTACK: @ 81CFEEB
 Move_PECK: @ 81CFF88
 	loadspritegfx ANIM_TAG_IMPACT
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
-	createvisualtask sub_80A8EFC, 2, 3, -768, 1, 2
-	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -12, 0, 1, 3
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 3, -768, ANIM_BATTLER_TARGET, 2
+	create_flashing_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-12, y=0, relative_to=ANIM_BATTLER_TARGET, animation=3
 	waitforvisualfinish
 	end
 
@@ -10432,13 +10432,13 @@ General_ItemEffect: @ 81D661C
 	loadspritegfx ANIM_TAG_SPARKLE_2
 	delay 0
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_BATTLER_ATTACKER, 2
 	waitforvisualfinish
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_BATTLER_ATTACKER, 2
 	waitforvisualfinish
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_80A8EFC, 2, 16, 128, 0, 2
+	createvisualtask AnimTask_RotateMonToSideAndRestore, 2, 16, 128, ANIM_BATTLER_ATTACKER, 2
 	waitforvisualfinish
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
 	call GrantingStarsEffect
