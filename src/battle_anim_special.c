@@ -17,6 +17,7 @@
 #include "trig.h"
 #include "util.h"
 #include "constants/items.h"
+#include "constants/moves.h"
 #include "constants/songs.h"
 
 int gUnknown_03005F0C;
@@ -2074,18 +2075,18 @@ void sub_8141D7C(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_8141DAC(u8 taskId)
+void AnimTask_GetTrappedMoveAnimId(u8 taskId)
 {
-    if (ewram17840.unk0 == 83)
-        gBattleAnimArgs[0] = 1;
-    else if (ewram17840.unk0 == 250)
-        gBattleAnimArgs[0] = 2;
-    else if (ewram17840.unk0 == 128)
-        gBattleAnimArgs[0] = 3;
-    else if (ewram17840.unk0 == 328)
-        gBattleAnimArgs[0] = 4;
+    if (ewram17840.unk0 == MOVE_FIRE_SPIN)
+        gBattleAnimArgs[0] = TRAP_ANIM_FIRE_SPIN;
+    else if (ewram17840.unk0 == MOVE_WHIRLPOOL)
+        gBattleAnimArgs[0] = TRAP_ANIM_WHIRLPOOL;
+    else if (ewram17840.unk0 == MOVE_CLAMP)
+        gBattleAnimArgs[0] = TRAP_ANIM_CLAMP;
+    else if (ewram17840.unk0 == MOVE_SAND_TOMB)
+        gBattleAnimArgs[0] = TRAP_ANIM_SAND_TOMB;
     else
-        gBattleAnimArgs[0] = 0;
+        gBattleAnimArgs[0] = TRAP_ANIM_BIND;
 
     DestroyAnimVisualTask(taskId);
 }

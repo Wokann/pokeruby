@@ -6361,32 +6361,32 @@ Move_SANDSTORM: @ 81D0304
 Move_WHIRLPOOL: @ 81D038C
 	loadspritegfx ANIM_TAG_WATER_ORB
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 0
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 0, 7, rgb(0, 13, 23)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(0, 13, 23)
 	playsewithpan SE_M_WHIRLPOOL, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 50, 1
-	call _81D03E4
-	call _81D03E4
-	call _81D03E4
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 50, 1
+	call WhirlpoolEffect
+	call WhirlpoolEffect
+	call WhirlpoolEffect
 	delay 12
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 7, 0, rgb(0, 13, 23)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(0, 13, 23)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
-_81D03E4:
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 28, 384, 50, 8, 50, 1
+WhirlpoolEffect:
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 28, 384, 50, 8, 50, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 32, 240, 40, 11, -46, 1
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 32, 240, 40, 11, -46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 33, 416, 40, 4, 42, 1
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 33, 416, 40, 4, 42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 31, 288, 45, 6, -42, 1
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 31, 288, 45, 6, -42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 28, 448, 45, 11, 46, 1
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 28, 448, 45, 11, 46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DACB8, ANIM_BATTLER_TARGET, 2, 0, 33, 464, 50, 10, -50, 1
+	createsprite gWhirlpoolSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 33, 464, 50, 10, -50, ANIM_BATTLER_TARGET
 	delay 2
 	return
 
@@ -10354,13 +10354,13 @@ General_ItemKnockoff: @ 81D647E
 	end
 
 General_TurnTrap: @ 81D6489
-	createvisualtask sub_8141DAC, 5
-	jumpargeq 0, 1, FireSpinHit
-	jumpargeq 0, 2, WhirlpoolHit
-	jumpargeq 0, 3, ClampHit
-	jumpargeq 0, 4, SandTombHit
-	goto WrapHit
-WrapHit:
+	createvisualtask AnimTask_GetTrappedMoveAnimId, 5
+	jumpargeq 0, TRAP_ANIM_FIRE_SPIN, Status_FireSpin
+	jumpargeq 0, TRAP_ANIM_WHIRLPOOL, Status_Whirlpool
+	jumpargeq 0, TRAP_ANIM_CLAMP,     Status_Clamp
+	jumpargeq 0, TRAP_ANIM_SAND_TOMB, Status_SandTomb
+	goto Status_BindWrap
+Status_BindWrap:
 	loadspritegfx ANIM_TAG_TENDRILS
 	loopsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET, 6, 2
 	createsprite gBattleAnimSpriteTemplate_83D65A0, ANIM_BATTLER_TARGET, 4, 0, 16, 0, 1
@@ -10373,7 +10373,7 @@ WrapHit:
 	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	end
-FireSpinHit:
+Status_FireSpin:
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 30, 1
@@ -10382,24 +10382,24 @@ FireSpinHit:
 	waitforvisualfinish
 	stopsound
 	end
-WhirlpoolHit:
+Status_Whirlpool:
 	loadspritegfx ANIM_TAG_WATER_ORB
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 0
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 0, 7, rgb(0, 13, 23)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(0, 13, 23)
 	playsewithpan SE_M_WHIRLPOOL, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 30, 1
-	call _81D03E4
-	call _81D03E4
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 30, 1
+	call WhirlpoolEffect
+	call WhirlpoolEffect
 	delay 12
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 7, 0, rgb(0, 13, 23)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(0, 13, 23)
 	waitforvisualfinish
 	stopsound
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
-ClampHit:
+Status_Clamp:
 	loadspritegfx ANIM_TAG_CLAMP
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_TARGET
@@ -10415,7 +10415,7 @@ ClampHit:
 	blendoff
 	waitforvisualfinish
 	end
-SandTombHit:
+Status_SandTomb:
 	loadspritegfx ANIM_TAG_MUD_SAND
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 0, 7, rgb(19, 17, 0)
 	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 30, 1

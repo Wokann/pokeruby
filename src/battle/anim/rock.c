@@ -101,7 +101,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC7C =
     .callback = AnimParticleInVortex,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAC94[] =
+static const union AffineAnimCmd sAffineAnim_Whirlpool[] =
 {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
     AFFINEANIMCMD_FRAME(0x2, 0xFFFD, 0, 5),
@@ -109,19 +109,19 @@ const union AffineAnimCmd gSpriteAffineAnim_83DAC94[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DACB4[] =
+static const union AffineAnimCmd *const sAffineAnims_Whirlpool[] =
 {
-    gSpriteAffineAnim_83DAC94,
+    sAffineAnim_Whirlpool,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DACB8 =
+const struct SpriteTemplate gWhirlpoolSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineNormal_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DACB4,
+    .affineAnims = sAffineAnims_Whirlpool,
     .callback = AnimParticleInVortex,
 };
 
