@@ -51,7 +51,7 @@ bool8 ShouldRotScaleSpeciesBeFlipped(void);
 void PrepareBattlerSpriteForRotScale(u8 spriteId, u8);
 void ResetSpriteRotScale(u8 spriteId);
 void SetBattlerSpriteYOffsetFromRotation(u8 spriteId);
-void sub_8079534(struct Sprite *sprite);
+void AnimTravelDiagonally(struct Sprite *sprite);
 void AnimTask_AlphaFadeIn(u8 taskId);
 void SetBattlerSpriteYOffsetFromYScale(u8 spriteId);
 u16 GetBattlerYDeltaFromSpriteId(u8 spriteId);

@@ -27,7 +27,7 @@ extern u8 gAnimMoveTurn;
 extern struct SpriteTemplate gBasicHitSplatSpriteTemplate;
 
 void sub_080B08A0(struct Sprite *sprite);
-void sub_80D902C(struct Sprite *sprite);
+static void AnimSlideHandOrFootToTarget(struct Sprite *sprite);
 void sub_80D9078(struct Sprite *sprite);
 void AnimBasicFistOrFoot(struct Sprite *sprite);
 void sub_80D90F4(struct Sprite *sprite);
@@ -68,62 +68,54 @@ const struct SpriteTemplate gSpriteTemplate_83D9F24 =
     .callback = sub_080B08A0,
 };
 
-const union AnimCmd gSpriteAnim_83D9F3C[] =
+static const union AnimCmd sAnim_Fist[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9F44[] =
+static const union AnimCmd sAnim_FootWide[] =
 {
     ANIMCMD_FRAME(16, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9F4C[] =
+static const union AnimCmd sAnim_FootTall[] =
 {
     ANIMCMD_FRAME(32, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9F54[] =
+static const union AnimCmd sAnim_HandLeft[] =
 {
     ANIMCMD_FRAME(48, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D9F5C[] =
+static const union AnimCmd sAnim_HandRight[] =
 {
     ANIMCMD_FRAME(48, 1, .hFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9F64[] =
+static const union AnimCmd *const sAnims_HandsAndFeet[] =
 {
-    gSpriteAnim_83D9F3C,
+    sAnim_Fist,
+    sAnim_FootWide,
+    sAnim_FootTall,
+    sAnim_HandLeft,
+    sAnim_HandRight,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9F68[] =
-{
-    gSpriteAnim_83D9F44,
-    gSpriteAnim_83D9F4C,
-};
-
-const union AnimCmd *const gSpriteAnimTable_83D9F70[] =
-{
-    gSpriteAnim_83D9F54,
-    gSpriteAnim_83D9F5C,
-};
-
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9F78 =
+const struct SpriteTemplate gKarateChopSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D902C,
+    .callback = AnimSlideHandOrFootToTarget,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9F90 =
@@ -131,7 +123,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9F90 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D9078,
@@ -142,7 +134,7 @@ const struct SpriteTemplate gFistFootSpriteTemplate =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimBasicFistOrFoot,
@@ -153,7 +145,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FC0 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D90F4,
@@ -164,7 +156,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FD8 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F70,
+    .anims = &sAnims_HandsAndFeet[3],
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D92D0,
@@ -175,7 +167,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FF0 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F68,
+    .anims = &sAnims_HandsAndFeet[1],
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D9378,
@@ -198,7 +190,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA024 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA020,
     .callback = AnimSpinningKickOrPunch,
@@ -221,7 +213,7 @@ const struct SpriteTemplate gMegaPunchKickSpriteTemplate =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA054,
     .callback = AnimSpinningKickOrPunch,
@@ -232,7 +224,7 @@ const struct SpriteTemplate gStompFootSpriteTemplate =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F68,
+    .anims = &sAnims_HandsAndFeet[1],
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimStompFoot,
@@ -323,7 +315,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA144 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D9B48,
@@ -427,7 +419,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA214 =
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9F64,
+    .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DA210,
     .callback = sub_80D9C40,
@@ -442,7 +434,7 @@ void sub_080B08A0(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80D902C(struct Sprite *sprite)
+static void AnimSlideHandOrFootToTarget(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[7] == 1 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
@@ -452,7 +444,7 @@ void sub_80D902C(struct Sprite *sprite)
 
     StartSpriteAnim(sprite, gBattleAnimArgs[6]);
     gBattleAnimArgs[6] = 0;
-    sub_8079534(sprite);
+    AnimTravelDiagonally(sprite);
 }
 
 void sub_80D9078(struct Sprite *sprite)
@@ -463,7 +455,7 @@ void sub_80D9078(struct Sprite *sprite)
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
     }
 
-    sub_80D902C(sprite);
+    AnimSlideHandOrFootToTarget(sprite);
 }
 
 // Displays a basic fist or foot sprite for a given duration.

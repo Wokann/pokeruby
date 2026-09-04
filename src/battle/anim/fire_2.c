@@ -200,7 +200,7 @@ void AnimEmberFlare(struct Sprite *sprite)
             || gBattleAnimAttacker == GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
             gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    sprite->callback = sub_8079534;
+    sprite->callback = AnimTravelDiagonally;
     sprite->callback(sprite);
 }
 
@@ -209,7 +209,7 @@ void sub_80D5210(struct Sprite *sprite)
     gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
-    sprite->callback = sub_8079534;
+    sprite->callback = AnimTravelDiagonally;
 }
 
 // Animates the a fire sprite in the first-half of the MOVE_FIRE_BLAST

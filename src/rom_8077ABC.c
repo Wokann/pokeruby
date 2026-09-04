@@ -1448,7 +1448,7 @@ static void AnimThrowProjectile_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_8079534(struct Sprite *sprite)
+void AnimTravelDiagonally(struct Sprite *sprite)
 {
     bool8 r4;
     u8 slot, r7;

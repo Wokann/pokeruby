@@ -36,7 +36,7 @@ const struct SpriteTemplate gSnoreZSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8079534,
+    .callback = AnimTravelDiagonally,
 };
 
 const union AnimCmd gExplosionAnimCmds[] =
