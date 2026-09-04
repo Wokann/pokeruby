@@ -262,9 +262,9 @@
 	.byte 0x29
 	.endm
 
-	.macro monbgprio_2A bank
+	.macro splitbgprio_foes battler:req
 	.byte 0x2A
-	.byte \bank
+	.byte \battler
 	.endm
 
 	.macro invisible bank

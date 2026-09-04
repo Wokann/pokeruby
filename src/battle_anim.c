@@ -1373,7 +1373,7 @@ static void ScriptCmd_jumpargeq(void);
 static void ScriptCmd_jumpifcontest(void);
 static void ScriptCmd_splitbgprio(void);
 static void ScriptCmd_splitbgprio_all(void);
-static void ScriptCmd_monbgprio_2A(void);
+static void ScriptCmd_splitbgprio_foes(void);
 static void ScriptCmd_invisible(void);
 static void ScriptCmd_visible(void);
 static void ScriptCmd_doublebattle_2D(void);
@@ -1423,7 +1423,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_panse_27,
     ScriptCmd_splitbgprio,
     ScriptCmd_splitbgprio_all,
-    ScriptCmd_monbgprio_2A,
+    ScriptCmd_splitbgprio_foes,
     ScriptCmd_invisible,
     ScriptCmd_visible,
     ScriptCmd_doublebattle_2D,
@@ -2988,22 +2988,22 @@ static void ScriptCmd_splitbgprio_all(void)
     }
 }
 
-static void ScriptCmd_monbgprio_2A(void)
+static void ScriptCmd_splitbgprio_foes(void)
 {
-    u8 wantedBank;
-    u8 bankIdentity;
-    u8 bank;
+    u8 wantedBattler;
+    u8 battlerPosition;
+    u8 battler;
 
-    wantedBank = T1_READ_8(sBattleAnimScriptPtr + 1);
+    wantedBattler = T1_READ_8(sBattleAnimScriptPtr + 1);
     sBattleAnimScriptPtr += 2;
     if (GetBattlerSide(gBattleAnimAttacker) != GetBattlerSide(gBattleAnimTarget))
     {
-        if (wantedBank != 0)
-            bank = gBattleAnimTarget;
+        if (wantedBattler != ANIM_BATTLER_ATTACKER)
+            battler = gBattleAnimTarget;
         else
-            bank = gBattleAnimAttacker;
-        bankIdentity = GetBattlerPosition(bank);
-        if (!IsContest() && (bankIdentity == 0 || bankIdentity == 3))
+            battler = gBattleAnimAttacker;
+        battlerPosition = GetBattlerPosition(battler);
+        if (!IsContest() && (battlerPosition == B_POSITION_PLAYER_LEFT || battlerPosition == B_POSITION_OPPONENT_RIGHT))
         {
             REG_BG1CNT_BITFIELD.priority = 1;
             REG_BG2CNT_BITFIELD.priority = 2;

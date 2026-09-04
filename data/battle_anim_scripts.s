@@ -625,7 +625,7 @@ Move_BODY_SLAM: @ 81C7D30
 Move_SUPERSONIC: @ 81C7DBD
 	loadspritegfx ANIM_TAG_GOLD_RING
 	monbg ANIM_BATTLER_ATK_PARTNER
-	monbgprio_2A ANIM_BATTLER_ATTACKER
+	splitbgprio_foes ANIM_BATTLER_ATTACKER
 	setalpha 12, 8
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1
 	call Move_SUPERSONIC_CreateWaveSprite
@@ -662,7 +662,7 @@ Move_SCREECH_CreateWaveSprite:
 Move_FLAME_WHEEL: @ 81C7E62
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	createsprite gFireSpiralOutwardSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 56, 0
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_ATTACKER
 	delay 2
@@ -2339,7 +2339,7 @@ Move_CONVERSION: @ 81CA809
 Move_CONVERSION_2: @ 81CA91E
 	loadspritegfx ANIM_TAG_CONVERSION
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	setalpha 0, 16
 	delay 0
 	playsewithpan SE_M_BARRIER, SOUND_PAN_TARGET
@@ -5703,7 +5703,7 @@ Move_ABSORB: @ 81CF427
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB(13, 31, 12)
 	waitforvisualfinish
@@ -5755,7 +5755,7 @@ Move_MEGA_DRAIN: @ 81CF53F
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=8, color=RGB(13, 31, 12)
 	waitforvisualfinish
@@ -5815,7 +5815,7 @@ Move_GIGA_DRAIN: @ 81CF6CF
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=12, color=RGB(13, 31, 12)
 	waitforvisualfinish
@@ -5885,7 +5885,7 @@ Move_LEECH_LIFE: @ 81CF8D7
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	delay 1
 	create_leech_life_needle_sprite ANIM_BATTLER_ATTACKER, 2, -20, 15, 12
@@ -6997,7 +6997,7 @@ Move_DREAM_EATER: @ 81D1271
 	loadspritegfx ANIM_TAG_ORBS
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
 	setalpha 8, 8
@@ -7007,7 +7007,7 @@ Move_DREAM_EATER: @ 81D1271
 	waitforvisualfinish
 	setalpha 12, 8
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 2, 25, 1
-	call _81D12DB
+	call DreamEaterAbsorb
 	waitforvisualfinish
 	delay 15
 	call HealingEffect
@@ -7017,46 +7017,46 @@ Move_DREAM_EATER: @ 81D1271
 	delay 1
 	call UnsetPsychicBackground
 	end
-_81D12DB:
+DreamEaterAbsorb:
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 5, -18, -40, 35
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=5, y=-18, wave_amplitude=-40, wave_period=35
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 28, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -10, 20, 40, 39
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=28, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-10, y=20, wave_amplitude=40, wave_period=39
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -32, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-32, wave_period=26
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -15, -16, 36
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=-15, wave_amplitude=-16, wave_period=36
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 16, 33
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -40, 26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-5, y=15, wave_amplitude=16, wave_period=33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-40, wave_period=26
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -5, 15, 36, 33
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, -5, -8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -10, 20, 20, 39
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-5, y=15, wave_amplitude=36, wave_period=33
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=10, y=-5, wave_amplitude=-8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=-10, y=20, wave_amplitude=20, wave_period=39
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 5, 8, 26
-	createsprite gAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 5, -18, -20, 35
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=5, wave_amplitude=8, wave_period=26
+	create_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 3, x=5, y=-18, wave_amplitude=-20, wave_period=35
 	delay 4
 	return
 
@@ -8044,7 +8044,7 @@ Move_WILL_O_WISP: @ 81D2B83
 	loadspritegfx ANIM_TAG_WISP_FIRE
 	loadspritegfx ANIM_TAG_WISP_ORB
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 10
 	createvisualtask sub_812B374, 2, -64, -64, 1, 0
@@ -8821,7 +8821,7 @@ Move_FRENZY_PLANT: @ 81D3C7B
 Move_METAL_SOUND: @ 81D3E1F
 	loadspritegfx ANIM_TAG_METAL_SOUND_WAVES
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_2A ANIM_BATTLER_TARGET
+	splitbgprio_foes ANIM_BATTLER_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1
 	call _81D3E52
 	call _81D3E52
