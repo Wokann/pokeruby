@@ -6945,21 +6945,21 @@ Move_FIRE_PUNCH: @ 81D1107
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 9, 31
-	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 64
-	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 128
-	createsprite gBattleAnimSpriteTemplate_83D9478, ANIM_BATTLER_TARGET, 1, 196
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, RGB_RED
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_BATTLER_TARGET, 1, 0
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_BATTLER_TARGET, 1, 64
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_BATTLER_TARGET, 1, 128
+	createsprite gFireSpiralInwardSpriteTemplate, ANIM_BATTLER_TARGET, 1, 196
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 8, 1, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 1
+	create_fist_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, duration=8
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 15, 1
 	call FireSpreadEffect
 	delay 4
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 0, 9, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 0, 9, 0, RGB_RED
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff

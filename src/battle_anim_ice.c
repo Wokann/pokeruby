@@ -612,8 +612,8 @@ static void AnimIcePunchSwirlingParticle(struct Sprite *sprite)
     sprite->data[3] = 30; 
     sprite->data[4] = 65024; 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078174;
-    sub_8078174(sprite);
+    sprite->callback = TranslateSpriteInGrowingCircle;
+    TranslateSpriteInGrowingCircle(sprite);
 }
 
 // Animates the ice particles in Ice Beam.

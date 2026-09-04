@@ -456,7 +456,7 @@ static void sub_80E1F3C(struct Sprite *sprite)
     sprite->data[4] = 112;
     sprite->data[5] = 0;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078174;
+    sprite->callback = TranslateSpriteInGrowingCircle;
     sprite->callback(sprite);
 }
 

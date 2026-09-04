@@ -485,7 +485,7 @@ void sub_8078114(struct Sprite *sprite)
     }
 }
 
-void sub_8078174(struct Sprite *sprite)
+void TranslateSpriteInGrowingCircle(struct Sprite *sprite)
 {
     if (sprite->data[3])
     {

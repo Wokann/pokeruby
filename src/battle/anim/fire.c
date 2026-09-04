@@ -6,15 +6,15 @@
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 
-void sub_80D4ED8(struct Sprite *sprite);
-void AnimFireSpread(struct Sprite *sprite);
+static void AnimFireSpiralInward(struct Sprite *sprite);
+static void AnimFireSpread(struct Sprite *sprite);
 static void AnimLargeFlame(struct Sprite *);
 static void AnimFirePlume(struct Sprite *);
 static void AnimUnusedSmallEmber(struct Sprite *);
 static void AnimLargeFlame_Step(struct Sprite *);
 static void AnimUnusedSmallEmber_Step(struct Sprite *);
 
-const union AnimCmd gSpriteAnim_83D9450[] =
+static const union AnimCmd sAnim_FireSpiralSpread_0[] =
 {
     ANIMCMD_FRAME(16, 4),
     ANIMCMD_FRAME(32, 4),
@@ -22,7 +22,7 @@ const union AnimCmd gSpriteAnim_83D9450[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83D9460[] =
+static const union AnimCmd sAnim_FireSpiralSpread_1[] =
 {
     ANIMCMD_FRAME(16, 4, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 4, .vFlip = TRUE, .hFlip = TRUE),
@@ -30,21 +30,21 @@ const union AnimCmd gSpriteAnim_83D9460[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9470[] =
+static const union AnimCmd *const sAnims_FireSpiralSpread[] =
 {
-    gSpriteAnim_83D9450,
-    gSpriteAnim_83D9460,
+    sAnim_FireSpiralSpread_0,
+    sAnim_FireSpiralSpread_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9478 =
+const struct SpriteTemplate gFireSpiralInwardSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9470,
+    .anims = sAnims_FireSpiralSpread,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D4ED8,
+    .callback = AnimFireSpiralInward,
 };
 
 const struct SpriteTemplate gFireSpreadSpriteTemplate =
@@ -52,7 +52,7 @@ const struct SpriteTemplate gFireSpreadSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9470,
+    .anims = sAnims_FireSpiralSpread,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimFireSpread,
@@ -172,7 +172,7 @@ const struct SpriteTemplate gSpriteTemplate_83D957C =
     .callback = AnimUnusedSmallEmber,
 };
 
-void sub_80D4ED8(struct Sprite *sprite)
+static void AnimFireSpiralInward(struct Sprite *sprite)
 {
     sprite->data[0] = gBattleAnimArgs[0];
     sprite->data[1] = 0x3C;
@@ -182,11 +182,11 @@ void sub_80D4ED8(struct Sprite *sprite)
 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
-    sprite->callback = sub_8078174;
+    sprite->callback = TranslateSpriteInGrowingCircle;
     sprite->callback(sprite);
 }
 
-void AnimFireSpread(struct Sprite *sprite)
+static void AnimFireSpread(struct Sprite *sprite)
 {
     SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
 
