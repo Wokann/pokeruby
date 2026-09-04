@@ -6538,29 +6538,32 @@ Move_TRIPLE_KICK: @ 81D071D
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	jumpifmoveturn 0, _81D0742
-	jumpifmoveturn 1, _81D0778
-	goto _81D07AE
-_81D073D:
+	jumpifmoveturn 0, TripleKickLeft
+	jumpifmoveturn 1, TripleKickRight
+	goto TripleKickCenter
+TripleKickContinue:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D0742:
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 4, -16, -8, 20, 1, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, -16, 1, 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 4, 0, 6, 1
-	goto _81D073D
-_81D0778:
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 4, 8, 8, 20, 1, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 8, 0, 1, 2
-	createvisualtask AnimTask_ShakeMon, 5, 1, 4, 0, 6, 1
-	goto _81D073D
-_81D07AE:
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 20, 1, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, -8, 1, 1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 6, 0, 8, 1
-	goto _81D073D
+
+TripleKickLeft:
+	create_wide_foot_sprite ANIM_BATTLER_TARGET, 4, x=-16, y=-8, duration=20
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-16, y=-16, relative_to=ANIM_BATTLER_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 4, 0, 6, 1
+	goto TripleKickContinue
+
+TripleKickRight:
+	create_wide_foot_sprite ANIM_BATTLER_TARGET, 4, x=8, y=8, duration=20
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=8, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 4, 0, 6, 1
+	goto TripleKickContinue
+
+TripleKickCenter:
+	create_wide_foot_sprite ANIM_BATTLER_TARGET, 4, x=0, y=0, duration=20
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
+	goto TripleKickContinue
 
 Move_DYNAMIC_PUNCH: @ 81D07E4
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
