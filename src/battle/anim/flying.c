@@ -32,8 +32,8 @@ static void sub_80DAD84(struct Sprite *sprite);
 static void sub_80DAF0C(struct Sprite *sprite);
 static void sub_80DB000(struct Sprite *sprite);
 static void sub_80DB0A0(struct Sprite *sprite);
-static void sub_80DB194(struct Sprite *sprite);
-static void sub_80DB1F4(struct Sprite *sprite);
+static void AnimBounceBallShrink(struct Sprite *sprite);
+static void AnimBounceBallLand(struct Sprite *sprite);
 static void sub_80DB288(struct Sprite *sprite);
 static void sub_80DB2D0(struct Sprite *sprite);
 static void sub_80DB330(struct Sprite *sprite);
@@ -239,7 +239,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA51C =
     .callback = sub_80DB000,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA534[] =
+static const union AffineAnimCmd sAffineAnim_BounceBallShrink[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x28, 0x0, 0, 6),
@@ -249,42 +249,42 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA534[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA564[] =
+static const union AffineAnimCmd *const sAffineAnims_BounceBallShrink[] =
 {
-    gSpriteAffineAnim_83DA534,
+    sAffineAnim_BounceBallShrink,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA568 =
+const struct SpriteTemplate gBounceBallShrinkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA564,
-    .callback = sub_80DB194,
+    .affineAnims = sAffineAnims_BounceBallShrink,
+    .callback = AnimBounceBallShrink,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA580[] =
+static const union AffineAnimCmd sAffineAnim_BounceBallLand[] =
 {
     AFFINEANIMCMD_FRAME(0xA0, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA590[] =
+static const union AffineAnimCmd *const sAffineAnims_BounceBallLand[] =
 {
-    gSpriteAffineAnim_83DA580,
+    sAffineAnim_BounceBallLand,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA594 =
+const struct SpriteTemplate gBounceBallLandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA590,
-    .callback = sub_80DB1F4,
+    .affineAnims = sAffineAnims_BounceBallLand,
+    .callback = AnimBounceBallLand,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA5AC[] =
@@ -1045,13 +1045,13 @@ void AnimTask_DrillPeckHitSplats(u8 taskId)
     }
 }
 
-static void sub_80DB194(struct Sprite *sprite)
+static void AnimBounceBallShrink(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
         case 0:
-            InitSpritePosToAnimAttacker(sprite, 1);
-            gSprites[GetAnimBattlerSpriteId(0)].invisible = TRUE;
+            InitSpritePosToAnimAttacker(sprite, TRUE);
+            gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = TRUE;
             ++sprite->data[0];
             break;
         case 1:
@@ -1062,12 +1062,12 @@ static void sub_80DB194(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB1F4(struct Sprite *sprite)
+static void AnimBounceBallLand(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
         case 0:
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
             sprite->y2 = -sprite->y - 32;
             ++sprite->data[0];
             break;
@@ -1082,7 +1082,7 @@ static void sub_80DB1F4(struct Sprite *sprite)
             sprite->y2 -= 10;
             if (sprite->y + sprite->y2 < -32)
             {
-                gSprites[GetAnimBattlerSpriteId(0)].invisible = FALSE;
+                gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = FALSE;
                 DestroyAnimSprite(sprite);
             }
     }

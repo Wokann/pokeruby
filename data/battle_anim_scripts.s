@@ -6418,26 +6418,26 @@ FlyUnleash:
 Move_BOUNCE: @ 81D04D9
 	loadspritegfx ANIM_TAG_ROUND_SHADOW
 	loadspritegfx ANIM_TAG_IMPACT
-	choosetwoturnanim _81D04E9, _81D04FD
-_81D04E8:
+	choosetwoturnanim BounceSetUp, BounceUnleash
+BounceEnd:
 	end
-_81D04E9:
+BounceSetUp:
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA568, ANIM_BATTLER_ATTACKER, 2, 0, 0
-	goto _81D04E8
-_81D04FD:
+	createsprite gBounceBallShrinkSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0
+	goto BounceEnd
+BounceUnleash:
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA594, ANIM_BATTLER_TARGET, 3
+	createsprite gBounceBallLandSpriteTemplate, ANIM_BATTLER_TARGET, 3
 	delay 7
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 5, 11, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 5, 11, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
-	goto _81D04E8
+	goto BounceEnd
 
 Move_KARATE_CHOP: @ 81D053C
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
