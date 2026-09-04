@@ -6393,27 +6393,27 @@ WhirlpoolEffect:
 Move_FLY: @ 81D046F
 	loadspritegfx ANIM_TAG_ROUND_SHADOW
 	loadspritegfx ANIM_TAG_IMPACT
-	choosetwoturnanim _81D0480, _81D0498
-_81D047E:
+	choosetwoturnanim FlySetUp, FlyUnleash
+FlyEnd:
 	waitforvisualfinish
 	end
-_81D0480:
+FlySetUp:
 	playsewithpan SE_M_FLY, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA450, ANIM_BATTLER_ATTACKER, 2, 0, 0, 13, 336
-	goto _81D047E
-_81D0498:
+	createsprite gFlyBallUpSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 13, 336
+	goto FlyEnd
+FlyUnleash:
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA468, ANIM_BATTLER_ATTACKER, 2, 20
+	createsprite gFlyBallAttackSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20
 	delay 20
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 6, 0, 8, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
-	goto _81D047E
+	goto FlyEnd
 
 Move_BOUNCE: @ 81D04D9
 	loadspritegfx ANIM_TAG_ROUND_SHADOW

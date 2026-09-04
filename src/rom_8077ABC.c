@@ -126,7 +126,7 @@ const struct SpriteTemplate gSpriteTemplate_837F5B0[] =
     {
         .tileTag = 55125,
         .paletteTag = 55125,
-        .oam = &gOamData_837DF9C,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -135,7 +135,7 @@ const struct SpriteTemplate gSpriteTemplate_837F5B0[] =
     {
         .tileTag = 55126,
         .paletteTag = 55126,
-        .oam = &gOamData_837DF9C,
+        .oam = &gOamData_AffineNormal_ObjNormal_64x64,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,

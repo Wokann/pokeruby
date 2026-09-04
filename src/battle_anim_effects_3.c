@@ -1141,7 +1141,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402AE4 =
 {
     .tileTag = ANIM_TAG_SLAM_HIT_2,
     .paletteTag = ANIM_TAG_SLAM_HIT_2,
-    .oam = &gOamData_837DF9C,
+    .oam = &gOamData_AffineNormal_ObjNormal_64x64,
     .anims = gSpriteAnimTable_8402AA8,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_8402ADC,
