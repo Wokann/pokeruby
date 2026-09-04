@@ -6462,13 +6462,13 @@ Move_CROSS_CHOP: @ 81D058E
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D9FD8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D9FD8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1
+	createsprite gCrossChopHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0
+	createsprite gCrossChopHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1
 	delay 40
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 32767, 10, 0, 10
-	createsprite gCrossImpactSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 20
-	createvisualtask AnimTask_ShakeMon, 5, 1, 7, 0, 9, 1
+	complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=10
+	create_cross_impact_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, duration=20
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 7, 0, 9, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff

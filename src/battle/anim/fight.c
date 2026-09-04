@@ -31,7 +31,7 @@ static void AnimSlideHandOrFootToTarget(struct Sprite *sprite);
 void sub_80D9078(struct Sprite *sprite);
 void AnimBasicFistOrFoot(struct Sprite *sprite);
 void sub_80D90F4(struct Sprite *sprite);
-void sub_80D92D0(struct Sprite *sprite);
+static void AnimCrossChopHand(struct Sprite *sprite);
 void sub_80D9378(struct Sprite *sprite);
 void AnimSpinningKickOrPunch(struct Sprite *sprite);
 void AnimSpinningKickOrPunch(struct Sprite *sprite);
@@ -46,7 +46,7 @@ void sub_80D9B48(struct Sprite *sprite);
 void sub_80D9BD4(struct Sprite *sprite);
 void sub_80D9C40(struct Sprite *sprite);
 static void sub_80D927C(struct Sprite *sprite);
-static void sub_80D9328(struct Sprite *sprite);
+static void AnimCrossChopHand_Step(struct Sprite *sprite);
 static void sub_80D9404(struct Sprite *sprite);
 static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite);
 static void AnimStompFootStep(struct Sprite *sprite);
@@ -151,7 +151,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FC0 =
     .callback = sub_80D90F4,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FD8 =
+const struct SpriteTemplate gCrossChopHandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
@@ -159,7 +159,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FD8 =
     .anims = &sAnims_HandsAndFeet[3],
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D92D0,
+    .callback = AnimCrossChopHand,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FF0 =
@@ -543,7 +543,7 @@ static void sub_80D927C(struct Sprite *sprite)
     }
 }
 
-void sub_80D92D0(struct Sprite *sprite)
+static void AnimCrossChopHand(struct Sprite *sprite)
 {
     sub_8078764(sprite, TRUE);
     sprite->data[0] = 30;
@@ -560,10 +560,10 @@ void sub_80D92D0(struct Sprite *sprite)
 
     sprite->data[4] = sprite->y - 20;
     sprite->callback = StartAnimLinearTranslation;
-    StoreSpriteCallbackInData6(sprite, sub_80D9328);
+    StoreSpriteCallbackInData6(sprite, AnimCrossChopHand_Step);
 }
 
-static void sub_80D9328(struct Sprite *sprite)
+static void AnimCrossChopHand_Step(struct Sprite *sprite)
 {
     if (++sprite->data[5] == 11)
     {
