@@ -3453,7 +3453,7 @@ Move_UPROAR: @ 81CBEFC
 Move_HEAT_WAVE: @ 81CBFC6
 	loadspritegfx ANIM_TAG_FLYING_DIRT
 	createvisualtask AnimTask_BlendParticle, 5, 10261, 0, 6, 6, rgb(31, 0, 0)
-	createvisualtask AnimTask_LoadSandstormBackground, 5, 1
+	createvisualtask AnimTask_LoadSandstormBackground, 5, TRUE
 	createvisualtask AnimTask_BlendBackground, 6, 6, 31
 	panse_1B SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 4
@@ -6337,10 +6337,11 @@ FlamethrowerCreateFlames:
 	delay 2
 	return
 
+@ Also used by Sandstorm weather
 Move_SANDSTORM: @ 81D0304
 	loadspritegfx ANIM_TAG_FLYING_DIRT
 	playsewithpan SE_M_SANDSTORM, 0
-	createvisualtask AnimTask_LoadSandstormBackground, 5, 0
+	createvisualtask AnimTask_LoadSandstormBackground, 5, FALSE
 	delay 16
 	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 10, 2304, 96, 0
 	delay 10

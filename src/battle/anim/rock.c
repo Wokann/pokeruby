@@ -410,10 +410,15 @@ static void AnimParticleInVortex_Step(struct Sprite *sprite)
     }
 }
 
+#define tBlendTimer     data[10]
+#define tBlend          data[11]
+#define tFullAlphaTimer data[11] // not a typo; this data field is used for multiple purposes
+#define tState          data[12]
+
 void AnimTask_LoadSandstormBackground(u8 taskId)
 {
     struct BattleAnimBgData animBg;
-    int var0 = 0;
+    int scrollRight = FALSE;
 
     REG_BLDCNT = 0x3F42;
     REG_BLDALPHA = 0x1000;
@@ -438,9 +443,9 @@ void AnimTask_LoadSandstormBackground(u8 taskId)
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
     if (gBattleAnimArgs[0] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
-        var0 = 1;
+        scrollRight = TRUE;
 
-    gTasks[taskId].data[0] = var0;
+    gTasks[taskId].data[0] = scrollRight;
     gTasks[taskId].func = AnimTask_LoadSandstormBackground_Step;
 }
 
@@ -449,44 +454,44 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
     struct BattleAnimBgData animBg;
 
     if (gTasks[taskId].data[0] == 0)
-        gBattle_BG1_X += 0xFFFA;
+        gBattle_BG1_X += -6;
     else
         gBattle_BG1_X += 6;
 
     gBattle_BG1_Y += -1;
 
-    switch (gTasks[taskId].data[12])
+    switch (gTasks[taskId].tState)
     {
     case 0:
-        if (++gTasks[taskId].data[10] == 4)
+        if (++gTasks[taskId].tBlendTimer == 4)
         {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11]++;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
-            if (gTasks[taskId].data[11] == 7)
+            gTasks[taskId].tBlendTimer = 0;
+            gTasks[taskId].tBlend++;
+            REG_BLDALPHA = gTasks[taskId].tBlend | ((16 - gTasks[taskId].tBlend) << 8);
+            if (gTasks[taskId].tBlend == 7)
             {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
+                gTasks[taskId].tState++;
+                gTasks[taskId].tFullAlphaTimer = 0;
             }
         }
         break;
     case 1:
-        if (++gTasks[taskId].data[11] == 101)
+        if (++gTasks[taskId].tFullAlphaTimer == 101)
         {
-            gTasks[taskId].data[11] = 7;
-            gTasks[taskId].data[12]++;
+            gTasks[taskId].tBlend = 7;
+            gTasks[taskId].tState++;
         }
         break;
     case 2:
-        if (++gTasks[taskId].data[10] == 4)
+        if (++gTasks[taskId].tBlendTimer == 4)
         {
-            gTasks[taskId].data[10] = 0;
-            gTasks[taskId].data[11]--;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
-            if (gTasks[taskId].data[11] == 0)
+            gTasks[taskId].tBlendTimer = 0;
+            gTasks[taskId].tBlend--;
+            REG_BLDALPHA = gTasks[taskId].tBlend | ((16 - gTasks[taskId].tBlend) << 8);
+            if (gTasks[taskId].tBlend == 0)
             {
-                gTasks[taskId].data[12]++;
-                gTasks[taskId].data[11] = 0;
+                gTasks[taskId].tState++;
+                gTasks[taskId].tFullAlphaTimer = 0;
             }
         }
         break;
@@ -497,7 +502,7 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
 
-        gTasks[taskId].data[12]++;
+        gTasks[taskId].tState++;
         // fall through
     case 4:
         gBattle_BG1_X = 0;
@@ -510,21 +515,33 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
     }
 }
 
+#undef tBlendTimer
+#undef tBlend
+#undef tFullAlphaTimer
+#undef tState
+
 // Animates the sprites that fly diagonally across the screen
 // in Sandstorm and Heat Wave.
 // arg 0: initial y pixel offset
 // arg 1: projectile speed
 // arg 2: y pixel drop
 // arg 3: ??? unknown (possibly a color bit)
+#define sState       data[0]
+#define sVelocityX   data[1] // 256ths of a pixel // init'd from gBattleAnimArgs[1]
+#define sVelocityY   data[2] // 256ths of a pixel // init'd from gBattleAnimArgs[2]
+#define sFractionalX data[3] // 256ths of a pixel
+#define sFractionalY data[4] // 256ths of a pixel
+#define sMirroredX   data[5] // init'd from gBattleAnimArgs[3]
+
 static void AnimFlyingSandCrescent(struct Sprite *sprite)
 {
-    if (sprite->data[0] == 0)
+    if (sprite->sState == 0)
     {
         if (gBattleAnimArgs[3] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         {
             sprite->x = 304;
             gBattleAnimArgs[1] = -gBattleAnimArgs[1];
-            sprite->data[5] = 1;
+            sprite->sMirroredX = 1;
             sprite->oam.matrixNum = 8;
         }
         else
@@ -534,20 +551,20 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite)
 
         sprite->y = gBattleAnimArgs[0];
         SetSubspriteTables(sprite, sFlyingSandSubspriteTable);
-        sprite->data[1] = gBattleAnimArgs[1];
-        sprite->data[2] = gBattleAnimArgs[2];
-        sprite->data[0]++;
+        sprite->sVelocityX = gBattleAnimArgs[1];
+        sprite->sVelocityY = gBattleAnimArgs[2];
+        sprite->sState++;
     }
     else
     {
-        sprite->data[3] += sprite->data[1];
-        sprite->data[4] += sprite->data[2];
-        sprite->x2 += (sprite->data[3] >> 8);
-        sprite->y2 += (sprite->data[4] >> 8);
-        sprite->data[3] &= 0xFF;
-        sprite->data[4] &= 0xFF;
+        sprite->sFractionalX += sprite->sVelocityX;
+        sprite->sFractionalY += sprite->sVelocityY;
+        sprite->x2 += (sprite->sFractionalX >> 8);
+        sprite->y2 += (sprite->sFractionalY >> 8);
+        sprite->sFractionalX &= 0xFF;
+        sprite->sFractionalY &= 0xFF;
 
-        if (sprite->data[5] == 0)
+        if (sprite->sMirroredX == 0)
         {
             if (sprite->x + sprite->x2 > 272)
             {
@@ -560,6 +577,13 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite)
         }
     }
 }
+
+#undef sState
+#undef sVelocityX
+#undef sVelocityY
+#undef sFractionalX
+#undef sFractionalY
+#undef sMirroredX
 
 // Animates the rising rocks in Ancient Power.
 // arg 0: initial x pixel offset
