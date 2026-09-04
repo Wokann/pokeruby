@@ -166,7 +166,7 @@ const struct SpriteTemplate gSpecialScreenSparkleSpriteTemplate =
     .callback = AnimWallSparkle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA784 =
+const struct SpriteTemplate gGoldRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,

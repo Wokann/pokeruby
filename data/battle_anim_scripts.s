@@ -7116,26 +7116,26 @@ Move_PSYBEAM: @ 81D15A2
 	loadspritegfx ANIM_TAG_GOLD_RING
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
-	createsoundtask SoundTask_LoopSEAdjustPanning, 200, -64, 63, 3, 4, 0, 15
-	call _81D1626
-	call _81D1626
-	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 4, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 2, 2, 0, 12, 32351
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
-	call _81D1626
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_PSYBEAM2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 3, 4, 0, 15
+	call PsybeamRings
+	call PsybeamRings
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 2048, 4, ANIM_BATTLER_TARGET
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
+	call PsybeamRings
 	waitforvisualfinish
 	delay 1
 	call UnsetPsychicBackground
 	end
-_81D1626:
-	createsprite gBattleAnimSpriteTemplate_83DA784, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 13, 0
+PsybeamRings:
+	createsprite gGoldRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 13, 0
 	delay 4
 	return
 
@@ -7152,8 +7152,8 @@ Move_HYPNOSIS: @ 81D163C
 	end
 _81D166F:
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA784, ANIM_BATTLER_TARGET, 2, 0, 8, 0, 8, 27, 0
-	createsprite gBattleAnimSpriteTemplate_83DA784, ANIM_BATTLER_TARGET, 2, 16, -8, 0, -8, 27, 0
+	createsprite gGoldRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 8, 0, 8, 27, 0
+	createsprite gGoldRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -8, 0, -8, 27, 0
 	delay 6
 	return
 
