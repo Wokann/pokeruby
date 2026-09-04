@@ -6308,32 +6308,32 @@ Move_SURF: @ 81D0253
 Move_FLAMETHROWER: @ 81D0267
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	monbg ANIM_BATTLER_DEF_PARTNER
-	monbgprio_28 1
+	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 46, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 46, 1
 	delay 6
 	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
-	panse_1B SE_M_FLAMETHROWER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 43, 1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
-	call _81D02E1
+	panse SE_M_FLAMETHROWER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 43, 1
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
+	call FlamethrowerCreateFlames
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D02E1:
-	createsprite gBattleAnimSpriteTemplate_83D9268, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+FlamethrowerCreateFlames:
+	createsprite gFlamethrowerFlameSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9268, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gFlamethrowerFlameSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
 	delay 2
 	return
 

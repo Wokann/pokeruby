@@ -79,7 +79,7 @@ const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const union AnimCmd gSpriteAnim_83D9254[] =
+static const union AnimCmd sAnim_FlamethrowerFlame[] =
 {
     ANIMCMD_FRAME(16, 2),
     ANIMCMD_FRAME(32, 2),
@@ -87,17 +87,17 @@ const union AnimCmd gSpriteAnim_83D9254[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9264[] =
+static const union AnimCmd *const sAnims_FlamethrowerFlame[] =
 {
-    gSpriteAnim_83D9254,
+    sAnim_FlamethrowerFlame,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9268 =
+const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9264,
+    .anims = sAnims_FlamethrowerFlame,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimToTargetInSinWave,
