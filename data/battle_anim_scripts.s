@@ -1295,7 +1295,7 @@ PursuitNormal:
 	goto PursuitContinue
 PursuitOnSwitchout:
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 5, FALSE, 1, 6, 1, 0
 	goto PursuitContinue
 
