@@ -6980,7 +6980,7 @@ Move_LEER: @ 81D121A
 	splitbgprio ANIM_BATTLER_ATTACKER
 	setalpha 8, 8
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_84022B0, ANIM_BATTLER_ATTACKER, 2, 24, -12
+	createsprite gLeerSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, -12
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -5, -5, 10, ANIM_BATTLER_ATTACKER, 1
 	waitforvisualfinish
 	delay 10

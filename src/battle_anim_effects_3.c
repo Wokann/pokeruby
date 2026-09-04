@@ -103,7 +103,7 @@ static void AnimWhiteHalo(struct Sprite *sprite);
 static void AnimTealAlert(struct Sprite *sprite);
 static void AnimMeanLookEye(struct Sprite *sprite);
 static void AnimSpikes(struct Sprite *sprite);
-static void sub_812C80C(struct Sprite *sprite);
+static void AnimLeer(struct Sprite *sprite);
 static void AnimLetterZ(struct Sprite *sprite);
 static void sub_812C908(struct Sprite *sprite);
 static void sub_812C990(struct Sprite *sprite);
@@ -280,7 +280,7 @@ const struct SpriteTemplate gSpikesSpriteTemplate =
     .callback = AnimSpikes,
 };
 
-const union AnimCmd gSpriteAnim_8402294[] =
+const union AnimCmd gLeerAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -290,20 +290,20 @@ const union AnimCmd gSpriteAnim_8402294[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_84022AC[] =
+const union AnimCmd *const gLeerAnimTable[] =
 {
-    gSpriteAnim_8402294,
+    gLeerAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84022B0 =
+const struct SpriteTemplate gLeerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LEER,
     .paletteTag = ANIM_TAG_LEER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_84022AC,
+    .anims = gLeerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812C80C,
+    .callback = AnimLeer,
 };
 
 const union AnimCmd gLetterZAnimCmds[] =
@@ -1468,7 +1468,7 @@ static void AnimSpikes_Step2(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_812C80C(struct Sprite *sprite)
+static void AnimLeer(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
