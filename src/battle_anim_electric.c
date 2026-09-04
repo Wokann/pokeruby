@@ -14,7 +14,7 @@ extern u8 gAnimVisualTaskCount;
 
 extern const struct SpriteTemplate gLightningSpriteTemplate;
 
-void sub_80D648C(struct Sprite *sprite);
+static void AnimZapCannonSpark(struct Sprite *sprite);
 void AnimThunderboltOrb(struct Sprite *sprite);
 void AnimSparkElectricityFlashing(struct Sprite *sprite);
 void sub_80D679C(struct Sprite *sprite);
@@ -26,7 +26,7 @@ static void AnimVoltTackleOrbSlide(struct Sprite *sprite);
 static void AnimVoltTackleBolt(struct Sprite *sprite);
 static void AnimGrowingShockWaveOrb(struct Sprite *sprite);
 static void AnimShockWaveProgressingBolt(struct Sprite *sprite);
-static void sub_80D6514(struct Sprite *sprite);
+static void AnimZapCannonSpark_Step(struct Sprite *sprite);
 static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite);
 static void AnimTask_ElectricBolt_Step(u8 taskId);
 static void AnimThunderWave_Step(struct Sprite *sprite);
@@ -38,26 +38,26 @@ static bool8 CreateShockWaveBoltSprite(struct Task *task, u8 taskId);
 static bool8 CreateShockWaveLightningSprite(struct Task *task, u8 taskId);
 static void AnimShockWaveLightning(struct Sprite *sprite);
 
-const union AffineAnimCmd gSpriteAffineAnim_83D988C[] =
+static const union AffineAnimCmd sAffineAnim_FlashingSpark[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 20, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D989C[] =
+static const union AffineAnimCmd *const sAffineAnims_FlashingSpark[] =
 {
-    gSpriteAffineAnim_83D988C,
+    sAffineAnim_FlashingSpark,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D98A0 =
+const struct SpriteTemplate gZapCannonSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARK_2,
     .paletteTag = ANIM_TAG_SPARK_2,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D989C,
-    .callback = sub_80D648C,
+    .affineAnims = sAffineAnims_FlashingSpark,
+    .callback = AnimZapCannonSpark,
 };
 
 const union AnimCmd gSpriteAnim_83D98B8[] =
@@ -104,7 +104,7 @@ const struct SpriteTemplate gSparkElectricityFlashingSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D989C,
+    .affineAnims = sAffineAnims_FlashingSpark,
     .callback = AnimSparkElectricityFlashing,
 };
 
@@ -356,7 +356,7 @@ const struct SpriteTemplate gShockWaveProgressingBoltSpriteTemplate =
     .callback = AnimShockWaveProgressingBolt,
 };
 
-void sub_80D648C(struct Sprite *sprite)
+static void AnimZapCannonSpark(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
 
@@ -372,11 +372,11 @@ void sub_80D648C(struct Sprite *sprite)
     sprite->data[7] = gBattleAnimArgs[4];
     sprite->oam.tileNum += gBattleAnimArgs[6] * 4;
 
-    sprite->callback = sub_80D6514;
+    sprite->callback = AnimZapCannonSpark_Step;
     sprite->callback(sprite);
 }
 
-static void sub_80D6514(struct Sprite *sprite)
+static void AnimZapCannonSpark_Step(struct Sprite *sprite)
 {
     if (!AnimTranslateLinear(sprite))
     {

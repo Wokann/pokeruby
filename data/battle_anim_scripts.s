@@ -7185,15 +7185,15 @@ Move_ZAP_CANNON: @ 81D1722
 	loadspritegfx ANIM_TAG_BLACK_BALL_2
 	loadspritegfx ANIM_TAG_SPARK_2
 	playsewithpan SE_M_THUNDER_WAVE, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D9874, ANIM_BATTLER_TARGET, 3, 10, 0, 0, 0, 30, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 0, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 64, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 128, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 192, 40, 2
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 32, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 96, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 160, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D98A0, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 224, 40, 2
+	createsprite gZapCannonBallSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 0, 0, 0, 30, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 0, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 64, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 128, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 16, 30, 192, 40, 2
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 32, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 96, 40, 1
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 160, 40, 0
+	createsprite gZapCannonSparkSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 0, 8, 30, 224, 40, 2
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 5, 1
 	delay 15

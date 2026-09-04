@@ -52,7 +52,7 @@ const struct SpriteTemplate gSparkElectricitySpriteTemplate =
     .callback = AnimSparkElectricity,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9874 =
+const struct SpriteTemplate gZapCannonBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLACK_BALL_2,
     .paletteTag = ANIM_TAG_BLACK_BALL_2,
