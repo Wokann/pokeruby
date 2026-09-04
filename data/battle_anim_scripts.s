@@ -6609,21 +6609,21 @@ Move_COUNTER: @ 81D08AC
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 20, 0, 0, 4
 	delay 4
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 18, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-15, y=18, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 25, 1
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -15, 18, 8, 1, 0
+	create_fist_sprite ANIM_BATTLER_ATTACKER, 3, x=-15, y=18, duration=8
 	delay 3
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -4, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=-4, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -4, 8, 1, 0
+	create_fist_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=-4, duration=8
 	delay 3
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 15, 9, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=15, y=9, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 15, 9, 8, 1, 0
+	create_fist_sprite ANIM_BATTLER_ATTACKER, 3, x=15, y=9, duration=8
 	delay 5
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 5
 	waitforvisualfinish
