@@ -26,7 +26,7 @@ extern const union AnimCmd *const gSpriteAnimTable_83D95E0[];
 extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 
 void sub_80DCE9C(struct Sprite *sprite);
-void sub_80DCF60(struct Sprite *sprite);
+static void AnimRockFragment(struct Sprite *sprite);
 void AnimParticleInVortex(struct Sprite *sprite);
 static void AnimFlyingSandCrescent(struct Sprite *sprite);
 void AnimRaiseSprite(struct Sprite *sprite);
@@ -79,7 +79,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC4C =
     .callback = sub_80DCE9C,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC64 =
+const struct SpriteTemplate gRockFragmentSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
@@ -87,7 +87,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC64 =
     .anims = gSpriteAnimTable_83DAC40,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DCF60,
+    .callback = AnimRockFragment,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC7C =
@@ -356,7 +356,8 @@ static void sub_80DCF1C(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void sub_80DCF60(struct Sprite *sprite)
+// Animates the rock particles that are shown on the impact for Rock Blast / Rock Smash
+static void AnimRockFragment(struct Sprite *sprite)
 {
     StartSpriteAnim(sprite, gBattleAnimArgs[5]);
     AnimateSprite(sprite);

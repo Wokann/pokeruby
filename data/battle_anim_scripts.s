@@ -6661,20 +6661,20 @@ Move_ROCK_SMASH: @ 81D09F6
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	delay 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 8, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	create_fist_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, duration=8
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 5, 1
 	waitforvisualfinish
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, 24, 14, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 5, 0, -20, 24, 14, 1
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, 5, 20, -24, 14, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, -5, 0, -20, -24, 14, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, -5, 30, 18, 8, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, 0, 30, -18, 8, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, 0, -30, 18, 8, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_ATTACKER, 2, 0, 0, -30, -18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, 24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 0, -20, 24, 14, 1
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 5, 20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -5, 0, -20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -5, 30, 18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 30, -18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, -30, 18, 8, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, -30, -18, 8, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 7, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -9242,11 +9242,11 @@ Move_ROCK_BLAST: @ 81D4A5F
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_TARGET, 2, 0, 0, 20, 24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 20, 24, 14, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 5, 1
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_TARGET, 2, 5, 0, -20, 24, 14, 1
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_TARGET, 2, 0, 5, 20, -24, 14, 2
-	createsprite gBattleAnimSpriteTemplate_83DAC64, ANIM_BATTLER_TARGET, 2, -5, 0, -20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 0, -20, 24, 14, 1
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 5, 20, -24, 14, 2
+	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 0, -20, -24, 14, 2
 	waitforvisualfinish
 	end
 
