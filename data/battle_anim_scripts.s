@@ -6911,20 +6911,20 @@ Move_MIST: @ 81D1073
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 12, 8
 	loopsewithpan SE_M_MIST, SOUND_PAN_ATTACKER, 20, 15
-	call _81D10BE
-	call _81D10BE
-	call _81D10BE
-	call _81D10BE
-	call _81D10BE
-	call _81D10BE
-	call _81D10BE
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
+	call MistCloud
 	delay 32
-	createvisualtask AnimTask_BlendColorCycle, 2, 10, 8, 2, 0, 14, 32767
+	blend_color_cycle priority=2, selector=F_PAL_ATK_SIDE, delay=8, num_blends=2, initial_blend_y=0, target_blend_y=14, color=RGB_WHITE
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
 	end
-_81D10BE:
+MistCloud:
 	createsprite gMistCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -24, 48, 240, 0, 1
 	delay 7
 	return
