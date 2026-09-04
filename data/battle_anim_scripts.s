@@ -6932,11 +6932,11 @@ MistCloud:
 Move_HAZE: @ 81D10D4
 	waitforvisualfinish
 	playsewithpan SE_M_HAZE, 0
-	createvisualtask AnimTask_Haze1, 5
+	createvisualtask AnimTask_HazeScrollingFog, 5
 	delay 30
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1920, 2, 0, 16, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BATTLERS_2, 2, 0, 16, RGB_BLACK
 	delay 90
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1920, 1, 16, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BATTLERS_2, 1, 16, 0, RGB_BLACK
 	end
 
 Move_FIRE_PUNCH: @ 81D1107
