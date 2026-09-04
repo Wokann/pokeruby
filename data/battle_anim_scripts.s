@@ -6785,28 +6785,28 @@ Move_PETAL_DANCE: @ 81D0CA6
 	setalpha 12, 8
 	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 12, 6, 6, 3
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_BATTLER_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, 16, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, -16, -24, 8, 100
+	create_petal_dance_big_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=8, duration=100
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_BATTLER_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, 32, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, -32, -24, 8, 100
+	create_petal_dance_big_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=32, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=-32, initial_y=-24, target_y=8, duration=100
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D6428, ANIM_BATTLER_ATTACKER, 2, 0, -24, 8, 140
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, 24, -24, 8, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, -24, -24, 8, 100
+	create_petal_dance_big_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=24, initial_y=-24, target_y=8, duration=100
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=-24, initial_y=-24, target_y=8, duration=100
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, 16, -24, 0, 100
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, -16, -24, 0, 100
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=0, duration=100
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=0, duration=100
 	delay 30
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, 20, -16, 14, 80
-	createsprite gBattleAnimSpriteTemplate_83D6440, ANIM_BATTLER_ATTACKER, 2, -20, -14, 16, 80
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=20, initial_y=-16, target_y=14, duration=80
+	create_petal_dance_small_flower_sprite ANIM_BATTLER_ATTACKER, 2, initial_x=-20, initial_y=-14, target_y=16, duration=80
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 5
 	delay 3
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	waitforvisualfinish
 	delay 8

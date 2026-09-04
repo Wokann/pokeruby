@@ -8,11 +8,11 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 static void AnimSporeParticle(struct Sprite* sprite);
-void sub_80CAD54(struct Sprite* sprite);
-void sub_80CAE20(struct Sprite* sprite);
+static void AnimPetalDanceBigFlower(struct Sprite* sprite);
+static void AnimPetalDanceSmallFlower(struct Sprite* sprite);
 static void AnimSporeParticle_Step(struct Sprite* sprite);
-static void sub_80CADA8(struct Sprite* sprite);
-static void sub_80CAE74(struct Sprite* sprite);
+static void AnimPetalDanceBigFlower_Step(struct Sprite* sprite);
+static void AnimPetalDanceSmallFlower_Step(struct Sprite* sprite);
 
 const union AnimCmd gSporeParticleAnimCmds1[] =
 {
@@ -65,7 +65,7 @@ const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[] =
     gPetalDanceSmallFlowerAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
+const struct SpriteTemplate gPetalDanceBigFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
@@ -73,10 +73,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6428 =
     .anims = gPetalDanceBigFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CAD54,
+    .callback = AnimPetalDanceBigFlower,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
+const struct SpriteTemplate gPetalDanceSmallFlowerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FLOWER,
     .paletteTag = ANIM_TAG_FLOWER,
@@ -84,7 +84,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
     .anims = gPetalDanceSmallFlowerAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CAE20,
+    .callback = AnimPetalDanceSmallFlower,
 };
 
 // Moves a spore particle in a halo around the target mon.
@@ -153,7 +153,7 @@ void AnimTask_SporeDoubleBattle(u8 taskId)
     }
 }
 
-void sub_80CAD54(struct Sprite* sprite)
+static void AnimPetalDanceBigFlower(struct Sprite* sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 0);
     sprite->data[0] = gBattleAnimArgs[3];
@@ -163,11 +163,11 @@ void sub_80CAD54(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
-    sprite->callback = sub_80CADA8;
-    sub_80CADA8(sprite);
+    sprite->callback = AnimPetalDanceBigFlower_Step;
+    AnimPetalDanceBigFlower_Step(sprite);
 }
 
-static void sub_80CADA8(struct Sprite* sprite)
+static void AnimPetalDanceBigFlower_Step(struct Sprite* sprite)
 {
     if (!AnimTranslateLinear(sprite))
     {
@@ -190,7 +190,7 @@ static void sub_80CADA8(struct Sprite* sprite)
     }
 }
 
-void sub_80CAE20(struct Sprite* sprite)
+static void AnimPetalDanceSmallFlower(struct Sprite* sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     sprite->data[0] = gBattleAnimArgs[3];
@@ -200,11 +200,11 @@ void sub_80CAE20(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
-    sprite->callback = sub_80CAE74;
-    sub_80CAE74(sprite);
+    sprite->callback = AnimPetalDanceSmallFlower_Step;
+    AnimPetalDanceSmallFlower_Step(sprite);
 }
 
-static void sub_80CAE74(struct Sprite* sprite)
+static void AnimPetalDanceSmallFlower_Step(struct Sprite* sprite)
 {
     if (!AnimTranslateLinear(sprite))
     {
