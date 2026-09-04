@@ -6717,21 +6717,21 @@ Move_SUNNY_DAY: @ 81D0B91
 	loadspritegfx ANIM_TAG_SUNLIGHT
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 13, 3
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 1, 0, 6, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 1, 0, 6, RGB_WHITE
 	waitforvisualfinish
-	panse_26 SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
-	call _81D0BDD
-	call _81D0BDD
-	call _81D0BDD
-	call _81D0BDD
+	panse_adjustnone SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
+	call SunnyDayLightRay
+	call SunnyDayLightRay
+	call SunnyDayLightRay
+	call SunnyDayLightRay
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 1, 6, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 1, 6, 0, RGB_WHITE
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
 	end
-_81D0BDD:
-	createsprite gBattleAnimSpriteTemplate_83D95B0, ANIM_BATTLER_ATTACKER, 40
+SunnyDayLightRay:
+	createsprite gSunlightRaySpriteTemplate, ANIM_BATTLER_ATTACKER, 40
 	delay 6
 	return
 

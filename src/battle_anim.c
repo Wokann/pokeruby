@@ -1361,7 +1361,7 @@ static void ScriptCmd_playsewithpan(void);
 static void ScriptCmd_setpan(void);
 static void ScriptCmd_panse_1B(void);
 static void Task_PanFromInitialToTarget(u8);
-static void ScriptCmd_panse_26(void);
+static void ScriptCmd_panse_adjustnone(void);
 static void ScriptCmd_panse_27(void);
 static void ScriptCmd_loopsewithpan(void);
 static void Task_LoopAndPlaySE(u8);
@@ -1419,7 +1419,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_clearmonbg_23,
     ScriptCmd_jumpifcontest,
     ScriptCmd_fadetobgfromset,
-    ScriptCmd_panse_26,
+    ScriptCmd_panse_adjustnone,
     ScriptCmd_panse_27,
     ScriptCmd_monbgprio_28,
     ScriptCmd_splitbgprio_all,
@@ -2709,7 +2709,7 @@ void Task_PanFromInitialToTarget(u8 taskId)
     }
 }
 
-static void ScriptCmd_panse_26(void)
+static void ScriptCmd_panse_adjustnone(void)
 {
     u16 songId;
     s8 currentPan, targetPan, incrementPan;

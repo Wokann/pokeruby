@@ -235,12 +235,12 @@
 	.byte \c
 	.endm
 
-	.macro panse_26 id, pan_start, pan_end, step, delay
+	.macro panse_adjustnone se:req, currentPan:req, targetPan:req, incrementPan:req, delay:req
 	.byte 0x26
-	.2byte \id
-	.byte \pan_start
-	.byte \pan_end
-	.byte \step
+	.2byte \se
+	.byte \currentPan
+	.byte \targetPan
+	.byte \incrementPan
 	.byte \delay
 	.endm
 
