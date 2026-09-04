@@ -6697,19 +6697,19 @@ Move_SUBMISSION: @ 81D0AEE
 	waitplaysewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET, 90
 	createvisualtask AnimTask_TranslateMonElliptical, 2, ANIM_BATTLER_ATTACKER, -18, 6, 6, 4
 	createvisualtask AnimTask_TranslateMonElliptical, 2, ANIM_BATTLER_TARGET, 18, 6, 6, 4
-	call _81D0B5D
-	call _81D0B5D
-	call _81D0B5D
+	call SubmissionHit
+	call SubmissionHit
+	call SubmissionHit
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D0B5D:
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, -12, 1, 1
+SubmissionHit:
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=-12, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -12, 8, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=-12, y=8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 12, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=12, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 8
 	return
 
