@@ -6569,18 +6569,18 @@ Move_DYNAMIC_PUNCH: @ 81D07E4
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_EXPLOSION
-	loadspritegfx ANIM_TAG_UNUSED_EXPLOSION
+	loadspritegfx ANIM_TAG_EXPLOSION_6
 	delay 1
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gFistFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 20, 1, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 5, 0, 7, 1
+	create_fist_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, duration=20
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 5, 0, 7, 1
 	delay 1
 	waitsound
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon2, 5, 1, 5, 0, 28, 1
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_BATTLER_TARGET, 5, 0, 28, 1
 	createsprite gExplosionSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 1
 	delay 6
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET

@@ -17,7 +17,7 @@
 #define ANIM_TAG_UNUSED_ORB                 (ANIM_SPRITES_START + 4)   
 #define ANIM_TAG_SWORD                      (ANIM_SPRITES_START + 5)   
 #define ANIM_TAG_SEED                       (ANIM_SPRITES_START + 6)   
-#define ANIM_TAG_UNUSED_EXPLOSION           (ANIM_SPRITES_START + 7)   
+#define ANIM_TAG_EXPLOSION_6                (ANIM_SPRITES_START + 7)
 #define ANIM_TAG_UNUSED_PINK_ORB            (ANIM_SPRITES_START + 8)   
 #define ANIM_TAG_GUST                       (ANIM_SPRITES_START + 9)   
 #define ANIM_TAG_ICE_CUBE                   (ANIM_SPRITES_START + 10)  
