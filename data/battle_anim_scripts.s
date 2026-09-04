@@ -6266,10 +6266,10 @@ Move_CRABHAMMER: @ 81D0159
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 0
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, ANIM_BATTLER_TARGET, 0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 32429, 10, 0, 0
+	complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB(13, 21, 31), blend_y1=10, color2=RGB_BLACK, blend_y2=0
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -24, 0, 0, 4
 	waitforvisualfinish
 	delay 8
@@ -6277,22 +6277,22 @@ Move_CRABHAMMER: @ 81D0159
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 4
 	waitforvisualfinish
 	loopsewithpan SE_M_CRABHAMMER, SOUND_PAN_TARGET, 20, 3
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 4, 8, 1
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 20, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 4, 8, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -20, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -20, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 15, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 15, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -20, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -20, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, -8, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, -8, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 8, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 8, 20, ANIM_BATTLER_TARGET
 	delay 4
-	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 0, 20, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 0, 20, ANIM_BATTLER_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
