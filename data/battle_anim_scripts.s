@@ -7095,22 +7095,22 @@ Move_POISON_GAS: @ 81D1474
 	end
 
 Move_BIND: @ 81D1552
-	createvisualtask AnimTask_SwayMon, 5, 0, 6, 3328, 4, 0
-	goto _81D1568
-_81D1568:
+	createvisualtask AnimTask_SwayMon, 5, 0, 6, 3328, 4, ANIM_BATTLER_ATTACKER
+	goto BindWrap
+BindWrap:
 	playsewithpan SE_M_BIND, SOUND_PAN_TARGET
-	call _81D1578
-	call _81D1578
+	call BindWrapSqueezeTarget
+	call BindWrapSqueezeTarget
 	waitforvisualfinish
 	end
-_81D1578:
+BindWrapSqueezeTarget:
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, 10, -5, 5, ANIM_BATTLER_TARGET, 0
 	delay 16
 	return
 
 Move_WRAP: @ 81D158C
 	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_BATTLER_ATTACKER, 6, 4, 2, 4
-	goto _81D1568
+	goto BindWrap
 
 Move_PSYBEAM: @ 81D15A2
 	loadspritegfx ANIM_TAG_GOLD_RING
