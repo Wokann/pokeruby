@@ -6481,11 +6481,11 @@ Move_JUMP_KICK: @ 81D05F7
 	setalpha 12, 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 4
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D9F90, ANIM_BATTLER_ATTACKER, 2, -16, 8, 0, 0, 10, 1, 1, 1
+	createsprite gJumpKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 8, 0, 0, 10, ANIM_BATTLER_TARGET, 1, 1
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 1, 1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 5, 0, 7, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 1, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 5, 0, 7, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -6502,7 +6502,7 @@ Move_HI_JUMP_KICK: @ 81D0654
 	delay 10
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 3
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D9F90, ANIM_BATTLER_ATTACKER, 2, -16, 8, 0, 0, 10, 1, 1, 1
+	createsprite gJumpKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 8, 0, 0, 10, ANIM_BATTLER_TARGET, 1, 1
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1

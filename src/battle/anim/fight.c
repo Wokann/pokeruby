@@ -28,7 +28,7 @@ extern struct SpriteTemplate gBasicHitSplatSpriteTemplate;
 
 void sub_080B08A0(struct Sprite *sprite);
 static void AnimSlideHandOrFootToTarget(struct Sprite *sprite);
-void sub_80D9078(struct Sprite *sprite);
+static void AnimJumpKick(struct Sprite *sprite);
 void AnimBasicFistOrFoot(struct Sprite *sprite);
 void sub_80D90F4(struct Sprite *sprite);
 static void AnimCrossChopHand(struct Sprite *sprite);
@@ -118,7 +118,7 @@ const struct SpriteTemplate gKarateChopSpriteTemplate =
     .callback = AnimSlideHandOrFootToTarget,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9F90 =
+const struct SpriteTemplate gJumpKickSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
@@ -126,7 +126,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9F90 =
     .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D9078,
+    .callback = AnimJumpKick,
 };
 
 const struct SpriteTemplate gFistFootSpriteTemplate =
@@ -447,7 +447,7 @@ static void AnimSlideHandOrFootToTarget(struct Sprite *sprite)
     AnimTravelDiagonally(sprite);
 }
 
-void sub_80D9078(struct Sprite *sprite)
+static void AnimJumpKick(struct Sprite *sprite)
 {
     if (IsContest())
     {
