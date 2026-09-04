@@ -26,8 +26,8 @@ void ResetSpriteRotScale(u8);
 void SetBattlerSpriteYOffsetFromYScale(u8);
 static void AnimWaterGunDroplet(struct Sprite *sprite);
 void AnimSmallBubblePair(struct Sprite *sprite);
-void sub_80D3B60(u8 taskId);
-void sub_80D3D68(u8 taskId);
+static void AnimTask_CreateSurfWave_Step1(u8 taskId);
+static void AnimTask_SurfWaveScanlineEffect(u8 taskId);
 void AnimSmallDriftingBubbles(struct Sprite *sprite);
 void AnimSmallDriftingBubbles_Step(struct Sprite *);
 static void AnimTask_WaterSpoutLaunch_Step(u8);
@@ -267,12 +267,12 @@ void AnimTask_CreateSurfWave(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     u8 taskId2;
-    u16 *BGptrX = &gBattle_BG1_X;
-    u16 *BGptrY = &gBattle_BG1_Y;
+    u16 *x = &gBattle_BG1_X;
+    u16 *y = &gBattle_BG1_Y;
     vu8 cpuDelay; // explanation below
 
     REG_BLDCNT = BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     REG_BG1CNT_BITFIELD.priority = 1;
     REG_BG1CNT_BITFIELD.screenSize = 1;
     GetBattleAnimBg1Data(&animBg);
@@ -295,52 +295,52 @@ void AnimTask_CreateSurfWave(u8 taskId)
     if (!IsContest())
     {
         REG_BG1CNT_BITFIELD.charBaseBlock = 1;
-        if (GetBattlerSide(gBattleAnimAttacker) == 1)
-            LZDecompressVram(&gUnknown_08E70968, animBg.bgTilemap);
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
+            LZDecompressVram(&gBattleAnimBgTilemap_SurfOpponent, animBg.bgTilemap);
         else
-            LZDecompressVram(&gUnknown_08E70C38, animBg.bgTilemap);
+            LZDecompressVram(&gBattleAnimBgTilemap_SurfPlayer, animBg.bgTilemap);
     }
     else
     {
-        LZDecompressVram(&gUnknown_08E70F0C, animBg.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_SurfContest, animBg.bgTilemap);
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 1);
     }
-    LZDecompressVram(&gBattleAnimBackgroundImage_Surf, animBg.bgTiles);
-    if (gBattleAnimArgs[0] == 0)
-        LoadCompressedPalette(&gBattleAnimBackgroundPalette_Surf, 16 * animBg.paletteId, 32);
+    LZDecompressVram(&gBattleAnimBgImage_Surf, animBg.bgTiles);
+    if (gBattleAnimArgs[0] == ANIM_SURF_PAL_SURF)
+        LoadCompressedPalette(&gBattleAnimBgPalette_Surf, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
     else
-        LoadCompressedPalette(&gBattleAnimBackgroundImageMuddyWater_Pal, 16 * animBg.paletteId, 32);
-    taskId2 = CreateTask(sub_80D3D68, gTasks[taskId].priority + 1);
+        LoadCompressedPalette(&gBattleAnimBackgroundImageMuddyWater_Pal, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
+    taskId2 = CreateTask(AnimTask_SurfWaveScanlineEffect, gTasks[taskId].priority + 1);
     gTasks[taskId].data[15] = taskId2;
     gTasks[taskId2].data[0] = 0;
     gTasks[taskId2].data[1] = 0x1000;
     gTasks[taskId2].data[2] = 0x1000;
     if (IsContest())
     {
-        *BGptrX = -80;
-        *BGptrY = -48;
+        *x = -80;
+        *y = -48;
         gTasks[taskId].data[0] = 2;
         gTasks[taskId].data[1] = 1;
         gTasks[taskId2].data[3] = 0;
     }
     else if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
     {
-        *BGptrX = -224;
-        *BGptrY = 256;
+        *x = -224;
+        *y = 256;
         gTasks[taskId].data[0] = 2;
         gTasks[taskId].data[1] = -1;
         gTasks[taskId2].data[3] = 1;
     }
     else
     {
-        *BGptrX = 0;
-        *BGptrY = -48;
+        *x = 0;
+        *y = -48;
         gTasks[taskId].data[0] = -2;
         gTasks[taskId].data[1] = 1;
         gTasks[taskId2].data[3] = 0;
     }
-    REG_BG1HOFS = *BGptrX;
-    REG_BG1VOFS = *BGptrY;
+    REG_BG1HOFS = *x;
+    REG_BG1VOFS = *y;
     if(gTasks[taskId2].data[3] == 0)
     {
         gTasks[taskId2].data[4] = 48;
@@ -352,21 +352,21 @@ void AnimTask_CreateSurfWave(u8 taskId)
         gTasks[taskId2].data[5] = 0;
     }
     gTasks[taskId].data[6] = 1;
-    gTasks[taskId].func = sub_80D3B60;
+    gTasks[taskId].func = AnimTask_CreateSurfWave_Step1;
 }
 
-void sub_80D3B60(u8 taskId)
+static void AnimTask_CreateSurfWave_Step1(u8 taskId)
 {
 
     vu8 cpuDelay; // yet again
     struct BattleAnimBgData animBg;
     u8 i;
     u16 rgbBuffer;
-    u16 *BGptrX = &gBattle_BG1_X;
-    u16 *BGptrY = &gBattle_BG1_Y;
+    u16 *x = &gBattle_BG1_X;
+    u16 *y = &gBattle_BG1_Y;
 
-    *BGptrX += gTasks[taskId].data[0];
-    *BGptrY += gTasks[taskId].data[1];
+    *x += gTasks[taskId].data[0];
+    *y += gTasks[taskId].data[1];
     GetBattleAnimBg1Data(&animBg);
     gTasks[taskId].data[2] += gTasks[taskId].data[1];
     if (++gTasks[taskId].data[5] == 4)
@@ -402,18 +402,18 @@ void sub_80D3B60(u8 taskId)
         Dma3FillLarge32_(0, animBg.bgTilemap, 0x1000); // !
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
-        *BGptrX = 0;
-        *BGptrY = 0;
+        *x = 0;
+        *y = 0;
 
         REG_BLDCNT = 0;
-        REG_BLDALPHA = 0;
+        REG_BLDALPHA = BLDALPHA_BLEND(0, 0);
 
         gTasks[gTasks[taskId].data[15]].data[15] = 0xffff;
         DestroyAnimVisualTask(taskId);
     }
 }
 
-void sub_80D3D68(u8 taskId)
+static void AnimTask_SurfWaveScanlineEffect(u8 taskId)
 {
     s16 i;
     struct ScanlineEffectParams params;

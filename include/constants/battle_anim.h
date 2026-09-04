@@ -429,6 +429,10 @@
 #define ANIM_WEATHER_SANDSTORM 3
 #define ANIM_WEATHER_HAIL 4
 
+// Surf wave palettes
+#define ANIM_SURF_PAL_SURF           0
+#define ANIM_SURF_PAL_MUDDY_WATER    1
+
 // Palette-selection flags used by battle animation blend tasks.
 #define F_PAL_BG          (1 << 0)
 #define F_PAL_ATTACKER    (1 << 1)
