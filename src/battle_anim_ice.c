@@ -46,7 +46,7 @@ static void AnimSwirlingSnowball_Step2(struct Sprite *sprite);
 static void AnimSwirlingSnowball_End(struct Sprite *sprite);
 static void AnimWiggleParticleTowardsTarget(struct Sprite *sprite);
 static void AnimSwirlingFogAnim(struct Sprite *sprite);
-static void sub_80D8874(struct Sprite *sprite);
+static void MovePoisonGasCloud(struct Sprite *sprite);
 static void AnimHailContinue(struct Sprite *sprite);
 static void AnimThrowIceBall(struct Sprite *sprite);
 static void AnimIceBallParticle(struct Sprite *sprite);
@@ -1252,11 +1252,11 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
     }
 
     InitAnimLinearTranslation(sprite);
-    sprite->callback = sub_80D8874;
+    sprite->callback = MovePoisonGasCloud;
 }
 
 // Animates the gas clouds towards the target mon in Poison Gas.
-static void sub_80D8874(struct Sprite *sprite)
+static void MovePoisonGasCloud(struct Sprite *sprite)
 {
     int value;
 
