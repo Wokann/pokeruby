@@ -18,7 +18,7 @@ static void sub_80CE1AC(struct Sprite* sprite);
 // tile_in (flips a white tile from the scene into facing the player.)
 // Used in Conversion.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F08 =
+const struct SpriteTemplate gOctazookaBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLACK_BALL,
     .paletteTag = ANIM_TAG_BLACK_BALL,
@@ -29,7 +29,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F08 =
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const union AnimCmd gSpriteAnim_83D6F20[] =
+const union AnimCmd gOctazookaAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(16, 3),
@@ -39,17 +39,17 @@ const union AnimCmd gSpriteAnim_83D6F20[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6F38[] =
+const union AnimCmd *const gOctazookaAnimTable[] =
 {
-    gSpriteAnim_83D6F20,
+    gOctazookaAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F3C =
+const struct SpriteTemplate gOctazookaSmokeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GRAY_SMOKE,
     .paletteTag = ANIM_TAG_GRAY_SMOKE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D6F38,
+    .anims = gOctazookaAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimSpriteOnMonPos,

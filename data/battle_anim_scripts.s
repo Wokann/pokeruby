@@ -6893,16 +6893,16 @@ Move_OCTAZOOKA: @ 81D100D
 	loadspritegfx ANIM_TAG_GRAY_SMOKE
 	loadspritegfx ANIM_TAG_BLACK_BALL
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D6F08, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 20, 0
+	createsprite gOctazookaBallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 20, 0
 	waitforvisualfinish
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_BATTLER_TARGET, 2, 8, 8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_BATTLER_TARGET, 2, -8, -8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, -8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_BATTLER_TARGET, 2, 8, -8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, -8, 1, 0
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6F3C, ANIM_BATTLER_TARGET, 2, -8, 8, 1, 0
+	createsprite gOctazookaSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 8, 1, 0
 	waitforvisualfinish
 	end
 
