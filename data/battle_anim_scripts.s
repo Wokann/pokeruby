@@ -7142,15 +7142,15 @@ PsybeamRings:
 Move_HYPNOSIS: @ 81D163C
 	loadspritegfx ANIM_TAG_GOLD_RING
 	call SetPsychicBackground
-	call _81D166F
-	call _81D166F
-	call _81D166F
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 2, 2, 0, 12, 32351
+	call HypnosisRings
+	call HypnosisRings
+	call HypnosisRings
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
 	waitforvisualfinish
 	delay 1
 	call UnsetPsychicBackground
 	end
-_81D166F:
+HypnosisRings:
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
 	createsprite gGoldRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 8, 0, 8, 27, 0
 	createsprite gGoldRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -8, 0, -8, 27, 0
