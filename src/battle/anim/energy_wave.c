@@ -103,7 +103,7 @@ const struct SpriteTemplate gFlamethrowerFlameSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9280 =
+const struct SpriteTemplate gPsywaveRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_RING,
     .paletteTag = ANIM_TAG_BLUE_RING,

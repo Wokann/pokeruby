@@ -7162,22 +7162,22 @@ Move_PSYWAVE: @ 81D169C
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
 	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
-	createsoundtask SoundTask_LoopSEAdjustPanning, 203, -64, 63, 2, 9, 0, 10
-	call _81D16FF
-	call _81D16FF
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 1, 4, 0, 12, 32351
-	call _81D16FF
-	call _81D16FF
-	call _81D16FF
-	call _81D16FF
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_TELEPORT, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 2, 9, 0, 10
+	call PsywaveRings
+	call PsywaveRings
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=1, num_blends=4, initial_blend_y=0, target_blend_y=12, color=RGB(31, 18, 31)
+	call PsywaveRings
+	call PsywaveRings
+	call PsywaveRings
+	call PsywaveRings
 	waitforvisualfinish
 	delay 1
 	call UnsetPsychicBackground
 	end
-_81D16FF:
-	createsprite gBattleAnimSpriteTemplate_83D9280, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
+PsywaveRings:
+	createsprite gPsywaveRingSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D9280, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
+	createsprite gPsywaveRingSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 10, 0, 16
 	delay 4
 	return
 
