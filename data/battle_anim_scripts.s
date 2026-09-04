@@ -6505,7 +6505,7 @@ Move_HI_JUMP_KICK: @ 81D0654
 	createsprite gJumpKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 8, 0, 0, 10, ANIM_BATTLER_TARGET, 1, 1
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -28, 0, 0, 3
 	delay 3
