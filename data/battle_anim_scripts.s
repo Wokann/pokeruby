@@ -2530,15 +2530,15 @@ Move_THRASH: @ 81CAD81
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	createvisualtask sub_80D0A4C, 2
 	createvisualtask sub_80D0AB8, 2
-	createsprite gBattleAnimSpriteTemplate_83D9FC0, ANIM_BATTLER_TARGET, 3, 1, 10, 0
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 10, 0
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 4, 0, 7, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	delay 28
-	createsprite gBattleAnimSpriteTemplate_83D9FC0, ANIM_BATTLER_TARGET, 3, 1, 10, 1
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 10, 1
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 4, 0, 7, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 28
-	createsprite gBattleAnimSpriteTemplate_83D9FC0, ANIM_BATTLER_TARGET, 3, 1, 10, 3
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 10, 3
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 8, 0, 16, 1
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	end
@@ -6523,8 +6523,8 @@ Move_DOUBLE_KICK: @ 81D06EA
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
-	createsprite gBattleAnimSpriteTemplate_83D9FC0, ANIM_BATTLER_ATTACKER, 3, 1, 20, 1
-	createvisualtask AnimTask_ShakeMon, 5, 1, 4, 0, 6, 1
+	createsprite gFistFootRandomPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 1, 20, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 4, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	waitforvisualfinish
