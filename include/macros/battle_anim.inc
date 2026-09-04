@@ -357,6 +357,18 @@
 	createsprite gPetalDanceSmallFlowerSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_y, \duration
 	.endm
 
+	.macro create_razor_leaf_particle_sprite anim_battler:req, subpriority_offset:req, upward_delta_x:req, upward_delta_y:req, upward_duration:req
+	createsprite gRazorLeafParticleSpriteTemplate, \anim_battler, \subpriority_offset, \upward_delta_x, \upward_delta_y, \upward_duration
+	.endm
+
+	.macro create_razor_leaf_cutter_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, target_x:req, target_y:req, duration:req, wave_amplitude:req, target_both:req
+	createsprite gRazorLeafCutterSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \target_x, \target_y, \duration, \wave_amplitude, \target_both
+	.endm
+
+	.macro create_twister_leaf_sprite anim_battler:req, subpriority_offset:req, duration:req, distance_y:req, wave_period:req, wave_amplitude:req, speed_up_on_frame:req
+	createsprite gTwisterLeafSpriteTemplate, \anim_battler, \subpriority_offset, \duration, \distance_y, \wave_period, \wave_amplitude, \speed_up_on_frame
+	.endm
+
 	.macro create_sharp_teeth_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, animation:req, x_velocity:req, y_velocity:req, half_duration:req
 	createsprite gSharpTeethSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \animation, 256 * \x_velocity, 256 * \y_velocity, \half_duration
 	.endm

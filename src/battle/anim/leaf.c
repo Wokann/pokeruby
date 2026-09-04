@@ -8,18 +8,18 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CAED8(struct Sprite* sprite);
+static void AnimRazorLeafParticle(struct Sprite* sprite);
 void AnimMoveTwisterParticle(struct Sprite* sprite);
 void AnimTranslateLinearSingleSineWave(struct Sprite* sprite);
-static void sub_80CAF20(struct Sprite* sprite);
-static void sub_80CAF6C(struct Sprite* sprite);
-static void AnimTranslateLinearSingleSineWaveStep(struct Sprite* sprite);
-static void AnimMoveTwisterParticleStep(struct Sprite* sprite);
+static void AnimRazorLeafParticle_Step1(struct Sprite* sprite);
+static void AnimRazorLeafParticle_Step2(struct Sprite* sprite);
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite* sprite);
+static void AnimMoveTwisterParticle_Step(struct Sprite* sprite);
 
 // leaf
 // Used by Razor Leaf and Twister.
 
-const union AnimCmd gSpriteAnim_83D6458[] =
+const union AnimCmd gRazorLeafParticleAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(4, 5),
@@ -34,7 +34,7 @@ const union AnimCmd gSpriteAnim_83D6458[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83D6484[] =
+const union AnimCmd gRazorLeafParticleAnimCmds2[] =
 {
     ANIMCMD_FRAME(24, 5),
     ANIMCMD_FRAME(28, 5),
@@ -42,35 +42,35 @@ const union AnimCmd gSpriteAnim_83D6484[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6494[] =
+const union AnimCmd *const gRazorLeafParticleAnimTable[] =
 {
-    gSpriteAnim_83D6458,
-    gSpriteAnim_83D6484,
+    gRazorLeafParticleAnimCmds1,
+    gRazorLeafParticleAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D649C =
+const struct SpriteTemplate gRazorLeafParticleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LEAF,
     .paletteTag = ANIM_TAG_LEAF,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6494,
+    .anims = gRazorLeafParticleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CAED8,
+    .callback = AnimRazorLeafParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D64B4 =
+const struct SpriteTemplate gTwisterLeafSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LEAF,
     .paletteTag = ANIM_TAG_LEAF,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6494,
+    .anims = gRazorLeafParticleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimMoveTwisterParticle,
 };
 
-const union AnimCmd gSpriteAnim_83D64CC[] =
+const union AnimCmd gRazorLeafCutterAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(0, 3, .hFlip = TRUE),
@@ -79,17 +79,17 @@ const union AnimCmd gSpriteAnim_83D64CC[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D64E0[] =
+const union AnimCmd *const gRazorLeafCutterAnimTable[] =
 {
-    gSpriteAnim_83D64CC,
+    gRazorLeafCutterAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D64E4 =
+const struct SpriteTemplate gRazorLeafCutterSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RAZOR_LEAF,
     .paletteTag = ANIM_TAG_RAZOR_LEAF,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
-    .anims = gSpriteAnimTable_83D64E0,
+    .anims = gRazorLeafCutterAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimTranslateLinearSingleSineWave,
@@ -115,17 +115,17 @@ const struct SpriteTemplate gSwiftStarSpriteTemplate =
     .callback = AnimTranslateLinearSingleSineWave,
 };
 
-void sub_80CAED8(struct Sprite* sprite)
+static void AnimRazorLeafParticle(struct Sprite* sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     sprite->data[0] = gBattleAnimArgs[0];
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->data[2] = gBattleAnimArgs[2];
-    sprite->callback = sub_80CAF20;
+    sprite->callback = AnimRazorLeafParticle_Step1;
 }
 
-static void sub_80CAF20(struct Sprite* sprite)
+static void AnimRazorLeafParticle_Step1(struct Sprite* sprite)
 {
     if (!sprite->data[2])
     {
@@ -141,7 +141,7 @@ static void sub_80CAF20(struct Sprite* sprite)
             sprite->data[1] = sprite->data[1] & 1;
             sprite->data[2] = sprite->data[1] & 1;
         }
-        sprite->callback = sub_80CAF6C;
+        sprite->callback = AnimRazorLeafParticle_Step2;
     }
     else
     {
@@ -151,7 +151,7 @@ static void sub_80CAF20(struct Sprite* sprite)
     }
 }
 
-static void sub_80CAF6C(struct Sprite* sprite)
+static void AnimRazorLeafParticle_Step2(struct Sprite* sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker))
     {
@@ -217,10 +217,10 @@ void AnimTranslateLinearSingleSineWave(struct Sprite* sprite)
         sprite->data[0] = 0;
     }
 
-    sprite->callback = AnimTranslateLinearSingleSineWaveStep;
+    sprite->callback = AnimTranslateLinearSingleSineWave_Step;
 }
 
-static void AnimTranslateLinearSingleSineWaveStep(struct Sprite* sprite)
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite* sprite)
 {
     bool8 destroy = FALSE;
     s16 a = sprite->data[0];
@@ -271,10 +271,10 @@ void AnimMoveTwisterParticle(struct Sprite* sprite)
     sprite->data[2] = gBattleAnimArgs[2];
     sprite->data[3] = gBattleAnimArgs[3];
     sprite->data[4] = gBattleAnimArgs[4];
-    sprite->callback = AnimMoveTwisterParticleStep;
+    sprite->callback = AnimMoveTwisterParticle_Step;
 }
 
-static void AnimMoveTwisterParticleStep(struct Sprite* sprite)
+static void AnimMoveTwisterParticle_Step(struct Sprite* sprite)
 {
     if (sprite->data[1] == 0xFF)
     {

@@ -6824,29 +6824,29 @@ Move_RAZOR_LEAF: @ 81D0DDE
 	setalpha 12, 8
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -2, 10
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-2, upward_duration=10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -1, -1, 15
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-1, upward_duration=15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -4, -4, 7
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-4, upward_delta_y=-4, upward_duration=7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 3, -3, 11
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=3, upward_delta_y=-3, upward_duration=11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -1, -6, 8
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-6, upward_duration=8
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 2, -1, 12
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-1, upward_duration=12
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -4, 13
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-4, upward_duration=13
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 4, -5, 7
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=4, upward_delta_y=-5, upward_duration=7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 2, -6, 11
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-6, upward_duration=11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -5, 8
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-5, upward_duration=8
 	delay 60
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_BATTLER_TARGET, 3, 20, -10, 20, 0, 22, 20, 1
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_BATTLER_TARGET, 3, 20, -10, 20, 0, 22, -20, 1
+	create_razor_leaf_cutter_sprite ANIM_BATTLER_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=20, target_both=TRUE
+	create_razor_leaf_cutter_sprite ANIM_BATTLER_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=22, wave_amplitude=-20, target_both=TRUE
 	delay 20
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
@@ -9654,26 +9654,26 @@ Move_TWISTER: @ 81D553A
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio ANIM_BATTLER_TARGET
 	playsewithpan SE_M_TWISTER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 120, 70, 5, 70, 30
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=120, distance_y=70, wave_period=5, wave_amplitude=70, speed_up_on_frame=30
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 115, 55, 6, 60, 25
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=55, wave_period=6, wave_amplitude=60, speed_up_on_frame=25
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 115, 60, 7, 60, 30
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 115, 55, 10, 60, 30
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=60, wave_period=7, wave_amplitude=60, speed_up_on_frame=30
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=55, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 100, 50, 4, 50, 26
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 105, 25, 8, 60, 20
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=105, distance_y=25, wave_period=8, wave_amplitude=60, speed_up_on_frame=20
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 115, 40, 10, 48, 30
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=40, wave_period=10, wave_amplitude=48, speed_up_on_frame=30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 120, 30, 6, 45, 25
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 115, 35, 10, 60, 30
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=35, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
 	delay 3
 	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 105, 20, 8, 40, 0
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 20, 255, 15, 32, 0
-	createsprite gBattleAnimSpriteTemplate_83D64B4, ANIM_BATTLER_TARGET, 2, 110, 10, 8, 32, 20
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=20, distance_y=255, wave_period=15, wave_amplitude=32, speed_up_on_frame=0
+	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=110, distance_y=10, wave_period=8, wave_amplitude=32, speed_up_on_frame=20
 	waitforvisualfinish
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -32, -16, 1, 3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
@@ -9702,29 +9702,29 @@ Move_MAGICAL_LEAF: @ 81D5699
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
 	createvisualtask sub_80CC5F8, 5
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -2, 10
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-2, upward_duration=10
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -1, -1, 15
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-1, upward_duration=15
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -4, -4, 7
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-4, upward_delta_y=-4, upward_duration=7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 3, -3, 11
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=3, upward_delta_y=-3, upward_duration=11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -1, -6, 8
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-6, upward_duration=8
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 2, -1, 12
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-1, upward_duration=12
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -4, 13
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-4, upward_duration=13
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 4, -5, 7
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=4, upward_delta_y=-5, upward_duration=7
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, 2, -6, 11
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=2, upward_delta_y=-6, upward_duration=11
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D649C, ANIM_BATTLER_ATTACKER, 2, -3, -5, 8
+	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-5, upward_duration=8
 	delay 60
 	playsewithpan SE_M_RAZOR_WIND2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_BATTLER_TARGET, 3, 20, -10, 20, 0, 32, 20, 0
-	createsprite gBattleAnimSpriteTemplate_83D64E4, ANIM_BATTLER_TARGET, 3, 20, -10, 20, 0, 32, -20, 0
+	create_razor_leaf_cutter_sprite ANIM_BATTLER_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=32, wave_amplitude=20, target_both=FALSE
+	create_razor_leaf_cutter_sprite ANIM_BATTLER_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=32, wave_amplitude=-20, target_both=FALSE
 	delay 30
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, -10, -4, 1, 2
