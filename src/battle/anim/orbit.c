@@ -7,40 +7,40 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CABF8(struct Sprite* sprite);
+static void AnimSporeParticle(struct Sprite* sprite);
 void sub_80CAD54(struct Sprite* sprite);
 void sub_80CAE20(struct Sprite* sprite);
-static void sub_80CAC44(struct Sprite* sprite);
+static void AnimSporeParticle_Step(struct Sprite* sprite);
 static void sub_80CADA8(struct Sprite* sprite);
 static void sub_80CAE74(struct Sprite* sprite);
 
-const union AnimCmd gSpriteAnim_83D63E0[] =
+const union AnimCmd gSporeParticleAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D63E8[] =
+const union AnimCmd gSporeParticleAnimCmds2[] =
 {
     ANIMCMD_FRAME(4, 7),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D63F0[] =
+const union AnimCmd *const gSporeParticleAnimTable[] =
 {
-    gSpriteAnim_83D63E0,
-    gSpriteAnim_83D63E8,
+    gSporeParticleAnimCmds1,
+    gSporeParticleAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D63F8 =
+const struct SpriteTemplate gSporeParticleSpriteTemplate =
 {
-    .tileTag = 10158,
-    .paletteTag = 10158,
+    .tileTag = ANIM_TAG_SPORE,
+    .paletteTag = ANIM_TAG_SPORE,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D63F0,
+    .anims = gSporeParticleAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CABF8,
+    .callback = AnimSporeParticle,
 };
 
 const union AnimCmd gPetalDanceBigFlowerAnimCmds[] =
@@ -87,7 +87,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6440 =
     .callback = sub_80CAE20,
 };
 
-void sub_80CABF8(struct Sprite* sprite)
+// Moves a spore particle in a halo around the target mon.
+// The sprite's priority is updated to give the effect of going
+// behind the mon's sprite.
+static void AnimSporeParticle(struct Sprite* sprite)
 {
     sub_8078764(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
@@ -98,11 +101,11 @@ void sub_80CABF8(struct Sprite* sprite)
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = gBattleAnimArgs[2];
-    sprite->callback = sub_80CAC44;
-    sub_80CAC44(sprite);
+    sprite->callback = AnimSporeParticle_Step;
+    AnimSporeParticle_Step(sprite);
 }
 
-static void sub_80CAC44(struct Sprite* sprite)
+static void AnimSporeParticle_Step(struct Sprite* sprite)
 {
     u8 var1;
     
@@ -129,7 +132,7 @@ static void sub_80CAC44(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80CACEC(u8 taskId)
+void AnimTask_SporeDoubleBattle(u8 taskId)
 {
     if (IsContest() || !IsDoubleBattle())
     {

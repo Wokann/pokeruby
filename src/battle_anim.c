@@ -1371,7 +1371,7 @@ static void ScriptCmd_createsoundtask(void);
 static void ScriptCmd_waitsound(void);
 static void ScriptCmd_jumpargeq(void);
 static void ScriptCmd_jumpifcontest(void);
-static void ScriptCmd_monbgprio_28(void);
+static void ScriptCmd_splitbgprio(void);
 static void ScriptCmd_splitbgprio_all(void);
 static void ScriptCmd_monbgprio_2A(void);
 static void ScriptCmd_invisible(void);
@@ -1421,7 +1421,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_fadetobgfromset,
     ScriptCmd_panse_adjustnone,
     ScriptCmd_panse_27,
-    ScriptCmd_monbgprio_28,
+    ScriptCmd_splitbgprio,
     ScriptCmd_splitbgprio_all,
     ScriptCmd_monbgprio_2A,
     ScriptCmd_invisible,
@@ -2956,7 +2956,7 @@ static void ScriptCmd_jumpifcontest(void)
         sBattleAnimScriptPtr += 4;
 }
 
-static void ScriptCmd_monbgprio_28(void)
+static void ScriptCmd_splitbgprio(void)
 {
     u8 wantedBank;
     u8 bank;

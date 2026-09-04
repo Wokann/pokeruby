@@ -258,11 +258,6 @@
 	.byte \battler
 	.endm
 
-	.macro monbgprio_28 bank
-	.byte 0x28
-	.byte \bank
-	.endm
-
 	.macro splitbgprio_all
 	.byte 0x29
 	.endm
@@ -348,6 +343,10 @@
 
 	.macro create_leech_life_needle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
 	createsprite gLeechLifeNeedleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
+	.macro create_spore_particle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, wave_offset:req, duration:req, blend:req
+	createsprite gSporeParticleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_offset, \duration, \blend
 	.endm
 
 	.macro create_sharp_teeth_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, animation:req, x_velocity:req, y_velocity:req, half_duration:req
