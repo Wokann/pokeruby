@@ -7219,8 +7219,8 @@ Move_STEEL_WING: @ 81D1807
 	delay 24
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 9
 	delay 17
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, 0, 1, 1
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=16, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-16, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 11
