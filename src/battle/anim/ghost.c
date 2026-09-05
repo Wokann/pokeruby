@@ -22,8 +22,8 @@ static void sub_80DDC4C(struct Sprite *);
 static void sub_80DDCC8(struct Sprite *);
 static void sub_80DDD58(struct Sprite *sprite);
 static void sub_80DDD78(struct Sprite *);
-static void sub_80DDE7C(u8 taskId);
-static void sub_80DDED0(u8 taskId);
+static void AnimTask_NightShadeClone_Step1(u8 taskId);
+static void AnimTask_NightShadeClone_Step2(u8 taskId);
 static void InitAnimShadowBall(struct Sprite *sprite);
 static void AnimShadowBallStep(struct Sprite *);
 static void sub_80DE0FC(struct Sprite *sprite);
@@ -343,12 +343,12 @@ static void sub_80DDD78(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80DDDF0(u8 taskId)
+void AnimTask_NightShadeClone(u8 taskId)
 {
     u8 spriteId;
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = 0x1000;
-    spriteId = GetAnimBattlerSpriteId(0);
+    REG_BLDCNT = BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
+    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     PrepareBattlerSpriteForRotScale(spriteId, 1);
     SetSpriteRotScale(spriteId, 128, 128, 0);
     gSprites[spriteId].invisible = FALSE;
@@ -356,10 +356,10 @@ void sub_80DDDF0(u8 taskId)
     gTasks[taskId].data[1] = *gBattleAnimArgs;
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].data[3] = 16;
-    gTasks[taskId].func = sub_80DDE7C;
+    gTasks[taskId].func = AnimTask_NightShadeClone_Step1;
 }
 
-static void sub_80DDE7C(u8 taskId)
+static void AnimTask_NightShadeClone_Step1(u8 taskId)
 {
     gTasks[taskId].data[10] += 1;
     if (gTasks[taskId].data[10] == 3)
@@ -367,15 +367,15 @@ static void sub_80DDE7C(u8 taskId)
         gTasks[taskId].data[10] = 0;
         gTasks[taskId].data[2] += 1;
         gTasks[taskId].data[3] -= 1;
-        REG_BLDALPHA = gTasks[taskId].data[3] << 8 | gTasks[taskId].data[2];
+        REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[2], gTasks[taskId].data[3]);
         if (gTasks[taskId].data[2] != 9)
             return;
 
-        gTasks[taskId].func = sub_80DDED0;
+        gTasks[taskId].func = AnimTask_NightShadeClone_Step2;
     }
 }
 
-static void sub_80DDED0(u8 taskId)
+static void AnimTask_NightShadeClone_Step2(u8 taskId)
 {
     u8 spriteId;
     if (gTasks[taskId].data[1] > 0)
@@ -384,7 +384,7 @@ static void sub_80DDED0(u8 taskId)
         return;
     }
 
-    spriteId = GetAnimBattlerSpriteId(0);
+    spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     gTasks[taskId].data[0] += 8;
     if (gTasks[taskId].data[0] <= 0xFF)
     {

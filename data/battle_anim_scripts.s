@@ -7298,10 +7298,10 @@ Move_NIGHT_SHADE: @ 81D1A0D
 	waitbgfadein
 	delay 10
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
-	createvisualtask sub_80DDDF0, 5, 85
+	createvisualtask AnimTask_NightShadeClone, 5, 85
 	delay 70
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 12, 1
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 0, 2, 0, 13, 0
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=13, color=RGB_BLACK
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	delay 1
