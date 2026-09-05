@@ -7313,7 +7313,7 @@ Move_EGG_BOMB: @ 81D1A55
 	loadspritegfx ANIM_TAG_EXPLOSION
 	loadspritegfx ANIM_TAG_LARGE_FRESH_EGG
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D7594, ANIM_BATTLER_TARGET, 2, 10, 0, 0, 0, 25, -32
+	createsprite gEggThrowSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 0, 0, 0, 25, -32
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 16, 1
 	createsprite gExplosionSpriteTemplate, ANIM_BATTLER_TARGET, 4, 6, 5, 1, 0
