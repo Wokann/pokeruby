@@ -7258,11 +7258,11 @@ Move_POISON_TAIL: @ 81D1914
 	setalpha 12, 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 4
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_ATTACKER, TRUE
+	set_original_pal battler=ANIM_BATTLER_ATTACKER
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
 	call PoisonBubblesEffect
