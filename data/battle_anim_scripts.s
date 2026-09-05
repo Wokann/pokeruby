@@ -7277,16 +7277,16 @@ Move_METAL_CLAW: @ 81D197A
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=-10, y=-10, animation=0
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=-10, y=10, animation=0
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
 	delay 8
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 2
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=10, y=-10, animation=1
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=10, y=10, animation=1
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
 	waitforvisualfinish
 	end
 
