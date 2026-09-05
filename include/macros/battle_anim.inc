@@ -394,6 +394,10 @@
 	.endif
 	.endm
 
+	.macro set_original_pal priority=5, battler:req
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, TRUE
+	.endm
+
 	.macro attacker_fade_to_invisible priority=2, step_delay:req
 	createvisualtask AnimTask_AttackerFadeToInvisible, \priority, \step_delay
 	.endm
