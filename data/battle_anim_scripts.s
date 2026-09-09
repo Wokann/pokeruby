@@ -7353,7 +7353,7 @@ Move_LICK: @ 81D1B32
 	loadspritegfx ANIM_TAG_LICK
 	delay 15
 	playsewithpan SE_M_LICK, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAEDC, ANIM_BATTLER_TARGET, 2, 0, 0
+	createsprite gLickSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 1, 0, 16, 1
 	waitforvisualfinish
 	end

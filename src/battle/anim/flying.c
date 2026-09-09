@@ -371,7 +371,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
 
 static void AnimEllipticalGust(struct Sprite *sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->y += 20;
     sprite->data[1] = 0xBF;
     sprite->callback = AnimEllipticalGust_Step;
@@ -980,7 +980,7 @@ static void sub_80DB000(struct Sprite *sprite)
     }
     else
     {
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
     }
 
     if ((!gBattleAnimArgs[2] && !GetBattlerSide(gBattleAnimAttacker))

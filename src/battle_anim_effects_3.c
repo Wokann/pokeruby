@@ -1252,7 +1252,7 @@ static void AnimTealAlert(struct Sprite *sprite)
     u8 x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     u8 y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
 
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     rotation = ArcTan2Neg(sprite->x - x, sprite->y - y);
     rotation += 0x6000;
@@ -1556,7 +1556,7 @@ static void sub_812C990(struct Sprite *sprite)
     REG_WIN0H = 0;
     REG_WIN0V = 0;
 
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
@@ -3092,7 +3092,7 @@ static void sub_812ED84(struct Sprite *sprite)
     REG_WIN0V = 0;
 
     sprite->data[0] = gBattleAnimArgs[2];
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
     sprite->callback = sub_812EE00;

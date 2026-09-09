@@ -463,7 +463,7 @@ static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite)
 
 void sub_80D679C(struct Sprite *sprite)
 {
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.tileNum += gBattleAnimArgs[3] * 4;
 
     if (gBattleAnimArgs[3] == 1)

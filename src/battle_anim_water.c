@@ -224,7 +224,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9438 =
 
 static void AnimWaterGunDroplet(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = sprite->x + gBattleAnimArgs[2];
@@ -238,7 +238,7 @@ void AnimSmallBubblePair(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[3] != ANIM_BATTLER_ATTACKER)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
     }
     else
     {
@@ -504,7 +504,7 @@ void AnimSmallDriftingBubbles(struct Sprite *sprite)
     s16 randData2;
 
     sprite->oam.tileNum += 8;
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     randData = (Random() & 0xFF) | 256;
     randData2 = (Random() & 0x1FF);
     if (randData2 > 255)

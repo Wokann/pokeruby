@@ -92,7 +92,7 @@ const struct SpriteTemplate gPetalDanceSmallFlowerSpriteTemplate =
 // behind the mon's sprite.
 static void AnimSporeParticle(struct Sprite* sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
     if (gBattleAnimArgs[4] == 1)
     {

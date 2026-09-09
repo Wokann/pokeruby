@@ -585,7 +585,7 @@ static void AnimWallSparkle(struct Sprite *sprite)
             if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
                 InitSpritePosToAnimAttacker(sprite, respectMonPicOffsets);
             else
-                sub_8078764(sprite, respectMonPicOffsets);
+                InitSpritePosToAnimTarget(sprite, respectMonPicOffsets);
         }
 
         sprite->data[0]++;

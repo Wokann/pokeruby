@@ -790,9 +790,9 @@ void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite)
     sprite->y2 = 0;
 }
 
-void sub_8078764(struct Sprite *sprite, bool8 a2)
+void InitSpritePosToAnimTarget(struct Sprite *sprite, bool8 respectMonPicOffsets)
 {
-    if (!a2)
+    if (!respectMonPicOffsets)
     {
         sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X);
         sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y);
@@ -1385,7 +1385,7 @@ void AnimSpriteOnMonPos(struct Sprite *sprite)
         if (!gBattleAnimArgs[2])
             InitSpritePosToAnimAttacker(sprite, respectMonPicOffsets);
         else
-            sub_8078764(sprite, respectMonPicOffsets);
+            InitSpritePosToAnimTarget(sprite, respectMonPicOffsets);
         sprite->data[0]++;
 
     }
@@ -1470,12 +1470,12 @@ void AnimTravelDiagonally(struct Sprite *sprite)
     }
     else
     {
-        sub_8078764(sprite, r4);
+        InitSpritePosToAnimTarget(sprite, r4);
         slot = gBattleAnimTarget;
     }
     if (GetBattlerSide(gBattleAnimAttacker))
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
-    sub_8078764(sprite, r4);
+    InitSpritePosToAnimTarget(sprite, r4);
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = GetBattlerSpriteCoord(slot, 2) + gBattleAnimArgs[2];
     sprite->data[4] = GetBattlerSpriteCoord(slot, r7) + gBattleAnimArgs[3];

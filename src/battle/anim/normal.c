@@ -864,7 +864,7 @@ static void AnimHitSplatBasic(struct Sprite *sprite)
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
@@ -876,7 +876,7 @@ static void sub_80E27E8(struct Sprite *sprite)
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
@@ -900,7 +900,7 @@ static void AnimHitSplatRandom(struct Sprite *sprite)
     if (gBattleAnimArgs[0] == 0)
         InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->x2 += (Random() % 48) - 24;
     sprite->y2 += (Random() % 24) - 12;
@@ -926,7 +926,7 @@ static void AnimCrossImpact(struct Sprite *sprite)
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
@@ -939,7 +939,7 @@ static void AnimFlashingHitSplat(struct Sprite *sprite)
     if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->callback = AnimFlashingHitSplat_Step;
 }

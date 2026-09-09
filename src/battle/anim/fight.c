@@ -472,7 +472,7 @@ void AnimBasicFistOrFoot(struct Sprite *sprite)
     if (gBattleAnimArgs[3] == 0)
         InitSpritePosToAnimAttacker(sprite, 1);
     else
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
@@ -545,7 +545,7 @@ static void AnimFistOrFootRandomPos_Step(struct Sprite *sprite)
 
 static void AnimCrossChopHand(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = 30;
 
     if (gBattleAnimArgs[2] == 0)
@@ -585,7 +585,7 @@ void sub_80D9378(struct Sprite *sprite)
     if ((gBattleAnimAttacker ^ 2) == gBattleAnimTarget && GetBattlerPosition(gBattleAnimTarget) < 2)
         gBattleAnimArgs[0] *= -1;
 
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -626,7 +626,7 @@ static void sub_80D9404(struct Sprite *sprite)
 // arg 3: spin duration
 void AnimSpinningKickOrPunch(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[2]);
     sprite->data[0] = gBattleAnimArgs[3];
 
@@ -650,7 +650,7 @@ static void AnimSpinningKickOrPunchFinish(struct Sprite *sprite)
 // arg 2: initial wait duration
 void AnimStompFoot(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
 
     sprite->callback = AnimStompFootStep;
@@ -681,7 +681,7 @@ void AnimDizzyPunchDuck(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
         sprite->data[1] = gBattleAnimArgs[2];
         sprite->data[2] = gBattleAnimArgs[3];
         sprite->data[0]++;
@@ -978,7 +978,7 @@ void sub_80D9BD4(struct Sprite *sprite)
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     if (IsContest())
     {

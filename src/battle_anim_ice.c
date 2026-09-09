@@ -647,7 +647,7 @@ static void AnimIceEffectParticle(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
     {
-        sub_8078764(sprite, TRUE);
+        InitSpritePosToAnimTarget(sprite, TRUE);
     }
     else
     {
@@ -883,7 +883,7 @@ static void AnimWaveFromCenterOfTarget(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[2] == 0)
         {
-            sub_8078764(sprite, FALSE);
+            InitSpritePosToAnimTarget(sprite, FALSE);
         }
         else
         {
@@ -940,7 +940,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[5] == 0)
         {
-            sub_8078764(sprite, FALSE);
+            InitSpritePosToAnimTarget(sprite, FALSE);
         }
         else 
         {
@@ -1586,7 +1586,7 @@ static void InitIceBallParticle(struct Sprite *sprite)
     s16 randA, randB;
 
     sprite->oam.tileNum += 8;
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
 
     randA = (Random() & 0xFF) + 256;
     randB = Random() & 0x1FF;

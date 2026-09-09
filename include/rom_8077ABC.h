@@ -65,7 +65,7 @@ u8 GetBattlerSpriteBGPriorityRank(u8 battler);
 void sub_807A960(struct Sprite *sprite);
 void sub_8078A34(struct Sprite *sprite);
 void InitSpritePosToAnimAttacker(struct Sprite *sprite, bool8 respectMonPicOffsets);
-void sub_8078764(struct Sprite *sprite, bool8);
+void InitSpritePosToAnimTarget(struct Sprite *sprite, bool8 respectMonPicOffsets);
 void StartAnimLinearTranslation(struct Sprite *sprite);
 void sub_8078D60(struct Sprite *sprite);
 void InitAnimArcTranslation(struct Sprite *sprite);

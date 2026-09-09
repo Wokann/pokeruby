@@ -388,7 +388,7 @@ void AnimParticleInVortex(struct Sprite *sprite)
     if (gBattleAnimArgs[6] == ANIM_BATTLER_ATTACKER)
         InitSpritePosToAnimAttacker(sprite, 0);
     else
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = gBattleAnimArgs[2];

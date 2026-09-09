@@ -36,7 +36,7 @@ void AnimItemSteal(struct Sprite* sprite)
 {
     s16 attackerX;
     s16 attackerY;
-    sub_8078764(sprite, FALSE);
+    InitSpritePosToAnimTarget(sprite, FALSE);
     attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
     attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
     if ((gBattleAnimTarget ^ 2) == gBattleAnimAttacker)

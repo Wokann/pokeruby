@@ -26,8 +26,8 @@ static void AnimTask_NightShadeClone_Step1(u8 taskId);
 static void AnimTask_NightShadeClone_Step2(u8 taskId);
 static void AnimShadowBall(struct Sprite *sprite);
 static void AnimShadowBall_Step(struct Sprite *);
-static void sub_80DE0FC(struct Sprite *sprite);
-static void sub_80DE114(struct Sprite *);
+static void AnimLick(struct Sprite *sprite);
+static void AnimLick_Step(struct Sprite *);
 static void sub_80DE2DC(u8 taskId);
 static void sub_80DE3D4(u8 taskId);
 static void sub_80DE7B8(struct Sprite *sprite);
@@ -105,7 +105,7 @@ const struct SpriteTemplate gShadowBallSpriteTemplate =
     .callback = AnimShadowBall,
 };
 
-const union AnimCmd gSpriteAnim_83DAEC0[] =
+static const union AnimCmd sAnim_Lick[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(8, 2),
@@ -115,20 +115,20 @@ const union AnimCmd gSpriteAnim_83DAEC0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAED8[] =
+static const union AnimCmd *const sAnims_Lick[] =
 {
-    gSpriteAnim_83DAEC0,
+    sAnim_Lick,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAEDC =
+const struct SpriteTemplate gLickSpriteTemplate =
 {
     .tileTag = ANIM_TAG_LICK,
     .paletteTag = ANIM_TAG_LICK,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
-    .anims = gSpriteAnimTable_83DAED8,
+    .anims = sAnims_Lick,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DE0FC,
+    .callback = AnimLick,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DAEF4[] =
@@ -320,7 +320,7 @@ static void sub_80DDCC8(struct Sprite *sprite)
 
 static void sub_80DDD58(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
+    InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->callback = sub_80DDD78;
     sub_80DDD78(sprite);
 }
@@ -466,14 +466,14 @@ static void AnimShadowBall_Step(struct Sprite *sprite)
     }
 }
 
-static void sub_80DE0FC(struct Sprite *sprite)
+static void AnimLick(struct Sprite *sprite)
 {
-    sub_8078764(sprite, TRUE);
-    sprite->callback = sub_80DE114;
+    InitSpritePosToAnimTarget(sprite, TRUE);
+    sprite->callback = AnimLick_Step;
 }
 
 
-static void sub_80DE114(struct Sprite *sprite)
+static void AnimLick_Step(struct Sprite *sprite)
 {
     bool8 r5 = FALSE;
     bool8 r6 = FALSE;

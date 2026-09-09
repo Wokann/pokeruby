@@ -41,7 +41,7 @@ void AnimPresentHealParticle(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
-        sub_8078764(sprite, FALSE);
+        InitSpritePosToAnimTarget(sprite, FALSE);
         sprite->data[1] = gBattleAnimArgs[2];
     }
 
