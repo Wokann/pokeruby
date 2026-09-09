@@ -7339,7 +7339,7 @@ Move_SHADOW_BALL: @ 81D1AEF
 	fadetobg BG_GHOST
 	waitbgfadein
 	delay 15
-	createsoundtask SoundTask_LoopSEAdjustPanning, 168, -64, 63, 5, 5, 0, 5
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_MIST, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 5, 5, 0, 5
 	createsprite gShadowBallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 16, 8
 	waitforvisualfinish
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET

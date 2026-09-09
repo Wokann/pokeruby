@@ -24,8 +24,8 @@ static void sub_80DDD58(struct Sprite *sprite);
 static void sub_80DDD78(struct Sprite *);
 static void AnimTask_NightShadeClone_Step1(u8 taskId);
 static void AnimTask_NightShadeClone_Step2(u8 taskId);
-static void InitAnimShadowBall(struct Sprite *sprite);
-static void AnimShadowBallStep(struct Sprite *);
+static void AnimShadowBall(struct Sprite *sprite);
+static void AnimShadowBall_Step(struct Sprite *);
 static void sub_80DE0FC(struct Sprite *sprite);
 static void sub_80DE114(struct Sprite *);
 static void sub_80DE2DC(u8 taskId);
@@ -83,15 +83,15 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE7C =
     .callback = sub_80DDD58,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAE94[] =
+static const union AffineAnimCmd sAffineAnim_ShadowBall[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAEA4[] =
+static const union AffineAnimCmd *const sAffineAnims_ShadowBall[] =
 {
-    gSpriteAffineAnim_83DAE94,
+    sAffineAnim_ShadowBall,
 };
 
 const struct SpriteTemplate gShadowBallSpriteTemplate =
@@ -101,8 +101,8 @@ const struct SpriteTemplate gShadowBallSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAEA4,
-    .callback = InitAnimShadowBall,
+    .affineAnims = sAffineAnims_ShadowBall,
+    .callback = AnimShadowBall,
 };
 
 const union AnimCmd gSpriteAnim_83DAEC0[] =
@@ -404,25 +404,25 @@ static void AnimTask_NightShadeClone_Step2(u8 taskId)
 // arg 0: duration step 1 (attacker -> center)
 // arg 1: duration step 2 (spin center)
 // arg 2: duration step 3 (center -> target)
-static void InitAnimShadowBall(struct Sprite *sprite)
+static void AnimShadowBall(struct Sprite *sprite)
 {
-    u16 r5, r6;
-    r5 = sprite->x;
-    r6 = sprite->y;
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    u16 oldPosX, oldPosY;
+    oldPosX = sprite->x;
+    oldPosY = sprite->y;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[0] = 0;
     sprite->data[1] = gBattleAnimArgs[0];
     sprite->data[2] = gBattleAnimArgs[1];
     sprite->data[3] = gBattleAnimArgs[2];
     sprite->data[4] = sprite->x << 4;
     sprite->data[5] = sprite->y << 4;
-    sprite->data[6] = (((s16)r5 - sprite->x) << 4) / (gBattleAnimArgs[0] << 1);
-    sprite->data[7] = (((s16)r6 - sprite->y) << 4) / (gBattleAnimArgs[0] << 1);
-    sprite->callback = AnimShadowBallStep;
+    sprite->data[6] = (((s16)oldPosX - sprite->x) << 4) / (gBattleAnimArgs[0] << 1);
+    sprite->data[7] = (((s16)oldPosY - sprite->y) << 4) / (gBattleAnimArgs[0] << 1);
+    sprite->callback = AnimShadowBall_Step;
 }
 
-static void AnimShadowBallStep(struct Sprite *sprite)
+static void AnimShadowBall_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -440,8 +440,8 @@ static void AnimShadowBallStep(struct Sprite *sprite)
         sprite->data[2] -= 1;
         if (sprite->data[2] > 0)
             break;
-        sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
         sprite->data[4] = sprite->x << 4;
         sprite->data[5] = sprite->y << 4;
         sprite->data[6] = ((sprite->data[1] - sprite->x) << 4) / sprite->data[3];
