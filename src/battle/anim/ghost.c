@@ -31,20 +31,20 @@ static void AnimLick_Step(struct Sprite *);
 static void sub_80DE2DC(u8 taskId);
 static void sub_80DE3D4(u8 taskId);
 static void sub_80DE7B8(struct Sprite *sprite);
-static void sub_80DEF3C(struct Sprite *sprite);
-static void sub_80DF0B8(struct Sprite *sprite);
+static void AnimCurseNail(struct Sprite *sprite);
+static void AnimGhostStatusSprite(struct Sprite *sprite);
 static void AnimGrudgeFlame(struct Sprite *sprite);
 static void sub_80DF49C(struct Sprite *sprite);
 static void sub_80DE61C(u8 taskId);
 static void sub_80DE6B0(u8 taskId);
 static void sub_80DE8D8(struct Sprite *sprite);
 static void sub_80DEB38(u8 taskId);
-static void sub_80DED60(u8 taskId);
-static void sub_80DEEE8(u8 taskId);
-static void sub_80DEF98(struct Sprite *sprite);
-static void sub_80DF018(struct Sprite *sprite);
-static void sub_80DF090(struct Sprite *sprite);
-static void sub_80DF18C(struct Sprite *sprite);
+static void AnimTask_CurseStretchingBlackBg_Step1(u8 taskId);
+static void AnimTask_CurseStretchingBlackBg_Step2(u8 taskId);
+static void AnimCurseNail_Step1(struct Sprite *sprite);
+static void AnimCurseNail_Step2(struct Sprite *sprite);
+static void AnimCurseNail_End(struct Sprite *sprite);
+static void AnimGhostStatusSprite_Step(struct Sprite *sprite);
 static void AnimTask_GrudgeFlames_Step(u8 taskId);
 static void sub_80DF4F4(struct Sprite *sprite);
 
@@ -153,7 +153,7 @@ const struct SpriteTemplate gSpriteTemplate_83DAF08 =
     .callback = sub_80DE7B8,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF20 =
+const struct SpriteTemplate gCurseNailSpriteTemplate =
 {
     .tileTag = ANIM_TAG_NAIL,
     .paletteTag = ANIM_TAG_NAIL,
@@ -161,10 +161,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF20 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DEF3C,
+    .callback = AnimCurseNail,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF38 =
+const struct SpriteTemplate gCurseGhostSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GHOSTLY_SPIRIT,
     .paletteTag = ANIM_TAG_GHOSTLY_SPIRIT,
@@ -172,7 +172,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF38 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DF0B8,
+    .callback = AnimGhostStatusSprite,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF50 =
@@ -183,7 +183,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF50 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DF0B8,
+    .callback = AnimGhostStatusSprite,
 };
 
 static const union AnimCmd sAnim_GrudgeFlame[] =
@@ -939,7 +939,7 @@ static void sub_80DEB38(u8 taskId)
     }
 }
 
-void sub_80DECB0(u8 taskId)
+void AnimTask_CurseStretchingBlackBg(u8 taskId)
 {
     s16 startX, startY;
     s16 leftDistance, topDistance, bottomDistance, rightDistance;
@@ -970,10 +970,10 @@ void sub_80DECB0(u8 taskId)
     gTasks[taskId].data[4] = bottomDistance;
     gTasks[taskId].data[5] = startX;
     gTasks[taskId].data[6] = startY;
-    gTasks[taskId].func = sub_80DED60;
+    gTasks[taskId].func = AnimTask_CurseStretchingBlackBg_Step1;
 }
 
-static void sub_80DED60(u8 taskId)
+static void AnimTask_CurseStretchingBlackBg_Step1(u8 taskId)
 {
     s16 step;
     s16 leftDistance, rightDistance, topDistance, bottomDistance;
@@ -1005,14 +1005,14 @@ static void sub_80DED60(u8 taskId)
         bottom = 112;
         selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
         BeginNormalPaletteFade(selectedPalettes, 0, 16, 16, RGB(0, 0, 0));
-        gTasks[taskId].func = sub_80DEEE8;
+        gTasks[taskId].func = AnimTask_CurseStretchingBlackBg_Step2;
     }
 
     gBattle_WIN0H = (left << 8) | right;
     gBattle_WIN0V = (top  << 8) | bottom;
 }
 
-static void sub_80DEEE8(u8 taskId)
+static void AnimTask_CurseStretchingBlackBg_Step2(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -1026,7 +1026,7 @@ static void sub_80DEEE8(u8 taskId)
     }
 }
 
-static void sub_80DEF3C(struct Sprite *sprite)
+static void AnimCurseNail(struct Sprite *sprite)
 {
     s16 xDelta;
     s16 xDelta2;
@@ -1047,10 +1047,10 @@ static void sub_80DEF3C(struct Sprite *sprite)
     sprite->x += xDelta;
     sprite->data[1] = xDelta2;
     sprite->data[0] = 60;
-    sprite->callback = sub_80DEF98;
+    sprite->callback = AnimCurseNail_Step1;
 }
 
-static void sub_80DEF98(struct Sprite *sprite)
+static void AnimCurseNail_Step1(struct Sprite *sprite)
 {
     u16 var0;
 
@@ -1071,7 +1071,7 @@ static void sub_80DEF98(struct Sprite *sprite)
             {
                 sprite->data[0] = 30;
                 sprite->callback = WaitAnimForDuration;
-                StoreSpriteCallbackInData6(sprite, sub_80DF018);
+                StoreSpriteCallbackInData6(sprite, AnimCurseNail_Step2);
             }
             else
             {
@@ -1081,7 +1081,7 @@ static void sub_80DEF98(struct Sprite *sprite)
     }
 }
 
-static void sub_80DF018(struct Sprite *sprite)
+static void AnimCurseNail_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -1103,12 +1103,12 @@ static void sub_80DF018(struct Sprite *sprite)
         if (sprite->data[2] == 16)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_80DF090;
+            sprite->callback = AnimCurseNail_End;
         }
     }
 }
 
-static void sub_80DF090(struct Sprite *sprite)
+static void AnimCurseNail_End(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
@@ -1117,7 +1117,7 @@ static void sub_80DF090(struct Sprite *sprite)
     DestroyAnimSprite(sprite);
 }
 
-static void sub_80DF0B8(struct Sprite *sprite)
+static void AnimGhostStatusSprite(struct Sprite *sprite)
 {
     u16 coeffB;
     u16 coeffA;
@@ -1154,12 +1154,12 @@ static void sub_80DF0B8(struct Sprite *sprite)
         if (coeffB == 16 && coeffA == 0)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_80DF18C;
+            sprite->callback = AnimGhostStatusSprite_Step;
         }
     }
 }
 
-static void sub_80DF18C(struct Sprite *sprite)
+static void AnimGhostStatusSprite_Step(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;

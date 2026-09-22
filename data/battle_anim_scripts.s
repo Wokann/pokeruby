@@ -7612,48 +7612,48 @@ Move_CONSTRICT: @ 81D2013
 	end
 
 Move_CURSE: @ 81D207B
-	choosetwoturnanim _81D2084, _81D2101
-_81D2084:
+	choosetwoturnanim CurseGhost, CurseStats
+CurseGhost:
 	loadspritegfx ANIM_TAG_NAIL
 	loadspritegfx ANIM_TAG_GHOSTLY_SPIRIT
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask sub_80DECB0, 5
+	createvisualtask AnimTask_CurseStretchingBlackBg, 5
 	waitforvisualfinish
 	delay 20
-	createsprite gBattleAnimSpriteTemplate_83DAF20, ANIM_BATTLER_ATTACKER, 2
+	createsprite gCurseNailSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	delay 60
-	call _81D20EB
+	call CurseGhostShakeFromNail
 	delay 41
-	call _81D20EB
+	call CurseGhostShakeFromNail
 	delay 41
-	call _81D20EB
+	call CurseGhostShakeFromNail
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	delay 1
 	monbg ANIM_BATTLER_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF38, ANIM_BATTLER_TARGET, 2
+	createsprite gCurseGhostSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 16, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
-_81D20EB:
+CurseGhostShakeFromNail:
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 4, 0, 10, 0
 	playsewithpan SE_M_BIND, SOUND_PAN_ATTACKER
 	return
-_81D2101:
-	createvisualtask AnimTask_SwayMon, 5, 0, 10, 1536, 3, 0
+CurseStats:
+	createvisualtask AnimTask_SwayMon, 5, 0, 10, 1536, 3, ANIM_BATTLER_ATTACKER
 	waitforvisualfinish
 	delay 10
-	call _81D211C
+	call CurseStats1
 	waitforvisualfinish
 	end
-_81D211C:
+CurseStats1:
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E2F2C, 5
-	createvisualtask AnimTask_BlendColorCycle, 5, 2, 4, 2, 0, 10, 31
+	createvisualtask AnimTask_DrawFallingWhiteLinesOnAttacker, 5
+	blend_color_cycle priority=5, selector=F_PAL_ATTACKER, delay=4, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB_RED
 	return
 
 Move_SOFT_BOILED: @ 81D213B
@@ -10284,7 +10284,7 @@ StatusCondition_Curse: @ 81D636A
 	loadspritegfx ANIM_TAG_GHOSTLY_SPIRIT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF38, ANIM_BATTLER_TARGET, 2
+	createsprite gCurseGhostSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER

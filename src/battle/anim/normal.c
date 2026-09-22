@@ -72,7 +72,7 @@ static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
 static void sub_80E2DB8(u8 taskId);
 static void AnimTask_TraceMonBlended_Step(u8 taskId);
 static void AnimMonTrace(struct Sprite *sprite);
-static void sub_80E3194(u8 taskId);
+static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId);
 static void sub_80E3338(u8 taskId);
 static void sub_80E3704(u8 taskId);
 static void sub_80E38F8(u8 taskId);
@@ -1187,7 +1187,7 @@ static void AnimMonTrace(struct Sprite *sprite)
     }
 }
 
-void sub_80E2F2C(u8 taskId)
+void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
 {
     u16 species;
     int spriteId, newSpriteId;
@@ -1250,10 +1250,10 @@ void sub_80E2F2C(u8 taskId)
     gBattle_BG1_Y = -gSprites[spriteId].y + 32;
     gTasks[taskId].data[0] = newSpriteId;
     gTasks[taskId].data[6] = var0;
-    gTasks[taskId].func = sub_80E3194;
+    gTasks[taskId].func = AnimTask_DrawFallingWhiteLinesOnAttacker_Step;
 }
 
-static void sub_80E3194(u8 taskId)
+static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     struct Sprite *sprite;
