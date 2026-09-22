@@ -409,21 +409,21 @@ BattleScript_EffectExplosion: @ 81D708A
 	faintifabilitynotdamp
 	setatkhptozero
 	waitstate
-	jumpifbyte NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED, BattleScript_1D70A5
-	call BattleScript_1D70FB
-	goto BattleScript_1D70A7
+	jumpifbyte NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_MISSED, BattleScript_ExplosionDoAnimStartLoop
+	call BattleScript_PreserveMissedBitDoMoveAnim
+	goto BattleScript_ExplosionLoop
 
-BattleScript_1D70A5: @ 81D70A5
+BattleScript_ExplosionDoAnimStartLoop: @ 81D70A5
 	attackanimation
 	waitanimation
 
-BattleScript_1D70A7: @ 81D70A7
+BattleScript_ExplosionLoop: @ 81D70A7
 	movevaluescleanup
 	critcalc
 	damagecalc
 	typecalc
 	adjustnormaldamage
-	accuracycheck BattleScript_1D70E0, ACC_CURR_MOVE
+	accuracycheck BattleScript_ExplosionMissed, ACC_CURR_MOVE
 	effectivenesssound
 	hitanimation TARGET
 	waitstate
@@ -436,21 +436,21 @@ BattleScript_1D70A7: @ 81D70A7
 	tryfaintmon TARGET, FALSE, NULL
 	setbyte sMOVEEND_STATE, 0
 	moveend 2, 16
-	jumpifnexttargetvalid BattleScript_1D70A7
+	jumpifnexttargetvalid BattleScript_ExplosionLoop
 	tryfaintmon USER, FALSE, NULL
 	end
 
-BattleScript_1D70E0: @ 81D70E0
+BattleScript_ExplosionMissed: @ 81D70E0
 	effectivenesssound
 	resultmessage
 	waitmessage 64
 	setbyte sMOVEEND_STATE, 0
 	moveend 2, 16
-	jumpifnexttargetvalid BattleScript_1D70A7
+	jumpifnexttargetvalid BattleScript_ExplosionLoop
 	tryfaintmon USER, FALSE, NULL
 	end
 
-BattleScript_1D70FB: @ 81D70FB
+BattleScript_PreserveMissedBitDoMoveAnim: @ 81D70FB
 	bicbyte gMoveResultFlags, MOVE_RESULT_MISSED
 	attackanimation
 	waitanimation
@@ -459,16 +459,16 @@ BattleScript_1D70FB: @ 81D70FB
 
 BattleScript_EffectDreamEater: @ 81D710A
 	attackcanceler
-	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_1D711F
-	jumpifstatus TARGET, SLP, BattleScript_1D7129
+	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_DreamEaterNoEffect
+	jumpifstatus TARGET, SLP, BattleScript_DreamEaterWorked
 
-BattleScript_1D711F: @ 81D711F
+BattleScript_DreamEaterNoEffect: @ 81D711F
 	attackstring
 	ppreduce
 	waitmessage 64
 	goto BattleScript_WasntAffected
 
-BattleScript_1D7129: @ 81D7129
+BattleScript_DreamEaterWorked: @ 81D7129
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
 	attackstring
 	ppreduce
