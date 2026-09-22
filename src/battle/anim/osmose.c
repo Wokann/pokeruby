@@ -7,35 +7,35 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CB768(struct Sprite* sprite);
+static void AnimIngrainOrb(struct Sprite* sprite);
 
 // osmose
 // Used by Ingrain.
 
-const union AnimCmd gSpriteAnim_83D6688[] =
+const union AnimCmd gIngrainOrbAnimCmds[] =
 {
     ANIMCMD_FRAME(3, 3),
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6694[] =
+const union AnimCmd *const gIngrainOrbAnimTable[] =
 {
-    gSpriteAnim_83D6688,
+    gIngrainOrbAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6698 =
+const struct SpriteTemplate gIngrainOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D6694,
+    .anims = gIngrainOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CB768,
+    .callback = AnimIngrainOrb,
 };
 
-void sub_80CB768(struct Sprite* sprite)
+static void AnimIngrainOrb(struct Sprite* sprite)
 {
     if (!sprite->data[0])
     {
