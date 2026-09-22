@@ -4397,7 +4397,7 @@ BattleScript_WhiteHerbRet:: @ 81D9A64
 
 BattleScript_ItemHealHP_RemoveItem:: @ 81D9A74
 	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
-	printstring BATTLE_TEXT_RestoredHealth
+	printstring BATTLE_TEXT_PkmnsItemRestoredHealth
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	healthbarupdate USER
@@ -4437,7 +4437,7 @@ BattleScript_HangedOnMsg:: @ 81D9AC6
 
 BattleScript_BerryConfuseHealEnd2:: @ 81D9AD4
 	playanimation USER, B_ANIM_ITEM_EFFECT, NULL
-	printstring BATTLE_TEXT_RestoredHealth
+	printstring BATTLE_TEXT_PkmnsItemRestoredHealth
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	healthbarupdate USER

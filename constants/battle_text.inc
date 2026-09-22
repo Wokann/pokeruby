@@ -244,21 +244,21 @@
 	enum BATTLE_TEXT_PerishSong
 	enum BATTLE_TEXT_NoPP1
 	enum BATTLE_TEXT_NoPP2
-	enum BATTLE_TEXT_Used1
-	enum BATTLE_TEXT_TutorialUsed
-	enum BATTLE_TEXT_BlockBall
+	enum BATTLE_TEXT_PlayerUsedItem
+	enum BATTLE_TEXT_WallyUsedItem
+	enum BATTLE_TEXT_TrainerBlockedBall
 	enum BATTLE_TEXT_DontBeAThief
-	enum BATTLE_TEXT_DodgeBall
-	enum BATTLE_TEXT_MissPoke
-	enum BATTLE_TEXT_BallBrokeOhNo
-	enum BATTLE_TEXT_BallBrokeAppeared
-	enum BATTLE_TEXT_BallBrokeAlmost
-	enum BATTLE_TEXT_BallBrokeSoClose
-	enum BATTLE_TEXT_BallCaught1
-	enum BATTLE_TEXT_BallCaught2
-	enum BATTLE_TEXT_GiveNickname
-	enum BATTLE_TEXT_SentToPC
-	enum BATTLE_TEXT_AddedToDex
+	enum BATTLE_TEXT_ItDodgedBall
+	enum BATTLE_TEXT_YouMissedPkmn
+	enum BATTLE_TEXT_PkmnBrokeFree
+	enum BATTLE_TEXT_ItAppearedCaught
+	enum BATTLE_TEXT_AarghAlmostHadIt
+	enum BATTLE_TEXT_ShootSoClose
+	enum BATTLE_TEXT_GotchaPkmnCaughtPlayer
+	enum BATTLE_TEXT_GotchaPkmnCaughtWally
+	enum BATTLE_TEXT_GiveNicknameCaptured
+	enum BATTLE_TEXT_PkmnSentToPC
+	enum BATTLE_TEXT_PkmnDataAddedToDex
 	enum BATTLE_TEXT_Raining
 	enum BATTLE_TEXT_Sandstorm
 	enum BATTLE_TEXT_CantEscape
@@ -272,12 +272,12 @@
 	enum BATTLE_TEXT_WillSwitch
 	enum BATTLE_TEXT_CreptCloser
 	enum BATTLE_TEXT_CantGetCloser
-	enum BATTLE_TEXT_WatchingCarefully
+	enum BATTLE_TEXT_PkmnWatchingCarefully
 	enum BATTLE_TEXT_CuriousAbout
 	enum BATTLE_TEXT_EnthralledBy
 	enum BATTLE_TEXT_IgnoredThing
-	enum BATTLE_TEXT_ThrewBlock
-	enum BATTLE_TEXT_SafariOver
+	enum BATTLE_TEXT_ThrewPokeblockAtPkmn
+	enum BATTLE_TEXT_OutOfSafariBalls
 	enum BATTLE_TEXT_CuredParalysis
 	enum BATTLE_TEXT_CuredPoison
 	enum BATTLE_TEXT_CuredBurn
@@ -285,7 +285,7 @@
 	enum BATTLE_TEXT_CuredSleep
 	enum BATTLE_TEXT_CuredConfusion
 	enum BATTLE_TEXT_CuredStatus
-	enum BATTLE_TEXT_RestoredHealth
+	enum BATTLE_TEXT_PkmnsItemRestoredHealth
 	enum BATTLE_TEXT_RestoredPP
 	enum BATTLE_TEXT_RestoredStatus
 	enum BATTLE_TEXT_RestoredHPLittle
@@ -320,7 +320,7 @@
 	enum BATTLE_TEXT_BoostedExp
 	enum BATTLE_TEXT_SunIntensified
 	enum BATTLE_TEXT_GroundMoveNegate
-	enum BATTLE_TEXT_WallyBall
+	enum BATTLE_TEXT_YouThrowABallNowRight
 	enum BATTLE_TEXT_TookAttack2
 	enum BATTLE_TEXT_ChoseDestiny
 	enum BATTLE_TEXT_LostFocus
@@ -330,7 +330,7 @@
 	enum BATTLE_TEXT_DraggedOut
 	enum BATTLE_TEXT_PreventedOther
 	enum BATTLE_TEXT_NormalizedStatus
-	enum BATTLE_TEXT_Used2
+	enum BATTLE_TEXT_Trainer1UsedItem
 	enum BATTLE_TEXT_BoxFull
 	enum BATTLE_TEXT_AvoidedAttack
 	enum BATTLE_TEXT_MadeIneffective2

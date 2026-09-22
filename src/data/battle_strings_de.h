@@ -247,21 +247,21 @@ enum
     BATTLE_TEXT_PerishSong,
     BATTLE_TEXT_NoPP1,
     BATTLE_TEXT_NoPP2,
-    BATTLE_TEXT_Used1,
-    BATTLE_TEXT_TutorialUsed,
-    BATTLE_TEXT_BlockBall,
+    BATTLE_TEXT_PlayerUsedItem,
+    BATTLE_TEXT_WallyUsedItem,
+    BATTLE_TEXT_TrainerBlockedBall,
     BATTLE_TEXT_DontBeAThief,
-    BATTLE_TEXT_DodgeBall,
-    BATTLE_TEXT_MissPoke,
-    BATTLE_TEXT_BallBrokeOhNo,
-    BATTLE_TEXT_BallBrokeAppeared,
-    BATTLE_TEXT_BallBrokeAlmost,
-    BATTLE_TEXT_BallBrokeSoClose,
-    BATTLE_TEXT_BallCaught1,
-    BATTLE_TEXT_BallCaught2,
-    BATTLE_TEXT_GiveNickname,
-    BATTLE_TEXT_SentToPC,
-    BATTLE_TEXT_AddedToDex,
+    BATTLE_TEXT_ItDodgedBall,
+    BATTLE_TEXT_YouMissedPkmn,
+    BATTLE_TEXT_PkmnBrokeFree,
+    BATTLE_TEXT_ItAppearedCaught,
+    BATTLE_TEXT_AarghAlmostHadIt,
+    BATTLE_TEXT_ShootSoClose,
+    BATTLE_TEXT_GotchaPkmnCaughtPlayer,
+    BATTLE_TEXT_GotchaPkmnCaughtWally,
+    BATTLE_TEXT_GiveNicknameCaptured,
+    BATTLE_TEXT_PkmnSentToPC,
+    BATTLE_TEXT_PkmnDataAddedToDex,
     BATTLE_TEXT_Raining,
     BATTLE_TEXT_Sandstorm,
     BATTLE_TEXT_CantEscape,
@@ -275,12 +275,12 @@ enum
     BATTLE_TEXT_WillSwitch,
     BATTLE_TEXT_CreptCloser,
     BATTLE_TEXT_CantGetCloser,
-    BATTLE_TEXT_WatchingCarefully,
+    BATTLE_TEXT_PkmnWatchingCarefully,
     BATTLE_TEXT_CuriousAbout,
     BATTLE_TEXT_EnthralledBy,
     BATTLE_TEXT_IgnoredThing,
-    BATTLE_TEXT_ThrewBlock,
-    BATTLE_TEXT_SafariOver,
+    BATTLE_TEXT_ThrewPokeblockAtPkmn,
+    BATTLE_TEXT_OutOfSafariBalls,
     BATTLE_TEXT_CuredParalysis,
     BATTLE_TEXT_CuredPoison,
     BATTLE_TEXT_CuredBurn,
@@ -288,7 +288,7 @@ enum
     BATTLE_TEXT_CuredSleep,
     BATTLE_TEXT_CuredConfusion,
     BATTLE_TEXT_CuredStatus,
-    BATTLE_TEXT_RestoredHealth,
+    BATTLE_TEXT_PkmnsItemRestoredHealth,
     BATTLE_TEXT_RestoredPP,
     BATTLE_TEXT_RestoredStatus,
     BATTLE_TEXT_RestoredHPLittle,
@@ -323,7 +323,7 @@ enum
     BATTLE_TEXT_BoostedExp,
     BATTLE_TEXT_SunIntensified,
     BATTLE_TEXT_GroundMoveNegate,
-    BATTLE_TEXT_WallyBall,
+    BATTLE_TEXT_YouThrowABallNowRight,
     BATTLE_TEXT_TookAttack2,
     BATTLE_TEXT_ChoseDestiny,
     BATTLE_TEXT_LostFocus,
@@ -333,7 +333,7 @@ enum
     BATTLE_TEXT_DraggedOut,
     BATTLE_TEXT_PreventedOther,
     BATTLE_TEXT_NormalizedStatus,
-    BATTLE_TEXT_Used2,
+    BATTLE_TEXT_Trainer1UsedItem,
     BATTLE_TEXT_BoxFull,
     BATTLE_TEXT_AvoidedAttack,
     BATTLE_TEXT_MadeIneffective2,
@@ -674,12 +674,12 @@ const u8 BattleText_LearnedMove2[] = _("{EVIL_LEGENDARY} hat\n{STRING 0} gelernt
 const u8 BattleText_PlayerDefeatedTrainer2[] = _("Spieler besiegte\n{STRING 25} {STRING 26}!\p");
 const u8 BattleText_CreptCloser[] = _("{STRING 32} schleicht sich näher an\n{STR_VAR_2} heran!");
 const u8 BattleText_CantGetCloser[] = _("{STRING 32} kann nicht näher herangehen!");
-const u8 BattleText_WatchingCarefully[] = _("{STR_VAR_2} beobachtet\nalles aufmerksam!");
+const u8 sText_PkmnWatchingCarefully[] = _("{STR_VAR_2} beobachtet\nalles aufmerksam!");
 const u8 BattleText_CuriousAbout[] = _("{STR_VAR_2} ist\nneugierig auf {STRING 0}!");
 const u8 BattleText_EnthralledBy[] = _("{STR_VAR_2} ist begeistert\nvon {STRING 0}!");
 const u8 BattleText_IgnoredThing[] = _("{STR_VAR_2} ignoriert\n{STRING 0} völlig!");
-const u8 BattleText_ThrewBlock[] = _("{STRING 32} wirft {STR_VAR_2} einen\n{POKEBLOCK} zu!");
-const u8 BattleText_SafariOver[] = _("{PLAY_SE 0x49 0x00}ANSAGE: Du hast keine\nSAFARIBÄLLE mehr! Game over!\p");
+const u8 sText_ThrewPokeblockAtPkmn[] = _("{STRING 32} wirft {STR_VAR_2} einen\n{POKEBLOCK} zu!");
+const u8 sText_OutOfSafariBalls[] = _("{PLAY_SE 0x49 0x00}ANSAGE: Du hast keine\nSAFARIBÄLLE mehr! Game over!\p");
 const u8 BattleText_WildAppeared1[] = _("Ein wildes {STR_VAR_2} erscheint!\p");
 const u8 BattleText_WildAppeared2[] = _("Ein wildes {STR_VAR_2} erscheint!\p");
 const u8 BattleText_WildAppeared3[] = _("Ein wildes {STR_VAR_2} erscheint!{PAUSE 127}");
@@ -736,24 +736,24 @@ const u8 ContestStatText_TooDry[] = _("zu trocken!");
 const u8 ContestStatText_TooSweet[] = _("zu süß!");
 const u8 ContestStatText_TooBitter[] = _("zu bitter!");
 const u8 ContestStatText_TooSour[] = _("zu sauer!");
-const u8 BattleText_Used1[] = _("{STRING 32} setzt\n{STRING 19} ein!");
-const u8 BattleText_TutorialUsed[] = _("HEIKO setzt\n{STRING 19} ein!");
-const u8 BattleText_Used2[] = _("{STRING 19} wird von\n{STRING 25} {STRING 26} eingesetzt!");
-const u8 BattleText_BlockBall[] = _("Der TRAINER hat den BALL abgeblockt!");
-const u8 BattleText_DontBeAThief[] = _("Sei kein Dieb!");
-const u8 BattleText_DodgeBall[] = _("Es ist dem BALL ausgewichen! Dieses\nPOKéMON kann nicht gefangen werden!");
-const u8 BattleText_MissPoke[] = _("Du hast das POKéMON verfehlt!");
-const u8 BattleText_BallBrokeOhNo[] = _("Mist!\nDas POKéMON hat sich befreit!");
-const u8 BattleText_BallBrokeAppeared[] = _("Oh!\nFast hätte es geklappt!");
-const u8 BattleText_BallBrokeAlmost[] = _("Mist!\nDas war knapp!");
-const u8 BattleText_BallBrokeSoClose[] = _("Verflixt!\nEs hätte beinahe geklappt!");
-const u8 BattleText_BallCaught1[] = _("Toll!\n{STR_VAR_2} wurde gefangen!{UNKNOWN_A}{PLAY_BGM 0x60 0x01}\p");
-const u8 BattleText_BallCaught2[] = _("Toll!\n{STR_VAR_2} wurde gefangen!{UNKNOWN_A}{PLAY_BGM 0x60 0x01}{PAUSE 127}");
-const u8 BattleText_GiveNickname[] = _("Möchtest du dem {STR_VAR_2}\neinen Spitznamen geben?");
-const u8 BattleText_SentToPC[] = _("{STR_VAR_2} wurde auf\n{STRING 35} PC übertragen.");
+const u8 sText_PlayerUsedItem[] = _("{STRING 32} setzt\n{STRING 19} ein!");
+const u8 sText_WallyUsedItem[] = _("HEIKO setzt\n{STRING 19} ein!");
+const u8 sText_Trainer1UsedItem[] = _("{STRING 19} wird von\n{STRING 25} {STRING 26} eingesetzt!");
+const u8 sText_TrainerBlockedBall[] = _("Der TRAINER hat den BALL abgeblockt!");
+const u8 sText_DontBeAThief[] = _("Sei kein Dieb!");
+const u8 sText_ItDodgedBall[] = _("Es ist dem BALL ausgewichen! Dieses\nPOKéMON kann nicht gefangen werden!");
+const u8 sText_YouMissedPkmn[] = _("Du hast das POKéMON verfehlt!");
+const u8 sText_PkmnBrokeFree[] = _("Mist!\nDas POKéMON hat sich befreit!");
+const u8 sText_ItAppearedCaught[] = _("Oh!\nFast hätte es geklappt!");
+const u8 sText_AarghAlmostHadIt[] = _("Mist!\nDas war knapp!");
+const u8 sText_ShootSoClose[] = _("Verflixt!\nEs hätte beinahe geklappt!");
+const u8 sText_GotchaPkmnCaughtPlayer[] = _("Toll!\n{STR_VAR_2} wurde gefangen!{UNKNOWN_A}{PLAY_BGM 0x60 0x01}\p");
+const u8 sText_GotchaPkmnCaughtWally[] = _("Toll!\n{STR_VAR_2} wurde gefangen!{UNKNOWN_A}{PLAY_BGM 0x60 0x01}{PAUSE 127}");
+const u8 sText_GiveNicknameCaptured[] = _("Möchtest du dem {STR_VAR_2}\neinen Spitznamen geben?");
+const u8 sText_PkmnSentToPC[] = _("{STR_VAR_2} wurde auf\n{STRING 35} PC übertragen.");
 const u8 BattleText_Someone[] = _("einen");
 const u8 BattleText_Lanette[] = _("LANETTES");
-const u8 BattleText_AddedToDex[] = _("Für {STR_VAR_2} wurde ein Eintrag\nim POKéDEX angelegt.\p");
+const u8 sText_PkmnDataAddedToDex[] = _("Für {STR_VAR_2} wurde ein Eintrag\nim POKéDEX angelegt.\p");
 const u8 BattleText_Raining[] = _("Es regnet.");
 const u8 BattleText_Sandstorm[] = _("Ein Sandsturm tobt.");
 const u8 BattleText_BoxFull[] = _("Die BOXEN sind voll!\nDu kannst keines mehr fangen!\p");
@@ -767,14 +767,14 @@ const u8 BattleText_CuredSleep[] = _("{STRING 19} von\n{STRING 16} \lweckte es a
 const u8 BattleText_CuredConfusion[] = _("{STRING 19} von\n{STRING 16}\lhebt die Verwirrung auf!");
 const u8 BattleText_CuredStatus[] = _("{STRING 19} von\n{STRING 16} \lheilte sein {STRING 0}-Problem!");
 const u8 BattleText_NormalizedStatus[] = _("{STRING 19} von\n{STRING 16} normalisierte\lseine Statuswerte!");
-const u8 BattleText_RestoredHealth[] = _("{STRING 19} füllte\nKP von {STRING 16} auf!");
+const u8 sText_PkmnsItemRestoredHealth[] = _("{STRING 19} füllte\nKP von {STRING 16} auf!");
 const u8 BattleText_RestoredPP[] = _("{STRING 19} von\n{STRING 16} füllte AP von\l{STRING 0} auf!");
 const u8 BattleText_RestoredStatus[] = _("{STRING 19} von\n{STRING 16}\pstellte seine\nStatuswerte wieder her!");
 const u8 BattleText_RestoredHPLittle[] = _("{STRING 19} von\n{STRING 16}\lfüllte einige KP auf!");
 const u8 BattleText_ChoiceBand[] = _("{STRING 19} erlaubt\nnur den Einsatz von {STRING 17}!\p");
 const u8 BattleText_FocusSash[] = _("{GOOD_LEGENDARY} hält\nmit Hilfe von\l{STRING 19} durch!");
 const u8 BattleText_Terminator2[] = _("");
-const u8 BattleText_WallyBall[] = _("Nun muss man einen BALL werfen, oder?\nIch... Ich werde mein Bestes geben!");
+const u8 sText_YouThrowABallNowRight[] = _("Nun muss man einen BALL werfen, oder?\nIch... Ich werde mein Bestes geben!");
 const u8 BattleText_StartEvo[] = _("Hey?\n{STR_VAR_1} entwickelt sich!");
 const u8 BattleText_FinishEvo[] = _("Glückwunsch! Dein {STR_VAR_1}\nwurde zu {STR_VAR_2}!{UNKNOWN_A}\p");
 const u8 BattleText_StopEvo[] = _("Hm? Die Entwicklung\nwurde abgebrochen!\p");
@@ -1109,21 +1109,21 @@ const u8 *const gBattleStringsTable[] =
     BattleText_PerishSong,
     BattleText_NoPP1,
     BattleText_NoPP2,
-    BattleText_Used1,
-    BattleText_TutorialUsed,
-    BattleText_BlockBall,
-    BattleText_DontBeAThief,
-    BattleText_DodgeBall,
-    BattleText_MissPoke,
-    BattleText_BallBrokeOhNo,
-    BattleText_BallBrokeAppeared,
-    BattleText_BallBrokeAlmost,
-    BattleText_BallBrokeSoClose,
-    BattleText_BallCaught1,
-    BattleText_BallCaught2,
-    BattleText_GiveNickname,
-    BattleText_SentToPC,
-    BattleText_AddedToDex,
+    sText_PlayerUsedItem,
+    sText_WallyUsedItem,
+    sText_TrainerBlockedBall,
+    sText_DontBeAThief,
+    sText_ItDodgedBall,
+    sText_YouMissedPkmn,
+    sText_PkmnBrokeFree,
+    sText_ItAppearedCaught,
+    sText_AarghAlmostHadIt,
+    sText_ShootSoClose,
+    sText_GotchaPkmnCaughtPlayer,
+    sText_GotchaPkmnCaughtWally,
+    sText_GiveNicknameCaptured,
+    sText_PkmnSentToPC,
+    sText_PkmnDataAddedToDex,
     BattleText_Raining,
     BattleText_Sandstorm,
     BattleText_CantEscape,
@@ -1137,12 +1137,12 @@ const u8 *const gBattleStringsTable[] =
     BattleText_WillSwitch,
     BattleText_CreptCloser,
     BattleText_CantGetCloser,
-    BattleText_WatchingCarefully,
+    sText_PkmnWatchingCarefully,
     BattleText_CuriousAbout,
     BattleText_EnthralledBy,
     BattleText_IgnoredThing,
-    BattleText_ThrewBlock,
-    BattleText_SafariOver,
+    sText_ThrewPokeblockAtPkmn,
+    sText_OutOfSafariBalls,
     BattleText_CuredParalysis,
     BattleText_CuredPoison,
     BattleText_CuredBurn,
@@ -1150,7 +1150,7 @@ const u8 *const gBattleStringsTable[] =
     BattleText_CuredSleep,
     BattleText_CuredConfusion,
     BattleText_CuredStatus,
-    BattleText_RestoredHealth,
+    sText_PkmnsItemRestoredHealth,
     BattleText_RestoredPP,
     BattleText_RestoredStatus,
     BattleText_RestoredHPLittle,
@@ -1185,7 +1185,7 @@ const u8 *const gBattleStringsTable[] =
     BattleText_BoostedExp,
     BattleText_SunIntensified,
     BattleText_GroundMoveNegate,
-    BattleText_WallyBall,
+    sText_YouThrowABallNowRight,
     BattleText_TookAttack2,
     BattleText_ChoseDestiny,
     BattleText_LostFocus,
@@ -1195,7 +1195,7 @@ const u8 *const gBattleStringsTable[] =
     BattleText_DraggedOut,
     BattleText_PreventedOther,
     BattleText_NormalizedStatus,
-    BattleText_Used2,
+    sText_Trainer1UsedItem,
     BattleText_BoxFull,
     BattleText_AvoidedAttack,
     BattleText_MadeIneffective2,
@@ -1471,10 +1471,10 @@ const u16 gFutureMoveUsedStringIds[] =
 
 const u16 gBallEscapeStringIds[] =
 {
-    BATTLE_TEXT_BallBrokeOhNo,
-    BATTLE_TEXT_BallBrokeAppeared,
-    BATTLE_TEXT_BallBrokeAlmost,
-    BATTLE_TEXT_BallBrokeSoClose,
+    BATTLE_TEXT_PkmnBrokeFree,
+    BATTLE_TEXT_ItAppearedCaught,
+    BATTLE_TEXT_AarghAlmostHadIt,
+    BATTLE_TEXT_ShootSoClose,
 };
 
 const u16 gWeatherContinuesStringIds[] =
