@@ -2508,12 +2508,12 @@ AI_CV_Recycle_ItemsToEncourage: @ 81DBCC6
 	.byte -1
 
 AI_CV_Revenge: @ 81DBCCA
-	if_status TARGET, SLP, AI_CV_Revenge_ScoreDown2
-	if_status2 TARGET, S_INFATUATED, AI_CV_Revenge_ScoreDown2
-	if_status2 TARGET, S_CONFUSED, AI_CV_Revenge_ScoreDown2
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_Revenge_ScoreDown2
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Revenge_ScoreDown2
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Revenge_ScoreDown2
 	if_random_less_than 180, AI_CV_Revenge_ScoreDown2
 	score +2
-	jump AI_CV_Revenge_End
+	goto AI_CV_Revenge_End
 
 AI_CV_Revenge_ScoreDown2: @ 81DBCF5
 	score -2
@@ -2522,8 +2522,8 @@ AI_CV_Revenge_End: @ 81DBCF7
 	end
 
 AI_CV_BrickBreak: @ 81DBCF8
-	if_status4 TARGET, S_REFLECT, AI_CV_BrickBreak_ScoreUp1
-	jump AI_CV_BrickBreak_End
+	if_side_affecting AI_TARGET, SIDE_STATUS_REFLECT, AI_CV_BrickBreak_ScoreUp1
+	goto AI_CV_BrickBreak_End
 
 AI_CV_BrickBreak_ScoreUp1: @ 81DBD07
 	score +1
@@ -2532,8 +2532,8 @@ AI_CV_BrickBreak_End: @ 81DBD09
 	end
 
 AI_CV_KnockOff: @ 81DBD0A
-	if_hp_less_than TARGET, 30, AI_CV_KnockOff_End
-	is_first_turn USER
+	if_hp_less_than AI_TARGET, 30, AI_CV_KnockOff_End
+	is_first_turn_for AI_USER
 	if_more_than 0, AI_CV_KnockOff_End
 	if_random_less_than 180, AI_CV_KnockOff_End
 	score +1
@@ -2542,16 +2542,16 @@ AI_CV_KnockOff_End: @ 81DBD21
 	end
 
 AI_CV_Endeavor: @ 81DBD22
-	if_hp_less_than TARGET, 70, AI_CV_Endeavor_ScoreDown1
+	if_hp_less_than AI_TARGET, 70, AI_CV_Endeavor_ScoreDown1
 	if_would_go_first USER, AI_CV_Endeavor2
-	if_hp_more_than USER, 40, AI_CV_Endeavor_ScoreDown1
+	if_hp_more_than AI_USER, 40, AI_CV_Endeavor_ScoreDown1
 	score +1
-	jump AI_CV_Endeavor_End
+	goto AI_CV_Endeavor_End
 
 AI_CV_Endeavor2: @ 81DBD3D
-	if_hp_more_than USER, 50, AI_CV_Endeavor_ScoreDown1
+	if_hp_more_than AI_USER, 50, AI_CV_Endeavor_ScoreDown1
 	score +1
-	jump AI_CV_Endeavor_End
+	goto AI_CV_Endeavor_End
 
 AI_CV_Endeavor_ScoreDown1: @ 81DBD4B
 	score -1
@@ -2560,14 +2560,14 @@ AI_CV_Endeavor_End: @ 81DBD4D
 	end
 
 AI_CV_Eruption: @ 81DBD4E
-	if_damage_bonus 10, AI_CV_Eruption_ScoreDown1
-	if_damage_bonus 20, AI_CV_Eruption_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Eruption_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Eruption_ScoreDown1
 	if_would_go_first USER, AI_CV_Eruption2
-	if_hp_more_than TARGET, 50, AI_CV_Eruption_End
-	jump AI_CV_Eruption_ScoreDown1
+	if_hp_more_than AI_TARGET, 50, AI_CV_Eruption_End
+	goto AI_CV_Eruption_ScoreDown1
 
 AI_CV_Eruption2: @ 81DBD6C
-	if_hp_more_than TARGET, 70, AI_CV_Eruption_End
+	if_hp_more_than AI_TARGET, 70, AI_CV_Eruption_End
 
 AI_CV_Eruption_ScoreDown1: @ 81DBD73
 	score -1
@@ -2576,7 +2576,7 @@ AI_CV_Eruption_End: @ 81DBD75
 	end
 
 AI_CV_Imprison: @ 81DBD76
-	is_first_turn USER
+	is_first_turn_for AI_USER
 	if_more_than 0, AI_CV_Imprison_End
 	if_random_less_than 100, AI_CV_Imprison_End
 	score +2
@@ -2585,8 +2585,8 @@ AI_CV_Imprison_End: @ 81DBD86
 	end
 
 AI_CV_Refresh: @ 81DBD87
-	if_hp_less_than TARGET, 50, AI_CV_Refresh_ScoreDown1
-	jump AI_CV_Refresh_End
+	if_hp_less_than AI_TARGET, 50, AI_CV_Refresh_ScoreDown1
+	goto AI_CV_Refresh_End
 
 AI_CV_Refresh_ScoreDown1: @ 81DBD93
 	score -1
@@ -2595,30 +2595,30 @@ AI_CV_Refresh_End: @ 81DBD95
 	end
 
 AI_CV_Snatch: @ 81DBD96
-	is_first_turn USER
-	if_equal 1, AI_CV_Snatch3
+	is_first_turn_for AI_USER
+	if_equal TRUE, AI_CV_Snatch3
 	if_random_less_than 30, AI_CV_Snatch_End
 	if_would_go_first USER, AI_CV_Snatch2
-	if_hp_not_equal USER, 100, AI_CV_Snatch5
-	if_hp_less_than TARGET, 70, AI_CV_Snatch5
+	if_hp_not_equal AI_USER, 100, AI_CV_Snatch5
+	if_hp_less_than AI_TARGET, 70, AI_CV_Snatch5
 	if_random_less_than 60, AI_CV_Snatch_End
-	jump AI_CV_Snatch5
+	goto AI_CV_Snatch5
 
 AI_CV_Snatch2: @ 81DBDC3
-	if_hp_more_than TARGET, 25, AI_CV_Snatch5
-	if_move_effect TARGET, EFFECT_RESTORE_HP, AI_CV_Snatch3
-	if_move_effect TARGET, EFFECT_DEFENSE_CURL, AI_CV_Snatch3
-	jump AI_CV_Snatch4
+	if_hp_more_than AI_TARGET, 25, AI_CV_Snatch5
+	if_move_effect AI_TARGET, EFFECT_RESTORE_HP, AI_CV_Snatch3
+	if_move_effect AI_TARGET, EFFECT_DEFENSE_CURL, AI_CV_Snatch3
+	goto AI_CV_Snatch4
 
 AI_CV_Snatch3: @ 81DBDDD
 	if_random_less_than 150, AI_CV_Snatch_End
 	score +2
-	jump AI_CV_Snatch_End
+	goto AI_CV_Snatch_End
 
 AI_CV_Snatch4: @ 81DBDEA
 	if_random_less_than 230, AI_CV_Snatch5
 	score +1
-	jump AI_CV_Snatch_End
+	goto AI_CV_Snatch_End
 
 AI_CV_Snatch5: @ 81DBDF7
 	if_random_less_than 30, AI_CV_Snatch_End
