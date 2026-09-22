@@ -9392,64 +9392,64 @@ Move_SEISMIC_TOSS: @ 81D4F58
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	waitforvisualfinish
-	createvisualtask sub_80DDA4C, 3
+	createvisualtask AnimTask_GetSeismicTossDamageLevel, 3
 	delay 1
-	fadetobg BG_SEISMICTOSS_SKUUPPERCUT
+	fadetobg BG_IN_AIR
 	waitbgfadeout
-	createvisualtask sub_80DDA8C, 3
+	createvisualtask AnimTask_MoveSeismicTossBg, 3
 	playsewithpan SE_M_SKY_UPPERCUT, 0
 	waitbgfadein
 	waitforvisualfinish
-	createvisualtask sub_80DDAF0, 3
-	jumpargeq 7, 0, _81D4FAB
-	jumpargeq 7, 1, _81D4FBC
-	jumpargeq 7, 2, _81D4FD4
-_81D4FA0:
+	createvisualtask AnimTask_SeismicTossBgAccelerateDownAtEnd, 3
+	jumpreteq 0, SeismicTossWeak
+	jumpreteq 1, SeismicTossMedium
+	jumpreteq 2, SeismicTossStrong
+SeismicTossContinue:
 	restorebg
 	waitbgfadeout
-	setarg ARG_RET_ID, 4095
+	setarg ARG_RET_ID, 0xFFF
 	waitbgfadein
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D4FAB:
-	call _81D4FF3
+SeismicTossWeak:
+	call SeismicTossRockScatter1
 	delay 16
-	call _81D5054
-	goto _81D4FA0
-_81D4FBC:
-	call _81D4FF3
+	call SeismicTossRockScatter2
+	goto SeismicTossContinue
+SeismicTossMedium:
+	call SeismicTossRockScatter1
 	delay 14
-	call _81D5054
+	call SeismicTossRockScatter2
 	delay 14
-	call _81D4FF3
-	goto _81D4FA0
-_81D4FD4:
-	call _81D5054
+	call SeismicTossRockScatter1
+	goto SeismicTossContinue
+SeismicTossStrong:
+	call SeismicTossRockScatter2
 	delay 10
-	call _81D4FF3
+	call SeismicTossRockScatter1
 	delay 10
-	call _81D5054
+	call SeismicTossRockScatter2
 	delay 10
-	call _81D4FF3
-	goto _81D4FA0
-_81D4FF3:
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -10, -8, 1, 1
+	call SeismicTossRockScatter1
+	goto SeismicTossContinue
+SeismicTossRockScatter1:
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 5, 1
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -12, 27, 2, 3
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 8, 28, 3, 4
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -4, 30, 2, 3
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 12, 25, 4, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -12, 27, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 28, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -4, 30, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 12, 25, 4, 4
 	return
-_81D5054:
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, -8, 1, 1
+SeismicTossRockScatter2:
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 3, 5, 1
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -12, 32, 3, 4
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 8, 31, 2, 2
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -4, 28, 2, 3
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 12, 30, 4, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -12, 32, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 31, 2, 2
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -4, 28, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 12, 30, 4, 3
 	return
 
 Move_MAGIC_COAT: @ 81D50B5
@@ -9597,7 +9597,7 @@ Move_SKY_UPPERCUT: @ 81D53ED
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio ANIM_BATTLER_TARGET
-	fadetobg BG_SEISMICTOSS_SKUUPPERCUT
+	fadetobg BG_IN_AIR
 	waitbgfadeout
 	playsewithpan SE_M_SKY_UPPERCUT, SOUND_PAN_ATTACKER
 	createvisualtask sub_80D9C80, 5, 55
@@ -9899,10 +9899,10 @@ _81D5AF9:
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	waitforvisualfinish
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -12, 27, 2, 3
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 8, 28, 3, 4
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, -4, 30, 2, 3
-	createsprite gBattleAnimSpriteTemplate_83DAE00, ANIM_BATTLER_TARGET, 2, 12, 25, 4, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -12, 27, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 28, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, -4, 30, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_BATTLER_TARGET, 2, 12, 25, 4, 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
 	waitforvisualfinish
 	end
