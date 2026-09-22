@@ -12,7 +12,7 @@ extern u8 gBattleAnimTarget;
 extern u8 gBattlerPositions[];
 extern u16 gBattleTypeFlags;
 
-extern void sub_80D4CA4(struct Sprite *sprite);
+extern void AnimWaterPulseRing(struct Sprite *sprite);
 
 void AnimSonicBoomProjectile(struct Sprite* sprite);
 static void AnimAirWaveProjectile(struct Sprite* sprite);
@@ -50,7 +50,7 @@ const union AffineAnimCmd gGrowingRingAffineAnimCmds[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D74EC[] =
+const union AffineAnimCmd gWaterPulseRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x5, 0x5, 0, 10),
     AFFINEANIMCMD_FRAME(0xFFF6, 0xFFF6, 0, 10),
@@ -67,9 +67,9 @@ const union AffineAnimCmd *const gGrowingRingAffineAnimTable[] =
     gGrowingRingAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7530[] =
+const union AffineAnimCmd *const gWaterPulseRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D74EC,
+    gWaterPulseRingAffineAnimCmds,
 };
 
 const struct SpriteTemplate gSupersonicRingSpriteTemplate =
@@ -105,15 +105,15 @@ const struct SpriteTemplate gMetalSoundSpriteTemplate =
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D757C =
+const struct SpriteTemplate gWaterPulseRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_RING_2,
     .paletteTag = ANIM_TAG_BLUE_RING_2,
     .oam = &gOamData_837E034,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7530,
-    .callback = sub_80D4CA4,
+    .affineAnims = gWaterPulseRingAffineAnimTable,
+    .callback = AnimWaterPulseRing,
 };
 
 // Moves a projectile towards the target mon. The sprite is rotated to be pointing

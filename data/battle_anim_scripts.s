@@ -9468,27 +9468,27 @@ Move_WATER_PULSE: @ 81D50D2
 	monbg ANIM_BATTLER_TARGET
 	splitbgprio ANIM_BATTLER_TARGET
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 0, 7, rgb(0, 25, 28)
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=7, color=rgb(0, 25, 28)
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_83D9408, ANIM_BATTLER_ATTACKER, 66, 100, 100, 8, 1, 20, 40, 0
-	createsprite gBattleAnimSpriteTemplate_83D9408, ANIM_BATTLER_ATTACKER, 66, 20, 100, 16, 2, 10, 35, 1
-	createsprite gBattleAnimSpriteTemplate_83D9408, ANIM_BATTLER_ATTACKER, 66, 200, 80, 8, 1, 40, 20, 0
-	createsprite gBattleAnimSpriteTemplate_83D9408, ANIM_BATTLER_ATTACKER, 66, 80, 60, 10, 3, 20, 50, 0
-	createsprite gBattleAnimSpriteTemplate_83D9408, ANIM_BATTLER_ATTACKER, 66, 140, 100, 16, 1, 20, 30, 1
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 100, 100, 8, 1, 20, 40, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 20, 100, 16, 2, 10, 35, 1
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 200, 80, 8, 1, 40, 20, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 80, 60, 10, 3, 20, 50, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 140, 100, 16, 1, 20, 30, 1
 	playsewithpan SE_M_BUBBLE3, SOUND_PAN_TARGET
 	waitforvisualfinish
 	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D757C, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
 	delay 5
 	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D757C, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
 	delay 5
 	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D757C, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 40, 15
 	delay 13
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 8, 18, 1
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 7, 0, rgb(0, 25, 28)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=rgb(0, 25, 28)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
