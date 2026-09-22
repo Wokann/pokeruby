@@ -22,7 +22,7 @@ void sub_80DBAF4(struct Sprite *sprite);
 void sub_80DBB70(struct Sprite *sprite);
 static void AnimRedX(struct Sprite *sprite);
 static void AnimSkillSwapOrb(struct Sprite *sprite);
-void sub_80DC700(struct Sprite *sprite);
+static void AnimPsychoBoost(struct Sprite *sprite);
 static void AnimDefensiveWall_Step2(struct Sprite *sprite);
 static void AnimDefensiveWall_Step3(struct Sprite *sprite);
 static void AnimDefensiveWall_Step4(struct Sprite *sprite);
@@ -389,7 +389,7 @@ const struct SpriteTemplate gLusterPurgeCircleSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA9F8[] =
+static const union AffineAnimCmd sAffineAnim_PsychoBoostOrb_0[] =
 {
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 17),
@@ -404,27 +404,27 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA9F8[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAA50[] =
+static const union AffineAnimCmd sAffineAnim_PsychoBoostOrb_1[] =
 {
     AFFINEANIMCMD_FRAME(0xFFEC, 0x18, 0, 15),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAA60[] =
+static const union AffineAnimCmd *const sAffineAnims_PsychoBoostOrb[] =
 {
-    gSpriteAffineAnim_83DA9F8,
-    gSpriteAffineAnim_83DAA50,
+    sAffineAnim_PsychoBoostOrb_0,
+    sAffineAnim_PsychoBoostOrb_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAA68 =
+const struct SpriteTemplate gPsychoBoostOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAA60,
-    .callback = sub_80DC700,
+    .affineAnims = sAffineAnims_PsychoBoostOrb,
+    .callback = AnimPsychoBoost,
 };
 
 static void AnimDefensiveWall(struct Sprite *sprite)
@@ -1115,20 +1115,20 @@ static void AnimTask_TransparentCloneGrowAndShrink_Step(u8 taskId)
     }
 }
 
-void sub_80DC700(struct Sprite *sprite)
+static void AnimPsychoBoost(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
     case 0:
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
 
         if (IsContest())
             sprite->y += 12;
 
         sprite->data[1] = 8;
-        REG_BLDCNT = 0x3F40;
-        REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+        REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[1], 16 - sprite->data[1]);
         sprite->data[0]++;
         break;
     case 1:
@@ -1144,7 +1144,7 @@ void sub_80DC700(struct Sprite *sprite)
         {
             sprite->data[2] = 0;
             sprite->data[1]--;
-            REG_BLDALPHA = ((16 - sprite->data[1]) << 8) | sprite->data[1];
+            REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[1], 16 - sprite->data[1]);
 
             if (sprite->data[1] == 0)
             {
@@ -1153,7 +1153,7 @@ void sub_80DC700(struct Sprite *sprite)
             }
         }
 
-        sprite->data[3] += 896;
+        sprite->data[3] += 0x380;
         sprite->y2 -= sprite->data[3] >> 8;
         sprite->data[3] &= 0xFF;
         break;

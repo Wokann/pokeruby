@@ -9501,14 +9501,14 @@ Move_PSYCHO_BOOST: @ 81D51C7
 	createvisualtask AnimTask_FadeScreenToWhite, 5
 	waitbgfadein
 	delay 6
-	createvisualtask AnimTask_BlendColorCycle, 2, 1, 2, 8, 0, 10, 0
+	blend_color_cycle priority=2, selector=F_PAL_BG, delay=2, num_blends=8, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
 	delay 0
 	splitbgprio ANIM_BATTLER_ATTACKER
 	setalpha 8, 8
 	delay 10
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 3, 0, 240, 0
 	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 14, 10
-	createsprite gBattleAnimSpriteTemplate_83DAA68, ANIM_BATTLER_ATTACKER, 2
+	createsprite gPsychoBoostOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	delay 110
 	loopsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER, 7, 10
 	waitforvisualfinish
