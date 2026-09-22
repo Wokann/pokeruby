@@ -2376,22 +2376,22 @@ AI_CV_SmellingSalt_End: @ 81DBBC5
 	end
 
 AI_CV_Trick: @ 81DBBC6
-	get_hold_effect USER
+	get_hold_effect AI_USER
 	if_in_bytes AI_CV_Trick_EffectsToEncourage2, AI_CV_Trick3
 	if_in_bytes AI_CV_Trick_EffectsToEncourage, AI_CV_Trick4
 
 AI_CV_Trick2: @ 81DBBDA
 	score -3
-	jump AI_CV_Trick_End
+	goto AI_CV_Trick_End
 
 AI_CV_Trick3: @ 81DBBE1
-	get_hold_effect TARGET
+	get_hold_effect AI_TARGET
 	if_in_bytes AI_CV_Trick_EffectsToEncourage2, AI_CV_Trick2
 	score +5
-	jump AI_CV_Trick_End
+	goto AI_CV_Trick_End
 
 AI_CV_Trick4: @ 81DBBF3
-	get_hold_effect TARGET
+	get_hold_effect AI_TARGET
 	if_in_bytes AI_CV_Trick_EffectsToEncourage, AI_CV_Trick2
 	if_random_less_than 50, AI_CV_Trick_End
 	score +2
@@ -2414,14 +2414,14 @@ AI_CV_Trick_EffectsToEncourage2: @ 81DBC0F
 	.byte -1
 
 AI_CV_ChangeSelfAbility: @ 81DBC11
-	get_ability USER
+	get_ability AI_USER
 	if_in_bytes AI_CV_ChangeSelfAbility_AbilitiesToEncourage, AI_CV_ChangeSelfAbility2
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_in_bytes AI_CV_ChangeSelfAbility_AbilitiesToEncourage, AI_CV_ChangeSelfAbility3
 
 AI_CV_ChangeSelfAbility2: @ 81DBC27
 	score -1
-	jump AI_CV_ChangeSelfAbility_End
+	goto AI_CV_ChangeSelfAbility_End
 
 AI_CV_ChangeSelfAbility3: @ 81DBC2E
 	if_random_less_than 50, AI_CV_ChangeSelfAbility_End
@@ -2450,15 +2450,15 @@ AI_CV_ChangeSelfAbility_AbilitiesToEncourage: @ 81DBC37
 	.byte -1
 
 AI_CV_Superpower: @ 81DBC48
-	if_damage_bonus 10, AI_CV_Superpower_ScoreDown1
-	if_damage_bonus 20, AI_CV_Superpower_ScoreDown1
-	if_stat_level_less_than USER, ATTACK, 6, AI_CV_Superpower_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Superpower_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Superpower_ScoreDown1
+	if_stat_level_less_than AI_USER, STAT_ATK, DEFAULT_STAT_STAGE, AI_CV_Superpower_ScoreDown1
 	if_would_go_first USER, AI_CV_Superpower2
-	if_hp_more_than USER, 40, AI_CV_Superpower_ScoreDown1
-	jump AI_CV_Superpower_End
+	if_hp_more_than AI_USER, 40, AI_CV_Superpower_ScoreDown1
+	goto AI_CV_Superpower_End
 
 AI_CV_Superpower2: @ 81DBC6E
-	if_hp_less_than USER, 60, AI_CV_Superpower_End
+	if_hp_less_than AI_USER, 60, AI_CV_Superpower_End
 
 AI_CV_Superpower_ScoreDown1: @ 81DBC75
 	score -1
@@ -2467,16 +2467,16 @@ AI_CV_Superpower_End: @ 81DBC77
 	end
 
 AI_CV_MagicCoat: @ 81DBC78
-	if_hp_more_than TARGET, 30, AI_CV_MagicCoat2
+	if_hp_more_than AI_TARGET, 30, AI_CV_MagicCoat2
 	if_random_less_than 100, AI_CV_MagicCoat2
 	score -1
 
 AI_CV_MagicCoat2: @ 81DBC87
-	is_first_turn USER
-	if_equal 0, AI_CV_MagicCoat4
+	is_first_turn_for AI_USER
+	if_equal FALSE, AI_CV_MagicCoat4
 	if_random_less_than 150, AI_CV_MagicCoat_End
 	score +1
-	jump AI_CV_MagicCoat_End
+	goto AI_CV_MagicCoat_End
 
 AI_CV_MagicCoat3: @ unreferenced
 	if_random_less_than 50, AI_CV_MagicCoat_End
@@ -2489,11 +2489,11 @@ AI_CV_MagicCoat_End: @ 81DBCAA
 	end
 
 AI_CV_Recycle: @ 81DBCAB
-	get_item USER
+	get_used_held_item AI_USER
 	if_not_in_bytes AI_CV_Recycle_ItemsToEncourage, AI_CV_Recycle_ScoreDown2
 	if_random_less_than 50, AI_CV_Recycle_End
 	score +1
-	jump AI_CV_Recycle_End
+	goto AI_CV_Recycle_End
 
 AI_CV_Recycle_ScoreDown2: @ 81DBCC3
 	score -2
