@@ -78,7 +78,7 @@ static void sub_811AA38(void)
 
 bool8 FldEff_UseStrength(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)sub_811AA9C >> 16;
     gTasks[taskId].data[9] = (u32)sub_811AA9C;

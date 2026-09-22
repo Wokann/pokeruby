@@ -321,7 +321,7 @@ static void FieldCallback_SecretBaseCave(void)
 
 bool8 FldEff_UseSecretPowerCave(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (uintptr_t)StartSecretBaseCaveFieldEffect >> 16;
     gTasks[taskId].data[9] = (uintptr_t)StartSecretBaseCaveFieldEffect;
@@ -382,7 +382,7 @@ static void FieldCallback_SecretBaseTree(void)
 
 bool8 FldEff_UseSecretPowerTree(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (uintptr_t)StartSecretBaseTreeFieldEffect >> 16;
     gTasks[taskId].data[9] = (uintptr_t)StartSecretBaseTreeFieldEffect;
@@ -455,7 +455,7 @@ static void FieldCallback_SecretBaseShrub(void)
 
 bool8 FldEff_UseSecretPowerShrub(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (uintptr_t)StartSecretBaseShrubFieldEffect >> 16;
     gTasks[taskId].data[9] = (uintptr_t)StartSecretBaseShrubFieldEffect;

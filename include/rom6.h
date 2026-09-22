@@ -4,7 +4,7 @@
 extern struct MapPosition gPlayerFacingPosition;
 
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
-u8 oei_task_add(void);
+u8 CreateFieldMoveTask(void);
 void debug_sub_8120968(void);
 
 #endif

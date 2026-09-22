@@ -25,10 +25,10 @@ extern u8 EventScript_UseRockSmash[];
 
 EWRAM_DATA struct MapPosition gPlayerFacingPosition = {0};
 
-static void task08_080C9820(u8);
-static void sub_810B3DC(u8);
-static void sub_810B428(u8);
-static void sub_810B4CC(u8);
+static void Task_DoFieldMove_Init(u8);
+static void Task_DoFieldMove_ShowMonAfterPose(u8);
+static void Task_DoFieldMove_WaitForMon(u8);
+static void Task_DoFieldMove_RunFunc(u8);
 static void sub_810B53C(void);
 static void sub_810B58C(void);
 static void sub_810B5D8(void);
@@ -52,13 +52,13 @@ bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
     }
 }
 
-u8 oei_task_add(void)
+u8 CreateFieldMoveTask(void)
 {
     GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
-    return CreateTask(task08_080C9820, 8);
+    return CreateTask(Task_DoFieldMove_Init, 8);
 }
 
-static void task08_080C9820(u8 taskId)
+static void Task_DoFieldMove_Init(u8 taskId)
 {
     u8 objEventId;
 
@@ -71,47 +71,47 @@ static void task08_080C9820(u8 taskId)
         if (gMapHeader.mapType == MAP_TYPE_UNDERWATER)
         {
             FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-            gTasks[taskId].func = sub_810B428;
+            gTasks[taskId].func = Task_DoFieldMove_WaitForMon;
         }
         else
         {
             sub_8059BF4();
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
-            gTasks[taskId].func = sub_810B3DC;
+            gTasks[taskId].func = Task_DoFieldMove_ShowMonAfterPose;
         }
     }
 }
 
-static void sub_810B3DC(u8 taskId)
+static void Task_DoFieldMove_ShowMonAfterPose(u8 taskId)
 {
     if (ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]) == TRUE)
     {
         FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-        gTasks[taskId].func = sub_810B428;
+        gTasks[taskId].func = Task_DoFieldMove_WaitForMon;
     }
 }
 
-static void sub_810B428(u8 taskId)
+static void Task_DoFieldMove_WaitForMon(u8 taskId)
 {
     if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
     {
         gFieldEffectArguments[1] = GetPlayerFacingDirection();
-        if (gFieldEffectArguments[1] == 1)
+        if (gFieldEffectArguments[1] == DIR_SOUTH)
             gFieldEffectArguments[2] = 0;
-        if (gFieldEffectArguments[1] == 2)
+        if (gFieldEffectArguments[1] == DIR_NORTH)
             gFieldEffectArguments[2] = 1;
-        if (gFieldEffectArguments[1] == 3)
+        if (gFieldEffectArguments[1] == DIR_WEST)
             gFieldEffectArguments[2] = 2;
-        if (gFieldEffectArguments[1] == 4)
+        if (gFieldEffectArguments[1] == DIR_EAST)
             gFieldEffectArguments[2] = 3;
         ObjectEventSetGraphicsId(&gObjectEvents[gPlayerAvatar.objectEventId], GetPlayerAvatarGraphicsIdByCurrentState());
         StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], gFieldEffectArguments[2]);
-        FieldEffectActiveListRemove(6);
-        gTasks[taskId].func = sub_810B4CC;
+        FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
+        gTasks[taskId].func = Task_DoFieldMove_RunFunc;
     }
 }
 
-static void sub_810B4CC(u8 taskId)
+static void Task_DoFieldMove_RunFunc(u8 taskId)
 {
     void (*func)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
 
@@ -157,7 +157,7 @@ static void sub_810B53C(void)
 
 int FldEff_RockSmash(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)sub_810B58C >> 16;
     gTasks[taskId].data[9] = (u32)sub_810B58C;
@@ -195,7 +195,7 @@ static void sub_810B5D8(void)
 
 int FldEff_UseDig(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)sub_810B634 >> 16;
     gTasks[taskId].data[9] = (u32)sub_810B634;
