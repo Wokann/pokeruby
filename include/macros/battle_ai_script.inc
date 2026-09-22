@@ -225,6 +225,11 @@
 	.4byte \address
 	.endm
 
+	.macro if_user_has_no_attacking_moves address
+	.byte 0x20
+	.4byte \address
+	.endm
+
 	.macro get_turn_count
 	.byte 0x21
 	.endm

@@ -1326,20 +1326,20 @@ AI_CV_Haze_End: @ 81DB137
 	end
 
 AI_CV_Bide: @ 81DB138
-	if_hp_more_than USER, 90, AI_CV_Bide_End
+	if_hp_more_than AI_USER, 90, AI_CV_Bide_End
 	score -2
 
 AI_CV_Bide_End: @ 81DB141
 	end
 
 AI_CV_Roar: @ 81DB142
-	if_stat_level_more_than TARGET, ATTACK, 8, AI_CV_Roar2
-	if_stat_level_more_than TARGET, DEFENSE, 8, AI_CV_Roar2
-	if_stat_level_more_than TARGET, SP_ATTACK, 8, AI_CV_Roar2
-	if_stat_level_more_than TARGET, SP_DEFENSE, 8, AI_CV_Roar2
-	if_stat_level_more_than TARGET, EVASION, 8, AI_CV_Roar2
+	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, AI_CV_Roar2
+	if_stat_level_more_than AI_TARGET, STAT_DEF, 8, AI_CV_Roar2
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, 8, AI_CV_Roar2
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 8, AI_CV_Roar2
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, AI_CV_Roar2
 	score -3
-	jump AI_CV_Roar_End
+	goto AI_CV_Roar_End
 
 AI_CV_Roar2: @ 81DB171
 	if_random_less_than 128, AI_CV_Roar_End
@@ -1349,7 +1349,7 @@ AI_CV_Roar_End: @ 81DB179
 	end
 
 AI_CV_Conversion: @ 81DB17A
-	if_hp_more_than USER, 90, AI_CV_Conversion2
+	if_hp_more_than AI_USER, 90, AI_CV_Conversion2
 	score -2
 
 AI_CV_Conversion2: @ 81DB183
@@ -1362,37 +1362,37 @@ AI_CV_Conversion_End: @ 81DB190
 
 AI_CV_HealWeather: @ 81DB191
 	get_weather
-	if_equal BATTLE_WEATHER_HAIL, AI_CV_HealWeather_ScoreDown2
-	if_equal BATTLE_WEATHER_RAIN, AI_CV_HealWeather_ScoreDown2
-	if_equal BATTLE_WEATHER_SANDSTORM, AI_CV_HealWeather_ScoreDown2
-	jump AI_CV_Heal
+	if_equal AI_WEATHER_HAIL, AI_CV_HealWeather_ScoreDown2
+	if_equal AI_WEATHER_RAIN, AI_CV_HealWeather_ScoreDown2
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_HealWeather_ScoreDown2
+	goto AI_CV_Heal
 
 AI_CV_HealWeather_ScoreDown2: @ 81DB1A9
 	score -2
 
 AI_CV_Heal: @ 81DB1AB
-	if_hp_equal USER, 100, AI_CV_Heal3
+	if_hp_equal AI_USER, 100, AI_CV_Heal3
 	if_would_go_first USER, AI_CV_Heal4
 	score -8
-	jump AI_CV_Heal_End
+	goto AI_CV_Heal_End
 
 AI_CV_Heal2: @ unreferenced
-	if_hp_less_than USER, 50, AI_CV_Heal5
-	if_hp_more_than USER, 80, AI_CV_Heal3
+	if_hp_less_than AI_USER, 50, AI_CV_Heal5
+	if_hp_more_than AI_USER, 80, AI_CV_Heal3
 	if_random_less_than 70, AI_CV_Heal5
 
 AI_CV_Heal3: @ 81DB1D3
 	score -3
-	jump AI_CV_Heal_End
+	goto AI_CV_Heal_End
 
 AI_CV_Heal4: @ 81DB1DA
-	if_hp_less_than USER, 70, AI_CV_Heal5
+	if_hp_less_than AI_USER, 70, AI_CV_Heal5
 	if_random_less_than 30, AI_CV_Heal5
 	score -3
-	jump AI_CV_Heal_End
+	goto AI_CV_Heal_End
 
 AI_CV_Heal5: @ 81DB1EE
-	if_not_move_effect TARGET, EFFECT_SNATCH, AI_CV_Heal6
+	if_not_move_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Heal6
 	if_random_less_than 100, AI_CV_Heal_End
 
 AI_CV_Heal6: @ 81DB1FB
@@ -1403,20 +1403,20 @@ AI_CV_Heal_End: @ 81DB203
 	end
 
 AI_CV_Toxic: @ 81DB204
-	if_user_cant_damage AI_CV_Toxic3
-	if_hp_more_than USER, 50, AI_CV_Toxic2
+	if_user_has_no_attacking_moves AI_CV_Toxic3
+	if_hp_more_than AI_USER, 50, AI_CV_Toxic2
 	if_random_less_than 50, AI_CV_Toxic2
 	score -3
 
 AI_CV_Toxic2: @ 81DB218
-	if_hp_more_than TARGET, 50, AI_CV_Toxic3
+	if_hp_more_than AI_TARGET, 50, AI_CV_Toxic3
 	if_random_less_than 50, AI_CV_Toxic3
 	score -3
 
 AI_CV_Toxic3: @ 81DB227
-	if_move_effect USER, EFFECT_SPECIAL_DEFENSE_UP, AI_CV_Toxic4
-	if_move_effect USER, EFFECT_PROTECT, AI_CV_Toxic4
-	jump AI_CV_Toxic_End
+	if_move_effect AI_USER, EFFECT_SPECIAL_DEFENSE_UP, AI_CV_Toxic4
+	if_move_effect AI_USER, EFFECT_PROTECT, AI_CV_Toxic4
+	goto AI_CV_Toxic_End
 
 AI_CV_Toxic4: @ 81DB23A
 	if_random_less_than 60, AI_CV_Toxic_End
@@ -1426,10 +1426,10 @@ AI_CV_Toxic_End: @ 81DB242
 	end
 
 AI_CV_LightScreen: @ 81DB243
-	if_hp_less_than USER, 50, AI_CV_LightScreen_ScoreDown2
-	get_type ENEMY_TYPE1
+	if_hp_less_than AI_USER, 50, AI_CV_LightScreen_ScoreDown2
+	get_target_type1
 	if_in_bytes AI_CV_LightScreen_SpecialTypeList, AI_CV_LightScreen_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_LightScreen_SpecialTypeList, AI_CV_LightScreen_End
 	if_random_less_than 50, AI_CV_LightScreen_End
 
@@ -1452,30 +1452,30 @@ AI_CV_LightScreen_SpecialTypeList: @ 81DB269
 
 AI_CV_Rest: @ 81DB272
 	if_would_go_first USER, AI_CV_Rest4
-	if_hp_not_equal USER, 100, AI_CV_Rest2
+	if_hp_not_equal AI_USER, 100, AI_CV_Rest2
 	score -8
-	jump AI_CV_Rest_End
+	goto AI_CV_Rest_End
 
 AI_CV_Rest2: @ 81DB286
-	if_hp_less_than USER, 40, AI_CV_Rest6
-	if_hp_more_than USER, 50, AI_CV_Rest3
+	if_hp_less_than AI_USER, 40, AI_CV_Rest6
+	if_hp_more_than AI_USER, 50, AI_CV_Rest3
 	if_random_less_than 70, AI_CV_Rest6
 
 AI_CV_Rest3: @ 81DB29A
 	score -3
-	jump AI_CV_Rest_End
+	goto AI_CV_Rest_End
 
 AI_CV_Rest4: @ 81DB2A1
-	if_hp_less_than USER, 60, AI_CV_Rest6
-	if_hp_more_than USER, 70, AI_CV_Rest5
+	if_hp_less_than AI_USER, 60, AI_CV_Rest6
+	if_hp_more_than AI_USER, 70, AI_CV_Rest5
 	if_random_less_than 50, AI_CV_Rest6
 
 AI_CV_Rest5: @ 81DB2B5
 	score -3
-	jump AI_CV_Rest_End
+	goto AI_CV_Rest_End
 
 AI_CV_Rest6: @ 81DB2BC
-	if_not_move_effect TARGET, EFFECT_SNATCH, AI_CV_Rest7
+	if_not_move_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Rest7
 	if_random_less_than 50, AI_CV_Rest_End
 
 AI_CV_Rest7: @ 81DB2C9
@@ -1489,18 +1489,18 @@ AI_CV_OneHitKO: @ 81DB2D2
 	end
 
 AI_CV_SuperFang: @ 81DB2D3
-	if_hp_more_than TARGET, 50, AI_CV_SuperFang_End
+	if_hp_more_than AI_TARGET, 50, AI_CV_SuperFang_End
 	score -1
 
 AI_CV_SuperFang_End: @ 81DB2DC
 	end
 
 AI_CV_Trap: @ 81DB2DD
-	if_status TARGET, TOX, AI_CV_Trap2
-	if_status2 TARGET, S_CURSED, AI_CV_Trap2
-	if_status3 TARGET, S_PERISH_SONG, AI_CV_Trap2
-	if_status2 TARGET, S_INFATUATED, AI_CV_Trap2
-	jump AI_CV_Trap_End
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_Trap2
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_Trap2
+	if_status3 AI_TARGET, STATUS3_PERISH_SONG, AI_CV_Trap2
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Trap2
+	goto AI_CV_Trap_End
 
 AI_CV_Trap2: @ 81DB30A
 	if_random_less_than 128, AI_CV_Trap_End
@@ -1510,10 +1510,10 @@ AI_CV_Trap_End: @ 81DB312
 	end
 
 AI_CV_HighCrit: @ 81DB313
-	if_damage_bonus 10, AI_CV_HighCrit_End
-	if_damage_bonus 20, AI_CV_HighCrit_End
-	if_damage_bonus 80, AI_CV_HighCrit2
-	if_damage_bonus 160, AI_CV_HighCrit2
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_HighCrit_End
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_HighCrit_End
+	if_type_effectiveness AI_EFFECTIVENESS_x2, AI_CV_HighCrit2
+	if_type_effectiveness AI_EFFECTIVENESS_x4, AI_CV_HighCrit2
 	if_random_less_than 128, AI_CV_HighCrit_End
 
 AI_CV_HighCrit2: @ 81DB331
