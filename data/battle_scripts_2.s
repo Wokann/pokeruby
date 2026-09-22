@@ -108,8 +108,7 @@ BattleScript_TrainerBallBlock:: @ 81D9F35
 	finishaction
 
 BattleScript_PlayerUsesItem: @ 81D9F45
-	setbyte sMOVEEND_STATE, 15
-	moveend 1, 0
+	moveendcase MOVEEND_MIRROR_MOVE
 	end
 
 BattleScript_OpponentUsesHealItem: @ 81D9F4F
@@ -124,8 +123,7 @@ BattleScript_OpponentUsesHealItem: @ 81D9F4F
 	printstring BATTLE_TEXT_PkmnsItemRestoredHealth
 	waitmessage B_WAIT_TIME_LONG
 	updatestatusicon USER
-	setbyte sMOVEEND_STATE, 15
-	moveend 1, 0
+	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
 BattleScript_OpponentUsesStatusCureItem: @ 81D9F7B
@@ -137,8 +135,7 @@ BattleScript_OpponentUsesStatusCureItem: @ 81D9F7B
 	printfromtable gTrainerItemCuredStatusStringIds
 	waitmessage B_WAIT_TIME_LONG
 	updatestatusicon USER
-	setbyte sMOVEEND_STATE, 15
-	moveend 1, 0
+	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
 BattleScript_OpponentUsesXItem: @ 81D9F9C
@@ -149,8 +146,7 @@ BattleScript_OpponentUsesXItem: @ 81D9F9C
 	useitemonopponent
 	printfromtable gStatUpStringIds
 	waitmessage B_WAIT_TIME_LONG
-	setbyte sMOVEEND_STATE, 15
-	moveend 1, 0
+	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
 BattleScript_OpponentUsesGuardSpec: @ 81D9FBB
@@ -161,8 +157,7 @@ BattleScript_OpponentUsesGuardSpec: @ 81D9FBB
 	useitemonopponent
 	printfromtable gMistUsedStringIds
 	waitmessage B_WAIT_TIME_LONG
-	setbyte sMOVEEND_STATE, 15
-	moveend 1, 0
+	moveendcase MOVEEND_MIRROR_MOVE
 	finishaction
 
 BattleScript_RunByUsingItem: @ 81D9FDA

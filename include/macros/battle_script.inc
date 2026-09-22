@@ -411,10 +411,42 @@
 	.byte \byte
 	.endm
 
-	.macro moveend byte1, byte2
+	.macro moveend endMode, endState
 	.byte 0x49
-	.byte \byte1
-	.byte \byte2
+	.byte \endMode
+	.byte \endState
+	.endm
+
+@ Helper macros for moveend command
+
+@ All cases
+	.macro moveendall
+	setbyte sMOVEEND_STATE, 0
+	moveend 0, 0
+	.endm
+
+@ Chosen case
+	.macro moveendcase case
+	setbyte sMOVEEND_STATE, \case
+	moveend 1, 0
+	.endm
+
+@ All cases from (inclusive)
+	.macro moveendfrom from
+	setbyte sMOVEEND_STATE, \from
+	moveend 0, 0
+	.endm
+
+@ All cases from 0 to (not inclusive)
+	.macro moveendto to
+	setbyte sMOVEEND_STATE, 0
+	moveend 2, \to
+	.endm
+
+@ Cases from (inclusive) to (not inclusive)
+	.macro moveendfromto from, to
+	setbyte sMOVEEND_STATE, \from
+	moveend 2, \to
 	.endm
 
 	.macro typecalc2
