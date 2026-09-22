@@ -8719,24 +8719,24 @@ Move_REVENGE: @ 81D3B99
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA198, ANIM_BATTLER_ATTACKER, 2, 10, -10
+	createsprite gRevengeSmallScratchSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, -10
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 0, 4, 2, 8, 31
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=4, initial_blend_y=2, target_blend_y=8, color=RGB_RED
 	waitforvisualfinish
 	unloadspritegfx ANIM_TAG_PURPLE_SCRATCH
 	loadspritegfx ANIM_TAG_PURPLE_SWIPE
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA1E0, ANIM_BATTLER_TARGET, 2, 10, -10
+	createsprite gRevengeBigScratchSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10
 	waitforvisualfinish
 	unloadspritegfx ANIM_TAG_PURPLE_SWIPE
 	loadspritegfx ANIM_TAG_IMPACT
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 10, 1
-	createsprite gBattleAnimSpriteTemplate_83DB550, ANIM_BATTLER_TARGET, 3, -10, -8, 1, 1, 8
+	create_persist_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=1, duration=8
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DB550, ANIM_BATTLER_TARGET, 3, 10, 8, 1, 1, 8
+	create_persist_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=10, y=8, relative_to=ANIM_BATTLER_TARGET, animation=1, duration=8
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET

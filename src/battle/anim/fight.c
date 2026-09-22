@@ -43,7 +43,7 @@ static void AnimSuperpowerOrb(struct Sprite *sprite);
 static void AnimSuperpowerRock(struct Sprite *sprite);
 static void AnimSuperpowerFireball(struct Sprite *sprite);
 static void AnimArmThrustHit(struct Sprite *sprite);
-void sub_80D9BD4(struct Sprite *sprite);
+static void AnimRevengeScratch(struct Sprite *sprite);
 void sub_80D9C40(struct Sprite *sprite);
 static void AnimFistOrFootRandomPos_Step(struct Sprite *sprite);
 static void AnimCrossChopHand_Step(struct Sprite *sprite);
@@ -321,7 +321,7 @@ const struct SpriteTemplate gArmThrustHandSpriteTemplate =
     .callback = AnimArmThrustHit,
 };
 
-const union AnimCmd gSpriteAnim_83DA15C[] =
+static const union AnimCmd sAnim_RevengeSmallScratch_0[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
@@ -329,7 +329,7 @@ const union AnimCmd gSpriteAnim_83DA15C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA16C[] =
+static const union AnimCmd sAnim_RevengeSmallScratch_1[] =
 {
     ANIMCMD_FRAME(0, 4, .vFlip = TRUE),
     ANIMCMD_FRAME(16, 4, .vFlip = TRUE),
@@ -337,7 +337,7 @@ const union AnimCmd gSpriteAnim_83DA16C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA17C[] =
+static const union AnimCmd sAnim_RevengeSmallScratch_2[] =
 {
     ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 4, .hFlip = TRUE),
@@ -345,61 +345,61 @@ const union AnimCmd gSpriteAnim_83DA17C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA18C[] =
+static const union AnimCmd *const sAnims_RevengeSmallScratch[] =
 {
-    gSpriteAnim_83DA15C,
-    gSpriteAnim_83DA16C,
-    gSpriteAnim_83DA17C,
+    sAnim_RevengeSmallScratch_0,
+    sAnim_RevengeSmallScratch_1,
+    sAnim_RevengeSmallScratch_2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA198 =
+const struct SpriteTemplate gRevengeSmallScratchSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_SCRATCH,
     .paletteTag = ANIM_TAG_PURPLE_SCRATCH,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DA18C,
+    .anims = sAnims_RevengeSmallScratch,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D9BD4,
+    .callback = AnimRevengeScratch,
 };
 
-const union AnimCmd gSpriteAnim_83DA1B0[] =
+static const union AnimCmd sAnim_RevengeBigScratch_0[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(64, 6),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA1BC[] =
+static const union AnimCmd sAnim_RevengeBigScratch_1[] =
 {
     ANIMCMD_FRAME(0, 6, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(64, 6, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA1C8[] =
+static const union AnimCmd sAnim_RevengeBigScratch_2[] =
 {
     ANIMCMD_FRAME(0, 6, .hFlip = TRUE),
     ANIMCMD_FRAME(64, 6, .hFlip = TRUE),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA1D4[] =
+static const union AnimCmd *const sAnims_RevengeBigScratch[] =
 {
-    gSpriteAnim_83DA1B0,
-    gSpriteAnim_83DA1BC,
-    gSpriteAnim_83DA1C8,
+    sAnim_RevengeBigScratch_0,
+    sAnim_RevengeBigScratch_1,
+    sAnim_RevengeBigScratch_2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA1E0 =
+const struct SpriteTemplate gRevengeBigScratchSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_SWIPE,
     .paletteTag = ANIM_TAG_PURPLE_SWIPE,
     .oam = &gOamData_AffineOff_ObjNormal_64x64,
-    .anims = gSpriteAnimTable_83DA1D4,
+    .anims = sAnims_RevengeBigScratch,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D9BD4,
+    .callback = AnimRevengeScratch,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DA1F8[] =
@@ -973,7 +973,7 @@ static void AnimArmThrustHit(struct Sprite *sprite)
     sprite->callback = AnimArmThrustHit_Step;
 }
 
-void sub_80D9BD4(struct Sprite *sprite)
+static void AnimRevengeScratch(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
         InitSpritePosToAnimAttacker(sprite, 0);

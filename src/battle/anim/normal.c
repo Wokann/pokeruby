@@ -51,7 +51,7 @@ static void AnimHitSplatRandom(struct Sprite *sprite);
 static void AnimHitSplatOnMonEdge(struct Sprite *sprite);
 static void AnimCrossImpact(struct Sprite *sprite);
 static void AnimFlashingHitSplat(struct Sprite *sprite);
-static void sub_80E27E8(struct Sprite *sprite);
+static void AnimHitSplatPersistent(struct Sprite *sprite);
 static void AnimConfusionDuckStep(struct Sprite *sprite);
 static u32 UnpackSelectedBattleAnimPalettes(s16);
 static void AnimSimplePaletteBlendStep(struct Sprite *sprite);
@@ -287,7 +287,7 @@ const struct SpriteTemplate gFlashingHitSplatSpriteTemplate =
     .callback = AnimFlashingHitSplat,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB550 =
+const struct SpriteTemplate gPersistHitSplatSpriteTemplate =
 {
     .tileTag = ANIM_TAG_IMPACT,
     .paletteTag = ANIM_TAG_IMPACT,
@@ -295,7 +295,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB550 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = sAffineAnims_HitSplat,
-    .callback = sub_80E27E8,
+    .callback = AnimHitSplatPersistent,
 };
 
 const u16 gUnknown_083DB568 = RGB(31, 31, 31);
@@ -882,7 +882,7 @@ static void AnimHitSplatBasic(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-static void sub_80E27E8(struct Sprite *sprite)
+static void AnimHitSplatPersistent(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[3]);
     if (gBattleAnimArgs[2] == 0)
