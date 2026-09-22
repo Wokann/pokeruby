@@ -73,8 +73,8 @@ static void AnimGreenStar_Callback(struct Sprite *sprite);
 static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 static void AnimSweetScentPetal_Step(struct Sprite *sprite);
 static void sub_812E8B4(u8 taskId);
-static void sub_812ED24(struct Sprite *sprite);
-static void sub_812EE00(struct Sprite *sprite);
+static void AnimFlatterConfetti_Step(struct Sprite *sprite);
+static void AnimFlatterSpotlight_Step(struct Sprite *sprite);
 static void AnimReversalOrb_Step(struct Sprite *sprite);
 static void AnimTask_RolePlaySilhouetteStep1(u8 taskId);
 static void sub_812F290(u8 taskId);
@@ -119,8 +119,8 @@ static void AnimSwallowBlueOrb(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void AnimSweetScentPetal(struct Sprite *sprite);
 static void AnimPainSplitProjectile(struct Sprite *sprite);
-static void sub_812EC78(struct Sprite *sprite);
-static void sub_812ED84(struct Sprite *sprite);
+static void AnimFlatterConfetti(struct Sprite *sprite);
+static void AnimFlatterSpotlight(struct Sprite *sprite);
 static void AnimReversalOrb(struct Sprite *sprite);
 static void AnimYawnCloud(struct Sprite *sprite);
 static void sub_812F948(struct Sprite *sprite);
@@ -766,7 +766,7 @@ const struct SpriteTemplate gPainSplitProjectileSpriteTemplate =
     .callback = AnimPainSplitProjectile,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402708 =
+const struct SpriteTemplate gFlatterConfettiSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CONFETTI,
     .paletteTag = ANIM_TAG_CONFETTI,
@@ -774,10 +774,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402708 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812EC78,
+    .callback = AnimFlatterConfetti,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402720 =
+const struct SpriteTemplate gFlatterSpotlightSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPOTLIGHT,
     .paletteTag = ANIM_TAG_SPOTLIGHT,
@@ -785,7 +785,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402720 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpotlightAffineAnimTable,
-    .callback = sub_812ED84,
+    .callback = AnimFlatterSpotlight,
 };
 
 const struct SpriteTemplate gReversalOrbSpriteTemplate =
@@ -3029,7 +3029,7 @@ void AnimTask_PainSplitMovement(u8 taskId)
     }
 }
 
-static void sub_812EC78(struct Sprite *sprite)
+static void AnimFlatterConfetti(struct Sprite *sprite)
 {
     u8 tileOffset;
     int rand1;
@@ -3051,18 +3051,18 @@ static void sub_812EC78(struct Sprite *sprite)
         sprite->data[1] = 0x480 - rand2;
 
     sprite->data[2] = gBattleAnimArgs[0];
-    if (sprite->data[2] == 0)
+    if (sprite->data[2] == ANIM_BATTLER_ATTACKER)
         sprite->x = -8;
     else
-        sprite->x = 248;
+        sprite->x = DISPLAY_WIDTH + 8;
 
     sprite->y = 104;
-    sprite->callback = sub_812ED24;
+    sprite->callback = AnimFlatterConfetti_Step;
 }
 
-static void sub_812ED24(struct Sprite *sprite)
+static void AnimFlatterConfetti_Step(struct Sprite *sprite)
 {
-    if (sprite->data[2] == 0)
+    if (sprite->data[2] == ANIM_BATTLER_ATTACKER)
     {
         sprite->x2 += sprite->data[0] >> 8;
         sprite->y2 -= sprite->data[1] >> 8;
@@ -3082,7 +3082,7 @@ static void sub_812ED24(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_812ED84(struct Sprite *sprite)
+static void AnimFlatterSpotlight(struct Sprite *sprite)
 {
     REG_WINOUT = 0x1F3F;
     REG_DISPCNT |= DISPCNT_OBJWIN_ON;
@@ -3095,10 +3095,10 @@ static void sub_812ED84(struct Sprite *sprite)
     InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
-    sprite->callback = sub_812EE00;
+    sprite->callback = AnimFlatterSpotlight_Step;
 }
 
-static void sub_812EE00(struct Sprite *sprite)
+static void AnimFlatterSpotlight_Step(struct Sprite *sprite)
 {
     switch (sprite->data[1])
     {

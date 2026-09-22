@@ -8384,46 +8384,46 @@ HyperBeamOrbs:
 Move_FLATTER: @ 81D332C
 	loadspritegfx ANIM_TAG_SPOTLIGHT
 	loadspritegfx ANIM_TAG_CONFETTI
-	createvisualtask SoundTask_PlaySE2WithPanning, 5, 223, 63
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_ENCORE2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_CreateSpotlight, 2
-	createvisualtask AnimTask_HardwarePaletteFade, 2, 248, 3, 0, 10, 0
+	createvisualtask AnimTask_HardwarePaletteFade, 2, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN, 3, 0, 10, FALSE
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_8402720, ANIM_BATTLER_TARGET, 2, 0, -8, 80
+	createsprite gFlatterSpotlightSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -8, 80
 	delay 0
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 2, ANIM_BATTLER_TARGET
 	delay 10
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 2, ANIM_BATTLER_TARGET
 	delay 0
-	createvisualtask SoundTask_PlaySE1WithPanning, 5, 229, -64
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
-	call _81D3415
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_FLATTER, SOUND_PAN_ATTACKER_NEG
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
+	call CreateFlatterConfetti
 	delay 5
-	createvisualtask SoundTask_PlaySE1WithPanning, 5, 229, 63
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_FLATTER, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createvisualtask AnimTask_HardwarePaletteFade, 2, 248, 3, 10, 0, 1
+	createvisualtask AnimTask_HardwarePaletteFade, 2, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN, 3, 10, 0, TRUE
 	waitforvisualfinish
 	createvisualtask AnimTask_RemoveSpotlight, 2
 	end
-_81D3415:
-	createsprite gBattleAnimSpriteTemplate_8402708, ANIM_BATTLER_ATTACKER, 40, 0
-	createsprite gBattleAnimSpriteTemplate_8402708, ANIM_BATTLER_ATTACKER, 40, 1
+CreateFlatterConfetti:
+	createsprite gFlatterConfettiSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, ANIM_BATTLER_ATTACKER
+	createsprite gFlatterConfettiSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, ANIM_BATTLER_TARGET
 	return
 
 Move_ROLE_PLAY: @ 81D3428
