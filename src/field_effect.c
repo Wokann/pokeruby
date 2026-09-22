@@ -2013,40 +2013,46 @@ void sub_8087AC8(struct Task *task)
     objectEvent->invisible ^= 1;
 }
 
-static void ExecuteTeleportFieldEffectTask(u8);
-static void TeleportFieldEffectTask1(struct Task*);
-static void TeleportFieldEffectTask2(struct Task*);
-static void TeleportFieldEffectTask3(struct Task*);
-static void TeleportFieldEffectTask4(struct Task*);
-static void mapldr_08085D88(void);
+static void Task_TeleportWarpOut(u8);
+static void TeleportWarpOutFieldEffect_Init(struct Task*);
+static void TeleportWarpOutFieldEffect_SpinGround(struct Task*);
+static void TeleportWarpOutFieldEffect_SpinExit(struct Task*);
+static void TeleportWarpOutFieldEffect_End(struct Task*);
+static void FieldCallback_TeleportWarpIn(void);
+static void Task_TeleportWarpIn(u8);
+static void TeleportWarpInFieldEffect_Init(struct Task*);
+static void TeleportWarpInFieldEffect_SpinEnter(struct Task*);
+static void TeleportWarpInFieldEffect_SpinGround(struct Task*);
 
-void CreateTeleportFieldEffectTask(void)
+#define tState data[0]
+
+void FldEff_TeleportWarpOut(void)
 {
-    CreateTask(ExecuteTeleportFieldEffectTask, 0);
+    CreateTask(Task_TeleportWarpOut, 0);
 }
 
-static void (*const sTeleportFieldEffectTasks[])(struct Task *) = {
-    TeleportFieldEffectTask1,
-    TeleportFieldEffectTask2,
-    TeleportFieldEffectTask3,
-    TeleportFieldEffectTask4
+static void (*const sTeleportWarpOutFieldEffectFuncs[])(struct Task *) = {
+    TeleportWarpOutFieldEffect_Init,
+    TeleportWarpOutFieldEffect_SpinGround,
+    TeleportWarpOutFieldEffect_SpinExit,
+    TeleportWarpOutFieldEffect_End
 };
 
-static void ExecuteTeleportFieldEffectTask(u8 taskId)
+static void Task_TeleportWarpOut(u8 taskId)
 {
-    sTeleportFieldEffectTasks[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sTeleportWarpOutFieldEffectFuncs[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-static void TeleportFieldEffectTask1(struct Task *task)
+static void TeleportWarpOutFieldEffect_Init(struct Task *task)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
     CameraObjectReset2();
     task->data[15] = GetPlayerFacingDirection();
-    task->data[0]++;
+    task->tState++;
 }
 
-static void TeleportFieldEffectTask2(struct Task *task)
+static void TeleportWarpOutFieldEffect_SpinGround(struct Task *task)
 {
     u8 spinDirections[5] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
     struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2058,7 +2064,7 @@ static void TeleportFieldEffectTask2(struct Task *task)
     }
     if (task->data[2] > 7 && task->data[15] == objectEvent->facingDirection)
     {
-        task->data[0]++;
+        task->tState++;
         task->data[1] = 4;
         task->data[2] = 8;
         task->data[3] = 1;
@@ -2066,7 +2072,7 @@ static void TeleportFieldEffectTask2(struct Task *task)
     }
 }
 
-static void TeleportFieldEffectTask3(struct Task *task)
+static void TeleportWarpOutFieldEffect_SpinExit(struct Task *task)
 {
     u8 spinDirections[5] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
     struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2082,33 +2088,31 @@ static void TeleportFieldEffectTask3(struct Task *task)
     {
         task->data[3] <<= 1;
     }
-    if (task->data[4] > 8 && (sprite->oam.priority = 1, sprite->subspriteMode != 0))
+    if (task->data[4] > 8 && (sprite->oam.priority = 1, sprite->subspriteMode != SUBSPRITES_OFF))
     {
-        sprite->subspriteMode = 2;
+        sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
     }
     if (task->data[4] >= 0xa8)
     {
-        task->data[0]++;
+        task->tState++;
         TryFadeOutOldMapMusic();
         WarpFadeScreen();
     }
 }
 
-static void TeleportFieldEffectTask4(struct Task *task)
+static void TeleportWarpOutFieldEffect_End(struct Task *task)
 {
     if (!gPaletteFade.active && BGMusicStopped() == TRUE)
     {
         Overworld_SetWarpDestToLastHealLoc();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
-        gFieldCallback = mapldr_08085D88;
-        DestroyTask(FindTaskIdByFunc(ExecuteTeleportFieldEffectTask));
+        gFieldCallback = FieldCallback_TeleportWarpIn;
+        DestroyTask(FindTaskIdByFunc(Task_TeleportWarpOut));
     }
 }
 
-void sub_8087E1C(u8);
-
-static void mapldr_08085D88(void)
+static void FieldCallback_TeleportWarpIn(void)
 {
     Overworld_PlaySpecialMapMusic();
     pal_fill_for_map_transition();
@@ -2117,21 +2121,21 @@ static void mapldr_08085D88(void)
     gFieldCallback = NULL;
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     CameraObjectReset2();
-    CreateTask(sub_8087E1C, 0);
+    CreateTask(Task_TeleportWarpIn, 0);
 }
 
-void (*const gUnknown_0839F3A0[])(struct Task *) = {
-    sub_8087E4C,
-    sub_8087ED8,
-    sub_8087FDC
+static void (*const sTeleportWarpInFieldEffectFuncs[])(struct Task *) = {
+    TeleportWarpInFieldEffect_Init,
+    TeleportWarpInFieldEffect_SpinEnter,
+    TeleportWarpInFieldEffect_SpinGround
 };
 
-void sub_8087E1C(u8 taskId)
+static void Task_TeleportWarpIn(u8 taskId)
 {
-    gUnknown_0839F3A0[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sTeleportWarpInFieldEffectFuncs[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-void sub_8087E4C(struct Task *task)
+static void TeleportWarpInFieldEffect_Init(struct Task *task)
 {
     struct Sprite *sprite;
     s16 centerToCornerVecY;
@@ -2141,7 +2145,7 @@ void sub_8087E4C(struct Task *task)
         centerToCornerVecY = -(sprite->centerToCornerVecY << 1);
         sprite->y2 = -(sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY + centerToCornerVecY);
         gObjectEvents[gPlayerAvatar.objectEventId].invisible = FALSE;
-        task->data[0]++;
+        task->tState++;
         task->data[1] = 8;
         task->data[2] = 1;
         task->data[14] = sprite->subspriteMode;
@@ -2150,7 +2154,7 @@ void sub_8087E4C(struct Task *task)
     }
 }
 
-void sub_8087ED8(struct Task *task)
+static void TeleportWarpInFieldEffect_SpinEnter(struct Task *task)
 {
     u8 spinDirections[5] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
     struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2160,15 +2164,15 @@ void sub_8087ED8(struct Task *task)
         if (task->data[13] == 0)
         {
             task->data[13]++;
-            objectEvent->triggerGroundEffectsOnMove = 1;
+            objectEvent->triggerGroundEffectsOnMove = TRUE;
             sprite->subspriteMode = task->data[14];
         }
     } else
     {
         sprite->oam.priority = 1;
-        if (sprite->subspriteMode != 0)
+        if (sprite->subspriteMode != SUBSPRITES_OFF)
         {
-            sprite->subspriteMode = 2;
+            sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
         }
     }
     if (sprite->y2 >= -0x30 && task->data[1] > 1 && !(sprite->y2 & 1))
@@ -2183,13 +2187,13 @@ void sub_8087ED8(struct Task *task)
     if (sprite->y2 >= 0)
     {
         sprite->y2 = 0;
-        task->data[0]++;
+        task->tState++;
         task->data[1] = 1;
         task->data[2] = 0;
     }
 }
 
-void sub_8087FDC(struct Task *task)
+static void TeleportWarpInFieldEffect_SpinGround(struct Task *task)
 {
     u8 spinDirections[5] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
     struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2202,10 +2206,12 @@ void sub_8087FDC(struct Task *task)
             UnlockPlayerFieldControls();
             CameraObjectReset1();
             UnfreezeObjectEvents();
-            DestroyTask(FindTaskIdByFunc(sub_8087E1C));
+            DestroyTask(FindTaskIdByFunc(Task_TeleportWarpIn));
         }
     }
 }
+
+#undef tState
 
 void sub_8088120(u8);
 void sub_808847C(u8);

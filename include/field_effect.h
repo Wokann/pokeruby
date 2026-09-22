@@ -107,10 +107,6 @@ bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *, struct ObjectEvent *, struct 
 void sub_8087AA4(struct Task *);
 void sub_8087AC8(struct Task *);
 
-void sub_8087E4C(struct Task *);
-void sub_8087ED8(struct Task *);
-void sub_8087FDC(struct Task *);
-
 void sub_8088150(struct Task *);
 void sub_80881C0(struct Task *);
 void sub_8088228(struct Task *);
@@ -158,7 +154,7 @@ u8 CreateMonSprite_PicBox(u16, s16, s16, u8);
 void FreeResourcesAndDestroySprite(struct Sprite *sprite);
 void MultiplyInvertedPaletteRGBComponents(u16, u8, u8, u8);
 void StartEscapeRopeFieldEffect(void);
-void CreateTeleportFieldEffectTask(void);
+void FldEff_TeleportWarpOut(void);
 void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b);
 
 extern s32 gFieldEffectArguments[8];
