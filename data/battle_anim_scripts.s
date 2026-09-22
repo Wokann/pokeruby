@@ -405,7 +405,7 @@ gBattleAnims_General:: @ 81C771C
 	.4byte General_TurnTrap
 	.4byte General_ItemEffect
 	.4byte General_SmokeballEscape
-	.4byte General_HangedOn
+	.4byte General_FocusBand
 	.4byte General_Rain
 	.4byte General_Sun
 	.4byte General_Sandstorm
@@ -10495,10 +10495,10 @@ General_SmokeballEscape: @ 81D6690
 	blendoff
 	end
 
-General_HangedOn: @ 81D676E
+General_FocusBand: @ 81D676E
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 2, 7, 0, 9, rgb(31, 0, 0)
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	createvisualtask sub_812FC68, 5, 30, 128, 0, 1, 2, 0, 1
+	createvisualtask AnimTask_SlideMonForFocusBand, 5, 30, 128, 0, 1, 2, 0, 1
 	waitforvisualfinish
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 2, 4, 9, 0, rgb(31, 0, 0)
 	waitforvisualfinish

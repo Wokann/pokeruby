@@ -3560,7 +3560,7 @@ static void sub_812F948(struct Sprite *sprite)
     sprite->callback = DestroyAnimSpriteAfterTimer;
 }
 
-static void sub_812F9B0(u8 taskId)
+static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId)
 {
     u16 var0 = 0;
     u16 var1 = 0;
@@ -3610,7 +3610,7 @@ static void sub_812F9B0(u8 taskId)
     }
 }
 
-static void sub_812FAF8(u8 taskId)
+static void AnimTask_SlideMonForFocusBand_Step1(u8 taskId)
 {
     u16 var0 = 0;
     u16 var1 = 0;
@@ -3659,11 +3659,11 @@ static void sub_812FAF8(u8 taskId)
     {
         gTasks[taskId].data[0] = 30;
         gTasks[taskId].data[13] = 0;
-        gTasks[taskId].func = sub_812F9B0;
+        gTasks[taskId].func = AnimTask_SlideMonForFocusBand_Step2;
     }
 }
 
-void sub_812FC68(u8 taskId)
+void AnimTask_SlideMonForFocusBand(u8 taskId)
 {
     gTasks[taskId].data[15] = gBattlerSpriteIds[gBattleAnimAttacker];
     gTasks[taskId].data[14] = gBattleAnimArgs[0];
@@ -3694,7 +3694,7 @@ void sub_812FC68(u8 taskId)
     gTasks[taskId].data[7] = 0;
     gTasks[taskId].data[4] = gBattleAnimArgs[4];
     gTasks[taskId].data[5] = gBattleAnimArgs[5];
-    gTasks[taskId].func = sub_812FAF8;
+    gTasks[taskId].func = AnimTask_SlideMonForFocusBand_Step1;
 }
 
 #define IDX_ACTIVE_SPRITES 2
