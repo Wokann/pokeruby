@@ -126,25 +126,25 @@ AI_PreferMostAppealingMove_Encourage:
 	end
 
 AI_CheckBoring:
-	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_end_081DC27F
-	if_move_used_count_eq 1, AI_score1_081DC27F
-	if_move_used_count_eq 2, AI_score2_081DC27F
-	if_move_used_count_eq 3, AI_score3_081DC27F
-	if_move_used_count_eq 4, AI_score4_081DC27F
+	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CheckBoring_NotBoring
+	if_move_used_count_eq 1, AI_CheckBoring_1stRepeat
+	if_move_used_count_eq 2, AI_CheckBoring_2ndRepeat
+	if_move_used_count_eq 3, AI_CheckBoring_3rdRepeat
+	if_move_used_count_eq 4, AI_CheckBoring_4thRepeat
 	end
-AI_score1_081DC27F:
+AI_CheckBoring_1stRepeat:
 	score -5
 	end
-AI_score2_081DC27F:
+AI_CheckBoring_2ndRepeat:
 	score -15
 	end
-AI_score3_081DC27F:
+AI_CheckBoring_3rdRepeat:
 	score -20
 	end
-AI_score4_081DC27F:
+AI_CheckBoring_4thRepeat:
 	score -25
 	end
-AI_end_081DC27F:
+AI_CheckBoring_NotBoring:
 	end
 
 AI_CheckExcitement:
