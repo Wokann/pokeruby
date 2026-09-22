@@ -7777,14 +7777,14 @@ Move_SWEET_KISS: @ 81D2446
 Move_LOVELY_KISS: @ 81D24AF
 	loadspritegfx ANIM_TAG_PINK_HEART
 	loadspritegfx ANIM_TAG_DEVIL
-	createsprite gBattleAnimSpriteTemplate_83D7C00, ANIM_BATTLER_TARGET, 2, 0, -24
+	createsprite gDevilSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -24
 	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_BATTLER_TARGET, 3, -256, -42
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_BATTLER_TARGET, 3, 128, -14
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_BATTLER_TARGET, 3, 416, -38
-	createsprite gBattleAnimSpriteTemplate_83D7BD0, ANIM_BATTLER_TARGET, 3, -128, -22
+	createsprite gPinkHeartSpriteTemplate, ANIM_BATTLER_TARGET, 3, -256, -42
+	createsprite gPinkHeartSpriteTemplate, ANIM_BATTLER_TARGET, 3, 128, -14
+	createsprite gPinkHeartSpriteTemplate, ANIM_BATTLER_TARGET, 3, 416, -38
+	createsprite gPinkHeartSpriteTemplate, ANIM_BATTLER_TARGET, 3, -128, -22
 	end
 
 Move_FURY_SWIPES: @ 81D24F6

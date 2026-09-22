@@ -9,12 +9,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D2A38(struct Sprite* sprite);
+static void AnimPinkHeart(struct Sprite* sprite);
 
 // angel_kiss (a different variation of kiss_fountain.)
 // Used in Sweet Kiss.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7BD0 =
+const struct SpriteTemplate gPinkHeartSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PINK_HEART,
     .paletteTag = ANIM_TAG_PINK_HEART,
@@ -22,10 +22,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7BD0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2A38,
+    .callback = AnimPinkHeart,
 };
 
-static void sub_80D29CC(struct Sprite* sprite)
+static void AnimPinkHeart_Step(struct Sprite* sprite)
 {
     sprite->data[5]++;
     sprite->x2 = Sin(sprite->data[3], 5);
@@ -38,7 +38,7 @@ static void sub_80D29CC(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D2A38(struct Sprite* sprite)
+static void AnimPinkHeart(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -54,7 +54,7 @@ void sub_80D2A38(struct Sprite* sprite)
         sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
         if (sprite->data[3] > 0x46)
         {
-            sprite->callback = sub_80D29CC;
+            sprite->callback = AnimPinkHeart_Step;
             sprite->x += sprite->x2;
             sprite->y += sprite->y2;
             sprite->x2 = 0;

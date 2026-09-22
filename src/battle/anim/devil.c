@@ -7,38 +7,38 @@
 extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimTarget;
 
-void sub_80D2ABC(struct Sprite *sprite);
+static void AnimDevil(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D7BE8[] =
+const union AnimCmd gDevilAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83D7BF0[] =
+const union AnimCmd gDevilAnimCmds2[] =
 {
     ANIMCMD_FRAME(16, 3),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7BF8[] =
+const union AnimCmd *const gDevilAnimTable[] =
 {
-    gSpriteAnim_83D7BE8,
-    gSpriteAnim_83D7BF0,
+    gDevilAnimCmds1,
+    gDevilAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7C00 =
+const struct SpriteTemplate gDevilSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DEVIL,
     .paletteTag = ANIM_TAG_DEVIL,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7BF8,
+    .anims = gDevilAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2ABC,
+    .callback = AnimDevil,
 };
 
-void sub_80D2ABC(struct Sprite *sprite)
+static void AnimDevil(struct Sprite *sprite)
 {
     if (sprite->data[3] == 0)
     {
