@@ -8601,62 +8601,60 @@ Move_DRAGON_CLAW: @ 81D380C
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	loadspritegfx ANIM_TAG_CLAW_SLASH
 	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 4, 0, 8, 639
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 15, 1
-	call _81D39E9
-	call _81D39E9
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 4, 0, 8, RGB(31, 19, 0)
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 15, 1
+	call DragonClawFireSpiral
+	call DragonClawFireSpiral
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, ANIM_BATTLER_ATTACKER
 	delay 2
-	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, -10, 0
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 10, 0
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=-10, y=-10, animation=0
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=-10, y=10, animation=0
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, ANIM_BATTLER_ATTACKER
 	delay 2
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 4
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createvisualtask SoundTask_PlaySE1WithPanning, 5, 136, 63
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 1
-	createsprite gClawSlashSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 10, 1
-	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -4, 1, 10, 3, 1
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=10, y=-10, animation=1
+	create_claw_slash_sprite ANIM_BATTLER_TARGET, 2, x=10, y=10, animation=1
+	shake_mon_or_platform velocity=-4, shake_timer=1, shake_duration=10, type=SHAKE_MON_Y, battler_selector=SHAKE_MON_TARGET
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 4, 8, 0, 639
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, ANIM_BATTLER_ATTACKER
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 4, 8, 0, RGB(31, 19, 0)
 	waitforvisualfinish
 	end
-_81D39E9:
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, 0
+DragonClawFireSpiral:
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 528, 30, 13, 50, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 480, 20, 16, -46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 576, 20, 8, 42, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 31, 400, 25, 11, -42, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 512, 25, 16, 46, ANIM_BATTLER_ATTACKER
 	delay 2
-	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, 0
+	createsprite gFireSpinSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 33, 464, 30, 15, -50, ANIM_BATTLER_ATTACKER
 	delay 2
 	return
-
-Unknown_81D3A74: @ 81D3A74
 	end
 
 Move_MUD_SHOT: @ 81D3A75
