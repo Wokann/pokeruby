@@ -148,60 +148,59 @@ AI_CheckBoring_NotBoring:
 	end
 
 AI_CheckExcitement:
-	if_move_excitement_less_than 0, AI_contest09_081DC2AB
-	if_move_excitement_eq 0, AI_contest7D_4_081DC2AB
-	if_move_excitement_eq 1, AI_contest3D_081DC2AB
+	if_move_excitement_less_than 0, AI_CheckExcitement_Negative
+	if_move_excitement_eq 0, AI_CheckExcitement_Neutral
+	if_move_excitement_eq 1, AI_CheckExcitement_Positive
 	end
-AI_contest09_081DC2AB:
-	if_excitement_eq 4, AI_contest0F_1_081DC2AB
-	if_excitement_eq 3, AI_contest0F_2_081DC2AB
-	if_user_has_exciting_move AI_end_081DC2AB
+AI_CheckExcitement_Negative:
+	if_excitement_eq 4, AI_CheckExcitement_Negative_1AwayFromMax
+	if_excitement_eq 3, AI_CheckExcitement_Negative_2AwayFromMax
+	if_user_has_exciting_move AI_CheckExcitement_End
 	score +15
 	end
-AI_contest0F_1_081DC2AB:
-	if_user_order_not_eq MON_1, AI_contest7D_1_081DC2AB
-	if_random 51, AI_end_081DC2AB
+AI_CheckExcitement_Negative_1AwayFromMax:
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp
+	if_random 51, AI_CheckExcitement_End
 	score +20
 	end
-AI_contest7D_1_081DC2AB:
-	if_random 127, AI_end_081DC2AB
+AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp:
+	if_random 127, AI_CheckExcitement_End
 	score -10
 	end
-AI_contest0F_2_081DC2AB:
-	if_user_order_not_eq MON_1, AI_contest7D_3_081DC2AB
-	if_last_appeal AI_score_081DC2AB
-AI_contest7D_2_081DC2AB:
-	if_random 51, AI_end_081DC2AB
+AI_CheckExcitement_Negative_2AwayFromMax:
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp
+	if_last_appeal AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal
+	if_random 51, AI_CheckExcitement_End
 	score +10
 	end
-AI_score_081DC2AB:
+AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal:
 	score +15
 	end
-AI_contest7D_3_081DC2AB:
-	if_random 127, AI_end_081DC2AB
+AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp:
+	if_random 127, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest7D_4_081DC2AB:
-	if_random 127, AI_end_081DC2AB
+AI_CheckExcitement_Neutral:
+	if_random 127, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest3D_081DC2AB:
-	if_move_used_count_more_than 0, AI_contest29_081DC2AB
-	if_user_order_not_eq MON_1, AI_contest7D_5_081DC2AB
-	if_excitement_not_eq 4, AI_contest7D_5_081DC2AB
+AI_CheckExcitement_Positive:
+	if_move_used_count_more_than 0, AI_CheckExcitement_Positive_Repeat
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Positive_Not1stUpForMax
+	if_excitement_not_eq 4, AI_CheckExcitement_Positive_Not1stUpForMax
 	score +30
 	end
-AI_contest7D_5_081DC2AB:
-	if_random 100, AI_end_081DC2AB
+AI_CheckExcitement_Positive_Not1stUpForMax:
+	if_random 100, AI_CheckExcitement_End
 	score +10
 	end
-AI_contest29_081DC2AB:
-	if_effect_not_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_end_081DC2AB
-	if_user_order_not_eq MON_1, AI_contest7D_5_081DC2AB
-	if_excitement_not_eq 4, AI_contest7D_5_081DC2AB
+AI_CheckExcitement_Positive_Repeat:
+	if_effect_not_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CheckExcitement_End
+	if_user_order_not_eq MON_1, AI_CheckExcitement_Positive_Not1stUpForMax
+	if_excitement_not_eq 4, AI_CheckExcitement_Positive_Not1stUpForMax
 	score +30
 	end
-AI_end_081DC2AB:
+AI_CheckExcitement_End:
 	end
 
 AI_CheckForCombo:
