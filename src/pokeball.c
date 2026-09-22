@@ -361,8 +361,8 @@ static void SendOutMonAnimation(u8 taskId)
     else
         ball = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_POKEBALL);
 
-    ballIndex = ball_number_to_ball_processing_index(ball);
-    LoadBallGraphics(ballIndex);
+    ballIndex = ItemIdToBallId(ball);
+    LoadBallGfx(ballIndex);
     spriteId = CreateSprite(&gBallSpriteTemplates[ballIndex], 32, 80, 29);
     gSprites[spriteId].data[0] = 0x80;
     gSprites[spriteId].data[1] = 0;
@@ -423,7 +423,7 @@ static void objc_0804ABD4(struct Sprite *sprite)
         sprite->x2 = 0;
         sprite->y2 = 0;
         sprite->data[5] = 0;
-        r4 = ball_number_to_ball_processing_index(GetBattlerBall(r5));
+        r4 = ItemIdToBallId(GetBattlerBall(r5));
         AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 0x1C, r4);
         sprite->data[0] = LaunchBallFadeMonTask(FALSE, r5, 14, r4);
         sprite->data[6] = r5;
@@ -702,7 +702,7 @@ static void sub_8046C78(struct Sprite *sprite)
     u8 battler = sprite->data[6];
 
     StartSpriteAnim(sprite, 1);
-    ballIndex = ball_number_to_ball_processing_index(GetBattlerBall(battler));
+    ballIndex = ItemIdToBallId(GetBattlerBall(battler));
     AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballIndex);
     sprite->data[0] = LaunchBallFadeMonTask(TRUE, sprite->data[6], 14, ballIndex);
     sprite->callback = sub_8046E9C;
@@ -804,7 +804,7 @@ static void sub_8046E9C(struct Sprite *sprite)
         if (r3 == 4)
         {
             for (i = 0; i < 12; i++)
-                FreeBallGraphics(i);
+                FreeBallGfx(i);
         }
     }
 }
@@ -1165,7 +1165,7 @@ static void oamc_804BEB4(struct Sprite *sprite)
     }
 }
 
-void LoadBallGraphics(u8 ballIndex)
+void LoadBallGfx(u8 ballIndex)
 {
     u16 tileStart;
 
@@ -1188,7 +1188,7 @@ void LoadBallGraphics(u8 ballIndex)
     }
 }
 
-void FreeBallGraphics(u8 ballIndex)
+void FreeBallGfx(u8 ballIndex)
 {
     FreeSpriteTilesByTag(sBallSpriteSheets[ballIndex].tag);
     FreeSpritePaletteByTag(sBallSpritePalettes[ballIndex].tag);

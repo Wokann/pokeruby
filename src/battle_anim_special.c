@@ -20,9 +20,9 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 
-int gUnknown_03005F0C;
-u16 gUnknown_03005F10;
-u16 gUnknown_03005F14;
+int gMonShrinkDuration __asm__("gUnknown_03005F0C");
+u16 gMonShrinkDelta __asm__("gUnknown_03005F10");
+u16 gMonShrinkDistance __asm__("gUnknown_03005F14");
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -45,26 +45,26 @@ extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 
 static void sub_813F300(u8 taskId);
 static void AnimTask_FlashHealthboxOnLevelUp_Step(u8 taskId);
-static void sub_813FD34(u8 taskId);
-static void sub_813FD90(struct Sprite *sprite);
-static void sub_813FB7C(u8 taskId);
-static void sub_813FCBC(u8 taskId);
-static void sub_813FDC0(struct Sprite *sprite);
-static void sub_813FE70(struct Sprite *sprite);
-static void sub_81407B8(struct Sprite *sprite);
-static void sub_813FEC8(struct Sprite *sprite);
-static void sub_8140014(struct Sprite *sprite);
-static void sub_8140058(struct Sprite *sprite);
-static void sub_8140410(struct Sprite *sprite);
-static void sub_8140158(struct Sprite *sprite);
-static void sub_81401A0(struct Sprite *sprite);
-static void sub_8140434(struct Sprite *sprite);
-static void sub_81405F4(struct Sprite *sprite);
-static void sub_8140454(struct Sprite *sprite);
-static void sub_81404E4(struct Sprite *sprite);
-static void sub_81405C8(struct Sprite *sprite);
-static void sub_81406BC(struct Sprite *sprite);
-static void sub_81407F4(struct Sprite *sprite);
+static void Task_PlayerThrow_Wait(u8 taskId);
+static void SpriteCB_Ball_Throw(struct Sprite *sprite);
+static void AnimTask_ThrowBall_Step(u8 taskId);
+static void AnimTask_ThrowBall_StandingTrainer_Step(u8 taskId);
+static void SpriteCB_Ball_Arc(struct Sprite *sprite);
+static void SpriteCB_Ball_MonShrink(struct Sprite *sprite);
+static void SpriteCB_Ball_Block(struct Sprite *sprite);
+static void SpriteCB_Ball_MonShrink_Step(struct Sprite *sprite);
+static void SpriteCB_Ball_Bounce(struct Sprite *sprite);
+static void SpriteCB_Ball_Bounce_Step(struct Sprite *sprite);
+static void SpriteCB_Ball_Release(struct Sprite *sprite);
+static void SpriteCB_Ball_Wobble(struct Sprite *sprite);
+static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite);
+static void SpriteCB_Ball_Capture(struct Sprite *sprite);
+static void SpriteCB_Ball_Release_Step(struct Sprite *sprite);
+static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite);
+static void SpriteCB_Ball_FadeOut(struct Sprite *sprite);
+static void DestroySpriteAfterOneFrame(struct Sprite *sprite);
+static void SpriteCB_Ball_Release_Wait(struct Sprite *sprite);
+static void SpriteCB_Ball_Block_Step(struct Sprite *sprite);
 static void PokeBallOpenParticleAnimation_Step1(struct Sprite *sprite);
 static void PokeBallOpenParticleAnimation_Step2(struct Sprite *sprite);
 static void DestroyBallOpenAnimationParticle(struct Sprite *sprite);
@@ -604,7 +604,7 @@ void AnimTask_SwitchOutBallEffect(u8 taskId)
     else
         ball = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_POKEBALL);
 
-    ballIndex = ball_number_to_ball_processing_index(ball);
+    ballIndex = ItemIdToBallId(ball);
     switch (gTasks[taskId].data[0])
     {
     case 0:
@@ -624,21 +624,21 @@ void AnimTask_SwitchOutBallEffect(u8 taskId)
     }
 }
 
-void sub_813F990(u8 taskId)
+void AnimTask_LoadBallGfx(u8 taskId)
 {
-    u8 ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
-    LoadBallGraphics(ballIndex);
+    u8 ballIndex = ItemIdToBallId(gLastUsedItem);
+    LoadBallGfx(ballIndex);
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_813F9B8(u8 taskId)
+void AnimTask_FreeBallGfx(u8 taskId)
 {
-    u8 ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
-    FreeBallGraphics(ballIndex);
+    u8 ballIndex = ItemIdToBallId(gLastUsedItem);
+    FreeBallGfx(ballIndex);
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_813F9E0(u8 taskId)
+void AnimTask_IsBallBlockedByTrainer(u8 taskId)
 {
     if (ewram17840.unk8 == 5)
         gBattleAnimArgs[7] = -1;
@@ -648,7 +648,7 @@ void sub_813F9E0(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-u8 ball_number_to_ball_processing_index(u16 ballItem)
+u8 ItemIdToBallId(u16 ballItem)
 {
     switch (ballItem)
     {
@@ -680,30 +680,30 @@ u8 ball_number_to_ball_processing_index(u16 ballItem)
     }
 }
 
-void sub_813FA94(u8 taskId)
+void AnimTask_ThrowBall(u8 taskId)
 {
     u8 ballIndex;
     u8 spriteId;
 
-    ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
+    ballIndex = ItemIdToBallId(gLastUsedItem);
     spriteId = CreateSprite(&gBallSpriteTemplates[ballIndex], 32, 80, 29);
     gSprites[spriteId].data[0] = 34;
     gSprites[spriteId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
     gSprites[spriteId].data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) - 16;
-    gSprites[spriteId].callback = sub_813FD90;
+    gSprites[spriteId].callback = SpriteCB_Ball_Throw;
     ewram17840.unk9_1 = gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible;
     gTasks[taskId].data[0] = spriteId;
-    gTasks[taskId].func = sub_813FB7C;
+    gTasks[taskId].func = AnimTask_ThrowBall_Step;
 }
 
-static void sub_813FB7C(u8 taskId)
+static void AnimTask_ThrowBall_Step(u8 taskId)
 {
     u8 spriteId = gTasks[taskId].data[0];
     if ((u16)gSprites[spriteId].data[0] == 0xFFFF)
         DestroyAnimVisualTask(taskId);
 }
 
-void sub_813FBB8(u8 taskId)
+void AnimTask_ThrowBall_StandingTrainer(u8 taskId)
 {
     int x, y;
     u8 ballIndex;
@@ -721,7 +721,7 @@ void sub_813FBB8(u8 taskId)
         y = 5;
     }
 
-    ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
+    ballIndex = ItemIdToBallId(gLastUsedItem);
     subpriority = GetBattlerSpriteSubpriority(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)) + 1;
     spriteId = CreateSprite(&gBallSpriteTemplates[ballIndex], x + 32, y | 80, subpriority);
     gSprites[spriteId].data[0] = 34;
@@ -730,21 +730,21 @@ void sub_813FBB8(u8 taskId)
     gSprites[spriteId].callback = SpriteCallbackDummy;
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]], 1);
     gTasks[taskId].data[0] = spriteId;
-    gTasks[taskId].func = sub_813FCBC;
+    gTasks[taskId].func = AnimTask_ThrowBall_StandingTrainer_Step;
 }
 
-static void sub_813FCBC(u8 taskId)
+static void AnimTask_ThrowBall_StandingTrainer_Step(u8 taskId)
 {
     if (gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]].animCmdIndex == 1)
     {
         PlaySE12WithPanning(SE_BALL_THROW, 0);
-        gSprites[gTasks[taskId].data[0]].callback = sub_813FD90;
-        CreateTask(sub_813FD34, 10);
-        gTasks[taskId].func = sub_813FB7C;
+        gSprites[gTasks[taskId].data[0]].callback = SpriteCB_Ball_Throw;
+        CreateTask(Task_PlayerThrow_Wait, 10);
+        gTasks[taskId].func = AnimTask_ThrowBall_Step;
     }
 }
 
-static void sub_813FD34(u8 taskId)
+static void Task_PlayerThrow_Wait(u8 taskId)
 {
     if (gSprites[gBattlerSpriteIds[GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)]].animEnded)
     {
@@ -753,7 +753,7 @@ static void sub_813FD34(u8 taskId)
     }
 }
 
-static void sub_813FD90(struct Sprite *sprite)
+static void SpriteCB_Ball_Throw(struct Sprite *sprite)
 {
     u16 temp = sprite->data[1];
     u16 temp2 = sprite->data[2];
@@ -763,10 +763,10 @@ static void sub_813FD90(struct Sprite *sprite)
     sprite->data[4] = temp2;
     sprite->data[5] = -40;
     InitAnimArcTranslation(sprite);
-    sprite->callback = sub_813FDC0;
+    sprite->callback = SpriteCB_Ball_Arc;
 }
 
-static void sub_813FDC0(struct Sprite *sprite)
+static void SpriteCB_Ball_Arc(struct Sprite *sprite)
 {
     int i;
     u8 ballIndex;
@@ -776,7 +776,7 @@ static void sub_813FDC0(struct Sprite *sprite)
     {
         if (ewram17840.unk8 == 5)
         {
-            sprite->callback = sub_81407B8;
+            sprite->callback = SpriteCB_Ball_Block;
         }
         else
         {
@@ -792,8 +792,8 @@ static void sub_813FDC0(struct Sprite *sprite)
             }
 
             sprite->data[5] = 0;
-            sprite->callback = sub_813FE70;
-            ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
+            sprite->callback = SpriteCB_Ball_MonShrink;
+            ballIndex = ItemIdToBallId(gLastUsedItem);
             ballIndex2 = ballIndex;
             if (ballIndex2 > 11)
                 return;
@@ -806,17 +806,17 @@ static void sub_813FDC0(struct Sprite *sprite)
     }
 }
 
-static void sub_813FE70(struct Sprite *sprite)
+static void SpriteCB_Ball_MonShrink(struct Sprite *sprite)
 {
     if (++sprite->data[5] == 10)
     {
         sprite->data[5] = CreateTask(TaskDummy, 50);
-        sprite->callback = sub_813FEC8;
+        sprite->callback = SpriteCB_Ball_MonShrink_Step;
         gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] = 0;
     }
 }
 
-static void sub_813FEC8(struct Sprite *sprite)
+static void SpriteCB_Ball_MonShrink_Step(struct Sprite *sprite)
 {
     u8 spriteId;
     u8 taskId;
@@ -832,10 +832,10 @@ static void sub_813FEC8(struct Sprite *sprite)
     case 0:
         PrepareBattlerSpriteForRotScale(spriteId, 0);
         gTasks[taskId].data[10] = 256;
-        gUnknown_03005F0C = 28;
-        gUnknown_03005F14 = (gSprites[spriteId].y + gSprites[spriteId].y2) - (sprite->y + sprite->y2);
-        gUnknown_03005F10 = (u32)(gUnknown_03005F14 * 256) / 28;
-        gTasks[taskId].data[2] = gUnknown_03005F10;
+        gMonShrinkDuration = 28;
+        gMonShrinkDistance = (gSprites[spriteId].y + gSprites[spriteId].y2) - (sprite->y + sprite->y2);
+        gMonShrinkDelta = (u32)(gMonShrinkDistance * 256) / 28;
+        gTasks[taskId].data[2] = gMonShrinkDelta;
         gTasks[taskId].data[0]++;
         break;
     case 1:
@@ -857,13 +857,13 @@ static void sub_813FEC8(struct Sprite *sprite)
             DestroyTask(taskId);
             StartSpriteAnim(sprite, 2);
             sprite->data[5] = 0;
-            sprite->callback = sub_8140014;
+            sprite->callback = SpriteCB_Ball_Bounce;
         }
         break;
     }
 }
 
-static void sub_8140014(struct Sprite *sprite)
+static void SpriteCB_Ball_Bounce(struct Sprite *sprite)
 {
     int angle;
 
@@ -875,11 +875,11 @@ static void sub_8140014(struct Sprite *sprite)
         angle = 0;
         sprite->y += Cos(angle, 32);
         sprite->y2 = -Cos(angle, sprite->data[4]);
-        sprite->callback = sub_8140058;
+        sprite->callback = SpriteCB_Ball_Bounce_Step;
     }
 }
 
-static void sub_8140058(struct Sprite *sprite)
+static void SpriteCB_Ball_Bounce_Step(struct Sprite *sprite)
 {
     bool8 lastBounce;
     int bounceCount;
@@ -937,18 +937,18 @@ static void sub_8140058(struct Sprite *sprite)
         if (ewram17840.unk8 == 0)
         {
             sprite->data[5] = 0;
-            sprite->callback = sub_8140410;
+            sprite->callback = SpriteCB_Ball_Release;
         }
         else
         {
-            sprite->callback = sub_8140158;
+            sprite->callback = SpriteCB_Ball_Wobble;
             sprite->data[4] = 1;
             sprite->data[5] = 0;
         }
     }
 }
 
-static void sub_8140158(struct Sprite *sprite)
+static void SpriteCB_Ball_Wobble(struct Sprite *sprite)
 {
     if (++sprite->data[3] == 31)
     {
@@ -956,12 +956,12 @@ static void sub_8140158(struct Sprite *sprite)
         sprite->affineAnimPaused = 1;
         StartSpriteAffineAnim(sprite, 1);
         ewram17840.unkC = 0;
-        sprite->callback = sub_81401A0;
+        sprite->callback = SpriteCB_Ball_Wobble_Step;
         PlaySE(SE_BALL);
     }
 }
 
-static void sub_81401A0(struct Sprite *sprite)
+static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
 {
     s8 state;
     u16 var0;
@@ -1071,13 +1071,13 @@ static void sub_81401A0(struct Sprite *sprite)
         if (state == ewram17840.unk8)
         {
             sprite->affineAnimPaused = 1;
-            sprite->callback = sub_8140410;
+            sprite->callback = SpriteCB_Ball_Release;
         }
         else
         {
             if (ewram17840.unk8 == 4 && state == 3)
             {
-                sprite->callback = sub_8140434;
+                sprite->callback = SpriteCB_Ball_Capture;
                 sprite->affineAnimPaused = 1;
             }
             else
@@ -1105,25 +1105,25 @@ static void sub_81401A0(struct Sprite *sprite)
     }
 }
 
-static void sub_8140410(struct Sprite *sprite)
+static void SpriteCB_Ball_Release(struct Sprite *sprite)
 {
     if (++sprite->data[5] == 31)
     {
         sprite->data[5] = 0;
-        sprite->callback = sub_81405F4;
+        sprite->callback = SpriteCB_Ball_Release_Step;
     }
 }
 
-static void sub_8140434(struct Sprite *sprite)
+static void SpriteCB_Ball_Capture(struct Sprite *sprite)
 {
     sprite->animPaused = 1;
-    sprite->callback = sub_8140454;
+    sprite->callback = SpriteCB_Ball_Capture_Step;
     sprite->data[3] = 0;
     sprite->data[4] = 0;
     sprite->data[5] = 0;
 }
 
-static void sub_8140454(struct Sprite *sprite)
+static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite)
 {
     u8 *battler = &gBattleAnimTarget;
 
@@ -1143,11 +1143,11 @@ static void sub_8140454(struct Sprite *sprite)
         FreeOamMatrix(gSprites[gBattlerSpriteIds[*battler]].oam.matrixNum);
         DestroySprite(&gSprites[gBattlerSpriteIds[*battler]]);
         sprite->data[0] = 0;
-        sprite->callback = sub_81404E4;
+        sprite->callback = SpriteCB_Ball_FadeOut;
     }
 }
 
-static void sub_81404E4(struct Sprite *sprite)
+static void SpriteCB_Ball_FadeOut(struct Sprite *sprite)
 {
     u8 paletteIndex;
 
@@ -1183,13 +1183,13 @@ static void sub_81404E4(struct Sprite *sprite)
             REG_BLDCNT = 0;
             REG_BLDALPHA = 0;
             sprite->data[0] = 0;
-            sprite->callback = sub_81405C8;
+            sprite->callback = DestroySpriteAfterOneFrame;
         }
         break;
     }
 }
 
-static void sub_81405C8(struct Sprite *sprite)
+static void DestroySpriteAfterOneFrame(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -1202,18 +1202,18 @@ static void sub_81405C8(struct Sprite *sprite)
     }
 }
 
-// fakematching. I think the return type of ball_number_to_ball_processing_index()
+// fakematching. I think the return type of ItemIdToBallId()
 // is wrong because of the weird required casting.
-static void sub_81405F4(struct Sprite *sprite)
+static void SpriteCB_Ball_Release_Step(struct Sprite *sprite)
 {
     u8 ballIndex;
     int ballIndex2; // extra var needed to match
 
     StartSpriteAnim(sprite, 1);
     StartSpriteAffineAnim(sprite, 0);
-    sprite->callback = sub_81406BC;
+    sprite->callback = SpriteCB_Ball_Release_Wait;
 
-    ballIndex = ball_number_to_ball_processing_index(gLastUsedItem);
+    ballIndex = ItemIdToBallId(gLastUsedItem);
     ballIndex2 = ballIndex;
     if (ballIndex2 > 11)
         goto LABEL;
@@ -1230,7 +1230,7 @@ static void sub_81405F4(struct Sprite *sprite)
     gSprites[gBattlerSpriteIds[gBattleAnimTarget]].data[1] = 0x1000;
 }
 
-static void sub_81406BC(struct Sprite *sprite)
+static void SpriteCB_Ball_Release_Wait(struct Sprite *sprite)
 {
     int next = FALSE;
 
@@ -1253,13 +1253,13 @@ static void sub_81406BC(struct Sprite *sprite)
         gSprites[gBattlerSpriteIds[gBattleAnimTarget]].y2 = 0;
         gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = ewram17840.unk9_1;
         sprite->data[0] = 0;
-        sprite->callback = sub_81405C8;
+        sprite->callback = DestroySpriteAfterOneFrame;
         gDoingBattleAnim = 0;
         UpdateOamPriorityInAllHealthboxes(1);
     }
 }
 
-static void sub_81407B8(struct Sprite *sprite)
+static void SpriteCB_Ball_Block(struct Sprite *sprite)
 {
     int i;
 
@@ -1270,10 +1270,10 @@ static void sub_81407B8(struct Sprite *sprite)
     for (i = 0; i < 6; i++)
         sprite->data[i] = 0;
 
-    sprite->callback = sub_81407F4;
+    sprite->callback = SpriteCB_Ball_Block_Step;
 }
 
-static void sub_81407F4(struct Sprite *sprite)
+static void SpriteCB_Ball_Block_Step(struct Sprite *sprite)
 {
     s16 var0 = sprite->data[0] + 0x800;
     s16 var1 = sprite->data[1] + 0x680;
@@ -1286,7 +1286,7 @@ static void sub_81407F4(struct Sprite *sprite)
      || sprite->x + sprite->x2 < -8)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_81405C8;
+        sprite->callback = DestroySpriteAfterOneFrame;
         gDoingBattleAnim = 0;
         UpdateOamPriorityInAllHealthboxes(1);
     }

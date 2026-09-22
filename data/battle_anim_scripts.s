@@ -426,7 +426,7 @@ gBattleAnims_Special:: @ 81C7778
 	.4byte Special_SwitchOutPlayerMon
 	.4byte Special_SwitchOutOpponentMon
 	.4byte Special_BallThrow
-	.4byte Special_SafariBallThrow
+	.4byte Special_BallThrowWithTrainer
 	.4byte Special_SubstituteToMon
 	.4byte Special_MonToSubstitute
 
@@ -10719,17 +10719,17 @@ Special_SwitchOutOpponentMon: @ 81D6B28
 	end
 
 Special_BallThrow: @ 81D6B39
-	createvisualtask sub_813F990, 2
+	createvisualtask AnimTask_LoadBallGfx, 2
 	delay 0
 	playsewithpan SE_BALL_THROW, 0
-	createvisualtask sub_813FA94, 2
-	createvisualtask sub_813F9E0, 2
-	jumpargeq 7, -1, _81D6B65
-_81D6B5C:
+	createvisualtask AnimTask_ThrowBall, 2
+	createvisualtask AnimTask_IsBallBlockedByTrainer, 2
+	jumpreteq -1, BallThrowTrainerBlock
+BallThrowEnd:
 	waitforvisualfinish
-	createvisualtask sub_813F9B8, 2
+	createvisualtask AnimTask_FreeBallGfx, 2
 	end
-_81D6B65:
+BallThrowTrainerBlock:
 	loadspritegfx ANIM_TAG_IMPACT
 	delay 25
 	monbg ANIM_BATTLER_DEF_PARTNER
@@ -10740,14 +10740,14 @@ _81D6B65:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
-	goto _81D6B5C
+	goto BallThrowEnd
 
-Special_SafariBallThrow: @ 81D6B8D
-	createvisualtask sub_813F990, 2
+Special_BallThrowWithTrainer: @ 81D6B8D
+	createvisualtask AnimTask_LoadBallGfx, 2
 	delay 0
-	createvisualtask sub_813FBB8, 2
+	createvisualtask AnimTask_ThrowBall_StandingTrainer, 2
 	waitforvisualfinish
-	createvisualtask sub_813F9B8, 2
+	createvisualtask AnimTask_FreeBallGfx, 2
 	end
 
 Special_SubstituteToMon: @ 81D6BA6
