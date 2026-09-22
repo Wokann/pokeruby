@@ -314,6 +314,10 @@
 	createvisualtask AnimTask_CreateSurfWave, \priority, \palette
 	.endm
 
+	.macro create_trick_bag_sprite anim_battler:req, subpriority_offset:req, initial_y:req, wave_offset:req
+	createsprite gTrickBagSpriteTemplate, \anim_battler, \subpriority_offset, \initial_y, \wave_offset
+	.endm
+
 	.macro shake_mon_or_platform unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, velocity:req, shake_timer:req, shake_duration:req, type:req, battler_selector
 	.if \type == SHAKE_MON_X || \type == SHAKE_MON_Y
 	.ifb \battler_selector

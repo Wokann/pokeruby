@@ -8099,8 +8099,8 @@ Move_ENCORE: @ 81D2C41
 Move_TRICK: @ 81D2CE8
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	loadspritegfx ANIM_TAG_SPEED_DUST
-	createsprite gBattleAnimSpriteTemplate_83D67F4, ANIM_BATTLER_ATTACKER, 2, -40, 80
-	createsprite gBattleAnimSpriteTemplate_83D67F4, ANIM_BATTLER_ATTACKER, 2, -40, 208
+	create_trick_bag_sprite ANIM_BATTLER_ATTACKER, 2, initial_y=-40, wave_offset=80
+	create_trick_bag_sprite ANIM_BATTLER_ATTACKER, 2, initial_y=-40, wave_offset=208
 	delay 16
 	playsewithpan SE_M_SKETCH, 0
 	createvisualtask AnimTask_StretchTargetUp, 3
@@ -8119,8 +8119,8 @@ Move_TRICK: @ 81D2CE8
 	playsewithpan SE_M_DOUBLE_TEAM, 0
 	delay 16
 	playsewithpan SE_M_ATTRACT, 0
-	createvisualtask AnimTask_ShakeMon, 3, 0, 5, 0, 7, 2
-	createvisualtask AnimTask_ShakeMon, 3, 1, 5, 0, 7, 2
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_BATTLER_ATTACKER, 5, 0, 7, 2
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_BATTLER_TARGET, 5, 0, 7, 2
 	waitforvisualfinish
 	end
 

@@ -11,21 +11,21 @@ extern const union AffineAnimCmd gFallingBagAffineAnimCmds1[];
 extern const union AffineAnimCmd gFallingBagAffineAnimCmds2[];
 extern const union AnimCmd *const gFallingBagAnimTable[];
 
-void sub_80CBBF0(struct Sprite* sprite);
-static void sub_80CBC8C(struct Sprite* sprite);
-static void sub_80CBCF8(struct Sprite* sprite);
-static void sub_80CBDB0(struct Sprite* sprite);
+static void AnimTrickBag(struct Sprite *sprite);
+static void AnimTrickBag_Step1(struct Sprite *sprite);
+static void AnimTrickBag_Step2(struct Sprite *sprite);
+static void AnimTrickBag_Step3(struct Sprite *sprite);
 
 // switch (makes an item and circles it from side to side on the field.)
 // Used in Trick.
 
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6794[] = {
+const union AffineAnimCmd gTrickBagAffineAnimCmds1[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 3),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D67A4[] = {
+const union AffineAnimCmd gTrickBagAffineAnimCmds2[] = {
     AFFINEANIMCMD_FRAME(0, -10, 0, 3),
     AFFINEANIMCMD_FRAME(0, -6, 0, 3),
     AFFINEANIMCMD_FRAME(0, -2, 0, 3),
@@ -36,25 +36,25 @@ const union AffineAnimCmd gSpriteAffineAnim_83D67A4[] = {
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D67E4[] = {
-    gSpriteAffineAnim_83D6794,
-    gSpriteAffineAnim_83D67A4,
+const union AffineAnimCmd *const gTrickBagAffineAnimTable[] = {
+    gTrickBagAffineAnimCmds1,
+    gTrickBagAffineAnimCmds2,
     gFallingBagAffineAnimCmds1,
     gFallingBagAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D67F4 =
+const struct SpriteTemplate gTrickBagSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ITEM_BAG,
     .paletteTag = ANIM_TAG_ITEM_BAG,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gFallingBagAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D67E4,
-    .callback = sub_80CBBF0,
+    .affineAnims = gTrickBagAffineAnimTable,
+    .callback = AnimTrickBag,
 };
 
-const s8 gUnknown_083D680C[][3] =
+const s8 gTrickBagCoordinates[][3] =
 {
     {5, 24,   1},
     {0,  4,   0},
@@ -69,7 +69,7 @@ const s8 gUnknown_083D680C[][3] =
     {0,  0, 127},
 };
 
-void sub_80CBBF0(struct Sprite* sprite)
+static void AnimTrickBag(struct Sprite *sprite)
 {
     int a;
     int b;
@@ -98,7 +98,7 @@ void sub_80CBBF0(struct Sprite* sprite)
         sprite->data[4] = 20;
         sprite->x2 = Cos(sprite->data[1], 60);
         sprite->y2 = Sin(sprite->data[1], 20);
-        sprite->callback = sub_80CBC8C;
+        sprite->callback = AnimTrickBag_Step1;
         if (sprite->data[1] > 0 && sprite->data[1] < 0xC0)
             sprite->subpriority = 31;
         else
@@ -106,7 +106,7 @@ void sub_80CBBF0(struct Sprite* sprite)
     }
 }
 
-static void sub_80CBC8C(struct Sprite* sprite)
+static void AnimTrickBag_Step1(struct Sprite *sprite)
 {
     switch (sprite->data[3])
     {
@@ -130,20 +130,20 @@ static void sub_80CBC8C(struct Sprite* sprite)
         {
             sprite->data[0] = 0;
             sprite->data[2] = 0;
-            sprite->callback = sub_80CBCF8;
+            sprite->callback = AnimTrickBag_Step2;
         }
         break;
     }
 }
 
-static void sub_80CBCF8(struct Sprite* sprite)
+static void AnimTrickBag_Step2(struct Sprite *sprite)
 {
-    if (sprite->data[2] == gUnknown_083D680C[sprite->data[0]][1])
+    if (sprite->data[2] == gTrickBagCoordinates[sprite->data[0]][1])
 	{
-	    if (gUnknown_083D680C[sprite->data[0]][2] == 0x7F)
+	    if (gTrickBagCoordinates[sprite->data[0]][2] == 0x7F)
 		{
 		    sprite->data[0] = 0;
-			sprite->callback = sub_80CBDB0;
+			sprite->callback = AnimTrickBag_Step3;
 		}
 
 		sprite->data[2] = 0;
@@ -152,7 +152,7 @@ static void sub_80CBCF8(struct Sprite* sprite)
 	else
 	{
 	    sprite->data[2]++;
-		sprite->data[1] = (gUnknown_083D680C[sprite->data[0]][0] * gUnknown_083D680C[sprite->data[0]][2] + sprite->data[1]) & 0xFF;
+		sprite->data[1] = (gTrickBagCoordinates[sprite->data[0]][0] * gTrickBagCoordinates[sprite->data[0]][2] + sprite->data[1]) & 0xFF;
 		if (!IsContest())
 		{
 		    if ((u16)(sprite->data[1] - 1) <= 0xBE)
@@ -170,7 +170,7 @@ static void sub_80CBCF8(struct Sprite* sprite)
 	}
 }
 
-static void sub_80CBDB0(struct Sprite* sprite)
+static void AnimTrickBag_Step3(struct Sprite *sprite)
 {
     if (sprite->data[0] > 20)
         DestroyAnimSprite(sprite);
