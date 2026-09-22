@@ -2306,46 +2306,46 @@ BattleScript_AlreadyBurned: @ 81D8575
 
 BattleScript_EffectMemento: @ 81D8583
 	attackcanceler
-	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_1D860A
+	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_MementoTargetProtect
 	attackstring
 	ppreduce
 	jumpifattackandspecialattackcannotfall BattleScript_ButItFailed
 	setatkhptozero
 	attackanimation
 	waitanimation
-	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_1D85FF
+	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_EffectMementoPrintNoEffect
 	setbyte sFIELD_1B, 0
 	playstatchangeanimation TARGET, 18, 7
 	playstatchangeanimation TARGET, 2, 3
 	setstatchanger ATTACK, 2, TRUE
-	statbuffchange 1, BattleScript_1D85D0
-	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_1D85D0
+	statbuffchange 1, BattleScript_EffectMementoTrySpAtk
+	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_EffectMementoTrySpAtk
 	printfromtable gStatDownStringIds
 	waitmessage 64
 
-BattleScript_1D85D0: @ 81D85D0
+BattleScript_EffectMementoTrySpAtk: @ 81D85D0
 	playstatchangeanimation TARGET, 16, 3
 	setstatchanger SP_ATTACK, 2, TRUE
-	statbuffchange 1, BattleScript_1D85F3
-	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_1D85F3
+	statbuffchange 1, BattleScript_EffectMementoTryFaint
+	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_EffectMementoTryFaint
 	printfromtable gStatDownStringIds
 	waitmessage 64
 
-BattleScript_1D85F3: @ 81D85F3
+BattleScript_EffectMementoTryFaint: @ 81D85F3
 	tryfaintmon USER, FALSE, NULL
 	goto BattleScript_MoveEnd
 
-BattleScript_1D85FF: @ 81D85FF
+BattleScript_EffectMementoPrintNoEffect: @ 81D85FF
 	printstring BATTLE_TEXT_NoEffect
 	waitmessage 64
-	goto BattleScript_1D85F3
+	goto BattleScript_EffectMementoTryFaint
 
-BattleScript_1D860A: @ 81D860A
+BattleScript_MementoTargetProtect: @ 81D860A
 	attackstring
 	ppreduce
-	jumpifattackandspecialattackcannotfall BattleScript_1D8611
+	jumpifattackandspecialattackcannotfall BattleScript_MementoTargetProtectEnd
 
-BattleScript_1D8611: @ 81D8611
+BattleScript_MementoTargetProtectEnd: @ 81D8611
 	setatkhptozero
 	pause 64
 	effectivenesssound
