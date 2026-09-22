@@ -9456,7 +9456,7 @@ Move_MAGIC_COAT: @ 81D50B5
 	loadspritegfx ANIM_TAG_ORANGE_LIGHT_WALL
 	setalpha 0, 16
 	waitplaysewithpan SE_M_BARRIER, SOUND_PAN_ATTACKER, 15
-	createsprite gBattleAnimSpriteTemplate_83DA708, ANIM_BATTLER_ATTACKER, 3, 40, 0, 10170
+	createsprite gMagicCoatWallSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 40, 0, ANIM_TAG_ORANGE_LIGHT_WALL
 	waitforvisualfinish
 	delay 1
 	blendoff
