@@ -4263,7 +4263,7 @@ BattleScript_AbilityCuredStatus:: @ 81D9956
 	updatestatusicon SCRIPTING_BANK
 	return
 
-gUnknown_081D995F:: @ 81D995F
+BattleScript_IgnoresWhileAsleep:: @ 81D995F
 	printstring BATTLE_TEXT_IgnoredOrdersSLP
 	waitmessage 64
 	setbyte sMOVEEND_STATE, 0
@@ -4291,7 +4291,7 @@ BattleScript_IgnoresAndFallsAsleep:: @ 81D9989
 	moveend 2, 16
 	end
 
-gUnknown_081D99A0:: @ 81D99A0
+BattleScript_IgnoresAndHitsItself:: @ 81D99A0
 	printstring BATTLE_TEXT_WontObey
 	waitmessage 64
 	goto BattleScript_DoSelfConfusionDmg

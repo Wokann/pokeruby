@@ -199,10 +199,10 @@ extern u8 BattleScript_BerryCureChosenStatusRet[]; //berry cure any status retur
 
 extern u8 BattleScript_ItemHealHP_Ret[];
 
-extern u8 gUnknown_081D995F[]; //disobedient while asleep
+extern u8 BattleScript_IgnoresWhileAsleep[];
 extern u8 BattleScript_IgnoresAndUsesRandomMove[]; //disobedient, uses a random move
 extern u8 BattleScript_IgnoresAndFallsAsleep[]; //disobedient, went to sleep
-extern u8 gUnknown_081D99A0[]; //disobedient, hits itself
+extern u8 BattleScript_IgnoresAndHitsItself[];
 
 //array entries for battle communication
 #define MOVE_EFFECT_BYTE    0x3
@@ -3525,7 +3525,7 @@ u8 IsMonDisobedient(void)
         gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_RAGE);
     if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP && (gCurrentMove == MOVE_SNORE || gCurrentMove == MOVE_SLEEP_TALK))
     {
-        gBattlescriptCurrInstr = gUnknown_081D995F;
+        gBattlescriptCurrInstr = BattleScript_IgnoresWhileAsleep;
         return 1;
     }
 
@@ -3581,7 +3581,7 @@ u8 IsMonDisobedient(void)
         {
             gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
             gBattlerTarget = gBattlerAttacker;
-            gBattlescriptCurrInstr = gUnknown_081D99A0;
+            gBattlescriptCurrInstr = BattleScript_IgnoresAndHitsItself;
             gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
             return 2;
         }
