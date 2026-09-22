@@ -9258,75 +9258,75 @@ Move_OVERHEAT: @ 81D4AFC
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 18
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 5, rgb(28, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=5, color=rgb(28, 0, 0)
 	waitforvisualfinish
-	createvisualtask sub_80E4028, 5, 0, 1
+	createvisualtask AnimTask_CopyPalUnfadedToBackup, 5, 0, 1
 	delay 1
-	createvisualtask sub_80E4178, 5, 0
+	createvisualtask AnimTask_CopyPalFadedToUnfaded, 5, 0
 	delay 1
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E4028, 5, 1, 0
+	createvisualtask AnimTask_CopyPalUnfadedToBackup, 5, 1, 0
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 1, 0, 13, rgb(28, 0, 0)
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=1, initial_blend_y=0, target_blend_y=13, color=rgb(28, 0, 0)
 	createvisualtask AnimTask_ShakeMon, 5, 0, 2, 0, 15, 1
 	waitforvisualfinish
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 0, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 32, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 64, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 96, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 128, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 160, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 192, 30, 25, -20
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 224, 30, 25, -20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=0, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=32, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=64, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=96, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=128, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=160, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=192, unk2=30, duration=25, y=-20
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=224, unk2=30, duration=25, y=-20
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 0, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 32, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 64, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 96, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 128, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 160, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 192, 30, 25, 0
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 224, 30, 25, 0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=0, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=32, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=64, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=96, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=128, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=160, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=192, unk2=30, duration=25, y=0
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=224, unk2=30, duration=25, y=0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 0, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 32, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 64, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 96, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 2, 1, 128, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 160, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 192, 30, 25, 10
-	createsprite gBattleAnimSpriteTemplate_83DB100, ANIM_BATTLER_ATTACKER, 66, 1, 224, 30, 25, 10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=0, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=32, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=64, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=96, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 2, speed=1, unk1=128, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=160, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=192, unk2=30, duration=25, y=10
+	create_overheat_flame_sprite ANIM_BATTLER_ATTACKER, 66, speed=1, unk1=224, unk2=30, duration=25, y=10
 	delay 5
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -5, 3, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-5, y=3, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 10, 0, 25, 1
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 8, -5, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=8, y=-5, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 10, 10, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=10, y=10, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
-	createvisualtask sub_80E4178, 5, 1
+	createvisualtask AnimTask_CopyPalFadedToUnfaded, 5, 1
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, -1, 0, 13, rgb(18, 18, 18)
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=-1, initial_blend_y=0, target_blend_y=13, color=rgb(18, 18, 18)
 	createvisualtask AnimTask_ShakeMon, 5, 0, 3, 0, 15, 1
 	waitforvisualfinish
-	createvisualtask sub_80E40D0, 5, 0, 1
+	createvisualtask AnimTask_CopyPalUnfadedFromBackup, 5, 0, 1
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 5, 0, rgb(28, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=5, target_blend_y=0, color=rgb(28, 0, 0)
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	waitforvisualfinish
 	delay 15
-	createvisualtask sub_80E40D0, 5, 1, 0
+	createvisualtask AnimTask_CopyPalUnfadedFromBackup, 5, 1, 0
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 0, 13, 0, rgb(18, 18, 18)
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=0, initial_blend_y=13, target_blend_y=0, color=rgb(18, 18, 18)
 	waitforvisualfinish
 	end
 

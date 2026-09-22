@@ -12,15 +12,15 @@ extern u8 gBattleAnimTarget;
 extern u8 gBattlerAttacker;
 extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG2_X;
-extern u16 gUnknown_03000730[];
+extern u16 gUnusedOverheatData[];
 extern u8 gBattlerSpriteIds[];
 
 static void AnimOutrageFlame(struct Sprite *sprite);
 static void StartDragonFireTranslation(struct Sprite *sprite);
 static void AnimDragonFireToTarget(struct Sprite *sprite);
 static void AnimDragonRageFirePlume(struct Sprite *sprite);
-void sub_80DFB28(struct Sprite *sprite);
-static void sub_80DFBD8(struct Sprite *sprite);
+static void AnimOverheatFlame(struct Sprite *sprite);
+static void AnimOverheatFlame_Step(struct Sprite *sprite);
 static void AnimDragonDanceOrb(struct Sprite *sprite);
 static void AnimDragonDanceOrb_Step(struct Sprite *sprite);
 static void AnimTask_DragonDanceWaver_Step(u8 taskId);
@@ -185,7 +185,7 @@ const struct SpriteTemplate gDragonDanceOrbSpriteTemplate =
     .callback = AnimDragonDanceOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
+const struct SpriteTemplate gOverheatFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -193,7 +193,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DB100 =
     .anims = sAnims_OutrageOverheatFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DFB28,
+    .callback = AnimOverheatFlame,
 };
 
 // Outrage
@@ -421,7 +421,7 @@ static void UpdateDragonDanceScanlineEffect(struct Task *task)
 
 // Overheat
 
-void sub_80DFB28(struct Sprite *sprite)
+static void AnimOverheatFlame(struct Sprite *sprite)
 {
     int r6 = (gBattleAnimArgs[2] * 3) / 5;
     int i;
@@ -432,12 +432,12 @@ void sub_80DFB28(struct Sprite *sprite)
     sprite->x += sprite->data[1] * gBattleAnimArgs[0];
     sprite->y += sprite->data[2] * gBattleAnimArgs[0];
     sprite->data[3] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DFBD8;
+    sprite->callback = AnimOverheatFlame_Step;
     for (i = 0; i <= 6; i++)
-        gUnknown_03000730[i] = sprite->data[i];
+        gUnusedOverheatData[i] = sprite->data[i];
 }
 
-static void sub_80DFBD8(struct Sprite *sprite)
+static void AnimOverheatFlame_Step(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[1];
     sprite->data[5] += sprite->data[2];

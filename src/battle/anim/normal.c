@@ -1801,7 +1801,7 @@ void AnimTask_GetBattleEnvironment(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4028(u8 taskId)
+void AnimTask_CopyPalUnfadedToBackup(u8 taskId)
 {
     u32 selectedPalettes;
     u8 *dest;
@@ -1834,7 +1834,7 @@ void sub_80E4028(u8 taskId)
 }
 
 
-void sub_80E40D0(u8 taskId)
+void AnimTask_CopyPalUnfadedFromBackup(u8 taskId)
 {
     u32 selectedPalettes;
     u8 *src;
@@ -1868,7 +1868,7 @@ void sub_80E40D0(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4178(u8 taskId)
+void AnimTask_CopyPalFadedToUnfaded(u8 taskId)
 {
     u32 selectedPalettes;
     int i = 0;
