@@ -7,14 +7,14 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CB25C(struct Sprite* sprite);
-static void sub_80CB298(struct Sprite* sprite);
-static void sub_80CB2D4(struct Sprite* sprite);
+static void AnimConstrictBinding(struct Sprite *sprite);
+static void AnimConstrictBinding_Step1(struct Sprite *sprite);
+static void AnimConstrictBinding_Step2(struct Sprite *sprite);
 
 // tendrils
 // Used by Constrict.
 
-const union AnimCmd gSpriteAnim_83D6528[] =
+static const union AnimCmd sAnim_ConstrictBinding[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(32, 4),
@@ -23,7 +23,7 @@ const union AnimCmd gSpriteAnim_83D6528[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D653C[] =
+static const union AnimCmd sAnim_ConstrictBinding_Flipped[] =
 {
     ANIMCMD_FRAME(0,  4, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 4, .hFlip = TRUE),
@@ -32,64 +32,64 @@ const union AnimCmd gSpriteAnim_83D653C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6550[] =
+static const union AnimCmd *const sAnims_ConstrictBinding[] =
 {
-    gSpriteAnim_83D6528,
-    gSpriteAnim_83D653C,
+    sAnim_ConstrictBinding,
+    sAnim_ConstrictBinding_Flipped,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6558[] = {
+static const union AffineAnimCmd sAffineAnim_ConstrictBinding[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(-11, 0, 0, 6),
     AFFINEANIMCMD_FRAME(11, 0, 0, 6),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6578[] = {
+static const union AffineAnimCmd sAffineAnim_ConstrictBinding_Flipped[] = {
     AFFINEANIMCMD_FRAME(-256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(11, 0, 0, 6),
     AFFINEANIMCMD_FRAME(-11, 0, 0, 6),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6598[] = {
-    gSpriteAffineAnim_83D6558,
-    gSpriteAffineAnim_83D6578,
+static const union AffineAnimCmd *const sAffineAnims_ConstrictBinding[] = {
+    sAffineAnim_ConstrictBinding,
+    sAffineAnim_ConstrictBinding_Flipped,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D65A0 =
+const struct SpriteTemplate gConstrictBindingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TENDRILS,
     .paletteTag = ANIM_TAG_TENDRILS,
-    .oam = &gOamData_837DFBC,
-    .anims = gSpriteAnimTable_83D6550,
+    .oam = &gOamData_AffineNormal_ObjNormal_64x32,
+    .anims = sAnims_ConstrictBinding,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6598,
-    .callback = sub_80CB25C,
+    .affineAnims = sAffineAnims_ConstrictBinding,
+    .callback = AnimConstrictBinding,
 };
 
-void sub_80CB25C(struct Sprite* sprite)
+static void AnimConstrictBinding(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->affineAnimPaused = 1;
     StartSpriteAffineAnim(sprite, gBattleAnimArgs[2]);
     sprite->data[6] = gBattleAnimArgs[2];
     sprite->data[7] = gBattleAnimArgs[3];
-    sprite->callback = sub_80CB298;
+    sprite->callback = AnimConstrictBinding_Step1;
 }
 
-static void sub_80CB298(struct Sprite* sprite)
+static void AnimConstrictBinding_Step1(struct Sprite *sprite)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         sprite->affineAnimPaused = 0;
         GetAnimBattlerSpriteId(1);
         sprite->data[0] = 0x100;
-        sprite->callback = sub_80CB2D4;
+        sprite->callback = AnimConstrictBinding_Step2;
     }
 }
 
-static void sub_80CB2D4(struct Sprite* sprite)
+static void AnimConstrictBinding_Step2(struct Sprite *sprite)
 {
     GetAnimBattlerSpriteId(1);
     if (!sprite->data[2])
