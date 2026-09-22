@@ -13,7 +13,7 @@
 	.align 2
 gContestAIs:: @ 81DC118
 	.4byte AI_CheckForBadMove
-	.4byte AI_CheckForCombo
+	.4byte AI_CheckCombo
 	.4byte AI_CheckBoring
 	.4byte AI_CheckExcitement
 	.4byte AI_CheckOrder
@@ -203,50 +203,50 @@ AI_CheckExcitement_Positive_Repeat:
 AI_CheckExcitement_End:
 	end
 
-AI_CheckForCombo:
-	if_would_finish_combo AI_score_081DC348
-	call AI_contest3F_081DC348
-	call AI_contest45_081DC348
+AI_CheckCombo:
+	if_would_finish_combo AI_CheckCombo_WouldFinish
+	call AI_CheckCombo_CheckStarter
+	call AI_CheckCombo_CheckFinisherWithoutStarter
 	end
-AI_contest3F_081DC348:
-	if_move_used_count_not_eq 0, AI_end_081DC348
-	if_not_combo_starter AI_end_081DC348
-	if_user_order_eq MON_1, AI_contest04_1_081DC348
-	if_user_order_eq MON_2, AI_contest04_2_081DC348
-	if_user_order_eq MON_3, AI_contest04_3_081DC348
-	if_user_order_eq MON_4, AI_contest04_4_081DC348
+AI_CheckCombo_CheckStarter:
+	if_move_used_count_not_eq 0, AI_CheckCombo_End
+	if_not_combo_starter AI_CheckCombo_End
+	if_user_order_eq MON_1, AI_CheckCombo_Starter1stUp
+	if_user_order_eq MON_2, AI_CheckCombo_Starter2ndUp
+	if_user_order_eq MON_3, AI_CheckCombo_Starter3rdUp
+	if_user_order_eq MON_4, AI_CheckCombo_StarterLast
 	end
-AI_contest45_081DC348:
-	if_not_combo_finisher AI_end_081DC348
+AI_CheckCombo_CheckFinisherWithoutStarter:
+	if_not_combo_finisher AI_CheckCombo_End
 	score -10
 	end
-AI_score_081DC348:
+AI_CheckCombo_WouldFinish:
 	score +25
 	end
-AI_contest04_1_081DC348:
-	if_last_appeal AI_contest7D_081DC348
-	if_random 150, AI_end_081DC348
+AI_CheckCombo_Starter1stUp:
+	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
+	if_random 150, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_2_081DC348:
-	if_last_appeal AI_contest7D_081DC348
-	if_random 125, AI_end_081DC348
+AI_CheckCombo_Starter2ndUp:
+	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
+	if_random 125, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_3_081DC348:
-	if_last_appeal AI_contest7D_081DC348
-	if_random 50, AI_end_081DC348
+AI_CheckCombo_Starter3rdUp:
+	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
+	if_random 50, AI_CheckCombo_End
 	score +10
 	end
-AI_contest04_4_081DC348:
-	if_last_appeal AI_contest7D_081DC348
+AI_CheckCombo_StarterLast:
+	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
 	score +10
 	end
-AI_contest7D_081DC348:
-	if_random 125, AI_end_081DC348
+AI_CheckCombo_StarterOnLastAppeal:
+	if_random 125, AI_CheckCombo_End
 	score -15
 	end
-AI_end_081DC348:
+AI_CheckCombo_End:
 	end
 
 AI_CheckForGoodMove:
