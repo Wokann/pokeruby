@@ -7792,13 +7792,13 @@ Move_FURY_SWIPES: @ 81D24F6
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 5
 	delay 4
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7C48, ANIM_BATTLER_TARGET, 2, 16, 0, 1
+	createsprite gFurySwipesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 5, 1
 	delay 10
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 5
 	delay 4
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83D7C48, ANIM_BATTLER_TARGET, 2, -16, 0, 0
+	createsprite gFurySwipesSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 0, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 7, 1
 	end
 

@@ -4,9 +4,9 @@
 
 extern s16 gBattleAnimArgs[8];
 
-void sub_80D2BE8(struct Sprite *sprite);
+static void AnimFurySwipes(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D7C18[] =
+static const union AnimCmd sAnim_FurySwipes[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
@@ -15,7 +15,7 @@ const union AnimCmd gSpriteAnim_83D7C18[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D7C2C[] =
+static const union AnimCmd sAnim_FurySwipes_Flipped[] =
 {
     ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 4, .hFlip = TRUE),
@@ -24,24 +24,24 @@ const union AnimCmd gSpriteAnim_83D7C2C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7C40[] =
+static const union AnimCmd *const sAnims_FurySwipes[] =
 {
-    gSpriteAnim_83D7C18,
-    gSpriteAnim_83D7C2C,
+    sAnim_FurySwipes,
+    sAnim_FurySwipes_Flipped,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7C48 =
+const struct SpriteTemplate gFurySwipesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SWIPE,
     .paletteTag = ANIM_TAG_SWIPE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7C40,
+    .anims = sAnims_FurySwipes,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2BE8,
+    .callback = AnimFurySwipes,
 };
 
-void sub_80D2BE8(struct Sprite *sprite)
+static void AnimFurySwipes(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
