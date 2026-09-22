@@ -260,8 +260,8 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CGM_AppealAsGoodAsPrevOne
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, AI_CGM_BetterWhenAudienceExcited
 	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CGM_WorsenConditionOfPrevMons
-	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect16or17
-	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect16or17
+	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
+	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect_FollowingMonsNervous
 	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect18
 	end
@@ -509,28 +509,28 @@ AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars:
 AI_CGM_WorsenConditionOfPrevMons_end:
 	end
 
-ContestEffect16or17:
+AI_CGM_TargetMonWithJudgesAttention:
 	if_user_order_eq MON_1, ContestEffectEnd
-	jump ContestEffect16or17_55
+	jump AI_CGM_TargetMonWithJudgesAttention_CheckMon1
 	end
-ContestEffect16or17_55:
-	if_cannot_participate MON_1, ContestEffect16or17_0E_1
-	if_used_combo_starter_eq MON_1, TRUE, ContestEffect16or17_0E_1
-	if_random 125, ContestEffect16or17_0E_1
+AI_CGM_TargetMonWithJudgesAttention_CheckMon1:
+	if_cannot_participate MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_used_combo_starter_eq MON_1, TRUE, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +2
-	contest_58 MON_1, ContestEffect16or17_0E_1
+	contest_58 MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +8
 	end
-ContestEffect16or17_0E_1:
+AI_CGM_TargetMonWithJudgesAttention_CheckMon2:
 	if_user_order_eq MON_2, ContestEffectEnd
-	if_cannot_participate MON_2, ContestEffect16or17_0E_2
-	if_used_combo_starter_eq MON_2, TRUE, ContestEffect16or17_0E_2
-	if_random 125, ContestEffect16or17_0E_2
+	if_cannot_participate MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_used_combo_starter_eq MON_2, TRUE, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +2
-	contest_58 MON_2, ContestEffect16or17_0E_2
+	contest_58 MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +8
 	end
-ContestEffect16or17_0E_2:
+AI_CGM_TargetMonWithJudgesAttention_CheckMon3:
 	if_user_order_eq MON_3, ContestEffectEnd
 	if_cannot_participate MON_3, ContestEffectEnd
 	if_used_combo_starter_eq MON_3, TRUE, ContestEffectEnd
@@ -548,7 +548,7 @@ ContestEffect_FollowingMonsNervous_CheckMon4:
 	if_cannot_participate MON_4, ContestEffect_FollowingMonsNervous_CheckMon3
 	if_used_combo_starter_eq MON_4, FALSE, ContestEffect_FollowingMonsNervous_CheckMon3
 	score +5
-	if_random 125, ContestEffect16or17_0E_1
+	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +5
 	end
 ContestEffect_FollowingMonsNervous_CheckMon3:
@@ -556,7 +556,7 @@ ContestEffect_FollowingMonsNervous_CheckMon3:
 	if_cannot_participate MON_3, ContestEffect_FollowingMonsNervous_CheckMon2
 	if_used_combo_starter_eq MON_3, FALSE, ContestEffect_FollowingMonsNervous_CheckMon2
 	score +5
-	if_random 125, ContestEffect16or17_0E_2
+	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +5
 	end
 ContestEffect_FollowingMonsNervous_CheckMon2:
