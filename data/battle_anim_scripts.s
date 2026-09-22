@@ -8749,9 +8749,9 @@ Move_POISON_FANG: @ 81D3C30
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
 	createsprite gFangSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 10
-	createvisualtask AnimTask_ShakeMon, 3, 1, 3, 0, 10, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_BATTLER_TARGET, 3, 0, 10, 1
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendColorCycle, 2, 4, 0, 4, 0, 12, 26650
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=4, initial_blend_y=0, target_blend_y=12, color=RGB(26, 0, 26)
 	call PoisonBubblesEffect
 	waitforvisualfinish
 	end
