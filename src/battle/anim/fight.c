@@ -44,7 +44,7 @@ static void AnimSuperpowerRock(struct Sprite *sprite);
 static void AnimSuperpowerFireball(struct Sprite *sprite);
 static void AnimArmThrustHit(struct Sprite *sprite);
 static void AnimRevengeScratch(struct Sprite *sprite);
-void sub_80D9C40(struct Sprite *sprite);
+static void AnimFocusPunchFist(struct Sprite *sprite);
 static void AnimFistOrFootRandomPos_Step(struct Sprite *sprite);
 static void AnimCrossChopHand_Step(struct Sprite *sprite);
 static void sub_80D9404(struct Sprite *sprite);
@@ -402,27 +402,27 @@ const struct SpriteTemplate gRevengeBigScratchSpriteTemplate =
     .callback = AnimRevengeScratch,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA1F8[] =
+static const union AffineAnimCmd sAffineAnim_FocusPunchFist[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFE0, 0xFFE0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA210[] =
+static const union AffineAnimCmd *const sAffineAnims_FocusPunchFist[] =
 {
-    gSpriteAffineAnim_83DA1F8,
+    sAffineAnim_FocusPunchFist,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA214 =
+const struct SpriteTemplate gFocusPunchFistSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = sAnims_HandsAndFeet,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA210,
-    .callback = sub_80D9C40,
+    .affineAnims = sAffineAnims_FocusPunchFist,
+    .callback = AnimFocusPunchFist,
 };
 
 void sub_080B08A0(struct Sprite *sprite)
@@ -993,7 +993,7 @@ static void AnimRevengeScratch(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void sub_80D9C40(struct Sprite *sprite)
+static void AnimFocusPunchFist(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {

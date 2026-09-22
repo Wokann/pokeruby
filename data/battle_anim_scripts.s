@@ -8842,52 +8842,52 @@ MetalSoundRings:
 	return
 
 Move_FOCUS_PUNCH: @ 81D3E6F
-	goto _81D3E76
-_81D3E74:
+	goto FocusPunch
+FocusPunchEnd:
 	waitforvisualfinish
 	end
-_81D3E76:
+FocusPunch:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	delay 1
 	createvisualtask AnimTask_IsContest, 2
-	jumpargeq 7, 1, _81D3F2F
+	jumprettrue FocusPunchInContest
 	createvisualtask AnimTask_IsTargetPlayerSide, 2
-	jumpargeq 7, 0, _81D3F21
-	jumpargeq 7, 1, _81D3F28
-_81D3EA4:
+	jumpretfalse FocusPunchOnOpponent
+	jumprettrue FocusPunchOnPlayer
+FocusPunchContinue:
 	waitbgfadein
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA214, ANIM_BATTLER_TARGET, 2
+	createsprite gFocusPunchFistSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 10
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 8, 0, 24, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 8, 0, 24, 1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 2, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=2, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, -6, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=-6, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=8, relative_to=ANIM_BATTLER_TARGET, animation=0
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	restorebg
 	waitbgfadein
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
-	goto _81D3E74
-_81D3F21:
+	goto FocusPunchEnd
+FocusPunchOnOpponent:
 	fadetobg BG_IMPACT_OPPONENT
-	goto _81D3EA4
-_81D3F28:
+	goto FocusPunchContinue
+FocusPunchOnPlayer:
 	fadetobg BG_IMPACT_PLAYER
-	goto _81D3EA4
-_81D3F2F:
+	goto FocusPunchContinue
+FocusPunchInContest:
 	fadetobg BG_IMPACT_CONTESTS
-	goto _81D3EA4
+	goto FocusPunchContinue
 
 Move_RETURN: @ 81D3F36
 	loadspritegfx ANIM_TAG_IMPACT
