@@ -2102,22 +2102,22 @@ AI_CV_Pursuit_End: @ 81DB8E8
 
 AI_CV_RainDance: @ 81DB8E9
 	if_would_go_first TARGET, AI_CV_RainDance2
-	get_ability USER
+	get_ability AI_USER
 	if_equal ABILITY_SWIFT_SWIM, AI_CV_RainDance3
 
 AI_CV_RainDance2: @ 81DB8F7
-	if_hp_less_than USER, 40, AI_CV_RainDance_ScoreDown1
+	if_hp_less_than AI_USER, 40, AI_CV_RainDance_ScoreDown1
 	get_weather
-	if_equal BATTLE_WEATHER_HAIL, AI_CV_RainDance3
-	if_equal BATTLE_WEATHER_SUN, AI_CV_RainDance3
-	if_equal BATTLE_WEATHER_SANDSTORM, AI_CV_RainDance3
-	get_ability USER
+	if_equal AI_WEATHER_HAIL, AI_CV_RainDance3
+	if_equal AI_WEATHER_SUN, AI_CV_RainDance3
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_RainDance3
+	get_ability AI_USER
 	if_equal ABILITY_RAIN_DISH, AI_CV_RainDance3
-	jump AI_CV_RainDance_End
+	goto AI_CV_RainDance_End
 
 AI_CV_RainDance3: @ 81DB91E
 	score +1
-	jump AI_CV_RainDance_End
+	goto AI_CV_RainDance_End
 
 AI_CV_RainDance_ScoreDown1: @ 81DB925
 	score -1
@@ -2126,16 +2126,16 @@ AI_CV_RainDance_End: @ 81DB927
 	end
 
 AI_CV_SunnyDay: @ 81DB928
-	if_hp_less_than USER, 40, AI_CV_SunnyDay_ScoreDown1
+	if_hp_less_than AI_USER, 40, AI_CV_SunnyDay_ScoreDown1
 	get_weather
-	if_equal BATTLE_WEATHER_HAIL, AI_CV_SunnyDay2
-	if_equal BATTLE_WEATHER_RAIN, AI_CV_SunnyDay2
-	if_equal BATTLE_WEATHER_SANDSTORM, AI_CV_SunnyDay2
-	jump AI_CV_SunnyDay_End
+	if_equal AI_WEATHER_HAIL, AI_CV_SunnyDay2
+	if_equal AI_WEATHER_RAIN, AI_CV_SunnyDay2
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_SunnyDay2
+	goto AI_CV_SunnyDay_End
 
 AI_CV_SunnyDay2: @ 81DB947
 	score +1
-	jump AI_CV_SunnyDay_End
+	goto AI_CV_SunnyDay_End
 
 AI_CV_SunnyDay_ScoreDown1: @ 81DB94E
 	score -1
@@ -2144,8 +2144,8 @@ AI_CV_SunnyDay_End: @ 81DB950
 	end
 
 AI_CV_BellyDrum: @ 81DB951
-	if_hp_less_than USER, 90, AI_CV_BellyDrum_ScoreDown2
-	jump AI_CV_BellyDrum_End
+	if_hp_less_than AI_USER, 90, AI_CV_BellyDrum_ScoreDown2
+	goto AI_CV_BellyDrum_End
 
 AI_CV_BellyDrum_ScoreDown2: @ 81DB95D
 	score -2
@@ -2154,21 +2154,21 @@ AI_CV_BellyDrum_End: @ 81DB95F
 	end
 
 AI_CV_PsychUp: @ 81DB960
-	if_stat_level_more_than TARGET, ATTACK, 8, AI_CV_PsychUp2
-	if_stat_level_more_than TARGET, DEFENSE, 8, AI_CV_PsychUp2
-	if_stat_level_more_than TARGET, SP_ATTACK, 8, AI_CV_PsychUp2
-	if_stat_level_more_than TARGET, SP_DEFENSE, 8, AI_CV_PsychUp2
-	if_stat_level_more_than TARGET, EVASION, 8, AI_CV_PsychUp2
-	jump AI_CV_PsychUp_ScoreDown2
+	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, AI_CV_PsychUp2
+	if_stat_level_more_than AI_TARGET, STAT_DEF, 8, AI_CV_PsychUp2
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, 8, AI_CV_PsychUp2
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 8, AI_CV_PsychUp2
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, AI_CV_PsychUp2
+	goto AI_CV_PsychUp_ScoreDown2
 
 AI_CV_PsychUp2: @ 81DB98D
-	if_stat_level_less_than USER, ATTACK, 7, AI_CV_PsychUp3
-	if_stat_level_less_than USER, DEFENSE, 7, AI_CV_PsychUp3
-	if_stat_level_less_than USER, SP_ATTACK, 7, AI_CV_PsychUp3
-	if_stat_level_less_than USER, SP_DEFENSE, 7, AI_CV_PsychUp3
-	if_stat_level_less_than USER, EVASION, 7, AI_CV_PsychUp_ScoreUp1
+	if_stat_level_less_than AI_USER, STAT_ATK, 7, AI_CV_PsychUp3
+	if_stat_level_less_than AI_USER, STAT_DEF, 7, AI_CV_PsychUp3
+	if_stat_level_less_than AI_USER, STAT_SPATK, 7, AI_CV_PsychUp3
+	if_stat_level_less_than AI_USER, STAT_SPDEF, 7, AI_CV_PsychUp3
+	if_stat_level_less_than AI_USER, STAT_EVASION, 7, AI_CV_PsychUp_ScoreUp1
 	if_random_less_than 50, AI_CV_PsychUp_End
-	jump AI_CV_PsychUp_ScoreDown2
+	goto AI_CV_PsychUp_ScoreDown2
 
 AI_CV_PsychUp_ScoreUp1: @ 81DB9C0
 	score +1
