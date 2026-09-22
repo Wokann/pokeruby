@@ -263,7 +263,7 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
 	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CGM_MakeFollowingMonsNervous
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect18
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CGM_JamsOthersButMissOneTurn
 	end
 
 AI_CGM_BetterWithGoodCondition:
@@ -568,32 +568,32 @@ AI_CGM_MakeFollowingMonsNervous_CheckMon2:
 	score +5
 	end
 
-ContestEffect18:
-	if_last_appeal ContestEffect18_score1
-	jump ContestEffect18_0E
+AI_CGM_JamsOthersButMissOneTurn:
+	if_last_appeal AI_CGM_JamsOthersButMissOneTurn_LastAppeal
+	jump AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
-ContestEffect18_score1:
+AI_CGM_JamsOthersButMissOneTurn_LastAppeal:
 	score +5
-	jump ContestEffect18_0E
+	jump AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
-ContestEffect18_0E:
-	if_user_order_eq MON_1, ContestEffect18_score2
-	if_user_order_eq MON_2, ContestEffect18_random1
-	if_user_order_eq MON_3, ContestEffect18_random2
-	if_user_order_eq MON_4, ContestEffect18_random3
+AI_CGM_JamsOthersButMissOneTurn_TurnOrder:
+	if_user_order_eq MON_1, AI_CGM_JamsOthersButMissOneTurn_1stUp
+	if_user_order_eq MON_2, AI_CGM_JamsOthersButMissOneTurn_2ndUp
+	if_user_order_eq MON_3, AI_CGM_JamsOthersButMissOneTurn_3rdUp
+	if_user_order_eq MON_4, AI_CGM_JamsOthersButMissOneTurn_Last
 	end
-ContestEffect18_score2:
+AI_CGM_JamsOthersButMissOneTurn_1stUp:
 	score -15
 	end
-ContestEffect18_random1:
+AI_CGM_JamsOthersButMissOneTurn_2ndUp:
 	if_random 125, ContestEffectEnd
 	score -10
 	end
-ContestEffect18_random2:
+AI_CGM_JamsOthersButMissOneTurn_3rdUp:
 	if_random 125, ContestEffectEnd
 	score +5
 	end
-ContestEffect18_random3:
+AI_CGM_JamsOthersButMissOneTurn_Last:
 	if_random 125, ContestEffectEnd
 	score +15
 	end
