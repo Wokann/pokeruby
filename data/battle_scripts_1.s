@@ -632,10 +632,10 @@ BattleScript_EffectRampage: @ 81D72AB
 	attackcanceler
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
 	attackstring
-	jumpifstatus2 USER, STATUS2_MULTIPLETURNS, BattleScript_1D72BF
+	jumpifstatus2 USER, STATUS2_MULTIPLETURNS, BattleScript_EffectRampage2
 	ppreduce
 
-BattleScript_1D72BF: @ 81D72BF
+BattleScript_EffectRampage2: @ 81D72BF
 	confuseifrepeatingattackends
 	goto BattleScript_HitFromCritCalc
 
