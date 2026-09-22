@@ -1740,16 +1740,16 @@ AI_CV_Counter_PhysicalTypeList: @ 81DB559
 	.byte -1
 
 AI_CV_Encore: @ 81DB563
-	if_last_move_did_damage TARGET, 0, AI_CV_Encore2
+	if_any_move_disabled AI_TARGET, AI_CV_Encore2
 	if_would_go_first USER, AI_CV_Encore_ScoreDown2
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
 	if_not_in_bytes AI_CV_Encore_EncouragedMovesToEncore, AI_CV_Encore_ScoreDown2
 
 AI_CV_Encore2: @ 81DB57C
 	if_random_less_than 30, AI_CV_Encore_End
 	score +3
-	jump AI_CV_Encore_End
+	goto AI_CV_Encore_End
 
 AI_CV_Encore_ScoreDown2: @ 81DB589
 	score -2
@@ -1823,16 +1823,16 @@ AI_CV_Encore_EncouragedMovesToEncore: @ 81DB58C
 	.byte -1
 
 AI_CV_PainSplit: @ 81DB5CB
-	if_hp_less_than TARGET, 80, AI_CV_PainSplit_ScoreDown1
+	if_hp_less_than AI_TARGET, 80, AI_CV_PainSplit_ScoreDown1
 	if_would_go_first USER, AI_CV_PainSplit2
-	if_hp_more_than USER, 40, AI_CV_PainSplit_ScoreDown1
+	if_hp_more_than AI_USER, 40, AI_CV_PainSplit_ScoreDown1
 	score +1
-	jump AI_CV_PainSplit_End
+	goto AI_CV_PainSplit_End
 
 AI_CV_PainSplit2: @ 81DB5E6
-	if_hp_more_than USER, 60, AI_CV_PainSplit_ScoreDown1
+	if_hp_more_than AI_USER, 60, AI_CV_PainSplit_ScoreDown1
 	score +1
-	jump AI_CV_PainSplit_End
+	goto AI_CV_PainSplit_End
 
 AI_CV_PainSplit_ScoreDown1: @ 81DB5F4
 	score -1
@@ -1858,17 +1858,17 @@ AI_CV_SleepTalk: @ 81DB603
 AI_CV_DestinyBond: @ 81DB606
 	score -1
 	if_would_go_first USER, AI_CV_DestinyBond_End
-	if_hp_more_than USER, 70, AI_CV_DestinyBond_End
+	if_hp_more_than AI_USER, 70, AI_CV_DestinyBond_End
 	if_random_less_than 128, AI_CV_DestinyBond2
 	score +1
 
 AI_CV_DestinyBond2: @ 81DB61D
-	if_hp_more_than USER, 50, AI_CV_DestinyBond_End
+	if_hp_more_than AI_USER, 50, AI_CV_DestinyBond_End
 	if_random_less_than 128, AI_CV_DestinyBond3
 	score +1
 
 AI_CV_DestinyBond3: @ 81DB62C
-	if_hp_more_than USER, 30, AI_CV_DestinyBond_End
+	if_hp_more_than AI_USER, 30, AI_CV_DestinyBond_End
 	if_random_less_than 100, AI_CV_DestinyBond_End
 	score +2
 
@@ -1877,15 +1877,15 @@ AI_CV_DestinyBond_End: @ 81DB63B
 
 AI_CV_Flail: @ 81DB63C
 	if_would_go_first USER, AI_CV_Flail2
-	if_hp_more_than USER, 33, AI_CV_Flail_ScoreDown1
-	if_hp_more_than USER, 20, AI_CV_Flail_End
-	if_hp_less_than USER, 8, AI_CV_Flail_ScoreUp1
-	jump AI_CV_Flail3
+	if_hp_more_than AI_USER, 33, AI_CV_Flail_ScoreDown1
+	if_hp_more_than AI_USER, 20, AI_CV_Flail_End
+	if_hp_less_than AI_USER, 8, AI_CV_Flail_ScoreUp1
+	goto AI_CV_Flail3
 
 AI_CV_Flail2: @ 81DB65C
-	if_hp_more_than USER, 60, AI_CV_Flail_ScoreDown1
-	if_hp_more_than USER, 40, AI_CV_Flail_End
-	jump AI_CV_Flail3
+	if_hp_more_than AI_USER, 60, AI_CV_Flail_ScoreDown1
+	if_hp_more_than AI_USER, 40, AI_CV_Flail_End
+	goto AI_CV_Flail3
 
 AI_CV_Flail_ScoreUp1: @ 81DB66F
 	score +1
@@ -1893,7 +1893,7 @@ AI_CV_Flail_ScoreUp1: @ 81DB66F
 AI_CV_Flail3: @ 81DB671
 	if_random_less_than 100, AI_CV_Flail_End
 	score +1
-	jump AI_CV_Flail_End
+	goto AI_CV_Flail_End
 
 AI_CV_Flail_ScoreDown1: @ 81DB67E
 	score -1
@@ -1902,19 +1902,19 @@ AI_CV_Flail_End: @ 81DB680
 	end
 
 AI_CV_HealBell: @ 81DB681
-	if_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_HealBell_End
-	if_status_in_party TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_HealBell_End
+	if_status AI_TARGET, STATUS1_ANY, AI_CV_HealBell_End
+	if_status_in_party AI_TARGET, STATUS1_ANY, AI_CV_HealBell_End
 	score -5
 
 AI_CV_HealBell_End: @ 81DB697
 	end
 
 AI_CV_Thief: @ 81DB698
-	get_hold_effect TARGET
+	get_hold_effect AI_TARGET
 	if_not_in_bytes AI_CV_Thief_EncourageItemsToSteal, AI_CV_Thief_ScoreDown2
 	if_random_less_than 50, AI_CV_Thief_End
 	score +1
-	jump AI_CV_Thief_End
+	goto AI_CV_Thief_End
 
 AI_CV_Thief_ScoreDown2: @ 81DB6B0
 	score -2
