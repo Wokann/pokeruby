@@ -112,7 +112,7 @@ gFieldEffectScript_UseSurf: @ 81D9C76
 	end
 
 gFieldEffectScript_GroundImpactDust: @ 81D9C7C
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Dust
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Dust
 	end
 
 gFieldEffectScript_UseSecretPowerCave: @ 81D9C86
@@ -124,19 +124,19 @@ gFieldEffectScript_JumpTallGrass: @ 81D9C8C
 	end
 
 gFieldEffectScript_SandFootprints: @ 81D9C96
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_SandFootprints
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_SandFootprints
 	end
 
 gFieldEffectScript_JumpBigSplash: @ 81D9CA0
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_JumpBigSplash
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_JumpBigSplash
 	end
 
 gFieldEffectScript_Splash: @ 81D9CAA
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Splash
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Splash
 	end
 
 gFieldEffectScript_JumpSmallSplash: @ 81D9CB4
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_JumpSmallSplash
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_JumpSmallSplash
 	end
 
 gFieldEffectScript_LongGrass: @ 81D9CBE
@@ -156,11 +156,11 @@ gFieldEffectScript_UnusedGrass2: @ 81D9CDC
 	end
 
 gFieldEffectScript_UnusedSand: @ 81D9CE6
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_UnusedSand
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_UnusedSand
 	end
 
 gFieldEffectScript_WaterSurfacing: @ 81D9CF0
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_WaterSurfacing
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_WaterSurfacing
 	end
 
 gFieldEffectScript_BerryTreeGrowthSparkle: @ 81D9CFA
@@ -168,12 +168,12 @@ gFieldEffectScript_BerryTreeGrowthSparkle: @ 81D9CFA
 	end
 
 gFieldEffectScript_DeepSandFootprints: @ 81D9D00
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_DeepSandFootprints
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_DeepSandFootprints
 	end
 
 gFieldEffectScript_PokecenterHeal: @ 81D9D0A
 	loadfadedpal gFieldEffectObjectPaletteInfo4
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_PokecenterHeal
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_PokecenterHeal
 	end
 
 gFieldEffectScript_UseSecretPowerTree: @ 81D9D19
@@ -209,11 +209,11 @@ gFieldEffectScript_QuestionMarkIcon: @ 81D9D43
 	end
 
 gFieldEffectScript_FeetInFlowingWater: @ 81D9D49
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_FeetInFlowingWater
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_FeetInFlowingWater
 	end
 
 gFieldEffectScript_BikeTireTracks: @ 81D9D53
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_BikeTireTracks
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_BikeTireTracks
 	end
 
 gFieldEffectScript_SandDisguisePlaceholder: @ 81D9D5D
@@ -233,7 +233,7 @@ gFieldEffectScript_UseDig: @ 81D9D6F
 	end
 
 gFieldEffectScript_SandPile: @ 81D9D75
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_SandPile
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_SandPile
 	end
 
 gFieldEffectScript_ShortGrass: @ 81D9D7F
@@ -258,7 +258,7 @@ gFieldEffectScript_PokeballTrail: @ 81D9D9F
 	end
 
 gFieldEffectScript_HeartIcon: @ 81D9DAA
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_HeartIcon
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_HeartIcon
 	end
 
 gFieldEffectScript_Nop47: @ 81D9DB4
@@ -286,7 +286,7 @@ gFieldEffectScript_SandPillar: @ 81D9DDA
 	end
 
 gFieldEffectScript_Bubbles: @ 81D9DE4
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Bubbles
+	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_Bubbles
 	end
 
 gFieldEffectScript_Sparkle: @ 81D9DEE
