@@ -12,7 +12,7 @@
 
 	.align 2
 gContestAIs:: @ 81DC118
-	.4byte AI_CheckForBadMove
+	.4byte AI_CheckBadMove
 	.4byte AI_CheckCombo
 	.4byte AI_CheckBoring
 	.4byte AI_CheckExcitement
@@ -614,7 +614,7 @@ AI_Erratic_CuteSmartTough:
 AI_Erratic_End:
 	end
 
-AI_CheckForBadMove:
+AI_CheckBadMove:
 	if_effect_eq CONTEST_EFFECT_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
 	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON, AI_CBM_DependsOnPrevMon
 	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
@@ -660,15 +660,15 @@ AI_CBM_DependsOnPrevMon_1stUp:
 	score -10
 	end
 AI_CBM_DependsOnPrevMon_2ndUp:
-	if_can_participate MON_1, ContestEffectEnd2
+	if_can_participate MON_1, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnPrevMon_3rdUp:
-	if_can_participate MON_2, ContestEffectEnd2
+	if_can_participate MON_2, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnPrevMon_Last:
-	if_can_participate MON_3, ContestEffectEnd2
+	if_can_participate MON_3, AI_CBM_End
 	score -10
 	end
 
@@ -682,18 +682,18 @@ AI_CBM_DependsOnPrevMons_1stUp:
 	score -20
 	end
 AI_CBM_DependsOnPrevMons_2ndUp:
-	if_can_participate MON_1, ContestEffectEnd2
+	if_can_participate MON_1, AI_CBM_End
 	score -15
 	end
 AI_CBM_DependsOnPrevMons_3rdUp:
-	if_can_participate MON_1, ContestEffectEnd2
-	if_can_participate MON_2, ContestEffectEnd2
+	if_can_participate MON_1, AI_CBM_End
+	if_can_participate MON_2, AI_CBM_End
 	score -15
 	end
 AI_CBM_DependsOnPrevMons_Last:
-	if_can_participate MON_1, ContestEffectEnd2
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
+	if_can_participate MON_1, AI_CBM_End
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
 	score -15
 	end
 
@@ -704,15 +704,15 @@ AI_CBM_DependsOnNextMon:
 	score -10
 	end
 AI_CBM_DependsOnNextMon_1stUp:
-	if_can_participate MON_2, ContestEffectEnd2
+	if_can_participate MON_2, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnNextMon_2ndUp:
-	if_can_participate MON_3, ContestEffectEnd2
+	if_can_participate MON_3, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnNextMon_3rdUp:
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 
@@ -723,23 +723,23 @@ AI_CBM_DependsOnNextMons:
 	score -10
 	end
 AI_CBM_DependsOnNextMons_1stUp:
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnNextMons_2ndUp:
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 AI_CBM_DependsOnNextMons_3rdUp:
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 
 AI_CBM_ImproveCondition:
-	if_user_condition_less_than 3, ContestEffectEnd2
+	if_user_condition_less_than 3, AI_CBM_End
 	score -20
 	end
 
@@ -750,18 +750,18 @@ AI_CBM_AvoidStartle:
 	score -10
 	end
 AI_CBM_AvoidStartle_1stUp:
-	if_can_participate MON_2, ContestEffectEnd2
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_2, AI_CBM_End
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 AI_CBM_AvoidStartle_2ndUp:
-	if_can_participate MON_3, ContestEffectEnd2
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_3, AI_CBM_End
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 AI_CBM_AvoidStartle_3rdUp:
-	if_can_participate MON_4, ContestEffectEnd2
+	if_can_participate MON_4, AI_CBM_End
 	score -10
 	end
 
@@ -773,27 +773,27 @@ AI_CBM_NoMoreMoves:
 	if_last_appeal AI_CBM_NoMoreMoves_LastAppeal
 	end
 AI_CBM_NoMoreMoves_1stAppeal:
-	if_random 20, ContestEffectEnd2
+	if_random 20, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_2ndAppeal:
-	if_random 40, ContestEffectEnd2
+	if_random 40, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_3rdAppeal:
-	if_random 60, ContestEffectEnd2
+	if_random 60, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_4thAppeal:
-	if_random 80, ContestEffectEnd2
+	if_random 80, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_LastAppeal:
-	if_random 20, ContestEffectEnd2
+	if_random 20, AI_CBM_End
 	score +20
 	end
 
-ContestEffectEnd2:
+AI_CBM_End:
 	end
 
 AI_CheckOrder:
@@ -814,7 +814,7 @@ AI_score2_081DCA4C:
 	score -15
 	end
 AI_random1_081DCA4C:
-	if_random 100, ContestEffectEnd2
+	if_random 100, AI_CBM_End
 	score +10
 	end
 AI_effectcheck2_081DCA4C:
@@ -825,7 +825,7 @@ AI_score3_081DCA4C:
 	score -5
 	end
 AI_random2_081DCA4C:
-	if_random 125, ContestEffectEnd2
+	if_random 125, AI_CBM_End
 	score +10
 	end
 AI_effectcheck3_081DCA4C:
@@ -852,7 +852,7 @@ AI_score6_081DCA4C:
 	score -10
 	end
 AI_random3_081DCA4C:
-	if_random 125, ContestEffectEnd2
+	if_random 125, AI_CBM_End
 	score +10
 	end
 AI_score7_081DCA4C:
