@@ -2242,12 +2242,12 @@ AI_CV_MirrorCoat_SpecialTypeList: @ 81DBA64
 	.byte -1
 
 AI_CV_ChargeUpMove: @ 81DBA6D
-	if_damage_bonus 10, AI_CV_ChargeUpMove_ScoreDown2
-	if_damage_bonus 20, AI_CV_ChargeUpMove_ScoreDown2
-	if_move_effect TARGET, EFFECT_PROTECT, AI_CV_ChargeUpMove_ScoreDown2
-	if_hp_more_than USER, 38, AI_CV_ChargeUpMove_End
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_ChargeUpMove_ScoreDown2
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_ChargeUpMove_ScoreDown2
+	if_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_ChargeUpMove_ScoreDown2
+	if_hp_more_than AI_USER, 38, AI_CV_ChargeUpMove_End
 	score -1
-	jump AI_CV_ChargeUpMove_End
+	goto AI_CV_ChargeUpMove_End
 
 AI_CV_ChargeUpMove_ScoreDown2: @ 81DBA8E
 	score -2
@@ -2256,47 +2256,47 @@ AI_CV_ChargeUpMove_End: @ 81DBA90
 	end
 
 AI_CV_Fly: @ 81DBA91
-	if_not_move_effect TARGET, EFFECT_PROTECT, AI_CV_Fly2
+	if_not_move_effect AI_TARGET, EFFECT_PROTECT, AI_CV_Fly_CheckWeather
 	score -1
-	jump AI_CV_Fly_End
+	goto AI_CV_Fly_End
 
-AI_CV_Fly2: @ 81DBA9F
-	if_status TARGET, TOX, AI_CV_Fly6
-	if_status2 TARGET, S_CURSED, AI_CV_Fly6
-	if_status3 TARGET, S_LEECH_SEED, AI_CV_Fly6
+AI_CV_Fly_CheckWeather: @ 81DBA9F
+	if_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_Fly_TryEncourage
+	if_status2 AI_TARGET, STATUS2_CURSED, AI_CV_Fly_TryEncourage
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_Fly_TryEncourage
 	get_weather
-	if_equal BATTLE_WEATHER_HAIL, AI_CV_Fly3
-	if_equal BATTLE_WEATHER_SANDSTORM, AI_CV_Fly4
-	jump AI_CV_Fly5
+	if_equal AI_WEATHER_HAIL, AI_CV_Fly_CheckSandstormTypes
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_Fly_CheckIceType
+	goto AI_CV_Fly_CheckLastMove
 
-AI_CV_Fly3: @ 81DBACF
-	get_type ENEMY_TYPE2
-	if_in_bytes AI_CV_Fly_TypesToEncourage, AI_CV_Fly6
-	get_type PLAYER_TYPE2
-	if_in_bytes AI_CV_Fly_TypesToEncourage, AI_CV_Fly6
-	jump AI_CV_Fly5
+AI_CV_Fly_CheckSandstormTypes: @ 81DBACF
+	get_user_type1
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_Fly_TryEncourage
+	get_user_type2
+	if_in_bytes AI_CV_SandstormResistantTypes, AI_CV_Fly_TryEncourage
+	goto AI_CV_Fly_CheckLastMove
 
-AI_CV_Fly4: @ 81DBAEA
-	get_type ENEMY_TYPE2
-	if_equal TYPE_ICE, AI_CV_Fly6
-	get_type PLAYER_TYPE2
-	if_equal TYPE_ICE, AI_CV_Fly6
+AI_CV_Fly_CheckIceType: @ 81DBAEA
+	get_user_type1
+	if_equal TYPE_ICE, AI_CV_Fly_TryEncourage
+	get_user_type2
+	if_equal TYPE_ICE, AI_CV_Fly_TryEncourage
 
-AI_CV_Fly5: @ 81DBAFA
+AI_CV_Fly_CheckLastMove: @ 81DBAFA
 	if_would_go_first USER, AI_CV_Fly_End
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
-	if_not_equal EFFECT_LOCK_ON, AI_CV_Fly6
-	jump AI_CV_Fly_End
+	if_not_equal EFFECT_LOCK_ON, AI_CV_Fly_TryEncourage
+	goto AI_CV_Fly_End
 
-AI_CV_Fly6: @ 81DBB0E
+AI_CV_Fly_TryEncourage: @ 81DBB0E
 	if_random_less_than 80, AI_CV_Fly_End
 	score +1
 
 AI_CV_Fly_End: @ 81DBB16
 	end
 
-AI_CV_Fly_TypesToEncourage: @ 81DBB17
+AI_CV_SandstormResistantTypes: @ 81DBB17
 	.byte TYPE_GROUND
 	.byte TYPE_ROCK
 	.byte TYPE_STEEL
