@@ -111,7 +111,7 @@ static void sub_812CAFC(struct Sprite *sprite);
 static void sub_812CC28(struct Sprite *sprite);
 static void AnimRapidSpin(struct Sprite *sprite);
 static void sub_812D294(struct Sprite *sprite);
-static void sub_812D3AC(struct Sprite *sprite);
+static void AnimBatonPassPokeball(struct Sprite *sprite);
 static void sub_812D4B4(struct Sprite *sprite);
 static void sub_812D588(struct Sprite *sprite);
 static void sub_812DEAC(struct Sprite *sprite);
@@ -535,7 +535,7 @@ const union AffineAnimCmd DefenseCurlDeformMonAffineAnimCmds[] =
     AFFINEANIMCMD_END,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84024D0 =
+const struct SpriteTemplate gBatonPassPokeballSpriteTemplate =
 {
     .tileTag = ANIM_TAG_POKEBALL,
     .paletteTag = ANIM_TAG_POKEBALL,
@@ -543,7 +543,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84024D0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812D3AC,
+    .callback = AnimBatonPassPokeball,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8 =
@@ -2065,7 +2065,7 @@ void AnimTask_DefenseCurlDeformMon(u8 taskId)
     }
 }
 
-static void sub_812D3AC(struct Sprite *sprite)
+static void AnimBatonPassPokeball(struct Sprite *sprite)
 {
     u8 spriteId = GetAnimBattlerSpriteId(0);
 
