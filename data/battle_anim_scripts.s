@@ -10555,26 +10555,26 @@ General_ItemSteal: @ 81D6852
 
 General_SnatchMove: @ 81D6877
 	loadspritegfx ANIM_TAG_ITEM_BAG
-	createvisualtask sub_80E4234, 2
-	call Unknown_81D6AB6
+	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectTgt, 2
+	call SnatchMoveTrySwapFromSubstitute
 	delay 1
 	createvisualtask AnimTask_SwayMon, 2, 0, 5, 5120, 4, 1
 	waitforvisualfinish
-	createvisualtask sub_80E4264, 2
-	jumpargeq 7, 0, _81D68B5
-	goto _81D68C5
-_81D68AE:
+	createvisualtask AnimTask_IsTargetSameSide, 2
+	jumpretfalse SnatchOpposingMonMove
+	goto SnatchPartnerMonMove
+SnatchMoveContinue:
 	waitforvisualfinish
-	call Unknown_81D6AD6
+	call SnatchMoveTrySwapToSubstitute
 	end
-_81D68B5:
+SnatchOpposingMonMove:
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_SnatchOpposingMonMove, 2
-	goto _81D68AE
-_81D68C5:
+	goto SnatchMoveContinue
+SnatchPartnerMonMove:
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_SnatchPartnerMove, 2
-	goto _81D68AE
+	goto SnatchMoveContinue
 
 General_FutureSightHit: @ 81D68D5
 	createvisualtask sub_80E42B0, 2
@@ -10675,27 +10675,27 @@ General_WishHeal: @ 81D6A7C
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 10, 0, rgb(0, 0, 0)
 	end
 
-Unknown_81D6AB6: @ 81D6AB6
-	createvisualtask sub_81417D8, 2
-	jumpargeq 7, 1, _81D6AC7
-_81D6AC5:
+SnatchMoveTrySwapFromSubstitute: @ 81D6AB6
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
+	jumprettrue SnatchMoveSwapSubstituteForMon
+SnatchMoveTrySwapFromSubstituteEnd:
 	waitforvisualfinish
 	return
-_81D6AC7:
-	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
+SnatchMoveSwapSubstituteForMon:
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
 	waitforvisualfinish
-	goto _81D6AC5
+	goto SnatchMoveTrySwapFromSubstituteEnd
 
-Unknown_81D6AD6: @ 81D6AD6
-	createvisualtask sub_81417D8, 2
-	jumpargeq 7, 1, _81D6AE7
-_81D6AE5:
+SnatchMoveTrySwapToSubstitute: @ 81D6AD6
+	createvisualtask AnimTask_IsAttackerBehindSubstitute, 2
+	jumprettrue SnatchMoveSwapMonForSubstitute
+SnatchMoveTrySwapToSubstituteEnd:
 	waitforvisualfinish
 	return
-_81D6AE7:
-	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
+SnatchMoveSwapMonForSubstitute:
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
 	waitforvisualfinish
-	goto _81D6AE5
+	goto SnatchMoveTrySwapToSubstituteEnd
 
 Special_LevelUp: @ 81D6AF6
 	playsewithpan SE_EXP_MAX, 0

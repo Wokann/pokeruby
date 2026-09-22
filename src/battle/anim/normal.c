@@ -1905,14 +1905,14 @@ void AnimTask_IsContest(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4234(u8 taskId)
+void AnimTask_SetAnimAttackerAndTargetForEffectTgt(u8 taskId)
 {
     gBattleAnimAttacker = gBattlerTarget;
     gBattleAnimTarget = gEffectBattler;
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E4264(u8 taskId)
+void AnimTask_IsTargetSameSide(u8 taskId)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
         gBattleAnimArgs[7] = 1;

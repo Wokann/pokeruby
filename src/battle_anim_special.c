@@ -1842,7 +1842,7 @@ void AnimTask_SubstituteFadeToInvisible(u8 taskId)
     }
 }
 
-void sub_81417D8(u8 taskId)
+void AnimTask_IsAttackerBehindSubstitute(u8 taskId)
 {
     gBattleAnimArgs[7] = gBattleSpriteInfo[gBattleAnimAttacker].behindSubstitute;
     DestroyAnimVisualTask(taskId);
