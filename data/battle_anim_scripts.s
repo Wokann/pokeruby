@@ -10699,11 +10699,11 @@ SnatchMoveSwapMonForSubstitute:
 
 Special_LevelUp: @ 81D6AF6
 	playsewithpan SE_EXP_MAX, 0
-	createvisualtask sub_813F4EC, 2
+	createvisualtask AnimTask_LoadHealthboxPalsForLevelUp, 2
 	delay 0
-	createvisualtask sub_813F6A0, 5, 0, 0
+	createvisualtask AnimTask_FlashHealthboxOnLevelUp, 5, 0, 0
 	waitforvisualfinish
-	createvisualtask sub_813F5E8, 2
+	createvisualtask AnimTask_FreeHealthboxPalsForLevelUp, 2
 	end
 
 Special_SwitchOutPlayerMon: @ 81D6B17

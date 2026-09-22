@@ -44,7 +44,7 @@ extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 
 static void sub_813F300(u8 taskId);
-static void sub_813F6CC(u8 taskId);
+static void AnimTask_FlashHealthboxOnLevelUp_Step(u8 taskId);
 static void sub_813FD34(u8 taskId);
 static void sub_813FD90(struct Sprite *sprite);
 static void sub_813FB7C(u8 taskId);
@@ -473,7 +473,7 @@ static void sub_813F300(u8 taskId)
     }
 }
 
-void sub_813F4EC(u8 taskId)
+void AnimTask_LoadHealthboxPalsForLevelUp(u8 taskId)
 {
     u8 healthBoxSpriteId;
     u8 spriteId1, spriteId2;
@@ -497,7 +497,7 @@ void sub_813F4EC(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_813F5E8(u8 taskId)
+void AnimTask_FreeHealthboxPalsForLevelUp(u8 taskId)
 {
     u8 healthBoxSpriteId;
     u8 spriteId1, spriteId2;
@@ -518,14 +518,14 @@ void sub_813F5E8(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_813F6A0(u8 taskId)
+void AnimTask_FlashHealthboxOnLevelUp(u8 taskId)
 {
     gTasks[taskId].data[10] = gBattleAnimArgs[0];
     gTasks[taskId].data[11] = gBattleAnimArgs[1];
-    gTasks[taskId].func = sub_813F6CC;
+    gTasks[taskId].func = AnimTask_FlashHealthboxOnLevelUp_Step;
 }
 
-static void sub_813F6CC(u8 taskId)
+static void AnimTask_FlashHealthboxOnLevelUp_Step(u8 taskId)
 {
     u8 paletteNum;
     int paletteOffset, colorOffset;
