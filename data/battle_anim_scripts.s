@@ -10751,9 +10751,9 @@ Special_BallThrowWithTrainer: @ 81D6B8D
 	end
 
 Special_SubstituteToMon: @ 81D6BA6
-	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
 	end
 
 Special_MonToSubstitute: @ 81D6BB0
-	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
 	end
