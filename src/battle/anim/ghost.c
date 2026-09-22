@@ -175,7 +175,7 @@ const struct SpriteTemplate gCurseGhostSpriteTemplate =
     .callback = AnimGhostStatusSprite,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAF50 =
+const struct SpriteTemplate gNightmareDevilSpriteTemplate =
 {
     .tileTag = ANIM_TAG_DEVIL,
     .paletteTag = ANIM_TAG_DEVIL,

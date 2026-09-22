@@ -10297,7 +10297,7 @@ StatusCondition_Nightmare: @ 81D638F
 	loadspritegfx ANIM_TAG_DEVIL
 	monbg ANIM_BATTLER_DEF_PARTNER
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAF50, ANIM_BATTLER_TARGET, 2
+	createsprite gNightmareDevilSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 14, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
