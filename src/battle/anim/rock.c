@@ -31,7 +31,7 @@ void AnimParticleInVortex(struct Sprite *sprite);
 static void AnimFlyingSandCrescent(struct Sprite *sprite);
 void AnimRaiseSprite(struct Sprite *sprite);
 void sub_80DD87C(struct Sprite *sprite);
-void sub_80DD8E8(struct Sprite *sprite);
+static void AnimRockTomb(struct Sprite *sprite);
 void sub_80DD978(struct Sprite *sprite);
 void sub_80DD9A4(struct Sprite *sprite);
 static void sub_80DCF1C(struct Sprite *sprite);
@@ -40,7 +40,7 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId);
 static void sub_80DD604(u8 taskId);
 static void sub_80DD774(struct Task *task);
 static u8 sub_80DD8BC(void);
-static void sub_80DD928(struct Sprite *sprite);
+static void AnimRockTomb_Step(struct Sprite *sprite);
 static void sub_80DD9FC(struct Sprite *sprite);
 
 const union AnimCmd gSpriteAnim_83DAC28[] =
@@ -158,13 +158,13 @@ static const struct SubspriteTable sFlyingSandSubspriteTable[] =
     {ARRAY_COUNT(sFlyingSandSubsprites), sFlyingSandSubsprites},
 };
 
-const union AnimCmd gSpriteAnim_83DAD18[] =
+static const union AnimCmd sAnim_Rock_Biggest[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DAD20[] =
+static const union AnimCmd sAnim_Rock_Bigger[] =
 {
     ANIMCMD_FRAME(16, 1),
     ANIMCMD_END,
@@ -194,10 +194,10 @@ const union AnimCmd gSpriteAnim_83DAD40[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAD48[] =
+static const union AnimCmd *const sAnims_BasicRockLarge[] =
 {
-    gSpriteAnim_83DAD18,
-    gSpriteAnim_83DAD20,
+    sAnim_Rock_Biggest,
+    sAnim_Rock_Bigger,
 };
 
 const union AnimCmd *const gSpriteAnimTable_83DAD50[] =
@@ -217,7 +217,7 @@ const struct SpriteTemplate gAncientPowerRockSpriteTemplate =
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD48,
+    .anims = sAnims_BasicRockLarge,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimRaiseSprite,
@@ -245,15 +245,15 @@ const struct SpriteTemplate gSpriteTemplate_83DAD90 =
     .callback = sub_80DD87C,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DADA8 =
+const struct SpriteTemplate gRockTombRockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD48,
+    .anims = sAnims_BasicRockLarge,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DD8E8,
+    .callback = AnimRockTomb,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_83DADC0[] =
@@ -279,7 +279,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DADE8 =
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD48,
+    .anims = sAnims_BasicRockLarge,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
     .callback = sub_80DD978,
@@ -290,7 +290,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE00 =
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD48,
+    .anims = sAnims_BasicRockLarge,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83DADE0,
     .callback = sub_80DD9A4,
@@ -797,7 +797,7 @@ u8 sub_80DD8BC(void)
     return retVal;
 }
 
-void sub_80DD8E8(struct Sprite *sprite)
+static void AnimRockTomb(struct Sprite *sprite)
 {
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
 
@@ -806,11 +806,11 @@ void sub_80DD8E8(struct Sprite *sprite)
     sprite->data[3] -= gBattleAnimArgs[2];
     sprite->data[0] = 3;
     sprite->data[1] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DD928;
+    sprite->callback = AnimRockTomb_Step;
     sprite->invisible = TRUE;
 }
 
-static void sub_80DD928(struct Sprite *sprite)
+static void AnimRockTomb_Step(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     if (sprite->data[3] != 0)

@@ -9101,29 +9101,29 @@ Move_ROCK_TOMB: @ 81D468C
 	loadspritegfx ANIM_TAG_ROCKS
 	shake_battle_platforms x_offset=2, y_offset=0, shakes=10, delay=1
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83DADA8, ANIM_BATTLER_TARGET, 2, 20, 12, 64, 114, 0
+	createsprite gRockTombRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 12, 64, 114, 0
 	delay 8
 	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DADA8, ANIM_BATTLER_TARGET, 2, -20, 12, 64, 98, 0
+	createsprite gRockTombRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, 12, 64, 98, 0
 	delay 8
 	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DADA8, ANIM_BATTLER_TARGET, 66, 3, 6, 64, 82, 0
+	createsprite gRockTombRockSpriteTemplate, ANIM_BATTLER_TARGET, 66, 3, 6, 64, 82, 0
 	delay 8
 	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DADA8, ANIM_BATTLER_TARGET, 2, -3, 13, 64, 66, 0
+	createsprite gRockTombRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -3, 13, 64, 66, 0
 	delay 8
 	shake_battle_platforms x_offset=0, y_offset=2, shakes=3, delay=1
 	playsewithpan SE_M_STRENGTH, SOUND_PAN_TARGET
 	delay 24
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_TARGET
 	createsprite gRedXSpriteTemplate, ANIM_BATTLER_TARGET, 5, ANIM_BATTLER_TARGET, 50
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 20, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 20, 1
 	shake_battle_platforms x_offset=2, y_offset=0, shakes=10, delay=1
 	waitforvisualfinish
 	end
