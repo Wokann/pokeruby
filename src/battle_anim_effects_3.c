@@ -4932,15 +4932,15 @@ static void MoveOdorSleuthClone(struct Sprite *sprite)
 
 void AnimTask_GetReturnPowerLevel(u8 taskId)
 {
-    gBattleAnimArgs[7] = 0;
+    gBattleAnimArgs[ARG_RET_ID] = 0;
     if (gAnimFriendship < 60)
-        gBattleAnimArgs[7] = 0;
+        gBattleAnimArgs[ARG_RET_ID] = 0;
     if (gAnimFriendship > 60 && gAnimFriendship < 92)
-        gBattleAnimArgs[7] = 1;
+        gBattleAnimArgs[ARG_RET_ID] = 1;
     if (gAnimFriendship > 91 && gAnimFriendship < 201)
-        gBattleAnimArgs[7] = 2;
+        gBattleAnimArgs[ARG_RET_ID] = 2;
     if (gAnimFriendship > 200)
-        gBattleAnimArgs[7] = 3;
+        gBattleAnimArgs[ARG_RET_ID] = 3;
 
     DestroyAnimVisualTask(taskId);
 }

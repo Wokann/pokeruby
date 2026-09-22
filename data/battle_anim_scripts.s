@@ -8895,10 +8895,10 @@ Move_RETURN: @ 81D3F36
 	setalpha 12, 8
 	createvisualtask AnimTask_GetReturnPowerLevel, 2
 	delay 2
-	jumpargeq ARG_RET_ID, 0, ReturnWeak
-	jumpargeq ARG_RET_ID, 1, ReturnMedium
-	jumpargeq ARG_RET_ID, 2, ReturnStrong
-	jumpargeq ARG_RET_ID, 3, ReturnStrongest
+	jumpreteq 0, ReturnWeak
+	jumpreteq 1, ReturnMedium
+	jumpreteq 2, ReturnStrong
+	jumpreteq 3, ReturnStrongest
 ReturnContinue:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
@@ -8911,7 +8911,7 @@ ReturnWeak:
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	delay 5
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	goto ReturnContinue
 ReturnMedium:
@@ -8924,7 +8924,7 @@ ReturnMedium:
 	delay 11
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, 4
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	goto ReturnContinue
 ReturnStrong:
@@ -8940,35 +8940,35 @@ ReturnStrong:
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 6, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=10, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, -5, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=3, y=-5, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -5, 3, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-5, y=3, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	goto ReturnContinue
 ReturnStrongest:
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 0, 6, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=6, color=RGB_BLACK
 	waitforvisualfinish
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	delay 8
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, -5, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=3, y=-5, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	waitforvisualfinish
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 12, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	delay 5
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	waitforvisualfinish
@@ -8976,7 +8976,7 @@ ReturnStrongest:
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	delay 5
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	waitforvisualfinish
@@ -8984,7 +8984,7 @@ ReturnStrongest:
 	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 5, 1
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 1, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 5, 1
@@ -8992,7 +8992,7 @@ ReturnStrongest:
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 2, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
 	delay 5
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 5, 1
@@ -9001,25 +9001,25 @@ ReturnStrongest:
 	call ReturnStrongestHit
 	call ReturnStrongestHit
 	call ReturnStrongestHit
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -8, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 8, 0, 24, 1
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 10, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=10, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 3, -5, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=3, y=-5, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	delay 6
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -5, 3, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-5, y=3, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MEGA_KICK2, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 0, 6, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=6, target_blend_y=0, color=RGB_BLACK
 	goto ReturnContinue
 ReturnStrongestHit:
 	createsprite gVerticalDipSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 3, ANIM_BATTLER_ATTACKER
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER_NEG
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	createvisualtask AnimTask_TraceMonBlended, 2, 0, 4, 5, 1
