@@ -203,6 +203,18 @@
 	.4byte \address
 	.endm
 
+	.macro if_in_hwords list, address
+	.byte 0x1d
+	.4byte \list
+	.4byte \address
+	.endm
+
+	.macro if_not_in_hwords list, address
+	.byte 0x1e
+	.4byte \list
+	.4byte \address
+	.endm
+
 	.macro if_user_can_damage address
 	.byte 0x1f
 	.4byte \address
@@ -251,6 +263,11 @@
 	.macro get_move target
 	.byte 0x25
 	.byte \target
+	.endm
+
+	.macro get_last_used_bank_move battler
+	.byte 0x25
+	.byte \battler
 	.endm
 
 	.macro if_arg_equal type, address

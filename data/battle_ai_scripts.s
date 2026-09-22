@@ -755,9 +755,9 @@ AI_CheckViability: @ 81DA86D
 	end
 
 AI_CV_Sleep: @ 81DAB44
-	if_move_effect TARGET, EFFECT_DREAM_EATER, AI_CV_SleepEncourageSlpDamage
-	if_move_effect TARGET, EFFECT_NIGHTMARE, AI_CV_SleepEncourageSlpDamage
-	jump AI_CV_Sleep_End
+	if_move_effect AI_TARGET, EFFECT_DREAM_EATER, AI_CV_SleepEncourageSlpDamage
+	if_move_effect AI_TARGET, EFFECT_NIGHTMARE, AI_CV_SleepEncourageSlpDamage
+	goto AI_CV_Sleep_End
 
 AI_CV_SleepEncourageSlpDamage: @ 81DAB57
 	if_random_less_than 128, AI_CV_Sleep_End
@@ -767,9 +767,9 @@ AI_CV_Sleep_End: @ 81DAB5F
 	end
 
 AI_CV_Absorb: @ 81DAB60
-	if_damage_bonus 20, AI_CV_AbsorbEncourageMaybe
-	if_damage_bonus 10, AI_CV_AbsorbEncourageMaybe
-	jump AI_CV_Absorb_End
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_AbsorbEncourageMaybe
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_AbsorbEncourageMaybe
+	goto AI_CV_Absorb_End
 
 AI_CV_AbsorbEncourageMaybe: @ 81DAB71
 	if_random_less_than 50, AI_CV_Absorb_End
@@ -779,28 +779,28 @@ AI_CV_Absorb_End: @ 81DAB79
 	end
 
 AI_CV_SelfKO: @ 81DAB7A
-	if_stat_level_less_than TARGET, EVASION, 7, AI_CV_SelfKO_Encourage1
+	if_stat_level_less_than AI_TARGET, STAT_EVASION, 7, AI_CV_SelfKO_Encourage1
 	score -1
-	if_stat_level_less_than TARGET, EVASION, 10, AI_CV_SelfKO_Encourage1
+	if_stat_level_less_than AI_TARGET, STAT_EVASION, 10, AI_CV_SelfKO_Encourage1
 	if_random_less_than 128, AI_CV_SelfKO_Encourage1
 	score -1
 
 AI_CV_SelfKO_Encourage1: @ 81DAB94
-	if_hp_less_than USER, 80, AI_CV_SelfKO_Encourage2
+	if_hp_less_than AI_USER, 80, AI_CV_SelfKO_Encourage2
 	if_would_go_first USER, AI_CV_SelfKO_Encourage2
 	if_random_less_than 50, AI_CV_SelfKO_End
-	jump Score_Minus3
+	goto Score_Minus3
 
 AI_CV_SelfKO_Encourage2: @ 81DABAC
-	if_hp_more_than USER, 50, AI_CV_SelfKO_Encourage4
+	if_hp_more_than AI_USER, 50, AI_CV_SelfKO_Encourage4
 	if_random_less_than 128, AI_CV_SelfKO_Encourage3
 	score +1
 
 AI_CV_SelfKO_Encourage3: @ 81DABBB
-	if_hp_more_than USER, 30, AI_CV_SelfKO_End
+	if_hp_more_than AI_USER, 30, AI_CV_SelfKO_End
 	if_random_less_than 50, AI_CV_SelfKO_End
 	score +1
-	jump AI_CV_SelfKO_End
+	goto AI_CV_SelfKO_End
 
 AI_CV_SelfKO_Encourage4: @ 81DABCF
 	if_random_less_than 50, AI_CV_SelfKO_End
@@ -810,9 +810,9 @@ AI_CV_SelfKO_End: @ 81DABD7
 	end
 
 AI_CV_DreamEater: @ 81DABD8
-	if_damage_bonus 10, AI_CV_DreamEater_ScoreDown1
-	if_damage_bonus 20, AI_CV_DreamEater_ScoreDown1
-	jump AI_CV_DreamEater_End
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_DreamEater_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_DreamEater_ScoreDown1
+	goto AI_CV_DreamEater_End
 
 AI_CV_DreamEater_ScoreDown1: @ 81DABE9
 	score -1
@@ -822,15 +822,15 @@ AI_CV_DreamEater_End: @ 81DABEB
 
 AI_CV_MirrorMove: @ 81DABEC
 	if_would_go_first USER, AI_CV_MirrorMove2
-	get_move TARGET
-	if_not_in_words AI_CV_MirrorMove_EncouragedMovesToMirror, AI_CV_MirrorMove2
+	get_last_used_bank_move AI_TARGET
+	if_not_in_hwords AI_CV_MirrorMove_EncouragedMovesToMirror, AI_CV_MirrorMove2
 	if_random_less_than 128, AI_CV_MirrorMove_End
 	score +2
-	jump AI_CV_MirrorMove_End
+	goto AI_CV_MirrorMove_End
 
 AI_CV_MirrorMove2: @ 81DAC0A
-	get_move TARGET
-	if_in_words AI_CV_MirrorMove_EncouragedMovesToMirror, AI_CV_MirrorMove_End
+	get_last_used_bank_move AI_TARGET
+	if_in_hwords AI_CV_MirrorMove_EncouragedMovesToMirror, AI_CV_MirrorMove_End
 	if_random_less_than 80, AI_CV_MirrorMove_End
 	score -1
 
@@ -881,19 +881,19 @@ AI_CV_MirrorMove_EncouragedMovesToMirror: @ 81DAC20
 	.2byte -1
 
 AI_CV_AttackUp: @ 81DAC70
-	if_stat_level_less_than USER, ATTACK, 9, AI_CV_AttackUp2
+	if_stat_level_less_than AI_USER, STAT_ATK, 9, AI_CV_AttackUp2
 	if_random_less_than 100, AI_CV_AttackUp3
 	score -1
-	jump AI_CV_AttackUp3
+	goto AI_CV_AttackUp3
 
 AI_CV_AttackUp2: @ 81DAC85
-	if_hp_not_equal USER, 100, AI_CV_AttackUp3
+	if_hp_not_equal AI_USER, 100, AI_CV_AttackUp3
 	if_random_less_than 128, AI_CV_AttackUp3
 	score +2
 
 AI_CV_AttackUp3: @ 81DAC94
-	if_hp_more_than USER, 70, AI_CV_AttackUp_End
-	if_hp_less_than USER, 40, AI_CV_AttackUp_ScoreDown2
+	if_hp_more_than AI_USER, 70, AI_CV_AttackUp_End
+	if_hp_less_than AI_USER, 40, AI_CV_AttackUp_ScoreDown2
 	if_random_less_than 40, AI_CV_AttackUp_End
 
 AI_CV_AttackUp_ScoreDown2: @ 81DACA8
@@ -903,26 +903,26 @@ AI_CV_AttackUp_End: @ 81DACAA
 	end
 
 AI_CV_DefenseUp: @ 81DACAB
-	if_stat_level_less_than USER, DEFENSE, 9, AI_CV_DefenseUp2
+	if_stat_level_less_than AI_USER, STAT_DEF, 9, AI_CV_DefenseUp2
 	if_random_less_than 100, AI_CV_DefenseUp3
 	score -1
-	jump AI_CV_DefenseUp3
+	goto AI_CV_DefenseUp3
 
 AI_CV_DefenseUp2: @ 81DACC0
-	if_hp_not_equal USER, 100, AI_CV_DefenseUp3
+	if_hp_not_equal AI_USER, 100, AI_CV_DefenseUp3
 	if_random_less_than 128, AI_CV_DefenseUp3
 	score +2
 
 AI_CV_DefenseUp3: @ 81DACCF
-	if_hp_less_than USER, 70, AI_CV_DefenseUp4
+	if_hp_less_than AI_USER, 70, AI_CV_DefenseUp4
 	if_random_less_than 200, AI_CV_DefenseUp_End
 
 AI_CV_DefenseUp4: @ 81DACDC
-	if_hp_less_than USER, 40, AI_CV_DefenseUp_ScoreDown2
-	get_move TARGET
+	if_hp_less_than AI_USER, 40, AI_CV_DefenseUp_ScoreDown2
+	get_last_used_bank_move AI_TARGET
 	get_move_power_from_result
 	if_equal 0, AI_CV_DefenseUp5
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_type_from_result
 	if_not_in_bytes AI_CV_DefenseUp_PhysicalTypes, AI_CV_DefenseUp_ScoreDown2
 	if_random_less_than 60, AI_CV_DefenseUp_End
@@ -961,19 +961,19 @@ AI_CV_SpeedUp_End: @ 81DAD26
 	end
 
 AI_CV_SpAtkUp: @ 81DAD27
-	if_stat_level_less_than USER, SP_ATTACK, 9, AI_CV_SpAtkUp2
+	if_stat_level_less_than AI_USER, STAT_SPATK, 9, AI_CV_SpAtkUp2
 	if_random_less_than 100, AI_CV_SpAtkUp3
 	score -1
-	jump AI_CV_SpAtkUp3
+	goto AI_CV_SpAtkUp3
 
 AI_CV_SpAtkUp2: @ 81DAD3C
-	if_hp_not_equal USER, 100, AI_CV_SpAtkUp3
+	if_hp_not_equal AI_USER, 100, AI_CV_SpAtkUp3
 	if_random_less_than 128, AI_CV_SpAtkUp3
 	score +2
 
 AI_CV_SpAtkUp3: @ 81DAD4B
-	if_hp_more_than USER, 70, AI_CV_SpAtkUp_End
-	if_hp_less_than USER, 40, AI_CV_SpAtkUp_ScoreDown2
+	if_hp_more_than AI_USER, 70, AI_CV_SpAtkUp_End
+	if_hp_less_than AI_USER, 40, AI_CV_SpAtkUp_ScoreDown2
 	if_random_less_than 70, AI_CV_SpAtkUp_End
 
 AI_CV_SpAtkUp_ScoreDown2: @ 81DAD5F
@@ -983,26 +983,26 @@ AI_CV_SpAtkUp_End: @ 81DAD61
 	end
 
 AI_CV_SpDefUp: @ 81DAD62
-	if_stat_level_less_than USER, SP_DEFENSE, 9, AI_CV_SpDefUp2
+	if_stat_level_less_than AI_USER, STAT_SPDEF, 9, AI_CV_SpDefUp2
 	if_random_less_than 100, AI_CV_SpDefUp3
 	score -1
-	jump AI_CV_SpDefUp3
+	goto AI_CV_SpDefUp3
 
 AI_CV_SpDefUp2: @ 81DAD77
-	if_hp_not_equal USER, 100, AI_CV_SpDefUp3
+	if_hp_not_equal AI_USER, 100, AI_CV_SpDefUp3
 	if_random_less_than 128, AI_CV_SpDefUp3
 	score +2
 
 AI_CV_SpDefUp3: @ 81DAD86
-	if_hp_less_than USER, 70, AI_CV_SpDefUp4
+	if_hp_less_than AI_USER, 70, AI_CV_SpDefUp4
 	if_random_less_than 200, AI_CV_SpDefUp_End
 
 AI_CV_SpDefUp4: @ 81DAD93
-	if_hp_less_than USER, 40, AI_CV_SpDefUp_ScoreDown2
-	get_move TARGET
+	if_hp_less_than AI_USER, 40, AI_CV_SpDefUp_ScoreDown2
+	get_last_used_bank_move AI_TARGET
 	get_move_power_from_result
 	if_equal 0, AI_CV_SpDefUp5
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_type_from_result
 	if_in_bytes AI_CV_SpDefUp_PhysicalTypes, AI_CV_SpDefUp_ScoreDown2
 	if_random_less_than 60, AI_CV_SpDefUp_End
