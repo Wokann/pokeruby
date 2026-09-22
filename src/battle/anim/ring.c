@@ -15,15 +15,15 @@ extern u8 gBattlerSpriteIds[];
 static void AnimBlendThinRing(struct Sprite* sprite);
 static void AnimHyperVoiceRing(struct Sprite* sprite);
 static void AnimUproarRing(struct Sprite* sprite);
-void sub_80D1368(struct Sprite* sprite);
+static void AnimSoftBoiledEgg(struct Sprite *sprite);
 static void AnimHyperVoiceRing_WaitEnd(struct Sprite* sprite);
-static void sub_80D13AC(struct Sprite* sprite);
-static void sub_80D1424(struct Sprite* sprite);
-static void sub_80D144C(struct Sprite* sprite);
-static void sub_80D14C4(struct Sprite* sprite);
-static void sub_80D1504(struct Sprite* sprite);
-static void sub_80D154C(struct Sprite* sprite);
-static void sub_80D158C(struct Sprite* sprite);
+static void AnimSoftBoiledEgg_Step1(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step2(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3_Callback1(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step3_Callback2(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step4(struct Sprite *sprite);
+static void AnimSoftBoiledEgg_Step4_Callback(struct Sprite *sprite);
 
 // ring (a ring that stretches outward from the Pokemon.)
 // Used in Aromatherapy and Heal Bell.
@@ -64,7 +64,7 @@ const struct SpriteTemplate gExplosionSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7840[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 2),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 4),
@@ -72,13 +72,13 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7840[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7860[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7870[] =
+const union AffineAnimCmd gSoftBoiledEggAffineAnimCmds3[] =
 {
     AFFINEANIMCMD_FRAME(0xFFF8, 0x4, 0, 8),
     AFFINEANIMCMD_LOOP(0),
@@ -90,22 +90,22 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7870[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D78B0[] =
+const union AffineAnimCmd *const gSoftBoiledEggAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7840,
-    gSpriteAffineAnim_83D7860,
-    gSpriteAffineAnim_83D7870,
+    gSoftBoiledEggAffineAnimCmds1,
+    gSoftBoiledEggAffineAnimCmds2,
+    gSoftBoiledEggAffineAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D78BC =
+const struct SpriteTemplate gSoftBoiledEggSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BREAKING_EGG,
     .paletteTag = ANIM_TAG_BREAKING_EGG,
-    .oam = &gOamData_837E114,
+    .oam = &gOamData_AffineDouble_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D78B0,
-    .callback = sub_80D1368,
+    .affineAnims = gSoftBoiledEggAffineAnimTable,
+    .callback = AnimSoftBoiledEgg,
 };
 
 const union AffineAnimCmd gThinRingExpandingAffineAnimCmds1[] =
@@ -345,7 +345,7 @@ static void AnimUproarRing(struct Sprite* sprite)
     AnimSpriteOnMonPos(sprite);
 }
 
-void sub_80D1368(struct Sprite* sprite)
+static void AnimSoftBoiledEgg(struct Sprite *sprite)
 {
     s16 r1;
     InitSpritePosToAnimAttacker(sprite, 0);
@@ -353,10 +353,10 @@ void sub_80D1368(struct Sprite* sprite)
     sprite->data[0] = 0x380;
     sprite->data[1] = r1;
     sprite->data[7] = gBattleAnimArgs[2];
-    sprite->callback = sub_80D13AC;
+    sprite->callback = AnimSoftBoiledEgg_Step1;
 }
 
-static void sub_80D13AC(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step1(struct Sprite *sprite)
 {
     s16 add;
     sprite->y2 -= (sprite->data[0] >> 8);
@@ -372,20 +372,20 @@ static void sub_80D13AC(struct Sprite* sprite)
         sprite->x2 = 0;
         sprite->data[0] = 0;
         StartSpriteAffineAnim(sprite, 1);
-        sprite->callback = sub_80D1424;
+        sprite->callback = AnimSoftBoiledEgg_Step2;
     }
 }
 
-static void sub_80D1424(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0]++ > 19)
     {
         StartSpriteAffineAnim(sprite, 2);
-        sprite->callback = sub_80D144C;
+        sprite->callback = AnimSoftBoiledEgg_Step3;
     }
 }
 
-static void sub_80D144C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
@@ -394,17 +394,17 @@ static void sub_80D144C(struct Sprite* sprite)
         if (sprite->data[7] == 0)
         {
             sprite->oam.tileNum += 16;
-            sprite->callback = sub_80D14C4;
+            sprite->callback = AnimSoftBoiledEgg_Step3_Callback1;
         }
         else
         {
             sprite->oam.tileNum += 32;
-            sprite->callback = sub_80D154C;
+            sprite->callback = AnimSoftBoiledEgg_Step4;
         }
     }
 }
 
-static void sub_80D14C4(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3_Callback1(struct Sprite *sprite)
 {
     sprite->y2 -= 2;
     if (++sprite->data[0] == 9)
@@ -413,34 +413,34 @@ static void sub_80D14C4(struct Sprite* sprite)
         sprite->data[1] = 0;
         REG_BLDCNT = 0x3F40;
         REG_BLDALPHA = sprite->data[0];
-        sprite->callback = sub_80D1504;
+        sprite->callback = AnimSoftBoiledEgg_Step3_Callback2;
     }
 }
 
-static void sub_80D1504(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step3_Callback2(struct Sprite *sprite)
 {
     if (sprite->data[1]++ % 3 == 0)
     {
         sprite->data[0]--;
         REG_BLDALPHA = sprite->data[0] | ((16 - sprite->data[0]) << 8);
         if (sprite->data[0] == 0)
-            sprite->callback = sub_80D154C;
+            sprite->callback = AnimSoftBoiledEgg_Step4;
     }
 }
 
-static void sub_80D154C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step4(struct Sprite *sprite)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {
         sprite->invisible = TRUE;
         if (sprite->data[7] == 0)
-            sprite->callback = sub_80D158C;
+            sprite->callback = AnimSoftBoiledEgg_Step4_Callback;
         else
             sprite->callback = DestroyAnimSprite;
     }
 }
 
-static void sub_80D158C(struct Sprite* sprite)
+static void AnimSoftBoiledEgg_Step4_Callback(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;

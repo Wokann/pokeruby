@@ -7663,12 +7663,12 @@ Move_SOFT_BOILED: @ 81D213B
 	monbg ANIM_BATTLER_ATK_PARTNER
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 2, 6, 1
-	createsprite gBattleAnimSpriteTemplate_83D78BC, ANIM_BATTLER_ATTACKER, 4, 0, 16, 0
-	createsprite gBattleAnimSpriteTemplate_83D78BC, ANIM_BATTLER_ATTACKER, 4, 0, 16, 1
+	createsprite gSoftBoiledEggSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 16, 0
+	createsprite gSoftBoiledEggSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 16, 1
 	delay 120
 	delay 7
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_ATTACKER
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 10, 0, rgb(12, 24, 30)
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB(12, 24, 30)
 	createsprite gThinRingExpandingSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 31, 16, 0, 1
 	delay 8
 	createsprite gThinRingExpandingSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 31, 16, 0, 1
