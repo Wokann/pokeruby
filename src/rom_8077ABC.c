@@ -1044,7 +1044,7 @@ void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void sub_8078C28(struct Sprite *sprite)
+void InitAnimFastLinearTranslation(struct Sprite *sprite)
 {
     int x = sprite->data[2] - sprite->data[1];
     int y = sprite->data[4] - sprite->data[3];
@@ -1072,16 +1072,16 @@ void sub_8078C28(struct Sprite *sprite)
     sprite->data[3] = 0;
 }
 
-void sub_8078CC0(struct Sprite *sprite)
+void InitAndRunAnimFastLinearTranslation(struct Sprite *sprite)
 {
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
-    sub_8078C28(sprite);
-    sprite->callback = sub_8078D44;
+    InitAnimFastLinearTranslation(sprite);
+    sprite->callback = AnimFastTranslateLinearWaitEnd;
     sprite->callback(sprite);
 }
 
-bool8 sub_8078CE8(struct Sprite *sprite)
+bool8 AnimFastTranslateLinear(struct Sprite *sprite)
 {
     u16 v1, v2, x, y;
 
@@ -1111,25 +1111,25 @@ bool8 sub_8078CE8(struct Sprite *sprite)
     return FALSE;
 }
 
-void sub_8078D44(struct Sprite *sprite)
+void AnimFastTranslateLinearWaitEnd(struct Sprite *sprite)
 {
-    if (sub_8078CE8(sprite))
+    if (AnimFastTranslateLinear(sprite))
         SetCallbackToStoredInData6(sprite);
 }
 
-void sub_8078D60(struct Sprite *sprite)
+void InitAnimFastLinearTranslationWithSpeed(struct Sprite *sprite)
 {
     int v1 = abs(sprite->data[2] - sprite->data[1]) << 4;
     sprite->data[0] = v1 / sprite->data[0];
-    sub_8078C28(sprite);
+    InitAnimFastLinearTranslation(sprite);
 }
 
-void sub_8078D8C(struct Sprite *sprite)
+void InitAnimFastLinearTranslationWithSpeedAndPos(struct Sprite *sprite)
 {
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
-    sub_8078D60(sprite);
-    sprite->callback = sub_8078D44;
+    InitAnimFastLinearTranslationWithSpeed(sprite);
+    sprite->callback = AnimFastTranslateLinearWaitEnd;
     sprite->callback(sprite);
 }
 

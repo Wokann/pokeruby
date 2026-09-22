@@ -223,6 +223,16 @@
 	.byte \bank
 	.endm
 
+	.macro monbg_static bank
+	.byte 0x22
+	.byte \bank
+	.endm
+
+	.macro clearmonbg_static bank
+	.byte 0x23
+	.byte \bank
+	.endm
+
 	.macro jumpifcontest addr
 	.byte 0x24
 	.4byte \addr
@@ -418,6 +428,10 @@
 	createvisualtask AnimTask_AttackerFadeFromInvisible, \priority, \step_delay
 	.endm
 
+	.macro shrink_target_copy priority=5, unk0:req, unk1:req
+	createvisualtask AnimTask_ShrinkTargetCopy, \priority, \unk0, \unk1
+	.endm
+
 	.macro blend_color_cycle priority=2, selector:req, delay:req, num_blends:req, initial_blend_y:req, target_blend_y:req, color:req
 	createvisualtask AnimTask_BlendColorCycle, \priority, \selector, \delay, \num_blends, \initial_blend_y, \target_blend_y, \color
 	.endm
@@ -445,6 +459,10 @@
 
 	.macro create_power_absorption_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req
 	createsprite gPowerAbsorptionOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
+	.endm
+
+	.macro create_mimic_orb_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req
+	createsprite gMimicOrbSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y
 	.endm
 
 	.macro create_solar_beam_big_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, animation:req

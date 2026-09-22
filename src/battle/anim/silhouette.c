@@ -7,13 +7,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void sub_80CB3A8(u8 taskId);
-static void sub_80CB438(u8 taskId);
+static void AnimTask_DuplicateAndShrinkToPos_Step1(u8 taskId);
+static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId);
 
 // silhouette (the transparent shadow image used for mimic.)
 // Only used by Mimic.
 
-void sub_80CB340(u8 taskId)
+void AnimTask_ShrinkTargetCopy(u8 taskId)
 {
     u8 spriteId = GetAnimBattlerSpriteId(1);
     if (gSprites[spriteId].invisible)
@@ -26,11 +26,11 @@ void sub_80CB340(u8 taskId)
         gTasks[taskId].data[0] = gBattleAnimArgs[0];
         gTasks[taskId].data[1] = gBattleAnimArgs[1];
         gTasks[taskId].data[11] = 256;
-        gTasks[taskId].func = sub_80CB3A8;
+        gTasks[taskId].func = AnimTask_DuplicateAndShrinkToPos_Step1;
     }
 }
 
-void sub_80CB3A8(u8 taskId)
+static void AnimTask_DuplicateAndShrinkToPos_Step1(u8 taskId)
 {
     u8 spriteId = GetAnimBattlerSpriteId(1);
     gTasks[taskId].data[10] += gTasks[taskId].data[0];
@@ -47,11 +47,11 @@ void sub_80CB3A8(u8 taskId)
     if (!gTasks[taskId].data[1])
     {
         gTasks[taskId].data[0] = 0;
-        gTasks[taskId].func = sub_80CB438;
+        gTasks[taskId].func = AnimTask_DuplicateAndShrinkToPos_Step2;
     }
 }
 
-void sub_80CB438(u8 taskId)
+static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId)
 {
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
     {

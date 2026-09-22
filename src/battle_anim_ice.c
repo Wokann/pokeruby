@@ -707,14 +707,14 @@ static void AnimSwirlingSnowball(struct Sprite *sprite)
     for (i = 0; i < 8; i++)
         tempDataHolder[i] = sprite->data[i];
 
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[1] ^= 1;
     sprite->data[2] ^= 1;
 
     while (1)
     {
         sprite->data[0] = 1;
-        sub_8078CE8(sprite);
+        AnimFastTranslateLinear(sprite);
 
         if ((u32)(sprite->x + sprite->x2 + 16) > 272
          || sprite->y + sprite->y2 > 160
@@ -730,7 +730,7 @@ static void AnimSwirlingSnowball(struct Sprite *sprite)
     for (i = 0; i < 8; i++)
         sprite->data[i] = tempDataHolder[i];
 
-    sprite->callback = sub_8078D8C;
+    sprite->callback = InitAnimFastLinearTranslationWithSpeedAndPos;
     StoreSpriteCallbackInData6(sprite, AnimSwirlingSnowball_Step1);
 }
 
@@ -780,7 +780,7 @@ static void AnimSwirlingSnowball_Step2(struct Sprite *sprite)
 static void AnimSwirlingSnowball_End(struct Sprite *sprite)
 {
     sprite->data[0] = 1;
-    sub_8078CE8(sprite);
+    AnimFastTranslateLinear(sprite);
 
     if ((u32)(sprite->x + sprite->x2 + 16) > 272
      || sprite->y + sprite->y2 > 256
@@ -825,7 +825,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
         sprite->data[2] += gBattleAnimArgs[2];
 
     sprite->data[4] += gBattleAnimArgs[3];
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     for (i = 0; i < 8; i++)
         tempDataHolder[i] = sprite->data[i];
 
@@ -835,7 +835,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
     while (1)
     {
         sprite->data[0] = 1;
-        sub_8078CE8(sprite);
+        AnimFastTranslateLinear(sprite);
         if ((u32)(sprite->x + sprite->x2 + 16) > 272
          || sprite->y + sprite->y2 > 160
          || sprite->y + sprite->y2 < -16)
@@ -858,7 +858,7 @@ static void AnimMoveParticleBeyondTarget(struct Sprite *sprite)
 // Moves particles in a sine wave towards the target.
 static void AnimWiggleParticleTowardsTarget(struct Sprite *sprite)
 {
-    sub_8078CE8(sprite);
+    AnimFastTranslateLinear(sprite);
     if (sprite->data[0] == 0)
         sprite->data[0] = 1;
 

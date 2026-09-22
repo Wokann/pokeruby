@@ -4065,7 +4065,7 @@ static void AnimAssistPawprint(struct Sprite *sprite)
     sprite->data[4] = gBattleAnimArgs[3];
     sprite->data[0] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
-    sprite->callback = sub_8078CC0;
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
 }
 
 void sub_8130554(u8 taskId)

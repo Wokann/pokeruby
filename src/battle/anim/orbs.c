@@ -305,7 +305,7 @@ void sub_80CAA14(struct Sprite* sprite)
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
-    sub_8078D60(sprite);
+    InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[5] = Random() & 0xFF;
     sprite->data[6] = sprite->subpriority;
     sprite->callback = sub_80CAACC;
@@ -314,7 +314,7 @@ void sub_80CAA14(struct Sprite* sprite)
 
 static void sub_80CAACC(struct Sprite* sprite)
 {
-    if (sub_8078CE8(sprite))
+    if (AnimFastTranslateLinear(sprite))
     {
         DestroyAnimSprite(sprite);
     }

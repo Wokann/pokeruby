@@ -7578,19 +7578,19 @@ RecoverAbsorbEffect:
 
 Move_MIMIC: @ 81D1FC9
 	loadspritegfx ANIM_TAG_ORBS
-	monbg_22 ANIM_BATTLER_DEF_PARTNER
+	monbg_static ANIM_BATTLER_DEF_PARTNER
 	setalpha 11, 5
-	panse_1B SE_M_MINIMIZE, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, 253, 0
-	createvisualtask sub_80CB340, 5, 128, 24
+	panse SE_M_MINIMIZE, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, -3, 0
+	shrink_target_copy unk0=128, unk1=24
 	delay 15
-	createsprite gBattleAnimSpriteTemplate_83D65E8, ANIM_BATTLER_TARGET, 2, -12, 24
+	create_mimic_orb_sprite ANIM_BATTLER_TARGET, 2, initial_x=-12, initial_y=24
 	delay 10
 	setarg ARG_RET_ID, -1
 	waitforvisualfinish
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 0, 2, 0, 11, 32767
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_WHITE
 	waitforvisualfinish
-	clearmonbg_23 ANIM_BATTLER_DEF_PARTNER
+	clearmonbg_static ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
 
