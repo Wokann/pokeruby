@@ -67,7 +67,7 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_ShowCutGrass
 	.4byte gFieldEffectScript_FieldMoveShowMonInit
 	.4byte gFieldEffectScript_UseFlyAncientTomb
-	.4byte gFieldEffectScript_SecretBasePCTurnOn
+	.4byte gFieldEffectScript_SecretBaseBootPC
 	.4byte gFieldEffectScript_HallOfFameRecord
 	.4byte gFieldEffectScript_UseTeleport
 
@@ -317,7 +317,7 @@ gFieldEffectScript_UseFlyAncientTomb: @ 81D9E26
 	callnative FldEff_UseFlyAncientTomb
 	end
 
-gFieldEffectScript_SecretBasePCTurnOn: @ 81D9E2C
+gFieldEffectScript_SecretBaseBootPC: @ 81D9E2C
 	callnative FldEff_SecretBasePCTurnOn
 	end
 

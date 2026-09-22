@@ -8,51 +8,60 @@
 #include "sound.h"
 #include "task.h"
 #include "constants/field_effects.h"
+#include "constants/metatile_labels.h"
 #include "constants/songs.h"
 
 static void Task_SecretBasePCTurnOn(u8);
 
-u32 FldEff_SecretBasePCTurnOn(void)
+#define tX     data[0]
+#define tY     data[1]
+#define tState data[2]
+
+bool8 FldEff_SecretBasePCTurnOn(void)
 {
     s16 x, y;
     u8 taskId;
 
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     taskId = CreateTask(Task_SecretBasePCTurnOn, 0);
-    gTasks[taskId].data[0] = x;
-    gTasks[taskId].data[1] = y;
-    gTasks[taskId].data[2] = 0;
+    gTasks[taskId].tX = x;
+    gTasks[taskId].tY = y;
+    gTasks[taskId].tState = 0;
 
-    return 0;
+    return FALSE;
 }
 
 static void Task_SecretBasePCTurnOn(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[2])
+    switch (tState)
     {
     case 4:
     case 12:
-        MapGridSetMetatileIdAt(data[0], data[1], 548);
-        CurrentMapDrawMetatileAt(data[0], data[1]);
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC_On);
+        CurrentMapDrawMetatileAt(tX, tY);
         break;
     case 8:
     case 16:
-        MapGridSetMetatileIdAt(data[0], data[1], 544);
-        CurrentMapDrawMetatileAt(data[0], data[1]);
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC);
+        CurrentMapDrawMetatileAt(tX, tY);
         break;
     case 20:
-        MapGridSetMetatileIdAt(data[0], data[1], 548);
-        CurrentMapDrawMetatileAt(data[0], data[1]);
-        FieldEffectActiveListRemove(FLDEFF_SECRET_BASE_PC_TURN_ON);
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC_On);
+        CurrentMapDrawMetatileAt(tX, tY);
+        FieldEffectActiveListRemove(FLDEFF_PCTURN_ON);
         ScriptContext_Enable();
         DestroyTask(taskId);
         return;
     }
 
-    data[2]++;
+    tState++;
 }
+
+#undef tX
+#undef tY
+#undef tState
 
 void DoSecretBasePCTurnOffEffect(void)
 {
@@ -62,9 +71,9 @@ void DoSecretBasePCTurnOffEffect(void)
     PlaySE(SE_PC_OFF);
 
     if (!VarGet(VAR_CURRENT_SECRET_BASE))
-        MapGridSetMetatileIdAt(x, y, 3616);
+        MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_PC | MAPGRID_COLLISION_MASK);
     else
-        MapGridSetMetatileIdAt(x, y, 3617);
+        MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_RegisterPC | MAPGRID_COLLISION_MASK);
 
     CurrentMapDrawMetatileAt(x, y);
 }

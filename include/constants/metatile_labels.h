@@ -285,6 +285,9 @@
 
 // gTileset_SecretBase
 #define METATILE_SecretBase_Ground                      0x20A
+#define METATILE_SecretBase_PC                          0x220
+#define METATILE_SecretBase_PC_On                       0x224
+#define METATILE_SecretBase_RegisterPC                  0x221
 #define METATILE_SecretBase_SandOrnament_BrokenBase     0x28C
 #define METATILE_SecretBase_SandOrnament_BrokenTop      0x284
 #define METATILE_SecretBase_SandOrnament_TopWall        0x286
