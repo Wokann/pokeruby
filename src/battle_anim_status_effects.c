@@ -23,9 +23,7 @@ extern const struct OamData gOamData_AffineOff_ObjBlend_64x64;
 extern const struct OamData gOamData_AffineOff_ObjNormal_8x8;
 
 extern u8 GetBattlerSpriteCoord(u8, u8);
-extern void sub_80E32E0(u8);
-
-
+extern void InitStatsChangeAnimation(u8);
 static const struct Subsprite sFrozenIceCubeSubsprites[] =
 {
     {.x = -16, .y = -16, .shape = ST_OAM_SQUARE,      .size = 3, .tileOffset =   0, .priority = 2},
@@ -277,7 +275,7 @@ static void AnimTask_FrozenIceCube_Step4(u8 taskId)
     }
 }
 
-void sub_807BB88(u8 taskId)
+void AnimTask_StatsChange(u8 taskId)
 {
     s16 r5;
     s16 r2;
@@ -328,8 +326,8 @@ void sub_807BB88(u8 taskId)
     gBattleAnimArgs[2] = 0;
     gBattleAnimArgs[3] = 0;
     gBattleAnimArgs[4] = r3;
-    gTasks[taskId].func = sub_80E32E0;
-    sub_80E32E0(taskId);
+    gTasks[taskId].func = InitStatsChangeAnimation;
+    InitStatsChangeAnimation(taskId);
 }
 
 void move_anim_start_t2(u8 a, u8 b)

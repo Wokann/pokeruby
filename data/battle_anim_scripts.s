@@ -10320,7 +10320,7 @@ CastformChangeSkipAnim:
 	end
 
 General_StatsChange: @ 81D63EA
-	createvisualtask sub_807BB88, 5
+	createvisualtask AnimTask_StatsChange, 5
 	waitforvisualfinish
 	end
 
