@@ -8296,38 +8296,38 @@ MorningSunStar:
 Move_SWEET_SCENT: @ 81D3100
 	loadspritegfx ANIM_TAG_PINK_PETAL
 	playsewithpan SE_M_SWEET_SCENT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 100, 0, 100
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 100, 0, 100
 	delay 25
 	setpan 0
-	call _81D3144
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 55, 0
+	call SweetScentEffect
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 55, 0
 	setpan SOUND_PAN_TARGET
-	createvisualtask AnimTask_BlendColorCycle, 2, 20, 1, 5, 5, 13, 22207
-	call _81D3144
+	blend_color_cycle priority=2, selector=F_PAL_DEF_SIDE, delay=1, num_blends=5, initial_blend_y=5, target_blend_y=13, color=RGB(31, 21, 21)
+	call SweetScentEffect
 	waitforvisualfinish
 	end
-_81D3144:
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 70, 1, 64
+SweetScentEffect:
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 70, 1, 64
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 60, 0, 64
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 60, 0, 64
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 80, 1, 64
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 80, 1, 64
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 58, 0, 120
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 58, 0, 120
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 100, 0, 120
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 100, 0, 120
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 90, 0, 64
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 90, 0, 64
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 48, 0, 64
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 48, 0, 64
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 95, 1, 80
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 95, 1, 80
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 100, 0, 120
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 100, 0, 120
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 75, 1, 64
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 75, 1, 64
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_84026A4, ANIM_BATTLER_ATTACKER, 2, 85, 0, 120
+	createsprite gSweetScentPetalSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 85, 0, 120
 	delay 2
 	return
 

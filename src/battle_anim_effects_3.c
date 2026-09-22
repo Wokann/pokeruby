@@ -71,7 +71,7 @@ static void AnimGreenStar_Step1(struct Sprite *sprite);
 static void AnimGreenStar_Step2(struct Sprite *sprite);
 static void AnimGreenStar_Callback(struct Sprite *sprite);
 static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
-static void sub_812E7F0(struct Sprite *sprite);
+static void AnimSweetScentPetal_Step(struct Sprite *sprite);
 static void sub_812E8B4(u8 taskId);
 static void sub_812ED24(struct Sprite *sprite);
 static void sub_812EE00(struct Sprite *sprite);
@@ -117,7 +117,7 @@ static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void AnimGreenStar(struct Sprite *sprite);
 static void AnimSwallowBlueOrb(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
-static void sub_812E7A0(struct Sprite *sprite);
+static void AnimSweetScentPetal(struct Sprite *sprite);
 static void AnimPainSplitProjectile(struct Sprite *sprite);
 static void sub_812EC78(struct Sprite *sprite);
 static void sub_812ED84(struct Sprite *sprite);
@@ -690,7 +690,7 @@ const struct SpriteTemplate gWeakFrustrationAngerMarkSpriteTemplate =
     .callback = AnimWeakFrustrationAngerMark,
 };
 
-const union AnimCmd gSpriteAnim_8402648[] =
+const union AnimCmd gSweetScentPetalAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(1, 8),
@@ -703,7 +703,7 @@ const union AnimCmd gSpriteAnim_8402648[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_840266C[] =
+const union AnimCmd gSweetScentPetalAnimCmds2[] =
 {
     ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
     ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
@@ -716,28 +716,28 @@ const union AnimCmd gSpriteAnim_840266C[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_8402690[] =
+const union AnimCmd gSweetScentPetalAnimCmds3[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_8402698[] =
+const union AnimCmd *const gSweetScentPetalAnimCmdTable[] =
 {
-    gSpriteAnim_8402648,
-    gSpriteAnim_840266C,
-    gSpriteAnim_8402690,
+    gSweetScentPetalAnimCmds1,
+    gSweetScentPetalAnimCmds2,
+    gSweetScentPetalAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84026A4 =
+const struct SpriteTemplate gSweetScentPetalSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PINK_PETAL,
     .paletteTag = ANIM_TAG_PINK_PETAL,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_8402698,
+    .anims = gSweetScentPetalAnimCmdTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812E7A0,
+    .callback = AnimSweetScentPetal,
 };
 
 const u16 gUnknown_4026BC[] = INCBIN_U16("graphics/unknown/unknown_4026BC.gbapal");
@@ -2807,7 +2807,7 @@ static void AnimTask_RockMonBackAndForth_Step(u8 taskId)
     }
 }
 
-static void sub_812E7A0(struct Sprite *sprite)
+static void AnimSweetScentPetal(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
@@ -2816,16 +2816,16 @@ static void sub_812E7A0(struct Sprite *sprite)
     }
     else
     {
-        sprite->x = 240;
+        sprite->x = DISPLAY_WIDTH;
         sprite->y = gBattleAnimArgs[0] - 30;
     }
 
     sprite->data[2] = gBattleAnimArgs[2];
     StartSpriteAnim(sprite, gBattleAnimArgs[1]);
-    sprite->callback = sub_812E7F0;
+    sprite->callback = AnimSweetScentPetal_Step;
 }
 
-static void sub_812E7F0(struct Sprite *sprite)
+static void AnimSweetScentPetal_Step(struct Sprite *sprite)
 {
     sprite->data[0] += 3;
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
@@ -2833,7 +2833,7 @@ static void sub_812E7F0(struct Sprite *sprite)
         sprite->x += 5;
         sprite->y -= 1;
 
-        if (sprite->x > 240)
+        if (sprite->x > DISPLAY_WIDTH)
             DestroyAnimSprite(sprite);
 
         sprite->y2 = Sin(sprite->data[0] & 0xFF, 16);
