@@ -577,7 +577,7 @@ const union AffineAnimCmd gStockpileDeformMonAffineAnimCmds[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gUnknown_08402540[] =
+const union AffineAnimCmd gSpitUpDeformMonAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0, 6, 0, 20),
     AFFINEANIMCMD_FRAME(0, 0, 0, 20),
@@ -2207,11 +2207,11 @@ void AnimTask_StockpileDeformMon(u8 taskId)
     }
 }
 
-void sub_812D6CC(u8 taskId)
+void AnimTask_SpitUpDeformMon(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402540);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), gSpitUpDeformMonAffineAnimCmds);
         gTasks[taskId].data[0]++;
     }
     else

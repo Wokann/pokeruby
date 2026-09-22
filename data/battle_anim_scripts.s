@@ -8173,48 +8173,48 @@ Move_SPIT_UP: @ 81D2E65
 	loadspritegfx ANIM_TAG_RED_ORB_2
 	loadspritegfx ANIM_TAG_IMPACT
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_812D6CC, 5
+	createvisualtask AnimTask_SpitUpDeformMon, 5
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 8, 2
 	delay 45
 	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 0, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 32, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 64, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 96, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 128, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 160, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 192, 12
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 224, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 64, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 96, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 128, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 160, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 192, 12
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 224, 12
 	delay 5
-	jumpifmoveturn 2, _81D2F32
-	jumpifmoveturn 3, _81D2F5B
-_81D2EF5:
+	jumpifmoveturn 2, SpitUpStrong
+	jumpifmoveturn 3, SpitUpStrongest
+SpitUpContinue:
 	delay 5
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 8, 1, 0
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -12, 10, 1, 1
+	create_flashing_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-12, y=10, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 5
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 12, -10, 1, 1
+	create_flashing_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=12, y=-10, relative_to=ANIM_BATTLER_TARGET, animation=1
 	waitforvisualfinish
 	end
-_81D2F32:
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 16
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 80
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 144
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 208
-	goto _81D2EF5
-_81D2F5B:
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 16
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 48
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 80
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 112
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 144
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 176
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 208
-	createsprite gBattleAnimSpriteTemplate_83D7B60, ANIM_BATTLER_ATTACKER, 2, 240
-	goto _81D2EF5
+SpitUpStrong:
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 208
+	goto SpitUpContinue
+SpitUpStrongest:
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 48
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 80
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 112
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 144
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 176
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 208
+	createsprite gSpitUpOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 240
+	goto SpitUpContinue
 
 Move_SWALLOW: @ 81D2FA8
 	loadspritegfx ANIM_TAG_BLUE_ORB
