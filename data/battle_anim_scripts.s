@@ -8574,26 +8574,26 @@ Move_MUDDY_WATER: @ 81D3764
 
 Move_BULLET_SEED: @ 81D3776
 	loadspritegfx ANIM_TAG_SEED
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 30, 1
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	delay 5
-	createsprite gBattleAnimSpriteTemplate_83D7628, ANIM_BATTLER_TARGET, 2, 20, 0
+	createsprite gBulletSeedSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0
 	waitforvisualfinish
 	end
 
