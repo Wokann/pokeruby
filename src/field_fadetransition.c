@@ -405,7 +405,7 @@ void sub_8080EF0(void)
 void DoFallWarp(void)
 {
     DoDiveWarp();
-    gFieldCallback = sub_8086748;
+    gFieldCallback = FieldCB_FallWarpExit;
 }
 
 void sub_8080F2C(u8 metatileBehavior)
@@ -417,13 +417,13 @@ void sub_8080F2C(u8 metatileBehavior)
 void sub_8080F48(void)
 {
     LockPlayerFieldControls();
-    sub_80871B8(10);
+    StartLavaridgeGymB1FWarp(10);
 }
 
 void sub_8080F58(void)
 {
     LockPlayerFieldControls();
-    sub_8087654(10);
+    StartLavaridgeGym1FWarp(10);
 }
 
 void sub_8080F68(void)

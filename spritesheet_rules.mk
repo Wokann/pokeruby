@@ -520,7 +520,7 @@ $(FIELDEFFGFXDIR)/jump_small_splash.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/jump_tall_grass.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 1
 
-$(FIELDEFFGFXDIR)/lavaridge_gym_warp.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/ash_launch.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/long_grass.4bpp: %.4bpp: %.png
@@ -529,7 +529,7 @@ $(FIELDEFFGFXDIR)/long_grass.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/mountain_disguise.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
-$(FIELDEFFGFXDIR)/pop_out_of_ash.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/ash_puff.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/ripple.4bpp: %.4bpp: %.png

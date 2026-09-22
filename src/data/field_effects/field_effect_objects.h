@@ -797,15 +797,15 @@ const union AnimCmd *const gFieldEffectAnimTable_HotSpringsWater[] = {
 
 const struct SpriteTemplate gFieldEffectSpriteTemplate_HotSpringsWater = {0xFFFF, 0x1005, &gFieldOamData_16x16, gFieldEffectAnimTable_HotSpringsWater, gFieldEffectPicTable_HotSpringsWater, gDummySpriteAffineAnimTable, UpdateHotSpringsWaterFieldEffect};
 
-const struct SpriteFrameImage gFieldEffectPicTable_PopOutOfAsh[] = {
-    overworld_frame(gFieldEffectPic_PopOutOfAsh, 2, 2, 0),
-    overworld_frame(gFieldEffectPic_PopOutOfAsh, 2, 2, 1),
-    overworld_frame(gFieldEffectPic_PopOutOfAsh, 2, 2, 2),
-    overworld_frame(gFieldEffectPic_PopOutOfAsh, 2, 2, 3),
-    overworld_frame(gFieldEffectPic_PopOutOfAsh, 2, 2, 4)
+const struct SpriteFrameImage gFieldEffectPicTable_AshPuff[] = {
+    overworld_frame(gFieldEffectPic_AshPuff, 2, 2, 0),
+    overworld_frame(gFieldEffectPic_AshPuff, 2, 2, 1),
+    overworld_frame(gFieldEffectPic_AshPuff, 2, 2, 2),
+    overworld_frame(gFieldEffectPic_AshPuff, 2, 2, 3),
+    overworld_frame(gFieldEffectPic_AshPuff, 2, 2, 4)
 };
 
-const union AnimCmd gFieldEffectAnim_83750B0[] = {
+const union AnimCmd gFieldEffectAnim_AshPuff[] = {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
     ANIMCMD_FRAME(2, 6),
@@ -814,23 +814,23 @@ const union AnimCmd gFieldEffectAnim_83750B0[] = {
     ANIMCMD_END
 };
 
-const union AnimCmd *const gFieldEffectAnimTable_PopOutOfAsh[] = {
-    gFieldEffectAnim_83750B0
+const union AnimCmd *const gFieldEffectAnimTable_AshPuff[] = {
+    gFieldEffectAnim_AshPuff
 };
 
-const struct SpriteTemplate gFieldEffectSpriteTemplate_PopOutOfAsh = {0xFFFF, 0x100D, &gFieldOamData_16x16, gFieldEffectAnimTable_PopOutOfAsh, gFieldEffectPicTable_PopOutOfAsh, gDummySpriteAffineAnimTable, sub_808788C};
+const struct SpriteTemplate gFieldEffectSpriteTemplate_AshPuff = {0xFFFF, FLDEFF_PAL_TAG_ASH, &gFieldOamData_16x16, gFieldEffectAnimTable_AshPuff, gFieldEffectPicTable_AshPuff, gDummySpriteAffineAnimTable, SpriteCB_AshPuff};
 
-const struct SpritePalette gFieldEffectObjectPaletteInfo2 = {gFieldEffectObjectPalette2, 0x100D};
+const struct SpritePalette gSpritePalette_Ash = {gFieldEffectPal_Ash, FLDEFF_PAL_TAG_ASH};
 
-const struct SpriteFrameImage gFieldEffectPicTable_LavaridgeGymWarp[] = {
-    overworld_frame(gFieldEffectPic_LavaridgeGymWarp, 2, 2, 0),
-    overworld_frame(gFieldEffectPic_LavaridgeGymWarp, 2, 2, 1),
-    overworld_frame(gFieldEffectPic_LavaridgeGymWarp, 2, 2, 2),
-    overworld_frame(gFieldEffectPic_LavaridgeGymWarp, 2, 2, 3),
-    overworld_frame(gFieldEffectPic_LavaridgeGymWarp, 2, 2, 4)
+const struct SpriteFrameImage gFieldEffectPicTable_AshLaunch[] = {
+    overworld_frame(gFieldEffectPic_AshLaunch, 2, 2, 0),
+    overworld_frame(gFieldEffectPic_AshLaunch, 2, 2, 1),
+    overworld_frame(gFieldEffectPic_AshLaunch, 2, 2, 2),
+    overworld_frame(gFieldEffectPic_AshLaunch, 2, 2, 3),
+    overworld_frame(gFieldEffectPic_AshLaunch, 2, 2, 4)
 };
 
-const union AnimCmd gFieldEffectAnim_8375114[] = {
+const union AnimCmd gFieldEffectAnim_AshLaunch[] = {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
     ANIMCMD_FRAME(2, 6),
@@ -839,11 +839,11 @@ const union AnimCmd gFieldEffectAnim_8375114[] = {
     ANIMCMD_END
 };
 
-const union AnimCmd *const gFieldEffectAnimTable_LavaridgeGymWarp[] = {
-    gFieldEffectAnim_8375114
+const union AnimCmd *const gFieldEffectAnimTable_AshLaunch[] = {
+    gFieldEffectAnim_AshLaunch
 };
 
-const struct SpriteTemplate gFieldEffectSpriteTemplate_LavaridgeGymWarp = {0xFFFF, 0x100D, &gFieldOamData_16x16, gFieldEffectAnimTable_LavaridgeGymWarp, gFieldEffectPicTable_LavaridgeGymWarp, gDummySpriteAffineAnimTable, sub_8087638};
+const struct SpriteTemplate gFieldEffectSpriteTemplate_AshLaunch = {0xFFFF, FLDEFF_PAL_TAG_ASH, &gFieldOamData_16x16, gFieldEffectAnimTable_AshLaunch, gFieldEffectPicTable_AshLaunch, gDummySpriteAffineAnimTable, SpriteCB_AshLaunch};
 
 const struct SpriteFrameImage gFieldEffectPicTable_Bubbles[] = {
     overworld_frame(gFieldEffectPic_Bubbles, 2, 4, 0),

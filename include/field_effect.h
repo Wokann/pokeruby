@@ -61,7 +61,7 @@ void PokeballGlowEffect_5(struct Sprite *);
 void PokeballGlowEffect_6(struct Sprite *);
 void PokeballGlowEffect_7(struct Sprite *);
 
-void sub_8086748(void);
+void FieldCB_FallWarpExit(void);
 
 bool8 sub_80867AC(struct Task *);
 bool8 sub_8086854(struct Task *);
@@ -98,27 +98,27 @@ bool8 sub_8087124(struct Task *);
 bool8 dive_2_unknown(struct Task *);
 bool8 dive_3_unknown(struct Task *);
 
-void sub_80871B8(u8);
+void StartLavaridgeGymB1FWarp(u8);
 
-bool8 sub_808722C(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_8087264(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_8087298(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80872E4(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80873D8(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80873F4(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_CameraShake(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_FadeOut(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *, struct ObjectEvent *, struct Sprite *);
 
-bool8 sub_80874CC(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80874FC(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_8087548(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_808759C(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *, struct ObjectEvent *, struct Sprite *);
 
-void sub_8087654(u8);
+void StartLavaridgeGym1FWarp(u8);
 
-bool8 sub_80876C8(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80876F8(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_8087774(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80877AC(struct Task *, struct ObjectEvent *, struct Sprite *);
-bool8 sub_80877D4(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGym1FWarpEffect_Init(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *, struct ObjectEvent *, struct Sprite *);
+bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *, struct ObjectEvent *, struct Sprite *);
 
 void sub_8087AA4(struct Task *);
 void sub_8087AC8(struct Task *);

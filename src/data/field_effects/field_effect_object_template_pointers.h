@@ -37,8 +37,8 @@ const struct SpriteTemplate gFieldEffectSpriteTemplate_SandDisguisePlaceholder;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_SandPile;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_ShortGrass;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_HotSpringsWater;
-const struct SpriteTemplate gFieldEffectSpriteTemplate_PopOutOfAsh;
-const struct SpriteTemplate gFieldEffectSpriteTemplate_LavaridgeGymWarp;
+const struct SpriteTemplate gFieldEffectSpriteTemplate_AshPuff;
+const struct SpriteTemplate gFieldEffectSpriteTemplate_AshLaunch;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_Bubbles;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_Sparkle;
 
@@ -75,8 +75,8 @@ const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[] = {
     &gFieldEffectSpriteTemplate_SandPile,
     &gFieldEffectSpriteTemplate_ShortGrass,
     &gFieldEffectSpriteTemplate_HotSpringsWater,
-    &gFieldEffectSpriteTemplate_PopOutOfAsh,
-    &gFieldEffectSpriteTemplate_LavaridgeGymWarp,
+    &gFieldEffectSpriteTemplate_AshPuff,
+    &gFieldEffectSpriteTemplate_AshLaunch,
     &gFieldEffectSpriteTemplate_Bubbles,
     &gFieldEffectSpriteTemplate_Sparkle
 };

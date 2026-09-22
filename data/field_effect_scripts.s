@@ -55,8 +55,8 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_HeartIcon
 	.4byte gFieldEffectScript_Nop47
 	.4byte gFieldEffectScript_Nop48
-	.4byte gFieldEffectScript_PopOutOfAsh
-	.4byte gFieldEffectScript_LavaridgeGymWarp
+	.4byte gFieldEffectScript_AshPuff
+	.4byte gFieldEffectScript_AshLaunch
 	.4byte gFieldEffectScript_SweetScent
 	.4byte gFieldEffectScript_SandPillar
 	.4byte gFieldEffectScript_Bubbles
@@ -269,12 +269,12 @@ gFieldEffectScript_Nop48: @ 81D9DBA
 	callnative FldEff_Nop48
 	end
 
-gFieldEffectScript_PopOutOfAsh: @ 81D9DC0
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo2, FldEff_PopOutOfAsh
+gFieldEffectScript_AshPuff: @ 81D9DC0
+	loadfadedpal_callnative gSpritePalette_Ash, FldEff_AshPuff
 	end
 
-gFieldEffectScript_LavaridgeGymWarp: @ 81D9DCA
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo2, FldEff_LavaridgeGymWarp
+gFieldEffectScript_AshLaunch: @ 81D9DCA
+	loadfadedpal_callnative gSpritePalette_Ash, FldEff_AshLaunch
 	end
 
 gFieldEffectScript_SweetScent: @ 81D9DD4

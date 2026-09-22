@@ -50,8 +50,8 @@
 #define FLDEFF_HEART_ICON                46
 #define FLDEFF_NOP_47                    47
 #define FLDEFF_NOP_48                    48
-#define FLDEFF_POP_OUT_OF_ASH            49
-#define FLDEFF_LAVARIDGE_GYM_WARP        50
+#define FLDEFF_ASH_PUFF                  49
+#define FLDEFF_ASH_LAUNCH                50
 #define FLDEFF_SWEET_SCENT               51
 #define FLDEFF_SAND_PILLAR               52
 #define FLDEFF_BUBBLES                   53
@@ -65,5 +65,10 @@
 #define FLDEFF_SECRET_BASE_PC_TURN_ON    61
 #define FLDEFF_HALL_OF_FAME_RECORD       62
 #define FLDEFF_USE_TELEPORT              63
+
+#define FLDEFFOBJ_ASH_PUFF               32
+#define FLDEFFOBJ_ASH_LAUNCH             33
+
+#define FLDEFF_PAL_TAG_ASH               0x100D
 
 #endif
