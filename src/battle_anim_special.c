@@ -2091,7 +2091,7 @@ void AnimTask_GetTrappedMoveAnimId(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_8141E10(u8 taskId)
+void AnimTask_GetBattlersFromArg(u8 taskId)
 {
     gBattleAnimAttacker = ewram17840.unk0;
     gBattleAnimTarget = ewram17840.unk0 >> 8;

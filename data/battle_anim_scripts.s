@@ -10529,7 +10529,7 @@ General_Hail: @ 81D680E
 	goto Move_HAIL
 
 General_LeechSeedDrain: @ 81D6813
-	createvisualtask sub_8141E10, 5
+	createvisualtask AnimTask_GetBattlersFromArg, 5
 	delay 0
 	goto Move_ABSORB
 
