@@ -9704,7 +9704,7 @@ Move_MAGICAL_LEAF: @ 81D5699
 	setalpha 12, 8
 	delay 1
 	loopsewithpan SE_M_POISON_POWDER, SOUND_PAN_ATTACKER, 10, 5
-	createvisualtask sub_80CC5F8, 5
+	createvisualtask AnimTask_CycleMagicalLeafPal, 5
 	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-3, upward_delta_y=-2, upward_duration=10
 	delay 2
 	create_razor_leaf_particle_sprite ANIM_BATTLER_ATTACKER, 2, upward_delta_x=-1, upward_delta_y=-1, upward_duration=15
@@ -9730,8 +9730,8 @@ Move_MAGICAL_LEAF: @ 81D5699
 	create_razor_leaf_cutter_sprite ANIM_BATTLER_TARGET, 3, initial_x=20, initial_y=-10, target_x=20, target_y=0, duration=32, wave_amplitude=-20, target_both=FALSE
 	delay 30
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, -10, -4, 1, 2
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, 10, 4, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 4, x=-10, y=-4, relative_to=ANIM_BATTLER_TARGET, animation=2
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 4, x=10, y=4, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 2, 0, 8, 1
 	delay 20
 	setarg ARG_RET_ID, -1

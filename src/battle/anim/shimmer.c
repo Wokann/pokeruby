@@ -4,6 +4,7 @@
 #include "battle_anim.h"
 #include "sound.h"
 #include "blend_palette.h"
+#include "palette.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -23,14 +24,14 @@ static const u16 sMagicalLeafBlendColors[] =
     RGB(22, 21, 31),
 };
 
-void sub_80CC5F8(u8 taskId)
+void AnimTask_CycleMagicalLeafPal(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     switch (task->data[0])
     {
     case 0:
-        task->data[8] = IndexOfSpritePaletteTag(0x274f) * 16 + 256;
-        task->data[12] = IndexOfSpritePaletteTag(0x27b0) * 16 + 256;
+        task->data[8] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_LEAF));
+        task->data[12] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_RAZOR_LEAF));
         task->data[0]++;
         break;
     case 1:
