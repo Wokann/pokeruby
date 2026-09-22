@@ -141,7 +141,7 @@ static const union AnimCmd sAnim_WaterPulseBubble_1[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D93A0[] =
+static const union AnimCmd sAnim_WeatherBallWaterDown[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
@@ -153,9 +153,9 @@ static const union AnimCmd *const sAnims_WaterPulseBubble[] =
     sAnim_WaterPulseBubble_1,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D93B0[] =
+static const union AnimCmd *const sAnims_WeatherBallWaterDown[] =
 {
-    gSpriteAnim_83D93A0,
+    sAnim_WeatherBallWaterDown,
 };
 
 static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_0[] =
@@ -172,7 +172,7 @@ static const union AffineAnimCmd sAffineAnim_WaterPulseRingBubble_1[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D93E4[] =
+static const union AffineAnimCmd sAffineAnim_WeatherBallWaterDown[] =
 {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 15),
@@ -185,9 +185,9 @@ static const union AffineAnimCmd *const sAffineAnims_WaterPulseRingBubble[] =
     sAffineAnim_WaterPulseRingBubble_1,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9404[] =
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallWaterDown[] =
 {
-    gSpriteAffineAnim_83D93E4,
+    sAffineAnim_WeatherBallWaterDown,
 };
 
 const struct SpriteTemplate gWaterPulseBubbleSpriteTemplate =
@@ -212,15 +212,15 @@ const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate =
     .callback = AnimWaterPulseRingBubble,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9438 =
+const struct SpriteTemplate gWeatherBallWaterDownSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D93B0,
+    .anims = sAnims_WeatherBallWaterDown,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9404,
-    .callback = sub_807A9BC,
+    .affineAnims = sAffineAnims_WeatherBallWaterDown,
+    .callback = AnimWeatherBallDown,
 };
 
 static void AnimWaterGunDroplet(struct Sprite *sprite)

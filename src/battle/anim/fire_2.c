@@ -28,7 +28,7 @@ static void CreateEruptionLaunchRocks(u8 spriteId, u8 taskId, u8 activeSpritesId
 static void UpdateEruptionLaunchRockPos(struct Sprite *sprite);
 static void AnimEruptionFallingRock_Step(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D95C8[] =
+static const union AnimCmd sAnim_BasicFire[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(16, 4),
@@ -38,9 +38,9 @@ const union AnimCmd gSpriteAnim_83D95C8[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D95E0[] =
+const union AnimCmd *const gAnims_BasicFire[] =
 {
-    gSpriteAnim_83D95C8,
+    sAnim_BasicFire,
 };
 
 const struct SpriteTemplate gEmberSpriteTemplate =
@@ -59,7 +59,7 @@ const struct SpriteTemplate gEmberFlareSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimEmberFlare,
@@ -70,7 +70,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9614 =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = sub_80D5210,
@@ -81,7 +81,7 @@ const struct SpriteTemplate gFireBlastRingSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimFireRing,
@@ -133,21 +133,21 @@ const struct SpriteTemplate gFireSpiralOutwardSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimFireSpiralOutward,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D96AC =
+const struct SpriteTemplate gWeatherBallFireDownSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 

@@ -2351,7 +2351,9 @@ static void AnimBattlerTrace(struct Sprite *sprite)
 
 // file_4
 
-void sub_807A908(struct Sprite *sprite) {
+static void AnimWeatherBallUp_Step(struct Sprite *sprite);
+
+void AnimWeatherBallUp(struct Sprite *sprite) {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     if (!GetBattlerSide(gBattleAnimAttacker))
@@ -2359,10 +2361,10 @@ void sub_807A908(struct Sprite *sprite) {
     else
         sprite->data[0] = -10;
     sprite->data[1] = -40;
-    sprite->callback = sub_807A960;
+    sprite->callback = AnimWeatherBallUp_Step;
 }
 
-void sub_807A960(struct Sprite *sprite)
+static void AnimWeatherBallUp_Step(struct Sprite *sprite)
 {
     sprite->data[2] += sprite->data[0];
     sprite->data[3] += sprite->data[1];
@@ -2374,7 +2376,7 @@ void sub_807A960(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_807A9BC(struct Sprite *sprite)
+void AnimWeatherBallDown(struct Sprite *sprite)
 {
     int x;
     sprite->data[0] = gBattleAnimArgs[2];

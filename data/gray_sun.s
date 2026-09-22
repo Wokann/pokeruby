@@ -3,19 +3,21 @@
 
 	.section .rodata
 
+	.equ ANIM_TAG_WEATHER_BALL, 10283
+
 	.align 2
-gSpriteAnim_839309C:: @ 839309C
+sAnim_WeatherBallNormal:: @ 839309C
 	obj_image_anim_frame 0, 3
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_83930A4:: @ 83930A4
-	.4byte gSpriteAnim_839309C
+sAnims_WeatherBallNormal:: @ 83930A4
+	.4byte sAnim_WeatherBallNormal
 
 	.align 2
-gBattleAnimSpriteTemplate_83930A8:: @ 83930A8
-	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, sub_807A908
+gWeatherBallUpSpriteTemplate:: @ 83930A8
+	spr_template ANIM_TAG_WEATHER_BALL, ANIM_TAG_WEATHER_BALL, gOamData_AffineOff_ObjNormal_32x32, sAnims_WeatherBallNormal, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallUp
 
 	.align 2
-gBattleAnimSpriteTemplate_83930C0:: @ 83930C0
-	spr_template 10283, 10283, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_83930A4, NULL, gDummySpriteAffineAnimTable, sub_807A9BC
+gWeatherBallNormalDownSpriteTemplate:: @ 83930C0
+	spr_template ANIM_TAG_WEATHER_BALL, ANIM_TAG_WEATHER_BALL, gOamData_AffineOff_ObjNormal_32x32, sAnims_WeatherBallNormal, NULL, gDummySpriteAffineAnimTable, AnimWeatherBallDown

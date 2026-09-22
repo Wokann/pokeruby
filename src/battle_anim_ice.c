@@ -37,7 +37,7 @@ static void InitSwirlingFogAnim(struct Sprite *sprite);
 static void AnimThrowMistBall(struct Sprite *sprite);
 static void InitPoisonGasCloudAnim(struct Sprite *sprite);
 static void AnimHailBegin(struct Sprite *sprite);
-void sub_807A9BC(struct Sprite *sprite);
+void AnimWeatherBallDown(struct Sprite *sprite);
 static void InitIceBallAnim(struct Sprite *sprite);
 static void InitIceBallParticle(struct Sprite *sprite);
 static void AnimSwirlingSnowball(struct Sprite *sprite);
@@ -451,7 +451,7 @@ const struct SpriteTemplate gHailParticleSpriteTemplate =
     .callback = AnimHailBegin,
 };
 
-const struct SpriteTemplate gWeatherBallHailSpriteTemplate =
+const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HAIL,
     .paletteTag = ANIM_TAG_HAIL,
@@ -459,7 +459,7 @@ const struct SpriteTemplate gWeatherBallHailSpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_83D9E38,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 static const union AnimCmd sAnim_IceBallChunk_0[] =

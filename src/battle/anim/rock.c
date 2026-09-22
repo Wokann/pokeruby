@@ -21,7 +21,7 @@ extern const u8 gBattleAnimBgTilemap_Sandstorm[];
 extern const u8 gBattleAnimBgImage_Sandstorm[];
 extern const u16 gBattleAnimSpritePal_FlyingDirt[];
 extern const union AnimCmd *const gAnims_WaterMudOrb[];
-extern const union AnimCmd *const gSpriteAnimTable_83D95E0[];
+extern const union AnimCmd *const gAnims_BasicFire[];
 
 extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 
@@ -130,7 +130,7 @@ const struct SpriteTemplate gFireSpinSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D95E0,
+    .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimParticleInVortex,
@@ -170,13 +170,13 @@ static const union AnimCmd sAnim_Rock_Bigger[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DAD28[] =
+static const union AnimCmd sAnim_Rock_Big[] =
 {
     ANIMCMD_FRAME(32, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DAD30[] =
+static const union AnimCmd sAnim_Rock_Small[] =
 {
     ANIMCMD_FRAME(48, 1),
     ANIMCMD_END,
@@ -200,10 +200,10 @@ static const union AnimCmd *const sAnims_BasicRockLarge[] =
     sAnim_Rock_Bigger,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAD50[] =
+static const union AnimCmd *const sAnims_WeatherBallRockDown[] =
 {
-    gSpriteAnim_83DAD28,
-    gSpriteAnim_83DAD30,
+    sAnim_Rock_Big,
+    sAnim_Rock_Small,
 };
 
 const union AnimCmd *const gTwisterRockAnimTable[] =
@@ -307,15 +307,15 @@ const struct SpriteTemplate gTwisterRockSpriteTemplate =
     .callback = AnimMoveTwisterParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE30 =
+const struct SpriteTemplate gWeatherBallRockDownSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD50,
+    .anims = sAnims_WeatherBallRockDown,
     .images = NULL,
     .affineAnims = sAffineAnims_BasicRock,
-    .callback = sub_807A9BC,
+    .callback = AnimWeatherBallDown,
 };
 
 void sub_80DCE9C(struct Sprite *sprite)
