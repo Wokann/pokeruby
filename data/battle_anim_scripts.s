@@ -380,7 +380,7 @@ gBattleAnims_Moves:: @ 81C7168
 	.4byte Move_WATER_PULSE
 	.4byte Move_DOOM_DESIRE
 	.4byte Move_PSYCHO_BOOST
-	.4byte PoundCopy
+	.4byte Move_COUNT @ cannot be reached, because last move is Psycho Boost
 
 	.align 2
 gBattleAnims_StatusConditions:: @ 81C76F8
@@ -9924,12 +9924,12 @@ WeatherBallIce:
 	waitforvisualfinish
 	end
 
-PoundCopy: @ 81D5C05
+Move_COUNT: @ 81D5C05
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 6, 1
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
