@@ -18,7 +18,7 @@ gBattleAI_ScriptsTable:: @ 81DA01C
 	.4byte AI_TryToFaint
 	.4byte AI_SetupFirstTurn
 	.4byte AI_Risky
-	.4byte AI_PreferStrongestMove
+	.4byte AI_PreferPowerExtremes
 	.4byte AI_PreferBatonPass
 	.4byte AI_Nothing
 	.4byte AI_HPAware
@@ -2779,17 +2779,17 @@ AI_SetupFirstTurn_SetupEffectsToEncourage: @ 81DBECF
 	.byte EFFECT_CAMOUFLAGE
 	.byte -1
 
-AI_PreferStrongestMove: @ 81DBF07
-	is_most_powerful_move
-	if_not_equal 0, AI_PreferStrongestMove_End
-	if_random_less_than 100, AI_PreferStrongestMove_End
+AI_PreferPowerExtremes: @ 81DBF07
+	get_how_powerful_move_is
+	if_not_equal MOVE_POWER_OTHER, AI_PreferPowerExtremes_End
+	if_random_less_than 100, AI_PreferPowerExtremes_End
 	score +2
 
-AI_PreferStrongestMove_End: @ 81DBF16
+AI_PreferPowerExtremes_End: @ 81DBF16
 	end
 
 AI_Risky: @ 81DBF17
-	get_effect
+	get_considered_move_effect
 	if_not_in_bytes AI_Risky_EffectsToEncourage, AI_Risky_End
 	if_random_less_than 128, AI_Risky_End
 	score +2
@@ -2820,11 +2820,11 @@ AI_Risky_EffectsToEncourage: @ 81DBF2A
 	.byte -1
 
 AI_PreferBatonPass: @ 81DBF3E
-	count_alive_pokemon USER
+	count_usable_party_mons AI_USER
 	if_equal 0, AI_PreferBatonPass_End
-	is_most_powerful_move
-	if_not_equal 0, AI_PreferBatonPass_End
-	if_move_effect USER, EFFECT_BATON_PASS, AI_PreferBatonPass_GoForBatonPass
+	get_how_powerful_move_is
+	if_not_equal MOVE_POWER_OTHER, AI_PreferBatonPass_End
+	if_move_effect AI_USER, EFFECT_BATON_PASS, AI_PreferBatonPass_GoForBatonPass
 	if_random_less_than 80, AI_Risky_End
 
 AI_PreferBatonPass_GoForBatonPass: @ 81DBF5A
