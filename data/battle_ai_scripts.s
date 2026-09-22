@@ -2307,7 +2307,7 @@ AI_CV_FakeOut: @ 81DBB1B
 	end
 
 AI_CV_SpitUp: @ 81DBB1E
-	get_stockpile_count USER
+	get_stockpile_count AI_USER
 	if_less_than 2, AI_CV_SpitUp_End
 	if_random_less_than 80, AI_CV_SpitUp_End
 	score +2
@@ -2316,16 +2316,16 @@ AI_CV_SpitUp_End: @ 81DBB2E
 	end
 
 AI_CV_Hail: @ 81DBB2F
-	if_hp_less_than USER, 40, AI_CV_Hail_ScoreDown1
+	if_hp_less_than AI_USER, 40, AI_CV_Hail_ScoreDown1
 	get_weather
-	if_equal BATTLE_WEATHER_SUN, AI_CV_Hail2
-	if_equal BATTLE_WEATHER_RAIN, AI_CV_Hail2
-	if_equal BATTLE_WEATHER_SANDSTORM, AI_CV_Hail2
-	jump AI_CV_Hail_End
+	if_equal AI_WEATHER_SUN, AI_CV_Hail2
+	if_equal AI_WEATHER_RAIN, AI_CV_Hail2
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_Hail2
+	goto AI_CV_Hail_End
 
 AI_CV_Hail2: @ 81DBB4E
 	score +1
-	jump AI_CV_Hail_End
+	goto AI_CV_Hail_End
 
 AI_CV_Hail_ScoreDown1: @ 81DBB55
 	score -1
@@ -2334,27 +2334,27 @@ AI_CV_Hail_End: @ 81DBB57
 	end
 
 AI_CV_Facade: @ 81DBB58
-	if_not_status TARGET, PSN | BRN | PAR | TOX, AI_CV_Facade_End
+	if_not_status AI_TARGET, STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, AI_CV_Facade_End
 	score +1
 
 AI_CV_Facade_End: @ 81DBB64
 	end
 
 AI_CV_FocusPunch: @ 81DBB65
-	if_damage_bonus 10, AI_CV_FocusPunch2
-	if_damage_bonus 20, AI_CV_FocusPunch2
-	if_status TARGET, SLP, AI_CV_FocusPunch_ScoreUp1
-	if_status2 TARGET, S_INFATUATED, AI_CV_FocusPunch3
-	if_status2 TARGET, S_CONFUSED, AI_CV_FocusPunch3
-	is_first_turn USER
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_FocusPunch2
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_FocusPunch2
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_FocusPunch_ScoreUp1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_FocusPunch3
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_FocusPunch3
+	is_first_turn_for AI_USER
 	if_not_equal 0, AI_CV_FocusPunch_End
 	if_random_less_than 100, AI_CV_FocusPunch_End
 	score +1
-	jump AI_CV_FocusPunch_End
+	goto AI_CV_FocusPunch_End
 
 AI_CV_FocusPunch2: @ 81DBBA4
 	score -1
-	jump AI_CV_FocusPunch_End
+	goto AI_CV_FocusPunch_End
 
 AI_CV_FocusPunch3: @ 81DBBAB
 	if_random_less_than 100, AI_CV_FocusPunch_End
@@ -2366,8 +2366,8 @@ AI_CV_FocusPunch_End: @ 81DBBB3
 	end
 
 AI_CV_SmellingSalt: @ 81DBBB4
-	if_status TARGET, PAR, AI_CV_SmellingSalt_ScoreUp1
-	jump AI_CV_SmellingSalt_End
+	if_status AI_TARGET, STATUS1_PARALYSIS, AI_CV_SmellingSalt_ScoreUp1
+	goto AI_CV_SmellingSalt_End
 
 AI_CV_SmellingSalt_ScoreUp1: @ 81DBBC3
 	score +1
