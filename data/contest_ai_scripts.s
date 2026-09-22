@@ -259,7 +259,7 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CGM_AppealAsGoodAsPrevOnes
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CGM_AppealAsGoodAsPrevOne
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, AI_CGM_BetterWhenAudienceExcited
-	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect27
+	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CGM_WorsenConditionOfPrevMons
 	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect16or17
 	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect16or17
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect_FollowingMonsNervous
@@ -433,80 +433,80 @@ AI_CGM_BetterWhenAudienceExcited_Not1stUp:
 	score +10
 	end
 
-ContestEffect27:
+AI_CGM_WorsenConditionOfPrevMons:
 	if_user_order_eq MON_1, ContestEffectEnd
-	jump ContestEffect27_55_1
+	jump AI_CGM_WorsenConditionOfPrevMons_CheckMon1
 	end
-ContestEffect27_55_1:
-	if_cannot_participate MON_1, ContestEffect27_noscore
-	if_condition_eq MON_1, 0, ContestEffect27_noscore
-	if_condition_eq MON_1, 1, ContestEffect27_score1
-	if_condition_eq MON_1, 2, ContestEffect27_score2
-	if_condition_eq MON_1, 3, ContestEffect27_score3
+AI_CGM_WorsenConditionOfPrevMons_CheckMon1:
+	if_cannot_participate MON_1, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2
+	if_condition_eq MON_1, 0, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2
+	if_condition_eq MON_1, 1, AI_CGM_WorsenConditionOfPrevMons_Mon1Has1Star
+	if_condition_eq MON_1, 2, AI_CGM_WorsenConditionOfPrevMons_Mon1Has2Stars
+	if_condition_eq MON_1, 3, AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars
 	end
-ContestEffect27_score1:
-	if_random 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has1Star:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +5
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_score2:
-	if_random 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has2Stars:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +10
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_score3:
-	if_random 125, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +15
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_noscore:
-	if_user_order_more_than MON_2, ContestEffect27_55_2
+AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2:
+	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
-ContestEffect27_55_2:
-	if_cannot_participate MON_2, ContestEffect27_noscore2
-	if_condition_eq MON_2, 0, ContestEffect27_noscore2
-	if_condition_eq MON_2, 1, ContestEffect27_score4
-	if_condition_eq MON_2, 2, ContestEffect27_score5
-	if_condition_eq MON_2, 3, ContestEffect27_score6
+AI_CGM_WorsenConditionOfPrevMons_CheckMon2:
+	if_cannot_participate MON_2, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3
+	if_condition_eq MON_2, 0, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3
+	if_condition_eq MON_2, 1, AI_CGM_WorsenConditionOfPrevMons_Mon2Has1Star
+	if_condition_eq MON_2, 2, AI_CGM_WorsenConditionOfPrevMons_Mon2Has2Stars
+	if_condition_eq MON_2, 3, AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars
 	end
-ContestEffect27_score4:
-	if_random 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has1Star:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +5
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_score5:
-	if_random 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has2Stars:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +10
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_score6:
-	if_random 125, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars:
+	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +15
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_noscore2:
-	if_user_order_more_than MON_3, ContestEffect27_55_3
+AI_CGM_WorsenConditionOfPrevMons_TryCheckMon3:
+	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
-ContestEffect27_55_3:
-	if_cannot_participate MON_3, ContestEffect27_end
-	if_condition_eq MON_3, 0, ContestEffect27_end
-	if_condition_eq MON_3, 1, ContestEffect27_score7
-	if_condition_eq MON_3, 2, ContestEffect27_score8
-	if_condition_eq MON_3, 3, ContestEffect27_score9
+AI_CGM_WorsenConditionOfPrevMons_CheckMon3:
+	if_cannot_participate MON_3, AI_CGM_WorsenConditionOfPrevMons_end
+	if_condition_eq MON_3, 0, AI_CGM_WorsenConditionOfPrevMons_end
+	if_condition_eq MON_3, 1, AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star
+	if_condition_eq MON_3, 2, AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars
+	if_condition_eq MON_3, 3, AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars
 	end
-ContestEffect27_score7:
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star:
 	if_random 125, ContestEffectEnd
 	score +5
 	end
-ContestEffect27_score8:
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars:
 	if_random 125, ContestEffectEnd
 	score +10
 	end
-ContestEffect27_score9:
+AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars:
 	if_random 125, ContestEffectEnd
 	score +15
 	end
-ContestEffect27_end:
+AI_CGM_WorsenConditionOfPrevMons_end:
 	end
 
 ContestEffect16or17:
