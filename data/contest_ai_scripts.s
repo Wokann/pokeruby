@@ -258,7 +258,7 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CGM_DontExciteAudience
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CGM_AppealAsGoodAsPrevOnes
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CGM_AppealAsGoodAsPrevOne
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, ContestEffect46
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, AI_CGM_BetterWhenAudienceExcited
 	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect27
 	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect16or17
 	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect16or17
@@ -407,28 +407,28 @@ AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3:
 	score +5
 	end
 
-ContestEffect46:
-	if_user_order_eq MON_1, ContestEffect46_05
-	if_user_order_more_than MON_1, ContestEffect46_score4
+AI_CGM_BetterWhenAudienceExcited:
+	if_user_order_eq MON_1, AI_CGM_BetterWhenAudienceExcited_1stUp
+	if_user_order_more_than MON_1, AI_CGM_BetterWhenAudienceExcited_Not1stUp
 	end
-ContestEffect46_05:
-	if_appeal_num_not_eq 0, ContestEffect46_score1
-	if_excitement_eq 4, ContestEffect46_score2
-	if_excitement_eq 3, ContestEffect46_score3
+AI_CGM_BetterWhenAudienceExcited_1stUp:
+	if_appeal_num_not_eq 0, AI_CGM_BetterWhenAudienceExcited_1stAppeal
+	if_excitement_eq 4, AI_CGM_BetterWhenAudienceExcited_1AwayFromMax
+	if_excitement_eq 3, AI_CGM_BetterWhenAudienceExcited_2AwayFromMax
 	end
-ContestEffect46_score1:
+AI_CGM_BetterWhenAudienceExcited_1stAppeal:
 	if_random 125, ContestEffectEnd
 	score -15
 	end
-ContestEffect46_score2:
+AI_CGM_BetterWhenAudienceExcited_1AwayFromMax:
 	if_random 125, ContestEffectEnd
 	score +20
 	end
-ContestEffect46_score3:
+AI_CGM_BetterWhenAudienceExcited_2AwayFromMax:
 	if_random 125, ContestEffectEnd
 	score +15
 	end
-ContestEffect46_score4:
+AI_CGM_BetterWhenAudienceExcited_Not1stUp:
 	if_random 178, ContestEffectEnd
 	score +10
 	end
