@@ -17,7 +17,7 @@ gContestAIs:: @ 81DC118
 	.4byte AI_CheckBoring
 	.4byte AI_CheckExcitement
 	.4byte AI_CheckOrder
-	.4byte AI_CheckForGoodMove
+	.4byte AI_CheckGoodMove
 	.4byte AI_Erratic
 	.4byte AI_Nothing
 	.4byte AI_Nothing
@@ -249,7 +249,7 @@ AI_CheckCombo_StarterOnLastAppeal:
 AI_CheckCombo_End:
 	end
 
-AI_CheckForGoodMove:
+AI_CheckGoodMove:
 	if_effect_eq CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_BetterWithGoodCondition
 	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, AI_CGM_NextAppealEarlier
 	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, AI_CGM_NextAppealLater
@@ -276,11 +276,11 @@ AI_CGM_BetterWithGoodCondition_3:
 	score +20
 	end
 AI_CGM_BetterWithGoodCondition_2:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_BetterWithGoodCondition_1:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_BetterWithGoodCondition_0:
@@ -288,20 +288,20 @@ AI_CGM_BetterWithGoodCondition_0:
 	end
 
 AI_CGM_NextAppealEarlier:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_FIRST, ContestEffectEnd
-	if_random 50, ContestEffectEnd
+	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_FIRST, AI_CGM_End
+	if_random 50, AI_CGM_End
 	score +20
 	end
 
 AI_CGM_NextAppealLater:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_LAST, ContestEffectEnd
-	if_random 50, ContestEffectEnd
+	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_LAST, AI_CGM_End
+	if_random 50, AI_CGM_End
 	score +20
 	end
 
 AI_CGM_RepetitionNotBoring:
-	if_user_order_not_eq MON_4, ContestEffectEnd
-	if_random 50, ContestEffectEnd
+	if_user_order_not_eq MON_4, AI_CGM_End
+	if_random 50, AI_CGM_End
 	score +15
 	end
 AI_CGM_Unused:
@@ -310,7 +310,7 @@ AI_CGM_Unused:
 	score +10
 	end
 AI_CGM_Unused_LastAppeal:
-	if_random 20, ContestEffectEnd
+	if_random 20, AI_CGM_End
 	score +15
 	end
 AI_CGM_Unused_Discourage:
@@ -320,7 +320,7 @@ AI_CGM_Unused_Discourage:
 AI_CGM_ImproveCondition:
 	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_ImproveCondition_CheckAppealNum
 	if_user_condition_eq 3, AI_CGM_ImproveCondition_AtMax
-	if_random 50, ContestEffectEnd
+	if_random 50, AI_CGM_End
 	score +15
 	end
 AI_CGM_ImproveCondition_AtMax:
@@ -329,12 +329,12 @@ AI_CGM_ImproveCondition_AtMax:
 AI_CGM_ImproveCondition_CheckAppealNum:
 	if_last_appeal AI_CGM_ImproveCondition_LastAppeal
 	if_appeal_num_eq 0, AI_CGM_ImproveCondition_FirstAppeal
-	if_move_used_count_eq 1, ContestEffectEnd
-	if_random 125, ContestEffectEnd
+	if_move_used_count_eq 1, AI_CGM_End
+	if_random 125, AI_CGM_End
 	score +10
 	end
 AI_CGM_ImproveCondition_FirstAppeal:
-	if_random 100, ContestEffectEnd
+	if_random 100, AI_CGM_End
 	score +10
 	end
 AI_CGM_ImproveCondition_LastAppeal:
@@ -342,16 +342,16 @@ AI_CGM_ImproveCondition_LastAppeal:
 	end
 
 AI_CGM_DontExciteAudience:
-	if_move_used_count_eq 1, ContestEffectEnd
+	if_move_used_count_eq 1, AI_CGM_End
 	if_user_order_eq MON_1, AI_CGM_DontExciteAudience_EarlyTurn
 	if_user_order_eq MON_2, AI_CGM_DontExciteAudience_EarlyTurn
-	if_not_last_appeal ContestEffectEnd
-	if_user_has_exciting_move ContestEffectEnd
-	if_excitement_less_than 1, ContestEffectEnd
+	if_not_last_appeal AI_CGM_End
+	if_user_has_exciting_move AI_CGM_End
+	if_excitement_less_than 1, AI_CGM_End
 	score +10
 	end
 AI_CGM_DontExciteAudience_EarlyTurn:
-	if_random 127, ContestEffectEnd
+	if_random 127, AI_CGM_End
 	score +10
 	end
 
@@ -380,7 +380,7 @@ AI_CGM_AppealAsGoodAsPrevOne_1stUp:
 	score -10
 	end
 AI_CGM_AppealAsGoodAsPrevOne_2ndUp:
-	if_cannot_participate MON_1, ContestEffectEnd
+	if_cannot_participate MON_1, AI_CGM_End
 	score +5
 	end
 AI_CGM_AppealAsGoodAsPrevOne_3rdUp:
@@ -389,7 +389,7 @@ AI_CGM_AppealAsGoodAsPrevOne_3rdUp:
 	jump AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	end
 AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2:
-	if_cannot_participate MON_2, ContestEffectEnd
+	if_cannot_participate MON_2, AI_CGM_End
 	score +5
 	end
 AI_CGM_AppealAsGoodAsPrevOne_Last:
@@ -403,7 +403,7 @@ AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2:
 	jump AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	end
 AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3:
-	if_cannot_participate MON_3, ContestEffectEnd
+	if_cannot_participate MON_3, AI_CGM_End
 	score +5
 	end
 
@@ -417,24 +417,24 @@ AI_CGM_BetterWhenAudienceExcited_1stUp:
 	if_excitement_eq 3, AI_CGM_BetterWhenAudienceExcited_2AwayFromMax
 	end
 AI_CGM_BetterWhenAudienceExcited_1stAppeal:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score -15
 	end
 AI_CGM_BetterWhenAudienceExcited_1AwayFromMax:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +20
 	end
 AI_CGM_BetterWhenAudienceExcited_2AwayFromMax:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_BetterWhenAudienceExcited_Not1stUp:
-	if_random 178, ContestEffectEnd
+	if_random 178, AI_CGM_End
 	score +10
 	end
 
 AI_CGM_WorsenConditionOfPrevMons:
-	if_user_order_eq MON_1, ContestEffectEnd
+	if_user_order_eq MON_1, AI_CGM_End
 	jump AI_CGM_WorsenConditionOfPrevMons_CheckMon1
 	end
 AI_CGM_WorsenConditionOfPrevMons_CheckMon1:
@@ -495,22 +495,22 @@ AI_CGM_WorsenConditionOfPrevMons_CheckMon3:
 	if_condition_eq MON_3, 3, AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +10
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_WorsenConditionOfPrevMons_end:
 	end
 
 AI_CGM_TargetMonWithJudgesAttention:
-	if_user_order_eq MON_1, ContestEffectEnd
+	if_user_order_eq MON_1, AI_CGM_End
 	jump AI_CGM_TargetMonWithJudgesAttention_CheckMon1
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon1:
@@ -522,7 +522,7 @@ AI_CGM_TargetMonWithJudgesAttention_CheckMon1:
 	score +8
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon2:
-	if_user_order_eq MON_2, ContestEffectEnd
+	if_user_order_eq MON_2, AI_CGM_End
 	if_cannot_participate MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	if_used_combo_starter_eq MON_2, TRUE, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
@@ -531,17 +531,17 @@ AI_CGM_TargetMonWithJudgesAttention_CheckMon2:
 	score +8
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon3:
-	if_user_order_eq MON_3, ContestEffectEnd
-	if_cannot_participate MON_3, ContestEffectEnd
-	if_used_combo_starter_eq MON_3, TRUE, ContestEffectEnd
-	if_random 125, ContestEffectEnd
+	if_user_order_eq MON_3, AI_CGM_End
+	if_cannot_participate MON_3, AI_CGM_End
+	if_used_combo_starter_eq MON_3, TRUE, AI_CGM_End
+	if_random 125, AI_CGM_End
 	score +2
-	contest_58 MON_3, ContestEffectEnd
+	contest_58 MON_3, AI_CGM_End
 	score +8
 	end
 
 AI_CGM_MakeFollowingMonsNervous:
-	if_user_order_eq MON_4, ContestEffectEnd
+	if_user_order_eq MON_4, AI_CGM_End
 	jump AI_CGM_MakeFollowingMonsNervous_CheckMon4
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon4:
@@ -552,7 +552,7 @@ AI_CGM_MakeFollowingMonsNervous_CheckMon4:
 	score +5
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon3:
-	if_user_order_eq MON_3, ContestEffectEnd
+	if_user_order_eq MON_3, AI_CGM_End
 	if_cannot_participate MON_3, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	if_used_combo_starter_eq MON_3, FALSE, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	score +5
@@ -560,11 +560,11 @@ AI_CGM_MakeFollowingMonsNervous_CheckMon3:
 	score +5
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon2:
-	if_user_order_eq MON_2, ContestEffectEnd
-	if_cannot_participate MON_2, ContestEffectEnd
-	if_used_combo_starter_eq MON_2, FALSE, ContestEffectEnd
+	if_user_order_eq MON_2, AI_CGM_End
+	if_cannot_participate MON_2, AI_CGM_End
+	if_used_combo_starter_eq MON_2, FALSE, AI_CGM_End
 	score +5
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +5
 	end
 
@@ -586,19 +586,19 @@ AI_CGM_JamsOthersButMissOneTurn_1stUp:
 	score -15
 	end
 AI_CGM_JamsOthersButMissOneTurn_2ndUp:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score -10
 	end
 AI_CGM_JamsOthersButMissOneTurn_3rdUp:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_JamsOthersButMissOneTurn_Last:
-	if_random 125, ContestEffectEnd
+	if_random 125, AI_CGM_End
 	score +15
 	end
 
-ContestEffectEnd:
+AI_CGM_End:
 	end
 
 @ Randomly encourage moves in Cute, Smart, and Tough contests.
