@@ -7412,81 +7412,81 @@ BideUnleash:
 
 Move_STRING_SHOT: @ 81D1C98
 	loadspritegfx ANIM_TAG_STRING
-	loadspritegfx ANIM_TAG_STRING_DOT
+	loadspritegfx ANIM_TAG_WEB_THREAD
 	monbg ANIM_BATTLER_DEF_PARTNER
 	delay 0
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 1, 2, 0, 9, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=9, color=RGB_BLACK
 	waitforvisualfinish
 	loopsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER, 9, 6
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
-	call _81D1D56
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
+	call StringShotThread
 	waitforvisualfinish
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_BATTLER_TARGET, 2, 0, 10
+	create_string_wrap_sprite ANIM_BATTLER_TARGET, 2, x=0, y=10
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_BATTLER_TARGET, 2, 0, -2
+	create_string_wrap_sprite ANIM_BATTLER_TARGET, 2, x=0, y=-2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83DAB40, ANIM_BATTLER_TARGET, 2, 0, 22
+	create_string_wrap_sprite ANIM_BATTLER_TARGET, 2, x=0, y=22
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 1
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 1, 2, 9, 0, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=9, target_blend_y=0, color=RGB_BLACK
 	end
-_81D1D56:
-	createsprite gBattleAnimSpriteTemplate_83DAB28, ANIM_BATTLER_TARGET, 2, 20, 0, 512, 20, 1
+StringShotThread:
+	create_web_thread_sprite ANIM_BATTLER_TARGET, 2, x=20, y=0, unk2=512, amplitude=20, targets_both=TRUE
 	delay 1
 	return
 
 Move_SPIDER_WEB: @ 81D1D6A
-	loadspritegfx ANIM_TAG_WEB
-	loadspritegfx ANIM_TAG_STRING_DOT
+	loadspritegfx ANIM_TAG_SPIDER_WEB
+	loadspritegfx ANIM_TAG_WEB_THREAD
 	monbg ANIM_BATTLER_DEF_PARTNER
 	delay 0
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 1, 2, 0, 9, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=9, color=RGB_BLACK
 	waitforvisualfinish
 	splitbgprio ANIM_BATTLER_TARGET
 	loopsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER, 9, 6
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
-	call _81D1DF7
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
 	waitforvisualfinish
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAB74, ANIM_BATTLER_ATTACKER, 2
+	createsprite gSpiderWebSpriteTemplate, ANIM_BATTLER_ATTACKER, 2
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 1
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 1, 2, 9, 0, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=5, selector=F_PAL_BG, delay=2, initial_blend_y=9, target_blend_y=0, color=RGB_BLACK
 	end
-_81D1DF7:
-	createsprite gBattleAnimSpriteTemplate_83DAB28, ANIM_BATTLER_TARGET, 2, 20, 0, 512, 20, 0
+SpiderWebThread:
+	create_web_thread_sprite ANIM_BATTLER_TARGET, 2, x=20, y=0, unk2=512, amplitude=20, targets_both=FALSE
 	delay 1
 	return
 

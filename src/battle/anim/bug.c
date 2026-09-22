@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 #include "contest.h"
 #include "rom_8077ABC.h"
 #include "trig.h"
@@ -10,16 +11,16 @@ extern u8 gBattleAnimTarget;
 
 static void AnimMegahornHorn(struct Sprite *sprite);
 static void AnimLeechLifeNeedle(struct Sprite *sprite);
-void sub_80DC9A0(struct Sprite *sprite);
-void sub_80DCA70(struct Sprite *sprite);
-void sub_80DCB38(struct Sprite *sprite);
+static void AnimTranslateWebThread(struct Sprite *sprite);
+static void AnimStringWrap(struct Sprite *sprite);
+static void AnimSpiderWeb(struct Sprite *sprite);
 void AnimTranslateStinger(struct Sprite *sprite);
 void AnimMissileArc(struct Sprite *sprite);
 static void AnimTailGlowOrb(struct Sprite *sprite);
-static void sub_80DCA38(struct Sprite *sprite);
-static void sub_80DCAEC(struct Sprite *sprite);
-static void sub_80DCB5C(struct Sprite *sprite);
-static void sub_80DCBB4(struct Sprite *sprite);
+static void AnimTranslateWebThread_Step(struct Sprite *sprite);
+static void AnimStringWrap_Step(struct Sprite *sprite);
+static void AnimSpiderWeb_Step(struct Sprite *sprite);
+static void AnimSpiderWeb_End(struct Sprite *sprite);
 static void AnimMissileArcStep(struct Sprite *sprite);
 
 static const union AffineAnimCmd sAffineAnim_MegahornHorn_0[] =
@@ -94,49 +95,49 @@ const struct SpriteTemplate gLeechLifeNeedleSpriteTemplate =
     .callback = AnimLeechLifeNeedle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB28 =
+const struct SpriteTemplate gWebThreadSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_STRING_DOT,
-    .paletteTag = ANIM_TAG_STRING_DOT,
+    .tileTag = ANIM_TAG_WEB_THREAD,
+    .paletteTag = ANIM_TAG_WEB_THREAD,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DC9A0,
+    .callback = AnimTranslateWebThread,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB40 =
+const struct SpriteTemplate gStringWrapSpriteTemplate =
 {
     .tileTag = ANIM_TAG_STRING,
     .paletteTag = ANIM_TAG_STRING,
-    .oam = &gOamData_837DF5C,
+    .oam = &gOamData_AffineOff_ObjNormal_64x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DCA70,
+    .callback = AnimStringWrap,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DAB58[] =
+static const union AffineAnimCmd sAffineAnim_SpiderWeb[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x6, 0x6, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DAB70[] =
+static const union AffineAnimCmd *const sAffineAnims_SpiderWeb[] =
 {
-    gSpriteAffineAnim_83DAB58,
+    sAffineAnim_SpiderWeb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAB74 =
+const struct SpriteTemplate gSpiderWebSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_WEB,
-    .paletteTag = ANIM_TAG_WEB,
+    .tileTag = ANIM_TAG_SPIDER_WEB,
+    .paletteTag = ANIM_TAG_SPIDER_WEB,
     .oam = &gOamData_AffineDouble_ObjBlend_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DAB70,
-    .callback = sub_80DCB38,
+    .affineAnims = sAffineAnims_SpiderWeb,
+    .callback = AnimSpiderWeb,
 };
 
 const struct SpriteTemplate gLinearStingerSpriteTemplate =
@@ -255,32 +256,32 @@ static void AnimLeechLifeNeedle(struct Sprite *sprite)
 
 // used in 2 moves:
 //         Move_STRING_SHOT, Move_SPIDER_WEB
-void sub_80DC9A0(struct Sprite *sprite)
+static void AnimTranslateWebThread(struct Sprite *sprite)
 {
     if (IsContest())
         gBattleAnimArgs[2] /= 2;
 
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
 
     if (!gBattleAnimArgs[4])
     {
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
     else
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->data[2], &sprite->data[4]);
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->data[2], &sprite->data[4]);
     }
 
     InitAnimLinearTranslationWithSpeed(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DCA38;
+    sprite->callback = AnimTranslateWebThread_Step;
 }
 
-static void sub_80DCA38(struct Sprite *sprite)
+static void AnimTranslateWebThread_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
@@ -293,22 +294,22 @@ static void sub_80DCA38(struct Sprite *sprite)
 }
 
 // used in Move_STRING_SHOT
-void sub_80DCA70(struct Sprite *sprite)
+static void AnimStringWrap(struct Sprite *sprite)
 {
-    SetAverageBattlerPositions(gBattleAnimTarget, 0, &sprite->x, &sprite->y);
+    SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &sprite->x, &sprite->y);
     if (GetBattlerSide(gBattleAnimAttacker))
         sprite->x -= gBattleAnimArgs[0];
     else
         sprite->x += gBattleAnimArgs[0];
 
     sprite->y += gBattleAnimArgs[1];
-    if (!GetBattlerSide(gBattleAnimTarget))
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         sprite->y += 8;
 
-    sprite->callback = sub_80DCAEC;
+    sprite->callback = AnimStringWrap_Step;
 }
 
-static void sub_80DCAEC(struct Sprite *sprite)
+static void AnimStringWrap_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] == 3)
     {
@@ -323,16 +324,16 @@ static void sub_80DCAEC(struct Sprite *sprite)
 }
 
 // used in Move_SPIDER_WEB
-void sub_80DCB38(struct Sprite *sprite)
+static void AnimSpiderWeb(struct Sprite *sprite)
 {
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = 16;
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(16, 0);
 
     sprite->data[0] = 16;
-    sprite->callback = sub_80DCB5C;
+    sprite->callback = AnimSpiderWeb_Step;
 }
 
-static void sub_80DCB5C(struct Sprite *sprite)
+static void AnimSpiderWeb_Step(struct Sprite *sprite)
 {
     if (sprite->data[2] < 20)
     {
@@ -341,17 +342,17 @@ static void sub_80DCB5C(struct Sprite *sprite)
     else if (sprite->data[1]++ & 1)
     {
         sprite->data[0]--;
-        REG_BLDALPHA = sprite->data[0] | ((16 - sprite->data[0]) << 8);
+        REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[0], 16 - sprite->data[0]);
 
         if (sprite->data[0] == 0)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_80DCBB4;
+            sprite->callback = AnimSpiderWeb_End;
         }
     }
 }
 
-static void sub_80DCBB4(struct Sprite *sprite)
+static void AnimSpiderWeb_End(struct Sprite *sprite)
 {
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;

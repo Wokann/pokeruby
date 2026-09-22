@@ -349,6 +349,14 @@
 	createsprite gLeechLifeNeedleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration
 	.endm
 
+	.macro create_web_thread_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, unk2:req, amplitude:req, targets_both:req
+	createsprite gWebThreadSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \unk2, \amplitude, \targets_both
+	.endm
+
+	.macro create_string_wrap_sprite anim_battler:req, subpriority_offset:req, x:req, y:req
+	createsprite gStringWrapSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y
+	.endm
+
 	.macro create_spore_particle_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, wave_offset:req, duration:req, blend:req
 	createsprite gSporeParticleSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \wave_offset, \duration, \blend
 	.endm

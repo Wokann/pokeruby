@@ -80,7 +80,7 @@ const struct OamData gOamData_AffineOff_ObjNormal_32x16 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837DF5C =
+const struct OamData gOamData_AffineOff_ObjNormal_64x32 =
 {
     .affineMode = 0,
     .objMode = 0,
@@ -847,8 +847,8 @@ const struct CompressedSpriteSheet gBattleAnimPicTable[] =
     { gBattleAnimSpriteSheet_177,  0x500, ANIM_TAG_LICK },
     { gBattleAnimSpriteSheet_178,  0x800, ANIM_TAG_UNUSED_VOID_LINES },
     { gBattleAnimSpriteSheet_179,  0x400, ANIM_TAG_STRING },
-    { gBattleAnimSpriteSheet_180,   0x20, ANIM_TAG_STRING_DOT },
-    { gBattleAnimSpriteSheet_181,  0x800, ANIM_TAG_WEB },
+    { gBattleAnimSpriteSheet_180,   0x20, ANIM_TAG_WEB_THREAD },
+    { gBattleAnimSpriteSheet_181,  0x800, ANIM_TAG_SPIDER_WEB },
     { gBattleAnimSpriteSheet_182,  0x100, ANIM_TAG_UNUSED_LIGHTBULB },
     { gBattleAnimSpriteSheet_183,  0x800, ANIM_TAG_SLASH },
     { gBattleAnimSpriteSheet_184,  0x400, ANIM_TAG_FOCUS_ENERGY },
@@ -1140,8 +1140,8 @@ const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
     { gBattleAnimSpritePalette_177, ANIM_TAG_LICK },
     { gBattleAnimSpritePalette_178, ANIM_TAG_UNUSED_VOID_LINES },
     { gBattleAnimSpritePalette_179, ANIM_TAG_STRING },
-    { gBattleAnimSpritePalette_179, ANIM_TAG_STRING_DOT },
-    { gBattleAnimSpritePalette_179, ANIM_TAG_WEB },
+    { gBattleAnimSpritePalette_179, ANIM_TAG_WEB_THREAD },
+    { gBattleAnimSpritePalette_179, ANIM_TAG_SPIDER_WEB },
     { gBattleAnimSpritePalette_182, ANIM_TAG_UNUSED_LIGHTBULB },
     { gBattleAnimSpritePalette_183, ANIM_TAG_SLASH },
     { gBattleAnimSpritePalette_184, ANIM_TAG_FOCUS_ENERGY },
