@@ -9600,7 +9600,7 @@ Move_SKY_UPPERCUT: @ 81D53ED
 	fadetobg BG_IN_AIR
 	waitbgfadeout
 	playsewithpan SE_M_SKY_UPPERCUT, SOUND_PAN_ATTACKER
-	createvisualtask sub_80D9C80, 5, 55
+	createvisualtask AnimTask_MoveSkyUppercutBg, 5, 55
 	waitbgfadein
 	setalpha 12, 8
 	delay 38
@@ -9608,20 +9608,20 @@ Move_SKY_UPPERCUT: @ 81D53ED
 	delay 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 6, 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -28, 28, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-28, y=28, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -15, 8, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-15, y=8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	delay 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -5, -12, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-5, y=-12, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, -32, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=-32, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 1
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 5, -52, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=5, y=-52, relative_to=ANIM_BATTLER_TARGET, animation=1
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -26, 16, 1, 4
 	delay 4
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 0, 3, 6, 1

@@ -1007,7 +1007,7 @@ static void AnimFocusPunchFist(struct Sprite *sprite)
     }
 }
 
-void sub_80D9C80(u8 taskId)
+void AnimTask_MoveSkyUppercutBg(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
