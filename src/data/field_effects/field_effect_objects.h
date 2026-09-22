@@ -874,24 +874,24 @@ const union AnimCmd *const gFieldEffectAnimTable_Bubbles[] = {
 
 const struct SpriteTemplate gFieldEffectSpriteTemplate_Bubbles = {0xFFFF, FLDEFF_PAL_TAG_GENERAL_0, &gFieldOamData_16x32, gFieldEffectAnimTable_Bubbles, gFieldEffectPicTable_Bubbles, gDummySpriteAffineAnimTable, UpdateBubblesFieldEffect};
 
-const struct SpriteFrameImage gFieldEffectPicTable_Sparkle[] = {
-    overworld_frame(gFieldEffectPic_Sparkle, 2, 2, 0),
-    overworld_frame(gFieldEffectPic_Sparkle, 2, 2, 1)
+const struct SpriteFrameImage gFieldEffectPicTable_SmallSparkle[] = {
+    overworld_frame(gFieldEffectPic_SmallSparkle, 2, 2, 0),
+    overworld_frame(gFieldEffectPic_SmallSparkle, 2, 2, 1)
 };
 
-const union AnimCmd gFieldEffectAnim_83751D8[] = {
+const union AnimCmd gFieldEffectAnim_SmallSparkle[] = {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_FRAME(1, 5),
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gFieldEffectAnimTable_Sparkle[] = {
-    gFieldEffectAnim_83751D8
+const union AnimCmd *const gFieldEffectAnimTable_SmallSparkle[] = {
+    gFieldEffectAnim_SmallSparkle
 };
 
-const struct SpriteTemplate gFieldEffectSpriteTemplate_Sparkle = {0xFFFF, 0x100F, &gFieldOamData_16x16, gFieldEffectAnimTable_Sparkle, gFieldEffectPicTable_Sparkle, gDummySpriteAffineAnimTable, UpdateSparkleFieldEffect};
+const struct SpriteTemplate gFieldEffectSpriteTemplate_SmallSparkle = {0xFFFF, FLDEFF_PAL_TAG_SMALL_SPARKLE, &gFieldOamData_16x16, gFieldEffectAnimTable_SmallSparkle, gFieldEffectPicTable_SmallSparkle, gDummySpriteAffineAnimTable, UpdateSparkleFieldEffect};
 
-const struct SpritePalette gFieldEffectObjectPaletteInfo3 = {gFieldEffectObjectPalette3, 0x100F};
+const struct SpritePalette gSpritePalette_SmallSparkle = {gFieldEffectPal_SmallSparkle, FLDEFF_PAL_TAG_SMALL_SPARKLE};
 
 #endif //POKERUBY_FIELD_EFFECT_OBJECTS_H

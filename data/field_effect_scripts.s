@@ -290,7 +290,7 @@ gFieldEffectScript_Bubbles: @ 81D9DE4
 	end
 
 gFieldEffectScript_Sparkle: @ 81D9DEE
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo3, FldEff_Sparkle
+	loadfadedpal_callnative gSpritePalette_SmallSparkle, FldEff_Sparkle
 	end
 
 gFieldEffectScript_SecretPowerCave: @ 81D9DF8

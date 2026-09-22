@@ -41,8 +41,8 @@ const u16 gFieldEffectPal_Ash[] = INCBIN_U16("graphics/field_effect_objects/pale
 const u32 gFieldEffectPic_AshPuff[] = INCBIN_U32("graphics/field_effect_objects/pics/ash_puff.4bpp");
 const u32 gFieldEffectPic_AshLaunch[] = INCBIN_U32("graphics/field_effect_objects/pics/ash_launch.4bpp");
 const u32 gFieldEffectPic_Bubbles[] = INCBIN_U32("graphics/field_effect_objects/pics/bubbles.4bpp");
-const u32 gFieldEffectPic_Sparkle[] = INCBIN_U32("graphics/field_effect_objects/pics/sparkle.4bpp");
-const u16 gFieldEffectObjectPalette3[] = INCBIN_U16("graphics/field_effect_objects/palettes/03.gbapal");
+const u32 gFieldEffectPic_SmallSparkle[] = INCBIN_U32("graphics/field_effect_objects/pics/small_sparkle.4bpp");
+const u16 gFieldEffectPal_SmallSparkle[] = INCBIN_U16("graphics/field_effect_objects/palettes/small_sparkle.gbapal");
 const u32 gFieldEffectPic_Bird[] = INCBIN_U32("graphics/field_effect_objects/pics/bird.4bpp");
 
 #endif // POKERUBY_FIELD_EFFECT_OBJECT_GFX_H

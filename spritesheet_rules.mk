@@ -547,7 +547,7 @@ $(FIELDEFFGFXDIR)/sand_pile.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/short_grass.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/sparkle.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/small_sparkle.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/splash.4bpp: %.4bpp: %.png

@@ -1321,14 +1321,17 @@ bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent)
     return FALSE;
 }
 
+#define sFinished data[0]
+#define sEndTimer data[1]
+
 u32 FldEff_Sparkle(void)
 {
     u8 spriteId;
 
-    gFieldEffectArguments[0] += 7;
-    gFieldEffectArguments[1] += 7;
+    gFieldEffectArguments[0] += MAP_OFFSET;
+    gFieldEffectArguments[1] += MAP_OFFSET;
     sub_8060470((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[35], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x52);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SMALL_SPARKLE], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x52);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].oam.priority = gFieldEffectArguments[2];
@@ -1339,21 +1342,24 @@ u32 FldEff_Sparkle(void)
 
 void UpdateSparkleFieldEffect(struct Sprite *sprite)
 {
-    if (sprite->data[0] == 0)
+    if (sprite->sFinished == 0)
     {
         if (sprite->animEnded)
         {
             sprite->invisible = TRUE;
-            sprite->data[0]++;
+            sprite->sFinished++;
         }
 
-        if (sprite->data[0] == 0)
+        if (sprite->sFinished == 0)
             return;
     }
 
-    if (++sprite->data[1] > 34)
+    if (++sprite->sEndTimer > 34)
         FieldEffectStop(sprite, FLDEFF_SPARKLE);
 }
+
+#undef sFinished
+#undef sEndTimer
 
 void UpdateJumpImpactEffect(struct Sprite *sprite)
 {
