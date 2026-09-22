@@ -472,3 +472,11 @@
 	.macro create_solar_beam_big_orb_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, duration:req, animation:req
 	createsprite gSolarBeamBigOrbSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, \animation
 	.endm
+
+	.macro create_present_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, unk2:req, unk3:req, unk4:req
+	createsprite gPresentSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \unk2, \unk3, \unk4
+	.endm
+
+	.macro create_present_heal_particle_sprite anim_battler:req, subpriority_offset:req, initial_x:req, initial_y:req, velocity_y:req, unused3=1
+	createsprite gPresentHealParticleSpriteTemplate, \anim_battler, \subpriority_offset, \initial_x, \initial_y, \velocity_y, \unused3
+	.endm

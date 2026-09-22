@@ -7835,7 +7835,7 @@ Move_INGRAIN: @ 81D255A
 Move_PRESENT: @ 81D260B
 	loadspritegfx ANIM_TAG_ITEM_BAG
 	createvisualtask AnimTask_IsHealingMove, 2
-	createsprite gPresentSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -5, 10, 2, -1
+	create_present_sprite ANIM_BATTLER_TARGET, 2, initial_x=0, initial_y=-5, unk2=10, unk3=2, unk4=-1
 	playsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER
 	delay 14
 	playsewithpan SE_M_BUBBLE2, SOUND_PAN_ATTACKER
@@ -7868,23 +7868,23 @@ PresentHeal:
 	loadspritegfx ANIM_TAG_GREEN_SPARKLE
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_TARGET
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -16, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=-16, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, 16, 32, -3, -1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=16, initial_y=32, velocity_y=-3, unused3=-1
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, 32, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=32, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -32, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=-32, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=0, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -8, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=-8, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -8, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=-8, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, 24, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=24, initial_y=32, velocity_y=-3
 	delay 3
-	createsprite gPresentHealParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -24, 32, -3, 1
+	create_present_heal_particle_sprite ANIM_BATTLER_TARGET, 4, initial_x=-24, initial_y=32, velocity_y=-3
 	waitforvisualfinish
 	waitsound
 	call HealingEffect2
