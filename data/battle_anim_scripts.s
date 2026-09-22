@@ -8428,17 +8428,17 @@ CreateFlatterConfetti:
 
 Move_ROLE_PLAY: @ 81D3428
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 16, 32767
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 0, 10, rgb(0, 0, 0)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 16, RGB_WHITE
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
 	waitforvisualfinish
 	playsewithpan SE_M_TRI_ATTACK, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_DETECT, SOUND_PAN_ATTACKER, 30
 	createvisualtask AnimTask_RolePlaySilhouette, 2
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 16, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 16, 0, RGB_WHITE
 	delay 8
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 2, 10, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
 	end
 
 Move_REFRESH: @ 81D3485
