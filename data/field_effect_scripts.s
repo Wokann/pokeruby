@@ -6,8 +6,8 @@
 
 	.align 2
 gFieldEffectScriptPointers:: @ 81D9B34
-	.4byte gFieldEffectScript_ExclamationMarkIcon
-	.4byte gFieldEffectScript_UseCutOnGrass
+	.4byte gFieldEffectScript_ExclamationMarkIcon1
+	.4byte gFieldEffectScript_UseCutOnTallGrass
 	.4byte gFieldEffectScript_UseCutOnTree
 	.4byte gFieldEffectScript_Shadow
 	.4byte gFieldEffectScript_TallGrass
@@ -16,7 +16,7 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_Ash
 	.4byte gFieldEffectScript_SurfBlob
 	.4byte gFieldEffectScript_UseSurf
-	.4byte gFieldEffectScript_Dust
+	.4byte gFieldEffectScript_GroundImpactDust
 	.4byte gFieldEffectScript_UseSecretPowerCave
 	.4byte gFieldEffectScript_JumpTallGrass
 	.4byte gFieldEffectScript_SandFootprints
@@ -71,11 +71,11 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_HallOfFameRecord
 	.4byte gFieldEffectScript_UseTeleport
 
-gFieldEffectScript_ExclamationMarkIcon: @ 81D9C34
+gFieldEffectScript_ExclamationMarkIcon1: @ 81D9C34
 	callnative FldEff_ExclamationMarkIcon
 	end
 
-gFieldEffectScript_UseCutOnGrass: @ 81D9C3A
+gFieldEffectScript_UseCutOnTallGrass: @ 81D9C3A
 	callnative FldEff_UseCutOnGrass
 	end
 
@@ -111,7 +111,7 @@ gFieldEffectScript_UseSurf: @ 81D9C76
 	callnative FldEff_UseSurf
 	end
 
-gFieldEffectScript_Dust: @ 81D9C7C
+gFieldEffectScript_GroundImpactDust: @ 81D9C7C
 	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Dust
 	end
 

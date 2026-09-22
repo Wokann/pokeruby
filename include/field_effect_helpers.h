@@ -18,7 +18,7 @@ void UpdateSandPileFieldEffect(struct Sprite *);
 void UpdateBubblesFieldEffect(struct Sprite *);
 void UpdateDisguiseFieldEffect(struct Sprite *);
 void UpdateSparkleFieldEffect(struct Sprite *);
-void UpdateJumpLandingFieldEffect(struct Sprite *);
+void UpdateJumpImpactEffect(struct Sprite *);
 void WaitFieldEffectSpriteAnim(struct Sprite *);
 void UpdateTallGrassFieldEffect(struct Sprite *);
 void UpdateLongGrassFieldEffect(struct Sprite *);

@@ -505,7 +505,7 @@ $(FIELDEFFGFXDIR)/bubbles.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/deep_sand_footprints.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/dust.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/ground_impact_dust.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 1
 
 $(FIELDEFFGFXDIR)/jump_big_splash.4bpp: %.4bpp: %.png
