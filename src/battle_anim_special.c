@@ -78,9 +78,9 @@ static void sub_814191C(u8 taskId);
 static void sub_8141B20(struct Sprite *sprite);
 static void sub_8141B74(struct Sprite *sprite);
 static void sub_8141AD8(u8 taskId);
-static void sub_8141CBC(struct Sprite *sprite);
-static void sub_8141CF4(struct Sprite *sprite);
-static void sub_8141D20(struct Sprite *sprite);
+static void SpriteCB_PokeBlock_LiftArm(struct Sprite *sprite);
+static void SpriteCB_PokeBlock_Arc(struct Sprite *sprite);
+static void SpriteCB_ThrowPokeBlock_Free(struct Sprite *sprite);
 
 extern const u8 gBattleAnimSpriteSheet_Particles[];
 const struct CompressedSpriteSheet gBallOpenParticleSpritesheets[] =
@@ -349,16 +349,16 @@ const u16 gUnknown_0840B4D4[] =
     0x0004,
 };
 
-static void sub_8141C30(struct Sprite *sprite);
-const struct SpriteTemplate gBattleAnimSpriteTemplate_840B4FC =
+static void SpriteCB_PokeBlock_Throw(struct Sprite *sprite);
+const struct SpriteTemplate gPokeblockSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_UNUSED_RED_BRICK,
-    .paletteTag = ANIM_TAG_UNUSED_RED_BRICK,
+    .tileTag = ANIM_TAG_POKEBLOCK,
+    .paletteTag = ANIM_TAG_POKEBLOCK,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8141C30,
+    .callback = SpriteCB_PokeBlock_Throw,
 };
 
 void unref_sub_813F0F4(u8 taskId)
@@ -2011,24 +2011,24 @@ static void sub_8141B74(struct Sprite *sprite)
     }
 }
 
-void sub_8141BD4(u8 taskId)
+void AnimTask_LoadPokeblockGfx(u8 taskId)
 {
     u8 paletteIndex;
 
-    LoadCompressedObjectPic(&gBattleAnimPicTable[269]);
-    LoadCompressedObjectPalette(&gBattleAnimPaletteTable[269]);
-    paletteIndex = IndexOfSpritePaletteTag(0x281D); // unused
+    LoadCompressedObjectPic(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
+    LoadCompressedObjectPalette(&gBattleAnimPaletteTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
+    paletteIndex = IndexOfSpritePaletteTag(ANIM_TAG_POKEBLOCK); // unused
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_8141C08(u8 taskId)
+void AnimTask_FreePokeblockGfx(u8 taskId)
 {
-    FreeSpriteTilesByTag(0x281D);
-    FreeSpritePaletteByTag(0x281D);
+    FreeSpriteTilesByTag(ANIM_TAG_POKEBLOCK);
+    FreeSpritePaletteByTag(ANIM_TAG_POKEBLOCK);
     DestroyAnimVisualTask(taskId);
 }
 
-static void sub_8141C30(struct Sprite *sprite)
+static void SpriteCB_PokeBlock_Throw(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 0);
     sprite->data[0] = 30;
@@ -2037,26 +2037,26 @@ static void sub_8141C30(struct Sprite *sprite)
     sprite->data[5] = -32;
     InitAnimArcTranslation(sprite);
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[gBattleAnimAttacker]], 1);
-    sprite->callback = sub_8141CBC;
+    sprite->callback = SpriteCB_PokeBlock_LiftArm;
 }
 
-static void sub_8141CBC(struct Sprite *sprite)
+static void SpriteCB_PokeBlock_LiftArm(struct Sprite *sprite)
 {
     if (gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].animCmdIndex == 1)
-        sprite->callback = sub_8141CF4;
+        sprite->callback = SpriteCB_PokeBlock_Arc;
 }
 
-static void sub_8141CF4(struct Sprite *sprite)
+static void SpriteCB_PokeBlock_Arc(struct Sprite *sprite)
 {
     if (TranslateAnimArc(sprite))
     {
         sprite->data[0] = 0;
         sprite->invisible = TRUE;
-        sprite->callback = sub_8141D20;
+        sprite->callback = SpriteCB_ThrowPokeBlock_Free;
     }
 }
 
-static void sub_8141D20(struct Sprite *sprite)
+static void SpriteCB_ThrowPokeBlock_Free(struct Sprite *sprite)
 {
     if (gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].animEnded)
     {
@@ -2068,7 +2068,7 @@ static void sub_8141D20(struct Sprite *sprite)
     }
 }
 
-void sub_8141D7C(u8 taskId)
+void AnimTask_SetAttackerTargetLeftPos(u8 taskId)
 {
     gBattleAnimAttacker = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
     gBattleAnimTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);

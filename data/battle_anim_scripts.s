@@ -10342,16 +10342,16 @@ General_SubstituteAppear: @ 81D6430
 	end
 
 General_PokeblockThrow: @ 81D6438
-	createvisualtask sub_8141D7C, 2
-	createvisualtask sub_8141BD4, 2
+	createvisualtask AnimTask_SetAttackerTargetLeftPos, 2
+	createvisualtask AnimTask_LoadPokeblockGfx, 2
 	delay 0
 	waitplaysewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER, 22
-	createsprite gBattleAnimSpriteTemplate_840B4FC, ANIM_BATTLER_TARGET, 3, -16, 7, 0, 32
+	createsprite gPokeblockSpriteTemplate, ANIM_BATTLER_TARGET, 3, -16, 7, 0, 32
 	delay 50
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_TARGET, 19, 2
 	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 2, 1
 	waitforvisualfinish
-	createvisualtask sub_8141C08, 2
+	createvisualtask AnimTask_FreePokeblockGfx, 2
 	end
 
 General_ItemKnockoff: @ 81D647E
