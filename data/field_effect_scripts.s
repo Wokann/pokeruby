@@ -25,10 +25,10 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_JumpSmallSplash
 	.4byte gFieldEffectScript_LongGrass
 	.4byte gFieldEffectScript_JumpLongGrass
-	.4byte gFieldEffectScript_Unknown19
-	.4byte gFieldEffectScript_Unknown20
-	.4byte gFieldEffectScript_Unknown21
-	.4byte gFieldEffectScript_Unknown22
+	.4byte gFieldEffectScript_UnusedGrass
+	.4byte gFieldEffectScript_UnusedGrass2
+	.4byte gFieldEffectScript_UnusedSand
+	.4byte gFieldEffectScript_WaterSurfacing
 	.4byte gFieldEffectScript_BerryTreeGrowthSparkle
 	.4byte gFieldEffectScript_DeepSandFootprints
 	.4byte gFieldEffectScript_PokecenterHeal
@@ -147,20 +147,20 @@ gFieldEffectScript_JumpLongGrass: @ 81D9CC8
 	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_JumpLongGrass
 	end
 
-gFieldEffectScript_Unknown19: @ 81D9CD2
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_Unknown19
+gFieldEffectScript_UnusedGrass: @ 81D9CD2
+	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_UnusedGrass
 	end
 
-gFieldEffectScript_Unknown20: @ 81D9CDC
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_Unknown20
+gFieldEffectScript_UnusedGrass2: @ 81D9CDC
+	loadfadedpal_callnative gFieldEffectObjectPaletteInfo1, FldEff_UnusedGrass2
 	end
 
-gFieldEffectScript_Unknown21: @ 81D9CE6
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Unknown21
+gFieldEffectScript_UnusedSand: @ 81D9CE6
+	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_UnusedSand
 	end
 
-gFieldEffectScript_Unknown22: @ 81D9CF0
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_Unknown22
+gFieldEffectScript_WaterSurfacing: @ 81D9CF0
+	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_WaterSurfacing
 	end
 
 gFieldEffectScript_BerryTreeGrowthSparkle: @ 81D9CFA

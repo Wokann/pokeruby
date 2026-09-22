@@ -565,13 +565,13 @@ $(FIELDEFFGFXDIR)/tree_disguise.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/unknown_17.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/unknown_18.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/unused_grass_2.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/unknown_19.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/unused_sand.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/unknown_20.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/water_surfacing.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/unused_grass.4bpp: %.4bpp: %.png
