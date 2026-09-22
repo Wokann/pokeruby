@@ -38,9 +38,9 @@ const u8 gSpriteImage_83D204C[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/3.
 const u8 gSpriteImage_83D20CC[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/4.4bpp");
 const u8 gSpriteImage_83D214C[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/5.4bpp");  // unused
 const u16 gFieldEffectObjectPalette8[] = INCBIN_U16("graphics/field_effect_objects/palettes/08.gbapal");
-const u8 gSpriteImage_83D21EC[] = INCBIN_U8("graphics/unknown_sprites/83D2688/0.4bpp");
-const u8 gSpriteImage_83D22EC[] = INCBIN_U8("graphics/unknown_sprites/83D2688/1.4bpp");
-const u8 gSpriteImage_83D23EC[] = INCBIN_U8("graphics/unknown_sprites/83D2688/2.4bpp");
+const u8 gSandPillar0_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/0.4bpp");
+const u8 gSandPillar1_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/1.4bpp");
+const u8 gSandPillar2_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/2.4bpp");
 
 const struct OamData gOamData_83D24EC =
 {

@@ -70,5 +70,6 @@
 #define FLDEFFOBJ_ASH_LAUNCH             33
 
 #define FLDEFF_PAL_TAG_ASH               0x100D
+#define FLDEFF_PAL_TAG_SAND_PILLAR       0x100E
 
 #endif

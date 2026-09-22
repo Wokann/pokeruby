@@ -12,14 +12,15 @@
 #include "task.h"
 #include "text.h"
 #include "constants/field_effects.h"
+#include "constants/metatile_labels.h"
 #include "constants/songs.h"
 
-extern const u8 gSpriteImage_83D21EC[];
-extern const u8 gSpriteImage_83D22EC[];
-extern const u8 gSpriteImage_83D23EC[];
+extern const u8 gSandPillar0_Gfx[];
+extern const u8 gSandPillar1_Gfx[];
+extern const u8 gSandPillar2_Gfx[];
 extern const u16 gTilesetPalettes_SecretBase[][16];
 
-const struct OamData gOamData_83D266C =
+const struct OamData gOamData_SandPillar =
 {
     .y = 0,
     .affineMode = 0,
@@ -36,7 +37,7 @@ const struct OamData gOamData_83D266C =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83D2674[] =
+const union AnimCmd gSpriteAnim_SandPillar[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
@@ -44,34 +45,34 @@ const union AnimCmd gSpriteAnim_83D2674[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D2684[] =
+const union AnimCmd *const gSpriteAnimTable_SandPillar[] =
 {
-    gSpriteAnim_83D2674,
+    gSpriteAnim_SandPillar,
 };
 
-const struct SpriteFrameImage gSpriteImageTable_83D2688[] =
+const struct SpriteFrameImage gSpriteImageTable_SandPillar[] =
 {
-    {gSpriteImage_83D21EC, 0x100},
-    {gSpriteImage_83D22EC, 0x100},
-    {gSpriteImage_83D23EC, 0x100},
+    {gSandPillar0_Gfx, 0x100},
+    {gSandPillar1_Gfx, 0x100},
+    {gSandPillar2_Gfx, 0x100},
 };
 
-void SpriteCB_SandPillar_0(struct Sprite *);
-void SpriteCB_SandPillar_1(struct Sprite *);
-void SpriteCB_SandPillar_2(struct Sprite *);
-const struct SpriteTemplate gSpriteTemplate_83D26A0 =
+void SpriteCB_SandPillar_BreakTop(struct Sprite *);
+void SpriteCB_SandPillar_BreakBase(struct Sprite *);
+void SpriteCB_SandPillar_End(struct Sprite *);
+const struct SpriteTemplate gSpriteTemplate_SandPillar =
 {
     .tileTag = 0xFFFF,
-    .paletteTag = 4110,
-    .oam = &gOamData_83D266C,
-    .anims = gSpriteAnimTable_83D2684,
-    .images = gSpriteImageTable_83D2688,
+    .paletteTag = FLDEFF_PAL_TAG_SAND_PILLAR,
+    .oam = &gOamData_SandPillar,
+    .anims = gSpriteAnimTable_SandPillar,
+    .images = gSpriteImageTable_SandPillar,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_SandPillar_0,
+    .callback = SpriteCB_SandPillar_BreakTop,
 };
 
 // This uses one of the secret base palettes, so there is no "09.pal" file.
-const struct SpritePalette gFieldEffectObjectPaletteInfo9 = {gTilesetPalettes_SecretBase[5], 0x100E};
+const struct SpritePalette gSpritePalette_SandPillar = {gTilesetPalettes_SecretBase[5], FLDEFF_PAL_TAG_SAND_PILLAR};
 
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
 
@@ -265,28 +266,28 @@ bool8 FldEff_SandPillar(void)
     {
     case DIR_SOUTH:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &gSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 32,
             0);
         break;
     case DIR_NORTH:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &gSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y,
             148);
         break;
     case DIR_WEST:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &gSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x - 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
         break;
     case DIR_EAST:
         CreateSprite(
-            &gSpriteTemplate_83D26A0,
+            &gSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 24,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
@@ -296,21 +297,21 @@ bool8 FldEff_SandPillar(void)
     return FALSE;
 }
 
-void SpriteCB_SandPillar_0(struct Sprite *sprite)
+void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
 {
     PlaySE(SE_M_ROCK_THROW);
-    if (MapGridGetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1) == 646)
-        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, 3586);
+    if (MapGridGetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1) == METATILE_SecretBase_SandOrnament_TopWall)
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, METATILE_SecretBase_Wall_TopMid | MAPGRID_COLLISION_MASK);
     else
-        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, 644);
-    MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], 522);
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, METATILE_SecretBase_SandOrnament_BrokenTop);
+    MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], METATILE_SecretBase_Ground);
     CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1);
     CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
     sprite->data[0] = 0;
-    sprite->callback = SpriteCB_SandPillar_1;
+    sprite->callback = SpriteCB_SandPillar_BreakBase;
 }
 
-void SpriteCB_SandPillar_1(struct Sprite *sprite)
+void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
 {
     if (sprite->data[0] < 18)
     {
@@ -318,14 +319,14 @@ void SpriteCB_SandPillar_1(struct Sprite *sprite)
     }
     else
     {
-        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], 3724);
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], METATILE_SecretBase_SandOrnament_BrokenBase | MAPGRID_COLLISION_MASK);
         CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
         sprite->data[0] = 0;
-        sprite->callback = SpriteCB_SandPillar_2;
+        sprite->callback = SpriteCB_SandPillar_End;
     }
 }
 
-void SpriteCB_SandPillar_2(struct Sprite *sprite)
+void SpriteCB_SandPillar_End(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SAND_PILLAR);
     ScriptContext_Enable();

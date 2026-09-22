@@ -283,6 +283,13 @@
 #define METATILE_PokemonCenter_Escalator2F_Tile2_Frame2  0x2AC
 #define METATILE_PokemonCenter_Floor_Plain_Alt           0x202
 
+// gTileset_SecretBase
+#define METATILE_SecretBase_Ground                      0x20A
+#define METATILE_SecretBase_SandOrnament_BrokenBase     0x28C
+#define METATILE_SecretBase_SandOrnament_BrokenTop      0x284
+#define METATILE_SecretBase_SandOrnament_TopWall        0x286
+#define METATILE_SecretBase_Wall_TopMid                 0x202
+
 // gTileset_Shop
 #define METATILE_Shop_Laptop1_Flash   0x258
 #define METATILE_Shop_Laptop1_Normal  0x29D

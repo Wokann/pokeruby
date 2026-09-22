@@ -282,7 +282,7 @@ gFieldEffectScript_SweetScent: @ 81D9DD4
 	end
 
 gFieldEffectScript_SandPillar: @ 81D9DDA
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo9, FldEff_SandPillar
+	loadfadedpal_callnative gSpritePalette_SandPillar, FldEff_SandPillar
 	end
 
 gFieldEffectScript_Bubbles: @ 81D9DE4
