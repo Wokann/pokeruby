@@ -647,7 +647,7 @@ AI_CheckForBadMove:
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_ONCE, AI_CBM_AvoidStartle
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE, AI_CBM_AvoidStartle
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_SLIGHTLY, AI_CBM_AvoidStartle
-	if_effect_eq CONTEST_EFFECT_GREAT_APPEAL_BUT_NO_MORE_MOVES, ContestEffect2_2
+	if_effect_eq CONTEST_EFFECT_GREAT_APPEAL_BUT_NO_MORE_MOVES, AI_CBM_NoMoreMoves
 	end
 
 AI_CBM_DependsOnPrevMon:
@@ -765,30 +765,30 @@ AI_CBM_AvoidStartle_3rdUp:
 	score -10
 	end
 
-ContestEffect2_2:
-	if_appeal_num_eq 0, ContestEffect2_2_score1
-	if_appeal_num_eq 1, ContestEffect2_2_score2
-	if_appeal_num_eq 2, ContestEffect2_2_score3
-	if_appeal_num_eq 3, ContestEffect2_2_score4
-	if_last_appeal ContestEffect2_2_score5
+AI_CBM_NoMoreMoves:
+	if_appeal_num_eq 0, AI_CBM_NoMoreMoves_1stAppeal
+	if_appeal_num_eq 1, AI_CBM_NoMoreMoves_2ndAppeal
+	if_appeal_num_eq 2, AI_CBM_NoMoreMoves_3rdAppeal
+	if_appeal_num_eq 3, AI_CBM_NoMoreMoves_4thAppeal
+	if_last_appeal AI_CBM_NoMoreMoves_LastAppeal
 	end
-ContestEffect2_2_score1:
+AI_CBM_NoMoreMoves_1stAppeal:
 	if_random 20, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_2_score2:
+AI_CBM_NoMoreMoves_2ndAppeal:
 	if_random 40, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_2_score3:
+AI_CBM_NoMoreMoves_3rdAppeal:
 	if_random 60, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_2_score4:
+AI_CBM_NoMoreMoves_4thAppeal:
 	if_random 80, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_2_score5:
+AI_CBM_NoMoreMoves_LastAppeal:
 	if_random 20, ContestEffectEnd2
 	score +20
 	end
