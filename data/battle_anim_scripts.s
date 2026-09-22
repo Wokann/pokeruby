@@ -9241,9 +9241,9 @@ Move_ROCK_BLAST: @ 81D4A5F
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 6
 	delay 3
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DADE8, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 25, 257
+	createsprite gRockBlastRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 25, 257
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	createsprite gRockFragmentSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 20, 24, 14, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 5, 1

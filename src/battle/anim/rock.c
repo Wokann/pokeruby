@@ -32,7 +32,7 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite);
 void AnimRaiseSprite(struct Sprite *sprite);
 void sub_80DD87C(struct Sprite *sprite);
 static void AnimRockTomb(struct Sprite *sprite);
-void sub_80DD978(struct Sprite *sprite);
+static void AnimRockBlastRock(struct Sprite *sprite);
 void sub_80DD9A4(struct Sprite *sprite);
 static void sub_80DCF1C(struct Sprite *sprite);
 static void AnimParticleInVortex_Step(struct Sprite *sprite);
@@ -256,33 +256,33 @@ const struct SpriteTemplate gRockTombRockSpriteTemplate =
     .callback = AnimRockTomb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DADC0[] =
+static const union AffineAnimCmd sAffineAnim_BasicRock_0[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -5, 5),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DADD0[] =
+static const union AffineAnimCmd sAffineAnim_BasicRock_1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 5, 5),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DADE0[] =
+static const union AffineAnimCmd *const sAffineAnims_BasicRock[] =
 {
-    gSpriteAffineAnim_83DADC0,
-    gSpriteAffineAnim_83DADD0,
+    sAffineAnim_BasicRock_0,
+    sAffineAnim_BasicRock_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DADE8 =
+const struct SpriteTemplate gRockBlastRockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = sAnims_BasicRockLarge,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DADE0,
-    .callback = sub_80DD978,
+    .affineAnims = sAffineAnims_BasicRock,
+    .callback = AnimRockBlastRock,
 };
 
 const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE00 =
@@ -292,7 +292,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE00 =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = sAnims_BasicRockLarge,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DADE0,
+    .affineAnims = sAffineAnims_BasicRock,
     .callback = sub_80DD9A4,
 };
 
@@ -303,7 +303,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE18 =
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD58,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DADE0,
+    .affineAnims = sAffineAnims_BasicRock,
     .callback = AnimMoveTwisterParticle,
 };
 
@@ -314,7 +314,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE30 =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gSpriteAnimTable_83DAD50,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DADE0,
+    .affineAnims = sAffineAnims_BasicRock,
     .callback = sub_807A9BC,
 };
 
@@ -832,7 +832,7 @@ static void AnimRockTomb_Step(struct Sprite *sprite)
     }
 }
 
-void sub_80DD978(struct Sprite *sprite)
+static void AnimRockBlastRock(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
         StartSpriteAffineAnim(sprite, 1);
