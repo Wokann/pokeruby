@@ -1372,23 +1372,23 @@ BattleScript_EffectSketch: @ 81D7B21
 
 BattleScript_EffectSleepTalk: @ 81D7B40
 	attackcanceler
-	jumpifstatus USER, SLP, BattleScript_1D7B52
+	jumpifstatus USER, SLP, BattleScript_SleepTalkIsAsleep
 	attackstring
 	ppreduce
 	goto BattleScript_ButItFailed
 
-BattleScript_1D7B52: @ 81D7B52
+BattleScript_SleepTalkIsAsleep: @ 81D7B52
 	printstring BATTLE_TEXT_FastAsleep
 	waitmessage 64
 	statusanimation USER
 	attackstring
 	ppreduce
 	orword gHitMarker, HITMARKER_NO_PPDEDUCT
-	trychoosesleeptalkmove BattleScript_SleepTalkIsAsleep
+	trychoosesleeptalkmove BattleScript_SleepTalkUsingMove
 	pause 64
 	goto BattleScript_ButItFailed
 
-BattleScript_SleepTalkIsAsleep: @ 81D7B72
+BattleScript_SleepTalkUsingMove: @ 81D7B72
 	attackanimation
 	waitanimation
 	setbyte sANIM_TURN, 0
