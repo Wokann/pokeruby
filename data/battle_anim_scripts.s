@@ -9526,10 +9526,10 @@ Move_KNOCK_OFF: @ 81D523B
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 6
 	delay 4
 	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_8402AE4, ANIM_BATTLER_TARGET, 2, -16, -16
+	createsprite gKnockOffStrikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, -16
 	delay 8
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 5, 1, 32767, 10, 0, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 2
+	complex_palette_blend unused_anim_battler=ANIM_BATTLER_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=5, num_blends=1, color1=RGB_WHITE, blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, -12, 10, 0, 3
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 5

@@ -1105,46 +1105,46 @@ const struct SpriteTemplate gSpriteTemplate_8402A84 =
     .callback = sub_8131EB8,
 };
 
-const union AnimCmd gSpriteAnim_8402A9C[] =
+const union AnimCmd gKnockOffStrikeAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_8402AA8[] =
+const union AnimCmd *const gKnockOffStrikeAnimTable[] =
 {
-    gSpriteAnim_8402A9C,
+    gKnockOffStrikeAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402AAC[] =
+const union AffineAnimCmd gKnockOffStrikeAffineanimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402AC4[] =
+const union AffineAnimCmd gKnockOffStrikeAffineanimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0xFF00, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402ADC[] =
+const union AffineAnimCmd *const gKnockOffStrikeAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402AAC,
-    gSpriteAffineAnim_8402AC4,
+    gKnockOffStrikeAffineanimCmds1,
+    gKnockOffStrikeAffineanimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402AE4 =
+const struct SpriteTemplate gKnockOffStrikeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SLAM_HIT_2,
     .paletteTag = ANIM_TAG_SLAM_HIT_2,
     .oam = &gOamData_AffineNormal_ObjNormal_64x64,
-    .anims = gSpriteAnimTable_8402AA8,
+    .anims = gKnockOffStrikeAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402ADC,
+    .affineAnims = gKnockOffStrikeAffineAnimTable,
     .callback = AnimKnockOffStrike,
 };
 
