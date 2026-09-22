@@ -10547,8 +10547,8 @@ General_MonHit: @ 81D6821
 
 General_ItemSteal: @ 81D6852
 	loadspritegfx ANIM_TAG_ITEM_BAG
-	createvisualtask sub_80E42D0, 2
-	createvisualtask sub_8141808, 2
+	createvisualtask AnimTask_SetAnimAttackerAndTargetForEffectAtk, 2
+	createvisualtask AnimTask_SetTargetToEffectBattler, 2
 	delay 1
 	createsprite gItemStealSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -5, 10, 2, -1
 	end

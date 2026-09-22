@@ -1848,7 +1848,7 @@ void sub_81417D8(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_8141808(u8 taskId)
+void AnimTask_SetTargetToEffectBattler(u8 taskId)
 {
     gBattleAnimTarget = gEffectBattler;
     DestroyAnimVisualTask(taskId);
