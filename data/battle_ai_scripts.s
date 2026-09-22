@@ -3102,22 +3102,22 @@ AI_HPAware_DiscouragedEffectsWhenTargetLowHP: @ 81DC07D
 
 AI_TrySunnyDayStart: @ 81DC0B9
 	if_not_effect EFFECT_SUNNY_DAY, AI_TrySunnyDayStart_End
-	if_equal 0, AI_TrySunnyDayStart_End
-	is_first_turn USER
-	if_equal 0, AI_TrySunnyDayStart_End
+	if_equal FALSE, AI_TrySunnyDayStart_End
+	is_first_turn_for AI_USER
+	if_equal FALSE, AI_TrySunnyDayStart_End
 	score +5
 
 AI_TrySunnyDayStart_End: @ 81DC0CF
 	end
 
 AI_Roaming: @ 81DC0D0
-	if_status2 USER, S_TEMP_TRAP, AI_Roaming_End
-	if_status2 USER, S_MEAN_LOOK, AI_Roaming_End
-	get_ability TARGET
+	if_status2 AI_USER, STATUS2_WRAPPED, AI_Roaming_End
+	if_status2 AI_USER, STATUS2_ESCAPE_PREVENTION, AI_Roaming_End
+	get_ability AI_TARGET
 	if_equal ABILITY_SHADOW_TAG, AI_Roaming_End
-	get_ability USER
+	get_ability AI_USER
 	if_equal ABILITY_LEVITATE, AI_Roaming_Flee
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_ARENA_TRAP, AI_Roaming_End
 
 AI_Roaming_Flee: @ 81DC0FC
@@ -3136,8 +3136,8 @@ AI_Safari_Flee: @ 81DC104
 @ This AI is used by the wild Poochyena in the first battle in the game.
 @ If it reduces your health to 20% or below, it will flee, allowing you to win.
 AI_FirstBattle: @ 81DC105
-	if_hp_equal TARGET, 20, AI_FirstBattle_Flee
-	if_hp_less_than TARGET, 20, AI_FirstBattle_Flee
+	if_hp_equal AI_TARGET, 20, AI_FirstBattle_Flee
+	if_hp_less_than AI_TARGET, 20, AI_FirstBattle_Flee
 	end
 
 AI_FirstBattle_Flee: @ 81DC114
