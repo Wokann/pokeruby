@@ -2953,7 +2953,7 @@ BattleScript_GiveExp:: @ 81D8C72
 	end2
 
 BattleScript_HandleFaintedMon:: @ 81D8C7B
-	atk24 BattleScript_1D8D87
+	atk24 BattleScript_LinkHandleFaintedMonMultiple
 	jumpifbyte NOT_EQUAL, gBattleOutcome, 0, BattleScript_FaintedMonEnd
 	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonTryChooseAnother
 	jumpifword NO_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonTryChooseAnother
@@ -3017,15 +3017,15 @@ BattleScript_FaintedMonChooseAnother: @ 81D8D66
 BattleScript_FaintedMonEnd: @ 81D8D86
 	end2
 
-BattleScript_1D8D87: @ 81D8D87
-	openpartyscreen 5, BattleScript_1D8D8D
+BattleScript_LinkHandleFaintedMonMultiple: @ 81D8D87
+	openpartyscreen 5, BattleScript_LinkHandleFaintedMonMultipleStart
 
-BattleScript_1D8D8D: @ 81D8D8D
+BattleScript_LinkHandleFaintedMonMultipleStart: @ 81D8D8D
 	switchhandleorder 3, 0
-	openpartyscreen 6, BattleScript_1D8DBD
+	openpartyscreen 6, BattleScript_LinkHandleFaintedMonMultipleEnd
 	switchhandleorder 3, 0
 
-BattleScript_1D8D99: @ 81D8D99
+BattleScript_LinkHandleFaintedMonLoop: @ 81D8D99
 	switchhandleorder 3, 2
 	drawpartystatussummary 3
 	getswitchedmondata 3
@@ -3036,9 +3036,9 @@ BattleScript_1D8D99: @ 81D8D99
 	switchinanim 3, 0
 	waitstate
 	switchineffects 5
-	jumpifbytenotequal gBank1, gBattlersCount, BattleScript_1D8D99
+	jumpifbytenotequal gBank1, gBattlersCount, BattleScript_LinkHandleFaintedMonLoop
 
-BattleScript_1D8DBD: @ 81D8DBD
+BattleScript_LinkHandleFaintedMonMultipleEnd: @ 81D8DBD
 	end2
 
 BattleScript_LocalTrainerBattleWon:: @ 81D8DBE
