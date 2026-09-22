@@ -643,7 +643,7 @@ AI_CheckForBadMove:
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, AI_CBM_DependsOnNextMon
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CBM_DependsOnNextMons
 	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CBM_DependsOnNextMons
-	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect2_38
+	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CBM_ImproveCondition
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_ONCE, ContestEffect2_4
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE, ContestEffect2_4
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_SLIGHTLY, ContestEffect2_4
@@ -738,7 +738,7 @@ AI_CBM_DependsOnNextMons_3rdUp:
 	score -10
 	end
 
-ContestEffect2_38:
+AI_CBM_ImproveCondition:
 	if_user_condition_less_than 3, ContestEffectEnd2
 	score -20
 	end
