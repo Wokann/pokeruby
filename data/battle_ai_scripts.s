@@ -11,7 +11,7 @@
 	.section script_data, "aw", %progbits
 
 	.align 2
-BattleAIs:: @ 81DA01C
+gBattleAI_ScriptsTable:: @ 81DA01C
 	.4byte AI_CheckBadMove
 	.4byte AI_CheckViability
 	.4byte AI_TryToFaint
@@ -21,7 +21,7 @@ BattleAIs:: @ 81DA01C
 	.4byte AI_PreferBatonPass
 	.4byte AI_Nothing
 	.4byte AI_HPAware
-	.4byte AI_Unknown
+	.4byte AI_TrySunnyDayStart
 	.4byte AI_Unused
 	.4byte AI_Unused
 	.4byte AI_Unused
@@ -43,7 +43,7 @@ BattleAIs:: @ 81DA01C
 	.4byte AI_Unused
 	.4byte AI_Roaming
 	.4byte AI_Safari
-	.4byte AI_GoEasy
+	.4byte AI_FirstBattle
 
 AI_CheckBadMove: @ 81DA09C
 	is_most_powerful_move
@@ -3100,14 +3100,14 @@ AI_HPAware_DiscouragedEffectsWhenTargetLowHP: @ 81DC07D
 	.byte EFFECT_DRAGON_DANCE
 	.byte -1
 
-AI_Unknown: @ 81DC0B9
-	if_not_effect EFFECT_SUNNY_DAY, AI_Unknown_End
-	if_equal 0, AI_Unknown_End
+AI_TrySunnyDayStart: @ 81DC0B9
+	if_not_effect EFFECT_SUNNY_DAY, AI_TrySunnyDayStart_End
+	if_equal 0, AI_TrySunnyDayStart_End
 	is_first_turn USER
-	if_equal 0, AI_Unknown_End
+	if_equal 0, AI_TrySunnyDayStart_End
 	score +5
 
-AI_Unknown_End: @ 81DC0CF
+AI_TrySunnyDayStart_End: @ 81DC0CF
 	end
 
 AI_Roaming: @ 81DC0D0
@@ -3135,12 +3135,12 @@ AI_Safari_Flee: @ 81DC104
 
 @ This AI is used by the wild Poochyena in the first battle in the game.
 @ If it reduces your health to 20% or below, it will flee, allowing you to win.
-AI_GoEasy: @ 81DC105
-	if_hp_equal TARGET, 20, AI_GoEasy_Flee
-	if_hp_less_than TARGET, 20, AI_GoEasy_Flee
+AI_FirstBattle: @ 81DC105
+	if_hp_equal TARGET, 20, AI_FirstBattle_Flee
+	if_hp_less_than TARGET, 20, AI_FirstBattle_Flee
 	end
 
-AI_GoEasy_Flee: @ 81DC114
+AI_FirstBattle_Flee: @ 81DC114
 	flee
 
 AI_Unused: @ 81DC115

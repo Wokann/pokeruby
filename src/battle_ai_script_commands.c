@@ -32,7 +32,7 @@ extern u16 gSideStatuses[2];
 extern struct BattlePokemon gBattleMons[MAX_BATTLERS_COUNT];
 extern u8 gCritMultiplier;
 extern u16 gTrainerBattleOpponent;
-extern u8 *BattleAIs[];
+extern u8 *gBattleAI_ScriptsTable[];
 
 enum
 {
@@ -403,7 +403,7 @@ void BattleAI_DoAIProcessing(void)
         case BATTLEAI_DO_NOT_PROCESS: //Needed to match.
             break;
         case BATTLEAI_SETTING_UP:
-            gAIScriptPtr = BattleAIs[AI_THINKING_STRUCT->aiLogicId]; // set the AI ptr.
+            gAIScriptPtr = gBattleAI_ScriptsTable[AI_THINKING_STRUCT->aiLogicId]; // set the AI ptr.
             if (gBattleMons[gBattlerAttacker].pp[AI_THINKING_STRUCT->movesetIndex] == 0)
             {
                 AI_THINKING_STRUCT->moveConsidered = MOVE_NONE; // don't consider a move you have 0 PP for, idiot.
