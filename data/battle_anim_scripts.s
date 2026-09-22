@@ -7758,7 +7758,7 @@ Move_SCARY_FACE: @ 81D23E3
 Move_SWEET_KISS: @ 81D2446
 	loadspritegfx ANIM_TAG_RED_HEART
 	loadspritegfx ANIM_TAG_ANGEL
-	createsprite gBattleAnimSpriteTemplate_83D7BB8, ANIM_BATTLER_TARGET, 2, 16, -48
+	createsprite gAngelSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, -48
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
 	delay 23
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_TARGET
