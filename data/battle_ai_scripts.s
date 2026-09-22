@@ -2628,16 +2628,16 @@ AI_CV_Snatch_End: @ 81DBDFF
 	end
 
 AI_CV_MudSport: @ 81DBE00
-	if_hp_less_than USER, 50, AI_CV_MudSport_ScoreDown1
-	get_type ENEMY_TYPE1
+	if_hp_less_than AI_USER, 50, AI_CV_MudSport_ScoreDown1
+	get_target_type1
 	if_equal TYPE_ELECTRIC, AI_CV_MudSport2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_ELECTRIC, AI_CV_MudSport2
-	jump AI_CV_MudSport_ScoreDown1
+	goto AI_CV_MudSport_ScoreDown1
 
 AI_CV_MudSport2: @ 81DBE1C
 	score +1
-	jump AI_CV_MudSport_End
+	goto AI_CV_MudSport_End
 
 AI_CV_MudSport_ScoreDown1: @ 81DBE23
 	score -1
@@ -2646,14 +2646,14 @@ AI_CV_MudSport_End: @ 81DBE25
 	end
 
 AI_CV_Overheat: @ 81DBE26
-	if_damage_bonus 10, AI_CV_Overheat_ScoreDown1
-	if_damage_bonus 20, AI_CV_Overheat_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Overheat_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Overheat_ScoreDown1
 	if_would_go_first USER, AI_CV_Overheat2
-	if_hp_more_than USER, 60, AI_CV_Overheat_End
-	jump AI_CV_Overheat_ScoreDown1
+	if_hp_more_than AI_USER, 60, AI_CV_Overheat_End
+	goto AI_CV_Overheat_ScoreDown1
 
 AI_CV_Overheat2: @ 81DBE44
-	if_hp_more_than USER, 80, AI_CV_Overheat_End
+	if_hp_more_than AI_USER, 80, AI_CV_Overheat_End
 
 AI_CV_Overheat_ScoreDown1: @ 81DBE4B
 	score -1
@@ -2662,16 +2662,16 @@ AI_CV_Overheat_End: @ 81DBE4D
 	end
 
 AI_CV_WaterSport: @ 81DBE4E
-	if_hp_less_than USER, 50, AI_CV_WaterSport_ScoreDown1
-	get_type ENEMY_TYPE1
+	if_hp_less_than AI_USER, 50, AI_CV_WaterSport_ScoreDown1
+	get_target_type1
 	if_equal TYPE_FIRE, AI_CV_WaterSport2
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_FIRE, AI_CV_WaterSport2
-	jump AI_CV_WaterSport_ScoreDown1
+	goto AI_CV_WaterSport_ScoreDown1
 
 AI_CV_WaterSport2: @ 81DBE6A
 	score +1
-	jump AI_CV_WaterSport_End
+	goto AI_CV_WaterSport_End
 
 AI_CV_WaterSport_ScoreDown1: @ 81DBE71
 	score -1
@@ -2681,10 +2681,10 @@ AI_CV_WaterSport_End: @ 81DBE73
 
 AI_CV_DragonDance: @ 81DBE74
 	if_would_go_first USER, AI_CV_DragonDance2
-	if_hp_more_than USER, 50, AI_CV_DragonDance_End
+	if_hp_more_than AI_USER, 50, AI_CV_DragonDance_End
 	if_random_less_than 70, AI_CV_DragonDance_End
 	score -1
-	jump AI_CV_DragonDance_End
+	goto AI_CV_DragonDance_End
 
 AI_CV_DragonDance2: @ 81DBE8E
 	if_random_less_than 128, AI_CV_DragonDance_End
