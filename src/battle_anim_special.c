@@ -36,7 +36,7 @@ extern u8 gEffectBattler;
 
 extern const u8 gUnknown_08D2EE48[];
 extern const u8 gUnknown_08D2EDFC[];
-extern const u16 gUnknown_08D2E150[];
+extern const u16 gCureBubblesPal[];
 extern const struct SpriteTemplate gSpriteTemplates_840B3B4[];
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 extern const struct SpriteTemplate gWishStarSpriteTemplate;
@@ -400,7 +400,7 @@ void unref_sub_813F0F4(u8 taskId)
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     LZDecompressVram(&gUnknown_08D2EE48, animBg.bgTilemap);
     LZDecompressVram(&gUnknown_08D2EDFC, animBg.bgTiles);
-    LoadCompressedPalette(gUnknown_08D2E150, animBg.paletteId << 4, 32);
+    LoadCompressedPalette(gCureBubblesPal, animBg.paletteId << 4, 32);
 
     gBattle_BG1_X = -gSprites[spriteId3].x + 32;
     gBattle_BG1_Y = -gSprites[spriteId3].y - 32;

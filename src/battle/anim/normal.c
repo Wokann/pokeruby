@@ -78,7 +78,7 @@ static void sub_80E3704(u8 taskId);
 static void sub_80E38F8(u8 taskId);
 static void sub_80E39BC(u32, u16);
 static void AnimTask_UpdateSlidingBg(u8 taskId);
-static void sub_80E3E64(u8 taskId);
+static void UpdateMonScrollingBgMask(u8 taskId);
 static void AnimTask_WaitAndRestoreVisibility(u8 taskId);
 
 const union AnimCmd gConfusionDuckSpriteAnim1[] =
@@ -1665,7 +1665,7 @@ void AnimTask_SetAllNonAttackersInvisiblity(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5, u8 arg6, u8 arg7, const u8 *arg8, const u8 *arg9, const u16 *palette)
+void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler, u8 includePartner, u8 numFadeSteps, u8 fadeStepDelay, u8 duration, const u8 *gfx, const u8 *tilemap, const u16 *palette)
 {
     u16 species;
     u8 spriteId, spriteId2;
@@ -1673,10 +1673,10 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
     u8 battler2;
 
     spriteId2 = 0;
-    battler2 = battler1 ^ 2;
+    battler2 = battler ^ 2;
 
-    if (IsContest() || (arg4 && !IsAnimBankSpriteVisible(battler2)))
-        arg4 = 0;
+    if (IsContest() || (includePartner && !IsAnimBankSpriteVisible(battler2)))
+        includePartner = FALSE;
 
     gBattle_WIN0H = 0;
     gBattle_WIN0V = 0;
@@ -1697,36 +1697,36 @@ void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5,
     }
     else
     {
-        if (GetBattlerSide(battler1) != B_SIDE_PLAYER)
-            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
+        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+            species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
         else
-            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler1]], MON_DATA_SPECIES);
+            species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
     }
 
-    spriteId = CreateInvisibleSpriteCopy(battler1, gBattlerSpriteIds[battler1], species);
-    if (arg4)
+    spriteId = CreateInvisibleSpriteCopy(battler, gBattlerSpriteIds[battler], species);
+    if (includePartner)
         spriteId2 = CreateInvisibleSpriteCopy(battler2, gBattlerSpriteIds[battler2], species);
 
     GetBattleAnimBg1Data(&animBg);
-    LZDecompressVram(arg9, animBg.bgTilemap);
+    LZDecompressVram(tilemap, animBg.bgTilemap);
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    LZDecompressVram(arg8, animBg.bgTiles);
+    LZDecompressVram(gfx, animBg.bgTiles);
     LoadCompressedPalette(palette, animBg.paletteId << 4, 32);
     gBattle_BG1_X = 0;
     gBattle_BG1_Y = 0;
-    gTasks[taskId].data[1] = arg2;
-    gTasks[taskId].data[4] = arg5;
-    gTasks[taskId].data[5] = arg7;
-    gTasks[taskId].data[6] = arg6;
+    gTasks[taskId].data[1] = scrollSpeed;
+    gTasks[taskId].data[4] = numFadeSteps;
+    gTasks[taskId].data[5] = duration;
+    gTasks[taskId].data[6] = fadeStepDelay;
     gTasks[taskId].data[0] = spriteId;
-    gTasks[taskId].data[2] = arg4;
+    gTasks[taskId].data[2] = includePartner;
     gTasks[taskId].data[3] = spriteId2;
-    gTasks[taskId].func = sub_80E3E64;
+    gTasks[taskId].func = UpdateMonScrollingBgMask;
 }
 
-static void sub_80E3E64(u8 taskId)
+static void UpdateMonScrollingBgMask(u8 taskId)
 {
     gTasks[taskId].data[13] += gTasks[taskId].data[1] < 0 ? -gTasks[taskId].data[1] : gTasks[taskId].data[1];
     if (gTasks[taskId].data[1] < 0)

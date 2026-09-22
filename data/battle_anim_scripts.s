@@ -8451,7 +8451,7 @@ Move_REFRESH: @ 81D3485
 	call GrantingStarsEffect
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 10, 0, rgb(12, 24, 30)
+	simple_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB(12, 24, 30)
 	createsprite gThinRingExpandingSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 0, 0
 	end
 

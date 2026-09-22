@@ -37,15 +37,15 @@ extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 extern const u32 gUnknown_08D2AA98[];
 extern const u32 gUnknown_08D2A9E0[];
 extern const u16 gUnknown_08D2AA80[];
-extern const u8 gUnknown_08D2E014[];
-extern const u8 gUnknown_08D2E170[];
-extern const u16 gUnknown_08D2E150[];
+extern const u8 gCureBubblesGfx[];
+extern const u8 gCureBubblesTilemap[];
+extern const u16 gCureBubblesPal[];
 extern u8 gBattleMonForms[];
 extern u8 gBattlerSpriteIds[];
 extern u16 gBattlerPartyIndexes[];
 
 extern u8 sub_8046234(s16 x, s16 y, u8 a3);
-extern void sub_80E3C4C(u8 taskId, int unused, u16 arg2, u8 battler1, u8 arg4, u8 arg5, u8 arg6, u8 arg7, const u8 *arg8, const u8 *arg9, const u16 *palette);
+extern void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler, u8 includePartner, u8 numFadeSteps, u8 fadeStepDelay, u8 duration, const u8 *gfx, const u8 *tilemap, const u16 *palette);
 
 static void sub_812C184(struct Sprite *sprite);
 static void AnimWhiteHalo_Step1(struct Sprite *sprite);
@@ -3869,7 +3869,7 @@ static void AnimTask_FacadeColorBlend_Step(u8 taskId)
 
 void AnimTask_StatusClearedEffect(u8 taskId)
 {
-    sub_80E3C4C(
+    StartMonScrollingBgMask(
         taskId,
         0,
         0x1A0,
@@ -3878,9 +3878,9 @@ void AnimTask_StatusClearedEffect(u8 taskId)
         10,
         2,
         30,
-        gUnknown_08D2E014,
-        gUnknown_08D2E170,
-        gUnknown_08D2E150);
+        gCureBubblesGfx,
+        gCureBubblesTilemap,
+        gCureBubblesPal);
 }
 
 static void AnimRoarNoiseLine(struct Sprite *sprite)
