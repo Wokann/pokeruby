@@ -57,11 +57,13 @@ extern u8 SecretBase_EventScript_PCCancel[];
 extern u8 SecretBase_EventScript_ShowRegisterMenu[];
 EWRAM_DATA u8 gCurrentSecretBaseId = 0;
 
-const struct
+struct SecretBaseEntranceMetatiles
 {
-    u16 unk_083D1358_0;
-    u16 unk_083D1358_1;
-} gUnknown_083D1358[] = {
+    u16 closedMetatileId;
+    u16 openMetatileId;
+};
+
+static const struct SecretBaseEntranceMetatiles sSecretBaseEntranceMetatiles[] = {
     {0x26,  0x36},
     {0x27,  0x37},
     {0x1a0, 0x1a1},
@@ -268,28 +270,28 @@ void sub_80BB764(s16 *arg1, s16 *arg2, u16 arg3)
     }
 }
 
-void SetOpenedSecretBaseMetatile(void)
+void ToggleSecretBaseEntranceMetatile(void)
 {
     s16 x, y;
-    s16 tile_id;
-    u16 idx;
+    s16 metatileId;
+    u16 i;
 
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
-    tile_id = MapGridGetMetatileIdAt(x, y);
-    for (idx = 0; idx < 7; idx++)
+    metatileId = MapGridGetMetatileIdAt(x, y);
+    for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
     {
-        if (gUnknown_083D1358[idx].unk_083D1358_0 == tile_id)
+        if (sSecretBaseEntranceMetatiles[i].closedMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, gUnknown_083D1358[idx].unk_083D1358_1 | 0xc00);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
     }
-    for (idx = 0; idx < 7; idx++)
+    for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
     {
-        if (gUnknown_083D1358[idx].unk_083D1358_1 == tile_id)
+        if (sSecretBaseEntranceMetatiles[i].openMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, gUnknown_083D1358[idx].unk_083D1358_0 | 0xc00);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
@@ -337,12 +339,12 @@ void SetOccupiedSecretBaseEntranceMetatiles(const struct MapEvents *events)
             {
                 if (gSaveBlock1.secretBases[jdx].secretBaseId == events->bgEvents[bgevidx].bgUnion.secretBaseId)
                 {
-                    tile_id = MapGridGetMetatileIdAt(events->bgEvents[bgevidx].x + 7, events->bgEvents[bgevidx].y + 7);
-                    for (idx = 0; idx < 7; idx++)
+                    tile_id = MapGridGetMetatileIdAt(events->bgEvents[bgevidx].x + MAP_OFFSET, events->bgEvents[bgevidx].y + MAP_OFFSET);
+                    for (idx = 0; idx < ARRAY_COUNT(sSecretBaseEntranceMetatiles); idx++)
                     {
-                        if (gUnknown_083D1358[idx].unk_083D1358_0 == tile_id)
+                        if (sSecretBaseEntranceMetatiles[idx].closedMetatileId == tile_id)
                         {
-                            MapGridSetMetatileIdAt(events->bgEvents[bgevidx].x + 7, events->bgEvents[bgevidx].y + 7, gUnknown_083D1358[idx].unk_083D1358_1 | 0xc00);
+                            MapGridSetMetatileIdAt(events->bgEvents[bgevidx].x + MAP_OFFSET, events->bgEvents[bgevidx].y + MAP_OFFSET, sSecretBaseEntranceMetatiles[idx].openMetatileId | MAPGRID_COLLISION_MASK);
                             break;
                         }
                     }
@@ -734,16 +736,16 @@ void sub_80BC474(void)
          && gSaveBlock1.secretBases[0].secretBaseId == mapEvents->bgEvents[eventId].bgUnion.secretBaseId)
         {
             u16 i;
-            s16 tileId = MapGridGetMetatileIdAt(mapEvents->bgEvents[eventId].x + 7, mapEvents->bgEvents[eventId].y + 7);
+            s16 tileId = MapGridGetMetatileIdAt(mapEvents->bgEvents[eventId].x + MAP_OFFSET, mapEvents->bgEvents[eventId].y + MAP_OFFSET);
 
-            for (i = 0; i < 7; i++)
+            for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
             {
-                if (gUnknown_083D1358[i].unk_083D1358_1 == tileId)
+                if (sSecretBaseEntranceMetatiles[i].openMetatileId == tileId)
                 {
                     MapGridSetMetatileIdAt(
-                        mapEvents->bgEvents[eventId].x + 7,
-                        mapEvents->bgEvents[eventId].y + 7,
-                        gUnknown_083D1358[i].unk_083D1358_0 | 0xc00);
+                        mapEvents->bgEvents[eventId].x + MAP_OFFSET,
+                        mapEvents->bgEvents[eventId].y + MAP_OFFSET,
+                        sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
                     break;
                 }
             }

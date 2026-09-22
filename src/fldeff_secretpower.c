@@ -19,30 +19,17 @@ extern u8 SecretBase_EventScript_CaveUseSecretPower[];
 extern u8 SecretBase_EventScript_TreeUseSecretPower[];
 extern u8 SecretBase_EventScript_ShrubUseSecretPower[];
 
-const u8 gSpriteImage_83D198C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/0.4bpp");
-const u8 gSpriteImage_83D1A0C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/1.4bpp");
-const u8 gSpriteImage_83D1A8C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/2.4bpp");
-const u8 gSpriteImage_83D1B0C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/3.4bpp");
-const u8 gSpriteImage_83D1B8C[] = INCBIN_U8("graphics/unknown_sprites/83D259C/4.4bpp");
-const u8 gUnusedEmptySpace_83D1C0C[32] = {0};
-const u16 gFieldEffectObjectPalette7[] = INCBIN_U16("graphics/field_effect_objects/palettes/07.gbapal");
-const u8 gSpriteImage_83D1C4C[] = INCBIN_U8("graphics/unknown_sprites/83D25EC/0.4bpp");
-const u8 gSpriteImage_83D1CCC[] = INCBIN_U8("graphics/unknown_sprites/83D25EC/1.4bpp");
-const u8 gSpriteImage_83D1D4C[] = INCBIN_U8("graphics/unknown_sprites/83D25EC/2.4bpp");
-const u8 gSpriteImage_83D1DCC[] = INCBIN_U8("graphics/unknown_sprites/83D25EC/3.4bpp");
-const u8 gSpriteImage_83D1E4C[] = INCBIN_U8("graphics/unknown_sprites/83D25EC/4.4bpp");
-const u8 gSpriteImage_83D1ECC[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/0.4bpp");
-const u8 gSpriteImage_83D1F4C[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/1.4bpp");
-const u8 gSpriteImage_83D1FCC[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/2.4bpp");
-const u8 gSpriteImage_83D204C[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/3.4bpp");
-const u8 gSpriteImage_83D20CC[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/4.4bpp");
-const u8 gSpriteImage_83D214C[] = INCBIN_U8("graphics/unknown_sprites/83D25C4/5.4bpp");  // unused
-const u16 gFieldEffectObjectPalette8[] = INCBIN_U16("graphics/field_effect_objects/palettes/08.gbapal");
+static const u8 sSecretPowerCave_Gfx[] = INCBIN_U8("graphics/field_effects/pics/secret_power_cave.4bpp");
+static const u8 sFiller[32] = {0};
+static const u16 sSecretPowerCave_Pal[] = INCBIN_U16("graphics/field_effects/palettes/secret_power_cave.gbapal");
+static const u8 sSecretPowerShrub_Gfx[] = INCBIN_U8("graphics/field_effects/pics/secret_power_shrub.4bpp");
+static const u8 sSecretPowerTree_Gfx[] = INCBIN_U8("graphics/field_effects/pics/secret_power_tree.4bpp");
+static const u16 sSecretPowerPlant_Pal[] = INCBIN_U16("graphics/field_effects/palettes/secret_power_plant.gbapal");
 const u8 gSandPillar0_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/0.4bpp");
 const u8 gSandPillar1_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/1.4bpp");
 const u8 gSandPillar2_Gfx[] = INCBIN_U8("graphics/field_effect_objects/pics/sand_pillar/2.4bpp");
 
-const struct OamData gOamData_83D24EC =
+static const struct OamData sOam_SecretPower =
 {
     .y = 0,
     .affineMode = 0,
@@ -59,7 +46,7 @@ const struct OamData gOamData_83D24EC =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83D24F4[] =
+static const union AnimCmd sAnim_SecretPowerCave[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(1, 8),
@@ -69,7 +56,7 @@ const union AnimCmd gSpriteAnim_83D24F4[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D250C[] =
+static const union AnimCmd sAnim_VineDropLeft[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(1, 8),
@@ -79,7 +66,7 @@ const union AnimCmd gSpriteAnim_83D250C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D2524[] =
+static const union AnimCmd sAnim_VineRiseLeft[] =
 {
     ANIMCMD_FRAME(4, 8),
     ANIMCMD_FRAME(3, 8),
@@ -89,7 +76,7 @@ const union AnimCmd gSpriteAnim_83D2524[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D253C[] =
+static const union AnimCmd sAnim_VineDropRight[] =
 {
     ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
     ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
@@ -99,7 +86,7 @@ const union AnimCmd gSpriteAnim_83D253C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D2554[] =
+static const union AnimCmd sAnim_VineRiseRight[] =
 {
     ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
     ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
@@ -109,7 +96,7 @@ const union AnimCmd gSpriteAnim_83D2554[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D256C[] =
+static const union AnimCmd sAnim_SecretPowerShrub[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(1, 8),
@@ -119,102 +106,103 @@ const union AnimCmd gSpriteAnim_83D256C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D2584[] =
+static const union AnimCmd *const sAnimTable_SecretPowerCave[] =
 {
-    gSpriteAnim_83D24F4,
+    sAnim_SecretPowerCave,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D2588[] =
+static const union AnimCmd *const sAnimTable_SecretPowerTree[] =
 {
-    gSpriteAnim_83D250C,
-    gSpriteAnim_83D2524,
-    gSpriteAnim_83D253C,
-    gSpriteAnim_83D2554,
+    sAnim_VineDropLeft,
+    sAnim_VineRiseLeft,
+    sAnim_VineDropRight,
+    sAnim_VineRiseRight,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D2598[] =
+static const union AnimCmd *const sAnimTable_SecretPowerShrub[] =
 {
-    gSpriteAnim_83D256C,
+    sAnim_SecretPowerShrub,
 };
 
-const struct SpriteFrameImage gSpriteImageTable_83D259C[] = 
+static const struct SpriteFrameImage sPicTable_SecretPowerCave[] =
 {
-    {gSpriteImage_83D198C, 0x80},
-    {gSpriteImage_83D1A0C, 0x80},
-    {gSpriteImage_83D1A8C, 0x80},
-    {gSpriteImage_83D1B0C, 0x80},
-    {gSpriteImage_83D1B8C, 0x80},
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerCave_Gfx, 2, 2, 4),
 };
 
-const struct SpriteFrameImage gSpriteImageTable_83D25C4[] = 
+static const struct SpriteFrameImage sPicTable_SecretPowerTree[] =
 {
-    {gSpriteImage_83D1ECC, 0x80},
-    {gSpriteImage_83D1F4C, 0x80},
-    {gSpriteImage_83D1FCC, 0x80},
-    {gSpriteImage_83D204C, 0x80},
-    {gSpriteImage_83D20CC, 0x80},
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerTree_Gfx, 2, 2, 4),
+    // The sixth frame is unused; the tree-vine metatile is used instead.
 };
 
-const struct SpriteFrameImage gSpriteImageTable_83D25EC[] = 
+static const struct SpriteFrameImage sPicTable_SecretPowerShrub[] =
 {
-    {gSpriteImage_83D1C4C, 0x80},
-    {gSpriteImage_83D1CCC, 0x80},
-    {gSpriteImage_83D1D4C, 0x80},
-    {gSpriteImage_83D1DCC, 0x80},
-    {gSpriteImage_83D1E4C, 0x80},
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 0),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 1),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 2),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 3),
+    overworld_frame(sSecretPowerShrub_Gfx, 2, 2, 4),
 };
 
-static void CaveEntranceSpriteCallback1(struct Sprite *);
-static const struct SpriteTemplate sSpriteTemplate_CaveEntrance =
-{
-    .tileTag = 0xFFFF,
-    .paletteTag = 4099,
-    .oam = &gOamData_83D24EC,
-    .anims = gSpriteAnimTable_83D2584,
-    .images = gSpriteImageTable_83D259C,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = CaveEntranceSpriteCallback1,
-};
-
-static void TreeEntranceSpriteCallback1(struct Sprite *);
-const struct SpriteTemplate sSpriteTemplate_TreeEntrance =
+static void SpriteCB_CaveEntranceInit(struct Sprite *);
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerCave =
 {
     .tileTag = 0xFFFF,
-    .paletteTag = 4104,
-    .oam = &gOamData_83D24EC,
-    .anims = gSpriteAnimTable_83D2588,
-    .images = gSpriteImageTable_83D25C4,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_TREE,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerCave,
+    .images = sPicTable_SecretPowerCave,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = TreeEntranceSpriteCallback1,
+    .callback = SpriteCB_CaveEntranceInit,
 };
 
-static void ShrubEntranceSpriteCallback1(struct Sprite *);
-const struct SpriteTemplate sSpriteTemplate_ShrubEntrance =
+static void SpriteCB_TreeEntranceInit(struct Sprite *);
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerTree =
 {
     .tileTag = 0xFFFF,
-    .paletteTag = 4104,
-    .oam = &gOamData_83D24EC,
-    .anims = gSpriteAnimTable_83D2598,
-    .images = gSpriteImageTable_83D25EC,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerTree,
+    .images = sPicTable_SecretPowerTree,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = ShrubEntranceSpriteCallback1,
+    .callback = SpriteCB_TreeEntranceInit,
 };
 
-const struct SpritePalette gFieldEffectObjectPaletteInfo7 = {gFieldEffectObjectPalette7, 0x1003};
-const struct SpritePalette gFieldEffectObjectPaletteInfo8 = {gFieldEffectObjectPalette8, 0x1008};
+static void SpriteCB_ShrubEntranceInit(struct Sprite *);
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerShrub =
+{
+    .tileTag = 0xFFFF,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerShrub,
+    .images = sPicTable_SecretPowerShrub,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ShrubEntranceInit,
+};
+
+const struct SpritePalette gSpritePalette_SecretPower_Cave = {sSecretPowerCave_Pal, FLDEFF_PAL_TAG_SECRET_POWER_TREE};
+const struct SpritePalette gSpritePalette_SecretPower_Plant = {sSecretPowerPlant_Pal, FLDEFF_PAL_TAG_SECRET_POWER_PLANT};
 
 static void FieldCallback_SecretBaseCave(void);
 static void StartSecretBaseCaveFieldEffect(void);
-static void CaveEntranceSpriteCallback2(struct Sprite *);
-static void CaveEntranceSpriteCallbackEnd(struct Sprite *);
+static void SpriteCB_CaveEntranceOpen(struct Sprite *);
+static void SpriteCB_CaveEntranceEnd(struct Sprite *);
 static void FieldCallback_SecretBaseTree(void);
 static void StartSecretBaseTreeFieldEffect(void);
-static void TreeEntranceSpriteCallback2(struct Sprite *);
-static void TreeEntranceSpriteCallbackEnd(struct Sprite *);
+static void SpriteCB_TreeEntranceOpen(struct Sprite *);
+static void SpriteCB_TreeEntranceEnd(struct Sprite *);
 static void FieldCallback_SecretBaseShrub(void);
 static void StartSecretBaseShrubFieldEffect(void);
-static void ShrubEntranceSpriteCallback2(struct Sprite *sprite);
-static void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite);
+static void SpriteCB_ShrubEntranceOpen(struct Sprite *sprite);
+static void SpriteCB_ShrubEntranceEnd(struct Sprite *sprite);
 
 static void SetCurrentSecretBase(void)
 {
@@ -351,36 +339,36 @@ bool8 FldEff_SecretPowerCave(void)
 {
     AdjustSecretPowerSpritePixelOffsets();
     CreateSprite(
-        &sSpriteTemplate_CaveEntrance,
+        &sSpriteTemplate_SecretPowerCave,
         gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
         gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
         148);
     return FALSE;
 }
 
-static void CaveEntranceSpriteCallback1(struct Sprite *sprite)
+static void SpriteCB_CaveEntranceInit(struct Sprite *sprite)
 {
     PlaySE(SE_M_ROCK_THROW);
     sprite->data[0] = 0;
-    sprite->callback = CaveEntranceSpriteCallback2;
+    sprite->callback = SpriteCB_CaveEntranceOpen;
 }
 
-static void CaveEntranceSpriteCallback2(struct Sprite *sprite)
+static void SpriteCB_CaveEntranceOpen(struct Sprite *sprite)
 {
     if (sprite->data[0] < 40)
     {
         sprite->data[0]++;
         if (sprite->data[0] == 20)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
     }
     else
     {
         sprite->data[0] = 0;
-        sprite->callback = CaveEntranceSpriteCallbackEnd;
+        sprite->callback = SpriteCB_CaveEntranceEnd;
     }
 }
 
-static void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite)
+static void SpriteCB_CaveEntranceEnd(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SECRET_POWER_CAVE);
     ScriptContext_Enable();
@@ -420,40 +408,40 @@ bool8 FldEff_SecretPowerTree(void)
 
     AdjustSecretPowerSpritePixelOffsets();
     CreateSprite(
-        &sSpriteTemplate_TreeEntrance,
+        &sSpriteTemplate_SecretPowerTree,
         gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
         gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
         148);
 
     if (gFieldEffectArguments[7] == 1 || gFieldEffectArguments[7] == 3)
-        SetOpenedSecretBaseMetatile();
+        ToggleSecretBaseEntranceMetatile();
 
     return FALSE;
 }
 
-static void TreeEntranceSpriteCallback1(struct Sprite *sprite)
+static void SpriteCB_TreeEntranceInit(struct Sprite *sprite)
 {
     PlaySE(SE_M_SCRATCH);
     sprite->animNum = gFieldEffectArguments[7];
     sprite->data[0] = 0;
-    sprite->callback = TreeEntranceSpriteCallback2;
+    sprite->callback = SpriteCB_TreeEntranceOpen;
 }
 
-static void TreeEntranceSpriteCallback2(struct Sprite *sprite)
+static void SpriteCB_TreeEntranceOpen(struct Sprite *sprite)
 {
     sprite->data[0]++;
 
     if (sprite->data[0] >= 40)
     {
         if (gFieldEffectArguments[7] == 0 || gFieldEffectArguments[7] == 2)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
 
         sprite->data[0] = 0;
-        sprite->callback = TreeEntranceSpriteCallbackEnd;
+        sprite->callback = SpriteCB_TreeEntranceEnd;
     }
 }
 
-static void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite)
+static void SpriteCB_TreeEntranceEnd(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SECRET_POWER_TREE);
     ScriptContext_Enable();
@@ -485,36 +473,36 @@ bool8 FldEff_SecretPowerShrub(void)
 {
     AdjustSecretPowerSpritePixelOffsets();
     CreateSprite(
-        &sSpriteTemplate_ShrubEntrance,
+        &sSpriteTemplate_SecretPowerShrub,
         gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
         gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
         148);
     return FALSE;
 }
 
-static void ShrubEntranceSpriteCallback1(struct Sprite *sprite)
+static void SpriteCB_ShrubEntranceInit(struct Sprite *sprite)
 {
     PlaySE(SE_M_POISON_POWDER);
     sprite->data[0] = 0;
-    sprite->callback = ShrubEntranceSpriteCallback2;
+    sprite->callback = SpriteCB_ShrubEntranceOpen;
 }
 
-static void ShrubEntranceSpriteCallback2(struct Sprite *sprite)
+static void SpriteCB_ShrubEntranceOpen(struct Sprite *sprite)
 {
     if (sprite->data[0] < 40)
     {
         sprite->data[0]++;
         if (sprite->data[0] == 20)
-            SetOpenedSecretBaseMetatile();
+            ToggleSecretBaseEntranceMetatile();
     }
     else
     {
         sprite->data[0] = 0;
-        sprite->callback = ShrubEntranceSpriteCallbackEnd;
+        sprite->callback = SpriteCB_ShrubEntranceEnd;
     }
 }
 
-static void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite)
+static void SpriteCB_ShrubEntranceEnd(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SECRET_POWER_SHRUB);
     ScriptContext_Enable();

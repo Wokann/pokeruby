@@ -1,5 +1,6 @@
 OBJEVENTGFXDIR := graphics/object_events/pics
 FIELDEFFGFXDIR := graphics/field_effect_objects/pics
+FIELDEFFECTGFXDIR := graphics/field_effects/pics
 
 $(OBJEVENTGFXDIR)/berry_trees/aguav.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
@@ -548,6 +549,15 @@ $(FIELDEFFGFXDIR)/short_grass.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/small_sparkle.4bpp: %.4bpp: %.png
+	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
+
+$(FIELDEFFECTGFXDIR)/secret_power_cave.4bpp: %.4bpp: %.png
+	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
+
+$(FIELDEFFECTGFXDIR)/secret_power_tree.4bpp: %.4bpp: %.png
+	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
+
+$(FIELDEFFECTGFXDIR)/secret_power_shrub.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
 $(FIELDEFFGFXDIR)/splash.4bpp: %.4bpp: %.png

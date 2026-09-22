@@ -7,7 +7,7 @@
 void ResetSecretBases(void);
 void SetCurrentSecretBaseVar(void);
 void CheckPlayerHasSecretBase(void);
-void SetOpenedSecretBaseMetatile(void);
+void ToggleSecretBaseEntranceMetatile(void);
 void SetOccupiedSecretBaseEntranceMetatiles(const struct MapEvents *events);
 u8 sub_80BBB24(void);
 void InitSecretBaseAppearance(u8 flagIn);
