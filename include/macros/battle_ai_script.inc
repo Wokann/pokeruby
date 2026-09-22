@@ -343,6 +343,10 @@
 	.byte 0x2e
 	.endm
 
+	.macro get_considered_move_effect
+	.byte 0x2e
+	.endm
+
 	.macro get_ability target
 	.byte 0x2f
 	.byte \target

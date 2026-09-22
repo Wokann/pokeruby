@@ -2695,8 +2695,8 @@ AI_CV_DragonDance_End: @ 81DBE96
 
 AI_TryToFaint: @ 81DBE97
 	if_can_faint AI_TryToFaint_TryToEncourageQuickAttack
-	is_most_powerful_move
-	if_equal 1, Score_Minus1
+	get_how_powerful_move_is
+	if_equal MOVE_NOT_MOST_POWERFUL, Score_Minus1
 	end
 
 AI_TryToFaint_TryToEncourageQuickAttack: @ 81DBEA4
@@ -2713,7 +2713,7 @@ AI_TryToFaint_End: @ 81DBEB4
 AI_SetupFirstTurn: @ 81DBEB5
 	get_turn_count
 	if_not_equal 0, AI_SetupFirstTurn_End
-	get_effect
+	get_considered_move_effect
 	if_not_in_bytes AI_SetupFirstTurn_SetupEffectsToEncourage, AI_SetupFirstTurn_End
 	if_random_less_than 80, AI_SetupFirstTurn_End
 	score +2
