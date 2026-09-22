@@ -8662,30 +8662,30 @@ Move_MUD_SHOT: @ 81D3A75
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 46, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_ATTACKER, 0, 2, 46, 1
 	delay 6
 	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
-	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	createvisualtask AnimTask_ShakeMon, 5, 1, 3, 0, 43, 1
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
-	call _81D3AEF
+	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +1, 0
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 3, 0, 43, 1
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
+	call MudShotOrbs
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D3AEF:
-	createsprite gBattleAnimSpriteTemplate_83D920C, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+MudShotOrbs:
+	createsprite gMudShotOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D920C, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
+	createsprite gMudShotOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 10, 10, 0, 16
 	delay 2
 	return
 

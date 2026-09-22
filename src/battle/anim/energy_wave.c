@@ -46,7 +46,7 @@ const struct SpriteTemplate gHydroPumpOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D920C =
+const struct SpriteTemplate gMudShotOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BROWN_ORB,
     .paletteTag = ANIM_TAG_BROWN_ORB,
