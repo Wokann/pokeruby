@@ -7684,7 +7684,7 @@ Move_HEAL_BELL: @ 81D21BD
 	loadspritegfx ANIM_TAG_MUSIC_NOTES_2
 	loadspritegfx ANIM_TAG_THIN_RING
 	loadspritegfx ANIM_TAG_SPARKLE_2
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 0, 0, 10, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 0, 0, 10, RGB_WHITE
 	waitforvisualfinish
 	createvisualtask AnimTask_LoadMusicNotesPals, 5
 	createsprite gBellSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -24, 0, 1
@@ -7715,13 +7715,13 @@ Move_HEAL_BELL: @ 81D21BD
 	createsprite gSparklingStarsSpriteTemplate, ANIM_BATTLER_ATTACKER, 16, 12, -5, 0, 0, 32, 60, 1
 	waitforvisualfinish
 	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 10, 0, 31500
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 3, 10, 0, 32767
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 10, 0, RGB(12, 24, 30)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 3, 10, 0, RGB_WHITE
 	createsprite gBlendThinRingExpandingSpriteTemplate, ANIM_BATTLER_ATTACKER, 16, 0, 0, 0, 1
 	end
 HealBellRing:
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 8, 0, 31500
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 10, 3, 2, 10, 32767
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 4, 3, 8, 0, RGB(12, 24, 30)
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATK_SIDE, 3, 2, 10, RGB_WHITE
 	createsprite gThinRingExpandingSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 0, -24, 0, 1
 	playsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER
 	return

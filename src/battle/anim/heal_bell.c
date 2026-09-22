@@ -15,6 +15,8 @@ extern const u8 gBattleAnimSpritePal_MusicNotes2[];
 
 static void AnimHealBellMusicNote(struct Sprite* sprite);
 
+#define NUM_MUSIC_NOTE_PAL_TAGS 5
+
 // Used in Heal Bell.
 
 const union AnimCmd gBellAnimCmds[] =
@@ -53,11 +55,11 @@ const struct SpriteTemplate gBellSpriteTemplate =
 
 static const u16 sMusicNotePaletteTagsTable[] =
 {
-    10206,
-    9999,
-    9998,
-    9997,
-    9996,
+    ANIM_TAG_MUSIC_NOTES_2,
+    ANIM_SPRITES_START - 1,
+    ANIM_SPRITES_START - 2,
+    ANIM_SPRITES_START - 3,
+    ANIM_SPRITES_START - 4,
     0,
 };
 
@@ -75,23 +77,23 @@ const struct SpriteTemplate gHealBellMusicNoteSpriteTemplate =
 void AnimTask_LoadMusicNotesPals(u8 taskId)
 {
     int i;
-    u8 sp[8];
-    const void* src;
-    void* dest;
-    void* what;
-    sp[0] = IndexOfSpritePaletteTag(0x27DE);
-    for (i = 1; i <= 4; i++)
+    u8 paletteNums[8];
+    const void *compressedPaletteData;
+    void *decompressedPaletteData;
+    void *palette;
+    paletteNums[0] = IndexOfSpritePaletteTag(ANIM_TAG_MUSIC_NOTES_2);
+    for (i = 1; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
     {
-        sp[i] = AllocSpritePalette(0x2710 - i);
+        paletteNums[i] = AllocSpritePalette(ANIM_SPRITES_START - i);
     }
 
-    src = &gBattleAnimSpritePal_MusicNotes2;
-    dest = (IsContest()) ? gSharedMem + 0x18000 - 0x3800: gSharedMem + 0x18000;
-    LZDecompressWram(src, dest);
-    for (i = 0; i <= 4; i++)
+    compressedPaletteData = gBattleAnimSpritePal_MusicNotes2;
+    decompressedPaletteData = (IsContest()) ? gSharedMem + 0x18000 - 0x3800: gSharedMem + 0x18000;
+    LZDecompressWram(compressedPaletteData, decompressedPaletteData);
+    for (i = 0; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
     {
-        what = ((IsContest()) ? gSharedMem + 0x14800 : gSharedMem + 0x18000) + (i << 5);
-        LoadPalette(what, (u16)((sp[i] << 4) + 0x100), 32);
+        palette = ((IsContest()) ? gSharedMem + 0x14800 : gSharedMem + 0x18000) + (i << 5);
+        LoadPalette(palette, (u16)((paletteNums[i] << 4) + 0x100), 32);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -108,13 +110,13 @@ void AnimTask_FreeMusicNotesPals(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void SetMusicNotePalette(struct Sprite* sprite, u8 a, u8 b)
+static void SetMusicNotePalette(struct Sprite* sprite, u8 animNum, u8 paletteNum)
 {
     u8 tile;
-    tile = (b & 1);
+    tile = (paletteNum & 1);
     tile = ((-tile | tile) >> 31) & 32;
-    sprite->oam.tileNum += tile + (a << 2);
-    sprite->oam.paletteNum = IndexOfSpritePaletteTag(sMusicNotePaletteTagsTable[b >> 1]);
+    sprite->oam.tileNum += tile + (animNum << 2);
+    sprite->oam.paletteNum = IndexOfSpritePaletteTag(sMusicNotePaletteTagsTable[paletteNum >> 1]);
 }
 
 static void AnimHealBellMusicNote(struct Sprite* sprite)
