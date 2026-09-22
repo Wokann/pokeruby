@@ -244,6 +244,14 @@
 	.byte AI_TYPE_MOVE
 	.endm
 
+	.macro get_user_type1
+	get_type AI_TYPE1_USER
+	.endm
+
+	.macro get_user_type2
+	get_type AI_TYPE2_USER
+	.endm
+
 	.macro get_target_type1
 	get_type AI_TYPE1_TARGET
 	.endm
