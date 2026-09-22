@@ -166,7 +166,7 @@ BattleScript_RunByUsingItem: @ 81D9FDA
 	finishturn
 
 BattleScript_ActionWatchesCarefully: @ 81D9FE4
-	printstring BATTLE_TEXT_PkmnWatchingCarefully
+	printstring STRINGID_PKMNWATCHINGCAREFULLY
 	waitmessage B_WAIT_TIME_LONG
 	end2
 
@@ -176,7 +176,7 @@ BattleScript_ActionGetNear: @ 81D9FEB
 	end2
 
 BattleScript_ActionThrowPokeblock: @ 81D9FF4
-	printstring BATTLE_TEXT_ThrewPokeblockAtPkmn
+	printstring STRINGID_THREWPOKEBLOCKATPKMN
 	waitmessage B_WAIT_TIME_LONG
 	playanimation USER, B_ANIM_POKEBLOCK_THROW, NULL
 	printfromtable gSafariPokeblockResultStringIds
@@ -190,6 +190,6 @@ BattleScript_ActionWallyThrow: @ 81DA00A
 	waitstate
 	trainerslidein TARGET
 	waitstate
-	printstring BATTLE_TEXT_YouThrowABallNowRight
+	printstring STRINGID_YOUTHROWABALLNOWRIGHT
 	waitmessage B_WAIT_TIME_LONG
 	end2
