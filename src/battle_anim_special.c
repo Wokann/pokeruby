@@ -1746,7 +1746,7 @@ static void sub_81414BC(u8 taskId)
     }
 }
 
-void sub_814151C(u8 taskId)
+void AnimTask_SwapMonSpriteToFromSubstitute(u8 taskId)
 {
     u8 spriteId;
     u32 x;
@@ -1808,7 +1808,7 @@ void sub_814151C(u8 taskId)
     }
 }
 
-void sub_81416C4(u8 taskId)
+void AnimTask_SubstituteFadeToInvisible(u8 taskId)
 {
     u8 spriteId;
 

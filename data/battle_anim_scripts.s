@@ -10326,7 +10326,7 @@ General_StatsChange: @ 81D63EA
 
 General_SubstituteFade: @ 81D63F3
 	monbg ANIM_BATTLER_ATTACKER
-	createvisualtask sub_81416C4, 5
+	createvisualtask AnimTask_SubstituteFadeToInvisible, 5
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 16, 32767
 	waitforvisualfinish
 	delay 1
@@ -10334,7 +10334,7 @@ General_SubstituteFade: @ 81D63F3
 	delay 2
 	blendoff
 	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 0, 0, 0, 32767
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	end
 
 General_SubstituteAppear: @ 81D6430
@@ -10682,7 +10682,7 @@ _81D6AC5:
 	waitforvisualfinish
 	return
 _81D6AC7:
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	waitforvisualfinish
 	goto _81D6AC5
 
@@ -10693,7 +10693,7 @@ _81D6AE5:
 	waitforvisualfinish
 	return
 _81D6AE7:
-	createvisualtask sub_814151C, 2, 0
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
 	waitforvisualfinish
 	goto _81D6AE5
 
@@ -10751,9 +10751,9 @@ Special_SafariBallThrow: @ 81D6B8D
 	end
 
 Special_SubstituteToMon: @ 81D6BA6
-	createvisualtask sub_814151C, 2, 1
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 1
 	end
 
 Special_MonToSubstitute: @ 81D6BB0
-	createvisualtask sub_814151C, 2, 0
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, 0
 	end
