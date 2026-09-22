@@ -8767,55 +8767,55 @@ Move_FRENZY_PLANT: @ 81D3C7B
 	monbg ANIM_BATTLER_TARGET
 	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 1, 2, 0, 5, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=5, color=RGB_BLACK
 	waitforvisualfinish
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 8, 2, 0, 0, 100
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=10, offset_x=8, offset_y=2, subpriority=30, animation=0, duration=100
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_ATTACKER
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 20, -8, -2, 0, 1, 95
-	playsewithpan SE_M_SCRATCH, 213
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=20, offset_x=-8, offset_y=-2, subpriority=30, animation=1, duration=95
+	playsewithpan SE_M_SCRATCH, -43
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 30, 8, -4, 0, 0, 90
-	playsewithpan SE_M_SCRATCH, 234
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=30, offset_x=8, offset_y=-4, subpriority=30, animation=0, duration=90
+	playsewithpan SE_M_SCRATCH, -22
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -8, 4, 0, 1, 85
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=40, offset_x=-8, offset_y=4, subpriority=30, animation=1, duration=85
 	playsewithpan SE_M_SCRATCH, 0
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 50, 8, 0, 0, 0, 85
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=50, offset_x=8, offset_y=0, subpriority=30, animation=0, duration=85
 	playsewithpan SE_M_SCRATCH, 21
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 60, -8, -2, 0, 1, 85
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=60, offset_x=-8, offset_y=-2, subpriority=30, animation=1, duration=85
 	playsewithpan SE_M_SCRATCH, 42
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 75, 8, 0, 0, 0, 85
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=75, offset_x=8, offset_y=0, subpriority=30, animation=0, duration=85
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 85, 16, 6, 0, 3, 80
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=85, offset_x=16, offset_y=6, subpriority=30, animation=3, duration=80
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
-	createsprite gFrenzyPlantRootSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 85, -16, -6, 0, 2, 75
+	create_frenzy_plant_root_sprite ANIM_BATTLER_ATTACKER, 2, interpolate_percent=85, offset_x=-16, offset_y=-6, subpriority=30, animation=2, duration=75
 	playsewithpan SE_M_SCRATCH, SOUND_PAN_TARGET
 	delay 5
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -10, 1, 3
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-10, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	createvisualtask AnimTask_ShakeMon, 3, 1, 8, 0, 20, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_BATTLER_TARGET, 8, 0, 20, 1
 	delay 3
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, 8, 1, 3
-	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	delay 3
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 10, -3, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=8, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	delay 3
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -3, 1, 1, 2
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=10, y=-3, relative_to=ANIM_BATTLER_TARGET, animation=2
+	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
+	delay 3
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-3, y=1, relative_to=ANIM_BATTLER_TARGET, animation=2
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, 1, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=1, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 10, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=10, relative_to=ANIM_BATTLER_TARGET, animation=1
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 1, 2, 5, 0, rgb(0, 0, 0)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_BG, delay=2, initial_blend_y=5, target_blend_y=0, color=RGB_BLACK
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
