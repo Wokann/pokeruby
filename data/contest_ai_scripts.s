@@ -254,8 +254,8 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, AI_CGM_NextAppealEarlier
 	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, AI_CGM_NextAppealLater
 	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CGM_RepetitionNotBoring
-	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect38
-	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect47
+	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CGM_ImproveCondition
+	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CGM_DontExciteAudience
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect31
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, ContestEffect32
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, ContestEffect46
@@ -317,40 +317,40 @@ AI_CGM_Unused_Discourage:
 	score -20
 	end
 
-ContestEffect38:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, ContestEffect38_contest04
-	if_user_condition_eq 3, ContestEffect38_score1
+AI_CGM_ImproveCondition:
+	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_ImproveCondition_CheckAppealNum
+	if_user_condition_eq 3, AI_CGM_ImproveCondition_AtMax
 	if_random 50, ContestEffectEnd
 	score +15
 	end
-ContestEffect38_score1:
+AI_CGM_ImproveCondition_AtMax:
 	score -10
 	end
-ContestEffect38_contest04:
-	if_last_appeal ContestEffect38_score2
-	if_appeal_num_eq 0, ContestEffect38_random
+AI_CGM_ImproveCondition_CheckAppealNum:
+	if_last_appeal AI_CGM_ImproveCondition_LastAppeal
+	if_appeal_num_eq 0, AI_CGM_ImproveCondition_FirstAppeal
 	if_move_used_count_eq 1, ContestEffectEnd
 	if_random 125, ContestEffectEnd
 	score +10
 	end
-ContestEffect38_random:
+AI_CGM_ImproveCondition_FirstAppeal:
 	if_random 100, ContestEffectEnd
 	score +10
 	end
-ContestEffect38_score2:
+AI_CGM_ImproveCondition_LastAppeal:
 	score -10
 	end
 
-ContestEffect47:
+AI_CGM_DontExciteAudience:
 	if_move_used_count_eq 1, ContestEffectEnd
-	if_user_order_eq MON_1, ContestEffect47_random
-	if_user_order_eq MON_2, ContestEffect47_random
+	if_user_order_eq MON_1, AI_CGM_DontExciteAudience_EarlyTurn
+	if_user_order_eq MON_2, AI_CGM_DontExciteAudience_EarlyTurn
 	if_not_last_appeal ContestEffectEnd
 	if_user_has_exciting_move ContestEffectEnd
 	if_excitement_less_than 1, ContestEffectEnd
 	score +10
 	end
-ContestEffect47_random:
+AI_CGM_DontExciteAudience_EarlyTurn:
 	if_random 127, ContestEffectEnd
 	score +10
 	end
