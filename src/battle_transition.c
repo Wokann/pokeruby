@@ -55,7 +55,7 @@ static void Phase2Task_Transition_Blur(u8 taskID);
 static void Phase2Task_Transition_Swirl(u8 taskID);
 static void Phase2Task_Transition_Shuffle(u8 taskID);
 static void Phase2Task_Transition_BigPokeball(u8 taskID);
-static void Phase2Task_Transition_PokeballsTrail(u8 taskID);
+static void Task_PokeballsTrail(u8 taskID);
 static void Phase2Task_Transition_Clockwise_BlackFade(u8 taskID);
 static void Phase2Task_Transition_Ripple(u8 taskID);
 static void Phase2Task_Transition_Wave(u8 taskID);
@@ -104,9 +104,9 @@ static bool8 Phase2_Transition_BigPokeball_Func3(struct Task* task);
 static bool8 Phase2_Transition_BigPokeball_Func4(struct Task* task);
 static bool8 Phase2_Transition_BigPokeball_Func5(struct Task* task);
 static bool8 Phase2_Transition_BigPokeball_Func6(struct Task* task);
-static bool8 Phase2_Transition_PokeballsTrail_Func1(struct Task* task);
-static bool8 Phase2_Transition_PokeballsTrail_Func2(struct Task* task);
-static bool8 Phase2_Transition_PokeballsTrail_Func3(struct Task* task);
+static bool8 PokeballsTrail_Init(struct Task* task);
+static bool8 PokeballsTrail_Main(struct Task* task);
+static bool8 PokeballsTrail_End(struct Task* task);
 static bool8 Phase2_Transition_Clockwise_BlackFade_Func1(struct Task* task);
 static bool8 Phase2_Transition_Clockwise_BlackFade_Func2(struct Task* task);
 static bool8 Phase2_Transition_Clockwise_BlackFade_Func3(struct Task* task);
@@ -170,14 +170,14 @@ static void sub_811D764(u16* a0, s16 a1, s16 a2, s16 a3);
 static void sub_811D8FC(s16* a0, s16 a1, s16 a2, s16 a3, s16 a4, s16 a5, s16 a6);
 static bool8 sub_811D978(s16* a0, bool8 a1, bool8 a2);
 static void sub_811CFD0(struct Sprite* sprite);
-static void sub_811B720(struct Sprite* sprite);
+static void SpriteCB_FldEffPokeballTrail(struct Sprite* sprite);
 static void sub_811C90C(struct Sprite* sprite);
 
 // const data
 
 static const u32 sBigPokeball_Tileset[] = INCBIN_U32("graphics/battle_transitions/big_pokeball.4bpp");
 static const u32 sPokeballTrail_Tileset[] = INCBIN_U32("graphics/battle_transitions/pokeball_trail.4bpp");
-static const u8 sSpriteImage_83FC148[] = INCBIN_U8("graphics/battle_transitions/pokeball.4bpp");
+static const u8 sPokeball_Gfx[] = INCBIN_U8("graphics/battle_transitions/pokeball.4bpp");
 static const u32 sUnknown_083FC348[] = INCBIN_U32("graphics/battle_transitions/elite_four_bg.4bpp");
 static const u8 sSpriteImage_83FC528[] = INCBIN_U8("graphics/battle_transitions/unused_brendan.4bpp");
 static const u8 sSpriteImage_83FCD28[] = INCBIN_U8("graphics/battle_transitions/unused_lass.4bpp");
@@ -196,7 +196,7 @@ static const TaskFunc sPhase2_Tasks[TRANSITIONS_NO] =
     Phase2Task_Transition_Swirl,                       // 1
     Phase2Task_Transition_Shuffle,                     // 2
     Phase2Task_Transition_BigPokeball,                 // 3
-    Phase2Task_Transition_PokeballsTrail,              // 4
+    Task_PokeballsTrail,                               // 4
     Phase2Task_Transition_Clockwise_BlackFade,         // 5
     Phase2Task_Transition_Ripple,                      // 6
     Phase2Task_Transition_Wave,                        // 7
@@ -248,16 +248,16 @@ static const TransitionState sPhase2_Transition_BigPokeball_Funcs[] =
     Phase2_Transition_BigPokeball_Func6
 };
 
-static const TransitionState sPhase2_Transition_PokeballsTrail_Funcs[] =
+static const TransitionState sPokeballsTrail_Funcs[] =
 {
-    Phase2_Transition_PokeballsTrail_Func1,
-    Phase2_Transition_PokeballsTrail_Func2,
-    Phase2_Transition_PokeballsTrail_Func3
+    PokeballsTrail_Init,
+    PokeballsTrail_Main,
+    PokeballsTrail_End
 };
 
-static const s16 sUnknown_083FD7E4[2] = {-16, 256};
-static const s16 sUnknown_083FD7E8[5] = {0, 32, 64, 18, 48};
-static const s16 sUnknown_083FD7F2[2] = {8, -8};
+static const s16 sPokeballsTrail_StartXCoords[2] = {-16, 256};
+static const s16 sPokeballsTrail_Delays[5] = {0, 32, 64, 18, 48};
+static const s16 sPokeballsTrail_Speeds[2] = {8, -8};
 
 static const TransitionState sPhase2_Transition_Clockwise_BlackFade_Funcs[] =
 {
@@ -382,49 +382,49 @@ static const TransitionState sPhase1_TransitionAll_Funcs[] =
     Phase1_TransitionAll_Func2
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_83FD950[] =
+static const struct SpriteFrameImage sSpriteImage_Pokeball[] =
 {
-    sSpriteImage_83FC148, 0x200
+    sPokeball_Gfx, 0x200
 };
 
-static const union AnimCmd sSpriteAnim_83FD958[] =
+static const union AnimCmd sSpriteAnim_Pokeball[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sSpriteAnimTable_83FD960[] =
+static const union AnimCmd *const sSpriteAnimTable_Pokeball[] =
 {
-    sSpriteAnim_83FD958
+    sSpriteAnim_Pokeball
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_83FD964[] =
+static const union AffineAnimCmd sSpriteAffineAnim_Pokeball1[] =
 {
     AFFINEANIMCMD_FRAME(0, 0, -4, 1),
     AFFINEANIMCMD_JUMP(0)
 };
 
-static const union AffineAnimCmd sSpriteAffineAnim_83FD974[] =
+static const union AffineAnimCmd sSpriteAffineAnim_Pokeball2[] =
 {
     AFFINEANIMCMD_FRAME(0, 0, 4, 1),
     AFFINEANIMCMD_JUMP(0)
 };
 
-static const union AffineAnimCmd *const sSpriteAffineAnimTable_83FD984[] =
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_Pokeball[] =
 {
-    sSpriteAffineAnim_83FD964,
-    sSpriteAffineAnim_83FD974
+    sSpriteAffineAnim_Pokeball1,
+    sSpriteAffineAnim_Pokeball2
 };
 
-static const struct SpriteTemplate sSpriteTemplate_83FD98C =
+static const struct SpriteTemplate sSpriteTemplate_Pokeball =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 4105,
     .oam = &gFieldOamData_32x32,
-    .anims = sSpriteAnimTable_83FD960,
-    .images = sSpriteImageTable_83FD950,
-    .affineAnims = sSpriteAffineAnimTable_83FD984,
-    .callback = sub_811B720
+    .anims = sSpriteAnimTable_Pokeball,
+    .images = sSpriteImage_Pokeball,
+    .affineAnims = sSpriteAffineAnimTable_Pokeball,
+    .callback = SpriteCB_FldEffPokeballTrail
 };
 
 static const struct OamData gOamData_83FD9A4 =
@@ -487,11 +487,11 @@ static const struct SpriteTemplate sSpriteTemplate_83FD9E0 =
     .callback = sub_811C90C
 };
 
-static const u16 gFieldEffectObjectPalette10[] = INCBIN_U16("graphics/field_effect_objects/palettes/10.gbapal");
+static const u16 sFieldEffectPal_Pokeball[] = INCBIN_U16("graphics/field_effect_objects/palettes/10.gbapal");
 
-const struct SpritePalette gFieldEffectObjectPaletteInfo10 =
+const struct SpritePalette gSpritePalette_Pokeball =
 {
-    gFieldEffectObjectPalette10, 0x1009
+    sFieldEffectPal_Pokeball, 0x1009
 };
 
 static const u16 sMugshotPal_Sydney[] = INCBIN_U16("graphics/battle_transitions/sidney_bg.gbapal");
@@ -822,7 +822,7 @@ static bool8 Phase2_Transition_BigPokeball_Func1(struct Task* task)
     sub_811D6A8(&dst1, & dst2);
     CpuFill16(0, dst1, 0x800);
     CpuSet(sBigPokeball_Tileset, dst2, 0x2C0);
-    LoadPalette(gFieldEffectObjectPalette10, 240, 32);
+    LoadPalette(sFieldEffectPal_Pokeball, 240, 32);
 
     task->tState++;
     return FALSE;
@@ -962,83 +962,87 @@ static void VBlankCB1_Phase2_Transition_BigPokeball(void)
     DmaSet(0, gScanlineEffectRegBuffers[1], &REG_WIN0H, 0xA2400001);
 }
 
-static void Phase2Task_Transition_PokeballsTrail(u8 taskID)
+#define sSide data[0]
+#define sDelay data[1]
+#define sPrevX data[2]
+
+static void Task_PokeballsTrail(u8 taskID)
 {
-    while (sPhase2_Transition_PokeballsTrail_Funcs[gTasks[taskID].tState](&gTasks[taskID]));
+    while (sPokeballsTrail_Funcs[gTasks[taskID].tState](&gTasks[taskID]));
 }
 
-static bool8 Phase2_Transition_PokeballsTrail_Func1(struct Task* task)
+static bool8 PokeballsTrail_Init(struct Task* task)
 {
     u16 *dst1, *dst2;
 
     sub_811D6A8(&dst1, &dst2);
     CpuSet(sPokeballTrail_Tileset, dst2, 0x20);
     CpuFill32(0, dst1, 0x800);
-    LoadPalette(gFieldEffectObjectPalette10, 0xF0, 0x20);
+    LoadPalette(sFieldEffectPal_Pokeball, 0xF0, 0x20);
 
     task->tState++;
     return FALSE;
 }
 
-static bool8 Phase2_Transition_PokeballsTrail_Func2(struct Task* task)
+static bool8 PokeballsTrail_Main(struct Task* task)
 {
     s16 i;
-    s16 rand;
-    s16 arr0[2];
-    s16 arr1[5];
+    s16 side;
+    s16 startX[2];
+    s16 delays[5];
 
-    memcpy(arr0, sUnknown_083FD7E4, sizeof(sUnknown_083FD7E4));
-    memcpy(arr1, sUnknown_083FD7E8, sizeof(sUnknown_083FD7E8));
-    rand = Random() & 1;
-    for (i = 0; i <= 4; i++, rand ^= 1)
+    memcpy(startX, sPokeballsTrail_StartXCoords, sizeof(sPokeballsTrail_StartXCoords));
+    memcpy(delays, sPokeballsTrail_Delays, sizeof(sPokeballsTrail_Delays));
+    side = Random() & 1;
+    for (i = 0; i <= 4; i++, side ^= 1)
     {
-        gFieldEffectArguments[0] = arr0[rand];      // x
+        gFieldEffectArguments[0] = startX[side];     // x
         gFieldEffectArguments[1] = (i * 32) + 16;   // y
-        gFieldEffectArguments[2] = rand;
-        gFieldEffectArguments[3] = arr1[i];
-        FieldEffectStart(FLDEFF_POKEBALL);
+        gFieldEffectArguments[2] = side;
+        gFieldEffectArguments[3] = delays[i];
+        FieldEffectStart(FLDEFF_POKEBALL_TRAIL);
     }
 
     task->tState++;
     return FALSE;
 }
 
-static bool8 Phase2_Transition_PokeballsTrail_Func3(struct Task* task)
+static bool8 PokeballsTrail_End(struct Task* task)
 {
-    if (!FieldEffectActiveListContains(FLDEFF_POKEBALL))
+    if (!FieldEffectActiveListContains(FLDEFF_POKEBALL_TRAIL))
     {
         sub_811D6D4();
-        DestroyTask(FindTaskIdByFunc(Phase2Task_Transition_PokeballsTrail));
+        DestroyTask(FindTaskIdByFunc(Task_PokeballsTrail));
     }
     return FALSE;
 }
 
-bool8 FldEff_Pokeball(void)
+bool8 FldEff_PokeballTrail(void)
 {
-    u8 spriteID = CreateSpriteAtEnd(&sSpriteTemplate_83FD98C, gFieldEffectArguments[0], gFieldEffectArguments[1], 0);
-    gSprites[spriteID].oam.priority = 0;
-    gSprites[spriteID].oam.affineMode = 1;
-    gSprites[spriteID].data[0] = gFieldEffectArguments[2];
-    gSprites[spriteID].data[1] = gFieldEffectArguments[3];
-    gSprites[spriteID].data[2] = -1;
-    InitSpriteAffineAnim(&gSprites[spriteID]);
-    StartSpriteAffineAnim(&gSprites[spriteID], gFieldEffectArguments[2]);
+    u8 spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Pokeball, gFieldEffectArguments[0], gFieldEffectArguments[1], 0);
+    gSprites[spriteId].oam.priority = 0;
+    gSprites[spriteId].oam.affineMode = 1;
+    gSprites[spriteId].sSide = gFieldEffectArguments[2];
+    gSprites[spriteId].sDelay = gFieldEffectArguments[3];
+    gSprites[spriteId].sPrevX = -1;
+    InitSpriteAffineAnim(&gSprites[spriteId]);
+    StartSpriteAffineAnim(&gSprites[spriteId], gFieldEffectArguments[2]);
     return FALSE;
 }
 
-#define SOME_VRAM_STORE(ptr, posY, posX, toStore)                       \
+#define SET_TILE(ptr, posY, posX, toStore)                               \
 {                                                                       \
     u32 index = (posY) * 32 + posX;                                     \
     ptr[index] = toStore;                                               \
 }
 
-static void sub_811B720(struct Sprite* sprite)
+static void SpriteCB_FldEffPokeballTrail(struct Sprite* sprite)
 {
-    s16 arr0[2];
+    s16 speeds[2];
 
-    memcpy(arr0, sUnknown_083FD7F2, sizeof(sUnknown_083FD7F2));
-    if (sprite->data[1] != 0)
-        sprite->data[1]--;
+    memcpy(speeds, sPokeballsTrail_Speeds, sizeof(sPokeballsTrail_Speeds));
+    if (sprite->sDelay != 0)
+        sprite->sDelay--;
     else
     {
         if (sprite->x >= 0 && sprite->x <= 240)
@@ -1046,26 +1050,31 @@ static void sub_811B720(struct Sprite* sprite)
             s16 posX = sprite->x >> 3;
             s16 posY = sprite->y >> 3;
 
-            if (posX != sprite->data[2])
+            if (posX != sprite->sPrevX)
             {
                 u32 var;
                 u16 *ptr;
 
-                sprite->data[2] = posX;
+                sprite->sPrevX = posX;
                 var = (((REG_BG0CNT >> 8) & 0x1F) << 11);  // r2
                 ptr = (u16 *)(VRAM + var);
 
-                SOME_VRAM_STORE(ptr, posY - 2, posX, 0xF001);
-                SOME_VRAM_STORE(ptr, posY - 1, posX, 0xF001);
-                SOME_VRAM_STORE(ptr, posY - 0, posX, 0xF001);
-                SOME_VRAM_STORE(ptr, posY + 1, posX, 0xF001);
+                SET_TILE(ptr, posY - 2, posX, 0xF001);
+                SET_TILE(ptr, posY - 1, posX, 0xF001);
+                SET_TILE(ptr, posY - 0, posX, 0xF001);
+                SET_TILE(ptr, posY + 1, posX, 0xF001);
             }
         }
-        sprite->x += arr0[sprite->data[0]];
+        sprite->x += speeds[sprite->sSide];
         if (sprite->x < -15 || sprite->x > 255)
-            FieldEffectStop(sprite, FLDEFF_POKEBALL);
+            FieldEffectStop(sprite, FLDEFF_POKEBALL_TRAIL);
     }
 }
+
+#undef SET_TILE
+#undef sSide
+#undef sDelay
+#undef sPrevX
 
 static void Phase2Task_Transition_Clockwise_BlackFade(u8 taskID)
 {
@@ -2113,7 +2122,7 @@ static bool8 Phase2_Transition_GridSquares_Func1(struct Task* task)
     sub_811D6A8(&dst1, &dst2);
     CpuSet(sShrinkingBoxTileset, dst2, 0x10);
     CpuFill16(0xF000, dst1, 0x800);
-    LoadPalette(gFieldEffectObjectPalette10, 0xF0, 0x20);
+    LoadPalette(sFieldEffectPal_Pokeball, 0xF0, 0x20);
 
     task->tState++;
     return FALSE;
