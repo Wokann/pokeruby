@@ -7372,20 +7372,20 @@ Move_FOCUS_ENERGY: @ 81D1B59
 	end
 
 Move_BIDE: @ 81D1B99
-	choosetwoturnanim _81D1BA3, _81D1BCF
+	choosetwoturnanim BideSetUp, BideUnleash
 	end
-_81D1BA3:
+BideSetUp:
 	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 9, 2
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 2, 0, 11, 31
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
 	waitforvisualfinish
 	end
-_81D1BCF:
+BideUnleash:
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	loopsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER, 9, 2
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 2, 0, 11, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 0, 11, RGB_RED
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 4
@@ -7393,18 +7393,18 @@ _81D1BCF:
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_ATTACKER, 2, 0, 12, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 16, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 18, -8, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 1, x=18, y=-8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 5
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, -18, 8, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 1, x=-18, y=8, relative_to=ANIM_BATTLER_TARGET, animation=1
 	delay 5
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, -8, -5, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_ATTACKER, 1, x=-8, y=-5, relative_to=ANIM_BATTLER_TARGET, animation=1
 	waitforvisualfinish
 	delay 5
 	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 7
 	waitforvisualfinish
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 2, 2, 11, 0, 31
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_ATTACKER, 2, 11, 0, RGB_RED
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
