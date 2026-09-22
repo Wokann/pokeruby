@@ -425,9 +425,9 @@
 @ 56
 @ 57
 
-	.macro contest_58 param addr
+	.macro if_not_completed_combo mon, addr
 	.byte 0x58
-	.byte \param
+	.byte \mon
 	.4byte \addr
 	.endm
 
@@ -468,7 +468,7 @@
 @ 7B
 @ 7C
 
-	.macro if_random param addr
+	.macro if_random_less_than param addr
 	.byte 0x7D
 	.byte \param
 	.4byte \addr
@@ -476,7 +476,7 @@
 
 @ 7E
 
-	.macro jump addr
+	.macro goto addr
 	.byte 0x7F
 	.4byte \addr
 	.endm
@@ -507,8 +507,8 @@
 @ 85
 @ 86
 
-	.macro if_effect_in_user_moveset param addr
+	.macro if_user_doesnt_have_move move, addr
 	.byte 0x87
-	.2byte \param
+	.2byte \move
 	.4byte \addr
 	.endm

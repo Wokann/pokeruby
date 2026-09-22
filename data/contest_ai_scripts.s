@@ -160,28 +160,28 @@ AI_CheckExcitement_Negative:
 	end
 AI_CheckExcitement_Negative_1AwayFromMax:
 	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp
-	if_random 51, AI_CheckExcitement_End
+	if_random_less_than 51, AI_CheckExcitement_End
 	score +20
 	end
 AI_CheckExcitement_Negative_1AwayFromMax_Not1stUp:
-	if_random 127, AI_CheckExcitement_End
+	if_random_less_than 127, AI_CheckExcitement_End
 	score -10
 	end
 AI_CheckExcitement_Negative_2AwayFromMax:
 	if_user_order_not_eq MON_1, AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp
 	if_last_appeal AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal
-	if_random 51, AI_CheckExcitement_End
+	if_random_less_than 51, AI_CheckExcitement_End
 	score +10
 	end
 AI_CheckExcitement_Negative_2AwayFromMax_LastAppeal:
 	score +15
 	end
 AI_CheckExcitement_Negative_2AwayFromMax_Not1stUp:
-	if_random 127, AI_CheckExcitement_End
+	if_random_less_than 127, AI_CheckExcitement_End
 	score +10
 	end
 AI_CheckExcitement_Neutral:
-	if_random 127, AI_CheckExcitement_End
+	if_random_less_than 127, AI_CheckExcitement_End
 	score +10
 	end
 AI_CheckExcitement_Positive:
@@ -191,7 +191,7 @@ AI_CheckExcitement_Positive:
 	score +30
 	end
 AI_CheckExcitement_Positive_Not1stUpForMax:
-	if_random 100, AI_CheckExcitement_End
+	if_random_less_than 100, AI_CheckExcitement_End
 	score +10
 	end
 AI_CheckExcitement_Positive_Repeat:
@@ -225,17 +225,17 @@ AI_CheckCombo_WouldFinish:
 	end
 AI_CheckCombo_Starter1stUp:
 	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
-	if_random 150, AI_CheckCombo_End
+	if_random_less_than 150, AI_CheckCombo_End
 	score +10
 	end
 AI_CheckCombo_Starter2ndUp:
 	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
-	if_random 125, AI_CheckCombo_End
+	if_random_less_than 125, AI_CheckCombo_End
 	score +10
 	end
 AI_CheckCombo_Starter3rdUp:
 	if_last_appeal AI_CheckCombo_StarterOnLastAppeal
-	if_random 50, AI_CheckCombo_End
+	if_random_less_than 50, AI_CheckCombo_End
 	score +10
 	end
 AI_CheckCombo_StarterLast:
@@ -243,7 +243,7 @@ AI_CheckCombo_StarterLast:
 	score +10
 	end
 AI_CheckCombo_StarterOnLastAppeal:
-	if_random 125, AI_CheckCombo_End
+	if_random_less_than 125, AI_CheckCombo_End
 	score -15
 	end
 AI_CheckCombo_End:
@@ -276,11 +276,11 @@ AI_CGM_BetterWithGoodCondition_3:
 	score +20
 	end
 AI_CGM_BetterWithGoodCondition_2:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_BetterWithGoodCondition_1:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_BetterWithGoodCondition_0:
@@ -288,29 +288,29 @@ AI_CGM_BetterWithGoodCondition_0:
 	end
 
 AI_CGM_NextAppealEarlier:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_FIRST, AI_CGM_End
-	if_random 50, AI_CGM_End
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_FIRST, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +20
 	end
 
 AI_CGM_NextAppealLater:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_LAST, AI_CGM_End
-	if_random 50, AI_CGM_End
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_IF_LAST, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +20
 	end
 
 AI_CGM_RepetitionNotBoring:
 	if_user_order_not_eq MON_4, AI_CGM_End
-	if_random 50, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +15
 	end
 AI_CGM_Unused:
 	if_last_appeal AI_CGM_Unused_LastAppeal
-	if_random 220, AI_CGM_Unused_Discourage
+	if_random_less_than 220, AI_CGM_Unused_Discourage
 	score +10
 	end
 AI_CGM_Unused_LastAppeal:
-	if_random 20, AI_CGM_End
+	if_random_less_than 20, AI_CGM_End
 	score +15
 	end
 AI_CGM_Unused_Discourage:
@@ -318,9 +318,9 @@ AI_CGM_Unused_Discourage:
 	end
 
 AI_CGM_ImproveCondition:
-	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_ImproveCondition_CheckAppealNum
+	if_user_doesnt_have_move CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_ImproveCondition_CheckAppealNum
 	if_user_condition_eq 3, AI_CGM_ImproveCondition_AtMax
-	if_random 50, AI_CGM_End
+	if_random_less_than 50, AI_CGM_End
 	score +15
 	end
 AI_CGM_ImproveCondition_AtMax:
@@ -330,11 +330,11 @@ AI_CGM_ImproveCondition_CheckAppealNum:
 	if_last_appeal AI_CGM_ImproveCondition_LastAppeal
 	if_appeal_num_eq 0, AI_CGM_ImproveCondition_FirstAppeal
 	if_move_used_count_eq 1, AI_CGM_End
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +10
 	end
 AI_CGM_ImproveCondition_FirstAppeal:
-	if_random 100, AI_CGM_End
+	if_random_less_than 100, AI_CGM_End
 	score +10
 	end
 AI_CGM_ImproveCondition_LastAppeal:
@@ -351,7 +351,7 @@ AI_CGM_DontExciteAudience:
 	score +10
 	end
 AI_CGM_DontExciteAudience_EarlyTurn:
-	if_random 127, AI_CGM_End
+	if_random_less_than 127, AI_CGM_End
 	score +10
 	end
 
@@ -386,7 +386,7 @@ AI_CGM_AppealAsGoodAsPrevOne_2ndUp:
 AI_CGM_AppealAsGoodAsPrevOne_3rdUp:
 	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	score +5
-	jump AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
+	goto AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	end
 AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2:
 	if_cannot_participate MON_2, AI_CGM_End
@@ -395,12 +395,12 @@ AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2:
 AI_CGM_AppealAsGoodAsPrevOne_Last:
 	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	score +5
-	jump AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
+	goto AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	end
 AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2:
 	if_cannot_participate MON_2, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	score +5
-	jump AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
+	goto AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	end
 AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3:
 	if_cannot_participate MON_3, AI_CGM_End
@@ -417,25 +417,25 @@ AI_CGM_BetterWhenAudienceExcited_1stUp:
 	if_excitement_eq 3, AI_CGM_BetterWhenAudienceExcited_2AwayFromMax
 	end
 AI_CGM_BetterWhenAudienceExcited_1stAppeal:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score -15
 	end
 AI_CGM_BetterWhenAudienceExcited_1AwayFromMax:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +20
 	end
 AI_CGM_BetterWhenAudienceExcited_2AwayFromMax:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_BetterWhenAudienceExcited_Not1stUp:
-	if_random 178, AI_CGM_End
+	if_random_less_than 178, AI_CGM_End
 	score +10
 	end
 
 AI_CGM_WorsenConditionOfPrevMons:
 	if_user_order_eq MON_1, AI_CGM_End
-	jump AI_CGM_WorsenConditionOfPrevMons_CheckMon1
+	goto AI_CGM_WorsenConditionOfPrevMons_CheckMon1
 	end
 AI_CGM_WorsenConditionOfPrevMons_CheckMon1:
 	if_cannot_participate MON_1, AI_CGM_WorsenConditionOfPrevMons_TryCheckMon2
@@ -445,17 +445,17 @@ AI_CGM_WorsenConditionOfPrevMons_CheckMon1:
 	if_condition_eq MON_1, 3, AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon1Has1Star:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +5
 	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon1Has2Stars:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +10
 	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon1Has3Stars:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	score +15
 	if_user_order_more_than MON_2, AI_CGM_WorsenConditionOfPrevMons_CheckMon2
 	end
@@ -470,17 +470,17 @@ AI_CGM_WorsenConditionOfPrevMons_CheckMon2:
 	if_condition_eq MON_2, 3, AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon2Has1Star:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +5
 	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon2Has2Stars:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +10
 	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon2Has3Stars:
-	if_random 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
+	if_random_less_than 125, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	score +15
 	if_user_order_more_than MON_3, AI_CGM_WorsenConditionOfPrevMons_CheckMon3
 	end
@@ -495,15 +495,15 @@ AI_CGM_WorsenConditionOfPrevMons_CheckMon3:
 	if_condition_eq MON_3, 3, AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has1Star:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has2Stars:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +10
 	end
 AI_CGM_WorsenConditionOfPrevMons_Mon3Has3Stars:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
 AI_CGM_WorsenConditionOfPrevMons_end:
@@ -511,44 +511,44 @@ AI_CGM_WorsenConditionOfPrevMons_end:
 
 AI_CGM_TargetMonWithJudgesAttention:
 	if_user_order_eq MON_1, AI_CGM_End
-	jump AI_CGM_TargetMonWithJudgesAttention_CheckMon1
+	goto AI_CGM_TargetMonWithJudgesAttention_CheckMon1
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon1:
 	if_cannot_participate MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	if_used_combo_starter_eq MON_1, TRUE, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
-	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +2
-	contest_58 MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_not_completed_combo MON_1, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +8
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon2:
 	if_user_order_eq MON_2, AI_CGM_End
 	if_cannot_participate MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	if_used_combo_starter_eq MON_2, TRUE, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
-	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +2
-	contest_58 MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_not_completed_combo MON_2, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +8
 	end
 AI_CGM_TargetMonWithJudgesAttention_CheckMon3:
 	if_user_order_eq MON_3, AI_CGM_End
 	if_cannot_participate MON_3, AI_CGM_End
 	if_used_combo_starter_eq MON_3, TRUE, AI_CGM_End
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +2
-	contest_58 MON_3, AI_CGM_End
+	if_not_completed_combo MON_3, AI_CGM_End
 	score +8
 	end
 
 AI_CGM_MakeFollowingMonsNervous:
 	if_user_order_eq MON_4, AI_CGM_End
-	jump AI_CGM_MakeFollowingMonsNervous_CheckMon4
+	goto AI_CGM_MakeFollowingMonsNervous_CheckMon4
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon4:
 	if_cannot_participate MON_4, AI_CGM_MakeFollowingMonsNervous_CheckMon3
 	if_used_combo_starter_eq MON_4, FALSE, AI_CGM_MakeFollowingMonsNervous_CheckMon3
 	score +5
-	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +5
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon3:
@@ -556,7 +556,7 @@ AI_CGM_MakeFollowingMonsNervous_CheckMon3:
 	if_cannot_participate MON_3, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	if_used_combo_starter_eq MON_3, FALSE, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	score +5
-	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
+	if_random_less_than 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +5
 	end
 AI_CGM_MakeFollowingMonsNervous_CheckMon2:
@@ -564,17 +564,17 @@ AI_CGM_MakeFollowingMonsNervous_CheckMon2:
 	if_cannot_participate MON_2, AI_CGM_End
 	if_used_combo_starter_eq MON_2, FALSE, AI_CGM_End
 	score +5
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
 
 AI_CGM_JamsOthersButMissOneTurn:
 	if_last_appeal AI_CGM_JamsOthersButMissOneTurn_LastAppeal
-	jump AI_CGM_JamsOthersButMissOneTurn_TurnOrder
+	goto AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
 AI_CGM_JamsOthersButMissOneTurn_LastAppeal:
 	score +5
-	jump AI_CGM_JamsOthersButMissOneTurn_TurnOrder
+	goto AI_CGM_JamsOthersButMissOneTurn_TurnOrder
 	end
 AI_CGM_JamsOthersButMissOneTurn_TurnOrder:
 	if_user_order_eq MON_1, AI_CGM_JamsOthersButMissOneTurn_1stUp
@@ -586,15 +586,15 @@ AI_CGM_JamsOthersButMissOneTurn_1stUp:
 	score -15
 	end
 AI_CGM_JamsOthersButMissOneTurn_2ndUp:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score -10
 	end
 AI_CGM_JamsOthersButMissOneTurn_3rdUp:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +5
 	end
 AI_CGM_JamsOthersButMissOneTurn_Last:
-	if_random 125, AI_CGM_End
+	if_random_less_than 125, AI_CGM_End
 	score +15
 	end
 
@@ -608,7 +608,7 @@ AI_Erratic:
 	if_contest_type_eq CONTEST_TOUGH, AI_Erratic_CuteSmartTough
 	end
 AI_Erratic_CuteSmartTough:
-	if_random 125, AI_Erratic_End
+	if_random_less_than 125, AI_Erratic_End
 	score +10
 	end
 AI_Erratic_End:
@@ -773,23 +773,23 @@ AI_CBM_NoMoreMoves:
 	if_last_appeal AI_CBM_NoMoreMoves_LastAppeal
 	end
 AI_CBM_NoMoreMoves_1stAppeal:
-	if_random 20, AI_CBM_End
+	if_random_less_than 20, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_2ndAppeal:
-	if_random 40, AI_CBM_End
+	if_random_less_than 40, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_3rdAppeal:
-	if_random 60, AI_CBM_End
+	if_random_less_than 60, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_4thAppeal:
-	if_random 80, AI_CBM_End
+	if_random_less_than 80, AI_CBM_End
 	score -15
 	end
 AI_CBM_NoMoreMoves_LastAppeal:
-	if_random 20, AI_CBM_End
+	if_random_less_than 20, AI_CBM_End
 	score +20
 	end
 
@@ -814,7 +814,7 @@ AI_CheckOrder_1stUp_Discourage:
 	score -15
 	end
 AI_CheckOrder_1stUp_RandomEncourage:
-	if_random 100, AI_CBM_End
+	if_random_less_than 100, AI_CBM_End
 	score +10
 	end
 AI_CheckOrder_2ndUp:
@@ -825,7 +825,7 @@ AI_CheckOrder_2ndUp_Discourage:
 	score -5
 	end
 AI_CheckOrder_2ndUp_RandomEncourage:
-	if_random 125, AI_CBM_End
+	if_random_less_than 125, AI_CBM_End
 	score +10
 	end
 AI_CheckOrder_3rdUp:
@@ -852,7 +852,7 @@ AI_CheckOrder_Last_Discourage:
 	score -10
 	end
 AI_CheckOrder_Last_RandomEncourage:
-	if_random 125, AI_CBM_End
+	if_random_less_than 125, AI_CBM_End
 	score +10
 	end
 AI_CheckOrder_Last_Encourage:
