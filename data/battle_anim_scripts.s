@@ -8549,22 +8549,22 @@ Move_ARM_THRUST: @ 81D36CF
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 3
 	delay 4
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA144, ANIM_BATTLER_TARGET, 2, 10, -8, 14, 3
+	createsprite gArmThrustHandSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -8, 14, 3
 	waitforvisualfinish
 	createvisualtask AnimTask_RotateMonSpriteToSide, 5, 8, 5, ANIM_BATTLER_ATTACKER, 1
 	playsewithpan SE_M_DOUBLE_SLAP, SOUND_PAN_TARGET
-	choosetwoturnanim _81D373C, _81D3750
-_81D3728:
-	createvisualtask AnimTask_ShakeMon, 5, 1, 4, 0, 6, 1
+	choosetwoturnanim ArmThrustRight, ArmThrustLeft
+ArmThrustContinue:
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 4, 0, 6, 1
 	waitforvisualfinish
 	blendoff
 	end
-_81D373C:
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 0, 1, 2
-	goto _81D3728
-_81D3750:
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 0, 1, 2
-	goto _81D3728
+ArmThrustRight:
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=8, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
+	goto ArmThrustContinue
+ArmThrustLeft:
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=-8, y=0, relative_to=ANIM_BATTLER_TARGET, animation=2
+	goto ArmThrustContinue
 
 Move_MUDDY_WATER: @ 81D3764
 	panse_1B SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0

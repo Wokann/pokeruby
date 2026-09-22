@@ -42,7 +42,7 @@ static void AnimBrickBreakWallShard(struct Sprite *sprite);
 static void AnimSuperpowerOrb(struct Sprite *sprite);
 static void AnimSuperpowerRock(struct Sprite *sprite);
 static void AnimSuperpowerFireball(struct Sprite *sprite);
-void sub_80D9B48(struct Sprite *sprite);
+static void AnimArmThrustHit(struct Sprite *sprite);
 void sub_80D9BD4(struct Sprite *sprite);
 void sub_80D9C40(struct Sprite *sprite);
 static void AnimFistOrFootRandomPos_Step(struct Sprite *sprite);
@@ -310,7 +310,7 @@ const struct SpriteTemplate gSuperpowerFireballSpriteTemplate =
     .callback = AnimSuperpowerFireball,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA144 =
+const struct SpriteTemplate gArmThrustHandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
@@ -318,7 +318,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA144 =
     .anims = sAnims_HandsAndFeet,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D9B48,
+    .callback = AnimArmThrustHit,
 };
 
 const union AnimCmd gSpriteAnim_83DA15C[] =
@@ -938,7 +938,7 @@ static void AnimSuperpowerFireball(struct Sprite *sprite)
     sprite->callback = AnimTranslateLinear_WithFollowup;
 }
 
-static void sub_80D9B24(struct Sprite *sprite)
+static void AnimArmThrustHit_Step(struct Sprite *sprite)
 {
     if (sprite->data[0] == sprite->data[4])
         DestroyAnimSprite(sprite);
@@ -946,7 +946,7 @@ static void sub_80D9B24(struct Sprite *sprite)
     sprite->data[0]++;
 }
 
-void sub_80D9B48(struct Sprite *sprite)
+static void AnimArmThrustHit(struct Sprite *sprite)
 {
     u8 turn;
 
@@ -970,7 +970,7 @@ void sub_80D9B48(struct Sprite *sprite)
     StartSpriteAnim(sprite, sprite->data[1]);
     sprite->x2 = sprite->data[2];
     sprite->y2 = sprite->data[3];
-    sprite->callback = sub_80D9B24;
+    sprite->callback = AnimArmThrustHit_Step;
 }
 
 void sub_80D9BD4(struct Sprite *sprite)
