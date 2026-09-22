@@ -8220,37 +8220,37 @@ Move_SWALLOW: @ 81D2FA8
 	loadspritegfx ANIM_TAG_BLUE_ORB
 	loadspritegfx ANIM_TAG_BLUE_STAR
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
-	createvisualtask sub_812D790, 5
+	createvisualtask AnimTask_SwallowDeformMon, 5
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 8, 2
 	delay 38
 	playsewithpan SE_M_SPIT_UP, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 2, 0, 12, 1
-	call _81D2FF9
-	jumpifmoveturn 2, _81D303B
-	jumpifmoveturn 3, _81D3045
-_81D2FF2:
+	call SwallowEffect
+	jumpifmoveturn 2, SwallowGood
+	jumpifmoveturn 3, SwallowBest
+SwallowContinue:
 	waitforvisualfinish
 	call HealingEffect
 	end
-_81D2FF9:
-	createsprite gBattleAnimSpriteTemplate_8402578, ANIM_BATTLER_ATTACKER, 2, 0, -8
+SwallowEffect:
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_8402578, ANIM_BATTLER_ATTACKER, 2, -24, -8
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -24, -8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_8402578, ANIM_BATTLER_ATTACKER, 2, 16, -8
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 16, -8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_8402578, ANIM_BATTLER_ATTACKER, 2, -16, -8
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -16, -8
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_8402578, ANIM_BATTLER_ATTACKER, 2, 24, -8
+	createsprite gSwallowBlueOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 24, -8
 	delay 1
 	return
-_81D303B:
-	call _81D2FF9
-	goto _81D2FF2
-_81D3045:
-	call _81D2FF9
-	call _81D2FF9
-	goto _81D2FF2
+SwallowGood:
+	call SwallowEffect
+	goto SwallowContinue
+SwallowBest:
+	call SwallowEffect
+	call SwallowEffect
+	goto SwallowContinue
 
 Move_TRANSFORM: @ 81D3054
 	monbg ANIM_BATTLER_ATTACKER

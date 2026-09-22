@@ -115,7 +115,7 @@ static void AnimBatonPassPokeball(struct Sprite *sprite);
 static void AnimWishStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void sub_812DEAC(struct Sprite *sprite);
-static void sub_812D724(struct Sprite *sprite);
+static void AnimSwallowBlueOrb(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void sub_812E7A0(struct Sprite *sprite);
 static void AnimPainSplitProjectile(struct Sprite *sprite);
@@ -588,7 +588,7 @@ const union AffineAnimCmd gSpitUpDeformMonAffineAnimCmds[] =
     AFFINEANIMCMD_END,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402578 =
+const struct SpriteTemplate gSwallowBlueOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_ORB,
     .paletteTag = ANIM_TAG_BLUE_ORB,
@@ -596,10 +596,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402578 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812D724,
+    .callback = AnimSwallowBlueOrb,
 };
 
-const union AffineAnimCmd gUnknown_08402590[] =
+const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0, 6, 0, 20),
     AFFINEANIMCMD_FRAME(0, 0, 0, 20),
@@ -2221,12 +2221,12 @@ void AnimTask_SpitUpDeformMon(u8 taskId)
     }
 }
 
-static void sub_812D724(struct Sprite *sprite)
+static void AnimSwallowBlueOrb(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
     case 0:
-        InitSpritePosToAnimAttacker(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, FALSE);
         sprite->data[1] = 0x900;
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
         sprite->data[0]++;
@@ -2240,11 +2240,11 @@ static void sub_812D724(struct Sprite *sprite)
     }
 }
 
-void sub_812D790(u8 taskId)
+void AnimTask_SwallowDeformMon(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402590);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), gSwallowDeformMonAffineAnimCmds);
         gTasks[taskId].data[0]++;
     }
     else
