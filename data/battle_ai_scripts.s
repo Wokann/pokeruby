@@ -951,7 +951,7 @@ AI_CV_DefenseUp_PhysicalTypes: @ 81DAD07
 AI_CV_SpeedUp: @ 81DAD11
 	if_would_go_first USER, AI_CV_SpeedUp2
 	score -3
-	jump AI_CV_SpeedUp_End
+	goto AI_CV_SpeedUp_End
 
 AI_CV_SpeedUp2: @ 81DAD1E
 	if_random_less_than 70, AI_CV_SpeedUp_End
