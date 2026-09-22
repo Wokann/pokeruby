@@ -34,12 +34,12 @@ static void sub_80DB000(struct Sprite *sprite);
 static void sub_80DB0A0(struct Sprite *sprite);
 static void AnimBounceBallShrink(struct Sprite *sprite);
 static void AnimBounceBallLand(struct Sprite *sprite);
-static void sub_80DB288(struct Sprite *sprite);
-static void sub_80DB2D0(struct Sprite *sprite);
-static void sub_80DB330(struct Sprite *sprite);
-static void sub_80DB374(struct Sprite *sprite);
-static void sub_80DB458(struct Sprite *sprite);
-static void sub_80DB508(struct Sprite *sprite);
+static void AnimDiveBall(struct Sprite *sprite);
+static void AnimDiveBall_Step1(struct Sprite *sprite);
+static void AnimDiveBall_Step2(struct Sprite *sprite);
+static void AnimDiveWaterSplash(struct Sprite *sprite);
+static void AnimSprayWaterDroplet(struct Sprite *sprite);
+static void AnimSprayWaterDroplet_Step(struct Sprite *sprite);
 static void sub_80DB564(struct Sprite *sprite);
 static void sub_80DB578(struct Sprite *sprite);
 static void sub_80DB5E4(struct Sprite *sprite);
@@ -287,7 +287,7 @@ const struct SpriteTemplate gBounceBallLandSpriteTemplate =
     .callback = AnimBounceBallLand,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA5AC[] =
+static const union AffineAnimCmd sAffineAnim_DiveBall[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x28, 0x0, 0, 6),
@@ -296,23 +296,23 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA5AC[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA5D4[] =
+static const union AffineAnimCmd *const sAffineAnims_DiveBall[] =
 {
-    gSpriteAffineAnim_83DA5AC,
+    sAffineAnim_DiveBall,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA5D8 =
+const struct SpriteTemplate gDiveBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROUND_SHADOW,
     .paletteTag = ANIM_TAG_ROUND_SHADOW,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA5D4,
-    .callback = sub_80DB288,
+    .affineAnims = sAffineAnims_DiveBall,
+    .callback = AnimDiveBall,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA5F0[] =
+static const union AffineAnimCmd sAnim_Unused[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x0, 0, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x20, 0, 12),
@@ -320,12 +320,12 @@ const union AffineAnimCmd gSpriteAffineAnim_83DA5F0[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA610[] =
+static const union AffineAnimCmd *const sAnims_Unused[] =
 {
-    gSpriteAffineAnim_83DA5F0,
+    sAnim_Unused,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA614 =
+const struct SpriteTemplate gDiveWaterSplashSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPLASH,
     .paletteTag = ANIM_TAG_SPLASH,
@@ -333,10 +333,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA614 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DB374,
+    .callback = AnimDiveWaterSplash,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA62C =
+const struct SpriteTemplate gSprayWaterDropletSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SWEAT_BEAD,
     .paletteTag = ANIM_TAG_SWEAT_BEAD,
@@ -344,7 +344,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA62C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DB458,
+    .callback = AnimSprayWaterDroplet,
 };
 
 const struct SpriteTemplate gSpriteTemplate_83DA644 =
@@ -1088,16 +1088,16 @@ static void AnimBounceBallLand(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB288(struct Sprite *sprite)
+static void AnimDiveBall(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DB2D0;
-    gSprites[GetAnimBattlerSpriteId(0)].invisible = TRUE;
+    sprite->callback = AnimDiveBall_Step1;
+    gSprites[GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER)].invisible = TRUE;
 }
 
-static void sub_80DB2D0(struct Sprite *sprite)
+static void AnimDiveBall_Step1(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
@@ -1113,12 +1113,12 @@ static void sub_80DB2D0(struct Sprite *sprite)
         sprite->invisible = TRUE;
         if (sprite->data[3]++ > 20)
         {
-            sprite->callback = sub_80DB330;
+            sprite->callback = AnimDiveBall_Step2;
         }
     }
 }
 
-static void sub_80DB330(struct Sprite *sprite)
+static void AnimDiveBall_Step2(struct Sprite *sprite)
 {
     sprite->y2 += sprite->data[2] >> 8;
 
@@ -1133,7 +1133,7 @@ static void sub_80DB330(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB374(struct Sprite *sprite)
+static void AnimDiveWaterSplash(struct Sprite *sprite)
 {
     u32 matrixNum;
     int t1, t2;
@@ -1143,18 +1143,18 @@ static void sub_80DB374(struct Sprite *sprite)
     case 0:
         if (!gBattleAnimArgs[0])
         {
-            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
         }
         else
         {
-            sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
         }
 
         sprite->data[1] = 512;
 
-        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, FALSE, 0x100, sprite->data[1], 0);
         sprite->data[0]++;
         break;
     case 1:
@@ -1165,11 +1165,11 @@ static void sub_80DB374(struct Sprite *sprite)
 
         sprite->data[2]++;
 
-        TrySetSpriteRotScale(sprite, 0, 256, sprite->data[1], 0);
+        TrySetSpriteRotScale(sprite, FALSE, 0x100, sprite->data[1], 0);
 
         matrixNum = sprite->oam.matrixNum;
 
-        t1 = 15616;
+        t1 = 0x3D00;
         t2 = t1 / gOamMatrices[matrixNum].d + 1;
 
         if (t2 > 128)
@@ -1187,7 +1187,7 @@ static void sub_80DB374(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB458(struct Sprite *sprite)
+static void AnimSprayWaterDroplet(struct Sprite *sprite)
 {
     int v1, v2;
 
@@ -1221,19 +1221,19 @@ static void sub_80DB458(struct Sprite *sprite)
 
     if (gBattleAnimArgs[1] == 0)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + 32;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + 32;
     }
     else
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + 32;
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 32;
     }
 
-    sprite->callback = sub_80DB508;
+    sprite->callback = AnimSprayWaterDroplet_Step;
 }
 
-static void sub_80DB508(struct Sprite *sprite)
+static void AnimSprayWaterDroplet_Step(struct Sprite *sprite)
 {
     if (sprite->data[2] == 0)
     {

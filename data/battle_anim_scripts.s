@@ -9193,36 +9193,36 @@ Move_SNATCH: @ 81D498B
 Move_DIVE: @ 81D49A5
 	loadspritegfx ANIM_TAG_SPLASH
 	loadspritegfx ANIM_TAG_SWEAT_BEAD
-	choosetwoturnanim _81D49B4, _81D4A09
-_81D49B4:
+	choosetwoturnanim DiveSetUp, DiveAttack
+DiveSetUp:
 	loadspritegfx ANIM_TAG_ROUND_SHADOW
 	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA5D8, ANIM_BATTLER_ATTACKER, 2, 0, 0, 13, 336
+	createsprite gDiveBallSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 13, 336
 	waitforvisualfinish
 	playsewithpan SE_M_DIVE, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83DA614, ANIM_BATTLER_ATTACKER, 3, 0
-	call _81D49F2
-	call _81D49F2
-	call _81D49F2
-	call _81D49F2
-	call _81D49F2
+	createsprite gDiveWaterSplashSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
+	call DiveSetUpWaterDroplets
 	end
-_81D49F2:
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_ATTACKER, 5, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_ATTACKER, 5, 1, 0
+DiveSetUpWaterDroplets:
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 0, 0
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_ATTACKER, 5, 1, 0
 	return
-_81D4A09:
+DiveAttack:
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	loadspritegfx ANIM_TAG_SMALL_BUBBLES
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_EXPLOSION, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA614, ANIM_BATTLER_TARGET, 3, 1
-	call _81D4A48
-	call _81D4A48
-	call _81D4A48
-	call _81D4A48
-	call _81D4A48
+	createsprite gDiveWaterSplashSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
+	call DiveAttackWaterDroplets
 	delay 12
 	call RisingWaterHitEffect
 	waitforvisualfinish
@@ -9230,9 +9230,9 @@ _81D4A09:
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D4A48:
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_TARGET, 5, 0, 1
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_TARGET, 5, 1, 1
+DiveAttackWaterDroplets:
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_TARGET, 5, 0, 1
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_TARGET, 5, 1, 1
 	return
 
 Move_ROCK_BLAST: @ 81D4A5F
@@ -9377,9 +9377,9 @@ Move_ASTONISH: @ 81D4F10
 	playsewithpan SE_M_ENCORE, SOUND_PAN_ATTACKER
 	createsprite gHorizontalLungeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 4, 6
 	delay 25
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_TARGET, 5, 0, 1
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_TARGET, 5, 0, 1
 	playsewithpan SE_M_SKETCH, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA62C, ANIM_BATTLER_TARGET, 5, 1, 1
+	createsprite gSprayWaterDropletSpriteTemplate, ANIM_BATTLER_TARGET, 5, 1, 1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 5, 1
 	createvisualtask AnimTask_StretchTargetUp, 3
 	waitforvisualfinish
