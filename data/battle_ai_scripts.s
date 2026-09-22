@@ -2184,43 +2184,43 @@ AI_CV_PsychUp_End: @ 81DB9CC
 	end
 
 AI_CV_MirrorCoat: @ 81DB9CD
-	if_status TARGET, SLP, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 TARGET, S_INFATUATED, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 TARGET, S_CONFUSED, AI_CV_MirrorCoat_ScoreDown1
-	if_hp_more_than USER, 30, AI_CV_MirrorCoat2
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_MirrorCoat_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_MirrorCoat_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_MirrorCoat_ScoreDown1
+	if_hp_more_than AI_USER, 30, AI_CV_MirrorCoat2
 	if_random_less_than 10, AI_CV_MirrorCoat2
 	score -1
 
 AI_CV_MirrorCoat2: @ 81DB9FA
-	if_hp_more_than USER, 50, AI_CV_MirrorCoat3
+	if_hp_more_than AI_USER, 50, AI_CV_MirrorCoat3
 	if_random_less_than 100, AI_CV_MirrorCoat3
 	score -1
 
 AI_CV_MirrorCoat3: @ 81DBA09
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_power_from_result
 	if_equal 0, AI_CV_MirrorCoat5
-	if_not_taunted AI_CV_MirrorCoat4
+	if_target_not_taunted AI_CV_MirrorCoat4
 	if_random_less_than 100, AI_CV_MirrorCoat4
 	score +1
 
 AI_CV_MirrorCoat4: @ 81DBA1F
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_type_from_result
 	if_not_in_bytes AI_CV_MirrorCoat_SpecialTypeList, AI_CV_MirrorCoat_ScoreDown1
 	if_random_less_than 100, AI_CV_MirrorCoat_End
 	score +1
-	jump AI_CV_MirrorCoat_End
+	goto AI_CV_MirrorCoat_End
 
 AI_CV_MirrorCoat5: @ 81DBA38
-	if_not_taunted AI_CV_MirrorCoat6
+	if_target_not_taunted AI_CV_MirrorCoat6
 	if_random_less_than 100, AI_CV_MirrorCoat6
 	score +1
 
 AI_CV_MirrorCoat6: @ 81DBA45
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_MirrorCoat_SpecialTypeList, AI_CV_MirrorCoat_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_MirrorCoat_SpecialTypeList, AI_CV_MirrorCoat_End
 	if_random_less_than 50, AI_CV_MirrorCoat_End
 
