@@ -250,10 +250,10 @@ AI_CheckCombo_End:
 	end
 
 AI_CheckForGoodMove:
-	if_effect_eq CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, ContestEffect39
-	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, ContestEffect40
-	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, ContestEffect41
-	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, ContestEffect3
+	if_effect_eq CONTEST_EFFECT_BETTER_WITH_GOOD_CONDITION, AI_CGM_BetterWithGoodCondition
+	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_EARLIER, AI_CGM_NextAppealEarlier
+	if_effect_eq CONTEST_EFFECT_NEXT_APPEAL_LATER, AI_CGM_NextAppealLater
+	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CGM_RepetitionNotBoring
 	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect38
 	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect47
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect31
@@ -266,53 +266,54 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect18
 	end
 
-ContestEffect39:
-	if_user_condition_eq 3, ContestEffect39_score1
-	if_user_condition_eq 2, ContestEffect39_score2
-	if_user_condition_eq 1, ContestEffect39_score3
-	if_user_condition_eq 0, ContestEffect39_score4
+AI_CGM_BetterWithGoodCondition:
+	if_user_condition_eq 3, AI_CGM_BetterWithGoodCondition_3
+	if_user_condition_eq 2, AI_CGM_BetterWithGoodCondition_2
+	if_user_condition_eq 1, AI_CGM_BetterWithGoodCondition_1
+	if_user_condition_eq 0, AI_CGM_BetterWithGoodCondition_0
 	end
-ContestEffect39_score1:
+AI_CGM_BetterWithGoodCondition_3:
 	score +20
 	end
-ContestEffect39_score2:
+AI_CGM_BetterWithGoodCondition_2:
 	if_random 125, ContestEffectEnd
 	score +15
 	end
-ContestEffect39_score3:
+AI_CGM_BetterWithGoodCondition_1:
 	if_random 125, ContestEffectEnd
 	score +5
 	end
-ContestEffect39_score4:
+AI_CGM_BetterWithGoodCondition_0:
 	score -20
 	end
 
-ContestEffect40:
+AI_CGM_NextAppealEarlier:
 	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_FIRST, ContestEffectEnd
 	if_random 50, ContestEffectEnd
 	score +20
 	end
 
-ContestEffect41:
+AI_CGM_NextAppealLater:
 	if_effect_in_user_moveset CONTEST_EFFECT_BETTER_IF_LAST, ContestEffectEnd
 	if_random 50, ContestEffectEnd
 	score +20
 	end
 
-ContestEffect3:
+AI_CGM_RepetitionNotBoring:
 	if_user_order_not_eq MON_4, ContestEffectEnd
 	if_random 50, ContestEffectEnd
 	score +15
 	end
-	if_last_appeal ContestEffect3_7D
-	if_random 220, ContestEffect3_score
+AI_CGM_Unused:
+	if_last_appeal AI_CGM_Unused_LastAppeal
+	if_random 220, AI_CGM_Unused_Discourage
 	score +10
 	end
-ContestEffect3_7D:
+AI_CGM_Unused_LastAppeal:
 	if_random 20, ContestEffectEnd
 	score +15
 	end
-ContestEffect3_score:
+AI_CGM_Unused_Discourage:
 	score -20
 	end
 
