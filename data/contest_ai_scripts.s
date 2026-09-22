@@ -615,31 +615,31 @@ AI_Erratic_End:
 	end
 
 AI_CheckForBadMove:
-	if_effect_eq CONTEST_EFFECT_STARTLE_FRONT_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON_2, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_SAME_TYPE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_DIFF_TYPE, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL, ContestEffect2_8
-	if_effect_eq CONTEST_EFFECT_SLIGHTLY_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS_2, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_COOL_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_BEAUTY_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_CUTE_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SMART_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_TOUGH_APPEAL, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_BADLY_STARTLES_MONS_IN_GOOD_CONDITION, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect2_9
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect2_9
+	if_effect_eq CONTEST_EFFECT_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_FRONT_MON, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MON_2, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_SAME_TYPE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_DIFF_TYPE, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_AFFECTED_BY_PREV_APPEAL, AI_CBM_DependsOnPrevMon
+	if_effect_eq CONTEST_EFFECT_SLIGHTLY_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_PREV_MONS_2, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SAME_TYPE_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLE_MONS_WITH_GOOD_APPEALS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_COOL_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_BEAUTY_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_CUTE_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_SMART_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_STARTLE_MONS_TOUGH_APPEAL, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_BADLY_STARTLES_MONS_IN_GOOD_CONDITION, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CBM_DependsOnPrevMons
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CBM_DependsOnPrevMons
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, ContestEffect2_25
 	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect2_26
 	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect2_26
@@ -650,47 +650,47 @@ AI_CheckForBadMove:
 	if_effect_eq CONTEST_EFFECT_GREAT_APPEAL_BUT_NO_MORE_MOVES, ContestEffect2_2
 	end
 
-ContestEffect2_8:
-	if_user_order_eq MON_1, ContestEffect2_8_score1
-	if_user_order_eq MON_2, ContestEffect2_8_score2
-	if_user_order_eq MON_3, ContestEffect2_8_score3
-	if_user_order_eq MON_4, ContestEffect2_8_score4
+AI_CBM_DependsOnPrevMon:
+	if_user_order_eq MON_1, AI_CBM_DependsOnPrevMon_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnPrevMon_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnPrevMon_3rdUp
+	if_user_order_eq MON_4, AI_CBM_DependsOnPrevMon_Last
 	end
-ContestEffect2_8_score1:
+AI_CBM_DependsOnPrevMon_1stUp:
 	score -10
 	end
-ContestEffect2_8_score2:
+AI_CBM_DependsOnPrevMon_2ndUp:
 	if_can_participate MON_1, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_8_score3:
+AI_CBM_DependsOnPrevMon_3rdUp:
 	if_can_participate MON_2, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_8_score4:
+AI_CBM_DependsOnPrevMon_Last:
 	if_can_participate MON_3, ContestEffectEnd2
 	score -10
 	end
 
-ContestEffect2_9:
-	if_user_order_eq MON_1, ContestEffect2_9_score1
-	if_user_order_eq MON_2, ContestEffect2_9_score2
-	if_user_order_eq MON_3, ContestEffect2_9_score3
-	if_user_order_eq MON_4, ContestEffect2_9_score4
+AI_CBM_DependsOnPrevMons:
+	if_user_order_eq MON_1, AI_CBM_DependsOnPrevMons_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnPrevMons_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnPrevMons_3rdUp
+	if_user_order_eq MON_4, AI_CBM_DependsOnPrevMons_Last
 	end
-ContestEffect2_9_score1:
+AI_CBM_DependsOnPrevMons_1stUp:
 	score -20
 	end
-ContestEffect2_9_score2:
+AI_CBM_DependsOnPrevMons_2ndUp:
 	if_can_participate MON_1, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_9_score3:
+AI_CBM_DependsOnPrevMons_3rdUp:
 	if_can_participate MON_1, ContestEffectEnd2
 	if_can_participate MON_2, ContestEffectEnd2
 	score -15
 	end
-ContestEffect2_9_score4:
+AI_CBM_DependsOnPrevMons_Last:
 	if_can_participate MON_1, ContestEffectEnd2
 	if_can_participate MON_2, ContestEffectEnd2
 	if_can_participate MON_3, ContestEffectEnd2
