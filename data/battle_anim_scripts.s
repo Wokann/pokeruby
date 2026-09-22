@@ -7899,37 +7899,37 @@ Move_BATON_PASS: @ 81D2762
 
 Move_PERISH_SONG: @ 81D2784
 	loadspritegfx ANIM_TAG_MUSIC_NOTES_2
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 0, 0, 0
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 1, 1, 16
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 2, 1, 32
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 3, 2, 48
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 4, 2, 64
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 5, 0, 80
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 6, 0, 96
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 7, 1, 112
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 8, 2, 128
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 9, 0, 144
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 10, 2, 160
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 11, 0, 176
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 12, 1, 192
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 13, 3, 208
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 14, 3, 224
-	createsprite gBattleAnimSpriteTemplate_83D7D1C, ANIM_BATTLER_ATTACKER, 4, 15, 0, 240
-	createsprite gBattleAnimSpriteTemplate_83D7D34, ANIM_BATTLER_ATTACKER, 4, 15, 0, 0
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 0
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 1, 1, 16
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 2, 1, 32
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 3, 2, 48
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 4, 2, 64
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 5, 0, 80
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 6, 0, 96
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 7, 1, 112
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 8, 2, 128
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 9, 0, 144
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 10, 2, 160
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 11, 0, 176
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 12, 1, 192
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 13, 3, 208
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 14, 3, 224
+	createsprite gPerishSongMusicNoteSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 15, 0, 240
+	createsprite gPerishSongMusicNote2SpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 15, 0, 0
 	delay 20
-	panse_1B SE_M_PERISH_SONG, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_PERISH_SONG, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
 	delay 80
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 16, rgb(0, 0, 0)
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_LEFT, FALSE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_RIGHT, FALSE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_LEFT, FALSE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_RIGHT, FALSE
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=16, color=rgb(0, 0, 0)
+	set_grayscale_pal battler=ANIM_PLAYER_LEFT
+	set_grayscale_pal battler=ANIM_PLAYER_RIGHT
+	set_grayscale_pal battler=ANIM_OPPONENT_LEFT
+	set_grayscale_pal battler=ANIM_OPPONENT_RIGHT
 	delay 100
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 16, 0, rgb(0, 0, 0)
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_LEFT, TRUE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_PLAYER_RIGHT, TRUE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_LEFT, TRUE
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_OPPONENT_RIGHT, TRUE
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=rgb(0, 0, 0)
+	set_original_pal battler=ANIM_PLAYER_LEFT
+	set_original_pal battler=ANIM_PLAYER_RIGHT
+	set_original_pal battler=ANIM_OPPONENT_LEFT
+	set_original_pal battler=ANIM_OPPONENT_RIGHT
 	waitforvisualfinish
 	end
 

@@ -416,6 +416,10 @@
 	.endif
 	.endm
 
+	.macro set_grayscale_pal priority=5, battler:req
+	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, FALSE
+	.endm
+
 	.macro set_original_pal priority=5, battler:req
 	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, \priority, \battler, TRUE
 	.endm

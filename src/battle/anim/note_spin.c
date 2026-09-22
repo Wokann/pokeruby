@@ -9,62 +9,62 @@ extern u8 gBattleAnimTarget;
 
 extern const union AnimCmd *const gMusicNotesAnimTable[];
 
-void sub_80D2E68(struct Sprite *sprite);
-void sub_80D2EC8(struct Sprite *sprite);
-static void sub_80D2F80(struct Sprite *);
-static void sub_80D2FA4(struct Sprite *);
+void AnimPerishSongMusicNote2(struct Sprite *sprite);
+void AnimPerishSongMusicNote(struct Sprite *sprite);
+static void AnimPerishSongMusicNote_Step1(struct Sprite *);
+static void AnimPerishSongMusicNote_Step2(struct Sprite *);
 
 // note_spin (spins music notes around, and rotates them)
 // Used in Perish Song.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7CE0[] =
+const union AffineAnimCmd gPerishSongMusicNoteAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 5),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7CF0[] =
+const union AffineAnimCmd gPerishSongMusicNoteAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -8, 16),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7D00[] =
+const union AffineAnimCmd gPerishSongMusicNoteAffineAnimCmds3[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 16),
     AFFINEANIMCMD_END_ALT(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7D10[] =
+const union AffineAnimCmd *const gPerishSongMusicNoteAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7CE0,
-    gSpriteAffineAnim_83D7CF0,
-    gSpriteAffineAnim_83D7D00,
+    gPerishSongMusicNoteAffineAnimCmds1,
+    gPerishSongMusicNoteAffineAnimCmds2,
+    gPerishSongMusicNoteAffineAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D1C =
-{
-    .tileTag = ANIM_TAG_MUSIC_NOTES_2,
-    .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
-    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
-    .anims = gMusicNotesAnimTable,
-    .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7D10,
-    .callback = sub_80D2EC8,
-};
-
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7D34 =
+const struct SpriteTemplate gPerishSongMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES_2,
     .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gMusicNotesAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D7D10,
-    .callback = sub_80D2E68,
+    .affineAnims = gPerishSongMusicNoteAffineAnimTable,
+    .callback = AnimPerishSongMusicNote,
 };
 
-void sub_80D2E68(struct Sprite *sprite)
+const struct SpriteTemplate gPerishSongMusicNote2SpriteTemplate =
+{
+    .tileTag = ANIM_TAG_MUSIC_NOTES_2,
+    .paletteTag = ANIM_TAG_MUSIC_NOTES_2,
+    .oam = &gOamData_AffineNormal_ObjNormal_16x16,
+    .anims = gMusicNotesAnimTable,
+    .images = NULL,
+    .affineAnims = gPerishSongMusicNoteAffineAnimTable,
+    .callback = AnimPerishSongMusicNote2,
+};
+
+void AnimPerishSongMusicNote2(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -83,7 +83,7 @@ void sub_80D2E68(struct Sprite *sprite)
     }
 }
 
-void sub_80D2EC8(struct Sprite *sprite)
+void AnimPerishSongMusicNote(struct Sprite *sprite)
 {
     int index;
     int var2;
@@ -113,7 +113,7 @@ void sub_80D2EC8(struct Sprite *sprite)
 
     if (sprite->data[0] > sprite->data[5])
     {
-        sprite->callback = sub_80D2F80;
+        sprite->callback = AnimPerishSongMusicNote_Step1;
 
         sprite->data[0] = 0;
         SetSpritePrimaryCoordsFromSecondaryCoords(sprite);
@@ -125,16 +125,16 @@ void sub_80D2EC8(struct Sprite *sprite)
     }
 }
 
-static void sub_80D2F80(struct Sprite *sprite)
+static void AnimPerishSongMusicNote_Step1(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 10)
     {
         sprite->data[0] = 0;
-        sprite->callback = sub_80D2FA4;
+        sprite->callback = AnimPerishSongMusicNote_Step2;
     }
 }
 
-static void sub_80D2FA4(struct Sprite *sprite)
+static void AnimPerishSongMusicNote_Step2(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[2];
     sprite->y2 = sprite->data[3];
