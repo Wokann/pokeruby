@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/battle.h"
 #include "battle_anim.h"
 #include "rom_8077ABC.h"
 #include "sprite.h"
@@ -11,11 +12,11 @@ extern u8 gBattleAnimTarget;
 extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 
 void AnimToTargetInSinWave(struct Sprite *sprite);
-void sub_80D3698(struct Sprite *sprite);
-void sub_80D3728(struct Sprite *sprite);
+static void AnimHydroCannonCharge(struct Sprite *sprite);
+static void AnimHydroCannonBeam(struct Sprite *sprite);
 static void AnimToTargetInSinWave_Step(struct Sprite *);
 static void AnimTask_RunSinAnimTimer(u8);
-static void sub_80D370C(struct Sprite *);
+static void AnimHydroCannonCharge_Step(struct Sprite *);
 
 // energy_wave (animates steady "waves" of energy)
 // Used in Hydro Pump, Mud Shot, Signal Beam, Flamethrower, Psywave, and
@@ -114,7 +115,7 @@ const struct SpriteTemplate gPsywaveRingSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9298[] =
+static const union AffineAnimCmd sAffineAnim_HydroCannonCharge[] =
 {
     AFFINEANIMCMD_FRAME(0x3, 0x3, 10, 50),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 10),
@@ -122,42 +123,42 @@ const union AffineAnimCmd gSpriteAffineAnim_83D9298[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D92B8[] =
+static const union AffineAnimCmd sAffineAnim_HydroCannonBeam[] =
 {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D92C8[] =
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonCharge[] =
 {
-    gSpriteAffineAnim_83D9298,
+    sAffineAnim_HydroCannonCharge,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D92CC[] =
+static const union AffineAnimCmd *const sAffineAnims_HydroCannonBeam[] =
 {
-    gSpriteAffineAnim_83D92B8,
+    sAffineAnim_HydroCannonBeam,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92D0 =
+const struct SpriteTemplate gHydroCannonChargeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D92C8,
-    .callback = sub_80D3698,
+    .affineAnims = sAffineAnims_HydroCannonCharge,
+    .callback = AnimHydroCannonCharge,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D92E8 =
+const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WATER_ORB,
     .paletteTag = ANIM_TAG_WATER_ORB,
     .oam = &gOamData_AffineDouble_ObjBlend_16x16,
     .anims = gAnims_WaterMudOrb,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D92CC,
-    .callback = sub_80D3728,
+    .affineAnims = sAffineAnims_HydroCannonBeam,
+    .callback = AnimHydroCannonBeam,
 };
 
 void AnimToTargetInSinWave(struct Sprite *sprite)
@@ -224,81 +225,75 @@ static void AnimTask_RunSinAnimTimer(u8 taskId)
     }
 }
 
-void sub_80D3698(struct Sprite *sprite)
+static void AnimHydroCannonCharge(struct Sprite *sprite)
 {
-    u8 subpriority;
+    u8 priority;
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
     sprite->y2 = -10;
 
-    subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
+    priority = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
 
     if (!IsContest())
     {
-        if (GetBattlerSide(gBattleAnimAttacker) == 0)
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
         {
             sprite->x2 = 10;
-            sprite->subpriority = subpriority + 2;
+            sprite->subpriority = priority + 2;
         }
         else
         {
             sprite->x2 = -10;
-            sprite->subpriority = subpriority - 2;
+            sprite->subpriority = priority - 2;
         }
     }
     else
     {
         sprite->x2 = -10;
-        sprite->subpriority = subpriority + 2;
+        sprite->subpriority = priority + 2;
     }
 
-    sprite->callback = sub_80D370C;
+    sprite->callback = AnimHydroCannonCharge_Step;
 }
 
-static void sub_80D370C(struct Sprite *sprite)
+static void AnimHydroCannonCharge_Step(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
-    {
         DestroyAnimSprite(sprite);
-    }
 }
 
-void sub_80D3728(struct Sprite *sprite)
+static void AnimHydroCannonBeam(struct Sprite *sprite)
 {
-    int var1, var2;
+    bool8 respectMonPicOffsets;
+    u8 coordType;
 
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
         gBattleAnimArgs[0] *= -1;
 
-        if (GetBattlerPosition(gBattleAnimAttacker) == 0 || GetBattlerPosition(gBattleAnimAttacker) == 1)
-        {
+        if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_LEFT)
             gBattleAnimArgs[0] *= -1;
-        }
-
     }
 
     if ((gBattleAnimArgs[5] & 0xFF00) == 0)
-        var1 = 1;
+        respectMonPicOffsets = TRUE;
     else
-        var1 = 0;
+        respectMonPicOffsets = FALSE;
 
     if ((u8)gBattleAnimArgs[5] == 0)
-        var2 = 3;
+        coordType = BATTLER_COORD_Y_PIC_OFFSET;
     else
-        var2 = 1;
+        coordType = BATTLER_COORD_Y;
 
-    InitSpritePosToAnimAttacker(sprite, var1);
+    InitSpritePosToAnimAttacker(sprite, respectMonPicOffsets);
 
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
-    {
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
-    }
 
     sprite->data[0] = gBattleAnimArgs[4];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, var2) + gBattleAnimArgs[3];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, coordType) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }

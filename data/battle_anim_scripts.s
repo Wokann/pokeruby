@@ -9336,40 +9336,40 @@ Move_HYDRO_CANNON: @ 81D4DDE
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 8
 	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D92D0, ANIM_BATTLER_TARGET, 2
+	createsprite gHydroCannonChargeSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 10
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 30
-	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	call _81D4EA8
-	createvisualtask AnimTask_ShakeMon, 5, 1, 10, 0, 40, 1
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	call _81D4EA8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	call _81D4EA8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	call _81D4EA8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	call _81D4EA8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
-	call _81D4EA8
-	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	call HydroCannonBeam
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 10, 0, 40, 1
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
+	call HydroCannonBeam
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, ANIM_BATTLER_TARGET, 0
 	waitforvisualfinish
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
 	end
-_81D4EA8:
-	createsprite gBattleAnimSpriteTemplate_83D92E8, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
+HydroCannonBeam:
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D92E8, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D92E8, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D92E8, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D92E8, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
+	createsprite gHydroCannonBeamSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, -10, 0, 0, 15, 257
 	return
 
 Move_ASTONISH: @ 81D4F10
