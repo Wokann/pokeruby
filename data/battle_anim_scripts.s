@@ -8333,51 +8333,51 @@ SweetScentEffect:
 
 Move_HYPER_BEAM: @ 81D31EA
 	loadspritegfx ANIM_TAG_ORBS
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 4, 0, 16, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=0, target_blend_y=16, color=RGB_BLACK
 	waitforvisualfinish
 	delay 10
 	playsewithpan SE_M_HYPER_BEAM, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 4, 1
 	waitforvisualfinish
 	delay 30
-	createsoundtask SoundTask_LoopSEAdjustPanning, 247, -64, 63, 1, 15, 0, 5
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_HYPER_BEAM2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 1, 15, 0, 5
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_ATTACKER, 0, 4, 50, 1
-	createvisualtask AnimTask_FlashAnimTagWithColor, 2, 10147, 1, 12, 31, 16, 0, 0
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
+	createvisualtask AnimTask_FlashAnimTagWithColor, 2, ANIM_TAG_ORBS, 1, 12, RGB_RED, 16, RGB_BLACK, 0
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 50, 1
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 11, 26425
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	call _81D331B
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 11, 0, 26425
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 11, RGB(25, 25, 25)
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	call HyperBeamOrbs
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 11, 0, RGB(25, 25, 25)
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 4, 16, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=4, initial_blend_y=16, target_blend_y=0, color=RGB_BLACK
 	end
-_81D331B:
-	createsprite gBattleAnimSpriteTemplate_83D6394, ANIM_BATTLER_TARGET, 2
-	createsprite gBattleAnimSpriteTemplate_83D6394, ANIM_BATTLER_TARGET, 2
+HyperBeamOrbs:
+	createsprite gHyperBeamOrbSpriteTemplate, ANIM_BATTLER_TARGET, 2
+	createsprite gHyperBeamOrbSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 1
 	return
 

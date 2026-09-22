@@ -3,6 +3,7 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "random.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -12,10 +13,10 @@ static void AnimPowerAbsorptionOrb(struct Sprite *sprite);
 static void AnimSolarBeamBigOrb(struct Sprite *sprite);
 static void AnimSolarBeamSmallOrb(struct Sprite *sprite);
 void AnimAbsorptionOrb(struct Sprite* sprite);
-void sub_80CAA14(struct Sprite* sprite);
+static void AnimHyperBeamOrb(struct Sprite *sprite);
 static void AnimSolarBeamSmallOrb_Step(struct Sprite *sprite);
 static void AnimAbsorptionOrb_Step(struct Sprite* sprite);
-static void sub_80CAACC(struct Sprite* sprite);
+static void AnimHyperBeamOrb_Step(struct Sprite *sprite);
 
 const union AnimCmd gSolarBeamBigOrbAnimCmds1[] =
 {
@@ -175,7 +176,7 @@ const struct SpriteTemplate gAbsorptionOrbSpriteTemplate =
     .callback = AnimAbsorptionOrb,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
+const struct SpriteTemplate gHyperBeamOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ORBS,
     .paletteTag = ANIM_TAG_ORBS,
@@ -183,7 +184,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6394 =
     .anims = gSolarBeamBigOrbAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CAA14,
+    .callback = AnimHyperBeamOrb,
 };
 
 
@@ -282,15 +283,15 @@ static void AnimAbsorptionOrb_Step(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80CAA14(struct Sprite* sprite)
+static void AnimHyperBeamOrb(struct Sprite *sprite)
 {
-    u16 a = Random();
-    u16 b;
+    u16 animNum = Random();
+    u16 speed;
     
-    StartSpriteAnim(sprite, a & 7);
+    StartSpriteAnim(sprite, animNum & 7);
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-    if (GetBattlerSide(gBattleAnimAttacker))
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= 20;
     }
@@ -299,8 +300,8 @@ void sub_80CAA14(struct Sprite* sprite)
         sprite->x += 20;
     }
 
-    b = Random();
-    sprite->data[0] = (b & 31) + 64;
+    speed = Random();
+    sprite->data[0] = (speed & 31) + 64;
     sprite->data[1] = sprite->x;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     sprite->data[3] = sprite->y;
@@ -308,11 +309,11 @@ void sub_80CAA14(struct Sprite* sprite)
     InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[5] = Random() & 0xFF;
     sprite->data[6] = sprite->subpriority;
-    sprite->callback = sub_80CAACC;
-    sub_80CAACC(sprite);
+    sprite->callback = AnimHyperBeamOrb_Step;
+    AnimHyperBeamOrb_Step(sprite);
 }
 
-static void sub_80CAACC(struct Sprite* sprite)
+static void AnimHyperBeamOrb_Step(struct Sprite *sprite)
 {
     if (AnimFastTranslateLinear(sprite))
     {
