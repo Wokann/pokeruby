@@ -797,65 +797,65 @@ AI_CBM_End:
 	end
 
 AI_CheckOrder:
-	if_user_order_eq MON_1, AI_effectcheck1_081DCA4C
-	if_user_order_eq MON_2, AI_effectcheck2_081DCA4C
-	if_user_order_eq MON_3, AI_effectcheck3_081DCA4C
-	if_user_order_eq MON_4, AI_effectcheck4_081DCA4C
+	if_user_order_eq MON_1, AI_CheckOrder_1stUp
+	if_user_order_eq MON_2, AI_CheckOrder_2ndUp
+	if_user_order_eq MON_3, AI_CheckOrder_3rdUp
+	if_user_order_eq MON_4, AI_CheckOrder_Last
 	end
-AI_effectcheck1_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_FIRST, AI_score1_081DCA4C
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score2_081DCA4C
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_random1_081DCA4C
+AI_CheckOrder_1stUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_FIRST, AI_CheckOrder_1stUp_Encourage
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_1stUp_Discourage
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_CheckOrder_1stUp_RandomEncourage
 	end
-AI_score1_081DCA4C:
+AI_CheckOrder_1stUp_Encourage:
 	score +15
 	end
-AI_score2_081DCA4C:
+AI_CheckOrder_1stUp_Discourage:
 	score -15
 	end
-AI_random1_081DCA4C:
+AI_CheckOrder_1stUp_RandomEncourage:
 	if_random 100, AI_CBM_End
 	score +10
 	end
-AI_effectcheck2_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score3_081DCA4C
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_random2_081DCA4C
+AI_CheckOrder_2ndUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_2ndUp_Discourage
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_CheckOrder_2ndUp_RandomEncourage
 	end
-AI_score3_081DCA4C:
+AI_CheckOrder_2ndUp_Discourage:
 	score -5
 	end
-AI_random2_081DCA4C:
+AI_CheckOrder_2ndUp_RandomEncourage:
 	if_random 125, AI_CBM_End
 	score +10
 	end
-AI_effectcheck3_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score4_081DCA4C
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_score4_081DCA4C
-	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_score4_081DCA4C
+AI_CheckOrder_3rdUp:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_3rdUp_Encourage
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CheckOrder_3rdUp_Encourage
+	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_CheckOrder_3rdUp_Encourage
 	end
-AI_score4_081DCA4C:
+AI_CheckOrder_3rdUp_Encourage:
 	score +5
 	end
-AI_effectcheck4_081DCA4C:
-	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_BETTER_IF_LAST, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_score5_081DCA4C
-	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_score7_081DCA4C
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_score6_081DCA4C
-	if_effect_type_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, AI_random3_081DCA4C
+AI_CheckOrder_Last:
+	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_BETTER_IF_LAST, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_CheckOrder_Last_StronglyEncourage
+	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_CheckOrder_Last_Encourage
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_CheckOrder_Last_Discourage
+	if_effect_type_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, AI_CheckOrder_Last_RandomEncourage
 	end
-AI_score5_081DCA4C:
+AI_CheckOrder_Last_StronglyEncourage:
 	score +15
 	end
-AI_score6_081DCA4C:
+AI_CheckOrder_Last_Discourage:
 	score -10
 	end
-AI_random3_081DCA4C:
+AI_CheckOrder_Last_RandomEncourage:
 	if_random 125, AI_CBM_End
 	score +10
 	end
-AI_score7_081DCA4C:
+AI_CheckOrder_Last_Encourage:
 	score +5
 	end
 
