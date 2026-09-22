@@ -1528,24 +1528,24 @@ AI_CV_Flatter: @ 81DB33A
 	score +1
 
 AI_CV_Confuse: @ 81DB342
-	if_hp_more_than TARGET, 70, AI_CV_Confuse_End
+	if_hp_more_than AI_TARGET, 70, AI_CV_Confuse_End
 	if_random_less_than 128, AI_CV_Confuse2
 	score -1
 
 AI_CV_Confuse2: @ 81DB351
-	if_hp_more_than TARGET, 50, AI_CV_Confuse_End
+	if_hp_more_than AI_TARGET, 50, AI_CV_Confuse_End
 	score -1
-	if_hp_more_than TARGET, 30, AI_CV_Confuse_End
+	if_hp_more_than AI_TARGET, 30, AI_CV_Confuse_End
 	score -1
 
 AI_CV_Confuse_End: @ 81DB363
 	end
 
 AI_CV_Reflect: @ 81DB364
-	if_hp_less_than USER, 50, AI_CV_Reflect_ScoreDown2
-	get_type ENEMY_TYPE1
+	if_hp_less_than AI_USER, 50, AI_CV_Reflect_ScoreDown2
+	get_target_type1
 	if_in_bytes AI_CV_Reflect_PhysicalTypeList, AI_CV_Reflect_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_Reflect_PhysicalTypeList, AI_CV_Reflect_End
 	if_random_less_than 50, AI_CV_Reflect_End
 
@@ -1568,8 +1568,8 @@ AI_CV_Reflect_PhysicalTypeList: @ 81DB38A
 	.byte -1
 
 AI_CV_Poison: @ 81DB394
-	if_hp_less_than USER, 50, AI_CV_Poison_ScoreDown1
-	if_hp_more_than TARGET, 50, AI_CV_Poison_End
+	if_hp_less_than AI_USER, 50, AI_CV_Poison_ScoreDown1
+	if_hp_more_than AI_TARGET, 50, AI_CV_Poison_End
 
 AI_CV_Poison_ScoreDown1: @ 81DB3A2
 	score -1
@@ -1579,9 +1579,9 @@ AI_CV_Poison_End: @ 81DB3A4
 
 AI_CV_Paralyze: @ 81DB3A5
 	if_would_go_first USER, AI_CV_Paralyze2
-	if_hp_more_than USER, 70, AI_CV_Paralyze_End
+	if_hp_more_than AI_USER, 70, AI_CV_Paralyze_End
 	score -1
-	jump AI_CV_Paralyze_End
+	goto AI_CV_Paralyze_End
 
 AI_CV_Paralyze2: @ 81DB3B9
 	if_random_less_than 20, AI_CV_Paralyze_End
@@ -1592,8 +1592,8 @@ AI_CV_Paralyze_End: @ 81DB3C1
 
 AI_CV_VitalThrow: @ 81DB3C2
 	if_would_go_first USER, AI_CV_VitalThrow_End
-	if_hp_more_than USER, 60, AI_CV_VitalThrow_End
-	if_hp_less_than USER, 40, AI_CV_VitalThrow2
+	if_hp_more_than AI_USER, 60, AI_CV_VitalThrow_End
+	if_hp_less_than AI_USER, 40, AI_CV_VitalThrow2
 	if_random_less_than 180, AI_CV_VitalThrow_End
 
 AI_CV_VitalThrow2: @ 81DB3DC
@@ -1604,9 +1604,9 @@ AI_CV_VitalThrow_End: @ 81DB3E4
 	end
 
 AI_CV_Substitute: @ 81DB3E5
-	if_hp_more_than USER, 90, AI_CV_Substitute4
-	if_hp_more_than USER, 70, AI_CV_Substitute3
-	if_hp_more_than USER, 50, AI_CV_Substitute2
+	if_hp_more_than AI_USER, 90, AI_CV_Substitute4
+	if_hp_more_than AI_USER, 70, AI_CV_Substitute3
+	if_hp_more_than AI_USER, 50, AI_CV_Substitute2
 	if_random_less_than 100, AI_CV_Substitute2
 	score -1
 
@@ -1620,7 +1620,7 @@ AI_CV_Substitute3: @ 81DB40A
 
 AI_CV_Substitute4: @ 81DB412
 	if_would_go_first USER, AI_CV_Substitute_End
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_effect_from_result
 	if_equal EFFECT_SLEEP, AI_CV_Substitute5
 	if_equal EFFECT_TOXIC, AI_CV_Substitute5
@@ -1629,18 +1629,18 @@ AI_CV_Substitute4: @ 81DB412
 	if_equal EFFECT_WILL_O_WISP, AI_CV_Substitute5
 	if_equal EFFECT_CONFUSE, AI_CV_Substitute6
 	if_equal EFFECT_LEECH_SEED, AI_CV_Substitute7
-	jump AI_CV_Substitute_End
+	goto AI_CV_Substitute_End
 
 AI_CV_Substitute5: @ 81DB44A
-	if_not_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, AI_CV_Substitute8
-	jump AI_CV_Substitute_End
+	if_not_status AI_TARGET, STATUS1_ANY, AI_CV_Substitute8
+	goto AI_CV_Substitute_End
 
 AI_CV_Substitute6: @ 81DB459
-	if_not_status2 TARGET, S_CONFUSED, AI_CV_Substitute8
-	jump AI_CV_Substitute_End
+	if_not_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Substitute8
+	goto AI_CV_Substitute_End
 
 AI_CV_Substitute7: @ 81DB468
-	if_status3 TARGET, S_LEECH_SEED, AI_CV_Substitute_End
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_Substitute_End
 
 AI_CV_Substitute8: @ 81DB472
 	if_random_less_than 100, AI_CV_Substitute_End
@@ -1650,14 +1650,14 @@ AI_CV_Substitute_End: @ 81DB47A
 	end
 
 AI_CV_Recharge: @ 81DB47B
-	if_damage_bonus 10, AI_CV_Recharge_ScoreDown1
-	if_damage_bonus 20, AI_CV_Recharge_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Recharge_ScoreDown1
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Recharge_ScoreDown1
 	if_would_go_first USER, AI_CV_Recharge2
-	if_hp_more_than USER, 40, AI_CV_Recharge_ScoreDown1
-	jump AI_CV_Recharge_End
+	if_hp_more_than AI_USER, 40, AI_CV_Recharge_ScoreDown1
+	goto AI_CV_Recharge_End
 
 AI_CV_Recharge2: @ 81DB499
-	if_hp_less_than USER, 60, AI_CV_Recharge_End
+	if_hp_less_than AI_USER, 60, AI_CV_Recharge_End
 
 AI_CV_Recharge_ScoreDown1: @ 81DB4A0
 	score -1
@@ -1667,11 +1667,11 @@ AI_CV_Recharge_End: @ 81DB4A2
 
 AI_CV_Disable: @ 81DB4A3
 	if_would_go_first USER, AI_CV_Disable_End
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_power_from_result
 	if_equal 0, AI_CV_Disable2
 	score +1
-	jump AI_CV_Disable_End
+	goto AI_CV_Disable_End
 
 AI_CV_Disable2: @ 81DB4B9
 	if_random_less_than 100, AI_CV_Disable_End
@@ -1681,43 +1681,43 @@ AI_CV_Disable_End: @ 81DB4C1
 	end
 
 AI_CV_Counter: @ 81DB4C2
-	if_status TARGET, SLP, AI_CV_Counter_ScoreDown1
-	if_status2 TARGET, S_INFATUATED, AI_CV_Counter_ScoreDown1
-	if_status2 TARGET, S_CONFUSED, AI_CV_Counter_ScoreDown1
-	if_hp_more_than USER, 30, AI_CV_Counter2
+	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_Counter_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Counter_ScoreDown1
+	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Counter_ScoreDown1
+	if_hp_more_than AI_USER, 30, AI_CV_Counter2
 	if_random_less_than 10, AI_CV_Counter2
 	score -1
 
 AI_CV_Counter2: @ 81DB4EF
-	if_hp_more_than USER, 50, AI_CV_Counter3
+	if_hp_more_than AI_USER, 50, AI_CV_Counter3
 	if_random_less_than 100, AI_CV_Counter3
 	score -1
 
 AI_CV_Counter3: @ 81DB4FE
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_power_from_result
 	if_equal 0, AI_CV_Counter5
-	if_not_taunted AI_CV_Counter4
+	if_target_not_taunted AI_CV_Counter4
 	if_random_less_than 100, AI_CV_Counter4
 	score +1
 
 AI_CV_Counter4: @ 81DB514
-	get_move TARGET
+	get_last_used_bank_move AI_TARGET
 	get_move_type_from_result
 	if_not_in_bytes AI_CV_Counter_PhysicalTypeList, AI_CV_Counter_ScoreDown1
 	if_random_less_than 100, AI_CV_Counter_End
 	score +1
-	jump AI_CV_Counter_End
+	goto AI_CV_Counter_End
 
 AI_CV_Counter5: @ 81DB52D
-	if_not_taunted AI_CV_Counter6
+	if_target_not_taunted AI_CV_Counter6
 	if_random_less_than 100, AI_CV_Counter6
 	score +1
 
 AI_CV_Counter6: @ 81DB53A
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_Counter_PhysicalTypeList, AI_CV_Counter_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_Counter_PhysicalTypeList, AI_CV_Counter_End
 	if_random_less_than 50, AI_CV_Counter_End
 

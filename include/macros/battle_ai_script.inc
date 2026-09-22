@@ -650,3 +650,7 @@
 	.byte 0x5d
 	.4byte \address
 	.endm
+
+	.macro if_target_not_taunted address
+	if_not_taunted \address
+	.endm
