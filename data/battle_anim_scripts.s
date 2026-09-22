@@ -9664,32 +9664,32 @@ Move_TWISTER: @ 81D553A
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=60, wave_period=7, wave_amplitude=60, speed_up_on_frame=30
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=55, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 100, 50, 4, 50, 26
+	createsprite gTwisterRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 100, 50, 4, 50, 26
 	delay 1
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=105, distance_y=25, wave_period=8, wave_amplitude=60, speed_up_on_frame=20
 	delay 1
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=40, wave_period=10, wave_amplitude=48, speed_up_on_frame=30
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 120, 30, 6, 45, 25
+	createsprite gTwisterRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 120, 30, 6, 45, 25
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=115, distance_y=35, wave_period=10, wave_amplitude=60, speed_up_on_frame=30
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83DAE18, ANIM_BATTLER_TARGET, 2, 105, 20, 8, 40, 0
+	createsprite gTwisterRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 105, 20, 8, 40, 0
 	delay 3
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=20, distance_y=255, wave_period=15, wave_amplitude=32, speed_up_on_frame=0
 	create_twister_leaf_sprite ANIM_BATTLER_TARGET, 2, duration=110, distance_y=10, wave_period=8, wave_amplitude=32, speed_up_on_frame=20
 	waitforvisualfinish
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, -32, -16, 1, 3
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=-32, y=-16, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 3, 0, 12, 1
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_DEF_PARTNER, 3, 0, 12, 1
 	delay 4
-	createsprite gRandomPosHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 3
+	create_random_pos_hitsplat_sprite ANIM_BATTLER_TARGET, 3, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	delay 4
-	createsprite gRandomPosHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 3
+	create_random_pos_hitsplat_sprite ANIM_BATTLER_TARGET, 3, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	delay 4
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 32, 20, 1, 3
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=32, y=20, relative_to=ANIM_BATTLER_TARGET, animation=3
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER

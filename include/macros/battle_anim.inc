@@ -334,6 +334,14 @@
 	createsprite gBasicHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation
 	.endm
 
+	.macro create_random_pos_hitsplat_sprite anim_battler:req, subpriority_offset:req, relative_to:req, animation
+	.ifnb \animation
+	createsprite gRandomPosHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, \animation
+	.else
+	createsprite gRandomPosHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \relative_to, -1
+	.endif
+	.endm
+
 	.macro create_persist_hitsplat_sprite anim_battler:req, subpriority_offset:req, x:req, y:req, relative_to:req, animation:req, duration:req
 	createsprite gPersistHitSplatSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \relative_to, \animation, \duration
 	.endm

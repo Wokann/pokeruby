@@ -182,13 +182,13 @@ const union AnimCmd gSpriteAnim_83DAD30[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DAD38[] =
+const union AnimCmd gTwisterRockAnimCmds1[] =
 {
     ANIMCMD_FRAME(64, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DAD40[] =
+const union AnimCmd gTwisterRockAnimCmds2[] =
 {
     ANIMCMD_FRAME(80, 1),
     ANIMCMD_END,
@@ -206,10 +206,10 @@ const union AnimCmd *const gSpriteAnimTable_83DAD50[] =
     gSpriteAnim_83DAD30,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DAD58[] =
+const union AnimCmd *const gTwisterRockAnimTable[] =
 {
-    gSpriteAnim_83DAD38,
-    gSpriteAnim_83DAD40,
+    gTwisterRockAnimCmds1,
+    gTwisterRockAnimCmds2,
 };
 
 const struct SpriteTemplate gAncientPowerRockSpriteTemplate =
@@ -296,12 +296,12 @@ const struct SpriteTemplate gRockScatterSpriteTemplate =
     .callback = AnimRockScatter,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAE18 =
+const struct SpriteTemplate gTwisterRockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ROCKS,
     .paletteTag = ANIM_TAG_ROCKS,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DAD58,
+    .anims = gTwisterRockAnimTable,
     .images = NULL,
     .affineAnims = sAffineAnims_BasicRock,
     .callback = AnimMoveTwisterParticle,
