@@ -9028,21 +9028,21 @@ ReturnStrongestHit:
 
 Move_COSMIC_POWER: @ 81D43C5
 	loadspritegfx ANIM_TAG_SPARKLE_2
-	createvisualtask SoundTask_PlaySE2WithPanning, 5, 243, 0
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_COSMIC_POWER, 0
 	playsewithpan SE_M_COSMIC_POWER, 0
-	createvisualtask sub_80E3A08, 2, 0, 0, 15, 0
+	createvisualtask AnimTask_BlendNonAttackerPalettes, 2, 0, 0, 15, RGB_BLACK
 	waitforvisualfinish
 	fadetobg BG_COSMIC
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 2, 0, 128, 0, -1
 	waitbgfadein
 	delay 70
-	createvisualtask SoundTask_PlaySE1WithPanning, 5, 228, -64
+	createvisualtask SoundTask_PlaySE1WithPanning, 5, SE_M_MORNING_SUN, SOUND_PAN_ATTACKER_NEG
 	createsprite gGrantingStarsSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -15, 0, 0, 0, 32, 60
 	delay 8
 	createsprite gGrantingStarsSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 12, -5, 0, 0, 32, 60
 	delay 40
-	createvisualtask sub_80E3A08, 2, 0, 15, 0, 0
+	createvisualtask AnimTask_BlendNonAttackerPalettes, 2, 0, 15, 0, RGB_BLACK
 	waitforvisualfinish
 	restorebg
 	waitbgfadeout

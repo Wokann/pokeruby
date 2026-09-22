@@ -1590,7 +1590,7 @@ static void sub_80E39BC(u32 selectedPalettes, u16 color)
     }
 }
 
-void sub_80E3A08(u8 taskId)
+void AnimTask_BlendNonAttackerPalettes(u8 taskId)
 {
     u32 i;
     int j;
