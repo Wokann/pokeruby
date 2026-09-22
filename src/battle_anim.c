@@ -1307,7 +1307,7 @@ EWRAM_DATA u16 sAnimMoveIndex = 0; // set but unused.
 EWRAM_DATA u8 gBattleAnimAttacker = 0;
 EWRAM_DATA u8 gBattleAnimTarget = 0;
 EWRAM_DATA u16 gAnimSpeciesByBanks[4] = {0};
-EWRAM_DATA u8 gUnknown_0202F7D2 = 0; // some global pan variable
+EWRAM_DATA u8 gAnimCustomPanning = 0;
 
 u16 gSoundAnimFramesToWait;
 s16 gBattleAnimArgs[ANIM_ARGS_COUNT];
@@ -1459,7 +1459,7 @@ void ClearBattleAnimationVars(void)
     sAnimMoveIndex = 0;
     gBattleAnimAttacker = 0;
     gBattleAnimTarget = 0;
-    gUnknown_0202F7D2 = 0;
+    gAnimCustomPanning = 0;
 }
 
 void DoMoveAnim(u16 move)

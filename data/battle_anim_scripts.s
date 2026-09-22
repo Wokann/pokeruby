@@ -2053,7 +2053,7 @@ Move_CONFUSE_RAY: @ 81CA291
 	monbg ANIM_BATTLER_DEF_PARTNER
 	fadetobg BG_GHOST
 	waitbgfadein
-	createvisualtask sub_812B374, 2, -64, 63, 2, 0
+	createvisualtask SoundTask_AdjustPanningVar, 2, -64, 63, 2, 0
 	createvisualtask sub_80E2094, 2, 10013, 0, 6, 0, 14, 351
 	createsprite gBattleAnimSpriteTemplate_83DAE64, ANIM_BATTLER_TARGET, 2, 28, 0, 288
 	waitforvisualfinish
@@ -8047,26 +8047,26 @@ Move_WILL_O_WISP: @ 81D2B83
 	splitbgprio_foes ANIM_BATTLER_TARGET
 	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_EMBER, SOUND_PAN_ATTACKER, 10
-	createvisualtask sub_812B374, 2, -64, -64, 1, 0
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0
+	createvisualtask SoundTask_AdjustPanningVar, 2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_ATTACKER_NEG, 1, 0
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 0
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 0, 0, 1
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_BATTLER_ATTACKER, 4, 0, 0, 2
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 2
 	delay 3
-	createsprite gBattleAnimSpriteTemplate_83D974C, ANIM_BATTLER_ATTACKER, 4, 0, 0, 3
+	createsprite gWillOWispOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 3
 	delay 40
-	createvisualtask sub_812B374, 2, -64, 63, 2, 0
+	createvisualtask SoundTask_AdjustPanningVar, 2, SOUND_PAN_ATTACKER_NEG, SOUND_PAN_TARGET, 2, 0
 	waitforvisualfinish
 	splitbgprio_all
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 13, 1
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 42
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 84
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 126
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 168
-	createsprite gBattleAnimSpriteTemplate_83D977C, ANIM_BATTLER_ATTACKER, 2, 210
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 42
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 84
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 126
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 168
+	createsprite gWillOWispFireSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 210
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end

@@ -11,12 +11,12 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern u16 gBattlerPartyIndexes[];
 extern u16 gAnimSpeciesByBanks[];
-extern u8 gUnknown_0202F7D2;
+extern u8 gAnimCustomPanning;
 
 static void SoundTask_FireBlast_Step1(u8 taskId);
 static void SoundTask_FireBlast_Step2(u8 taskId);
 static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId);
-static void sub_812B404(u8 taskId);
+static void SoundTask_AdjustPanningVar_Step(u8 taskId);
 
 // used in 1 move:
 //         Move_FIRE_BLAST
@@ -232,7 +232,7 @@ void SoundTask_PlaySE2WithPanning(u8 taskId)
 
 // used in 2 moves:
 //         Move_CONFUSE_RAY, Move_WILL_O_WISP
-void sub_812B374(u8 taskId)
+void SoundTask_AdjustPanningVar(u8 taskId)
 {
     u8 r5 = gBattleAnimArgs[1];
     s8 panIncrement = gBattleAnimArgs[2];
@@ -250,11 +250,11 @@ void sub_812B374(u8 taskId)
     TASK.data[10] = 0;
     TASK.data[11] = sourcePan;
 
-    TASK.func = sub_812B404;
+    TASK.func = SoundTask_AdjustPanningVar_Step;
     TASK.func(taskId);
 }
 
-static void sub_812B404(u8 taskId)
+static void SoundTask_AdjustPanningVar_Step(u8 taskId)
 {
     u16 dPan = TASK.data[3];
 
@@ -267,7 +267,7 @@ static void sub_812B404(u8 taskId)
         TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
     }
 
-    gUnknown_0202F7D2 = TASK.data[11];
+    gAnimCustomPanning = TASK.data[11];
 
     if (TASK.data[11] == TASK.data[2])
     {

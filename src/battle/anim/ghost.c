@@ -14,7 +14,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattlerSpriteIds[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern u8 gUnknown_0202F7D2;
+extern u8 gAnimCustomPanning;
 
 static void sub_80DDB6C(struct Sprite *sprite);
 static void sub_80DDBD8(struct Sprite *);
@@ -257,7 +257,7 @@ static void sub_80DDBD8(struct Sprite *sprite)
         return;
     if (r0 <= 0)
         return;
-    PlaySE12WithPanning(SE_M_CONFUSE_RAY, gUnknown_0202F7D2);
+    PlaySE12WithPanning(SE_M_CONFUSE_RAY, gAnimCustomPanning);
 }
 
 static void sub_80DDC4C(struct Sprite *sprite)

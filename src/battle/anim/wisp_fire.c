@@ -12,10 +12,10 @@ extern u8 gBattleAnimTarget;
 extern u8 gBattleAnimAttacker;
 extern u8 gBattlerSpriteIds[];
 
-void sub_80D5CC0(struct Sprite *sprite);
+static void AnimWillOWispFire(struct Sprite *sprite);
 static void AnimTask_MoveHeatWaveTargets_Step(u8 taskId);
 
-const union AnimCmd gSpriteAnim_83D9764[] =
+static const union AnimCmd sAnim_WillOWispFire[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -24,20 +24,20 @@ const union AnimCmd gSpriteAnim_83D9764[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9778[] =
+static const union AnimCmd *const sAnims_WillOWispFire[] =
 {
-    gSpriteAnim_83D9764,
+    sAnim_WillOWispFire,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D977C =
+const struct SpriteTemplate gWillOWispFireSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WISP_FIRE,
     .paletteTag = ANIM_TAG_WISP_FIRE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9778,
+    .anims = sAnims_WillOWispFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D5CC0,
+    .callback = AnimWillOWispFire,
 };
 
 const s8 gUnknown_083D9794[16] =
@@ -50,7 +50,7 @@ const s8 gUnknown_083D97A4[16] =
     -1, 0, 1, 0, -1, 1, 0, -1, 0, 1, 0, -1, 0, 1, 0, 1,
 };
 
-void sub_80D5CC0(struct Sprite *sprite)
+static void AnimWillOWispFire(struct Sprite *sprite)
 {
     if (!sprite->data[0])
     {
