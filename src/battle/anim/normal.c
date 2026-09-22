@@ -1651,9 +1651,9 @@ void AnimTask_GetAttackerSide(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E3B78(u8 taskId)
+void AnimTask_GetTargetSide(u8 taskId)
 {
-    gBattleAnimArgs[7] = GetBattlerSide(gBattleAnimTarget);
+    gBattleAnimArgs[ARG_RET_ID] = GetBattlerSide(gBattleAnimTarget);
     DestroyAnimVisualTask(taskId);
 }
 

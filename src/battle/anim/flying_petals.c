@@ -48,66 +48,66 @@ const struct SpriteTemplate gAromatherapyBigFlowerSpriteTemplate =
     .callback = AnimFlyingParticle,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D68E8[] = {
+const union AffineAnimCmd gSilverWindBigSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(256, 256, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -10, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6900[] = {
+const union AffineAnimCmd gSilverWindMediumSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(192, 192, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -12, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6918[] = {
+const union AffineAnimCmd gSilverWindSmallSparkAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(143, 143, 0, 0),
     AFFINEANIMCMD_FRAME(0, 0, -15, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6930[] = {
-    gSpriteAffineAnim_83D68E8,
+const union AffineAnimCmd *const gSilverWindBigSparkAffineAnimTable[] = {
+    gSilverWindBigSparkAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6934[] = {
-    gSpriteAffineAnim_83D6900,
+const union AffineAnimCmd *const gSilverWindMediumSparkAffineAnimTable[] = {
+    gSilverWindMediumSparkAffineAnimCmds,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6938[] = {
-    gSpriteAffineAnim_83D6918,
+const union AffineAnimCmd *const gSilverWindSmallSparkAffineAnimTable[] = {
+    gSilverWindSmallSparkAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D693C =
+const struct SpriteTemplate gSilverWindBigSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6930,
+    .affineAnims = gSilverWindBigSparkAffineAnimTable,
     .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6954 =
+const struct SpriteTemplate gSilverWindMediumSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6934,
+    .affineAnims = gSilverWindMediumSparkAffineAnimTable,
     .callback = AnimFlyingParticle,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D696C =
+const struct SpriteTemplate gSilverWindSmallSparkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPARKLE_6,
     .paletteTag = ANIM_TAG_SPARKLE_6,
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6938,
+    .affineAnims = gSilverWindSmallSparkAffineAnimTable,
     .callback = AnimFlyingParticle,
 };
 

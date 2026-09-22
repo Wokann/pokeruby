@@ -9136,54 +9136,54 @@ Move_SILVER_WIND: @ 81D4773
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio_all
 	delay 0
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 1, 0, 0, 4, 0
-	createvisualtask sub_80E3B78, 2
-	jumpargeq 7, 1, _81D4974
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, ANIM_BATTLER_TARGET, 0, 0, 4, RGB_BLACK
+	createvisualtask AnimTask_GetTargetSide, 2
+	jumprettrue SilverWindOnPlayer
 	fadetobg BG_BUG_OPPONENT
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, 1536, 0, 0, -1
-_81D47BA:
+SilverWindContinue:
 	delay 0
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1, 0, 4, 4, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 0, 4, 4, RGB_BLACK
 	waitbgfadein
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -32, 16, 0, 6, 2, 3, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -8, 18, 64, 3, 2, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -24, 18, 90, 5, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, -40, 14, 128, 4, 1, 2, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D693C, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindBigSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D6954, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindMediumSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	delay 0
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D696C, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -4, 16, 0, 6, 1, 2, 1
+	createsprite gSilverWindSmallSparkSpriteTemplate, ANIM_BATTLER_TARGET, 66, -16, 12, 192, 5, 2, 3, 1
 	waitforvisualfinish
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 0
 	restorebg
 	waitbgfadeout
-	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, 1, 0, 4, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPalExclude, 10, ANIM_BATTLER_TARGET, 0, 4, 0, RGB_BLACK
 	setarg ARG_RET_ID, -1
 	waitbgfadein
 	end
-_81D4974:
+SilverWindOnPlayer:
 	fadetobg BG_BUG_PLAYER
 	waitbgfadeout
 	createvisualtask AnimTask_StartSlidingBg, 5, -1536, 0, 0, -1
-	goto _81D47BA
+	goto SilverWindContinue
 
 Move_SNATCH: @ 81D498B
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
