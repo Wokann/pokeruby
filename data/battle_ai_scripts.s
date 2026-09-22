@@ -46,42 +46,42 @@ gBattleAI_ScriptsTable:: @ 81DA01C
 	.4byte AI_FirstBattle
 
 AI_CheckBadMove: @ 81DA09C
-	is_most_powerful_move
-	if_equal 0, AI_CheckBadMove_CheckSoundproof
-	if_damage_bonus 0, Score_Minus10
-	get_ability TARGET
+	get_how_powerful_move_is
+	if_equal MOVE_POWER_OTHER, AI_CheckBadMove_CheckSoundproof
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_VOLT_ABSORB, CheckIfVoltAbsorbCancelsElectric
 	if_equal ABILITY_WATER_ABSORB, CheckIfWaterAbsorbCancelsWater
 	if_equal ABILITY_FLASH_FIRE, CheckIfFlashFireCancelsFire
 	if_equal ABILITY_WONDER_GUARD, CheckIfWonderGuardCancelsMove
 	if_equal ABILITY_LEVITATE, CheckIfLevitateCancelsGroundMove
-	jump AI_CheckBadMove_CheckSoundproof
+	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfVoltAbsorbCancelsElectric: @ 81DA0CE
-	get_type CURRENT_MOVE
-	if_arg_equal TYPE_ELECTRIC, Score_Minus12
-	jump AI_CheckBadMove_CheckSoundproof
+	get_curr_move_type
+	if_equal_ TYPE_ELECTRIC, Score_Minus12
+	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfWaterAbsorbCancelsWater: @ 81DA0DB
-	get_type CURRENT_MOVE
-	if_arg_equal TYPE_WATER, Score_Minus12
-	jump AI_CheckBadMove_CheckSoundproof
+	get_curr_move_type
+	if_equal_ TYPE_WATER, Score_Minus12
+	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfFlashFireCancelsFire: @ 81DA0E8
-	get_type CURRENT_MOVE
-	if_arg_equal TYPE_FIRE, Score_Minus12
-	jump AI_CheckBadMove_CheckSoundproof
+	get_curr_move_type
+	if_equal_ TYPE_FIRE, Score_Minus12
+	goto AI_CheckBadMove_CheckSoundproof
 
 CheckIfWonderGuardCancelsMove: @ 81DA0F5
-	if_damage_bonus 80, AI_CheckBadMove_CheckSoundproof
-	jump Score_Minus10
+	if_type_effectiveness AI_EFFECTIVENESS_x2, AI_CheckBadMove_CheckSoundproof
+	goto Score_Minus10
 
 CheckIfLevitateCancelsGroundMove: @ 81DA100
-	get_type CURRENT_MOVE
-	if_arg_equal TYPE_GROUND, Score_Minus10
+	get_curr_move_type
+	if_equal_ TYPE_GROUND, Score_Minus10
 
 AI_CheckBadMove_CheckSoundproof: @ 81DA108
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_not_equal ABILITY_SOUNDPROOF, AI_CheckBadMove_CheckEffect
 	if_move MOVE_GROWL, Score_Minus10
 	if_move MOVE_ROAR, Score_Minus10

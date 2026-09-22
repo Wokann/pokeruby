@@ -215,12 +215,21 @@
 	.byte \byte
 	.endm
 
+	.macro get_curr_move_type
+	.byte 0x22
+	.byte AI_TYPE_MOVE
+	.endm
+
 	@ unused
 	.macro get_move_power
 	.byte 0x23
 	.endm
 
 	.macro is_most_powerful_move
+	.byte 0x24
+	.endm
+
+	.macro get_how_powerful_move_is
 	.byte 0x24
 	.endm
 
@@ -232,6 +241,12 @@
 	.macro if_arg_equal type, address
 	.byte 0x26
 	.byte \type
+	.4byte \address
+	.endm
+
+	.macro if_equal_ value, address
+	.byte 0x26
+	.byte \value
 	.4byte \address
 	.endm
 
@@ -289,6 +304,12 @@
 	.endm
 
 	.macro if_damage_bonus value, address
+	.byte 0x31
+	.byte \value
+	.4byte \address
+	.endm
+
+	.macro if_type_effectiveness value, address
 	.byte 0x31
 	.byte \value
 	.4byte \address
@@ -516,6 +537,11 @@
 	.endm
 
 	.macro jump address
+	.byte 0x59
+	.4byte \address
+	.endm
+
+	.macro goto address
 	.byte 0x59
 	.4byte \address
 	.endm

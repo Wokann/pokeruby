@@ -40,6 +40,28 @@
 .equiv TARGET, 0
 .equiv USER, 1
 
+@ battle AI script operands
+.equiv AI_TARGET,       TARGET
+.equiv AI_USER,         USER
+.equiv AI_TYPE1_TARGET, ENEMY_TYPE1
+.equiv AI_TYPE2_TARGET, PLAYER_TYPE1
+.equiv AI_TYPE1_USER,   ENEMY_TYPE2
+.equiv AI_TYPE2_USER,   PLAYER_TYPE2
+.equiv AI_TYPE_MOVE,    CURRENT_MOVE
+
+@ battle AI type effectiveness
+.equiv AI_EFFECTIVENESS_x4,   160
+.equiv AI_EFFECTIVENESS_x2,   80
+.equiv AI_EFFECTIVENESS_x1,   40
+.equiv AI_EFFECTIVENESS_x0_5, 20
+.equiv AI_EFFECTIVENESS_x0_25, 10
+.equiv AI_EFFECTIVENESS_x0,   0
+
+@ get_how_powerful_move_is results
+.equiv MOVE_POWER_OTHER,        0
+.equiv MOVE_NOT_MOST_POWERFUL,  1
+.equiv MOVE_MOST_POWERFUL,      2
+
 .equiv BATTLE_WEATHER_SUN, 0
 .equiv BATTLE_WEATHER_RAIN, 1
 .equiv BATTLE_WEATHER_SANDSTORM, 2
