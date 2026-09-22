@@ -256,8 +256,8 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_REPETITION_NOT_BORING, AI_CGM_RepetitionNotBoring
 	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CGM_ImproveCondition
 	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CGM_DontExciteAudience
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, ContestEffect31
-	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, ContestEffect32
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CGM_AppealAsGoodAsPrevOnes
+	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONE, AI_CGM_AppealAsGoodAsPrevOne
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_AUDIENCE_EXCITED, ContestEffect46
 	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, ContestEffect27
 	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, ContestEffect16or17
@@ -355,54 +355,54 @@ AI_CGM_DontExciteAudience_EarlyTurn:
 	score +10
 	end
 
-ContestEffect31:
-	if_user_order_eq MON_2, ContestEffect31_score1
-	if_user_order_eq MON_3, ContestEffect31_score2
-	if_user_order_eq MON_4, ContestEffect31_score3
+AI_CGM_AppealAsGoodAsPrevOnes:
+	if_user_order_eq MON_2, AI_CGM_AppealAsGoodAsPrevOnes_2ndUp
+	if_user_order_eq MON_3, AI_CGM_AppealAsGoodAsPrevOnes_3rdUp
+	if_user_order_eq MON_4, AI_CGM_AppealAsGoodAsPrevOnes_Last
 	end
-ContestEffect31_score1:
+AI_CGM_AppealAsGoodAsPrevOnes_2ndUp:
 	score +5
 	end
-ContestEffect31_score2:
+AI_CGM_AppealAsGoodAsPrevOnes_3rdUp:
 	score +15
 	end
-ContestEffect31_score3:
+AI_CGM_AppealAsGoodAsPrevOnes_Last:
 	score +20
 	end
 
-ContestEffect32:
-	if_user_order_eq MON_1, ContestEffect32_score1
-	if_user_order_eq MON_2, ContestEffect32_score2
-	if_user_order_eq MON_3, ContestEffect32_score3
-	if_user_order_eq MON_4, ContestEffect32_score5
+AI_CGM_AppealAsGoodAsPrevOne:
+	if_user_order_eq MON_1, AI_CGM_AppealAsGoodAsPrevOne_1stUp
+	if_user_order_eq MON_2, AI_CGM_AppealAsGoodAsPrevOne_2ndUp
+	if_user_order_eq MON_3, AI_CGM_AppealAsGoodAsPrevOne_3rdUp
+	if_user_order_eq MON_4, AI_CGM_AppealAsGoodAsPrevOne_Last
 	end
-ContestEffect32_score1:
+AI_CGM_AppealAsGoodAsPrevOne_1stUp:
 	score -10
 	end
-ContestEffect32_score2:
+AI_CGM_AppealAsGoodAsPrevOne_2ndUp:
 	if_cannot_participate MON_1, ContestEffectEnd
 	score +5
 	end
-ContestEffect32_score3:
-	if_cannot_participate MON_1, ContestEffect32_score4
+AI_CGM_AppealAsGoodAsPrevOne_3rdUp:
+	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	score +5
-	jump ContestEffect32_score4
+	jump AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2
 	end
-ContestEffect32_score4:
+AI_CGM_AppealAsGoodAsPrevOne_3rdUp_CheckMon2:
 	if_cannot_participate MON_2, ContestEffectEnd
 	score +5
 	end
-ContestEffect32_score5:
-	if_cannot_participate MON_1, ContestEffect32_score6
+AI_CGM_AppealAsGoodAsPrevOne_Last:
+	if_cannot_participate MON_1, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	score +5
-	jump ContestEffect32_score6
+	jump AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2
 	end
-ContestEffect32_score6:
-	if_cannot_participate MON_2, ContestEffect32_score7
+AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon2:
+	if_cannot_participate MON_2, AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	score +5
-	jump ContestEffect32_score7
+	jump AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3
 	end
-ContestEffect32_score7:
+AI_CGM_AppealAsGoodAsPrevOne_Last_CheckMon3:
 	if_cannot_participate MON_3, ContestEffectEnd
 	score +5
 	end
