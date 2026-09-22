@@ -64,7 +64,7 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_ShowSecretPowerCave
 	.4byte gFieldEffectScript_ShowSecretPowerTree
 	.4byte gFieldEffectScript_ShowSecretPowerShrub
-	.4byte gFieldEffectScript_CutGrass
+	.4byte gFieldEffectScript_ShowCutGrass
 	.4byte gFieldEffectScript_FieldMoveShowMonInit
 	.4byte gFieldEffectScript_UseFlyAncientTomb
 	.4byte gFieldEffectScript_SecretBasePCTurnOn
@@ -305,8 +305,8 @@ gFieldEffectScript_ShowSecretPowerShrub: @ 81D9E0C
 	loadfadedpal_callnative gSpritePalette_SecretPower_Plant, FldEff_SecretPowerShrub
 	end
 
-gFieldEffectScript_CutGrass: @ 81D9E16
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo6, FldEff_CutGrass
+gFieldEffectScript_ShowCutGrass: @ 81D9E16
+	loadfadedpal_callnative gSpritePalette_CutGrass, FldEff_CutGrass
 	end
 
 gFieldEffectScript_FieldMoveShowMonInit: @ 81D9E20

@@ -1796,7 +1796,7 @@ void ObjectEventGetLocalIdAndMap(struct ObjectEvent *objectEvent, void *localId,
     *(u8 *)mapGroup = objectEvent->mapGroup;
 }
 
-void sub_805BCC0(s16 x, s16 y)
+void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y)
 {
     u8 objectEventId;
     struct ObjectEvent *objectEvent;
