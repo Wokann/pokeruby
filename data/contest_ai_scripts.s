@@ -262,7 +262,7 @@ AI_CheckForGoodMove:
 	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CGM_WorsenConditionOfPrevMons
 	if_effect_eq CONTEST_EFFECT_SHIFT_JUDGE_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
 	if_effect_eq CONTEST_EFFECT_STARTLE_MON_WITH_JUDGES_ATTENTION, AI_CGM_TargetMonWithJudgesAttention
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect_FollowingMonsNervous
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CGM_MakeFollowingMonsNervous
 	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, ContestEffect18
 	end
 
@@ -540,26 +540,26 @@ AI_CGM_TargetMonWithJudgesAttention_CheckMon3:
 	score +8
 	end
 
-ContestEffect_FollowingMonsNervous:
+AI_CGM_MakeFollowingMonsNervous:
 	if_user_order_eq MON_4, ContestEffectEnd
-	jump ContestEffect_FollowingMonsNervous_CheckMon4
+	jump AI_CGM_MakeFollowingMonsNervous_CheckMon4
 	end
-ContestEffect_FollowingMonsNervous_CheckMon4:
-	if_cannot_participate MON_4, ContestEffect_FollowingMonsNervous_CheckMon3
-	if_used_combo_starter_eq MON_4, FALSE, ContestEffect_FollowingMonsNervous_CheckMon3
+AI_CGM_MakeFollowingMonsNervous_CheckMon4:
+	if_cannot_participate MON_4, AI_CGM_MakeFollowingMonsNervous_CheckMon3
+	if_used_combo_starter_eq MON_4, FALSE, AI_CGM_MakeFollowingMonsNervous_CheckMon3
 	score +5
 	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon2
 	score +5
 	end
-ContestEffect_FollowingMonsNervous_CheckMon3:
+AI_CGM_MakeFollowingMonsNervous_CheckMon3:
 	if_user_order_eq MON_3, ContestEffectEnd
-	if_cannot_participate MON_3, ContestEffect_FollowingMonsNervous_CheckMon2
-	if_used_combo_starter_eq MON_3, FALSE, ContestEffect_FollowingMonsNervous_CheckMon2
+	if_cannot_participate MON_3, AI_CGM_MakeFollowingMonsNervous_CheckMon2
+	if_used_combo_starter_eq MON_3, FALSE, AI_CGM_MakeFollowingMonsNervous_CheckMon2
 	score +5
 	if_random 125, AI_CGM_TargetMonWithJudgesAttention_CheckMon3
 	score +5
 	end
-ContestEffect_FollowingMonsNervous_CheckMon2:
+AI_CGM_MakeFollowingMonsNervous_CheckMon2:
 	if_user_order_eq MON_2, ContestEffectEnd
 	if_cannot_participate MON_2, ContestEffectEnd
 	if_used_combo_starter_eq MON_2, FALSE, ContestEffectEnd
