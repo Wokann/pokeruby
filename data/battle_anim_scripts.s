@@ -9743,91 +9743,91 @@ Move_MAGICAL_LEAF: @ 81D5699
 Move_ICE_BALL: @ 81D57BA
 	loadspritegfx ANIM_TAG_ICE_CHUNK
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
-	jumpargeq 0, 4, _81D5831
-_81D57D1:
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 4, IceBallSetIceBg
+IceBallContinue:
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_ATTACKER
-	createsprite gIceBallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 0, -12, -16, 30, -40
+	createsprite gIceBallChunkSpriteTemplate, ANIM_BATTLER_TARGET, 2, 15, 0, -12, -16, 30, -40
 	delay 28
 	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
-	jumpargeq 0, 0, _81D5842
-	jumpargeq 0, 1, _81D5871
-	jumpargeq 0, 2, _81D58AA
-	jumpargeq 0, 3, _81D58ED
-	jumpargeq 0, 4, _81D5935
-_81D581F:
-	createvisualtask AnimTask_CountIceBallThrows, 5, 0
-	jumpargeq 0, 4, _81D5838
-_81D5830:
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 0, IceBallWeakest
+	jumpargeq 0, 1, IceBallWeak
+	jumpargeq 0, 2, IceBallMediun
+	jumpargeq 0, 3, IceBallStrong
+	jumpargeq 0, 4, IceBallStrongest
+IceBallContinue2:
+	createvisualtask AnimTask_GetIceBallCounter, 5, 0
+	jumpargeq 0, 4, IceBallUnsetIceBg
+IceBallEnd:
 	end
-_81D5831:
+IceBallSetIceBg:
 	fadetobg BG_ICE
-	goto _81D57D1
-_81D5838:
+	goto IceBallContinue
+IceBallUnsetIceBg:
 	waitbgfadein
 	delay 45
 	restorebg
 	waitbgfadein
-	goto _81D5830
-_81D5842:
+	goto IceBallEnd
+IceBallWeakest:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 8, 1, 0
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	goto _81D581F
-_81D5871:
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallWeak:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 10, 1, 0
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	goto _81D581F
-_81D58AA:
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallMediun:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 14, 1, 0
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	goto _81D581F
-_81D58ED:
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallStrong:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 18, 1, 0
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	goto _81D581F
-_81D5935:
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallStrongest:
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 30, 1, 0
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	call _81D597D
-	goto _81D581F
-_81D597D:
-	createsprite gIceBallParticleSpriteTemplate, ANIM_BATTLER_TARGET, 4, -12, -16
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	goto IceBallContinue2
+IceBallImpactShard:
+	createsprite gIceBallImpactShardSpriteTemplate, ANIM_BATTLER_TARGET, 4, -12, -16
 	return
 
 Move_WEATHER_BALL: @ 81D5989
