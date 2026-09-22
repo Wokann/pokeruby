@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/battle.h"
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
@@ -19,17 +20,17 @@ extern const u8 gBattleAnimBackgroundPalette_ScaryFace[];
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG1_X;
 
-static void sub_80D24E0(u8 taskId);
+static void AnimTask_ScaryFace_Step(u8 taskId);
 
 // scary_face (darkens the screen and shows a scary face.)
 // Used in Glare and Scary Face.
 
-void sub_80D23B4(u8 taskId)
+void AnimTask_ScaryFace(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
-    REG_BLDCNT = 0x3F42;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     REG_BG1CNT_BITFIELD.priority = 1;
     REG_BG1CNT_BITFIELD.screenSize = 0;
     if (!IsContest())
@@ -43,7 +44,7 @@ void sub_80D23B4(u8 taskId)
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     if (IsContest())
         LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceContest, animBg.bgTilemap);
-    else if (GetBattlerSide(gBattleAnimTarget) == 1)
+    else if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
         LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFacePlayer, animBg.bgTilemap);
     else
         LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceOpponent, animBg.bgTilemap);
@@ -53,10 +54,10 @@ void sub_80D23B4(u8 taskId)
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
-    gTasks[taskId].func = sub_80D24E0;
+    gTasks[taskId].func = AnimTask_ScaryFace_Step;
 }
 
-void sub_80D24E0(u8 taskId)
+static void AnimTask_ScaryFace_Step(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
@@ -67,7 +68,7 @@ void sub_80D24E0(u8 taskId)
         {
             gTasks[taskId].data[10] = 0;
             gTasks[taskId].data[11]++;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]);
             if (gTasks[taskId].data[11] == 14)
             {
                 gTasks[taskId].data[12]++;
@@ -87,7 +88,7 @@ void sub_80D24E0(u8 taskId)
         {
             gTasks[taskId].data[10] = 0;
             gTasks[taskId].data[11]--;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]);
             if (gTasks[taskId].data[11] == 0)
             {
                 gTasks[taskId].data[12]++;
