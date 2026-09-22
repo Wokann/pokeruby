@@ -2195,26 +2195,26 @@ BattleScript_EffectStockpile: @ 81D841A
 
 BattleScript_EffectSpitUp: @ 81D842D
 	attackcanceler
-	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_SpitUpFail
+	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_SpitUpFailProtect
 	attackstring
 	ppreduce
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
-	stockpiletobasedamage BattleScript_1D844E
+	stockpiletobasedamage BattleScript_SpitUpFail
 	typecalc
 	adjustsetdamage
 	goto BattleScript_HitFromAtkAnimation
 
-BattleScript_1D844E: @ 81D844E
+BattleScript_SpitUpFail: @ 81D844E
 	pause 32
 	printstring BATTLE_TEXT_SpitUpFail
 	waitmessage 64
 	goto BattleScript_MoveEnd
 
-BattleScript_SpitUpFail: @ 81D845C
+BattleScript_SpitUpFailProtect: @ 81D845C
 	attackstring
 	ppreduce
 	pause 64
-	stockpiletobasedamage BattleScript_1D844E
+	stockpiletobasedamage BattleScript_SpitUpFail
 	resultmessage
 	waitmessage 64
 	goto BattleScript_MoveEnd
