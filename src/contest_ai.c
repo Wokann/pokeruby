@@ -8,7 +8,7 @@
 extern u16 gSpecialVar_ContestCategory;
 
 extern u8 *gAIScriptPtr;
-extern u8 *gContestAIs[];
+extern u8 *gContestAI_ScriptsTable[];
 
 static void ContestAICmd_unk_00(void);
 static void ContestAICmd_get_turn(void);
@@ -345,7 +345,7 @@ static void ContestAI_DoAIProcessing(void)
             case CONTESTAI_DO_NOT_PROCESS:
                 break;
             case CONTESTAI_SETTING_UP:
-                gAIScriptPtr = gContestAIs[eContestAI->unk10];
+                gAIScriptPtr = gContestAI_ScriptsTable[eContestAI->unk10];
 
                 if(gContestMons[eContestAI->unk41].moves[eContestAI->unk4] == 0)
                     eContestAI->unk2 = 0; // don't process a move that doesn't exist.
