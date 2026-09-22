@@ -48,75 +48,80 @@ gContestAIs:: @ 81DC118
 @ Unreferenced AI routine to encourage moves that improve condition on the first
 @ turn. Additionally, it checks the appeal order of the user and the effect
 @ type, but the code is buggy and doesn't affect the score.
-	if_appeal_num_not_eq 0, ContestUnreferenced_80
-	if_effect_not_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestUnreferenced_80
+AI_CheckTiming:
+	if_appeal_num_not_eq 0, AI_CheckTiming_SkipCondition
+	if_effect_not_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, AI_CheckTiming_SkipCondition
 	score +10
-ContestUnreferenced_80:
-	call ContestUnreferenced_0D
+AI_CheckTiming_SkipCondition:
+	call AI_CheckTiming_TryStartle
 	end
-ContestUnreferenced_0D:
-	if_user_order_more_than MON_2, ContestUnreferenced_end
-	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MON, ContestUnreferenced_end
-	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, ContestUnreferenced_end
+AI_CheckTiming_TryStartle:
+	if_user_order_more_than MON_2, AI_CheckTiming_End
+	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MON, AI_CheckTiming_End
+	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, AI_CheckTiming_End
 	score +10 @ unreachable
-ContestUnreferenced_end:
+AI_CheckTiming_End:
 	end
 
 @ Unreferenced AI routine that doesn't make much sense.
-	if_appeal_num_eq 0, ContestUnreferenced_0F_1
-	if_appeal_num_eq 1, ContestUnreferenced_0F_2
-	if_appeal_num_eq 2, ContestUnreferenced_0F_3
-	if_appeal_num_eq 3, ContestUnreferenced_0F_4
-	if_last_appeal ContestUnreferenced_0F_5
+AI_AvoidStartle:
+	if_appeal_num_eq 0, AI_AvoidStartle_1stAppeal
+	if_appeal_num_eq 1, AI_AvoidStartle_2ndAppeal
+	if_appeal_num_eq 2, AI_AvoidStartle_3rdAppeal
+	if_appeal_num_eq 3, AI_AvoidStartle_4thAppeal
+	if_last_appeal AI_AvoidStartle_LastAppeal
 	end
-ContestUnreferenced_0F_1:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_2
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_1stAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove2
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_2B_1:
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove:
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_AvoidStartle_Encourage
 	end
-ContestUnreferenced_2B_2:
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove2:
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_AvoidStartle_Encourage
 	end
-	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
+AI_AvoidStartle_EncourageIfAvoidMove3:
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_AvoidStartle_Encourage
 	end
-ContestUnreferenced_0F_2:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_2ndAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_3:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_3rdAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_4:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_4thAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_0F_5:
-	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_2, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_3, ContestUnreferenced_2B_1
-	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
+AI_AvoidStartle_LastAppeal:
+	if_user_order_not_eq MON_1, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_2, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_3, AI_AvoidStartle_EncourageIfAvoidMove
+	if_user_order_not_eq MON_4, AI_AvoidStartle_EncourageIfAvoidMove
 	end
-ContestUnreferenced_score:
+AI_AvoidStartle_Encourage:
 	score +10
 	end
 
+AI_AvoidStartle_End:
 	end
 
 @ Unreferenced AI routine to encourage the most appealing move.
-	if_most_appealing_move ContestUnreferenced_score2
+AI_PreferMostAppealingMove:
+	if_most_appealing_move AI_PreferMostAppealingMove_Encourage
 	end
-ContestUnreferenced_score2:
+AI_PreferMostAppealingMove_Encourage:
 	score +10
 	end
 
