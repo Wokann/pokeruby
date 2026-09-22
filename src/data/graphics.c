@@ -603,8 +603,8 @@ const u8 gBattleAnimSpritePalette_223[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpriteSheet_223[] = INCBIN_U8("graphics/battle_anims/sprites/223.4bpp.lz");
 const u8 gBattleAnimSpritePalette_224[] = INCBIN_U8("graphics/battle_anims/sprites/224.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_224[] = INCBIN_U8("graphics/battle_anims/sprites/224.4bpp.lz");
-const u8 gBattleAnimSpritePalette_230[] = INCBIN_U8("graphics/battle_anims/sprites/230.gbapal.lz");
-const u8 gBattleAnimSpriteSheet_230[] = INCBIN_U8("graphics/battle_anims/sprites/230.4bpp.lz");
+const u8 gBattleAnimSpritePalette_TriAttackTriangle[] = INCBIN_U8("graphics/battle_anims/sprites/230.gbapal.lz");
+const u8 gBattleAnimSpriteSheet_TriAttackTriangle[] = INCBIN_U8("graphics/battle_anims/sprites/230.4bpp.lz");
 const u8 gBattleAnimSpritePalette_228[] = INCBIN_U8("graphics/battle_anims/sprites/228.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_228[] = INCBIN_U8("graphics/battle_anims/sprites/228.4bpp.lz");
 

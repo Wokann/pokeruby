@@ -110,7 +110,7 @@ static void sub_812C990(struct Sprite *sprite);
 static void sub_812CAFC(struct Sprite *sprite);
 static void sub_812CC28(struct Sprite *sprite);
 static void AnimRapidSpin(struct Sprite *sprite);
-static void sub_812D294(struct Sprite *sprite);
+static void AnimTriAttackTriangle(struct Sprite *sprite);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
 static void sub_812D4B4(struct Sprite *sprite);
 static void sub_812D588(struct Sprite *sprite);
@@ -462,18 +462,18 @@ const union AffineAnimCmd gUnknown_08402400[] =
     AFFINEANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_8402420[] =
+const union AnimCmd gTriAttackTriangleAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_8402428[] =
+const union AnimCmd *const gTriAttackTriangleAnimTable[] =
 {
-    gSpriteAnim_8402420,
+    gTriAttackTriangleAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_840242C[] =
+const union AffineAnimCmd gTriAttackTriangleAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 5, 40),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 10, 10),
@@ -482,20 +482,20 @@ const union AffineAnimCmd gSpriteAffineAnim_840242C[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402454[] =
+const union AffineAnimCmd *const gTriAttackTriangleAffineAnimTable[] =
 {
-    gSpriteAffineAnim_840242C,
+    gTriAttackTriangleAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402458 =
+const struct SpriteTemplate gTriAttackTriangleSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_TRI_FORCE_TRIANGLE,
-    .paletteTag = ANIM_TAG_TRI_FORCE_TRIANGLE,
+    .tileTag = ANIM_TAG_TRI_ATTACK_TRIANGLE,
+    .paletteTag = ANIM_TAG_TRI_ATTACK_TRIANGLE,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
-    .anims = gSpriteAnimTable_8402428,
+    .anims = gTriAttackTriangleAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402454,
-    .callback = sub_812D294,
+    .affineAnims = gTriAttackTriangleAffineAnimTable,
+    .callback = AnimTriAttackTriangle,
 };
 
 const union AnimCmd gEclipsingOrbAnimCmds[] =
@@ -2018,7 +2018,7 @@ static void sub_812D254(struct Sprite *sprite)
     }
 }
 
-static void sub_812D294(struct Sprite *sprite)
+static void AnimTriAttackTriangle(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
         InitSpritePosToAnimAttacker(sprite, 0);
