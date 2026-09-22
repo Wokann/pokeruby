@@ -12,48 +12,48 @@ extern u8 gBattleAnimTarget;
 extern u16 gBattle_WIN0V;
 extern u16 gBattle_WIN0H;
 
-static void sub_80D1D48(u8 taskId);
-static void sub_80D1D9C(u8 taskId);
+static void AnimTask_FakeOut_Step1(u8 taskId);
+static void AnimTask_FakeOut_Step2(u8 taskId);
 
 // curtain (a sweeping blackening curtain in the BG)
 // Used in Fake Out.
 
-void sub_80D1CD0(u8 taskId)
+void AnimTask_FakeOut(u8 taskId)
 {
-    int zero;
-    bool8 result = IsContest();
-    u16 var = 0xF0;
-    if (result)
+    int win0v;
+    bool8 isContest = IsContest();
+    u16 win0h = DISPLAY_WIDTH;
+    if (isContest)
     {
-        var = 0x98;
-        zero = 0;
+        win0h = 152;
+        win0v = 0;
     }
     else
     {
-        zero = 0;
+        win0v = 0;
     }
 
-    gBattle_WIN0H = var;
-    gBattle_WIN0V = 0xA0;
-    REG_WIN0H = var;
-    REG_WIN0V = 0xA0;
-    REG_WININ = 0x3F1F;
-    REG_WINOUT = 0x3F3F;
-    REG_BLDCNT = 0xC8;
-    REG_BLDY = 0x10;
-    gTasks[taskId].data[0] = zero;
-    gTasks[taskId].data[1] = var;
-    gTasks[taskId].func = sub_80D1D48;
+    gBattle_WIN0H = win0h;
+    gBattle_WIN0V = DISPLAY_HEIGHT;
+    REG_WIN0H = win0h;
+    REG_WIN0V = DISPLAY_HEIGHT;
+    REG_WININ = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR;
+    REG_WINOUT = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR;
+    REG_BLDCNT = BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_DARKEN;
+    REG_BLDY = 16;
+    gTasks[taskId].data[0] = win0v;
+    gTasks[taskId].data[1] = win0h;
+    gTasks[taskId].func = AnimTask_FakeOut_Step1;
 }
 
-void sub_80D1D48(u8 taskId)
+static void AnimTask_FakeOut_Step1(u8 taskId)
 {
     gTasks[taskId].data[0] += 13;
     gTasks[taskId].data[1] -= 13;
     if (gTasks[taskId].data[0] >= gTasks[taskId].data[1])
     {
         gBattle_WIN0H = 0;
-        gTasks[taskId].func = sub_80D1D9C;
+        gTasks[taskId].func = AnimTask_FakeOut_Step2;
     }
     else
     {
@@ -61,20 +61,20 @@ void sub_80D1D48(u8 taskId)
     }
 }
 
-void sub_80D1D9C(u8 taskId)
+static void AnimTask_FakeOut_Step2(u8 taskId)
 {
     if (++gTasks[taskId].data[10] == 5)
     {
-        gTasks[taskId].data[11] = 0x88;
+        gTasks[taskId].data[11] = BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_LIGHTEN;
         RequestSpriteCopy((u8 *)(&gTasks[taskId].data[11]), (u8 *)(&REG_BLDCNT), 2);
-        BlendPalettes(GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE), 16, RGB(31, 31, 31));
+        BlendPalettes(GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE), 16, RGB_WHITE);
     }
     else if (gTasks[taskId].data[10] > 4)
     {
         gBattle_WIN0H = 0;
         gBattle_WIN0V = 0;
-        REG_WININ = 0x3F3F;
-        REG_WINOUT = 0x3F3F;
+        REG_WININ = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR;
+        REG_WINOUT = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR;
         REG_BLDCNT = 0;
         REG_BLDY = 0;
         DestroyAnimVisualTask(taskId);
