@@ -8,26 +8,26 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void sub_80D0428(u8 taskId);
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
 
 // shadow_enlarge (the magnifying-like shadow over the Pokemon effect)
 // Used in Disable.
 
-void sub_80D03C4(u8 taskId)
+void AnimTask_GrowAndGrayscale(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(1);
-    PrepareBattlerSpriteForRotScale(spriteId, 1);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+    PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
     SetSpriteRotScale(spriteId, 0xD0, 0xD0, 0);
     SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, FALSE);
-    gTasks[taskId].data[0] = 0x50;
-    gTasks[taskId].func = sub_80D0428;
+    gTasks[taskId].data[0] = 80;
+    gTasks[taskId].func = AnimTask_GrowAndGrayscale_Step;
 }
 
-void sub_80D0428(u8 taskId)
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId)
 {
     if (--gTasks[taskId].data[0] == -1)
     {
-        u8 spriteId = GetAnimBattlerSpriteId(1);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
         ResetSpriteRotScale(spriteId);
         SetGrayscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, TRUE);
         DestroyAnimVisualTask(taskId);

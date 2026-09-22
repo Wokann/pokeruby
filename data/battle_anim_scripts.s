@@ -7534,7 +7534,7 @@ Move_DISABLE: @ 81D1EF1
 	playsewithpan SE_M_DETECT, SOUND_PAN_ATTACKER
 	createsprite gSpinningSparkleSpriteTemplate, ANIM_BATTLER_ATTACKER, 13, 24, -16
 	waitforvisualfinish
-	createvisualtask sub_80D03C4, 5
+	createvisualtask AnimTask_GrowAndGrayscale, 5
 	loopsewithpan SE_M_BIND, SOUND_PAN_TARGET, 15, 4
 	waitforvisualfinish
 	delay 1
