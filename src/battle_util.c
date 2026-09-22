@@ -170,8 +170,8 @@ extern u8 BattleScript_ApplySecondaryEffect[];
 extern u8 BattleScript_CuteCharmActivates[];
 extern u8 BattleScript_AbilityCuredStatus[]; //ability status clear
 extern u8 BattleScript_SynchronizeActivates[];
-extern u8 gUnknown_081D978C[]; //intimidate1
-extern u8 gUnknown_081D9795[]; //intimidate2
+extern u8 BattleScript_IntimidateActivatesEnd3[];
+extern u8 BattleScript_IntimidateActivates[];
 extern u8 BattleScript_TraceActivates[];
 
 extern u8 BattleScript_WhiteHerbEnd2[];
@@ -2409,7 +2409,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     gLastUsedAbility = ABILITY_INTIMIDATE;
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
-                    BattleScriptPushCursorAndCallback(gUnknown_081D978C);
+                    BattleScriptPushCursorAndCallback(BattleScript_IntimidateActivatesEnd3);
                     gBattleStruct->intimidateBank = i;
                     effect++;
                     break;
@@ -2489,7 +2489,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     gLastUsedAbility = ABILITY_INTIMIDATE;
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
                     BattleScriptPushCursor();
-                    gBattlescriptCurrInstr = gUnknown_081D9795;
+                    gBattlescriptCurrInstr = BattleScript_IntimidateActivates;
                     gBattleStruct->intimidateBank = i;
                     effect++;
                     break;

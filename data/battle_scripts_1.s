@@ -4048,52 +4048,52 @@ BattleScript_WeatherFormChangesLoop: @ 81D9767
 	return
 
 BattleScript_CastformChange:: @ 81D977D
-	call BattleScript_1D9783
+	call BattleScript_DoCastformChange
 	end3
 
-BattleScript_1D9783: @ 81D9783
+BattleScript_DoCastformChange: @ 81D9783
 	docastformchangeanimation
 	waitstate
 	printstring BATTLE_TEXT_Transformed2
 	waitmessage 64
 	return
 
-gUnknown_081D978C:: @ 81D978C
-	call BattleScript_1D9792
+BattleScript_IntimidateActivatesEnd3:: @ 81D978C
+	call BattleScript_PauseIntimidateActivates
 	end3
 
-BattleScript_1D9792: @ 81D9792
+BattleScript_PauseIntimidateActivates: @ 81D9792
 	pause 32
 
-gUnknown_081D9795:: @ 81D9795
+BattleScript_IntimidateActivates:: @ 81D9795
 	setbyte gBattlerTarget, 0
 	setstatchanger ATTACK, 1, TRUE
 
-BattleScript_1D97A1: @ 81D97A1
-	trygetintimidatetarget BattleScript_1D97EF
-	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_1D97E4
-	jumpifability TARGET, ABILITY_CLEAR_BODY, BattleScript_1D97F0
-	jumpifability TARGET, ABILITY_HYPER_CUTTER, BattleScript_1D97F0
-	jumpifability TARGET, ABILITY_WHITE_SMOKE, BattleScript_1D97F0
-	statbuffchange 33, BattleScript_1D97E4
-	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_1D97E4
+BattleScript_IntimidateActivatesLoop: @ 81D97A1
+	trygetintimidatetarget BattleScript_IntimidateActivatesReturn
+	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_IntimidateActivatesLoopIncrement
+	jumpifability TARGET, ABILITY_CLEAR_BODY, BattleScript_IntimidatePrevented
+	jumpifability TARGET, ABILITY_HYPER_CUTTER, BattleScript_IntimidatePrevented
+	jumpifability TARGET, ABILITY_WHITE_SMOKE, BattleScript_IntimidatePrevented
+	statbuffchange 33, BattleScript_IntimidateActivatesLoopIncrement
+	jumpifbyte GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_IntimidateActivatesLoopIncrement
 	setgraphicalstatchangevalues
 	playanimation TARGET, B_ANIM_STATS_CHANGE, sANIM_ARG1
 	printstring BATTLE_TEXT_CutsAttack
 	waitmessage 64
 
-BattleScript_1D97E4: @ 81D97E4
+BattleScript_IntimidateActivatesLoopIncrement: @ 81D97E4
 	addbyte gBattlerTarget, 1
-	goto BattleScript_1D97A1
+	goto BattleScript_IntimidateActivatesLoop
 
-BattleScript_1D97EF: @ 81D97EF
+BattleScript_IntimidateActivatesReturn: @ 81D97EF
 	return
 
-BattleScript_1D97F0: @ 81D97F0
+BattleScript_IntimidatePrevented: @ 81D97F0
 	pause 32
 	printstring BATTLE_TEXT_PreventedOther
 	waitmessage 64
-	goto BattleScript_1D97E4
+	goto BattleScript_IntimidateActivatesLoopIncrement
 
 BattleScript_DroughtActivates:: @ 81D97FE
 	pause 32
