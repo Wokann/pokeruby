@@ -738,17 +738,17 @@ const union AnimCmd *const gFieldEffectAnimTable_MountainDisguise[] = {
 
 const struct SpriteTemplate gFieldEffectSpriteTemplate_MountainDisguise = {0xFFFF, 0xFFFF, &gFieldOamData_16x32, gFieldEffectAnimTable_MountainDisguise, gFieldEffectPicTable_MountainDisguise, gDummySpriteAffineAnimTable, UpdateDisguiseFieldEffect};
 
-const struct SpriteFrameImage gFieldEffectPicTable_SandDisguise[] = {
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 0),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 1),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 2),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 3),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 4),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 5),
-    overworld_frame(gFieldEffectPic_SandDisguise, 2, 4, 6)
+const struct SpriteFrameImage gFieldEffectPicTable_SandDisguisePlaceholder[] = {
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 0),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 1),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 2),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 3),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 4),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 5),
+    overworld_frame(gFieldEffectPic_SandDisguisePlaceholder, 2, 4, 6)
 };
 
-const struct SpriteTemplate gFieldEffectSpriteTemplate_SandDisguise = {0xFFFF, 0xFFFF, &gFieldOamData_16x32, gFieldEffectAnimTable_TreeDisguise, gFieldEffectPicTable_SandDisguise, gDummySpriteAffineAnimTable, UpdateDisguiseFieldEffect};
+const struct SpriteTemplate gFieldEffectSpriteTemplate_SandDisguisePlaceholder = {0xFFFF, 0xFFFF, &gFieldOamData_16x32, gFieldEffectAnimTable_TreeDisguise, gFieldEffectPicTable_SandDisguisePlaceholder, gDummySpriteAffineAnimTable, UpdateDisguiseFieldEffect};
 
 const struct SpriteFrameImage gFieldEffectPicTable_Bird[] = {
     overworld_frame(gFieldEffectPic_Bird, 4, 4, 0)

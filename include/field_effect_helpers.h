@@ -3,8 +3,8 @@
 
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
 
-void sub_812869C(struct ObjectEvent *);
-bool8 sub_81286C4(struct ObjectEvent *);
+void StartRevealDisguise(struct ObjectEvent *);
+bool8 UpdateRevealDisguise(struct ObjectEvent *);
 void UpdateShadowFieldEffect(struct Sprite *);
 void sub_8087638(struct Sprite *);
 void sub_808788C(struct Sprite *);

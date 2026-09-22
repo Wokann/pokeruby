@@ -535,7 +535,7 @@ $(FIELDEFFGFXDIR)/pop_out_of_ash.4bpp: %.4bpp: %.png
 $(FIELDEFFGFXDIR)/ripple.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 2
 
-$(FIELDEFFGFXDIR)/sand_disguise.4bpp: %.4bpp: %.png
+$(FIELDEFFGFXDIR)/sand_disguise_placeholder.4bpp: %.4bpp: %.png
 	$(GBAGFX) $< $@ -mwidth 2 -mheight 4
 
 $(FIELDEFFGFXDIR)/sand_footprints.4bpp: %.4bpp: %.png

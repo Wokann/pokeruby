@@ -1214,19 +1214,19 @@ u32 FldEff_BerryTreeGrowthSparkle(void)
     return 0;
 }
 
-u32 FldEff_TreeDisguise(void)
+u32 ShowTreeDisguiseFieldEffect(void)
 {
     return ShowDisguiseFieldEffect(FLDEFF_TREE_DISGUISE, 24, 4);
 }
 
 
-u32 FldEff_MountainDisguise(void)
+u32 ShowMountainDisguiseFieldEffect(void)
 {
     return ShowDisguiseFieldEffect(FLDEFF_MOUNTAIN_DISGUISE, 25, 3);
 }
 
 
-u32 FldEff_SandDisguise(void)
+u32 ShowSandDisguiseFieldEffect(void)
 {
     return ShowDisguiseFieldEffect(FLDEFF_SAND_DISGUISE, 28, 2);
 }
@@ -1287,7 +1287,7 @@ void UpdateDisguiseFieldEffect(struct Sprite *sprite)
     }
 }
 
-void sub_812869C(struct ObjectEvent *objectEvent)
+void StartRevealDisguise(struct ObjectEvent *objectEvent)
 {
     if (objectEvent->directionSequenceIndex == 1)
     {
@@ -1295,7 +1295,7 @@ void sub_812869C(struct ObjectEvent *objectEvent)
     }
 }
 
-bool8 sub_81286C4(struct ObjectEvent *objectEvent)
+bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent)
 {
     struct Sprite *sprite;
 

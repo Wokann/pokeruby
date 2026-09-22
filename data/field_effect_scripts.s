@@ -36,13 +36,13 @@ gFieldEffectScriptPointers:: @ 81D9B34
 	.4byte gFieldEffectScript_UseSecretPowerShrub
 	.4byte gFieldEffectScript_TreeDisguise
 	.4byte gFieldEffectScript_MountainDisguise
-	.4byte gFieldEffectScript_NPCFlyOut
+	.4byte gFieldEffectScript_NPCUseFly
 	.4byte gFieldEffectScript_UseFly
 	.4byte gFieldEffectScript_FlyIn
 	.4byte gFieldEffectScript_QuestionMarkIcon
 	.4byte gFieldEffectScript_FeetInFlowingWater
 	.4byte gFieldEffectScript_BikeTireTracks
-	.4byte gFieldEffectScript_SandDisguise
+	.4byte gFieldEffectScript_SandDisguisePlaceholder
 	.4byte gFieldEffectScript_UseRockSmash
 	.4byte gFieldEffectScript_UseDig
 	.4byte gFieldEffectScript_SandPile
@@ -185,14 +185,14 @@ gFieldEffectScript_UseSecretPowerShrub: @ 81D9D1F
 	end
 
 gFieldEffectScript_TreeDisguise: @ 81D9D25
-	callnative FldEff_TreeDisguise
+	callnative ShowTreeDisguiseFieldEffect
 	end
 
 gFieldEffectScript_MountainDisguise: @ 81D9D2B
-	callnative FldEff_MountainDisguise
+	callnative ShowMountainDisguiseFieldEffect
 	end
 
-gFieldEffectScript_NPCFlyOut: @ 81D9D31
+gFieldEffectScript_NPCUseFly: @ 81D9D31
 	callnative FldEff_NPCFlyOut
 	end
 
@@ -216,8 +216,8 @@ gFieldEffectScript_BikeTireTracks: @ 81D9D53
 	loadfadedpal_callnative gFieldEffectObjectPaletteInfo0, FldEff_BikeTireTracks
 	end
 
-gFieldEffectScript_SandDisguise: @ 81D9D5D
-	callnative FldEff_SandDisguise
+gFieldEffectScript_SandDisguisePlaceholder: @ 81D9D5D
+	callnative ShowSandDisguiseFieldEffect
 	end
 
 gFieldEffectScript_UseRockSmash: @ 81D9D63

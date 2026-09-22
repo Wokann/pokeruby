@@ -33,7 +33,7 @@ const struct SpriteTemplate gFieldEffectSpriteTemplate_TreeDisguise;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_MountainDisguise;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_Bird;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_BikeTireTracks;
-const struct SpriteTemplate gFieldEffectSpriteTemplate_SandDisguise;
+const struct SpriteTemplate gFieldEffectSpriteTemplate_SandDisguisePlaceholder;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_SandPile;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_ShortGrass;
 const struct SpriteTemplate gFieldEffectSpriteTemplate_HotSpringsWater;
@@ -71,7 +71,7 @@ const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[] = {
     &gFieldEffectSpriteTemplate_MountainDisguise,
     &gFieldEffectSpriteTemplate_Bird,
     &gFieldEffectSpriteTemplate_BikeTireTracks,
-    &gFieldEffectSpriteTemplate_SandDisguise,
+    &gFieldEffectSpriteTemplate_SandDisguisePlaceholder,
     &gFieldEffectSpriteTemplate_SandPile,
     &gFieldEffectSpriteTemplate_ShortGrass,
     &gFieldEffectSpriteTemplate_HotSpringsWater,
