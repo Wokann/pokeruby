@@ -640,9 +640,9 @@ AI_CheckForBadMove:
 	if_effect_eq CONTEST_EFFECT_BADLY_STARTLES_MONS_IN_GOOD_CONDITION, AI_CBM_DependsOnPrevMons
 	if_effect_eq CONTEST_EFFECT_WORSEN_CONDITION_OF_PREV_MONS, AI_CBM_DependsOnPrevMons
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_CBM_DependsOnPrevMons
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, ContestEffect2_25
-	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, ContestEffect2_26
-	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, ContestEffect2_26
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MON_NERVOUS, AI_CBM_DependsOnNextMon
+	if_effect_eq CONTEST_EFFECT_MAKE_FOLLOWING_MONS_NERVOUS, AI_CBM_DependsOnNextMons
+	if_effect_eq CONTEST_EFFECT_DONT_EXCITE_AUDIENCE, AI_CBM_DependsOnNextMons
 	if_effect_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestEffect2_38
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE_ONCE, ContestEffect2_4
 	if_effect_eq CONTEST_EFFECT_AVOID_STARTLE, ContestEffect2_4
@@ -697,43 +697,43 @@ AI_CBM_DependsOnPrevMons_Last:
 	score -15
 	end
 
-ContestEffect2_25:
-	if_user_order_eq MON_1, ContestEffect2_25_score1
-	if_user_order_eq MON_2, ContestEffect2_25_score2
-	if_user_order_eq MON_3, ContestEffect2_25_score3
+AI_CBM_DependsOnNextMon:
+	if_user_order_eq MON_1, AI_CBM_DependsOnNextMon_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnNextMon_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnNextMon_3rdUp
 	score -10
 	end
-ContestEffect2_25_score1:
+AI_CBM_DependsOnNextMon_1stUp:
 	if_can_participate MON_2, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_25_score2:
+AI_CBM_DependsOnNextMon_2ndUp:
 	if_can_participate MON_3, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_25_score3:
+AI_CBM_DependsOnNextMon_3rdUp:
 	if_can_participate MON_4, ContestEffectEnd2
 	score -10
 	end
 
-ContestEffect2_26:
-	if_user_order_eq MON_1, ContestEffect2_26_score1
-	if_user_order_eq MON_2, ContestEffect2_26_score2
-	if_user_order_eq MON_3, ContestEffect2_26_score3
+AI_CBM_DependsOnNextMons:
+	if_user_order_eq MON_1, AI_CBM_DependsOnNextMons_1stUp
+	if_user_order_eq MON_2, AI_CBM_DependsOnNextMons_2ndUp
+	if_user_order_eq MON_3, AI_CBM_DependsOnNextMons_3rdUp
 	score -10
 	end
-ContestEffect2_26_score1:
+AI_CBM_DependsOnNextMons_1stUp:
 	if_can_participate MON_2, ContestEffectEnd2
 	if_can_participate MON_3, ContestEffectEnd2
 	if_can_participate MON_4, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_26_score2:
+AI_CBM_DependsOnNextMons_2ndUp:
 	if_can_participate MON_3, ContestEffectEnd2
 	if_can_participate MON_4, ContestEffectEnd2
 	score -10
 	end
-ContestEffect2_26_score3:
+AI_CBM_DependsOnNextMons_3rdUp:
 	if_can_participate MON_4, ContestEffectEnd2
 	score -10
 	end
