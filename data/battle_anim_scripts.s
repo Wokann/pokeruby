@@ -10304,10 +10304,10 @@ StatusCondition_Nightmare: @ 81D638F
 	end
 
 General_CastformChange: @ 81D63B4
-	createvisualtask c3_80DFBE4, 2
-	jumpargeq 7, 1, _81D63E0
-	goto _81D63C8
-_81D63C8:
+	createvisualtask AnimTask_IsMonInvisible, 2
+	jumpargeq ARG_RET_ID, TRUE, CastformChangeSkipAnim
+	goto CastformChangeContinue
+CastformChangeContinue:
 	monbg ANIM_BATTLER_ATTACKER
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
@@ -10315,8 +10315,8 @@ _81D63C8:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	end
-_81D63E0:
-	createvisualtask sub_812DB58, 2, 1
+CastformChangeSkipAnim:
+	createvisualtask AnimTask_CastformGfxDataChange, 2, 1
 	end
 
 General_StatsChange: @ 81D63EA
