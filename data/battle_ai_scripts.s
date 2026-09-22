@@ -369,222 +369,221 @@ AI_CBM_HighRiskForDamage_End: @ 81DA5F3
 	end
 
 AI_CBM_Mist: @ 81DA5F4
-	if_status4 USER, S_MIST, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_MIST, Score_Minus8
 	end
 
 AI_CBM_FocusEnergy: @ 81DA5FF
-	if_status2 USER, S_FOCUS_ENERGY, Score_Minus10
+	if_status2 AI_USER, STATUS2_FOCUS_ENERGY, Score_Minus10
 	end
 
 AI_CBM_Confuse: @ 81DA60A
-	if_status2 TARGET, S_CONFUSED, Score_Minus5
-	get_ability TARGET
+	if_status2 AI_TARGET, STATUS2_CONFUSION, Score_Minus5
+	get_ability AI_TARGET
 	if_equal ABILITY_OWN_TEMPO, Score_Minus10
 	end
 
 AI_CBM_Reflect: @ 81DA61D
-	if_status4 USER, S_REFLECT, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_REFLECT, Score_Minus8
 	end
 
 AI_CBM_Paralyze: @ 81DA628
-	if_damage_bonus 0, Score_Minus10
-	get_ability TARGET
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_LIMBER, Score_Minus10
-	if_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_Substitute: @ 81DA641
-	if_status2 USER, S_SUBSTITUTE, Score_Minus8
-	if_hp_less_than USER, 26, Score_Minus10
+	if_status2 AI_USER, STATUS2_SUBSTITUTE, Score_Minus8
+	if_hp_less_than AI_USER, 26, Score_Minus10
 	end
 
 AI_CBM_LeechSeed: @ 81DA653
-	if_status3 TARGET, S_LEECH_SEED, Score_Minus10
-	get_type ENEMY_TYPE1
+	if_status3 AI_TARGET, STATUS3_LEECHSEED, Score_Minus10
+	get_target_type1
 	if_equal TYPE_GRASS, Score_Minus10
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_equal TYPE_GRASS, Score_Minus10
 	end
 
 AI_CBM_Disable: @ 81DA66E
-	if_last_move_did_damage TARGET, 0, Score_Minus8
+	if_any_move_disabled AI_TARGET, Score_Minus8
 	end
 
 AI_CBM_Encore: @ 81DA676
-	if_last_move_did_damage TARGET, 1, Score_Minus8
+	if_any_move_encored AI_TARGET, Score_Minus8
 	end
 
 AI_CBM_DamageDuringSleep: @ 81DA67E
-	if_not_status USER, SLP, Score_Minus8
+	if_not_status AI_USER, STATUS1_SLEEP, Score_Minus8
 	end
 
 AI_CBM_CantEscape: @ 81DA689
-	if_status2 TARGET, S_MEAN_LOOK, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_ESCAPE_PREVENTION, Score_Minus10
 	end
 
 AI_CBM_Curse: @ 81DA694
-	if_stat_level_equal USER, ATTACK, 12, Score_Minus10
-	if_stat_level_equal USER, DEFENSE, 12, Score_Minus8
+	if_stat_level_equal AI_USER, STAT_ATK, MAX_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_DEF, MAX_STAT_STAGE, Score_Minus8
 	end
 
 AI_CBM_Spikes: @ 81DA6A5
-	if_status4 TARGET, S_SPIKES, Score_Minus10
+	if_side_affecting AI_TARGET, SIDE_STATUS_SPIKES, Score_Minus10
 	end
 
 AI_CBM_Foresight: @ 81DA6B0
-	if_status2 TARGET, S_FORESIGHT, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_FORESIGHT, Score_Minus10
 	end
 
 AI_CBM_PerishSong: @ 81DA6BB
-	if_status3 TARGET, S_PERISH_SONG, Score_Minus10
+	if_status3 AI_TARGET, STATUS3_PERISH_SONG, Score_Minus10
 	end
 
 AI_CBM_Sandstorm: @ 81DA6C6
 	get_weather
-	if_equal BATTLE_WEATHER_SANDSTORM, Score_Minus8
+	if_equal AI_WEATHER_SANDSTORM, Score_Minus8
 	end
 
 AI_CBM_Attract: @ 81DA6CE
-	if_status2 TARGET, S_INFATUATED, Score_Minus10
-	get_ability TARGET
+	if_status2 AI_TARGET, STATUS2_INFATUATION, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_OBLIVIOUS, Score_Minus10
-	get_gender USER
-	if_equal 0, AI_CBM_Attract_CheckIfTargetIsFemale
-	if_equal 254, AI_CBM_Attract_CheckIfTargetIsMale
-	jump Score_Minus10
+	get_gender AI_USER
+	if_equal MON_MALE, AI_CBM_Attract_CheckIfTargetIsFemale
+	if_equal MON_FEMALE, AI_CBM_Attract_CheckIfTargetIsMale
+	goto Score_Minus10
 
 AI_CBM_Attract_CheckIfTargetIsFemale: @ 81DA6F3
-	get_gender TARGET
-	if_equal 254, AI_CBM_Attract_End
-	jump Score_Minus10
+	get_gender AI_TARGET
+	if_equal MON_FEMALE, AI_CBM_Attract_End
+	goto Score_Minus10
 
 AI_CBM_Attract_CheckIfTargetIsMale: @ 81DA700
-	get_gender TARGET
-	if_equal 0, AI_CBM_Attract_End
-	jump Score_Minus10
+	get_gender AI_TARGET
+	if_equal MON_MALE, AI_CBM_Attract_End
+	goto Score_Minus10
 
 AI_CBM_Attract_End: @ 81DA70D
 	end
 
 AI_CBM_Safeguard: @ 81DA70E
-	if_status4 USER, S_SAFEGUARD, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_SAFEGUARD, Score_Minus8
 	end
 
 AI_CBM_Memento: @ 81DA719
-	if_stat_level_equal TARGET, ATTACK, 0, Score_Minus10
-	if_stat_level_equal TARGET, SP_ATTACK, 0, Score_Minus8
+	if_stat_level_equal AI_TARGET, STAT_ATK, MIN_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_TARGET, STAT_SPATK, MIN_STAT_STAGE, Score_Minus8
 
 AI_CBM_BatonPass: @ 81DA729
-	count_alive_pokemon USER
+	count_usable_party_mons AI_USER
 	if_equal 0, Score_Minus10
 	end
 
 AI_CBM_RainDance: @ 81DA732
 	get_weather
-	if_equal BATTLE_WEATHER_RAIN, Score_Minus8
+	if_equal AI_WEATHER_RAIN, Score_Minus8
 	end
 
 AI_CBM_SunnyDay: @ 81DA73A
 	get_weather
-	if_equal BATTLE_WEATHER_SUN, Score_Minus8
+	if_equal AI_WEATHER_SUN, Score_Minus8
 	end
 
 AI_CBM_FutureSight: @ 81DA742
-	if_status4 TARGET, S_FUTURE_SIGHT, Score_Minus10
+	if_side_affecting AI_TARGET, SIDE_STATUS_FUTUREATTACK, Score_Minus10
 	end
 
 AI_CBM_FakeOut: @ 81DA74D
-	is_first_turn USER
+	is_first_turn_for AI_USER
 	if_equal 0, Score_Minus10
 	end
 
 AI_CBM_Stockpile: @ 81DA756
-	get_stockpile_count USER
+	get_stockpile_count AI_USER
 	if_equal 3, Score_Minus10
 	end
 
 AI_CBM_SpitUpAndSwallow: @ 81DA75F
-	if_damage_bonus 0, Score_Minus10
-	get_stockpile_count USER
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_stockpile_count AI_USER
 	if_equal 0, Score_Minus10
 	end
 
 AI_CBM_Hail: @ 81DA76E
 	get_weather
-	if_equal BATTLE_WEATHER_HAIL, Score_Minus8
+	if_equal AI_WEATHER_HAIL, Score_Minus8
 	end
 
 AI_CBM_Torment: @ 81DA776
-	if_status2 TARGET, S_TORMENT, Score_Minus10
+	if_status2 AI_TARGET, STATUS2_TORMENT, Score_Minus10
 	end
 
 AI_CBM_WillOWisp: @ 81DA781
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_WATER_VEIL, Score_Minus10
-	if_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
-	if_damage_bonus 0, Score_Minus10
-	if_damage_bonus 20, Score_Minus10
-	if_damage_bonus 10, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	if_type_effectiveness AI_EFFECTIVENESS_x0_5, Score_Minus10
+	if_type_effectiveness AI_EFFECTIVENESS_x0_25, Score_Minus10
 	end
 
 AI_CBM_HelpingHand: @ 81DA7A6
-	is_double_battle
-	if_equal 0, Score_Minus10
+	if_not_double_battle Score_Minus10
 	end
 
 AI_CBM_TrickAndKnockOff: @ 81DA7AE
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_STICKY_HOLD, Score_Minus10
 	end
 
 AI_CBM_Ingrain: @ 81DA7B7
-	if_status3 USER, S_ROOTED, Score_Minus10
+	if_status3 AI_USER, STATUS3_ROOTED, Score_Minus10
 	end
 
 AI_CBM_Recycle: @ 81DA7C2
-	get_item USER
+	get_used_held_item AI_USER
 	if_equal ITEM_NONE, Score_Minus10
 	end
 
 AI_CBM_Imprison: @ 81DA7CB
-	if_status3 USER, S_IMPRISONED, Score_Minus10
+	if_status3 AI_USER, STATUS3_IMPRISONED_OTHERS, Score_Minus10
 	end
 
 AI_CBM_Refresh: @ 81DA7D6
-	if_not_status USER, PSN | BRN | PAR | TOX, Score_Minus10
+	if_not_status AI_USER, STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, Score_Minus10
 	end
 
 AI_CBM_MudSport: @ 81DA7E1
-	if_status3 USER, S_MUD_SPORT, Score_Minus10
+	if_status3 AI_USER, STATUS3_MUDSPORT, Score_Minus10
 	end
 
 AI_CBM_Tickle: @ 81DA7EC
-	if_stat_level_equal TARGET, ATTACK, 0, Score_Minus10
-	if_stat_level_equal TARGET, DEFENSE, 0, Score_Minus8
+	if_stat_level_equal AI_TARGET, STAT_ATK, MIN_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_TARGET, STAT_DEF, MIN_STAT_STAGE, Score_Minus8
 	end
 
 AI_CBM_CosmicPower: @ 81DA7FD
-	if_stat_level_equal USER, DEFENSE, 12, Score_Minus10
-	if_stat_level_equal USER, SP_DEFENSE, 12, Score_Minus8
+	if_stat_level_equal AI_USER, STAT_DEF, MAX_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPDEF, MAX_STAT_STAGE, Score_Minus8
 	end
 
 AI_CBM_BulkUp: @ 81DA80E
-	if_stat_level_equal USER, ATTACK, 12, Score_Minus10
-	if_stat_level_equal USER, DEFENSE, 12, Score_Minus8
+	if_stat_level_equal AI_USER, STAT_ATK, MAX_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_DEF, MAX_STAT_STAGE, Score_Minus8
 	end
 
 AI_CBM_WaterSport: @ 81DA81F
-	if_status3 USER, S_WATER_SPORT, Score_Minus10
+	if_status3 AI_USER, STATUS3_WATERSPORT, Score_Minus10
 	end
 
 AI_CBM_CalmMind: @ 81DA82A
-	if_stat_level_equal USER, SP_ATTACK, 12, Score_Minus10
-	if_stat_level_equal USER, SP_DEFENSE, 12, Score_Minus8
+	if_stat_level_equal AI_USER, STAT_SPATK, MAX_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPDEF, MAX_STAT_STAGE, Score_Minus8
 	end
 
 AI_CBM_DragonDance: @ 81DA83B
-	if_stat_level_equal USER, ATTACK, 12, Score_Minus10
-	if_stat_level_equal USER, SPEED, 12, Score_Minus8
+	if_stat_level_equal AI_USER, STAT_ATK, MAX_STAT_STAGE, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPEED, MAX_STAT_STAGE, Score_Minus8
 	end
 
 Score_Minus1: @ 81DA84C

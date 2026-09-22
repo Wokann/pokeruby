@@ -67,6 +67,12 @@
 .equiv BATTLE_WEATHER_SANDSTORM, 2
 .equiv BATTLE_WEATHER_HAIL, 3
 
+@ battle AI weather results
+.equiv AI_WEATHER_SUN,       BATTLE_WEATHER_SUN
+.equiv AI_WEATHER_RAIN,      BATTLE_WEATHER_RAIN
+.equiv AI_WEATHER_SANDSTORM, BATTLE_WEATHER_SANDSTORM
+.equiv AI_WEATHER_HAIL,      BATTLE_WEATHER_HAIL
+
 
 @ Battle animation shake types. Keep in sync with include/constants/battle_anim.h.
 	enum_start

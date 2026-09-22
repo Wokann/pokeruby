@@ -227,6 +227,14 @@
 	.byte AI_TYPE_MOVE
 	.endm
 
+	.macro get_target_type1
+	get_type AI_TYPE1_TARGET
+	.endm
+
+	.macro get_target_type2
+	get_type AI_TYPE2_TARGET
+	.endm
+
 	@ unused
 	.macro get_move_power
 	.byte 0x23
@@ -440,6 +448,21 @@
 	.4byte \address
 	.endm
 
+	.macro if_any_move_disabled_or_encored battler, state, address
+	.byte 0x43
+	.byte \battler
+	.byte \state
+	.4byte \address
+	.endm
+
+	.macro if_any_move_disabled battler, address
+	if_any_move_disabled_or_encored \battler, 0, \address
+	.endm
+
+	.macro if_any_move_encored battler, address
+	if_any_move_disabled_or_encored \battler, 1, \address
+	.endm
+
 	.macro if_last_move_did_damage target, byte, address
 	.byte 0x43
 	.byte \target
@@ -481,6 +504,11 @@
 	.byte \target
 	.endm
 
+	.macro is_first_turn_for battler
+	.byte 0x4a
+	.byte \battler
+	.endm
+
 	.macro get_stockpile_count target
 	.byte 0x4b
 	.byte \target
@@ -490,9 +518,19 @@
 	.byte 0x4c
 	.endm
 
+	.macro if_not_double_battle address
+	is_double_battle
+	if_equal 0, \address
+	.endm
+
 	.macro get_item target
 	.byte 0x4d
 	.byte \target
+	.endm
+
+	.macro get_used_held_item battler
+	.byte 0x4d
+	.byte \battler
 	.endm
 
 	.macro get_move_type_from_result
