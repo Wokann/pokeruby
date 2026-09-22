@@ -3664,20 +3664,20 @@ BattleScript_AtkDefDown:: @ 81D93FA
 	playstatchangeanimation USER, 6, 13
 	playstatchangeanimation USER, 2, 9
 	setstatchanger ATTACK, 1, TRUE
-	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_1D9427
-	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_1D9427
+	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_AtkDefDown_TryDef
+	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_AtkDefDown_TryDef
 	printfromtable gStatDownStringIds
 	waitmessage 64
 
-BattleScript_1D9427: @ 81D9427
+BattleScript_AtkDefDown_TryDef: @ 81D9427
 	playstatchangeanimation USER, 4, 9
 	setstatchanger DEFENSE, 1, TRUE
-	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_1D944A
-	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_1D944A
+	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_AtkDefDown_End
+	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_AtkDefDown_End
 	printfromtable gStatDownStringIds
 	waitmessage 64
 
-BattleScript_1D944A: @ 81D944A
+BattleScript_AtkDefDown_End: @ 81D944A
 	return
 
 BattleScript_KnockedOff:: @ 81D944B
@@ -3735,12 +3735,12 @@ BattleScript_SAtkDown2:: @ 81D94B0
 	setbyte sFIELD_1B, 0
 	playstatchangeanimation USER, 16, 11
 	setstatchanger SP_ATTACK, 2, TRUE
-	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_1D94D9
-	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_1D94D9
+	statbuffchange AFFECTS_USER | CERTAIN | 0x1, BattleScript_SAtkDown2End
+	jumpifbyte EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_SAtkDown2End
 	printfromtable gStatDownStringIds
 	waitmessage 64
 
-BattleScript_1D94D9: @ 81D94D9
+BattleScript_SAtkDown2End: @ 81D94D9
 	return
 
 BattleScript_FocusPunchSetUp:: @ 81D94DA
