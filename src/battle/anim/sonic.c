@@ -43,7 +43,7 @@ const struct SpriteTemplate gAirWaveProjectileSpriteTemplate =
     .callback = AnimAirWaveProjectile,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D74D4[] =
+const union AffineAnimCmd gGrowingRingAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 0),
     AFFINEANIMCMD_FRAME(0x7, 0x7, 0, -56),
@@ -62,9 +62,9 @@ const union AffineAnimCmd gSpriteAffineAnim_83D74EC[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D752C[] =
+const union AffineAnimCmd *const gGrowingRingAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D74D4,
+    gGrowingRingAffineAnimCmds,
 };
 
 const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7530[] =
@@ -72,36 +72,36 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83D7530[] =
     gSpriteAffineAnim_83D74EC,
 };
 
-const struct SpriteTemplate gSupersonicWaveSpriteTemplate =
+const struct SpriteTemplate gSupersonicRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
     .oam = &gOamData_837E034,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gScreechWaveSpriteTemplate =
+const struct SpriteTemplate gScreechRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_RING,
     .paletteTag = ANIM_TAG_PURPLE_RING,
     .oam = &gOamData_837E034,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7564 =
+const struct SpriteTemplate gMetalSoundSpriteTemplate =
 {
     .tileTag = ANIM_TAG_METAL_SOUND_WAVES,
     .paletteTag = ANIM_TAG_METAL_SOUND_WAVES,
     .oam = &gOamData_837E03C,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 

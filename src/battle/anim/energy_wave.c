@@ -8,7 +8,7 @@
 extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83D752C[];
+extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 
 void AnimToTargetInSinWave(struct Sprite *sprite);
 void sub_80D3698(struct Sprite *sprite);
@@ -110,7 +110,7 @@ const struct SpriteTemplate gPsywaveRingSpriteTemplate =
     .oam = &gOamData_837E034,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D752C,
+    .affineAnims = gGrowingRingAffineAnimTable,
     .callback = AnimToTargetInSinWave,
 };
 

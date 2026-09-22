@@ -645,7 +645,7 @@ Move_SUPERSONIC: @ 81C7DBD
 	end
 Move_SUPERSONIC_CreateWaveSprite:
 	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_ATTACKER
-	createsprite gSupersonicWaveSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
+	createsprite gSupersonicRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
 	delay 2
 	return
 
@@ -660,7 +660,7 @@ Move_SCREECH: @ 81C7E15
 	end
 Move_SCREECH_CreateWaveSprite:
 	playsewithpan SE_M_SCREECH, SOUND_PAN_ATTACKER
-	createsprite gScreechWaveSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
+	createsprite gScreechRingSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
 	delay 2
 	return
 
@@ -8826,18 +8826,18 @@ Move_METAL_SOUND: @ 81D3E1F
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio_foes ANIM_BATTLER_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1
-	call _81D3E52
-	call _81D3E52
-	call _81D3E52
-	call _81D3E52
+	call MetalSoundRings
+	call MetalSoundRings
+	call MetalSoundRings
+	call MetalSoundRings
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	delay 0
 	waitforvisualfinish
 	end
-_81D3E52:
-	panse SE_M_SCREECH, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
-	createsprite gBattleAnimSpriteTemplate_83D7564, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
+MetalSoundRings:
+	panse SE_M_SCREECH, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createsprite gMetalSoundSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
 	delay 2
 	return
 
