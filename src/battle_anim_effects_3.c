@@ -67,9 +67,9 @@ static void TormentAttacker_Step(u8 taskId);
 static void sub_812D254(struct Sprite *sprite);
 static void AnimWishStar_Step(struct Sprite *sprite);
 static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
-static void sub_812DFEC(struct Sprite *sprite);
-static void sub_812E09C(struct Sprite *sprite);
-static void sub_812E0F8(struct Sprite *sprite);
+static void AnimGreenStar_Step1(struct Sprite *sprite);
+static void AnimGreenStar_Step2(struct Sprite *sprite);
+static void AnimGreenStar_Callback(struct Sprite *sprite);
 static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 static void sub_812E7F0(struct Sprite *sprite);
 static void sub_812E8B4(u8 taskId);
@@ -114,7 +114,7 @@ static void AnimTriAttackTriangle(struct Sprite *sprite);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
 static void AnimWishStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar(struct Sprite *sprite);
-static void sub_812DEAC(struct Sprite *sprite);
+static void AnimGreenStar(struct Sprite *sprite);
 static void AnimSwallowBlueOrb(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void sub_812E7A0(struct Sprite *sprite);
@@ -609,7 +609,7 @@ const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[] =
     AFFINEANIMCMD_END,
 };
 
-const s8 gUnknown_084025C0[] =
+const s8 gMorningSunLightBeamCoordsTable[] =
 {
     0xE8, 
     0x18, 
@@ -617,41 +617,41 @@ const s8 gUnknown_084025C0[] =
     0x00,
 };
 
-const union AnimCmd gSpriteAnim_84025C4[] =
+const union AnimCmd gGreenStarAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(4, 6),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_84025D0[] =
+const union AnimCmd gGreenStarAnimCmds2[] =
 {
     ANIMCMD_FRAME(8, 6),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_84025D8[] =
+const union AnimCmd gGreenStarAnimCmds3[] =
 {
     ANIMCMD_FRAME(12, 6),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_84025E0[] =
+const union AnimCmd *const gGreenStarAnimTable[] =
 {
-    gSpriteAnim_84025C4,
-    gSpriteAnim_84025D0,
-    gSpriteAnim_84025D8,
+    gGreenStarAnimCmds1,
+    gGreenStarAnimCmds2,
+    gGreenStarAnimCmds3,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84025EC =
+const struct SpriteTemplate gGreenStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GREEN_STAR,
     .paletteTag = ANIM_TAG_GREEN_STAR,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_84025E0,
+    .anims = gGreenStarAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812DEAC,
+    .callback = AnimGreenStar,
 };
 
 const s8 gUnknown_08402604[] =
@@ -2381,7 +2381,7 @@ void sub_812DB58(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_812DB84(u8 taskId)
+void AnimTask_MorningSunLightBeam(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
@@ -2444,7 +2444,7 @@ void sub_812DB84(u8 taskId)
 
         if (gTasks[taskId].data[1] == 0)
         {
-            gBattle_BG1_X = gUnknown_084025C0[gTasks[taskId].data[2]] + gTasks[taskId].data[10];
+            gBattle_BG1_X = gMorningSunLightBeamCoordsTable[gTasks[taskId].data[2]] + gTasks[taskId].data[10];
             if (++gTasks[taskId].data[2] == 4)
                 gTasks[taskId].data[0] = 4;
             else
@@ -2477,24 +2477,24 @@ void sub_812DB84(u8 taskId)
     }
 }
 
-static void sub_812DEAC(struct Sprite *sprite)
+static void AnimGreenStar(struct Sprite *sprite)
 {
-    s16 var0;
+    s16 xOffset;
     u8 spriteId1;
     u8 spriteId2;
 
-    var0 = Random();
-    var0 &= 0x3F;
-    if (var0 > 31)
-        var0 = 32 - var0;
+    xOffset = Random();
+    xOffset &= 0x3F;
+    if (xOffset > 31)
+        xOffset = 32 - xOffset;
     
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + var0;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + xOffset;
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + 32;
     sprite->data[1] = gBattleAnimArgs[0];
     sprite->data[2] = gBattleAnimArgs[1];
 
-    spriteId1 = CreateSprite(&gBattleAnimSpriteTemplate_84025EC, sprite->x, sprite->y, sprite->subpriority + 1);
-    spriteId2 = CreateSprite(&gBattleAnimSpriteTemplate_84025EC, sprite->x, sprite->y, sprite->subpriority + 1);
+    spriteId1 = CreateSprite(&gGreenStarSpriteTemplate, sprite->x, sprite->y, sprite->subpriority + 1);
+    spriteId2 = CreateSprite(&gGreenStarSpriteTemplate, sprite->x, sprite->y, sprite->subpriority + 1);
     StartSpriteAnim(&gSprites[spriteId1], 1);
     StartSpriteAnim(&gSprites[spriteId2], 2);
 
@@ -2506,23 +2506,23 @@ static void sub_812DEAC(struct Sprite *sprite)
     gSprites[spriteId2].data[7] = -1;
     gSprites[spriteId1].invisible = TRUE;
     gSprites[spriteId2].invisible = TRUE;
-    gSprites[spriteId1].callback = sub_812E0F8;
-    gSprites[spriteId2].callback = sub_812E0F8;
+    gSprites[spriteId1].callback = AnimGreenStar_Callback;
+    gSprites[spriteId2].callback = AnimGreenStar_Callback;
 
     sprite->data[6] = spriteId1;
     sprite->data[7] = spriteId2;
-    sprite->callback = sub_812DFEC;
+    sprite->callback = AnimGreenStar_Step1;
 }
 
-static void sub_812DFEC(struct Sprite *sprite)
+static void AnimGreenStar_Step1(struct Sprite *sprite)
 {
-    int var0;
-    s8 var1;
+    int delta;
+    s8 deltaY;
     
-    var0 = (u16)sprite->data[2] + (u16)sprite->data[3];
-    var1 = var0 >> 8;
-    sprite->y2 -= var1;
-    sprite->data[3] = var0 & 0xFF;
+    delta = (u16)sprite->data[2] + (u16)sprite->data[3];
+    deltaY = delta >> 8;
+    sprite->y2 -= deltaY;
+    sprite->data[3] = delta & 0xFF;
     if (sprite->data[4] == 0 && sprite->y2 < -8)
     {
         gSprites[sprite->data[6]].invisible = FALSE;
@@ -2538,11 +2538,11 @@ static void sub_812DFEC(struct Sprite *sprite)
     if (--sprite->data[1] == -1)
     {
         sprite->invisible = TRUE;
-        sprite->callback = sub_812E09C;
+        sprite->callback = AnimGreenStar_Step2;
     }
 }
 
-static void sub_812E09C(struct Sprite *sprite)
+static void AnimGreenStar_Step2(struct Sprite *sprite)
 {
     if (gSprites[sprite->data[6]].callback == SpriteCallbackDummy
      && gSprites[sprite->data[7]].callback == SpriteCallbackDummy)
@@ -2553,7 +2553,7 @@ static void sub_812E09C(struct Sprite *sprite)
     }
 }
 
-static void sub_812E0F8(struct Sprite *sprite)
+static void AnimGreenStar_Callback(struct Sprite *sprite)
 {
     if (sprite->invisible)
         return;

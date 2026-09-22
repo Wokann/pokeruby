@@ -8264,32 +8264,32 @@ Move_TRANSFORM: @ 81D3054
 Move_MORNING_SUN: @ 81D306C
 	loadspritegfx ANIM_TAG_GREEN_STAR
 	loadspritegfx ANIM_TAG_BLUE_STAR
-	createvisualtask sub_812DB84, 5
+	createvisualtask AnimTask_MorningSunLightBeam, 5
 	delay 8
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 8, 0, 12, 32767
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 8, 0, 12, RGB_WHITE
 	delay 14
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	call _81D30F2
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 1921, 3, 12, 0, 32767
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	call MorningSunStar
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG | F_PAL_BATTLERS_2, 3, 12, 0, RGB_WHITE
 	waitforvisualfinish
 	waitsound
 	call HealingEffect
 	end
-_81D30F2:
-	createsprite gBattleAnimSpriteTemplate_84025EC, ANIM_BATTLER_ATTACKER, 2, 30, 640
+MorningSunStar:
+	createsprite gGreenStarSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 30, 640
 	delay 5
 	return
 
