@@ -71,9 +71,9 @@ static void DestroyBallOpenAnimationParticle(struct Sprite *sprite);
 static void FanOutBallOpenParticles_Step1(struct Sprite *sprite);
 static void RepeatBallOpenParticleAnimation_Step1(struct Sprite *sprite);
 static void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite);
-static void sub_81413DC(u8 taskId);
-static void sub_814146C(u8 taskId);
-static void sub_81414BC(u8 taskId);
+static void Task_FadeMon_ToBallColor(u8 taskId);
+static void Task_FadeMon_ToNormal(u8 taskId);
+static void Task_FadeMon_ToNormal_Step(u8 taskId);
 static void sub_814191C(u8 taskId);
 static void sub_8141B20(struct Sprite *sprite);
 static void sub_8141B74(struct Sprite *sprite);
@@ -325,7 +325,7 @@ const struct SpriteTemplate gSpriteTemplates_840B3B4[] =
     },
 };
 
-const u16 gUnknown_0840B4D4[] =
+const u16 gBallOpenFadeColors[] =
 {
     0x7ADF,
     0x7AF0,
@@ -562,7 +562,7 @@ static void AnimTask_FlashHealthboxOnLevelUp_Step(u8 taskId)
     }
 }
 
-void sub_813F798(u8 taskId)
+void AnimTask_SwitchOutShrinkMon(u8 taskId)
 {
     u8 spriteId;
 
@@ -589,7 +589,7 @@ void sub_813F798(u8 taskId)
     }
 }
 
-void sub_813F844(u8 taskId)
+void AnimTask_SwitchOutBallEffect(u8 taskId)
 {
     u8 spriteId;
     u16 ball;
@@ -614,7 +614,7 @@ void sub_813F844(u8 taskId)
         subpriority = gSprites[spriteId].subpriority;
         gTasks[taskId].data[10] = AnimateBallOpenParticles(x, y + 32, priority, subpriority, ballIndex);
         selectedPalettes = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE);
-        gTasks[taskId].data[11] = sub_8141314(0, gBattleAnimAttacker, selectedPalettes, ballIndex);
+        gTasks[taskId].data[11] = LaunchBallFadeMonTask(FALSE, gBattleAnimAttacker, selectedPalettes, ballIndex);
         gTasks[taskId].data[0]++;
         break;
     case 1:
@@ -801,7 +801,7 @@ static void sub_813FDC0(struct Sprite *sprite)
                 return;
 
             AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballIndex);
-            sub_8141314(0, gBattleAnimTarget, 14, ballIndex);
+            LaunchBallFadeMonTask(FALSE, gBattleAnimTarget, 14, ballIndex);
         }
     }
 }
@@ -1221,7 +1221,7 @@ static void sub_81405F4(struct Sprite *sprite)
         goto LABEL;
 
     AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballIndex);
-    sub_8141314(1, gBattleAnimTarget, 14, ballIndex);
+    LaunchBallFadeMonTask(TRUE, gBattleAnimTarget, 14, ballIndex);
 
     LABEL:
     gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = FALSE;
@@ -1675,40 +1675,40 @@ static void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-u8 sub_8141314(u8 arg0, u8 battler, u32 selectedPalettes, u8 ballIndex)
+u8 LaunchBallFadeMonTask(u8 unfadeLater, u8 spritePalNum, u32 selectedPalettes, u8 ballId)
 {
     u8 taskId;
 
-    taskId = CreateTask(sub_81413DC, 5);
-    gTasks[taskId].data[15] = ballIndex;
-    gTasks[taskId].data[3] = battler;
+    taskId = CreateTask(Task_FadeMon_ToBallColor, 5);
+    gTasks[taskId].data[15] = ballId;
+    gTasks[taskId].data[3] = spritePalNum;
     gTasks[taskId].data[10] = selectedPalettes;
     gTasks[taskId].data[11] = selectedPalettes >> 16;
 
-    if (!arg0)
+    if (!unfadeLater)
     {
-        BlendPalette(battler * 16 + 0x100, 16, 0, gUnknown_0840B4D4[ballIndex]);
+        BlendPalette(spritePalNum * 16 + 0x100, 16, 0, gBallOpenFadeColors[ballId]);
         gTasks[taskId].data[1] = 1;
     }
     else
     {
-        BlendPalette(battler * 16 + 0x100, 16, 16, gUnknown_0840B4D4[ballIndex]);
+        BlendPalette(spritePalNum * 16 + 0x100, 16, 16, gBallOpenFadeColors[ballId]);
         gTasks[taskId].data[0] = 16;
         gTasks[taskId].data[1] = -1;
-        gTasks[taskId].func = sub_814146C;
+        gTasks[taskId].func = Task_FadeMon_ToNormal;
     }
 
     BeginNormalPaletteFade(selectedPalettes, 0, 0, 16, RGB(31, 31, 31));
     return taskId;
 }
 
-static void sub_81413DC(u8 taskId)
+static void Task_FadeMon_ToBallColor(u8 taskId)
 {
     u8 ballIndex = gTasks[taskId].data[15];
 
     if (gTasks[taskId].data[2] <= 16)
     {
-        BlendPalette(gTasks[taskId].data[3] * 16 + 0x100, 16, gTasks[taskId].data[0], gUnknown_0840B4D4[ballIndex]);
+        BlendPalette(gTasks[taskId].data[3] * 16 + 0x100, 16, gTasks[taskId].data[0], gBallOpenFadeColors[ballIndex]);
         gTasks[taskId].data[0] += gTasks[taskId].data[1];
         gTasks[taskId].data[2]++;
     }
@@ -1720,23 +1720,23 @@ static void sub_81413DC(u8 taskId)
     }
 }
 
-static void sub_814146C(u8 taskId)
+static void Task_FadeMon_ToNormal(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         u32 selectedPalettes = (u16)gTasks[taskId].data[10] | ((u16)gTasks[taskId].data[11] << 16);
         BeginNormalPaletteFade(selectedPalettes, 0, 16, 0, RGB(31, 31, 31));
-        gTasks[taskId].func = sub_81414BC;
+        gTasks[taskId].func = Task_FadeMon_ToNormal_Step;
     }
 }
 
-static void sub_81414BC(u8 taskId)
+static void Task_FadeMon_ToNormal_Step(u8 taskId)
 {
     u8 ballIndex = gTasks[taskId].data[15];
 
     if (gTasks[taskId].data[2] <= 16)
     {
-        BlendPalette(gTasks[taskId].data[3] * 16 + 0x100, 16, gTasks[taskId].data[0], gUnknown_0840B4D4[ballIndex]);
+        BlendPalette(gTasks[taskId].data[3] * 16 + 0x100, 16, gTasks[taskId].data[0], gBallOpenFadeColors[ballIndex]);
         gTasks[taskId].data[0] += gTasks[taskId].data[1];
         gTasks[taskId].data[2]++;
     }

@@ -425,7 +425,7 @@ static void objc_0804ABD4(struct Sprite *sprite)
         sprite->data[5] = 0;
         r4 = ball_number_to_ball_processing_index(GetBattlerBall(r5));
         AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 0x1C, r4);
-        sprite->data[0] = sub_8141314(0, r5, 14, r4);
+        sprite->data[0] = LaunchBallFadeMonTask(FALSE, r5, 14, r4);
         sprite->data[6] = r5;
         sprite->data[7] = r8;
         DestroyTask(taskId);
@@ -704,7 +704,7 @@ static void sub_8046C78(struct Sprite *sprite)
     StartSpriteAnim(sprite, 1);
     ballIndex = ball_number_to_ball_processing_index(GetBattlerBall(battler));
     AnimateBallOpenParticles(sprite->x, sprite->y - 5, 1, 28, ballIndex);
-    sprite->data[0] = sub_8141314(1, sprite->data[6], 14, ballIndex);
+    sprite->data[0] = LaunchBallFadeMonTask(TRUE, sprite->data[6], 14, ballIndex);
     sprite->callback = sub_8046E9C;
     if (gMain.inBattle)
     {
@@ -932,7 +932,7 @@ static u8 sub_80472B0(u8 a, u8 b, u8 c, u8 d)
 
 static u8 sub_80472D8(u8 a, u8 b, u32 c)
 {
-    return sub_8141314(a, b, c, 0);
+    return LaunchBallFadeMonTask(a, b, c, 0);
 }
 
 void CreatePokeballSprite(u8 a, u8 b, u8 x, u8 y, u8 e, u8 f, u8 g, u32 h)

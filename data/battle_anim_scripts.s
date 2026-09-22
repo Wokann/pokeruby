@@ -10707,15 +10707,15 @@ Special_LevelUp: @ 81D6AF6
 	end
 
 Special_SwitchOutPlayerMon: @ 81D6B17
-	createvisualtask sub_813F844, 2
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
 	delay 10
-	createvisualtask sub_813F798, 2
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
 	end
 
 Special_SwitchOutOpponentMon: @ 81D6B28
-	createvisualtask sub_813F844, 2
+	createvisualtask AnimTask_SwitchOutBallEffect, 2
 	delay 10
-	createvisualtask sub_813F798, 2
+	createvisualtask AnimTask_SwitchOutShrinkMon, 2
 	end
 
 Special_BallThrow: @ 81D6B39
