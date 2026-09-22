@@ -59,11 +59,11 @@ extern u8 GetBattlerSpriteDefault_Y();
 extern u8 GetBattlerPosition(u8);
 extern void BattleLoadOpponentMonSprite(struct Pokemon *, u8);
 extern void sub_8037A74(void);
-extern void sub_8032984(u8, u16);
+extern void SetBattlerShadowSpriteCallback(u8, u16);
 extern void sub_8037E30(void);
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
-extern void sub_8032A08();
+extern void HideBattlerShadowSprite(u8 battler);
 extern void sub_8037BBC(void);
 extern s32 sub_803FC34(u16);
 extern void sub_8031A6C(u16, u8);
@@ -351,7 +351,7 @@ void sub_8037840(void)
               0);
             StartHealthboxSlideIn(gActiveBattler ^ 2);
             SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler ^ 2]);
-            sub_8032984(
+            SetBattlerShadowSpriteCallback(
               gActiveBattler ^ 2,
               GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler ^ 2]], MON_DATA_SPECIES));
         }
@@ -362,7 +362,7 @@ void sub_8037840(void)
           0);
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-        sub_8032984(
+        SetBattlerShadowSpriteCallback(
           gActiveBattler,
           GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
@@ -419,7 +419,7 @@ void sub_8037BBC(void)
     {
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
-        sub_8032A08(gActiveBattler);
+        HideBattlerShadowSprite(gActiveBattler);
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
         LinkOpponentBufferExecCompleted();
     }
@@ -497,7 +497,7 @@ void sub_8037E30(void)
      && !gBattleHealthBoxInfo[gActiveBattler].ballAnimActive)
     {
         DestroySprite(&gSprites[gBattleControllerData[gActiveBattler]]);
-        sub_8032984(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
+        SetBattlerShadowSpriteCallback(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
         gBattlerControllerFuncs[gActiveBattler] = sub_8037D64;
     }
 }
@@ -1156,7 +1156,7 @@ void LinkOpponentHandleLoadPokeSprite(void)
     gSprites[gBattlerSpriteIds[gActiveBattler]].data[0] = gActiveBattler;
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[gActiveBattler]], gBattleMonForms[gActiveBattler]);
-    sub_8032984(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
+    SetBattlerShadowSpriteCallback(gActiveBattler, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
     gBattlerControllerFuncs[gActiveBattler] = sub_8037A74;
 }
 
@@ -1203,7 +1203,7 @@ void LinkOpponentHandleReturnPokeToBall(void)
     {
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
-        sub_8032A08(gActiveBattler);
+        HideBattlerShadowSprite(gActiveBattler);
         SetHealthboxSpriteInvisible(gHealthboxSpriteIds[gActiveBattler]);
         LinkOpponentBufferExecCompleted();
     }

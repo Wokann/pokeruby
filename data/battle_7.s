@@ -15,7 +15,7 @@ gOamData_81FAF2C:: @ 81FAF2C
 
 	.align 2
 gSpriteTemplate_81FAF34:: @ 81FAF34
-	spr_template 55129, 55039, gOamData_81FAF2C, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_8032978
+	spr_template 55129, 55039, gOamData_81FAF2C, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_SetInvisible
 
 	.align 2
 gMonSpriteGfx_Sprite_ptr:: @ 81FAF4C

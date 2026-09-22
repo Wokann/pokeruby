@@ -2254,14 +2254,14 @@ void AnimTask_SwallowDeformMon(u8 taskId)
     }
 }
 
-void sub_812D7E8(u8 taskId)
+void AnimTask_TransformMon(u8 taskId)
 {
     int i, j;
     u8 position;
     struct BattleAnimBgData animBg;
     u8 *dest;
     u8 *src;
-    u16 *field_4;
+    u16 *bgTilemap;
     u16 stretch;
 
     switch (gTasks[taskId].data[0])
@@ -2288,11 +2288,11 @@ void sub_812D7E8(u8 taskId)
         }
         break;
     case 2:
-        sub_8031FC4(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
+        HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, gTasks[taskId].data[10]);
         GetBgDataForTransform(&animBg, gBattleAnimAttacker);
 
         if (IsContest())
-            position = 0;
+            position = B_POSITION_PLAYER_LEFT;
         else
             position = GetBattlerPosition(gBattleAnimAttacker);
 
@@ -2304,14 +2304,14 @@ void sub_812D7E8(u8 taskId)
         {
             if (IsSpeciesNotUnown(gContestResources__moveAnim.species) != IsSpeciesNotUnown(gContestResources__moveAnim.targetSpecies))
             {
-                field_4 = (u16 *)animBg.bgTilemap;
+                bgTilemap = (u16 *)animBg.bgTilemap;
                 for (i = 0; i < 8; i++)
                 {
                     for (j = 0; j < 4; j++)
                     {
-                        u16 temp = field_4[j + i * 0x20];
-                        field_4[j + i * 0x20] = field_4[(7 - j) + i * 0x20];
-                        field_4[(7 - j) + i * 0x20] = temp;
+                        u16 temp = bgTilemap[j + i * 0x20];
+                        bgTilemap[j + i * 0x20] = bgTilemap[(7 - j) + i * 0x20];
+                        bgTilemap[(7 - j) + i * 0x20] = temp;
                     }
                 }
 
@@ -2319,7 +2319,7 @@ void sub_812D7E8(u8 taskId)
                 {
                     for (j = 0; j < 8; j++)
                     {
-                       field_4[j + i * 0x20] ^= 0x400;
+                       bgTilemap[j + i * 0x20] ^= 0x400;
                     }
                 }
             }
@@ -2360,7 +2360,7 @@ void sub_812D7E8(u8 taskId)
             if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
             {
                 if (gTasks[taskId].data[10] == 0)
-                    sub_8032984(gBattleAnimAttacker, gBattleSpriteInfo[gBattleAnimAttacker].transformSpecies);
+                    SetBattlerShadowSpriteCallback(gBattleAnimAttacker, gBattleSpriteInfo[gBattleAnimAttacker].transformSpecies);
             }
         }
 
@@ -2377,7 +2377,7 @@ void c3_80DFBE4(u8 taskId)
 
 void sub_812DB58(u8 taskId)
 {
-    sub_8031FC4(gBattleAnimAttacker, gBattleAnimTarget, 1);
+    HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, TRUE);
     DestroyAnimVisualTask(taskId);
 }
 

@@ -706,8 +706,8 @@ void sub_8032638();
 void sub_8032AA8(u8, u8);
 void SetBankFuncToOpponentBufferRunCommand(void);
 void BattleStopLowHpSound(void);
-void sub_8031FC4(u8, u8, bool8);
-void sub_8032984(u8, u16);
+void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform);
+void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
 void refresh_graphics_maybe(u8, u8, u8);
 void sub_80324E0(u8 a);
 

@@ -26,7 +26,7 @@ bool8 LoadChosenBattleElement(u8 a0);
 bool8 sub_8031C30(u8 a0);
 void sub_8031EE8(void);
 void sub_80327CC(void);
-void sub_8032984(u8 a, u16 b);
+void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
 void sub_800FCD4(void);
 void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
 void BattleLoadPlayerMonSprite(struct Pokemon *, u8 bank);
@@ -166,13 +166,13 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
 
             opponentBank = GetBattlerAtPosition(1);
             species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBank]], MON_DATA_SPECIES);
-            sub_8032984(opponentBank, species);
+            SetBattlerShadowSpriteCallback(opponentBank, species);
 
             if (IsDoubleBattle())
             {
                 opponentBank = GetBattlerAtPosition(3);
                 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBank]], MON_DATA_SPECIES);
-                sub_8032984(opponentBank, species);
+                SetBattlerShadowSpriteCallback(opponentBank, species);
             }
             sub_802E3E4(gActionSelectionCursor[gBattlerInMenuId], 0);
         }
