@@ -65,7 +65,7 @@ static void AnimTask_FlashAnimTagWithColor_Step1(u8 taskId);
 static void AnimTask_FlashAnimTagWithColor_Step2(u8 taskId);
 static void AnimShakeMonOrBattlePlatforms_UpdateCoordOffsetEnabled(void);
 static void AnimShakeMonOrBattlePlatforms_Step(struct Sprite *sprite);
-static void sub_80E2710(u8 taskId);
+static void AnimTask_ShakeBattlePlatforms_Step(u8 taskId);
 static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
 static void StartBlendAnimSpriteColor(u8 taskId, u32 selectedPalettes);
 static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
@@ -817,35 +817,41 @@ static void AnimShakeMonOrBattlePlatforms_UpdateCoordOffsetEnabled(void)
     }
 }
 
-void sub_80E26BC(u8 taskId)
+#define tXOffset data[0]
+#define tYOffset data[1]
+#define tNumShakes data[2]
+#define tTimer data[3]
+#define tShakeDelay data[8]
+
+void AnimTask_ShakeBattlePlatforms(u8 taskId)
 {
-    gTasks[taskId].data[0] = gBattleAnimArgs[0];
-    gTasks[taskId].data[1] = gBattleAnimArgs[1];
-    gTasks[taskId].data[2] = gBattleAnimArgs[2];
-    gTasks[taskId].data[3] = gBattleAnimArgs[3];
-    gTasks[taskId].data[8] = gBattleAnimArgs[3];
+    gTasks[taskId].tXOffset = gBattleAnimArgs[0];
+    gTasks[taskId].tYOffset = gBattleAnimArgs[1];
+    gTasks[taskId].tNumShakes = gBattleAnimArgs[2];
+    gTasks[taskId].tTimer = gBattleAnimArgs[3];
+    gTasks[taskId].tShakeDelay = gBattleAnimArgs[3];
     gBattle_BG3_X = gBattleAnimArgs[0];
     gBattle_BG3_Y = gBattleAnimArgs[1];
-    gTasks[taskId].func = sub_80E2710;
+    gTasks[taskId].func = AnimTask_ShakeBattlePlatforms_Step;
     gTasks[taskId].func(taskId);
 }
 
-static void sub_80E2710(u8 taskId)
+static void AnimTask_ShakeBattlePlatforms_Step(u8 taskId)
 {
-    if (gTasks[taskId].data[3] == 0)
+    if (gTasks[taskId].tTimer == 0)
     {
-        if (gBattle_BG3_X == gTasks[taskId].data[0])
-            gBattle_BG3_X = -gTasks[taskId].data[0];
+        if (gBattle_BG3_X == gTasks[taskId].tXOffset)
+            gBattle_BG3_X = -gTasks[taskId].tXOffset;
         else
-            gBattle_BG3_X = gTasks[taskId].data[0];
+            gBattle_BG3_X = gTasks[taskId].tXOffset;
 
-        if (gBattle_BG3_Y == -gTasks[taskId].data[1])
+        if (gBattle_BG3_Y == -gTasks[taskId].tYOffset)
             gBattle_BG3_Y = 0;
         else
-            gBattle_BG3_Y = -gTasks[taskId].data[1];
+            gBattle_BG3_Y = -gTasks[taskId].tYOffset;
 
-        gTasks[taskId].data[3] = gTasks[taskId].data[8];
-        if (--gTasks[taskId].data[2] == 0)
+        gTasks[taskId].tTimer = gTasks[taskId].tShakeDelay;
+        if (--gTasks[taskId].tNumShakes == 0)
         {
             gBattle_BG3_X = 0;
             gBattle_BG3_Y = 0;
@@ -854,9 +860,15 @@ static void sub_80E2710(u8 taskId)
     }
     else
     {
-        gTasks[taskId].data[3]--;
+        gTasks[taskId].tTimer--;
     }
 }
+
+#undef tXOffset
+#undef tYOffset
+#undef tNumShakes
+#undef tTimer
+#undef tShakeDelay
 
 static void AnimHitSplatBasic(struct Sprite *sprite)
 {

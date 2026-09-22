@@ -5,6 +5,7 @@
 #include "rom_8077ABC.h"
 #include "sound.h"
 #include "task.h"
+#include "constants/sound.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -189,8 +190,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-// used in Move_HYPER_VOICE
-void sub_812B2B8(u8 taskId)
+void SoundTask_PlayHyperVoiceCry(u8 taskId)
 {
     u16 species;
     s8 pan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
@@ -201,7 +201,7 @@ void sub_812B2B8(u8 taskId)
         species = gAnimSpeciesByBanks[gBattleAnimAttacker];
 
     if (species != 0)
-        PlayCry3(species, pan, 4);
+        PlayCry3(species, pan, CRY_MODE_HYPER_VOICE);
 
     DestroyAnimVisualTask(taskId);
 }

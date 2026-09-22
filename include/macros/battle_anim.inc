@@ -449,6 +449,10 @@
 	createvisualtask AnimTask_InvertScreenColor, \priority, (\scenery << 8) | \scenery, (\attacker << 8) | \attacker, (\target << 8) | \target
 	.endm
 
+	.macro shake_battle_platforms priority=2, x_offset:req, y_offset:req, shakes:req, delay:req
+	createvisualtask AnimTask_ShakeBattlePlatforms, \priority, \x_offset, \y_offset, \shakes, \delay
+	.endm
+
 	.macro create_outrage_flame_sprite anim_battler, subpriority_offset, x, y, duration, x_velocity, y_velocity, flicker_duration
 	createsprite gOutrageFlameSpriteTemplate, \anim_battler, \subpriority_offset, \x, \y, \duration, 256 * \x_velocity, 256 * \y_velocity, \flicker_duration
 	.endm
