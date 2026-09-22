@@ -9071,26 +9071,26 @@ Move_BLAST_BURN: @ 81D444A
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 6, -40, -20, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 70, 0, -32, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 70, 40, -20, 24, 0, 0, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 6, 0, 8, 1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 6, 0, 8, 1
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 64, 0, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 40, 20, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -40, 20, 24, 0, 0, 0
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	delay 25
 	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_ATTACKER
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -96, 0, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 6, -60, -30, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 70, 0, -48, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 70, 60, -30, 24, 0, 0, 0
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, -4, 3, 1, 0
-	createvisualtask AnimTask_ShakeMon, 5, 1, 12, 0, 20, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=-4, y=3, relative_to=ANIM_BATTLER_TARGET, animation=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 12, 0, 20, 1
 	shake_battle_platforms x_offset=2, y_offset=0, shakes=10, delay=1
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 96, 0, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 66, 60, 30, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 48, 24, 0, 0, 0
 	createsprite gFirePlumeSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -60, 30, 24, 0, 0, 0
-	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
+	invert_screen_color scenery=TRUE, attacker=TRUE, target=TRUE
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	blendoff
