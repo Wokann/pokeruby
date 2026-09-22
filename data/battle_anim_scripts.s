@@ -2239,7 +2239,7 @@ Move_ICY_WIND: @ 81CA650
 	playsewithpan SE_M_ICY_WIND, 0
 	waitbgfadein
 	waitforvisualfinish
-	panse_1B SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	call _81CA6A8
 	delay 5
 	call _81CA6A8
@@ -2553,7 +2553,7 @@ Move_SING: @ 81CAE00
 	monbg ANIM_BATTLER_DEF_PARTNER
 	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
 	waitforvisualfinish
-	panse_1B SE_M_SING, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_SING, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 7, 0, 12
 	delay 5
 	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 12
@@ -3460,7 +3460,7 @@ Move_HEAT_WAVE: @ 81CBFC6
 	createvisualtask AnimTask_BlendParticle, 5, 10261, 0, 6, 6, rgb(31, 0, 0)
 	createvisualtask AnimTask_LoadSandstormBackground, 5, TRUE
 	createvisualtask AnimTask_BlendBackground, 6, 6, 31
-	panse_1B SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_HEAT_WAVE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	delay 4
 	createvisualtask AnimTask_MoveHeatWaveTargets, 5
 	delay 12
@@ -4236,7 +4236,7 @@ Move_GRASS_WHISTLE: @ 81CD249
 	waitforvisualfinish
 	createvisualtask AnimTask_MusicNotesRainbowBlend, 2
 	waitforvisualfinish
-	panse_1B SE_M_GRASSWHISTLE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_GRASSWHISTLE, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 7, 1, 0
 	delay 5
 	createsprite gWavyMusicNotesSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 0
@@ -4468,7 +4468,7 @@ Move_WATER_SPORT: @ 81CD6D1
 	delay 44
 	playsewithpan SE_M_SURF, SOUND_PAN_ATTACKER
 	delay 44
-	panse_1B SE_M_SURF, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_SURF, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	end
 
 Move_CALM_MIND: @ 81CD6F7
@@ -8567,7 +8567,7 @@ ArmThrustLeft:
 	goto ArmThrustContinue
 
 Move_MUDDY_WATER: @ 81D3764
-	panse_1B SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	create_surf_wave palette=ANIM_SURF_PAL_MUDDY_WATER
 	waitforvisualfinish
 	end
@@ -8667,7 +8667,7 @@ Move_MUD_SHOT: @ 81D3A75
 	createvisualtask AnimTask_ShakeMon, 5, 0, 0, 2, 46, 1
 	delay 6
 	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
-	panse_1B SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
+	panse SE_M_WHIRLPOOL, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 0
 	call _81D3AEF
 	call _81D3AEF
 	call _81D3AEF
@@ -8695,7 +8695,7 @@ Move_METEOR_MASH: @ 81D3B12
 	loadspritegfx ANIM_TAG_GOLD_STARS
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
-	panse_1B SE_M_BARRIER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 3, 0
+	panse SE_M_BARRIER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 3, 0
 	fadetobg BG_COSMIC
 	waitbgfadein
 	waitforvisualfinish
@@ -8838,7 +8838,7 @@ Move_METAL_SOUND: @ 81D3E1F
 	waitforvisualfinish
 	end
 _81D3E52:
-	panse_1B SE_M_SCREECH, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_SCREECH, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	createsprite gBattleAnimSpriteTemplate_83D7564, ANIM_BATTLER_TARGET, 2, 16, 0, 0, 0, 30, 0
 	delay 2
 	return
@@ -9132,7 +9132,7 @@ Move_ROCK_TOMB: @ 81D468C
 
 Move_SILVER_WIND: @ 81D4773
 	loadspritegfx ANIM_TAG_SPARKLE_6
-	panse_1B SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_GUST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	playsewithpan SE_M_MORNING_SUN, 0
 	delay 0
 	monbg ANIM_BATTLER_DEF_PARTNER
@@ -9342,7 +9342,7 @@ Move_HYDRO_CANNON: @ 81D4DDE
 	delay 10
 	createvisualtask AnimTask_InvertScreenColor, 2, 257, 257, 257
 	delay 30
-	panse_1B SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
+	panse SE_M_HYDRO_PUMP, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 2, 0
 	call _81D4EA8
 	createvisualtask AnimTask_ShakeMon, 5, 1, 10, 0, 40, 1
 	createsprite gWaterHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0

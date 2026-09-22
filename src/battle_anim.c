@@ -1359,7 +1359,7 @@ static void ScriptCmd_waitbgfadein(void);
 static void ScriptCmd_changebg(void);
 static void ScriptCmd_playsewithpan(void);
 static void ScriptCmd_setpan(void);
-static void ScriptCmd_panse_1B(void);
+static void ScriptCmd_panse(void);
 static void Task_PanFromInitialToTarget(u8);
 static void ScriptCmd_panse_adjustnone(void);
 static void ScriptCmd_panse_adjustall(void);
@@ -1408,7 +1408,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_changebg,
     ScriptCmd_playsewithpan,
     ScriptCmd_setpan,
-    ScriptCmd_panse_1B,
+    ScriptCmd_panse,
     ScriptCmd_loopsewithpan,
     ScriptCmd_waitplaysewithpan,
     ScriptCmd_setbldcnt,
@@ -2637,7 +2637,7 @@ static void ScriptCmd_setpan(void)
 #define tCurrentPan     data[4]
 #define tFrameCounter   data[8]
 
-static void ScriptCmd_panse_1B(void)
+static void ScriptCmd_panse(void)
 {
     u16 songNum;
     s8 currentPanArg, incrementPan, incrementPanArg, currentPan, targetPan;

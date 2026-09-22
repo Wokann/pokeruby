@@ -142,15 +142,6 @@
 	.byte \pan
 	.endm
 
-	.macro panse_1B id, pan_start, pan_end, step, delay
-	.byte 0x1B
-	.2byte \id
-	.byte \pan_start
-	.byte \pan_end
-	.byte \step
-	.byte \delay
-	.endm
-
 	.macro panse se:req, currentPan:req, targetPan:req, incrementPan:req, delay:req
 	.byte 0x1B
 	.2byte \se
