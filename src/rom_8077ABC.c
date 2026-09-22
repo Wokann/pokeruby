@@ -466,7 +466,7 @@ void SetCallbackToStoredInData6(struct Sprite *sprite)
     sprite->callback = (void (*)(struct Sprite *))callback;
 }
 
-void sub_8078114(struct Sprite *sprite)
+void TranslateSpriteInCircle(struct Sprite *sprite)
 {
     if (sprite->data[3])
     {

@@ -7491,20 +7491,20 @@ SpiderWebThread:
 	return
 
 Move_RAZOR_WIND: @ 81D1E0B
-	choosetwoturnanim _81D1E16, _81D1E66
-_81D1E14:
+	choosetwoturnanim RazorWindSetUp, RazorWindUnleash
+RazorWindEnd:
 	waitforvisualfinish
 	end
-_81D1E16:
+RazorWindSetUp:
 	loadspritegfx ANIM_TAG_GUST
 	playsewithpan SE_M_GUST, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 0, 7, 40
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 85, 7, 40
-	createsprite gBattleAnimSpriteTemplate_83D765C, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 0, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 85, 7, 40
+	createsprite gRazorWindTornadoSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
 	waitforvisualfinish
 	playsewithpan SE_M_GUST2, SOUND_PAN_ATTACKER
-	goto _81D1E14
-_81D1E66:
+	goto RazorWindEnd
+RazorWindUnleash:
 	loadspritegfx ANIM_TAG_AIR_WAVE_2
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_TARGET
@@ -7524,7 +7524,7 @@ _81D1E66:
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	blendoff
-	goto _81D1E14
+	goto RazorWindEnd
 
 Move_DISABLE: @ 81D1EF1
 	loadspritegfx ANIM_TAG_SPARKLE_4

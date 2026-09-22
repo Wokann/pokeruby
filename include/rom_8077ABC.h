@@ -80,7 +80,7 @@ void TranslateSpriteLinearFixedPoint(struct Sprite *sprite);
 void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
 void sub_8078278(struct Sprite *sprite);
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
-void sub_8078114(struct Sprite *sprite);
+void TranslateSpriteInCircle(struct Sprite *sprite);
 void TranslateSpriteInGrowingCircle(struct Sprite *sprite);
 void AnimSpriteOnMonPos(struct Sprite *sprite);
 void SetAverageBattlerPositions(u8 slot, u8 a2, s16 *a3, s16 *a4);
