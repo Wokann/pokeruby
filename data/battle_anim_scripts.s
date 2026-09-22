@@ -7548,10 +7548,10 @@ Move_RECOVER: @ 81D1F1F
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 12, 8
 	loopsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER, 13, 3
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 0, 6, 0, 11, 12287
-	call _81D1F5F
-	call _81D1F5F
-	call _81D1F5F
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=6, initial_blend_y=0, target_blend_y=11, color=RGB(31, 31, 11)
+	call RecoverAbsorbEffect
+	call RecoverAbsorbEffect
+	call RecoverAbsorbEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
@@ -7559,20 +7559,20 @@ Move_RECOVER: @ 81D1F1F
 	call HealingEffect
 	waitforvisualfinish
 	end
-_81D1F5F:
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 40, -10, 13
+RecoverAbsorbEffect:
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=40, y=-10, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -35, -10, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-35, y=-10, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 15, -40, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=15, y=-40, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -10, -32, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-10, y=-32, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 25, -20, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=25, y=-20, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -40, -20, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-40, y=-20, duration=13
 	delay 3
-	createsprite gPowerAbsorptionOrbSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 5, -40, 13
+	create_power_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=5, y=-40, duration=13
 	delay 3
 	return
 
