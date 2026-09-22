@@ -3074,7 +3074,7 @@ BattleScript_LinkBattleWonOrLost:: @ 81D8E02
 	waitmessage 64
 	end2
 
-gUnknown_081D8E0D:: @ 81D8E0D
+BattleScript_BattleTowerOrEReaderTrainerBattleWon:: @ 81D8E0D
 	printstring BATTLE_TEXT_PlayerDefeatedTrainer2
 	trainerslidein 1
 	waitstate

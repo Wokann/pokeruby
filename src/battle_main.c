@@ -142,7 +142,7 @@ extern void (* const gUnknown_081FA678[])(void);
 extern u8* gBattlescriptCurrInstr;
 extern u8 BattleScript_LinkBattleWonOrLost[];
 extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
-extern u8 gUnknown_081D8E0D[];
+extern u8 BattleScript_BattleTowerOrEReaderTrainerBattleWon[];
 extern u8 BattleScript_LocalTrainerBattleWon[];
 extern u8 BattleScript_LocalBattleLost[];
 extern u8 BattleScript_GotAwaySafely[];
@@ -4939,7 +4939,7 @@ void HandleEndTurn_BattleWon(void)
     }
     else if (gBattleTypeFlags & (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER))
     {
-        gBattlescriptCurrInstr = gUnknown_081D8E0D;
+        gBattlescriptCurrInstr = BattleScript_BattleTowerOrEReaderTrainerBattleWon;
     }
     else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
