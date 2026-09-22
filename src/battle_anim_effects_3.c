@@ -105,7 +105,7 @@ static void AnimMeanLookEye(struct Sprite *sprite);
 static void AnimSpikes(struct Sprite *sprite);
 static void AnimLeer(struct Sprite *sprite);
 static void AnimLetterZ(struct Sprite *sprite);
-static void sub_812C908(struct Sprite *sprite);
+static void AnimFang(struct Sprite *sprite);
 static void sub_812C990(struct Sprite *sprite);
 static void sub_812CAFC(struct Sprite *sprite);
 static void sub_812CC28(struct Sprite *sprite);
@@ -340,7 +340,7 @@ const struct SpriteTemplate gLetterZSpriteTemplate =
     .callback = AnimLetterZ,
 };
 
-const union AnimCmd gSpriteAnim_8402308[] =
+const union AnimCmd gFangAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(16, 16),
@@ -349,32 +349,32 @@ const union AnimCmd gSpriteAnim_8402308[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_840231C[] =
+const union AnimCmd *const gFangAnimTable[] =
 {
-    gSpriteAnim_8402308,
+    gFangAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402320[] =
+const union AffineAnimCmd gFangAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFE0, 0xFFE0, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402338[] =
+const union AffineAnimCmd *const gFangAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402320,
+    gFangAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_840233C =
+const struct SpriteTemplate gFangSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FANG_ATTACK,
     .paletteTag = ANIM_TAG_FANG_ATTACK,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_840231C,
+    .anims = gFangAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402338,
-    .callback = sub_812C908,
+    .affineAnims = gFangAffineAnimTable,
+    .callback = AnimFang,
 };
 
 const union AffineAnimCmd gSpriteAffineAnim_8402354[] =
@@ -1521,7 +1521,7 @@ static void AnimLetterZ(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_812C908(struct Sprite *sprite)
+static void AnimFang(struct Sprite *sprite)
 {
     if (sprite->animEnded)
         DestroyAnimSprite(sprite);

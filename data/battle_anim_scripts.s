@@ -7966,30 +7966,30 @@ Move_HYPER_FANG: @ 81D29A8
 	delay 1
 	delay 2
 	createvisualtask AnimTask_IsContest, 2
-	jumpargeq 7, 1, _81D2A08
+	jumprettrue HyperFangInContest
 	createvisualtask AnimTask_IsTargetPlayerSide, 2
-	jumpargeq 7, 0, _81D29FA
-	goto _81D2A01
-_81D29D6:
+	jumpretfalse HyperFangOnOpponent
+	goto HyperFangOnPlayer
+HyperFangContinue:
 	waitbgfadeout
-	createsprite gBattleAnimSpriteTemplate_840233C, ANIM_BATTLER_TARGET, 2
+	createsprite gFangSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	waitbgfadein
-	createvisualtask AnimTask_ShakeMon, 3, 1, 0, 10, 10, 1
+	createvisualtask AnimTask_ShakeMon, 3, ANIM_BATTLER_TARGET, 0, 10, 10, 1
 	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
 	delay 20
 	restorebg
 	waitbgfadein
 	waitforvisualfinish
 	end
-_81D29FA:
+HyperFangOnOpponent:
 	fadetobg BG_IMPACT_OPPONENT
-	goto _81D29D6
-_81D2A01:
+	goto HyperFangContinue
+HyperFangOnPlayer:
 	fadetobg BG_IMPACT_PLAYER
-	goto _81D29D6
-_81D2A08:
+	goto HyperFangContinue
+HyperFangInContest:
 	fadetobg BG_IMPACT_CONTESTS
-	goto _81D29D6
+	goto HyperFangContinue
 
 Move_TRI_ATTACK: @ 81D2A0F
 	loadspritegfx ANIM_TAG_TRI_FORCE_TRIANGLE
@@ -8744,7 +8744,7 @@ Move_POISON_FANG: @ 81D3C30
 	loadspritegfx ANIM_TAG_FANG_ATTACK
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_840233C, ANIM_BATTLER_TARGET, 2
+	createsprite gFangSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 10
 	createvisualtask AnimTask_ShakeMon, 3, 1, 3, 0, 10, 1
 	waitforvisualfinish
