@@ -10236,13 +10236,13 @@ StatusCondition_Confusion: @ 81D629B
 StatusCondition_Burn: @ 81D62A4
 	loadspritegfx ANIM_TAG_SMALL_EMBER
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
-	call ConditionBurnFire
-	call ConditionBurnFire
-	call ConditionBurnFire
+	call BurnFlame
+	call BurnFlame
+	call BurnFlame
 	waitforvisualfinish
 	end
-ConditionBurnFire:
-	createsprite gBattleAnimSpriteTemplate_83D9614, ANIM_BATTLER_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
+BurnFlame:
+	createsprite gBurnFlameSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 24, 24, 20, 1, 1
 	delay 4
 	return
 

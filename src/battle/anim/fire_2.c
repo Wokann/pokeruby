@@ -11,7 +11,7 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 void AnimEmberFlare(struct Sprite *sprite);
-void sub_80D5210(struct Sprite *sprite);
+static void AnimBurnFlame(struct Sprite *sprite);
 void AnimFireRing(struct Sprite *sprite);
 void AnimFireCross(struct Sprite *sprite);
 void AnimFireSpiralOutward(struct Sprite *sprite);
@@ -65,7 +65,7 @@ const struct SpriteTemplate gEmberFlareSpriteTemplate =
     .callback = AnimEmberFlare,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9614 =
+const struct SpriteTemplate gBurnFlameSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
@@ -73,7 +73,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9614 =
     .anims = gAnims_BasicFire,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D5210,
+    .callback = AnimBurnFlame,
 };
 
 const struct SpriteTemplate gFireBlastRingSpriteTemplate =
@@ -204,7 +204,7 @@ void AnimEmberFlare(struct Sprite *sprite)
     sprite->callback(sprite);
 }
 
-void sub_80D5210(struct Sprite *sprite)
+static void AnimBurnFlame(struct Sprite *sprite)
 {
     gBattleAnimArgs[0] = -gBattleAnimArgs[0];
     gBattleAnimArgs[2] = -gBattleAnimArgs[2];
