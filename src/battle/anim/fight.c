@@ -173,26 +173,26 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D9FF0 =
     .callback = sub_80D9378,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83DA008[] =
+static const union AffineAnimCmd sAffineAnim_SpinningHandOrFoot[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 20, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83DA020[] =
+static const union AffineAnimCmd *const sAffineAnims_SpinningHandOrFoot[] =
 {
-    gSpriteAffineAnim_83DA008,
+    sAffineAnim_SpinningHandOrFoot,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA024 =
+const struct SpriteTemplate gSpinningHandOrFootSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HANDS_AND_FEET,
     .paletteTag = ANIM_TAG_HANDS_AND_FEET,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = sAnims_HandsAndFeet,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83DA020,
+    .affineAnims = sAffineAnims_SpinningHandOrFoot,
     .callback = AnimSpinningKickOrPunch,
 };
 

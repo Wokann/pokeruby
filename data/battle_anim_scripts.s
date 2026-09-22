@@ -8462,14 +8462,14 @@ Move_BLAZE_KICK: @ 81D34C8
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
 	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DA024, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 30
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 7, 32767
+	createsprite gSpinningHandOrFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 30
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 7, RGB_WHITE
 	delay 30
 	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 0, 1, 0
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 2, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 3, 0, 14, 1
-	createvisualtask AnimTask_BlendBattleAnimPal, 10, 4, 2, 0, 0, 32767
-	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 31, 3, 1, 0, 8, 0, 0
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 0, RGB_WHITE
+	complex_palette_blend selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB_BLACK, blend_y1=8, color2=RGB_BLACK, blend_y2=0
 	call FireSpreadEffect
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
@@ -8703,7 +8703,7 @@ Move_METEOR_MASH: @ 81D3B12
 	delay 10
 	createsprite gBattleAnimSpriteTemplate_8402A3C, ANIM_BATTLER_TARGET, 3, -112, -64, 8, 32, 30
 	delay 40
-	createsprite gBattleAnimSpriteTemplate_83DA024, ANIM_BATTLER_TARGET, 3, 0, 0, 0, 30
+	createsprite gSpinningHandOrFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 0, 30
 	createsprite gBattleAnimSpriteTemplate_8402A3C, ANIM_BATTLER_TARGET, 3, -80, -64, 40, 32, 30
 	delay 20
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
