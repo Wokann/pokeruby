@@ -65,8 +65,8 @@ static void AnimRapidSpin_Step(struct Sprite *sprite);
 static void RapinSpinMonElevation_Step(u8 taskId);
 static void TormentAttacker_Step(u8 taskId);
 static void sub_812D254(struct Sprite *sprite);
-static void sub_812D4EC(struct Sprite *sprite);
-static void sub_812D5E8(struct Sprite *sprite);
+static void AnimWishStar_Step(struct Sprite *sprite);
+static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
 static void sub_812DFEC(struct Sprite *sprite);
 static void sub_812E09C(struct Sprite *sprite);
 static void sub_812E0F8(struct Sprite *sprite);
@@ -112,8 +112,8 @@ static void AnimClappingHand2(struct Sprite *sprite);
 static void AnimRapidSpin(struct Sprite *sprite);
 static void AnimTriAttackTriangle(struct Sprite *sprite);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
-static void sub_812D4B4(struct Sprite *sprite);
-static void sub_812D588(struct Sprite *sprite);
+static void AnimWishStar(struct Sprite *sprite);
+static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void sub_812DEAC(struct Sprite *sprite);
 static void sub_812D724(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
@@ -546,7 +546,7 @@ const struct SpriteTemplate gBatonPassPokeballSpriteTemplate =
     .callback = AnimBatonPassPokeball,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8 =
+const struct SpriteTemplate gWishStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
@@ -554,10 +554,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812D4B4,
+    .callback = AnimWishStar,
 };
 
-const struct SpriteTemplate gSpriteTemplate_8402500 =
+const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
@@ -565,7 +565,7 @@ const struct SpriteTemplate gSpriteTemplate_8402500 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812D588,
+    .callback = AnimMiniTwinklingStar,
 };
 
 const union AffineAnimCmd gUnknown_08402518[] =
@@ -2108,7 +2108,7 @@ static void AnimBatonPassPokeball(struct Sprite *sprite)
     }
 }
 
-static void sub_812D4B4(struct Sprite *sprite)
+static void AnimWishStar(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         sprite->x = -16;
@@ -2116,10 +2116,10 @@ static void sub_812D4B4(struct Sprite *sprite)
         sprite->x = 256;
 
     sprite->y = 0;
-    sprite->callback = sub_812D4EC;
+    sprite->callback = AnimWishStar_Step;
 }
 
-static void sub_812D4EC(struct Sprite *sprite)
+static void AnimWishStar_Step(struct Sprite *sprite)
 {
     u32 newX;
 
@@ -2135,7 +2135,7 @@ static void sub_812D4EC(struct Sprite *sprite)
     if (++sprite->data[2] % 3 == 0)
     {
         CreateSpriteAndAnimate(
-            &gSpriteTemplate_8402500,
+            &gMiniTwinklingStarSpriteTemplate,
             sprite->x + sprite->x2,
             sprite->y + sprite->y2,
             sprite->subpriority + 1);
@@ -2146,7 +2146,7 @@ static void sub_812D4EC(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_812D588(struct Sprite *sprite)
+static void AnimMiniTwinklingStar(struct Sprite *sprite)
 {
     u8 rand;
     s8 y;
@@ -2162,10 +2162,10 @@ static void sub_812D588(struct Sprite *sprite)
         y = -y;
 
     sprite->y2 = y;
-    sprite->callback = sub_812D5E8;
+    sprite->callback = AnimMiniTwinklingStar_Step;
 }
 
-static void sub_812D5E8(struct Sprite *sprite)
+static void AnimMiniTwinklingStar_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] < 30)
     {
@@ -4633,7 +4633,7 @@ static void sub_81311E4(struct Sprite *sprite)
     if (!(sprite->data[5] & 1))
     {
         CreateSprite(
-            &gSpriteTemplate_8402500,
+            &gMiniTwinklingStarSpriteTemplate,
             sprite->x + sprite->x2,
             sprite->y + sprite->y2, 5);
     }

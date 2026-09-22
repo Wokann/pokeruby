@@ -1362,7 +1362,7 @@ static void ScriptCmd_setpan(void);
 static void ScriptCmd_panse_1B(void);
 static void Task_PanFromInitialToTarget(u8);
 static void ScriptCmd_panse_adjustnone(void);
-static void ScriptCmd_panse_27(void);
+static void ScriptCmd_panse_adjustall(void);
 static void ScriptCmd_loopsewithpan(void);
 static void Task_LoopAndPlaySE(u8);
 static void ScriptCmd_waitplaysewithpan(void);
@@ -1420,7 +1420,7 @@ static void (*const sScriptCmdTable[])(void) = {
     ScriptCmd_jumpifcontest,
     ScriptCmd_fadetobgfromset,
     ScriptCmd_panse_adjustnone,
-    ScriptCmd_panse_27,
+    ScriptCmd_panse_adjustall,
     ScriptCmd_splitbgprio,
     ScriptCmd_splitbgprio_all,
     ScriptCmd_splitbgprio_foes,
@@ -2736,7 +2736,7 @@ static void ScriptCmd_panse_adjustnone(void)
     sBattleAnimScriptPtr += 6;
 }
 
-static void ScriptCmd_panse_27(void)
+static void ScriptCmd_panse_adjustall(void)
 {
     u16 songId;
     u8 targetPanArg, incrementPanArg, currentPan, currentPanArg;

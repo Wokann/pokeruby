@@ -8127,16 +8127,16 @@ Move_TRICK: @ 81D2CE8
 Move_WISH: @ 81D2D66
 	loadspritegfx ANIM_TAG_GOLD_STARS
 	loadspritegfx ANIM_TAG_SPARKLE_2
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 10, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
 	waitforvisualfinish
-	panse_27 SE_M_REFLECT, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, 253, 0
-	createsprite gBattleAnimSpriteTemplate_84024E8, ANIM_BATTLER_ATTACKER, 40
+	panse_adjustall SE_M_REFLECT, SOUND_PAN_TARGET, SOUND_PAN_ATTACKER, -3, 0
+	createsprite gWishStarSpriteTemplate, ANIM_BATTLER_ATTACKER, 40
 	waitforvisualfinish
 	delay 60
 	loopsewithpan SE_M_HEAL_BELL, SOUND_PAN_ATTACKER, 16, 3
 	call GrantingStarsEffect
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 10, 0, rgb(0, 0, 0)
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
 	waitforvisualfinish
 	end
 

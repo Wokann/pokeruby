@@ -38,8 +38,8 @@ extern const u8 gUnknown_08D2EE48[];
 extern const u8 gUnknown_08D2EDFC[];
 extern const u16 gUnknown_08D2E150[];
 extern const struct SpriteTemplate gSpriteTemplates_840B3B4[];
-extern const struct SpriteTemplate gSpriteTemplate_8402500;
-extern const struct SpriteTemplate gBattleAnimSpriteTemplate_84024E8;
+extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
+extern const struct SpriteTemplate gWishStarSpriteTemplate;
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 
@@ -1921,16 +1921,16 @@ static void sub_814191C(u8 taskId)
     state = gTasks[taskId].data[11];
     if (state == 0)
     {
-        spriteId = CreateSprite(&gBattleAnimSpriteTemplate_84024E8, x, y, 5);
+        spriteId = CreateSprite(&gWishStarSpriteTemplate, x, y, 5);
     }
     else if (state >= 0 && gTasks[taskId].data[11] < 4)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_8402500, x, y, 5);
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
         gSprites[spriteId].oam.tileNum += 4;
     }
     else
     {
-        spriteId = CreateSprite(&gSpriteTemplate_8402500, x, y, 5);
+        spriteId = CreateSprite(&gMiniTwinklingStarSpriteTemplate, x, y, 5);
         gSprites[spriteId].oam.tileNum += 5;
     }
 
