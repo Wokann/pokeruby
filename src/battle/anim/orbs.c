@@ -134,24 +134,24 @@ const struct SpriteTemplate gSolarBeamSmallOrbSpriteTemplate =
     .callback = AnimSolarBeamSmallOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6334[] = {
+const union AffineAnimCmd gStockpileAbsorptionOrbAffineCmds[] = {
     AFFINEANIMCMD_FRAME(320, 320, 0, 0),
     AFFINEANIMCMD_FRAME(-14, -14, 0, 1),
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D634C[] = {
-    gSpriteAffineAnim_83D6334,
+const union AffineAnimCmd *const gStockpileAbsorptionOrbAffineAnimTable[] = {
+    gStockpileAbsorptionOrbAffineCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6350 =
+const struct SpriteTemplate gStockpileAbsorptionOrbSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GRAY_ORB,
     .paletteTag = ANIM_TAG_GRAY_ORB,
-    .oam = &gOamData_837DFE4,
+    .oam = &gOamData_AffineDouble_ObjNormal_8x8,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D634C,
+    .affineAnims = gStockpileAbsorptionOrbAffineAnimTable,
     .callback = AnimPowerAbsorptionOrb,
 };
 

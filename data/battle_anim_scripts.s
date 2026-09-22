@@ -8143,29 +8143,29 @@ Move_WISH: @ 81D2D66
 Move_STOCKPILE: @ 81D2DAE
 	loadspritegfx ANIM_TAG_GRAY_ORB
 	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 8, 1, 0, 12, 32767
-	createvisualtask sub_812D674, 5
-	call _81D2DEC
-	call _81D2DEC
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=8, num_blends=1, initial_blend_y=0, target_blend_y=12, color=RGB_WHITE
+	createvisualtask AnimTask_StockpileDeformMon, 5
+	call StockpileAbsorb
+	call StockpileAbsorb
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 0, 12, 0, rgb(31, 31, 31)
+	simple_palette_blend selector=F_PAL_ATTACKER, delay=0, initial_blend_y=12, target_blend_y=0, color=RGB_WHITE
 	end
-_81D2DEC:
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, 55, 55, 13
+StockpileAbsorb:
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=55, y=55, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, -55, -55, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-55, y=-55, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, 0, 55, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=55, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, 0, -55, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=0, y=-55, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, 55, -34, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=55, y=-34, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, 55, 34, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=55, y=34, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, -55, -34, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-55, y=-34, duration=13
 	delay 1
-	createsprite gBattleAnimSpriteTemplate_83D6350, ANIM_BATTLER_ATTACKER, 2, -55, 34, 13
+	create_stockpile_absorption_orb_sprite ANIM_BATTLER_ATTACKER, 2, x=-55, y=34, duration=13
 	delay 1
 	return
 

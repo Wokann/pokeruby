@@ -568,7 +568,7 @@ const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate =
     .callback = AnimMiniTwinklingStar,
 };
 
-const union AffineAnimCmd gUnknown_08402518[] =
+const union AffineAnimCmd gStockpileDeformMonAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(8, -8, 0, 12),
     AFFINEANIMCMD_FRAME(-16, 16, 0, 12),
@@ -2193,11 +2193,11 @@ static void AnimMiniTwinklingStar_Step(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-void sub_812D674(u8 taskId)
+void AnimTask_StockpileDeformMon(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(0), &gUnknown_08402518);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER), gStockpileDeformMonAffineAnimCmds);
         gTasks[taskId].data[0]++;
     }
     else
