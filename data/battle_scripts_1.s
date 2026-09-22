@@ -4470,6 +4470,6 @@ BattleScript_ActionSelectionItemsCantBeUsed:: @ 81D9B29
 	printselectionstring BATTLE_TEXT_CantUseItems
 	endselectionscript
 
-gUnknown_081D9B2D:: @ 81D9B2D
+BattleScript_FlushMessageBox:: @ 81D9B2D
 	printstring BATTLE_TEXT_Terminator2
 	return

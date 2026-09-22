@@ -4238,8 +4238,6 @@ static void atk48_playstatchangeanimation(void)
     }
 }
 
-#define BattleScript_FlushMessageBox gUnknown_081D9B2D
-
 extern u8 BattleScript_RageIsBuilding[];
 extern u8 BattleScript_DefrostedViaFireMove[];
 extern u8 BattleScript_FlushMessageBox[];
