@@ -105,6 +105,13 @@
 	.4byte \address
 	.endm
 
+	.macro if_side_affecting battler, status, address
+	.byte 0x0f
+	.byte \battler
+	.4byte \status
+	.4byte \address
+	.endm
+
 	.macro if_not_status4 target, status, address
 	.byte 0x10
 	.byte \target
@@ -282,6 +289,11 @@
 	.macro count_alive_pokemon target
 	.byte 0x2c
 	.byte \target
+	.endm
+
+	.macro count_usable_party_mons battler
+	.byte 0x2c
+	.byte \battler
 	.endm
 
 	@ unused

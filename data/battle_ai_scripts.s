@@ -1,3 +1,4 @@
+#include "constants/battle.h"
 #include "constants/abilities.h"
 #include "constants/battle_move_effects.h"
 #include "constants/hold_effects.h"
@@ -206,163 +207,163 @@ AI_CheckBadMove_CheckEffect: @ 81DA14F
 	end
 
 AI_CBM_Sleep: @ 81DA3DE
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_INSOMNIA, Score_Minus10
 	if_equal ABILITY_VITAL_SPIRIT, Score_Minus10
-	if_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_Explosion: @ 81DA3F7
-	if_damage_bonus 0, Score_Minus10
-	get_ability TARGET
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_DAMP, Score_Minus10
-	count_alive_pokemon USER
+	count_usable_party_mons AI_USER
 	if_not_equal 0, AI_CBM_Explosion_End
-	count_alive_pokemon TARGET
+	count_usable_party_mons AI_TARGET
 	if_not_equal 0, Score_Minus10
-	jump Score_Minus1
+	goto Score_Minus1
 
 AI_CBM_Explosion_End: @ 81DA41A
 	end
 
 AI_CBM_Nightmare: @ 81DA41B
-	if_status2 TARGET, S_NIGHTMARE, Score_Minus10
-	if_not_status TARGET, SLP, Score_Minus8
+	if_status2 AI_TARGET, STATUS2_NIGHTMARE, Score_Minus10
+	if_not_status AI_TARGET, STATUS1_SLEEP, Score_Minus8
 	end
 
 AI_CBM_DreamEater: @ 81DA430
-	if_not_status TARGET, SLP, Score_Minus8
-	if_damage_bonus 0, Score_Minus10
+	if_not_status AI_TARGET, STATUS1_SLEEP, Score_Minus8
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
 	end
 
 AI_CBM_BellyDrum: @ 81DA441
-	if_hp_less_than USER, 51, Score_Minus10
+	if_hp_less_than AI_USER, 51, Score_Minus10
 
 AI_CBM_AttackUp: @ 81DA448
-	if_stat_level_equal USER, ATTACK, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_ATK, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_DefenseUp: @ 81DA451
-	if_stat_level_equal USER, DEFENSE, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_DEF, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_SpeedUp: @ 81DA45A
-	if_stat_level_equal USER, SPEED, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPEED, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_SpAtkUp: @ 81DA463
-	if_stat_level_equal USER, SP_ATTACK, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPATK, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_SpDefUp: @ 81DA46C
-	if_stat_level_equal USER, SP_DEFENSE, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_SPDEF, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_AccUp: @ 81DA475
-	if_stat_level_equal USER, ACCURACY, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_ACC, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_EvasionUp: @ 81DA47E
-	if_stat_level_equal USER, EVASION, 12, Score_Minus10
+	if_stat_level_equal AI_USER, STAT_EVASION, MAX_STAT_STAGE, Score_Minus10
 	end
 
 AI_CBM_AttackDown: @ 81DA487
-	if_stat_level_equal TARGET, ATTACK, 0, Score_Minus10
-	get_ability TARGET
+	if_stat_level_equal AI_TARGET, STAT_ATK, MIN_STAT_STAGE, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_HYPER_CUTTER, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_DefenseDown: @ 81DA49C
-	if_stat_level_equal TARGET, DEFENSE, 0, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	if_stat_level_equal AI_TARGET, STAT_DEF, MIN_STAT_STAGE, Score_Minus10
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_SpeedDown: @ 81DA4A9
-	if_stat_level_equal TARGET, SPEED, 0, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	if_stat_level_equal AI_TARGET, STAT_SPEED, MIN_STAT_STAGE, Score_Minus10
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_SpAtkDown: @ 81DA4B6
-	if_stat_level_equal TARGET, SP_ATTACK, 0, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	if_stat_level_equal AI_TARGET, STAT_SPATK, MIN_STAT_STAGE, Score_Minus10
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_SpDefDown: @ 81DA4C3
-	if_stat_level_equal TARGET, SP_DEFENSE, 0, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	if_stat_level_equal AI_TARGET, STAT_SPDEF, MIN_STAT_STAGE, Score_Minus10
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_AccDown: @ 81DA4D0
-	if_stat_level_equal TARGET, ACCURACY, 0, Score_Minus10
-	get_ability TARGET
+	if_stat_level_equal AI_TARGET, STAT_ACC, MIN_STAT_STAGE, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_KEEN_EYE, Score_Minus10
-	jump CheckIfAbilityBlocksStatChange
+	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_EvasionDown: @ 81DA4E5
-	if_stat_level_equal TARGET, EVASION, 0, Score_Minus10
+	if_stat_level_equal AI_TARGET, STAT_EVASION, MIN_STAT_STAGE, Score_Minus10
 
 CheckIfAbilityBlocksStatChange: @ 81DA4ED
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_CLEAR_BODY, Score_Minus10
 	if_equal ABILITY_WHITE_SMOKE, Score_Minus10
 	end
 
 AI_CBM_Haze: @ 81DA4FC
-	if_stat_level_less_than USER, ATTACK, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, DEFENSE, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, SPEED, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, SP_ATTACK, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, SP_DEFENSE, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, ACCURACY, 6, AI_CBM_Haze_End
-	if_stat_level_less_than USER, EVASION, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, ATTACK, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, DEFENSE, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, SPEED, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, SP_ATTACK, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, SP_DEFENSE, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, ACCURACY, 6, AI_CBM_Haze_End
-	if_stat_level_more_than TARGET, EVASION, 6, AI_CBM_Haze_End
-	jump Score_Minus10
+	if_stat_level_less_than AI_USER, STAT_ATK, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_DEF, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_SPEED, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_SPATK, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_SPDEF, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_ACC, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_less_than AI_USER, STAT_EVASION, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_ATK, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_DEF, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_SPEED, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_ACC, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, DEFAULT_STAT_STAGE, AI_CBM_Haze_End
+	goto Score_Minus10
 
 AI_CBM_Haze_End: @ 81DA571
 	end
 
 AI_CBM_Roar: @ 81DA572
-	count_alive_pokemon TARGET
+	count_usable_party_mons AI_TARGET
 	if_equal 0, Score_Minus10
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_SUCTION_CUPS, Score_Minus10
 	end
 
 AI_CBM_Toxic: @ 81DA583
-	get_type ENEMY_TYPE1
+	get_type AI_TYPE1_TARGET
 	if_equal TYPE_STEEL, Score_Minus10
 	if_equal TYPE_POISON, Score_Minus10
-	get_type PLAYER_TYPE1
+	get_type AI_TYPE2_TARGET
 	if_equal TYPE_STEEL, Score_Minus10
 	if_equal TYPE_POISON, Score_Minus10
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_IMMUNITY, Score_Minus10
-	if_status TARGET, SLP | PSN | BRN | FRZ | PAR | TOX, Score_Minus10
+	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	end
 
 AI_CBM_LightScreen: @ 81DA5B2
-	if_status4 USER, S_LIGHT_SCREEN, Score_Minus8
+	if_side_affecting AI_USER, SIDE_STATUS_LIGHTSCREEN, Score_Minus8
 	end
 
 AI_CBM_OneHitKO: @ 81DA5BD
-	if_damage_bonus 0, Score_Minus10
-	get_ability TARGET
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_ability AI_TARGET
 	if_equal ABILITY_STURDY, Score_Minus10
 	if_target_higher_level Score_Minus10
 	end
 
 AI_CBM_Magnitude: @ 81DA5D2
-	get_ability TARGET
+	get_ability AI_TARGET
 	if_equal ABILITY_LEVITATE, Score_Minus10
 
 AI_CBM_HighRiskForDamage: @ 81DA5DA
-	if_damage_bonus 0, Score_Minus10
-	get_ability TARGET
+	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	get_ability AI_TARGET
 	if_not_equal ABILITY_WONDER_GUARD, AI_CBM_HighRiskForDamage_End
-	if_damage_bonus 80, AI_CBM_HighRiskForDamage_End
-	jump Score_Minus10
+	if_type_effectiveness AI_EFFECTIVENESS_x2, AI_CBM_HighRiskForDamage_End
+	goto Score_Minus10
 
 AI_CBM_HighRiskForDamage_End: @ 81DA5F3
 	end

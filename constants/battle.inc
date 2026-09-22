@@ -88,3 +88,11 @@
 	enum SP_DEFENSE
 	enum ACCURACY
 	enum EVASION
+
+.equiv STAT_ATK,     ATTACK
+.equiv STAT_DEF,     DEFENSE
+.equiv STAT_SPEED,   SPEED
+.equiv STAT_SPATK,   SP_ATTACK
+.equiv STAT_SPDEF,   SP_DEFENSE
+.equiv STAT_ACC,     ACCURACY
+.equiv STAT_EVASION, EVASION
