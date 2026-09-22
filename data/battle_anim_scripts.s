@@ -3190,26 +3190,26 @@ Move_DESTINY_BOND: @ 81CBA2C
 Move_ENDURE: @ 81CBA87
 	loadspritegfx ANIM_TAG_FOCUS_ENERGY
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 2, 0, 11, 31
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	call EndureFlamesAnim
+	call EndureEffect
 	waitforvisualfinish
 	end
 
-EndureFlamesAnim:
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_BATTLER_ATTACKER, 2, 0, -24, 26, 2
+EndureEffect:
+	createsprite gEndureEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -24, 26, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_BATTLER_ATTACKER, 2, 0, 14, 28, 1
+	createsprite gEndureEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 14, 28, 1
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_BATTLER_ATTACKER, 2, 0, -5, 10, 2
+	createsprite gEndureEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -5, 10, 2
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_BATTLER_ATTACKER, 2, 0, 28, 26, 3
+	createsprite gEndureEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 28, 26, 3
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_EndureFlame, ANIM_BATTLER_ATTACKER, 2, 0, -12, 0, 1
+	createsprite gEndureEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -12, 0, 1
 	return
 
 Move_CHARM: @ 81CBB1B
@@ -7361,13 +7361,13 @@ Move_LICK: @ 81D1B32
 Move_FOCUS_ENERGY: @ 81D1B59
 	loadspritegfx ANIM_TAG_FOCUS_ENERGY
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 2, 0, 11, 32767
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_WHITE
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	call EndureFlamesAnim
+	call EndureEffect
 	waitforvisualfinish
 	end
 
@@ -10630,13 +10630,13 @@ General_DoomDesireHit: @ 81D6934
 General_FocusPunchSetUp: @ 81D69F9
 	loadspritegfx ANIM_TAG_FOCUS_ENERGY
 	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 2, 0, 11, 31
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=2, num_blends=2, initial_blend_y=0, target_blend_y=11, color=RGB_RED
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_ATTACKER, 1, 0, 32, 1
-	call EndureFlamesAnim
+	call EndureEffect
 	delay 8
-	call EndureFlamesAnim
+	call EndureEffect
 	waitforvisualfinish
 	end
 
