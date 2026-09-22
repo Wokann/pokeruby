@@ -296,7 +296,7 @@ const struct SpriteTemplate gPowderSnowSnowballSpriteTemplate =
     .callback = AnimMoveParticleBeyondTarget,
 };
 
-const union AnimCmd gSpriteAnim_83D9CF0[] =
+static const union AnimCmd sAnim_IceGroundSpike[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(2, 5),
@@ -308,17 +308,17 @@ const union AnimCmd gSpriteAnim_83D9CF0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9D10[] =
+static const union AnimCmd *const sAnims_IceGroundSpike[] =
 {
-    gSpriteAnim_83D9CF0,
+    sAnim_IceGroundSpike,
 };
 
-const struct SpriteTemplate gIceSpikeSpriteTemplate =
+const struct SpriteTemplate gIceGroundSpikeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ICE_SPIKES,
     .paletteTag = ANIM_TAG_ICE_SPIKES,
     .oam = &gOamData_837E084,
-    .anims = gSpriteAnimTable_83D9D10,
+    .anims = sAnims_IceGroundSpike,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimWaveFromCenterOfTarget,

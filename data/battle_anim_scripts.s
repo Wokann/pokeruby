@@ -2245,7 +2245,7 @@ Move_ICY_WIND: @ 81CA650
 	call _81CA6A8
 	playsewithpan SE_M_GUST2, SOUND_PAN_TARGET
 	delay 55
-	call Unknown_81D5E0E
+	call IceSpikesEffectLong
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	restorebg
@@ -9994,44 +9994,44 @@ IceCrystalEffectLong: @ 81D5CBA
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	return
 
-Unknown_81D5D8A: @ 81D5D8A
+IceSpikesEffectShort: @ Unused
 	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 0
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 32, 24, 0
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -32, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 32, 24, 0
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -32, 24, 0
 	return
 
-Unknown_81D5E0E: @ 81D5E0E Icy Wind animates end bit with the wavy shiz
+IceSpikesEffectLong:
 	loopsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET, 6, 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 8, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -16, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 32, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -32, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 32, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -32, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 40, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -40, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 40, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -40, 24, 1
 	delay 4
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 48, 24, 1
-	createsprite gIceSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -48, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, 48, 24, 1
+	createsprite gIceGroundSpikeSpriteTemplate, ANIM_BATTLER_TARGET, 2, -48, 24, 1
 	return
 
 GrantingStarsEffect: @ 81D5ECA
