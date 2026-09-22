@@ -48,7 +48,7 @@ gContestAIs:: @ 81DC118
 @ Unreferenced AI routine to encourage moves that improve condition on the first
 @ turn. Additionally, it checks the appeal order of the user and the effect
 @ type, but the code is buggy and doesn't affect the score.
-	if_turn_not_eq 0, ContestUnreferenced_80
+	if_appeal_num_not_eq 0, ContestUnreferenced_80
 	if_effect_not_eq CONTEST_EFFECT_IMPROVE_CONDITION_PREVENT_NERVOUSNESS, ContestUnreferenced_80
 	score +10
 ContestUnreferenced_80:
@@ -56,18 +56,18 @@ ContestUnreferenced_80:
 	end
 ContestUnreferenced_0D:
 	if_user_order_more_than MON_2, ContestUnreferenced_end
-	if_effect_type_not_eq 2, ContestUnreferenced_end
-	if_effect_type_not_eq 3, ContestUnreferenced_end
+	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MON, ContestUnreferenced_end
+	if_effect_type_not_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, ContestUnreferenced_end
 	score +10 @ unreachable
 ContestUnreferenced_end:
 	end
 
 @ Unreferenced AI routine that doesn't make much sense.
-	if_turn_eq 0, ContestUnreferenced_0F_1
-	if_turn_eq 1, ContestUnreferenced_0F_2
-	if_turn_eq 2, ContestUnreferenced_0F_3
-	if_turn_eq 3, ContestUnreferenced_0F_4
-	if_turn_eq 4, ContestUnreferenced_0F_5
+	if_appeal_num_eq 0, ContestUnreferenced_0F_1
+	if_appeal_num_eq 1, ContestUnreferenced_0F_2
+	if_appeal_num_eq 2, ContestUnreferenced_0F_3
+	if_appeal_num_eq 3, ContestUnreferenced_0F_4
+	if_last_appeal ContestUnreferenced_0F_5
 	end
 ContestUnreferenced_0F_1:
 	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
@@ -76,12 +76,12 @@ ContestUnreferenced_0F_1:
 	if_user_order_not_eq MON_4, ContestUnreferenced_2B_1
 	end
 ContestUnreferenced_2B_1:
-	if_effect_type_eq 1, ContestUnreferenced_score
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
 	end
 ContestUnreferenced_2B_2:
-	if_effect_type_eq 1, ContestUnreferenced_score
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
 	end
-	if_effect_type_eq 1, ContestUnreferenced_score
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, ContestUnreferenced_score
 	end
 ContestUnreferenced_0F_2:
 	if_user_order_not_eq MON_1, ContestUnreferenced_2B_1
@@ -164,7 +164,7 @@ AI_contest7D_1_081DC2AB:
 	end
 AI_contest0F_2_081DC2AB:
 	if_user_order_not_eq MON_1, AI_contest7D_3_081DC2AB
-	if_turn_eq 4, AI_score_081DC2AB
+	if_last_appeal AI_score_081DC2AB
 AI_contest7D_2_081DC2AB:
 	if_random 51, AI_end_081DC2AB
 	score +10
@@ -220,22 +220,22 @@ AI_score_081DC348:
 	score +25
 	end
 AI_contest04_1_081DC348:
-	if_turn_eq 4, AI_contest7D_081DC348
+	if_last_appeal AI_contest7D_081DC348
 	if_random 150, AI_end_081DC348
 	score +10
 	end
 AI_contest04_2_081DC348:
-	if_turn_eq 4, AI_contest7D_081DC348
+	if_last_appeal AI_contest7D_081DC348
 	if_random 125, AI_end_081DC348
 	score +10
 	end
 AI_contest04_3_081DC348:
-	if_turn_eq 4, AI_contest7D_081DC348
+	if_last_appeal AI_contest7D_081DC348
 	if_random 50, AI_end_081DC348
 	score +10
 	end
 AI_contest04_4_081DC348:
-	if_turn_eq 4, AI_contest7D_081DC348
+	if_last_appeal AI_contest7D_081DC348
 	score +10
 	end
 AI_contest7D_081DC348:
@@ -300,7 +300,7 @@ ContestEffect3:
 	if_random 50, ContestEffectEnd
 	score +15
 	end
-	if_turn_eq 4, ContestEffect3_7D
+	if_last_appeal ContestEffect3_7D
 	if_random 220, ContestEffect3_score
 	score +10
 	end
@@ -322,8 +322,8 @@ ContestEffect38_score1:
 	score -10
 	end
 ContestEffect38_contest04:
-	if_turn_eq 4, ContestEffect38_score2
-	if_turn_eq 0, ContestEffect38_random
+	if_last_appeal ContestEffect38_score2
+	if_appeal_num_eq 0, ContestEffect38_random
 	if_move_used_count_eq 1, ContestEffectEnd
 	if_random 125, ContestEffectEnd
 	score +10
@@ -340,7 +340,7 @@ ContestEffect47:
 	if_move_used_count_eq 1, ContestEffectEnd
 	if_user_order_eq MON_1, ContestEffect47_random
 	if_user_order_eq MON_2, ContestEffect47_random
-	if_turn_not_eq 4, ContestEffectEnd
+	if_not_last_appeal ContestEffectEnd
 	if_user_has_exciting_move ContestEffectEnd
 	if_excitement_less_than 1, ContestEffectEnd
 	score +10
@@ -407,7 +407,7 @@ ContestEffect46:
 	if_user_order_more_than MON_1, ContestEffect46_score4
 	end
 ContestEffect46_05:
-	if_turn_not_eq 0, ContestEffect46_score1
+	if_appeal_num_not_eq 0, ContestEffect46_score1
 	if_excitement_eq 4, ContestEffect46_score2
 	if_excitement_eq 3, ContestEffect46_score3
 	end
@@ -564,7 +564,7 @@ ContestEffect_FollowingMonsNervous_CheckMon2:
 	end
 
 ContestEffect18:
-	if_turn_eq 4, ContestEffect18_score1
+	if_last_appeal ContestEffect18_score1
 	jump ContestEffect18_0E
 	end
 ContestEffect18_score1:
@@ -761,11 +761,11 @@ ContestEffect2_4_score3:
 	end
 
 ContestEffect2_2:
-	if_turn_eq 0, ContestEffect2_2_score1
-	if_turn_eq 1, ContestEffect2_2_score2
-	if_turn_eq 2, ContestEffect2_2_score3
-	if_turn_eq 3, ContestEffect2_2_score4
-	if_turn_eq 4, ContestEffect2_2_score5
+	if_appeal_num_eq 0, ContestEffect2_2_score1
+	if_appeal_num_eq 1, ContestEffect2_2_score2
+	if_appeal_num_eq 2, ContestEffect2_2_score3
+	if_appeal_num_eq 3, ContestEffect2_2_score4
+	if_last_appeal ContestEffect2_2_score5
 	end
 ContestEffect2_2_score1:
 	if_random 20, ContestEffectEnd2
@@ -800,7 +800,7 @@ AI_CheckOrder:
 AI_effectcheck1_081DCA4C:
 	if_effect_eq CONTEST_EFFECT_BETTER_IF_FIRST, AI_score1_081DCA4C
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score2_081DCA4C
-	if_effect_type_eq 1, AI_random1_081DCA4C
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_random1_081DCA4C
 	end
 AI_score1_081DCA4C:
 	score +15
@@ -814,7 +814,7 @@ AI_random1_081DCA4C:
 	end
 AI_effectcheck2_081DCA4C:
 	if_effect_eq CONTEST_EFFECT_BETTER_WHEN_LATER, AI_score3_081DCA4C
-	if_effect_type_eq 1, AI_random2_081DCA4C
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_random2_081DCA4C
 	end
 AI_score3_081DCA4C:
 	score -5
@@ -837,8 +837,8 @@ AI_effectcheck4_081DCA4C:
 	if_effect_eq CONTEST_EFFECT_APPEAL_AS_GOOD_AS_PREV_ONES, AI_score5_081DCA4C
 	if_effect_eq CONTEST_EFFECT_USER_MORE_EASILY_STARTLED, AI_score5_081DCA4C
 	if_effect_eq CONTEST_EFFECT_JAMS_OTHERS_BUT_MISS_ONE_TURN, AI_score7_081DCA4C
-	if_effect_type_eq 1, AI_score6_081DCA4C
-	if_effect_type_eq 3, AI_random3_081DCA4C
+	if_effect_type_eq CONTEST_EFFECT_TYPE_AVOID_STARTLE, AI_score6_081DCA4C
+	if_effect_type_eq CONTEST_EFFECT_TYPE_STARTLE_MONS, AI_random3_081DCA4C
 	end
 AI_score5_081DCA4C:
 	score +15

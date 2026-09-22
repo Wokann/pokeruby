@@ -5,34 +5,42 @@
 	.byte \score
 	.endm
 
-@ turn (AKA "Appeal No.")
+@ appeal number
 
-	.macro get_turn
+	.macro get_appeal_num
 	.byte 0x01
 	.endm
 
-	.macro if_turn_less_than param, addr
+	.macro if_appeal_num_less_than num, destination
 	.byte 0x02
-	.byte \param
-	.4byte \addr
+	.byte \num
+	.4byte \destination
 	.endm
 
-	.macro if_turn_more_than param, addr
+	.macro if_appeal_num_more_than num, destination
 	.byte 0x03
-	.byte \param
-	.4byte \addr
+	.byte \num
+	.4byte \destination
 	.endm
 
-	.macro if_turn_eq param, addr
+	.macro if_appeal_num_eq num, destination
 	.byte 0x04
-	.byte \param
-	.4byte \addr
+	.byte \num
+	.4byte \destination
 	.endm
 
-	.macro if_turn_not_eq param, addr
+	.macro if_appeal_num_not_eq num, destination
 	.byte 0x05
-	.byte \param
-	.4byte \addr
+	.byte \num
+	.4byte \destination
+	.endm
+
+	.macro if_last_appeal destination
+	if_appeal_num_eq CONTEST_LAST_APPEAL, \destination
+	.endm
+
+	.macro if_not_last_appeal destination
+	if_appeal_num_not_eq CONTEST_LAST_APPEAL, \destination
 	.endm
 
 @ audience excitement
