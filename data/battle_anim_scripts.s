@@ -8496,28 +8496,28 @@ HyperVoiceEffect:
 
 Move_SAND_TOMB: @ 81D35D2
 	loadspritegfx ANIM_TAG_MUD_SAND
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 0, 7, rgb(19, 17, 0)
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 43, 1
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(19, 17, 0)
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 43, 1
 	playsewithpan SE_M_SAND_TOMB, SOUND_PAN_TARGET
-	call _81D361F
-	call _81D361F
-	call _81D361F
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
 	delay 22
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 7, 0, rgb(19, 17, 0)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(19, 17, 0)
 	waitforvisualfinish
 	end
-_81D361F:
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 32, 528, 30, 10, 50, 1
+SandTombSwirlingDirt:
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 32, 528, 30, 10, 50, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 36, 480, 20, 13, -46, 1
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 36, 480, 20, 13, -46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 37, 576, 20, 5, 42, 1
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 37, 576, 20, 5, 42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 35, 400, 25, 8, -42, 1
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 35, 400, 25, 8, -42, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 32, 512, 25, 13, 46, 1
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 32, 512, 25, 13, 46, ANIM_BATTLER_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC7C, ANIM_BATTLER_TARGET, 2, 0, 37, 464, 30, 12, -50, 1
+	createsprite gSwirlingDirtSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 37, 464, 30, 12, -50, ANIM_BATTLER_TARGET
 	delay 2
 	return
 
@@ -10425,13 +10425,13 @@ Status_Clamp:
 	end
 Status_SandTomb:
 	loadspritegfx ANIM_TAG_MUD_SAND
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 0, 7, rgb(19, 17, 0)
-	createvisualtask AnimTask_ShakeMon, 5, 1, 0, 2, 30, 1
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=0, target_blend_y=7, color=RGB(19, 17, 0)
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_BATTLER_TARGET, 0, 2, 30, 1
 	playsewithpan SE_M_SAND_TOMB, SOUND_PAN_TARGET
-	call _81D361F
-	call _81D361F
+	call SandTombSwirlingDirt
+	call SandTombSwirlingDirt
 	delay 22
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 0, 4, 2, 7, 0, rgb(19, 17, 0)
+	simple_palette_blend unused_subpriority_offset=0, selector=F_PAL_TARGET, delay=2, initial_blend_y=7, target_blend_y=0, color=RGB(19, 17, 0)
 	waitforvisualfinish
 	stopsound
 	end

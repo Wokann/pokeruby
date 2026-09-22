@@ -90,7 +90,7 @@ const struct SpriteTemplate gRockFragmentSpriteTemplate =
     .callback = AnimRockFragment,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DAC7C =
+const struct SpriteTemplate gSwirlingDirtSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUD_SAND,
     .paletteTag = ANIM_TAG_MUD_SAND,
