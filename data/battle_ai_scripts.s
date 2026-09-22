@@ -1029,30 +1029,30 @@ AI_CV_SpDefUp_PhysicalTypes: @ 81DADBE
 	.byte -1
 
 AI_CV_AccuracyUp: @ 81DADC8
-	if_stat_level_less_than USER, ACCURACY, 9, AI_CV_AccuracyUp2
+	if_stat_level_less_than AI_USER, STAT_ACC, 9, AI_CV_AccuracyUp2
 	if_random_less_than 50, AI_CV_AccuracyUp2
 	score -2
 
 AI_CV_AccuracyUp2: @ 81DADD8
-	if_hp_more_than USER, 70, AI_CV_AccuracyUp_End
+	if_hp_more_than AI_USER, 70, AI_CV_AccuracyUp_End
 	score -2
 
 AI_CV_AccuracyUp_End: @ 81DADE1
 	end
 
 AI_CV_EvasionUp: @ 81DADE2
-	if_hp_less_than USER, 90, AI_CV_EvasionUp2
+	if_hp_less_than AI_USER, 90, AI_CV_EvasionUp2
 	if_random_less_than 100, AI_CV_EvasionUp2
 	score +3
 
 AI_CV_EvasionUp2: @ 81DADF1
-	if_stat_level_less_than USER, EVASION, 9, AI_CV_EvasionUp3
+	if_stat_level_less_than AI_USER, STAT_EVASION, 9, AI_CV_EvasionUp3
 	if_random_less_than 128, AI_CV_EvasionUp3
 	score -1
 
 AI_CV_EvasionUp3: @ 81DAE01
-	if_not_status TARGET, TOX, AI_CV_EvasionUp5
-	if_hp_more_than USER, 50, AI_CV_EvasionUp4
+	if_not_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_EvasionUp5
+	if_hp_more_than AI_USER, 50, AI_CV_EvasionUp4
 	if_random_less_than 80, AI_CV_EvasionUp5
 
 AI_CV_EvasionUp4: @ 81DAE18
@@ -1060,25 +1060,25 @@ AI_CV_EvasionUp4: @ 81DAE18
 	score +3
 
 AI_CV_EvasionUp5: @ 81DAE20
-	if_not_status3 TARGET, S_LEECH_SEED, AI_CV_EvasionUp6
+	if_not_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_EvasionUp6
 	if_random_less_than 70, AI_CV_EvasionUp6
 	score +3
 
 AI_CV_EvasionUp6: @ 81DAE32
-	if_not_status3 USER, S_ROOTED, AI_CV_EvasionUp7
+	if_not_status3 AI_USER, STATUS3_ROOTED, AI_CV_EvasionUp7
 	if_random_less_than 128, AI_CV_EvasionUp7
 	score +2
 
 AI_CV_EvasionUp7: @ 81DAE44
-	if_not_status2 TARGET, S_CURSED, AI_CV_EvasionUp8
+	if_not_status2 AI_TARGET, STATUS2_CURSED, AI_CV_EvasionUp8
 	if_random_less_than 70, AI_CV_EvasionUp8
 	score +3
 
 AI_CV_EvasionUp8: @ 81DAE56
-	if_hp_more_than USER, 70, AI_CV_EvasionUp_End
-	if_stat_level_equal USER, EVASION, 6, AI_CV_EvasionUp_End
-	if_hp_less_than USER, 40, AI_CV_EvasionUp_ScoreDown2
-	if_hp_less_than TARGET, 40, AI_CV_EvasionUp_ScoreDown2
+	if_hp_more_than AI_USER, 70, AI_CV_EvasionUp_End
+	if_stat_level_equal AI_USER, STAT_EVASION, DEFAULT_STAT_STAGE, AI_CV_EvasionUp_End
+	if_hp_less_than AI_USER, 40, AI_CV_EvasionUp_ScoreDown2
+	if_hp_less_than AI_TARGET, 40, AI_CV_EvasionUp_ScoreDown2
 	if_random_less_than 70, AI_CV_EvasionUp_End
 
 AI_CV_EvasionUp_ScoreDown2: @ 81DAE79
@@ -1088,11 +1088,11 @@ AI_CV_EvasionUp_End: @ 81DAE7B
 	end
 
 AI_CV_AlwaysHit: @ 81DAE7C
-	if_stat_level_more_than TARGET, EVASION, 10, AI_CV_AlwaysHit_ScoreUp1
-	if_stat_level_less_than USER, ACCURACY, 2, AI_CV_AlwaysHit_ScoreUp1
-	if_stat_level_more_than TARGET, EVASION, 8, AI_CV_AlwaysHit2
-	if_stat_level_less_than USER, ACCURACY, 4, AI_CV_AlwaysHit2
-	jump AI_CV_AlwaysHit_End
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 10, AI_CV_AlwaysHit_ScoreUp1
+	if_stat_level_less_than AI_USER, STAT_ACC, 2, AI_CV_AlwaysHit_ScoreUp1
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, AI_CV_AlwaysHit2
+	if_stat_level_less_than AI_USER, STAT_ACC, 4, AI_CV_AlwaysHit2
+	goto AI_CV_AlwaysHit_End
 
 AI_CV_AlwaysHit_ScoreUp1: @ 81DAEA1
 	score +1
@@ -1105,32 +1105,32 @@ AI_CV_AlwaysHit_End: @ 81DAEAB
 	end
 
 AI_CV_AttackDown: @ 81DAEAC
-	if_stat_level_equal TARGET, ATTACK, 6, AI_CV_AttackDown3
+	if_stat_level_equal AI_TARGET, STAT_ATK, DEFAULT_STAT_STAGE, AI_CV_AttackDown3
 	score -1
-	if_hp_more_than USER, 90, AI_CV_AttackDown2
+	if_hp_more_than AI_USER, 90, AI_CV_AttackDown2
 	score -1
 
 AI_CV_AttackDown2: @ 81DAEBF
-	if_stat_level_more_than TARGET, ATTACK, 3, AI_CV_AttackDown3
+	if_stat_level_more_than AI_TARGET, STAT_ATK, 3, AI_CV_AttackDown3
 	if_random_less_than 50, AI_CV_AttackDown3
 	score -2
 
 AI_CV_AttackDown3: @ 81DAECF
-	if_hp_more_than TARGET, 70, AI_CV_AttackDown4
+	if_hp_more_than AI_TARGET, 70, AI_CV_AttackDown4
 	score -2
 
 AI_CV_AttackDown4: @ 81DAED8
-	get_type ENEMY_TYPE1
-	if_in_bytes AI_CV_AttackDown_UnknownTypeList, AI_CV_AttackDown_End
-	get_type PLAYER_TYPE1
-	if_in_bytes AI_CV_AttackDown_UnknownTypeList, AI_CV_AttackDown_End
+	get_target_type1
+	if_in_bytes AI_CV_AttackDown_PhysicalTypeList, AI_CV_AttackDown_End
+	get_target_type2
+	if_in_bytes AI_CV_AttackDown_PhysicalTypeList, AI_CV_AttackDown_End
 	if_random_less_than 50, AI_CV_AttackDown_End
 	score -2
 
 AI_CV_AttackDown_End: @ 81DAEF6
 	end
 
-AI_CV_AttackDown_UnknownTypeList: @ 81DAEF7
+AI_CV_AttackDown_PhysicalTypeList: @ 81DAEF7
 @ why these types specifically?
 	.byte TYPE_NORMAL
 	.byte TYPE_FIGHTING
@@ -1141,15 +1141,15 @@ AI_CV_AttackDown_UnknownTypeList: @ 81DAEF7
 	.byte -1
 
 AI_CV_DefenseDown: @ 81DAEFE
-	if_hp_less_than USER, 70, AI_CV_DefenseDown2
-	if_stat_level_more_than TARGET, DEFENSE, 3, AI_CV_DefenseDown3
+	if_hp_less_than AI_USER, 70, AI_CV_DefenseDown2
+	if_stat_level_more_than AI_TARGET, STAT_DEF, 3, AI_CV_DefenseDown3
 
 AI_CV_DefenseDown2: @ 81DAF0D
 	if_random_less_than 50, AI_CV_DefenseDown3
 	score -2
 
 AI_CV_DefenseDown3: @ 81DAF15
-	if_hp_more_than TARGET, 70, AI_CV_DefenseDown_End
+	if_hp_more_than AI_TARGET, 70, AI_CV_DefenseDown_End
 	score -2
 
 AI_CV_DefenseDown_End: @ 81DAF1E
@@ -1164,7 +1164,7 @@ AI_CV_SpeedDownFromChance: @ 81DAF1F
 AI_CV_SpeedDown: @ 81DAF35
 	if_would_go_first USER, AI_CV_SpeedDown2
 	score -3
-	jump AI_CV_SpeedDown_End
+	goto AI_CV_SpeedDown_End
 
 AI_CV_SpeedDown2: @ 81DAF42
 	if_random_less_than 70, AI_CV_SpeedDown_End
@@ -1174,24 +1174,24 @@ AI_CV_SpeedDown_End: @ 81DAF4A
 	end
 
 AI_CV_SpAtkDown: @ 81DAF4B
-	if_stat_level_equal TARGET, ATTACK, 6, AI_CV_SpAtkDown3
+	if_stat_level_equal AI_TARGET, STAT_ATK, DEFAULT_STAT_STAGE, AI_CV_SpAtkDown3
 	score -1
-	if_hp_more_than USER, 90, AI_CV_SpAtkDown2
+	if_hp_more_than AI_USER, 90, AI_CV_SpAtkDown2
 	score -1
 
 AI_CV_SpAtkDown2: @ 81DAF5E
-	if_stat_level_more_than TARGET, SP_ATTACK, 3, AI_CV_SpAtkDown3
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, 3, AI_CV_SpAtkDown3
 	if_random_less_than 50, AI_CV_SpAtkDown3
 	score -2
 
 AI_CV_SpAtkDown3: @ 81DAF6E
-	if_hp_more_than TARGET, 70, AI_CV_SpAtkDown4
+	if_hp_more_than AI_TARGET, 70, AI_CV_SpAtkDown4
 	score -2
 
 AI_CV_SpAtkDown4: @ 81DAF77
-	get_type ENEMY_TYPE1
+	get_target_type1
 	if_in_bytes AI_CV_SpAtkDown_SpecialTypeList, AI_CV_SpAtkDown_End
-	get_type PLAYER_TYPE1
+	get_target_type2
 	if_in_bytes AI_CV_SpAtkDown_SpecialTypeList, AI_CV_SpAtkDown_End
 	if_random_less_than 50, AI_CV_SpAtkDown_End
 	score -2
@@ -1211,58 +1211,58 @@ AI_CV_SpAtkDown_SpecialTypeList: @ 81DAF96
 	.byte -1
 
 AI_CV_SpDefDown: @ 81DAF9F
-	if_hp_less_than USER, 70, AI_CV_SpDefDown2
-	if_stat_level_more_than TARGET, SP_DEFENSE, 3, AI_CV_SpDefDown3
+	if_hp_less_than AI_USER, 70, AI_CV_SpDefDown2
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 3, AI_CV_SpDefDown3
 
 AI_CV_SpDefDown2: @ 81DAFAE
 	if_random_less_than 50, AI_CV_SpDefDown3
 	score -2
 
 AI_CV_SpDefDown3: @ 81DAFB6
-	if_hp_more_than TARGET, 70, AI_CV_SpDefDown_End
+	if_hp_more_than AI_TARGET, 70, AI_CV_SpDefDown_End
 	score -2
 
 AI_CV_SpDefDown_End: @ 81DAFBF
 	end
 
 AI_CV_AccuracyDown: @ 81DAFC0
-	if_hp_less_than USER, 70, AI_CV_AccuracyDown2
-	if_hp_more_than TARGET, 70, AI_CV_AccuracyDown3
+	if_hp_less_than AI_USER, 70, AI_CV_AccuracyDown2
+	if_hp_more_than AI_TARGET, 70, AI_CV_AccuracyDown3
 
 AI_CV_AccuracyDown2: @ 81DAFCE
 	if_random_less_than 100, AI_CV_AccuracyDown3
 	score -1
 
 AI_CV_AccuracyDown3: @ 81DAFD6
-	if_stat_level_more_than USER, ACCURACY, 4, AI_CV_AccuracyDown4
+	if_stat_level_more_than AI_USER, STAT_ACC, 4, AI_CV_AccuracyDown4
 	if_random_less_than 80, AI_CV_AccuracyDown4
 	score -2
 
 AI_CV_AccuracyDown4: @ 81DAFE6
-	if_not_status TARGET, TOX, AI_CV_AccuracyDown5
+	if_not_status AI_TARGET, STATUS1_TOXIC_POISON, AI_CV_AccuracyDown5
 	if_random_less_than 70, AI_CV_AccuracyDown5
 	score +2
 
 AI_CV_AccuracyDown5: @ 81DAFF8
-	if_not_status3 TARGET, S_LEECH_SEED, AI_CV_AccuracyDown6
+	if_not_status3 AI_TARGET, STATUS3_LEECHSEED, AI_CV_AccuracyDown6
 	if_random_less_than 70, AI_CV_AccuracyDown6
 	score +2
 
 AI_CV_AccuracyDown6: @ 81DB00A
-	if_not_status3 USER, S_ROOTED, AI_CV_AccuracyDown7
+	if_not_status3 AI_USER, STATUS3_ROOTED, AI_CV_AccuracyDown7
 	if_random_less_than 128, AI_CV_AccuracyDown7
 	score +1
 
 AI_CV_AccuracyDown7: @ 81DB01C
-	if_not_status2 TARGET, S_CURSED, AI_CV_AccuracyDown8
+	if_not_status2 AI_TARGET, STATUS2_CURSED, AI_CV_AccuracyDown8
 	if_random_less_than 70, AI_CV_AccuracyDown8
 	score +2
 
 AI_CV_AccuracyDown8: @ 81DB02E
-	if_hp_more_than USER, 70, AI_CV_AccuracyDown_End
-	if_stat_level_equal TARGET, ACCURACY, 6, AI_CV_AccuracyDown_End
-	if_hp_less_than USER, 40, AI_CV_AccuracyDown_ScoreDown2
-	if_hp_less_than TARGET, 40, AI_CV_AccuracyDown_ScoreDown2
+	if_hp_more_than AI_USER, 70, AI_CV_AccuracyDown_End
+	if_stat_level_equal AI_TARGET, STAT_ACC, DEFAULT_STAT_STAGE, AI_CV_AccuracyDown_End
+	if_hp_less_than AI_USER, 40, AI_CV_AccuracyDown_ScoreDown2
+	if_hp_less_than AI_TARGET, 40, AI_CV_AccuracyDown_ScoreDown2
 	if_random_less_than 70, AI_CV_AccuracyDown_End
 
 AI_CV_AccuracyDown_ScoreDown2: @ 81DB051
@@ -1272,51 +1272,51 @@ AI_CV_AccuracyDown_End: @ 81DB053
 	end
 
 AI_CV_EvasionDown: @ 81DB054
-	if_hp_less_than USER, 70, AI_CV_EvasionDown2
-	if_stat_level_more_than TARGET, EVASION, 3, AI_CV_EvasionDown3
+	if_hp_less_than AI_USER, 70, AI_CV_EvasionDown2
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 3, AI_CV_EvasionDown3
 
 AI_CV_EvasionDown2: @ 81DB063
 	if_random_less_than 50, AI_CV_EvasionDown3
 	score -2
 
 AI_CV_EvasionDown3: @ 81DB06B
-	if_hp_more_than TARGET, 70, AI_CV_EvasionDown_End
+	if_hp_more_than AI_TARGET, 70, AI_CV_EvasionDown_End
 	score -2
 
 AI_CV_EvasionDown_End: @ 81DB074
 	end
 
 AI_CV_Haze: @ 81DB075
-	if_stat_level_more_than USER, ATTACK, 8, AI_CV_Haze2
-	if_stat_level_more_than USER, DEFENSE, 8, AI_CV_Haze2
-	if_stat_level_more_than USER, SP_ATTACK, 8, AI_CV_Haze2
-	if_stat_level_more_than USER, SP_DEFENSE, 8, AI_CV_Haze2
-	if_stat_level_more_than USER, EVASION, 8, AI_CV_Haze2
-	if_stat_level_less_than TARGET, ATTACK, 4, AI_CV_Haze2
-	if_stat_level_less_than TARGET, DEFENSE, 4, AI_CV_Haze2
-	if_stat_level_less_than TARGET, SP_ATTACK, 4, AI_CV_Haze2
-	if_stat_level_less_than TARGET, SP_DEFENSE, 4, AI_CV_Haze2
-	if_stat_level_less_than TARGET, ACCURACY, 4, AI_CV_Haze2
-	jump AI_CV_Haze3
+	if_stat_level_more_than AI_USER, STAT_ATK, 8, AI_CV_Haze2
+	if_stat_level_more_than AI_USER, STAT_DEF, 8, AI_CV_Haze2
+	if_stat_level_more_than AI_USER, STAT_SPATK, 8, AI_CV_Haze2
+	if_stat_level_more_than AI_USER, STAT_SPDEF, 8, AI_CV_Haze2
+	if_stat_level_more_than AI_USER, STAT_EVASION, 8, AI_CV_Haze2
+	if_stat_level_less_than AI_TARGET, STAT_ATK, 4, AI_CV_Haze2
+	if_stat_level_less_than AI_TARGET, STAT_DEF, 4, AI_CV_Haze2
+	if_stat_level_less_than AI_TARGET, STAT_SPATK, 4, AI_CV_Haze2
+	if_stat_level_less_than AI_TARGET, STAT_SPDEF, 4, AI_CV_Haze2
+	if_stat_level_less_than AI_TARGET, STAT_ACC, 4, AI_CV_Haze2
+	goto AI_CV_Haze3
 
 AI_CV_Haze2: @ 81DB0CA
 	if_random_less_than 50, AI_CV_Haze3
 	score -3
 
 AI_CV_Haze3: @ 81DB0D2
-	if_stat_level_more_than TARGET, ATTACK, 8, AI_CV_Haze4
-	if_stat_level_more_than TARGET, DEFENSE, 8, AI_CV_Haze4
-	if_stat_level_more_than TARGET, SP_ATTACK, 8, AI_CV_Haze4
-	if_stat_level_more_than TARGET, SP_DEFENSE, 8, AI_CV_Haze4
-	if_stat_level_more_than TARGET, EVASION, 8, AI_CV_Haze4
-	if_stat_level_less_than USER, ATTACK, 4, AI_CV_Haze4
-	if_stat_level_less_than USER, DEFENSE, 4, AI_CV_Haze4
-	if_stat_level_less_than USER, SP_ATTACK, 4, AI_CV_Haze4
-	if_stat_level_less_than USER, SP_DEFENSE, 4, AI_CV_Haze4
-	if_stat_level_less_than USER, ACCURACY, 4, AI_CV_Haze4
+	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, AI_CV_Haze4
+	if_stat_level_more_than AI_TARGET, STAT_DEF, 8, AI_CV_Haze4
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, 8, AI_CV_Haze4
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 8, AI_CV_Haze4
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, AI_CV_Haze4
+	if_stat_level_less_than AI_USER, STAT_ATK, 4, AI_CV_Haze4
+	if_stat_level_less_than AI_USER, STAT_DEF, 4, AI_CV_Haze4
+	if_stat_level_less_than AI_USER, STAT_SPATK, 4, AI_CV_Haze4
+	if_stat_level_less_than AI_USER, STAT_SPDEF, 4, AI_CV_Haze4
+	if_stat_level_less_than AI_USER, STAT_ACC, 4, AI_CV_Haze4
 	if_random_less_than 50, AI_CV_Haze_End
 	score -1
-	jump AI_CV_Haze_End
+	goto AI_CV_Haze_End
 
 AI_CV_Haze4: @ 81DB12F
 	if_random_less_than 50, AI_CV_Haze_End
