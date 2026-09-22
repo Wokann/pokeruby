@@ -10577,7 +10577,7 @@ SnatchPartnerMonMove:
 	goto SnatchMoveContinue
 
 General_FutureSightHit: @ 81D68D5
-	createvisualtask sub_80E42B0, 2
+	createvisualtask AnimTask_SetAnimTargetToBattlerTarget, 2
 	monbg ANIM_BATTLER_DEF_PARTNER
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
@@ -10597,7 +10597,7 @@ General_FutureSightHit: @ 81D68D5
 	end
 
 General_DoomDesireHit: @ 81D6934
-	createvisualtask sub_80E42B0, 2
+	createvisualtask AnimTask_SetAnimTargetToBattlerTarget, 2
 	loadspritegfx ANIM_TAG_EXPLOSION
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 16, rgb(31, 31, 31)
 	waitforvisualfinish

@@ -1922,7 +1922,7 @@ void AnimTask_IsTargetSameSide(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E42B0(u8 taskId)
+void AnimTask_SetAnimTargetToBattlerTarget(u8 taskId)
 {
     gBattleAnimTarget = gBattlerTarget;
     DestroyAnimVisualTask(taskId);
