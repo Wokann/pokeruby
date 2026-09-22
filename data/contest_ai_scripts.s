@@ -603,15 +603,15 @@ AI_CGM_End:
 
 @ Randomly encourage moves in Cute, Smart, and Tough contests.
 AI_Erratic:
-	if_contest_type_eq CONTEST_CUTE, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_SMART, Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_TOUGH, Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CUTE, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_SMART, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_TOUGH, AI_Erratic_CuteSmartTough
 	end
-Erratic_CuteSmartTough:
-	if_random 125, Erratic_NoScoreIncrease
+AI_Erratic_CuteSmartTough:
+	if_random 125, AI_Erratic_End
 	score +10
 	end
-Erratic_NoScoreIncrease:
+AI_Erratic_End:
 	end
 
 AI_CheckForBadMove:
