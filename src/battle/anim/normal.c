@@ -69,7 +69,7 @@ static void sub_80E2710(u8 taskId);
 static void AnimFlashingHitSplat_Step(struct Sprite *sprite);
 static void StartBlendAnimSpriteColor(u8 taskId, u32 selectedPalettes);
 static void AnimTask_BlendSpriteColor_Step2(u8 taskId);
-static void sub_80E2DB8(u8 taskId);
+static void AnimTask_HardwarePaletteFade_Step(u8 taskId);
 static void AnimTask_TraceMonBlended_Step(u8 taskId);
 static void AnimMonTrace(struct Sprite *sprite);
 static void AnimTask_DrawFallingWhiteLinesOnAttacker_Step(u8 taskId);
@@ -1110,7 +1110,7 @@ static void AnimTask_BlendSpriteColor_Step2(u8 taskId)
     }
 }
 
-void sub_80E2D78(u8 taskId)
+void AnimTask_HardwarePaletteFade(u8 taskId)
 {
     BeginHardwarePaletteFade(
         gBattleAnimArgs[0],
@@ -1119,10 +1119,10 @@ void sub_80E2D78(u8 taskId)
         gBattleAnimArgs[3],
         gBattleAnimArgs[4]);
 
-    gTasks[taskId].func = sub_80E2DB8;
+    gTasks[taskId].func = AnimTask_HardwarePaletteFade_Step;
 }
 
-static void sub_80E2DB8(u8 taskId)
+static void AnimTask_HardwarePaletteFade_Step(u8 taskId)
 {
     if (!gPaletteFade.active)
         DestroyAnimVisualTask(taskId);

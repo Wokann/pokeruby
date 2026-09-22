@@ -5,6 +5,11 @@
 #include "constants/rgb.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
+
+#define BLDCNT_TGT1_BG3      (1 << 3)
+#define BLDCNT_TGT1_OBJ      (1 << 4)
+#define BLDCNT_TGT1_BD       (1 << 5)
+#define BLDCNT_EFFECT_DARKEN (3 << 6)
 	.include "include/macros.inc"
 	.include "include/macros/battle_anim.inc"
 	.include "constants/constants.inc"
@@ -8074,21 +8079,21 @@ Move_WILL_O_WISP: @ 81D2B83
 Move_ENCORE: @ 81D2C41
 	loadspritegfx ANIM_TAG_SPOTLIGHT
 	loadspritegfx ANIM_TAG_TAG_HAND
-	createvisualtask sub_812CC44, 2
-	createvisualtask sub_80E2D78, 2, 248, 3, 0, 10, 0
+	createvisualtask AnimTask_CreateSpotlight, 2
+	createvisualtask AnimTask_HardwarePaletteFade, 2, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN, 3, 0, 10, FALSE
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_840238C, ANIM_BATTLER_TARGET, 2, 0, -8
-	createsprite gBattleAnimSpriteTemplate_84023A4, ANIM_BATTLER_ATTACKER, 2, -2, 0, 0, 0, 9
-	createsprite gBattleAnimSpriteTemplate_84023A4, ANIM_BATTLER_ATTACKER, 2, 2, 0, 1, 0, 9
-	createsprite gBattleAnimSpriteTemplate_84023BC, ANIM_BATTLER_ATTACKER, 3, -2, 0, 0, 0, 9
-	createsprite gBattleAnimSpriteTemplate_84023BC, ANIM_BATTLER_ATTACKER, 3, 2, 0, 1, 0, 9
+	createsprite gSpotlightSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -8
+	createsprite gClappingHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -2, 0, 0, 0, 9
+	createsprite gClappingHandSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 2, 0, 1, 0, 9
+	createsprite gClappingHand2SpriteTemplate, ANIM_BATTLER_ATTACKER, 3, -2, 0, 0, 0, 9
+	createsprite gClappingHand2SpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 2, 0, 1, 0, 9
 	delay 16
-	createvisualtask SoundTask_PlaySE2WithPanning, 5, 223, 63
-	createvisualtask AnimTask_SwayMon, 5, 1, 8, 1536, 5, 1
+	createvisualtask SoundTask_PlaySE2WithPanning, 5, SE_M_ENCORE2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_SwayMon, 5, ANIM_BATTLER_TARGET, 8, 1536, 5, ANIM_BATTLER_TARGET
 	waitforvisualfinish
-	createvisualtask sub_80E2D78, 2, 248, 3, 10, 0, 1
+	createvisualtask AnimTask_HardwarePaletteFade, 2, BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN, 3, 10, 0, TRUE
 	waitforvisualfinish
-	createvisualtask sub_812CCA8, 2
+	createvisualtask AnimTask_RemoveSpotlight, 2
 	end
 
 Move_TRICK: @ 81D2CE8
@@ -8380,8 +8385,8 @@ Move_FLATTER: @ 81D332C
 	loadspritegfx ANIM_TAG_SPOTLIGHT
 	loadspritegfx ANIM_TAG_CONFETTI
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, 223, 63
-	createvisualtask sub_812CC44, 2
-	createvisualtask sub_80E2D78, 2, 248, 3, 0, 10, 0
+	createvisualtask AnimTask_CreateSpotlight, 2
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 248, 3, 0, 10, 0
 	waitforvisualfinish
 	createsprite gBattleAnimSpriteTemplate_8402720, ANIM_BATTLER_TARGET, 2, 0, -8, 80
 	delay 0
@@ -8412,9 +8417,9 @@ Move_FLATTER: @ 81D332C
 	delay 5
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 229, 63
 	waitforvisualfinish
-	createvisualtask sub_80E2D78, 2, 248, 3, 10, 0, 1
+	createvisualtask AnimTask_HardwarePaletteFade, 2, 248, 3, 10, 0, 1
 	waitforvisualfinish
-	createvisualtask sub_812CCA8, 2
+	createvisualtask AnimTask_RemoveSpotlight, 2
 	end
 _81D3415:
 	createsprite gBattleAnimSpriteTemplate_8402708, ANIM_BATTLER_ATTACKER, 40, 0

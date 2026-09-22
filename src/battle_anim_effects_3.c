@@ -58,9 +58,9 @@ static void SetPsychicBackground_Step(u8 taskId);
 static void FadeScreenToWhite_Step(u8 taskId);
 static void AnimSpikes_Step1(struct Sprite *sprite);
 static void AnimSpikes_Step2(struct Sprite *sprite);
-static void sub_812CA04(struct Sprite *sprite);
-static void sub_812CAD0(struct Sprite *sprite);
-static void sub_812CBB4(struct Sprite *sprite);
+static void AnimSpotlight_Step1(struct Sprite *sprite);
+static void AnimSpotlight_Step2(struct Sprite *sprite);
+static void AnimClappingHand_Step(struct Sprite *sprite);
 static void AnimRapidSpin_Step(struct Sprite *sprite);
 static void RapinSpinMonElevation_Step(u8 taskId);
 static void TormentAttacker_Step(u8 taskId);
@@ -106,9 +106,9 @@ static void AnimSpikes(struct Sprite *sprite);
 static void AnimLeer(struct Sprite *sprite);
 static void AnimLetterZ(struct Sprite *sprite);
 static void AnimFang(struct Sprite *sprite);
-static void sub_812C990(struct Sprite *sprite);
-static void sub_812CAFC(struct Sprite *sprite);
-static void sub_812CC28(struct Sprite *sprite);
+static void AnimSpotlight(struct Sprite *sprite);
+static void AnimClappingHand(struct Sprite *sprite);
+static void AnimClappingHand2(struct Sprite *sprite);
 static void AnimRapidSpin(struct Sprite *sprite);
 static void AnimTriAttackTriangle(struct Sprite *sprite);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
@@ -377,38 +377,38 @@ const struct SpriteTemplate gFangSpriteTemplate =
     .callback = AnimFang,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402354[] =
+const union AffineAnimCmd gSpotlightAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x180, 0, 0),
     AFFINEANIMCMD_FRAME(0x10, 0x0, 0, 20),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_840236C[] =
+const union AffineAnimCmd gSpotlightAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x140, 0x180, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF0, 0x0, 0, 19),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402384[] =
+const union AffineAnimCmd *const gSpotlightAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402354,
-    gSpriteAffineAnim_840236C,
+    gSpotlightAffineAnimCmds1,
+    gSpotlightAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_840238C =
+const struct SpriteTemplate gSpotlightSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPOTLIGHT,
     .paletteTag = ANIM_TAG_SPOTLIGHT,
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402384,
-    .callback = sub_812C990,
+    .affineAnims = gSpotlightAffineAnimTable,
+    .callback = AnimSpotlight,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84023A4 =
+const struct SpriteTemplate gClappingHandSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TAG_HAND,
     .paletteTag = ANIM_TAG_TAG_HAND,
@@ -416,10 +416,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84023A4 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812CAFC,
+    .callback = AnimClappingHand,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84023BC =
+const struct SpriteTemplate gClappingHand2SpriteTemplate =
 {
     .tileTag = ANIM_TAG_TAG_HAND,
     .paletteTag = ANIM_TAG_TAG_HAND,
@@ -427,7 +427,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_84023BC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_812CC28,
+    .callback = AnimClappingHand2,
 };
 
 const union AnimCmd gRapidSpinAnimCmds[] =
@@ -784,7 +784,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402720 =
     .oam = &gOamData_AffineDouble_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402384,
+    .affineAnims = gSpotlightAffineAnimTable,
     .callback = sub_812ED84,
 };
 
@@ -1547,7 +1547,7 @@ void AnimTask_IsHealingMove(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void sub_812C990(struct Sprite *sprite)
+static void AnimSpotlight(struct Sprite *sprite)
 {
     REG_WINOUT = 0x1F3F;
     REG_DISPCNT |= DISPCNT_OBJWIN_ON;
@@ -1560,10 +1560,10 @@ static void sub_812C990(struct Sprite *sprite)
 
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->invisible = TRUE;
-    sprite->callback = sub_812CA04;
+    sprite->callback = AnimSpotlight_Step1;
 }
 
-static void sub_812CA04(struct Sprite *sprite)
+static void AnimSpotlight_Step1(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -1599,20 +1599,20 @@ static void sub_812CA04(struct Sprite *sprite)
         if (sprite->affineAnimEnded)
         {
             sprite->invisible = TRUE;
-            sprite->callback = sub_812CAD0;
+            sprite->callback = AnimSpotlight_Step2;
         }
         break;
     }
 }
 
-static void sub_812CAD0(struct Sprite *sprite)
+static void AnimSpotlight_Step2(struct Sprite *sprite)
 {
     REG_WINOUT = 0x3F3F;
     REG_DISPCNT ^= DISPCNT_OBJWIN_ON;
     DestroyAnimSprite(sprite);
 }
 
-static void sub_812CAFC(struct Sprite *sprite)
+static void AnimClappingHand(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[3] == 0)
     {
@@ -1641,10 +1641,10 @@ static void sub_812CAFC(struct Sprite *sprite)
     if (sprite->data[3] != 255)
         sprite->data[3] = gBattleAnimArgs[2];
 
-    sprite->callback = sub_812CBB4;
+    sprite->callback = AnimClappingHand_Step;
 }
 
-static void sub_812CBB4(struct Sprite *sprite)
+static void AnimClappingHand_Step(struct Sprite *sprite)
 {
     if (sprite->data[2] == 0)
     {
@@ -1654,7 +1654,7 @@ static void sub_812CBB4(struct Sprite *sprite)
             sprite->data[2]++;
             if (sprite->data[3] == 0)
             {
-                PlaySE1WithPanning(222, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG));
+                PlaySE1WithPanning(SE_M_ENCORE, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG));
             }
         }
     }
@@ -1673,14 +1673,14 @@ static void sub_812CBB4(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void sub_812CC28(struct Sprite *sprite)
+static void AnimClappingHand2(struct Sprite *sprite)
 {
     sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
     sprite->data[3] = 255;
-    sub_812CAFC(sprite);
+    AnimClappingHand(sprite);
 }
 
-void sub_812CC44(u8 taskId)
+void AnimTask_CreateSpotlight(u8 taskId)
 {
     if (IsContest())
     {
@@ -1694,7 +1694,7 @@ void sub_812CC44(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_812CCA8(u8 taskId)
+void AnimTask_RemoveSpotlight(u8 taskId)
 {
     if (IsContest())
     {
