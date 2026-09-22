@@ -856,7 +856,7 @@ const struct SpriteFrameImage gFieldEffectPicTable_Bubbles[] = {
     overworld_frame(gFieldEffectPic_Bubbles, 2, 4, 7)
 };
 
-const union AnimCmd gFieldEffectAnim_8375188[] = {
+const union AnimCmd gFieldEffectAnim_Bubbles[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(1, 4),
     ANIMCMD_FRAME(2, 4),
@@ -869,7 +869,7 @@ const union AnimCmd gFieldEffectAnim_8375188[] = {
 };
 
 const union AnimCmd *const gFieldEffectAnimTable_Bubbles[] = {
-    gFieldEffectAnim_8375188
+    gFieldEffectAnim_Bubbles
 };
 
 const struct SpriteTemplate gFieldEffectSpriteTemplate_Bubbles = {0xFFFF, FLDEFF_PAL_TAG_GENERAL_0, &gFieldOamData_16x32, gFieldEffectAnimTable_Bubbles, gFieldEffectPicTable_Bubbles, gDummySpriteAffineAnimTable, UpdateBubblesFieldEffect};

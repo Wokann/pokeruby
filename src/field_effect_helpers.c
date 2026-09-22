@@ -1174,7 +1174,7 @@ u32 FldEff_Bubbles(void)
     struct Sprite *sprite;
 
     sub_8060470((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 0);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[34], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x52);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_BUBBLES], gFieldEffectArguments[0], gFieldEffectArguments[1], 0x52);
     if (spriteId != MAX_SPRITES)
     {
         sprite = &gSprites[spriteId];
@@ -1184,17 +1184,21 @@ u32 FldEff_Bubbles(void)
     return 0;
 }
 
+#define sY data[0]
+
 void UpdateBubblesFieldEffect(struct Sprite *sprite)
 {
-    sprite->data[0] += 0x80;
-    sprite->data[0] &= 0x100;
-    sprite->y -= sprite->data[0] >> 8;
+    sprite->sY += 0x80;
+    sprite->sY &= 0x100;
+    sprite->y -= sprite->sY >> 8;
     UpdateObjectEventSpriteVisibility(sprite, FALSE);
     if (sprite->invisible || sprite->animEnded)
     {
         FieldEffectStop(sprite, FLDEFF_BUBBLES);
     }
 }
+
+#undef sY
 
 u32 FldEff_BerryTreeGrowthSparkle(void)
 {

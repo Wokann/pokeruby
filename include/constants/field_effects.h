@@ -68,6 +68,7 @@
 
 #define FLDEFFOBJ_ASH_PUFF               32
 #define FLDEFFOBJ_ASH_LAUNCH             33
+#define FLDEFFOBJ_BUBBLES                34
 
 #define FLDEFF_PAL_TAG_GENERAL_0         0x1004
 #define FLDEFF_PAL_TAG_ASH               0x100D
