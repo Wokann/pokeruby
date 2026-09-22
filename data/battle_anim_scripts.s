@@ -8693,19 +8693,19 @@ Move_METEOR_MASH: @ 81D3B12
 	loadspritegfx ANIM_TAG_GOLD_STARS
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
-	panse SE_M_BARRIER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 3, 0
+	panse SE_M_BARRIER, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +3, 0
 	fadetobg BG_COSMIC
 	waitbgfadein
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_8402A3C, ANIM_BATTLER_TARGET, 3, -48, -64, 72, 32, 30
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_BATTLER_TARGET, 3, -48, -64, 72, 32, 30
 	delay 10
-	createsprite gBattleAnimSpriteTemplate_8402A3C, ANIM_BATTLER_TARGET, 3, -112, -64, 8, 32, 30
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_BATTLER_TARGET, 3, -112, -64, 8, 32, 30
 	delay 40
 	createsprite gSpinningHandOrFootSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 0, 30
-	createsprite gBattleAnimSpriteTemplate_8402A3C, ANIM_BATTLER_TARGET, 3, -80, -64, 40, 32, 30
+	createsprite gMeteorMashStarSpriteTemplate, ANIM_BATTLER_TARGET, 3, -80, -64, 40, 32, 30
 	delay 20
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
-	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
+	create_basic_hitsplat_sprite ANIM_BATTLER_TARGET, 3, x=0, y=0, relative_to=ANIM_BATTLER_TARGET, animation=1
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 5, 0, 20, 1
 	waitforvisualfinish
 	delay 10

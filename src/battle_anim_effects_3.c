@@ -132,7 +132,7 @@ static void AnimSmellingSaltsHand(struct Sprite *sprite);
 static void AnimSmellingSaltExclamation(struct Sprite *sprite);
 static void AnimHelpingHandClap(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
-static void sub_8131264(struct Sprite *sprite);
+static void AnimMeteorMashStar(struct Sprite *sprite);
 extern void AnimParticleBurst(struct Sprite *sprite);// kiss_fountain.c
 static void AnimBlockX(struct Sprite *sprite);
 static void AnimTask_TeeterDanceMovementStep(u8);
@@ -1061,7 +1061,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A24 =
     .callback = sub_8130F5C,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A3C =
+const struct SpriteTemplate gMeteorMashStarSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
@@ -1069,7 +1069,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A3C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8131264,
+    .callback = AnimMeteorMashStar,
 };
 
 const struct SpriteTemplate gSpriteTemplate_8402A54 =
@@ -4626,7 +4626,7 @@ static void sub_8130FE0(struct Sprite *sprite)
     }
 }
 
-static void sub_81311E4(struct Sprite *sprite)
+static void AnimMeteorMashStar_Step(struct Sprite *sprite)
 {
     sprite->x2 = ((sprite->data[2] - sprite->data[0]) * sprite->data[5]) / sprite->data[4];
     sprite->y2 = ((sprite->data[3] - sprite->data[1]) * sprite->data[5]) / sprite->data[4];
@@ -4644,7 +4644,7 @@ static void sub_81311E4(struct Sprite *sprite)
     sprite->data[5]++;
 }
 
-static void sub_8131264(struct Sprite *sprite)
+static void AnimMeteorMashStar(struct Sprite *sprite)
 {
     GetBattlerSpriteCoord(gBattleAnimTarget, 2); // unused local variable
     GetBattlerSpriteCoord(gBattleAnimTarget, 3); // unused local variable
@@ -4665,7 +4665,7 @@ static void sub_8131264(struct Sprite *sprite)
     sprite->data[4] = gBattleAnimArgs[4];
     sprite->x = sprite->data[0];
     sprite->y = sprite->data[1];
-    sprite->callback = sub_81311E4;
+    sprite->callback = AnimMeteorMashStar_Step;
 }
 
 void sub_81312E4(u8 taskId)
