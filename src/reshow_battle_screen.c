@@ -30,9 +30,9 @@ void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
 void sub_800FCD4(void);
 void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
 void BattleLoadPlayerMonSprite(struct Pokemon *, u8 bank);
-void BattleLoadSubstituteSprite(u8 bank, u8 b);
+void BattleLoadSubstituteOrMonSpriteGfx(u8 bank, u8 loadMonSprite);
 void DecompressTrainerBackPic(u16 a0, u8 bank);
-u8 sub_8077F7C(u8 bank);
+u8 GetSubstituteSpriteDefault_Y(u8 bank);
 u8 GetBattlerSpriteDefault_Y(u8 bank);
 void nullsub_11(u8 healthboxID, u8 a1);
 void SetHealthboxSpriteInvisible(u8 bank);
@@ -205,7 +205,7 @@ static bool8 LoadAppropiateBankSprite(u8 bank)
             if (!gBattleSpriteInfo[bank].behindSubstitute)
                 BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[bank]], bank);
             else
-                BattleLoadSubstituteSprite(bank, 0);
+                BattleLoadSubstituteOrMonSpriteGfx(bank, FALSE);
         }
         else if (gBattleTypeFlags & BATTLE_TYPE_SAFARI && bank == 0)
             DecompressTrainerBackPic(gSaveBlock2.playerGender, 0);
@@ -214,7 +214,7 @@ static bool8 LoadAppropiateBankSprite(u8 bank)
         else if (!gBattleSpriteInfo[bank].behindSubstitute)
             BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[bank]], bank);
         else
-            BattleLoadSubstituteSprite(bank, 0);
+            BattleLoadSubstituteOrMonSpriteGfx(bank, FALSE);
 
         gHelperState = 0;
     }
@@ -228,7 +228,7 @@ static void sub_807B184(u8 bank)
         u8 posY;
 
         if (gBattleSpriteInfo[bank].behindSubstitute)
-            posY = sub_8077F7C(bank);
+            posY = GetSubstituteSpriteDefault_Y(bank);
         else
             posY = GetBattlerSpriteDefault_Y(bank);
         if (GetBattlerSide(bank))

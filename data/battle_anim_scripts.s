@@ -8758,7 +8758,7 @@ Move_POISON_FANG: @ 81D3C30
 
 Move_SUBSTITUTE: @ 81D3C6F
 	playsewithpan SE_M_ATTRACT, SOUND_PAN_ATTACKER
-	createvisualtask sub_81312E4, 2
+	createvisualtask AnimTask_MonToSubstitute, 2
 	end
 
 Move_FRENZY_PLANT: @ 81D3C7B
@@ -10338,7 +10338,7 @@ General_SubstituteFade: @ 81D63F3
 	end
 
 General_SubstituteAppear: @ 81D6430
-	createvisualtask sub_81312E4, 2
+	createvisualtask AnimTask_MonToSubstitute, 2
 	end
 
 General_PokeblockThrow: @ 81D6438

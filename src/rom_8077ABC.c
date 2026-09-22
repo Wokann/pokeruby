@@ -368,14 +368,14 @@ u8 GetBattlerSpriteDefault_Y(u8 slot)
     return GetBattlerSpriteCoord(slot, 4);
 }
 
-u8 sub_8077F7C(u8 slot)
+u8 GetSubstituteSpriteDefault_Y(u8 battler)
 {
-    u16 var;
-    if (GetBattlerSide(slot) != 0)
-        var = GetBattlerSpriteCoord(slot, 1) + 16;
+    u16 y;
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+        y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + 16;
     else
-        var = GetBattlerSpriteCoord(slot, 1) + 17;
-    return var;
+        y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + 17;
+    return y;
 }
 
 u8 GetBattlerYCoordWithElevation(u8 battler)

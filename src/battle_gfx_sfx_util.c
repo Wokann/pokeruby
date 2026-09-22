@@ -14,6 +14,7 @@
 #include "rom_8077ABC.h"
 #include "rom_8094928.h"
 #include "constants/songs.h"
+#include "constants/moves.h"
 #include "sound.h"
 #include "constants/species.h"
 #include "sprite.h"
@@ -96,7 +97,7 @@ const struct SpritePalette gUnknown_0820A4D4[] =
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern u8 IsBankSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
-extern u8 sub_8077F7C(u8);
+extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void sub_8094958(void);
 extern void sub_80105DC(struct Sprite *);
 extern void move_anim_start_t2();
@@ -105,8 +106,8 @@ void sub_80315E8(u8);
 u8 sub_803163C(u8);
 void sub_80316CC(u8);
 void sub_8031F0C(void);
-void refresh_graphics_maybe(u8, u8, u8);
-void sub_80324E0(u8 a);
+void LoadBattleMonGfxAndAnimate(u8, u8, u8);
+void ClearBehindSubstituteBit(u8 battler);
 void sub_80327CC(void);
 void SpriteCB_SetInvisible(struct Sprite *);
 void SpriteCB_EnemyShadow(struct Sprite *);
@@ -197,8 +198,8 @@ bool8 TryHandleLaunchBattleTableAnimation(u8 a, u8 b, u8 c, u8 d, u16 e)
         return TRUE;
     if (gBattleSpriteInfo[a].behindSubstitute && d == 2 && gSprites[gBattlerSpriteIds[a]].invisible)
     {
-        refresh_graphics_maybe(a, 1, gBattlerSpriteIds[a]);
-        sub_80324E0(a);
+        LoadBattleMonGfxAndAnimate(a, TRUE, gBattlerSpriteIds[a]);
+        ClearBehindSubstituteBit(a);
         return TRUE;
     }
     gBattleAnimAttacker = b;
@@ -723,65 +724,65 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
     }
 }
 
-void BattleLoadSubstituteSprite(u8 a, u8 b)
+void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite)
 {
-    u8 r4;
-    u16 foo;
-    const u8 *gSubstituteDollPal_;
-    void *src;
+    u8 position;
+    u16 palOffset;
+    const u8 *substituteDollPal;
+    void *gfxSrc;
     s32 i;
 
-    if (b == 0)
+    if (loadMonSprite == 0)
     {
         if (IsContest())
-            r4 = 0;
+            position = 0;
         else
-            r4 = GetBattlerPosition(a);
+            position = GetBattlerPosition(battler);
         if (IsContest())
-            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[r4]);
-        else if (GetBattlerSide(a) != 0)
-            LZDecompressVram(gSubstituteDollGfx, gMonSpriteGfx_Sprite_ptr[r4]);
+            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[position]);
+        else if (GetBattlerSide(battler) != 0)
+            LZDecompressVram(gSubstituteDollGfx, gMonSpriteGfx_Sprite_ptr[position]);
         else
-            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[r4]);
+            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[position]);
         // There is probably a way to do this without all the temp variables, but I couldn't figure it out.
-        foo = a * 16;
-        gSubstituteDollPal_ = gSubstituteDollPal;
-        src = gMonSpriteGfx_Sprite_ptr[r4];
+        palOffset = battler * 16;
+        substituteDollPal = gSubstituteDollPal;
+        gfxSrc = gMonSpriteGfx_Sprite_ptr[position];
         for (i = 0; i < 3; i++)
-            DmaCopy32(3, src, src + i * 0x800 + 0x800, 0x800);
-        LoadCompressedPalette(gSubstituteDollPal_, 0x100 + foo, 32);
+            DmaCopy32(3, gfxSrc, gfxSrc + i * 0x800 + 0x800, 0x800);
+        LoadCompressedPalette(substituteDollPal, 0x100 + palOffset, 32);
     }
     else
     {
         if (!IsContest())
         {
-            if (GetBattlerSide(a) != 0)
-                BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[a]], a);
+            if (GetBattlerSide(battler) != 0)
+                BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
             else
-                BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[a]], a);
+                BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[battler]], battler);
         }
     }
 }
 
-void refresh_graphics_maybe(u8 a, u8 b, u8 spriteId)
+void LoadBattleMonGfxAndAnimate(u8 battler, u8 loadMonSprite, u8 spriteId)
 {
-    BattleLoadSubstituteSprite(a, b);
-    StartSpriteAnim(&gSprites[spriteId], gBattleMonForms[a]);
-    if (b == 0)
-        gSprites[spriteId].y = sub_8077F7C(a);
+    BattleLoadSubstituteOrMonSpriteGfx(battler, loadMonSprite);
+    StartSpriteAnim(&gSprites[spriteId], gBattleMonForms[battler]);
+    if (loadMonSprite == 0)
+        gSprites[spriteId].y = GetSubstituteSpriteDefault_Y(battler);
     else
-        gSprites[spriteId].y = GetBattlerSpriteDefault_Y(a);
+        gSprites[spriteId].y = GetBattlerSpriteDefault_Y(battler);
 }
 
-void TrySetBehindSubstituteSpriteBit(u8 a, u16 b)
+void TrySetBehindSubstituteSpriteBit(u8 battler, u16 move)
 {
-    if (b == 0xA4)
-        gBattleSpriteInfo[a].behindSubstitute = 1;
+    if (move == MOVE_SUBSTITUTE)
+        gBattleSpriteInfo[battler].behindSubstitute = TRUE;
 }
 
-void sub_80324E0(u8 a)
+void ClearBehindSubstituteBit(u8 battler)
 {
-    gBattleSpriteInfo[a].behindSubstitute = 0;
+    gBattleSpriteInfo[battler].behindSubstitute = FALSE;
 }
 
 void HandleLowHpMusicChange(struct Pokemon *pkmn, u8 b)
@@ -962,5 +963,5 @@ void sub_8032AA8(u8 a, u8 b)
     gBattleSpriteInfo[a].transformSpecies = 0;
     gBattleMonForms[a] = 0;
     if (b == 0)
-        sub_80324E0(a);
+        ClearBehindSubstituteBit(a);
 }

@@ -94,7 +94,7 @@ static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
 static void AnimHelpingHandClap_Step(struct Sprite *sprite);
 static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
 static void sub_8130FE0(struct Sprite *sprite);
-static void sub_8131408(u8 taskId);
+static void AnimTask_MonToSubstituteDoll(u8 taskId);
 static void AnimBlockX_Step(struct Sprite *sprite);
 static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
 static void MoveOdorSleuthClone(struct Sprite *sprite);
@@ -4668,14 +4668,14 @@ static void AnimMeteorMashStar(struct Sprite *sprite)
     sprite->callback = AnimMeteorMashStar_Step;
 }
 
-void sub_81312E4(u8 taskId)
+void AnimTask_MonToSubstitute(u8 taskId)
 {
     int i;
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
 
     if (gTasks[taskId].data[0] == 0)
     {
-        PrepareBattlerSpriteForRotScale(spriteId, 0);
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
         gTasks[taskId].data[1] = 0x100;
         gTasks[taskId].data[2] = 0x100;
         gTasks[taskId].data[0]++;
@@ -4695,7 +4695,7 @@ void sub_81312E4(u8 taskId)
     }
     else
     {
-        refresh_graphics_maybe(gBattleAnimAttacker, 0, spriteId);
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, FALSE, spriteId);
         if (IsContest())
         {
             gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gAffineAnims_BattleSpriteContest;
@@ -4705,13 +4705,13 @@ void sub_81312E4(u8 taskId)
         for (i = 0; i < 16; i++)
             gTasks[taskId].data[i] = 0;
         
-        gTasks[taskId].func = sub_8131408;
+        gTasks[taskId].func = AnimTask_MonToSubstituteDoll;
     }
 }
 
-static void sub_8131408(u8 taskId)
+static void AnimTask_MonToSubstituteDoll(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
 
     switch (gTasks[taskId].data[0])
     {

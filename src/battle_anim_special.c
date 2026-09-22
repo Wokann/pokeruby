@@ -1770,7 +1770,7 @@ void sub_814151C(u8 taskId)
             gTasks[taskId].data[10]++;
         break;
     case 1:
-        refresh_graphics_maybe(gBattleAnimAttacker, gTasks[taskId].data[11], spriteId);
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, gTasks[taskId].data[11], spriteId);
         gTasks[taskId].data[10]++;
         break;
     case 2:
@@ -1836,7 +1836,7 @@ void sub_81416C4(u8 taskId)
     case 2:
         spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
         DmaClear32(3, (void *)OBJ_VRAM0 + gSprites[spriteId].oam.tileNum * TILE_SIZE_4BPP, 0x800);
-        sub_80324E0(gBattleAnimAttacker);
+        ClearBehindSubstituteBit(gBattleAnimAttacker);
         DestroyAnimVisualTask(taskId);
         break;
     }
