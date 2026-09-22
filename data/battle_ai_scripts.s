@@ -2838,42 +2838,42 @@ AI_Nothing: @ 81DBF63
 	end
 
 AI_HPAware: @ 81DBF64
-	if_hp_more_than USER, 70, AI_HPAware_UserHasHighHP
-	if_hp_more_than USER, 30, AI_HPAware_UserHasMediumHP
-	get_effect
+	if_hp_more_than AI_USER, 70, AI_HPAware_UserHasHighHP
+	if_hp_more_than AI_USER, 30, AI_HPAware_UserHasMediumHP
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenLowHP, AI_HPAware_TryToDiscourage
-	jump AI_HPAware_ConsiderTarget
+	goto AI_HPAware_ConsiderTarget
 
 AI_HPAware_UserHasHighHP: @ 81DBF81
-	get_effect
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenHighHP, AI_HPAware_TryToDiscourage
-	jump AI_HPAware_ConsiderTarget
+	goto AI_HPAware_ConsiderTarget
 
 AI_HPAware_UserHasMediumHP: @ 81DBF90
-	get_effect
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenMediumHP, AI_HPAware_TryToDiscourage
-	jump AI_HPAware_ConsiderTarget
+	goto AI_HPAware_ConsiderTarget
 
 AI_HPAware_TryToDiscourage: @ 81DBF9F
 	if_random_less_than 50, AI_HPAware_ConsiderTarget
 	score -2
 
 AI_HPAware_ConsiderTarget: @ 81DBFA7
-	if_hp_more_than TARGET, 70, AI_HPAware_TargetHasHighHP
-	if_hp_more_than TARGET, 30, AI_HPAware_TargetHasMediumHP
-	get_effect
+	if_hp_more_than AI_TARGET, 70, AI_HPAware_TargetHasHighHP
+	if_hp_more_than AI_TARGET, 30, AI_HPAware_TargetHasMediumHP
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenTargetLowHP, AI_HPAware_TargetTryToDiscourage
-	jump AI_HPAware_End
+	goto AI_HPAware_End
 
 AI_HPAware_TargetHasHighHP: @ 81DBFC4
-	get_effect
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenTargetHighHP, AI_HPAware_TargetTryToDiscourage
-	jump AI_HPAware_End
+	goto AI_HPAware_End
 
 AI_HPAware_TargetHasMediumHP: @ 81DBFD3
-	get_effect
+	get_considered_move_effect
 	if_in_bytes AI_HPAware_DiscouragedEffectsWhenTargetMediumHP, AI_HPAware_TargetTryToDiscourage
-	jump AI_HPAware_End
+	goto AI_HPAware_End
 
 AI_HPAware_TargetTryToDiscourage: @ 81DBFE2
 	if_random_less_than 50, AI_HPAware_End
