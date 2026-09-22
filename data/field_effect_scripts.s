@@ -172,7 +172,7 @@ gFieldEffectScript_DeepSandFootprints: @ 81D9D00
 	end
 
 gFieldEffectScript_PokecenterHeal: @ 81D9D0A
-	loadfadedpal gFieldEffectObjectPaletteInfo4
+	loadfadedpal gSpritePalette_PokeballGlow
 	loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_PokecenterHeal
 	end
 
@@ -322,8 +322,8 @@ gFieldEffectScript_SecretBaseBootPC: @ 81D9E2C
 	end
 
 gFieldEffectScript_HallOfFameRecord: @ 81D9E32
-	loadfadedpal gFieldEffectObjectPaletteInfo4
-	loadfadedpal_callnative gFieldEffectObjectPaletteInfo5, FldEff_HallOfFameRecord
+	loadfadedpal gSpritePalette_PokeballGlow
+	loadfadedpal_callnative gSpritePalette_HofMonitor, FldEff_HallOfFameRecord
 	end
 
 gFieldEffectScript_UseTeleport: @ 81D9E41
