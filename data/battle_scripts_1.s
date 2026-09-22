@@ -1651,14 +1651,14 @@ BattleScript_EffectPerishSong: @ 81D7E3D
 	setbyte sBANK, 0
 
 BattleScript_PerishSongLoop: @ 81D7E53
-	jumpifability SCRIPTING_BANK, ABILITY_SOUNDPROOF, BattleScript_1D7E73
+	jumpifability SCRIPTING_BANK, ABILITY_SOUNDPROOF, BattleScript_PerishSongNotAffected
 
 BattleScript_PerishSongLoopIncrement: @ 81D7E5A
 	addbyte sBANK, 1
 	jumpifbytenotequal sBANK, gBattlersCount, BattleScript_PerishSongLoop
 	goto BattleScript_MoveEnd
 
-BattleScript_1D7E73: @ 81D7E73
+BattleScript_PerishSongNotAffected: @ 81D7E73
 	printstring BATTLE_TEXT_BlocksOther2
 	waitmessage 64
 	goto BattleScript_PerishSongLoopIncrement
