@@ -34,9 +34,9 @@ extern u16 gWeatherMoveAnim;
 extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
-extern const u32 gUnknown_08D2AA98[];
-extern const u32 gUnknown_08D2A9E0[];
-extern const u16 gUnknown_08D2AA80[];
+extern const u32 gBattleAnimMaskTilemap_LightBeam[];
+extern const u32 gBattleAnimMaskImage_LightBeam[];
+extern const u16 gBattleAnimMaskPalette_LightBeam[];
 extern const u8 gCureBubblesGfx[];
 extern const u8 gCureBubblesTilemap[];
 extern const u16 gCureBubblesPal[];
@@ -654,7 +654,7 @@ const struct SpriteTemplate gGreenStarSpriteTemplate =
     .callback = AnimGreenStar,
 };
 
-const s8 gUnknown_08402604[] =
+const s8 gDoomDesireLightBeamCoordTable[] =
 {
     0x78,
     0x50,
@@ -662,7 +662,7 @@ const s8 gUnknown_08402604[] =
     0x00,
 };
 
-const u8 gUnknown_08402608[] =
+const u8 gDoomDesireLightBeamDelayTable[] =
 {
     0,
     0,
@@ -2398,9 +2398,9 @@ void AnimTask_MorningSunLightBeam(u8 taskId)
 
         GetBattleAnimBg1Data(&animBg);
         DmaClear32(3, animBg.bgTilemap, 0x1000);
-        LZDecompressVram(gUnknown_08D2AA98, animBg.bgTilemap);
-        LZDecompressVram(gUnknown_08D2A9E0, animBg.bgTiles);
-        LoadCompressedPalette(gUnknown_08D2AA80, animBg.paletteId * 16, 32);
+        LZDecompressVram(gBattleAnimMaskTilemap_LightBeam, animBg.bgTilemap);
+        LZDecompressVram(gBattleAnimMaskImage_LightBeam, animBg.bgTiles);
+        LoadCompressedPalette(gBattleAnimMaskPalette_LightBeam, animBg.paletteId * 16, 32);
         if (IsContest())
         {
             sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
@@ -2568,7 +2568,7 @@ static void AnimGreenStar_Callback(struct Sprite *sprite)
     }
 }
 
-void sub_812E14C(u8 taskId)
+void AnimTask_DoomDesireLightBeam(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
@@ -2586,9 +2586,9 @@ void sub_812E14C(u8 taskId)
 
         GetBattleAnimBg1Data(&animBg);
         DmaClear32(3, animBg.bgTilemap, 0x1000);
-        LZDecompressVram(gUnknown_08D2AA98, animBg.bgTilemap);
-        LZDecompressVram(gUnknown_08D2A9E0, animBg.bgTiles);
-        LoadCompressedPalette(gUnknown_08D2AA80, animBg.paletteId * 16, 32);
+        LZDecompressVram(gBattleAnimMaskTilemap_LightBeam, animBg.bgTilemap);
+        LZDecompressVram(gBattleAnimMaskImage_LightBeam, animBg.bgTiles);
+        LoadCompressedPalette(gBattleAnimMaskPalette_LightBeam, animBg.paletteId * 16, 32);
 
         if (IsContest())
         {
@@ -2628,9 +2628,9 @@ void sub_812E14C(u8 taskId)
     case 1:
         gTasks[taskId].data[3] = 0;
         if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
-            gBattle_BG1_X = gTasks[taskId].data[10] + gUnknown_08402604[gTasks[taskId].data[2]];
+            gBattle_BG1_X = gTasks[taskId].data[10] + gDoomDesireLightBeamCoordTable[gTasks[taskId].data[2]];
         else
-            gBattle_BG1_X = gTasks[taskId].data[10] - gUnknown_08402604[gTasks[taskId].data[2]];
+            gBattle_BG1_X = gTasks[taskId].data[10] - gDoomDesireLightBeamCoordTable[gTasks[taskId].data[2]];
 
         if (++gTasks[taskId].data[2] == 5)
             gTasks[taskId].data[0] = 5;
@@ -2646,7 +2646,7 @@ void sub_812E14C(u8 taskId)
             gTasks[taskId].data[0]++;
         break;
     case 3:
-        if (++gTasks[taskId].data[3] > gUnknown_08402608[gTasks[taskId].data[2]])
+        if (++gTasks[taskId].data[3] > gDoomDesireLightBeamDelayTable[gTasks[taskId].data[2]])
             gTasks[taskId].data[0]++;
         break;
     case 4:

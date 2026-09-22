@@ -9542,19 +9542,19 @@ Move_KNOCK_OFF: @ 81D523B
 	end
 
 Move_DOOM_DESIRE: @ 81D52CB
-	createvisualtask sub_80E0EE8, 2
+	createvisualtask GetIsDoomDesireHitTurn, 2
 	delay 1
 	monbg ANIM_BATTLER_ATK_PARTNER
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_TARGET, FALSE
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 0, 4, rgb(0, 0, 0)
+	set_grayscale_pal battler=ANIM_BATTLER_TARGET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
 	waitforvisualfinish
 	setalpha 8, 8
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	createvisualtask AnimTask_ScaleMonAndRestore, 5, -4, -4, 15, ANIM_BATTLER_ATTACKER, 1
 	waitforvisualfinish
 	delay 20
-	createvisualtask AnimTask_SetGrayscaleOrOriginalPal, 5, ANIM_BATTLER_TARGET, TRUE
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 1, 4, 0, rgb(0, 0, 0)
+	set_original_pal battler=ANIM_BATTLER_TARGET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=4, target_blend_y=0, color=RGB_BLACK
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATK_PARTNER
 	blendoff
@@ -9562,10 +9562,10 @@ Move_DOOM_DESIRE: @ 81D52CB
 
 Move_DOOM_DESIRE_Activate: @ 81D532F
 	loadspritegfx ANIM_TAG_EXPLOSION
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 16, rgb(31, 31, 31)
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=0, target_blend_y=16, color=RGB_WHITE
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_812E14C, 5
+	createvisualtask AnimTask_DoomDesireLightBeam, 5
 	delay 5
 	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER
 	delay 10
@@ -9589,7 +9589,7 @@ Move_DOOM_DESIRE_Activate: @ 81D532F
 	playsewithpan SE_M_SELF_DESTRUCT, SOUND_PAN_TARGET
 	createsprite gExplosionSpriteTemplate, ANIM_BATTLER_ATTACKER, 3, 16, 16, 1, 1
 	waitforvisualfinish
-	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 16, 0, rgb(31, 31, 31)
+	simple_palette_blend selector=F_PAL_BG, delay=3, initial_blend_y=16, target_blend_y=0, color=RGB_WHITE
 	waitforvisualfinish
 	end
 
@@ -10602,7 +10602,7 @@ General_DoomDesireHit: @ 81D6934
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1, 3, 0, 16, rgb(31, 31, 31)
 	waitforvisualfinish
 	delay 10
-	createvisualtask sub_812E14C, 5
+	createvisualtask AnimTask_DoomDesireLightBeam, 5
 	delay 9
 	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER
 	delay 9

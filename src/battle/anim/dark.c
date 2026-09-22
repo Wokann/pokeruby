@@ -1000,7 +1000,7 @@ void AnimTask_SetGrayscaleOrOriginalPal(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void sub_80E0EE8(u8 taskId)
+void GetIsDoomDesireHitTurn(u8 taskId)
 {
     if (gAnimMoveTurn < 2)
         gBattleAnimArgs[7] = 0;
