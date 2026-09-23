@@ -1557,7 +1557,7 @@ void SetContestantStatusesForNextRound(void)
         sContest.excitementHistory[sContest.appealNumber][i] = Contest_GetMoveExcitement(sContestantStatus[i].currMove);
         sContestantStatus[i].currMove = MOVE_NONE;
     }
-    eContestExcitement.excitementFrozen = 0;
+    eContestExcitement.frozen = 0;
 }
 
 bool8 Contest_IsMonsTurnDisabled(u8 a)

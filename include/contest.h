@@ -412,8 +412,8 @@ struct ContestGfxState
 struct ContestExcitement
 {
     s8 moveExcitement;
-    bool8 excitementFrozen:1;
-    u8 excitementFreezer:3;
+    bool8 frozen:1;
+    u8 freezer:3;
     s8 excitementAppealBonus;
 };
 

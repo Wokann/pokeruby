@@ -929,10 +929,10 @@ static void ContestEffect_BetterWhenAudienceExcited(void)
 // Temporarily stops the crowd from growing excited.
 static void ContestEffect_DontExciteAudience(void)
 {
-    if (!eContestExcitement.excitementFrozen)
+    if (!eContestExcitement.frozen)
     {
-        eContestExcitement.excitementFrozen = TRUE;
-        eContestExcitement.excitementFreezer = eContestAppealResults.contestant;
+        eContestExcitement.frozen = TRUE;
+        eContestExcitement.freezer = eContestAppealResults.contestant;
         SetContestantEffectStringID(eContestAppealResults.contestant, CONTEST_STRING_ATTRACTED_ATTENTION);
     }
 }

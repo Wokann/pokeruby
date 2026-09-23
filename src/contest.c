@@ -1331,8 +1331,8 @@ void Task_DoAppeals(u8 taskId)
         }
         return;
     case 41:
-        if (eContestExcitement.excitementFrozen &&
-            contestant != eContestExcitement.excitementFreezer)
+        if (eContestExcitement.frozen &&
+            contestant != eContestExcitement.freezer)
         {
             gTasks[taskId].data[0] = 57;
         }
@@ -1478,7 +1478,7 @@ void Task_DoAppeals(u8 taskId)
         return;
     case 57:
         ContestClearGeneralTextWindow();
-        StringCopy(gStringVar3, gContestMons[eContestExcitement.excitementFreezer].nickname);
+        StringCopy(gStringVar3, gContestMons[eContestExcitement.freezer].nickname);
         StringCopy(gStringVar1, gContestMons[contestant].nickname);
         StringCopy(gStringVar2, gMoveNames[sContestantStatus[contestant].currMove]);
         StringExpandPlaceholders(gStringVar4, ContestString_CrowdWatches);
