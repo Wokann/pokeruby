@@ -1,6 +1,7 @@
 #ifndef GUARD_CONTEST_INTERNAL_H
 #define GUARD_CONTEST_INTERNAL_H
 
+void LoadContestPalettes(void);
 void InitContestResources(void);
 void Task_StartContestWaitFade(u8 taskId);
 void Task_TryStartLinkContest(u8 taskId);
@@ -10,10 +11,10 @@ void Task_ReadyStartLinkContest(u8 taskId);
 u8 SetupContestGraphics(u8 *a);
 void Task_WaitToRaiseCurtainAtStart(u8 taskId);
 void Task_RaiseCurtainAtStart(u8 taskId);
-void ContestMainCallback2(void);
-void ContestVBlankCallback(void);
+void CB2_ContestMain(void);
+void VBlankCB_Contest(void);
 void Task_DisplayAppealNumberText(u8 taskId);
-void sub_80ABC3C(u8);
+void Task_WaitForAppealNumberText(u8 taskId);
 void Task_TryShowMoveSelectScreen(u8 taskId);
 void Task_ShowMoveSelectScreen(u8 taskId);
 void Task_HandleMoveSelectInput(u8 taskId);
@@ -33,7 +34,7 @@ void Task_FinishRoundOfAppeals(u8 taskId);
 void Task_ReadyUpdateHeartSliders(u8 taskId);
 void Task_UpdateHeartSliders(u8 taskId);
 void Task_WaitForHeartSliders(u8 taskId);
-void sub_80ADB04(u8 taskId);
+void Task_RestorePlttBufferUnfaded(u8 taskId);
 void Task_WaitBeforePrintRoundResult(u8 taskId);
 void Task_PrintRoundResultText(u8 taskId);
 void Task_WaitPrintRoundResultText(u8 taskId);

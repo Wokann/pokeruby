@@ -100,7 +100,7 @@ void ResetLinkContestBoolean(void)
     gIsLinkContest = FALSE;
 }
 
-void ResetContestGpuRegs(void)
+void SetupContestGpuRegs(void)
 {
     u16 savedIme;
 
@@ -143,7 +143,7 @@ void LoadContestBgAfterMoveAnim(void)
     LZDecompressVram(gContestAudienceGfx, (void *)(VRAM + 0x2000));
     LZDecompressVram(gContestGfx, (void *)(VRAM + 0xD000));
     LoadCompressedPalette(gContestPalette, 0, 0x200);
-    InitContestResources();
+    LoadContestPalettes();
     for (i = 0; i < 4; i++)
     {
         u32 var = 5 + i;
@@ -152,14 +152,14 @@ void LoadContestBgAfterMoveAnim(void)
     }
 }
 
-void SetUpContestWindow(void)
+void InitContestWindows(void)
 {
     Text_LoadWindowTemplate(&gWindowTemplate_81E6FD8);
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6FD8);
     Text_InitWindowWithTemplate(&gMenuWindow, &gWindowTemplate_81E6FF4);
 }
 
-void InitContestResources(void)
+void LoadContestPalettes(void)
 {
     u8 i;
 
@@ -170,7 +170,7 @@ void InitContestResources(void)
     FillPalette(0x7E3F, 0xF3, 2);
 }
 
-void ClearContestVars(void)
+void InitContestResources(void)
 {
     s32 i;
 
@@ -207,8 +207,8 @@ void CB2_StartContest(void)
     {
     case 0:
         SetVBlankCallback(NULL);
-        SetUpContestWindow();
-        ResetContestGpuRegs();
+        InitContestWindows();
+        SetupContestGpuRegs();
         ScanlineEffect_Clear();
         ResetPaletteFade();
         gPaletteFade.bufferTransferDisabled = TRUE;
@@ -220,11 +220,11 @@ void CB2_StartContest(void)
         //eContestTempSave.unk18000 = 0;
         eEnableContestDebugging = 0;
         ClearBattleMonForms();
-        ClearContestVars();
+        InitContestResources();
         gMain.state++;
         break;
     case 1:
-        InitContestResources();
+        LoadContestPalettes();
         gMain.state++;
         break;
     case 2:
@@ -239,9 +239,9 @@ void CB2_StartContest(void)
         gBattle_BG1_Y = 0;
         BeginFastPaletteFade(2);
         gPaletteFade.bufferTransferDisabled = FALSE;
-        SetVBlankCallback(ContestVBlankCallback);
+        SetVBlankCallback(VBlankCB_Contest);
         sContest.mainTaskId = CreateTask(Task_StartContestWaitFade, 10);
-        SetMainCallback2(ContestMainCallback2);
+        SetMainCallback2(CB2_ContestMain);
         break;
     }
 }
@@ -325,7 +325,7 @@ u8 SetupContestGraphics(u8 *a)
         CpuCopy32(sp20, gPlttBufferUnfaded + 128, 16 * sizeof(u16));
         CpuCopy32(sp0, gPlttBufferUnfaded + (5 + gContestPlayerMonIndex) * 16, 16 * sizeof(u16));
         DmaCopy32Defvars(3, gPlttBufferUnfaded, eContestTempSave.cachedWindowPalettes, 0x200);
-        InitContestResources();
+        LoadContestPalettes();
         break;
     case 6:
         DrawContestantWindows();
@@ -404,7 +404,7 @@ void Task_RaiseCurtainAtStart(u8 taskId)
     }
 }
 
-void ContestMainCallback2(void)
+void CB2_ContestMain(void)
 {
 #if DEBUG
     if (gUnknown_020297ED == 1 && gMain.newKeys == SELECT_BUTTON)
@@ -416,7 +416,7 @@ void ContestMainCallback2(void)
     UpdatePaletteFade();
 }
 
-void ContestVBlankCallback(void)
+void VBlankCB_Contest(void)
 {
     REG_BG0HOFS = gBattle_BG0_X;
     REG_BG0VOFS = gBattle_BG0_Y;
@@ -450,10 +450,10 @@ void Task_DisplayAppealNumberText(u8 taskId)
     ContestClearGeneralTextWindow();
     StringExpandPlaceholders(gStringVar4, gDisplayedStringBattle);
     Contest_StartTextPrinter(&gMenuWindow, gStringVar4, 776, 1, 15);
-    gTasks[taskId].func = sub_80ABC3C;
+    gTasks[taskId].func = Task_WaitForAppealNumberText;
 }
 
-void sub_80ABC3C(u8 taskId)
+void Task_WaitForAppealNumberText(u8 taskId)
 {
     if (Contest_RunTextPrinter(&gMenuWindow) == 1)
         gTasks[taskId].func = Task_TryShowMoveSelectScreen;
@@ -1698,10 +1698,10 @@ void Task_UpdateHeartSliders(u8 taskId)
 void Task_WaitForHeartSliders(u8 taskId)
 {
     if (SlidersDoneUpdating())
-        gTasks[taskId].func = sub_80ADB04;
+        gTasks[taskId].func = Task_RestorePlttBufferUnfaded;
 }
 
-void sub_80ADB04(u8 taskId)
+void Task_RestorePlttBufferUnfaded(u8 taskId)
 {
     DmaCopy32Defvars(3, eContestTempSave.cachedPlttBufferUnfaded, gPlttBufferUnfaded, 0x400);
     gTasks[taskId].data[0] = 0;
