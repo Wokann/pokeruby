@@ -360,7 +360,7 @@ struct ContestantStatus
  /*0x08*/ u16 prevMove;
  /*0x0A*/ u8 moveCategory;
  /*0x0B*/ u8 ranking:2;
-          u8 unkB_2:2; // unused
+          u8 unused1:2;
           u8 moveRepeatCount:3;
           bool8 noMoreTurns:1;  // used a one-time move?
  /*0x0C*/ bool8 nervous:1;
@@ -386,7 +386,7 @@ struct ContestantStatus
  /*0x13*/ u8 effectStringId;   // status action?
  /*0x14*/ u8 effectStringId2;
  /*0x15*/ bool8 repeatedMove:1;
-          bool8 unk15_1:1; // unused
+          bool8 unused2:1;
           bool8 repeatedPrevMove:1;
           bool8 completedComboFlag:1;
           bool8 hasJudgesAttention:1;
