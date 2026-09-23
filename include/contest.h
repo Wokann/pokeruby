@@ -400,7 +400,7 @@ struct ContestantStatus
  /*0x1B*/ u8 contestantAnimTarget;
 };
 
-struct ContestGfxState
+struct ContestGraphicsState
 {
     u8 sliderHeartSpriteId;
     u8 nextTurnSpriteId;

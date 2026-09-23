@@ -64,7 +64,7 @@ extern u8 gSharedMem[];
 #define eContestAppealResults           (*(struct ContestAppealMoveResults *)(gSharedMem + 0x192D0))
 #define eContestAI                      ((struct ContestAIInfo *)(gSharedMem + 0x192E4))
 #define eContestExcitement              (*(struct ContestExcitement *)(gSharedMem + 0x19328))
-#define eContestGfxState                ((struct ContestGfxState *)(gSharedMem + 0x19338))
+#define eContestGfxState                ((struct ContestGraphicsState *)(gSharedMem + 0x19338))
 #define gContestResources__moveAnim     (*(struct ContestMoveAnim *)(gSharedMem + 0x19348))
 
 // Non-battle allocations
