@@ -321,11 +321,11 @@ struct Contest
 {
     /*0x19204*/ u8 playerMoveChoice;
     /*0x19205*/ u8 appealNumber;
-    /*0x19206*/ u8 unk19206[4];    // seems to only be used by an unref function
-    /*0x1920A*/ bool16 unk1920A_0:1;  // Task active flags?
-                bool16 unk1920A_1:1;
-                bool16 unk1920A_2:1;
-                bool16 unk1920A_3:1;
+    /*0x19206*/ u8 unk[4];
+    /*0x1920A*/ bool16 unused1:1;
+                bool16 unused2:1;
+                bool16 unused3:1;
+                bool16 unused4:1;
                 bool16 waitForJudgeSpeechBubble:1;
                 bool16 isShowingApplauseMeter:1;
                 bool16 applauseMeterIsMoving:1;
@@ -337,7 +337,7 @@ struct Contest
     /*0x1920D*/ u8 unk1920D[4];
     /*0x19211*/ u8 judgeAttentionTaskId;
     /*0x19212*/ u8 blendTaskId;
-    /*0x19213*/ u8 filler19213;
+    /*0x19213*/ u8 filler2;
     /*0x19214*/ u8 turnNumber;
     /*0x19215*/ u8 currentContestant;
     /*0x19216*/ u8 judgeSpeechBubbleSpriteId;

@@ -1579,19 +1579,19 @@ bool8 unref_sub_80AF5D0(u8 a, u8 b)
     {
         if (b == 3)
         {
-            sContest.unk1920A_0 = 1;
+            sContest.unused1 = 1;
             return TRUE;
         }
         if (b == 4)
         {
-            sContest.unk1920A_1 = 1;
+            sContest.unused2 = 1;
             return TRUE;
         }
-        if (sContest.unk19206[i] == b)
+        if (sContest.unk[i] == b)
             return TRUE;
-        if (sContest.unk19206[i] == 0xFF)
+        if (sContest.unk[i] == 0xFF)
         {
-            sContest.unk19206[i] = b;
+            sContest.unk[i] = b;
             return TRUE;
         }
     }
@@ -2763,7 +2763,7 @@ _080B0990: .4byte gSharedMem + 0x19338\n\
 void unref_sub_80B0994(u8 a)
 {
     if (a != 0)
-        sContest.unk1920A_2 = 1;
+        sContest.unused3 = 1;
 }
 
 void StartStopFlashJudgeAttentionEye(u8 a)
