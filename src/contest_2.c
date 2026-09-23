@@ -2103,7 +2103,7 @@ void unref_sub_80B011C(void)
 
         gSprites[spriteId].invisible = TRUE;
         gSprites[spriteId].data[0] = i;
-        sContest.unk1920D[i] = spriteId;
+        sContest.unusedSpriteIds[i] = spriteId;
     }
 }
 
@@ -2112,7 +2112,7 @@ void unref_sub_80B01B0(void)
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gSprites[sContest.unk1920D[i]].callback = sub_80B0238;
+        gSprites[sContest.unusedSpriteIds[i]].callback = sub_80B0238;
 }
 
 bool8 unref_sub_80B01E0(void)
@@ -2121,7 +2121,7 @@ bool8 unref_sub_80B01E0(void)
 
     for (i = 0; i < 4; i++)
     {
-        if (gSprites[sContest.unk1920D[i]].callback != SpriteCallbackDummy)
+        if (gSprites[sContest.unusedSpriteIds[i]].callback != SpriteCallbackDummy)
             break;
     }
     if (i == 4)

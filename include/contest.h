@@ -334,7 +334,7 @@ struct Contest
                 bool16 sliderHeartsAnimating:1;
                 bool16 waitForLink:1;
     /*0x1920C*/ u8 mainTaskId;
-    /*0x1920D*/ u8 unk1920D[4];
+    /*0x1920D*/ u8 unusedSpriteIds[4];
     /*0x19211*/ u8 judgeAttentionTaskId;
     /*0x19212*/ u8 blendTaskId;
     /*0x19213*/ u8 filler2;
