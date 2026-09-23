@@ -1005,7 +1005,7 @@ u8 CreateJudgeSpeechBubbleSprite(void)
 }
 
 UNUSED
-u8 unref_sub_80AE908(void)
+u8 CreateUnusedPlayerContestantSprite(void)
 {
     u16 species = gContestMons[gContestPlayerMonIndex].species;
     u8 spriteId;
@@ -1376,56 +1376,56 @@ void GetAllChosenMoves(void)
 }
 
 UNUSED
-void sub_80AF1E4(u8 a, u8 b)
+void PrintUnusedContestantMoveText(u8 contestant, u8 useContestantColor)
 {
-    u8 r3;
+    u8 textColor;
 
-    if (b == 0)
-        r3 = a + 10;
+    if (useContestantColor == FALSE)
+        textColor = contestant + 10;
     else
-        r3 = 14;
-    if (sContestantStatus[a].currMove == MOVE_NONE)
-        Contest_CopyStringWithColor(gDisplayedStringBattle, gUnknownText_MissedTurn, r3);
+        textColor = 14;
+    if (sContestantStatus[contestant].currMove == MOVE_NONE)
+        Contest_CopyStringWithColor(gDisplayedStringBattle, gUnknownText_MissedTurn, textColor);
     else
         Contest_CopyStringWithColor(
-            gDisplayedStringBattle, gMoveNames[sContestantStatus[a].currMove], r3);
-    sub_80AF2A0(a);
+            gDisplayedStringBattle, gMoveNames[sContestantStatus[contestant].currMove], textColor);
+    ClearUnusedContestantMoveText(contestant);
     Text_InitWindowAndPrintText(
         &gWindowTemplate_Contest_MoveDescription,
         gDisplayedStringBattle,
-        696 + a * 20,
-        gUnknown_083CA318[a][0],
-        gUnknown_083CA318[a][1]);
+        696 + contestant * 20,
+        gUnknown_083CA318[contestant][0],
+        gUnknown_083CA318[contestant][1]);
 }
 
 UNUSED
-void unref_sub_80AF280(u8 a)
+void PrintUnusedContestantMoveTexts(u8 useContestantColor)
 {
     u8 i;
 
     for (i = 0; i < 4; i++)
-        sub_80AF1E4(i, a);
+        PrintUnusedContestantMoveText(i, useContestantColor);
 }
 
 UNUSED
-void sub_80AF2A0(u8 a)
+void ClearUnusedContestantMoveText(u8 contestant)
 {
     Text_FillWindowRectDefPalette(
         &gWindowTemplate_Contest_MoveDescription,
         0,
-        gUnknown_083CA318[a][0],
-        gUnknown_083CA318[a][1],
-        gUnknown_083CA318[a][0] + 7,
-        gUnknown_083CA318[a][1] + 1);
+        gUnknown_083CA318[contestant][0],
+        gUnknown_083CA318[contestant][1],
+        gUnknown_083CA318[contestant][0] + 7,
+        gUnknown_083CA318[contestant][1] + 1);
 }
 
 UNUSED
-void unref_sub_80AF2E0(void)
+void ClearUnusedContestantMoveTexts(void)
 {
     u8 i;
 
     for (i = 0; i < 4; i++)
-        sub_80AF2A0(i);
+        ClearUnusedContestantMoveText(i);
 }
 
 void RankContestants(void)
@@ -1569,29 +1569,29 @@ bool8 Contest_IsMonsTurnDisabled(u8 a)
 }
 
 UNUSED
-bool8 unref_sub_80AF5D0(u8 a, u8 b)
+bool8 UnusedTryRecordPlayerMoveChoice(u8 contestant, u8 choice)
 {
     u8 i;
 
-    if (a != gContestPlayerMonIndex)
+    if (contestant != gContestPlayerMonIndex)
         return TRUE;
     for (i = 0; i < 4; i++)
     {
-        if (b == 3)
+        if (choice == 3)
         {
             sContest.unused1 = 1;
             return TRUE;
         }
-        if (b == 4)
+        if (choice == 4)
         {
             sContest.unused2 = 1;
             return TRUE;
         }
-        if (sContest.unk[i] == b)
+        if (sContest.unk[i] == choice)
             return TRUE;
         if (sContest.unk[i] == 0xFF)
         {
-            sContest.unk[i] = b;
+            sContest.unk[i] = choice;
             return TRUE;
         }
     }
@@ -1709,7 +1709,7 @@ void ContestPrintLinkStandby(void)
 }
 
 UNUSED
-u8 unref_sub_80AF89C(s16 appealStart, s16 appealDelta, u8 tileOffs, u8 contestant)
+u8 UpdateUnusedAppealHearts(s16 appealStart, s16 appealDelta, u8 tileOffset, u8 contestant)
 {
     u8 taskId;
     u8 heartsStart;
@@ -1717,13 +1717,13 @@ u8 unref_sub_80AF89C(s16 appealStart, s16 appealDelta, u8 tileOffs, u8 contestan
     u16 baseBlock;
 
     eContestGfxState[contestant].updatingAppealHearts = 1;
-    taskId = CreateTask(Task_unused_80AF94C, 20);
+    taskId = CreateTask(Task_UpdateUnusedAppealHearts, 20);
     heartsStart = GetNumHeartsFromAppealPoints(appealStart);
     heartsDelta = GetNumHeartsFromAppealPoints(appealStart + appealDelta) - heartsStart;
     baseBlock = GetAppealHeartTileOffset(contestant);
     gTasks[taskId].data[0] = heartsStart;
     gTasks[taskId].data[1] = heartsDelta;
-    gTasks[taskId].data[2] = baseBlock + tileOffs;
+    gTasks[taskId].data[2] = baseBlock + tileOffset;
     gTasks[taskId].data[3] = contestant;
     if (appealDelta < 0)
         nullsub_19(contestant);
@@ -1731,7 +1731,7 @@ u8 unref_sub_80AF89C(s16 appealStart, s16 appealDelta, u8 tileOffs, u8 contestan
 }
 
 UNUSED
-void Task_unused_80AF94C(u8 taskId)
+void Task_UpdateUnusedAppealHearts(u8 taskId)
 {
     u8 contestant = gTasks[taskId].data[3];
 
@@ -1797,31 +1797,31 @@ void FillContestantWindowBgs(void)
 }
 
 UNUSED
-void unref_sub_80AFAB8(s16 a, u8 b)
+void DrawUnusedAppealHearts(s16 appeal, u8 contestant)
 {
-    u8 r5 = GetNumHeartsFromAppealPoints(a);
-    u16 r2;
+    u8 numHearts = GetNumHeartsFromAppealPoints(appeal);
+    u16 heartTile;
     u8 i;
-    u16 arr[9];
+    u16 tiles[9];
 
-    if (b == 0)
-        r2 = 0x50A2;
-    else if (b == 1)
-        r2 = 0x60A2;
-    else if (b == 2)
-        r2 = 0x70A2;
+    if (contestant == 0)
+        heartTile = 0x50A2;
+    else if (contestant == 1)
+        heartTile = 0x60A2;
+    else if (contestant == 2)
+        heartTile = 0x70A2;
     else
-        r2 = 0x80A2;
+        heartTile = 0x80A2;
 
     for (i = 0; i < 9; i++)
     {
-        if (i < r5)
-            arr[i] = r2;
+        if (i < numHearts)
+            tiles[i] = heartTile;
         else
-            arr[i] = 0;
+            tiles[i] = 0;
     }
 
-    DmaCopy16Defvars(3, arr, (void *)(VRAM + 0xC000 + (148 + b * 160) * 2), sizeof(arr));
+    DmaCopy16Defvars(3, tiles, (void *)(VRAM + 0xC000 + (148 + contestant * 160) * 2), sizeof(tiles));
 }
 
 u16 GetAppealHeartTileOffset(u8 a)
@@ -2087,7 +2087,7 @@ void nullsub_18(s8 unused)
 {
 }
 
-void unref_sub_80B011C(void)
+void CreateUnusedContestantRankSprites(void)
 {
     u8 i;
 
@@ -2107,15 +2107,15 @@ void unref_sub_80B011C(void)
     }
 }
 
-void unref_sub_80B01B0(void)
+void StartUnusedContestantRankSpriteAnims(void)
 {
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gSprites[sContest.unusedSpriteIds[i]].callback = sub_80B0238;
+        gSprites[sContest.unusedSpriteIds[i]].callback = SpriteCB_StartUnusedContestantRankSpriteAnim;
 }
 
-bool8 unref_sub_80B01E0(void)
+bool8 AreUnusedContestantRankSpriteAnimsFinished(void)
 {
     s32 i;
 
@@ -2130,40 +2130,40 @@ bool8 unref_sub_80B01E0(void)
         return FALSE;
 }
 
-void sub_80B0238(struct Sprite *sprite)
+void SpriteCB_StartUnusedContestantRankSpriteAnim(struct Sprite *sprite)
 {
     sprite->oam.affineMode = 1;
     InitSpriteAffineAnim(sprite);
     if (sprite->invisible)
     {
-        sprite->callback = sub_80B02A8;
+        sprite->callback = SpriteCB_ShowUnusedContestantRankSprite;
     }
     else
     {
         StartSpriteAffineAnim(sprite, 1);
-        sprite->callback = sub_80B0280;
+        sprite->callback = SpriteCB_HideUnusedContestantRankSprite;
     }
 }
 
-void sub_80B0280(struct Sprite *sprite)
+void SpriteCB_HideUnusedContestantRankSprite(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
         sprite->invisible = TRUE;
-        sprite->callback = sub_80B02A8;
+        sprite->callback = SpriteCB_ShowUnusedContestantRankSprite;
     }
 }
 
-void sub_80B02A8(struct Sprite *sprite)
+void SpriteCB_ShowUnusedContestantRankSprite(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     StartSpriteAnim(sprite, sContestantStatus[sprite->data[0]].ranking);
     StartSpriteAffineAnim(sprite, 2);
-    sprite->callback = sub_80B02F4;
+    sprite->callback = SpriteCB_FinishUnusedContestantRankSpriteAnim;
     PlaySE(SE_CONTEST_PLACE);
 }
 
-void sub_80B02F4(struct Sprite *sprite)
+void SpriteCB_FinishUnusedContestantRankSpriteAnim(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
     {
@@ -2760,9 +2760,9 @@ _080B0990: .4byte gSharedMem + 0x19338\n\
 }
 #endif
 
-void unref_sub_80B0994(u8 a)
+void UnusedSetContestStateFlag(u8 contestant)
 {
-    if (a != 0)
+    if (contestant != 0)
         sContest.unused3 = 1;
 }
 
@@ -2960,21 +2960,21 @@ void ContestDebugDoPrint(void)
     }
 }
 
-void unref_sub_80B0EE8(s32 *a, s32 b)
+void UnusedSortS32Array(s32 *values, s32 count)
 {
     s32 i;
     s32 j;
 
-    for (i = 0; i < b - 1; i++)
+    for (i = 0; i < count - 1; i++)
     {
-        for (j = b - 1; j > i; j--)
+        for (j = count - 1; j > i; j--)
         {
-            if (a[j - 1] > a[j])
+            if (values[j - 1] > values[j])
             {
-                s32 temp = a[j];
+                s32 temp = values[j];
 
-                a[j] = a[j - 1];
-                a[j - 1] = temp;
+                values[j] = values[j - 1];
+                values[j - 1] = temp;
             }
         }
     }
@@ -3408,7 +3408,7 @@ void UpdateApplauseMeter(void)
 }
 
 UNUSED
-void unref_sub_80B19D0(void)
+void PrintUnusedContestText(void)
 {
     u8 str[20];
     StringCopy(str, gUnknown_083CC2EC);
