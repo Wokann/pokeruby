@@ -997,7 +997,7 @@ void Task_DoAppeals(u8 taskId)
             else
             {
                 if (!sContestantStatus[contestant].hasJudgesAttention)
-                    sub_80B03A8(contestant);
+                    StopFlashJudgeAttentionEye(contestant);
                 DrawUnnervedSymbols();
                 gTasks[taskId].data[0] = 23;
             }
@@ -1206,7 +1206,7 @@ void Task_DoAppeals(u8 taskId)
             PlaySE(SE_CONTEST_ICON_CLEAR);
         if (sContestantStatus[i].judgesAttentionWasRemoved)
         {
-            sub_80B03A8(i);
+            StopFlashJudgeAttentionEye(i);
             sContestantStatus[i].judgesAttentionWasRemoved = 0;
         }
         gTasks[taskId].data[1]++;

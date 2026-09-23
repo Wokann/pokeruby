@@ -1973,26 +1973,26 @@ void CreateSliderHeartSprites(void)
     }
 }
 
-void sub_80AFE78(u8 a)
+void UpdateHeartSlider(u8 contestant)
 {
     u8 spriteId;
-    s16 r5;
+    s16 slideTarget;
 
-    eContestGfxState[a].sliderUpdating = 1;
-    spriteId = eContestGfxState[a].sliderHeartSpriteId;
-    r5 = sContestantStatus[a].pointTotal / 10 * 2;
-    if (r5 > 56)
-        r5 = 56;
-    else if (r5 < 0)
-        r5 = 0;
+    eContestGfxState[contestant].sliderUpdating = 1;
+    spriteId = eContestGfxState[contestant].sliderHeartSpriteId;
+    slideTarget = sContestantStatus[contestant].pointTotal / 10 * 2;
+    if (slideTarget > 56)
+        slideTarget = 56;
+    else if (slideTarget < 0)
+        slideTarget = 0;
     gSprites[spriteId].invisible = FALSE;
-    gSprites[spriteId].data[0] = a;
-    gSprites[spriteId].data[1] = r5;
+    gSprites[spriteId].data[0] = contestant;
+    gSprites[spriteId].data[1] = slideTarget;
     if (gSprites[spriteId].data[1] > gSprites[spriteId].x2)
         gSprites[spriteId].data[2] = 1;
     else
         gSprites[spriteId].data[2] = -1;
-    gSprites[spriteId].callback = sub_80AFF60;
+    gSprites[spriteId].callback = SpriteCB_UpdateHeartSlider;
 }
 
 void UpdateHeartSliders(void)
@@ -2000,7 +2000,7 @@ void UpdateHeartSliders(void)
     s32 i;
 
     for (i = 0; i < 4; i++)
-        sub_80AFE78(i);
+        UpdateHeartSlider(i);
 }
 
 bool8 SlidersDoneUpdating(void)
@@ -2018,7 +2018,7 @@ bool8 SlidersDoneUpdating(void)
         return FALSE;
 }
 
-void sub_80AFF60(struct Sprite *sprite)
+void SpriteCB_UpdateHeartSlider(struct Sprite *sprite)
 {
     if (sprite->x2 == sprite->data[1])
     {
@@ -2176,63 +2176,63 @@ void sub_80B02F4(struct Sprite *sprite)
 void CreateJudgeAttentionEyeTask(void)
 {
     u8 i;
-    u8 taskId = CreateTask(sub_80B0458, 30);
+    u8 taskId = CreateTask(Task_FlashJudgeAttentionEye, 30);
 
     sContest.judgeAttentionTaskId = taskId;
     for (i = 0; i < 4; i++)
         gTasks[taskId].data[i * 4] = 0xFF;
 }
 
-void sub_80B0368(u8 a)
+void StartFlashJudgeAttentionEye(u8 contestant)
 {
-    gTasks[sContest.judgeAttentionTaskId].data[a * 4 + 0] = 0;
-    gTasks[sContest.judgeAttentionTaskId].data[a * 4 + 1] = 0;
+    gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 0] = 0;
+    gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 1] = 0;
 }
 
-void sub_80B03A8(u8 a)
+void StopFlashJudgeAttentionEye(u8 contestant)
 {
-    u8 taskId = CreateTask(sub_80B03D8, 31);
+    u8 taskId = CreateTask(Task_StopFlashJudgeAttentionEye, 31);
 
-    gTasks[taskId].data[0] = a;
+    gTasks[taskId].data[0] = contestant;
 }
 
-void sub_80B03D8(u8 taskId)
+void Task_StopFlashJudgeAttentionEye(u8 taskId)
 {
-    u8 r4 = gTasks[taskId].data[0];
+    u8 contestant = gTasks[taskId].data[0];
 
-    if (gTasks[sContest.judgeAttentionTaskId].data[r4 * 4 + 0] == 0
-        || gTasks[sContest.judgeAttentionTaskId].data[r4 * 4 + 0] == 0xFF)
+    if (gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 0] == 0
+        || gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 0] == 0xFF)
     {
-        gTasks[sContest.judgeAttentionTaskId].data[r4 * 4 + 0] = 0xFF;
-        gTasks[sContest.judgeAttentionTaskId].data[r4 * 4 + 1] = 0;
-        BlendPalette((sContest.prevTurnOrder[r4] + 5) * 16 + 6, 2, 0, RGB(31, 31, 18));
+        gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 0] = 0xFF;
+        gTasks[sContest.judgeAttentionTaskId].data[contestant * 4 + 1] = 0;
+        BlendPalette((sContest.prevTurnOrder[contestant] + 5) * 16 + 6, 2, 0, RGB(31, 31, 18));
         DestroyTask(taskId);
     }
 }
 
-void sub_80B0458(u8 taskId)
+void Task_FlashJudgeAttentionEye(u8 taskId)
 {
     u8 i;
 
     for (i = 0; i < 4; i++)
     {
-        u8 r3 = i * 4;
+        u8 offset = i * 4;
 
-        if (gTasks[taskId].data[r3 + 0] != 0xFF)
+        if (gTasks[taskId].data[offset + 0] != 0xFF)
         {
-            if (gTasks[taskId].data[r3 + 1] == 0)
-                gTasks[taskId].data[r3 + 0]++;
+            if (gTasks[taskId].data[offset + 1] == 0)
+                gTasks[taskId].data[offset + 0]++;
             else
-                gTasks[taskId].data[r3 + 0]--;
+                gTasks[taskId].data[offset + 0]--;
 
-            if (gTasks[taskId].data[r3 + 0] == 16
-                || gTasks[taskId].data[r3 + 0] == 0)
-                gTasks[taskId].data[r3 + 1] ^= 1;
+            if (gTasks[taskId].data[offset + 0] == 16
+                || gTasks[taskId].data[offset + 0] == 0)
+                gTasks[taskId].data[offset + 1] ^= 1;
 
             BlendPalette(
                 (sContest.prevTurnOrder[i] + 5) * 16 + 6,
                 2,
-                gTasks[taskId].data[r3 + 0],
+                gTasks[taskId].data[offset + 0],
                 RGB(31, 31, 18));
         }
     }
@@ -2766,12 +2766,12 @@ void unref_sub_80B0994(u8 a)
         sContest.unused3 = 1;
 }
 
-void StartStopFlashJudgeAttentionEye(u8 a)
+void StartStopFlashJudgeAttentionEye(u8 contestant)
 {
-    if (sContestantStatus[a].hasJudgesAttention)
-        sub_80B0368(a);
+    if (sContestantStatus[contestant].hasJudgesAttention)
+        StartFlashJudgeAttentionEye(contestant);
     else
-        sub_80B03A8(a);
+        StopFlashJudgeAttentionEye(contestant);
 }
 
 extern const struct CompressedSpriteSheet gUnknown_083CC4B4[];
