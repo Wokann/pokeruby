@@ -530,7 +530,7 @@ void Task_ShowMoveSelectScreen(u8 taskId)
     gTasks[taskId].func = Task_HandleMoveSelectInput;
 }
 
-void debug_sub_80B9EBC(u8);
+void Task_DebugSelectMove(u8 taskId);
 
 // Handle move selection input
 void Task_HandleMoveSelectInput(u8 taskId)
@@ -610,7 +610,7 @@ void Task_HandleMoveSelectInput(u8 taskId)
 	    {
 		gTasks[taskId].data[0] = 0;
 		gTasks[taskId].data[1] = gContestMons[gContestPlayerMonIndex].moves[0];
-		gTasks[taskId].func = debug_sub_80B9EBC;
+		gTasks[taskId].func = Task_DebugSelectMove;
 	    }
 	    break;
 #endif
@@ -620,9 +620,9 @@ void Task_HandleMoveSelectInput(u8 taskId)
 
 #if DEBUG
 
-void debug_sub_80BA054(u8);
+void Task_DebugPlayMoveAnimation(u8 taskId);
 
-void debug_sub_80B9EBC(u8 taskId)
+void Task_DebugSelectMove(u8 taskId)
 {
     u8 text[100];
 
@@ -686,7 +686,7 @@ void debug_sub_80B9EBC(u8 taskId)
 	    gBattle_BG2_Y = 0;
 	    SlideApplauseMeterOut();
 	    gTasks[taskId].data[0] = 0;
-	    gTasks[taskId].func = debug_sub_80BA054;
+	    gTasks[taskId].func = Task_DebugPlayMoveAnimation;
 	    break;
 	case 2:
 	    gBattle_BG0_Y = DISPLAY_HEIGHT;
@@ -703,10 +703,10 @@ void debug_sub_80B9EBC(u8 taskId)
     }
 }
 
-void debug_sub_80BA054(u8 taskId)
+void Task_DebugPlayMoveAnimation(u8 taskId)
 {
     s32 i;
-    u8 r6;
+    u8 spriteId;
 
     switch (gTasks[taskId].data[0])
     {
@@ -715,21 +715,21 @@ void debug_sub_80BA054(u8 taskId)
 	    gBattleMonForms[i] = 0;
 	memset(&gContestResources__moveAnim, 0, sizeof(gContestResources__moveAnim));
 	SetMoveAnimAttackerData(gContestPlayerMonIndex);
-	r6 = CreateContestantSprite(
+	spriteId = CreateContestantSprite(
 	  gContestMons[gContestPlayerMonIndex].species, 
 	  gContestMons[gContestPlayerMonIndex].otId, 
 	  gContestMons[gContestPlayerMonIndex].personality);
-	gSprites[r6].x2 = 120;
-	gSprites[r6].callback = SpriteCB_MonSlideIn;
-	gTasks[taskId].data[2] = r6;
-	gBattlerSpriteIds[gBattlerAttacker] = r6;
+	gSprites[spriteId].x2 = 120;
+	gSprites[spriteId].callback = SpriteCB_MonSlideIn;
+	gTasks[taskId].data[2] = spriteId;
+	gBattlerSpriteIds[gBattlerAttacker] = spriteId;
 	gTasks[taskId].data[3] = 0;
 	gTasks[taskId].data[0]++;
 	sContest.moveAnimTurnCount = 0;
 	break;
     case 1:
-	r6 = gTasks[taskId].data[2];
-	if (gSprites[r6].callback == SpriteCallbackDummy)
+	spriteId = gTasks[taskId].data[2];
+	if (gSprites[spriteId].callback == SpriteCallbackDummy)
 	{
 	    sContestantStatus[gContestPlayerMonIndex].currMove = gTasks[taskId].data[1];
 	    SetMoveSpecificAnimData(gContestPlayerMonIndex);
@@ -760,21 +760,21 @@ void debug_sub_80BA054(u8 taskId)
 	gTasks[taskId].data[3]++;
 	if (gTasks[taskId].data[3] == 21)
 	{
-	    r6 = gTasks[taskId].data[2];
-	    gSprites[r6].callback = SpriteCB_MonSlideOut;
+	    spriteId = gTasks[taskId].data[2];
+	    gSprites[spriteId].callback = SpriteCB_MonSlideOut;
 	    SlideApplauseMeterIn();
 	    gTasks[taskId].data[3] = 0;
 	    gTasks[taskId].data[0]++;
 	}
 	break;
     case 4:
-	r6 = gTasks[taskId].data[2];
-	if (gSprites[r6].invisible)
+	spriteId = gTasks[taskId].data[2];
+	if (gSprites[spriteId].invisible)
 	{
-	    FreeSpriteOamMatrix(&gSprites[r6]);
-	    DestroySprite(&gSprites[r6]);
+	    FreeSpriteOamMatrix(&gSprites[spriteId]);
+	    DestroySprite(&gSprites[spriteId]);
 	    gTasks[taskId].data[0] = 0;
-	    gTasks[taskId].func = debug_sub_80B9EBC;
+	    gTasks[taskId].func = Task_DebugSelectMove;
 	    gBattle_BG0_Y = DISPLAY_HEIGHT;
 	    gBattle_BG2_Y = DISPLAY_HEIGHT;
 	}
