@@ -686,8 +686,8 @@ void Contest_CreatePlayerMon(u8 partyIndex)
         gContestMons[gContestPlayerMonIndex].trainerGfxId = OBJ_EVENT_GFX_LINK_BRENDAN;
     else
         gContestMons[gContestPlayerMonIndex].trainerGfxId = OBJ_EVENT_GFX_LINK_MAY;
-    gContestMons[gContestPlayerMonIndex].flags = 0;
-    gContestMons[gContestPlayerMonIndex].unk2C[0] = 0;
+    gContestMons[gContestPlayerMonIndex].aiFlags = 0;
+    gContestMons[gContestPlayerMonIndex].highestRank = 0;
     gContestMons[gContestPlayerMonIndex].species = GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES);
     GetMonData(&gPlayerParty[partyIndex], MON_DATA_NICKNAME, name);
     StringGet_Nickname(name);
@@ -4177,4 +4177,3 @@ void Contest_ResetWinners(void)
     for (i = 0; i < 8; i++)
         gSaveBlock1.contestWinners[i] = gDefaultContestWinners[i];
 }
-

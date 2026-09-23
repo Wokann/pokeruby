@@ -249,7 +249,7 @@ struct ContestPokemon
     /*0x02*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
     /*0x0D*/ u8 trainerName[8];
     /*0x15*/ u8 trainerGfxId;
-    /*0x18*/ u32 flags;
+    /*0x18*/ u32 aiFlags;
     /*0x1C*/ u8 whichRank:2;
              u8 aiPool_Cool:1;
              u8 aiPool_Beauty:1;
@@ -263,7 +263,9 @@ struct ContestPokemon
     /*0x29*/ u8 smart; // smart
     /*0x2A*/ u8 tough; // tough
     /*0x2B*/ u8 sheen; // sheen
-    /*0x2C*/ u8 unk2C[12];
+    /*0x2C*/ u8 highestRank;
+    /*0x2D*/ bool8 gameCleared;
+    /*0x2E*/ u8 unused[10];
     /*0x38*/ u32 personality;  // personality
     /*0x3C*/ u32 otId;  // otId
 }; // wow

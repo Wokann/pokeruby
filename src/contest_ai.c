@@ -304,7 +304,7 @@ void ContestAI_ResetAI(u8 contestantAI)
 
     eContestAI->contestantId = contestantAI;
     eContestAI->stackSize = 0;
-    eContestAI->aiFlags = gContestMons[eContestAI->contestantId].flags;
+    eContestAI->aiFlags = gContestMons[eContestAI->contestantId].aiFlags;
 }
 
 u8 ContestAI_GetActionToUse(void)
