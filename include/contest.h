@@ -270,18 +270,18 @@ struct ContestPokemon
 
 struct ContestAIInfo {
  /*0x00*/ u8 aiState;
- /*0x02*/ u16 unk2;
- /*0x04*/ u8 unk4;
- /*0x05*/ u8 unk5[4];
+ /*0x02*/ u16 nextMove;
+ /*0x04*/ u8 nextMoveIndex;
+ /*0x05*/ u8 moveScores[4];
  /*0x09*/ u8 aiAction;
- /*0x0A*/ u8 fillerA[0x6]; // TODO: don't know what's here
- /*0x10*/ u8 unk10;
- /*0x14*/ u32 flags;
+ /*0x0A*/ u8 filler[0x6];
+ /*0x10*/ u8 currentAIFlag;
+ /*0x14*/ u32 aiFlags;
  /*0x18*/ s16 scriptResult;
- /*0x1A*/ s16 scriptArr[3];
+ /*0x1A*/ s16 vars[3];
  /*0x20*/ u32 stack[8];
- /*0x40*/ u8 unk40;
- /*0x41*/ u8 unk41;
+ /*0x40*/ u8 stackSize;
+ /*0x41*/ u8 contestantId;
 };
 
 extern struct ContestPokemon gContestMons[];
