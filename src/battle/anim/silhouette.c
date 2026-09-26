@@ -15,14 +15,14 @@ static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId);
 
 void AnimTask_ShrinkTargetCopy(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(1);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
     if (gSprites[spriteId].invisible)
     {
         DestroyAnimVisualTask(taskId);
     }
     else
     {
-        PrepareBattlerSpriteForRotScale(spriteId, 1);
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
         gTasks[taskId].data[0] = gBattleAnimArgs[0];
         gTasks[taskId].data[1] = gBattleAnimArgs[1];
         gTasks[taskId].data[11] = 256;
@@ -32,7 +32,7 @@ void AnimTask_ShrinkTargetCopy(u8 taskId)
 
 static void AnimTask_DuplicateAndShrinkToPos_Step1(u8 taskId)
 {
-    u8 spriteId = GetAnimBattlerSpriteId(1);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
     gTasks[taskId].data[10] += gTasks[taskId].data[0];
     gSprites[spriteId].x2 = gTasks[taskId].data[10] >> 8;
     if (GetBattlerSide(gBattleAnimTarget))
@@ -57,7 +57,7 @@ static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId)
     {
         if (gTasks[taskId].data[0] == 0)
         {
-            u8 spriteId = GetAnimBattlerSpriteId(1);
+            u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
             ResetSpriteRotScale(spriteId);
             gSprites[spriteId].x2 = 0;
             gSprites[spriteId].y2 = 0;
