@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 #include "rom_8077ABC.h"
 #include "trig.h"
 
@@ -8,13 +9,12 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern struct OamMatrix gOamMatrices[];
 
-void sub_80D6294(struct Sprite *sprite);
+static void AnimUnusedCirclingShock(struct Sprite *sprite);
 static void AnimSparkElectricity(struct Sprite *sprite);
 
-// shock (moves the little electricity lines)
-// Used in Shock.
+// Shock and Spark electricity effects.
 
-const union AnimCmd gSpriteAnim_83D9824[] =
+static const union AnimCmd sAnim_UnusedCirclingShock[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -25,20 +25,21 @@ const union AnimCmd gSpriteAnim_83D9824[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9840[] =
+static const union AnimCmd *const sAnims_UnusedCirclingShock[] =
 {
-    gSpriteAnim_83D9824,
+    sAnim_UnusedCirclingShock,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D9844 =
+// Unused
+static const struct SpriteTemplate sUnusedCirclingShockSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SHOCK,
     .paletteTag = ANIM_TAG_SHOCK,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9840,
+    .anims = sAnims_UnusedCirclingShock,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D6294,
+    .callback = AnimUnusedCirclingShock,
 };
 
 const struct SpriteTemplate gSparkElectricitySpriteTemplate =
@@ -63,12 +64,12 @@ const struct SpriteTemplate gZapCannonBallSpriteTemplate =
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-void sub_80D6294(struct Sprite *sprite)
+static void AnimUnusedCirclingShock(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= gBattleAnimArgs[0];
         sprite->y -= gBattleAnimArgs[1];
