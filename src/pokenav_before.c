@@ -1460,11 +1460,11 @@ void ClosePokenavConditionMenu(void)
     {
     case 0:
         sub_80F2D04(1);
-        sub_80EE9C0(0, gPokenavStructPtr->unk6DDC, 0);
+        StartPokenavMenuTransition(0, gPokenavStructPtr->unk6DDC, 0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80EEA0C())
+        if (!UpdatePokenavMenuTransition())
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
 		break;
     }
@@ -1745,11 +1745,11 @@ void OpenPokenavConditionMenu(void)
     {
     case 0:
         sub_80F2D04(0);
-        sub_80EE9C0(1, 0, 1);
+        StartPokenavMenuTransition(1, 0, 1);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80EEA0C())
+        if (!UpdatePokenavMenuTransition())
 			SetPokenavCallback(&HandleConditionMenuInput);
 		break;
     }
@@ -1803,11 +1803,11 @@ void OpenPokenavConditionSearchMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80EE9C0(2, 0, 5);
+        StartPokenavMenuTransition(2, 0, 5);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80EEA0C())
+        if (!UpdatePokenavMenuTransition())
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
 		break;
     }
@@ -1819,11 +1819,11 @@ void ReturnToConditionMenu(void)
     {
     case 0:
         sub_80F2D04(5);
-        sub_80EE9C0(1, gPokenavStructPtr->unk6DF0, 0xC);
+        StartPokenavMenuTransition(1, gPokenavStructPtr->unk6DF0, 0xC);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80EEA0C())
+        if (!UpdatePokenavMenuTransition())
         {
 			SetPokenavCallback(&HandleConditionMenuInput);
 			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
@@ -3250,42 +3250,42 @@ void ExitPokenav(void)
     }
 }
 
-void sub_80EE9C0(u8 param1, u8 param2, u8 param3)
+void StartPokenavMenuTransition(u8 menuType, u8 cursorPos, u8 gfxId)
 {
     sub_80F1E84();
-    gPokenavStructPtr->unk6E14 = param1;
-    gPokenavStructPtr->unk6E15 = param2;
-    gPokenavStructPtr->unk6E16 = 0;
-    gPokenavStructPtr->unk6E17 = param3;
+    gPokenavStructPtr->transitionMenuType = menuType;
+    gPokenavStructPtr->transitionCursorPos = cursorPos;
+    gPokenavStructPtr->transitionStep = 0;
+    gPokenavStructPtr->transitionGfxId = gfxId;
 }
 
 bool8 sub_80EF4F8(void);
 void sub_80EF490(u8);
 
-bool8 sub_80EEA0C(void)
+bool8 UpdatePokenavMenuTransition(void)
 {
-    switch (gPokenavStructPtr->unk6E16)
+    switch (gPokenavStructPtr->transitionStep)
     {
     case 0:
         if (!sub_80F1F10())
         {
-            if (gPokenavStructPtr->unk6E17 != 12)
-                gPokenavStructPtr->unk6E16 = 1;
+            if (gPokenavStructPtr->transitionGfxId != 12)
+                gPokenavStructPtr->transitionStep = 1;
             else
-                gPokenavStructPtr->unk6E16 = 3;
+                gPokenavStructPtr->transitionStep = 3;
         }
         break;
     case 1:
-        sub_80F2C80(gPokenavStructPtr->unk6E17);
-        gPokenavStructPtr->unk6E16++;
+        sub_80F2C80(gPokenavStructPtr->transitionGfxId);
+        gPokenavStructPtr->transitionStep++;
         // fallthrough
     case 2:
-        if (!sub_80F2CBC(gPokenavStructPtr->unk6E17))
-            gPokenavStructPtr->unk6E16++;
+        if (!sub_80F2CBC(gPokenavStructPtr->transitionGfxId))
+            gPokenavStructPtr->transitionStep++;
         break;
     case 3:
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6E15;
-        switch (gPokenavStructPtr->unk6E14)
+        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->transitionCursorPos;
+        switch (gPokenavStructPtr->transitionMenuType)
         {
         case 0:
             gPokenavStructPtr->unk6DAE = 5;
@@ -3297,33 +3297,33 @@ bool8 sub_80EEA0C(void)
             gPokenavStructPtr->unk6DAE = 6;
             break;
         }
-        sub_80F1B8C(gPokenavStructPtr->unk6E14);
-        gPokenavStructPtr->unk6E16++;
+        sub_80F1B8C(gPokenavStructPtr->transitionMenuType);
+        gPokenavStructPtr->transitionStep++;
         // fallthrough
     case 4:
-        if (!sub_80F1BC8(gPokenavStructPtr->unk6E14))
-            gPokenavStructPtr->unk6E16++;
+        if (!sub_80F1BC8(gPokenavStructPtr->transitionMenuType))
+            gPokenavStructPtr->transitionStep++;
         break;
     case 5:
         if (!sub_8055870())
-            gPokenavStructPtr->unk6E16++;
+            gPokenavStructPtr->transitionStep++;
         break;
     case 6:
         sub_80F1DF0();
-        sub_80EF490(gPokenavStructPtr->unk6E14);
-        gPokenavStructPtr->unk6E16++;
+        sub_80EF490(gPokenavStructPtr->transitionMenuType);
+        gPokenavStructPtr->transitionStep++;
         break;
     case 7:
         if (!sub_80F1E50())
         {
-            sub_80EF428(gPokenavStructPtr->unk6E14, gPokenavStructPtr->unk6DAD);
-            gPokenavStructPtr->unk6E16++;
+            sub_80EF428(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->unk6DAD);
+            gPokenavStructPtr->transitionStep++;
         }
         break;
     case 8:
         if (!sub_80EF4F8())
         {
-            gPokenavStructPtr->unk6E16++;
+            gPokenavStructPtr->transitionStep++;
             return FALSE;
         }
         break;
