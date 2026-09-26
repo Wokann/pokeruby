@@ -266,7 +266,7 @@ SECTIONS {
         src/battle/anim/fury_cutter_count.o(.text);
         src/battle/anim/rain.o(.text);
         src/battle/anim/water_bubble_projectile.o(.text);
-        src/battle/anim/aurora.o(.text);
+        src/battle/anim/aurora_beam_ring.o(.text);
         src/battle/anim/energy_wave.o(.text);
         src/battle_anim_water.o(.text);
         src/battle/anim/fire.o(.text);
@@ -687,7 +687,7 @@ SECTIONS {
         src/battle/anim/guard_ring.o(.rodata);
         src/battle/anim/rain.o(.rodata);
         src/battle/anim/water_bubble_projectile.o(.rodata);
-        src/battle/anim/aurora.o(.rodata);
+        src/battle/anim/aurora_beam_ring.o(.rodata);
         src/battle/anim/energy_wave.o(.rodata);
         src/battle_anim_water.o(.rodata);
         src/battle/anim/fire.o(.rodata);

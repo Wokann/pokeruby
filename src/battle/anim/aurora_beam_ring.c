@@ -64,16 +64,16 @@ const struct SpriteTemplate gAuroraBeamRingSpriteTemplate =
 // arg 4: duration
 static void AnimAuroraBeamRings(struct Sprite *sprite)
 {
-    s16 unkArg;
+    s16 targetXOffset;
 
     InitSpritePosToAnimAttacker(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
-        unkArg = -gBattleAnimArgs[2];
+        targetXOffset = -gBattleAnimArgs[2];
     else
-        unkArg = gBattleAnimArgs[2];
+        targetXOffset = gBattleAnimArgs[2];
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + unkArg;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + targetXOffset;
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     InitAnimLinearTranslation(sprite);
