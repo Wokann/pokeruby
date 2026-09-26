@@ -3,15 +3,17 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimBreathPuff(struct Sprite *sprite);
+static void AnimBreathPuff(struct Sprite *sprite);
 
-// breath (a puff of smoke, usually from the mouth or nose of the Pokemon.)
-// Used in Swagger and Bulk Up.
+// Animates a little puff of the mon's breath.
+// Used by Swagger and Bulk Up.
+// No args.
 
 const union AnimCmd gBreathPuffAnimCmds1[] =
 {
@@ -48,9 +50,9 @@ const struct SpriteTemplate gBreathPuffSpriteTemplate =
     .callback = AnimBreathPuff,
 };
 
-void AnimBreathPuff(struct Sprite *sprite)
+static void AnimBreathPuff(struct Sprite *sprite)
 {
-    if (GetBattlerSide(gBattleAnimAttacker) == 0)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         StartSpriteAnim(sprite, 0);
         sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + 32;
