@@ -66,6 +66,7 @@
 #define FLDEFF_HALL_OF_FAME_RECORD       62
 #define FLDEFF_USE_TELEPORT              63
 
+#define FLDEFFOBJ_SPARKLE                22
 #define FLDEFFOBJ_ASH_PUFF               32
 #define FLDEFFOBJ_ASH_LAUNCH             33
 #define FLDEFFOBJ_BUBBLES                34

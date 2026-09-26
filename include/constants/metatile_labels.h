@@ -284,14 +284,33 @@
 #define METATILE_PokemonCenter_Floor_Plain_Alt           0x202
 
 // gTileset_SecretBase
+#define METATILE_SecretBase_BlueBalloon                 0x33C
+#define METATILE_SecretBase_BreakableDoor_BottomOpen    0x276
+#define METATILE_SecretBase_BreakableDoor_TopOpen       0x26E
+#define METATILE_SecretBase_CuteTV                      0x2F6
+#define METATILE_SecretBase_GoldShield_Base1            0x336
 #define METATILE_SecretBase_Ground                      0x20A
+#define METATILE_SecretBase_MudBall                     0x228
+#define METATILE_SecretBase_NoteMat_A                   0x27D
+#define METATILE_SecretBase_NoteMat_B                   0x27E
+#define METATILE_SecretBase_NoteMat_C_High              0x2B3
+#define METATILE_SecretBase_NoteMat_C_Low               0x278
+#define METATILE_SecretBase_NoteMat_D                   0x279
+#define METATILE_SecretBase_NoteMat_E                   0x27A
+#define METATILE_SecretBase_NoteMat_F                   0x27B
+#define METATILE_SecretBase_NoteMat_G                   0x27C
 #define METATILE_SecretBase_PC                          0x220
 #define METATILE_SecretBase_PC_On                       0x224
+#define METATILE_SecretBase_RedBalloon                  0x338
 #define METATILE_SecretBase_RegisterPC                  0x221
+#define METATILE_SecretBase_RoundTV                     0x2F5
 #define METATILE_SecretBase_SandOrnament_BrokenBase     0x28C
 #define METATILE_SecretBase_SandOrnament_BrokenTop      0x284
 #define METATILE_SecretBase_SandOrnament_TopWall        0x286
+#define METATILE_SecretBase_SilverShield_Base1          0x2DE
+#define METATILE_SecretBase_TV                          0x2F4
 #define METATILE_SecretBase_Wall_TopMid                 0x202
+#define METATILE_SecretBase_YellowBalloon               0x340
 
 // gTileset_Shop
 #define METATILE_Shop_Laptop1_Flash   0x258

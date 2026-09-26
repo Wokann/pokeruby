@@ -76,12 +76,12 @@ const struct SpritePalette gSpritePalette_SandPillar = {gTilesetPalettes_SecretB
 
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
 
-static void sub_80C68EC(u8);
+static void Task_PopSecretBaseBalloon(u8);
 static void DoBalloonSoundEffect(s16);
 
 void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
 {
-    u8 taskId = CreateTask(sub_80C68EC, 0);
+    u8 taskId = CreateTask(Task_PopSecretBaseBalloon, 0);
 
     gTasks[taskId].data[0] = metatileId;
     gTasks[taskId].data[1] = x;
@@ -90,7 +90,7 @@ void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
     gTasks[taskId].data[4] = 1;
 }
 
-static void sub_80C68EC(u8 taskId)
+static void Task_PopSecretBaseBalloon(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -116,16 +116,16 @@ static void DoBalloonSoundEffect(s16 metatileId)
 {
     switch (metatileId)
     {
-    case 824:
+    case METATILE_SecretBase_RedBalloon:
         PlaySE(SE_BALLOON_RED);
         break;
-    case 828:
+    case METATILE_SecretBase_BlueBalloon:
         PlaySE(SE_BALLOON_BLUE);
         break;
-    case 832:
+    case METATILE_SecretBase_YellowBalloon:
         PlaySE(SE_BALLOON_YELLOW);
         break;
-    case 552:
+    case METATILE_SecretBase_MudBall:
         PlaySE(SE_MUD_BALL);
         break;
     }
@@ -141,20 +141,20 @@ bool8 FldEff_Nop48(void)
     return FALSE;
 }
 
-static void sub_80C69C4(s16 x, s16 y)
+static void DoSecretBaseBreakableDoorEffect(s16 x, s16 y)
 {
     PlaySE(SE_BREAKABLE_DOOR);
-    MapGridSetMetatileIdAt(x, y, 630);
-    MapGridSetMetatileIdAt(x, y - 1, 622);
+    MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_BreakableDoor_BottomOpen);
+    MapGridSetMetatileIdAt(x, y - 1, METATILE_SecretBase_BreakableDoor_TopOpen);
     CurrentMapDrawMetatileAt(x, y);
     CurrentMapDrawMetatileAt(x, y - 1);
 }
 
-static void sub_80C6A14(u8 taskId)
+static void Task_ShatterSecretBaseBreakableDoor(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 7)
     {
-        sub_80C69C4(gTasks[taskId].data[1], gTasks[taskId].data[2]);
+        DoSecretBaseBreakableDoorEffect(gTasks[taskId].data[1], gTasks[taskId].data[2]);
         DestroyTask(taskId);
     }
     else
@@ -168,45 +168,46 @@ void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
     u8 dir = GetPlayerFacingDirection();
     if (dir == DIR_SOUTH)
     {
-        sub_80C69C4(x, y);
+        DoSecretBaseBreakableDoorEffect(x, y);
     }
     else if (dir == DIR_NORTH)
     {
-        u8 taskId = CreateTask(sub_80C6A14, 5);
+        u8 taskId = CreateTask(Task_ShatterSecretBaseBreakableDoor, 5);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = x;
         gTasks[taskId].data[2] = y;
     }
 }
 
+#define tMetatileID data[0]
 static void Task_SecretBaseMusicNoteMatSound(u8 taskId)
 {
     if (gTasks[taskId].data[1] == 7)
     {
-        switch (gTasks[taskId].data[0]) // metatileId
+        switch (gTasks[taskId].tMetatileID)
         {
-        case 632:
+        case METATILE_SecretBase_NoteMat_C_Low:
             PlaySE(SE_NOTE_C);
             break;
-        case 633:
+        case METATILE_SecretBase_NoteMat_D:
             PlaySE(SE_NOTE_D);
             break;
-        case 634:
+        case METATILE_SecretBase_NoteMat_E:
             PlaySE(SE_NOTE_E);
             break;
-        case 635:
+        case METATILE_SecretBase_NoteMat_F:
             PlaySE(SE_NOTE_F);
             break;
-        case 636:
+        case METATILE_SecretBase_NoteMat_G:
             PlaySE(SE_NOTE_G);
             break;
-        case 637:
+        case METATILE_SecretBase_NoteMat_A:
             PlaySE(SE_NOTE_A);
             break;
-        case 638:
+        case METATILE_SecretBase_NoteMat_B:
             PlaySE(SE_NOTE_B);
             break;
-        case 691:
+        case METATILE_SecretBase_NoteMat_C_High:
             PlaySE(SE_NOTE_C_HIGH);
             break;
         }
@@ -222,9 +223,10 @@ static void Task_SecretBaseMusicNoteMatSound(u8 taskId)
 void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
 {
     u8 taskId = CreateTask(Task_SecretBaseMusicNoteMatSound, 5);
-    gTasks[taskId].data[0] = metatileId;
+    gTasks[taskId].tMetatileID = metatileId;
     gTasks[taskId].data[1] = 0;
 }
+#undef tMetatileID
 
 void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
 {
@@ -242,7 +244,7 @@ void DoSecretBaseGlitterMatSparkle(void)
     u8 spriteId;
 
     sub_8060470(&x, &y, 8, 4);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[22], x, y, 0);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SPARKLE], x, y, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].coordOffsetEnabled = TRUE;
@@ -343,23 +345,23 @@ void InteractWithShieldOrTVDecoration(void)
 
     switch (metatileId)
     {
-    case 822:
+    case METATILE_SecretBase_GoldShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 100, STR_CONV_MODE_LEFT_ALIGN, 3);
         StringCopy(gStringVar2, gSecretBaseText_GoldRank);
         gSpecialVar_Result = 0;
         break;
-    case 734:
+    case METATILE_SecretBase_SilverShield_Base1:
         ConvertIntToDecimalStringN(gStringVar1, 50, STR_CONV_MODE_LEFT_ALIGN, 2);
         StringCopy(gStringVar2, gSecretBaseText_SilverRank);
         gSpecialVar_Result = 0;
         break;
-    case 756:
+    case METATILE_SecretBase_TV:
         gSpecialVar_Result = 1;
         break;
-    case 757:
+    case METATILE_SecretBase_RoundTV:
         gSpecialVar_Result = 2;
         break;
-    case 758:
+    case METATILE_SecretBase_CuteTV:
         gSpecialVar_Result = 3;
         break;
     }
