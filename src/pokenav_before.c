@@ -1496,7 +1496,7 @@ void HandlePokenavMainMenuInput(void)
                     break;
                 case 1:
                     PlaySE(SE_SELECT);
-                    SetPokenavCallback(&sub_80EC81C);
+                    SetPokenavCallback(&OpenPokenavConditionMenu);
                     break;
                 case 4:
                     gPokenavStructPtr->callbackStep = 1;
@@ -1739,7 +1739,7 @@ void HandleRegionMapInput(void)
 #endif
 }
 
-void sub_80EC81C()
+void OpenPokenavConditionMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1750,12 +1750,12 @@ void sub_80EC81C()
         break;
     case 1:
         if (!sub_80EEA0C())
-			SetPokenavCallback(&sub_80EC86C);
+			SetPokenavCallback(&HandleConditionMenuInput);
 		break;
     }
 }
 
-void sub_80EC86C()
+void HandleConditionMenuInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1776,7 +1776,7 @@ void sub_80EC86C()
                 SetPokenavCallback(&sub_80ED620);
                 break;
             case 1:
-                SetPokenavCallback(&sub_80EC960);
+                SetPokenavCallback(&OpenPokenavConditionSearchMenu);
                 break;
             case 2:
                 SetPokenavCallback(&ClosePokenavConditionMenu);
@@ -1798,7 +1798,7 @@ void sub_80EC86C()
     }
 }
 
-void sub_80EC960()
+void OpenPokenavConditionSearchMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1808,12 +1808,12 @@ void sub_80EC960()
         break;
     case 1:
         if (!sub_80EEA0C())
-			SetPokenavCallback(&sub_80ECC08);
+			SetPokenavCallback(&HandleConditionSearchMenuInput);
 		break;
     }
 }
 
-void sub_80EC9A8()
+void ReturnToConditionMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1825,14 +1825,14 @@ void sub_80EC9A8()
     case 1:
         if (!sub_80EEA0C())
         {
-			SetPokenavCallback(&sub_80EC86C);
+			SetPokenavCallback(&HandleConditionMenuInput);
 			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
 		}
 		break;
     }
 }
 
-void sub_80ECA10()
+void RestorePokenavConditionMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1898,7 +1898,7 @@ void sub_80ECA10()
         if (!sub_80F1E50())
         {
 			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
-			SetPokenavCallback(&sub_80EC86C);
+			SetPokenavCallback(&HandleConditionMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1908,7 +1908,7 @@ void sub_80ECA10()
     }
 }
 
-void sub_80ECC08()
+void HandleConditionSearchMenuInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1940,7 +1940,7 @@ void sub_80ECC08()
                 gPokenavStructPtr->unk87D8 = 47;
                 break;
             case 5:
-                SetPokenavCallback(&sub_80EC9A8);
+                SetPokenavCallback(&ReturnToConditionMenu);
                 return;
             }
 
@@ -1957,7 +1957,7 @@ void sub_80ECC08()
         break;
     case 1:
         if (!sub_80F1E6C())
-			SetPokenavCallback(&sub_80EC9A8);
+			SetPokenavCallback(&ReturnToConditionMenu);
         break;
     }
 }
@@ -2063,7 +2063,7 @@ void sub_80ECD80()
         if (!sub_80F1E50())
 		{
 			sub_80EF428(2, gPokenavStructPtr->unk6DAD);
-			SetPokenavCallback(&sub_80ECC08);
+			SetPokenavCallback(&HandleConditionSearchMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2580,7 +2580,7 @@ void sub_80ED858(void)
                 sub_80F357C();
                 sub_80F2D6C(1);
                 sub_80F2D6C(6);
-                SetPokenavCallback(sub_80ECA10);
+                SetPokenavCallback(RestorePokenavConditionMenu);
             }
             else
             {
