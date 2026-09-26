@@ -14,7 +14,6 @@ extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 
 static void AnimTask_MoonlightEndFade_Step(u8 taskId);
 
-// flash (a "ting!" flash effect.)
 // Used in Moonlight.
 
 void AnimTask_MoonlightEndFade(u8 taskId)

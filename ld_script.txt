@@ -211,7 +211,7 @@ SECTIONS {
         src/battle/anim/tile.o(.text);
         src/battle/anim/moon.o(.text);
         src/battle/anim/moonlight_sparkle.o(.text);
-        src/battle/anim/flash.o(.text);
+        src/battle/anim/moonlight_end_fade.o(.text);
         src/battle/anim/strike.o(.text);
         src/battle/anim/evasion.o(.text);
         src/battle/anim/fang.o(.text);
