@@ -301,18 +301,18 @@ void DrawPokenavBottomToolbar(u8 toolbarId)
     }
 }
 
-void sub_80EF248(u8 a)
+void InitPokenavMenuGfx(u8 menuType)
 {
     gPokenavStructPtr->setupStep = 0;
 
     if (!gPokenavStructPtr->unk6DAC)
     {
-        while (sub_80EF284(a))
+        while (LoadPokenavMenuGfxStep(menuType))
             ;
     }
 }
 
-bool8 sub_80EF284(u8 a)
+bool8 LoadPokenavMenuGfxStep(u8 menuType)
 {
     switch (gPokenavStructPtr->setupStep)
     {
@@ -348,7 +348,7 @@ bool8 sub_80EF284(u8 a)
         LZ77UnCompVram(gPokenavOutlineTiles, (void *)VRAM + 0x8020);
         break;
     case 10:
-        sub_80EF54C(a);
+        sub_80EF54C(menuType);
         LoadPalette(gUnknown_083DFECC, 0xF0, 0x20);
         LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
         sub_80EF7D4();

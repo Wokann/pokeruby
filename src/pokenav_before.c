@@ -1319,11 +1319,11 @@ void InitPokenavMainMenu(void)
 		}
         break;
     case 6:
-        sub_80EF248(0);
+        InitPokenavMenuGfx(0);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
-        if (!sub_80EF284(0))
+        if (!LoadPokenavMenuGfxStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
@@ -1392,11 +1392,11 @@ void RestorePokenavMainMenu(void)
         }
         break;
     case 1:
-        sub_80EF248(0);
+        InitPokenavMenuGfx(0);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 2:
-        if (!sub_80EF284(0))
+        if (!LoadPokenavMenuGfxStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
@@ -1848,10 +1848,10 @@ void RestorePokenavConditionMenu(void)
 		}
         break;
     case 1:
-        sub_80EF248(1);
+        InitPokenavMenuGfx(1);
         gPokenavStructPtr->callbackStep++;
     case 2:
-        if (!sub_80EF284(1))
+        if (!LoadPokenavMenuGfxStep(1))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
@@ -2001,11 +2001,11 @@ void ReturnToConditionSearchMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EF248(0x2);
+        InitPokenavMenuGfx(0x2);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 8:
-        if (!sub_80EF284(0x2))
+        if (!LoadPokenavMenuGfxStep(0x2))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
