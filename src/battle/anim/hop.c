@@ -2,6 +2,7 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -97,7 +98,7 @@ bool8 moveAlongLinearPath(struct Sprite* sprite)
     }
     else if (xEndPos == 255)
     {
-        xEndPos = 0x110;
+        xEndPos = DISPLAY_WIDTH + 32;
     }
 
     yEndPos_2 = yEndPos - yStartPos;
@@ -150,9 +151,9 @@ void AnimPresent(struct Sprite* sprite)
     s16 targetX;
     s16 targetY;
     InitSpritePosToAnimAttacker(sprite, 0);
-    targetX = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-    targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
-    if ((gBattleAnimAttacker ^ 2) == gBattleAnimTarget)
+    targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (BATTLE_PARTNER(gBattleAnimAttacker) == gBattleAnimTarget)
     {
         sprite->data[6] = targetX;
         sprite->data[7] = targetY + 10;
@@ -193,8 +194,8 @@ void AnimKnockOffOpponentsItem(struct Sprite* sprite)
 
 void AnimKnockOffItem(struct Sprite* sprite)
 {
-    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
-    if (GetBattlerSide(gBattleAnimTarget) == 0)
+    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
     {
         sprite->data[6] = 0;
         sprite->data[7] = targetY + 10;
