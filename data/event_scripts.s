@@ -7,6 +7,11 @@
 #include "constants/easy_chat.h"
 #include "constants/field_effects.h"
 #include "constants/field_poison.h"
+#include "constants/field_specials.h"
+// These are defined as assembler symbols in constants/misc_constants.inc.
+#undef PC_LOCATION_OTHER
+#undef PC_LOCATION_BRENDANS_HOUSE
+#undef PC_LOCATION_MAYS_HOUSE
 #include "constants/field_tasks.h"
 #include "constants/flags.h"
 #include "constants/game_stat.h"

@@ -17,6 +17,8 @@
 #include "sprite.h"
 #include "task.h"
 #include "constants/event_objects.h"
+#include "constants/event_object_movement.h"
+#include "constants/field_specials.h"
 
 #define BOX1_X_OFFSET  3
 #define BOX1_Y_OFFSET  3
@@ -26,14 +28,6 @@
 #define BOX3_Y_OFFSET  0
 
 #define SECONDS(value) ((signed) (60.0 * value + 0.5))
-
-// TODO: Move somewhere else
-enum
-{
-    STEP_17 = 0x17,
-    STEP_18,
-    STEP_END = 0xFE,
-};
 
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
 const u16 gObjectEventPalette19[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
@@ -63,14 +57,14 @@ static const s8 sTruckCamera_HorizontalTable[] =
 
 static const u8 sSSTidalSailEastMovementScript[] =
 {
-    STEP_18,
-    STEP_END,
+    MOVEMENT_ACTION_WALK_FAST_RIGHT,
+    MOVEMENT_ACTION_STEP_END,
 };
 
 static const u8 sSSTidalSailWestMovementScript[] =
 {
-    STEP_17,
-    STEP_END,
+    MOVEMENT_ACTION_WALK_FAST_LEFT,
+    MOVEMENT_ACTION_STEP_END,
 };
 
 // porthole states
@@ -302,7 +296,7 @@ bool8 TrySetPortholeWarpDestination(void)
     s8 mapGroup, mapNum;
     s16 x, y;
 
-    if (GetSSTidalLocation(&mapGroup, &mapNum, &x, &y))
+    if (GetSSTidalLocation(&mapGroup, &mapNum, &x, &y) != SS_TIDAL_LOCATION_CURRENTS)
     {
         return FALSE;
     }
@@ -316,7 +310,7 @@ bool8 TrySetPortholeWarpDestination(void)
 void Task_HandlePorthole(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u16 *var = GetVarPointer(VAR_PORTHOLE_STATE);
+    u16 *cruiseState = GetVarPointer(VAR_SS_TIDAL_STATE);
     struct WarpData *location = &gSaveBlock1.location;
 
     switch (data[0])
@@ -335,14 +329,14 @@ void Task_HandlePorthole(u8 taskId)
             return;
         if (CountSSTidalStep(1) == TRUE)
         {
-            if (*var == 2)
-                *var = 9;
+            if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT)
+                *cruiseState = SS_TIDAL_EXIT_CURRENTS_RIGHT;
             else
-                *var = 10;
-            data[0] = 3;
+                *cruiseState = SS_TIDAL_EXIT_CURRENTS_LEFT;
+            data[0] = EXIT_PORTHOLE;
             return;
         }
-        data[0] = 2;
+        data[0] = EXECUTE_MOVEMENT;
     case EXECUTE_MOVEMENT: // execute movement.
         if (data[1])
         {
@@ -350,7 +344,7 @@ void Task_HandlePorthole(u8 taskId)
             return;
         }
         // run this once.
-        if (*var == 2) // which direction?
+        if (*cruiseState == SS_TIDAL_DEPART_SLATEPORT) // which direction?
         {
             ScriptMovement_StartObjectMovementScript(LOCALID_PLAYER, location->mapNum, location->mapGroup, sSSTidalSailEastMovementScript);
             data[0] = IDLE_CHECK; // run case 1.
@@ -373,17 +367,17 @@ void Task_HandlePorthole(u8 taskId)
 
 static void ShowSSTidalWhileSailing(void)
 {
-    u8 spriteId = AddPseudoObjectEvent(0x8C, SpriteCallbackDummy, 112, 80, 0);
+    u8 spriteId = AddPseudoObjectEvent(OBJ_EVENT_GFX_SS_TIDAL, SpriteCallbackDummy, 112, 80, 0);
 
     gSprites[spriteId].coordOffsetEnabled = FALSE;
 
-    if (VarGet(VAR_PORTHOLE_STATE) == 2)
+    if (VarGet(VAR_SS_TIDAL_STATE) == SS_TIDAL_DEPART_SLATEPORT)
     {
-        StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(4));
+        StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(DIR_EAST));
     }
     else
     {
-        StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(3));
+        StartSpriteAnim(&gSprites[spriteId], GetFaceDirectionAnimNum(DIR_WEST));
     }
 }
 
