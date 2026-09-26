@@ -252,7 +252,7 @@ SECTIONS {
         src/battle/anim/hearts_background.o(.text);
         src/battle/anim/scary_face.o(.text);
         src/battle/anim/hidden_power_orbit.o(.text);
-        src/battle/anim/spit.o(.text);
+        src/battle/anim/spit_up_orb.o(.text);
         src/battle/anim/perceive.o(.text);
         src/battle/anim/angel.o(.text);
         src/battle/anim/angel_kiss.o(.text);
@@ -674,7 +674,7 @@ SECTIONS {
         src/battle/anim/hearts_background.o(.rodata);
         src/battle/anim/scary_face.o(.rodata);
         src/battle/anim/hidden_power_orbit.o(.rodata);
-        src/battle/anim/spit.o(.rodata);
+        src/battle/anim/spit_up_orb.o(.rodata);
         src/battle/anim/perceive.o(.rodata);
         src/battle/anim/angel.o(.rodata);
         src/battle/anim/angel_kiss.o(.rodata);

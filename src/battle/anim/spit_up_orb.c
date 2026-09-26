@@ -11,8 +11,7 @@ extern u8 gBattleAnimTarget;
 static void AnimSpitUpOrb(struct Sprite *sprite);
 static void AnimSpitUpOrb_Step(struct Sprite *sprite);
 
-// spit (hurls sprites outward from the pokemon. Similar to orbit_fast, but takes another argument.)
-// Used in Spit Up.
+// Spit Up orb thrown outward from the attacking mon.
 
 const union AffineAnimCmd gSpitUpOrbAffineAnimCmds[] =
 {
@@ -47,8 +46,8 @@ static void AnimSpitUpOrb_Step(struct Sprite *sprite)
 
 static void AnimSpitUpOrb(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[0] = Sin(gBattleAnimArgs[0], 10);
     sprite->data[1] = Cos(gBattleAnimArgs[0], 7);
     sprite->data[2] = gBattleAnimArgs[1];
