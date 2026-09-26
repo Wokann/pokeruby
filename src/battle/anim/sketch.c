@@ -4,6 +4,7 @@
 #include "battle_anim.h"
 #include "sound.h"
 #include "scanline_effect.h"
+#include "constants/songs.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -12,14 +13,13 @@ extern u8 gBattleAnimTarget;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG1_X;
 
-void sub_80D0E30(struct Sprite* sprite);
-static void sub_80D0D68(u8 taskId);
-static void sub_80D0E8C(struct Sprite* sprite);
+static void AnimPencil(struct Sprite *sprite);
+static void AnimTask_SketchDrawMon_Step(u8 taskId);
+static void AnimPencil_Step(struct Sprite *sprite);
 
-// draw (draws the Pokemon into the world using a pencil.)
-// Used in Sketch.
+// Draws the target mon using a pencil for Sketch.
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77E0 =
+const struct SpriteTemplate gPencilSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PENCIL,
     .paletteTag = ANIM_TAG_PENCIL,
@@ -27,12 +27,12 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D77E0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D0E30,
+    .callback = AnimPencil,
 };
 
-void sub_80D0C88(u8 taskId)
+void AnimTask_SketchDrawMon(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     struct ScanlineEffectParams params;
 
     s16 i;
@@ -42,7 +42,7 @@ void sub_80D0C88(u8 taskId)
     task->data[3] = 0;
     task->data[4] = 0;
     task->data[5] = 0;
-    task->data[15] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 0);
+    task->data[15] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_HEIGHT);
 
     if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
     {
@@ -68,12 +68,12 @@ void sub_80D0C88(u8 taskId)
     params.initState = 1;
     params.unused9 = 0;
     ScanlineEffect_SetParams(params);
-    task->func = sub_80D0D68;
+    task->func = AnimTask_SketchDrawMon_Step;
 }
 
-static void sub_80D0D68(u8 taskId)
+static void AnimTask_SketchDrawMon_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
 
     switch (task->data[4])
     {
@@ -118,21 +118,21 @@ static void sub_80D0D68(u8 taskId)
     }
 }
 
-void sub_80D0E30(struct Sprite* sprite)
+static void AnimPencil(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0) - 16;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) - 16;
     sprite->y = GetBattlerYCoordWithElevation(gBattleAnimTarget) + 16;
     sprite->data[0] = 0;
     sprite->data[1] = 0;
     sprite->data[2] = 0;
     sprite->data[3] = 16;
     sprite->data[4] = 0;
-    sprite->data[5] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, 0) + 2;
+    sprite->data[5] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_HEIGHT) + 2;
     sprite->data[6] = BattleAnimAdjustPanning(SOUND_PAN_TARGET);
-    sprite->callback = sub_80D0E8C;
+    sprite->callback = AnimPencil_Step;
 }
 
-static void sub_80D0E8C(struct Sprite* sprite)
+static void AnimPencil_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -155,7 +155,7 @@ static void sub_80D0E8C(struct Sprite* sprite)
             sprite->y -= 1;
             sprite->data[2]++;
             if (sprite->data[2] % 10 == 0)
-                PlaySE12WithPanning(0xCD, sprite->data[6]);
+                PlaySE12WithPanning(SE_M_SKETCH, sprite->data[6]);
         }
         sprite->data[4] += sprite->data[3];
         if (sprite->data[4] > 31)

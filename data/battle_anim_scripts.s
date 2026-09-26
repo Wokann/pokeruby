@@ -3062,8 +3062,8 @@ Move_STRUGGLE: @ 81CB815
 Move_SKETCH: @ 81CB87B
 	loadspritegfx ANIM_TAG_PENCIL
 	monbg ANIM_BATTLER_TARGET
-	createvisualtask sub_80D0C88, 2
-	createsprite gBattleAnimSpriteTemplate_83D77E0, ANIM_BATTLER_TARGET, 2
+	createvisualtask AnimTask_SketchDrawMon, 2
+	createsprite gPencilSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_TARGET
 	createvisualtask AnimTask_Splash, 2, 0, 2
