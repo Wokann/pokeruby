@@ -7,10 +7,10 @@ extern s16 gBattleAnimArgs[8];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80D2C38(struct Sprite *sprite);
-static void sub_80D2CC4(struct Sprite *);
+static void AnimMovementWaves(struct Sprite *sprite);
+static void AnimMovementWaves_Step(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D7C60[] =
+const union AnimCmd gMovementWavesAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(16, 8),
@@ -19,7 +19,7 @@ const union AnimCmd gSpriteAnim_83D7C60[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D7C74[] =
+const union AnimCmd gMovementWavesAnimCmds2[] =
 {
     ANIMCMD_FRAME(16, 8, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 8, .hFlip = TRUE),
@@ -28,24 +28,24 @@ const union AnimCmd gSpriteAnim_83D7C74[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7C88[] =
+const union AnimCmd *const gMovementWavesAnimTable[] =
 {
-    gSpriteAnim_83D7C60,
-    gSpriteAnim_83D7C74,
+    gMovementWavesAnimCmds1,
+    gMovementWavesAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7C90 =
+const struct SpriteTemplate gMovementWavesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MOVEMENT_WAVES,
     .paletteTag = ANIM_TAG_MOVEMENT_WAVES,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D7C88,
+    .anims = gMovementWavesAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D2C38,
+    .callback = AnimMovementWaves,
 };
 
-void sub_80D2C38(struct Sprite *sprite)
+static void AnimMovementWaves(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] == 0)
     {
@@ -55,13 +55,13 @@ void sub_80D2C38(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[0] == 0)
         {
-            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
         }
         else
         {
-            sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
         }
 
         if (gBattleAnimArgs[1] == 0)
@@ -72,11 +72,11 @@ void sub_80D2C38(struct Sprite *sprite)
         sprite->data[0] = gBattleAnimArgs[2];
         sprite->data[1] = gBattleAnimArgs[1];
         StartSpriteAnim(sprite, sprite->data[1]);
-        sprite->callback = sub_80D2CC4;
+        sprite->callback = AnimMovementWaves_Step;
     }
 }
 
-static void sub_80D2CC4(struct Sprite *sprite)
+static void AnimMovementWaves_Step(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {

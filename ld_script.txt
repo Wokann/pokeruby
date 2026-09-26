@@ -258,7 +258,7 @@ SECTIONS {
         src/battle/anim/pink_heart.o(.text);
         src/battle/anim/devil.o(.text);
         src/battle/anim/swipe.o(.text);
-        src/battle/anim/struggle.o(.text);
+        src/battle/anim/movement_waves.o(.text);
         src/battle/anim/uproar.o(.text);
         src/battle/anim/noise.o(.text);
         src/battle/anim/note_spin.o(.text);
@@ -680,7 +680,7 @@ SECTIONS {
         src/battle/anim/pink_heart.o(.rodata);
         src/battle/anim/devil.o(.rodata);
         src/battle/anim/swipe.o(.rodata);
-        src/battle/anim/struggle.o(.rodata);
+        src/battle/anim/movement_waves.o(.rodata);
         src/battle/anim/uproar.o(.rodata);
         src/battle/anim/noise.o(.rodata);
         src/battle/anim/note_spin.o(.rodata);
