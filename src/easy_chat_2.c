@@ -38,18 +38,18 @@ void CreateWordSelectCursorSprite(void);
 void SpriteCB_WordSelectCursor(struct Sprite *);
 void CreateScrollIndicatorSprites(void);
 void SpriteCB_ScrollIndicator(struct Sprite *);
-void sub_80E8FA4(void);
-void sub_80E9198(u8);
-void sub_80E91D4(u8);
-void sub_80E948C(void);
-void sub_80E95A4(void);
-void sub_80E9620(u16, u16);
-void sub_80E97C0(u16, u16);
-void sub_80E9A4C(void);
-void sub_80E9A60(const u8 *, u16, u16);
-void sub_80E9A7C(u8 *, u16);
-void sub_80E9AD4(void);
-void sub_80E9C74(u16);
+void InitEasyChatFramePaletteBlend(void);
+void SetEasyChatMessageId(u8);
+void PrintEasyChatStdMessage(u8);
+void BufferFrameTilemap(void);
+void PrintCurrentPhrase(void);
+void PrintCurrentPhraseWords(u16, u16);
+void PrintCurrentPhraseAsTextAt(u16, u16);
+void ResetLowerWindowScroll(void);
+void PrintEasyChatTextAt(const u8 *, u16, u16);
+void BufferEasyChatGroupNamesRow(u8 *, u16);
+void ClearLowerWindow(void);
+void ClearWordSelectRow(u16);
 u8 sub_80EA1E0(void);
 void sub_80EA24C(void);
 void sub_80EA348(void);
@@ -79,7 +79,7 @@ static u16 GetRandomUnlockedEasyChatPokemon(void);
 
 EWRAM_DATA u8 gUnknown_020388AC = 0;
 
-static u8 gUnknown_03000740;
+static u8 sEasyChatMessageId;
 
 const u16 InterviewPalette_0[] = INCBIN_U16("graphics/misc/interview_pal0.gbapal");
 const u16 InterviewPalette_1[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
@@ -950,7 +950,7 @@ const u16 gUnused_083DBE60[] =
 
 const u8 gUnknown_083DBEA8[] = _("{CLEAR_TO 88}");
 
-void sub_80E8DD8(void)
+void InitEasyChatScreenGraphics(void)
 {
     REG_BG0HOFS = 0;
     REG_BG0VOFS = 0;
@@ -990,11 +990,11 @@ void sub_80E8DD8(void)
     gPlttBufferFaded[56] = RGB(28, 28, 28);
 
     gEasyChatStruct->unkBC = 0;
-    sub_80E8FA4();
-    sub_80E948C();
-    sub_80E9198(10);
-    sub_80E91D4(0);
-    sub_80E95A4();
+    InitEasyChatFramePaletteBlend();
+    BufferFrameTilemap();
+    SetEasyChatMessageId(10);
+    PrintEasyChatStdMessage(0);
+    PrintCurrentPhrase();
 
     REG_BLDCNT = 0;
 }
@@ -1006,7 +1006,7 @@ void sub_80E8DD8(void)
 #define G_VAL(color) (((color) >> 5) & 0x1F)
 #define B_VAL(color) (((color) >> 10) & 0x1F)
 
-void sub_80E8FA4(void)
+void InitEasyChatFramePaletteBlend(void)
 {
     u16 i;
     u16 r3;
@@ -1038,7 +1038,7 @@ void sub_80E8FA4(void)
     gEasyChatStruct->unk9C32 = 0;
 }
 
-void sub_80E9108(s8 a)
+void UpdateEasyChatFramePaletteBlend(s8 a)
 {
     u16 i;
 
@@ -1050,94 +1050,94 @@ void sub_80E9108(s8 a)
     }
 }
 
-void sub_80E9178(void)
+void ResetEasyChatFramePaletteBlend(void)
 {
     gEasyChatStruct->unk9C32 = 0;
-    sub_80E9108(0);
+    UpdateEasyChatFramePaletteBlend(0);
 }
 
-void sub_80E9198(u8 a)
+void SetEasyChatMessageId(u8 a)
 {
-    gUnknown_03000740 = a;
+    sEasyChatMessageId = a;
 }
 
-u8 sub_80E91A4(void)
+u8 GetEasyChatMessageId(void)
 {
-    return gUnknown_03000740;
+    return sEasyChatMessageId;
 }
 
-void sub_80E91B0(const u8 *a, u8 b, u8 c, u8 d)
+void PrintEasyChatStdText(const u8 *a, u8 b, u8 c, u8 d)
 {
     sub_8072AB0(a, b * 8, c * 8, 176, d * 8, 1);
 }
 
-void sub_80E91D4(u8 a)
+void PrintEasyChatStdMessage(u8 a)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
 
     if (a == 10)
     {
         Menu_EraseWindowRect(3, 14, 26, 19);
-        sub_80E9198(10);
+        SetEasyChatMessageId(10);
         return;
     }
 
-    if (sub_80E91A4() == 10)
+    if (GetEasyChatMessageId() == 10)
         Menu_DrawStdWindowFrame(3, 14, 26, 19);
 
-    sub_80E9198(a);
+    SetEasyChatMessageId(a);
     switch (a)
     {
     case 0:
-        sub_80E91B0(gEasyChatStruct->unk9C80, 4, 15, 2);
-        sub_80E91B0(gEasyChatStruct->unk9CC9, 4, 17, 2);
+        PrintEasyChatStdText(gEasyChatStruct->unk9C80, 4, 15, 2);
+        PrintEasyChatStdText(gEasyChatStruct->unk9CC9, 4, 17, 2);
         break;
     case 1:
-        sub_80E91B0(gEasyChatStruct->unk9D12, 4, 15, 2);
-        sub_80E91B0(gEasyChatStruct->unk9D5B, 4, 17, 2);
+        PrintEasyChatStdText(gEasyChatStruct->unk9D12, 4, 15, 2);
+        PrintEasyChatStdText(gEasyChatStruct->unk9D5B, 4, 17, 2);
         break;
     case 2:
-        sub_80E91B0(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);
-        sub_80E91B0(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
+        PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);
+        PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
         break;
     case 3:
         switch (gEasyChatStruct->unk8)
         {
         case 9:
-            sub_80E91B0(gOtherText_QuitGivingInfo, 4, 15, 4);
+            PrintEasyChatStdText(gOtherText_QuitGivingInfo, 4, 15, 4);
             break;
         case 4:
-            sub_80E91B0(gOtherText_StopGivingMail, 4, 15, 4);
+            PrintEasyChatStdText(gOtherText_StopGivingMail, 4, 15, 4);
             break;
         default:
-            sub_80E91B0(gOtherText_QuitEditing, 4, 15, 4);
+            PrintEasyChatStdText(gOtherText_QuitEditing, 4, 15, 4);
             break;
         }
         break;
     case 4:
-        sub_80E91B0(gOtherText_EditedTextNoSavePage1, 4, 15, 2);
-        sub_80E91B0(gOtherText_EditedTextNoSavePage2, 4, 17, 2);
+        PrintEasyChatStdText(gOtherText_EditedTextNoSavePage1, 4, 15, 2);
+        PrintEasyChatStdText(gOtherText_EditedTextNoSavePage2, 4, 17, 2);
         break;
     case 5:
-        sub_80E91B0(gOtherText_EnterAPhraseOrWord, 4, 15, 4);
+        PrintEasyChatStdText(gOtherText_EnterAPhraseOrWord, 4, 15, 4);
         break;
     case 6:
-        sub_80E91B0(gOtherText_TextNoDelete, 4, 15, 4);
+        PrintEasyChatStdText(gOtherText_TextNoDelete, 4, 15, 4);
         break;
     case 7:
-        sub_80E91B0(gOtherText_OnlyOnePhrase, 4, 15, 2);
-        sub_80E91B0(gOtherText_OriginalSongRestored, 4, 17, 2);
+        PrintEasyChatStdText(gOtherText_OnlyOnePhrase, 4, 15, 2);
+        PrintEasyChatStdText(gOtherText_OriginalSongRestored, 4, 17, 2);
         break;
     case 8:
-        sub_80E91B0(gOtherText_TrendyAlready, 4, 15, 4);
+        PrintEasyChatStdText(gOtherText_TrendyAlready, 4, 15, 4);
         break;
     case 9:
-        sub_80E91B0(gOtherText_CombineTwoPhrases, 4, 15, 4);
+        PrintEasyChatStdText(gOtherText_CombineTwoPhrases, 4, 15, 4);
         break;
     }
 }
 
-void sub_80E9368(u8 a)
+void PrintTitle(u8 a)
 {
     const u8 *r4;
 
@@ -1201,7 +1201,7 @@ void sub_80E9368(u8 a)
     BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
 }
 
-void sub_80E948C(void)
+void BufferFrameTilemap(void)
 {
     switch (gEasyChatStruct->unk9)
     {
@@ -1226,34 +1226,34 @@ void sub_80E948C(void)
     }
 }
 
-void sub_80E95A4(void)
+void PrintCurrentPhrase(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
     switch (gEasyChatStruct->unk9)
     {
     case 4:
-        sub_80E9620(4, 6);
+        PrintCurrentPhraseWords(4, 6);
         break;
     case 5:
-        sub_80E9620(2, 17);
+        PrintCurrentPhraseWords(2, 17);
         break;
     case 0:
-        sub_80E9620(3, 5);
+        PrintCurrentPhraseWords(3, 5);
         break;
     case 1:
-        sub_80E9620(0, 5);
+        PrintCurrentPhraseWords(0, 5);
         break;
     case 2:
-        sub_80E9620(4, 17);
+        PrintCurrentPhraseWords(4, 17);
         break;
     case 3:
-        sub_80E9620(3, 6);
+        PrintCurrentPhraseWords(3, 6);
         break;
     }
     BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
 }
 
-void sub_80E9620(u16 a, u16 b)
+void PrintCurrentPhraseWords(u16 a, u16 b)
 {
     u16 i;
     u16 j;
@@ -1288,34 +1288,34 @@ void sub_80E9620(u16 a, u16 b)
     }
 }
 
-void sub_80E9744(void)
+void PrintCurrentPhraseAsText(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
     switch (gEasyChatStruct->unk9)
     {
     case 4:
-        sub_80E97C0(4, 6);
+        PrintCurrentPhraseAsTextAt(4, 6);
         break;
     case 5:
-        sub_80E97C0(2, 17);
+        PrintCurrentPhraseAsTextAt(2, 17);
         break;
     case 0:
-        sub_80E97C0(3, 5);
+        PrintCurrentPhraseAsTextAt(3, 5);
         break;
     case 1:
-        sub_80E97C0(0, 5);
+        PrintCurrentPhraseAsTextAt(0, 5);
         break;
     case 2:
-        sub_80E97C0(4, 17);
+        PrintCurrentPhraseAsTextAt(4, 17);
         break;
     case 3:
-        sub_80E97C0(3, 6);
+        PrintCurrentPhraseAsTextAt(3, 6);
         break;
     }
     BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
 }
 
-void sub_80E97C0(u16 a, u16 b)
+void PrintCurrentPhraseAsTextAt(u16 a, u16 b)
 {
     u8 i;
     u8 r7 = 0;
@@ -1352,7 +1352,7 @@ void sub_80E97C0(u16 a, u16 b)
     }
 }
 
-void sub_80E98C4(void)
+void ClearPhraseWindow(void)
 {
     u8 r1;
     u8 r3;
@@ -1391,13 +1391,13 @@ void sub_80E98C4(void)
     BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
 }
 
-void sub_80E9940(u8 *a, u8 b)
+void PrintKeyboardGroupNamesRow(u8 *a, u8 b)
 {
     u8 r4 = (b & 7);
 
     Menu_BlankWindowRect(2, r4 * 2, 31, r4 * 2 + 1);
-    sub_80E9A7C(a, b);
-    sub_80E9A60(a, 2, r4 * 2);
+    BufferEasyChatGroupNamesRow(a, b);
+    PrintEasyChatTextAt(a, 2, r4 * 2);
 }
 
 #if ENGLISH
@@ -1427,7 +1427,7 @@ const u8 *const gUnknown_083DBEAC[] =
 
 #endif
 
-void sub_80E9974(void)
+void PrintKeyboardText(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6D54);
     if (gEasyChatStruct->unk26 == 0)
@@ -1435,37 +1435,37 @@ void sub_80E9974(void)
         u16 i;
 
         for (i = gEasyChatStruct->unk1B5; i < gEasyChatStruct->unk1B5 + 4; i++)
-            sub_80E9940(gEasyChatStruct->unk9DC9, i);
+            PrintKeyboardGroupNamesRow(gEasyChatStruct->unk9DC9, i);
     }
     else
     {
-        sub_80E9AD4();
-        sub_80E9A60(gUnknown_083DBEAC[0], 2, 0);
-        sub_80E9A60(gUnknown_083DBEAC[1], 2, 2);
-        sub_80E9A60(gUnknown_083DBEAC[2], 2, 4);
-        sub_80E9A60(gUnknown_083DBEAC[3], 2, 6);
+        ClearLowerWindow();
+        PrintEasyChatTextAt(gUnknown_083DBEAC[0], 2, 0);
+        PrintEasyChatTextAt(gUnknown_083DBEAC[1], 2, 2);
+        PrintEasyChatTextAt(gUnknown_083DBEAC[2], 2, 4);
+        PrintEasyChatTextAt(gUnknown_083DBEAC[3], 2, 6);
     }
 }
 
-void sub_80E9A14(void)
+void RestoreKeyboardScrollOffset(void)
 {
-    sub_80E9A4C();
+    ResetLowerWindowScroll();
     if (gEasyChatStruct->unk26 == 0)
         gEasyChatStruct->unk1BA += gEasyChatStruct->unk1B5 * 16;
 }
 
-void sub_80E9A4C(void)
+void ResetLowerWindowScroll(void)
 {
     gEasyChatStruct->unk1BA = 0;
 }
 
-void sub_80E9A60(const u8 *a, u16 b, u16 c)
+void PrintEasyChatTextAt(const u8 *a, u16 b, u16 c)
 {
     c &= 0xF;
     Menu_PrintText(a, b, c);
 }
 
-void sub_80E9A7C(u8 *dest, u16 b)
+void BufferEasyChatGroupNamesRow(u8 *dest, u16 b)
 {
     u16 i;
     u16 r5 = b * 2;
@@ -1484,21 +1484,21 @@ void sub_80E9A7C(u8 *dest, u16 b)
     }
 }
 
-void sub_80E9AD4(void)
+void ClearLowerWindow(void)
 {
     u16 i;
 
     BasicInitMenuWindow(&gWindowTemplate_81E6D54);
     for (i = 0; i < 16; i++)
-        sub_80E9C74(i);
+        ClearWordSelectRow(i);
 }
 
-void sub_80E9AF8(u16 a)
+void PrintWordSelectRow(u16 a)
 {
     u8 *r8;
     u16 i;
 
-    sub_80E9C74(a);
+    ClearWordSelectRow(a);
 
     r8 = gEasyChatStruct->unk9E14;
     r8[0] = EXT_CTRL_CODE_BEGIN;
@@ -1515,7 +1515,7 @@ void sub_80E9AF8(u16 a)
             else
                 BasicInitMenuWindow(&gWindowTemplate_81E6D54);
             CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
-            sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
+            PrintEasyChatTextAt(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
     else
@@ -1524,29 +1524,29 @@ void sub_80E9AF8(u16 a)
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
             CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
-            sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
+            PrintEasyChatTextAt(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
 }
 
-void sub_80E9C74(u16 a)
+void ClearWordSelectRow(u16 a)
 {
     a &= 7;
     Menu_BlankWindowRect(0, a * 2, 29, a * 2 + 1);
 }
 
-void sub_80E9C94(void)
+void PrintInitialWordSelectText(void)
 {
     u16 r5 = min(gEasyChatStruct->unk9A28, 4);
     u16 i;
 
     for (i = 0; i < r5; i++)
-        sub_80E9AF8(gEasyChatStruct->unk9A29 + i);
+        PrintWordSelectRow(gEasyChatStruct->unk9A29 + i);
     while (i < 4)
-        sub_80E9C74(i++);
+        ClearWordSelectRow(i++);
 }
 
-void sub_80E9D00(void)
+void PrintWordSelectRowsDuringScroll(void)
 {
     u16 r4;
     u16 r5;
@@ -1562,10 +1562,10 @@ void sub_80E9D00(void)
         r5 = gEasyChatStruct->unk9A29 - r4;
     }
     while (--r4 != 0xFFFF)
-        sub_80E9AF8(r5++);
+        PrintWordSelectRow(r5++);
 }
 
-void sub_80E9D7C(void)
+void PrintKeyboardRowsDuringScroll(void)
 {
     u16 r6;
     u16 r4;
@@ -1584,18 +1584,18 @@ void sub_80E9D7C(void)
     }
     for (i = 0; i < r6; i++)
     {
-        sub_80E9940(gEasyChatStruct->unk9DC9, r4);
+        PrintKeyboardGroupNamesRow(gEasyChatStruct->unk9DC9, r4);
         r4++;
     }
 }
 
-void sub_80E9E08(u8 a)
+void InitLowerWindowScroll(u8 a)
 {
     gEasyChatStruct->unk1BC = (gEasyChatStruct->unk1BA + gEasyChatStruct->unk1C0 * 16) & 0x7F;
     gEasyChatStruct->unk1BF = (gEasyChatStruct->unk1C0 < 0) ? -a : a;
 }
 
-bool8 sub_80E9E54(void)
+bool8 UpdateLowerWindowScroll(void)
 {
     gEasyChatStruct->unk1BA = (gEasyChatStruct->unk1BA + gEasyChatStruct->unk1BF) & 0x7F;
     return (gEasyChatStruct->unk1BA == gEasyChatStruct->unk1BC);
@@ -1730,7 +1730,7 @@ bool8 sub_80EA050(void)
         }
         break;
     case 2:
-        sub_80E9108(1);
+        UpdateEasyChatFramePaletteBlend(1);
         if (sub_80EA1E0() != 0)
         {
             sub_80EA8BC();
@@ -1738,7 +1738,7 @@ bool8 sub_80EA050(void)
         }
         break;
     case 3:
-        sub_80E9108(1);
+        UpdateEasyChatFramePaletteBlend(1);
         if (sub_80EA1E0() != 0)
             gEasyChatStruct->unkBE++;
         break;
@@ -1757,7 +1757,7 @@ bool8 sub_80EA0E4(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        sub_80E9108(-1);
+        UpdateEasyChatFramePaletteBlend(-1);
         if (sub_80EA1E0() != 0)
         {
             sub_80EAA44();
@@ -1765,7 +1765,7 @@ bool8 sub_80EA0E4(void)
         }
         break;
     case 2:
-        sub_80E9108(-1);
+        UpdateEasyChatFramePaletteBlend(-1);
         if (sub_80EA1E0() != 0)
         {
             sub_80EA704();
@@ -1795,7 +1795,7 @@ bool8 sub_80EA184(void)
             gEasyChatStruct->unkBE++;
         break;
     case 2:
-        sub_80E9178();
+        ResetEasyChatFramePaletteBlend();
         return TRUE;
     }
     return FALSE;

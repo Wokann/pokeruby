@@ -152,33 +152,33 @@ void BufferCurrentPhraseToStringVar2(void);
 void CloseEasyChatPrompt(void);
 void InitEasyChatSprites(void);
 
-void SetMainCursorState();
+void SetMainCursorState(u8 state);
 void CreateRectangleCursorSprites(void);
 void DestroyRectangleCursorSprites(void);
-void SetWordSelectCursorVisibility();
+void SetWordSelectCursorVisibility(u8 visible);
 
 void HideScrollIndicatorSprites(void);
-void SetScrollIndicatorMode();
+void SetScrollIndicatorMode(u8 mode);
 
-void CreateInterviewObjectEvents();
+void CreateInterviewObjectEvents(u8 personType, u8 frameId);
 void CreateModeWindowSprite(void);
 void UpdateModeWindowAnim(void);
-void SetModeWindowAnimForVisibility();
-void sub_80E8DD8(void);
-void sub_80E91D4();
-void sub_80E9368();
-void sub_80E95A4(void);
-void sub_80E9744(void);
-void sub_80E98C4(void);
-void sub_80E9974(void);
-void sub_80E9A14(void);
-void sub_80E9A4C(void);
-void sub_80E9AD4(void);
-void sub_80E9C94(void);
-void sub_80E9D00(void);
-void sub_80E9D7C(void);
-void sub_80E9E08();
-bool8 sub_80E9E54(void);
+void SetModeWindowAnimForVisibility(u8 visible);
+void InitEasyChatScreenGraphics(void);
+void PrintEasyChatStdMessage(u8 messageId);
+void PrintTitle(u8 type);
+void PrintCurrentPhrase(void);
+void PrintCurrentPhraseAsText(void);
+void ClearPhraseWindow(void);
+void PrintKeyboardText(void);
+void RestoreKeyboardScrollOffset(void);
+void ResetLowerWindowScroll(void);
+void ClearLowerWindow(void);
+void PrintInitialWordSelectText(void);
+void PrintWordSelectRowsDuringScroll(void);
+void PrintKeyboardRowsDuringScroll(void);
+void InitLowerWindowScroll(u8 speed);
+bool8 UpdateLowerWindowScroll(void);
 void sub_80E9E98(void);
 u8 sub_80E9EA8(void);
 u8 sub_80E9F50(void);
@@ -316,7 +316,7 @@ void CB2_InitEasyChatScreen(void)
         InitEasyChatScreenLayout();
         break;
     case 4:
-        sub_80E8DD8();
+        InitEasyChatScreenGraphics();
         break;
     case 5:
         InitEasyChatSprites();
@@ -582,7 +582,7 @@ void InitKeyboardSelection(void)
     gEasyChatStruct->unk1A9 = 0;
     gEasyChatStruct->unk1B5 = 0;
     gEasyChatStruct->unk1B7 = 0;
-    sub_80E9A4C();
+    ResetLowerWindowScroll();
 }
 
 void InitWordSelectSelection(void)
@@ -619,7 +619,7 @@ void InitWordSelectSelection(void)
     gEasyChatStruct->unk99A4 = 0;
     gEasyChatStruct->unk99A5 = 0;
     gEasyChatStruct->unk9A29 = 0;
-    sub_80E9A4C();
+    ResetLowerWindowScroll();
 }
 
 void ShowEasyChatTitleAndPortrait(void)
@@ -635,7 +635,7 @@ void ShowEasyChatTitleAndPortrait(void)
     case 9:
     case 13:
     default:
-        sub_80E9368(gEasyChatStruct->unk8);
+        PrintTitle(gEasyChatStruct->unk8);
         break;
     case 5:
     case 7:
@@ -643,7 +643,7 @@ void ShowEasyChatTitleAndPortrait(void)
     case EASY_CHAT_TYPE_GABBY_AND_TY:
     case 11:
     case 12:
-        sub_80E9368(gEasyChatStruct->unk8);
+        PrintTitle(gEasyChatStruct->unk8);
         CreateInterviewObjectEvents(gEasyChatStruct->unkB, gEasyChatStruct->unk9);
         break;
     }
@@ -676,7 +676,7 @@ void InitEasyChatMainScreen(void)
 {
     HideScrollIndicatorSprites();
     SetMainCursorState(0);
-    sub_80E91D4(0);
+    PrintEasyChatStdMessage(0);
     SetEasyChatScreenCallback(HandleEasyChatMainScreenInput);
 }
 
@@ -725,12 +725,12 @@ void HandleEasyChatDeleteAllPrompt(void)
         SetMainCursorState(2);
         if (gEasyChatStruct->unk8 == 6)
         {
-            sub_80E91D4(6);
+            PrintEasyChatStdMessage(6);
             gEasyChatStruct->unk24 = 100;
         }
         else
         {
-            sub_80E91D4(2);
+            PrintEasyChatStdMessage(2);
             DisplayYesNoMenu(23, 8, 1);
             Menu_MoveCursor(1);
             gEasyChatStruct->unk24++;
@@ -741,8 +741,8 @@ void HandleEasyChatDeleteAllPrompt(void)
         {
         case 0:
             ResetCurrentPhrase();
-            sub_80E98C4();
-            sub_80E95A4();
+            ClearPhraseWindow();
+            PrintCurrentPhrase();
             gEasyChatStruct->unk24++;
             break;
         case -1:
@@ -768,7 +768,7 @@ void HandleEasyChatExitPrompt(void)
     {
     case 0:
         SetMainCursorState(2);
-        sub_80E91D4(3);
+        PrintEasyChatStdMessage(3);
         DisplayYesNoMenu(23, 8, 0);
         Menu_MoveCursor(1);
         if (gEasyChatStruct->unk8 == 9
@@ -788,7 +788,7 @@ void HandleEasyChatExitPrompt(void)
         switch (Menu_ProcessInputNoWrap_())
         {
         case 0:
-            sub_80E91D4(4);
+            PrintEasyChatStdMessage(4);
             DisplayYesNoMenu(23, 8, 0);
             Menu_MoveCursor(1);
             gEasyChatStruct->unk24++;
@@ -828,7 +828,7 @@ void HandleEasyChatConfirmWordsPrompt(void)
         SetMainCursorState(2);
         if (IsCurrentPhraseEmpty())
         {
-            sub_80E91D4(5);
+            PrintEasyChatStdMessage(5);
             gEasyChatStruct->unk24 = 10;
             break;
         }
@@ -836,13 +836,13 @@ void HandleEasyChatConfirmWordsPrompt(void)
         {
             if (DidPhraseChange() == 0)
             {
-                sub_80E91D4(8);
+                PrintEasyChatStdMessage(8);
                 gEasyChatStruct->unk24 = 10;
                 break;
             }
             if (gEasyChatStruct->unkC[0] == 0xFFFF || gEasyChatStruct->unkC[1] == 0xFFFF)
             {
-                sub_80E91D4(9);
+                PrintEasyChatStdMessage(9);
                 gEasyChatStruct->unk24 = 10;
                 break;
             }
@@ -853,8 +853,8 @@ void HandleEasyChatConfirmWordsPrompt(void)
         }
         else
         {
-            sub_80E91D4(1);
-            sub_80E9744();
+            PrintEasyChatStdMessage(1);
+            PrintCurrentPhraseAsText();
             DisplayYesNoMenu(23, 8, 0);
             Menu_MoveCursor(0);
             gEasyChatStruct->unk24++;
@@ -891,7 +891,7 @@ void HandleEasyChatConfirmWordsPrompt(void)
             }
             else
             {
-                sub_80E95A4();
+                PrintCurrentPhrase();
                 SetEasyChatScreenCallback(InitEasyChatMainScreen);
             }
             break;
@@ -902,7 +902,7 @@ void HandleEasyChatConfirmWordsPrompt(void)
             SetEasyChatScreenCallback(InitEasyChatMainScreen);
         break;
     case 100:
-        sub_80E91D4(7);
+        PrintEasyChatStdMessage(7);
         gEasyChatStruct->unk24++;
         // fall through
     case 101:
@@ -911,7 +911,7 @@ void HandleEasyChatConfirmWordsPrompt(void)
         break;
     case 102:
         ResetCurrentPhraseToSaved();
-        sub_80E95A4();
+        PrintCurrentPhrase();
         SetEasyChatScreenCallback(InitEasyChatMainScreen);
         break;
     }
@@ -923,9 +923,9 @@ void HandleEasyChatOpenKeyboard(void)
     {
     case 0:
         SetMainCursorState(1);
-        sub_80E91D4(10);
+        PrintEasyChatStdMessage(10);
         InitKeyboardSelection();
-        sub_80E9974();
+        PrintKeyboardText();
         sub_80E9E98();
         gEasyChatStruct->unk24++;
         break;
@@ -969,7 +969,7 @@ void HandleEasyChatKeyboardInput(void)
                     {
                         SetCurrentPhraseWord(gEasyChatStruct->unk27, 0xFFFF);
                         ClearUnusedField();
-                        sub_80E95A4();
+                        PrintCurrentPhrase();
                     }
                     break;
                 case 3:
@@ -1040,7 +1040,7 @@ void SwitchKeyboardMode(void)
         {
             gEasyChatStruct->unk26 = !gEasyChatStruct->unk26;
             InitKeyboardSelection();
-            sub_80E9974();
+            PrintKeyboardText();
             sub_80E9E98();
             gEasyChatStruct->unk24++;
         }
@@ -1069,7 +1069,7 @@ void HandleEasyChatOpenWordSelect(void)
     case 8:
         SetModeWindowAnimForVisibility(0);
         DestroyRectangleCursorSprites();
-        sub_80E9AD4();
+        ClearLowerWindow();
         InitWordSelectSelection();
         HideScrollIndicatorSprites();
         sub_80E9E98();
@@ -1078,7 +1078,7 @@ void HandleEasyChatOpenWordSelect(void)
     case 9:
         if (sub_80EA050() != 0)
         {
-            sub_80E9C94();
+            PrintInitialWordSelectText();
             gEasyChatStruct->unk24++;
         }
         break;
@@ -1163,7 +1163,7 @@ void HandleEasyChatReturnToKeyboard(void)
         gEasyChatStruct->unk24++;
         break;
     case 1:
-        sub_80E9AD4();
+        ClearLowerWindow();
         sub_80E9E98();
         gEasyChatStruct->unk24++;
         break;
@@ -1171,7 +1171,7 @@ void HandleEasyChatReturnToKeyboard(void)
         if (sub_80EA0E4() != 0)
         {
             SetModeWindowAnimForVisibility(1);
-            sub_80E9A14();
+            RestoreKeyboardScrollOffset();
             gEasyChatStruct->unk24++;
         }
         break;
@@ -1181,7 +1181,7 @@ void HandleEasyChatReturnToKeyboard(void)
         gEasyChatStruct->unk24++;
         break;
     case 4:
-        sub_80E9974();
+        PrintKeyboardText();
         SetEasyChatScreenCallback(HandleEasyChatKeyboardInput);
         break;
     }
@@ -1193,18 +1193,18 @@ void ScrollEasyChatList(void)
     {
     case 0:
         if (gEasyChatStruct->unk1C4 == HandleEasyChatKeyboardInput)
-            sub_80E9D7C();
+            PrintKeyboardRowsDuringScroll();
         else
-            sub_80E9D00();
-        sub_80E9E08(gEasyChatStruct->unk1BE);
+            PrintWordSelectRowsDuringScroll();
+        InitLowerWindowScroll(gEasyChatStruct->unk1BE);
         gEasyChatStruct->unk24++;
         break;
     case 1:
-        if (sub_80E9E54())
+        if (UpdateLowerWindowScroll())
         {
             if (gEasyChatStruct->unk1C4 == HandleEasyChatKeyboardInput)
             {
-                sub_80E9D7C();
+                PrintKeyboardRowsDuringScroll();
                 gEasyChatStruct->unk1B5 += gEasyChatStruct->unk1C0;
                 ReduceToValidKeyboardColumn();
                 gEasyChatStruct->unk96 = TRUE;
@@ -1591,7 +1591,7 @@ bool8 TrySetSelectedWord(void)
         return FALSE;
 
     SetCurrentPhraseWord(gEasyChatStruct->unk27, r4);
-    sub_80E95A4();
+    PrintCurrentPhrase();
     return TRUE;
 }
 
@@ -1737,6 +1737,6 @@ void BufferCurrentPhraseToStringVar2(void)
 void CloseEasyChatPrompt(void)
 {
     PlaySE(SE_SELECT);
-    sub_80E95A4();
+    PrintCurrentPhrase();
     Menu_EraseWindowRect(0, 0, 29, 13);
 }
