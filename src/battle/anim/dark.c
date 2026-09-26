@@ -28,11 +28,11 @@ extern const u8 gUnknown_08D1D574[];
 extern const u8 gUnknown_08D1D410[];
 extern const u16 gUnknown_08D1D54C[];
 
-void sub_80DFE14(struct Sprite *sprite);
+static void AnimUnusedBagSteal(struct Sprite *sprite);
 static void AnimBite(struct Sprite *sprite);
 static void AnimTearDrop(struct Sprite *sprite);
 void AnimClawSlash(struct Sprite *sprite);
-static void sub_80DFE90(struct Sprite *sprite);
+static void AnimUnusedBagSteal_Step(struct Sprite *sprite);
 static void AnimTask_AttackerFadeToInvisible_Step(u8 taskId);
 static void AnimTask_AttackerFadeFromInvisible_Step(u8 taskId);
 static void AnimBite_Step1(struct Sprite *sprite);
@@ -44,7 +44,7 @@ static void SetAllBattlersSpritePriority(u8 priority);
 static void DoMementoShadowEffect(struct Task *task);
 static void AnimTask_MetallicShine_Step(u8 taskId);
 
-const struct SpriteTemplate gSpriteTemplate_83DB118 =
+static const struct SpriteTemplate sUnusedBagStealSpriteTemplate =
 {
     .tileTag = ANIM_TAG_TIED_BAG,
     .paletteTag = ANIM_TAG_TIED_BAG,
@@ -52,7 +52,7 @@ const struct SpriteTemplate gSpriteTemplate_83DB118 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DFE14,
+    .callback = AnimUnusedBagSteal,
 };
 
 static const union AffineAnimCmd sAffineAnim_Bite_0[] =
@@ -284,22 +284,22 @@ void AnimTask_InitAttackerFadeFromInvisible(u8 taskId)
 
 // unused sprite template's callback
 
-void sub_80DFE14(struct Sprite *sprite)
+static void AnimUnusedBagSteal(struct Sprite *sprite)
 {
-    sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->data[3] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->data[3] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[0] = 0x7E;
     InitSpriteDataForLinearTranslation(sprite);
     sprite->data[3] = -sprite->data[1];
     sprite->data[4] = -sprite->data[2];
     sprite->data[6] = 0xFFD8;
-    sprite->callback = sub_80DFE90;
-    sub_80DFE90(sprite);
+    sprite->callback = AnimUnusedBagSteal_Step;
+    AnimUnusedBagSteal_Step(sprite);
 }
 
-static void sub_80DFE90(struct Sprite *sprite)
+static void AnimUnusedBagSteal_Step(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
