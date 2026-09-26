@@ -11,7 +11,6 @@ extern u8 gBattleAnimTarget;
 static void AnimEndureEnergy(struct Sprite *sprite);
 static void AnimEndureEnergy_Step(struct Sprite *sprite);
 
-// brace (the Pokemon prepares to endure a hit)
 // Used in Endure.
 
 const union AnimCmd gEndureEnergyAnimCmds[] =
