@@ -7,27 +7,27 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimLeechSeed(struct Sprite* sprite);
-static void AnimLeechSeedStep(struct Sprite* sprite);
-static void AnimLeechSeedSprouts(struct Sprite* sprite);
+void AnimLeechSeed(struct Sprite *sprite);
+static void AnimLeechSeed_Step(struct Sprite *sprite);
+static void AnimLeechSeedSprouts(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D63AC[] =
+const union AnimCmd gLeechSeedAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D63B4[] =
+const union AnimCmd gLeechSeedAnimCmds2[] =
 {
     ANIMCMD_FRAME(4, 7),
     ANIMCMD_FRAME(8, 7),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D63C0[] =
+const union AnimCmd *const gLeechSeedAnimTable[] =
 {
-    gSpriteAnim_83D63AC,
-    gSpriteAnim_83D63B4,
+    gLeechSeedAnimCmds1,
+    gLeechSeedAnimCmds2,
 };
 
 const struct SpriteTemplate gLeechSeedSpriteTemplate =
@@ -35,7 +35,7 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
     .tileTag = ANIM_TAG_SEED,
     .paletteTag = ANIM_TAG_SEED,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D63C0,
+    .anims = gLeechSeedAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimLeechSeed,
@@ -49,7 +49,7 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 // arg 3: target y pixel offset
 // arg 4: duration
 // arg 5: wave amplitude
-void AnimLeechSeed(struct Sprite* sprite)
+void AnimLeechSeed(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
     if (GetBattlerSide(gBattleAnimAttacker))
@@ -62,10 +62,10 @@ void AnimLeechSeed(struct Sprite* sprite)
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[5];
     InitAnimArcTranslation(sprite);
-    sprite->callback = AnimLeechSeedStep;
+    sprite->callback = AnimLeechSeed_Step;
 }
 
-static void AnimLeechSeedStep(struct Sprite* sprite)
+static void AnimLeechSeed_Step(struct Sprite *sprite)
 {
     if (TranslateAnimHorizontalArc(sprite))
     {
@@ -76,7 +76,7 @@ static void AnimLeechSeedStep(struct Sprite* sprite)
     }
 }
 
-static void AnimLeechSeedSprouts(struct Sprite* sprite)
+static void AnimLeechSeedSprouts(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     StartSpriteAnim(sprite, 1);
