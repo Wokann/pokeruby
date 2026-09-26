@@ -249,7 +249,7 @@ SECTIONS {
         src/battle/anim/red_heart_projectile.o(.text);
         src/battle/anim/red_heart_burst.o(.text);
         src/battle/anim/red_heart_rising.o(.text);
-        src/battle/anim/love_bg.o(.text);
+        src/battle/anim/hearts_background.o(.text);
         src/battle/anim/scary_face.o(.text);
         src/battle/anim/hidden_power_orbit.o(.text);
         src/battle/anim/spit.o(.text);
@@ -671,7 +671,7 @@ SECTIONS {
         src/battle/anim/red_heart_projectile.o(.rodata);
         src/battle/anim/red_heart_burst.o(.rodata);
         src/battle/anim/red_heart_rising.o(.rodata);
-        src/battle/anim/love_bg.o(.rodata);
+        src/battle/anim/hearts_background.o(.rodata);
         src/battle/anim/scary_face.o(.rodata);
         src/battle/anim/hidden_power_orbit.o(.rodata);
         src/battle/anim/spit.o(.rodata);

@@ -19,15 +19,14 @@ extern u16 gBattle_BG1_X;
 
 static void AnimTask_HeartsBackground_Step(u8 taskId);
 
-// love_bg (makes the BG a background of hearts.)
-// Used in Attract.
+// Hearts background used in Attract.
 
 void AnimTask_HeartsBackground(u8 taskId)
 {
     struct BattleAnimBgData animBg;
 
-    REG_BLDCNT = 0x3F42;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     REG_BG1CNT_BITFIELD.priority = 3;
     REG_BG1CNT_BITFIELD.screenSize = 0;
     if (!IsContest())
@@ -41,7 +40,7 @@ void AnimTask_HeartsBackground(u8 taskId)
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     LZDecompressVram(&gBattleAnimBgTilemap_Attract, animBg.bgTilemap);
     LZDecompressVram(&gBattleAnimBgImage_Attract, animBg.bgTiles);
-    LoadCompressedPalette(&gBattleAnimBgPalette_Attract, animBg.paletteId << 4, 32);
+    LoadCompressedPalette(&gBattleAnimBgPalette_Attract, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
