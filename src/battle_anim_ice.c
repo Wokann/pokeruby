@@ -422,7 +422,7 @@ static const union AffineAnimCmd sAffineAnim_HailParticle_2[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9E1C[] =
+static const union AffineAnimCmd sAffineAnim_WeatherBallIceDown[] =
 {
     AFFINEANIMCMD_FRAME(0x150, 0x150, 0, 0),
     AFFINEANIMCMD_END,
@@ -435,9 +435,9 @@ static const union AffineAnimCmd *const sAffineAnims_HailParticle[] =
     sAffineAnim_HailParticle_2,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9E38[] =
+static const union AffineAnimCmd *const sAffineAnims_WeatherBallIceDown[] =
 {
-    gSpriteAffineAnim_83D9E1C,
+    sAffineAnim_WeatherBallIceDown,
 };
 
 const struct SpriteTemplate gHailParticleSpriteTemplate =
@@ -458,7 +458,7 @@ const struct SpriteTemplate gWeatherBallIceDownSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D9E38,
+    .affineAnims = sAffineAnims_WeatherBallIceDown,
     .callback = AnimWeatherBallDown,
 };
 
