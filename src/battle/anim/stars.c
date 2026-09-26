@@ -3,15 +3,15 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimGrantingStars(struct Sprite* sprite);
-static void AnimSparklingStars(struct Sprite* sprite);
+static void AnimGrantingStars(struct Sprite *sprite);
+static void AnimSparklingStars(struct Sprite *sprite);
 
-// glitter (the sparkling effect seen on Pokemon, usually after healing or a beneficial effect.)
 // Used by Heal Bell, Cosmic Power, and Aromatherapy.
 
 const union AnimCmd gGrantingStarsAnimCmds[] =
@@ -54,7 +54,7 @@ const struct SpriteTemplate gSparklingStarsSpriteTemplate =
     .callback = AnimSparklingStars,
 };
 
-static void AnimGrantingStars(struct Sprite* sprite)
+static void AnimGrantingStars(struct Sprite *sprite)
 {
     if (!gBattleAnimArgs[2])
         SetSpriteCoordsToAnimAttackerCoords(sprite);
@@ -68,17 +68,17 @@ static void AnimGrantingStars(struct Sprite* sprite)
     sprite->callback = TranslateSpriteLinearFixedPoint;
 }
 
-static void AnimSparklingStars(struct Sprite* sprite)
+static void AnimSparklingStars(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (!gBattleAnimArgs[2])
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    if (IsDoubleBattle() && IsAnimBankSpriteVisible(bank ^ 2))
+    if (IsDoubleBattle() && IsAnimBankSpriteVisible(BATTLE_PARTNER(battler)))
     {
-        SetAverageBattlerPositions(bank, gBattleAnimArgs[6], &sprite->x, &sprite->y);
+        SetAverageBattlerPositions(battler, gBattleAnimArgs[6], &sprite->x, &sprite->y);
         SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
         sprite->y += gBattleAnimArgs[1];
     }
@@ -86,13 +86,13 @@ static void AnimSparklingStars(struct Sprite* sprite)
     {
         if (!gBattleAnimArgs[6])
         {
-            sprite->x = GetBattlerSpriteCoord(bank, 0);
-            sprite->y = GetBattlerSpriteCoord(bank, 1) + gBattleAnimArgs[1];
+            sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+            sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + gBattleAnimArgs[1];
         }
         else
         {
-            sprite->x = GetBattlerSpriteCoord(bank, 2);
-            sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[1];
+            sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
         }
 
         SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);

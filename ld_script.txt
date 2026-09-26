@@ -200,7 +200,7 @@ SECTIONS {
         src/battle/anim/circling_music_note.o(.text);
         src/battle/anim/protect.o(.text);
         src/battle/anim/milk_bottle.o(.text);
-        src/battle/anim/glitter.o(.text);
+        src/battle/anim/stars.o(.text);
         src/battle/anim/unused_3.o(.text);
         src/battle/anim/sleep.o(.text);
         src/battle/anim/scan.o(.text);
@@ -626,7 +626,7 @@ SECTIONS {
         src/battle/anim/circling_music_note.o(.rodata);
         src/battle/anim/protect.o(.rodata);
         src/battle/anim/milk_bottle.o(.rodata);
-        src/battle/anim/glitter.o(.rodata);
+        src/battle/anim/stars.o(.rodata);
         src/battle/anim/unused_3.o(.rodata);
         src/battle/anim/sleep.o(.rodata);
         src/battle/anim/scan.o(.rodata);
