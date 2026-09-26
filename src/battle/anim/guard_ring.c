@@ -10,8 +10,7 @@ extern u16 gBattleTypeFlags;
 
 static void AnimGuardRing(struct Sprite *sprite);
 
-// guard (moves guard rings upwards)
-// Used in Safeguard.
+// Guard rings move upward during Safeguard.
 
 const union AffineAnimCmd gGuardRingAffineAnimCmds1[] =
 {

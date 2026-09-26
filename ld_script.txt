@@ -262,7 +262,7 @@ SECTIONS {
         src/battle/anim/uproar.o(.text);
         src/battle/anim/jagged_music_note.o(.text);
         src/battle/anim/perish_song_music_note.o(.text);
-        src/battle/anim/guard.o(.text);
+        src/battle/anim/guard_ring.o(.text);
         src/battle/anim/fury_cutter_count.o(.text);
         src/battle/anim/rain.o(.text);
         src/battle/anim/bubble.o(.text);
@@ -684,7 +684,7 @@ SECTIONS {
         src/battle/anim/uproar.o(.rodata);
         src/battle/anim/jagged_music_note.o(.rodata);
         src/battle/anim/perish_song_music_note.o(.rodata);
-        src/battle/anim/guard.o(.rodata);
+        src/battle/anim/guard_ring.o(.rodata);
         src/battle/anim/rain.o(.rodata);
         src/battle/anim/bubble.o(.rodata);
         src/battle/anim/aurora.o(.rodata);
