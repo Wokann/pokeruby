@@ -8,11 +8,10 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimEyeSparkle(struct Sprite* sprite);
-static void AnimEyeSparkle_Step(struct Sprite* sprite);
+static void AnimEyeSparkle(struct Sprite *sprite);
+static void AnimEyeSparkle_Step(struct Sprite *sprite);
 
-// perceive (shows a sparkle in a set of eyes, usually for heightened perception.)
-// Used in Glare, Tickle, and Scary Face.
+// Eye sparkle used in Glare, Tickle, and Scary Face.
 
 const union AnimCmd gEyeSparkleAnimCmds[] =
 {
@@ -40,13 +39,13 @@ const struct SpriteTemplate gEyeSparkleSpriteTemplate =
     .callback = AnimEyeSparkle,
 };
 
-static void AnimEyeSparkle_Step(struct Sprite* sprite)
+static void AnimEyeSparkle_Step(struct Sprite *sprite)
 {
     if (sprite->animEnded)
         DestroyAnimSprite(sprite);
 }
 
-static void AnimEyeSparkle(struct Sprite* sprite)
+static void AnimEyeSparkle(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->callback = AnimEyeSparkle_Step;
