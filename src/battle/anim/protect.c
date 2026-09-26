@@ -4,6 +4,7 @@
 #include "battle_anim.h"
 #include "sound.h"
 #include "palette.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -12,7 +13,6 @@ extern u8 gBattleAnimTarget;
 void AnimProtect(struct Sprite* sprite);
 static void AnimProtect_Step(struct Sprite* sprite);
 
-// shield
 // Used by Protect.
 
 const struct SpriteTemplate gProtectSpriteTemplate =
@@ -35,7 +35,7 @@ void AnimProtect(struct Sprite* sprite)
 
     sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
     sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
-    if (GetBattlerSide(gBattleAnimAttacker) == 0 || IsContest())
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER || IsContest())
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker) + 1;
     else
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
