@@ -117,7 +117,7 @@ struct Shared1000
 extern struct Shared1000 *const gEasyChatStruct;
 
 void ShowEasyChatScreen(void);
-void sub_80E62A0(u8 arg0, u16 *arg1, void (*arg2)(void), u8 arg3);
+void DoEasyChatScreen(u8 type, u16 *words, void (*exitCallback)(void), u8 displayedPersonType);
 u16 GetRandomEasyChatWordFromGroup(u16 groupId);
 void sub_80EB6FC(u16 *, u16);
 void InitEasyChatPhrases(void);

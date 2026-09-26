@@ -2572,15 +2572,15 @@ void CB2_ChooseBerry(void)
 
 static void OnBagClose_Field4(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)sub_80546B8 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_80546B8;
+    gTasks[taskId].data[8] = (u32)CB2_ReturnToFieldContinueScript >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_ReturnToFieldContinueScript;
     sub_80A5AE4(taskId);
 }
 
 static void OnItemSelect_Field4(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)sub_80546B8 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_80546B8;
+    gTasks[taskId].data[8] = (u32)CB2_ReturnToFieldContinueScript >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_ReturnToFieldContinueScript;
     sub_80A5AAC(taskId);
 }
 

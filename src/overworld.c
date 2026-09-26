@@ -1434,7 +1434,7 @@ void c2_exit_to_overworld_1_sub_8080DEC(void)
     CB2_ReturnToField();
 }
 
-void sub_80546B8(void)
+void CB2_ReturnToFieldContinueScript(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = sub_80809B0;

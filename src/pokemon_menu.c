@@ -422,7 +422,7 @@ static void sub_808A180(u8 taskID)
     {
         u8 mailID = GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_MAIL);
         DestroyTask(taskID);
-        sub_80E62A0(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
+        DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
     }
 }
 
@@ -461,7 +461,7 @@ static void sub_808A2DC(u8 taskID)
 {
     u8 mailID = GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_MAIL);
     DestroyTask(taskID);
-    sub_80E62A0(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
+    DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
 }
 
 static void sub_808A330(u8 taskID)
@@ -1117,7 +1117,7 @@ static void sub_808B338(u8 taskID)
         gLastFieldPokeMenuOpened = sub_806CA38(taskID);
         mailID = GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MAIL);
         DestroyTask(taskID);
-        sub_80E62A0(4, gSaveBlock1.mail[mailID].words, sub_808B3EC, 3);
+        DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808B3EC, 3);
     }
 }
 
