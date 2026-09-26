@@ -1548,7 +1548,7 @@ void HandlePokenavMainMenuInput(void)
         if (gPokenavStructPtr->unkD158 != 0)
         {
             PlaySE(SE_SELECT);
-            SetPokenavCallback(&sub_80EE3D8);
+            SetPokenavCallback(&OpenTrainerEyes);
         }
         else
         {
@@ -2972,7 +2972,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
     }
 }
 
-void sub_80EE3D8()
+void OpenTrainerEyes(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -3047,12 +3047,12 @@ void sub_80EE3D8()
         break;
     case 13:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80EE58C);
+			SetPokenavCallback(&HandleTrainerEyesInput);
         break;
     }
 }
 
-void sub_80EE58C()
+void HandleTrainerEyesInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -3071,13 +3071,13 @@ void sub_80EE58C()
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80EE658);
+                SetPokenavCallback(&ShowTrainerEyesTrainerInfo);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80EE8F4);
+                SetPokenavCallback(&TrainerEyes_ReturnToMainMenu);
 				return;
             }
             break;
@@ -3102,7 +3102,7 @@ void sub_80EE58C()
 #endif
 }
 
-void sub_80EE658()
+void ShowTrainerEyesTrainerInfo(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -3195,7 +3195,7 @@ void sub_80EE658()
     case 15:
         sub_80EEFBC(0x9);
         sub_80F3294(0);
-        SetPokenavCallback(&sub_80EE58C);
+        SetPokenavCallback(&HandleTrainerEyesInput);
         sub_80EED9C();
         break;
     case 16:
@@ -3209,7 +3209,7 @@ void sub_80EE658()
     }
 }
 
-void sub_80EE8F4()
+void TrainerEyes_ReturnToMainMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
