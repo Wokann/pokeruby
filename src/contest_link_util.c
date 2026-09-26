@@ -155,14 +155,14 @@ void Task_LinkContest_FinalizeConnection(u8 taskId);
 void Task_LinkContest_Disconnect(u8 taskId);
 void Task_LinkContest_WaitDisconnect(u8 taskId);
 
-const u16 sResultsTextWindow_Gfx0[] = INCBIN_U16("graphics/unknown/unknown_3D1624/0.4bpp");
-const u16 sResultsTextWindow_Gfx1[] = INCBIN_U16("graphics/unknown/unknown_3D1624/1.4bpp");
-const u16 sResultsTextWindow_Gfx2[] = INCBIN_U16("graphics/unknown/unknown_3D1624/2.4bpp");
-const u16 sResultsTextWindow_Gfx3[] = INCBIN_U16("graphics/unknown/unknown_3D1624/3.4bpp");
-const u16 sResultsTextWindow_Gfx4[] = INCBIN_U16("graphics/unknown/unknown_3D1624/4.4bpp");
-const u16 sResultsTextWindow_Gfx5[] = INCBIN_U16("graphics/unknown/unknown_3D1624/5.4bpp");
-const u16 sResultsTextWindow_Gfx6[] = INCBIN_U16("graphics/unknown/unknown_3D1624/6.4bpp");
-const u16 sResultsTextWindow_Gfx7[] = INCBIN_U16("graphics/unknown/unknown_3D1624/7.4bpp");
+const u16 sResultsTextWindow_Gfx0[] = INCBIN_U16("graphics/contest/results_screen/text_window_0.4bpp");
+const u16 sResultsTextWindow_Gfx1[] = INCBIN_U16("graphics/contest/results_screen/text_window_1.4bpp");
+const u16 sResultsTextWindow_Gfx2[] = INCBIN_U16("graphics/contest/results_screen/text_window_2.4bpp");
+const u16 sResultsTextWindow_Gfx3[] = INCBIN_U16("graphics/contest/results_screen/text_window_3.4bpp");
+const u16 sResultsTextWindow_Gfx4[] = INCBIN_U16("graphics/contest/results_screen/text_window_4.4bpp");
+const u16 sResultsTextWindow_Gfx5[] = INCBIN_U16("graphics/contest/results_screen/text_window_5.4bpp");
+const u16 sResultsTextWindow_Gfx6[] = INCBIN_U16("graphics/contest/results_screen/text_window_6.4bpp");
+const u16 sResultsTextWindow_Gfx7[] = INCBIN_U16("graphics/contest/results_screen/text_window_7.4bpp");
 const u16 sMiscBlank_Pal[] = INCBIN_U16("graphics/interface/blank.gbapal");
 
 const struct OamData sOamData_ResultsTextWindow = {
