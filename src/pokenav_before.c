@@ -1381,7 +1381,7 @@ void RestorePokenavMainMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        if (!sub_80EEF78())
+        if (!SlideMenuHeaderDown())
         {
             SetVBlankCallback(&VBlankCB_PokenavOamOnly);
             SetPokenavDisplayForMenu();
@@ -1597,7 +1597,7 @@ void OpenPokenavRegionMap(void)
         }
         break;
     case 2:
-        if (!sub_80EEF34())
+        if (!SlideMenuHeaderUp())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
             gPokenavStructPtr->callbackStep++;
@@ -1837,7 +1837,7 @@ void RestorePokenavConditionMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        if (!sub_80EEF78())
+        if (!SlideMenuHeaderDown())
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
 			SetPokenavDisplayForMenu();
@@ -1975,7 +1975,7 @@ void ReturnToConditionSearchMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 2:
-        if (!sub_80EEF78())
+        if (!SlideMenuHeaderDown())
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
 			gPokenavStructPtr->callbackStep++;
@@ -2091,7 +2091,7 @@ void OpenConditionSearchResults(void)
 		}
         break;
     case 2:
-        if (!sub_80EEF34())
+        if (!SlideMenuHeaderUp())
         {
 			BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
 			gPokenavStructPtr->callbackStep++;
@@ -2360,7 +2360,7 @@ void OpenConditionGraphFromParty(void)
 		}
         break;
     case 2:
-        if (!sub_80EEF34())
+        if (!SlideMenuHeaderUp())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0x0, 16, RGB(0, 0, 0));
             gPokenavStructPtr->callbackStep++;
@@ -2614,7 +2614,7 @@ void OpenRibbonsMonList(void)
 		}
         break;
     case 2:
-        if (!sub_80EEF34())
+        if (!SlideMenuHeaderUp())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
             gPokenavStructPtr->callbackStep++;
@@ -2989,7 +2989,7 @@ void OpenTrainerEyes(void)
 		}
         break;
     case 2:
-        if (!sub_80EEF34())
+        if (!SlideMenuHeaderUp())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
             gPokenavStructPtr->callbackStep++;

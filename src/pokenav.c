@@ -199,7 +199,7 @@ bool8 LoadPokenavBackgroundStep(void)
         sub_80EF58C(2);
         break;
     case 4:
-        gPokenavStructPtr->unk030C = 0;
+        gPokenavStructPtr->menuVerticalOffset = 0;
         REG_BG1HOFS = 0;
         REG_BG1VOFS = 0;
         REG_BG1CNT = 0x1B0C;
@@ -211,39 +211,39 @@ bool8 LoadPokenavBackgroundStep(void)
     return TRUE;
 }
 
-bool8 sub_80EEF34(void)
+bool8 SlideMenuHeaderUp(void)
 {
     bool8 retVal = TRUE;
 
-    if (gPokenavStructPtr->unk030C == 32)
+    if (gPokenavStructPtr->menuVerticalOffset == 32)
         return FALSE;
 
-    gPokenavStructPtr->unk030C += 2;
-    if (gPokenavStructPtr->unk030C > 31)
+    gPokenavStructPtr->menuVerticalOffset += 2;
+    if (gPokenavStructPtr->menuVerticalOffset > 31)
     {
-        gPokenavStructPtr->unk030C = 32;
+        gPokenavStructPtr->menuVerticalOffset = 32;
         retVal = FALSE;
     }
 
-    REG_BG1VOFS = gPokenavStructPtr->unk030C;
+    REG_BG1VOFS = gPokenavStructPtr->menuVerticalOffset;
     return retVal;
 }
 
-bool8 sub_80EEF78(void)
+bool8 SlideMenuHeaderDown(void)
 {
     bool8 retVal = TRUE;
 
-    if (gPokenavStructPtr->unk030C == 0)
+    if (gPokenavStructPtr->menuVerticalOffset == 0)
         return FALSE;
 
-    gPokenavStructPtr->unk030C -= 2;
-    if (gPokenavStructPtr->unk030C <= 0)
+    gPokenavStructPtr->menuVerticalOffset -= 2;
+    if (gPokenavStructPtr->menuVerticalOffset <= 0)
     {
-        gPokenavStructPtr->unk030C = 0;
+        gPokenavStructPtr->menuVerticalOffset = 0;
         retVal = FALSE;
     }
 
-    REG_BG1VOFS = gPokenavStructPtr->unk030C;
+    REG_BG1VOFS = gPokenavStructPtr->menuVerticalOffset;
     return retVal;
 }
 
@@ -2500,7 +2500,7 @@ void sub_80F29B8(u8 arg0)
     case 2:
     case 3:
         initialX = -96;
-        y = 49 - gPokenavStructPtr->unk030C;
+        y = 49 - gPokenavStructPtr->menuVerticalOffset;
         deltaX = 8;
         endX = 32;
         width = 64;
@@ -2509,7 +2509,7 @@ void sub_80F29B8(u8 arg0)
         break;
     case 4:
         initialX = 272;
-        y = 49 - gPokenavStructPtr->unk030C;
+        y = 49 - gPokenavStructPtr->menuVerticalOffset;
         deltaX = -8;
         endX = 152;
         width = 64;
@@ -2529,7 +2529,7 @@ void sub_80F29B8(u8 arg0)
             spriteTemplate = &gSpriteTemplate_83E4548;
 
         initialX = -96;
-        y = 68 - gPokenavStructPtr->unk030C;
+        y = 68 - gPokenavStructPtr->menuVerticalOffset;
         deltaX = 8;
         endX = 16;
         width = 32;
@@ -3514,7 +3514,7 @@ bool8 sub_80F4024(void)
 
 void sub_80F4138(struct Sprite *sprite)
 {
-    sprite->y2 = -gPokenavStructPtr->unk030C;
+    sprite->y2 = -gPokenavStructPtr->menuVerticalOffset;
     if (sprite->y2 <= -32)
     {
         if (sprite->data[0] == 0)

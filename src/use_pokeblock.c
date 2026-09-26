@@ -243,7 +243,7 @@ static void sub_8136294(void)
         case 6:
             gPokenavStructPtr->unk76AA = 0;
             gPokenavStructPtr->unk87E0 = NULL;
-            gPokenavStructPtr->unk030C = 0x20;
+            gPokenavStructPtr->menuVerticalOffset = 0x20;
             gUnknown_02039304->unk50++;
             break;
         case 7:
