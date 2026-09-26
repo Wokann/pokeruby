@@ -14,8 +14,7 @@ void AnimPerishSongMusicNote(struct Sprite *sprite);
 static void AnimPerishSongMusicNote_Step1(struct Sprite *);
 static void AnimPerishSongMusicNote_Step2(struct Sprite *);
 
-// note_spin (spins music notes around, and rotates them)
-// Used in Perish Song.
+// Perish Song music notes spin and rotate around the field.
 
 const union AffineAnimCmd gPerishSongMusicNoteAffineAnimCmds1[] =
 {
@@ -86,7 +85,7 @@ void AnimPerishSongMusicNote2(struct Sprite *sprite)
 void AnimPerishSongMusicNote(struct Sprite *sprite)
 {
     int index;
-    int var2;
+    int angleMask;
 
     if (sprite->data[0] == 0)
     {
@@ -103,10 +102,10 @@ void AnimPerishSongMusicNote(struct Sprite *sprite)
 
     sprite->data[1] = (sprite->data[0] + ((u16)sprite->data[0] >> 31)) / 2;
     index = ((sprite->data[0] * 3) + (u16)sprite->data[3]);
-    var2 = 0xFF;
+    angleMask = 0xFF;
     sprite->data[6] = (sprite->data[6] + 10) & 0xFF;
 
-    index &= var2;
+    index &= angleMask;
     sprite->x2 = Cos(index, 100);
 
     sprite->y2 = sprite->data[1] + Sin(index, 10) + Cos(sprite->data[6], 4);
