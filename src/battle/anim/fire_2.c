@@ -302,7 +302,7 @@ void AnimFireCross(struct Sprite *sprite)
 
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 
-    sprite->callback = TranslateSpriteOverDuration;
+    sprite->callback = TranslateSpriteLinear;
 }
 
 void AnimFireSpiralOutward(struct Sprite *sprite)

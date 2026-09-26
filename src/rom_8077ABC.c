@@ -562,7 +562,7 @@ void WaitAnimForDuration(struct Sprite *sprite)
 void sub_80782F8(struct Sprite *sprite)
 {
     sub_8078314(sprite);
-    sprite->callback = TranslateSpriteOverDuration;
+    sprite->callback = TranslateSpriteLinear;
     sprite->callback(sprite);
 }
 
@@ -580,7 +580,7 @@ void sub_8078314(struct Sprite *sprite)
     sprite->data[1] = old;
 }
 
-void TranslateSpriteOverDuration(struct Sprite *sprite)
+void TranslateSpriteLinear(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {

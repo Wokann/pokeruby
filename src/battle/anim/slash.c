@@ -117,7 +117,7 @@ static void AnimFalseSwipeSlice_Step1(struct Sprite *sprite)
         sprite->data[1] = 8;
         sprite->data[2] = 0;
         StoreSpriteCallbackInData6(sprite, AnimFalseSwipeSlice_Step2);
-        sprite->callback = TranslateSpriteOverDuration;
+        sprite->callback = TranslateSpriteLinear;
     }
 }
 
