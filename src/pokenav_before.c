@@ -1945,7 +1945,7 @@ void HandleConditionSearchMenuInput(void)
             }
 
             gPokenavStructPtr->conditionSearchCursorPos = gPokenavStructPtr->menuCursorPos;
-            gPokenavStructPtr->unk76AA = 1;
+            gPokenavStructPtr->isConditionGraphSearchMode = 1;
             SetPokenavCallback(&OpenConditionSearchResults);
         }
         else if (JOY_NEW(B_BUTTON))
@@ -2314,11 +2314,11 @@ void OpenConditionGraphFromSearchResults(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        sub_80EFF34();
+        InitConditionGraphScreen();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 5:
-        if (!sub_80EFF68())
+        if (!LoadConditionGraphScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -2372,7 +2372,7 @@ void OpenConditionGraphFromParty(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			StopPokenavBg3Scroll();
-			gPokenavStructPtr->unk76AA = 0;
+			gPokenavStructPtr->isConditionGraphSearchMode = 0;
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2386,11 +2386,11 @@ void OpenConditionGraphFromParty(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        sub_80EFF34();
+        InitConditionGraphScreen();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
-        if (!sub_80EFF68())
+        if (!LoadConditionGraphScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
@@ -2440,7 +2440,7 @@ void OpenConditionGraphFromParty(void)
 }
 
 void sub_80F4F78(void);
-void sub_80F0174(bool8);
+void SetConditionGraphBg2Visible(bool8 visible);
 bool8 sub_80F4FB4(void);
 void sub_80F3668(void);
 bool8 sub_80F7500(void);
@@ -2466,7 +2466,7 @@ void HandleConditionGraphInput(void)
             gPokenavStructPtr->callbackStep = 2;
         break;
     case 2:
-        sub_80F0174(1);
+        SetConditionGraphBg2Visible(1);
         gPokenavStructPtr->callbackStep = 3;
         break;
     case 3:
@@ -2481,7 +2481,7 @@ void HandleConditionGraphInput(void)
         if (JOY_HELD(DPAD_UP))
         {
             if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->unk76AA == 0
+                gPokenavStructPtr->isConditionGraphSearchMode == 0
                 || gPokenavStructPtr->unk87DC != 0
             ))
             {
@@ -2495,7 +2495,7 @@ void HandleConditionGraphInput(void)
         if (JOY_HELD(DPAD_DOWN))
         {
             if (gPokenavStructPtr->unk87CB && (
-                gPokenavStructPtr->unk76AA == 0
+                gPokenavStructPtr->isConditionGraphSearchMode == 0
                 || gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774
             ))
             {
@@ -2516,7 +2516,7 @@ void HandleConditionGraphInput(void)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            if (gPokenavStructPtr->unk76AA == 0)
+            if (gPokenavStructPtr->isConditionGraphSearchMode == 0)
             {
                 if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
                 {
@@ -2562,7 +2562,7 @@ void HandleConditionGraphInput(void)
     case 9:
         if (!sub_80F5038())
         {
-            sub_80F0174(0);
+            SetConditionGraphBg2Visible(0);
             sub_80F2F48();
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB_BLACK);
             gPokenavStructPtr->callbackStep = 11;
@@ -2575,7 +2575,7 @@ void HandleConditionGraphInput(void)
         {
             sub_80F3CE8();
             sub_80F5BDC();
-            if (!gPokenavStructPtr->unk76AA)
+            if (!gPokenavStructPtr->isConditionGraphSearchMode)
             {
                 sub_80F357C();
                 sub_80F2D6C(1);

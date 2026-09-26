@@ -852,18 +852,18 @@ void UpdateRegionMapCityBanner(void)
     }
 }
 
-void sub_80EFF34(void)
+void InitConditionGraphScreen(void)
 {
     gPokenavStructPtr->setupStep = 0;
 
     if (gPokenavStructPtr->unk6DAC == 0)
     {
-        while (sub_80EFF68())
+        while (LoadConditionGraphScreenStep())
             ;
     }
 }
 
-bool8 sub_80EFF68(void)
+bool8 LoadConditionGraphScreenStep(void)
 {
     switch (gPokenavStructPtr->setupStep)
     {
@@ -899,7 +899,7 @@ bool8 sub_80EFF68(void)
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 9:
-        if (gPokenavStructPtr->unk76AA == 1)
+        if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
             sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
         break;
     case 10:
@@ -911,10 +911,10 @@ bool8 sub_80EFF68(void)
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);
-        sub_80F01A4();
+        SetConditionGraphWindowRegs();
         break;
     case 12:
-        sub_80F01E0(gPokenavStructPtr->unk8fe9);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
         break;
     case 13:
         REG_BG3CNT = 0x1E03;
@@ -930,15 +930,15 @@ bool8 sub_80EFF68(void)
     return TRUE;
 }
 
-void sub_80F0174(bool8 bg2on)
+void SetConditionGraphBg2Visible(bool8 visible)
 {
-    if (bg2on)
+    if (visible)
         REG_DISPCNT |= DISPCNT_BG2_ON;
     else
         REG_DISPCNT &= ~DISPCNT_BG2_ON;
 }
 
-void sub_80F01A4(void)
+void SetConditionGraphWindowRegs(void)
 {
     REG_WIN0H = WIN_RANGE(0, 240);
     REG_WIN1H = WIN_RANGE(0, 155);
@@ -948,13 +948,13 @@ void sub_80F01A4(void)
     REG_WINOUT = 0x001B;
 }
 
-void sub_80F01E0(u16 a)
+void PrintConditionGraphMonInfo(u16 monSlot)
 {
-    Menu_PrintText(gPokenavStructPtr->unk8829[a], 13, 1);
+    Menu_PrintText(gPokenavStructPtr->unk8829[monSlot], 13, 1);
 
-    if (gPokenavStructPtr->unk76AA == 1)
+    if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
     {
-        Menu_PrintText(gPokenavStructPtr->unk88E9[a], 13, 3);
+        Menu_PrintText(gPokenavStructPtr->unk88E9[monSlot], 13, 3);
         sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
         Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
     }
@@ -1766,10 +1766,10 @@ bool8 sub_80F1778(void)
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[30], 0xBF, 0x2);
-        sub_80F01A4();
+        SetConditionGraphWindowRegs();
         break;
     case 8:
-        sub_80F01E0(gPokenavStructPtr->unk8fe9);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
         break;
     case 9:
         REG_BG3CNT = 0x1E03;
@@ -3985,7 +3985,7 @@ bool8 sub_80F4FB4(void)
 
 void sub_80F4FDC(void)
 {
-    if (gPokenavStructPtr->unk76AA || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
+    if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
         sub_80F53EC(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
 }
 
@@ -4060,7 +4060,7 @@ bool8 sub_80F5264(void)
     {
     case 0:
         sub_80F2E18(gPokenavStructPtr->unk8fe9);
-        sub_80F01E0(gPokenavStructPtr->unk8fe9);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
         gPokenavStructPtr->unk87DE++;
         // fall through
     case 1:
@@ -4084,7 +4084,7 @@ bool8 sub_80F52F8(void)
     case 0:
         if (!sub_80F5038())
         {
-            sub_80F01E0(gPokenavStructPtr->unk8fe9);
+            PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
             sub_80F4900(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
             gPokenavStructPtr->unk87DE++;
         }
@@ -4105,7 +4105,7 @@ bool8 sub_80F5364(void)
         if (!sub_80F173C())
         {
             sub_80F2E18(gPokenavStructPtr->unk8fe9);
-            sub_80F01E0(gPokenavStructPtr->unk8fe9);
+            PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
             gPokenavStructPtr->unk87DE++;
         }
         break;
