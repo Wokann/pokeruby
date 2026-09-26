@@ -1317,7 +1317,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
         return OBJECT_EVENTS_COUNT;
     }
     sprite = &gSprites[spriteId];
-    sub_8060388(cameraDeltaX + objectEvent->currentCoords.x, cameraDeltaY + objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+    GetMapCoordsFromSpritePos(cameraDeltaX + objectEvent->currentCoords.x, cameraDeltaY + objectEvent->currentCoords.y, &sprite->x, &sprite->y);
     sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
@@ -1615,7 +1615,7 @@ void sub_805B75C(u8 objectEventId, s16 x, s16 y)
     if (spriteId != MAX_SPRITES)
     {
         sprite = &gSprites[spriteId];
-        sub_8060388(x + objectEvent->currentCoords.x, y + objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+        GetMapCoordsFromSpritePos(x + objectEvent->currentCoords.x, y + objectEvent->currentCoords.y, &sprite->x, &sprite->y);
         sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
         sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
         sprite->x += 8;
@@ -4589,12 +4589,12 @@ static void MoveCoordsInDirection(u32 dir, s16 *x, s16 *y, s16 deltaX, s16 delta
         *y -= dy2;
 }
 
-void sub_8060388(s16 x1, s16 y1, s16 *x2, s16 *y2)
+void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, s16 *destY)
 {
-    *x2 = (x1 - gSaveBlock1.pos.x) << 4;
-    *y2 = (y1 - gSaveBlock1.pos.y) << 4;
-    *x2 -= gTotalCameraPixelOffsetX;
-    *y2 -= gTotalCameraPixelOffsetY;
+    *destX = (x - gSaveBlock1.pos.x) << 4;
+    *destY = (y - gSaveBlock1.pos.y) << 4;
+    *destX -= gTotalCameraPixelOffsetX;
+    *destY -= gTotalCameraPixelOffsetY;
 }
 
 void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *destX, s16 *destY)

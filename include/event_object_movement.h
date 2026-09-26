@@ -395,7 +395,7 @@ u8 GetCollisionAtCoords(struct ObjectEvent *, s16, s16, u32);
 u8 GetCollisionFlagsAtCoords(struct ObjectEvent *, s16, s16, u8);
 bool8 IsBerryTreeSparkling(u8, u8, u8);
 void sub_8060288(u8, u8, u8);
-void sub_8060388(s16, s16, s16 *, s16 *);
+void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, s16 *destY);
 void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *destX, s16 *destY);
 void ObjectEventMoveDestCoords(struct ObjectEvent *pObject, u32 unk_19, s16 *pInt, s16 *pInt1);
 bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *);
