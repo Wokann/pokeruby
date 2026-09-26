@@ -2060,11 +2060,11 @@ Move_CONFUSE_RAY: @ 81CA291
 	waitbgfadein
 	createvisualtask SoundTask_AdjustPanningVar, 2, -64, 63, 2, 0
 	createvisualtask sub_80E2094, 2, 10013, 0, 6, 0, 14, 351
-	createsprite gBattleAnimSpriteTemplate_83DAE64, ANIM_BATTLER_TARGET, 2, 28, 0, 288
+	createsprite gConfuseRayBallBounceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 28, 0, 288
 	waitforvisualfinish
 	setalpha 8, 8
 	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_83DAE7C, ANIM_BATTLER_TARGET, 2, 0, -16
+	createsprite gConfuseRayBallSpiralSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, -16
 	waitforvisualfinish
 	delay 0
 	blendoff
@@ -3075,7 +3075,7 @@ Move_NIGHTMARE: @ 81CB8A3
 	waitbgfadein
 	jumpifcontest _81CB8CF
 	monbg ANIM_BATTLER_DEF_PARTNER
-	createvisualtask sub_80DE1B0, 2
+	createvisualtask AnimTask_NightmareClone, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 3, 0, 40, 1
 	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -3113,7 +3113,7 @@ Move_SPITE: @ 81CB936
 	waitbgfadein
 	monbg ANIM_BATTLER_DEF_PARTNER
 	createvisualtask AnimTask_BlendColorCycle, 2, 2, 2, 6, 0, 8, 32767
-	createvisualtask sub_80DE3AC, 2
+	createvisualtask AnimTask_SpiteTargetShadow, 2
 	loopsewithpan SE_M_PSYBEAM, SOUND_PAN_TARGET, 20, 3
 	waitforvisualfinish
 	restorebg
@@ -3177,7 +3177,7 @@ Move_DESTINY_BOND: @ 81CBA2C
 	fadetobg BG_GHOST
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	waitbgfadein
-	createvisualtask sub_80DE918, 5, 0, 48
+	createvisualtask AnimTask_DestinyBondWhiteShadow, 5, 0, 48
 	playsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER
 	delay 48
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_ATTACKER, 2, 0, 24, 1
