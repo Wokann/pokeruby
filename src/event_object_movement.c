@@ -1461,7 +1461,7 @@ u8 sub_805B410(u8 graphicsId, u8 b, s16 x, s16 y, u8 elevation, u8 direction)
     *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
     x += 7;
     y += 7;
-    sub_8060470(&x, &y, 8, 16);
+    SetSpritePosToOffsetMapCoords(&x, &y, 8, 16);
     spriteId = CreateSpriteAtEnd(&spriteTemplate, x, y, 0);
     if (spriteId != MAX_SPRITES)
     {
@@ -1687,7 +1687,7 @@ void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
     sprite->oam.paletteNum = graphicsInfo->paletteSlot;
     objectEvent->inanimate = graphicsInfo->inanimate;
     objectEvent->graphicsId = graphicsId;
-    sub_80603CC(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+    SetSpritePosToMapCoords(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
     sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
@@ -1975,7 +1975,7 @@ void sub_805C058(struct ObjectEvent *objectEvent, s16 x, s16 y)
     const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
 
     SetObjectEventCoords(objectEvent, x, y);
-    sub_80603CC(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+    SetSpritePosToMapCoords(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
     sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
@@ -4597,35 +4597,35 @@ void sub_8060388(s16 x1, s16 y1, s16 *x2, s16 *y2)
     *y2 -= gTotalCameraPixelOffsetY;
 }
 
-void sub_80603CC(s16 x1, s16 y1, s16 *x2, s16 *y2)
+void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *destX, s16 *destY)
 {
-    s16 x3;
-    s16 y3;
-    x3 = -gTotalCameraPixelOffsetX - gFieldCamera.curMovementOffsetX;
-    y3 = -gTotalCameraPixelOffsetY - gFieldCamera.curMovementOffsetY;
+    s16 dx;
+    s16 dy;
+    dx = -gTotalCameraPixelOffsetX - gFieldCamera.curMovementOffsetX;
+    dy = -gTotalCameraPixelOffsetY - gFieldCamera.curMovementOffsetY;
     if (gFieldCamera.curMovementOffsetX > 0)
     {
-        x3 += 0x10;
+        dx += 0x10;
     }
     if (gFieldCamera.curMovementOffsetX < 0)
     {
-        x3 -= 0x10;
+        dx -= 0x10;
     }
     if (gFieldCamera.curMovementOffsetY > 0)
     {
-        y3 += 0x10;
+        dy += 0x10;
     }
     if (gFieldCamera.curMovementOffsetY < 0)
     {
-        y3 -= 0x10;
+        dy -= 0x10;
     }
-    *x2 = ((x1 - gSaveBlock1.pos.x) << 4) + x3;
-    *y2 = ((y1 - gSaveBlock1.pos.y) << 4) + y3;
+    *destX = ((mapX - gSaveBlock1.pos.x) << 4) + dx;
+    *destY = ((mapY - gSaveBlock1.pos.y) << 4) + dy;
 }
 
-void sub_8060470(s16 *x, s16 *y, s16 dx, s16 dy)
+void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy)
 {
-    sub_80603CC(*x, *y, x, y);
+    SetSpritePosToMapCoords(*x, *y, x, y);
     *x += dx;
     *y += dy;
 }

@@ -2530,7 +2530,7 @@ static void InitLinkPlayerObjectEventPos(struct ObjectEvent *objEvent, s16 x, s1
     objEvent->currentCoords.y = y;
     objEvent->previousCoords.x = x;
     objEvent->previousCoords.y = y;
-    sub_80603CC(x, y, &objEvent->initialCoords.x, &objEvent->initialCoords.y);
+    SetSpritePosToMapCoords(x, y, &objEvent->initialCoords.x, &objEvent->initialCoords.y);
     objEvent->initialCoords.x += 8;
     ObjectEventUpdateZCoord(objEvent);
 }
