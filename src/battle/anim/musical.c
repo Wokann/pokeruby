@@ -4,19 +4,20 @@
 #include "battle_anim.h"
 #include "sound.h"
 #include "palette.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimWavyMusicNotes(struct Sprite* sprite);
-void AnimFlyingMusicNotes(struct Sprite* sprite);
-void AnimBellyDrumHand(struct Sprite* sprite);
-void AnimSlowFlyingMusicNotes(struct Sprite* sprite);
-static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16* velocX, s16* velocY, s8 xSpeedFactor);
-static void AnimWavyMusicNotes_Step(struct Sprite* sprite);
-static void AnimFlyingMusicNotes_Step(struct Sprite* sprite);
-static void AnimSlowFlyingMusicNotes_Step(struct Sprite* sprite);
+static void AnimWavyMusicNotes(struct Sprite *sprite);
+static void AnimFlyingMusicNotes(struct Sprite *sprite);
+static void AnimBellyDrumHand(struct Sprite *sprite);
+void AnimSlowFlyingMusicNotes(struct Sprite *sprite);
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16 *velocX, s16 *velocY, s8 xSpeedFactor);
+static void AnimWavyMusicNotes_Step(struct Sprite *sprite);
+static void AnimFlyingMusicNotes_Step(struct Sprite *sprite);
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite *sprite);
 
 const union AnimCmd gWavyMusicNotesAnimCmds1[] =
 {
@@ -167,7 +168,7 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
     index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[0][0]);
     if (index != 0xFF)
     {
-        index = (index << 4) + 0x100;
+        index = OBJ_PLTT_ID(index);
         for (i = 1; i < 6; i++)
         {
             gPlttBufferFaded[index + i] = gParticlesColorBlendTable[0][i];
@@ -179,7 +180,7 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
         index = AllocSpritePalette(gParticlesColorBlendTable[j][0]);
         if (index != 0xFF)
         {
-            index = (index << 4) + 0x100;
+            index = OBJ_PLTT_ID(index);
             for (i = 1; i < 6; i++)
             {
                 gPlttBufferFaded[index + i] = gParticlesColorBlendTable[j][i];
@@ -201,7 +202,16 @@ void AnimTask_MusicNotesClearRainbowBlend(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-void AnimWavyMusicNotes(struct Sprite* sprite)
+#define sMoveTimer      data[0]
+#define sBlendTableIdx  data[1]
+#define sBlendTimer     data[2]
+#define sBlendCycleTime data[3]
+#define sX              data[4]
+#define sY              data[5]
+#define sVelocX         data[6]
+#define sVelocY         data[7]
+
+static void AnimWavyMusicNotes(struct Sprite *sprite)
 {
     u8 paletteIndex;
     u8 targetX;
@@ -211,9 +221,9 @@ void AnimWavyMusicNotes(struct Sprite* sprite)
     if ((paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[gBattleAnimArgs[1]][0])) != 0xFF)
         sprite->oam.paletteNum = paletteIndex;
 
-    sprite->data[1] = gBattleAnimArgs[1];
-    sprite->data[2] = 0;
-    sprite->data[3] = gBattleAnimArgs[2];
+    sprite->sBlendTableIdx = gBattleAnimArgs[1];
+    sprite->sBlendTimer = 0;
+    sprite->sBlendCycleTime = gBattleAnimArgs[2];
     if (IsContest())
     {
         targetX = 0x30;
@@ -221,17 +231,17 @@ void AnimWavyMusicNotes(struct Sprite* sprite)
     }
     else
     {
-        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     }
 
-    sprite->data[4] = sprite->x << 4;
-    sprite->data[5] = sprite->y << 4;
-    AnimWavyMusicNotes_CalcVelocity(targetX - sprite->x, targetY - sprite->y, &sprite->data[6], &sprite->data[7], 0x28);
+    sprite->sX = sprite->x << 4;
+    sprite->sY = sprite->y << 4;
+    AnimWavyMusicNotes_CalcVelocity(targetX - sprite->x, targetY - sprite->y, &sprite->sVelocX, &sprite->sVelocY, 0x28);
     sprite->callback = AnimWavyMusicNotes_Step;
 }
 
-static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16* velocX, s16* velocY, s8 xSpeedFactor)
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16 *velocX, s16 *velocY, s8 xSpeedFactor)
 {
     int scaledX;
     int duration;
@@ -247,18 +257,18 @@ static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16* velocX, s16* velo
     *velocY = (y << 8) / duration;
 }
 
-static void AnimWavyMusicNotes_Step(struct Sprite* sprite)
+static void AnimWavyMusicNotes_Step(struct Sprite *sprite)
 {
     int trigIdx;
     s16 y;
     int x;
     u8 paletteIndex;
-    sprite->data[0]++;
-    trigIdx = sprite->data[0] * 5 - ((sprite->data[0] * 5 / 256) << 8);
-    sprite->data[4] += sprite->data[6];
-    sprite->data[5] += sprite->data[7];
-    sprite->x = sprite->data[4] >> 4;
-    sprite->y = sprite->data[5] >> 4;
+    sprite->sMoveTimer++;
+    trigIdx = sprite->sMoveTimer * 5 - ((sprite->sMoveTimer * 5 / 256) << 8);
+    sprite->sX += sprite->sVelocX;
+    sprite->sY += sprite->sVelocY;
+    sprite->x = sprite->sX >> 4;
+    sprite->y = sprite->sY >> 4;
     sprite->y2 = Sin(trigIdx, 15);
     y = (u16)sprite->y;
     x = (u16)sprite->x;
@@ -269,13 +279,13 @@ static void AnimWavyMusicNotes_Step(struct Sprite* sprite)
     }
     else
     {
-        if (sprite->data[3] && ++sprite->data[2] > sprite->data[3])
+        if (sprite->sBlendCycleTime && ++sprite->sBlendTimer > sprite->sBlendCycleTime)
         {
-            sprite->data[2] = 0;
-            if (++sprite->data[1] > 3)
-                sprite->data[1] = 0;
+            sprite->sBlendTimer = 0;
+            if (++sprite->sBlendTableIdx > 3)
+                sprite->sBlendTableIdx = 0;
 
-            paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[sprite->data[1]][0]);
+            paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[sprite->sBlendTableIdx][0]);
             if (paletteIndex != 0xFF)
                 sprite->oam.paletteNum = paletteIndex;
         }
@@ -285,17 +295,17 @@ static void AnimWavyMusicNotes_Step(struct Sprite* sprite)
 // note_scatter
 // Used by Teeter Dance.
 
-void AnimFlyingMusicNotes(struct Sprite* sprite)
+static void AnimFlyingMusicNotes(struct Sprite *sprite)
 {
     int xOffset;
-    if (GetBattlerSide(gBattleAnimAttacker) == 1)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
     {
         xOffset = gBattleAnimArgs[1];
         *(u16*)&gBattleAnimArgs[1] = -xOffset;
     }
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[1];
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
     StartSpriteAnim(sprite, gBattleAnimArgs[0]);
     sprite->data[2] = 0;
     sprite->data[3] = 0;
@@ -306,7 +316,7 @@ void AnimFlyingMusicNotes(struct Sprite* sprite)
     sprite->callback = AnimFlyingMusicNotes_Step;
 }
 
-static void AnimFlyingMusicNotes_Step(struct Sprite* sprite)
+static void AnimFlyingMusicNotes_Step(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[6];
     sprite->data[5] += sprite->data[7];
@@ -328,7 +338,7 @@ static void AnimFlyingMusicNotes_Step(struct Sprite* sprite)
 // drum (using hands to slap the Pokemon's belly in a rhythm.)
 // Used in Belly Drum.
 
-void AnimBellyDrumHand(struct Sprite* sprite)
+static void AnimBellyDrumHand(struct Sprite *sprite)
 {
     s16 xOffset;
     if (gBattleAnimArgs[0] == 1)
@@ -341,8 +351,8 @@ void AnimBellyDrumHand(struct Sprite* sprite)
         xOffset = -16;
     }
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + xOffset;
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + 8;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + xOffset;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + 8;
     sprite->data[0] = 8;
     sprite->callback = WaitAnimForDuration;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
@@ -351,7 +361,7 @@ void AnimBellyDrumHand(struct Sprite* sprite)
 // note_scatter_2 (slower scatter of notes.)
 // Used in Belly Drum.
 
-void AnimSlowFlyingMusicNotes(struct Sprite* sprite)
+void AnimSlowFlyingMusicNotes(struct Sprite *sprite)
 {
     s16 xDiff;
     u8 paletteIndex;
@@ -373,7 +383,7 @@ void AnimSlowFlyingMusicNotes(struct Sprite* sprite)
     sprite->callback = AnimSlowFlyingMusicNotes_Step;
 }
 
-static void AnimSlowFlyingMusicNotes_Step(struct Sprite* sprite)
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite) == 0)
     {
