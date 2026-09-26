@@ -96,7 +96,7 @@ struct PokemonStorageSystemData {
     u8 unk_0007;
     u16 unk_0008;
     u16 unk_000a;
-    struct PCScreenEffectStruct unk_000c;
+    struct PCScreenEffectStruct pcScreenEffect;
     struct UnkStruct_2000020 unk_0020;
     struct UnkStruct_2000028 unk_0028[8];
     u8 unk_00a8[0x800];

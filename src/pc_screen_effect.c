@@ -4,102 +4,102 @@
 #include "sprite.h"
 #include "pc_screen_effect.h"
 
-static void sub_80C603C(void);
-static void sub_80C6078(void);
-static void sub_80C60CC(struct Sprite *);
-static void sub_80C6130(struct Sprite *);
-static void HBlankIntrOn(IntrFunc);
-static void HBlankIntrOff(void);
+static void HBlankCB_PCScreenBlend(void);
+static void HBlankCB_PCScreenReveal(void);
+static void SpriteCB_PCScreenMoveOutward(struct Sprite *);
+static void SpriteCB_PCScreenMoveInward(struct Sprite *);
+static void EnablePCScreenHBlank(IntrFunc);
+static void DisablePCScreenHBlank(void);
 
-struct OamData gOamData_83D18D8 = {
+struct OamData gPCScreenEffectOam = {
     .shape = ST_OAM_H_RECTANGLE,
     .size = 1
 };
 
-union AnimCmd gSpriteAnim_83D18E0[] = {
+union AnimCmd gPCScreenEffectAnim[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *gSpriteAnimTable_83D18E8[] = {
-    gSpriteAnim_83D18E0
+const union AnimCmd *gPCScreenEffectAnimTable[] = {
+    gPCScreenEffectAnim
 };
 
-u16 gUnknownPal_083D18EC[] = INCBIN_U16("graphics/unknown/unknown_3D18EC.gbapal");
-u8 gUnknownGfx_083D190C[] = INCBIN_U8("graphics/unknown/unknown_3D190C.4bpp");
+u16 gPCScreenEffectPal[] = INCBIN_U16("graphics/pc_screen_effect/palette.gbapal");
+u8 gPCScreenEffectGfx[] = INCBIN_U8("graphics/pc_screen_effect/tiles.4bpp");
 
-EWRAM_DATA struct PCScreenEffectStruct *gUnknown_020387EC = NULL;
+EWRAM_DATA struct PCScreenEffectStruct *gPCScreenEffect = NULL;
 
-void sub_80C5CD4(struct PCScreenEffectStruct *unkStruct)
+void StartPCScreenOpenEffect(struct PCScreenEffectStruct *effect)
 {
     u16 i;
 
-    struct SpriteSheet sprSheet = { gUnknownGfx_083D190C, sizeof(gUnknownGfx_083D190C), 0 };
-    struct SpritePalette sprPalette = { gUnknownPal_083D18EC, 0 };
-    struct SpriteTemplate sprTemplate =
+    struct SpriteSheet spriteSheet = { gPCScreenEffectGfx, sizeof(gPCScreenEffectGfx), 0 };
+    struct SpritePalette spritePalette = { gPCScreenEffectPal, 0 };
+    struct SpriteTemplate spriteTemplate =
         {
             0,
             0,
-            &gOamData_83D18D8,
-            gSpriteAnimTable_83D18E8,
+            &gPCScreenEffectOam,
+            gPCScreenEffectAnimTable,
             NULL,
             gDummySpriteAffineAnimTable,
-            sub_80C60CC,
+            SpriteCB_PCScreenMoveOutward,
         };
 
-    sprSheet.tag = unkStruct->tileTag;
-    sprTemplate.tileTag =  unkStruct->tileTag;
-    sprPalette.tag = unkStruct->paletteTag;
-    sprTemplate.paletteTag = unkStruct->paletteTag;
+    spriteSheet.tag = effect->tileTag;
+    spriteTemplate.tileTag =  effect->tileTag;
+    spritePalette.tag = effect->paletteTag;
+    spriteTemplate.paletteTag = effect->paletteTag;
 
-    LoadSpriteSheet(&sprSheet);
-    LoadSpritePalette(&sprPalette);
+    LoadSpriteSheet(&spriteSheet);
+    LoadSpritePalette(&spritePalette);
 
-    unkStruct->unk0C = 1;
-    unkStruct->unk0A = 0;
-    unkStruct->unk08 = 0;
-    unkStruct->selectedPalettes  = ~(0x10000 << IndexOfSpritePaletteTag(unkStruct->paletteTag)) & 0xFFFF0000;
+    effect->revealRadius = 1;
+    effect->spritesFinished = 0;
+    effect->state = 0;
+    effect->selectedPalettes  = ~(0x10000 << IndexOfSpritePaletteTag(effect->paletteTag)) & 0xFFFF0000;
 
-    if (unkStruct->unk04 == 0)
-        unkStruct->unk04 = 16;
+    if (effect->spriteSpeed == 0)
+        effect->spriteSpeed = 16;
 
-    if (unkStruct->unk06 == 0)
-        unkStruct->unk06 = 20;
+    if (effect->revealSpeed == 0)
+        effect->revealSpeed = 20;
 
-    gUnknown_020387EC = unkStruct;
+    gPCScreenEffect = effect;
 
     for (i = 0; i < 8; i++)
     {
-        u8 spriteId = CreateSprite(&sprTemplate, 32 * i + 8, 80, 0);
+        u8 spriteId = CreateSprite(&spriteTemplate, 32 * i + 8, 80, 0);
         if (spriteId == MAX_SPRITES)
             break;
-        gSprites[spriteId].data[0] = (i < 4) ? -unkStruct->unk04 : unkStruct->unk04;
+        gSprites[spriteId].data[0] = (i < 4) ? -effect->spriteSpeed : effect->spriteSpeed;
     }
 
     REG_BLDCNT = 191;
     REG_BLDY = 16;
 }
 
-bool8 sub_80C5DCC(void)
+bool8 UpdatePCScreenOpenEffect(void)
 {
-    if (gUnknown_020387EC->unk08 == 0)
+    if (gPCScreenEffect->state == 0)
     {
-        BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, FADE_COLOR_WHITE);
-        HBlankIntrOn(sub_80C603C);
-        gUnknown_020387EC->unk08++;
+        BlendPalettes(gPCScreenEffect->selectedPalettes, 16, FADE_COLOR_WHITE);
+        EnablePCScreenHBlank(HBlankCB_PCScreenBlend);
+        gPCScreenEffect->state++;
     }
 
-    if (gUnknown_020387EC->unk0A < 8)
+    if (gPCScreenEffect->spritesFinished < 8)
         return FALSE;
 
-    gUnknown_020387EC->unk0C += gUnknown_020387EC->unk06;
+    gPCScreenEffect->revealRadius += gPCScreenEffect->revealSpeed;
 
-    if (gUnknown_020387EC->unk0C >= 80)
+    if (gPCScreenEffect->revealRadius >= 80)
     {
-        gUnknown_020387EC->unk0C = 80;
+        gPCScreenEffect->revealRadius = 80;
         REG_BLDCNT = 0;
         REG_BLDY = 0;
-        HBlankIntrOff();
+        DisablePCScreenHBlank();
         return TRUE;
     }
     else
@@ -108,41 +108,41 @@ bool8 sub_80C5DCC(void)
     }
 }
 
-void sub_80C5E38(struct PCScreenEffectStruct * a0)
+void StartPCScreenCloseEffect(struct PCScreenEffectStruct *effect)
 {
     u16 i;
     u8 spriteId;
 
-    struct SpriteSheet spriteSheet = { gUnknownGfx_083D190C, sizeof(gUnknownGfx_083D190C), 0 };
-    struct SpritePalette spritePalette = { gUnknownPal_083D18EC, 0 };
+    struct SpriteSheet spriteSheet = { gPCScreenEffectGfx, sizeof(gPCScreenEffectGfx), 0 };
+    struct SpritePalette spritePalette = { gPCScreenEffectPal, 0 };
     struct SpriteTemplate spriteTemplate =
         {
             0,
             0,
-            &gOamData_83D18D8,
-            gSpriteAnimTable_83D18E8,
+            &gPCScreenEffectOam,
+            gPCScreenEffectAnimTable,
             NULL,
             gDummySpriteAffineAnimTable,
-            sub_80C6130,
+            SpriteCB_PCScreenMoveInward,
         };
 
-    spriteSheet.tag = a0->tileTag;
-    spriteTemplate.tileTag = a0->tileTag;
-    spritePalette.tag = a0->paletteTag;
-    spriteTemplate.paletteTag = a0->paletteTag;
+    spriteSheet.tag = effect->tileTag;
+    spriteTemplate.tileTag = effect->tileTag;
+    spritePalette.tag = effect->paletteTag;
+    spriteTemplate.paletteTag = effect->paletteTag;
 
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&spritePalette);
 
-    a0->unk0C = 0x50;
-    a0->unk08 = 0;
-    a0->unk0A = 0;
-    a0->selectedPalettes = 0xffff0000 & ~(0x10000 << IndexOfSpritePaletteTag(a0->paletteTag));
-    if (a0->unk04 == 0)
-        a0->unk04 = 16;
-    if (a0->unk06 == 0)
-        a0->unk06 = 20;
-    gUnknown_020387EC = a0;
+    effect->revealRadius = 0x50;
+    effect->state = 0;
+    effect->spritesFinished = 0;
+    effect->selectedPalettes = 0xffff0000 & ~(0x10000 << IndexOfSpritePaletteTag(effect->paletteTag));
+    if (effect->spriteSpeed == 0)
+        effect->spriteSpeed = 16;
+    if (effect->revealSpeed == 0)
+        effect->revealSpeed = 20;
+    gPCScreenEffect = effect;
 
     for (i = 0; i < 8; i++)
     {
@@ -151,7 +151,7 @@ void sub_80C5E38(struct PCScreenEffectStruct * a0)
             spriteId = CreateSprite(&spriteTemplate, i * 32 - 0x70, 0x50, 0);
             if (spriteId == MAX_SPRITES)
                 break;
-            gSprites[spriteId].data[0] = a0->unk04;
+            gSprites[spriteId].data[0] = effect->spriteSpeed;
             gSprites[spriteId].data[1] = 1;
         }
         else
@@ -160,7 +160,7 @@ void sub_80C5E38(struct PCScreenEffectStruct * a0)
             spriteId = CreateSprite(&spriteTemplate, ((i << 21) + (0x80 << 16)) >> 16, 0x50, 0);
             if (spriteId == MAX_SPRITES)
                 break;
-            gSprites[spriteId].data[0] = -a0->unk04;
+            gSprites[spriteId].data[0] = -effect->spriteSpeed;
             gSprites[spriteId].data[1] = -1;
         }
         gSprites[spriteId].data[2] = i * 32 + 8;
@@ -169,37 +169,37 @@ void sub_80C5E38(struct PCScreenEffectStruct * a0)
     }
     REG_BLDCNT = BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN;
     REG_BLDY = 16;
-    HBlankIntrOn(sub_80C6078);
+    EnablePCScreenHBlank(HBlankCB_PCScreenReveal);
 }
 
-bool8 sub_80C5F98(void)
+bool8 UpdatePCScreenCloseEffect(void)
 {
-    switch (gUnknown_020387EC->unk08)
+    switch (gPCScreenEffect->state)
     {
         case 0:
-            gUnknown_020387EC->unk0C -= gUnknown_020387EC->unk06;
-            if (gUnknown_020387EC->unk0C < 2)
+            gPCScreenEffect->revealRadius -= gPCScreenEffect->revealSpeed;
+            if (gPCScreenEffect->revealRadius < 2)
             {
-                BlendPalettes(gUnknown_020387EC->selectedPalettes, 16, FADE_COLOR_WHITE);
-                SetHBlankCallback(sub_80C603C);
-                gUnknown_020387EC->unk0C = 1;
-                gUnknown_020387EC->unk08++;
+                BlendPalettes(gPCScreenEffect->selectedPalettes, 16, FADE_COLOR_WHITE);
+                SetHBlankCallback(HBlankCB_PCScreenBlend);
+                gPCScreenEffect->revealRadius = 1;
+                gPCScreenEffect->state++;
             }
             break;
         case 1:
-            if (gUnknown_020387EC->unk0A == 8)
+            if (gPCScreenEffect->spritesFinished == 8)
             {
                 BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-                gUnknown_020387EC->unk08++;
+                gPCScreenEffect->state++;
             }
             break;
         case 2:
             REG_BLDCNT = 0;
             REG_BLDY = 0;
-            FreeSpriteTilesByTag(gUnknown_020387EC->tileTag);
-            FreeSpritePaletteByTag(gUnknown_020387EC->paletteTag);
-            HBlankIntrOff();
-            gUnknown_020387EC->unk08++;
+            FreeSpriteTilesByTag(gPCScreenEffect->tileTag);
+            FreeSpritePaletteByTag(gPCScreenEffect->paletteTag);
+            DisablePCScreenHBlank();
+            gPCScreenEffect->state++;
             return TRUE;
         default:
             return TRUE;
@@ -207,7 +207,7 @@ bool8 sub_80C5F98(void)
     return FALSE;
 }
 
-static void sub_80C603C(void)
+static void HBlankCB_PCScreenBlend(void)
 {
     vu16 vcount = REG_VCOUNT & 0xFF;
     if (vcount == 0x50)
@@ -216,35 +216,35 @@ static void sub_80C603C(void)
         REG_BLDCNT = BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD | BLDCNT_EFFECT_DARKEN;
 }
 
-static void sub_80C6078(void)
+static void HBlankCB_PCScreenReveal(void)
 {
     vu16 vcount = REG_VCOUNT & 0xFF;
-    if (vcount > 0x50 - gUnknown_020387EC->unk0C && vcount < 0x50 + gUnknown_020387EC->unk0C)
+    if (vcount > 0x50 - gPCScreenEffect->revealRadius && vcount < 0x50 + gPCScreenEffect->revealRadius)
         REG_BLDY = 0;
     else
         REG_BLDY = 16;
 }
 
-static void sub_80C60CC(struct Sprite *sprite)
+static void SpriteCB_PCScreenMoveOutward(struct Sprite *sprite)
 {
     sprite->x += sprite->data[0];
     if (sprite->x < -0x08 || sprite->x > 0xf8)
     {
         DestroySprite(sprite);
-        gUnknown_020387EC->unk0A++;
-        if (gUnknown_020387EC->unk0A == 8)
+        gPCScreenEffect->spritesFinished++;
+        if (gPCScreenEffect->spritesFinished == 8)
         {
-            FreeSpriteTilesByTag(gUnknown_020387EC->tileTag);
-            FreeSpritePaletteByTag(gUnknown_020387EC->paletteTag);
-            BlendPalettes(gUnknown_020387EC->selectedPalettes, 0, FADE_COLOR_WHITE);
-            SetHBlankCallback(sub_80C6078);
+            FreeSpriteTilesByTag(gPCScreenEffect->tileTag);
+            FreeSpritePaletteByTag(gPCScreenEffect->paletteTag);
+            BlendPalettes(gPCScreenEffect->selectedPalettes, 0, FADE_COLOR_WHITE);
+            SetHBlankCallback(HBlankCB_PCScreenReveal);
         }
     }
 }
 
-static void sub_80C6130(struct Sprite *sprite)
+static void SpriteCB_PCScreenMoveInward(struct Sprite *sprite)
 {
-    if (sprite->data[4] == 0 && gUnknown_020387EC->unk0C == 1)
+    if (sprite->data[4] == 0 && gPCScreenEffect->revealRadius == 1)
     {
         sprite->x += sprite->data[0];
         if (sprite->x > -0x10 && sprite->x < 0x100)
@@ -261,13 +261,13 @@ static void sub_80C6130(struct Sprite *sprite)
         }
         if (sprite->data[4])
         {
-            gUnknown_020387EC->unk0A++;
+            gPCScreenEffect->spritesFinished++;
             sprite->x = sprite->data[2];
         }
     }
 }
 
-static void HBlankIntrOn(IntrFunc cb)
+static void EnablePCScreenHBlank(IntrFunc cb)
 {
     u16 imeBak;
     INTR_CHECK |= INTR_FLAG_HBLANK;
@@ -280,7 +280,7 @@ static void HBlankIntrOn(IntrFunc cb)
     SetHBlankCallback(cb);
 }
 
-static void HBlankIntrOff(void)
+static void DisablePCScreenHBlank(void)
 {
     u16 imeBak;
     INTR_CHECK &= ~INTR_FLAG_HBLANK;

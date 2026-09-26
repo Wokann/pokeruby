@@ -801,14 +801,14 @@ void sub_81428CC(void)
 
         eHOFPCScreenEffect = sPCScreenEffectTemplate;
 
-        sub_80C5CD4(&eHOFPCScreenEffect);
+        StartPCScreenOpenEffect(&eHOFPCScreenEffect);
         gMain.state++;
         break;
     case 4:
         AnimateSprites();
         BuildOamBuffer();
         UpdatePaletteFade();
-        if (sub_80C5DCC())
+        if (UpdatePCScreenOpenEffect())
             gMain.state++;
         break;
     case 5:
@@ -1013,13 +1013,13 @@ static void sub_8142F78(u8 taskID)
 {
     CpuSet(gPlttBufferFaded, gPlttBufferUnfaded, 0x200);
     eHOFPCScreenEffect = sPCScreenEffectTemplate;
-    sub_80C5E38(&eHOFPCScreenEffect);
+    StartPCScreenCloseEffect(&eHOFPCScreenEffect);
     gTasks[taskID].func = sub_8142FCC;
 }
 
 static void sub_8142FCC(u8 taskID)
 {
-    if (sub_80C5F98())
+    if (UpdatePCScreenCloseEffect())
     {
         DestroyTask(taskID);
         ReturnFromHallOfFamePC();

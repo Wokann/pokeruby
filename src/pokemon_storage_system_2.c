@@ -413,16 +413,16 @@ void sub_8096BF0(void)
         break;
     case 1:
         PlaySE(SE_PC_LOGIN);
-        gPokemonStorageSystemPtr->unk_000c.tileTag = 14;
-        gPokemonStorageSystemPtr->unk_000c.paletteTag = 0xdad0;
-        gPokemonStorageSystemPtr->unk_000c.unk04 = 0;
-        gPokemonStorageSystemPtr->unk_000c.unk06 = 0;
-        sub_80C5CD4(&gPokemonStorageSystemPtr->unk_000c);
+        gPokemonStorageSystemPtr->pcScreenEffect.tileTag = 14;
+        gPokemonStorageSystemPtr->pcScreenEffect.paletteTag = 0xdad0;
+        gPokemonStorageSystemPtr->pcScreenEffect.spriteSpeed = 0;
+        gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
+        StartPCScreenOpenEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
         BlendPalettes(0xFFFFFFFF, 0, RGB(0, 0, 0));
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 2:
-        if (sub_80C5DCC())
+        if (UpdatePCScreenOpenEffect())
             SetPSSCallback(sub_8096C84);
         break;
     }
@@ -1340,15 +1340,15 @@ void sub_8097BA0(void)
         }
         break;
     case 3:
-        gPokemonStorageSystemPtr->unk_000c.tileTag = 0x000e;
-        gPokemonStorageSystemPtr->unk_000c.paletteTag = 0xdad0;
-        gPokemonStorageSystemPtr->unk_000c.unk04 = 20;
-        gPokemonStorageSystemPtr->unk_000c.unk06 = 0;
-        sub_80C5E38(&gPokemonStorageSystemPtr->unk_000c);
+        gPokemonStorageSystemPtr->pcScreenEffect.tileTag = 0x000e;
+        gPokemonStorageSystemPtr->pcScreenEffect.paletteTag = 0xdad0;
+        gPokemonStorageSystemPtr->pcScreenEffect.spriteSpeed = 20;
+        gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
+        StartPCScreenCloseEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 4:
-        if (sub_80C5F98())
+        if (UpdatePCScreenCloseEffect())
         {
             gPlayerPartyCount = CalculatePlayerPartyCount();
             SetMainCallback2(sub_80961A8);
@@ -1399,15 +1399,15 @@ void sub_8097CC0(void)
         }
         break;
     case 3:
-        gPokemonStorageSystemPtr->unk_000c.tileTag = 0x000e;
-        gPokemonStorageSystemPtr->unk_000c.paletteTag = 0xdad0;
-        gPokemonStorageSystemPtr->unk_000c.unk04 = 20;
-        gPokemonStorageSystemPtr->unk_000c.unk06 = 0;
-        sub_80C5E38(&gPokemonStorageSystemPtr->unk_000c);
+        gPokemonStorageSystemPtr->pcScreenEffect.tileTag = 0x000e;
+        gPokemonStorageSystemPtr->pcScreenEffect.paletteTag = 0xdad0;
+        gPokemonStorageSystemPtr->pcScreenEffect.spriteSpeed = 20;
+        gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
+        StartPCScreenCloseEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 4:
-        if (sub_80C5F98())
+        if (UpdatePCScreenCloseEffect())
         {
             gPlayerPartyCount = CalculatePlayerPartyCount();
             SetMainCallback2(sub_80961A8);
