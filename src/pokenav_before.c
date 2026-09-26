@@ -1343,7 +1343,7 @@ void InitPokenavMainMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        sub_80EED2C(0);
+        SetPokenavDisplayForScreen(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 13:
@@ -1384,7 +1384,7 @@ void RestorePokenavMainMenu(void)
         if (!sub_80EEF78())
         {
             SetVBlankCallback(&VBlankCB_PokenavOamOnly);
-            sub_80EED1C();
+            SetPokenavDisplayForMenu();
             gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
             gPokenavStructPtr->menuItemCount = 5;
             sub_80EEE08();
@@ -1417,7 +1417,7 @@ void RestorePokenavMainMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EED2C(0);
+        SetPokenavDisplayForScreen(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 8:
@@ -1607,7 +1607,7 @@ void OpenPokenavRegionMap(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -1649,7 +1649,7 @@ void OpenPokenavRegionMap(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 0xD:
-        sub_80EED2C(0x1);
+        SetPokenavDisplayForScreen(0x1);
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x75E0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1840,7 +1840,7 @@ void RestorePokenavConditionMenu(void)
         if (!sub_80EEF78())
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
-			sub_80EED1C();
+			SetPokenavDisplayForMenu();
 			gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionMenuCursorPos;
 			gPokenavStructPtr->menuItemCount = 3;
 			sub_80EEE08();
@@ -1871,7 +1871,7 @@ void RestorePokenavConditionMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EED2C(0);
+        SetPokenavDisplayForScreen(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 8:
@@ -1982,7 +1982,7 @@ void ReturnToConditionSearchMenu(void)
 		}
         break;
     case 3:
-        sub_80EED1C();
+        SetPokenavDisplayForMenu();
         sub_80F3130();
         gPokenavStructPtr->callbackStep++;
         break;
@@ -2026,7 +2026,7 @@ void ReturnToConditionSearchMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        sub_80EED2C(0);
+        SetPokenavDisplayForScreen(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
@@ -2101,7 +2101,7 @@ void OpenConditionSearchResults(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80EF814();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2150,7 +2150,7 @@ void OpenConditionSearchResults(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
-        sub_80EED2C(0x4);
+        SetPokenavDisplayForScreen(0x4);
         gPokenavStructPtr->callbackStep++;
         break;
     case 15:
@@ -2247,7 +2247,7 @@ void OpenConditionSearchListFromGraph(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        sub_80EED0C();
+        SetPokenavDisplayForTransition();
         sub_80F6134();
         gPokenavStructPtr->callbackStep++;
         break;
@@ -2274,7 +2274,7 @@ void OpenConditionSearchListFromGraph(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EED2C(0x4);
+        SetPokenavDisplayForScreen(0x4);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -2300,7 +2300,7 @@ void OpenConditionGraphFromSearchResults(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80F3130();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2329,7 +2329,7 @@ void OpenConditionGraphFromSearchResults(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EED2C(0x2);
+        SetPokenavDisplayForScreen(0x2);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -2370,7 +2370,7 @@ void OpenConditionGraphFromParty(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80EF814();
 			gPokenavStructPtr->unk76AA = 0;
 			gPokenavStructPtr->callbackStep++;
@@ -2408,7 +2408,7 @@ void OpenConditionGraphFromParty(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        sub_80EED2C(0x2);
+        SetPokenavDisplayForScreen(0x2);
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
@@ -2624,7 +2624,7 @@ void OpenRibbonsMonList(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80EF814();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2678,7 +2678,7 @@ void OpenRibbonsMonList(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 16:
-        sub_80EED2C(0x4);
+        SetPokenavDisplayForScreen(0x4);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -2777,7 +2777,7 @@ void OpenRibbonsSummaryMenu(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80F3130();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2809,7 +2809,7 @@ void OpenRibbonsSummaryMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        sub_80EED2C(0x3);
+        SetPokenavDisplayForScreen(0x3);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -2929,7 +2929,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80F3C2C();
 			sub_80EEE08();
 			gPokenavStructPtr->callbackStep++;
@@ -2958,7 +2958,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80EED2C(0x4);
+        SetPokenavDisplayForScreen(0x4);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -2999,7 +2999,7 @@ void OpenTrainerEyes(void)
         if (!gPaletteFade.active)
         {
 			SetVBlankCallback(NULL);
-			sub_80EED0C();
+			SetPokenavDisplayForTransition();
 			sub_80EF814();
 			sub_80EEE08();
 			gPokenavStructPtr->callbackStep++;
@@ -3038,7 +3038,7 @@ void OpenTrainerEyes(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        sub_80EED2C(0x5);
+        SetPokenavDisplayForScreen(0x5);
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
@@ -3383,19 +3383,19 @@ bool8 UpdateSubmenuCursorPos(void)
     return FALSE;
 }
 
-void sub_80EED0C()
+void SetPokenavDisplayForTransition(void)
 {
     REG_DISPCNT = 512;
 }
 
-void sub_80EED1C()
+void SetPokenavDisplayForMenu(void)
 {
     REG_DISPCNT = 0x92 << 5;
 }
 
-void sub_80EED2C(u8 param1)
+void SetPokenavDisplayForScreen(u8 screenId)
 {
-    switch (param1) {
+    switch (screenId) {
     case 0:
         REG_DISPCNT = 0xFA << 5;
         break;
