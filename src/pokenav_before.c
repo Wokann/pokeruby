@@ -1946,7 +1946,7 @@ void HandleConditionSearchMenuInput(void)
 
             gPokenavStructPtr->unk6DFC = gPokenavStructPtr->unk6DAD;
             gPokenavStructPtr->unk76AA = 1;
-            SetPokenavCallback(&sub_80ED01C);
+            SetPokenavCallback(&OpenConditionSearchResults);
         }
         else if (JOY_NEW(B_BUTTON))
         {
@@ -1962,7 +1962,7 @@ void HandleConditionSearchMenuInput(void)
     }
 }
 
-void sub_80ECD80()
+void ReturnToConditionSearchMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2073,7 +2073,7 @@ void sub_80ECD80()
     }
 }
 
-void sub_80ED01C()
+void OpenConditionSearchResults(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2178,7 +2178,7 @@ void sub_80ED01C()
     case 19:
         if (!sub_80F2CBC(gPokenavStructPtr->unk6DFC + 7))
 		{
-			SetPokenavCallback(&sub_80ED31C);
+			SetPokenavCallback(&HandleConditionSearchInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2188,7 +2188,7 @@ void sub_80ED01C()
     }
 }
 
-void sub_80ED31C()
+void HandleConditionSearchInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2213,7 +2213,7 @@ void sub_80ED31C()
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80ECD80);
+                SetPokenavCallback(&ReturnToConditionSearchMenu);
 				return;
             }
             break;
@@ -2238,7 +2238,7 @@ void sub_80ED31C()
 #endif
 }
 
-void sub_80ED3D0()
+void OpenConditionSearchListFromGraph(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2283,7 +2283,7 @@ void sub_80ED3D0()
         break;
     case 8:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80ED31C);
+			SetPokenavCallback(&HandleConditionSearchInput);
 		break;
     }
 }
@@ -2585,7 +2585,7 @@ void sub_80ED858(void)
             else
             {
                 sub_80F3614();
-                SetPokenavCallback(sub_80ED3D0);
+                SetPokenavCallback(OpenConditionSearchListFromGraph);
             }
         }
         break;
