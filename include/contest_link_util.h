@@ -1,12 +1,12 @@
 #ifndef GUARD_CONTEST_LINK_UTIL_H
 #define GUARD_CONTEST_LINK_UTIL_H
 
-void sub_80C2358(void);
+void CB2_StartShowContestResults(void);
 void BufferContestantTrainerName(void);
 void BufferContestantMonNickname(void);
-void sub_80C48C8(void);
+void StartContest(void);
 void BufferContestantMonSpecies(void);
-void sub_80C4940(void);
+void ShowContestResults(void);
 void ContestLinkTransfer(u8 category);
 u8 LinkContest_GetLeaderIndex(u8 *a0);
 void Contest_CopyAndConvertTrainerName_Intl(u8 *, const u8 *);

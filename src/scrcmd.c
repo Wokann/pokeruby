@@ -1818,14 +1818,14 @@ bool8 ScrCmd_choosecontestmon(struct ScriptContext *ctx)
 
 bool8 ScrCmd_startcontest(struct ScriptContext *ctx)
 {
-    sub_80C48C8();
+    StartContest();
     ScriptContext_Stop();
     return TRUE;
 }
 
 bool8 ScrCmd_showcontestresults(struct ScriptContext *ctx)
 {
-    sub_80C4940();
+    ShowContestResults();
     ScriptContext_Stop();
     return TRUE;
 }

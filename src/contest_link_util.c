@@ -71,58 +71,58 @@ struct UnkEwramStruct18018 {
 #define eContestLink80C2020Struct2018018 ((struct UnkEwramStruct18018 *)(gSharedMem + 0x18018))
 #define eContestLink80C2020Struct2018068 (gSharedMem + 0x18068)
 
-static void sub_80C2430(void);
-static void sub_80C2448(void);
-static void sub_80C24F4(u8 taskId);
-static void sub_80C255C(u8 taskId);
-static void sub_80C25A4(u8 taskId);
-static void sub_80C25C0(u8 taskId);
-static void sub_80C2600(u8 taskId);
-static void sub_80C26E4(u8 taskId);
-static void sub_80C2770(u8 taskId);
-static void sub_80C27EC(u8 taskId);
-static void sub_80C2878(u8 taskId);
-static void sub_80C2A8C(u8 taskId);
-static void sub_80C2D1C(u8 taskId);
-static void sub_80C2D80(u8 taskId);
-static void sub_80C2DD8(u8 taskId);
-static void sub_80C2E14(u8 taskId);
-static void sub_80C2EA0(u8 taskId);
-static void sub_80C2F28(u8 taskId);
-static void sub_80C2F64(u8 taskId);
+static void CB2_ShowContestResults(void);
+static void VBlankCB_ShowContestResults(void);
+static void Task_ShowContestResults(u8 taskId);
+static void Task_WaitForLinkPartnersBeforeResults(u8 taskId);
+static void Task_CommunicateMonIdxsForResults(u8 taskId);
+static void Task_WaitForLinkPartnerMonIdxs(u8 taskId);
+static void Task_AnnouncePreliminaryResults(u8 taskId);
+static void Task_ShowPreliminaryResults(u8 taskId);
+static void Task_AnnounceRound2Results(u8 taskId);
+static void Task_ShowRound2Results(u8 taskId);
+static void Task_AnnounceWinner(u8 taskId);
+static void Task_ShowWinnerMonBanner(u8 taskId);
+static void Task_SetSeenWinnerMon(u8 taskId);
+static void Task_TryDisconnectLinkPartners(u8 taskId);
+static void Task_WaitForLinkPartnersDisconnect(u8 taskId);
+static void Task_TrySetContestInterviewData(u8 taskId);
+static void Task_EndShowContestResults(u8 taskId);
+static void Task_SlideContestResultsBg(u8 taskId);
+static void Task_FlashStarsAndHearts(u8 taskId);
 static void LoadAllContestMonIcons(u8 srcOffset, bool8 useDmaNow);
-void sub_80C310C(void);
-void sub_80C3158(const u8 *string, u8 spriteId);
-void sub_80C33DC(void);
-u16 sub_80C34AC(const u8 *string);
-void sub_80C34CC(s16 data4, u16 pos0y, u16 data5, u16 data6);
-void sub_80C3520(u16 a0);
-void sub_80C3588(struct Sprite *sprite);
-void sub_80C35FC(struct Sprite *sprite);
-void sub_80C3630(struct Sprite *sprite);
-void sub_80C3698(const u8 *string);
-void sub_80C3764(void);
-void sub_80C37E4(void);
-u8 sub_80C3990(u8 a0, u8 a1);
-s8 sub_80C39E4(u8 a0, u8 a1);
-void sub_80C3A5C(u8 taskId);
-void sub_80C3BD8(u8 taskId);
-void sub_80C3B30(u8 taskId);
-void sub_80C3C44(struct Sprite *sprite);
-void sub_80C3CB8(struct Sprite *sprite);
-void sub_80C3D04(u8 taskId);
-void sub_80C3DF0(struct Sprite *sprite);
-void sub_80C3E60(u8 a0, u8 a1);
-void sub_80C3EA4(u8 taskId);
-void sub_80C3F00(void);
-void sub_80C40D4(u8 a0, u8 a1);
-void sub_80C42C0(u8 taskId);
+void LoadAllContestMonIconPalettes(void);
+void DrawResultsTextWindow(const u8 *string, u8 spriteId);
+void CreateResultsTextWindowSprites(void);
+u16 GetResultsTextWindowX(const u8 *string);
+void StartTextBoxSlideIn(s16 data4, u16 pos0y, u16 data5, u16 data6);
+void StartTextBoxSlideOut(u16 a0);
+void SpriteCB_TextBoxSlideIn(struct Sprite *sprite);
+void SpriteCB_EndTextBoxSlideIn(struct Sprite *sprite);
+void SpriteCB_TextBoxSlideOut(struct Sprite *sprite);
+void ShowLinkResultsTextBox(const u8 *string);
+void HideLinkResultsTextBox(void);
+void LoadContestResultsTitleBarTilemaps(void);
+u8 GetNumPreliminaryPoints(u8 a0, u8 a1);
+s8 GetNumRound2Points(u8 a0, u8 a1);
+void Task_DrawFinalStandingNumber(u8 taskId);
+void Task_HighlightWinnersBox(u8 taskId);
+void Task_StartHighlightWinnersBox(u8 taskId);
+void SpriteCB_WinnerMonSlideIn(struct Sprite *sprite);
+void SpriteCB_WinnerMonSlideOut(struct Sprite *sprite);
+void Task_CreateConfetti(u8 taskId);
+void SpriteCB_Confetti(struct Sprite *sprite);
+void BounceMonIconInBox(u8 a0, u8 a1);
+void Task_BounceMonIconInBox(u8 taskId);
+void CalculateContestantsResultData(void);
+void UpdateContestResultBars(u8 a0, u8 a1);
+void Task_UpdateContestResultBar(u8 taskId);
 void Task_StartCommunication(u8 taskId);
-void Task_StartCommunicateRng(u8 taskId);
-void Task_StartCommunicateLeaderIds(u8 taskId);
-void Task_StartCommunicateCategory(u8 taskId);
-void Task_LinkContest_SetUpContest(u8 taskId);
-void Task_LinkContest_CalculateTurnOrder(u8 taskId);
+void Task_StartCommunicateRngRS(u8 taskId);
+void Task_StartCommunicateLeaderIdsRS(u8 taskId);
+void Task_StartCommunicateCategoryRS(u8 taskId);
+void Task_LinkContest_SetUpContestRS(u8 taskId);
+void Task_LinkContest_CalculateTurnOrderRS(u8 taskId);
 void Task_LinkContest_FinalizeConnection(u8 taskId);
 void Task_LinkContest_Disconnect(u8 taskId);
 void Task_LinkContest_WaitDisconnect(u8 taskId);
@@ -178,7 +178,7 @@ const struct SpriteTemplate gSpriteTemplate_83D17B4 = {
     gDummySpriteAnimTable,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_80C3DF0
+    SpriteCB_Confetti
 };
 
 const struct CompressedSpriteSheet gUnknown_083D17CC = {gContestConfetti_Gfx, 0x220, 0xbc9};
@@ -189,7 +189,7 @@ const u8 gUnknown_083D17DC[] = _("{COLOR RED}");
 const u8 gUnknown_083D17E0[] = _("/");
 const u8 gUnknown_083D17E2[] = _("{SIZE 3}{COLOR_HIGHLIGHT_SHADOW WHITE2 DARK_GREY LIGHT_BLUE}");
 
-void sub_80C2020(void)
+void InitContestResultsDisplay(void)
 {
     REG_DISPCNT = DISPCNT_OBJ_1D_MAP;
     Text_LoadWindowTemplate(&gWindowTemplate_81E6FA0);
@@ -231,7 +231,7 @@ void sub_80C2020(void)
     gBattle_WIN1V = 0;
 }
 
-void sub_80C2144(void)
+void LoadContestResultsBgGfx(void)
 {
     int i;
     int j;
@@ -245,13 +245,13 @@ void sub_80C2144(void)
     LZDecompressVram(gUnknown_08D1A490, BG_SCREEN_ADDR(26));
     LZDecompressVram(gUnknown_08D1A364, BG_SCREEN_ADDR(28));
     LZDecompressVram(gUnknown_08D1A250, BG_SCREEN_ADDR(30));
-    sub_80C37E4();
+    LoadContestResultsTitleBarTilemaps();
     LoadCompressedPalette(gUnknown_08D1A618, 0, 0x200);
     LoadFontDefaultPalette(&gWindowTemplate_81E6FA0);
     for (i = 0; i < 4; i++)
     {
-        r7 = sub_80C3990(i, 1);
-        r4 = sub_80C39E4(i, 1);
+        r7 = GetNumPreliminaryPoints(i, 1);
+        r4 = GetNumRound2Points(i, 1);
         for (j = 0; j < 10; j++)
         {
             r6 = 0x60b2;
@@ -271,7 +271,7 @@ void sub_80C2144(void)
     }
 }
 
-void sub_80C226C(u8 a0)
+void LoadContestMonName(u8 a0)
 {
     u8 *strbuf;
 
@@ -296,44 +296,44 @@ void sub_80C226C(u8 a0)
     Text_InitWindowAndPrintText(&gMenuWindow, gDisplayedStringBattle, a0 * 36 + 770, 7, a0 * 3 + 4);
 }
 
-void sub_80C2340(void)
+void LoadAllContestMonNames(void)
 {
     int i;
 
     for (i = 0; i < 4; i++)
-        sub_80C226C(i);
+        LoadContestMonName(i);
 }
 
-void sub_80C2358(void)
+void CB2_StartShowContestResults(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
     SetVBlankCallback(NULL);
-    sub_80C2020();
+    InitContestResultsDisplay();
     ScanlineEffect_Clear();
     ResetPaletteFade();
     ResetSpriteData();
     ResetTasks();
     FreeAllSpritePalettes();
-    sub_80C2144();
-    sub_80C310C();
+    LoadContestResultsBgGfx();
+    LoadAllContestMonIconPalettes();
     LoadAllContestMonIcons(0, TRUE);
-    sub_80C2340();
+    LoadAllContestMonNames();
     eContestLink80C2020Struct2018000 = (struct UnkEwramStruct18000){};
     memset(eContestLink80C2020Struct2018018, 0, 4 * sizeof(struct UnkEwramStruct18018));
-    sub_80C33DC();
+    CreateResultsTextWindowSprites();
     BeginNormalPaletteFade(0xffffffff, 0, 16, 0, 0);
     gPaletteFade.bufferTransferDisabled = FALSE;
-    eContestLink80C2020Struct2018000.unk_02 = CreateTask(sub_80C24F4, 5);
-    SetMainCallback2(sub_80C2430);
+    eContestLink80C2020Struct2018000.unk_02 = CreateTask(Task_ShowContestResults, 5);
+    SetMainCallback2(CB2_ShowContestResults);
     gBattle_WIN1H = 0xf0;
     gBattle_WIN1V = 0x80a0;
-    CreateTask(sub_80C2F28, 20);
-    sub_80C3F00();
+    CreateTask(Task_SlideContestResultsBg, 20);
+    CalculateContestantsResultData();
     PlayBGM(MUS_CONTEST_RESULTS);
-    SetVBlankCallback(sub_80C2448);
+    SetVBlankCallback(VBlankCB_ShowContestResults);
 }
 
-static void sub_80C2430(void)
+static void CB2_ShowContestResults(void)
 {
     AnimateSprites();
     BuildOamBuffer();
@@ -341,7 +341,7 @@ static void sub_80C2430(void)
     UpdatePaletteFade();
 }
 
-static void sub_80C2448(void)
+static void VBlankCB_ShowContestResults(void)
 {
     REG_BG0HOFS = gBattle_BG0_X;
     REG_BG0VOFS = gBattle_BG0_Y;
@@ -361,53 +361,53 @@ static void sub_80C2448(void)
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-static void sub_80C24F4(u8 taskId)
+static void Task_ShowContestResults(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         if (gIsLinkContest & 1)
         {
-            sub_80C3698(gOtherText_LinkStandby);
-            gTasks[taskId].func = sub_80C255C;
+            ShowLinkResultsTextBox(gOtherText_LinkStandby);
+            gTasks[taskId].func = Task_WaitForLinkPartnersBeforeResults;
         }
         else
         {
-            gTasks[taskId].func = sub_80C2600;
+            gTasks[taskId].func = Task_AnnouncePreliminaryResults;
         }
     }
 }
 
-static void sub_80C255C(u8 taskId)
+static void Task_WaitForLinkPartnersBeforeResults(u8 taskId)
 {
     if (gReceivedRemoteLinkPlayers && GetLinkPlayerCount() == MAX_LINK_PLAYERS)
     {
-        CreateTask(sub_80C25A4, 0);
+        CreateTask(Task_CommunicateMonIdxsForResults, 0);
         gTasks[taskId].func = TaskDummy;
     }
 }
 
-static void sub_80C25A4(u8 taskId)
+static void Task_CommunicateMonIdxsForResults(u8 taskId)
 {
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonIdxs, sub_80C25C0);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonIdxs, Task_WaitForLinkPartnerMonIdxs);
 }
 
-static void sub_80C25C0(u8 taskId)
+static void Task_WaitForLinkPartnerMonIdxs(u8 taskId)
 {
     if (IsLinkTaskFinished())
     {
         DestroyTask(taskId);
-        gTasks[eContestLink80C2020Struct2018000.unk_02].func = sub_80C2600;
-        sub_80C3764();
+        gTasks[eContestLink80C2020Struct2018000.unk_02].func = Task_AnnouncePreliminaryResults;
+        HideLinkResultsTextBox();
     }
 }
 
-static void sub_80C2600(u8 taskId)
+static void Task_AnnouncePreliminaryResults(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
-        CreateTask(sub_80C2F64, 20);
-        sub_80C3158(gContestText_AnnounceResults, eContestLink80C2020Struct2018000.unk_00);
-        sub_80C34CC(sub_80C34AC(gContestText_AnnounceResults), 0x90, 0x78, 0x440);
+        CreateTask(Task_FlashStarsAndHearts, 20);
+        DrawResultsTextWindow(gContestText_AnnounceResults, eContestLink80C2020Struct2018000.unk_00);
+        StartTextBoxSlideIn(GetResultsTextWindowX(gContestText_AnnounceResults), 0x90, 0x78, 0x440);
         gTasks[taskId].data[0]++;
     }
     else if (gTasks[taskId].data[0] == 1)
@@ -428,8 +428,8 @@ static void sub_80C2600(u8 taskId)
     }
     else if (gTasks[taskId].data[0] == 3)
     {
-        sub_80C3158(gContestText_PreliminaryResults, eContestLink80C2020Struct2018000.unk_00);
-        sub_80C34CC(sub_80C34AC(gContestText_PreliminaryResults), 0x90, 0xffff, 0x440);
+        DrawResultsTextWindow(gContestText_PreliminaryResults, eContestLink80C2020Struct2018000.unk_00);
+        StartTextBoxSlideIn(GetResultsTextWindowX(gContestText_PreliminaryResults), 0x90, 0xffff, 0x440);
         gTasks[taskId].data[0]++;
     }
     else if (gTasks[taskId].data[0] == 4)
@@ -437,19 +437,19 @@ static void sub_80C2600(u8 taskId)
         if (eContestLink80C2020Struct2018000.unk_04 == 2)
         {
             gTasks[taskId].data[0] = 0;
-            gTasks[taskId].func = sub_80C26E4;
+            gTasks[taskId].func = Task_ShowPreliminaryResults;
         }
     }
 }
 
-static void sub_80C26E4(u8 taskId)
+static void Task_ShowPreliminaryResults(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
         case 0:
             if (eContestLink80C2020Struct2018000.unk_0a == 0)
             {
-                sub_80C40D4(0, gTasks[taskId].data[2]++);
+                UpdateContestResultBars(0, gTasks[taskId].data[2]++);
                 if (eContestLink80C2020Struct2018000.unk_14 == 0)
                 {
                     gTasks[taskId].data[0] = 2;
@@ -467,39 +467,39 @@ static void sub_80C26E4(u8 taskId)
             }
             break;
         case 2:
-            sub_80C3520(0x440);
+            StartTextBoxSlideOut(0x440);
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[2] = 0;
-            gTasks[taskId].func = sub_80C2770;
+            gTasks[taskId].func = Task_AnnounceRound2Results;
             break;
     }
 }
 
-static void sub_80C2770(u8 taskId)
+static void Task_AnnounceRound2Results(u8 taskId)
 {
     if (eContestLink80C2020Struct2018000.unk_04 == 0)
     {
         if (++gTasks[taskId].data[1] == 21)
         {
             gTasks[taskId].data[1] = 0;
-            sub_80C3158(gContestText_Round2Results, eContestLink80C2020Struct2018000.unk_00);
-            sub_80C34CC(sub_80C34AC(gContestText_Round2Results), 0x90, 0xffff, 0x440);
+            DrawResultsTextWindow(gContestText_Round2Results, eContestLink80C2020Struct2018000.unk_00);
+            StartTextBoxSlideIn(GetResultsTextWindowX(gContestText_Round2Results), 0x90, 0xffff, 0x440);
         }
     }
     else if (eContestLink80C2020Struct2018000.unk_04 == 2)
     {
-        gTasks[taskId].func = sub_80C27EC;
+        gTasks[taskId].func = Task_ShowRound2Results;
     }
 }
 
-static void sub_80C27EC(u8 taskId)
+static void Task_ShowRound2Results(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
         case 0:
             if (eContestLink80C2020Struct2018000.unk_0a == 0)
             {
-                sub_80C40D4(1, gTasks[taskId].data[2]++);
+                UpdateContestResultBars(1, gTasks[taskId].data[2]++);
                 if (eContestLink80C2020Struct2018000.unk_14 == 0)
                 {
                     gTasks[taskId].data[0] = 2;
@@ -517,14 +517,14 @@ static void sub_80C27EC(u8 taskId)
             }
             break;
         case 2:
-            sub_80C3520(0x440);
+            StartTextBoxSlideOut(0x440);
             gTasks[taskId].data[0] = 0;
-            gTasks[taskId].func = sub_80C2878;
+            gTasks[taskId].func = Task_AnnounceWinner;
             break;
     }
 }
 
-static void sub_80C2878(u8 taskId)
+static void Task_AnnounceWinner(u8 taskId)
 {
     int i;
     u8 taskId2;
@@ -546,7 +546,7 @@ static void sub_80C2878(u8 taskId)
         case 2:
             for (i = 0; i < 4; i++)
             {
-                taskId2 = CreateTask(sub_80C3A5C, 10);
+                taskId2 = CreateTask(Task_DrawFinalStandingNumber, 10);
                 gTasks[taskId2].data[0] = gContestFinalStandings[i];
                 gTasks[taskId2].data[1] = i;
             }
@@ -558,10 +558,10 @@ static void sub_80C2878(u8 taskId)
                 if (++gTasks[taskId].data[1] == 31)
                 {
                     gTasks[taskId].data[1] = 0;
-                    CreateTask(sub_80C3B30, 10);
+                    CreateTask(Task_StartHighlightWinnersBox, 10);
                     gTasks[taskId].data[0]++;
                     GET_CONTEST_WINNER(i);
-                    sub_80C3E60(i, 14);
+                    BounceMonIconInBox(i, 14);
                 }
             }
             break;
@@ -580,19 +580,19 @@ static void sub_80C2878(u8 taskId)
                 }
                 StringCopy(gStringVar2, gContestMons[i].nickname);
                 StringExpandPlaceholders(strbuf, gContestText_PokeWon);
-                sub_80C3158(strbuf, eContestLink80C2020Struct2018000.unk_00);
-                sub_80C34CC(sub_80C34AC(strbuf), 0x90, 0xffff, 0x440);
+                DrawResultsTextWindow(strbuf, eContestLink80C2020Struct2018000.unk_00);
+                StartTextBoxSlideIn(GetResultsTextWindowX(strbuf), 0x90, 0xffff, 0x440);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 5:
             gTasks[taskId].data[0] = 0;
-            gTasks[taskId].func = sub_80C2A8C;
+            gTasks[taskId].func = Task_ShowWinnerMonBanner;
             break;
     }
 }
 
-static void sub_80C2A8C(u8 taskId)
+static void Task_ShowWinnerMonBanner(u8 taskId)
 {
     int i;
     u8 spriteId;
@@ -618,11 +618,11 @@ static void sub_80C2A8C(u8 taskId)
             spriteId = CreateSprite(&gCreatingSpriteTemplate, 0x110, 0x50, 10);
             gSprites[spriteId].data[1] = species;
             gSprites[spriteId].oam.priority = 0;
-            gSprites[spriteId].callback = sub_80C3C44;
+            gSprites[spriteId].callback = SpriteCB_WinnerMonSlideIn;
             eContestLink80C2020Struct2018000.unk_08 = spriteId;
             LoadCompressedObjectPic(&gUnknown_083D17CC);
             LoadCompressedObjectPalette(&gUnknown_083D17D4);
-            CreateTask(sub_80C3D04, 10);
+            CreateTask(Task_CreateConfetti, 10);
             gTasks[taskId].data[0]++;
             break;
         case 1:
@@ -651,7 +651,7 @@ static void sub_80C2A8C(u8 taskId)
             if (++gTasks[taskId].data[1] == 121)
             {
                 gTasks[taskId].data[1] = 0;
-                gSprites[eContestLink80C2020Struct2018000.unk_08].callback = sub_80C3CB8;
+                gSprites[eContestLink80C2020Struct2018000.unk_08].callback = SpriteCB_WinnerMonSlideOut;
                 gTasks[taskId].data[0]++;
             }
             break;
@@ -674,13 +674,13 @@ static void sub_80C2A8C(u8 taskId)
             {
                 eContestLink80C2020Struct2018000.unk_09 = 1;
                 gTasks[taskId].data[0] = 0;
-                gTasks[taskId].func = sub_80C2D1C;
+                gTasks[taskId].func = Task_SetSeenWinnerMon;
             }
             break;
     }
 }
 
-static void sub_80C2D1C(u8 taskId)
+static void Task_SetSeenWinnerMon(u8 taskId)
 {
     int i;
 
@@ -693,35 +693,35 @@ static void sub_80C2D1C(u8 taskId)
                 GetSetPokedexFlag(SpeciesToNationalPokedexNum(gContestMons[i].species), FLAG_SET_SEEN);
             }
         }
-        gTasks[taskId].func = sub_80C2D80;
+        gTasks[taskId].func = Task_TryDisconnectLinkPartners;
     }
 }
 
-static void sub_80C2D80(u8 taskId)
+static void Task_TryDisconnectLinkPartners(u8 taskId)
 {
     if (gIsLinkContest & 1)
     {
-        sub_80C3698(gOtherText_LinkStandby);
+        ShowLinkResultsTextBox(gOtherText_LinkStandby);
         SetCloseLinkCallback();
-        gTasks[taskId].func = sub_80C2DD8;
+        gTasks[taskId].func = Task_WaitForLinkPartnersDisconnect;
     }
     else
     {
-        gTasks[taskId].func = sub_80C2E14;
+        gTasks[taskId].func = Task_TrySetContestInterviewData;
     }
 }
 
-static void sub_80C2DD8(u8 taskId)
+static void Task_WaitForLinkPartnersDisconnect(u8 taskId)
 {
     if (gReceivedRemoteLinkPlayers == 0)
     {
         gIsLinkContest = 0;
-        sub_80C3764();
-        gTasks[taskId].func = sub_80C2E14;
+        HideLinkResultsTextBox();
+        gTasks[taskId].func = Task_TrySetContestInterviewData;
     }
 }
 
-static void sub_80C2E14(u8 taskId)
+static void Task_TrySetContestInterviewData(u8 taskId)
 {
     sub_80BE284(gContestFinalStandings[gContestPlayerMonIndex]);
     TryGainNewFanFromCounter(2);
@@ -730,10 +730,10 @@ static void sub_80C2E14(u8 taskId)
     eCurContestWinnerIsForArtist = TRUE;
     eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(0xfe, 0);
     BeginHardwarePaletteFade(0xff, 0, 0, 16, 0);
-    gTasks[taskId].func = sub_80C2EA0;
+    gTasks[taskId].func = Task_EndShowContestResults;
 }
 
-static void sub_80C2EA0(u8 taskId)
+static void Task_EndShowContestResults(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -758,7 +758,7 @@ static void sub_80C2EA0(u8 taskId)
     }
 }
 
-static void sub_80C2F28(u8 taskId)
+static void Task_SlideContestResultsBg(u8 taskId)
 {
     gBattle_BG3_X += 2;
     gBattle_BG3_Y++;
@@ -768,7 +768,7 @@ static void sub_80C2F28(u8 taskId)
         gBattle_BG3_Y -= 0xff;
 }
 
-static void sub_80C2F64(u8 taskId)
+static void Task_FlashStarsAndHearts(u8 taskId)
 {
     if (++gTasks[taskId].data[0] == 2)
     {
@@ -791,7 +791,7 @@ static void sub_80C2F64(u8 taskId)
         eContestLink80C2020Struct2018000.unk_0a = 1;
 }
 
-void sub_80C3024(u16 species, u8 destOffset, u8 srcOffset, bool8 useDmaNow, u32 personality)
+void LoadContestMonIcon(u16 species, u8 destOffset, u8 srcOffset, bool8 useDmaNow, u32 personality)
 {
     int i;
     int j;
@@ -828,11 +828,11 @@ static void LoadAllContestMonIcons(u8 srcOffset, bool8 useDmaNow)
 
     for (i = 0; i < 4; i++)
     {
-        sub_80C3024(gContestMons[i].species, i, srcOffset, useDmaNow, gContestMons[i].personality);
+        LoadContestMonIcon(gContestMons[i].species, i, srcOffset, useDmaNow, gContestMons[i].personality);
     }
 }
 
-void sub_80C310C(void)
+void LoadAllContestMonIconPalettes(void)
 {
     int i;
     register u16 species asm("r0");
@@ -845,7 +845,7 @@ void sub_80C310C(void)
 }
 
 #ifdef NONMATCHING
-void sub_80C3158(const u8 *string, u8 spriteId)
+void DrawResultsTextWindow(const u8 *string, u8 spriteId)
 {
     int i, j;
     u8 width;
@@ -942,7 +942,7 @@ void sub_80C3158(const u8 *string, u8 spriteId)
 asm(".include \"constants/gba_constants.inc\"");
 asm(".include \"include/macros.inc\"");
 NAKED
-void sub_80C3158(const u8 * string, u8 spriteId)
+void DrawResultsTextWindow(const u8 * string, u8 spriteId)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                 "\tmov r7, r10\n"
@@ -1242,7 +1242,7 @@ void sub_80C3158(const u8 * string, u8 spriteId)
 }
 #endif //NONMATCHING
 
-void sub_80C33DC(void)
+void CreateResultsTextWindowSprites(void)
 {
     int i;
     struct SpriteTemplate template;
@@ -1270,16 +1270,16 @@ void sub_80C33DC(void)
     eContestLink80C2020Struct2018000.unk_00 = spriteIds[0];
     eContestLink80C2020Struct2018000.unk_04 = 0;
     eContestLink80C2020Struct2018000.unk_01 = spriteIds[4];
-    sub_80C3764();
+    HideLinkResultsTextBox();
 }
 
-u16 sub_80C34AC(const u8 * string)
+u16 GetResultsTextWindowX(const u8 * string)
 {
     u8 width = (StringLength(string) * 6);
     return 0x70 - (width / 2);
 }
 
-void sub_80C34CC(s16 arg0, u16 y, u16 arg2, u16 arg3)
+void StartTextBoxSlideIn(s16 arg0, u16 y, u16 arg2, u16 arg3)
 {
     struct Sprite *sprite = &gSprites[eContestLink80C2020Struct2018000.unk_00];
     sprite->x = 272;
@@ -1290,11 +1290,11 @@ void sub_80C34CC(s16 arg0, u16 y, u16 arg2, u16 arg3)
     sprite->data[5] = arg2;
     sprite->data[6] = arg3;
     sprite->data[7] = 0;
-    sprite->callback = sub_80C3588;
+    sprite->callback = SpriteCB_TextBoxSlideIn;
     eContestLink80C2020Struct2018000.unk_04 = 1;
 }
 
-void sub_80C3520(u16 arg0)
+void StartTextBoxSlideOut(u16 arg0)
 {
     struct Sprite *sprite = &gSprites[eContestLink80C2020Struct2018000.unk_00];
     sprite->x += sprite->x2;
@@ -1303,11 +1303,11 @@ void sub_80C3520(u16 arg0)
     sprite->x2 = 0;
     sprite->data[6] = arg0;
     sprite->data[7] = 0;
-    sprite->callback = sub_80C3630;
+    sprite->callback = SpriteCB_TextBoxSlideOut;
     eContestLink80C2020Struct2018000.unk_04 = 3;
 }
 
-void sub_80C3564(struct Sprite *sprite)
+void EndTextBoxSlideOut(struct Sprite *sprite)
 {
     sprite->x = 272;
     sprite->y = 144;
@@ -1318,7 +1318,7 @@ void sub_80C3564(struct Sprite *sprite)
 }
 
 
-void sub_80C3588(struct Sprite *sprite)
+void SpriteCB_TextBoxSlideIn(struct Sprite *sprite)
 {
     int i;
     s16 var0;
@@ -1336,20 +1336,20 @@ void sub_80C3588(struct Sprite *sprite)
     }
 
     if (sprite->x == sprite->data[4])
-        sprite->callback = sub_80C35FC;
+        sprite->callback = SpriteCB_EndTextBoxSlideIn;
 }
 
-void sub_80C35FC(struct Sprite *sprite)
+void SpriteCB_EndTextBoxSlideIn(struct Sprite *sprite)
 {
     eContestLink80C2020Struct2018000.unk_04 = 2;
     if ((u16)sprite->data[5] != 0xFFFF)
     {
         if (--sprite->data[5] == -1)
-            sub_80C3520(sprite->data[6]);
+            StartTextBoxSlideOut(sprite->data[6]);
     }
 }
 
-void sub_80C3630(struct Sprite *sprite)
+void SpriteCB_TextBoxSlideOut(struct Sprite *sprite)
 {
     int i;
     s16 var0;
@@ -1364,17 +1364,17 @@ void sub_80C3630(struct Sprite *sprite)
     }
 
     if (sprite->x + sprite->x2 < -224)
-        sub_80C3564(sprite);
+        EndTextBoxSlideOut(sprite);
 }
 
-void sub_80C3698(const u8 *text)
+void ShowLinkResultsTextBox(const u8 *text)
 {
     int i;
     u16 x;
     struct Sprite *sprite;
 
-    sub_80C3158(text, eContestLink80C2020Struct2018000.unk_01);
-    x = sub_80C34AC(text);
+    DrawResultsTextWindow(text, eContestLink80C2020Struct2018000.unk_01);
+    x = GetResultsTextWindowX(text);
     sprite = &gSprites[eContestLink80C2020Struct2018000.unk_01];
     sprite->x = x + 32;
     sprite->y = 80;
@@ -1391,7 +1391,7 @@ void sub_80C3698(const u8 *text)
     REG_WININ = WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR | WININ_WIN0_BG1 | WININ_WIN0_BG2 | WININ_WIN0_BG3 | WININ_WIN0_OBJ | WININ_WIN0_CLR;
 }
 
-void sub_80C3764(void)
+void HideLinkResultsTextBox(void)
 {
     int i;
     struct Sprite *sprite;
@@ -1410,7 +1410,7 @@ void sub_80C3764(void)
 
 #ifdef ENGLISH
 #ifdef NONMATCHING
-static inline s32 de_sub_80C39A8(s32 a0)
+static inline s32 LoadContestResultsRankOrLinkTitleTiles(s32 a0)
 {
     s32 result = 0;
     if (gIsLinkContest & 0x1)
@@ -1441,7 +1441,7 @@ static inline s32 de_sub_80C39A8(s32 a0)
     return result;
 }
 
-static inline s32 de_sub_80C3A84(s32 a0, s32 * a1)
+static inline s32 LoadContestResultsCategoryTitleTiles(s32 a0, s32 * a1)
 {
     s32 result;
     if (gSpecialVar_ContestCategory == 0)
@@ -1477,11 +1477,11 @@ static inline s32 de_sub_80C3A84(s32 a0, s32 * a1)
     return result;
 }
 
-void sub_80C37E4(void)
+void LoadContestResultsTitleBarTilemaps(void)
 {
     s32 sp0;
     s32 i;
-    de_sub_80C3A84(de_sub_80C39A8(5) + 5, &sp0);
+    LoadContestResultsCategoryTitleTiles(LoadContestResultsRankOrLinkTitleTiles(5) + 5, &sp0);
     for (i = 0; i < 0x80; i++)
     {
         ((vu16 *)(VRAM + 0xE000))[i] &= 0xFFF;
@@ -1490,7 +1490,7 @@ void sub_80C37E4(void)
 }
 #else
 NAKED
-void sub_80C37E4(void)
+void LoadContestResultsTitleBarTilemaps(void)
 {
     asm_unified("\tpush {r4-r6,lr}\n"
                 "\tsub sp, 0x10\n"
@@ -1702,7 +1702,7 @@ void sub_80C37E4(void)
 #endif // NONMATCHING
 
 #elif defined(GERMAN)
-s16 de_sub_80C39A8(s32 a0)
+s16 LoadContestResultsRankOrLinkTitleTiles(s32 a0)
 {
     s16 result;
     if (gIsLinkContest & 1)
@@ -1733,7 +1733,7 @@ s16 de_sub_80C39A8(s32 a0)
     return result;
 }
 
-s16 de_sub_80C3A84(s32 a0, s32 * a1)
+s16 LoadContestResultsCategoryTitleTiles(s32 a0, s32 * a1)
 {
     s16 result;
     if (gSpecialVar_ContestCategory == 0)
@@ -1769,11 +1769,11 @@ s16 de_sub_80C3A84(s32 a0, s32 * a1)
     return result;
 }
 
-void sub_80C37E4(void)
+void LoadContestResultsTitleBarTilemaps(void)
 {
     s32 sp0;
     s32 i;
-    de_sub_80C3A84(de_sub_80C39A8(6) + 6, &sp0);
+    LoadContestResultsCategoryTitleTiles(LoadContestResultsRankOrLinkTitleTiles(6) + 6, &sp0);
     for (i = 0; i < 0x80; i++)
     {
         ((vu16 *)(VRAM + 0xE000))[i] &= 0xFFF;
@@ -1783,7 +1783,7 @@ void sub_80C37E4(void)
 #endif
 
 // fakematching?
-u8 sub_80C3990(u8 monIndex, u8 arg1)
+u8 GetNumPreliminaryPoints(u8 monIndex, u8 arg1)
 {
     u32 var0;
     u32 var1;
@@ -1803,7 +1803,7 @@ u8 sub_80C3990(u8 monIndex, u8 arg1)
     return var1;
 }
 
-s8 sub_80C39E4(u8 arg0, u8 arg1)
+s8 GetNumRound2Points(u8 arg0, u8 arg1)
 {
     u32 r4;
     u32 r2;
@@ -1834,7 +1834,7 @@ s8 sub_80C39E4(u8 arg0, u8 arg1)
     return ret;
 }
 
-void sub_80C3A5C(u8 taskId)
+void Task_DrawFinalStandingNumber(u8 taskId)
 {
     u16 firstTileNum;
 
@@ -1860,7 +1860,7 @@ void sub_80C3A5C(u8 taskId)
 }
 
 #ifdef NONMATCHING
-void sub_80C3B30(u8 taskId)
+void Task_StartHighlightWinnersBox(u8 taskId)
 {
     int i, j, k;
 
@@ -1877,12 +1877,12 @@ void sub_80C3B30(u8 taskId)
     }
     gTasks[taskId].data[10] = i;
     gTasks[taskId].data[12] = 1;
-    gTasks[taskId].func = sub_80C3BD8;
+    gTasks[taskId].func = Task_HighlightWinnersBox;
     eContestLink80C2020Struct2018000.unk_03 = taskId;
 }
 #else
 NAKED
-void sub_80C3B30(u8 taskId)
+void Task_StartHighlightWinnersBox(u8 taskId)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                 "\tmov r7, r10\n"
@@ -1949,7 +1949,7 @@ void sub_80C3B30(u8 taskId)
                 "\tstrh r5, [r0, 0x1C]\n"
                 "\tmovs r1, 0x1\n"
                 "\tstrh r1, [r0, 0x20]\n"
-                "\tldr r2, _080C3BD0 @ =sub_80C3BD8\n"
+                "\tldr r2, _080C3BD0 @ =Task_HighlightWinnersBox\n"
                 "\tstr r2, [r0]\n"
                 "\tmov r1, r12\n"
                 "\tldr r0, _080C3BD4 @ =gSharedMem + 0x18000\n"
@@ -1966,12 +1966,12 @@ void sub_80C3B30(u8 taskId)
                 "_080C3BC4: .4byte gTasks\n"
                 "_080C3BC8: .4byte 0x00000fff\n"
                 "_080C3BCC: .4byte 0x0600e100\n"
-                "_080C3BD0: .4byte sub_80C3BD8\n"
+                "_080C3BD0: .4byte Task_HighlightWinnersBox\n"
                 "_080C3BD4: .4byte gSharedMem + 0x18000");
 }
 #endif //NONMATCHING
 
-void sub_80C3BD8(u8 taskId)
+void Task_HighlightWinnersBox(u8 taskId)
 {
     if (++gTasks[taskId].data[11] == 1)
     {
@@ -1990,7 +1990,7 @@ void sub_80C3BD8(u8 taskId)
     }
 }
 
-void sub_80C3C44(struct Sprite *sprite)
+void SpriteCB_WinnerMonSlideIn(struct Sprite *sprite)
 {
     if (sprite->data[0] < 10)
     {
@@ -2017,7 +2017,7 @@ void sub_80C3C44(struct Sprite *sprite)
     }
 }
 
-void sub_80C3CB8(struct Sprite *sprite)
+void SpriteCB_WinnerMonSlideOut(struct Sprite *sprite)
 {
     s16 delta = (u16)sprite->data[1] + 0x600;
     sprite->x -= delta >> 8;
@@ -2030,7 +2030,7 @@ void sub_80C3CB8(struct Sprite *sprite)
     }
 }
 
-void sub_80C3D04(u8 taskId)
+void Task_CreateConfetti(u8 taskId)
 {
     if (++gTasks[taskId].data[0] == 5)
     {
@@ -2050,7 +2050,7 @@ void sub_80C3D04(u8 taskId)
         DestroyTask(taskId);
 }
 
-void sub_80C3DF0(struct Sprite *sprite)
+void SpriteCB_Confetti(struct Sprite *sprite)
 {
     register s16 var0 asm("r1");
 
@@ -2071,26 +2071,26 @@ void sub_80C3DF0(struct Sprite *sprite)
     }
 }
 
-void sub_80C3E60(u8 monIndex, u8 numFrames)
+void BounceMonIconInBox(u8 monIndex, u8 numFrames)
 {
-    u8 taskId = CreateTask(sub_80C3EA4, 8);
+    u8 taskId = CreateTask(Task_BounceMonIconInBox, 8);
     gTasks[taskId].data[0] = monIndex;
     gTasks[taskId].data[1] = numFrames;
     gTasks[taskId].data[2] = gContestMons[monIndex].species;
 }
 
-void sub_80C3EA4(u8 taskId)
+void Task_BounceMonIconInBox(u8 taskId)
 {
     u8 monIndex = gTasks[taskId].data[0];
     if (gTasks[taskId].data[10]++ == gTasks[taskId].data[1])
     {
         gTasks[taskId].data[10] = 0;
-        sub_80C3024(gTasks[taskId].data[2], monIndex, gTasks[taskId].data[11], FALSE, gContestMons[monIndex].personality);
+        LoadContestMonIcon(gTasks[taskId].data[2], monIndex, gTasks[taskId].data[11], FALSE, gContestMons[monIndex].personality);
         gTasks[taskId].data[11] ^= 1;
     }
 }
 
-void sub_80C3F00(void)
+void CalculateContestantsResultData(void)
 {
     s32 i;
     s16 r2 = gContestMonTotalPoints[0];
@@ -2140,8 +2140,8 @@ void sub_80C3F00(void)
             r5 += 256;
         eContestLink80C2020Struct2018018[i].unk_0c = r5 / 256;
 
-        eContestLink80C2020Struct2018018[i].unk_11 = sub_80C3990(i, 1);
-        r0 = sub_80C39E4(i, 1);
+        eContestLink80C2020Struct2018018[i].unk_11 = GetNumPreliminaryPoints(i, 1);
+        r0 = GetNumRound2Points(i, 1);
         eContestLink80C2020Struct2018018[i].unk_12 = ABS(r0);
 
         if (gContestFinalStandings[i])
@@ -2162,7 +2162,7 @@ void sub_80C3F00(void)
 }
 
 #ifdef NONMATCHING
-void sub_80C40D4(u8 arg0, u8 arg1)
+void UpdateContestResultBars(u8 arg0, u8 arg1)
 {
     int i;
     u8 taskId;
@@ -2183,7 +2183,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 x -= arg1;
                 x--;
                 *(vu16 *)((VRAM + 0xC000) + 2 * x) = 0x60B3;
-                taskId = CreateTask(sub_80C42C0, 10);
+                taskId = CreateTask(Task_UpdateContestResultBar, 10);
                 var0 = ((eContestLink80C2020Struct2018018[i].unk_08 << 16) / eContestLink80C2020Struct2018018[i].unk_11) * (arg1 + 1);
                 if ((var0 % 0x10000) >= 0x8000)
                     var0 += 0x10000;
@@ -2210,7 +2210,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 x -= arg1;
                 x--;
                 *(vu16 *)((VRAM + 0xC000) + 2 * x) = tile;
-                taskId = CreateTask(sub_80C42C0, 10);
+                taskId = CreateTask(Task_UpdateContestResultBar, 10);
                 var0 = ((eContestLink80C2020Struct2018018[i].unk_0c << 16) / eContestLink80C2020Struct2018018[i].unk_12) * (arg1 + 1);
                 if ((var0 % 0x10000) >= 0x8000)
                     var0 += 0x10000;
@@ -2245,7 +2245,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
 #else
 // Assorted register differences
 NAKED
-void sub_80C40D4(u8 arg0, u8 arg1)
+void UpdateContestResultBars(u8 arg0, u8 arg1)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                 "\tmov r7, r10\n"
@@ -2283,7 +2283,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 "\tldr r2, _080C4184 @ =0x000060b3\n"
                 "\tadds r1, r2, 0\n"
                 "\tstrh r1, [r0]\n"
-                "\tldr r0, _080C4188 @ =sub_80C42C0\n"
+                "\tldr r0, _080C4188 @ =Task_UpdateContestResultBar\n"
                 "\tmovs r1, 0xA\n"
                 "\tbl CreateTask\n"
                 "\tlsls r0, 24\n"
@@ -2335,7 +2335,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 "_080C417C: .4byte gSharedMem + 0x18018\n"
                 "_080C4180: .4byte 0x0600bffe\n"
                 "_080C4184: .4byte 0x000060b3\n"
-                "_080C4188: .4byte sub_80C42C0\n"
+                "_080C4188: .4byte Task_UpdateContestResultBar\n"
                 "_080C418C: .4byte 0x0000ffff\n"
                 "_080C4190: .4byte 0x00007fff\n"
                 "_080C4194: .4byte gTasks\n"
@@ -2369,7 +2369,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 "\tldr r1, _080C4228 @ =0x0600bffe\n"
                 "\tadds r0, r1\n"
                 "\tstrh r2, [r0]\n"
-                "\tldr r0, _080C422C @ =sub_80C42C0\n"
+                "\tldr r0, _080C422C @ =Task_UpdateContestResultBar\n"
                 "\tmovs r1, 0xA\n"
                 "\tbl CreateTask\n"
                 "\tlsls r0, 24\n"
@@ -2413,7 +2413,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
                 "_080C4220: .4byte gSharedMem + 0x18018\n"
                 "_080C4224: .4byte 0x000060a3\n"
                 "_080C4228: .4byte 0x0600bffe\n"
-                "_080C422C: .4byte sub_80C42C0\n"
+                "_080C422C: .4byte Task_UpdateContestResultBar\n"
                 "_080C4230: .4byte 0x0000ffff\n"
                 "_080C4234: .4byte 0x00007fff\n"
                 "_080C4238: .4byte gTasks\n"
@@ -2490,7 +2490,7 @@ void sub_80C40D4(u8 arg0, u8 arg1)
 }
 #endif //NONMATCHING
 
-void sub_80C42C0(u8 taskId /*r12*/)
+void Task_UpdateContestResultBar(u8 taskId /*r12*/)
 {
     bool32 r6 = FALSE;
     bool32 r9 = FALSE;
@@ -2749,24 +2749,24 @@ void BufferContestWinnerMonName(void)
     Contest_CopyAndConvertNicknameI_Intl(gStringVar1, i);
 }
 
-void sub_80C488C(void)
+void CB2_SetStartContestCallback(void)
 {
     SetMainCallback2(CB2_StartContest);
 }
 
-void sub_80C489C(u8 taskId)
+void Task_StartContest(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         DestroyTask(taskId);
-        SetMainCallback2(sub_80C488C);
+        SetMainCallback2(CB2_SetStartContestCallback);
     }
 }
 
-void sub_80C48C8(void)
+void StartContest(void)
 {
     LockPlayerFieldControls();
-    CreateTask(sub_80C489C, 10);
+    CreateTask(Task_StartContest, 10);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
 }
 
@@ -2775,19 +2775,19 @@ void BufferContestantMonSpecies(void)
     gSpecialVar_0x8004 = gContestMons[gSpecialVar_0x8006].species;
 }
 
-void sub_80C4914(u8 taskId)
+void Task_StartShowContestResults(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         DestroyTask(taskId);
-        SetMainCallback2(sub_80C2358);
+        SetMainCallback2(CB2_StartShowContestResults);
     }
 }
 
-void sub_80C4940(void)
+void ShowContestResults(void)
 {
     LockPlayerFieldControls();
-    CreateTask(sub_80C4914, 10);
+    CreateTask(Task_StartShowContestResults, 10);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
 }
 
@@ -2808,28 +2808,28 @@ void ContestLinkTransfer(u8 category)
 void Task_StartCommunication(u8 taskId)
 {
     Contest_CreatePlayerMon(gContestMonPartyIndex);
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRng);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRngRS);
 }
 
-void Task_StartCommunicateRng(u8 taskId)
+void Task_StartCommunicateRngRS(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateRngRS, Task_StartCommunicateLeaderIds);
+        taskId, Task_LinkContest_CommunicateRngRS, Task_StartCommunicateLeaderIdsRS);
 }
 
-void Task_StartCommunicateLeaderIds(u8 taskId)
+void Task_StartCommunicateLeaderIdsRS(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateLeaderIdsRS, Task_StartCommunicateCategory);
+        taskId, Task_LinkContest_CommunicateLeaderIdsRS, Task_StartCommunicateCategoryRS);
 }
 
-void Task_StartCommunicateCategory(u8 taskId)
+void Task_StartCommunicateCategoryRS(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateCategoryRS, Task_LinkContest_SetUpContest);
+        taskId, Task_LinkContest_CommunicateCategoryRS, Task_LinkContest_SetUpContestRS);
 }
 
-void Task_LinkContest_SetUpContest(u8 taskId)
+void Task_LinkContest_SetUpContestRS(u8 taskId)
 {
     u8 i;
     u8 sp0[4];
@@ -2855,10 +2855,10 @@ void Task_LinkContest_SetUpContest(u8 taskId)
     gContestLinkLeaderIndex = LinkContest_GetLeaderIndex(sp4);
     CalculateRound1Points(gSpecialVar_ContestCategory);
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateRound1Points, Task_LinkContest_CalculateTurnOrder);
+        taskId, Task_LinkContest_CommunicateRound1Points, Task_LinkContest_CalculateTurnOrderRS);
 }
 
-void Task_LinkContest_CalculateTurnOrder(u8 taskId)
+void Task_LinkContest_CalculateTurnOrderRS(u8 taskId)
 {
     SortContestants(0);
     SetTaskFuncWithFollowupFunc(
