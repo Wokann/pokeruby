@@ -584,10 +584,10 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         break;
     case 8:
         LoadPalette(gPokenavHoennMapSquares_Pal, 0x30, 0x20);
-        sub_80EFC3C();
+        InitCityMapDecompression();
         break;
     case 9:
-        if (sub_80EFC64())
+        if (DecompressCityMapsStep())
             return TRUE;
         break;
     case 10:
@@ -663,11 +663,11 @@ void UpdateMapSecInfoWindow(void)
         top += 2;
         mapSectionId = gPokenavStructPtr->regionMap.mapSectionId;
         b = gPokenavStructPtr->regionMap.everGrandeCityArea;
-        if (gPokenavStructPtr->unkCDCC[mapSectionId][b] != NULL)
+        if (gPokenavStructPtr->cityMapTilemapPtrs[mapSectionId][b] != NULL)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
             Menu_BlankWindowRect(26, top, 28, 15);
-            sub_8095C8C((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->unkCDCC[mapSectionId][b], 0, 0, 10, 10, 10);
+            sub_8095C8C((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSectionId][b], 0, 0, 10, 10, 10);
             top += 11;
         }
         break;
@@ -731,42 +731,42 @@ bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut)
     return active;
 }
 
-void sub_80EFC3C(void)
+void InitCityMapDecompression(void)
 {
-    gPokenavStructPtr->unkBC9A = 0;
-    gPokenavStructPtr->unkBC9B = 0;
+    gPokenavStructPtr->cityMapSectionIndex = 0;
+    gPokenavStructPtr->cityMapBufferIndex = 0;
     sub_80EFD3C();
 }
 
-bool8 sub_80EFC64(void)
+bool8 DecompressCityMapsStep(void)
 {
     u16 i;
-    u8 var1;
-    u16 var2;
+    u8 sectionIndex;
+    u16 bufferIndex;
 
-    if (gPokenavStructPtr->unkBC9A >= 16)
+    if (gPokenavStructPtr->cityMapSectionIndex >= 16)
         return FALSE;
 
-    var1 = gPokenavStructPtr->unkBC9A;
-    var2 = gPokenavStructPtr->unkBC9B;
+    sectionIndex = gPokenavStructPtr->cityMapSectionIndex;
+    bufferIndex = gPokenavStructPtr->cityMapBufferIndex;
     for (i = 0; i < 2; i++)
     {
-        if (gPokenavCityMaps[var1][i] != 0)
+        if (gPokenavCityMaps[sectionIndex][i] != 0)
         {
-            LZ77UnCompVram(gPokenavCityMaps[var1][i], gPokenavStructPtr->unkBC9C[var2]);
-            gPokenavStructPtr->unkCDCC[var1][i] = gPokenavStructPtr->unkBC9C[var2];
-            var2++;
+            LZ77UnCompVram(gPokenavCityMaps[sectionIndex][i], gPokenavStructPtr->cityMapTilemaps[bufferIndex]);
+            gPokenavStructPtr->cityMapTilemapPtrs[sectionIndex][i] = gPokenavStructPtr->cityMapTilemaps[bufferIndex];
+            bufferIndex++;
         }
         else
         {
-            gPokenavStructPtr->unkCDCC[var1][i] = NULL;
+            gPokenavStructPtr->cityMapTilemapPtrs[sectionIndex][i] = NULL;
         }
     }
 
-    if (++gPokenavStructPtr->unkBC9A >= 16)
+    if (++gPokenavStructPtr->cityMapSectionIndex >= 16)
         return FALSE;
 
-    gPokenavStructPtr->unkBC9B = var2;
+    gPokenavStructPtr->cityMapBufferIndex = bufferIndex;
     return TRUE;
 }
 
