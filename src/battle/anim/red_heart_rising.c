@@ -8,11 +8,10 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimRedHeartRising(struct Sprite* sprite);
-static void AnimRedHeartRising_Step(struct Sprite* sprite);
+static void AnimRedHeartRising(struct Sprite *sprite);
+static void AnimRedHeartRising_Step(struct Sprite *sprite);
 
-// flying_hearts (hearts float upward from the bottom of the screen.)
-// Used in Attract.
+// Red hearts rising from the bottom of the screen for Attract.
 
 const struct SpriteTemplate gRedHeartRisingSpriteTemplate =
 {
@@ -25,17 +24,17 @@ const struct SpriteTemplate gRedHeartRisingSpriteTemplate =
     .callback = AnimRedHeartRising,
 };
 
-static void AnimRedHeartRising(struct Sprite* sprite)
+static void AnimRedHeartRising(struct Sprite *sprite)
 {
     sprite->x = gBattleAnimArgs[0];
-    sprite->y = 0xA0;
+    sprite->y = DISPLAY_HEIGHT;
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->callback = WaitAnimForDuration;
     StoreSpriteCallbackInData6(sprite, AnimRedHeartRising_Step);
 }
 
-static void AnimRedHeartRising_Step(struct Sprite* sprite)
+static void AnimRedHeartRising_Step(struct Sprite *sprite)
 {
     s16 y;
     sprite->data[2] += sprite->data[1];
@@ -43,10 +42,10 @@ static void AnimRedHeartRising_Step(struct Sprite* sprite)
     sprite->x2 = Sin(sprite->data[3], 4);
     sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
     y = sprite->y + sprite->y2;
-    if (y <= 0x48)
+    if (y <= 72)
     {
         sprite->invisible = sprite->data[3] % 2;
-        if (y <= 0x40)
+        if (y <= 64)
             DestroyAnimSprite(sprite);
     }
 }
