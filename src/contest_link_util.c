@@ -2808,25 +2808,25 @@ void ContestLinkTransfer(u8 category)
 void Task_StartCommunication(u8 taskId)
 {
     Contest_CreatePlayerMon(gContestMonPartyIndex);
-    SetTaskFuncWithFollowupFunc(taskId, sub_80C8734, Task_StartCommunicateRng);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, Task_StartCommunicateRng);
 }
 
 void Task_StartCommunicateRng(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateRng, Task_StartCommunicateLeaderIds);
+        taskId, Task_LinkContest_CommunicateRngRS, Task_StartCommunicateLeaderIds);
 }
 
 void Task_StartCommunicateLeaderIds(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateLeaderIds, Task_StartCommunicateCategory);
+        taskId, Task_LinkContest_CommunicateLeaderIdsRS, Task_StartCommunicateCategory);
 }
 
 void Task_StartCommunicateCategory(u8 taskId)
 {
     SetTaskFuncWithFollowupFunc(
-        taskId, Task_LinkContest_CommunicateCategory, Task_LinkContest_SetUpContest);
+        taskId, Task_LinkContest_CommunicateCategoryRS, Task_LinkContest_SetUpContest);
 }
 
 void Task_LinkContest_SetUpContest(u8 taskId)

@@ -144,17 +144,17 @@ u8 MatsudaDebugMenu_CommTest(void)
 static void sub_80A9C98(u8 taskId)
 {
     Contest_CreatePlayerMon(0);
-    SetTaskFuncWithFollowupFunc(taskId, sub_80C8734, sub_80A9CC0);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateMonsRS, sub_80A9CC0);
 }
 
 static void sub_80A9CC0(u8 taskId)
 {
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateRng, sub_80A9CDC);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateRngRS, sub_80A9CDC);
 }
 
 static void sub_80A9CDC(u8 taskId)
 {
-    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateLeaderIds, sub_80A9D58);
+    SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_CommunicateLeaderIdsRS, sub_80A9D58);
 }
 
 static void sub_80A9CF8(u8 taskId)

@@ -3,33 +3,34 @@
 #include "random.h"
 #include "task.h"
 #include "contest.h"
+#include "contest_link.h"
 #include "text.h"
 #include "string_util.h"
 #include "link.h"
 
-static void sub_80C8644(u8 taskId);
-static void sub_80C8660(u8 taskId);
+static void Task_LinkContest_StartWaitForPlayers(u8 taskId);
+static void Task_LinkContest_WaitForPlayers(u8 taskId);
 #if GERMAN
-static void de_sub_80C9274(bool32 arg0);
-static void de_sub_80C9294(bool32 arg0);
+static void UpdateGermanContestLeaderBlockState(bool32 isCategory);
+static void UpdateGermanContestPlayerBlockState(bool32 isCategory);
 #endif
 
-static void SendBlockToAllOpponents(const void *data, u16 size)
+static void LinkContest_SendBlock(const void *data, u16 size)
 {
     memcpy(gDecompressionBuffer, data, size);
     SendBlock(bitmask_all_link_players_but_self(), gDecompressionBuffer, size);
 }
 
-static bool8 HasPlayerReceivedBlock(u8 who)
+static bool8 LinkContest_GetBlockReceived(u8 playerId)
 {
-    u8 flag = 1 << who;
+    u8 flag = 1 << playerId;
     if (!(GetBlockReceivedStatus() & flag))
         return FALSE;
     ResetBlockReceivedFlag(flag);
     return TRUE;
 }
 
-static bool8 HaveAllPlayersReceivedBlock(void)
+static bool8 LinkContest_GetBlockReceivedFromAllPlayers(void)
 {
     int i;
 
@@ -51,15 +52,15 @@ void Task_LinkContest_Init(u8 taskId)
         gBlockRecvBuffer[i][0] = 0xff;
 #endif
     gTasks[taskId].data[0] = 0;
-    gTasks[taskId].func = sub_80C8644;
+    gTasks[taskId].func = Task_LinkContest_StartWaitForPlayers;
 }
 
-static void sub_80C8644(u8 taskId)
+static void Task_LinkContest_StartWaitForPlayers(u8 taskId)
 {
-    gTasks[taskId].func = sub_80C8660;
+    gTasks[taskId].func = Task_LinkContest_WaitForPlayers;
 }
 
-static void sub_80C8660(u8 taskId)
+static void Task_LinkContest_WaitForPlayers(u8 taskId)
 {
     if (gReceivedRemoteLinkPlayers)
     {
@@ -110,7 +111,7 @@ u8 GetStringLanguage(const u8 *string)
     return language;
 }
 
-void sub_80C8734(u8 taskId)
+void Task_LinkContest_CommunicateMonsRS(u8 taskId)
 {
     int i;
     u8 *name;
@@ -139,7 +140,7 @@ void sub_80C8734(u8 taskId)
                     else
                     {
                         memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
-                        de_sub_80C9274(FALSE);
+                        UpdateGermanContestLeaderBlockState(FALSE);
                         sub_8007E9C(2);
                         gTasks[taskId].data[0] = 1;
                     }
@@ -150,13 +151,13 @@ void sub_80C8734(u8 taskId)
             {
                 memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
 #if GERMAN
-                de_sub_80C9294(FALSE);
+                UpdateGermanContestPlayerBlockState(FALSE);
 #endif
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 for (i = 0; i < MAX_LINK_PLAYERS; i++)
                 {
@@ -207,7 +208,7 @@ void sub_80C8734(u8 taskId)
     }
 }
 
-void Task_LinkContest_CommunicateRng(u8 taskId)
+void Task_LinkContest_CommunicateRngRS(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
@@ -220,7 +221,7 @@ void Task_LinkContest_CommunicateRng(u8 taskId)
             {
                 if (IsLinkTaskFinished())
                 {
-                    SendBlockToAllOpponents(&gRngValue, sizeof(u32));
+                    LinkContest_SendBlock(&gRngValue, sizeof(u32));
                     gTasks[taskId].data[0]++;
                 }
             }
@@ -230,7 +231,7 @@ void Task_LinkContest_CommunicateRng(u8 taskId)
             }
             break;
         case 1:
-            if (HasPlayerReceivedBlock(0))
+            if (LinkContest_GetBlockReceived(0))
             {
                 memcpy(&gRngValue, gBlockRecvBuffer[0], sizeof(u32));
                 memcpy(&gContestRngValue, gBlockRecvBuffer[0], sizeof(u32));
@@ -240,7 +241,7 @@ void Task_LinkContest_CommunicateRng(u8 taskId)
     }
 }
 
-void Task_LinkContest_CommunicateCategory(u8 taskId)
+void Task_LinkContest_CommunicateCategoryRS(u8 taskId)
 {
     int i;
 
@@ -270,7 +271,7 @@ void Task_LinkContest_CommunicateCategory(u8 taskId)
                     }
                     else
                     {
-                        de_sub_80C9274(TRUE);
+                        UpdateGermanContestLeaderBlockState(TRUE);
                         sub_8007E9C(2);
                         gTasks[taskId].data[0] = 1;
                     }
@@ -280,13 +281,13 @@ void Task_LinkContest_CommunicateCategory(u8 taskId)
             else
             {
 #if GERMAN
-                de_sub_80C9294(TRUE);
+                UpdateGermanContestPlayerBlockState(TRUE);
 #endif
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 for (i = 0; i < MAX_LINK_PLAYERS; i++)
                 {
@@ -318,12 +319,12 @@ void Task_LinkContest_CommunicateMonIdxs(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(&gContestPlayerMonIndex, sizeof(u8));
+                LinkContest_SendBlock(&gContestPlayerMonIndex, sizeof(u8));
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 gTasks[taskId].data[0]++;
             }
@@ -331,7 +332,7 @@ void Task_LinkContest_CommunicateMonIdxs(u8 taskId)
     }
 }
 
-void sub_80C8A38(u8 taskId)
+void Task_LinkContest_CommunicateMoveSelections(u8 taskId)
 {
     int i;
 
@@ -344,12 +345,12 @@ void sub_80C8A38(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(&sContestantStatus[gContestPlayerMonIndex].currMove, sizeof(u16));
+                LinkContest_SendBlock(&sContestantStatus[gContestPlayerMonIndex].currMove, sizeof(u16));
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 for (i = 0; i < MAX_LINK_PLAYERS; i++)
                 {
@@ -368,12 +369,12 @@ void Task_LinkContest_CommunicateFinalStandings(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestMonTotalPoints, sizeof gContestMonTotalPoints);
+                LinkContest_SendBlock(gContestMonTotalPoints, sizeof gContestMonTotalPoints);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestMonTotalPoints, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestMonTotalPoints);
                 gTasks[taskId].data[0]++;
@@ -392,13 +393,13 @@ void Task_LinkContest_CommunicateFinalStandings(u8 taskId)
         case 3:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(
+                LinkContest_SendBlock(
                     gContestMonAppealPointTotals, sizeof gContestMonAppealPointTotals);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 4:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestMonAppealPointTotals, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestMonAppealPointTotals);
                 gTasks[taskId].data[0]++;
@@ -407,12 +408,12 @@ void Task_LinkContest_CommunicateFinalStandings(u8 taskId)
         case 6:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestMonRound2Points, sizeof gContestMonRound2Points);
+                LinkContest_SendBlock(gContestMonRound2Points, sizeof gContestMonRound2Points);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 7:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestMonRound2Points, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestMonRound2Points);
                 gTasks[taskId].data[0]++;
@@ -421,12 +422,12 @@ void Task_LinkContest_CommunicateFinalStandings(u8 taskId)
         case 9:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestFinalStandings, sizeof gContestFinalStandings);
+                LinkContest_SendBlock(gContestFinalStandings, sizeof gContestFinalStandings);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 10:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestFinalStandings, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestFinalStandings);
                 gTasks[taskId].data[0]++;
@@ -446,12 +447,12 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(sContestantStatus, 4 * sizeof(struct ContestantStatus));
+                LinkContest_SendBlock(sContestantStatus, 4 * sizeof(struct ContestantStatus));
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(sContestantStatus, gBlockRecvBuffer[gContestLinkLeaderIndex], 4 * sizeof(struct ContestantStatus));
                 gTasks[taskId].data[0]++;
@@ -470,12 +471,12 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 3:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(&eContestAppealResults, sizeof eContestAppealResults);
+                LinkContest_SendBlock(&eContestAppealResults, sizeof eContestAppealResults);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 4:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(&eContestAppealResults, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof eContestAppealResults);
                 gTasks[taskId].data[0]++;
@@ -484,12 +485,12 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 6:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(&eContestExcitement, sizeof eContestExcitement);
+                LinkContest_SendBlock(&eContestExcitement, sizeof eContestExcitement);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 7:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(&eContestExcitement, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof eContestExcitement);
                 gTasks[taskId].data[0]++;
@@ -498,12 +499,12 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 9:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestantTurnOrder, sizeof gContestantTurnOrder);
+                LinkContest_SendBlock(gContestantTurnOrder, sizeof gContestantTurnOrder);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 10:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestantTurnOrder, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestantTurnOrder);
                 gTasks[taskId].data[0]++;
@@ -516,7 +517,7 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
     }
 }
 
-void Task_LinkContest_CommunicateLeaderIds(u8 taskId)
+void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId)
 {
     int i;
 
@@ -546,7 +547,7 @@ void Task_LinkContest_CommunicateLeaderIds(u8 taskId)
                     }
                     else
                     {
-                        de_sub_80C9274(FALSE);
+                        UpdateGermanContestLeaderBlockState(FALSE);
                         sub_8007E9C(2);
                         gTasks[taskId].data[0] = 1;
                     }
@@ -556,13 +557,13 @@ void Task_LinkContest_CommunicateLeaderIds(u8 taskId)
             else
             {
 #if GERMAN
-                de_sub_80C9294(FALSE);
+                UpdateGermanContestPlayerBlockState(FALSE);
 #endif
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 for (i = 0; i < MAX_LINK_PLAYERS; i++)
                 {
@@ -594,12 +595,12 @@ void Task_LinkContest_CommunicateRound1Points(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestMonRound1Points, sizeof gContestMonRound1Points);
+                LinkContest_SendBlock(gContestMonRound1Points, sizeof gContestMonRound1Points);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestMonRound1Points, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestMonRound1Points);
                 gTasks[taskId].data[0]++;
@@ -619,12 +620,12 @@ void Task_LinkContest_CommunicateTurnOrder(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                SendBlockToAllOpponents(gContestantTurnOrder, sizeof gContestantTurnOrder);
+                LinkContest_SendBlock(gContestantTurnOrder, sizeof gContestantTurnOrder);
                 gTasks[taskId].data[0]++;
             }
             break;
         case 1:
-            if (HaveAllPlayersReceivedBlock())
+            if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
                 memcpy(gContestantTurnOrder, gBlockRecvBuffer[gContestLinkLeaderIndex], sizeof gContestantTurnOrder);
                 gTasks[taskId].data[0]++;
@@ -635,22 +636,22 @@ void Task_LinkContest_CommunicateTurnOrder(u8 taskId)
 
 #if GERMAN
 
-static void de_sub_80C9274(bool32 arg0)
+static void UpdateGermanContestLeaderBlockState(bool32 isCategory)
 {
     if (deUnkValue2 == 1)
     {
-        if (arg0)
+        if (isCategory)
             deUnkValue2 = 3;
         else
             deUnkValue2 = 2;
     }
 }
 
-static void de_sub_80C9294(bool32 arg0)
+static void UpdateGermanContestPlayerBlockState(bool32 isCategory)
 {
     if (deUnkValue2 == 1)
     {
-        if (arg0)
+        if (isCategory)
             deUnkValue2 = 3;
         else
             deUnkValue2 = 2;
@@ -658,7 +659,7 @@ static void de_sub_80C9294(bool32 arg0)
     else if (deUnkValue2 == 2)
     {
         SendBlock(0, sBlockRequestLookupTable[deUnkValue1].address, sBlockRequestLookupTable[deUnkValue1].size);
-        if (arg0)
+        if (isCategory)
             deUnkValue2 = 0;
         else
             deUnkValue2 = 1;
