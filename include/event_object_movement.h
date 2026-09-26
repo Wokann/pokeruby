@@ -363,7 +363,7 @@ void ObjectEventGetLocalIdAndMap(struct ObjectEvent *, void *, void *, void *);
 void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y);
 void sub_805BCF0(u8, u8, u8, u8);
 void sub_805BD48(u8, u8, u8);
-void sub_805BD90(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
+void SetObjectEventSpritePosByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
 void FreeAndReserveObjectSpritePalettes(void);
 void sub_805BDF8(u16);
 void PatchObjectPalette(u16, u8);

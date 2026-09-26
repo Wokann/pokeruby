@@ -18,6 +18,13 @@
 #include "task.h"
 #include "constants/event_objects.h"
 
+#define BOX1_X_OFFSET  3
+#define BOX1_Y_OFFSET  3
+#define BOX2_X_OFFSET  0
+#define BOX2_Y_OFFSET -3
+#define BOX3_X_OFFSET -3
+#define BOX3_Y_OFFSET  0
+
 #define SECONDS(value) ((signed) (60.0 * value + 0.5))
 
 // TODO: Move somewhere else
@@ -31,7 +38,7 @@ enum
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
 const u16 gObjectEventPalette19[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
 
-static const s8 gTruckCamera_HorizontalTable[] =
+static const s8 sTruckCamera_HorizontalTable[] =
 {
     0,
     0,
@@ -75,78 +82,83 @@ enum
     EXIT_PORTHOLE,
 };
 
-s16 GetTruckCameraBobbingY(int a1)
+s16 GetTruckCameraBobbingY(int time)
 {
-    if (!(a1 % 120))
+    if (!(time % 120))
         return -1;
-    else if ((a1 % 10) <= 4)
+    else if ((time % 10) <= 4)
         return 1;
 
     return 0;
 }
 
-s16 GetTruckBoxMovement(int a1) // for the box movement?
+s16 GetTruckBoxYMovement(int time)
 {
-    if (!((a1 + 120) % 180))
+    if (!((time + 120) % 180))
         return -1;
 
     return 0;
 }
 
+#define tTimer data[0]
 void Task_Truck1(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan, cameraXpan = 0;
-    s16 box1, box2, box3;
+    s16 yBox1, yBox2, yBox3;
 
-    box1 = GetTruckBoxMovement(data[0] + 30) * 4; // top box.
-    sub_805BD90(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, box1 + 3);
-    box2 = GetTruckBoxMovement(data[0]) * 2; // bottom left box.
-    sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, box2 - 3);
-    box3 = GetTruckBoxMovement(data[0]) * 4; // bottom right box.
-    sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, box3);
+    yBox1 = GetTruckBoxYMovement(tTimer + 30) * 4; // top box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX1_X_OFFSET - cameraXpan, BOX1_Y_OFFSET + yBox1);
+    yBox2 = GetTruckBoxYMovement(tTimer) * 2; // bottom left box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX2_X_OFFSET - cameraXpan, BOX2_Y_OFFSET + yBox2);
+    yBox3 = GetTruckBoxYMovement(tTimer) * 4; // bottom right box.
+    SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX3_X_OFFSET - cameraXpan, BOX3_Y_OFFSET + yBox3);
 
-    if (++data[0] == SECONDS(500)) // this will never run
-        data[0] = 0; // reset the timer if it gets stuck.
+    if (++tTimer == SECONDS(500)) // this will never run
+        tTimer = 0; // reset the timer if it gets stuck.
 
     // this also matches with directly calling GetTruckCameraBobbingY within SetCameraPanning, but this is consistent with a later function that requires a temp variable.
-    cameraYpan = GetTruckCameraBobbingY(data[0]);
+    cameraYpan = GetTruckCameraBobbingY(tTimer);
     SetCameraPanning(cameraXpan, cameraYpan);
 }
+#undef tTimer
 
+#define tTimerHorizontal data[0]
+#define tMoveStep        data[1]
+#define tTimerVertical   data[2]
 void Task_Truck2(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan;
     s16 cameraXpan;
-    s16 box1, box2, box3;
+    s16 yBox1, yBox2, yBox3;
 
-    data[0]++;
-    data[2]++;
+    tTimerHorizontal++;
+    tTimerVertical++;
 
-    if (data[0] > 5)
+    if (tTimerHorizontal > 5)
     {
-        data[0] = 0;
-        data[1]++;
+        tTimerHorizontal = 0;
+        tMoveStep++;
     }
-    if ((u16)data[1] == 19)
+    if ((u16)tMoveStep == ARRAY_COUNT(sTruckCamera_HorizontalTable))
     {
         DestroyTask(taskId);
     }
     else
     {
-        if (gTruckCamera_HorizontalTable[data[1]] == 2)
+        if (sTruckCamera_HorizontalTable[tMoveStep] == 2)
             gTasks[taskId].func = Task_Truck3;
 
-        cameraXpan = gTruckCamera_HorizontalTable[data[1]];
-        cameraYpan = GetTruckCameraBobbingY(data[2]);
+        cameraXpan = sTruckCamera_HorizontalTable[tMoveStep];
+        cameraYpan = GetTruckCameraBobbingY(tTimerVertical);
         SetCameraPanning(cameraXpan, cameraYpan);
-        box1 = GetTruckBoxMovement(data[2] + 30) * 4;
-        sub_805BD90(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, box1 + 3);
-        box2 = GetTruckBoxMovement(data[2]) * 2;
-        sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, box2 - 3);
-        box3 = GetTruckBoxMovement(data[2]) * 4;
-        sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, box3);
+        yBox1 = GetTruckBoxYMovement(tTimerVertical + 30) * 4;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX1_X_OFFSET - cameraXpan, BOX1_Y_OFFSET + yBox1);
+        yBox2 = GetTruckBoxYMovement(tTimerVertical) * 2;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX2_X_OFFSET - cameraXpan, BOX2_Y_OFFSET + yBox2);
+        yBox3 = GetTruckBoxYMovement(tTimerVertical) * 4;
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX3_X_OFFSET - cameraXpan, BOX3_Y_OFFSET + yBox3);
     }
 }
 
@@ -156,90 +168,97 @@ void Task_Truck3(u8 taskId)
    s16 cameraXpan;
    s16 cameraYpan;
 
-   data[0]++;
+   tTimerHorizontal++;
 
-   if (data[0] > 5)
+   if (tTimerHorizontal > 5)
    {
-       data[0] = 0;
-       data[1]++;
+       tTimerHorizontal = 0;
+       tMoveStep++;
    }
 
-   if ((u16)data[1] == 19)
+   if ((u16)tMoveStep == ARRAY_COUNT(sTruckCamera_HorizontalTable))
    {
        DestroyTask(taskId);
    }
    else
    {
-       cameraXpan = gTruckCamera_HorizontalTable[data[1]];
+       cameraXpan = sTruckCamera_HorizontalTable[tMoveStep];
        cameraYpan = 0;
        SetCameraPanning(cameraXpan, cameraYpan);
-       sub_805BD90(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3 - cameraXpan, cameraYpan + 3);
-       sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -cameraXpan, cameraYpan - 3);
-       sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3 - cameraXpan, cameraYpan);
+       SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX1_X_OFFSET - cameraXpan, BOX1_Y_OFFSET + cameraYpan);
+       SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX2_X_OFFSET - cameraXpan, BOX2_Y_OFFSET + cameraYpan);
+       SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX3_X_OFFSET - cameraXpan, BOX3_Y_OFFSET + cameraYpan);
    }
 }
+#undef tTimerHorizontal
+#undef tMoveStep
+#undef tTimerVertical
 
+#define tState   data[0]
+#define tTimer   data[1]
+#define tTaskId1 data[2]
+#define tTaskId2 data[3]
 void Task_HandleTruckSequence(u8 taskId)
 {
    s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
         /*
         Each case has a timer which is handled with data[1], incrementing
         until it reaches the if function's condition, which sets the next task up.
         */
     case 0:
-        data[1]++;
-        if (data[1] == SECONDS(1.5))
+        tTimer++;
+        if (tTimer == SECONDS(1.5))
         {
             SetCameraPanningCallback(0);
-            data[1] = 0; // reset the timer.
-            data[2] = CreateTask(Task_Truck1, 0xA);
-            data[0] = 1; // run the next case.
+            tTimer = 0; // reset the timer.
+            tTaskId1 = CreateTask(Task_Truck1, 0xA);
+            tState = 1; // run the next case.
             PlaySE(SE_TRUCK_MOVE);
         }
         break;
     case 1:
-        data[1]++;
-        if (data[1] == SECONDS(2.5))
+        tTimer++;
+        if (tTimer == SECONDS(2.5))
         {
             pal_fill_black();
-            data[1] = 0;
-            data[0] = 2;
+            tTimer = 0;
+            tState = 2;
         }
         break;
     case 2:
-        data[1]++;
-        if (!gPaletteFade.active && data[1] > SECONDS(5))
+        tTimer++;
+        if (!gPaletteFade.active && tTimer > SECONDS(5))
         {
-            data[1] = 0;
-            DestroyTask(data[2]);
-            data[3] = CreateTask(Task_Truck2, 0xA);
-            data[0] = 3;
+            tTimer = 0;
+            DestroyTask(tTaskId1);
+            tTaskId2 = CreateTask(Task_Truck2, 0xA);
+            tState = 3;
             PlaySE(SE_TRUCK_STOP);
         }
         break;
     case 3:
-        if (!gTasks[data[3]].isActive) // is Truck2 no longer active (is Truck3 active?)
+        if (!gTasks[tTaskId2].isActive) // is Truck2 no longer active (is Truck3 active?)
         {
             InstallCameraPanAheadCallback();
-            data[1] = 0;
-            data[0] = 4;
+            tTimer = 0;
+            tState = 4;
         }
         break;
     case 4:
-        data[1]++;
-        if (data[1] == 90)
+        tTimer++;
+        if (tTimer == 90)
         {
             PlaySE(SE_TRUCK_UNLOAD);
-            data[1] = 0;
-            data[0] = 5;
+            tTimer = 0;
+            tState = 5;
         }
         break;
     case 5:
-        data[1]++;
-        if (data[1] == 120)
+        tTimer++;
+        if (tTimer == 120)
         {
             MapGridSetMetatileIdAt(11, 8, METATILE_ID(InsideOfTruck, ExitLight_Top));
             MapGridSetMetatileIdAt(11, 9, METATILE_ID(InsideOfTruck, ExitLight_Mid));
@@ -252,6 +271,10 @@ void Task_HandleTruckSequence(u8 taskId)
         break;
     }
 }
+#undef tState
+#undef tTimer
+#undef tTaskId1
+#undef tTaskId2
 
 void ExecuteTruckSequence(void)
 {
@@ -268,9 +291,9 @@ void EndTruckSequence(u8 taskId)
 {
     if (!FuncIsActiveTask(Task_HandleTruckSequence))
     {
-        sub_805BD90(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 3, 3);
-        sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, 0, -3);
-        sub_805BD90(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, -3, 0);
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_TOP, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX1_X_OFFSET, BOX1_Y_OFFSET);
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_L, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX2_X_OFFSET, BOX2_Y_OFFSET);
+        SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX3_X_OFFSET, BOX3_Y_OFFSET);
     }
 }
 
