@@ -9,18 +9,19 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
 static void AnimTask_Minimize_Step(u8 taskId);
-void CreateMinimizeSprite(struct Task* task, u8 taskId);
-void ClonedMinimizeSprite_Step(struct Sprite* sprite);
+static void CreateMinimizeSprite(struct Task *task, u8 taskId);
+static void ClonedMinimizeSprite_Step(struct Sprite *sprite);
 
-// shadow_minimize (the minimizing-like shadow over the Pokemon effect.)
-// Used in Minimize.
+// Shrinks and grows the attacking mon several times. Also creates transparent versions of the
+// mon's sprite while it is shrinking.
+// No args.
 
 void AnimTask_Minimize(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    struct Task *task = &gTasks[taskId];
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[0] = spriteId;
-    PrepareBattlerSpriteForRotScale(spriteId, 0);
+    PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
     task->data[1] = 0;
     task->data[2] = 0;
     task->data[3] = 0;
@@ -31,9 +32,9 @@ void AnimTask_Minimize(u8 taskId)
     task->func = AnimTask_Minimize_Step;
 }
 
-void AnimTask_Minimize_Step(u8 taskId)
+static void AnimTask_Minimize_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     switch (task->data[1])
     {
     case 0:
@@ -97,10 +98,10 @@ void AnimTask_Minimize_Step(u8 taskId)
     }
 }
 
-void CreateMinimizeSprite(struct Task* task, u8 taskId)
+static void CreateMinimizeSprite(struct Task *task, u8 taskId)
 {
     s16 matrixNum; // u16 in Emerald
-    s16 spriteId = CloneBattlerSpriteWithBlend(0);
+    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_BATTLER_ATTACKER);
 
     if (spriteId >= 0)
     {
@@ -124,13 +125,13 @@ void CreateMinimizeSprite(struct Task* task, u8 taskId)
             gSprites[spriteId].data[2] = 6;
             gSprites[spriteId].callback = ClonedMinimizeSprite_Step;
             SetSpriteRotScale(spriteId, task->data[4], task->data[4], 0);
-            gSprites[spriteId].oam.affineMode = 1;
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
             CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
         }
     }
 }
 
-void ClonedMinimizeSprite_Step(struct Sprite* sprite)
+static void ClonedMinimizeSprite_Step(struct Sprite *sprite)
 {
     if (--sprite->data[0] == 0)
     {

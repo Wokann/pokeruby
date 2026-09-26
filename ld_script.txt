@@ -233,7 +233,7 @@ SECTIONS {
         src/battle/anim/grip.o(.text);
         src/battle/anim/guillotine.o(.text);
         src/battle/anim/grow_and_grayscale.o(.text);
-        src/battle/anim/shadow_minimize.o(.text);
+        src/battle/anim/minimize.o(.text);
         src/battle/anim/splash.o(.text);
         src/battle/anim/grow.o(.text);
         src/battle/anim/breath.o(.text);
@@ -656,7 +656,7 @@ SECTIONS {
         src/battle/anim/cyclone.o(.rodata);
         src/battle/anim/grip.o(.rodata);
         src/battle/anim/guillotine.o(.rodata);
-        src/battle/anim/shadow_minimize.o(.rodata);
+        src/battle/anim/minimize.o(.rodata);
         src/battle/anim/splash.o(.rodata);
         src/battle/anim/grow.o(.rodata);
         src/battle/anim/breath.o(.rodata);
