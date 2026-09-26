@@ -74,7 +74,7 @@ extern const u8 gPokenavHoennMapMisc_Gfx[];
 extern const u8 gUnknown_08E99FB0[];
 extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u16 gPokenavHoennMap1_Pal[];
-extern void (*const gUnknown_083E3270[])(u16, u16);
+extern void (*const gPokenavListRowPrinters[])(u16, u16);
 extern const u8 gUnknown_083E039C[];
 extern const u8 gUnknown_083E03A0[];
 extern const u8 gUnknown_083E01F4[];
@@ -960,19 +960,19 @@ void PrintConditionGraphMonInfo(u16 monSlot)
     }
 }
 
-void sub_80F0264(u8 a)
+void InitPokenavListScreen(u8 listMode)
 {
     gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->unk87CA = a;
+    gPokenavStructPtr->listMode = listMode;
 
     if (gPokenavStructPtr->unk6DAC == 0)
     {
-        while (sub_80F02A0())
+        while (LoadPokenavListScreenStep())
             ;
     }
 }
 
-bool8 sub_80F02A0(void)
+bool8 LoadPokenavListScreenStep(void)
 {
     const u16 *pointer;
 
@@ -981,7 +981,7 @@ bool8 sub_80F02A0(void)
     case 0:
         ResetPokenavBgOffsets();
 
-        gPokenavStructPtr->unk87C8 = gPokenavStructPtr->unk87CA == 1;
+        gPokenavStructPtr->isRibbonsList = gPokenavStructPtr->listMode == POKENAV_LIST_RIBBONS;
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
@@ -1010,7 +1010,7 @@ bool8 sub_80F02A0(void)
         LoadPalette(gUnknown_083E02B4, 0xF0, 0x20);
         LoadPalette(gUnknown_083E0334, 0x40, 0x20);
 
-        if (gPokenavStructPtr->unk87CA == 0)
+        if (gPokenavStructPtr->listMode == POKENAV_LIST_CONDITION_SEARCH)
         {
             LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
@@ -1019,7 +1019,7 @@ bool8 sub_80F02A0(void)
             LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
             LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
         }
-        else if (gPokenavStructPtr->unk87CA == 1)
+        else if (gPokenavStructPtr->listMode == POKENAV_LIST_RIBBONS)
         {
             LoadPalette(gUnknown_083E0274, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gUnknown_083E0274[5];
@@ -1040,7 +1040,7 @@ bool8 sub_80F02A0(void)
         }
         break;
     case 8:
-        if (gPokenavStructPtr->unk87CA != 2)
+        if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
             sub_8095C8C((void *)VRAM + 0xE800, 0, 5, gUnknown_08E9FD1C, 0, 0, 9, 4, 9);
         }
@@ -1066,7 +1066,7 @@ bool8 sub_80F02A0(void)
         }
         break;
     case 13:
-        if (gPokenavStructPtr->unk87CA != 2)
+        if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
             ShowMapNamePopUpWindow();
         }
@@ -1150,12 +1150,12 @@ bool8 sub_80F0718(void)
 
 void ShowMapNamePopUpWindow(void)
 {
-    switch (gPokenavStructPtr->unk87CA)
+    switch (gPokenavStructPtr->listMode)
     {
-    case 0:
+    case POKENAV_LIST_CONDITION_SEARCH:
         sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk876E].unk2_5);
         break;
-    case 1:
+    case POKENAV_LIST_RIBBONS:
         sub_80F445C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk876E + 1);
         break;
     default:
@@ -1245,7 +1245,7 @@ bool8 sub_80F098C(void)
     r8 = 0;
     while (1)
     {
-        gUnknown_083E3270[gPokenavStructPtr->unk87CA](gPokenavStructPtr->unk877E, gPokenavStructPtr->unk8780);
+        gPokenavListRowPrinters[gPokenavStructPtr->listMode](gPokenavStructPtr->unk877E, gPokenavStructPtr->unk8780);
         if (--gPokenavStructPtr->unk8784 == 0)
             return FALSE;
         if (++gPokenavStructPtr->unk877E > gPokenavStructPtr->unk8774)
@@ -1259,7 +1259,7 @@ bool8 sub_80F098C(void)
 
 void sub_80F0A24(u16 arg0, u16 arg1)
 {
-    u8 var0 = gPokenavStructPtr->unk87C8 == 0 ? 2 : 1;
+    u8 var0 = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
     sub_80F4428(gPokenavStructPtr->unk8788, arg0, var0);
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
     Menu_PrintText(gPokenavStructPtr->unk8788, 13, arg1);

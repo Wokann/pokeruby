@@ -200,11 +200,11 @@ const u8 *const gPokenavConditionSearchDescriptions[] =
 void sub_80F0A24(u16, u16);
 void sub_80F0A74(u16, u16);
 
-void (*const gUnknown_083E3270[])(u16, u16) = 
+void (*const gPokenavListRowPrinters[])(u16, u16) =
 {
-    sub_80F0A24,
-    sub_80F0A24,
-    sub_80F0A74,
+    [POKENAV_LIST_CONDITION_SEARCH] = sub_80F0A24,
+    [POKENAV_LIST_RIBBONS] = sub_80F0A24,
+    [POKENAV_LIST_TRAINERS_EYES] = sub_80F0A74,
 };
 
 const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
@@ -2129,11 +2129,11 @@ void OpenConditionSearchResults(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        sub_80F0264(0);
+        InitPokenavListScreen(POKENAV_LIST_CONDITION_SEARCH);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 10:
-        if (!sub_80F02A0())
+        if (!LoadPokenavListScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
@@ -2256,11 +2256,11 @@ void OpenConditionSearchListFromGraph(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        sub_80F0264(0);
+        InitPokenavListScreen(POKENAV_LIST_CONDITION_SEARCH);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 4:
-        if (!sub_80F02A0())
+        if (!LoadPokenavListScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -2651,10 +2651,10 @@ void OpenRibbonsMonList(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        sub_80F0264(0x1);
+        InitPokenavListScreen(POKENAV_LIST_RIBBONS);
         gPokenavStructPtr->callbackStep++;
     case 10:
-        if (!sub_80F02A0())
+        if (!LoadPokenavListScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
@@ -2937,10 +2937,10 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         break;
     case 2:
         sub_80F6134();
-        sub_80F0264(0x1);
+        InitPokenavListScreen(POKENAV_LIST_RIBBONS);
         gPokenavStructPtr->callbackStep++;
     case 3:
-        if (!sub_80F02A0())
+        if (!LoadPokenavListScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
@@ -3010,10 +3010,10 @@ void OpenTrainerEyes(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80F0264(0x2);
+        InitPokenavListScreen(POKENAV_LIST_TRAINERS_EYES);
         gPokenavStructPtr->callbackStep++;
     case 6:
-        if (!sub_80F02A0())
+        if (!LoadPokenavListScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 7:

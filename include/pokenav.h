@@ -5,6 +5,12 @@
 #include "region_map.h"
 #include "mon_markings.h"
 
+enum {
+    POKENAV_LIST_CONDITION_SEARCH,
+    POKENAV_LIST_RIBBONS,
+    POKENAV_LIST_TRAINERS_EYES,
+};
+
 struct TrainersEyeStruct {
     /*0x0*/ u16 opponentId;
     /*0x2*/ u16 regionMapSectionId;
@@ -143,9 +149,9 @@ struct UnkPokenavStruct {
     /*0x8784*/ u16 unk8784;
     /*0x8786*/ u16 unk8786;
     /*0x8788*/ u8 unk8788[0x40];
-    /*0x87C8*/ u8 unk87C8;
+    /*0x87C8*/ u8 isRibbonsList;
     /*0x87C9*/ u8 unk87C9;
-    /*0x87CA*/ u8 unk87CA;
+    /*0x87CA*/ u8 listMode;
     /*0x87CB*/ u8 unk87CB;
     /*0x87CC*/ struct Sprite *unk87CC;
     /*0x87D0*/ struct Sprite *unk87D0[2];
@@ -444,8 +450,8 @@ void InitConditionGraphScreen(void);
 bool8 LoadConditionGraphScreenStep(void);
 void sub_80F6134();
 u8 sub_80F5DD4();
-void sub_80F0264(u8);
-bool8 sub_80F02A0();
+void InitPokenavListScreen(u8 listMode);
+bool8 LoadPokenavListScreenStep(void);
 void UpdateMapSecInfoWindow(void);
 bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut);
 void UpdateRegionMapBottomToolbar(void);
