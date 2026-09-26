@@ -11,6 +11,7 @@
 #include "field_poison.h"
 #include "field_specials.h"
 #include "fieldmap.h"
+#include "constants/field_poison.h"
 #include "constants/flags.h"
 #include "item_menu.h"
 #include "metatile_behavior.h"
@@ -638,11 +639,11 @@ static bool8 UpdatePoisonStepCounter(void)
         {
             switch (DoPoisonFieldEffect())
             {
-            case 0:
+            case FLDPSN_NONE:
                 return FALSE;
-            case 1:
+            case FLDPSN_PSN:
                 return FALSE;
-            case 2:
+            case FLDPSN_FNT:
                 return TRUE;
             }
         }

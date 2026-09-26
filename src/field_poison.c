@@ -8,6 +8,7 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
+#include "constants/field_poison.h"
 #include "constants/species.h"
 
 extern u16 gSpecialVar_Result;
@@ -92,9 +93,9 @@ static void Task_TryFieldPoisonWhiteOut(u8 taskId)
         break;
     case 2:  // done checking all mons
         if (AllMonsFainted())
-            gSpecialVar_Result = 1;
+            gSpecialVar_Result = FLDPSN_WHITEOUT;
         else
-            gSpecialVar_Result = 0;
+            gSpecialVar_Result = FLDPSN_NO_WHITEOUT;
         ScriptContext_Enable();
         DestroyTask(taskId);
         break;
@@ -143,11 +144,11 @@ s32 DoPoisonFieldEffect(void)
     }
     if (numFainted != 0)
     {
-        return 2;
+        return FLDPSN_FNT;
     }
     if (numPoisoned != 0)
     {
-        return 1;
+        return FLDPSN_PSN;
     }
-    return 0;
+    return FLDPSN_NONE;
 }

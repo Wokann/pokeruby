@@ -6,6 +6,7 @@
 #include "constants/decorations.h"
 #include "constants/easy_chat.h"
 #include "constants/field_effects.h"
+#include "constants/field_poison.h"
 #include "constants/field_tasks.h"
 #include "constants/flags.h"
 #include "constants/game_stat.h"
@@ -1138,7 +1139,7 @@ EventScript_FieldPoison:: @ 81A14B8
 	lockall
 	special TryFieldPoisonWhiteOut
 	waitstate
-	compare VAR_RESULT, 1
+	compare VAR_RESULT, FLDPSN_WHITEOUT
 	goto_if_eq EventScript_FieldWhiteOut
 	releaseall
 	end
