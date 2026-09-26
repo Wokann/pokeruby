@@ -22,7 +22,7 @@ const struct BardSound *GetWordSounds(u16 group, u16 word)
 const struct BardSound *GetWordSounds(u16 group, u16 word)
 {
     const struct BardSound (*sounds)[6] = gBardSoundsTable[group];
-    u32 index = de_sub_80EB748(group, word);
+    u32 index = GetEasyChatWordIndexInGroup(group, word);
 
     return sounds[index];
 }

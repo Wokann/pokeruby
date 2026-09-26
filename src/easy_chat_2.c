@@ -68,14 +68,14 @@ void sub_80EAC30(struct UnknownEasyChatStruct1 *, u16, u16, u16, u16, void *);
 void sub_80EAC48(struct UnknownEasyChatStruct1 *);
 void sub_80EACBC(void *, u16 *, struct UnknownEasyChatStruct1 *);
 u8 *CopyEasyChatGroupName(u8 *, u8, int);
-u8 *sub_80EB218(u8 *, u16, u16);
+u8 *CopyEasyChatWordPadded(u8 *, u16, u16);
 u16 GetEasyChatWordStringLength(u16 easyChatWord);
 bool8 IsEasyChatWordInvalid(u16 easyChatWord);
 static bool8 IsTrendySayingUnlocked(u8);
 static u8 GetNumTrendySayingsUnlocked(void);
 static u16 GetRandomUnlockedTrendySaying(void);
-u8 sub_80EB9C8(void);
-static u16 sub_80EB9D8(void);
+u8 EasyChatIsNationalPokedexEnabled(void);
+static u16 GetRandomUnlockedEasyChatPokemon(void);
 
 EWRAM_DATA u8 gUnknown_020388AC = 0;
 
@@ -1278,7 +1278,7 @@ void sub_80E9620(u16 a, u16 b)
             }
             else
             {
-                sub_80EB218(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[r10], 11);
+                CopyEasyChatWordPadded(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[r10], 11);
                 Menu_PrintText(gEasyChatStruct->unk9E14, r6, r7);
                 r6 += gEasyChatStruct->unk8C[i][j] + 11;
             }
@@ -1334,7 +1334,7 @@ void sub_80E97C0(u16 a, u16 b)
                 break;
             if (gEasyChatStruct->unkC[r7] != 0xFFFF)
             {
-                r2 = sub_80EB218(r2, gEasyChatStruct->unkC[r7], 0);
+                r2 = CopyEasyChatWordPadded(r2, gEasyChatStruct->unkC[r7], 0);
                 *r2++ = CHAR_SPACE;
             }
             r7++;
@@ -1514,7 +1514,7 @@ void sub_80E9AF8(u16 a)
                 BasicInitMenuWindow(&gWindowTemplate_81E6D70);
             else
                 BasicInitMenuWindow(&gWindowTemplate_81E6D54);
-            sub_80EB218(r8, gEasyChatStruct->unk9A2A[a][i], 9);
+            CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
             sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
@@ -1523,7 +1523,7 @@ void sub_80E9AF8(u16 a)
         BasicInitMenuWindow(&gWindowTemplate_81E6D54);
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
-            sub_80EB218(r8, gEasyChatStruct->unk9A2A[a][i], 9);
+            CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
             sub_80E9A60(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
@@ -2079,7 +2079,7 @@ u8 *CopyEasyChatGroupName(u8 *dest, u8 group, int unused)
     return StringCopy(dest, gEasyChatGroupNames[group]);
 }
 
-bool8 sub_80EAD7C(u8 group)
+bool8 IsEasyChatGroupUnlocked(u8 group)
 {
     switch (group)
     {
@@ -2090,13 +2090,13 @@ bool8 sub_80EAD7C(u8 group)
     case EC_GROUP_MOVE_2:
         return FlagGet(FLAG_SYS_GAME_CLEAR);
     case EC_GROUP_POKEMON_2:
-        return sub_80EB9C8();
+        return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
     }
 }
 
-bool8 sub_80EADC0(u8 group, u16 word)
+bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
 {
     switch (group)
     {
@@ -2113,7 +2113,7 @@ bool8 sub_80EADC0(u8 group, u16 word)
             return FALSE;
         return TRUE;
     case EC_GROUP_POKEMON_2:
-        return sub_80EB9C8();
+        return EasyChatIsNationalPokedexEnabled();
     default:
         return TRUE;
     }
@@ -2128,7 +2128,7 @@ u16 EasyChat_GetNumWordsInGroup(u8 group)
     case EC_GROUP_TRENDY_SAYING:
         return GetNumTrendySayingsUnlocked();
     default:
-        if (sub_80EAD7C(group))
+        if (IsEasyChatGroupUnlocked(group))
             return gEasyChatGroupSizes[group];
         return FALSE;
     }
@@ -2136,7 +2136,7 @@ u16 EasyChat_GetNumWordsInGroup(u8 group)
 
 #if GERMAN
 NAKED
-void sub_80EAECC(void)
+void SetUnlockedWordsByAlphabet(void)
 {
     asm(".syntax unified\n\
 	push {r4-r7,lr}\n\
@@ -2217,7 +2217,7 @@ _080EAF4A:\n\
 	adds r1, r4, 0\n\
 	ands r1, r2\n\
 	str r3, [sp, 0xC]\n\
-	bl sub_80EADC0\n\
+	bl IsEasyChatIndexAndGroupUnlocked\n\
 	lsls r0, 24\n\
 	ldr r3, [sp, 0xC]\n\
 	cmp r0, 0\n\
@@ -2266,7 +2266,7 @@ _080EAFC8:\n\
 	adds r2, r3, 0\n\
 	adds r1, r4, 0\n\
 	ands r1, r2\n\
-	bl sub_80EADC0\n\
+	bl IsEasyChatIndexAndGroupUnlocked\n\
 	lsls r0, 24\n\
 	cmp r0, 0\n\
 	beq _080EB00C\n\
@@ -2323,7 +2323,7 @@ _080EB03C: .4byte 0x0000446c\n\
     .syntax divided\n");
 }
 #else
-void sub_80EAECC(void)
+void SetUnlockedWordsByAlphabet(void)
 {
     u16 i;
     u16 r9;
@@ -2350,7 +2350,7 @@ void sub_80EAECC(void)
                 while (--r5 != 0xFFFF)
                 {
                     word = gEasyChatWordsAlphabetized[r6++];
-                    if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)) && !r7)
+                    if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)) && !r7)
                     {
                         gEasyChatStruct->unkB78[i][r9++] = word;
                         gEasyChatStruct->unk4142[i]++;
@@ -2360,7 +2360,7 @@ void sub_80EAECC(void)
             }
             else
             {
-                if (sub_80EADC0(EC_GROUP(word), EC_INDEX(word)))
+                if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)))
                 {
                     gEasyChatStruct->unkB78[i][r9++] = word;
                     gEasyChatStruct->unk4142[i]++;
@@ -2403,7 +2403,7 @@ void LoadEasyChatStrings(void)
     }
 }
 
-void sub_80EB0B0(void)
+void SetSelectedWordGroup(void)
 {
     const u16 *sp0;
     u16 r7;
@@ -2420,7 +2420,7 @@ void sub_80EB0B0(void)
         sp0 = gEasyChatGroupOrders[group];
         for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatStruct->unk1B8]; r8++)
         {
-            if (sub_80EADC0(group, sp0[r8]))
+            if (IsEasyChatIndexAndGroupUnlocked(group, sp0[r8]))
             {
                 gEasyChatStruct->unk9A2A[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
                 gEasyChatStruct->unk4178[group]++;
@@ -2453,7 +2453,7 @@ void sub_80EB0B0(void)
     }
 }
 
-u8 *sub_80EB218(u8 *dest, u16 word, u16 c)
+u8 *CopyEasyChatWordPadded(u8 *dest, u16 word, u16 c)
 {
     u8 *wordText;
 
@@ -2580,7 +2580,7 @@ bool8 IsEasyChatWordInvalid(u16 easyChatWord)
 }
 
 #if GERMAN
-u32 de_sub_80EB748(s32 group, s32 index)
+u32 GetEasyChatWordIndexInGroup(s32 group, s32 index)
 {
     s32 i;
     u16 *words;
@@ -2694,7 +2694,7 @@ u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16 arg2, u16 arg3)
     return dst;
 }
 
-u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3)
+u8 *ConvertEasyChatWordsToStringWithScroll(u8 *dst, u16 *words, u16 arg2, u16 arg3)
 {
     u16 i;
     u16 n;
@@ -2734,7 +2734,7 @@ u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3)
 }
 
 
-u16 unref_sub_80EB5E0(u16 arg0)
+u16 UnusedGetEasyChatWordStringLength(u16 arg0)
 {
     const u8 *chars;
     u16 i;
@@ -2777,12 +2777,12 @@ u16 unref_sub_80EB5E0(u16 arg0)
     return length;
 }
 
-bool8 sub_80EB680(u16 *arg0, u16 arg1, u16 arg2, u16 arg3)
+bool8 CanPhraseFitInXRowsYCols(u16 *arg0, u16 arg1, u16 arg2, u16 arg3)
 {
     return FALSE;
 }
 
-void unref_sub_80EB684(u8 arg0, u16 arg1)
+void UnusedClearTvShowEasyChatWords(u8 arg0, u16 arg1)
 {
     u16 *ptr;
     u16 c;
@@ -2815,7 +2815,7 @@ void unref_sub_80EB684(u8 arg0, u16 arg1)
     }
 }
 
-void sub_80EB6FC(u16 *arg0, u16 arg1)
+void InitializeEasyChatWordArray(u16 *arg0, u16 arg1)
 {
     u16 i;
 
@@ -2844,7 +2844,7 @@ u16 GetRandomEasyChatWordFromGroup(u16 groupId)
 
 u16 GetRandomEasyChatWordFromUnlockedGroup(u16 groupId)
 {
-    if (!sub_80EAD7C(groupId))
+    if (!IsEasyChatGroupUnlocked(groupId))
         return -1;
 
     if (groupId != EC_GROUP_POKEMON_1)
@@ -2854,7 +2854,7 @@ u16 GetRandomEasyChatWordFromUnlockedGroup(u16 groupId)
     }
     else
     {
-        return sub_80EB9D8();
+        return GetRandomUnlockedEasyChatPokemon();
     }
 
     return GetRandomEasyChatWordFromGroup(groupId);
@@ -2875,7 +2875,7 @@ void ShowEasyChatProfile(void)
         break;
     case 1:
         easyChatWords = gSaveBlock1.easyChats.unk2B28;
-        if (sub_80EB680(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
+        if (CanPhraseFitInXRowsYCols(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
         {
             columns = 2;
             rows = 3;
@@ -3003,12 +3003,12 @@ static u16 GetRandomUnlockedTrendySaying(void)
     return -1;
 }
 
-u8 sub_80EB9C8(void)
+u8 EasyChatIsNationalPokedexEnabled(void)
 {
     return IsNationalPokedexEnabled();
 }
 
-static u16 sub_80EB9D8(void)
+static u16 GetRandomUnlockedEasyChatPokemon(void)
 {
     u16 *speciesList;
     u16 local1;

@@ -1706,7 +1706,7 @@ void InterviewBefore_FanClubLetter(void)
     {
         StringCopy(gStringVar1, gSpeciesNames[GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES, 0)]);
         fanclubLetter = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].fanclubLetter;
-        sub_80EB6FC(fanclubLetter->pad04, 6);
+        InitializeEasyChatWordArray(fanclubLetter->pad04, 6);
     }
 }
 
@@ -1718,7 +1718,7 @@ void InterviewBefore_RecentHappenings(void)
     if (gSpecialVar_Result == 0)
     {
         recentHappenings = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].recentHappenings;
-        sub_80EB6FC(recentHappenings->var04, 6);
+        InitializeEasyChatWordArray(recentHappenings->var04, 6);
     }
 }
 
@@ -1733,7 +1733,7 @@ void InterviewBefore_PkmnFanClubOpinions(void)
         GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_NICKNAME, gStringVar2);
         StringGet_Nickname(gStringVar2);
         fanclubOpinions = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].fanclubOpinions;
-        sub_80EB6FC(fanclubOpinions->var1C, 2);
+        InitializeEasyChatWordArray(fanclubOpinions->var1C, 2);
     }
 }
 
@@ -1755,7 +1755,7 @@ void InterviewBefore_BravoTrainerPkmnProfile(void)
     if (gSpecialVar_Result == 0)
     {
         bravoTrainer = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].bravoTrainer;
-        sub_80EB6FC(bravoTrainer->var04, 2);
+        InitializeEasyChatWordArray(bravoTrainer->var04, 2);
     }
 }
 
@@ -1767,7 +1767,7 @@ void InterviewBefore_BravoTrainerBTProfile(void)
     if (gSpecialVar_Result == 0)
     {
         bravoTrainerTower = &gSaveBlock1.tvShows[gUnknown_03005D38.var0].bravoTrainerTower;
-        sub_80EB6FC(bravoTrainerTower->var18, 1); // wrong struct ident, fix later
+        InitializeEasyChatWordArray(bravoTrainerTower->var18, 1); // wrong struct ident, fix later
     }
 }
 

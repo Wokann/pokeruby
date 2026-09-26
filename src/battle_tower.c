@@ -1024,7 +1024,7 @@ void CheckPartyBattleTowerBanlist(void)
 
 void CopyBattleTowerTrainerSpeech(u16 *easyChat)
 {
-    sub_80EB544(gStringVar4, easyChat, 2, 3);
+    ConvertEasyChatWordsToStringWithScroll(gStringVar4, easyChat, 2, 3);
 }
 
 void CopyBattleTowerTrainerGreeting(void)

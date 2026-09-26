@@ -189,13 +189,13 @@ u8 sub_80EA0E4(void);
 u8 sub_80EA184(void);
 void sub_80EAC5C(void);
 void sub_80EAD08(void);
-u8 sub_80EAD7C(u8);
-void sub_80EAECC(void);
+u8 IsEasyChatGroupUnlocked(u8);
+void SetUnlockedWordsByAlphabet(void);
 void LoadEasyChatStrings(void);
-void sub_80EB0B0(void);
-u8 *sub_80EB218(u8 *, u16, u16);
+void SetSelectedWordGroup(void);
+u8 *CopyEasyChatWordPadded(u8 *, u16, u16);
 u16 GetEasyChatWordStringLength(u16 easyChatWord);
-bool8 sub_80EB680(u16 *, u16, u16, u16);
+bool8 CanPhraseFitInXRowsYCols(u16 *, u16, u16, u16);
 
 void ShowEasyChatScreen(void)
 {
@@ -394,7 +394,7 @@ void InitEasyChatScreenLayout(void)
     gEasyChatStruct->unk1BA = 0;
     gEasyChatStruct->unk1BE = 2;
     SetUnlockedEasyChatGroups();
-    sub_80EAECC();
+    SetUnlockedWordsByAlphabet();
     LoadEasyChatStrings();
     ResetCurrentPhraseToSaved();
     InitAlphabetKeyboardRows();
@@ -421,7 +421,7 @@ void SetUnlockedEasyChatGroups(void)
     gEasyChatStruct->unk28 = 17;
     while (r4 < 22)
     {
-        if (sub_80EAD7C(r4) != 0)
+        if (IsEasyChatGroupUnlocked(r4) != 0)
         {
             r5++;
             if (r5 > 1)
@@ -587,7 +587,7 @@ void InitKeyboardSelection(void)
 
 void InitWordSelectSelection(void)
 {
-    sub_80EB0B0();
+    SetSelectedWordGroup();
     if (gEasyChatStruct->unk26 == 0)
     {
         u16 i;
@@ -1644,8 +1644,8 @@ u8 DidPhraseChange(void)
 
     for (i = 0; i < gEasyChatStruct->unkA; i++)
     {
-        sub_80EB218(gEasyChatStruct->unk9E14, gEasyChatStruct->unk4[i], 0);
-        sub_80EB218(gEasyChatStruct->unk9E41, gEasyChatStruct->unkC[i], 0);
+        CopyEasyChatWordPadded(gEasyChatStruct->unk9E14, gEasyChatStruct->unk4[i], 0);
+        CopyEasyChatWordPadded(gEasyChatStruct->unk9E41, gEasyChatStruct->unkC[i], 0);
         r1 = gEasyChatStruct->unk9E14;
         r2 = gEasyChatStruct->unk9E41;
         while (*r1 == *r2 && *r1 != 0xFF)
@@ -1680,8 +1680,8 @@ bool8 DidPlayerInputMysteryEventPhrase(void)
 
     for (i = 0; i < 4; i++)
     {
-        sub_80EB218(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[i], 0);
-        sub_80EB218(gEasyChatStruct->unk9E41, sMysteryEventPhrase[i], 0);
+        CopyEasyChatWordPadded(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[i], 0);
+        CopyEasyChatWordPadded(gEasyChatStruct->unk9E41, sMysteryEventPhrase[i], 0);
         r3 = gEasyChatStruct->unk9E14;
         r4 = gEasyChatStruct->unk9E41;
         while (*r3 != 0xFF && *r4 != 0xFF)
@@ -1704,13 +1704,13 @@ u8 DidPlayerInputABerryMasterWifePhrase(void)
         u8 *ptr;
         u8 *r3;
 
-        ptr = sub_80EB218(gEasyChatStruct->unk9E6E, gEasyChatStruct->unkC[0], 0);
+        ptr = CopyEasyChatWordPadded(gEasyChatStruct->unk9E6E, gEasyChatStruct->unkC[0], 0);
         *ptr++ = CHAR_SPACE;
-        sub_80EB218(ptr, gEasyChatStruct->unkC[1], 0);
+        CopyEasyChatWordPadded(ptr, gEasyChatStruct->unkC[1], 0);
 
-        ptr = sub_80EB218(gEasyChatStruct->unk9EEE, sBerryMasterWifePhrases[i][0], 0);
+        ptr = CopyEasyChatWordPadded(gEasyChatStruct->unk9EEE, sBerryMasterWifePhrases[i][0], 0);
         *ptr++ = CHAR_SPACE;
-        sub_80EB218(ptr, sBerryMasterWifePhrases[i][1], 0);
+        CopyEasyChatWordPadded(ptr, sBerryMasterWifePhrases[i][1], 0);
 
         ptr = gEasyChatStruct->unk9E6E;
         r3 = gEasyChatStruct->unk9EEE;
@@ -1729,9 +1729,9 @@ void BufferCurrentPhraseToStringVar2(void)
 {
     u8 *ptr;
 
-    ptr = sub_80EB218(gStringVar2, gEasyChatStruct->currentPhrase[0], 0);
+    ptr = CopyEasyChatWordPadded(gStringVar2, gEasyChatStruct->currentPhrase[0], 0);
     *ptr++ = CHAR_SPACE;
-    sub_80EB218(ptr, gEasyChatStruct->currentPhrase[1], 0);
+    CopyEasyChatWordPadded(ptr, gEasyChatStruct->currentPhrase[1], 0);
 }
 
 void CloseEasyChatPrompt(void)

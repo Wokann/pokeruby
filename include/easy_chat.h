@@ -119,9 +119,9 @@ extern struct Shared1000 *const gEasyChatStruct;
 void ShowEasyChatScreen(void);
 void DoEasyChatScreen(u8 type, u16 *words, void (*exitCallback)(void), u8 displayedPersonType);
 u16 GetRandomEasyChatWordFromGroup(u16 groupId);
-void sub_80EB6FC(u16 *, u16);
+void InitializeEasyChatWordArray(u16 *words, u16 length);
 void InitEasyChatPhrases(void);
-u8 sub_80EAD7C(u8 group);
+u8 IsEasyChatGroupUnlocked(u8 groupId);
 u16 EasyChat_GetNumWordsInGroup(u8);
 bool8 IsEasyChatWordInvalid(u16 easyChatWord);
 u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord);
@@ -129,10 +129,10 @@ u8 *ConvertEasyChatWordsToString(u8 *dst, u16 *words, u16, u16);
 u16 GetRandomEasyChatWordFromUnlockedGroup(u16 group);
 void UnlockTrendySaying(u8);
 u16 UnlockRandomTrendySaying(void);
-u8 *sub_80EB544(u8 *dst, u16 *words, u16 arg2, u16 arg3);
+u8 *ConvertEasyChatWordsToStringWithScroll(u8 *dest, u16 *words, u16 columns, u16 rows);
 
 #if GERMAN
-u32 de_sub_80EB748(s32, s32);
+u32 GetEasyChatWordIndexInGroup(s32 groupId, s32 wordIndex);
 #endif
 
 #endif // GUARD_EASYCHAT_H
