@@ -272,7 +272,7 @@ SECTIONS {
         src/battle/anim/fire.o(.text);
         src/battle/anim/sunlight.o(.text);
         src/battle/anim/fire_2.o(.text);
-        src/battle/anim/wisp_orb.o(.text);
+        src/battle/anim/will_o_wisp_orb.o(.text);
         src/battle/anim/wisp_fire.o(.text);
         src/battle/anim/thunder.o(.text);
         src/battle/anim/beta_beat_up.o(.text);
@@ -693,7 +693,7 @@ SECTIONS {
         src/battle/anim/fire.o(.rodata);
         src/battle/anim/sunlight.o(.rodata);
         src/battle/anim/fire_2.o(.rodata);
-        src/battle/anim/wisp_orb.o(.rodata);
+        src/battle/anim/will_o_wisp_orb.o(.rodata);
         src/battle/anim/wisp_fire.o(.rodata);
         src/battle/anim/thunder.o(.rodata);
         src/battle/anim/beta_beat_up.o(.rodata);

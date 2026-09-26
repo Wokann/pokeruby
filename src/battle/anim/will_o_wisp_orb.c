@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 #include "constants/songs.h"
 #include "rom_8077ABC.h"
 #include "sound.h"
@@ -14,8 +15,7 @@ extern u8 gAnimCustomPanning;
 static void AnimWillOWispOrb(struct Sprite *sprite);
 static void AnimWillOWispOrb_Step(struct Sprite *);
 
-// wisp_orb (animates the wisp orbs)
-// Used in Will-O-Wisp
+// Orbs used in Will-O-Wisp.
 
 static const union AnimCmd sAnim_WillOWispOrb_0[] =
 {
@@ -68,11 +68,11 @@ static void AnimWillOWispOrb(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        InitSpritePosToAnimAttacker(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, FALSE);
         StartSpriteAnim(sprite, gBattleAnimArgs[2]);
         sprite->data[7] = gBattleAnimArgs[2];
 
-        if (GetBattlerSide(gBattleAnimAttacker) != 0)
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         {
             sprite->data[4] = 4;
         }
@@ -86,7 +86,7 @@ static void AnimWillOWispOrb(struct Sprite *sprite)
         break;
     case 1:
         sprite->data[1] += 192;
-        if (GetBattlerSide(gBattleAnimAttacker) != 0)
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         {
             sprite->y2 = -(sprite->data[1] >> 8);
         }
@@ -107,7 +107,7 @@ static void AnimWillOWispOrb(struct Sprite *sprite)
     case 2:
         sprite->x2 = Sin(sprite->data[2], sprite->data[4]);
         sprite->data[2] = (sprite->data[2] + 4) & 0xFF;
-        
+
         if (++sprite->data[3] == 31)
         {
             sprite->x += sprite->x2;
@@ -117,9 +117,9 @@ static void AnimWillOWispOrb(struct Sprite *sprite)
 
             sprite->data[0] = 256;
             sprite->data[1] = sprite->x;
-            sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+            sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
             sprite->data[3] = sprite->y;
-            sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+            sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
             InitAnimLinearTranslationWithSpeed(sprite);
             sprite->callback = AnimWillOWispOrb_Step;
