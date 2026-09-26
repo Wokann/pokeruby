@@ -3,17 +3,18 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CD274(struct Sprite* sprite);
-static void sub_80CD2D4(struct Sprite* sprite);
+static void AnimBubbleBurst(struct Sprite *sprite);
+static void AnimBubbleBurst_Step(struct Sprite *sprite);
 
-// unused_3 (seems to be some sort of popping effect with a growing diamond shape)
+// Unused Bubble Burst effect.
 
-const union AnimCmd gSpriteAnim_83D6CB8[] =
+static const union AnimCmd sAnim_BubbleBurst[] =
 {
     ANIMCMD_FRAME(0, 10),
     ANIMCMD_FRAME(4, 10),
@@ -26,7 +27,7 @@ const union AnimCmd gSpriteAnim_83D6CB8[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D6CDC[] =
+static const union AnimCmd sAnim_BubbleBurst_Flipped[] =
 {
     ANIMCMD_FRAME(0, 10, .hFlip = TRUE),
     ANIMCMD_FRAME(4, 10, .hFlip = TRUE),
@@ -39,27 +40,27 @@ const union AnimCmd gSpriteAnim_83D6CDC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6D00[] =
+static const union AnimCmd *const sAnims_BubbleBurst[] =
 {
-    gSpriteAnim_83D6CB8,
-    gSpriteAnim_83D6CDC,
+    sAnim_BubbleBurst,
+    sAnim_BubbleBurst_Flipped,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D6D08 =
+static const struct SpriteTemplate sBubbleBurstSpriteTemplate =
 {
-    .tileTag = ANIM_TAG_UNUSED_BUBBLE_BURST,
-    .paletteTag = ANIM_TAG_UNUSED_BUBBLE_BURST,
+    .tileTag = ANIM_TAG_BUBBLE_BURST,
+    .paletteTag = ANIM_TAG_BUBBLE_BURST,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
-    .anims = gSpriteAnimTable_83D6D00,
+    .anims = sAnims_BubbleBurst,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD274,
+    .callback = AnimBubbleBurst,
 };
 
-void sub_80CD274(struct Sprite* sprite)
+static void AnimBubbleBurst(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
-    if (GetBattlerSide(gBattleAnimAttacker) == 0)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         sprite->x += gBattleAnimArgs[0];
         sprite->y += gBattleAnimArgs[1];
@@ -71,10 +72,10 @@ void sub_80CD274(struct Sprite* sprite)
         StartSpriteAnim(sprite, 1);
     }
 
-    sprite->callback = sub_80CD2D4;
+    sprite->callback = AnimBubbleBurst_Step;
 }
 
-static void sub_80CD2D4(struct Sprite* sprite)
+static void AnimBubbleBurst_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 30)
     {

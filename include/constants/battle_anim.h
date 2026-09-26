@@ -42,7 +42,7 @@
 #define ANIM_TAG_SMALL_EMBER                (ANIM_SPRITES_START + 29)  
 #define ANIM_TAG_GRAY_SMOKE                 (ANIM_SPRITES_START + 30)  
 #define ANIM_TAG_BLUE_STAR                  (ANIM_SPRITES_START + 31)  
-#define ANIM_TAG_UNUSED_BUBBLE_BURST        (ANIM_SPRITES_START + 32)  
+#define ANIM_TAG_BUBBLE_BURST               (ANIM_SPRITES_START + 32)
 #define ANIM_TAG_FIRE                       (ANIM_SPRITES_START + 33)  
 #define ANIM_TAG_UNUSED_SPINNING_FIRE       (ANIM_SPRITES_START + 34)  
 #define ANIM_TAG_FIRE_PLUME                 (ANIM_SPRITES_START + 35)  
@@ -52,7 +52,7 @@
 #define ANIM_TAG_CLAW_SLASH                 (ANIM_SPRITES_START + 39)  
 #define ANIM_TAG_UNUSED_SCRATCH             (ANIM_SPRITES_START + 40)  
 #define ANIM_TAG_UNUSED_SCRATCH_2           (ANIM_SPRITES_START + 41)  
-#define ANIM_TAG_UNUSED_BUBBLE_BURST_2      (ANIM_SPRITES_START + 42)  
+#define ANIM_TAG_BUBBLE_BURST_2             (ANIM_SPRITES_START + 42) // unused
 #define ANIM_TAG_ICE_CHUNK                  (ANIM_SPRITES_START + 43)  
 #define ANIM_TAG_UNUSED_GLASS_2             (ANIM_SPRITES_START + 44)  
 #define ANIM_TAG_UNUSED_PINK_HEART          (ANIM_SPRITES_START + 45)  
