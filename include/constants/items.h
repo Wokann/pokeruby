@@ -367,6 +367,13 @@
 #define ITEMS_COUNT 349
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
+// Item type IDs used to select the exit callback when an item is used
+#define ITEM_USE_MAIL        0
+#define ITEM_USE_PARTY_MENU  1
+#define ITEM_USE_FIELD       2
+#define ITEM_USE_PBLOCK_CASE 3
+#define ITEM_USE_BAG_MENU    4
+
 #define NUM_TECHNICAL_MACHINES 50
 #define NUM_HIDDEN_MACHINES     8
 
