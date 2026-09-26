@@ -179,16 +179,16 @@ void PrintWordSelectRowsDuringScroll(void);
 void PrintKeyboardRowsDuringScroll(void);
 void InitLowerWindowScroll(u8 speed);
 bool8 UpdateLowerWindowScroll(void);
-void sub_80E9E98(void);
-u8 sub_80E9EA8(void);
-u8 sub_80E9F50(void);
-u8 sub_80E9FD4(void);
-u8 sub_80EA014(void);
-u8 sub_80EA050(void);
-u8 sub_80EA0E4(void);
-u8 sub_80EA184(void);
-void sub_80EAC5C(void);
-void sub_80EAD08(void);
+void ResetLowerWindowAnimState(void);
+bool8 OpenKeyboard(void);
+bool8 CloseKeyboard(void);
+bool8 StartSwitchKeyboardMode(void);
+bool8 FinishSwitchKeyboardMode(void);
+bool8 OpenWordSelect(void);
+bool8 ReturnToKeyboard(void);
+bool8 CloseWordSelect(void);
+void CopyLowerWindowAnimToVram(void);
+void UpdateEasyChatScanlineEffect(void);
 u8 IsEasyChatGroupUnlocked(u8);
 void SetUnlockedWordsByAlphabet(void);
 void LoadEasyChatStrings(void);
@@ -299,7 +299,7 @@ void CB2_InitEasyChatScreen(void)
         ResetSpriteData();
         ScanlineEffect_Clear();
         ScanlineEffect_Stop();
-        sub_80EAD08();
+        UpdateEasyChatScanlineEffect();
         ScanlineEffect_SetParams(sEasyChatScanlineParams);
         FreeSpriteTileRanges();
         FreeAllSpritePalettes();
@@ -653,7 +653,7 @@ void VBlankCB_EasyChatScreen(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
-    sub_80EAC5C();
+    CopyLowerWindowAnimToVram();
     TransferPlttBuffer();
     ScanlineEffect_InitHBlankDmaTransfer();
 }
@@ -663,7 +663,7 @@ void CB2_EasyChatScreen(void)
     gEasyChatStruct->unk20();
     AnimateSprites();
     BuildOamBuffer();
-    sub_80EAD08();
+    UpdateEasyChatScanlineEffect();
 }
 
 void WaitEasyChatFadeIn(void)
@@ -926,11 +926,11 @@ void HandleEasyChatOpenKeyboard(void)
         PrintEasyChatStdMessage(10);
         InitKeyboardSelection();
         PrintKeyboardText();
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         gEasyChatStruct->unk24++;
         break;
     case 1:
-        if (sub_80E9EA8() != 0)
+        if (OpenKeyboard() != 0)
         {
             SetModeWindowAnimForVisibility(1);
             CreateRectangleCursorSprites();
@@ -1005,7 +1005,7 @@ void HandleEasyChatCloseKeyboard(void)
     {
     case 0:
         DestroyRectangleCursorSprites();
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         HideScrollIndicatorSprites();
         SetModeWindowAnimForVisibility(0);
         gEasyChatStruct->unk24++;
@@ -1015,7 +1015,7 @@ void HandleEasyChatCloseKeyboard(void)
         gEasyChatStruct->unk24++;
         break;
     case 3:
-        if (sub_80E9F50() != 0)
+        if (CloseKeyboard() != 0)
             gEasyChatStruct->unk24++;
         break;
     case 4:
@@ -1030,18 +1030,18 @@ void SwitchKeyboardMode(void)
     {
     case 0:
         DestroyRectangleCursorSprites();
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         HideScrollIndicatorSprites();
         gEasyChatStruct->unk24++;
         UpdateModeWindowAnim();
         break;
     case 1:
-        if (sub_80E9FD4() != 0)
+        if (StartSwitchKeyboardMode() != 0)
         {
             gEasyChatStruct->unk26 = !gEasyChatStruct->unk26;
             InitKeyboardSelection();
             PrintKeyboardText();
-            sub_80E9E98();
+            ResetLowerWindowAnimState();
             gEasyChatStruct->unk24++;
         }
         break;
@@ -1049,7 +1049,7 @@ void SwitchKeyboardMode(void)
         gEasyChatStruct->unk24++;
         break;
     case 8:
-        if (sub_80EA014() != 0)
+        if (FinishSwitchKeyboardMode() != 0)
         {
             CreateRectangleCursorSprites();
             SetScrollIndicatorMode(0);
@@ -1072,11 +1072,11 @@ void HandleEasyChatOpenWordSelect(void)
         ClearLowerWindow();
         InitWordSelectSelection();
         HideScrollIndicatorSprites();
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         gEasyChatStruct->unk24++;
         break;
     case 9:
-        if (sub_80EA050() != 0)
+        if (OpenWordSelect() != 0)
         {
             PrintInitialWordSelectText();
             gEasyChatStruct->unk24++;
@@ -1137,11 +1137,11 @@ void SelectNewWord(void)
         gEasyChatStruct->unk24++;
         break;
     case 2:
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         gEasyChatStruct->unk24++;
         break;
     case 3:
-        if (sub_80EA184() != 0)
+        if (CloseWordSelect() != 0)
             gEasyChatStruct->unk24++;
         break;
     case 4:
@@ -1164,11 +1164,11 @@ void HandleEasyChatReturnToKeyboard(void)
         break;
     case 1:
         ClearLowerWindow();
-        sub_80E9E98();
+        ResetLowerWindowAnimState();
         gEasyChatStruct->unk24++;
         break;
     case 2:
-        if (sub_80EA0E4() != 0)
+        if (ReturnToKeyboard() != 0)
         {
             SetModeWindowAnimForVisibility(1);
             RestoreKeyboardScrollOffset();

@@ -50,7 +50,7 @@ void PrintEasyChatTextAt(const u8 *, u16, u16);
 void BufferEasyChatGroupNamesRow(u8 *, u16);
 void ClearLowerWindow(void);
 void ClearWordSelectRow(u16);
-u8 sub_80EA1E0(void);
+bool8 UpdateLowerWindowAnim(void);
 void sub_80EA24C(void);
 void sub_80EA348(void);
 void sub_80EA4A4(void);
@@ -62,11 +62,11 @@ void sub_80EA8BC(void);
 void sub_80EA948(void);
 void sub_80EAA44(void);
 void sub_80EAAD4(void);
-void sub_80EABD4(u16 *, u16, u16, u16, u16, u16, u16, u16, u16);
-void sub_80EAC0C(u16 *);
-void sub_80EAC30(struct UnknownEasyChatStruct1 *, u16, u16, u16, u16, void *);
-void sub_80EAC48(struct UnknownEasyChatStruct1 *);
-void sub_80EACBC(void *, u16 *, struct UnknownEasyChatStruct1 *);
+void InitLowerWindowAnimRect(u16 *, u16, u16, u16, u16, u16, u16, u16, u16);
+void UpdateLowerWindowAnimRect(u16 *);
+void InitLowerWindowAnimSource(struct UnknownEasyChatStruct1 *, u16, u16, u16, u16, void *);
+void UpdateLowerWindowAnimSource(struct UnknownEasyChatStruct1 *);
+void CopyLowerWindowAnimRectToVram(void *, u16 *, struct UnknownEasyChatStruct1 *);
 u8 *CopyEasyChatGroupName(u8 *, u8, int);
 u8 *CopyEasyChatWordPadded(u8 *, u16, u16);
 u16 GetEasyChatWordStringLength(u16 easyChatWord);
@@ -1605,12 +1605,12 @@ void nullsub_23(void)
 {
 }
 
-void sub_80E9E98(void)
+void ResetLowerWindowAnimState(void)
 {
     gEasyChatStruct->unkBE = 0;
 }
 
-bool8 sub_80E9EA8(void)
+bool8 OpenKeyboard(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1619,21 +1619,21 @@ bool8 sub_80E9EA8(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EA4A4();
             gEasyChatStruct->unkBE++;
         }
         break;
     case 2:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EA704();
             gEasyChatStruct->unkBE++;
         }
         break;
     case 3:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 4:
@@ -1645,7 +1645,7 @@ bool8 sub_80E9EA8(void)
     return FALSE;
 }
 
-bool8 sub_80E9F50(void)
+bool8 CloseKeyboard(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1655,7 +1655,7 @@ bool8 sub_80E9F50(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 2:
@@ -1663,7 +1663,7 @@ bool8 sub_80E9F50(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 3:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 4:
@@ -1671,7 +1671,7 @@ bool8 sub_80E9F50(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 5:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 6:
@@ -1680,7 +1680,7 @@ bool8 sub_80E9F50(void)
     return FALSE;
 }
 
-bool8 sub_80E9FD4(void)
+bool8 StartSwitchKeyboardMode(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1690,14 +1690,14 @@ bool8 sub_80E9FD4(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             return TRUE;
         break;
     }
     return FALSE;
 }
 
-bool8 sub_80EA014(void)
+bool8 FinishSwitchKeyboardMode(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1706,14 +1706,14 @@ bool8 sub_80EA014(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             return TRUE;
         break;
     }
     return FALSE;
 }
 
-bool8 sub_80EA050(void)
+bool8 OpenWordSelect(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1723,7 +1723,7 @@ bool8 sub_80EA050(void)
         gEasyChatStruct->unkBE++;
         break;
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EA7F4();
             gEasyChatStruct->unkBE++;
@@ -1731,7 +1731,7 @@ bool8 sub_80EA050(void)
         break;
     case 2:
         UpdateEasyChatFramePaletteBlend(1);
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EA8BC();
             gEasyChatStruct->unkBE++;
@@ -1739,7 +1739,7 @@ bool8 sub_80EA050(void)
         break;
     case 3:
         UpdateEasyChatFramePaletteBlend(1);
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 4:
@@ -1748,7 +1748,7 @@ bool8 sub_80EA050(void)
     return FALSE;
 }
 
-bool8 sub_80EA0E4(void)
+bool8 ReturnToKeyboard(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1758,7 +1758,7 @@ bool8 sub_80EA0E4(void)
         // fall through
     case 1:
         UpdateEasyChatFramePaletteBlend(-1);
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EAA44();
             gEasyChatStruct->unkBE++;
@@ -1766,14 +1766,14 @@ bool8 sub_80EA0E4(void)
         break;
     case 2:
         UpdateEasyChatFramePaletteBlend(-1);
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
         {
             sub_80EA704();
             gEasyChatStruct->unkBE++;
         }
         break;
     case 3:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 4:
@@ -1782,7 +1782,7 @@ bool8 sub_80EA0E4(void)
     return FALSE;
 }
 
-bool8 sub_80EA184(void)
+bool8 CloseWordSelect(void)
 {
     switch (gEasyChatStruct->unkBE)
     {
@@ -1791,7 +1791,7 @@ bool8 sub_80EA184(void)
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
-        if (sub_80EA1E0() != 0)
+        if (UpdateLowerWindowAnim() != 0)
             gEasyChatStruct->unkBE++;
         break;
     case 2:
@@ -1801,7 +1801,7 @@ bool8 sub_80EA184(void)
     return FALSE;
 }
 
-bool8 sub_80EA1E0(void)
+bool8 UpdateLowerWindowAnim(void)
 {
     u16 i;
 
@@ -1809,8 +1809,8 @@ bool8 sub_80EA1E0(void)
     {
         for (i = 0; i < gEasyChatStruct->unkC2; i++)
         {
-            sub_80EAC0C(gEasyChatStruct->unkC8[i]);
-            sub_80EAC48(&gEasyChatStruct->unk148[i]);
+            UpdateLowerWindowAnimRect(gEasyChatStruct->unkC8[i]);
+            UpdateLowerWindowAnimSource(&gEasyChatStruct->unk148[i]);
         }
         gEasyChatStruct->unkBC = 1;
         gEasyChatStruct->unkC4--;
@@ -1821,17 +1821,17 @@ bool8 sub_80EA1E0(void)
 
 void sub_80EA24C(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 13, 14, 13, 15, -2, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 13, 14, 13, 15, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 12, 14, 12, 15, 0, 0, 2, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 30, 0, -2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 12, 15, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 30, 0, -2, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 13, 15, 13, 16, -2, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 13, 15, 13, 16, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 12, 15, 12, 16, 0, 0, 2, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 30, 9, -2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 12, 16, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 30, 9, -2, 0, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 4;
     gEasyChatStruct->unkC4 = 6;
@@ -1839,23 +1839,23 @@ void sub_80EA24C(void)
 
 void sub_80EA348(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 2, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, 0, -2, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 18, 0, 2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, 0, -2, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 2, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 2, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, -2, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 18, 9, 2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, -2, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 9, 2, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[4], 1, 14, 1, 16, 0, 0, 2, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[4], 1, 14, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[4], 1, 14, 1, 16, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[4], 1, 14, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[5], 24, 14, 24, 16, -2, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[5], 24, 14, -2, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[5], 24, 14, 24, 16, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[5], 24, 14, -2, 0, gEasyChatStruct->unk1C8);
 
     gEasyChatStruct->unkC2 = 6;
     gEasyChatStruct->unkC4 = 6;
@@ -1863,17 +1863,17 @@ void sub_80EA348(void)
 
 void sub_80EA4A4(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 0, -1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, -1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 0, 0, 0, 1);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 9, 0, -1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, -1, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, 0, 1);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 18, 9, 0, -1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 9, 0, -1, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 4;
     gEasyChatStruct->unkC4 = 4;
@@ -1881,23 +1881,23 @@ void sub_80EA4A4(void)
 
 void sub_80EA5A0(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 1, 10, 13, 15, 0, 1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 10, 13, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 12, 10, 24, 15, 0, 1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 10, 24, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 1, 15, 13, 20, 0, 0, 0, -1);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 12, 15, 24, 20, 0, 0, 0, -1);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 18, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 5, 0, 1, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[4], 1, 10, 24, 10, 0, 0, 0, 1);
-    sub_80EAC30(&gEasyChatStruct->unk148[4], 1, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[4], 1, 10, 24, 10, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[4], 1, 10, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[5], 1, 20, 24, 20, 0, -1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[5], 1, 20, 0, -1, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[5], 1, 20, 24, 20, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[5], 1, 20, 0, -1, gEasyChatStruct->unk1C8);
 
     gEasyChatStruct->unkC2 = 6;
     gEasyChatStruct->unkC4 = 4;
@@ -1905,8 +1905,8 @@ void sub_80EA5A0(void)
 
 void sub_80EA704(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 24, 12, 25, 20, 0, 0, 1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 5, 10, -1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 25, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 5, 10, -1, 0, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 1;
     gEasyChatStruct->unkC4 = 5;
@@ -1914,11 +1914,11 @@ void sub_80EA704(void)
 
 void sub_80EA764(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 24, 12, 30, 20, 0, 0, -1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 10, 1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 30, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 1, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 30, 12, 31, 20, -1, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 30, 12, -1, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 30, 12, 31, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 30, 12, -1, 0, gEasyChatStruct->unk1C8);
 
     gEasyChatStruct->unkC2 = 2;
     gEasyChatStruct->unkC4 = 6;
@@ -1926,14 +1926,14 @@ void sub_80EA764(void)
 
 void sub_80EA7F4(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 20, 10, 25, 20, 0, 0, 1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 25, 0, -1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 20, 10, 25, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 25, 0, -1, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 0, 10, 1, 20, 0, 0, 1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 10, 1, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 1, 10, 4, 20, 1, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 10, 4, 20, 1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 3;
     gEasyChatStruct->unkC4 = 2;
@@ -1941,11 +1941,11 @@ void sub_80EA7F4(void)
 
 void sub_80EA8BC(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 3, 10, 4, 20, 0, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 3, 10, 4, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 0, 10, 2, 20, 0, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 10, 2, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
 
     gEasyChatStruct->unkC2 = 2;
     gEasyChatStruct->unkC4 = 1;
@@ -1953,17 +1953,17 @@ void sub_80EA8BC(void)
 
 void sub_80EA948(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 0, 10, 2, 20, 0, 0, -1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 2, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 3, 10, 5, 20, -1, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 3, 10, 5, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 26, 10, 30, 20, -1, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 26, 10, -1, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 26, 10, 30, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 26, 10, -1, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 25, 10, 26, 20, -1, 0, -1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 25, 10, 26, 20, -1, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 4;
     gEasyChatStruct->unkC4 = 2;
@@ -1971,11 +1971,11 @@ void sub_80EA948(void)
 
 void sub_80EAA44(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 24, 10, 30, 20, 0, 0, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 24, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 10, 30, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 24, 10, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 23, 10, 24, 20, 0, 0, -1, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 23, 10, 24, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
 
     gEasyChatStruct->unkC2 = 2;
     gEasyChatStruct->unkC4 = 1;
@@ -1983,80 +1983,80 @@ void sub_80EAA44(void)
 
 void sub_80EAAD4(void)
 {
-    sub_80EABD4(gEasyChatStruct->unkC8[0], 0, 10, 30, 15, 0, 1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 30, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[1], 0, 15, 30, 20, 0, 0, 0, -1);
-    sub_80EAC30(&gEasyChatStruct->unk148[1], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 15, 30, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[2], 0, 10, 30, 10, 0, 0, 0, 1);
-    sub_80EAC30(&gEasyChatStruct->unk148[2], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 0, 10, 30, 10, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
 
-    sub_80EABD4(gEasyChatStruct->unkC8[3], 0, 20, 30, 20, 0, -1, 0, 0);
-    sub_80EAC30(&gEasyChatStruct->unk148[3], 0, 20, 0, -1, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 0, 20, 30, 20, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 0, 20, 0, -1, gEasyChatStruct->unk1C8);
 
     gEasyChatStruct->unkC2 = 4;
     gEasyChatStruct->unkC4 = 5;
 }
 
-void sub_80EABD4(u16 *a, u16 b, u16 c, u16 d, u16 e, u16 f, u16 g, u16 h, u16 i)
+void InitLowerWindowAnimRect(u16 *rect, u16 left, u16 top, u16 right, u16 bottom, u16 leftStep, u16 topStep, u16 rightStep, u16 bottomStep)
 {
-    a[0] = b;
-    a[1] = d;
-    a[2] = c;
-    a[3] = e;
-    a[4] = f;
-    a[5] = h;
-    a[6] = g;
-    a[7] = i;
+    rect[0] = left;
+    rect[1] = right;
+    rect[2] = top;
+    rect[3] = bottom;
+    rect[4] = leftStep;
+    rect[5] = rightStep;
+    rect[6] = topStep;
+    rect[7] = bottomStep;
 }
 
-void sub_80EAC0C(u16 *a)
+void UpdateLowerWindowAnimRect(u16 *rect)
 {
-    a[0] += a[4];
-    a[1] += a[5];
-    a[2] += a[6];
-    a[3] += a[7];
+    rect[0] += rect[4];
+    rect[1] += rect[5];
+    rect[2] += rect[6];
+    rect[3] += rect[7];
 }
 
-void sub_80EAC30(struct UnknownEasyChatStruct1 *a, u16 b, u16 c, u16 d, u16 e, void *f)
+void InitLowerWindowAnimSource(struct UnknownEasyChatStruct1 *source, u16 x, u16 y, u16 dx, u16 dy, void *tilemap)
 {
-    a->unk0 = b;
-    a->unk2 = c;
-    a->unk4 = d;
-    a->unk6 = e;
-    a->unk8 = f;
+    source->unk0 = x;
+    source->unk2 = y;
+    source->unk4 = dx;
+    source->unk6 = dy;
+    source->unk8 = tilemap;
 }
 
-void sub_80EAC48(struct UnknownEasyChatStruct1 *a)
+void UpdateLowerWindowAnimSource(struct UnknownEasyChatStruct1 *source)
 {
-    a->unk0 += a->unk4;
-    a->unk2 += a->unk6;
+    source->unk0 += source->unk4;
+    source->unk2 += source->unk6;
 }
 
-void sub_80EAC5C(void)
+void CopyLowerWindowAnimToVram(void)
 {
     u16 i;
 
     if (gEasyChatStruct->unkBC != 0)
     {
         for (i = 0; i < gEasyChatStruct->unkC2; i++)
-            sub_80EACBC((void *)(VRAM + 0x6800), gEasyChatStruct->unkC8[i], &gEasyChatStruct->unk148[i]);
+            CopyLowerWindowAnimRectToVram((void *)(VRAM + 0x6800), gEasyChatStruct->unkC8[i], &gEasyChatStruct->unk148[i]);
         gEasyChatStruct->unkBC = 0;
     }
 }
 
-void sub_80EACBC(void *a, u16 *b, struct UnknownEasyChatStruct1 *c)
+void CopyLowerWindowAnimRectToVram(void *dst, u16 *rect, struct UnknownEasyChatStruct1 *source)
 {
-    s16 r6 = b[1] - b[0];
-    s16 r5 = b[3] - b[2];
+    s16 width = rect[1] - rect[0];
+    s16 height = rect[3] - rect[2];
 
-    if (r6 > 0 && r5 > 0)
-        sub_809D104(a, b[0], b[2], c->unk8, c->unk0, c->unk2, r6, r5);
+    if (width > 0 && height > 0)
+        sub_809D104(dst, rect[0], rect[2], source->unk8, source->unk0, source->unk2, width, height);
 }
 
 // Strange...
-void sub_80EAD08(void)
+void UpdateEasyChatScanlineEffect(void)
 {
     u16 *r4;
     u16 r2;
