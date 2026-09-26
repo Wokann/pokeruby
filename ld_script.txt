@@ -223,7 +223,7 @@ SECTIONS {
         src/battle/anim/vibrate_battler_back.o(.text);
         src/battle/anim/moving_clamp.o(.text);
         src/battle/anim/withdraw.o(.text);
-        src/battle/anim/alert.o(.text);
+        src/battle/anim/kinesis_zap_energy.o(.text);
         src/battle/anim/sword.o(.text);
         src/battle/anim/sonic.o(.text);
         src/battle/anim/unused_9.o(.text);
@@ -646,7 +646,7 @@ SECTIONS {
         src/battle/anim/bouncing_music_note.o(.rodata);
         src/battle/anim/vibrate_battler_back.o(.rodata);
         src/battle/anim/moving_clamp.o(.rodata);
-        src/battle/anim/alert.o(.rodata);
+        src/battle/anim/kinesis_zap_energy.o(.rodata);
         src/battle/anim/sword.o(.rodata);
         src/battle/anim/sonic.o(.rodata);
         src/battle/anim/egg.o(.rodata);

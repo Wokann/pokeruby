@@ -2872,8 +2872,8 @@ Move_KINESIS: @ 81CB479
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
 	createsprite gBattleAnimSpriteTemplate_83DA824, ANIM_BATTLER_ATTACKER, 20
-	createsprite gBattleAnimSpriteTemplate_83D7450, ANIM_BATTLER_ATTACKER, 19, 32, -8, 0
-	createsprite gBattleAnimSpriteTemplate_83D7450, ANIM_BATTLER_ATTACKER, 19, 32, 16, 1
+	createsprite gKinesisZapEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 19, 32, -8, 0
+	createsprite gKinesisZapEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 19, 32, 16, 1
 	loopsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER, 21, 2
 	delay 60
 	playsewithpan SE_M_DIZZY_PUNCH, SOUND_PAN_ATTACKER

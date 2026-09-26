@@ -3,17 +3,20 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CF610(struct Sprite* sprite);
+static void AnimKinesisZapEnergy(struct Sprite *sprite);
 
-// alert (red thunder from the sides of a Pokemon, simulating more alert behavior.)
-// Used in Kinesis.
+// Animates a "zap of energy" used in KINESIS.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: vertical flip
 
-const union AnimCmd gSpriteAnim_83D7428[] =
+const union AnimCmd gKinesisZapEnergyAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3, .hFlip = TRUE),
     ANIMCMD_FRAME(8, 3, .hFlip = TRUE),
@@ -26,37 +29,37 @@ const union AnimCmd gSpriteAnim_83D7428[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D744C[] =
+const union AnimCmd *const gKinesisZapEnergyAnimTable[] =
 {
-    gSpriteAnim_83D7428,
+    gKinesisZapEnergyAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7450 =
+const struct SpriteTemplate gKinesisZapEnergySpriteTemplate =
 {
     .tileTag = ANIM_TAG_ALERT,
     .paletteTag = ANIM_TAG_ALERT,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
-    .anims = gSpriteAnimTable_83D744C,
+    .anims = gKinesisZapEnergyAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF610,
+    .callback = AnimKinesisZapEnergy,
 };
 
-void sub_80CF610(struct Sprite* sprite)
+static void AnimKinesisZapEnergy(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
     SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
     sprite->y += gBattleAnimArgs[1];
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
-        sprite->hFlip = 1;
+        sprite->hFlip = TRUE;
         if (gBattleAnimArgs[2] != 0)
-            sprite->vFlip = 1;
+            sprite->vFlip = TRUE;
     }
     else
     {
         if (gBattleAnimArgs[2] != 0)
-            sprite->vFlip = 1;
+            sprite->vFlip = TRUE;
     }
 
     sprite->callback = RunStoredCallbackWhenAnimEnds;
