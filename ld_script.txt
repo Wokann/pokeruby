@@ -243,7 +243,7 @@ SECTIONS {
         src/battle/anim/ring.o(.text);
         src/battle/anim/espeed.o(.text);
         src/battle/anim/heal_bell.o(.text);
-        src/battle/anim/heart_1.o(.text);
+        src/battle/anim/magenta_heart.o(.text);
         src/battle/anim/curtain.o(.text);
         src/battle/anim/startle.o(.text);
         src/battle/anim/blow_kiss.o(.text);
@@ -666,7 +666,7 @@ SECTIONS {
         src/battle/anim/ring.o(.rodata);
         src/battle/anim/espeed.o(.rodata);
         src/battle/anim/heal_bell.o(.rodata);
-        src/battle/anim/heart_1.o(.rodata);
+        src/battle/anim/magenta_heart.o(.rodata);
         src/battle/anim/startle.o(.rodata);
         src/battle/anim/blow_kiss.o(.rodata);
         src/battle/anim/kiss_fountain.o(.rodata);

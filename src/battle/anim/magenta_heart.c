@@ -10,8 +10,8 @@ extern u8 gBattleAnimTarget;
 
 static void AnimMagentaHeart(struct Sprite *sprite);
 
-// heart_1 (a floating heart in a wave pattern upward.)
-// Used in Charm, Covet, and when a Pokemon is infatuated.
+// A magenta heart floating upward in a wave pattern.
+// Used in Charm, Covet, and infatuation.
 
 const struct SpriteTemplate gMagentaHeartSpriteTemplate =
 {
