@@ -195,7 +195,7 @@ SECTIONS {
         src/battle/anim/shimmer.o(.text);
         src/battle/anim/homing.o(.text);
         src/battle/anim/whip.o(.text);
-        src/battle/anim/unused_1.o(.text);
+        src/battle/anim/flickering_punch.o(.text);
         src/battle/anim/slice.o(.text);
         src/battle/anim/unused_2.o(.text);
         src/battle/anim/shield.o(.text);
@@ -621,7 +621,7 @@ SECTIONS {
         src/battle/anim/shimmer.o(.rodata);
         src/battle/anim/homing.o(.rodata);
         src/battle/anim/whip.o(.rodata);
-        src/battle/anim/unused_1.o(.rodata);
+        src/battle/anim/flickering_punch.o(.rodata);
         src/battle/anim/slice.o(.rodata);
         src/battle/anim/unused_2.o(.rodata);
         src/battle/anim/shield.o(.rodata);
