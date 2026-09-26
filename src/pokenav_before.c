@@ -1533,7 +1533,7 @@ void HandlePokenavMainMenuInput(void)
 			if (gPokenavStructPtr->unk8FE8 != 0)
 			{
 				PlaySE(SE_SELECT);
-				SetPokenavCallback(&sub_80EDB88);
+				SetPokenavCallback(&OpenRibbonsMonList);
 			}
 			else
 			{
@@ -2597,7 +2597,7 @@ void HandleConditionGraphInput(void)
 #endif
 }
 
-void sub_80EDB88()
+void OpenRibbonsMonList(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2687,12 +2687,12 @@ void sub_80EDB88()
         break;
     case 17:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80EDDBC);
+			SetPokenavCallback(&HandleRibbonsMonListInput);
         break;
     }
 }
 
-void sub_80EDDBC()
+void HandleRibbonsMonListInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2711,13 +2711,13 @@ void sub_80EDDBC()
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80EDEE4);
+                SetPokenavCallback(&OpenRibbonsSummaryMenu);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80EDE70);
+                SetPokenavCallback(&RibbonsMonMenu_ReturnToMainMenu);
 				return;
             }
             break;
@@ -2742,7 +2742,7 @@ void sub_80EDDBC()
 #endif
 }
 
-void sub_80EDE70()
+void RibbonsMonMenu_ReturnToMainMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2765,7 +2765,7 @@ void sub_80EDE70()
 
 }
 
-void sub_80EDEE4()
+void OpenRibbonsSummaryMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2822,12 +2822,12 @@ void sub_80EDEE4()
         break;
     case 10:
         if (!sub_80F170C())
-			SetPokenavCallback(&sub_80EE06C);
+			SetPokenavCallback(&RibbonsSummaryHandleInput);
         break;
     }
 }
 
-void sub_80EE06C()
+void RibbonsSummaryHandleInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2857,7 +2857,7 @@ void sub_80EE06C()
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            SetPokenavCallback(&sub_80EE294);
+            SetPokenavCallback(&OpenRibbonsMonListFromRibbonsSummary);
         }
         break;
     case 2:
@@ -2917,7 +2917,7 @@ void sub_80EE06C()
 #endif
 }
 
-void sub_80EE294()
+void OpenRibbonsMonListFromRibbonsSummary(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2967,7 +2967,7 @@ void sub_80EE294()
         break;
     case 8:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80EDDBC);
+			SetPokenavCallback(&HandleRibbonsMonListInput);
         break;
     }
 }
