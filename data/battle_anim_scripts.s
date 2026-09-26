@@ -2036,12 +2036,12 @@ _81CA1C0:
 
 Move_WHIRLWIND: @ 81CA1E9
 	loadspritegfx ANIM_TAG_WHIRLWIND_LINES
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, -8, 1, 60, 0
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 60, 1
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1, 60, 2
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, 16, 1, 60, 3
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, 24, 1, 60, 4
-	createsprite gBattleAnimSpriteTemplate_83DA51C, ANIM_BATTLER_ATTACKER, 2, 0, 32, 1, 60, 0
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -8, 1, 60, 0
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 0, 1, 60, 1
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 8, 1, 60, 2
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 16, 1, 60, 3
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 1, 60, 4
+	createsprite gWhirlwindLineSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 32, 1, 60, 0
 	delay 5
 	loopsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET, 10, 4
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 15, 1
@@ -2967,7 +2967,7 @@ _81CB68E:
 	createvisualtask AnimTask_AttackerFadeToInvisible, 5, 0
 	waitforvisualfinish
 	createvisualtask SoundTask_PlaySE2WithPanning, 5, 238, -64
-	createsprite gBattleAnimSpriteTemplate_83DA65C, ANIM_BATTLER_TARGET, 2
+	createsprite gSkyAttackBirdSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	delay 14
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 10, 0, 18, 1
 	createvisualtask SoundTask_PlaySE1WithPanning, 5, 141, 63

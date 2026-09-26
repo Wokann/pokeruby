@@ -27,11 +27,11 @@ static void AnimFlyBallAttack(struct Sprite *sprite);
 static void AnimFallingFeather(struct Sprite *sprite);
 static void AnimFlyBallAttack_Step(struct Sprite *sprite);
 static void AnimFallingFeather_Step(struct Sprite *sprite);
-static void sub_80DAD30(struct Sprite *sprite);
-static void sub_80DAD84(struct Sprite *sprite);
-static void sub_80DAF0C(struct Sprite *sprite);
-static void sub_80DB000(struct Sprite *sprite);
-static void sub_80DB0A0(struct Sprite *sprite);
+static void AnimUnusedBubbleThrow(struct Sprite *sprite);
+static void AnimUnusedFallingFeatherBurst(struct Sprite *sprite);
+static void AnimUnusedFallingFeatherBurst_Step(struct Sprite *sprite);
+static void AnimWhirlwindLine(struct Sprite *sprite);
+static void AnimWhirlwindLine_Step(struct Sprite *sprite);
 static void AnimBounceBallShrink(struct Sprite *sprite);
 static void AnimBounceBallLand(struct Sprite *sprite);
 static void AnimDiveBall(struct Sprite *sprite);
@@ -40,10 +40,10 @@ static void AnimDiveBall_Step2(struct Sprite *sprite);
 static void AnimDiveWaterSplash(struct Sprite *sprite);
 static void AnimSprayWaterDroplet(struct Sprite *sprite);
 static void AnimSprayWaterDroplet_Step(struct Sprite *sprite);
-static void sub_80DB564(struct Sprite *sprite);
-static void sub_80DB578(struct Sprite *sprite);
-static void sub_80DB5E4(struct Sprite *sprite);
-static void sub_80DB6A0(struct Sprite *sprite);
+static void AnimUnusedFlashingLight(struct Sprite *sprite);
+static void AnimUnusedFlashingLight_Step(struct Sprite *sprite);
+static void AnimSkyAttackBird(struct Sprite *sprite);
+static void AnimSkyAttackBird_Step(struct Sprite *sprite);
 
 static void AnimTask_AnimateGustTornadoPalette_Step(u8 taskId);
 
@@ -189,9 +189,10 @@ const struct SpriteTemplate gFallingFeatherSpriteTemplate =
     .callback = AnimFallingFeather,
 };
 
-const u16 gUnknownPalette_83DA4B0[] = INCBIN_U16("graphics/unknown/unknown_3DA4B0.gbapal");
+static const u16 sUnusedFlyingPalette[] = INCBIN_U16("graphics/unknown/unknown_3DA4B0.gbapal");
 
-const struct SpriteTemplate gSpriteTemplate_83DA4D0 =
+// Unused
+static const struct SpriteTemplate sUnusedBubbleThrowSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
@@ -199,10 +200,11 @@ const struct SpriteTemplate gSpriteTemplate_83DA4D0 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DAD30,
+    .callback = AnimUnusedBubbleThrow,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DA4E8 =
+// Ruby-only unused variant that transitions into the Falling Feather callback.
+static const struct SpriteTemplate sUnusedFallingFeatherBurstSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHITE_FEATHER,
     .paletteTag = ANIM_TAG_WHITE_FEATHER,
@@ -210,10 +212,10 @@ const struct SpriteTemplate gSpriteTemplate_83DA4E8 =
     .anims = sAnims_FallingFeather,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DAD84,
+    .callback = AnimUnusedFallingFeatherBurst,
 };
 
-const union AnimCmd gSpriteAnim_83DA500[] =
+static const union AnimCmd sAnim_WhirlwindLines[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(8, 1),
@@ -223,20 +225,20 @@ const union AnimCmd gSpriteAnim_83DA500[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA518[] =
+static const union AnimCmd *const sAnims_WhirlwindLines[] =
 {
-    gSpriteAnim_83DA500,
+    sAnim_WhirlwindLines,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA51C =
+const struct SpriteTemplate gWhirlwindLineSpriteTemplate =
 {
     .tileTag = ANIM_TAG_WHIRLWIND_LINES,
     .paletteTag = ANIM_TAG_WHIRLWIND_LINES,
     .oam = &gOamData_AffineOff_ObjNormal_32x16,
-    .anims = gSpriteAnimTable_83DA518,
+    .anims = sAnims_WhirlwindLines,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DB000,
+    .callback = AnimWhirlwindLine,
 };
 
 static const union AffineAnimCmd sAffineAnim_BounceBallShrink[] =
@@ -347,7 +349,8 @@ const struct SpriteTemplate gSprayWaterDropletSpriteTemplate =
     .callback = AnimSprayWaterDroplet,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DA644 =
+// Unused
+static const struct SpriteTemplate sUnusedFlashingLightSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CIRCLE_OF_LIGHT,
     .paletteTag = ANIM_TAG_CIRCLE_OF_LIGHT,
@@ -355,10 +358,10 @@ const struct SpriteTemplate gSpriteTemplate_83DA644 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DB564,
+    .callback = AnimUnusedFlashingLight,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
+const struct SpriteTemplate gSkyAttackBirdSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BIRD,
     .paletteTag = ANIM_TAG_BIRD,
@@ -366,7 +369,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA65C =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DB5E4,
+    .callback = AnimSkyAttackBird,
 };
 
 static void AnimEllipticalGust(struct Sprite *sprite)
@@ -832,15 +835,15 @@ static void AnimFallingFeather_Step(struct Sprite *sprite)
     }
 }
 
-static void sub_80DAD30(struct Sprite *sprite)
+static void AnimUnusedBubbleThrow(struct Sprite *sprite)
 {
     sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget);
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = TranslateAnimSpriteToTargetMonLocation;
 }
 
-static void sub_80DAD84(struct Sprite * sprite)
+static void AnimUnusedFallingFeatherBurst(struct Sprite *sprite)
 {
     u32 matrixNum;
     s16 rand;
@@ -854,18 +857,16 @@ static void sub_80DAD84(struct Sprite * sprite)
     {
         if (gBattlerPositions[gBattleAnimTarget] & 1)
         {
-            sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[3];
+            sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[3];
         }
         else
         {
-            // 080dade0
-            sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + 40;
+            sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 40;
         }
 
         if (gBattleAnimArgs[4])
         {
             sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget) + 1;
-            // 080dae24
         }
         else
         {
@@ -874,7 +875,7 @@ static void sub_80DAD84(struct Sprite * sprite)
     }
     else
     {
-        sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[3];
+        sprite->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[3];
     }
 
     sprite->data[4] = gSineTable[sprite->data[1] & 0xff];
@@ -906,11 +907,11 @@ static void sub_80DAD84(struct Sprite * sprite)
         sprite->hFlip = 1;
     }
 
-    sprite->callback = sub_80DAF0C;
+    sprite->callback = AnimUnusedFallingFeatherBurst_Step;
 
 }
 
-static void sub_80DAF0C(struct Sprite *sprite)
+static void AnimUnusedFallingFeatherBurst_Step(struct Sprite *sprite)
 {
     u16 dataCpy[8];
     struct FeatherDanceData *data = (struct FeatherDanceData *)sprite->data;
@@ -969,22 +970,22 @@ static void sub_80DAF0C(struct Sprite *sprite)
     sprite->callback = AnimFallingFeather_Step;
 }
 
-static void sub_80DB000(struct Sprite *sprite)
+static void AnimWhirlwindLine(struct Sprite *sprite)
 {
-    u16 arg;
+    u16 offset;
     u8 mult;
 
-    if (gBattleAnimArgs[2] == 0)
+    if (gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER)
     {
-        InitSpritePosToAnimAttacker(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, FALSE);
     }
     else
     {
         InitSpritePosToAnimTarget(sprite, FALSE);
     }
 
-    if ((!gBattleAnimArgs[2] && !GetBattlerSide(gBattleAnimAttacker))
-        || (gBattleAnimArgs[2] == 1 && !GetBattlerSide(gBattleAnimTarget)))
+    if ((gBattleAnimArgs[2] == ANIM_BATTLER_ATTACKER && GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        || (gBattleAnimArgs[2] == ANIM_BATTLER_TARGET && GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER))
     {
         sprite->x += 8;
     }
@@ -993,15 +994,15 @@ static void sub_80DB000(struct Sprite *sprite)
     sprite->x -= 32;
     sprite->data[1] = 0x0ccc;
 
-    arg = gBattleAnimArgs[4];
+    offset = gBattleAnimArgs[4];
     mult = 12;
-    sprite->x2 += mult * arg;
-    sprite->data[0] = arg;
+    sprite->x2 += mult * offset;
+    sprite->data[0] = offset;
     sprite->data[7] = gBattleAnimArgs[3];
-    sprite->callback = sub_80DB0A0;
+    sprite->callback = AnimWhirlwindLine_Step;
 }
 
-static void sub_80DB0A0(struct Sprite *sprite)
+static void AnimWhirlwindLine_Step(struct Sprite *sprite)
 {
     sprite->x2 += sprite->data[1] >> 8;
 
@@ -1260,14 +1261,14 @@ static void AnimSprayWaterDroplet_Step(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB564(struct Sprite *sprite)
+static void AnimUnusedFlashingLight(struct Sprite *sprite)
 {
     sprite->data[6] = 0;
     sprite->data[7] = 0x40;
-    sprite->callback = sub_80DB578;
+    sprite->callback = AnimUnusedFlashingLight_Step;
 }
 
-static void sub_80DB578(struct Sprite *sprite)
+static void AnimUnusedFlashingLight_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -1287,7 +1288,7 @@ static void sub_80DB578(struct Sprite *sprite)
     }
 }
 
-static void sub_80DB5E4(struct Sprite *sprite)
+static void AnimSkyAttackBird(struct Sprite *sprite)
 {
     s16 posx, posy;
     u16 rotation;
@@ -1295,8 +1296,8 @@ static void sub_80DB5E4(struct Sprite *sprite)
     posx = sprite->x;
     posy = sprite->y;
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
 
     sprite->data[4] = sprite->x << 4;
     sprite->data[5] = sprite->y << 4;
@@ -1309,10 +1310,10 @@ static void sub_80DB5E4(struct Sprite *sprite)
 
     TrySetSpriteRotScale(sprite, 1, 0x100, 0x100, rotation);
 
-    sprite->callback = sub_80DB6A0;
+    sprite->callback = AnimSkyAttackBird_Step;
 }
 
-static void sub_80DB6A0(struct Sprite *sprite)
+static void AnimSkyAttackBird_Step(struct Sprite *sprite)
 {
     sprite->data[4] += sprite->data[6];
     sprite->data[5] += sprite->data[7];
@@ -1326,16 +1327,16 @@ static void sub_80DB6A0(struct Sprite *sprite)
     }
 }
 
-void unref_sub_80DB6E4(u8 taskId)
+static void UNUSED AnimTask_SetAttackerVisibility(u8 taskId)
 {
     if (gBattleAnimArgs[0] == 0)
     {
-        u8 spriteId = GetAnimBattlerSpriteId(0);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
         gSprites[spriteId].invisible = TRUE;
     }
     else
     {
-        u8 spriteId = GetAnimBattlerSpriteId(0);
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
         gSprites[spriteId].invisible = FALSE;
     }
 
