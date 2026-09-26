@@ -77,7 +77,7 @@ void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite);
 void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite);
 void TranslateSpriteLinearFixedPoint(struct Sprite *sprite);
 void RunStoredCallbackWhenAffineAnimEnds(struct Sprite *sprite);
-void sub_8078278(struct Sprite *sprite);
+void TranslateSpriteInEllipse(struct Sprite *sprite);
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
 void TranslateSpriteInCircle(struct Sprite *sprite);
 void TranslateSpriteInGrowingCircle(struct Sprite *sprite);

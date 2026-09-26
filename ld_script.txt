@@ -218,7 +218,7 @@ SECTIONS {
         src/battle/anim/musical.o(.text);
         src/battle/anim/thought.o(.text);
         src/battle/anim/finger.o(.text);
-        src/battle/anim/unused_5.o(.text);
+        src/battle/anim/circling_finger.o(.text);
         src/battle/anim/unused_6.o(.text);
         src/battle/anim/unused_7.o(.text);
         src/battle/anim/unused_8.o(.text);
@@ -642,7 +642,7 @@ SECTIONS {
         src/battle/anim/musical.o(.rodata);
         src/battle/anim/thought.o(.rodata);
         src/battle/anim/finger.o(.rodata);
-        src/battle/anim/unused_5.o(.rodata);
+        src/battle/anim/circling_finger.o(.rodata);
         src/battle/anim/unused_6.o(.rodata);
         src/battle/anim/unused_7.o(.rodata);
         src/battle/anim/unused_8.o(.rodata);

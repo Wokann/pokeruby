@@ -529,7 +529,7 @@ void unref_sub_80781F0(struct Sprite *sprite)
     }
 }
 
-void sub_8078278(struct Sprite *sprite)
+void TranslateSpriteInEllipse(struct Sprite *sprite)
 {
     if (sprite->data[3])
     {

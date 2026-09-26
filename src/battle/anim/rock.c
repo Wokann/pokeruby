@@ -337,7 +337,7 @@ void sub_80DCE9C(struct Sprite *sprite)
     sprite->data[5] = gBattleAnimArgs[2];
 
     StoreSpriteCallbackInData6(sprite, sub_80DCF1C);
-    sprite->callback = sub_8078278;
+    sprite->callback = TranslateSpriteInEllipse;
     sprite->callback(sprite);
 }
 
@@ -352,7 +352,7 @@ static void sub_80DCF1C(struct Sprite *sprite)
     sprite->data[4] = -24;
 
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    sprite->callback = sub_8078278;
+    sprite->callback = TranslateSpriteInEllipse;
     sprite->callback(sprite);
 }
 
