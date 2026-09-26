@@ -2,6 +2,7 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 #include "sound.h"
 
 extern s16 gBattleAnimArgs[];
@@ -113,23 +114,23 @@ const struct SpriteTemplate gSilverWindSmallSparkSpriteTemplate =
 
 void AnimFlyingParticle(struct Sprite* sprite)
 {
-    u8 bank;
+    u8 battler;
     if (!gBattleAnimArgs[6])
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    if (GetBattlerSide(bank) != 0)
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
     {
         sprite->data[4] = 0;
         sprite->data[2] = gBattleAnimArgs[3];
-        sprite->x = 0xFFF0;
+        sprite->x = -16;
     }
     else
     {
         sprite->data[4] = 1;
         sprite->data[2] = -gBattleAnimArgs[3];
-        sprite->x = 0x100;
+        sprite->x = DISPLAY_WIDTH + 16;
     }
 
     sprite->data[1] = gBattleAnimArgs[1];
@@ -139,20 +140,20 @@ void AnimFlyingParticle(struct Sprite* sprite)
     {
     case 0:
         sprite->y = gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank);
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
         break;
     case 1:
         sprite->y = gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank) + 1;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
         break;
     case 2:
-        sprite->y = GetBattlerSpriteCoord(bank, 3) + gBattleAnimArgs[0];
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank);
+        sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[0];
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
         break;
     case 3:
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[0];
-        GetAnimBattlerSpriteId(1);
-        sprite->oam.priority = GetBattlerSpriteBGPriority(bank) + 1;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[0];
+        GetAnimBattlerSpriteId(ANIM_BATTLER_TARGET);
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
         break;
     }
 
@@ -168,7 +169,7 @@ static void AnimFlyingParticle_Step(struct Sprite* sprite)
     sprite->data[0] = (sprite->data[3] * a) & 0xFF;
     if (sprite->data[4] == 0)
     {
-        if (sprite->x2 + sprite->x <= 0xF7)
+        if (sprite->x2 + sprite->x < DISPLAY_WIDTH + 8)
             return;
     }
     else
