@@ -155,7 +155,7 @@ extern const u8 gUnknown_083E4890[];
 
 // .text
 
-void sub_80EEDE8(void)
+void ResetPokenavBgOffsets(void)
 {
     REG_BG0HOFS = 0;
     REG_BG0VOFS = 0;
@@ -165,24 +165,24 @@ void sub_80EEDE8(void)
     REG_BG3VOFS = 0;
 }
 
-void sub_80EEE08(void)
+void ResetPokenavSetupStep(void)
 {
-    gPokenavStructPtr->unkD160 = 0;
+    gPokenavStructPtr->setupStep = 0;
 }
 
-void sub_80EEE20(void)
+void InitPokenavBackground(void)
 {
-    gPokenavStructPtr->unkD160 = 0;
+    gPokenavStructPtr->setupStep = 0;
     if (!gPokenavStructPtr->unk6DAC)
     {
-        while (sub_80EEE54())
+        while (LoadPokenavBackgroundStep())
             ;
     }
 }
 
-bool8 sub_80EEE54(void)
+bool8 LoadPokenavBackgroundStep(void)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
         LZ77UnCompVram(gPokenavHoennMapMisc_Gfx, (void *)VRAM + 0xC000);
@@ -203,11 +203,11 @@ bool8 sub_80EEE54(void)
         REG_BG1HOFS = 0;
         REG_BG1VOFS = 0;
         REG_BG1CNT = 0x1B0C;
-        gPokenavStructPtr->unkD160++;
+        gPokenavStructPtr->setupStep++;
     default:
         return FALSE;
     }
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 
@@ -303,7 +303,7 @@ void sub_80EEFBC(u8 a)
 
 void sub_80EF248(u8 a)
 {
-    gPokenavStructPtr->unkD160 = 0;
+    gPokenavStructPtr->setupStep = 0;
 
     if (!gPokenavStructPtr->unk6DAC)
     {
@@ -314,10 +314,10 @@ void sub_80EF248(u8 a)
 
 bool8 sub_80EF284(u8 a)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
         break;
     case 1:
         Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
@@ -359,13 +359,13 @@ bool8 sub_80EF284(u8 a)
         REG_BG3CNT = 0x1C0B;
         REG_BLDCNT = 0;
 
-        gPokenavStructPtr->unkD160++;
+        gPokenavStructPtr->setupStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 
@@ -543,7 +543,7 @@ void sub_80EF814(void)
 
 void sub_80EF840(void)
 {
-    gPokenavStructPtr->unkD160 = 0;
+    gPokenavStructPtr->setupStep = 0;
 
     if (gPokenavStructPtr->unk6DAC == 0)
     {
@@ -554,10 +554,10 @@ void sub_80EF840(void)
 
 bool8 sub_80EF874(void)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
         break;
     case 1:
         Text_LoadWindowTemplate(&gWindowTemplate_81E7224);
@@ -614,7 +614,7 @@ bool8 sub_80EF874(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 
@@ -854,7 +854,7 @@ void sub_80EFE7C(void)
 
 void sub_80EFF34(void)
 {
-    gPokenavStructPtr->unkD160 = 0;
+    gPokenavStructPtr->setupStep = 0;
 
     if (gPokenavStructPtr->unk6DAC == 0)
     {
@@ -865,10 +865,10 @@ void sub_80EFF34(void)
 
 bool8 sub_80EFF68(void)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
@@ -926,7 +926,7 @@ bool8 sub_80EFF68(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 
@@ -979,7 +979,7 @@ bool8 sub_80F02A0(void)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
 
         gPokenavStructPtr->unk87C8 = gPokenavStructPtr->unk87CA == 1;
         gPokenavStructPtr->unkD162 = 11;
@@ -1086,7 +1086,7 @@ bool8 sub_80F02A0(void)
         gPokenavStructPtr->unk8778 = 0;
 
         REG_BLDCNT = 0;
-        gPokenavStructPtr->unkD160++;
+        gPokenavStructPtr->setupStep++;
         return FALSE;
     default:
         return FALSE;
@@ -1487,10 +1487,10 @@ void sub_80F105C(void)
 
 bool8 sub_80F1080(void)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
@@ -1542,13 +1542,13 @@ bool8 sub_80F1080(void)
         REG_BG2CNT = 0x1E02;
         REG_BG3CNT = 0x170B;
         REG_BLDCNT = 0;
-        gPokenavStructPtr->unkD160++;
+        gPokenavStructPtr->setupStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 
@@ -1734,10 +1734,10 @@ bool8 sub_80F173C(void)
 
 bool8 sub_80F1778(void)
 {
-    switch (gPokenavStructPtr->unkD160)
+    switch (gPokenavStructPtr->setupStep)
     {
     case 0:
-        sub_80EEDE8();
+        ResetPokenavBgOffsets();
         gPokenavStructPtr->unkD162 = 2;
         break;
     case 1:
@@ -1781,7 +1781,7 @@ bool8 sub_80F1778(void)
         return FALSE;
     }
 
-    gPokenavStructPtr->unkD160++;
+    gPokenavStructPtr->setupStep++;
     return TRUE;
 }
 

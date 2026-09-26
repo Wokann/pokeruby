@@ -1308,13 +1308,13 @@ void InitPokenavMainMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        sub_80EEE20();
+        InitPokenavBackground();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 5:
-        if (!sub_80EEE54())
+        if (!LoadPokenavBackgroundStep())
 		{
-			sub_80EEE08();
+			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -1387,7 +1387,7 @@ void RestorePokenavMainMenu(void)
             SetPokenavDisplayForMenu();
             gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
             gPokenavStructPtr->menuItemCount = 5;
-            sub_80EEE08();
+            ResetPokenavSetupStep();
             gPokenavStructPtr->callbackStep++;
         }
         break;
@@ -1843,7 +1843,7 @@ void RestorePokenavConditionMenu(void)
 			SetPokenavDisplayForMenu();
 			gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionMenuCursorPos;
 			gPokenavStructPtr->menuItemCount = 3;
-			sub_80EEE08();
+			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -1997,7 +1997,7 @@ void ReturnToConditionSearchMenu(void)
     case 6:
         gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionSearchCursorPos;
         gPokenavStructPtr->menuItemCount = 0x6;
-        sub_80EEE08();
+        ResetPokenavSetupStep();
         gPokenavStructPtr->callbackStep++;
         break;
     case 7:
@@ -2784,7 +2784,7 @@ void OpenRibbonsSummaryMenu(void)
         break;
     case 2:
         sub_80F66E0();
-        sub_80EEE08();
+        ResetPokenavSetupStep();
         gPokenavStructPtr->callbackStep++;
         break;
     case 3:
@@ -2931,7 +2931,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			sub_80F3C2C();
-			sub_80EEE08();
+			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -3001,7 +3001,7 @@ void OpenTrainerEyes(void)
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
 			sub_80EF814();
-			sub_80EEE08();
+			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;

@@ -272,7 +272,7 @@ static void sub_8136294(void)
             gPokenavStructPtr->unk9344 = 0;
             gPokenavStructPtr->unk8768 = NULL;
             sub_80F4BD0();
-            gPokenavStructPtr->unkD160 = 0;
+            gPokenavStructPtr->setupStep = 0;
             gUnknown_02039304->unk50++;
             break;
         case 12:

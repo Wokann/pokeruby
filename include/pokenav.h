@@ -219,7 +219,7 @@ struct UnkPokenavStruct {
     /*0xD15C*/ u16 unkD15C;
     /*0xD15E*/ u8 unkD15E;
     /*0xD15F*/ u8 unkD15F;
-    /*0xD160*/ u16 unkD160;
+    /*0xD160*/ u16 setupStep;
     /*0xD162*/ u8 unkD162;
     /*0xD164*/ struct UnkPokenavStruct_Sub1 unkD164;
     /*0xD1D4*/ u8 fillerD1D6[0x2];
@@ -272,9 +272,9 @@ void sub_80F6208(void);
 bool8 sub_80F6250();
 
 void InitPokenavMenuOptions(void);
-void sub_80EEE20();
-bool8 sub_80EEE54();
-void sub_80EEE08();
+void InitPokenavBackground(void);
+bool8 LoadPokenavBackgroundStep(void);
+void ResetPokenavSetupStep(void);
 void SetPokenavDisplayForScreen(u8 screenId);
 void HandlePokenavMainMenuInput(void);
 void SetPokenavDisplayForMenu(void);
