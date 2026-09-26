@@ -96,7 +96,7 @@ static void AnimSporeParticle(struct Sprite* sprite)
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
     if (gBattleAnimArgs[4] == 1)
     {
-        sprite->oam.objMode = 1;
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
     }
 
     sprite->data[0] = gBattleAnimArgs[3];
@@ -107,7 +107,7 @@ static void AnimSporeParticle(struct Sprite* sprite)
 
 static void AnimSporeParticle_Step(struct Sprite* sprite)
 {
-    u8 var1;
+    u8 priority;
     
     sprite->x2 = Sin(sprite->data[1], 32);
     sprite->y2 = Cos(sprite->data[1], -3) + ((sprite->data[2] += 24) >> 8);
@@ -117,13 +117,13 @@ static void AnimSporeParticle_Step(struct Sprite* sprite)
     }
     else
     {
-        var1 = GetBattlerSpriteBGPriority(gBattleAnimTarget) + 1;
-        if (var1 > 3)
+        priority = GetBattlerSpriteBGPriority(gBattleAnimTarget) + 1;
+        if (priority > 3)
         {
-            var1 = 3;
+            priority = 3;
         }
 
-        sprite->oam.priority = var1;
+        sprite->oam.priority = priority;
     }
 
     sprite->data[1] = (sprite->data[1] + 2) & 0xFF;
