@@ -3,16 +3,16 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CE670(struct Sprite* sprite);
-static void sub_80CE798(struct Sprite* sprite);
+static void AnimHornHit(struct Sprite *sprite);
+static void AnimHornHit_Step(struct Sprite *sprite);
 
-// strike (A red strike towards the opponent.)
-// Used in Horn Attack, Fury Attack, and Horn Drill.
+// Healing blue star and Horn Hit effects.
 
 const union AnimCmd gHealingBlueStarAnimCmds[] =
 {
@@ -43,7 +43,7 @@ const struct SpriteTemplate gHealingBlueStarSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7050 =
+const struct SpriteTemplate gHornHitSpriteTemplate =
 {
     .tileTag = ANIM_TAG_HORN_HIT,
     .paletteTag = ANIM_TAG_HORN_HIT,
@@ -51,10 +51,10 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7050 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CE670,
+    .callback = AnimHornHit,
 };
 
-void sub_80CE670(struct Sprite* sprite)
+static void AnimHornHit(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[2] <= 1)
         gBattleAnimArgs[2] = 2;
@@ -64,8 +64,8 @@ void sub_80CE670(struct Sprite* sprite)
 
     sprite->data[0] = 0;
     sprite->data[1] = gBattleAnimArgs[2];
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[0];
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[1];
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1];
     sprite->data[6] = sprite->x;
     sprite->data[7] = sprite->y;
     if (IsContest() != 0)
@@ -78,7 +78,7 @@ void sub_80CE670(struct Sprite* sprite)
         sprite->data[4] = sprite->y << 7;
         sprite->data[5] = -0xA00 / sprite->data[1];
     }
-    else if (GetBattlerSide(gBattleAnimAttacker) == 0)
+    else if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         sprite->x -= 40;
         sprite->y += 20;
@@ -98,10 +98,10 @@ void sub_80CE670(struct Sprite* sprite)
         sprite->oam.matrixNum = 24;
     }
 
-    sprite->callback = sub_80CE798;
+    sprite->callback = AnimHornHit_Step;
 }
 
-static void sub_80CE798(struct Sprite* sprite)
+static void AnimHornHit_Step(struct Sprite *sprite)
 {
     sprite->data[2] += sprite->data[3];
     sprite->data[4] += sprite->data[5];

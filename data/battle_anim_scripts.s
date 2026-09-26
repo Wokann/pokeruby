@@ -2432,7 +2432,7 @@ Move_HORN_ATTACK: @ 81CAB1A
 	waitforvisualfinish
 	delay 2
 	createsprite gBowMonSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_BATTLER_TARGET, 4, 0, 0, 10
+	createsprite gHornHitSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 10
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_ATTACKER, 2, 0, 4, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 6, 1
@@ -2452,13 +2452,13 @@ _81CABA5:
 	waitforvisualfinish
 	end
 _81CABB8:
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_BATTLER_TARGET, 4, 8, 8, 10
+	createsprite gHornHitSpriteTemplate, ANIM_BATTLER_TARGET, 4, 8, 8, 10
 	waitforvisualfinish
 	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
 	goto _81CABA5
 _81CABDE:
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_BATTLER_TARGET, 4, -8, -8, 10
+	createsprite gHornHitSpriteTemplate, ANIM_BATTLER_TARGET, 4, -8, -8, 10
 	waitforvisualfinish
 	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 0, 0, 1, 1
 	playsewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET
@@ -2479,7 +2479,7 @@ _81CAC21:
 	waitforvisualfinish
 	delay 2
 	createsprite gBowMonSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 1
-	createsprite gBattleAnimSpriteTemplate_83D7050, ANIM_BATTLER_TARGET, 4, 0, 0, 12
+	createsprite gHornHitSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 12
 	waitforvisualfinish
 	playse SE_BANG
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_ATTACKER, 2, 0, 40, 1
