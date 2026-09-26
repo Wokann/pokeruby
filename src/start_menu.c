@@ -491,7 +491,7 @@ static u8 StartMenu_PokenavCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        SetMainCallback2(sub_80EBA5C);
+        SetMainCallback2(CB2_InitPokeNav);
         return 1;
     }
     return 0;

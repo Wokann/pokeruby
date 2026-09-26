@@ -63,8 +63,8 @@ struct UnknownStruct_Pokenav_8FF0 {
 
 struct UnkPokenavStruct {
     /*0x0000*/ u16 unk0[6][0x40];
-    /*0x0300*/ void (*unk300)(void);
-    /*0x0304*/ u16 unk304;
+    /*0x0300*/ void (*callback)(void);
+    /*0x0304*/ u16 callbackStep;
     /*0x0306*/ u16 unk306;
     /*0x0306*/ int unk308;
     /*0x030C*/ s16 unk030C;
@@ -251,7 +251,7 @@ void sub_80F567C(u8 *, struct UnkPokenav11 *);
 void sub_80F5B38(void);
 bool8 sub_80F5B50(void);
 void sub_80F5CDC(u8);
-void sub_80EBA5C(void);
+void CB2_InitPokeNav(void);
 void sub_80F5060(bool8);
 void move_anim_execute(void);
 bool8 gpu_sync_bg_show(void);
@@ -271,7 +271,7 @@ void sub_80F6074(s16 arg0);
 void sub_80F6208(void);
 bool8 sub_80F6250();
 
-void sub_80EBCA8();
+void InitPokenavMenuOptions(void);
 void sub_80EEE20();
 bool8 sub_80EEE54();
 void sub_80EEE08();
@@ -459,12 +459,12 @@ void sub_80EF248(u8);
 bool8 sub_80EF284(u8);
 void sub_80EF428(u8, u8);
 bool8 sub_80EEF78();
-void sub_80EBC10();
-void sub_80EBDBC(void (*func)(void));
-void sub_80EBBE8();
+void InitPokenavState(void);
+void SetPokenavCallback(void (*callback)(void));
+void CB2_ContinueInitPokeNav(void);
 void sub_80EBDD8();
-void sub_80EBD90();
-void sub_80EBD18();
+void CB2_Pokenav(void);
+void VBlankCB_Pokenav(void);
 void sub_80FB260();
 void sub_80EFE7C(void);
 void sub_80F5BF0();

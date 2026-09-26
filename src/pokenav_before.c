@@ -1115,7 +1115,7 @@ const u16 gUnknown_083E499C[] =
     MON_DATA_WORLD_RIBBON,
 };
 
-void sub_80EBA5C()
+void CB2_InitPokeNav(void)
 {
     switch (gMain.state)
     {
@@ -1127,7 +1127,7 @@ void sub_80EBA5C()
         {
             gPokenavStructPtr->unk6DAB = 0;
             gMain.state++;
-            SetMainCallback2(&sub_80EBBE8);
+            SetMainCallback2(&CB2_ContinueInitPokeNav);
         }
         break;
     case 1:
@@ -1171,14 +1171,14 @@ void sub_80EBA5C()
             return;
         break;
     case 13:
-        sub_80EBC10();
-        sub_80EBDBC(&sub_80EBDD8);
+        InitPokenavState();
+        SetPokenavCallback(&sub_80EBDD8);
         break;
     case 14:
         gPokenavStructPtr->unk6DAB = 1;
         PlaySE(SE_POKENAV_ON);
-        SetMainCallback2(&sub_80EBD90);
-        SetVBlankCallback(&sub_80EBD18);
+        SetMainCallback2(&CB2_Pokenav);
+        SetVBlankCallback(&VBlankCB_Pokenav);
         sub_80F1A74();
         break;
     }
@@ -1186,13 +1186,13 @@ void sub_80EBA5C()
     gMain.state++;
 }
 
-void sub_80EBBE8()
+void CB2_ContinueInitPokeNav(void)
 {
     while (!gPokenavStructPtr->unk6DAB)
-        sub_80EBA5C();
+        CB2_InitPokeNav();
 }
 
-void sub_80EBC10()
+void InitPokenavState(void)
 {
     u16 i;
 
@@ -1211,10 +1211,10 @@ void sub_80EBC10()
     }
 
     gPokenavStructPtr->regionMap.needUpdateVideoRegs = 0;
-    sub_80EBCA8();
+    InitPokenavMenuOptions();
 }
 
-void sub_80EBCA8()
+void InitPokenavMenuOptions(void)
 {
     gPokenavStructPtr->unk6DB2[0] = 1;
     gPokenavStructPtr->unk6DB2[1] = 2;
@@ -1228,7 +1228,7 @@ void sub_80EBCA8()
     gPokenavStructPtr->unk6DB2[4] = 5;
 }
 
-void sub_80EBD18()
+void VBlankCB_Pokenav(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -1236,7 +1236,7 @@ void sub_80EBD18()
     sub_80F1FF0();
 }
 
-void sub_80EBD30()
+void VBlankCB_PokenavRegionMap(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -1245,7 +1245,7 @@ void sub_80EBD30()
     sub_80EFE7C();
 }
 
-void sub_80EBD4C()
+void VBlankCB_PokenavConditionGraph(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -1254,7 +1254,7 @@ void sub_80EBD4C()
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-void sub_80EBD68()
+void VBlankCB_PokenavTrainerEyes(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -1262,15 +1262,15 @@ void sub_80EBD68()
     sub_80F6F64();
 }
 
-void sub_80EBD80()
+void VBlankCB_PokenavOamOnly(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
 }
 
-void sub_80EBD90()
+void CB2_Pokenav(void)
 {
-    gPokenavStructPtr->unk300();
+    gPokenavStructPtr->callback();
     AnimateSprites();
     BuildOamBuffer();
     RunTasks();
@@ -1278,95 +1278,95 @@ void sub_80EBD90()
     sub_80F19FC();
 }
 
-void sub_80EBDBC(void (*func)(void))
+void SetPokenavCallback(void (*callback)(void))
 {
-    gPokenavStructPtr->unk300 = func;
-    gPokenavStructPtr->unk304 = 0;
+    gPokenavStructPtr->callback = callback;
+    gPokenavStructPtr->callbackStep = 0;
 }
 
 void sub_80EBDD8()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
         gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
         gPokenavStructPtr->unk6DAE = 5;
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         sub_80F3FF0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 2:
         if (!sub_80F4024())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         sub_80F2598();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         sub_80EEE20();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 5:
         if (!sub_80EEE54())
 		{
 			sub_80EEE08();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 6:
         sub_80EF248(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
         if (!sub_80EF284(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         sub_80F1B8C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 		// fall through
     case 9:
         if (!sub_80F1BC8(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         sub_80EED2C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 14:
         sub_80F2C80(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 15:
         if (!sub_80F2CBC(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 16:
         sub_80F1DF0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 17:
         if (!sub_80F1E50())
         {
             sub_80EF428(0, 0);
-            sub_80EBDBC(&sub_80EC268);
+            SetPokenavCallback(&sub_80EC268);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1378,73 +1378,73 @@ void sub_80EBDD8()
 
 void sub_80EC00C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         if (!sub_80EEF78())
         {
-            SetVBlankCallback(&sub_80EBD80);
+            SetVBlankCallback(&VBlankCB_PokenavOamOnly);
             sub_80EED1C();
             gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
             gPokenavStructPtr->unk6DAE = 5;
             sub_80EEE08();
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 1:
         sub_80EF248(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 2:
         if (!sub_80EF284(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         sub_80F1B8C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 4:
         if (!sub_80F1BC8(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EED2C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         sub_80F2598();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 10:
         sub_80F2C80(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 11:
         if (!sub_80F2CBC(0))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         sub_80F1DF0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         if (!sub_80F1E50())
         {
             sub_80EF428(0, gPokenavStructPtr->unk6DAD);
-			sub_80EBDBC(&sub_80EC268);
+			SetPokenavCallback(&sub_80EC268);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1456,16 +1456,16 @@ void sub_80EC00C()
 
 void sub_80EC210()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F2D04(1);
         sub_80EE9C0(0, gPokenavStructPtr->unk6DDC, 0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80EEA0C())
-			sub_80EBDBC(&sub_80EC268);
+			SetPokenavCallback(&sub_80EC268);
 		break;
     }
 }
@@ -1474,7 +1474,7 @@ void sub_80EC268()
 {
     u8 var1;
 
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         if (sub_80EEC10() != 0)
@@ -1492,40 +1492,40 @@ void sub_80EC268()
                 {
                 case 0:
                     PlaySE(SE_SELECT);
-                    sub_80EBDBC(&sub_80EC4A0);
+                    SetPokenavCallback(&sub_80EC4A0);
                     break;
                 case 1:
                     PlaySE(SE_SELECT);
-                    sub_80EBDBC(&sub_80EC81C);
+                    SetPokenavCallback(&sub_80EC81C);
                     break;
                 case 4:
-                    gPokenavStructPtr->unk304 = 1;
+                    gPokenavStructPtr->callbackStep = 1;
                     break;
                 case 3:
-                    gPokenavStructPtr->unk304 = 2;
+                    gPokenavStructPtr->callbackStep = 2;
                     break;
                 case 2:
-                    gPokenavStructPtr->unk304 = 6;
+                    gPokenavStructPtr->callbackStep = 6;
                     break;
                 }
             }
             else if (JOY_NEW(B_BUTTON))
             {
-                gPokenavStructPtr->unk304 = 1;
+                gPokenavStructPtr->callbackStep = 1;
             }
         }
         break;
     case 1:
         sub_80F208C();
-        sub_80EBDBC(&sub_80EE96C);
+        SetPokenavCallback(&sub_80EE96C);
         break;
     case 2:
         sub_80F6208();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 3:
         if (!sub_80F6250())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         if (!sub_8055870())
@@ -1533,13 +1533,13 @@ void sub_80EC268()
 			if (gPokenavStructPtr->unk8FE8 != 0)
 			{
 				PlaySE(SE_SELECT);
-				sub_80EBDBC(&sub_80EDB88);
+				SetPokenavCallback(&sub_80EDB88);
 			}
 			else
 			{
 				PlaySE(0x20);
 				sub_80EF428(0, 5);
-				gPokenavStructPtr->unk304 = 0xFF;
+				gPokenavStructPtr->callbackStep = 0xFF;
 			}
 		}
 		break;
@@ -1548,13 +1548,13 @@ void sub_80EC268()
         if (gPokenavStructPtr->unkD158 != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EBDBC(&sub_80EE3D8);
+            SetPokenavCallback(&sub_80EE3D8);
         }
         else
         {
             PlaySE(0x20);
             sub_80EF428(0, 6);
-            gPokenavStructPtr->unk304 = 0xFF;
+            gPokenavStructPtr->callbackStep = 0xFF;
         }
         break;
     case 0xFF:
@@ -1562,13 +1562,13 @@ void sub_80EC268()
         {
             PlaySE(SE_SELECT);
             sub_80EF428(0, gPokenavStructPtr->unk6DAD);
-            gPokenavStructPtr->unk304 = 0;
+            gPokenavStructPtr->callbackStep = 0;
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
 			sub_80EF428(0, gPokenavStructPtr->unk6DAD);
-			gPokenavStructPtr->unk304 = var1;
+			gPokenavStructPtr->callbackStep = var1;
 		}
         break;
     }
@@ -1578,12 +1578,12 @@ void sub_80EC4A0()
 {
     u32 var1;
 
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F1E84();
         sub_80F2D04(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F1F10())
@@ -1593,14 +1593,14 @@ void sub_80EC4A0()
             else
 				var1 = 0x8;
             sub_80EEFBC(var1);
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 2:
         if (!sub_80EEF34())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 3:
@@ -1608,45 +1608,45 @@ void sub_80EC4A0()
         {
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F2620();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80EF814();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         sub_80EF840();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
         if (!sub_80EF874())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         sub_80F2C80(0x4);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 9:
         if (!sub_80F2CBC(0x4))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 0xA:
         sub_80F2DD8();
-        SetVBlankCallback(&sub_80EBD30);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_PokenavRegionMap);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 0xB:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 0xC:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 0xD:
         sub_80EED2C(0x1);
@@ -1654,18 +1654,18 @@ void sub_80EC4A0()
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x75E0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 0xE:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80EC67C);
+			SetPokenavCallback(&sub_80EC67C);
 		break;
     }
 }
 
 void sub_80EC67C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         switch (sub_80FAB60())
@@ -1678,11 +1678,11 @@ void sub_80EC67C()
             break;
         case 4:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk304 = 1;
+            gPokenavStructPtr->callbackStep = 1;
             break;
         case 5:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk304 = 4;
+            gPokenavStructPtr->callbackStep = 4;
             break;
         }
         break;
@@ -1690,12 +1690,12 @@ void sub_80EC67C()
         if (!gPokenavStructPtr->regionMap.zoomed)
         {
             sub_80FAEC4();
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         else if (!sub_80EFBDC(1))
         {
 			sub_80FAEC4();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
@@ -1704,11 +1704,11 @@ void sub_80EC67C()
 			if (!gPokenavStructPtr->regionMap.zoomed)
 			{
 				sub_80EFBB0();
-				gPokenavStructPtr->unk304 = 0;
+				gPokenavStructPtr->callbackStep = 0;
 			}
 			else
 			{
-				gPokenavStructPtr->unk304++;
+				gPokenavStructPtr->callbackStep++;
 			}
 		}
         break;
@@ -1716,12 +1716,12 @@ void sub_80EC67C()
         if (!sub_80EFBDC(0))
         {
 			sub_80EFBB0();
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
 		}
         break;
     case 4:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (!gPaletteFade.active)
@@ -1729,7 +1729,7 @@ void sub_80EC67C()
 			sub_80F2DF4();
 			sub_80F2D04(0x4);
 			gSaveBlock2.regionMapZoom = (gPokenavStructPtr->regionMap.zoomed == 1) ? 1 : 0;
-			sub_80EBDBC(&sub_80EC00C);
+			SetPokenavCallback(&sub_80EC00C);
 		}
 		break;
     }
@@ -1741,23 +1741,23 @@ void sub_80EC67C()
 
 void sub_80EC81C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F2D04(0);
         sub_80EE9C0(1, 0, 1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80EEA0C())
-			sub_80EBDBC(&sub_80EC86C);
+			SetPokenavCallback(&sub_80EC86C);
 		break;
     }
 }
 
 void sub_80EC86C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         if (sub_80EEC90())
@@ -1773,13 +1773,13 @@ void sub_80EC86C()
             switch (gPokenavStructPtr->unk6DF0)
             {
             case 0:
-                sub_80EBDBC(&sub_80ED620);
+                SetPokenavCallback(&sub_80ED620);
                 break;
             case 1:
-                sub_80EBDBC(&sub_80EC960);
+                SetPokenavCallback(&sub_80EC960);
                 break;
             case 2:
-                sub_80EBDBC(&sub_80EC210);
+                SetPokenavCallback(&sub_80EC210);
                 break;
             }
         }
@@ -1788,44 +1788,44 @@ void sub_80EC86C()
             PlaySE(SE_SELECT);
             gPokenavStructPtr->unk6DF0 = 0x2;
             gPokenavStructPtr->unk6DAD = 0x2;
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 1:
         if (!sub_80F1E6C())
-			sub_80EBDBC(&sub_80EC210);
+			SetPokenavCallback(&sub_80EC210);
 		break;
     }
 }
 
 void sub_80EC960()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80EE9C0(2, 0, 5);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80EEA0C())
-			sub_80EBDBC(&sub_80ECC08);
+			SetPokenavCallback(&sub_80ECC08);
 		break;
     }
 }
 
 void sub_80EC9A8()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F2D04(5);
         sub_80EE9C0(1, gPokenavStructPtr->unk6DF0, 0xC);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80EEA0C())
         {
-			sub_80EBDBC(&sub_80EC86C);
+			SetPokenavCallback(&sub_80EC86C);
 			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
 		}
 		break;
@@ -1834,71 +1834,71 @@ void sub_80EC9A8()
 
 void sub_80ECA10()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         if (!sub_80EEF78())
         {
-			SetVBlankCallback(&sub_80EBD80);
+			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
 			sub_80EED1C();
 			gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DF0;
 			gPokenavStructPtr->unk6DAE = 3;
 			sub_80EEE08();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 1:
         sub_80EF248(1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 2:
         if (!sub_80EF284(1))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         sub_80F1B8C(1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 4:
         if (!sub_80F1BC8(1))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (sub_8055870()) return;
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EED2C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         sub_80F2598();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
         sub_80F2C80(1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 		// fall through
     case 11:
         if (!sub_80F2CBC(1))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         sub_80F1DF0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         if (!sub_80F1E50())
         {
 			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
-			sub_80EBDBC(&sub_80EC86C);
+			SetPokenavCallback(&sub_80EC86C);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1910,7 +1910,7 @@ void sub_80ECA10()
 
 void sub_80ECC08()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         if (sub_80EEC90())
@@ -1940,130 +1940,130 @@ void sub_80ECC08()
                 gPokenavStructPtr->unk87D8 = 47;
                 break;
             case 5:
-                sub_80EBDBC(&sub_80EC9A8);
+                SetPokenavCallback(&sub_80EC9A8);
                 return;
             }
 
             gPokenavStructPtr->unk6DFC = gPokenavStructPtr->unk6DAD;
             gPokenavStructPtr->unk76AA = 1;
-            sub_80EBDBC(&sub_80ED01C);
+            SetPokenavCallback(&sub_80ED01C);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
             gPokenavStructPtr->unk6DAD = 0x5;
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 1:
         if (!sub_80F1E6C())
-			sub_80EBDBC(&sub_80EC9A8);
+			SetPokenavCallback(&sub_80EC9A8);
         break;
     }
 }
 
 void sub_80ECD80()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 2:
         if (!sub_80EEF78())
         {
-			SetVBlankCallback(&sub_80EBD80);
-			gPokenavStructPtr->unk304++;
+			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 3:
         sub_80EED1C();
         sub_80F3130();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         sub_80F2D6C(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80F2D6C(0x5);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DFC;
         gPokenavStructPtr->unk6DAE = 0x6;
         sub_80EEE08();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EF248(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 8:
         if (!sub_80EF284(0x2))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         sub_80F1B8C(2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 10:
         if (!sub_80F1BC8(2))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         sub_80EED2C(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 14:
         sub_80F2598();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 15:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 16:
         sub_80F2C80(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 17:
         if (!sub_80F2CBC(0x1))
         {
 			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 18:
         sub_80F2C80(0x5);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 19:
         if (!sub_80F2CBC(0x5))
         {
 			sub_80F1DF0();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 20:
         if (!sub_80F1E50())
 		{
 			sub_80EF428(2, gPokenavStructPtr->unk6DAD);
-			sub_80EBDBC(&sub_80ECC08);
+			SetPokenavCallback(&sub_80ECC08);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2075,26 +2075,26 @@ void sub_80ECD80()
 
 void sub_80ED01C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F1E84();
         sub_80F2D04(0x1);
         sub_80F2D04(0x5);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F1F10())
         {
 			sub_80EEFBC(0);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_80EEF34())
         {
 			BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 3:
@@ -2103,82 +2103,82 @@ void sub_80ED01C()
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
 			sub_80EF814();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F2620();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80F4D44();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 6:
         if (!sub_80F4D88())
-            gPokenavStructPtr->unk304 += 2;
+            gPokenavStructPtr->callbackStep += 2;
         else
-			gPokenavStructPtr->unk304 += 1;
+			gPokenavStructPtr->callbackStep += 1;
         break;
     case 7:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304--;
+			gPokenavStructPtr->callbackStep--;
         break;
     case 8:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         sub_80F0264(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 10:
         if (!sub_80F02A0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         sub_80F3008(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 14:
         sub_80EED2C(0x4);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 15:
         if (!gPaletteFade.active)
         {
 			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 16:
         sub_80F2C80(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 17:
         if (!sub_80F2CBC(0x1))
         {
 			gPokenavStructPtr->unk306 = 0;
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 18:
         sub_80F2C80(gPokenavStructPtr->unk6DFC + 7);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 19:
         if (!sub_80F2CBC(gPokenavStructPtr->unk6DFC + 7))
 		{
-			sub_80EBDBC(&sub_80ED31C);
+			SetPokenavCallback(&sub_80ED31C);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2190,7 +2190,7 @@ void sub_80ED01C()
 
 void sub_80ED31C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         switch (sub_80F5DD4())
@@ -2201,19 +2201,19 @@ void sub_80ED31C()
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80ED4D8);
+                SetPokenavCallback(&sub_80ED4D8);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80ECD80);
+                SetPokenavCallback(&sub_80ECD80);
 				return;
             }
             break;
@@ -2224,12 +2224,12 @@ void sub_80ED31C()
         {
 			ShowMapNamePopUpWindow();
 			sub_80F3264();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -2240,42 +2240,42 @@ void sub_80ED31C()
 
 void sub_80ED3D0()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         SetVBlankCallback(NULL);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         sub_80EED0C();
         sub_80F6134();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 2:
         sub_80EEFBC(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         sub_80F0264(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 4:
         if (!sub_80F02A0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         sub_80F3008(0);
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EED2C(0x4);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2283,18 +2283,18 @@ void sub_80ED3D0()
         break;
     case 8:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80ED31C);
+			SetPokenavCallback(&sub_80ED31C);
 		break;
     }
 }
 
 void sub_80ED4D8()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2302,35 +2302,35 @@ void sub_80ED4D8()
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
 			sub_80F3130();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         sub_80F4CF0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         sub_80EFF34();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 5:
         if (!sub_80EFF68())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         sub_80F35B4();
         sub_80EEFBC(0x2);
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(sub_80EBD4C);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(VBlankCB_PokenavConditionGraph);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EED2C(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2338,32 +2338,32 @@ void sub_80ED4D8()
         break;
     case 8:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80ED858);
+			SetPokenavCallback(&sub_80ED858);
         break;
     }
 }
 
 void sub_80ED620()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F1E84();
         sub_80F2D04(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F1F10())
         {
 			sub_80EEFBC(0x1);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_80EEF34())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0x0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 3:
@@ -2373,63 +2373,63 @@ void sub_80ED620()
 			sub_80EED0C();
 			sub_80EF814();
 			gPokenavStructPtr->unk76AA = 0;
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F2620();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         gPokenavStructPtr->unkD162 = 0x2;
         sub_80F4BD0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         sub_80EFF34();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
         if (!sub_80EFF68())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
         sub_80F33A8();
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD4C);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_PokenavConditionGraph);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         sub_80EED2C(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         sub_80F2C80(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 14:
         if (!sub_80F2CBC(0x1))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
         sub_80F2C80(0x6);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         // fall through
     case 16:
         if (!sub_80F2CBC(0x6))
 		{
-			sub_80EBDBC(&sub_80ED858);
+			SetPokenavCallback(&sub_80ED858);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2454,27 +2454,27 @@ void sub_80F4FDC(void);
 
 void sub_80ED858(void)
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F4F78();
         sub_80F5B38();
-        gPokenavStructPtr->unk304 = 1;
+        gPokenavStructPtr->callbackStep = 1;
         break;
     case 1:
         if (!sub_80F5B50())
-            gPokenavStructPtr->unk304 = 2;
+            gPokenavStructPtr->callbackStep = 2;
         break;
     case 2:
         sub_80F0174(1);
-        gPokenavStructPtr->unk304 = 3;
+        gPokenavStructPtr->callbackStep = 3;
         break;
     case 3:
         if (!sub_80F4FB4())
         {
             sub_80F3C94();
             sub_80F3D00();
-            gPokenavStructPtr->unk304 = 4;
+            gPokenavStructPtr->callbackStep = 4;
         }
         break;
     case 4:
@@ -2488,7 +2488,7 @@ void sub_80ED858(void)
                 PlaySE(SE_SELECT);
                 sub_80F5060(1);
                 move_anim_execute();
-                gPokenavStructPtr->unk304 = 5;
+                gPokenavStructPtr->callbackStep = 5;
                 break;
             }
         }
@@ -2502,7 +2502,7 @@ void sub_80ED858(void)
                 PlaySE(SE_SELECT);
                 sub_80F5060(0);
                 move_anim_execute();
-                gPokenavStructPtr->unk304 = 5;
+                gPokenavStructPtr->callbackStep = 5;
                 break;
             }
         }
@@ -2511,7 +2511,7 @@ void sub_80ED858(void)
             PlaySE(SE_SELECT);
             sub_80F4FDC();
             move_anim_execute();
-            gPokenavStructPtr->unk304 = 9;
+            gPokenavStructPtr->callbackStep = 9;
             break;
         }
         if (JOY_NEW(A_BUTTON))
@@ -2521,7 +2521,7 @@ void sub_80ED858(void)
                 if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
                 {
                     PlaySE(SE_SELECT);
-                    gPokenavStructPtr->unk304 = 9;
+                    gPokenavStructPtr->callbackStep = 9;
                 }
             }
             else
@@ -2529,7 +2529,7 @@ void sub_80ED858(void)
                 if (gPokenavStructPtr->unk6DAC == 0)
                 {
                     PlaySE(SE_SELECT);
-                    gPokenavStructPtr->unk304 = 7;
+                    gPokenavStructPtr->callbackStep = 7;
                 }
             }
             break;
@@ -2539,24 +2539,24 @@ void sub_80ED858(void)
         if (!gpu_sync_bg_show())
         {
             sub_80F3D00();
-            gPokenavStructPtr->unk304 = 6;
+            gPokenavStructPtr->callbackStep = 6;
         }
         break;
     case 6:
         if (!sub_8055870())
-            gPokenavStructPtr->unk304 = 4;
+            gPokenavStructPtr->callbackStep = 4;
         break;
     case 7:
         sub_80EEFBC(3);
         sub_80F3668();
-        gPokenavStructPtr->unk304 = 8;
+        gPokenavStructPtr->callbackStep = 8;
         break;
     case 8:
         if (!sub_80F7500())
         {
             sub_80EEFBC(2);
             sub_80F3698();
-            gPokenavStructPtr->unk304 = 4;
+            gPokenavStructPtr->callbackStep = 4;
         }
         break;
     case 9:
@@ -2565,7 +2565,7 @@ void sub_80ED858(void)
             sub_80F0174(0);
             sub_80F2F48();
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB_BLACK);
-            gPokenavStructPtr->unk304 = 11;
+            gPokenavStructPtr->callbackStep = 11;
         }
         break;
     case 10:
@@ -2580,12 +2580,12 @@ void sub_80ED858(void)
                 sub_80F357C();
                 sub_80F2D6C(1);
                 sub_80F2D6C(6);
-                sub_80EBDBC(sub_80ECA10);
+                SetPokenavCallback(sub_80ECA10);
             }
             else
             {
                 sub_80F3614();
-                sub_80EBDBC(sub_80ED3D0);
+                SetPokenavCallback(sub_80ED3D0);
             }
         }
         break;
@@ -2599,25 +2599,25 @@ void sub_80ED858(void)
 
 void sub_80EDB88()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F1E84();
         sub_80F2D04(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F1F10())
         {
 			sub_80EEFBC(0x4);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_80EEF34())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 3:
@@ -2626,60 +2626,60 @@ void sub_80EDB88()
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
 			sub_80EF814();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F2620();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80F638C();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 6:
         if (!sub_80F63D0())
-            gPokenavStructPtr->unk304 += 2;
+            gPokenavStructPtr->callbackStep += 2;
         else
-			gPokenavStructPtr->unk304 += 1;
+			gPokenavStructPtr->callbackStep += 1;
         break;
     case 7:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304--;
+			gPokenavStructPtr->callbackStep--;
         break;
     case 8:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         sub_80F0264(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 10:
         if (!sub_80F02A0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         sub_80F2C80(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 12:
         if (!sub_80F2CBC(0x2))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         sub_80F3008(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 14:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 16:
         sub_80EED2C(0x4);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2687,14 +2687,14 @@ void sub_80EDB88()
         break;
     case 17:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80EDDBC);
+			SetPokenavCallback(&sub_80EDDBC);
         break;
     }
 }
 
 void sub_80EDDBC()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         switch (sub_80F5DD4())
@@ -2705,19 +2705,19 @@ void sub_80EDDBC()
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80EDEE4);
+                SetPokenavCallback(&sub_80EDEE4);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80EDE70);
+                SetPokenavCallback(&sub_80EDE70);
 				return;
             }
             break;
@@ -2728,12 +2728,12 @@ void sub_80EDDBC()
         {
 			ShowMapNamePopUpWindow();
 			sub_80F3264();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -2744,22 +2744,22 @@ void sub_80EDDBC()
 
 void sub_80EDE70()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
         {
 			sub_80F3130();
 			sub_80F2D6C(0x2);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
-        sub_80EBDBC(&sub_80EC00C);
+        SetPokenavCallback(&sub_80EC00C);
         break;
     }
 
@@ -2767,11 +2767,11 @@ void sub_80EDE70()
 
 void sub_80EDEE4()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2779,38 +2779,38 @@ void sub_80EDEE4()
 			SetVBlankCallback(NULL);
 			sub_80EED0C();
 			sub_80F3130();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         sub_80F66E0();
         sub_80EEE08();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         if (!sub_80F1080())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         sub_80EEFBC(0x5);
         sub_80F38B8();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 5:
         if (!sub_80F38EC())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         sub_80EED2C(0x3);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2818,65 +2818,65 @@ void sub_80EDEE4()
         break;
     case 9:
         if (!gPaletteFade.active)
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
         if (!sub_80F170C())
-			sub_80EBDBC(&sub_80EE06C);
+			SetPokenavCallback(&sub_80EE06C);
         break;
     }
 }
 
 void sub_80EE06C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F15A8();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (JOY_REPT(0x40) && (gPokenavStructPtr->unk87DC))
         {
 			PlaySE(SE_SELECT);
 			sub_80F6A4C(-1);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         }
 		else if (JOY_REPT(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
 		{
             PlaySE(SE_SELECT);
             sub_80F6A4C(1);
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             sub_80EEFBC(0xB);
-            gPokenavStructPtr->unk304 = 0x4;
+            gPokenavStructPtr->callbackStep = 0x4;
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_80EBDBC(&sub_80EE294);
+            SetPokenavCallback(&sub_80EE294);
         }
         break;
     case 2:
         if (!sub_80F6AF0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
         break;
     case 4:
         sub_80F3B00();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (!sub_80F3B58())
 		{
 			sub_80F1494();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 			sub_80EED9C();
 		}
         break;
@@ -2886,7 +2886,7 @@ void sub_80EE06C()
         case 1:
             PlaySE(SE_SELECT);
             sub_80F3B94();
-            gPokenavStructPtr->unk304 = 0x7;
+            gPokenavStructPtr->callbackStep = 0x7;
             return;
         default:
         case 0:
@@ -2894,20 +2894,20 @@ void sub_80EE06C()
             {
                 PlaySE(SE_SELECT);
                 sub_80F3B94();
-                gPokenavStructPtr->unk304 = 0x8;
+                gPokenavStructPtr->callbackStep = 0x8;
             }
             break;
         }
         break;
     case 7:
         if (!sub_80F3BD4())
-			gPokenavStructPtr->unk304 = 0x4;
+			gPokenavStructPtr->callbackStep = 0x4;
         break;
     case 8:
         if (!sub_80F3BD4())
 		{
 			sub_80EEFBC(0x5);
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
 		}
         break;
     }
@@ -2919,11 +2919,11 @@ void sub_80EE06C()
 
 void sub_80EE294()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -2932,34 +2932,34 @@ void sub_80EE294()
 			sub_80EED0C();
 			sub_80F3C2C();
 			sub_80EEE08();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         sub_80F6134();
         sub_80F0264(0x1);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 3:
         if (!sub_80F02A0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
         sub_80EEFBC(0x4);
         sub_80F3008(0x1);
-        SetVBlankCallback(&sub_80EBD18);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_Pokenav);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80EED2C(0x4);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -2967,32 +2967,32 @@ void sub_80EE294()
         break;
     case 8:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80EDDBC);
+			SetPokenavCallback(&sub_80EDDBC);
         break;
     }
 }
 
 void sub_80EE3D8()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F1E84();
         sub_80F2D04(0);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F1F10())
         {
 			sub_80EEFBC(0x9);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_80EEF34())
         {
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 3:
@@ -3002,44 +3002,44 @@ void sub_80EE3D8()
 			sub_80EED0C();
 			sub_80EF814();
 			sub_80EEE08();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F2620();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80F0264(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 6:
         if (!sub_80F02A0())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 7:
         sub_80F2C80(0x3);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 8:
         if (!sub_80F2CBC(0x3))
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
         sub_80F3008(0x2);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 10:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         sub_80F6F10();
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(&sub_80EBD68);
-        gPokenavStructPtr->unk304++;
+        SetVBlankCallback(&VBlankCB_PokenavTrainerEyes);
+        gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         sub_80EED2C(0x5);
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
 			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -3047,14 +3047,14 @@ void sub_80EE3D8()
         break;
     case 13:
         if (!gPaletteFade.active)
-			sub_80EBDBC(&sub_80EE58C);
+			SetPokenavCallback(&sub_80EE58C);
         break;
     }
 }
 
 void sub_80EE58C()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         switch (sub_80F5DD4())
@@ -3065,19 +3065,19 @@ void sub_80EE58C()
             return;
         case 2:
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
             return;
         default:
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80EE658);
+                SetPokenavCallback(&sub_80EE658);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80EBDBC(&sub_80EE8F4);
+                SetPokenavCallback(&sub_80EE8F4);
 				return;
             }
             break;
@@ -3088,12 +3088,12 @@ void sub_80EE58C()
         {
 			sub_80F0FFC(gPokenavStructPtr->unk876E);
 			sub_80F3264();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304 = 0;
+			gPokenavStructPtr->callbackStep = 0;
         break;
     }
 #if DEBUG
@@ -3104,64 +3104,64 @@ void sub_80EE58C()
 
 void sub_80EE658()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         sub_80F3294(0x1);
         sub_80EEFBC(0xA);
         sub_80F0B24();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!sub_80F0B44())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 2:
         sub_80F0F64();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 3:
         if (!sub_80F0FEC())
         {
 			sub_80F6FB8(0x1);
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 4:
         sub_80F6DB8();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 5:
         sub_80F700C((u8 *)(gSharedMem + 0x8788), *(u16 *)(gSharedMem + 0x8788 - 0x1A));
         sub_80F42C4((u8 *)(gSharedMem + 0x8788));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 6:
         LoadTrainerEyesDescriptionLines();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     case 7:
         if (!sub_80F6E9C() && !sub_80F0D5C())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
         if (JOY_HELD(0x40) && gPokenavStructPtr->unk87DC)
         {
 			PlaySE(SE_SELECT);
 			sub_80F708C(-1);
-			gPokenavStructPtr->unk304 = 0x10;
+			gPokenavStructPtr->callbackStep = 0x10;
         }
         else if (JOY_HELD(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
         {
 			PlaySE(SE_SELECT);
 			sub_80F708C(1);
-			gPokenavStructPtr->unk304 = 0x10;
+			gPokenavStructPtr->callbackStep = 0x10;
         }
 		else if (JOY_NEW(B_BUTTON))
 		{
             PlaySE(SE_SELECT);
             sub_80F4394();
             sub_80F0EC0();
-            gPokenavStructPtr->unk304++;
+            gPokenavStructPtr->callbackStep++;
         }
         break;
     case 9:
@@ -3169,53 +3169,53 @@ void sub_80EE658()
         {
 			sub_80F6FB8(0);
 			sub_80F2FB0();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 10:
         sub_80F6134();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 11:
         sub_80F0FA0();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 12:
         if (!sub_80F0FEC())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
         sub_80F0C28();
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 14:
         if (!sub_80F0C48())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
         sub_80EEFBC(0x9);
         sub_80F3294(0);
-        sub_80EBDBC(&sub_80EE58C);
+        SetPokenavCallback(&sub_80EE58C);
         sub_80EED9C();
         break;
     case 16:
         if (!sub_80F70FC())
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
         break;
     case 17:
         if (!sub_8055870())
-			gPokenavStructPtr->unk304 = 0x8;
+			gPokenavStructPtr->callbackStep = 0x8;
         break;
     }
 }
 
 void sub_80EE8F4()
 {
-    switch (gPokenavStructPtr->unk304)
+    switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!gPaletteFade.active)
@@ -3223,22 +3223,22 @@ void sub_80EE8F4()
 			sub_80F3130();
 			sub_80F2D6C(0x2);
 			sub_80F6FFC();
-			gPokenavStructPtr->unk304++;
+			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
-        sub_80EBDBC(&sub_80EC00C);
+        SetPokenavCallback(&sub_80EC00C);
         break;
     }
 }
 
 void sub_80EE96C()
 {
-    if (!gPokenavStructPtr->unk304)
+    if (!gPokenavStructPtr->callbackStep)
     {
         PlaySE(0x6F);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gPokenavStructPtr->unk304++;
+        gPokenavStructPtr->callbackStep++;
     }
     else
     {
@@ -3417,13 +3417,13 @@ void sub_80EED2C(u8 param1)
 
 void sub_80EED9C(void)
 {
-    gUnknown_03000744 = gPokenavStructPtr->unk300;
-    gPokenavStructPtr->unk300 = &sub_80EEDC4;
-    gPokenavStructPtr->unk300();
+    gUnknown_03000744 = gPokenavStructPtr->callback;
+    gPokenavStructPtr->callback = &sub_80EEDC4;
+    gPokenavStructPtr->callback();
 }
 
 void sub_80EEDC4(void)
 {
     if (sub_8055870() != 0x1)
-        gPokenavStructPtr->unk300 = gUnknown_03000744;
+        gPokenavStructPtr->callback = gUnknown_03000744;
 }
