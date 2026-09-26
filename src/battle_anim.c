@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "battle.h"
-#include "battle_anim_80CA710.h"
 #include "battle_interface.h"
 #include "contest.h"
 #include "decompress.h"
@@ -1955,7 +1954,7 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
             r2 = 0;
         else
             r2 = GetBattlerPosition(bank);
-        sub_80E4EF8(0, 0, r2, animBg.paletteId, (u32)animBg.bgTiles, (((s32)animBg.bgTilemap - VRAM) / 2048), REG_BG1CNT_BITFIELD.charBaseBlock);
+        DrawBattlerOnBg(0, 0, r2, animBg.paletteId, (u32)animBg.bgTiles, (((s32)animBg.bgTilemap - VRAM) / 2048), REG_BG1CNT_BITFIELD.charBaseBlock);
         if (IsContest())
             sub_8076380();
     }
@@ -1983,7 +1982,7 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
         LoadPalette(gPlttBufferUnfaded + 0x100 + bank * 16, 0x90, 32);
         DmaCopy32Defvars(3, gPlttBufferUnfaded + 0x100 + bank * 16, (void *)(PLTT + 0x120), 32);
 
-        sub_80E4EF8(0, 0, GetBattlerPosition(bank), 9, 0x6000, 0x1E, REG_BG2CNT_BITFIELD.charBaseBlock);
+        DrawBattlerOnBg(0, 0, GetBattlerPosition(bank), 9, 0x6000, 0x1E, REG_BG2CNT_BITFIELD.charBaseBlock);
     }
 }
 

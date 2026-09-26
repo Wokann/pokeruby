@@ -151,5 +151,6 @@ s16 KeepPanInRange(s16 panArg, int oldPan);
 void DestroyAnimSoundTask(u8 taskId);
 void ResetBattleAnimBg(u8 toBG2);
 s8 BattleAnimAdjustPanning2(s8);
+void DrawBattlerOnBg(u8 left, u8 top, u8 battlerPosition, u8 paletteId, u16 tilesOffset, u8 screenBaseBlock, u8 charBaseBlock);
 
 #endif

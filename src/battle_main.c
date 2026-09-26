@@ -1166,11 +1166,11 @@ void sub_800FCFC(void)
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-void nullsub_36(struct Sprite *sprite)
+void SpriteCB_VsLetterDummy(struct Sprite *sprite)
 {
 }
 
-void sub_800FDB0(struct Sprite *sprite)
+static void SpriteCB_VsLetter(struct Sprite *sprite)
 {
     if (sprite->data[0] != 0)
         sprite->x = sprite->data[1] + ((sprite->data[2] & 0xFF00) >> 8);
@@ -1186,10 +1186,10 @@ void sub_800FDB0(struct Sprite *sprite)
     }
 }
 
-void sub_800FE20(struct Sprite *sprite)
+void SpriteCB_VsLetterInit(struct Sprite *sprite)
 {
     StartSpriteAffineAnim(sprite, 1);
-    sprite->callback = sub_800FDB0;
+    sprite->callback = SpriteCB_VsLetter;
     PlaySE(SE_MUGSHOT);
 }
 

@@ -2,7 +2,6 @@
 #include "constants/battle.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "battle_anim_80CA710.h"
 #include "data2.h"
 #include "ewram.h"
 #include "main.h"
@@ -15,51 +14,50 @@ extern u16 gBattleTypeFlags;
 extern u16 gIntroSlideFlags;
 extern u8 gBattleMonForms[];
 
-extern void sub_800FE20(struct Sprite *);
+static void BattleIntroSlide1(u8);
+static void BattleIntroSlide2(u8);
+static void BattleIntroSlide3(u8);
+static void BattleIntroSlideLink(u8);
 
-static void BattleIntroTask_ScrollScenery(u8);
-static void BattleIntroTask_FadeScenery(u8);
-static void BattleIntroTask_ScrollAndFadeScenery(u8);
-static void BattleIntroTask_80E4C34(u8);
-
-static const TaskFunc sBattleIntroTaskFuncs[] =
+static const TaskFunc sBattleIntroSlideFuncs[] =
 {
-    BattleIntroTask_ScrollScenery,
-    BattleIntroTask_ScrollScenery,
-    BattleIntroTask_FadeScenery,
-    BattleIntroTask_FadeScenery,
-    BattleIntroTask_FadeScenery,
-    BattleIntroTask_ScrollScenery,
-    BattleIntroTask_ScrollScenery,
-    BattleIntroTask_ScrollScenery,
-    BattleIntroTask_ScrollAndFadeScenery,
-    BattleIntroTask_ScrollAndFadeScenery,
+    BattleIntroSlide1,
+    BattleIntroSlide1,
+    BattleIntroSlide2,
+    BattleIntroSlide2,
+    BattleIntroSlide2,
+    BattleIntroSlide1,
+    BattleIntroSlide1,
+    BattleIntroSlide1,
+    BattleIntroSlide3,
+    BattleIntroSlide3,
 };
 
 #define tState data[0]
+#define tEnvironment data[1]
 #define tBgXOffset data[2]
 #define tFramesUntilBg1Slide data[3]
 
-void HandleIntroSlide(u8 a)
+void HandleIntroSlide(u8 environment)
 {
     u8 taskId;
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
-        taskId = CreateTask(BattleIntroTask_80E4C34, 0);
+        taskId = CreateTask(BattleIntroSlideLink, 0);
     }
     else if ((gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON) && gGameVersion != VERSION_RUBY)
     {
-        a = 3;
-        taskId = CreateTask(BattleIntroTask_FadeScenery, 0);
+        environment = BATTLE_ENVIRONMENT_UNDERWATER;
+        taskId = CreateTask(BattleIntroSlide2, 0);
     }
     else
     {
-        taskId = CreateTask(sBattleIntroTaskFuncs[a], 0);
+        taskId = CreateTask(sBattleIntroSlideFuncs[environment], 0);
     }
 
     gTasks[taskId].tState = 0;
-    gTasks[taskId].data[1] = a;
+    gTasks[taskId].tEnvironment = environment;
     gTasks[taskId].tBgXOffset = 0;
     gTasks[taskId].tFramesUntilBg1Slide = 0;
     gTasks[taskId].data[4] = 0;
@@ -67,7 +65,7 @@ void HandleIntroSlide(u8 a)
     gTasks[taskId].data[6] = 0;
 }
 
-static void EndBattleIntroTask(u8 taskId)
+static void BattleIntroSlideEnd(u8 taskId)
 {
     DestroyTask(taskId);
     gBattle_BG1_X = 0;
@@ -81,7 +79,7 @@ static void EndBattleIntroTask(u8 taskId)
     REG_WINOUT = 0x3F3F;
 }
 
-static void BattleIntroTask_ScrollScenery(u8 taskId)
+static void BattleIntroSlide1(u8 taskId)
 {
     s32 i;
 
@@ -128,7 +126,7 @@ static void BattleIntroTask_ScrollScenery(u8 taskId)
         }
         else
         {
-            if (gTasks[taskId].data[1] == 1)
+            if (gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_LONG_GRASS)
             {
                 if (gBattle_BG1_Y != 0xFFB0)
                     gBattle_BG1_Y -= 2;
@@ -163,27 +161,27 @@ static void BattleIntroTask_ScrollScenery(u8 taskId)
         }
         break;
     case 4:
-        EndBattleIntroTask(taskId);
+        BattleIntroSlideEnd(taskId);
         break;
     }
 }
 
-static void BattleIntroTask_FadeScenery(u8 taskId)
+static void BattleIntroSlide2(u8 taskId)
 {
     s32 i;
 
-    switch (gTasks[taskId].data[1])
+    switch (gTasks[taskId].tEnvironment)
     {
-    case 2:
-    case 4:
+    case BATTLE_ENVIRONMENT_SAND:
+    case BATTLE_ENVIRONMENT_WATER:
         gBattle_BG1_X += 8;
         break;
-    case 3:
+    case BATTLE_ENVIRONMENT_UNDERWATER:
         gBattle_BG1_X += 6;
         break;
     }
 
-    if (gTasks[taskId].data[1] == 4)
+    if (gTasks[taskId].tEnvironment == BATTLE_ENVIRONMENT_WATER)
     {
         gBattle_BG1_Y = Cos2(gTasks[taskId].data[6]) / 512 - 8;
         if (gTasks[taskId].data[6] < 0xB4)
@@ -273,7 +271,7 @@ static void BattleIntroTask_FadeScenery(u8 taskId)
         }
         break;
     case 4:
-        EndBattleIntroTask(taskId);
+        BattleIntroSlideEnd(taskId);
         break;
     }
 
@@ -281,7 +279,7 @@ static void BattleIntroTask_FadeScenery(u8 taskId)
         REG_BLDALPHA = gTasks[taskId].data[4];
 }
 
-static void BattleIntroTask_ScrollAndFadeScenery(u8 taskId)
+static void BattleIntroSlide3(u8 taskId)
 {
     s32 i;
 
@@ -363,7 +361,7 @@ static void BattleIntroTask_ScrollAndFadeScenery(u8 taskId)
         }
         break;
     case 4:
-        EndBattleIntroTask(taskId);
+        BattleIntroSlideEnd(taskId);
         break;
     }
 
@@ -372,7 +370,7 @@ static void BattleIntroTask_ScrollAndFadeScenery(u8 taskId)
 }
 
 // Seems to only be used for link battles.
-static void BattleIntroTask_80E4C34(u8 taskId)
+static void BattleIntroSlideLink(u8 taskId)
 {
     s32 i;
 
@@ -403,9 +401,9 @@ static void BattleIntroTask_80E4C34(u8 taskId)
         {
             gTasks[taskId].tState++;
             gSprites[gBattleStruct->linkBattleVsSpriteId_V].oam.objMode = 2;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_V].callback = sub_800FE20;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_V].callback = SpriteCB_VsLetterInit;
             gSprites[gBattleStruct->linkBattleVsSpriteId_S].oam.objMode = 2;
-            gSprites[gBattleStruct->linkBattleVsSpriteId_S].callback = sub_800FE20;
+            gSprites[gBattleStruct->linkBattleVsSpriteId_S].callback = SpriteCB_VsLetterInit;
             REG_WININ = 0x3F;
             REG_WINOUT = 0x3F06;
         }
@@ -445,49 +443,49 @@ static void BattleIntroTask_80E4C34(u8 taskId)
         }
         break;
     case 4:
-        EndBattleIntroTask(taskId);
+        BattleIntroSlideEnd(taskId);
         break;
     }
 }
 
-void unref_sub_80E4EC8(u8 a, u8 b, u8 c, u8 d)
+void DrawBattlerOnBgDefault(u8 x, u8 y, u8 battlerPosition, u8 paletteId)
 {
-    sub_80E4EF8(a, b, c, d, 0x4000, 30, 1);
+    DrawBattlerOnBg(x, y, battlerPosition, paletteId, 0x4000, 30, 1);
 }
 
 // draws some 8x8 tilemap
-void sub_80E4EF8(u8 left, u8 top, u8 c, u8 paletteNum, u16 e, u8 bgMap, u8 g)
+void DrawBattlerOnBg(u8 left, u8 top, u8 battlerPosition, u8 paletteId, u16 tilesOffset, u8 screenBaseBlock, u8 charBaseBlock)
 {
     u32 tileNum;
     s32 x;
     s32 y;
-    u8 bank = GetBattlerAtPosition(c);
+    u8 battler = GetBattlerAtPosition(battlerPosition);
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[c] + gBattleMonForms[bank] * 0x800, (void *)(VRAM + e), 0x800);
-    tileNum = e / 32 - g * 512;
+    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + gBattleMonForms[battler] * 0x800, (void *)(VRAM + tilesOffset), 0x800);
+    tileNum = tilesOffset / 32 - charBaseBlock * 512;
     for (y = top; y < top + 8; y++)
     {
         for (x = left; x < left + 8; x++)
         {
-            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteNum << 12);
+            *(u16 *)(VRAM + x * 2 + screenBaseBlock * 0x800 + y * 64) = tileNum | (paletteId << 12);
             tileNum++;
         }
     }
 }
 
-void unref_sub_80E4FDC(u8 left, u8 top, u8 c, u8 form, u8 paletteNum, u16 f, u8 bgMap, u8 h)
+void DrawBattlerOnBgDMA(u8 left, u8 top, u8 battlerPosition, u8 form, u8 paletteId, u16 tilesOffset, u8 screenBaseBlock, u8 charBaseBlock)
 {
     u32 tileNum;
     s32 x;
     s32 y;
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[c] + form * 0x800, (void *)(VRAM + f), 0x800);
-    tileNum = f / 32 - h * 512;
+    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + form * 0x800, (void *)(VRAM + tilesOffset), 0x800);
+    tileNum = tilesOffset / 32 - charBaseBlock * 512;
     for (y = top; y < top + 8; y++)
     {
         for (x = left; x < left + 8; x++)
         {
-            *(u16 *)(VRAM + x * 2 + bgMap * 0x800 + y * 64) = tileNum | (paletteNum << 12);
+            *(u16 *)(VRAM + x * 2 + screenBaseBlock * 0x800 + y * 64) = tileNum | (paletteId << 12);
             tileNum++;
         }
     }

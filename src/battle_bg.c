@@ -108,7 +108,7 @@ const struct SpriteTemplate gSpriteTemplate_81F9574 = {
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_81F956C,
-    .callback = nullsub_36
+    .callback = SpriteCB_VsLetterDummy
 };
 
 const struct SpriteTemplate gSpriteTemplate_81F958C = {
@@ -118,7 +118,7 @@ const struct SpriteTemplate gSpriteTemplate_81F958C = {
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSpriteAffineAnimTable_81F956C,
-    .callback = nullsub_36
+    .callback = SpriteCB_VsLetterDummy
 };
 
 extern const u8 gUnknown_08E5DC2C[];
