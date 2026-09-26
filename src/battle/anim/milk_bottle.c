@@ -8,20 +8,19 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CCF04(struct Sprite* sprite);
-static void sub_80CCF70(struct Sprite* sprite);
-static void sub_80CD0CC(struct Sprite* sprite, int unk1, int unk2);
+void AnimMilkBottle(struct Sprite *sprite);
+static void AnimMilkBottle_Step1(struct Sprite *sprite);
+static void AnimMilkBottle_Step2(struct Sprite *sprite, int unk1, int unk2);
 
-// bottle (shows a bottle swinging back and forth.)
 // Used by Milk Drink.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6C00[] =
+const union AffineAnimCmd gMilkBottleAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6C10[] =
+const union AffineAnimCmd gMilkBottleAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 2, 12),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 6),
@@ -31,27 +30,27 @@ const union AffineAnimCmd gSpriteAffineAnim_83D6C10[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6C40[] =
+const union AffineAnimCmd *const gMilkBottleAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D6C00,
-    gSpriteAffineAnim_83D6C10,
+    gMilkBottleAffineAnimCmds1,
+    gMilkBottleAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6C48 =
+const struct SpriteTemplate gMilkBottleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MILK_BOTTLE,
     .paletteTag = ANIM_TAG_MILK_BOTTLE,
     .oam = &gOamData_AffineNormal_ObjBlend_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6C40,
-    .callback = sub_80CCF04,
+    .affineAnims = gMilkBottleAffineAnimTable,
+    .callback = AnimMilkBottle,
 };
 
-void sub_80CCF04(struct Sprite* sprite)
+void AnimMilkBottle(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + 0xFFE8;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 0xFFE8;
     sprite->data[0] = 0;
     sprite->data[1] = 0;
     sprite->data[2] = 0;
@@ -61,10 +60,10 @@ void sub_80CCF04(struct Sprite* sprite)
     sprite->data[7] = 16;
     REG_BLDCNT = 0x3F40;
     REG_BLDALPHA = (sprite->data[7] << 8) | sprite->data[6];
-    sprite->callback = sub_80CCF70;
+    sprite->callback = AnimMilkBottle_Step1;
 }
 
-static void sub_80CCF70(struct Sprite* sprite)
+static void AnimMilkBottle_Step1(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -97,7 +96,7 @@ static void sub_80CCF70(struct Sprite* sprite)
         }
         break;
     case 2:
-        sub_80CD0CC(sprite, 16, 4);
+        AnimMilkBottle_Step2(sprite, 16, 4);
         if (++sprite->data[1] > 2)
         {
             sprite->data[1] = 0;
@@ -137,7 +136,7 @@ static void sub_80CCF70(struct Sprite* sprite)
     }
 }
 
-static void sub_80CD0CC(struct Sprite* sprite, int unk1, int unk2)
+static void AnimMilkBottle_Step2(struct Sprite *sprite, int unk1, int unk2)
 {
     if (sprite->data[3] <= 11)
         sprite->data[4] += 2;
