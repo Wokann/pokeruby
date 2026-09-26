@@ -3,15 +3,15 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimSleepLetterZ(struct Sprite* sprite);
-static void AnimSleepLetterZ_Step(struct Sprite* sprite);
+static void AnimSleepLetterZ(struct Sprite *sprite);
+static void AnimSleepLetterZ_Step(struct Sprite *sprite);
 
-// sleep (the "ZZZ" graphical effect)
 // Used by Rest and the sleep turn when the Pokemon is still asleep.
 
 const union AnimCmd gSleepLetterZAnimCmds[] =
@@ -70,10 +70,10 @@ const struct SpriteTemplate gSleepLetterZSpriteTemplate =
     .callback = AnimSleepLetterZ,
 };
 
-static void AnimSleepLetterZ(struct Sprite* sprite)
+static void AnimSleepLetterZ(struct Sprite *sprite)
 {
     SetSpriteCoordsToAnimAttackerCoords(sprite);
-    if (GetBattlerSide(gBattleAnimAttacker) == 0)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
     {
         sprite->x += gBattleAnimArgs[0];
         sprite->y += gBattleAnimArgs[1];
@@ -90,7 +90,7 @@ static void AnimSleepLetterZ(struct Sprite* sprite)
     sprite->callback = AnimSleepLetterZ_Step;
 }
 
-static void AnimSleepLetterZ_Step(struct Sprite* sprite)
+static void AnimSleepLetterZ_Step(struct Sprite *sprite)
 {
     sprite->y2 = -(sprite->data[0] / 0x28);
     sprite->x2 = sprite->data[4] / 10;

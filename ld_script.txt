@@ -202,7 +202,7 @@ SECTIONS {
         src/battle/anim/milk_bottle.o(.text);
         src/battle/anim/stars.o(.text);
         src/battle/anim/bubble_burst.o(.text);
-        src/battle/anim/sleep.o(.text);
+        src/battle/anim/sleep_letter_z.o(.text);
         src/battle/anim/scan.o(.text);
         src/battle/anim/lunge.o(.text);
         src/battle/anim/slash.o(.text);
@@ -628,7 +628,7 @@ SECTIONS {
         src/battle/anim/milk_bottle.o(.rodata);
         src/battle/anim/stars.o(.rodata);
         src/battle/anim/bubble_burst.o(.rodata);
-        src/battle/anim/sleep.o(.rodata);
+        src/battle/anim/sleep_letter_z.o(.rodata);
         src/battle/anim/scan.o(.rodata);
         src/battle/anim/lunge.o(.rodata);
         src/battle/anim/slash.o(.rodata);
