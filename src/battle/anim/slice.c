@@ -9,11 +9,11 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimCuttingSlice(struct Sprite* sprite);
-static void AnimAirCutterSlice(struct Sprite* sprite);
-static void AnimSliceStep(struct Sprite* sprite);
+void AnimCuttingSlice(struct Sprite *sprite);
+static void AnimAirCutterSlice(struct Sprite *sprite);
+static void AnimSlice_Step(struct Sprite *sprite);
 
-const union AnimCmd gSpriteAnim_83D6B10[] =
+const union AnimCmd gCuttingSliceAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(16, 5),
@@ -22,9 +22,9 @@ const union AnimCmd gSpriteAnim_83D6B10[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6B24[] =
+const union AnimCmd *const gCuttingSliceAnimTable[] =
 {
-    gSpriteAnim_83D6B10,
+    gCuttingSliceAnimCmds,
 };
 
 const struct SpriteTemplate gCuttingSliceSpriteTemplate =
@@ -32,7 +32,7 @@ const struct SpriteTemplate gCuttingSliceSpriteTemplate =
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
-    .anims = gSpriteAnimTable_83D6B24,
+    .anims = gCuttingSliceAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimCuttingSlice,
@@ -43,7 +43,7 @@ const struct SpriteTemplate gAirCutterSliceSpriteTemplate =
     .tileTag = ANIM_TAG_CUT,
     .paletteTag = ANIM_TAG_CUT,
     .oam = &gOamData_AffineOff_ObjBlend_32x32,
-    .anims = gSpriteAnimTable_83D6B24,
+    .anims = gCuttingSliceAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimAirCutterSlice,
@@ -54,14 +54,14 @@ const struct SpriteTemplate gAirCutterSliceSpriteTemplate =
 // arg 0: initial x pixel offset
 // arg 1: initial y pixel offset
 // arg 2: slice direction; 0 = right-to-left, 1 = left-to-right
-void AnimCuttingSlice(struct Sprite* sprite)
+void AnimCuttingSlice(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1);
-    if (GetBattlerSide(gBattleAnimTarget) == 0)
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         sprite->y += 8;
 
-    sprite->callback = AnimSliceStep;
+    sprite->callback = AnimSlice_Step;
     if (gBattleAnimArgs[2] == 0)
     {
         sprite->x += gBattleAnimArgs[0];
@@ -80,7 +80,7 @@ void AnimCuttingSlice(struct Sprite* sprite)
         sprite->data[1] = -sprite->data[1];
 }
 
-static void AnimAirCutterSlice(struct Sprite* sprite)
+static void AnimAirCutterSlice(struct Sprite *sprite)
 {
     u8 x;
     u8 y;
@@ -111,7 +111,7 @@ static void AnimAirCutterSlice(struct Sprite* sprite)
     if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         sprite->y += 8;
 
-    sprite->callback = AnimSliceStep;
+    sprite->callback = AnimSlice_Step;
     if (gBattleAnimArgs[2] == 0)
     {
         sprite->x += gBattleAnimArgs[0];
@@ -130,7 +130,7 @@ static void AnimAirCutterSlice(struct Sprite* sprite)
         sprite->data[1] = -sprite->data[1];
 }
 
-static void AnimSliceStep(struct Sprite* sprite)
+static void AnimSlice_Step(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
