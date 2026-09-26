@@ -1773,7 +1773,7 @@ void HandleConditionMenuInput(void)
             switch (gPokenavStructPtr->unk6DF0)
             {
             case 0:
-                SetPokenavCallback(&sub_80ED620);
+                SetPokenavCallback(&OpenConditionGraphFromParty);
                 break;
             case 1:
                 SetPokenavCallback(&OpenPokenavConditionSearchMenu);
@@ -2207,7 +2207,7 @@ void HandleConditionSearchInput(void)
             if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                SetPokenavCallback(&sub_80ED4D8);
+                SetPokenavCallback(&OpenConditionGraphFromSearchResults);
 				return;
             }
             else if (JOY_NEW(B_BUTTON))
@@ -2288,7 +2288,7 @@ void OpenConditionSearchListFromGraph(void)
     }
 }
 
-void sub_80ED4D8()
+void OpenConditionGraphFromSearchResults(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2338,12 +2338,12 @@ void sub_80ED4D8()
         break;
     case 8:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80ED858);
+			SetPokenavCallback(&HandleConditionGraphInput);
         break;
     }
 }
 
-void sub_80ED620()
+void OpenConditionGraphFromParty(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -2429,7 +2429,7 @@ void sub_80ED620()
     case 16:
         if (!sub_80F2CBC(0x6))
 		{
-			SetPokenavCallback(&sub_80ED858);
+			SetPokenavCallback(&HandleConditionGraphInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
@@ -2452,7 +2452,7 @@ void sub_80F3614(void);
 void sub_80F357C(void);
 void sub_80F4FDC(void);
 
-void sub_80ED858(void)
+void HandleConditionGraphInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
