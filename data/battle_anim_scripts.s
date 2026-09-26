@@ -2075,11 +2075,11 @@ Move_CONFUSE_RAY: @ 81CA291
 
 Move_LOCK_ON: @ 81CA2E4
 	loadspritegfx ANIM_TAG_LOCK_ON
-	createsprite gBattleAnimSpriteTemplate_83D6DAC, ANIM_BATTLER_ATTACKER, 40
-	createsprite gBattleAnimSpriteTemplate_83D6DC4, ANIM_BATTLER_ATTACKER, 40, 1
-	createsprite gBattleAnimSpriteTemplate_83D6DC4, ANIM_BATTLER_ATTACKER, 40, 2
-	createsprite gBattleAnimSpriteTemplate_83D6DC4, ANIM_BATTLER_ATTACKER, 40, 3
-	createsprite gBattleAnimSpriteTemplate_83D6DC4, ANIM_BATTLER_ATTACKER, 40, 4
+	createsprite gLockOnTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 40
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 1
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 2
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 3
+	createsprite gLockOnMoveTargetSpriteTemplate, ANIM_BATTLER_ATTACKER, 40, 4
 	delay 120
 	setarg ARG_RET_ID, -1
 	waitforvisualfinish
