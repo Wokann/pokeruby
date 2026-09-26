@@ -9,13 +9,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CDFB0(struct Sprite* sprite);
-static void sub_80CE000(struct Sprite* sprite);
+static void AnimSharpenSphere(struct Sprite *sprite);
+static void AnimSharpenSphere_Step(struct Sprite *sprite);
 
-// cube (shows a sphere sharpening into a cube.)
 // Used in Sharpen.
 
-const union AnimCmd gSpriteAnim_83D6EB0[] =
+const union AnimCmd gSharpenSphereAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 18),
     ANIMCMD_FRAME(0, 6),
@@ -34,36 +33,36 @@ const union AnimCmd gSpriteAnim_83D6EB0[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6EEC[] =
+const union AnimCmd *const gSharpenSphereAnimTable[] =
 {
-    gSpriteAnim_83D6EB0,
+    gSharpenSphereAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6EF0 =
+const struct SpriteTemplate gSharpenSphereSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SPHERE_TO_CUBE,
     .paletteTag = ANIM_TAG_SPHERE_TO_CUBE,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D6EEC,
+    .anims = gSharpenSphereAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CDFB0,
+    .callback = AnimSharpenSphere,
 };
 
-void sub_80CDFB0(struct Sprite* sprite)
+static void AnimSharpenSphere(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) - 12;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) - 12;
     sprite->data[0] = 0;
     sprite->data[1] = 2;
     sprite->data[2] = 0;
     sprite->data[3] = 0;
     sprite->data[4] = 0;
     sprite->data[5] = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
-    sprite->callback = sub_80CE000;
+    sprite->callback = AnimSharpenSphere_Step;
 }
 
-static void sub_80CE000(struct Sprite* sprite)
+static void AnimSharpenSphere_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] >= sprite->data[1])
     {

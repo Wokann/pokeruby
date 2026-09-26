@@ -207,7 +207,7 @@ SECTIONS {
         src/battle/anim/lunge.o(.text);
         src/battle/anim/slash.o(.text);
         src/battle/anim/endure_energy.o(.text);
-        src/battle/anim/cube.o(.text);
+        src/battle/anim/sharpen_sphere.o(.text);
         src/battle/anim/tile.o(.text);
         src/battle/anim/moon.o(.text);
         src/battle/anim/twinkle.o(.text);
@@ -633,7 +633,7 @@ SECTIONS {
         src/battle/anim/lunge.o(.rodata);
         src/battle/anim/slash.o(.rodata);
         src/battle/anim/endure_energy.o(.rodata);
-        src/battle/anim/cube.o(.rodata);
+        src/battle/anim/sharpen_sphere.o(.rodata);
         src/battle/anim/tile.o(.rodata);
         src/battle/anim/moon.o(.rodata);
         src/battle/anim/twinkle.o(.rodata);
