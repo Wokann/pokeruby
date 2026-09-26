@@ -3032,10 +3032,10 @@ Move_SUPER_FANG: @ 81CB75A
 
 Move_SLASH: @ 81CB7DB
 	loadspritegfx ANIM_TAG_SLASH
-	createsprite gBattleAnimSpriteTemplate_83D6E38, ANIM_BATTLER_TARGET, 2, 1, -8, 0
+	createsprite gSlashSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, -8, 0
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	delay 4
-	createsprite gBattleAnimSpriteTemplate_83D6E38, ANIM_BATTLER_TARGET, 2, 1, 8, 0
+	createsprite gSlashSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1, 8, 0
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_BATTLER_TARGET, 4, 0, 18, 1
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	waitforvisualfinish
@@ -3251,23 +3251,23 @@ Move_ROLLOUT: @ 81CBB5E
 Move_FALSE_SWIPE: @ 81CBB9F
 	loadspritegfx ANIM_TAG_SLASH_2
 	loadspritegfx ANIM_TAG_IMPACT
-	createsprite gBattleAnimSpriteTemplate_83D6E50, ANIM_BATTLER_TARGET, 2
+	createsprite gFalseSwipeSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2
 	playsewithpan SE_M_VITAL_THROW, SOUND_PAN_TARGET
 	delay 16
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 0
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 16
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 16
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 32
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 32
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 48
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 48
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 64
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 64
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83D6E68, ANIM_BATTLER_TARGET, 2, 80
+	createsprite gFalseSwipePositionedSliceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 80
 	delay 2
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 6, 1
