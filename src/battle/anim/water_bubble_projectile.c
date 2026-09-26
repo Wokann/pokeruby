@@ -14,7 +14,7 @@ static void AnimWaterBubbleProjectile_Step1(struct Sprite *);
 static void AnimWaterBubbleProjectile_Step2(struct Sprite *);
 static void AnimWaterBubbleProjectile_Step3(struct Sprite *);
 
-// For water bubbles that move to a dest, as in Bubble/Bubblebeam
+// Water bubble projectiles move toward the target during Bubble and Bubble Beam.
 
 static const union AffineAnimCmd sAffineAnim_WaterBubbleProjectile[] =
 {
