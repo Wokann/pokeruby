@@ -15,8 +15,7 @@ extern u16 gBattle_WIN0H;
 static void AnimTask_FakeOut_Step1(u8 taskId);
 static void AnimTask_FakeOut_Step2(u8 taskId);
 
-// curtain (a sweeping blackening curtain in the BG)
-// Used in Fake Out.
+// Fake Out background curtain and flash.
 
 void AnimTask_FakeOut(u8 taskId)
 {

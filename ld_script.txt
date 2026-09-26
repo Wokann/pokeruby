@@ -244,7 +244,7 @@ SECTIONS {
         src/battle/anim/espeed.o(.text);
         src/battle/anim/heal_bell.o(.text);
         src/battle/anim/magenta_heart.o(.text);
-        src/battle/anim/curtain.o(.text);
+        src/battle/anim/fake_out.o(.text);
         src/battle/anim/startle.o(.text);
         src/battle/anim/blow_kiss.o(.text);
         src/battle/anim/kiss_fountain.o(.text);
