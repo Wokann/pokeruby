@@ -407,7 +407,7 @@ static void AnimTearDrop(struct Sprite *sprite)
 
 static void AnimTearDrop_Step(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroySpriteAndMatrix(sprite);
 }
 

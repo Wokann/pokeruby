@@ -449,7 +449,7 @@ static void AnimMissileArcStep(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         DestroyAnimSprite(sprite);
     }
@@ -469,7 +469,7 @@ static void AnimMissileArcStep(struct Sprite *sprite)
         x2 += x1;
         y2 += y1;
 
-        if (!TranslateAnimArc(sprite))
+        if (!TranslateAnimHorizontalArc(sprite))
         {
             u16 rotation = ArcTan2Neg(sprite->x + sprite->x2 - x2,
                                   sprite->y + sprite->y2 - y2);

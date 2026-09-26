@@ -773,7 +773,7 @@ void InitAnimArcTranslation(struct Sprite *sprite)
     sprite->data[7] = 0;
 }
 
-bool8 TranslateAnimArc(struct Sprite *sprite)
+bool8 TranslateAnimHorizontalArc(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
         return TRUE;
@@ -1444,7 +1444,7 @@ void AnimThrowProjectile(struct Sprite *sprite)
 
 static void AnimThrowProjectile_Step(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 

@@ -938,7 +938,7 @@ static void CreateWaterSportDroplet(struct Task *task)
 
 static void AnimWaterSportDroplet(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
@@ -955,7 +955,7 @@ static void AnimWaterSportDroplet_Step(struct Sprite *sprite)
 {
     u16 i;
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         for (i = 0; i < NUM_TASKS; i++)
         {

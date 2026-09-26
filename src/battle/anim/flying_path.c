@@ -116,7 +116,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
     {
     case 4:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -128,7 +128,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
         break;
     case 8:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -140,7 +140,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
         break;
     case 0:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 1;
@@ -166,7 +166,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
         break;
     case 2:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 3;
@@ -209,7 +209,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
         break;
     case 6:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
             break;
 
         task->data[15] = 7;
@@ -252,7 +252,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
         break;
     case 10:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) == 0)
+        if (TranslateAnimHorizontalArc(sprite) == 0)
         {
             break;
         }
@@ -284,7 +284,7 @@ static void AnimTask_LeafBlade_Step(u8 taskId)
     }
     case 12:
         AnimTask_LeafBlade_Step2(task, taskId);
-        if (TranslateAnimArc(sprite) != 0)
+        if (TranslateAnimHorizontalArc(sprite) != 0)
         {
             DestroySprite(sprite);
             task->data[0]++;

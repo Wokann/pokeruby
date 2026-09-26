@@ -930,7 +930,7 @@ static void AnimTask_SkillSwap_Step(u8 taskId)
 
 static void AnimSkillSwapOrb(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         FreeOamMatrix(sprite->oam.matrixNum);
         DestroySprite(sprite);

@@ -166,7 +166,7 @@ static void AnimBonemerangProjectile(struct Sprite *sprite)
 
 static void AnimBonemerangProjectileStep(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
@@ -183,7 +183,7 @@ static void AnimBonemerangProjectileStep(struct Sprite *sprite)
 
 static void AnimBonemerangProjectileEnd(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
@@ -543,7 +543,7 @@ static void AnimFissureDirtPlumeParticle(struct Sprite *sprite)
 
 static void AnimFissureDirtPlumeParticleStep(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 

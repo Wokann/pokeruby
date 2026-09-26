@@ -1450,7 +1450,7 @@ static void AnimSpikes(struct Sprite *sprite)
 
 static void AnimSpikes_Step1(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->data[0] = 30;
         sprite->data[1] = 0;
@@ -4105,13 +4105,13 @@ static void sub_81306A4(u8 taskId)
         if (++task->data[1] > 1)
         {
             task->data[1] = 0;
-            TranslateAnimArc(&gSprites[task->data[15]]);
+            TranslateAnimHorizontalArc(&gSprites[task->data[15]]);
             if (++task->data[2] > 7)
                 task->data[0]++;
         }
         break;
     case 1:
-        if (TranslateAnimArc(&gSprites[task->data[15]]))
+        if (TranslateAnimHorizontalArc(&gSprites[task->data[15]]))
         {
             task->data[1] = 0;
             task->data[2] = 0;

@@ -204,7 +204,7 @@ static void AnimSludgeProjectile(struct Sprite *sprite)
 
 static void AnimSludgeProjectile_Step(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 
@@ -232,7 +232,7 @@ static void AnimAcidPoisonBubble(struct Sprite *sprite)
 
 static void AnimAcidPoisonBubble_Step(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 

@@ -279,7 +279,7 @@ void AnimAbsorptionOrb(struct Sprite* sprite)
 
 static void AnimAbsorptionOrb_Step(struct Sprite* sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
 }
 

@@ -772,7 +772,7 @@ static void SpriteCB_Ball_Arc(struct Sprite *sprite)
     u8 ballIndex;
     int ballIndex2; // extra var needed to match
 
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         if (ewram17840.unk8 == 5)
         {
@@ -2048,7 +2048,7 @@ static void SpriteCB_PokeBlock_LiftArm(struct Sprite *sprite)
 
 static void SpriteCB_PokeBlock_Arc(struct Sprite *sprite)
 {
-    if (TranslateAnimArc(sprite))
+    if (TranslateAnimHorizontalArc(sprite))
     {
         sprite->data[0] = 0;
         sprite->invisible = TRUE;

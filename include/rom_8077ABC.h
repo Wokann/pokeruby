@@ -98,7 +98,7 @@ void PrepareAffineAnimInTaskData(struct Task *task, u8 a2, const void *a3);
 bool8 RunAffineAnimFromTaskData(struct Task *task);
 u8 GetBattlerYCoordWithElevation(u8 battler);
 void DestroySpriteAndMatrix(struct Sprite *sprite);
-bool8 TranslateAnimArc(struct Sprite *sprite);
+bool8 TranslateAnimHorizontalArc(struct Sprite *sprite);
 bool8 AnimFastTranslateLinear(struct Sprite *sprite);
 void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite);
 void InitAnimLinearTranslationWithSpeed(struct Sprite *sprite);
