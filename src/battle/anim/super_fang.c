@@ -8,13 +8,11 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void sub_80CEA04(struct Sprite* sprite);
+static void AnimSuperFang(struct Sprite *sprite);
 
-// fang
-// Used by Super Fang (and probably Hyper Fang, but the actual callbacks are not in this file.)
-// (Look into this one later.)
+// Used by Super Fang.
 
-const union AnimCmd gSpriteAnim_83D7068[] =
+const union AnimCmd gSuperFangAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_FRAME(16, 2),
@@ -23,23 +21,23 @@ const union AnimCmd gSpriteAnim_83D7068[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D707C[] =
+const union AnimCmd *const gSuperFangAnimTable[] =
 {
-    gSpriteAnim_83D7068,
+    gSuperFangAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D7080 =
+const struct SpriteTemplate gSuperFangSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FANG_ATTACK,
     .paletteTag = ANIM_TAG_FANG_ATTACK,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D707C,
+    .anims = gSuperFangAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CEA04,
+    .callback = AnimSuperFang,
 };
 
-void sub_80CEA04(struct Sprite* sprite)
+static void AnimSuperFang(struct Sprite *sprite)
 {
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = RunStoredCallbackWhenAnimEnds;

@@ -214,7 +214,7 @@ SECTIONS {
         src/battle/anim/moonlight_end_fade.o(.text);
         src/battle/anim/strike.o(.text);
         src/battle/anim/double_team.o(.text);
-        src/battle/anim/fang.o(.text);
+        src/battle/anim/super_fang.o(.text);
         src/battle/anim/musical.o(.text);
         src/battle/anim/thought.o(.text);
         src/battle/anim/finger.o(.text);
@@ -638,7 +638,7 @@ SECTIONS {
         src/battle/anim/moon.o(.rodata);
         src/battle/anim/moonlight_sparkle.o(.rodata);
         src/battle/anim/strike.o(.rodata);
-        src/battle/anim/fang.o(.rodata);
+        src/battle/anim/super_fang.o(.rodata);
         src/battle/anim/musical.o(.rodata);
         src/battle/anim/thought.o(.rodata);
         src/battle/anim/finger.o(.rodata);
