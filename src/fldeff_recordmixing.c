@@ -5,22 +5,22 @@
 
 extern const struct OamData gFieldOamData_32x8;
 
-static const u8 sSpriteImage_83D26C0[] = INCBIN_U8("graphics/unknown_sprites/83D2860/0.4bpp");
-static const u8 sSpriteImage_83D2740[] = INCBIN_U8("graphics/unknown_sprites/83D2860/1.4bpp");
-static const u8 sSpriteImage_83D27C0[] = INCBIN_U8("graphics/unknown_sprites/83D2860/2.4bpp");
-static const u16 sPalette_3D2840[] = INCBIN_U16("graphics/unknown/unknown_3D2840.gbapal");
+static const u8 sRecordMixLights_Gfx0[] = INCBIN_U8("graphics/field_effects/pics/record_mix_lights_0.4bpp");
+static const u8 sRecordMixLights_Gfx1[] = INCBIN_U8("graphics/field_effects/pics/record_mix_lights_1.4bpp");
+static const u8 sRecordMixLights_Gfx2[] = INCBIN_U8("graphics/field_effects/pics/record_mix_lights_2.4bpp");
+static const u16 sRecordMixLights_Pal[] = INCBIN_U16("graphics/field_effects/palettes/record_mix_lights.gbapal");
 
 
-static const struct SpriteFrameImage sSpriteImageTable_83FD950[] =
+static const struct SpriteFrameImage sPicTable_RecordMixLights[] =
 {
-    { sSpriteImage_83D26C0, sizeof(sSpriteImage_83D26C0) },
-    { sSpriteImage_83D2740, sizeof(sSpriteImage_83D2740) },
-    { sSpriteImage_83D27C0, sizeof(sSpriteImage_83D27C0) },
+    { sRecordMixLights_Gfx0, sizeof(sRecordMixLights_Gfx0) },
+    { sRecordMixLights_Gfx1, sizeof(sRecordMixLights_Gfx1) },
+    { sRecordMixLights_Gfx2, sizeof(sRecordMixLights_Gfx2) },
 };
 
-static const struct SpritePalette sUnknown_083D2878 = { sPalette_3D2840, 0x1000 };
+static const struct SpritePalette sSpritePalette_RecordMixLights = { sRecordMixLights_Pal, 0x1000 };
 
-static const union AnimCmd sSpriteAnim_83D2880[] =
+static const union AnimCmd sAnim_RecordMixLights[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
@@ -28,29 +28,29 @@ static const union AnimCmd sSpriteAnim_83D2880[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd *const sSpriteAnimTable_83D2890[] =
+static const union AnimCmd *const sAnimTable_RecordMixLights[] =
 {
-    sSpriteAnim_83D2880,
+    sAnim_RecordMixLights,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_83D2894 =
+static const struct SpriteTemplate sSpriteTemplate_RecordMixLights =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 0x1000,
     .oam = &gFieldOamData_32x8,
-    .anims = sSpriteAnimTable_83D2890,
-    .images = sSpriteImageTable_83FD950,
+    .anims = sAnimTable_RecordMixLights,
+    .images = sPicTable_RecordMixLights,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-u8 CreateRecordMixingSprite(void)
+u8 CreateRecordMixingLights(void)
 {
     u8 spriteId;
 
-    LoadSpritePalette(&sUnknown_083D2878);
+    LoadSpritePalette(&sSpritePalette_RecordMixLights);
 
-    spriteId = CreateSprite(&sSpriteTemplate_83D2894, 0, 0, 82);
+    spriteId = CreateSprite(&sSpriteTemplate_RecordMixLights, 0, 0, 82);
 
     if (spriteId == MAX_SPRITES)
     {
@@ -68,13 +68,13 @@ u8 CreateRecordMixingSprite(void)
     return spriteId;
 }
 
-void DestroyRecordMixingSprite(void)
+void DestroyRecordMixingLights(void)
 {
     int i;
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
-        if (gSprites[i].template == &sSpriteTemplate_83D2894)
+        if (gSprites[i].template == &sSpriteTemplate_RecordMixLights)
         {
             FreeSpritePalette(&gSprites[i]);
             DestroySprite(&gSprites[i]);
