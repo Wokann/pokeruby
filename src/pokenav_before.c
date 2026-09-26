@@ -1172,7 +1172,7 @@ void CB2_InitPokeNav(void)
         break;
     case 13:
         InitPokenavState();
-        SetPokenavCallback(&sub_80EBDD8);
+        SetPokenavCallback(&InitPokenavMainMenu);
         break;
     case 14:
         gPokenavStructPtr->unk6DAB = 1;
@@ -1284,7 +1284,7 @@ void SetPokenavCallback(void (*callback)(void))
     gPokenavStructPtr->callbackStep = 0;
 }
 
-void sub_80EBDD8()
+void InitPokenavMainMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1366,7 +1366,7 @@ void sub_80EBDD8()
         if (!sub_80F1E50())
         {
             sub_80EF428(0, 0);
-            SetPokenavCallback(&sub_80EC268);
+            SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1376,7 +1376,7 @@ void sub_80EBDD8()
     }
 }
 
-void sub_80EC00C()
+void RestorePokenavMainMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1444,7 +1444,7 @@ void sub_80EC00C()
         if (!sub_80F1E50())
         {
             sub_80EF428(0, gPokenavStructPtr->unk6DAD);
-			SetPokenavCallback(&sub_80EC268);
+			SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
 				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
@@ -1454,7 +1454,7 @@ void sub_80EC00C()
     }
 }
 
-void sub_80EC210()
+void ClosePokenavConditionMenu(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
@@ -1465,12 +1465,12 @@ void sub_80EC210()
         break;
     case 1:
         if (!sub_80EEA0C())
-			SetPokenavCallback(&sub_80EC268);
+			SetPokenavCallback(&HandlePokenavMainMenuInput);
 		break;
     }
 }
 
-void sub_80EC268()
+void HandlePokenavMainMenuInput(void)
 {
     u8 var1;
 
@@ -1729,7 +1729,7 @@ void sub_80EC67C()
 			sub_80F2DF4();
 			sub_80F2D04(0x4);
 			gSaveBlock2.regionMapZoom = (gPokenavStructPtr->regionMap.zoomed == 1) ? 1 : 0;
-			SetPokenavCallback(&sub_80EC00C);
+			SetPokenavCallback(&RestorePokenavMainMenu);
 		}
 		break;
     }
@@ -1779,7 +1779,7 @@ void sub_80EC86C()
                 SetPokenavCallback(&sub_80EC960);
                 break;
             case 2:
-                SetPokenavCallback(&sub_80EC210);
+                SetPokenavCallback(&ClosePokenavConditionMenu);
                 break;
             }
         }
@@ -1793,7 +1793,7 @@ void sub_80EC86C()
         break;
     case 1:
         if (!sub_80F1E6C())
-			SetPokenavCallback(&sub_80EC210);
+			SetPokenavCallback(&ClosePokenavConditionMenu);
 		break;
     }
 }
@@ -2759,7 +2759,7 @@ void sub_80EDE70()
 		}
         break;
     case 2:
-        SetPokenavCallback(&sub_80EC00C);
+        SetPokenavCallback(&RestorePokenavMainMenu);
         break;
     }
 
@@ -3227,7 +3227,7 @@ void sub_80EE8F4()
 		}
         break;
     case 2:
-        SetPokenavCallback(&sub_80EC00C);
+        SetPokenavCallback(&RestorePokenavMainMenu);
         break;
     }
 }
