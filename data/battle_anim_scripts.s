@@ -2841,7 +2841,7 @@ _81CB3A9:
 	return
 _81CB3E6:
 	loadspritegfx ANIM_TAG_IMPACT
-	createvisualtask sub_80CDAC8, 2, 0
+	createvisualtask AnimTask_SkullBashPosition, 2, 0
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	playse SE_BANG
@@ -2851,7 +2851,7 @@ _81CB3E6:
 	createsprite gFlashingHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 1, 0
 	loopsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET, 8, 3
 	waitforvisualfinish
-	createvisualtask sub_80CDAC8, 2, 1
+	createvisualtask AnimTask_SkullBashPosition, 2, 1
 	goto _81CB398
 
 Move_AMNESIA: @ 81CB455

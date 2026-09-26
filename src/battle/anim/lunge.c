@@ -3,6 +3,7 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -10,20 +11,19 @@ extern u8 gBattleAnimTarget;
 
 extern u8 gBattlerSpriteIds[];
 
-void AnimBowMon(struct Sprite* sprite);
-void sub_80CD9C4(struct Sprite* sprite);
-static void AnimBowMon_Step1(struct Sprite* sprite);
-static void AnimBowMon_Step1_Callback(struct Sprite* sprite);
-static void AnimBowMon_Step2(struct Sprite* sprite);
-static void AnimBowMon_Step3(struct Sprite* sprite);
-static void AnimBowMon_Step3_Callback(struct Sprite* sprite);
-static void AnimBowMon_Step4(struct Sprite* sprite);
-static void sub_80CD9D4(struct Sprite* sprite);
-static void sub_80CDB60(u8 taskId);
-static void sub_80CDD20(u8 taskId);
+static void AnimBowMon(struct Sprite *sprite);
+static void AnimTipMon(struct Sprite *sprite);
+static void AnimBowMon_Step1(struct Sprite *sprite);
+static void AnimBowMon_Step1_Callback(struct Sprite *sprite);
+static void AnimBowMon_Step2(struct Sprite *sprite);
+static void AnimBowMon_Step3(struct Sprite *sprite);
+static void AnimBowMon_Step3_Callback(struct Sprite *sprite);
+static void AnimBowMon_Step4(struct Sprite *sprite);
+static void AnimTipMon_Step(struct Sprite *sprite);
+static void AnimTask_SkullBashPositionSet(u8 taskId);
+static void AnimTask_SkullBashPositionReset(u8 taskId);
 
-// lunge_1 (makes the pokemon sprite do a "lunge" where it leans back to attack, usually with its head or horn.)
-// Used in Drill Peck, Headbutt, Horn Attack, and Horn Drill.
+// Bowing and tipping battler effects, plus Skull Bash positioning.
 
 const struct SpriteTemplate gBowMonSpriteTemplate =
 {
@@ -36,7 +36,8 @@ const struct SpriteTemplate gBowMonSpriteTemplate =
     .callback = AnimBowMon,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D6DFC =
+// Unused: tips the battler without first moving it back.
+static const struct SpriteTemplate sTipMonSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -44,10 +45,10 @@ const struct SpriteTemplate gSpriteTemplate_83D6DFC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CD9C4,
+    .callback = AnimTipMon,
 };
 
-void AnimBowMon(struct Sprite* sprite)
+static void AnimBowMon(struct Sprite *sprite)
 {
     sprite->invisible = TRUE;
     sprite->data[0] = 0;
@@ -68,7 +69,7 @@ void AnimBowMon(struct Sprite* sprite)
     }
 }
 
-static void AnimBowMon_Step1(struct Sprite* sprite)
+static void AnimBowMon_Step1(struct Sprite *sprite)
 {
     sprite->data[0] = 6;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? 2 : -2;
@@ -78,12 +79,12 @@ static void AnimBowMon_Step1(struct Sprite* sprite)
     sprite->callback = TranslateMonBGUntil;
 }
 
-static void AnimBowMon_Step1_Callback(struct Sprite* sprite)
+static void AnimBowMon_Step1_Callback(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
         sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
-        PrepareBattlerSpriteForRotScale(sprite->data[3], 0);
+        PrepareBattlerSpriteForRotScale(sprite->data[3], ST_OAM_OBJ_NORMAL);
         sprite->data[4] = (sprite->data[6] = GetBattlerSide(gBattleAnimAttacker)) ? 0x300 : 0xFFFFFD00;
         sprite->data[5] = 0;
     }
@@ -98,7 +99,7 @@ static void AnimBowMon_Step1_Callback(struct Sprite* sprite)
     }
 }
 
-static void AnimBowMon_Step2(struct Sprite* sprite)
+static void AnimBowMon_Step2(struct Sprite *sprite)
 {
     sprite->data[0] = 4;
     sprite->data[1] = (GetBattlerSide(gBattleAnimAttacker)) ? -3 : 3;
@@ -108,7 +109,7 @@ static void AnimBowMon_Step2(struct Sprite* sprite)
     sprite->callback = TranslateMonBGUntil;
 }
 
-static void AnimBowMon_Step3(struct Sprite* sprite)
+static void AnimBowMon_Step3(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 8)
     {
@@ -117,13 +118,13 @@ static void AnimBowMon_Step3(struct Sprite* sprite)
     }
 }
 
-static void AnimBowMon_Step3_Callback(struct Sprite* sprite)
+static void AnimBowMon_Step3_Callback(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
         sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
         sprite->data[6] = GetBattlerSide(gBattleAnimAttacker);
-        if (GetBattlerSide(gBattleAnimAttacker))
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         {
             sprite->data[4] = 0xFC00;
             sprite->data[5] = 0xC00;
@@ -145,18 +146,18 @@ static void AnimBowMon_Step3_Callback(struct Sprite* sprite)
     }
 }
 
-static void AnimBowMon_Step4(struct Sprite* sprite)
+static void AnimBowMon_Step4(struct Sprite *sprite)
 {
     DestroyAnimSprite(sprite);
 }
 
-void sub_80CD9C4(struct Sprite* sprite)
+static void AnimTipMon(struct Sprite *sprite)
 {
     sprite->data[0] = 0;
-    sprite->callback = sub_80CD9D4;
+    sprite->callback = AnimTipMon_Step;
 }
 
-static void sub_80CD9D4(struct Sprite* sprite)
+static void AnimTipMon_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -164,9 +165,9 @@ static void sub_80CD9D4(struct Sprite* sprite)
         sprite->data[1] = 0;
         sprite->data[2] = gBattlerSpriteIds[gBattleAnimAttacker];
         sprite->data[3] = GetBattlerSide(gBattleAnimAttacker);
-        sprite->data[4] = (sprite->data[3] != 0) ? 0x200 : -0x200;
+        sprite->data[4] = (sprite->data[3] != B_SIDE_PLAYER) ? 0x200 : -0x200;
         sprite->data[5] = 0;
-        PrepareBattlerSpriteForRotScale(sprite->data[2], 0);
+        PrepareBattlerSpriteForRotScale(sprite->data[2], ST_OAM_OBJ_NORMAL);
         sprite->data[0]++;
     case 1:
         sprite->data[5] += sprite->data[4];
@@ -192,13 +193,13 @@ static void sub_80CD9D4(struct Sprite* sprite)
     }
 }
 
-void sub_80CDAC8(u8 taskId)
+void AnimTask_SkullBashPosition(u8 taskId)
 {
-    u8 a;
+    u8 side;
 
     gTasks[taskId].data[0] = gBattlerSpriteIds[gBattleAnimAttacker];
-    a = GetBattlerSide(gBattleAnimAttacker);
-    gTasks[taskId].data[1] = a;
+    side = GetBattlerSide(gBattleAnimAttacker);
+    gTasks[taskId].data[1] = side;
     gTasks[taskId].data[2] = 0;
     switch (gBattleAnimArgs[0])
     {
@@ -210,27 +211,27 @@ void sub_80CDAC8(u8 taskId)
         gTasks[taskId].data[3] = 8;
         gTasks[taskId].data[4] = 0;
         gTasks[taskId].data[5] = 3;
-        if (a == 0)
+        if (side == B_SIDE_PLAYER)
             gTasks[taskId].data[5] *= -1;
 
-        gTasks[taskId].func = sub_80CDB60;
+        gTasks[taskId].func = AnimTask_SkullBashPositionSet;
         break;
     case 1:
         gTasks[taskId].data[3] = 8;
         gTasks[taskId].data[4] = 0x600;
         gTasks[taskId].data[5] = 0xC0;
-        if (a == 0)
+        if (side == B_SIDE_PLAYER)
         {
             gTasks[taskId].data[4] = -gTasks[taskId].data[4];
             gTasks[taskId].data[5] = -gTasks[taskId].data[5];
         }
 
-        gTasks[taskId].func = sub_80CDD20;
+        gTasks[taskId].func = AnimTask_SkullBashPositionReset;
         break;
     }
 }
 
-void sub_80CDB60(u8 taskId)
+static void AnimTask_SkullBashPositionSet(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     switch (task->data[2])
@@ -246,8 +247,8 @@ void sub_80CDB60(u8 taskId)
         {
             task->data[3] = 8;
             task->data[4] = 0;
-            task->data[5] = (task->data[1] == 0) ? -0xC0 : 0xC0;
-            PrepareBattlerSpriteForRotScale(task->data[0], 0);
+            task->data[5] = (task->data[1] == B_SIDE_PLAYER) ? -0xC0 : 0xC0;
+            PrepareBattlerSpriteForRotScale(task->data[0], ST_OAM_OBJ_NORMAL);
             task->data[2]++;
         }
         break;
@@ -263,7 +264,7 @@ void sub_80CDB60(u8 taskId)
         {
             task->data[3] = 8;
             task->data[4] = gSprites[task->data[0]].x2;
-            task->data[5] = (task->data[1] == 0) ? 0x2 : -0x2;
+            task->data[5] = (task->data[1] == B_SIDE_PLAYER) ? 0x2 : -0x2;
             task->data[6] = 1;
             task->data[2]++;
         }
@@ -302,7 +303,7 @@ void sub_80CDB60(u8 taskId)
         {
             task->data[3] = 3;
             task->data[4] = gSprites[task->data[0]].x2;
-            task->data[5] = (task->data[1] == 0) ? 8 : -8;
+            task->data[5] = (task->data[1] == B_SIDE_PLAYER) ? 8 : -8;
             task->data[2]++;
         }
         break;
@@ -321,7 +322,7 @@ void sub_80CDB60(u8 taskId)
     }
 }
 
-void sub_80CDD20(u8 taskId)
+static void AnimTask_SkullBashPositionReset(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     if (task->data[3])
