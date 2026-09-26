@@ -77,32 +77,32 @@ static u16 GetRandomUnlockedTrendySaying(void);
 u8 EasyChatIsNationalPokedexEnabled(void);
 static u16 GetRandomUnlockedEasyChatPokemon(void);
 
-EWRAM_DATA u8 gUnknown_020388AC = 0;
+static EWRAM_DATA u8 sRectangleCursorAnim = 0;
 
 static u8 sEasyChatMessageId;
 
-const u16 InterviewPalette_0[] = INCBIN_U16("graphics/misc/interview_pal0.gbapal");
-const u16 InterviewPalette_1[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
-const u8 InterviewArrowTiles[] = INCBIN_U8("graphics/misc/interview_arrow.4bpp");
-const u8 InterviewButtonTiles[] = INCBIN_U8("graphics/misc/interview_buttons.4bpp");
-const u16 gMenuInterviewFrame_Pal[] = INCBIN_U16("graphics/misc/interview_frame.gbapal");
-const u8 gMenuInterviewFrame_Gfx[] = INCBIN_U8("graphics/misc/interview_frame.4bpp.lz");
-const u8 InterviewTriangleCursorTiles[] = INCBIN_U8("graphics/misc/interview_triangle_cursor.4bpp");
+static const u16 sTriangleCursor_Pal[] = INCBIN_U16("graphics/misc/interview_pal0.gbapal");
+static const u16 sRectangleCursor_Pal[] = INCBIN_U16("graphics/misc/interview_pal1.gbapal");
+static const u8 sScrollIndicator_Gfx[] = INCBIN_U8("graphics/misc/interview_arrow.4bpp");
+static const u8 sStartSelectButtons_Gfx[] = INCBIN_U8("graphics/misc/interview_buttons.4bpp");
+static const u16 sRSInterviewFrame_Pal[] = INCBIN_U16("graphics/misc/interview_frame.gbapal");
+static const u8 sRSInterviewFrame_Gfx[] = INCBIN_U8("graphics/misc/interview_frame.4bpp.lz");
+static const u8 sTriangleCursor_Gfx[] = INCBIN_U8("graphics/misc/interview_triangle_cursor.4bpp");
 
 void InitEasyChatSprites(void)
 {
     struct SpriteSheet interviewSpriteSheets[] =
     {
-        {InterviewTriangleCursorTiles, 0x20, 0},
+        {sTriangleCursor_Gfx, 0x20, 0},
         {gInterviewOutlineCursorTiles, 0x700, 1},
-        {InterviewArrowTiles, 0x100, 2},
-        {InterviewButtonTiles, 0x100, 3},
+        {sScrollIndicator_Gfx, 0x100, 2},
+        {sStartSelectButtons_Gfx, 0x100, 3},
         {NULL, 0, 0},
     };
     struct SpritePalette interviewSpritePalettes[] =
     {
-        {InterviewPalette_0, 0},
-        {InterviewPalette_1, 1},
+        {sTriangleCursor_Pal, 0},
+        {sRectangleCursor_Pal, 1},
         {NULL, 0},
     };
 
@@ -113,7 +113,7 @@ void InitEasyChatSprites(void)
     CreateScrollIndicatorSprites();
 }
 
-const struct OamData gOamData_83DBBF4 =
+static const struct OamData sOamData_TriangleCursor =
 {
     .y = 0,
     .affineMode = 0,
@@ -130,11 +130,11 @@ const struct OamData gOamData_83DBBF4 =
     .affineParam = 0,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DBBFC =
+static const struct SpriteTemplate sSpriteTemplate_TriangleCursor =
 {
     .tileTag = 0,
     .paletteTag = 0,
-    .oam = &gOamData_83DBBF4,
+    .oam = &sOamData_TriangleCursor,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -145,7 +145,7 @@ void CreateMainCursorSprite(void)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83DBBFC, 0, 0, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_TriangleCursor, 0, 0, 0);
     gSprites[spriteId].y = gEasyChatStruct->unk8A * 8 + 8;
     gSprites[spriteId].x = gEasyChatStruct->unk88 * 8 + 4;
     gSprites[spriteId].data[0] = 0;
@@ -215,7 +215,7 @@ void SetMainCursorState(u8 state)
     }
 }
 
-const struct OamData gOamData_83DBC14 =
+static const struct OamData sOamData_RectangleCursor =
 {
     .y = 0,
     .affineMode = 0,
@@ -232,13 +232,13 @@ const struct OamData gOamData_83DBC14 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83DBC1C[] =
+static const union AnimCmd sAnim_RectCursorPrimary_Group[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC24[] =
+static const union AnimCmd sAnim_RectCursorPrimary_Button[] =
 {
 #if ENGLISH
     ANIMCMD_FRAME(8, 5),
@@ -248,49 +248,49 @@ const union AnimCmd gSpriteAnim_83DBC24[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC2C[] =
+static const union AnimCmd sAnim_RectCursorPrimary_Others[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC34[] =
+static const union AnimCmd sAnim_RectCursorPrimary_Letter[] =
 {
     ANIMCMD_FRAME(24, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC3C[] =
+static const union AnimCmd sAnim_RectCursorMiddle_Group[] =
 {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC44[] =
+static const union AnimCmd sAnim_RectCursorMiddle_Button[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC4C[] =
+static const union AnimCmd sAnim_RectCursorMiddle_Others[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC54[] =
+static const union AnimCmd sAnim_RectCursorMiddle_Letter[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC5C[] =
+static const union AnimCmd sAnim_RectCursorEnd_Group[] =
 {
     ANIMCMD_FRAME(48, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC64[] =
+static const union AnimCmd sAnim_RectCursorEnd_Button[] =
 {
 #if ENGLISH
     ANIMCMD_FRAME(40, 5),
@@ -300,40 +300,40 @@ const union AnimCmd gSpriteAnim_83DBC64[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC6C[] =
+static const union AnimCmd sAnim_RectCursorEnd_Others[] =
 {
     ANIMCMD_FRAME(48, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBC74[] =
+static const union AnimCmd sAnim_RectCursorEnd_Letter[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBC7C[] =
+static const union AnimCmd *const sAnims_RectCursorPrimary[] =
 {
-    gSpriteAnim_83DBC1C,
-    gSpriteAnim_83DBC24,
-    gSpriteAnim_83DBC2C,
-    gSpriteAnim_83DBC34,
+    sAnim_RectCursorPrimary_Group,
+    sAnim_RectCursorPrimary_Button,
+    sAnim_RectCursorPrimary_Others,
+    sAnim_RectCursorPrimary_Letter,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBC8C[] =
+static const union AnimCmd *const sAnims_RectCursorMiddle[] =
 {
-    gSpriteAnim_83DBC3C,
-    gSpriteAnim_83DBC44,
-    gSpriteAnim_83DBC4C,
-    gSpriteAnim_83DBC54,
+    sAnim_RectCursorMiddle_Group,
+    sAnim_RectCursorMiddle_Button,
+    sAnim_RectCursorMiddle_Others,
+    sAnim_RectCursorMiddle_Letter,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBC9C[] =
+static const union AnimCmd *const sAnims_RectCursorEnd[] =
 {
-    gSpriteAnim_83DBC5C,
-    gSpriteAnim_83DBC64,
-    gSpriteAnim_83DBC6C,
-    gSpriteAnim_83DBC74,
+    sAnim_RectCursorEnd_Group,
+    sAnim_RectCursorEnd_Button,
+    sAnim_RectCursorEnd_Others,
+    sAnim_RectCursorEnd_Letter,
 };
 
 void CreateRectangleCursorSprites(void)
@@ -342,8 +342,8 @@ void CreateRectangleCursorSprites(void)
     {
         .tileTag = 1,
         .paletteTag = 1,
-        .oam = &gOamData_83DBC14,
-        .anims = gSpriteAnimTable_83DBC7C,
+        .oam = &sOamData_RectangleCursor,
+        .anims = sAnims_RectCursorPrimary,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
         .callback = SpriteCB_RectangleCursorPrimary,
@@ -353,12 +353,12 @@ void CreateRectangleCursorSprites(void)
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 3);
     gEasyChatStruct->unk9C = &gSprites[spriteId];
 
-    spriteTemplate_83DBCAC.anims = gSpriteAnimTable_83DBC8C;
+    spriteTemplate_83DBCAC.anims = sAnims_RectCursorMiddle;
     spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorMiddle;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 4);
     gEasyChatStruct->unkA0 = &gSprites[spriteId];
 
-    spriteTemplate_83DBCAC.anims = gSpriteAnimTable_83DBC9C;
+    spriteTemplate_83DBCAC.anims = sAnims_RectCursorEnd;
     spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorEnd;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 5);
     gEasyChatStruct->unkA4 = &gSprites[spriteId];
@@ -383,28 +383,28 @@ void DestroyRectangleCursorSprites(void)
 void UpdateRectangleCursorPos(void)
 {
     if (gEasyChatStruct->unk1B7 != 0)
-        gUnknown_020388AC = 1;
+        sRectangleCursorAnim = 1;
     else if (gEasyChatStruct->unk26 == 0)
-        gUnknown_020388AC = 0;
+        sRectangleCursorAnim = 0;
     else if (gEasyChatStruct->unk1A8 == 0 && gEasyChatStruct->unk1A9 == 6)
-        gUnknown_020388AC = 2;
+        sRectangleCursorAnim = 2;
     else
-        gUnknown_020388AC = 3;
+        sRectangleCursorAnim = 3;
 
-    gEasyChatStruct->unk9C->data[2] = gUnknown_020388AC;
-    gEasyChatStruct->unkA0->data[2] = gUnknown_020388AC;
-    gEasyChatStruct->unkA4->data[2] = gUnknown_020388AC;
+    gEasyChatStruct->unk9C->data[2] = sRectangleCursorAnim;
+    gEasyChatStruct->unkA0->data[2] = sRectangleCursorAnim;
+    gEasyChatStruct->unkA4->data[2] = sRectangleCursorAnim;
 
-    StartSpriteAnim(gEasyChatStruct->unk9C, gUnknown_020388AC);
-    StartSpriteAnim(gEasyChatStruct->unkA0, gUnknown_020388AC);
-    StartSpriteAnim(gEasyChatStruct->unkA4, gUnknown_020388AC);
+    StartSpriteAnim(gEasyChatStruct->unk9C, sRectangleCursorAnim);
+    StartSpriteAnim(gEasyChatStruct->unkA0, sRectangleCursorAnim);
+    StartSpriteAnim(gEasyChatStruct->unkA4, sRectangleCursorAnim);
 
     gEasyChatStruct->unk9C->data[5] = 8;
     gEasyChatStruct->unk9C->data[6] = 8;
     gEasyChatStruct->unk9C->data[1] = 0;
 }
 
-const s8 gUnknown_083DBCC4[][7] =
+static const s8 sAlphabetKeyboardColumnOffsets[][7] =
 {
     {1,  3,  5,  8, 10, 12, 15},
     {1,  3,  5,  8, 10, 12,  0},
@@ -451,7 +451,7 @@ void SpriteCB_RectangleCursorPrimary(struct Sprite *sprite)
             sprite->y = 96;
             break;
         case 3:
-            sprite->x = gUnknown_083DBCC4[gEasyChatStruct->unk1A8][gEasyChatStruct->unk1A9] * 8 + 31;
+            sprite->x = sAlphabetKeyboardColumnOffsets[gEasyChatStruct->unk1A8][gEasyChatStruct->unk1A9] * 8 + 31;
             sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->unk1B5) * 16 + 96;
             break;
         }
@@ -508,7 +508,7 @@ void SetWordSelectCursorVisibility(u8 visible)
 
 void CreateWordSelectCursorSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83DBBFC, 0, 0, 0);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_TriangleCursor, 0, 0, 0);
 
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
@@ -596,7 +596,7 @@ void SetScrollIndicatorMode(u8 animNum)
     gEasyChatStruct->unk9C70 = 1;
 }
 
-const struct OamData gOamData_83DBCE0 =
+static const struct OamData sOamData_ScrollIndicator =
 {
     .y = 0,
     .affineMode = 0,
@@ -613,40 +613,40 @@ const struct OamData gOamData_83DBCE0 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83DBCE8[] =
+static const union AnimCmd sAnim_ScrollArrowKeyboard[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBCF0[] =
+static const union AnimCmd sAnim_ScrollArrowWordSelect[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBCF8[] =
+static const union AnimCmd *const sAnims_ScrollArrow[] =
 {
-    gSpriteAnim_83DBCE8,
-    gSpriteAnim_83DBCF0,
+    sAnim_ScrollArrowKeyboard,
+    sAnim_ScrollArrowWordSelect,
 };
 
-const union AnimCmd gSpriteAnim_83DBD00[] =
+static const union AnimCmd sAnim_PageScrollStartButton[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBD08[] =
+static const union AnimCmd sAnim_PageScrollSelectButton[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBD10[] =
+static const union AnimCmd *const sAnims_PageScrollButtons[] =
 {
-    gSpriteAnim_83DBD00,
-    gSpriteAnim_83DBD08,
+    sAnim_PageScrollStartButton,
+    sAnim_PageScrollSelectButton,
 };
 
 void CreateScrollIndicatorSprites(void)
@@ -655,8 +655,8 @@ void CreateScrollIndicatorSprites(void)
     {
         .tileTag = 2,
         .paletteTag = 0,
-        .oam = &gOamData_83DBCE0,
-        .anims = gSpriteAnimTable_83DBCF8,
+        .oam = &sOamData_ScrollIndicator,
+        .anims = sAnims_ScrollArrow,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
         .callback = SpriteCB_ScrollIndicator,
@@ -673,7 +673,7 @@ void CreateScrollIndicatorSprites(void)
     }
 
     spriteTemplate_83DBD18.tileTag = 3;
-    spriteTemplate_83DBD18.anims = gSpriteAnimTable_83DBD10;
+    spriteTemplate_83DBD18.anims = sAnims_PageScrollButtons;
 
     for (i = 0; i < 2; i++)
     {
@@ -713,12 +713,12 @@ void SpriteCB_ScrollIndicator(struct Sprite *sprite)
 }
 
 // defined below
-extern const struct SpriteTemplate gSpriteTemplate_83DBD48;
+extern const struct SpriteTemplate sSpriteTemplate_InterviewFrame;
 
 void CreateInterviewObjectEvents(u8 personType, u8 frameId)
 {
-    struct CompressedSpriteSheet gUnknown_083DBD30 = {gMenuInterviewFrame_Gfx, 2048, 0x0006};
-    struct SpritePalette gUnknown_083DBD38 = {gMenuInterviewFrame_Pal, 0x0004};
+    struct CompressedSpriteSheet interviewFrameSheet = {sRSInterviewFrame_Gfx, 2048, 0x0006};
+    struct SpritePalette interviewFramePalette = {sRSInterviewFrame_Pal, 0x0004};
     s16 x;
     s16 y;
     u16 gabbyTyGfxId;
@@ -748,9 +748,9 @@ void CreateInterviewObjectEvents(u8 personType, u8 frameId)
         break;
     }
 
-    LoadCompressedObjectPic(&gUnknown_083DBD30);
-    LoadSpritePalette(&gUnknown_083DBD38);
-    CreateSprite(&gSpriteTemplate_83DBD48, x, y, 1);
+    LoadCompressedObjectPic(&interviewFrameSheet);
+    LoadSpritePalette(&interviewFramePalette);
+    CreateSprite(&sSpriteTemplate_InterviewFrame, x, y, 1);
 
     spriteId = AddPseudoObjectEvent(
       (gSaveBlock2.playerGender == MALE) ? OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL : OBJ_EVENT_GFX_RIVAL_MAY_NORMAL,
@@ -769,7 +769,7 @@ void CreateInterviewObjectEvents(u8 personType, u8 frameId)
     }
 }
 
-const struct OamData gOamData_83DBD40 =
+static const struct OamData sOamData_InterviewFrame =
 {
     .y = 0,
     .affineMode = 0,
@@ -786,22 +786,22 @@ const struct OamData gOamData_83DBD40 =
     .affineParam = 0,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DBD48 =
+static const struct SpriteTemplate sSpriteTemplate_InterviewFrame =
 {
     .tileTag = 6,
     .paletteTag = 4,
-    .oam = &gOamData_83DBD40,
+    .oam = &sOamData_InterviewFrame,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-const struct CompressedSpriteSheet gUnknown_083DBD60 = {gMenuWordGroupIndicator_Gfx, 4096, 0x0007};
+static const struct CompressedSpriteSheet sSpriteSheet_ModeWindow = {gMenuWordGroupIndicator_Gfx, 4096, 0x0007};
 
-const struct SpritePalette gUnknown_083DBD68 = {gMenuWordGroupIndicator_Pal, 0x0005};
+static const struct SpritePalette sSpritePalette_ModeWindow = {gMenuWordGroupIndicator_Pal, 0x0005};
 
-const struct OamData gOamData_83DBD70 =
+static const struct OamData sOamData_ModeWindow =
 {
     .y = 0,
     .affineMode = 0,
@@ -818,13 +818,13 @@ const struct OamData gOamData_83DBD70 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83DBD78[] =
+static const union AnimCmd sAnim_ModeWindowHidden[] =
 {
     ANIMCMD_FRAME(96, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBD80[] =
+static const union AnimCmd sAnim_ModeWindowGroup[] =
 {
     ANIMCMD_FRAME(64, 4),
     ANIMCMD_FRAME(96, 4),
@@ -833,7 +833,7 @@ const union AnimCmd gSpriteAnim_83DBD80[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBD94[] =
+static const union AnimCmd sAnim_ModeWindowAlphabet[] =
 {
     ANIMCMD_FRAME(64, 4),
     ANIMCMD_FRAME(96, 4),
@@ -842,43 +842,43 @@ const union AnimCmd gSpriteAnim_83DBD94[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBDA8[] =
+static const union AnimCmd sAnim_ModeWindowRevealGroup[] =
 {
     ANIMCMD_FRAME(64, 2),
     ANIMCMD_FRAME(32, 2),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBDB4[] =
+static const union AnimCmd sAnim_ModeWindowRevealAlphabet[] =
 {
     ANIMCMD_FRAME(64, 2),
     ANIMCMD_FRAME(0, 2),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DBDC0[] =
+static const union AnimCmd sAnim_ModeWindowHide[] =
 {
     ANIMCMD_FRAME(64, 2),
     ANIMCMD_FRAME(96, 2),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DBDCC[] =
+static const union AnimCmd *const sAnims_ModeWindow[] =
 {
-    gSpriteAnim_83DBD78,
-    gSpriteAnim_83DBD80,
-    gSpriteAnim_83DBD94,
-    gSpriteAnim_83DBDA8,
-    gSpriteAnim_83DBDB4,
-    gSpriteAnim_83DBDC0,
+    sAnim_ModeWindowHidden,
+    sAnim_ModeWindowGroup,
+    sAnim_ModeWindowAlphabet,
+    sAnim_ModeWindowRevealGroup,
+    sAnim_ModeWindowRevealAlphabet,
+    sAnim_ModeWindowHide,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83DBDE4 =
+static const struct SpriteTemplate sSpriteTemplate_ModeWindow =
 {
     .tileTag = 7,
     .paletteTag = 5,
-    .oam = &gOamData_83DBD70,
-    .anims = gSpriteAnimTable_83DBDCC,
+    .oam = &sOamData_ModeWindow,
+    .anims = sAnims_ModeWindow,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -888,10 +888,10 @@ void CreateModeWindowSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&gUnknown_083DBD60);
-    LoadSpritePalette(&gUnknown_083DBD68);
+    LoadCompressedObjectPic(&sSpriteSheet_ModeWindow);
+    LoadSpritePalette(&sSpritePalette_ModeWindow);
 
-    spriteId = CreateSprite(&gSpriteTemplate_83DBDE4, 224, 88, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_ModeWindow, 224, 88, 0);
     if (spriteId != MAX_SPRITES)
         gEasyChatStruct->unk9C74 = &gSprites[spriteId];
     else
@@ -929,7 +929,7 @@ void SetModeWindowAnimForVisibility(u8 visible)
 
 const u16 gUnknown_083DBDFC[] = INCBIN_U16("graphics/unknown/unknown_3DBDFC.gbapal");
 
-const u16 gUnknown_083DBE1C[] =
+static const u16 sBlankPhraseWordTilemap[] =
 {
     0x300, 0x300, 0x300, 0x300, 0x300, 0x300, 0x300, 0x300, 0x300,
     0x301, 0x301, 0x301, 0x301, 0x301, 0x300, 0x300, 0x300, 0x300,
@@ -938,7 +938,7 @@ const u16 gUnknown_083DBE1C[] =
 const u16 gUnknown_083DBE40[] = INCBIN_U16("graphics/unknown/unknown_3DBE40.gbapal");
 
 // unused tilemap?
-const u16 gUnused_083DBE60[] =
+const u16 gUnusedEasyChatPhraseTilemap[] =
 {
     0x5036, 0x5037, 0x5038, 0x5039, 0x503A, 0x503B,
     0x5046, 0x5047, 0x5048, 0x5049, 0x504A, 0x504B,
@@ -948,7 +948,7 @@ const u16 gUnused_083DBE60[] =
     0x5050, 0x5051, 0x5052, 0x5053, 0x5054, 0x5055,
 };
 
-const u8 gUnknown_083DBEA8[] = _("{CLEAR_TO 88}");
+static const u8 sClearPhraseRowText[] = _("{CLEAR_TO 88}");
 
 void InitEasyChatScreenGraphics(void)
 {
@@ -1268,12 +1268,12 @@ void PrintCurrentPhraseWords(u16 a, u16 b)
         {
             if (r10 >= gEasyChatStruct->unkA)
             {
-                Menu_PrintText(gUnknown_083DBEA8, r6, r7);
+                Menu_PrintText(sClearPhraseRowText, r6, r7);
                 break;
             }
             if (gEasyChatStruct->unkC[r10] == 0xFFFF)
             {
-                sub_8095C8C((void *)(VRAM + 0x7000), r6, r7, gUnknown_083DBE1C, 0, 0, 9, 2, 9);
+                sub_8095C8C((void *)(VRAM + 0x7000), r6, r7, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
                 r6 += 11;
             }
             else
@@ -1402,7 +1402,7 @@ void PrintKeyboardGroupNamesRow(u8 *a, u8 b)
 
 #if ENGLISH
 
-const u8 gUnknown_083DBEAC[][32] =
+static const u8 sAlphabetKeyboardRowsText[][32] =
 {
 	_("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}others"),
 	_("{UNKNOWN_14 8} G H I  J K L      "),
@@ -1412,17 +1412,17 @@ const u8 gUnknown_083DBEAC[][32] =
 
 #else
 
-const u8 unk_83E7EB0[] = _("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}mehr");
-const u8 unk_83E7ECA[] = _("{UNKNOWN_14 8} G H I  J K L      ");
-const u8 unk_83E7EE1[] = _("{UNKNOWN_14 8} M N O  P Q R S    ");
-const u8 unk_83E7EF8[] = _("{UNKNOWN_14 8} T U V  W X Y Z    ");
-const u8 *const gUnknown_083DBEAC[] =
+static const u8 sGermanAlphabetKeyboardRow0[] = _("{UNKNOWN_14 8} A B C  D E F  {UNKNOWN_14 0}mehr");
+static const u8 sGermanAlphabetKeyboardRow1[] = _("{UNKNOWN_14 8} G H I  J K L      ");
+static const u8 sGermanAlphabetKeyboardRow2[] = _("{UNKNOWN_14 8} M N O  P Q R S    ");
+static const u8 sGermanAlphabetKeyboardRow3[] = _("{UNKNOWN_14 8} T U V  W X Y Z    ");
+static const u8 *const sAlphabetKeyboardRowsText[] =
 {
-    unk_83E7EB0,
-    unk_83E7ECA,
-    unk_83E7EE1,
-    unk_83E7EF8,
-    unk_83E7EB0 + 21,  // pointer to "mehr". What is this for?
+    sGermanAlphabetKeyboardRow0,
+    sGermanAlphabetKeyboardRow1,
+    sGermanAlphabetKeyboardRow2,
+    sGermanAlphabetKeyboardRow3,
+    sGermanAlphabetKeyboardRow0 + 21,  // pointer to "mehr". What is this for?
 };
 
 #endif
@@ -1440,10 +1440,10 @@ void PrintKeyboardText(void)
     else
     {
         ClearLowerWindow();
-        PrintEasyChatTextAt(gUnknown_083DBEAC[0], 2, 0);
-        PrintEasyChatTextAt(gUnknown_083DBEAC[1], 2, 2);
-        PrintEasyChatTextAt(gUnknown_083DBEAC[2], 2, 4);
-        PrintEasyChatTextAt(gUnknown_083DBEAC[3], 2, 6);
+        PrintEasyChatTextAt(sAlphabetKeyboardRowsText[0], 2, 0);
+        PrintEasyChatTextAt(sAlphabetKeyboardRowsText[1], 2, 2);
+        PrintEasyChatTextAt(sAlphabetKeyboardRowsText[2], 2, 4);
+        PrintEasyChatTextAt(sAlphabetKeyboardRowsText[3], 2, 6);
     }
 }
 
