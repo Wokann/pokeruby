@@ -188,7 +188,7 @@
 #define ANIM_TAG_LARGE_FRESH_EGG            (ANIM_SPRITES_START + 175) 
 #define ANIM_TAG_SHADOW_BALL                (ANIM_SPRITES_START + 176) 
 #define ANIM_TAG_LICK                       (ANIM_SPRITES_START + 177) 
-#define ANIM_TAG_UNUSED_VOID_LINES          (ANIM_SPRITES_START + 178) 
+#define ANIM_TAG_VOID_LINES                 (ANIM_SPRITES_START + 178)
 #define ANIM_TAG_STRING                     (ANIM_SPRITES_START + 179) 
 #define ANIM_TAG_WEB_THREAD                 (ANIM_SPRITES_START + 180)
 #define ANIM_TAG_SPIDER_WEB                 (ANIM_SPRITES_START + 181)
