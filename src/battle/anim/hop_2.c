@@ -2,6 +2,7 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 #include "constants/songs.h"
 #include "sound.h"
 
@@ -37,9 +38,9 @@ void AnimItemSteal(struct Sprite* sprite)
     s16 attackerX;
     s16 attackerY;
     InitSpritePosToAnimTarget(sprite, FALSE);
-    attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
-    attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
-    if ((gBattleAnimTarget ^ 2) == gBattleAnimAttacker)
+    attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    if (BATTLE_PARTNER(gBattleAnimTarget) == gBattleAnimAttacker)
     {
         sprite->data[6] = attackerX;
         sprite->data[7] = attackerY + 10;
