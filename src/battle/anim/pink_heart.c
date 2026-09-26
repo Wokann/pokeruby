@@ -9,10 +9,9 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimPinkHeart(struct Sprite* sprite);
+static void AnimPinkHeart(struct Sprite *sprite);
 
-// angel_kiss (a different variation of kiss_fountain.)
-// Used in Sweet Kiss.
+// Pink heart used in Sweet Kiss.
 
 const struct SpriteTemplate gPinkHeartSpriteTemplate =
 {
@@ -25,7 +24,7 @@ const struct SpriteTemplate gPinkHeartSpriteTemplate =
     .callback = AnimPinkHeart,
 };
 
-static void AnimPinkHeart_Step(struct Sprite* sprite)
+static void AnimPinkHeart_Step(struct Sprite *sprite)
 {
     sprite->data[5]++;
     sprite->x2 = Sin(sprite->data[3], 5);
@@ -38,7 +37,7 @@ static void AnimPinkHeart_Step(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-static void AnimPinkHeart(struct Sprite* sprite)
+static void AnimPinkHeart(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -52,14 +51,14 @@ static void AnimPinkHeart(struct Sprite* sprite)
         sprite->x2 = sprite->data[4] >> 8;
         sprite->y2 = Sin(sprite->data[3], sprite->data[2]);
         sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
-        if (sprite->data[3] > 0x46)
+        if (sprite->data[3] > 70)
         {
             sprite->callback = AnimPinkHeart_Step;
             sprite->x += sprite->x2;
             sprite->y += sprite->y2;
             sprite->x2 = 0;
             sprite->y2 = 0;
-            sprite->data[3] = Random() % 0xB4;
+            sprite->data[3] = Random() % 180;
         }
     }
 }
