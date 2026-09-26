@@ -10,7 +10,7 @@ struct UnkDebugMenu3Items {
 void DebugMenu_8077048(void);
 
 // matsuda_debug_menu
-void sub_80AAF30(void);
+void PrepareContestArtistDebugResult(void);
 void Crash(const u8 *text);
 bool8 InitMatsudaDebugMenu(void);
 

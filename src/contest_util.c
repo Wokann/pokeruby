@@ -129,14 +129,14 @@ void ShouldReadyContestArtist(void)
 
 u8 CountPlayerMuseumPaintings(void)
 {
-    u8 retVar = 0;
+    u8 count = 0;
     int i;
 
     for (i = 0; i < 5; i++)
         if (gSaveBlock1.museumPortraits[i].species != 0)
-            retVar++;
+            count++;
 
-    return retVar;
+    return count;
 }
 
 void GetContestantNamesAtRank(void)
@@ -232,7 +232,7 @@ void ShowContestPainting(void)
 {
     if(gContestDebugMode)
     {
-        sub_80AAF30();
+        PrepareContestArtistDebugResult();
         eCurContestWinnerIsForArtist = TRUE;
         eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
         SaveContestWinner(3);
@@ -256,7 +256,7 @@ bool8 GiveMonArtistRibbon(void)
 
     if(hasArtistRibbon == FALSE
     && gContestFinalStandings[gContestPlayerMonIndex] == 0
-    && gSpecialVar_ContestRank == 3
+    && gSpecialVar_ContestRank == CONTEST_RANK_MASTER
     && gContestMonTotalPoints[gContestPlayerMonIndex] >= 800)
     {
         hasArtistRibbon = TRUE;
@@ -277,7 +277,7 @@ u8 IsContestDebugActive(void)
 void ShowContestEntryMonPic(void)
 {
     const struct CompressedSpritePalette *palette;
-    u32 var1, var2;
+    u32 personality, otId;
     u16 species;
     u8 spriteId;
     u8 taskId;
@@ -289,8 +289,8 @@ void ShowContestEntryMonPic(void)
 
         Menu_DrawStdWindowFrame(left, top, 19, 13);
         species = gContestMons[gSpecialVar_0x8006].species;
-        var1 = gContestMons[gSpecialVar_0x8006].personality;
-        var2 = gContestMons[gSpecialVar_0x8006].otId;
+        personality = gContestMons[gSpecialVar_0x8006].personality;
+        otId = gContestMons[gSpecialVar_0x8006].otId;
         taskId = CreateTask(Task_ShowContestEntryMonPic, 0x50);
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1] = species;
@@ -301,8 +301,8 @@ void ShowContestEntryMonPic(void)
           gMonSpriteGfx_Sprite_ptr[0],
           gMonSpriteGfx_Sprite_ptr[1],
           species,
-          var1);
-        palette = GetMonSpritePalStructFromOtIdPersonality(species, var2, var1);
+          personality);
+        palette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
         LoadCompressedObjectPalette(palette);
         SetMultiuseSpriteTemplateToPokemon(species, 1);
         gCreatingSpriteTemplate.paletteTag = palette->tag;
@@ -358,26 +358,26 @@ void GetContestMultiplayerId(void)
     if(gIsLinkContest & 1)
         gSpecialVar_Result = GetMultiplayerId();
     else
-        gSpecialVar_Result = 4;
+        gSpecialVar_Result = MAX_LINK_PLAYERS;
 }
 
 void GenerateContestRand(void)
 {
     u16 random;
-    u16 *scriptPtr;
+    u16 *result;
 
     if(gIsLinkContest & 1)
     {
         gContestRngValue = 1103515245 * gContestRngValue + 24691;
         random = gContestRngValue >> 16;
-        scriptPtr = &gSpecialVar_Result;
+        result = &gSpecialVar_Result;
     }
     else
     {
-        scriptPtr = &gSpecialVar_Result;
+        result = &gSpecialVar_Result;
         random = Random();
     }
-    *scriptPtr = random % *scriptPtr;
+    *result = random % *result;
 }
 
 void HealPlayerParty(void)
@@ -518,9 +518,9 @@ void ChooseHalfPartyForBattle(void)
 
 static void CB2_ReturnFromChooseHalfParty(void)
 {
-    u8 var = gSelectedOrderFromParty[0];
+    u8 selection = gSelectedOrderFromParty[0];
 
-    switch(var)
+    switch(selection)
     {
     case 0:
         gSpecialVar_Result = 0;
@@ -541,9 +541,9 @@ void ChoosePartyForBattleTower(void)
 
 void SetBattleTowerPlayerParty(void)
 {
-    u8 var = gSelectedOrderFromParty[0];
+    u8 selection = gSelectedOrderFromParty[0];
 
-    switch(var)
+    switch(selection)
     {
     case 0: // player quit battle tower?
         LoadPlayerParty();

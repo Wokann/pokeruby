@@ -937,7 +937,7 @@ void unref_sub_80AAEE8(s32 a, u8 b, u8 c, u8 d)
     sub_80AAD84(string, b, c, d);
 }
 
-void sub_80AAF30(void)
+void PrepareContestArtistDebugResult(void)
 {
     s32 i;
 
@@ -964,7 +964,7 @@ void sub_80AAF30(void)
 
 u8 MatsudaDebugMenu_SetHighScore(void)
 {
-    sub_80AAF30();
+    PrepareContestArtistDebugResult();
     CloseMenu();
     return 1;
 }
