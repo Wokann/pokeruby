@@ -150,20 +150,20 @@ u8 DidPlayerInputMysteryEventPhrase(void);
 u8 DidPlayerInputABerryMasterWifePhrase(void);
 void BufferCurrentPhraseToStringVar2(void);
 void CloseEasyChatPrompt(void);
-void sub_80E8218(void);
+void InitEasyChatSprites(void);
 
-void sub_80E8398();
-void sub_80E8420(void);
-void sub_80E8504(void);
-void sub_80E87CC();
+void SetMainCursorState();
+void CreateRectangleCursorSprites(void);
+void DestroyRectangleCursorSprites(void);
+void SetWordSelectCursorVisibility();
 
-void sub_80E88F0(void);
-void sub_80E8958();
+void HideScrollIndicatorSprites(void);
+void SetScrollIndicatorMode();
 
-void sub_80E8BF4();
-void sub_80E8CEC(void);
-void sub_80E8D54(void);
-void sub_80E8D8C();
+void CreateInterviewObjectEvents();
+void CreateModeWindowSprite(void);
+void UpdateModeWindowAnim(void);
+void SetModeWindowAnimForVisibility();
 void sub_80E8DD8(void);
 void sub_80E91D4();
 void sub_80E9368();
@@ -319,8 +319,8 @@ void CB2_InitEasyChatScreen(void)
         sub_80E8DD8();
         break;
     case 5:
-        sub_80E8218();
-        sub_80E8CEC();
+        InitEasyChatSprites();
+        CreateModeWindowSprite();
         break;
     case EASY_CHAT_TYPE_BARD_SONG:
         ShowEasyChatTitleAndPortrait();
@@ -644,7 +644,7 @@ void ShowEasyChatTitleAndPortrait(void)
     case 11:
     case 12:
         sub_80E9368(gEasyChatStruct->unk8);
-        sub_80E8BF4(gEasyChatStruct->unkB, gEasyChatStruct->unk9);
+        CreateInterviewObjectEvents(gEasyChatStruct->unkB, gEasyChatStruct->unk9);
         break;
     }
 }
@@ -674,8 +674,8 @@ void WaitEasyChatFadeIn(void)
 
 void InitEasyChatMainScreen(void)
 {
-    sub_80E88F0();
-    sub_80E8398(0);
+    HideScrollIndicatorSprites();
+    SetMainCursorState(0);
     sub_80E91D4(0);
     SetEasyChatScreenCallback(HandleEasyChatMainScreenInput);
 }
@@ -722,7 +722,7 @@ void HandleEasyChatDeleteAllPrompt(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8398(2);
+        SetMainCursorState(2);
         if (gEasyChatStruct->unk8 == 6)
         {
             sub_80E91D4(6);
@@ -767,7 +767,7 @@ void HandleEasyChatExitPrompt(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8398(2);
+        SetMainCursorState(2);
         sub_80E91D4(3);
         DisplayYesNoMenu(23, 8, 0);
         Menu_MoveCursor(1);
@@ -825,7 +825,7 @@ void HandleEasyChatConfirmWordsPrompt(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8398(2);
+        SetMainCursorState(2);
         if (IsCurrentPhraseEmpty())
         {
             sub_80E91D4(5);
@@ -922,7 +922,7 @@ void HandleEasyChatOpenKeyboard(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8398(1);
+        SetMainCursorState(1);
         sub_80E91D4(10);
         InitKeyboardSelection();
         sub_80E9974();
@@ -932,9 +932,9 @@ void HandleEasyChatOpenKeyboard(void)
     case 1:
         if (sub_80E9EA8() != 0)
         {
-            sub_80E8D8C(1);
-            sub_80E8420();
-            sub_80E8958(0);
+            SetModeWindowAnimForVisibility(1);
+            CreateRectangleCursorSprites();
+            SetScrollIndicatorMode(0);
             SetEasyChatScreenCallback(HandleEasyChatKeyboardInput);
         }
         break;
@@ -1004,10 +1004,10 @@ void HandleEasyChatCloseKeyboard(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8504();
+        DestroyRectangleCursorSprites();
         sub_80E9E98();
-        sub_80E88F0();
-        sub_80E8D8C(0);
+        HideScrollIndicatorSprites();
+        SetModeWindowAnimForVisibility(0);
         gEasyChatStruct->unk24++;
         break;
     case 1:
@@ -1029,11 +1029,11 @@ void SwitchKeyboardMode(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E8504();
+        DestroyRectangleCursorSprites();
         sub_80E9E98();
-        sub_80E88F0();
+        HideScrollIndicatorSprites();
         gEasyChatStruct->unk24++;
-        sub_80E8D54();
+        UpdateModeWindowAnim();
         break;
     case 1:
         if (sub_80E9FD4() != 0)
@@ -1051,8 +1051,8 @@ void SwitchKeyboardMode(void)
     case 8:
         if (sub_80EA014() != 0)
         {
-            sub_80E8420();
-            sub_80E8958(0);
+            CreateRectangleCursorSprites();
+            SetScrollIndicatorMode(0);
             SetEasyChatScreenCallback(HandleEasyChatKeyboardInput);
         }
         break;
@@ -1067,11 +1067,11 @@ void HandleEasyChatOpenWordSelect(void)
         gEasyChatStruct->unk24++;
         break;
     case 8:
-        sub_80E8D8C(0);
-        sub_80E8504();
+        SetModeWindowAnimForVisibility(0);
+        DestroyRectangleCursorSprites();
         sub_80E9AD4();
         InitWordSelectSelection();
-        sub_80E88F0();
+        HideScrollIndicatorSprites();
         sub_80E9E98();
         gEasyChatStruct->unk24++;
         break;
@@ -1083,8 +1083,8 @@ void HandleEasyChatOpenWordSelect(void)
         }
         break;
     case 10:
-        sub_80E87CC(1);
-        sub_80E8958(1);
+        SetWordSelectCursorVisibility(1);
+        SetScrollIndicatorMode(1);
         SetEasyChatScreenCallback(HandleEasyChatWordSelectInput);
         break;
     case 11:
@@ -1128,8 +1128,8 @@ void SelectNewWord(void)
         }
         else
         {
-            sub_80E88F0();
-            sub_80E87CC(0);
+            HideScrollIndicatorSprites();
+            SetWordSelectCursorVisibility(0);
             gEasyChatStruct->unk24++;
         }
         break;
@@ -1158,8 +1158,8 @@ void HandleEasyChatReturnToKeyboard(void)
     switch (gEasyChatStruct->unk24)
     {
     case 0:
-        sub_80E87CC(0);
-        sub_80E88F0();
+        SetWordSelectCursorVisibility(0);
+        HideScrollIndicatorSprites();
         gEasyChatStruct->unk24++;
         break;
     case 1:
@@ -1170,14 +1170,14 @@ void HandleEasyChatReturnToKeyboard(void)
     case 2:
         if (sub_80EA0E4() != 0)
         {
-            sub_80E8D8C(1);
+            SetModeWindowAnimForVisibility(1);
             sub_80E9A14();
             gEasyChatStruct->unk24++;
         }
         break;
     case 3:
-        sub_80E8420();
-        sub_80E8958(0);
+        CreateRectangleCursorSprites();
+        SetScrollIndicatorMode(0);
         gEasyChatStruct->unk24++;
         break;
     case 4:

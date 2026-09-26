@@ -28,16 +28,16 @@
 extern void sub_8095C8C();
 extern void sub_809D104(void *, u16, u16, const void *, u16, u16, u16, u16);
 
-void sub_80E8268(void);
-void sub_80E82BC(struct Sprite *);
-void sub_80E8534(void);
-void sub_80E85F8(struct Sprite *);
-void sub_80E872C(struct Sprite *);
-void sub_80E8760(struct Sprite *);
-void sub_80E8818(void);
-void sub_80E8860(struct Sprite *);
-void sub_80E8A7C(void);
-void sub_80E8B78(struct Sprite *);
+void CreateMainCursorSprite(void);
+void SpriteCB_Cursor(struct Sprite *);
+void UpdateRectangleCursorPos(void);
+void SpriteCB_RectangleCursorPrimary(struct Sprite *);
+void SpriteCB_RectangleCursorMiddle(struct Sprite *);
+void SpriteCB_RectangleCursorEnd(struct Sprite *);
+void CreateWordSelectCursorSprite(void);
+void SpriteCB_WordSelectCursor(struct Sprite *);
+void CreateScrollIndicatorSprites(void);
+void SpriteCB_ScrollIndicator(struct Sprite *);
 void sub_80E8FA4(void);
 void sub_80E9198(u8);
 void sub_80E91D4(u8);
@@ -89,7 +89,7 @@ const u16 gMenuInterviewFrame_Pal[] = INCBIN_U16("graphics/misc/interview_frame.
 const u8 gMenuInterviewFrame_Gfx[] = INCBIN_U8("graphics/misc/interview_frame.4bpp.lz");
 const u8 InterviewTriangleCursorTiles[] = INCBIN_U8("graphics/misc/interview_triangle_cursor.4bpp");
 
-void sub_80E8218(void)
+void InitEasyChatSprites(void)
 {
     struct SpriteSheet interviewSpriteSheets[] =
     {
@@ -108,9 +108,9 @@ void sub_80E8218(void)
 
     LoadSpriteSheets(interviewSpriteSheets);
     LoadSpritePalettes(interviewSpritePalettes);
-    sub_80E8268();
-    sub_80E8818();
-    sub_80E8A7C();
+    CreateMainCursorSprite();
+    CreateWordSelectCursorSprite();
+    CreateScrollIndicatorSprites();
 }
 
 const struct OamData gOamData_83DBBF4 =
@@ -138,10 +138,10 @@ const struct SpriteTemplate gSpriteTemplate_83DBBFC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80E82BC,
+    .callback = SpriteCB_Cursor,
 };
 
-void sub_80E8268(void)
+void CreateMainCursorSprite(void)
 {
     u8 spriteId;
 
@@ -153,7 +153,7 @@ void sub_80E8268(void)
     gEasyChatStruct->unk98 = &gSprites[spriteId];
 }
 
-void sub_80E82BC(struct Sprite *sprite)
+void SpriteCB_Cursor(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
@@ -193,17 +193,17 @@ void sub_80E82BC(struct Sprite *sprite)
     }
 }
 
-void sub_80E8398(u8 a)
+void SetMainCursorState(u8 state)
 {
-    switch (a)
+    switch (state)
     {
     case 0:
-        gEasyChatStruct->unk98->data[1] = a;
-        gEasyChatStruct->unk98->x2 = a;
+        gEasyChatStruct->unk98->data[1] = state;
+        gEasyChatStruct->unk98->x2 = state;
         gEasyChatStruct->unk98->invisible = FALSE;
         break;
     case 1:
-        gEasyChatStruct->unk98->data[1] = a;
+        gEasyChatStruct->unk98->data[1] = state;
         gEasyChatStruct->unk98->x2 = 0;
         gEasyChatStruct->unk98->invisible = FALSE;
         break;
@@ -336,7 +336,7 @@ const union AnimCmd *const gSpriteAnimTable_83DBC9C[] =
     gSpriteAnim_83DBC74,
 };
 
-void sub_80E8420(void)
+void CreateRectangleCursorSprites(void)
 {
     struct SpriteTemplate spriteTemplate_83DBCAC =
     {
@@ -346,7 +346,7 @@ void sub_80E8420(void)
         .anims = gSpriteAnimTable_83DBC7C,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = sub_80E85F8,
+        .callback = SpriteCB_RectangleCursorPrimary,
     };
     u8 spriteId;
 
@@ -354,12 +354,12 @@ void sub_80E8420(void)
     gEasyChatStruct->unk9C = &gSprites[spriteId];
 
     spriteTemplate_83DBCAC.anims = gSpriteAnimTable_83DBC8C;
-    spriteTemplate_83DBCAC.callback = sub_80E872C;
+    spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorMiddle;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 4);
     gEasyChatStruct->unkA0 = &gSprites[spriteId];
 
     spriteTemplate_83DBCAC.anims = gSpriteAnimTable_83DBC9C;
-    spriteTemplate_83DBCAC.callback = sub_80E8760;
+    spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorEnd;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 5);
     gEasyChatStruct->unkA4 = &gSprites[spriteId];
 
@@ -368,19 +368,19 @@ void sub_80E8420(void)
     gEasyChatStruct->unkA4->data[0] = 0;
 
     gEasyChatStruct->unk9C->data[3] = 0x0101 + IndexOfSpritePaletteTag(1) * 16;
-    sub_80E8534();
+    UpdateRectangleCursorPos();
     gEasyChatStruct->unk96 = 1;
     REG_BLDCNT = 0x3F40;
 }
 
-void sub_80E8504(void)
+void DestroyRectangleCursorSprites(void)
 {
     DestroySprite(gEasyChatStruct->unk9C);
     DestroySprite(gEasyChatStruct->unkA0);
     DestroySprite(gEasyChatStruct->unkA4);
 }
 
-void sub_80E8534(void)
+void UpdateRectangleCursorPos(void)
 {
     if (gEasyChatStruct->unk1B7 != 0)
         gUnknown_020388AC = 1;
@@ -412,7 +412,7 @@ const s8 gUnknown_083DBCC4[][7] =
     {1,  3,  5,  8, 10, 12, 14},
 };
 
-void sub_80E85F8(struct Sprite *sprite)
+void SpriteCB_RectangleCursorPrimary(struct Sprite *sprite)
 {
     sprite->data[0]++;
     if (sprite->data[0] & 1)
@@ -426,7 +426,7 @@ void sub_80E85F8(struct Sprite *sprite)
 
     if (gEasyChatStruct->unk96 != 0)
     {
-        sub_80E8534();
+        UpdateRectangleCursorPos();
 
         gEasyChatStruct->unk9C->data[5] = 8;
         gEasyChatStruct->unk9C->data[6] = 8;
@@ -459,7 +459,7 @@ void sub_80E85F8(struct Sprite *sprite)
 }
 
 
-void sub_80E872C(struct Sprite *sprite)
+void SpriteCB_RectangleCursorMiddle(struct Sprite *sprite)
 {
     if (gEasyChatStruct->unk96 != 0 && sprite->data[2] == 0)
     {
@@ -468,7 +468,7 @@ void sub_80E872C(struct Sprite *sprite)
     }
 }
 
-void sub_80E8760(struct Sprite *sprite)
+void SpriteCB_RectangleCursorEnd(struct Sprite *sprite)
 {
     if (gEasyChatStruct->unk96 != 0)
     {
@@ -492,32 +492,32 @@ void sub_80E8760(struct Sprite *sprite)
     }
 }
 
-void sub_80E87A4(u8 a)
+void SetWordSelectCursorAnim(u8 visible)
 {
-    gEasyChatStruct->unkA8->data[1] = (a == 0);
+    gEasyChatStruct->unkA8->data[1] = (visible == 0);
     gEasyChatStruct->unkA8->x2 = 0;
 }
 
-void sub_80E87CC(u8 a)
+void SetWordSelectCursorVisibility(u8 visible)
 {
-    gEasyChatStruct->unkA8->invisible = (a == 0);
-    sub_80E87A4(a);
-    if (a != 0)
+    gEasyChatStruct->unkA8->invisible = (visible == 0);
+    SetWordSelectCursorAnim(visible);
+    if (visible != 0)
         gEasyChatStruct->unk1B9 = 1;
 }
 
-void sub_80E8818(void)
+void CreateWordSelectCursorSprite(void)
 {
     u8 spriteId = CreateSprite(&gSpriteTemplate_83DBBFC, 0, 0, 0);
 
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
     gEasyChatStruct->unkA8 = &gSprites[spriteId];
-    gEasyChatStruct->unkA8->callback = sub_80E8860;
-    sub_80E87CC(0);
+    gEasyChatStruct->unkA8->callback = SpriteCB_WordSelectCursor;
+    SetWordSelectCursorVisibility(0);
 }
 
-void sub_80E8860(struct Sprite *sprite)
+void SpriteCB_WordSelectCursor(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
@@ -542,7 +542,7 @@ void sub_80E8860(struct Sprite *sprite)
     }
 }
 
-void sub_80E88F0(void)
+void HideScrollIndicatorSprites(void)
 {
     u16 i;
 
@@ -556,7 +556,7 @@ void sub_80E88F0(void)
     gEasyChatStruct->unk9C70 = 0;
 }
 
-void sub_80E8958(u8 animNum)
+void SetScrollIndicatorMode(u8 animNum)
 {
     s16 r9;
     u16 i;
@@ -649,7 +649,7 @@ const union AnimCmd *const gSpriteAnimTable_83DBD10[] =
     gSpriteAnim_83DBD08,
 };
 
-void sub_80E8A7C(void)
+void CreateScrollIndicatorSprites(void)
 {
     struct SpriteTemplate spriteTemplate_83DBD18 =
     {
@@ -659,7 +659,7 @@ void sub_80E8A7C(void)
         .anims = gSpriteAnimTable_83DBCF8,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = sub_80E8B78,
+        .callback = SpriteCB_ScrollIndicator,
     };
     u16 i;
     u8 spriteId;
@@ -685,11 +685,11 @@ void sub_80E8A7C(void)
         StartSpriteAnim(gEasyChatStruct->unkB4[i], i);
     }
 
-    sub_80E8958(0);
-    sub_80E88F0();
+    SetScrollIndicatorMode(0);
+    HideScrollIndicatorSprites();
 }
 
-void sub_80E8B78(struct Sprite *sprite)
+void SpriteCB_ScrollIndicator(struct Sprite *sprite)
 {
     bool8 invisible;
 
@@ -715,7 +715,7 @@ void sub_80E8B78(struct Sprite *sprite)
 // defined below
 extern const struct SpriteTemplate gSpriteTemplate_83DBD48;
 
-void sub_80E8BF4(u8 reporter, u8 b)
+void CreateInterviewObjectEvents(u8 personType, u8 frameId)
 {
     struct CompressedSpriteSheet gUnknown_083DBD30 = {gMenuInterviewFrame_Gfx, 2048, 0x0006};
     struct SpritePalette gUnknown_083DBD38 = {gMenuInterviewFrame_Pal, 0x0004};
@@ -724,7 +724,7 @@ void sub_80E8BF4(u8 reporter, u8 b)
     u16 gabbyTyGfxId;
     u8 spriteId;
 
-    switch (b)
+    switch (frameId)
     {
     case 2:
     default:
@@ -737,7 +737,7 @@ void sub_80E8BF4(u8 reporter, u8 b)
         break;
     }
 
-    switch (reporter)
+    switch (personType)
     {
     case 0:  // Gabby
     default:
@@ -884,7 +884,7 @@ const struct SpriteTemplate gSpriteTemplate_83DBDE4 =
     .callback = SpriteCallbackDummy,
 };
 
-void sub_80E8CEC(void)
+void CreateModeWindowSprite(void)
 {
     u8 spriteId;
 
@@ -898,7 +898,7 @@ void sub_80E8CEC(void)
         gEasyChatStruct->unk9C74 = NULL;
 }
 
-void sub_80E8D54(void)
+void UpdateModeWindowAnim(void)
 {
     if (gEasyChatStruct->unk9C74 != NULL)
     {
@@ -909,11 +909,11 @@ void sub_80E8D54(void)
     }
 }
 
-void sub_80E8D8C(u8 a)
+void SetModeWindowAnimForVisibility(u8 visible)
 {
     if (gEasyChatStruct->unk9C74 != NULL)
     {
-        if (a != 0)
+        if (visible != 0)
         {
             if (gEasyChatStruct->unk26 == 0)
                 StartSpriteAnim(gEasyChatStruct->unk9C74, 3);
