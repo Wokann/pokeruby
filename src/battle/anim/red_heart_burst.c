@@ -8,10 +8,9 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimParticleBurst(struct Sprite* sprite);
+void AnimParticleBurst(struct Sprite *sprite);
 
-// kiss_fountain (a series of hearts pour out of a target Pokemon.)
-// Used in Attract and Sweet Kiss.
+// Red heart burst used in Attract and Sweet Kiss.
 
 const struct SpriteTemplate gRedHeartBurstSpriteTemplate =
 {
@@ -24,7 +23,7 @@ const struct SpriteTemplate gRedHeartBurstSpriteTemplate =
     .callback = AnimParticleBurst,
 };
 
-void AnimParticleBurst(struct Sprite* sprite)
+void AnimParticleBurst(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -38,12 +37,12 @@ void AnimParticleBurst(struct Sprite* sprite)
         sprite->x2 = sprite->data[4] >> 8;
         sprite->y2 = Sin(sprite->data[3], sprite->data[2]);
         sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
-        if (sprite->data[3] > 0x64)
+        if (sprite->data[3] > 100)
         {
             sprite->invisible = sprite->data[3] % 2;
         }
 
-        if (sprite->data[3] > 0x78)
+        if (sprite->data[3] > 120)
         {
             DestroyAnimSprite(sprite);
         }

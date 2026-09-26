@@ -133,7 +133,7 @@ static void AnimSmellingSaltExclamation(struct Sprite *sprite);
 static void AnimHelpingHandClap(struct Sprite *sprite);
 static void sub_8130F5C(struct Sprite *sprite);
 static void AnimMeteorMashStar(struct Sprite *sprite);
-extern void AnimParticleBurst(struct Sprite *sprite);// kiss_fountain.c
+extern void AnimParticleBurst(struct Sprite *sprite); // red_heart_burst.c
 static void AnimBlockX(struct Sprite *sprite);
 static void AnimTask_TeeterDanceMovementStep(u8);
 

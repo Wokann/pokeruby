@@ -246,8 +246,8 @@ SECTIONS {
         src/battle/anim/magenta_heart.o(.text);
         src/battle/anim/fake_out.o(.text);
         src/battle/anim/startle.o(.text);
-        src/battle/anim/blow_kiss.o(.text);
-        src/battle/anim/kiss_fountain.o(.text);
+        src/battle/anim/red_heart_projectile.o(.text);
+        src/battle/anim/red_heart_burst.o(.text);
         src/battle/anim/flying_hearts.o(.text);
         src/battle/anim/love_bg.o(.text);
         src/battle/anim/scary_face.o(.text);
@@ -668,8 +668,8 @@ SECTIONS {
         src/battle/anim/heal_bell.o(.rodata);
         src/battle/anim/magenta_heart.o(.rodata);
         src/battle/anim/startle.o(.rodata);
-        src/battle/anim/blow_kiss.o(.rodata);
-        src/battle/anim/kiss_fountain.o(.rodata);
+        src/battle/anim/red_heart_projectile.o(.rodata);
+        src/battle/anim/red_heart_burst.o(.rodata);
         src/battle/anim/flying_hearts.o(.rodata);
         src/battle/anim/love_bg.o(.rodata);
         src/battle/anim/scary_face.o(.rodata);

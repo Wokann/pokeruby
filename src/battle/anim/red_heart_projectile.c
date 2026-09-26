@@ -8,11 +8,10 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimRedHeartProjectile(struct Sprite* sprite);
-static void AnimRedHeartProjectile_Step(struct Sprite* sprite);
+static void AnimRedHeartProjectile(struct Sprite *sprite);
+static void AnimRedHeartProjectile_Step(struct Sprite *sprite);
 
-// blow_kiss (a heart floating across the screen.)
-// Used in Attract.
+// Red heart projectile used in Attract.
 
 const struct SpriteTemplate gRedHeartProjectileSpriteTemplate =
 {
@@ -25,19 +24,19 @@ const struct SpriteTemplate gRedHeartProjectileSpriteTemplate =
     .callback = AnimRedHeartProjectile,
 };
 
-static void AnimRedHeartProjectile(struct Sprite* sprite)
+static void AnimRedHeartProjectile(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
-    sprite->data[0] = 0x5F;
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    sprite->data[0] = 95;
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     InitAnimLinearTranslation(sprite);
     sprite->callback = AnimRedHeartProjectile_Step;
 }
 
-static void AnimRedHeartProjectile_Step(struct Sprite* sprite)
+static void AnimRedHeartProjectile_Step(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite) == 0)
     {
