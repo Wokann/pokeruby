@@ -2698,7 +2698,7 @@ _81CB16A:
 
 Move_MEDITATE: @ 81CB1BD
 	call SetPsychicBackground
-	createvisualtask sub_80DBC94, 2
+	createvisualtask AnimTask_MeditateStretchAttacker, 2
 	playsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER
 	delay 16
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
@@ -2767,7 +2767,7 @@ Move_RAGE: @ 81CB27C
 
 Move_TELEPORT: @ 81CB2F2
 	call SetPsychicBackground
-	createvisualtask sub_80DBCFC, 2
+	createvisualtask AnimTask_Teleport, 2
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	delay 15
 	call UnsetPsychicBackground
@@ -2858,7 +2858,7 @@ Move_AMNESIA: @ 81CB455
 	loadspritegfx ANIM_TAG_AMNESIA
 	call SetPsychicBackground
 	delay 8
-	createsprite gBattleAnimSpriteTemplate_83DA88C, ANIM_BATTLER_ATTACKER, 20
+	createsprite gQuestionMarkSpriteTemplate, ANIM_BATTLER_ATTACKER, 20
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 54
 	loopsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER, 16, 3
@@ -2871,7 +2871,7 @@ Move_KINESIS: @ 81CB479
 	loadspritegfx ANIM_TAG_BENT_SPOON
 	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
 	call SetPsychicBackground
-	createsprite gBattleAnimSpriteTemplate_83DA824, ANIM_BATTLER_ATTACKER, 20
+	createsprite gBentSpoonSpriteTemplate, ANIM_BATTLER_ATTACKER, 20
 	createsprite gKinesisZapEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 19, 32, -8, 0
 	createsprite gKinesisZapEnergySpriteTemplate, ANIM_BATTLER_ATTACKER, 19, 32, 16, 1
 	loopsewithpan SE_M_CONFUSE_RAY, SOUND_PAN_ATTACKER, 21, 2

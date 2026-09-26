@@ -18,8 +18,8 @@ extern u8 gBattlerSpriteIds[];
 
 static void AnimDefensiveWall(struct Sprite *sprite);
 static void AnimWallSparkle(struct Sprite *sprite);
-void sub_80DBAF4(struct Sprite *sprite);
-void sub_80DBB70(struct Sprite *sprite);
+static void AnimBentSpoon(struct Sprite *sprite);
+static void AnimQuestionMark(struct Sprite *sprite);
 static void AnimRedX(struct Sprite *sprite);
 static void AnimSkillSwapOrb(struct Sprite *sprite);
 static void AnimPsychoBoost(struct Sprite *sprite);
@@ -27,10 +27,10 @@ static void AnimDefensiveWall_Step2(struct Sprite *sprite);
 static void AnimDefensiveWall_Step3(struct Sprite *sprite);
 static void AnimDefensiveWall_Step4(struct Sprite *sprite);
 static void AnimDefensiveWall_Step5(struct Sprite *sprite);
-static void sub_80DBC00(struct Sprite *sprite);
-static void sub_80DBC34(struct Sprite *sprite);
-static void sub_80DBCD0(u8 taskId);
-static void sub_80DBD58(u8 taskId);
+static void AnimQuestionMark_Step1(struct Sprite *sprite);
+static void AnimQuestionMark_Step2(struct Sprite *sprite);
+static void AnimTask_MeditateStretchAttacker_Step(u8 taskId);
+static void AnimTask_Teleport_Step(u8 taskId);
 static void AnimTask_ImprisonOrbs_Step(u8 taskId);
 static void AnimRedX_Step(struct Sprite *sprite);
 static void AnimTask_SkillSwap_Step(u8 taskId);
@@ -177,7 +177,7 @@ const struct SpriteTemplate gGoldRingSpriteTemplate =
     .callback = TranslateAnimSpriteToTargetMonLocation,
 };
 
-const union AnimCmd gSpriteAnim_83DA79C[] =
+static const union AnimCmd sAnim_BentSpoon_0[] =
 {
     ANIMCMD_FRAME(8, 60, .hFlip = TRUE),
     ANIMCMD_FRAME(16, 5, .hFlip = TRUE),
@@ -197,7 +197,7 @@ const union AnimCmd gSpriteAnim_83DA79C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83DA7DC[] =
+static const union AnimCmd sAnim_BentSpoon_1[] =
 {
     ANIMCMD_FRAME(8, 60),
     ANIMCMD_FRAME(16, 5),
@@ -217,24 +217,24 @@ const union AnimCmd gSpriteAnim_83DA7DC[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA81C[] =
+static const union AnimCmd *const sAnims_BentSpoon[] =
 {
-    gSpriteAnim_83DA79C,
-    gSpriteAnim_83DA7DC,
+    sAnim_BentSpoon_0,
+    sAnim_BentSpoon_1,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA824 =
+const struct SpriteTemplate gBentSpoonSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BENT_SPOON,
     .paletteTag = ANIM_TAG_BENT_SPOON,
     .oam = &gOamData_AffineOff_ObjNormal_16x32,
-    .anims = gSpriteAnimTable_83DA81C,
+    .anims = sAnims_BentSpoon,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DBAF4,
+    .callback = AnimBentSpoon,
 };
 
-const union AnimCmd gSpriteAnim_83DA83C[] =
+static const union AnimCmd sAnim_QuestionMark[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(16, 6),
@@ -246,12 +246,12 @@ const union AnimCmd gSpriteAnim_83DA83C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83DA85C[] =
+static const union AnimCmd *const sAnims_QuestionMark[] =
 {
-    gSpriteAnim_83DA83C,
+    sAnim_QuestionMark,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_3DA860[] =
+static const union AffineAnimCmd sAffineAnim_QuestionMark[] =
 {
     AFFINEANIMCMD_FRAME(0, 0, 4, 4),
     AFFINEANIMCMD_FRAME(0, 0, -4, 8),
@@ -260,23 +260,23 @@ const union AffineAnimCmd gSpriteAffineAnim_3DA860[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_083DA888[] =
+static const union AffineAnimCmd *const sAffineAnims_QuestionMark[] =
 {
-    gSpriteAffineAnim_3DA860,
+    sAffineAnim_QuestionMark,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83DA88C =
+const struct SpriteTemplate gQuestionMarkSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AMNESIA,
     .paletteTag = ANIM_TAG_AMNESIA,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83DA85C,
+    .anims = sAnims_QuestionMark,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80DBB70,
+    .callback = AnimQuestionMark,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_083DA8A4[] =
+static const union AffineAnimCmd sAffineAnim_MeditateStretchAttacker[] =
 {
     AFFINEANIMCMD_FRAME(-8, 10, 0, 16),
     AFFINEANIMCMD_FRAME(18, -18, 0, 16),
@@ -284,7 +284,7 @@ const union AffineAnimCmd gSpriteAffineAnim_083DA8A4[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_083DA8C4[] =
+static const union AffineAnimCmd sAffineAnim_Teleport[] =
 {
     AFFINEANIMCMD_FRAME(64, -4, 0, 20),
     AFFINEANIMCMD_FRAME(0, 0, 0, -56),
@@ -597,10 +597,10 @@ static void AnimWallSparkle(struct Sprite *sprite)
     }
 }
 
-void sub_80DBAF4(struct Sprite *sprite)
+static void AnimBentSpoon(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
 
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
@@ -620,38 +620,38 @@ void sub_80DBAF4(struct Sprite *sprite)
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
-void sub_80DBB70(struct Sprite *sprite)
+static void AnimQuestionMark(struct Sprite *sprite)
 {
-    s16 x = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 1) /  2;
-    s16 y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, 0) / -2;
+    s16 x = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_WIDTH) / 2;
+    s16 y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_HEIGHT) / -2;
 
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
     {
         x = -x;
     }
 
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + x;
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + y;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + x;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + y;
 
     if (sprite->y < 16)
     {
         sprite->y = 16;
     }
 
-    StoreSpriteCallbackInData6(sprite, sub_80DBC00);
+    StoreSpriteCallbackInData6(sprite, AnimQuestionMark_Step1);
     sprite->callback = RunStoredCallbackWhenAnimEnds;
 }
 
-static void sub_80DBC00(struct Sprite *sprite)
+static void AnimQuestionMark_Step1(struct Sprite *sprite)
 {
     sprite->oam.affineMode = 1;
-    sprite->affineAnims = gSpriteAffineAnimTable_083DA888;
+    sprite->affineAnims = sAffineAnims_QuestionMark;
     sprite->data[0] = 0;
     InitSpriteAffineAnim(sprite);
-    sprite->callback = sub_80DBC34;
+    sprite->callback = AnimQuestionMark_Step2;
 }
 
-static void sub_80DBC34(struct Sprite *sprite)
+static void AnimQuestionMark_Step2(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -673,16 +673,16 @@ static void sub_80DBC34(struct Sprite *sprite)
     }
 }
 
-void sub_80DBC94(u8 taskId)
+void AnimTask_MeditateStretchAttacker(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[0] = spriteId;
-    PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_083DA8A4);
-    task->func = sub_80DBCD0;
+    PrepareAffineAnimInTaskData(task, spriteId, sAffineAnim_MeditateStretchAttacker);
+    task->func = AnimTask_MeditateStretchAttacker_Step;
 }
 
-static void sub_80DBCD0(u8 taskId)
+static void AnimTask_MeditateStretchAttacker_Step(u8 taskId)
 {
     if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
     {
@@ -690,20 +690,20 @@ static void sub_80DBCD0(u8 taskId)
     }
 }
 
-void sub_80DBCFC(u8 taskId)
+void AnimTask_Teleport(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[0] = spriteId;
     task->data[1] = 0;
     task->data[2] = 0;
     task->data[3] = GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER ? 4 : 8;
 
-    PrepareAffineAnimInTaskData(task, task->data[0], &gSpriteAffineAnim_083DA8C4);
-    task->func = sub_80DBD58;
+    PrepareAffineAnimInTaskData(task, task->data[0], sAffineAnim_Teleport);
+    task->func = AnimTask_Teleport_Step;
 }
 
-static void sub_80DBD58(u8 taskId)
+static void AnimTask_Teleport_Step(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
