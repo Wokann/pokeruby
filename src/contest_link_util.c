@@ -33,6 +33,7 @@
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define CONTESTANT_COUNT 4
+#define tCategory data[9]
 
 enum {
     SLIDING_TEXT_OFFSCREEN,
@@ -2830,7 +2831,7 @@ void ContestLinkTransfer(u8 category)
     LockPlayerFieldControls();
     taskId = CreateTask(Task_LinkContest_Init, 0);
     SetTaskFuncWithFollowupFunc(taskId, Task_LinkContest_Init, Task_StartCommunication);
-    gTasks[taskId].data[9] = category;
+    gTasks[taskId].tCategory = category;
 }
 
 void Task_StartCommunication(u8 taskId)
