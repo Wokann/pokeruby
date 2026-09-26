@@ -17,7 +17,7 @@ extern const struct SpriteTemplate gLightningSpriteTemplate;
 static void AnimZapCannonSpark(struct Sprite *sprite);
 void AnimThunderboltOrb(struct Sprite *sprite);
 void AnimSparkElectricityFlashing(struct Sprite *sprite);
-void sub_80D679C(struct Sprite *sprite);
+static void AnimElectricity(struct Sprite *sprite);
 void AnimElectricBoltSegment(struct Sprite *sprite);
 void AnimThunderWave(struct Sprite *sprite);
 void AnimGrowingChargeOrb(struct Sprite *sprite);
@@ -60,7 +60,7 @@ const struct SpriteTemplate gZapCannonSparkSpriteTemplate =
     .callback = AnimZapCannonSpark,
 };
 
-const union AnimCmd gSpriteAnim_83D98B8[] =
+static const union AnimCmd sAnim_ThunderboltOrb[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(16, 6),
@@ -68,12 +68,12 @@ const union AnimCmd gSpriteAnim_83D98B8[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D98C8[] =
+static const union AnimCmd *const sAnims_ThunderboltOrb[] =
 {
-    gSpriteAnim_83D98B8,
+    sAnim_ThunderboltOrb,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D98CC[] =
+static const union AffineAnimCmd sAffineAnim_ThunderboltOrb[] =
 {
     AFFINEANIMCMD_FRAME(0xE8, 0xE8, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 0, 10),
@@ -81,9 +81,9 @@ const union AffineAnimCmd gSpriteAffineAnim_83D98CC[] =
     AFFINEANIMCMD_JUMP(1),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D98EC[] =
+static const union AffineAnimCmd *const sAffineAnims_ThunderboltOrb[] =
 {
-    gSpriteAffineAnim_83D98CC,
+    sAffineAnim_ThunderboltOrb,
 };
 
 const struct SpriteTemplate gThunderboltOrbSpriteTemplate =
@@ -91,9 +91,9 @@ const struct SpriteTemplate gThunderboltOrbSpriteTemplate =
     .tileTag = ANIM_TAG_SHOCK_3,
     .paletteTag = ANIM_TAG_SHOCK_3,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D98C8,
+    .anims = sAnims_ThunderboltOrb,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D98EC,
+    .affineAnims = sAffineAnims_ThunderboltOrb,
     .callback = AnimThunderboltOrb,
 };
 
@@ -116,7 +116,7 @@ const struct SpriteTemplate gElectricitySpriteTemplate =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80D679C,
+    .callback = AnimElectricity,
 };
 
 const struct SpriteTemplate gElectricBoltSegmentSpriteTemplate =
@@ -161,7 +161,7 @@ static const s8 sElectricChargingParticleCoordOffsets[][2] =
     { 48,  48},
 };
 
-const union AnimCmd gSpriteAnim_83D9988[] =
+static const union AnimCmd sAnim_ElectricChargingParticles_0[] =
 {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_FRAME(2, 1),
@@ -170,7 +170,7 @@ const union AnimCmd gSpriteAnim_83D9988[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83D999C[] =
+static const union AnimCmd sAnim_ElectricChargingParticles_1[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(1, 5),
@@ -179,10 +179,10 @@ const union AnimCmd gSpriteAnim_83D999C[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D99B0[] =
+static const union AnimCmd *const sAnims_ElectricChargingParticles[] =
 {
-    gSpriteAnim_83D9988,
-    gSpriteAnim_83D999C,
+    sAnim_ElectricChargingParticles_0,
+    sAnim_ElectricChargingParticles_1,
 };
 
 const struct SpriteTemplate gElectricChargingParticlesSpriteTemplate =
@@ -190,7 +190,7 @@ const struct SpriteTemplate gElectricChargingParticlesSpriteTemplate =
     .tileTag = ANIM_TAG_ELECTRIC_ORBS,
     .paletteTag = ANIM_TAG_ELECTRIC_ORBS,
     .oam = &gOamData_AffineOff_ObjNormal_8x8,
-    .anims = gSpriteAnimTable_83D99B0,
+    .anims = sAnims_ElectricChargingParticles,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
@@ -461,7 +461,8 @@ static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80D679C(struct Sprite *sprite)
+// Electricity arcs around the target during Paralysis and electric move hits.
+static void AnimElectricity(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->oam.tileNum += gBattleAnimArgs[3] * 4;
