@@ -41,13 +41,13 @@ void AnimNeedleArmSpike(struct Sprite* sprite)
     {
         if (gBattleAnimArgs[0] == 0)
         {
-            a = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-            b = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+            a = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            b = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
         }
         else
         {
-            a = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-            b = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+            a = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+            b = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
         }
 
         sprite->data[0] = gBattleAnimArgs[4];
@@ -76,7 +76,7 @@ void AnimNeedleArmSpike(struct Sprite* sprite)
         if (IsContest())
             c -= 0x8000;
 
-        TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, c);
+        TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, c);
         sprite->callback = AnimNeedleArmSpike_Step;
     }
 }
