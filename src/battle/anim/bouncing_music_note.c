@@ -10,23 +10,24 @@ extern u8 gBattleAnimTarget;
 
 extern void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite);
 
-void sub_80CF2D0(struct Sprite* sprite);
-static void sub_80CF310(struct Sprite* sprite);
+static void AnimBouncingMusicNote(struct Sprite *sprite);
+static void AnimBouncingMusicNote_Step(struct Sprite *sprite);
 
-// unused_6
+// Unused (association assumed)
 
-const union AnimCmd gSpriteAnim_83D7388[] =
+const union AnimCmd gBouncingMusicNoteAnimCmds[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D7390[] =
+const union AnimCmd *const gBouncingMusicNoteAnimTable[] =
 {
-    gSpriteAnim_83D7388,
+    gBouncingMusicNoteAnimCmds,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D7394 =
+// Unused
+const struct SpriteTemplate gBouncingMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
@@ -34,24 +35,24 @@ const struct SpriteTemplate gSpriteTemplate_83D7394 =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF2D0,
+    .callback = AnimBouncingMusicNote,
 };
 
-void sub_80CF2D0(struct Sprite* sprite)
+static void AnimBouncingMusicNote(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    SetSpriteNextToMonHead(bank, sprite);
+    SetSpriteNextToMonHead(battler, sprite);
     sprite->data[0] = 0;
     sprite->data[1] = 0;
-    sprite->callback = sub_80CF310;
+    sprite->callback = AnimBouncingMusicNote_Step;
 }
 
-static void sub_80CF310(struct Sprite* sprite)
+static void AnimBouncingMusicNote_Step(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -66,7 +67,7 @@ static void sub_80CF310(struct Sprite* sprite)
             sprite->data[0]++;
         break;
     case 2:
-        if (++sprite->data[1] == 0x40)
+        if (++sprite->data[1] == 64)
             DestroyAnimSprite(sprite);
         break;
     }
