@@ -353,7 +353,7 @@ void sub_8080E28(void)
     CreateTask(task_mpl_807E3C8, 10);
 }
 
-void sub_8080E44(void)
+void FieldCB_ReturnToFieldNoScriptCheckMusic(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();

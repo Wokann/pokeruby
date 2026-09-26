@@ -8,6 +8,7 @@
 #include "script.h"
 #include "string_util.h"
 #include "text.h"
+#include "constants/battle.h"
 
 struct PokeblockFeeder
 {
@@ -99,14 +100,14 @@ void CB2_EndSafariBattle(void)
     {
         SetMainCallback2(CB2_ReturnToField);
     }
-    else if (gBattleOutcome == 8)
+    else if (gBattleOutcome == B_OUTCOME_NO_SAFARI_BALLS)
     {
         RunScriptImmediately(SafariZone_EventScript_OutOfBallsMidBattle);
         WarpIntoMap();
-        gFieldCallback = sub_8080E44;
+        gFieldCallback = FieldCB_ReturnToFieldNoScriptCheckMusic;
         SetMainCallback2(CB2_LoadMap);
     }
-    else if (gBattleOutcome == 7)
+    else if (gBattleOutcome == B_OUTCOME_CAUGHT)
     {
         ScriptContext_SetupScript(SafariZone_EventScript_OutOfBalls);
         ScriptContext_Stop();

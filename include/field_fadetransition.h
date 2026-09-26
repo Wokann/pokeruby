@@ -15,7 +15,7 @@ void mapldr_default();
 void FieldCB_WarpExitFadeFromBlack(void);
 void sub_8080DEC(void);
 void sub_8080E28(void);
-void sub_8080E44(void);
+void FieldCB_ReturnToFieldNoScriptCheckMusic(void);
 bool32 sub_8080E70(void);
 void sub_8080E88(void);
 void DoDiveWarp(void);
