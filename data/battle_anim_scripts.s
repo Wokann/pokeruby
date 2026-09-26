@@ -2059,7 +2059,7 @@ Move_CONFUSE_RAY: @ 81CA291
 	fadetobg BG_GHOST
 	waitbgfadein
 	createvisualtask SoundTask_AdjustPanningVar, 2, -64, 63, 2, 0
-	createvisualtask sub_80E2094, 2, 10013, 0, 6, 0, 14, 351
+	createvisualtask AnimTask_BlendColorCycleByTag, 2, ANIM_TAG_YELLOW_BALL, 0, 6, 0, 14, 351
 	createsprite gConfuseRayBallBounceSpriteTemplate, ANIM_BATTLER_TARGET, 2, 28, 0, 288
 	waitforvisualfinish
 	setalpha 8, 8
@@ -2921,7 +2921,7 @@ _81CB584:
 _81CB585:
 	monbg ANIM_BATTLER_DEF_PARTNER
 	setalpha 12, 11
-	createvisualtask sub_80E3BA4, 5, 7
+	createvisualtask AnimTask_GetTargetIsAttackerPartner, 5, 7
 	jumpargeq 7, 0, _81CB5A0
 	goto _81CB617
 _81CB5A0:
@@ -2982,7 +2982,7 @@ _81CB68E:
 
 Move_FLASH: @ 81CB713
 	playsewithpan SE_M_LEER, SOUND_PAN_ATTACKER
-	createvisualtask sub_80E388C, 2
+	createvisualtask AnimTask_Flash, 2
 	waitforvisualfinish
 	end
 
