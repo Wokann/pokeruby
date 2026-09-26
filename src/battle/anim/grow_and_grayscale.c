@@ -10,8 +10,9 @@ extern u8 gBattleAnimTarget;
 
 static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
 
-// shadow_enlarge (the magnifying-like shadow over the Pokemon effect)
+// Scales up the target mon sprite, and sets the palette to grayscale.
 // Used in Disable.
+// No args.
 
 void AnimTask_GrowAndGrayscale(u8 taskId)
 {

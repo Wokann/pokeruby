@@ -232,7 +232,7 @@ SECTIONS {
         src/battle/anim/cyclone.o(.text);
         src/battle/anim/grip.o(.text);
         src/battle/anim/guillotine.o(.text);
-        src/battle/anim/shadow_enlarge.o(.text);
+        src/battle/anim/grow_and_grayscale.o(.text);
         src/battle/anim/shadow_minimize.o(.text);
         src/battle/anim/splash.o(.text);
         src/battle/anim/grow.o(.text);
