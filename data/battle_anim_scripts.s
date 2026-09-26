@@ -2103,20 +2103,20 @@ Move_MEAN_LOOK: @ 81CA31A
 Move_ROCK_THROW: @ 81CA35F
 	loadspritegfx ANIM_TAG_ROCKS
 	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_TARGET, 2, 6, 1, 15, 1
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 0, 1, 0, 0
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 0, 1, 0, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 19, 1, 10, 0
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 19, 1, 10, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -23, 2, -10, 0
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -23, 2, -10, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 5, 20, 1
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -15, 1, -10, 0
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -15, 1, -10, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 23, 2, 10, 0
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 23, 2, 10, 0
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	waitforvisualfinish
 	end
@@ -2125,16 +2125,16 @@ Move_ROCK_SLIDE: @ 81CA3EB
 	loadspritegfx ANIM_TAG_ROCKS
 	monbg ANIM_BATTLER_DEF_PARTNER
 	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 7, 1, 11, 1
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -5, 1, -5, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -5, 1, -5, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 5, 0, 6, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 5, 0, 6, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 19, 1, 10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 19, 1, 10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -23, 2, -10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -23, 2, -10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 0, 5, 50, 1
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_DEF_PARTNER, 0, 5, 50, 1
@@ -2145,28 +2145,28 @@ Move_ROCK_SLIDE: @ 81CA3EB
 	clearmonbg ANIM_BATTLER_DEF_PARTNER
 	end
 _81CA483:
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -20, 0, -10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, 0, -10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 28, 1, 10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 28, 1, 10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -10, 1, -5, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -10, 1, -5, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 10, 0, 6, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 10, 0, 6, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 24, 1, 10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 24, 1, 10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -32, 2, -10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -32, 2, -10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, -20, 0, -10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, -20, 0, -10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
-	createsprite gBattleAnimSpriteTemplate_83DAC4C, ANIM_BATTLER_TARGET, 2, 30, 2, 10, 1
+	createsprite gFallingRockSpriteTemplate, ANIM_BATTLER_TARGET, 2, 30, 2, 10, 1
 	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
 	delay 2
 	return
@@ -3238,7 +3238,7 @@ Move_ROLLOUT: @ 81CBB5E
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createvisualtask sub_80DD4D4, 2
+	createvisualtask AnimTask_Rollout, 2
 	waitforvisualfinish
 	createvisualtask AnimTask_ShakeTargetBasedOnMovePowerOrDmg, 2, FALSE, 1, 30, 1, 0
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 4, 0, 0, 1, 2
