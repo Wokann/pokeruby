@@ -351,7 +351,7 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         SetPokenavMenuPalette(menuType);
         LoadPalette(gUnknown_083DFECC, 0xF0, 0x20);
         LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
-        sub_80EF7D4();
+        StartPokenavBg3Scroll();
         break;
     case 11:
         REG_BG0CNT = 0x1F01;
@@ -504,41 +504,41 @@ void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u
     }
 }
 
-void sub_80EF740(void)
+void UpdatePokenavBg3Scroll(void)
 {
-    gPokenavStructPtr->unk6DA0 = (gPokenavStructPtr->unk6DA0 + 1) & 1;
-    if (gPokenavStructPtr->unk6DA0)
-        gPokenavStructPtr->unk6DA2++;
+    gPokenavStructPtr->bg3ScrollFrameCounter = (gPokenavStructPtr->bg3ScrollFrameCounter + 1) & 1;
+    if (gPokenavStructPtr->bg3ScrollFrameCounter)
+        gPokenavStructPtr->bg3ScrollOffset++;
 
-    REG_BG3HOFS = gPokenavStructPtr->unk6DA2;
+    REG_BG3HOFS = gPokenavStructPtr->bg3ScrollOffset;
 }
 
-void sub_80EF780(u8 taskId)
+void Task_PokenavBg3Scroll(u8 taskId)
 {
-    if (gTasks[taskId].data[0] == 0 || (gPokenavStructPtr->unk6DA2 & 0x7) != 0)
+    if (gTasks[taskId].data[0] == 0 || (gPokenavStructPtr->bg3ScrollOffset & 0x7) != 0)
     {
-        sub_80EF740();
+        UpdatePokenavBg3Scroll();
     }
     else
     {
-        u16 value = gPokenavStructPtr->unk6DA2 & 0x7;
-        gPokenavStructPtr->unk6DA2 = value;
-        gPokenavStructPtr->unk6DA0 = value;
+        u16 value = gPokenavStructPtr->bg3ScrollOffset & 0x7;
+        gPokenavStructPtr->bg3ScrollOffset = value;
+        gPokenavStructPtr->bg3ScrollFrameCounter = value;
         REG_BG3HOFS = value;
     }
 }
 
-void sub_80EF7D4(void)
+void StartPokenavBg3Scroll(void)
 {
-    gPokenavStructPtr->unk6DA2 = 0;
-    gPokenavStructPtr->unk6DA0 = 0;
-    gPokenavStructPtr->taskId6DA4 = CreateTask(sub_80EF780, 80);
+    gPokenavStructPtr->bg3ScrollOffset = 0;
+    gPokenavStructPtr->bg3ScrollFrameCounter = 0;
+    gPokenavStructPtr->bg3ScrollTaskId = CreateTask(Task_PokenavBg3Scroll, 80);
 }
 
-void sub_80EF814(void)
+void StopPokenavBg3Scroll(void)
 {
-    if (FuncIsActiveTask(sub_80EF780))
-        DestroyTask(gPokenavStructPtr->taskId6DA4);
+    if (FuncIsActiveTask(Task_PokenavBg3Scroll))
+        DestroyTask(gPokenavStructPtr->bg3ScrollTaskId);
 }
 
 void sub_80EF840(void)

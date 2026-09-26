@@ -1616,7 +1616,7 @@ void OpenPokenavRegionMap(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80EF814();
+        StopPokenavBg3Scroll();
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -2102,7 +2102,7 @@ void OpenConditionSearchResults(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80EF814();
+			StopPokenavBg3Scroll();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2371,7 +2371,7 @@ void OpenConditionGraphFromParty(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80EF814();
+			StopPokenavBg3Scroll();
 			gPokenavStructPtr->unk76AA = 0;
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2625,7 +2625,7 @@ void OpenRibbonsMonList(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80EF814();
+			StopPokenavBg3Scroll();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -3000,7 +3000,7 @@ void OpenTrainerEyes(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80EF814();
+			StopPokenavBg3Scroll();
 			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}
