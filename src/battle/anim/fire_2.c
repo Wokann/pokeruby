@@ -87,34 +87,35 @@ const struct SpriteTemplate gFireBlastRingSpriteTemplate =
     .callback = AnimFireRing,
 };
 
-const union AnimCmd gSpriteAnim_83D9644[] =
+static const union AnimCmd sAnim_FireBlastCross[] =
 {
     ANIMCMD_FRAME(32, 6),
     ANIMCMD_FRAME(48, 6),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9650[] =
+static const union AnimCmd *const sAnims_FireBlastCross[] =
 {
-    gSpriteAnim_83D9644,
+    sAnim_FireBlastCross,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9654[] =
+static const union AffineAnimCmd sAffineAnim_Unused_0[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 1),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D9664[] =
+static const union AffineAnimCmd sAffineAnim_Unused_1[] =
 {
     AFFINEANIMCMD_FRAME(0xA0, 0xA0, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D9674[] =
+// Unused
+static const union AffineAnimCmd *const sAffineAnims_Unused[] =
 {
-    gSpriteAffineAnim_83D9654,
-    gSpriteAffineAnim_83D9664,
+    sAffineAnim_Unused_0,
+    sAffineAnim_Unused_1,
 };
 
 const struct SpriteTemplate gFireBlastCrossSpriteTemplate =
@@ -122,7 +123,7 @@ const struct SpriteTemplate gFireBlastCrossSpriteTemplate =
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9650,
+    .anims = sAnims_FireBlastCross,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimFireCross,
