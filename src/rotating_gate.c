@@ -785,7 +785,7 @@ static void SpriteCallback_RotatingGate(struct Sprite *sprite)
     {
         affineAnimation = orientation + 4;
 
-        if (GetPlayerSpeed() != SPEED_NORMAL)
+        if (GetPlayerSpeed() != PLAYER_SPEED_NORMAL)
             affineAnimation += 8;
 
         PlaySE(SE_ROTATING_GATE);
@@ -795,7 +795,7 @@ static void SpriteCallback_RotatingGate(struct Sprite *sprite)
     {
         affineAnimation = orientation + 8;
 
-        if (GetPlayerSpeed() != SPEED_NORMAL)
+        if (GetPlayerSpeed() != PLAYER_SPEED_NORMAL)
             affineAnimation += 8;
 
         PlaySE(SE_ROTATING_GATE);

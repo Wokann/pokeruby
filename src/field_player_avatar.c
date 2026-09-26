@@ -566,7 +566,7 @@ static void sub_8058D0C(u8 direction, u16 heldKeys)
             return;
         }
         if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
-         && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
+         && RS_IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
         {
             PlayerRun(direction);
             gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
@@ -886,7 +886,7 @@ void sub_80594C0(void)
 {
     if (gPlayerAvatar.tileTransitionState == T_TILE_CENTER || gPlayerAvatar.tileTransitionState == T_NOT_MOVING)
     {
-        if (player_should_look_direction_be_enforced_upon_movement())
+        if (IsPlayerNotUsingAcroBikeOnBumpySlope())
             sub_8059348(GetFaceDirectionMovementAction(gObjectEvents[gPlayerAvatar.objectEventId].facingDirection));
     }
 }

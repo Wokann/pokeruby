@@ -54,8 +54,8 @@ static u8 AcroBike_GetJumpDirection(void);
 static void Bike_UpdateDirTimerHistory(u8);
 static void Bike_UpdateABStartSelectHistory(u8);
 static u8 Bike_DPadToDirection(u16);
-static u8 get_some_collision(u8);
-static u8 Bike_CheckCollisionTryAdvanceCollisionCount(struct ObjectEvent *, s16, s16, u8, u8);
+static u8 GetBikeCollision(u8);
+static u8 GetBikeCollisionAt(struct ObjectEvent *, s16, s16, u8, u8);
 static bool8 IsRunningDisallowedByMetatile(u8);
 static void Bike_TryAdvanceCyclingRoadCollisions();
 static u8 CanBikeFaceDirOnMetatile(u8, u8);
@@ -118,7 +118,7 @@ static u8 (*const sAcroBikeInputHandlers[])(u8 *, u16, u16) =
 };
 
 // used with bikeFrameCounter from mach bike
-static const u16 sMachBikeSpeeds[] = {SPEED_NORMAL, SPEED_FAST, SPEED_FASTEST};
+static const u16 sMachBikeSpeeds[] = {PLAYER_SPEED_NORMAL, PLAYER_SPEED_FAST, PLAYER_SPEED_FASTEST};
 
 // this is a list of timers to compare against later, terminated with 0. the only timer being compared against is 4 frames in this list.
 static const u8 sAcroBikeJumpTimerList[] = {4, 0};
@@ -164,7 +164,7 @@ static u8 GetMachBikeTransition(u8 *dirTraveling)
     if (*dirTraveling == 0)
     {
         *dirTraveling = direction; // update the direction, since below we either faced a direction or we started moving.
-        if (gPlayerAvatar.bikeSpeed == SPEED_STANDING)
+        if (gPlayerAvatar.bikeSpeed == PLAYER_SPEED_STANDING)
         {
             gPlayerAvatar.runningState = NOT_MOVING;
             return MACH_TRANS_FACE_DIRECTION;
@@ -176,7 +176,7 @@ static u8 GetMachBikeTransition(u8 *dirTraveling)
     // we need to check if the last traveled direction changed from the new direction as well as ensuring that we dont update the state while the player is moving: see the else check.
     if (*dirTraveling != direction && gPlayerAvatar.runningState != MOVING)
     {
-        if (gPlayerAvatar.bikeSpeed != SPEED_STANDING)
+        if (gPlayerAvatar.bikeSpeed != PLAYER_SPEED_STANDING)
         {
             *dirTraveling = direction; // implement the new direction
             gPlayerAvatar.runningState = MOVING;
@@ -230,7 +230,7 @@ static void MachBikeTransition_TrySpeedUp(u8 direction)
     }
     else
     {
-        collision = get_some_collision(direction);
+        collision = GetBikeCollision(direction);
         if (collision > 0 && collision < 12)
         {
             // we hit a solid object, but check to see if its a ledge and then jump.
@@ -261,10 +261,10 @@ static void MachBikeTransition_TrySlowDown(u8 direction)
 {
     u8 collision;
 
-    if (gPlayerAvatar.bikeSpeed != SPEED_STANDING)
+    if (gPlayerAvatar.bikeSpeed != PLAYER_SPEED_STANDING)
         gPlayerAvatar.bikeFrameCounter = --gPlayerAvatar.bikeSpeed;
 
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
 
     if (collision > 0 && collision < 12)
     {
@@ -327,7 +327,7 @@ static u8 AcroBikeHandleInputNormal(u8 *newDirection, u16 newKeys, u16 heldKeys)
             return ACRO_TRANS_FACE_DIRECTION;
         }
     }
-    if (*newDirection == direction && (heldKeys & B_BUTTON) && gPlayerAvatar.bikeSpeed == SPEED_STANDING)
+    if (*newDirection == direction && (heldKeys & B_BUTTON) && gPlayerAvatar.bikeSpeed == PLAYER_SPEED_STANDING)
     {
         gPlayerAvatar.bikeSpeed++;
         gPlayerAvatar.acroBikeState = ACRO_STATE_WHEELIE_MOVING;
@@ -363,7 +363,7 @@ static u8 AcroBikeHandleInputTurning(u8 *newDirection, u16 newKeys, u16 heldKeys
     if (*newDirection == AcroBike_GetJumpDirection())
     {
         Bike_SetBikeStill(); // Bike_SetBikeStill sets speed to standing, but the next line immediately overrides it. could have just reset acroBikeState to 0 here instead of wasting a jump.
-        gPlayerAvatar.bikeSpeed = SPEED_NORMAL;
+        gPlayerAvatar.bikeSpeed = PLAYER_SPEED_NORMAL;
         if (*newDirection == GetOppositeDirection(direction))
         {
             // do a turn jump.
@@ -572,7 +572,7 @@ static void AcroBikeTransition_Moving(u8 direction)
         AcroBikeTransition_FaceDirection(playerObjEvent->movementDirection);
         return;
     }
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     if (collision > 0 && collision < 12)
     {
         if (collision == COLLISION_LEDGE_JUMP)
@@ -632,7 +632,7 @@ static void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
         AcroBikeTransition_WheelieHoppingStanding(playerObjEvent->movementDirection);
         return;
     }
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     // TODO: Try to get rid of this goto
     if (collision == 0 || collision == 9)
     {
@@ -661,7 +661,7 @@ static void AcroBikeTransition_SideJump(u8 direction)
     u8 collision;
     struct ObjectEvent *playerObjEvent;
 
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     if (collision != 0)
     {
         if (collision == 7)
@@ -698,7 +698,7 @@ static void AcroBikeTransition_WheelieMoving(u8 direction)
         PlayerIdleWheelie(playerObjEvent->movementDirection);
         return;
     }
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     if (collision > 0 && collision < 12)
     {
         if (collision == 6)
@@ -732,7 +732,7 @@ static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
         PlayerStartWheelie(playerObjEvent->movementDirection);
         return;
     }
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     if (collision > 0 && collision < 12)
     {
         if (collision == 6)
@@ -766,7 +766,7 @@ static void AcroBikeTransition_WheelieLoweringMoving(u8 direction)
         PlayerEndWheelie(playerObjEvent->movementDirection);
         return;
     }
-    collision = get_some_collision(direction);
+    collision = GetBikeCollision(direction);
     if (collision > 0 && collision < 12)
     {
         if (collision == 6)
@@ -797,7 +797,7 @@ static void AcroBike_TryHistoryUpdate(u16 newKeys, u16 heldKeys) // newKeys is u
     else
     {
         Bike_UpdateDirTimerHistory(direction);
-        gPlayerAvatar.bikeSpeed = SPEED_STANDING;
+        gPlayerAvatar.bikeSpeed = PLAYER_SPEED_STANDING;
     }
 
     direction = heldKeys & (A_BUTTON | B_BUTTON | SELECT_BUTTON | START_BUTTON); // directions is reused for some reason.
@@ -809,7 +809,7 @@ static void AcroBike_TryHistoryUpdate(u16 newKeys, u16 heldKeys) // newKeys is u
     else
     {
         Bike_UpdateABStartSelectHistory(direction);
-        gPlayerAvatar.bikeSpeed = SPEED_STANDING;
+        gPlayerAvatar.bikeSpeed = PLAYER_SPEED_STANDING;
     }
 }
 
@@ -883,28 +883,28 @@ static u8 Bike_DPadToDirection(u16 heldKeys)
     return DIR_NONE;
 }
 
-static u8 get_some_collision(u8 direction)
+static u8 GetBikeCollision(u8 direction)
 {
     s16 x;
     s16 y;
-    u8 metatitleBehavior;
+    u8 metatileBehavior;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
     x = playerObjEvent->currentCoords.x;
     y = playerObjEvent->currentCoords.y;
     MoveCoords(direction, &x, &y);
-    metatitleBehavior = MapGridGetMetatileBehaviorAt(x, y);
-    return Bike_CheckCollisionTryAdvanceCollisionCount(playerObjEvent, x, y, direction, metatitleBehavior);
+    metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
+    return GetBikeCollisionAt(playerObjEvent, x, y, direction, metatileBehavior);
 }
 
-static u8 Bike_CheckCollisionTryAdvanceCollisionCount(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatitleBehavior)
+static u8 GetBikeCollisionAt(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior)
 {
-    u8 collision = CheckForObjectEventCollision(objectEvent, x, y, direction, metatitleBehavior);
+    u8 collision = CheckForObjectEventCollision(objectEvent, x, y, direction, metatileBehavior);
 
     if (collision > 4)
         return collision;
 
-    if (collision == 0 && IsRunningDisallowedByMetatile(metatitleBehavior))
+    if (collision == 0 && IsRunningDisallowedByMetatile(metatileBehavior))
         collision = 2;
 
     if (collision)
@@ -913,7 +913,7 @@ static u8 Bike_CheckCollisionTryAdvanceCollisionCount(struct ObjectEvent *object
     return collision;
 }
 
-bool8 IsRunningDisallowed(u8 tile)
+bool8 RS_IsRunningDisallowed(u8 tile)
 {
     if (IsRunningDisallowedByMetatile(tile) != FALSE || gMapHeader.mapType == MAP_TYPE_INDOOR)
         return TRUE;
@@ -985,7 +985,7 @@ bool8 IsBikingDisallowedByPlayer(void)
     return TRUE;
 }
 
-bool8 player_should_look_direction_be_enforced_upon_movement(void)
+bool8 IsPlayerNotUsingAcroBikeOnBumpySlope(void)
 {
     if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE) != FALSE && MetatileBehavior_IsBumpySlope(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) != FALSE)
         return FALSE;
@@ -1018,7 +1018,7 @@ void BikeClearState(int newDirHistory, int newAbStartHistory)
     gPlayerAvatar.acroBikeState = ACRO_STATE_NORMAL;
     gPlayerAvatar.newDirBackup = DIR_NONE;
     gPlayerAvatar.bikeFrameCounter = 0;
-    gPlayerAvatar.bikeSpeed = SPEED_STANDING;
+    gPlayerAvatar.bikeSpeed = PLAYER_SPEED_STANDING;
     gPlayerAvatar.directionHistory = newDirHistory;
     gPlayerAvatar.abStartSelectHistory = newAbStartHistory;
 
@@ -1038,7 +1038,7 @@ void Bike_UpdateBikeCounterSpeed(u8 counter)
 static void Bike_SetBikeStill(void)
 {
     gPlayerAvatar.bikeFrameCounter = 0;
-    gPlayerAvatar.bikeSpeed = SPEED_STANDING;
+    gPlayerAvatar.bikeSpeed = PLAYER_SPEED_STANDING;
 }
 
 s16 GetPlayerSpeed(void)
@@ -1051,11 +1051,11 @@ s16 GetPlayerSpeed(void)
     if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
         return machSpeeds[gPlayerAvatar.bikeFrameCounter];
     else if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ACRO_BIKE)
-        return SPEED_FASTER;
+        return PLAYER_SPEED_FASTER;
     else if (gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_DASH))
-        return SPEED_FAST;
+        return PLAYER_SPEED_FAST;
     else
-        return SPEED_NORMAL;
+        return PLAYER_SPEED_NORMAL;
 }
 
 void Bike_HandleBumpySlopeJump(void)
