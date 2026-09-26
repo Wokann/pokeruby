@@ -95,13 +95,13 @@ const struct SpriteTemplate gRazorLeafCutterSpriteTemplate =
     .callback = AnimTranslateLinearSingleSineWave,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D64FC[] = {
+const union AffineAnimCmd gSwiftStarAffineAnimCmds[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 1),
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D650C[] = {
-    gSpriteAffineAnim_83D64FC,
+const union AffineAnimCmd *const gSwiftStarAffineAnimTable[] = {
+    gSwiftStarAffineAnimCmds,
 };
 
 const struct SpriteTemplate gSwiftStarSpriteTemplate =
@@ -111,7 +111,7 @@ const struct SpriteTemplate gSwiftStarSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D650C,
+    .affineAnims = gSwiftStarAffineAnimTable,
     .callback = AnimTranslateLinearSingleSineWave,
 };
 
