@@ -4,6 +4,7 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -11,12 +12,11 @@ extern u8 gBattleAnimTarget;
 extern u8 gBattlersCount;
 extern u8 gHealthboxSpriteIds[];
 
-void sub_80CE09C(struct Sprite* sprite);
-void sub_80CE17C(struct Sprite* sprite);
-static void sub_80CE1AC(struct Sprite* sprite);
+static void AnimConversion(struct Sprite *sprite);
+static void AnimConversion2(struct Sprite *sprite);
+static void AnimConversion2_Step(struct Sprite *sprite);
 
-// tile_in (flips a white tile from the scene into facing the player.)
-// Used in Conversion.
+// Conversion effects and the Octazooka ball and smoke sprites.
 
 const struct SpriteTemplate gOctazookaBallSpriteTemplate =
 {
@@ -55,7 +55,7 @@ const struct SpriteTemplate gOctazookaSmokeSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const union AnimCmd gSpriteAnim_83D6F54[] =
+const union AnimCmd gConversionAnimCmds[] =
 {
     ANIMCMD_FRAME(3, 5),
     ANIMCMD_FRAME(2, 5),
@@ -64,34 +64,34 @@ const union AnimCmd gSpriteAnim_83D6F54[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6F68[] =
+const union AnimCmd *const gConversionAnimTable[] =
 {
-    gSpriteAnim_83D6F54,
+    gConversionAnimCmds,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D6F6C[] =
+const union AffineAnimCmd gConversionAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(0x200, 0x200, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D6F7C[] =
+const union AffineAnimCmd *const gConversionAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D6F6C,
+    gConversionAffineAnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6F80 =
+const struct SpriteTemplate gConversionSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CONVERSION,
     .paletteTag = ANIM_TAG_CONVERSION,
-    .oam = &gOamData_837E104,
-    .anims = gSpriteAnimTable_83D6F68,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x8,
+    .anims = gConversionAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6F7C,
-    .callback = sub_80CE09C,
+    .affineAnims = gConversionAffineAnimTable,
+    .callback = AnimConversion,
 };
 
-const union AnimCmd gSpriteAnim_83D6F98[] =
+const union AnimCmd gConversion2AnimCmds[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(1, 5),
@@ -100,28 +100,28 @@ const union AnimCmd gSpriteAnim_83D6F98[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D6FAC[] =
+const union AnimCmd *const gConversion2AnimTable[] =
 {
-    gSpriteAnim_83D6F98,
+    gConversion2AnimCmds,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D6FB0 =
+const struct SpriteTemplate gConversion2SpriteTemplate =
 {
     .tileTag = ANIM_TAG_CONVERSION,
     .paletteTag = ANIM_TAG_CONVERSION,
-    .oam = &gOamData_837E104,
-    .anims = gSpriteAnimTable_83D6FAC,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x8,
+    .anims = gConversion2AnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D6F7C,
-    .callback = sub_80CE17C,
+    .affineAnims = gConversionAffineAnimTable,
+    .callback = AnimConversion2,
 };
 
-void sub_80CE09C(struct Sprite* sprite)
+static void AnimConversion(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
         if (IsContest())
             sprite->y += 10;
         sprite->data[0]++;
@@ -131,7 +131,7 @@ void sub_80CE09C(struct Sprite* sprite)
         DestroyAnimSprite(sprite);
 }
 
-void sub_80CE108(u8 taskId)
+void AnimTask_ConversionAlphaBlend(u8 taskId)
 {
     if (gTasks[taskId].data[2] == 1)
     {
@@ -155,15 +155,15 @@ void sub_80CE108(u8 taskId)
     }
 }
 
-void sub_80CE17C(struct Sprite* sprite)
+static void AnimConversion2(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, FALSE);
     sprite->animPaused = 1;
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->callback = sub_80CE1AC;
+    sprite->callback = AnimConversion2_Step;
 }
 
-static void sub_80CE1AC(struct Sprite* sprite)
+static void AnimConversion2_Step(struct Sprite *sprite)
 {
     if (sprite->data[0])
     {
@@ -173,14 +173,14 @@ static void sub_80CE1AC(struct Sprite* sprite)
     {
         sprite->animPaused = 0;
         sprite->data[0] = 30;
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
         sprite->callback = StartAnimLinearTranslation;
         StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     }
 }
 
-void sub_80CE210(u8 taskId)
+void AnimTask_Conversion2AlphaBlend(u8 taskId)
 {
     if (++gTasks[taskId].data[0] == 4)
     {
@@ -192,22 +192,22 @@ void sub_80CE210(u8 taskId)
     }
 }
 
-void unref_sub_80CE260(u8 taskId)
+static void UNUSED AnimTask_HideBattlersHealthbox(u8 taskId)
 {
     u8 i;
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (gBattleAnimArgs[0] == 1 && GetBattlerSide(i) == 0)
+        if (gBattleAnimArgs[0] == TRUE && GetBattlerSide(i) == B_SIDE_PLAYER)
             SetHealthboxSpriteInvisible(gHealthboxSpriteIds[i]);
 
-        if (gBattleAnimArgs[1] == 1 && GetBattlerSide(i) == 1)
+        if (gBattleAnimArgs[1] == TRUE && GetBattlerSide(i) == B_SIDE_OPPONENT)
             SetHealthboxSpriteInvisible(gHealthboxSpriteIds[i]);
     }
 
     DestroyAnimVisualTask(taskId);
 }
 
-void unref_sub_80CE2D4(u8 taskId)
+static void UNUSED AnimTask_ShowBattlersHealthbox(u8 taskId)
 {
     u8 i;
     for (i = 0; i < gBattlersCount; i++)
