@@ -221,7 +221,7 @@ SECTIONS {
         src/battle/anim/circling_finger.o(.text);
         src/battle/anim/bouncing_music_note.o(.text);
         src/battle/anim/vibrate_battler_back.o(.text);
-        src/battle/anim/unused_8.o(.text);
+        src/battle/anim/moving_clamp.o(.text);
         src/battle/anim/withdraw.o(.text);
         src/battle/anim/alert.o(.text);
         src/battle/anim/sword.o(.text);
@@ -645,7 +645,7 @@ SECTIONS {
         src/battle/anim/circling_finger.o(.rodata);
         src/battle/anim/bouncing_music_note.o(.rodata);
         src/battle/anim/vibrate_battler_back.o(.rodata);
-        src/battle/anim/unused_8.o(.rodata);
+        src/battle/anim/moving_clamp.o(.rodata);
         src/battle/anim/alert.o(.rodata);
         src/battle/anim/sword.o(.rodata);
         src/battle/anim/sonic.o(.rodata);
