@@ -95,8 +95,8 @@ static void AnimIngrainRoot(struct Sprite* sprite)
 {
     if (!sprite->data[0])
     {
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
         sprite->x2 = gBattleAnimArgs[0];
         sprite->y2 = gBattleAnimArgs[1];
         sprite->subpriority = gBattleAnimArgs[2] + 30;
@@ -113,10 +113,10 @@ static void AnimIngrainRoot(struct Sprite* sprite)
 
 static void AnimFrenzyPlantRoot(struct Sprite *sprite)
 {
-    s16 attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    s16 attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-    s16 targetX = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    s16 attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    s16 attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    s16 targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
     targetX -= attackerX;
     targetY -= attackerY;
