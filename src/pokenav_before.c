@@ -2220,7 +2220,7 @@ void HandleConditionSearchInput(void)
         }
         break;
     case 1:
-        if (!sub_80F0718())
+        if (!UpdatePokenavListScroll())
         {
 			ShowMapNamePopUpWindow();
 			sub_80F3264();
@@ -2724,7 +2724,7 @@ void HandleRibbonsMonListInput(void)
         }
         break;
     case 1:
-        if (!sub_80F0718())
+        if (!UpdatePokenavListScroll())
         {
 			ShowMapNamePopUpWindow();
 			sub_80F3264();
@@ -3084,7 +3084,7 @@ void HandleTrainerEyesInput(void)
         }
         break;
     case 1:
-        if (!sub_80F0718())
+        if (!UpdatePokenavListScroll())
         {
 			sub_80F0FFC(gPokenavStructPtr->unk876E);
 			sub_80F3264();
