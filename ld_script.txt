@@ -228,7 +228,7 @@ SECTIONS {
         src/battle/anim/sonic.o(.text);
         src/battle/anim/void_lines.o(.text);
         src/battle/anim/money.o(.text);
-        src/battle/anim/bullet.o(.text);
+        src/battle/anim/bullet_seed.o(.text);
         src/battle/anim/cyclone.o(.text);
         src/battle/anim/grip.o(.text);
         src/battle/anim/guillotine.o(.text);
@@ -652,7 +652,7 @@ SECTIONS {
         src/battle/anim/egg.o(.rodata);
         src/battle/anim/void_lines.o(.rodata);
         src/battle/anim/money.o(.rodata);
-        src/battle/anim/bullet.o(.rodata);
+        src/battle/anim/bullet_seed.o(.rodata);
         src/battle/anim/cyclone.o(.rodata);
         src/battle/anim/grip.o(.rodata);
         src/battle/anim/guillotine.o(.rodata);

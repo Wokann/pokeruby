@@ -10,12 +10,11 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimBulletSeed(struct Sprite* sprite);
-static void AnimBulletSeed_Step1(struct Sprite* sprite);
-static void AnimBulletSeed_Step2(struct Sprite* sprite);
+static void AnimBulletSeed(struct Sprite *sprite);
+static void AnimBulletSeed_Step1(struct Sprite *sprite);
+static void AnimBulletSeed_Step2(struct Sprite *sprite);
 
-// bullet (shoot seeds as ammunition.)
-// Used by Bullet Seed.
+// Bullet Seed projectile.
 
 const union AffineAnimCmd gBulletSeedAffineAnimCmds[] =
 {
@@ -39,22 +38,22 @@ const struct SpriteTemplate gBulletSeedSpriteTemplate =
     .callback = AnimBulletSeed,
 };
 
-static void AnimBulletSeed(struct Sprite* sprite)
+static void AnimBulletSeed(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = 20;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = StartAnimLinearTranslation;
     sprite->affineAnimPaused = 1;
     StoreSpriteCallbackInData6(sprite, AnimBulletSeed_Step1);
 }
 
-static void AnimBulletSeed_Step1(struct Sprite* sprite)
+static void AnimBulletSeed_Step1(struct Sprite *sprite)
 {
     int i;
     u16 rand;
-    s16* ptr;
+    s16 *ptr;
     PlaySE12WithPanning(SE_M_HORN_ATTACK, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
     sprite->x += sprite->x2;
     sprite->y += sprite->y2;
@@ -74,7 +73,7 @@ static void AnimBulletSeed_Step1(struct Sprite* sprite)
     sprite->affineAnimPaused = 0;
 }
 
-static void AnimBulletSeed_Step2(struct Sprite* sprite)
+static void AnimBulletSeed_Step2(struct Sprite *sprite)
 {
     sprite->data[0] += sprite->data[7];
     sprite->x2 = sprite->data[0] >> 8;
@@ -83,7 +82,7 @@ static void AnimBulletSeed_Step2(struct Sprite* sprite)
 
     sprite->y2 = Sin(sprite->data[1], sprite->data[6]);
     sprite->data[1] += 8;
-    if (sprite->data[1] > 0x7E)
+    if (sprite->data[1] > 126)
     {
         sprite->data[1] = 0;
         sprite->data[2] /= 2;
