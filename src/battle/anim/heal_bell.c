@@ -6,6 +6,7 @@
 #include "ewram.h"
 #include "palette.h"
 #include "decompress.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -13,7 +14,7 @@ extern u8 gBattleAnimTarget;
 
 extern const u8 gBattleAnimSpritePal_MusicNotes2[];
 
-static void AnimHealBellMusicNote(struct Sprite* sprite);
+static void AnimHealBellMusicNote(struct Sprite *sprite);
 
 #define NUM_MUSIC_NOTE_PAL_TAGS 5
 
@@ -93,7 +94,7 @@ void AnimTask_LoadMusicNotesPals(u8 taskId)
     for (i = 0; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
     {
         palette = ((IsContest()) ? gSharedMem + 0x14800 : gSharedMem + 0x18000) + (i << 5);
-        LoadPalette(palette, (u16)((paletteNums[i] << 4) + 0x100), 32);
+        LoadPalette(palette, (u16)OBJ_PLTT_ID(paletteNums[i]), PLTT_SIZE_4BPP);
     }
 
     DestroyAnimVisualTask(taskId);
@@ -102,7 +103,7 @@ void AnimTask_LoadMusicNotesPals(u8 taskId)
 void AnimTask_FreeMusicNotesPals(u8 taskId)
 {
     int i;
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
     {
         FreeSpritePaletteByTag(sMusicNotePaletteTagsTable[i]);
     }
@@ -110,7 +111,7 @@ void AnimTask_FreeMusicNotesPals(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-static void SetMusicNotePalette(struct Sprite* sprite, u8 animNum, u8 paletteNum)
+static void SetMusicNotePalette(struct Sprite *sprite, u8 animNum, u8 paletteNum)
 {
     u8 tile;
     tile = (paletteNum & 1);
@@ -119,15 +120,15 @@ static void SetMusicNotePalette(struct Sprite* sprite, u8 animNum, u8 paletteNum
     sprite->oam.paletteNum = IndexOfSpritePaletteTag(sMusicNotePaletteTagsTable[paletteNum >> 1]);
 }
 
-static void AnimHealBellMusicNote(struct Sprite* sprite)
+static void AnimHealBellMusicNote(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 0);
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
 
     sprite->data[0] = gBattleAnimArgs[4];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[3];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[3];
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     SetMusicNotePalette(sprite, gBattleAnimArgs[5], gBattleAnimArgs[6]);
