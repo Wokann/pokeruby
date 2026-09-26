@@ -3259,8 +3259,8 @@ void StartPokenavMenuTransition(u8 menuType, u8 cursorPos, u8 gfxId)
     gPokenavStructPtr->transitionGfxId = gfxId;
 }
 
-bool8 sub_80EF4F8(void);
-void sub_80EF490(u8);
+bool8 UpdatePokenavPaletteTransition(void);
+void StartPokenavPaletteTransition(u8 menuType);
 
 bool8 UpdatePokenavMenuTransition(void)
 {
@@ -3310,7 +3310,7 @@ bool8 UpdatePokenavMenuTransition(void)
         break;
     case 6:
         sub_80F1DF0();
-        sub_80EF490(gPokenavStructPtr->transitionMenuType);
+        StartPokenavPaletteTransition(gPokenavStructPtr->transitionMenuType);
         gPokenavStructPtr->transitionStep++;
         break;
     case 7:
@@ -3321,7 +3321,7 @@ bool8 UpdatePokenavMenuTransition(void)
         }
         break;
     case 8:
-        if (!sub_80EF4F8())
+        if (!UpdatePokenavPaletteTransition())
         {
             gPokenavStructPtr->transitionStep++;
             return FALSE;

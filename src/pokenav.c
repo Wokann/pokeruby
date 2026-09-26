@@ -194,9 +194,9 @@ bool8 LoadPokenavBackgroundStep(void)
         LoadPalette(gPokenavHoennMap1_Pal, 0x10, 0x20);
         break;
     case 3:
-        sub_80EF58C(0);
-        sub_80EF58C(1);
-        sub_80EF58C(2);
+        InitPokenavPaletteGradient(0);
+        InitPokenavPaletteGradient(1);
+        InitPokenavPaletteGradient(2);
         break;
     case 4:
         gPokenavStructPtr->menuVerticalOffset = 0;
@@ -348,7 +348,7 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         LZ77UnCompVram(gPokenavOutlineTiles, (void *)VRAM + 0x8020);
         break;
     case 10:
-        sub_80EF54C(menuType);
+        SetPokenavMenuPalette(menuType);
         LoadPalette(gUnknown_083DFECC, 0xF0, 0x20);
         LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
         sub_80EF7D4();
@@ -392,104 +392,104 @@ void PrintPokenavMenuDescription(u8 menuType, u8 itemId)
     Menu_PrintText(&tileBuffer[0x800], 3, 17);
 }
 
-void sub_80EF490(u8 a)
+void StartPokenavPaletteTransition(u8 menuType)
 {
-    u16 var1, var2;
+    u16 currentIndex, targetIndex;
 
-    if (a == 2)
-        a = 1;
+    if (menuType == 2)
+        menuType = 1;
 
-    gPokenavStructPtr->unkCE4E = a * 30;
-    var1 = gPokenavStructPtr->unkCE4C;
-    var2 = a * 30;
-    if (var1 < var2)
-        gPokenavStructPtr->unkCE50 = 2;
-    else if (var1 > var2)
-        gPokenavStructPtr->unkCE50 = -2;
+    gPokenavStructPtr->paletteGradientTarget = menuType * 30;
+    currentIndex = gPokenavStructPtr->paletteGradientIndex;
+    targetIndex = menuType * 30;
+    if (currentIndex < targetIndex)
+        gPokenavStructPtr->paletteGradientDelta = 2;
+    else if (currentIndex > targetIndex)
+        gPokenavStructPtr->paletteGradientDelta = -2;
     else
-        gPokenavStructPtr->unkCE50 = 0;
+        gPokenavStructPtr->paletteGradientDelta = 0;
 }
 
-bool8 sub_80EF4F8(void)
+bool8 UpdatePokenavPaletteTransition(void)
 {
-    u16 *palettes;
+    u16 *gradient;
 
-    if (gPokenavStructPtr->unkCE4C == gPokenavStructPtr->unkCE4E)
+    if (gPokenavStructPtr->paletteGradientIndex == gPokenavStructPtr->paletteGradientTarget)
     {
         return FALSE;
     }
     else
     {
-        gPokenavStructPtr->unkCE4C = gPokenavStructPtr->unkCE50 + gPokenavStructPtr->unkCE4C;
+        gPokenavStructPtr->paletteGradientIndex = gPokenavStructPtr->paletteGradientDelta + gPokenavStructPtr->paletteGradientIndex;
 
-        palettes = gPokenavStructPtr->palettesCE52;
-        LoadPalette(&palettes[gPokenavStructPtr->unkCE4C], 0x31, 4);
+        gradient = gPokenavStructPtr->palettesCE52;
+        LoadPalette(&gradient[gPokenavStructPtr->paletteGradientIndex], 0x31, 4);
         return TRUE;
     }
 
 }
 
-void sub_80EF54C(u8 a)
+void SetPokenavMenuPalette(u8 menuType)
 {
-    if (a == 2)
-        a = 1;
+    if (menuType == 2)
+        menuType = 1;
 
-    gPokenavStructPtr->unkCE4C = a * 30;
-    LoadPalette(&gPokenavStructPtr->palettesCE52[gPokenavStructPtr->unkCE4C], 0x31, 4);
+    gPokenavStructPtr->paletteGradientIndex = menuType * 30;
+    LoadPalette(&gPokenavStructPtr->palettesCE52[gPokenavStructPtr->paletteGradientIndex], 0x31, 4);
 }
 
-void sub_80EF58C(u8 a)
+void InitPokenavPaletteGradient(u8 stage)
 {
     u16 i;
-    u16 * palettes;
-    const u16 *var1;
+    u16 *gradient;
+    const u16 *colors;
 
-    switch (a)
+    switch (stage)
     {
     case 0:
         for (i = 0; i < 62; i++)
             gPokenavStructPtr->palettesCE52[i] = 0;
         break;
     case 1:
-        palettes = gPokenavStructPtr->palettesCE52;
-        var1 = gUnknown_083E003C;
-        sub_80EF624(&var1[1], &var1[3], 16, 2, palettes);
+        gradient = gPokenavStructPtr->palettesCE52;
+        colors = gUnknown_083E003C;
+        BuildPokenavPaletteGradient(&colors[1], &colors[3], 16, 2, gradient);
         break;
     case 2:
-        palettes = gPokenavStructPtr->palettesCE8E;
-        var1 = gUnknown_083E003C;
-        sub_80EF624(&var1[3], &var1[7], 16, 2, palettes);
+        gradient = gPokenavStructPtr->palettesCE8E;
+        colors = gUnknown_083E003C;
+        BuildPokenavPaletteGradient(&colors[3], &colors[7], 16, 2, gradient);
         break;
     }
 }
 
-void sub_80EF624(const u16 *a, const u16 *b, u8 c, u8 d, u16 *palettes)
+void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u8 stepCount, u8 colorCount, u16 *gradient)
 {
     u16 i;
     u16 j;
-    u16 * r3;
+    u16 *output;
 
-    for (i = 0; i < d; i++)
+    for (i = 0; i < colorCount; i++)
     {
-        s32 r1 = Q_24_8(GET_R(*a));
-        s32 g1 = Q_24_8(GET_G(*a));
-        s32 b1 = Q_24_8(GET_B(*a));
-        s32 r2 = Q_24_8(GET_R(*b));
-        s32 g2 = Q_24_8(GET_G(*b));
-        s32 b2 = Q_24_8(GET_B(*b));
-        s32 dr = (r2 - r1) / c;
-        s32 dg = (g2 - g1) / c;
-        s32 db = (b2 - b1) / c;
+        s32 r1 = Q_24_8(GET_R(*startColors));
+        s32 g1 = Q_24_8(GET_G(*startColors));
+        s32 b1 = Q_24_8(GET_B(*startColors));
+        s32 r2 = Q_24_8(GET_R(*endColors));
+        s32 g2 = Q_24_8(GET_G(*endColors));
+        s32 b2 = Q_24_8(GET_B(*endColors));
+        s32 dr = (r2 - r1) / stepCount;
+        s32 dg = (g2 - g1) / stepCount;
+        s32 db = (b2 - b1) / stepCount;
         u16 rf, gf, bf;
 
-        r3 = palettes;
-        for (j = 0; j < c - 1; j++)
+        output = gradient;
+        for (j = 0; j < stepCount - 1; j++)
         {
             rf = Q_24_8_TO_INT(r1);
             gf = Q_24_8_TO_INT(g1);
             bf = Q_24_8_TO_INT(b1);
-            *r3 = RGB2(rf, gf, bf);
-            r3 += d;
+            *output = RGB2(rf, gf, bf);
+            output += colorCount;
             r1 += dr;
             g1 += dg;
             b1 += db;
@@ -497,10 +497,10 @@ void sub_80EF624(const u16 *a, const u16 *b, u8 c, u8 d, u16 *palettes)
         rf = Q_24_8_TO_INT(r2);
         gf = Q_24_8_TO_INT(g2);
         bf = Q_24_8_TO_INT(b2);
-        *r3 = RGB2(rf, gf, bf);
-        a++;
-        b++;
-        palettes++;
+        *output = RGB2(rf, gf, bf);
+        startColors++;
+        endColors++;
+        gradient++;
     }
 }
 
