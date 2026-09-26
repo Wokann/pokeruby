@@ -1492,7 +1492,7 @@ void HandlePokenavMainMenuInput(void)
                 {
                 case 0:
                     PlaySE(SE_SELECT);
-                    SetPokenavCallback(&sub_80EC4A0);
+                    SetPokenavCallback(&OpenPokenavRegionMap);
                     break;
                 case 1:
                     PlaySE(SE_SELECT);
@@ -1574,7 +1574,7 @@ void HandlePokenavMainMenuInput(void)
     }
 }
 
-void sub_80EC4A0()
+void OpenPokenavRegionMap(void)
 {
     u32 var1;
 
@@ -1658,12 +1658,12 @@ void sub_80EC4A0()
         break;
     case 0xE:
         if (!gPaletteFade.active)
-			SetPokenavCallback(&sub_80EC67C);
+			SetPokenavCallback(&HandleRegionMapInput);
 		break;
     }
 }
 
-void sub_80EC67C()
+void HandleRegionMapInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
