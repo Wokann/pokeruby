@@ -213,7 +213,7 @@ SECTIONS {
         src/battle/anim/moonlight_sparkle.o(.text);
         src/battle/anim/moonlight_end_fade.o(.text);
         src/battle/anim/strike.o(.text);
-        src/battle/anim/evasion.o(.text);
+        src/battle/anim/double_team.o(.text);
         src/battle/anim/fang.o(.text);
         src/battle/anim/musical.o(.text);
         src/battle/anim/thought.o(.text);

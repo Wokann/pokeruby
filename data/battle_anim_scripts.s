@@ -2777,7 +2777,7 @@ Move_TELEPORT: @ 81CB2F2
 Move_DOUBLE_TEAM: @ 81CB30B
 	monbg ANIM_BATTLER_ATK_PARTNER
 	setalpha 12, 8
-	createvisualtask sub_80CE7E0, 2
+	createvisualtask AnimTask_DoubleTeam, 2
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
 	delay 32
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER

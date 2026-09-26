@@ -10,13 +10,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void sub_80CE910(u8 taskId);
-static void sub_80CE974(struct Sprite* sprite);
+static void AnimTask_DoubleTeam_Step(u8 taskId);
+static void AnimDoubleTeam(struct Sprite *sprite);
 
-// evasion (the shadow seen during evasion increases, mainly Double Team.)
 // Used by Double Team.
 
-void sub_80CE7E0(u8 taskId)
+void AnimTask_DoubleTeam(u8 taskId)
 {
     u16 i;
     int obj;
@@ -24,7 +23,7 @@ void sub_80CE7E0(u8 taskId)
     u16 r4;
     struct Task* task = &gTasks[taskId];
     task->data[0] = GetAnimBattlerSpriteId(0);
-    task->data[1] = AllocSpritePalette(0x2771);
+    task->data[1] = AllocSpritePalette(ANIM_TAG_BENT_SPOON);
     r3 = (task->data[1] * 16) + 0x100;
     r4 = (gSprites[task->data[0]].oam.paletteNum + 16) << 4;
     for (i = 1; i < 16; i++)
@@ -32,7 +31,7 @@ void sub_80CE7E0(u8 taskId)
         gPlttBufferUnfaded[r3 + i] = gPlttBufferUnfaded[r4 + i];
     }
 
-    BlendPalette(r3, 16, 11, RGB(0, 0, 0));
+    BlendPalette(r3, 16, 11, RGB_BLACK);
     task->data[3] = 0;
     i = 0;
     while (i <= 1 && (obj = CloneBattlerSpriteWithBlend(0)) >= 0)
@@ -41,12 +40,12 @@ void sub_80CE7E0(u8 taskId)
         gSprites[obj].data[0] = 0;
         gSprites[obj].data[1] = i << 7;
         gSprites[obj].data[2] = taskId;
-        gSprites[obj].callback = sub_80CE974;
+        gSprites[obj].callback = AnimDoubleTeam;
         task->data[3]++;
         i++;
     }
 
-    task->func = sub_80CE910;
+    task->func = AnimTask_DoubleTeam_Step;
     if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
         REG_DISPCNT &= 0xFDFF;
@@ -57,7 +56,7 @@ void sub_80CE7E0(u8 taskId)
     }
 }
 
-void sub_80CE910(u8 taskId)
+static void AnimTask_DoubleTeam_Step(u8 taskId)
 {
     struct Task* task = &gTasks[taskId];
     if (!task->data[3])
@@ -67,12 +66,12 @@ void sub_80CE910(u8 taskId)
         else
             REG_DISPCNT |= 0x400;
 
-        FreeSpritePaletteByTag(0x2771);
+        FreeSpritePaletteByTag(ANIM_TAG_BENT_SPOON);
         DestroyAnimVisualTask(taskId);
     }
 }
 
-void sub_80CE974(struct Sprite* sprite)
+static void AnimDoubleTeam(struct Sprite *sprite)
 {
     if (++sprite->data[3] > 1)
     {
