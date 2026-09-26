@@ -2397,7 +2397,7 @@ Move_ROLLING_KICK: @ 81CAA3A
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 20, 0, 0, 4
-	createsprite gBattleAnimSpriteTemplate_83D9FF0, ANIM_BATTLER_ATTACKER, 2, -24, 0, 48, 10, 160, 0
+	createsprite gSlidingKickSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -24, 0, 48, 10, 160, 0
 	delay 5
 	playsewithpan SE_M_VITAL_THROW2, SOUND_PAN_TARGET
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -8, 0, 1, 2
@@ -2588,7 +2588,7 @@ Move_LOW_KICK: @ 81CAED4
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loadspritegfx ANIM_TAG_IMPACT
 	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 20, 0, 0, 4
-	createsprite gBattleAnimSpriteTemplate_83D9FF0, ANIM_BATTLER_TARGET, 2, -24, 28, 40, 8, 160, 0
+	createsprite gSlidingKickSpriteTemplate, ANIM_BATTLER_TARGET, 2, -24, 28, 40, 8, 160, 0
 	delay 4
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 2, -8, 8, 1, 2
 	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 6, 384, ANIM_BATTLER_TARGET, 2
