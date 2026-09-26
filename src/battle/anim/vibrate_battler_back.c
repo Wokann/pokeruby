@@ -3,6 +3,7 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -10,11 +11,11 @@ extern u8 gBattleAnimTarget;
 
 extern u8 gBattlerSpriteIds[];
 
-void sub_80CF3C4(struct Sprite* sprite);
+static void AnimVibrateBattlerBack(struct Sprite *sprite);
 
-// unused_7
+// Unused
 
-const struct SpriteTemplate gSpriteTemplate_83D73AC =
+const struct SpriteTemplate gVibrateBattlerBackSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
@@ -22,10 +23,10 @@ const struct SpriteTemplate gSpriteTemplate_83D73AC =
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80CF3C4,
+    .callback = AnimVibrateBattlerBack,
 };
 
-static void sub_80CF374(struct Sprite* sprite)
+static void AnimVibrateBattlerBack_Step(struct Sprite *sprite)
 {
     s16 temp;
     gSprites[sprite->data[2]].x2 += sprite->data[1];
@@ -40,13 +41,13 @@ static void sub_80CF374(struct Sprite* sprite)
     sprite->data[0]--;
 }
 
-void sub_80CF3C4(struct Sprite* sprite)
+static void AnimVibrateBattlerBack(struct Sprite *sprite)
 {
-    u8 a;
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
-    a = gBattlerSpriteIds[gBattleAnimTarget];
-    if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    u8 spriteId;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    spriteId = gBattlerSpriteIds[gBattleAnimTarget];
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= gBattleAnimArgs[0];
     }
@@ -58,7 +59,7 @@ void sub_80CF3C4(struct Sprite* sprite)
     sprite->y += gBattleAnimArgs[1];
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = gBattleAnimArgs[3];
-    sprite->data[2] = a;
-    sprite->callback = sub_80CF374;
+    sprite->data[2] = spriteId;
+    sprite->callback = AnimVibrateBattlerBack_Step;
     sprite->invisible = TRUE;
 }
