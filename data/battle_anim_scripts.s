@@ -2625,7 +2625,7 @@ Move_FISSURE: @ 81CAF7E
 	delay 50
 	fadetobg BG_FISSURE
 	waitbgfadeout
-	createvisualtask sub_80E1BB0, 5, 1, 5, -1
+	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, 1, 5, -1
 	waitbgfadein
 	delay 40
 	restorebg
@@ -2655,11 +2655,11 @@ _81CB0AA:
 _81CB0AB:
 	loadspritegfx ANIM_TAG_MUD_SAND
 	loadspritegfx ANIM_TAG_DIRT_MOUND
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 180
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 1, 180
+	createsprite gDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 180
+	createsprite gDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 1, 180
 	monbg_22 ANIM_BATTLER_ATTACKER
 	delay 1
-	createvisualtask sub_80E1244, 2, 0
+	createvisualtask AnimTask_DigDownMovement, 2, 0
 	delay 6
 	call _81CB16A
 	call _81CB16A
@@ -2669,18 +2669,18 @@ _81CB0AB:
 	waitforvisualfinish
 	clearmonbg_23 ANIM_BATTLER_ATTACKER
 	delay 1
-	createvisualtask sub_80E1244, 2, 1
+	createvisualtask AnimTask_DigDownMovement, 2, 1
 	goto _81CB0AA
 _81CB106:
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_DIRT_MOUND
-	createvisualtask sub_80E149C, 2, 0
+	createvisualtask AnimTask_DigUpMovement, 2, 0
 	waitforvisualfinish
 	monbg ANIM_BATTLER_ATTACKER
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 48
-	createsprite gDigDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 1, 48
+	createsprite gDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 0, 48
+	createsprite gDirtMoundSpriteTemplate, ANIM_BATTLER_ATTACKER, 1, 0, 1, 48
 	delay 1
-	createvisualtask sub_80E149C, 2, 1
+	createvisualtask AnimTask_DigUpMovement, 2, 1
 	delay 16
 	createsprite gBasicHitSplatSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, -8, 0, 1, 2
 	createvisualtask AnimTask_ShakeMon, 2, ANIM_BATTLER_TARGET, 5, 0, 6, 1
