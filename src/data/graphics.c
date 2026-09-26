@@ -1248,8 +1248,8 @@ const u8 gUnknown_08E9A300[] = INCBIN_U8("graphics/unknown/unknown_E9A300.bin");
 const u8 gUnknown_08E9AB00[] = INCBIN_U8("graphics/unknown/unknown_E9AB00.bin");
 const u8 gUnknown_08E9AB40[] = INCBIN_U8("graphics/unknown/unknown_E9AB40.gbapal");
 const u8 gUnknown_08E9AB60[] = INCBIN_U8("graphics/unknown/unknown_E9AB60.bin.lz");
-const u8 gUnknown_08E9ABB4[] = INCBIN_U8("graphics/unknown/unknown_E9ABB4.bin");
-const u8 gUnknown_08E9AC2C[] = INCBIN_U8("graphics/unknown/unknown_E9AC2C.bin");
+const u8 gPokenavRegionMapCityBannerFrames[] = INCBIN_U8("graphics/pokenav/region_map_city_banner_frames.bin");
+const u8 gPokenavRegionMapCityBannerBlank[] = INCBIN_U8("graphics/pokenav/region_map_city_banner_blank.bin");
 const u8 gUnknown_08E9AC4C[] = INCBIN_U8("graphics/pokenav/condition_screen.bin.lz");
 
 // text window frames

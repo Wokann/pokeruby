@@ -117,10 +117,10 @@ struct UnkPokenavStruct {
     /*0x6E17*/ u8 transitionGfxId;
     /*0x6E18*/ struct RegionMap regionMap;
     /*0x7698*/ u16 regionMapBg0YOffset;
-    /*0x769A*/ u16 unk769A;
-    /*0x769C*/ u8 unk769C;
-    /*0x769D*/ u8 unk769D;
-    /*0x769E*/ u8 unk769E;
+    /*0x769A*/ u16 cityBannerDelay;
+    /*0x769C*/ u8 cityBannerFrame;
+    /*0x769D*/ u8 cityBannerState;
+    /*0x769E*/ u8 cityBannerVisible;
     /*0x769F*/ u8 filler769F[0xB];
     /*0x76AA*/ u8 unk76AA;
     /*0x76AC*/ struct Sprite *unk76AC;
@@ -415,10 +415,10 @@ bool8 sub_80F5364(void);
 
 void sub_80F0900(void);
 void sub_80F01A4(void);
-void sub_80EFD3C(void);
+void InitRegionMapCityBanner(void);
 void sub_8095C8C();
-void sub_80EFDA0(void);
-void sub_80EFD74(void);
+void HideRegionMapCityBanner(void);
+void ShowRegionMapCityBanner(void);
 bool8 DecompressCityMapsStep(void);
 void InitCityMapDecompression(void);
 void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u8 stepCount, u8 colorCount, u16 *gradient);
@@ -466,7 +466,7 @@ void InitPokenavMainMenu(void);
 void CB2_Pokenav(void);
 void VBlankCB_Pokenav(void);
 void sub_80FB260();
-void sub_80EFE7C(void);
+void UpdateRegionMapCityBanner(void);
 void sub_80F5BF0();
 void sub_80F6F64();
 

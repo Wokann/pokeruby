@@ -52,8 +52,8 @@ extern const u8 gUnknown_083E01AC[];
 extern const u8 gUnknown_08E9AC4C[];
 extern const u8 gPokenavConditionMenu2_Pal[];
 extern const u8 gPokenavConditionView_Gfx[];
-extern const u8 gUnknown_08E9ABB4[];
-extern const u8 gUnknown_08E9AC2C[];
+extern const u8 gPokenavRegionMapCityBannerFrames[];
+extern const u8 gPokenavRegionMapCityBannerBlank[];
 extern const u8 *const gPokenavCityMaps[][2];
 extern const u8 gPokenavHoennMapSquares_Pal[];
 extern const u8 gPokenavHoennMapSquares_Gfx[];
@@ -682,9 +682,9 @@ void UpdateMapSecInfoWindow(void)
         Menu_BlankWindowRect(14, top, 28, 15);
 
     if (gPokenavStructPtr->regionMap.unk16 == 2)
-        sub_80EFD74();
+        ShowRegionMapCityBanner();
     else
-        sub_80EFDA0();
+        HideRegionMapCityBanner();
 }
 
 void UpdateRegionMapBottomToolbar(void)
@@ -735,7 +735,7 @@ void InitCityMapDecompression(void)
 {
     gPokenavStructPtr->cityMapSectionIndex = 0;
     gPokenavStructPtr->cityMapBufferIndex = 0;
-    sub_80EFD3C();
+    InitRegionMapCityBanner();
 }
 
 bool8 DecompressCityMapsStep(void)
@@ -770,84 +770,84 @@ bool8 DecompressCityMapsStep(void)
     return TRUE;
 }
 
-void sub_80EFD3C(void)
+void InitRegionMapCityBanner(void)
 {
-    gPokenavStructPtr->unk769E = 0;
-    gPokenavStructPtr->unk769C = 47;
-    gPokenavStructPtr->unk769D = 0;
-    gPokenavStructPtr->unk769A = 0;
+    gPokenavStructPtr->cityBannerVisible = 0;
+    gPokenavStructPtr->cityBannerFrame = 47;
+    gPokenavStructPtr->cityBannerState = 0;
+    gPokenavStructPtr->cityBannerDelay = 0;
 }
 
-void sub_80EFD74(void)
+void ShowRegionMapCityBanner(void)
 {
-    gPokenavStructPtr->unk769E = 1;
-    if (gPokenavStructPtr->unk769D == 1)
-        gPokenavStructPtr->unk769D = 2;
+    gPokenavStructPtr->cityBannerVisible = 1;
+    if (gPokenavStructPtr->cityBannerState == 1)
+        gPokenavStructPtr->cityBannerState = 2;
 }
 
-void sub_80EFDA0(void)
+void HideRegionMapCityBanner(void)
 {
-    sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gUnknown_08E9AC2C, 0, 0, 15, 1, 15);
-    gPokenavStructPtr->unk769E = 0;
+    sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerBlank, 0, 0, 15, 1, 15);
+    gPokenavStructPtr->cityBannerVisible = 0;
 }
 
-void sub_80EFDE4(u8 param0)
+void DrawRegionMapCityBannerFrame(u8 unused)
 {
-    u16 var1 = 60 - gPokenavStructPtr->unk769C;
+    u16 var1 = 60 - gPokenavStructPtr->cityBannerFrame;
 
     if (var1 > 15)
         var1 = 15;
 
-    if (gPokenavStructPtr->unk769E != 0)
+    if (gPokenavStructPtr->cityBannerVisible != 0)
     {
-        sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gUnknown_08E9ABB4, gPokenavStructPtr->unk769C, 0, var1, 1, 60);
+        sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavStructPtr->cityBannerFrame, 0, var1, 1, 60);
 
         if (var1 < 15)
         {
             u16 var2 = var1 + 14;
 
-            sub_8095C8C((void *)VRAM + 0xF800, var2, 16, gUnknown_08E9ABB4, 0, 0, (u16)(15 - var1), 1, 60);
+            sub_8095C8C((void *)VRAM + 0xF800, var2, 16, gPokenavRegionMapCityBannerFrames, 0, 0, (u16)(15 - var1), 1, 60);
         }
     }
 }
 
-void sub_80EFE7C(void)
+void UpdateRegionMapCityBanner(void)
 {
     u16 var1;
-    u8 var2 = gPokenavStructPtr->unk769D;
+    u8 var2 = gPokenavStructPtr->cityBannerState;
 
     switch (var2)
     {
     case 0:
-        var1 = ++gPokenavStructPtr->unk769C;
+        var1 = ++gPokenavStructPtr->cityBannerFrame;
 
         if (var1 > 59)
-            gPokenavStructPtr->unk769C = var2;
+            gPokenavStructPtr->cityBannerFrame = var2;
 
-        sub_80EFDE4(gPokenavStructPtr->unk769E);
+        DrawRegionMapCityBannerFrame(gPokenavStructPtr->cityBannerVisible);
 
-        switch (gPokenavStructPtr->unk769C)
+        switch (gPokenavStructPtr->cityBannerFrame)
         {
         case 0:
         case 15:
         case 30:
         case 45:
-            gPokenavStructPtr->unk769D = 1;
-            gPokenavStructPtr->unk769A = 0;
+            gPokenavStructPtr->cityBannerState = 1;
+            gPokenavStructPtr->cityBannerDelay = 0;
             break;
         }
         break;
     case 1:
-        var1 = ++gPokenavStructPtr->unk769A;
+        var1 = ++gPokenavStructPtr->cityBannerDelay;
         if (var1 > 120)
         {
-            gPokenavStructPtr->unk769A = 0;
-            gPokenavStructPtr->unk769D = 0;
+            gPokenavStructPtr->cityBannerDelay = 0;
+            gPokenavStructPtr->cityBannerState = 0;
         }
         break;
     case 2:
-        sub_80EFDE4(1);
-        gPokenavStructPtr->unk769D = 1;
+        DrawRegionMapCityBannerFrame(1);
+        gPokenavStructPtr->cityBannerState = 1;
         break;
     }
 }

@@ -1242,7 +1242,7 @@ void VBlankCB_PokenavRegionMap(void)
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
     UpdateRegionMapVideoRegs();
-    sub_80EFE7C();
+    UpdateRegionMapCityBanner();
 }
 
 void VBlankCB_PokenavConditionGraph(void)
