@@ -10,8 +10,7 @@ extern u8 gBattleAnimTarget;
 static void AnimJaggedMusicNote(struct Sprite *sprite);
 static void AnimJaggedMusicNote_Step(struct Sprite *sprite);
 
-// noise (moving music note)
-// Used in Uproar.
+// Jagged music notes used in Uproar.
 
 const struct SpriteTemplate gJaggedMusicNoteSpriteTemplate =
 {
@@ -65,5 +64,5 @@ static void AnimJaggedMusicNote_Step(struct Sprite *sprite)
     if (++sprite->data[0] > 16)
     {
         DestroyAnimSprite(sprite);
-    } 
+    }
 }
