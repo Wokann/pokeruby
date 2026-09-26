@@ -58,9 +58,9 @@ extern const u8 *const gPokenavCityMaps[][2];
 extern const u8 gPokenavHoennMapSquares_Pal[];
 extern const u8 gPokenavHoennMapSquares_Gfx[];
 extern const u16 gUnknown_083E003C[];
-extern const u8 *const gUnknown_083E31B0[];
-extern const u8 *const gUnknown_083E31CC[];
-extern const u8 *const gUnknown_083E31D8[];
+extern const u8 *const gPokenavMainMenuDescriptions[];
+extern const u8 *const gPokenavConditionMenuDescriptions[];
+extern const u8 *const gPokenavConditionSearchDescriptions[];
 extern u8 *gUnknown_083DFEC8;
 extern const u8 gUnknown_083DFEEC[];
 extern const u8 gUnknown_083E005C[];
@@ -369,26 +369,26 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
     return TRUE;
 }
 
-void sub_80EF428(u8 a, u8 b)
+void PrintPokenavMenuDescription(u8 menuType, u8 itemId)
 {
     u8 *tileBuffer;
-    const u8 *pcText = 0;
+    const u8 *description = 0;
 
-    switch (a)
+    switch (menuType)
     {
     case 0:
-        pcText = gUnknown_083E31B0[b];
+        description = gPokenavMainMenuDescriptions[itemId];
         break;
     case 1:
-        pcText = gUnknown_083E31CC[b];
+        description = gPokenavConditionMenuDescriptions[itemId];
         break;
     case 2:
-        pcText = gUnknown_083E31D8[b];
+        description = gPokenavConditionSearchDescriptions[itemId];
         break;
     }
 
     tileBuffer = gUnknown_083DFEC8;
-    AlignStringInMenuWindow(&tileBuffer[0x800], pcText, 0xC0, 2);
+    AlignStringInMenuWindow(&tileBuffer[0x800], description, 0xC0, 2);
     Menu_PrintText(&tileBuffer[0x800], 3, 17);
 }
 

@@ -457,7 +457,7 @@ bool8 sub_80F6250();
 void sub_80F6C20();
 void InitPokenavMenuGfx(u8 menuType);
 bool8 LoadPokenavMenuGfxStep(u8 menuType);
-void sub_80EF428(u8, u8);
+void PrintPokenavMenuDescription(u8 menuType, u8 itemId);
 bool8 SlideMenuHeaderDown(void);
 void InitPokenavState(void);
 void SetPokenavCallback(void (*callback)(void));

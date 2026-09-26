@@ -167,7 +167,7 @@ const u8 gPokenavOutlineTilemap[] = INCBIN_U8("graphics/pokenav/outline_map.bin.
 #include "data/text/trainer_eye_descriptions_de.h"
 #endif
 
-const u8 *const gUnknown_083E31B0[] = 
+const u8 *const gPokenavMainMenuDescriptions[] =
 {
     PCText_CheckMap,
     PCText_CheckPoke,
@@ -178,14 +178,14 @@ const u8 *const gUnknown_083E31B0[] =
     PCText_NoTrainers,
 };
 
-const u8 *const gUnknown_083E31CC[] = 
+const u8 *const gPokenavConditionMenuDescriptions[] =
 {
     PCText_CheckParty,
     PCText_CheckPokeAll,
     PCText_ReturnToNav,
 };
 
-const u8 *const gUnknown_083E31D8[] = 
+const u8 *const gPokenavConditionSearchDescriptions[] =
 {
     PCText_FindCool,
     PCText_FindBeauty,
@@ -1365,7 +1365,7 @@ void InitPokenavMainMenu(void)
     case 17:
         if (!sub_80F1E50())
         {
-            sub_80EF428(0, 0);
+            PrintPokenavMenuDescription(0, 0);
             SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1443,7 +1443,7 @@ void RestorePokenavMainMenu(void)
     case 13:
         if (!sub_80F1E50())
         {
-            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1480,7 +1480,7 @@ void HandlePokenavMainMenuInput(void)
         if (UpdateMainMenuCursorPos() != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else
@@ -1538,7 +1538,7 @@ void HandlePokenavMainMenuInput(void)
 			else
 			{
 				PlaySE(0x20);
-				sub_80EF428(0, 5);
+				PrintPokenavMenuDescription(0, 5);
 				gPokenavStructPtr->callbackStep = 0xFF;
 			}
 		}
@@ -1553,7 +1553,7 @@ void HandlePokenavMainMenuInput(void)
         else
         {
             PlaySE(0x20);
-            sub_80EF428(0, 6);
+            PrintPokenavMenuDescription(0, 6);
             gPokenavStructPtr->callbackStep = 0xFF;
         }
         break;
@@ -1561,13 +1561,13 @@ void HandlePokenavMainMenuInput(void)
         if ((var1 = UpdateMainMenuCursorPos()) != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->callbackStep = 0;
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
-			sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
 			gPokenavStructPtr->callbackStep = var1;
 		}
         break;
@@ -1763,7 +1763,7 @@ void HandleConditionMenuInput(void)
         if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
@@ -1826,7 +1826,7 @@ void ReturnToConditionMenu(void)
         if (!UpdatePokenavMenuTransition())
         {
 			SetPokenavCallback(&HandleConditionMenuInput);
-			sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
 		}
 		break;
     }
@@ -1897,7 +1897,7 @@ void RestorePokenavConditionMenu(void)
     case 13:
         if (!sub_80F1E50())
         {
-			sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1916,7 +1916,7 @@ void HandleConditionSearchMenuInput(void)
         if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(2, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(2, gPokenavStructPtr->menuCursorPos);
             PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
@@ -2062,7 +2062,7 @@ void ReturnToConditionSearchMenu(void)
     case 20:
         if (!sub_80F1E50())
 		{
-			sub_80EF428(2, gPokenavStructPtr->menuCursorPos);
+			PrintPokenavMenuDescription(2, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -3316,7 +3316,7 @@ bool8 UpdatePokenavMenuTransition(void)
     case 7:
         if (!sub_80F1E50())
         {
-            sub_80EF428(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->menuCursorPos);
+            PrintPokenavMenuDescription(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->transitionStep++;
         }
         break;
