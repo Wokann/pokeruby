@@ -2815,7 +2815,7 @@ Move_METRONOME: @ 81CB365
 	createsprite gThoughtBubbleSpriteTemplate, ANIM_BATTLER_ATTACKER, 11, 0, 100
 	playsewithpan SE_M_METRONOME, SOUND_PAN_ATTACKER
 	delay 6
-	createsprite gBattleAnimSpriteTemplate_83D72C8, ANIM_BATTLER_ATTACKER, 12, 0
+	createsprite gMetronomeFingerSpriteTemplate, ANIM_BATTLER_ATTACKER, 12, 0
 	delay 24
 	loopsewithpan SE_M_TAIL_WHIP, SOUND_PAN_ATTACKER, 22, 3
 	waitforvisualfinish

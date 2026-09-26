@@ -9,28 +9,28 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite);
+extern void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 
-void sub_80CF040(struct Sprite* sprite);
-void AnimFollowMeFinger(struct Sprite* sprite);
-static void AnimTauntFinger(struct Sprite* sprite);
-static void sub_80CF088(struct Sprite* sprite);
-static void AnimFollowMeFinger_Step1(struct Sprite* sprite);
-static void AnimFollowMeFinger_Step2(struct Sprite* sprite);
-static void AnimTauntFinger_Step1(struct Sprite* sprite);
-static void AnimTauntFinger_Step2(struct Sprite* sprite);
+static void AnimMetronomeFinger(struct Sprite *sprite);
+static void AnimFollowMeFinger(struct Sprite *sprite);
+static void AnimTauntFinger(struct Sprite *sprite);
+static void AnimMetronomeFinger_Step(struct Sprite *sprite);
+static void AnimFollowMeFinger_Step1(struct Sprite *sprite);
+static void AnimFollowMeFinger_Step2(struct Sprite *sprite);
+static void AnimTauntFinger_Step1(struct Sprite *sprite);
+static void AnimTauntFinger_Step2(struct Sprite *sprite);
 
 // wave_finger
 // Used by Metronome, Follow Me, and Taunt.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7238[] =
+const union AffineAnimCmd gMetronomeFingerAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_FRAME(0x1E, 0x1E, 0, 8),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7250[] =
+const union AffineAnimCmd gMetronomeFingerAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 11),
     AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 11),
@@ -39,7 +39,7 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7250[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83D7278[] =
+const union AffineAnimCmd gMetronomeFingerAffineAnimCmds2_2[] =
 {
     AFFINEANIMCMD_FRAME(16, 16, 0, 0),
     AFFINEANIMCMD_FRAME(30, 30, 0, 8),
@@ -52,21 +52,21 @@ const union AffineAnimCmd gSpriteAffineAnim_83D7278[] =
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83D72C0[] =
+const union AffineAnimCmd *const gMetronomeFingerAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83D7238,
-    gSpriteAffineAnim_83D7250,
+    gMetronomeFingerAffineAnimCmds1,
+    gMetronomeFingerAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_83D72C8 =
+const struct SpriteTemplate gMetronomeFingerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D72C0,
-    .callback = sub_80CF040,
+    .affineAnims = gMetronomeFingerAffineAnimTable,
+    .callback = AnimMetronomeFinger,
 };
 
 const struct SpriteTemplate gFollowMeFingerSpriteTemplate =
@@ -76,7 +76,7 @@ const struct SpriteTemplate gFollowMeFingerSpriteTemplate =
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83D72C0,
+    .affineAnims = gMetronomeFingerAffineAnimTable,
     .callback = AnimFollowMeFinger,
 };
 
@@ -135,21 +135,21 @@ const struct SpriteTemplate gTauntFingerSpriteTemplate =
     .callback = AnimTauntFinger,
 };
 
-void sub_80CF040(struct Sprite* sprite)
+static void AnimMetronomeFinger(struct Sprite *sprite)
 {
-    u8 bank;
+    u8 battler;
     if (gBattleAnimArgs[0] == 0)
-        bank = gBattleAnimAttacker;
+        battler = gBattleAnimAttacker;
     else
-        bank = gBattleAnimTarget;
+        battler = gBattleAnimTarget;
 
-    SetSpriteNextToMonHead(bank, sprite);
+    SetSpriteNextToMonHead(battler, sprite);
     sprite->data[0] = 0;
-    StoreSpriteCallbackInData6(sprite, sub_80CF088);
+    StoreSpriteCallbackInData6(sprite, AnimMetronomeFinger_Step);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-static void sub_80CF088(struct Sprite* sprite)
+static void AnimMetronomeFinger_Step(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 16)
     {
@@ -159,7 +159,7 @@ static void sub_80CF088(struct Sprite* sprite)
     }
 }
 
-void AnimFollowMeFinger(struct Sprite* sprite)
+static void AnimFollowMeFinger(struct Sprite *sprite)
 {
     u8 battler;
     if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
@@ -181,13 +181,13 @@ void AnimFollowMeFinger(struct Sprite* sprite)
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-static void AnimFollowMeFinger_Step1(struct Sprite* sprite)
+static void AnimFollowMeFinger_Step1(struct Sprite *sprite)
 {
     if (++sprite->data[4] > 12)
         sprite->callback = AnimFollowMeFinger_Step2;
 }
 
-static void AnimFollowMeFinger_Step2(struct Sprite* sprite)
+static void AnimFollowMeFinger_Step2(struct Sprite *sprite)
 {
     s16 x1;
     s16 x2;
@@ -197,7 +197,7 @@ static void AnimFollowMeFinger_Step2(struct Sprite* sprite)
         if (--sprite->data[0] == 0)
         {
             sprite->x2 = 0;
-            sprite->callback = sub_80CF088;
+            sprite->callback = AnimMetronomeFinger_Step;
             return;
         }
         else
@@ -217,7 +217,7 @@ static void AnimFollowMeFinger_Step2(struct Sprite* sprite)
     sprite->x2 = (x1 >> 3) + (x2 >> 1);
 }
 
-static void AnimTauntFinger(struct Sprite* sprite)
+static void AnimTauntFinger(struct Sprite *sprite)
 {
     u8 battler;
     if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
@@ -240,7 +240,7 @@ static void AnimTauntFinger(struct Sprite* sprite)
     sprite->callback = AnimTauntFinger_Step1;
 }
 
-static void AnimTauntFinger_Step1(struct Sprite* sprite)
+static void AnimTauntFinger_Step1(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 10)
     {
@@ -251,7 +251,7 @@ static void AnimTauntFinger_Step1(struct Sprite* sprite)
     }
 }
 
-static void AnimTauntFinger_Step2(struct Sprite* sprite)
+static void AnimTauntFinger_Step2(struct Sprite *sprite)
 {
     if (++sprite->data[1] > 5)
         DestroyAnimSprite(sprite);
