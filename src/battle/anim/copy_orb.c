@@ -2,6 +2,7 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -47,14 +48,14 @@ static void AnimMimicOrb(struct Sprite *sprite)
     {
     case 0:
     {
-        if (GetBattlerSide(gBattleAnimTarget) == 0)
+        if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         {
-            s16 a = gBattleAnimArgs[0];
-            gBattleAnimArgs[0] = -a;
+            s16 initialX = gBattleAnimArgs[0];
+            gBattleAnimArgs[0] = -initialX;
         }
 
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 0) + gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[0];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[1];
         sprite->invisible = TRUE;
         sprite->data[0]++;
         break;
@@ -66,8 +67,8 @@ static void AnimMimicOrb(struct Sprite *sprite)
         {
             ChangeSpriteAffineAnim(sprite, 1);
             sprite->data[0] = 25;
-            sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-            sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+            sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
             sprite->callback = InitAndRunAnimFastLinearTranslation;
             StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
             break;
