@@ -1068,11 +1068,11 @@ bool8 LoadPokenavListScreenStep(void)
     case 13:
         if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
-            ShowMapNamePopUpWindow();
+            PrintPokenavListSelectionInfo();
         }
         else
         {
-            sub_80F081C(0);
+            PrintTrainerEyesListStats(0);
             sub_80F0FFC((u8)gPokenavStructPtr->unk876E);
         }
         break;
@@ -1148,7 +1148,7 @@ bool8 UpdatePokenavListScroll(void)
     return TRUE;
 }
 
-void ShowMapNamePopUpWindow(void)
+void PrintPokenavListSelectionInfo(void)
 {
     switch (gPokenavStructPtr->listMode)
     {
@@ -1166,17 +1166,17 @@ void ShowMapNamePopUpWindow(void)
     Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
 }
 
-void sub_80F081C(u8 arg0)
+void PrintTrainerEyesListStats(u8 drawStep)
 {
     u32 numTrainerBattles;
 
     BasicInitMenuWindow(&gWindowTemplate_81E710C);
-    switch (arg0)
+    switch (drawStep)
     {
     case 0:
     case 1:
         MenuPrint_RightAligned(gOtherText_NumberRegistered, 10, 9);
-        if (arg0 != 0)
+        if (drawStep != 0)
             break;
         // fall through
     case 2:
@@ -1186,12 +1186,12 @@ void sub_80F081C(u8 arg0)
             STR_CONV_MODE_RIGHT_ALIGN,
             5);
         MenuPrint_RightAligned(gPokenavStructPtr->unk8788, 10, 11);
-        if (arg0 != 0)
+        if (drawStep != 0)
             break;
         // fall through
     case 3:
         MenuPrint_RightAligned(gOtherText_NumberBattles, 10, 13);
-        if (arg0 != 0)
+        if (drawStep != 0)
             break;
         // fall through
     case 4:
@@ -1209,7 +1209,7 @@ void sub_80F081C(u8 arg0)
     }
 }
 
-void sub_80F08E4(void)
+void ClearTrainerEyesListStats(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E710C);
     Menu_EraseWindowRect(0, 9, 11, 16);
@@ -1304,7 +1304,7 @@ bool8 sub_80F0B44(void)
             }
 
             if (!gPokenavStructPtr->unkD15C)
-                sub_80F08E4();
+                ClearTrainerEyesListStats();
 
             gPokenavStructPtr->unkD15C++;
             return TRUE;
@@ -1350,7 +1350,7 @@ bool8 sub_80F0C48(void)
 
         if ((++gPokenavStructPtr->unkD15C) > 7)
         {
-            sub_80F081C(0);
+            PrintTrainerEyesListStats(0);
             return FALSE;
         }
     }

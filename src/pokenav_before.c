@@ -2197,7 +2197,7 @@ void HandleConditionSearchInput(void)
         {
         case 1:
             PlaySE(SE_SELECT);
-            ShowMapNamePopUpWindow();
+            PrintPokenavListSelectionInfo();
             return;
         case 2:
             PlaySE(SE_SELECT);
@@ -2222,7 +2222,7 @@ void HandleConditionSearchInput(void)
     case 1:
         if (!UpdatePokenavListScroll())
         {
-			ShowMapNamePopUpWindow();
+			PrintPokenavListSelectionInfo();
 			sub_80F3264();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2701,7 +2701,7 @@ void HandleRibbonsMonListInput(void)
         {
         case 1:
             PlaySE(SE_SELECT);
-            ShowMapNamePopUpWindow();
+            PrintPokenavListSelectionInfo();
             return;
         case 2:
             PlaySE(SE_SELECT);
@@ -2726,7 +2726,7 @@ void HandleRibbonsMonListInput(void)
     case 1:
         if (!UpdatePokenavListScroll())
         {
-			ShowMapNamePopUpWindow();
+			PrintPokenavListSelectionInfo();
 			sub_80F3264();
 			gPokenavStructPtr->callbackStep++;
 		}
