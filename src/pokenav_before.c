@@ -99,7 +99,7 @@ struct PokenavRibbonIconGfx {
     u8 paletteNum;
 };
 
-static void (*gUnknown_03000744)(void);
+static void (*sPokenavCallbackBeforeLinkWait)(void);
 
 struct UnkPokenavStruct *const gPokenavStructPtr = (struct UnkPokenavStruct *)gSharedMem;
 
@@ -1481,7 +1481,7 @@ void HandlePokenavMainMenuInput(void)
         {
             PlaySE(SE_SELECT);
             sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
-            sub_80EED9C();
+            PausePokenavCallbackForLink();
         }
         else
         {
@@ -1563,7 +1563,7 @@ void HandlePokenavMainMenuInput(void)
             PlaySE(SE_SELECT);
             sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->callbackStep = 0;
-            sub_80EED9C();
+            PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
@@ -1671,7 +1671,7 @@ void HandleRegionMapInput(void)
         switch (sub_80FAB60())
         {
         case 1:
-            sub_80EED9C();
+            PausePokenavCallbackForLink();
             break;
         case 3:
             sub_80EF9F8();
@@ -1764,7 +1764,7 @@ void HandleConditionMenuInput(void)
         {
             PlaySE(SE_SELECT);
             sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
-            sub_80EED9C();
+            PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
         {
@@ -1917,7 +1917,7 @@ void HandleConditionSearchMenuInput(void)
         {
             PlaySE(SE_SELECT);
             sub_80EF428(2, gPokenavStructPtr->menuCursorPos);
-            sub_80EED9C();
+            PausePokenavCallbackForLink();
         }
         else if (JOY_NEW(A_BUTTON))
         {
@@ -2877,7 +2877,7 @@ void RibbonsSummaryHandleInput(void)
 		{
 			sub_80F1494();
 			gPokenavStructPtr->callbackStep++;
-			sub_80EED9C();
+			PausePokenavCallbackForLink();
 		}
         break;
     case 6:
@@ -3196,7 +3196,7 @@ void ShowTrainerEyesTrainerInfo(void)
         sub_80EEFBC(0x9);
         sub_80F3294(0);
         SetPokenavCallback(&HandleTrainerEyesInput);
-        sub_80EED9C();
+        PausePokenavCallbackForLink();
         break;
     case 16:
         if (!sub_80F70FC())
@@ -3415,15 +3415,15 @@ void SetPokenavDisplayForScreen(u8 screenId)
     }
 }
 
-void sub_80EED9C(void)
+void PausePokenavCallbackForLink(void)
 {
-    gUnknown_03000744 = gPokenavStructPtr->callback;
-    gPokenavStructPtr->callback = &sub_80EEDC4;
+    sPokenavCallbackBeforeLinkWait = gPokenavStructPtr->callback;
+    gPokenavStructPtr->callback = &WaitForPokenavLinkQueue;
     gPokenavStructPtr->callback();
 }
 
-void sub_80EEDC4(void)
+void WaitForPokenavLinkQueue(void)
 {
     if (sub_8055870() != 0x1)
-        gPokenavStructPtr->callback = gUnknown_03000744;
+        gPokenavStructPtr->callback = sPokenavCallbackBeforeLinkWait;
 }
