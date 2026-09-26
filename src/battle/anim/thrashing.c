@@ -3,18 +3,19 @@
 #include "trig.h"
 #include "battle_anim.h"
 #include "sound.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void sub_80D0A8C(u8 taskId);
-static void sub_80D0B3C(u8 taskId);
+static void AnimTask_ThrashMoveMonHorizontal_Step(u8 taskId);
+static void AnimTask_ThrashMoveMonVertical_Step(u8 taskId);
 
 // thrashing (the movement of the Pokemon left/right repeatedly, with up/down movements below.)
 // Used by Thrash.
 
-const union AffineAnimCmd gSpriteAffineAnim_83D77B0[] =
+const union AffineAnimCmd gThrashMoveMonAffineAnimCmds[] =
 {
     AFFINEANIMCMD_FRAME(-10, 9, 0, 7),
     AFFINEANIMCMD_FRAME(20, -20, 0, 7),
@@ -25,28 +26,28 @@ const union AffineAnimCmd gSpriteAffineAnim_83D77B0[] =
 };
 
 // left/right movements
-void sub_80D0A4C(u8 taskId)
+void AnimTask_ThrashMoveMonHorizontal(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
-    u8 spriteId = GetAnimBattlerSpriteId(0);
+    struct Task *task = &gTasks[taskId];
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[0] = spriteId;
     task->data[1] = 0;
-    PrepareAffineAnimInTaskData(task, spriteId, &gSpriteAffineAnim_83D77B0);
-    task->func = sub_80D0A8C;
+    PrepareAffineAnimInTaskData(task, spriteId, gThrashMoveMonAffineAnimCmds);
+    task->func = AnimTask_ThrashMoveMonHorizontal_Step;
 }
 
-static void sub_80D0A8C(u8 taskId)
+static void AnimTask_ThrashMoveMonHorizontal_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (!RunAffineAnimFromTaskData(task))
         DestroyAnimVisualTask(taskId);
 }
 
 // up/down movements
-void sub_80D0AB8(u8 taskId)
+void AnimTask_ThrashMoveMonVertical(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
-    task->data[0] = GetAnimBattlerSpriteId(0);
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = GetAnimBattlerSpriteId(ANIM_BATTLER_ATTACKER);
     task->data[1] = 0;
     task->data[2] = 4;
     task->data[3] = 7;
@@ -56,15 +57,15 @@ void sub_80D0AB8(u8 taskId)
     task->data[7] = 0;
     task->data[8] = 0;
     task->data[9] = 2;
-    if (GetBattlerSide(gBattleAnimAttacker) == 1)
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
         task->data[2] *= -1;
 
-    task->func = sub_80D0B3C;
+    task->func = AnimTask_ThrashMoveMonVertical_Step;
 }
 
-static void sub_80D0B3C(u8 taskId)
+static void AnimTask_ThrashMoveMonVertical_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (++task->data[7] > 2)
     {
         task->data[7] = 0;

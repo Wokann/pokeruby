@@ -2533,8 +2533,8 @@ _81CAD6A:
 Move_THRASH: @ 81CAD81
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
-	createvisualtask sub_80D0A4C, 2
-	createvisualtask sub_80D0AB8, 2
+	createvisualtask AnimTask_ThrashMoveMonHorizontal, 2
+	createvisualtask AnimTask_ThrashMoveMonVertical, 2
 	createsprite gFistFootRandomPosSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 10, 0
 	createvisualtask AnimTask_ShakeMonInPlace, 2, ANIM_BATTLER_TARGET, 4, 0, 7, 1
 	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
