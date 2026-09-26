@@ -148,7 +148,7 @@ static const struct SpriteTemplate sUnusedEmberFirePlumeSpriteTemplate =
     .callback = AnimFirePlume,
 };
 
-const union AnimCmd gSpriteAnim_83D9568[] =
+static const union AnimCmd sAnim_UnusedSmallEmber[] =
 {
     ANIMCMD_FRAME(16, 6),
     ANIMCMD_FRAME(32, 6),
@@ -156,17 +156,18 @@ const union AnimCmd gSpriteAnim_83D9568[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83D9578[] =
+static const union AnimCmd *const sAnims_UnusedSmallEmber[] =
 {
-    gSpriteAnim_83D9568,
+    sAnim_UnusedSmallEmber,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83D957C =
+// Unused
+static const struct SpriteTemplate sUnusedSmallEmberSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_EMBER,
     .paletteTag = ANIM_TAG_SMALL_EMBER,
     .oam = &gOamData_AffineOff_ObjNormal_32x32,
-    .anims = gSpriteAnimTable_83D9578,
+    .anims = sAnims_UnusedSmallEmber,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimUnusedSmallEmber,
