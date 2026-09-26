@@ -1674,7 +1674,7 @@ void HandleRegionMapInput(void)
             PausePokenavCallbackForLink();
             break;
         case 3:
-            sub_80EF9F8();
+            UpdateMapSecInfoWindow();
             break;
         case 4:
             PlaySE(SE_SELECT);
@@ -1692,7 +1692,7 @@ void HandleRegionMapInput(void)
             sub_80FAEC4();
             gPokenavStructPtr->callbackStep++;
         }
-        else if (!sub_80EFBDC(1))
+        else if (!UpdateRegionMapBgYForZoom(1))
         {
 			sub_80FAEC4();
 			gPokenavStructPtr->callbackStep++;
@@ -1703,7 +1703,7 @@ void HandleRegionMapInput(void)
         {
 			if (!gPokenavStructPtr->regionMap.zoomed)
 			{
-				sub_80EFBB0();
+				UpdateRegionMapBottomToolbar();
 				gPokenavStructPtr->callbackStep = 0;
 			}
 			else
@@ -1713,9 +1713,9 @@ void HandleRegionMapInput(void)
 		}
         break;
     case 3:
-        if (!sub_80EFBDC(0))
+        if (!UpdateRegionMapBgYForZoom(0))
         {
-			sub_80EFBB0();
+			UpdateRegionMapBottomToolbar();
 			gPokenavStructPtr->callbackStep = 0;
 		}
         break;

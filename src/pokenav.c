@@ -592,17 +592,17 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         break;
     case 10:
         Menu_DrawStdWindowFrame(13, 3, 29, 17);
-        sub_80EF9F8();
+        UpdateMapSecInfoWindow();
         break;
     case 11:
         if (!gPokenavStructPtr->regionMap.zoomed)
         {
-            gPokenavStructPtr->unk7698 = 160;
+            gPokenavStructPtr->regionMapBg0YOffset = 160;
             REG_BG0VOFS = 160;
         }
         else
         {
-            gPokenavStructPtr->unk7698 = 256;
+            gPokenavStructPtr->regionMapBg0YOffset = 256;
             REG_BG0VOFS = 0;
         }
 
@@ -620,7 +620,7 @@ bool8 LoadPokenavRegionMapGfxStep(void)
 
 asm(".include \"constants/gba_constants.inc\"\n");
 
-void sub_80EF9F8(void)
+void UpdateMapSecInfoWindow(void)
 {
     bool8 someBool = FALSE;
     u16 top = 4;
@@ -687,7 +687,7 @@ void sub_80EF9F8(void)
         sub_80EFDA0();
 }
 
-void sub_80EFBB0(void)
+void UpdateRegionMapBottomToolbar(void)
 {
     if (!gPokenavStructPtr->regionMap.zoomed)
         DrawPokenavBottomToolbar(8);
@@ -695,40 +695,40 @@ void sub_80EFBB0(void)
         DrawPokenavBottomToolbar(7);
 }
 
-bool8 sub_80EFBDC(bool8 a)
+bool8 UpdateRegionMapBgYForZoom(bool8 zoomOut)
 {
-    bool8 retVal = TRUE;
-    u16 var1 = gPokenavStructPtr->unk7698;
+    bool8 active = TRUE;
+    u16 offset = gPokenavStructPtr->regionMapBg0YOffset;
 
-    if (a)
+    if (zoomOut)
     {
-        if (var1 > 168)
+        if (offset > 168)
         {
-            var1 = var1 - 8;
+            offset = offset - 8;
         }
         else
         {
-            var1 = 160;
-            retVal = FALSE;
+            offset = 160;
+            active = FALSE;
         }
     }
     else
     {
-        if (var1 < 248)
+        if (offset < 248)
         {
-            var1 = var1 + 8;
+            offset = offset + 8;
         }
         else
         {
-            var1 = 256;
-            retVal = FALSE;
+            offset = 256;
+            active = FALSE;
         }
     }
 
-    gPokenavStructPtr->unk7698 = var1;
-    REG_BG0VOFS = var1 & 0xFF;
+    gPokenavStructPtr->regionMapBg0YOffset = offset;
+    REG_BG0VOFS = offset & 0xFF;
 
-    return retVal;
+    return active;
 }
 
 void sub_80EFC3C(void)
