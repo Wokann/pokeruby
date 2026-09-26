@@ -210,7 +210,7 @@ SECTIONS {
         src/battle/anim/sharpen_sphere.o(.text);
         src/battle/anim/tile.o(.text);
         src/battle/anim/moon.o(.text);
-        src/battle/anim/twinkle.o(.text);
+        src/battle/anim/moonlight_sparkle.o(.text);
         src/battle/anim/flash.o(.text);
         src/battle/anim/strike.o(.text);
         src/battle/anim/evasion.o(.text);
@@ -636,7 +636,7 @@ SECTIONS {
         src/battle/anim/sharpen_sphere.o(.rodata);
         src/battle/anim/tile.o(.rodata);
         src/battle/anim/moon.o(.rodata);
-        src/battle/anim/twinkle.o(.rodata);
+        src/battle/anim/moonlight_sparkle.o(.rodata);
         src/battle/anim/strike.o(.rodata);
         src/battle/anim/fang.o(.rodata);
         src/battle/anim/musical.o(.rodata);

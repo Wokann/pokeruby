@@ -11,7 +11,6 @@ extern u8 gBattleAnimTarget;
 static void AnimMoonlightSparkle(struct Sprite *sprite);
 static void AnimMoonlightSparkle_Step(struct Sprite *sprite);
 
-// twinkle (a tiny twinkling star appears above the Pokemon and descends toward the Pokemon.)
 // Used in Moonlight.
 
 const union AnimCmd gMoonlightSparkleAnimCmds[] =
@@ -41,7 +40,7 @@ const struct SpriteTemplate gMoonlightSparkleSpriteTemplate =
 
 static void AnimMoonlightSparkle(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2) + gBattleAnimArgs[0];
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
     sprite->y = gBattleAnimArgs[1];
     sprite->data[0] = 0;
     sprite->data[1] = 0;
