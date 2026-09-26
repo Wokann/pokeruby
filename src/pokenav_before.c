@@ -1517,7 +1517,7 @@ void HandlePokenavMainMenuInput(void)
         break;
     case 1:
         sub_80F208C();
-        SetPokenavCallback(&sub_80EE96C);
+        SetPokenavCallback(&ExitPokenav);
         break;
     case 2:
         sub_80F6208();
@@ -3232,7 +3232,7 @@ void TrainerEyes_ReturnToMainMenu(void)
     }
 }
 
-void sub_80EE96C()
+void ExitPokenav(void)
 {
     if (!gPokenavStructPtr->callbackStep)
     {

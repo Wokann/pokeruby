@@ -285,7 +285,7 @@ void sub_80EED9C();
 void OpenRibbonsMonList(void);
 void OpenPokenavRegionMap(void);
 void OpenPokenavConditionMenu(void);
-void sub_80EE96C();
+void ExitPokenav(void);
 void OpenTrainerEyes(void);
 bool8 sub_80EEF34();
 void sub_80EED0C();
