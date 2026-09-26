@@ -269,12 +269,12 @@ void LoadContestResultsBgGfx(void)
     u16 r3;
 
     DmaFill32Large(3, 0, VRAM, VRAM_SIZE, 0x1000);
-    LZDecompressVram(gUnknown_08D1977C, BG_SCREEN_ADDR(0));
-    LZDecompressVram(gUnknown_08D1A490, BG_SCREEN_ADDR(26));
-    LZDecompressVram(gUnknown_08D1A364, BG_SCREEN_ADDR(28));
-    LZDecompressVram(gUnknown_08D1A250, BG_SCREEN_ADDR(30));
+    LZDecompressVram(gContestResults_Gfx, BG_SCREEN_ADDR(0));
+    LZDecompressVram(gContestResults_Bg_Tilemap, BG_SCREEN_ADDR(26));
+    LZDecompressVram(gContestResults_Interface_Tilemap, BG_SCREEN_ADDR(28));
+    LZDecompressVram(gContestResults_WinnerBanner_Tilemap, BG_SCREEN_ADDR(30));
     LoadContestResultsTitleBarTilemaps();
-    LoadCompressedPalette(gUnknown_08D1A618, 0, 0x200);
+    LoadCompressedPalette(gContestResults_Pal, 0, 0x200);
     LoadFontDefaultPalette(&gWindowTemplate_81E6FA0);
     for (i = 0; i < 4; i++)
     {
@@ -1443,27 +1443,27 @@ static inline s32 LoadContestResultsRankOrLinkTitleTiles(s32 a0)
     s32 result = 0;
     if (gIsLinkContest & 0x1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 9, 2, 8, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 9, 2, 8, 2);
         result = 8;
     }
     else if (gSpecialVar_ContestRank == 0)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 0, 0, 9, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 0, 0, 9, 2);
         result = 9;
     }
     else if (gSpecialVar_ContestRank == 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 9, 0, 8, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 9, 0, 8, 2);
         result = 8;
     }
     else if (gSpecialVar_ContestRank == 2)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 17, 0, 8, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 17, 0, 8, 2);
         result = 8;
     }
     else
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 0, 2, 9, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 0, 2, 9, 2);
         result = 9;
     }
     return result;
@@ -1475,31 +1475,31 @@ static inline s32 LoadContestResultsCategoryTitleTiles(s32 a0, s32 * a1)
     if (gSpecialVar_ContestCategory == 0)
     {
         *a1 = 0;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 17, 2, 10, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 17, 2, 10, 2);
         result = 10;
     }
     else if (gSpecialVar_ContestCategory == 1)
     {
         *a1 = 1;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 0, 4, 11, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 0, 4, 11, 2);
         result = 11;
     }
     else if (gSpecialVar_ContestCategory == 2)
     {
         *a1 = 2;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 11, 4, 10, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 11, 4, 10, 2);
         result = 10;
     }
     else if (gSpecialVar_ContestCategory == 3)
     {
         *a1 = 3;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 21, 4, 10, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 21, 4, 10, 2);
         result = 10;
     }
     else
     {
         *a1 = 4;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gUnknown_08E964B8, 0, 6, 10, 2);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 1, gContestResultsTitleWords_Tilemap, 0, 6, 10, 2);
         result = 10;
     }
     return result;
@@ -1531,7 +1531,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tcmp r1, 0\n"
                 "\tbeq _080C3814\n"
                 "\tldr r0, _080C380C @ =0x0600e000\n"
-                "\tldr r3, _080C3810 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3810 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0x9\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r2, 0x2\n"
@@ -1540,7 +1540,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\t.align 2, 0\n"
                 "_080C3808: .4byte gIsLinkContest\n"
                 "_080C380C: .4byte 0x0600e000\n"
-                "_080C3810: .4byte gUnknown_08E964B8\n"
+                "_080C3810: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C3814:\n"
                 "\tldr r0, _080C3830 @ =gSpecialVar_ContestRank\n"
                 "\tldrh r2, [r0]\n"
@@ -1548,7 +1548,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tbne _080C383C\n"
                 "\tmovs r4, 0x1\n"
                 "\tldr r0, _080C3834 @ =0x0600e000\n"
-                "\tldr r3, _080C3838 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3838 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tstr r2, [sp]\n"
                 "\tstr r2, [sp, 0x4]\n"
                 "\tmovs r1, 0x9\n"
@@ -1559,12 +1559,12 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\t.align 2, 0\n"
                 "_080C3830: .4byte gSpecialVar_ContestRank\n"
                 "_080C3834: .4byte 0x0600e000\n"
-                "_080C3838: .4byte gUnknown_08E964B8\n"
+                "_080C3838: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C383C:\n"
                 "\tcmp r2, 0x1\n"
                 "\tbne _080C385C\n"
                 "\tldr r0, _080C3854 @ =0x0600e000\n"
-                "\tldr r3, _080C3858 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3858 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0x9\n"
                 "\tstr r1, [sp]\n"
                 "\tstr r4, [sp, 0x4]\n"
@@ -1575,12 +1575,12 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C3870\n"
                 "\t.align 2, 0\n"
                 "_080C3854: .4byte 0x0600e000\n"
-                "_080C3858: .4byte gUnknown_08E964B8\n"
+                "_080C3858: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C385C:\n"
                 "\tcmp r2, 0x2\n"
                 "\tbne _080C3884\n"
                 "\tldr r0, _080C387C @ =0x0600e000\n"
-                "\tldr r3, _080C3880 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3880 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0x11\n"
                 "\tstr r1, [sp]\n"
                 "\tstr r4, [sp, 0x4]\n"
@@ -1595,11 +1595,11 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C389E\n"
                 "\t.align 2, 0\n"
                 "_080C387C: .4byte 0x0600e000\n"
-                "_080C3880: .4byte gUnknown_08E964B8\n"
+                "_080C3880: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C3884:\n"
                 "\tmovs r4, 0x1\n"
                 "\tldr r0, _080C38C0 @ =0x0600e000\n"
-                "\tldr r3, _080C38C4 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C38C4 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r2, 0x2\n"
                 "\tstr r2, [sp, 0x4]\n"
@@ -1617,7 +1617,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tbne _080C38CC\n"
                 "\tmovs r6, 0\n"
                 "\tldr r0, _080C38C0 @ =0x0600e000\n"
-                "\tldr r3, _080C38C4 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C38C4 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0x11\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r2, 0x2\n"
@@ -1628,14 +1628,14 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C392A\n"
                 "\t.align 2, 0\n"
                 "_080C38C0: .4byte 0x0600e000\n"
-                "_080C38C4: .4byte gUnknown_08E964B8\n"
+                "_080C38C4: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C38C8: .4byte gSpecialVar_ContestCategory\n"
                 "_080C38CC:\n"
                 "\tcmp r0, 0x1\n"
                 "\tbne _080C38EC\n"
                 "\tmovs r6, 0x1\n"
                 "\tldr r0, _080C38E4 @ =0x0600e000\n"
-                "\tldr r3, _080C38E8 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C38E8 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r1, 0x4\n"
@@ -1644,13 +1644,13 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C3924\n"
                 "\t.align 2, 0\n"
                 "_080C38E4: .4byte 0x0600e000\n"
-                "_080C38E8: .4byte gUnknown_08E964B8\n"
+                "_080C38E8: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C38EC:\n"
                 "\tcmp r0, 0x2\n"
                 "\tbne _080C3910\n"
                 "\tmovs r6, 0x2\n"
                 "\tldr r0, _080C3908 @ =0x0600e000\n"
-                "\tldr r3, _080C390C @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C390C @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0xB\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r1, 0x4\n"
@@ -1661,13 +1661,13 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C392A\n"
                 "\t.align 2, 0\n"
                 "_080C3908: .4byte 0x0600e000\n"
-                "_080C390C: .4byte gUnknown_08E964B8\n"
+                "_080C390C: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C3910:\n"
                 "\tcmp r0, 0x3\n"
                 "\tbne _080C393C\n"
                 "\tmovs r6, 0x3\n"
                 "\tldr r0, _080C3934 @ =0x0600e000\n"
-                "\tldr r3, _080C3938 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3938 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0x15\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r1, 0x4\n"
@@ -1684,11 +1684,11 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tb _080C395A\n"
                 "\t.align 2, 0\n"
                 "_080C3934: .4byte 0x0600e000\n"
-                "_080C3938: .4byte gUnknown_08E964B8\n"
+                "_080C3938: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C393C:\n"
                 "\tmovs r6, 0x4\n"
                 "\tldr r0, _080C3984 @ =0x0600e000\n"
-                "\tldr r3, _080C3988 @ =gUnknown_08E964B8\n"
+                "\tldr r3, _080C3988 @ =gContestResultsTitleWords_Tilemap\n"
                 "\tmovs r1, 0\n"
                 "\tstr r1, [sp]\n"
                 "\tmovs r1, 0x6\n"
@@ -1724,7 +1724,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tbx r0\n"
                 "\t.align 2, 0\n"
                 "_080C3984: .4byte 0x0600e000\n"
-                "_080C3988: .4byte gUnknown_08E964B8\n"
+                "_080C3988: .4byte gContestResultsTitleWords_Tilemap\n"
                 "_080C398C: .4byte 0x00000fff");
 }
 #endif // NONMATCHING
@@ -1735,27 +1735,27 @@ s16 LoadContestResultsRankOrLinkTitleTiles(s32 a0)
     s16 result;
     if (gIsLinkContest & 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 11, 3, 8, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 11, 3, 8, 3);
         result = 8;
     }
     else if (gSpecialVar_ContestRank == 0)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 0, 0, 11, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 0, 0, 11, 3);
         result = 11;
     }
     else if (gSpecialVar_ContestRank == 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 11, 0, 10, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 11, 0, 10, 3);
         result = 10;
     }
     else if (gSpecialVar_ContestRank == 2)
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 21, 0, 10, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 21, 0, 10, 3);
         result = 10;
     }
     else
     {
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 0, 3, 11, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 0, 3, 11, 3);
         result = 11;
     }
     return result;
@@ -1767,31 +1767,31 @@ s16 LoadContestResultsCategoryTitleTiles(s32 a0, s32 * a1)
     if (gSpecialVar_ContestCategory == 0)
     {
         *a1 = 0;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 19, 3, 7, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 19, 3, 7, 3);
         result = 7;
     }
     else if (gSpecialVar_ContestCategory == 1)
     {
         *a1 = 1;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 0, 6, 7, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 0, 6, 7, 3);
         result = 7;
     }
     else if (gSpecialVar_ContestCategory == 2)
     {
         *a1 = 2;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 7, 6, 4, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 7, 6, 4, 3);
         result = 4;
     }
     else if (gSpecialVar_ContestCategory == 3)
     {
         *a1 = 3;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 11, 6, 6, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 11, 6, 6, 3);
         result = 6;
     }
     else
     {
         *a1 = 4;
-        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gUnknown_08E964B8, 17, 6, 5, 3);
+        sub_809D104((void *)(VRAM + 0xE000), a0, 0, gContestResultsTitleWords_Tilemap, 17, 6, 5, 3);
         result = 5;
     }
     return result;

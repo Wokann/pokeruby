@@ -46,11 +46,11 @@ extern const u8 gContest3Pal[];
 extern const u8 gContestNumbers_UnusedGfx[];
 extern const u8 gContestNumbers_UnusedPal[];
 extern const u8 gTiles_8D1975C[];
-extern const u8 gUnknown_08D1977C[];
-extern const u8 gUnknown_08D1A250[];
-extern const u8 gUnknown_08D1A364[];
-extern const u8 gUnknown_08D1A490[];
-extern const u8 gUnknown_08D1A618[];
+extern const u8 gContestResults_Gfx[];
+extern const u8 gContestResults_WinnerBanner_Tilemap[];
+extern const u8 gContestResults_Interface_Tilemap[];
+extern const u8 gContestResults_Bg_Tilemap[];
+extern const u8 gContestResults_Pal[];
 
 extern const u8 gContestJudgeGfx[];
 extern const u8 gContest2Pal[];
@@ -3438,7 +3438,7 @@ extern const u8 gBattleAnimBgTilemap_SurfOpponent[];
 extern const u8 gBattleAnimBgTilemap_SurfPlayer[];
 extern const u8 gBattleAnimBgTilemap_SurfContest[];
 
-extern const u8 gUnknown_08E964B8[];
+extern const u8 gContestResultsTitleWords_Tilemap[];
 
 extern const u8 gUnknown_08E8096C[];
 extern const u8 gRouletteWheelTiles[];

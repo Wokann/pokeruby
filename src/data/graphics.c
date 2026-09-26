@@ -376,15 +376,15 @@ const u8 gContest3Pal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
 
 const u8 gTiles_8D1975C[] = INCBIN_U8("graphics/contest/heart.4bpp");
 
-const u8 gUnknown_08D1977C[] = INCBIN_U8("graphics/contest/misc_2.4bpp.lz");
+const u8 gContestResults_Gfx[] = INCBIN_U8("graphics/contest/results_screen/tiles.4bpp.lz");
 
-const u8 gUnknown_08D1A250[] = INCBIN_U8("graphics/contest/misc_2_tilemap_1.bin.lz");
+const u8 gContestResults_WinnerBanner_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/winner_banner.bin.lz");
 
-const u8 gUnknown_08D1A364[] = INCBIN_U8("graphics/contest/misc_2_tilemap_2.bin.lz");
+const u8 gContestResults_Interface_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/interface.bin.lz");
 
-const u8 gUnknown_08D1A490[] = INCBIN_U8("graphics/contest/misc_2_tilemap_3.bin.lz");
+const u8 gContestResults_Bg_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/bg.bin.lz");
 
-const u8 gUnknown_08D1A618[] = INCBIN_U8("graphics/contest/misc_2.gbapal.lz");
+const u8 gContestResults_Pal[] = INCBIN_U8("graphics/contest/results_screen/tiles.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_135[] = INCBIN_U8("graphics/battle_anims/sprites/135.4bpp.lz");
 const u8 gBattleAnimSpritePalette_135[] = INCBIN_U8("graphics/battle_anims/sprites/135.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_Particles[] = INCBIN_U8("graphics/battle_anims/sprites/particles.4bpp.lz");
@@ -1164,7 +1164,7 @@ const u8 gUnknown_08E95A18[] = INCBIN_U8("graphics/slot_machine/ruby.gbapal");
 
 const u8 gUnknown_08E95AB8[] = INCBIN_U8("graphics/unknown/unknown_E95AB8.bin");
 const u8 gUnknown_08E95FB8[] = INCBIN_U8("graphics/slot_machine/slots_layout.bin");
-const u8 gUnknown_08E964B8[] = INCBIN_U8("graphics/contest/contest_words.bin");
+const u8 gContestResultsTitleWords_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/title_words.bin");
 const u16 gUnknown_08E966B8[] = INCBIN_U16("graphics/unknown/unknown_E966B8.gbapal");
 
 const u16 gMonIconPalettes[][16] = 
