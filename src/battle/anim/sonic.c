@@ -14,10 +14,10 @@ extern u16 gBattleTypeFlags;
 
 extern void AnimWaterPulseRing(struct Sprite *sprite);
 
-void AnimSonicBoomProjectile(struct Sprite* sprite);
-static void AnimAirWaveProjectile(struct Sprite* sprite);
-static void AnimAirWaveProjectile_Step1(struct Sprite* sprite);
-static void AnimAirWaveProjectile_Step2(struct Sprite* sprite);
+static void AnimSonicBoomProjectile(struct Sprite *sprite);
+static void AnimAirWaveProjectile(struct Sprite *sprite);
+static void AnimAirWaveProjectile_Step1(struct Sprite *sprite);
+static void AnimAirWaveProjectile_Step2(struct Sprite *sprite);
 static void AirCutterProjectileStep1(u8 taskId);
 static void AirCutterProjectileStep2(u8 taskId);
 
@@ -25,7 +25,7 @@ const struct SpriteTemplate gSonicBoomSpriteTemplate =
 {
     .tileTag = ANIM_TAG_AIR_WAVE,
     .paletteTag = ANIM_TAG_AIR_WAVE,
-    .oam = &gOamData_837E134,
+    .oam = &gOamData_AffineDouble_ObjBlend_32x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -76,7 +76,7 @@ const struct SpriteTemplate gSupersonicRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_RING,
     .paletteTag = ANIM_TAG_GOLD_RING,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gGrowingRingAffineAnimTable,
@@ -87,7 +87,7 @@ const struct SpriteTemplate gScreechRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PURPLE_RING,
     .paletteTag = ANIM_TAG_PURPLE_RING,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gGrowingRingAffineAnimTable,
@@ -98,7 +98,7 @@ const struct SpriteTemplate gMetalSoundSpriteTemplate =
 {
     .tileTag = ANIM_TAG_METAL_SOUND_WAVES,
     .paletteTag = ANIM_TAG_METAL_SOUND_WAVES,
-    .oam = &gOamData_837E03C,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gGrowingRingAffineAnimTable,
@@ -109,7 +109,7 @@ const struct SpriteTemplate gWaterPulseRingSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLUE_RING_2,
     .paletteTag = ANIM_TAG_BLUE_RING_2,
-    .oam = &gOamData_837E034,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gWaterPulseRingAffineAnimTable,
@@ -123,7 +123,7 @@ const struct SpriteTemplate gWaterPulseRingSpriteTemplate =
 // arg 2: target x pixel offset
 // arg 3: target y pixel offset
 // arg 4: duration
-void AnimSonicBoomProjectile(struct Sprite* sprite)
+static void AnimSonicBoomProjectile(struct Sprite *sprite)
 {
     s16 targetXPos;
     s16 targetYPos;
@@ -133,22 +133,22 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
     }
-    else if (GetBattlerSide(gBattleAnimAttacker) != 0)
+    else if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
         gBattleAnimArgs[1] = -gBattleAnimArgs[1];
         gBattleAnimArgs[3] = -gBattleAnimArgs[3];
     }
 
-    InitSpritePosToAnimAttacker(sprite, 1);
-    targetXPos = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
-    targetYPos = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    targetXPos = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
+    targetYPos = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     rotation = ArcTan2Neg(targetXPos - sprite->x, targetYPos - sprite->y);
     rotation += 0xF000;
     if (IsContest())
         rotation -= 0x6000;
 
-    TrySetSpriteRotScale(sprite, 0, 0x100, 0x100, rotation);
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, rotation);
     sprite->data[0] = gBattleAnimArgs[4];
     sprite->data[2] = targetXPos;
     sprite->data[4] = targetYPos;
@@ -156,7 +156,7 @@ void AnimSonicBoomProjectile(struct Sprite* sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-static void AnimAirWaveProjectile_Step2(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0]-- <= 0)
     {
@@ -165,9 +165,9 @@ static void AnimAirWaveProjectile_Step2(struct Sprite* sprite)
     }
 }
 
-static void AnimAirWaveProjectile_Step1(struct Sprite* sprite)
+static void AnimAirWaveProjectile_Step1(struct Sprite *sprite)
 {
-    struct Task* task = &gTasks[sprite->data[7]];
+    struct Task *task = &gTasks[sprite->data[7]];
     if (sprite->data[0] > task->data[5])
     {
         sprite->data[5] += sprite->data[3];
@@ -198,13 +198,13 @@ static void AnimAirWaveProjectile_Step1(struct Sprite* sprite)
     }
 }
 
-static void AnimAirWaveProjectile(struct Sprite* sprite)
+static void AnimAirWaveProjectile(struct Sprite *sprite)
 {
     s16 a;
     s16 b;
     s16 c;
 
-    struct Task* task = &gTasks[sprite->data[7]];
+    struct Task *task = &gTasks[sprite->data[7]];
     sprite->data[1] += (-2 & task->data[7]);
     sprite->data[2] += (-2 & task->data[8]);
     if (1 & task->data[7])
@@ -257,7 +257,7 @@ static void AirCutterProjectileStep1(u8 taskId)
     if (gTasks[taskId].data[0]-- <= 0)
     {
         u8 spriteId;
-        struct Sprite* sprite;
+        struct Sprite *sprite;
         spriteId = CreateSprite(&gAirWaveProjectileSpriteTemplate, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
         sprite = &gSprites[spriteId];
         switch (gTasks[taskId].data[4])

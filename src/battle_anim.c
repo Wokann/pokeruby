@@ -323,7 +323,7 @@ const struct OamData gOamData_837E02C =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E034 =
+const struct OamData gOamData_AffineDouble_ObjNormal_16x32 =
 {
     .affineMode = 3,
     .objMode = 0,
@@ -332,7 +332,7 @@ const struct OamData gOamData_837E034 =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E03C =
+const struct OamData gOamData_AffineDouble_ObjNormal_32x64 =
 {
     .affineMode = 3,
     .objMode = 0,
@@ -611,7 +611,7 @@ const struct OamData gOamData_837E12C =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E134 =
+const struct OamData gOamData_AffineDouble_ObjBlend_32x16 =
 {
     .affineMode = 3,
     .objMode = 1,
