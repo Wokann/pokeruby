@@ -8,11 +8,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimSwordsDanceBlade(struct Sprite* sprite);
-static void AnimSwordsDanceBlade_Step(struct Sprite* sprite);
+static void AnimSwordsDanceBlade(struct Sprite *sprite);
+static void AnimSwordsDanceBlade_Step(struct Sprite *sprite);
 
-// sword (sword appears and floats upward.)
-// Used in Swords Dance.
+// Animates a sword that rises into the air after a brief pause.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
 
 const union AffineAnimCmd gSwordsDanceBladeAffineAnimCmds[] =
 {
@@ -31,21 +32,21 @@ const struct SpriteTemplate gSwordsDanceBladeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SWORD,
     .paletteTag = ANIM_TAG_SWORD,
-    .oam = &gOamData_837E0FC,
+    .oam = &gOamData_AffineNormal_ObjBlend_32x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gSwordsDanceBladeAffineAnimTable,
     .callback = AnimSwordsDanceBlade,
 };
 
-void AnimSwordsDanceBlade(struct Sprite* sprite)
+static void AnimSwordsDanceBlade(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, FALSE);
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
     StoreSpriteCallbackInData6(sprite, AnimSwordsDanceBlade_Step);
 }
 
-static void AnimSwordsDanceBlade_Step(struct Sprite* sprite)
+static void AnimSwordsDanceBlade_Step(struct Sprite *sprite)
 {
     sprite->data[0] = 6;
     sprite->data[2] = sprite->x;
