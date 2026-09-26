@@ -1620,11 +1620,11 @@ void OpenPokenavRegionMap(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        sub_80EF840();
+        InitPokenavRegionMapGfx();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 7:
-        if (!sub_80EF874())
+        if (!LoadPokenavRegionMapGfxStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:

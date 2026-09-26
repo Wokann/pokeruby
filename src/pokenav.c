@@ -541,18 +541,18 @@ void StopPokenavBg3Scroll(void)
         DestroyTask(gPokenavStructPtr->bg3ScrollTaskId);
 }
 
-void sub_80EF840(void)
+void InitPokenavRegionMapGfx(void)
 {
     gPokenavStructPtr->setupStep = 0;
 
     if (gPokenavStructPtr->unk6DAC == 0)
     {
-        while (sub_80EF874() != 0)
+        while (LoadPokenavRegionMapGfxStep() != 0)
             ;
     }
 }
 
-bool8 sub_80EF874(void)
+bool8 LoadPokenavRegionMapGfxStep(void)
 {
     switch (gPokenavStructPtr->setupStep)
     {
