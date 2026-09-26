@@ -51,17 +51,17 @@ void BufferEasyChatGroupNamesRow(u8 *, u16);
 void ClearLowerWindow(void);
 void ClearWordSelectRow(u16);
 bool8 UpdateLowerWindowAnim(void);
-void sub_80EA24C(void);
-void sub_80EA348(void);
-void sub_80EA4A4(void);
-void sub_80EA5A0(void);
-void sub_80EA704(void);
-void sub_80EA764(void);
-void sub_80EA7F4(void);
-void sub_80EA8BC(void);
-void sub_80EA948(void);
-void sub_80EAA44(void);
-void sub_80EAAD4(void);
+void InitLowerWindowExpandHorizontalAnim(void);
+void InitLowerWindowCollapseHorizontalAnim(void);
+void InitKeyboardExpandVerticalAnim(void);
+void InitKeyboardCollapseVerticalAnim(void);
+void InitKeyboardRightPanelExpandAnim(void);
+void InitKeyboardRightPanelCollapseAnim(void);
+void InitWordSelectRevealAnim(void);
+void InitWordSelectRevealFinishAnim(void);
+void InitWordSelectHideAnim(void);
+void InitKeyboardRestoreAfterWordSelectAnim(void);
+void InitWordSelectCollapseVerticalAnim(void);
 void InitLowerWindowAnimRect(u16 *, u16, u16, u16, u16, u16, u16, u16, u16);
 void UpdateLowerWindowAnimRect(u16 *);
 void InitLowerWindowAnimSource(struct UnknownEasyChatStruct1 *, u16, u16, u16, u16, void *);
@@ -1615,20 +1615,20 @@ bool8 OpenKeyboard(void)
     switch (gEasyChatStruct->unkBE)
     {
     case 0:
-        sub_80EA24C();
+        InitLowerWindowExpandHorizontalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EA4A4();
+            InitKeyboardExpandVerticalAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
     case 2:
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EA704();
+            InitKeyboardRightPanelExpandAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
@@ -1651,7 +1651,7 @@ bool8 CloseKeyboard(void)
     {
     case 0:
         nullsub_23();
-        sub_80EA764();
+        InitKeyboardRightPanelCollapseAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
@@ -1659,7 +1659,7 @@ bool8 CloseKeyboard(void)
             gEasyChatStruct->unkBE++;
         break;
     case 2:
-        sub_80EA5A0();
+        InitKeyboardCollapseVerticalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 3:
@@ -1667,7 +1667,7 @@ bool8 CloseKeyboard(void)
             gEasyChatStruct->unkBE++;
         break;
     case 4:
-        sub_80EA348();
+        InitLowerWindowCollapseHorizontalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 5:
@@ -1686,7 +1686,7 @@ bool8 StartSwitchKeyboardMode(void)
     {
     case 0:
         nullsub_23();
-        sub_80EA5A0();
+        InitKeyboardCollapseVerticalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
@@ -1702,7 +1702,7 @@ bool8 FinishSwitchKeyboardMode(void)
     switch (gEasyChatStruct->unkBE)
     {
     case 0:
-        sub_80EA4A4();
+        InitKeyboardExpandVerticalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
@@ -1719,13 +1719,13 @@ bool8 OpenWordSelect(void)
     {
     case 0:
         nullsub_23();
-        sub_80EA764();
+        InitKeyboardRightPanelCollapseAnim();
         gEasyChatStruct->unkBE++;
         break;
     case 1:
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EA7F4();
+            InitWordSelectRevealAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
@@ -1733,7 +1733,7 @@ bool8 OpenWordSelect(void)
         UpdateEasyChatFramePaletteBlend(1);
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EA8BC();
+            InitWordSelectRevealFinishAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
@@ -1753,14 +1753,14 @@ bool8 ReturnToKeyboard(void)
     switch (gEasyChatStruct->unkBE)
     {
     case 0:
-        sub_80EA948();
+        InitWordSelectHideAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
         UpdateEasyChatFramePaletteBlend(-1);
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EAA44();
+            InitKeyboardRestoreAfterWordSelectAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
@@ -1768,7 +1768,7 @@ bool8 ReturnToKeyboard(void)
         UpdateEasyChatFramePaletteBlend(-1);
         if (UpdateLowerWindowAnim() != 0)
         {
-            sub_80EA704();
+            InitKeyboardRightPanelExpandAnim();
             gEasyChatStruct->unkBE++;
         }
         break;
@@ -1787,7 +1787,7 @@ bool8 CloseWordSelect(void)
     switch (gEasyChatStruct->unkBE)
     {
     case 0:
-        sub_80EAAD4();
+        InitWordSelectCollapseVerticalAnim();
         gEasyChatStruct->unkBE++;
         // fall through
     case 1:
@@ -1819,7 +1819,7 @@ bool8 UpdateLowerWindowAnim(void)
     return TRUE;
 }
 
-void sub_80EA24C(void)
+void InitLowerWindowExpandHorizontalAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 13, 14, 13, 15, -2, 0, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
@@ -1837,7 +1837,7 @@ void sub_80EA24C(void)
     gEasyChatStruct->unkC4 = 6;
 }
 
-void sub_80EA348(void)
+void InitLowerWindowCollapseHorizontalAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 2, 0, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
@@ -1861,7 +1861,7 @@ void sub_80EA348(void)
     gEasyChatStruct->unkC4 = 6;
 }
 
-void sub_80EA4A4(void)
+void InitKeyboardExpandVerticalAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 0, -1, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
@@ -1879,7 +1879,7 @@ void sub_80EA4A4(void)
     gEasyChatStruct->unkC4 = 4;
 }
 
-void sub_80EA5A0(void)
+void InitKeyboardCollapseVerticalAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 10, 13, 15, 0, 1, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
@@ -1903,7 +1903,7 @@ void sub_80EA5A0(void)
     gEasyChatStruct->unkC4 = 4;
 }
 
-void sub_80EA704(void)
+void InitKeyboardRightPanelExpandAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 25, 20, 0, 0, 1, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 5, 10, -1, 0, gEasyChatStruct->unk6C8);
@@ -1912,7 +1912,7 @@ void sub_80EA704(void)
     gEasyChatStruct->unkC4 = 5;
 }
 
-void sub_80EA764(void)
+void InitKeyboardRightPanelCollapseAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 30, 20, 0, 0, -1, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 1, 0, gEasyChatStruct->unk6C8);
@@ -1924,7 +1924,7 @@ void sub_80EA764(void)
     gEasyChatStruct->unkC4 = 6;
 }
 
-void sub_80EA7F4(void)
+void InitWordSelectRevealAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 20, 10, 25, 20, 0, 0, 1, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 25, 0, -1, 0, gEasyChatStruct->unk6C8);
@@ -1939,7 +1939,7 @@ void sub_80EA7F4(void)
     gEasyChatStruct->unkC4 = 2;
 }
 
-void sub_80EA8BC(void)
+void InitWordSelectRevealFinishAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 3, 10, 4, 20, 0, 0, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
@@ -1951,7 +1951,7 @@ void sub_80EA8BC(void)
     gEasyChatStruct->unkC4 = 1;
 }
 
-void sub_80EA948(void)
+void InitWordSelectHideAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 2, 20, 0, 0, -1, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
@@ -1969,7 +1969,7 @@ void sub_80EA948(void)
     gEasyChatStruct->unkC4 = 2;
 }
 
-void sub_80EAA44(void)
+void InitKeyboardRestoreAfterWordSelectAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 10, 30, 20, 0, 0, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 24, 10, 0, 0, gEasyChatStruct->unk1C8);
@@ -1981,7 +1981,7 @@ void sub_80EAA44(void)
     gEasyChatStruct->unkC4 = 1;
 }
 
-void sub_80EAAD4(void)
+void InitWordSelectCollapseVerticalAnim(void)
 {
     InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 30, 15, 0, 1, 0, 0);
     InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
