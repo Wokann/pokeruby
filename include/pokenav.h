@@ -449,7 +449,7 @@ bool8 sub_80F02A0();
 void sub_80EF9F8(void);
 bool8 sub_80EFBDC(bool8);
 void sub_80EFBB0(void);
-void sub_80EEFBC(u8);
+void DrawPokenavBottomToolbar(u8 toolbarId);
 void sub_80EF814(void);
 void sub_80EF840(void);
 bool8 sub_80EF874(void);

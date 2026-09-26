@@ -1592,7 +1592,7 @@ void OpenPokenavRegionMap(void)
                 var1 = 0x7;
             else
 				var1 = 0x8;
-            sub_80EEFBC(var1);
+            DrawPokenavBottomToolbar(var1);
             gPokenavStructPtr->callbackStep++;
         }
         break;
@@ -2086,7 +2086,7 @@ void OpenConditionSearchResults(void)
     case 1:
         if (!sub_80F1F10())
         {
-			sub_80EEFBC(0);
+			DrawPokenavBottomToolbar(0);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2252,7 +2252,7 @@ void OpenConditionSearchListFromGraph(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 2:
-        sub_80EEFBC(0);
+        DrawPokenavBottomToolbar(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 3:
@@ -2323,7 +2323,7 @@ void OpenConditionGraphFromSearchResults(void)
         break;
     case 6:
         sub_80F35B4();
-        sub_80EEFBC(0x2);
+        DrawPokenavBottomToolbar(0x2);
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(VBlankCB_PokenavConditionGraph);
         gPokenavStructPtr->callbackStep++;
@@ -2355,7 +2355,7 @@ void OpenConditionGraphFromParty(void)
     case 1:
         if (!sub_80F1F10())
         {
-			sub_80EEFBC(0x1);
+			DrawPokenavBottomToolbar(0x1);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2547,14 +2547,14 @@ void HandleConditionGraphInput(void)
             gPokenavStructPtr->callbackStep = 4;
         break;
     case 7:
-        sub_80EEFBC(3);
+        DrawPokenavBottomToolbar(3);
         sub_80F3668();
         gPokenavStructPtr->callbackStep = 8;
         break;
     case 8:
         if (!sub_80F7500())
         {
-            sub_80EEFBC(2);
+            DrawPokenavBottomToolbar(2);
             sub_80F3698();
             gPokenavStructPtr->callbackStep = 4;
         }
@@ -2609,7 +2609,7 @@ void OpenRibbonsMonList(void)
     case 1:
         if (!sub_80F1F10())
         {
-			sub_80EEFBC(0x4);
+			DrawPokenavBottomToolbar(0x4);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2792,7 +2792,7 @@ void OpenRibbonsSummaryMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        sub_80EEFBC(0x5);
+        DrawPokenavBottomToolbar(0x5);
         sub_80F38B8();
         gPokenavStructPtr->callbackStep++;
     case 5:
@@ -2851,7 +2851,7 @@ void RibbonsSummaryHandleInput(void)
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_80EEFBC(0xB);
+            DrawPokenavBottomToolbar(0xB);
             gPokenavStructPtr->callbackStep = 0x4;
         }
         else if (JOY_NEW(B_BUTTON))
@@ -2906,7 +2906,7 @@ void RibbonsSummaryHandleInput(void)
     case 8:
         if (!sub_80F3BD4())
 		{
-			sub_80EEFBC(0x5);
+			DrawPokenavBottomToolbar(0x5);
 			gPokenavStructPtr->callbackStep = 0;
 		}
         break;
@@ -2944,7 +2944,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        sub_80EEFBC(0x4);
+        DrawPokenavBottomToolbar(0x4);
         sub_80F3008(0x1);
         SetVBlankCallback(&VBlankCB_Pokenav);
         gPokenavStructPtr->callbackStep++;
@@ -2984,7 +2984,7 @@ void OpenTrainerEyes(void)
     case 1:
         if (!sub_80F1F10())
         {
-			sub_80EEFBC(0x9);
+			DrawPokenavBottomToolbar(0x9);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -3108,7 +3108,7 @@ void ShowTrainerEyesTrainerInfo(void)
     {
     case 0:
         sub_80F3294(0x1);
-        sub_80EEFBC(0xA);
+        DrawPokenavBottomToolbar(0xA);
         sub_80F0B24();
         gPokenavStructPtr->callbackStep++;
         break;
@@ -3193,7 +3193,7 @@ void ShowTrainerEyesTrainerInfo(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
-        sub_80EEFBC(0x9);
+        DrawPokenavBottomToolbar(0x9);
         sub_80F3294(0);
         SetPokenavCallback(&HandleTrainerEyesInput);
         PausePokenavCallbackForLink();

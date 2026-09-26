@@ -2724,7 +2724,7 @@ extern const u8 gUnknownPalette_08E997E8[];
 extern const u8 gSpriteImage_8E99808[];
 extern const u8 gSlotMachineReelTimeLights_Gfx[];
 extern const u8 gUnknown_08E99FB0[];
-extern const u8 gUnknown_08E9A100[];
+extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u8 gUnknown_08E9A300[];
 extern const u8 gUnknown_08E9AB00[];
 extern const u8 gUnknown_08E9AB40[];

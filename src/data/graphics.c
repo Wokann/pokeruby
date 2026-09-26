@@ -1243,7 +1243,7 @@ const u8 gSpriteImage_8E99808[] = INCBIN_U8("graphics/unknown_sprites/8E99808.4b
 const u8 gSlotMachineReelTimeLights_Gfx[] = INCBIN_U8("graphics/slot_machine/reel_time_lights.4bpp.lz");
 
 const u8 gUnknown_08E99FB0[] = INCBIN_U8("graphics/unknown/unknown_E99FB0.bin.lz");
-const u8 gUnknown_08E9A100[] = INCBIN_U8("graphics/pokenav/bottom_toolbar.bin");
+const u8 gPokenavBottomToolbarTilemap[] = INCBIN_U8("graphics/pokenav/bottom_toolbar.bin");
 const u8 gUnknown_08E9A300[] = INCBIN_U8("graphics/unknown/unknown_E9A300.bin");
 const u8 gUnknown_08E9AB00[] = INCBIN_U8("graphics/unknown/unknown_E9AB00.bin");
 const u8 gUnknown_08E9AB40[] = INCBIN_U8("graphics/unknown/unknown_E9AB40.gbapal");

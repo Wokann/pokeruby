@@ -72,7 +72,7 @@ extern const u8 gUnknown_083DFECC[];
 extern const u8 gUnknown_083DFF8C[];
 extern const u8 gPokenavHoennMapMisc_Gfx[];
 extern const u8 gUnknown_08E99FB0[];
-extern const u8 gUnknown_08E9A100[];
+extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u16 gPokenavHoennMap1_Pal[];
 extern void (*const gUnknown_083E3270[])(u16, u16);
 extern const u8 gUnknown_083E039C[];
@@ -247,56 +247,56 @@ bool8 SlideMenuHeaderDown(void)
     return retVal;
 }
 
-void sub_80EEFBC(u8 a)
+void DrawPokenavBottomToolbar(u8 toolbarId)
 {
-    u8 var1;
+    u8 linkActive;
 
-    sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 0, 0, 17, 2);
+    sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 0, 17, 2);
 
-    switch (a)
+    switch (toolbarId)
     {
     case 0:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 17, 0, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 17, 0, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 11:
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 2:
-        var1 = gPokenavStructPtr->unk6DAC;
-        if (!var1)
+        linkActive = gPokenavStructPtr->unk6DAC;
+        if (!linkActive)
         {
-            sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 10, 2, 10, 2);
-            sub_809D104((void *)VRAM + 0xD800, 10, 22, gUnknown_08E9A100, var1, 6, 7, 2);
+            sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 2, 10, 2);
+            sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, linkActive, 6, 7, 2);
         }
         else
         {
-            sub_809D104((void *)VRAM + 0xD800, 10, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+            sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         }
         break;
     case 3:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 0, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 4, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 4:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 20, 2, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 2, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 7:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 10, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 7, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 4, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 8:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 20, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 7, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 4, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 5:
     case 9:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gUnknown_08E9A100, 0, 2, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 2, 10, 2);
+        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 10:
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gUnknown_08E9A100, 0, 6, 7, 2);
+        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     }
 }
@@ -690,9 +690,9 @@ void sub_80EF9F8(void)
 void sub_80EFBB0(void)
 {
     if (!gPokenavStructPtr->regionMap.zoomed)
-        sub_80EEFBC(8);
+        DrawPokenavBottomToolbar(8);
     else
-        sub_80EEFBC(7);
+        DrawPokenavBottomToolbar(7);
 }
 
 bool8 sub_80EFBDC(bool8 a)
