@@ -1198,7 +1198,7 @@ void InitPokenavState(void)
 
     gKeyRepeatStartDelay = 0x14;
     gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
-    gPokenavStructPtr->unk6DDC = 0;
+    gPokenavStructPtr->mainMenuCursorPos = 0;
     gPokenavStructPtr->unk9344 = 0;
     gPokenavStructPtr->unk8768 = 0;
     gPokenavStructPtr->unkCED0 = 0;
@@ -1216,16 +1216,16 @@ void InitPokenavState(void)
 
 void InitPokenavMenuOptions(void)
 {
-    gPokenavStructPtr->unk6DB2[0] = 1;
-    gPokenavStructPtr->unk6DB2[1] = 2;
-    gPokenavStructPtr->unk6DB2[2] = 3;
+    gPokenavStructPtr->mainMenuItemIds[0] = 1;
+    gPokenavStructPtr->mainMenuItemIds[1] = 2;
+    gPokenavStructPtr->mainMenuItemIds[2] = 3;
 
     if (FlagGet(FLAG_SYS_RIBBON_GET))
-        gPokenavStructPtr->unk6DB2[3] = 4;
+        gPokenavStructPtr->mainMenuItemIds[3] = 4;
     else
-        gPokenavStructPtr->unk6DB2[3] = 0;
+        gPokenavStructPtr->mainMenuItemIds[3] = 0;
 
-    gPokenavStructPtr->unk6DB2[4] = 5;
+    gPokenavStructPtr->mainMenuItemIds[4] = 5;
 }
 
 void VBlankCB_Pokenav(void)
@@ -1291,8 +1291,8 @@ void InitPokenavMainMenu(void)
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
-        gPokenavStructPtr->unk6DAE = 5;
+        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
+        gPokenavStructPtr->menuItemCount = 5;
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -1385,8 +1385,8 @@ void RestorePokenavMainMenu(void)
         {
             SetVBlankCallback(&VBlankCB_PokenavOamOnly);
             sub_80EED1C();
-            gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DDC;
-            gPokenavStructPtr->unk6DAE = 5;
+            gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->mainMenuCursorPos;
+            gPokenavStructPtr->menuItemCount = 5;
             sub_80EEE08();
             gPokenavStructPtr->callbackStep++;
         }
@@ -1443,7 +1443,7 @@ void RestorePokenavMainMenu(void)
     case 13:
         if (!sub_80F1E50())
         {
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1460,7 +1460,7 @@ void ClosePokenavConditionMenu(void)
     {
     case 0:
         sub_80F2D04(1);
-        StartPokenavMenuTransition(0, gPokenavStructPtr->unk6DDC, 0);
+        StartPokenavMenuTransition(0, gPokenavStructPtr->mainMenuCursorPos, 0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -1477,18 +1477,18 @@ void HandlePokenavMainMenuInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        if (sub_80EEC10() != 0)
+        if (UpdateMainMenuCursorPos() != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
             sub_80EED9C();
         }
         else
         {
             if (JOY_NEW(A_BUTTON))
             {
-                gPokenavStructPtr->unk6DDC = gPokenavStructPtr->unk6DAD;
-                switch (gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DDC] - 1)
+                gPokenavStructPtr->mainMenuCursorPos = gPokenavStructPtr->menuCursorPos;
+                switch (gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->mainMenuCursorPos] - 1)
                 {
                 case 0:
                     PlaySE(SE_SELECT);
@@ -1558,16 +1558,16 @@ void HandlePokenavMainMenuInput(void)
         }
         break;
     case 0xFF:
-        if ((var1 = sub_80EEC10()) != 0)
+        if ((var1 = UpdateMainMenuCursorPos()) != 0)
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->callbackStep = 0;
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON | B_BUTTON))
 		{
-			sub_80EF428(0, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(0, gPokenavStructPtr->menuCursorPos);
 			gPokenavStructPtr->callbackStep = var1;
 		}
         break;
@@ -1760,17 +1760,17 @@ void HandleConditionMenuInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        if (sub_80EEC90())
+        if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk6DF0 = gPokenavStructPtr->unk6DAD;
-            switch (gPokenavStructPtr->unk6DF0)
+            gPokenavStructPtr->conditionMenuCursorPos = gPokenavStructPtr->menuCursorPos;
+            switch (gPokenavStructPtr->conditionMenuCursorPos)
             {
             case 0:
                 SetPokenavCallback(&OpenConditionGraphFromParty);
@@ -1786,8 +1786,8 @@ void HandleConditionMenuInput(void)
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk6DF0 = 0x2;
-            gPokenavStructPtr->unk6DAD = 0x2;
+            gPokenavStructPtr->conditionMenuCursorPos = 0x2;
+            gPokenavStructPtr->menuCursorPos = 0x2;
             gPokenavStructPtr->callbackStep++;
         }
         break;
@@ -1819,14 +1819,14 @@ void ReturnToConditionMenu(void)
     {
     case 0:
         sub_80F2D04(5);
-        StartPokenavMenuTransition(1, gPokenavStructPtr->unk6DF0, 0xC);
+        StartPokenavMenuTransition(1, gPokenavStructPtr->conditionMenuCursorPos, 0xC);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
         if (!UpdatePokenavMenuTransition())
         {
 			SetPokenavCallback(&HandleConditionMenuInput);
-			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
 		}
 		break;
     }
@@ -1841,8 +1841,8 @@ void RestorePokenavConditionMenu(void)
         {
 			SetVBlankCallback(&VBlankCB_PokenavOamOnly);
 			sub_80EED1C();
-			gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DF0;
-			gPokenavStructPtr->unk6DAE = 3;
+			gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionMenuCursorPos;
+			gPokenavStructPtr->menuItemCount = 3;
 			sub_80EEE08();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -1897,7 +1897,7 @@ void RestorePokenavConditionMenu(void)
     case 13:
         if (!sub_80F1E50())
         {
-			sub_80EF428(1, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(1, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -1913,16 +1913,16 @@ void HandleConditionSearchMenuInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        if (sub_80EEC90())
+        if (UpdateSubmenuCursorPos())
         {
             PlaySE(SE_SELECT);
-            sub_80EF428(2, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(2, gPokenavStructPtr->menuCursorPos);
             sub_80EED9C();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            switch ((s8)gPokenavStructPtr->unk6DAD)
+            switch ((s8)gPokenavStructPtr->menuCursorPos)
             {
             case 0:
                 gPokenavStructPtr->unk87D8 = 22;
@@ -1944,14 +1944,14 @@ void HandleConditionSearchMenuInput(void)
                 return;
             }
 
-            gPokenavStructPtr->unk6DFC = gPokenavStructPtr->unk6DAD;
+            gPokenavStructPtr->conditionSearchCursorPos = gPokenavStructPtr->menuCursorPos;
             gPokenavStructPtr->unk76AA = 1;
             SetPokenavCallback(&OpenConditionSearchResults);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gPokenavStructPtr->unk6DAD = 0x5;
+            gPokenavStructPtr->menuCursorPos = 0x5;
             gPokenavStructPtr->callbackStep++;
         }
         break;
@@ -1995,8 +1995,8 @@ void ReturnToConditionSearchMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DFC;
-        gPokenavStructPtr->unk6DAE = 0x6;
+        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->conditionSearchCursorPos;
+        gPokenavStructPtr->menuItemCount = 0x6;
         sub_80EEE08();
         gPokenavStructPtr->callbackStep++;
         break;
@@ -2062,7 +2062,7 @@ void ReturnToConditionSearchMenu(void)
     case 20:
         if (!sub_80F1E50())
 		{
-			sub_80EF428(2, gPokenavStructPtr->unk6DAD);
+			sub_80EF428(2, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
@@ -2172,11 +2172,11 @@ void OpenConditionSearchResults(void)
 		}
         break;
     case 18:
-        sub_80F2C80(gPokenavStructPtr->unk6DFC + 7);
+        sub_80F2C80(gPokenavStructPtr->conditionSearchCursorPos + 7);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 19:
-        if (!sub_80F2CBC(gPokenavStructPtr->unk6DFC + 7))
+        if (!sub_80F2CBC(gPokenavStructPtr->conditionSearchCursorPos + 7))
 		{
 			SetPokenavCallback(&HandleConditionSearchInput);
 #if DEBUG
@@ -3284,17 +3284,17 @@ bool8 UpdatePokenavMenuTransition(void)
             gPokenavStructPtr->transitionStep++;
         break;
     case 3:
-        gPokenavStructPtr->unk6DAD = gPokenavStructPtr->transitionCursorPos;
+        gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->transitionCursorPos;
         switch (gPokenavStructPtr->transitionMenuType)
         {
         case 0:
-            gPokenavStructPtr->unk6DAE = 5;
+            gPokenavStructPtr->menuItemCount = 5;
             break;
         case 1:
-            gPokenavStructPtr->unk6DAE = 3;
+            gPokenavStructPtr->menuItemCount = 3;
             break;
         case 2:
-            gPokenavStructPtr->unk6DAE = 6;
+            gPokenavStructPtr->menuItemCount = 6;
             break;
         }
         sub_80F1B8C(gPokenavStructPtr->transitionMenuType);
@@ -3316,7 +3316,7 @@ bool8 UpdatePokenavMenuTransition(void)
     case 7:
         if (!sub_80F1E50())
         {
-            sub_80EF428(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->unk6DAD);
+            sub_80EF428(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->transitionStep++;
         }
         break;
@@ -3334,25 +3334,25 @@ bool8 UpdatePokenavMenuTransition(void)
     return TRUE;
 }
 
-// var6dad and var6dae must be s8 in this func
-bool8 sub_80EEC10()
+// Keep menuCursorPos and menuItemCount signed for upward wraparound.
+bool8 UpdateMainMenuCursorPos(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
         do
         {
-            if (--gPokenavStructPtr->unk6DAD < 0)
-                gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DAE - 1;
-        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DAD]);
+            if (--gPokenavStructPtr->menuCursorPos < 0)
+                gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->menuItemCount - 1;
+        } while (!gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->menuCursorPos]);
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         do
         {
-            if (++gPokenavStructPtr->unk6DAD >= gPokenavStructPtr->unk6DAE)
-                gPokenavStructPtr->unk6DAD = 0;
-        } while (!gPokenavStructPtr->unk6DB2[gPokenavStructPtr->unk6DAD]);
+            if (++gPokenavStructPtr->menuCursorPos >= gPokenavStructPtr->menuItemCount)
+                gPokenavStructPtr->menuCursorPos = 0;
+        } while (!gPokenavStructPtr->mainMenuItemIds[gPokenavStructPtr->menuCursorPos]);
         return TRUE;
     }
 #if DEBUG
@@ -3362,18 +3362,18 @@ bool8 sub_80EEC10()
     return FALSE;
 }
 
-bool8 sub_80EEC90()
+bool8 UpdateSubmenuCursorPos(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
-        if (--gPokenavStructPtr->unk6DAD < 0)
-            gPokenavStructPtr->unk6DAD = gPokenavStructPtr->unk6DAE - 1;
+        if (--gPokenavStructPtr->menuCursorPos < 0)
+            gPokenavStructPtr->menuCursorPos = gPokenavStructPtr->menuItemCount - 1;
         return TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        if (++gPokenavStructPtr->unk6DAD >= gPokenavStructPtr->unk6DAE)
-            gPokenavStructPtr->unk6DAD = 0;
+        if (++gPokenavStructPtr->menuCursorPos >= gPokenavStructPtr->menuItemCount)
+            gPokenavStructPtr->menuCursorPos = 0;
         return TRUE;
     }
 #if DEBUG

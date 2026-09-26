@@ -1946,7 +1946,7 @@ bool8 sub_80F1BC8(u8 arg0)
             gPokenavStructPtr->unk314[i] = (middle << 8) | (middle + 0x11);
             if (!arg0)
             {
-                if (gPokenavStructPtr->unk6DB2[i] == 0)
+                if (gPokenavStructPtr->mainMenuItemIds[i] == 0)
                 {
                     for (j = 0; j < 4; j++)
                         gPokenavStructPtr->unk320[i][j] = NULL;
@@ -1954,7 +1954,7 @@ bool8 sub_80F1BC8(u8 arg0)
                 }
                 else
                 {
-                    animNum = (gPokenavStructPtr->unk6DB2[i] - 1) * 4;
+                    animNum = (gPokenavStructPtr->mainMenuItemIds[i] - 1) * 4;
                 }
             }
 
@@ -2027,7 +2027,7 @@ void sub_80F1E84(void)
     sub_80F2148();
     for (i = 0; i < gPokenavStructPtr->unk30E; i++)
     {
-        if (i != gPokenavStructPtr->unk6DAD)
+        if (i != gPokenavStructPtr->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
@@ -2049,7 +2049,7 @@ bool8 sub_80F1F10(void)
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+                struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
                 sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
                 sprite->affineAnims = gSpriteAffineAnimTable_83E4450;
                 InitSpriteAffineAnim(sprite);
@@ -2082,7 +2082,7 @@ void sub_80F1FF0(void)
 {
     if (gPokenavStructPtr->unk311 == 1)
     {
-        REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->unk6DAD];
+        REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->menuCursorPos];
         REG_BLDY = gSineTable[gPokenavStructPtr->unk312] >> 5;
         gPokenavStructPtr->unk312 += 3;
         gPokenavStructPtr->unk312 &= 0x7F;
@@ -2103,7 +2103,7 @@ void sub_80F208C(void)
 void sub_80F2098(void)
 {
     REG_WIN0H = 0x77F0;
-    REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->unk6DAD];
+    REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->menuCursorPos];
     REG_WININ = 0x3F;
     REG_WINOUT = 0x1F;
     REG_DISPCNT |= DISPCNT_WIN0_ON;
@@ -2142,7 +2142,7 @@ void sub_80F2170(void)
         sub_80F20F4();
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+            struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         }
 
@@ -2171,7 +2171,7 @@ void sub_80F2218(struct Sprite *sprite)
 
 void sub_80F2240(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->unk6DAD)
+    if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
     {
         if (sprite->data[5])
         {
@@ -2192,7 +2192,7 @@ void sub_80F2240(struct Sprite *sprite)
 
 void sub_80F22B0(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->unk6DAD)
+    if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
     {
         if (sprite->x2 > -16)
             sprite->x2 -= 4;
@@ -2208,7 +2208,7 @@ bool8 sub_80F22F8(void)
 {
     u16 i, j;
 
-    for (i = 0; i < gPokenavStructPtr->unk6DAE; i++)
+    for (i = 0; i < gPokenavStructPtr->menuItemCount; i++)
     {
         for (j = 0; j < 4; j++)
         {
@@ -2230,7 +2230,7 @@ bool8 sub_80F2360(void)
 
     for (i = 0; i < gPokenavStructPtr->unk30E; i++)
     {
-        if (i != gPokenavStructPtr->unk6DAD)
+        if (i != gPokenavStructPtr->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
@@ -2250,7 +2250,7 @@ bool8 sub_80F23C8(void)
 
     for (j = 0; j < 4; j++)
     {
-        struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->unk6DAD][j];
+        struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
         if (sprite)
             return FALSE;
     }
