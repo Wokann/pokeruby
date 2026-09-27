@@ -1075,9 +1075,9 @@ static void Task_Scene2_Load(u8 taskId)
     gIntroCredits_MovingSceneryVBase = 0;
     gIntroCredits_MovingSceneryVOffset = 0;
 #ifdef SAPPHIRE
-    load_intro_part2_graphics(0);
+    LoadIntroPart2Graphics(0);
 #else
-    load_intro_part2_graphics(1);
+    LoadIntroPart2Graphics(1);
 #endif
     gTasks[taskId].func = Task_Scene2_CreateSprites;
 }
@@ -1098,27 +1098,27 @@ static void Task_Scene2_CreateSprites(u8 taskId)
 #endif
     LoadSpritePalettes(gIntro2SpritePalettes);
     if (gUnknown_02039318 == 0)
-        spriteId = intro_create_brendan_sprite(0x110, 100);
+        spriteId = CreateIntroBrendanSprite(0x110, 100);
     else
-        spriteId = intro_create_may_sprite(0x110, 100);
+        spriteId = CreateIntroMaySprite(0x110, 100);
     gSprites[spriteId].callback = SpriteCB_PlayerOnBicycle;
     gSprites[spriteId].anims = gUnknown_0840AE80;
     gTasks[taskId].data[1] = spriteId;
 #ifdef SAPPHIRE
-    spriteId = intro_create_latias_sprite(-0x40, 0x3C);
+    spriteId = CreateIntroLatiasSprite(-0x40, 0x3C);
 #else
-    spriteId = intro_create_latios_sprite(-0x40, 0x3C);
+    spriteId = CreateIntroLatiosSprite(-0x40, 0x3C);
 #endif
     gSprites[spriteId].callback = SpriteCB_Eon;
     gTasks[taskId].data[2] = spriteId;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
     SetVBlankCallback(VBlankCB_Intro);
 #ifdef SAPPHIRE
-    gTasks[taskId].data[0] = sub_8148EC0(0, 0x4000, 0x40, 0x10);
-    sub_8148C78(0);
+    gTasks[taskId].data[0] = CreateBicycleBgAnimationTask(0, 0x4000, 0x40, 0x10);
+    SetIntroPart2BgCnt(0);
 #else
-    gTasks[taskId].data[0] = sub_8148EC0(1, 0x4000, 0x400, 0x10);
-    sub_8148C78(1);
+    gTasks[taskId].data[0] = CreateBicycleBgAnimationTask(1, 0x4000, 0x400, 0x10);
+    SetIntroPart2BgCnt(1);
 #endif
     gTasks[taskId].func = Task_Scene2_BikeRide;
 }

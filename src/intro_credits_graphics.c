@@ -69,13 +69,13 @@ const u8 gIntro2LatiosTiles[] = INCBIN_U8("graphics/intro/intro2_latios.4bpp.lz"
 const u16 gIntro2LatiasPalette[] = INCBIN_U16("graphics/intro/intro2_latias.gbapal");
 const u8 gIntro2LatiasTiles[] = INCBIN_U8("graphics/intro/intro2_latias.4bpp.lz");
 
-void sub_814910C(struct Sprite *sprite);
-void nullsub_82(struct Sprite *sprite);
-void sub_81492A0(struct Sprite *sprite);
-void nullsub_83(struct Sprite *sprite);
+void SpriteCB_MovingScenery(struct Sprite *sprite);
+void SpriteCB_Player(struct Sprite *sprite);
+void SpriteCB_Bicycle(struct Sprite *sprite);
+void SpriteCB_LatiLeftHalf(struct Sprite *sprite);
 
 const struct SpriteTemplate gSpriteTemplate_MovingScenery = {
-    2000, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_814910C
+    2000, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_MovingScenery
 };
 
 const struct CompressedSpriteSheet gSpriteSheet_Clouds[] = {
@@ -203,11 +203,11 @@ const union AnimCmd *const gAnims_Player[] = {
 };
 
 const struct SpriteTemplate gSpriteTemplate_Brendan = {
-    1002, 1002, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, nullsub_82
+    1002, 1002, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
 };
 
 const struct SpriteTemplate gSpriteTemplate_May = {
-    1003, 1003, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, nullsub_82
+    1003, 1003, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
 };
 
 const struct OamData gOamData_Bicycle = {
@@ -227,11 +227,11 @@ const union AnimCmd *const gAnims_Bicycle[] = {
 };
 
 const struct SpriteTemplate gSpriteTemplate_BrendanBicycle = {
-    1001, 1002, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, sub_81492A0
+    1001, 1002, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
 };
 
 const struct SpriteTemplate gSpriteTemplate_MayBicycle = {
-    1001, 1003, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, sub_81492A0
+    1001, 1003, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
 };
 
 const struct OamData gOamData_LatiosLatias = {
@@ -254,11 +254,11 @@ const union AnimCmd *const gAnims_Lati[] = {
 };
 
 const struct SpriteTemplate gSpriteTemplate_Latios = {
-    1004, 1004, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, nullsub_83
+    1004, 1004, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
 };
 
 const struct SpriteTemplate gSpriteTemplate_Latias = {
-    1005, 1005, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, nullsub_83
+    1005, 1005, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
 };
 
 const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[] = {
@@ -307,15 +307,15 @@ EWRAM_DATA s16 gIntroCredits_MovingSceneryState = 0;
 
 extern u8 gReservedSpritePaletteCount;
 
-void sub_8149248();
-void sub_8149264();
+void CreateIntroCloudSprites();
+void CreateTreeSprites();
 
-void load_intro_part2_graphics(u8 a)
+void LoadIntroPart2Graphics(u8 scenery)
 {
     LZ77UnCompVram(&gIntro2GrassTiles, (void *)(VRAM + 0x4000));
     LZ77UnCompVram(&gIntro2GrassTilemap, (void *)(VRAM + 0x7800));
     LoadPalette(&gIntro2GrassPalette, 240, 32);
-    switch (a)
+    switch (scenery)
     {
     case 0:
     default:
@@ -324,7 +324,7 @@ void load_intro_part2_graphics(u8 a)
         LoadPalette(&gIntro2CloudsBgPalette, 0, 96);
         LoadCompressedObjectPic(gSpriteSheet_Clouds);
         LoadPalette(&gIntro2CloudsPalette, 256, 32);
-        sub_8149248();
+        CreateIntroCloudSprites();
         break;
     case 1:
         LZ77UnCompVram(&gIntro2TreesTiles, (void *)(VRAM));
@@ -332,16 +332,16 @@ void load_intro_part2_graphics(u8 a)
         LoadPalette(&gIntro2TreesBgPalette, 0, 32);
         LoadCompressedObjectPic(gSpriteSheet_TreesSmall);
         LoadPalette(&gIntro2TreesSmallPalette, 256, 32);
-        sub_8149264();
+        CreateTreeSprites();
         break;
     }
     gIntroCredits_MovingSceneryState = 0;
     gReservedSpritePaletteCount = 8;
 }
 
-void sub_8148C78(u8 a)
+void SetIntroPart2BgCnt(u8 scenery)
 {
-    if (a == 1)
+    if (scenery == 1)
     {
         REG_BG3CNT = 0x603;
         REG_BG2CNT = 0x702;
@@ -357,13 +357,13 @@ void sub_8148C78(u8 a)
     }
 }
 
-void sub_8149280();
+void CreateHouseSprites();
 
-void sub_8148CB0(u8 a)
+void LoadCreditsSceneGraphics(u8 scene)
 {
     LZ77UnCompVram(&gIntro2GrassTiles, (void *)(VRAM + 0x4000));
     LZ77UnCompVram(&gIntro2GrassTilemap, (void *)(VRAM + 0x7800));
-    switch (a)
+    switch (scene)
     {
     case 0:
     default:
@@ -374,7 +374,7 @@ void sub_8148CB0(u8 a)
         LoadCompressedObjectPic(gSpriteSheet_Clouds);
         LZ77UnCompVram(&gIntro2CloudsTiles, (void *)(VRAM + 0x10000));
         LoadPalette(&gIntro2CloudsPalette, 256, 32);
-        sub_8149248();
+        CreateIntroCloudSprites();
         break;
     case 1:
         LoadPalette(&gIntro2GrassAfternoonPalette, 240, 32);
@@ -384,7 +384,7 @@ void sub_8148CB0(u8 a)
         LoadCompressedObjectPic(gSpriteSheet_Clouds);
         LZ77UnCompVram(&gIntro2CloudsTiles, (void *)(VRAM + 0x10000));
         LoadPalette(&gIntro2CloudsAfternoonPalette, 256, 32);
-        sub_8149248();
+        CreateIntroCloudSprites();
         break;
     case 2:
     case 3:
@@ -394,7 +394,7 @@ void sub_8148CB0(u8 a)
         LoadPalette(&gIntro2TreesAfternoonPalette, 0, 32);
         LoadCompressedObjectPic(gSpriteSheet_TreesSmall);
         LoadPalette(&gIntro2TreesAfternoonPalette, 256, 32);
-        sub_8149264();
+        CreateTreeSprites();
         break;
     case 4:
         LoadPalette(&gIntro2GrassNightPalette, 240, 32);
@@ -403,14 +403,14 @@ void sub_8148CB0(u8 a)
         LoadPalette(&gIntro2NightBgLayerPalette, 0, 64);
         LoadCompressedObjectPic(gSpriteSheet_HouseSilhouette);
         LoadPalette(&gIntro2NightBgPalette, 256, 32);
-        sub_8149280();
+        CreateHouseSprites();
         break;
     }
     gReservedSpritePaletteCount = 8;
     gIntroCredits_MovingSceneryState = 0;
 }
 
-void sub_8148E90(u8 a)
+void SetCreditsSceneBgCnt(u8 scene)
 {
     REG_BG3CNT = 0x603;
     REG_BG2CNT = 0x702;
@@ -418,49 +418,49 @@ void sub_8148E90(u8 a)
     REG_DISPCNT = 0x1F40;
 }
 
-u8 sub_8148EC0(u8 a, u16 b, u16 c, u16 d)
+u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Speed)
 {
-    u8 taskId = CreateTask(&sub_8148F3C, 0);
+    u8 taskId = CreateTask(&Task_BicycleBgAnimation, 0);
 
-    gTasks[taskId].data[0] = a;
-    gTasks[taskId].data[1] = b;
+    gTasks[taskId].data[0] = mode;
+    gTasks[taskId].data[1] = bg1Speed;
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].data[3] = 0;
-    gTasks[taskId].data[4] = c;
+    gTasks[taskId].data[4] = bg2Speed;
     gTasks[taskId].data[5] = 0;
     gTasks[taskId].data[6] = 0;
-    gTasks[taskId].data[7] = d;
+    gTasks[taskId].data[7] = bg3Speed;
     gTasks[taskId].data[8] = 8;
     gTasks[taskId].data[9] = 0;
-    sub_8148F3C(taskId);
+    Task_BicycleBgAnimation(taskId);
     return taskId;
 }
 
-void sub_8148F3C(u8 taskId)
+void Task_BicycleBgAnimation(u8 taskId)
 {
-    s16 deltaBG1HOFS;
-    s16 deltaBG2HOFS;
-    s16 deltaBG3HOFS;
-    s32 r2;
+    s16 bg1Speed;
+    s16 bg2Speed;
+    s16 bg3Speed;
+    s32 offset;
 
-    deltaBG1HOFS = gTasks[taskId].data[1];
-    if (deltaBG1HOFS != 0)
+    bg1Speed = gTasks[taskId].data[1];
+    if (bg1Speed != 0)
     {
-        r2 = (gTasks[taskId].data[2] << 16) + (u16)gTasks[taskId].data[3];
-        r2 -= 16 * (u16)deltaBG1HOFS;
-        gTasks[taskId].data[2] = r2 >> 16;
-        gTasks[taskId].data[3] = r2;
+        offset = (gTasks[taskId].data[2] << 16) + (u16)gTasks[taskId].data[3];
+        offset -= 16 * (u16)bg1Speed;
+        gTasks[taskId].data[2] = offset >> 16;
+        gTasks[taskId].data[3] = offset;
         REG_BG1HOFS = gTasks[taskId].data[2];
         REG_BG1VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
     }
 
-    deltaBG2HOFS = gTasks[taskId].data[4];
-    if (deltaBG2HOFS != 0)
+    bg2Speed = gTasks[taskId].data[4];
+    if (bg2Speed != 0)
     {
-        r2 = (gTasks[taskId].data[5] << 16) + (u16)gTasks[taskId].data[6];
-        r2 -= 16 * (u16)deltaBG2HOFS;
-        gTasks[taskId].data[5] = r2 >> 16;
-        gTasks[taskId].data[6] = r2;
+        offset = (gTasks[taskId].data[5] << 16) + (u16)gTasks[taskId].data[6];
+        offset -= 16 * (u16)bg2Speed;
+        gTasks[taskId].data[5] = offset >> 16;
+        gTasks[taskId].data[6] = offset;
         REG_BG2HOFS = gTasks[taskId].data[5];
         if (gTasks[taskId].data[0] != 0)
             REG_BG2VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
@@ -468,13 +468,13 @@ void sub_8148F3C(u8 taskId)
             REG_BG2VOFS = gIntroCredits_MovingSceneryVBase;
     }
 
-    deltaBG3HOFS = gTasks[taskId].data[7];
-    if (deltaBG3HOFS != 0)
+    bg3Speed = gTasks[taskId].data[7];
+    if (bg3Speed != 0)
     {
-        r2 = (gTasks[taskId].data[8] << 16) + (u16)gTasks[taskId].data[9];
-        r2 -= 16 * (u16)deltaBG3HOFS;
-        gTasks[taskId].data[8] = r2 >> 16;
-        gTasks[taskId].data[9] = r2;
+        offset = (gTasks[taskId].data[8] << 16) + (u16)gTasks[taskId].data[9];
+        offset -= 16 * (u16)bg3Speed;
+        gTasks[taskId].data[8] = offset >> 16;
+        gTasks[taskId].data[9] = offset;
         REG_BG3HOFS = gTasks[taskId].data[8];
         REG_BG3VOFS = gIntroCredits_MovingSceneryVBase;
     }
@@ -525,7 +525,7 @@ void CycleSceneryPalette(u8 mode)
     }
 }
 
-void sub_814910C(struct Sprite *sprite)
+void SpriteCB_MovingScenery(struct Sprite *sprite)
 {
     if (gIntroCredits_MovingSceneryState)
     {
@@ -548,46 +548,46 @@ void sub_814910C(struct Sprite *sprite)
     }
 }
 
-void sub_8149174(u8 a, const struct IntroCreditsSpriteMetadata *b, const union AnimCmd *const *c, u8 d)
+void CreateMovingScenerySprites(bool8 hasVerticalMove, const struct IntroCreditsSpriteMetadata *metadata, const union AnimCmd *const *anims, u8 numSprites)
 {
     u8 i;
 
-    for(i = 0; i < d; i++)
+    for(i = 0; i < numSprites; i++)
     {
-        u8 sprite = CreateSprite(&gSpriteTemplate_MovingScenery, b[i].x, b[i].y, b[i].subpriority);
-        CalcCenterToCornerVec(&gSprites[sprite], b[i].shape, b[i].size, 0);
+        u8 sprite = CreateSprite(&gSpriteTemplate_MovingScenery, metadata[i].x, metadata[i].y, metadata[i].subpriority);
+        CalcCenterToCornerVec(&gSprites[sprite], metadata[i].shape, metadata[i].size, 0);
         gSprites[sprite].oam.priority = 3;
-        gSprites[sprite].oam.shape = b[i].shape;
-        gSprites[sprite].oam.size = b[i].size;
+        gSprites[sprite].oam.shape = metadata[i].shape;
+        gSprites[sprite].oam.size = metadata[i].size;
         gSprites[sprite].oam.paletteNum = 0;
-        gSprites[sprite].anims = c;
-        StartSpriteAnim(&gSprites[sprite], b[i].animNum);
-        gSprites[sprite].data[0] = a;
-        gSprites[sprite].data[1] = b[i].xOff;
+        gSprites[sprite].anims = anims;
+        StartSpriteAnim(&gSprites[sprite], metadata[i].animNum);
+        gSprites[sprite].data[0] = hasVerticalMove;
+        gSprites[sprite].data[1] = metadata[i].xOff;
         gSprites[sprite].data[2] = 0;
     }
 }
 
-void sub_8149248()
+void CreateIntroCloudSprites()
 {
-    sub_8149174(0, gSpriteMetadata_Clouds, gAnims_Clouds, 9);
+    CreateMovingScenerySprites(0, gSpriteMetadata_Clouds, gAnims_Clouds, 9);
 }
 
-void sub_8149264()
+void CreateTreeSprites()
 {
-    sub_8149174(1, gSpriteMetadata_Trees, gAnims_Trees, 12);
+    CreateMovingScenerySprites(1, gSpriteMetadata_Trees, gAnims_Trees, 12);
 }
 
-void sub_8149280()
+void CreateHouseSprites()
 {
-    sub_8149174(1, gSpriteMetadata_HouseSilhouette, gAnims_HouseSilhouette, 6);
+    CreateMovingScenerySprites(1, gSpriteMetadata_HouseSilhouette, gAnims_HouseSilhouette, 6);
 }
 
-void nullsub_82(struct Sprite *sprite)
+void SpriteCB_Player(struct Sprite *sprite)
 {
 }
 
-void sub_81492A0(struct Sprite* sprite)
+void SpriteCB_Bicycle(struct Sprite* sprite)
 {
     sprite->invisible = gSprites[sprite->data[0]].invisible;
     sprite->x = gSprites[sprite->data[0]].x;
@@ -598,27 +598,27 @@ void sub_81492A0(struct Sprite* sprite)
 
 
 
-u8 intro_create_brendan_sprite(s16 a, s16 b)
+u8 CreateIntroBrendanSprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_Brendan, a, b, 0);
-    u8 brendan = CreateSprite(&gSpriteTemplate_BrendanBicycle, a, b + 8, 1);
-    gSprites[brendan].data[0] = sprite;
-    return sprite;
+    u8 playerSprite = CreateSprite(&gSpriteTemplate_Brendan, x, y, 0);
+    u8 bicycleSprite = CreateSprite(&gSpriteTemplate_BrendanBicycle, x, y + 8, 1);
+    gSprites[bicycleSprite].data[0] = playerSprite;
+    return playerSprite;
 }
 
-u8 intro_create_may_sprite(s16 a, s16 b)
+u8 CreateIntroMaySprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_May, a, b, 0);
-    u8 may = CreateSprite(&gSpriteTemplate_MayBicycle, a, b + 8, 1);
-    gSprites[may].data[0] = sprite;
-    return sprite;
+    u8 playerSprite = CreateSprite(&gSpriteTemplate_May, x, y, 0);
+    u8 bicycleSprite = CreateSprite(&gSpriteTemplate_MayBicycle, x, y + 8, 1);
+    gSprites[bicycleSprite].data[0] = playerSprite;
+    return playerSprite;
 }
 
-void nullsub_83(struct Sprite *sprite)
+void SpriteCB_LatiLeftHalf(struct Sprite *sprite)
 {
 }
 
-void sub_81493C4(struct Sprite* sprite)
+void SpriteCB_LatiRightHalf(struct Sprite* sprite)
 {
     sprite->invisible = gSprites[sprite->data[0]].invisible;
     sprite->y = gSprites[sprite->data[0]].y;
@@ -626,22 +626,22 @@ void sub_81493C4(struct Sprite* sprite)
     sprite->y2 = gSprites[sprite->data[0]].y2;
 }
 
-u8 intro_create_latios_sprite(s16 a, s16 b)
+u8 CreateIntroLatiosSprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_Latios, a - 32, b, 2);
-    u8 latios = CreateSprite(&gSpriteTemplate_Latios, a + 32, b, 2);
-    gSprites[latios].data[0] = sprite;
-    StartSpriteAnim(&gSprites[latios], 1);
-    gSprites[latios].callback = &sub_81493C4;
-    return sprite;
+    u8 leftHalf = CreateSprite(&gSpriteTemplate_Latios, x - 32, y, 2);
+    u8 rightHalf = CreateSprite(&gSpriteTemplate_Latios, x + 32, y, 2);
+    gSprites[rightHalf].data[0] = leftHalf;
+    StartSpriteAnim(&gSprites[rightHalf], 1);
+    gSprites[rightHalf].callback = &SpriteCB_LatiRightHalf;
+    return leftHalf;
 }
 
-u8 intro_create_latias_sprite(s16 a, s16 b)
+u8 CreateIntroLatiasSprite(s16 x, s16 y)
 {
-    u8 sprite = CreateSprite(&gSpriteTemplate_Latias, a - 32, b, 2);
-    u8 latios = CreateSprite(&gSpriteTemplate_Latias, a + 32, b, 2);
-    gSprites[latios].data[0] = sprite;
-    StartSpriteAnim(&gSprites[latios], 1);
-    gSprites[latios].callback = &sub_81493C4;
-    return sprite;
+    u8 leftHalf = CreateSprite(&gSpriteTemplate_Latias, x - 32, y, 2);
+    u8 rightHalf = CreateSprite(&gSpriteTemplate_Latias, x + 32, y, 2);
+    gSprites[rightHalf].data[0] = leftHalf;
+    StartSpriteAnim(&gSprites[rightHalf], 1);
+    gSprites[rightHalf].callback = &SpriteCB_LatiRightHalf;
+    return leftHalf;
 }
