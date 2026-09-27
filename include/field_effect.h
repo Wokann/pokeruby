@@ -107,21 +107,21 @@ bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *, struct ObjectEvent *, struct 
 void EscapeRopeWarpInEffect_Init(struct Task *);
 void EscapeRopeWarpInEffect_Spin(struct Task *);
 
-void sub_8088150(struct Task *);
-void sub_80881C0(struct Task *);
-void sub_8088228(struct Task *);
-void sub_80882B4(struct Task *);
-void sub_80882E4(struct Task *);
-void sub_8088338(struct Task *);
-void sub_8088380(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_Init(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *);
+void FieldMoveShowMonOutdoorsEffect_End(struct Task *);
 
-void sub_80884AC(struct Task *);
-void sub_80884E8(struct Task *);
-void sub_8088554(struct Task *);
-void sub_80885A8(struct Task *);
-void sub_80885D8(struct Task *);
-void sub_808860C(struct Task *);
-void sub_808862C(struct Task *);
+void FieldMoveShowMonIndoorsEffect_Init(struct Task *);
+void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *);
+void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *);
+void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *);
+void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *);
+void FieldMoveShowMonIndoorsEffect_End(struct Task *);
 
 void sub_8088984(struct Task *);
 void sub_80889E4(struct Task *);

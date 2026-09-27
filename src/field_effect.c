@@ -2272,57 +2272,57 @@ static void TeleportWarpInFieldEffect_SpinGround(struct Task *task)
 
 #undef tState
 
-void sub_8088120(u8);
-void sub_808847C(u8);
-u8 sub_8088830(u32, u32, u32);
-void sub_80883DC(void);
-void sub_808843C(u16);
-void sub_8088890(struct Sprite *);
+void Task_FieldMoveShowMonOutdoors(u8);
+void Task_FieldMoveShowMonIndoors(u8);
+u8 InitFieldMoveMonSprite(u32, u32, u32);
+void VBlankCB_FieldMoveShowMonOutdoors(void);
+void LoadFieldMoveOutdoorStreaksTilemap(u16);
+void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *);
 
 bool8 FldEff_FieldMoveShowMon(void)
 {
     u8 taskId;
     if (is_map_type_1_2_3_5_or_6(Overworld_GetMapTypeOfSaveblockLocation()) == TRUE)
     {
-        taskId = CreateTask(sub_8088120, 0xff);
+        taskId = CreateTask(Task_FieldMoveShowMonOutdoors, 0xff);
     } else
     {
-        taskId = CreateTask(sub_808847C, 0xff);
+        taskId = CreateTask(Task_FieldMoveShowMonIndoors, 0xff);
     }
-    gTasks[taskId].data[15] = sub_8088830(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    gTasks[taskId].data[15] = InitFieldMoveMonSprite(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
     return FALSE;
 }
 
 bool8 FldEff_FieldMoveShowMonInit(void)
 {
     struct Pokemon *pokemon;
-    u32 flag = gFieldEffectArguments[0] & 0x80000000;
+    u32 noDucking = gFieldEffectArguments[0] & 0x80000000;
     pokemon = &gPlayerParty[(u8)gFieldEffectArguments[0]];
     gFieldEffectArguments[0] = GetMonData(pokemon, MON_DATA_SPECIES);
     gFieldEffectArguments[1] = GetMonData(pokemon, MON_DATA_OT_ID);
     gFieldEffectArguments[2] = GetMonData(pokemon, MON_DATA_PERSONALITY);
-    gFieldEffectArguments[0] |= flag;
+    gFieldEffectArguments[0] |= noDucking;
     FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON);
     FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     return FALSE;
 }
 
-void (*const gUnknown_0839F3AC[])(struct Task *) = {
-    sub_8088150,
-    sub_80881C0,
-    sub_8088228,
-    sub_80882B4,
-    sub_80882E4,
-    sub_8088338,
-    sub_8088380
+static void (*const sFieldMoveShowMonOutdoorsEffectFuncs[])(struct Task *) = {
+    FieldMoveShowMonOutdoorsEffect_Init,
+    FieldMoveShowMonOutdoorsEffect_LoadGfx,
+    FieldMoveShowMonOutdoorsEffect_CreateBanner,
+    FieldMoveShowMonOutdoorsEffect_WaitForMon,
+    FieldMoveShowMonOutdoorsEffect_ShrinkBanner,
+    FieldMoveShowMonOutdoorsEffect_RestoreBg,
+    FieldMoveShowMonOutdoorsEffect_End
 };
 
-void sub_8088120(u8 taskId)
+void Task_FieldMoveShowMonOutdoors(u8 taskId)
 {
-    gUnknown_0839F3AC[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sFieldMoveShowMonOutdoorsEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
 }
 
-void sub_8088150(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_Init(struct Task *task)
 {
     task->data[11] = REG_WININ;
     task->data[12] = REG_WINOUT;
@@ -2335,11 +2335,11 @@ void sub_8088150(struct Task *task)
     REG_WIN0V = task->data[2];
     REG_WININ = task->data[3];
     REG_WINOUT = task->data[4];
-    SetVBlankCallback(sub_80883DC);
+    SetVBlankCallback(VBlankCB_FieldMoveShowMonOutdoors);
     task->data[0]++;
 }
 
-void sub_80881C0(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_LoadGfx(struct Task *task)
 {
     u16 offset;
     u16 delta;
@@ -2348,44 +2348,44 @@ void sub_80881C0(struct Task *task)
     CpuCopy16(gFieldMoveStreaksTiles, (void *)(VRAM + offset), 0x200);
     CpuFill32(0, (void *)(VRAM + delta), 0x800);
     LoadPalette(gFieldMoveStreaksPalette, 0xf0, 0x20);
-    sub_808843C(delta);
+    LoadFieldMoveOutdoorStreaksTilemap(delta);
     task->data[0]++;
 }
 
-void sub_8088228(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct Task *task)
 {
-    s16 v0;
-    s16 v2;
-    s16 v3;
+    s16 horiz;
+    s16 vertHi;
+    s16 vertLo;
     task->data[5] -= 16;
-    v0 = ((u16)task->data[1] >> 8);
-    v2 = ((u16)task->data[2] >> 8);
-    v3 = ((u16)task->data[2] & 0xff);
-    v0 -= 16;
-    v2 -= 2;
-    v3 += 2;
-    if (v0 < 0)
+    horiz = ((u16)task->data[1] >> 8);
+    vertHi = ((u16)task->data[2] >> 8);
+    vertLo = ((u16)task->data[2] & 0xff);
+    horiz -= 16;
+    vertHi -= 2;
+    vertLo += 2;
+    if (horiz < 0)
     {
-        v0 = 0;
+        horiz = 0;
     }
-    if (v2 < 0x28)
+    if (vertHi < 0x28)
     {
-        v2 = 0x28;
+        vertHi = 0x28;
     }
-    if (v3 > 0x78)
+    if (vertLo > 0x78)
     {
-        v3 = 0x78;
+        vertLo = 0x78;
     }
-    task->data[1] = (v0 << 8) | (task->data[1] & 0xff);
-    task->data[2] = (v2 << 8) | v3;
-    if (v0 == 0 && v2 == 0x28 && v3 == 0x78)
+    task->data[1] = (horiz << 8) | (task->data[1] & 0xff);
+    task->data[2] = (vertHi << 8) | vertLo;
+    if (horiz == 0 && vertHi == 0x28 && vertLo == 0x78)
     {
-        gSprites[task->data[15]].callback = sub_8088890;
+        gSprites[task->data[15]].callback = SpriteCB_FieldMoveMonSlideOnscreen;
         task->data[0]++;
     }
 }
 
-void sub_80882B4(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Task *task)
 {
     task->data[5] -= 16;
     if (gSprites[task->data[15]].data[7])
@@ -2394,31 +2394,31 @@ void sub_80882B4(struct Task *task)
     }
 }
 
-void sub_80882E4(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_ShrinkBanner(struct Task *task)
 {
-    s16 v2;
-    s16 v3;
+    s16 vertHi;
+    s16 vertLo;
     task->data[5] -= 16;
-    v2 = (task->data[2] >> 8);
-    v3 = (task->data[2] & 0xff);
-    v2 += 6;
-    v3 -= 6;
-    if (v2 > 0x50)
+    vertHi = (task->data[2] >> 8);
+    vertLo = (task->data[2] & 0xff);
+    vertHi += 6;
+    vertLo -= 6;
+    if (vertHi > 0x50)
     {
-        v2 = 0x50;
+        vertHi = 0x50;
     }
-    if (v3 < 0x51)
+    if (vertLo < 0x51)
     {
-        v3 = 0x51;
+        vertLo = 0x51;
     }
-    task->data[2] = (v2 << 8) | v3;
-    if (v2 == 0x50 && v3 == 0x51)
+    task->data[2] = (vertHi << 8) | vertLo;
+    if (vertHi == 0x50 && vertLo == 0x51)
     {
         task->data[0]++;
     }
 }
 
-void sub_8088338(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_RestoreBg(struct Task *task)
 {
     u16 bg0cnt;
     bg0cnt = (REG_BG0CNT >> 8) << 11;
@@ -2430,7 +2430,7 @@ void sub_8088338(struct Task *task)
     task->data[0]++;
 }
 
-void sub_8088380(struct Task *task)
+void FieldMoveShowMonOutdoorsEffect_End(struct Task *task)
 {
     IntrCallback callback;
     LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&callback);
@@ -2439,14 +2439,14 @@ void sub_8088380(struct Task *task)
     InitMenuWindow(&gMenuTextWindowTemplate);
     FreeResourcesAndDestroySprite(&gSprites[task->data[15]]);
     FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
-    DestroyTask(FindTaskIdByFunc(sub_8088120));
+    DestroyTask(FindTaskIdByFunc(Task_FieldMoveShowMonOutdoors));
 }
 
-void sub_80883DC(void)
+void VBlankCB_FieldMoveShowMonOutdoors(void)
 {
     struct Task *task;
     IntrCallback callback;
-    task = &gTasks[FindTaskIdByFunc(sub_8088120)];
+    task = &gTasks[FindTaskIdByFunc(Task_FieldMoveShowMonOutdoors)];
     LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&callback);
     callback();
     REG_WIN0H = task->data[1];
@@ -2457,7 +2457,7 @@ void sub_80883DC(void)
     REG_BG0VOFS = task->data[6];
 }
 
-void sub_808843C(u16 offs)
+void LoadFieldMoveOutdoorStreaksTilemap(u16 offs)
 {
     u16 i;
     u16 *dest;
@@ -2468,36 +2468,36 @@ void sub_808843C(u16 offs)
     }
 }
 
-void sub_80886B0(void);
-bool8 sub_8088708(struct Task *);
-void sub_80886F8(struct Task *);
-bool8 sub_80887C0(struct Task *);
+void VBlankCB_FieldMoveShowMonIndoors(void);
+bool8 SlideIndoorBannerOnscreen(struct Task *);
+void AnimateIndoorShowMonBg(struct Task *);
+bool8 SlideIndoorBannerOffscreen(struct Task *);
 
-void (*const gUnknown_0839F3C8[])(struct Task *) = {
-    sub_80884AC,
-    sub_80884E8,
-    sub_8088554,
-    sub_80885A8,
-    sub_80885D8,
-    sub_808860C,
-    sub_808862C
+static void (*const sFieldMoveShowMonIndoorsEffectFuncs[])(struct Task *) = {
+    FieldMoveShowMonIndoorsEffect_Init,
+    FieldMoveShowMonIndoorsEffect_LoadGfx,
+    FieldMoveShowMonIndoorsEffect_SlideBannerOn,
+    FieldMoveShowMonIndoorsEffect_WaitForMon,
+    FieldMoveShowMonIndoorsEffect_RestoreBg,
+    FieldMoveShowMonIndoorsEffect_SlideBannerOff,
+    FieldMoveShowMonIndoorsEffect_End
 };
 
-void sub_808847C(u8 taskId)
+void Task_FieldMoveShowMonIndoors(u8 taskId)
 {
-    gUnknown_0839F3C8[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sFieldMoveShowMonIndoorsEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
 }
 
-void sub_80884AC(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_Init(struct Task *task)
 {
     REG_BG0HOFS = task->data[1];
     REG_BG0VOFS = task->data[2];
     StoreWordInTwoHalfwords((u16 *)&task->data[13], (u32)gMain.vblankCallback);
-    SetVBlankCallback(sub_80886B0);
+    SetVBlankCallback(VBlankCB_FieldMoveShowMonIndoors);
     task->data[0]++;
 }
 
-void sub_80884E8(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_LoadGfx(struct Task *task)
 {
     u16 offset;
     u16 delta;
@@ -2510,30 +2510,30 @@ void sub_80884E8(struct Task *task)
     task->data[0]++;
 }
 
-void sub_8088554(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct Task *task)
 {
-    if (sub_8088708(task))
+    if (SlideIndoorBannerOnscreen(task))
     {
         REG_WIN1H = 0x00f0;
         REG_WIN1V = 0x2878;
-        gSprites[task->data[15]].callback = sub_8088890;
+        gSprites[task->data[15]].callback = SpriteCB_FieldMoveMonSlideOnscreen;
         task->data[0]++;
     }
-    sub_80886F8(task);
+    AnimateIndoorShowMonBg(task);
 }
 
-void sub_80885A8(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task *task)
 {
-    sub_80886F8(task);
+    AnimateIndoorShowMonBg(task);
     if (gSprites[task->data[15]].data[7])
     {
         task->data[0]++;
     }
 }
 
-void sub_80885D8(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *task)
 {
-    sub_80886F8(task);
+    AnimateIndoorShowMonBg(task);
     task->data[3] = task->data[1] & 7;
     task->data[4] = 0;
     REG_WIN1H = 0xffff;
@@ -2541,16 +2541,16 @@ void sub_80885D8(struct Task *task)
     task->data[0]++;
 }
 
-void sub_808860C(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *task)
 {
-    sub_80886F8(task);
-    if (sub_80887C0(task))
+    AnimateIndoorShowMonBg(task);
+    if (SlideIndoorBannerOffscreen(task))
     {
         task->data[0]++;
     }
 }
 
-void sub_808862C(struct Task *task)
+void FieldMoveShowMonIndoorsEffect_End(struct Task *task)
 {
     IntrCallback intrCallback;
     u16 bg0cnt;
@@ -2562,27 +2562,27 @@ void sub_808862C(struct Task *task)
     InitMenuWindow(&gMenuTextWindowTemplate);
     FreeResourcesAndDestroySprite(&gSprites[task->data[15]]);
     FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON);
-    DestroyTask(FindTaskIdByFunc(sub_808847C));
+    DestroyTask(FindTaskIdByFunc(Task_FieldMoveShowMonIndoors));
 }
 
-void sub_80886B0(void)
+void VBlankCB_FieldMoveShowMonIndoors(void)
 {
     IntrCallback intrCallback;
     struct Task *task;
-    task = &gTasks[FindTaskIdByFunc(sub_808847C)];
+    task = &gTasks[FindTaskIdByFunc(Task_FieldMoveShowMonIndoors)];
     LoadWordFromTwoHalfwords((u16 *)&task->data[13], (u32 *)&intrCallback);
     intrCallback();
     REG_BG0HOFS = task->data[1];
     REG_BG0VOFS = task->data[2];
 }
 
-void sub_80886F8(struct Task *task)
+void AnimateIndoorShowMonBg(struct Task *task)
 {
     task->data[1] -= 16;
     task->data[3] += 16;
 }
 
-bool8 sub_8088708(struct Task *task)
+bool8 SlideIndoorBannerOnscreen(struct Task *task)
 {
     u16 i;
     u16 srcOffs;
@@ -2611,7 +2611,7 @@ bool8 sub_8088708(struct Task *task)
     return FALSE;
 }
 
-bool8 sub_80887C0(struct Task *task)
+bool8 SlideIndoorBannerOffscreen(struct Task *task)
 {
     u16 i;
     u16 dstOffs;
@@ -2635,31 +2635,31 @@ bool8 sub_80887C0(struct Task *task)
     return FALSE;
 }
 
-u8 sub_8088830(u32 a0, u32 a1, u32 a2)
+u8 InitFieldMoveMonSprite(u32 species, u32 otId, u32 personality)
 {
-    u16 v0;
+    u16 noDucking;
     u8 monSprite;
     struct Sprite *sprite;
-    v0 = (a0 & 0x80000000) >> 16;
-    a0 &= 0x7fffffff;
-    monSprite = CreateMonSprite_FieldMove(a0, a1, a2, 0x140, 0x50, 0);
+    noDucking = (species & 0x80000000) >> 16;
+    species &= 0x7fffffff;
+    monSprite = CreateMonSprite_FieldMove(species, otId, personality, 0x140, 0x50, 0);
     sprite = &gSprites[monSprite];
     sprite->callback = SpriteCallbackDummy;
     sprite->oam.priority = 0;
-    sprite->data[0] = a0;
-    sprite->data[6] = v0;
+    sprite->data[0] = species;
+    sprite->data[6] = noDucking;
     return monSprite;
 }
 
-void sub_80888D4(struct Sprite *);
+void SpriteCB_FieldMoveMonWaitAfterCry(struct Sprite *);
 
-void sub_8088890(struct Sprite *sprite)
+void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sprite)
 {
     if ((sprite->x -= 20) <= 0x78)
     {
         sprite->x = 0x78;
         sprite->data[1] = 30;
-        sprite->callback = sub_80888D4;
+        sprite->callback = SpriteCB_FieldMoveMonWaitAfterCry;
         if (sprite->data[6])
         {
             PlayCry2(sprite->data[0], 0, 0x7d, 0xa);
@@ -2670,17 +2670,17 @@ void sub_8088890(struct Sprite *sprite)
     }
 }
 
-void sub_80888F0(struct Sprite *);
+void SpriteCB_FieldMoveMonSlideOffscreen(struct Sprite *);
 
-void sub_80888D4(struct Sprite *sprite)
+void SpriteCB_FieldMoveMonWaitAfterCry(struct Sprite *sprite)
 {
     if ((--sprite->data[1]) == 0)
     {
-        sprite->callback = sub_80888F0;
+        sprite->callback = SpriteCB_FieldMoveMonSlideOffscreen;
     }
 }
 
-void sub_80888F0(struct Sprite *sprite)
+void SpriteCB_FieldMoveMonSlideOffscreen(struct Sprite *sprite)
 {
     if (sprite->x < -0x40)
     {
