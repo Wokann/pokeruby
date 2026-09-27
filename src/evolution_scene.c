@@ -578,7 +578,7 @@ static void Task_EvolutionScene(u8 taskID)
     case 5: // after screen fade, preapre evo sparkles
         if (!gPaletteFade.active)
         {
-            sEvoGraphicsTaskId = LaunchTask_PreEvoSparklesSet1(17);
+            sEvoGraphicsTaskId = EvolutionSparkles_SpiralUpward(17);
             gTasks[taskID].tState++;
         }
         break;
@@ -587,13 +587,13 @@ static void Task_EvolutionScene(u8 taskID)
         {
             gTasks[taskID].tState++;
             sEvoInfo.delayTimer = 1;
-            sEvoGraphicsTaskId = LaunchTask_PreEvoSparklesSet2();
+            sEvoGraphicsTaskId = EvolutionSparkles_ArcDown();
         }
         break;
     case 7: // launch task that flashes pre evo with post evo sprites
         if (!gTasks[sEvoGraphicsTaskId].isActive)
         {
-            sEvoGraphicsTaskId = sub_8149E7C(sEvoInfo.preEvoSpriteId, sEvoInfo.postEvoSpriteId);
+            sEvoGraphicsTaskId = CycleEvolutionMonSprite(sEvoInfo.preEvoSpriteId, sEvoInfo.postEvoSpriteId);
             gTasks[taskID].tState++;
         }
         break;
@@ -606,13 +606,13 @@ static void Task_EvolutionScene(u8 taskID)
         }
         break;
     case 9: // post evo sparkles
-        sEvoGraphicsTaskId = LaunchTask_PostEvoSparklesSet1();
+        sEvoGraphicsTaskId = EvolutionSparkles_CircleInward();
         gTasks[taskID].tState++;
         break;
     case 10:
         if (!gTasks[sEvoGraphicsTaskId].isActive)
         {
-            sEvoGraphicsTaskId = LaunchTask_PostEvoSparklesSet2AndFlash(gTasks[taskID].tPostEvoSpecies);
+            sEvoGraphicsTaskId = EvolutionSparkles_SprayAndFlash(gTasks[taskID].tPostEvoSpecies);
             gTasks[taskID].tState++;
         }
         break;
@@ -933,7 +933,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
         if (!gPaletteFade.active)
         {
             REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP;
-            sEvoGraphicsTaskId = LaunchTask_PreEvoSparklesSet1(17);
+            sEvoGraphicsTaskId = EvolutionSparkles_SpiralUpward(17);
             gTasks[taskID].tState++;
         }
         break;
@@ -942,13 +942,13 @@ static void Task_TradeEvolutionScene(u8 taskID)
         {
             gTasks[taskID].tState++;
             sEvoInfo.delayTimer = 1;
-            sEvoGraphicsTaskId = LaunchTask_PreEvoSparklesSet2();
+            sEvoGraphicsTaskId = EvolutionSparkles_ArcDown();
         }
         break;
     case 6:
         if (!gTasks[sEvoGraphicsTaskId].isActive)
         {
-            sEvoGraphicsTaskId = sub_8149E7C(sEvoInfo.preEvoSpriteId, sEvoInfo.postEvoSpriteId);
+            sEvoGraphicsTaskId = CycleEvolutionMonSprite(sEvoInfo.preEvoSpriteId, sEvoInfo.postEvoSpriteId);
             gTasks[taskID].tState++;
         }
         break;
@@ -961,13 +961,13 @@ static void Task_TradeEvolutionScene(u8 taskID)
         }
         break;
     case 8:
-        sEvoGraphicsTaskId = LaunchTask_PostEvoSparklesSet1();
+        sEvoGraphicsTaskId = EvolutionSparkles_CircleInward();
         gTasks[taskID].tState++;
         break;
     case 9:
         if (!gTasks[sEvoGraphicsTaskId].isActive)
         {
-            sEvoGraphicsTaskId = LaunchTask_PostEvoSparklesSet2AndFlash_Trade(gTasks[taskID].tPostEvoSpecies);
+            sEvoGraphicsTaskId = EvolutionSparkles_SprayAndFlash_Trade(gTasks[taskID].tPostEvoSpecies);
             gTasks[taskID].tState++;
         }
         break;
