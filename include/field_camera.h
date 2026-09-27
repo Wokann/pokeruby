@@ -23,7 +23,7 @@ void ResetCameraUpdateInfo(void);
 u32 InitCameraUpdateCallback(u8 a);
 void CameraUpdate(void);
 void SetCameraPanningCallback(void (*a)(void));
-void SetCameraPanning(s16 a, s16 b);
+void SetCameraPanning(s16 horizontal, s16 vertical);
 void InstallCameraPanAheadCallback(void);
 void UpdateCameraPanning(void);
 
