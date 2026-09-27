@@ -203,7 +203,7 @@ void ShowWarpArrowSprite(u8 spriteId, u8 direction, s16 x, s16 y)
     }
 }
 
-const u8 gShadowEffectTemplateIds[] = {
+static const u8 sShadowEffectTemplateIds[] = {
     0,
     1,
     2,
@@ -217,6 +217,11 @@ const u16 gShadowVerticalOffsets[] = {
     16
 };
 
+#define sShadowLocalId  data[0]
+#define sShadowMapNum   data[1]
+#define sShadowMapGroup data[2]
+#define sShadowYOffset  data[3]
+
 u32 FldEff_Shadow(void)
 {
     u8 objectEventId;
@@ -225,14 +230,14 @@ u32 FldEff_Shadow(void)
 
     objectEventId = GetObjectEventIdByLocalIdAndMap(gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
     graphicsInfo = GetObjectEventGraphicsInfo(gObjectEvents[objectEventId].graphicsId);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[gShadowEffectTemplateIds[graphicsInfo->shadowSize]], 0, 0, 0x94);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[sShadowEffectTemplateIds[graphicsInfo->shadowSize]], 0, 0, 0x94);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].coordOffsetEnabled = TRUE;
-        gSprites[spriteId].data[0] = gFieldEffectArguments[0];
-        gSprites[spriteId].data[1] = gFieldEffectArguments[1];
-        gSprites[spriteId].data[2] = gFieldEffectArguments[2];
-        gSprites[spriteId].data[3] = (graphicsInfo->height >> 1) - gShadowVerticalOffsets[graphicsInfo->shadowSize];
+        gSprites[spriteId].sShadowLocalId = gFieldEffectArguments[0];
+        gSprites[spriteId].sShadowMapNum = gFieldEffectArguments[1];
+        gSprites[spriteId].sShadowMapGroup = gFieldEffectArguments[2];
+        gSprites[spriteId].sShadowYOffset = (graphicsInfo->height >> 1) - gShadowVerticalOffsets[graphicsInfo->shadowSize];
     }
     return 0;
 }
@@ -243,7 +248,7 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
     struct ObjectEvent *objectEvent;
     struct Sprite *linkedSprite;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->data[0], sprite->data[1], sprite->data[2], &objectEventId))
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sShadowLocalId, sprite->sShadowMapNum, sprite->sShadowMapGroup, &objectEventId))
     {
         FieldEffectStop(sprite, FLDEFF_SHADOW);
     }
@@ -253,7 +258,7 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
         linkedSprite = &gSprites[objectEvent->spriteId];
         sprite->oam.priority = linkedSprite->oam.priority;
         sprite->x = linkedSprite->x;
-        sprite->y = linkedSprite->y + sprite->data[3];
+        sprite->y = linkedSprite->y + sprite->sShadowYOffset;
         if (!objectEvent->active || !objectEvent->hasShadow
          || MetatileBehavior_IsPokeGrass(objectEvent->currentMetatileBehavior)
          || MetatileBehavior_IsSurfableWaterOrUnderwater(objectEvent->currentMetatileBehavior)
@@ -265,6 +270,11 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
         }
     }
 }
+
+#undef sShadowLocalId
+#undef sShadowMapNum
+#undef sShadowMapGroup
+#undef sShadowYOffset
 
 u32 FldEff_TallGrass(void)
 {
