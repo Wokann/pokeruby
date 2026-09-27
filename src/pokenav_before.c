@@ -822,7 +822,7 @@ const struct SpriteTemplate gPokenavConditionSelectionIconTemplate =
     .callback = SpriteCB_ConditionPartyPokeball,
 };
 
-const u16 gUnknown_083E4678[] = INCBIN_U16("graphics/pokenav/83E4678.gbapal");
+const u16 gPokenavConditionMonMarkingsPalette[] = INCBIN_U16("graphics/pokenav/condition/mon_markings.gbapal");
 
 const u16 gPokenavRibbonsIconGfx[][2] = 
 {
@@ -2322,7 +2322,7 @@ void OpenConditionGraphFromSearchResults(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        sub_80F35B4();
+        CreateConditionMonMarkingsSprite();
         DrawPokenavBottomToolbar(0x2);
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(VBlankCB_PokenavConditionGraph);
@@ -2442,13 +2442,13 @@ void OpenConditionGraphFromParty(void)
 void sub_80F4F78(void);
 void SetConditionGraphBg2Visible(bool8 visible);
 bool8 sub_80F4FB4(void);
-void sub_80F3668(void);
+void OpenConditionMonMarkingsMenu(void);
 bool8 sub_80F7500(void);
-void sub_80F3698(void);
+void SaveAndCloseConditionMonMarkingsMenu(void);
 bool8 sub_80F5038(void);
 void DestroyPokenavPortraitSprite(void);
 void sub_80F3CE8(void);
-void sub_80F3614(void);
+void DestroyConditionMonMarkingsSprite(void);
 void DestroyConditionPartyPokeballIndicators(void);
 void sub_80F4FDC(void);
 
@@ -2548,14 +2548,14 @@ void HandleConditionGraphInput(void)
         break;
     case 7:
         DrawPokenavBottomToolbar(3);
-        sub_80F3668();
+        OpenConditionMonMarkingsMenu();
         gPokenavStructPtr->callbackStep = 8;
         break;
     case 8:
         if (!sub_80F7500())
         {
             DrawPokenavBottomToolbar(2);
-            sub_80F3698();
+            SaveAndCloseConditionMonMarkingsMenu();
             gPokenavStructPtr->callbackStep = 4;
         }
         break;
@@ -2584,7 +2584,7 @@ void HandleConditionGraphInput(void)
             }
             else
             {
-                sub_80F3614();
+                DestroyConditionMonMarkingsSprite();
                 SetPokenavCallback(OpenConditionSearchListFromGraph);
             }
         }

@@ -129,7 +129,7 @@ extern const struct SpriteTemplate gPokenavListUpDownArrowSpriteTemplate;
 extern const struct SpriteSheet gPokenavConditionSelectionIconSheets[4];
 extern const struct SpritePalette gPokenavConditionSelectionIconPalettes[3];
 extern const struct SpriteTemplate gPokenavConditionSelectionIconTemplate;
-extern const u16 gUnknown_083E4678[];
+extern const u16 gPokenavConditionMonMarkingsPalette[];
 extern const u8 gUnknown_083E3D00[];
 extern const struct SpriteTemplate gSpriteTemplate_83E476C;
 extern const struct SpriteSheet gUnknown_083E4784;
@@ -2987,44 +2987,44 @@ void DestroyConditionPartyPokeballIndicators(void)
     }
 }
 
-void sub_80F35B4(void)
+void CreateConditionMonMarkingsSprite(void)
 {
     struct Sprite *sprite;
 
-    gPokenavStructPtr->unk76B0.baseTileTag = 0x1C;
-    gPokenavStructPtr->unk76B0.basePaletteTag = 0x13;
-    sub_80F727C(&gPokenavStructPtr->unk76B0);
+    gPokenavStructPtr->conditionMarkingsMenu.baseTileTag = 0x1C;
+    gPokenavStructPtr->conditionMarkingsMenu.basePaletteTag = 0x13;
+    sub_80F727C(&gPokenavStructPtr->conditionMarkingsMenu);
     sub_80F7404();
-    sprite = sub_80F7920(27, 21, gUnknown_083E4678);
+    sprite = sub_80F7920(27, 21, gPokenavConditionMonMarkingsPalette);
     sprite->oam.priority = 3;
     sprite->x = 192;
     sprite->y = 32;
-    sprite->callback = sub_80F363C;
-    gPokenavStructPtr->unk76AC = sprite;
+    sprite->callback = MonMarkingsCallback;
+    gPokenavStructPtr->conditionMonMarkingsSprite = sprite;
 }
 
-void sub_80F3614(void)
+void DestroyConditionMonMarkingsSprite(void)
 {
-    DestroySprite(gPokenavStructPtr->unk76AC);
+    DestroySprite(gPokenavStructPtr->conditionMonMarkingsSprite);
     FreeSpriteTilesByTag(0x1B);
     FreeSpritePaletteByTag(0x15);
 }
 
-void sub_80F363C(struct Sprite *sprite)
+void MonMarkingsCallback(struct Sprite *sprite)
 {
-    StartSpriteAnim(sprite, gPokenavStructPtr->unk8934[gPokenavStructPtr->unk8fe9]);
+    StartSpriteAnim(sprite, gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9]);
 }
 
-void sub_80F3668(void)
+void OpenConditionMonMarkingsMenu(void)
 {
-    sub_80F7418(gPokenavStructPtr->unk8934[gPokenavStructPtr->unk8fe9], 176, 32);
+    sub_80F7418(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9], 176, 32);
 }
 
-void sub_80F3698(void)
+void SaveAndCloseConditionMonMarkingsMenu(void)
 {
     struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
-    gPokenavStructPtr->unk8934[gPokenavStructPtr->unk8fe9] = gPokenavStructPtr->unk76B0.markings;
-    SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->unk76B0.markings);
+    gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9] = gPokenavStructPtr->conditionMarkingsMenu.markings;
+    SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->conditionMarkingsMenu.markings);
     sub_80F7470();
 }
 
@@ -3727,7 +3727,7 @@ void sub_80F468C(s16 arg0, u8 arg1)
                                            ? sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) / 29
                                            : 9;
 
-        gPokenavStructPtr->unk8934[arg1] = sub_80F44B0(box, monIndex, MON_DATA_MARKINGS, NULL);
+        gPokenavStructPtr->conditionMonMarkings[arg1] = sub_80F44B0(box, monIndex, MON_DATA_MARKINGS, NULL);
         sub_80F55AC(gPokenavStructPtr->unk8ff0[arg1], gPokenavStructPtr->unk9004[arg1]);
     }
     else
