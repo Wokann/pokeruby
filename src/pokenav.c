@@ -110,8 +110,8 @@ extern const u8 gPokenavMainMenuHeader_Gfx[];
 extern const u8 gPokenavConditionMenuHeader_Gfx[];
 extern const u8 gPokenavRibbonsHeader_Gfx[];
 extern const u8 gPokenavHoennMapHeader_Gfx[];
-extern const u8 gPokenavConditionMenuOptions_Gfx[];
-extern const u8 gPokenavConditionMenuOptions2_Gfx[];
+extern const u8 gPokenavConditionHeaderLabels_Gfx[];
+extern const u8 gPokenavConditionHeaderLabels2_Gfx[];
 extern const u8 gPokenavTrainersEyesHeader_Gfx[];
 extern const struct SpritePalette gUnknown_083E449C[];
 extern const struct SpriteTemplate gSpriteTemplate_83E4530;
@@ -2390,10 +2390,10 @@ bool8 LoadPokenavMenuHeaderGfxStep(void)
         LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavStructPtr->hoennMapHeaderGfx);
         break;
     case 4:
-        LZ77UnCompWram(gPokenavConditionMenuOptions_Gfx, gPokenavStructPtr->unk5F98);
+        LZ77UnCompWram(gPokenavConditionHeaderLabels_Gfx, gPokenavStructPtr->searchHeaderGfx);
         break;
     case 5:
-        LZ77UnCompWram(gPokenavConditionMenuOptions2_Gfx, gPokenavStructPtr->unk6798);
+        LZ77UnCompWram(gPokenavConditionHeaderLabels2_Gfx, gPokenavStructPtr->smartHeaderGfx);
         break;
     case 6:
         LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavStructPtr->trainersEyesHeaderGfx);
@@ -2409,11 +2409,11 @@ bool8 LoadPokenavMenuHeaderGfxStep(void)
     return TRUE;
 }
 
-void sub_80F27DC(u8 arg0)
+void LoadPokenavMenuHeaderSpriteSheet(u8 headerType)
 {
     struct SpriteSheet spriteSheet;
 
-    switch (arg0)
+    switch (headerType)
     {
     case 0:
         spriteSheet.data = gPokenavStructPtr->mainMenuHeaderGfx;
@@ -2441,38 +2441,38 @@ void sub_80F27DC(u8 arg0)
         spriteSheet.tag = 0x1;
         break;
     case 5:
-        spriteSheet.data = gPokenavStructPtr->unk5F98;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk5F98);
+        spriteSheet.data = gPokenavStructPtr->searchHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->searchHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 6:
-        spriteSheet.data = gPokenavStructPtr->unk6198;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6198);
+        spriteSheet.data = gPokenavStructPtr->partyHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->partyHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 8:
-        spriteSheet.data = gPokenavStructPtr->unk6398;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6398);
+        spriteSheet.data = gPokenavStructPtr->beautyHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->beautyHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 9:
-        spriteSheet.data = gPokenavStructPtr->unk6598;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6598);
+        spriteSheet.data = gPokenavStructPtr->cuteHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->cuteHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 11:
-        spriteSheet.data = gPokenavStructPtr->unk6998;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6998);
+        spriteSheet.data = gPokenavStructPtr->toughHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->toughHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 10:
-        spriteSheet.data = gPokenavStructPtr->unk6798;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6798);
+        spriteSheet.data = gPokenavStructPtr->smartHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->smartHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     case 7:
-        spriteSheet.data = gPokenavStructPtr->unk6B98;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk6B98);
+        spriteSheet.data = gPokenavStructPtr->coolHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->coolHeaderGfx);
         spriteSheet.tag = 0x2;
         break;
     default:
@@ -2623,7 +2623,7 @@ bool8 sub_80F2CBC(u8 arg0)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        sub_80F27DC(arg0);
+        LoadPokenavMenuHeaderSpriteSheet(arg0);
         gPokenavStructPtr->unk306++;
         return TRUE;
     case 1:
