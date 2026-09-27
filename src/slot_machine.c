@@ -423,7 +423,7 @@ static void PlaySlotMachine_Internal(u8 arg0, MainCallback cb)
     StoreWordInTwoHalfwords(task->data + 1, (intptr_t)cb);
 }
 
-static void sub_81019EC(void)
+static void SlotMachine_InitFromTask(void)
 {
     struct Task *task = gTasks + FindTaskIdByFunc(SlotMachineDummyTask);
     sSlotMachine->machineId = task->data[0];
@@ -493,7 +493,7 @@ static void SlotMachineSetup_0_1(void)
 {
     u8 i;
 
-    sub_81019EC();
+    SlotMachine_InitFromTask();
     sSlotMachine->state = 0;
     sSlotMachine->pikaPowerBolts = 0;
     sSlotMachine->luckyGame = Random() & 1;
@@ -1874,13 +1874,13 @@ static bool8 DecideStop_Bias_Reel2(void)
 static bool8 DecideStop_Bias_Reel2_Bet1or2(void)
 {
     s16 i;
-    s16 unk34_0 = sSlotMachine->winnerRows[0];
+    s16 reel1BiasRow = sSlotMachine->winnerRows[0];
 
     for (i = 0; i < 5; i++)
     {
-        if (GetSymbol(1, unk34_0 - i) == sSlotMachine->biasSymbol)
+        if (GetSymbol(1, reel1BiasRow - i) == sSlotMachine->biasSymbol)
         {
-            sSlotMachine->winnerRows[1] = unk34_0;
+            sSlotMachine->winnerRows[1] = reel1BiasRow;
             sSlotMachine->reelExtraTurns[1] = i;
             return TRUE;
         }
@@ -1946,13 +1946,13 @@ static bool8 DecideStop_Bias_Reel3(void)
 static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0)
 {
     s16 i;
-    s16 unk34_1 = sSlotMachine->winnerRows[1];
+    s16 reel2BiasRow = sSlotMachine->winnerRows[1];
 
     for (i = 0; i < 5; i++)
     {
-        if (GetSymbol(2, unk34_1 - i) == a0)
+        if (GetSymbol(2, reel2BiasRow - i) == a0)
         {
-            sSlotMachine->winnerRows[2] = unk34_1;
+            sSlotMachine->winnerRows[2] = reel2BiasRow;
             sSlotMachine->reelExtraTurns[2] = i;
             return TRUE;
         }
