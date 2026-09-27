@@ -32,8 +32,8 @@ bool8 TayaDebugMenu_AwardARibbon(void);
 bool8 TayaDebugMenu_PKMNLottery(void);
 bool8 TayaDebugMenu_Trainer(void);
 bool8 TayaDebugMenu_PokenavD(void);
-void debug_sub_80915BC(void);
-void debug_sub_80916AC(void);
+void TayaDebugRibbon_Init(void);
+void TayaDebugRibbon_PrintOptions(void);
 
 EWRAM_DATA s8 sTayaTopMenuPage = 0;
 
@@ -146,57 +146,57 @@ const struct {
     {sMenuActions_TayaDebug_Page2, 2}
 };
 
-const u8 gUnknown_Debug_083C5078[] = _("CHANP");
-const u8 gUnknown_Debug_083C507E[] = _("COOL");
-const u8 gUnknown_Debug_083C5083[] = _("BEAUTY");
-const u8 gUnknown_Debug_083C508A[] = _("CUTE");
-const u8 gUnknown_Debug_083C508F[] = _("SMART");
-const u8 gUnknown_Debug_083C5095[] = _("TOUGH");
-const u8 gUnknown_Debug_083C509B[] = _("WIN");
-const u8 gUnknown_Debug_083C509F[] = _("VICTORY");
-const u8 gUnknown_Debug_083C50A7[] = _("BROMIDE");
-const u8 gUnknown_Debug_083C50AF[] = _("ACCESSIT");
-const u8 gUnknown_Debug_083C50B8[] = _("MARINE");
-const u8 gUnknown_Debug_083C50BF[] = _("LAND");
-const u8 gUnknown_Debug_083C50C4[] = _("SKY");
-const u8 gUnknown_Debug_083C50C8[] = _("COUNTRY");
-const u8 gUnknown_Debug_083C50D0[] = _("NATIONAL");
-const u8 gUnknown_Debug_083C50D9[] = _("EARTH");
-const u8 gUnknown_Debug_083C50DF[] = _("WORLD");
-const u8 gUnknown_Debug_083C50E5[] = _("　　　　　");
+const u8 sText_TayaRibbon_Champion[] = _("CHANP");
+const u8 sText_TayaRibbon_Cool[] = _("COOL");
+const u8 sText_TayaRibbon_Beauty[] = _("BEAUTY");
+const u8 sText_TayaRibbon_Cute[] = _("CUTE");
+const u8 sText_TayaRibbon_Smart[] = _("SMART");
+const u8 sText_TayaRibbon_Tough[] = _("TOUGH");
+const u8 sText_TayaRibbon_Winning[] = _("WIN");
+const u8 sText_TayaRibbon_Victory[] = _("VICTORY");
+const u8 sText_TayaRibbon_Artist[] = _("BROMIDE");
+const u8 sText_TayaRibbon_Effort[] = _("ACCESSIT");
+const u8 sText_TayaRibbon_Marine[] = _("MARINE");
+const u8 sText_TayaRibbon_Land[] = _("LAND");
+const u8 sText_TayaRibbon_Sky[] = _("SKY");
+const u8 sText_TayaRibbon_Country[] = _("COUNTRY");
+const u8 sText_TayaRibbon_National[] = _("NATIONAL");
+const u8 sText_TayaRibbon_Earth[] = _("EARTH");
+const u8 sText_TayaRibbon_World[] = _("WORLD");
+const u8 sText_TayaRibbon_Blank[] = _("　　　　　");
 
 const struct {
     const u8 * text;
     u16 param;
-} gUnknown_Debug_083C50EC[][3] = {
+} sRibbonOptions_TayaDebug[][3] = {
     {
-        {gUnknown_Debug_083C5078, MON_DATA_CHAMPION_RIBBON},
-        {gUnknown_Debug_083C507E, MON_DATA_COOL_RIBBON},
-        {gUnknown_Debug_083C5083, MON_DATA_BEAUTY_RIBBON}
+        {sText_TayaRibbon_Champion, MON_DATA_CHAMPION_RIBBON},
+        {sText_TayaRibbon_Cool, MON_DATA_COOL_RIBBON},
+        {sText_TayaRibbon_Beauty, MON_DATA_BEAUTY_RIBBON}
     }, {
-        {gUnknown_Debug_083C508A, MON_DATA_CUTE_RIBBON},
-        {gUnknown_Debug_083C508F, MON_DATA_SMART_RIBBON},
-        {gUnknown_Debug_083C5095, MON_DATA_TOUGH_RIBBON}
+        {sText_TayaRibbon_Cute, MON_DATA_CUTE_RIBBON},
+        {sText_TayaRibbon_Smart, MON_DATA_SMART_RIBBON},
+        {sText_TayaRibbon_Tough, MON_DATA_TOUGH_RIBBON}
     }, {
-        {gUnknown_Debug_083C509B, MON_DATA_WINNING_RIBBON},
-        {gUnknown_Debug_083C509F, MON_DATA_VICTORY_RIBBON},
-        {gUnknown_Debug_083C50A7, MON_DATA_ARTIST_RIBBON}
+        {sText_TayaRibbon_Winning, MON_DATA_WINNING_RIBBON},
+        {sText_TayaRibbon_Victory, MON_DATA_VICTORY_RIBBON},
+        {sText_TayaRibbon_Artist, MON_DATA_ARTIST_RIBBON}
     }, {
-        {gUnknown_Debug_083C50AF, MON_DATA_EFFORT_RIBBON},
-        {gUnknown_Debug_083C50B8, MON_DATA_MARINE_RIBBON},
-        {gUnknown_Debug_083C50BF, MON_DATA_LAND_RIBBON}
+        {sText_TayaRibbon_Effort, MON_DATA_EFFORT_RIBBON},
+        {sText_TayaRibbon_Marine, MON_DATA_MARINE_RIBBON},
+        {sText_TayaRibbon_Land, MON_DATA_LAND_RIBBON}
     }, {
-        {gUnknown_Debug_083C50C4, MON_DATA_SKY_RIBBON},
-        {gUnknown_Debug_083C50C8, MON_DATA_COUNTRY_RIBBON},
-        {gUnknown_Debug_083C50D0, MON_DATA_NATIONAL_RIBBON}
+        {sText_TayaRibbon_Sky, MON_DATA_SKY_RIBBON},
+        {sText_TayaRibbon_Country, MON_DATA_COUNTRY_RIBBON},
+        {sText_TayaRibbon_National, MON_DATA_NATIONAL_RIBBON}
     }, {
-        {gUnknown_Debug_083C50D9, MON_DATA_EARTH_RIBBON},
-        {gUnknown_Debug_083C50DF, MON_DATA_WORLD_RIBBON},
-        {gUnknown_Debug_083C50E5, 0 /* sentinel */}
+        {sText_TayaRibbon_Earth, MON_DATA_EARTH_RIBBON},
+        {sText_TayaRibbon_World, MON_DATA_WORLD_RIBBON},
+        {sText_TayaRibbon_Blank, 0 /* sentinel */}
     }
 };
 
-const u8 gUnknown_Debug_083C517C[] = _("Select Ribbon");
+const u8 sText_TayaRibbon_Select[] = _("Select Ribbon");
 
 bool8 TayaDebugMenu_Trend(void)
 {
@@ -426,7 +426,7 @@ bool8 TayaDebugMenu_TownFlags(void)
 bool8 TayaDebugMenu_AwardARibbon(void)
 {
     BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-    SetMainCallback2(debug_sub_80915BC);
+    SetMainCallback2(TayaDebugRibbon_Init);
     CloseMenu();
     return TRUE;
 }
@@ -714,14 +714,14 @@ bool8 debug_sub_8091300(void)
     return FALSE;
 }
 
-void debug_sub_8091320(void)
+void TayaDebugRibbon_VBlankCallback(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void debug_sub_8091334(void)
+void TayaDebugRibbon_MainCallback(void)
 {
     AnimateSprites();
     BuildOamBuffer();
@@ -786,11 +786,11 @@ void debug_sub_8091334(void)
             }
             if (eTayaMonData.redraw)
             {
-                debug_sub_80916AC();
+                TayaDebugRibbon_PrintOptions();
             }
             else if (JOY_NEW(A_BUTTON))
             {
-                u16 param = gUnknown_Debug_083C50EC[eTayaMonData.y][eTayaMonData.x].param;
+                u16 param = sRibbonOptions_TayaDebug[eTayaMonData.y][eTayaMonData.x].param;
                 if (param >= MON_DATA_COOL_RIBBON && param <= MON_DATA_TOUGH_RIBBON)
                     eTayaMonData.maxVal = 4;
                 else
@@ -823,20 +823,20 @@ void debug_sub_8091334(void)
             }
             if (eTayaMonData.redraw)
             {
-                debug_sub_80916AC();
+                TayaDebugRibbon_PrintOptions();
             }
             else
             {
                 if (JOY_NEW(B_BUTTON))
                 {
-                    eTayaMonData.data[eTayaMonData.y][eTayaMonData.x] = GetMonData(gPlayerParty, gUnknown_Debug_083C50EC[eTayaMonData.y][eTayaMonData.x].param);
-                    debug_sub_80916AC();
+                    eTayaMonData.data[eTayaMonData.y][eTayaMonData.x] = GetMonData(gPlayerParty, sRibbonOptions_TayaDebug[eTayaMonData.y][eTayaMonData.x].param);
+                    TayaDebugRibbon_PrintOptions();
                     eTayaMonData.state = 0;
                 }
                 if (JOY_NEW(A_BUTTON))
                 {
-                    if (gUnknown_Debug_083C50EC[eTayaMonData.y][eTayaMonData.x].param)
-                        SetMonData(gPlayerParty, gUnknown_Debug_083C50EC[eTayaMonData.y][eTayaMonData.x].param, &eTayaMonData.data[eTayaMonData.y][eTayaMonData.x]);
+                    if (sRibbonOptions_TayaDebug[eTayaMonData.y][eTayaMonData.x].param)
+                        SetMonData(gPlayerParty, sRibbonOptions_TayaDebug[eTayaMonData.y][eTayaMonData.x].param, &eTayaMonData.data[eTayaMonData.y][eTayaMonData.x]);
                     eTayaMonData.state = 0;
                 }
             }
@@ -844,7 +844,7 @@ void debug_sub_8091334(void)
     }
 }
 
-void debug_sub_80915BC(void)
+void TayaDebugRibbon_Init(void)
 {
     u8 i;
     u8 j;
@@ -854,7 +854,7 @@ void debug_sub_80915BC(void)
     {
         for (j = 0; j < 3; j++)
         {
-            u16 param = gUnknown_Debug_083C50EC[i][j].param;
+            u16 param = sRibbonOptions_TayaDebug[i][j].param;
             if (param)
                 eTayaMonData.data[i][j] = GetMonData(gPlayerParty, param);
             else
@@ -865,19 +865,19 @@ void debug_sub_80915BC(void)
     InitMenuWindow(&gWindowTemplate_81E7224);
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 29, 3);
-    Menu_PrintText(gUnknown_Debug_083C517C, 1, 1);
+    Menu_PrintText(sText_TayaRibbon_Select, 1, 1);
     Menu_DrawStdWindowFrame(0, 4, 29, 17);
     Menu_DrawStdWindowFrame(0, 18, 29, 21);
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON;
     eTayaMonData.x = 0;
     eTayaMonData.y = 0;
     eTayaMonData.state = 0;
-    debug_sub_80916AC();
-    SetVBlankCallback(debug_sub_8091320);
-    SetMainCallback2(debug_sub_8091334);
+    TayaDebugRibbon_PrintOptions();
+    SetVBlankCallback(TayaDebugRibbon_VBlankCallback);
+    SetMainCallback2(TayaDebugRibbon_MainCallback);
 }
 
-void debug_sub_80916AC(void)
+void TayaDebugRibbon_PrintOptions(void)
 {
     u8 i;
     u8 j;
@@ -894,7 +894,7 @@ void debug_sub_80916AC(void)
                 *buffer++ = CHAR_SPACE;
                 *buffer++ = CHAR_SPACE;
             }
-            buffer = StringCopy(buffer, gUnknown_Debug_083C50EC[i][j].text);
+            buffer = StringCopy(buffer, sRibbonOptions_TayaDebug[i][j].text);
             *buffer++ = CHAR_SPACE;
             buffer = ConvertIntToDecimalStringN(buffer, eTayaMonData.data[i][j], STR_CONV_MODE_LEFT_ALIGN, 1);
             *buffer++ = CHAR_SPACE;
