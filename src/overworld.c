@@ -1797,7 +1797,7 @@ static void InitOverworldGraphicsRegisters(void)
     REG_WIN0V = 255;
     REG_WIN1H = -1;
     REG_WIN1V = -1;
-    REG_BLDCNT = gUnknown_081E29E0[1] | gUnknown_081E29E0[2] | gUnknown_081E29E0[3] | 0x1040;
+    REG_BLDCNT = gBgLayerBlendTarget2Flags[1] | gBgLayerBlendTarget2Flags[2] | gBgLayerBlendTarget2Flags[3] | 0x1040;
     REG_BLDALPHA = 1805;
     *gBGHOffsetRegs[0] = 0;
     *gBGVOffsetRegs[0] = 0;
@@ -1811,7 +1811,7 @@ static void InitOverworldGraphicsRegisters(void)
     *gBGHOffsetRegs[3] = 0;
     *gBGVOffsetRegs[3] = 0;
     *gBGControlRegs[3] = 7747;
-    REG_DISPCNT = gUnknown_081E29D8[1] | 0x7060 | gUnknown_081E29D8[2] | gUnknown_081E29D8[0] | gUnknown_081E29D8[3];
+    REG_DISPCNT = gBgLayerDisplayFlags[1] | 0x7060 | gBgLayerDisplayFlags[2] | gBgLayerDisplayFlags[0] | gBgLayerDisplayFlags[3];
 }
 
 void sub_8054D4C(u32 a1)

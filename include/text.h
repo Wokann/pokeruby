@@ -62,8 +62,8 @@ extern vu16 *const gBGControlRegs[];
 extern vu16 *const gBGHOffsetRegs[];
 extern vu16 *const gBGVOffsetRegs[];
 
-extern const u16 gUnknown_081E29D8[];
-extern const u16 gUnknown_081E29E0[];
+extern const u16 gBgLayerDisplayFlags[];
+extern const u16 gBgLayerBlendTarget2Flags[];
 
 extern const struct WindowTemplate gWindowTemplate_81E6C3C;
 extern const struct WindowTemplate gWindowTemplate_81E6C58;

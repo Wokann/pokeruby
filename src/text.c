@@ -223,8 +223,8 @@ vu16 *const gBGVOffsetRegs[] =
     &REG_BG3VOFS,
 };
 
-const u16 gUnknown_081E29D8[] = { 0x100, 0x200, 0x400, 0x800 };
-const u16 gUnknown_081E29E0[] = { 0x100, 0x200, 0x400, 0x800 };
+const u16 gBgLayerDisplayFlags[] = { 0x100, 0x200, 0x400, 0x800 };
+const u16 gBgLayerBlendTarget2Flags[] = { 0x100, 0x200, 0x400, 0x800 };
 const u16 gOrbEffectBackgroundLayerFlags[] = { 1, 2, 4, 8 };
 
 static const u8 sFont0LatinGlyphs[] = INCBIN_U8("graphics/fonts/font0_lat.1bpp");
