@@ -183,8 +183,8 @@ struct CreditsEntry
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 
-extern u16 gUnknown_02039358;
-extern s16 gUnknown_0203935A;
+extern u16 gIntroCredits_MovingSceneryVBase;
+extern s16 gIntroCredits_MovingSceneryVOffset;
 extern s16 gIntroCredits_MovingSceneryState;
 
 static EWRAM_DATA s16 sUnusedCreditsValue = 0;
@@ -1006,13 +1006,13 @@ void Task_BikeScene(u8 taskIdC)
     switch (gTasks[taskIdC].data[TDC_STATE])
     {
     case 0:
-        gUnknown_0203935A = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
+        gIntroCredits_MovingSceneryVOffset = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
         gTasks[taskIdC].data[TDC_SINE_INDEX]++;
         break;
     case 1:
-        if (gUnknown_0203935A != 0)
+        if (gIntroCredits_MovingSceneryVOffset != 0)
         {
-            gUnknown_0203935A = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
+            gIntroCredits_MovingSceneryVOffset = Sin((gTasks[taskIdC].data[TDC_SINE_INDEX] >> 1) & 0x7F, 12);
             gTasks[taskIdC].data[TDC_SINE_INDEX]++;
         }
         else
@@ -1026,7 +1026,7 @@ void Task_BikeScene(u8 taskIdC)
         if (gTasks[taskIdC].data[TDC_SINE_INDEX] < 64)
         {
             gTasks[taskIdC].data[TDC_SINE_INDEX]++;
-            gUnknown_0203935A = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
+            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
         }
         else
         {
@@ -1054,7 +1054,7 @@ void Task_BikeScene(u8 taskIdC)
         if (gTasks[taskIdC].data[TDC_SINE_INDEX] > 0)
         {
             gTasks[taskIdC].data[TDC_SINE_INDEX]--;
-            gUnknown_0203935A = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
+            gIntroCredits_MovingSceneryVOffset = Sin(gTasks[taskIdC].data[TDC_SINE_INDEX] & 0x7F, 20);
         }
         else
         {
@@ -1241,8 +1241,8 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
         gMain.state = 1;
         break;
     case 1:
-        gUnknown_02039358 = 34;
-        gUnknown_0203935A = 0;
+        gIntroCredits_MovingSceneryVBase = 34;
+        gIntroCredits_MovingSceneryVOffset = 0;
         sub_8148CB0(data);
         gMain.state += 1;
         break;
@@ -1250,7 +1250,7 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
         if (gSaveBlock2.playerGender == MALE)
         {
             LoadCompressedObjectPic(gIntro2BrendanSpriteSheet);
-            LoadCompressedObjectPic(gUnknown_08416E34);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsRivalMay);
             LoadCompressedObjectPic(gIntro2BicycleSpriteSheet);
             LoadSpritePalettes(gIntro2SpritePalettes);
 
@@ -1267,7 +1267,7 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
         else
         {
             LoadCompressedObjectPic(gIntro2MaySpriteSheet);
-            LoadCompressedObjectPic(gUnknown_08416E24);
+            LoadCompressedObjectPic(gSpriteSheet_CreditsRivalBrendan);
             LoadCompressedObjectPic(gIntro2BicycleSpriteSheet);
             LoadSpritePalettes(gIntro2SpritePalettes);
 
@@ -1455,7 +1455,7 @@ static void SpriteCB_Rival(struct Sprite *sprite)
             StartSpriteAnimIfDifferent(sprite, 2);
         if (sprite->x > -32)
             sprite->x -= 2;
-        sprite->y2 = -gUnknown_0203935A;
+        sprite->y2 = -gIntroCredits_MovingSceneryVOffset;
         break;
     case 2:
         sprite->data[7] += 1;

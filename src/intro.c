@@ -23,8 +23,8 @@
 #include "ewram.h"
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-extern u16 gUnknown_02039358;
-extern u16 gUnknown_0203935A;
+extern u16 gIntroCredits_MovingSceneryVBase;
+extern u16 gIntroCredits_MovingSceneryVOffset;
 extern u16 gSaveFileStatus;
 extern u8 gReservedSpritePaletteCount;
 extern const u8 gInterfaceGfx_PokeBall[];
@@ -1072,8 +1072,8 @@ static void Task_Scene2_Load(u8 taskId)
     SetVBlankCallback(NULL);
     ResetSpriteData();
     FreeAllSpritePalettes();
-    gUnknown_02039358 = 0;
-    gUnknown_0203935A = 0;
+    gIntroCredits_MovingSceneryVBase = 0;
+    gIntroCredits_MovingSceneryVOffset = 0;
 #ifdef SAPPHIRE
     load_intro_part2_graphics(0);
 #else
@@ -1149,7 +1149,7 @@ static void Task_Scene2_BikeRide(u8 taskId)
     //TODO: Clean this up
     a = (((u16)gTasks[taskId].data[3] << 16) >> 18) & 0x7F;
     sine = Sin(a, 48);
-    gUnknown_0203935A = sine;
+    gIntroCredits_MovingSceneryVOffset = sine;
     if (gTasks[taskId].data[3] < 512)
         gTasks[taskId].data[3]++;
 #ifdef SAPPHIRE
@@ -1957,7 +1957,7 @@ static void SpriteCB_Eon(struct Sprite *sprite)
             sprite->x2 -= 2;
         break;
     }
-    sprite->y2 = Sin((u8)sprite->data[1], 8) - gUnknown_0203935A;
+    sprite->y2 = Sin((u8)sprite->data[1], 8) - gIntroCredits_MovingSceneryVOffset;
     sprite->data[1] += 4;
 }
 

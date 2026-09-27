@@ -7,8 +7,8 @@ extern const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[];
 extern const struct CompressedSpriteSheet gIntro2LatiosSpriteSheet[];
 extern const struct CompressedSpriteSheet gIntro2LatiasSpriteSheet[];
 extern const struct SpritePalette gIntro2SpritePalettes[];
-extern const struct CompressedSpriteSheet gUnknown_08416E24[];
-extern const struct CompressedSpriteSheet gUnknown_08416E34[];
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalBrendan[];
+extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[];
 
 void load_intro_part2_graphics(u8 a);
 void sub_8148C78(u8 a);
