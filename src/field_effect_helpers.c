@@ -166,6 +166,9 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
 #undef sReflectionVerticalOffset
 #undef sIsStillReflection
 
+#define sPrevX data[0]
+#define sPrevY data[1]
+
 u8 CreateWarpArrowSprite(void)
 {
     u8 spriteId;
@@ -194,18 +197,21 @@ void ShowWarpArrowSprite(u8 spriteId, u8 direction, s16 x, s16 y)
     struct Sprite *sprite;
 
     sprite = &gSprites[spriteId];
-    if (sprite->invisible || sprite->data[0] != x || sprite->data[1] != y)
+    if (sprite->invisible || sprite->sPrevX != x || sprite->sPrevY != y)
     {
         SetSpritePosToMapCoords(x, y, &x2, &y2);
         sprite = &gSprites[spriteId];
         sprite->x = x2 + 8;
         sprite->y = y2 + 8;
         sprite->invisible = FALSE;
-        sprite->data[0] = x;
-        sprite->data[1] = y;
+        sprite->sPrevX = x;
+        sprite->sPrevY = y;
         StartSpriteAnim(sprite, direction - 1);
     }
 }
+
+#undef sPrevX
+#undef sPrevY
 
 static const u8 sShadowEffectTemplateIds[] = {
     0,
