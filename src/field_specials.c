@@ -1790,12 +1790,12 @@ bool8 IsPokerusInParty(void)
     return TRUE;
 }
 
-static void sub_810F7A8(u8);
-static void sub_810F814(u8);
+static void Task_ShakeCamera(u8);
+static void StopCameraShake(u8);
 
 void ShakeCamera(void)
 {
-    u8 taskId = CreateTask(sub_810F7A8, 9);
+    u8 taskId = CreateTask(Task_ShakeCamera, 9);
     gTasks[taskId].data[0] = gSpecialVar_0x8005;
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
@@ -1806,7 +1806,7 @@ void ShakeCamera(void)
     PlaySE(SE_M_STRENGTH);
 }
 
-static void sub_810F7A8(u8 taskId)
+static void Task_ShakeCamera(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     task->data[1]++;
@@ -1821,14 +1821,14 @@ static void sub_810F7A8(u8 taskId)
             SetCameraPanning(task->data[0], task->data[4]);
             if (task->data[2] == 8)
             {
-                sub_810F814(taskId);
+                StopCameraShake(taskId);
                 InstallCameraPanAheadCallback();
             }
         }
     }
 }
 
-static void sub_810F814(u8 taskId)
+static void StopCameraShake(u8 taskId)
 {
     DestroyTask(taskId);
     ScriptContext_Enable();
