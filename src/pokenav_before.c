@@ -1581,12 +1581,12 @@ void OpenPokenavRegionMap(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F1E84();
+        StartMenuOptionSpritesSlideOut();
         sub_80F2D04(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
             if (gSaveBlock2.regionMapZoom)
                 var1 = 0x7;
@@ -2078,13 +2078,13 @@ void OpenConditionSearchResults(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F1E84();
+        StartMenuOptionSpritesSlideOut();
         sub_80F2D04(0x1);
         sub_80F2D04(0x5);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0);
 			gPokenavStructPtr->callbackStep++;
@@ -2348,12 +2348,12 @@ void OpenConditionGraphFromParty(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F1E84();
+        StartMenuOptionSpritesSlideOut();
         sub_80F2D04(0x1);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x1);
 			gPokenavStructPtr->callbackStep++;
@@ -2602,12 +2602,12 @@ void OpenRibbonsMonList(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F1E84();
+        StartMenuOptionSpritesSlideOut();
         sub_80F2D04(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x4);
 			gPokenavStructPtr->callbackStep++;
@@ -2977,12 +2977,12 @@ void OpenTrainerEyes(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F1E84();
+        StartMenuOptionSpritesSlideOut();
         sub_80F2D04(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
 			DrawPokenavBottomToolbar(0x9);
 			gPokenavStructPtr->callbackStep++;
@@ -3252,7 +3252,7 @@ void ExitPokenav(void)
 
 void StartPokenavMenuTransition(u8 menuType, u8 cursorPos, u8 gfxId)
 {
-    sub_80F1E84();
+    StartMenuOptionSpritesSlideOut();
     gPokenavStructPtr->transitionMenuType = menuType;
     gPokenavStructPtr->transitionCursorPos = cursorPos;
     gPokenavStructPtr->transitionStep = 0;
@@ -3267,7 +3267,7 @@ bool8 UpdatePokenavMenuTransition(void)
     switch (gPokenavStructPtr->transitionStep)
     {
     case 0:
-        if (!sub_80F1F10())
+        if (!UpdateMenuOptionSpritesSlideOut())
         {
             if (gPokenavStructPtr->transitionGfxId != 12)
                 gPokenavStructPtr->transitionStep = 1;

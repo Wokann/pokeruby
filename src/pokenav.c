@@ -2019,11 +2019,11 @@ bool8 AreMenuOptionSpriteOffsetsMoving(void)
     return !AreMenuOptionSpriteOffsetsAtRest();
 }
 
-void sub_80F1E84(void)
+void StartMenuOptionSpritesSlideOut(void)
 {
     u16 i, j;
 
-    gPokenavStructPtr->unk30F = 0;
+    gPokenavStructPtr->menuOptionExitStep = 0;
     sub_80F2148();
     for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
     {
@@ -2032,20 +2032,20 @@ void sub_80F1E84(void)
             for (j = 0; j < 4; j++)
             {
                 if (gPokenavStructPtr->menuOptionSprites[i][j])
-                    gPokenavStructPtr->menuOptionSprites[i][j]->callback = sub_80F2240;
+                    gPokenavStructPtr->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionOut;
             }
         }
     }
 }
 
-bool8 sub_80F1F10(void)
+bool8 UpdateMenuOptionSpritesSlideOut(void)
 {
     u16 j;
 
-    switch (gPokenavStructPtr->unk30F)
+    switch (gPokenavStructPtr->menuOptionExitStep)
     {
     case 0:
-        if (sub_80F2360())
+        if (AreOtherMenuOptionSpritesGone())
         {
             for (j = 0; j < 4; j++)
             {
@@ -2056,17 +2056,17 @@ bool8 sub_80F1F10(void)
                 sprite->data[4] = j * 4 - 6;
                 sprite->data[4] /= 2;
                 sprite->data[5] = sprite->data[4] * 8;
-                sprite->callback = sub_80F2240;
+                sprite->callback = SpriteCB_SlideMenuOptionOut;
             }
 
-            sub_80F2170();
-            gPokenavStructPtr->unk30F++;
+            StartSelectedMenuOptionFadeOut();
+            gPokenavStructPtr->menuOptionExitStep++;
         }
         break;
     case 1:
-        if (sub_80F23C8())
+        if (AreSelectedMenuOptionSpritesGone())
         {
-            sub_80F21F8();
+            StopMenuOptionFadeOut();
             FreeSpriteTilesByTag(0x0);
             FreeSpritePaletteByTag(0x0);
             FreeSpritePaletteByTag(0x1);
@@ -2133,7 +2133,7 @@ void sub_80F2148(void)
     sub_80F20F4();
 }
 
-void sub_80F2170(void)
+void StartSelectedMenuOptionFadeOut(void)
 {
     u16 j;
 
@@ -2153,7 +2153,7 @@ void sub_80F2170(void)
     }
 }
 
-void sub_80F21F8()
+void StopMenuOptionFadeOut()
 {
     gPokenavStructPtr->unk311 = 0;
     REG_BLDCNT = 0;
@@ -2169,7 +2169,7 @@ void SpriteCB_SlideMenuOptionIn(struct Sprite *sprite)
     }
 }
 
-void sub_80F2240(struct Sprite *sprite)
+void SpriteCB_SlideMenuOptionOut(struct Sprite *sprite)
 {
     if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
     {
@@ -2180,13 +2180,13 @@ void sub_80F2240(struct Sprite *sprite)
         }
 
         if (sprite->affineAnimEnded)
-            sub_80F240C(sprite);
+            DestroyMenuOptionSprite(sprite);
     }
     else
     {
         sprite->x += 8;
         if (sprite->x >= sprite->data[3])
-            sub_80F240C(sprite);
+            DestroyMenuOptionSprite(sprite);
     }
 }
 
@@ -2224,7 +2224,7 @@ bool8 AreMenuOptionSpriteOffsetsAtRest(void)
     return TRUE;
 }
 
-bool8 sub_80F2360(void)
+bool8 AreOtherMenuOptionSpritesGone(void)
 {
     u16 i, j;
 
@@ -2244,7 +2244,7 @@ bool8 sub_80F2360(void)
     return TRUE;
 }
 
-bool8 sub_80F23C8(void)
+bool8 AreSelectedMenuOptionSpritesGone(void)
 {
     u16 j;
 
@@ -2258,7 +2258,7 @@ bool8 sub_80F23C8(void)
     return TRUE;
 }
 
-void sub_80F240C(struct Sprite *sprite)
+void DestroyMenuOptionSprite(struct Sprite *sprite)
 {
     gPokenavStructPtr->menuOptionSprites[sprite->data[0]][sprite->data[1]] = NULL;
     if (sprite->affineAnimEnded)
