@@ -47,27 +47,27 @@ static bool8 SetPokeblock(void);
 // TOP MENU
 // =======================================================
 
-static const u8 Str_843E36C[] = _("Berries");
-static const u8 Str_843E374[] = _("Goods");
-static const u8 Str_843E37A[] = _("{PKMN} list");
-static const u8 Str_843E382[] = DTR("トラップ", "Trap");
-static const u8 Str_843E387[] = _("Move your base");
-static const u8 Str_843E396[] = _("Moving {PKMN}");
-static const u8 Str_843E3A0[] = _("Fishing points");
-static const u8 Str_843E3AF[] = _("Set {POKEBLOCK}");
-static const u8 Str_843E3B9[] = _("Make bases(to max)");
-static const u8 Str_843E3CC[] = _("Base location");
+static const u8 sText_Berries[] = _("Berries");
+static const u8 sText_Goods[] = _("Goods");
+static const u8 sText_PokemonList[] = _("{PKMN} list");
+static const u8 sText_Trap[] = DTR("トラップ", "Trap");
+static const u8 sText_MoveYourBase[] = _("Move your base");
+static const u8 sText_MovingPokemon[] = _("Moving {PKMN}");
+static const u8 sText_FishingPoints[] = _("Fishing points");
+static const u8 sText_SetPokeblock[] = _("Set {POKEBLOCK}");
+static const u8 sText_MakeBasesToMax[] = _("Make bases(to max)");
+static const u8 sText_BaseLocation[] = _("Base location");
 
 static const struct MenuAction sNakamuraTopMenuActions[] = {
-	{ Str_843E36C, Give999OfAllBerries },
-	{ Str_843E37A, SwitchToPkmnListMenu },
-	{ Str_843E374, GiveAllDecorations },
-	{ Str_843E387, SwitchToMoveYourBaseSubmenu },
-	{ Str_843E3B9, MakeBasesToMax },
-	{ Str_843E3CC, BaseLocation },
-	{ Str_843E396, MovingPKMN },
-	{ Str_843E3A0, FishingPoints },
-	{ Str_843E3AF, SetPokeblock },
+	{ sText_Berries, Give999OfAllBerries },
+	{ sText_PokemonList, SwitchToPkmnListMenu },
+	{ sText_Goods, GiveAllDecorations },
+	{ sText_MoveYourBase, SwitchToMoveYourBaseSubmenu },
+	{ sText_MakeBasesToMax, MakeBasesToMax },
+	{ sText_BaseLocation, BaseLocation },
+	{ sText_MovingPokemon, MovingPKMN },
+	{ sText_FishingPoints, FishingPoints },
+	{ sText_SetPokeblock, SetPokeblock },
 };
 
 static void DrawNakamuraDebugMenu(void)
@@ -224,10 +224,10 @@ static const u8 sSecretBaseTemplates[] = {
     0xE9,   119,     6,     2 ,
 };
 
-static const u8 Str_843E550[] = _("R");
-static const u8 Str_843E552[] = _("X");
-static const u8 Str_843E554[] = _("Y");
-static const u8 Str_843E556[] = _(
+static const u8 sText_RouteLabel[] = _("R");
+static const u8 sText_XCoordinateLabel[] = _("X");
+static const u8 sText_YCoordinateLabel[] = _("Y");
+static const u8 sText_SecretBasePartySlots[] = _(
                                     "♂1\n"
                                     "♂2\n"
                                     "♂3\n"
@@ -326,15 +326,15 @@ static void BaseLocation_Redraw(void)
         sub_80BC190(gStringVar1, sSecretBaseIdx);
         Menu_PrintText(gStringVar1, 1, 3);
 
-        Menu_PrintText(Str_843E550, 1, 5);
+        Menu_PrintText(sText_RouteLabel, 1, 5);
         ConvertIntToDecimalStringN(gStringVar1, R, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 2, 5);
 
-        Menu_PrintText(Str_843E552, 1, 7);
+        Menu_PrintText(sText_XCoordinateLabel, 1, 7);
         ConvertIntToDecimalStringN(gStringVar1, X, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 3, 7);
 
-        Menu_PrintText(Str_843E554, 1, 9);
+        Menu_PrintText(sText_YCoordinateLabel, 1, 9);
         ConvertIntToDecimalStringN(gStringVar1, Y, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 3, 9);
     }
@@ -389,8 +389,8 @@ EWRAM_DATA u8 sMoveYourBase_CursorPos = 0;
 EWRAM_DATA u8 sMoveYourBase_XCursorPos = 0;
 EWRAM_DATA u8 sSecretBaseNameCharGroup = 0;
 
-static const u8 Str_843E574[] = _("ー");
-static const u8 Str_843E576[][2] = {
+static const u8 sText_NameCursor[] = _("ー");
+static const u8 sText_SecretBaseNameCharGroups[][2] = {
     _("あ"),
     _("ア"),
     _("A"),
@@ -432,7 +432,7 @@ static void MoveYourBase_Redraw(void)
 static void MoveYourBase_UpdateXCursorPosition(void)
 {
     Menu_BlankWindowRect(2, 5, 11, 6);
-    Menu_PrintText(Str_843E574, sMoveYourBase_XCursorPos + 2, 5);
+    Menu_PrintText(sText_NameCursor, sMoveYourBase_XCursorPos + 2, 5);
 }
 
 static void MoveYourBase_PrintCharacterSetName(void)
@@ -440,7 +440,7 @@ static void MoveYourBase_PrintCharacterSetName(void)
     if (sMoveYourBase_CursorPos)
         Menu_BlankWindowRect(11, 1, 11, 2);
     else
-        Menu_PrintText(Str_843E576[sSecretBaseNameCharGroup], 11, 1);
+        Menu_PrintText(sText_SecretBaseNameCharGroups[sSecretBaseNameCharGroup], 11, 1);
 }
 
 static void MoveYourBase_EditOwnerID(s8 direction)
@@ -650,7 +650,7 @@ static bool8 SwitchToMoveYourBaseSubmenu(void)
 // MOVING PKMN (aka Roamers)
 // =======================================================
 
-static const u8 Str_843E580[] = _(
+static const u8 sText_RoamerActions[] = _(
                                     "ADD\n"
                                     "DEL\n"
                                     "EXIT");
@@ -701,7 +701,7 @@ static bool8 MovingPKMN(void)
     Debug_GetRoamerLocation(gStringVar1);
     Menu_DrawStdWindowFrame(0, 0, 11, 9);
     Menu_PrintText(gStringVar1, 1, 1);
-    Menu_PrintText(Str_843E580, 2, 3);
+    Menu_PrintText(sText_RoamerActions, 2, 3);
     InitMenu(0, 1, 3, 3, 0, 10);
     return FALSE;
 }
@@ -742,7 +742,7 @@ static bool8 GiveAllDecorations(void)
 // =======================================================
 
 #if (ENGLISH && REVISION == 0)
-static const u8 Str_843E58D[] = _(
+static const u8 sText_FishingLocations[] = _(
                                     "つりばしょ     R119\n"
                                     " Y1\n"
                                     " Y2\n"
@@ -752,7 +752,7 @@ static const u8 Str_843E58D[] = _(
                                     "\n"
                                     "じぶんのまえ");
 #else
-static const u8 Str_843E58D[] = _(
+static const u8 sText_FishingLocations[] = _(
                                     "Fishing location R119\n"
                                     " Y1\n"
                                     " Y2\n"
@@ -831,7 +831,7 @@ static bool8 FishingPoints(void)
 
     Menu_EraseWindowRect(0, 0, 29, 19);
     Menu_DrawStdWindowFrame(0, 0, 16, 19);
-    Menu_PrintText(Str_843E58D, 1, 1);
+    Menu_PrintText(sText_FishingLocations, 1, 1);
 
     ConvertIntToDecimalStringN(gStringVar1, FishingPoints_CountFishingTilesInMapThird(0), STR_CONV_MODE_RIGHT_ALIGN, 5);
     Menu_PrintText(gStringVar1, 5, 3);
@@ -887,8 +887,8 @@ static struct {
 } sNakaGenderTestData[PARTY_SIZE];
 
 EWRAM_DATA u8 sNakaGenderTest_CursorPosition = 0;
-static const u8 _843E5D1[] = {0x0F, 0x16, 0x19};
-static const u8 Str_843E5D4[] = DTR(
+static const u8 sGenderTestCursorXPositions[] = {0x0F, 0x16, 0x19};
+static const u8 sText_GenderTestInstructions[] = DTR(
                                     "Aボタン　{TALL_PLUS}　　Bボタン　ー\n"
                                     "START　けってい",
                                     "A BUTTON {TALL_PLUS}    B BUTTON {JPN}ー{ENG}\n"
@@ -900,7 +900,7 @@ void NakaGenderTest(void)
 
     Menu_DrawStdWindowFrame(14, 0, 29, 13);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
-    Menu_PrintText(Str_843E5D4, 1, 15);
+    Menu_PrintText(sText_GenderTestInstructions, 1, 15);
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
@@ -1031,7 +1031,7 @@ static void NakaGenderTest_JoypadAction(u8 i)
     PlaySE(SE_SELECT);
     q = sNakaGenderTest_CursorPosition / 6;
     r = sNakaGenderTest_CursorPosition % 6;
-    Menu_BlankWindowRect(_843E5D1[q], r * 2 + 1, _843E5D1[q], r * 2 + 2);
+    Menu_BlankWindowRect(sGenderTestCursorXPositions[q], r * 2 + 1, sGenderTestCursorXPositions[q], r * 2 + 2);
 
     if (i == 0)
     {
@@ -1067,7 +1067,7 @@ static void NakaGenderTest_JoypadAction(u8 i)
 
     q = sNakaGenderTest_CursorPosition / 6;
     r = sNakaGenderTest_CursorPosition % 6;
-    PrintTriangleCursorWithPalette(_843E5D1[q], r * 2 + 1, 0xFF);
+    PrintTriangleCursorWithPalette(sGenderTestCursorXPositions[q], r * 2 + 1, 0xFF);
 }
 
 static bool8 NakaGenderTest_HandleJoypad(void)
@@ -1938,27 +1938,27 @@ static bool8 SetPokeblock(void)
 
 EWRAM_DATA u8 sEVTest_CursorPosition = 0;
 
-static const u8 Str_843E5F2[] = DTR("HP　どりょくち", "HP EVs");
-static const u8 Str_843E5FB[] = DTR("こうげき　どりょくち", "ATK EVs");
-static const u8 Str_843E606[] = DTR("ぼうぎょ　どりょくち", "DEF EVs");
-static const u8 Str_843E611[] = DTR("すばやさ　どりょくち", "SPE EVs");
-static const u8 Str_843E61C[] = DTR("とくこう　どりょくち", "SPA EVs");
-static const u8 Str_843E627[] = DTR("とくぼう　どりょくち", "SPD EVs");
-static const u8 Str_843E632[] = DTR("なつきど", "FRIENDSHIP");
-static const u8 Str_843E637[] = DTR("どりょくち　ごうけい", "EV TOTAL");
+static const u8 sText_HpEvs[] = DTR("HP　どりょくち", "HP EVs");
+static const u8 sText_AttackEvs[] = DTR("こうげき　どりょくち", "ATK EVs");
+static const u8 sText_DefenseEvs[] = DTR("ぼうぎょ　どりょくち", "DEF EVs");
+static const u8 sText_SpeedEvs[] = DTR("すばやさ　どりょくち", "SPE EVs");
+static const u8 sText_SpAttackEvs[] = DTR("とくこう　どりょくち", "SPA EVs");
+static const u8 sText_SpDefenseEvs[] = DTR("とくぼう　どりょくち", "SPD EVs");
+static const u8 sText_Friendship[] = DTR("なつきど", "FRIENDSHIP");
+static const u8 sText_TotalEvs[] = DTR("どりょくち　ごうけい", "EV TOTAL");
 
 static void EVTest_Init(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 22, 19);
     Menu_PrintText(gOtherText_Slash, 11, 1);
-    Menu_PrintText(Str_843E5F2, 2, 3);
-    Menu_PrintText(Str_843E5FB, 2, 5);
-    Menu_PrintText(Str_843E606, 2, 7);
-    Menu_PrintText(Str_843E611, 2, 9);
-    Menu_PrintText(Str_843E61C, 2, 11);
-    Menu_PrintText(Str_843E627, 2, 13);
-    Menu_PrintText(Str_843E637, 2, 15);
-    Menu_PrintText(Str_843E632, 2, 17);
+    Menu_PrintText(sText_HpEvs, 2, 3);
+    Menu_PrintText(sText_AttackEvs, 2, 5);
+    Menu_PrintText(sText_DefenseEvs, 2, 7);
+    Menu_PrintText(sText_SpeedEvs, 2, 9);
+    Menu_PrintText(sText_SpAttackEvs, 2, 11);
+    Menu_PrintText(sText_SpDefenseEvs, 2, 13);
+    Menu_PrintText(sText_TotalEvs, 2, 15);
+    Menu_PrintText(sText_Friendship, 2, 17);
 }
 
 static void EVTest_PrintMonData(struct Pokemon *pokemon)
@@ -2093,13 +2093,13 @@ EWRAM_DATA u16 sRngRight = 0;
 EWRAM_DATA u16 sNumSamples = 0;
 EWRAM_DATA u16 sRngMax = 0;
 
-static const u8 Str_843E642[] = DTR("ここから", "FROM");
-static const u8 Str_843E647[] = DTR("ここまで", "TO");
-static const u8 Str_843E64C[] = DTR("かいすう", "TIMES");
-static const u8 Str_843E651[] = DTR("けっか", "RESULT");
-static const u8 Str_843E655[] = DTR("かい", "×");
-static const u8 Str_843E658[] = _("0");
-static const u8 Str_843E65A[] = DTR("はんい", "RANGE");
+static const u8 sText_From[] = DTR("ここから", "FROM");
+static const u8 sText_To[] = DTR("ここまで", "TO");
+static const u8 sText_Times[] = DTR("かいすう", "TIMES");
+static const u8 sText_Result[] = DTR("けっか", "RESULT");
+static const u8 sText_TimesSymbol[] = DTR("かい", "×");
+static const u8 sText_Zero[] = _("0");
+static const u8 sText_Range[] = DTR("はんい", "RANGE");
 
 static u16 EVTest_GetDiscreteUniformRandomSamples(void)
 {
@@ -2132,17 +2132,17 @@ static u16 EVTest_GetDiscreteUniformRandomSamples(void)
 static void RNGTest_Init(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 15, 11);
-    Menu_PrintText(Str_843E642, 2, 1);
-    Menu_PrintText(Str_843E647, 2, 3);
-    Menu_PrintText(Str_843E65A, 2, 5);
-    Menu_PrintText(Str_843E64C, 2, 7);
-    Menu_PrintText(Str_843E651, 2, 9);
-    Menu_PrintText(Str_843E655, 13, 9);
-    Menu_PrintText(Str_843E658, 12, 1);
-    Menu_PrintText(Str_843E658, 12, 3);
-    Menu_PrintText(Str_843E658, 12, 5);
-    Menu_PrintText(Str_843E658, 12, 7);
-    Menu_PrintText(Str_843E658, 12, 9);
+    Menu_PrintText(sText_From, 2, 1);
+    Menu_PrintText(sText_To, 2, 3);
+    Menu_PrintText(sText_Range, 2, 5);
+    Menu_PrintText(sText_Times, 2, 7);
+    Menu_PrintText(sText_Result, 2, 9);
+    Menu_PrintText(sText_TimesSymbol, 13, 9);
+    Menu_PrintText(sText_Zero, 12, 1);
+    Menu_PrintText(sText_Zero, 12, 3);
+    Menu_PrintText(sText_Zero, 12, 5);
+    Menu_PrintText(sText_Zero, 12, 7);
+    Menu_PrintText(sText_Zero, 12, 9);
     InitMenu(0, 1, 1, 4, 0, 14);
 }
 
