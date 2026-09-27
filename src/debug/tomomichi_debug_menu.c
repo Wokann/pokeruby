@@ -1396,44 +1396,44 @@ static const struct MenuAction sMenuActions_ObjWorkCategories[] = {
     {sString_ObjWork_9To15, ControlWorks_ObjWork_9To15_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C35D4[] = _("OBJCHRWORK1");
-static const u8 gUnknown_Debug_083C35E0[] = _("OBJCHRWORK2");
-static const u8 gUnknown_Debug_083C35EC[] = _("OBJCHRWORK3");
-static const u8 gUnknown_Debug_083C35F8[] = _("OBJCHRWORK4");
-static const u8 gUnknown_Debug_083C3604[] = _("OBJCHRWORK5");
-static const u8 gUnknown_Debug_083C3610[] = _("OBJCHRWORK6");
-static const u8 gUnknown_Debug_083C361C[] = _("OBJCHRWORK7");
-static const u8 gUnknown_Debug_083C3628[] = _("OBJCHRWORK8");
-static const u8 gUnknown_Debug_083C3634[] = _("OBJCHRWORK9");
+static const u8 sString_ObjWork1[] = _("OBJCHRWORK1");
+static const u8 sString_ObjWork2[] = _("OBJCHRWORK2");
+static const u8 sString_ObjWork3[] = _("OBJCHRWORK3");
+static const u8 sString_ObjWork4[] = _("OBJCHRWORK4");
+static const u8 sString_ObjWork5[] = _("OBJCHRWORK5");
+static const u8 sString_ObjWork6[] = _("OBJCHRWORK6");
+static const u8 sString_ObjWork7[] = _("OBJCHRWORK7");
+static const u8 sString_ObjWork8[] = _("OBJCHRWORK8");
+static const u8 sString_ObjWork9[] = _("OBJCHRWORK9");
 
-static const u8 gUnknown_Debug_083C3640[] = _("OBJCHRWORK10");
-static const u8 gUnknown_Debug_083C364D[] = _("OBJCHRWORK11");
-static const u8 gUnknown_Debug_083C365A[] = _("OBJCHRWORK12");
-static const u8 gUnknown_Debug_083C3667[] = _("OBJCHRWORK13");
-static const u8 gUnknown_Debug_083C3674[] = _("OBJCHRWORK14");
-static const u8 gUnknown_Debug_083C3681[] = _("OBJCHRWORK15");
-static const u8 gUnknown_Debug_083C368E[] = _("OBJCHRWORK16");
+static const u8 sString_ObjWork10[] = _("OBJCHRWORK10");
+static const u8 sString_ObjWork11[] = _("OBJCHRWORK11");
+static const u8 sString_ObjWork12[] = _("OBJCHRWORK12");
+static const u8 sString_ObjWork13[] = _("OBJCHRWORK13");
+static const u8 sString_ObjWork14[] = _("OBJCHRWORK14");
+static const u8 sString_ObjWork15[] = _("OBJCHRWORK15");
+static const u8 sString_ObjWork16[] = _("OBJCHRWORK16");
 
 static const struct MenuAction sMenuActions_ObjWork_0To8[] = {
-    {gUnknown_Debug_083C35D4, DummyMenuAction},
-    {gUnknown_Debug_083C35E0, DummyMenuAction},
-    {gUnknown_Debug_083C35EC, DummyMenuAction},
-    {gUnknown_Debug_083C35F8, DummyMenuAction},
-    {gUnknown_Debug_083C3604, DummyMenuAction},
-    {gUnknown_Debug_083C3610, DummyMenuAction},
-    {gUnknown_Debug_083C361C, DummyMenuAction},
-    {gUnknown_Debug_083C3628, DummyMenuAction},
-    {gUnknown_Debug_083C3634, DummyMenuAction}
+    {sString_ObjWork1, DummyMenuAction},
+    {sString_ObjWork2, DummyMenuAction},
+    {sString_ObjWork3, DummyMenuAction},
+    {sString_ObjWork4, DummyMenuAction},
+    {sString_ObjWork5, DummyMenuAction},
+    {sString_ObjWork6, DummyMenuAction},
+    {sString_ObjWork7, DummyMenuAction},
+    {sString_ObjWork8, DummyMenuAction},
+    {sString_ObjWork9, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_ObjWork_9To15[] = {
-    {gUnknown_Debug_083C3640, DummyMenuAction},
-    {gUnknown_Debug_083C364D, DummyMenuAction},
-    {gUnknown_Debug_083C365A, DummyMenuAction},
-    {gUnknown_Debug_083C3667, DummyMenuAction},
-    {gUnknown_Debug_083C3674, DummyMenuAction},
-    {gUnknown_Debug_083C3681, DummyMenuAction},
-    {gUnknown_Debug_083C368E, DummyMenuAction}
+    {sString_ObjWork10, DummyMenuAction},
+    {sString_ObjWork11, DummyMenuAction},
+    {sString_ObjWork12, DummyMenuAction},
+    {sString_ObjWork13, DummyMenuAction},
+    {sString_ObjWork14, DummyMenuAction},
+    {sString_ObjWork15, DummyMenuAction},
+    {sString_ObjWork16, DummyMenuAction}
 };
 
 static const u8 sObjWorkPageCounts[] = {9, 7};
@@ -1830,44 +1830,44 @@ static const struct MenuAction sMenuActions_LocalWorkCategories[] = {
     {sString_LocalWork_9To15, ControlWorks_LocalWork_9To15_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C4654[] = _("LOCALWORK0");
-static const u8 gUnknown_Debug_083C465F[] = _("LOCALWORK1");
-static const u8 gUnknown_Debug_083C466A[] = _("LOCALWORK2");
-static const u8 gUnknown_Debug_083C4675[] = _("LOCALWORK3");
-static const u8 gUnknown_Debug_083C4680[] = _("LOCALWORK4");
-static const u8 gUnknown_Debug_083C468B[] = _("LOCALWORK5");
-static const u8 gUnknown_Debug_083C4696[] = _("LOCALWORK6");
-static const u8 gUnknown_Debug_083C46A1[] = _("LOCALWORK7");
-static const u8 gUnknown_Debug_083C46AC[] = _("LOCALWORK8");
+static const u8 sString_LocalWork0[] = _("LOCALWORK0");
+static const u8 sString_LocalWork1[] = _("LOCALWORK1");
+static const u8 sString_LocalWork2[] = _("LOCALWORK2");
+static const u8 sString_LocalWork3[] = _("LOCALWORK3");
+static const u8 sString_LocalWork4[] = _("LOCALWORK4");
+static const u8 sString_LocalWork5[] = _("LOCALWORK5");
+static const u8 sString_LocalWork6[] = _("LOCALWORK6");
+static const u8 sString_LocalWork7[] = _("LOCALWORK7");
+static const u8 sString_LocalWork8[] = _("LOCALWORK8");
 
-static const u8 gUnknown_Debug_083C46B7[] = _("LOCALWORK9");
-static const u8 gUnknown_Debug_083C46C2[] = _("LOCALWORK10");
-static const u8 gUnknown_Debug_083C46CE[] = _("LOCALWORK11");
-static const u8 gUnknown_Debug_083C46DA[] = _("LOCALWORK12");
-static const u8 gUnknown_Debug_083C46E6[] = _("LOCALWORK13");
-static const u8 gUnknown_Debug_083C46F2[] = _("LOCALWORK14");
-static const u8 gUnknown_Debug_083C46FE[] = _("LOCALWORK15");
+static const u8 sString_LocalWork9[] = _("LOCALWORK9");
+static const u8 sString_LocalWork10[] = _("LOCALWORK10");
+static const u8 sString_LocalWork11[] = _("LOCALWORK11");
+static const u8 sString_LocalWork12[] = _("LOCALWORK12");
+static const u8 sString_LocalWork13[] = _("LOCALWORK13");
+static const u8 sString_LocalWork14[] = _("LOCALWORK14");
+static const u8 sString_LocalWork15[] = _("LOCALWORK15");
 
 static const struct MenuAction sMenuActions_LocalWork_0To8[] = {
-    {gUnknown_Debug_083C4654, DummyMenuAction},
-    {gUnknown_Debug_083C465F, DummyMenuAction},
-    {gUnknown_Debug_083C466A, DummyMenuAction},
-    {gUnknown_Debug_083C4675, DummyMenuAction},
-    {gUnknown_Debug_083C4680, DummyMenuAction},
-    {gUnknown_Debug_083C468B, DummyMenuAction},
-    {gUnknown_Debug_083C4696, DummyMenuAction},
-    {gUnknown_Debug_083C46A1, DummyMenuAction},
-    {gUnknown_Debug_083C46AC, DummyMenuAction}
+    {sString_LocalWork0, DummyMenuAction},
+    {sString_LocalWork1, DummyMenuAction},
+    {sString_LocalWork2, DummyMenuAction},
+    {sString_LocalWork3, DummyMenuAction},
+    {sString_LocalWork4, DummyMenuAction},
+    {sString_LocalWork5, DummyMenuAction},
+    {sString_LocalWork6, DummyMenuAction},
+    {sString_LocalWork7, DummyMenuAction},
+    {sString_LocalWork8, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_LocalWork_9To15[] = {
-    {gUnknown_Debug_083C46B7, DummyMenuAction},
-    {gUnknown_Debug_083C46C2, DummyMenuAction},
-    {gUnknown_Debug_083C46CE, DummyMenuAction},
-    {gUnknown_Debug_083C46DA, DummyMenuAction},
-    {gUnknown_Debug_083C46E6, DummyMenuAction},
-    {gUnknown_Debug_083C46F2, DummyMenuAction},
-    {gUnknown_Debug_083C46FE, DummyMenuAction}
+    {sString_LocalWork9, DummyMenuAction},
+    {sString_LocalWork10, DummyMenuAction},
+    {sString_LocalWork11, DummyMenuAction},
+    {sString_LocalWork12, DummyMenuAction},
+    {sString_LocalWork13, DummyMenuAction},
+    {sString_LocalWork14, DummyMenuAction},
+    {sString_LocalWork15, DummyMenuAction}
 };
 
 static const u8 sLocalWorkPageCounts[] = {9, 7};
