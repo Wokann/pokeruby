@@ -257,11 +257,11 @@ static void sub_8136294(void)
             }
             break;
         case 9:
-            sub_80F2C80(1);
+            BeginPokenavLeftHeaderLoad(1);
             gUnknown_02039304->unk50++;
             // fallthrough
         case 10:
-            if (!sub_80F2CBC(1))
+            if (!LoadPokenavLeftHeaderStep(1))
             {
                 gUnknown_02039304->unk50++;
             }

@@ -1351,11 +1351,11 @@ void InitPokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 14:
-        sub_80F2C80(0);
+        BeginPokenavLeftHeaderLoad(0);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 15:
-        if (!sub_80F2CBC(0))
+        if (!LoadPokenavLeftHeaderStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 16:
@@ -1429,11 +1429,11 @@ void RestorePokenavMainMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        sub_80F2C80(0);
+        BeginPokenavLeftHeaderLoad(0);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 11:
-        if (!sub_80F2CBC(0))
+        if (!LoadPokenavLeftHeaderStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
@@ -1459,7 +1459,7 @@ void ClosePokenavConditionMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F2D04(1);
+        StartPokenavLeftHeaderSlideOut(1);
         StartPokenavMenuTransition(0, gPokenavStructPtr->mainMenuCursorPos, 0);
         gPokenavStructPtr->callbackStep++;
         break;
@@ -1582,7 +1582,7 @@ void OpenPokenavRegionMap(void)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
-        sub_80F2D04(0);
+        StartPokenavLeftHeaderSlideOut(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -1628,11 +1628,11 @@ void OpenPokenavRegionMap(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        sub_80F2C80(0x4);
+        BeginPokenavLeftHeaderLoad(0x4);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 9:
-        if (!sub_80F2CBC(0x4))
+        if (!LoadPokenavLeftHeaderStep(0x4))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 0xA:
@@ -1727,7 +1727,7 @@ void HandleRegionMapInput(void)
         if (!gPaletteFade.active)
         {
 			sub_80F2DF4();
-			sub_80F2D04(0x4);
+			StartPokenavLeftHeaderSlideOut(0x4);
 			gSaveBlock2.regionMapZoom = (gPokenavStructPtr->regionMap.zoomed == 1) ? 1 : 0;
 			SetPokenavCallback(&RestorePokenavMainMenu);
 		}
@@ -1744,7 +1744,7 @@ void OpenPokenavConditionMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F2D04(0);
+        StartPokenavLeftHeaderSlideOut(0);
         StartPokenavMenuTransition(1, 0, 1);
         gPokenavStructPtr->callbackStep++;
         break;
@@ -1818,7 +1818,7 @@ void ReturnToConditionMenu(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F2D04(5);
+        StartPokenavLeftHeaderSlideOut(5);
         StartPokenavMenuTransition(1, gPokenavStructPtr->conditionMenuCursorPos, 0xC);
         gPokenavStructPtr->callbackStep++;
         break;
@@ -1883,11 +1883,11 @@ void RestorePokenavConditionMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        sub_80F2C80(1);
+        BeginPokenavLeftHeaderLoad(1);
         gPokenavStructPtr->callbackStep++;
 		// fall through
     case 11:
-        if (!sub_80F2CBC(1))
+        if (!LoadPokenavLeftHeaderStep(1))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
@@ -1987,11 +1987,11 @@ void ReturnToConditionSearchMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        sub_80F2D6C(0x1);
+        DestroyPokenavLeftHeaderSprites(0x1);
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80F2D6C(0x5);
+        DestroyPokenavLeftHeaderSprites(0x5);
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -2038,22 +2038,22 @@ void ReturnToConditionSearchMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 16:
-        sub_80F2C80(0x1);
+        BeginPokenavLeftHeaderLoad(0x1);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 17:
-        if (!sub_80F2CBC(0x1))
+        if (!LoadPokenavLeftHeaderStep(0x1))
         {
 			gPokenavStructPtr->unk306 = 0;
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 18:
-        sub_80F2C80(0x5);
+        BeginPokenavLeftHeaderLoad(0x5);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 19:
-        if (!sub_80F2CBC(0x5))
+        if (!LoadPokenavLeftHeaderStep(0x5))
         {
 			StartMenuOptionSpritesSlideIn();
 			gPokenavStructPtr->callbackStep++;
@@ -2079,8 +2079,8 @@ void OpenConditionSearchResults(void)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
-        sub_80F2D04(0x1);
-        sub_80F2D04(0x5);
+        StartPokenavLeftHeaderSlideOut(0x1);
+        StartPokenavLeftHeaderSlideOut(0x5);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -2161,22 +2161,22 @@ void OpenConditionSearchResults(void)
 		}
         break;
     case 16:
-        sub_80F2C80(0x1);
+        BeginPokenavLeftHeaderLoad(0x1);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 17:
-        if (!sub_80F2CBC(0x1))
+        if (!LoadPokenavLeftHeaderStep(0x1))
         {
 			gPokenavStructPtr->unk306 = 0;
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 18:
-        sub_80F2C80(gPokenavStructPtr->conditionSearchCursorPos + 7);
+        BeginPokenavLeftHeaderLoad(gPokenavStructPtr->conditionSearchCursorPos + 7);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 19:
-        if (!sub_80F2CBC(gPokenavStructPtr->conditionSearchCursorPos + 7))
+        if (!LoadPokenavLeftHeaderStep(gPokenavStructPtr->conditionSearchCursorPos + 7))
 		{
 			SetPokenavCallback(&HandleConditionSearchInput);
 #if DEBUG
@@ -2349,7 +2349,7 @@ void OpenConditionGraphFromParty(void)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
-        sub_80F2D04(0x1);
+        StartPokenavLeftHeaderSlideOut(0x1);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -2416,18 +2416,18 @@ void OpenConditionGraphFromParty(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        sub_80F2C80(0x1);
+        BeginPokenavLeftHeaderLoad(0x1);
         gPokenavStructPtr->callbackStep++;
     case 14:
-        if (!sub_80F2CBC(0x1))
+        if (!LoadPokenavLeftHeaderStep(0x1))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
-        sub_80F2C80(0x6);
+        BeginPokenavLeftHeaderLoad(0x6);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 16:
-        if (!sub_80F2CBC(0x6))
+        if (!LoadPokenavLeftHeaderStep(0x6))
 		{
 			SetPokenavCallback(&HandleConditionGraphInput);
 #if DEBUG
@@ -2578,8 +2578,8 @@ void HandleConditionGraphInput(void)
             if (!gPokenavStructPtr->isConditionGraphSearchMode)
             {
                 sub_80F357C();
-                sub_80F2D6C(1);
-                sub_80F2D6C(6);
+                DestroyPokenavLeftHeaderSprites(1);
+                DestroyPokenavLeftHeaderSprites(6);
                 SetPokenavCallback(RestorePokenavConditionMenu);
             }
             else
@@ -2603,7 +2603,7 @@ void OpenRibbonsMonList(void)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
-        sub_80F2D04(0);
+        StartPokenavLeftHeaderSlideOut(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -2658,10 +2658,10 @@ void OpenRibbonsMonList(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        sub_80F2C80(0x2);
+        BeginPokenavLeftHeaderLoad(0x2);
         gPokenavStructPtr->callbackStep++;
     case 12:
-        if (!sub_80F2CBC(0x2))
+        if (!LoadPokenavLeftHeaderStep(0x2))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
@@ -2754,7 +2754,7 @@ void RibbonsMonMenu_ReturnToMainMenu(void)
         if (!gPaletteFade.active)
         {
 			sub_80F3130();
-			sub_80F2D6C(0x2);
+			DestroyPokenavLeftHeaderSprites(0x2);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2978,7 +2978,7 @@ void OpenTrainerEyes(void)
     {
     case 0:
         StartMenuOptionSpritesSlideOut();
-        sub_80F2D04(0);
+        StartPokenavLeftHeaderSlideOut(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -3017,10 +3017,10 @@ void OpenTrainerEyes(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 7:
-        sub_80F2C80(0x3);
+        BeginPokenavLeftHeaderLoad(0x3);
         gPokenavStructPtr->callbackStep++;
     case 8:
-        if (!sub_80F2CBC(0x3))
+        if (!LoadPokenavLeftHeaderStep(0x3))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
@@ -3221,7 +3221,7 @@ void TrainerEyes_ReturnToMainMenu(void)
         if (!gPaletteFade.active)
         {
 			sub_80F3130();
-			sub_80F2D6C(0x2);
+			DestroyPokenavLeftHeaderSprites(0x2);
 			sub_80F6FFC();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -3276,11 +3276,11 @@ bool8 UpdatePokenavMenuTransition(void)
         }
         break;
     case 1:
-        sub_80F2C80(gPokenavStructPtr->transitionGfxId);
+        BeginPokenavLeftHeaderLoad(gPokenavStructPtr->transitionGfxId);
         gPokenavStructPtr->transitionStep++;
         // fallthrough
     case 2:
-        if (!sub_80F2CBC(gPokenavStructPtr->transitionGfxId))
+        if (!LoadPokenavLeftHeaderStep(gPokenavStructPtr->transitionGfxId))
             gPokenavStructPtr->transitionStep++;
         break;
     case 3:

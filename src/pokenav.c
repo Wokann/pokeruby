@@ -2611,23 +2611,23 @@ void SpriteCB_UpdateRegionMapHeaderZoom(struct Sprite *sprite)
     StartSpriteAnim(sprite, anim);
 }
 
-void sub_80F2C80(u8 arg0)
+void BeginPokenavLeftHeaderLoad(u8 headerType)
 {
     gPokenavStructPtr->unk306 = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F2CBC(arg0));
+        while (LoadPokenavLeftHeaderStep(headerType));
 }
 
-bool8 sub_80F2CBC(u8 arg0)
+bool8 LoadPokenavLeftHeaderStep(u8 headerType)
 {
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LoadPokenavMenuHeaderSpriteSheet(arg0);
+        LoadPokenavMenuHeaderSpriteSheet(headerType);
         gPokenavStructPtr->unk306++;
         return TRUE;
     case 1:
-        CreatePokenavLeftHeaderSprites(arg0);
+        CreatePokenavLeftHeaderSprites(headerType);
         gPokenavStructPtr->unk306++;
         return FALSE;
     default:
@@ -2635,11 +2635,11 @@ bool8 sub_80F2CBC(u8 arg0)
     }
 }
 
-void sub_80F2D04(u8 arg0)
+void StartPokenavLeftHeaderSlideOut(u8 headerType)
 {
     u16 i;
 
-    if (arg0 < 5)
+    if (headerType < 5)
     {
         for (i = 0; i < 2; i++)
             gPokenavStructPtr->largeHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
@@ -2651,11 +2651,11 @@ void sub_80F2D04(u8 arg0)
     }
 }
 
-void sub_80F2D6C(u8 arg0)
+void DestroyPokenavLeftHeaderSprites(u8 headerType)
 {
     u16 i;
 
-    if (arg0 < 5)
+    if (headerType < 5)
     {
         FreeSpriteTilesByTag(0x1);
         for (i = 0; i < 2; i++)
