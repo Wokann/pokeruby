@@ -369,7 +369,7 @@ bool8 AreSelectedMenuOptionSpritesGone(void);
 void StopMenuOptionFadeOut(void);
 void UpdateMenuOptionBlendRegisters(void);
 void ResetMenuOptionBlendOnPokenavExit(void);
-void sub_80F22B0(struct Sprite *sprite);
+void SpriteCB_UpdateMenuOptionSelectionOffset(struct Sprite *sprite);
 void DestroyMenuOptionSprite(struct Sprite *sprite);
 void sub_80F2598(void);
 void sub_80F2620(void);

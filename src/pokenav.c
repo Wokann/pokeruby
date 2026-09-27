@@ -2165,7 +2165,7 @@ void SpriteCB_SlideMenuOptionIn(struct Sprite *sprite)
     if (sprite->x <= sprite->data[2])
     {
         sprite->x = sprite->data[2];
-        sprite->callback = sub_80F22B0;
+        sprite->callback = SpriteCB_UpdateMenuOptionSelectionOffset;
     }
 }
 
@@ -2190,7 +2190,7 @@ void SpriteCB_SlideMenuOptionOut(struct Sprite *sprite)
     }
 }
 
-void sub_80F22B0(struct Sprite *sprite)
+void SpriteCB_UpdateMenuOptionSelectionOffset(struct Sprite *sprite)
 {
     if (sprite->data[0] == gPokenavStructPtr->menuCursorPos)
     {
