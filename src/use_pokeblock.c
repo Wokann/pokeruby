@@ -317,7 +317,7 @@ static void sub_8136294(void)
             }
             break;
         case 19:
-            sub_80F556C(gPokenavStructPtr->unk9004[0]);
+            ConditionGraph_Update(gPokenavStructPtr->unk9004[0]);
             gUnknown_02039304->unk50++;
             break;
         case 20:
@@ -550,12 +550,12 @@ static void sub_81369CC(void)
         case 2:
             sub_8136EF0();
             sub_80F567C(gUnknown_02039304->unk5c, gPokenavStructPtr->unk9004[3]);
-            sub_80F5550(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
+            StartPokeblockConditionGraphReset(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
             sub_8137138();
             gUnknown_02039304->unk50++;
             break;
         case 3:
-            if (!sub_80F555C())
+            if (!UpdatePokeblockConditionGraphReset())
             {
                 sub_80F7224(sub_81370A4(gPokenavStructPtr->unk87DC));
                 CreateConditionSparkleSprites();

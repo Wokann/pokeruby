@@ -3988,13 +3988,13 @@ bool8 BuildConditionSearchResultsStep(void)
 
 void StartConditionGraphMonEnter(void)
 {
-    sub_80F53EC(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9]);
-    sub_80F5504();
+    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9]);
+    ConditionGraph_TryUpdate();
 }
 
 bool8 UpdateConditionGraphMonEnter(void)
 {
-    bool8 var0 = sub_80F5504();
+    bool8 var0 = ConditionGraph_TryUpdate();
     bool8 var1 = SlidePokenavMonInfoHeaderIn();
     return var0 || var1;
 }
@@ -4002,12 +4002,12 @@ bool8 UpdateConditionGraphMonEnter(void)
 void StartConditionGraphMonExit(void)
 {
     if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
-        sub_80F53EC(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
+        ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
 }
 
 bool8 UpdateConditionGraphMonExit(void)
 {
-    bool8 var0 = sub_80F5504();
+    bool8 var0 = ConditionGraph_TryUpdate();
     bool8 var1 = SlidePokenavMonInfoHeaderOut();
     return var0 || var1;
 }
@@ -4023,7 +4023,7 @@ void BeginConditionGraphMonScroll(u8 arg0)
     else
         var0 = gPokenavStructPtr->unk8FEA;
 
-    sub_80F53EC(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[var0]);
+    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[var0]);
     var1 = gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14;
     if (arg0)
     {
@@ -4117,7 +4117,7 @@ bool8 UpdateConditionGraphScrollBetweenMons(void)
     switch (gPokenavStructPtr->unk87DE)
     {
     case 0:
-        sub_80F5504();
+        ConditionGraph_TryUpdate();
         if (!SlidePokenavMonInfoHeaderOut())
         {
             CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->unk8fe9);
@@ -4137,7 +4137,7 @@ bool8 UpdateConditionGraphScrollBetweenMons(void)
     return TRUE;
 }
 
-void sub_80F53EC(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
+void ConditionGraph_SetNewPositions(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
 {
     u16 i, j;
     int r5;
@@ -4168,11 +4168,11 @@ void sub_80F53EC(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
     gPokenavStructPtr->unk9342 = 0;
 }
 
-bool8 sub_80F5504(void)
+bool8 ConditionGraph_TryUpdate(void)
 {
     if (gPokenavStructPtr->unk9342 < 10)
     {
-        sub_80F556C(gPokenavStructPtr->unk9054[gPokenavStructPtr->unk9342++]);
+        ConditionGraph_Update(gPokenavStructPtr->unk9054[gPokenavStructPtr->unk9342++]);
         return gPokenavStructPtr->unk9342 != 10;
     }
     else
@@ -4181,17 +4181,17 @@ bool8 sub_80F5504(void)
     }
 }
 
-void sub_80F5550(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
+void StartPokeblockConditionGraphReset(struct UnkPokenav11 *arg0, struct UnkPokenav11 *arg1)
 {
-    sub_80F53EC(arg0, arg1);
+    ConditionGraph_SetNewPositions(arg0, arg1);
 }
 
-bool8 sub_80F555C(void)
+bool8 UpdatePokeblockConditionGraphReset(void)
 {
-    return sub_80F5504();
+    return ConditionGraph_TryUpdate();
 }
 
-void sub_80F556C(struct UnkPokenav11 *arg0)
+void ConditionGraph_Update(struct UnkPokenav11 *arg0)
 {
     u16 i;
 
