@@ -3744,7 +3744,7 @@ void LoadConditionGraphMonStats(s16 arg0, u8 arg1)
                                            : 9;
 
         gPokenavStructPtr->conditionMonMarkings[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_MARKINGS, NULL);
-        sub_80F55AC(gPokenavStructPtr->unk8ff0[arg1], gPokenavStructPtr->unk9004[arg1]);
+        ConditionGraph_CalcPositions(gPokenavStructPtr->unk8ff0[arg1], gPokenavStructPtr->unk9004[arg1]);
     }
     else
     {
@@ -4201,7 +4201,7 @@ void ConditionGraph_Update(struct UnkPokenav11 *arg0)
     gPokenavStructPtr->unk9344 = 1;
 }
 
-void sub_80F55AC(u8 *a0, struct UnkPokenav11 a1[])
+void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[])
 {
     u16 i;
     u8 r2 = gUnknown_083E4890[*a0++];
@@ -4230,9 +4230,9 @@ void sub_80F55AC(u8 *a0, struct UnkPokenav11 a1[])
     }
 }
 
-void sub_80F567C(u8 *a0, struct UnkPokenav11 a1[])
+void CalcPokeblockConditionGraphPositions(u8 *a0, struct UnkPokenav11 a1[])
 {
-    sub_80F55AC(a0, a1);
+    ConditionGraph_CalcPositions(a0, a1);
 }
 
 void sub_80F5688(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkPokenav11 * arg3, u8 arg4, u16 * arg5)

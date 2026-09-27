@@ -306,7 +306,7 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 17:
-            sub_80F567C(gPokenavStructPtr->unk8ff0[0], gPokenavStructPtr->unk9004[0]);
+            CalcPokeblockConditionGraphPositions(gPokenavStructPtr->unk8ff0[0], gPokenavStructPtr->unk9004[0]);
             sub_80F5B38();
             gUnknown_02039304->unk50++;
             break;
@@ -549,7 +549,7 @@ static void sub_81369CC(void)
             break;
         case 2:
             sub_8136EF0();
-            sub_80F567C(gUnknown_02039304->unk5c, gPokenavStructPtr->unk9004[3]);
+            CalcPokeblockConditionGraphPositions(gUnknown_02039304->unk5c, gPokenavStructPtr->unk9004[3]);
             StartPokeblockConditionGraphReset(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
             sub_8137138();
             gUnknown_02039304->unk50++;
