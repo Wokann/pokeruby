@@ -61,9 +61,9 @@ static void PlayerNotOnBikeNotMoving(u8 direction, u16 heldKeys);
 static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys);
 static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys);
 static u8 CheckForPlayerAvatarCollision(u8 a);
-static bool8 sub_8058EF0(s16 x, s16 y, u8 direction);
+static bool8 CanStopSurfing(s16 x, s16 y, u8 direction);
 static bool8 ShouldJumpLedge(s16 a, s16 b, u8 c);
-static u8 sub_8058F6C(s16 a, s16 b, u8 c);
+static u8 TryPushBoulder(s16 x, s16 y, u8 direction);
 static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior, u8 *collision);
 static void DoPlayerAvatarTransition(void);
 static void PlayerAvatarTransition_Dummy(struct ObjectEvent *objEvent);
@@ -95,9 +95,9 @@ static bool8 PlayerAvatar_SecretBaseMatSpinStep0(struct Task *task, struct Objec
 static bool8 PlayerAvatar_SecretBaseMatSpinStep1(struct Task *task, struct ObjectEvent *objectEvent);
 static bool8 PlayerAvatar_SecretBaseMatSpinStep2(struct Task *task, struct ObjectEvent *objectEvent);
 static bool8 PlayerAvatar_SecretBaseMatSpinStep3(struct Task *task, struct ObjectEvent *objectEvent);
-static void sub_805A20C(u8 a);
-static void taskFF_0805D1D4(u8 taskId);
-static void sub_805A2D0(u8 taskId);
+static void CreateStopSurfingTask(u8 direction);
+static void Task_StopSurfingInit(u8 taskId);
+static void Task_WaitStopSurfing(u8 taskId);
 static void Task_Fishing(u8 taskId);
 static bool8 Fishing1(struct Task *task);
 static bool8 Fishing2(struct Task *task);
@@ -594,14 +594,14 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *a, s16 x, s16 y, u8 directio
     u8 collision;
 
     collision = GetCollisionAtCoords(a, x, y, direction);
-    if (collision == 3 && sub_8058EF0(x, y, direction))
+    if (collision == 3 && CanStopSurfing(x, y, direction))
         return 5;
     if (ShouldJumpLedge(x, y, direction))
     {
         IncrementGameStat(GAME_STAT_JUMPED_DOWN_LEDGES);
         return COLLISION_LEDGE_JUMP;
     }
-    if (collision == 4 && sub_8058F6C(x, y, direction))
+    if (collision == 4 && TryPushBoulder(x, y, direction))
         return 7;
 
     if (collision == 0)
@@ -613,13 +613,13 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *a, s16 x, s16 y, u8 directio
     return collision;
 }
 
-static bool8 sub_8058EF0(s16 x, s16 y, u8 direction)
+static bool8 CanStopSurfing(s16 x, s16 y, u8 direction)
 {
     if ((gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
      && MapGridGetElevationAt(x, y) == 3
      && GetObjectEventIdByXYZ(x, y, 3) == 16)
     {
-        sub_805A20C(direction);
+        CreateStopSurfingTask(direction);
         return TRUE;
     }
     else
@@ -636,7 +636,7 @@ static bool8 ShouldJumpLedge(s16 x, s16 y, u8 z)
         return FALSE;
 }
 
-static u8 sub_8058F6C(s16 x, s16 y, u8 direction)
+static u8 TryPushBoulder(s16 x, s16 y, u8 direction)
 {
     if (FlagGet(FLAG_SYS_USE_STRENGTH))
     {
@@ -1429,7 +1429,7 @@ static bool8 PlayerAvatar_SecretBaseMatSpinStep3(struct Task *task, struct Objec
 
 /* Some Field effect */
 
-static void sub_805A20C(u8 a)
+static void CreateStopSurfingTask(u8 direction)
 {
     u8 taskId;
 
@@ -1439,12 +1439,12 @@ static void sub_805A20C(u8 a)
     gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_SURFING;
     gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_ON_FOOT;
     gPlayerAvatar.preventStep = TRUE;
-    taskId = CreateTask(taskFF_0805D1D4, 0xFF);
-    gTasks[taskId].data[0] = a;
-    taskFF_0805D1D4(taskId);
+    taskId = CreateTask(Task_StopSurfingInit, 0xFF);
+    gTasks[taskId].data[0] = direction;
+    Task_StopSurfingInit(taskId);
 }
 
-static void taskFF_0805D1D4(u8 taskId)
+static void Task_StopSurfingInit(u8 taskId)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -1455,10 +1455,10 @@ static void taskFF_0805D1D4(u8 taskId)
     }
     SetSurfBlob_BobState(playerObjEvent->fieldEffectSpriteId, 2);
     ObjectEventSetHeldMovement(playerObjEvent, GetJumpSpecialMovementAction((u8)gTasks[taskId].data[0]));
-    gTasks[taskId].func = sub_805A2D0;
+    gTasks[taskId].func = Task_WaitStopSurfing;
 }
 
-static void sub_805A2D0(u8 taskId)
+static void Task_WaitStopSurfing(u8 taskId)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
