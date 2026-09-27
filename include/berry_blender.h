@@ -2,6 +2,6 @@
 #define GUARD_BERRY_BLENDER_H
 
 void debug_sub_80524BC(void);
-void sub_804E990(void);
+void StartBlender(void);
 
 #endif //GUARD_BERRY_BLENDER_H

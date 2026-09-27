@@ -2614,15 +2614,15 @@ static void sub_80A699C(void)
 
 static void OnBagClose_Field5(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)sub_804E990 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_804E990;
+    gTasks[taskId].data[8] = (u32)StartBlender >> 16;
+    gTasks[taskId].data[9] = (u32)StartBlender;
     sub_80A5AE4(taskId);
 }
 
 static void HandlePopupMenuAction_Confirm(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)sub_804E990 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_804E990;
+    gTasks[taskId].data[8] = (u32)StartBlender >> 16;
+    gTasks[taskId].data[9] = (u32)StartBlender;
     sub_80A5AAC(taskId);
 }
 
