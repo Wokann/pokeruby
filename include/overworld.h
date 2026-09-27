@@ -169,11 +169,11 @@ u16 KeyInterCB_DeferToSendQueue(u32);
 // KeyInterCB_SendNothing
 // KeyInterCB_WaitForPlayersToExit
 // KeyInterCB_SendExitRoomKey
-s32 sub_80554F8(void);
+s32 GetCableClubPartnersReady(void);
 // unref_sub_8055568
-u16 sub_8055574(void);
-u16 sub_8055588(void);
-u16 sub_805559C(void);
+u16 SetInCableClubSeat(void);
+u16 SetLinkWaitingForScript(void);
+u16 QueueExitLinkRoomKey(void);
 void sub_80555B0(int linkPlayerId, int a2, struct UnkStruct_8054FF8 *a3);
 bool32 sub_8055618(struct UnkStruct_8054FF8 *);
 bool32 sub_8055630(struct UnkStruct_8054FF8 *);

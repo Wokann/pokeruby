@@ -814,7 +814,7 @@ void CleanupLinkRoomState(void)
 
 void ExitLinkRoom(void)
 {
-    sub_805559C();
+    QueueExitLinkRoomKey();
 }
 
 static void Task_EnterCableClubSeat(u8 taskId)
@@ -830,13 +830,13 @@ static void Task_EnterCableClubSeat(u8 taskId)
     case 1:
         if (IsFieldMessageBoxHidden())
         {
-            sub_8055574();
+            SetInCableClubSeat();
             SetLocalLinkPlayerId(gSpecialVar_0x8005);
             task->data[0] = 2;
         }
         break;
     case 2:
-        switch (sub_80554F8())
+        switch (GetCableClubPartnersReady())
         {
         case 0:
             break;
@@ -851,7 +851,7 @@ static void Task_EnterCableClubSeat(u8 taskId)
         }
         break;
     case 3:
-        sub_8055588();
+        SetLinkWaitingForScript();
         HideFieldMessageBox();
         Menu_EraseScreen();
         DestroyTask(taskId);

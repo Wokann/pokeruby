@@ -2245,7 +2245,7 @@ u16 KeyInterCB_SendExitRoomKey(u32 a1)
     return 23;
 }
 
-s32 sub_80554F8(void)
+s32 GetCableClubPartnersReady(void)
 {
     if (sub_8054FC0(0x83) == TRUE)
         return 2;
@@ -2261,19 +2261,19 @@ bool32 unref_sub_8055568(void)
     return sub_8054FC0(0x83);
 }
 
-u16 sub_8055574(void)
+u16 SetInCableClubSeat(void)
 {
     sub_80543DC(KeyInterCB_SetReady);
     return 0;
 }
 
-u16 sub_8055588(void)
+u16 SetLinkWaitingForScript(void)
 {
     sub_80543DC(KeyInterCB_DeferToEventScript);
     return 0;
 }
 
-u16 sub_805559C(void)
+u16 QueueExitLinkRoomKey(void)
 {
     sub_80543DC(KeyInterCB_SendExitRoomKey);
     return 0;

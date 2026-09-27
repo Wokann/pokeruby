@@ -163,7 +163,7 @@ void Task_RecordMixing_Main(u8 taskId)
     case 5:
         if (!gTasks[data[10]].isActive)
         {
-            sub_8055588();
+            SetLinkWaitingForScript();
             Menu_EraseScreen();
             DestroyTask(taskId);
             ScriptContext_Enable();
