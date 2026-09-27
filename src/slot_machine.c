@@ -133,37 +133,37 @@ static void SlotMachineSetup_4_0(void);
 static void SlotMachineSetup_5_0(void);
 static void SlotMachineSetup_6_0(void);
 static void SlotMachineSetup_6_1(void);
-static void sub_8101D04(void);
-static void sub_8101D24(u8 taskId);
-static bool8 sub_8101D5C(struct Task *task);
-static bool8 sub_8101D8C(struct Task *task);
-static bool8 sub_8101DB0(struct Task *task);
-static bool8 sub_8101DF4(struct Task *task);
-static bool8 sub_8101E10(struct Task *task);
-static bool8 sub_8101E3C(struct Task *task);
-static bool8 sub_8101F44(struct Task *task);
-static bool8 sub_8101F60(struct Task *task);
-static bool8 sub_8101F88(struct Task *task);
-static bool8 sub_8101FA4(struct Task *task);
-static bool8 sub_8102008(struct Task *task);
-static bool8 sub_8102034(struct Task *task);
-static bool8 sub_8102058(struct Task *task);
-static bool8 sub_8102090(struct Task *task);
-bool8 sub_81020C8(struct Task *task);
-static bool8 sub_81021E0(struct Task *task);
-static bool8 sub_81021FC(struct Task *task);
-static bool8 sub_8102264(struct Task *task);
-static bool8 sub_81022A0(struct Task *task);
-static bool8 sub_81022CC(struct Task *task);
-static bool8 sub_81022F0(struct Task *task);
-static bool8 sub_8102318(struct Task *task);
-static bool8 sub_8102344(struct Task *task);
-static bool8 sub_810239C(struct Task *task);
-static bool8 sub_81023B8(struct Task *task);
-static bool8 sub_81023E0(struct Task *task);
-static bool8 sub_81023FC(struct Task *task);
-static bool8 sub_8102424(struct Task *task);
-static bool8 sub_8102460(struct Task *task);
+static void CreateSlotMachineTasks(void);
+static void Task_SlotMachine(u8 taskId);
+static bool8 SlotTask_UnfadeScreen(struct Task *task);
+static bool8 SlotTask_WaitUnfade(struct Task *task);
+static bool8 SlotTask_ReadyNewSpin(struct Task *task);
+static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task);
+static bool8 SlotTask_AskInsertBet(struct Task *task);
+static bool8 SlotTask_HandleBetInput(struct Task *task);
+static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task);
+static bool8 SlotTask_WaitMsg_Need3Coins(struct Task *task);
+static bool8 SlotTask_WaitInfoBox(struct Task *task);
+static bool8 SlotTask_StartSpin(struct Task *task);
+static bool8 SlotTask_StartReelTimeSpin(struct Task *task);
+static bool8 SlotTask_ResetBiasFailure(struct Task *task);
+static bool8 SlotTask_WaitReelStop(struct Task *task);
+static bool8 SlotTask_WaitAllReelsStop(struct Task *task);
+bool8 SlotTask_CheckMatches(struct Task *task);
+static bool8 SlotTask_WaitPayout(struct Task *task);
+static bool8 SlotTask_EndPayout(struct Task *task);
+static bool8 SlotTask_MatchedPower(struct Task *task);
+static bool8 SlotTask_WaitReelTimeAnim(struct Task *task);
+static bool8 SlotTask_ResetBetTiles(struct Task *task);
+static bool8 SlotTask_NoMatches(struct Task *task);
+static bool8 SlotTask_AskQuit(struct Task *task);
+static bool8 SlotTask_HandleQuitInput(struct Task *task);
+static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task);
+static bool8 SlotTask_WaitMsg_MaxCoins(struct Task *task);
+static bool8 SlotTask_PrintMsg_NoMoreCoins(struct Task *task);
+static bool8 SlotTask_WaitMsg_NoMoreCoins(struct Task *task);
+static bool8 SlotTask_EndGame(struct Task *task);
+static bool8 SlotTask_FreeDataStructures(struct Task *task);
 #if DEBUG
 static bool8 debug_sub_8116E74(struct Task *);
 #endif
@@ -561,57 +561,57 @@ static void SlotMachineSetup_6_1(void)
     sub_8104048();
     sub_8102DA8();
     sub_8104C5C();
-    sub_8101D04();
+    CreateSlotMachineTasks();
 }
 
-static void sub_8101D04(void)
+static void CreateSlotMachineTasks(void)
 {
-    sub_8101D24(CreateTask(sub_8101D24, 0));
+    Task_SlotMachine(CreateTask(Task_SlotMachine, 0));
 }
 
 static bool8 (*const gUnknown_083ECAAC[])(struct Task *task) =
 {
-    sub_8101D5C,
-    sub_8101D8C,
-    sub_8101DB0,
-    sub_8101DF4,
-    sub_8101E10,
-    sub_8101E3C,
-    sub_8101F44,
-    sub_8101F60,
-    sub_8101F88,
-    sub_8101FA4,
-    sub_8102008,
-    sub_8102034,
-    sub_8102058,
-    sub_8102090,
-    sub_81020C8,
-    sub_81021E0,
-    sub_81021FC,
-    sub_8102264,
-    sub_81022A0,
-    sub_81022CC,
-    sub_81022F0,
-    sub_8102318,
-    sub_8102344,
-    sub_810239C,
-    sub_81023B8,
-    sub_81023E0,
-    sub_81023FC,
-    sub_8102424,
-    sub_8102460,
+    SlotTask_UnfadeScreen,
+    SlotTask_WaitUnfade,
+    SlotTask_ReadyNewSpin,
+    SlotTask_ReadyNewReelTimeSpin,
+    SlotTask_AskInsertBet,
+    SlotTask_HandleBetInput,
+    SlotTask_PrintMsg_Need3Coins,
+    SlotTask_WaitMsg_Need3Coins,
+    SlotTask_WaitInfoBox,
+    SlotTask_StartSpin,
+    SlotTask_StartReelTimeSpin,
+    SlotTask_ResetBiasFailure,
+    SlotTask_WaitReelStop,
+    SlotTask_WaitAllReelsStop,
+    SlotTask_CheckMatches,
+    SlotTask_WaitPayout,
+    SlotTask_EndPayout,
+    SlotTask_MatchedPower,
+    SlotTask_WaitReelTimeAnim,
+    SlotTask_ResetBetTiles,
+    SlotTask_NoMatches,
+    SlotTask_AskQuit,
+    SlotTask_HandleQuitInput,
+    SlotTask_PrintMsg_MaxCoins,
+    SlotTask_WaitMsg_MaxCoins,
+    SlotTask_PrintMsg_NoMoreCoins,
+    SlotTask_WaitMsg_NoMoreCoins,
+    SlotTask_EndGame,
+    SlotTask_FreeDataStructures,
 #if DEBUG
     debug_sub_8116E74,
 #endif
 };
 
-static void sub_8101D24(u8 taskId)
+static void Task_SlotMachine(u8 taskId)
 {
     while (gUnknown_083ECAAC[sSlotMachine->state](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8101D5C(struct Task *task)
+static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     sub_810423C(sSlotMachine->pikaPower);
@@ -619,14 +619,14 @@ static bool8 sub_8101D5C(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8101D8C(struct Task *task)
+static bool8 SlotTask_WaitUnfade(struct Task *task)
 {
     if (!gPaletteFade.active)
         sSlotMachine->state++;
     return FALSE;
 }
 
-static bool8 sub_8101DB0(struct Task *task)
+static bool8 SlotTask_ReadyNewSpin(struct Task *task)
 {
     sSlotMachine->payout = 0;
     sSlotMachine->bet = 0;
@@ -645,14 +645,14 @@ static bool8 sub_8101DB0(struct Task *task)
     return TRUE;
 }
 
-static bool8 sub_8101DF4(struct Task *task)
+static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task)
 {
     if (sub_8104E18())
         sSlotMachine->state = 4;
     return FALSE;
 }
 
-static bool8 sub_8101E10(struct Task *task)
+static bool8 SlotTask_AskInsertBet(struct Task *task)
 {
     sub_8104CAC(0);
     sSlotMachine->state = 5;
@@ -665,7 +665,7 @@ static bool8 sub_8101E10(struct Task *task)
     return TRUE;
 }
 
-static bool8 sub_8101E3C(struct Task *task)
+static bool8 SlotTask_HandleBetInput(struct Task *task)
 {
     s16 i;
 
@@ -739,14 +739,14 @@ static void sub_8101F2C(const u8 *str)
     Menu_PrintText(str, 2, 15);
 }
 
-static bool8 sub_8101F44(struct Task *task)
+static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
     sub_8101F2C(gOtherText_DontHaveThreeCoins);
     sSlotMachine->state = 7;
     return FALSE;
 }
 
-static bool8 sub_8101F60(struct Task *task)
+static bool8 SlotTask_WaitMsg_Need3Coins(struct Task *task)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
@@ -756,14 +756,14 @@ static bool8 sub_8101F60(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8101F88(struct Task *task)
+static bool8 SlotTask_WaitInfoBox(struct Task *task)
 {
     if (sub_8104AEC())
         sSlotMachine->state = 5;
     return FALSE;
 }
 
-static bool8 sub_8101FA4(struct Task *task)
+static bool8 SlotTask_StartSpin(struct Task *task)
 {
     sub_8102484();
     sub_8104DA4();
@@ -791,7 +791,7 @@ static bool8 sub_8101FA4(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102008(struct Task *task)
+static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
 {
     if (sub_810432C())
     {
@@ -802,7 +802,7 @@ static bool8 sub_8102008(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102034(struct Task *task)
+static bool8 SlotTask_ResetBiasFailure(struct Task *task)
 {
     if (++task->data[0] >= 30)
     {
@@ -816,7 +816,7 @@ static bool8 sub_8102034(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102058(struct Task *task)
+static bool8 SlotTask_WaitReelStop(struct Task *task)
 {
 #if DEBUG
     if (unk_debug_bss_1_1 != 0 && unk_debug_bss_1_4 != 0)
@@ -844,7 +844,7 @@ static bool8 sub_8102058(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102090(struct Task *task)
+static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
 {
     if (!sub_8102E40(sSlotMachine->unk18))
     {
@@ -899,7 +899,7 @@ static bool8 sub_8102090(struct Task *task)
     return FALSE;
 }
 
-bool8 sub_81020C8(struct Task *task)
+bool8 SlotTask_CheckMatches(struct Task *task)
 {
     sSlotMachine->unk04 &= 0xc0;
     CheckMatch();
@@ -970,14 +970,14 @@ bool8 sub_81020C8(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81021E0(struct Task *task)
+static bool8 SlotTask_WaitPayout(struct Task *task)
 {
     if (sub_8102A44())
         sSlotMachine->state = 16;
     return FALSE;
 }
 
-static bool8 sub_81021FC(struct Task *task)
+static bool8 SlotTask_EndPayout(struct Task *task)
 {
     if (sub_8103FA0())
     {
@@ -1000,7 +1000,7 @@ static bool8 sub_81021FC(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102264(struct Task *task)
+static bool8 SlotTask_MatchedPower(struct Task *task)
 {
     if (!sub_81040C8())
     {
@@ -1018,7 +1018,7 @@ static bool8 sub_8102264(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81022A0(struct Task *task)
+static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
 {
     if (sub_8104E18())
     {
@@ -1031,7 +1031,7 @@ static bool8 sub_81022A0(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81022CC(struct Task *task)
+static bool8 SlotTask_ResetBetTiles(struct Task *task)
 {
     sub_8103D8C(0);
     sub_8103D8C(1);
@@ -1040,7 +1040,7 @@ static bool8 sub_81022CC(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81022F0(struct Task *task)
+static bool8 SlotTask_NoMatches(struct Task *task)
 {
     if (++task->data[1] > 64)
     {
@@ -1050,7 +1050,7 @@ static bool8 sub_81022F0(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102318(struct Task *task)
+static bool8 SlotTask_AskQuit(struct Task *task)
 {
     sub_8101F2C(gOtherText_QuitGamePrompt);
     DisplayYesNoMenu(21, 7, 1);
@@ -1059,7 +1059,7 @@ static bool8 sub_8102318(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102344(struct Task *task)
+static bool8 SlotTask_HandleQuitInput(struct Task *task)
 {
     s8 input = Menu_ProcessInputNoWrap_();
     if (input == 0)
@@ -1079,14 +1079,14 @@ static bool8 sub_8102344(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_810239C(struct Task *task)
+static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task)
 {
     sub_8101F2C(gOtherText_MaxCoins);
     sSlotMachine->state = 24;
     return FALSE;
 }
 
-static bool8 sub_81023B8(struct Task *task)
+static bool8 SlotTask_WaitMsg_MaxCoins(struct Task *task)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
@@ -1096,14 +1096,14 @@ static bool8 sub_81023B8(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_81023E0(struct Task *task)
+static bool8 SlotTask_PrintMsg_NoMoreCoins(struct Task *task)
 {
     sub_8101F2C(gOtherText_OutOfCoins);
     sSlotMachine->state = 26;
     return FALSE;
 }
 
-static bool8 sub_81023FC(struct Task *task)
+static bool8 SlotTask_WaitMsg_NoMoreCoins(struct Task *task)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
@@ -1113,7 +1113,7 @@ static bool8 sub_81023FC(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102424(struct Task *task)
+static bool8 SlotTask_EndGame(struct Task *task)
 {
 #if DEBUG
     if (unk_debug_bss_1_1 == 0)
@@ -1126,7 +1126,7 @@ static bool8 sub_8102424(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102460(struct Task *task)
+static bool8 SlotTask_FreeDataStructures(struct Task *task)
 {
     if (!gPaletteFade.active)
     {
