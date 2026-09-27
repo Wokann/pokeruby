@@ -165,7 +165,7 @@ const struct RouletteTable sRouletteTables[] = {
     }
 };
 
-const struct UnkStruct1 gUnknown_083F8E34[] = {
+const struct UnkStruct1 sFlashData_Colors[] = {
 	{
         .var00 = 0x8000,
         .var02 = 5,
@@ -286,7 +286,7 @@ const struct UnkStruct1 gUnknown_083F8E34[] = {
     }
 };
 
-const struct UnkStruct1 gUnknown_083F8E9C[] = {
+const struct UnkStruct1 sFlashData_PokeIcons[] = {
     {
         .var00 = 0x53ff,
         .var02 = 0x101,
@@ -317,12 +317,12 @@ const struct UnkStruct1 gUnknown_083F8E9C[] = {
     }
 };
 
-const struct YesNoFuncTable gUnknown_083F8EB4 = {
+const struct YesNoFuncTable sYesNoTable_AcceptMinBet = {
     Task_AcceptMinBet,
     Task_DeclineMinBet
 };
 
-const struct YesNoFuncTable gUnknown_083F8EBC = {
+const struct YesNoFuncTable sYesNoTable_KeepPlaying = {
     Task_ContinuePlaying,
     Task_StopPlaying
 };
@@ -417,7 +417,7 @@ void InitRouletteTableData(void)
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[1];
     sub_8124918((&eRoulette->varB8));
     for (i = 0; i < 13; i++)
-        sub_812492C((&eRoulette->varB8), i, &gUnknown_083F8E34[i]);
+        sub_812492C((&eRoulette->varB8), i, &sFlashData_Colors[i]);
     for (i = 0; i < 6; i++)
     {
         switch (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2))
@@ -573,7 +573,7 @@ void Task_AskKeepPlaying(u8 taskid)
     sub_814AAF8(RGB(30, 12, 11));
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText(Roulette_Text_KeepPlaying, 1, 15);
-    DoYesNoFuncWithChoice(taskid, &gUnknown_083F8EBC);
+    DoYesNoFuncWithChoice(taskid, &sYesNoTable_KeepPlaying);
 }
 
 void Task_ContinuePlaying(u8 taskid)
@@ -1409,7 +1409,7 @@ void FlashSelectionOnWheel(u8 r0)
     default:
     {
         struct UnkStruct1 var1[3];
-        memcpy(var1, gUnknown_083F8E9C, sizeof var1);
+        memcpy(var1, sFlashData_PokeIcons, sizeof var1);
         if (r0 > 0 && r0 < 5)
             var2 = 3;
         else
@@ -1569,7 +1569,7 @@ void Task_ShowMinBetYesNo(u8 r0)
 {
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
-    DoYesNoFuncWithChoice(r0, &gUnknown_083F8EB4);
+    DoYesNoFuncWithChoice(r0, &sYesNoTable_AcceptMinBet);
 }
 
 void Task_FadeToRouletteGame(u8 taskid)
