@@ -93,7 +93,7 @@ static bool8 sub_8146058(void)
     {
     case 0:
         ClearVideoCallbacks();
-        sub_80F9368();
+        ResetVramOamAndBgCntRegs();
         sub_8146288();
         REG_BLDCNT = 0;
         gMain.state += 1;
@@ -174,7 +174,7 @@ void BerryTagScreen_814625C(u8 taskId)
             CreateTask(sub_8146480, 0);
             return;
         }
-    } while (sub_80F9344() != TRUE);
+    } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
 static void sub_8146288(void)

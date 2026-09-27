@@ -219,7 +219,7 @@ void DecorationItemsMenuAction_Trade(u8 taskId)
     Menu_EraseWindowRect(0, 0, 29, 19);
     DestroyVerticalScrollIndicator(TOP_ARROW);
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
-    sub_80F9520(gUnknown_020388F7, 8);
+    DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
     BuyMenuFreeMemory();
     if (sub_80FEFA4() == TRUE)
     {

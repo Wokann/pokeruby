@@ -575,7 +575,7 @@ static void Task_809538C(void)
             SetMainCallback2(CB2_PartyMenuMain);
             return;
         }
-    } while (sub_80F9344() != 1);
+    } while (MenuHelpers_IsLinkActive() != 1);
 }
 
 static void Task_HandlePopupMenuInput(u8 taskId)

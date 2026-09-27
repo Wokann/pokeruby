@@ -34,7 +34,7 @@ extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void DrawMonDescriptorStatus(u8, u8);
 extern u8 GetMonStatusAndPokerus();
 extern void PartyMenuPrintHP();
-extern bool8 sub_80F9344(void); 
+extern bool8 MenuHelpers_IsLinkActive(void);
 
 static void ClearPartySelection(void);
 static bool8 IsMonAllowedInBattleTower(struct Pokemon *);
@@ -414,7 +414,7 @@ static void sub_8122530(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == 1)
+        if (MenuHelpers_IsLinkActive() == 1)
             break;
     }
 }
@@ -895,7 +895,7 @@ static void sub_8122F90(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == 1)
+        if (MenuHelpers_IsLinkActive() == 1)
             break;
     }
 }

@@ -498,7 +498,7 @@ static bool8 sub_80A34B4(void)
             ResetTasks();
             return TRUE;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
     return FALSE;
@@ -507,7 +507,7 @@ static bool8 sub_80A34B4(void)
 
 void sub_80A34E8(void)
 {
-    sub_80F9368();
+    ResetVramOamAndBgCntRegs();
     REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(12) | BGCNT_16COLOR | BGCNT_TXT256x256;
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(4)  | BGCNT_16COLOR | BGCNT_TXT256x256;
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
@@ -1455,7 +1455,7 @@ static void sub_80A4BF0(u16 *a)
     {
         Menu_DrawStdWindowFrame(0, 7, 13, 12);
         sub_80A4008(a, 1, 8, 12, 4);
-        if (sub_80F9344() == TRUE && sReturnLocation == RETURN_TO_FIELD_5)
+        if (MenuHelpers_IsLinkActive() == TRUE && sReturnLocation == RETURN_TO_FIELD_5)
         {
             sub_80A7834(1, 0);
         }
@@ -1530,12 +1530,12 @@ static bool8 sub_80A4F0C(void)
 {
     if (sReturnLocation == RETURN_TO_FIELD_5 || sReturnLocation == RETURN_TO_FIELD_4)
         return FALSE;
-    if (gMain.newKeys == DPAD_RIGHT || sub_80F9284() == 2)
+    if (gMain.newKeys == DPAD_RIGHT || GetLRKeysPressed() == 2)
     {
         sub_80A4E8C(1, 2);
         return TRUE;
     }
-    if (gMain.newKeys == DPAD_LEFT || sub_80F9284() == 1)
+    if (gMain.newKeys == DPAD_LEFT || GetLRKeysPressed() == 1)
     {
         sub_80A4E8C(-1, 1);
         return TRUE;
@@ -1951,7 +1951,7 @@ static void sub_80A57C4(void)
         gUnknown_02038564 = 1;
         r5 = 9;
     }
-    else if (sub_80F92F4(gSpecialVar_ItemId) == 0)
+    else if (IsHoldingItemAllowed(gSpecialVar_ItemId) == 0)
     {
         sPopupMenuActionList = gUnknown_083C16AE[4];
         gUnknown_02038564 = 1;
@@ -2020,7 +2020,7 @@ static void OnItemSelect_Field05(u8 taskId)
     gTasks[taskId].data[10] = gBagPocketScrollStates[sCurrentBagPocket].scrollTop + gBagPocketScrollStates[sCurrentBagPocket].cursorPos + 1;
     sub_80A48E8(taskId, gBagPocketScrollStates[sCurrentBagPocket].cursorPos, gBagPocketScrollStates[sCurrentBagPocket].cursorPos);
     sub_80A73FC();
-    if (sub_80F9344() == TRUE && sReturnLocation != RETURN_TO_FIELD_5)
+    if (MenuHelpers_IsLinkActive() == TRUE && sReturnLocation != RETURN_TO_FIELD_5)
     {
         sub_80A57C4();
         gTasks[taskId].func = sub_80A5888;
@@ -2071,7 +2071,7 @@ void sub_80A5B40(void)
             gUnknown_02038563 = CreateTask(sub_80A50C8, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2148,7 +2148,7 @@ void sub_80A5D04(void)
             gUnknown_02038563 = CreateTask(sub_80A50C8, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2298,7 +2298,7 @@ static void DisplayCannotBeHeldMessage(u8 taskId)
 static void HandlePopupMenuAction_Give(u8 taskId)
 {
     PlaySE(SE_SELECT);
-    if (sub_80F931C(gSpecialVar_ItemId) == 0)
+    if (IsWritingMailAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         sub_80A7590();
@@ -2355,13 +2355,13 @@ static void OnItemSelect_PkmnList(u8 taskId)
 {
     u8 r6 = sCurrentBagPocket + 1;
 
-    if (sub_80F931C(gSpecialVar_ItemId) == 0)
+    if (IsWritingMailAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         sub_80A7590();
         DisplayCannotUseItemMessage(taskId, gOtherText_CantWriteMail, sub_80A6024, 1);
     }
-    else if (sub_80F92F4(gSpecialVar_ItemId) == 0)
+    else if (IsHoldingItemAllowed(gSpecialVar_ItemId) == 0)
     {
         sub_80A73FC();
         CopyItemName(gSpecialVar_ItemId, gStringVar1);
@@ -2594,7 +2594,7 @@ static void sub_80A6940(void)
             sub_80A699C();
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2769,7 +2769,7 @@ static void sub_80A6D98(void)
             gUnknown_02038563 = CreateTask(sub_80A50C8, 0);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -2904,7 +2904,7 @@ static void sub_80A7150(void)
             gTasks[gUnknown_02038563].data[15] = 0;
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }

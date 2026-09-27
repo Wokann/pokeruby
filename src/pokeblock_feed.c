@@ -512,7 +512,7 @@ static bool8 TransitionToPokeblockFeedScene(void)
     {
     case 0:
         ClearVideoCallbacks();
-        sub_80F9368();
+        ResetVramOamAndBgCntRegs();
         sub_8147B04();
         gMain.state++;
         break;
@@ -596,7 +596,7 @@ void CB2_PreparePokeblockFeedScene(void)
             LaunchPokeblockFeedTask(1);
             break;
         }
-        if (sub_80F9344() == 1)
+        if (MenuHelpers_IsLinkActive() == 1)
             break;
     }
 }

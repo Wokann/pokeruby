@@ -600,7 +600,7 @@ void Task_StandingOnHiddenItem(u8 taskId)
 
 void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
 {
-    if (sub_80F9344() == TRUE)
+    if (MenuHelpers_IsLinkActive() == TRUE)
     {
         DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
     }

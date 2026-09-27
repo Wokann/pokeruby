@@ -16,12 +16,12 @@
 
 #define SCROLL_INDICATOR_PAL_TAG 6
 
-static void sub_80F9834(struct Sprite *sprite);
+static void SpriteCB_VerticalScrollIndicator(struct Sprite *sprite);
 
 static EWRAM_DATA u8 gVerticalScrollIndicatorIds[4] = {0};
-static EWRAM_DATA struct YesNoFuncTable gUnknown_020388C4 = {0};
+static EWRAM_DATA struct YesNoFuncTable sYesNo = {0};
 
-static TaskFunc gUnknown_0300074C;
+static TaskFunc sMessageNextTask;
 
 static const u8 gSpriteImage_83E5808[] = INCBIN_U8("graphics/unknown_sprites/83E59A0/0.4bpp");
 
@@ -37,7 +37,7 @@ static const u8 gSpriteImage_83E5928[] = INCBIN_U8("graphics/unknown_sprites/83E
 
 static const u16 Palette_3E5948[] = INCBIN_U16("graphics/interface/83E5948.gbapal");
 
-static const struct SpritePalette gUnknown_083E5968 = { Palette_3E5948, SCROLL_INDICATOR_PAL_TAG };
+static const struct SpritePalette sScrollIndicatorPalette = { Palette_3E5948, SCROLL_INDICATOR_PAL_TAG };
 
 static const struct OamData gOamData_83E5970 =
 {
@@ -100,7 +100,7 @@ static const struct SpriteTemplate gSpriteTemplate_83E59D0 =
     .anims = gSpriteAnimTable_83E5998,
     .images = gSpriteImageTable_83E59A0,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F9834,
+    .callback = SpriteCB_VerticalScrollIndicator,
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83E59E8 =
@@ -111,7 +111,7 @@ static const struct SpriteTemplate gSpriteTemplate_83E59E8 =
     .anims = gSpriteAnimTable_83E5998,
     .images = gSpriteImageTable_83E59B0,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F9834,
+    .callback = SpriteCB_VerticalScrollIndicator,
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83E5A00 =
@@ -143,19 +143,19 @@ static void PrintMessage(const u8 *str, u16 tile)
     MenuPrintMessageDefaultCoords(str);
 }
 
-static void sub_80F9090(u8 taskId)
+static void Task_ContinueTaskAfterMessagePrints(u8 taskId)
 {
     if (Menu_UpdateWindowText() == TRUE)
     {
-        gUnknown_0300074C(taskId);
+        sMessageNextTask(taskId);
     }
 }
 
 void DisplayItemMessageOnField(u8 taskId, const u8 *str, TaskFunc callback, u16 tile)
 {
     PrintMessage(str, tile);
-    gUnknown_0300074C = callback;
-    gTasks[taskId].func = sub_80F9090;
+    sMessageNextTask = callback;
+    gTasks[taskId].func = Task_ContinueTaskAfterMessagePrints;
 }
 
 static void Task_CallYesOrNoCallback(u8 taskId)
@@ -164,18 +164,18 @@ static void Task_CallYesOrNoCallback(u8 taskId)
     {
     case 0:
         PlaySE(SE_SELECT);
-        gUnknown_020388C4.yesFunc(taskId);
+        sYesNo.yesFunc(taskId);
         break;
     case 1:
     case -1:
         PlaySE(SE_SELECT);
-        gUnknown_020388C4.noFunc(taskId);
+        sYesNo.noFunc(taskId);
     }
 }
 
 void DoYesNoFuncWithChoice(u8 taskId, const struct YesNoFuncTable *funcTable)
 {
-    gUnknown_020388C4 = *funcTable;
+    sYesNo = *funcTable;
     gTasks[taskId].func = Task_CallYesOrNoCallback;
 }
 
@@ -220,7 +220,7 @@ void PrintTriangleCursorWithPalette(u8 left, u8 top, u8 paletteNum)
     PrintStringWithPalette(cursorStr, paletteNum, left, top);
 }
 
-u8 sub_80F9284(void)
+u8 GetLRKeysPressed(void)
 {
     if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
     {
@@ -237,7 +237,7 @@ u8 sub_80F9284(void)
     return 0;
 }
 
-u8 sub_80F92BC(void)
+u8 GetLRKeysPressedAndHeld(void)
 {
     if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
     {
@@ -254,7 +254,7 @@ u8 sub_80F92BC(void)
     return 0;
 }
 
-bool8 sub_80F92F4(u16 itemId)
+bool8 IsHoldingItemAllowed(u16 itemId)
 {
     if (itemId != ITEM_ENIGMA_BERRY)
     {
@@ -269,7 +269,7 @@ bool8 sub_80F92F4(u16 itemId)
     return FALSE;
 }
 
-bool8 sub_80F931C(u16 itemId)
+bool8 IsWritingMailAllowed(u16 itemId)
 {
     if (is_c1_link_related_active() != TRUE)
     {
@@ -284,7 +284,7 @@ bool8 sub_80F931C(u16 itemId)
     return FALSE;
 }
 
-bool8 sub_80F9344(void)
+bool8 MenuHelpers_IsLinkActive(void)
 {
     if (is_c1_link_related_active() == TRUE || gReceivedRemoteLinkPlayers == 1)
     {
@@ -294,7 +294,7 @@ bool8 sub_80F9344(void)
     return FALSE;
 }
 
-void sub_80F9368(void)
+void ResetVramOamAndBgCntRegs(void)
 {
     REG_DISPCNT = 0;
     REG_BG3CNT = 0;
@@ -330,10 +330,10 @@ void ClearVerticalScrollIndicatorPalettes(void)
     }
 
     FreeSpritePaletteByTag(SCROLL_INDICATOR_PAL_TAG);
-    LoadSpritePalette(&gUnknown_083E5968);
+    LoadSpritePalette(&sScrollIndicatorPalette);
 }
 
-void sub_80F9480(u8 *data, u8 n)
+void InitDecorationMarkerSpriteIds(u8 *data, u8 n)
 {
     u8 i;
 
@@ -343,7 +343,7 @@ void sub_80F9480(u8 *data, u8 n)
     }
 }
 
-void sub_80F94A4(u8 animNum, u8 *spriteId, s16 x, s16 y)
+void CreateDecorationMarkerSprite(u8 animNum, u8 *spriteId, s16 x, s16 y)
 {
     if (animNum <= 5)
     {
@@ -356,7 +356,7 @@ void sub_80F94A4(u8 animNum, u8 *spriteId, s16 x, s16 y)
     }
 }
 
-void sub_80F94F8(u8 *spriteId)
+void DestroyDecorationMarkerSprite(u8 *spriteId)
 {
     if (*spriteId != 0xFF)
     {
@@ -365,13 +365,13 @@ void sub_80F94F8(u8 *spriteId)
     }
 }
 
-void sub_80F9520(u8 *data, u8 n)
+void DestroyDecorationMarkerSprites(u8 *data, u8 n)
 {
     u8 i;
 
     for (i = 0; i < 8; i++)
     {
-        sub_80F94F8(&data[i]);
+        DestroyDecorationMarkerSprite(&data[i]);
     }
 }
 
@@ -475,7 +475,7 @@ void DestroyVerticalScrollIndicator(u8 id)
 
 void LoadScrollIndicatorPalette(void)
 {
-    LoadSpritePalette(&gUnknown_083E5968);
+    LoadSpritePalette(&sScrollIndicatorPalette);
 }
 
 void BuyMenuFreeMemory(void)
@@ -483,7 +483,7 @@ void BuyMenuFreeMemory(void)
     FreeSpritePaletteByTag(SCROLL_INDICATOR_PAL_TAG);
 }
 
-static void sub_80F9834(struct Sprite *sprite)
+static void SpriteCB_VerticalScrollIndicator(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
@@ -525,7 +525,7 @@ void StartVerticalScrollIndicators(u8 id)
 {
     if (gVerticalScrollIndicatorIds[id] != 0xFF && id < 4)
     {
-        gSprites[gVerticalScrollIndicatorIds[id]].callback = sub_80F9834;
+        gSprites[gVerticalScrollIndicatorIds[id]].callback = SpriteCB_VerticalScrollIndicator;
     }
 }
 

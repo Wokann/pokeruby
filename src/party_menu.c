@@ -723,7 +723,7 @@ void CB2_InitPartyMenu(void)
 {
     while (InitPartyMenu() != TRUE)
     {
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             return;
     }
 
@@ -1208,7 +1208,7 @@ u16 HandleDefaultPartyMenuInput(u8 taskId)
     if (menuDirectionPressed == 0)
     {
         // Check L/R input
-        u8 var1 = sub_80F92BC();
+        u8 var1 = GetLRKeysPressedAndHeld();
         switch (var1)
         {
         case 1:
@@ -1258,7 +1258,7 @@ u16 HandleBattleTowerPartyMenuInput(u8 taskId)
 
     if (menuDirectionPressed == 0)
     {
-        switch (sub_80F92BC())
+        switch (GetLRKeysPressedAndHeld())
         {
         case 1:
             menuDirectionPressed = 0xFF;

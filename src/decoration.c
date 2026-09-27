@@ -1617,7 +1617,7 @@ void sub_80FE604(u8 taskId)
                     gUnknown_020388D0 = gDecorationInventories[gUnknown_020388F6].items;
                     sub_80FEF50(taskId);
                     ClearVerticalScrollIndicatorPalettes();
-                    sub_80F9480(gUnknown_020388F7, 8);
+                    InitDecorationMarkerSpriteIds(gUnknown_020388F7, 8);
                     LoadScrollIndicatorPalette();
                     gTasks[taskId].func = sub_80FE868;
                 } else
@@ -1802,7 +1802,7 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
         ni = 2 * (i - gUnknown_020388F4) + 2;
         if (gUnknown_020388F7[i - gUnknown_020388F4])
         {
-            sub_80F94F8(&gUnknown_020388F7[i - gUnknown_020388F4]);
+            DestroyDecorationMarkerSprite(&gUnknown_020388F7[i - gUnknown_020388F4]);
         }
         if (i == gUnknown_020388D5)
         {
@@ -1823,7 +1823,7 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
             {
                 if (gUnknown_020388D6[j] - 1 == i)
                 {
-                    sub_80F94A4(4, &gUnknown_020388F7[i - gUnknown_020388F4], 0x6c, (i - gUnknown_020388F4) * 16 + 24);
+                    CreateDecorationMarkerSprite(4, &gUnknown_020388F7[i - gUnknown_020388F4], 0x6c, (i - gUnknown_020388F4) * 16 + 24);
                     break;
                 }
             }
@@ -1831,7 +1831,7 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
             {
                 if (gUnknown_020388E6[j] - 1 == i)
                 {
-                    sub_80F94A4(5, &gUnknown_020388F7[i - gUnknown_020388F4], 0x6c, (i - gUnknown_020388F4) * 16 + 24);
+                    CreateDecorationMarkerSprite(5, &gUnknown_020388F7[i - gUnknown_020388F4], 0x6c, (i - gUnknown_020388F4) * 16 + 24);
                     break;
                 }
             }
@@ -1969,7 +1969,7 @@ void sub_80FEF50(u8 taskId)
 
 void sub_80FEF74(void)
 {
-    sub_80F9520(gUnknown_020388F7, 8);
+    DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
     DestroyVerticalScrollIndicator(TOP_ARROW);
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     Menu_DestroyCursor();
@@ -2009,7 +2009,7 @@ void sub_80FF034(u8 taskId)
 
 void sub_80FF058(u8 taskId)
 {
-    sub_80F9520(gUnknown_020388F7, 8);
+    DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
     DestroyVerticalScrollIndicator(TOP_ARROW);
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     BuyMenuFreeMemory();
@@ -2236,7 +2236,7 @@ void sub_80FF6AC(u8 taskId)
                 sub_80FF0E0(taskId);
                 DestroyVerticalScrollIndicator(TOP_ARROW);
                 DestroyVerticalScrollIndicator(BOTTOM_ARROW);
-                sub_80F9520(gUnknown_020388F7, 8);
+                DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
                 BuyMenuFreeMemory();
                 gTasks[taskId].data[2] = 1;
             }

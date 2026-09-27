@@ -448,7 +448,7 @@ void sub_8115384(void)
         SetVBlankCallback(NULL);
         ScanlineEffect_Stop();
         ClearVideoCallbacks();
-        sub_80F9368();
+        ResetVramOamAndBgCntRegs();
         REG_BG2CNT   = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_256COLOR | BGCNT_SCREENBASE(6) | BGCNT_TXT512x256;
         REG_BG1CNT   = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(4) | BGCNT_TXT512x256;
         REG_BLDCNT   = BLDCNT_EFFECT_NONE | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BD;
@@ -1255,7 +1255,7 @@ void sub_8116B40(u8 taskId) // end roulette ?
         SetVBlankCallback(NULL);
         memset(eRoulette, 0, 0x17c);
         gSpriteCoordOffsetX = gSpriteCoordOffsetY = 0;
-        sub_80F9368();
+        ResetVramOamAndBgCntRegs();
         FreeAllSpritePalettes();
         ResetPaletteFade();
         ResetSpriteData();

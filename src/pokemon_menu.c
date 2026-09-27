@@ -336,7 +336,7 @@ static void sub_8089EBC(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-    } while (sub_80F9344() != TRUE);
+    } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
 static void sub_8089F14(void)
@@ -485,7 +485,7 @@ static void sub_808A358(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -503,7 +503,7 @@ static void sub_808A3A4(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -549,7 +549,7 @@ static void sub_808A4D4(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -716,7 +716,7 @@ static void PokemonMenu_FieldMove(u8 taskID)
 
     Menu_DestroyCursor();
     tFieldMoveId = sPokeMenuOptionsOrder[sPokeMenuCursorPos] - POKEMENU_FIRST_FIELD_MOVE_ID;
-    if (sub_80F9344() == TRUE)
+    if (MenuHelpers_IsLinkActive() == TRUE)
     {
         Menu_EraseWindowRect(19, 0, 29, 19);
         if (IS_SOFTBOILED_MILKDRINK(tFieldMoveId))
@@ -858,7 +858,7 @@ static void sub_808AD0C(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -994,7 +994,7 @@ static void sub_808AF80(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -1132,7 +1132,7 @@ static void sub_808B3A0(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
@@ -1192,7 +1192,7 @@ static void sub_808B518(void)
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
-        if (sub_80F9344() == TRUE)
+        if (MenuHelpers_IsLinkActive() == TRUE)
             break;
     }
 }
