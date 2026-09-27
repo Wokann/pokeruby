@@ -1189,7 +1189,7 @@ void ResetSafariZoneFlag_(void)
 
 bool32 is_c1_link_related_active(void)
 {
-    if (gMain.callback1 == sub_8055354)
+    if (gMain.callback1 == CB1_OverworldLink)
         return TRUE;
     else
         return FALSE;
@@ -1380,7 +1380,7 @@ static void c2_80567AC(void)
     if (sub_805483C(&gMain.state))
     {
         SetFieldVBlankCallback();
-        SetMainCallback1(sub_8055354);
+        SetMainCallback1(CB1_OverworldLink);
         sub_80543DC(KeyInterCB_SelfIdle);
         SetMainCallback2(CB2_Overworld);
     }
@@ -1419,7 +1419,7 @@ void sub_805465C(void)
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
     sub_8054F70();
-    SetMainCallback1(sub_8055354);
+    SetMainCallback1(CB1_OverworldLink);
     sub_80543DC(KeyInterCB_SelfIdle);
     gFieldCallback = FieldCB_ReturnToFieldCableLink;
     ScriptContext_Init();
@@ -1901,7 +1901,7 @@ void sub_8054EC8(void)
         CreateLinkPlayerSprite(i);
     }
 
-    sub_8055340(word_3002910);
+    ResetPlayerHeldKeys(word_3002910);
 }
 
 void sub_8054F48(void)
@@ -2049,7 +2049,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
     }
 }
 
-void sub_8055218(u16 *a1, int a2)
+void UpdateAllLinkPlayers(u16 *a1, int a2)
 {
     struct UnkStruct_8054FF8 st;
     int i;
@@ -2060,12 +2060,12 @@ void sub_8055218(u16 *a1, int a2)
         sub_80555B0(i, a2, &st);
         sub_8054FF8(i, v5, &st, &v8);
         if (gUnknown_03000580[i] == 0x80)
-            v8 = sub_805530C(v5);
+            v8 = GetDirectionForDpadKey(v5);
         sub_8055BFC(i, v8);
     }
 }
 
-void sub_8055280(u16 a1)
+void UpdateHeldKeyCode(u16 a1)
 {
     if (a1 >= 17 && a1 < 30)
         gHeldKeyCodeToSend = a1;
@@ -2105,7 +2105,7 @@ u16 KeyInterCB_ReadButtons(u32 a1)
     }
 }
 
-u16 sub_805530C(u16 a1)
+u16 GetDirectionForDpadKey(u16 a1)
 {
     switch (a1)
     {
@@ -2122,19 +2122,19 @@ u16 sub_805530C(u16 a1)
     }
 }
 
-void sub_8055340(u16 *a1)
+void ResetPlayerHeldKeys(u16 *a1)
 {
     int i;
     for (i = 0; i < 4; i++)
         a1[i] = 17;
 }
 
-void sub_8055354(void)
+void CB1_OverworldLink(void)
 {
     u8 val = gLocalLinkPlayerId;
-    sub_8055218(word_3002910, val);
-    sub_8055280(gUnknown_03000584(val));
-    sub_8055340(word_3002910);
+    UpdateAllLinkPlayers(word_3002910, val);
+    UpdateHeldKeyCode(gUnknown_03000584(val));
+    ResetPlayerHeldKeys(word_3002910);
 }
 
 u16 KeyInterCB_SelfIdle(u32 a1)

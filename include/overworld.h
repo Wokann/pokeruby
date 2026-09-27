@@ -152,12 +152,12 @@ void sub_8054F70(void);
 // sub_8054F88
 // sub_8054FC0
 // sub_8054FF8
-// sub_8055218
-// sub_8055280
+// UpdateAllLinkPlayers
+// UpdateHeldKeyCode
 // KeyInterCB_ReadButtons
-u16 sub_805530C(u16);
-void sub_8055340(u16 *);
-void sub_8055354(void);
+u16 GetDirectionForDpadKey(u16);
+void ResetPlayerHeldKeys(u16 *);
+void CB1_OverworldLink(void);
 u16 KeyInterCB_SelfIdle(u32);
 // KeyInterCB_Idle
 u16 KeyInterCB_DeferToEventScript(u32);
