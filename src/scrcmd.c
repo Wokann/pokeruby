@@ -1101,7 +1101,7 @@ bool8 ScrCmd_setobjectsubpriority(struct ScriptContext *ctx)
     u8 mapNum = ScriptReadByte(ctx);
     u8 priority = ScriptReadByte(ctx);
 
-    sub_805BCF0(localId, mapNum, mapGroup, priority + 83);
+    SetObjectSubpriority(localId, mapNum, mapGroup, priority + 83);
     return FALSE;
 }
 
@@ -1111,7 +1111,7 @@ bool8 ScrCmd_resetobjectsubpriority(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    sub_805BD48(localId, mapNum, mapGroup);
+    ResetObjectSubpriority(localId, mapNum, mapGroup);
     return FALSE;
 }
 
