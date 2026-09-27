@@ -197,8 +197,8 @@ static void ControlWorks_ObjWork_PrintPageValues(u8);
 static void ControlWorks_ObjWork_AdjustSelection(u8, u8);
 static bool8 TrickRelated_Level_InitSubmenu(void);
 static bool8 TrickRelated_TrickMaster_InitSubmenu(void);
-static bool8 debug_sub_808EC10(void);
-static bool8 debug_sub_808EC5C(void);
+static bool8 TrickRelated_Level_HandleInput(void);
+static bool8 TrickRelated_TrickMaster_HandleInput(void);
 static bool8 PreviewGraphics_Show(void);
 static bool8 PreviewGraphics_WaitForFade(void);
 static void PicTest_SelectPokemon(void);
@@ -1878,56 +1878,56 @@ static const u16 sLocalWorkPageVars[][9] = {
 };
 
 #if (ENGLISH && REVISION == 0)
-static const u8 gUnknown_Debug_083C47B2[] = _("レベル");
-static const u8 gUnknown_Debug_083C47B8[] = _("シーン1");
-static const u8 gUnknown_Debug_083C47BF[] = _("シーン2");
-static const u8 gUnknown_Debug_083C47C6[] = _("シーン3");
-static const u8 gUnknown_Debug_083C47CD[] = _("シーン4");
-static const u8 gUnknown_Debug_083C47D4[] = _("シーン5");
-static const u8 gUnknown_Debug_083C47DB[] = _("シーン6");
-static const u8 gUnknown_Debug_083C47E2[] = _("シーン7");
-static const u8 gUnknown_Debug_083C47E9[] = _("シーン8");
+static const u8 sString_TrickHouseLevelHeading[] = _("レベル");
+static const u8 sString_TrickHouseScene1[] = _("シーン1");
+static const u8 sString_TrickHouseScene2[] = _("シーン2");
+static const u8 sString_TrickHouseScene3[] = _("シーン3");
+static const u8 sString_TrickHouseScene4[] = _("シーン4");
+static const u8 sString_TrickHouseScene5[] = _("シーン5");
+static const u8 sString_TrickHouseScene6[] = _("シーン6");
+static const u8 sString_TrickHouseScene7[] = _("シーン7");
+static const u8 sString_TrickHouseScene8[] = _("シーン8");
 #else
-static const u8 gUnknown_Debug_083C47B2[] = _("Level");
-static const u8 gUnknown_Debug_083C47B8[] = _("Scene1");
-static const u8 gUnknown_Debug_083C47BF[] = _("Scene2");
-static const u8 gUnknown_Debug_083C47C6[] = _("Scene3");
-static const u8 gUnknown_Debug_083C47CD[] = _("Scene4");
-static const u8 gUnknown_Debug_083C47D4[] = _("Scene5");
-static const u8 gUnknown_Debug_083C47DB[] = _("Scene6");
-static const u8 gUnknown_Debug_083C47E2[] = _("Scene7");
-static const u8 gUnknown_Debug_083C47E9[] = _("Scene8");
+static const u8 sString_TrickHouseLevelHeading[] = _("Level");
+static const u8 sString_TrickHouseScene1[] = _("Scene1");
+static const u8 sString_TrickHouseScene2[] = _("Scene2");
+static const u8 sString_TrickHouseScene3[] = _("Scene3");
+static const u8 sString_TrickHouseScene4[] = _("Scene4");
+static const u8 sString_TrickHouseScene5[] = _("Scene5");
+static const u8 sString_TrickHouseScene6[] = _("Scene6");
+static const u8 sString_TrickHouseScene7[] = _("Scene7");
+static const u8 sString_TrickHouseScene8[] = _("Scene8");
 #endif
 
-static const struct MenuAction gUnknown_Debug_083C47F0[] = {
-    {gUnknown_Debug_083C47B8, DummyMenuAction},
-    {gUnknown_Debug_083C47BF, DummyMenuAction},
-    {gUnknown_Debug_083C47C6, DummyMenuAction},
-    {gUnknown_Debug_083C47CD, DummyMenuAction},
-    {gUnknown_Debug_083C47D4, DummyMenuAction},
-    {gUnknown_Debug_083C47DB, DummyMenuAction},
-    {gUnknown_Debug_083C47E2, DummyMenuAction},
-    {gUnknown_Debug_083C47E9, DummyMenuAction}
+static const struct MenuAction sMenuActions_TrickHouseLevels[] = {
+    {sString_TrickHouseScene1, DummyMenuAction},
+    {sString_TrickHouseScene2, DummyMenuAction},
+    {sString_TrickHouseScene3, DummyMenuAction},
+    {sString_TrickHouseScene4, DummyMenuAction},
+    {sString_TrickHouseScene5, DummyMenuAction},
+    {sString_TrickHouseScene6, DummyMenuAction},
+    {sString_TrickHouseScene7, DummyMenuAction},
+    {sString_TrickHouseScene8, DummyMenuAction}
 };
 
 #if (ENGLISH && REVISION == 0)
-static const u8 gUnknown_Debug_083C4830[] = _("カラクリだいおう");
+static const u8 sString_TrickMasterHeading[] = _("カラクリだいおう");
 #else
-static const u8 gUnknown_Debug_083C4830[] = _("Trick Master");
+static const u8 sString_TrickMasterHeading[] = _("Trick Master");
 #endif
 
-static const u8 gUnknown_Debug_083C483D[] = _("Hidden MASTER");
-static const u8 gUnknown_Debug_083C484B[] = _("Inside the HOUSE");
-static const u8 gUnknown_Debug_083C485C[] = _("Pass a reward");
-static const u8 gUnknown_Debug_083C486A[] = _("Rig a trick");
-static const u8 gUnknown_Debug_083C4876[] = _("MASTER is gone");
+static const u8 sString_TrickMasterHidden[] = _("Hidden MASTER");
+static const u8 sString_TrickMasterInsideHouse[] = _("Inside the HOUSE");
+static const u8 sString_TrickMasterPassReward[] = _("Pass a reward");
+static const u8 sString_TrickMasterRigTrick[] = _("Rig a trick");
+static const u8 sString_TrickMasterGone[] = _("MASTER is gone");
 
-static const struct MenuAction gUnknown_Debug_083C4888[] = {
-    {gUnknown_Debug_083C483D, DummyMenuAction},
-    {gUnknown_Debug_083C484B, DummyMenuAction},
-    {gUnknown_Debug_083C485C, DummyMenuAction},
-    {gUnknown_Debug_083C486A, DummyMenuAction},
-    {gUnknown_Debug_083C4876, DummyMenuAction}
+static const struct MenuAction sMenuActions_TrickMasterEntranceStates[] = {
+    {sString_TrickMasterHidden, DummyMenuAction},
+    {sString_TrickMasterInsideHouse, DummyMenuAction},
+    {sString_TrickMasterPassReward, DummyMenuAction},
+    {sString_TrickMasterRigTrick, DummyMenuAction},
+    {sString_TrickMasterGone, DummyMenuAction}
 };
 
 #if (ENGLISH && REVISION == 0)
@@ -3931,26 +3931,26 @@ static void ControlWorks_ObjWork_AdjustSelection(u8 whichMenu, u8 cursorPos)
 static bool8 TrickRelated_Level_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 12, 2 * ARRAY_COUNT(gUnknown_Debug_083C47F0) + 3);
-    Menu_PrintText(gUnknown_Debug_083C47B2, 1, 1);
-    Menu_PrintItems(2, 3, ARRAY_COUNT(gUnknown_Debug_083C47F0), gUnknown_Debug_083C47F0);
-    InitMenu(0, 1, 3, ARRAY_COUNT(gUnknown_Debug_083C47F0), 0, 11);
-    gMenuCallback = debug_sub_808EC10;
+    Menu_DrawStdWindowFrame(0, 0, 12, 2 * ARRAY_COUNT(sMenuActions_TrickHouseLevels) + 3);
+    Menu_PrintText(sString_TrickHouseLevelHeading, 1, 1);
+    Menu_PrintItems(2, 3, ARRAY_COUNT(sMenuActions_TrickHouseLevels), sMenuActions_TrickHouseLevels);
+    InitMenu(0, 1, 3, ARRAY_COUNT(sMenuActions_TrickHouseLevels), 0, 11);
+    gMenuCallback = TrickRelated_Level_HandleInput;
     return FALSE;
 }
 
 static bool8 TrickRelated_TrickMaster_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 13, 2 * ARRAY_COUNT(gUnknown_Debug_083C4888) + 3);
-    Menu_PrintText(gUnknown_Debug_083C4830, 1, 1);
-    Menu_PrintItems(2, 3, ARRAY_COUNT(gUnknown_Debug_083C4888), gUnknown_Debug_083C4888);
-    InitMenu(0, 1, 3, ARRAY_COUNT(gUnknown_Debug_083C4888), 0, 12);
-    gMenuCallback = debug_sub_808EC5C;
+    Menu_DrawStdWindowFrame(0, 0, 13, 2 * ARRAY_COUNT(sMenuActions_TrickMasterEntranceStates) + 3);
+    Menu_PrintText(sString_TrickMasterHeading, 1, 1);
+    Menu_PrintItems(2, 3, ARRAY_COUNT(sMenuActions_TrickMasterEntranceStates), sMenuActions_TrickMasterEntranceStates);
+    InitMenu(0, 1, 3, ARRAY_COUNT(sMenuActions_TrickMasterEntranceStates), 0, 12);
+    gMenuCallback = TrickRelated_TrickMaster_HandleInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808EC10(void)
+static bool8 TrickRelated_Level_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
@@ -3968,7 +3968,7 @@ static bool8 debug_sub_808EC10(void)
     return TRUE;
 }
 
-static bool8 debug_sub_808EC5C(void)
+static bool8 TrickRelated_TrickMaster_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
