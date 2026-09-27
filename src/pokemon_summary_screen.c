@@ -795,7 +795,7 @@ bool8 sub_809DA84(void)
         gMain.state++;
         break;
     case 22:
-        if (sub_8055870() != TRUE)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
             gMain.state++;
         break;
     default:
@@ -924,7 +924,7 @@ static void SummaryScreenExit(u8 taskId)
 
 static void SummaryScreen_DestroyTask(u8 taskId)
 {
-    if (sub_8055870() != TRUE && !gPaletteFade.active)
+    if (Overworld_IsRecvQueueAtMax() != TRUE && !gPaletteFade.active)
     {
         gUnknown_020384F0 = pssData.monIndex;
 
@@ -1438,7 +1438,7 @@ void sub_809EC38(u8 taskId)
         taskData[0]++;
         break;
     case 5:
-        if (sub_8055870() != TRUE)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
             gTasks[taskId].func = gUnknown_03005CF0;
         break;
     }
@@ -1537,7 +1537,7 @@ void sub_809EE74(u8 taskId)
         taskData[0]++;
         break;
     case 6:
-        if (sub_8055870() != TRUE)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
             gTasks[taskId].func = gUnknown_03005CF0;
         break;
     }
@@ -1764,7 +1764,7 @@ void sub_809F43C(u8 taskId)
         }
         break;
     default:
-        if (sub_8055870() != TRUE)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
         {
             gMain.state = 0;
             gTasks[taskId].func = pssData.unk84;
@@ -4068,6 +4068,6 @@ static void sub_80A2078(int taskId)
 
 static void sub_80A20A8(u8 taskId)
 {
-    if (sub_8055870() != TRUE)
+    if (Overworld_IsRecvQueueAtMax() != TRUE)
         gTasks[taskId].func = gUnknown_03005CF0;
 }

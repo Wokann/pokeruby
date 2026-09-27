@@ -1216,6 +1216,6 @@ void sub_808B5B4(u32 taskID)
 
 static void sub_808B5E4(u8 taskID)
 {
-    if (sub_8055870() != TRUE)
+    if (Overworld_IsRecvQueueAtMax() != TRUE)
         gTasks[taskID].func = gUnknown_03005CF0;
 }

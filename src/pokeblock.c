@@ -359,7 +359,7 @@ static bool8 InitPokeblockMenu(void)
             gMain.state++;
             break;
         case 17:
-            if (sub_8055870() != TRUE)
+            if (Overworld_IsRecvQueueAtMax() != TRUE)
             {
                 gMain.state++;
             }

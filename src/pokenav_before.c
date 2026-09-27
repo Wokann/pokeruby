@@ -1408,7 +1408,7 @@ void RestorePokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -1528,7 +1528,7 @@ void HandlePokenavMainMenuInput(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
         {
 			if (gPokenavStructPtr->unk8FE8 != 0)
 			{
@@ -1641,7 +1641,7 @@ void OpenPokenavRegionMap(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 0xB:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 0xC:
@@ -1862,7 +1862,7 @@ void RestorePokenavConditionMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        if (sub_8055870()) return;
+        if (Overworld_IsRecvQueueAtMax()) return;
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -2017,7 +2017,7 @@ void ReturnToConditionSearchMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
@@ -2121,11 +2121,11 @@ void OpenConditionSearchResults(void)
 			gPokenavStructPtr->callbackStep += 1;
         break;
     case 7:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep--;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
@@ -2141,7 +2141,7 @@ void OpenConditionSearchResults(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
@@ -2228,7 +2228,7 @@ void HandleConditionSearchInput(void)
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep = 0;
         break;
     }
@@ -2264,7 +2264,7 @@ void OpenConditionSearchListFromGraph(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -2306,7 +2306,7 @@ void OpenConditionGraphFromSearchResults(void)
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
@@ -2394,11 +2394,11 @@ void OpenConditionGraphFromParty(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
@@ -2543,7 +2543,7 @@ void HandleConditionGraphInput(void)
         }
         break;
     case 6:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
             gPokenavStructPtr->callbackStep = 4;
         break;
     case 7:
@@ -2643,11 +2643,11 @@ void OpenRibbonsMonList(void)
 			gPokenavStructPtr->callbackStep += 1;
         break;
     case 7:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep--;
         break;
     case 8:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
@@ -2669,7 +2669,7 @@ void OpenRibbonsMonList(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 15:
@@ -2732,7 +2732,7 @@ void HandleRibbonsMonListInput(void)
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep = 0;
         break;
     }
@@ -2800,7 +2800,7 @@ void OpenRibbonsSummaryMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 7:
@@ -2865,7 +2865,7 @@ void RibbonsSummaryHandleInput(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep = 0;
         break;
     case 4:
@@ -2950,7 +2950,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -3028,7 +3028,7 @@ void OpenTrainerEyes(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
@@ -3092,7 +3092,7 @@ void HandleTrainerEyesInput(void)
 		}
         break;
     case 2:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep = 0;
         break;
     }
@@ -3203,7 +3203,7 @@ void ShowTrainerEyesTrainerInfo(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 17:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
 			gPokenavStructPtr->callbackStep = 0x8;
         break;
     }
@@ -3305,7 +3305,7 @@ bool8 UpdatePokenavMenuTransition(void)
             gPokenavStructPtr->transitionStep++;
         break;
     case 5:
-        if (!sub_8055870())
+        if (!Overworld_IsRecvQueueAtMax())
             gPokenavStructPtr->transitionStep++;
         break;
     case 6:
@@ -3424,6 +3424,6 @@ void PausePokenavCallbackForLink(void)
 
 void WaitForPokenavLinkQueue(void)
 {
-    if (sub_8055870() != 0x1)
+    if (Overworld_IsRecvQueueAtMax() != 0x1)
         gPokenavStructPtr->callback = sPokenavCallbackBeforeLinkWait;
 }

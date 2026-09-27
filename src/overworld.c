@@ -1410,7 +1410,7 @@ void CB2_ReturnToFieldLocal(void)
 
 void CB2_ReturnToFieldLink(void)
 {
-    if (!sub_8055870() && sub_8054A9C(&gMain.state))
+    if (!Overworld_IsRecvQueueAtMax() && sub_8054A9C(&gMain.state))
         SetMainCallback2(CB2_Overworld);
 }
 
@@ -2427,7 +2427,7 @@ void RunTerminateLinkScript(void)
     LockPlayerFieldControls();
 }
 
-bool32 sub_8055870(void)
+bool32 Overworld_IsRecvQueueAtMax(void)
 {
     if (!is_c1_link_related_active())
         return 0;

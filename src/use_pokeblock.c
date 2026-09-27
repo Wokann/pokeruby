@@ -413,7 +413,7 @@ static void UsePokeblockMenu(void)
             }
             break;
         case 2:
-            if (!sub_8055870())
+            if (!Overworld_IsRecvQueueAtMax())
             {
                 PrintPokeblockMonNature();
                 CreateConditionSparkleSprites();
@@ -502,7 +502,7 @@ static void ShowUsePokeblockMenuForResults(void)
             }
             break;
         case 2:
-            if (!sub_8055870())
+            if (!Overworld_IsRecvQueueAtMax())
             {
                 PrintPokeblockMonNature();
                 gUnknown_02039304->unk50 = 0;

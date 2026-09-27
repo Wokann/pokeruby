@@ -599,7 +599,7 @@ static bool8 LoadPokeblockFeedScene(void)
         gMain.state++;
         break;
     case 11:
-        if (sub_8055870() != 1)
+        if (Overworld_IsRecvQueueAtMax() != 1)
         {
             gMain.state++;
         }

@@ -467,7 +467,7 @@ static bool8 SetupBagMultistep(void)
         gMain.state++;
         break;
     case 15:
-        if (sub_8055870() == TRUE)
+        if (Overworld_IsRecvQueueAtMax() == TRUE)
             break;
         gMain.state++;
         break;

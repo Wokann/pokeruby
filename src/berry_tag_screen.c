@@ -154,7 +154,7 @@ static bool8 InitBerryTagScreen(void)
         gMain.state += 1;
         break;
     case 11:
-        if (sub_8055870() == TRUE)
+        if (Overworld_IsRecvQueueAtMax() == TRUE)
             break;
         gMain.state += 1;
         break;

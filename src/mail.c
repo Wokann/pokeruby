@@ -502,7 +502,7 @@ static u8 MailReadBuildGraphics(void)
     }
 
     case 17:
-        if (sub_8055870() != TRUE)
+        if (Overworld_IsRecvQueueAtMax() != TRUE)
         {
             RETURN_UP_STATE;
         }

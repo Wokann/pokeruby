@@ -184,7 +184,7 @@ void InitLinkPlayerQueueScript(void);
 void InitLinkRoomStartMenuScript(void);
 void RunConfirmLeaveCableClubScript(void);
 void RunTerminateLinkScript(void);
-bool32 sub_8055870(void);
+bool32 Overworld_IsRecvQueueAtMax(void);
 u32 Overworld_RecvKeysFromLinkIsRunning(void);
 u32 Overworld_SendKeysToLinkIsRunning(void);
 u32 IsSendingKeysOverCable(void);
