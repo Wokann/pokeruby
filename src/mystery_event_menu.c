@@ -17,7 +17,7 @@
 #include "ewram.h"
 #include "debug.h"
 
-static EWRAM_DATA u8 gUnknown_02039338 = 0;
+static EWRAM_DATA u8 sUnused = 0; // Set but unused.
 
 static void VBlankCB(void);
 static bool8 CheckLanguageMatch(void);
@@ -33,12 +33,12 @@ static void VBlankCB(void)
 
 static bool8 CheckLanguageMatch(void)
 {
-    bool8 val = FALSE;
+    bool8 languagesMatch = FALSE;
 
     if (gLinkPlayers[0].language == gLinkPlayers[1].language)
-        val = TRUE;
+        languagesMatch = TRUE;
 
-    return val;
+    return languagesMatch;
 }
 
 void CB2_InitMysteryEventMenu(void)
@@ -64,18 +64,18 @@ void CB2_InitMysteryEventMenu(void)
 
 static bool8 GetEventLoadMessage(u8 *dest, u32 status)
 {
-    bool8 retVal = 1;
+    bool8 retVal = TRUE;
 
-    if (status == 0)
+    if (status == MEVENT_STATUS_LOAD_OK)
     {
         StringCopy(dest, gSystemText_EventLoadSuccess);
-        retVal = 0;
+        retVal = FALSE;
     }
 
-    if (status == 2)
-        retVal = 0;
+    if (status == MEVENT_STATUS_SUCCESS)
+        retVal = FALSE;
 
-    if (status == 1)
+    if (status == MEVENT_STATUS_LOAD_ERROR)
         StringCopy(dest, gSystemText_LoadingError);
 
     return retVal;
@@ -83,7 +83,7 @@ static bool8 GetEventLoadMessage(u8 *dest, u32 status)
 
 static void CB2_MysteryEventMenu(void)
 {
-    u16 unkVal;
+    u16 status;
 
     switch (gMain.state)
     {
@@ -102,12 +102,12 @@ static void CB2_MysteryEventMenu(void)
         if (Menu_UpdateWindowText())
         {
             gMain.state++;
-            gLinkType = 21761;
+            gLinkType = LINKTYPE_MYSTERY_EVENT;
             OpenLink();
         }
         break;
     case 3:
-        if ((gLinkStatus & 0x20) && (gLinkStatus & 0x1C) > 4)
+        if ((gLinkStatus & LINK_STAT_MASTER) && (gLinkStatus & LINK_STAT_PLAYER_COUNT) > 4)
         {
             PlaySE(SE_PIN);
             MenuPrintMessageDefaultCoords(gSystemText_LoadEventPressA);
@@ -128,7 +128,7 @@ static void CB2_MysteryEventMenu(void)
     case 5:
         if (GetLinkPlayerCount_2() != 2)
         {
-            GetEventLoadMessage(gStringVar4, 1);
+            GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
             MenuPrintMessageDefaultCoords(gStringVar4);
             gMain.state = 13;
             break;
@@ -158,7 +158,7 @@ static void CB2_MysteryEventMenu(void)
             {
                 SetCloseLinkCallback();
                 Menu_EraseWindowRect(6, 5, 23, 8);
-                GetEventLoadMessage(gStringVar4, 1);
+                GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
                 MenuPrintMessageDefaultCoords(gStringVar4);
                 gMain.state = 13;
                 break;
@@ -173,7 +173,7 @@ static void CB2_MysteryEventMenu(void)
             {
                 CloseLink();
                 Menu_EraseWindowRect(6, 5, 23, 8);
-                GetEventLoadMessage(gStringVar4, 1);
+                GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
                 MenuPrintMessageDefaultCoords(gStringVar4);
                 gMain.state = 13;
                 break;
@@ -222,7 +222,7 @@ static void CB2_MysteryEventMenu(void)
             {
                 SetCloseLinkCallback();
                 Menu_EraseWindowRect(6, 5, 23, 8);
-                GetEventLoadMessage(gStringVar4, 1);
+                GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
                 MenuPrintMessageDefaultCoords(gStringVar4);
                 ptr = (u8 *)&gMain;
                 offset1 = offsetof(struct Main, state);
@@ -249,7 +249,7 @@ static void CB2_MysteryEventMenu(void)
                 CloseLink();
                 Menu_EraseWindowRect(6, 5, 23, 8);
             label:
-                GetEventLoadMessage(gStringVar4, 1);
+                GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
                 MenuPrintMessageDefaultCoords(gStringVar4);
                 ptr = (u8 *)&gMain;
                 offset2 = offsetof(struct Main, state);
@@ -288,9 +288,9 @@ static void CB2_MysteryEventMenu(void)
     case 11:
         if (gReceivedRemoteLinkPlayers)
             break;
-        unkVal = RunMysteryEventScript(gSharedMem);
+        status = RunMysteryEventScript(gSharedMem);
         CpuFill32(0, gSharedMem, 0x7D4);
-        if (!GetEventLoadMessage(gStringVar4, unkVal))
+        if (!GetEventLoadMessage(gStringVar4, status))
             TrySavingData(SAVE_NORMAL);
         gMain.state++;
         break;
@@ -303,7 +303,7 @@ static void CB2_MysteryEventMenu(void)
         if (Menu_UpdateWindowText())
         {
             gMain.state++;
-            gUnknown_02039338 = 0;
+            sUnused = 0;
         }
         break;
     case 14:
@@ -323,13 +323,13 @@ static void CB2_MysteryEventMenu(void)
         break;
     }
 
-    if (gLinkStatus & 0x40)
+    if (gLinkStatus & LINK_STAT_CONN_ESTABLISHED)
     {
         if (!IsLinkMaster())
         {
             CloseLink();
             Menu_EraseWindowRect(6, 5, 23, 8);
-            GetEventLoadMessage(gStringVar4, 1);
+            GetEventLoadMessage(gStringVar4, MEVENT_STATUS_LOAD_ERROR);
             MenuPrintMessageDefaultCoords(gStringVar4);
             gMain.state = 13;
         }
@@ -343,34 +343,34 @@ static void CB2_MysteryEventMenu(void)
 
 #if DEBUG
 
-static const u8 Str_843DA70[] = _("CARDーE　emulation。。。");
-static const u8 Str_843DA84[] = _("LR:　select　A:　send。");
-static const u8 Str_843DA98[] = _("sending。。。");
-static const u8 Str_843DAA3[] = _("completed。");
+static const u8 sText_EReaderEmulation[] = _("CARDーE　emulation。。。");
+static const u8 sText_SelectAndSend[] = _("LR:　select　A:　send。");
+static const u8 sText_Sending[] = _("sending。。。");
+static const u8 sText_Sent[] = _("completed。");
 
 
-void debug_sub_815D1D8();
+void CB2_MysteryEventDebugMenu(void);
 
-void debug_sub_815D04C(u8 taskId)
+static void Task_SelectMysteryEventDebugData(u8 taskId)
 {
     if (gTasks[taskId].data[0] == 0)
     {
         Menu_DrawStdWindowFrame(4, 4, 13, 7);
-        Menu_PrintText(gUnknown_Debug_842E2D0[gTasks[taskId].data[1]].text, 5, 5);
+        Menu_PrintText(gMysteryEventDebugDataSources[gTasks[taskId].data[1]].text, 5, 5);
         gTasks[taskId].data[0]++;
     }
 
     if (JOY_NEW(DPAD_LEFT))
     {
         if (gTasks[taskId].data[1] == 0)
-            gTasks[taskId].data[1] = gUnknown_Debug_842E350 - 1;
+            gTasks[taskId].data[1] = gMysteryEventDebugDataSourceCount - 1;
         else
             gTasks[taskId].data[1]--;
         gTasks[taskId].data[0] = 0;
     }
     if (JOY_NEW(DPAD_RIGHT))
     {
-        if (gTasks[taskId].data[1] == gUnknown_Debug_842E350 - 1)
+        if (gTasks[taskId].data[1] == gMysteryEventDebugDataSourceCount - 1)
             gTasks[taskId].data[1] = 0;
         else
             gTasks[taskId].data[1]++;
@@ -381,14 +381,14 @@ void debug_sub_815D04C(u8 taskId)
         // TODO: fix this
         s32 var = gTasks[taskId].data[1];
         asm(""::"r"(var * 8));
-        gUnknown_Debug_842E2D0[var].func(gSharedMem + 0x4000);
+        gMysteryEventDebugDataSources[var].func(gSharedMem + 0x4000);
 
         gMain.state++;
         DestroyTask(taskId);
     }
 }
 
-void debug_sub_815D15C(void)
+void CB2_InitMysteryEventDebugMenu(void)
 {
     ResetSpriteData();
     FreeAllSpritePalettes();
@@ -407,10 +407,10 @@ void debug_sub_815D15C(void)
     BuildOamBuffer();
     UpdatePaletteFade();
     FillPalette(0, 0, 2);
-    SetMainCallback2(debug_sub_815D1D8);
+    SetMainCallback2(CB2_MysteryEventDebugMenu);
 }
 
-void debug_sub_815D1D8(void)
+void CB2_MysteryEventDebugMenu(void)
 {
     switch (gMain.state)
     {
@@ -424,7 +424,7 @@ void debug_sub_815D1D8(void)
         {
             if (JOY_HELD(R_BUTTON))
                 gUnknown_Debug_30030E0++;
-            MenuPrintMessage(Str_843DA70, 4, 15);
+            MenuPrintMessage(sText_EReaderEmulation, 4, 15);
             gMain.state++;
         }
         break;
@@ -432,7 +432,7 @@ void debug_sub_815D1D8(void)
         if (Menu_UpdateWindowText())
         {
             gMain.state++;
-            gLinkType = 0x5501;
+            gLinkType = LINKTYPE_MYSTERY_EVENT;
             OpenLink();
         }
         break;
@@ -440,18 +440,18 @@ void debug_sub_815D1D8(void)
         if (gReceivedRemoteLinkPlayers != 0)
         {
             gMain.state++;
-            MenuPrintMessage(Str_843DA84, 4, 15);
+            MenuPrintMessage(sText_SelectAndSend, 4, 15);
         }
         break;
     case 4:
         if (Menu_UpdateWindowText())
         {
-            CreateTask(debug_sub_815D04C, 10);
+            CreateTask(Task_SelectMysteryEventDebugData, 10);
             gMain.state++;
         }
         break;
     case 6:
-        MenuPrintMessage(Str_843DA98, 4, 15);
+        MenuPrintMessage(sText_Sending, 4, 15);
         SendBlock(0, gSharedMem + 0x4000, 0x2004);
         gMain.state++;
         break;
@@ -468,7 +468,7 @@ void debug_sub_815D1D8(void)
         if (gReceivedRemoteLinkPlayers == 0)
         {
             Menu_BlankWindowRect(4, 15, 26, 18);
-            Menu_PrintText(Str_843DAA3, 4, 15);
+            Menu_PrintText(sText_Sent, 4, 15);
             gMain.state++;
         }
         break;

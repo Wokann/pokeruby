@@ -527,7 +527,7 @@ u8 DebugMenu_8076CEC(void)
 
 u8 DebugMenu_8076D00(void)
 {
-    SetMainCallback2(debug_sub_815D15C);
+    SetMainCallback2(CB2_InitMysteryEventDebugMenu);
     return 0;
 }
 

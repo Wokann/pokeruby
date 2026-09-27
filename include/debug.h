@@ -1,7 +1,7 @@
 #ifndef GUARD_DEBUG_H
 #define GUARD_DEBUG_H
 
-struct UnkDebugMenu3Items {
+struct MysteryEventDebugDataSource {
     const u8 * text;
     size_t (*func)(u8 * dest);
 };
@@ -25,8 +25,8 @@ void CB2_StartSoundCheckMenu(void);
 void NakaGenderTest(void);
 
 // unk debug menu 3
-extern const u8 gUnknown_Debug_842E350;
-extern const struct UnkDebugMenu3Items gUnknown_Debug_842E2D0[];
+extern const u8 gMysteryEventDebugDataSourceCount;
+extern const struct MysteryEventDebugDataSource gMysteryEventDebugDataSources[];
 
 // unknown debug menu
 int InitSogabeDebugMenu(void);

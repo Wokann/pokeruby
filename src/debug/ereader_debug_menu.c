@@ -327,7 +327,7 @@ const u8 Str_842E2B7[] = _("ball");
 const u8 Str_842E2BC[] = _("cheri berry");
 const u8 Str_842E2C8[] = _("TM01");
 
-const struct UnkDebugMenu3Items gUnknown_Debug_842E2D0[] = {
+const struct MysteryEventDebugDataSource gMysteryEventDebugDataSources[] = {
     {Str_842E264, debug_sub_813C404},
     {Str_842E26B, debug_sub_813C810},
     {Str_842E26E, debug_sub_813C888},
@@ -348,7 +348,7 @@ const struct UnkDebugMenu3Items gUnknown_Debug_842E2D0[] = {
 
 extern u8 gUnknown_Debug_845E306[];
 
-const u8 gUnknown_Debug_842E350 = 16;
+const u8 gMysteryEventDebugDataSourceCount = 16;
 
 u8 *const gUnknown_Debug_842E354[] = {
     gUnknown_Debug_845DAE1,
