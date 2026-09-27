@@ -13,9 +13,9 @@
 #include "field_specials.h"
 #include "sound.h"
 
-static u8 gDebug_03000724;
-static u8 gDebug_03000725;
-static u8 gDebug_03000726;
+static u8 sTVDataTypeIndex;
+static u8 sTVDataSlotIndex;
+static u8 sTVShowActiveStateDisplayed;
 
 bool8 NoharaDebugMenu_HandleInput(void);
 bool8 NoharaDebugMenu_TV(void);
@@ -51,7 +51,7 @@ bool8 NoharaDebugMenu_WaitForAButton(void);
 bool8 NoharaDebugMenu_BattleVSDad(void);
 bool8 NoharaDebugMenu_DadAfterBattle(void);
 bool8 NoharaDebugMenu_SootopolisCity(void);
-bool8 NoharaDebugMenu_Embark(void);
+bool8 NoharaDebugMenu_ResetMrBriney(void);
 bool8 NoharaDebugMenu_Yes9999(void);
 bool8 NoharaDebugMenu_LegendsFlagOn(void);
 bool8 NoharaDebugMenu_AddNumWinningStreaks(void);
@@ -72,7 +72,7 @@ const struct MenuAction sMenuActions_NoharaDebug[] = {
     {sString_NoharaDebug_BattleVsDad, NoharaDebugMenu_BattleVSDad},
     {sString_NoharaDebug_DadAfterBattle, NoharaDebugMenu_DadAfterBattle},
     {sString_NoharaDebug_SootopolisCity, NoharaDebugMenu_SootopolisCity},
-    {sString_NoharaDebug_ResetMrBriney, NoharaDebugMenu_Embark},
+    {sString_NoharaDebug_ResetMrBriney, NoharaDebugMenu_ResetMrBriney},
     {sString_NoharaDebug_Yes9999, NoharaDebugMenu_Yes9999},
     {sString_NoharaDebug_LegendsFlagOn, NoharaDebugMenu_LegendsFlagOn},
     {sString_NoharaDebug_AddWinningStreaks, NoharaDebugMenu_AddNumWinningStreaks}
@@ -205,7 +205,7 @@ const struct {
 
 bool8 NoharaDebugMenu_TV(void)
 {
-    gDebug_03000726 = 0;
+    sTVShowActiveStateDisplayed = 0;
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 10, 19);
     Menu_PrintItems(1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_TV), sMenuActions_NoharaDebug_TV);
@@ -274,7 +274,7 @@ bool8 NoharaDebugMenu_TV_SetPopulatedShowsActive(void)
     return TRUE;
 }
 
-const u8 gUnknown_Debug_083C4BD4[][12] = {
+const u8 sSlotMachineHitTableCoords[][12] = {
     {0x0C, 0x04},
     {0x0C, 0x08},
     {0x0C, 0x0A},
@@ -297,7 +297,7 @@ bool8 NoharaDebugMenu_TV_ShowSlotMachineHitTable(void)
     {
         gSpecialVar_0x8004 = i;
         ConvertIntToDecimalStringN(gStringVar1, GetSlotMachineId(), STR_CONV_MODE_LEFT_ALIGN, 1);
-        Menu_PrintText(gStringVar1, gUnknown_Debug_083C4BD4[i][0], gUnknown_Debug_083C4BD4[i][1]);
+        Menu_PrintText(gStringVar1, sSlotMachineHitTableCoords[i][0], sSlotMachineHitTableCoords[i][1]);
     }
     gSpecialVar_0x8004 = 0;
     gMenuCallback = NoharaDebugMenu_WaitForAButton;
@@ -309,8 +309,8 @@ bool8 NoharaDebugMenu_TV_HandleSecretTypePrompt(void)
     if (JOY_NEW(DPAD_LEFT))
     {
         Menu_EraseWindowRect(10, 0, 29, 13);
-        gDebug_03000726 ^= 1;
-        if (gDebug_03000726)
+        sTVShowActiveStateDisplayed ^= 1;
+        if (sTVShowActiveStateDisplayed)
             NoharaDebugMenu_TV_PrintDataStates();
         else
             NoharaDebugMenu_TV_PrintDataKinds();
@@ -402,7 +402,7 @@ bool8 NoharaDebugMenu_TV_EnableBroadcasts(void)
 
 void NoharaDebugMenu_TV_OpenCreateShowMenu(void)
 {
-    gDebug_03000724 = 0;
+    sTVDataTypeIndex = 0;
     sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 26, 8);
     Menu_PrintText(sTVShowNames_NoharaDebug[0], 14, 7);
@@ -417,48 +417,48 @@ bool8 NoharaDebugMenu_TV_HandleCreateShowInput(void)
     bool8 updateDisplay = FALSE;
     if (JOY_NEW(DPAD_UP))
     {
-        gDebug_03000725++;
-        if (gDebug_03000725 == 24)
-            gDebug_03000725 = 0;
+        sTVDataSlotIndex++;
+        if (sTVDataSlotIndex == 24)
+            sTVDataSlotIndex = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
-        if (gDebug_03000725 == 0)
-            gDebug_03000725 = 24;
-        gDebug_03000725--;
+        if (sTVDataSlotIndex == 0)
+            sTVDataSlotIndex = 24;
+        sTVDataSlotIndex--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
     if (JOY_NEW(DPAD_RIGHT))
     {
-        gDebug_03000724++;
-        if (gDebug_03000724 == 12)
-            gDebug_03000724 = 0;
+        sTVDataTypeIndex++;
+        if (sTVDataTypeIndex == 12)
+            sTVDataTypeIndex = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
-        if (gDebug_03000724 == 0)
-            gDebug_03000724 = 12;
-        gDebug_03000724--;
+        if (sTVDataTypeIndex == 0)
+            sTVDataTypeIndex = 12;
+        sTVDataTypeIndex--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
     if (updateDisplay)
     {
         Menu_BlankWindowRect(13, 6, 26, 8);
-        Menu_PrintText(sTVShowNames_NoharaDebug[gDebug_03000724], 14, 7);
+        Menu_PrintText(sTVShowNames_NoharaDebug[sTVDataTypeIndex], 14, 7);
         Menu_BlankWindowRect(22, 1, 24, 2);
-        ConvertIntToDecimalStringN(gStringVar1, gDebug_03000725, STR_CONV_MODE_LEFT_ALIGN, 2);
+        ConvertIntToDecimalStringN(gStringVar1, sTVDataSlotIndex, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, 23, 1);
     }
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        NoharaDebugMenu_TV_CreateShow(gDebug_03000725, sTVShowTypes_NoharaDebug[gDebug_03000724]);
+        NoharaDebugMenu_TV_CreateShow(sTVDataSlotIndex, sTVShowTypes_NoharaDebug[sTVDataTypeIndex]);
     }
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
@@ -669,12 +669,12 @@ void NoharaDebugMenu_TV_CreateShow(u8 a0, u8 a1)
         case TVSHOW_POKEMON_TODAY_CAUGHT:
         {
             DECLARE_TERU_POINTER;
-            u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
-            u8 gUnknown_Debug_083C4C6C[] = _("TERUTERUDA");
+            u8 playerNameTerukun[] = _("TERUKUN");
+            u8 nicknameTeruteruda[] = _("TERUTERUDA");
 
             TERU_ACCESS(pokemonToday).var12 = 255;
-            StringCopy(TERU_ACCESS(pokemonToday).playerName, gUnknown_Debug_083C4C64);
-            StringCopy(TERU_ACCESS(pokemonToday).nickname, gUnknown_Debug_083C4C6C);
+            StringCopy(TERU_ACCESS(pokemonToday).playerName, playerNameTerukun);
+            StringCopy(TERU_ACCESS(pokemonToday).nickname, nicknameTeruteruda);
             TERU_ACCESS(pokemonToday).ball = ITEM_PREMIER_BALL;
             TERU_ACCESS(pokemonToday).species = SPECIES_WIGGLYTUFF;
             TERU_ACCESS(pokemonToday).language = GAME_LANGUAGE;
@@ -684,7 +684,7 @@ void NoharaDebugMenu_TV_CreateShow(u8 a0, u8 a1)
         case TVSHOW_SMART_SHOPPER:
         {
             DECLARE_TERU_POINTER;
-            u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
+            u8 playerNameTerukun[] = _("TERUKUN");
             int ii;
 
             for (ii = 0; ii < 3; ii++)
@@ -693,47 +693,47 @@ void NoharaDebugMenu_TV_CreateShow(u8 a0, u8 a1)
             TERU_ACCESS(smartshopperShow).shopLocation = 40;
             for (ii = 0; ii < 3; ii++)
                 TERU_ACCESS(smartshopperShow).itemIds[ii] = ITEM_ENERGY_POWDER;
-            StringCopy(TERU_ACCESS(smartshopperShow).playerName, gUnknown_Debug_083C4C64);
+            StringCopy(TERU_ACCESS(smartshopperShow).playerName, playerNameTerukun);
             TERU_ACCESS(smartshopperShow).language = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_POKEMON_TODAY_FAILED:
         {
             DECLARE_TERU_POINTER;
-            u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
+            u8 playerNameTerukun[] = _("TERUKUN");
 
             TERU_ACCESS(pokemonTodayFailed).species = SPECIES_WIGGLYTUFF;
             TERU_ACCESS(pokemonTodayFailed).species2 = SPECIES_WIGGLYTUFF;
             TERU_ACCESS(pokemonTodayFailed).var12 = 3;
             TERU_ACCESS(pokemonTodayFailed).var10 = 0xff;
             TERU_ACCESS(pokemonTodayFailed).var11 = 1;
-            StringCopy(TERU_ACCESS(pokemonTodayFailed).playerName, gUnknown_Debug_083C4C64);
+            StringCopy(TERU_ACCESS(pokemonTodayFailed).playerName, playerNameTerukun);
             TERU_ACCESS(pokemonTodayFailed).language = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_FISHING_ADVICE:
         {
             DECLARE_TERU_POINTER;
-            u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
+            u8 playerNameTerukun[] = _("TERUKUN");
 
             TERU_ACCESS(pokemonAngler).var02 = 0xff;
             TERU_ACCESS(pokemonAngler).var03 = 0;
             TERU_ACCESS(pokemonAngler).var04 = 40;
-            StringCopy(TERU_ACCESS(pokemonAngler).playerName, gUnknown_Debug_083C4C64);
+            StringCopy(TERU_ACCESS(pokemonAngler).playerName, playerNameTerukun);
             TERU_ACCESS(pokemonAngler).language = GAME_LANGUAGE;
             break;
         }
         case TVSHOW_WORLD_OF_MASTERS:
         {
             DECLARE_TERU_POINTER;
-            u8 gUnknown_Debug_083C4C64[] = _("TERUKUN");
+            u8 playerNameTerukun[] = _("TERUKUN");
 
             TERU_ACCESS(worldOfMasters).var02 = 0xffff;
             TERU_ACCESS(worldOfMasters).var06 = 0xffff;
             TERU_ACCESS(worldOfMasters).var04 = 40;
             TERU_ACCESS(worldOfMasters).var08 = 40;
             TERU_ACCESS(worldOfMasters).var0a = 3;
-            StringCopy(TERU_ACCESS(worldOfMasters).playerName, gUnknown_Debug_083C4C64);
+            StringCopy(TERU_ACCESS(worldOfMasters).playerName, playerNameTerukun);
             TERU_ACCESS(worldOfMasters).language = GAME_LANGUAGE;
             break;
         }
@@ -750,7 +750,7 @@ bool8 NoharaDebugMenu_TV_ClearShowData(void)
 
 void NoharaDebugMenu_TV_OpenCreateCommercialMenu(void)
 {
-    gDebug_03000724 = 0;
+    sTVDataTypeIndex = 0;
     sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 23, 8);
     Menu_PrintText(sTVCommercialNames_NoharaDebug[0], 14, 7);
@@ -766,36 +766,36 @@ bool8 NoharaDebugMenu_TV_HandleCreateCommercialInput(void)
 
     if (JOY_NEW(DPAD_UP))
     {
-        gDebug_03000725++;
-        if (gDebug_03000725 == 16)
-            gDebug_03000725 = 0;
+        sTVDataSlotIndex++;
+        if (sTVDataSlotIndex == 16)
+            sTVDataSlotIndex = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
 
     if (JOY_NEW(DPAD_DOWN))
     {
-        if (gDebug_03000725 == 0)
-            gDebug_03000725 = 16;
-        gDebug_03000725--;
+        if (sTVDataSlotIndex == 0)
+            sTVDataSlotIndex = 16;
+        sTVDataSlotIndex--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
 
     if (JOY_NEW(DPAD_RIGHT))
     {
-        gDebug_03000724++;
-        if (gDebug_03000724 == 3)
-            gDebug_03000724 = 0;
+        sTVDataTypeIndex++;
+        if (sTVDataTypeIndex == 3)
+            sTVDataTypeIndex = 0;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
 
     if (JOY_NEW(DPAD_LEFT))
     {
-        if (gDebug_03000724 == 0)
-            gDebug_03000724 = 3;
-        gDebug_03000724--;
+        if (sTVDataTypeIndex == 0)
+            sTVDataTypeIndex = 3;
+        sTVDataTypeIndex--;
         PlaySE(SE_SELECT);
         updateDisplay = TRUE;
     }
@@ -803,16 +803,16 @@ bool8 NoharaDebugMenu_TV_HandleCreateCommercialInput(void)
     if (updateDisplay)
     {
         Menu_BlankWindowRect(13, 6, 23, 8);
-        Menu_PrintText(sTVCommercialNames_NoharaDebug[gDebug_03000724], 14, 7);
+        Menu_PrintText(sTVCommercialNames_NoharaDebug[sTVDataTypeIndex], 14, 7);
         Menu_BlankWindowRect(22, 1, 24, 2);
-        ConvertIntToDecimalStringN(gStringVar1, gDebug_03000725, STR_CONV_MODE_LEFT_ALIGN, 2);
+        ConvertIntToDecimalStringN(gStringVar1, sTVDataSlotIndex, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, 23, 1);
     }
 
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        NoharaDebugMenu_TV_CreateCommercial(gDebug_03000725, sTVCommercialTypes_NoharaDebug[gDebug_03000724]);
+        NoharaDebugMenu_TV_CreateCommercial(sTVDataSlotIndex, sTVCommercialTypes_NoharaDebug[sTVDataTypeIndex]);
     }
 
     if (JOY_NEW(B_BUTTON | START_BUTTON))
@@ -1038,7 +1038,7 @@ bool8 NoharaDebugMenu_SootopolisCity(void)
     return TRUE;
 }
 
-bool8 NoharaDebugMenu_Embark(void)
+bool8 NoharaDebugMenu_ResetMrBriney(void)
 {
     FlagClear(FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY);
     VarSet(VAR_BRINEY_HOUSE_STATE, 1);
