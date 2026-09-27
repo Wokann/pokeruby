@@ -93,12 +93,12 @@ static u16 GetOverworldMapFromUnderwaterMap_(u16);
 static void GetPositionOfCursorWithinMapSec(void);
 static bool8 RegionMap_IsMapSecIdInNextRow(u16);
 void CreateRegionMapCursor(u16, u16);
-void sub_80FBCA0(void);
-static void sub_80FBDF8(void);
-static void sub_80FBE24(void);
-static void SpriteCB_PlayerIconZoomedOut(struct Sprite *);
-static void UpdateIconBlink(struct Sprite *);
-static void SpriteCB_PlayerIconZoomedIn(struct Sprite *);
+void FreeRegionMapCursorSprite(void);
+static void HideRegionMapPlayerIcon(void);
+static void UnhideRegionMapPlayerIcon(void);
+static void SpriteCB_PlayerIconMapFull(struct Sprite *);
+static void SpriteCB_PlayerIcon(struct Sprite *);
+static void SpriteCB_PlayerIconMapZoomed(struct Sprite *);
 const u8 *GetMapSectionName(u8 *, u16, u16);
 static void VBlankCB_FlyRegionMap(void);
 void CB2_FlyRegionMap(void);
@@ -380,8 +380,8 @@ void SetRegionMapDataForZoom(void)
         gRegionMap->unk50 = 0x800;
     }
     gRegionMap->unk6E = 0;
-    sub_80FBCA0();
-    sub_80FBDF8();
+    FreeRegionMapCursorSprite();
+    HideRegionMapPlayerIcon();
 }
 
 u8 UpdateRegionMapZoom(void)
@@ -401,7 +401,7 @@ u8 UpdateRegionMapZoom(void)
         gRegionMap->zoomed = !gRegionMap->zoomed;
         gRegionMap->inputCallback = (gRegionMap->zoomed == FALSE) ? ProcessRegionMapInput_Full : ProcessRegionMapInput_Zoomed;
         CreateRegionMapCursor(gRegionMap->cursorTileTag, gRegionMap->cursorPaletteTag);
-        sub_80FBE24();
+        UnhideRegionMapPlayerIcon();
         r4 = 0;
     }
     else
@@ -864,7 +864,7 @@ static const union AnimCmd *const sCursorAnimTable[] =
     sCursorAnimSeq1,
 };
 
-static void SpriteCB_Cursor(struct Sprite *sprite)
+static void SpriteCB_CursorMapFull(struct Sprite *sprite)
 {
     if (gRegionMap->unk7A != 0)
     {
@@ -874,7 +874,7 @@ static void SpriteCB_Cursor(struct Sprite *sprite)
     }
 }
 
-static void nullsub_66(struct Sprite *sprite)
+static void SpriteCB_CursorMapZoomed(struct Sprite *sprite)
 {
 }
 
@@ -892,7 +892,7 @@ void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         .anims = sCursorAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = SpriteCB_Cursor,
+        .callback = SpriteCB_CursorMapFull,
     };
 
     spriteSheet.tag = tileTag;
@@ -907,13 +907,13 @@ void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
     {
         spriteSheet.data = gRegionMap->cursorSmallImage;
         spriteSheet.size = 0x100;
-        spriteTemplate.callback = SpriteCB_Cursor;
+        spriteTemplate.callback = SpriteCB_CursorMapFull;
     }
     else
     {
         spriteSheet.data = gRegionMap->cursorLargeImage;
         spriteSheet.size = 0x600;
-        spriteTemplate.callback = nullsub_66;
+        spriteTemplate.callback = SpriteCB_CursorMapZoomed;
     }
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&spritePalette);
@@ -940,7 +940,7 @@ void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
     }
 }
 
-void sub_80FBCA0(void)
+void FreeRegionMapCursorSprite(void)
 {
     if (gRegionMap->cursorSprite != NULL)
     {
@@ -1026,17 +1026,17 @@ void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTag)
     {
         gRegionMap->playerIconSprite->x = gRegionMap->unk74 * 8 + 4;
         gRegionMap->playerIconSprite->y = gRegionMap->unk76 * 8 + 4;
-        gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconZoomedOut;
+        gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapFull;
     }
     else
     {
         gRegionMap->playerIconSprite->x = gRegionMap->unk74 * 16 - 48;
         gRegionMap->playerIconSprite->y = gRegionMap->unk76 * 16 - 66;
-        gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconZoomedIn;
+        gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapZoomed;
     }
 }
 
-static void sub_80FBDF8(void)
+static void HideRegionMapPlayerIcon(void)
 {
     if (gRegionMap->playerIconSprite != NULL)
     {
@@ -1045,7 +1045,7 @@ static void sub_80FBDF8(void)
     }
 }
 
-static void sub_80FBE24(void)
+static void UnhideRegionMapPlayerIcon(void)
 {
     if (gRegionMap->playerIconSprite != NULL)
     {
@@ -1053,7 +1053,7 @@ static void sub_80FBE24(void)
         {
             gRegionMap->playerIconSprite->x = gRegionMap->unk74 * 16 - 48;
             gRegionMap->playerIconSprite->y = gRegionMap->unk76 * 16 - 66;
-            gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconZoomedIn;
+            gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapZoomed;
             gRegionMap->playerIconSprite->invisible = FALSE;
         }
         else
@@ -1062,13 +1062,13 @@ static void sub_80FBE24(void)
             gRegionMap->playerIconSprite->y = gRegionMap->unk76 * 8 + 4;
             gRegionMap->playerIconSprite->x2 = 0;
             gRegionMap->playerIconSprite->y2 = 0;
-            gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconZoomedOut;
+            gRegionMap->playerIconSprite->callback = SpriteCB_PlayerIconMapFull;
             gRegionMap->playerIconSprite->invisible = FALSE;
         }
     }
 }
 
-static void SpriteCB_PlayerIconZoomedIn(struct Sprite *sprite)
+static void SpriteCB_PlayerIconMapZoomed(struct Sprite *sprite)
 {
     sprite->x2 = -(gRegionMap->scrollX * 2);
     sprite->y2 = -(gRegionMap->scrollY * 2);
@@ -1082,17 +1082,17 @@ static void SpriteCB_PlayerIconZoomedIn(struct Sprite *sprite)
         sprite->data[2] = TRUE;
 
     if (sprite->data[2] == TRUE)
-        UpdateIconBlink(sprite);
+        SpriteCB_PlayerIcon(sprite);
     else
         sprite->invisible = TRUE;
 }
 
-static void SpriteCB_PlayerIconZoomedOut(struct Sprite *sprite)
+static void SpriteCB_PlayerIconMapFull(struct Sprite *sprite)
 {
-    UpdateIconBlink(sprite);
+    SpriteCB_PlayerIcon(sprite);
 }
 
-static void UpdateIconBlink(struct Sprite *sprite)
+static void SpriteCB_PlayerIcon(struct Sprite *sprite)
 {
     if (gRegionMap->blinkPlayerIcon)
     {
@@ -1110,7 +1110,7 @@ static void UpdateIconBlink(struct Sprite *sprite)
     }
 }
 
-void sub_80FBF94(void)
+void TrySetPlayerIconBlink(void)
 {
     if (gRegionMap->playerIsInCave)
         gRegionMap->blinkPlayerIcon = TRUE;
@@ -1726,7 +1726,7 @@ void debug_sub_8110D84(void)
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            sub_80FBCA0();
+            FreeRegionMapCursorSprite();
             SetRegionMapDataForZoom();
             gRegionMapState->state++;
         }
@@ -1745,7 +1745,7 @@ void debug_sub_8110D84(void)
         }
         if (JOY_NEW(A_BUTTON))  // no "else if" like above?
         {
-            sub_80FBCA0();
+            FreeRegionMapCursorSprite();
             SetRegionMapDataForZoom();
             gRegionMapState->state++;
         }
@@ -1766,7 +1766,7 @@ void debug_sub_8110F28(void)
     
     if (gMain.callback2 == CB2_FlyRegionMap)
     {
-        sub_80FBF94();
+        TrySetPlayerIconBlink();
         sub_80FC244(debug_sub_8110D84);
         debug_sub_8110CCC();
     }

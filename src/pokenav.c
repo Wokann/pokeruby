@@ -2673,7 +2673,7 @@ void CreatePokenavRegionMapIcons(void)
 {
     CreateRegionMapCursor(7, 7);
     CreateRegionMapPlayerIcon(8, 8);
-    sub_80FBF94();
+    TrySetPlayerIconBlink();
 }
 
 void FreePokenavRegionMapIcons(void)
