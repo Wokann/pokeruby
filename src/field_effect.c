@@ -993,27 +993,27 @@ static void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
 #undef sSpriteId
 #undef sEffectSpriteId
 
-void mapldr_080842E8(void);
-void mapldr_08084390(void);
-void task00_8084310(u8);
-void c3_080843F8(u8);
+void FieldCallback_UseFly(void);
+void FieldCallback_FlyIntoMap(void);
+void Task_UseFly(u8);
+void Task_FlyIntoMap(u8);
 
-void sub_80865BC(void)
+void ReturnToFieldFromFlyMapSelect(void)
 {
     SetMainCallback2(CB2_ReturnToField);
-    gFieldCallback = mapldr_080842E8;
+    gFieldCallback = FieldCallback_UseFly;
 }
 
-void mapldr_080842E8(void)
+void FieldCallback_UseFly(void)
 {
     FadeInFromBlack();
-    CreateTask(task00_8084310, 0);
+    CreateTask(Task_UseFly, 0);
     LockPlayerFieldControls();
     FreezeObjectEvents();
     gFieldCallback = NULL;
 }
 
-void task00_8084310(u8 taskId)
+void Task_UseFly(u8 taskId)
 {
     struct Task *task;
     task = &gTasks[taskId];
@@ -1036,18 +1036,18 @@ void task00_8084310(u8 taskId)
         Overworld_ResetStateAfterFly();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
-        gFieldCallback = mapldr_08084390;
+        gFieldCallback = FieldCallback_FlyIntoMap;
         DestroyTask(taskId);
     }
 }
 
-void mapldr_08084390(void)
+void FieldCallback_FlyIntoMap(void)
 {
     Overworld_PlaySpecialMapMusic();
     FadeInFromBlack();
-    CreateTask(c3_080843F8, 0);
+    CreateTask(Task_FlyIntoMap, 0);
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
-    if (gPlayerAvatar.flags & 0x08)
+    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
         ObjectEventTurn(&gObjectEvents[gPlayerAvatar.objectEventId], DIR_WEST);
     }
@@ -1056,7 +1056,7 @@ void mapldr_08084390(void)
     gFieldCallback = NULL;
 }
 
-void c3_080843F8(u8 taskId)
+void Task_FlyIntoMap(u8 taskId)
 {
     struct Task *task;
     task = &gTasks[taskId];

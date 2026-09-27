@@ -1626,7 +1626,7 @@ void CB_ExitFlyMap(void)
                     warp1_set_2(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][0], sMapHealLocations[gRegionMapState->regionMap.mapSectionId][1], -1);
                 break;
             }
-            sub_80865BC();
+            ReturnToFieldFromFlyMapSelect();
         }
         else
         {

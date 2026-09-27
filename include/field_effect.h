@@ -38,7 +38,7 @@ bool8 FieldEffectActiveListContains(u8 id);
 
 void SpriteCB_PokecenterMonitor(struct Sprite *);
 
-void sub_80865BC(void);
+void ReturnToFieldFromFlyMapSelect(void);
 
 void PokecenterHealEffect_0(struct Task *);
 void PokecenterHealEffect_1(struct Task *);
