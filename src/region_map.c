@@ -1649,7 +1649,7 @@ void CB_ExitFlyMap(void)
 
 #if DEBUG
 
-void debug_sub_8110CCC(void)
+void DebugDrawRegionMapSectionName(void)
 {
     bool8 r7 = FALSE;
     u16 i;
@@ -1680,7 +1680,7 @@ void debug_sub_8110CCC(void)
     }
 }
 
-void debug_sub_8110D84(void)
+void DebugHandleRegionMapInput(void)
 {
     switch (gRegionMapState->state)
     {
@@ -1698,7 +1698,7 @@ void debug_sub_8110D84(void)
         case 0:
             break;
         case 3:
-            debug_sub_8110CCC();
+            DebugDrawRegionMapSectionName();
             break;
         case 4:
             if (gRegionMapState->regionMap.unk16 != 0)
@@ -1722,7 +1722,7 @@ void debug_sub_8110D84(void)
     case 4:
         if (DoRegionMapInputCallback() != 0)
         {
-            debug_sub_8110CCC();
+            DebugDrawRegionMapSectionName();
         }
         else if (JOY_NEW(A_BUTTON))
         {
@@ -1741,7 +1741,7 @@ void debug_sub_8110D84(void)
     case 6:
         if (DoRegionMapInputCallback() != 0)
         {
-            debug_sub_8110CCC();
+            DebugDrawRegionMapSectionName();
         }
         if (JOY_NEW(A_BUTTON))  // no "else if" like above?
         {
@@ -1760,15 +1760,15 @@ void debug_sub_8110D84(void)
     }
 }
 
-void debug_sub_8110F28(void)
+void CB2_OpenDebugRegionMap(void)
 {
     CB2_OpenFlyMap();
     
     if (gMain.callback2 == CB2_FlyMap)
     {
         TrySetPlayerIconBlink();
-        SetFlyMapCallback(debug_sub_8110D84);
-        debug_sub_8110CCC();
+        SetFlyMapCallback(DebugHandleRegionMapInput);
+        DebugDrawRegionMapSectionName();
     }
 }
 

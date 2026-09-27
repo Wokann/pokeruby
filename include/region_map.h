@@ -89,7 +89,7 @@ const u8 *GetMapName(u8 *dest, u16 mapSectionId, u16 length);
 const u8 *GetMapNameGeneric(u8 *dest, u16 b);
 const u8 *GetMapNameHandleEvilTeamHideout(u8 *dest, u16 b);
 void CB2_OpenFlyMap(void);
-void debug_sub_8110F28(void);
+void CB2_OpenDebugRegionMap(void);
 u16 GetRegionMapSectionAt_(u16 x, u16 y);
 void TrySetPlayerIconBlink(void);
 

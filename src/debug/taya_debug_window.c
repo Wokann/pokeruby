@@ -701,7 +701,7 @@ bool8 debug_sub_80912D8(void)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(debug_sub_8110F28);
+        SetMainCallback2(CB2_OpenDebugRegionMap);
         return TRUE;
     }
     return FALSE;
