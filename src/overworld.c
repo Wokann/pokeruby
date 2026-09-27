@@ -121,8 +121,8 @@ static u8 LinkPlayerDetectCollision(u8, u8, s16, s16);
 static void CreateLinkPlayerSprite(u8);
 static void SpriteCB_LinkPlayer(struct Sprite *);
 static u16 sub_8055758(const u8 *);
-static void sub_8055808(const u8 *);
-static void sub_8055840(const u8 *);
+static void RunInteractLocalPlayerScript(const u8 *);
+static void InitMenuBasedScript(const u8 *);
 
 static const struct WarpData sDummyWarpData =
 {
@@ -1954,7 +1954,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             if (a3->b)
             {
                 sub_80543DC(sub_80553E4);
-                sub_8055808(script);
+                RunInteractLocalPlayerScript(script);
             }
             return;
         }
@@ -1964,7 +1964,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             if (a3->b)
             {
                 sub_80543DC(sub_80553E4);
-                sub_805585C();
+                RunTerminateLinkScript();
             }
             return;
         }
@@ -1977,7 +1977,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 if (a3->b)
                 {
                     sub_80543DC(sub_80553E4);
-                    sub_80557F4();
+                    InitLinkRoomStartMenuScript();
                 }
             }
             break;
@@ -1988,7 +1988,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 if (a3->b)
                 {
                     sub_80543DC(sub_80553E4);
-                    sub_8055824();
+                    RunConfirmLeaveCableClubScript();
                 }
             }
             break;
@@ -2000,7 +2000,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 if (a3->b)
                 {
                     sub_80543DC(sub_80553E4);
-                    sub_8055840(script);
+                    InitMenuBasedScript(script);
                 }
             }
             break;
@@ -2011,7 +2011,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 if (a3->b)
                 {
                     sub_80543DC(sub_8055408);
-                    sub_80557E8();
+                    InitLinkPlayerQueueScript();
                 }
             }
             break;
@@ -2022,7 +2022,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 if (a3->b)
                 {
                     sub_80543DC(sub_8055438);
-                    sub_80557E8();
+                    InitLinkPlayerQueueScript();
                 }
             }
             break;
@@ -2388,40 +2388,40 @@ static u16 sub_8055758(const u8 *script)
     return 0;
 }
 
-void sub_80557E8(void)
+void InitLinkPlayerQueueScript(void)
 {
     LockPlayerFieldControls();
 }
 
-void sub_80557F4(void)
+void InitLinkRoomStartMenuScript(void)
 {
     PlaySE(SE_WIN_OPEN);
     sub_8071310();
     LockPlayerFieldControls();
 }
 
-static void sub_8055808(const u8 *script)
+static void RunInteractLocalPlayerScript(const u8 *script)
 {
     PlaySE(SE_SELECT);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }
 
-void sub_8055824(void)
+void RunConfirmLeaveCableClubScript(void)
 {
     PlaySE(SE_WIN_OPEN);
     ScriptContext_SetupScript(EventScript_ConfirmLeaveCableClubRoom);
     LockPlayerFieldControls();
 }
 
-static void sub_8055840(const u8 *script)
+static void InitMenuBasedScript(const u8 *script)
 {
     PlaySE(SE_SELECT);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }
 
-void sub_805585C(void)
+void RunTerminateLinkScript(void)
 {
     ScriptContext_SetupScript(EventScript_TerminateLink);
     LockPlayerFieldControls();
