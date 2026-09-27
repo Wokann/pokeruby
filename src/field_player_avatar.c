@@ -59,14 +59,14 @@ static void MovePlayerNotOnBike(u8 a, u16 b);
 static u8 CheckMovementInputNotOnBike(u8 a);
 static void PlayerNotOnBikeNotMoving(u8 direction, u16 heldKeys);
 static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys);
-static void sub_8058D0C(u8 direction, u16 heldKeys);
+static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys);
 static u8 CheckForPlayerAvatarCollision(u8 a);
 static bool8 sub_8058EF0(s16 x, s16 y, u8 direction);
 static bool8 ShouldJumpLedge(s16 a, s16 b, u8 c);
 static u8 sub_8058F6C(s16 a, s16 b, u8 c);
-static void check_acro_bike_metatile(s16 unused1, s16 unused2, u8 c, u8 *d);
+static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior, u8 *collision);
 static void DoPlayerAvatarTransition(void);
-static void nullsub_49(struct ObjectEvent *a);
+static void PlayerAvatarTransition_Dummy(struct ObjectEvent *objEvent);
 static void PlayerAvatarTransition_Normal(struct ObjectEvent *a);
 static void PlayerAvatarTransition_MachBike(struct ObjectEvent *a);
 static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *a);
@@ -163,13 +163,13 @@ static bool8 (*const sForcedMovementFuncs[])(void) =
     ForcedMovement_SecretBaseSpinMat,
     ForcedMovement_MuddySlope,
 };
-static void (*const gUnknown_0830FBEC[])(u8, u16) =
+static void (*const sPlayerNotOnBikeFuncs[])(u8, u16) =
 {
     PlayerNotOnBikeNotMoving,
     PlayerNotOnBikeTurningInPlace,
-    sub_8058D0C,
+    PlayerNotOnBikeMoving,
 };
-static bool8 (*const gUnknown_0830FBF8[])(u8) =
+static bool8 (*const sAcroBikeTrickMetatiles[])(u8) =
 {
     MetatileBehavior_IsBumpySlope,
     MetatileBehavior_IsIsolatedVerticalRail,
@@ -177,8 +177,8 @@ static bool8 (*const gUnknown_0830FBF8[])(u8) =
     MetatileBehavior_IsVerticalRail,
     MetatileBehavior_IsHorizontalRail,
 };
-static const u8 gUnknown_0830FC0C[] = {9, 10, 11, 12, 13};
-static void (*const gUnknown_0830FC14[])(struct ObjectEvent *) =
+static const u8 sAcroBikeTrickCollisionTypes[] = {9, 10, 11, 12, 13};
+static void (*const sPlayerAvatarTransitionFuncs[])(struct ObjectEvent *) =
 {
     PlayerAvatarTransition_Normal,
     PlayerAvatarTransition_MachBike,
@@ -186,8 +186,8 @@ static void (*const gUnknown_0830FC14[])(struct ObjectEvent *) =
     PlayerAvatarTransition_Surfing,
     PlayerAvatarTransition_Underwater,
     PlayerAvatarTransition_ReturnToField,
-    nullsub_49,
-    nullsub_49,
+    PlayerAvatarTransition_Dummy,
+    PlayerAvatarTransition_Dummy,
 };
 static bool8 (*const sArrowWarpMetatileBehaviorChecks[])(u8) =
 {
@@ -513,7 +513,7 @@ static void MovePlayerNotOnBike(u8 direction, u16 heldKeys)
     if (gUnknown_020297ED != 0 && debug_sub_805F2B0(direction) != 0)
         return;
 #endif
-    gUnknown_0830FBEC[CheckMovementInputNotOnBike(direction)](direction, heldKeys);
+    sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction)](direction, heldKeys);
 }
 
 static u8 CheckMovementInputNotOnBike(u8 direction)
@@ -545,7 +545,7 @@ static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys)
     PlayerTurnInPlace(direction);
 }
 
-static void sub_8058D0C(u8 direction, u16 heldKeys)
+static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
 {
     u8 r1 = CheckForPlayerAvatarCollision(direction);
 
@@ -608,7 +608,7 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *a, s16 x, s16 y, u8 directio
     {
         if (CheckForRotatingGatePuzzleCollision(direction, x, y))
             return 8;
-        check_acro_bike_metatile(x, y, e, &collision);
+        CheckAcroBikeCollision(x, y, e, &collision);
     }
     return collision;
 }
@@ -658,15 +658,15 @@ static u8 sub_8058F6C(s16 x, s16 y, u8 direction)
     return 0;
 }
 
-static void check_acro_bike_metatile(s16 unused1, s16 unused2, u8 c, u8 *d)
+static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior, u8 *collision)
 {
     u8 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < ARRAY_COUNT(sAcroBikeTrickMetatiles); i++)
     {
-        if (gUnknown_0830FBF8[i](c))
+        if (sAcroBikeTrickMetatiles[i](metatileBehavior))
         {
-            *d = gUnknown_0830FC0C[i];
+            *collision = sAcroBikeTrickCollisionTypes[i];
             return;
         }
     }
@@ -685,18 +685,18 @@ static void DoPlayerAvatarTransition(void)
 
     if (flags != 0)
     {
-        for (i = 0; i < ARRAY_COUNT(gUnknown_0830FC14); i++, flags >>= 1)
+        for (i = 0; i < ARRAY_COUNT(sPlayerAvatarTransitionFuncs); i++, flags >>= 1)
         {
             if (flags & 1)
             {
-                gUnknown_0830FC14[i](&gObjectEvents[gPlayerAvatar.objectEventId]);
+                sPlayerAvatarTransitionFuncs[i](&gObjectEvents[gPlayerAvatar.objectEventId]);
             }
         }
         gPlayerAvatar.unk1 = 0;
     }
 }
 
-static void nullsub_49(struct ObjectEvent *objEvent)
+static void PlayerAvatarTransition_Dummy(struct ObjectEvent *objEvent)
 {
 }
 
