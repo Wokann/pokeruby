@@ -368,7 +368,7 @@ void ItemStorage_ReshowAfterDeposit(void)
     Menu_DisplayDialogueFrame();
     InitItemStorageMenu(ITEMPC_MENU_DEPOSIT);
     CreateTask(ItemStorage_HandleReturnToProcessInput, 0);
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 static void ItemStorage_Withdraw(u8 taskId)
@@ -1215,7 +1215,7 @@ static void Mailbox_HandleReturnToProcessInput(u8 taskId) // Mailbox_HandleRetur
 static void Mailbox_ReshowAfterMail(void)
 {
     Mailbox_DrawMailboxMenu(CreateTask(Mailbox_HandleReturnToProcessInput, 0));
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 static void Mailbox_ReturnToFieldFromReadMail(void)
@@ -1305,7 +1305,7 @@ static void Mailbox_UpdateMailListAfterDeposit(void)
 
     SetPlayerPCListCount(taskId);
     Mailbox_DrawMailboxMenu(taskId);
-    pal_fill_black();
+    FadeInFromBlack();
 }
 
 void Mailbox_ReturnToMailListAfterDeposit(void)

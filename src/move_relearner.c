@@ -249,7 +249,7 @@ static void Task_WaitForFadeOut(u8 taskId)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_InitLearnMove);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }

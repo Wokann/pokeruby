@@ -1263,7 +1263,7 @@ void Task_ExitRoulette(u8 taskId) // end roulette ?
         REG_BLDCNT = 0;
         REG_BLDALPHA = 0;
         REG_BLDY = 0;
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         SetMainCallback2(&CB2_ReturnToField);
         DestroyTask(taskId);
 #if DEBUG

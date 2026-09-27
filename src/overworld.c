@@ -1371,7 +1371,7 @@ void CB2_ReturnToFieldContestHall(void)
 void sub_8054588(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080AC4;
+    gFieldCallback = FieldCB_ReturnToFieldWirelessLink;
     SetMainCallback2(c2_80567AC);
 }
 
@@ -1421,7 +1421,7 @@ void sub_805465C(void)
     sub_8054F70();
     SetMainCallback1(sub_8055354);
     sub_80543DC(sub_8055390);
-    gFieldCallback = sub_8080A3C;
+    gFieldCallback = FieldCB_ReturnToFieldCableLink;
     ScriptContext_Init();
     UnlockPlayerFieldControls();
     CB2_ReturnToField();
@@ -1437,14 +1437,14 @@ void c2_exit_to_overworld_1_sub_8080DEC(void)
 void CB2_ReturnToFieldContinueScript(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_80809B0;
+    gFieldCallback = FieldCB_ContinueScript;
     CB2_ReturnToField();
 }
 
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080990;
+    gFieldCallback = FieldCB_ContinueScriptHandleMusic;
     CB2_ReturnToField();
 }
 

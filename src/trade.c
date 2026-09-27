@@ -5210,7 +5210,7 @@ static void sub_804E1A0(u8 taskId)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(sub_804B790);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
 }

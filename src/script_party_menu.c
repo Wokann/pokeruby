@@ -278,7 +278,7 @@ void MoveDeleterChooseMoveToForget(void)
 {
     ShowSelectMovePokemonSummaryScreen(&gPlayerParty[0], gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField, 0);
     pssData.mode = PSS_MODE_MOVE_DELETER;
-    gFieldCallback = sub_8080990;
+    gFieldCallback = FieldCB_ContinueScriptHandleMusic;
 }
 
 void GetNumMovesSelectedMonHas(void)

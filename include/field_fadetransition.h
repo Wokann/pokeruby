@@ -1,16 +1,16 @@
 #ifndef GUARD_FIELD_FADETRANSITION_H
 #define GUARD_FIELD_FADETRANSITION_H
 
-void palette_bg_fill_white(void);
-void palette_bg_fill_black(void);
-void pal_fill_black(void);
-void pal_fill_black();
-void pal_fill_black(void);
-void task0A_asap_script_env_2_enable_and_set_ctx_running(u8);
-void sub_8080990(void);
-void sub_80809B0(void);
-void sub_8080A3C(void);
-void sub_8080AC4(void);
+void FillPalBufferWhite(void);
+void FillPalBufferBlack(void);
+void FadeInFromBlack(void);
+void FadeInFromBlack();
+void FadeInFromBlack(void);
+void Task_WaitForFadeAndEnableScriptCtx(u8);
+void FieldCB_ContinueScriptHandleMusic(void);
+void FieldCB_ContinueScript(void);
+void FieldCB_ReturnToFieldCableLink(void);
+void FieldCB_ReturnToFieldWirelessLink(void);
 void mapldr_default();
 void FieldCB_WarpExitFadeFromBlack(void);
 void sub_8080DEC(void);
@@ -28,7 +28,7 @@ void sub_8080F58(void);
 void sub_8080F68(void);
 void DoPortholeWarp(void);
 void debug_sub_80888D8(void);
-void WarpFadeScreen(void);
-void pal_fill_for_map_transition(void);
+void WarpFadeOutScreen(void);
+void WarpFadeInScreen(void);
 
 #endif // GUARD_FIELD_FADETRANSITION_H

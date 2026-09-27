@@ -217,7 +217,7 @@ void Task_HandleTruckSequence(u8 taskId)
         tTimer++;
         if (tTimer == SECONDS(2.5))
         {
-            pal_fill_black();
+            FadeInFromBlack();
             tTimer = 0;
             tState = 2;
         }
@@ -385,7 +385,7 @@ void FieldCB_ShowPortholeView(void)
 {
     ShowSSTidalWhileSailing();
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(Task_HandlePorthole, 80);
     LockPlayerFieldControls();
 }

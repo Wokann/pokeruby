@@ -803,7 +803,7 @@ static void Task_FreeDataAndExitPokeblockCase(u8 taskId)
     {
         if (sPokeblockCaseContext == 3)
         {
-            gFieldCallback = sub_8080990;
+            gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         }
         FreePokeblockMenuResources();
         SetMainCallback2(sExitCallbacksByCase[sPokeblockCaseContext]);

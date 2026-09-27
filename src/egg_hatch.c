@@ -48,7 +48,7 @@ extern const u16 gBattleTextboxPalette[]; //palette
 bool8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
 u8 sav1_map_get_name(void);
 const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
-void sub_8080990(void);
+void FieldCB_ContinueScriptHandleMusic(void);
 
 static void Task_EggHatch(u8 taskID);
 static void CB2_LoadEggHatch(void);
@@ -389,7 +389,7 @@ static void Task_EggHatch(u8 taskID)
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_LoadEggHatch);
-        gFieldCallback = sub_8080990;
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskID);
     }
 }

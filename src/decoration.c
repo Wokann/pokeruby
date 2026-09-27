@@ -2246,7 +2246,7 @@ void Task_PlaceDecoration(u8 taskId)
             AddDecorationIconObjectFromObjectEvent(&gUnknown_02038900, gUnknown_020388D0[gUnknown_020388F5]);
             SetUpDecorationShape(taskId);
             SetUpPlacingDecorationPlayerAvatar(taskId, &gUnknown_02038900);
-            pal_fill_black();
+            FadeInFromBlack();
             gPaletteFade.bufferTransferDisabled = 0;
             gTasks[taskId].data[2] = 2;
             break;
@@ -2658,7 +2658,7 @@ void FieldCB_InitDecorationItemsWindow(void)
 {
     LockPlayerFieldControls();
     LoadScrollIndicatorPalette();
-    pal_fill_black();
+    FadeInFromBlack();
     InitDecorationItemsWindow(CreateTask(Task_WaitForDecorationWeather, 8));
 }
 
@@ -3155,7 +3155,7 @@ void Task_PutAwayDecoration(u8 taskId)
         case 2:
             LockPlayerFieldControls();
             IdentifyOwnedDecorationsCurrentlyInUse(taskId);
-            pal_fill_black();
+            FadeInFromBlack();
             gTasks[taskId].data[2] = 3;
             break;
         case 3:
@@ -3220,7 +3220,7 @@ void Task_ContinuePuttingAwayDecorations(u8 taskId)
             break;
         case 1:
             SetUpPuttingAwayDecorationPlayerAvatar();
-            pal_fill_black();
+            FadeInFromBlack();
             data[2] = 2;
             break;
         case 2:
@@ -3528,7 +3528,7 @@ void Task_ReinitializeDecorationMenuHandler(u8 taskId)
 
 void FieldCB_StopPuttingAwayDecorations(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     Menu_DisplayDialogueFrame();
     InitDecorationActionsWindow();
     CreateTask(Task_ReinitializeDecorationMenuHandler, 8);

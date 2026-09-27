@@ -30,38 +30,38 @@ void task_map_chg_seq_0807E2CC(u8);
 void task0A_fade_n_map_maybe(u8);
 void sub_808115C(u8);
 
-void palette_bg_fill_white(void)
+void FillPalBufferWhite(void)
 {
     CpuFastFill16(RGB_WHITE, gPlttBufferFaded, PLTT_SIZE);
 }
 
-void palette_bg_fill_black(void)
+void FillPalBufferBlack(void)
 {
     CpuFastFill16(RGB_BLACK, gPlttBufferFaded, PLTT_SIZE);
 }
 
-void pal_fill_for_map_transition(void)
+void WarpFadeInScreen(void)
 {
     u8 previousMapType = GetLastUsedWarpMapType();
     switch (GetMapPairFadeFromType(previousMapType, Overworld_GetMapTypeOfSaveblockLocation()))
     {
     case 0:
         FadeScreen(FADE_FROM_BLACK, 0);
-        palette_bg_fill_black();
+        FillPalBufferBlack();
         break;
     case 1:
         FadeScreen(FADE_FROM_WHITE, 0);
-        palette_bg_fill_white();
+        FillPalBufferWhite();
     }
 }
 
-void pal_fill_black(void)
+void FadeInFromBlack(void)
 {
     FadeScreen(FADE_FROM_BLACK, 0);
-    palette_bg_fill_black();
+    FillPalBufferBlack();
 }
 
-void WarpFadeScreen(void)
+void WarpFadeOutScreen(void)
 {
     u8 currentMapType = Overworld_GetMapTypeOfSaveblockLocation();
     switch (GetMapPairFadeToType(currentMapType, GetDestinationWarpMapHeader()->mapType))
@@ -74,12 +74,12 @@ void WarpFadeScreen(void)
     }
 }
 
-void sub_8080958(u8 arg)
+void SetPlayerVisibility(u8 arg)
 {
     sub_8059B88(!arg);
 }
 
-void task0A_asap_script_env_2_enable_and_set_ctx_running(u8 taskID)
+void Task_WaitForFadeAndEnableScriptCtx(u8 taskID)
 {
     if (sub_8080E70() == TRUE)
     {
@@ -88,22 +88,22 @@ void task0A_asap_script_env_2_enable_and_set_ctx_running(u8 taskID)
     }
 }
 
-void sub_8080990(void)
+void FieldCB_ContinueScriptHandleMusic(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
-    pal_fill_black();
-    CreateTask(task0A_asap_script_env_2_enable_and_set_ctx_running, 10);
+    FadeInFromBlack();
+    CreateTask(Task_WaitForFadeAndEnableScriptCtx, 10);
 }
 
-void sub_80809B0(void)
+void FieldCB_ContinueScript(void)
 {
     LockPlayerFieldControls();
-    pal_fill_black();
-    CreateTask(task0A_asap_script_env_2_enable_and_set_ctx_running, 10);
+    FadeInFromBlack();
+    CreateTask(Task_WaitForFadeAndEnableScriptCtx, 10);
 }
 
-void task_mpl_807DD60(u8 taskId)
+void Task_ReturnToFieldCableLink(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -116,7 +116,7 @@ void task_mpl_807DD60(u8 taskId)
     case 1:
         if (gTasks[task->data[1]].isActive != TRUE)
         {
-            pal_fill_for_map_transition();
+            WarpFadeInScreen();
             task->data[0]++;
         }
         break;
@@ -129,15 +129,15 @@ void task_mpl_807DD60(u8 taskId)
     }
 }
 
-void sub_8080A3C(void)
+void FieldCB_ReturnToFieldCableLink(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
-    palette_bg_fill_black();
-    CreateTask(task_mpl_807DD60, 10);
+    FillPalBufferBlack();
+    CreateTask(Task_ReturnToFieldCableLink, 10);
 }
 
-void sub_8080A5C(u8 taskId)
+void Task_ReturnToFieldWirelessLink(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -150,7 +150,7 @@ void sub_8080A5C(u8 taskId)
     case 1:
         if (IsLinkTaskFinished())
         {
-            pal_fill_for_map_transition();
+            WarpFadeInScreen();
             task->data[0]++;
         }
         break;
@@ -164,12 +164,12 @@ void sub_8080A5C(u8 taskId)
     }
 }
 
-void sub_8080AC4(void)
+void FieldCB_ReturnToFieldWirelessLink(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
-    palette_bg_fill_black();
-    CreateTask(sub_8080A5C, 10);
+    FillPalBufferBlack();
+    CreateTask(Task_ReturnToFieldWirelessLink, 10);
 }
 
 void sub_8080AE4(void)
@@ -191,7 +191,7 @@ void sub_8080AE4(void)
 void mapldr_default(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     sub_8080AE4();
     LockPlayerFieldControls();
 }
@@ -199,7 +199,7 @@ void mapldr_default(void)
 void FieldCB_WarpExitFadeFromBlack(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_black();
+    FadeInFromBlack();
     sub_8080AE4();
     LockPlayerFieldControls();
 }
@@ -207,7 +207,7 @@ void FieldCB_WarpExitFadeFromBlack(void)
 void sub_8080B78(void)
 {
     Overworld_PlaySpecialMapMusic();
-    pal_fill_for_map_transition();
+    WarpFadeInScreen();
     PlaySE(SE_WARP_OUT);
     CreateTask(task_map_chg_seq_0807E2CC, 10);
     LockPlayerFieldControls();
@@ -222,7 +222,7 @@ void sub_8080B9C(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        sub_8080958(0);
+        SetPlayerVisibility(0);
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
         FieldSetDoorOpened(*x, *y);
@@ -232,7 +232,7 @@ void sub_8080B9C(u8 taskId)
         if (sub_8080E70())
         {
             u8 objEventId;
-            sub_8080958(1);
+            SetPlayerVisibility(1);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN);
             task->data[0] = 2;
@@ -271,7 +271,7 @@ void task_map_chg_seq_0807E20C(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        sub_8080958(0);
+        SetPlayerVisibility(0);
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
         task->data[0] = 1;
@@ -280,7 +280,7 @@ void task_map_chg_seq_0807E20C(u8 taskId)
         if (sub_8080E70())
         {
             u8 objEventId;
-            sub_8080958(1);
+            SetPlayerVisibility(1);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], GetWalkNormalMovementAction(GetPlayerFacingDirection()));
             task->data[0] = 2;
@@ -331,7 +331,7 @@ void sub_8080DC4(u8 taskId)
 
 void sub_8080DEC(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateStartMenuTask(sub_8080DC4);
     LockPlayerFieldControls();
 }
@@ -349,7 +349,7 @@ void task_mpl_807E3C8(u8 taskId)
 void sub_8080E28(void)
 {
     LockPlayerFieldControls();
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(task_mpl_807E3C8, 10);
 }
 
@@ -357,7 +357,7 @@ void FieldCB_ReturnToFieldNoScriptCheckMusic(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(task_mpl_807E3C8, 10);
 }
 
@@ -378,7 +378,7 @@ void sub_8080E88(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = mapldr_default;
@@ -389,7 +389,7 @@ void DoDiveWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     PlayRainSoundEffect();
     gFieldCallback = mapldr_default;
     CreateTask(task0A_fade_n_map_maybe, 10);
@@ -430,7 +430,7 @@ void sub_8080F68(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     PlaySE(SE_WARP_IN);
     CreateTask(task0A_fade_n_map_maybe, 10);
     gFieldCallback = sub_8080B78;
@@ -439,7 +439,7 @@ void sub_8080F68(void)
 void DoPortholeWarp(void)
 {
     LockPlayerFieldControls();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     CreateTask(task0A_fade_n_map_maybe, 10);
     gFieldCallback = FieldCB_ShowPortholeView;
 }
@@ -470,7 +470,7 @@ void DoCableClubWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     PlaySE(SE_EXIT);
     CreateTask(WaitCableClubWarp, 10);
 }
@@ -587,7 +587,7 @@ void sub_808115C(u8 taskId)
             task->data[1] = FieldAnimateDoorClose(*x, *y - 1);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]);
-            sub_8080958(0);
+            SetPlayerVisibility(0);
             task->data[0] = 3;
         }
         break;
@@ -599,7 +599,7 @@ void sub_808115C(u8 taskId)
         break;
     case 4:
         TryFadeOutOldMapMusic();
-        WarpFadeScreen();
+        WarpFadeOutScreen();
         PlayRainSoundEffect();
         task->data[0] = 0;
         task->func = task0A_fade_n_map_maybe;
@@ -636,7 +636,7 @@ void DoContestHallWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
-    WarpFadeScreen();
+    WarpFadeOutScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = FieldCB_WarpExitFadeFromBlack;

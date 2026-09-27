@@ -956,7 +956,7 @@ static void Task_PartyMenuWaitForFade(u8);
 
 void FieldCallback_FadeFromPartyMenu(void)
 {
-    pal_fill_black();
+    FadeInFromBlack();
     CreateTask(Task_PartyMenuWaitForFade, 10);
 }
 
