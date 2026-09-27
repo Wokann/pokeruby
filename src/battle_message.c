@@ -27,7 +27,7 @@
 
 // This is four lists of moves which use a different attack string in Japanese
 // to the default. See the documentation for ChooseTypeOfMoveUsedString for more detail.
-const u16 gUnknown_084016BC[] =
+const u16 sGrammarMoveUsedTable[] =
 {
     MOVE_SWORDS_DANCE,
     MOVE_STRENGTH,
@@ -149,7 +149,7 @@ const u16 gUnknown_084016BC[] =
     0,
 };
 
-const u8 gUnknown_084017A8[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // empty flags
+const u8 sText_EmptyStatus[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // empty flags
 
 extern const u8* const gBattleStringsTable[BATTLESTRINGS_NO];
 
@@ -455,7 +455,7 @@ const u8* TryGetStatusString(u8* src)
     u32 flag1, flag2;
     u8* statusPtr;
 
-    memcpy(status, gUnknown_084017A8, 8);
+    memcpy(status, sText_EmptyStatus, 8);
 
     statusPtr = status;
     for (i = 0; i < sizeof(struct StatusFlagString); i++)
@@ -980,9 +980,9 @@ void ChooseMoveUsedParticle(u8* textBuff)
 
     while (counter != 4)
     {
-        if (gUnknown_084016BC[i] == 0)
+        if (sGrammarMoveUsedTable[i] == 0)
             counter++;
-        if (gUnknown_084016BC[i++] == gStringInfo->currentMove)
+        if (sGrammarMoveUsedTable[i++] == gStringInfo->currentMove)
             break;
     }
 
@@ -996,7 +996,7 @@ void ChooseMoveUsedParticle(u8* textBuff)
 }
 
 // Appends "!" to the text buffer `dst`. In the original Japanese this looked
-// into the table of moves at gUnknown_084016BC and varied the line accordingly.
+// into the table of moves at sGrammarMoveUsedTable and varied the line accordingly.
 // 
 // BattleText_Exclamation was a plain "!", used for any attack not on the list.
 // It resulted in the translation "<NAME>'s <ATTACK>!".
@@ -1023,9 +1023,9 @@ void ChooseTypeOfMoveUsedString(u8* dst)
 
     while (counter != 4)
     {
-        if (gUnknown_084016BC[i] == 0)
+        if (sGrammarMoveUsedTable[i] == 0)
             counter++;
-        if (gUnknown_084016BC[i++] == gStringInfo->currentMove)
+        if (sGrammarMoveUsedTable[i++] == gStringInfo->currentMove)
             break;
     }
 
