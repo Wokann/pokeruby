@@ -324,7 +324,7 @@ static void MovePlayerAvatarUsingKeypadInput(u8 direction, u16 newKeys, u16 held
 static void PlayerAllowForcedMovementIfMovingSameDirection(void)
 {
     if (gPlayerAvatar.runningState == MOVING)
-        gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_5;
+        gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_CONTROLLABLE;
 }
 
 static bool8 TryDoMetatileBehaviorForcedMovement(void)
@@ -340,7 +340,7 @@ static u8 GetForcedMovementByMetatileBehavior(void)
 {
     u8 i;
 
-    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_5))
+    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_CONTROLLABLE))
     {
         u8 metatileBehavior = gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior;
 
@@ -355,14 +355,14 @@ static u8 GetForcedMovementByMetatileBehavior(void)
 
 static bool8 ForcedMovement_None(void)
 {
-    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_6)
+    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_FORCED_MOVE)
     {
         struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
         playerObjEvent->facingDirectionLocked = 0;
         playerObjEvent->enableAnim = 1;
         SetObjectEventDirection(playerObjEvent, playerObjEvent->facingDirection);
-        gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_6;
+        gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_FORCED_MOVE;
     }
     return FALSE;
 }
@@ -372,7 +372,7 @@ static u8 DoForcedMovement(u8 direction, void (*b)(u8))
     struct PlayerAvatar *playerAvatar = &gPlayerAvatar;
     u8 collisionType = CheckForPlayerAvatarCollision(direction);
 
-    playerAvatar->flags |= PLAYER_AVATAR_FLAG_6;
+    playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
     if (collisionType != 0)
     {
         ForcedMovement_None();
@@ -384,7 +384,7 @@ static u8 DoForcedMovement(u8 direction, void (*b)(u8))
         {
             if (collisionType == COLLISION_LEDGE_JUMP)
                 PlayerJumpLedge(direction);
-            playerAvatar->flags |= PLAYER_AVATAR_FLAG_6;
+            playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
             playerAvatar->runningState = MOVING;
             return 1;
         }
@@ -749,7 +749,7 @@ static void PlayerAvatarTransition_Underwater(struct ObjectEvent *objEvent)
 
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent)
 {
-    gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_5;
+    gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_CONTROLLABLE;
 }
 
 void sub_8059204(void)
@@ -1139,7 +1139,7 @@ void ClearPlayerAvatarInfo(void)
 
 void SetPlayerAvatarStateMask(u8 flags)
 {
-    gPlayerAvatar.flags &= (PLAYER_AVATAR_FLAG_DASH | PLAYER_AVATAR_FLAG_6 | PLAYER_AVATAR_FLAG_5);
+    gPlayerAvatar.flags &= (PLAYER_AVATAR_FLAG_DASH | PLAYER_AVATAR_FLAG_FORCED_MOVE | PLAYER_AVATAR_FLAG_CONTROLLABLE);
     gPlayerAvatar.flags |= flags;
 }
 
@@ -1205,7 +1205,7 @@ void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender)
     gPlayerAvatar.objectEventId = objectEventId;
     gPlayerAvatar.spriteId = objectEvent->spriteId;
     gPlayerAvatar.gender = gender;
-    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_5 | PLAYER_AVATAR_FLAG_ON_FOOT);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_CONTROLLABLE | PLAYER_AVATAR_FLAG_ON_FOOT);
 }
 
 void sub_8059B88(u8 a)
