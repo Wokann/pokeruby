@@ -918,14 +918,14 @@ static void Task_8071B64(u8 taskId)
             (*step)++;
             break;
         case 1:
-            SetSecretBase2Field_9_AndHideBG();
+            SetContinueGameWarpStatusToDynamicWarp();
             sub_8125E2C();
             (*step)++;
             break;
         case 2:
             if (!sub_8125E6C())
                 break;
-            ClearSecretBase2Field_9_2();
+            ClearContinueGameWarpStatus2();
             (*step)++;
             break;
         case 3:

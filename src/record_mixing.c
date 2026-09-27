@@ -665,14 +665,14 @@ void sub_80BA00C(u8 taskId)
         task->data[0]++;
         break;
     case 2:
-        SetSecretBase2Field_9_AndHideBG();
+        SetContinueGameWarpStatusToDynamicWarp();
         sub_8125E2C();
         task->data[0]++;
         break;
     case 3:
         if (sub_8125E6C() != 0)
         {
-            ClearSecretBase2Field_9_2();
+            ClearContinueGameWarpStatus2();
             task->data[0]++;
             task->data[1] = 0;
         }

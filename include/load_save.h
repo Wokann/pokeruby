@@ -4,11 +4,11 @@
 extern bool32 gFlashMemoryPresent;
 
 void CheckForFlashMemory(void);
-bool32 GetSecretBase2Field_9(void);
-void ClearSecretBase2Field_9(void);
-void SetSecretBase2Field_9(void);
-void SetSecretBase2Field_9_AndHideBG(void);
-void ClearSecretBase2Field_9_2(void);
+bool32 GetContinueGameWarpStatus(void);
+void ClearContinueGameWarpStatus(void);
+void SetContinueGameWarpStatus(void);
+void SetContinueGameWarpStatusToDynamicWarp(void);
+void ClearContinueGameWarpStatus2(void);
 void SavePlayerParty(void);
 void LoadPlayerParty(void);
 void SaveSerializedGame(void);

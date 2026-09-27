@@ -5096,7 +5096,7 @@ static void sub_804DC88(void)
             Text_InitWindowAndPrintText(&gUnknown_03004828->window, gSystemText_Saving, gUnknown_03004828->textWindowBaseTileNum, 2, 15);
             break;
         case 50:
-            SetSecretBase2Field_9_AndHideBG();
+            SetContinueGameWarpStatusToDynamicWarp();
             IncrementGameStat(GAME_STAT_POKEMON_TRADES);
             sub_8125D80();
             gMain.state ++;
@@ -5111,7 +5111,7 @@ static void sub_804DC88(void)
         case 52:
             if (sub_8125DA8())
             {
-                ClearSecretBase2Field_9_2();
+                ClearContinueGameWarpStatus2();
                 gMain.state = 4;
             }
             else

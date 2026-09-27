@@ -64,7 +64,7 @@ void SetFixedHoleWarp(s8, s8, s8, s8, s8);
 void SetFixedHoleWarpAsDestination(s16, s16);
 // sub_8053778
 // unref_sub_8053790
-void sub_80537CC(u8);
+void SetContinueGameWarpToHealLocation(u8);
 void gpu_sync_bg_hide();
 // GetMapConnection
 bool8 SetDiveWarpEmerge(u16 x, u16 y);

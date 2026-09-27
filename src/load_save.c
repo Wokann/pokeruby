@@ -35,28 +35,28 @@ void CheckForFlashMemory(void)
         gFlashMemoryPresent = FALSE;
 }
 
-bool32 GetSecretBase2Field_9(void)
+bool32 GetContinueGameWarpStatus(void)
 {
     return gSaveBlock2.specialSaveWarp;
 }
 
-void ClearSecretBase2Field_9(void)
+void ClearContinueGameWarpStatus(void)
 {
     gSaveBlock2.specialSaveWarp = 0;
 }
 
-void SetSecretBase2Field_9(void)
+void SetContinueGameWarpStatus(void)
 {
     gSaveBlock2.specialSaveWarp = 1;
 }
 
-void SetSecretBase2Field_9_AndHideBG(void) // note: no other function sets specialSaveWarp to values other than 0 or 1, hence clear and set distinctions.
+void SetContinueGameWarpStatusToDynamicWarp(void) // note: no other function sets specialSaveWarp to values other than 0 or 1, hence clear and set distinctions.
 {
     gpu_sync_bg_hide(0); // the function doesn't use the parameter passed to it, but this is necessary to match.
     gSaveBlock2.specialSaveWarp = 1;
 }
 
-void ClearSecretBase2Field_9_2(void) // duplicate function
+void ClearContinueGameWarpStatus2(void) // duplicate function
 {
     gSaveBlock2.specialSaveWarp = 0;
 }

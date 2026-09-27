@@ -544,7 +544,7 @@ void unref_sub_8053790(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
     SetWarpData(&gSaveBlock1.warp1, mapGroup, mapNum, warpId, x, y);
 }
 
-void sub_80537CC(u8 a1)
+void SetContinueGameWarpToHealLocation(u8 a1)
 {
     const struct HealLocation *warp = GetHealLocation(a1);
     if (warp)
@@ -1480,9 +1480,9 @@ void CB2_ContinueSavedGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (GetSecretBase2Field_9() == 1)
+    if (GetContinueGameWarpStatus() == 1)
     {
-        ClearSecretBase2Field_9();
+        ClearContinueGameWarpStatus();
         sub_8053778();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
