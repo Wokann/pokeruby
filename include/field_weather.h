@@ -31,12 +31,12 @@ struct Weather
             struct Sprite *sandstormSprites2[5];
         } s2;
     } sprites;
-    u8 gammaShifts[19][32];
-    u8 altGammaShifts[19][32];
-    s8 gammaIndex;
-    s8 gammaTargetIndex;
-    u8 gammaStepDelay;
-    u8 gammaStepFrameCounter;
+    u8 darkenedContrastColorMaps[19][32];
+    u8 contrastColorMaps[19][32];
+    s8 colorMapIndex;
+    s8 targetColorMapIndex;
+    u8 colorMapStepDelay;
+    u8 colorMapStepCounter;
     u16 fadeDestColor;
     u8 palProcessingState;
     u8 fadeScreenCounter;
@@ -51,7 +51,7 @@ struct Weather
     u8 weatherGfxLoaded;
     bool8 weatherChangeComplete;
     u8 weatherPicSpritePalIndex;
-    u8 altGammaSpritePalIndex;
+    u8 contrastColorMapSpritePalIndex;
     u16 rainSpriteVisibleCounter;
     u8 curRainSpriteIndex;
     u8 targetRainSpriteCount;
@@ -142,7 +142,7 @@ enum
 void FadeScreen(u8, u8);
 // ...
 void UpdateSpritePaletteWithWeather(u8 tag);
-void ApplyWeatherGammaShiftToPal(u8);
+void ApplyWeatherColorMapToPal(u8);
 // ...
 void Weather_SetBlendCoeffs(u8, u8);
 // ...

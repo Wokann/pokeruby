@@ -626,7 +626,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     LoadSecondaryTilesetPalette(gMapHeader.mapLayout);
 
     for (paletteIndex = 6; paletteIndex < 12; paletteIndex++)
-        ApplyWeatherGammaShiftToPal(paletteIndex);
+        ApplyWeatherColorMapToPal(paletteIndex);
 
     sub_8072ED0();
     UpdateLocationHistoryForRoamer();
