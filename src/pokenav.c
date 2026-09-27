@@ -1986,7 +1986,7 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
     return TRUE;
 }
 
-void sub_80F1DF0(void)
+void StartMenuOptionSpritesSlideIn(void)
 {
     u16 i, j;
     for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
@@ -1994,16 +1994,16 @@ void sub_80F1DF0(void)
         for (j = 0; j < 4; j++)
         {
             if (gPokenavStructPtr->menuOptionSprites[i][j])
-                gPokenavStructPtr->menuOptionSprites[i][j]->callback = sub_80F2218;
+                gPokenavStructPtr->menuOptionSprites[i][j]->callback = SpriteCB_SlideMenuOptionIn;
         }
     }
 
     PlaySE(SE_WIN_OPEN);
 }
 
-bool8 sub_80F1E50(void)
+bool8 UpdateMenuOptionEntryHighlight(void)
 {
-    if (sub_80F22F8())
+    if (AreMenuOptionSpriteOffsetsAtRest())
     {
         sub_80F2108();
         return FALSE;
@@ -2014,9 +2014,9 @@ bool8 sub_80F1E50(void)
     }
 }
 
-bool8 sub_80F1E6C(void)
+bool8 AreMenuOptionSpriteOffsetsMoving(void)
 {
-    return !sub_80F22F8();
+    return !AreMenuOptionSpriteOffsetsAtRest();
 }
 
 void sub_80F1E84(void)
@@ -2159,7 +2159,7 @@ void sub_80F21F8()
     REG_BLDCNT = 0;
 }
 
-void sub_80F2218(struct Sprite *sprite)
+void SpriteCB_SlideMenuOptionIn(struct Sprite *sprite)
 {
     sprite->x -= 8;
     if (sprite->x <= sprite->data[2])
@@ -2204,7 +2204,7 @@ void sub_80F22B0(struct Sprite *sprite)
     }
 }
 
-bool8 sub_80F22F8(void)
+bool8 AreMenuOptionSpriteOffsetsAtRest(void)
 {
     u16 i, j;
 

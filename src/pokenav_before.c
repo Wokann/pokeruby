@@ -1359,11 +1359,11 @@ void InitPokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 16:
-        sub_80F1DF0();
+        StartMenuOptionSpritesSlideIn();
         gPokenavStructPtr->callbackStep++;
         break;
     case 17:
-        if (!sub_80F1E50())
+        if (!UpdateMenuOptionEntryHighlight())
         {
             PrintPokenavMenuDescription(0, 0);
             SetPokenavCallback(&HandlePokenavMainMenuInput);
@@ -1437,11 +1437,11 @@ void RestorePokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        sub_80F1DF0();
+        StartMenuOptionSpritesSlideIn();
         gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        if (!sub_80F1E50())
+        if (!UpdateMenuOptionEntryHighlight())
         {
             PrintPokenavMenuDescription(0, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
@@ -1792,7 +1792,7 @@ void HandleConditionMenuInput(void)
         }
         break;
     case 1:
-        if (!sub_80F1E6C())
+        if (!AreMenuOptionSpriteOffsetsMoving())
 			SetPokenavCallback(&ClosePokenavConditionMenu);
 		break;
     }
@@ -1891,11 +1891,11 @@ void RestorePokenavConditionMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        sub_80F1DF0();
+        StartMenuOptionSpritesSlideIn();
         gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        if (!sub_80F1E50())
+        if (!UpdateMenuOptionEntryHighlight())
         {
 			PrintPokenavMenuDescription(1, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionMenuInput);
@@ -1956,7 +1956,7 @@ void HandleConditionSearchMenuInput(void)
         }
         break;
     case 1:
-        if (!sub_80F1E6C())
+        if (!AreMenuOptionSpriteOffsetsMoving())
 			SetPokenavCallback(&ReturnToConditionMenu);
         break;
     }
@@ -2055,12 +2055,12 @@ void ReturnToConditionSearchMenu(void)
     case 19:
         if (!sub_80F2CBC(0x5))
         {
-			sub_80F1DF0();
+			StartMenuOptionSpritesSlideIn();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 20:
-        if (!sub_80F1E50())
+        if (!UpdateMenuOptionEntryHighlight())
 		{
 			PrintPokenavMenuDescription(2, gPokenavStructPtr->menuCursorPos);
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
@@ -3309,12 +3309,12 @@ bool8 UpdatePokenavMenuTransition(void)
             gPokenavStructPtr->transitionStep++;
         break;
     case 6:
-        sub_80F1DF0();
+        StartMenuOptionSpritesSlideIn();
         StartPokenavPaletteTransition(gPokenavStructPtr->transitionMenuType);
         gPokenavStructPtr->transitionStep++;
         break;
     case 7:
-        if (!sub_80F1E50())
+        if (!UpdateMenuOptionEntryHighlight())
         {
             PrintPokenavMenuDescription(gPokenavStructPtr->transitionMenuType, gPokenavStructPtr->menuCursorPos);
             gPokenavStructPtr->transitionStep++;
