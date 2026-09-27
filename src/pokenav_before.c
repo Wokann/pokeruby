@@ -630,7 +630,7 @@ const struct SpriteTemplate gPokenavSmallHeaderAltSpriteTemplate =
     .callback = SpriteCB_SlideLeftHeaderIn,
 };
 
-const struct OamData gOamData_83E4560 = 
+const struct OamData gPokenavPortraitSpriteOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -647,22 +647,22 @@ const struct OamData gOamData_83E4560 =
     .affineParam = 0,
 };
 
-const struct SpriteSheet gUnknown_083E4568 = {NULL, 0x800, 6};
+const struct SpriteSheet gPokenavPortraitSpriteSheet = {NULL, 0x800, 6};
 
-void sub_80F2E00(struct Sprite *);
+void SpriteCB_UpdatePokenavPortraitSpriteX(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E4570 = 
+const struct SpriteTemplate gPokenavPortraitSpriteTemplate =
 {
     .tileTag = 6,
     .paletteTag = 6,
-    .oam = &gOamData_83E4560,
+    .oam = &gPokenavPortraitSpriteOamData,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2E00,
+    .callback = SpriteCB_UpdatePokenavPortraitSpriteX,
 };
 
-const struct SpritePalette gUnknown_083E4588 = {NULL, 6};
+const struct SpritePalette gPokenavPortraitSpritePalette = {NULL, 6};
 extern const u8 gPokenavArrow_Gfx[];
 
 const struct SpriteSheet gUnknown_083E4590[] = 
@@ -1200,7 +1200,7 @@ void InitPokenavState(void)
     gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
     gPokenavStructPtr->mainMenuCursorPos = 0;
     gPokenavStructPtr->unk9344 = 0;
-    gPokenavStructPtr->unk8768 = 0;
+    gPokenavStructPtr->portraitSprite = 0;
     gPokenavStructPtr->unkCED0 = 0;
 
     for (i = 0; i < 5; ++i)
@@ -2446,7 +2446,7 @@ void sub_80F3668(void);
 bool8 sub_80F7500(void);
 void sub_80F3698(void);
 bool8 sub_80F5038(void);
-void sub_80F2F48(void);
+void DestroyPokenavPortraitSprite(void);
 void sub_80F3CE8(void);
 void sub_80F3614(void);
 void sub_80F357C(void);
@@ -2563,7 +2563,7 @@ void HandleConditionGraphInput(void)
         if (!sub_80F5038())
         {
             SetConditionGraphBg2Visible(0);
-            sub_80F2F48();
+            DestroyPokenavPortraitSprite();
             BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 0, 16, RGB_BLACK);
             gPokenavStructPtr->callbackStep = 11;
         }

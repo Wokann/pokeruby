@@ -270,7 +270,7 @@ static void sub_8136294(void)
             gKeyRepeatStartDelay = 20;
             gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
             gPokenavStructPtr->unk9344 = 0;
-            gPokenavStructPtr->unk8768 = NULL;
+            gPokenavStructPtr->portraitSprite = NULL;
             sub_80F4BD0();
             gPokenavStructPtr->setupStep = 0;
             gUnknown_02039304->unk50++;
@@ -284,8 +284,8 @@ static void sub_8136294(void)
             }
             break;
         case 13:
-            sub_80F2E18(0);
-            gPokenavStructPtr->unk8768->y2 = 0xffd8;
+            CreateOrUpdatePokenavPortraitSprite(0);
+            gPokenavStructPtr->portraitSprite->y2 = 0xffd8;
             gUnknown_02039304->unk50++;
             break;
         case 14:

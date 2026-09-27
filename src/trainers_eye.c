@@ -90,7 +90,7 @@ void sub_80F6E04(u8 a0)
 {
     u16 r1 = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].opponentId;
     u8 r6 = gTrainers[r1].trainerPic;
-    DecompressPicFromTable_2(&gTrainerFrontPicTable[r6], gTrainerFrontPicCoords[r6].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->unkD1E4[a0], r6);
+    DecompressPicFromTable_2(&gTrainerFrontPicTable[r6], gTrainerFrontPicCoords[r6].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->spriteGfxBuffers[a0], r6);
     LZ77UnCompWram(gTrainerFrontPicPaletteTable[r6].data, gPokenavStructPtr->unk0[a0]);
 }
 

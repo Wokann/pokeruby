@@ -118,9 +118,9 @@ extern const struct SpriteTemplate gPokenavSmallHeaderSpriteTemplate;
 extern const struct SpriteTemplate gPokenavSmallHeaderAltSpriteTemplate;
 extern const struct SpriteTemplate gPokenavLargeHeaderSpriteTemplate;
 extern const struct SpriteTemplate gPokenavTrainersEyesHeaderSpriteTemplate;
-extern const struct SpriteSheet gUnknown_083E4568;
-extern const struct SpriteTemplate gSpriteTemplate_83E4570;
-extern const struct SpritePalette gUnknown_083E4588;
+extern const struct SpriteSheet gPokenavPortraitSpriteSheet;
+extern const struct SpriteTemplate gPokenavPortraitSpriteTemplate;
+extern const struct SpritePalette gPokenavPortraitSpritePalette;
 extern const struct SpriteSheet gUnknown_083E4590[3];
 extern const struct SpritePalette gUnknown_083E45A8;
 extern const u16 gUnknown_08E9F988[];
@@ -948,13 +948,13 @@ void SetConditionGraphWindowRegs(void)
     REG_WINOUT = 0x001B;
 }
 
-void PrintConditionGraphMonInfo(u16 monSlot)
+void PrintConditionGraphMonInfo(u16 portraitSlot)
 {
-    Menu_PrintText(gPokenavStructPtr->unk8829[monSlot], 13, 1);
+    Menu_PrintText(gPokenavStructPtr->unk8829[portraitSlot], 13, 1);
 
     if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
     {
-        Menu_PrintText(gPokenavStructPtr->unk88E9[monSlot], 13, 3);
+        Menu_PrintText(gPokenavStructPtr->unk88E9[portraitSlot], 13, 3);
         sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
         Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
     }
@@ -2681,65 +2681,65 @@ void FreePokenavRegionMapIcons(void)
     FreeRegionMapIconResources();
 }
 
-void sub_80F2E00(struct Sprite *sprite)
+void SpriteCB_UpdatePokenavPortraitSpriteX(struct Sprite *sprite)
 {
     sprite->x = gPokenavStructPtr->monInfoHeaderXOffset + 38;
 }
 
-void sub_80F2E18(u8 arg0)
+void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot)
 {
     u8 spriteId;
     struct SpriteTemplate spriteTemplate;
     struct SpritePalette spritePalette;
     struct SpriteSheet spriteSheet;
 
-    if (!gPokenavStructPtr->unk8768)
+    if (!gPokenavStructPtr->portraitSprite)
     {
-        spriteSheet = gUnknown_083E4568;
-        spriteTemplate = gSpriteTemplate_83E4570;
-        spritePalette = gUnknown_083E4588;
+        spriteSheet = gPokenavPortraitSpriteSheet;
+        spriteTemplate = gPokenavPortraitSpriteTemplate;
+        spritePalette = gPokenavPortraitSpritePalette;
 
-        spriteSheet.data = gPokenavStructPtr->unkD1E4[arg0];
-        spritePalette.data = gPokenavStructPtr->unk0[arg0];
-        gPokenavStructPtr->unkD1DC = LoadSpritePalette(&spritePalette);
-        gPokenavStructPtr->unkD1DE = LoadSpriteSheet(&spriteSheet);
+        spriteSheet.data = gPokenavStructPtr->spriteGfxBuffers[portraitSlot];
+        spritePalette.data = gPokenavStructPtr->unk0[portraitSlot];
+        gPokenavStructPtr->portraitPaletteOffset = LoadSpritePalette(&spritePalette);
+        gPokenavStructPtr->portraitTileStart = LoadSpriteSheet(&spriteSheet);
 
         spriteId = CreateSprite(&spriteTemplate, 38, 104, 0);
         if (spriteId == MAX_SPRITES)
         {
             FreeSpriteTilesByTag(0x6);
             FreeSpritePaletteByTag(0x6);
-            gPokenavStructPtr->unk8768 = NULL;
+            gPokenavStructPtr->portraitSprite = NULL;
         }
         else
         {
-            gPokenavStructPtr->unk8768 = &gSprites[spriteId];
-            gPokenavStructPtr->unkD1E0 = (void *)(VRAM + 0x10000) + gPokenavStructPtr->unkD1DE * 32;
-            gPokenavStructPtr->unkD1DC = gPokenavStructPtr->unkD1DC * 16 + 0x100;
+            gPokenavStructPtr->portraitSprite = &gSprites[spriteId];
+            gPokenavStructPtr->portraitVramDest = (void *)(VRAM + 0x10000) + gPokenavStructPtr->portraitTileStart * 32;
+            gPokenavStructPtr->portraitPaletteOffset = gPokenavStructPtr->portraitPaletteOffset * 16 + 0x100;
         }
     }
     else
     {
-        DmaCopy16Defvars(3, gPokenavStructPtr->unkD1E4[arg0], gPokenavStructPtr->unkD1E0, 0x800);
-        LoadPalette(gPokenavStructPtr->unk0[arg0], gPokenavStructPtr->unkD1DC, 0x20);
+        DmaCopy16Defvars(3, gPokenavStructPtr->spriteGfxBuffers[portraitSlot], gPokenavStructPtr->portraitVramDest, 0x800);
+        LoadPalette(gPokenavStructPtr->unk0[portraitSlot], gPokenavStructPtr->portraitPaletteOffset, 0x20);
     }
 }
 
-void sub_80F2F48(void)
+void DestroyPokenavPortraitSprite(void)
 {
-    if (gPokenavStructPtr->unk8768)
+    if (gPokenavStructPtr->portraitSprite)
     {
-        DestroySprite(gPokenavStructPtr->unk8768);
+        DestroySprite(gPokenavStructPtr->portraitSprite);
         FreeSpriteTilesByTag(0x6);
         FreeSpritePaletteByTag(0x6);
-        gPokenavStructPtr->unk8768 = NULL;
+        gPokenavStructPtr->portraitSprite = NULL;
     }
 }
 
 void sub_80F2F7C(u8 arg0)
 {
-    sub_80F2E18(arg0);
-    gPokenavStructPtr->unkCED0 = gPokenavStructPtr->unk8768;
+    CreateOrUpdatePokenavPortraitSprite(arg0);
+    gPokenavStructPtr->unkCED0 = gPokenavStructPtr->portraitSprite;
     gPokenavStructPtr->unkCED0->callback = sub_80F2FEC;
 }
 
@@ -2751,7 +2751,7 @@ void sub_80F2FB0(void)
         FreeSpriteTilesByTag(0x6);
         FreeSpritePaletteByTag(0x6);
         gPokenavStructPtr->unkCED0 = NULL;
-        gPokenavStructPtr->unk8768 = NULL;
+        gPokenavStructPtr->portraitSprite = NULL;
     }
 }
 
@@ -3129,7 +3129,7 @@ bool8 sub_80F38EC(void)
         gPokenavStructPtr->unkBC92 = 0;
         break;
     case 1:
-        sub_80F2E18(0);
+        CreateOrUpdatePokenavPortraitSprite(0);
         break;
     case 2:
         sub_80F3970();
@@ -3278,7 +3278,7 @@ void sub_80F3C2C(void)
     for (i = 0; i < 5; i++)
         FreeSpritePaletteByTag(i + 0xA);
 
-    sub_80F2F48();
+    DestroyPokenavPortraitSprite();
 }
 
 void sub_80F3C94(void)
@@ -3364,13 +3364,13 @@ void sub_80F3E04(struct Sprite *sprite)
 
 void sub_80F3E24(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->unk8768)
+    if (gPokenavStructPtr->portraitSprite)
     {
-        sprite->x = gPokenavStructPtr->unk8768->x
-                         + gPokenavStructPtr->unk8768->x2
+        sprite->x = gPokenavStructPtr->portraitSprite->x
+                         + gPokenavStructPtr->portraitSprite->x2
                          + gUnknown_083E4794[sprite->data[0]][0];
-        sprite->y = gPokenavStructPtr->unk8768->y
-                         + gPokenavStructPtr->unk8768->y2
+        sprite->y = gPokenavStructPtr->portraitSprite->y
+                         + gPokenavStructPtr->portraitSprite->y2
                          + gUnknown_083E4794[sprite->data[0]][1];
     }
     else
@@ -3580,12 +3580,12 @@ void sub_80F42C4(u8 *arg0)
     u16 i, tileOffset;
     u8 spriteId;
     struct SpriteSheet spriteSheet = {
-        .data = gPokenavStructPtr->unkD1E4[0],
+        .data = gPokenavStructPtr->spriteGfxBuffers[0],
         .size = 0x500,
         .tag = 0x1A,
     };
 
-    sub_80F4194(gPokenavStructPtr->unkD1E4[0], arg0);
+    sub_80F4194(gPokenavStructPtr->spriteGfxBuffers[0], arg0);
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&gUnknown_083E4868);
 
@@ -3625,10 +3625,10 @@ void sub_80F43D4(u8 *arg0)
 {
     u16 tile;
 
-    sub_80F4194(gPokenavStructPtr->unkD1E4[0], arg0);
+    sub_80F4194(gPokenavStructPtr->spriteGfxBuffers[0], arg0);
     tile = GetSpriteTileStartByTag(0x1A);
     if (tile != 0xFFFF)
-    DmaCopy32Defvars(3, gPokenavStructPtr->unkD1E4[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
+    DmaCopy32Defvars(3, gPokenavStructPtr->spriteGfxBuffers[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
 }
 
 u8 *sub_80F4428(u8 *arg0, u16 arg1, u8 arg2)
@@ -3762,7 +3762,7 @@ void sub_80F4824(s16 arg0, u8 arg1)
             gMonFrontPicCoords[species].coords,
             1,
             gPokenavStructPtr->unk131E4,
-            gPokenavStructPtr->unkD1E4[arg1],
+            gPokenavStructPtr->spriteGfxBuffers[arg1],
             species,
             personality);
 
@@ -3836,7 +3836,7 @@ void sub_80F4B20(void)
     s16 var1;
 
     sub_80F4900(gPokenavStructPtr->unk87DC, 0);
-    sub_80F2E18(0);
+    CreateOrUpdatePokenavPortraitSprite(0);
     if (gPokenavStructPtr->unk87DA == 1)
     {
         gPokenavStructPtr->unk8fe9 = 0;
@@ -4059,7 +4059,7 @@ bool8 sub_80F5264(void)
     switch (gPokenavStructPtr->unk87DE)
     {
     case 0:
-        sub_80F2E18(gPokenavStructPtr->unk8fe9);
+        CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->unk8fe9);
         PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
         gPokenavStructPtr->unk87DE++;
         // fall through
@@ -4104,7 +4104,7 @@ bool8 sub_80F5364(void)
         sub_80F5504();
         if (!SlidePokenavMonInfoHeaderOut())
         {
-            sub_80F2E18(gPokenavStructPtr->unk8fe9);
+            CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->unk8fe9);
             PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
             gPokenavStructPtr->unk87DE++;
         }
@@ -5064,7 +5064,7 @@ bool8 sub_80F6AF0(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 5:
-        sub_80F2E18(0);
+        CreateOrUpdatePokenavPortraitSprite(0);
         gPokenavStructPtr->unk87DE++;
         break;
     case 6:
