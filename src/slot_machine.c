@@ -2955,7 +2955,7 @@ static void ReelTime_EndFailure(struct Task *task)
     DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
-static const u16 sReelTimeWindowTilemap[];
+static const u16 sReelTimeWindow_Tilemap[];
 
 static void LoadReelTimeWindowTilemap(s16 a0, s16 a1)
 {
@@ -2963,7 +2963,7 @@ static void LoadReelTimeWindowTilemap(s16 a0, s16 a1)
 
     for (i = 4; i < 15; i++)
     {
-        u16 tile = sReelTimeWindowTilemap[a1 + (i - 4) * 20];
+        u16 tile = sReelTimeWindow_Tilemap[a1 + (i - 4) * 20];
         ((u16 *)BG_SCREEN_ADDR(28))[32 * i + a0] = tile;
     }
 }
@@ -4016,11 +4016,11 @@ static void EndDigitalDisplayScene_StopReel(void)
     REG_MOSAIC = 0;
 }
 
-static const u16 *const gUnknown_083EDE20;
+static const u16 *const sDigitalDisplay_Pal;
 
 static void EndDigitalDisplayScene_Win(void)
 {
-    LoadPalette(gUnknown_083EDE20, (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+    LoadPalette(sDigitalDisplay_Pal, (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
 }
 
 static void EndDigitalDisplayScene_InsertBet(void)
@@ -4033,7 +4033,7 @@ static void EndDigitalDisplayScene_InsertBet(void)
 
 static const u8 sReelTimeGfx[];
 static const struct SpriteSheet sSlotMachineSpriteSheets[];
-static const struct SpritePalette gSlotMachineSpritePalettes[];
+static const struct SpritePalette sSlotMachineSpritePalettes[];
 
 static void LoadSlotMachineGfx(void)
 {
@@ -4041,7 +4041,7 @@ static void LoadSlotMachineGfx(void)
     LZDecompressWram(gSlotMachineReelTimeLights_Gfx, eSlotMachineGfxBuffer);
     LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
-    LoadSpritePalettes(gSlotMachineSpritePalettes);
+    LoadSpritePalettes(sSlotMachineSpritePalettes);
 }
 
 static const u8 *const sReelBackground_Tilemap;
@@ -5480,17 +5480,17 @@ static const struct SpriteSheet sReelBackgroundSpriteSheet = {
 static const u8 *const sReelBackground_Tilemap = gUnknownPalette_08E997E8;
 
 #ifdef SAPPHIRE
-static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/sapphire_83EDD40.gbapal");
+static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDD40.gbapal");
 #elif defined(RUBY)
-static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/ruby_83EDCE8.gbapal");
+static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDCE8.gbapal");
 #endif // RS
 
 static const u16 *const sLitMatchLinePalTable[] = {
-    UnknownPalette_83EDCE8 + 10,
-    UnknownPalette_83EDCE8 + 11,
-    UnknownPalette_83EDCE8 + 12,
-    UnknownPalette_83EDCE8 + 13,
-    UnknownPalette_83EDCE8 + 14
+    sLitMatchLines_Pal + 10,
+    sLitMatchLines_Pal + 11,
+    sLitMatchLines_Pal + 12,
+    sLitMatchLines_Pal + 13,
+    sLitMatchLines_Pal + 14
 };
 
 static const u16 *const sDarkMatchLinePalTable[] = {
@@ -5513,39 +5513,39 @@ static const u8 sBetToMatchLineIds[][2] = {
 static const u8 sMatchLinesPerBet[] = {1, 2, 2};
 
 #ifdef SAPPHIRE
-static const u16 Unknown_83EDD3E[] = INCBIN_U16("graphics/unknown/sapphire_83EDD96.gbapal");
-static const u16 Unknown_83EDD5E[] = INCBIN_U16("graphics/unknown/sapphire_83EDDB6.gbapal");
-static const u16 Unknown_83EDD7E[] = INCBIN_U16("graphics/unknown/sapphire_83EDDD6.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDD96.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDDB6.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDDD6.gbapal");
 #elif defined (RUBY)
-static const u16 Unknown_83EDD3E[] = INCBIN_U16("graphics/unknown/ruby_83EDD3E.gbapal");
-static const u16 Unknown_83EDD5E[] = INCBIN_U16("graphics/unknown/ruby_83EDD5E.gbapal");
-static const u16 Unknown_83EDD7E[] = INCBIN_U16("graphics/unknown/ruby_83EDD7E.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD3E.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD5E.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD7E.gbapal");
 #endif // RS
 
 static const u16 *const sFlashingLightsPalTable[] = {
-    Unknown_83EDD3E,
-    Unknown_83EDD5E,
-    Unknown_83EDD7E
+    sFlashingLightsInside_Pal,
+    sFlashingLightsMiddle_Pal,
+    sFlashingLightsOutside_Pal
 };
 
 static const u16 *const sSlotMachineMenu_Pal = gUnknown_08E95A18 + 16;
 
-static const u16 Palette_83EDDB0[] = INCBIN_U16("graphics/slot_machine/83EDDB0.gbapal");
-static const u16 Palette_83EDDD0[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
-static const u16 Palette_83EDDF0[] = INCBIN_U16("graphics/slot_machine/83EDDF0.gbapal");
+static const u16 sPokeballShining0_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDB0.gbapal");
+static const u16 sPokeballShining1_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
+static const u16 sPokeballShining2_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDF0.gbapal");
 
 static const u16 *const sPokeballShiningPalTable[] = {
-    Palette_83EDDB0,
-    Palette_83EDDD0,
-    Palette_83EDDF0,
+    sPokeballShining0_Pal,
+    sPokeballShining1_Pal,
+    sPokeballShining2_Pal,
     gSlotMachineSpritePalette6
 };
 
-static const u16 *const gUnknown_083EDE20 = gSlotMachineSpritePalette6;
+static const u16 *const sDigitalDisplay_Pal = gSlotMachineSpritePalette6;
 
 static const u16 gPalette_83EDE24[] = INCBIN_U16("graphics/slot_machine/83EDE24_pal.bin");
 
-static const struct SpritePalette gSlotMachineSpritePalettes[] = {
+static const struct SpritePalette sSlotMachineSpritePalettes[] = {
     {gSlotMachineSpritePalette0, 0},
     {gSlotMachineSpritePalette1, 1},
     {gSlotMachineSpritePalette2, 2},
@@ -5559,7 +5559,7 @@ static const struct SpritePalette gSlotMachineSpritePalettes[] = {
 
 static const u8 sReelTimeGfx[] = INCBIN_U8("graphics/slot_machine/reel_time.4bpp.lz");
 
-static const u16 sReelTimeWindowTilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window_map.bin");
+static const u16 sReelTimeWindow_Tilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window_map.bin");
 
 #if DEBUG
 
