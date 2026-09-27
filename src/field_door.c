@@ -6,6 +6,9 @@
 #include "task.h"
 #include "constants/songs.h"
 
+#define DOOR_SOUND_NORMAL  0
+#define DOOR_SOUND_SLIDING 1
+
 const u8 DoorAnimTiles_04[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/04/0.4bpp"),
@@ -354,40 +357,40 @@ const u8 sDoorAnimPalettes_BattleTowerElevator[] = {7, 7, 7, 7, 7, 7, 7, 7}; // 
 
 static const struct DoorGraphics sDoorAnimGraphicsTable[] =
 {
-    {0x021, 0, DoorAnimTiles_00, DoorAnimPalettes_830F8A4}, // door 00
-    {0x061, 1, sDoorAnimTiles_PokeCenter, sDoorAnimPalettes_PokeCenter}, // door 01
-    {0x1CD, 1, sDoorAnimTiles_Gym, sDoorAnimPalettes_Gym}, // door 02
-    {0x041, 1, sDoorAnimTiles_PokeMart, sDoorAnimPalettes_PokeMart}, // door 03
-    {0x248, 0, DoorAnimTiles_04, DoorAnimPalettes_830F8C4}, // door 04
-    {0x249, 0, DoorAnimTiles_05, DoorAnimPalettes_830F8CC}, // door 05
-    {0x22F, 0, DoorAnimTiles_06, DoorAnimPalettes_830F8D4}, // door 06
-    {0x21F, 0, DoorAnimTiles_07, DoorAnimPalettes_830F8DC}, // door 07
-    {0x2A5, 0, DoorAnimTiles_08, DoorAnimPalettes_830F8E4}, // door 08
-    {0x287, 0, DoorAnimTiles_09, DoorAnimPalettes_830F8F4}, // door 09
-    {0x2AC, 0, DoorAnimTiles_10, DoorAnimPalettes_830F934}, // door 10
-    {0x3A1, 0, DoorAnimTiles_11, DoorAnimPalettes_830F93C}, // door 11
-    {0x2DC, 0, DoorAnimTiles_12, DoorAnimPalettes_830F92C}, // door 12
-    {0x225, 0, DoorAnimTiles_13, DoorAnimPalettes_830F924}, // door 13
-    {0x1DB, 1, sDoorAnimTiles_Contest, sDoorAnimPalettes_Contest}, // door 14
-    {0x246, 0, DoorAnimTiles_15, DoorAnimPalettes_830F8EC}, // door 15
-    {0x28E, 0, DoorAnimTiles_16, DoorAnimPalettes_830F944}, // door 16
-    {0x2A1, 0, DoorAnimTiles_17, DoorAnimPalettes_830F8FC}, // door 17
-    {0x21C, 0, DoorAnimTiles_18, DoorAnimPalettes_830F914}, // door 18
-    {0x21E, 0, sDoorAnimTiles_Sootopolis, sDoorAnimPalettes_Sootopolis}, // door 19
-    {0x21D, 1, sDoorAnimTiles_PokemonLeague, sDoorAnimPalettes_PokemonLeague}, // door 20
-    {0x21A, 0, DoorAnimTiles_21, DoorAnimPalettes_830F90C}, // door 21
-    {0x224, 0, DoorAnimTiles_22, DoorAnimPalettes_830F954}, // door 22
-    {0x289, 0, DoorAnimTiles_23, DoorAnimPalettes_830F95C}, // door 23
-    {0x30C, 1, DoorAnimTiles_24, DoorAnimPalettes_830F964}, // door 24
-    {0x32D, 1, DoorAnimTiles_25, DoorAnimPalettes_830F96C}, // door 25
-    {0x2ED, 1, DoorAnimTiles_26, DoorAnimPalettes_830F974}, // door 26
-    {0x264, 1, sDoorAnimTiles_CableClub, sDoorAnimPalettes_CableClub}, // door 27
-    {0x22B, 0, sDoorAnimTiles_AbandonedShip, sDoorAnimPalettes_AbandonedShip}, // door 28
-    {0x2F7, 0, DoorAnimTiles_29, DoorAnimPalettes_830F98C}, // door 29
-    {0x297, 0, sDoorAnimTiles_AbandonedShipRoom, sDoorAnimPalettes_AbandonedShipRoom}, // door 30
-    {0x285, 1, sDoorAnimTiles_LilycoveDeptStoreElevator, sDoorAnimPalettes_LilycoveDeptStoreElevator}, // door 31
-    {0x25D, 1, sDoorAnimTiles_BattleTowerOld, sDoorAnimPalettes_BattleTowerOld}, // door 32
-    {0x20E, 1, sDoorAnimTiles_BattleTowerElevator, sDoorAnimPalettes_BattleTowerElevator}, // door 33
+    {0x021, DOOR_SOUND_NORMAL, DoorAnimTiles_00, DoorAnimPalettes_830F8A4}, // door 00
+    {0x061, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokeCenter, sDoorAnimPalettes_PokeCenter}, // door 01
+    {0x1CD, DOOR_SOUND_SLIDING, sDoorAnimTiles_Gym, sDoorAnimPalettes_Gym}, // door 02
+    {0x041, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokeMart, sDoorAnimPalettes_PokeMart}, // door 03
+    {0x248, DOOR_SOUND_NORMAL, DoorAnimTiles_04, DoorAnimPalettes_830F8C4}, // door 04
+    {0x249, DOOR_SOUND_NORMAL, DoorAnimTiles_05, DoorAnimPalettes_830F8CC}, // door 05
+    {0x22F, DOOR_SOUND_NORMAL, DoorAnimTiles_06, DoorAnimPalettes_830F8D4}, // door 06
+    {0x21F, DOOR_SOUND_NORMAL, DoorAnimTiles_07, DoorAnimPalettes_830F8DC}, // door 07
+    {0x2A5, DOOR_SOUND_NORMAL, DoorAnimTiles_08, DoorAnimPalettes_830F8E4}, // door 08
+    {0x287, DOOR_SOUND_NORMAL, DoorAnimTiles_09, DoorAnimPalettes_830F8F4}, // door 09
+    {0x2AC, DOOR_SOUND_NORMAL, DoorAnimTiles_10, DoorAnimPalettes_830F934}, // door 10
+    {0x3A1, DOOR_SOUND_NORMAL, DoorAnimTiles_11, DoorAnimPalettes_830F93C}, // door 11
+    {0x2DC, DOOR_SOUND_NORMAL, DoorAnimTiles_12, DoorAnimPalettes_830F92C}, // door 12
+    {0x225, DOOR_SOUND_NORMAL, DoorAnimTiles_13, DoorAnimPalettes_830F924}, // door 13
+    {0x1DB, DOOR_SOUND_SLIDING, sDoorAnimTiles_Contest, sDoorAnimPalettes_Contest}, // door 14
+    {0x246, DOOR_SOUND_NORMAL, DoorAnimTiles_15, DoorAnimPalettes_830F8EC}, // door 15
+    {0x28E, DOOR_SOUND_NORMAL, DoorAnimTiles_16, DoorAnimPalettes_830F944}, // door 16
+    {0x2A1, DOOR_SOUND_NORMAL, DoorAnimTiles_17, DoorAnimPalettes_830F8FC}, // door 17
+    {0x21C, DOOR_SOUND_NORMAL, DoorAnimTiles_18, DoorAnimPalettes_830F914}, // door 18
+    {0x21E, DOOR_SOUND_NORMAL, sDoorAnimTiles_Sootopolis, sDoorAnimPalettes_Sootopolis}, // door 19
+    {0x21D, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokemonLeague, sDoorAnimPalettes_PokemonLeague}, // door 20
+    {0x21A, DOOR_SOUND_NORMAL, DoorAnimTiles_21, DoorAnimPalettes_830F90C}, // door 21
+    {0x224, DOOR_SOUND_NORMAL, DoorAnimTiles_22, DoorAnimPalettes_830F954}, // door 22
+    {0x289, DOOR_SOUND_NORMAL, DoorAnimTiles_23, DoorAnimPalettes_830F95C}, // door 23
+    {0x30C, DOOR_SOUND_SLIDING, DoorAnimTiles_24, DoorAnimPalettes_830F964}, // door 24
+    {0x32D, DOOR_SOUND_SLIDING, DoorAnimTiles_25, DoorAnimPalettes_830F96C}, // door 25
+    {0x2ED, DOOR_SOUND_SLIDING, DoorAnimTiles_26, DoorAnimPalettes_830F974}, // door 26
+    {0x264, DOOR_SOUND_SLIDING, sDoorAnimTiles_CableClub, sDoorAnimPalettes_CableClub}, // door 27
+    {0x22B, DOOR_SOUND_NORMAL, sDoorAnimTiles_AbandonedShip, sDoorAnimPalettes_AbandonedShip}, // door 28
+    {0x2F7, DOOR_SOUND_NORMAL, DoorAnimTiles_29, DoorAnimPalettes_830F98C}, // door 29
+    {0x297, DOOR_SOUND_NORMAL, sDoorAnimTiles_AbandonedShipRoom, sDoorAnimPalettes_AbandonedShipRoom}, // door 30
+    {0x285, DOOR_SOUND_SLIDING, sDoorAnimTiles_LilycoveDeptStoreElevator, sDoorAnimPalettes_LilycoveDeptStoreElevator}, // door 31
+    {0x25D, DOOR_SOUND_SLIDING, sDoorAnimTiles_BattleTowerOld, sDoorAnimPalettes_BattleTowerOld}, // door 32
+    {0x20E, DOOR_SOUND_SLIDING, sDoorAnimTiles_BattleTowerElevator, sDoorAnimPalettes_BattleTowerElevator}, // door 33
     {0, 0, NULL, NULL},
 };
 
@@ -596,7 +599,7 @@ bool8 FieldIsDoorAnimationRunning(void)
 
 u32 GetDoorSoundEffect(u32 x, u32 y)
 {
-    if (GetDoorSoundType(sDoorAnimGraphicsTable, x, y) == 0)
+    if (GetDoorSoundType(sDoorAnimGraphicsTable, x, y) == DOOR_SOUND_NORMAL)
         return SE_DOOR;
     else
         return SE_SLIDING_DOOR;
