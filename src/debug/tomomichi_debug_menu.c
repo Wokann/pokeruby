@@ -620,122 +620,122 @@ static const struct MenuAction sMenuActions_SysFlags_CitiesVisited[] = {
     {sString_SysFlag_VisitedEverGrandeCity, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C154C[] = _("SYSーPOKEMONーGET");
-static const u8 gUnknown_Debug_083C155C[] = _("SYSーZUKANーGET");
-static const u8 gUnknown_Debug_083C156A[] = _("SYSーPOKEGEARーGET");
-static const u8 gUnknown_Debug_083C157B[] = _("SYSーRIBBONーGET");
+static const u8 sString_SysFlag_PokemonGet[] = _("SYSーPOKEMONーGET");
+static const u8 sString_SysFlag_PokedexGet[] = _("SYSーZUKANーGET");
+static const u8 sString_SysFlag_PokenavGet[] = _("SYSーPOKEGEARーGET");
+static const u8 sString_SysFlag_RibbonGet[] = _("SYSーRIBBONーGET");
 
 static const struct MenuAction sMenuActions_SysFlags_Acquired[] = {
-    {gUnknown_Debug_083C154C, DummyMenuAction},
-    {gUnknown_Debug_083C155C, DummyMenuAction},
-    {gUnknown_Debug_083C156A, DummyMenuAction},
-    {gUnknown_Debug_083C157B, DummyMenuAction}
+    {sString_SysFlag_PokemonGet, DummyMenuAction},
+    {sString_SysFlag_PokedexGet, DummyMenuAction},
+    {sString_SysFlag_PokenavGet, DummyMenuAction},
+    {sString_SysFlag_RibbonGet, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C15AC[] = _("SYSーGAMEーCLEAR");
-static const u8 gUnknown_Debug_083C15BB[] = _("SYSーKAIWAーUSED");
-static const u8 gUnknown_Debug_083C15CA[] = _("SYSーNOWーOYAJIーMEET");
-static const u8 gUnknown_Debug_083C15DD[] = _("SYSーUSEーWAZAーFLASH");
-static const u8 gUnknown_Debug_083C15F0[] = _("SYSーUSEーWAZAーKAIRIKI");
-static const u8 gUnknown_Debug_083C1605[] = _("SYSーWEATHERーCTRL");
-static const u8 gUnknown_Debug_083C1616[] = _("SYSーCYCLINGーROAD");
-static const u8 gUnknown_Debug_083C1627[] = _("SYSーSAFARIーMODE");
-static const u8 gUnknown_Debug_083C1637[] = _("SYSーCRUISEーMODE");
+static const u8 sString_SysFlag_GameClear[] = _("SYSーGAMEーCLEAR");
+static const u8 sString_SysFlag_ChatUsed[] = _("SYSーKAIWAーUSED");
+static const u8 sString_SysFlag_HipsterMeet[] = _("SYSーNOWーOYAJIーMEET");
+static const u8 sString_SysFlag_UseFlash[] = _("SYSーUSEーWAZAーFLASH");
+static const u8 sString_SysFlag_UseStrength[] = _("SYSーUSEーWAZAーKAIRIKI");
+static const u8 sString_SysFlag_WeatherControl[] = _("SYSーWEATHERーCTRL");
+static const u8 sString_SysFlag_CyclingRoad[] = _("SYSーCYCLINGーROAD");
+static const u8 sString_SysFlag_SafariMode[] = _("SYSーSAFARIーMODE");
+static const u8 sString_SysFlag_CruiseMode[] = _("SYSーCRUISEーMODE");
 
 static const struct MenuAction sMenuActions_SysFlags_Other1[] = {
-    {gUnknown_Debug_083C15AC, DummyMenuAction},
-    {gUnknown_Debug_083C15BB, DummyMenuAction},
-    {gUnknown_Debug_083C15CA, DummyMenuAction},
-    {gUnknown_Debug_083C15DD, DummyMenuAction},
-    {gUnknown_Debug_083C15F0, DummyMenuAction},
-    {gUnknown_Debug_083C1605, DummyMenuAction},
-    {gUnknown_Debug_083C1616, DummyMenuAction},
-    {gUnknown_Debug_083C1627, DummyMenuAction},
-    {gUnknown_Debug_083C1637, DummyMenuAction}
+    {sString_SysFlag_GameClear, DummyMenuAction},
+    {sString_SysFlag_ChatUsed, DummyMenuAction},
+    {sString_SysFlag_HipsterMeet, DummyMenuAction},
+    {sString_SysFlag_UseFlash, DummyMenuAction},
+    {sString_SysFlag_UseStrength, DummyMenuAction},
+    {sString_SysFlag_WeatherControl, DummyMenuAction},
+    {sString_SysFlag_CyclingRoad, DummyMenuAction},
+    {sString_SysFlag_SafariMode, DummyMenuAction},
+    {sString_SysFlag_CruiseMode, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1690[] = _("SYSーTVーHOME");
-static const u8 gUnknown_Debug_083C169C[] = _("SYSーTVーWATCH");
-static const u8 gUnknown_Debug_083C16A9[] = _("SYSーTVSTART");
-static const u8 gUnknown_Debug_083C16B5[] = _("SYSーPOPWORDーINPUT");
-static const u8 gUnknown_Debug_083C16C7[] = _("SYSーMIXーRECORD");
-static const u8 gUnknown_Debug_083C16D6[] = _("SYSーCLOCKーSET");
-static const u8 gUnknown_Debug_083C16E4[] = _("SYSーCAVEーSHIP");
-static const u8 gUnknown_Debug_083C16F2[] = _("SYSーCAVEーWONDER");
-static const u8 gUnknown_Debug_083C1702[] = _("SYSーCAVEーBATTLE");
+static const u8 sString_SysFlag_TvHome[] = _("SYSーTVーHOME");
+static const u8 sString_SysFlag_TvWatch[] = _("SYSーTVーWATCH");
+static const u8 sString_SysFlag_TvStart[] = _("SYSーTVSTART");
+static const u8 sString_SysFlag_PopWordInput[] = _("SYSーPOPWORDーINPUT");
+static const u8 sString_SysFlag_MixRecord[] = _("SYSーMIXーRECORD");
+static const u8 sString_SysFlag_ClockSet[] = _("SYSーCLOCKーSET");
+static const u8 sString_SysFlag_CaveShip[] = _("SYSーCAVEーSHIP");
+static const u8 sString_SysFlag_CaveWonder[] = _("SYSーCAVEーWONDER");
+static const u8 sString_SysFlag_CaveBattle[] = _("SYSーCAVEーBATTLE");
 
 static const struct MenuAction sMenuActions_SysFlags_Other2[] = {
-    {gUnknown_Debug_083C1690, DummyMenuAction},
-    {gUnknown_Debug_083C169C, DummyMenuAction},
-    {gUnknown_Debug_083C16A9, DummyMenuAction},
-    {gUnknown_Debug_083C16B5, DummyMenuAction},
-    {gUnknown_Debug_083C16C7, DummyMenuAction},
-    {gUnknown_Debug_083C16D6, DummyMenuAction},
-    {gUnknown_Debug_083C16E4, DummyMenuAction},
-    {gUnknown_Debug_083C16F2, DummyMenuAction},
-    {gUnknown_Debug_083C1702, DummyMenuAction}
+    {sString_SysFlag_TvHome, DummyMenuAction},
+    {sString_SysFlag_TvWatch, DummyMenuAction},
+    {sString_SysFlag_TvStart, DummyMenuAction},
+    {sString_SysFlag_PopWordInput, DummyMenuAction},
+    {sString_SysFlag_MixRecord, DummyMenuAction},
+    {sString_SysFlag_ClockSet, DummyMenuAction},
+    {sString_SysFlag_CaveShip, DummyMenuAction},
+    {sString_SysFlag_CaveWonder, DummyMenuAction},
+    {sString_SysFlag_CaveBattle, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C175C[] = _("SYSーSPECIALーZUKAN");
-static const u8 gUnknown_Debug_083C176E[] = _("SYSーASASEーTIDE");
-static const u8 gUnknown_Debug_083C177D[] = _("SYSーRIBBONーGET");
-static const u8 gUnknown_Debug_083C178C[] = _("SYSーPASOーMAYUMI");
-static const u8 gUnknown_Debug_083C179C[] = _("SYSーEXDATAーENABLE");
-static const u8 gUnknown_Debug_083C17AE[] = _("SYSーTENJIーANAWOHORU");
-static const u8 gUnknown_Debug_083C17C2[] = _("SYSーTENJIーKAIRIKI");
-static const u8 gUnknown_Debug_083C17D4[] = _("SYSーTENJIーWAIT");
-static const u8 gUnknown_Debug_083C17E3[] = _("SYSーTENJIーSORAWOTOBU");
+static const u8 sString_SysFlag_NationalDex[] = _("SYSーSPECIALーZUKAN");
+static const u8 sString_SysFlag_ShoalTide[] = _("SYSーASASEーTIDE");
+static const u8 sString_SysFlag_RibbonGetOther3[] = _("SYSーRIBBONーGET");
+static const u8 sString_SysFlag_LanettePc[] = _("SYSーPASOーMAYUMI");
+static const u8 sString_SysFlag_ExternalDataEnabled[] = _("SYSーEXDATAーENABLE");
+static const u8 sString_SysFlag_BrailleDig[] = _("SYSーTENJIーANAWOHORU");
+static const u8 sString_SysFlag_BrailleStrength[] = _("SYSーTENJIーKAIRIKI");
+static const u8 sString_SysFlag_BrailleWait[] = _("SYSーTENJIーWAIT");
+static const u8 sString_SysFlag_BrailleFly[] = _("SYSーTENJIーSORAWOTOBU");
 
 static const struct MenuAction sMenuActions_SysFlags_Other3[] = {
-    {gUnknown_Debug_083C175C, DummyMenuAction},
-    {gUnknown_Debug_083C176E, DummyMenuAction},
-    {gUnknown_Debug_083C177D, DummyMenuAction},
-    {gUnknown_Debug_083C178C, DummyMenuAction},
-    {gUnknown_Debug_083C179C, DummyMenuAction},
-    {gUnknown_Debug_083C17AE, DummyMenuAction},
-    {gUnknown_Debug_083C17C2, DummyMenuAction},
-    {gUnknown_Debug_083C17D4, DummyMenuAction},
-    {gUnknown_Debug_083C17E3, DummyMenuAction}
+    {sString_SysFlag_NationalDex, DummyMenuAction},
+    {sString_SysFlag_ShoalTide, DummyMenuAction},
+    {sString_SysFlag_RibbonGetOther3, DummyMenuAction},
+    {sString_SysFlag_LanettePc, DummyMenuAction},
+    {sString_SysFlag_ExternalDataEnabled, DummyMenuAction},
+    {sString_SysFlag_BrailleDig, DummyMenuAction},
+    {sString_SysFlag_BrailleStrength, DummyMenuAction},
+    {sString_SysFlag_BrailleWait, DummyMenuAction},
+    {sString_SysFlag_BrailleFly, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1840[] = _("SYSーENCーUPーITEM");
-static const u8 gUnknown_Debug_083C1850[] = _("SYSーENEーDOWNーITEM");
-static const u8 gUnknown_Debug_083C1862[] = _("SYSーKOKOROーEVENT");
-static const u8 gUnknown_Debug_083C1873[] = _("SYSーMOVEーPOKEーNEWS");
-static const u8 gUnknown_Debug_083C1886[] = _("SYSーASASEーITEM");
-static const u8 gUnknown_Debug_083C1895[] = _("SYSーBーDASH");
-static const u8 gUnknown_Debug_083C18A0[] = _("SYSーCTRLーOBJーDELETE");
+static const u8 sString_SysFlag_EncounterUpItem[] = _("SYSーENCーUPーITEM");
+static const u8 sString_SysFlag_EncounterDownItem[] = _("SYSーENEーDOWNーITEM");
+static const u8 sString_SysFlag_HasEonTicket[] = _("SYSーKOKOROーEVENT");
+static const u8 sString_SysFlag_TvLati[] = _("SYSーMOVEーPOKEーNEWS");
+static const u8 sString_SysFlag_ShoalItem[] = _("SYSーASASEーITEM");
+static const u8 sString_SysFlag_BDash[] = _("SYSーBーDASH");
+static const u8 sString_SysFlag_ControlObjectDelete[] = _("SYSーCTRLーOBJーDELETE");
 static const u8 gUnknown_Debug_083C18B4[] = _("");
 static const u8 gUnknown_Debug_083C18B5[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
-    {gUnknown_Debug_083C1840, DummyMenuAction},
-    {gUnknown_Debug_083C1850, DummyMenuAction},
-    {gUnknown_Debug_083C1862, DummyMenuAction},
-    {gUnknown_Debug_083C1873, DummyMenuAction},
-    {gUnknown_Debug_083C1886, DummyMenuAction},
-    {gUnknown_Debug_083C1895, DummyMenuAction},
-    {gUnknown_Debug_083C18A0, DummyMenuAction},
+    {sString_SysFlag_EncounterUpItem, DummyMenuAction},
+    {sString_SysFlag_EncounterDownItem, DummyMenuAction},
+    {sString_SysFlag_HasEonTicket, DummyMenuAction},
+    {sString_SysFlag_TvLati, DummyMenuAction},
+    {sString_SysFlag_ShoalItem, DummyMenuAction},
+    {sString_SysFlag_BDash, DummyMenuAction},
+    {sString_SysFlag_ControlObjectDelete, DummyMenuAction},
     {gUnknown_Debug_083C18B4, DummyMenuAction},
     {gUnknown_Debug_083C18B5, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1900[] = _("SYSーARRIVEーSUBMARINECAVE");
-static const u8 gUnknown_Debug_083C1919[] = _("SYSーARRIVEーBATTLETOWER");
-static const u8 gUnknown_Debug_083C1930[] = _("SYSーARRIVEーISLAND");
-static const u8 gUnknown_Debug_083C1942[] = _("SYSーARRIVEーLEAGUE");
-static const u8 gUnknown_Debug_083C1954[] = _("SYSーARRIVEーSORANOHASHIRA");
+static const u8 sString_SysFlag_SeafloorCavernLandmark[] = _("SYSーARRIVEーSUBMARINECAVE");
+static const u8 sString_SysFlag_BattleTowerLandmark[] = _("SYSーARRIVEーBATTLETOWER");
+static const u8 sString_SysFlag_SouthernIslandLandmark[] = _("SYSーARRIVEーISLAND");
+static const u8 sString_SysFlag_PokemonLeagueFly[] = _("SYSーARRIVEーLEAGUE");
+static const u8 sString_SysFlag_SkyPillarLandmark[] = _("SYSーARRIVEーSORANOHASHIRA");
 static const u8 gUnknown_Debug_083C196D[] = _("");
 static const u8 gUnknown_Debug_083C196E[] = _("");
 static const u8 gUnknown_Debug_083C196F[] = _("");
 static const u8 gUnknown_Debug_083C1970[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
-    {gUnknown_Debug_083C1900, DummyMenuAction},
-    {gUnknown_Debug_083C1919, DummyMenuAction},
-    {gUnknown_Debug_083C1930, DummyMenuAction},
-    {gUnknown_Debug_083C1942, DummyMenuAction},
-    {gUnknown_Debug_083C1954, DummyMenuAction},
+    {sString_SysFlag_SeafloorCavernLandmark, DummyMenuAction},
+    {sString_SysFlag_BattleTowerLandmark, DummyMenuAction},
+    {sString_SysFlag_SouthernIslandLandmark, DummyMenuAction},
+    {sString_SysFlag_PokemonLeagueFly, DummyMenuAction},
+    {sString_SysFlag_SkyPillarLandmark, DummyMenuAction},
     {gUnknown_Debug_083C196D, DummyMenuAction},
     {gUnknown_Debug_083C196E, DummyMenuAction},
     {gUnknown_Debug_083C196F, DummyMenuAction},
