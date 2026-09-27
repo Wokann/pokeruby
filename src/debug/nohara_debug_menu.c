@@ -17,7 +17,7 @@ static u8 gDebug_03000724;
 static u8 gDebug_03000725;
 static u8 gDebug_03000726;
 
-bool8 debug_sub_808F414(void);
+bool8 NoharaDebugMenu_HandleInput(void);
 bool8 NoharaDebugMenu_TV(void);
 bool8 debug_sub_808F4AC(void);
 void debug_sub_808F4EC(void);
@@ -56,45 +56,45 @@ bool8 NoharaDebugMenu_Yes9999(void);
 bool8 NoharaDebugMenu_LegendsFlagOn(void);
 bool8 NoharaDebugMenu_AddNumWinningStreaks(void);
 
-const u8 gUnknown_Debug_083C48C4[] = _("TV");
-const u8 gUnknown_Debug_083C48C7[] = DTR("Fan", "LILYCOVE TRAINER FAN CLUB");
-const u8 gUnknown_Debug_083C48CB[] = _("Battle (vs Dad)");
-const u8 gUnknown_Debug_083C48DB[] = _("Dad after battle");
-const u8 gUnknown_Debug_083C48EC[] = _("SOOTOPOLIS CITY");
-const u8 gUnknown_Debug_083C48FC[] = DTR("Embark", "Reset Mr. BRINEY");
-const u8 gUnknown_Debug_083C4903[] = _("Yes 9999");
-const u8 gUnknown_Debug_083C490C[] = _("Legends flag ON");
-const u8 gUnknown_Debug_083C491C[] = _("Add num of winning streaks");
+const u8 sString_NoharaDebug_TV[] = _("TV");
+const u8 sString_NoharaDebug_FanClub[] = DTR("Fan", "LILYCOVE TRAINER FAN CLUB");
+const u8 sString_NoharaDebug_BattleVsDad[] = _("Battle (vs Dad)");
+const u8 sString_NoharaDebug_DadAfterBattle[] = _("Dad after battle");
+const u8 sString_NoharaDebug_SootopolisCity[] = _("SOOTOPOLIS CITY");
+const u8 sString_NoharaDebug_ResetMrBriney[] = DTR("Embark", "Reset Mr. BRINEY");
+const u8 sString_NoharaDebug_Yes9999[] = _("Yes 9999");
+const u8 sString_NoharaDebug_LegendsFlagOn[] = _("Legends flag ON");
+const u8 sString_NoharaDebug_AddWinningStreaks[] = _("Add num of winning streaks");
 
-const struct MenuAction gUnknown_Debug_083C4938[] = {
-    {gUnknown_Debug_083C48C4, NoharaDebugMenu_TV},
-    {gUnknown_Debug_083C48C7, NoharaDebugMenu_Fan},
-    {gUnknown_Debug_083C48CB, NoharaDebugMenu_BattleVSDad},
-    {gUnknown_Debug_083C48DB, NoharaDebugMenu_DadAfterBattle},
-    {gUnknown_Debug_083C48EC, NoharaDebugMenu_SootopolisCity},
-    {gUnknown_Debug_083C48FC, NoharaDebugMenu_Embark},
-    {gUnknown_Debug_083C4903, NoharaDebugMenu_Yes9999},
-    {gUnknown_Debug_083C490C, NoharaDebugMenu_LegendsFlagOn},
-    {gUnknown_Debug_083C491C, NoharaDebugMenu_AddNumWinningStreaks}
+const struct MenuAction sMenuActions_NoharaDebug[] = {
+    {sString_NoharaDebug_TV, NoharaDebugMenu_TV},
+    {sString_NoharaDebug_FanClub, NoharaDebugMenu_Fan},
+    {sString_NoharaDebug_BattleVsDad, NoharaDebugMenu_BattleVSDad},
+    {sString_NoharaDebug_DadAfterBattle, NoharaDebugMenu_DadAfterBattle},
+    {sString_NoharaDebug_SootopolisCity, NoharaDebugMenu_SootopolisCity},
+    {sString_NoharaDebug_ResetMrBriney, NoharaDebugMenu_Embark},
+    {sString_NoharaDebug_Yes9999, NoharaDebugMenu_Yes9999},
+    {sString_NoharaDebug_LegendsFlagOn, NoharaDebugMenu_LegendsFlagOn},
+    {sString_NoharaDebug_AddWinningStreaks, NoharaDebugMenu_AddNumWinningStreaks}
 };
 
 bool8 InitNoharaDebugMenu(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 19, 19);
-    Menu_PrintItems(1, 1, ARRAY_COUNT(gUnknown_Debug_083C4938), gUnknown_Debug_083C4938);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C4938), 0, 18);
-    gMenuCallback = debug_sub_808F414;
+    Menu_PrintItems(1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug), sMenuActions_NoharaDebug);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug), 0, 18);
+    gMenuCallback = NoharaDebugMenu_HandleInput;
     return FALSE;
 }
 
-bool8 debug_sub_808F414(void)
+bool8 NoharaDebugMenu_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     switch (input)
     {
         default:
-            gMenuCallback = gUnknown_Debug_083C4938[input].func;
+            gMenuCallback = sMenuActions_NoharaDebug[input].func;
             return FALSE;
         case -2:
             return FALSE;
