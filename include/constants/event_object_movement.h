@@ -220,6 +220,21 @@
 
 #define MOVEMENT_ACTION_STEP_END                    0xFE
 
+#define ANIM_FIELD_MOVE 0
+
+#define ANIM_TAKE_OUT_ROD_SOUTH   0
+#define ANIM_TAKE_OUT_ROD_NORTH   1
+#define ANIM_TAKE_OUT_ROD_WEST    2
+#define ANIM_TAKE_OUT_ROD_EAST    3
+#define ANIM_PUT_AWAY_ROD_SOUTH   4
+#define ANIM_PUT_AWAY_ROD_NORTH   5
+#define ANIM_PUT_AWAY_ROD_WEST    6
+#define ANIM_PUT_AWAY_ROD_EAST    7
+#define ANIM_HOOKED_POKEMON_SOUTH 8
+#define ANIM_HOOKED_POKEMON_NORTH 9
+#define ANIM_HOOKED_POKEMON_WEST  10
+#define ANIM_HOOKED_POKEMON_EAST  11
+
 // IDs for how NPCs that copy player movement should respond.
 #define COPY_MOVE_NONE           0
 #define COPY_MOVE_FACE           1
