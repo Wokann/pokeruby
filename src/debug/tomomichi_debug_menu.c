@@ -87,19 +87,19 @@ static bool8 ControlFlags_EventFlag_HandlePageInput(void);
 static void ControlFlags_EventFlag_ToggleSelection(u8, u8);
 static void ControlFlags_EventFlag_PrintPageValues(u8);
 static bool8 ControlFlags_VanishFlag_InitSubmenu(void);
-static bool8 debug_sub_808C818(void);
-static bool8 debug_sub_808C85C(void);
-static bool8 debug_sub_808C8B4(void);
-static bool8 debug_sub_808C90C(void);
-static bool8 debug_sub_808C964(void);
-static bool8 debug_sub_808C9BC(void);
-static bool8 debug_sub_808CA14(void);
-static bool8 debug_sub_808CA6C(void);
-static bool8 debug_sub_808CAC4(void);
-static bool8 debug_sub_808CB1C(void);
-static bool8 debug_sub_808CB74(void);
-static void debug_sub_808CBC0(u8, u8);
-static void debug_sub_808CC10(u8);
+static bool8 ControlFlags_VanishFlag_HandleCategoryInput(void);
+static bool8 ControlFlags_VanishFlag_Kecleon_InitPage(void);
+static bool8 ControlFlags_VanishFlag_OtherAndSupport_InitPage(void);
+static bool8 ControlFlags_VanishFlag_BirchAndFighter_InitPage(void);
+static bool8 ControlFlags_VanishFlag_WallyAndWeather_InitPage(void);
+static bool8 ControlFlags_VanishFlag_OtherAndSteven_InitPage(void);
+static bool8 ControlFlags_VanishFlag_Pokemon_InitPage(void);
+static bool8 ControlFlags_VanishFlag_MomAndSupport_InitPage(void);
+static bool8 ControlFlags_VanishFlag_MrBriney_InitPage(void);
+static bool8 ControlFlags_VanishFlag_Support_InitPage(void);
+static bool8 ControlFlags_VanishFlag_HandlePageInput(void);
+static void ControlFlags_VanishFlag_ToggleSelection(u8, u8);
+static void ControlFlags_VanishFlag_PrintPageValues(u8);
 static bool8 ControlFlags_TrainerFlag_InitSubmenu(void);
 static bool8 debug_sub_808CCC4(void);
 static bool8 debug_sub_808CD08(void);
@@ -831,26 +831,26 @@ static const u16 gUnknown_Debug_083C1C38[][9] = {
     {0x04E1}
 };
 
-static const u8 gUnknown_Debug_083C1C6E[] = DTR("120/119ばんどうろカクレオン", "ROUTE 120/119 KECLEON");
-static const u8 gUnknown_Debug_083C1C80[] = DTR("そのた1　/　SUPPORTM/W", "Other 1/SUPPORT/M/W");
-static const u8 gUnknown_Debug_083C1C92[] = DTR("ODAMAKI/FIGHTER1", "BIRCH/FIGHTER1");
-static const u8 gUnknown_Debug_083C1CA3[] = DTR("MITSURU/TENKI", "WALLY/WEATHER");
-static const u8 gUnknown_Debug_083C1CB1[] = DTR("そのた2　/DAIGO", "Other 2/STEVEN");
-static const u8 gUnknown_Debug_083C1CBD[] = _("POKE/POKEMON");
-static const u8 gUnknown_Debug_083C1CCA[] = _("MAMA/SUPPORT02");
-static const u8 gUnknown_Debug_083C1CD9[] = DTR("HAGI", "Mr. BRINEY");
-static const u8 gUnknown_Debug_083C1CDE[] = _("SUPPORT01");
+static const u8 sString_VanishFlag_Kecleon[] = DTR("120/119ばんどうろカクレオン", "ROUTE 120/119 KECLEON");
+static const u8 sString_VanishFlag_OtherAndSupport[] = DTR("そのた1　/　SUPPORTM/W", "Other 1/SUPPORT/M/W");
+static const u8 sString_VanishFlag_BirchAndFighter[] = DTR("ODAMAKI/FIGHTER1", "BIRCH/FIGHTER1");
+static const u8 sString_VanishFlag_WallyAndWeather[] = DTR("MITSURU/TENKI", "WALLY/WEATHER");
+static const u8 sString_VanishFlag_OtherAndSteven[] = DTR("そのた2　/DAIGO", "Other 2/STEVEN");
+static const u8 sString_VanishFlag_Pokemon[] = _("POKE/POKEMON");
+static const u8 sString_VanishFlag_MomAndSupport[] = _("MAMA/SUPPORT02");
+static const u8 sString_VanishFlag_MrBriney[] = DTR("HAGI", "Mr. BRINEY");
+static const u8 sString_VanishFlag_Support[] = _("SUPPORT01");
 
-static const struct MenuAction gUnknown_Debug_083C1CE8[] = {
-	{gUnknown_Debug_083C1C6E, debug_sub_808C85C},
-	{gUnknown_Debug_083C1C80, debug_sub_808C8B4},
-	{gUnknown_Debug_083C1C92, debug_sub_808C90C},
-	{gUnknown_Debug_083C1CA3, debug_sub_808C964},
-	{gUnknown_Debug_083C1CB1, debug_sub_808C9BC},
-	{gUnknown_Debug_083C1CBD, debug_sub_808CA14},
-	{gUnknown_Debug_083C1CCA, debug_sub_808CA6C},
-	{gUnknown_Debug_083C1CD9, debug_sub_808CAC4},
-	{gUnknown_Debug_083C1CDE, debug_sub_808CB1C}
+static const struct MenuAction sMenuActions_VanishFlagCategories[] = {
+	{sString_VanishFlag_Kecleon, ControlFlags_VanishFlag_Kecleon_InitPage},
+	{sString_VanishFlag_OtherAndSupport, ControlFlags_VanishFlag_OtherAndSupport_InitPage},
+	{sString_VanishFlag_BirchAndFighter, ControlFlags_VanishFlag_BirchAndFighter_InitPage},
+	{sString_VanishFlag_WallyAndWeather, ControlFlags_VanishFlag_WallyAndWeather_InitPage},
+	{sString_VanishFlag_OtherAndSteven, ControlFlags_VanishFlag_OtherAndSteven_InitPage},
+	{sString_VanishFlag_Pokemon, ControlFlags_VanishFlag_Pokemon_InitPage},
+	{sString_VanishFlag_MomAndSupport, ControlFlags_VanishFlag_MomAndSupport_InitPage},
+	{sString_VanishFlag_MrBriney, ControlFlags_VanishFlag_MrBriney_InitPage},
+	{sString_VanishFlag_Support, ControlFlags_VanishFlag_Support_InitPage}
 };
 
 static const u8 gUnknown_Debug_083C1D30[] = _("FVーKAKUREONBー01ーFIELDーR120");
@@ -863,7 +863,7 @@ static const u8 gUnknown_Debug_083C1DC3[] = _("FVーKAKUREー06ーFIELDーR120")
 static const u8 gUnknown_Debug_083C1DDB[] = _("FVーKAKUREー01ーFIELDーR119");
 static const u8 gUnknown_Debug_083C1DF3[] = _("FVーKAKUREー02ーFIELDーR119");
 
-static const struct MenuAction gUnknown_Debug_083C1E0C[] = {
+static const struct MenuAction sMenuActions_VanishFlags_Kecleon[] = {
 	{gUnknown_Debug_083C1D30, DummyMenuAction},
 	{gUnknown_Debug_083C1D4B, DummyMenuAction},
 	{gUnknown_Debug_083C1D63, DummyMenuAction},
@@ -885,7 +885,7 @@ static const u8 gUnknown_Debug_083C1EEB[] = _("FVーFUNEー01ーC102ーR0601");
 static const u8 gUnknown_Debug_083C1F01[] = _("FVーSUPPORTWー01ーT101ーR0202");
 static const u8 gUnknown_Debug_083C1F1B[] = _("FVーSUPPORTMー01ーT101ーR0102");
 
-static const struct MenuAction gUnknown_Debug_083C1F38[] = {
+static const struct MenuAction sMenuActions_VanishFlags_OtherAndSupport[] = {
 	{gUnknown_Debug_083C1E54, DummyMenuAction},
 	{gUnknown_Debug_083C1E6A, DummyMenuAction},
 	{gUnknown_Debug_083C1E84, DummyMenuAction},
@@ -907,7 +907,7 @@ static const u8 gUnknown_Debug_083C201F[] = _("FVーFIGHTERー01ーCAVEーD0201"
 static const u8 gUnknown_Debug_083C2038[] = _("FVーFIGHTERー01ーT106ーR0201");
 static const u8 gUnknown_Debug_083C2051[] = _("FVーFIGHTERー01ーFIELDーR116");
 
-static const struct MenuAction gUnknown_Debug_083C206C[] = {
+static const struct MenuAction sMenuActions_VanishFlags_BirchAndFighter[] = {
 	{gUnknown_Debug_083C1F80, DummyMenuAction},
 	{gUnknown_Debug_083C1F99, DummyMenuAction},
 	{gUnknown_Debug_083C1FB2, DummyMenuAction},
@@ -929,7 +929,7 @@ static const u8 gUnknown_Debug_083C214A[] = _("FVーMITSURUー01ーFIELDーR102"
 static const u8 gUnknown_Debug_083C2163[] = _("FVーTENKIー01ーR119ーR101");
 static const u8 gUnknown_Debug_083C2179[] = _("FVーTENKIー01ーR119ーR102");
 
-static const struct MenuAction gUnknown_Debug_083C2190[] = {
+static const struct MenuAction sMenuActions_VanishFlags_WallyAndWeather[] = {
 	{gUnknown_Debug_083C20B4, DummyMenuAction},
 	{gUnknown_Debug_083C20CD, DummyMenuAction},
 	{gUnknown_Debug_083C20E6, DummyMenuAction},
@@ -948,7 +948,7 @@ static const u8 gUnknown_Debug_083C221D[] = _("FVーDAIGOー01ーC107ーR0501");
 static const u8 gUnknown_Debug_083C2234[] = _("FVーDAIGOー01ーFIELDーR120");
 static const u8 gUnknown_Debug_083C224B[] = _("FVーDAIGOー01ーFIELDーR108");
 
-static const struct MenuAction gUnknown_Debug_083C2264[] = {
+static const struct MenuAction sMenuActions_VanishFlags_OtherAndSteven[] = {
 	{gUnknown_Debug_083C21D8, DummyMenuAction},
 	{gUnknown_Debug_083C21EF, DummyMenuAction},
 	{gUnknown_Debug_083C2206, DummyMenuAction},
@@ -967,7 +967,7 @@ static const u8 gUnknown_Debug_083C2326[] = _("FVーPOKE1ー01ーCAVEーD2308");
 static const u8 gUnknown_Debug_083C233D[] = _("FVーPOKEMONー01ーCAVEーD0201");
 static const u8 gUnknown_Debug_083C2356[] = _("FVーPOKEMONー01ーR104ーR0101");
 
-static const struct MenuAction gUnknown_Debug_083C2370[] = {
+static const struct MenuAction sMenuActions_VanishFlags_Pokemon[] = {
 	{gUnknown_Debug_083C2294, DummyMenuAction},
 	{gUnknown_Debug_083C22AB, DummyMenuAction},
 	{gUnknown_Debug_083C22C2, DummyMenuAction},
@@ -989,7 +989,7 @@ static const u8 gUnknown_Debug_083C2440[] = _("FVーSUPPORTー02ーFIELDーR110"
 static const u8 gUnknown_Debug_083C2459[] = _("FVーSUPPORTー02ーFIELDーR119");
 static const u8 gUnknown_Debug_083C2472[] = _("FVーSUPPORTー02ーFIELDーT104");
 
-static const struct MenuAction gUnknown_Debug_083C248C[] = {
+static const struct MenuAction sMenuActions_VanishFlags_MomAndSupport[] = {
 	{gUnknown_Debug_083C23B8, DummyMenuAction},
 	{gUnknown_Debug_083C23CE, DummyMenuAction},
 	{gUnknown_Debug_083C23E8, DummyMenuAction},
@@ -1011,7 +1011,7 @@ static const u8 gUnknown_Debug_083C2558[] = _("FVーHAGIー01ーCAVEーD0201");
 static const u8 gUnknown_Debug_083C256E[] = _("FVーHAGIー01ーFIELDーR116");
 static const u8 gUnknown_Debug_083C2584[] = _("FVーHAGIー01ーSPーSHIP01");
 
-static const struct MenuAction gUnknown_Debug_083C259C[] = {
+static const struct MenuAction sMenuActions_VanishFlags_MrBriney[] = {
 	{gUnknown_Debug_083C24D4, DummyMenuAction},
 	{gUnknown_Debug_083C24EA, DummyMenuAction},
 	{gUnknown_Debug_083C2500, DummyMenuAction},
@@ -1033,7 +1033,7 @@ static const u8 gUnknown_Debug_083C267A[] = _("FVーSUPPORTー01ーFIELDーR119"
 static const u8 gUnknown_Debug_083C2693[] = _("FVーSUPPORTー01ーFIELDーT104");
 static const u8 gUnknown_Debug_083C26AC[] = _("FVーSUPPORTー01ーFIELDーT102");
 
-static const struct MenuAction gUnknown_Debug_083C26C8[] = {
+static const struct MenuAction sMenuActions_VanishFlags_Support[] = {
 	{gUnknown_Debug_083C25E4, DummyMenuAction},
 	{gUnknown_Debug_083C25FD, DummyMenuAction},
 	{gUnknown_Debug_083C2616, DummyMenuAction},
@@ -1045,9 +1045,9 @@ static const struct MenuAction gUnknown_Debug_083C26C8[] = {
 	{gUnknown_Debug_083C26AC, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2710[] = {9, 9, 9, 9, 6, 9, 9, 9, 9};
+static const u8 sVanishFlagPageCounts[] = {9, 9, 9, 9, 6, 9, 9, 9, 9};
 
-static const u16 gUnknown_Debug_083C271A[][9] = {
+static const u16 sVanishFlagPageFlags[][9] = {
     {FLAG_HIDE_ROUTE_120_KECLEON_BRIDGE_SHADOW, FLAG_HIDE_ROUTE_120_KECLEON_BRIDGE, FLAG_HIDE_ROUTE_120_KECLEON_1, FLAG_HIDE_ROUTE_120_KECLEON_2, FLAG_HIDE_ROUTE_120_KECLEON_3, FLAG_HIDE_ROUTE_120_KECLEON_4, FLAG_HIDE_ROUTE_120_KECLEON_5, FLAG_HIDE_ROUTE_119_KECLEON_1, FLAG_HIDE_ROUTE_119_KECLEON_2},
     {FLAG_HIDE_BELDUM_BALL_STEVENS_HOUSE, FLAG_HIDE_RUSTBORO_CITY_DEVON_EMPLOYEE, FLAG_HIDE_UNDERWATER_SUBMARINE_INTERACTION, FLAG_HIDE_LILYCOVE_MOTEL_PEOPLE, FLAG_HIDE_ROOFTOP_LADY_LILYCOVE_MART, FLAG_HIDE_TRICK_HOUSE_ENTRANCE_MAN, 0x352, FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM, FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM},
     {FLAG_HIDE_ROUTE_101_BIRCH_POOCHYENA_BATTLE, FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH, FLAG_UNKNOWN_BIRCH_380, FLAG_HIDE_ROUTE_101_BIRCH, FLAG_HIDE_ROUTE_103_BIRCH, FLAG_HIDE_BIRCH_CHAMPIONS_ROOM, FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND, FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND, FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND},
@@ -2630,13 +2630,13 @@ static bool8 ControlFlags_VanishFlag_InitSubmenu(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 28, 19);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1CE8), gUnknown_Debug_083C1CE8);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1CE8), 0, 27);
-    gMenuCallback = debug_sub_808C818;
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlagCategories), sMenuActions_VanishFlagCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlagCategories), 0, 27);
+    gMenuCallback = ControlFlags_VanishFlag_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808C818(void)
+static bool8 ControlFlags_VanishFlag_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -2647,116 +2647,116 @@ static bool8 debug_sub_808C818(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C1CE8[input].func;
+    gMenuCallback = sMenuActions_VanishFlagCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808C85C(void)
+static bool8 ControlFlags_VanishFlag_Kecleon_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1E0C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1E0C), gUnknown_Debug_083C1E0C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1E0C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_Kecleon) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Kecleon), sMenuActions_VanishFlags_Kecleon);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Kecleon), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808C8B4(void)
+static bool8 ControlFlags_VanishFlag_OtherAndSupport_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1F38) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1F38), gUnknown_Debug_083C1F38);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1F38), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSupport) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSupport), sMenuActions_VanishFlags_OtherAndSupport);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSupport), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808C90C(void)
+static bool8 ControlFlags_VanishFlag_BirchAndFighter_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C206C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C206C), gUnknown_Debug_083C206C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C206C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_BirchAndFighter) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_BirchAndFighter), sMenuActions_VanishFlags_BirchAndFighter);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_BirchAndFighter), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 2;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808C964(void)
+static bool8 ControlFlags_VanishFlag_WallyAndWeather_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C2190) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C2190), gUnknown_Debug_083C2190);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C2190), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_WallyAndWeather) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_WallyAndWeather), sMenuActions_VanishFlags_WallyAndWeather);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_WallyAndWeather), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 3;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808C9BC(void)
+static bool8 ControlFlags_VanishFlag_OtherAndSteven_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C2264) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C2264), gUnknown_Debug_083C2264);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C2264), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSteven) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSteven), sMenuActions_VanishFlags_OtherAndSteven);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_OtherAndSteven), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 4;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CA14(void)
+static bool8 ControlFlags_VanishFlag_Pokemon_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C2370) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C2370), gUnknown_Debug_083C2370);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C2370), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_Pokemon) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Pokemon), sMenuActions_VanishFlags_Pokemon);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Pokemon), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 5;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CA6C(void)
+static bool8 ControlFlags_VanishFlag_MomAndSupport_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C248C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C248C), gUnknown_Debug_083C248C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C248C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_MomAndSupport) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_MomAndSupport), sMenuActions_VanishFlags_MomAndSupport);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_MomAndSupport), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 6;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CAC4(void)
+static bool8 ControlFlags_VanishFlag_MrBriney_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C259C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C259C), gUnknown_Debug_083C259C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C259C), 0, 27);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_MrBriney) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_MrBriney), sMenuActions_VanishFlags_MrBriney);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_MrBriney), 0, 27);
     sFlagAndVarTest_WhichSubmenu = 7;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CB1C(void)
+static bool8 ControlFlags_VanishFlag_Support_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C26C8) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C26C8), gUnknown_Debug_083C26C8);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C26C8), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_VanishFlags_Support) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Support), sMenuActions_VanishFlags_Support);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_VanishFlags_Support), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 8;
-    gMenuCallback = debug_sub_808CB74;
+    gMenuCallback = ControlFlags_VanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CB74(void)
+static bool8 ControlFlags_VanishFlag_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808CBC0(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808CC10(sFlagAndVarTest_WhichSubmenu);
+    ControlFlags_VanishFlag_ToggleSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlFlags_VanishFlag_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -2767,24 +2767,24 @@ static bool8 debug_sub_808CB74(void)
     return FALSE;
 }
 
-static void debug_sub_808CBC0(u8 whichMenu, u8 cursorPos)
+static void ControlFlags_VanishFlag_ToggleSelection(u8 whichMenu, u8 cursorPos)
 {
     if (JOY_NEW(R_BUTTON))
     {
-        if (!FlagGet(gUnknown_Debug_083C271A[whichMenu][cursorPos]))
-            FlagSet(gUnknown_Debug_083C271A[whichMenu][cursorPos]);
+        if (!FlagGet(sVanishFlagPageFlags[whichMenu][cursorPos]))
+            FlagSet(sVanishFlagPageFlags[whichMenu][cursorPos]);
         else
-            FlagClear(gUnknown_Debug_083C271A[whichMenu][cursorPos]);
+            FlagClear(sVanishFlagPageFlags[whichMenu][cursorPos]);
     }
 }
 
-static void debug_sub_808CC10(u8 whichMenu)
+static void ControlFlags_VanishFlag_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C2710[whichMenu]; i++)
+    for (i = 0; i < sVanishFlagPageCounts[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C271A[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sVanishFlagPageFlags[whichMenu][i]) ? 1 : 0);
     }
 }
 
