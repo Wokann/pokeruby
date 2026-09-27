@@ -216,8 +216,8 @@ struct BerryBlenderData* gBerryBlenderData;
 // iwram bss
 static s16 gUnknown_03000510[8];
 static s16 gUnknown_03000520[6];
-static s16 gUnknown_0300052C;
-static s16 gUnknown_0300052E;
+static s16 sDebug_MaxRPMStage;
+static s16 sDebug_GameTimeStage;
 static s32 gUnknown_03000530[6];
 static s32 gUnknown_03000548[5];
 static u32 gUnknown_0300055C;
@@ -245,12 +245,12 @@ static void sub_8051AC8(s16* a0, u16 a1);
 static void sub_805194C(u16 a0, u16 a1);
 static void sub_8051A3C(u16 a0);
 static void sub_8051B18(void);
-static void sub_805123C(void);
-static void sub_8050954(void);
+static void ProcessLinkPlayerCmds(void);
+static void CB2_EndBlenderGame(void);
 static bool8 Blender_PrintBlendingRanking(void);
 bool8 Blender_PrintBlendingResults(void);
-static void sub_80510E8(void);
-static void sub_8050E30(void);
+static void CB2_CheckPlayAgainLocal(void);
+static void CB2_CheckPlayAgainLink(void);
 static void sub_805197C(u16 a0, u16 a1);
 static void Blender_PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst);
 static void sub_8052BD0(u8 taskID);
@@ -1853,12 +1853,12 @@ static void CB2_PlayBlender(void)
     sub_805194C(gBerryBlenderData->field_13E, 1000);
     sub_8051A3C(gBerryBlenderData->field_56);
     sub_8051B18();
-    sub_805123C();
+    ProcessLinkPlayerCmds();
     if (gBerryBlenderData->field_6F == 0 && gBerryBlenderData->field_140 >= 1000)
     {
         gBerryBlenderData->field_13E = 1000;
         gBerryBlenderData->field_6F = 1;
-        SetMainCallback2(sub_8050954);
+        SetMainCallback2(CB2_EndBlenderGame);
     }
     RunTasks();
     AnimateSprites();
@@ -1866,7 +1866,7 @@ static void CB2_PlayBlender(void)
     UpdatePaletteFade();
 }
 
-static bool8 sub_80502A4(struct BlenderBerry* berries, u8 index1, u8 index2)
+static bool8 AreBlenderBerriesSame(struct BlenderBerry* berries, u8 index1, u8 index2)
 {
     if (berries[index1].itemID != berries[index2].itemID
      || (StringCompare(berries[index1].name, berries[index2].name) == 0
@@ -1881,7 +1881,7 @@ static bool8 sub_80502A4(struct BlenderBerry* berries, u8 index1, u8 index2)
         return FALSE;
 }
 
-u32 Blender_GetPokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersNo, u8 a3)
+u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersNo, u8 a3)
 {
     s16 vars[5];
     s32 i;
@@ -1908,7 +1908,7 @@ u32 Blender_GetPokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersN
         for (r6 = 0; r6 < playersNo; r6++)
         {
             if (berries[i].itemID == berries[r6].itemID && i != r6
-                && (berries[i].itemID != ITEM_ENIGMA_BERRY || sub_80502A4(berries, i, r6)))
+                && (berries[i].itemID != ITEM_ENIGMA_BERRY || AreBlenderBerriesSame(berries, i, r6)))
                     return PBLOCK_CLR_BLACK;
         }
     }
@@ -1975,27 +1975,27 @@ u32 Blender_GetPokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersN
     return 0;
 }
 
-static void sub_80504F0(s16 value)
+static void Debug_SetMaxRPMStage(s16 value)
 {
-    gUnknown_0300052C = value;
+    sDebug_MaxRPMStage = value;
 }
 
-s16 unref_sub_80504FC(void)
+s16 Debug_GetMaxRPMStage(void)
 {
-    return gUnknown_0300052C;
+    return sDebug_MaxRPMStage;
 }
 
-static void sub_8050508(s16 value)
+static void Debug_SetGameTimeStage(s16 value)
 {
-    gUnknown_0300052E = value;
+    sDebug_GameTimeStage = value;
 }
 
-s16 unref_sub_8050514(void)
+s16 Debug_GetGameTimeStage(void)
 {
-    return gUnknown_0300052E;
+    return sDebug_GameTimeStage;
 }
 
-static void Blender_CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* pokeblock, u8 playersNo, u8* flavours, u16 maxRPM)
+static void CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* pokeblock, u8 playersNo, u8* flavours, u16 maxRPM)
 {
     s32 i;
     s32 j;
@@ -2061,7 +2061,7 @@ static void Blender_CalculatePokeblock(struct BlenderBerry* berries, struct Poke
     {
         gUnknown_03000548[i] = gUnknown_03000510[i];
     }
-    pokeblock->color = Blender_GetPokeblockColor(berries, &gUnknown_03000510[0], playersNo, r10);
+    pokeblock->color = CalculatePokeblockColor(berries, &gUnknown_03000510[0], playersNo, r10);
     gUnknown_03000510[5] = (gUnknown_03000510[5] / playersNo) - playersNo;
     if (gUnknown_03000510[5] < 0)
         gUnknown_03000510[5] = 0;
@@ -2095,7 +2095,7 @@ static void Blender_CalculatePokeblock(struct BlenderBerry* berries, struct Poke
 
 static void BlenderDebug_CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* pokeblock, u8 playersNo, u8* flavours, u16 a4)
 {
-    Blender_CalculatePokeblock(berries, pokeblock, playersNo, flavours, a4);
+    CalculatePokeblock(berries, pokeblock, playersNo, flavours, a4);
 }
 
 /*static*/ void sub_8050760(void)
@@ -2114,7 +2114,7 @@ static void BlenderDebug_CalculatePokeblock(struct BlenderBerry* berries, struct
         var = 2;
     else if ((u16)(frames - 3300) < 300)
         var = 1;
-    sub_8050508(var);
+    Debug_SetGameTimeStage(var);
 
     var = 0;
     if (max_RPM <= 64)
@@ -2140,25 +2140,25 @@ static void BlenderDebug_CalculatePokeblock(struct BlenderBerry* berries, struct
         else if (max_RPM >= 600)
             var = -10;
     }
-    sub_80504F0(var);
+    Debug_SetMaxRPMStage(var);
 }
 
-static void sub_80508D4(u8 value)
+static void SetBlenderContinueMenuCursor(u8 value)
 {
     gBerryBlenderData->field_AA = value;
     SetOutlineCursorPosition(192, (gBerryBlenderData->field_AA * 16) + 72);
 }
 
-static void sub_80508FC(void)
+static void ShowBlenderContinueMenu(void)
 {
     gBerryBlenderData->field_AA = 0;
     Menu_DrawStdWindowFrame(23, 8, 28, 13);
     CreateOutlineCursor(0, -1, 12, 0x2D9F, 32);
     Menu_PrintText(gOtherText_YesNoTerminating, 24, 9);
-    sub_80508D4(gBerryBlenderData->field_AA);
+    SetBlenderContinueMenuCursor(gBerryBlenderData->field_AA);
 }
 
-static void sub_8050954(void)
+static void CB2_EndBlenderGame(void)
 {
     u8 i;
     u8 multiplayerID; // unused
@@ -2236,7 +2236,7 @@ static void sub_8050954(void)
         break;
     case 9:
         gBerryBlenderData->field_AA = 0;
-        sub_80508FC();
+        ShowBlenderContinueMenu();
         gBerryBlenderData->field_6F++;
         break;
     case 10:
@@ -2244,13 +2244,13 @@ static void sub_8050954(void)
         {
             if (gBerryBlenderData->field_AA != 0)
                 PlaySE(SE_SELECT);
-            sub_80508D4(0);
+            SetBlenderContinueMenuCursor(0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             if (gBerryBlenderData->field_AA != 1)
                 PlaySE(SE_SELECT);
-            sub_80508D4(1);
+            SetBlenderContinueMenuCursor(1);
         }
         else if (JOY_NEW(A_BUTTON))
         {
@@ -2261,7 +2261,7 @@ static void sub_8050954(void)
         {
             PlaySE(SE_SELECT);
             gBerryBlenderData->field_6F++;
-            sub_80508D4(1);
+            SetBlenderContinueMenuCursor(1);
         }
         break;
     case 11:
@@ -2295,7 +2295,7 @@ static void sub_8050954(void)
     case 12:
         if (gInGameOpponentsNo)
         {
-            SetMainCallback2(sub_80510E8);
+            SetMainCallback2(CB2_CheckPlayAgainLocal);
             gBerryBlenderData->field_6F = 0;
             gBerryBlenderData->field_0 = 0;
         }
@@ -2308,7 +2308,7 @@ static void sub_8050954(void)
     case 13:
         if (Menu_UpdateWindowText())
         {
-            SetMainCallback2(sub_8050E30);
+            SetMainCallback2(CB2_CheckPlayAgainLink);
             gBerryBlenderData->field_6F = 0;
             gBerryBlenderData->field_0 = 0;
         }
@@ -2316,14 +2316,14 @@ static void sub_8050954(void)
     }
     sub_8051B18();
     sub_8051A3C(gBerryBlenderData->field_56);
-    sub_805123C();
+    ProcessLinkPlayerCmds();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-bool8 sub_8050CE8(void)
+bool8 LinkPlayAgainHandleSaving(void)
 {
     switch (gBerryBlenderData->field_1C4)
     {
@@ -2378,7 +2378,7 @@ bool8 sub_8050CE8(void)
     return FALSE;
 }
 
-static void sub_8050E30(void)
+static void CB2_CheckPlayAgainLink(void)
 {
     switch (gBerryBlenderData->field_6F)
     {
@@ -2447,7 +2447,7 @@ static void sub_8050E30(void)
         }
         break;
     case 7:
-        if (sub_8050CE8())
+        if (LinkPlayAgainHandleSaving())
         {
             PlaySE(SE_SAVE);
             gBerryBlenderData->field_6F++;
@@ -2489,14 +2489,14 @@ static void sub_8050E30(void)
         break;
     }
 
-    sub_805123C();
+    ProcessLinkPlayerCmds();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-static void sub_80510E8(void)
+static void CB2_CheckPlayAgainLocal(void)
 {
     switch (gBerryBlenderData->field_6F)
     {
@@ -2539,14 +2539,14 @@ static void sub_80510E8(void)
         break;
     }
 
-    sub_805123C();
+    ProcessLinkPlayerCmds();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-static void sub_805123C(void)
+static void ProcessLinkPlayerCmds(void)
 {
     if (gReceivedRemoteLinkPlayers)
     {
@@ -3079,7 +3079,7 @@ bool8 Blender_PrintBlendingResults(void)
                 berryIDs[i] = gBerryBlenderData->chosenItemID[i] - 133;
         }
         sub_8050760();
-        Blender_CalculatePokeblock(gBerryBlenderData->blendedBerries, &pokeblock, gBerryBlenderData->playersNo, flavours, gBerryBlenderData->max_RPM);
+        CalculatePokeblock(gBerryBlenderData->blendedBerries, &pokeblock, gBerryBlenderData->playersNo, flavours, gBerryBlenderData->max_RPM);
         Blender_PrintMadePokeblockString(&pokeblock, gBerryBlenderData->stringVar);
         CreateTask(sub_8052BD0, 6);
 #if DEBUG
