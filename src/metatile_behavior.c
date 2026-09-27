@@ -2,7 +2,11 @@
 #include "metatile_behavior.h"
 #include "constants/metatile_behaviors.h"
 
-#define TILE_ATTRIBUTES(unused, surfable, wildEncounter) (((wildEncounter) ? 1 : 0) | ((surfable) ? 2 : 0) | ((unused) ? 4 : 0))
+#define TILE_FLAG_HAS_ENCOUNTERS (1 << 0)
+#define TILE_FLAG_SURFABLE       (1 << 1)
+#define TILE_FLAG_UNUSED         (1 << 2)
+
+#define TILE_ATTRIBUTES(unused, surfable, wildEncounter) (((wildEncounter) ? TILE_FLAG_HAS_ENCOUNTERS : 0) | ((surfable) ? TILE_FLAG_SURFABLE : 0) | ((unused) ? TILE_FLAG_UNUSED : 0))
 
 static const u8 sTileBitAttributes[] =
 {
@@ -256,7 +260,7 @@ bool8 MetatileBehavior_IsATile(u8 metatileBehavior)
 
 bool8 MetatileBehavior_IsEncounterTile(u8 metatileBehavior)
 {
-    if (sTileBitAttributes[metatileBehavior] & 1)
+    if (sTileBitAttributes[metatileBehavior] & TILE_FLAG_HAS_ENCOUNTERS)
         return TRUE;
     else
         return FALSE;
@@ -401,7 +405,7 @@ bool8 MetatileBehavior_IsDeepSouthWarp(u8 metatileBehavior)
 
 bool8 MetatileBehavior_IsSurfableWaterOrUnderwater(u8 metatileBehavior)
 {
-    if ((sTileBitAttributes[metatileBehavior] & 2) != 0)
+    if ((sTileBitAttributes[metatileBehavior] & TILE_FLAG_SURFABLE) != 0)
         return TRUE;
     else
         return FALSE;
