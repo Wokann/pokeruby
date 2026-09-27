@@ -29,18 +29,18 @@
 
 asm(".include \"constants/gba_constants.inc\"");
 
-s16 sub_811866C(struct Sprite *);
-u8 sub_81186B8(struct Sprite *);
-s16 sub_81186E8(struct Sprite *);
-void sub_8118724(struct Sprite *);
-void sub_8118834(struct Sprite *);
-void sub_811889C(struct Sprite *);
-void sub_81189A8(struct Sprite *);
-void sub_8118B30(struct Sprite *);
-void sub_8118BD8(struct Sprite *);
-void sub_8118CAC(struct Sprite *);
-void sub_8118CEC(struct Sprite *);
-void sub_8118D2C(struct Sprite *);
+s16 UpdateBallRelativeWheelAngle(struct Sprite *);
+u8 UpdateSlotBelowBall(struct Sprite *);
+s16 GetBallDistanceToSlotMidpoint(struct Sprite *);
+void UpdateBallPos(struct Sprite *);
+void SpriteCB_BallLandInSlot(struct Sprite *);
+void SpriteCB_UnstickBall_ShroomishBallFall(struct Sprite *);
+void SpriteCB_UnstickBall_Shroomish(struct Sprite *);
+void SpriteCB_UnstickBall_TaillowDrop(struct Sprite *);
+void SpriteCB_UnstickBall_TaillowPickUp(struct Sprite *);
+void SpriteCB_UnstickBall_Taillow(struct Sprite *);
+void SpriteCB_UnstickBall(struct Sprite *);
+void SpriteCB_RollBall_TryLandAdjacent(struct Sprite *);
 void sub_8118DE4(struct Sprite *);
 void sub_8118F8C(struct Sprite *);
 void sub_8119088(struct Sprite *);
@@ -1101,7 +1101,7 @@ void HideWheelBalls(void)
     }
 }
 
-s16 sub_811866C(struct Sprite *sprite)
+s16 UpdateBallRelativeWheelAngle(struct Sprite *sprite)
 {
     if (eRoulette->var24 > sprite->data[3])
     {
@@ -1114,15 +1114,15 @@ s16 sub_811866C(struct Sprite *sprite)
     return sprite->data[6];
 }
 
-u8 sub_81186B8(struct Sprite *sprite)
+u8 UpdateSlotBelowBall(struct Sprite *sprite)
 {
-    eRoulette->var7E = (u8)(((float)(s16)sub_811866C(sprite)) / 30.0f);
+    eRoulette->var7E = (u8)(((float)(s16)UpdateBallRelativeWheelAngle(sprite)) / 30.0f);
     return eRoulette->var7E;
 }
 
-s16 sub_81186E8(struct Sprite *sprite)
+s16 GetBallDistanceToSlotMidpoint(struct Sprite *sprite)
 {
-    s16 t = sub_811866C(sprite) % 30;
+    s16 t = UpdateBallRelativeWheelAngle(sprite) % 30;
     u16 z;
     if (t == 14)
     {
@@ -1141,7 +1141,7 @@ s16 sub_81186E8(struct Sprite *sprite)
     }
 }
 
-void sub_8118724(struct Sprite *sprite)
+void UpdateBallPos(struct Sprite *sprite)
 {
     s16 sin, cos;
     eRoulette->var8C += eRoulette->var90;
@@ -1165,7 +1165,7 @@ void sub_8118724(struct Sprite *sprite)
     }
 }
 
-void sub_8118834(struct Sprite *sprite)
+void SpriteCB_BallLandInSlot(struct Sprite *sprite)
 {
     s16 sin, cos;
     sprite->data[3] = eRoulette->var24 + sprite->data[6];
@@ -1178,9 +1178,9 @@ void sub_8118834(struct Sprite *sprite)
     sprite->y2 += gSpriteCoordOffsetY;
 }
 
-void sub_811889C(struct Sprite *sprite)
+void SpriteCB_UnstickBall_ShroomishBallFall(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     sprite->data[2]++;
     if ((u16)(sprite->data[4] + 132) > 212)
         sprite->invisible = TRUE;
@@ -1195,11 +1195,11 @@ void sub_811889C(struct Sprite *sprite)
                 eRoulette->var7D = 255;
                 eRoulette->var03_7 = 0;
                 StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
-                sub_81186B8(sprite);
+                UpdateSlotBelowBall(sprite);
                 sprite->data[4] = 30;
-                sub_811866C(sprite);
+                UpdateBallRelativeWheelAngle(sprite);
                 sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
-                sprite->callback = sub_8118834;
+                sprite->callback = SpriteCB_BallLandInSlot;
                 m4aSongNumStartOrChange(SE_BRIDGE_WALK);
                 eRoulette->var9C = eRoulette->var98 = 0.0f;
                 eRoulette->var8C = -1.0f;
@@ -1212,11 +1212,11 @@ void sub_811889C(struct Sprite *sprite)
                 eRoulette->var7D = 255;
                 eRoulette->var03_7 = 0;
                 StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
-                sub_81186B8(sprite);
+                UpdateSlotBelowBall(sprite);
                 sprite->data[4] = 30;
-                sub_811866C(sprite);
+                UpdateBallRelativeWheelAngle(sprite);
                 sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
-                sprite->callback = sub_8118834;
+                sprite->callback = SpriteCB_BallLandInSlot;
                 m4aSongNumStartOrChange(SE_BRIDGE_WALK);
                 eRoulette->var9C = eRoulette->var98 = 0.0f;
                 eRoulette->var8C = -1.0f;
@@ -1225,11 +1225,11 @@ void sub_811889C(struct Sprite *sprite)
     }
 }
 
-void sub_81189A8(struct Sprite *sprite)
+void SpriteCB_UnstickBall_Shroomish(struct Sprite *sprite)
 {
     float f0, f1, f2;
     const struct RouletteTable *p;
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     switch (sprite->data[3])
     {
     case 0:
@@ -1268,11 +1268,11 @@ void sub_81189A8(struct Sprite *sprite)
     sprite->animNum       = 0;
     sprite->animBeginning = TRUE;
     sprite->animEnded     = FALSE;
-    sprite->callback      = sub_811889C;
+    sprite->callback      = SpriteCB_UnstickBall_ShroomishBallFall;
     sprite->data[2]       = 0;
 }
 
-void sub_8118B30(struct Sprite *sprite)
+void SpriteCB_UnstickBall_TaillowDrop(struct Sprite *sprite)
 {
     sprite->y2 = (s32)(((float)sprite->data[2]) * 0.05f * ((float)sprite->data[2])) - 45;
     sprite->data[2]++;
@@ -1281,17 +1281,17 @@ void sub_8118B30(struct Sprite *sprite)
         eRoulette->var7D   = 255;
         eRoulette->var03_7 = FALSE;
         StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
-        sub_81186B8(sprite);
+        UpdateSlotBelowBall(sprite);
         sprite->data[4] = 30;
-        sub_811866C(sprite);
+        UpdateBallRelativeWheelAngle(sprite);
         sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
-        sprite->callback  = sub_8118834;
+        sprite->callback  = SpriteCB_BallLandInSlot;
         m4aSongNumStartOrChange(SE_BRIDGE_WALK);
         eRoulette->var03_6 = TRUE;
     }
 }
 
-void sub_8118BD8(struct Sprite *sprite)
+void SpriteCB_UnstickBall_TaillowPickUp(struct Sprite *sprite)
 {
     if (sprite->data[2]++ < 45)
     {
@@ -1321,54 +1321,54 @@ void sub_8118BD8(struct Sprite *sprite)
             sprite->animBeginning = TRUE;
             sprite->animEnded     = FALSE;
             sprite->data[2]       = 0;
-            sprite->callback      = sub_8118B30;
+            sprite->callback      = SpriteCB_UnstickBall_TaillowDrop;
             m4aSongNumStart(SE_BALL_THROW);
         }
     }
 }
 
-void sub_8118CAC(struct Sprite *sprite)
+void SpriteCB_UnstickBall_Taillow(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     switch (sprite->data[3])
     {
     case 90:
         if (sprite->data[0] != 1)
         {
-            sprite->callback  = sub_8118BD8;
+            sprite->callback  = SpriteCB_UnstickBall_TaillowPickUp;
             sprite->data[2] = 0;
         }
         break;
     case 270:
         if (sprite->data[0] != 0)
         {
-            sprite->callback  = sub_8118BD8;
+            sprite->callback  = SpriteCB_UnstickBall_TaillowPickUp;
             sprite->data[2] = 0;
         }
         break;
     }
 }
 
-void sub_8118CEC(struct Sprite *sprite)
+void SpriteCB_UnstickBall(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     switch (eRoulette->var03_0)
     {
     default:
     case 0:
         sub_8119224(sprite);
-        sprite->callback = sub_81189A8;
+        sprite->callback = SpriteCB_UnstickBall_Shroomish;
         break;
     case 1:
         sub_81193D4(sprite);
-        sprite->callback = sub_8118CAC;
+        sprite->callback = SpriteCB_UnstickBall_Taillow;
         break;
     }
 }
 
-void sub_8118D2C(struct Sprite *sprite)
+void SpriteCB_RollBall_TryLandAdjacent(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     if (sprite->data[2]-- == 16)
         eRoulette->var98 *= -1.0f;
     if (sprite->data[2] == 0)
@@ -1378,11 +1378,11 @@ void sub_8118D2C(struct Sprite *sprite)
             eRoulette->var7D   = 255;
             eRoulette->var03_7 = 0;
             StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
-            sub_81186B8(sprite);
+            UpdateSlotBelowBall(sprite);
             sprite->data[4] = 30;
-            sub_811866C(sprite);
+            UpdateBallRelativeWheelAngle(sprite);
             sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
-            sprite->callback  = sub_8118834;
+            sprite->callback  = SpriteCB_BallLandInSlot;
             m4aSongNumStartOrChange(SE_BRIDGE_WALK);
         }
         else
@@ -1398,9 +1398,9 @@ void sub_8118D2C(struct Sprite *sprite)
 
 void debug_sub_812E698(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     sprite->data[2] = 0;
-    sub_81186B8(sprite);
+    UpdateSlotBelowBall(sprite);
     m4aSongNumStart(SE_BALL_BOUNCE_1);
     if (Random() & 1)
     {
@@ -1415,7 +1415,7 @@ void debug_sub_812E698(struct Sprite *sprite)
     sprite->data[0] = 1;
     sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
     eRoulette->var98 = 0.085f;
-    sprite->callback = sub_8118D2C;
+    sprite->callback = SpriteCB_RollBall_TryLandAdjacent;
     sprite->data[1] = 5;
 }
 
@@ -1423,19 +1423,19 @@ void debug_sub_812E698(struct Sprite *sprite)
 
 void sub_8118DE4(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     sprite->data[2] = 0;
-    sub_81186B8(sprite);
+    UpdateSlotBelowBall(sprite);
     if (!(sRouletteSlots[eRoulette->var7E].flag & eRoulette->var08))
     {
         eRoulette->var7D   = 255;
         eRoulette->var03_7 = 0;
         StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
-        sub_81186B8(sprite);
+        UpdateSlotBelowBall(sprite);
         sprite->data[4] = 30;
-        sub_811866C(sprite);
+        UpdateBallRelativeWheelAngle(sprite);
         sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
-        sprite->callback  = sub_8118834;
+        sprite->callback  = SpriteCB_BallLandInSlot;
         m4aSongNumStartOrChange(SE_BRIDGE_WALK);
     }
     else
@@ -1486,18 +1486,18 @@ void sub_8118DE4(struct Sprite *sprite)
             }
         }
         eRoulette->var98 = 0.085f;
-        sprite->callback = sub_8118D2C;
+        sprite->callback = SpriteCB_RollBall_TryLandAdjacent;
         sprite->data[1] = 5;
     }
 }
 
 void sub_8118F8C(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     if (!(eRoulette->var8C > 0.5f))
     {
-        sub_81186B8(sprite);
-        if (!sub_81186E8(sprite))
+        UpdateSlotBelowBall(sprite);
+        if (!GetBallDistanceToSlotMidpoint(sprite))
         {
             const struct RouletteTable *p;
             eRoulette->var90 = 0.0f;
@@ -1529,7 +1529,7 @@ void sub_8118F8C(struct Sprite *sprite)
 
 void sub_8119088(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     if (!(eRoulette->var94 > 40.f))
     {
         eRoulette->var98 = - (        4.0f / (float)((u16)eRoulette->var86));
@@ -1544,7 +1544,7 @@ void sub_8119088(struct Sprite *sprite)
 
 void sub_8119134(struct Sprite *sprite)
 {
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     if (!(eRoulette->var94 > 60.0f))
     {
         m4aSongNumStartOrChange(SE_ROULETTE_BALL2);
@@ -1562,7 +1562,7 @@ void sub_81191F4(struct Sprite *sprite)
 {
     sprite->data[1] = 1;
     sprite->data[2] = 0;
-    sub_8118724(sprite);
+    UpdateBallPos(sprite);
     sprite->invisible = FALSE;
     sprite->callback  = sub_8119134;
 }
@@ -1707,7 +1707,7 @@ void sub_811952C(struct Sprite *sprite)
         sprite->data[7] = s[rand % h];
     }
 
-    sprite->callback = sub_8118CEC;
+    sprite->callback = SpriteCB_UnstickBall;
 }
 
 const u16 gUnknown_083FA61E[] = {
