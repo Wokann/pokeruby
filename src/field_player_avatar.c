@@ -678,16 +678,16 @@ static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior
     }
 }
 
-void SetPlayerAvatarTransitionFlags(u16 a)
+void SetPlayerAvatarTransitionFlags(u16 transitionFlags)
 {
-    gPlayerAvatar.unk1 |= a;
+    gPlayerAvatar.transitionFlags |= transitionFlags;
     DoPlayerAvatarTransition();
 }
 
 static void DoPlayerAvatarTransition(void)
 {
     u8 i;
-    u8 flags = gPlayerAvatar.unk1;
+    u8 flags = gPlayerAvatar.transitionFlags;
 
     if (flags != 0)
     {
@@ -698,7 +698,7 @@ static void DoPlayerAvatarTransition(void)
                 sPlayerAvatarTransitionFuncs[i](&gObjectEvents[gPlayerAvatar.objectEventId]);
             }
         }
-        gPlayerAvatar.unk1 = 0;
+        gPlayerAvatar.transitionFlags = 0;
     }
 }
 
@@ -1174,11 +1174,11 @@ u8 GetPlayerAvatarGraphicsIdByCurrentState(void)
     return 0;
 }
 
-void SetPlayerAvatarExtraStateTransition(u8 a, u8 b)
+void SetPlayerAvatarExtraStateTransition(u8 graphicsId, u8 transitionFlag)
 {
-    u8 unk = GetPlayerAvatarStateTransitionByGraphicsId(a, gPlayerAvatar.gender);
+    u8 stateFlag = GetPlayerAvatarStateTransitionByGraphicsId(graphicsId, gPlayerAvatar.gender);
 
-    gPlayerAvatar.unk1 |= unk | b;
+    gPlayerAvatar.transitionFlags |= stateFlag | transitionFlag;
     DoPlayerAvatarTransition();
 }
 
@@ -1353,7 +1353,7 @@ static u8 PlayerAvatar_DoSecretBaseMatJump(struct Task *task, struct ObjectEvent
         if (task->data[1] > 1)
         {
             gPlayerAvatar.preventStep = FALSE;
-            gPlayerAvatar.unk1 |= 0x20;
+            gPlayerAvatar.transitionFlags |= PLAYER_AVATAR_FLAG_CONTROLLABLE;
             DestroyTask(FindTaskIdByFunc(DoPlayerAvatarSecretBaseMatJump));
         }
     }
