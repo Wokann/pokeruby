@@ -1,4 +1,5 @@
 #include "constants/abilities.h"
+#include "battle_string_ids.h"
 #include "constants/battle.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
@@ -2195,7 +2196,7 @@ BattleScript_EffectStockpile: @ 81D841A
 
 BattleScript_EffectSpitUp: @ 81D842D
 	attackcanceler
-	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_SpitUpFailProtect
+	jumpifbyte EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_SpitUpFailProtect
 	attackstring
 	ppreduce
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
@@ -2306,7 +2307,7 @@ BattleScript_AlreadyBurned: @ 81D8575
 
 BattleScript_EffectMemento: @ 81D8583
 	attackcanceler
-	jumpifbyte EQUAL, gUnknown_02024D1F + 0x5, 1, BattleScript_MementoTargetProtect
+	jumpifbyte EQUAL, cMISS_TYPE, B_MSG_PROTECTED, BattleScript_MementoTargetProtect
 	attackstring
 	ppreduce
 	jumpifattackandspecialattackcannotfall BattleScript_ButItFailed
@@ -2960,7 +2961,7 @@ BattleScript_HandleFaintedMon:: @ 81D8C7B
 	printstring BATTLE_TEXT_UseNext
 	setbyte gBattleCommunication, 0
 	yesnobox
-	jumpifbyte EQUAL, gUnknown_02024D1F, 0, BattleScript_FaintedMonTryChoose
+	jumpifbyte EQUAL, gBattleCommunication + 1, 0, BattleScript_FaintedMonTryChoose
 	jumpifplayerran BattleScript_FaintedMonEnd
 	printstring BATTLE_TEXT_CantEscape
 
@@ -2977,7 +2978,7 @@ BattleScript_FaintedMonTryChoose: @ 81D8CC2
 	printstring BATTLE_TEXT_WillSwitch
 	setbyte gBattleCommunication, 0
 	yesnobox
-	jumpifbyte EQUAL, gUnknown_02024D1F, 1, BattleScript_FaintedMonSendOutNew
+	jumpifbyte EQUAL, gBattleCommunication + 1, 1, BattleScript_FaintedMonSendOutNew
 	setatktoplayer0
 	openpartyscreen 129, BattleScript_FaintedMonSendOutNew
 	switchhandleorder USER, 2

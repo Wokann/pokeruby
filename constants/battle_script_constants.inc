@@ -186,3 +186,4 @@
 @ battle communication struct
 	.equiv cEFFECT_CHOOSER, gBattleCommunication + 3
 	.equiv cMULTISTRING_CHOOSER, gBattleCommunication + 5
+	.equiv cMISS_TYPE, gBattleCommunication + 6
