@@ -150,7 +150,7 @@ const u8 gUnknown_083E03A0[][8] =
 
 const u16 gUnknown_083E03A8[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
 const u16 gUnknown_083E03C8[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
-const u8 gPokenavRibbonIconsHalf_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons_half.4bpp.lz");
+const u8 gPokenavRibbonIcons_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
 const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
 const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
 const u8 gPokenavOutlineTilemap[] = INCBIN_U8("graphics/pokenav/outline_map.bin.lz");
@@ -217,16 +217,16 @@ const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_
 const u8 gUnknown_083E3BC0[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
 const u8 gTiles_083E3BE0[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
 
-const u16 gUnknown_083E3C60[][16] = 
+const u16 gPokenavRibbonIconPalettes[][16] =
 {
-    INCBIN_U16("graphics/misc/ribbons_cool.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_beauty.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_cute.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_smart.gbapal"),
-    INCBIN_U16("graphics/misc/ribbons_tough.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons1.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons2.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons3.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons4.gbapal"),
+    INCBIN_U16("graphics/pokenav/ribbons/icons5.gbapal"),
 };
 
-const u8 gUnknown_083E3D00[] = INCBIN_U8("graphics/misc/ribbons_full.4bpp.lz");
+const u8 gPokenavRibbonIconsBigHalfGfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons_big_half.4bpp.lz");
 const u16 gPokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
 const u8 gPokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
 const u16 Palette_3E42D8[] = INCBIN_U16("graphics/pokenav/83E42D8.gbapal");
@@ -1164,10 +1164,10 @@ void CB2_InitPokeNav(void)
             return;
         break;
     case 11:
-        sub_80F36F0();
+        InitRibbonIconGfx();
         gMain.state++;
     case 12:
-        if (sub_80F3724())
+        if (LoadRibbonIconGfxStep())
             return;
         break;
     case 13:
@@ -2793,10 +2793,10 @@ void OpenRibbonsSummaryMenu(void)
         break;
     case 4:
         DrawPokenavBottomToolbar(0x5);
-        sub_80F38B8();
+        InitRibbonsSummarySpriteGfx();
         gPokenavStructPtr->callbackStep++;
     case 5:
-        if (!sub_80F38EC())
+        if (!LoadRibbonsSummarySpriteGfxStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:

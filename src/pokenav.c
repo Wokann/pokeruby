@@ -81,10 +81,10 @@ extern const u8 gUnknown_083E01F4[];
 extern const u8 *const gTrainerEyeDescriptions[];
 extern const u8 gPokenavRibbonsSummaryTilemap[];
 extern const u8 gPokenavRibbonView_Gfx[];
-extern const u8 gPokenavRibbonIconsHalf_Gfx[];
+extern const u8 gPokenavRibbonIcons_Gfx[];
 extern const u16 gPokenavRibbonView_Pal[];
 extern const u16 gUnknown_083E03A8[];
-extern const u16 gUnknown_083E3C60[][16];
+extern const u16 gPokenavRibbonIconPalettes[][16];
 extern const u16 gPokenavRibbonsIconGfx[][2];
 extern const u8 *const gRibbonDescriptions[][2];
 extern const u8 *const gGiftRibbonDescriptions[][2];
@@ -130,7 +130,7 @@ extern const struct SpriteSheet gPokenavConditionSelectionIconSheets[4];
 extern const struct SpritePalette gPokenavConditionSelectionIconPalettes[3];
 extern const struct SpriteTemplate gPokenavConditionSelectionIconTemplate;
 extern const u16 gPokenavConditionMonMarkingsPalette[];
-extern const u8 gUnknown_083E3D00[];
+extern const u8 gPokenavRibbonIconsBigHalfGfx[];
 extern const struct SpriteTemplate gSpriteTemplate_83E476C;
 extern const struct SpriteSheet gUnknown_083E4784;
 extern const struct SpritePalette gUnknown_083E478C;
@@ -1526,12 +1526,12 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         LZ77UnCompVram(gPokenavRibbonView_Gfx, (void *)(VRAM + 0x8000));
         break;
     case 11:
-        LZ77UnCompVram(gPokenavRibbonIconsHalf_Gfx, (void *)(VRAM + 0x8200));
+        LZ77UnCompVram(gPokenavRibbonIcons_Gfx, (void *)(VRAM + 0x8200));
         break;
     case 12:
         LoadPalette(gPokenavRibbonView_Pal, 0x20, 0x20);
         LoadPalette(gUnknown_083E03A8, 0xF0, 0x20);
-        LoadPalette(gUnknown_083E3C60[0], 0x30, 0xA0);
+        LoadPalette(gPokenavRibbonIconPalettes[0], 0x30, 0xA0);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
         LoadPalette(gUnknown_083E03A8 + 0xF, 0xBF, 0x2);
         break;
@@ -3028,26 +3028,26 @@ void SaveAndCloseConditionMonMarkingsMenu(void)
     sub_80F7470();
 }
 
-void sub_80F36F0(void)
+void InitRibbonIconGfx(void)
 {
     gPokenavStructPtr->unk306 = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F3724());
+        while (LoadRibbonIconGfxStep());
 }
 
-bool8 sub_80F3724(void)
+bool8 LoadRibbonIconGfxStep(void)
 {
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gUnknown_083E3D00, gPokenavStructPtr->unk984C);
+        LZ77UnCompWram(gPokenavRibbonIconsBigHalfGfx, gPokenavStructPtr->ribbonIconHalfGfx);
         break;
     case 1:
-        sub_80F379C();
+        InitRibbonIconExpansion();
         gPokenavStructPtr->unk306++;
         // fall through
     case 2:
-        if (sub_80F37D0())
+        if (ExpandRibbonIconGfxStep())
             return TRUE;
         break;
     default:
@@ -3058,69 +3058,69 @@ bool8 sub_80F3724(void)
     return TRUE;
 }
 
-void sub_80F379C(void)
+void InitRibbonIconExpansion(void)
 {
-    gPokenavStructPtr->unkBC93 = 0;
+    gPokenavStructPtr->ribbonIconLoadIndex = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F37D0());
+        while (ExpandRibbonIconGfxStep());
 }
 
-bool8 sub_80F37D0(void)
+bool8 ExpandRibbonIconGfxStep(void)
 {
     u16 i;
     u8 j, k, l, m;
 
-    if (gPokenavStructPtr->unkBC93 > 11)
+    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
         return FALSE;
 
     for (i = 0; i < 2; i++)
     {
-        u8 *r4 = &gPokenavStructPtr->unk984C[gPokenavStructPtr->unkBC93][0];
-        u8 *r5 = &gPokenavStructPtr->unkA44C[gPokenavStructPtr->unkBC93][0];
+        u8 *src = &gPokenavStructPtr->ribbonIconHalfGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
+        u8 *dst = &gPokenavStructPtr->ribbonIconBigGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
         for (j = 0; j < 4; j++)
         {
-            CpuFastSet(r4, r5, 0x10);
-            r5 += 0x40;
-            r4 += 0x20;
+            CpuFastSet(src, dst, 0x10);
+            dst += 0x40;
+            src += 0x20;
             for (k = 0; k < 2; k++)
             {
                 for (l = 0; l < 8; l++)
                 {
-                    r4 += 4;
+                    src += 4;
                     for (m = 0; m < 4; m++)
                     {
-                        r4 -= 1;
-                        *r5 = (*r4 << 4) | ((*r4 >> 4) & 0xF);
-                        r5++;
+                        src -= 1;
+                        *dst = (*src << 4) | ((*src >> 4) & 0xF);
+                        dst++;
                     }
 
-                    r4 += 4;
+                    src += 4;
                 }
 
-                r4 -= 0x40;
+                src -= 0x40;
             }
 
-            r4 += 0x60;
+            src += 0x60;
         }
 
-        if (++gPokenavStructPtr->unkBC93 > 11)
+        if (++gPokenavStructPtr->ribbonIconLoadIndex > 11)
             return FALSE;
     }
 
-    if (gPokenavStructPtr->unkBC93 > 11)
+    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
         return FALSE;
 
     return TRUE;
 }
 
-void sub_80F38B8(void)
+void InitRibbonsSummarySpriteGfx(void)
 {
     gPokenavStructPtr->unk306 = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F38EC());
+        while (LoadRibbonsSummarySpriteGfxStep());
 }
 
-bool8 sub_80F38EC(void)
+bool8 LoadRibbonsSummarySpriteGfxStep(void)
 {
     switch (gPokenavStructPtr->unk306)
     {
@@ -3132,11 +3132,11 @@ bool8 sub_80F38EC(void)
         CreateOrUpdatePokenavPortraitSprite(0);
         break;
     case 2:
-        sub_80F3970();
+        InitRibbonIconSpriteSheets();
         gPokenavStructPtr->unk306++;
         // fall through
     case 3:
-        if (sub_80F39A4())
+        if (LoadRibbonIconSpriteSheetStep())
             return TRUE;
         break;
     default:
@@ -3147,32 +3147,32 @@ bool8 sub_80F38EC(void)
     return TRUE;
 }
 
-void sub_80F3970(void)
+void InitRibbonIconSpriteSheets(void)
 {
-    gPokenavStructPtr->unkBC93 = 0;
+    gPokenavStructPtr->ribbonIconLoadIndex = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F39A4());
+        while (LoadRibbonIconSpriteSheetStep());
 }
 
-bool8 sub_80F39A4(void)
+bool8 LoadRibbonIconSpriteSheetStep(void)
 {
     struct SpriteSheet spriteSheet;
     struct SpritePalette spritePalette;
-    if (gPokenavStructPtr->unkBC93 > 11)
+    if (gPokenavStructPtr->ribbonIconLoadIndex > 11)
         return FALSE;
 
-    spriteSheet.data = &gPokenavStructPtr->unkA44C[gPokenavStructPtr->unkBC93][0];
+    spriteSheet.data = &gPokenavStructPtr->ribbonIconBigGfx[gPokenavStructPtr->ribbonIconLoadIndex][0];
     spriteSheet.size = 0x200;
-    spriteSheet.tag = gPokenavStructPtr->unkBC93 + 11;
+    spriteSheet.tag = gPokenavStructPtr->ribbonIconLoadIndex + 11;
     LoadSpriteSheet(&spriteSheet);
-    if (gPokenavStructPtr->unkBC93 < 5)
+    if (gPokenavStructPtr->ribbonIconLoadIndex < 5)
     {
-        spritePalette.data = gUnknown_083E3C60[gPokenavStructPtr->unkBC93];
-        spritePalette.tag = gPokenavStructPtr->unkBC93 + 10;
+        spritePalette.data = gPokenavRibbonIconPalettes[gPokenavStructPtr->ribbonIconLoadIndex];
+        spritePalette.tag = gPokenavStructPtr->ribbonIconLoadIndex + 10;
         LoadSpritePalette(&spritePalette);
     }
 
-    if (++gPokenavStructPtr->unkBC93 > 11)
+    if (++gPokenavStructPtr->ribbonIconLoadIndex > 11)
         return FALSE;
 
     return TRUE;
