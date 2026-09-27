@@ -4048,7 +4048,7 @@ bool8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *objectEvent, stru
     return TRUE;
 }
 
-bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_WalkNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
     s16 x;
@@ -4067,7 +4067,7 @@ bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_WalkFast(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
     s16 x;
@@ -4086,7 +4086,7 @@ bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-bool8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_WalkFaster(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
     s16 x;
@@ -4124,7 +4124,7 @@ bool8 CopyablePlayerMovement_Slide(struct ObjectEvent *objectEvent, struct Sprit
     return TRUE;
 }
 
-bool8 cph_IM_DIFFERENT(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_JumpInPlace(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
 
@@ -4136,7 +4136,7 @@ bool8 cph_IM_DIFFERENT(struct ObjectEvent *objectEvent, struct Sprite *sprite, u
     return TRUE;
 }
 
-bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_Jump(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
     s16 x;
@@ -4155,7 +4155,7 @@ bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-bool8 CopyablePlayerMovement_Jump(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_Jump2(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     u32 direction;
     s16 x;

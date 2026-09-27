@@ -81,13 +81,13 @@ u8 GetLimitedVectorDirection_SouthWestEast(s16 a0, s16 a1, s16 a2, s16 a3);
 
 u8 CopyablePlayerMovement_None(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
-u8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
-u8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
-u8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+u8 CopyablePlayerMovement_WalkNormal(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+u8 CopyablePlayerMovement_WalkFast(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+u8 CopyablePlayerMovement_WalkFaster(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 CopyablePlayerMovement_Slide(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
-u8 cph_IM_DIFFERENT(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
-u8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+u8 CopyablePlayerMovement_JumpInPlace(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 u8 CopyablePlayerMovement_Jump(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
+u8 CopyablePlayerMovement_Jump2(struct ObjectEvent *, struct Sprite *, u8, bool8(u8));
 
 extern struct FieldCamera gFieldCamera;
 extern u16 gTotalCameraPixelOffsetY;
