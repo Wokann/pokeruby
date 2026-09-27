@@ -107,7 +107,7 @@ extern u16 gPauseCounterBattle;
 extern u16 gPaydayMoney;
 extern u16 gRandomTurnNumber;
 extern u8 gBattleCommunication[];
-extern u8 gUnknown_02024D1F[];  // I don't actually know what type this is.
+extern u8 gBattleCommunicationTail[];
 extern u8 gBattleOutcome;
 extern u16 gIntroSlideFlags;
 extern u8 gActionSelectionCursor[];
@@ -561,7 +561,7 @@ void CB2_HandleStartBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 9:
-        if (battle_load_something(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
+        if (battle_load_something(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;
@@ -945,7 +945,7 @@ void CB2_HandleStartMultiBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 7:
-        if (battle_load_something(gUnknown_02024D1F, gUnknown_02024D1F + 1) != 0)
+        if (battle_load_something(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;

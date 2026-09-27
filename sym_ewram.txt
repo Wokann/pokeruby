@@ -216,7 +216,7 @@ gRandomTurnNumber = .; /* 2024D1C */
 gBattleCommunication = .; /* 2024D1E */
     . += 0x1;
 
-gUnknown_02024D1F = .; /* 2024D1F */
+gBattleCommunicationTail = .; /* 2024D1F */
     . += 0x7;
 
 gBattleOutcome = .; /* 2024D26 */
