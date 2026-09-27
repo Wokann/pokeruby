@@ -1,7 +1,7 @@
 #include "global.h"
 #include "gba/m4a_internal.h"
 #include "battle.h"
-#include "battle_anim_special.h"
+#include "battle_anim_throw.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "m4a.h"

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "battle_anim_special.h"
+#include "battle_anim_throw.h"
 #include "battle_interface.h"
 #include "blend_palette.h"
 #include "contest.h"

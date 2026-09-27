@@ -1,7 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "battle_anim_special.h"
+#include "battle_anim_throw.h"
 #include "battle_interface.h"
 #include "blend_palette.h"
 #include "decompress.h"
@@ -43,7 +43,7 @@ extern const struct SpriteTemplate gWishStarSpriteTemplate;
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
 
-static void sub_813F300(u8 taskId);
+static void AnimTask_UnusedLevelUpHealthBox_Step(u8 taskId);
 static void AnimTask_FlashHealthboxOnLevelUp_Step(u8 taskId);
 static void Task_PlayerThrow_Wait(u8 taskId);
 static void SpriteCB_Ball_Throw(struct Sprite *sprite);
@@ -74,10 +74,10 @@ static void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite);
 static void Task_FadeMon_ToBallColor(u8 taskId);
 static void Task_FadeMon_ToNormal(u8 taskId);
 static void Task_FadeMon_ToNormal_Step(u8 taskId);
-static void sub_814191C(u8 taskId);
-static void sub_8141B20(struct Sprite *sprite);
-static void sub_8141B74(struct Sprite *sprite);
-static void sub_8141AD8(u8 taskId);
+static void Task_ShinyStars(u8 taskId);
+static void SpriteCB_ShinyStars_Encircle(struct Sprite *sprite);
+static void SpriteCB_ShinyStars_Diagonal(struct Sprite *sprite);
+static void Task_ShinyStars_Wait(u8 taskId);
 static void SpriteCB_PokeBlock_LiftArm(struct Sprite *sprite);
 static void SpriteCB_PokeBlock_Arc(struct Sprite *sprite);
 static void SpriteCB_ThrowPokeBlock_Free(struct Sprite *sprite);
@@ -361,7 +361,7 @@ const struct SpriteTemplate gPokeblockSpriteTemplate =
     .callback = SpriteCB_PokeBlock_Throw,
 };
 
-void unref_sub_813F0F4(u8 taskId)
+void AnimTask_UnusedLevelUpHealthBox(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     u8 healthBoxSpriteId;
@@ -407,10 +407,10 @@ void unref_sub_813F0F4(u8 taskId)
     gTasks[taskId].data[1] = 640;
     gTasks[taskId].data[0] = spriteId3;
     gTasks[taskId].data[2] = spriteId4;
-    gTasks[taskId].func = sub_813F300;
+    gTasks[taskId].func = AnimTask_UnusedLevelUpHealthBox_Step;
 }
 
-static void sub_813F300(u8 taskId)
+static void AnimTask_UnusedLevelUpHealthBox_Step(u8 taskId)
 {
     struct BattleAnimBgData animBg;
     u8 spriteId1, spriteId2;
@@ -1880,8 +1880,8 @@ void TryShinyAnimation(u8 battler, struct Pokemon *mon)
                 LoadCompressedObjectPalette(&gBattleAnimPaletteTable[233]);
             }
 
-            taskId1 = CreateTask(sub_814191C, 10);
-            taskId2 = CreateTask(sub_814191C, 10);
+            taskId1 = CreateTask(Task_ShinyStars, 10);
+            taskId2 = CreateTask(Task_ShinyStars, 10);
             gTasks[taskId1].data[0] = battler;
             gTasks[taskId2].data[0] = battler;
             gTasks[taskId1].data[1] = 0;
@@ -1893,7 +1893,7 @@ void TryShinyAnimation(u8 battler, struct Pokemon *mon)
     gBattleHealthBoxInfo[battler].finishedShinyMonAnim = TRUE;
 }
 
-static void sub_814191C(u8 taskId)
+static void Task_ShinyStars(u8 taskId)
 {
     u8 battler;
     u8 x, y;
@@ -1936,11 +1936,11 @@ static void sub_814191C(u8 taskId)
 
     if (gTasks[taskId].data[1] == 0)
     {
-        gSprites[spriteId].callback = sub_8141B20;
+        gSprites[spriteId].callback = SpriteCB_ShinyStars_Encircle;
     }
     else
     {
-        gSprites[spriteId].callback = sub_8141B74;
+        gSprites[spriteId].callback = SpriteCB_ShinyStars_Diagonal;
         gSprites[spriteId].x2 = -32;
         gSprites[spriteId].y2 = 32;
         gSprites[spriteId].invisible = TRUE;
@@ -1959,10 +1959,10 @@ static void sub_814191C(u8 taskId)
     gTasks[taskId].data[11]++;
     gTasks[taskId].data[12]++;
     if (gTasks[taskId].data[11] == 5)
-        gTasks[taskId].func = sub_8141AD8;
+        gTasks[taskId].func = Task_ShinyStars_Wait;
 }
 
-static void sub_8141AD8(u8 taskId)
+static void Task_ShinyStars_Wait(u8 taskId)
 {
     u8 battler;
 
@@ -1978,7 +1978,7 @@ static void sub_8141AD8(u8 taskId)
     }
 }
 
-static void sub_8141B20(struct Sprite *sprite)
+static void SpriteCB_ShinyStars_Encircle(struct Sprite *sprite)
 {
     sprite->x2 = Sin(sprite->data[1], 24);
     sprite->y2 = Cos(sprite->data[1], 24);
@@ -1991,7 +1991,7 @@ static void sub_8141B20(struct Sprite *sprite)
     }
 }
 
-static void sub_8141B74(struct Sprite *sprite)
+static void SpriteCB_ShinyStars_Diagonal(struct Sprite *sprite)
 {
     if (sprite->data[1] < 4)
     {

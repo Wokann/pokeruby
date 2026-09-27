@@ -1,6 +1,6 @@
 #include "global.h"
 #include "battle.h"
-#include "battle_anim_special.h"
+#include "battle_anim_throw.h"
 #include "contest.h"
 #include "data2.h"
 #include "daycare.h"

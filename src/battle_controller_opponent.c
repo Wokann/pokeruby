@@ -7,7 +7,7 @@
 #include "battle_interface.h"
 #include "data2.h"
 #include "battle_811DA74.h"
-#include "battle_anim_special.h"
+#include "battle_anim_throw.h"
 #include "battle_tower.h"
 #include "link.h"
 #include "m4a.h"
