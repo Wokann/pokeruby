@@ -46,7 +46,7 @@ gSpecials::
 	def_special CableClubSaveGame
 	def_special TryBerryBlenderLinkup
 	def_special GetLinkPartnerNames
-	def_special SpawnBerryBlenderLinkPlayerSprites
+	def_special SpawnLinkPartnerObjectEvent
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
 	def_special ChooseHalfPartyForBattle
