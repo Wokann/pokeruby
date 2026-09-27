@@ -104,7 +104,7 @@ static bool8 mapheader_run_first_tag2_script_list_match_conditionally(struct Map
 static bool8 IsWarpMetatileBehavior(u16);
 static bool8 IsArrowWarpMetatileBehavior(u16, u8);
 static s8 GetWarpEventAtMapPosition(struct MapHeader *, struct MapPosition *);
-static void sub_8068C30(struct MapHeader *, s8, struct MapPosition *);
+static void SetupWarp(struct MapHeader *, s8, struct MapPosition *);
 static bool8 map_warp_consider_2_to_inside(struct MapPosition *, u16, u8);
 static s8 GetWarpEventAtPosition(struct MapHeader *, u16, u16, u8);
 static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
@@ -684,7 +684,7 @@ static bool8 mapheader_run_first_tag2_script_list_match_conditionally(struct Map
     if (IsArrowWarpMetatileBehavior(metatileBehavior, direction) == TRUE && warpEventId != -1)
     {
         StoreInitialPlayerAvatarState();
-        sub_8068C30(&gMapHeader, warpEventId, position);
+        SetupWarp(&gMapHeader, warpEventId, position);
         sub_8080E88();
         return TRUE;
     }
@@ -698,7 +698,7 @@ bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior
     if (warpEventId != -1 && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
     {
         StoreInitialPlayerAvatarState();
-        sub_8068C30(&gMapHeader, warpEventId, position);
+        SetupWarp(&gMapHeader, warpEventId, position);
         if (MetatileBehavior_IsEscalator(metatileBehavior) == TRUE)
         {
             sub_8080F2C(metatileBehavior);
@@ -765,7 +765,7 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader *mapHeader, struct MapPosit
     return GetWarpEventAtPosition(mapHeader, position->x - 7, position->y - 7, position->height);
 }
 
-static void sub_8068C30(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
+static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
 {
     const struct WarpEvent *warpEvent = &gMapHeader.events->warps[warpEventId];
 
@@ -802,7 +802,7 @@ static bool8 map_warp_consider_2_to_inside(struct MapPosition *position, u16 met
             if (warpEventId != -1 && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
                 StoreInitialPlayerAvatarState();
-                sub_8068C30(&gMapHeader, warpEventId, position);
+                SetupWarp(&gMapHeader, warpEventId, position);
                 sub_8080EF0();
                 return TRUE;
             }
@@ -953,6 +953,6 @@ int SetCableClubWarp(void)
     GetPlayerMovementDirection();  //unnecessary
     GetPlayerPosition(&position);
     MapGridGetMetatileBehaviorAt(position.x, position.y);  //unnecessary
-    sub_8068C30(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
+    SetupWarp(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
     return 0;
 }
