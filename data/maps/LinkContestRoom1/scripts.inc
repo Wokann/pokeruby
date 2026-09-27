@@ -47,29 +47,29 @@ LinkContestRoom1_EventScript_SaveContestMusic:: @ 815F5F0
 
 LinkContestRoom1_MapScript2_OnResume:: @ 815F5F4
 	compare VAR_TEMP_9, 1
-	call_if_eq LinkContestRoom1_EventScript_15F600
+	call_if_eq LinkContestRoom1_EventScript_CreateContestantsOnResume
 	end
 
-LinkContestRoom1_EventScript_15F600:: @ 815F600
-	call LinkContestRoom1_EventScript_15F919
+LinkContestRoom1_EventScript_CreateContestantsOnResume:: @ 815F600
+	call LinkContestRoom1_EventScript_CreateContestantsForLocation
 	return
 
 LinkContestRoom1_MapScript2_OnFrame:: @ 815F606
-	map_script_2 VAR_LINK_CONTEST_ROOM_STATE, 1, LinkContestRoom1_EventScript_15F61A
+	map_script_2 VAR_LINK_CONTEST_ROOM_STATE, 1, LinkContestRoom1_EventScript_RunContestAndReturnToLobby
 	.2byte 0
 
 LinkContestRoom1_MapScript2_OnWarp:: @ 815F610
-	map_script_2 VAR_LINK_CONTEST_ROOM_STATE, 1, LinkContestRoom1_EventScript_15F625
+	map_script_2 VAR_LINK_CONTEST_ROOM_STATE, 1, LinkContestRoom1_EventScript_HidePlayerAndCreateContestants
 	.2byte 0
 
-LinkContestRoom1_EventScript_15F61A:: @ 815F61A
+LinkContestRoom1_EventScript_RunContestAndReturnToLobby:: @ 815F61A
 	call LinkContestRoom1_EventScript_1A514D
-	call LinkContestRoom1_EventScript_15FB64
+	call LinkContestRoom1_EventScript_ReturnToContestLobby
 	end
 
-LinkContestRoom1_EventScript_15F625:: @ 815F625
+LinkContestRoom1_EventScript_HidePlayerAndCreateContestants:: @ 815F625
 	hideobjectat LOCALID_PLAYER, MAP_LITTLEROOT_TOWN
-	call LinkContestRoom1_EventScript_15F919
+	call LinkContestRoom1_EventScript_CreateContestantsForLocation
 	end
 
 LinkContestRoom1_EventScript_AddRandomAudienceMembers:: @ 815F630
@@ -292,21 +292,21 @@ LinkContestRoom1_EventScript_RandomAudience46:: @ 815F913
 	setvar VAR_TEMP_1, 46
 	return
 
-LinkContestRoom1_EventScript_15F919:: @ 815F919
+LinkContestRoom1_EventScript_CreateContestantsForLocation:: @ 815F919
 	switch VAR_CONTEST_LOCATION
-	case 1, LinkContestRoom1_EventScript_15F956
-	case 2, LinkContestRoom1_EventScript_15F969
-	case 3, LinkContestRoom1_EventScript_15F9C4
-	case 4, LinkContestRoom1_EventScript_15FA70
-	case 5, LinkContestRoom1_EventScript_15FA70
+	case CONTEST_LOCATION_VERDANTURF, LinkContestRoom1_EventScript_CreateVerdanturfContestants
+	case CONTEST_LOCATION_FALLARBOR, LinkContestRoom1_EventScript_CreateFallarborContestants
+	case CONTEST_LOCATION_SLATEPORT, LinkContestRoom1_EventScript_CreateSlateportContestants
+	case CONTEST_LOCATION_LILYCOVE, LinkContestRoom1_EventScript_CreateLilycoveContestants
+	case CONTEST_LOCATION_LINK, LinkContestRoom1_EventScript_CreateLilycoveContestants
 	return
 
-LinkContestRoom1_EventScript_15F956:: @ 815F956
+LinkContestRoom1_EventScript_CreateVerdanturfContestants:: @ 815F956
 	createvobject 5, 20, 3, 2, 3, 1
 	createvobject 46, 24, 11, 2, 3, 1
 	return
 
-LinkContestRoom1_EventScript_15F969:: @ 815F969
+LinkContestRoom1_EventScript_CreateFallarborContestants:: @ 815F969
 	createvobject 45, 0, 2, 3, 3, 4
 	createvobject 66, 1, 2, 4, 3, 4
 	createvobject 55, 2, 2, 7, 3, 4
@@ -319,7 +319,7 @@ LinkContestRoom1_EventScript_15F969:: @ 815F969
 	createvobject 46, 24, 11, 2, 3, 1
 	return
 
-LinkContestRoom1_EventScript_15F9C4:: @ 815F9C4
+LinkContestRoom1_EventScript_CreateSlateportContestants:: @ 815F9C4
 	createvobject 45, 0, 2, 3, 3, 4
 	createvobject 66, 1, 2, 4, 3, 4
 	createvobject 55, 2, 2, 7, 3, 4
@@ -341,7 +341,7 @@ LinkContestRoom1_EventScript_15F9C4:: @ 815F9C4
 	createvobject 83, 30, 11, 9, 3, 2
 	return
 
-LinkContestRoom1_EventScript_15FA70:: @ 815FA70
+LinkContestRoom1_EventScript_CreateLilycoveContestants:: @ 815FA70
 	createvobject 45, 0, 2, 3, 3, 4
 	createvobject 66, 1, 2, 4, 3, 4
 	createvobject 55, 2, 2, 7, 3, 4
@@ -371,40 +371,40 @@ LinkContestRoom1_EventScript_15FA70:: @ 815FA70
 	createvobject 83, 30, 11, 9, 3, 2
 	return
 
-LinkContestRoom1_EventScript_15FB64:: @ 815FB64
+LinkContestRoom1_EventScript_ReturnToContestLobby:: @ 815FB64
 	switch VAR_CONTEST_LOCATION
-	case 1, LinkContestRoom1_EventScript_15FBA1
-	case 2, LinkContestRoom1_EventScript_15FBAD
-	case 3, LinkContestRoom1_EventScript_15FBB9
-	case 4, LinkContestRoom1_EventScript_15FBC5
-	case 5, LinkContestRoom1_EventScript_15FBD1
+	case CONTEST_LOCATION_VERDANTURF, LinkContestRoom1_EventScript_ReturnToVerdanturfLobby
+	case CONTEST_LOCATION_FALLARBOR, LinkContestRoom1_EventScript_ReturnToFallarborLobby
+	case CONTEST_LOCATION_SLATEPORT, LinkContestRoom1_EventScript_ReturnToSlateportLobby
+	case CONTEST_LOCATION_LILYCOVE, LinkContestRoom1_EventScript_ReturnToLilycoveLobby
+	case CONTEST_LOCATION_LINK, LinkContestRoom1_EventScript_ReturnToLinkContestLobby
 	return
 
-LinkContestRoom1_EventScript_15FBA1:: @ 815FBA1
+LinkContestRoom1_EventScript_ReturnToVerdanturfLobby:: @ 815FBA1
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
 	warp MAP_VERDANTURF_TOWN_CONTEST_LOBBY, 255, 5, 4
 	waitstate
 	end
 
-LinkContestRoom1_EventScript_15FBAD:: @ 815FBAD
+LinkContestRoom1_EventScript_ReturnToFallarborLobby:: @ 815FBAD
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
 	warp MAP_FALLARBOR_TOWN_CONTEST_LOBBY, 255, 5, 4
 	waitstate
 	end
 
-LinkContestRoom1_EventScript_15FBB9:: @ 815FBB9
+LinkContestRoom1_EventScript_ReturnToSlateportLobby:: @ 815FBB9
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
 	warp MAP_SLATEPORT_CITY_CONTEST_LOBBY, 255, 5, 4
 	waitstate
 	end
 
-LinkContestRoom1_EventScript_15FBC5:: @ 815FBC5
+LinkContestRoom1_EventScript_ReturnToLilycoveLobby:: @ 815FBC5
 	incrementgamestat GAME_STAT_ENTERED_CONTEST
 	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 255, 6, 4
 	waitstate
 	end
 
-LinkContestRoom1_EventScript_15FBD1:: @ 815FBD1
+LinkContestRoom1_EventScript_ReturnToLinkContestLobby:: @ 815FBD1
 	warp MAP_LILYCOVE_CITY_CONTEST_LOBBY, 255, 7, 4
 	waitstate
 	end
