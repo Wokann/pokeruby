@@ -44,16 +44,16 @@ static bool8 ForcedMovement_WalkSouth(void);
 static bool8 ForcedMovement_WalkNorth(void);
 static bool8 ForcedMovement_WalkWest(void);
 static bool8 ForcedMovement_WalkEast(void);
-static bool8 ForcedMovement_RideCurrentSouth(void);
-static bool8 ForcedMovement_RideCurrentNorth(void);
-static bool8 ForcedMovement_RideCurrentWest(void);
-static bool8 ForcedMovement_RideCurrentEast(void);
+static bool8 ForcedMovement_PushedSouthByCurrent(void);
+static bool8 ForcedMovement_PushedNorthByCurrent(void);
+static bool8 ForcedMovement_PushedWestByCurrent(void);
+static bool8 ForcedMovement_PushedEastByCurrent(void);
 static bool8 ForcedMovement_SlideSouth(void);
 static bool8 ForcedMovement_SlideNorth(void);
 static bool8 ForcedMovement_SlideWest(void);
 static bool8 ForcedMovement_SlideEast(void);
-static bool8 ForcedMovement_SecretBaseJumpMat(void);
-static bool8 ForcedMovement_SecretBaseSpinMat(void);
+static bool8 ForcedMovement_MatJump(void);
+static bool8 ForcedMovement_MatSpin(void);
 static bool8 ForcedMovement_MuddySlope(void);
 static void MovePlayerNotOnBike(u8 a, u16 b);
 static u8 CheckMovementInputNotOnBike(u8 a);
@@ -150,17 +150,17 @@ static bool8 (*const sForcedMovementFuncs[])(void) =
     ForcedMovement_WalkNorth,
     ForcedMovement_WalkWest,
     ForcedMovement_WalkEast,
-    ForcedMovement_RideCurrentSouth,
-    ForcedMovement_RideCurrentNorth,
-    ForcedMovement_RideCurrentWest,
-    ForcedMovement_RideCurrentEast,
+    ForcedMovement_PushedSouthByCurrent,
+    ForcedMovement_PushedNorthByCurrent,
+    ForcedMovement_PushedWestByCurrent,
+    ForcedMovement_PushedEastByCurrent,
     ForcedMovement_SlideSouth,
     ForcedMovement_SlideNorth,
     ForcedMovement_SlideWest,
     ForcedMovement_SlideEast,
-    ForcedMovement_RideCurrentSouth,
-    ForcedMovement_SecretBaseJumpMat,
-    ForcedMovement_SecretBaseSpinMat,
+    ForcedMovement_PushedSouthByCurrent,
+    ForcedMovement_MatJump,
+    ForcedMovement_MatSpin,
     ForcedMovement_MuddySlope,
 };
 static void (*const sPlayerNotOnBikeFuncs[])(u8, u16) =
@@ -344,7 +344,7 @@ static u8 GetForcedMovementByMetatileBehavior(void)
     {
         u8 metatileBehavior = gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior;
 
-        for (i = 0; i < 18; i++)
+        for (i = 0; i < ARRAY_COUNT(sForcedMovementTestFuncs); i++)
         {
             if (sForcedMovementTestFuncs[i](metatileBehavior))
                 return i + 1;
@@ -367,7 +367,7 @@ static bool8 ForcedMovement_None(void)
     return FALSE;
 }
 
-static u8 DoForcedMovement(u8 direction, void (*b)(u8))
+static u8 DoForcedMovement(u8 direction, void (*moveFunc)(u8))
 {
     struct PlayerAvatar *playerAvatar = &gPlayerAvatar;
     u8 collisionType = CheckForPlayerAvatarCollision(direction);
@@ -392,17 +392,17 @@ static u8 DoForcedMovement(u8 direction, void (*b)(u8))
     else
     {
         playerAvatar->runningState = MOVING;
-        b(direction);
+        moveFunc(direction);
         return 1;
     }
 }
 
-static u8 DoForcedMovementInCurrentDirection(void (*a)(u8))
+static u8 DoForcedMovementInCurrentDirection(void (*moveFunc)(u8))
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
     playerObjEvent->disableAnim = 1;
-    return DoForcedMovement(playerObjEvent->movementDirection, a);
+    return DoForcedMovement(playerObjEvent->movementDirection, moveFunc);
 }
 
 static bool8 ForcedMovement_Slip(void)
@@ -430,33 +430,33 @@ static bool8 ForcedMovement_WalkEast(void)
     return DoForcedMovement(DIR_EAST, PlayerGoSpeed1);
 }
 
-static bool8 ForcedMovement_RideCurrentSouth(void)
+static bool8 ForcedMovement_PushedSouthByCurrent(void)
 {
     return DoForcedMovement(DIR_SOUTH, PlayerRideWaterCurrent);
 }
 
-static bool8 ForcedMovement_RideCurrentNorth(void)
+static bool8 ForcedMovement_PushedNorthByCurrent(void)
 {
     return DoForcedMovement(DIR_NORTH, PlayerRideWaterCurrent);
 }
 
-static bool8 ForcedMovement_RideCurrentWest(void)
+static bool8 ForcedMovement_PushedWestByCurrent(void)
 {
     return DoForcedMovement(DIR_WEST, PlayerRideWaterCurrent);
 }
 
-static bool8 ForcedMovement_RideCurrentEast(void)
+static bool8 ForcedMovement_PushedEastByCurrent(void)
 {
     return DoForcedMovement(DIR_EAST, PlayerRideWaterCurrent);
 }
 
-static u8 ForcedMovement_Slide(u8 direction, void (*b)(u8))
+static u8 ForcedMovement_Slide(u8 direction, void (*moveFunc)(u8))
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
     playerObjEvent->disableAnim = 1;
     playerObjEvent->facingDirectionLocked = 1;
-    return DoForcedMovement(direction, b);
+    return DoForcedMovement(direction, moveFunc);
 }
 
 static bool8 ForcedMovement_SlideSouth(void)
@@ -479,13 +479,13 @@ static bool8 ForcedMovement_SlideEast(void)
     return ForcedMovement_Slide(DIR_EAST, PlayerGoSpeed2);
 }
 
-static bool8 ForcedMovement_SecretBaseJumpMat(void)
+static bool8 ForcedMovement_MatJump(void)
 {
     DoPlayerMatJump();
     return TRUE;
 }
 
-static bool8 ForcedMovement_SecretBaseSpinMat(void)
+static bool8 ForcedMovement_MatSpin(void)
 {
     DoPlayerMatSpin();
     return TRUE;
@@ -495,11 +495,11 @@ static bool8 ForcedMovement_MuddySlope(void)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
-    if (playerObjEvent->movementDirection != DIR_NORTH || GetPlayerSpeed() <= 3)
+    if (playerObjEvent->movementDirection != DIR_NORTH || GetPlayerSpeed() < PLAYER_SPEED_FASTEST)
     {
         Bike_UpdateBikeCounterSpeed(0);
         playerObjEvent->facingDirectionLocked = 1;
-        return DoForcedMovement(1, PlayerGoSpeed2);
+        return DoForcedMovement(DIR_SOUTH, PlayerGoSpeed2);
     }
     else
     {
