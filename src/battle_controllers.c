@@ -119,7 +119,7 @@ void SetUpBattleVarsAndBirchPoochyena(void)
 #endif
 }
 
-void sub_800B950(void)
+void InitBattleControllers(void)
 {
     s32 i;
 
@@ -510,7 +510,7 @@ void Task_HandleSendLinkBuffersData(u8 taskId)
 }
 
 //fix me
-void sub_800C35C(void)
+void TryReceiveLinkBattleData(void)
 {
     u8 i;  //r4
     s32 j;  //r2
@@ -1073,7 +1073,7 @@ void BtlController_EmitHitAnimation(u8 a)
     PrepareBufferDataTransfer(a, gBattleBuffersTransferData, 4);
 }
 
-void BtlController_EmitCmd42(u8 a)
+void BtlController_EmitCantSwitch(u8 a)
 {
     gBattleBuffersTransferData[0] = 42;
     gBattleBuffersTransferData[1] = 42;
@@ -1188,7 +1188,7 @@ void BtlController_EmitResetActionMoveSelection(u8 a, u8 b)
     PrepareBufferDataTransfer(a, gBattleBuffersTransferData, 2);
 }
 
-void BtlController_EmitCmd55(u8 a, u8 b)
+void BtlController_EmitEndLinkBattle(u8 a, u8 b)
 {
     gBattleBuffersTransferData[0] = 55;
     gBattleBuffersTransferData[1] = b;

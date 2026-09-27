@@ -585,7 +585,7 @@ void BtlController_EmitHidePartyStatusSummary(u8 a);  //0x31
 void BtlController_EmitSpriteInvisibility(u8 a, u8 b); //0x33
 void BtlController_EmitBattleAnimation(u8 a, u8 b, u16 c); //0x34
 void BtlController_EmitResetActionMoveSelection(u8 a, u8 b); //0x36
-void BtlController_EmitCmd55(u8 a, u8 b); //0x37
+void BtlController_EmitEndLinkBattle(u8 a, u8 b); //0x37
 
 void MarkBattlerForControllerExec(u8 bank);
 

@@ -556,7 +556,7 @@ void CB2_HandleStartBattle(void)
         }
         break;
     case 8:
-        sub_800B950();
+        InitBattleControllers();
         gBattleCommunication[0]++;
         gBattleCommunication[1] = 0;
         gBattleCommunication[2] = 0;
@@ -940,7 +940,7 @@ void CB2_HandleStartMultiBattle(void)
         }
         break;
     case 6:
-        sub_800B950();
+        InitBattleControllers();
         gBattleCommunication[0]++;
         gBattleCommunication[1] = 0;
         gBattleCommunication[2] = 0;

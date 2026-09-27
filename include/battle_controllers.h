@@ -164,10 +164,10 @@ struct DisableStruct;
 // emitters
 void HandleLinkBattleSetup(void);
 void SetUpBattleVarsAndBirchPoochyena();
-void sub_800B950(void);
+void InitBattleControllers(void);
 void InitLinkBtlControllers(void);
 void PrepareBufferDataTransferLink(u8 a, u16, u8 *c);
-void sub_800C35C(void);
+void TryReceiveLinkBattleData(void);
 void BtlController_EmitGetMonData(u8 a, u8 b, u8 c);
 void BtlController_EmitGetRawMonData(u8 a, u8 b, u8 c);
 void BtlController_EmitLoadMonSprite(u8 a);
@@ -203,7 +203,7 @@ void BtlController_EmitCmd38(u8 a, u8 b);
 void BtlController_EmitCmd39(u8 a);
 void BtlController_EmitCmd40(u8 a);
 void BtlController_EmitHitAnimation(u8 a);
-void BtlController_EmitCmd42(u8 a);
+void BtlController_EmitCantSwitch(u8 a);
 void BtlController_EmitPlaySE(u8 a, u16 b);
 void BtlController_EmitPlayFanfareOrBGM(u8 a, u16 b);
 void BtlController_EmitFaintingCry(u8 a);
@@ -216,6 +216,6 @@ void BtlController_EmitSpriteInvisibility(u8 a, u8 b);
 void BtlController_EmitBattleAnimation(u8 a, u8 b, u16 c);
 void BtlController_EmitLinkStandbyMsg(u8 a, u8 b);
 void BtlController_EmitResetActionMoveSelection(u8 a, u8 b);
-void BtlController_EmitCmd55(u8 a, u8 b);
+void BtlController_EmitEndLinkBattle(u8 a, u8 b);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H
