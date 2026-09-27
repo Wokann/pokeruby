@@ -4724,110 +4724,110 @@ static const struct SpriteFrameImage sImageTable_PikaPowerBolt[] = {
     {gSpriteImage_8E98828, 0x20}
 };
 
-static const union AnimCmd gSpriteAnim_83ED230[] = {
+static const union AnimCmd sAnim_SingleFrame[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED238[] = {
+static const union AnimCmd sAnim_ReelTimeDuck[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED240[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_Still[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED248[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingSlow[] = {
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED254[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingMedium[] = {
     ANIMCMD_FRAME(1, 8),
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED260[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_ChargingFast[] = {
     ANIMCMD_FRAME(1, 4),
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED26C[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_Cheering[] = {
     ANIMCMD_FRAME(2, 32),
     ANIMCMD_FRAME(3, 32),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED278[] = {
+static const union AnimCmd sAnim_ReelTimePikachu_FellOver[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED280[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_0[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED288[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_1[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED290[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_2[] = {
     ANIMCMD_FRAME(2, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED298[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_3[] = {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2A0[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_4[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2A8[] = {
+static const union AnimCmd sAnim_ReelTimeNumber_5[] = {
     ANIMCMD_FRAME(5, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2B0[] = {
+static const union AnimCmd sAnim_ReelTimeBolt[] = {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(1, 4),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2BC[] = {
+static const union AnimCmd sAnim_ReelTimeExplosion[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2C8[] = {
+static const union AnimCmd sAnim_DigitalDisplay_AButton_Flashing[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2D4[] = {
+static const union AnimCmd sAnim_DigitalDisplay_AButton_Static[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED2DC[] = {
+static const union AnimCmd sAnim_DigitalDisplay_DPad_Flashing[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2E8[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Pokeball_Rocking[] = {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_FRAME(0, 16),
@@ -4835,93 +4835,93 @@ static const union AnimCmd gSpriteAnim_83ED2E8[] = {
     ANIMCMD_JUMP(0)
 };
 
-static const union AnimCmd gSpriteAnim_83ED2FC[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Pokeball_Static[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED304[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_1[] = {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED30C[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_2[] = {
     ANIMCMD_FRAME(1, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED314[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_3[] = {
     ANIMCMD_FRAME(2, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED31C[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_4[] = {
     ANIMCMD_FRAME(3, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd gSpriteAnim_83ED324[] = {
+static const union AnimCmd sAnim_DigitalDisplay_Number_5[] = {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED32C[] = {
-    gSpriteAnim_83ED230
+static const union AnimCmd *const sAnims_SingleFrame[] = {
+    sAnim_SingleFrame
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED330[] = {
-    gSpriteAnim_83ED238
+static const union AnimCmd *const sAnims_ReelTimeDuck[] = {
+    sAnim_ReelTimeDuck
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED334[] = {
-    gSpriteAnim_83ED240,
-    gSpriteAnim_83ED248,
-    gSpriteAnim_83ED254,
-    gSpriteAnim_83ED260,
-    gSpriteAnim_83ED26C,
-    gSpriteAnim_83ED278
+static const union AnimCmd *const sAnims_ReelTimePikachu[] = {
+    sAnim_ReelTimePikachu_Still,
+    sAnim_ReelTimePikachu_ChargingSlow,
+    sAnim_ReelTimePikachu_ChargingMedium,
+    sAnim_ReelTimePikachu_ChargingFast,
+    sAnim_ReelTimePikachu_Cheering,
+    sAnim_ReelTimePikachu_FellOver
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED34C[] = {
-    gSpriteAnim_83ED280,
-    gSpriteAnim_83ED288,
-    gSpriteAnim_83ED290,
-    gSpriteAnim_83ED298,
-    gSpriteAnim_83ED2A0,
-    gSpriteAnim_83ED2A8
+static const union AnimCmd *const sAnims_ReelTimeNumbers[] = {
+    sAnim_ReelTimeNumber_0,
+    sAnim_ReelTimeNumber_1,
+    sAnim_ReelTimeNumber_2,
+    sAnim_ReelTimeNumber_3,
+    sAnim_ReelTimeNumber_4,
+    sAnim_ReelTimeNumber_5
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED364[] = {
-    gSpriteAnim_83ED2B0
+static const union AnimCmd *const sAnims_ReelTimeBolt[] = {
+    sAnim_ReelTimeBolt
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED368[] = {
-    gSpriteAnim_83ED2BC
+static const union AnimCmd *const sAnims_ReelTimeExplosion[] = {
+    sAnim_ReelTimeExplosion
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED36C[] = {
-    gSpriteAnim_83ED2C8,
-    gSpriteAnim_83ED2D4
+static const union AnimCmd *const sAnims_DigitalDisplay_AButton[] = {
+    sAnim_DigitalDisplay_AButton_Flashing,
+    sAnim_DigitalDisplay_AButton_Static
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED374[] = {
-    gSpriteAnim_83ED2DC
+static const union AnimCmd *const sAnims_DigitalDisplay_DPad[] = {
+    sAnim_DigitalDisplay_DPad_Flashing
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED378[] = {
-    gSpriteAnim_83ED2E8,
-    gSpriteAnim_83ED2FC
+static const union AnimCmd *const sAnims_DigitalDisplay_Pokeball[] = {
+    sAnim_DigitalDisplay_Pokeball_Rocking,
+    sAnim_DigitalDisplay_Pokeball_Static
 };
 
-static const union AnimCmd *const gSpriteAnimTable_83ED380[] = {
-    gSpriteAnim_83ED304,
-    gSpriteAnim_83ED30C,
-    gSpriteAnim_83ED314,
-    gSpriteAnim_83ED31C,
-    gSpriteAnim_83ED324
+static const union AnimCmd *const sAnims_DigitalDisplay_Number[] = {
+    sAnim_DigitalDisplay_Number_1,
+    sAnim_DigitalDisplay_Number_2,
+    sAnim_DigitalDisplay_Number_3,
+    sAnim_DigitalDisplay_Number_4,
+    sAnim_DigitalDisplay_Number_5
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_83ED394[] = {
+static const union AffineAnimCmd sAffineAnim_ReelTimeSmoke[] = {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0),
     AFFINEANIMCMD_LOOP(0),
     AFFINEANIMCMD_FRAME(0x1, 0x1, 0, 1),
@@ -4929,11 +4929,11 @@ static const union AffineAnimCmd gSpriteAffineAnim_83ED394[] = {
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_83ED3BC[] = {
-    gSpriteAffineAnim_83ED394
+static const union AffineAnimCmd *const sAffineAnims_ReelTimeSmoke[] = {
+    sAffineAnim_ReelTimeSmoke
 };
 
-static const union AffineAnimCmd gSpriteAffineAnim_83ED3C0[] = {
+static const union AffineAnimCmd sAffineAnim_PikaPowerBolt[] = {
     AFFINEANIMCMD_FRAME(0x0, 0x0, 8, 32),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 6, 32),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 16),
@@ -4946,128 +4946,128 @@ static const union AffineAnimCmd gSpriteAffineAnim_83ED3C0[] = {
     AFFINEANIMCMD_END
 };
 
-static const union AffineAnimCmd *const gSpriteAffineAnimTable_83ED410[] = {
-    gSpriteAffineAnim_83ED3C0
+static const union AffineAnimCmd *const sAffineAnims_PikaPowerBolt[] = {
+    sAffineAnim_PikaPowerBolt
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelSymbol = {
-    0, 0, &sOam_32x32, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCB_ReelSymbol
+    0, 0, &sOam_32x32, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCB_ReelSymbol
 };
 
 static const struct SpriteTemplate sSpriteTemplate_CoinNumber = {
-    7, 4, &sOam_8x16, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCB_CoinNumber
+    7, 4, &sOam_8x16, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCB_CoinNumber
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelBackground = {
-    17, 0, &sOam_64x64, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    17, 0, &sOam_64x64, sAnims_SingleFrame, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachu = {
-    0xFFFF, 1, &sOam_64x64, gSpriteAnimTable_83ED334, sImageTable_ReelTimePikachu, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachu
+    0xFFFF, 1, &sOam_64x64, sAnims_ReelTimePikachu, sImageTable_ReelTimePikachu, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachu
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachineAntennae = {
-    0xFFFF, 2, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeMachineAntennae, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 2, &sOam_8x16, sAnims_SingleFrame, sImageTable_ReelTimeMachineAntennae, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachine = {
-    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 3, &sOam_8x16, sAnims_SingleFrame, sImageTable_ReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine = {
-    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_BrokenReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 3, &sOam_8x16, sAnims_SingleFrame, sImageTable_BrokenReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumbers = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED34C, sImageTable_ReelTimeNumbers, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeNumbers
+    0xFFFF, 4, &sOam_16x16, sAnims_ReelTimeNumbers, sImageTable_ReelTimeNumbers, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeNumbers
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeShadow = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeShadow, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeShadow, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeNumberGap, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeNumberGap, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt = {
-    0xFFFF, 4, &sOam_16x32, gSpriteAnimTable_83ED364, sImageTable_ReelTimeBolt, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
+    0xFFFF, 4, &sOam_16x32, sAnims_ReelTimeBolt, sImageTable_ReelTimeBolt, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura = {
-    0xFFFF, 7, &sOam_32x64, gSpriteAnimTable_83ED32C, sImageTable_ReelTimePikachuAura, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
+    0xFFFF, 7, &sOam_32x64, sAnims_SingleFrame, sImageTable_ReelTimePikachuAura, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion = {
-    0xFFFF, 5, &sOam_32x32, gSpriteAnimTable_83ED368, sImageTable_ReelTimeExplosion, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
+    0xFFFF, 5, &sOam_32x32, sAnims_ReelTimeExplosion, sImageTable_ReelTimeExplosion, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck = {
-    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED330, sImageTable_ReelTimeDuck, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
+    0xFFFF, 4, &sOam_8x8, sAnims_ReelTimeDuck, sImageTable_ReelTimeDuck, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeSmoke, gSpriteAffineAnimTable_83ED3BC, SpriteCB_ReelTimeSmoke
+    0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeSmoke, sAffineAnims_ReelTimeSmoke, SpriteCB_ReelTimeSmoke
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED57C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Reel, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reel, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED594 = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Time, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Time, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5AC = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Insert, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Insert, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5C4 = {
-    18, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Stop, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    18, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Stop, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5DC = {
-    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Win, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Win, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5F4 = {
-    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Lose, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Lose, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED60C = {
-    19, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Bonus, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    19, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Bonus, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED624 = {
-    20, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Big, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    20, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Big, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED63C = {
-    21, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Reg, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    21, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reg, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED654 = {
-    0xFFFF, 6, &sOam_32x32, gSpriteAnimTable_83ED36C, sImageTable_DigitalDisplay_AButton, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_32x32, sAnims_DigitalDisplay_AButton, sImageTable_DigitalDisplay_AButton, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED66C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Smoke, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Smoke, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED684 = {
-    0xFFFF, 6, &sOam_16x16, gSpriteAnimTable_83ED380, sImageTable_DigitalDisplay_Number, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_16x16, sAnims_DigitalDisplay_Number, sImageTable_DigitalDisplay_Number, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED69C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED378, sImageTable_DigitalDisplay_Pokeball, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_Pokeball, sImageTable_DigitalDisplay_Pokeball, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED6B4 = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED374, sImageTable_DigitalDisplay_DPad, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_DPad, sImageTable_DigitalDisplay_DPad, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt = {
-    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_PikaPowerBolt, gSpriteAffineAnimTable_83ED410, SpriteCB_PikaPowerBolt
+    0xFFFF, 4, &sOam_8x8, sAnims_SingleFrame, sImageTable_PikaPowerBolt, sAffineAnims_PikaPowerBolt, SpriteCB_PikaPowerBolt
 };
 
 static const struct Subsprite gSubspriteTable_83ED6E4[] = {
