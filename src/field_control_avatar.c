@@ -272,7 +272,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
 #if DEBUG
     if (input->input_field_1_0)
     {
-        debug_sub_80888D8();
+        DebugCycleWarpDestinationAndWarp();
         return TRUE;
     }
     if (input->input_field_1_2)

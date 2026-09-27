@@ -47,7 +47,7 @@ static const struct ContestWinner sEmptyMuseumPortrait =
 };
 
 #if DEBUG
-const s8 gUnknown_Debug_0823C788[][2] =
+const s8 gDebugWarpDestinations[][2] =
 {
     { MAP_GROUP(MAP_INSIDE_OF_TRUCK),                   MAP_NUM(MAP_INSIDE_OF_TRUCK) },
     { MAP_GROUP(MAP_OLDALE_TOWN_POKEMON_CENTER_2F),     MAP_NUM(MAP_OLDALE_TOWN_POKEMON_CENTER_2F) },
@@ -111,14 +111,14 @@ void ZeroBattleTowerData(void)
 }
 
 #if DEBUG
-void debug_sub_8052E04()
+void DebugSetNextWarpDestination()
 {
     u8 i;
 
     for (i = 0; i < 4; i++)
     {
-        if (gUnknown_Debug_0823C788[i][0] == gSaveBlock1.location.mapGroup &&
-            gUnknown_Debug_0823C788[i][1] == gSaveBlock1.location.mapNum)
+        if (gDebugWarpDestinations[i][0] == gSaveBlock1.location.mapGroup &&
+            gDebugWarpDestinations[i][1] == gSaveBlock1.location.mapNum)
         {
             break;
         }
@@ -130,7 +130,7 @@ void debug_sub_8052E04()
         i = 0;
     }
 
-    Overworld_SetWarpDestination(gUnknown_Debug_0823C788[i][0], gUnknown_Debug_0823C788[i][1], -1, -1, -1);
+    Overworld_SetWarpDestination(gDebugWarpDestinations[i][0], gDebugWarpDestinations[i][1], -1, -1, -1);
 }
 #endif
 

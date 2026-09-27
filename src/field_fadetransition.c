@@ -513,14 +513,14 @@ void ReturnFromLinkRoom(void)
 
 #if DEBUG
 
-void debug_sub_80888D8()
+void DebugCycleWarpDestinationAndWarp()
 {
-    debug_sub_8052E04();
+    DebugSetNextWarpDestination();
     DoWarp();
     LockPlayerFieldControls();
 /*    asm("\
     PUSH    {LR}\n\
-    BL      debug_sub_8052E04\n\
+    BL      DebugSetNextWarpDestination\n\
     BL      DoWarp\n\
     BL      LockPlayerFieldControls\n\
     POP     {R0}\n\

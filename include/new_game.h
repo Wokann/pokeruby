@@ -17,7 +17,7 @@ void NewGameInitData(void);
 void debug_sub_8057508(bool32 arg0);
 
 #if DEBUG
-void debug_sub_8052E04();
+void DebugSetNextWarpDestination();
 #endif
 
 #endif // GUARD_NEW_GAME_H

@@ -27,7 +27,7 @@ void DoLavaridgeGymB1FWarp(void);
 void DoLavaridgeGym1FWarp(void);
 void DoTeleportTileWarp(void);
 void DoPortholeWarp(void);
-void debug_sub_80888D8(void);
+void DebugCycleWarpDestinationAndWarp(void);
 void WarpFadeOutScreen(void);
 void WarpFadeInScreen(void);
 
