@@ -649,6 +649,10 @@ static void FadeFootprintsTireTracks_Step1(struct Sprite *sprite)
 #undef sTimer
 #undef sFldEff
 
+#define sLocalId  data[0]
+#define sMapNum   data[1]
+#define sMapGroup data[2]
+
 u32 FldEff_Splash(void)
 {
     u8 objectEventId;
@@ -668,9 +672,9 @@ u32 FldEff_Splash(void)
         sprite->coordOffsetEnabled = TRUE;
         linkedSprite = &gSprites[objectEvent->spriteId];
         sprite->oam.priority = linkedSprite->oam.priority;
-        sprite->data[0] = gFieldEffectArguments[0];
-        sprite->data[1] = gFieldEffectArguments[1];
-        sprite->data[2] = gFieldEffectArguments[2];
+        sprite->sLocalId = gFieldEffectArguments[0];
+        sprite->sMapNum = gFieldEffectArguments[1];
+        sprite->sMapGroup = gFieldEffectArguments[2];
         sprite->y2 = (graphicsInfo->height >> 1) - 4;
         PlaySE(SE_PUDDLE);
     }
@@ -681,7 +685,7 @@ void UpdateSplashFieldEffect(struct Sprite *sprite)
 {
     u8 objectEventId;
 
-    if (sprite->animEnded || TryGetObjectEventIdByLocalIdAndMap(sprite->data[0], sprite->data[1], sprite->data[2], &objectEventId))
+    if (sprite->animEnded || TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
     {
         FieldEffectStop(sprite, FLDEFF_SPLASH);
     }
@@ -692,6 +696,10 @@ void UpdateSplashFieldEffect(struct Sprite *sprite)
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
     }
 }
+
+#undef sLocalId
+#undef sMapNum
+#undef sMapGroup
 
 u32 FldEff_JumpSmallSplash(void)
 {
@@ -729,6 +737,12 @@ u32 FldEff_JumpBigSplash(void)
     return 0;
 }
 
+#define sLocalId  data[0]
+#define sMapNum   data[1]
+#define sMapGroup data[2]
+#define sPrevX    data[3]
+#define sPrevY    data[4]
+
 u32 FldEff_FeetInFlowingWater(void)
 {
     u8 objectEventId;
@@ -747,11 +761,11 @@ u32 FldEff_FeetInFlowingWater(void)
         sprite->callback = UpdateFeetInFlowingWaterFieldEffect;
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gSprites[objectEvent->spriteId].oam.priority;
-        sprite->data[0] = gFieldEffectArguments[0];
-        sprite->data[1] = gFieldEffectArguments[1];
-        sprite->data[2] = gFieldEffectArguments[2];
-        sprite->data[3] = -1;
-        sprite->data[4] = -1;
+        sprite->sLocalId = gFieldEffectArguments[0];
+        sprite->sMapNum = gFieldEffectArguments[1];
+        sprite->sMapGroup = gFieldEffectArguments[2];
+        sprite->sPrevX = -1;
+        sprite->sPrevY = -1;
         sprite->y2 = (graphicsInfo->height >> 1) - 4;
         StartSpriteAnim(sprite, 1);
     }
@@ -764,7 +778,7 @@ static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *sprite)
     struct Sprite *linkedSprite;
     struct ObjectEvent *objectEvent;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->data[0], sprite->data[1], sprite->data[2], &objectEventId) || !gObjectEvents[objectEventId].inShallowFlowingWater)
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId) || !gObjectEvents[objectEventId].inShallowFlowingWater)
     {
         FieldEffectStop(sprite, FLDEFF_FEET_IN_FLOWING_WATER);
     }
@@ -776,10 +790,10 @@ static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *sprite)
         sprite->y = linkedSprite->y;
         sprite->subpriority = linkedSprite->subpriority;
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
-        if (objectEvent->currentCoords.x != sprite->data[3] || objectEvent->currentCoords.y != sprite->data[4])
+        if (objectEvent->currentCoords.x != sprite->sPrevX || objectEvent->currentCoords.y != sprite->sPrevY)
         {
-            sprite->data[3] = objectEvent->currentCoords.x;
-            sprite->data[4] = objectEvent->currentCoords.y;
+            sprite->sPrevX = objectEvent->currentCoords.x;
+            sprite->sPrevY = objectEvent->currentCoords.y;
             if (!sprite->invisible)
             {
                 PlaySE(SE_PUDDLE);
@@ -787,6 +801,12 @@ static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *sprite)
         }
     }
 }
+
+#undef sLocalId
+#undef sMapNum
+#undef sMapGroup
+#undef sPrevX
+#undef sPrevY
 
 u32 FldEff_Ripple(void)
 {
