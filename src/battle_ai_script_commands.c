@@ -95,7 +95,7 @@ static void BattleAICmd_if_would_go_first(void);
 static void BattleAICmd_if_would_not_go_first(void);
 static void BattleAICmd_nullsub_2A(void);
 static void BattleAICmd_nullsub_2B(void);
-static void BattleAICmd_count_alive_pokemon(void);
+static void BattleAICmd_count_usable_party_mons(void);
 static void BattleAICmd_get_considered_move(void);
 static void BattleAICmd_get_considered_move_effect(void);
 static void BattleAICmd_get_ability(void);
@@ -118,17 +118,17 @@ static void BattleAICmd_if_has_move(void);
 static void BattleAICmd_if_dont_have_move(void);
 static void BattleAICmd_if_move_effect(void);
 static void BattleAICmd_if_not_move_effect(void);
-static void BattleAICmd_if_last_move_did_damage(void);
-static void BattleAICmd_if_encored(void);
+static void BattleAICmd_if_any_move_disabled_or_encored(void);
+static void BattleAICmd_if_curr_move_disabled_or_encored(void);
 static void BattleAICmd_flee(void);
-static void BattleAICmd_if_random_100(void);
+static void BattleAICmd_if_random_safari_flee(void);
 static void BattleAICmd_watch(void);
 static void BattleAICmd_get_hold_effect(void);
 static void BattleAICmd_get_gender(void);
-static void BattleAICmd_is_first_turn(void);
+static void BattleAICmd_is_first_turn_for(void);
 static void BattleAICmd_get_stockpile_count(void);
 static void BattleAICmd_is_double_battle(void);
-static void BattleAICmd_get_used_item(void);
+static void BattleAICmd_get_used_held_item(void);
 static void BattleAICmd_get_move_type_from_result(void);
 static void BattleAICmd_get_move_power_from_result(void);
 static void BattleAICmd_get_move_effect_from_result(void);
@@ -194,7 +194,7 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_would_not_go_first,       // 0x29
     BattleAICmd_nullsub_2A,                  // 0x2A
     BattleAICmd_nullsub_2B,                  // 0x2B
-    BattleAICmd_count_alive_pokemon,         // 0x2C
+    BattleAICmd_count_usable_party_mons,         // 0x2C
     BattleAICmd_get_considered_move,         // 0x2D
     BattleAICmd_get_considered_move_effect,  // 0x2E
     BattleAICmd_get_ability,                 // 0x2F
@@ -217,17 +217,17 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_dont_have_move,           // 0x40
     BattleAICmd_if_move_effect,              // 0x41
     BattleAICmd_if_not_move_effect,          // 0x42
-    BattleAICmd_if_last_move_did_damage,     // 0x43
-    BattleAICmd_if_encored,                  // 0x44
+    BattleAICmd_if_any_move_disabled_or_encored,     // 0x43
+    BattleAICmd_if_curr_move_disabled_or_encored,                  // 0x44
     BattleAICmd_flee,                        // 0x45
-    BattleAICmd_if_random_100,               // 0x46
+    BattleAICmd_if_random_safari_flee,               // 0x46
     BattleAICmd_watch,                       // 0x47
     BattleAICmd_get_hold_effect,             // 0x48
     BattleAICmd_get_gender,                  // 0x49
-    BattleAICmd_is_first_turn,               // 0x4A
+    BattleAICmd_is_first_turn_for,               // 0x4A
     BattleAICmd_get_stockpile_count,         // 0x4B
     BattleAICmd_is_double_battle,            // 0x4C
-    BattleAICmd_get_used_item,               // 0x4D
+    BattleAICmd_get_used_held_item,               // 0x4D
     BattleAICmd_get_move_type_from_result,   // 0x4E
     BattleAICmd_get_move_power_from_result,  // 0x4F
     BattleAICmd_get_move_effect_from_result, // 0x50
@@ -1056,7 +1056,7 @@ static void BattleAICmd_nullsub_2B(void)
 {
 }
 
-static void BattleAICmd_count_alive_pokemon(void)
+static void BattleAICmd_count_usable_party_mons(void)
 {
     struct Pokemon *party;
     int i;
@@ -1601,7 +1601,7 @@ static void BattleAICmd_if_not_move_effect(void)
     }
 }
 
-static void BattleAICmd_if_last_move_did_damage(void)
+static void BattleAICmd_if_any_move_disabled_or_encored(void)
 {
     u8 index;
 
@@ -1633,7 +1633,7 @@ static void BattleAICmd_if_last_move_did_damage(void)
     gAIScriptPtr += 7;
 }
 
-static void BattleAICmd_if_encored(void)
+static void BattleAICmd_if_curr_move_disabled_or_encored(void)
 {
     switch (gAIScriptPtr[1])
     {
@@ -1664,7 +1664,7 @@ static void BattleAICmd_flee(void)
     AI_THINKING_STRUCT->aiAction |= (AI_ACTION_DONE | AI_ACTION_FLEE | AI_ACTION_DO_NOT_ATTACK); // what matters is AI_ACTION_FLEE being enabled.
 }
 
-static void BattleAICmd_if_random_100(void)
+static void BattleAICmd_if_random_safari_flee(void)
 {
     u8 safariFleeRate = gBattleStruct->safariFleeRate * 5; // safari flee rate, from 0-20
 
@@ -1714,7 +1714,7 @@ static void BattleAICmd_get_gender(void)
     gAIScriptPtr += 2;
 }
 
-static void BattleAICmd_is_first_turn(void)
+static void BattleAICmd_is_first_turn_for(void)
 {
     u8 index;
 
@@ -1749,7 +1749,7 @@ static void BattleAICmd_is_double_battle(void)
     gAIScriptPtr += 1;
 }
 
-static void BattleAICmd_get_used_item(void)
+static void BattleAICmd_get_used_held_item(void)
 {
     u8 index;
 
