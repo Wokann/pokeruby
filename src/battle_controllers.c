@@ -572,7 +572,7 @@ static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId)
             if (gBattleControllerExecFlags & gBitTable[battlerId])
                 return;
             memcpy(gBattleBufferA[battlerId], &BCOMM(linkRecv, data, gTasks[taskId].data[15], 0), blockSize);
-            sub_80155A4(battlerId);
+            MarkBattlerReceivedLinkData(battlerId);
             if (!(gBattleTypeFlags & BATTLE_TYPE_WILD))
             {
                 gBattlerAttacker    = BCOMM(linkRecv, battlerAttacker, gTasks[taskId].data[15], 0);

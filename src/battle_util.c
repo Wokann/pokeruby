@@ -84,7 +84,7 @@ u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 bank);
 void SetMoveEffect(bool8 primary, u8 certainArg);
 bool8 UproarWakeUpCheck(u8 bank);
-bool8 sub_8018018(u8 bank, u8, u8);
+bool8 HasNoMonsToSwitch(u8 bank, u8, u8);
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 a4, u16 powerOverride, u8 typeOverride, u8 bank_atk, u8 bank_def);
 u8 CountTrailingZeroBits(u32 a);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
@@ -359,7 +359,7 @@ void MarkBattlerForControllerExec(u8 bank)
         gBattleControllerExecFlags |= gBitTable[bank];
 }
 
-void sub_80155A4(u8 arg0)
+void MarkBattlerReceivedLinkData(u8 arg0)
 {
     s32 i;
 
@@ -420,7 +420,7 @@ void ResetSentPokesToOpponentValue(void)
         gSentPokesToOpponent[(i & BIT_FLANK) >> 1] = bits;
 }
 
-void sub_8015740(u8 bank)
+void OpponentSwitchInResetSentPokesToOpponentValue(u8 bank)
 {
     s32 i = 0;
     u32 bits = 0;
@@ -440,11 +440,11 @@ void sub_8015740(u8 bank)
     }
 }
 
-void sub_80157C4(u8 bank)
+void UpdateSentPokesToOpponentValue(u8 bank)
 {
     if (GetBattlerSide(bank) == B_SIDE_OPPONENT)
     {
-        sub_8015740(bank);
+        OpponentSwitchInResetSentPokesToOpponentValue(bank);
     }
     else
     {
@@ -1296,7 +1296,7 @@ bool8 HandleFaintedMonActions(void)
             gBattleStruct->faintedActionsState++;
             for (i = 0; i < gBattlersCount; i++)
             {
-                if (gAbsentBattlerFlags & gBitTable[i] && !sub_8018018(i, 6, 6))
+                if (gAbsentBattlerFlags & gBitTable[i] && !HasNoMonsToSwitch(i, 6, 6))
                     gAbsentBattlerFlags &= ~(gBitTable[i]);
             }
         case 1:
@@ -1313,7 +1313,7 @@ bool8 HandleFaintedMonActions(void)
             gBattleStruct->faintedActionsState = 3;
             break;
         case 2:
-            sub_8015740(gBank1);
+            OpponentSwitchInResetSentPokesToOpponentValue(gBank1);
             if (++gBattleStruct->faintedActionsBattlerId == gBattlersCount)
                 gBattleStruct->faintedActionsState = 3;
             else
@@ -1632,7 +1632,7 @@ u8 AtkCanceller_UnableToUseMove(void)
     return effect;
 }
 
-bool8 sub_8018018(u8 bank, u8 r1, u8 r2)
+bool8 HasNoMonsToSwitch(u8 bank, u8 r1, u8 r2)
 {
     struct Pokemon* party;
     u8 r7;
