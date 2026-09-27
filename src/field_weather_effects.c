@@ -444,36 +444,36 @@ static const u16 sRainSpriteFallingDurations[][2];
 static void StartRainSpriteFall(struct Sprite *sprite)
 {
     u32 randVal;
-    u16 r6;
-    s32 r4;
-    s32 r0;
+    u16 numFallingFrames;
+    s32 tileX;
+    s32 tileY;
 
     if (sprite->data[1] == 0)
         sprite->data[1] = 361;
     randVal = sprite->data[1] * 1103515245 + 12345;
     sprite->data[1] = ((randVal & 0x7FFF0000) >> 16) % 600;
 
-    r6 = sRainSpriteFallingDurations[gWeatherPtr->isDownpour][0];
+    numFallingFrames = sRainSpriteFallingDurations[gWeatherPtr->isDownpour][0];
 
-    r4 = sprite->data[1] % 30;
-    sprite->data[2] = r4 * 8;  // useless assignment
+    tileX = sprite->data[1] % 30;
+    sprite->data[2] = tileX * 8;  // useless assignment
 
-    r0 = sprite->data[1] / 30;
-    sprite->data[3] = r0 * 8;  // useless assignment
+    tileY = sprite->data[1] / 30;
+    sprite->data[3] = tileY * 8;  // useless assignment
 
-    sprite->data[2] = r4;
+    sprite->data[2] = tileX;
     sprite->data[2] <<= 7;
 
-    sprite->data[3] = r0;
+    sprite->data[3] = tileY;
     sprite->data[3] <<= 7;
 
-    sprite->data[2] -= sRainSpriteMovement[gWeatherPtr->isDownpour][0] * r6;
-    sprite->data[3] -= sRainSpriteMovement[gWeatherPtr->isDownpour][1] * r6;
+    sprite->data[2] -= sRainSpriteMovement[gWeatherPtr->isDownpour][0] * numFallingFrames;
+    sprite->data[3] -= sRainSpriteMovement[gWeatherPtr->isDownpour][1] * numFallingFrames;
 
     StartSpriteAnim(sprite, 0);
     sprite->data[4] = 0;
     sprite->coordOffsetEnabled = FALSE;
-    sprite->data[0] = r6;
+    sprite->data[0] = numFallingFrames;
 }
 
 static void UpdateRainSprite(struct Sprite *sprite)
@@ -522,23 +522,23 @@ static void WaitRainSprite(struct Sprite *sprite)
     }
 }
 
-static void InitRainSpriteMovement(struct Sprite *sprite, u16 b)
+static void InitRainSpriteMovement(struct Sprite *sprite, u16 val)
 {
-    u16 r8 = sRainSpriteFallingDurations[gWeatherPtr->isDownpour][0];
-    u16 r6 = b / (sRainSpriteFallingDurations[gWeatherPtr->isDownpour][1] + r8);
-    u16 r4 = b % (sRainSpriteFallingDurations[gWeatherPtr->isDownpour][1] + r8);
+    u16 numFallingFrames = sRainSpriteFallingDurations[gWeatherPtr->isDownpour][0];
+    u16 numAdvanceRng = val / (sRainSpriteFallingDurations[gWeatherPtr->isDownpour][1] + numFallingFrames);
+    u16 frameVal = val % (sRainSpriteFallingDurations[gWeatherPtr->isDownpour][1] + numFallingFrames);
 
-    while (--r6 != 0xFFFF)
+    while (--numAdvanceRng != 0xFFFF)
         StartRainSpriteFall(sprite);
-    if (r4 < r8)
+    if (frameVal < numFallingFrames)
     {
-        while (--r4 != 0xFFFF)
+        while (--frameVal != 0xFFFF)
             UpdateRainSprite(sprite);
         sprite->data[6] = 0;
     }
     else
     {
-        sprite->data[0] = r4 - r8;
+        sprite->data[0] = frameVal - numFallingFrames;
         sprite->invisible = TRUE;
         sprite->data[6] = 1;
     }
@@ -984,20 +984,20 @@ static bool8 DestroySnowflakeSprite(void)
 
 static void InitSnowflakeSpriteMovement(struct Sprite *sprite)
 {
-    u16 r4 = ((sprite->data[4] * 5) & 7) * 30 + (Random() % 30);
-    u16 r6;
+    u16 x = ((sprite->data[4] * 5) & 7) * 30 + (Random() % 30);
+    u16 rand;
 
     sprite->y = -3 - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
-    sprite->x = r4 - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
+    sprite->x = x - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
     sprite->data[0] = sprite->y * 128;
     sprite->x2 = 0;
-    r6 = Random();
-    sprite->data[1] = (r6 & 3) * 5 + 64;
-    sprite->data[7] = (r6 & 3) * 5 + 64;
-    StartSpriteAnim(sprite, (r6 & 1) ? 0 : 1);
+    rand = Random();
+    sprite->data[1] = (rand & 3) * 5 + 64;
+    sprite->data[7] = (rand & 3) * 5 + 64;
+    StartSpriteAnim(sprite, (rand & 1) ? 0 : 1);
     sprite->data[3] = 0;
-    sprite->data[2] = ((r6 & 3) == 0) ? 2 : 1;
-    sprite->data[6] = (r6 & 0x1F) + 210;
+    sprite->data[2] = ((rand & 3) == 0) ? 2 : 1;
+    sprite->data[6] = (rand & 0x1F) + 210;
     sprite->data[5] = 0;
 }
 
@@ -1015,31 +1015,31 @@ static void WaitSnowflakeSprite(struct Sprite *sprite)
 
 static void UpdateSnowflakeSprite(struct Sprite *sprite)
 {
-    s16 r3;
-    s16 r2;
+    s16 x;
+    s16 y;
 
     sprite->data[0] += sprite->data[1];
     sprite->y = sprite->data[0] >> 7;
     sprite->data[3] = (sprite->data[3] + sprite->data[2]) & 0xFF;
     sprite->x2 = gSineTable[sprite->data[3]] / 64;
 
-    r3 = (sprite->x + sprite->centerToCornerVecX + gSpriteCoordOffsetX) & 0x1FF;
-    if (r3 & 0x100)
-        r3 = -0x100 | r3;  // hmm... what is this?
-    if (r3 < -3)
+    x = (sprite->x + sprite->centerToCornerVecX + gSpriteCoordOffsetX) & 0x1FF;
+    if (x & 0x100)
+        x = -0x100 | x;  // hmm... what is this?
+    if (x < -3)
         sprite->x = 242 - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
-    else if (r3 > 242)
+    else if (x > 242)
         sprite->x = -3 - (gSpriteCoordOffsetX + sprite->centerToCornerVecX);
 
-    r2 = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0xFF;
-    if (r2 > 163 && r2 < 171)
+    y = (sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY) & 0xFF;
+    if (y > 163 && y < 171)
     {
         sprite->y = 250 - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
         sprite->data[0] = sprite->y * 128;
         sprite->data[5] = 0;
         sprite->data[6] = 220;
     }
-    else if (r2 > 242 && r2 < 250)
+    else if (y > 242 && y < 250)
     {
         sprite->y = 163;
         sprite->data[0] = sprite->y * 128;
