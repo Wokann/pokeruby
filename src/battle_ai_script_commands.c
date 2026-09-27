@@ -66,24 +66,24 @@ static void BattleAICmd_if_status2(void);
 static void BattleAICmd_if_not_status2(void);
 static void BattleAICmd_if_status3(void);
 static void BattleAICmd_if_not_status3(void);
-static void BattleAICmd_if_status4(void);
-static void BattleAICmd_if_not_status4(void);
+static void BattleAICmd_if_side_affecting(void);
+static void BattleAICmd_if_not_side_affecting(void);
 static void BattleAICmd_if_less_than(void);
 static void BattleAICmd_if_more_than(void);
 static void BattleAICmd_if_equal(void);
 static void BattleAICmd_if_not_equal(void);
-static void BattleAICmd_if_less_than_32(void);
-static void BattleAICmd_if_more_than_32(void);
-static void BattleAICmd_if_equal_32(void);
-static void BattleAICmd_if_not_equal_32(void);
+static void BattleAICmd_if_less_than_ptr(void);
+static void BattleAICmd_if_more_than_ptr(void);
+static void BattleAICmd_if_equal_ptr(void);
+static void BattleAICmd_if_not_equal_ptr(void);
 static void BattleAICmd_if_move(void);
 static void BattleAICmd_if_not_move(void);
 static void BattleAICmd_if_in_bytes(void);
 static void BattleAICmd_if_not_in_bytes(void);
-static void BattleAICmd_if_in_words(void);
-static void BattleAICmd_if_not_in_words(void);
-static void BattleAICmd_if_user_can_damage(void);
-static void BattleAICmd_if_user_cant_damage(void);
+static void BattleAICmd_if_in_hwords(void);
+static void BattleAICmd_if_not_in_hwords(void);
+static void BattleAICmd_if_user_has_attacking_move(void);
+static void BattleAICmd_if_user_has_no_attacking_moves(void);
 static void BattleAICmd_get_turn_count(void);
 static void BattleAICmd_get_type(void);
 static void BattleAICmd_get_move_power(void);
@@ -165,24 +165,24 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_not_status2,              // 0xC
     BattleAICmd_if_status3,                  // 0xD
     BattleAICmd_if_not_status3,              // 0xE
-    BattleAICmd_if_status4,                  // 0xF
-    BattleAICmd_if_not_status4,              // 0x10
+    BattleAICmd_if_side_affecting,                  // 0xF
+    BattleAICmd_if_not_side_affecting,              // 0x10
     BattleAICmd_if_less_than,                // 0x11
     BattleAICmd_if_more_than,                // 0x12
     BattleAICmd_if_equal,                    // 0x13
     BattleAICmd_if_not_equal,                // 0x14
-    BattleAICmd_if_less_than_32,             // 0x15
-    BattleAICmd_if_more_than_32,             // 0x16
-    BattleAICmd_if_equal_32,                 // 0x17
-    BattleAICmd_if_not_equal_32,             // 0x18
+    BattleAICmd_if_less_than_ptr,             // 0x15
+    BattleAICmd_if_more_than_ptr,             // 0x16
+    BattleAICmd_if_equal_ptr,                 // 0x17
+    BattleAICmd_if_not_equal_ptr,             // 0x18
     BattleAICmd_if_move,                     // 0x19
     BattleAICmd_if_not_move,                 // 0x1A
     BattleAICmd_if_in_bytes,                 // 0x1B
     BattleAICmd_if_not_in_bytes,             // 0x1C
-    BattleAICmd_if_in_words,                 // 0x1D
-    BattleAICmd_if_not_in_words,             // 0x1E
-    BattleAICmd_if_user_can_damage,          // 0x1F
-    BattleAICmd_if_user_cant_damage,         // 0x20
+    BattleAICmd_if_in_hwords,                 // 0x1D
+    BattleAICmd_if_not_in_hwords,             // 0x1E
+    BattleAICmd_if_user_has_attacking_move,          // 0x1F
+    BattleAICmd_if_user_has_no_attacking_moves,         // 0x20
     BattleAICmd_get_turn_count,              // 0x21
     BattleAICmd_get_type,                    // 0x22
     BattleAICmd_get_move_power,              // 0x23
@@ -681,7 +681,7 @@ static void BattleAICmd_if_not_status3(void)
         gAIScriptPtr += 10;
 }
 
-static void BattleAICmd_if_status4(void)
+static void BattleAICmd_if_side_affecting(void)
 {
     u16 index;
     u32 arg1, arg2;
@@ -700,7 +700,7 @@ static void BattleAICmd_if_status4(void)
         gAIScriptPtr += 10;
 }
 
-static void BattleAICmd_if_not_status4(void)
+static void BattleAICmd_if_not_side_affecting(void)
 {
     u16 index;
     u32 arg1, arg2;
@@ -751,7 +751,7 @@ static void BattleAICmd_if_not_equal(void)
         gAIScriptPtr += 6;
 }
 
-static void BattleAICmd_if_less_than_32(void)
+static void BattleAICmd_if_less_than_ptr(void)
 {
     u8 *temp = T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -761,7 +761,7 @@ static void BattleAICmd_if_less_than_32(void)
         gAIScriptPtr += 9;
 }
 
-static void BattleAICmd_if_more_than_32(void)
+static void BattleAICmd_if_more_than_ptr(void)
 {
     u8 *temp = T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -771,7 +771,7 @@ static void BattleAICmd_if_more_than_32(void)
         gAIScriptPtr += 9;
 }
 
-static void BattleAICmd_if_equal_32(void)
+static void BattleAICmd_if_equal_ptr(void)
 {
     u8 *temp = T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -781,7 +781,7 @@ static void BattleAICmd_if_equal_32(void)
         gAIScriptPtr += 9;
 }
 
-static void BattleAICmd_if_not_equal_32(void)
+static void BattleAICmd_if_not_equal_ptr(void)
 {
     u8 *temp = T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -843,7 +843,7 @@ static void BattleAICmd_if_not_in_bytes(void)
     gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 5);
 }
 
-static void BattleAICmd_if_in_words(void)
+static void BattleAICmd_if_in_hwords(void)
 {
     u16 *ptr = (u16 *)T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -859,7 +859,7 @@ static void BattleAICmd_if_in_words(void)
     gAIScriptPtr += 9;
 }
 
-static void BattleAICmd_if_not_in_words(void)
+static void BattleAICmd_if_not_in_hwords(void)
 {
     u16 *ptr = (u16 *)T1_READ_PTR(gAIScriptPtr + 1);
 
@@ -875,7 +875,7 @@ static void BattleAICmd_if_not_in_words(void)
     gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 5);
 }
 
-static void BattleAICmd_if_user_can_damage(void)
+static void BattleAICmd_if_user_has_attacking_move(void)
 {
     s32 i;
 
@@ -891,7 +891,7 @@ static void BattleAICmd_if_user_can_damage(void)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
 }
 
-static void BattleAICmd_if_user_cant_damage(void)
+static void BattleAICmd_if_user_has_no_attacking_moves(void)
 {
     s32 i;
 
