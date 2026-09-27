@@ -276,10 +276,10 @@ static void CreateDigitalDisplayScene(u8 arg0);
 static bool8 IsDigitalDisplayAnimFinished(void);
 static void DigitalDisplay_Idle(struct Task *task);
 static void Task_DigitalDisplay(u8 taskId);
-static void sub_8104EA8(void);
-static void sub_8104F8C(void);
-static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3);
-static void sub_81050C4(void);
+static void CreateReelSymbolSprites(void);
+static void CreateCreditPayoutNumberSprites(void);
+static void CreateCoinNumberSprite(s16 x, s16 y, u8 a2, s16 a3);
+static void CreateReelBackgroundSprite(void);
 static void sub_8105100(void);
 static void sub_810514C(void);
 static void sub_81051C0(void);
@@ -550,10 +550,10 @@ static void SlotMachineSetup_5_0(void)
 
 static void SlotMachineSetup_6_0(void)
 {
-    sub_8104EA8();
-    sub_8104F8C();
+    CreateReelSymbolSprites();
+    CreateCreditPayoutNumberSprites();
     CreateInvisibleFlashMatchLineSprites();
-    sub_81050C4();
+    CreateReelBackgroundSprite();
 }
 
 static void SlotMachineSetup_6_1(void)
@@ -3160,9 +3160,9 @@ static void DigitalDisplay_Idle(struct Task *task)
 {
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED414;
+static const struct SpriteTemplate sSpriteTemplate_ReelSymbol;
 
-static void sub_8104EA8(void)
+static void CreateReelSymbolSprites(void)
 {
     s16 i;
     s16 j;
@@ -3171,7 +3171,7 @@ static void sub_8104EA8(void)
     {
         for (j = 0; j < 120; j += 24)
         {
-            struct Sprite *sprite = gSprites + CreateSprite(&gSpriteTemplate_83ED414, x, 0, 14);
+            struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_ReelSymbol, x, 0, 14);
             sprite->oam.priority = 3;
             sprite->data[0] = i;
             sprite->data[1] = j;
@@ -3180,7 +3180,7 @@ static void sub_8104EA8(void)
     }
 }
 
-static void sub_8104F18(struct Sprite *sprite)
+static void SpriteCB_ReelSymbol(struct Sprite *sprite)
 {
     sprite->data[2] = sSlotMachine->unk1C[sprite->data[0]] + sprite->data[1];
     sprite->data[2] %= 120;
@@ -3189,22 +3189,22 @@ static void sub_8104F18(struct Sprite *sprite)
     SetSpriteSheetFrameTileNum(sprite);
 }
 
-static void sub_8104F8C(void)
+static void CreateCreditPayoutNumberSprites(void)
 {
     s16 i;
     s16 x;
 
     for (x = 203, i = 1; i < 10000; i *= 10, x -= 7)
-        sub_8104FF4(x, 23, 0, i);
+        CreateCoinNumberSprite(x, 23, 0, i);
     for (x = 235, i = 1; i < 10000; i *= 10, x -= 7)
-        sub_8104FF4(x, 23, 1, i);
+        CreateCoinNumberSprite(x, 23, 1, i);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED42C;
+static const struct SpriteTemplate sSpriteTemplate_CoinNumber;
 
-static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3)
+static void CreateCoinNumberSprite(s16 x, s16 y, u8 a2, s16 a3)
 {
-    struct Sprite *sprite = gSprites + CreateSprite(&gSpriteTemplate_83ED42C, x, y, 13);
+    struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_CoinNumber, x, y, 13);
     sprite->oam.priority = 2;
     sprite->data[0] = a2;
     sprite->data[1] = a3;
@@ -3212,7 +3212,7 @@ static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3)
     sprite->data[3] = -1;
 }
 
-static void sub_810506C(struct Sprite *sprite)
+static void SpriteCB_CoinNumber(struct Sprite *sprite)
 {
     u16 tag = sSlotMachine->coins;
     if (sprite->data[0])
@@ -3228,14 +3228,14 @@ static void sub_810506C(struct Sprite *sprite)
     }
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED444;
-static const struct SubspriteTable gSubspriteTables_83ED704[];
+static const struct SpriteTemplate sSpriteTemplate_ReelBackground;
+static const struct SubspriteTable sSubspriteTable_ReelBackground[];
 
-static void sub_81050C4(void)
+static void CreateReelBackgroundSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED444, 0x58, 0x48, 15);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelBackground, 0x58, 0x48, 15);
     gSprites[spriteId].oam.priority = 3;
-    SetSubspriteTables(gSprites + spriteId, gSubspriteTables_83ED704);
+    SetSubspriteTables(gSprites + spriteId, sSubspriteTable_ReelBackground);
 }
 
 static const struct SpriteTemplate gSpriteTemplate_83ED45C;
@@ -4950,15 +4950,15 @@ static const union AffineAnimCmd *const gSpriteAffineAnimTable_83ED410[] = {
     gSpriteAffineAnim_83ED3C0
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED414 = {
-    0, 0, &gOamData_83ED0A0, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, sub_8104F18
+static const struct SpriteTemplate sSpriteTemplate_ReelSymbol = {
+    0, 0, &gOamData_83ED0A0, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCB_ReelSymbol
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED42C = {
-    7, 4, &gOamData_83ED088, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, sub_810506C
+static const struct SpriteTemplate sSpriteTemplate_CoinNumber = {
+    7, 4, &gOamData_83ED088, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCB_CoinNumber
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED444 = {
+static const struct SpriteTemplate sSpriteTemplate_ReelBackground = {
     17, 0, &gOamData_83ED0B8, gSpriteAnimTable_83ED32C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
@@ -5077,7 +5077,7 @@ static const struct Subsprite gSubspriteTable_83ED6E4[] = {
     {0, 0, ST_OAM_SQUARE, 3, 0x0, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED704[] = {
+static const struct SubspriteTable sSubspriteTable_ReelBackground[] = {
     {4, gSubspriteTable_83ED6E4}
 };
 
