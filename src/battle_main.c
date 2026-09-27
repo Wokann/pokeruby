@@ -1370,12 +1370,12 @@ extern u8 gUnknown_Debug_2023B62[];
 extern const u8 Str_821F7BD[];
 extern const u8 Str_821F7DA[];
 
-void debug_sub_8010818(void);
-void debug_sub_80108B8(void);
-void debug_sub_8010CAC(void);
-void debug_sub_8011498(void);
-void debug_sub_801174C(void);
-void debug_sub_8011D40(void);
+void ResetDebugBattlePartyData(void);
+void CB2_InitDebugBattlePartyEditor(void);
+void CB2_DebugBattlePartyEditor(void);
+void CB2_DebugBattleMoveEditor(void);
+void StartDebugBattleFromPartyEditor(void);
+void VBlankCB_DebugBattlePartyEditor(void);
 void debug_sub_8011E5C(void);
 void debug_sub_8011E74(void);
 void debug_sub_8011EA0(u8);
@@ -1410,14 +1410,14 @@ extern const u8 gDebugBattleCharmap_Gfx_lz[];
 extern const u8 gDebugBattleCharmap_Tilemap_lz[];
 extern const u8 gDebugBattleCharmap_Pal_lz[];
 
-void debug_sub_8010800(void)
+void InitDebugBattlePartyEditor(void)
 {
-    debug_sub_8010818();
-    debug_sub_80108B8();
+    ResetDebugBattlePartyData();
+    CB2_InitDebugBattlePartyEditor();
     *(u32 *)(gBattleBuffersTransferData + 0x100) = 0;
 }
 
-void debug_sub_8010818(void)
+void ResetDebugBattlePartyData(void)
 {
 	s32 i;
 
@@ -1439,7 +1439,7 @@ void debug_sub_8010818(void)
 	}
 }
 
-void debug_sub_80108B8(void)
+void CB2_InitDebugBattlePartyEditor(void)
 {
 	s32 i;
 
@@ -1466,8 +1466,8 @@ void debug_sub_80108B8(void)
 	LZDecompressVram(gDebugBattleCharmap_Pal_lz, (void *)PLTT);
 	LZDecompressVram(gDebugBattleCharmap_Pal_lz, (void *)(PLTT + 0x1E0));
 	m4aSoundVSyncOn();
-	SetVBlankCallback(debug_sub_8011D40);
-	SetMainCallback2(debug_sub_8010CAC);
+	SetVBlankCallback(VBlankCB_DebugBattlePartyEditor);
+	SetMainCallback2(CB2_DebugBattlePartyEditor);
 	ResetTasks();
 	ResetSpriteData();
 	ScanlineEffect_Stop();
@@ -1487,7 +1487,7 @@ void debug_sub_80108B8(void)
 	debug_sub_80125A0();
 	if (gUnknown_Debug_2023A76[0][0x22] == 8)
 	{
-		debug_sub_801174C();
+		StartDebugBattleFromPartyEditor();
 	}
 	else
 	{
@@ -1567,7 +1567,7 @@ void debug_sub_8010B80(u8 a)
 	= r12 * 10 + r7;
 }
 
-void debug_sub_8010CAC(void)
+void CB2_DebugBattlePartyEditor(void)
 {
     s32 r5;
 
@@ -1579,11 +1579,11 @@ void debug_sub_8010CAC(void)
         {
             gUnknown_Debug_030043A8 = 0;
             debug_sub_8012628();
-            SetMainCallback2(debug_sub_8011498);
+            SetMainCallback2(CB2_DebugBattleMoveEditor);
         }
         if (gUnknown_Debug_030043A0 == 0 && gUnknown_Debug_030043A4 == 6)
         {
-            gMain.savedCallback = debug_sub_80108B8;
+            gMain.savedCallback = CB2_InitDebugBattlePartyEditor;
             CreateMon(
               &gPlayerParty[0],
               gUnknown_Debug_2023A76[0][0 * 5 + 0],
@@ -1598,7 +1598,7 @@ void debug_sub_8010CAC(void)
             switch (gUnknown_Debug_2023A76[0][6 * 5 + 0])
             {
             case 1:
-                gCB2_AfterEvolution = debug_sub_80108B8;
+                gCB2_AfterEvolution = CB2_InitDebugBattlePartyEditor;
                 EvolutionScene(&gPlayerParty[0], gUnknown_Debug_2023A76[0][1 * 5 + 0], 1, 0);
                 break;
             case 2:
@@ -1620,7 +1620,7 @@ void debug_sub_8010CAC(void)
         }
     }
     if (gMain.newKeysRaw == START_BUTTON)
-        debug_sub_801174C();
+        StartDebugBattleFromPartyEditor();
     if (gMain.newKeysRaw == DPAD_UP)
     {
         debug_sub_80125E4();
@@ -1690,7 +1690,7 @@ void debug_sub_8010CAC(void)
         switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
         {
         case 31:
-            debug_sub_8010818();
+            ResetDebugBattlePartyData();
             debug_sub_8011E5C();
             debug_sub_8011E74();
             debug_sub_8012540();
@@ -1751,7 +1751,7 @@ void debug_sub_8010CAC(void)
         switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
         {
         case 31:
-            debug_sub_8010818();
+            ResetDebugBattlePartyData();
             debug_sub_8011E5C();
             debug_sub_8011E74();
             debug_sub_8012540();
@@ -1867,7 +1867,7 @@ void debug_sub_8010CAC(void)
 
 extern u16 gUnknown_Debug_821F564[][5];
 
-void debug_sub_8011498(void)
+void CB2_DebugBattleMoveEditor(void)
 {
 	u8 r9 = gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5;
 
@@ -1876,10 +1876,10 @@ void debug_sub_8011498(void)
 	if (gMain.newKeysRaw == SELECT_BUTTON)
 	{
 		debug_sub_8012658();
-		SetMainCallback2(debug_sub_8010CAC);
+		SetMainCallback2(CB2_DebugBattlePartyEditor);
 	}
 	if (gMain.newKeysRaw == START_BUTTON)
-		debug_sub_801174C();
+		StartDebugBattleFromPartyEditor();
 	if (gMain.newKeysRaw == DPAD_UP || gMain.newKeysRaw == DPAD_DOWN)
 	{
 		debug_sub_8012658();
@@ -1933,7 +1933,7 @@ extern u8 gUnknown_020297ED;
 
 extern void DebugInitBattleSprites(void);
 
-void debug_sub_801174C(void)
+void StartDebugBattleFromPartyEditor(void)
 {
 	u8 r9 = 0;
 	u8 r6;
@@ -2105,7 +2105,7 @@ void debug_sub_801174C(void)
             gUnknown_02023A14_50 |= 6;
     }
 
-    gMain.savedCallback = debug_sub_80108B8;
+    gMain.savedCallback = CB2_InitDebugBattlePartyEditor;
     SetMainCallback2(DebugInitBattleSprites);
 
     ClearBag();
@@ -2143,7 +2143,7 @@ void debug_sub_801174C(void)
         GivePokeblock(&gUnknown_Debug_821F5AC[i]);
 }
 
-void debug_sub_8011D40(void)
+void VBlankCB_DebugBattlePartyEditor(void)
 {
     DmaCopy16(3, gSharedMem, (void *)(VRAM + 0x4000), 0x1000);
     REG_BG0HOFS = gBattle_BG0_X;
@@ -2649,7 +2649,7 @@ void debug_sub_8012878(void)
 	UpdatePaletteFade();
 	RunTasks();
 	if (gMain.heldKeys == (SELECT_BUTTON | R_BUTTON))
-		SetMainCallback2(debug_sub_80108B8);
+		SetMainCallback2(CB2_InitDebugBattlePartyEditor);
 }
 
 void debug_sub_80128B4(void)

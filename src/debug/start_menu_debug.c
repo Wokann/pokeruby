@@ -472,7 +472,7 @@ void debug_sub_8076BB4(u8 taskId)
 
 u8 DebugMenu_8076C6C(void)
 {
-    SetMainCallback2(debug_sub_8010800);
+    SetMainCallback2(InitDebugBattlePartyEditor);
     return 0;
 }
 
