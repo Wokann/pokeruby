@@ -131,8 +131,8 @@ struct UnkPokenavStruct {
     /*0x76AA*/ u8 isConditionGraphSearchMode;
     /*0x76AC*/ struct Sprite *unk76AC;
     /*0x76B0*/ struct PokemonMarkMenu unk76B0;
-    /*0x8764*/ u16 unk8764;
-    /*0x8766*/ s16 unk8766;
+    /*0x8764*/ u16 monInfoHeaderGfxStep;
+    /*0x8766*/ s16 monInfoHeaderXOffset;
     /*0x8768*/ struct Sprite *unk8768;
     /*0x876C*/ s16 listCursorRow;
     /*0x876E*/ s16 listSelectedIndex;
@@ -239,7 +239,7 @@ struct UnkPokenavStruct {
 
 extern struct UnkPokenavStruct *const gPokenavStructPtr;
 
-bool8 sub_80F170C(void);
+bool8 SlidePokenavMonInfoHeaderIn(void);
 bool8 sub_80F1778(void);
 void sub_80F1934(void);
 void sub_80F2C80(u8);
@@ -337,12 +337,12 @@ bool8 UpdatePokenavListScroll(void);
 void PrintTrainerEyesLocation(u8 listIndex);
 void sub_80F19DC(u8*);
 bool8 LoadRibbonsSummaryScreenStep(void);
-void sub_80F1614(void);
+void InitPokenavMonInfoHeaderGfx(void);
 void DrawMonRibbonIcons(void);
 void CopyRibbonsSummaryTilemapToVram(void);
 void PrintRibbonsSummaryMonInfo(void);
 void PrintRibbonsSummaryDescription(void);
-bool8 sub_80F162C(u8);
+bool8 LoadPokenavMonInfoHeaderGfxStep(u8 forRibbons);
 void PrintConditionGraphMonInfo(u16 monSlot);
 void sub_80F19FC(void);
 void sub_80F1A74(void);

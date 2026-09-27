@@ -88,8 +88,8 @@ extern const u16 gUnknown_083E3C60[][16];
 extern const u16 gPokenavRibbonsIconGfx[][2];
 extern const u8 *const gRibbonDescriptions[][2];
 extern const u8 *const gGiftRibbonDescriptions[][2];
-extern const u8 gUnknown_08E9FF58[];
-extern const u8 gPokenavRibbonPokeView_Gfx[];
+extern const u8 gPokenavMonInfoHeaderTilemap[];
+extern const u8 gPokenavMonInfoHeader_Gfx[];
 extern const u16 gUnknown_083E0124[];
 extern const u16 gUnknown_083E0144[];
 extern const u8 gPokenavMenuOptions_Gfx[];
@@ -885,10 +885,10 @@ bool8 LoadConditionGraphScreenStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        sub_80F1614();
+        InitPokenavMonInfoHeaderGfx();
         break;
     case 6:
-        if (sub_80F162C(0))
+        if (LoadPokenavMonInfoHeaderGfxStep(FALSE))
             return TRUE;
         break;
     case 7:
@@ -1507,10 +1507,10 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        sub_80F1614();
+        InitPokenavMonInfoHeaderGfx();
         break;
     case 6:
-        if (sub_80F162C(1))
+        if (LoadPokenavMonInfoHeaderGfxStep(TRUE))
             return TRUE;
         break;
     case 7:
@@ -1679,57 +1679,57 @@ void PrintRibbonsSummaryCount(void)
     Menu_PrintText(gPokenavStructPtr->unk8788, 12, 13);
 }
 
-void sub_80F1614(void)
+void InitPokenavMonInfoHeaderGfx(void)
 {
-    gPokenavStructPtr->unk8764 = 0;
+    gPokenavStructPtr->monInfoHeaderGfxStep = 0;
 }
 
-bool8 sub_80F162C(u8 arg0)
+bool8 LoadPokenavMonInfoHeaderGfxStep(u8 forRibbons)
 {
-    switch (gPokenavStructPtr->unk8764)
+    switch (gPokenavStructPtr->monInfoHeaderGfxStep)
     {
     case 0:
         break;
     case 1:
-        LZ77UnCompVram(gUnknown_08E9FF58, (void *)(VRAM + 0xE800));
+        LZ77UnCompVram(gPokenavMonInfoHeaderTilemap, (void *)(VRAM + 0xE800));
         break;
     case 2:
-    DmaCopy16Defvars(3, gPokenavRibbonPokeView_Gfx, (void *)(VRAM + 0xE000), 0xE0);
+    DmaCopy16Defvars(3, gPokenavMonInfoHeader_Gfx, (void *)(VRAM + 0xE000), 0xE0);
         break;
     case 3:
-        if (!arg0)
+        if (!forRibbons)
             LoadPalette(gUnknown_083E0124, 0xD0, 0x20);
         else
             LoadPalette(gUnknown_083E0144, 0xD0, 0x20);
 
-        gPokenavStructPtr->unk8766 = -80;
+        gPokenavStructPtr->monInfoHeaderXOffset = -80;
         REG_BG0CNT = 0x1D0D;
-        gPokenavStructPtr->unk8764++;
+        gPokenavStructPtr->monInfoHeaderGfxStep++;
         return FALSE;
     default:
         return FALSE;
     }
 
-    gPokenavStructPtr->unk8764++;
+    gPokenavStructPtr->monInfoHeaderGfxStep++;
     return TRUE;
 }
 
-bool8 sub_80F170C(void)
+bool8 SlidePokenavMonInfoHeaderIn(void)
 {
-    gPokenavStructPtr->unk8766 += 0x10;
-    if (gPokenavStructPtr->unk8766 > 0)
-        gPokenavStructPtr->unk8766 = 0;
+    gPokenavStructPtr->monInfoHeaderXOffset += 0x10;
+    if (gPokenavStructPtr->monInfoHeaderXOffset > 0)
+        gPokenavStructPtr->monInfoHeaderXOffset = 0;
 
-    return gPokenavStructPtr->unk8766 != 0;
+    return gPokenavStructPtr->monInfoHeaderXOffset != 0;
 }
 
-bool8 sub_80F173C(void)
+bool8 SlidePokenavMonInfoHeaderOut(void)
 {
-    gPokenavStructPtr->unk8766 -= 0x10;
-    if (gPokenavStructPtr->unk8766 < -0x50)
-        gPokenavStructPtr->unk8766 = -0x50;
+    gPokenavStructPtr->monInfoHeaderXOffset -= 0x10;
+    if (gPokenavStructPtr->monInfoHeaderXOffset < -0x50)
+        gPokenavStructPtr->monInfoHeaderXOffset = -0x50;
 
-    return gPokenavStructPtr->unk8766 != -0x50;
+    return gPokenavStructPtr->monInfoHeaderXOffset != -0x50;
 }
 
 bool8 sub_80F1778(void)
@@ -1741,10 +1741,10 @@ bool8 sub_80F1778(void)
         gPokenavStructPtr->unkD162 = 2;
         break;
     case 1:
-        sub_80F1614();
+        InitPokenavMonInfoHeaderGfx();
         break;
     case 2:
-        if (sub_80F162C(0))
+        if (LoadPokenavMonInfoHeaderGfxStep(FALSE))
             return TRUE;
         break;
     case 3:
@@ -2683,7 +2683,7 @@ void sub_80F2DF4(void)
 
 void sub_80F2E00(struct Sprite *sprite)
 {
-    sprite->x = gPokenavStructPtr->unk8766 + 38;
+    sprite->x = gPokenavStructPtr->monInfoHeaderXOffset + 38;
 }
 
 void sub_80F2E18(u8 arg0)
@@ -3979,7 +3979,7 @@ void sub_80F4F78(void)
 bool8 sub_80F4FB4(void)
 {
     bool8 var0 = sub_80F5504();
-    bool8 var1 = sub_80F170C();
+    bool8 var1 = SlidePokenavMonInfoHeaderIn();
     return var0 || var1;
 }
 
@@ -3992,7 +3992,7 @@ void sub_80F4FDC(void)
 bool8 sub_80F5038(void)
 {
     bool8 var0 = sub_80F5504();
-    bool8 var1 = sub_80F173C();
+    bool8 var1 = SlidePokenavMonInfoHeaderOut();
     return var0 || var1;
 }
 
@@ -4102,7 +4102,7 @@ bool8 sub_80F5364(void)
     {
     case 0:
         sub_80F5504();
-        if (!sub_80F173C())
+        if (!SlidePokenavMonInfoHeaderOut())
         {
             sub_80F2E18(gPokenavStructPtr->unk8fe9);
             PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
@@ -5040,7 +5040,7 @@ bool8 sub_80F6AF0(void)
     switch (gPokenavStructPtr->unk87DE)
     {
     case 0:
-        if (!sub_80F173C())
+        if (!SlidePokenavMonInfoHeaderOut())
         {
             gPokenavStructPtr->unk87DE++;
         }
@@ -5068,7 +5068,7 @@ bool8 sub_80F6AF0(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 6:
-        if (!sub_80F170C())
+        if (!SlidePokenavMonInfoHeaderIn())
         {
             PrintRibbonsSummaryMonInfo();
             REG_DISPCNT &= ~DISPCNT_WIN0_ON;

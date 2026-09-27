@@ -289,7 +289,7 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 14:
-            if (!sub_80F170C())
+            if (!SlidePokenavMonInfoHeaderIn())
             {
                 gUnknown_02039304->unk50++;
             }

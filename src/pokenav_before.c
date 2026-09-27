@@ -2821,7 +2821,7 @@ void OpenRibbonsSummaryMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        if (!sub_80F170C())
+        if (!SlidePokenavMonInfoHeaderIn())
 			SetPokenavCallback(&RibbonsSummaryHandleInput);
         break;
     }
