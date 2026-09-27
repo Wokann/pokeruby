@@ -51,14 +51,14 @@ const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon)
 void sub_8080990(void);
 
 static void Task_EggHatch(u8 taskID);
-static void CB2_EggHatch_0(void);
-static void CB2_EggHatch_1(void);
-static void SpriteCB_Egg_0(struct Sprite* sprite);
-static void SpriteCB_Egg_1(struct Sprite* sprite);
-static void SpriteCB_Egg_2(struct Sprite* sprite);
-static void SpriteCB_Egg_3(struct Sprite* sprite);
-static void SpriteCB_Egg_4(struct Sprite* sprite);
-static void SpriteCB_Egg_5(struct Sprite* sprite);
+static void CB2_LoadEggHatch(void);
+static void CB2_EggHatch(void);
+static void SpriteCB_Egg_Shake1(struct Sprite* sprite);
+static void SpriteCB_Egg_Shake2(struct Sprite* sprite);
+static void SpriteCB_Egg_Shake3(struct Sprite* sprite);
+static void SpriteCB_Egg_WaitHatch(struct Sprite* sprite);
+static void SpriteCB_Egg_Hatch(struct Sprite* sprite);
+static void SpriteCB_Egg_Reveal(struct Sprite* sprite);
 static void SpriteCB_EggShard(struct Sprite* sprite);
 static void EggHatchPrintMessage2(u8* src);
 static void EggHatchPrintMessage1(u8* src);
@@ -388,13 +388,13 @@ static void Task_EggHatch(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_EggHatch_0);
+        SetMainCallback2(CB2_LoadEggHatch);
         gFieldCallback = sub_8080990;
         DestroyTask(taskID);
     }
 }
 
-static void CB2_EggHatch_0(void)
+static void CB2_LoadEggHatch(void)
 {
     switch (gMain.state)
     {
@@ -462,7 +462,7 @@ static void CB2_EggHatch_0(void)
         REG_BG2HOFS = 0;
         REG_BG2VOFS = 0;
 
-        SetMainCallback2(CB2_EggHatch_1);
+        SetMainCallback2(CB2_EggHatch);
         gEggHatchData->CB2_state = 0;
         break;
     }
@@ -489,7 +489,7 @@ static void Task_EggHatchPlayBGM(u8 taskID)
     gTasks[taskID].data[0]++;
 }
 
-static void CB2_EggHatch_1(void)
+static void CB2_EggHatch(void)
 {
     switch (gEggHatchData->CB2_state)
     {
@@ -510,7 +510,7 @@ static void CB2_EggHatch_1(void)
         if (++gEggHatchData->CB2_PalCounter > 30)
         {
             gEggHatchData->CB2_state++;
-            gSprites[gEggHatchData->eggSpriteID].callback = SpriteCB_Egg_0;
+            gSprites[gEggHatchData->eggSpriteID].callback = SpriteCB_Egg_Shake1;
         }
         break;
     case 3:
@@ -583,11 +583,11 @@ static void CB2_EggHatch_1(void)
     UpdatePaletteFade();
 }
 
-static void SpriteCB_Egg_0(struct Sprite* sprite)
+static void SpriteCB_Egg_Shake1(struct Sprite* sprite)
 {
     if (++sprite->data[0] > 20)
     {
-        sprite->callback = SpriteCB_Egg_1;
+        sprite->callback = SpriteCB_Egg_Shake2;
         sprite->data[0] = 0;
     }
     else
@@ -603,13 +603,13 @@ static void SpriteCB_Egg_0(struct Sprite* sprite)
     }
 }
 
-static void SpriteCB_Egg_1(struct Sprite* sprite)
+static void SpriteCB_Egg_Shake2(struct Sprite* sprite)
 {
     if (++sprite->data[2] > 30)
     {
         if (++sprite->data[0] > 20)
         {
-            sprite->callback = SpriteCB_Egg_2;
+            sprite->callback = SpriteCB_Egg_Shake3;
             sprite->data[0] = 0;
             sprite->data[2] = 0;
         }
@@ -626,7 +626,7 @@ static void SpriteCB_Egg_1(struct Sprite* sprite)
     }
 }
 
-static void SpriteCB_Egg_2(struct Sprite* sprite)
+static void SpriteCB_Egg_Shake3(struct Sprite* sprite)
 {
     if (++sprite->data[2] > 30)
     {
@@ -634,7 +634,7 @@ static void SpriteCB_Egg_2(struct Sprite* sprite)
         {
             u16 species;
 
-            sprite->callback = SpriteCB_Egg_3;
+            sprite->callback = SpriteCB_Egg_WaitHatch;
             sprite->data[0] = 0;
             species = GetMonData(&gPlayerParty[gEggHatchData->eggPartyID], MON_DATA_SPECIES);
             gSprites[gEggHatchData->pokeSpriteID].x2 = 0;
@@ -657,16 +657,16 @@ static void SpriteCB_Egg_2(struct Sprite* sprite)
     }
 }
 
-static void SpriteCB_Egg_3(struct Sprite* sprite)
+static void SpriteCB_Egg_WaitHatch(struct Sprite* sprite)
 {
     if (++sprite->data[0] > 50)
     {
-        sprite->callback = SpriteCB_Egg_4;
+        sprite->callback = SpriteCB_Egg_Hatch;
         sprite->data[0] = 0;
     }
 }
 
-static void SpriteCB_Egg_4(struct Sprite* sprite)
+static void SpriteCB_Egg_Hatch(struct Sprite* sprite)
 {
     s16 i;
     if (sprite->data[0] == 0)
@@ -681,12 +681,12 @@ static void SpriteCB_Egg_4(struct Sprite* sprite)
     {
         PlaySE(SE_EGG_HATCH);
         sprite->invisible = TRUE;
-        sprite->callback = SpriteCB_Egg_5;
+        sprite->callback = SpriteCB_Egg_Reveal;
         sprite->data[0] = 0;
     }
 }
 
-static void SpriteCB_Egg_5(struct Sprite* sprite)
+static void SpriteCB_Egg_Reveal(struct Sprite* sprite)
 {
     if (sprite->data[0] == 0)
     {
