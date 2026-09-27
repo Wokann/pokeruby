@@ -31,7 +31,7 @@
 
 // Static RAM declarations
 
-EWRAM_DATA u8 gUnknown_020388B0[4] = {};
+EWRAM_DATA u8 gRegionMapLinkLandmarkPrintState[4] = {};
 EWRAM_DATA u16 gPokenavRibbonDescriptionId = 0;
 
 extern const u8 gUnknown_083E0314[];
@@ -637,7 +637,7 @@ void UpdateMapSecInfoWindow(void)
         top += 2;
         if (gLinkOpen == TRUE)
         {
-            sub_80F1A80();
+            StartRegionMapLinkLandmarks();
             someBool = TRUE;
         }
         else
@@ -1816,10 +1816,10 @@ void TruncateTrainerEyesLocationAtControlCode(u8 *text)
     }
 }
 
-void sub_80F19FC(void)
+void UpdateRegionMapLinkLandmarks(void)
 {
     // FIXME r4/r5 swapped
-    register u8 *ptr asm("r5") = gUnknown_020388B0;
+    register u8 *ptr asm("r5") = gRegionMapLinkLandmarkPrintState;
     if (ptr[0] == 1)
     {
         const u8 *landmarkName = GetLandmarkName(
@@ -1839,15 +1839,15 @@ void sub_80F19FC(void)
     }
 }
 
-void sub_80F1A74(void)
+void StopRegionMapLinkLandmarks(void)
 {
-    gUnknown_020388B0[0] = 0;
+    gRegionMapLinkLandmarkPrintState[0] = 0;
 }
 
-void sub_80F1A80(void)
+void StartRegionMapLinkLandmarks(void)
 {
-    gUnknown_020388B0[0] = 1;
-    gUnknown_020388B0[1] = 0;
+    gRegionMapLinkLandmarkPrintState[0] = 1;
+    gRegionMapLinkLandmarkPrintState[1] = 0;
 }
 
 void sub_80F1A90(void)

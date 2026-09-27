@@ -1179,7 +1179,7 @@ void CB2_InitPokeNav(void)
         PlaySE(SE_POKENAV_ON);
         SetMainCallback2(&CB2_Pokenav);
         SetVBlankCallback(&VBlankCB_Pokenav);
-        sub_80F1A74();
+        StopRegionMapLinkLandmarks();
         break;
     }
 
@@ -1275,7 +1275,7 @@ void CB2_Pokenav(void)
     BuildOamBuffer();
     RunTasks();
     UpdatePaletteFade();
-    sub_80F19FC();
+    UpdateRegionMapLinkLandmarks();
 }
 
 void SetPokenavCallback(void (*callback)(void))
