@@ -4440,7 +4440,7 @@ void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
 {
     objectEvent->movementType = movementType;
     objectEvent->directionSequenceIndex = 0;
-    objectEvent->playerCopyableMovement = 0;
+    objectEvent->playerCopyableMovement = COPY_MOVE_NONE;
     gSprites[objectEvent->spriteId].callback = sMovementTypeCallbacks[movementType];
     gSprites[objectEvent->spriteId].data[1] = 0;
 }

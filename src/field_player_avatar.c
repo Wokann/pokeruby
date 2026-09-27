@@ -835,57 +835,57 @@ void PlayerSetAnimId(u8 movementActionId, u8 copyableMovement)
 // normal speed (1 speed)
 void PlayerWalkNormal(u8 direction)
 {
-    PlayerSetAnimId(GetWalkNormalMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkNormalMovementAction(direction), COPY_MOVE_WALK);
 }
 
 // fast speed (2 speed)
 void PlayerWalkFast(u8 direction)
 {
-    PlayerSetAnimId(GetWalkFastMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkFastMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerRideWaterCurrent(u8 direction)
 {
-    PlayerSetAnimId(GetRideWaterCurrentMovementAction(direction), 2);
+    PlayerSetAnimId(GetRideWaterCurrentMovementAction(direction), COPY_MOVE_WALK);
 }
 
 // fastest speed (4 speed)
 void PlayerWalkFaster(u8 direction)
 {
-    PlayerSetAnimId(GetWalkFastestMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkFastestMovementAction(direction), COPY_MOVE_WALK);
 }
 
 static void PlayerRun(u8 direction)
 {
-    PlayerSetAnimId(GetPlayerRunMovementAction(direction), 2);
+    PlayerSetAnimId(GetPlayerRunMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerOnBikeCollide(u8 direction)
 {
     PlayCollisionSoundIfNotFacingWarp(direction);
-    PlayerSetAnimId(GetWalkInPlaceNormalMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkInPlaceNormalMovementAction(direction), COPY_MOVE_WALK);
 }
 
 static void PlayerNotOnBikeCollide(u8 direction)
 {
     PlayCollisionSoundIfNotFacingWarp(direction);
-    PlayerSetAnimId(GetWalkInPlaceSlowMovementAction(direction), 2);
+    PlayerSetAnimId(GetWalkInPlaceSlowMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerFaceDirection(u8 direction)
 {
-    PlayerSetAnimId(GetFaceDirectionMovementAction(direction), 1);
+    PlayerSetAnimId(GetFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 void PlayerTurnInPlace(u8 direction)
 {
-    PlayerSetAnimId(GetWalkInPlaceFastMovementAction(direction), 1);
+    PlayerSetAnimId(GetWalkInPlaceFastMovementAction(direction), COPY_MOVE_FACE);
 }
 
 void PlayerJumpLedge(u8 direction)
 {
     PlaySE(SE_LEDGE);
-    PlayerSetAnimId(GetJump2MovementAction(direction), 8);
+    PlayerSetAnimId(GetJump2MovementAction(direction), COPY_MOVE_JUMP2);
 }
 
 void PlayerFreeze(void)
@@ -900,68 +900,68 @@ void PlayerFreeze(void)
 // wheelie idle
 void PlayerIdleWheelie(u8 direction)
 {
-    PlayerSetAnimId(GetAcroWheelieFaceDirectionMovementAction(direction), 1);
+    PlayerSetAnimId(GetAcroWheelieFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // normal to wheelie
 void PlayerStartWheelie(u8 direction)
 {
-    PlayerSetAnimId(GetAcroPopWheelieFaceDirectionMovementAction(direction), 1);
+    PlayerSetAnimId(GetAcroPopWheelieFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // wheelie to normal
 void PlayerEndWheelie(u8 direction)
 {
-    PlayerSetAnimId(GetAcroEndWheelieFaceDirectionMovementAction(direction), 1);
+    PlayerSetAnimId(GetAcroEndWheelieFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // wheelie hopping standing
 void PlayerStandingHoppingWheelie(u8 direction)
 {
     PlaySE(SE_BIKE_HOP);
-    PlayerSetAnimId(GetAcroWheelieHopFaceDirectionMovementAction(direction), 1);
+    PlayerSetAnimId(GetAcroWheelieHopFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // wheelie hopping moving
 void PlayerMovingHoppingWheelie(u8 direction)
 {
     PlaySE(SE_BIKE_HOP);
-    PlayerSetAnimId(GetAcroWheelieHopDirectionMovementAction(direction), 2);
+    PlayerSetAnimId(GetAcroWheelieHopDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 // wheelie hopping ledge
 void PlayerLedgeHoppingWheelie(u8 direction)
 {
     PlaySE(SE_BIKE_HOP);
-    PlayerSetAnimId(GetAcroWheelieJumpDirectionMovementAction(direction), 8);
+    PlayerSetAnimId(GetAcroWheelieJumpDirectionMovementAction(direction), COPY_MOVE_JUMP2);
 }
 
 // acro turn jump
 void PlayerAcroTurnJump(u8 direction)
 {
     PlaySE(SE_BIKE_HOP);
-    PlayerSetAnimId(GetJumpInPlaceTurnAroundMovementAction(direction), 1);
+    PlayerSetAnimId(GetJumpInPlaceTurnAroundMovementAction(direction), COPY_MOVE_FACE);
 }
 
 void PlayerWheelieInPlace(u8 direction)
 {
     PlaySE(SE_WALL_HIT);
-    PlayerSetAnimId(GetAcroWheelieInPlaceDirectionMovementAction(direction), 2);
+    PlayerSetAnimId(GetAcroWheelieInPlaceDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerPopWheelieWhileMoving(u8 direction)
 {
-    PlayerSetAnimId(GetAcroPopWheelieMoveDirectionMovementAction(direction), 2);
+    PlayerSetAnimId(GetAcroPopWheelieMoveDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerWheelieMove(u8 direction)
 {
-    PlayerSetAnimId(GetAcroWheelieMoveDirectionMovementAction(direction), 2);
+    PlayerSetAnimId(GetAcroWheelieMoveDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerEndWheelieWhileMoving(u8 direction)
 {
-    PlayerSetAnimId(GetAcroEndWheelieMoveDirectionMovementAction(direction), 2);
+    PlayerSetAnimId(GetAcroEndWheelieMoveDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 static void PlayCollisionSoundIfNotFacingWarp(u8 direction)

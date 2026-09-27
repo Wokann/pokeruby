@@ -220,4 +220,17 @@
 
 #define MOVEMENT_ACTION_STEP_END                    0xFE
 
+// IDs for how NPCs that copy player movement should respond.
+#define COPY_MOVE_NONE           0
+#define COPY_MOVE_FACE           1
+#define COPY_MOVE_WALK           2
+#define COPY_MOVE_WALK_FAST      3
+#define COPY_MOVE_WALK_FASTER    4
+#define COPY_MOVE_SLIDE          5
+#define COPY_MOVE_JUMP_IN_PLACE  6
+#define COPY_MOVE_JUMP           7
+#define COPY_MOVE_JUMP2          8
+#define COPY_MOVE_EMPTY_1        9
+#define COPY_MOVE_EMPTY_2       10
+
 #endif // GUARD_CONSTANTS_EVENT_OBJECT_MOVEMENT_H

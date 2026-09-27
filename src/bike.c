@@ -7,6 +7,7 @@
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "sound.h"
+#include "constants/event_object_movement.h"
 #include "constants/flags.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
@@ -680,7 +681,7 @@ static void AcroBikeTransition_SideJump(u8 direction)
     playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     PlaySE(SE_BIKE_HOP);
     playerObjEvent->facingDirectionLocked = 1;
-    PlayerSetAnimId(GetJumpMovementAction(direction), 2);
+    PlayerSetAnimId(GetJumpMovementAction(direction), COPY_MOVE_WALK);
 }
 
 static void AcroBikeTransition_TurnJump(u8 direction)
