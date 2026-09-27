@@ -189,12 +189,12 @@ static bool8 ControlWorks_LocalWork_HandlePageInput(void);
 static void ControlWorks_LocalWork_AdjustSelection(u8, u8);
 static void ControlWorks_LocalWork_PrintPageValues(u8);
 static bool8 ControlWorks_ObjWork_InitSubmenu(void);
-static bool8 debug_sub_808E95C(void);
-static bool8 debug_sub_808E9A0(void);
-static bool8 debug_sub_808E9F8(void);
-static bool8 debug_sub_808EA50(void);
-static void debug_sub_808EA9C(u8);
-static void debug_sub_808EAFC(u8, u8);
+static bool8 ControlWorks_ObjWork_HandleCategoryInput(void);
+static bool8 ControlWorks_ObjWork_0To8_InitPage(void);
+static bool8 ControlWorks_ObjWork_9To15_InitPage(void);
+static bool8 ControlWorks_ObjWork_HandlePageInput(void);
+static void ControlWorks_ObjWork_PrintPageValues(u8);
+static void ControlWorks_ObjWork_AdjustSelection(u8, u8);
 static bool8 TrickRelated_Level_InitSubmenu(void);
 static bool8 TrickRelated_TrickMaster_InitSubmenu(void);
 static bool8 debug_sub_808EC10(void);
@@ -1388,12 +1388,12 @@ static const u16 sSysWorkPageVars[][9] = {
     {VAR_NATIONAL_DEX, VAR_BIRCH_STATE, VAR_LOTTERY_RND_L, VAR_LOTTERY_RND_H, VAR_SECRET_BASE_MAP}
 };
 
-static const u8 gUnknown_Debug_083C35A4[] = _("OBJCHRWORK0ー8");
-static const u8 gUnknown_Debug_083C35B2[] = _("OBJCHRWORK9ー15");
+static const u8 sString_ObjWork_0To8[] = _("OBJCHRWORK0ー8");
+static const u8 sString_ObjWork_9To15[] = _("OBJCHRWORK9ー15");
 
-static const struct MenuAction gUnknown_Debug_083C35C4[] = {
-    {gUnknown_Debug_083C35A4, debug_sub_808E9A0},
-    {gUnknown_Debug_083C35B2, debug_sub_808E9F8}
+static const struct MenuAction sMenuActions_ObjWorkCategories[] = {
+    {sString_ObjWork_0To8, ControlWorks_ObjWork_0To8_InitPage},
+    {sString_ObjWork_9To15, ControlWorks_ObjWork_9To15_InitPage}
 };
 
 static const u8 gUnknown_Debug_083C35D4[] = _("OBJCHRWORK1");
@@ -1414,7 +1414,7 @@ static const u8 gUnknown_Debug_083C3674[] = _("OBJCHRWORK14");
 static const u8 gUnknown_Debug_083C3681[] = _("OBJCHRWORK15");
 static const u8 gUnknown_Debug_083C368E[] = _("OBJCHRWORK16");
 
-static const struct MenuAction gUnknown_Debug_083C369C[] = {
+static const struct MenuAction sMenuActions_ObjWork_0To8[] = {
     {gUnknown_Debug_083C35D4, DummyMenuAction},
     {gUnknown_Debug_083C35E0, DummyMenuAction},
     {gUnknown_Debug_083C35EC, DummyMenuAction},
@@ -1426,7 +1426,7 @@ static const struct MenuAction gUnknown_Debug_083C369C[] = {
     {gUnknown_Debug_083C3634, DummyMenuAction}
 };
 
-static const struct MenuAction gUnknown_Debug_083C36E4[] = {
+static const struct MenuAction sMenuActions_ObjWork_9To15[] = {
     {gUnknown_Debug_083C3640, DummyMenuAction},
     {gUnknown_Debug_083C364D, DummyMenuAction},
     {gUnknown_Debug_083C365A, DummyMenuAction},
@@ -1436,9 +1436,9 @@ static const struct MenuAction gUnknown_Debug_083C36E4[] = {
     {gUnknown_Debug_083C368E, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C371C[] = {9, 7};
+static const u8 sObjWorkPageCounts[] = {9, 7};
 
-static const u16 gUnknown_Debug_083C371E[][9] = {
+static const u16 sObjWorkPageVars[][9] = {
     {VAR_OBJ_GFX_ID_0, VAR_OBJ_GFX_ID_1, VAR_OBJ_GFX_ID_2, VAR_OBJ_GFX_ID_3, VAR_OBJ_GFX_ID_4, VAR_OBJ_GFX_ID_5, VAR_OBJ_GFX_ID_6, VAR_OBJ_GFX_ID_7, VAR_OBJ_GFX_ID_8},
     {VAR_OBJ_GFX_ID_9, VAR_OBJ_GFX_ID_A, VAR_OBJ_GFX_ID_B, VAR_OBJ_GFX_ID_C, VAR_OBJ_GFX_ID_D, VAR_OBJ_GFX_ID_E, VAR_OBJ_GFX_ID_F}
 };
@@ -3844,14 +3844,14 @@ static void ControlWorks_LocalWork_PrintPageValues(u8 whichMenu)
 static bool8 ControlWorks_ObjWork_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 24, 2 * ARRAY_COUNT(gUnknown_Debug_083C35C4) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C35C4), gUnknown_Debug_083C35C4);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C35C4), 0, 23);
-    gMenuCallback = debug_sub_808E95C;
+    Menu_DrawStdWindowFrame(0, 0, 24, 2 * ARRAY_COUNT(sMenuActions_ObjWorkCategories) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_ObjWorkCategories), sMenuActions_ObjWorkCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_ObjWorkCategories), 0, 23);
+    gMenuCallback = ControlWorks_ObjWork_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E95C(void)
+static bool8 ControlWorks_ObjWork_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -3862,39 +3862,39 @@ static bool8 debug_sub_808E95C(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C35C4[input].func;
+    gMenuCallback = sMenuActions_ObjWorkCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808E9A0(void)
+static bool8 ControlWorks_ObjWork_0To8_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C369C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C369C), gUnknown_Debug_083C369C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C369C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_ObjWork_0To8) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_ObjWork_0To8), sMenuActions_ObjWork_0To8);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_ObjWork_0To8), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808EA50;
+    gMenuCallback = ControlWorks_ObjWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E9F8(void)
+static bool8 ControlWorks_ObjWork_9To15_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C36E4) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C36E4), gUnknown_Debug_083C36E4);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C36E4), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_ObjWork_9To15) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_ObjWork_9To15), sMenuActions_ObjWork_9To15);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_ObjWork_9To15), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808EA50;
+    gMenuCallback = ControlWorks_ObjWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808EA50(void)
+static bool8 ControlWorks_ObjWork_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808EAFC(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808EA9C(sFlagAndVarTest_WhichSubmenu);
+    ControlWorks_ObjWork_AdjustSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlWorks_ObjWork_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -3905,17 +3905,17 @@ static bool8 debug_sub_808EA50(void)
     return FALSE;
 }
 
-static void debug_sub_808EA9C(u8 whichMenu)
+static void ControlWorks_ObjWork_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C371C[whichMenu]; i++)
+    for (i = 0; i < sObjWorkPageCounts[whichMenu]; i++)
     {
-        PrintUnsignedShort(24, 2 * i + 1, VarGet(gUnknown_Debug_083C371E[whichMenu][i]));
+        PrintUnsignedShort(24, 2 * i + 1, VarGet(sObjWorkPageVars[whichMenu][i]));
     }
 }
 
-static void debug_sub_808EAFC(u8 whichMenu, u8 cursorPos)
+static void ControlWorks_ObjWork_AdjustSelection(u8 whichMenu, u8 cursorPos)
 {
     u16 delta;
 
@@ -3925,7 +3925,7 @@ static void debug_sub_808EAFC(u8 whichMenu, u8 cursorPos)
         delta = -1;
     else
         return;
-    VarSet(gUnknown_Debug_083C371E[whichMenu][cursorPos], VarGet(gUnknown_Debug_083C371E[whichMenu][cursorPos]) + delta);
+    VarSet(sObjWorkPageVars[whichMenu][cursorPos], VarGet(sObjWorkPageVars[whichMenu][cursorPos]) + delta);
 }
 
 static bool8 TrickRelated_Level_InitSubmenu(void)
