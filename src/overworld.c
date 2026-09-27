@@ -101,7 +101,7 @@ EWRAM_DATA struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4] = {0};
 
 static u8 sPlayerLinkStates[4];
 static u16 (*sPlayerKeyInterceptCallback)(u32);
-static u8 gUnknown_03000588;
+static u8 sReceivingFromLink;
 
 static void CB2_Overworld(void);
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState*, u16, u8);
@@ -2432,10 +2432,10 @@ bool32 Overworld_IsRecvQueueAtMax(void)
     if (!is_c1_link_related_active())
         return 0;
     if (gLink.recvQueue.count >= 3)
-        gUnknown_03000588 = 1;
+        sReceivingFromLink = 1;
     else
-        gUnknown_03000588 = 0;
-    return gUnknown_03000588;
+        sReceivingFromLink = 0;
+    return sReceivingFromLink;
 }
 
 bool32 Overworld_RecvKeysFromLinkIsRunning(void)
@@ -2454,8 +2454,8 @@ bool32 Overworld_RecvKeysFromLinkIsRunning(void)
     if (sPlayerKeyInterceptCallback != KeyInterCB_DeferToEventScript)
         return FALSE;
 
-    temp = gUnknown_03000588;
-    gUnknown_03000588 = 0;
+    temp = sReceivingFromLink;
+    sReceivingFromLink = 0;
 
     if (temp == TRUE)
         return TRUE;
