@@ -26,7 +26,7 @@ static void AshGrassPerStepCallback(u8);
 static void FortreeBridgePerStepCallback(u8);
 static void PacifidlogBridgePerStepCallback(u8);
 static void SootopolisGymIcePerStepCallback(u8);
-void PerStepCallback_806A07C(u8);
+static void CrackedFloorPerStepCallback(u8);
 
 void (*const gUnknown_08376364[])(u8) = {
     DummyPerStepCallback,
@@ -36,7 +36,7 @@ void (*const gUnknown_08376364[])(u8) = {
     SootopolisGymIcePerStepCallback,
     EndTruckSequence,
     sub_80BCF1C,
-    PerStepCallback_806A07C
+    CrackedFloorPerStepCallback
 };
 
 void Task_RunPerStepCallback(u8 taskId)
@@ -660,13 +660,13 @@ static void AshGrassPerStepCallback(u8 taskId)
     }
 }
 
-void sub_806A040(s16 x, s16 y)
+static void SetCrackedFloorHoleMetatile(s16 x, s16 y)
 {
     MapGridSetMetatileIdAt(x, y, MapGridGetMetatileIdAt(x, y) == 0x22f ? 0x206 : 0x237);
     CurrentMapDrawMetatileAt(x, y);
 }
 
-void PerStepCallback_806A07C(u8 taskId)
+static void CrackedFloorPerStepCallback(u8 taskId)
 {
     s16 x, y;
     u16 behavior;
@@ -675,11 +675,11 @@ void PerStepCallback_806A07C(u8 taskId)
     behavior = MapGridGetMetatileBehaviorAt(x, y);
     if (data[4] != 0 && (--data[4]) == 0)
     {
-        sub_806A040(data[5], data[6]);
+        SetCrackedFloorHoleMetatile(data[5], data[6]);
     }
     if (data[7] != 0 && (--data[7]) == 0)
     {
-        sub_806A040(data[8], data[9]);
+        SetCrackedFloorHoleMetatile(data[8], data[9]);
     }
     if (MetatileBehavior_IsCrackedFloorHole(behavior))
     {
