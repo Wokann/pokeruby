@@ -87,7 +87,7 @@ extern s32 gMaxFlashLevel;
 
 u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);
-u8 gUnknown_03004860;
+u8 gLocalLinkPlayerId;
 u8 gFieldLinkPlayerCount;
 
 EWRAM_DATA struct WarpData gLastUsedWarp = {0};
@@ -1872,19 +1872,19 @@ void sub_8054E34(void)
 
 void sub_8054E60(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gUnknown_03004860));
+    InitCameraUpdateCallback(sub_8055AE8(gLocalLinkPlayerId));
 }
 
 void sub_8054E7C(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gUnknown_03004860));
+    InitCameraUpdateCallback(sub_8055AE8(gLocalLinkPlayerId));
 }
 
 void sub_8054E98(void)
 {
     u16 x, y;
     GetCameraFocusCoords(&x, &y);
-    SetCameraFocusCoords(x + gUnknown_03004860, y);
+    SetCameraFocusCoords(x + gLocalLinkPlayerId, y);
 }
 
 void sub_8054EC8(void)
@@ -1893,7 +1893,7 @@ void sub_8054EC8(void)
     u16 x, y;
 
     GetCameraFocusCoords(&x, &y);
-    x -= gUnknown_03004860;
+    x -= gLocalLinkPlayerId;
 
     for (i = 0; i < gFieldLinkPlayerCount; i++)
     {
@@ -2131,7 +2131,7 @@ void sub_8055340(u16 *a1)
 
 void sub_8055354(void)
 {
-    u8 val = gUnknown_03004860;
+    u8 val = gLocalLinkPlayerId;
     sub_8055218(word_3002910, val);
     sub_8055280(gUnknown_03000584(val));
     sub_8055340(word_3002910);
@@ -2249,9 +2249,9 @@ s32 sub_80554F8(void)
 {
     if (sub_8054FC0(0x83) == TRUE)
         return 2;
-    if (gUnknown_03000584 == sub_805546C && gUnknown_03000580[gUnknown_03004860] != 0x82)
+    if (gUnknown_03000584 == sub_805546C && gUnknown_03000580[gLocalLinkPlayerId] != 0x82)
         return 0;
-    if (gUnknown_03000584 == sub_8055468 && gUnknown_03000580[gUnknown_03004860] == 0x81)
+    if (gUnknown_03000584 == sub_8055468 && gUnknown_03000580[gLocalLinkPlayerId] == 0x81)
         return 2;
     return sub_8054F88(0x82);
 }

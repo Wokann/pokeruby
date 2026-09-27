@@ -25,7 +25,7 @@ struct UCoords32
 extern const struct UCoords32 gDirectionToVectors[];
 extern void (*gFieldCallback)(void);
 extern u8 gFieldLinkPlayerCount;
-extern u8 gUnknown_03004860;
+extern u8 gLocalLinkPlayerId;
 
 // sub_8052F5C
 void Overworld_ResetStateAfterFly(void);

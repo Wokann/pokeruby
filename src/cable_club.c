@@ -435,7 +435,7 @@ static void Task_LinkupExchangeDataWithLeader(u8 taskId)
     else
     {
         gFieldLinkPlayerCount = GetLinkPlayerCount_2();
-        gUnknown_03004860 = GetMultiplayerId();
+        gLocalLinkPlayerId = GetMultiplayerId();
         SaveLinkPlayers(gFieldLinkPlayerCount);
         TrainerCard_GenerateCardForPlayer((struct TrainerCard *)gBlockSendBuffer);
         gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
@@ -456,7 +456,7 @@ static void Task_LinkupCheckStatusAfterConfirm(u8 taskId)
     else
     {
         gFieldLinkPlayerCount = GetLinkPlayerCount_2();
-        gUnknown_03004860 = GetMultiplayerId();
+        gLocalLinkPlayerId = GetMultiplayerId();
         SaveLinkPlayers(gFieldLinkPlayerCount);
         TrainerCard_GenerateCardForPlayer((struct TrainerCard *)gBlockSendBuffer);
         gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
@@ -796,7 +796,7 @@ static void CB2_ReturnFromCableClubBattle(void)
     UpdateTrainerFansAfterLinkBattle();
 
     if (gSpecialVar_0x8004 != 5)
-        UpdatePlayerLinkBattleRecords(gUnknown_03004860 ^ 1);
+        UpdatePlayerLinkBattleRecords(gLocalLinkPlayerId ^ 1);
 
     gMain.savedCallback = sub_805465C;
     SetMainCallback2(sub_8071B28);

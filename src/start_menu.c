@@ -59,7 +59,7 @@ extern bool8 gDifferentSaveFile;
 extern u16 gSaveFileStatus;
 extern u16 gSpecialVar_Result;
 
-extern u8 gUnknown_03004860;
+extern u8 gLocalLinkPlayerId;
 
 u8 (*gMenuCallback)(void);
 
@@ -551,7 +551,7 @@ static u8 StartMenu_PlayerLinkCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        TrainerCard_ShowLinkCard(gUnknown_03004860, CB2_ReturnToFieldWithOpenMenu);
+        TrainerCard_ShowLinkCard(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;

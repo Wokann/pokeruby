@@ -165,7 +165,7 @@ SYMBOL(gBerryBlenderData, 4)
 // overworld.c
 SYMBOL(gHeldKeyCodeToSend, 4)
 SYMBOL(gFieldCallback, 4)
-SYMBOL(gUnknown_03004860, 4)
+SYMBOL(gLocalLinkPlayerId, 4)
 SYMBOL(gFieldLinkPlayerCount, 4)
 
 // fieldmap.c
