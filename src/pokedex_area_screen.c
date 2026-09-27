@@ -22,31 +22,31 @@
 
 // Static type declarations
 
-struct PokedexAreaScreenSubstruct0010
+struct OverworldArea
 {
     u8 mapGroup;
     u8 mapNum;
     u16 regionMapSectionId;
 };
 
-struct PokedexAreaScreenEwramStruct
+struct PokedexAreaScreen
 {
     void (*callback)(void);
     MainCallback prev;
     MainCallback next;
     u16 state;
     u16 species;
-    struct PokedexAreaScreenSubstruct0010 overworldAreasWithMons[0x40];
+    struct OverworldArea overworldAreasWithMons[0x40];
     u16 numOverworldAreas;
     u16 numSpecialAreas;
     u16 drawAreaGlowState;
     u16 areaGlowTilemap[0x280];
-    u16 areaShadeOrMarkerFrameCounter;
-    u16 areaShadeFrameCounter;
+    u16 markerTimer;
+    u16 glowTimer;
     u16 areaShadeBldArgLo;
     u16 areaShadeBldArgHi;
-    u8 whichMarkersFlashing;
-    u8 specialMarkerCycleCounter;
+    u8 showingMarkers;
+    u8 markerFlashCounter;
     u16 specialAreaRegionMapSectionIds[0x20];
     struct Sprite * areaMarkerSprites[0x20];
     u16 numAreaMarkerSprites;
@@ -57,7 +57,7 @@ struct PokedexAreaScreenEwramStruct
     u8 areaUnknownGraphicsBuffer[0x600];
 };
 
-#define ePokedexAreaScreen (*(struct PokedexAreaScreenEwramStruct *)gSharedMem)
+#define ePokedexAreaScreen (*(struct PokedexAreaScreen *)gSharedMem)
 
 // Static RAM declarations
 
@@ -84,9 +84,9 @@ static void DebugCB_GoNext(void);
 
 // .rodata
 
-static const u16 gUnknown_083F8418[] = INCBIN_U16("graphics/pokedex/area_glow.gbapal");
+static const u16 sAreaGlow_Pal[] = INCBIN_U16("graphics/pokedex/area_glow.gbapal");
 
-static const u8 gUnknown_083F8438[] = INCBIN_U8("graphics/pokedex/area_glow.4bpp.lz");
+static const u8 sAreaGlow_Gfx[] = INCBIN_U8("graphics/pokedex/area_glow.4bpp.lz");
 
 static const u16 sSpeciesHiddenFromAreaScreen[] = {SPECIES_WYNAUT};
 
@@ -101,15 +101,15 @@ static const u16 sLandmarkData[][2] = {
     {MAPSEC_NONE}
 };
 
-static struct PokedexAreaScreenEwramStruct *const gPokedexAreaScreenPtr = &ePokedexAreaScreen;
+static struct PokedexAreaScreen *const sPokedexAreaScreen = &ePokedexAreaScreen;
 
 // .text
 
 void UnusedPokedexAreaScreen(u16 a0, MainCallback a1, MainCallback a2)
 {
-    gPokedexAreaScreenPtr->prev = a1;
-    gPokedexAreaScreenPtr->next = a2;
-    gPokedexAreaScreenPtr->species = a0;
+    sPokedexAreaScreen->prev = a1;
+    sPokedexAreaScreen->next = a2;
+    sPokedexAreaScreen->species = a0;
     SetMainCallback2(CB2_UnusedPokedexAreaScreen);
 }
 
@@ -133,8 +133,8 @@ static void CB2_UnusedPokedexAreaScreen(void)
             REG_BG3VOFS = 0;
             break;
         case 1:
-            InitRegionMap(&gPokedexAreaScreenPtr->regionMap, FALSE);
-            StringFill(gPokedexAreaScreenPtr->charBuffer, CHAR_SPACE, 16);
+            InitRegionMap(&sPokedexAreaScreen->regionMap, FALSE);
+            StringFill(sPokedexAreaScreen->charBuffer, CHAR_SPACE, 16);
             break;
         case 2:
             ResetDrawAreaGlowState();
@@ -173,7 +173,7 @@ static void VBlankCB_AreaScren(void)
 
 static void MainCB_AreaScren(void)
 {
-    gPokedexAreaScreenPtr->callback();
+    sPokedexAreaScreen->callback();
     DoAreaGlow();
     AnimateSprites();
     BuildOamBuffer();
@@ -182,42 +182,42 @@ static void MainCB_AreaScren(void)
 
 static void SetCallback(void (*func)(void))
 {
-    gPokedexAreaScreenPtr->callback = func;
-    gPokedexAreaScreenPtr->state = 0;
+    sPokedexAreaScreen->callback = func;
+    sPokedexAreaScreen->state = 0;
 }
 
 static void ResetDrawAreaGlowState(void)
 {
-    gPokedexAreaScreenPtr->drawAreaGlowState = 0;
+    sPokedexAreaScreen->drawAreaGlowState = 0;
 }
 
 bool8 DrawAreaGlow(void)
 {
-    switch (gPokedexAreaScreenPtr->drawAreaGlowState)
+    switch (sPokedexAreaScreen->drawAreaGlowState)
     {
         case 0:
-            FindMapsWithMon(gPokedexAreaScreenPtr->species);
+            FindMapsWithMon(sPokedexAreaScreen->species);
             break;
         case 1:
             BuildAreaGlowTilemap();
             break;
         case 2:
-            LZ77UnCompVram(gUnknown_083F8438, BG_CHAR_ADDR(3));
+            LZ77UnCompVram(sAreaGlow_Gfx, BG_CHAR_ADDR(3));
             break;
         case 3:
-            DmaCopy16(3, gPokedexAreaScreenPtr->areaGlowTilemap, BG_SCREEN_ADDR(30), 0x500);
+            DmaCopy16(3, sPokedexAreaScreen->areaGlowTilemap, BG_SCREEN_ADDR(30), 0x500);
             break;
         case 4:
-            LoadPalette(gUnknown_083F8418, 0, 32);
+            LoadPalette(sAreaGlow_Pal, 0, 32);
             break;
         case 5:
             REG_BG0CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(30) | BGCNT_TXT256x256;
-            gPokedexAreaScreenPtr->drawAreaGlowState++;
+            sPokedexAreaScreen->drawAreaGlowState++;
             return FALSE;
         default:
             return FALSE;
     }
-    gPokedexAreaScreenPtr->drawAreaGlowState++;
+    sPokedexAreaScreen->drawAreaGlowState++;
     return TRUE;
 }
 
@@ -228,8 +228,8 @@ static void FindMapsWithMon(u16 mon)
 
     if (mon != ROAMER_SPECIES)
     {
-        gPokedexAreaScreenPtr->numOverworldAreas = 0;
-        gPokedexAreaScreenPtr->numSpecialAreas = 0;
+        sPokedexAreaScreen->numOverworldAreas = 0;
+        sPokedexAreaScreen->numSpecialAreas = 0;
         for (i = 0; i < ARRAY_COUNT(sSpeciesHiddenFromAreaScreen); i++)
         {
             if (sSpeciesHiddenFromAreaScreen[i] == mon)
@@ -270,27 +270,27 @@ static void FindMapsWithMon(u16 mon)
     }
     else
     {
-        gPokedexAreaScreenPtr->numSpecialAreas = 0;
+        sPokedexAreaScreen->numSpecialAreas = 0;
         roamer = &gSaveBlock1.roamer;
         if (roamer->active)
         {
-            GetRoamerLocation(&gPokedexAreaScreenPtr->overworldAreasWithMons[0].mapGroup, &gPokedexAreaScreenPtr->overworldAreasWithMons[0].mapNum);
-            gPokedexAreaScreenPtr->overworldAreasWithMons[0].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gPokedexAreaScreenPtr->overworldAreasWithMons[0].mapGroup, gPokedexAreaScreenPtr->overworldAreasWithMons[0].mapNum)->regionMapSectionId;
-            gPokedexAreaScreenPtr->numOverworldAreas = 1;
+            GetRoamerLocation(&sPokedexAreaScreen->overworldAreasWithMons[0].mapGroup, &sPokedexAreaScreen->overworldAreasWithMons[0].mapNum);
+            sPokedexAreaScreen->overworldAreasWithMons[0].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(sPokedexAreaScreen->overworldAreasWithMons[0].mapGroup, sPokedexAreaScreen->overworldAreasWithMons[0].mapNum)->regionMapSectionId;
+            sPokedexAreaScreen->numOverworldAreas = 1;
         }
         else
-            gPokedexAreaScreenPtr->numOverworldAreas = 0;
+            sPokedexAreaScreen->numOverworldAreas = 0;
     }
 }
 
 static void SetAreaHasMon(u16 mapGroup, u16 mapNum)
 {
-    if (gPokedexAreaScreenPtr->numOverworldAreas < 0x40)
+    if (sPokedexAreaScreen->numOverworldAreas < 0x40)
     {
-        gPokedexAreaScreenPtr->overworldAreasWithMons[gPokedexAreaScreenPtr->numOverworldAreas].mapGroup = mapGroup;
-        gPokedexAreaScreenPtr->overworldAreasWithMons[gPokedexAreaScreenPtr->numOverworldAreas].mapNum = mapNum;
-        gPokedexAreaScreenPtr->overworldAreasWithMons[gPokedexAreaScreenPtr->numOverworldAreas].regionMapSectionId = GetOverworldMapFromUnderwaterMap(Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId);
-        gPokedexAreaScreenPtr->numOverworldAreas++;
+        sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].mapGroup = mapGroup;
+        sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].mapNum = mapNum;
+        sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].regionMapSectionId = GetOverworldMapFromUnderwaterMap(Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId);
+        sPokedexAreaScreen->numOverworldAreas++;
     }
 }
 
@@ -299,7 +299,7 @@ static void SetSpecialMapHasMon(u16 mapGroup, u16 mapNum)
     const struct MapHeader *mapHeader;
     u16 i;
 
-    if (gPokedexAreaScreenPtr->numSpecialAreas < 0x20)
+    if (sPokedexAreaScreen->numSpecialAreas < 0x20)
     {
         mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
         if (mapHeader->regionMapSectionId < MAPSEC_NONE)
@@ -309,15 +309,15 @@ static void SetSpecialMapHasMon(u16 mapGroup, u16 mapNum)
                 if (mapHeader->regionMapSectionId == sLandmarkData[i][0] && !FlagGet(sLandmarkData[i][1]))
                     return;
             }
-            for (i = 0; i < gPokedexAreaScreenPtr->numSpecialAreas; i++)
+            for (i = 0; i < sPokedexAreaScreen->numSpecialAreas; i++)
             {
-                if (gPokedexAreaScreenPtr->specialAreaRegionMapSectionIds[i] == mapHeader->regionMapSectionId)
+                if (sPokedexAreaScreen->specialAreaRegionMapSectionIds[i] == mapHeader->regionMapSectionId)
                     break;
             }
-            if (i == gPokedexAreaScreenPtr->numSpecialAreas)
+            if (i == sPokedexAreaScreen->numSpecialAreas)
             {
-                gPokedexAreaScreenPtr->specialAreaRegionMapSectionIds[i] = mapHeader->regionMapSectionId;
-                gPokedexAreaScreenPtr->numSpecialAreas++;
+                sPokedexAreaScreen->specialAreaRegionMapSectionIds[i] = mapHeader->regionMapSectionId;
+                sPokedexAreaScreen->numSpecialAreas++;
             }
         }
     }
@@ -362,18 +362,18 @@ static void BuildAreaGlowTilemap(void)
     u32 r3;
 
     for (gUnknown_02039260 = 0; gUnknown_02039260 < 0x280; gUnknown_02039260++)
-        gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] = 0;
+        sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] = 0;
 
-    for (gUnknown_02039260 = 0; gUnknown_02039260 < gPokedexAreaScreenPtr->numOverworldAreas; gUnknown_02039260++)
+    for (gUnknown_02039260 = 0; gUnknown_02039260 < sPokedexAreaScreen->numOverworldAreas; gUnknown_02039260++)
     {
         gUnknown_02039266 = 0;
         for (gUnknown_02039264 = 0; gUnknown_02039264 < 20; gUnknown_02039264++)
         {
             for (gUnknown_02039262 = 0; gUnknown_02039262 < 32; gUnknown_02039262++)
             {
-                if (GetRegionMapSectionAt_(gUnknown_02039262, gUnknown_02039264) == gPokedexAreaScreenPtr->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
+                if (GetRegionMapSectionAt_(gUnknown_02039262, gUnknown_02039264) == sPokedexAreaScreen->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
                 {
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266] = 0xFFFF;
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266] = 0xFFFF;
                 }
                 gUnknown_02039266++;
             }
@@ -385,24 +385,24 @@ static void BuildAreaGlowTilemap(void)
     {
         for (gUnknown_02039262 = 0; gUnknown_02039262 < 32; gUnknown_02039262++)
         {
-            if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266] == 0xFFFF)
+            if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266] == 0xFFFF)
             {
-                if (gUnknown_02039262 != 0 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 1] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 1] |= 0x02;
-                if (gUnknown_02039262 != 31 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 1] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 1] |= 0x01;
-                if (gUnknown_02039264 != 0 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 32] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 32] |= 0x08;
-                if (gUnknown_02039264 != 19 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 32] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 32] |= 0x04;
-                if (gUnknown_02039262 != 0 && gUnknown_02039264 != 0 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 33] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 33] |= 0x10;
-                if (gUnknown_02039262 != 31 && gUnknown_02039264 != 0 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 31] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 - 31] |= 0x40;
-                if (gUnknown_02039262 != 0 && gUnknown_02039264 != 19 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 31] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 31] |= 0x20;
-                if (gUnknown_02039262 != 31 && gUnknown_02039264 != 19 && gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 33] != 0xFFFF)
-                    gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039266 + 33] |= 0x80;
+                if (gUnknown_02039262 != 0 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 1] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 1] |= 0x02;
+                if (gUnknown_02039262 != 31 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 1] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 1] |= 0x01;
+                if (gUnknown_02039264 != 0 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 32] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 32] |= 0x08;
+                if (gUnknown_02039264 != 19 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 32] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 32] |= 0x04;
+                if (gUnknown_02039262 != 0 && gUnknown_02039264 != 0 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 33] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 33] |= 0x10;
+                if (gUnknown_02039262 != 31 && gUnknown_02039264 != 0 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 31] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 - 31] |= 0x40;
+                if (gUnknown_02039262 != 0 && gUnknown_02039264 != 19 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 31] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 31] |= 0x20;
+                if (gUnknown_02039262 != 31 && gUnknown_02039264 != 19 && sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 33] != 0xFFFF)
+                    sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266 + 33] |= 0x80;
             }
             gUnknown_02039266++;
         }
@@ -410,36 +410,36 @@ static void BuildAreaGlowTilemap(void)
 
     for (gUnknown_02039260 = 0; gUnknown_02039260 < 0x280; gUnknown_02039260++) // Register difference on induction: expected r3, got r1
     {
-        if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] == 0xFFFF)
-            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] = 0x10;
-        else if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] != 0)
+        if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] == 0xFFFF)
+            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] = 0x10;
+        else if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] != 0)
         {
-            if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0x02)
-                gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] &= 0xFFCF;
-            if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0x01)
-                gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] &= 0xFF3F;
-            if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0x08)
-                gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] &= 0xFFAF;
-            if (gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0x04)
-                gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] &= 0xFF5F;
-            gUnknown_02039268 = gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0x0F;
-            gUnknown_0203926A = gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] & 0xF0;
+            if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0x02)
+                sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] &= 0xFFCF;
+            if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0x01)
+                sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] &= 0xFF3F;
+            if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0x08)
+                sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] &= 0xFFAF;
+            if (sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0x04)
+                sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] &= 0xFF5F;
+            gUnknown_02039268 = sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0x0F;
+            gUnknown_0203926A = sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] & 0xF0;
             if (gUnknown_0203926A)
             {
-                gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] &= 0x0F;
+                sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] &= 0x0F;
                 switch (gUnknown_02039268)
                 {
                     case 0:
                         if (gUnknown_0203926A != 0)
-                            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 4) + 0x10;
+                            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 4) + 0x10;
                         break;
                     case 2:
                         if (gUnknown_0203926A != 0)
-                            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 4) + 0x1E;
+                            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 4) + 0x1E;
                         break;
                     case 1:
                         if (gUnknown_0203926A != 0)
-                            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 6) + 0x20;
+                            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += (gUnknown_0203926A >> 6) + 0x20;
                         break;
                     case 8:
                         if (gUnknown_0203926A != 0)
@@ -449,7 +449,7 @@ static void BuildAreaGlowTilemap(void)
                                 r3 |= 1;
                             if (gUnknown_0203926A & 0x20)
                                 r3 |= 2;
-                            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += r3 + 0x20;
+                            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += r3 + 0x20;
                         }
                         break;
                     case 4:
@@ -460,16 +460,16 @@ static void BuildAreaGlowTilemap(void)
                                 r3 |= 1;
                             if (gUnknown_0203926A & 0x10)
                                 r3 |= 2;
-                            gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += r3 + 0x21;
+                            sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += r3 + 0x21;
                         }
                         break;
                     case 5:
                     case 6:
-                        gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += 0x27;
+                        sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += 0x27;
                         break;
                     case 9:
                     case 10:
-                        gPokedexAreaScreenPtr->areaGlowTilemap[gUnknown_02039260] += 0x25;
+                        sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039260] += 0x25;
                         break;
                 }
             }
@@ -1057,15 +1057,15 @@ static NAKED void BuildAreaGlowTilemap(void)
 
 static void StartAreaGlow(void)
 {
-    if (gPokedexAreaScreenPtr->numSpecialAreas != 0 && gPokedexAreaScreenPtr->numOverworldAreas == 0)
-        gPokedexAreaScreenPtr->whichMarkersFlashing = 1;
+    if (sPokedexAreaScreen->numSpecialAreas != 0 && sPokedexAreaScreen->numOverworldAreas == 0)
+        sPokedexAreaScreen->showingMarkers = 1;
     else
-        gPokedexAreaScreenPtr->whichMarkersFlashing = 0;
-    gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter = 0;
-    gPokedexAreaScreenPtr->areaShadeFrameCounter = 0;
-    gPokedexAreaScreenPtr->areaShadeBldArgLo = 0;
-    gPokedexAreaScreenPtr->areaShadeBldArgHi = 0x40;
-    gPokedexAreaScreenPtr->specialMarkerCycleCounter = 1;
+        sPokedexAreaScreen->showingMarkers = 0;
+    sPokedexAreaScreen->markerTimer = 0;
+    sPokedexAreaScreen->glowTimer = 0;
+    sPokedexAreaScreen->areaShadeBldArgLo = 0;
+    sPokedexAreaScreen->areaShadeBldArgHi = 0x40;
+    sPokedexAreaScreen->markerFlashCounter = 1;
     REG_BLDCNT = BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BG1 | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BD;
     REG_BLDALPHA = 0x1000;
     DoAreaGlow();
@@ -1077,45 +1077,45 @@ static void DoAreaGlow(void)
     u16 y;
     u16 i;
 
-    if (gPokedexAreaScreenPtr->whichMarkersFlashing == 0)
+    if (sPokedexAreaScreen->showingMarkers == 0)
     {
-        if (gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter == 0)
+        if (sPokedexAreaScreen->markerTimer == 0)
         {
-            gPokedexAreaScreenPtr->areaShadeFrameCounter++;
-            if (gPokedexAreaScreenPtr->areaShadeFrameCounter & 1)
-                gPokedexAreaScreenPtr->areaShadeBldArgLo = (gPokedexAreaScreenPtr->areaShadeBldArgLo + 4) & 0x7f;
+            sPokedexAreaScreen->glowTimer++;
+            if (sPokedexAreaScreen->glowTimer & 1)
+                sPokedexAreaScreen->areaShadeBldArgLo = (sPokedexAreaScreen->areaShadeBldArgLo + 4) & 0x7f;
             else
-                gPokedexAreaScreenPtr->areaShadeBldArgHi = (gPokedexAreaScreenPtr->areaShadeBldArgHi + 4) & 0x7f;
-            x = gSineTable[gPokedexAreaScreenPtr->areaShadeBldArgLo] >> 4;
-            y = gSineTable[gPokedexAreaScreenPtr->areaShadeBldArgHi] >> 4;
+                sPokedexAreaScreen->areaShadeBldArgHi = (sPokedexAreaScreen->areaShadeBldArgHi + 4) & 0x7f;
+            x = gSineTable[sPokedexAreaScreen->areaShadeBldArgLo] >> 4;
+            y = gSineTable[sPokedexAreaScreen->areaShadeBldArgHi] >> 4;
             REG_BLDALPHA = x | (y << 8);
-            gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter = 0;
-            if (gPokedexAreaScreenPtr->areaShadeFrameCounter == 0x40)
+            sPokedexAreaScreen->markerTimer = 0;
+            if (sPokedexAreaScreen->glowTimer == 0x40)
             {
-                gPokedexAreaScreenPtr->areaShadeFrameCounter = 0;
-                if (gPokedexAreaScreenPtr->numSpecialAreas != 0)
-                    gPokedexAreaScreenPtr->whichMarkersFlashing = 1;
+                sPokedexAreaScreen->glowTimer = 0;
+                if (sPokedexAreaScreen->numSpecialAreas != 0)
+                    sPokedexAreaScreen->showingMarkers = 1;
             }
         }
         else
-            gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter--;
+            sPokedexAreaScreen->markerTimer--;
     }
     else
     {
-        gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter++;
-        if (gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter > 12)
+        sPokedexAreaScreen->markerTimer++;
+        if (sPokedexAreaScreen->markerTimer > 12)
         {
-            gPokedexAreaScreenPtr->areaShadeOrMarkerFrameCounter = 0;
-            gPokedexAreaScreenPtr->specialMarkerCycleCounter++;
-            for (i = 0; i < gPokedexAreaScreenPtr->numSpecialAreas; i++)
+            sPokedexAreaScreen->markerTimer = 0;
+            sPokedexAreaScreen->markerFlashCounter++;
+            for (i = 0; i < sPokedexAreaScreen->numSpecialAreas; i++)
             {
-                gPokedexAreaScreenPtr->areaMarkerSprites[i]->invisible = gPokedexAreaScreenPtr->specialMarkerCycleCounter & 1;
+                sPokedexAreaScreen->areaMarkerSprites[i]->invisible = sPokedexAreaScreen->markerFlashCounter & 1;
             }
-            if (gPokedexAreaScreenPtr->specialMarkerCycleCounter > 4)
+            if (sPokedexAreaScreen->markerFlashCounter > 4)
             {
-                gPokedexAreaScreenPtr->specialMarkerCycleCounter = 1;
-                if (gPokedexAreaScreenPtr->numOverworldAreas != 0)
-                    gPokedexAreaScreenPtr->whichMarkersFlashing = 0;
+                sPokedexAreaScreen->markerFlashCounter = 1;
+                if (sPokedexAreaScreen->numOverworldAreas != 0)
+                    sPokedexAreaScreen->showingMarkers = 0;
             }
         }
     }
@@ -1123,10 +1123,10 @@ static void DoAreaGlow(void)
 
 static void DebugCB_WaitFade(void)
 {
-    switch (gPokedexAreaScreenPtr->state)
+    switch (sPokedexAreaScreen->state)
     {
         case 0:
-            gPokedexAreaScreenPtr->state = 1;
+            sPokedexAreaScreen->state = 1;
             break;
         case 1:
             if (!UpdatePaletteFade())
@@ -1139,7 +1139,7 @@ static void DebugCB_WaitFade(void)
 
 static void DebugCB_WaitButton(void)
 {
-    switch (gPokedexAreaScreenPtr->state)
+    switch (sPokedexAreaScreen->state)
     {
         case 0:
             if (JOY_NEW(B_BUTTON))
@@ -1156,17 +1156,17 @@ static void DebugCB_WaitButton(void)
 
 static void DebugCB_GoBack(void)
 {
-    switch (gPokedexAreaScreenPtr->state)
+    switch (sPokedexAreaScreen->state)
     {
         case 0:
             BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 16, RGB(0, 0, 0));
-            gPokedexAreaScreenPtr->state++;
+            sPokedexAreaScreen->state++;
             break;
         case 1:
             if (!UpdatePaletteFade())
             {
                 FreeRegionMapIconResources();
-                SetMainCallback2(gPokedexAreaScreenPtr->prev);
+                SetMainCallback2(sPokedexAreaScreen->prev);
             }
             break;
     }
@@ -1174,17 +1174,17 @@ static void DebugCB_GoBack(void)
 
 static void DebugCB_GoNext(void)
 {
-    switch (gPokedexAreaScreenPtr->state)
+    switch (sPokedexAreaScreen->state)
     {
         case 0:
             BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 16, RGB(0, 0, 0));
-            gPokedexAreaScreenPtr->state++;
+            sPokedexAreaScreen->state++;
             break;
         case 1:
             if (!UpdatePaletteFade())
             {
                 FreeRegionMapIconResources();
-                SetMainCallback2(gPokedexAreaScreenPtr->next);
+                SetMainCallback2(sPokedexAreaScreen->next);
             }
             break;
     }
@@ -1200,8 +1200,8 @@ static void CreateAreaUnknownSprites(void);
 void ShowPokedexAreaScreen(u16 species, u8 * errno)
 {
     u8 taskId;
-    gPokedexAreaScreenPtr->species = species;
-    gPokedexAreaScreenPtr->errno = errno;
+    sPokedexAreaScreen->species = species;
+    sPokedexAreaScreen->errno = errno;
     errno[0] = 0;
     taskId = CreateTask(Task_PokedexAreaScreen_0, 0);
     gTasks[taskId].data[0] = 0;
@@ -1226,8 +1226,8 @@ static void Task_PokedexAreaScreen_0(u8 taskId)
             FreeAllSpritePalettes();
             break;
         case 2:
-            InitRegionMap(&gPokedexAreaScreenPtr->regionMap, FALSE);
-            StringFill(gPokedexAreaScreenPtr->charBuffer, CHAR_SPACE, 16);
+            InitRegionMap(&sPokedexAreaScreen->regionMap, FALSE);
+            StringFill(sPokedexAreaScreen->charBuffer, CHAR_SPACE, 16);
             break;
         case 3:
             ResetDrawAreaGlowState();
@@ -1297,7 +1297,7 @@ static void Task_PokedexAreaScreen_1(u8 taskId)
             if (gPaletteFade.active)
                 return;
             DestroyAreaSprites();
-            gPokedexAreaScreenPtr->errno[0] = gTasks[taskId].data[1];
+            sPokedexAreaScreen->errno[0] = gTasks[taskId].data[1];
             DestroyTask(taskId);
             return;
     }
@@ -1345,9 +1345,9 @@ static void CreateAreaMarkerSprites(void)
     LoadSpriteSheet(&sAreaMarkerSpriteSheet);
     LoadSpritePalette(&sAreaMarkerSpritePalette);
     cnt = 0;
-    for (i = 0; i < gPokedexAreaScreenPtr->numSpecialAreas; i++)
+    for (i = 0; i < sPokedexAreaScreen->numSpecialAreas; i++)
     {
-        mapSecId = gPokedexAreaScreenPtr->specialAreaRegionMapSectionIds[i];
+        mapSecId = sPokedexAreaScreen->specialAreaRegionMapSectionIds[i];
         x = 8 * (gRegionMapEntries[mapSecId].x + 1) + 4;
         y = 8 * (gRegionMapEntries[mapSecId].y) + 28;
         x += 4 * (gRegionMapEntries[mapSecId].width - 1);
@@ -1356,10 +1356,10 @@ static void CreateAreaMarkerSprites(void)
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].invisible = TRUE;
-            gPokedexAreaScreenPtr->areaMarkerSprites[cnt++] = gSprites + spriteId;
+            sPokedexAreaScreen->areaMarkerSprites[cnt++] = gSprites + spriteId;
         }
     }
-    gPokedexAreaScreenPtr->numAreaMarkerSprites = cnt;
+    sPokedexAreaScreen->numAreaMarkerSprites = cnt;
 }
 
 static void DestroyAreaSprites(void)
@@ -1367,17 +1367,17 @@ static void DestroyAreaSprites(void)
     u16 i;
     FreeSpriteTilesByTag(2);
     FreeSpritePaletteByTag(2);
-    for (i = 0; i < gPokedexAreaScreenPtr->numAreaMarkerSprites; i++)
+    for (i = 0; i < sPokedexAreaScreen->numAreaMarkerSprites; i++)
     {
-        DestroySprite(gPokedexAreaScreenPtr->areaMarkerSprites[i]);
+        DestroySprite(sPokedexAreaScreen->areaMarkerSprites[i]);
     }
     FreeSpriteTilesByTag(3);
     FreeSpritePaletteByTag(3);
     for (i = 0; i < 3; i++)
     {
-        if (gPokedexAreaScreenPtr->areaUnknownSprites[i] != NULL)
+        if (sPokedexAreaScreen->areaUnknownSprites[i] != NULL)
         {
-            DestroySprite(gPokedexAreaScreenPtr->areaUnknownSprites[i]);
+            DestroySprite(sPokedexAreaScreen->areaUnknownSprites[i]);
         }
     }
 }
@@ -1386,9 +1386,9 @@ const struct SpritePalette sAreaUnknownSpritePalette = {gAreaUnknownPalette, 3};
 
 static void LoadAreaUnknownGraphics(void)
 {
-    struct SpriteSheet spriteSheet = {gPokedexAreaScreenPtr->areaUnknownGraphicsBuffer, 0x600, 3};
+    struct SpriteSheet spriteSheet = {sPokedexAreaScreen->areaUnknownGraphicsBuffer, 0x600, 3};
 
-    LZ77UnCompWram(gAreaUnknownTiles, gPokedexAreaScreenPtr->areaUnknownGraphicsBuffer);
+    LZ77UnCompWram(gAreaUnknownTiles, sPokedexAreaScreen->areaUnknownGraphicsBuffer);
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&sAreaUnknownSpritePalette);
 }
@@ -1413,11 +1413,11 @@ static void CreateAreaUnknownSprites(void)
     u16 i;
     u8 spriteId;
 
-    if (gPokedexAreaScreenPtr->numOverworldAreas != 0 || gPokedexAreaScreenPtr->numSpecialAreas != 0)
+    if (sPokedexAreaScreen->numOverworldAreas != 0 || sPokedexAreaScreen->numSpecialAreas != 0)
     {
         for (i = 0; i < 3; i++)
         {
-            gPokedexAreaScreenPtr->areaUnknownSprites[i] = NULL;
+            sPokedexAreaScreen->areaUnknownSprites[i] = NULL;
         }
     }
     else
@@ -1428,10 +1428,10 @@ static void CreateAreaUnknownSprites(void)
             if (spriteId != MAX_SPRITES)
             {
                 gSprites[spriteId].oam.tileNum += i * 16;
-                gPokedexAreaScreenPtr->areaUnknownSprites[i] = gSprites + spriteId;
+                sPokedexAreaScreen->areaUnknownSprites[i] = gSprites + spriteId;
             }
             else
-                gPokedexAreaScreenPtr->areaUnknownSprites[i] = NULL;
+                sPokedexAreaScreen->areaUnknownSprites[i] = NULL;
         }
     }
 }
