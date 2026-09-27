@@ -321,7 +321,7 @@ u8 *BufferRibbonsMonListIndexText(u8*, u16);
 void PrintTrainerEyesListStats(u8 drawStep);
 bool8 LoadPokenavListRowsStep(void);
 u8 *BufferPokenavMonListRowText(u8*, u16, u8);
-void sub_80F700C(u8*, u16);
+void BufferTrainerEyesListRowText(u8*, u16);
 void InitTrainerEyesListErase(void);
 bool8 EraseTrainerEyesListStep(void);
 void InitTrainerEyesListRestore(void);

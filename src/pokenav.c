@@ -1267,7 +1267,7 @@ void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 
 void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 {
-    sub_80F700C(gPokenavStructPtr->unk8788, listIndex);
+    BufferTrainerEyesListRowText(gPokenavStructPtr->unk8788, listIndex);
     tilemapRow &= 0x1F;
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
     Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);

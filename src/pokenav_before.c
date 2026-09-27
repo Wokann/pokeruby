@@ -3132,7 +3132,7 @@ void ShowTrainerEyesTrainerInfo(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80F700C((u8 *)(gSharedMem + 0x8788), *(u16 *)(gSharedMem + 0x8788 - 0x1A));
+        BufferTrainerEyesListRowText((u8 *)(gSharedMem + 0x8788), *(u16 *)(gSharedMem + 0x8788 - 0x1A));
         CreateTrainerEyesNameSprites((u8 *)(gSharedMem + 0x8788));
         gPokenavStructPtr->callbackStep++;
         break;

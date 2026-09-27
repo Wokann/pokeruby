@@ -166,7 +166,7 @@ void StopTrainerEyesBackgroundPulse(void)
     REG_BLDY = 0;
 }
 
-void sub_80F700C(u8 *arg0, u16 arg1)
+void BufferTrainerEyesListRowText(u8 *arg0, u16 arg1)
 {
     const struct Trainer *trainer = &gTrainers[gPokenavStructPtr->trainersEye[arg1].opponentId];
     u8 *ptr = arg0;
@@ -226,7 +226,7 @@ bool8 sub_80F70FC(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 3:
-        sub_80F700C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex);
+        BufferTrainerEyesListRowText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex);
         UpdateTrainerEyesNameSprites(gPokenavStructPtr->unk8788);
         RedrawSelectedTrainerEyesListRow();
         PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
