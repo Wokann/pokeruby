@@ -165,7 +165,7 @@ static bool8 SlotTask_WaitMsg_NoMoreCoins(struct Task *task);
 static bool8 SlotTask_EndGame(struct Task *task);
 static bool8 SlotTask_FreeDataStructures(struct Task *task);
 #if DEBUG
-static bool8 debug_sub_8116E74(struct Task *);
+static bool8 SlotTask_WaitDebugMenuClosed(struct Task *);
 #endif
 static void DrawMachineBias(void);
 static void ResetBiasFailure(void);
@@ -601,7 +601,7 @@ static bool8 (*const sSlotTasks[])(struct Task *task) =
     SlotTask_EndGame,
     SlotTask_FreeDataStructures,
 #if DEBUG
-    debug_sub_8116E74,
+    SlotTask_WaitDebugMenuClosed,
 #endif
 };
 
@@ -733,7 +733,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
     return FALSE;
 }
 
-static void sub_8101F2C(const u8 *str)
+static void SlotMachine_PrintMessage(const u8 *str)
 {
     Menu_DisplayDialogueFrame();
     Menu_PrintText(str, 2, 15);
@@ -741,7 +741,7 @@ static void sub_8101F2C(const u8 *str)
 
 static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
-    sub_8101F2C(gOtherText_DontHaveThreeCoins);
+    SlotMachine_PrintMessage(gOtherText_DontHaveThreeCoins);
     sSlotMachine->state = 7;
     return FALSE;
 }
@@ -1052,7 +1052,7 @@ static bool8 SlotTask_NoMatches(struct Task *task)
 
 static bool8 SlotTask_AskQuit(struct Task *task)
 {
-    sub_8101F2C(gOtherText_QuitGamePrompt);
+    SlotMachine_PrintMessage(gOtherText_QuitGamePrompt);
     DisplayYesNoMenu(21, 7, 1);
     sub_814AB84();
     sSlotMachine->state = 22;
@@ -1081,7 +1081,7 @@ static bool8 SlotTask_HandleQuitInput(struct Task *task)
 
 static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task)
 {
-    sub_8101F2C(gOtherText_MaxCoins);
+    SlotMachine_PrintMessage(gOtherText_MaxCoins);
     sSlotMachine->state = 24;
     return FALSE;
 }
@@ -1098,7 +1098,7 @@ static bool8 SlotTask_WaitMsg_MaxCoins(struct Task *task)
 
 static bool8 SlotTask_PrintMsg_NoMoreCoins(struct Task *task)
 {
-    sub_8101F2C(gOtherText_OutOfCoins);
+    SlotMachine_PrintMessage(gOtherText_OutOfCoins);
     sSlotMachine->state = 26;
     return FALSE;
 }
@@ -1137,7 +1137,7 @@ static bool8 SlotTask_FreeDataStructures(struct Task *task)
 
 #if DEBUG
 
-static bool8 debug_sub_8116E74(struct Task *task)
+static bool8 SlotTask_WaitDebugMenuClosed(struct Task *task)
 {
     if (DebugSlot_IsMenuClosed() != 0)
         sSlotMachine->state = 5;
