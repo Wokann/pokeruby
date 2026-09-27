@@ -172,15 +172,15 @@ static bool8 ControlWorks_SaveWorkPart2_HandlePageInput(void);
 static void ControlWorks_SaveWorkPart2_PrintPageValues(u8);
 static void ControlWorks_SaveWorkPart2_AdjustSelection(u8, u8);
 static bool8 ControlWorks_SysWork_InitSubmenu(void);
-static bool8 debug_sub_808E3BC(void);
-static bool8 debug_sub_808E400(void);
-static bool8 debug_sub_808E458(void);
-static bool8 debug_sub_808E4B0(void);
-static bool8 debug_sub_808E508(void);
-static bool8 debug_sub_808E560(void);
-static bool8 debug_sub_808E5B8(void);
-static void debug_sub_808E604(u8, u8);
-static void debug_sub_808E660(u8);
+static bool8 ControlWorks_SysWork_HandleCategoryInput(void);
+static bool8 ControlWorks_SysWork_CyclingRoad_InitPage(void);
+static bool8 ControlWorks_SysWork_SizeRecords_InitPage(void);
+static bool8 ControlWorks_SysWork_Counters_InitPage(void);
+static bool8 ControlWorks_SysWork_Other1_InitPage(void);
+static bool8 ControlWorks_SysWork_Other2_InitPage(void);
+static bool8 ControlWorks_SysWork_HandlePageInput(void);
+static void ControlWorks_SysWork_AdjustSelection(u8, u8);
+static void ControlWorks_SysWork_PrintPageValues(u8);
 static bool8 ControlWorks_LocalWork_InitSubmenu(void);
 static bool8 debug_sub_808E710(void);
 static bool8 debug_sub_808E754(void);
@@ -1294,18 +1294,18 @@ static const u16 sEventFlagPageFlags[][9] = {
     {FLAG_BIRCH_AIDE_MET, FLAG_DECLINED_BIKE, FLAG_RECEIVED_SECRET_POWER}
 };
 
-static const u8 gUnknown_Debug_083C3288[] = DTR("CYCLEかんれん", "CYCLE-related");
-static const u8 gUnknown_Debug_083C3292[] = DTR("おおきさくらべ", "Size comparison");
-static const u8 gUnknown_Debug_083C329A[] = DTR("カウンタ", "Counter");
-static const u8 gUnknown_Debug_083C329F[] = DTR("そのた1", "Other 1");
-static const u8 gUnknown_Debug_083C32A4[] = DTR("そのた2", "Other 2");
+static const u8 sString_SysWork_CyclingRoad[] = DTR("CYCLEかんれん", "CYCLE-related");
+static const u8 sString_SysWork_SizeRecords[] = DTR("おおきさくらべ", "Size comparison");
+static const u8 sString_SysWork_Counters[] = DTR("カウンタ", "Counter");
+static const u8 sString_SysWork_Other1[] = DTR("そのた1", "Other 1");
+static const u8 sString_SysWork_Other2[] = DTR("そのた2", "Other 2");
 
-static const struct MenuAction gUnknown_Debug_083C32AC[] = {
-    {gUnknown_Debug_083C3288, debug_sub_808E400},
-    {gUnknown_Debug_083C3292, debug_sub_808E458},
-    {gUnknown_Debug_083C329A, debug_sub_808E4B0},
-    {gUnknown_Debug_083C329F, debug_sub_808E508},
-    {gUnknown_Debug_083C32A4, debug_sub_808E560}
+static const struct MenuAction sMenuActions_SysWorkCategories[] = {
+    {sString_SysWork_CyclingRoad, ControlWorks_SysWork_CyclingRoad_InitPage},
+    {sString_SysWork_SizeRecords, ControlWorks_SysWork_SizeRecords_InitPage},
+    {sString_SysWork_Counters, ControlWorks_SysWork_Counters_InitPage},
+    {sString_SysWork_Other1, ControlWorks_SysWork_Other1_InitPage},
+    {sString_SysWork_Other2, ControlWorks_SysWork_Other2_InitPage}
 };
 
 static const u8 gUnknown_Debug_083C32D4[] = _("WKーCYCLEーROADーHIT");
@@ -1338,18 +1338,18 @@ static const u8 gUnknown_Debug_083C344E[] = _("WKーPOKELOTーRND1");
 static const u8 gUnknown_Debug_083C345E[] = _("WKーPOKELOTーRND2");
 static const u8 gUnknown_Debug_083C346E[] = _("WKーBASEーMAPNO");
 
-static const struct MenuAction gUnknown_Debug_083C347C[] = {
+static const struct MenuAction sMenuActions_SysWork_CyclingRoad[] = {
     {gUnknown_Debug_083C32D4, DummyMenuAction},
     {gUnknown_Debug_083C32E6, DummyMenuAction},
     {gUnknown_Debug_083C32FA, DummyMenuAction}
 };
 
-static const struct MenuAction gUnknown_Debug_083C3494[] = {
+static const struct MenuAction sMenuActions_SysWork_SizeRecords[] = {
     {gUnknown_Debug_083C330E, DummyMenuAction},
     {gUnknown_Debug_083C3325, DummyMenuAction}
 };
 
-static const struct MenuAction gUnknown_Debug_083C34A4[] = {
+static const struct MenuAction sMenuActions_SysWork_Counters[] = {
     {gUnknown_Debug_083C333A, DummyMenuAction},
     {gUnknown_Debug_083C3349, DummyMenuAction},
     {gUnknown_Debug_083C3356, DummyMenuAction},
@@ -1358,7 +1358,7 @@ static const struct MenuAction gUnknown_Debug_083C34A4[] = {
     {gUnknown_Debug_083C3391, DummyMenuAction}
 };
 
-static const struct MenuAction gUnknown_Debug_083C34D4[] = {
+static const struct MenuAction sMenuActions_SysWork_Other1[] = {
     {gUnknown_Debug_083C33A6, DummyMenuAction},
     {gUnknown_Debug_083C33B6, DummyMenuAction},
     {gUnknown_Debug_083C33C4, DummyMenuAction},
@@ -1370,7 +1370,7 @@ static const struct MenuAction gUnknown_Debug_083C34D4[] = {
     {gUnknown_Debug_083C341E, DummyMenuAction}
 };
 
-static const struct MenuAction gUnknown_Debug_083C351C[] = {
+static const struct MenuAction sMenuActions_SysWork_Other2[] = {
     {gUnknown_Debug_083C342F, DummyMenuAction},
     {gUnknown_Debug_083C343F, DummyMenuAction},
     {gUnknown_Debug_083C344E, DummyMenuAction},
@@ -1378,9 +1378,9 @@ static const struct MenuAction gUnknown_Debug_083C351C[] = {
     {gUnknown_Debug_083C346E, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C3544[] = {3, 2, 6, 9, 5};
+static const u8 sSysWorkPageCounts[] = {3, 2, 6, 9, 5};
 
-static const u16 gUnknown_Debug_083C354A[][9] = {
+static const u16 sSysWorkPageVars[][9] = {
     {VAR_CYCLING_ROAD_RECORD_COLLISIONS, VAR_CYCLING_ROAD_RECORD_TIME_L, VAR_CYCLING_ROAD_RECORD_TIME_H},
     {VAR_SHROOMISH_SIZE_RECORD, VAR_BARBOACH_SIZE_RECORD},
     {VAR_REPEL_STEP_COUNT, VAR_ICE_STEP_COUNT, VAR_ASH_GATHER_COUNT, VAR_CRUISE_STEP_COUNT, VAR_HAPPINESS_STEP_COUNTER, VAR_POISON_STEP_COUNTER},
@@ -3637,14 +3637,14 @@ static void ControlWorks_SaveWorkPart2_AdjustSelection(u8 whichMenu, u8 cursorPo
 static bool8 ControlWorks_SysWork_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 24, 2 * ARRAY_COUNT(gUnknown_Debug_083C32AC) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C32AC), gUnknown_Debug_083C32AC);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C32AC), 0, 23);
-    gMenuCallback = debug_sub_808E3BC;
+    Menu_DrawStdWindowFrame(0, 0, 24, 2 * ARRAY_COUNT(sMenuActions_SysWorkCategories) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWorkCategories), sMenuActions_SysWorkCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWorkCategories), 0, 23);
+    gMenuCallback = ControlWorks_SysWork_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E3BC(void)
+static bool8 ControlWorks_SysWork_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -3655,72 +3655,72 @@ static bool8 debug_sub_808E3BC(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C32AC[input].func;
+    gMenuCallback = sMenuActions_SysWorkCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808E400(void)
+static bool8 ControlWorks_SysWork_CyclingRoad_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C347C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C347C), gUnknown_Debug_083C347C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C347C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysWork_CyclingRoad) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWork_CyclingRoad), sMenuActions_SysWork_CyclingRoad);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWork_CyclingRoad), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808E5B8;
+    gMenuCallback = ControlWorks_SysWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E458(void)
+static bool8 ControlWorks_SysWork_SizeRecords_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C3494) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C3494), gUnknown_Debug_083C3494);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C3494), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysWork_SizeRecords) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWork_SizeRecords), sMenuActions_SysWork_SizeRecords);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWork_SizeRecords), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808E5B8;
+    gMenuCallback = ControlWorks_SysWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E4B0(void)
+static bool8 ControlWorks_SysWork_Counters_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C34A4) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C34A4), gUnknown_Debug_083C34A4);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C34A4), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysWork_Counters) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWork_Counters), sMenuActions_SysWork_Counters);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWork_Counters), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 2;
-    gMenuCallback = debug_sub_808E5B8;
+    gMenuCallback = ControlWorks_SysWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E508(void)
+static bool8 ControlWorks_SysWork_Other1_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C34D4) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C34D4), gUnknown_Debug_083C34D4);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C34D4), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysWork_Other1) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWork_Other1), sMenuActions_SysWork_Other1);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWork_Other1), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 3;
-    gMenuCallback = debug_sub_808E5B8;
+    gMenuCallback = ControlWorks_SysWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E560(void)
+static bool8 ControlWorks_SysWork_Other2_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C351C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C351C), gUnknown_Debug_083C351C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C351C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysWork_Other2) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysWork_Other2), sMenuActions_SysWork_Other2);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysWork_Other2), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 4;
-    gMenuCallback = debug_sub_808E5B8;
+    gMenuCallback = ControlWorks_SysWork_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808E5B8(void)
+static bool8 ControlWorks_SysWork_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808E604(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808E660(sFlagAndVarTest_WhichSubmenu);
+    ControlWorks_SysWork_AdjustSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlWorks_SysWork_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -3731,7 +3731,7 @@ static bool8 debug_sub_808E5B8(void)
     return FALSE;
 }
 
-static void debug_sub_808E604(u8 whichMenu, u8 cursorPos)
+static void ControlWorks_SysWork_AdjustSelection(u8 whichMenu, u8 cursorPos)
 {
     u16 delta;
 
@@ -3741,16 +3741,16 @@ static void debug_sub_808E604(u8 whichMenu, u8 cursorPos)
         delta = -1;
     else
         return;
-    VarSet(gUnknown_Debug_083C354A[whichMenu][cursorPos], VarGet(gUnknown_Debug_083C354A[whichMenu][cursorPos]) + delta);
+    VarSet(sSysWorkPageVars[whichMenu][cursorPos], VarGet(sSysWorkPageVars[whichMenu][cursorPos]) + delta);
 }
 
-static void debug_sub_808E660(u8 whichMenu)
+static void ControlWorks_SysWork_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C3544[whichMenu]; i++)
+    for (i = 0; i < sSysWorkPageCounts[whichMenu]; i++)
     {
-        PrintUnsignedShort(24, 2 * i + 1, VarGet(gUnknown_Debug_083C354A[whichMenu][i]));
+        PrintUnsignedShort(24, 2 * i + 1, VarGet(sSysWorkPageVars[whichMenu][i]));
     }
 }
 
