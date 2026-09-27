@@ -516,8 +516,8 @@ static const u8 sString_FH12[] = _("FHー12");
 static const u8 sString_FH13[] = _("FHー13");
 static const u8 sString_FH14[] = _("FHー14");
 static const u8 sString_FH15[] = _("FHー15");
-static const u8 gUnknown_Debug_083C1286[] = _("");
-static const u8 gUnknown_Debug_083C1287[] = _("");
+static const u8 sString_Blank_083C1286[] = _("");
+static const u8 sString_Blank_083C1287[] = _("");
 
 static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
     {sString_FH09, DummyMenuAction},
@@ -527,8 +527,8 @@ static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
     {sString_FH13, DummyMenuAction},
     {sString_FH14, DummyMenuAction},
     {sString_FH15, DummyMenuAction},
-    {gUnknown_Debug_083C1286, DummyMenuAction},
-    {gUnknown_Debug_083C1287, DummyMenuAction}
+    {sString_Blank_083C1286, DummyMenuAction},
+    {sString_Blank_083C1287, DummyMenuAction}
 };
 
 static const u8 sControlFlags_FH_CountsArray[] = {9, 7};
@@ -705,8 +705,8 @@ static const u8 sString_SysFlag_TvLati[] = _("SYSーMOVEーPOKEーNEWS");
 static const u8 sString_SysFlag_ShoalItem[] = _("SYSーASASEーITEM");
 static const u8 sString_SysFlag_BDash[] = _("SYSーBーDASH");
 static const u8 sString_SysFlag_ControlObjectDelete[] = _("SYSーCTRLーOBJーDELETE");
-static const u8 gUnknown_Debug_083C18B4[] = _("");
-static const u8 gUnknown_Debug_083C18B5[] = _("");
+static const u8 sString_Blank_083C18B4[] = _("");
+static const u8 sString_Blank_083C18B5[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
     {sString_SysFlag_EncounterUpItem, DummyMenuAction},
@@ -716,8 +716,8 @@ static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
     {sString_SysFlag_ShoalItem, DummyMenuAction},
     {sString_SysFlag_BDash, DummyMenuAction},
     {sString_SysFlag_ControlObjectDelete, DummyMenuAction},
-    {gUnknown_Debug_083C18B4, DummyMenuAction},
-    {gUnknown_Debug_083C18B5, DummyMenuAction}
+    {sString_Blank_083C18B4, DummyMenuAction},
+    {sString_Blank_083C18B5, DummyMenuAction}
 };
 
 static const u8 sString_SysFlag_SeafloorCavernLandmark[] = _("SYSーARRIVEーSUBMARINECAVE");
@@ -725,10 +725,10 @@ static const u8 sString_SysFlag_BattleTowerLandmark[] = _("SYSーARRIVEーBATTLE
 static const u8 sString_SysFlag_SouthernIslandLandmark[] = _("SYSーARRIVEーISLAND");
 static const u8 sString_SysFlag_PokemonLeagueFly[] = _("SYSーARRIVEーLEAGUE");
 static const u8 sString_SysFlag_SkyPillarLandmark[] = _("SYSーARRIVEーSORANOHASHIRA");
-static const u8 gUnknown_Debug_083C196D[] = _("");
-static const u8 gUnknown_Debug_083C196E[] = _("");
-static const u8 gUnknown_Debug_083C196F[] = _("");
-static const u8 gUnknown_Debug_083C1970[] = _("");
+static const u8 sString_Blank_083C196D[] = _("");
+static const u8 sString_Blank_083C196E[] = _("");
+static const u8 sString_Blank_083C196F[] = _("");
+static const u8 sString_Blank_083C1970[] = _("");
 
 static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
     {sString_SysFlag_SeafloorCavernLandmark, DummyMenuAction},
@@ -736,10 +736,10 @@ static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
     {sString_SysFlag_SouthernIslandLandmark, DummyMenuAction},
     {sString_SysFlag_PokemonLeagueFly, DummyMenuAction},
     {sString_SysFlag_SkyPillarLandmark, DummyMenuAction},
-    {gUnknown_Debug_083C196D, DummyMenuAction},
-    {gUnknown_Debug_083C196E, DummyMenuAction},
-    {gUnknown_Debug_083C196F, DummyMenuAction},
-    {gUnknown_Debug_083C1970, DummyMenuAction}
+    {sString_Blank_083C196D, DummyMenuAction},
+    {sString_Blank_083C196E, DummyMenuAction},
+    {sString_Blank_083C196F, DummyMenuAction},
+    {sString_Blank_083C1970, DummyMenuAction}
 };
 
 static const u8 sSysFlagPageCounts[] = {8, 7, 9, 4, 9, 9, 9, 7, 5};
@@ -1261,23 +1261,23 @@ static const struct MenuAction sMenuActions_EventFlags_Other2[] = {
 static const u8 sString_EventFlag_BirchAideMet[] = _("FEーSTUDYM1ー01ーP01ーT101R0301");
 static const u8 sString_EventFlag_DeclinedBike[] = _("FEーWORKERM1ー01ーC103ーR0201");
 static const u8 sString_EventFlag_ReceivedSecretPower[] = _("FEーHIMITSUーGET");
-static const u8 gUnknown_Debug_083C318D[] = _("");
-static const u8 gUnknown_Debug_083C318E[] = _("");
-static const u8 gUnknown_Debug_083C318F[] = _("");
-static const u8 gUnknown_Debug_083C3190[] = _("");
-static const u8 gUnknown_Debug_083C3191[] = _("");
-static const u8 gUnknown_Debug_083C3192[] = _("");
+static const u8 sString_Blank_083C318D[] = _("");
+static const u8 sString_Blank_083C318E[] = _("");
+static const u8 sString_Blank_083C318F[] = _("");
+static const u8 sString_Blank_083C3190[] = _("");
+static const u8 sString_Blank_083C3191[] = _("");
+static const u8 sString_Blank_083C3192[] = _("");
 
 static const struct MenuAction sMenuActions_EventFlags_Other6[] = {
     {sString_EventFlag_BirchAideMet, DummyMenuAction},
     {sString_EventFlag_DeclinedBike, DummyMenuAction},
     {sString_EventFlag_ReceivedSecretPower, DummyMenuAction},
-    {gUnknown_Debug_083C318D, DummyMenuAction},
-    {gUnknown_Debug_083C318E, DummyMenuAction},
-    {gUnknown_Debug_083C318F, DummyMenuAction},
-    {gUnknown_Debug_083C3190, DummyMenuAction},
-    {gUnknown_Debug_083C3191, DummyMenuAction},
-    {gUnknown_Debug_083C3192, DummyMenuAction}
+    {sString_Blank_083C318D, DummyMenuAction},
+    {sString_Blank_083C318E, DummyMenuAction},
+    {sString_Blank_083C318F, DummyMenuAction},
+    {sString_Blank_083C3190, DummyMenuAction},
+    {sString_Blank_083C3191, DummyMenuAction},
+    {sString_Blank_083C3192, DummyMenuAction}
 };
 
 static const u8 sEventFlagPageCounts[] = {9, 9, 9, 9, 9, 9, 9, 9, 3};
@@ -1465,19 +1465,19 @@ static const u8 sString_SaveWorkPart2_ContestLocation[] = _("WKーSCENEーSPーC
 static const u8 sString_SaveWorkPart2_ContestPrizePickup[] = _("WKーSCENEーSPーCONTESTITEM");
 static const u8 sString_SaveWorkPart2_LittlerootIntroState[] = _("WKーSCENEーSPーOPENING");
 static const u8 sString_SaveWorkPart2_SSTidalState[] = _("WKーSCENEーSPーSHIP01");
-static const u8 gUnknown_Debug_083C3824[] = _("");
-static const u8 gUnknown_Debug_083C3825[] = _("");
-static const u8 gUnknown_Debug_083C3826[] = _("");
+static const u8 sString_Blank_083C3824[] = _("");
+static const u8 sString_Blank_083C3825[] = _("");
+static const u8 sString_Blank_083C3826[] = _("");
 
 static const u8 sString_SaveWorkPart2_TrickHouseFoundTrickMaster[] = _("WKーSCENEーR110ーR0101");
 static const u8 sString_SaveWorkPart2_TrickHousePrizePickup[] = _("WKーSCENEーR110ーR0102");
 static const u8 sString_SaveWorkPart2_TrickHouseEnterFromCorridor[] = _("WKーSCENEーR110ーR0103");
 static const u8 sString_SaveWorkPart2_TrickHouseEntranceState[] = _("WKーKARAKURIーDAIOU");
 static const u8 sString_SaveWorkPart2_TrickHouseBeingWatchedState[] = _("WKーSCENEーSHISEN");
-static const u8 gUnknown_Debug_083C3885[] = _("");
-static const u8 gUnknown_Debug_083C3886[] = _("");
-static const u8 gUnknown_Debug_083C3887[] = _("");
-static const u8 gUnknown_Debug_083C3888[] = _("");
+static const u8 sString_Blank_083C3885[] = _("");
+static const u8 sString_Blank_083C3886[] = _("");
+static const u8 sString_Blank_083C3887[] = _("");
+static const u8 sString_Blank_083C3888[] = _("");
 
 static const u8 sString_SaveWorkPart2_TrickHousePuzzle1State[] = _("WKーSCENEーR110ーR0104");
 static const u8 sString_SaveWorkPart2_TrickHousePuzzle2State[] = _("WKーSCENEーR110ーR0105");
@@ -1491,13 +1491,13 @@ static const u8 sString_SaveWorkPart2_TrickHousePuzzle7State2[] = _("WKーSCENE�
 
 static const u8 sString_SaveWorkPart2_BrineyHouseState[] = _("WKーSCENEーR104ーR0101");
 static const u8 sString_SaveWorkPart2_GlassWorkshopState[] = _("WKーSCENEーR113ーR0101");
-static const u8 gUnknown_Debug_083C3968[] = _("");
-static const u8 gUnknown_Debug_083C3969[] = _("");
-static const u8 gUnknown_Debug_083C396A[] = _("");
-static const u8 gUnknown_Debug_083C396B[] = _("");
-static const u8 gUnknown_Debug_083C396C[] = _("");
-static const u8 gUnknown_Debug_083C396D[] = _("");
-static const u8 gUnknown_Debug_083C396E[] = _("");
+static const u8 sString_Blank_083C3968[] = _("");
+static const u8 sString_Blank_083C3969[] = _("");
+static const u8 sString_Blank_083C396A[] = _("");
+static const u8 sString_Blank_083C396B[] = _("");
+static const u8 sString_Blank_083C396C[] = _("");
+static const u8 sString_Blank_083C396D[] = _("");
+static const u8 sString_Blank_083C396E[] = _("");
 
 static const u8 sString_SaveWorkPart2_SecretBaseInitialized[] = _("WKーSCENEーBASEーGDOODS");
 static const u8 sString_SaveWorkPart2_BoardBrineyBoatState[] = _("WKーSCENEーHAGIーFUNE");
@@ -1515,9 +1515,9 @@ static const u8 sString_SaveWorkPart2_UnknownVar40BB[] = _("WKーFUTAGOー01ーF
 static const u8 sString_SaveWorkPart2_BattleTowerBravoTrainerOn[] = _("WKーSCENEーBATTLEーTOWER");
 static const u8 sString_SaveWorkPart2_EReaderTrainerBattleResult[] = _("WKーSCENEーTRーHOUSE");
 static const u8 sString_SaveWorkPart2_WhichFossilRevived[] = _("WKーKASEKIーTYPE");
-static const u8 gUnknown_Debug_083C3A9C[] = _("");
-static const u8 gUnknown_Debug_083C3A9D[] = _("");
-static const u8 gUnknown_Debug_083C3A9E[] = _("");
+static const u8 sString_Blank_083C3A9C[] = _("");
+static const u8 sString_Blank_083C3A9D[] = _("");
+static const u8 sString_Blank_083C3A9E[] = _("");
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_SP[] = {
     {sString_SaveWorkPart2_LinkContestRoomState, DummyMenuAction},
@@ -1526,8 +1526,8 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_SP[] = {
     {sString_SaveWorkPart2_ContestPrizePickup, DummyMenuAction},
     {sString_SaveWorkPart2_LittlerootIntroState, DummyMenuAction},
     {sString_SaveWorkPart2_SSTidalState, DummyMenuAction},
-    {gUnknown_Debug_083C3824, DummyMenuAction},
-    {gUnknown_Debug_083C3825, DummyMenuAction}
+    {sString_Blank_083C3824, DummyMenuAction},
+    {sString_Blank_083C3825, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHouse[] = {
@@ -1536,10 +1536,10 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHous
     {sString_SaveWorkPart2_TrickHouseEnterFromCorridor, DummyMenuAction},
     {sString_SaveWorkPart2_TrickHouseEntranceState, DummyMenuAction},
     {sString_SaveWorkPart2_TrickHouseBeingWatchedState, DummyMenuAction},
-    {gUnknown_Debug_083C3885, DummyMenuAction},
-    {gUnknown_Debug_083C3886, DummyMenuAction},
-    {gUnknown_Debug_083C3887, DummyMenuAction},
-    {gUnknown_Debug_083C3888, DummyMenuAction}
+    {sString_Blank_083C3885, DummyMenuAction},
+    {sString_Blank_083C3886, DummyMenuAction},
+    {sString_Blank_083C3887, DummyMenuAction},
+    {sString_Blank_083C3888, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part2[] = {
@@ -1557,13 +1557,13 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part2[] = {
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomRoute[] = {
     {sString_SaveWorkPart2_BrineyHouseState, DummyMenuAction},
     {sString_SaveWorkPart2_GlassWorkshopState, DummyMenuAction},
-    {gUnknown_Debug_083C3968, DummyMenuAction},
-    {gUnknown_Debug_083C3969, DummyMenuAction},
-    {gUnknown_Debug_083C396A, DummyMenuAction},
-    {gUnknown_Debug_083C396B, DummyMenuAction},
-    {gUnknown_Debug_083C396C, DummyMenuAction},
-    {gUnknown_Debug_083C396D, DummyMenuAction},
-    {gUnknown_Debug_083C396E, DummyMenuAction}
+    {sString_Blank_083C3968, DummyMenuAction},
+    {sString_Blank_083C3969, DummyMenuAction},
+    {sString_Blank_083C396A, DummyMenuAction},
+    {sString_Blank_083C396B, DummyMenuAction},
+    {sString_Blank_083C396C, DummyMenuAction},
+    {sString_Blank_083C396D, DummyMenuAction},
+    {sString_Blank_083C396E, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_Other1[] = {
@@ -1585,9 +1585,9 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_Other2[] = {
     {sString_SaveWorkPart2_BattleTowerBravoTrainerOn, DummyMenuAction},
     {sString_SaveWorkPart2_EReaderTrainerBattleResult, DummyMenuAction},
     {sString_SaveWorkPart2_WhichFossilRevived, DummyMenuAction},
-    {gUnknown_Debug_083C3A9C, DummyMenuAction},
-    {gUnknown_Debug_083C3A9D, DummyMenuAction},
-    {gUnknown_Debug_083C3A9E, DummyMenuAction}
+    {sString_Blank_083C3A9C, DummyMenuAction},
+    {sString_Blank_083C3A9D, DummyMenuAction},
+    {sString_Blank_083C3A9E, DummyMenuAction}
 };
 
 static const u8 sControlWorks_SaveWork_CountsArray[] = {6, 5, 9, 2, 9, 6};
