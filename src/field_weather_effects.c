@@ -15,7 +15,7 @@ extern struct Weather *const gWeatherPtr;
 
 const u16 gCloudsWeatherPalette[] = INCBIN_U16("graphics/weather/1.gbapal");
 const u16 gUnknown_08397128[] = INCBIN_U16("graphics/weather/2.gbapal");
-const u8 gWeatherFog2Tiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
+const u8 gWeatherFogDiagonalTiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
 const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
 const u8 gWeatherCloudTiles[] = INCBIN_U8("graphics/weather/cloud.4bpp");
 const u8 gWeatherSnow1Tiles[] = INCBIN_U8("graphics/weather/snow0.4bpp");
@@ -1627,7 +1627,7 @@ void sub_807FAA8(struct Sprite *sprite)
 // Fog 2
 //------------------------------------------------------------------------------
 
-void Fog2_InitVars(void)
+void FogDiagonal_InitVars(void)
 {
     gWeatherPtr->initStep = 0;
     gWeatherPtr->weatherGfxLoaded = 0;
@@ -1635,37 +1635,37 @@ void Fog2_InitVars(void)
     gWeatherPtr->gammaStepDelay = 20;
     gWeatherPtr->fogHScrollCounter = 0;
     gWeatherPtr->fogHScrollOffset = 1;
-    if (gWeatherPtr->fog2SpritesCreated == 0)
+    if (gWeatherPtr->fogDSpritesCreated == 0)
     {
-        gWeatherPtr->unknown_71C = 0;
-        gWeatherPtr->unknown_71E = 0;
-        gWeatherPtr->unknown_720 = 0;
-        gWeatherPtr->unknown_722 = 0;
-        gWeatherPtr->unknown_718 = 0;
-        gWeatherPtr->unknown_71A = 0;
+        gWeatherPtr->fogDScrollXCounter = 0;
+        gWeatherPtr->fogDScrollYCounter = 0;
+        gWeatherPtr->fogDXOffset = 0;
+        gWeatherPtr->fogDYOffset = 0;
+        gWeatherPtr->fogDBaseSpritesX = 0;
+        gWeatherPtr->fogDPosY = 0;
         Weather_SetBlendCoeffs(0, 16);
     }
 }
 
-void Fog2_Main(void);
+void FogDiagonal_Main(void);
 
-void Fog2_InitAll(void)
+void FogDiagonal_InitAll(void)
 {
-    Fog2_InitVars();
+    FogDiagonal_InitVars();
     while (gWeatherPtr->weatherGfxLoaded == FALSE)
-        Fog2_Main();
+        FogDiagonal_Main();
 }
 
-void sub_807FC9C(void);
-void CreateFog2Sprites(void);
+static void UpdateFogDiagonalMovement(void);
+static void CreateFogDiagonalSprites(void);
 
-void Fog2_Main(void)
+void FogDiagonal_Main(void)
 {
-    sub_807FC9C();
+    UpdateFogDiagonalMovement();
     switch (gWeatherPtr->initStep)
     {
     case 0:
-        CreateFog2Sprites();
+        CreateFogDiagonalSprites();
         gWeatherPtr->initStep++;
         break;
     case 1:
@@ -1681,11 +1681,11 @@ void Fog2_Main(void)
     }
 }
 
-void DestroyFog2Sprites(void);
+static void DestroyFogDiagonalSprites(void);
 
-bool8 Fog2_Finish(void)
+bool8 FogDiagonal_Finish(void)
 {
-    sub_807FC9C();
+    UpdateFogDiagonalMovement();
     switch (gWeatherPtr->finishStep)
     {
     case 0:
@@ -1698,7 +1698,7 @@ bool8 Fog2_Finish(void)
         gWeatherPtr->finishStep++;
         break;
     case 2:
-        DestroyFog2Sprites();
+        DestroyFogDiagonalSprites();
         gWeatherPtr->finishStep++;
         break;
     default:
@@ -1707,38 +1707,38 @@ bool8 Fog2_Finish(void)
     return TRUE;
 }
 
-void sub_807FC9C(void)
+static void UpdateFogDiagonalMovement(void)
 {
-    if (++gWeatherPtr->unknown_71C > 2)
+    if (++gWeatherPtr->fogDScrollXCounter > 2)
     {
-        gWeatherPtr->unknown_720++;
-        gWeatherPtr->unknown_71C = 0;
+        gWeatherPtr->fogDXOffset++;
+        gWeatherPtr->fogDScrollXCounter = 0;
     }
 
-    if (++gWeatherPtr->unknown_71E > 4)
+    if (++gWeatherPtr->fogDScrollYCounter > 4)
     {
-        gWeatherPtr->unknown_722++;
-        gWeatherPtr->unknown_71E = 0;
+        gWeatherPtr->fogDYOffset++;
+        gWeatherPtr->fogDScrollYCounter = 0;
     }
 
-    gWeatherPtr->unknown_718 = (gSpriteCoordOffsetX - gWeatherPtr->unknown_720) & 0xFF;
-    gWeatherPtr->unknown_71A = gSpriteCoordOffsetY + gWeatherPtr->unknown_722;
+    gWeatherPtr->fogDBaseSpritesX = (gSpriteCoordOffsetX - gWeatherPtr->fogDXOffset) & 0xFF;
+    gWeatherPtr->fogDPosY = gSpriteCoordOffsetY + gWeatherPtr->fogDYOffset;
 }
 
-extern const struct SpriteTemplate sFog2SpriteTemplate;  // defined below
+static const struct SpriteTemplate sFogDiagonalSpriteTemplate;  // defined below
 
-void CreateFog2Sprites(void)
+static void CreateFogDiagonalSprites(void)
 {
     u16 i;
 
-    if (!gWeatherPtr->fog2SpritesCreated)
+    if (!gWeatherPtr->fogDSpritesCreated)
     {
-        struct SpriteSheet fog2SpriteSheet = {gWeatherFog2Tiles, sizeof(gWeatherFog2Tiles), 0x1203};
+        struct SpriteSheet fogDiagonalSpriteSheet = {gWeatherFogDiagonalTiles, sizeof(gWeatherFogDiagonalTiles), 0x1203};
 
-        LoadSpriteSheet(&fog2SpriteSheet);
+        LoadSpriteSheet(&fogDiagonalSpriteSheet);
         for (i = 0; i < 20; i++)
         {
-            u8 spriteId = CreateSpriteAtEnd(&sFog2SpriteTemplate, 0, (i / 5) * 64, 0xFF);
+            u8 spriteId = CreateSpriteAtEnd(&sFogDiagonalSpriteTemplate, 0, (i / 5) * 64, 0xFF);
 
             if (spriteId != MAX_SPRITES)
             {
@@ -1746,18 +1746,18 @@ void CreateFog2Sprites(void)
 
                 sprite->data[0] = i % 5;
                 sprite->data[1] = i / 5;
-                gWeatherPtr->sprites.s2.fog2Sprites[i] = sprite;
+                gWeatherPtr->sprites.s2.fogDSprites[i] = sprite;
             }
             else
             {
-                gWeatherPtr->sprites.s2.fog2Sprites[i] = NULL;
+                gWeatherPtr->sprites.s2.fogDSprites[i] = NULL;
             }
         }
-        gWeatherPtr->fog2SpritesCreated = TRUE;
+        gWeatherPtr->fogDSpritesCreated = TRUE;
     }
 }
 
-const struct OamData gOamData_839ABF0 =
+static const struct OamData sFogDiagonalSpriteOamData =
 {
     .y = 0,
     .affineMode = 0,
@@ -1774,52 +1774,52 @@ const struct OamData gOamData_839ABF0 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_839ABF8[] =
+static const union AnimCmd sFogDiagonalSpriteAnimCmd0[] =
 {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_839AC00[] =
+static const union AnimCmd *const sFogDiagonalSpriteAnimCmds[] =
 {
-    gSpriteAnim_839ABF8,
+    sFogDiagonalSpriteAnimCmd0,
 };
 
-void Fog2SpriteCallback(struct Sprite *);
-const struct SpriteTemplate sFog2SpriteTemplate =
+static void UpdateFogDiagonalSprite(struct Sprite *);
+static const struct SpriteTemplate sFogDiagonalSpriteTemplate =
 {
     .tileTag = 4611,
     .paletteTag = 4608,
-    .oam = &gOamData_839ABF0,
-    .anims = gSpriteAnimTable_839AC00,
+    .oam = &sFogDiagonalSpriteOamData,
+    .anims = sFogDiagonalSpriteAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = Fog2SpriteCallback,
+    .callback = UpdateFogDiagonalSprite,
 };
 
-void DestroyFog2Sprites(void)
+static void DestroyFogDiagonalSprites(void)
 {
     u16 i;
 
-    if (gWeatherPtr->fog2SpritesCreated)
+    if (gWeatherPtr->fogDSpritesCreated)
     {
         for (i = 0; i < 20; i++)
         {
-            if (gWeatherPtr->sprites.s2.fog2Sprites[i] != NULL)
-                DestroySprite(gWeatherPtr->sprites.s2.fog2Sprites[i]);
+            if (gWeatherPtr->sprites.s2.fogDSprites[i] != NULL)
+                DestroySprite(gWeatherPtr->sprites.s2.fogDSprites[i]);
         }
         FreeSpriteTilesByTag(0x1203);
-        gWeatherPtr->fog2SpritesCreated = FALSE;
+        gWeatherPtr->fogDSpritesCreated = FALSE;
     }
 }
 
-void Fog2SpriteCallback(struct Sprite *sprite)
+static void UpdateFogDiagonalSprite(struct Sprite *sprite)
 {
-    sprite->y2 = gWeatherPtr->unknown_71A;
-    sprite->x = gWeatherPtr->unknown_718 + 32 + sprite->data[0] * 64;
+    sprite->y2 = gWeatherPtr->fogDPosY;
+    sprite->x = gWeatherPtr->fogDBaseSpritesX + 32 + sprite->data[0] * 64;
     if (sprite->x > 271)
     {
-        sprite->x = gWeatherPtr->unknown_718 + 0x1E0 - (4 - sprite->data[0]) * 64;
+        sprite->x = gWeatherPtr->fogDBaseSpritesX + 0x1E0 - (4 - sprite->data[0]) * 64;
         sprite->x &= 0x1FF;
     }
 }

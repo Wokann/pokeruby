@@ -123,10 +123,10 @@ void Sandstorm_InitVars(void);
 void Sandstorm_Main(void);
 void Sandstorm_InitAll(void);
 bool8 Sandstorm_Finish(void);
-void Fog2_InitVars(void);
-void Fog2_Main(void);
-void Fog2_InitAll(void);
-bool8 Fog2_Finish(void);
+void FogDiagonal_InitVars(void);
+void FogDiagonal_Main(void);
+void FogDiagonal_InitAll(void);
+bool8 FogDiagonal_Finish(void);
 void FogHorizontal_InitVars(void);
 void FogHorizontal_Main(void);
 void FogHorizontal_InitAll(void);
@@ -159,7 +159,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     {FogHorizontal_InitVars,      FogHorizontal_Main,      FogHorizontal_InitAll,      FogHorizontal_Finish},
     {Ash_InitVars,       Ash_Main,       Ash_InitAll,       Ash_Finish},
     {Sandstorm_InitVars, Sandstorm_Main, Sandstorm_InitAll, Sandstorm_Finish},
-    {Fog2_InitVars,      Fog2_Main,      Fog2_InitAll,      Fog2_Finish},
+    {FogDiagonal_InitVars,      FogDiagonal_Main,      FogDiagonal_InitAll,      FogDiagonal_Finish},
     {FogHorizontal_InitVars,      FogHorizontal_Main,      FogHorizontal_InitAll,      FogHorizontal_Finish},
     {Shade_InitVars,     Shade_Main,     Shade_InitAll,     Shade_Finish},
     {Drought_InitVars,   Drought_Main,   Drought_InitAll,   Drought_Finish},
@@ -273,7 +273,7 @@ void StartWeather(void)
         gWeatherPtr->snowflakeSpriteCount = 0;
         gWeatherPtr->ashSpritesCreated = 0;
         gWeatherPtr->fogHSpritesCreated = 0;
-        gWeatherPtr->fog2SpritesCreated = 0;
+        gWeatherPtr->fogDSpritesCreated = 0;
         gWeatherPtr->sandstormSprites1Created = 0;
         gWeatherPtr->sandstormSprites2Created = 0;
         gWeatherPtr->unknown_72E = 0;
