@@ -33,56 +33,56 @@ asm(".include \"constants/gba_constants.inc\"");
 void *gUnknown_Debug_03005FB8;
 #endif
 
-void sub_81150FC(void);
-void sub_8115124(void);
-void sub_8115238(void);
-void sub_8115384(void);
-void sub_8115634(u8);
-void sub_81156BC(u8);
-void sub_8115734(u8);
-void sub_811577C(u8);
-void sub_81157AC(u8);
-void sub_81157D0(u8);
-void sub_8115928(u8, u8);
-void sub_811597C(u8);
-void sub_81159BC(u8);
-u8 sub_8115A94(s16 *, u8);
-void sub_8115B58(u8);
-void sub_8115DA0(u8);
-void sub_8115E14(u8);
-void sub_8115ECC(u8);
-u8 sub_8115F58(u16, u16);
-void sub_8116100(u8);
-void sub_8116308(u8);
-void sub_811637C(u8);
-void sub_8116474(u8);
-void sub_8116514(u8);
-void sub_811659C(u8);
-void sub_8116638(u8);
-void sub_81166E8(u8);
-void sub_811677C(u8);
-void sub_81167F4(u8);
-void sub_8116880(u8);
-void dp01t_12_3_battle_menu(u8);
-void sub_8116AB0(u8);
-void sub_8116B40(u8);
-void sub_8116BC0(u8);
-void sub_8116C34(u8, TaskFunc, u16, u16);
-void sub_8116CAC(u8);
-void sub_8116CF8(void);
-u8 sub_8116D54(u8, u8);
-u8 sub_8116E5C(u8, u8);
-void sub_8116EF8(u8);
-void sub_8117158(u8);
-u8 sub_8117380(u8);
-void sub_8117434(void);
-void sub_81174F8(u8);
-void sub_8117528(u8);
-void sub_811755C(u8);
-void sub_81175C0(u8);
-void sub_81175DC(u8);
-void sub_8117630(u8);
-void Task_Roulette_0(u8);
+void CB2_Roulette(void);
+void VBlankCB_Roulette(void);
+void InitRouletteTableData(void);
+void CB2_LoadRoulette(void);
+void Task_SpinWheel(u8);
+void Task_StartPlaying(u8);
+void Task_AskKeepPlaying(u8);
+void Task_ContinuePlaying(u8);
+void Task_StopPlaying(u8);
+void UpdateGridSelectionRect(u8);
+void UpdateGridSelection(u8, u8);
+void Task_StartHandleBetGridInput(u8);
+void Task_SelectFirstEmptySquare(u8);
+u8 CanMoveSelectionInDir(s16 *, u8);
+void ProcessBetGridInput(u8);
+void Task_PlaceBet(u8);
+void Task_HandleBetGridInput(u8);
+void Task_SlideGridOffscreen(u8);
+u8 GetRandomForBallTravelDistance(u16, u16);
+void Task_InitBallRoll(u8);
+void Task_RollBall(u8);
+void Task_RecordBallHit(u8);
+void Task_SlideGridOnscreen(u8);
+void Task_FlashBallOnWinningSquare(u8);
+void Task_TryIncrementWins(u8);
+void Task_PrintSpinResult(u8);
+void Task_GivePayout(u8);
+void Task_PrintPayout(u8);
+void Task_EndTurn(u8);
+void Task_TryPrintEndTurnMsg(u8);
+void Task_ClearBoard(u8);
+void ExitRoulette(u8);
+void Task_ExitRoulette(u8);
+void Task_WaitForNextTask(u8);
+void StartTaskAfterDelayOrInput(u8, TaskFunc, u16, u16);
+void ResetBallDataForNewSpin(u8);
+void ResetHits(void);
+u8 RecordHit(u8, u8);
+u8 IsHitInBetSelection(u8, u8);
+void FlashSelectionOnWheel(u8);
+void DrawGridBackground(u8);
+u8 GetMultiplier(u8);
+void UpdateWheelPosition(void);
+void Task_ShowMinBetYesNo(u8);
+void Task_FadeToRouletteGame(u8);
+void Task_AcceptMinBet(u8);
+void Task_DeclineMinBet(u8);
+void Task_NotEnoughForMinBet(u8);
+void Task_PrintMinBet(u8);
+void Task_PrintRouletteEntryMsg(u8);
 
 const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/83F86BC.gbapal");
 const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/83F88BC.bin.lz");
@@ -318,13 +318,13 @@ const struct UnkStruct1 gUnknown_083F8E9C[] = {
 };
 
 const struct YesNoFuncTable gUnknown_083F8EB4 = {
-    sub_811755C,
-    sub_81175C0
+    Task_AcceptMinBet,
+    Task_DeclineMinBet
 };
 
 const struct YesNoFuncTable gUnknown_083F8EBC = {
-    sub_811577C,
-    sub_81157AC
+    Task_ContinuePlaying,
+    Task_StopPlaying
 };
 
 extern u8 gUnknown_02019000[];
@@ -354,7 +354,7 @@ EWRAM_DATA u8 unk_2039560 = 0;
 #endif
 
 
-void sub_81150FC(void)
+void CB2_Roulette(void)
 {
 	RunTasks();
 	AnimateSprites();
@@ -363,12 +363,12 @@ void sub_81150FC(void)
 	   task_tutorial_controls_fadein(&eRoulette->varB8);
 }
 
-void sub_8115124(void)
+void VBlankCB_Roulette(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_8117434();
+    UpdateWheelPosition();
     REG_BG1HOFS = 0x200 - eRoulette->var26;
     if (eRoulette->var01)
         REG_BLDALPHA = eRoulette->var34;
@@ -396,7 +396,7 @@ void sub_8115124(void)
     }
 }
 
-void sub_8115238(void)
+void InitRouletteTableData(void)
 {
     u8 i;
     u32 temp;
@@ -433,7 +433,7 @@ void sub_8115238(void)
     RtcCalcLocalTime();
 }
 
-void sub_8115384(void)
+void CB2_LoadRoulette(void)
 {
     u32 temp_IME;
     u8 taskid;
@@ -470,7 +470,7 @@ void sub_8115384(void)
         gMain.state++;
         break;
     case 3:
-        sub_8115238();
+        InitRouletteTableData();
         ClearBGTilemapBuffers();
         LZ77UnCompWram(sGrid_Tilemap, (void *)(ewram18800));
         LZ77UnCompVram(sWheel_Tilemap, (void *)(VRAM + 0x3000));
@@ -492,7 +492,7 @@ void sub_8115384(void)
         sub_81180F4(gSaveBlock1.coins);
         sub_81182F8(6);
         sub_811829C(0);
-        sub_8117158(0);
+        DrawGridBackground(0);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(Roulette_Text_ControlsInstruction, 1, 15);
         gSpriteCoordOffsetX = -60;
@@ -509,18 +509,18 @@ void sub_8115384(void)
         REG_IE       |= INTR_FLAG_VBLANK;
         REG_IME       = temp_IME;
         REG_DISPSTAT |= 8;
-        SetVBlankCallback(sub_8115124);
+        SetVBlankCallback(VBlankCB_Roulette);
         BeginHardwarePaletteFade(255, 0, 16, 0 , 1);
-        taskid = eRoulette->varA4 = CreateTask(sub_81156BC, 0);
+        taskid = eRoulette->varA4 = CreateTask(Task_StartPlaying, 0);
         gTasks[taskid].data[6] = 6;
         gTasks[taskid].data[13] = gSaveBlock1.coins;
-        eRoulette->varA5 = CreateTask(sub_8115634, 1);
-        SetMainCallback2(sub_81150FC);
+        eRoulette->varA5 = CreateTask(Task_SpinWheel, 1);
+        SetMainCallback2(CB2_Roulette);
         break;
     }
 }
 
-void sub_8115634(u8 taskId)
+void Task_SpinWheel(u8 taskId)
 {
     s16 sin;
     s16 cos;
@@ -543,7 +543,7 @@ void sub_8115634(u8 taskId)
 #if DEBUG
     if (unk_203955C[0] != 0 && JOY_NEW(START_BUTTON))
     {
-        gTasks[eRoulette->varA4].func = sub_81157AC;
+        gTasks[eRoulette->varA4].func = Task_StopPlaying;
         m4aMPlayStop(&gMPlayInfo_SE1);
         m4aMPlayStop(&gMPlayInfo_SE2);
         m4aMPlayStop(&gMPlayInfo_SE3);
@@ -551,23 +551,23 @@ void sub_8115634(u8 taskId)
 #endif
 }
 
-void sub_81156BC(u8 taskid)
+void Task_StartPlaying(u8 taskid)
 {
     if (UpdatePaletteFade() == 0)
     {
         REG_BLDCNT   |= BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BD;
         REG_BLDALPHA  = BLDALPHA_BLEND(8, 8);
         gTasks[taskid].data[6] = 0;
-        sub_8116CAC(taskid);
-        sub_8116CF8();
+        ResetBallDataForNewSpin(taskid);
+        ResetHits();
         sub_81185E8();
-        sub_8117158(0);
+        DrawGridBackground(0);
         sub_81182F8(6);
-        sub_8116C34(taskid, sub_81159BC, 0xffff, 3);
+        StartTaskAfterDelayOrInput(taskid, Task_SelectFirstEmptySquare, 0xffff, 3);
     }
 }
 
-void sub_8115734(u8 taskid)
+void Task_AskKeepPlaying(u8 taskid)
 {
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
@@ -576,19 +576,19 @@ void sub_8115734(u8 taskid)
     DoYesNoFuncWithChoice(taskid, &gUnknown_083F8EBC);
 }
 
-void sub_811577C(u8 taskid)
+void Task_ContinuePlaying(u8 taskid)
 {
     Menu_EraseWindowRect(20, 8, 26, 13);
-    gTasks[taskid].func = sub_81159BC;
+    gTasks[taskid].func = Task_SelectFirstEmptySquare;
 }
 
-void sub_81157AC(u8 taskid)
+void Task_StopPlaying(u8 taskid)
 {
     DestroyTask(eRoulette->varA5);
-    sub_8116AB0(taskid);
+    ExitRoulette(taskid);
 }
 
-void sub_81157D0(u8 r0)
+void UpdateGridSelectionRect(u8 r0)
 {
     u8 temp0, temp1;
     switch (r0)
@@ -620,25 +620,25 @@ void sub_81157D0(u8 r0)
     }
 }
 
-void sub_8115928(u8 taskid, u8 r1)
+void UpdateGridSelection(u8 taskid, u8 r1)
 {
     if (!r1)
         sub_811829C(gTasks[taskid].data[4]);
     else
         sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
-    sub_81157D0(gTasks[taskid].data[4]);
+    UpdateGridSelectionRect(gTasks[taskid].data[4]);
 }
 
-void sub_811597C(u8 taskid)
+void Task_StartHandleBetGridInput(u8 taskid)
 {
     eRoulette->var28 = 1;
-    sub_81157D0(gTasks[taskid].data[4]);
+    UpdateGridSelectionRect(gTasks[taskid].data[4]);
     eRoulette->var23 = 2;
     eRoulette->var21 = 0;
-    gTasks[taskid].func = sub_8115E14;
+    gTasks[taskid].func = Task_HandleBetGridInput;
 }
 
-void sub_81159BC(u8 taskid)
+void Task_SelectFirstEmptySquare(u8 taskid)
 {
     s16 i;
 
@@ -655,15 +655,15 @@ void sub_81159BC(u8 taskid)
                 break;
     }
     gTasks[taskid].data[4] = i;
-    sub_8116CAC(taskid);
-    sub_8117158(gTasks[taskid].data[4]);
+    ResetBallDataForNewSpin(taskid);
+    DrawGridBackground(gTasks[taskid].data[4]);
     sub_811829C(gTasks[taskid].data[4]);
-    sub_8116EF8(gTasks[taskid].data[4]);
+    FlashSelectionOnWheel(gTasks[taskid].data[4]);
     gTasks[taskid].data[1] = 0;
-    gTasks[taskid].func = sub_811597C;
+    gTasks[taskid].func = Task_StartHandleBetGridInput;
 }
 
-u8 sub_8115A94(s16 *r0, u8 r1)
+u8 CanMoveSelectionInDir(s16 *r0, u8 r1)
 {
     s8 temp1 = 0;
     s8 temp = 0;
@@ -697,46 +697,46 @@ u8 sub_8115A94(s16 *r0, u8 r1)
     return FALSE;
 }
 
-void sub_8115B58(u8 r0)
+void ProcessBetGridInput(u8 r0)
 {
     u8 z = 0;
     bool8 var0 = FALSE;
     if (JOY_NEW(DPAD_UP))
     {
         var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 0))
+        if (!CanMoveSelectionInDir(&gTasks[r0].data[4], 0))
             return;
     }
     if (JOY_NEW(DPAD_DOWN))
     {
         var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 1))
+        if (!CanMoveSelectionInDir(&gTasks[r0].data[4], 1))
             return;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
         var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 2))
+        if (!CanMoveSelectionInDir(&gTasks[r0].data[4], 2))
             return;
     }
     if (JOY_NEW(DPAD_RIGHT))
     {
         var0 = TRUE;
-        if (!sub_8115A94(&gTasks[r0].data[4], 3))
+        if (!CanMoveSelectionInDir(&gTasks[r0].data[4], 3))
             return;
     }
     if (var0)
     {
         u8 i;
-        sub_8117158(gTasks[r0].data[4]);
-        sub_8115928(r0, FALSE);
+        DrawGridBackground(gTasks[r0].data[4]);
+        UpdateGridSelection(r0, FALSE);
         gTasks[r0].data[1] = z;
         PlaySE(SE_SELECT);
         sub_8124D3C((&eRoulette->varB8), 0xffff);
         eRoulette->varB8.var04[15].var00_7 = 0;
         eRoulette->varB8.var04[14].var00_7 = 0;
         eRoulette->varB8.var04[13].var00_7 = 0;
-        sub_8116EF8(gTasks[r0].data[4]);
+        FlashSelectionOnWheel(gTasks[r0].data[4]);
         for (i = 0; i < 4; i++)
         {
             gSprites[eRoulette->var3C[i + 41]].oam.tileNum =
@@ -753,7 +753,7 @@ void sub_8115B58(u8 r0)
     }
 }
 
-void sub_8115D58(u8 r0)
+void Task_StartSpin(u8 r0)
 {
     eRoulette->var28 = 255;
     if (eRoulette->var19 == 1)
@@ -762,31 +762,31 @@ void sub_8115D58(u8 r0)
         eRoulette->var23 = 0;
     eRoulette->var21 = 0;
     gTasks[r0].data[1] = 32;
-    gTasks[r0].func = sub_8115ECC;
+    gTasks[r0].func = Task_SlideGridOffscreen;
 }
 
-void sub_8115DA0(u8 taskid)
+void Task_PlaceBet(u8 taskid)
 {
     eRoulette->var1B[eRoulette->var1A_0] = gTasks[taskid].data[4];
-    gTasks[taskid].data[2] = sub_8117380(eRoulette->var1B[eRoulette->var1A_0]);
+    gTasks[taskid].data[2] = GetMultiplier(eRoulette->var1B[eRoulette->var1A_0]);
     sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
     if ((gTasks[taskid].data[13] -= eRoulette->var19) < 0)
         gTasks[taskid].data[13] = 0;
     sub_81180F4(gTasks[taskid].data[13]);
-    gTasks[taskid].func = sub_8115D58;
+    gTasks[taskid].func = Task_StartSpin;
 }
 
-void sub_8115E14(u8 taskid)
+void Task_HandleBetGridInput(u8 taskid)
 {
-    sub_8115B58(taskid);
+    ProcessBetGridInput(taskid);
     switch (gTasks[taskid].data[1])
     {
     case 0:
-        sub_81157D0(gTasks[taskid].data[4]);
+        UpdateGridSelectionRect(gTasks[taskid].data[4]);
         gTasks[taskid].data[1]+= 1;
     break;
     case 30:
-        sub_81157D0(0);
+        UpdateGridSelectionRect(0);
         gTasks[taskid].data[1]+= 1;
     break;
     case 59:
@@ -802,12 +802,12 @@ void sub_8115E14(u8 taskid)
         else
         {
             m4aSongNumStart(SE_SHOP);
-            gTasks[taskid].func = sub_8115DA0;
+            gTasks[taskid].func = Task_PlaceBet;
         }
     }
 }
 
-void sub_8115ECC(u8 taskid)
+void Task_SlideGridOffscreen(u8 taskid)
 {
     if (gTasks[taskid].data[1]-- > 0)
     {
@@ -820,12 +820,12 @@ void sub_8115ECC(u8 taskid)
     {
         sub_8117AA8(1, 255);
         sub_8117C60(1, 255);
-        gTasks[taskid].func = sub_8116100;
+        gTasks[taskid].func = Task_InitBallRoll;
         gTasks[taskid].data[1] = 0;
     }
 }
 
-u8 sub_8115F58(u16 r0, u16 r1)
+u8 GetRandomForBallTravelDistance(u16 r0, u16 r1)
 {
     u8 timeh;
     switch (eRoulette->var02)
@@ -931,7 +931,7 @@ u8 sub_8115F58(u16 r0, u16 r1)
     }
 }
 
-void sub_8116100(u8 taskid)
+void Task_InitBallRoll(u8 taskid)
 {
     u8 randf;
     s8 randfinal;
@@ -946,7 +946,7 @@ void sub_8116100(u8 taskid)
     eRoulette->var7F = g;
     eRoulette->var7E = g;
     eRoulette->var7D = g;
-    randf = sub_8115F58(gTasks[taskid].data[8], rand);
+    randf = GetRandomForBallTravelDistance(gTasks[taskid].data[8], rand);
     randfinal = (rand % randf) - (randf / 2);
     if (gLocalTime.hours < 13)
         r5 = 0;
@@ -970,10 +970,10 @@ void sub_8116100(u8 taskid)
     eRoulette->var9C = 0.0f;
     eRoulette->var98 = -(8.0f / S16TOPOSFLOAT(g * 3));
     eRoulette->varA0 = 36.0f;
-    gTasks[taskid].func = sub_8116308;
+    gTasks[taskid].func = Task_RollBall;
 }
 
-void sub_8116308(u8 taskid)
+void Task_RollBall(u8 taskid)
 {
     u8 index;
     eRoulette->var03_7 = 1;
@@ -984,10 +984,10 @@ void sub_8116308(u8 taskid)
     gTasks[taskid].data[8]++;
     sub_81182F8(6 - gTasks[taskid].data[6]);
     m4aSongNumStart(SE_ROULETTE_BALL);
-    gTasks[taskid].func = sub_811637C;
+    gTasks[taskid].func = Task_RecordBallHit;
 }
 
-void sub_811637C(u8 taskid)
+void Task_RecordBallHit(u8 taskid)
 {
     if (eRoulette->var7D)
     {
@@ -1003,7 +1003,7 @@ void sub_811637C(u8 taskid)
         {
             if (!gTasks[taskid].data[1])
             {
-                u8 temp = sub_8116E5C(sub_8116D54(taskid, eRoulette->var7E), eRoulette->var1B[eRoulette->var1A_0]);
+                u8 temp = IsHitInBetSelection(RecordHit(taskid, eRoulette->var7E), eRoulette->var1B[eRoulette->var1A_0]);
                 gTasks[taskid].data[5] = temp;
                 if (temp == 1)
                     sub_8124CE8((&eRoulette->varB8), 0x1000);
@@ -1016,17 +1016,17 @@ void sub_811637C(u8 taskid)
             }
             else
             {
-                sub_8117158(eRoulette->var1B[eRoulette->var1A_0]);
+                DrawGridBackground(eRoulette->var1B[eRoulette->var1A_0]);
                 sub_8117AA8(0, (u8)gTasks[taskid].data[12]);
                 sub_8117C60(0, (u8)gTasks[taskid].data[6] - 1);
                 gTasks[taskid].data[1] = 32;
-                gTasks[taskid].func = sub_8116474;
+                gTasks[taskid].func = Task_SlideGridOnscreen;
             }
         }
     }
 }
 
-void sub_8116474(u8 taskid)
+void Task_SlideGridOnscreen(u8 taskid)
 {
     if (gTasks[taskid].data[1]-- > 0)
     {
@@ -1042,11 +1042,11 @@ void sub_8116474(u8 taskid)
             gTasks[taskid].data[1] = 121;
         else
             gTasks[taskid].data[1] = 61;
-        gTasks[taskid].func = sub_8116514;
+        gTasks[taskid].func = Task_FlashBallOnWinningSquare;
     }
 }
 
-void sub_8116514(u8 taskid)
+void Task_FlashBallOnWinningSquare(u8 taskid)
 {
     if (gTasks[taskid].data[1]-- > 1)
     {
@@ -1064,11 +1064,11 @@ void sub_8116514(u8 taskid)
     }
     else
     {
-        sub_8116C34(taskid, sub_8116638, 30, 0);
+        StartTaskAfterDelayOrInput(taskid, Task_PrintSpinResult, 30, 0);
     }
 }
 
-void sub_811659C(u8 taskid)
+void Task_TryIncrementWins(u8 taskid)
 {
     switch (gTasks[taskid].data[5])
     {
@@ -1079,7 +1079,7 @@ void sub_811659C(u8 taskid)
             u32 wins = GetGameStat(GAME_STAT_CONSECUTIVE_ROULETTE_WINS);
             if (wins < ++gTasks[taskid].data[11])
                 SetGameStat(GAME_STAT_CONSECUTIVE_ROULETTE_WINS, gTasks[taskid].data[11]);
-            sub_8116C34(taskid, sub_811677C, 0xffff, 3);
+            StartTaskAfterDelayOrInput(taskid, Task_PrintPayout, 0xffff, 3);
         }
         break;
     case 0:
@@ -1087,12 +1087,12 @@ void sub_811659C(u8 taskid)
         if (!IsSEPlaying())
         {
             gTasks[taskid].data[11] = FALSE;
-            sub_8116C34(taskid, sub_81167F4, 0xffff, 3);
+            StartTaskAfterDelayOrInput(taskid, Task_EndTurn, 0xffff, 3);
         }
     }
 }
 
-void sub_8116638(u8 taskid)
+void Task_PrintSpinResult(u8 taskid)
 {
     switch (gTasks[taskid].data[5])
     {
@@ -1118,10 +1118,10 @@ void sub_8116638(u8 taskid)
         Menu_PrintText(Roulette_Text_NothingDoing, 1, 15);
     }
     gTasks[taskid].data[1] = 0;
-    gTasks[taskid].func = sub_811659C;
+    gTasks[taskid].func = Task_TryIncrementWins;
 }
 
-void sub_81166E8(u8 taskid)
+void Task_GivePayout(u8 taskid)
 {
     s32 r0 = gTasks[taskid].data[7];
     switch (r0)
@@ -1148,10 +1148,10 @@ void sub_81166E8(u8 taskid)
         gTasks[taskid].data[7]++;
     }
     if (gTasks[taskid].data[1] == 0)
-        sub_8116C34(taskid, sub_81167F4, 0xffff, 3);
+        StartTaskAfterDelayOrInput(taskid, Task_EndTurn, 0xffff, 3);
 }
 
-void sub_811677C(u8 taskid)
+void Task_PrintPayout(u8 taskid)
 {
     ConvertIntToDecimalStringN((u8 *)&gStringVar1, (eRoulette->var19 * gTasks[taskid].data[2]), STR_CONV_MODE_LEFT_ALIGN, 2);
     StringExpandPlaceholders((u8 *)&gStringVar4, Roulette_Text_YouveWonXCoins);
@@ -1159,25 +1159,25 @@ void sub_811677C(u8 taskid)
     Menu_PrintText((u8 *)&gStringVar4, 1, 15);
     gTasks[taskid].data[1] = (eRoulette->var19 * gTasks[taskid].data[2]);
     gTasks[taskid].data[7] = 0;
-    gTasks[taskid].func = sub_81166E8;
+    gTasks[taskid].func = Task_GivePayout;
 }
 
-void sub_81167F4(u8 taskid)
+void Task_EndTurn(u8 taskid)
 {
     sub_8124D3C((&eRoulette->varB8), 0xffff);
     eRoulette->varB8.var04[15].var00_7 = 0;
     eRoulette->varB8.var04[14].var00_7 = 0;
     eRoulette->varB8.var04[13].var00_7 = 0;
     gSprites[eRoulette->var3C[7 + sGridSelections[gTasks[taskid].data[12]].spriteIdOffset]].invisible = TRUE;
-    gTasks[taskid].func = sub_8116880;
+    gTasks[taskid].func = Task_TryPrintEndTurnMsg;
 }
 
-void sub_8116880(u8 taskid)
+void Task_TryPrintEndTurnMsg(u8 taskid)
 {
     u8 i = 0;
     gTasks[taskid].data[4] = i;
     eRoulette->var1B[eRoulette->var1A_0] = 0;
-    sub_8117158(0);
+    DrawGridBackground(0);
     gSprites[eRoulette->var3C[48]].invisible = TRUE;
     for (i = 0; i < 4; i++)
     {
@@ -1191,35 +1191,35 @@ void sub_8116880(u8 taskid)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(Roulette_Text_BoardWillBeCleared, 1, 15);
-            sub_8116C34(taskid, &dp01t_12_3_battle_menu, 0xffff, 3);
+            StartTaskAfterDelayOrInput(taskid, &Task_ClearBoard, 0xffff, 3);
         }
         else if (gTasks[taskid].data[13] == 0x270f)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(Roulette_Text_CoinCaseIsFull, 1, 15);
-            sub_8116C34(taskid, sub_8115734, 0xffff, 3);
+            StartTaskAfterDelayOrInput(taskid, Task_AskKeepPlaying, 0xffff, 3);
         }
         else
         {
-            gTasks[taskid].func = sub_8115734;
+            gTasks[taskid].func = Task_AskKeepPlaying;
         }
     }
     else
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(Roulette_Text_NoCoinsLeft, 1, 15);
-        sub_8116C34(taskid, sub_81157AC, 60, 3);
+        StartTaskAfterDelayOrInput(taskid, Task_StopPlaying, 60, 3);
     }
 }
 
-void dp01t_12_3_battle_menu(u8 taskid)
+void Task_ClearBoard(u8 taskid)
 {
     u8 i = 0;
     gTasks[taskid].data[6] = 0;
-    sub_8116CAC(taskid);
-    sub_8116CF8();
+    ResetBallDataForNewSpin(taskid);
+    ResetHits();
     sub_81185E8();
-    sub_8117158(0);
+    DrawGridBackground(0);
     sub_81182F8(6);
     for (i = 0; i < 12; i++)
         gSprites[eRoulette->var3C[i + 7]].invisible = FALSE;
@@ -1227,15 +1227,15 @@ void dp01t_12_3_battle_menu(u8 taskid)
     {
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(Roulette_Text_CoinCaseIsFull, 1, 15);
-        sub_8116C34(taskid, sub_8115734, 0xffff, 3);
+        StartTaskAfterDelayOrInput(taskid, Task_AskKeepPlaying, 0xffff, 3);
     }
     else
     {
-        gTasks[taskid].func = sub_8115734;
+        gTasks[taskid].func = Task_AskKeepPlaying;
     }
 }
 
-void sub_8116AB0(u8 taskid)
+void ExitRoulette(u8 taskid)
 {
     sub_8124D3C((&eRoulette->varB8), 0xffff);
     sub_8124918((&eRoulette->varB8));
@@ -1245,10 +1245,10 @@ void sub_8116AB0(u8 taskid)
     else
         gSpecialVar_0x8004 = FALSE;
     BeginHardwarePaletteFade(255, 0, 0, 16, 0);
-    gTasks[taskid].func = sub_8116B40;
+    gTasks[taskid].func = Task_ExitRoulette;
 }
 
-void sub_8116B40(u8 taskId) // end roulette ?
+void Task_ExitRoulette(u8 taskId) // end roulette ?
 {
     if (UpdatePaletteFade() == 0)
     {
@@ -1272,7 +1272,7 @@ void sub_8116B40(u8 taskId) // end roulette ?
     }
 }
 
-void sub_8116BC0(u8 taskid)
+void Task_WaitForNextTask(u8 taskid)
 {
     if (eRoulette->varA8 == 0 || JOY_NEW(eRoulette->varAA))
     {
@@ -1287,7 +1287,7 @@ void sub_8116BC0(u8 taskid)
         eRoulette->varA8--;
 }
 
-void sub_8116C34(u8 taskid, TaskFunc r1, u16 r2, u16 r3)
+void StartTaskAfterDelayOrInput(u8 taskid, TaskFunc r1, u16 r2, u16 r3)
 {
     eRoulette->varB4 = gTasks[taskid].func;
     if (r1 == NULL)
@@ -1298,10 +1298,10 @@ void sub_8116C34(u8 taskid, TaskFunc r1, u16 r2, u16 r3)
         eRoulette->varAA = 0xffff;
     else
         eRoulette->varAA = r3;
-    gTasks[taskid].func = sub_8116BC0;
+    gTasks[taskid].func = Task_WaitForNextTask;
 }
 
-void sub_8116CAC(u8 taskid)
+void ResetBallDataForNewSpin(u8 taskid)
 {
     u8 i = 0;
     eRoulette->var00 = i;
@@ -1315,7 +1315,7 @@ void sub_8116CAC(u8 taskid)
     gTasks[taskid].data[1] = 0;
 }
 
-void sub_8116CF8(void)
+void ResetHits(void)
 {
     u8 i;
     eRoulette->var08 = 0;
@@ -1328,7 +1328,7 @@ void sub_8116CF8(void)
     sub_8117C60(1, 255);
 }
 
-u8 sub_8116D54(u8 taskid, u8 r1)
+u8 RecordHit(u8 taskid, u8 r1)
 {
     u32 t0[] = {67650, 135300, 270600, 541200};
     u32 t1[] = {0x3e0, 0x7c00, 0xf8000};
@@ -1361,7 +1361,7 @@ u8 sub_8116D54(u8 taskid, u8 r1)
     }
 }
 
-u8 sub_8116E5C(u8 r0, u8 r1)
+u8 IsHitInBetSelection(u8 r0, u8 r1)
 {
     u8 t = r0;
     if (--r0 < 19)
@@ -1389,7 +1389,7 @@ u8 sub_8116E5C(u8 r0, u8 r1)
     return 0;
 }
 
-void sub_8116EF8(u8 r0)
+void FlashSelectionOnWheel(u8 r0)
 {
 
     u16 var0 = 0;
@@ -1463,7 +1463,7 @@ void sub_8116EF8(u8 r0)
     }
 }
 
-void sub_8117158(u8 r0)
+void DrawGridBackground(u8 r0)
 {
     vu8 i;
     vu8 z;
@@ -1509,7 +1509,7 @@ void sub_8117158(u8 r0)
     }
 }
 
-u8 sub_8117380(u8 r0)
+u8 GetMultiplier(u8 r0)
 {
     u8 var0[] = {0, 3, 4, 6, 12};
     if (r0 > 19)
@@ -1534,7 +1534,7 @@ u8 sub_8117380(u8 r0)
     return 0;
 }
 
-void sub_8117434(void)
+void UpdateWheelPosition(void)
 {
     s32 x1;
     s32 x2;
@@ -1565,34 +1565,34 @@ s16 sub_81174E0(s16 r0)
     return t / r0;
 }
 
-void sub_81174F8(u8 r0)
+void Task_ShowMinBetYesNo(u8 r0)
 {
     DisplayYesNoMenu(20, 8, 1);
     sub_814AAF8(RGB(30, 12, 11));
     DoYesNoFuncWithChoice(r0, &gUnknown_083F8EB4);
 }
 
-void sub_8117528(u8 taskid)
+void Task_FadeToRouletteGame(u8 taskid)
 {
     if (!gPaletteFade.active)
     {
         SetVBlankCallback(NULL);
-        SetMainCallback2(sub_8115384);
+        SetMainCallback2(CB2_LoadRoulette);
         DestroyTask(taskid);
     }
 }
 
-void sub_811755C(u8 taskid)
+void Task_AcceptMinBet(u8 taskid)
 {
     Menu_EraseWindowRect(20, 8, 26, 13);
     Menu_EraseScreen();
     BeginNormalPaletteFade(0xffffffff, 0, 0, 16, RGB(0, 0, 0));
     gPaletteFade.delayCounter = gPaletteFade.multipurpose2;
     UpdatePaletteFade();
-    gTasks[taskid].func = sub_8117528;
+    gTasks[taskid].func = Task_FadeToRouletteGame;
 }
 
-void sub_81175C0(u8 taskid)
+void Task_DeclineMinBet(u8 taskid)
 {
 #if DEBUG
     unk_203955C[0] = 0;
@@ -1602,7 +1602,7 @@ void sub_81175C0(u8 taskid)
     DestroyTask(taskid);
 }
 
-void sub_81175DC(u8 taskid)
+void Task_NotEnoughForMinBet(u8 taskid)
 {
     gTasks[taskid].data[0]++;
     if (!JOY_NEW(A_BUTTON | B_BUTTON) && gTasks[taskid].data[0] < 61)
@@ -1613,17 +1613,17 @@ void sub_81175DC(u8 taskid)
     DestroyTask(taskid);
 }
 
-void sub_8117630(u8 taskid)
+void Task_PrintMinBet(u8 taskid)
 {
     u32 temp = sTableMinBets[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
     ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
     StringExpandPlaceholders(gStringVar4, Roulette_Text_PlayMinimumWagerIsX);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText(gStringVar4, 1, 15);
-    gTasks[taskid].func = sub_81174F8;
+    gTasks[taskid].func = Task_ShowMinBetYesNo;
 }
 
-void Task_Roulette_0(u8 taskid)
+void Task_PrintRouletteEntryMsg(u8 taskid)
 {
     s32 temp;
     ConvertIntToDecimalStringN(gStringVar1, gTasks[taskid].data[13], 1, 4);
@@ -1638,14 +1638,14 @@ void Task_Roulette_0(u8 taskid)
         {
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(Roulette_Text_SpecialRateTable, 1, 15);
-            sub_8116C34(taskid , sub_8117630, 0xffff, 3);
+            StartTaskAfterDelayOrInput(taskid , Task_PrintMinBet, 0xffff, 3);
         }
         else
         {
             StringExpandPlaceholders(gStringVar4, Roulette_Text_PlayMinimumWagerIsX);
             Menu_DrawStdWindowFrame(0, 14, 29, 19);
             Menu_PrintText(gStringVar4, 1, 15);
-            gTasks[taskid].func = sub_81174F8;
+            gTasks[taskid].func = Task_ShowMinBetYesNo;
         }
     }
     else
@@ -1653,7 +1653,7 @@ void Task_Roulette_0(u8 taskid)
         StringExpandPlaceholders(gStringVar4, Roulette_Text_NotEnoughCoins);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(gStringVar4, 1, 15);
-        gTasks[taskid].func = sub_81175DC;
+        gTasks[taskid].func = Task_NotEnoughForMinBet;
         gTasks[taskid].data[13] = 0;
         gTasks[taskid].data[0] = 0;
     }
@@ -1732,7 +1732,7 @@ void debug_sub_812CDE4(u8 taskId)
     else if (JOY_NEW(START_BUTTON))
     {
         gSaveBlock1.coins = gTasks[taskId].data[13];
-        gTasks[taskId].func = Task_Roulette_0;
+        gTasks[taskId].func = Task_PrintRouletteEntryMsg;
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[13], 1, 4);
 #if (ENGLISH && REVISION == 0)
         StringExpandPlaceholders(gStringVar4, coinText);
@@ -1746,7 +1746,7 @@ void debug_sub_812CDE4(u8 taskId)
     else if (JOY_NEW(SELECT_BUTTON))
     {
         gSaveBlock1.coins = gTasks[taskId].data[13];
-        gTasks[taskId].func = Task_Roulette_0;
+        gTasks[taskId].func = Task_PrintRouletteEntryMsg;
         ConvertIntToDecimalStringN(gStringVar1, gTasks[taskId].data[13], 1, 4);
 #if (ENGLISH && REVISION == 0)
         StringExpandPlaceholders(gStringVar4, coinText);
@@ -1792,6 +1792,6 @@ void PlayRoulette(void)
 	    return;
     }
 #endif
-    taskid = CreateTask(Task_Roulette_0, 0);
+    taskid = CreateTask(Task_PrintRouletteEntryMsg, 0);
     gTasks[taskid].data[13] = gSaveBlock1.coins;
 }
