@@ -23,8 +23,14 @@
 
 #define CLOCK_WIN_TOP (MSG_WIN_TOP - 4)
 
-static EWRAM_DATA u16 gSaveFailedType = 0;
-static EWRAM_DATA u16 gSaveFailedClockInfo[9] = {0};
+enum
+{
+    CLOCK_RUNNING,
+    DEBUG_TIMER,
+};
+
+static EWRAM_DATA u16 sSaveFailedType = 0;
+static EWRAM_DATA u16 sClockInfo[9] = {0};
 
 extern u32 gUnknown_Debug_03004BD0;
 extern u32 gDamagedSaveSectors;
@@ -59,8 +65,8 @@ static const u8 sClockFrames[8][3] =
     { 5, 1, 0 },
 };
 
-static const u8 gSaveFailedClockPal[] = INCBIN_U8("graphics/misc/clock_small.gbapal");
-static const u8 gSaveFailedClockGfx[] = INCBIN_U8("graphics/misc/clock_small.4bpp.lz");
+static const u8 sSaveFailedClockPal[] = INCBIN_U8("graphics/misc/clock_small.gbapal");
+static const u8 sSaveFailedClockGfx[] = INCBIN_U8("graphics/misc/clock_small.4bpp.lz");
 
 static void VBlankCB(void);
 static void CB2_SaveFailedScreen(void);
@@ -69,15 +75,15 @@ static void CB2_GameplayCannotBeContinued(void);
 static void CB2_FadeAndReturnToTitleScreen(void);
 static void CB2_ReturnToTitleScreen(void);
 static void VBlankCB_UpdateClockGraphics(void);
-static bool8 IsSectorNonEmpty(u16 sector);
+static bool8 VerifySectorWipe(u16 sector);
 static bool8 WipeSector(u16 sector);
 static bool8 WipeSectors(u32 sectorBits);
 
 void DoSaveFailedScreen(u8 saveType)
 {
     SetMainCallback2(CB2_SaveFailedScreen);
-    gSaveFailedType = saveType;
-    gSaveFailedClockInfo[0] = FALSE;
+    sSaveFailedType = saveType;
+    sClockInfo[CLOCK_RUNNING] = FALSE;
 }
 
 static void VBlankCB(void)
@@ -115,12 +121,12 @@ static void CB2_SaveFailedScreen(void)
         LZ77UnCompVram(&gBirchHelpGfx, (void *)VRAM);
         LZ77UnCompVram(&gBirchBagTilemap, (void *)(VRAM + 0x3000));
         LZ77UnCompVram(&gBirchGrassTilemap, (void *)(VRAM + 0x3800));
-        LZ77UnCompVram(&gSaveFailedClockGfx, (void *)(VRAM + 0x10020));
+        LZ77UnCompVram(&sSaveFailedClockGfx, (void *)(VRAM + 0x10020));
         ResetSpriteData();
         ResetTasks();
         ResetPaletteFade();
         LoadPalette(&gBirchBagGrassPal, 0, sizeof(gBirchBagGrassPal));
-        LoadPalette(&gSaveFailedClockPal, 0x100, sizeof(gSaveFailedClockPal));
+        LoadPalette(&sSaveFailedClockPal, 0x100, sizeof(sSaveFailedClockPal));
         Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
         InitMenuWindow(&gMenuTextWindowTemplate);
         Menu_DrawStdWindowFrame(13, CLOCK_WIN_TOP, 16, CLOCK_WIN_TOP + 3); // clock window
@@ -153,7 +159,7 @@ static void CB2_WipeSave(void)
 {
     u8 wipeTries = 0;
 
-    gSaveFailedClockInfo[0] = TRUE;
+    sClockInfo[CLOCK_RUNNING] = TRUE;
 
 #if (DEBUG && !(ENGLISH && REVISION == 0))
 	if (gUnknown_Debug_03004BD0 != 0)
@@ -172,7 +178,7 @@ static void CB2_WipeSave(void)
 
         Menu_DrawStdWindowFrame(1, MSG_WIN_TOP, 28, 19);
         Menu_PrintText(gSystemText_CheckCompleteSaveAttempt, 2, MSG_WIN_TOP + 1);
-        HandleSavingData(gSaveFailedType);
+        HandleSavingData(sSaveFailedType);
 
         if (gDamagedSaveSectors != 0)
         {
@@ -207,7 +213,7 @@ static void CB2_WipeSave(void)
 
 static void CB2_GameplayCannotBeContinued(void)
 {
-    gSaveFailedClockInfo[0] = FALSE;
+    sClockInfo[CLOCK_RUNNING] = FALSE;
 
     if (JOY_NEW(A_BUTTON))
     {
@@ -220,7 +226,7 @@ static void CB2_GameplayCannotBeContinued(void)
 
 static void CB2_FadeAndReturnToTitleScreen(void)
 {
-    gSaveFailedClockInfo[0] = FALSE;
+    sClockInfo[CLOCK_RUNNING] = FALSE;
 
     if (JOY_NEW(A_BUTTON))
     {
@@ -254,7 +260,7 @@ static void VBlankCB_UpdateClockGraphics(void)
     gMain.oamBuffer[0].x = 112;
     gMain.oamBuffer[0].y = (CLOCK_WIN_TOP + 1) * 8;
 
-    if (gSaveFailedClockInfo[0] != FALSE)
+    if (sClockInfo[CLOCK_RUNNING] != FALSE)
     {
         gMain.oamBuffer[0].tileNum = sClockFrames[n][0];
         gMain.oamBuffer[0].matrixNum = (sClockFrames[n][2] << 4) | (sClockFrames[n][1] << 3);
@@ -266,11 +272,11 @@ static void VBlankCB_UpdateClockGraphics(void)
 
     CpuFastCopy(gMain.oamBuffer, (void *)OAM, 4);
 
-    if (gSaveFailedClockInfo[1]) // maybe was used for debugging?
-        gSaveFailedClockInfo[1]--;
+    if (sClockInfo[DEBUG_TIMER])
+        sClockInfo[DEBUG_TIMER]--;
 }
 
-static bool8 IsSectorNonEmpty(u16 sector)
+static bool8 VerifySectorWipe(u16 sector)
 {
     u32 *ptr = (u32 *)&gSharedMem;
     u16 i;
@@ -299,7 +305,7 @@ static bool8 WipeSector(u16 sector)
         for (j = 0; j < 0x1000; j++)
             ProgramFlashByte(sector, j, 0);
 
-        failed = IsSectorNonEmpty(sector);
+        failed = VerifySectorWipe(sector);
     }
 
     return failed;
