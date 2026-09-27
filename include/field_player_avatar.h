@@ -64,6 +64,6 @@ void SetPlayerInvisibility(bool8 invisible);
 void SetPlayerAvatarFieldMove(void);
 void PlayerUseAcroBikeOnBumpySlope(u8);
 void SetPlayerAvatarWatering(u8);
-void StartFishing(u8 a);
+void StartFishing(u8 rod);
 
 #endif

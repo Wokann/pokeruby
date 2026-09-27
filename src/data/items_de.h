@@ -4206,7 +4206,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_Rod,
         .battleUsage = 0,
         .battleUseFunc = NULL,
-        .secondaryId = 0,
+        .secondaryId = OLD_ROD,
     },
     {
         .name = _("PROFIANGEL"),
@@ -4222,7 +4222,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_Rod,
         .battleUsage = 0,
         .battleUseFunc = NULL,
-        .secondaryId = 1,
+        .secondaryId = GOOD_ROD,
     },
     {
         .name = _("SUPERANGEL"),
@@ -4238,7 +4238,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_Rod,
         .battleUsage = 0,
         .battleUseFunc = NULL,
-        .secondaryId = 2,
+        .secondaryId = SUPER_ROD,
     },
     {
         .name = _("BOOTSTICKET"),
