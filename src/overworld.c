@@ -616,7 +616,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     RestartWildEncounterImmunitySteps();
     TryUpdateRandomTrainerRematches(mapGroup, mapNum);
     DoTimeBasedEvents();
-    SetSav1WeatherFromCurrMapHeader();
+    SetSavedWeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
@@ -652,7 +652,7 @@ void sub_8053994(u32 a1)
     TryUpdateRandomTrainerRematches(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum);
     if (a1 != 1)
         DoTimeBasedEvents();
-    SetSav1WeatherFromCurrMapHeader();
+    SetSavedWeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
     if (v2)
         FlagClear(FLAG_SYS_USE_FLASH);
@@ -857,7 +857,7 @@ u16 GetCurrLocationDefaultMusic(void)
     // Play the desert music only when the sandstorm is active on Route 111.
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE111)
      && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE111)
-     && GetSav1Weather() == 8)
+     && GetSavedWeather() == 8)
         return MUS_ROUTE111;
 
     music = GetLocationMusic(&gSaveBlock1.location);
@@ -1826,7 +1826,7 @@ void sub_8054D4C(u32 a1)
     FieldEffectActiveListClear();
     InitFieldMessageBox();
     StartWeather();
-    sub_8080750();
+    ResumePausedWeather();
     if (!a1)
         SetUpFieldTasks();
     RunOnResumeMapScript();

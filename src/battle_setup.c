@@ -697,7 +697,7 @@ s8 BattleSetup_GetEnvironmentId(void)
     }
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE113) && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE113))
         return BATTLE_ENVIRONMENT_SAND;
-    if (GetSav1Weather() == 8)
+    if (GetSavedWeather() == 8)
         return BATTLE_ENVIRONMENT_SAND;
     return BATTLE_ENVIRONMENT_PLAIN;
 }

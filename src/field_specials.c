@@ -1841,7 +1841,7 @@ void SetRoute119Weather(void)
 {
     if (is_map_type_1_2_3_5_or_6(GetLastUsedWarpMapType()) != TRUE)
     {
-        SetSav1Weather(WEATHER_ROUTE119_CYCLE);
+        SetSavedWeather(WEATHER_ROUTE119_CYCLE);
     }
 }
 
@@ -1849,7 +1849,7 @@ void SetRoute123Weather(void)
 {
     if (is_map_type_1_2_3_5_or_6(GetLastUsedWarpMapType()) != TRUE)
     {
-        SetSav1Weather(WEATHER_ROUTE123_CYCLE);
+        SetSavedWeather(WEATHER_ROUTE123_CYCLE);
     }
 }
 
