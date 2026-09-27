@@ -3915,17 +3915,17 @@ void PrepareConditionGraphFromSearchResult(void)
         gPokenavStructPtr->unk87CB = 1;
 }
 
-void sub_80F4D44(void)
+void InitConditionSearchResults(void)
 {
     gPokenavStructPtr->unk8FE6 = 0;
     gPokenavStructPtr->unk8FE7 = 0;
     ResetPokenavMonList();
 
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F4D88());
+        while (BuildConditionSearchResultsStep());
 }
 
-bool8 sub_80F4D88(void)
+bool8 BuildConditionSearchResultsStep(void)
 {
     u16 i;
     register int mask asm("r3"); // FIXME

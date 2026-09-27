@@ -2111,11 +2111,11 @@ void OpenConditionSearchResults(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80F4D44();
+        InitConditionSearchResults();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 6:
-        if (!sub_80F4D88())
+        if (!BuildConditionSearchResultsStep())
             gPokenavStructPtr->callbackStep += 2;
         else
 			gPokenavStructPtr->callbackStep += 1;
