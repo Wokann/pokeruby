@@ -2731,7 +2731,7 @@ extern const u8 gUnknown_08E9AB40[];
 extern const u8 gUnknown_08E9AB60[];
 extern const u8 gPokenavRegionMapCityBannerFrames[];
 extern const u8 gPokenavRegionMapCityBannerBlank[];
-extern const u8 gUnknown_08E9AC4C[];
+extern const u8 gPokenavCondition_Tilemap[];
 
 extern const u8 gInterviewOutlineCursorTiles[];
 extern const u8 gTitleScreenPressStart_Gfx[];

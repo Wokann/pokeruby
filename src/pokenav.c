@@ -47,9 +47,9 @@ extern const u8 gUnknown_083E0334[];
 extern const u16 gUnknown_083E02B4[];
 extern const u8 gPokenavConditionSearch2_Gfx[];
 extern const u8 gUnknown_083E0254[];
-extern const u8 gUnknown_08E9FEB4[];
+extern const u8 gConditionGraphData_Tilemap[];
 extern const u8 gUnknown_083E01AC[];
-extern const u8 gUnknown_08E9AC4C[];
+extern const u8 gPokenavCondition_Tilemap[];
 extern const u8 gPokenavConditionMenu2_Pal[];
 extern const u8 gPokenavConditionView_Gfx[];
 extern const u8 gPokenavRegionMapCityBannerFrames[];
@@ -895,7 +895,7 @@ bool8 LoadConditionGraphScreenStep(void)
         LZ77UnCompVram(gPokenavConditionView_Gfx, (void *)VRAM + 0x5000);
         break;
     case 8:
-        LZ77UnCompVram(gUnknown_08E9AC4C, (void *)VRAM + 0xF000);
+        LZ77UnCompVram(gPokenavCondition_Tilemap, (void *)VRAM + 0xF000);
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 9:
@@ -903,7 +903,7 @@ bool8 LoadConditionGraphScreenStep(void)
             sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
         break;
     case 10:
-        LZ77UnCompVram(gUnknown_08E9FEB4, (void *)VRAM + 0xB800);
+        LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)VRAM + 0xB800);
         break;
     case 11:
         LoadPalette(gUnknown_083E0254, 0x30, 0x20);
@@ -1732,7 +1732,7 @@ bool8 SlidePokenavMonInfoHeaderOut(void)
     return gPokenavStructPtr->monInfoHeaderXOffset != -0x50;
 }
 
-bool8 sub_80F1778(void)
+bool8 LoadPokeblockConditionGraphScreenStep(void)
 {
     switch (gPokenavStructPtr->setupStep)
     {
@@ -1751,14 +1751,14 @@ bool8 sub_80F1778(void)
         LZ77UnCompVram(gPokenavConditionView_Gfx, (void *)(VRAM + 0x5000));
         break;
     case 4:
-        LZ77UnCompVram(gUnknown_08E9AC4C, (void *)(VRAM + 0xF000));
+        LZ77UnCompVram(gPokenavCondition_Tilemap, (void *)(VRAM + 0xF000));
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 5:
         sub_8095C8C((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
         break;
     case 6:
-        LZ77UnCompVram(gUnknown_08E9FEB4, (void *)(VRAM + 0xB800));
+        LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)(VRAM + 0xB800));
         break;
     case 7:
         LoadPalette(gUnknown_083E0254, 0x30, 0x20);

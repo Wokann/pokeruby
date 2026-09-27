@@ -276,7 +276,7 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 12:
-            if (!sub_80F1778())
+            if (!LoadPokeblockConditionGraphScreenStep())
             {
                 REG_BG2VOFS = 6;
                 REG_BG3VOFS = 6;
