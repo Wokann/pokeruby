@@ -485,6 +485,12 @@ u32 FldEff_JumpLongGrass(void)
     return 0;
 }
 
+#define sLocalId  data[0]
+#define sMapNum   data[1]
+#define sMapGroup data[2]
+#define sPrevX    data[3]
+#define sPrevY    data[4]
+
 u32 FldEff_ShortGrass(void)
 {
     u8 objectEventId;
@@ -500,11 +506,11 @@ u32 FldEff_ShortGrass(void)
         sprite = &(gSprites[spriteId]);
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gSprites[objectEvent->spriteId].oam.priority;
-        sprite->data[0] = gFieldEffectArguments[0];
-        sprite->data[1] = gFieldEffectArguments[1];
-        sprite->data[2] = gFieldEffectArguments[2];
-        sprite->data[3] = gSprites[objectEvent->spriteId].x;
-        sprite->data[4] = gSprites[objectEvent->spriteId].y;
+        sprite->sLocalId = gFieldEffectArguments[0];
+        sprite->sMapNum = gFieldEffectArguments[1];
+        sprite->sMapGroup = gFieldEffectArguments[2];
+        sprite->sPrevX = gSprites[objectEvent->spriteId].x;
+        sprite->sPrevY = gSprites[objectEvent->spriteId].y;
     }
     return 0;
 }
@@ -517,7 +523,7 @@ void UpdateShortGrassFieldEffect(struct Sprite *sprite)
     const struct ObjectEventGraphicsInfo *graphicsInfo;
     struct Sprite *linkedSprite;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->data[0], sprite->data[1], sprite->data[2], &objectEventId) || !gObjectEvents[objectEventId].inShortGrass)
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId) || !gObjectEvents[objectEventId].inShortGrass)
     {
         FieldEffectStop(sprite, FLDEFF_SHORT_GRASS);
     }
@@ -527,10 +533,10 @@ void UpdateShortGrassFieldEffect(struct Sprite *sprite)
         linkedSprite = &gSprites[gObjectEvents[objectEventId].spriteId];
         y = linkedSprite->y;
         x = linkedSprite->x;
-        if (x != sprite->data[3] || y != sprite->data[4])
+        if (x != sprite->sPrevX || y != sprite->sPrevY)
         {
-            sprite->data[3] = x;
-            sprite->data[4] = y;
+            sprite->sPrevX = x;
+            sprite->sPrevY = y;
             if (sprite->animEnded)
             {
                 StartSpriteAnim(sprite, 0);
@@ -544,6 +550,12 @@ void UpdateShortGrassFieldEffect(struct Sprite *sprite)
         UpdateObjectEventSpriteVisibility(sprite, linkedSprite->invisible);
     }
 }
+
+#undef sLocalId
+#undef sMapNum
+#undef sMapGroup
+#undef sPrevX
+#undef sPrevY
 
 u32 FldEff_SandFootprints(void)
 {
