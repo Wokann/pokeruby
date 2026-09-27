@@ -3674,7 +3674,7 @@ u8 *BufferRibbonsMonListIndexText(u8 *dst, u16 index)
     return buffer;
 }
 
-u32 sub_80F44B0(u16 box, u16 monIndex, int monDataField, u8 *text)
+u32 GetBoxOrPartyMonData(u16 box, u16 monIndex, int monDataField, u8 *text)
 {
     if (box == 14)
     {
@@ -3733,17 +3733,17 @@ void sub_80F468C(s16 arg0, u8 arg1)
     {
         box = gPokenavStructPtr->unk893c[arg0].unk1;
         monIndex = gPokenavStructPtr->unk893c[arg0].partyIdx;
-        gPokenavStructPtr->unk8ff0[arg1][0] = sub_80F44B0(box, monIndex, MON_DATA_COOL, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][1] = sub_80F44B0(box, monIndex, MON_DATA_TOUGH, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][2] = sub_80F44B0(box, monIndex, MON_DATA_SMART, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][3] = sub_80F44B0(box, monIndex, MON_DATA_CUTE, NULL);
-        gPokenavStructPtr->unk8ff0[arg1][4] = sub_80F44B0(box, monIndex, MON_DATA_BEAUTY, NULL);
+        gPokenavStructPtr->unk8ff0[arg1][0] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_COOL, NULL);
+        gPokenavStructPtr->unk8ff0[arg1][1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_TOUGH, NULL);
+        gPokenavStructPtr->unk8ff0[arg1][2] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SMART, NULL);
+        gPokenavStructPtr->unk8ff0[arg1][3] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_CUTE, NULL);
+        gPokenavStructPtr->unk8ff0[arg1][4] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_BEAUTY, NULL);
 
-        gPokenavStructPtr->conditionNumSparkles[arg1] = sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) != 255
-                                           ? sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) / 29
+        gPokenavStructPtr->conditionNumSparkles[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) != 255
+                                           ? GetBoxOrPartyMonData(box, monIndex, MON_DATA_SHEEN, NULL) / 29
                                            : 9;
 
-        gPokenavStructPtr->conditionMonMarkings[arg1] = sub_80F44B0(box, monIndex, MON_DATA_MARKINGS, NULL);
+        gPokenavStructPtr->conditionMonMarkings[arg1] = GetBoxOrPartyMonData(box, monIndex, MON_DATA_MARKINGS, NULL);
         sub_80F55AC(gPokenavStructPtr->unk8ff0[arg1], gPokenavStructPtr->unk9004[arg1]);
     }
     else
@@ -3769,9 +3769,9 @@ void sub_80F4824(s16 arg0, u8 arg1)
     {
         box = gPokenavStructPtr->unk893c[arg0].unk1;
         monIndex = gPokenavStructPtr->unk893c[arg0].partyIdx;
-        species = sub_80F44B0(box, monIndex, MON_DATA_SPECIES2, NULL);
-        otId = sub_80F44B0(box, monIndex, MON_DATA_OT_ID, NULL);
-        personality = sub_80F44B0(box, monIndex, MON_DATA_PERSONALITY, NULL);
+        species = GetBoxOrPartyMonData(box, monIndex, MON_DATA_SPECIES2, NULL);
+        otId = GetBoxOrPartyMonData(box, monIndex, MON_DATA_OT_ID, NULL);
+        personality = GetBoxOrPartyMonData(box, monIndex, MON_DATA_PERSONALITY, NULL);
 
         HandleLoadSpecialPokePic(
             &gMonFrontPicTable[species],
@@ -4802,11 +4802,11 @@ u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
     u16 level;
     u8 gender;
 
-    if (!sub_80F44B0(box, monNo, MON_DATA_IS_EGG, NULL))
+    if (!GetBoxOrPartyMonData(box, monNo, MON_DATA_IS_EGG, NULL))
     {
-        sub_80F44B0(box, monNo, MON_DATA_NICKNAME, dest);
+        GetBoxOrPartyMonData(box, monNo, MON_DATA_NICKNAME, dest);
         StringGet_Nickname(dest);
-        species = sub_80F44B0(box, monNo, MON_DATA_SPECIES, NULL);
+        species = GetBoxOrPartyMonData(box, monNo, MON_DATA_SPECIES, NULL);
         if (box == 14)
         {
             level = GetMonData(&gPlayerParty[monNo], MON_DATA_LEVEL);
@@ -4815,7 +4815,7 @@ u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
         else
         {
             level = GetLevelFromBoxMonExp(&gPokemonStorage.boxes[box][monNo]);
-            gender = GetGenderFromSpeciesAndPersonality(species, sub_80F44B0(box, monNo, MON_DATA_PERSONALITY, NULL));
+            gender = GetGenderFromSpeciesAndPersonality(species, GetBoxOrPartyMonData(box, monNo, MON_DATA_PERSONALITY, NULL));
         }
         if (ShouldHideGenderIcon(species, r10))
         {
@@ -4907,7 +4907,7 @@ void sub_80F66E0(void)
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->ribbonCount = 0;
     r9 = 0;
-    r7 = sub_80F44B0(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
+    r7 = GetBoxOrPartyMonData(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
     gPokenavStructPtr->giftRibbonCount = 0;
     for (i = 0; i < 17; i++)
     {
