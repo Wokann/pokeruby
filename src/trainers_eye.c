@@ -73,7 +73,7 @@ void sub_80F6C20(void)
     gPokenavStructPtr->listSelectedIndex = 0;
     gPokenavStructPtr->unk8772 = gPokenavStructPtr->unkD158 <= 8 ? gPokenavStructPtr->unkD158 - 1 : 7;
     gPokenavStructPtr->unk8774 = gPokenavStructPtr->unkD158 - 1;
-    gPokenavStructPtr->unk87C9 = gPokenavStructPtr->unk8774 < 8 ? 0 : 1;
+    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 < 8 ? 0 : 1;
 }
 
 void sub_80F6DB8(void)

@@ -213,7 +213,7 @@ const u8 gPokenavPokeballTiles[] = INCBIN_U8("graphics/pokenav/pokeball.4bpp");
 const u8 gUnknown_083E3780[] = INCBIN_U8("graphics/pokenav/83E3780.4bpp");
 const u16 gPokenavSparkle_Pal[] = INCBIN_U16("graphics/pokenav/sparkle.gbapal");
 const u8 gPokenavSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/sparkle.4bpp");
-const u8 gPokenavUpDownArrows_Gfx[] = INCBIN_U8("graphics/pokenav/arrows.4bpp");
+const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
 const u8 gUnknown_083E3BC0[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
 const u8 gTiles_083E3BE0[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
 
@@ -663,20 +663,20 @@ const struct SpriteTemplate gPokenavPortraitSpriteTemplate =
 };
 
 const struct SpritePalette gPokenavPortraitSpritePalette = {NULL, 6};
-extern const u8 gPokenavArrow_Gfx[];
+extern const u8 gPokenavListRightArrowGfx[];
 
-const struct SpriteSheet gUnknown_083E4590[] = 
+const struct SpriteSheet gPokenavListArrowSpriteSheets[] =
 {
-    {gPokenavArrow_Gfx, 0x40, 9},
-    {gPokenavUpDownArrows_Gfx, 0x80, 10},
+    {gPokenavListRightArrowGfx, 0x40, 9},
+    {gPokenavListUpDownArrowGfx, 0x80, 10},
     {},
 };
 
-extern const u16 gPokenavArrowsPalette[];
+extern const u16 gPokenavListArrowPalette[];
 
-const struct SpritePalette gUnknown_083E45A8 = {gPokenavArrowsPalette, 9};
+const struct SpritePalette gPokenavListArrowSpritePalette = {gPokenavListArrowPalette, 9};
 
-const struct OamData gOamData_83E45B0 = 
+const struct OamData gPokenavListRightArrowOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -693,38 +693,38 @@ const struct OamData gOamData_83E45B0 =
     .affineParam = 0,
 };
 
-void sub_80F3190(struct Sprite *);
+void SpriteCB_UpdatePokenavListRightArrow(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E45B8 = 
+const struct SpriteTemplate gPokenavListRightArrowSpriteTemplate =
 {
     .tileTag = 9,
     .paletteTag = 9,
-    .oam = &gOamData_83E45B0,
+    .oam = &gPokenavListRightArrowOam,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3190,
+    .callback = SpriteCB_UpdatePokenavListRightArrow,
 };
 
-const union AnimCmd gSpriteAnim_83E45D0[] = 
+const union AnimCmd gPokenavListUpArrowAnim[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E45D8[] = 
+const union AnimCmd gPokenavListDownArrowAnim[] =
 {
     ANIMCMD_FRAME(2, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E45E0[] = 
+const union AnimCmd *const gPokenavListUpDownArrowAnims[] =
 {
-    gSpriteAnim_83E45D0,
-    gSpriteAnim_83E45D8,
+    gPokenavListUpArrowAnim,
+    gPokenavListDownArrowAnim,
 };
 
-const struct OamData gOamData_83E45E8 = 
+const struct OamData gPokenavListUpDownArrowOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -741,17 +741,17 @@ const struct OamData gOamData_83E45E8 =
     .affineParam = 0,
 };
 
-void sub_80F31AC(struct Sprite *);
+void SpriteCB_UpdatePokenavListUpDownArrow(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E45F0 = 
+const struct SpriteTemplate gPokenavListUpDownArrowSpriteTemplate =
 {
     .tileTag = 10,
     .paletteTag = 9,
-    .oam = &gOamData_83E45E8,
-    .anims = gSpriteAnimTable_83E45E0,
+    .oam = &gPokenavListUpDownArrowOam,
+    .anims = gPokenavListUpDownArrowAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F31AC,
+    .callback = SpriteCB_UpdatePokenavListUpDownArrow,
 };
 
 const struct OamData gOamData_83E4608 = 
@@ -1983,7 +1983,7 @@ void ReturnToConditionSearchMenu(void)
         break;
     case 3:
         SetPokenavDisplayForMenu();
-        sub_80F3130();
+        DestroyPokenavListArrowSprites();
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
@@ -2137,7 +2137,7 @@ void OpenConditionSearchResults(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        sub_80F3008(0);
+        CreatePokenavListArrowSprites(0);
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
@@ -2223,7 +2223,7 @@ void HandleConditionSearchInput(void)
         if (!UpdatePokenavListScroll())
         {
 			PrintPokenavListSelectionInfo();
-			sub_80F3264();
+			RefreshPokenavListArrowVisibility();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2268,7 +2268,7 @@ void OpenConditionSearchListFromGraph(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 6:
-        sub_80F3008(0);
+        CreatePokenavListArrowSprites(0);
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_Pokenav);
         gPokenavStructPtr->callbackStep++;
@@ -2301,7 +2301,7 @@ void OpenConditionGraphFromSearchResults(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80F3130();
+			DestroyPokenavListArrowSprites();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2665,7 +2665,7 @@ void OpenRibbonsMonList(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        sub_80F3008(0x1);
+        CreatePokenavListArrowSprites(0x1);
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
@@ -2727,7 +2727,7 @@ void HandleRibbonsMonListInput(void)
         if (!UpdatePokenavListScroll())
         {
 			PrintPokenavListSelectionInfo();
-			sub_80F3264();
+			RefreshPokenavListArrowVisibility();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2753,7 +2753,7 @@ void RibbonsMonMenu_ReturnToMainMenu(void)
     case 1:
         if (!gPaletteFade.active)
         {
-			sub_80F3130();
+			DestroyPokenavListArrowSprites();
 			DestroyPokenavLeftHeaderSprites(0x2);
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -2778,7 +2778,7 @@ void OpenRibbonsSummaryMenu(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80F3130();
+			DestroyPokenavListArrowSprites();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -2945,7 +2945,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         break;
     case 4:
         DrawPokenavBottomToolbar(0x4);
-        sub_80F3008(0x1);
+        CreatePokenavListArrowSprites(0x1);
         SetVBlankCallback(&VBlankCB_Pokenav);
         gPokenavStructPtr->callbackStep++;
         break;
@@ -3024,7 +3024,7 @@ void OpenTrainerEyes(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        sub_80F3008(0x2);
+        CreatePokenavListArrowSprites(0x2);
         gPokenavStructPtr->callbackStep++;
         break;
     case 10:
@@ -3087,7 +3087,7 @@ void HandleTrainerEyesInput(void)
         if (!UpdatePokenavListScroll())
         {
 			PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
-			sub_80F3264();
+			RefreshPokenavListArrowVisibility();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -3107,7 +3107,7 @@ void ShowTrainerEyesTrainerInfo(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F3294(0x1);
+        TogglePokenavListArrows(0x1);
         DrawPokenavBottomToolbar(0xA);
         InitTrainerEyesListErase();
         gPokenavStructPtr->callbackStep++;
@@ -3194,7 +3194,7 @@ void ShowTrainerEyesTrainerInfo(void)
         break;
     case 15:
         DrawPokenavBottomToolbar(0x9);
-        sub_80F3294(0);
+        TogglePokenavListArrows(0);
         SetPokenavCallback(&HandleTrainerEyesInput);
         PausePokenavCallbackForLink();
         break;
@@ -3220,7 +3220,7 @@ void TrainerEyes_ReturnToMainMenu(void)
     case 1:
         if (!gPaletteFade.active)
         {
-			sub_80F3130();
+			DestroyPokenavListArrowSprites();
 			DestroyPokenavLeftHeaderSprites(0x2);
 			sub_80F6FFC();
 			gPokenavStructPtr->callbackStep++;

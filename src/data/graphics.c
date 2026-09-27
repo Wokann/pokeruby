@@ -1316,9 +1316,9 @@ const u16 gUnknown_08E9F624[] = INCBIN_U16("graphics/title_screen/logo_ruby.gbap
 #endif // SAPPHIRE
 
 const u8 gUnknown_08E9F7E4[] = INCBIN_U8("graphics/unknown/unknown_E9F7E4.bin.lz");
-const u16 gPokenavArrowsPalette[] = INCBIN_U16("graphics/pokenav/arrows.gbapal");
-const u16 gUnknown_08E9F988[] = INCBIN_U16("graphics/unknown/unknown_E9F988.gbapal");
-const u8 gPokenavArrow_Gfx[] = INCBIN_U8("graphics/pokenav/arrow2.4bpp");
+const u16 gPokenavListArrowPalette[] = INCBIN_U16("graphics/pokenav/list_arrows_up_down.gbapal");
+const u16 gPokenavListArrowAltPalette[] = INCBIN_U16("graphics/pokenav/list_arrows_alt.gbapal");
+const u8 gPokenavListRightArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_right.4bpp");
 const u16 gUnknown_08E9F9E8[] = INCBIN_U16("graphics/unknown/unknown_E9F9E8.gbapal");
 const u8 gPokenavConditionSearch2_Gfx[] = INCBIN_U8("graphics/pokenav/condition_search2.4bpp.lz");
 const u8 gPokenavRibbonView_Pal[] = INCBIN_U8("graphics/pokenav/ribbon_view.pal.bin");

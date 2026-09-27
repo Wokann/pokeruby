@@ -121,11 +121,11 @@ extern const struct SpriteTemplate gPokenavTrainersEyesHeaderSpriteTemplate;
 extern const struct SpriteSheet gPokenavPortraitSpriteSheet;
 extern const struct SpriteTemplate gPokenavPortraitSpriteTemplate;
 extern const struct SpritePalette gPokenavPortraitSpritePalette;
-extern const struct SpriteSheet gUnknown_083E4590[3];
-extern const struct SpritePalette gUnknown_083E45A8;
-extern const u16 gUnknown_08E9F988[];
-extern const struct SpriteTemplate gSpriteTemplate_83E45B8;
-extern const struct SpriteTemplate gSpriteTemplate_83E45F0;
+extern const struct SpriteSheet gPokenavListArrowSpriteSheets[3];
+extern const struct SpritePalette gPokenavListArrowSpritePalette;
+extern const u16 gPokenavListArrowAltPalette[];
+extern const struct SpriteTemplate gPokenavListRightArrowSpriteTemplate;
+extern const struct SpriteTemplate gPokenavListUpDownArrowSpriteTemplate;
 extern const struct SpriteSheet gUnknown_083E4628[4];
 extern const struct SpritePalette gUnknown_083E4648[3];
 extern const struct SpriteTemplate gSpriteTemplate_83E4660;
@@ -2761,39 +2761,39 @@ void SpriteCB_UpdateTrainerEyesPortraitPosition(struct Sprite *sprite)
     sprite->y = 104;
 }
 
-void sub_80F3008(u8 arg0)
+void CreatePokenavListArrowSprites(u8 paletteType)
 {
     u16 i;
     u8 spriteId;
     struct SpritePalette spritePalette;
     struct SpriteSheet spriteSheets[3];
 
-    memcpy(spriteSheets, gUnknown_083E4590, sizeof(gUnknown_083E4590));
-    spritePalette = gUnknown_083E45A8;
-    switch (arg0)
+    memcpy(spriteSheets, gPokenavListArrowSpriteSheets, sizeof(gPokenavListArrowSpriteSheets));
+    spritePalette = gPokenavListArrowSpritePalette;
+    switch (paletteType)
     {
     case 1:
     case 2:
-        spritePalette.data = gUnknown_08E9F988;
+        spritePalette.data = gPokenavListArrowAltPalette;
         break;
     }
 
     LoadSpriteSheets(spriteSheets);
     LoadSpritePalette(&spritePalette);
-    spriteId = CreateSprite(&gSpriteTemplate_83E45B8, 95, 0, 0);
+    spriteId = CreateSprite(&gPokenavListRightArrowSpriteTemplate, 95, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
-        gPokenavStructPtr->unk87CC = NULL;
+        gPokenavStructPtr->listRightArrowSprite = NULL;
     }
     else
     {
-        gPokenavStructPtr->unk87CC = &gSprites[spriteId];
+        gPokenavStructPtr->listRightArrowSprite = &gSprites[spriteId];
         for (i = 0; i < 2; i++)
         {
-            spriteId = CreateSprite(&gSpriteTemplate_83E45F0, 168, i * 128 + 8, 0);
+            spriteId = CreateSprite(&gPokenavListUpDownArrowSpriteTemplate, 168, i * 128 + 8, 0);
             if (spriteId != MAX_SPRITES)
             {
-                gPokenavStructPtr->unk87D0[i] = &gSprites[spriteId];
+                gPokenavStructPtr->listUpDownArrowSprites[i] = &gSprites[spriteId];
                 gSprites[spriteId].invisible = TRUE;
                 gSprites[spriteId].data[0] = 0;
                 gSprites[spriteId].data[1] = 0;
@@ -2804,44 +2804,44 @@ void sub_80F3008(u8 arg0)
             }
             else
             {
-                gPokenavStructPtr->unk87D0[i] = NULL;
+                gPokenavStructPtr->listUpDownArrowSprites[i] = NULL;
             }
         }
     }
 }
 
-void sub_80F3130(void)
+void DestroyPokenavListArrowSprites(void)
 {
     u16 i;
 
-    if (gPokenavStructPtr->unk87CC)
+    if (gPokenavStructPtr->listRightArrowSprite)
     {
-        DestroySprite(gPokenavStructPtr->unk87CC);
+        DestroySprite(gPokenavStructPtr->listRightArrowSprite);
         FreeSpriteTilesByTag(0x9);
         FreeSpritePaletteByTag(0x9);
-        gPokenavStructPtr->unk87CC = NULL;
+        gPokenavStructPtr->listRightArrowSprite = NULL;
     }
 
     for (i = 0; i < 2; i++)
     {
-        if (gPokenavStructPtr->unk87D0[i])
+        if (gPokenavStructPtr->listUpDownArrowSprites[i])
         {
-            DestroySprite(gPokenavStructPtr->unk87D0[i]);
-            gPokenavStructPtr->unk87D0[i] = NULL;
+            DestroySprite(gPokenavStructPtr->listUpDownArrowSprites[i]);
+            gPokenavStructPtr->listUpDownArrowSprites[i] = NULL;
         }
     }
 
     FreeSpriteTilesByTag(0xA);
 }
 
-void sub_80F3190(struct Sprite *sprite)
+void SpriteCB_UpdatePokenavListRightArrow(struct Sprite *sprite)
 {
     sprite->y = gPokenavStructPtr->listCursorRow * 16 + 16;
 }
 
-void sub_80F31AC(struct Sprite *sprite)
+void SpriteCB_UpdatePokenavListUpDownArrow(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->unk87C9)
+    if (gPokenavStructPtr->hasListScrollArrows)
     {
         if (sprite->data[4])
         {
@@ -2869,31 +2869,31 @@ void sub_80F31AC(struct Sprite *sprite)
     }
 }
 
-void sub_80F3264(void)
+void RefreshPokenavListArrowVisibility(void)
 {
     u16 i;
 
     for (i = 0; i < 2; i++)
     {
-        if (gPokenavStructPtr->unk87D0[i])
-            gPokenavStructPtr->unk87D0[i]->data[4] = 1;
+        if (gPokenavStructPtr->listUpDownArrowSprites[i])
+            gPokenavStructPtr->listUpDownArrowSprites[i]->data[4] = 1;
     }
 }
 
-void sub_80F3294(u8 arg0)
+void TogglePokenavListArrows(u8 invisible)
 {
-    gPokenavStructPtr->unk87CC->invisible = arg0;
-    if (gPokenavStructPtr->unk87C9)
+    gPokenavStructPtr->listRightArrowSprite->invisible = invisible;
+    if (gPokenavStructPtr->hasListScrollArrows)
     {
-        if (arg0 == 1)
+        if (invisible == 1)
         {
-            gPokenavStructPtr->unk87D0[0]->invisible = arg0;
-            gPokenavStructPtr->unk87D0[1]->invisible = arg0;
+            gPokenavStructPtr->listUpDownArrowSprites[0]->invisible = invisible;
+            gPokenavStructPtr->listUpDownArrowSprites[1]->invisible = invisible;
         }
         else
         {
-            gPokenavStructPtr->unk87D0[0]->data[4] = 1;
-            gPokenavStructPtr->unk87D0[1]->data[4] = 1;
+            gPokenavStructPtr->listUpDownArrowSprites[0]->data[4] = 1;
+            gPokenavStructPtr->listUpDownArrowSprites[1]->data[4] = 1;
         }
     }
 }
@@ -3827,7 +3827,7 @@ void sub_80F49F4(void)
     gPokenavStructPtr->listSelectedIndex = 0;
     gPokenavStructPtr->unk8772 = gPokenavStructPtr->unk8FE4 < 9 ? (gPokenavStructPtr->unk8FE4 - 1) : 7;
     gPokenavStructPtr->unk8774 = gPokenavStructPtr->unk8FE4 - 1;
-    gPokenavStructPtr->unk87C9 = gPokenavStructPtr->unk8774 > 7;
+    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 > 7;
 }
 
 void sub_80F4B20(void)
@@ -4511,14 +4511,14 @@ u8 sub_80F5E20(void)
     {
         return 0;
     }
-    if (gPokenavStructPtr->unk87C9 != 0 && gPokenavStructPtr->listCursorRow == 0)
+    if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 0)
     {
         BeginPokenavListScroll(-1);
         sub_80F6074(-1);
         return 2;
     }
     gPokenavStructPtr->listCursorRow--;
-    if (gPokenavStructPtr->unk87C9 == 0 && gPokenavStructPtr->listCursorRow < 0)
+    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow < 0)
     {
         gPokenavStructPtr->listCursorRow = gPokenavStructPtr->unk8772;
     }
@@ -4536,14 +4536,14 @@ u8 sub_80F5EE4(void)
     {
         return 0;
     }
-    if (gPokenavStructPtr->unk87C9 != 0 && gPokenavStructPtr->listCursorRow == 7)
+    if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 7)
     {
         BeginPokenavListScroll(1);
         sub_80F6074(1);
         return 2;
     }
     gPokenavStructPtr->listCursorRow++;
-    if (gPokenavStructPtr->unk87C9 == 0 && gPokenavStructPtr->listCursorRow > gPokenavStructPtr->unk8772)
+    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow > gPokenavStructPtr->unk8772)
     {
         gPokenavStructPtr->listCursorRow = 0;
     }
@@ -4558,7 +4558,7 @@ u8 sub_80F5EE4(void)
 u8 sub_80F5FB4(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->unk8770 == 0 || gPokenavStructPtr->unk87C9 == 0)
+    if (gPokenavStructPtr->unk8770 == 0 || gPokenavStructPtr->hasListScrollArrows == 0)
     {
         return 0;
     }
@@ -4578,7 +4578,7 @@ u8 sub_80F5FB4(void)
 u8 sub_80F6010(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->unk8772 == gPokenavStructPtr->unk8774 || gPokenavStructPtr->unk87C9 == 0)
+    if (gPokenavStructPtr->unk8772 == gPokenavStructPtr->unk8774 || gPokenavStructPtr->hasListScrollArrows == 0)
     {
         return 0;
     }
@@ -4625,7 +4625,7 @@ void sub_80F6074(s16 a0)
 
 void sub_80F6134(void)
 {
-    if (gPokenavStructPtr->unk87C9 != 0)
+    if (gPokenavStructPtr->hasListScrollArrows != 0)
     {
         if (gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774 - 7)
         {
