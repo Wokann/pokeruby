@@ -450,7 +450,7 @@ enum
     TD_Y
 };
 
-static bool32 sub_8058464(struct DoorGraphics *gfx, struct DoorAnimFrame *frames, s16 *taskData)
+static bool32 AnimateDoorFrame(struct DoorGraphics *gfx, struct DoorAnimFrame *frames, s16 *taskData)
 {
     if (taskData[TD_COUNTER] == 0)
         DrawDoor(gfx, &frames[taskData[TD_FRAME]], taskData[TD_X], taskData[TD_Y]);
@@ -473,7 +473,7 @@ static void Task_AnimateDoor(u8 taskId)
     struct DoorAnimFrame *frames = (struct DoorAnimFrame *)(taskData[TD_FRAMELIST] << 16 | taskData[TD_FRAMELIST + 1]);
     struct DoorGraphics *gfx = (struct DoorGraphics *)(taskData[TD_GFX] << 16 | taskData[TD_GFX + 1]);
 
-    if (sub_8058464(gfx, frames, taskData) == FALSE)
+    if (AnimateDoorFrame(gfx, frames, taskData) == FALSE)
         DestroyTask(taskId);
 }
 
