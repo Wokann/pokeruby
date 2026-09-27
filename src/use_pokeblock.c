@@ -307,11 +307,11 @@ static void sub_8136294(void)
             break;
         case 17:
             CalcPokeblockConditionGraphPositions(gPokenavStructPtr->unk8ff0[0], gPokenavStructPtr->unk9004[0]);
-            sub_80F5B38();
+            ConditionGraph_InitResetScanline();
             gUnknown_02039304->unk50++;
             break;
         case 18:
-            if (!sub_80F5B50())
+            if (!ConditionGraph_ResetScanline())
             {
                 gUnknown_02039304->unk50++;
             }
@@ -595,7 +595,7 @@ static void sub_8136B44(void)
             }
             break;
         case 2:
-            sub_80F5BDC();
+            StopConditionGraphScanlineEffect();
             gUnknown_02039304->unk50++;
             break;
         case 3:

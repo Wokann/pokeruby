@@ -1086,7 +1086,7 @@ const u8 gUnknown_083E4890[] =
     34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 35,
 };
 
-const struct ScanlineEffectParams gUnknown_083E4990 = 
+const struct ScanlineEffectParams gConditionGraphScanlineParams =
 {
     (void *)REG_ADDR_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_32BIT | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
@@ -2458,11 +2458,11 @@ void HandleConditionGraphInput(void)
     {
     case 0:
         StartConditionGraphMonEnter();
-        sub_80F5B38();
+        ConditionGraph_InitResetScanline();
         gPokenavStructPtr->callbackStep = 1;
         break;
     case 1:
-        if (!sub_80F5B50())
+        if (!ConditionGraph_ResetScanline())
             gPokenavStructPtr->callbackStep = 2;
         break;
     case 2:
@@ -2574,7 +2574,7 @@ void HandleConditionGraphInput(void)
         if (!gPaletteFade.active)
         {
             FreeConditionSparkles();
-            sub_80F5BDC();
+            StopConditionGraphScanlineEffect();
             if (!gPokenavStructPtr->isConditionGraphSearchMode)
             {
                 DestroyConditionPartyPokeballIndicators();
@@ -3244,7 +3244,7 @@ void ExitPokenav(void)
     {
         if (!gPaletteFade.active)
         {
-			sub_80F5BDC();
+			StopConditionGraphScanlineEffect();
 			c2_exit_to_overworld_1_sub_8080DEC();
 		}
     }

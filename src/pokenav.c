@@ -4421,14 +4421,14 @@ void ConditionGraph_CalcLeftHalf(struct UnkPokenav11 *arg0)
 //    }
 }
 
-void sub_80F5B38(void)
+void ConditionGraph_InitResetScanline(void)
 {
     gPokenavStructPtr->unk9345 = 0;
 }
 
-extern const struct ScanlineEffectParams gUnknown_083E4990;
+extern const struct ScanlineEffectParams gConditionGraphScanlineParams;
 
-bool8 sub_80F5B50(void)
+bool8 ConditionGraph_ResetScanline(void)
 {
     s32 i;
     struct ScanlineEffectParams params;
@@ -4447,7 +4447,7 @@ bool8 sub_80F5B50(void)
         gPokenavStructPtr->unk9345++;
         return TRUE;
     case 1:
-        params = gUnknown_083E4990;
+        params = gConditionGraphScanlineParams;
         ScanlineEffect_SetParams(params);
         gPokenavStructPtr->unk9345++;
         break;
@@ -4455,7 +4455,7 @@ bool8 sub_80F5B50(void)
     return FALSE;
 }
 
-void sub_80F5BDC(void)
+void StopConditionGraphScanlineEffect(void)
 {
     gScanlineEffect.state = 3;
     ScanlineEffect_InitHBlankDmaTransfer();
