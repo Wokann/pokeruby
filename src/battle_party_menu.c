@@ -20,7 +20,7 @@
 #include "ewram.h"
 
 EWRAM_DATA u8 gBattlePartyCurrentOrder[3] = {};
-EWRAM_DATA u8 gUnknown_02038473 = 0;
+EWRAM_DATA u8 gBattlePartyMenuAction = 0;
 
 extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
@@ -50,11 +50,11 @@ u8 GetPartyIdFromBattlePartyId(u8);
 static void BufferBattlePartyOrder(u8[3], u8);
 static void BufferBattlePartyOrderBySide(u8[3], u8, u32);
 static void UpdatePartyToFieldOrder(void);
-static void Task_809527C(u8);
-static void Task_80952B4(u8);
-static void Task_80952E4(u8);
-static void Task_8095330(u8);
-static void Task_809538C(void);
+static void Task_BeginExitBattlePartyMenu(u8);
+static void Task_ExitBattlePartyMenuToBattle(u8);
+static void Task_ExitBattlePartyMenuAfterItem(u8);
+static void Task_ExitBattlePartyMenuToBag(u8);
+static void CB2_InitBattlePartyMenuAfterSummary(void);
 static void Task_HandlePopupMenuInput(u8);
 static void Task_BattlePartyMenuSummary(u8 taskId);
 static void Task_BattlePartyMenuShift(u8 taskId);
@@ -67,22 +67,22 @@ static const struct MenuAction2 sBattlePartyMenuActions[] =
     {OtherText_Shift,               Task_BattlePartyMenuShift},
     {OtherText_SendOut,             Task_BattlePartyMenuShift},
 };
-static const u8 Unknown_83B5FEC[] = {2, 0, 1};  //SHIFT, SUMMARY, CANCEL
-static const u8 Unknown_83B5FEF[] = {3, 0, 1};  //SEND OUT, SUMMARY, CANCEL
-static const u8 Unknown_83B5FF2[] = {0, 1};     //SUMMARY, CANCEL
+static const u8 sBattlePartyMenuShiftActions[] = {2, 0, 1};  //SHIFT, SUMMARY, CANCEL
+static const u8 sBattlePartyMenuSendOutActions[] = {3, 0, 1};  //SEND OUT, SUMMARY, CANCEL
+static const u8 sBattlePartyMenuSummaryActions[] = {0, 1};     //SUMMARY, CANCEL
 static const struct PartyPopupMenu sBattlePartyPopupMenus[] =
 {
-    {ARRAY_COUNT(Unknown_83B5FEC), 9, Unknown_83B5FEC},
-    {ARRAY_COUNT(Unknown_83B5FEF), 9, Unknown_83B5FEF},
-    {ARRAY_COUNT(Unknown_83B5FF2), 9, Unknown_83B5FF2},
+    {ARRAY_COUNT(sBattlePartyMenuShiftActions), 9, sBattlePartyMenuShiftActions},
+    {ARRAY_COUNT(sBattlePartyMenuSendOutActions), 9, sBattlePartyMenuSendOutActions},
+    {ARRAY_COUNT(sBattlePartyMenuSummaryActions), 9, sBattlePartyMenuSummaryActions},
 };
 
-void unref_sub_8094928(struct PokemonStorage *ptr)
+void CopyPokemonStorageToBuffer(struct PokemonStorage *ptr)
 {
     *ptr = gPokemonStorage;
 }
 
-void unref_sub_8094940(struct PokemonStorage *ptr)
+void RestorePokemonStorageFromBuffer(struct PokemonStorage *ptr)
 {
     gPokemonStorage = *ptr;
 }
@@ -309,7 +309,7 @@ static void UpdatePartyToFieldOrder(void)
     }
 }
 
-void unref_sub_8094DB0(void)
+void TrySwitchFirstHealthyPartyMonToFront(void)
 {
     u8 i;
     u8 r4;
@@ -332,7 +332,7 @@ void unref_sub_8094DB0(void)
 void OpenBattlePartyMenuWithAction(u8 action)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
-    gUnknown_02038473 = action;
+    gBattlePartyMenuAction = action;
     ReshowBattleScreenDummy();
     UpdatePartyToBattleOrder();
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE, 0xFF);
@@ -426,7 +426,7 @@ bool8 SetUpBattlePartyMenu(void)
             ePartyMenu2.pmMonIndex++;
         break;
     case 10:
-        if (gUnknown_02038473 == 3)
+        if (gBattlePartyMenuAction == 3)
         {
             if (GetItemEffectType(gSpecialVar_ItemId) == 10)
                 ePartyMenu2.promptTextId = 0xFF;
@@ -438,11 +438,11 @@ bool8 SetUpBattlePartyMenu(void)
     return FALSE;
 }
 
-static void sub_8095050(u8 a, u8 b)
+static void ShowBattlePartyPopupMenu(u8 a, u8 b)
 {
     if (!GetMonData(&gPlayerParty[b], MON_DATA_IS_EGG))
     {
-        if (gUnknown_02038473 == 1)
+        if (gBattlePartyMenuAction == 1)
         {
             gTasks[ePartyMenu2.menuHandlerTaskId].data[4] = 1;
             gTasks[ePartyMenu2.menuHandlerTaskId].data[5] = 1;
@@ -466,48 +466,48 @@ void HandleBattlePartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (gUnknown_02038473 == 3 && GetItemEffectType(gSpecialVar_ItemId) == 10)
+        if (gBattlePartyMenuAction == 3 && GetItemEffectType(gSpecialVar_ItemId) == 10)
         {
-            gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_80952E4);
+            gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_ExitBattlePartyMenuAfterItem);
             return;
         }
 
         switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
-            if (gUnknown_02038473 == 3)
+            if (gBattlePartyMenuAction == 3)
             {
                 if (GetMonData(&gPlayerParty[sub_806CA38(taskId)], MON_DATA_IS_EGG))
                     PlaySE(SE_FAILURE);
                 else
                 {
                     PartyMenuEraseMsgBoxAndFrame();
-                    gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_80952E4);
+                    gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_ExitBattlePartyMenuAfterItem);
                 }
             }
             else
             {
                 PlaySE(SE_SELECT);
                 GetMonNickname(&gPlayerParty[sub_806CA38(taskId)], gStringVar1);
-                sub_8095050(taskId, sub_806CA38(taskId));
+                ShowBattlePartyPopupMenu(taskId, sub_806CA38(taskId));
                 SetTaskFuncWithFollowupFunc(taskId, Task_HandlePopupMenuInput, HandleBattlePartyMenu);
             }
             break;
         case B_BUTTON:
-            if (gUnknown_02038473 == 1)
+            if (gBattlePartyMenuAction == 1)
                 PlaySE(SE_FAILURE);
             else
             {
                 PlaySE(SE_SELECT);
-                if (gUnknown_02038473 == 3)
+                if (gBattlePartyMenuAction == 3)
                 {
                     gUnknown_0202E8F4 = 0;
-                    gTasks[taskId].func = Task_80952E4;
+                    gTasks[taskId].func = Task_ExitBattlePartyMenuAfterItem;
                 }
                 else
                 {
                     gUnknown_0202E8F4 = 0;
-                    gTasks[taskId].func = Task_809527C;
+                    gTasks[taskId].func = Task_BeginExitBattlePartyMenu;
                 }
             }
             break;
@@ -515,13 +515,13 @@ void HandleBattlePartyMenu(u8 taskId)
     }
 }
 
-static void Task_809527C(u8 taskId)
+static void Task_BeginExitBattlePartyMenu(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskId].func = Task_80952B4;
+    gTasks[taskId].func = Task_ExitBattlePartyMenuToBattle;
 }
 
-static void Task_80952B4(u8 taskId)
+static void Task_ExitBattlePartyMenuToBattle(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -531,18 +531,18 @@ static void Task_80952B4(u8 taskId)
     }
 }
 
-static void Task_80952E4(u8 taskId)
+static void Task_ExitBattlePartyMenuAfterItem(u8 taskId)
 {
     if (gUnknown_0202E8F4 != 0)
-        Task_809527C(taskId);
+        Task_BeginExitBattlePartyMenu(taskId);
     else
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskId].func = Task_8095330;
+        gTasks[taskId].func = Task_ExitBattlePartyMenuToBag;
     }
 }
 
-static void Task_8095330(u8 taskId)
+static void Task_ExitBattlePartyMenuToBag(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -552,14 +552,14 @@ static void Task_8095330(u8 taskId)
     }
 }
 
-static void Task_809535C(void)
+static void CB2_ReopenBattlePartyMenuAfterSummary(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
     SetPartyMenuSettings(PARTY_MENU_TYPE_BATTLE, 0xFF, HandleBattlePartyMenu, 5);
-    SetMainCallback2(Task_809538C);
+    SetMainCallback2(CB2_InitBattlePartyMenuAfterSummary);
 }
 
-static void Task_809538C(void)
+static void CB2_InitBattlePartyMenuAfterSummary(void)
 {
     do
     {
@@ -568,7 +568,7 @@ static void Task_809538C(void)
             sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
-            sub_8095050(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            ShowBattlePartyPopupMenu(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
             SetTaskFuncWithFollowupFunc(
                 ePartyMenu2.menuHandlerTaskId, Task_HandlePopupMenuInput, HandleBattlePartyMenu);
             SetMainCallback2(CB2_PartyMenuMain);
@@ -614,7 +614,7 @@ static void Task_HandlePopupMenuInput(u8 taskId)
     }
 }
 
-static void Task_80954C0(u8 taskId)
+static void Task_WaitBattlePartyErrorMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
         Task_BattlePartyMenuCancel(taskId);
@@ -628,7 +628,7 @@ static void Task_ShowSummaryScreen(u8 taskId)
     {
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, partySelection, gPlayerPartyCount - 1, Task_809535C, PSS_MODE_NO_MOVE_ORDER_EDIT);
+        ShowPokemonSummaryScreen(gPlayerParty, partySelection, gPlayerPartyCount - 1, CB2_ReopenBattlePartyMenuAfterSummary, PSS_MODE_NO_MOVE_ORDER_EDIT);
     }
 }
 
@@ -653,7 +653,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         StringCopy(gStringVar1, sub_8040D08());
         StringExpandPlaceholders(gStringVar4, gOtherText_CantSwitchPokeWithYours);
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
     if (GetMonData(&gPlayerParty[partySelection], MON_DATA_HP) == 0)
@@ -662,7 +662,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_NoEnergyLeft);
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
     for (i = 0; i < gBattlersCount; i++)
@@ -674,7 +674,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
             GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
             StringExpandPlaceholders(gStringVar4, gOtherText_AlreadyBattle);
             DisplayPartyMenuMessage(gStringVar4, 0);
-            gTasks[taskId].func = Task_80954C0;
+            gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
             return;
         }
     }
@@ -683,7 +683,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         PartyMenuEraseMsgBoxAndFrame();
         StringExpandPlaceholders(gStringVar4, gOtherText_EGGCantBattle);
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
     if (GetPartyIdFromBattleSlot(partySelection) == gBattleStruct->unk1609D)
@@ -692,18 +692,18 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         GetMonNickname(&gPlayerParty[partySelection], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_AlreadySelected);
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
-    if (gUnknown_02038473 == 4)
+    if (gBattlePartyMenuAction == 4)
     {
         PartyMenuEraseMsgBoxAndFrame();
         SetMonPreventsSwitchingString();
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
-    if (gUnknown_02038473 == 2)
+    if (gBattlePartyMenuAction == 2)
     {
         u8 r0;
         u8 r4 = gBattlerInMenuId;
@@ -713,7 +713,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         GetMonNickname(&gPlayerParty[r0], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_CantBeSwitched);
         DisplayPartyMenuMessage(gStringVar4, 0);
-        gTasks[taskId].func = Task_80954C0;
+        gTasks[taskId].func = Task_WaitBattlePartyErrorMessage;
         return;
     }
     gUnknown_0202E8F5 = GetPartyIdFromBattleSlot(partySelection);
@@ -721,7 +721,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     r4 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
     SwitchPartyMonSlots(r4, partySelection);
     SwapPokemon(&gPlayerParty[r4], &gPlayerParty[partySelection]);
-    gTasks[taskId].func = Task_809527C;
+    gTasks[taskId].func = Task_BeginExitBattlePartyMenu;
 }
 
 static void Task_BattlePartyMenuCancel(u8 taskId)
