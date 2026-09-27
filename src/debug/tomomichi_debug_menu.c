@@ -1443,54 +1443,54 @@ static const u16 sObjWorkPageVars[][9] = {
     {VAR_OBJ_GFX_ID_9, VAR_OBJ_GFX_ID_A, VAR_OBJ_GFX_ID_B, VAR_OBJ_GFX_ID_C, VAR_OBJ_GFX_ID_D, VAR_OBJ_GFX_ID_E, VAR_OBJ_GFX_ID_F}
 };
 
-static const u8 gUnknown_Debug_083C3742[] = _("SP");
-static const u8 gUnknown_Debug_083C3745[] = DTR("ルーム　R110　PART1/カラクリ", "Room R110 Part 1/TRICK");
-static const u8 gUnknown_Debug_083C3759[] = DTR("ルーム　R110　PART2", "Room R110 Part 2");
-static const u8 gUnknown_Debug_083C3768[] = DTR("ルーム　ロード", "Room road"); // TRN
+static const u8 sString_SaveWorkPart2_CategorySpecial[] = _("SP");
+static const u8 sString_SaveWorkPart2_CategoryTrickHousePart1[] = DTR("ルーム　R110　PART1/カラクリ", "Room R110 Part 1/TRICK");
+static const u8 sString_SaveWorkPart2_CategoryTrickHousePart2[] = DTR("ルーム　R110　PART2", "Room R110 Part 2");
+static const u8 sString_SaveWorkPart2_CategoryRoomRoute[] = DTR("ルーム　ロード", "Room road"); // TRN
 static const u8 sString_SaveWorkPart2_Other1[] = DTR("ソノタ1", "Other 1");
 static const u8 sString_SaveWorkPart2_Other2[] = DTR("ソノタ2", "Other 2");
 
 static const struct MenuAction sMenuActions_ControlWorks_SaveWorkPart2[] = {
-    {gUnknown_Debug_083C3742, ControlWorks_SaveWorkPart2_SP_InitSubsubmenu},
-    {gUnknown_Debug_083C3745, ControlWorks_SaveWorkPart2_RoomR110Part1TrickHouse_InitSubsubmenu},
-    {gUnknown_Debug_083C3759, ControlWorks_SaveWorkPart2_RoomR110Part2_InitSubsubmenu},
-    {gUnknown_Debug_083C3768, ControlWorks_SaveWorkPart2_RoomRoute_InitSubsubmenu},
+    {sString_SaveWorkPart2_CategorySpecial, ControlWorks_SaveWorkPart2_SP_InitSubsubmenu},
+    {sString_SaveWorkPart2_CategoryTrickHousePart1, ControlWorks_SaveWorkPart2_RoomR110Part1TrickHouse_InitSubsubmenu},
+    {sString_SaveWorkPart2_CategoryTrickHousePart2, ControlWorks_SaveWorkPart2_RoomR110Part2_InitSubsubmenu},
+    {sString_SaveWorkPart2_CategoryRoomRoute, ControlWorks_SaveWorkPart2_RoomRoute_InitSubsubmenu},
     {sString_SaveWorkPart2_Other1, ControlWorks_SaveWorkPart2_Other1_InitSubsubmenu},
     {sString_SaveWorkPart2_Other2, ControlWorks_SaveWorkPart2_Other2_InitSubsubmenu}
 };
 
-static const u8 gUnknown_Debug_083C37AC[] = _("WKーSCENEーSPーCONTEST");
-static const u8 gUnknown_Debug_083C37C0[] = _("WKーSCENEーSPーPC");
-static const u8 gUnknown_Debug_083C37CF[] = _("WKーSCENEーSPーCONTEST03");
-static const u8 gUnknown_Debug_083C37E5[] = _("WKーSCENEーSPーCONTESTITEM");
-static const u8 gUnknown_Debug_083C37FD[] = _("WKーSCENEーSPーOPENING");
-static const u8 gUnknown_Debug_083C3811[] = _("WKーSCENEーSPーSHIP01");
+static const u8 sString_SaveWorkPart2_LinkContestRoomState[] = _("WKーSCENEーSPーCONTEST");
+static const u8 sString_SaveWorkPart2_CableClubState[] = _("WKーSCENEーSPーPC");
+static const u8 sString_SaveWorkPart2_ContestLocation[] = _("WKーSCENEーSPーCONTEST03");
+static const u8 sString_SaveWorkPart2_ContestPrizePickup[] = _("WKーSCENEーSPーCONTESTITEM");
+static const u8 sString_SaveWorkPart2_LittlerootIntroState[] = _("WKーSCENEーSPーOPENING");
+static const u8 sString_SaveWorkPart2_SSTidalState[] = _("WKーSCENEーSPーSHIP01");
 static const u8 gUnknown_Debug_083C3824[] = _("");
 static const u8 gUnknown_Debug_083C3825[] = _("");
 static const u8 gUnknown_Debug_083C3826[] = _("");
 
-static const u8 gUnknown_Debug_083C3827[] = _("WKーSCENEーR110ーR0101");
-static const u8 gUnknown_Debug_083C383B[] = _("WKーSCENEーR110ーR0102");
-static const u8 gUnknown_Debug_083C384F[] = _("WKーSCENEーR110ーR0103");
-static const u8 gUnknown_Debug_083C3863[] = _("WKーKARAKURIーDAIOU");
-static const u8 gUnknown_Debug_083C3875[] = _("WKーSCENEーSHISEN");
+static const u8 sString_SaveWorkPart2_TrickHouseFoundTrickMaster[] = _("WKーSCENEーR110ーR0101");
+static const u8 sString_SaveWorkPart2_TrickHousePrizePickup[] = _("WKーSCENEーR110ーR0102");
+static const u8 sString_SaveWorkPart2_TrickHouseEnterFromCorridor[] = _("WKーSCENEーR110ーR0103");
+static const u8 sString_SaveWorkPart2_TrickHouseEntranceState[] = _("WKーKARAKURIーDAIOU");
+static const u8 sString_SaveWorkPart2_TrickHouseBeingWatchedState[] = _("WKーSCENEーSHISEN");
 static const u8 gUnknown_Debug_083C3885[] = _("");
 static const u8 gUnknown_Debug_083C3886[] = _("");
 static const u8 gUnknown_Debug_083C3887[] = _("");
 static const u8 gUnknown_Debug_083C3888[] = _("");
 
-static const u8 gUnknown_Debug_083C3889[] = _("WKーSCENEーR110ーR0104");
-static const u8 gUnknown_Debug_083C389D[] = _("WKーSCENEーR110ーR0105");
-static const u8 gUnknown_Debug_083C38B1[] = _("WKーSCENEーR110ーR0106");
-static const u8 gUnknown_Debug_083C38C5[] = _("WKーSCENEーR110ーR0107");
-static const u8 gUnknown_Debug_083C38D9[] = _("WKーSCENEーR110ーR0108");
-static const u8 gUnknown_Debug_083C38ED[] = _("WKーSCENEーR110ーR0109");
-static const u8 gUnknown_Debug_083C3901[] = _("WKーSCENEーR110ーR0110");
-static const u8 gUnknown_Debug_083C3915[] = _("WKーSCENEーR110ーR0111");
-static const u8 gUnknown_Debug_083C3929[] = _("WKーSCENEー02ーR110ーR0110");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle1State[] = _("WKーSCENEーR110ーR0104");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle2State[] = _("WKーSCENEーR110ーR0105");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle3State[] = _("WKーSCENEーR110ーR0106");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle4State[] = _("WKーSCENEーR110ーR0107");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle5State[] = _("WKーSCENEーR110ーR0108");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle6State[] = _("WKーSCENEーR110ーR0109");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle7State[] = _("WKーSCENEーR110ーR0110");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle8State[] = _("WKーSCENEーR110ーR0111");
+static const u8 sString_SaveWorkPart2_TrickHousePuzzle7State2[] = _("WKーSCENEー02ーR110ーR0110");
 
-static const u8 gUnknown_Debug_083C3940[] = _("WKーSCENEーR104ーR0101");
-static const u8 gUnknown_Debug_083C3954[] = _("WKーSCENEーR113ーR0101");
+static const u8 sString_SaveWorkPart2_BrineyHouseState[] = _("WKーSCENEーR104ーR0101");
+static const u8 sString_SaveWorkPart2_GlassWorkshopState[] = _("WKーSCENEーR113ーR0101");
 static const u8 gUnknown_Debug_083C3968[] = _("");
 static const u8 gUnknown_Debug_083C3969[] = _("");
 static const u8 gUnknown_Debug_083C396A[] = _("");
@@ -1499,43 +1499,43 @@ static const u8 gUnknown_Debug_083C396C[] = _("");
 static const u8 gUnknown_Debug_083C396D[] = _("");
 static const u8 gUnknown_Debug_083C396E[] = _("");
 
-static const u8 gUnknown_Debug_083C396F[] = _("WKーSCENEーBASEーGDOODS");
-static const u8 gUnknown_Debug_083C3984[] = _("WKーSCENEーHAGIーFUNE");
-static const u8 gUnknown_Debug_083C3997[] = _("WKーSCENEーFUNEーPOS");
-static const u8 gUnknown_Debug_083C39A9[] = _("WKーSCENEーBASEーMAKE");
-static const u8 gUnknown_Debug_083C39BC[] = _("WKーSCENEーARTISTーC106ーR");
-static const u8 gUnknown_Debug_083C39D3[] = _("WKーSCENEーPOKEーLEAGUE");
-static const u8 gUnknown_Debug_083C39E8[] = _("WKーSCENEーROPEWAY");
-static const u8 gUnknown_Debug_083C39F9[] = _("WKーSCENEーSAFARIーZONE");
-static const u8 gUnknown_Debug_083C3A0E[] = _("WKーSCENEーCYCLEーROAD");
+static const u8 sString_SaveWorkPart2_SecretBaseInitialized[] = _("WKーSCENEーBASEーGDOODS");
+static const u8 sString_SaveWorkPart2_BoardBrineyBoatState[] = _("WKーSCENEーHAGIーFUNE");
+static const u8 sString_SaveWorkPart2_BrineyLocation[] = _("WKーSCENEーFUNEーPOS");
+static const u8 sString_SaveWorkPart2_InitSecretBase[] = _("WKーSCENEーBASEーMAKE");
+static const u8 sString_SaveWorkPart2_LilycoveContestLobbyState[] = _("WKーSCENEーARTISTーC106ーR");
+static const u8 sString_SaveWorkPart2_EliteFourState[] = _("WKーSCENEーPOKEーLEAGUE");
+static const u8 sString_SaveWorkPart2_CableCarStationState[] = _("WKーSCENEーROPEWAY");
+static const u8 sString_SaveWorkPart2_SafariZoneState[] = _("WKーSCENEーSAFARIーZONE");
+static const u8 sString_SaveWorkPart2_CyclingChallengeState[] = _("WKーSCENEーCYCLEーROAD");
 
-static const u8 gUnknown_Debug_083C3A22[] = _("WKーSCENEーR119ーTENKI");
-static const u8 gUnknown_Debug_083C3A36[] = _("WKーSCENEー01ーC102ーR0401");
-static const u8 gUnknown_Debug_083C3A4D[] = _("WKーFUTAGOー01ーFIELDーR104");
-static const u8 gUnknown_Debug_083C3A65[] = _("WKーSCENEーBATTLEーTOWER");
-static const u8 gUnknown_Debug_083C3A7B[] = _("WKーSCENEーTRーHOUSE");
-static const u8 gUnknown_Debug_083C3A8D[] = _("WKーKASEKIーTYPE");
+static const u8 sString_SaveWorkPart2_WeatherInstituteState[] = _("WKーSCENEーR119ーTENKI");
+static const u8 sString_SaveWorkPart2_SlateportFanClubState[] = _("WKーSCENEー01ーC102ーR0401");
+static const u8 sString_SaveWorkPart2_UnknownVar40BB[] = _("WKーFUTAGOー01ーFIELDーR104");
+static const u8 sString_SaveWorkPart2_BattleTowerBravoTrainerOn[] = _("WKーSCENEーBATTLEーTOWER");
+static const u8 sString_SaveWorkPart2_EReaderTrainerBattleResult[] = _("WKーSCENEーTRーHOUSE");
+static const u8 sString_SaveWorkPart2_WhichFossilRevived[] = _("WKーKASEKIーTYPE");
 static const u8 gUnknown_Debug_083C3A9C[] = _("");
 static const u8 gUnknown_Debug_083C3A9D[] = _("");
 static const u8 gUnknown_Debug_083C3A9E[] = _("");
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_SP[] = {
-    {gUnknown_Debug_083C37AC, DummyMenuAction},
-    {gUnknown_Debug_083C37C0, DummyMenuAction},
-    {gUnknown_Debug_083C37CF, DummyMenuAction},
-    {gUnknown_Debug_083C37E5, DummyMenuAction},
-    {gUnknown_Debug_083C37FD, DummyMenuAction},
-    {gUnknown_Debug_083C3811, DummyMenuAction},
+    {sString_SaveWorkPart2_LinkContestRoomState, DummyMenuAction},
+    {sString_SaveWorkPart2_CableClubState, DummyMenuAction},
+    {sString_SaveWorkPart2_ContestLocation, DummyMenuAction},
+    {sString_SaveWorkPart2_ContestPrizePickup, DummyMenuAction},
+    {sString_SaveWorkPart2_LittlerootIntroState, DummyMenuAction},
+    {sString_SaveWorkPart2_SSTidalState, DummyMenuAction},
     {gUnknown_Debug_083C3824, DummyMenuAction},
     {gUnknown_Debug_083C3825, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHouse[] = {
-    {gUnknown_Debug_083C3827, DummyMenuAction},
-    {gUnknown_Debug_083C383B, DummyMenuAction},
-    {gUnknown_Debug_083C384F, DummyMenuAction},
-    {gUnknown_Debug_083C3863, DummyMenuAction},
-    {gUnknown_Debug_083C3875, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHouseFoundTrickMaster, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePrizePickup, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHouseEnterFromCorridor, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHouseEntranceState, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHouseBeingWatchedState, DummyMenuAction},
     {gUnknown_Debug_083C3885, DummyMenuAction},
     {gUnknown_Debug_083C3886, DummyMenuAction},
     {gUnknown_Debug_083C3887, DummyMenuAction},
@@ -1543,20 +1543,20 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part1TrickHous
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomR110Part2[] = {
-    {gUnknown_Debug_083C3889, DummyMenuAction},
-    {gUnknown_Debug_083C389D, DummyMenuAction},
-    {gUnknown_Debug_083C38B1, DummyMenuAction},
-    {gUnknown_Debug_083C38C5, DummyMenuAction},
-    {gUnknown_Debug_083C38D9, DummyMenuAction},
-    {gUnknown_Debug_083C38ED, DummyMenuAction},
-    {gUnknown_Debug_083C3901, DummyMenuAction},
-    {gUnknown_Debug_083C3915, DummyMenuAction},
-    {gUnknown_Debug_083C3929, DummyMenuAction}
+    {sString_SaveWorkPart2_TrickHousePuzzle1State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle2State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle3State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle4State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle5State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle6State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle7State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle8State, DummyMenuAction},
+    {sString_SaveWorkPart2_TrickHousePuzzle7State2, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_RoomRoute[] = {
-    {gUnknown_Debug_083C3940, DummyMenuAction},
-    {gUnknown_Debug_083C3954, DummyMenuAction},
+    {sString_SaveWorkPart2_BrineyHouseState, DummyMenuAction},
+    {sString_SaveWorkPart2_GlassWorkshopState, DummyMenuAction},
     {gUnknown_Debug_083C3968, DummyMenuAction},
     {gUnknown_Debug_083C3969, DummyMenuAction},
     {gUnknown_Debug_083C396A, DummyMenuAction},
@@ -1567,24 +1567,24 @@ static const struct MenuAction sMenuActions_SaveWorkPart2_RoomRoute[] = {
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_Other1[] = {
-    {gUnknown_Debug_083C396F, DummyMenuAction},
-    {gUnknown_Debug_083C3984, DummyMenuAction},
-    {gUnknown_Debug_083C3997, DummyMenuAction},
-    {gUnknown_Debug_083C39A9, DummyMenuAction},
-    {gUnknown_Debug_083C39BC, DummyMenuAction},
-    {gUnknown_Debug_083C39D3, DummyMenuAction},
-    {gUnknown_Debug_083C39E8, DummyMenuAction},
-    {gUnknown_Debug_083C39F9, DummyMenuAction},
-    {gUnknown_Debug_083C3A0E, DummyMenuAction}
+    {sString_SaveWorkPart2_SecretBaseInitialized, DummyMenuAction},
+    {sString_SaveWorkPart2_BoardBrineyBoatState, DummyMenuAction},
+    {sString_SaveWorkPart2_BrineyLocation, DummyMenuAction},
+    {sString_SaveWorkPart2_InitSecretBase, DummyMenuAction},
+    {sString_SaveWorkPart2_LilycoveContestLobbyState, DummyMenuAction},
+    {sString_SaveWorkPart2_EliteFourState, DummyMenuAction},
+    {sString_SaveWorkPart2_CableCarStationState, DummyMenuAction},
+    {sString_SaveWorkPart2_SafariZoneState, DummyMenuAction},
+    {sString_SaveWorkPart2_CyclingChallengeState, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SaveWorkPart2_Other2[] = {
-    {gUnknown_Debug_083C3A22, DummyMenuAction},
-    {gUnknown_Debug_083C3A36, DummyMenuAction},
-    {gUnknown_Debug_083C3A4D, DummyMenuAction},
-    {gUnknown_Debug_083C3A65, DummyMenuAction},
-    {gUnknown_Debug_083C3A7B, DummyMenuAction},
-    {gUnknown_Debug_083C3A8D, DummyMenuAction},
+    {sString_SaveWorkPart2_WeatherInstituteState, DummyMenuAction},
+    {sString_SaveWorkPart2_SlateportFanClubState, DummyMenuAction},
+    {sString_SaveWorkPart2_UnknownVar40BB, DummyMenuAction},
+    {sString_SaveWorkPart2_BattleTowerBravoTrainerOn, DummyMenuAction},
+    {sString_SaveWorkPart2_EReaderTrainerBattleResult, DummyMenuAction},
+    {sString_SaveWorkPart2_WhichFossilRevived, DummyMenuAction},
     {gUnknown_Debug_083C3A9C, DummyMenuAction},
     {gUnknown_Debug_083C3A9D, DummyMenuAction},
     {gUnknown_Debug_083C3A9E, DummyMenuAction}
