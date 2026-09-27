@@ -23,7 +23,7 @@
 
 void DummyPerStepCallback(u8);
 void PerStepCallback_8069F64(u8);
-void PerStepCallback_8069AA0(u8);
+static void FortreeBridgePerStepCallback(u8);
 static void PacifidlogBridgePerStepCallback(u8);
 void PerStepCallback_8069DD4(u8);
 void PerStepCallback_806A07C(u8);
@@ -31,7 +31,7 @@ void PerStepCallback_806A07C(u8);
 void (*const gUnknown_08376364[])(u8) = {
     DummyPerStepCallback,
     PerStepCallback_8069F64,
-    PerStepCallback_8069AA0,
+    FortreeBridgePerStepCallback,
     PacifidlogBridgePerStepCallback,
     PerStepCallback_8069DD4,
     EndTruckSequence,
@@ -354,7 +354,7 @@ static void PacifidlogBridgePerStepCallback(u8 taskId)
     }
 }
 
-void sub_80699D8(s16 x, s16 y)
+static void TryLowerFortreeBridge(s16 x, s16 y)
 {
     u8 z = PlayerGetZCoord();
     if (!(z & 0x01))
@@ -371,7 +371,7 @@ void sub_80699D8(s16 x, s16 y)
     }
 }
 
-void sub_8069A3C(s16 x, s16 y)
+static void TryRaiseFortreeBridge(s16 x, s16 y)
 {
     u8 z = PlayerGetZCoord();
     if (!(z & 0x01))
@@ -388,7 +388,7 @@ void sub_8069A3C(s16 x, s16 y)
     }
 }
 
-void PerStepCallback_8069AA0(u8 taskId)
+static void FortreeBridgePerStepCallback(u8 taskId)
 {
     bool8 isFortreeBridgeCur;
     bool8 isFortreeBridgePrev;
@@ -405,7 +405,7 @@ void PerStepCallback_8069AA0(u8 taskId)
             data[3] = y;
             if (MetatileBehavior_IsFortreeBridge(MapGridGetMetatileBehaviorAt(x, y)))
             {
-                sub_80699D8(x, y);
+                TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
             data[1] = 1;
@@ -431,9 +431,9 @@ void PerStepCallback_8069AA0(u8 taskId)
             }
             if (isFortreeBridgePrev)
             {
-                sub_8069A3C(x2, y2);
+                TryRaiseFortreeBridge(x2, y2);
                 CurrentMapDrawMetatileAt(x2, y2);
-                sub_80699D8(x, y);
+                TryLowerFortreeBridge(x, y);
                 CurrentMapDrawMetatileAt(x, y);
             }
             data[4] = x2;
@@ -460,9 +460,9 @@ void PerStepCallback_8069AA0(u8 taskId)
                 case 3:
                     break;
                 case 4:
-                    sub_80699D8(x2, y2);
+                    TryLowerFortreeBridge(x2, y2);
                     CurrentMapDrawMetatileAt(x2, y2);
-                    sub_8069A3C(x2, y2);
+                    TryRaiseFortreeBridge(x2, y2);
                 case 5:
                 case 6:
                 case 7:
