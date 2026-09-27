@@ -70,8 +70,8 @@ static bool8 CallScript_FillPartyWithBarboach(void);
 static bool8 CallScript_FillPartyWithShroomish(void);
 static bool8 CallScript_GiveBarboachEgg(void);
 static bool8 CallScript_GiveShroomishEgg(void);
-static bool8 debug_sub_808C280(void);
-static bool8 debug_sub_808C2E4(void);
+static bool8 ContestGraphics_WaitForFade(void);
+static bool8 MuseumGraphics_WaitForFade(void);
 static bool8 ControlFlags_EventFlag_InitSubmenu(void);
 static bool8 debug_sub_808C36C(void);
 static bool8 debug_sub_808C3B0(void);
@@ -200,7 +200,7 @@ static bool8 TrickRelated_TrickMaster_InitSubmenu(void);
 static bool8 debug_sub_808EC10(void);
 static bool8 debug_sub_808EC5C(void);
 static bool8 PreviewGraphics_Show(void);
-static bool8 debug_sub_808ECD0(void);
+static bool8 PreviewGraphics_WaitForFade(void);
 static void PicTest_SelectPokemon(void);
 static void PicTest_SelectPersonality(void);
 static void ContestPicTest_SelectContestType(void);
@@ -1944,7 +1944,7 @@ bool8 InitTomomichiDebugWindow(void)
     return FALSE;
 }
 
-static void debug_sub_808B868(void)
+static void CB2_ReturnFromPaintingPreview(void)
 {
     CB2_ReturnToFieldContinueScriptPlayMapMusic();
 }
@@ -2427,18 +2427,18 @@ static bool8 CallScript_GiveShroomishEgg(void)
 static bool8 ContestGraphics_Show(void)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_808C280;
+    gMenuCallback = ContestGraphics_WaitForFade;
     return FALSE;
 }
 
-static bool8 debug_sub_808C280(void)
+static bool8 ContestGraphics_WaitForFade(void)
 {
     if (!UpdatePaletteFade())
     {
         CloseMenu();
         PrepareDebugOverlayBeforeShowingContestPainting(0);
         SetMainCallback2(CB2_ContestPainting);
-        gMain.savedCallback = debug_sub_808B868;
+        gMain.savedCallback = CB2_ReturnFromPaintingPreview;
         return TRUE;
     }
     return FALSE;
@@ -2447,18 +2447,18 @@ static bool8 debug_sub_808C280(void)
 static bool8 MuseumGraphics_Show(void)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_808C2E4;
+    gMenuCallback = MuseumGraphics_WaitForFade;
     return FALSE;
 }
 
-static bool8 debug_sub_808C2E4(void)
+static bool8 MuseumGraphics_WaitForFade(void)
 {
     if (!UpdatePaletteFade())
     {
         CloseMenu();
         PrepareDebugOverlayBeforeShowingContestPainting(1);
         SetMainCallback2(CB2_ContestPainting);
-        gMain.savedCallback = debug_sub_808B868;
+        gMain.savedCallback = CB2_ReturnFromPaintingPreview;
         return TRUE;
     }
     return FALSE;
@@ -3989,18 +3989,18 @@ static bool8 debug_sub_808EC5C(void)
 static bool8 PreviewGraphics_Show(void)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_808ECD0;
+    gMenuCallback = PreviewGraphics_WaitForFade;
     return FALSE;
 }
 
-static bool8 debug_sub_808ECD0(void)
+static bool8 PreviewGraphics_WaitForFade(void)
 {
     if (!UpdatePaletteFade())
     {
         CloseMenu();
         PrepareDebugOverlayBeforeShowingContestPainting(2);
         SetMainCallback2(CB2_ContestPainting);
-        gMain.savedCallback = debug_sub_808B868;
+        gMain.savedCallback = CB2_ReturnFromPaintingPreview;
         return TRUE;
     }
     return FALSE;
