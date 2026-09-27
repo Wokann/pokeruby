@@ -82,10 +82,10 @@ static void PlayerNotOnBikeCollide(u8 a);
 static void PlayCollisionSoundIfNotFacingWarp(u8 a);
 static void sub_8059D60(struct ObjectEvent *a);
 static void StartStrengthAnim(u8 a, u8 b);
-static void Task_BumpBoulder(u8 taskId);
-static bool8 sub_8059E84(struct Task *task, struct ObjectEvent *b, struct ObjectEvent *c);
-static bool8 do_boulder_dust(struct Task *task, struct ObjectEvent *b, struct ObjectEvent *c);
-static bool8 sub_8059F40(struct Task *task, struct ObjectEvent *b, struct ObjectEvent *c);
+static void Task_PushBoulder(u8 taskId);
+static bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
+static bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
+static bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
 static void DoPlayerMatJump(void);
 static void DoPlayerAvatarSecretBaseMatJump(u8 taskId);
 static u8 PlayerAvatar_DoSecretBaseMatJump(struct Task *task, struct ObjectEvent *objectEvent);
@@ -244,11 +244,11 @@ static bool8 (*const sArrowWarpMetatileBehaviorChecks2[])(u8) =  //Duplicate of 
     MetatileBehavior_IsWestArrowWarp,
     MetatileBehavior_IsEastArrowWarp,
 };
-static u8 (*const gUnknown_0830FC88[])(struct Task *, struct ObjectEvent *, struct ObjectEvent *) =
+static u8 (*const sPushBoulderFuncs[])(struct Task *, struct ObjectEvent *, struct ObjectEvent *) =
 {
-    sub_8059E84,
-    do_boulder_dust,
-    sub_8059F40,
+    PushBoulder_Start,
+    PushBoulder_Move,
+    PushBoulder_End,
 };
 static u8 (*const sPlayerAvatarSecretBaseMatJump[])(struct Task *, struct ObjectEvent *) =
 {
@@ -1265,22 +1265,22 @@ static void sub_8059D60(struct ObjectEvent *objectEvent)
 
 static void StartStrengthAnim(u8 a, u8 b)
 {
-    u8 taskId = CreateTask(Task_BumpBoulder, 0xFF);
+    u8 taskId = CreateTask(Task_PushBoulder, 0xFF);
 
     gTasks[taskId].data[1] = a;
     gTasks[taskId].data[2] = b;
-    Task_BumpBoulder(taskId);
+    Task_PushBoulder(taskId);
 }
 
-static void Task_BumpBoulder(u8 taskId)
+static void Task_PushBoulder(u8 taskId)
 {
-    while (gUnknown_0830FC88[gTasks[taskId].data[0]](&gTasks[taskId],
+    while (sPushBoulderFuncs[gTasks[taskId].data[0]](&gTasks[taskId],
                                                      &gObjectEvents[gPlayerAvatar.objectEventId],
                                                      &gObjectEvents[gTasks[taskId].data[1]]))
         ;
 }
 
-static bool8 sub_8059E84(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
 {
     LockPlayerFieldControls();
     gPlayerAvatar.preventStep = TRUE;
@@ -1288,7 +1288,7 @@ static bool8 sub_8059E84(struct Task *task, struct ObjectEvent *playerObject, st
     return FALSE;
 }
 
-static bool8 do_boulder_dust(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
 {
     if (!ObjectEventIsMovementOverridden(playerObject)
      && !ObjectEventIsMovementOverridden(strengthObject))
@@ -1308,7 +1308,7 @@ static bool8 do_boulder_dust(struct Task *task, struct ObjectEvent *playerObject
     return FALSE;
 }
 
-static bool8 sub_8059F40(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
 {
     if (ObjectEventCheckHeldMovementStatus(playerObject)
      && ObjectEventCheckHeldMovementStatus(strengthObject))
@@ -1317,7 +1317,7 @@ static bool8 sub_8059F40(struct Task *task, struct ObjectEvent *playerObject, st
         ObjectEventClearHeldMovementIfFinished(strengthObject);
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
-        DestroyTask(FindTaskIdByFunc(Task_BumpBoulder));
+        DestroyTask(FindTaskIdByFunc(Task_PushBoulder));
     }
     return FALSE;
 }
