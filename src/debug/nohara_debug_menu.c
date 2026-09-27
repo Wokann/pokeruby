@@ -105,36 +105,36 @@ bool8 NoharaDebugMenu_HandleInput(void)
 }
 
 #if (ENGLISH && REVISION == 0)
-const u8 gUnknown_Debug_083C4980[] = _("ひみつがたを すぐみれるように    ひだりキーで\n"
+const u8 sText_NoharaDebug_TV_SecretTypePrompt[] = _("ひみつがたを すぐみれるように    ひだりキーで\n"
                                        "データタイプを へんこうしますか？  きりかえ");
 #else
-const u8 gUnknown_Debug_083C4980[] = _("Want to change data type{CLEAR_TO 143}Press　Left\n"
+const u8 sText_NoharaDebug_TV_SecretTypePrompt[] = _("Want to change data type{CLEAR_TO 143}Press　Left\n"
                                        "to see secret type now？{CLEAR_TO 143}to　switch");
 #endif
 
-const u8 gUnknown_Debug_083C49CA[] = _("Choose the TV data you wish to\n"
+const u8 sText_NoharaDebug_TV_CreateShowPrompt[] = _("Choose the TV data you wish to\n"
                                        "create to check a transmission。");
 
-const u8 gUnknown_Debug_083C4A09[] = DTR("ほうそうの　はっせいりつを　セット\n"
+const u8 sText_NoharaDebug_TV_TransmissionFrequencyPrompt[] = DTR("ほうそうの　はっせいりつを　セット\n"
                                          "してください　？ぶんの1に　なります",
                                          "Please set the transmission frequency\n"
                                          "Part 1");
 
-const u8 gUnknown_Debug_083C4A2E[] = _("SURVEY");
-const u8 gUnknown_Debug_083C4A35[] = _("RECENT HAPPENINGS");
-const u8 gUnknown_Debug_083C4A47[] = _("POKéMON FAN CLUB");
-const u8 gUnknown_Debug_083C4A58[] = DTR("ジム", "GYM");
-const u8 gUnknown_Debug_083C4A5B[] = _("OUTBREAKS");
-const u8 gUnknown_Debug_083C4A65[] = _("NAME RATER");
-const u8 gUnknown_Debug_083C4A70[] = _("CONTEST");
-const u8 gUnknown_Debug_083C4A78[] = _("INTRODUCTION");
-const u8 gUnknown_Debug_083C4A85[] = _("SHOPPING");
-const u8 gUnknown_Debug_083C4A8E[] = _("MISFORTUNE");
-const u8 gUnknown_Debug_083C4A99[] = _("FISHING");
-const u8 gUnknown_Debug_083C4AA1[] = _("MEMORABLE DAY");
-const u8 gUnknown_Debug_083C4AAF[] = _("BRAVO TRAINER");
+const u8 sString_NoharaDebug_TV_Survey[] = _("SURVEY");
+const u8 sString_NoharaDebug_TV_RecentHappenings[] = _("RECENT HAPPENINGS");
+const u8 sString_NoharaDebug_TV_PokemonFanClub[] = _("POKéMON FAN CLUB");
+const u8 sString_NoharaDebug_TV_Gym[] = DTR("ジム", "GYM");
+const u8 sString_NoharaDebug_TV_Outbreaks[] = _("OUTBREAKS");
+const u8 sString_NoharaDebug_TV_NameRater[] = _("NAME RATER");
+const u8 sString_NoharaDebug_TV_Contest[] = _("CONTEST");
+const u8 sString_NoharaDebug_TV_Introduction[] = _("INTRODUCTION");
+const u8 sString_NoharaDebug_TV_Shopping[] = _("SHOPPING");
+const u8 sString_NoharaDebug_TV_Misfortune[] = _("MISFORTUNE");
+const u8 sString_NoharaDebug_TV_Fishing[] = _("FISHING");
+const u8 sString_NoharaDebug_TV_MemorableDay[] = _("MEMORABLE DAY");
+const u8 sString_NoharaDebug_TV_BravoTrainer[] = _("BRAVO TRAINER");
 
-const u8 gUnknown_Debug_083C4ABD[] = {
+const u8 sTVShowTypes_NoharaDebug[] = {
     TVSHOW_FAN_CLUB_LETTER,
     TVSHOW_RECENT_HAPPENINGS,
     TVSHOW_PKMN_FAN_CLUB_OPINIONS,
@@ -149,58 +149,58 @@ const u8 gUnknown_Debug_083C4ABD[] = {
     TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE
 };
 
-const u8 *const gUnknown_Debug_083C4ACC[] = {
-    gUnknown_Debug_083C4A2E,
-    gUnknown_Debug_083C4A35,
-    gUnknown_Debug_083C4A47,
-    gUnknown_Debug_083C4A5B,
-    gUnknown_Debug_083C4A65,
-    gUnknown_Debug_083C4A70,
-    gUnknown_Debug_083C4A78,
-    gUnknown_Debug_083C4A85,
-    gUnknown_Debug_083C4A8E,
-    gUnknown_Debug_083C4A99,
-    gUnknown_Debug_083C4AA1,
-    gUnknown_Debug_083C4AAF
+const u8 *const sTVShowNames_NoharaDebug[] = {
+    sString_NoharaDebug_TV_Survey,
+    sString_NoharaDebug_TV_RecentHappenings,
+    sString_NoharaDebug_TV_PokemonFanClub,
+    sString_NoharaDebug_TV_Outbreaks,
+    sString_NoharaDebug_TV_NameRater,
+    sString_NoharaDebug_TV_Contest,
+    sString_NoharaDebug_TV_Introduction,
+    sString_NoharaDebug_TV_Shopping,
+    sString_NoharaDebug_TV_Misfortune,
+    sString_NoharaDebug_TV_Fishing,
+    sString_NoharaDebug_TV_MemorableDay,
+    sString_NoharaDebug_TV_BravoTrainer
 };
 
 const u8 gDebugText_BigSale[] = _("BIG SALE");
 
-const u8 gUnknown_Debug_083C4B05[] = _("SERVICE DAY");
-const u8 gUnknown_Debug_083C4B11[] = _("CLEAR-OUT SALE");
-const u8 gUnknown_Debug_083C4B20[] = {1, 2, 3};
+const u8 sString_NoharaDebug_TV_ServiceDay[] = _("SERVICE DAY");
+const u8 sString_NoharaDebug_TV_ClearOutSale[] = _("CLEAR-OUT SALE");
+const u8 sTVCommercialTypes_NoharaDebug[] = {1, 2, 3};
 
-const u8 *const gUnknown_Debug_083C4B24[] = {
+const u8 *const sTVCommercialNames_NoharaDebug[] = {
     gDebugText_BigSale,
-    gUnknown_Debug_083C4B05,
-    gUnknown_Debug_083C4B11
+    sString_NoharaDebug_TV_ServiceDay,
+    sString_NoharaDebug_TV_ClearOutSale
 };
 
-const u8 gUnknown_Debug_083C4B30[] = _("Secret type");
-const u8 gUnknown_Debug_083C4B3C[] = _("Start");
-const u8 gUnknown_Debug_083C4B42[] = _("Create TV");
-const u8 gUnknown_Debug_083C4B4C[] = _("All clear");
-const u8 gUnknown_Debug_083C4B56[] = _("All seen");
-const u8 gUnknown_Debug_083C4B5F[] = _("Create CM");
-const u8 gUnknown_Debug_083C4B69[] = _("Not yet seen");
-const u8 gUnknown_Debug_083C4B76[] = _("Hit Table");
-const u8 gUnknown_Debug_083C4B80[] = _("Set full");
+const u8 sString_NoharaDebug_TV_SecretType[] = _("Secret type");
+const u8 sString_NoharaDebug_TV_Start[] = _("Start");
+const u8 sString_NoharaDebug_TV_CreateTV[] = _("Create TV");
+const u8 sString_NoharaDebug_TV_AllClear[] = _("All clear");
+const u8 sString_NoharaDebug_TV_AllSeen[] = _("All seen");
+const u8 sString_NoharaDebug_TV_CreateCM[] = _("Create CM");
+const u8 sString_NoharaDebug_TV_NotYetSeen[] = _("Not yet seen");
+const u8 sString_NoharaDebug_TV_HitTable[] = _("Hit Table");
+const u8 sString_NoharaDebug_TV_SetFull[] = _("Set full");
 
 // Normaly these would be struct MenuAction, but the prototype of
 // member .func is not consistent.
 const struct {
     const u8 * text;
     void *func;
-} gUnknown_Debug_083C4B8C[] = {
-    {gUnknown_Debug_083C4B30, debug_sub_808F4EC},
-    {gUnknown_Debug_083C4B3C, debug_sub_808F8AC},
-    {gUnknown_Debug_083C4B42, debug_sub_808F8CC},
-    {gUnknown_Debug_083C4B4C, debug_sub_808FEBC},
-    {gUnknown_Debug_083C4B56, debug_sub_808F560},
-    {gUnknown_Debug_083C4B5F, debug_sub_808FECC},
-    {gUnknown_Debug_083C4B69, debug_sub_808F594},
-    {gUnknown_Debug_083C4B76, debug_sub_808F5D8},
-    {gUnknown_Debug_083C4B80, debug_sub_80900AC}
+} sMenuActions_NoharaDebug_TV[] = {
+    {sString_NoharaDebug_TV_SecretType, debug_sub_808F4EC},
+    {sString_NoharaDebug_TV_Start, debug_sub_808F8AC},
+    {sString_NoharaDebug_TV_CreateTV, debug_sub_808F8CC},
+    {sString_NoharaDebug_TV_AllClear, debug_sub_808FEBC},
+    {sString_NoharaDebug_TV_AllSeen, debug_sub_808F560},
+    {sString_NoharaDebug_TV_CreateCM, debug_sub_808FECC},
+    {sString_NoharaDebug_TV_NotYetSeen, debug_sub_808F594},
+    {sString_NoharaDebug_TV_HitTable, debug_sub_808F5D8},
+    {sString_NoharaDebug_TV_SetFull, debug_sub_80900AC}
 };
 
 bool8 NoharaDebugMenu_TV(void)
@@ -208,8 +208,8 @@ bool8 NoharaDebugMenu_TV(void)
     gDebug_03000726 = 0;
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 10, 19);
-    Menu_PrintItems(1, 1, ARRAY_COUNT(gUnknown_Debug_083C4B8C), gUnknown_Debug_083C4B8C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C4B8C), 0, 9);
+    Menu_PrintItems(1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_TV), sMenuActions_NoharaDebug_TV);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_TV), 0, 9);
     gMenuCallback = debug_sub_808F4AC;
     return FALSE;
 }
@@ -220,7 +220,7 @@ bool8 debug_sub_808F4AC(void)
     switch (input)
     {
         default:
-            gMenuCallback = (MenuFunc)gUnknown_Debug_083C4B8C[input].func;
+            gMenuCallback = (MenuFunc)sMenuActions_NoharaDebug_TV[input].func;
             return FALSE;
         case -2:
             return FALSE;
@@ -233,7 +233,7 @@ bool8 debug_sub_808F4AC(void)
 void debug_sub_808F4EC(void)
 {
     debug_sub_808F6BC();
-    sub_8071F40(gUnknown_Debug_083C4980);
+    sub_8071F40(sText_NoharaDebug_TV_SecretTypePrompt);
     DisplayYesNoMenu(3, 3, 1);
     gMenuCallback = debug_sub_808F648;
 }
@@ -403,9 +403,9 @@ bool8 debug_sub_808F8AC(void)
 void debug_sub_808F8CC(void)
 {
     gDebug_03000724 = 0;
-    sub_8071F40(gUnknown_Debug_083C49CA);
+    sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 26, 8);
-    Menu_PrintText(gUnknown_Debug_083C4ACC[0], 14, 7);
+    Menu_PrintText(sTVShowNames_NoharaDebug[0], 14, 7);
     Menu_BlankWindowRect(22, 1, 24, 2);
     ConvertIntToDecimalStringN(gStringVar1, 0, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 23, 1);
@@ -450,7 +450,7 @@ bool8 debug_sub_808F93C(void)
     if (updateDisplay)
     {
         Menu_BlankWindowRect(13, 6, 26, 8);
-        Menu_PrintText(gUnknown_Debug_083C4ACC[gDebug_03000724], 14, 7);
+        Menu_PrintText(sTVShowNames_NoharaDebug[gDebug_03000724], 14, 7);
         Menu_BlankWindowRect(22, 1, 24, 2);
         ConvertIntToDecimalStringN(gStringVar1, gDebug_03000725, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, 23, 1);
@@ -458,7 +458,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        debug_sub_808FA88(gDebug_03000725, gUnknown_Debug_083C4ABD[gDebug_03000724]);
+        debug_sub_808FA88(gDebug_03000725, sTVShowTypes_NoharaDebug[gDebug_03000724]);
     }
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
@@ -751,9 +751,9 @@ bool8 debug_sub_808FEBC(void)
 void debug_sub_808FECC(void)
 {
     gDebug_03000724 = 0;
-    sub_8071F40(gUnknown_Debug_083C49CA);
+    sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 23, 8);
-    Menu_PrintText(gUnknown_Debug_083C4B24[0], 14, 7);
+    Menu_PrintText(sTVCommercialNames_NoharaDebug[0], 14, 7);
     Menu_BlankWindowRect(22, 1, 24, 2);
     ConvertIntToDecimalStringN(gStringVar1, 0, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 23, 1);
@@ -803,7 +803,7 @@ bool8 debug_sub_808FF3C(void)
     if (updateDisplay)
     {
         Menu_BlankWindowRect(13, 6, 23, 8);
-        Menu_PrintText(gUnknown_Debug_083C4B24[gDebug_03000724], 14, 7);
+        Menu_PrintText(sTVCommercialNames_NoharaDebug[gDebug_03000724], 14, 7);
         Menu_BlankWindowRect(22, 1, 24, 2);
         ConvertIntToDecimalStringN(gStringVar1, gDebug_03000725, STR_CONV_MODE_LEFT_ALIGN, 2);
         Menu_PrintText(gStringVar1, 23, 1);
@@ -812,7 +812,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        debug_sub_8090080(gDebug_03000725, gUnknown_Debug_083C4B20[gDebug_03000724]);
+        debug_sub_8090080(gDebug_03000725, sTVCommercialTypes_NoharaDebug[gDebug_03000724]);
     }
 
     if (JOY_NEW(B_BUTTON | START_BUTTON))
@@ -844,7 +844,7 @@ bool8 debug_sub_80900AC(void)
         {
             if (j == 12)
                 j = 0;
-            debug_sub_808FA88(i, gUnknown_Debug_083C4ABD[j]);
+            debug_sub_808FA88(i, sTVShowTypes_NoharaDebug[j]);
             gSaveBlock1.tvShows[i].common.active = FALSE;
             j++;
         }
@@ -857,7 +857,7 @@ bool8 debug_sub_80900AC(void)
         {
             if (j == 3)
                 j = 0;
-            debug_sub_8090080(i, gUnknown_Debug_083C4B20[j]);
+            debug_sub_8090080(i, sTVCommercialTypes_NoharaDebug[j]);
             j++;
         }
     }
