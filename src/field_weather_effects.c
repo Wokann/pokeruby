@@ -268,7 +268,7 @@ void Drought_Main(void)
         break;
     case 4:
         DroughtStateRun();
-        if (gWeatherPtr->unknown_73C == 6)
+        if (gWeatherPtr->droughtBrightnessStage == 6)
         {
             gWeatherPtr->weatherGfxLoaded = TRUE;
             gWeatherPtr->initStep++;

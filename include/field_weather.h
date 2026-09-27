@@ -112,10 +112,10 @@ struct Weather
     u8 blendFrameCounter;
     u8 blendDelay;
     u8 filler_73B[0x3C-0x3B];
-    s16 unknown_73C;
-    s16 unknown_73E;
-    s16 unknown_740;
-    s16 unknown_742;
+    s16 droughtBrightnessStage;
+    s16 droughtLastBrightnessStage;
+    s16 droughtTimer;
+    s16 droughtState;
     u8 filler_744[0xD-4];
     s8 loadDroughtPalsIndex;
     u8 loadDroughtPalsOffset;

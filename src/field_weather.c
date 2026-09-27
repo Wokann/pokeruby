@@ -48,7 +48,7 @@ struct WeatherCallbacks
 
 EWRAM_DATA struct Weather gWeather = {0};
 EWRAM_DATA u8 gFieldEffectPaletteGammaTypes[32] = {0};
-EWRAM_DATA u16 gUnknown_0202FF58 = 0;
+EWRAM_DATA u16 gDroughtStageDelay = 0;
 
 static const u8 *sPaletteGammaTypes;
 
@@ -1048,44 +1048,44 @@ static void SetDroughtColorMap(s8 gammaIndex)
 
 void DroughtStateInit(void)
 {
-    gWeatherPtr->unknown_73C = 0;
-    gWeatherPtr->unknown_740 = 0;
-    gWeatherPtr->unknown_742 = 0;
-    gWeatherPtr->unknown_73E = 0;
-    gUnknown_0202FF58 = 5;
+    gWeatherPtr->droughtBrightnessStage = 0;
+    gWeatherPtr->droughtTimer = 0;
+    gWeatherPtr->droughtState = 0;
+    gWeatherPtr->droughtLastBrightnessStage = 0;
+    gDroughtStageDelay = 5;
 }
 
 void DroughtStateRun(void)
 {
-    switch (gWeatherPtr->unknown_742)
+    switch (gWeatherPtr->droughtState)
     {
     case 0:
-        if (++gWeatherPtr->unknown_740 > gUnknown_0202FF58)
+        if (++gWeatherPtr->droughtTimer > gDroughtStageDelay)
         {
-            gWeatherPtr->unknown_740 = 0;
-            SetDroughtColorMap(gWeatherPtr->unknown_73C++);
-            if (gWeatherPtr->unknown_73C > 5)
+            gWeatherPtr->droughtTimer = 0;
+            SetDroughtColorMap(gWeatherPtr->droughtBrightnessStage++);
+            if (gWeatherPtr->droughtBrightnessStage > 5)
             {
-                gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
-                gWeatherPtr->unknown_742 = 1;
-                gWeatherPtr->unknown_740 = 0x3C;
+                gWeatherPtr->droughtLastBrightnessStage = gWeatherPtr->droughtBrightnessStage;
+                gWeatherPtr->droughtState = 1;
+                gWeatherPtr->droughtTimer = 0x3C;
             }
         }
         break;
     case 1:
-        gWeatherPtr->unknown_740 = (gWeatherPtr->unknown_740 + 3) & 0x7F;
-        gWeatherPtr->unknown_73C = ((gSineTable[gWeatherPtr->unknown_740] - 1) >> 6) + 2;
-        if (gWeatherPtr->unknown_73C != gWeatherPtr->unknown_73E)
-            SetDroughtColorMap(gWeatherPtr->unknown_73C);
-        gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
+        gWeatherPtr->droughtTimer = (gWeatherPtr->droughtTimer + 3) & 0x7F;
+        gWeatherPtr->droughtBrightnessStage = ((gSineTable[gWeatherPtr->droughtTimer] - 1) >> 6) + 2;
+        if (gWeatherPtr->droughtBrightnessStage != gWeatherPtr->droughtLastBrightnessStage)
+            SetDroughtColorMap(gWeatherPtr->droughtBrightnessStage);
+        gWeatherPtr->droughtLastBrightnessStage = gWeatherPtr->droughtBrightnessStage;
         break;
     case 2:
-        if (++gWeatherPtr->unknown_740 > gUnknown_0202FF58)
+        if (++gWeatherPtr->droughtTimer > gDroughtStageDelay)
         {
-            gWeatherPtr->unknown_740 = 0;
-            SetDroughtColorMap(--gWeatherPtr->unknown_73C);
-            if (gWeatherPtr->unknown_73C == 3)
-                gWeatherPtr->unknown_742 = 0;
+            gWeatherPtr->droughtTimer = 0;
+            SetDroughtColorMap(--gWeatherPtr->droughtBrightnessStage);
+            if (gWeatherPtr->droughtBrightnessStage == 3)
+                gWeatherPtr->droughtState = 0;
         }
         break;
     }
