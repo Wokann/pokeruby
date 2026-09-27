@@ -853,196 +853,196 @@ static const struct MenuAction sMenuActions_VanishFlagCategories[] = {
 	{sString_VanishFlag_Support, ControlFlags_VanishFlag_Support_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C1D30[] = _("FVーKAKUREONBー01ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1D4B[] = _("FVーKAKUREー01ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1D63[] = _("FVーKAKUREー02ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1D7B[] = _("FVーKAKUREー03ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1D93[] = _("FVーKAKUREー04ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1DAB[] = _("FVーKAKUREー05ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1DC3[] = _("FVーKAKUREー06ーFIELDーR120");
-static const u8 gUnknown_Debug_083C1DDB[] = _("FVーKAKUREー01ーFIELDーR119");
-static const u8 gUnknown_Debug_083C1DF3[] = _("FVーKAKUREー02ーFIELDーR119");
+static const u8 sString_VanishFlag_Route120KecleonBridgeShadow[] = _("FVーKAKUREONBー01ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120KecleonBridge[] = _("FVーKAKUREー01ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120Kecleon1[] = _("FVーKAKUREー02ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120Kecleon2[] = _("FVーKAKUREー03ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120Kecleon3[] = _("FVーKAKUREー04ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120Kecleon4[] = _("FVーKAKUREー05ーFIELDーR120");
+static const u8 sString_VanishFlag_Route120Kecleon5[] = _("FVーKAKUREー06ーFIELDーR120");
+static const u8 sString_VanishFlag_Route119Kecleon1[] = _("FVーKAKUREー01ーFIELDーR119");
+static const u8 sString_VanishFlag_Route119Kecleon2[] = _("FVーKAKUREー02ーFIELDーR119");
 
 static const struct MenuAction sMenuActions_VanishFlags_Kecleon[] = {
-	{gUnknown_Debug_083C1D30, DummyMenuAction},
-	{gUnknown_Debug_083C1D4B, DummyMenuAction},
-	{gUnknown_Debug_083C1D63, DummyMenuAction},
-	{gUnknown_Debug_083C1D7B, DummyMenuAction},
-	{gUnknown_Debug_083C1D93, DummyMenuAction},
-	{gUnknown_Debug_083C1DAB, DummyMenuAction},
-	{gUnknown_Debug_083C1DC3, DummyMenuAction},
-	{gUnknown_Debug_083C1DDB, DummyMenuAction},
-	{gUnknown_Debug_083C1DF3, DummyMenuAction}
+	{sString_VanishFlag_Route120KecleonBridgeShadow, DummyMenuAction},
+	{sString_VanishFlag_Route120KecleonBridge, DummyMenuAction},
+	{sString_VanishFlag_Route120Kecleon1, DummyMenuAction},
+	{sString_VanishFlag_Route120Kecleon2, DummyMenuAction},
+	{sString_VanishFlag_Route120Kecleon3, DummyMenuAction},
+	{sString_VanishFlag_Route120Kecleon4, DummyMenuAction},
+	{sString_VanishFlag_Route120Kecleon5, DummyMenuAction},
+	{sString_VanishFlag_Route119Kecleon1, DummyMenuAction},
+	{sString_VanishFlag_Route119Kecleon2, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1E54[] = _("FVーBALLー01ーC107ーR0501");
-static const u8 gUnknown_Debug_083C1E6A[] = _("FVーWORKERM1ー04ーFIELDーC104");
-static const u8 gUnknown_Debug_083C1E84[] = _("FVーSUBMARINEー06ーCAVEーD1101");
-static const u8 gUnknown_Debug_083C1E9F[] = _("FVーGUESTーALLーC106ーR0102");
-static const u8 gUnknown_Debug_083C1EB7[] = _("FVーHORIDASIー01ーC106ーR1106");
-static const u8 gUnknown_Debug_083C1ED1[] = _("FVーMIDDLEM1ー01ーR110ーR0101");
-static const u8 gUnknown_Debug_083C1EEB[] = _("FVーFUNEー01ーC102ーR0601");
-static const u8 gUnknown_Debug_083C1F01[] = _("FVーSUPPORTWー01ーT101ーR0202");
-static const u8 gUnknown_Debug_083C1F1B[] = _("FVーSUPPORTMー01ーT101ーR0102");
+static const u8 sString_VanishFlag_BeldumBallStevensHouse[] = _("FVーBALLー01ーC107ーR0501");
+static const u8 sString_VanishFlag_RustboroCityDevonEmployee[] = _("FVーWORKERM1ー04ーFIELDーC104");
+static const u8 sString_VanishFlag_UnderwaterSubmarineInteraction[] = _("FVーSUBMARINEー06ーCAVEーD1101");
+static const u8 sString_VanishFlag_LilycoveMotelPeople[] = _("FVーGUESTーALLーC106ーR0102");
+static const u8 sString_VanishFlag_RooftopLadyLilycoveMart[] = _("FVーHORIDASIー01ーC106ーR1106");
+static const u8 sString_VanishFlag_TrickHouseEntranceMan[] = _("FVーMIDDLEM1ー01ーR110ーR0101");
+static const u8 sString_VanishFlag_UnknownFlag352[] = _("FVーFUNEー01ーC102ーR0601");
+static const u8 sString_VanishFlag_LittlerootTownMaysHouseRivalBedroom[] = _("FVーSUPPORTWー01ーT101ーR0202");
+static const u8 sString_VanishFlag_LittlerootTownBrendansHouseRivalBedroom[] = _("FVーSUPPORTMー01ーT101ーR0102");
 
 static const struct MenuAction sMenuActions_VanishFlags_OtherAndSupport[] = {
-	{gUnknown_Debug_083C1E54, DummyMenuAction},
-	{gUnknown_Debug_083C1E6A, DummyMenuAction},
-	{gUnknown_Debug_083C1E84, DummyMenuAction},
-	{gUnknown_Debug_083C1E9F, DummyMenuAction},
-	{gUnknown_Debug_083C1EB7, DummyMenuAction},
-	{gUnknown_Debug_083C1ED1, DummyMenuAction},
-	{gUnknown_Debug_083C1EEB, DummyMenuAction},
-	{gUnknown_Debug_083C1F01, DummyMenuAction},
-	{gUnknown_Debug_083C1F1B, DummyMenuAction}
+	{sString_VanishFlag_BeldumBallStevensHouse, DummyMenuAction},
+	{sString_VanishFlag_RustboroCityDevonEmployee, DummyMenuAction},
+	{sString_VanishFlag_UnderwaterSubmarineInteraction, DummyMenuAction},
+	{sString_VanishFlag_LilycoveMotelPeople, DummyMenuAction},
+	{sString_VanishFlag_RooftopLadyLilycoveMart, DummyMenuAction},
+	{sString_VanishFlag_TrickHouseEntranceMan, DummyMenuAction},
+	{sString_VanishFlag_UnknownFlag352, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownMaysHouseRivalBedroom, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownBrendansHouseRivalBedroom, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1F80[] = _("FVーODAMAKIー01ーFIELDーR101");
-static const u8 gUnknown_Debug_083C1F99[] = _("FVーODAMAKIー01ーT101ーR0301");
-static const u8 gUnknown_Debug_083C1FB2[] = _("FVーODAMAKIーHYOKAーT101ーR0301");
-static const u8 gUnknown_Debug_083C1FCE[] = _("FVーODAMAKIーHYOKAーFIELDーR101");
-static const u8 gUnknown_Debug_083C1FEA[] = _("FVーODAMAKIーHYOKAーFIELDーR103");
-static const u8 gUnknown_Debug_083C2006[] = _("FVーODAMAKIー01ーC109ーR0105");
-static const u8 gUnknown_Debug_083C201F[] = _("FVーFIGHTERー01ーCAVEーD0201");
-static const u8 gUnknown_Debug_083C2038[] = _("FVーFIGHTERー01ーT106ーR0201");
-static const u8 gUnknown_Debug_083C2051[] = _("FVーFIGHTERー01ーFIELDーR116");
+static const u8 sString_VanishFlag_Route101BirchPoochyenaBattle[] = _("FVーODAMAKIー01ーFIELDーR101");
+static const u8 sString_VanishFlag_LittlerootTownBirchsLabBirch[] = _("FVーODAMAKIー01ーT101ーR0301");
+static const u8 sString_VanishFlag_UnknownBirch380[] = _("FVーODAMAKIーHYOKAーT101ーR0301");
+static const u8 sString_VanishFlag_Route101Birch[] = _("FVーODAMAKIーHYOKAーFIELDーR101");
+static const u8 sString_VanishFlag_Route103Birch[] = _("FVーODAMAKIーHYOKAーFIELDーR103");
+static const u8 sString_VanishFlag_BirchChampionsRoom[] = _("FVーODAMAKIー01ーC109ーR0105");
+static const u8 sString_VanishFlag_RusturfTunnelWandasBoyfriend[] = _("FVーFIGHTERー01ーCAVEーD0201");
+static const u8 sString_VanishFlag_VerdanturfTownWandasHouseWandasBoyfriend[] = _("FVーFIGHTERー01ーT106ーR0201");
+static const u8 sString_VanishFlag_Route116WandasBoyfriend[] = _("FVーFIGHTERー01ーFIELDーR116");
 
 static const struct MenuAction sMenuActions_VanishFlags_BirchAndFighter[] = {
-	{gUnknown_Debug_083C1F80, DummyMenuAction},
-	{gUnknown_Debug_083C1F99, DummyMenuAction},
-	{gUnknown_Debug_083C1FB2, DummyMenuAction},
-	{gUnknown_Debug_083C1FCE, DummyMenuAction},
-	{gUnknown_Debug_083C1FEA, DummyMenuAction},
-	{gUnknown_Debug_083C2006, DummyMenuAction},
-	{gUnknown_Debug_083C201F, DummyMenuAction},
-	{gUnknown_Debug_083C2038, DummyMenuAction},
-	{gUnknown_Debug_083C2051, DummyMenuAction}
+	{sString_VanishFlag_Route101BirchPoochyenaBattle, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownBirchsLabBirch, DummyMenuAction},
+	{sString_VanishFlag_UnknownBirch380, DummyMenuAction},
+	{sString_VanishFlag_Route101Birch, DummyMenuAction},
+	{sString_VanishFlag_Route103Birch, DummyMenuAction},
+	{sString_VanishFlag_BirchChampionsRoom, DummyMenuAction},
+	{sString_VanishFlag_RusturfTunnelWandasBoyfriend, DummyMenuAction},
+	{sString_VanishFlag_VerdanturfTownWandasHouseWandasBoyfriend, DummyMenuAction},
+	{sString_VanishFlag_Route116WandasBoyfriend, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C20B4[] = _("FVーMITSURUー01ーFIELDーC101");
-static const u8 gUnknown_Debug_083C20CD[] = _("FVーMITSURUー02ーCAVEーD1301");
-static const u8 gUnknown_Debug_083C20E6[] = _("FVーMITSURUー01ーFIELDーC103");
-static const u8 gUnknown_Debug_083C20FF[] = _("FVーMITSURUー01ーT106ーR0201");
-static const u8 gUnknown_Debug_083C2118[] = _("FVーMITSURUー01ーCAVEーD1301");
-static const u8 gUnknown_Debug_083C2131[] = _("FVーMITSURUー01ーC101ーR0201");
-static const u8 gUnknown_Debug_083C214A[] = _("FVーMITSURUー01ーFIELDーR102");
-static const u8 gUnknown_Debug_083C2163[] = _("FVーTENKIー01ーR119ーR101");
-static const u8 gUnknown_Debug_083C2179[] = _("FVーTENKIー01ーR119ーR102");
+static const u8 sString_VanishFlag_PetalburgCityWally[] = _("FVーMITSURUー01ーFIELDーC101");
+static const u8 sString_VanishFlag_WallyDefeatedVictoryRoad[] = _("FVーMITSURUー02ーCAVEーD1301");
+static const u8 sString_VanishFlag_MauvilleCityWally[] = _("FVーMITSURUー01ーFIELDーC103");
+static const u8 sString_VanishFlag_VerdanturfTownWandasHouseWally[] = _("FVーMITSURUー01ーT106ーR0201");
+static const u8 sString_VanishFlag_WallyBattleVictoryRoad[] = _("FVーMITSURUー01ーCAVEーD1301");
+static const u8 sString_VanishFlag_PetalburgGymWally[] = _("FVーMITSURUー01ーC101ーR0201");
+static const u8 sString_VanishFlag_Unknown363[] = _("FVーMITSURUー01ーFIELDーR102");
+static const u8 sString_VanishFlag_WeatherInstitute1FWorkers[] = _("FVーTENKIー01ーR119ーR101");
+static const u8 sString_VanishFlag_WeatherInstitute2FWorkers[] = _("FVーTENKIー01ーR119ーR102");
 
 static const struct MenuAction sMenuActions_VanishFlags_WallyAndWeather[] = {
-	{gUnknown_Debug_083C20B4, DummyMenuAction},
-	{gUnknown_Debug_083C20CD, DummyMenuAction},
-	{gUnknown_Debug_083C20E6, DummyMenuAction},
-	{gUnknown_Debug_083C20FF, DummyMenuAction},
-	{gUnknown_Debug_083C2118, DummyMenuAction},
-	{gUnknown_Debug_083C2131, DummyMenuAction},
-	{gUnknown_Debug_083C214A, DummyMenuAction},
-	{gUnknown_Debug_083C2163, DummyMenuAction},
-	{gUnknown_Debug_083C2179, DummyMenuAction}
+	{sString_VanishFlag_PetalburgCityWally, DummyMenuAction},
+	{sString_VanishFlag_WallyDefeatedVictoryRoad, DummyMenuAction},
+	{sString_VanishFlag_MauvilleCityWally, DummyMenuAction},
+	{sString_VanishFlag_VerdanturfTownWandasHouseWally, DummyMenuAction},
+	{sString_VanishFlag_WallyBattleVictoryRoad, DummyMenuAction},
+	{sString_VanishFlag_PetalburgGymWally, DummyMenuAction},
+	{sString_VanishFlag_Unknown363, DummyMenuAction},
+	{sString_VanishFlag_WeatherInstitute1FWorkers, DummyMenuAction},
+	{sString_VanishFlag_WeatherInstitute2FWorkers, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C21D8[] = _("FVーDAIGOー01ーCAVEーD0504");
-static const u8 gUnknown_Debug_083C21EF[] = _("FVーDAIGOー01ーFIELDーR128");
-static const u8 gUnknown_Debug_083C2206[] = _("FVーDAIGOー01ーFIELDーR118");
-static const u8 gUnknown_Debug_083C221D[] = _("FVーDAIGOー01ーC107ーR0501");
-static const u8 gUnknown_Debug_083C2234[] = _("FVーDAIGOー01ーFIELDーR120");
-static const u8 gUnknown_Debug_083C224B[] = _("FVーDAIGOー01ーFIELDーR108");
+static const u8 sString_VanishFlag_StevenGraniteCave[] = _("FVーDAIGOー01ーCAVEーD0504");
+static const u8 sString_VanishFlag_StevenRoute128[] = _("FVーDAIGOー01ーFIELDーR128");
+static const u8 sString_VanishFlag_Route118Steven[] = _("FVーDAIGOー01ーFIELDーR118");
+static const u8 sString_VanishFlag_StevenStevensHouse[] = _("FVーDAIGOー01ーC107ーR0501");
+static const u8 sString_VanishFlag_Route120Steven[] = _("FVーDAIGOー01ーFIELDーR120");
+static const u8 sString_VanishFlag_StevenSootopolis[] = _("FVーDAIGOー01ーFIELDーR108");
 
 static const struct MenuAction sMenuActions_VanishFlags_OtherAndSteven[] = {
-	{gUnknown_Debug_083C21D8, DummyMenuAction},
-	{gUnknown_Debug_083C21EF, DummyMenuAction},
-	{gUnknown_Debug_083C2206, DummyMenuAction},
-	{gUnknown_Debug_083C221D, DummyMenuAction},
-	{gUnknown_Debug_083C2234, DummyMenuAction},
-	{gUnknown_Debug_083C224B, DummyMenuAction}
+	{sString_VanishFlag_StevenGraniteCave, DummyMenuAction},
+	{sString_VanishFlag_StevenRoute128, DummyMenuAction},
+	{sString_VanishFlag_Route118Steven, DummyMenuAction},
+	{sString_VanishFlag_StevenStevensHouse, DummyMenuAction},
+	{sString_VanishFlag_Route120Steven, DummyMenuAction},
+	{sString_VanishFlag_StevenSootopolis, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2294[] = _("FVーPOKE1ー02ーCAVEーD1111");
-static const u8 gUnknown_Debug_083C22AB[] = _("FVーPOKE1ー01ーCAVEーD0601");
-static const u8 gUnknown_Debug_083C22C2[] = _("FVーPOKE1ー02ーCAVEーD0601");
-static const u8 gUnknown_Debug_083C22D9[] = _("FVーPOKE1ー01ーFIELDーR101");
-static const u8 gUnknown_Debug_083C22F0[] = _("FVーPOKE1ー01ーOPENINGーROOM01");
-static const u8 gUnknown_Debug_083C230B[] = _("FVーPOKE1ー02ーOPENINGーROOM01");
-static const u8 gUnknown_Debug_083C2326[] = _("FVーPOKE1ー01ーCAVEーD2308");
-static const u8 gUnknown_Debug_083C233D[] = _("FVーPOKEMONー01ーCAVEーD0201");
-static const u8 gUnknown_Debug_083C2356[] = _("FVーPOKEMONー01ーR104ーR0101");
+static const u8 sString_VanishFlag_SeafloorCavernRoom9SleepingLegendary[] = _("FVーPOKE1ー02ーCAVEーD1111");
+static const u8 sString_VanishFlag_Unknown2E1[] = _("FVーPOKE1ー01ーCAVEーD0601");
+static const u8 sString_VanishFlag_Unknown2Ec[] = _("FVーPOKE1ー02ーCAVEーD0601");
+static const u8 sString_VanishFlag_Route101Poochyena[] = _("FVーPOKE1ー01ーFIELDーR101");
+static const u8 sString_VanishFlag_LittlerootTownPlayersHouseMachoke1[] = _("FVーPOKE1ー01ーOPENINGーROOM01");
+static const u8 sString_VanishFlag_LittlerootTownPlayersHouseMachoke2[] = _("FVーPOKE1ー02ーOPENINGーROOM01");
+static const u8 sString_VanishFlag_UnknownFlag305[] = _("FVーPOKE1ー01ーCAVEーD2308");
+static const u8 sString_VanishFlag_RusturfTunnelPeeko[] = _("FVーPOKEMONー01ーCAVEーD0201");
+static const u8 sString_VanishFlag_BrineysHousePeeko[] = _("FVーPOKEMONー01ーR104ーR0101");
 
 static const struct MenuAction sMenuActions_VanishFlags_Pokemon[] = {
-	{gUnknown_Debug_083C2294, DummyMenuAction},
-	{gUnknown_Debug_083C22AB, DummyMenuAction},
-	{gUnknown_Debug_083C22C2, DummyMenuAction},
-	{gUnknown_Debug_083C22D9, DummyMenuAction},
-	{gUnknown_Debug_083C22F0, DummyMenuAction},
-	{gUnknown_Debug_083C230B, DummyMenuAction},
-	{gUnknown_Debug_083C2326, DummyMenuAction},
-	{gUnknown_Debug_083C233D, DummyMenuAction},
-	{gUnknown_Debug_083C2356, DummyMenuAction}
+	{sString_VanishFlag_SeafloorCavernRoom9SleepingLegendary, DummyMenuAction},
+	{sString_VanishFlag_Unknown2E1, DummyMenuAction},
+	{sString_VanishFlag_Unknown2Ec, DummyMenuAction},
+	{sString_VanishFlag_Route101Poochyena, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownPlayersHouseMachoke1, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownPlayersHouseMachoke2, DummyMenuAction},
+	{sString_VanishFlag_UnknownFlag305, DummyMenuAction},
+	{sString_VanishFlag_RusturfTunnelPeeko, DummyMenuAction},
+	{sString_VanishFlag_BrineysHousePeeko, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C23B8[] = _("FVーMAMAー01ーFIELDーT101");
-static const u8 gUnknown_Debug_083C23CE[] = _("FVーMAMAー01ーOPENINGーROOM02");
-static const u8 gUnknown_Debug_083C23E8[] = _("FVーMAMAー01ーT101ーR0101");
-static const u8 gUnknown_Debug_083C23FE[] = _("FVーMAMAー01ーT101ーR0201");
-static const u8 gUnknown_Debug_083C2414[] = _("FVーMAMAー02ーT101ーR0101");
-static const u8 gUnknown_Debug_083C242A[] = _("FVーMAMAー02ーT101ーR0201");
-static const u8 gUnknown_Debug_083C2440[] = _("FVーSUPPORTー02ーFIELDーR110");
-static const u8 gUnknown_Debug_083C2459[] = _("FVーSUPPORTー02ーFIELDーR119");
-static const u8 gUnknown_Debug_083C2472[] = _("FVーSUPPORTー02ーFIELDーT104");
+static const u8 sString_VanishFlag_LittlerootTownMomOutside[] = _("FVーMAMAー01ーFIELDーT101");
+static const u8 sString_VanishFlag_LittlerootTownPlayersBedroomMom[] = _("FVーMAMAー01ーOPENINGーROOM02");
+static const u8 sString_VanishFlag_LittlerootTownBrendansHouseMom[] = _("FVーMAMAー01ーT101ーR0101");
+static const u8 sString_VanishFlag_LittlerootTownMaysHouseMom[] = _("FVーMAMAー01ーT101ーR0201");
+static const u8 sString_VanishFlag_Unknown30E[] = _("FVーMAMAー02ーT101ーR0101");
+static const u8 sString_VanishFlag_Unknown30F[] = _("FVーMAMAー02ーT101ーR0201");
+static const u8 sString_VanishFlag_Route110RivalOnBike[] = _("FVーSUPPORTー02ーFIELDーR110");
+static const u8 sString_VanishFlag_Route119RivalOnBike[] = _("FVーSUPPORTー02ーFIELDーR119");
+static const u8 sString_VanishFlag_LavaridgeTownRivalOnBike[] = _("FVーSUPPORTー02ーFIELDーT104");
 
 static const struct MenuAction sMenuActions_VanishFlags_MomAndSupport[] = {
-	{gUnknown_Debug_083C23B8, DummyMenuAction},
-	{gUnknown_Debug_083C23CE, DummyMenuAction},
-	{gUnknown_Debug_083C23E8, DummyMenuAction},
-	{gUnknown_Debug_083C23FE, DummyMenuAction},
-	{gUnknown_Debug_083C2414, DummyMenuAction},
-	{gUnknown_Debug_083C242A, DummyMenuAction},
-	{gUnknown_Debug_083C2440, DummyMenuAction},
-	{gUnknown_Debug_083C2459, DummyMenuAction},
-	{gUnknown_Debug_083C2472, DummyMenuAction}
+	{sString_VanishFlag_LittlerootTownMomOutside, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownPlayersBedroomMom, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownBrendansHouseMom, DummyMenuAction},
+	{sString_VanishFlag_LittlerootTownMaysHouseMom, DummyMenuAction},
+	{sString_VanishFlag_Unknown30E, DummyMenuAction},
+	{sString_VanishFlag_Unknown30F, DummyMenuAction},
+	{sString_VanishFlag_Route110RivalOnBike, DummyMenuAction},
+	{sString_VanishFlag_Route119RivalOnBike, DummyMenuAction},
+	{sString_VanishFlag_LavaridgeTownRivalOnBike, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C24D4[] = _("FVーHAGIー01ーFIELDーR104");
-static const u8 gUnknown_Debug_083C24EA[] = _("FVーHAGIー01ーR104ーR0101");
-static const u8 gUnknown_Debug_083C2500[] = _("FVーHAGIー01ーFIELDーT103");
-static const u8 gUnknown_Debug_083C2516[] = _("FVーHAGIー01ーFIELDーR109");
-static const u8 gUnknown_Debug_083C252C[] = _("FVーHAGIー01ーC102ーR0601");
-static const u8 gUnknown_Debug_083C2542[] = _("FVーHAGIー01ーC102ーR0101");
-static const u8 gUnknown_Debug_083C2558[] = _("FVーHAGIー01ーCAVEーD0201");
-static const u8 gUnknown_Debug_083C256E[] = _("FVーHAGIー01ーFIELDーR116");
-static const u8 gUnknown_Debug_083C2584[] = _("FVーHAGIー01ーSPーSHIP01");
+static const u8 sString_VanishFlag_Route104MrBriney[] = _("FVーHAGIー01ーFIELDーR104");
+static const u8 sString_VanishFlag_BrineysHouseMrBriney[] = _("FVーHAGIー01ーR104ーR0101");
+static const u8 sString_VanishFlag_MrBrineyDewfordTown[] = _("FVーHAGIー01ーFIELDーT103");
+static const u8 sString_VanishFlag_Route109MrBriney[] = _("FVーHAGIー01ーFIELDーR109");
+static const u8 sString_VanishFlag_Unknown34F[] = _("FVーHAGIー01ーC102ーR0601");
+static const u8 sString_VanishFlag_SlateportCitySternsShipyardMrBriney[] = _("FVーHAGIー01ーC102ーR0101");
+static const u8 sString_VanishFlag_RusturfTunnelBriney[] = _("FVーHAGIー01ーCAVEーD0201");
+static const u8 sString_VanishFlag_Route116MrBriney[] = _("FVーHAGIー01ーFIELDーR116");
+static const u8 sString_VanishFlag_BrineyAndPeekoSsTidal[] = _("FVーHAGIー01ーSPーSHIP01");
 
 static const struct MenuAction sMenuActions_VanishFlags_MrBriney[] = {
-	{gUnknown_Debug_083C24D4, DummyMenuAction},
-	{gUnknown_Debug_083C24EA, DummyMenuAction},
-	{gUnknown_Debug_083C2500, DummyMenuAction},
-	{gUnknown_Debug_083C2516, DummyMenuAction},
-	{gUnknown_Debug_083C252C, DummyMenuAction},
-	{gUnknown_Debug_083C2542, DummyMenuAction},
-	{gUnknown_Debug_083C2558, DummyMenuAction},
-	{gUnknown_Debug_083C256E, DummyMenuAction},
-	{gUnknown_Debug_083C2584, DummyMenuAction}
+	{sString_VanishFlag_Route104MrBriney, DummyMenuAction},
+	{sString_VanishFlag_BrineysHouseMrBriney, DummyMenuAction},
+	{sString_VanishFlag_MrBrineyDewfordTown, DummyMenuAction},
+	{sString_VanishFlag_Route109MrBriney, DummyMenuAction},
+	{sString_VanishFlag_Unknown34F, DummyMenuAction},
+	{sString_VanishFlag_SlateportCitySternsShipyardMrBriney, DummyMenuAction},
+	{sString_VanishFlag_RusturfTunnelBriney, DummyMenuAction},
+	{sString_VanishFlag_Route116MrBriney, DummyMenuAction},
+	{sString_VanishFlag_BrineyAndPeekoSsTidal, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C25E4[] = _("FVーSUPPORTー01ーT101ーR0301");
-static const u8 gUnknown_Debug_083C25FD[] = _("FVーSUPPORTー01ーC109ーR0105");
-static const u8 gUnknown_Debug_083C2616[] = _("FVーSUPPORTー01ーFIELDーC104");
-static const u8 gUnknown_Debug_083C262F[] = _("FVーSUPPORTー01ーFIELDーC106");
-static const u8 gUnknown_Debug_083C2648[] = _("FVーSUPPORTー01ーFIELDーR103");
-static const u8 gUnknown_Debug_083C2661[] = _("FVーSUPPORTー01ーFIELDーR110");
-static const u8 gUnknown_Debug_083C267A[] = _("FVーSUPPORTー01ーFIELDーR119");
-static const u8 gUnknown_Debug_083C2693[] = _("FVーSUPPORTー01ーFIELDーT104");
-static const u8 gUnknown_Debug_083C26AC[] = _("FVーSUPPORTー01ーFIELDーT102");
+static const u8 sString_VanishFlag_LittlerootTownBirchsLabRival[] = _("FVーSUPPORTー01ーT101ーR0301");
+static const u8 sString_VanishFlag_RivalChampionsRoom[] = _("FVーSUPPORTー01ーC109ーR0105");
+static const u8 sString_VanishFlag_RustboroCityRival[] = _("FVーSUPPORTー01ーFIELDーC104");
+static const u8 sString_VanishFlag_RivalLilycoveMart[] = _("FVーSUPPORTー01ーFIELDーC106");
+static const u8 sString_VanishFlag_Route103Rival[] = _("FVーSUPPORTー01ーFIELDーR103");
+static const u8 sString_VanishFlag_Route110Rival[] = _("FVーSUPPORTー01ーFIELDーR110");
+static const u8 sString_VanishFlag_Route119Rival[] = _("FVーSUPPORTー01ーFIELDーR119");
+static const u8 sString_VanishFlag_LavaridgeTownRival[] = _("FVーSUPPORTー01ーFIELDーT104");
+static const u8 sString_VanishFlag_OldaleTownRival[] = _("FVーSUPPORTー01ーFIELDーT102");
 
 static const struct MenuAction sMenuActions_VanishFlags_Support[] = {
-	{gUnknown_Debug_083C25E4, DummyMenuAction},
-	{gUnknown_Debug_083C25FD, DummyMenuAction},
-	{gUnknown_Debug_083C2616, DummyMenuAction},
-	{gUnknown_Debug_083C262F, DummyMenuAction},
-	{gUnknown_Debug_083C2648, DummyMenuAction},
-	{gUnknown_Debug_083C2661, DummyMenuAction},
-	{gUnknown_Debug_083C267A, DummyMenuAction},
-	{gUnknown_Debug_083C2693, DummyMenuAction},
-	{gUnknown_Debug_083C26AC, DummyMenuAction}
+	{sString_VanishFlag_LittlerootTownBirchsLabRival, DummyMenuAction},
+	{sString_VanishFlag_RivalChampionsRoom, DummyMenuAction},
+	{sString_VanishFlag_RustboroCityRival, DummyMenuAction},
+	{sString_VanishFlag_RivalLilycoveMart, DummyMenuAction},
+	{sString_VanishFlag_Route103Rival, DummyMenuAction},
+	{sString_VanishFlag_Route110Rival, DummyMenuAction},
+	{sString_VanishFlag_Route119Rival, DummyMenuAction},
+	{sString_VanishFlag_LavaridgeTownRival, DummyMenuAction},
+	{sString_VanishFlag_OldaleTownRival, DummyMenuAction}
 };
 
 static const u8 sVanishFlagPageCounts[] = {9, 9, 9, 9, 6, 9, 9, 9, 9};
