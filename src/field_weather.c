@@ -85,7 +85,7 @@ static void ApplyDroughtGammaShiftWithBlend(s8 gammaIndex, u8 blendCoeff, u16 bl
 static void ApplyFogBlend(u8 blendCoeff, u16 blendColor);
 static bool8 FadeInScreen_RainShowShade(void);
 static bool8 FadeInScreen_Drought(void);
-static bool8 FadeInScreen_Fog1(void);
+static bool8 FadeInScreen_FogHorizontal(void);
 static void FadeInScreenWithWeather(void);
 static void DoNothing(void);
 void None_Init(void);
@@ -111,10 +111,10 @@ void Thunderstorm_InitVars(void);
 void Thunderstorm_Main(void);
 void Thunderstorm_InitAll(void);
 bool8 Thunderstorm_Finish(void);
-void Fog1_InitVars(void);
-void Fog1_Main(void);
-void Fog1_InitAll(void);
-bool8 Fog1_Finish(void);
+void FogHorizontal_InitVars(void);
+void FogHorizontal_Main(void);
+void FogHorizontal_InitAll(void);
+bool8 FogHorizontal_Finish(void);
 void Ash_InitVars(void);
 void Ash_Main(void);
 void Ash_InitAll(void);
@@ -127,10 +127,10 @@ void Fog2_InitVars(void);
 void Fog2_Main(void);
 void Fog2_InitAll(void);
 bool8 Fog2_Finish(void);
-void Fog1_InitVars(void);
-void Fog1_Main(void);
-void Fog1_InitAll(void);
-bool8 Fog1_Finish(void);
+void FogHorizontal_InitVars(void);
+void FogHorizontal_Main(void);
+void FogHorizontal_InitAll(void);
+bool8 FogHorizontal_Finish(void);
 void Shade_InitVars(void);
 void Shade_Main(void);
 void Shade_InitAll(void);
@@ -156,11 +156,11 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     {Rain_InitVars, Rain_Main, Rain_InitAll, Rain_Finish},
     {Snow_InitVars,      Snow_Main,      Snow_InitAll,      Snow_Finish},
     {Thunderstorm_InitVars,   Thunderstorm_Main,      Thunderstorm_InitAll,   Thunderstorm_Finish},
-    {Fog1_InitVars,      Fog1_Main,      Fog1_InitAll,      Fog1_Finish},
+    {FogHorizontal_InitVars,      FogHorizontal_Main,      FogHorizontal_InitAll,      FogHorizontal_Finish},
     {Ash_InitVars,       Ash_Main,       Ash_InitAll,       Ash_Finish},
     {Sandstorm_InitVars, Sandstorm_Main, Sandstorm_InitAll, Sandstorm_Finish},
     {Fog2_InitVars,      Fog2_Main,      Fog2_InitAll,      Fog2_Finish},
-    {Fog1_InitVars,      Fog1_Main,      Fog1_InitAll,      Fog1_Finish},
+    {FogHorizontal_InitVars,      FogHorizontal_Main,      FogHorizontal_InitAll,      FogHorizontal_Finish},
     {Shade_InitVars,     Shade_Main,     Shade_InitAll,     Shade_Finish},
     {Drought_InitVars,   Drought_Main,   Drought_InitAll,   Drought_Finish},
     {Downpour_InitVars, Thunderstorm_Main,      Downpour_InitAll, Thunderstorm_Finish},
@@ -272,7 +272,7 @@ void StartWeather(void)
         gWeatherPtr->cloudSpritesCreated = 0;
         gWeatherPtr->snowflakeSpriteCount = 0;
         gWeatherPtr->ashSpritesCreated = 0;
-        gWeatherPtr->fog1SpritesCreated = 0;
+        gWeatherPtr->fogHSpritesCreated = 0;
         gWeatherPtr->fog2SpritesCreated = 0;
         gWeatherPtr->sandstormSprites1Created = 0;
         gWeatherPtr->sandstormSprites2Created = 0;
@@ -486,7 +486,7 @@ static void FadeInScreenWithWeather(void)
         }
         break;
     case WEATHER_FOG_1:
-        if (FadeInScreen_Fog1() == FALSE)
+        if (FadeInScreen_FogHorizontal() == FALSE)
         {
             gWeatherPtr->gammaIndex = 0;
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
@@ -538,7 +538,7 @@ bool8 FadeInScreen_Drought(void)
     return TRUE;
 }
 
-bool8 FadeInScreen_Fog1(void)
+bool8 FadeInScreen_FogHorizontal(void)
 {
     if (gWeatherPtr->fadeScreenCounter == 16)
         return FALSE;

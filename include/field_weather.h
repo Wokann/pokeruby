@@ -24,7 +24,7 @@ struct Weather
         struct
         {
             u8 filler0[0xA0];
-            struct Sprite *fog1Sprites[20];
+            struct Sprite *fogHSprites[20];
             struct Sprite *ashSprites[20];
             struct Sprite *fog2Sprites[20];
             struct Sprite *sandstormSprites1[20];
@@ -71,12 +71,12 @@ struct Weather
     u8 unknown_6EB;
     u8 unknown_6EC;
     u8 unknown_6ED;
-    u16 fog1ScrollPosX;
-    u16 unknown_6F0;
-    u16 unknown_6F2;
+    u16 fogHScrollPosX;
+    u16 fogHScrollCounter;
+    u16 fogHScrollOffset;
     u8 lightenedFogSpritePals[6];
     u8 lightenedFogSpritePalsCount;
-    u8 fog1SpritesCreated;
+    u8 fogHSpritesCreated;
     u16 unknown_6FC;
     u16 unknown_6FE;
     u8 ashSpritesCreated;
