@@ -314,12 +314,12 @@ static void SetReelButtonTilemap(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg
 static void LoadInfoBoxTilemap(void);
 
 #if DEBUG
-static void debug_sub_811B5D0(void);
-static void debug_sub_811B620(void);
-static void debug_sub_811B5B4(s32 *, s32);
-static void debug_sub_811B894(void);
-static u8 debug_sub_811B634(void);
-static void debug_sub_811B654(u8 taskId);
+static void DebugSlot_ResetCounters(void);
+static void DebugSlot_OpenMenu(void);
+static void DebugSlot_AddCounterClamped(s32 *, s32);
+static void DebugSlot_CheckErrors(void);
+static u8 DebugSlot_IsMenuClosed(void);
+static void DebugSlot_Task_Menu(u8 taskId);
 #endif
 
 #if DEBUG
@@ -520,7 +520,7 @@ static void SlotMachineSetup_0_1(void)
         sSlotMachine->unk1C[i] %= 0x1f8;
     }
 #if DEBUG
-    debug_sub_811B5D0();
+    DebugSlot_ResetCounters();
     if (unk_debug_bss_1_1 != 0)
         sSlotMachine->coins = 1000;
 #endif
@@ -689,7 +689,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
     }
     if (unk_debug_bss_1_1 != 0 && JOY_NEW(START_BUTTON))
     {
-        debug_sub_811B620();
+        DebugSlot_OpenMenu();
         sSlotMachine->state = 29;
         return 0;
     }
@@ -786,7 +786,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
         sSlotMachine->unk1A = ReelTimeSpeed();
 #if DEBUG
     if (unk_debug_bss_1_1 != 0)
-        debug_sub_811B5B4(&sSlotMachine->unk68, 1);
+        DebugSlot_AddCounterClamped(&sSlotMachine->unk68, 1);
 #endif
     return FALSE;
 }
@@ -911,14 +911,14 @@ bool8 SlotTask_CheckMatches(struct Task *task)
 #if DEBUG
     else
     {
-        debug_sub_811B894();
+        DebugSlot_CheckErrors();
     }
 #endif
 
     if (sSlotMachine->matchedSymbols)
     {
 #if DEBUG
-        debug_sub_811B5B4(&sSlotMachine->unk6C, sSlotMachine->payout);
+        DebugSlot_AddCounterClamped(&sSlotMachine->unk6C, sSlotMachine->payout);
 #endif
         sSlotMachine->state = 15;
         AwardPayout();
@@ -1139,7 +1139,7 @@ static bool8 SlotTask_FreeDataStructures(struct Task *task)
 
 static bool8 debug_sub_8116E74(struct Task *task)
 {
-    if (debug_sub_811B634() != 0)
+    if (DebugSlot_IsMenuClosed() != 0)
         sSlotMachine->state = 5;
     return FALSE;
 }
@@ -1159,21 +1159,21 @@ static void DrawMachineBias(void)
             unk_debug_bss_1_2 = 0;
             unk_debug_bss_1_3 = 0;
             if (sSlotMachine->unk04 & 0x80)
-                debug_sub_811B5B4(&sSlotMachine->unk88, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk88, 1);
             if (sSlotMachine->unk04 & 0x40)
-                debug_sub_811B5B4(&sSlotMachine->unk84, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk84, 1);
             if (sSlotMachine->unk04 & 0x20)
-                debug_sub_811B5B4(&sSlotMachine->unk8C, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk8C, 1);
             if (sSlotMachine->unk04 & 0x10)
-                debug_sub_811B5B4(&sSlotMachine->unk80, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk80, 1);
             if (sSlotMachine->unk04 & 8)
-                debug_sub_811B5B4(&sSlotMachine->unk7C, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk7C, 1);
             if (sSlotMachine->unk04 & 4)
-                debug_sub_811B5B4(&sSlotMachine->unk78, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk78, 1);
             if (sSlotMachine->unk04 & 1)
-                debug_sub_811B5B4(&sSlotMachine->unk74, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk74, 1);
             if (sSlotMachine->unk04 & 2)
-                debug_sub_811B5B4(&sSlotMachine->unk70, 1);
+                DebugSlot_AddCounterClamped(&sSlotMachine->unk70, 1);
             return;
         }
 #endif
@@ -1187,11 +1187,11 @@ static void DrawMachineBias(void)
                     sSlotMachine->unk04 |= sBiasesSpecial[r3];
 #if DEBUG
                     if (sSlotMachine->unk04 & 0x80)
-                        debug_sub_811B5B4(&sSlotMachine->unk88, 1);
+                        DebugSlot_AddCounterClamped(&sSlotMachine->unk88, 1);
                     if (sSlotMachine->unk04 & 0x40)
-                        debug_sub_811B5B4(&sSlotMachine->unk84, 1);
+                        DebugSlot_AddCounterClamped(&sSlotMachine->unk84, 1);
                     if (sSlotMachine->unk04 & 0x20)
-                        debug_sub_811B5B4(&sSlotMachine->unk8C, 1);
+                        DebugSlot_AddCounterClamped(&sSlotMachine->unk8C, 1);
 #endif
                     if (r3 != 1)
                     {
@@ -1205,15 +1205,15 @@ static void DrawMachineBias(void)
                 sSlotMachine->unk04 |= sBiasesRegular[r3];
 #if DEBUG
                 if (sSlotMachine->unk04 & 0x10)
-                    debug_sub_811B5B4(&sSlotMachine->unk80, 1);
+                    DebugSlot_AddCounterClamped(&sSlotMachine->unk80, 1);
                 if (sSlotMachine->unk04 & 8)
-                    debug_sub_811B5B4(&sSlotMachine->unk7C, 1);
+                    DebugSlot_AddCounterClamped(&sSlotMachine->unk7C, 1);
                 if (sSlotMachine->unk04 & 4)
-                    debug_sub_811B5B4(&sSlotMachine->unk78, 1);
+                    DebugSlot_AddCounterClamped(&sSlotMachine->unk78, 1);
                 if (sSlotMachine->unk04 & 1)
-                    debug_sub_811B5B4(&sSlotMachine->unk74, 1);
+                    DebugSlot_AddCounterClamped(&sSlotMachine->unk74, 1);
                 if (sSlotMachine->unk04 & 2)
-                    debug_sub_811B5B4(&sSlotMachine->unk70, 1);
+                    DebugSlot_AddCounterClamped(&sSlotMachine->unk70, 1);
 #endif
             }
         }
@@ -5563,54 +5563,54 @@ static const u16 sReelTimeWindow_Tilemap[] = INCBIN_U16("graphics/slot_machine/r
 
 #if DEBUG
 
-static void debug_sub_811B1C4(void)
+static void DebugSlot_ToggleCherryBias(void)
 {
     unk_debug_bss_1_3 |= 2;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 2) ? 0 : 2;
 }
 
-static void debug_sub_811B1EC(void)
+static void DebugSlot_ToggleReplayBias(void)
 {
     unk_debug_bss_1_3 |= 1;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 1) ? 0 : 1;
 }
 
-static void debug_sub_811B210(void)
+static void DebugSlot_ToggleLotadBias(void)
 {
     unk_debug_bss_1_3 |= 4;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 4) ? 0 : 4;
 }
 
-static void debug_sub_811B238(void)
+static void DebugSlot_ToggleAzurillBias(void)
 {
     unk_debug_bss_1_3 |= 8;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 8) ? 0 : 8;
 }
 
-static void debug_sub_811B260(void)
+static void DebugSlot_TogglePowerBias(void)
 {
     unk_debug_bss_1_3 |= 0x10;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 0x10) ? 0 : 0x10;
 }
 
-static void debug_sub_811B288(void)
+static void DebugSlot_ToggleMixed7Bias(void)
 {
     unk_debug_bss_1_3 |= 0x40;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 0x40) ? 0 : 0x40;
 }
 
-static void debug_sub_811B2B0(void)
+static void DebugSlot_ToggleStraight7Bias(void)
 {
     unk_debug_bss_1_3 |= 0x80;
     unk_debug_bss_1_0 = (unk_debug_bss_1_0 == 0x80) ? 0 : 0x80;
 }
 
-static void debug_sub_811B2D8(void)
+static void DebugSlot_ForceReelTimeBias(void)
 {
     unk_debug_bss_1_3 |= 0x20;
 }
 
-static void debug_sub_811B2E8(void)
+static void DebugSlot_PrintMachineSetting(void)
 {
     u8 text[2];
 
@@ -5618,58 +5618,58 @@ static void debug_sub_811B2E8(void)
     Menu_PrintText(text, 6, 1);
 }
 
-static const u8 Str_841B1C4[] = DTR("SETTEI", "SET");
-static const u8 Str_841B1CB[] = DTR("MAWASITA", "TURNED");
-static const u8 Str_841B1D4[] = DTR("MODOSI", "RETURN");
-static const u8 Str_841B1DB[] = DTR("NOMARE", "CONSUMED");
-static const u8 Str_841B1E2[] = DTR("MAE　7", "BEFORE 7");
-static const u8 Str_841B1E8[] = DTR("LR  HENKOU", "LR: CHANGE");
-static const u8 Str_841B1F3[] = DTR("START  JIDOUSU", "START: AUTO");
-static const u8 Str_841B202[] = DTR("SELECT  SETTEI", "SELECT: FORCE");
+static const u8 sDebugSlotText_Setting[] = DTR("SETTEI", "SET");
+static const u8 sDebugSlotText_Spins[] = DTR("MAWASITA", "TURNED");
+static const u8 sDebugSlotText_Returned[] = DTR("MODOSI", "RETURN");
+static const u8 sDebugSlotText_Consumed[] = DTR("NOMARE", "CONSUMED");
+static const u8 sDebugSlotText_Before7[] = DTR("MAE　7", "BEFORE 7");
+static const u8 sDebugSlotText_ChangeMachine[] = DTR("LR  HENKOU", "LR: CHANGE");
+static const u8 sDebugSlotText_AutoSpin[] = DTR("START  JIDOUSU", "START: AUTO");
+static const u8 sDebugSlotText_ForceBias[] = DTR("SELECT  SETTEI", "SELECT: FORCE");
 // Irregular Romaji: 抽選 (ちゅうせん/chuusen)
-static const u8 Str_841B211[] = DTR("TYUHSEN", "DRAWINGS");
-static const u8 Str_841B219[] = _("CHERRY");
-static const u8 Str_841B220[] = _("REPLAY");
-static const u8 Str_841B227[] = DTR("HASUBO", "LOTAD");
-static const u8 Str_841B22E[] = DTR("RURIRI", "AZURILL");
-static const u8 Str_841B235[] = DTR("INAZU", "LIGHTNING");
-static const u8 Str_841B23B[] = _("REG");
-static const u8 Str_841B23F[] = _("BIG");
-static const u8 Str_841B243[] = DTR("BD", "REEL TIME");
-static const u8 Str_841B246[] = _("R7");
-static const u8 Str_841B249[] = _("B7");
-static const u8 Str_841B24C[] = DTR("A  COIN", "A: COIN");
-static const u8 Str_841B254[] = DTR("TYUHSEN", "DRAWINGS");
-static const u8 Str_841B25C[] = _("UD  100");
-static const u8 Str_841B264[] = _("LR  1000");
-static const u8 Str_841B26D[] = _("×");
+static const u8 sDebugSlotText_Drawings[] = DTR("TYUHSEN", "DRAWINGS");
+static const u8 sDebugSlotText_Cherry[] = _("CHERRY");
+static const u8 sDebugSlotText_Replay[] = _("REPLAY");
+static const u8 sDebugSlotText_Lotad[] = DTR("HASUBO", "LOTAD");
+static const u8 sDebugSlotText_Azurill[] = DTR("RURIRI", "AZURILL");
+static const u8 sDebugSlotText_Lightning[] = DTR("INAZU", "LIGHTNING");
+static const u8 sDebugSlotText_Reg[] = _("REG");
+static const u8 sDebugSlotText_Big[] = _("BIG");
+static const u8 sDebugSlotText_ReelTime[] = DTR("BD", "REEL TIME");
+static const u8 sDebugSlotText_Red7[] = _("R7");
+static const u8 sDebugSlotText_Blue7[] = _("B7");
+static const u8 sDebugSlotText_InsertCoin[] = DTR("A  COIN", "A: COIN");
+static const u8 sDebugSlotText_SelectDrawing[] = DTR("TYUHSEN", "DRAWINGS");
+static const u8 sDebugSlotText_Adjust100[] = _("UD  100");
+static const u8 sDebugSlotText_Adjust1000[] = _("LR  1000");
+static const u8 sDebugSlotText_SelectionMarker[] = _("×");
 
-void debug_sub_811B310(void)
+void DebugSlot_DrawStats(void)
 {
     u8 text[5];
 
-    Menu_PrintText(Str_841B1C4, 1, 1);
-    Menu_PrintText(Str_841B1CB, 1, 3);
-    Menu_PrintText(Str_841B1D4, 1, 5);
-    Menu_PrintText(Str_841B1DB, 1, 7);
-    Menu_PrintText(Str_841B1E2, 1, 9);
-    Menu_PrintText(Str_841B1E8, 1, 11);
-    Menu_PrintText(Str_841B1F3, 1, 13);
-    Menu_PrintText(Str_841B202, 1, 15);
-    Menu_PrintText(Str_841B24C, 1, 17);
-    Menu_PrintText(Str_841B211, 15, 1);
-    Menu_PrintText(Str_841B219, 15, 3);
-    Menu_PrintText(Str_841B220, 15, 5);
-    Menu_PrintText(Str_841B227, 15, 7);
-    Menu_PrintText(Str_841B22E, 15, 9);
-    Menu_PrintText(Str_841B235, 15, 11);
-    Menu_PrintText(Str_841B23B, 15, 13);
-    Menu_PrintText(Str_841B23F, 15, 15);
-    Menu_PrintText(Str_841B243, 15, 17);
+    Menu_PrintText(sDebugSlotText_Setting, 1, 1);
+    Menu_PrintText(sDebugSlotText_Spins, 1, 3);
+    Menu_PrintText(sDebugSlotText_Returned, 1, 5);
+    Menu_PrintText(sDebugSlotText_Consumed, 1, 7);
+    Menu_PrintText(sDebugSlotText_Before7, 1, 9);
+    Menu_PrintText(sDebugSlotText_ChangeMachine, 1, 11);
+    Menu_PrintText(sDebugSlotText_AutoSpin, 1, 13);
+    Menu_PrintText(sDebugSlotText_ForceBias, 1, 15);
+    Menu_PrintText(sDebugSlotText_InsertCoin, 1, 17);
+    Menu_PrintText(sDebugSlotText_Drawings, 15, 1);
+    Menu_PrintText(sDebugSlotText_Cherry, 15, 3);
+    Menu_PrintText(sDebugSlotText_Replay, 15, 5);
+    Menu_PrintText(sDebugSlotText_Lotad, 15, 7);
+    Menu_PrintText(sDebugSlotText_Azurill, 15, 9);
+    Menu_PrintText(sDebugSlotText_Lightning, 15, 11);
+    Menu_PrintText(sDebugSlotText_Reg, 15, 13);
+    Menu_PrintText(sDebugSlotText_Big, 15, 15);
+    Menu_PrintText(sDebugSlotText_ReelTime, 15, 17);
     if (sSlotMachine->unk03 == 0)
-        Menu_PrintText(Str_841B246, 10, 9);
+        Menu_PrintText(sDebugSlotText_Red7, 10, 9);
     else
-        Menu_PrintText(Str_841B249, 10, 9);
+        Menu_PrintText(sDebugSlotText_Blue7, 10, 9);
 
 #define PRINT_NUMBER(n, x, y)                  \
     ConvertIntToDecimalStringN(text, n, 2, 4); \
@@ -5723,19 +5723,19 @@ void debug_sub_811B310(void)
             y = 15;
             break;
         }
-        Menu_PrintText(Str_841B26D, 23, y);
+        Menu_PrintText(sDebugSlotText_SelectionMarker, 23, y);
     }
-    debug_sub_811B2E8();
+    DebugSlot_PrintMachineSetting();
 }
 
-static void debug_sub_811B5B4(s32 *a, s32 b)
+static void DebugSlot_AddCounterClamped(s32 *a, s32 b)
 {
     *a += b;
     if (*a > 9999)
         *a = 9999;
 }
 
-static void debug_sub_811B5D0(void)
+static void DebugSlot_ResetCounters(void)
 {
     unk_debug_bss_1_0 = 0;
     unk_debug_bss_1_2 = 0;
@@ -5754,32 +5754,32 @@ static void debug_sub_811B5D0(void)
     sSlotMachine->unk90 = 0;
 }
 
-static void debug_sub_811B620(void)
+static void DebugSlot_OpenMenu(void)
 {
-    CreateTask(debug_sub_811B654, 0);
+    CreateTask(DebugSlot_Task_Menu, 0);
 }
 
-static u8 debug_sub_811B634(void)
+static u8 DebugSlot_IsMenuClosed(void)
 {
-    if (FindTaskIdByFunc(debug_sub_811B654) == 0xFF)
+    if (FindTaskIdByFunc(DebugSlot_Task_Menu) == 0xFF)
         return 1;
     else
         return 0;
 }
 
-static const struct {const u8 *text; void (*func)();} _841B270[] =
+static const struct {const u8 *text; void (*func)();} sDebugSlotBiasChoices[] =
 {
-    {Str_841B219, debug_sub_811B1C4},
-    {Str_841B220, debug_sub_811B1EC},
-    {Str_841B227, debug_sub_811B210},
-    {Str_841B22E, debug_sub_811B238},
-    {Str_841B235, debug_sub_811B260},
-    {Str_841B23B, debug_sub_811B288},
-    {Str_841B23F, debug_sub_811B2B0},
-    {Str_841B243, debug_sub_811B2D8},
+    {sDebugSlotText_Cherry, DebugSlot_ToggleCherryBias},
+    {sDebugSlotText_Replay, DebugSlot_ToggleReplayBias},
+    {sDebugSlotText_Lotad, DebugSlot_ToggleLotadBias},
+    {sDebugSlotText_Azurill, DebugSlot_ToggleAzurillBias},
+    {sDebugSlotText_Lightning, DebugSlot_TogglePowerBias},
+    {sDebugSlotText_Reg, DebugSlot_ToggleMixed7Bias},
+    {sDebugSlotText_Big, DebugSlot_ToggleStraight7Bias},
+    {sDebugSlotText_ReelTime, DebugSlot_ForceReelTimeBias},
 };
 
-static void debug_sub_811B654(u8 taskId)
+static void DebugSlot_Task_Menu(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s8 selection;
@@ -5793,7 +5793,7 @@ static void debug_sub_811B654(u8 taskId)
         Menu_DrawStdWindowFrame(0, 0, 24, 19);
 #endif
 
-        debug_sub_811B310();
+        DebugSlot_DrawStats();
         task->data[0]++;
         break;
     case 1:
@@ -5808,7 +5808,7 @@ static void debug_sub_811B654(u8 taskId)
             sSlotMachine->unk01--;
             if ((s8)sSlotMachine->unk01 < 0)  // Why? It's unsigned
                 sSlotMachine->unk01 = 5;
-            debug_sub_811B2E8();
+            DebugSlot_PrintMachineSetting();
             break;
         }
         if (JOY_NEW(DPAD_RIGHT))
@@ -5816,7 +5816,7 @@ static void debug_sub_811B654(u8 taskId)
             sSlotMachine->unk01++;
             if (sSlotMachine->unk01 > 5)
                 sSlotMachine->unk01 = 0;
-            debug_sub_811B2E8();
+            DebugSlot_PrintMachineSetting();
             break;
         }
         if (JOY_NEW(A_BUTTON))
@@ -5824,8 +5824,8 @@ static void debug_sub_811B654(u8 taskId)
             task->data[0] = 3;
             Menu_EraseScreen();
             Menu_DrawStdWindowFrame(0, 0, 9, 5);
-            Menu_PrintText(Str_841B25C, 1, 1);
-            Menu_PrintText(Str_841B264, 1, 3);
+            Menu_PrintText(sDebugSlotText_Adjust100, 1, 1);
+            Menu_PrintText(sDebugSlotText_Adjust1000, 1, 3);
             break;
         }
         if (JOY_NEW(SELECT_BUTTON))
@@ -5834,8 +5834,8 @@ static void debug_sub_811B654(u8 taskId)
             unk_debug_bss_1_3 = 0;
             Menu_EraseScreen();
             Menu_DrawStdWindowFrame(0, 0, 10, 19);
-            Menu_PrintText(Str_841B254, 1, 1);
-            Menu_PrintItems(2, 3, 8, (void *)_841B270);
+            Menu_PrintText(sDebugSlotText_SelectDrawing, 1, 1);
+            Menu_PrintItems(2, 3, 8, (void *)sDebugSlotBiasChoices);
             InitMenu(0, 1, 3, 8, 0, 9);
             task->data[0]++;
         }
@@ -5853,7 +5853,7 @@ static void debug_sub_811B654(u8 taskId)
         if (selection != -1)
         {
             unk_debug_bss_1_2 = 1;
-            _841B270[selection].func();
+            sDebugSlotBiasChoices[selection].func();
         }
         Menu_EraseScreen();
         DestroyTask(taskId);
@@ -5896,12 +5896,12 @@ static void debug_sub_811B654(u8 taskId)
     }
 }
 
-static const u8 Str_841B2B0[] = DTR("·カウントエラーがおきました", "Count error occured.");
-static const u8 Str_841B2BF[] = DTR("·リールそうさで　エラーが　おきました", "Reel processing error occurred.");
-static const u8 Str_841B2D3[] = DTR("·フラグオフエラーが　おきました", "FLAG OFF error occurred.");
-static const u8 Str_841B2E4[] = DTR("·ボーナスこやくの　エラーが　おきました", "BONUS use error occurred."); // TRN
+static const u8 sDebugSlotText_CountError[] = DTR("·カウントエラーがおきました", "Count error occured.");
+static const u8 sDebugSlotText_ReelProcessingError[] = DTR("·リールそうさで　エラーが　おきました", "Reel processing error occurred.");
+static const u8 sDebugSlotText_FlagOffError[] = DTR("·フラグオフエラーが　おきました", "FLAG OFF error occurred.");
+static const u8 sDebugSlotText_BonusUseError[] = DTR("·ボーナスこやくの　エラーが　おきました", "BONUS use error occurred."); // TRN
 
-static void debug_sub_811B894(void)
+static void DebugSlot_CheckErrors(void)
 {
     if (sSlotMachine->matchedSymbols & 0x180)
     {
@@ -5910,12 +5910,12 @@ static void debug_sub_811B894(void)
             sSlotMachine->unk90 = 9999;
         if (sSlotMachine->unk90 != sSlotMachine->unk88)
         {
-            Menu_PrintText(Str_841B2B0, 4, 15);
+            Menu_PrintText(sDebugSlotText_CountError, 4, 15);
             unk_debug_bss_1_4 = 0;
         }
         if (!(sSlotMachine->unk04 & 0x80))
         {
-            Menu_PrintText(Str_841B2D3, 4, 17);
+            Menu_PrintText(sDebugSlotText_FlagOffError, 4, 17);
             unk_debug_bss_1_4 = 0;
         }
     }
@@ -5923,7 +5923,7 @@ static void debug_sub_811B894(void)
     {
         if ((sSlotMachine->unk04 & 0x80) && !(sSlotMachine->matchedSymbols & 3))
         {
-            Menu_PrintText(Str_841B2E4, 4, 2);
+            Menu_PrintText(sDebugSlotText_BonusUseError, 4, 2);
             unk_debug_bss_1_4 = 0;
         }
     }
@@ -5952,7 +5952,7 @@ static void debug_sub_811B894(void)
          || (sym_0_1 == 1 && sym_1_2 == 0 && sym_2_3 == 1)
          || (sym_0_3 == 1 && sym_1_2 == 0 && sym_2_1 == 1))
         {
-            Menu_PrintText(Str_841B2BF, 4, 0);
+            Menu_PrintText(sDebugSlotText_ReelProcessingError, 4, 0);
             unk_debug_bss_1_4 = 0;
         }
     }
