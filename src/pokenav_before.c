@@ -507,7 +507,7 @@ const struct SpritePalette gUnknown_083E449C[] =
     {0x0, 0},
 };
 
-const struct OamData gOamData_83E44B4 = 
+const struct OamData gPokenavLargeHeaderOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -524,56 +524,56 @@ const struct OamData gOamData_83E44B4 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E44BC[] = 
+const union AnimCmd gPokenavLargeHeaderAnim0[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E44C4[] = 
+const union AnimCmd gPokenavLargeHeaderAnim1[] =
 {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E44CC[] = 
+const union AnimCmd gPokenavLargeHeaderAnim2[] =
 {
     ANIMCMD_FRAME(64, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E44D4[] = 
+const union AnimCmd *const gPokenavLargeHeaderAnimTable[] =
 {
-    gSpriteAnim_83E44BC,
-    gSpriteAnim_83E44C4,
-    gSpriteAnim_83E44CC,
+    gPokenavLargeHeaderAnim0,
+    gPokenavLargeHeaderAnim1,
+    gPokenavLargeHeaderAnim2,
 };
 
-void sub_80F2BBC(struct Sprite *);
+void SpriteCB_SlideLeftHeaderIn(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E44E0 = 
+const struct SpriteTemplate gPokenavLargeHeaderSpriteTemplate =
 {
     .tileTag = 1,
     .paletteTag = 2,
-    .oam = &gOamData_83E44B4,
-    .anims = gSpriteAnimTable_83E44D4,
+    .oam = &gPokenavLargeHeaderOamData,
+    .anims = gPokenavLargeHeaderAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2BBC,
+    .callback = SpriteCB_SlideLeftHeaderIn,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E44F8 = 
+const struct SpriteTemplate gPokenavTrainersEyesHeaderSpriteTemplate =
 {
     .tileTag = 1,
     .paletteTag = 3,
-    .oam = &gOamData_83E44B4,
-    .anims = gSpriteAnimTable_83E44D4,
+    .oam = &gPokenavLargeHeaderOamData,
+    .anims = gPokenavLargeHeaderAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2BBC,
+    .callback = SpriteCB_SlideLeftHeaderIn,
 };
 
-const struct OamData gOamData_83E4510 = 
+const struct OamData gPokenavSmallHeaderOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -590,44 +590,44 @@ const struct OamData gOamData_83E4510 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E4518[] = 
+const union AnimCmd gPokenavSmallHeaderAnim0[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E4520[] = 
+const union AnimCmd gPokenavSmallHeaderAnim1[] =
 {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E4528[] = 
+const union AnimCmd *const gPokenavSmallHeaderAnimTable[] =
 {
-    gSpriteAnim_83E4518,
-    gSpriteAnim_83E4520,
+    gPokenavSmallHeaderAnim0,
+    gPokenavSmallHeaderAnim1,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E4530 = 
+const struct SpriteTemplate gPokenavSmallHeaderSpriteTemplate =
 {
     .tileTag = 2,
     .paletteTag = 2,
-    .oam = &gOamData_83E4510,
-    .anims = gSpriteAnimTable_83E4528,
+    .oam = &gPokenavSmallHeaderOamData,
+    .anims = gPokenavSmallHeaderAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2BBC,
+    .callback = SpriteCB_SlideLeftHeaderIn,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E4548 = 
+const struct SpriteTemplate gPokenavSmallHeaderAltSpriteTemplate =
 {
     .tileTag = 2,
     .paletteTag = 3,
-    .oam = &gOamData_83E4510,
-    .anims = gSpriteAnimTable_83E4528,
+    .oam = &gPokenavSmallHeaderOamData,
+    .anims = gPokenavSmallHeaderAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2BBC,
+    .callback = SpriteCB_SlideLeftHeaderIn,
 };
 
 const struct OamData gOamData_83E4560 = 

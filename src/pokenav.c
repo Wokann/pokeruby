@@ -114,10 +114,10 @@ extern const u8 gPokenavConditionHeaderLabels_Gfx[];
 extern const u8 gPokenavConditionHeaderLabels2_Gfx[];
 extern const u8 gPokenavTrainersEyesHeader_Gfx[];
 extern const struct SpritePalette gUnknown_083E449C[];
-extern const struct SpriteTemplate gSpriteTemplate_83E4530;
-extern const struct SpriteTemplate gSpriteTemplate_83E4548;
-extern const struct SpriteTemplate gSpriteTemplate_83E44E0;
-extern const struct SpriteTemplate gSpriteTemplate_83E44F8;
+extern const struct SpriteTemplate gPokenavSmallHeaderSpriteTemplate;
+extern const struct SpriteTemplate gPokenavSmallHeaderAltSpriteTemplate;
+extern const struct SpriteTemplate gPokenavLargeHeaderSpriteTemplate;
+extern const struct SpriteTemplate gPokenavTrainersEyesHeaderSpriteTemplate;
 extern const struct SpriteSheet gUnknown_083E4568;
 extern const struct SpriteTemplate gSpriteTemplate_83E4570;
 extern const struct SpritePalette gUnknown_083E4588;
@@ -2482,7 +2482,7 @@ void LoadPokenavMenuHeaderSpriteSheet(u8 headerType)
     LoadSpriteSheet(&spriteSheet);
 }
 
-void sub_80F29B8(u8 arg0)
+void CreatePokenavLeftHeaderSprites(u8 headerType)
 {
     u16 i;
     s16 deltaX, endX, initialX;
@@ -2493,7 +2493,7 @@ void sub_80F29B8(u8 arg0)
     u8 spriteId;
 
     spriteTemplate = NULL;
-    switch (arg0)
+    switch (headerType)
     {
     case 0:
     case 1:
@@ -2504,8 +2504,8 @@ void sub_80F29B8(u8 arg0)
         deltaX = 8;
         endX = 32;
         width = 64;
-        sprites = gPokenavStructPtr->unk3B88;
-        spriteTemplate = arg0 != 3 ? &gSpriteTemplate_83E44E0 : &gSpriteTemplate_83E44F8;
+        sprites = gPokenavStructPtr->largeHeaderSprites;
+        spriteTemplate = headerType != 3 ? &gPokenavLargeHeaderSpriteTemplate : &gPokenavTrainersEyesHeaderSpriteTemplate;
         break;
     case 4:
         initialX = 272;
@@ -2513,27 +2513,27 @@ void sub_80F29B8(u8 arg0)
         deltaX = -8;
         endX = 152;
         width = 64;
-        spriteTemplate = &gSpriteTemplate_83E44E0;
-        sprites = gPokenavStructPtr->unk3B88;
+        spriteTemplate = &gPokenavLargeHeaderSpriteTemplate;
+        sprites = gPokenavStructPtr->largeHeaderSprites;
         break;
     case 5:
     case 6:
     case 8:
     case 9:
-        spriteTemplate = &gSpriteTemplate_83E4530;
+        spriteTemplate = &gPokenavSmallHeaderSpriteTemplate;
         // fall through
     case 7:
     case 10:
     case 11:
         if (spriteTemplate == NULL)
-            spriteTemplate = &gSpriteTemplate_83E4548;
+            spriteTemplate = &gPokenavSmallHeaderAltSpriteTemplate;
 
         initialX = -96;
         y = 68 - gPokenavStructPtr->menuVerticalOffset;
         deltaX = 8;
         endX = 16;
         width = 32;
-        sprites = gPokenavStructPtr->unk3B90;
+        sprites = gPokenavStructPtr->smallHeaderSprites;
         break;
     default:
         return;
@@ -2547,8 +2547,8 @@ void sub_80F29B8(u8 arg0)
             gSprites[spriteId].data[0] = deltaX;
             gSprites[spriteId].data[1] =  endX + i * width;
             gSprites[spriteId].data[2] = i;
-            gSprites[spriteId].data[3] = arg0;
-            if (arg0 == 4 && i == 1)
+            gSprites[spriteId].data[3] = headerType;
+            if (headerType == 4 && i == 1)
             {
                 int anim = !gPokenavStructPtr->regionMap.zoomed ? 1 : 2;
                 StartSpriteAnim(&gSprites[spriteId], anim);
@@ -2558,7 +2558,7 @@ void sub_80F29B8(u8 arg0)
                 StartSpriteAnim(&gSprites[spriteId], i);
             }
 
-            if (arg0 < 4 && i == 1)
+            if (headerType < 4 && i == 1)
             {
                 gSprites[spriteId].oam.shape = ST_OAM_SQUARE;
                 gSprites[spriteId].oam.size = 2;
@@ -2570,7 +2570,7 @@ void sub_80F29B8(u8 arg0)
 }
 
 #define sEndX sprite->data[1]
-void sub_80F2BBC(struct Sprite *sprite)
+void SpriteCB_SlideLeftHeaderIn(struct Sprite *sprite)
 {
     s16 x = sprite->x;
     sprite->x += sprite->data[0];
@@ -2578,14 +2578,14 @@ void sub_80F2BBC(struct Sprite *sprite)
     {
         sprite->x = sEndX;
         if (sprite->data[3] == 4 && sprite->data[2] == 1)
-            sprite->callback = sub_80F2C58;
+            sprite->callback = SpriteCB_UpdateRegionMapHeaderZoom;
         else
             sprite->callback = SpriteCallbackDummy;
     }
 }
 #undef sEndX
 
-void sub_80F2C14(struct Sprite *sprite)
+void SpriteCB_SlideLeftHeaderOut(struct Sprite *sprite)
 {
     u16 right;
 
@@ -2605,7 +2605,7 @@ void sub_80F2C14(struct Sprite *sprite)
     }
 }
 
-void sub_80F2C58(struct Sprite *sprite)
+void SpriteCB_UpdateRegionMapHeaderZoom(struct Sprite *sprite)
 {
     int anim = !gPokenavStructPtr->regionMap.zoomed ? 1 : 2;
     StartSpriteAnim(sprite, anim);
@@ -2627,7 +2627,7 @@ bool8 sub_80F2CBC(u8 arg0)
         gPokenavStructPtr->unk306++;
         return TRUE;
     case 1:
-        sub_80F29B8(arg0);
+        CreatePokenavLeftHeaderSprites(arg0);
         gPokenavStructPtr->unk306++;
         return FALSE;
     default:
@@ -2642,12 +2642,12 @@ void sub_80F2D04(u8 arg0)
     if (arg0 < 5)
     {
         for (i = 0; i < 2; i++)
-            gPokenavStructPtr->unk3B88[i]->callback = sub_80F2C14;
+            gPokenavStructPtr->largeHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
     }
     else
     {
         for (i = 0; i < 2; i++)
-            gPokenavStructPtr->unk3B90[i]->callback = sub_80F2C14;
+            gPokenavStructPtr->smallHeaderSprites[i]->callback = SpriteCB_SlideLeftHeaderOut;
     }
 }
 
@@ -2659,13 +2659,13 @@ void sub_80F2D6C(u8 arg0)
     {
         FreeSpriteTilesByTag(0x1);
         for (i = 0; i < 2; i++)
-            DestroySprite(gPokenavStructPtr->unk3B88[i]);
+            DestroySprite(gPokenavStructPtr->largeHeaderSprites[i]);
     }
     else
     {
         FreeSpriteTilesByTag(0x2);
         for (i = 0; i < 2; i++)
-            DestroySprite(gPokenavStructPtr->unk3B90[i]);
+            DestroySprite(gPokenavStructPtr->smallHeaderSprites[i]);
     }
 }
 
