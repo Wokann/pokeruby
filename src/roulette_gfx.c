@@ -99,15 +99,15 @@ extern const u16 RouletteSpritePalette_15[];
 extern const u16 RouletteSpritePalette_16[];
 #endif //ENGLISH
 
-const u8 gUnknown_083F90FC[] = INCBIN_U8("graphics/roulette/ball.4bpp.lz");
+const u8 sBall_Gfx[] = INCBIN_U8("graphics/roulette/ball.4bpp.lz");
 const u8 RouletteBallCounterTiles[] = INCBIN_U8("graphics/roulette/ball_counter.4bpp.lz");
-const u8 gUnknown_083F92A8[] = INCBIN_U8("graphics/roulette/roulette_tilt.4bpp.lz");
+const u8 sShroomishTaillow_Gfx[] = INCBIN_U8("graphics/roulette/roulette_tilt.4bpp.lz");
 const u8 RoulettePokeIconsTiles[] = INCBIN_U8("graphics/roulette/poke_icons.4bpp.lz");
 const u8 RoulettePokeIcons2Tiles[] = INCBIN_U8("graphics/roulette/poke_icons2.4bpp.lz");
-const u8 gUnknown_083F9D3C[] = INCBIN_U8("graphics/roulette/shadow.4bpp.lz");
+const u8 sShadow_Gfx[] = INCBIN_U8("graphics/roulette/shadow.4bpp.lz");
 const u8 RouletteCursorTiles[] = INCBIN_U8("graphics/roulette/cursor.4bpp.lz");
 
-const struct SpritePalette gUnknown_083F9E30[] = {
+const struct SpritePalette sSpritePalettes[] = {
     {RouletteSpritePalette_01, 1 },
     {RouletteSpritePalette_02, 2 },
     {RouletteSpritePalette_03, 3 },
@@ -164,7 +164,7 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83F9EE4[] = {
     gSpriteAffineAnim_83F9EDC
 };
 
-const struct CompressedSpriteSheet gUnknown_083F9EE8 = {
+const struct CompressedSpriteSheet sSpriteSheet_WheelIcons = {
     RoulettePokeIcons2Tiles,
     0xc00,
     0
@@ -234,13 +234,13 @@ const union AnimCmd *const gSpriteAnimTable_83F9F50[] = {
     gSpriteAnim_83F9EF0 + 11
 };
 
-const struct CompressedSpriteSheet gUnknown_083F9F54 = {
+const struct CompressedSpriteSheet sSpriteSheet_Headers = {
     gRouletteHeadersTiles,
     0x1600,
     4
 };
 
-const struct CompressedSpriteSheet gUnknown_083F9F5C = {
+const struct CompressedSpriteSheet sSpriteSheet_GridIcons = {
     RoulettePokeIconsTiles,
     0x400,
     5
@@ -372,7 +372,7 @@ const struct OamData gOamData_83FA214 = {
     .priority = 1
 };
 
-const struct SpriteSheet gUnknown_083FA21C[] = {
+const struct SpriteSheet sSpriteSheets_Interface[] = {
     {gRouletteCreditTiles, 0x400, 7},
     {gRouletteNumbersTiles, 0x280, 8},
     {gRouletteMultiplierTiles, 0x500, 9},
@@ -532,7 +532,7 @@ const struct OamData gOamData_83FA424 = {
     .priority = 2
 };
 
-const struct CompressedSpriteSheet gUnknown_083FA42C = {
+const struct CompressedSpriteSheet sSpriteSheet_WheelCenter = {
     gRouletteCenter_Gfx,
     0x800,
     6
@@ -696,10 +696,10 @@ void LoadOrFreeMiscSpritePalettesAndSheets(u8 r0)
     if (!r0)
     {
         FreeAllSpritePalettes();
-        LoadSpritePalettes(gUnknown_083F9E30);
-        LZ77UnCompWram(gUnknown_083F92A8, ewram17000);
-        LZ77UnCompWram(gUnknown_083F90FC, ewram17E00);
-        LZ77UnCompWram(gUnknown_083F9D3C, ewram18000);
+        LoadSpritePalettes(sSpritePalettes);
+        LZ77UnCompWram(sShroomishTaillow_Gfx, ewram17000);
+        LZ77UnCompWram(sBall_Gfx, ewram17E00);
+        LZ77UnCompWram(sShadow_Gfx, ewram18000);
     }
     else
     {
@@ -728,15 +728,15 @@ void CreateGridSprites(void)
     u8 i, j;
     u8 spriteid;
     struct SpriteSheet s;
-    LZ77UnCompWram(gUnknown_083F9F54.data, gSharedMem);
+    LZ77UnCompWram(sSpriteSheet_Headers.data, gSharedMem);
     s.data = gSharedMem;
-    s.size = gUnknown_083F9F54.size;
-    s.tag  = gUnknown_083F9F54.tag;
+    s.size = sSpriteSheet_Headers.size;
+    s.tag  = sSpriteSheet_Headers.tag;
     LoadSpriteSheet(&s);
-    LZ77UnCompWram(gUnknown_083F9F5C.data, gSharedMem);
+    LZ77UnCompWram(sSpriteSheet_GridIcons.data, gSharedMem);
     s.data = gSharedMem;
-    s.size = gUnknown_083F9F5C.size;
-    s.tag  = gUnknown_083F9F5C.tag;
+    s.size = sSpriteSheet_GridIcons.size;
+    s.tag  = sSpriteSheet_GridIcons.tag;
     LoadSpriteSheet(&s);
     for (i = 0; i < 3; i++)
     {
@@ -856,10 +856,10 @@ void CreateWheelIconSprites(void)
     u8 i, j;
     u16 k;
     struct SpriteSheet s;
-    LZ77UnCompWram(gUnknown_083F9EE8.data, gSharedMem);
+    LZ77UnCompWram(sSpriteSheet_WheelIcons.data, gSharedMem);
     s.data = gSharedMem;
-    s.size = gUnknown_083F9EE8.size;
-    s.tag  = gUnknown_083F9EE8.tag;
+    s.size = sSpriteSheet_WheelIcons.size;
+    s.tag  = sSpriteSheet_WheelIcons.tag;
     LoadSpriteSheet(&s);
     k = 15;
     for (i = 0; i < 3; i++)
@@ -901,10 +901,10 @@ void CreateInterfaceSprites(void)
     for (i = 0; i < 5; i++)
     {
         struct SpriteSheet s;
-        LZ77UnCompWram(gUnknown_083FA21C[i].data, gSharedMem);
+        LZ77UnCompWram(sSpriteSheets_Interface[i].data, gSharedMem);
         s.data = gSharedMem;
-        s.size = gUnknown_083FA21C[i].size;
-        s.tag  = gUnknown_083FA21C[i].tag;
+        s.size = sSpriteSheets_Interface[i].size;
+        s.tag  = sSpriteSheets_Interface[i].tag;
         LoadSpriteSheet(&s);
     }
     eRoulette->var3C[20] = CreateSprite(&gSpriteTemplate_83FA2B0, 208, 16, 4);
@@ -1047,10 +1047,10 @@ void CreateWheelCenterSprite(void)
 {
     u8 spriteid;
     struct SpriteSheet s;
-    LZ77UnCompWram(gUnknown_083FA42C.data, gSharedMem);
+    LZ77UnCompWram(sSpriteSheet_WheelCenter.data, gSharedMem);
     s.data = gSharedMem;
-    s.size = gUnknown_083FA42C.size;
-    s.tag  = gUnknown_083FA42C.tag;
+    s.size = sSpriteSheet_WheelCenter.size;
+    s.tag  = sSpriteSheet_WheelCenter.tag;
     LoadSpriteSheet(&s);
     spriteid = CreateSprite(&gSpriteTemplate_83FA434, 116, 80, 81);
     gSprites[spriteid].data[0]            = eRoulette->var24;
