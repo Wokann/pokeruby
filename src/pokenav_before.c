@@ -2832,7 +2832,7 @@ void RibbonsSummaryHandleInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F15A8();
+        PrintRibbonsSummaryCount();
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
@@ -2875,7 +2875,7 @@ void RibbonsSummaryHandleInput(void)
     case 5:
         if (!sub_80F3B58())
 		{
-			sub_80F1494();
+			PrintRibbonsSummaryDescription();
 			gPokenavStructPtr->callbackStep++;
 			PausePokenavCallbackForLink();
 		}

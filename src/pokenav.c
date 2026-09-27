@@ -32,7 +32,7 @@
 // Static RAM declarations
 
 EWRAM_DATA u8 gUnknown_020388B0[4] = {};
-EWRAM_DATA u16 gUnknown_020388B4 = 0;
+EWRAM_DATA u16 gPokenavRibbonDescriptionId = 0;
 
 extern const u8 gUnknown_083E0314[];
 extern const u16 gUnknown_08E9F9E8[];
@@ -1611,7 +1611,7 @@ void PrintRibbonsSummaryMonInfo(void)
     Menu_PrintText(gPokenavStructPtr->unk8788, 1, 5);
 }
 
-void sub_80F1480(void)
+void ClearRibbonsSummaryDescription(void)
 {
     Menu_EraseWindowRect(12, 13, 27, 16);
 }
@@ -1621,36 +1621,36 @@ void sub_80F1480(void)
 // their descriptions, since the hardcoded access is inside of the LinkBattleRecords
 // save data, rather than the giftRibbons array, which is almost certainly what the
 // intended access is.
-void sub_80F1494(void)
+void PrintRibbonsSummaryDescription(void)
 {
     u8 *arr;
     u8 *tileBuffer1 = &gUnknown_083DFEC8[0x800];
     u8 *tileBuffer2 = &gUnknown_083DFEC8[0xA98];
 
-    if (gPokenavStructPtr->unkBC91 < 3)
+    if (gPokenavStructPtr->ribbonPageIndex < 3)
     {
-        gUnknown_020388B4 = gPokenavStructPtr->unkBC91 * 9 + gPokenavStructPtr->unkBC90;
-        gUnknown_020388B4 = gPokenavStructPtr->ribbonIds[gUnknown_020388B4];
-        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gUnknown_020388B4][0], 128, 0);
-        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gUnknown_020388B4][1], 128, 0);
+        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonPageIndex * 9 + gPokenavStructPtr->ribbonCursorPos;
+        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonIds[gPokenavRibbonDescriptionId];
+        AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gPokenavRibbonDescriptionId][0], 128, 0);
+        AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gPokenavRibbonDescriptionId][1], 128, 0);
     }
     else
     {
-        gUnknown_020388B4 = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
-        gUnknown_020388B4 = gPokenavStructPtr->ribbonIds[gUnknown_020388B4 + gPokenavStructPtr->unkBC90];
+        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
+        gPokenavRibbonDescriptionId = gPokenavStructPtr->ribbonIds[gPokenavRibbonDescriptionId + gPokenavStructPtr->ribbonCursorPos];
 
         // FIXME!
         arr = ((u8*)&gSaveBlock1);
         asm("ldrh r1, [r5]\n\
             add r0, r0, r1");
-        gUnknown_020388B4 = arr[0x30F7];
+        gPokenavRibbonDescriptionId = arr[0x30F7];
         // The bug fix for this code is the following:
-        // gUnknown_020388B4 = gSaveBlock1.giftRibbons[gUnknown_020388B4];
-        if (gUnknown_020388B4)
+        // gPokenavRibbonDescriptionId = gSaveBlock1.giftRibbons[gPokenavRibbonDescriptionId];
+        if (gPokenavRibbonDescriptionId)
         {
-            gUnknown_020388B4--;
-            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptions[gUnknown_020388B4][0], 128, 0);
-            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptions[gUnknown_020388B4][1], 128, 0);
+            gPokenavRibbonDescriptionId--;
+            AlignStringInMenuWindow(tileBuffer1, gGiftRibbonDescriptions[gPokenavRibbonDescriptionId][0], 128, 0);
+            AlignStringInMenuWindow(tileBuffer2, gGiftRibbonDescriptions[gPokenavRibbonDescriptionId][1], 128, 0);
         }
         else
         {
@@ -1663,7 +1663,7 @@ void sub_80F1494(void)
     Menu_PrintText(tileBuffer2, 12, 15);
 }
 
-void sub_80F15A8(void)
+void PrintRibbonsSummaryCount(void)
 {
     u8 *buffer;
     Menu_EraseWindowRect(12, 13, 27, 16);
@@ -3203,7 +3203,7 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
 
 void sub_80F3B00(void)
 {
-    gPokenavStructPtr->unk9348 = sub_80F3A3C(gPokenavStructPtr->unkBC90, gPokenavStructPtr->unkBC91);
+    gPokenavStructPtr->unk9348 = sub_80F3A3C(gPokenavStructPtr->ribbonCursorPos, gPokenavStructPtr->ribbonPageIndex);
     if (gPokenavStructPtr->unk9348)
     {
         StartSpriteAffineAnim(gPokenavStructPtr->unk9348, 1);
@@ -4920,13 +4920,13 @@ void sub_80F66E0(void)
     }
     if (gPokenavStructPtr->ribbonCount != gPokenavStructPtr->giftRibbonCount)
     {
-        gPokenavStructPtr->unkBC90 = 0;
-        gPokenavStructPtr->unkBC91 = 0;
+        gPokenavStructPtr->ribbonCursorPos = 0;
+        gPokenavStructPtr->ribbonPageIndex = 0;
     }
     else
     {
-        gPokenavStructPtr->unkBC90 = 0;
-        gPokenavStructPtr->unkBC91 = 3;
+        gPokenavStructPtr->ribbonCursorPos = 0;
+        gPokenavStructPtr->ribbonPageIndex = 3;
     }
     r2 = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
     for (i = 0; i < 3; i++)
@@ -4947,8 +4947,8 @@ void sub_80F66E0(void)
 
 u8 sub_80F68E8(void)
 {
-    s8 r5 = gPokenavStructPtr->unkBC90;
-    s8 r4 = gPokenavStructPtr->unkBC91;
+    s8 r5 = gPokenavStructPtr->ribbonCursorPos;
+    s8 r4 = gPokenavStructPtr->ribbonPageIndex;
     s8 r12 = 1;
     do
     {
@@ -4966,7 +4966,7 @@ u8 sub_80F68E8(void)
                     r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
                 break;
             }
-            r4 = gPokenavStructPtr->unkBC91;
+            r4 = gPokenavStructPtr->ribbonPageIndex;
         }
         if (JOY_REPT(DPAD_DOWN) && r4 < 3)
         {
@@ -4982,7 +4982,7 @@ u8 sub_80F68E8(void)
                     r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
                 break;
             }
-            r4 = gPokenavStructPtr->unkBC91;
+            r4 = gPokenavStructPtr->ribbonPageIndex;
         }
         if (JOY_REPT(DPAD_LEFT))
         {
@@ -5004,10 +5004,10 @@ u8 sub_80F68E8(void)
     } while (0);
     if (r12)
     {
-        if (r5 != gPokenavStructPtr->unkBC90 || r4 != gPokenavStructPtr->unkBC91)
+        if (r5 != gPokenavStructPtr->ribbonCursorPos || r4 != gPokenavStructPtr->ribbonPageIndex)
         {
-            gPokenavStructPtr->unkBC90 = r5;
-            gPokenavStructPtr->unkBC91 = r4;
+            gPokenavStructPtr->ribbonCursorPos = r5;
+            gPokenavStructPtr->ribbonPageIndex = r4;
         }
         else
             r12 = 0;
@@ -5047,7 +5047,7 @@ bool8 sub_80F6AF0(void)
         break;
     case 1:
         REG_DISPCNT |= DISPCNT_WIN0_ON;
-        sub_80F1480();
+        ClearRibbonsSummaryDescription();
         sub_80F66E0();
         gPokenavStructPtr->unk87DE++;
         break;
