@@ -75,7 +75,7 @@ static void Task_DoFieldMove_Init(u8 taskId)
         }
         else
         {
-            sub_8059BF4();
+            SetPlayerAvatarFieldMove();
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
             gTasks[taskId].func = Task_DoFieldMove_ShowMonAfterPose;
         }

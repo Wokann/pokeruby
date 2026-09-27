@@ -76,7 +76,7 @@ void WarpFadeOutScreen(void)
 
 void SetPlayerVisibility(u8 arg)
 {
-    sub_8059B88(!arg);
+    SetPlayerInvisibility(!arg);
 }
 
 void Task_WaitForFadeAndEnableScriptCtx(u8 taskID)

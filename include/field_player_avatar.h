@@ -60,10 +60,10 @@ void SetPlayerAvatarStateMask(u8 a);
 u8 GetPlayerAvatarGraphicsIdByCurrentState(void);
 void SetPlayerAvatarExtraStateTransition(u8 a, u8 b);
 void InitPlayerAvatar(s16 a, s16 b, u8 c, u8 d);
-void sub_8059B88(u8);
-void sub_8059BF4(void);
-void sub_8059C94(u8);
-void sub_8059D08(u8);
+void SetPlayerInvisibility(bool8 invisible);
+void SetPlayerAvatarFieldMove(void);
+void PlayerUseAcroBikeOnBumpySlope(u8);
+void SetPlayerAvatarWatering(u8);
 void StartFishing(u8 a);
 
 #endif

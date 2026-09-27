@@ -20,7 +20,7 @@ static void Task_WateringBerryTreeAnim_1(u8 taskId)
     if (!ObjectEventIsMovementOverridden(playerObjEvent)
         || ObjectEventClearHeldMovementIfFinished(playerObjEvent))
     {
-        sub_8059D08(GetPlayerFacingDirection());
+        SetPlayerAvatarWatering(GetPlayerFacingDirection());
         ObjectEventSetHeldMovement(playerObjEvent, GetWalkInPlaceNormalMovementAction(GetPlayerFacingDirection()));
         gTasks[taskId].func = Task_WateringBerryTreeAnim_2;
     }
