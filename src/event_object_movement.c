@@ -6375,7 +6375,7 @@ bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct
 {
     if (objectEvent->movementType == MOVEMENT_TYPE_BURIED)
     {
-        sub_8084794(objectEvent);
+        SetBuriedTrainerMovement(objectEvent);
         return FALSE;
     }
     else if (objectEvent->movementType != MOVEMENT_TYPE_TREE_DISGUISE && objectEvent->movementType != MOVEMENT_TYPE_MOUNTAIN_DISGUISE)
