@@ -28,6 +28,11 @@ static void UpdateBobbingEffect(struct ObjectEvent *, struct Sprite *, struct Sp
 static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
 static u32 ShowDisguiseFieldEffect(u8, u8, u8);
 
+#define sReflectionObjEventId      data[0]
+#define sReflectionObjEventLocalId data[1]
+#define sReflectionVerticalOffset  data[2]
+#define sIsStillReflection         data[7]
+
 void SetUpReflection(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 stillReflection)
 {
     struct Sprite *reflectionSprite;
@@ -42,9 +47,9 @@ void SetUpReflection(struct ObjectEvent *objectEvent, struct Sprite *sprite, boo
     reflectionSprite->affineAnims = gDummySpriteAffineAnimTable;
     reflectionSprite->affineAnimBeginning = TRUE;
     reflectionSprite->subspriteMode = SUBSPRITES_OFF;
-    reflectionSprite->data[0] = sprite->data[0];
-    reflectionSprite->data[1] = objectEvent->localId;
-    reflectionSprite->data[7] = stillReflection;
+    reflectionSprite->sReflectionObjEventId = sprite->data[0];
+    reflectionSprite->sReflectionObjEventLocalId = objectEvent->localId;
+    reflectionSprite->sIsStillReflection = stillReflection;
     LoadObjectReflectionPalette(objectEvent, reflectionSprite);
 
     if (!stillReflection)
@@ -60,10 +65,10 @@ static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct 
 {
     u8 bridgeType;
     u16 bridgeReflectionVerticalOffsets[] = { 12, 28, 44 };
-    sprite->data[2] = 0;
+    sprite->sReflectionVerticalOffset = 0;
     if (!GetObjectEventGraphicsInfo(objectEvent->graphicsId)->disableReflectionPaletteLoad && ((bridgeType = MetatileBehavior_GetBridgeType(objectEvent->previousMetatileBehavior)) || (bridgeType = MetatileBehavior_GetBridgeType(objectEvent->currentMetatileBehavior))))
     {
-        sprite->data[2] = bridgeReflectionVerticalOffsets[bridgeType - 1];
+        sprite->sReflectionVerticalOffset = bridgeReflectionVerticalOffsets[bridgeType - 1];
         LoadObjectHighBridgeReflectionPalette(objectEvent, sprite->oam.paletteNum);
     }
     else
@@ -114,9 +119,9 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
     struct ObjectEvent *objectEvent;
     struct Sprite *mainSprite;
 
-    objectEvent = &gObjectEvents[reflectionSprite->data[0]];
+    objectEvent = &gObjectEvents[reflectionSprite->sReflectionObjEventId];
     mainSprite = &gSprites[objectEvent->spriteId];
-    if (!objectEvent->active || !objectEvent->hasReflection || objectEvent->localId != reflectionSprite->data[1])
+    if (!objectEvent->active || !objectEvent->hasReflection || objectEvent->localId != reflectionSprite->sReflectionObjEventLocalId)
     {
         reflectionSprite->inUse = FALSE;
     }
@@ -131,8 +136,8 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
         reflectionSprite->subspriteTableNum = mainSprite->subspriteTableNum;
         reflectionSprite->invisible = mainSprite->invisible;
         reflectionSprite->x = mainSprite->x;
-        // reflectionSprite->data[2] holds an additional vertical offset, used by the high bridges on Route 120
-        reflectionSprite->y = mainSprite->y + GetReflectionVerticalOffset(objectEvent) + reflectionSprite->data[2];
+        // sReflectionVerticalOffset holds an additional offset for the high bridges on Route 120.
+        reflectionSprite->y = mainSprite->y + GetReflectionVerticalOffset(objectEvent) + reflectionSprite->sReflectionVerticalOffset;
         reflectionSprite->centerToCornerVecX = mainSprite->centerToCornerVecX;
         reflectionSprite->centerToCornerVecY = mainSprite->centerToCornerVecY;
         reflectionSprite->x2 = mainSprite->x2;
@@ -140,7 +145,7 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
         reflectionSprite->coordOffsetEnabled = mainSprite->coordOffsetEnabled;
 
         // Check if the reflection is not still.
-        if (reflectionSprite->data[7] == FALSE)
+        if (reflectionSprite->sIsStillReflection == FALSE)
         {
             // Sets the reflection sprite's rot/scale matrix to the appropriate
             // matrix based on whether or not the main sprite is horizontally flipped.
@@ -151,6 +156,11 @@ static void UpdateObjectReflectionSprite(struct Sprite *reflectionSprite)
         }
     }
 }
+
+#undef sReflectionObjEventId
+#undef sReflectionObjEventLocalId
+#undef sReflectionVerticalOffset
+#undef sIsStillReflection
 
 u8 CreateWarpArrowSprite(void)
 {
