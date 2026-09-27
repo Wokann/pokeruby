@@ -1379,9 +1379,9 @@ void LoadTrainerEyesDescriptionLines(void)
     }
 }
 
-bool8 sub_80F0D5C(void)
+bool8 PrintTrainerEyesDescriptionStep(void)
 {
-    u32 r5;
+    u32 tilemapRow;
 
     if (gPokenavStructPtr->trainerEyesRowStep == 7)
         return FALSE;
@@ -1389,7 +1389,7 @@ bool8 sub_80F0D5C(void)
         return TRUE;
     gPokenavStructPtr->unk306 = 0;
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-    r5 = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
+    tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
 #ifndef NONMATCHING
     asm("":::"r2"); // fakematch
 #endif //NONMATCHING
@@ -1398,54 +1398,54 @@ bool8 sub_80F0D5C(void)
     default:
         return FALSE;
     case 0:
-        Menu_PrintTextPixelCoords(gOtherText_Strategy, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gOtherText_Strategy, 0x61, tilemapRow * 8, 0);
         break;
     case 1:
         AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[0], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
         break;
     case 2:
-        Menu_PrintTextPixelCoords(gOtherText_TrainersPokemon, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gOtherText_TrainersPokemon, 0x61, tilemapRow * 8, 0);
         break;
     case 3:
         AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[1], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
         break;
     case 4:
-        Menu_PrintTextPixelCoords(gOtherText_SelfIntroduction, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gOtherText_SelfIntroduction, 0x61, tilemapRow * 8, 0);
         break;
     case 5:
         AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[2], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
         break;
     case 6:
         AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[3], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, r5 * 8, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
         return FALSE;
     }
     gPokenavStructPtr->trainerEyesRowStep++;
     return TRUE;
 }
 
-void sub_80F0EC0(void)
+void InitTrainerEyesDescriptionErase(void)
 {
     gPokenavStructPtr->unk306 = 0;
     gPokenavStructPtr->trainerEyesRowStep = 0;
     StringFill(gPokenavStructPtr->unk8788, CHAR_SPACE, 16);
 }
 
-bool8 sub_80F0EF4(void)
+bool8 EraseTrainerEyesDescriptionStep(void)
 {
-    int top;
+    int tilemapRow;
     if (gPokenavStructPtr->trainerEyesRowStep > 6)
         return FALSE;
 
     if (++gPokenavStructPtr->unk306 > 1)
     {
         gPokenavStructPtr->unk306 = 0;
-        top = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
+        tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
         BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-        Menu_EraseWindowRect(12, top, 31, top + 1);
+        Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
         gPokenavStructPtr->trainerEyesRowStep++;
     }
 

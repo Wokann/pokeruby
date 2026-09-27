@@ -3140,7 +3140,7 @@ void ShowTrainerEyesTrainerInfo(void)
         LoadTrainerEyesDescriptionLines();
         gPokenavStructPtr->callbackStep++;
     case 7:
-        if (!sub_80F6E9C() && !sub_80F0D5C())
+        if (!sub_80F6E9C() && !PrintTrainerEyesDescriptionStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
@@ -3160,12 +3160,12 @@ void ShowTrainerEyesTrainerInfo(void)
 		{
             PlaySE(SE_SELECT);
             sub_80F4394();
-            sub_80F0EC0();
+            InitTrainerEyesDescriptionErase();
             gPokenavStructPtr->callbackStep++;
         }
         break;
     case 9:
-        if (!sub_80F6ED4() && !sub_80F0EF4())
+        if (!sub_80F6ED4() && !EraseTrainerEyesDescriptionStep())
         {
 			sub_80F6FB8(0);
 			sub_80F2FB0();

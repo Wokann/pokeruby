@@ -239,14 +239,14 @@ bool8 sub_80F70FC(void)
         // fallthrough
     case 5:
         if (gPokenavStructPtr->unkBC95 < 2){
-            sub_80F0D5C();
+            PrintTrainerEyesDescriptionStep();
             gPokenavStructPtr->unkBC95++;
             break;
         }
         gPokenavStructPtr->unk87DE++;
         // fallthrough
     case 6:
-        if (!sub_80F6E9C() && !sub_80F0D5C())
+        if (!sub_80F6E9C() && !PrintTrainerEyesDescriptionStep())
             gPokenavStructPtr->unk87DE++;
         break;
     default:
