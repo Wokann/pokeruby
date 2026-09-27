@@ -824,7 +824,7 @@ const struct SpriteTemplate gPokenavConditionSelectionIconTemplate =
 
 const u16 gPokenavConditionMonMarkingsPalette[] = INCBIN_U16("graphics/pokenav/condition/mon_markings.gbapal");
 
-const u16 gPokenavRibbonsIconGfx[][2] = 
+const u16 gPokenavRibbonGfxData[][2] =
 {
     {0, 0},
     {1, 0},
@@ -860,7 +860,7 @@ const u16 gPokenavRibbonsIconGfx[][2] =
     {11, 1},
 };
 
-const struct OamData gOamData_83E4718 = 
+const struct OamData gPokenavBigRibbonOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_NORMAL,
@@ -877,41 +877,41 @@ const struct OamData gOamData_83E4718 =
     .affineParam = 0,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4720[] = 
+const union AffineAnimCmd gPokenavBigRibbonNormalAnim[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4730[] = 
+const union AffineAnimCmd gPokenavBigRibbonZoomInAnim[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0x20, 0x20, 0, 4),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4748[] = 
+const union AffineAnimCmd gPokenavBigRibbonZoomOutAnim[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFE0, 0xFFE0, 0, 4),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83E4760[] = 
+const union AffineAnimCmd *const gPokenavBigRibbonAffineAnims[] =
 {
-    gSpriteAffineAnim_83E4720,
-    gSpriteAffineAnim_83E4730,
-    gSpriteAffineAnim_83E4748,
+    gPokenavBigRibbonNormalAnim,
+    gPokenavBigRibbonZoomInAnim,
+    gPokenavBigRibbonZoomOutAnim,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E476C = 
+const struct SpriteTemplate gPokenavBigRibbonSpriteTemplate =
 {
     .tileTag = 11,
     .paletteTag = 10,
-    .oam = &gOamData_83E4718,
+    .oam = &gPokenavBigRibbonOam,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83E4760,
+    .affineAnims = gPokenavBigRibbonAffineAnims,
     .callback = SpriteCallbackDummy,
 };
 
@@ -2869,11 +2869,11 @@ void RibbonsSummaryHandleInput(void)
 			gPokenavStructPtr->callbackStep = 0;
         break;
     case 4:
-        sub_80F3B00();
+        CreateAndZoomInSelectedRibbon();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        if (!sub_80F3B58())
+        if (!IsRibbonZoomInAnimating())
 		{
 			PrintRibbonsSummaryDescription();
 			gPokenavStructPtr->callbackStep++;
@@ -2885,7 +2885,7 @@ void RibbonsSummaryHandleInput(void)
         {
         case 1:
             PlaySE(SE_SELECT);
-            sub_80F3B94();
+            ZoomOutSelectedRibbon();
             gPokenavStructPtr->callbackStep = 0x7;
             return;
         default:
@@ -2893,18 +2893,18 @@ void RibbonsSummaryHandleInput(void)
             if (JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                sub_80F3B94();
+                ZoomOutSelectedRibbon();
                 gPokenavStructPtr->callbackStep = 0x8;
             }
             break;
         }
         break;
     case 7:
-        if (!sub_80F3BD4())
+        if (!UpdateRibbonZoomOutAndDestroySprite())
 			gPokenavStructPtr->callbackStep = 0x4;
         break;
     case 8:
-        if (!sub_80F3BD4())
+        if (!UpdateRibbonZoomOutAndDestroySprite())
 		{
 			DrawPokenavBottomToolbar(0x5);
 			gPokenavStructPtr->callbackStep = 0;
@@ -2930,7 +2930,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         {
 			SetVBlankCallback(NULL);
 			SetPokenavDisplayForTransition();
-			sub_80F3C2C();
+			FreeRibbonsSummarySprites();
 			ResetPokenavSetupStep();
 			gPokenavStructPtr->callbackStep++;
 		}

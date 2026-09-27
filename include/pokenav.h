@@ -191,7 +191,7 @@ struct UnkPokenavStruct {
     /*0x9344*/ u8 unk9344;
     /*0x9345*/ u8 unk9345;
 
-    /*0x9348*/ struct Sprite *unk9348;
+    /*0x9348*/ struct Sprite *bigRibbonSprite;
     /*0x934C*/ u16 ribbonsSummaryTilemap[0x280];
     /*0x984C*/ u8 ribbonIconHalfGfx[0xC][0x100];
     /*0xA44C*/ u8 ribbonIconBigGfx[0xC][0x200];
@@ -200,7 +200,7 @@ struct UnkPokenavStruct {
     /*0xBC8F*/ u8 giftRibbonCount;
     /*0xBC90*/ u8 ribbonCursorPos;
     /*0xBC91*/ u8 ribbonPageIndex;
-    /*0xBC92*/ u8 unkBC92;
+    /*0xBC92*/ u8 isBigRibbonAnimating;
     /*0xBC93*/ u8 ribbonIconLoadIndex;
     /*0xBC94*/ u8 unkBC94;
     /*0xBC95*/ u8 unkBC95;
@@ -395,11 +395,11 @@ void InitRibbonsSummarySpriteGfx(void);
 bool8 LoadRibbonsSummarySpriteGfxStep(void);
 void InitRibbonIconSpriteSheets(void);
 bool8 LoadRibbonIconSpriteSheetStep(void);
-void sub_80F3B00(void);
-bool8 sub_80F3B58(void);
-void sub_80F3B94(void);
-bool8 sub_80F3BD4(void);
-void sub_80F3C2C(void);
+void CreateAndZoomInSelectedRibbon(void);
+bool8 IsRibbonZoomInAnimating(void);
+void ZoomOutSelectedRibbon(void);
+bool8 UpdateRibbonZoomOutAndDestroySprite(void);
+void FreeRibbonsSummarySprites(void);
 void sub_80F3F20(u8, u8);
 void sub_80F3FAC(void);
 void sub_80F3FF0(void);
