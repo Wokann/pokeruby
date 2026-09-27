@@ -594,7 +594,7 @@ static void Task_AnimateBgGoingDown(u8 taskId)
     }
     else
     {
-        gWeatherPtr->unknown_6FC = (gWeatherPtr->unknown_6FC + 247) % 248;
+        gWeatherPtr->ashBaseSpritesX = (gWeatherPtr->ashBaseSpritesX + 247) % 248;
     }
 }
 

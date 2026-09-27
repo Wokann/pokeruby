@@ -77,8 +77,8 @@ struct Weather
     u8 lightenedFogSpritePals[6];
     u8 lightenedFogSpritePalsCount;
     u8 fogHSpritesCreated;
-    u16 unknown_6FC;
-    u16 unknown_6FE;
+    u16 ashBaseSpritesX;
+    u16 ashUnused;
     u8 ashSpritesCreated;
     u8 filler_701[3];
     u32 unknown_704;

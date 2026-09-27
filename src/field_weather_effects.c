@@ -1435,9 +1435,9 @@ static void DestroyFogHorizontalSprites(void)
 //------------------------------------------------------------------------------
 
 void Ash_Main(void);
-void LoadAshSpriteSheet(void);
-void CreateAshSprites(void);
-void DestroyAshSprites(void);
+static void LoadAshSpriteSheet(void);
+static void CreateAshSprites(void);
+static void DestroyAshSprites(void);
 
 void Ash_InitVars(void)
 {
@@ -1445,7 +1445,7 @@ void Ash_InitVars(void)
     gWeatherPtr->weatherGfxLoaded = FALSE;
     gWeatherPtr->gammaTargetIndex = 0;
     gWeatherPtr->gammaStepDelay = 20;
-    gWeatherPtr->unknown_6FE = 20;
+    gWeatherPtr->ashUnused = 20;
     if (!gWeatherPtr->ashSpritesCreated)
     {
         Weather_SetBlendCoeffs(0, 16);
@@ -1462,9 +1462,9 @@ void Ash_InitAll(void)
 
 void Ash_Main(void)
 {
-    gWeatherPtr->unknown_6FC = gSpriteCoordOffsetX & 0x1FF;
-    while (gWeatherPtr->unknown_6FC > 0xEF)
-        gWeatherPtr->unknown_6FC -= 0xF0;
+    gWeatherPtr->ashBaseSpritesX = gSpriteCoordOffsetX & 0x1FF;
+    while (gWeatherPtr->ashBaseSpritesX > 0xEF)
+        gWeatherPtr->ashBaseSpritesX -= 0xF0;
     switch (gWeatherPtr->initStep)
     {
     case 0:
@@ -1515,12 +1515,12 @@ bool8 Ash_Finish(void)
 
 static const struct SpriteSheet sAshSpriteSheet = {gWeatherAshTiles, sizeof(gWeatherAshTiles), 0x1202};
 
-void LoadAshSpriteSheet(void)
+static void LoadAshSpriteSheet(void)
 {
     LoadSpriteSheet(&sAshSpriteSheet);
 }
 
-const struct OamData gOamData_839ABB8 =
+static const struct OamData sAshSpriteOamData =
 {
     .y = 0,
     .affineMode = 0,
@@ -1537,31 +1537,31 @@ const struct OamData gOamData_839ABB8 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_839ABC0[] =
+static const union AnimCmd sAshSpriteAnimCmd0[] =
 {
     ANIMCMD_FRAME(0, 60),
     ANIMCMD_FRAME(64, 60),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_839ABCC[] =
+static const union AnimCmd *const sAshSpriteAnimCmds[] =
 {
-    gSpriteAnim_839ABC0,
+    sAshSpriteAnimCmd0,
 };
 
-void sub_807FAA8(struct Sprite *);
+static void UpdateAshSprite(struct Sprite *);
 static const struct SpriteTemplate sAshSpriteTemplate =
 {
     .tileTag = 4610,
     .paletteTag = 4608,
-    .oam = &gOamData_839ABB8,
-    .anims = gSpriteAnimTable_839ABCC,
+    .oam = &sAshSpriteOamData,
+    .anims = sAshSpriteAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_807FAA8,
+    .callback = UpdateAshSprite,
 };
 
-void CreateAshSprites(void)
+static void CreateAshSprites(void)
 {
     u8 i;
 
@@ -1590,7 +1590,7 @@ void CreateAshSprites(void)
     }
 }
 
-void DestroyAshSprites(void)
+static void DestroyAshSprites(void)
 {
     u16 i;
 
@@ -1606,7 +1606,7 @@ void DestroyAshSprites(void)
     }
 }
 
-void sub_807FAA8(struct Sprite *sprite)
+static void UpdateAshSprite(struct Sprite *sprite)
 {
     sprite->data[1]++;
     if (sprite->data[1] > 5)
@@ -1615,10 +1615,10 @@ void sub_807FAA8(struct Sprite *sprite)
         sprite->data[0]++;
     }
     sprite->y = gSpriteCoordOffsetY + sprite->data[0];
-    sprite->x = gWeatherPtr->unknown_6FC + 32 + sprite->data[2] * 64;
+    sprite->x = gWeatherPtr->ashBaseSpritesX + 32 + sprite->data[2] * 64;
     if (sprite->x > 271)
     {
-        sprite->x = gWeatherPtr->unknown_6FC + 0x1E0 - (4 - sprite->data[2]) * 64;
+        sprite->x = gWeatherPtr->ashBaseSpritesX + 0x1E0 - (4 - sprite->data[2]) * 64;
         sprite->x &= 0x1FF;
     }
 }
