@@ -192,7 +192,7 @@ static void sub_8136264(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_80F5CDC(6);
+    ConditionGraph_DrawAtYOffset(6);
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 

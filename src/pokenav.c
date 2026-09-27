@@ -4235,7 +4235,7 @@ void CalcPokeblockConditionGraphPositions(u8 *a0, struct UnkPokenav11 a1[])
     ConditionGraph_CalcPositions(a0, a1);
 }
 
-void sub_80F5688(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkPokenav11 * arg3, u8 arg4, u16 * arg5)
+void ConditionGraph_CalcLine(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkPokenav11 * arg3, u8 arg4, u16 * arg5)
 {
     u16 i, r8, r10, r0, var_30;
     u16 *ptr;
@@ -4337,24 +4337,24 @@ void sub_80F5688(u16 * arg1, struct UnkPokenav11 * arg2, struct UnkPokenav11 * a
     ptr[arg4] = arg4 + var_30;
 }
 
-void sub_80F58DC(struct UnkPokenav11 * a0)
+void ConditionGraph_CalcRightHalf(struct UnkPokenav11 * a0)
 {
     u16 i, r6, varMax;
 
     if (a0[0].unk2 < a0[1].unk2)
     {
         r6 = a0[0].unk2;
-        sub_80F5688((u16 *)gPokenavStructPtr->unk9130, &a0[0], &a0[1], 1, NULL);
+        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[0], &a0[1], 1, NULL);
     }
     else
     {
         r6 = a0[1].unk2;
-        sub_80F5688((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[0], 0, NULL);
+        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[0], 0, NULL);
     }
-    sub_80F5688((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[2], 1, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[1], &a0[2], 1, NULL);
 
     i = a0[2].unk2 <= a0[3].unk2;
-    sub_80F5688((u16 *)gPokenavStructPtr->unk9130, &a0[2], &a0[3], i, (u16 *)gPokenavStructPtr->unk9238);
+    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9130, &a0[2], &a0[3], i, (u16 *)gPokenavStructPtr->unk9238);
     for (i = 56; i < r6; i++)
     {
         gPokenavStructPtr->unk9130[i - 56][0] = 0;
@@ -4378,22 +4378,22 @@ void sub_80F58DC(struct UnkPokenav11 * a0)
 //    }
 }
 
-void sub_80F5A1C(struct UnkPokenav11 *arg0)
+void ConditionGraph_CalcLeftHalf(struct UnkPokenav11 *arg0)
 {
     u16 i, r6, varMax;
 
     if (arg0[0].unk2 < arg0[4].unk2)
     {
         r6 = arg0[0].unk2;
-        sub_80F5688((u16 *)gPokenavStructPtr->unk9238, &arg0[0], &arg0[4], 0, NULL);
+        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[0], &arg0[4], 0, NULL);
     }
     else
     {
         r6 = arg0[4].unk2;
-        sub_80F5688((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[0], 1, NULL);
+        ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[0], 1, NULL);
     }
 
-    sub_80F5688((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[3], 0, NULL);
+    ConditionGraph_CalcLine((u16 *)gPokenavStructPtr->unk9238, &arg0[4], &arg0[3], 0, NULL);
 
     for (i = 56; i < r6; i++)
     {
@@ -4461,14 +4461,14 @@ void sub_80F5BDC(void)
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-void sub_80F5BF0(void)
+void ConditionGraph_Draw(void)
 {
     u16 i;
 
     if (gPokenavStructPtr->unk9344)
     {
-        sub_80F58DC(gPokenavStructPtr->unk911C);
-        sub_80F5A1C(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcRightHalf(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcLeftHalf(gPokenavStructPtr->unk911C);
         for (i = 0; i < 66; i++)
         {
             gScanlineEffectRegBuffers[1][(i + 55) * 2 + 0] = gScanlineEffectRegBuffers[0][(i + 55) * 2 + 0] = (gPokenavStructPtr->unk9130[i][0] << 8) | (gPokenavStructPtr->unk9130[i][1]);
@@ -4478,14 +4478,14 @@ void sub_80F5BF0(void)
     }
 }
 
-void sub_80F5CDC(u8 a0)
+void ConditionGraph_DrawAtYOffset(u8 a0)
 {
     u16 i, r5;
 
     if (gPokenavStructPtr->unk9344)
     {
-        sub_80F58DC(gPokenavStructPtr->unk911C);
-        sub_80F5A1C(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcRightHalf(gPokenavStructPtr->unk911C);
+        ConditionGraph_CalcLeftHalf(gPokenavStructPtr->unk911C);
         r5 = 2 * (55 - a0);
         for (i = 0; i < 66; i ++)
         {

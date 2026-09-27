@@ -256,7 +256,7 @@ void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[]);
 void CalcPokeblockConditionGraphPositions(u8 *, struct UnkPokenav11 *);
 void sub_80F5B38(void);
 bool8 sub_80F5B50(void);
-void sub_80F5CDC(u8);
+void ConditionGraph_DrawAtYOffset(u8);
 void CB2_InitPokeNav(void);
 void BeginConditionGraphMonScroll(bool8);
 void DestroyConditionSparkleSprites(void);
@@ -472,7 +472,7 @@ void CB2_Pokenav(void);
 void VBlankCB_Pokenav(void);
 void sub_80FB260();
 void UpdateRegionMapCityBanner(void);
-void sub_80F5BF0();
+void ConditionGraph_Draw();
 void sub_80F6F64();
 
 #endif // GUARD_POKENAV_H

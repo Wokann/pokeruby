@@ -1250,7 +1250,7 @@ void VBlankCB_PokenavConditionGraph(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_80F5BF0();
+    ConditionGraph_Draw();
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
