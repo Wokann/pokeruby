@@ -1078,7 +1078,7 @@ void SetCurrentTrainerBattledFlag(void)
     FlagSet(CurrentOpponentTrainerFlag());
 }
 
-void unref_sub_8082590(void)
+void UnusedSetCurrentTrainerBattledFlag(void)
 {
     FlagSet(CurrentOpponentTrainerFlag()); // duplicate function
 }

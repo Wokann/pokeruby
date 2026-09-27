@@ -63,7 +63,6 @@ void SetTrainerFacingDirection(void);
 u8 GetTrainerBattleMode(void);
 bool8 GetTrainerFlag(void);
 //void sub_808257C(void);
-//void unref_sub_8082590(void); // unused
 u8 HasTrainerAlreadyBeenFought(u16);
 void SetTrainerFlag(u16);
 void ClearTrainerFlag(u16);
