@@ -28,6 +28,8 @@ static void UpdateBobbingEffect(struct ObjectEvent *, struct Sprite *, struct Sp
 static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
 static u32 ShowDisguiseFieldEffect(u8, u8, u8);
 
+#define sWaitFldEff data[0]
+
 #define sReflectionObjEventId      data[0]
 #define sReflectionObjEventLocalId data[1]
 #define sReflectionVerticalOffset  data[2]
@@ -819,7 +821,7 @@ u32 FldEff_Ripple(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = FLDEFF_RIPPLE;
+        sprite->sWaitFldEff = FLDEFF_RIPPLE;
     }
     return 0;
 }
@@ -893,7 +895,7 @@ u32 FldEff_UnusedGrass(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = FLDEFF_UNUSED_GRASS;
+        sprite->sWaitFldEff = FLDEFF_UNUSED_GRASS;
     }
     return 0;
 }
@@ -910,7 +912,7 @@ u32 FldEff_UnusedGrass2(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = FLDEFF_UNUSED_GRASS_2;
+        sprite->sWaitFldEff = FLDEFF_UNUSED_GRASS_2;
     }
     return 0;
 }
@@ -927,7 +929,7 @@ u32 FldEff_UnusedSand(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = FLDEFF_UNUSED_SAND;
+        sprite->sWaitFldEff = FLDEFF_UNUSED_SAND;
     }
     return 0;
 }
@@ -944,7 +946,7 @@ u32 FldEff_WaterSurfacing(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = FLDEFF_WATER_SURFACING;
+        sprite->sWaitFldEff = FLDEFF_WATER_SURFACING;
     }
     return 0;
 }
@@ -1303,7 +1305,7 @@ u32 FldEff_BerryTreeGrowthSparkle(void)
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
         sprite->oam.paletteNum = 5;
-        sprite->data[0] = FLDEFF_BERRY_TREE_GROWTH_SPARKLE;
+        sprite->sWaitFldEff = FLDEFF_BERRY_TREE_GROWTH_SPARKLE;
     }
     return 0;
 }
@@ -1467,7 +1469,7 @@ void UpdateJumpImpactEffect(struct Sprite *sprite)
 void WaitFieldEffectSpriteAnim(struct Sprite *sprite)
 {
     if (sprite->animEnded)
-        FieldEffectStop(sprite, sprite->data[0]);
+        FieldEffectStop(sprite, sprite->sWaitFldEff);
     else
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
 }
