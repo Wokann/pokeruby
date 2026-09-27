@@ -13,7 +13,7 @@
 
 extern struct Weather *const gWeatherPtr;
 
-const u16 gUnknown_08397108[] = INCBIN_U16("graphics/weather/1.gbapal");
+const u16 gCloudsWeatherPalette[] = INCBIN_U16("graphics/weather/1.gbapal");
 const u16 gUnknown_08397128[] = INCBIN_U16("graphics/weather/2.gbapal");
 const u8 gWeatherFog2Tiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
 const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
@@ -25,7 +25,7 @@ const u8 gWeatherAshTiles[] = INCBIN_U8("graphics/weather/ash.4bpp");
 const u8 gWeatherRainTiles[] = INCBIN_U8("graphics/weather/rain.4bpp");
 const u8 gWeatherSandstormTiles[] = INCBIN_U8("graphics/weather/sandstorm.4bpp");
 
-static const struct Coords16 gUnknown_0839A9C8[] =
+static const struct Coords16 sCloudSpriteMapCoords[] =
 {
     { 0, 66},
     { 5, 73},
@@ -34,7 +34,7 @@ static const struct Coords16 gUnknown_0839A9C8[] =
 
 static const struct SpriteSheet sCloudSpriteSheet = {gWeatherCloudTiles, sizeof(gWeatherCloudTiles), 0x1200};
 
-static const struct OamData gOamData_839A9DC =
+static const struct OamData sCloudSpriteOamData =
 {
     .y = 0,
     .affineMode = 0,
@@ -51,27 +51,27 @@ static const struct OamData gOamData_839A9DC =
     .affineParam = 0,
 };
 
-static const union AnimCmd gSpriteAnim_839A9E4[] =
+static const union AnimCmd sCloudSpriteAnimCmd[] =
 {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gSpriteAnimTable_839A9EC[] =
+static const union AnimCmd *const sCloudSpriteAnimCmds[] =
 {
-    gSpriteAnim_839A9E4,
+    sCloudSpriteAnimCmd,
 };
 
-void sub_807E0F4(struct Sprite *);
+static void UpdateCloudSprite(struct Sprite *);
 static const struct SpriteTemplate sCloudSpriteTemplate =
 {
     .tileTag = 4608,
     .paletteTag = 4609,
-    .oam = &gOamData_839A9DC,
-    .anims = gSpriteAnimTable_839A9EC,
+    .oam = &sCloudSpriteOamData,
+    .anims = sCloudSpriteAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_807E0F4,
+    .callback = UpdateCloudSprite,
 };
 
 extern void ApplyWeatherColorMapIfIdle(s8 gammaIndex);
@@ -105,7 +105,7 @@ void Clouds_InitAll(void)
         Clouds_Main();
 }
 
-void CreateCloudSprites(void);
+static void CreateCloudSprites(void);
 
 void Clouds_Main(void)
 {
@@ -129,7 +129,7 @@ void Clouds_Main(void)
     }
 }
 
-void sub_807E0A0(void);
+static void DestroyCloudSprites(void);
 
 bool8 Clouds_Finish(void)
 {
@@ -142,7 +142,7 @@ bool8 Clouds_Finish(void)
     case 1:
         if (Weather_UpdateBlend())
         {
-            sub_807E0A0();
+            DestroyCloudSprites();
             gWeatherPtr->finishStep++;
         }
         return TRUE;
@@ -154,34 +154,34 @@ bool8 Clouds_Finish(void)
 // Weather 2
 //------------------------------------------------------------------------------
 
-void Weather2_InitVars(void)
+void Sunny_InitVars(void)
 {
     gWeatherPtr->gammaTargetIndex = 0;
     gWeatherPtr->gammaStepDelay = 20;
 }
 
-void Weather2_InitAll(void)
+void Sunny_InitAll(void)
 {
-    Weather2_InitVars();
+    Sunny_InitVars();
 }
 
-void Weather2_Main(void)
+void Sunny_Main(void)
 {
 }
 
-int Weather2_Finish(void)
+bool8 Sunny_Finish(void)
 {
     return 0;
 }
 
-void CreateCloudSprites(void)
+static void CreateCloudSprites(void)
 {
     u16 i;
 
     if (gWeatherPtr->cloudSpritesCreated == TRUE)
         return;
     LoadSpriteSheet(&sCloudSpriteSheet);
-    LoadCustomWeatherSpritePalette(gUnknown_08397108);
+    LoadCustomWeatherSpritePalette(gCloudsWeatherPalette);
     for (i = 0; i < 3; i++)
     {
         u8 spriteId = CreateSprite(&sCloudSpriteTemplate, 0, 0, 0xFF);
@@ -192,7 +192,7 @@ void CreateCloudSprites(void)
 
             gWeatherPtr->sprites.s1.cloudSprites[i] = &gSprites[spriteId];
             sprite = gWeatherPtr->sprites.s1.cloudSprites[i];
-            SetSpritePosToMapCoords(gUnknown_0839A9C8[i].x + 7, gUnknown_0839A9C8[i].y + 7, &sprite->x, &sprite->y);
+            SetSpritePosToMapCoords(sCloudSpriteMapCoords[i].x + 7, sCloudSpriteMapCoords[i].y + 7, &sprite->x, &sprite->y);
             sprite->coordOffsetEnabled = TRUE;
         }
         else
@@ -203,7 +203,7 @@ void CreateCloudSprites(void)
     gWeatherPtr->cloudSpritesCreated = TRUE;
 }
 
-void sub_807E0A0(void)
+static void DestroyCloudSprites(void)
 {
     u16 i;
 
@@ -218,7 +218,7 @@ void sub_807E0A0(void)
     gWeatherPtr->cloudSpritesCreated = FALSE;
 }
 
-void sub_807E0F4(struct Sprite *sprite)
+static void UpdateCloudSprite(struct Sprite *sprite)
 {
     sprite->data[0] = (sprite->data[0] + 1) & 1;
     if (sprite->data[0] != 0)
