@@ -372,65 +372,65 @@ u8 None_Finish(void)
 // this function always builds the same two tables.
 static void BuildColorMaps(void)
 {
-    u16 v0;
-    u8 (*v1)[32];
-    u16 v2;
-    u16 v4;
-    u16 v5;
-    u16 v6;
-    u16 v9;
-    u32 v10;
-    u16 v11;
-    s16 dunno;
+    u16 mapType;
+    u8 (*colorMaps)[32];
+    u16 colorVal;
+    u16 curBrightness;
+    u16 darkeningDelta;
+    u16 colorMapIndex;
+    u16 baseBrightness;
+    u32 remainingBrightness;
+    u16 brighteningDelta;
+    s16 brightnessDiff;
 
     sPaletteColorMapTypes = sBasePaletteColorMapTypes;
-    for (v0 = 0; v0 <= 1; v0++)
+    for (mapType = 0; mapType <= 1; mapType++)
     {
-        if (v0 == 0)
-            v1 = gWeatherPtr->darkenedContrastColorMaps;
+        if (mapType == 0)
+            colorMaps = gWeatherPtr->darkenedContrastColorMaps;
         else
-            v1 = gWeatherPtr->contrastColorMaps;
+            colorMaps = gWeatherPtr->contrastColorMaps;
 
-        for (v2 = 0; v2 < 32; v2++)
+        for (colorVal = 0; colorVal < 32; colorVal++)
         {
-            v4 = v2 << 8;
-            if (v0 == 0)
-                v5 = (v2 << 8) / 16;
+            curBrightness = colorVal << 8;
+            if (mapType == 0)
+                darkeningDelta = (colorVal << 8) / 16;
             else
-                v5 = 0;
-            for (v6 = 0; v6 <= 2; v6++)
+                darkeningDelta = 0;
+            for (colorMapIndex = 0; colorMapIndex <= 2; colorMapIndex++)
             {
-                v4 = (v4 - v5);
-                v1[v6][v2] = v4 >> 8;
+                curBrightness = (curBrightness - darkeningDelta);
+                colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
             }
-            v9 = v4;
-            v10 = 0x1f00 - v4;
-            if ((0x1f00 - v4) < 0)
+            baseBrightness = curBrightness;
+            remainingBrightness = 0x1f00 - curBrightness;
+            if ((0x1f00 - curBrightness) < 0)
             {
-                v10 += 0xf;
+                remainingBrightness += 0xf;
             }
-            v11 = v10 >> 4;
-            if (v2 < 12)
+            brighteningDelta = remainingBrightness >> 4;
+            if (colorVal < 12)
             {
-                for (; v6 < 19; v6++)
+                for (; colorMapIndex < 19; colorMapIndex++)
                 {
-                    v4 += v11;
-                    dunno = v4 - v9;
-                    if (dunno > 0)
-                        v4 -= (dunno + ((u16)dunno >> 15)) >> 1;
-                    v1[v6][v2] = v4 >> 8;
-                    if (v1[v6][v2] > 0x1f)
-                        v1[v6][v2] = 0x1f;
+                    curBrightness += brighteningDelta;
+                    brightnessDiff = curBrightness - baseBrightness;
+                    if (brightnessDiff > 0)
+                        curBrightness -= (brightnessDiff + ((u16)brightnessDiff >> 15)) >> 1;
+                    colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
+                    if (colorMaps[colorMapIndex][colorVal] > 0x1f)
+                        colorMaps[colorMapIndex][colorVal] = 0x1f;
                 }
             }
             else
             {
-                for (; v6 < 19; v6++)
+                for (; colorMapIndex < 19; colorMapIndex++)
                 {
-                    v4 += v11;
-                    v1[v6][v2] = v4 >> 8;
-                    if (v1[v6][v2] > 0x1f)
-                        v1[v6][v2] = 0x1f;
+                    curBrightness += brighteningDelta;
+                    colorMaps[colorMapIndex][colorVal] = curBrightness >> 8;
+                    if (colorMaps[colorMapIndex][colorVal] > 0x1f)
+                        colorMaps[colorMapIndex][colorVal] = 0x1f;
                 }
             }
         }
