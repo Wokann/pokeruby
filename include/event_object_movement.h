@@ -340,7 +340,7 @@ u8 GetMoveDirectionFastAnimNum(u8);
 u8 GetMoveDirectionFasterAnimNum(u8);
 u8 GetMoveDirectionFastestAnimNum(u8);
 
-u32 state_to_direction(u8, u32, u32);
+u32 GetCopyDirection(u8, u32, u32);
 
 void ResetObjectEvents();
 u8 GetFirstInactiveObjectEventId(void);
