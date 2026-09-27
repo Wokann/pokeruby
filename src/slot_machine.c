@@ -43,47 +43,47 @@ enum
     SLOT_MACHINE_MATCHED_NONE
 };
 
-struct SlotMachineEwramStruct
+struct SlotMachine
 {
     /*0x00*/ u8 state;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 pikaPower;
-    /*0x03*/ u8 unk03;
-    /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
-    /*0x06*/ u8 unk06;
-    /*0x07*/ u8 unk07;
-    /*0x08*/ u16 matchedSymbols;
-    /*0x0A*/ u8 unk0A;
-    /*0x0B*/ u8 unk0B;
+    /*0x01*/ u8 machineId;
+    /*0x02*/ u8 pikaPowerBolts;
+    /*0x03*/ u8 luckyGame;
+    /*0x04*/ u8 machineBias;
+    /*0x05*/ u8 reelTimeDraw;
+    /*0x06*/ u8 didNotFailBias;
+    /*0x07*/ u8 biasSymbol;
+    /*0x08*/ u16 matches;
+    /*0x0A*/ u8 reelTimeSpinsLeft;
+    /*0x0B*/ u8 reelTimeSpinsUsed;
     /*0x0C*/ s16 coins;
     /*0x0E*/ s16 payout;
-    /*0x10*/ s16 unk10;
+    /*0x10*/ s16 netCoinLoss;
     /*0x12*/ s16 bet;
-    /*0x14*/ s16 unk14;
-    /*0x16*/ s16 unk16;
-    /*0x18*/ s16 unk18;
-    /*0x1A*/ s16 unk1A;
-    /*0x1C*/ s16 unk1C[3];
-    /*0x22*/ u16 unk22[3];
+    /*0x14*/ s16 reeltimePixelOffset;
+    /*0x16*/ s16 reeltimePosition;
+    /*0x18*/ s16 currentReel;
+    /*0x1A*/ s16 reelSpeed;
+    /*0x1C*/ s16 reelPixelOffsets[3];
+    /*0x22*/ u16 reelShockOffsets[3];
     /*0x28*/ s16 reelPositions[3];
-    /*0x2E*/ s16 unk2E[3];
-    /*0x34*/ s16 unk34[3];
-    /*0x3A*/ u8 reelTasks[3];
-    /*0x3D*/ u8 unk3D;
-    /*0x3E*/ u8 unk3E;
-    /*0x3F*/ u8 unk3F;
-    /*0x40*/ u8 unk40;
-    /*0x41*/ u8 unk41;
-    /*0x42*/ u8 unk42;
-    /*0x43*/ u8 unk43;
-    /*0x44*/ u8 unk44[5];
-    /*0x49*/ u8 unk49[2];
-    /*0x49*/ u8 unk4B[3];
-    /*0x4E*/ u8 unk4E[2];
-    /*0x50*/ u8 unk50[2];
-    /*0x52*/ u8 unk52[2];
-    /*0x54*/ u8 unk54[4];
+    /*0x2E*/ s16 reelExtraTurns[3];
+    /*0x34*/ s16 winnerRows[3];
+    /*0x3A*/ u8 slotReelTasks[3];
+    /*0x3D*/ u8 digDisplayTaskId;
+    /*0x3E*/ u8 pikaPowerBoltTaskId;
+    /*0x3F*/ u8 reelTimePikachuSpriteId;
+    /*0x40*/ u8 reelTimeNumberGapSpriteId;
+    /*0x41*/ u8 reelTimeExplosionSpriteId;
+    /*0x42*/ u8 reelTimeBrokenMachineSpriteId;
+    /*0x43*/ u8 reelTimeSmokeSpriteId;
+    /*0x44*/ u8 flashMatchLineSpriteIds[5];
+    /*0x49*/ u8 reelTimeMachineSpriteIds[2];
+    /*0x49*/ u8 reelTimeNumberSpriteIds[3];
+    /*0x4E*/ u8 reelTimeShadowSpriteIds[2];
+    /*0x50*/ u8 reelTimeBoltSpriteIds[2];
+    /*0x52*/ u8 reelTimePikachuAuraSpriteIds[2];
+    /*0x54*/ u8 reelTimeDuckSpriteIds[4];
     /*0x58*/ u16 win0h;
     /*0x5a*/ u16 win0v;
     /*0x5c*/ u16 winIn;
@@ -230,7 +230,7 @@ static void FlashSlotMachineLights(void);
 static bool8 TryStopSlotMachineLights(void);
 static void Task_FlashSlotMachineLights(u8 taskId);
 static void CreatePikaPowerBoltTask(void);
-static void AddPikaPowerBolt(u8 pikaPower);
+static void AddPikaPowerBolt(u8 pikaPowerBolts);
 static bool8 IsPikaPowerBoltAnimating(void);
 static void Task_CreatePikaPowerBolt(u8 taskId);
 static void PikaPowerBolt_Idle(struct Task *task);
@@ -238,7 +238,7 @@ static void PikaPowerBolt_AddBolt(struct Task *task);
 static void PikaPowerBolt_WaitAnim(struct Task *task);
 static void PikaPowerBolt_ClearAll(struct Task *task);
 static void ResetPikaPowerBoltTask(struct Task *task);
-static void LoadPikaPowerMeter(u8 pikaPower);
+static void LoadPikaPowerMeter(u8 pikaPowerBolts);
 static void BeginReelTime(void);
 static bool8 IsReelTimeTaskDone(void);
 static void Task_ReelTime(u8 taskId);
@@ -331,7 +331,7 @@ static u8 unk_debug_bss_1_4;
 static u32 unk_debug_bss_1_8;
 #endif
 
-static struct SlotMachineEwramStruct *const sSlotMachine = eSlotMachine;
+static struct SlotMachine *const sSlotMachine = eSlotMachine;
 
 static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[];
 static const u16 gPalette_83EDE24[];
@@ -426,7 +426,7 @@ static void PlaySlotMachine_Internal(u8 arg0, MainCallback cb)
 static void sub_81019EC(void)
 {
     struct Task *task = gTasks + FindTaskIdByFunc(SlotMachineDummyTask);
-    sSlotMachine->unk01 = task->data[0];
+    sSlotMachine->machineId = task->data[0];
     LoadWordFromTwoHalfwords((u16 *)(task->data + 1), (u32 *)&sSlotMachine->prevMainCb);
 }
 
@@ -495,18 +495,18 @@ static void SlotMachineSetup_0_1(void)
 
     sub_81019EC();
     sSlotMachine->state = 0;
-    sSlotMachine->pikaPower = 0;
-    sSlotMachine->unk03 = Random() & 1;
-    sSlotMachine->unk04 = 0;
-    sSlotMachine->matchedSymbols = 0;
-    sSlotMachine->unk0A = 0;
-    sSlotMachine->unk0B = 0;
+    sSlotMachine->pikaPowerBolts = 0;
+    sSlotMachine->luckyGame = Random() & 1;
+    sSlotMachine->machineBias = 0;
+    sSlotMachine->matches = 0;
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reelTimeSpinsUsed = 0;
     sSlotMachine->coins = gSaveBlock1.coins;
     sSlotMachine->payout = 0;
-    sSlotMachine->unk10 = 0;
+    sSlotMachine->netCoinLoss = 0;
     sSlotMachine->bet = 0;
-    sSlotMachine->unk18 = 0;
-    sSlotMachine->unk1A = 8;
+    sSlotMachine->currentReel = 0;
+    sSlotMachine->reelSpeed = 8;
     sSlotMachine->win0h = 0xf0;
     sSlotMachine->win0v = 0xa0;
     sSlotMachine->winIn = 0x3f;
@@ -514,10 +514,10 @@ static void SlotMachineSetup_0_1(void)
     sSlotMachine->backupMapMusic = GetCurrentMapMusic();
     for (i = 0; i < 3; i++)
     {
-        sSlotMachine->unk22[i] = 0;
-        sSlotMachine->reelPositions[i] = sInitialReelPositions[i][sSlotMachine->unk03] % 21;
-        sSlotMachine->unk1C[i] = 0x1f8 - sSlotMachine->reelPositions[i] * 24;
-        sSlotMachine->unk1C[i] %= 0x1f8;
+        sSlotMachine->reelShockOffsets[i] = 0;
+        sSlotMachine->reelPositions[i] = sInitialReelPositions[i][sSlotMachine->luckyGame] % 21;
+        sSlotMachine->reelPixelOffsets[i] = 0x1f8 - sSlotMachine->reelPositions[i] * 24;
+        sSlotMachine->reelPixelOffsets[i] %= 0x1f8;
     }
 #if DEBUG
     DebugSlot_ResetCounters();
@@ -614,7 +614,7 @@ static void Task_SlotMachine(u8 taskId)
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-    LoadPikaPowerMeter(sSlotMachine->pikaPower);
+    LoadPikaPowerMeter(sSlotMachine->pikaPowerBolts);
     sSlotMachine->state++;
     return FALSE;
 }
@@ -630,14 +630,14 @@ static bool8 SlotTask_ReadyNewSpin(struct Task *task)
 {
     sSlotMachine->payout = 0;
     sSlotMachine->bet = 0;
-    sSlotMachine->unk18 = 0;
-    sSlotMachine->unk04 &= 0xc0;
+    sSlotMachine->currentReel = 0;
+    sSlotMachine->machineBias &= 0xc0;
     sSlotMachine->state = 4;
     if (sSlotMachine->coins <= 0)
     {
         sSlotMachine->state = 25;
     }
-    else if (sSlotMachine->unk0A)
+    else if (sSlotMachine->reelTimeSpinsLeft)
     {
         sSlotMachine->state = 3;
         CreateDigitalDisplayScene(4);
@@ -771,7 +771,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
     SpinSlotReel(1);
     SpinSlotReel(2);
     task->data[0] = 0;
-    if (sSlotMachine->unk04 & 0x20)
+    if (sSlotMachine->machineBias & 0x20)
     {
         BeginReelTime();
         sSlotMachine->state = 10;
@@ -781,9 +781,9 @@ static bool8 SlotTask_StartSpin(struct Task *task)
         CreateDigitalDisplayScene(1);
         sSlotMachine->state = 11;
     }
-    sSlotMachine->unk1A = 8;
-    if (sSlotMachine->unk0A)
-        sSlotMachine->unk1A = ReelTimeSpeed();
+    sSlotMachine->reelSpeed = 8;
+    if (sSlotMachine->reelTimeSpinsLeft)
+        sSlotMachine->reelSpeed = ReelTimeSpeed();
 #if DEBUG
     if (unk_debug_bss_1_1 != 0)
         DebugSlot_AddCounterClamped(&sSlotMachine->unk68, 1);
@@ -796,7 +796,7 @@ static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
     if (IsReelTimeTaskDone())
     {
         CreateDigitalDisplayScene(1);
-        sSlotMachine->unk04 &= 0xDF;
+        sSlotMachine->machineBias &= 0xDF;
         sSlotMachine->state = 11;
     }
     return FALSE;
@@ -825,8 +825,8 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
         if (unk_debug_bss_1_8 == 0)
         {
             PlaySE(SE_CONTEST_PLACE);
-            StopSlotReel(sSlotMachine->unk18);
-            PressStopReelButton(sSlotMachine->unk18);
+            StopSlotReel(sSlotMachine->currentReel);
+            PressStopReelButton(sSlotMachine->currentReel);
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
             sSlotMachine->state = 13;
         }
@@ -837,8 +837,8 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_CONTEST_PLACE);
-        StopSlotReel(sSlotMachine->unk18);
-        PressStopReelButton(sSlotMachine->unk18);
+        StopSlotReel(sSlotMachine->currentReel);
+        PressStopReelButton(sSlotMachine->currentReel);
         sSlotMachine->state = 13;
     }
     return FALSE;
@@ -846,11 +846,11 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
 
 static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
 {
-    if (!IsSlotReelMoving(sSlotMachine->unk18))
+    if (!IsSlotReelMoving(sSlotMachine->currentReel))
     {
-        sSlotMachine->unk18++;
+        sSlotMachine->currentReel++;
         sSlotMachine->state = 12;
-        if (sSlotMachine->unk18 > 2)
+        if (sSlotMachine->currentReel > 2)
         {
             sSlotMachine->state = 14;
 #if DEBUG
@@ -901,12 +901,12 @@ static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
 
 bool8 SlotTask_CheckMatches(struct Task *task)
 {
-    sSlotMachine->unk04 &= 0xc0;
+    sSlotMachine->machineBias &= 0xc0;
     CheckMatch();
-    if (sSlotMachine->unk0A)
+    if (sSlotMachine->reelTimeSpinsLeft)
     {
-        sSlotMachine->unk0A--;
-        sSlotMachine->unk0B++;
+        sSlotMachine->reelTimeSpinsLeft--;
+        sSlotMachine->reelTimeSpinsUsed++;
     }
 #if DEBUG
     else
@@ -915,7 +915,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
     }
 #endif
 
-    if (sSlotMachine->matchedSymbols)
+    if (sSlotMachine->matches)
     {
 #if DEBUG
         DebugSlot_AddCounterClamped(&sSlotMachine->unk6C, sSlotMachine->payout);
@@ -923,16 +923,16 @@ bool8 SlotTask_CheckMatches(struct Task *task)
         sSlotMachine->state = 15;
         AwardPayout();
         FlashSlotMachineLights();
-        if ((sSlotMachine->unk10 -= sSlotMachine->payout) < 0)
+        if ((sSlotMachine->netCoinLoss -= sSlotMachine->payout) < 0)
         {
-            sSlotMachine->unk10 = 0;
+            sSlotMachine->netCoinLoss = 0;
         }
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+        if (sSlotMachine->matches & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             CreateDigitalDisplayScene(6);
         }
-        else if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_777_MIXED))
+        else if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_777_MIXED))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
             CreateDigitalDisplayScene(5);
@@ -942,30 +942,30 @@ bool8 SlotTask_CheckMatches(struct Task *task)
             PlayFanfare(MUS_SLOTS_WIN);
             CreateDigitalDisplayScene(2);
         }
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_MIXED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+        if (sSlotMachine->matches & ((1 << SLOT_MACHINE_MATCHED_777_MIXED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
         {
-            sSlotMachine->unk04 &= 0x3f;
-            if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
+            sSlotMachine->machineBias &= 0x3f;
+            if (sSlotMachine->matches & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
             {
-                sSlotMachine->unk0A = 0;
-                sSlotMachine->unk0B = 0;
-                sSlotMachine->unk03 = 0;
-                if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_777_BLUE))
-                    sSlotMachine->unk03 = 1;
+                sSlotMachine->reelTimeSpinsLeft = 0;
+                sSlotMachine->reelTimeSpinsUsed = 0;
+                sSlotMachine->luckyGame = 0;
+                if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_777_BLUE))
+                    sSlotMachine->luckyGame = 1;
             }
         }
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_POWER) && sSlotMachine->pikaPower < 16)
+        if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_POWER) && sSlotMachine->pikaPowerBolts < 16)
         {
-            sSlotMachine->pikaPower++;
-            AddPikaPowerBolt(sSlotMachine->pikaPower);
+            sSlotMachine->pikaPowerBolts++;
+            AddPikaPowerBolt(sSlotMachine->pikaPowerBolts);
         }
     }
     else
     {
         CreateDigitalDisplayScene(3);
         sSlotMachine->state = 20;
-        if ((sSlotMachine->unk10 += sSlotMachine->bet) > 9999)
-            sSlotMachine->unk10 = 9999;
+        if ((sSlotMachine->netCoinLoss += sSlotMachine->bet) > 9999)
+            sSlotMachine->netCoinLoss = 9999;
     }
     return FALSE;
 }
@@ -982,16 +982,16 @@ static bool8 SlotTask_EndPayout(struct Task *task)
     if (TryStopSlotMachineLights())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_RED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE)))
+        if (sSlotMachine->matches & ((1 << SLOT_MACHINE_MATCHED_777_RED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE)))
             IncrementGameStat(GAME_STAT_SLOT_JACKPOTS);
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_REPLAY))
         {
-            sSlotMachine->unk18 = 0;
+            sSlotMachine->currentReel = 0;
             sSlotMachine->state = 9;
         }
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_POWER))
+        if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_POWER))
             sSlotMachine->state = 17;
-        if (sSlotMachine->unk0A && sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->reelTimeSpinsLeft && sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_REPLAY))
         {
             CreateDigitalDisplayScene(4);
             sSlotMachine->state = 18;
@@ -1005,10 +1005,10 @@ static bool8 SlotTask_MatchedPower(struct Task *task)
     if (!IsPikaPowerBoltAnimating())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_REPLAY))
         {
             sSlotMachine->state = 9;
-            if (sSlotMachine->unk0A)
+            if (sSlotMachine->reelTimeSpinsLeft)
             {
                 CreateDigitalDisplayScene(4);
                 sSlotMachine->state = 18;
@@ -1023,7 +1023,7 @@ static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
     if (IsDigitalDisplayAnimFinished())
     {
         sSlotMachine->state = 19;
-        if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
+        if (sSlotMachine->matches & (1 << SLOT_MACHINE_MATCHED_REPLAY))
         {
             sSlotMachine->state = 9;
         }
@@ -1150,47 +1150,47 @@ static void DrawMachineBias(void)
 {
     u8 r3;
 
-    if (sSlotMachine->unk0A == 0)
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
     {
 #if DEBUG
         if (unk_debug_bss_1_1 != 0 && unk_debug_bss_1_2 != 0)
         {
-            sSlotMachine->unk04 = unk_debug_bss_1_3;
+            sSlotMachine->machineBias = unk_debug_bss_1_3;
             unk_debug_bss_1_2 = 0;
             unk_debug_bss_1_3 = 0;
-            if (sSlotMachine->unk04 & 0x80)
+            if (sSlotMachine->machineBias & 0x80)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk88, 1);
-            if (sSlotMachine->unk04 & 0x40)
+            if (sSlotMachine->machineBias & 0x40)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk84, 1);
-            if (sSlotMachine->unk04 & 0x20)
+            if (sSlotMachine->machineBias & 0x20)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk8C, 1);
-            if (sSlotMachine->unk04 & 0x10)
+            if (sSlotMachine->machineBias & 0x10)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk80, 1);
-            if (sSlotMachine->unk04 & 8)
+            if (sSlotMachine->machineBias & 8)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk7C, 1);
-            if (sSlotMachine->unk04 & 4)
+            if (sSlotMachine->machineBias & 4)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk78, 1);
-            if (sSlotMachine->unk04 & 1)
+            if (sSlotMachine->machineBias & 1)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk74, 1);
-            if (sSlotMachine->unk04 & 2)
+            if (sSlotMachine->machineBias & 2)
                 DebugSlot_AddCounterClamped(&sSlotMachine->unk70, 1);
             return;
         }
 #endif
-        if (!(sSlotMachine->unk04 & 0xc0))
+        if (!(sSlotMachine->machineBias & 0xc0))
         {
             if (ShouldTrySpecialBias())
             {
                 r3 = TrySelectBias_Special();
                 if (r3 != 3)
                 {
-                    sSlotMachine->unk04 |= sBiasesSpecial[r3];
+                    sSlotMachine->machineBias |= sBiasesSpecial[r3];
 #if DEBUG
-                    if (sSlotMachine->unk04 & 0x80)
+                    if (sSlotMachine->machineBias & 0x80)
                         DebugSlot_AddCounterClamped(&sSlotMachine->unk88, 1);
-                    if (sSlotMachine->unk04 & 0x40)
+                    if (sSlotMachine->machineBias & 0x40)
                         DebugSlot_AddCounterClamped(&sSlotMachine->unk84, 1);
-                    if (sSlotMachine->unk04 & 0x20)
+                    if (sSlotMachine->machineBias & 0x20)
                         DebugSlot_AddCounterClamped(&sSlotMachine->unk8C, 1);
 #endif
                     if (r3 != 1)
@@ -1202,17 +1202,17 @@ static void DrawMachineBias(void)
             r3 = TrySelectBias_Regular();
             if (r3 != 5)
             {
-                sSlotMachine->unk04 |= sBiasesRegular[r3];
+                sSlotMachine->machineBias |= sBiasesRegular[r3];
 #if DEBUG
-                if (sSlotMachine->unk04 & 0x10)
+                if (sSlotMachine->machineBias & 0x10)
                     DebugSlot_AddCounterClamped(&sSlotMachine->unk80, 1);
-                if (sSlotMachine->unk04 & 8)
+                if (sSlotMachine->machineBias & 8)
                     DebugSlot_AddCounterClamped(&sSlotMachine->unk7C, 1);
-                if (sSlotMachine->unk04 & 4)
+                if (sSlotMachine->machineBias & 4)
                     DebugSlot_AddCounterClamped(&sSlotMachine->unk78, 1);
-                if (sSlotMachine->unk04 & 1)
+                if (sSlotMachine->machineBias & 1)
                     DebugSlot_AddCounterClamped(&sSlotMachine->unk74, 1);
-                if (sSlotMachine->unk04 & 2)
+                if (sSlotMachine->machineBias & 2)
                     DebugSlot_AddCounterClamped(&sSlotMachine->unk70, 1);
 #endif
             }
@@ -1225,14 +1225,14 @@ static void DrawMachineBias(void)
 {
     u8 r3;
 
-    if (sSlotMachine->unk0A == 0 && !(sSlotMachine->unk04 & 0xc0))
+    if (sSlotMachine->reelTimeSpinsLeft == 0 && !(sSlotMachine->machineBias & 0xc0))
     {
         if (ShouldTrySpecialBias())
         {
             r3 = TrySelectBias_Special();
             if (r3 != 3)
             {
-                sSlotMachine->unk04 |= sBiasesSpecial[r3];
+                sSlotMachine->machineBias |= sBiasesSpecial[r3];
                 if (r3 != 1)
                 {
                     return;
@@ -1242,7 +1242,7 @@ static void DrawMachineBias(void)
         r3 = TrySelectBias_Regular();
         if (r3 != 5)
         {
-            sSlotMachine->unk04 |= sBiasesRegular[r3];
+            sSlotMachine->machineBias |= sBiasesRegular[r3];
         }
     }
 }
@@ -1250,9 +1250,9 @@ static void DrawMachineBias(void)
 
 static void ResetBiasFailure(void)
 {
-    sSlotMachine->unk06 = 0;
-    if (sSlotMachine->unk04)
-        sSlotMachine->unk06 = 1;
+    sSlotMachine->didNotFailBias = 0;
+    if (sSlotMachine->machineBias)
+        sSlotMachine->didNotFailBias = 1;
 }
 
 static u8 GetBiasSymbol(u8 a0)
@@ -1271,7 +1271,7 @@ static u8 GetBiasSymbol(u8 a0)
 static bool8 ShouldTrySpecialBias(void)
 {
     u8 rval = Random();
-    if (sSpecialDrawOdds[sSlotMachine->unk01][sSlotMachine->bet - 1] > rval)
+    if (sSpecialDrawOdds[sSlotMachine->machineId][sSlotMachine->bet - 1] > rval)
         return TRUE;
     return FALSE;
 }
@@ -1285,7 +1285,7 @@ static u8 TrySelectBias_Special(void)
     for (i = 0; i < 3; i++)
     {
         s16 rval = Random() & 0xff;
-        s16 value = sBiasProbabilities_Special[i][sSlotMachine->unk01];
+        s16 value = sBiasProbabilities_Special[i][sSlotMachine->machineId];
         if (value > rval)
             break;
     }
@@ -1301,14 +1301,14 @@ static u8 TrySelectBias_Regular(void)
     for (i = 0; i < 5; i++)
     {
         s16 rval = Random() & 0xff;
-        s16 r3 = sBiasProbabilities_Regular[i][sSlotMachine->unk01];
-        if (i == 0 && sSlotMachine->unk03 == 1)
+        s16 r3 = sBiasProbabilities_Regular[i][sSlotMachine->machineId];
+        if (i == 0 && sSlotMachine->luckyGame == 1)
         {
             r3 += 10;
             if (r3 > 0x100)
                 r3 = 0x100;
         }
-        else if (i == 4 && sSlotMachine->unk03 == 1)
+        else if (i == 4 && sSlotMachine->luckyGame == 1)
         {
             r3 -= 10;
             if (r3 < 0)
@@ -1325,10 +1325,10 @@ static const u8 sReelTimeProbabilities_LuckyGame[][17];
 
 static u8 GetReelTimeSpinProbability(u8 a0)
 {
-    if (sSlotMachine->unk03 == 0)
-        return sReelTimeProbabilities_NormalGame[a0][sSlotMachine->pikaPower];
+    if (sSlotMachine->luckyGame == 0)
+        return sReelTimeProbabilities_NormalGame[a0][sSlotMachine->pikaPowerBolts];
     else
-        return sReelTimeProbabilities_LuckyGame[a0][sSlotMachine->pikaPower];
+        return sReelTimeProbabilities_LuckyGame[a0][sSlotMachine->pikaPowerBolts];
 }
 
 static void GetReelTimeDraw(void)
@@ -1336,7 +1336,7 @@ static void GetReelTimeDraw(void)
     u8 rval;
     s16 i;
 
-    sSlotMachine->unk05 = 0;
+    sSlotMachine->reelTimeDraw = 0;
     rval = Random();
     if (rval < GetReelTimeSpinProbability(0))
         return;
@@ -1346,7 +1346,7 @@ static void GetReelTimeDraw(void)
         if (rval < GetReelTimeSpinProbability(i))
             break;
     }
-    sSlotMachine->unk05 = i;
+    sSlotMachine->reelTimeDraw = i;
 }
 
 static const u16 sReelTimeExplodeProbability[];
@@ -1368,20 +1368,20 @@ static u16 ReelTimeSpeed(void)
     u8 r4 = 0;
     u8 rval;
     u8 value;
-    if (sSlotMachine->unk10 >= 300)
+    if (sSlotMachine->netCoinLoss >= 300)
         r4 = 4;
-    else if (sSlotMachine->unk10 >= 250)
+    else if (sSlotMachine->netCoinLoss >= 250)
         r4 = 3;
-    else if (sSlotMachine->unk10 >= 200)
+    else if (sSlotMachine->netCoinLoss >= 200)
         r4 = 2;
-    else if (sSlotMachine->unk10 >= 150)
+    else if (sSlotMachine->netCoinLoss >= 150)
         r4 = 1;
     rval = Random() % 100;
     value = sReelTimeSpeed_Probabilities[r4][0];
     if (rval < value)
         return 4;
     rval = Random() % 100;
-    value = sReelTimeSpeed_Probabilities[r4][1] + sQuarterSpeed_ProbabilityBoost[sSlotMachine->unk0B];
+    value = sReelTimeSpeed_Probabilities[r4][1] + sQuarterSpeed_ProbabilityBoost[sSlotMachine->reelTimeSpinsUsed];
     if (rval < value)
         return 2;
     return 8;
@@ -1389,7 +1389,7 @@ static u16 ReelTimeSpeed(void)
 
 static void CheckMatch(void)
 {
-    sSlotMachine->matchedSymbols = 0;
+    sSlotMachine->matches = 0;
     CheckMatch_CenterRow();
     if (sSlotMachine->bet > 1)
         CheckMatch_TopAndBottom();
@@ -1411,7 +1411,7 @@ static void CheckMatch_CenterRow(void)
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(0);
     }
 }
@@ -1429,7 +1429,7 @@ static void CheckMatch_TopAndBottom(void)
         if (match == SLOT_MACHINE_MATCHED_1CHERRY)
             match = SLOT_MACHINE_MATCHED_2CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(1);
     }
     c1 = GetSymbolAtRest(0, 3);
@@ -1441,7 +1441,7 @@ static void CheckMatch_TopAndBottom(void)
         if (match == SLOT_MACHINE_MATCHED_1CHERRY)
             match = SLOT_MACHINE_MATCHED_2CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
-        sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
         FlashMatchLine(2);
     }
 }
@@ -1459,7 +1459,7 @@ static void CheckMatch_Diagonals(void)
         if (match != SLOT_MACHINE_MATCHED_1CHERRY)
         {
             sSlotMachine->payout += sSlotPayouts[match];
-            sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
         }
         FlashMatchLine(3);
     }
@@ -1472,7 +1472,7 @@ static void CheckMatch_Diagonals(void)
         if (match != SLOT_MACHINE_MATCHED_1CHERRY)
         {
             sSlotMachine->payout += sSlotPayouts[match];
-            sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
         }
         FlashMatchLine(4);
     }
@@ -1579,7 +1579,7 @@ static u8 GetSymbolAtRest(u8 x, s16 y)
 static u8 GetSymbol(u8 x, s16 y)
 {
     s16 r6 = 0;
-    if ((sSlotMachine->unk1C[x]) % 24)
+    if ((sSlotMachine->reelPixelOffsets[x]) % 24)
         r6 = -1;
     return GetSymbolAtRest(x, y + r6);
 }
@@ -1588,7 +1588,7 @@ static const u8 sReelTimeSymbols[];
 
 static u8 GetReelTimeSymbol(s16 a0)
 {
-    s16 r1 = (sSlotMachine->unk16 + a0) % 6;
+    s16 r1 = (sSlotMachine->reeltimePosition + a0) % 6;
     if (r1 < 0)
         r1 += 6;
     return sReelTimeSymbols[r1];
@@ -1596,40 +1596,40 @@ static u8 GetReelTimeSymbol(s16 a0)
 
 static void AdvanceSlotReel(u8 a0, s16 a1)
 {
-    sSlotMachine->unk1C[a0] += a1;
-    sSlotMachine->unk1C[a0] %= 504;
-    sSlotMachine->reelPositions[a0] = 21 - sSlotMachine->unk1C[a0] / 24;
+    sSlotMachine->reelPixelOffsets[a0] += a1;
+    sSlotMachine->reelPixelOffsets[a0] %= 504;
+    sSlotMachine->reelPositions[a0] = 21 - sSlotMachine->reelPixelOffsets[a0] / 24;
 }
 
 static s16 AdvanceSlotReelToNextSymbol(u8 a0, s16 a1)
 {
-    s16 r1 = sSlotMachine->unk1C[a0] % 24;
+    s16 r1 = sSlotMachine->reelPixelOffsets[a0] % 24;
     if (r1 != 0)
     {
         if (r1 < a1)
             a1 = r1;
         AdvanceSlotReel(a0, a1);
-        r1 = sSlotMachine->unk1C[a0] % 24;
+        r1 = sSlotMachine->reelPixelOffsets[a0] % 24;
     }
     return r1;
 }
 
 static void AdvanceReeltimeReel(s16 a0)
 {
-    sSlotMachine->unk14 += a0;
-    sSlotMachine->unk14 %= 120;
-    sSlotMachine->unk16 = 6 - sSlotMachine->unk14 / 20;
+    sSlotMachine->reeltimePixelOffset += a0;
+    sSlotMachine->reeltimePixelOffset %= 120;
+    sSlotMachine->reeltimePosition = 6 - sSlotMachine->reeltimePixelOffset / 20;
 }
 
 static s16 AdvanceReeltimeReelToNextSymbol(s16 a0)
 {
-    s16 r1 = sSlotMachine->unk14 % 20;
+    s16 r1 = sSlotMachine->reeltimePixelOffset % 20;
     if (r1 != 0)
     {
         if (r1 < a0)
             a0 = r1;
         AdvanceReeltimeReel(a0);
-        r1 = sSlotMachine->unk14 % 20;
+        r1 = sSlotMachine->reeltimePixelOffset % 20;
     }
     return r1;
 }
@@ -1641,25 +1641,25 @@ static void CreateReelTasks(void)
     {
         u8 taskId = CreateTask(Task_Reel, 2);
         gTasks[taskId].data[15] = i;
-        sSlotMachine->reelTasks[i] = taskId;
+        sSlotMachine->slotReelTasks[i] = taskId;
         Task_Reel(taskId);
     }
 }
 
 static void SpinSlotReel(u8 a0)
 {
-    gTasks[sSlotMachine->reelTasks[a0]].data[0] = 1;
-    gTasks[sSlotMachine->reelTasks[a0]].data[14] = 1;
+    gTasks[sSlotMachine->slotReelTasks[a0]].data[0] = 1;
+    gTasks[sSlotMachine->slotReelTasks[a0]].data[14] = 1;
 }
 
 static void StopSlotReel(u8 a0)
 {
-    gTasks[sSlotMachine->reelTasks[a0]].data[0] = 2;
+    gTasks[sSlotMachine->slotReelTasks[a0]].data[0] = 2;
 }
 
 static bool8 IsSlotReelMoving(u8 a0)
 {
-    return gTasks[sSlotMachine->reelTasks[a0]].data[14];
+    return gTasks[sSlotMachine->slotReelTasks[a0]].data[14];
 }
 
 static bool8 (*const sReelTasks[])(struct Task *task) =
@@ -1684,7 +1684,7 @@ static bool8 ReelTask_StayStill(struct Task *task)
 
 static bool8 ReelTask_Spin(struct Task *task)
 {
-    AdvanceSlotReel(task->data[15], sSlotMachine->unk1A);
+    AdvanceSlotReel(task->data[15], sSlotMachine->reelSpeed);
     return FALSE;
 }
 
@@ -1705,30 +1705,30 @@ static void (*const sDecideStop_NoBias[])(void) =
 static bool8 ReelTask_DecideStop(struct Task *task)
 {
     task->data[0]++;
-    sSlotMachine->unk34[task->data[15]] = 0;
-    sSlotMachine->unk2E[task->data[15]] = 0;
-    if (sSlotMachine->unk0A == 0 && (sSlotMachine->unk04 == 0 || sSlotMachine->unk06 == 0 || !sDecideStop_Bias[task->data[15]]()))
+    sSlotMachine->winnerRows[task->data[15]] = 0;
+    sSlotMachine->reelExtraTurns[task->data[15]] = 0;
+    if (sSlotMachine->reelTimeSpinsLeft == 0 && (sSlotMachine->machineBias == 0 || sSlotMachine->didNotFailBias == 0 || !sDecideStop_Bias[task->data[15]]()))
     {
-        sSlotMachine->unk06 = 0;
+        sSlotMachine->didNotFailBias = 0;
         sDecideStop_NoBias[task->data[15]]();
     }
-    task->data[1] = sSlotMachine->unk2E[task->data[15]];
+    task->data[1] = sSlotMachine->reelExtraTurns[task->data[15]];
     return TRUE;
 }
 
 static bool8 ReelTask_MoveToStop(struct Task *task)
 {
     u16 sp[] = {2, 4, 4, 4, 8};
-    s16 r2 = sSlotMachine->unk1C[task->data[15]] % 24;
+    s16 r2 = sSlotMachine->reelPixelOffsets[task->data[15]] % 24;
     if (r2 != 0)
-        r2 = AdvanceSlotReelToNextSymbol(task->data[15], sSlotMachine->unk1A);
-    else if (sSlotMachine->unk2E[task->data[15]])
+        r2 = AdvanceSlotReelToNextSymbol(task->data[15], sSlotMachine->reelSpeed);
+    else if (sSlotMachine->reelExtraTurns[task->data[15]])
     {
-        sSlotMachine->unk2E[task->data[15]]--;
-        AdvanceSlotReel(task->data[15], sSlotMachine->unk1A);
-        r2 = sSlotMachine->unk1C[task->data[15]] % 24;
+        sSlotMachine->reelExtraTurns[task->data[15]]--;
+        AdvanceSlotReel(task->data[15], sSlotMachine->reelSpeed);
+        r2 = sSlotMachine->reelPixelOffsets[task->data[15]] % 24;
     }
-    if (r2 == 0 && sSlotMachine->unk2E[task->data[15]] == 0)
+    if (r2 == 0 && sSlotMachine->reelExtraTurns[task->data[15]] == 0)
     {
         task->data[0]++;
         task->data[1] = sp[task->data[1]];
@@ -1739,7 +1739,7 @@ static bool8 ReelTask_MoveToStop(struct Task *task)
 
 static bool8 ReelTask_ShakingStop(struct Task *task)
 {
-    sSlotMachine->unk22[task->data[15]] = task->data[1];
+    sSlotMachine->reelShockOffsets[task->data[15]] = task->data[1];
     task->data[1] = -task->data[1];
     task->data[2]++;
     if ((task->data[2] & 0x3) == 0)
@@ -1748,7 +1748,7 @@ static bool8 ReelTask_ShakingStop(struct Task *task)
     {
         task->data[0] = 0;
         task->data[14] = 0;
-        sSlotMachine->unk22[task->data[15]] = 0;
+        sSlotMachine->reelShockOffsets[task->data[15]] = 0;
     }
     return FALSE;
 }
@@ -1762,9 +1762,9 @@ static bool8 (*const sDecideStop_Bias_Reel1_Bets[])(u8 a0, u8 a1) =
 
 static bool8 DecideStop_Bias_Reel1(void)
 {
-    u8 r3 = GetBiasSymbol(sSlotMachine->unk04);
+    u8 r3 = GetBiasSymbol(sSlotMachine->machineBias);
     u8 r5 = r3;
-    if (sSlotMachine->unk04 & 0xc0)
+    if (sSlotMachine->machineBias & 0xc0)
     {
         r5 = 0;
         r3 = 1;
@@ -1777,7 +1777,7 @@ static bool8 EitherSymbolAtPos_Reel1(s16 y, u8 tag1, u8 tag2)
     u8 tag = GetSymbol(0, y);
     if (tag == tag1 || tag == tag2)
     {
-        sSlotMachine->unk07 = tag;
+        sSlotMachine->biasSymbol = tag;
         return TRUE;
     }
     return FALSE;
@@ -1793,7 +1793,7 @@ static bool8 AreCherriesOnScreen_Reel1(s16 y)
 
 static bool8 BiasedTowardCherryOr7s(void)
 {
-    if (sSlotMachine->unk04 & 0xc2)
+    if (sSlotMachine->machineBias & 0xc2)
         return TRUE;
     else
         return FALSE;
@@ -1807,8 +1807,8 @@ static bool8 DecideStop_Bias_Reel1_Bet1(u8 a0, u8 a1)
     {
         if (EitherSymbolAtPos_Reel1(2 - i, a0, a1))
         {
-            sSlotMachine->unk34[0] = 2;
-            sSlotMachine->unk2E[0] = i;
+            sSlotMachine->winnerRows[0] = 2;
+            sSlotMachine->reelExtraTurns[0] = i;
             return TRUE;
         }
     }
@@ -1825,8 +1825,8 @@ static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 tag1, u8 tag2)
         {
             if (EitherSymbolAtPos_Reel1(i, tag1, tag2))
             {
-                sSlotMachine->unk34[0] = i;
-                sSlotMachine->unk2E[0] = 0;
+                sSlotMachine->winnerRows[0] = i;
+                sSlotMachine->reelExtraTurns[0] = 0;
                 return TRUE;
             }
         }
@@ -1840,18 +1840,18 @@ static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 tag1, u8 tag2)
             {
                 if (i == 1 && (r7 || !AreCherriesOnScreen_Reel1(3)))
                 {
-                    sSlotMachine->unk34[0] = 3;
-                    sSlotMachine->unk2E[0] = 3;
+                    sSlotMachine->winnerRows[0] = 3;
+                    sSlotMachine->reelExtraTurns[0] = 3;
                     return TRUE;
                 }
                 if (i < 4 && (r7 || !AreCherriesOnScreen_Reel1(i + 1)))
                 {
-                    sSlotMachine->unk34[0] = 2;
-                    sSlotMachine->unk2E[0] = i + 1;
+                    sSlotMachine->winnerRows[0] = 2;
+                    sSlotMachine->reelExtraTurns[0] = i + 1;
                     return TRUE;
                 }
-                sSlotMachine->unk34[0] = 1;
-                sSlotMachine->unk2E[0] = i;
+                sSlotMachine->winnerRows[0] = 1;
+                sSlotMachine->reelExtraTurns[0] = i;
                 return TRUE;
             }
         }
@@ -1874,14 +1874,14 @@ static bool8 DecideStop_Bias_Reel2(void)
 static bool8 DecideStop_Bias_Reel2_Bet1or2(void)
 {
     s16 i;
-    s16 unk34_0 = sSlotMachine->unk34[0];
+    s16 unk34_0 = sSlotMachine->winnerRows[0];
 
     for (i = 0; i < 5; i++)
     {
-        if (GetSymbol(1, unk34_0 - i) == sSlotMachine->unk07)
+        if (GetSymbol(1, unk34_0 - i) == sSlotMachine->biasSymbol)
         {
-            sSlotMachine->unk34[1] = unk34_0;
-            sSlotMachine->unk2E[1] = i;
+            sSlotMachine->winnerRows[1] = unk34_0;
+            sSlotMachine->reelExtraTurns[1] = i;
             return TRUE;
         }
     }
@@ -1893,28 +1893,28 @@ static bool8 DecideStop_Bias_Reel2_Bet3(void)
     s16 i;
     if (DecideStop_Bias_Reel2_Bet1or2())
     {
-        if (sSlotMachine->unk34[0] != 2 && sSlotMachine->unk2E[1] > 1 && sSlotMachine->unk2E[1] != 4)
+        if (sSlotMachine->winnerRows[0] != 2 && sSlotMachine->reelExtraTurns[1] > 1 && sSlotMachine->reelExtraTurns[1] != 4)
         {
             for (i = 0; i < 5; i++)
             {
-                if (GetSymbol(1, 2 - i) == sSlotMachine->unk07)
+                if (GetSymbol(1, 2 - i) == sSlotMachine->biasSymbol)
                 {
-                    sSlotMachine->unk34[1] = 2;
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = 2;
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
         }
         return TRUE;
     }
-    if (sSlotMachine->unk34[0] != 2)
+    if (sSlotMachine->winnerRows[0] != 2)
     {
         for (i = 0; i < 5; i++)
         {
-            if (GetSymbol(1, 2 - i) == sSlotMachine->unk07)
+            if (GetSymbol(1, 2 - i) == sSlotMachine->biasSymbol)
             {
-                sSlotMachine->unk34[1] = 2;
-                sSlotMachine->unk2E[1] = i;
+                sSlotMachine->winnerRows[1] = 2;
+                sSlotMachine->reelExtraTurns[1] = i;
                 return TRUE;
             }
         }
@@ -1931,11 +1931,11 @@ static bool8 (*const sDecideStop_Bias_Reel3_Bets[])(u8 a0) =
 
 static bool8 DecideStop_Bias_Reel3(void)
 {
-    u8 r3 = sSlotMachine->unk07;
-    if (sSlotMachine->unk04 & 0x40)
+    u8 r3 = sSlotMachine->biasSymbol;
+    if (sSlotMachine->machineBias & 0x40)
     {
         r3 = 0;
-        if (sSlotMachine->unk07 == 0)
+        if (sSlotMachine->biasSymbol == 0)
         {
             r3 = 1;
         }
@@ -1946,14 +1946,14 @@ static bool8 DecideStop_Bias_Reel3(void)
 static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0)
 {
     s16 i;
-    s16 unk34_1 = sSlotMachine->unk34[1];
+    s16 unk34_1 = sSlotMachine->winnerRows[1];
 
     for (i = 0; i < 5; i++)
     {
         if (GetSymbol(2, unk34_1 - i) == a0)
         {
-            sSlotMachine->unk34[2] = unk34_1;
-            sSlotMachine->unk2E[2] = i;
+            sSlotMachine->winnerRows[2] = unk34_1;
+            sSlotMachine->reelExtraTurns[2] = i;
             return TRUE;
         }
     }
@@ -1964,9 +1964,9 @@ static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0)
 {
     s16 i;
     s16 r8;
-    if (sSlotMachine->unk34[0] == sSlotMachine->unk34[1])
+    if (sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1])
         return DecideStop_Bias_Reel3_Bet1or2(a0);
-    if (sSlotMachine->unk34[0] == 1)
+    if (sSlotMachine->winnerRows[0] == 1)
         r8 = 3;
     else
         r8 = 1;
@@ -1974,8 +1974,8 @@ static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0)
     {
         if (GetSymbol(2, r8 - i) == a0)
         {
-            sSlotMachine->unk2E[2] = i;
-            sSlotMachine->unk34[2] = r8;
+            sSlotMachine->reelExtraTurns[2] = i;
+            sSlotMachine->winnerRows[2] = r8;
             return TRUE;
         }
     }
@@ -1988,7 +1988,7 @@ static void DecideStop_NoBias_Reel1(void)
 
     while (AreCherriesOnScreen_Reel1(i) != 0)
         i++;
-    sSlotMachine->unk2E[0] = i;
+    sSlotMachine->reelExtraTurns[0] = i;
 }
 
 static bool8 IfSymbol7_SwitchColor(u8 *a0)
@@ -2020,9 +2020,9 @@ static void DecideStop_NoBias_Reel2(void)
 
 static void DecideStop_NoBias_Reel2_Bet1(void)
 {
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        u8 sp0 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
+        u8 sp0 = GetSymbol(0, 2 - sSlotMachine->reelExtraTurns[0]);
         if (IfSymbol7_SwitchColor(&sp0))
         {
             s16 i;
@@ -2030,8 +2030,8 @@ static void DecideStop_NoBias_Reel2_Bet1(void)
             {
                 if (sp0 == GetSymbol(1, 2 - i))
                 {
-                    sSlotMachine->unk34[1] = 2;
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = 2;
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
@@ -2041,18 +2041,18 @@ static void DecideStop_NoBias_Reel2_Bet1(void)
 
 static void DecideStop_NoBias_Reel2_Bet2(void)
 {
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+        u8 sp0 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
         if (IfSymbol7_SwitchColor(&sp0))
         {
             s16 i;
             for (i = 0; i < 5; i++)
             {
-                if (sp0 == GetSymbol(1, sSlotMachine->unk34[0] - i))
+                if (sp0 == GetSymbol(1, sSlotMachine->winnerRows[0] - i))
                 {
-                    sSlotMachine->unk34[1] = sSlotMachine->unk34[0];
-                    sSlotMachine->unk2E[1] = i;
+                    sSlotMachine->winnerRows[1] = sSlotMachine->winnerRows[0];
+                    sSlotMachine->reelExtraTurns[1] = i;
                     break;
                 }
             }
@@ -2064,57 +2064,57 @@ static void DecideStop_NoBias_Reel2_Bet3(void)
 {
     s16 i;
     s16 j;
-    if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & 0x80)
     {
-        if (sSlotMachine->unk34[0] == 2)
+        if (sSlotMachine->winnerRows[0] == 2)
         {
             DecideStop_NoBias_Reel2_Bet2();
         }
         else
         {
-            u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+            u8 sp0 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
             if (IfSymbol7_SwitchColor(&sp0))
             {
                 j = 2;
-                if (sSlotMachine->unk34[0] == 3)
+                if (sSlotMachine->winnerRows[0] == 3)
                     j = 3;
                 for (i = 0; i < 2; i++, j--)
                 {
                     if (sp0 == GetSymbol(1, j))
                     {
-                        sSlotMachine->unk34[1] = j;
-                        sSlotMachine->unk2E[1] = 0;
+                        sSlotMachine->winnerRows[1] = j;
+                        sSlotMachine->reelExtraTurns[1] = 0;
                         return;
                     }
                 }
                 for (j = 1; j < 5; j++)
                 {
-                    if (sp0 == GetSymbol(1, sSlotMachine->unk34[0] - j))
+                    if (sp0 == GetSymbol(1, sSlotMachine->winnerRows[0] - j))
                     {
-                        if (sSlotMachine->unk34[0] == 1)
+                        if (sSlotMachine->winnerRows[0] == 1)
                         {
                             if (j < 3)
                             {
-                                sSlotMachine->unk34[1] = 2;
-                                sSlotMachine->unk2E[1] = j + 1;
+                                sSlotMachine->winnerRows[1] = 2;
+                                sSlotMachine->reelExtraTurns[1] = j + 1;
                             }
                             else
                             {
-                                sSlotMachine->unk34[1] = 1;
-                                sSlotMachine->unk2E[1] = j;
+                                sSlotMachine->winnerRows[1] = 1;
+                                sSlotMachine->reelExtraTurns[1] = j;
                             }
                         }
                         else
                         {
                             if (j < 3)
                             {
-                                sSlotMachine->unk34[1] = 3;
-                                sSlotMachine->unk2E[1] = j;
+                                sSlotMachine->winnerRows[1] = 3;
+                                sSlotMachine->reelExtraTurns[1] = j;
                             }
                             else
                             {
-                                sSlotMachine->unk34[1] = 2;
-                                sSlotMachine->unk2E[1] = j - 1;
+                                sSlotMachine->winnerRows[1] = 2;
+                                sSlotMachine->reelExtraTurns[1] = j - 1;
                             }
                         }
                         return;
@@ -2169,8 +2169,8 @@ static void DecideStop_NoBias_Reel3(void)
 static void DecideStop_NoBias_Reel3_Bet1(void)
 {
     s16 i = 0;
-    u8 r5 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
-    u8 r1 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
+    u8 r5 = GetSymbol(0, 2 - sSlotMachine->reelExtraTurns[0]);
+    u8 r1 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
     if (r5 == r1)
     {
         while (1)
@@ -2183,13 +2183,13 @@ static void DecideStop_NoBias_Reel3_Bet1(void)
     }
     else if (MismatchedSyms_77(r5, r1))
     {
-        if (sSlotMachine->unk04 & 0x80)
+        if (sSlotMachine->machineBias & 0x80)
         {
             for (i = 0; i < 5; i++)
             {
                 if (r5 == GetSymbol(2, 2 - i))
                 {
-                    sSlotMachine->unk2E[2] = i;
+                    sSlotMachine->reelExtraTurns[2] = i;
                     return;
                 }
             }
@@ -2202,7 +2202,7 @@ static void DecideStop_NoBias_Reel3_Bet1(void)
             i++;
         }
     }
-    sSlotMachine->unk2E[2] = i;
+    sSlotMachine->reelExtraTurns[2] = i;
 }
 
 static void DecideStop_NoBias_Reel3_Bet2(void)
@@ -2213,15 +2213,15 @@ static void DecideStop_NoBias_Reel3_Bet2(void)
     u8 r6;
     u8 r4;
 
-    if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] == sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[1] != 0 && sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1] && sSlotMachine->machineBias & 0x80)
     {
-        r7 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r6 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
+        r7 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        r6 = GetSymbol(1, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
         if (MismatchedSyms_77(r7, r6))
         {
             for (i = 0; i < 5; i++)
             {
-                r4 = GetSymbol(2, sSlotMachine->unk34[1] - i);
+                r4 = GetSymbol(2, sSlotMachine->winnerRows[1] - i);
                 if (r7 == r4)
                 {
                     sp0 = i;
@@ -2235,10 +2235,10 @@ static void DecideStop_NoBias_Reel3_Bet2(void)
         s16 r8;
         for (i = 1, r8 = 0; i < 4; i++)
         {
-            r7 = GetSymbol(0, i - sSlotMachine->unk2E[0]);
-            r6 = GetSymbol(1, i - sSlotMachine->unk2E[1]);
+            r7 = GetSymbol(0, i - sSlotMachine->reelExtraTurns[0]);
+            r6 = GetSymbol(1, i - sSlotMachine->reelExtraTurns[1]);
             r4 = GetSymbol(2, i - sp0);
-            if (!NeitherMatchNor7Mismatch(r7, r6, r4) && (!MismatchedSyms_777(r7, r6, r4) || !(sSlotMachine->unk04 & 0x80)))
+            if (!NeitherMatchNor7Mismatch(r7, r6, r4) && (!MismatchedSyms_777(r7, r6, r4) || !(sSlotMachine->machineBias & 0x80)))
             {
                 r8++;
                 break;
@@ -2248,7 +2248,7 @@ static void DecideStop_NoBias_Reel3_Bet2(void)
             break;
         sp0++;
     }
-    sSlotMachine->unk2E[2] = sp0;
+    sSlotMachine->reelExtraTurns[2] = sp0;
 }
 
 static void DecideStop_NoBias_Reel3_Bet3(void)
@@ -2260,21 +2260,21 @@ static void DecideStop_NoBias_Reel3_Bet3(void)
     s16 i;
 
     DecideStop_NoBias_Reel3_Bet2();
-    if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] != sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
+    if (sSlotMachine->winnerRows[1] != 0 && sSlotMachine->winnerRows[0] != sSlotMachine->winnerRows[1] && sSlotMachine->machineBias & 0x80)
     {
-        r6 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r5 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
+        r6 = GetSymbol(0, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        r5 = GetSymbol(1, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
         if (MismatchedSyms_77(r6, r5))
         {
             r8 = 1;
-            if (sSlotMachine->unk34[0] == 1)
+            if (sSlotMachine->winnerRows[0] == 1)
                 r8 = 3;
             for (i = 0; i < 5; i++)
             {
-                r4 = GetSymbol(2, r8 - (sSlotMachine->unk2E[2] + i));
+                r4 = GetSymbol(2, r8 - (sSlotMachine->reelExtraTurns[2] + i));
                 if (r6 == r4)
                 {
-                    sSlotMachine->unk2E[2] += i;
+                    sSlotMachine->reelExtraTurns[2] += i;
                     break;
                 }
             }
@@ -2282,21 +2282,21 @@ static void DecideStop_NoBias_Reel3_Bet3(void)
     }
     while (1)
     {
-        r6 = GetSymbol(0, 1 - sSlotMachine->unk2E[0]);
-        r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetSymbol(2, 3 - sSlotMachine->unk2E[2]);
-        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        r6 = GetSymbol(0, 1 - sSlotMachine->reelExtraTurns[0]);
+        r5 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
+        r4 = GetSymbol(2, 3 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->machineBias & 0x80))
             break;
-        sSlotMachine->unk2E[2]++;
+        sSlotMachine->reelExtraTurns[2]++;
     }
     while (1)
     {
-        r6 = GetSymbol(0, 3 - sSlotMachine->unk2E[0]);
-        r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetSymbol(2, 1 - sSlotMachine->unk2E[2]);
-        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        r6 = GetSymbol(0, 3 - sSlotMachine->reelExtraTurns[0]);
+        r5 = GetSymbol(1, 2 - sSlotMachine->reelExtraTurns[1]);
+        r4 = GetSymbol(2, 1 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->machineBias & 0x80))
             break;
-        sSlotMachine->unk2E[2]++;
+        sSlotMachine->reelExtraTurns[2]++;
     }
 }
 
@@ -2377,13 +2377,13 @@ static void CreateInvisibleFlashMatchLineSprites(void)
     {
         u8 spriteId = CreateInvisibleSprite(SpriteCB_FlashMatchingLines);
         gSprites[spriteId].data[0] = i;
-        sSlotMachine->unk44[i] = spriteId;
+        sSlotMachine->flashMatchLineSpriteIds[i] = spriteId;
     }
 }
 
 static void FlashMatchLine(u8 a0)
 {
-    struct Sprite *sprite = gSprites + sSlotMachine->unk44[a0];
+    struct Sprite *sprite = gSprites + sSlotMachine->flashMatchLineSpriteIds[a0];
     sprite->data[1] = 1;
     sprite->data[2] = 4;
     sprite->data[3] = 0;
@@ -2397,7 +2397,7 @@ static bool8 IsMatchLineDoneFlashingBeforePayout(void)
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        struct Sprite *sprite = &gSprites[sSlotMachine->unk44[i]];
+        struct Sprite *sprite = &gSprites[sSlotMachine->flashMatchLineSpriteIds[i]];
         if (sprite->data[1] && sprite->data[2])
             return FALSE;
     }
@@ -2409,7 +2409,7 @@ static bool8 TryStopMatchLinesFlashing(void)
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        if (!TryStopMatchLineFlashing(sSlotMachine->unk44[i]))
+        if (!TryStopMatchLineFlashing(sSlotMachine->flashMatchLineSpriteIds[i]))
             return FALSE;
     }
     return TRUE;
@@ -2491,12 +2491,12 @@ static void Task_FlashSlotMachineLights(u8 taskId)
 
 static void CreatePikaPowerBoltTask(void)
 {
-    sSlotMachine->unk3E = CreateTask(Task_CreatePikaPowerBolt, 8);
+    sSlotMachine->pikaPowerBoltTaskId = CreateTask(Task_CreatePikaPowerBolt, 8);
 }
 
-static void AddPikaPowerBolt(u8 pikaPower)
+static void AddPikaPowerBolt(u8 pikaPowerBolts)
 {
-    struct Task *task = gTasks + sSlotMachine->unk3E;
+    struct Task *task = gTasks + sSlotMachine->pikaPowerBoltTaskId;
     ResetPikaPowerBoltTask(task);
     task->data[0] = 1;
     task->data[1]++;
@@ -2505,7 +2505,7 @@ static void AddPikaPowerBolt(u8 pikaPower)
 
 static void ResetPikaPowerBolts(void)
 {
-    struct Task *task = gTasks + sSlotMachine->unk3E;
+    struct Task *task = gTasks + sSlotMachine->pikaPowerBoltTaskId;
     ResetPikaPowerBoltTask(task);
     task->data[0] = 3;
     task->data[15] = 1;
@@ -2513,7 +2513,7 @@ static void ResetPikaPowerBolts(void)
 
 static bool8 IsPikaPowerBoltAnimating(void)
 {
-    return gTasks[sSlotMachine->unk3E].data[15];
+    return gTasks[sSlotMachine->pikaPowerBoltTaskId].data[15];
 }
 
 static void (*const sPikaPowerBoltTasks[])(struct Task *task) =
@@ -2595,13 +2595,13 @@ static void ResetPikaPowerBoltTask(struct Task *task)
         task->data[i] = 0;
 }
 
-static void LoadPikaPowerMeter(u8 pikaPower)
+static void LoadPikaPowerMeter(u8 pikaPowerBolts)
 {
     s16 i;
     u8 r3;
     s16 r2 = 3;
     u16 *vaddr = (u16 *)BG_SCREEN_ADDR(29);
-    for (i = 0; i < pikaPower; i++, r2++)
+    for (i = 0; i < pikaPowerBolts; i++, r2++)
     {
         r3 = 0;
         if (i == 0)
@@ -2619,7 +2619,7 @@ static void LoadPikaPowerMeter(u8 pikaPower)
             r3 = 2;
         vaddr[r2 + 0x40] = sPikaPowerTileTable[r3][1];
     }
-    gTasks[sSlotMachine->unk3E].data[1] = pikaPower;
+    gTasks[sSlotMachine->pikaPowerBoltTaskId].data[1] = pikaPowerBolts;
 }
 
 static void BeginReelTime(void)
@@ -2665,9 +2665,9 @@ static void Task_ReelTime(u8 taskId)
 
 static void ReelTime_Init(struct Task *task)
 {
-    sSlotMachine->unk0A = 0;
-    sSlotMachine->unk14 = 0;
-    sSlotMachine->unk16 = 0;
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reeltimePixelOffset = 0;
+    sSlotMachine->reeltimePosition = 0;
     task->data[0]++;
     task->data[1] = 0;
     task->data[2] = 30;
@@ -2731,7 +2731,7 @@ static void ReelTime_PikachuSpeedUp1(struct Task *task)
     r5 = 4 - (task->data[4] >> 8);
     SetReelTimeBoltDelay(sp4[r5]);
     SetReelTimePikachuAuraFlashDelay(spC[r5]);
-    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, sp0[r5]);
+    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, sp0[r5]);
     if (task->data[4] <= 0x100)
     {
         task->data[0]++;
@@ -2748,7 +2748,7 @@ static void ReelTime_PikachuSpeedUp2(struct Task *task)
         task->data[0]++;
         task->data[5] = 0;
         SetReelTimePikachuAuraFlashDelay(2);
-        StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 3);
+        StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 3);
     }
 }
 
@@ -2770,9 +2770,9 @@ static void ReelTime_CheckExplode(struct Task *task)
     if (++task->data[5] >= 40)
     {
         task->data[5] = 0;
-        if (sSlotMachine->unk05)
+        if (sSlotMachine->reelTimeDraw)
         {
-            if (sSlotMachine->unk0A <= task->data[6])
+            if (sSlotMachine->reelTimeSpinsLeft <= task->data[6])
                 task->data[0]++;
         }
         else if (task->data[6] > 3)
@@ -2789,19 +2789,19 @@ static void ReelTime_CheckExplode(struct Task *task)
 
 static void ReelTime_LandOnOutcome(struct Task *task)
 {
-    s16 r5 = sSlotMachine->unk14 % 20;
+    s16 r5 = sSlotMachine->reeltimePixelOffset % 20;
     if (r5)
     {
         r5 = AdvanceReeltimeReelToNextSymbol(task->data[4] >> 8);
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    else if (GetReelTimeSymbol(1) != sSlotMachine->unk05)
+    else if (GetReelTimeSymbol(1) != sSlotMachine->reelTimeDraw)
     {
         AdvanceReeltimeReel(task->data[4] >> 8);
-        r5 = sSlotMachine->unk14 % 20;
+        r5 = sSlotMachine->reeltimePixelOffset % 20;
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    if (r5 == 0 && GetReelTimeSymbol(1) == sSlotMachine->unk05)
+    if (r5 == 0 && GetReelTimeSymbol(1) == sSlotMachine->reelTimeDraw)
     {
         task->data[4] = 0;
         task->data[0]++;
@@ -2816,21 +2816,21 @@ static void ReelTime_PikachuReact(struct Task *task)
         DestroyReelTimeBoltSprites();
         DestroyReelTimePikachuAuraSprites();
         task->data[0]++;
-        if(sSlotMachine->unk05 == 0)
+        if(sSlotMachine->reelTimeDraw == 0)
         {
             task->data[4] = 0xa0;
-            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 5);
+            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 5);
             PlayFanfare(MUS_TOO_BAD);
         }
         else
         {
             task->data[4] = 0xc0;
-            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 4);
-            gSprites[sSlotMachine->unk3F].animCmdIndex = 0;
-            if (sSlotMachine->pikaPower)
+            StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 4);
+            gSprites[sSlotMachine->reelTimePikachuSpriteId].animCmdIndex = 0;
+            if (sSlotMachine->pikaPowerBolts)
             {
                 ResetPikaPowerBolts();
-                sSlotMachine->pikaPower = 0;
+                sSlotMachine->pikaPowerBolts = 0;
             }
             PlayFanfare(MUS_SLOTS_WIN);
         }
@@ -2859,16 +2859,16 @@ static void ReelTime_CloseWindow(struct Task *task)
 
 static void ReelTime_DestroySprites(struct Task *task)
 {
-    sSlotMachine->unk0B = 0;
-    sSlotMachine->unk0A = sSlotMachine->unk05;
+    sSlotMachine->reelTimeSpinsUsed = 0;
+    sSlotMachine->reelTimeSpinsLeft = sSlotMachine->reelTimeDraw;
     gSpriteCoordOffsetX = 0;
     REG_BG1HOFS = 0;
-    sSlotMachine->unk1A = 8;
+    sSlotMachine->reelSpeed = 8;
     DestroyReelTimePikachuSprite();
     DestroyReelTimeMachineSprites();
     DestroyReelTimeShadowSprites();
     PlayNewMapMusic(sSlotMachine->backupMapMusic);
-    if (sSlotMachine->unk0A == 0)
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
     {
         DestroyTask(FindTaskIdByFunc(Task_ReelTime));
     }
@@ -2884,10 +2884,10 @@ static void ReelTime_DestroySprites(struct Task *task)
 
 static void ReelTime_SetReelSpeed(struct Task *task)
 {
-    if (sSlotMachine->unk1A == task->data[1])
+    if (sSlotMachine->reelSpeed == task->data[1])
         task->data[0]++;
-    else if (sSlotMachine->unk1C[0] % 24 == 0 && (++task->data[2]& 0x07) == 0)
-        sSlotMachine->unk1A >>= 1;
+    else if (sSlotMachine->reelPixelOffsets[0] % 24 == 0 && (++task->data[2]& 0x07) == 0)
+        sSlotMachine->reelSpeed >>= 1;
 }
 
 static void ReelTime_EndSuccess(struct Task *task)
@@ -2902,8 +2902,8 @@ static void ReelTime_ExplodeMachine(struct Task *task)
     DestroyReelTimeBoltSprites();
     DestroyReelTimePikachuAuraSprites();
     CreateReelTimeExplosionSprite();
-    gSprites[sSlotMachine->unk4E[0]].invisible = TRUE;
-    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 5);
+    gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = TRUE;
+    StartSpriteAnimIfDifferent(gSprites + sSlotMachine->reelTimePikachuSpriteId, 5);
     task->data[0]++;
     task->data[4] = 4;
     task->data[5] = 0;
@@ -2926,7 +2926,7 @@ static void ReelTime_WaitExplode(struct Task *task)
         CreateReelTimeDuckSprites();
         CreateBrokenReelTimeMachineSprite();
         CreateReelTimeSmokeSprite();
-        gSprites[sSlotMachine->unk4E[0]].invisible = FALSE;
+        gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = FALSE;
         task->data[0]++;
         task->data[5] = 0;
     }
@@ -3048,7 +3048,7 @@ static void InfoBox_RestoreSlotMachineDisplay(struct Task *task)
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
     LoadMenuAndReelOverlayTilemaps();
     CreateDigitalDisplayScene(task->data[1]);
-    LoadPikaPowerMeter(sSlotMachine->pikaPower);
+    LoadPikaPowerMeter(sSlotMachine->pikaPowerBolts);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->data[0]++;
 }
@@ -3063,7 +3063,7 @@ static void CreateDigitalDisplayTask(void)
     u8 i;
     struct Task *task;
     i = CreateTask(Task_DigitalDisplay, 3);
-    sSlotMachine->unk3D = i;
+    sSlotMachine->digDisplayTaskId = i;
     task = gTasks + i;
     task->data[1] = -1;
     for (i = 4; i < 16; i++)
@@ -3079,7 +3079,7 @@ static void CreateDigitalDisplayScene(u8 arg0)
 
     DestroyDigitalDisplayScene();
 
-    task = gTasks + sSlotMachine->unk3D;
+    task = gTasks + sSlotMachine->digDisplayTaskId;
     task->data[1] = arg0;
 
     for (i = 0; sDigitalDisplayScenes[arg0][i].spriteTemplateId != 0xFF; i++)
@@ -3102,7 +3102,7 @@ static void CreateDigitalDisplayScene(u8 arg0)
 static void AddDigitalDisplaySprite(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s16 a4)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] == MAX_SPRITES)
@@ -3118,7 +3118,7 @@ static void (*const sDigitalDisplaySceneExitCallbacks[])(void);
 void DestroyDigitalDisplayScene(void)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     if ((u16)task->data[1] != 0xFFFF)
         sDigitalDisplaySceneExitCallbacks[task->data[1]]();
     for (i = 4; i < 16; i++)
@@ -3134,7 +3134,7 @@ void DestroyDigitalDisplayScene(void)
 static bool8 IsDigitalDisplayAnimFinished(void)
 {
     u8 i;
-    struct Task *task = gTasks + sSlotMachine->unk3D;
+    struct Task *task = gTasks + sSlotMachine->digDisplayTaskId;
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] != MAX_SPRITES)
@@ -3182,9 +3182,9 @@ static void CreateReelSymbolSprites(void)
 
 static void SpriteCB_ReelSymbol(struct Sprite *sprite)
 {
-    sprite->data[2] = sSlotMachine->unk1C[sprite->data[0]] + sprite->data[1];
+    sprite->data[2] = sSlotMachine->reelPixelOffsets[sprite->data[0]] + sprite->data[1];
     sprite->data[2] %= 120;
-    sprite->y = sSlotMachine->unk22[sprite->data[0]] + 28 + sprite->data[2];
+    sprite->y = sSlotMachine->reelShockOffsets[sprite->data[0]] + 28 + sprite->data[2];
     sprite->sheetTileStart = GetSpriteTileStartByTag(GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
     SetSpriteSheetFrameTileNum(sprite);
 }
@@ -3245,12 +3245,12 @@ static void CreateReelTimePikachuSprite(void)
     u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachu, 0x118, 0x50, 1);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].coordOffsetEnabled = TRUE;
-    sSlotMachine->unk3F = spriteId;
+    sSlotMachine->reelTimePikachuSpriteId = spriteId;
 }
 
 static void DestroyReelTimePikachuSprite(void)
 {
-    DestroySprite(gSprites + sSlotMachine->unk3F);
+    DestroySprite(gSprites + sSlotMachine->reelTimePikachuSpriteId);
 }
 
 static void SpriteCB_ReelTimePikachu(struct Sprite *sprite)
@@ -3276,14 +3276,14 @@ static void CreateReelTimeMachineSprites(void)
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
     SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachineAntennae);
-    sSlotMachine->unk49[0] = spriteId;
+    sSlotMachine->reelTimeMachineSpriteIds[0] = spriteId;
 
     spriteId = CreateSprite(&sSpriteTemplate_ReelTimeMachine, 0x170, 0x54, 7);
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
     SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachine);
-    sSlotMachine->unk49[1] = spriteId;
+    sSlotMachine->reelTimeMachineSpriteIds[1] = spriteId;
 }
 
 static const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine;
@@ -3296,7 +3296,7 @@ static void CreateBrokenReelTimeMachineSprite(void)
     sprite->oam.priority = 1;
     sprite->coordOffsetEnabled = TRUE;
     SetSubspriteTables(sprite, sSubspriteTable_BrokenReelTimeMachine);
-    sSlotMachine->unk42 = spriteId;
+    sSlotMachine->reelTimeBrokenMachineSpriteId = spriteId;
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumbers;
@@ -3312,13 +3312,13 @@ static void CreateReelTimeNumberSprites(void)
         sprite->oam.priority = 1;
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[7] = r5;
-        sSlotMachine->unk4B[i] = spriteId;
+        sSlotMachine->reelTimeNumberSpriteIds[i] = spriteId;
     }
 }
 
 static void SpriteCB_ReelTimeNumbers(struct Sprite *sprite)
 {
-    s16 r0 = (u16)(sSlotMachine->unk14 + sprite->data[7]);
+    s16 r0 = (u16)(sSlotMachine->reeltimePixelOffset + sprite->data[7]);
     r0 %= 40;
     sprite->y = r0 + 59;
     StartSpriteAnimIfDifferent(sprite, GetReelTimeSymbol(r0 / 20));
@@ -3334,14 +3334,14 @@ static void CreateReelTimeShadowSprites(void)
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
     SetSubspriteTables(sprite, sSubspriteTable_ReelTimeShadow);
-    sSlotMachine->unk4E[0] = spriteId;
+    sSlotMachine->reelTimeShadowSpriteIds[0] = spriteId;
 
     spriteId = CreateSprite(&sSpriteTemplate_ReelTimeShadow, 0x120, 0x68, 4);
     sprite = &gSprites[spriteId];
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
     SetSubspriteTables(sprite, sSubspriteTable_ReelTimeShadow);
-    sSlotMachine->unk4E[1] = spriteId;
+    sSlotMachine->reelTimeShadowSpriteIds[1] = spriteId;
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap;
@@ -3354,18 +3354,18 @@ static void CreateReelTimeNumberGapSprite(void)
     sprite->coordOffsetEnabled = TRUE;
     sprite->oam.priority = 1;
     SetSubspriteTables(sprite, sSubspriteTable_ReelTimeNumberGap);
-    sSlotMachine->unk40 = spriteId;
+    sSlotMachine->reelTimeNumberGapSpriteId = spriteId;
 }
 
 static void DestroyReelTimeMachineSprites(void)
 {
     u8 i;
 
-    DestroySprite(&gSprites[sSlotMachine->unk40]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeNumberGapSpriteId]);
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk49[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeMachineSpriteIds[i]]);
     for (i = 0; i < 3; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk4B[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeNumberSpriteIds[i]]);
 }
 
 static void DestroyReelTimeShadowSprites(void)
@@ -3373,12 +3373,12 @@ static void DestroyReelTimeShadowSprites(void)
     u8 i;
 
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk4E[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeShadowSpriteIds[i]]);
 }
 
 static void DestroyBrokenReelTimeMachineSprite(void)
 {
-    DestroySprite(&gSprites[sSlotMachine->unk42]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeBrokenMachineSpriteId]);
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt;
@@ -3389,7 +3389,7 @@ static void CreateReelTimeBoltSprites(void)
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->hFlip = TRUE;
-    sSlotMachine->unk50[0] = spriteId;
+    sSlotMachine->reelTimeBoltSpriteIds[0] = spriteId;
     sprite->data[0] = 8;
     sprite->data[1] = -1;
     sprite->data[2] = -1;
@@ -3398,7 +3398,7 @@ static void CreateReelTimeBoltSprites(void)
     spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 0xb8, 0x20, 5);
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
-    sSlotMachine->unk50[1] = spriteId;
+    sSlotMachine->reelTimeBoltSpriteIds[1] = spriteId;
     sprite->data[1] = 1;
     sprite->data[2] = -1;
     sprite->data[7] = 0x20;
@@ -3428,8 +3428,8 @@ static void SpriteCB_ReelTimeBolt(struct Sprite *sprite)
 
 static void SetReelTimeBoltDelay(s16 a0)
 {
-    gSprites[sSlotMachine->unk50[0]].data[7] = a0;
-    gSprites[sSlotMachine->unk50[1]].data[7] = a0;
+    gSprites[sSlotMachine->reelTimeBoltSpriteIds[0]].data[7] = a0;
+    gSprites[sSlotMachine->reelTimeBoltSpriteIds[1]].data[7] = a0;
 }
 
 static void DestroyReelTimeBoltSprites(void)
@@ -3437,7 +3437,7 @@ static void DestroyReelTimeBoltSprites(void)
     u8 i;
 
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk50[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeBoltSpriteIds[i]]);
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura;
@@ -3450,12 +3450,12 @@ static void CreateReelTimePikachuAuraSprites(void)
     gSprites[spriteId].data[5] = 0;
     gSprites[spriteId].data[6] = 16;
     gSprites[spriteId].data[7] = 8;
-    sSlotMachine->unk52[0] = spriteId;
+    sSlotMachine->reelTimePikachuAuraSpriteIds[0] = spriteId;
 
     spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachuAura, 0x68, 0x50, 3);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].hFlip = TRUE;
-    sSlotMachine->unk52[1] = spriteId;
+    sSlotMachine->reelTimePikachuAuraSpriteIds[1] = spriteId;
 }
 
 static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through sInitialReelPositions
@@ -3474,7 +3474,7 @@ static void SpriteCB_ReelTimePikachuAura(struct Sprite *sprite)
 
 static void SetReelTimePikachuAuraFlashDelay(s16 a0)
 {
-    gSprites[sSlotMachine->unk52[0]].data[7] = a0;
+    gSprites[sSlotMachine->reelTimePikachuAuraSpriteIds[0]].data[7] = a0;
 }
 
 static void DestroyReelTimePikachuAuraSprites(void)
@@ -3482,7 +3482,7 @@ static void DestroyReelTimePikachuAuraSprites(void)
     u8 i;
     MultiplyInvertedPaletteRGBComponents((IndexOfSpritePaletteTag(7) << 4) + 0x103, 0, 0, 0);
     for (i = 0; i < 2; i++)
-        DestroySprite(&gSprites[sSlotMachine->unk52[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimePikachuAuraSpriteIds[i]]);
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion;
@@ -3491,7 +3491,7 @@ static void CreateReelTimeExplosionSprite(void)
 {
     u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeExplosion, 0xa8, 0x50, 6);
     gSprites[spriteId].oam.priority = 1;
-    sSlotMachine->unk41 = spriteId;
+    sSlotMachine->reelTimeExplosionSpriteId = spriteId;
 }
 
 static void SpriteCB_ReelTimeExplosion(struct Sprite *sprite)
@@ -3501,7 +3501,7 @@ static void SpriteCB_ReelTimeExplosion(struct Sprite *sprite)
 
 static void DestroyReelTimeExplosionSprite(void)
 {
-    DestroySprite(&gSprites[sSlotMachine->unk41]);
+    DestroySprite(&gSprites[sSlotMachine->reelTimeExplosionSpriteId]);
 }
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck;
@@ -3517,7 +3517,7 @@ static void CreateReelTimeDuckSprites(void)
         sprite->oam.priority = 1;
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[0] = sp[i];
-        sSlotMachine->unk54[i] = spriteId;
+        sSlotMachine->reelTimeDuckSpriteIds[i] = spriteId;
     }
 }
 
@@ -3544,7 +3544,7 @@ static void DestroyReelTimeDuckSprites(void)
     u8 i;
     for (i = 0; i < 4; i++)
     {
-        DestroySprite(&gSprites[sSlotMachine->unk54[i]]);
+        DestroySprite(&gSprites[sSlotMachine->reelTimeDuckSpriteIds[i]]);
     }
 }
 
@@ -3557,7 +3557,7 @@ static void CreateReelTimeSmokeSprite(void)
     sprite->oam.priority = 1;
     sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     InitSpriteAffineAnim(sprite);
-    sSlotMachine->unk43 = spriteId;
+    sSlotMachine->reelTimeSmokeSpriteId = spriteId;
 }
 
 static void SpriteCB_ReelTimeSmoke(struct Sprite *sprite)
@@ -3589,12 +3589,12 @@ static void SpriteCB_ReelTimeSmoke(struct Sprite *sprite)
 
 u8 IsReelTimeSmokeAnimFinished(void)
 {
-    return gSprites[sSlotMachine->unk43].data[7];
+    return gSprites[sSlotMachine->reelTimeSmokeSpriteId].data[7];
 }
 
 static void DestroyReelTimeSmokeSprite(void)
 {
-    struct Sprite *sprite = &gSprites[sSlotMachine->unk43];
+    struct Sprite *sprite = &gSprites[sSlotMachine->reelTimeSmokeSpriteId];
     FreeOamMatrix(sprite->oam.matrixNum);
     DestroySprite(sprite);
 }
@@ -3750,7 +3750,7 @@ static void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
     switch (sprite->data[0])
     {
     case 0:
-        StartSpriteAnim(sprite, sSlotMachine->unk0A - 1);
+        StartSpriteAnim(sprite, sSlotMachine->reelTimeSpinsLeft - 1);
         sprite->data[0]++;
         // fallthrough
     case 1:
@@ -5614,7 +5614,7 @@ static void DebugSlot_PrintMachineSetting(void)
 {
     u8 text[2];
 
-    ConvertIntToDecimalStringN(text, sSlotMachine->unk01 + 1, 2, 1);
+    ConvertIntToDecimalStringN(text, sSlotMachine->machineId + 1, 2, 1);
     Menu_PrintText(text, 6, 1);
 }
 
@@ -5666,7 +5666,7 @@ void DebugSlot_DrawStats(void)
     Menu_PrintText(sDebugSlotText_Reg, 15, 13);
     Menu_PrintText(sDebugSlotText_Big, 15, 15);
     Menu_PrintText(sDebugSlotText_ReelTime, 15, 17);
-    if (sSlotMachine->unk03 == 0)
+    if (sSlotMachine->luckyGame == 0)
         Menu_PrintText(sDebugSlotText_Red7, 10, 9);
     else
         Menu_PrintText(sDebugSlotText_Blue7, 10, 9);
@@ -5677,7 +5677,7 @@ void DebugSlot_DrawStats(void)
 
     PRINT_NUMBER(sSlotMachine->unk68, 10, 3);
     PRINT_NUMBER(sSlotMachine->unk6C, 10, 5);
-    PRINT_NUMBER(sSlotMachine->unk10, 10, 7);
+    PRINT_NUMBER(sSlotMachine->netCoinLoss, 10, 7);
 
 #if DEBUG_FIX
 #define OFFSET 24 // wider window
@@ -5805,17 +5805,17 @@ static void DebugSlot_Task_Menu(u8 taskId)
         }
         if (JOY_NEW(DPAD_LEFT))
         {
-            sSlotMachine->unk01--;
-            if ((s8)sSlotMachine->unk01 < 0)  // Why? It's unsigned
-                sSlotMachine->unk01 = 5;
+            sSlotMachine->machineId--;
+            if ((s8)sSlotMachine->machineId < 0)  // Why? It's unsigned
+                sSlotMachine->machineId = 5;
             DebugSlot_PrintMachineSetting();
             break;
         }
         if (JOY_NEW(DPAD_RIGHT))
         {
-            sSlotMachine->unk01++;
-            if (sSlotMachine->unk01 > 5)
-                sSlotMachine->unk01 = 0;
+            sSlotMachine->machineId++;
+            if (sSlotMachine->machineId > 5)
+                sSlotMachine->machineId = 0;
             DebugSlot_PrintMachineSetting();
             break;
         }
@@ -5903,7 +5903,7 @@ static const u8 sDebugSlotText_BonusUseError[] = DTR("·ボーナスこやくの
 
 static void DebugSlot_CheckErrors(void)
 {
-    if (sSlotMachine->matchedSymbols & 0x180)
+    if (sSlotMachine->matches & 0x180)
     {
         sSlotMachine->unk90++;
         if (sSlotMachine->unk90 > 9999)
@@ -5913,21 +5913,21 @@ static void DebugSlot_CheckErrors(void)
             Menu_PrintText(sDebugSlotText_CountError, 4, 15);
             unk_debug_bss_1_4 = 0;
         }
-        if (!(sSlotMachine->unk04 & 0x80))
+        if (!(sSlotMachine->machineBias & 0x80))
         {
             Menu_PrintText(sDebugSlotText_FlagOffError, 4, 17);
             unk_debug_bss_1_4 = 0;
         }
     }
-    else if (sSlotMachine->matchedSymbols != 0)
+    else if (sSlotMachine->matches != 0)
     {
-        if ((sSlotMachine->unk04 & 0x80) && !(sSlotMachine->matchedSymbols & 3))
+        if ((sSlotMachine->machineBias & 0x80) && !(sSlotMachine->matches & 3))
         {
             Menu_PrintText(sDebugSlotText_BonusUseError, 4, 2);
             unk_debug_bss_1_4 = 0;
         }
     }
-    if (sSlotMachine->matchedSymbols == 0 && sSlotMachine->bet == 3 && !(sSlotMachine->unk04 & 0x80))
+    if (sSlotMachine->matches == 0 && sSlotMachine->bet == 3 && !(sSlotMachine->machineBias & 0x80))
     {
         u8 sym_0_1 = GetSymbolAtRest(0, 1);
         u8 sym_0_2 = GetSymbolAtRest(0, 2);

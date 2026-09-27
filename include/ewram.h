@@ -70,7 +70,7 @@ extern u8 gSharedMem[];
 // Non-battle allocations
 #define namingScreenData                (*(struct NamingScreenData *)(gSharedMem + 0x0))
 #define eSaveSection                    (struct SaveSector *)(gSharedMem + 0x0)
-#define eSlotMachine                    ((struct SlotMachineEwramStruct *)(gSharedMem + 0x0))
+#define eSlotMachine                    ((struct SlotMachine *)(gSharedMem + 0x0))
 #define ePokemonStorageSystem           (*(struct PokemonStorageSystemData *)(gSharedMem + 0))
 
 #define ewramSavedItemsPocket           ((struct ItemSlot *)(gSharedMem + 0x1E000))  // saved items pocket (for Wally battle)
