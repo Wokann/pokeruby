@@ -184,17 +184,17 @@ static bool8 IsFinalTask_Task_Payout(void);
 static bool8 PayoutTask_Init(struct Task *task);
 static bool8 PayoutTask_GivePayout(struct Task *task);
 static bool8 PayoutTask_Free(struct Task *task);
-static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y);
-static void sub_8102DA8(void);
-static void sub_8102DEC(u8 a0);
-static void sub_8102E1C(u8 a0);
-static bool8 sub_8102E40(u8 a0);
-static void sub_8102E68(u8 taskId);
-static bool8 sub_8102EA0(struct Task *task);
-static bool8 sub_8102EA4(struct Task *task);
-static bool8 sub_8102EC0(struct Task *task);
-static bool8 sub_8102F4C(struct Task *task);
-static bool8 sub_8103008(struct Task *task);
+static u8 GetSymbolAtRest(u8 x, s16 y);
+static void CreateReelTasks(void);
+static void SpinSlotReel(u8 a0);
+static void StopSlotReel(u8 a0);
+static bool8 IsSlotReelMoving(u8 a0);
+static void Task_Reel(u8 taskId);
+static bool8 ReelTask_StayStill(struct Task *task);
+static bool8 ReelTask_Spin(struct Task *task);
+static bool8 ReelTask_DecideStop(struct Task *task);
+static bool8 ReelTask_MoveToStop(struct Task *task);
+static bool8 ReelTask_ShakingStop(struct Task *task);
 static bool8 sub_810305C(void);
 static bool8 sub_8103154(u8 a0, u8 a1);
 static bool8 sub_81031B4(u8 a0, u8 a1);
@@ -559,7 +559,7 @@ static void SlotMachineSetup_6_0(void)
 static void SlotMachineSetup_6_1(void)
 {
     sub_8104048();
-    sub_8102DA8();
+    CreateReelTasks();
     sub_8104C5C();
     CreateSlotMachineTasks();
 }
@@ -767,9 +767,9 @@ static bool8 SlotTask_StartSpin(struct Task *task)
 {
     DrawMachineBias();
     sub_8104DA4();
-    sub_8102DEC(0);
-    sub_8102DEC(1);
-    sub_8102DEC(2);
+    SpinSlotReel(0);
+    SpinSlotReel(1);
+    SpinSlotReel(2);
     task->data[0] = 0;
     if (sSlotMachine->unk04 & 0x20)
     {
@@ -825,7 +825,7 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
         if (unk_debug_bss_1_8 == 0)
         {
             PlaySE(SE_CONTEST_PLACE);
-            sub_8102E1C(sSlotMachine->unk18);
+            StopSlotReel(sSlotMachine->unk18);
             sub_8103C14(sSlotMachine->unk18);
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
             sSlotMachine->state = 13;
@@ -837,7 +837,7 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_CONTEST_PLACE);
-        sub_8102E1C(sSlotMachine->unk18);
+        StopSlotReel(sSlotMachine->unk18);
         sub_8103C14(sSlotMachine->unk18);
         sSlotMachine->state = 13;
     }
@@ -846,7 +846,7 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
 
 static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
 {
-    if (!sub_8102E40(sSlotMachine->unk18))
+    if (!IsSlotReelMoving(sSlotMachine->unk18))
     {
         sSlotMachine->unk18++;
         sSlotMachine->state = 12;
@@ -1404,9 +1404,9 @@ static void CheckMatch_CenterRow(void)
 {
     u8 c1, c2, c3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 2);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 2);
+    c1 = GetSymbolAtRest(0, 2);
+    c2 = GetSymbolAtRest(1, 2);
+    c3 = GetSymbolAtRest(2, 2);
     match = GetMatchFromSymbolsInRow(c1, c2, c3);
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
@@ -1420,9 +1420,9 @@ static void CheckMatch_TopAndBottom(void)
 {
     u8 c1, c2, c3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 1);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
+    c1 = GetSymbolAtRest(0, 1);
+    c2 = GetSymbolAtRest(1, 1);
+    c3 = GetSymbolAtRest(2, 1);
     match = GetMatchFromSymbolsInRow(c1, c2, c3);
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
@@ -1432,9 +1432,9 @@ static void CheckMatch_TopAndBottom(void)
         sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
         sub_8103E04(1);
     }
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 3);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
+    c1 = GetSymbolAtRest(0, 3);
+    c2 = GetSymbolAtRest(1, 3);
+    c3 = GetSymbolAtRest(2, 3);
     match = GetMatchFromSymbolsInRow(c1, c2, c3);
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
@@ -1450,9 +1450,9 @@ static void CheckMatch_Diagonals(void)
 {
     u8 c1, c2, c3, match;
 
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
+    c1 = GetSymbolAtRest(0, 1);
+    c2 = GetSymbolAtRest(1, 2);
+    c3 = GetSymbolAtRest(2, 3);
     match = GetMatchFromSymbolsInRow(c1, c2, c3);
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
@@ -1463,9 +1463,9 @@ static void CheckMatch_Diagonals(void)
         }
         sub_8103E04(3);
     }
-    c1 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
-    c2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-    c3 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
+    c1 = GetSymbolAtRest(0, 3);
+    c2 = GetSymbolAtRest(1, 2);
+    c3 = GetSymbolAtRest(2, 1);
     match = GetMatchFromSymbolsInRow(c1, c2, c3);
     if (match != SLOT_MACHINE_MATCHED_NONE)
     {
@@ -1568,7 +1568,7 @@ static bool8 PayoutTask_Free(struct Task *task)
 
 static const u8 sReelSymbols[][21];
 
-static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y)
+static u8 GetSymbolAtRest(u8 x, s16 y)
 {
     s16 offset = (sSlotMachine->reelPositions[x] + y) % 21;
     if (offset < 0)
@@ -1576,17 +1576,17 @@ static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y)
     return sReelSymbols[x][offset];
 }
 
-static u8 GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(u8 x, s16 y)
+static u8 GetSymbol(u8 x, s16 y)
 {
     s16 r6 = 0;
     if ((sSlotMachine->unk1C[x]) % 24)
         r6 = -1;
-    return GetTagOfReelSymbolOnScreenAtPos(x, y + r6);
+    return GetSymbolAtRest(x, y + r6);
 }
 
 static const u8 gUnknown_083ECCF1[];
 
-static u8 sub_8102C48(s16 a0)
+static u8 GetReelTimeSymbol(s16 a0)
 {
     s16 r1 = (sSlotMachine->unk16 + a0) % 6;
     if (r1 < 0)
@@ -1594,97 +1594,97 @@ static u8 sub_8102C48(s16 a0)
     return gUnknown_083ECCF1[r1];
 }
 
-static void sub_8102C84(u8 a0, s16 a1)
+static void AdvanceSlotReel(u8 a0, s16 a1)
 {
     sSlotMachine->unk1C[a0] += a1;
     sSlotMachine->unk1C[a0] %= 504;
     sSlotMachine->reelPositions[a0] = 21 - sSlotMachine->unk1C[a0] / 24;
 }
 
-static s16 sub_8102CCC(u8 a0, s16 a1)
+static s16 AdvanceSlotReelToNextSymbol(u8 a0, s16 a1)
 {
     s16 r1 = sSlotMachine->unk1C[a0] % 24;
     if (r1 != 0)
     {
         if (r1 < a1)
             a1 = r1;
-        sub_8102C84(a0, a1);
+        AdvanceSlotReel(a0, a1);
         r1 = sSlotMachine->unk1C[a0] % 24;
     }
     return r1;
 }
 
-static void sub_8102D28(s16 a0)
+static void AdvanceReeltimeReel(s16 a0)
 {
     sSlotMachine->unk14 += a0;
     sSlotMachine->unk14 %= 120;
     sSlotMachine->unk16 = 6 - sSlotMachine->unk14 / 20;
 }
 
-static s16 sub_8102D5C(s16 a0)
+static s16 AdvanceReeltimeReelToNextSymbol(s16 a0)
 {
     s16 r1 = sSlotMachine->unk14 % 20;
     if (r1 != 0)
     {
         if (r1 < a0)
             a0 = r1;
-        sub_8102D28(a0);
+        AdvanceReeltimeReel(a0);
         r1 = sSlotMachine->unk14 % 20;
     }
     return r1;
 }
 
-static void sub_8102DA8(void)
+static void CreateReelTasks(void)
 {
     u8 i;
     for (i = 0; i < 3; i++)
     {
-        u8 taskId = CreateTask(sub_8102E68, 2);
+        u8 taskId = CreateTask(Task_Reel, 2);
         gTasks[taskId].data[15] = i;
         sSlotMachine->reelTasks[i] = taskId;
-        sub_8102E68(taskId);
+        Task_Reel(taskId);
     }
 }
 
-static void sub_8102DEC(u8 a0)
+static void SpinSlotReel(u8 a0)
 {
     gTasks[sSlotMachine->reelTasks[a0]].data[0] = 1;
     gTasks[sSlotMachine->reelTasks[a0]].data[14] = 1;
 }
 
-static void sub_8102E1C(u8 a0)
+static void StopSlotReel(u8 a0)
 {
     gTasks[sSlotMachine->reelTasks[a0]].data[0] = 2;
 }
 
-static bool8 sub_8102E40(u8 a0)
+static bool8 IsSlotReelMoving(u8 a0)
 {
     return gTasks[sSlotMachine->reelTasks[a0]].data[14];
 }
 
-static bool8 (*const gUnknown_083ECB2C[])(struct Task *task) =
+static bool8 (*const sReelTasks[])(struct Task *task) =
 {
-    sub_8102EA0,
-    sub_8102EA4,
-    sub_8102EC0,
-    sub_8102F4C,
-    sub_8103008
+    ReelTask_StayStill,
+    ReelTask_Spin,
+    ReelTask_DecideStop,
+    ReelTask_MoveToStop,
+    ReelTask_ShakingStop
 };
 
-static void sub_8102E68(u8 taskId)
+static void Task_Reel(u8 taskId)
 {
-    while (gUnknown_083ECB2C[gTasks[taskId].data[0]](gTasks + taskId))
+    while (sReelTasks[gTasks[taskId].data[0]](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8102EA0(struct Task *task)
+static bool8 ReelTask_StayStill(struct Task *task)
 {
     return FALSE;
 }
 
-static bool8 sub_8102EA4(struct Task *task)
+static bool8 ReelTask_Spin(struct Task *task)
 {
-    sub_8102C84(task->data[15], sSlotMachine->unk1A);
+    AdvanceSlotReel(task->data[15], sSlotMachine->unk1A);
     return FALSE;
 }
 
@@ -1702,7 +1702,7 @@ static void (*const gUnknown_083ECB4C[])(void) =
     sub_810380C
 };
 
-static bool8 sub_8102EC0(struct Task *task)
+static bool8 ReelTask_DecideStop(struct Task *task)
 {
     task->data[0]++;
     sSlotMachine->unk34[task->data[15]] = 0;
@@ -1716,16 +1716,16 @@ static bool8 sub_8102EC0(struct Task *task)
     return TRUE;
 }
 
-static bool8 sub_8102F4C(struct Task *task)
+static bool8 ReelTask_MoveToStop(struct Task *task)
 {
     u16 sp[] = {2, 4, 4, 4, 8};
     s16 r2 = sSlotMachine->unk1C[task->data[15]] % 24;
     if (r2 != 0)
-        r2 = sub_8102CCC(task->data[15], sSlotMachine->unk1A);
+        r2 = AdvanceSlotReelToNextSymbol(task->data[15], sSlotMachine->unk1A);
     else if (sSlotMachine->unk2E[task->data[15]])
     {
         sSlotMachine->unk2E[task->data[15]]--;
-        sub_8102C84(task->data[15], sSlotMachine->unk1A);
+        AdvanceSlotReel(task->data[15], sSlotMachine->unk1A);
         r2 = sSlotMachine->unk1C[task->data[15]] % 24;
     }
     if (r2 == 0 && sSlotMachine->unk2E[task->data[15]] == 0)
@@ -1737,7 +1737,7 @@ static bool8 sub_8102F4C(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8103008(struct Task *task)
+static bool8 ReelTask_ShakingStop(struct Task *task)
 {
     sSlotMachine->unk22[task->data[15]] = task->data[1];
     task->data[1] = -task->data[1];
@@ -1774,7 +1774,7 @@ static bool8 sub_810305C(void)
 
 static bool8 sub_81030A4(s16 y, u8 tag1, u8 tag2)
 {
-    u8 tag = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, y);
+    u8 tag = GetSymbol(0, y);
     if (tag == tag1 || tag == tag2)
     {
         sSlotMachine->unk07 = tag;
@@ -1785,7 +1785,7 @@ static bool8 sub_81030A4(s16 y, u8 tag1, u8 tag2)
 
 static bool8 sub_81030E0(s16 y)
 {
-    if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 1 - y) == 4 || GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - y) == 4 || GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 3 - y) == 4)
+    if (GetSymbol(0, 1 - y) == 4 || GetSymbol(0, 2 - y) == 4 || GetSymbol(0, 3 - y) == 4)
         return TRUE;
     else
         return FALSE;
@@ -1878,7 +1878,7 @@ static bool8 sub_81032E8(void)
 
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, unk34_0 - i) == sSlotMachine->unk07)
+        if (GetSymbol(1, unk34_0 - i) == sSlotMachine->unk07)
         {
             sSlotMachine->unk34[1] = unk34_0;
             sSlotMachine->unk2E[1] = i;
@@ -1897,7 +1897,7 @@ static bool8 sub_810333C(void)
         {
             for (i = 0; i < 5; i++)
             {
-                if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i) == sSlotMachine->unk07)
+                if (GetSymbol(1, 2 - i) == sSlotMachine->unk07)
                 {
                     sSlotMachine->unk34[1] = 2;
                     sSlotMachine->unk2E[1] = i;
@@ -1911,7 +1911,7 @@ static bool8 sub_810333C(void)
     {
         for (i = 0; i < 5; i++)
         {
-            if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i) == sSlotMachine->unk07)
+            if (GetSymbol(1, 2 - i) == sSlotMachine->unk07)
             {
                 sSlotMachine->unk34[1] = 2;
                 sSlotMachine->unk2E[1] = i;
@@ -1950,7 +1950,7 @@ static bool8 sub_810341C(u8 a0)
 
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, unk34_1 - i) == a0)
+        if (GetSymbol(2, unk34_1 - i) == a0)
         {
             sSlotMachine->unk34[2] = unk34_1;
             sSlotMachine->unk2E[2] = i;
@@ -1972,7 +1972,7 @@ static bool8 sub_810347C(u8 a0)
         r8 = 1;
     for (i = 0; i < 5; i++)
     {
-        if (GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, r8 - i) == a0)
+        if (GetSymbol(2, r8 - i) == a0)
         {
             sSlotMachine->unk2E[2] = i;
             sSlotMachine->unk34[2] = r8;
@@ -2022,13 +2022,13 @@ static void sub_8103564(void)
 {
     if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
     {
-        u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - sSlotMachine->unk2E[0]);
+        u8 sp0 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
         if (sub_8103520(&sp0))
         {
             s16 i;
             for (i = 0; i < 5; i++)
             {
-                if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - i))
+                if (sp0 == GetSymbol(1, 2 - i))
                 {
                     sSlotMachine->unk34[1] = 2;
                     sSlotMachine->unk2E[1] = i;
@@ -2043,13 +2043,13 @@ static void j5_08111E84(void)
 {
     if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
     {
-        u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+        u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
         if (sub_8103520(&sp0))
         {
             s16 i;
             for (i = 0; i < 5; i++)
             {
-                if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[0] - i))
+                if (sp0 == GetSymbol(1, sSlotMachine->unk34[0] - i))
                 {
                     sSlotMachine->unk34[1] = sSlotMachine->unk34[0];
                     sSlotMachine->unk2E[1] = i;
@@ -2072,7 +2072,7 @@ static void sub_8103668(void)
         }
         else
         {
-            u8 sp0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+            u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
             if (sub_8103520(&sp0))
             {
                 j = 2;
@@ -2080,7 +2080,7 @@ static void sub_8103668(void)
                     j = 3;
                 for (i = 0; i < 2; i++, j--)
                 {
-                    if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, j))
+                    if (sp0 == GetSymbol(1, j))
                     {
                         sSlotMachine->unk34[1] = j;
                         sSlotMachine->unk2E[1] = 0;
@@ -2089,7 +2089,7 @@ static void sub_8103668(void)
                 }
                 for (j = 1; j < 5; j++)
                 {
-                    if (sp0 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[0] - j))
+                    if (sp0 == GetSymbol(1, sSlotMachine->unk34[0] - j))
                     {
                         if (sSlotMachine->unk34[0] == 1)
                         {
@@ -2169,14 +2169,14 @@ static void sub_810380C(void)
 static void sub_8103830(void)
 {
     s16 i = 0;
-    u8 r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 2 - sSlotMachine->unk2E[0]);
-    u8 r1 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
+    u8 r5 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
+    u8 r1 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
     if (r5 == r1)
     {
         while (1)
         {
             u8 r0;
-            if (!(r5 == (r0 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i)) || (r5 == 0 && r0 == 1) || (r5 == 1 && r0 == 0)))
+            if (!(r5 == (r0 = GetSymbol(2, 2 - i)) || (r5 == 0 && r0 == 1) || (r5 == 1 && r0 == 0)))
                 break;
             i++;
         }
@@ -2187,7 +2187,7 @@ static void sub_8103830(void)
         {
             for (i = 0; i < 5; i++)
             {
-                if (r5 == GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i))
+                if (r5 == GetSymbol(2, 2 - i))
                 {
                     sSlotMachine->unk2E[2] = i;
                     return;
@@ -2197,7 +2197,7 @@ static void sub_8103830(void)
         i = 0;
         while (1)
         {
-            if (r5 != GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 2 - i))
+            if (r5 != GetSymbol(2, 2 - i))
                 break;
             i++;
         }
@@ -2215,13 +2215,13 @@ static void sub_8103910(void)
 
     if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] == sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
     {
-        r7 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
+        r7 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+        r6 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
         if (sub_8103764(r7, r6))
         {
             for (i = 0; i < 5; i++)
             {
-                r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, sSlotMachine->unk34[1] - i);
+                r4 = GetSymbol(2, sSlotMachine->unk34[1] - i);
                 if (r7 == r4)
                 {
                     sp0 = i;
@@ -2235,9 +2235,9 @@ static void sub_8103910(void)
         s16 r8;
         for (i = 1, r8 = 0; i < 4; i++)
         {
-            r7 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, i - sSlotMachine->unk2E[0]);
-            r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, i - sSlotMachine->unk2E[1]);
-            r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, i - sp0);
+            r7 = GetSymbol(0, i - sSlotMachine->unk2E[0]);
+            r6 = GetSymbol(1, i - sSlotMachine->unk2E[1]);
+            r4 = GetSymbol(2, i - sp0);
             if (!sub_81037BC(r7, r6, r4) && (!sub_810378C(r7, r6, r4) || !(sSlotMachine->unk04 & 0x80)))
             {
                 r8++;
@@ -2262,8 +2262,8 @@ static void sub_8103A78(void)
     sub_8103910();
     if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] != sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
+        r6 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
+        r5 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
         if (sub_8103764(r6, r5))
         {
             r8 = 1;
@@ -2271,7 +2271,7 @@ static void sub_8103A78(void)
                 r8 = 3;
             for (i = 0; i < 5; i++)
             {
-                r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, r8 - (sSlotMachine->unk2E[2] + i));
+                r4 = GetSymbol(2, r8 - (sSlotMachine->unk2E[2] + i));
                 if (r6 == r4)
                 {
                     sSlotMachine->unk2E[2] += i;
@@ -2282,18 +2282,18 @@ static void sub_8103A78(void)
     }
     while (1)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 1 - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 3 - sSlotMachine->unk2E[2]);
+        r6 = GetSymbol(0, 1 - sSlotMachine->unk2E[0]);
+        r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
+        r4 = GetSymbol(2, 3 - sSlotMachine->unk2E[2]);
         if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
             break;
         sSlotMachine->unk2E[2]++;
     }
     while (1)
     {
-        r6 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(0, 3 - sSlotMachine->unk2E[0]);
-        r5 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(1, 2 - sSlotMachine->unk2E[1]);
-        r4 = GetTagOfReelSymbolOnScreenAtPos_AdjustForPixelOffset(2, 1 - sSlotMachine->unk2E[2]);
+        r6 = GetSymbol(0, 3 - sSlotMachine->unk2E[0]);
+        r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
+        r4 = GetSymbol(2, 1 - sSlotMachine->unk2E[2]);
         if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
             break;
         sSlotMachine->unk2E[2]++;
@@ -2705,12 +2705,12 @@ static void sub_81043EC(struct Task *task)
         task->data[0]++;
         task->data[3] = 0;
     }
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
 }
 
 static void sub_8104468(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 60)
     {
         task->data[0]++;
@@ -2726,7 +2726,7 @@ static void sub_8104498(struct Task *task)
     s16 sp4[] = {0x40, 0x30, 0x18, 0x08};
     s16 spC[] = {10, 8, 6, 4};
 
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] -= 4;
     r5 = 4 - (task->data[4] >> 8);
     sub_8105688(sp4[r5]);
@@ -2742,7 +2742,7 @@ static void sub_8104498(struct Task *task)
 
 static void sub_8104548(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 80)
     {
         task->data[0]++;
@@ -2754,7 +2754,7 @@ static void sub_8104548(struct Task *task)
 
 static void sub_8104598(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x80;
     if (++task->data[5] >= 80)
     {
@@ -2765,7 +2765,7 @@ static void sub_8104598(struct Task *task)
 
 static void sub_81045CC(struct Task *task)
 {
-    sub_8102D28(task->data[4] >> 8);
+    AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x40;
     if (++task->data[5] >= 40)
     {
@@ -2792,16 +2792,16 @@ static void sub_810463C(struct Task *task)
     s16 r5 = sSlotMachine->unk14 % 20;
     if (r5)
     {
-        r5 = sub_8102D5C(task->data[4] >> 8);
+        r5 = AdvanceReeltimeReelToNextSymbol(task->data[4] >> 8);
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    else if (sub_8102C48(1) != sSlotMachine->unk05)
+    else if (GetReelTimeSymbol(1) != sSlotMachine->unk05)
     {
-        sub_8102D28(task->data[4] >> 8);
+        AdvanceReeltimeReel(task->data[4] >> 8);
         r5 = sSlotMachine->unk14 % 20;
         task->data[4] = (u8)task->data[4] + 0x40;
     }
-    if (r5 == 0 && sub_8102C48(1) == sSlotMachine->unk05)
+    if (r5 == 0 && GetReelTimeSymbol(1) == sSlotMachine->unk05)
     {
         task->data[4] = 0;
         task->data[0]++;
@@ -3185,7 +3185,7 @@ static void sub_8104F18(struct Sprite *sprite)
     sprite->data[2] = sSlotMachine->unk1C[sprite->data[0]] + sprite->data[1];
     sprite->data[2] %= 120;
     sprite->y = sSlotMachine->unk22[sprite->data[0]] + 28 + sprite->data[2];
-    sprite->sheetTileStart = GetSpriteTileStartByTag(GetTagOfReelSymbolOnScreenAtPos(sprite->data[0], sprite->data[2] / 24));
+    sprite->sheetTileStart = GetSpriteTileStartByTag(GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
     SetSpriteSheetFrameTileNum(sprite);
 }
 
@@ -3321,7 +3321,7 @@ static void sub_810535C(struct Sprite *sprite)
     s16 r0 = (u16)(sSlotMachine->unk14 + sprite->data[7]);
     r0 %= 40;
     sprite->y = r0 + 59;
-    StartSpriteAnimIfDifferent(sprite, sub_8102C48(r0 / 20));
+    StartSpriteAnimIfDifferent(sprite, GetReelTimeSymbol(r0 / 20));
 }
 
 static const struct SpriteTemplate gSpriteTemplate_83ED4D4;
@@ -5929,17 +5929,17 @@ static void debug_sub_811B894(void)
     }
     if (sSlotMachine->matchedSymbols == 0 && sSlotMachine->bet == 3 && !(sSlotMachine->unk04 & 0x80))
     {
-        u8 sym_0_1 = GetTagOfReelSymbolOnScreenAtPos(0, 1);
-        u8 sym_0_2 = GetTagOfReelSymbolOnScreenAtPos(0, 2);
-        u8 sym_0_3 = GetTagOfReelSymbolOnScreenAtPos(0, 3);
+        u8 sym_0_1 = GetSymbolAtRest(0, 1);
+        u8 sym_0_2 = GetSymbolAtRest(0, 2);
+        u8 sym_0_3 = GetSymbolAtRest(0, 3);
 
-        u8 sym_1_1 = GetTagOfReelSymbolOnScreenAtPos(1, 1);
-        u8 sym_1_2 = GetTagOfReelSymbolOnScreenAtPos(1, 2);
-        u8 sym_1_3 = GetTagOfReelSymbolOnScreenAtPos(1, 3);
+        u8 sym_1_1 = GetSymbolAtRest(1, 1);
+        u8 sym_1_2 = GetSymbolAtRest(1, 2);
+        u8 sym_1_3 = GetSymbolAtRest(1, 3);
 
-        u8 sym_2_1 = GetTagOfReelSymbolOnScreenAtPos(2, 1);
-        u8 sym_2_2 = GetTagOfReelSymbolOnScreenAtPos(2, 2);
-        u8 sym_2_3 = GetTagOfReelSymbolOnScreenAtPos(2, 3);
+        u8 sym_2_1 = GetSymbolAtRest(2, 1);
+        u8 sym_2_2 = GetSymbolAtRest(2, 2);
+        u8 sym_2_3 = GetSymbolAtRest(2, 3);
 
         if ((sym_0_1 == 0 && sym_1_1 == 1 && sym_2_1 == 0)
          || (sym_0_2 == 0 && sym_1_2 == 1 && sym_2_2 == 0)
