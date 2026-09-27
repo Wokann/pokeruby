@@ -63,7 +63,7 @@ LinkContestRoom1_MapScript2_OnWarp:: @ 815F610
 	.2byte 0
 
 LinkContestRoom1_EventScript_RunContestAndReturnToLobby:: @ 815F61A
-	call LinkContestRoom1_EventScript_1A514D
+	call LinkContestRoom1_EventScript_RunContest
 	call LinkContestRoom1_EventScript_ReturnToContestLobby
 	end
 
