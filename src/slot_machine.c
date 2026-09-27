@@ -4597,7 +4597,7 @@ static const struct OamData sOam_64x64 = {
     .affineParam = 0
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0C0[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimePikachu[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x0000, 0x800},
     {eSlotMachineReelTimeGfxBuffer + 0x0800, 0x800},
     {eSlotMachineReelTimeGfxBuffer + 0x1000, 0x800},
@@ -4605,19 +4605,19 @@ static const struct SpriteFrameImage gSpriteImageTable_83ED0C0[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2000, 0x800}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0E8[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeMachineAntennae[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2800, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0F0[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeMachine[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x2B00, 0x500}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED0F8[] = {
+static const struct SpriteFrameImage sImageTable_BrokenReelTimeMachine[] = {
     {eSlotMachineReelTimeGfxBuffer + 0x3000, 0x600}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED100[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeNumbers[] = {
     {gSpriteImage_8E988E8, 0x80},
     {gSpriteImage_8E98968, 0x80},
     {gSpriteImage_8E989E8, 0x80},
@@ -4626,83 +4626,83 @@ static const struct SpriteFrameImage gSpriteImageTable_83ED100[] = {
     {gSpriteImage_8E98B68, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED130[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeShadow[] = {
     {gSpriteImage_8E991E8, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED138[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeNumberGap[] = {
     {gSpriteImage_8E99808, 0x40}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED140[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeBolt[] = {
     {gSpriteImage_8E98BE8, 0x100},
     {gSpriteImage_8E98CE8, 0x100}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED150[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimePikachuAura[] = {
     {gSpriteImage_8E993E8, 0x400}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED158[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeExplosion[] = {
     {gSpriteImage_8E98DE8, 0x200},
     {gSpriteImage_8E98FE8, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED168[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeDuck[] = {
     {gSpriteImage_8E98848, 0x20}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED170[] = {
+static const struct SpriteFrameImage sImageTable_ReelTimeSmoke[] = {
     {gSpriteImage_8E98868, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED178[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reel[] = {
     {eSlotMachineGfxBuffer + 0x0000, 0x600}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED180[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Time[] = {
     {eSlotMachineGfxBuffer + 0x0600, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED188[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Insert[] = {
     {eSlotMachineGfxBuffer + 0x0800, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED190[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Stop[] = {
     {eSlotMachineGfxBuffer + 0x0A00, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED198[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Win[] = {
     {eSlotMachineGfxBuffer + 0x0C00, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1A0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Lose[] = {
     {eSlotMachineGfxBuffer + 0x1000, 0x400}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1A8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Bonus[] = {
     {eSlotMachineGfxBuffer + 0x1400, 0x200}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1B0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Big[] = {
     {eSlotMachineGfxBuffer + 0x1600, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1B8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reg[] = {
     {eSlotMachineGfxBuffer + 0x1900, 0x300}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1C0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_AButton[] = {
     {eSlotMachineGfxBuffer + 0x1C00, 0x200},
     {eSlotMachineGfxBuffer + 0x1E00, 0x200},
     {eSlotMachineGfxBuffer + 0x1E00, 0x200} // is this a typo?
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1D8[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Smoke[] = {
     {eSlotMachineGfxBuffer + 0x2000, 0x280}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED1E0[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Number[] = {
     {eSlotMachineGfxBuffer + 0x2280, 0x80},
     {eSlotMachineGfxBuffer + 0x2300, 0x80},
     {eSlotMachineGfxBuffer + 0x2380, 0x80},
@@ -4710,17 +4710,17 @@ static const struct SpriteFrameImage gSpriteImageTable_83ED1E0[] = {
     {eSlotMachineGfxBuffer + 0x2480, 0x80}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED208[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_Pokeball[] = {
     {eSlotMachineGfxBuffer + 0x2600, 0x480},
     {eSlotMachineGfxBuffer + 0x2A80, 0x480}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED218[] = {
+static const struct SpriteFrameImage sImageTable_DigitalDisplay_DPad[] = {
     {eSlotMachineGfxBuffer + 0x2F00, 0x180},
     {eSlotMachineGfxBuffer + 0x3080, 0x180}
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_83ED228[] = {
+static const struct SpriteFrameImage sImageTable_PikaPowerBolt[] = {
     {gSpriteImage_8E98828, 0x20}
 };
 
@@ -4963,111 +4963,111 @@ static const struct SpriteTemplate sSpriteTemplate_ReelBackground = {
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachu = {
-    0xFFFF, 1, &sOam_64x64, gSpriteAnimTable_83ED334, gSpriteImageTable_83ED0C0, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachu
+    0xFFFF, 1, &sOam_64x64, gSpriteAnimTable_83ED334, sImageTable_ReelTimePikachu, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachu
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachineAntennae = {
-    0xFFFF, 2, &sOam_8x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0E8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 2, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeMachineAntennae, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeMachine = {
-    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0F0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine = {
-    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED0F8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 3, &sOam_8x16, gSpriteAnimTable_83ED32C, sImageTable_BrokenReelTimeMachine, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumbers = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED34C, gSpriteImageTable_83ED100, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeNumbers
+    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED34C, sImageTable_ReelTimeNumbers, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeNumbers
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeShadow = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED130, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeShadow, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED138, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeNumberGap, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt = {
-    0xFFFF, 4, &sOam_16x32, gSpriteAnimTable_83ED364, gSpriteImageTable_83ED140, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
+    0xFFFF, 4, &sOam_16x32, gSpriteAnimTable_83ED364, sImageTable_ReelTimeBolt, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura = {
-    0xFFFF, 7, &sOam_32x64, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED150, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
+    0xFFFF, 7, &sOam_32x64, gSpriteAnimTable_83ED32C, sImageTable_ReelTimePikachuAura, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion = {
-    0xFFFF, 5, &sOam_32x32, gSpriteAnimTable_83ED368, gSpriteImageTable_83ED158, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
+    0xFFFF, 5, &sOam_32x32, gSpriteAnimTable_83ED368, sImageTable_ReelTimeExplosion, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck = {
-    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED330, gSpriteImageTable_83ED168, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
+    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED330, sImageTable_ReelTimeDuck, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
 };
 
 static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke = {
-    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED170, gSpriteAffineAnimTable_83ED3BC, SpriteCB_ReelTimeSmoke
+    0xFFFF, 4, &sOam_16x16, gSpriteAnimTable_83ED32C, sImageTable_ReelTimeSmoke, gSpriteAffineAnimTable_83ED3BC, SpriteCB_ReelTimeSmoke
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED57C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED178, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Reel, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED594 = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED180, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Time, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5AC = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED188, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Insert, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5C4 = {
-    18, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED190, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    18, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Stop, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5DC = {
-    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED198, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Win, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED5F4 = {
-    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1A0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_64x32, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Lose, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED60C = {
-    19, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1A8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    19, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Bonus, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED624 = {
-    20, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1B0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    20, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Big, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED63C = {
-    21, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1B8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    21, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Reg, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED654 = {
-    0xFFFF, 6, &sOam_32x32, gSpriteAnimTable_83ED36C, gSpriteImageTable_83ED1C0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_32x32, gSpriteAnimTable_83ED36C, sImageTable_DigitalDisplay_AButton, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED66C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED1D8, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_DigitalDisplay_Smoke, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED684 = {
-    0xFFFF, 6, &sOam_16x16, gSpriteAnimTable_83ED380, gSpriteImageTable_83ED1E0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_16x16, gSpriteAnimTable_83ED380, sImageTable_DigitalDisplay_Number, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED69C = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED378, gSpriteImageTable_83ED208, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED378, sImageTable_DigitalDisplay_Pokeball, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED6B4 = {
-    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED374, gSpriteImageTable_83ED218, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    0xFFFF, 6, &sOam_8x8, gSpriteAnimTable_83ED374, sImageTable_DigitalDisplay_DPad, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
 static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt = {
-    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED228, gSpriteAffineAnimTable_83ED410, SpriteCB_PikaPowerBolt
+    0xFFFF, 4, &sOam_8x8, gSpriteAnimTable_83ED32C, sImageTable_PikaPowerBolt, gSpriteAffineAnimTable_83ED410, SpriteCB_PikaPowerBolt
 };
 
 static const struct Subsprite gSubspriteTable_83ED6E4[] = {
