@@ -955,7 +955,7 @@ void PrintConditionGraphMonInfo(u16 portraitSlot)
     if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
     {
         Menu_PrintText(gPokenavStructPtr->unk88E9[portraitSlot], 13, 3);
-        sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
+        BufferConditionSearchRankText(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
         Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
     }
 }
@@ -1153,10 +1153,10 @@ void PrintPokenavListSelectionInfo(void)
     switch (gPokenavStructPtr->listMode)
     {
     case POKENAV_LIST_CONDITION_SEARCH:
-        sub_80F443C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk2_5);
+        BufferConditionSearchRankText(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk2_5);
         break;
     case POKENAV_LIST_RIBBONS:
-        sub_80F445C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
+        BufferRibbonsMonListIndexText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
         break;
     default:
         return;
@@ -1260,7 +1260,7 @@ bool8 PrintPokenavListRowStep(void)
 void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 {
     u8 displayMode = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
-    sub_80F4428(gPokenavStructPtr->unk8788, listIndex, displayMode);
+    BufferPokenavMonListRowText(gPokenavStructPtr->unk8788, listIndex, displayMode);
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
     Menu_PrintText(gPokenavStructPtr->unk8788, 13, tilemapRow);
 }
@@ -1607,7 +1607,7 @@ void CopyRibbonsSummaryTilemapToVram(void)
 void PrintRibbonsSummaryMonInfo(void)
 {
     Menu_PrintText(gPokenavStructPtr->unk8829[0], 13, 1);
-    sub_80F445C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
+    BufferRibbonsMonListIndexText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
     Menu_PrintText(gPokenavStructPtr->unk8788, 1, 5);
 }
 
@@ -3647,19 +3647,19 @@ void UpdateTrainerEyesNameSprites(u8 *text)
     DmaCopy32Defvars(3, gPokenavStructPtr->spriteGfxBuffers[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
 }
 
-u8 *sub_80F4428(u8 *arg0, u16 arg1, u8 arg2)
+u8 *BufferPokenavMonListRowText(u8 *dst, u16 listIndex, u8 displayMode)
 {
-    return sub_80F6514(arg0, arg1, arg2);
+    return sub_80F6514(dst, listIndex, displayMode);
 }
 
-u8 *sub_80F443C(u8 *arg0, u16 arg1)
+u8 *BufferConditionSearchRankText(u8 *dst, u16 rank)
 {
-    return AlignInt1InMenuWindow(StringCopy(arg0, gOtherText_Number), arg1, 56, 1);
+    return AlignInt1InMenuWindow(StringCopy(dst, gOtherText_Number), rank, 56, 1);
 }
 
-u8 *sub_80F445C(u8 *arg0, u16 arg1)
+u8 *BufferRibbonsMonListIndexText(u8 *dst, u16 index)
 {
-    u8 *buffer = AlignInt1InMenuWindow(arg0, arg1, 23, 1);
+    u8 *buffer = AlignInt1InMenuWindow(dst, index, 23, 1);
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x11;
     buffer[2] = 1;
@@ -3706,7 +3706,7 @@ void sub_80F45A0(s16 arg0, u8 arg1)
     u8 var0 = gPokenavStructPtr->unk893c[arg0].unk3_14;
     if (var0)
     {
-        sub_80F4428(gPokenavStructPtr->unk8829[arg1], arg0, 0);
+        BufferPokenavMonListRowText(gPokenavStructPtr->unk8829[arg1], arg0, 0);
         box = gPokenavStructPtr->unk893c[arg0].unk1;
         if (box == 14)
             AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gOtherText_InParty, 64, 0);
