@@ -25,7 +25,7 @@ void DummyPerStepCallback(u8);
 void PerStepCallback_8069F64(u8);
 static void FortreeBridgePerStepCallback(u8);
 static void PacifidlogBridgePerStepCallback(u8);
-void PerStepCallback_8069DD4(u8);
+static void SootopolisGymIcePerStepCallback(u8);
 void PerStepCallback_806A07C(u8);
 
 void (*const gUnknown_08376364[])(u8) = {
@@ -33,7 +33,7 @@ void (*const gUnknown_08376364[])(u8) = {
     PerStepCallback_8069F64,
     FortreeBridgePerStepCallback,
     PacifidlogBridgePerStepCallback,
-    PerStepCallback_8069DD4,
+    SootopolisGymIcePerStepCallback,
     EndTruckSequence,
     sub_80BCF1C,
     PerStepCallback_806A07C
@@ -476,7 +476,7 @@ static void FortreeBridgePerStepCallback(u8 taskId)
     }
 }
 
-const u16 gUnknown_083763E4[] = {
+static const u16 sSootopolisGymIceRowVars[] = {
     0,
     0,
     0,
@@ -505,31 +505,31 @@ const u16 gUnknown_083763E4[] = {
     0
 };
 
-bool32 sub_8069CB8(s16 x, s16 y)
+static bool32 CoordInIcePuzzleRegion(s16 x, s16 y)
 {
-    if ((u16)(x - 3) < 11 && (u16)(y - 6) < 14 && gUnknown_083763E4[y])
+    if ((u16)(x - 3) < 11 && (u16)(y - 6) < 14 && sSootopolisGymIceRowVars[y])
     {
         return TRUE;
     }
     return FALSE;
 }
 
-void sub_8069CFC(s16 x, s16 y)
+static void MarkIcePuzzleCoordVisited(s16 x, s16 y)
 {
-    if (sub_8069CB8(x, y))
+    if (CoordInIcePuzzleRegion(x, y))
     {
-        *GetVarPointer(gUnknown_083763E4[y]) |= (1 << (x - 3));
+        *GetVarPointer(sSootopolisGymIceRowVars[y]) |= (1 << (x - 3));
     }
 }
 
-bool32 sub_8069D34(s16 x, s16 y)
+static bool32 IsIcePuzzleCoordVisited(s16 x, s16 y)
 {
     u32 var;
-    if (!sub_8069CB8(x, y))
+    if (!CoordInIcePuzzleRegion(x, y))
     {
         return FALSE;
     }
-    var = VarGet(gUnknown_083763E4[y]) << 16;
+    var = VarGet(sSootopolisGymIceRowVars[y]) << 16;
     if (((1 << 16) << (x - 3)) & var)
     {
         return TRUE;
@@ -546,7 +546,7 @@ void SetSootopolisGymCrackedIceMetatiles(void)
     {
         for (y = 0; y < height; y++)
         {
-            if (sub_8069D34(x, y) == TRUE)
+            if (IsIcePuzzleCoordVisited(x, y) == TRUE)
             {
                 MapGridSetMetatileIdAt(x + 7, y + 7, METATILE_ID(SootopolisGym, Ice_Cracked));
             }
@@ -554,7 +554,7 @@ void SetSootopolisGymCrackedIceMetatiles(void)
     }
 }
 
-void PerStepCallback_8069DD4(u8 taskId)
+static void SootopolisGymIcePerStepCallback(u8 taskId)
 {
     s16 x, y;
     u16 tileBehavior;
@@ -606,7 +606,7 @@ void PerStepCallback_8069DD4(u8 taskId)
                 PlaySE(SE_ICE_CRACK);
                 MapGridSetMetatileIdAt(x, y, METATILE_ID(SootopolisGym, Ice_Cracked));
                 CurrentMapDrawMetatileAt(x, y);
-                sub_8069CFC(x - 7, y - 7);
+                MarkIcePuzzleCoordVisited(x - 7, y - 7);
                 data[1] = 1;
             }
             break;
