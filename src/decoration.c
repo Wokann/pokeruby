@@ -2264,14 +2264,14 @@ void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 * unk_0203
 {
     RemoveDecorationItemsWindow();
     RemoveDecorationItemsOtherWindows();
-    sub_81006D0(unk_02038900);
+    ClearPlaceDecorationTileBuffers(unk_02038900);
     unk_02038900->decoration = &gDecorations[decoIdx];
     if (gDecorations[decoIdx].permission != DECORPERM_SOLID_MAT)
     {
-        sub_81008BC(unk_02038900);
-        sub_8100930(unk_02038900->decoration->shape);
-        sub_8100874(unk_02038900);
-        sub_810070C(unk_02038900->palette, ((u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles + 8 * unk_02038900->decoration->tiles[0])[7] >> 12);
+        SetDecorSelectionMetatiles(unk_02038900);
+        SetDecorSelectionBoxOamAttributes(unk_02038900->decoration->shape);
+        SetDecorSelectionBoxTiles(unk_02038900);
+        CopyPalette(unk_02038900->palette, ((u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles + 8 * unk_02038900->decoration->tiles[0])[7] >> 12);
         LoadSpritePalette(&gUnknown_083EC954);
         gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
         gFieldCamera.trackedSpriteId = CreateSprite(&gSpriteTemplate_83EC93C, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 0);
@@ -2782,7 +2782,7 @@ void CantPlaceDecorationPrompt(u8 taskId)
     }
 }
 
-void sub_81006D0(struct UnkStruct_02038900 *unk_02038900)
+void ClearPlaceDecorationTileBuffers(struct UnkStruct_02038900 *unk_02038900)
 {
     u16 i;
     for (i=0; i<0x800; i++)
@@ -2795,7 +2795,7 @@ void sub_81006D0(struct UnkStruct_02038900 *unk_02038900)
     }
 }
 
-void sub_810070C(u16 *a0, u16 a1)
+void CopyPalette(u16 *a0, u16 a1)
 {
     u16 i;
     for (i=0; i<16; i++)
@@ -2804,7 +2804,7 @@ void sub_810070C(u16 *a0, u16 a1)
     }
 }
 
-void sub_8100740(u8 *dest, u16 flags)
+void CopyTile(u8 *dest, u16 flags)
 {
     u8 buffer[32];
     u16 mode;
@@ -2853,14 +2853,14 @@ void sub_8100740(u8 *dest, u16 flags)
     }
 }
 
-void sub_8100874(struct UnkStruct_02038900 *unk_02038900)
+void SetDecorSelectionBoxTiles(struct UnkStruct_02038900 *unk_02038900)
 {
     u16 i;
     for (i=0; i<0x40; i++)
-        sub_8100740(&unk_02038900->image[i * 32], unk_02038900->tiles[i]);
+        CopyTile(&unk_02038900->image[i * 32], unk_02038900->tiles[i]);
 }
 
-u16 sub_810089C(u16 a0)
+u16 GetMetatile(u16 a0)
 {
     return ((u16 *)gMapHeader.mapLayout->secondaryTileset->metatiles)[a0] & 0xfff;
 }
@@ -2993,18 +2993,18 @@ const struct SpriteTemplate gSpriteTemplate_83ECA88 = {
 
 const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = sub_8101848, .noFunc = ReturnToDecorationItemsMenu};
 
-void sub_81008BC(struct UnkStruct_02038900 *unk_02038900)
+void SetDecorSelectionMetatiles(struct UnkStruct_02038900 *unk_02038900)
 {
     u8 i;
     u8 shape;
     shape = unk_02038900->decoration->shape;
     for (i=0; i<gUnknown_083EC860[shape].size; i++)
     {
-        unk_02038900->tiles[gUnknown_083EC860[shape].tiles[i]] = sub_810089C(unk_02038900->decoration->tiles[gUnknown_083EC860[shape].y[i]] * 8 + gUnknown_083EC860[shape].x[i]);
+        unk_02038900->tiles[gUnknown_083EC860[shape].tiles[i]] = GetMetatile(unk_02038900->decoration->tiles[gUnknown_083EC860[shape].y[i]] * 8 + gUnknown_083EC860[shape].x[i]);
     }
 }
 
-void sub_8100930(u8 decoShape)
+void SetDecorSelectionBoxOamAttributes(u8 decoShape)
 {
     gUnknown_020391AC.y = 0;
     gUnknown_020391AC.affineMode = 0;
