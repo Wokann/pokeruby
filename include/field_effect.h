@@ -78,9 +78,9 @@ bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *, struct ObjectEvent *);
 bool8 WaterfallFieldEffect_RideUp(struct Task *, struct ObjectEvent *);
 bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *, struct ObjectEvent *);
 
-bool8 sub_8087124(struct Task *);
-bool8 dive_2_unknown(struct Task *);
-bool8 dive_3_unknown(struct Task *);
+bool8 DiveFieldEffect_Init(struct Task *);
+bool8 DiveFieldEffect_ShowMon(struct Task *);
+bool8 DiveFieldEffect_TryWarp(struct Task *);
 
 void StartLavaridgeGymB1FWarp(u8);
 

@@ -294,10 +294,10 @@ static bool8 (*const sWaterfallFieldEffectFuncs[])(struct Task *, struct ObjectE
     WaterfallFieldEffect_ContinueRideOrEnd
 };
 
-bool8 (*const gUnknown_0839F330[])(struct Task *) = {
-    sub_8087124,
-    dive_2_unknown,
-    dive_3_unknown
+static bool8 (*const sDiveFieldEffectFuncs[])(struct Task *) = {
+    DiveFieldEffect_Init,
+    DiveFieldEffect_ShowMon,
+    DiveFieldEffect_TryWarp
 };
 
 bool8 (*const sLavaridgeGymB1FWarpEffectFuncs[])(struct Task *, struct ObjectEvent *, struct Sprite *) = {
@@ -1589,51 +1589,57 @@ bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEve
 #undef tWaterfallState
 #undef tWaterfallMonId
 
-static void Task_Dive(u8);
+#define tDiveState data[0]
+#define tDiveMonId data[15]
+
+static void Task_UseDive(u8);
 
 bool8 FldEff_UseDive(void)
 {
     u8 taskId;
-    taskId = CreateTask(Task_Dive, 0xff);
-    gTasks[taskId].data[15] = gFieldEffectArguments[0];
+    taskId = CreateTask(Task_UseDive, 0xff);
+    gTasks[taskId].tDiveMonId = gFieldEffectArguments[0];
     gTasks[taskId].data[14] = gFieldEffectArguments[1];
-    Task_Dive(taskId);
+    Task_UseDive(taskId);
     return FALSE;
 }
 
-void Task_Dive(u8 taskId)
+void Task_UseDive(u8 taskId)
 {
-    while (gUnknown_0839F330[gTasks[taskId].data[0]](&gTasks[taskId]));
+    while (sDiveFieldEffectFuncs[gTasks[taskId].tDiveState](&gTasks[taskId]));
 }
 
-bool8 sub_8087124(struct Task *task)
+bool8 DiveFieldEffect_Init(struct Task *task)
 {
     gPlayerAvatar.preventStep = TRUE;
-    task->data[0]++;
+    task->tDiveState++;
     return FALSE;
 }
 
-bool8 dive_2_unknown(struct Task *task)
+bool8 DiveFieldEffect_ShowMon(struct Task *task)
 {
     LockPlayerFieldControls();
-    gFieldEffectArguments[0] = task->data[15];
+    gFieldEffectArguments[0] = task->tDiveMonId;
     FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-    task->data[0]++;
+    task->tDiveState++;
     return FALSE;
 }
 
-bool8 dive_3_unknown(struct Task *task)
+bool8 DiveFieldEffect_TryWarp(struct Task *task)
 {
     struct MapPosition mapPosition;
     PlayerGetDestCoords(&mapPosition.x, &mapPosition.y);
     if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
     {
         dive_warp(&mapPosition, gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior);
-        DestroyTask(FindTaskIdByFunc(Task_Dive));
+        DestroyTask(FindTaskIdByFunc(Task_UseDive));
         FieldEffectActiveListRemove(FLDEFF_USE_DIVE);
     }
     return FALSE;
 }
+
+#undef tDiveState
+#undef tDiveMonId
 
 void Task_LavaridgeGymB1FWarp(u8);
 void FieldCB_LavaridgeGymB1FWarpExit(void);
