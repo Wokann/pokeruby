@@ -377,14 +377,14 @@ static void sub_8136638(void)
             if (JOY_HELD(DPAD_UP))
             {
                 PlaySE(SE_SELECT);
-                sub_80F5060(TRUE);
+                BeginConditionGraphMonScroll(TRUE);
                 DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
             else if (JOY_HELD(DPAD_DOWN))
             {
                 PlaySE(SE_SELECT);
-                sub_80F5060(FALSE);
+                BeginConditionGraphMonScroll(FALSE);
                 DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
@@ -407,7 +407,7 @@ static void sub_8136638(void)
             }
             break;
         case 1:
-            if (!gpu_sync_bg_show())
+            if (!UpdateConditionGraphMonScroll())
             {
                 gUnknown_02039304->unk50++;
             }
@@ -487,7 +487,7 @@ static void sub_81368A4(void)
         case 0:
             if (gPokenavStructPtr->unk87DC != gPokeblockMonID)
             {
-                sub_80F5060(gUnknown_02039304->unk56);
+                BeginConditionGraphMonScroll(gUnknown_02039304->unk56);
                 gUnknown_02039304->unk50++;
             }
             else
@@ -496,7 +496,7 @@ static void sub_81368A4(void)
             }
             break;
         case 1:
-            if (!gpu_sync_bg_show())
+            if (!UpdateConditionGraphMonScroll())
             {
                 gUnknown_02039304->unk50++;
             }

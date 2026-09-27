@@ -2486,7 +2486,7 @@ void HandleConditionGraphInput(void)
             ))
             {
                 PlaySE(SE_SELECT);
-                sub_80F5060(1);
+                BeginConditionGraphMonScroll(1);
                 DestroyConditionSparkleSprites();
                 gPokenavStructPtr->callbackStep = 5;
                 break;
@@ -2500,7 +2500,7 @@ void HandleConditionGraphInput(void)
             ))
             {
                 PlaySE(SE_SELECT);
-                sub_80F5060(0);
+                BeginConditionGraphMonScroll(0);
                 DestroyConditionSparkleSprites();
                 gPokenavStructPtr->callbackStep = 5;
                 break;
@@ -2536,7 +2536,7 @@ void HandleConditionGraphInput(void)
         }
         break;
     case 5:
-        if (!gpu_sync_bg_show())
+        if (!UpdateConditionGraphMonScroll())
         {
             CreateConditionSparkleSprites();
             gPokenavStructPtr->callbackStep = 6;

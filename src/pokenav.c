@@ -4012,7 +4012,7 @@ bool8 UpdateConditionGraphMonExit(void)
     return var0 || var1;
 }
 
-void sub_80F5060(u8 arg0)
+void BeginConditionGraphMonScroll(u8 arg0)
 {
     u16 var0;
     u8 var1;
@@ -4056,21 +4056,21 @@ void sub_80F5060(u8 arg0)
 
     var2 = gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14;
     if (!var1)
-        gPokenavStructPtr->unk87E0 = sub_80F5264;
+        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollToMon;
     else if (!var2)
-        gPokenavStructPtr->unk87E0 = sub_80F52F8;
+        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollToEmpty;
     else
-        gPokenavStructPtr->unk87E0 = sub_80F5364;
+        gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollBetweenMons;
 
     gPokenavStructPtr->unk87DE = 0;
 }
 
-bool8 gpu_sync_bg_show(void)
+bool8 UpdateConditionGraphMonScroll(void)
 {
     return gPokenavStructPtr->unk87E0();
 }
 
-bool8 sub_80F5264(void)
+bool8 UpdateConditionGraphScrollToMon(void)
 {
     switch (gPokenavStructPtr->unk87DE)
     {
@@ -4093,7 +4093,7 @@ bool8 sub_80F5264(void)
     return TRUE;
 }
 
-bool8 sub_80F52F8(void)
+bool8 UpdateConditionGraphScrollToEmpty(void)
 {
     switch (gPokenavStructPtr->unk87DE)
     {
@@ -4112,7 +4112,7 @@ bool8 sub_80F52F8(void)
     return TRUE;
 }
 
-bool8 sub_80F5364(void)
+bool8 UpdateConditionGraphScrollBetweenMons(void)
 {
     switch (gPokenavStructPtr->unk87DE)
     {
