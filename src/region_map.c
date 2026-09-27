@@ -29,17 +29,6 @@
 #define MAPCURSOR_X_MAX (MAPCURSOR_X_MIN + MAP_WIDTH - 1)
 #define MAPCURSOR_Y_MAX (MAPCURSOR_Y_MIN + MAP_HEIGHT - 1)
 
-// Input events
-enum
-{
-    INPUT_EVENT_NONE,
-    INPUT_EVENT_DPAD,
-    INPUT_EVENT_2,
-    INPUT_EVENT_3,
-    INPUT_EVENT_A_BUTTON,
-    INPUT_EVENT_B_BUTTON,
-};
-
 static EWRAM_DATA struct RegionMap *gRegionMap = NULL;
 
 static const u16 sRegionMapCursor_Pal[] = INCBIN_U16("graphics/pokenav/cursor.gbapal");
@@ -207,37 +196,37 @@ u8 DoRegionMapInputCallback(void)
 
 static u8 ProcessRegionMapInput_Full(void)
 {
-    u8 event = INPUT_EVENT_NONE;
+    u8 event = MAP_INPUT_NONE;
 
     gRegionMap->cursorDeltaX = 0;
     gRegionMap->cursorDeltaY = 0;
     if (JOY_HELD(DPAD_UP) && gRegionMap->cursorPosY > MAPCURSOR_Y_MIN)
     {
         gRegionMap->cursorDeltaY = -1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_DOWN) && gRegionMap->cursorPosY < MAPCURSOR_Y_MAX)
     {
         gRegionMap->cursorDeltaY = 1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_LEFT) && gRegionMap->cursorPosX > MAPCURSOR_X_MIN)
     {
         gRegionMap->cursorDeltaX = -1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_RIGHT) && gRegionMap->cursorPosX < MAPCURSOR_X_MAX)
     {
         gRegionMap->cursorDeltaX = 1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
 
     if (JOY_NEW(A_BUTTON))
-        event = INPUT_EVENT_A_BUTTON;
+        event = MAP_INPUT_A_BUTTON;
     else if (JOY_NEW(B_BUTTON))
-        event = INPUT_EVENT_B_BUTTON;
+        event = MAP_INPUT_B_BUTTON;
 
-    if (event == INPUT_EVENT_DPAD)
+    if (event == MAP_INPUT_MOVE_START)
     {
         gRegionMap->unk7A = 4;
         gRegionMap->inputCallback = MoveRegionMapCursor_Full;
@@ -250,7 +239,7 @@ static u8 MoveRegionMapCursor_Full(void)
     u16 mapSectionId;
 
     if (gRegionMap->unk7A != 0)
-        return INPUT_EVENT_2;
+        return MAP_INPUT_MOVE_CONT;
 
     if (gRegionMap->cursorDeltaX > 0)
         gRegionMap->cursorPosX++;
@@ -273,42 +262,42 @@ static u8 MoveRegionMapCursor_Full(void)
     }
     GetPositionOfCursorWithinMapSec();
     gRegionMap->inputCallback = ProcessRegionMapInput_Full;
-    return INPUT_EVENT_3;
+    return MAP_INPUT_MOVE_END;
 }
 
 static u8 ProcessRegionMapInput_Zoomed(void)
 {
-    u8 event = INPUT_EVENT_NONE;
+    u8 event = MAP_INPUT_NONE;
 
     gRegionMap->unk6A = 0;
     gRegionMap->unk68 = 0;
     if (JOY_HELD(DPAD_UP) && gRegionMap->scrollY > -52)
     {
         gRegionMap->unk68 = -1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_DOWN) && gRegionMap->scrollY < 60)
     {
         gRegionMap->unk68 = 1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_LEFT) && gRegionMap->scrollX > -44)
     {
         gRegionMap->unk6A = -1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
     if (JOY_HELD(DPAD_RIGHT) && gRegionMap->scrollX < 172)
     {
         gRegionMap->unk6A = 1;
-        event = INPUT_EVENT_DPAD;
+        event = MAP_INPUT_MOVE_START;
     }
 
     if (JOY_NEW(A_BUTTON))
-        event = INPUT_EVENT_A_BUTTON;
+        event = MAP_INPUT_A_BUTTON;
     if (JOY_NEW(B_BUTTON))
-        event = INPUT_EVENT_B_BUTTON;
+        event = MAP_INPUT_B_BUTTON;
 
-    if (event == INPUT_EVENT_DPAD)
+    if (event == MAP_INPUT_MOVE_START)
     {
         gRegionMap->inputCallback = MoveRegionMapCursor_Zoomed;
         gRegionMap->unk6C = 0;
@@ -344,9 +333,9 @@ static u8 MoveRegionMapCursor_Zoomed(void)
         }
         gRegionMap->unk6C = 0;
         gRegionMap->inputCallback = ProcessRegionMapInput_Zoomed;
-        return INPUT_EVENT_3;
+        return MAP_INPUT_MOVE_END;
     }
-    return INPUT_EVENT_2;
+    return MAP_INPUT_MOVE_CONT;
 }
 
 void SetRegionMapDataForZoom(void)
@@ -1578,14 +1567,14 @@ static void CB_HandleFlyMapInput(void)
     {
         switch (DoRegionMapInputCallback())
         {
-        case INPUT_EVENT_NONE:
-        case INPUT_EVENT_DPAD:
-        case INPUT_EVENT_2:
+        case MAP_INPUT_NONE:
+        case MAP_INPUT_MOVE_START:
+        case MAP_INPUT_MOVE_CONT:
             break;
-        case INPUT_EVENT_3:
+        case MAP_INPUT_MOVE_END:
             DrawFlyDestTextWindow();
             break;
-        case INPUT_EVENT_A_BUTTON:
+        case MAP_INPUT_A_BUTTON:
             if (gRegionMapState->regionMap.unk16 == 2 || gRegionMapState->regionMap.unk16 == 4)
             {
                 m4aSongNumStart(SE_SELECT);
@@ -1593,7 +1582,7 @@ static void CB_HandleFlyMapInput(void)
                 SetFlyMapCallback(CB_ExitFlyMap);
             }
             break;
-        case INPUT_EVENT_B_BUTTON:
+        case MAP_INPUT_B_BUTTON:
             m4aSongNumStart(SE_SELECT);
             gRegionMapState->choseFlyLocation = 0;
             SetFlyMapCallback(CB_ExitFlyMap);

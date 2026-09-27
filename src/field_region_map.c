@@ -14,10 +14,10 @@ void FieldInitRegionMap(MainCallback callback)
     SetVBlankCallback(NULL);
     eRegionMapState.unk_888[0] = 0;
     eRegionMapState.callback = callback;
-    SetMainCallback2(CB2_FieldInitRegionMap);
+    SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
 
-void CB2_FieldInitRegionMap(void)
+void MCB2_InitRegionMapRegisters(void)
 {
     REG_DISPCNT = 0;
     REG_BG0HOFS = 0;
@@ -40,28 +40,28 @@ void CB2_FieldInitRegionMap(void)
     Menu_DrawStdWindowFrame(21, 0, 29, 3);
     MenuPrint_Centered(gOtherText_Hoenn, 0x16, 1, 0x38);
     Menu_DrawStdWindowFrame(16, 16, 29, 19);
-    sub_813F0C8();
-    SetMainCallback2(CB2_FieldRegionMap);
-    SetVBlankCallback(VBlankCB_FieldRegionMap);
+    PrintRegionMapSecName();
+    SetMainCallback2(MCB2_FieldUpdateRegionMap);
+    SetVBlankCallback(VBCB_FieldUpdateRegionMap);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
 }
 
-void VBlankCB_FieldRegionMap(void)
+void VBCB_FieldUpdateRegionMap(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void CB2_FieldRegionMap(void)
+void MCB2_FieldUpdateRegionMap(void)
 {
-    sub_813EFDC();
+    FieldUpdateRegionMap();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
 }
 
-void sub_813EFDC(void)
+void FieldUpdateRegionMap(void)
 {
     switch (eRegionMapState.unk_888[0])
     {
@@ -76,11 +76,11 @@ void sub_813EFDC(void)
     case 2:
         switch (DoRegionMapInputCallback())
         {
-        case 3:
-            sub_813F0C8();
+        case MAP_INPUT_MOVE_END:
+            PrintRegionMapSecName();
             break;
-        case 4:
-        case 5:
+        case MAP_INPUT_A_BUTTON:
+        case MAP_INPUT_B_BUTTON:
             eRegionMapState.unk_888[0]++;
         }
         break;
@@ -98,7 +98,7 @@ void sub_813EFDC(void)
     }
 }
 
-void sub_813F0C8(void)
+void PrintRegionMapSecName(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
     if (eRegionMapState.regionMap.unk16)

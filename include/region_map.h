@@ -1,6 +1,16 @@
 #ifndef GUARD_REGION_MAP_H
 #define GUARD_REGION_MAP_H
 
+enum
+{
+    MAP_INPUT_NONE,
+    MAP_INPUT_MOVE_START,
+    MAP_INPUT_MOVE_CONT,
+    MAP_INPUT_MOVE_END,
+    MAP_INPUT_A_BUTTON,
+    MAP_INPUT_B_BUTTON,
+};
+
 struct RegionMapLocation
 {
     u8 x, y;
