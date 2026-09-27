@@ -159,12 +159,12 @@ extern void ReshowPlayerPC(u8); // src/player_pc
 void DoSecretBaseDecorationMenu(u8);
 
 void DoSecretBaseDecorationMenu(u8 taskId);
-void sub_80FE2B4(void);
-void Task_DecorationPCProcessMenuInput(u8);
-void sub_80FE394(void);
-void gpu_pal_decompress_alloc_tag_and_upload(u8);
-void sub_80FE5AC(u8);
-void sub_80FE604(u8);
+void LoadDecorationMenuPalette(void);
+void HandleDecorationActionsMenuInput(u8);
+void PrintCurMainMenuDescription(void);
+void DecorationMenuAction_Cancel(u8);
+void InitDecorationCategoriesWindow(u8);
+void HandleDecorationCategoriesMenuInput(u8);
 void sub_80FE728(u8);
 void sub_80FE758(u8);
 void sub_80FE7A8(u8);
@@ -238,6 +238,6 @@ void sub_8100FB4(u8);
 void sub_810153C(u8);
 void sub_8101590(u8);
 void sub_8101848(u8);
-void DoPlayerPCDecoration(u8);
+void DoPlayerRoomDecorationMenu(u8);
 
 #endif // GUARD_DECORATION_H

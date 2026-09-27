@@ -23,7 +23,7 @@
 #include "ewram.h"
 
 extern void DisplayItemMessageOnField(u8, const u8*, TaskFunc, u16);
-extern void DoPlayerPCDecoration(u8);
+extern void DoPlayerRoomDecorationMenu(u8);
 extern void BuyMenuFreeMemory(void);
 extern void DestroyVerticalScrollIndicator(u8);
 extern void PauseVerticalScrollIndicator(u8);
@@ -278,7 +278,7 @@ static void PlayerPC_Mailbox(u8 taskId)
 static void PlayerPC_Decoration(u8 var)
 {
     Menu_EraseWindowRect(0, 0, 10, 9);
-    DoPlayerPCDecoration(var);
+    DoPlayerRoomDecorationMenu(var);
 }
 
 static void PlayerPC_TurnOff(u8 taskId)
