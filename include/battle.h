@@ -665,7 +665,7 @@ void RunBattleScriptCommands(void);
 bool8 TryRunFromBattle(u8 bank);
 
 // asm/battle_2.o
-void sub_8012324(void);
+void HandleTurnActionSelectionState(void);
 void SwapTurnOrder(u8, u8);
 u8 GetWhoStrikesFirst(u8, u8, u8);
 

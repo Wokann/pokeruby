@@ -172,7 +172,7 @@ struct BattleResults gBattleResults;
 void BattleMainCB1(void);
 static void BattleIntroPrepareBackgroundSlide(void);
 void CheckFocusPunch_ClearVarsBeforeTurnStarts(void);
-void SetActionsAndBanksTurnOrder(void);
+void SetActionsAndBattlersTurnOrder(void);
 static void TurnValuesCleanUp(u8);
 void SpecialStatusesClear(void);
 static void RunTurnActionsFunctions(void);
@@ -4027,7 +4027,7 @@ void TryDoEventsBeforeFirstTurn(void)
         TurnValuesCleanUp(0);
         SpecialStatusesClear();
         gBattleStruct->unk160A6 = gAbsentBattlerFlags;
-        gBattleMainFunc = sub_8012324;
+        gBattleMainFunc = HandleTurnActionSelectionState;
         ResetSentPokesToOpponentValue();
         for (i = 0; i < 8; i++)
             gBattleCommunication[i] = 0;
@@ -4045,7 +4045,7 @@ void TryDoEventsBeforeFirstTurn(void)
     }
 }
 
-void bc_8013B1C(void)
+void HandleEndTurn_ContinueBattle(void)
 {
     s32 i;
 
@@ -4114,31 +4114,31 @@ void BattleTurnPassed(void)
     for (i = 0; i < 4; i++)
         gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + i] = 6;
     gBattleStruct->unk160A6 = gAbsentBattlerFlags;
-    gBattleMainFunc = sub_8012324;
+    gBattleMainFunc = HandleTurnActionSelectionState;
     gRandomTurnNumber = Random();
 }
 
-u8 CanRunFromBattle(void)
+u8 IsRunningFromBattleImpossible(void)
 {
-    u8 r2;
-    u8 r6;
+    u8 holdEffect;
+    u8 side;
     s32 i;
 
     if (gBattleMons[gActiveBattler].item == ITEM_ENIGMA_BERRY)
-        r2 = gEnigmaBerries[gActiveBattler].holdEffect;
+        holdEffect = gEnigmaBerries[gActiveBattler].holdEffect;
     else
-        r2 = ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item);
     gPotentialItemEffectBattler = gActiveBattler;
-    if (r2 == HOLD_EFFECT_CAN_ALWAYS_RUN)
+    if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
         return 0;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
         return 0;
     if (gBattleMons[gActiveBattler].ability == ABILITY_RUN_AWAY)
         return 0;
-    r6 = GetBattlerSide(gActiveBattler);
+    side = GetBattlerSide(gActiveBattler);
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (r6 != GetBattlerSide(i)
+        if (side != GetBattlerSide(i)
          && gBattleMons[i].ability == ABILITY_SHADOW_TAG)
         {
             gBattleStruct->scriptingActive = i;
@@ -4146,7 +4146,7 @@ u8 CanRunFromBattle(void)
             gBattleCommunication[5] = 2;
             return 2;
         }
-        if (r6 != GetBattlerSide(i)
+        if (side != GetBattlerSide(i)
          && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
          && gBattleMons[gActiveBattler].type1 != 2
          && gBattleMons[gActiveBattler].type2 != 2
@@ -4179,23 +4179,23 @@ u8 CanRunFromBattle(void)
     return 0;
 }
 
-void sub_8012258(u8 a)
+void SwitchPartyOrder(u8 battler)
 {
     s32 i;
-    u8 r4;
-    u8 r1;
+    u8 partyId1;
+    u8 partyId2;
 
     for (i = 0; i < 3; i++)
-        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3];
-    r4 = pokemon_order_func(gBattlerPartyIndexes[a]);
-    r1 = pokemon_order_func(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + a]);
-    sub_8094C98(r4, r1);
+        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3];
+    partyId1 = pokemon_order_func(gBattlerPartyIndexes[battler]);
+    partyId2 = pokemon_order_func(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + battler]);
+    sub_8094C98(partyId1, partyId2);
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3] = gBattlePartyCurrentOrder[i];
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + (a ^ BIT_FLANK) * 3] =
+            gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(unk1606C) + i + (battler ^ BIT_FLANK) * 3] =
                 gBattlePartyCurrentOrder[i];
         }
     }
@@ -4203,7 +4203,7 @@ void sub_8012258(u8 a)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + a * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3] = gBattlePartyCurrentOrder[i];
         }
     }
 }
@@ -4226,7 +4226,7 @@ extern u8 BattleScript_PrintFullBox[];
 extern u8 BattleScript_PrintCantRunFromTrainer[];
 extern u8 BattleScript_PrintCantEscapeFromBattle[];
 
-void sub_8012324(void)
+void HandleTurnActionSelectionState(void)
 {
     u8 position;
     s32 i;
@@ -4387,7 +4387,7 @@ void sub_8012324(void)
                         BattleScriptExecute(BattleScript_PrintCantRunFromTrainer);
                         gBattleCommunication[gActiveBattler] = STATE_BEFORE_ACTION_CHOSEN;
                     }
-                    else if (CanRunFromBattle()
+                    else if (IsRunningFromBattleImpossible()
                              && gBattleBufferB[gActiveBattler][1] == B_ACTION_RUN)
                     {
                         gSelectionBattleScripts[gActiveBattler] = BattleScript_PrintCantEscapeFromBattle;
@@ -4559,7 +4559,7 @@ void sub_8012324(void)
     // Check if everyone chose actions.
     if (gBattleCommunication[ACTIONS_CONFIRMED_COUNT] == gBattlersCount)
     {
-        gBattleMainFunc = SetActionsAndBanksTurnOrder;
+        gBattleMainFunc = SetActionsAndBattlersTurnOrder;
     }
 }
 
@@ -4721,18 +4721,18 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
     return strikesFirst;
 }
 
-void SetActionsAndBanksTurnOrder(void)
+void SetActionsAndBattlersTurnOrder(void)
 {
-    s32 var = 0;
+    s32 turnOrderId = 0;
     s32 i, j;
 
     if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
     {
         for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
         {
-            gActionsByTurnOrder[var] = gActionForBanks[gActiveBattler];
-            gBattlerByTurnOrder[var] = gActiveBattler;
-            var++;
+            gActionsByTurnOrder[turnOrderId] = gActionForBanks[gActiveBattler];
+            gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+            turnOrderId++;
         }
     }
     else
@@ -4743,7 +4743,7 @@ void SetActionsAndBanksTurnOrder(void)
             {
                 if (gActionForBanks[gActiveBattler] == B_ACTION_RUN)
                 {
-                    var = 5;
+                    turnOrderId = 5;
                     break;
                 }
             }
@@ -4753,22 +4753,22 @@ void SetActionsAndBanksTurnOrder(void)
             if (gActionForBanks[0] == B_ACTION_RUN)
             {
                 gActiveBattler = 0;
-                var = 5;
+                turnOrderId = 5;
             }
         }
 
-        if (var == 5)
+        if (turnOrderId == 5)
         {
             gActionsByTurnOrder[0] = gActionForBanks[gActiveBattler];
             gBattlerByTurnOrder[0] = gActiveBattler;
-            var = 1;
+            turnOrderId = 1;
             for (i = 0; i < gBattlersCount; i++)
             {
                 if (i != gActiveBattler)
                 {
-                    gActionsByTurnOrder[var] = gActionForBanks[i];
-                    gBattlerByTurnOrder[var] = i;
-                    var++;
+                    gActionsByTurnOrder[turnOrderId] = gActionForBanks[i];
+                    gBattlerByTurnOrder[turnOrderId] = i;
+                    turnOrderId++;
                 }
             }
             gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
@@ -4781,32 +4781,32 @@ void SetActionsAndBanksTurnOrder(void)
             {
                 if (gActionForBanks[gActiveBattler] == B_ACTION_USE_ITEM || gActionForBanks[gActiveBattler] == B_ACTION_SWITCH)
                 {
-                    gActionsByTurnOrder[var] = gActionForBanks[gActiveBattler];
-                    gBattlerByTurnOrder[var] = gActiveBattler;
-                    var++;
+                    gActionsByTurnOrder[turnOrderId] = gActionForBanks[gActiveBattler];
+                    gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+                    turnOrderId++;
                 }
             }
             for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
             {
                 if (gActionForBanks[gActiveBattler] != B_ACTION_USE_ITEM && gActionForBanks[gActiveBattler] != B_ACTION_SWITCH)
                 {
-                    gActionsByTurnOrder[var] = gActionForBanks[gActiveBattler];
-                    gBattlerByTurnOrder[var] = gActiveBattler;
-                    var++;
+                    gActionsByTurnOrder[turnOrderId] = gActionForBanks[gActiveBattler];
+                    gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+                    turnOrderId++;
                 }
             }
             for (i = 0; i < gBattlersCount - 1; i++)
             {
                 for (j = i + 1; j < gBattlersCount; j++)
                 {
-                    u8 bank1 = gBattlerByTurnOrder[i];
-                    u8 bank2 = gBattlerByTurnOrder[j];
+                    u8 battler1 = gBattlerByTurnOrder[i];
+                    u8 battler2 = gBattlerByTurnOrder[j];
                     if (gActionsByTurnOrder[i] != B_ACTION_USE_ITEM
                         && gActionsByTurnOrder[j] != B_ACTION_USE_ITEM
                         && gActionsByTurnOrder[i] != B_ACTION_SWITCH
                         && gActionsByTurnOrder[j] != B_ACTION_SWITCH)
                     {
-                        if (GetWhoStrikesFirst(bank1, bank2, FALSE))
+                        if (GetWhoStrikesFirst(battler1, battler2, FALSE))
                             SwapTurnOrder(i, j);
                     }
                 }

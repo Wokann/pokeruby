@@ -156,7 +156,7 @@ u16 SpeciesToNationalPokedexNum(u16 species);
 u8 sub_803FC34(u8 bank);
 u16 sub_803FBFC(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
-void sub_8012258(u8);
+void SwitchPartyOrder(u8);
 //MonTryLearningNewMove teach poke a move
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
@@ -174,7 +174,7 @@ void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CountAliveMons(u8 caseID);
 void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
-u8 CanRunFromBattle(void);
+u8 IsRunningFromBattleImpossible(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 CastformDataTypeChange(u8 bank);
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
@@ -5078,7 +5078,7 @@ static void atk51_switchhandleorder(void)
         break;
     case 1:
         if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
-            sub_8012258(gActiveBattler);
+            SwitchPartyOrder(gActiveBattler);
         break;
     case 2:
         gBattleCommunication[0] = gBattleBufferB[gActiveBattler][1];
@@ -5093,7 +5093,7 @@ static void atk51_switchhandleorder(void)
             gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
         }
         else
-            sub_8012258(gActiveBattler);
+            SwitchPartyOrder(gActiveBattler);
 
         gBattleTextBuff1[0] = 0xFD;
         gBattleTextBuff1[1] = 6;
@@ -6036,7 +6036,7 @@ static void atk76_various(void)
         }
         break;
     case 2:
-        gBattleCommunication[0] = CanRunFromBattle();
+        gBattleCommunication[0] = IsRunningFromBattleImpossible();
         break;
     case 3:
         gBattlerTarget = GetMoveTarget(gCurrentMove, 0);
@@ -6810,7 +6810,7 @@ static void atk8F_forcerandomswitch(void)
             }
             gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gBattlerTarget] = i;
             if (!IsLinkDoubleBattle())
-                sub_8012258(gBattlerTarget);
+                SwitchPartyOrder(gBattlerTarget);
             sub_8094B6C(gBattlerTarget, i, 0);
             sub_8094B6C(gBattlerTarget ^ 2, i, 1);
 #undef MON_CAN_BATTLE
