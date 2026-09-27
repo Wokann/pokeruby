@@ -584,7 +584,7 @@ void CB2_InitTitleScreen(void)
     {
         u16 savedIme;
 
-        sub_813CE30(0x78, 0x50, 0x100, 0);
+        PanFadeAndZoomScreen(0x78, 0x50, 0x100, 0);
         REG_BG2X = -29 * 256;
         REG_BG2Y = -33 * 256;
         REG_WIN0H = 0;

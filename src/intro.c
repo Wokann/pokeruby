@@ -129,7 +129,7 @@ static const union AnimCmd *const gSpriteAnimTable_840AE10[] =
     gSpriteAnim_840AE00,
     gSpriteAnim_840AE08,
 };
-static void sub_813D208(struct Sprite *sprite);
+static void SpriteCB_WaterDrop(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840AE20 =
 {
     .tileTag = 2000,
@@ -138,7 +138,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AE20 =
     .anims = gSpriteAnimTable_840AE10,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813D208,
+    .callback = SpriteCB_WaterDrop,
 };
 static const union AnimCmd Unknown_40AE38[] =
 {
@@ -351,7 +351,7 @@ static const s16 gUnknown_0840AF74[][2] =
     {5, 20},
     {3, 28},
 };
-static void sub_813D908(struct Sprite *sprite);
+static void SpriteCB_LogoLetter(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840AF94 =
 {
     .tileTag = 2000,
@@ -360,7 +360,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AF94 =
     .anims = gSpriteAnimTable_840AF18,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813D908,
+    .callback = SpriteCB_LogoLetter,
 };
 static const struct SpriteTemplate gSpriteTemplate_840AFAC =
 {
@@ -370,7 +370,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AFAC =
     .anims = gSpriteAnimTable_840AF34,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813D908,
+    .callback = SpriteCB_LogoLetter,
 };
 static const struct SpriteTemplate gSpriteTemplate_840AFC4 =
 {
@@ -380,7 +380,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AFC4 =
     .anims = gSpriteAnimTable_840AF4C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813D908,
+    .callback = SpriteCB_LogoLetter,
 };
 static const struct OamData gOamData_840AFDC =
 {
@@ -407,7 +407,7 @@ static const union AnimCmd *const gSpriteAnimTable_840AFEC[] =
 {
     gSpriteAnim_840AFE4,
 };
-static void sub_813DA64(struct Sprite *sprite);
+static void SpriteCB_EonSilhouette(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840AFF0 =
 {
     .tileTag = 2002,
@@ -416,7 +416,7 @@ static const struct SpriteTemplate gSpriteTemplate_840AFF0 =
     .anims = gSpriteAnimTable_840AFEC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813DA64,
+    .callback = SpriteCB_EonSilhouette,
 };
 const struct CompressedSpriteSheet gUnknown_0840B008[] =
 {
@@ -482,7 +482,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B080[] =
 {
     gSpriteAnim_840B078,
 };
-static void sub_813E30C(struct Sprite *sprite);
+static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B084 =
 {
     .tileTag = 2002,
@@ -491,7 +491,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B084 =
     .anims = gSpriteAnimTable_840B080,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E30C,
+    .callback = SpriteCB_IntroFlyingPokeball,
 };
 static const struct OamData gOamData_840B09C =
 {
@@ -518,7 +518,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B0AC[] =
 {
     gSpriteAnim_840B0A4,
 };
-static void sub_813E4B8(struct Sprite *sprite);
+static void SpriteCB_IntroBurstParticle(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B0B0 =
 {
     .tileTag = 2003,
@@ -527,7 +527,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B0B0 =
     .anims = gSpriteAnimTable_840B0AC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E4B8,
+    .callback = SpriteCB_IntroBurstParticle,
 };
 static const struct OamData gOamData_840B0C8 =
 {
@@ -554,7 +554,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B0D8[] =
 {
     gSpriteAnim_840B0D0,
 };
-static void sub_813E5E0(struct Sprite *sprite);
+static void SpriteCB_IntroAttackParticle(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B0DC =
 {
     .tileTag = 2003,
@@ -563,9 +563,9 @@ static const struct SpriteTemplate gSpriteTemplate_840B0DC =
     .anims = gSpriteAnimTable_840B0D8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E5E0,
+    .callback = SpriteCB_IntroAttackParticle,
 };
-static void sub_813E6C0(struct Sprite *sprite);
+static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B0F4 =
 {
     .tileTag = 2003,
@@ -574,7 +574,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B0F4 =
     .anims = gSpriteAnimTable_840B0D8,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E6C0,
+    .callback = SpriteCB_IntroAttackParticleSpawner,
 };
 static const struct OamData gOamData_840B10C =
 {
@@ -602,7 +602,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B120[] =
 {
     gSpriteAnim_840B114,
 };
-static void sub_813E804(struct Sprite *sprite);
+static void SpriteCB_IntroOrbitingParticle(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B124 =
 {
     .tileTag = 2003,
@@ -611,7 +611,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B124 =
     .anims = gSpriteAnimTable_840B120,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E804,
+    .callback = SpriteCB_IntroOrbitingParticle,
 };
 static const struct OamData gOamData_840B13C =
 {
@@ -638,7 +638,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B14C[] =
 {
     gSpriteAnim_840B144,
 };
-static void sub_813E980(struct Sprite *sprite);
+static void SpriteCB_IntroTorchicAttackParticle(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B150 =
 {
     .tileTag = 2003,
@@ -647,10 +647,10 @@ static const struct SpriteTemplate gSpriteTemplate_840B150 =
     .anims = gSpriteAnimTable_840B14C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813E980,
+    .callback = SpriteCB_IntroTorchicAttackParticle,
 };
 static const u8 gUnknown_0840B168[] = {0xE6, 0xEB, 0xE4, 0xEA, 0xE5, 0xE9, 0xE7, 0xE8};
-static void sub_813EA60(struct Sprite *sprite);
+static void SpriteCB_IntroTorchicAttackSpawner(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B170 =
 {
     .tileTag = 2003,
@@ -659,7 +659,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B170 =
     .anims = gSpriteAnimTable_840B14C,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813EA60,
+    .callback = SpriteCB_IntroTorchicAttackSpawner,
 };
 static const u16 gUnknown_0840B188[] = {0x200, 0x1C0, 0x180, 0x140, 0x100, 0xE0, 0xC0, 0xA0, 0x80, 0x80};
 static const struct OamData gOamData_840B19C =
@@ -687,7 +687,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B1AC[] =
 {
     gSpriteAnim_840B1A4,
 };
-static void sub_813EBBC(struct Sprite *sprite);
+static void SpriteCB_IntroMudkipAttackParticle(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B1B0 =
 {
     .tileTag = 2003,
@@ -696,9 +696,9 @@ static const struct SpriteTemplate gSpriteTemplate_840B1B0 =
     .anims = gSpriteAnimTable_840B1AC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813EBBC,
+    .callback = SpriteCB_IntroMudkipAttackParticle,
 };
-static void sub_813EC90(struct Sprite *sprite);
+static void SpriteCB_IntroMudkipAttackSpawner(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B1C8 =
 {
     .tileTag = 2003,
@@ -707,7 +707,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B1C8 =
     .anims = gSpriteAnimTable_840B1AC,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813EC90,
+    .callback = SpriteCB_IntroMudkipAttackSpawner,
 };
 static const struct OamData gOamData_840B1E0 =
 {
@@ -734,7 +734,7 @@ static const union AnimCmd *const gSpriteAnimTable_840B1F0[] =
 {
     gSpriteAnim_840B1E8,
 };
-static void sub_813EDFC(struct Sprite *sprite);
+static void SpriteCB_IntroBattleFlash(struct Sprite *sprite);
 static const struct SpriteTemplate gSpriteTemplate_840B1F4 =
 {
     .tileTag = 2003,
@@ -743,7 +743,7 @@ static const struct SpriteTemplate gSpriteTemplate_840B1F4 =
     .anims = gSpriteAnimTable_840B1F0,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_813EDFC,
+    .callback = SpriteCB_IntroBattleFlash,
 };
 const struct CompressedSpriteSheet gIntro3PokeballGfx_Table[] =
 {
@@ -773,46 +773,46 @@ const struct SpritePalette gIntro3MiscPal_Table[] =
 u8 (*const ewram0arr)[32] = (u8 (*)[32])gSharedMem;
 
 static void MainCB2_EndIntro(void);
-void Task_IntroLoadPart1Graphics(u8);
-static void Task_IntroFadeIn(u8);
-static void Task_IntroWaterDrops(u8);
-static void Task_IntroScrollDownAndShowEon(u8);
-static void Task_IntroWaitToSetupPart2(u8);
-static void Task_IntroLoadPart2Graphics(u8);
-static void Task_IntroStartBikeRide(u8);
-static void Task_IntroHandleBikeAndEonMovement(u8);
-static void Task_IntroWaitToSetupPart3(u8);
-static void Task_IntroLoadPart3Graphics(u8);
-static void Task_IntroSpinAndZoomPokeball(u8);
-static void Task_IntroWaitToSetupPart3DoubleFight(u8);
-static void Task_IntroLoadPart3Streaks(u8);
-static void task_intro_14(u8);
-static void task_intro_15(u8);
-static void task_intro_16(u8);
-static void task_intro_17(u8);
-static void Task_IntroPokemonBattle(u8);
-static void task_intro_19(u8);
-static void task_intro_20(u8);
-static void intro_reset_and_hide_bgs(void);
-static void sub_813CCE8(u8);
-static u16 sub_813CE88(u16, s16, s16, u16, u8);
-static u8 sub_813CFA8(u16, u16, u16, u16);
-static void sub_813D084(u8);
-static void sub_813D220(struct Sprite *);
-static void sub_813D368(struct Sprite *);
-static void sub_813D414(struct Sprite *);
-static void SpriteCB_WaterDropFall(struct Sprite *);
+void Task_Scene1_Load(u8);
+static void Task_Scene1_FadeIn(u8);
+static void Task_Scene1_WaterDrops(u8);
+static void Task_Scene1_PanUpAndShowEon(u8);
+static void Task_Scene1_End(u8);
+static void Task_Scene2_Load(u8);
+static void Task_Scene2_CreateSprites(u8);
+static void Task_Scene2_BikeRide(u8);
+static void Task_Scene2_End(u8);
+static void Task_Scene3_Load(u8);
+static void Task_Scene3_SpinPokeball(u8);
+static void Task_Scene3_WaitForBattle(u8);
+static void Task_Scene3_LoadBattleStreaks(u8);
+static void Task_Scene3_InitBattleWindow(u8);
+static void Task_Scene3_OpenBattleWindow(u8);
+static void Task_Scene3_FinishOpeningWindow(u8);
+static void Task_Scene3_StartPokemonBattle(u8);
+static void Task_Scene3_PokemonBattle(u8);
+static void Task_EndIntroMovie(u8);
+static void Task_Scene3_AnimateBattleBackground(u8);
+static void IntroResetGpuRegs(void);
+static void Task_AnimateGameFreakLogoBlend(u8);
+static u16 CreateIntroBattleMonSprite(u16, s16, s16, u16, u8);
+static u8 CreateIntroTrainerSprite(u16, u16, u16, u16);
+static void SetIntroBattleBackgroundColor(u8);
+static void SpriteCB_WaterDrop_Slide(struct Sprite *);
+static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *);
+static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *);
+static void SpriteCB_WaterDrop_Fall(struct Sprite *);
 static u8 CreateWaterDrop(s16, s16, u16, u16, u16, u8);
-static void sub_813D788(struct Sprite *);
-static void sub_813D880(struct Sprite *);
-static u8 CreateGameFreakLogo(s16, s16, u8);
-static void sub_813DB9C(struct Sprite *);
-static void sub_813DE70(struct Sprite *);
-static void sub_813E10C(struct Sprite *);
-static void sub_813E210(struct Sprite *);
-static void sub_813E580(u16, u16);
-static void sub_813E7C0(u8);
-static void sub_813E930(u8);
+static void SpriteCB_PlayerOnBicycle(struct Sprite *);
+static void SpriteCB_Eon(struct Sprite *);
+static u8 CreateGameFreakLogoSprites(s16, s16, u8);
+static void SpriteCB_IntroOpposingPokemon(struct Sprite *);
+static void SpriteCB_IntroTrainer(struct Sprite *);
+static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *);
+static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *);
+static void CreateIntroBurstParticles(u16, u16);
+static void CreateIntroOpposingAttackEffect(u8);
+static void CreateIntroOrbitingParticles(u8);
 static void InitIntroTorchicAttackAnim(u8);
 static void InitIntroMudkipAttackAnim(u8);
 
@@ -908,7 +908,7 @@ static u8 SetUpCopyrightScreen(void)
     case 141:
         if (UpdatePaletteFade())
             break;
-        CreateTask(Task_IntroLoadPart1Graphics, 0);
+        CreateTask(Task_Scene1_Load, 0);
         SetMainCallback2(MainCB2_Intro);
         if (gMultibootProgramStruct.gcmb_field_2)
         {
@@ -943,11 +943,11 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void)
     SetUpCopyrightScreen();
 }
 
-void Task_IntroLoadPart1Graphics(u8 taskId)
+void Task_Scene1_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
     gUnknown_02039318 = Random() & 1;
-    intro_reset_and_hide_bgs();
+    IntroResetGpuRegs();
     REG_BG3VOFS = 0;
     REG_BG2VOFS = 0x50;
     REG_BG1VOFS = 0x18;
@@ -977,21 +977,21 @@ void Task_IntroLoadPart1Graphics(u8 taskId)
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1A5, 0x16);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x196, 0x14);
     gTasks[taskId].data[0] = CreateWaterDrop(236, -14, 0x200, 1, 0x78, FALSE);
-    gTasks[taskId].func = Task_IntroFadeIn;
+    gTasks[taskId].func = Task_Scene1_FadeIn;
 }
 
-static void Task_IntroFadeIn(u8 taskId)
+static void Task_Scene1_FadeIn(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     SetVBlankCallback(VBlankCB_Intro);
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_ON;
-    gTasks[taskId].func = Task_IntroWaterDrops;
+    gTasks[taskId].func = Task_Scene1_WaterDrops;
     gIntroFrameCounter = 0;
     m4aSongNumStart(0x19E);
     ResetSerial();
 }
 
-static void Task_IntroWaterDrops(u8 taskId)
+static void Task_Scene1_WaterDrops(u8 taskId)
 {
     //start moving rock
     if (gIntroFrameCounter == 76)
@@ -1007,7 +1007,7 @@ static void Task_IntroWaterDrops(u8 taskId)
         CreateWaterDrop(200, 60, 0x400, 9, 0x80, TRUE);
 
     if (gIntroFrameCounter == 560)
-        CreateGameFreakLogo(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, CreateTask(sub_813CCE8, 0));
+        CreateGameFreakLogoSprites(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, CreateTask(Task_AnimateGameFreakLogoBlend, 0));
 
     if (gIntroFrameCounter > 739)
     {
@@ -1017,11 +1017,11 @@ static void Task_IntroWaterDrops(u8 taskId)
         gTasks[taskId].data[4] = 0;
         gTasks[taskId].data[5] = 0x28;
         gTasks[taskId].data[6] = 0;
-        gTasks[taskId].func = Task_IntroScrollDownAndShowEon;
+        gTasks[taskId].func = Task_Scene1_PanUpAndShowEon;
     }
 }
 
-static void Task_IntroScrollDownAndShowEon(u8 taskId)
+static void Task_Scene1_PanUpAndShowEon(u8 taskId)
 {
     if (gIntroFrameCounter < 904)
     {
@@ -1055,20 +1055,20 @@ static void Task_IntroScrollDownAndShowEon(u8 taskId)
         if (gIntroFrameCounter > 1007)
         {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
-            gTasks[taskId].func = Task_IntroWaitToSetupPart2;
+            gTasks[taskId].func = Task_Scene1_End;
         }
     }
 }
 
-static void Task_IntroWaitToSetupPart2(u8 taskId)
+static void Task_Scene1_End(u8 taskId)
 {
     if (gIntroFrameCounter > 1026)
-        gTasks[taskId].func = Task_IntroLoadPart2Graphics;
+        gTasks[taskId].func = Task_Scene2_Load;
 }
 
-static void Task_IntroLoadPart2Graphics(u8 taskId)
+static void Task_Scene2_Load(u8 taskId)
 {
-    intro_reset_and_hide_bgs();
+    IntroResetGpuRegs();
     SetVBlankCallback(NULL);
     ResetSpriteData();
     FreeAllSpritePalettes();
@@ -1079,10 +1079,10 @@ static void Task_IntroLoadPart2Graphics(u8 taskId)
 #else
     load_intro_part2_graphics(1);
 #endif
-    gTasks[taskId].func = Task_IntroStartBikeRide;
+    gTasks[taskId].func = Task_Scene2_CreateSprites;
 }
 
-static void Task_IntroStartBikeRide(u8 taskId)
+static void Task_Scene2_CreateSprites(u8 taskId)
 {
     u8 spriteId;
 
@@ -1101,7 +1101,7 @@ static void Task_IntroStartBikeRide(u8 taskId)
         spriteId = intro_create_brendan_sprite(0x110, 100);
     else
         spriteId = intro_create_may_sprite(0x110, 100);
-    gSprites[spriteId].callback = sub_813D788;
+    gSprites[spriteId].callback = SpriteCB_PlayerOnBicycle;
     gSprites[spriteId].anims = gUnknown_0840AE80;
     gTasks[taskId].data[1] = spriteId;
 #ifdef SAPPHIRE
@@ -1109,7 +1109,7 @@ static void Task_IntroStartBikeRide(u8 taskId)
 #else
     spriteId = intro_create_latios_sprite(-0x40, 0x3C);
 #endif
-    gSprites[spriteId].callback = sub_813D880;
+    gSprites[spriteId].callback = SpriteCB_Eon;
     gTasks[taskId].data[2] = spriteId;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
     SetVBlankCallback(VBlankCB_Intro);
@@ -1120,10 +1120,10 @@ static void Task_IntroStartBikeRide(u8 taskId)
     gTasks[taskId].data[0] = sub_8148EC0(1, 0x4000, 0x400, 0x10);
     sub_8148C78(1);
 #endif
-    gTasks[taskId].func = Task_IntroHandleBikeAndEonMovement;
+    gTasks[taskId].func = Task_Scene2_BikeRide;
 }
 
-static void Task_IntroHandleBikeAndEonMovement(u8 taskId)
+static void Task_Scene2_BikeRide(u8 taskId)
 {
     s16 a;
     u16 sine;
@@ -1131,7 +1131,7 @@ static void Task_IntroHandleBikeAndEonMovement(u8 taskId)
     if (gIntroFrameCounter > 1823)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 16, 0, 16, FADE_COLOR_WHITE);
-        gTasks[taskId].func = Task_IntroWaitToSetupPart3;
+        gTasks[taskId].func = Task_Scene2_End;
     }
     if (gIntroFrameCounter == 1109)
         gSprites[gTasks[taskId].data[1]].data[0] = 1;
@@ -1159,18 +1159,18 @@ static void Task_IntroHandleBikeAndEonMovement(u8 taskId)
 #endif
 }
 
-static void Task_IntroWaitToSetupPart3(u8 taskId)
+static void Task_Scene2_End(u8 taskId)
 {
     if (gIntroFrameCounter > 2068)
     {
         DestroyTask(gTasks[taskId].data[0]);
-        gTasks[taskId].func = Task_IntroLoadPart3Graphics;
+        gTasks[taskId].func = Task_Scene3_Load;
     }
 }
 
-static void Task_IntroLoadPart3Graphics(u8 taskId)
+static void Task_Scene3_Load(u8 taskId)
 {
-    intro_reset_and_hide_bgs();
+    IntroResetGpuRegs();
     LZ77UnCompVram(gIntro3Pokeball_Gfx, (void *)VRAM);
     LZ77UnCompVram(gIntro3Pokeball_Tilemap, (void *)(VRAM + 0x4000));
     LoadPalette(gIntro3PokeballPal, 0, 0x200);
@@ -1178,18 +1178,18 @@ static void Task_IntroLoadPart3Graphics(u8 taskId)
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].data[3] = 0;
-    sub_813CE30(0x78, 0x50, 0, 0);
+    PanFadeAndZoomScreen(0x78, 0x50, 0, 0);
     ResetSpriteData();
     FreeAllSpritePalettes();
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
     REG_BG2CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(8) | BGCNT_256COLOR | BGCNT_AFF256x256;
     REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
-    gTasks[taskId].func = Task_IntroSpinAndZoomPokeball;
+    gTasks[taskId].func = Task_Scene3_SpinPokeball;
     gIntroFrameCounter = 0;
     m4aSongNumStart(0x1BA);
 }
 
-static void Task_IntroSpinAndZoomPokeball(u8 taskId)
+static void Task_Scene3_SpinPokeball(u8 taskId)
 {
     gTasks[taskId].data[0] += 0x400;
     if (gTasks[taskId].data[1] <= 0x6BF)
@@ -1199,24 +1199,24 @@ static void Task_IntroSpinAndZoomPokeball(u8 taskId)
     }
     else
     {
-        gTasks[taskId].func = Task_IntroWaitToSetupPart3DoubleFight;
+        gTasks[taskId].func = Task_Scene3_WaitForBattle;
     }
-    sub_813CE30(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
+    PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
     if (gIntroFrameCounter == 44)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
 }
 
-static void Task_IntroWaitToSetupPart3DoubleFight(u8 taskId)
+static void Task_Scene3_WaitForBattle(u8 taskId)
 {
     if (gIntroFrameCounter > 59)
-        gTasks[taskId].func = Task_IntroLoadPart3Streaks;
+        gTasks[taskId].func = Task_Scene3_LoadBattleStreaks;
 }
 
-static void Task_IntroLoadPart3Streaks(u8 taskId)
+static void Task_Scene3_LoadBattleStreaks(u8 taskId)
 {
     u16 i;
 
-    intro_reset_and_hide_bgs();
+    IntroResetGpuRegs();
     for (i = 0; i < 32; i++)
     {
         ewram0arr[0][i] = 0;
@@ -1234,7 +1234,7 @@ static void Task_IntroLoadPart3Streaks(u8 taskId)
         ((u16 *)(VRAM + 0x3C00))[i] = 0xF002;
     gPlttBufferUnfaded[0xF0] = RGB_WHITE;
     gPlttBufferFaded[0xF0] = RGB_WHITE;
-    sub_813D084(1);
+    SetIntroBattleBackgroundColor(1);
     gPlttBufferUnfaded[0xF2] = RGB_BLACK;
     gPlttBufferFaded[0xF2] = RGB_BLACK;
     LZ77UnCompVram(gIntro3Streaks_Gfx, (void *)(VRAM + 0x4000));
@@ -1247,10 +1247,10 @@ static void Task_IntroLoadPart3Streaks(u8 taskId)
     LoadCompressedObjectPic(&gIntro3MiscGfx_Table[0]);
     LoadCompressedObjectPalette(&gInterfacePokeballPal_Table[0]);
     LoadSpritePalettes(gIntro3MiscPal_Table);
-    gTasks[taskId].func = task_intro_14;
+    gTasks[taskId].func = Task_Scene3_InitBattleWindow;
 }
 
-static void task_intro_14(u8 taskId)
+static void Task_Scene3_InitBattleWindow(u8 taskId)
 {
     REG_WIN0H = 0xF0;
     REG_WIN0V = 0xA0;
@@ -1267,13 +1267,13 @@ static void task_intro_14(u8 taskId)
                | BGCNT_16COLOR
                | BGCNT_TXT256x256;
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
-    gTasks[taskId].data[15] = CreateTask(task_intro_20, 0);
+    gTasks[taskId].data[15] = CreateTask(Task_Scene3_AnimateBattleBackground, 0);
     gTasks[gTasks[taskId].data[15]].data[0] = 0;
     gTasks[taskId].data[0] = 0;
-    gTasks[taskId].func = task_intro_15;
+    gTasks[taskId].func = Task_Scene3_OpenBattleWindow;
 }
 
-static void task_intro_15(u8 taskId)
+static void Task_Scene3_OpenBattleWindow(u8 taskId)
 {
     u16 foo = gTasks[taskId].data[0];
 
@@ -1287,44 +1287,44 @@ static void task_intro_15(u8 taskId)
     else
     {
         REG_WIN0V = 0x2080;
-        gTasks[taskId].func = task_intro_16;
+        gTasks[taskId].func = Task_Scene3_FinishOpeningWindow;
     }
 }
 
-static void task_intro_16(u8 taskId)
+static void Task_Scene3_FinishOpeningWindow(u8 taskId)
 {
-    gTasks[taskId].func = task_intro_17;
+    gTasks[taskId].func = Task_Scene3_StartPokemonBattle;
 }
 
-static void task_intro_17(u8 taskId)
+static void Task_Scene3_StartPokemonBattle(u8 taskId)
 {
     gUnknown_0203931A = 0;
-    gTasks[taskId].func = Task_IntroPokemonBattle;
+    gTasks[taskId].func = Task_Scene3_PokemonBattle;
 }
 
-static void Task_IntroPokemonBattle(u8 taskId)
+static void Task_Scene3_PokemonBattle(u8 taskId)
 {
     u8 spriteId;
 
     if (gIntroFrameCounter == 80)
     {
-        spriteId = sub_813CE88(SPECIES_SHARPEDO, 0xF0, 0xA0, 5, 1);
-        gSprites[spriteId].callback = sub_813DB9C;
+        spriteId = CreateIntroBattleMonSprite(SPECIES_SHARPEDO, 0xF0, 0xA0, 5, 1);
+        gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemon;
         gSprites[spriteId].data[1] = 1;
         gSprites[spriteId].data[2] = 0;
     }
     if (gIntroFrameCounter == 152)
     {
-        spriteId = sub_813CE88(SPECIES_DUSKULL, 0, 0xA0, 4, 1);
-        gSprites[spriteId].callback = sub_813DB9C;
+        spriteId = CreateIntroBattleMonSprite(SPECIES_DUSKULL, 0, 0xA0, 4, 1);
+        gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemon;
         gSprites[spriteId].data[1] = 2;
         gSprites[spriteId].data[2] = 1;
     }
     if (gIntroFrameCounter == 219)
     {
-        sub_813D084(0);
-        spriteId = sub_813CFA8(gUnknown_02039318, 0x110, 0x60, 6);
-        gSprites[spriteId].callback = sub_813DE70;
+        SetIntroBattleBackgroundColor(0);
+        spriteId = CreateIntroTrainerSprite(gUnknown_02039318, 0x110, 0x60, 6);
+        gSprites[spriteId].callback = SpriteCB_IntroTrainer;
         gTasks[taskId].data[1] = spriteId;
     }
     if (gIntroFrameCounter == 304)
@@ -1352,18 +1352,18 @@ static void Task_IntroPokemonBattle(u8 taskId)
     }
     if (gIntroFrameCounter == 463)
     {
-        sub_813D084(1);
-        spriteId = sub_813CE88(SPECIES_SHARPEDO, 0xD0, 8, 5, 1);
-        gSprites[spriteId].callback = sub_813E10C;
+        SetIntroBattleBackgroundColor(1);
+        spriteId = CreateIntroBattleMonSprite(SPECIES_SHARPEDO, 0xD0, 8, 5, 1);
+        gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemonBattle;
         gTasks[taskId].data[2] = spriteId;
-        sub_813E7C0(spriteId);
+        CreateIntroOpposingAttackEffect(spriteId);
     }
     if (gIntroFrameCounter == 539)
     {
-        spriteId = sub_813CE88(SPECIES_DUSKULL, 0xF8, 0x10, 4, 1);
-        gSprites[spriteId].callback = sub_813E10C;
+        spriteId = CreateIntroBattleMonSprite(SPECIES_DUSKULL, 0xF8, 0x10, 4, 1);
+        gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemonBattle;
         gTasks[taskId].data[3] = spriteId;
-        sub_813E930(spriteId);
+        CreateIntroOrbitingParticles(spriteId);
     }
     if (gIntroFrameCounter == 623)
     {
@@ -1373,16 +1373,16 @@ static void Task_IntroPokemonBattle(u8 taskId)
     }
     if (gIntroFrameCounter == 624)
     {
-        sub_813D084(0);
-        spriteId = sub_813CE88(SPECIES_MUDKIP, 0x20, 0x98, 0, 0);
-        gSprites[spriteId].callback = sub_813E210;
+        SetIntroBattleBackgroundColor(0);
+        spriteId = CreateIntroBattleMonSprite(SPECIES_MUDKIP, 0x20, 0x98, 0, 0);
+        gSprites[spriteId].callback = SpriteCB_IntroPartnerPokemonBattle;
         gTasks[taskId].data[4] = spriteId;
         InitIntroMudkipAttackAnim(spriteId);
     }
     if (gIntroFrameCounter == 700)
     {
-        spriteId = sub_813CE88(SPECIES_TORCHIC, -8, 0x90, 1, 0);
-        gSprites[spriteId].callback = sub_813E210;
+        spriteId = CreateIntroBattleMonSprite(SPECIES_TORCHIC, -8, 0x90, 1, 0);
+        gSprites[spriteId].callback = SpriteCB_IntroPartnerPokemonBattle;
         gTasks[taskId].data[5] = spriteId;
         InitIntroTorchicAttackAnim(spriteId);
     }
@@ -1395,7 +1395,7 @@ static void Task_IntroPokemonBattle(u8 taskId)
     }
     if (gIntroFrameCounter == 781)
     {
-        sub_813D084(2);
+        SetIntroBattleBackgroundColor(2);
         gSprites[gTasks[taskId].data[2]].data[0] = 3;
         gSprites[gTasks[taskId].data[3]].data[0] = 3;
         gSprites[gTasks[taskId].data[4]].data[0] = 3;
@@ -1408,16 +1408,16 @@ static void Task_IntroPokemonBattle(u8 taskId)
     if (gIntroFrameCounter == 850)
         BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, FADE_COLOR_WHITE);
     if (gIntroFrameCounter == 946)
-        gTasks[taskId].func = task_intro_19;
+        gTasks[taskId].func = Task_EndIntroMovie;
 }
 
-static void task_intro_19(u8 taskId)
+static void Task_EndIntroMovie(u8 taskId)
 {
     DestroyTask(taskId);
     SetMainCallback2(MainCB2_EndIntro);
 }
 
-static void task_intro_20(u8 taskId)
+static void Task_Scene3_AnimateBattleBackground(u8 taskId)
 {
 #define BG2_FLAGS (BGCNT_PRIORITY(3) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(14) | BGCNT_16COLOR | BGCNT_TXT256x256)
 #define DISPCNT_FLAGS (DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON)
@@ -1483,7 +1483,7 @@ static void task_intro_20(u8 taskId)
 #undef DISPCNT_FLAGS
 }
 
-static void intro_reset_and_hide_bgs(void)
+static void IntroResetGpuRegs(void)
 {
     REG_DISPCNT = 0;
     REG_BG3HOFS = 0;
@@ -1499,7 +1499,7 @@ static void intro_reset_and_hide_bgs(void)
     REG_BLDY = 0;
 }
 
-static void sub_813CCE8(u8 taskId)
+static void Task_AnimateGameFreakLogoBlend(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
@@ -1572,7 +1572,7 @@ static void sub_813CCE8(u8 taskId)
     }
 }
 
-void sub_813CE30(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
+void PanFadeAndZoomScreen(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
 {
     struct BgAffineSrcData src;
     struct BgAffineDstData dest;
@@ -1593,7 +1593,7 @@ void sub_813CE30(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
     REG_BG2Y = dest.dy;
 }
 
-static u16 sub_813CE88(u16 species, s16 x, s16 y, u16 d, u8 front)
+static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 d, u8 front)
 {
     const u8 *lzPaletteData;
     u8 spriteId;
@@ -1611,7 +1611,7 @@ static u16 sub_813CE88(u16 species, s16 x, s16 y, u16 d, u8 front)
     return spriteId;
 }
 
-static u8 sub_813CFA8(u16 a, u16 b, u16 c, u16 d)
+static u8 CreateIntroTrainerSprite(u16 a, u16 b, u16 c, u16 d)
 {
     u8 spriteId;
 
@@ -1625,7 +1625,7 @@ static u8 sub_813CFA8(u16 a, u16 b, u16 c, u16 d)
     return spriteId;
 }
 
-static void sub_813D084(u8 a)
+static void SetIntroBattleBackgroundColor(u8 a)
 {
     u16 color;
 
@@ -1646,7 +1646,7 @@ static void sub_813D084(u8 a)
     gPlttBufferFaded[241] = color;
 }
 
-static void sub_813D0CC(struct Sprite *sprite)
+static void SpriteCB_WaterDrop_Ripple(struct Sprite *sprite)
 {
     u8 r0;
 
@@ -1673,7 +1673,7 @@ static void sub_813D0CC(struct Sprite *sprite)
     }
 }
 
-static void sub_813D158(struct Sprite *sprite)
+static void SpriteCB_WaterDropHalf(struct Sprite *sprite)
 {
     if (gSprites[sprite->data[7]].data[7] != 0)
     {
@@ -1683,7 +1683,7 @@ static void sub_813D158(struct Sprite *sprite)
         StartSpriteAnim(sprite, 3);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
-        sprite->callback = sub_813D0CC;
+        sprite->callback = SpriteCB_WaterDrop_Ripple;
         sprite->oam.shape = 1;
         sprite->oam.size = 3;
         CalcCenterToCornerVec(sprite, 1, 3, 2);
@@ -1697,13 +1697,13 @@ static void sub_813D158(struct Sprite *sprite)
     }
 }
 
-static void sub_813D208(struct Sprite *sprite)
+static void SpriteCB_WaterDrop(struct Sprite *sprite)
 {
     if (sprite->data[0] != 0)
-        sprite->callback = sub_813D220;
+        sprite->callback = SpriteCB_WaterDrop_Slide;
 }
 
-static void sub_813D220(struct Sprite *sprite)
+static void SpriteCB_WaterDrop_Slide(struct Sprite *sprite)
 {
     if (sprite->x <= 116)
     {
@@ -1712,7 +1712,7 @@ static void sub_813D220(struct Sprite *sprite)
         sprite->x += 4;
         sprite->x2 = -4;
         sprite->data[4] = 128;
-        sprite->callback = sub_813D368;
+        sprite->callback = SpriteCB_WaterDrop_ReachLeafEnd;
     }
     else
     {
@@ -1752,7 +1752,7 @@ static void sub_813D220(struct Sprite *sprite)
     }
 }
 
-static void sub_813D368(struct Sprite *sprite)
+static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *sprite)
 {
     SetOamMatrix(sprite->data[1], sprite->data[6] + 64, 0, 0, sprite->data[6] + 64);
     SetOamMatrix(sprite->data[1] + 1, sprite->data[6] + 64, 0, 0, sprite->data[6] + 64);
@@ -1769,11 +1769,11 @@ static void sub_813D368(struct Sprite *sprite)
     else
     {
         sprite->data[4] = 0;
-        sprite->callback = sub_813D414;
+        sprite->callback = SpriteCB_WaterDrop_DangleFromLeaf;
     }
 }
 
-static void sub_813D414(struct Sprite *sprite)
+static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *sprite)
 {
     if (sprite->data[0] != 2)
     {
@@ -1786,11 +1786,11 @@ static void sub_813D414(struct Sprite *sprite)
     }
     else
     {
-        sprite->callback = SpriteCB_WaterDropFall;
+        sprite->callback = SpriteCB_WaterDrop_Fall;
     }
 }
 
-static void SpriteCB_WaterDropFall(struct Sprite *sprite)
+static void SpriteCB_WaterDrop_Fall(struct Sprite *sprite)
 {
     if (sprite->y < sprite->data[5])
     {
@@ -1805,7 +1805,7 @@ static void SpriteCB_WaterDropFall(struct Sprite *sprite)
         StartSpriteAnim(sprite, 3);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
-        sprite->callback = sub_813D0CC;
+        sprite->callback = SpriteCB_WaterDrop_Ripple;
         sprite->oam.shape = 1;
         sprite->oam.size = 3;
         CalcCenterToCornerVec(sprite, 1, 3, 2);
@@ -1813,7 +1813,7 @@ static void SpriteCB_WaterDropFall(struct Sprite *sprite)
 }
 
 //Duplicate function
-static void SpriteCB_WaterDropFall_2(struct Sprite *sprite)
+static void SpriteCB_WaterDropShort(struct Sprite *sprite)
 {
     if (sprite->y < sprite->data[5])
     {
@@ -1828,7 +1828,7 @@ static void SpriteCB_WaterDropFall_2(struct Sprite *sprite)
         StartSpriteAnim(sprite, 3);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
-        sprite->callback = sub_813D0CC;
+        sprite->callback = SpriteCB_WaterDrop_Ripple;
         sprite->oam.shape = 1;
         sprite->oam.size = 3;
         CalcCenterToCornerVec(sprite, 1, 3, 2);
@@ -1853,9 +1853,9 @@ static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately)
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
     StartSpriteAnim(&gSprites[spriteId], 2);
     if (!fallImmediately)
-        gSprites[spriteId].callback = sub_813D208;
+        gSprites[spriteId].callback = SpriteCB_WaterDrop;
     else
-        gSprites[spriteId].callback = SpriteCB_WaterDropFall_2;
+        gSprites[spriteId].callback = SpriteCB_WaterDropShort;
     oldSpriteId = spriteId;
 
     spriteId = CreateSprite(&gSpriteTemplate_840AE20, x, y, 0);
@@ -1864,7 +1864,7 @@ static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately)
     gSprites[spriteId].oam.affineMode = 3;
     gSprites[spriteId].oam.matrixNum = d + 1;
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
-    gSprites[spriteId].callback = sub_813D158;
+    gSprites[spriteId].callback = SpriteCB_WaterDropHalf;
 
     spriteId = CreateSprite(&gSpriteTemplate_840AE20, x, y, 0);
     gSprites[spriteId].data[7] = oldSpriteId;
@@ -1873,7 +1873,7 @@ static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately)
     gSprites[spriteId].oam.affineMode = 3;
     gSprites[spriteId].oam.matrixNum = d + 2;
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
-    gSprites[spriteId].callback = sub_813D158;
+    gSprites[spriteId].callback = SpriteCB_WaterDropHalf;
 
     SetOamMatrix(d, c + 32, 0, 0, c + 32);
     SetOamMatrix(d + 1, c + 32, 0, 0, c + 32);
@@ -1882,7 +1882,7 @@ static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately)
     return oldSpriteId;
 }
 
-static void sub_813D788(struct Sprite *sprite)
+static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -1934,7 +1934,7 @@ static void sub_813D788(struct Sprite *sprite)
     }
 }
 
-static void sub_813D880(struct Sprite *sprite)
+static void SpriteCB_Eon(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -1961,7 +1961,7 @@ static void sub_813D880(struct Sprite *sprite)
     sprite->data[1] += 4;
 }
 
-static void sub_813D908(struct Sprite *sprite)
+static void SpriteCB_LogoLetter(struct Sprite *sprite)
 {
     if (gTasks[sprite->data[0]].data[0] == 0)
     {
@@ -1977,7 +1977,7 @@ static void sub_813D908(struct Sprite *sprite)
     }
 }
 
-static u8 CreateGameFreakLogo(s16 a, s16 b, u8 c)
+static u8 CreateGameFreakLogoSprites(s16 a, s16 b, u8 c)
 {
     u8 spriteId;
     u16 i;
@@ -2000,7 +2000,7 @@ static u8 CreateGameFreakLogo(s16 a, s16 b, u8 c)
     return spriteId;
 }
 
-static void sub_813DA64(struct Sprite *sprite)
+static void SpriteCB_EonSilhouette(struct Sprite *sprite)
 {
     sprite->data[7]++;
 
@@ -2057,7 +2057,7 @@ static void sub_813DA64(struct Sprite *sprite)
     }
 }
 
-static void sub_813DB9C(struct Sprite *sprite)
+static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -2133,7 +2133,7 @@ static void sub_813DB9C(struct Sprite *sprite)
     }
 }
 
-static void sub_813DD58(struct Sprite *sprite)
+static void SpriteCB_IntroPartnerPokemon(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -2176,7 +2176,7 @@ static void sub_813DD58(struct Sprite *sprite)
     }
 }
 
-static void sub_813DE70(struct Sprite *sprite)
+static void SpriteCB_IntroTrainer(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -2221,22 +2221,22 @@ static void sub_813DE70(struct Sprite *sprite)
         r5 = gSprites[sprite->data[6]].x + gSprites[sprite->data[6]].x2;
         r4 = gSprites[sprite->data[6]].y + gSprites[sprite->data[6]].y2;
         DestroySprite(&gSprites[sprite->data[6]]);
-        sprite->data[6] = sub_813CE88(SPECIES_TORCHIC, r5, r4, 2, 1);
-        gSprites[sprite->data[6]].callback = sub_813DD58;
+        sprite->data[6] = CreateIntroBattleMonSprite(SPECIES_TORCHIC, r5, r4, 2, 1);
+        gSprites[sprite->data[6]].callback = SpriteCB_IntroPartnerPokemon;
         gSprites[sprite->data[6]].invisible = TRUE;
         gSprites[sprite->data[6]].data[1] = 1;
         gSprites[sprite->data[6]].data[2] = 1;
-        sub_813E580(r5, r4);
+        CreateIntroBurstParticles(r5, r4);
 
         r5 = gSprites[sprite->data[7]].x + gSprites[sprite->data[7]].x2;
         r4 = gSprites[sprite->data[7]].y + gSprites[sprite->data[7]].y2;
         DestroySprite(&gSprites[sprite->data[7]]);
-        sprite->data[7] = sub_813CE88(SPECIES_MUDKIP, r5, r4, 3, 1);
-        gSprites[sprite->data[7]].callback = sub_813DD58;
+        sprite->data[7] = CreateIntroBattleMonSprite(SPECIES_MUDKIP, r5, r4, 3, 1);
+        gSprites[sprite->data[7]].callback = SpriteCB_IntroPartnerPokemon;
         gSprites[sprite->data[7]].invisible = TRUE;
         gSprites[sprite->data[7]].data[1] = 2;
         gSprites[sprite->data[7]].data[2] = 0;
-        sub_813E580(r5, r4);
+        CreateIntroBurstParticles(r5, r4);
 
         BeginNormalPaletteFade(0xFF0000, 0, 16, 16, RGB(31, 23, 31));
         sprite->data[0] = 1;
@@ -2254,7 +2254,7 @@ static void sub_813DE70(struct Sprite *sprite)
     }
 }
 
-static void sub_813E10C(struct Sprite *sprite)
+static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -2322,7 +2322,7 @@ static void sub_813E10C(struct Sprite *sprite)
     }
 }
 
-static void sub_813E210(struct Sprite *sprite)
+static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -2390,7 +2390,7 @@ static void sub_813E210(struct Sprite *sprite)
     }
 }
 
-static void sub_813E30C(struct Sprite *sprite)
+static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite)
 {
     u16 r4, r1;
 
@@ -2445,7 +2445,7 @@ static void sub_813E30C(struct Sprite *sprite)
     }
 }
 
-static void sub_813E4B8(struct Sprite *sprite)
+static void SpriteCB_IntroBurstParticle(struct Sprite *sprite)
 {
     u16 r4;
     u16 r2;
@@ -2476,7 +2476,7 @@ static void sub_813E4B8(struct Sprite *sprite)
     }
 }
 
-static void sub_813E580(u16 x, u16 y)
+static void CreateIntroBurstParticles(u16 x, u16 y)
 {
     u8 i;
     u8 spriteId;
@@ -2491,7 +2491,7 @@ static void sub_813E580(u16 x, u16 y)
     }
 }
 
-static void sub_813E5E0(struct Sprite *sprite)
+static void SpriteCB_IntroAttackParticle(struct Sprite *sprite)
 {
     if (gUnknown_0203931A != 0)
     {
@@ -2513,7 +2513,7 @@ static void sub_813E5E0(struct Sprite *sprite)
     }
 }
 
-static void sub_813E6C0(struct Sprite *sprite)
+static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite)
 {
     u8 spriteId;
     u8 i;
@@ -2555,7 +2555,7 @@ static void sub_813E6C0(struct Sprite *sprite)
     }
 }
 
-static void sub_813E7C0(u8 a)
+static void CreateIntroOpposingAttackEffect(u8 a)
 {
     u8 spriteId;
 
@@ -2569,7 +2569,7 @@ static void sub_813E7C0(u8 a)
     }
 }
 
-static void sub_813E804(struct Sprite *sprite)
+static void SpriteCB_IntroOrbitingParticle(struct Sprite *sprite)
 {
     if (gUnknown_0203931A != 0)
     {
@@ -2594,7 +2594,7 @@ static void sub_813E804(struct Sprite *sprite)
     }
 }
 
-static void sub_813E930(u8 a)
+static void CreateIntroOrbitingParticles(u8 a)
 {
     u8 i;
     u8 spriteId;
@@ -2610,7 +2610,7 @@ static void sub_813E930(u8 a)
     }
 }
 
-static void sub_813E980(struct Sprite *sprite)
+static void SpriteCB_IntroTorchicAttackParticle(struct Sprite *sprite)
 {
     if (gUnknown_0203931A != 0)
     {
@@ -2636,7 +2636,7 @@ static void sub_813E980(struct Sprite *sprite)
     }
 }
 
-static void sub_813EA60(struct Sprite *sprite)
+static void SpriteCB_IntroTorchicAttackSpawner(struct Sprite *sprite)
 {
     bool32 r6;
     s16 r1, r2;
@@ -2693,7 +2693,7 @@ static void InitIntroTorchicAttackAnim(u8 a)
     }
 }
 
-static void sub_813EBBC(struct Sprite *sprite)
+static void SpriteCB_IntroMudkipAttackParticle(struct Sprite *sprite)
 {
     if (gUnknown_0203931A != 0)
     {
@@ -2713,7 +2713,7 @@ static void sub_813EBBC(struct Sprite *sprite)
     }
 }
 
-static void sub_813EC90(struct Sprite *sprite)
+static void SpriteCB_IntroMudkipAttackSpawner(struct Sprite *sprite)
 {
     bool32 r6;
     s16 r1, r2;
@@ -2772,7 +2772,7 @@ static void InitIntroMudkipAttackAnim(u8 a)
     }
 }
 
-static void sub_813EDFC(struct Sprite *sprite)
+static void SpriteCB_IntroBattleFlash(struct Sprite *sprite)
 {
     u16 foo;
 
