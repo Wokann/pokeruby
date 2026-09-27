@@ -1475,7 +1475,7 @@ void PrintTrainerEyesLocation(u8 listIndex)
 {
     GetMapSectionName(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
     BasicInitMenuWindow(&gWindowTemplate_81E710C);
-    sub_80F19DC(gPokenavStructPtr->unk8788);
+    TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->unk8788);
     AlignStringInMenuWindow(gPokenavStructPtr->unkD138, gPokenavStructPtr->unk8788, 88, 2);
     Menu_PrintText(gPokenavStructPtr->unkD138, 0, 5);
 }
@@ -1802,7 +1802,7 @@ void PrintPokeblockMonNature(void)
     Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 1, 112, 1);
 }
 
-void sub_80F19DC(u8 *text)
+void TruncateTrainerEyesLocationAtControlCode(u8 *text)
 {
     while (text[0] != EOS)
     {

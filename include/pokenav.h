@@ -335,7 +335,7 @@ void BeginTrainerEyesDetailExitScroll(void);
 bool8 UpdateTrainerEyesDetailScroll(void);
 bool8 UpdatePokenavListScroll(void);
 void PrintTrainerEyesLocation(u8 listIndex);
-void sub_80F19DC(u8*);
+void TruncateTrainerEyesLocationAtControlCode(u8 *text);
 bool8 LoadRibbonsSummaryScreenStep(void);
 void InitPokenavMonInfoHeaderGfx(void);
 void DrawMonRibbonIcons(void);
