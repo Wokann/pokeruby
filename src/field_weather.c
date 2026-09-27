@@ -1262,7 +1262,7 @@ void ResetPreservedPalettesInWeather(void)
 
 EWRAM_DATA static u8 sSelectedDebugWeather = 0;
 
-bool8 debug_sub_8085564(void)
+bool8 TayaDebugMenu_HandleWeatherInput(void)
 {
     bool8 changed = FALSE;
 
@@ -1298,13 +1298,13 @@ bool8 debug_sub_8085564(void)
     return FALSE;
 }
 
-bool8 debug_sub_808560C(void)
+bool8 TayaDebugMenu_Weather(void)
 {
     sSelectedDebugWeather = gWeather.currWeather;
     Menu_EraseScreen();
     Menu_BlankWindowRect(22, 1, 28, 2);
     Menu_PrintText(sDebugText_Weather[sSelectedDebugWeather], 23, 1);
-    gMenuCallback = debug_sub_8085564;
+    gMenuCallback = TayaDebugMenu_HandleWeatherInput;
     return FALSE;
 }
 

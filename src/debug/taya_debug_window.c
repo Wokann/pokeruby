@@ -21,7 +21,7 @@
 #include "overworld.h"
 
 bool8 debug_sub_8090808(void);
-bool8 debug_sub_808560C(void);
+bool8 TayaDebugMenu_Weather(void);
 bool8 TayaDebugMenu_LanettesPC(void);
 bool8 TayaDebugMenu_SimpleText(void);
 bool8 TayaDebugMenu_OldMan(void);
@@ -122,7 +122,7 @@ const u8 gUnknown_Debug_083C4FFC[] = _("Trainer");
 const u8 gUnknown_Debug_083C5004[] = _("POKéNAV D");
 
 const struct MenuAction gUnknown_Debug_083C5010[] = {
-    {gUnknown_Debug_083C4FA3, debug_sub_808560C},
+    {gUnknown_Debug_083C4FA3, TayaDebugMenu_Weather},
     {gUnknown_Debug_083C4FAB, TayaDebugMenu_LanettesPC},
     {gUnknown_Debug_083C4FB8, TayaDebugMenu_SimpleText},
     {gUnknown_Debug_083C4FC3, TayaDebugMenu_OldMan},
