@@ -125,8 +125,8 @@ static void VBlankCB_Field(void);
 static void SpawnLinkPlayerObjectEvent(u8, s16, s16, u8);
 static void InitLinkPlayerObjectEventPos(struct ObjectEvent *, s16, s16);
 static u8 GetLinkPlayerIdAt(s16, s16);
-static u8 npc_something3(u8, u8);
-static u8 LinkPlayerDetectCollision(u8, u8, s16, s16);
+static u8 FlipVerticalAndClearForced(u8, u8);
+static u8 LinkPlayerGetCollision(u8, u8, s16, s16);
 static void CreateLinkPlayerSprite(u8);
 static void SpriteCB_LinkPlayer(struct Sprite *);
 static u16 GetDirectionForEventScript(const u8 *);
@@ -175,43 +175,43 @@ static const struct ScanlineEffectParams sFlashEffectParams =
     0,
 };
 
-static u8 sub_8055C68(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055C88(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055C8C(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
-static u8 (*const gUnknown_082166A0[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+static u8 (*const sLinkPlayerMovementModes[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
 {
-    sub_8055C68,
-    sub_8055C88,
-    sub_8055C8C,
+    MovementEventModeCB_Normal,
+    MovementEventModeCB_Ignored,
+    MovementEventModeCB_Scripted,
 };
 
-static u8 sub_8055CAC(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055CB0(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
-static u8 sub_8055D18(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
+static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8);
 
-static u8 (*const gUnknown_082166AC[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
+static u8 (*const sLinkPlayerFacingHandlers[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *, u8) =
 {
-    sub_8055CAC,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CB0,
-    sub_8055CAC,
-    sub_8055CAC,
-    sub_8055D18,
-    sub_8055D18,
-    sub_8055D18,
-    sub_8055D18,
+    FacingHandler_DoNothing,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DpadMovement,
+    FacingHandler_DoNothing,
+    FacingHandler_DoNothing,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
+    FacingHandler_ForcedFacingChange,
 };
 
-static void sub_8055D30(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
-static void sub_8055D38(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
+static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *, struct ObjectEvent *);
 
-static void (*const gUnknown_082166D8[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
+static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, struct ObjectEvent *) =
 {
-    sub_8055D30,
-    sub_8055D38,
+    MovementStatusHandler_EnterFreeMode,
+    MovementStatusHandler_TryAdvanceScript,
 };
 
 
@@ -2628,38 +2628,38 @@ void SetPlayerFacingDirection(u8 linkPlayerId, u8 a2)
         if (a2 > FACING_FORCED_RIGHT)
             objEvent->triggerGroundEffectsOnMove = 1;
         else
-            gUnknown_082166D8[gUnknown_082166A0[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
+            sMovementStatusHandler[sLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
     }
 }
 
-static u8 sub_8055C68(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
-    return gUnknown_082166AC[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
 }
 
-static u8 sub_8055C88(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return 1;
 }
 
-static u8 sub_8055C8C(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
-    return gUnknown_082166AC[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
 }
 
-static u8 sub_8055CAC(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     return 0;
 }
 
-static u8 sub_8055CB0(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
     s16 x, y;
 
-    objEvent->range.as_byte = npc_something3(a3, objEvent->range.as_byte);
+    objEvent->range.as_byte = FlipVerticalAndClearForced(a3, objEvent->range.as_byte);
     ObjectEventMoveDestCoords(objEvent, objEvent->range.as_byte, &x, &y);
 
-    if (LinkPlayerDetectCollision(linkPlayerObjEvent->objEventId, objEvent->range.as_byte, x, y))
+    if (LinkPlayerGetCollision(linkPlayerObjEvent->objEventId, objEvent->range.as_byte, x, y))
     {
         return 0;
     }
@@ -2672,18 +2672,18 @@ static u8 sub_8055CB0(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct O
     }
 }
 
-static u8 sub_8055D18(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
 {
-    objEvent->range.as_byte = npc_something3(a3, objEvent->range.as_byte);
+    objEvent->range.as_byte = FlipVerticalAndClearForced(a3, objEvent->range.as_byte);
     return 0;
 }
 
-static void sub_8055D30(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 }
 
-static void sub_8055D38(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
+static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     objEvent->directionSequenceIndex--;
     linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FROZEN;
@@ -2695,7 +2695,7 @@ static void sub_8055D38(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct
     }
 }
 
-static u8 npc_something3(u8 a1, u8 a2)
+static u8 FlipVerticalAndClearForced(u8 a1, u8 a2)
 {
     switch (a1 - 1)
     {
@@ -2715,7 +2715,7 @@ static u8 npc_something3(u8 a1, u8 a2)
     return a2;
 }
 
-static u8 LinkPlayerDetectCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y)
+static u8 LinkPlayerGetCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y)
 {
     u8 i;
     for (i = 0; i < 16; i++)

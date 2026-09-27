@@ -218,14 +218,14 @@ u8 GetLinkPlayerFacingDirection(u8);
 u8 GetLinkPlayerElevation(u8);
 // unref_sub_8055B74
 void SetPlayerFacingDirection(u8, u8);
-// sub_8055C68
-// sub_8055C88
-// sub_8055C8C
-// sub_8055CAC
-// sub_8055CB0
-// sub_8055D18
-// sub_8055D30
-// sub_8055D38
+// MovementEventModeCB_Normal
+// MovementEventModeCB_Ignored
+// MovementEventModeCB_Scripted
+// FacingHandler_DoNothing
+// FacingHandler_DpadMovement
+// FacingHandler_ForcedFacingChange
+// MovementStatusHandler_EnterFreeMode
+// MovementStatusHandler_TryAdvanceScript
 void sub_805465C(void);
 
 void CB2_InitTestMenu(void);
