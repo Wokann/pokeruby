@@ -99,18 +99,18 @@ void Sunny_InitVars(void);
 void Sunny_Main(void);
 void Sunny_InitAll(void);
 bool8 Sunny_Finish(void);
-void LightRain_InitVars(void);
-void LightRain_Main(void);
-void LightRain_InitAll(void);
-bool8 LightRain_Finish(void);
+void Rain_InitVars(void);
+void Rain_Main(void);
+void Rain_InitAll(void);
+bool8 Rain_Finish(void);
 void Snow_InitVars(void);
 void Snow_Main(void);
 void Snow_InitAll(void);
 bool8 Snow_Finish(void);
-void MedRain_InitVars(void);
-void Rain_Main(void);
-void MedRain_InitAll(void);
-bool8 Rain_Finish(void);
+void Thunderstorm_InitVars(void);
+void Thunderstorm_Main(void);
+void Thunderstorm_InitAll(void);
+bool8 Thunderstorm_Finish(void);
 void Fog1_InitVars(void);
 void Fog1_Main(void);
 void Fog1_InitAll(void);
@@ -139,10 +139,10 @@ void Drought_InitVars(void);
 void Drought_Main(void);
 void Drought_InitAll(void);
 bool8 Drought_Finish(void);
-void HeavyRain_InitVars(void);
-void Rain_Main(void);
-void HeavyRain_InitAll(void);
-bool8 Rain_Finish(void);
+void Downpour_InitVars(void);
+void Thunderstorm_Main(void);
+void Downpour_InitAll(void);
+bool8 Thunderstorm_Finish(void);
 void Bubbles_InitVars(void);
 void Bubbles_Main(void);
 void Bubbles_InitAll(void);
@@ -153,9 +153,9 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     {None_Init,          None_Main,      None_Init,         None_Finish},
     {Clouds_InitVars,    Clouds_Main,    Clouds_InitAll,    Clouds_Finish},
     {Sunny_InitVars,  Sunny_Main,  Sunny_InitAll,  Sunny_Finish},
-    {LightRain_InitVars, LightRain_Main, LightRain_InitAll, LightRain_Finish},
+    {Rain_InitVars, Rain_Main, Rain_InitAll, Rain_Finish},
     {Snow_InitVars,      Snow_Main,      Snow_InitAll,      Snow_Finish},
-    {MedRain_InitVars,   Rain_Main,      MedRain_InitAll,   Rain_Finish},
+    {Thunderstorm_InitVars,   Thunderstorm_Main,      Thunderstorm_InitAll,   Thunderstorm_Finish},
     {Fog1_InitVars,      Fog1_Main,      Fog1_InitAll,      Fog1_Finish},
     {Ash_InitVars,       Ash_Main,       Ash_InitAll,       Ash_Finish},
     {Sandstorm_InitVars, Sandstorm_Main, Sandstorm_InitAll, Sandstorm_Finish},
@@ -163,7 +163,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     {Fog1_InitVars,      Fog1_Main,      Fog1_InitAll,      Fog1_Finish},
     {Shade_InitVars,     Shade_Main,     Shade_InitAll,     Shade_Finish},
     {Drought_InitVars,   Drought_Main,   Drought_InitAll,   Drought_Finish},
-    {HeavyRain_InitVars, Rain_Main,      HeavyRain_InitAll, Rain_Finish},
+    {Downpour_InitVars, Thunderstorm_Main,      Downpour_InitAll, Thunderstorm_Finish},
     {Bubbles_InitVars,   Bubbles_Main,   Bubbles_InitAll,   Bubbles_Finish},
 };
 
