@@ -1,4 +1,4 @@
-Underwater_SeafloorCavern_Text_197435:: @ 8197435
+Underwater_SeafloorCavern_Text_SubExplorer1:: @ 8197435
 	.string "“SUBMARINE EXPLORER 1” is painted\n"
 	.string "on the hull.\p"
 	.string "This is the submarine TEAM {EVIL_TEAM}\n"
