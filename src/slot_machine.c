@@ -4007,23 +4007,23 @@ static void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *sprite)
     }
 }
 
-static void nullsub_70(void)
+static void EndDigitalDisplayScene_Dummy(void)
 {
 }
 
-static void sub_8106364(void)
+static void EndDigitalDisplayScene_StopReel(void)
 {
     REG_MOSAIC = 0;
 }
 
 static const u16 *const gUnknown_083EDE20;
 
-static void sub_8106370(void)
+static void EndDigitalDisplayScene_Win(void)
 {
     LoadPalette(gUnknown_083EDE20, (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
 }
 
-static void sub_810639C(void)
+static void EndDigitalDisplayScene_InsertBet(void)
 {
     sSlotMachine->win0h = 0xf0;
     sSlotMachine->win0v = 0xa0;
@@ -4459,13 +4459,13 @@ static const struct UnkStruct1 *const gUnknown_083ED048[] = {
 };
 
 static void (*const sDigitalDisplaySceneExitCallbacks[])(void) = {
-    sub_810639C,
-    sub_8106364,
-    sub_8106370,
-    nullsub_70,
-    nullsub_70,
-    sub_8106370,
-    sub_8106370
+    EndDigitalDisplayScene_InsertBet,
+    EndDigitalDisplayScene_StopReel,
+    EndDigitalDisplayScene_Win,
+    EndDigitalDisplayScene_Dummy,
+    EndDigitalDisplayScene_Dummy,
+    EndDigitalDisplayScene_Win,
+    EndDigitalDisplayScene_Win
 };
 
 
