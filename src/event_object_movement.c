@@ -1372,7 +1372,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     return objectEventId;
 }
 
-static u8 TrySpawnObjectEvent(const struct ObjectEventTemplate *objectEventTemplate, u8 mapNum, u8 mapGroup, s16 cameraDeltaX, s16 cameraDeltaY)
+static u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemplate, u8 mapNum, u8 mapGroup, s16 cameraDeltaX, s16 cameraDeltaY)
 {
     u8 objectEventId;
     struct SpriteTemplate spriteTemplate;
@@ -1403,10 +1403,10 @@ u8 SpawnSpecialObjectEvent(struct ObjectEventTemplate *objectEventTemplate)
     s16 y;
 
     GetObjectEventMovingCameraOffset(&x, &y);
-    return TrySpawnObjectEvent(objectEventTemplate, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
 }
 
-u8 SpawnSpecialObjectEventParametrized(u8 graphicsId, u8 movementType, u8 localId, s16 x, s16 y, u8 elevation)
+u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementType, u8 localId, s16 x, s16 y, u8 elevation)
 {
     struct ObjectEventTemplate objectEventTemplate;
 
@@ -1426,7 +1426,7 @@ u8 SpawnSpecialObjectEventParametrized(u8 graphicsId, u8 movementType, u8 localI
     return SpawnSpecialObjectEvent(&objectEventTemplate);
 }
 
-u8 show_sprite(u8 localId, u8 mapNum, u8 mapGroup)
+u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
 {
     const struct ObjectEventTemplate *objectEventTemplate;
     s16 x;
@@ -1438,7 +1438,7 @@ u8 show_sprite(u8 localId, u8 mapNum, u8 mapGroup)
         return OBJECT_EVENTS_COUNT;
     }
     GetObjectEventMovingCameraOffset(&x, &y);
-    return TrySpawnObjectEvent(objectEventTemplate, mapNum, mapGroup, x, y);
+    return TrySpawnObjectEventTemplate(objectEventTemplate, mapNum, mapGroup, x, y);
 }
 
 void MakeObjectTemplateFromObjectEventGraphicsInfo(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
@@ -1546,7 +1546,7 @@ void TrySpawnObjectEvents(s16 cameraDeltaX, s16 cameraDeltaY)
 
             if (top <= npcY && bottom >= npcY && left <= npcX && right >= npcX
              && !FlagGet(template->flagId))
-                TrySpawnObjectEvent(template, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, cameraDeltaX, cameraDeltaY);
+                TrySpawnObjectEventTemplate(template, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, cameraDeltaX, cameraDeltaY);
         }
     }
 }

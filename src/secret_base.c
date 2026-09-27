@@ -531,7 +531,7 @@ void InitSecretBaseDecorationSprites(void)
                         VarSet(gSpecialVar_Result, gDecorations[roomdecor[decidx]].tiles[0]);
                         gSpecialVar_Result = gMapHeader.events->objectEvents[objid].localId;
                         FlagClear(gSpecialVar_0x8004 + 0xAE);
-                        show_sprite(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+                        TrySpawnObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         TryMoveObjectEventToMapCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
                         TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         gSpecialVar_0x8004 ++;
