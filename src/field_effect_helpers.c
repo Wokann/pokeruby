@@ -276,6 +276,15 @@ void UpdateShadowFieldEffect(struct Sprite *sprite)
 #undef sShadowMapGroup
 #undef sShadowYOffset
 
+#define sElevation   data[0]
+#define sX           data[1]
+#define sY           data[2]
+#define sMapNum      data[3]
+#define sLocalId     data[3] >> 8
+#define sMapGroup    data[4]
+#define sCurrentMap  data[5]
+#define sObjectMoved data[7]
+
 u32 FldEff_TallGrass(void)
 {
     s16 x;
@@ -292,12 +301,12 @@ u32 FldEff_TallGrass(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = gFieldEffectArguments[0];
-        sprite->data[2] = gFieldEffectArguments[1];
-        sprite->data[3] = gFieldEffectArguments[4];
-        sprite->data[4] = gFieldEffectArguments[5];
-        sprite->data[5] = gFieldEffectArguments[6];
+        sprite->sElevation = gFieldEffectArguments[2];
+        sprite->sX = gFieldEffectArguments[0];
+        sprite->sY = gFieldEffectArguments[1];
+        sprite->sMapNum = gFieldEffectArguments[4];
+        sprite->sMapGroup = gFieldEffectArguments[5];
+        sprite->sCurrentMap = gFieldEffectArguments[6];
         if (gFieldEffectArguments[7])
         {
             SeekSpriteAnim(sprite, 4);
@@ -315,34 +324,34 @@ void UpdateTallGrassFieldEffect(struct Sprite *sprite)
     u8 objectEventId;
     struct ObjectEvent *objectEvent;
 
-    mapNum = sprite->data[5] >> 8;
-    mapGroup = sprite->data[5];
+    mapNum = sprite->sCurrentMap >> 8;
+    mapGroup = sprite->sCurrentMap;
     if (gCamera.active && (gSaveBlock1.location.mapNum != mapNum || gSaveBlock1.location.mapGroup != mapGroup))
     {
-        sprite->data[1] -= gCamera.x;
-        sprite->data[2] -= gCamera.y;
-        sprite->data[5] = ((u8)gSaveBlock1.location.mapNum << 8) | (u8)gSaveBlock1.location.mapGroup;
+        sprite->sX -= gCamera.x;
+        sprite->sY -= gCamera.y;
+        sprite->sCurrentMap = ((u8)gSaveBlock1.location.mapNum << 8) | (u8)gSaveBlock1.location.mapGroup;
     }
-    localId = sprite->data[3] >> 8;
-    mapNum = sprite->data[3];
-    mapGroup = sprite->data[4];
-    metatileBehavior = MapGridGetMetatileBehaviorAt(sprite->data[1], sprite->data[2]);
-    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId) || !MetatileBehavior_IsTallGrass(metatileBehavior) || (sprite->data[7] && sprite->animEnded))
+    localId = sprite->sLocalId;
+    mapNum = sprite->sMapNum;
+    mapGroup = sprite->sMapGroup;
+    metatileBehavior = MapGridGetMetatileBehaviorAt(sprite->sX, sprite->sY);
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId) || !MetatileBehavior_IsTallGrass(metatileBehavior) || (sprite->sObjectMoved && sprite->animEnded))
     {
         FieldEffectStop(sprite, FLDEFF_TALL_GRASS);
     }
     else
     {
         objectEvent = &gObjectEvents[objectEventId];
-        if ((objectEvent->currentCoords.x != sprite->data[1] || objectEvent->currentCoords.y != sprite->data[2]) && (objectEvent->previousCoords.x != sprite->data[1] || objectEvent->previousCoords.y != sprite->data[2]))
-            sprite->data[7] = TRUE;
+        if ((objectEvent->currentCoords.x != sprite->sX || objectEvent->currentCoords.y != sprite->sY) && (objectEvent->previousCoords.x != sprite->sX || objectEvent->previousCoords.y != sprite->sY))
+            sprite->sObjectMoved = TRUE;
 
         metatileBehavior = 0;
         if (sprite->animCmdIndex == 0)
             metatileBehavior = 4;
 
         UpdateObjectEventSpriteVisibility(sprite, 0);
-        UpdateGrassFieldEffectSubpriority(sprite, sprite->data[0], metatileBehavior);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, metatileBehavior);
     }
 }
 
@@ -374,7 +383,7 @@ u8 FindTallGrassFieldEffectSpriteId(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s
         if (gSprites[i].inUse)
         {
             sprite = &gSprites[i];
-            if (sprite->callback == UpdateTallGrassFieldEffect && (x == sprite->data[1] && y == sprite->data[2]) && (localId == (u8)(sprite->data[3] >> 8) && mapNum == (sprite->data[3] & 0xFF) && mapGroup == sprite->data[4]))
+            if (sprite->callback == UpdateTallGrassFieldEffect && (x == sprite->sX && y == sprite->sY) && (localId == (u8)(sprite->sLocalId) && mapNum == (sprite->sMapNum & 0xFF) && mapGroup == sprite->sMapGroup))
                 return i;
         }
     }
@@ -398,12 +407,12 @@ u32 FldEff_LongGrass(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = ZCoordToPriority(gFieldEffectArguments[2]);
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = gFieldEffectArguments[0];
-        sprite->data[2] = gFieldEffectArguments[1];
-        sprite->data[3] = gFieldEffectArguments[4];
-        sprite->data[4] = gFieldEffectArguments[5];
-        sprite->data[5] = gFieldEffectArguments[6];
+        sprite->sElevation = gFieldEffectArguments[2];
+        sprite->sX = gFieldEffectArguments[0];
+        sprite->sY = gFieldEffectArguments[1];
+        sprite->sMapNum = gFieldEffectArguments[4];
+        sprite->sMapGroup = gFieldEffectArguments[5];
+        sprite->sCurrentMap = gFieldEffectArguments[6];
         if (gFieldEffectArguments[7])
         {
             SeekSpriteAnim(sprite, 6);
@@ -421,33 +430,42 @@ void UpdateLongGrassFieldEffect(struct Sprite *sprite)
     u8 objectEventId;
     struct ObjectEvent *objectEvent;
 
-    mapNum = sprite->data[5] >> 8;
-    mapGroup = sprite->data[5];
+    mapNum = sprite->sCurrentMap >> 8;
+    mapGroup = sprite->sCurrentMap;
     if (gCamera.active && (gSaveBlock1.location.mapNum != mapNum || gSaveBlock1.location.mapGroup != mapGroup))
     {
-        sprite->data[1] -= gCamera.x;
-        sprite->data[2] -= gCamera.y;
-        sprite->data[5] = ((u8)gSaveBlock1.location.mapNum << 8) | (u8)gSaveBlock1.location.mapGroup;
+        sprite->sX -= gCamera.x;
+        sprite->sY -= gCamera.y;
+        sprite->sCurrentMap = ((u8)gSaveBlock1.location.mapNum << 8) | (u8)gSaveBlock1.location.mapGroup;
     }
-    localId = sprite->data[3] >> 8;
-    mapNum = sprite->data[3];
-    mapGroup = sprite->data[4];
-    metatileBehavior = MapGridGetMetatileBehaviorAt(sprite->data[1], sprite->data[2]);
-    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId) || !MetatileBehavior_IsLongGrass(metatileBehavior) || (sprite->data[7] && sprite->animEnded))
+    localId = sprite->sLocalId;
+    mapNum = sprite->sMapNum;
+    mapGroup = sprite->sMapGroup;
+    metatileBehavior = MapGridGetMetatileBehaviorAt(sprite->sX, sprite->sY);
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId) || !MetatileBehavior_IsLongGrass(metatileBehavior) || (sprite->sObjectMoved && sprite->animEnded))
     {
         FieldEffectStop(sprite, FLDEFF_LONG_GRASS);
     }
     else
     {
         objectEvent = &gObjectEvents[objectEventId];
-        if ((objectEvent->currentCoords.x != sprite->data[1] || objectEvent->currentCoords.y != sprite->data[2]) && (objectEvent->previousCoords.x != sprite->data[1] || objectEvent->previousCoords.y != sprite->data[2]))
+        if ((objectEvent->currentCoords.x != sprite->sX || objectEvent->currentCoords.y != sprite->sY) && (objectEvent->previousCoords.x != sprite->sX || objectEvent->previousCoords.y != sprite->sY))
         {
-            sprite->data[7] = TRUE;
+            sprite->sObjectMoved = TRUE;
         }
         UpdateObjectEventSpriteVisibility(sprite, 0);
-        UpdateGrassFieldEffectSubpriority(sprite, sprite->data[0], 0);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->sElevation, 0);
     }
 }
+
+#undef sElevation
+#undef sX
+#undef sY
+#undef sMapNum
+#undef sLocalId
+#undef sMapGroup
+#undef sCurrentMap
+#undef sObjectMoved
 
 u32 FldEff_JumpLongGrass(void)
 {
