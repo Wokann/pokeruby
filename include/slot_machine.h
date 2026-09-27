@@ -3,7 +3,7 @@
 
 void PlaySlotMachine(u8 arg0, MainCallback cb);
 void DestroyDigitalDisplayScene(void);
-u8 sub_8105BB4(u8 templateIdx, u8 cbAndCoordsIdx, s16 a2);
+u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 cbAndCoordsIdx, s16 a2);
 void debug_sub_811609C(u8, void (*)(void));
 
 #endif // GUARD_SLOT_MACHINE_H

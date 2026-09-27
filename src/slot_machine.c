@@ -303,9 +303,9 @@ static void DestroyReelTimeDuckSprites(void);
 static void CreateReelTimeSmokeSprite(void);
 static bool8 IsReelTimeSmokeAnimFinished(void);
 static void DestroyReelTimeSmokeSprite(void);
-static u8 sub_8105B1C(s16 x, s16 y);
-static void sub_8105B88(u8 spriteId);
-static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
+static u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
+static void DestroyPikaPowerBoltSprite(u8 spriteId);
+static u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
 static void sub_81063C0(void);
 static void sub_8106404(void);
 static void sub_8106448(void);
@@ -2535,7 +2535,7 @@ static void PikaPowerBolt_Idle(struct Task *task)
 
 static void PikaPowerBolt_AddBolt(struct Task *task)
 {
-    task->data[2] = sub_8105B1C((task->data[1] << 3) + 20, 20);
+    task->data[2] = CreatePikaPowerBoltSprite((task->data[1] << 3) + 20, 20);
     task->data[0]++;
 }
 
@@ -2558,7 +2558,7 @@ static void PikaPowerBolt_WaitAnim(struct Task *task)
         else if (task->data[1] == 16)
             r0 = 2;
         vaddr[r2 + 0x40] = sPikaPowerTileTable[r0][0];
-        sub_8105B88(task->data[2]);
+        DestroyPikaPowerBoltSprite(task->data[2]);
         task->data[0] = 0;
         task->data[15] = 0;
     }
@@ -3085,7 +3085,7 @@ static void CreateDigitalDisplayScene(u8 arg0)
     for (i = 0; gUnknown_083ED048[arg0][i].unk00 != 0xFF; i++)
     {
         u8 spriteId;
-        spriteId = sub_8105BB4(
+        spriteId = CreateStdDigitalDisplaySprite(
                 gUnknown_083ED048[arg0][i].unk00,
                 gUnknown_083ED048[arg0][i].unk01,
                 gUnknown_083ED048[arg0][i].unk02
@@ -3107,7 +3107,7 @@ static void AddDigitalDisplaySprite(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s1
     {
         if (task->data[i] == MAX_SPRITES)
         {
-            task->data[i] = sub_8105BF8(a0, a1, a2, a3, a4);
+            task->data[i] = CreateDigitalDisplaySprite(a0, a1, a2, a3, a4);
             break;
         }
     }
@@ -3599,11 +3599,11 @@ static void DestroyReelTimeSmokeSprite(void)
     DestroySprite(sprite);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6CC;
+static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt;
 
-static u8 sub_8105B1C(s16 x, s16 y)
+static u8 CreatePikaPowerBoltSprite(s16 x, s16 y)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED6CC, x, y, 12);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_PikaPowerBolt, x, y, 12);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 2;
     sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
@@ -3611,49 +3611,49 @@ static u8 sub_8105B1C(s16 x, s16 y)
     return spriteId;
 }
 
-static void sub_8105B70(struct Sprite *sprite)
+static void SpriteCB_PikaPowerBolt(struct Sprite *sprite)
 {
     if (sprite->affineAnimEnded)
         sprite->data[7] = 1;
 }
 
-static void sub_8105B88(u8 spriteId)
+static void DestroyPikaPowerBoltSprite(u8 spriteId)
 {
     struct Sprite *sprite = &gSprites[spriteId];
     FreeOamMatrix(sprite->oam.matrixNum);
     DestroySprite(sprite);
 }
 
-static const s16 gUnknown_083ECE7E[][2];
-static const SpriteCallback gUnknown_083ECF0C[];
+static const s16 sDigitalDisplay_SpriteCoords[][2];
+static const SpriteCallback sDigitalDisplay_SpriteCallbacks[];
 
-u8 sub_8105BB4(u8 templateIdx, u8 cbAndCoordsIdx, s16 a2)
+u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 cbAndCoordsIdx, s16 a2)
 {
-    return sub_8105BF8(templateIdx, gUnknown_083ECF0C[cbAndCoordsIdx], gUnknown_083ECE7E[cbAndCoordsIdx][0], gUnknown_083ECE7E[cbAndCoordsIdx][1], a2);
+    return CreateDigitalDisplaySprite(templateIdx, sDigitalDisplay_SpriteCallbacks[cbAndCoordsIdx], sDigitalDisplay_SpriteCoords[cbAndCoordsIdx][0], sDigitalDisplay_SpriteCoords[cbAndCoordsIdx][1], a2);
 }
 
-static const struct SpriteTemplate *const gUnknown_083EDB5C[];
-static const struct SubspriteTable *const gUnknown_083EDBC4[];
+static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[];
+static const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[];
 
-static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4)
+static u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4)
 {
-    u8 spriteId = CreateSprite(gUnknown_083EDB5C[templateIdx], x, y, 16);
+    u8 spriteId = CreateSprite(sSpriteTemplates_DigitalDisplay[templateIdx], x, y, 16);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 3;
     sprite->callback = callback;
     sprite->data[6] = a4;
     sprite->data[7] = 1;
-    if (gUnknown_083EDBC4[templateIdx])
-        SetSubspriteTables(sprite, gUnknown_083EDBC4[templateIdx]);
+    if (sSubspriteTables_DigitalDisplay[templateIdx])
+        SetSubspriteTables(sprite, sSubspriteTables_DigitalDisplay[templateIdx]);
     return spriteId;
 }
 
-static void sub_8105C64(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Static(struct Sprite *sprite)
 {
     sprite->data[7] = 0;
 }
 
-static void sub_8105C6C(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
 {
     s16 sp0[] = {4, -4, 4, -4};
     s16 sp8[] = {4, 4, -4, -4};
@@ -3672,26 +3672,26 @@ static void sub_8105C6C(struct Sprite *sprite)
     }
 }
 
-static void sub_8105CF0(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeNE(struct Sprite *sprite)
 {
     sprite->hFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D08(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSW(struct Sprite *sprite)
 {
     sprite->vFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D20(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSE(struct Sprite *sprite)
 {
     sprite->hFlip = TRUE;
     sprite->vFlip = TRUE;
-    sub_8105C6C(sprite);
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-static void sub_8105D3C(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Reel(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3718,7 +3718,7 @@ static void sub_8105D3C(struct Sprite *sprite)
     }
 }
 
-static void sub_8105DA4(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Time(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3745,7 +3745,7 @@ static void sub_8105DA4(struct Sprite *sprite)
     }
 }
 
-static void sub_8105E08(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3783,7 +3783,7 @@ static void sub_8105E08(struct Sprite *sprite)
     }
 }
 
-static void sub_8105EB4(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballRocking(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3823,7 +3823,7 @@ static void sub_8105EB4(struct Sprite *sprite)
     }
 }
 
-static void sub_8105F54(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Stop(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3843,7 +3843,7 @@ static void sub_8105F54(struct Sprite *sprite)
     }
 }
 
-static void sub_8105F9C(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_AButtonStop(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -3877,13 +3877,13 @@ static void sub_8105F9C(struct Sprite *sprite)
     }
 }
 
-static const u16 *const gUnknown_083EDE10[];
+static const u16 *const sPokeballShiningPalTable[];
 
-static void sub_8106058(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballShining(struct Sprite *sprite)
 {
     if (sprite->data[1] < 3)
     {
-        LoadPalette(gUnknown_083EDE10[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+        LoadPalette(sPokeballShiningPalTable[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
         if (++sprite->data[2] >= 4)
         {
             sprite->data[1]++;
@@ -3892,7 +3892,7 @@ static void sub_8106058(struct Sprite *sprite)
     }
     else
     {
-        LoadPalette(gUnknown_083EDE10[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
+        LoadPalette(sPokeballShiningPalTable[sprite->data[1]], (IndexOfSpritePaletteTag(6) << 4) + 0x100, 0x20);
         if (++sprite->data[2] >= 25)
         {
             sprite->data[1] = 0;
@@ -3903,7 +3903,7 @@ static void sub_8106058(struct Sprite *sprite)
     sprite->data[7] = 0;
 }
 
-static void sub_81060FC(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *sprite)
 {
     s16 sp00[] = {0, -40, 0, 0, 48, 0, 24, 0};
     s16 sp10[] = {-32, 0, -32, -48, 0, -48, 0, -48};
@@ -3938,7 +3938,7 @@ static void sub_81060FC(struct Sprite *sprite)
     }
 }
 
-static void sub_81061C8(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_BigBonus(struct Sprite *sprite)
 {
     s16 sp0[] = {160, 192, 224, 104, 80, 64, 48, 24};
 
@@ -3953,7 +3953,7 @@ static void sub_81061C8(struct Sprite *sprite)
         sprite->data[1]--;
 }
 
-static void sub_8106230(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *sprite)
 {
     switch (sprite->data[0])
     {
@@ -4307,7 +4307,7 @@ static const u16 sSlotPayouts[] = {
     2, 4, 0, 6, 12, 3, 90, 300, 300
 };
 
-static const s16 gUnknown_083ECE7E[][2] = {
+static const s16 sDigitalDisplay_SpriteCoords[][2] = {
     { 0xd0, 0x38},
     { 0xb8, 0x00},
     { 0xc8, 0x08},
@@ -4345,42 +4345,42 @@ static const s16 gUnknown_083ECE7E[][2] = {
     { 0x00, 0x00}
 };
 
-static const SpriteCallback gUnknown_083ECF0C[] = {
-    sub_8105C64,
-    sub_8105F54,
-    sub_8105F54,
-    sub_8105F54,
-    sub_8105F54,
-    sub_8105F9C,
-    sub_8105EB4,
-    sub_8105C64,
-    sub_8105C64,
-    sub_8105C6C,
-    sub_8105CF0,
-    sub_8105D08,
-    sub_8105D20,
-    sub_8105D3C,
-    sub_8105DA4,
-    sub_8105E08,
-    sub_8105C64,
-    sub_8106058,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81060FC,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_81061C8,
-    sub_8106230
+static const SpriteCallback sDigitalDisplay_SpriteCallbacks[] = {
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_Stop,
+    SpriteCB_DigitalDisplay_AButtonStop,
+    SpriteCB_DigitalDisplay_PokeballRocking,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_Smoke,
+    SpriteCB_DigitalDisplay_SmokeNE,
+    SpriteCB_DigitalDisplay_SmokeSW,
+    SpriteCB_DigitalDisplay_SmokeSE,
+    SpriteCB_DigitalDisplay_Reel,
+    SpriteCB_DigitalDisplay_Time,
+    SpriteCB_DigitalDisplay_ReelTimeNumber,
+    SpriteCB_DigitalDisplay_Static,
+    SpriteCB_DigitalDisplay_PokeballShining,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_RegBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_BigBonus,
+    SpriteCB_DigitalDisplay_AButtonStart
 };
 
 static const struct UnkStruct1 Unknown_83ECF98[] = {
@@ -5066,8 +5066,8 @@ static const struct SpriteTemplate gSpriteTemplate_83ED6B4 = {
     0xFFFF, 6, &gOamData_83ED080, gSpriteAnimTable_83ED374, gSpriteImageTable_83ED218, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6CC = {
-    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED228, gSpriteAffineAnimTable_83ED410, sub_8105B70
+static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt = {
+    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED228, gSpriteAffineAnimTable_83ED410, SpriteCB_PikaPowerBolt
 };
 
 static const struct Subsprite gSubspriteTable_83ED6E4[] = {
@@ -5390,7 +5390,7 @@ static const struct SubspriteTable gSubspriteTables_83EDB54[] = {
     {6, gSubspriteTable_83EDB24}
 };
 
-static const struct SpriteTemplate *const gUnknown_083EDB5C[] = {
+static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[] = {
     &gSpriteTemplate_83ED57C,
     &gSpriteTemplate_83ED594,
     &gSpriteTemplate_83ED5AC,
@@ -5419,7 +5419,7 @@ static const struct SpriteTemplate *const gUnknown_083EDB5C[] = {
     &gDummySpriteTemplate
 };
 
-static const struct SubspriteTable *const gUnknown_083EDBC4[] = {
+static const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[] = {
     gSubspriteTables_83ED804,
     gSubspriteTables_83ED82C,
     gSubspriteTables_83ED854,
@@ -5534,7 +5534,7 @@ static const u16 Palette_83EDDB0[] = INCBIN_U16("graphics/slot_machine/83EDDB0.g
 static const u16 Palette_83EDDD0[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
 static const u16 Palette_83EDDF0[] = INCBIN_U16("graphics/slot_machine/83EDDF0.gbapal");
 
-static const u16 *const gUnknown_083EDE10[] = {
+static const u16 *const sPokeballShiningPalTable[] = {
     Palette_83EDDB0,
     Palette_83EDDD0,
     Palette_83EDDF0,
