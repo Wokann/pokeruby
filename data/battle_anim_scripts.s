@@ -2271,7 +2271,7 @@ Move_SMOKESCREEN: @ 81CA710
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
 	createsprite gBattleAnimSpriteTemplate_84021B0, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 35, -25
 	waitforvisualfinish
-	createvisualtask sub_812C1D0, 2
+	createvisualtask AnimTask_SmokescreenImpact, 2
 	delay 2
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
 	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, -12, 104, 0, 75
@@ -2888,7 +2888,7 @@ Move_KINESIS: @ 81CB479
 Move_GLARE: @ 81CB4CA
 	loadspritegfx ANIM_TAG_SMALL_RED_EYE
 	loadspritegfx ANIM_TAG_EYE_SPARKLE
-	createvisualtask sub_81301EC, 5, 0
+	createvisualtask AnimTask_GlareEyeDots, 5, 0
 	playsewithpan SE_M_PSYBEAM2, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createvisualtask AnimTask_BlendBattleAnimPal, 5, 1, 0, 0, 16, 0
@@ -2905,7 +2905,7 @@ Move_GLARE: @ 81CB4CA
 
 Move_BARRAGE: @ 81CB533
 	loadspritegfx ANIM_TAG_RED_BALL
-	createvisualtask sub_8130554, 3
+	createvisualtask AnimTask_BarrageBall, 3
 	playsewithpan SE_M_SWAGGER, SOUND_PAN_ATTACKER
 	delay 24
 	createsprite gShakeMonOrPlatformSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 8, 1, 40, 1
@@ -2996,7 +2996,7 @@ Move_SPLASH: @ 81CB720
 Move_ACID_ARMOR: @ 81CB735
 	monbg ANIM_BATTLER_ATTACKER
 	setalpha 15, 0
-	createvisualtask sub_812F314, 2, 0
+	createvisualtask AnimTask_AcidArmor, 2, 0
 	playsewithpan SE_M_ACID_ARMOR, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	blendoff
@@ -3096,7 +3096,7 @@ Move_FLAIL: @ 81CB8F9
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_BATTLER_TARGET
 	setalpha 12, 8
-	createvisualtask sub_812E860, 2, 0
+	createvisualtask AnimTask_FlailMovement, 2, 0
 	loopsewithpan SE_M_HEADBUTT, SOUND_PAN_ATTACKER, 8, 2
 	waitforvisualfinish
 	createsprite gRandomPosHitSplatSpriteTemplate, ANIM_BATTLER_TARGET, 3, 1, 3
