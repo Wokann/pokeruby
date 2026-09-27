@@ -226,9 +226,9 @@ static bool8 IsMatchLineDoneFlashingBeforePayout(void);
 static bool8 TryStopMatchLinesFlashing(void);
 static bool8 TryStopMatchLineFlashing(u8 spriteId);
 static void SpriteCB_FlashMatchingLines(struct Sprite *sprite);
-static void sub_8103F70(void);
-static bool8 sub_8103FA0(void);
-static void sub_8103FE8(u8 taskId);
+static void FlashSlotMachineLights(void);
+static bool8 TryStopSlotMachineLights(void);
+static void Task_FlashSlotMachineLights(u8 taskId);
 static void sub_8104048(void);
 static void sub_8104064(u8 pikaPower);
 static bool8 sub_81040C8(void);
@@ -922,7 +922,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
 #endif
         sSlotMachine->state = 15;
         AwardPayout();
-        sub_8103F70();
+        FlashSlotMachineLights();
         if ((sSlotMachine->unk10 -= sSlotMachine->payout) < 0)
         {
             sSlotMachine->unk10 = 0;
@@ -979,7 +979,7 @@ static bool8 SlotTask_WaitPayout(struct Task *task)
 
 static bool8 SlotTask_EndPayout(struct Task *task)
 {
-    if (sub_8103FA0())
+    if (TryStopSlotMachineLights())
     {
         sSlotMachine->state = 19;
         if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_RED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE)))
@@ -2454,29 +2454,29 @@ static void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
     }
 }
 
-static void sub_8103F70(void)
+static void FlashSlotMachineLights(void)
 {
-    u8 taskId = CreateTask(sub_8103FE8, 6);
+    u8 taskId = CreateTask(Task_FlashSlotMachineLights, 6);
     gTasks[taskId].data[3] = 1;
-    sub_8103FE8(taskId);
+    Task_FlashSlotMachineLights(taskId);
 }
 
-static const u16 *const gUnknown_083EDDA0[];
-static const u16 *const gUnknown_083EDDAC;
+static const u16 *const sFlashingLightsPalTable[];
+static const u16 *const sSlotMachineMenu_Pal;
 
-static bool8 sub_8103FA0(void)
+static bool8 TryStopSlotMachineLights(void)
 {
-    u8 taskId = FindTaskIdByFunc(sub_8103FE8);
+    u8 taskId = FindTaskIdByFunc(Task_FlashSlotMachineLights);
     if (!gTasks[taskId].data[2])
     {
         DestroyTask(taskId);
-        LoadPalette(gUnknown_083EDDAC, 0x10, 0x20);
+        LoadPalette(sSlotMachineMenu_Pal, 0x10, 0x20);
         return TRUE;
     }
     return FALSE;
 }
 
-static void sub_8103FE8(u8 taskId)
+static void Task_FlashSlotMachineLights(u8 taskId)
 {
     struct Task *task = gTasks + taskId;
     if (!task->data[1]--)
@@ -2486,7 +2486,7 @@ static void sub_8103FE8(u8 taskId)
         if (task->data[2] == 0 || task->data[2] == 2)
             task->data[3] = -task->data[3];
     }
-    LoadPalette(gUnknown_083EDDA0[task->data[2]], 0x10, 0x20);
+    LoadPalette(sFlashingLightsPalTable[task->data[2]], 0x10, 0x20);
 }
 
 static void sub_8104048(void)
@@ -5522,13 +5522,13 @@ static const u16 Unknown_83EDD5E[] = INCBIN_U16("graphics/unknown/ruby_83EDD5E.g
 static const u16 Unknown_83EDD7E[] = INCBIN_U16("graphics/unknown/ruby_83EDD7E.gbapal");
 #endif // RS
 
-static const u16 *const gUnknown_083EDDA0[] = {
+static const u16 *const sFlashingLightsPalTable[] = {
     Unknown_83EDD3E,
     Unknown_83EDD5E,
     Unknown_83EDD7E
 };
 
-static const u16 *const gUnknown_083EDDAC = gUnknown_08E95A18 + 16;
+static const u16 *const sSlotMachineMenu_Pal = gUnknown_08E95A18 + 16;
 
 static const u16 Palette_83EDDB0[] = INCBIN_U16("graphics/slot_machine/83EDDB0.gbapal");
 static const u16 Palette_83EDDD0[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
