@@ -273,7 +273,7 @@ void PrintTrainerEyesLocation(u8 listIndex);
 void RedrawSelectedTrainerEyesListRow(void);
 void UpdateTrainerEyesNameSprites(u8 *);
 void BeginPokenavListScroll(s16 rowsToScroll);
-void sub_80F6074(s16 arg0);
+void UpdatePokenavListIndicesAfterScroll(s16 arg0);
 void sub_80F6208(void);
 bool8 sub_80F6250();
 
@@ -448,7 +448,7 @@ bool8 sub_80F63D0();
 void InitConditionGraphScreen(void);
 bool8 LoadConditionGraphScreenStep(void);
 void sub_80F6134();
-u8 sub_80F5DD4();
+u8 HandlePokenavListDpadInput();
 void InitPokenavListScreen(u8 listMode);
 bool8 LoadPokenavListScreenStep(void);
 void UpdateMapSecInfoWindow(void);

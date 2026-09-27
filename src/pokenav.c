@@ -144,10 +144,10 @@ extern const struct SpriteTemplate gPokenavTrainerEyesNameSpriteTemplate;
 
 // Static ROM declarations
 
-u8 sub_80F5E20(void);
-u8 sub_80F5EE4(void);
-u8 sub_80F5FB4(void);
-u8 sub_80F6010(void);
+u8 PokenavList_MoveCursorUp(void);
+u8 PokenavList_MoveCursorDown(void);
+u8 PokenavList_PageUp(void);
+u8 PokenavList_PageDown(void);
 
 // .rodata
 
@@ -4497,23 +4497,23 @@ void ConditionGraph_DrawAtYOffset(u8 a0)
     }
 }
 
-u8 sub_80F5DD4(void)
+u8 HandlePokenavListDpadInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
-        return sub_80F5E20();
+        return PokenavList_MoveCursorUp();
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
-        return sub_80F5EE4();
+        return PokenavList_MoveCursorDown();
     }
     else if (JOY_REPT(DPAD_LEFT))
     {
-        return sub_80F5FB4();
+        return PokenavList_PageUp();
     }
     else if (JOY_REPT(DPAD_RIGHT))
     {
-        return sub_80F6010();
+        return PokenavList_PageDown();
     }
     else
     {
@@ -4521,7 +4521,7 @@ u8 sub_80F5DD4(void)
     }
 }
 
-u8 sub_80F5E20(void)
+u8 PokenavList_MoveCursorUp(void)
 {
     if (gPokenavStructPtr->listSelectedIndex == 0)
     {
@@ -4530,7 +4530,7 @@ u8 sub_80F5E20(void)
     if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 0)
     {
         BeginPokenavListScroll(-1);
-        sub_80F6074(-1);
+        UpdatePokenavListIndicesAfterScroll(-1);
         return 2;
     }
     gPokenavStructPtr->listCursorRow--;
@@ -4546,7 +4546,7 @@ u8 sub_80F5E20(void)
     return 1;
 }
 
-u8 sub_80F5EE4(void)
+u8 PokenavList_MoveCursorDown(void)
 {
     if (gPokenavStructPtr->listSelectedIndex == gPokenavStructPtr->unk8774)
     {
@@ -4555,7 +4555,7 @@ u8 sub_80F5EE4(void)
     if (gPokenavStructPtr->hasListScrollArrows != 0 && gPokenavStructPtr->listCursorRow == 7)
     {
         BeginPokenavListScroll(1);
-        sub_80F6074(1);
+        UpdatePokenavListIndicesAfterScroll(1);
         return 2;
     }
     gPokenavStructPtr->listCursorRow++;
@@ -4571,7 +4571,7 @@ u8 sub_80F5EE4(void)
     return 1;
 }
 
-u8 sub_80F5FB4(void)
+u8 PokenavList_PageUp(void)
 {
     s16 r4;
     if (gPokenavStructPtr->unk8770 == 0 || gPokenavStructPtr->hasListScrollArrows == 0)
@@ -4587,11 +4587,11 @@ u8 sub_80F5FB4(void)
         r4 = -8;
     }
     BeginPokenavListScroll(r4);
-    sub_80F6074(r4);
+    UpdatePokenavListIndicesAfterScroll(r4);
     return 2;
 }
 
-u8 sub_80F6010(void)
+u8 PokenavList_PageDown(void)
 {
     s16 r4;
     if (gPokenavStructPtr->unk8772 == gPokenavStructPtr->unk8774 || gPokenavStructPtr->hasListScrollArrows == 0)
@@ -4604,11 +4604,11 @@ u8 sub_80F6010(void)
         r4 = 8;
     }
     BeginPokenavListScroll(r4);
-    sub_80F6074(r4);
+    UpdatePokenavListIndicesAfterScroll(r4);
     return 2;
 }
 
-void sub_80F6074(s16 a0)
+void UpdatePokenavListIndicesAfterScroll(s16 a0)
 {
     gPokenavStructPtr->unk8770 += a0;
     if (gPokenavStructPtr->unk8770 > gPokenavStructPtr->unk8774)

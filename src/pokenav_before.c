@@ -2193,7 +2193,7 @@ void HandleConditionSearchInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        switch (sub_80F5DD4())
+        switch (HandlePokenavListDpadInput())
         {
         case 1:
             PlaySE(SE_SELECT);
@@ -2697,7 +2697,7 @@ void HandleRibbonsMonListInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        switch (sub_80F5DD4())
+        switch (HandlePokenavListDpadInput())
         {
         case 1:
             PlaySE(SE_SELECT);
@@ -3057,7 +3057,7 @@ void HandleTrainerEyesInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        switch (sub_80F5DD4())
+        switch (HandlePokenavListDpadInput())
         {
         case 1:
             PlaySE(SE_SELECT);
