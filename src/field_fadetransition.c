@@ -24,9 +24,9 @@
 #include "constants/event_objects.h"
 #include "constants/songs.h"
 
-void sub_8080B9C(u8);
-void task_map_chg_seq_0807E20C(u8);
-void task_map_chg_seq_0807E2CC(u8);
+void Task_ExitDoor(u8);
+void Task_ExitNonAnimDoor(u8);
+void Task_ExitNonDoor(u8);
 void task0A_fade_n_map_maybe(u8);
 void sub_808115C(u8);
 
@@ -81,7 +81,7 @@ void SetPlayerVisibility(u8 arg)
 
 void Task_WaitForFadeAndEnableScriptCtx(u8 taskID)
 {
-    if (sub_8080E70() == TRUE)
+    if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskID);
         ScriptContext_Enable();
@@ -121,7 +121,7 @@ void Task_ReturnToFieldCableLink(u8 taskId)
         }
         break;
     case 2:
-        if (sub_8080E70() == TRUE)
+        if (WaitForWeatherFadeIn() == TRUE)
         {
             UnlockPlayerFieldControls();
             DestroyTask(taskId);
@@ -155,7 +155,7 @@ void Task_ReturnToFieldWirelessLink(u8 taskId)
         }
         break;
     case 2:
-        if (sub_8080E70() == TRUE)
+        if (WaitForWeatherFadeIn() == TRUE)
         {
             StartSendingKeysToLink();
             UnlockPlayerFieldControls();
@@ -172,7 +172,7 @@ void FieldCB_ReturnToFieldWirelessLink(void)
     CreateTask(Task_ReturnToFieldWirelessLink, 10);
 }
 
-void sub_8080AE4(void)
+void SetUpWarpExitTask(void)
 {
     s16 x, y;
     u8 behavior;
@@ -180,19 +180,19 @@ void sub_8080AE4(void)
     PlayerGetDestCoords(&x, &y);
     behavior = MapGridGetMetatileBehaviorAt(x, y);
     if (MetatileBehavior_IsDoor(behavior) == TRUE)
-        func = sub_8080B9C;
+        func = Task_ExitDoor;
     else if (MetatileBehavior_IsNonAnimDoor(behavior) == TRUE)
-        func = task_map_chg_seq_0807E20C;
+        func = Task_ExitNonAnimDoor;
     else
-        func = task_map_chg_seq_0807E2CC;
+        func = Task_ExitNonDoor;
     CreateTask(func, 10);
 }
 
-void mapldr_default(void)
+void FieldCB_DefaultWarpExit(void)
 {
     Overworld_PlaySpecialMapMusic();
     WarpFadeInScreen();
-    sub_8080AE4();
+    SetUpWarpExitTask();
     LockPlayerFieldControls();
 }
 
@@ -200,7 +200,7 @@ void FieldCB_WarpExitFadeFromBlack(void)
 {
     Overworld_PlaySpecialMapMusic();
     FadeInFromBlack();
-    sub_8080AE4();
+    SetUpWarpExitTask();
     LockPlayerFieldControls();
 }
 
@@ -209,11 +209,11 @@ void sub_8080B78(void)
     Overworld_PlaySpecialMapMusic();
     WarpFadeInScreen();
     PlaySE(SE_WARP_OUT);
-    CreateTask(task_map_chg_seq_0807E2CC, 10);
+    CreateTask(Task_ExitNonDoor, 10);
     LockPlayerFieldControls();
 }
 
-void sub_8080B9C(u8 taskId)
+void Task_ExitDoor(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
@@ -229,7 +229,7 @@ void sub_8080B9C(u8 taskId)
         task->data[0] = 1;
         break;
     case 1:
-        if (sub_8080E70())
+        if (WaitForWeatherFadeIn())
         {
             u8 objEventId;
             SetPlayerVisibility(1);
@@ -262,7 +262,7 @@ void sub_8080B9C(u8 taskId)
     }
 }
 
-void task_map_chg_seq_0807E20C(u8 taskId)
+void Task_ExitNonAnimDoor(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
@@ -277,7 +277,7 @@ void task_map_chg_seq_0807E20C(u8 taskId)
         task->data[0] = 1;
         break;
     case 1:
-        if (sub_8080E70())
+        if (WaitForWeatherFadeIn())
         {
             u8 objEventId;
             SetPlayerVisibility(1);
@@ -300,7 +300,7 @@ void task_map_chg_seq_0807E20C(u8 taskId)
     }
 }
 
-void task_map_chg_seq_0807E2CC(u8 taskId)
+void Task_ExitNonDoor(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
@@ -310,7 +310,7 @@ void task_map_chg_seq_0807E2CC(u8 taskId)
         gTasks[taskId].data[0]++;
         break;
     case 1:
-        if (sub_8080E70())
+        if (WaitForWeatherFadeIn())
         {
             UnfreezeObjectEvents();
             UnlockPlayerFieldControls();
@@ -322,7 +322,7 @@ void task_map_chg_seq_0807E2CC(u8 taskId)
 
 void sub_8080DC4(u8 taskId)
 {
-    if (sub_8080E70() == TRUE)
+    if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskId);
         CreateTask(sub_80712B4, 80);
@@ -338,7 +338,7 @@ void sub_8080DEC(void)
 
 void task_mpl_807E3C8(u8 taskId)
 {
-    if (sub_8080E70() == 1)
+    if (WaitForWeatherFadeIn() == 1)
     {
         UnlockPlayerFieldControls();
         DestroyTask(taskId);
@@ -366,7 +366,7 @@ static bool32 PaletteFadeActive(void)
     return gPaletteFade.active;
 }
 
-bool32 sub_8080E70(void)
+bool32 WaitForWeatherFadeIn(void)
 {
     if (IsWeatherNotFadingIn() == TRUE)
         return TRUE;
@@ -374,14 +374,14 @@ bool32 sub_8080E70(void)
         return FALSE;
 }
 
-void sub_8080E88(void)
+void DoWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
 
@@ -391,14 +391,14 @@ void DoDiveWarp(void)
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
     PlayRainSoundEffect();
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(task0A_fade_n_map_maybe, 10);
 }
 
-void sub_8080EF0(void)
+void DoDoorWarp(void)
 {
     LockPlayerFieldControls();
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(sub_808115C, 10);
 }
 
@@ -516,12 +516,12 @@ void ReturnFromLinkRoom(void)
 void debug_sub_80888D8()
 {
     debug_sub_8052E04();
-    sub_8080E88();
+    DoWarp();
     LockPlayerFieldControls();
 /*    asm("\
     PUSH    {LR}\n\
     BL      debug_sub_8052E04\n\
-    BL      sub_8080E88\n\
+    BL      DoWarp\n\
     BL      LockPlayerFieldControls\n\
     POP     {R0}\n\
     BX      R0");*/

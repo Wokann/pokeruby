@@ -828,7 +828,7 @@ void CB2_ExitDebugMailViewer(void)
 {
     gMain.watchedKeysPressed = 0;
     gMain.watchedKeysMask = 0;
-    gFieldCallback = mapldr_default;
+    gFieldCallback = FieldCB_DefaultWarpExit;
     SetMainCallback2(CB2_ReturnToField);
 }
 

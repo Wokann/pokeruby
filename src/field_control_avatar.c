@@ -685,7 +685,7 @@ static bool8 mapheader_run_first_tag2_script_list_match_conditionally(struct Map
     {
         StoreInitialPlayerAvatarState();
         SetupWarp(&gMapHeader, warpEventId, position);
-        sub_8080E88();
+        DoWarp();
         return TRUE;
     }
     return FALSE;
@@ -724,7 +724,7 @@ bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileBehavior
             ScriptContext_SetupScript(EventScript_FallDownHoleMtPyre);
             return TRUE;
         }
-        sub_8080E88();
+        DoWarp();
         return TRUE;
     }
     return FALSE;
@@ -803,7 +803,7 @@ static bool8 map_warp_consider_2_to_inside(struct MapPosition *position, u16 met
             {
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
-                sub_8080EF0();
+                DoDoorWarp();
                 return TRUE;
             }
         }

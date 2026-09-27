@@ -1265,7 +1265,7 @@ static void RunFieldCallback(void)
     if (gFieldCallback != NULL)
         gFieldCallback();
     else
-        mapldr_default();
+        FieldCB_DefaultWarpExit();
     gFieldCallback = NULL;
 }
 
