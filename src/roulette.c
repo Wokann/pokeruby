@@ -477,12 +477,12 @@ void CB2_LoadRoulette(void)
         gMain.state++;
         break;
     case 4:
-        sub_8117838(0);
+        LoadOrFreeMiscSpritePalettesAndSheets(0);
         sub_811857C();
         sub_81184D8();
         sub_8117F2C();
-        sub_8117900();
-        sub_8117BBC();
+        CreateGridSprites();
+        CreateGridBallSprites();
         sub_8117DF4();
         gMain.state++;
         break;
@@ -818,8 +818,8 @@ void Task_SlideGridOffscreen(u8 taskid)
     }
     else
     {
-        sub_8117AA8(1, 255);
-        sub_8117C60(1, 255);
+        ShowHideGridIcons(1, 255);
+        ShowHideGridBalls(1, 255);
         gTasks[taskid].func = Task_InitBallRoll;
         gTasks[taskid].data[1] = 0;
     }
@@ -1017,8 +1017,8 @@ void Task_RecordBallHit(u8 taskid)
             else
             {
                 DrawGridBackground(eRoulette->var1B[eRoulette->var1A_0]);
-                sub_8117AA8(0, (u8)gTasks[taskid].data[12]);
-                sub_8117C60(0, (u8)gTasks[taskid].data[6] - 1);
+                ShowHideGridIcons(0, (u8)gTasks[taskid].data[12]);
+                ShowHideGridBalls(0, (u8)gTasks[taskid].data[6] - 1);
                 gTasks[taskid].data[1] = 32;
                 gTasks[taskid].func = Task_SlideGridOnscreen;
             }
@@ -1037,7 +1037,7 @@ void Task_SlideGridOnscreen(u8 taskid)
     }
     else
     {
-        sub_8117D68(gTasks[taskid].data[12]);
+        ShowHideWinSlotCursor(gTasks[taskid].data[12]);
         if (gTasks[taskid].data[5] == 1)
             gTasks[taskid].data[1] = 121;
         else
@@ -1053,12 +1053,12 @@ void Task_FlashBallOnWinningSquare(u8 taskid)
         switch (gTasks[taskid].data[1] % 16)
         {
         case 8:
-            sub_8117AA8(0, 255);
-            sub_8117C60(0, 255);
+            ShowHideGridIcons(0, 255);
+            ShowHideGridBalls(0, 255);
             break;
         case 0:
-            sub_8117AA8(0, (u8)gTasks[taskid].data[12]);
-            sub_8117C60(0, (u8)gTasks[taskid].data[6] - 1);
+            ShowHideGridIcons(0, (u8)gTasks[taskid].data[12]);
+            ShowHideGridBalls(0, (u8)gTasks[taskid].data[6] - 1);
             break;
         }
     }
@@ -1325,7 +1325,7 @@ void ResetHits(void)
         eRoulette->var12[i] = 0;
     for (i = 0; i < 3; i++)
         eRoulette->var16[i] = 0;
-    sub_8117C60(1, 255);
+    ShowHideGridBalls(1, 255);
 }
 
 u8 RecordHit(u8 taskid, u8 r1)
@@ -1473,7 +1473,7 @@ void DrawGridBackground(u8 r0)
     u8 v[5];
     u8 l;
     eRoulette->var2A = 1;
-    sub_8117AA8(0, 0);
+    ShowHideGridIcons(0, 0);
     sub_8124E2C(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
     switch (r0)
     {

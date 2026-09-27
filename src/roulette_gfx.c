@@ -691,7 +691,7 @@ const struct SpriteTemplate gSpriteTemplate_83FA5C0[] = {
 
 const struct SpriteTemplate gSpriteTemplate_83FA5F0 = {0xffff, 1, &gOamData_83FA54C, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, gSpriteAffineAnimTable_83FA5A8, sub_8119D80};
 
-void sub_8117838(u8 r0)
+void LoadOrFreeMiscSpritePalettesAndSheets(u8 r0)
 {
     if (!r0)
     {
@@ -707,7 +707,7 @@ void sub_8117838(u8 r0)
     }
 }
 
-u8 sub_8117890(const struct SpriteTemplate *r0, u8 r1, u16 *r2)
+u8 CreateWheelIconSprite(const struct SpriteTemplate *r0, u8 r1, u16 *r2)
 {
     u16 temp;
     u8 spriteid = CreateSprite(r0, 116, 80, r0->oam->y);
@@ -723,7 +723,7 @@ u8 sub_8117890(const struct SpriteTemplate *r0, u8 r1, u16 *r2)
     return spriteid;
 }
 
-void sub_8117900(void)
+void CreateGridSprites(void)
 {
     u8 i, j;
     u8 spriteid;
@@ -765,14 +765,14 @@ void sub_8117900(void)
     }
 }
 
-void unref_sub_8117A74(void) //destroy all sprites at 29
+void DestroyGridSprites(void) //destroy all sprites at 29
 {
     u8 i;
     for (i = 0; i < 12; i++)
         DestroySprite(&gSprites[eRoulette->var3C[29 + i]]);
 }
 
-void sub_8117AA8(u8 r0, u8 r1)
+void ShowHideGridIcons(u8 r0, u8 r1)
 {
     u8 i;
     switch (r0)
@@ -797,7 +797,7 @@ void sub_8117AA8(u8 r0, u8 r1)
     }
 }
 
-void sub_8117BBC(void)
+void CreateGridBallSprites(void)
 {
     u8 i;
     for (i = 0; i < 6; i++)
@@ -811,7 +811,7 @@ void sub_8117BBC(void)
     }
 }
 
-void sub_8117C60(u8 r0, u8 r1)
+void ShowHideGridBalls(u8 r0, u8 r1)
 {
     u8 i = 0;
     if (r0)
@@ -837,7 +837,7 @@ void sub_8117C60(u8 r0, u8 r1)
     }
 }
 
-void sub_8117D68(u8 r0)
+void ShowHideWinSlotCursor(u8 r0)
 {
     if (!r0)
     {
@@ -868,7 +868,7 @@ void sub_8117DF4(void)
         {
             u8 spriteid;
             spriteid =
-                eRoulette->var3C[7 + i * 4 + j] = sub_8117890(&gSpriteTemplate_83FA0DC[i * 4 + j], 40, &k);
+                eRoulette->var3C[7 + i * 4 + j] = CreateWheelIconSprite(&gSpriteTemplate_83FA0DC[i * 4 + j], 40, &k);
             gSprites[spriteid].animPaused       = TRUE;
             gSprites[spriteid].affineAnimPaused = TRUE;
         }
