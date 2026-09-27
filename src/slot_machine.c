@@ -204,15 +204,15 @@ static bool8 DecideStop_Bias_Reel2_Bet3(void);
 static bool8 DecideStop_Bias_Reel3(void);
 static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0);
 static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0);
-static void sub_81034F4(void);
-static void sub_8103540(void);
-static void sub_8103564(void);
-static void j5_08111E84(void);
-static void sub_8103668(void);
-static void sub_810380C(void);
-static void sub_8103830(void);
-static void sub_8103910(void);
-static void sub_8103A78(void);
+static void DecideStop_NoBias_Reel1(void);
+static void DecideStop_NoBias_Reel2(void);
+static void DecideStop_NoBias_Reel2_Bet1(void);
+static void DecideStop_NoBias_Reel2_Bet2(void);
+static void DecideStop_NoBias_Reel2_Bet3(void);
+static void DecideStop_NoBias_Reel3(void);
+static void DecideStop_NoBias_Reel3_Bet1(void);
+static void DecideStop_NoBias_Reel3_Bet2(void);
+static void DecideStop_NoBias_Reel3_Bet3(void);
 static void sub_8103C14(u8 a0);
 static void sub_8103C48(u8 taskId);
 static void sub_8103D50(u8 a0);
@@ -1695,11 +1695,11 @@ static bool8 (*const sDecideStop_Bias[])(void) =
     DecideStop_Bias_Reel3
 };
 
-static void (*const gUnknown_083ECB4C[])(void) =
+static void (*const sDecideStop_NoBias[])(void) =
 {
-    sub_81034F4,
-    sub_8103540,
-    sub_810380C
+    DecideStop_NoBias_Reel1,
+    DecideStop_NoBias_Reel2,
+    DecideStop_NoBias_Reel3
 };
 
 static bool8 ReelTask_DecideStop(struct Task *task)
@@ -1710,7 +1710,7 @@ static bool8 ReelTask_DecideStop(struct Task *task)
     if (sSlotMachine->unk0A == 0 && (sSlotMachine->unk04 == 0 || sSlotMachine->unk06 == 0 || !sDecideStop_Bias[task->data[15]]()))
     {
         sSlotMachine->unk06 = 0;
-        gUnknown_083ECB4C[task->data[15]]();
+        sDecideStop_NoBias[task->data[15]]();
     }
     task->data[1] = sSlotMachine->unk2E[task->data[15]];
     return TRUE;
@@ -1982,7 +1982,7 @@ static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0)
     return FALSE;
 }
 
-static void sub_81034F4(void)
+static void DecideStop_NoBias_Reel1(void)
 {
     s16 i = 0;
 
@@ -1991,7 +1991,7 @@ static void sub_81034F4(void)
     sSlotMachine->unk2E[0] = i;
 }
 
-static bool8 sub_8103520(u8 *a0)
+static bool8 IfSymbol7_SwitchColor(u8 *a0)
 {
     if (*a0 == 0)
     {
@@ -2006,24 +2006,24 @@ static bool8 sub_8103520(u8 *a0)
     return FALSE;
 }
 
-static void (*const gUnknown_083ECB88[])(void) =
+static void (*const sDecideStop_NoBias_Reel2_Bets[])(void) =
 {
-    sub_8103564,
-    j5_08111E84,
-    sub_8103668
+    DecideStop_NoBias_Reel2_Bet1,
+    DecideStop_NoBias_Reel2_Bet2,
+    DecideStop_NoBias_Reel2_Bet3
 };
 
-static void sub_8103540(void)
+static void DecideStop_NoBias_Reel2(void)
 {
-    gUnknown_083ECB88[sSlotMachine->bet - 1]();
+    sDecideStop_NoBias_Reel2_Bets[sSlotMachine->bet - 1]();
 }
 
-static void sub_8103564(void)
+static void DecideStop_NoBias_Reel2_Bet1(void)
 {
     if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
     {
         u8 sp0 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
-        if (sub_8103520(&sp0))
+        if (IfSymbol7_SwitchColor(&sp0))
         {
             s16 i;
             for (i = 0; i < 5; i++)
@@ -2039,12 +2039,12 @@ static void sub_8103564(void)
     }
 }
 
-static void j5_08111E84(void)
+static void DecideStop_NoBias_Reel2_Bet2(void)
 {
     if (sSlotMachine->unk34[0] != 0 && sSlotMachine->unk04 & 0x80)
     {
         u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-        if (sub_8103520(&sp0))
+        if (IfSymbol7_SwitchColor(&sp0))
         {
             s16 i;
             for (i = 0; i < 5; i++)
@@ -2060,7 +2060,7 @@ static void j5_08111E84(void)
     }
 }
 
-static void sub_8103668(void)
+static void DecideStop_NoBias_Reel2_Bet3(void)
 {
     s16 i;
     s16 j;
@@ -2068,12 +2068,12 @@ static void sub_8103668(void)
     {
         if (sSlotMachine->unk34[0] == 2)
         {
-            j5_08111E84();
+            DecideStop_NoBias_Reel2_Bet2();
         }
         else
         {
             u8 sp0 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
-            if (sub_8103520(&sp0))
+            if (IfSymbol7_SwitchColor(&sp0))
             {
                 j = 2;
                 if (sSlotMachine->unk34[0] == 3)
@@ -2125,7 +2125,7 @@ static void sub_8103668(void)
     }
 }
 
-static bool8 sub_8103764(u8 a0, u8 a1)
+static bool8 MismatchedSyms_77(u8 a0, u8 a1)
 {
     if ((a0 == 0 && a1 == 1) || (a0 == 1 && a1 == 0))
         return TRUE;
@@ -2133,7 +2133,7 @@ static bool8 sub_8103764(u8 a0, u8 a1)
         return FALSE;
 }
 
-static bool8 sub_810378C(u8 a0, u8 a1, u8 a2)
+static bool8 MismatchedSyms_777(u8 a0, u8 a1, u8 a2)
 {
     if ((a0 == 0 && a1 == 1 && a2 == 0) || (a0 == 1 && a1 == 0 && a2 == 1))
         return TRUE;
@@ -2141,7 +2141,7 @@ static bool8 sub_810378C(u8 a0, u8 a1, u8 a2)
         return FALSE;
 }
 
-static bool8 sub_81037BC(u8 a0, u8 a1, u8 a2)
+static bool8 NeitherMatchNor7Mismatch(u8 a0, u8 a1, u8 a2)
 {
     if ((a0 == 0 && a1 == 1 && a2 == 0) ||
         (a0 == 1 && a1 == 0 && a2 == 1) ||
@@ -2154,19 +2154,19 @@ static bool8 sub_81037BC(u8 a0, u8 a1, u8 a2)
     return TRUE;
 }
 
-static void (*const gUnknown_083ECB94[])(void) =
+static void (*const sDecideStop_NoBias_Reel3_Bets[])(void) =
 {
-    sub_8103830,
-    sub_8103910,
-    sub_8103A78
+    DecideStop_NoBias_Reel3_Bet1,
+    DecideStop_NoBias_Reel3_Bet2,
+    DecideStop_NoBias_Reel3_Bet3
 };
 
-static void sub_810380C(void)
+static void DecideStop_NoBias_Reel3(void)
 {
-    gUnknown_083ECB94[sSlotMachine->bet - 1]();
+    sDecideStop_NoBias_Reel3_Bets[sSlotMachine->bet - 1]();
 }
 
-static void sub_8103830(void)
+static void DecideStop_NoBias_Reel3_Bet1(void)
 {
     s16 i = 0;
     u8 r5 = GetSymbol(0, 2 - sSlotMachine->unk2E[0]);
@@ -2181,7 +2181,7 @@ static void sub_8103830(void)
             i++;
         }
     }
-    else if (sub_8103764(r5, r1))
+    else if (MismatchedSyms_77(r5, r1))
     {
         if (sSlotMachine->unk04 & 0x80)
         {
@@ -2205,7 +2205,7 @@ static void sub_8103830(void)
     sSlotMachine->unk2E[2] = i;
 }
 
-static void sub_8103910(void)
+static void DecideStop_NoBias_Reel3_Bet2(void)
 {
     s16 sp0 = 0;
     s16 i;
@@ -2217,7 +2217,7 @@ static void sub_8103910(void)
     {
         r7 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
         r6 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
-        if (sub_8103764(r7, r6))
+        if (MismatchedSyms_77(r7, r6))
         {
             for (i = 0; i < 5; i++)
             {
@@ -2238,7 +2238,7 @@ static void sub_8103910(void)
             r7 = GetSymbol(0, i - sSlotMachine->unk2E[0]);
             r6 = GetSymbol(1, i - sSlotMachine->unk2E[1]);
             r4 = GetSymbol(2, i - sp0);
-            if (!sub_81037BC(r7, r6, r4) && (!sub_810378C(r7, r6, r4) || !(sSlotMachine->unk04 & 0x80)))
+            if (!NeitherMatchNor7Mismatch(r7, r6, r4) && (!MismatchedSyms_777(r7, r6, r4) || !(sSlotMachine->unk04 & 0x80)))
             {
                 r8++;
                 break;
@@ -2251,7 +2251,7 @@ static void sub_8103910(void)
     sSlotMachine->unk2E[2] = sp0;
 }
 
-static void sub_8103A78(void)
+static void DecideStop_NoBias_Reel3_Bet3(void)
 {
     u8 r6;
     u8 r5;
@@ -2259,12 +2259,12 @@ static void sub_8103A78(void)
     s16 r8;
     s16 i;
 
-    sub_8103910();
+    DecideStop_NoBias_Reel3_Bet2();
     if (sSlotMachine->unk34[1] != 0 && sSlotMachine->unk34[0] != sSlotMachine->unk34[1] && sSlotMachine->unk04 & 0x80)
     {
         r6 = GetSymbol(0, sSlotMachine->unk34[0] - sSlotMachine->unk2E[0]);
         r5 = GetSymbol(1, sSlotMachine->unk34[1] - sSlotMachine->unk2E[1]);
-        if (sub_8103764(r6, r5))
+        if (MismatchedSyms_77(r6, r5))
         {
             r8 = 1;
             if (sSlotMachine->unk34[0] == 1)
@@ -2285,7 +2285,7 @@ static void sub_8103A78(void)
         r6 = GetSymbol(0, 1 - sSlotMachine->unk2E[0]);
         r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
         r4 = GetSymbol(2, 3 - sSlotMachine->unk2E[2]);
-        if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
             break;
         sSlotMachine->unk2E[2]++;
     }
@@ -2294,7 +2294,7 @@ static void sub_8103A78(void)
         r6 = GetSymbol(0, 3 - sSlotMachine->unk2E[0]);
         r5 = GetSymbol(1, 2 - sSlotMachine->unk2E[1]);
         r4 = GetSymbol(2, 1 - sSlotMachine->unk2E[2]);
-        if (sub_81037BC(r6, r5, r4) || (sub_810378C(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
+        if (NeitherMatchNor7Mismatch(r6, r5, r4) || (MismatchedSyms_777(r6, r5, r4) && sSlotMachine->unk04 & 0x80))
             break;
         sSlotMachine->unk2E[2]++;
     }
