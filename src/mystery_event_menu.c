@@ -136,7 +136,7 @@ static void CB2_MysteryEventMenu(void)
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_8007F4C();
+            CheckShouldAdvanceLinkState();
             Menu_DrawStdWindowFrame(6, 5, 23, 8);
             Menu_PrintText(gSystemText_LoadingEvent, 7, 6);
             gMain.state++;
@@ -196,7 +196,7 @@ static void CB2_MysteryEventMenu(void)
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_8007F4C();
+            CheckShouldAdvanceLinkState();
             Menu_DrawStdWindowFrame(6, 5, 23, 8);
             Menu_PrintText(gSystemText_LoadingEvent, 7, 6);
             gMain.state++;

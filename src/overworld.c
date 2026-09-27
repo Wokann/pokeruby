@@ -85,7 +85,7 @@ extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
 extern s32 gMaxFlashLevel;
 
-u16 word_3004858;
+u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);
 u8 gUnknown_03004860;
 u8 gFieldLinkPlayerCount;
@@ -2068,9 +2068,9 @@ void sub_8055218(u16 *a1, int a2)
 void sub_8055280(u16 a1)
 {
     if (a1 >= 17 && a1 < 30)
-        word_3004858 = a1;
+        gHeldKeyCodeToSend = a1;
     else
-        word_3004858 = 17;
+        gHeldKeyCodeToSend = 17;
 }
 
 u16 sub_80552B0(u32 a1)
@@ -2445,7 +2445,7 @@ bool32 sub_80558AC(void)
     if (is_c1_link_related_active() != TRUE)
         return FALSE;
 
-    if (sub_8007B24() != TRUE)
+    if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
     if (gUnknown_03000584 == sub_8055408)
@@ -2471,7 +2471,7 @@ bool32 sub_8055910(void)
     if (is_c1_link_related_active() != TRUE)
         return FALSE;
 
-    if (sub_8007B24() != TRUE)
+    if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
     if (gUnknown_03000584 == sub_8055438)
@@ -2482,7 +2482,7 @@ bool32 sub_8055910(void)
 
 bool32 sub_8055940(void)
 {
-    if (!sub_8007B24())
+    if (!IsSendingKeysToLink())
         return FALSE;
     return TRUE;
 }

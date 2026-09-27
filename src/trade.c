@@ -50,7 +50,7 @@ asm(".include \"constants/gba_constants.inc\"");
 asm(".set sub_804A96C_alt, sub_804A96C");
 #endif
 
-#define Trade_SendData(ptr) (SendBlock(bitmask_all_link_players_but_self(), ptr->linkData, 20))
+#define Trade_SendData(ptr) (SendBlock(BitmaskAllOtherLinkPlayers(), ptr->linkData, 20))
 
 struct InGameTrade {
     /*0x00*/ u8 name[11];
@@ -1121,7 +1121,7 @@ static void sub_8047EC0(void)
                 {
                     if (++gUnknown_03004824->unk_00b4 > 30)
                     {
-                        sub_8007F4C();
+                        CheckShouldAdvanceLinkState();
                         gMain.state ++;
                     }
                 }
@@ -1542,7 +1542,7 @@ static bool8 sub_8048D44(void)
         case  2:
             if (mpId == 0)
             {
-                sub_8007E9C(1);
+                SendBlockRequest(1);
             }
             gUnknown_03004824->unk_0075 ++;
             break;
@@ -1561,7 +1561,7 @@ static bool8 sub_8048D44(void)
         case  5:
             if (mpId == 0)
             {
-                sub_8007E9C(1);
+                SendBlockRequest(1);
             }
             gUnknown_03004824->unk_0075 ++;
             break;
@@ -1580,7 +1580,7 @@ static bool8 sub_8048D44(void)
         case  8:
             if (mpId == 0)
             {
-                sub_8007E9C(1);
+                SendBlockRequest(1);
             }
             gUnknown_03004824->unk_0075 ++;
             break;
@@ -1599,7 +1599,7 @@ static bool8 sub_8048D44(void)
         case 11:
             if (mpId == 0)
             {
-                sub_8007E9C(3);
+                SendBlockRequest(3);
             }
             gUnknown_03004824->unk_0075 ++;
             break;
@@ -1618,7 +1618,7 @@ static bool8 sub_8048D44(void)
         case 14:
             if (mpId == 0)
             {
-                sub_8007E9C(4);
+                SendBlockRequest(4);
             }
             gUnknown_03004824->unk_0075 ++;
             break;
@@ -3595,7 +3595,7 @@ void sub_804B41C(void)
             {
                 if (GetLinkPlayerCount_2() >= GetSavedPlayerCount() && ++ gUnknown_03004828->unk_00c0 > 30)
                 {
-                    sub_8007F4C();
+                    CheckShouldAdvanceLinkState();
                     gMain.state ++;
                 }
             }
@@ -3882,7 +3882,7 @@ NAKED void sub_804B41C(void)
                     "\tbhi _0804B62E\n"
                     "\tb _0804B76E_break\n"
                     "_0804B62E:\n"
-                    "\tbl sub_8007F4C\n"
+                    "\tbl CheckShouldAdvanceLinkState\n"
                     "\tldr r1, _0804B640 @ =gMain\n"
                     "\tldr r0, _0804B644 @ =0x0000043c\n"
                     "\tadds r1, r0\n"
@@ -5069,7 +5069,7 @@ static void sub_804DC88(void)
             Text_InitWindowAndPrintText(&gUnknown_03004828->window, gStringVar4, gUnknown_03004828->textWindowBaseTileNum, 2, 15);
             break;
         case 1:
-            sub_80084A4();
+            SetLinkStandbyCallback();
             gMain.state = 100;
             gUnknown_03004828->unk_00c0 = 0;
             break;
@@ -5133,7 +5133,7 @@ static void sub_804DC88(void)
             }
             break;
         case 41:
-            sub_80084A4();
+            SetLinkStandbyCallback();
             gMain.state = 42;
             break;
         case 42:
@@ -5148,7 +5148,7 @@ static void sub_804DC88(void)
             if (++ gUnknown_03004828->unk_00c0 > 60)
             {
                 gMain.state ++;
-                sub_80084A4();
+                SetLinkStandbyCallback();
             }
             break;
         case 6:

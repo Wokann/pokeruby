@@ -24,7 +24,7 @@ static void UpdateGermanContestPlayerBlockState(bool32 isCategory);
 static void LinkContest_SendBlock(const void *data, u16 size)
 {
     memcpy(gDecompressionBuffer, data, size);
-    SendBlock(bitmask_all_link_players_but_self(), gDecompressionBuffer, size);
+    SendBlock(BitmaskAllOtherLinkPlayers(), gDecompressionBuffer, size);
 }
 
 static bool8 LinkContest_GetBlockReceived(u8 playerId)
@@ -136,7 +136,7 @@ void Task_LinkContest_CommunicateMonsRS(u8 taskId)
                 if (IsLinkTaskFinished()) {
 #if ENGLISH
                     memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -147,7 +147,7 @@ void Task_LinkContest_CommunicateMonsRS(u8 taskId)
                     {
                         memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
                         UpdateGermanContestLeaderBlockState(FALSE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].tState = 1;
                     }
 #endif
@@ -268,7 +268,7 @@ void Task_LinkContest_CommunicateCategoryRS(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -278,7 +278,7 @@ void Task_LinkContest_CommunicateCategoryRS(u8 taskId)
                     else
                     {
                         UpdateGermanContestLeaderBlockState(TRUE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].tState = 1;
                     }
 #endif
@@ -544,7 +544,7 @@ void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    sub_8007E9C(2);
+                    SendBlockRequest(2);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -554,7 +554,7 @@ void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId)
                     else
                     {
                         UpdateGermanContestLeaderBlockState(FALSE);
-                        sub_8007E9C(2);
+                        SendBlockRequest(2);
                         gTasks[taskId].tState = 1;
                     }
 #endif

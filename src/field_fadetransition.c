@@ -144,7 +144,7 @@ void sub_8080A5C(u8 taskId)
     switch (task->data[0])
     {
     case 0:
-        sub_80084A4();
+        SetLinkStandbyCallback();
         task->data[0]++;
         break;
     case 1:
@@ -157,7 +157,7 @@ void sub_8080A5C(u8 taskId)
     case 2:
         if (sub_8080E70() == TRUE)
         {
-            sub_8007B14();
+            StartSendingKeysToLink();
             UnlockPlayerFieldControls();
             DestroyTask(taskId);
         }
