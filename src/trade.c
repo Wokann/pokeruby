@@ -209,7 +209,7 @@ void sub_804DB84(void);
 
 EWRAM_DATA u8 *gUnknown_020296CC[13] = {0};
 EWRAM_DATA struct MailStruct gUnknown_02029700[6] = {0};
-EWRAM_DATA u8 gUnknown_020297D8[2] = {0};
+EWRAM_DATA u8 gSelectedTradeMonPositions[2] = {0};
 
 struct TradeEwramSubstruct *gUnknown_03004824;
 
@@ -1404,8 +1404,8 @@ static void sub_80489F4(void)
 {
     if (!gPaletteFade.active)
     {
-        gUnknown_020297D8[0] = gUnknown_03004824->tradeMenuCursorPosition;
-        gUnknown_020297D8[1] = gUnknown_03004824->unk_008a;
+        gSelectedTradeMonPositions[0] = gUnknown_03004824->tradeMenuCursorPosition;
+        gSelectedTradeMonPositions[1] = gUnknown_03004824->unk_008a;
         SetCloseLinkCallback();
         gUnknown_03004824->unk_007b = 13;
     }
@@ -3509,12 +3509,12 @@ static void sub_804B2D0(u8 whichParty, u8 a1)
     pokemon = NULL;
     if (whichParty == 0)
     {
-        pokemon = &gPlayerParty[gUnknown_020297D8[0]];
+        pokemon = &gPlayerParty[gSelectedTradeMonPositions[0]];
         v0 = 1;
     }
     if (whichParty == 1)
     {
-        pokemon = &gEnemyParty[gUnknown_020297D8[1] % 6];
+        pokemon = &gEnemyParty[gSelectedTradeMonPositions[1] % 6];
         v0 = 3;
     }
     switch (a1)
@@ -4046,8 +4046,8 @@ void sub_804B790(void)
     switch (gMain.state)
     {
         case 0:
-            gUnknown_020297D8[0] = gSpecialVar_0x8005;
-            gUnknown_020297D8[1] = 6;
+            gSelectedTradeMonPositions[0] = gSpecialVar_0x8005;
+            gSelectedTradeMonPositions[1] = 6;
             StringCopy(gLinkPlayers[0].name, gSaveBlock2.playerName);
             GetMonData(&gEnemyParty[0], MON_DATA_OT_NAME, otName);
             StringCopy(gLinkPlayers[1].name, otName);
@@ -4329,9 +4329,9 @@ static void SetTradeSceneStrings(void)
     {
         mpId = GetMultiplayerId();
         StringCopy(gStringVar1, gLinkPlayers[mpId ^ 1].name);
-        GetMonData(&gEnemyParty[gUnknown_020297D8[1] % 6], MON_DATA_NICKNAME, string);
+        GetMonData(&gEnemyParty[gSelectedTradeMonPositions[1] % 6], MON_DATA_NICKNAME, string);
         StringCopy10(gStringVar3, string);
-        GetMonData(&gPlayerParty[gUnknown_020297D8[0]], MON_DATA_NICKNAME, string);
+        GetMonData(&gPlayerParty[gSelectedTradeMonPositions[0]], MON_DATA_NICKNAME, string);
         StringCopy10(gStringVar2, string);
     }
     else
@@ -4773,9 +4773,9 @@ static bool8 sub_804C29C(void)
         case 72: // Only if in-game trade
             sub_804BA94(gSpecialVar_0x8005, 0);
             gCB2_AfterEvolution = sub_804BBCC;
-            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gUnknown_020297D8[0]], TRUE, ITEM_NONE);
+            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], TRUE, ITEM_NONE);
             if (evoTarget != SPECIES_NONE)
-                TradeEvolutionScene(&gPlayerParty[gUnknown_020297D8[0]], evoTarget, gUnknown_03004828->pokePicSpriteIdxs[1], gUnknown_020297D8[0]);
+                TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[0]], evoTarget, gUnknown_03004828->pokePicSpriteIdxs[1], gSelectedTradeMonPositions[0]);
             gUnknown_03004828->unk_00c4 ++;
             break;
         case 73:
@@ -4805,12 +4805,12 @@ static void sub_804D588(void)
             break;
         case 4:
             gCB2_AfterEvolution = sub_804DC88;
-            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gUnknown_020297D8[0]], TRUE, ITEM_NONE);
+            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], TRUE, ITEM_NONE);
             if (evoTarget != SPECIES_NONE)
-                TradeEvolutionScene(&gPlayerParty[gUnknown_020297D8[0]], evoTarget, gUnknown_03004828->pokePicSpriteIdxs[1], gUnknown_020297D8[0]);
+                TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[0]], evoTarget, gUnknown_03004828->pokePicSpriteIdxs[1], gSelectedTradeMonPositions[0]);
             else
                 SetMainCallback2(sub_804DC88);
-            gUnknown_020297D8[0] = 255;
+            gSelectedTradeMonPositions[0] = 255;
             break;
     }
     if (!HasLinkErrorOccurred())
@@ -5027,7 +5027,7 @@ void sub_804DB84(void)
     {
         DestroySprite(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]]);
         FreeSpriteOamMatrix(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[1]]);
-        sub_804BA94(gUnknown_020297D8[0], gUnknown_020297D8[1] % 6);
+        sub_804BA94(gSelectedTradeMonPositions[0], gSelectedTradeMonPositions[1] % 6);
         gUnknown_03004828->linkData[0] = 0xabcd;
         gUnknown_03004828->unk_00bd = 1;
         SetMainCallback2(sub_804DC18);
@@ -5221,7 +5221,7 @@ static void sub_804E1DC(void)
     u8 numRibbons = 0;
     for (i = 0; i < 12; i ++)
     {
-        numRibbons += GetMonData(&gEnemyParty[gUnknown_020297D8[1] % 6], MON_DATA_CHAMPION_RIBBON + i);
+        numRibbons += GetMonData(&gEnemyParty[gSelectedTradeMonPositions[1] % 6], MON_DATA_CHAMPION_RIBBON + i);
     }
     if (numRibbons != 0)
         FlagSet(FLAG_SYS_RIBBON_GET);

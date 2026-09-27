@@ -31,11 +31,7 @@ extern const u8 gText_ConfirmLinkWhenPlayersReady[];
 extern const u8 gText_ConfirmStartLinkWithXPlayers[];
 extern const u8 gText_AwaitingLinkup[];
 extern const u8 gText_PleaseWaitForLink[];
-extern struct
-{
-    u8 field0;
-    u8 field1;
-} gUnknown_020297D8;
+extern u8 gSelectedTradeMonPositions[2];
 
 static void Task_LinkupStart(u8 taskId);
 static void Task_LinkupAwaitConnection(u8 taskId);
@@ -888,8 +884,8 @@ static void Task_StartWiredTrade(u8 taskId)
             task->data[0]++;
         break;
     case 2:
-        gUnknown_020297D8.field0 = 0;
-        gUnknown_020297D8.field1 = 0;
+        gSelectedTradeMonPositions[0] = 0;
+        gSelectedTradeMonPositions[1] = 0;
         m4aMPlayAllStop();
         SetCloseLinkCallback();
         task->data[0]++;
