@@ -951,14 +951,20 @@ u32 FldEff_WaterSurfacing(void)
     return 0;
 }
 
-void StartAshFieldEffect(s16 x, s16 y, u16 c, s16 d)
+#define sAshState      data[0]
+#define sAshX          data[1]
+#define sAshY          data[2]
+#define sAshMetatileId data[3]
+#define sAshDelay      data[4]
+
+void StartAshFieldEffect(s16 x, s16 y, u16 metatileId, s16 delay)
 {
     gFieldEffectArguments[0] = x;
     gFieldEffectArguments[1] = y;
     gFieldEffectArguments[2] = 0x52;
     gFieldEffectArguments[3] = 1;
-    gFieldEffectArguments[4] = c;
-    gFieldEffectArguments[5] = d;
+    gFieldEffectArguments[4] = metatileId;
+    gFieldEffectArguments[5] = delay;
     FieldEffectStart(FLDEFF_ASH);
 }
 
@@ -978,10 +984,10 @@ u32 FldEff_Ash(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[1] = gFieldEffectArguments[0];
-        sprite->data[2] = gFieldEffectArguments[1];
-        sprite->data[3] = gFieldEffectArguments[4];
-        sprite->data[4] = gFieldEffectArguments[5];
+        sprite->sAshX = gFieldEffectArguments[0];
+        sprite->sAshY = gFieldEffectArguments[1];
+        sprite->sAshMetatileId = gFieldEffectArguments[4];
+        sprite->sAshDelay = gFieldEffectArguments[5];
     }
     return 0;
 }
@@ -994,25 +1000,25 @@ void (*const gAshFieldEffectFuncs[])(struct Sprite *) = {
 
 void UpdateAshFieldEffect(struct Sprite *sprite)
 {
-    gAshFieldEffectFuncs[sprite->data[0]](sprite);
+    gAshFieldEffectFuncs[sprite->sAshState](sprite);
 }
 
 static void UpdateAshFieldEffect_Wait(struct Sprite *sprite)
 {
     sprite->invisible = TRUE;
     sprite->animPaused = TRUE;
-    if (--sprite->data[4] == 0)
-        sprite->data[0] = 1;
+    if (--sprite->sAshDelay == 0)
+        sprite->sAshState = 1;
 }
 
 static void UpdateAshFieldEffect_Show(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     sprite->animPaused = FALSE;
-    MapGridSetMetatileIdAt(sprite->data[1], sprite->data[2], sprite->data[3]);
-    CurrentMapDrawMetatileAt(sprite->data[1], sprite->data[2]);
+    MapGridSetMetatileIdAt(sprite->sAshX, sprite->sAshY, sprite->sAshMetatileId);
+    CurrentMapDrawMetatileAt(sprite->sAshX, sprite->sAshY);
     gObjectEvents[gPlayerAvatar.objectEventId].triggerGroundEffectsOnMove = TRUE;
-    sprite->data[0] = 2;
+    sprite->sAshState = 2;
 }
 
 static void UpdateAshFieldEffect_End(struct Sprite *sprite)
@@ -1021,6 +1027,12 @@ static void UpdateAshFieldEffect_End(struct Sprite *sprite)
     if (sprite->animEnded)
         FieldEffectStop(sprite, FLDEFF_ASH);
 }
+
+#undef sAshState
+#undef sAshX
+#undef sAshY
+#undef sAshMetatileId
+#undef sAshDelay
 
 u32 FldEff_SurfBlob(void)
 {
