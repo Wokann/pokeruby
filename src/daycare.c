@@ -31,7 +31,7 @@ static u16 gHatchedEggMotherMoves[4];
 
 extern u16 gMoveToLearn;
 
-static void ClearDaycareMail(struct DayCareMail *);
+static void ClearDaycareMonMail(struct DayCareMail *);
 static void SetInitialEggData(struct Pokemon *, u16, struct DayCare *);
 static u8 GetDaycareCompatibilityScore(struct DayCare *);
 
@@ -160,7 +160,7 @@ static void ShiftDaycareSlots(struct DayCare * daycare)
         daycare->misc.mail[0] = daycare->misc.mail[1];
         daycare->misc.countersEtc.steps[0] = daycare->misc.countersEtc.steps[1];
         daycare->misc.countersEtc.steps[1] = 0;
-        ClearDaycareMail(&daycare->misc.mail[1]);
+        ClearDaycareMonMail(&daycare->misc.mail[1]);
     }
 }
 
@@ -218,7 +218,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DayCare * daycare, u8 slot)
     if (daycare->misc.mail[slot].message.itemId)
     {
         GiveMailToMon2(&gPlayerParty[PARTY_SIZE - 1], &daycare->misc.mail[slot].message);
-        ClearDaycareMail(&daycare->misc.mail[slot]);
+        ClearDaycareMonMail(&daycare->misc.mail[slot]);
     }
 
     CompactPartySlots();
@@ -291,7 +291,7 @@ u8 GetNumLevelsGainedFromDaycare(void)
     return 0;
 }
 
-static void ClearDaycareMail(struct DayCareMail *mail)
+static void ClearDaycareMonMail(struct DayCareMail *mail)
 {
     u8 *names;
     u8 *names2;
@@ -310,14 +310,14 @@ static void ClearDaycareMail(struct DayCareMail *mail)
     ClearMailStruct(&mail->message);
 }
 
-void unref_sub_8041824(struct DayCare *daycare)
+void ClearAllDaycareData(struct DayCare *daycare)
 {
     u8 slot;
     for (slot = 0; slot < ARRAY_COUNT(daycare->mons); slot++)
     {
         ZeroBoxMonData(&daycare->mons[slot]);
         daycare->misc.countersEtc.steps[slot] = 0;
-        ClearDaycareMail(&daycare->misc.mail[slot]);
+        ClearDaycareMonMail(&daycare->misc.mail[slot]);
     }
 
     daycare->misc.countersEtc.pendingEggPersonality = 0;
@@ -735,7 +735,7 @@ void GiveEggFromDaycare(void)
     _GiveEggFromDaycare(&gSaveBlock1.daycare);
 }
 
-static bool8 _ShouldEggHatch(struct DayCare *daycare)
+static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
 {
     struct BoxPokemon *parent;
     u32 i;
@@ -779,7 +779,7 @@ static bool8 _ShouldEggHatch(struct DayCare *daycare)
 
 bool8 ShouldEggHatch(void)
 {
-    return _ShouldEggHatch(&gSaveBlock1.daycare);
+    return TryProduceOrHatchEgg(&gSaveBlock1.daycare);
 }
 
 static bool8 IsEggPending(struct DayCare *daycare)
@@ -1017,7 +1017,7 @@ static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
     *dest = EOS;
 }
 
-static void HandleDaycareLevelMenuInput(u8 taskId)
+static void Task_HandleDaycareLevelMenuInput(u8 taskId)
 {
     if (JOY_NEW(DPAD_UP))
     {
@@ -1065,7 +1065,7 @@ void ShowDaycareLevelMenu(void)
     GetDaycareLevelMenuLevelText(&gSaveBlock1.daycare, buffer);
     Menu_PrintTextPixelCoords(buffer, 0xce, 0x38, TRUE);
     InitMenu(0, 16, 7, 3, 0, 13);
-    CreateTask(HandleDaycareLevelMenuInput, 3);
+    CreateTask(Task_HandleDaycareLevelMenuInput, 3);
 }
 
 void ChooseSendDaycareMon(void)
