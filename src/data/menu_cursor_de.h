@@ -40,7 +40,7 @@ const union AnimCmd *const gSpriteAnimTable_842F13C[] = {
     gSpriteAnim_842F134
 };
 
-const struct SpriteSheet gUnknown_0842F140[] = {
+const struct SpriteSheet gOutlineCursorSpriteSheets[] = {
     { OutlineCursorTiles_00, 0x380, 0xFFF0 },
     { OutlineCursorTiles_01, 0x380, 0xFFF0 },
     { OutlineCursorTiles_02, 0x380, 0xFFF0 },
@@ -59,7 +59,7 @@ const struct SpriteSheet gUnknown_0842F140[] = {
     { OutlineCursorTiles_15, 0x380, 0xFFF0 }
 };
 
-const struct SpriteSheet gUnknown_0842F1C0[] = {
+const struct SpriteSheet gBlendedOutlineCursorSpriteSheets[] = {
     { OutlineCursorTiles_00, 0x380, 0xFFF1 },
     { OutlineCursorTiles_01, 0x380, 0xFFF1 },
     { OutlineCursorTiles_02, 0x380, 0xFFF1 },
@@ -78,14 +78,14 @@ const struct SpriteSheet gUnknown_0842F1C0[] = {
     { OutlineCursorTiles_15, 0x380, 0xFFF1 }
 };
 
-const struct SpritePalette gUnknown_0842F240 = {
+const struct SpritePalette gOutlineCursorSpritePalette = {
     sMenuCursorPalette, 0xfff0
 };
-const struct SpritePalette gUnknown_0842F248 = {
+const struct SpritePalette gBlendedOutlineCursorSpritePalette = {
     sMenuCursorPalette, 0xfff1
 };
 
-const struct SpriteTemplate gSpriteTemplate_842F250[] = {
+const struct SpriteTemplate gOutlineCursorSpriteTemplates[] = {
     {
         0xfff0, 0xfff0, &gOamData_842F11C, gSpriteAnimTable_842F13C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
     }, {
@@ -94,7 +94,7 @@ const struct SpriteTemplate gSpriteTemplate_842F250[] = {
         0xfff0, 0xffff, &gOamData_842F124, gSpriteAnimTable_842F13C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
     }
 };
-const struct SpriteTemplate gSpriteTemplate_842F298[] = {
+const struct SpriteTemplate gBlendedOutlineCursorSpriteTemplates[] = {
     {
         0xfff1, 0xfff1, &gOamData_842F12C, gSpriteAnimTable_842F13C, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
     }, {
@@ -249,7 +249,7 @@ const struct Subsprite *const gUnknown_0842F5BC[] = {
     gSubspriteTable_842F558
 };
 
-const struct SubspriteTable gSubspriteTables_842F5C0[] = {
+const struct SubspriteTable gDynamicOutlineCursorSubspriteTables[] = {
     {1, sMenuCursorSubsprites},
     {1, sMenuCursorSubsprites},
     {2, sMenuCursorSubsprites},
@@ -284,7 +284,7 @@ const struct SubspriteTable gSubspriteTables_842F5C0[] = {
     {31, sMenuCursorSubsprites}
 };
 
-const struct SubspriteTable gSubspriteTables_842F6C0[] = {
+const struct SubspriteTable gBlendedOutlineCursorSubspriteTables[] = {
     {2, gSubspriteTable_842F2C8},
     {2, gSubspriteTable_842F2C8},
     {3, gSubspriteTable_842F2D8},
@@ -306,7 +306,7 @@ const struct SubspriteTable gSubspriteTables_842F6C0[] = {
     {7, gSubspriteTable_842F520}
 };
 
-const struct SubspriteTable gUnknown_0842F758[] = {
+const struct SubspriteTable gOutlineCursorWindowSubspriteTable[] = {
     {3, sMenuCursorSubsprites}
 };
 

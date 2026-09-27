@@ -38,16 +38,16 @@ u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5
     if (paletteTag == 0xFFFF)
     {
         sMenuCursorPalette[a3 & 0xF] = a4;
-        if (LoadSpritePalette(&gUnknown_0842F240) != 0xFF)
+        if (LoadSpritePalette(&gOutlineCursorSpritePalette) != 0xFF)
         {
             paletteTag = 0xFFF0;
             v9 = 0;
         }
     }
 
-    LoadSpriteSheetDeferred(&gUnknown_0842F140[a3 & 0xF]);
-    sOutlineCursorSpriteId = CreateSprite(&gSpriteTemplate_842F250[v9], 0, 160, subpriority);
-    sOutlineCursorWindowSpriteId = CreateSprite(&gSpriteTemplate_842F250[2], 0, 160, subpriority);
+    LoadSpriteSheetDeferred(&gOutlineCursorSpriteSheets[a3 & 0xF]);
+    sOutlineCursorSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[v9], 0, 160, subpriority);
+    sOutlineCursorWindowSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[2], 0, 160, subpriority);
     if (sOutlineCursorSpriteId != 0x40)
     {
         v10 = &gSprites[sOutlineCursorSpriteId];
@@ -112,7 +112,7 @@ void DestroyMenuCursor(void)
 {
     if (sOutlineCursorSpriteId != 0x40)
     {
-        LoadTilesForSpriteSheet(&gUnknown_0842F140[0]);
+        LoadTilesForSpriteSheet(&gOutlineCursorSpriteSheets[0]);
         DestroySpriteAndFreeResources(&gSprites[sOutlineCursorSpriteId]);
         sOutlineCursorSpriteId = 0x40;
     }
@@ -231,9 +231,9 @@ void sub_814A958(u8 a)
     r4->x = r2 - 7 + i;
     r7++;
     if (sOutlineCursorSpriteId != 64)
-        SetSubspriteTables(&gSprites[sOutlineCursorSpriteId], gSubspriteTables_842F5C0 + r7);
+        SetSubspriteTables(&gSprites[sOutlineCursorSpriteId], gDynamicOutlineCursorSubspriteTables + r7);
     if (sOutlineCursorWindowSpriteId != 64)
-        SetSubspriteTables(&gSprites[sOutlineCursorWindowSpriteId], gSubspriteTables_842F5C0 + r7);
+        SetSubspriteTables(&gSprites[sOutlineCursorWindowSpriteId], gDynamicOutlineCursorSubspriteTables + r7);
 }
 #else
 NAKED
@@ -413,7 +413,7 @@ _0814AA98:\n\
 _0814AAA8: .4byte gUnknown_0842F790\n\
 _0814AAAC: .4byte sOutlineCursorSpriteId\n\
 _0814AAB0: .4byte gSprites\n\
-_0814AAB4: .4byte gSubspriteTables_842F5C0\n\
+_0814AAB4: .4byte gDynamicOutlineCursorSubspriteTables\n\
 _0814AAB8: .4byte sOutlineCursorWindowSpriteId\n\
     .syntax divided\n");
 }
@@ -564,7 +564,7 @@ _0814AA3E:\n\
     ldr r1, _0814AAB4 @ =gSprites\n\
     adds r2, r0, r1\n\
     lsls r1, r7, 3\n\
-    ldr r0, _0814AAB8 @ =gSubspriteTables_842F5C0\n\
+    ldr r0, _0814AAB8 @ =gDynamicOutlineCursorSubspriteTables\n\
     adds r1, r0\n\
     adds r0, r2, 0\n\
     bl SetSubspriteTables\n\
@@ -580,7 +580,7 @@ _0814AA7C:\n\
     ldr r1, _0814AAB4 @ =gSprites\n\
     adds r2, r0, r1\n\
     lsls r1, r7, 3\n\
-    ldr r0, _0814AAB8 @ =gSubspriteTables_842F5C0\n\
+    ldr r0, _0814AAB8 @ =gDynamicOutlineCursorSubspriteTables\n\
     adds r1, r0\n\
     adds r0, r2, 0\n\
     bl SetSubspriteTables\n\
@@ -597,7 +597,7 @@ _0814AA9C:\n\
 _0814AAAC: .4byte gUnknown_0842F798\n\
 _0814AAB0: .4byte sOutlineCursorSpriteId\n\
 _0814AAB4: .4byte gSprites\n\
-_0814AAB8: .4byte gSubspriteTables_842F5C0\n\
+_0814AAB8: .4byte gDynamicOutlineCursorSubspriteTables\n\
 _0814AABC: .4byte sOutlineCursorWindowSpriteId\n\
     .syntax divided\n");
 }
@@ -643,7 +643,7 @@ void sub_814AAF8(u16 a1)
                 }
             }
             spr->oam.paletteNum = v2;
-            RequestSpriteSheetCopy(&gUnknown_0842F140[v3 & 0xF]);
+            RequestSpriteSheetCopy(&gOutlineCursorSpriteSheets[v3 & 0xF]);
         }
     }
     return;
@@ -676,12 +676,12 @@ void unref_sub_814ABE4(int a1)
     if (sOutlineCursorSpriteId != 0x40)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
-        SetSubspriteTables(spr, &gUnknown_0842F758[a1]);
+        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[a1]);
     }
     if (sOutlineCursorWindowSpriteId != 0x40)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
-        SetSubspriteTables(spr, &gUnknown_0842F758[a1]);
+        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[a1]);
     }
     return;
 }
@@ -699,18 +699,18 @@ u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 
     if (paletteTag == 0xFFFF)
     {
         sMenuCursorPalette[a3 & 0xF] = a4;
-        if (LoadSpritePalette(&gUnknown_0842F248) != 0xFF )
+        if (LoadSpritePalette(&gBlendedOutlineCursorSpritePalette) != 0xFF )
         {
             paletteTag = 0xFFF1;
             v8 = 0;
         }
     }
 
-    LoadSpriteSheetDeferred(&gUnknown_0842F1C0[a3 & 0xF]);
+    LoadSpriteSheetDeferred(&gBlendedOutlineCursorSpriteSheets[a3 & 0xF]);
 #if ENGLISH
-    sBlendedOutlineCursorSpriteId = CreateSprite(&gSpriteTemplate_842F298[v8], 0, 160, subpriority);
+    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[v8], 0, 160, subpriority);
 #elif GERMAN
-    sBlendedOutlineCursorSpriteId = CreateSprite(&gSpriteTemplate_842F298[v8], 0, 161, subpriority);
+    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[v8], 0, 161, subpriority);
 #endif
 
     if (sBlendedOutlineCursorSpriteId != 0x40)
@@ -731,7 +731,7 @@ void MenuCursor_Destroy814AD44(void)
 {
     if (sBlendedOutlineCursorSpriteId != 0x40)
     {
-        LoadTilesForSpriteSheet(&gUnknown_0842F1C0[0]);
+        LoadTilesForSpriteSheet(&gBlendedOutlineCursorSpriteSheets[0]);
         DestroySpriteAndFreeResources(&gSprites[sBlendedOutlineCursorSpriteId]);
         sBlendedOutlineCursorSpriteId = 0x40;
     }
@@ -770,7 +770,7 @@ void sub_814ADF4(u8 a1)
         a1 = 0;
 
     if (sBlendedOutlineCursorSpriteId != 0x40)
-        SetSubspriteTables(&gSprites[sBlendedOutlineCursorSpriteId], &gSubspriteTables_842F6C0[a1]);
+        SetSubspriteTables(&gSprites[sBlendedOutlineCursorSpriteId], &gBlendedOutlineCursorSubspriteTables[a1]);
     return;
 }
 
