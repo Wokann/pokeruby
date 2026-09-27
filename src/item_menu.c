@@ -2006,8 +2006,8 @@ static void sub_80A5888(u8 taskId)
 
 static void OnBagClose_Field0(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)c2_exit_to_overworld_1_sub_8080DEC >> 16;
-    gTasks[taskId].data[9] = (u32)c2_exit_to_overworld_1_sub_8080DEC;
+    gTasks[taskId].data[8] = (u32)CB2_ReturnToFieldWithOpenMenu >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_ReturnToFieldWithOpenMenu;
     gLastFieldPokeMenuOpened = 0;
     sub_80A5AE4(taskId);
 }

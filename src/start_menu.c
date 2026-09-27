@@ -503,7 +503,7 @@ static u8 StartMenu_PlayerCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        TrainerCard_ShowPlayerCard(c2_exit_to_overworld_1_sub_8080DEC);
+        TrainerCard_ShowPlayerCard(CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;
@@ -524,7 +524,7 @@ static u8 StartMenu_OptionCallback(void)
     {
         PlayRainSoundEffect();
         SetMainCallback2(CB2_InitOptionMenu);
-        gMain.savedCallback = c2_exit_to_overworld_1_sub_8080DEC;
+        gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
         return 1;
     }
     return 0;
@@ -551,7 +551,7 @@ static u8 StartMenu_PlayerLinkCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainSoundEffect();
-        TrainerCard_ShowLinkCard(gUnknown_03004860, c2_exit_to_overworld_1_sub_8080DEC);
+        TrainerCard_ShowLinkCard(gUnknown_03004860, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;

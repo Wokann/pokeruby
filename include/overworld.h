@@ -125,7 +125,7 @@ void CB2_ReturnToField(void);
 void CB2_ReturnToFieldLocal(void);
 void CB2_ReturnToFieldLink(void);
 // sub_805465C
-void c2_exit_to_overworld_1_sub_8080DEC(void);
+void CB2_ReturnToFieldWithOpenMenu(void);
 void CB2_ReturnToFieldContinueScript(void);
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 void sub_80546F0(void);

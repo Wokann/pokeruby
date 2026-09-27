@@ -3245,7 +3245,7 @@ void ExitPokenav(void)
         if (!gPaletteFade.active)
         {
 			StopConditionGraphScanlineEffect();
-			c2_exit_to_overworld_1_sub_8080DEC();
+			CB2_ReturnToFieldWithOpenMenu();
 		}
     }
 }

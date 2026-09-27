@@ -465,7 +465,7 @@ static void sub_80AA064(void)
     RunTasks();
     UpdatePaletteFade();
     if (gMain.newKeys == SELECT_BUTTON)
-        SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
+        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
 }
 
 static void sub_80AA090(void)
@@ -883,7 +883,7 @@ void sub_80AAD44(struct Sprite *sprite, s8 var2)
         SetDebugMonForContest();
         for (i = 0; i < 4; i++)
             gContestMonRound1Points[i] = CalculateContestantRound1Points(i, gSpecialVar_ContestCategory);
-        SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
+        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
     }
 }
 

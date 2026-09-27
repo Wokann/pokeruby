@@ -320,7 +320,7 @@ void Task_ExitNonDoor(u8 taskId)
     }
 }
 
-void sub_8080DC4(u8 taskId)
+void Task_WaitForFadeShowStartMenu(u8 taskId)
 {
     if (WaitForWeatherFadeIn() == TRUE)
     {
@@ -329,14 +329,14 @@ void sub_8080DC4(u8 taskId)
     }
 }
 
-void sub_8080DEC(void)
+void ReturnToFieldOpenStartMenu(void)
 {
     FadeInFromBlack();
-    CreateStartMenuTask(sub_8080DC4);
+    CreateStartMenuTask(Task_WaitForFadeShowStartMenu);
     LockPlayerFieldControls();
 }
 
-void task_mpl_807E3C8(u8 taskId)
+void Task_ReturnToFieldNoScript(u8 taskId)
 {
     if (WaitForWeatherFadeIn() == 1)
     {
@@ -346,11 +346,11 @@ void task_mpl_807E3C8(u8 taskId)
     }
 }
 
-void sub_8080E28(void)
+void FieldCB_ReturnToFieldNoScript(void)
 {
     LockPlayerFieldControls();
     FadeInFromBlack();
-    CreateTask(task_mpl_807E3C8, 10);
+    CreateTask(Task_ReturnToFieldNoScript, 10);
 }
 
 void FieldCB_ReturnToFieldNoScriptCheckMusic(void)
@@ -358,7 +358,7 @@ void FieldCB_ReturnToFieldNoScriptCheckMusic(void)
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
     FadeInFromBlack();
-    CreateTask(task_mpl_807E3C8, 10);
+    CreateTask(Task_ReturnToFieldNoScript, 10);
 }
 
 static bool32 PaletteFadeActive(void)

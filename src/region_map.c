@@ -1706,7 +1706,7 @@ void DebugHandleRegionMapInput(void)
         break;
     case 3:
         if (!UpdatePaletteFade())
-            SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
+            SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
         break;
     case 4:
         if (DoRegionMapInputCallback() != 0)

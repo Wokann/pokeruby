@@ -1686,7 +1686,7 @@ static void Task_ClosePokedex(u8 taskId)
             gSaveBlock2.pokedex.mode = 0;
         gSaveBlock2.pokedex.order = gPokedexView->dexOrder;
         DestroyTask(taskId);
-        SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
+        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 0x100);
     }
 }

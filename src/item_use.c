@@ -610,7 +610,7 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
     }
     else
     {
-        gFieldCallback = (void *)sub_8080E28;
+        gFieldCallback = (void *)FieldCB_ReturnToFieldNoScript;
         SetPokeblockCaseContext(1);
         ItemMenu_ConfirmComplexFade(taskId);
     }

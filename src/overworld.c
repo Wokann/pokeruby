@@ -1427,10 +1427,10 @@ void sub_805465C(void)
     CB2_ReturnToField();
 }
 
-void c2_exit_to_overworld_1_sub_8080DEC(void)
+void CB2_ReturnToFieldWithOpenMenu(void)
 {
     FieldClearVBlankHBlankCallbacks();
-    gFieldCallback = sub_8080DEC;
+    gFieldCallback = ReturnToFieldOpenStartMenu;
     CB2_ReturnToField();
 }
 
