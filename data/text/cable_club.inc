@@ -60,18 +60,15 @@ gText_PleaseWaitForLink:: @ 81A490C
 	.string "Please wait.\n"
 	.string "... ... B Button: Cancel$"
 
-gUnknown_081A4932:: @ 81A4932
-UnknownString_81A4932: @ 81A4932
+gText_ConfirmLinkWhenPlayersReady:: @ 81A4932
 	.string "When all players are ready...\n"
 	.string "A Button: Confirm   B Button: Cancel$"
 
-gUnknown_081A4975:: @ 81A4975
-UnknownString_81A4975: @ 81A4975
+gText_ConfirmStartLinkWithXPlayers:: @ 81A4975
 	.string "Start link with {STR_VAR_1} players.\n"
 	.string "A Button: Confirm   B Button: Cancel$"
 
-gUnknown_081A49B6:: @ 81A49B6
-UnknownString_81A49B6: @ 81A49B6
+gText_AwaitingLinkup:: @ 81A49B6
 	.string "Awaiting linkup...\n"
 	.string "... ... B Button: Cancel$"
 

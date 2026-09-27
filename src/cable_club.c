@@ -27,9 +27,9 @@
 #include "trainer_card.h"
 
 extern u16 gBattleTypeFlags;
-extern const u8 gUnknown_081A4932[];
-extern const u8 gUnknown_081A4975[];
-extern const u8 gUnknown_081A49B6[];
+extern const u8 gText_ConfirmLinkWhenPlayersReady[];
+extern const u8 gText_ConfirmStartLinkWithXPlayers[];
+extern const u8 gText_AwaitingLinkup[];
 extern const u8 gText_PleaseWaitForLink[];
 extern struct
 {
@@ -300,13 +300,13 @@ static void Task_LinkupAwaitConnection(u8 taskId)
     if (IsLinkMaster() == TRUE)
     {
         PlaySE(SE_PIN);
-        ShowFieldAutoScrollMessage(gUnknown_081A4932);
+        ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
         gTasks[taskId].func = Task_LinkupConfirmWhenReady;
     }
     else
     {
         PlaySE(SE_BOO);
-        ShowFieldAutoScrollMessage(gUnknown_081A49B6);
+        ShowFieldAutoScrollMessage(gText_AwaitingLinkup);
         gTasks[taskId].func = Task_LinkupExchangeDataWithLeader;
     }
 }
@@ -347,7 +347,7 @@ static void Task_LinkupAwaitConfirmation(u8 taskId)
     SaveLinkPlayers(linkPlayerCount);
     ClearLinkPlayerCountWindow();
     ConvertIntToDecimalStringN(gStringVar1, linkPlayerCount, STR_CONV_MODE_LEFT_ALIGN, 1);
-    ShowFieldAutoScrollMessage((u8 *)gUnknown_081A4975);
+    ShowFieldAutoScrollMessage((u8 *)gText_ConfirmStartLinkWithXPlayers);
     gTasks[taskId].func = Task_LinkupTryConfirmation;
 #elif GERMAN
     if ((gLinkType == 0x2255 && (u32)linkPlayerCount > 1)
@@ -356,7 +356,7 @@ static void Task_LinkupAwaitConfirmation(u8 taskId)
         SaveLinkPlayers(linkPlayerCount);
         ClearLinkPlayerCountWindow();
         ConvertIntToDecimalStringN(gStringVar1, linkPlayerCount, STR_CONV_MODE_LEFT_ALIGN, 1);
-        ShowFieldAutoScrollMessage((u8 *)gUnknown_081A4975);
+        ShowFieldAutoScrollMessage((u8 *)gText_ConfirmStartLinkWithXPlayers);
         gTasks[taskId].func = Task_LinkupTryConfirmation;
     }
 #endif
@@ -373,12 +373,12 @@ static void Task_LinkupTryConfirmation(u8 taskId)
     {
         if (GetSavedPlayerCount() != GetLinkPlayerCount_2())
         {
-            ShowFieldAutoScrollMessage(gUnknown_081A4932);
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
             gTasks[taskId].func = Task_LinkupConfirmWhenReady;
         }
         else if (JOY_HELD(B_BUTTON))
         {
-            ShowFieldAutoScrollMessage(gUnknown_081A4932);
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
             gTasks[taskId].func = Task_LinkupConfirmWhenReady;
         }
         else if (JOY_HELD(A_BUTTON))
