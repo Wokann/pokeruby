@@ -130,12 +130,12 @@ static bool8 ControlFlags_FH_OBJ_Subsubmenu_HandleInput(void);
 static void ControlFlags_FH_OBJ_FlagToggle(u8, u8);
 static void ControlFlags_FH_OBJ_UpdateDisplay(u8);
 static bool8 ControlFlags_FH_InitSubmenu(void);
-static bool8 debug_sub_808D650(void);
-static bool8 debug_sub_808D694(void);
-static bool8 debug_sub_808D6EC(void);
-static bool8 debug_sub_808D744(void);
-static void debug_sub_808D790(u8, u8);
-static void debug_sub_808D7E0(u8);
+static bool8 ControlFlags_FH_HandleInput(void);
+static bool8 ControlFlags_FH00_08_InitSubsubmenu(void);
+static bool8 ControlFlags_FH09_15_InitSubsubmenu(void);
+static bool8 ControlFlags_FH_Subsubmenu_HandleInput(void);
+static void ControlFlags_FH_FlagToggle(u8, u8);
+static void ControlFlags_FH_UpdateDisplay(u8);
 static bool8 ControlFlags_BallVanishFlag_InitSubmenu(void);
 static bool8 debug_sub_808D894(void);
 static bool8 debug_sub_808D8D8(void);
@@ -479,12 +479,12 @@ static const u16 sControlFlags_FH_OBJ_FlagsArrays[][9] = {
     {0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x20}
 };
 
-static const u8 gUnknown_Debug_083C11BA[] = _("FH-00-08");
-static const u8 gUnknown_Debug_083C11C3[] = _("FH-09-15");
+static const u8 sString_FH00_08[] = _("FH-00-08");
+static const u8 sString_FH09_15[] = _("FH-09-15");
 
-static const struct MenuAction gUnknown_Debug_083C11CC[] = {
-    {gUnknown_Debug_083C11BA, debug_sub_808D694},
-    {gUnknown_Debug_083C11C3, debug_sub_808D6EC}
+static const struct MenuAction sMenuActions_ControlFlags_FH[] = {
+    {sString_FH00_08, ControlFlags_FH00_08_InitSubsubmenu},
+    {sString_FH09_15, ControlFlags_FH09_15_InitSubsubmenu}
 };
 
 static const u8 gUnknown_Debug_083C11DC[] = _("FH-00");
@@ -497,7 +497,7 @@ static const u8 gUnknown_Debug_083C1200[] = _("FH-06");
 static const u8 gUnknown_Debug_083C1206[] = _("FH-07");
 static const u8 gUnknown_Debug_083C120C[] = _("FH-08");
 
-static const struct MenuAction gUnknown_Debug_083C1212[] = {
+static const struct MenuAction sMenuActions_ControlFlags_FH00_08[] = {
     {gUnknown_Debug_083C11DC, DummyMenuAction},
     {gUnknown_Debug_083C11E2, DummyMenuAction},
     {gUnknown_Debug_083C11E8, DummyMenuAction},
@@ -519,7 +519,7 @@ static const u8 gUnknown_Debug_083C1280[] = _("FHー15");
 static const u8 gUnknown_Debug_083C1286[] = _("");
 static const u8 gUnknown_Debug_083C1287[] = _("");
 
-static const struct MenuAction gUnknown_Debug_083C1288[] = {
+static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
     {gUnknown_Debug_083C125C, DummyMenuAction},
     {gUnknown_Debug_083C1262, DummyMenuAction},
     {gUnknown_Debug_083C1268, DummyMenuAction},
@@ -531,9 +531,9 @@ static const struct MenuAction gUnknown_Debug_083C1288[] = {
     {gUnknown_Debug_083C1287, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C12D0[] = {9, 7};
+static const u8 sControlFlags_FH_CountsArray[] = {9, 7};
 
-static const u16 gUnknown_Debug_083C12D2[][9] = {
+static const u16 sControlFlags_FH_FlagsArrays[][9] = {
     {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09},
     {0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10}
 };
@@ -3134,14 +3134,14 @@ static void ControlFlags_FH_OBJ_UpdateDisplay(u8 whichMenu)
 static bool8 ControlFlags_FH_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(gUnknown_Debug_083C11CC) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C11CC), gUnknown_Debug_083C11CC);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C11CC), 0, 27);
-    gMenuCallback = debug_sub_808D650;
+    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(sMenuActions_ControlFlags_FH) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_ControlFlags_FH), sMenuActions_ControlFlags_FH);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_ControlFlags_FH), 0, 27);
+    gMenuCallback = ControlFlags_FH_HandleInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D650(void)
+static bool8 ControlFlags_FH_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -3152,39 +3152,39 @@ static bool8 debug_sub_808D650(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C11CC[input].func;
+    gMenuCallback = sMenuActions_ControlFlags_FH[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808D694(void)
+static bool8 ControlFlags_FH00_08_InitSubsubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1212) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1212), gUnknown_Debug_083C1212);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1212), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_ControlFlags_FH00_08) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_ControlFlags_FH00_08), sMenuActions_ControlFlags_FH00_08);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_ControlFlags_FH00_08), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808D744;
+    gMenuCallback = ControlFlags_FH_Subsubmenu_HandleInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D6EC(void)
+static bool8 ControlFlags_FH09_15_InitSubsubmenu(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 29, 2 * 7 + 1);
-    Menu_PrintItems(2, 1, 7, gUnknown_Debug_083C1288);
+    Menu_PrintItems(2, 1, 7, sMenuActions_ControlFlags_FH09_15);
     InitMenu(0, 1, 1, 7, 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808D744;
+    gMenuCallback = ControlFlags_FH_Subsubmenu_HandleInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D744(void)
+static bool8 ControlFlags_FH_Subsubmenu_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808D790(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808D7E0(sFlagAndVarTest_WhichSubmenu);
+    ControlFlags_FH_FlagToggle(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlFlags_FH_UpdateDisplay(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -3195,24 +3195,24 @@ static bool8 debug_sub_808D744(void)
     return FALSE;
 }
 
-static void debug_sub_808D790(u8 whichMenu, u8 cursorPos)
+static void ControlFlags_FH_FlagToggle(u8 whichMenu, u8 cursorPos)
 {
     if (JOY_NEW(R_BUTTON))
     {
-        if (!FlagGet(gUnknown_Debug_083C12D2[whichMenu][cursorPos]))
-            FlagSet(gUnknown_Debug_083C12D2[whichMenu][cursorPos]);
+        if (!FlagGet(sControlFlags_FH_FlagsArrays[whichMenu][cursorPos]))
+            FlagSet(sControlFlags_FH_FlagsArrays[whichMenu][cursorPos]);
         else
-            FlagClear(gUnknown_Debug_083C12D2[whichMenu][cursorPos]);
+            FlagClear(sControlFlags_FH_FlagsArrays[whichMenu][cursorPos]);
     }
 }
 
-static void debug_sub_808D7E0(u8 whichMenu)
+static void ControlFlags_FH_UpdateDisplay(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C12D0[whichMenu]; i++)
+    for (i = 0; i < sControlFlags_FH_CountsArray[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C12D2[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sControlFlags_FH_FlagsArrays[whichMenu][i]) ? 1 : 0);
     }
 }
 
