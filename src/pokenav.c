@@ -1867,7 +1867,7 @@ bool8 LoadPokenavMenuOptionGfxStep(void)
         for (i = 0; i < 6; i++)
         {
             for (j = 0; j < 4; j++)
-                gPokenavStructPtr->unk320[i][j] = NULL;
+                gPokenavStructPtr->menuOptionSprites[i][j] = NULL;
         }
 
         gPokenavStructPtr->unk311 = 0;
@@ -1887,14 +1887,14 @@ bool8 LoadPokenavMenuOptionGfxStep(void)
     return TRUE;
 }
 
-void sub_80F1B8C(u8 arg0)
+void InitPokenavMenuOptionSprites(u8 menuType)
 {
     gPokenavStructPtr->unk306 = 0;
     if (gPokenavStructPtr->unk6DAC == 0)
-        while (sub_80F1BC8(arg0));
+        while (LoadPokenavMenuOptionSpritesStep(menuType));
 }
 
-bool8 sub_80F1BC8(u8 arg0)
+bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
 {
     u16 animNum;
     u16 topOffset;
@@ -1906,50 +1906,50 @@ bool8 sub_80F1BC8(u8 arg0)
     {
     case 0:
     {
-        sub_80F2458(arg0);
+        sub_80F2458(menuType);
         break;
     }
     case 1:
     {
-        sub_80F2514(arg0);
+        sub_80F2514(menuType);
         break;
     }
     case 2:
     {
         u16 i, j;
 
-        switch (arg0)
+        switch (menuType)
         {
         case 0:
             topOffset = 42;
             height = 20;
-            gPokenavStructPtr->unk30E = 5;
+            gPokenavStructPtr->menuOptionRowCount = 5;
             break;
         case 1:
             topOffset = 56;
             height = 20;
-            gPokenavStructPtr->unk30E = 3;
+            gPokenavStructPtr->menuOptionRowCount = 3;
             break;
         case 2:
             topOffset = 40;
             height = 16;
-            gPokenavStructPtr->unk30E = 6;
+            gPokenavStructPtr->menuOptionRowCount = 6;
             break;
         default:
             return FALSE;
         }
 
         animNum = 0;
-        for (i = 0; i < gPokenavStructPtr->unk30E; i++)
+        for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
         {
             middle = (height * i) + topOffset - 8;
-            gPokenavStructPtr->unk314[i] = (middle << 8) | (middle + 0x11);
-            if (!arg0)
+            gPokenavStructPtr->menuOptionWin0V[i] = (middle << 8) | (middle + 0x11);
+            if (!menuType)
             {
                 if (gPokenavStructPtr->mainMenuItemIds[i] == 0)
                 {
                     for (j = 0; j < 4; j++)
-                        gPokenavStructPtr->unk320[i][j] = NULL;
+                        gPokenavStructPtr->menuOptionSprites[i][j] = NULL;
                     continue;
                 }
                 else
@@ -1963,16 +1963,16 @@ bool8 sub_80F1BC8(u8 arg0)
                 spriteId = CreateSprite(&gSpriteTemplate_83E4454, j * 32 + 256, (height * i) + topOffset, 0);
                 if (spriteId == MAX_SPRITES)
                     return FALSE;
-                gPokenavStructPtr->unk320[i][j] = &gSprites[spriteId];
-                gPokenavStructPtr->unk320[i][j]->data[0] = i;
-                gPokenavStructPtr->unk320[i][j]->data[1] = j;
-                gPokenavStructPtr->unk320[i][j]->data[2] = j * 32 + 152;
-                gPokenavStructPtr->unk320[i][j]->data[3] = j * 32 + 256;
-                StartSpriteAnim(gPokenavStructPtr->unk320[i][j], animNum++);
+                gPokenavStructPtr->menuOptionSprites[i][j] = &gSprites[spriteId];
+                gPokenavStructPtr->menuOptionSprites[i][j]->data[0] = i;
+                gPokenavStructPtr->menuOptionSprites[i][j]->data[1] = j;
+                gPokenavStructPtr->menuOptionSprites[i][j]->data[2] = j * 32 + 152;
+                gPokenavStructPtr->menuOptionSprites[i][j]->data[3] = j * 32 + 256;
+                StartSpriteAnim(gPokenavStructPtr->menuOptionSprites[i][j], animNum++);
 
-                if ((arg0 == 2 || arg0 == 0) && i > 2)
+                if ((menuType == 2 || menuType == 0) && i > 2)
                 {
-                    gPokenavStructPtr->unk320[i][j]->oam.paletteNum = IndexOfSpritePaletteTag(0x1);
+                    gPokenavStructPtr->menuOptionSprites[i][j]->oam.paletteNum = IndexOfSpritePaletteTag(0x1);
                 }
             }
         }
@@ -1989,12 +1989,12 @@ bool8 sub_80F1BC8(u8 arg0)
 void sub_80F1DF0(void)
 {
     u16 i, j;
-    for (i = 0; i < gPokenavStructPtr->unk30E; i++)
+    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
     {
         for (j = 0; j < 4; j++)
         {
-            if (gPokenavStructPtr->unk320[i][j])
-                gPokenavStructPtr->unk320[i][j]->callback = sub_80F2218;
+            if (gPokenavStructPtr->menuOptionSprites[i][j])
+                gPokenavStructPtr->menuOptionSprites[i][j]->callback = sub_80F2218;
         }
     }
 
@@ -2025,14 +2025,14 @@ void sub_80F1E84(void)
 
     gPokenavStructPtr->unk30F = 0;
     sub_80F2148();
-    for (i = 0; i < gPokenavStructPtr->unk30E; i++)
+    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
     {
         if (i != gPokenavStructPtr->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
-                if (gPokenavStructPtr->unk320[i][j])
-                    gPokenavStructPtr->unk320[i][j]->callback = sub_80F2240;
+                if (gPokenavStructPtr->menuOptionSprites[i][j])
+                    gPokenavStructPtr->menuOptionSprites[i][j]->callback = sub_80F2240;
             }
         }
     }
@@ -2049,7 +2049,7 @@ bool8 sub_80F1F10(void)
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
+                struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
                 sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
                 sprite->affineAnims = gSpriteAffineAnimTable_83E4450;
                 InitSpriteAffineAnim(sprite);
@@ -2082,7 +2082,7 @@ void sub_80F1FF0(void)
 {
     if (gPokenavStructPtr->unk311 == 1)
     {
-        REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->menuCursorPos];
+        REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
         REG_BLDY = gSineTable[gPokenavStructPtr->unk312] >> 5;
         gPokenavStructPtr->unk312 += 3;
         gPokenavStructPtr->unk312 &= 0x7F;
@@ -2103,7 +2103,7 @@ void sub_80F208C(void)
 void sub_80F2098(void)
 {
     REG_WIN0H = 0x77F0;
-    REG_WIN0V = gPokenavStructPtr->unk314[gPokenavStructPtr->menuCursorPos];
+    REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
     REG_WININ = 0x3F;
     REG_WINOUT = 0x1F;
     REG_DISPCNT |= DISPCNT_WIN0_ON;
@@ -2142,7 +2142,7 @@ void sub_80F2170(void)
         sub_80F20F4();
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
+            struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         }
 
@@ -2212,7 +2212,7 @@ bool8 sub_80F22F8(void)
     {
         for (j = 0; j < 4; j++)
         {
-            struct Sprite *sprite = gPokenavStructPtr->unk320[i][j];
+            struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[i][j];
             if (!sprite)
                 return TRUE;
 
@@ -2228,13 +2228,13 @@ bool8 sub_80F2360(void)
 {
     u16 i, j;
 
-    for (i = 0; i < gPokenavStructPtr->unk30E; i++)
+    for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
     {
         if (i != gPokenavStructPtr->menuCursorPos)
         {
             for (j = 0; j < 4; j++)
             {
-                struct Sprite *sprite = gPokenavStructPtr->unk320[i][j];
+                struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[i][j];
                 if (sprite)
                     return FALSE;
             }
@@ -2250,7 +2250,7 @@ bool8 sub_80F23C8(void)
 
     for (j = 0; j < 4; j++)
     {
-        struct Sprite *sprite = gPokenavStructPtr->unk320[gPokenavStructPtr->menuCursorPos][j];
+        struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
         if (sprite)
             return FALSE;
     }
@@ -2260,7 +2260,7 @@ bool8 sub_80F23C8(void)
 
 void sub_80F240C(struct Sprite *sprite)
 {
-    gPokenavStructPtr->unk320[sprite->data[0]][sprite->data[1]] = NULL;
+    gPokenavStructPtr->menuOptionSprites[sprite->data[0]][sprite->data[1]] = NULL;
     if (sprite->affineAnimEnded)
         FreeOamMatrix(sprite->oam.matrixNum);
 
@@ -2272,25 +2272,25 @@ void sub_80F2458(u8 arg0)
     switch (arg0)
     {
     case 0:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->menuOptionsGfx;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->menuOptionsGfx);
-        gPokenavStructPtr->unk380.tag = 0x0;
+        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->menuOptionsGfx;
+        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->menuOptionsGfx);
+        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
         break;
     case 1:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->conditionMenuGfx;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->conditionMenuGfx);
-        gPokenavStructPtr->unk380.tag = 0x0;
+        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->conditionMenuGfx;
+        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->conditionMenuGfx);
+        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
         break;
     case 2:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->conditionSearchGfx;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->conditionSearchGfx);
-        gPokenavStructPtr->unk380.tag = 0x0;
+        gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->conditionSearchGfx;
+        gPokenavStructPtr->menuOptionSpriteSheet.size = sizeof(gPokenavStructPtr->conditionSearchGfx);
+        gPokenavStructPtr->menuOptionSpriteSheet.tag = 0x0;
         break;
     default:
         return;
     }
 
-    LoadSpriteSheet(&gPokenavStructPtr->unk380);
+    LoadSpriteSheet(&gPokenavStructPtr->menuOptionSpriteSheet);
 }
 
 void sub_80F2514(u8 arg0)

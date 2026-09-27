@@ -1327,11 +1327,11 @@ void InitPokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        sub_80F1B8C(0);
+        InitPokenavMenuOptionSprites(0);
         gPokenavStructPtr->callbackStep++;
 		// fall through
     case 9:
-        if (!sub_80F1BC8(0))
+        if (!LoadPokenavMenuOptionSpritesStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
@@ -1400,11 +1400,11 @@ void RestorePokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        sub_80F1B8C(0);
+        InitPokenavMenuOptionSprites(0);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 4:
-        if (!sub_80F1BC8(0))
+        if (!LoadPokenavMenuOptionSpritesStep(0))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -1855,10 +1855,10 @@ void RestorePokenavConditionMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        sub_80F1B8C(1);
+        InitPokenavMenuOptionSprites(1);
         gPokenavStructPtr->callbackStep++;
     case 4:
-        if (!sub_80F1BC8(1))
+        if (!LoadPokenavMenuOptionSpritesStep(1))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -2009,11 +2009,11 @@ void ReturnToConditionSearchMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        sub_80F1B8C(2);
+        InitPokenavMenuOptionSprites(2);
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 10:
-        if (!sub_80F1BC8(2))
+        if (!LoadPokenavMenuOptionSpritesStep(2))
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
@@ -3297,11 +3297,11 @@ bool8 UpdatePokenavMenuTransition(void)
             gPokenavStructPtr->menuItemCount = 6;
             break;
         }
-        sub_80F1B8C(gPokenavStructPtr->transitionMenuType);
+        InitPokenavMenuOptionSprites(gPokenavStructPtr->transitionMenuType);
         gPokenavStructPtr->transitionStep++;
         // fallthrough
     case 4:
-        if (!sub_80F1BC8(gPokenavStructPtr->transitionMenuType))
+        if (!LoadPokenavMenuOptionSpritesStep(gPokenavStructPtr->transitionMenuType))
             gPokenavStructPtr->transitionStep++;
         break;
     case 5:
