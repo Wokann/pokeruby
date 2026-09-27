@@ -101,13 +101,13 @@ static bool8 ControlFlags_VanishFlag_HandlePageInput(void);
 static void ControlFlags_VanishFlag_ToggleSelection(u8, u8);
 static void ControlFlags_VanishFlag_PrintPageValues(u8);
 static bool8 ControlFlags_TrainerFlag_InitSubmenu(void);
-static bool8 debug_sub_808CCC4(void);
-static bool8 debug_sub_808CD08(void);
-static bool8 debug_sub_808CD60(void);
-static bool8 debug_sub_808CDB8(void);
-static bool8 debug_sub_808CE10(void);
-static void debug_sub_808CE5C(u8, u8);
-static void debug_sub_808CEAC(u8);
+static bool8 ControlFlags_TrainerFlag_HandleCategoryInput(void);
+static bool8 ControlFlags_TrainerFlag_GymLeaders_InitPage(void);
+static bool8 ControlFlags_TrainerFlag_EliteFour_InitPage(void);
+static bool8 ControlFlags_TrainerFlag_Wally_InitPage(void);
+static bool8 ControlFlags_TrainerFlag_HandlePageInput(void);
+static void ControlFlags_TrainerFlag_ToggleSelection(u8, u8);
+static void ControlFlags_TrainerFlag_PrintPageValues(u8);
 static bool8 ControlFlags_SysFlag_InitSubmenu(void);
 static bool8 debug_sub_808CF60(void);
 static bool8 debug_sub_808CFA4(void);
@@ -776,14 +776,14 @@ static const u16 gUnknown_Debug_083C1AAE[][9] = {
     {FLAG_ITEM_ABANDONED_SHIP_HIDDEN_FLOOR_ROOM_2_SCANNER, FLAG_ITEM_MOSSDEEP_STEVENS_HOUSE_HM08}
 };
 
-static const u8 gUnknown_Debug_083C1AC0[] = DTR("ジムリーダー", "GYM LEADER");
-static const u8 gUnknown_Debug_083C1AC7[] = DTR("してんのう", "ELITE FOUR");
-static const u8 gUnknown_Debug_083C1ACD[] = DTR("みつる/Champロード", "WALLY/VICTORY ROAD");
+static const u8 sString_TrainerFlag_GymLeaders[] = DTR("ジムリーダー", "GYM LEADER");
+static const u8 sString_TrainerFlag_EliteFour[] = DTR("してんのう", "ELITE FOUR");
+static const u8 sString_TrainerFlag_Wally[] = DTR("みつる/Champロード", "WALLY/VICTORY ROAD");
 
-static const struct MenuAction gUnknown_Debug_083C1ADC[] = {
-	{gUnknown_Debug_083C1AC0, debug_sub_808CD08},
-	{gUnknown_Debug_083C1AC7, debug_sub_808CD60},
-	{gUnknown_Debug_083C1ACD, debug_sub_808CDB8}
+static const struct MenuAction sMenuActions_TrainerFlagCategories[] = {
+	{sString_TrainerFlag_GymLeaders, ControlFlags_TrainerFlag_GymLeaders_InitPage},
+	{sString_TrainerFlag_EliteFour, ControlFlags_TrainerFlag_EliteFour_InitPage},
+	{sString_TrainerFlag_Wally, ControlFlags_TrainerFlag_Wally_InitPage}
 };
 
 static const u8 gUnknown_Debug_083C1AF4[] = _("FTーGYMー01ーLEADER");
@@ -795,7 +795,7 @@ static const u8 gUnknown_Debug_083C1B49[] = _("FTーGYMー06ーLEADER");
 static const u8 gUnknown_Debug_083C1B5A[] = _("FTーGYMー07ーLEADER");
 static const u8 gUnknown_Debug_083C1B6B[] = _("FTーGYMー08ーLEADER");
 
-static const struct MenuAction gUnknown_Debug_083C1B7C[] = {
+static const struct MenuAction sMenuActions_TrainerFlags_GymLeaders[] = {
 	{gUnknown_Debug_083C1AF4, DummyMenuAction},
 	{gUnknown_Debug_083C1B05, DummyMenuAction},
 	{gUnknown_Debug_083C1B16, DummyMenuAction},
@@ -811,7 +811,7 @@ static const u8 gUnknown_Debug_083C1BC9[] = _("FTーSHITENー02");
 static const u8 gUnknown_Debug_083C1BD6[] = _("FTーSHITENー03");
 static const u8 gUnknown_Debug_083C1BE3[] = _("FTーSHITENー04");
 
-static const struct MenuAction gUnknown_Debug_083C1BF0[] = {
+static const struct MenuAction sMenuActions_TrainerFlags_EliteFour[] = {
 	{gUnknown_Debug_083C1BBC, DummyMenuAction},
 	{gUnknown_Debug_083C1BC9, DummyMenuAction},
 	{gUnknown_Debug_083C1BD6, DummyMenuAction},
@@ -820,12 +820,12 @@ static const struct MenuAction gUnknown_Debug_083C1BF0[] = {
 
 static const u8 gUnknown_Debug_083C1C10[] = _("FTーMITSURUー01ーCAVEーD1301");
 
-static const struct MenuAction gUnknown_Debug_083C1C2C[] = {
+static const struct MenuAction sMenuActions_TrainerFlags_Wally[] = {
 	{gUnknown_Debug_083C1C10, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1C34[] = {8, 4, 1};
-static const u16 gUnknown_Debug_083C1C38[][9] = {
+static const u8 sTrainerFlagPageCounts[] = {8, 4, 1};
+static const u16 sTrainerFlagPageFlags[][9] = {
     {FLAG_DEFEATED_RUSTBORO_GYM, FLAG_DEFEATED_DEWFORD_GYM, FLAG_DEFEATED_MAUVILLE_GYM, FLAG_DEFEATED_LAVARIDGE_GYM, FLAG_DEFEATED_PETALBURG_GYM, FLAG_DEFEATED_FORTREE_GYM, FLAG_DEFEATED_MOSSDEEP_GYM, FLAG_DEFEATED_SOOTOPOLIS_GYM},
     {FLAG_DEFEATED_ELITE_4_SYDNEY, FLAG_DEFEATED_ELITE_4_PHOEBE, FLAG_DEFEATED_ELITE_4_GLACIA, FLAG_DEFEATED_ELITE_4_DRAKE},
     {0x04E1}
@@ -2791,14 +2791,14 @@ static void ControlFlags_VanishFlag_PrintPageValues(u8 whichMenu)
 static bool8 ControlFlags_TrainerFlag_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(gUnknown_Debug_083C1ADC) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1ADC), gUnknown_Debug_083C1ADC);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1ADC), 0, 27);
-    gMenuCallback = debug_sub_808CCC4;
+    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(sMenuActions_TrainerFlagCategories) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_TrainerFlagCategories), sMenuActions_TrainerFlagCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_TrainerFlagCategories), 0, 27);
+    gMenuCallback = ControlFlags_TrainerFlag_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CCC4(void)
+static bool8 ControlFlags_TrainerFlag_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -2809,50 +2809,50 @@ static bool8 debug_sub_808CCC4(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C1ADC[input].func;
+    gMenuCallback = sMenuActions_TrainerFlagCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808CD08(void)
+static bool8 ControlFlags_TrainerFlag_GymLeaders_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1B7C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1B7C), gUnknown_Debug_083C1B7C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1B7C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_TrainerFlags_GymLeaders) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_GymLeaders), sMenuActions_TrainerFlags_GymLeaders);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_GymLeaders), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808CE10;
+    gMenuCallback = ControlFlags_TrainerFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CD60(void)
+static bool8 ControlFlags_TrainerFlag_EliteFour_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1BF0) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1BF0), gUnknown_Debug_083C1BF0);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1BF0), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_TrainerFlags_EliteFour) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_EliteFour), sMenuActions_TrainerFlags_EliteFour);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_EliteFour), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808CE10;
+    gMenuCallback = ControlFlags_TrainerFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CDB8(void)
+static bool8 ControlFlags_TrainerFlag_Wally_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1C2C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1C2C), gUnknown_Debug_083C1C2C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1C2C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_TrainerFlags_Wally) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_Wally), sMenuActions_TrainerFlags_Wally);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_TrainerFlags_Wally), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 2;
-    gMenuCallback = debug_sub_808CE10;
+    gMenuCallback = ControlFlags_TrainerFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CE10(void)
+static bool8 ControlFlags_TrainerFlag_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808CE5C(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808CEAC(sFlagAndVarTest_WhichSubmenu);
+    ControlFlags_TrainerFlag_ToggleSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlFlags_TrainerFlag_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -2863,24 +2863,24 @@ static bool8 debug_sub_808CE10(void)
     return FALSE;
 }
 
-static void debug_sub_808CE5C(u8 whichMenu, u8 cursorPos)
+static void ControlFlags_TrainerFlag_ToggleSelection(u8 whichMenu, u8 cursorPos)
 {
     if (JOY_NEW(R_BUTTON))
     {
-        if (!FlagGet(gUnknown_Debug_083C1C38[whichMenu][cursorPos]))
-            FlagSet(gUnknown_Debug_083C1C38[whichMenu][cursorPos]);
+        if (!FlagGet(sTrainerFlagPageFlags[whichMenu][cursorPos]))
+            FlagSet(sTrainerFlagPageFlags[whichMenu][cursorPos]);
         else
-            FlagClear(gUnknown_Debug_083C1C38[whichMenu][cursorPos]);
+            FlagClear(sTrainerFlagPageFlags[whichMenu][cursorPos]);
     }
 }
 
-static void debug_sub_808CEAC(u8 whichMenu)
+static void ControlFlags_TrainerFlag_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C1C34[whichMenu]; i++)
+    for (i = 0; i < sTrainerFlagPageCounts[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1C38[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sTrainerFlagPageFlags[whichMenu][i]) ? 1 : 0);
     }
 }
 
