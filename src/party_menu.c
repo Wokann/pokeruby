@@ -37,7 +37,7 @@
 #include "task.h"
 #include "scanline_effect.h"
 #include "util.h"
-#include "script_pokemon_80F9.h"
+#include "script_party_menu.h"
 #include "ewram.h"
 
 struct Coords8

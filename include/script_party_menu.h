@@ -1,5 +1,5 @@
-#ifndef GUARD_SCRIPTPOKE80F9_H
-#define GUARD_SCRIPTPOKE80F9_H
+#ifndef GUARD_SCRIPT_PARTY_MENU_H
+#define GUARD_SCRIPT_PARTY_MENU_H
 
 struct UnknownStruct2018000
 {
@@ -8,9 +8,9 @@ struct UnknownStruct2018000
 };
 
 void OpenPartyMenuFromScriptContext(u8 taskId);
-void sub_80F9C00(void);
-void sub_80F9E1C(void);
-void sub_80F99CC(void);
+void DrawContestPartyMonStatus(void);
+void DrawMoveRelearnerPartyMonStatus(void);
+void ChooseContestMon(void);
 void HandleSelectPartyMenu(u8 taskId);
 bool8 SetupContestPartyMenu(void);
 void HandleMoveRelearnerPartyMenu(u8 taskId);

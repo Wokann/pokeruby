@@ -11,7 +11,7 @@
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
 #include "script.h"
-#include "script_pokemon_80F9.h"
+#include "script_party_menu.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"
@@ -29,7 +29,7 @@ extern u16 gSpecialVar_Result;
 
 extern void (*gFieldCallback)(void);
 
-void sub_80F99CC(void)
+void ChooseContestMon(void)
 {
     u8 taskId;
 
@@ -115,7 +115,7 @@ bool8 SetupContestPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 6:
-        sub_80F9C00();
+        DrawContestPartyMonStatus();
         ePartyMenu2.pmSetupState++;
         break;
     case 7: // the only case that can return true.
@@ -134,7 +134,7 @@ bool8 SetupContestPartyMenu(void)
     return FALSE;
 }
 
-void sub_80F9C00(void)
+void DrawContestPartyMonStatus(void)
 {
     u8 i;
 
@@ -222,7 +222,7 @@ bool8 SetupMoveRelearnerPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 6:
-        sub_80F9E1C();
+        DrawMoveRelearnerPartyMonStatus();
         ePartyMenu2.pmSetupState++;
         break;
     case 7: // the only case that can return true.
@@ -241,7 +241,7 @@ bool8 SetupMoveRelearnerPartyMenu(void)
     return FALSE;
 }
 
-void sub_80F9E1C(void)
+void DrawMoveRelearnerPartyMonStatus(void)
 {
     u8 i;
 
