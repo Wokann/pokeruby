@@ -178,12 +178,12 @@ static void CheckMatch_CenterRow(void);
 static void CheckMatch_TopAndBottom(void);
 static void CheckMatch_Diagonals(void);
 static u8 GetMatchFromSymbolsInRow(u8 c1, u8 c2, u8 c3);
-static void sub_8102A24(void);
-static void sub_8102A64(u8 taskId);
-static bool8 sub_8102A44(void);
-static bool8 sub_8102A9C(struct Task *task);
-static bool8 sub_8102AD0(struct Task *task);
-static bool8 sub_8102B80(struct Task *task);
+static void AwardPayout(void);
+static void Task_Payout(u8 taskId);
+static bool8 IsFinalTask_Task_Payout(void);
+static bool8 PayoutTask_Init(struct Task *task);
+static bool8 PayoutTask_GivePayout(struct Task *task);
+static bool8 PayoutTask_Free(struct Task *task);
 static u8 GetTagOfReelSymbolOnScreenAtPos(u8 x, s16 y);
 static void sub_8102DA8(void);
 static void sub_8102DEC(u8 a0);
@@ -921,7 +921,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
         debug_sub_811B5B4(&sSlotMachine->unk6C, sSlotMachine->payout);
 #endif
         sSlotMachine->state = 15;
-        sub_8102A24();
+        AwardPayout();
         sub_8103F70();
         if ((sSlotMachine->unk10 -= sSlotMachine->payout) < 0)
         {
@@ -972,7 +972,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
 
 static bool8 SlotTask_WaitPayout(struct Task *task)
 {
-    if (sub_8102A44())
+    if (IsFinalTask_Task_Payout())
         sSlotMachine->state = 16;
     return FALSE;
 }
@@ -1493,33 +1493,33 @@ static u8 GetMatchFromSymbolsInRow(u8 c1, u8 c2, u8 c3)
     return SLOT_MACHINE_MATCHED_NONE;
 }
 
-static void sub_8102A24(void)
+static void AwardPayout(void)
 {
-    sub_8102A64(CreateTask(sub_8102A64, 4));
+    Task_Payout(CreateTask(Task_Payout, 4));
 }
 
-static bool8 sub_8102A44(void)
+static bool8 IsFinalTask_Task_Payout(void)
 {
-    if (FindTaskIdByFunc(sub_8102A64) == 0xff)
+    if (FindTaskIdByFunc(Task_Payout) == 0xff)
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB20[])(struct Task *task) =
+static bool8 (*const sPayoutTasks[])(struct Task *task) =
 {
-    sub_8102A9C,
-    sub_8102AD0,
-    sub_8102B80
+    PayoutTask_Init,
+    PayoutTask_GivePayout,
+    PayoutTask_Free
 };
 
-static void sub_8102A64(u8 taskId)
+static void Task_Payout(u8 taskId)
 {
-    while (gUnknown_083ECB20[gTasks[taskId].data[0]](gTasks + taskId))
+    while (sPayoutTasks[gTasks[taskId].data[0]](gTasks + taskId))
         ;
 }
 
-static bool8 sub_8102A9C(struct Task *task)
+static bool8 PayoutTask_Init(struct Task *task)
 {
     if (sub_8103E38())
     {
@@ -1533,7 +1533,7 @@ static bool8 sub_8102A9C(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102AD0(struct Task *task)
+static bool8 PayoutTask_GivePayout(struct Task *task)
 {
     if (!task->data[1]--)
     {
@@ -1559,10 +1559,10 @@ static bool8 sub_8102AD0(struct Task *task)
     return FALSE;
 }
 
-static bool8 sub_8102B80(struct Task *task)
+static bool8 PayoutTask_Free(struct Task *task)
 {
     if (sub_8103E7C())
-        DestroyTask(FindTaskIdByFunc(sub_8102A64));
+        DestroyTask(FindTaskIdByFunc(Task_Payout));
     return FALSE;
 }
 
