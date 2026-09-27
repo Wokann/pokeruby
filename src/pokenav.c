@@ -3846,7 +3846,7 @@ void FinalizePokenavMonListRanks(void)
     gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 > 7;
 }
 
-void sub_80F4B20(void)
+void LoadConditionGraphMonNeighbors(void)
 {
     s16 var0;
     s16 var1;
@@ -3878,7 +3878,7 @@ void sub_80F4B20(void)
     }
 }
 
-void sub_80F4BD0(void)
+void BuildPartyConditionGraphMonList(void)
 {
     u16 i, j;
 
@@ -3900,14 +3900,14 @@ void sub_80F4BD0(void)
     gPokenavStructPtr->unk893c[j].unk3_14 = 0;
     gPokenavStructPtr->unk87DC = 0;
     gPokenavStructPtr->unk87DA = j + 1;
-    sub_80F4B20();
+    LoadConditionGraphMonNeighbors();
     gPokenavStructPtr->unk87CB = 1;
 }
 
-void sub_80F4CF0(void)
+void PrepareConditionGraphFromSearchResult(void)
 {
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
-    sub_80F4B20();
+    LoadConditionGraphMonNeighbors();
 
     if (gPokenavStructPtr->unk8774 == 0)
         gPokenavStructPtr->unk87CB = 0;

@@ -271,7 +271,7 @@ static void sub_8136294(void)
             gPokenavStructPtr->unk8828 = CalculatePlayerPartyCount();
             gPokenavStructPtr->unk9344 = 0;
             gPokenavStructPtr->portraitSprite = NULL;
-            sub_80F4BD0();
+            BuildPartyConditionGraphMonList();
             gPokenavStructPtr->setupStep = 0;
             gUnknown_02039304->unk50++;
             break;

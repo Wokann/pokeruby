@@ -2310,7 +2310,7 @@ void OpenConditionGraphFromSearchResults(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        sub_80F4CF0();
+        PrepareConditionGraphFromSearchResult();
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
@@ -2382,7 +2382,7 @@ void OpenConditionGraphFromParty(void)
         break;
     case 5:
         gPokenavStructPtr->unkD162 = 0x2;
-        sub_80F4BD0();
+        BuildPartyConditionGraphMonList();
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
