@@ -195,15 +195,15 @@ static bool8 ReelTask_Spin(struct Task *task);
 static bool8 ReelTask_DecideStop(struct Task *task);
 static bool8 ReelTask_MoveToStop(struct Task *task);
 static bool8 ReelTask_ShakingStop(struct Task *task);
-static bool8 sub_810305C(void);
-static bool8 sub_8103154(u8 a0, u8 a1);
-static bool8 sub_81031B4(u8 a0, u8 a1);
-static bool8 sub_81032C0(void);
-static bool8 sub_81032E8(void);
-static bool8 sub_810333C(void);
-static bool8 sub_81033DC(void);
-static bool8 sub_810341C(u8 a0);
-static bool8 sub_810347C(u8 a0);
+static bool8 DecideStop_Bias_Reel1(void);
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 a0, u8 a1);
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 a0, u8 a1);
+static bool8 DecideStop_Bias_Reel2(void);
+static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
+static bool8 DecideStop_Bias_Reel2_Bet3(void);
+static bool8 DecideStop_Bias_Reel3(void);
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0);
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0);
 static void sub_81034F4(void);
 static void sub_8103540(void);
 static void sub_8103564(void);
@@ -1688,11 +1688,11 @@ static bool8 ReelTask_Spin(struct Task *task)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB40[])(void) =
+static bool8 (*const sDecideStop_Bias[])(void) =
 {
-    sub_810305C,
-    sub_81032C0,
-    sub_81033DC
+    DecideStop_Bias_Reel1,
+    DecideStop_Bias_Reel2,
+    DecideStop_Bias_Reel3
 };
 
 static void (*const gUnknown_083ECB4C[])(void) =
@@ -1707,7 +1707,7 @@ static bool8 ReelTask_DecideStop(struct Task *task)
     task->data[0]++;
     sSlotMachine->unk34[task->data[15]] = 0;
     sSlotMachine->unk2E[task->data[15]] = 0;
-    if (sSlotMachine->unk0A == 0 && (sSlotMachine->unk04 == 0 || sSlotMachine->unk06 == 0 || !gUnknown_083ECB40[task->data[15]]()))
+    if (sSlotMachine->unk0A == 0 && (sSlotMachine->unk04 == 0 || sSlotMachine->unk06 == 0 || !sDecideStop_Bias[task->data[15]]()))
     {
         sSlotMachine->unk06 = 0;
         gUnknown_083ECB4C[task->data[15]]();
@@ -1753,14 +1753,14 @@ static bool8 ReelTask_ShakingStop(struct Task *task)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB64[])(u8 a0, u8 a1) =
+static bool8 (*const sDecideStop_Bias_Reel1_Bets[])(u8 a0, u8 a1) =
 {
-    sub_8103154,
-    sub_81031B4,
-    sub_81031B4
+    DecideStop_Bias_Reel1_Bet1,
+    DecideStop_Bias_Reel1_Bet2or3,
+    DecideStop_Bias_Reel1_Bet2or3
 };
 
-static bool8 sub_810305C(void)
+static bool8 DecideStop_Bias_Reel1(void)
 {
     u8 r3 = GetBiasSymbol(sSlotMachine->unk04);
     u8 r5 = r3;
@@ -1769,10 +1769,10 @@ static bool8 sub_810305C(void)
         r5 = 0;
         r3 = 1;
     }
-    return gUnknown_083ECB64[sSlotMachine->bet - 1](r5, r3);
+    return sDecideStop_Bias_Reel1_Bets[sSlotMachine->bet - 1](r5, r3);
 }
 
-static bool8 sub_81030A4(s16 y, u8 tag1, u8 tag2)
+static bool8 EitherSymbolAtPos_Reel1(s16 y, u8 tag1, u8 tag2)
 {
     u8 tag = GetSymbol(0, y);
     if (tag == tag1 || tag == tag2)
@@ -1783,7 +1783,7 @@ static bool8 sub_81030A4(s16 y, u8 tag1, u8 tag2)
     return FALSE;
 }
 
-static bool8 sub_81030E0(s16 y)
+static bool8 AreCherriesOnScreen_Reel1(s16 y)
 {
     if (GetSymbol(0, 1 - y) == 4 || GetSymbol(0, 2 - y) == 4 || GetSymbol(0, 3 - y) == 4)
         return TRUE;
@@ -1791,7 +1791,7 @@ static bool8 sub_81030E0(s16 y)
         return FALSE;
 }
 
-static bool8 sub_8103134(void)
+static bool8 BiasedTowardCherryOr7s(void)
 {
     if (sSlotMachine->unk04 & 0xc2)
         return TRUE;
@@ -1799,13 +1799,13 @@ static bool8 sub_8103134(void)
         return FALSE;
 }
 
-static bool8 sub_8103154(u8 a0, u8 a1)
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 a0, u8 a1)
 {
     s16 i;
 
     for (i = 0; i < 5; i++)
     {
-        if (sub_81030A4(2 - i, a0, a1))
+        if (EitherSymbolAtPos_Reel1(2 - i, a0, a1))
         {
             sSlotMachine->unk34[0] = 2;
             sSlotMachine->unk2E[0] = i;
@@ -1815,15 +1815,15 @@ static bool8 sub_8103154(u8 a0, u8 a1)
     return FALSE;
 }
 
-static bool8 sub_81031B4(u8 tag1, u8 tag2)
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 tag1, u8 tag2)
 {
     s16 i;
-    bool8 r6 = sub_8103134();
-    if (r6 || !sub_81030E0(0))
+    bool8 r6 = BiasedTowardCherryOr7s();
+    if (r6 || !AreCherriesOnScreen_Reel1(0))
     {
         for (i = 1; i < 4; i++)
         {
-            if (sub_81030A4(i, tag1, tag2))
+            if (EitherSymbolAtPos_Reel1(i, tag1, tag2))
             {
                 sSlotMachine->unk34[0] = i;
                 sSlotMachine->unk2E[0] = 0;
@@ -1834,17 +1834,17 @@ static bool8 sub_81031B4(u8 tag1, u8 tag2)
     for (i = 1; i < 5; i++)
     {
         bool8 r7 = r6;
-        if (r7 || !sub_81030E0(i))
+        if (r7 || !AreCherriesOnScreen_Reel1(i))
         {
-            if (sub_81030A4(1 - i, tag1, tag2))
+            if (EitherSymbolAtPos_Reel1(1 - i, tag1, tag2))
             {
-                if (i == 1 && (r7 || !sub_81030E0(3)))
+                if (i == 1 && (r7 || !AreCherriesOnScreen_Reel1(3)))
                 {
                     sSlotMachine->unk34[0] = 3;
                     sSlotMachine->unk2E[0] = 3;
                     return TRUE;
                 }
-                if (i < 4 && (r7 || !sub_81030E0(i + 1)))
+                if (i < 4 && (r7 || !AreCherriesOnScreen_Reel1(i + 1)))
                 {
                     sSlotMachine->unk34[0] = 2;
                     sSlotMachine->unk2E[0] = i + 1;
@@ -1859,19 +1859,19 @@ static bool8 sub_81031B4(u8 tag1, u8 tag2)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB70[])(void) =
+static bool8 (*const sDecideStop_Bias_Reel2_Bets[])(void) =
 {
-    sub_81032E8,
-    sub_81032E8,
-    sub_810333C
+    DecideStop_Bias_Reel2_Bet1or2,
+    DecideStop_Bias_Reel2_Bet1or2,
+    DecideStop_Bias_Reel2_Bet3
 };
 
-static bool8 sub_81032C0(void)
+static bool8 DecideStop_Bias_Reel2(void)
 {
-    return gUnknown_083ECB70[sSlotMachine->bet - 1]();
+    return sDecideStop_Bias_Reel2_Bets[sSlotMachine->bet - 1]();
 }
 
-static bool8 sub_81032E8(void)
+static bool8 DecideStop_Bias_Reel2_Bet1or2(void)
 {
     s16 i;
     s16 unk34_0 = sSlotMachine->unk34[0];
@@ -1888,10 +1888,10 @@ static bool8 sub_81032E8(void)
     return FALSE;
 }
 
-static bool8 sub_810333C(void)
+static bool8 DecideStop_Bias_Reel2_Bet3(void)
 {
     s16 i;
-    if (sub_81032E8())
+    if (DecideStop_Bias_Reel2_Bet1or2())
     {
         if (sSlotMachine->unk34[0] != 2 && sSlotMachine->unk2E[1] > 1 && sSlotMachine->unk2E[1] != 4)
         {
@@ -1922,14 +1922,14 @@ static bool8 sub_810333C(void)
     return FALSE;
 }
 
-static bool8 (*const gUnknown_083ECB7C[])(u8 a0) =
+static bool8 (*const sDecideStop_Bias_Reel3_Bets[])(u8 a0) =
 {
-    sub_810341C,
-    sub_810341C,
-    sub_810347C
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet3
 };
 
-static bool8 sub_81033DC(void)
+static bool8 DecideStop_Bias_Reel3(void)
 {
     u8 r3 = sSlotMachine->unk07;
     if (sSlotMachine->unk04 & 0x40)
@@ -1940,10 +1940,10 @@ static bool8 sub_81033DC(void)
             r3 = 1;
         }
     }
-    return gUnknown_083ECB7C[sSlotMachine->bet - 1](r3);
+    return sDecideStop_Bias_Reel3_Bets[sSlotMachine->bet - 1](r3);
 }
 
-static bool8 sub_810341C(u8 a0)
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a0)
 {
     s16 i;
     s16 unk34_1 = sSlotMachine->unk34[1];
@@ -1960,12 +1960,12 @@ static bool8 sub_810341C(u8 a0)
     return FALSE;
 }
 
-static bool8 sub_810347C(u8 a0)
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 a0)
 {
     s16 i;
     s16 r8;
     if (sSlotMachine->unk34[0] == sSlotMachine->unk34[1])
-        return sub_810341C(a0);
+        return DecideStop_Bias_Reel3_Bet1or2(a0);
     if (sSlotMachine->unk34[0] == 1)
         r8 = 3;
     else
@@ -1986,7 +1986,7 @@ static void sub_81034F4(void)
 {
     s16 i = 0;
 
-    while (sub_81030E0(i) != 0)
+    while (AreCherriesOnScreen_Reel1(i) != 0)
         i++;
     sSlotMachine->unk2E[0] = i;
 }
