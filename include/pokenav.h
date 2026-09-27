@@ -263,7 +263,7 @@ void DestroyConditionSparkleSprites(void);
 bool8 UpdateConditionGraphMonScroll(void);
 void StartPokeblockConditionGraphReset(struct UnkPokenav11*, struct UnkPokenav11*);
 bool8 UpdatePokeblockConditionGraphReset(void);
-void sub_80F7224(u8);
+void CalculateNumAdditionalSparkles(u8 monIndex);
 void StopConditionGraphScanlineEffect(void);
 void CreateOrUpdateTrainerEyesPortrait(u8 portraitSlot);
 

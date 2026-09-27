@@ -256,8 +256,8 @@ bool8 UpdateTrainerEyesDetailSelection(void)
     return TRUE;
 }
 
-void sub_80F7224(u8 a0)
+void CalculateNumAdditionalSparkles(u8 monIndex)
 {
-    u8 sheen = GetMonData(&gPlayerParty[a0], MON_DATA_SHEEN);
+    u8 sheen = GetMonData(&gPlayerParty[monIndex], MON_DATA_SHEEN);
     gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->unk8fe9] = sheen != 255 ? sheen / 29 : 9;
 }

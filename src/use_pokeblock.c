@@ -557,7 +557,7 @@ static void sub_81369CC(void)
         case 3:
             if (!UpdatePokeblockConditionGraphReset())
             {
-                sub_80F7224(sub_81370A4(gPokenavStructPtr->unk87DC));
+                CalculateNumAdditionalSparkles(sub_81370A4(gPokenavStructPtr->unk87DC));
                 CreateConditionSparkleSprites();
                 gUnknown_02039304->unk52 = 0;
                 gUnknown_02039304->unk50++;
