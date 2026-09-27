@@ -3,7 +3,7 @@
 #include "field_fadetransition.h"
 #include "main.h"
 #include "menu.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "palette.h"
 #include "party_menu.h"
 #include "pokemon_menu.h"
@@ -687,7 +687,7 @@ static void Task_PrintLinkMultiPartnerPartyInfo(u8 taskId)
             PartyMenuDoPrintGenderIcon(gMultiPartnerParty[i].species, gMultiPartnerParty[i].gender, 3, i + 3, gMultiPartnerParty[i].nickname);
             StringCopy(gStringVar1, gMultiPartnerParty[i].nickname);
             StringGet_Nickname(gStringVar1);
-            SanitizeNameString(gStringVar1);
+            ConvertInternationalPlayerName(gStringVar1);
             PartyMenuDoPrintMonNickname(i + 3, 3, gStringVar1);
             PartyMenuDoDrawHPBar(i + 3, 3, gMultiPartnerParty[i].hp, gMultiPartnerParty[i].maxhp);
         }

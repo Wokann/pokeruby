@@ -9,7 +9,7 @@
 #include "mail_data.h"
 #include "menu.h"
 #include "menu_helpers.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "palette.h"
 #include "pokemon_icon.h"
 #include "overworld.h"
@@ -544,7 +544,7 @@ static u8 *CopyAndSanitizeMailPlayerName(u8 *dest, u8 *src)
     u16 length;
 
     StringCopy(dest, src);
-    SanitizeNameString(dest);
+    ConvertInternationalPlayerName(dest);
 
     length = StringLength(dest);
 

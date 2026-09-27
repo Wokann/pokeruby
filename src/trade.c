@@ -1,5 +1,5 @@
 #include "global.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "string_util.h"
 #include "text.h"
 #include "main.h"

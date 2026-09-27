@@ -16,7 +16,7 @@
 #include "strings.h"
 #include "task.h"
 #include "constants/songs.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "mail.h"
 #include "overworld.h"
 #include "player_pc.h"
@@ -1043,7 +1043,7 @@ static void Mailbox_DrawMailList(u8 taskId) // taskId is unused
         else
         {
             StringCopy(gStringVar1, gSaveBlock1.mail[i + 6].playerName);
-            SanitizeNameString(gStringVar1);
+            ConvertInternationalPlayerName(gStringVar1);
             Menu_PrintText(gStringVar1, 0x15, yCoord + 2);
         }
     }
@@ -1142,7 +1142,7 @@ static void Mailbox_PrintWhatToDoWithPlayerMailText(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 0x1D, 0x13);
     StringCopy(gStringVar1, gSaveBlock1.mail[eMailboxInfo.itemsAbove + 6 + eMailboxInfo.cursorPos].playerName);
-    SanitizeNameString(gStringVar1);
+    ConvertInternationalPlayerName(gStringVar1);
     StringExpandPlaceholders(gStringVar4, gOtherText_WhatWillYouDoMail);
     DisplayItemMessageOnField(taskId, gStringVar4, Mailbox_PrintMailOptions, 0);
 }

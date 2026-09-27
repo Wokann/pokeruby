@@ -23,7 +23,7 @@
 #include "link.h"
 #include "main.h"
 #include "m4a.h"
-#include "name_string_util.h"
+#include "international_string_util.h"
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
