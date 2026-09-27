@@ -374,7 +374,7 @@ SECTIONS {
         src/evolution_graphics.o(.text);
         src/bard_music.o(.text);
         src/fldeff_teleport.o(.text);
-        src/debug/unknown_debug_menu.o(.text);
+        src/debug/sogabe_debug_menu.o(.text);
         src/name_string_util.o(.text);
         src/menu_cursor.o(.text);
     } =0
@@ -781,7 +781,7 @@ SECTIONS {
         src/intro_credits_graphics.o(.rodata);
         src/evolution_graphics.o(.rodata);
         src/bard_music.o(.rodata);
-        src/debug/unknown_debug_menu.o(.rodata);
+        src/debug/sogabe_debug_menu.o(.rodata);
         data/strings2.o(.rodata);
         src/menu_cursor.o(.rodata);
         src/mystery_event_msg.o(.rodata);
