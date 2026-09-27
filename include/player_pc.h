@@ -78,7 +78,7 @@ void ReshowPlayerPC(u8 var);
 void NewGameInitPCItems(void);
 void BedroomPC(void);
 void PlayerPC(void);
-void ItemStorage_ReturnToMenuAfterDeposit(void);
+void ItemStorage_ReshowAfterDeposit(void);
 void Mailbox_ReturnToMailListAfterDeposit(void);
 
 void sub_813A240(u8);

@@ -2640,7 +2640,7 @@ void sub_80A6A30(void)
 
 static void OnBagClose_PC(u8 taskId)
 {
-    gFieldCallback = ItemStorage_ReturnToMenuAfterDeposit;
+    gFieldCallback = ItemStorage_ReshowAfterDeposit;
     gTasks[taskId].data[8] = (u32)CB2_ReturnToField >> 16;
     gTasks[taskId].data[9] = (u32)CB2_ReturnToField;
     sub_80A5AE4(taskId);
