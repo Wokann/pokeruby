@@ -1034,6 +1034,15 @@ static void UpdateAshFieldEffect_End(struct Sprite *sprite)
 #undef sAshMetatileId
 #undef sAshDelay
 
+#define sBitfield     data[0]
+#define sPlayerOffset data[1]
+#define sPlayerObjId  data[2]
+#define sVelocity     data[3]
+#define sTimer        data[4]
+#define sIntervalIdx  data[5]
+#define sPrevX        data[6]
+#define sPrevY        data[7]
+
 u32 FldEff_SurfBlob(void)
 {
     u8 spriteId;
@@ -1046,44 +1055,44 @@ u32 FldEff_SurfBlob(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.paletteNum = 0;
-        sprite->data[2] = gFieldEffectArguments[2];
-        sprite->data[3] = -1;
-        sprite->data[6] = -1;
-        sprite->data[7] = -1;
+        sprite->sPlayerObjId = gFieldEffectArguments[2];
+        sprite->sVelocity = -1;
+        sprite->sPrevX = -1;
+        sprite->sPrevY = -1;
     }
     FieldEffectActiveListRemove(FLDEFF_SURF_BLOB);
     return spriteId;
 }
 
-void SetSurfBlob_BobState(u8 spriteId, u8 value)
+void SetSurfBlob_BobState(u8 spriteId, u8 state)
 {
-    gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF) | (value & 0xF);
+    gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF) | (state & 0xF);
 }
 
-void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 value)
+void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 dontSync)
 {
-    gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF0) | ((value & 0xF) << 4);
+    gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF0) | ((dontSync & 0xF) << 4);
 }
 
-void SetSurfBlob_PlayerOffset(u8 spriteId, u8 value, s16 data1)
+void SetSurfBlob_PlayerOffset(u8 spriteId, u8 hasOffset, s16 offset)
 {
-    gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF00) | ((value & 0xF) << 8);
-    gSprites[spriteId].data[1] = data1;
+    gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF00) | ((hasOffset & 0xF) << 8);
+    gSprites[spriteId].sPlayerOffset = offset;
 }
 
 static u8 GetSurfBlob_BobState(struct Sprite *sprite)
 {
-    return sprite->data[0] & 0xF;
+    return sprite->sBitfield & 0xF;
 }
 
 static u8 GetSurfBlob_DontSyncAnim(struct Sprite *sprite)
 {
-    return (sprite->data[0] & 0xF0) >> 4;
+    return (sprite->sBitfield & 0xF0) >> 4;
 }
 
 static u8 GetSurfBlob_HasPlayerOffset(struct Sprite *sprite)
 {
-    return (sprite->data[0] & 0xF00) >> 8;
+    return (sprite->sBitfield & 0xF00) >> 8;
 }
 
 void UpdateSurfBlobFieldEffect(struct Sprite *sprite)
@@ -1091,7 +1100,7 @@ void UpdateSurfBlobFieldEffect(struct Sprite *sprite)
     struct ObjectEvent *objectEvent;
     struct Sprite *linkedSprite;
 
-    objectEvent = &gObjectEvents[sprite->data[2]];
+    objectEvent = &gObjectEvents[sprite->sPlayerObjId];
     linkedSprite = &gSprites[objectEvent->spriteId];
     SynchronizeSurfAnim(objectEvent, sprite);
     SynchronizeSurfPosition(objectEvent, sprite);
@@ -1120,17 +1129,17 @@ static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Spri
     s16 y = objectEvent->currentCoords.y;
     s32 spriteY = sprite->y2;
 
-    if (spriteY == 0 && (x != sprite->data[6] || y != sprite->data[7]))
+    if (spriteY == 0 && (x != sprite->sPrevX || y != sprite->sPrevY))
     {
-        sprite->data[5] = spriteY;
-        sprite->data[6] = x;
-        sprite->data[7] = y;
-        for (i = DIR_SOUTH; i <= DIR_EAST; i++, x = sprite->data[6], y = sprite->data[7])
+        sprite->sIntervalIdx = spriteY;
+        sprite->sPrevX = x;
+        sprite->sPrevY = y;
+        for (i = DIR_SOUTH; i <= DIR_EAST; i++, x = sprite->sPrevX, y = sprite->sPrevY)
         {
             MoveCoords(i, &x, &y);
             if (MapGridGetElevationAt(x, y) == 3)
             {
-                sprite->data[5] ++;
+                sprite->sIntervalIdx++;
                 break;
             }
         }
@@ -1139,19 +1148,19 @@ static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Spri
 
 static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *linkedSprite, struct Sprite *sprite)
 {
-    u16 unk_8401E5A[] = {3, 7};
-    u8 v0 = GetSurfBlob_BobState(sprite);
-    if (v0 != 0)
+    u16 intervals[] = {3, 7};
+    u8 bobState = GetSurfBlob_BobState(sprite);
+    if (bobState != 0)
     {
-        if (((u16)(++ sprite->data[4]) & unk_8401E5A[sprite->data[5]]) == 0)
+        if (((u16)(++ sprite->sTimer) & intervals[sprite->sIntervalIdx]) == 0)
         {
-            sprite->y2 += sprite->data[3];
+            sprite->y2 += sprite->sVelocity;
         }
-        if ((sprite->data[4] & 0x0F) == 0)
+        if ((sprite->sTimer & 0x0F) == 0)
         {
-            sprite->data[3] = -sprite->data[3];
+            sprite->sVelocity = -sprite->sVelocity;
         }
-        if (v0 != 2)
+        if (bobState != 2)
         {
             if (GetSurfBlob_HasPlayerOffset(sprite) == 0)
             {
@@ -1159,7 +1168,7 @@ static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *
             }
             else
             {
-                linkedSprite->y2 = sprite->data[1] + sprite->y2;
+                linkedSprite->y2 = sprite->sPlayerOffset + sprite->y2;
             }
             sprite->x = linkedSprite->x;
             sprite->y = linkedSprite->y + 8;
@@ -1167,7 +1176,20 @@ static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *
     }
 }
 
-u8 StartUnderwaterSurfBlobBobbing(u8 oldSpriteId)
+#undef sBitfield
+#undef sPlayerOffset
+#undef sPlayerObjId
+#undef sVelocity
+#undef sTimer
+#undef sIntervalIdx
+#undef sPrevX
+#undef sPrevY
+
+#define sSpriteId data[0]
+#define sBobY     data[1]
+#define sTimer    data[2]
+
+u8 StartUnderwaterSurfBlobBobbing(u8 blobSpriteId)
 {
     u8 spriteId;
     struct Sprite *sprite;
@@ -1176,8 +1198,8 @@ u8 StartUnderwaterSurfBlobBobbing(u8 oldSpriteId)
     sprite = &gSprites[spriteId];
     sprite->callback = SpriteCB_UnderwaterSurfBlob;
     sprite->invisible = TRUE;
-    sprite->data[0] = oldSpriteId;
-    sprite->data[1] = 1;
+    sprite->sSpriteId = blobSpriteId;
+    sprite->sBobY = 1;
     return spriteId;
 }
 
@@ -1185,16 +1207,20 @@ static void SpriteCB_UnderwaterSurfBlob(struct Sprite *sprite)
 {
     struct Sprite *oldSprite;
 
-    oldSprite = &gSprites[sprite->data[0]];
-    if (((sprite->data[2]++) & 0x03) == 0)
+    oldSprite = &gSprites[sprite->sSpriteId];
+    if (((sprite->sTimer++) & 0x03) == 0)
     {
-        oldSprite->y2 += sprite->data[1];
+        oldSprite->y2 += sprite->sBobY;
     }
-    if ((sprite->data[2] & 0x0F) == 0)
+    if ((sprite->sTimer & 0x0F) == 0)
     {
-        sprite->data[1] = -sprite->data[1];
+        sprite->sBobY = -sprite->sBobY;
     }
 }
+
+#undef sSpriteId
+#undef sBobY
+#undef sTimer
 
 u32 FldEff_Dust(void)
 {
