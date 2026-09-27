@@ -123,11 +123,11 @@ void FieldMoveShowMonIndoorsEffect_RestoreBg(struct Task *);
 void FieldMoveShowMonIndoorsEffect_SlideBannerOff(struct Task *);
 void FieldMoveShowMonIndoorsEffect_End(struct Task *);
 
-void sub_8088984(struct Task *);
-void sub_80889E4(struct Task *);
-void sub_8088A30(struct Task *);
-void sub_8088A78(struct Task *);
-void sub_8088AF4(struct Task *);
+void SurfFieldEffect_Init(struct Task *);
+void SurfFieldEffect_FieldMovePose(struct Task *);
+void SurfFieldEffect_ShowMon(struct Task *);
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *);
+void SurfFieldEffect_End(struct Task *);
 
 void sub_8088CA0(struct Task *);
 void sub_8088CF8(struct Task *);

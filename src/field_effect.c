@@ -2691,43 +2691,48 @@ void SpriteCB_FieldMoveMonSlideOffscreen(struct Sprite *sprite)
     }
 }
 
-void sub_8088954(u8);
+#define tSurfState data[0]
+#define tSurfDestX data[1]
+#define tSurfDestY data[2]
+#define tSurfMonId data[15]
+
+void Task_SurfFieldEffect(u8);
 
 u8 FldEff_UseSurf(void)
 {
     u8 taskId;
-    taskId = CreateTask(sub_8088954, 0xff);
-    gTasks[taskId].data[15] = gFieldEffectArguments[0];
+    taskId = CreateTask(Task_SurfFieldEffect, 0xff);
+    gTasks[taskId].tSurfMonId = gFieldEffectArguments[0];
     Overworld_ClearSavedMusic();
     Overworld_ChangeMusicTo(MUS_SURF);
     return FALSE;
 }
 
-void (*const gUnknown_0839F3E4[])(struct Task *) = {
-    sub_8088984,
-    sub_80889E4,
-    sub_8088A30,
-    sub_8088A78,
-    sub_8088AF4
+static void (*const sSurfFieldEffectFuncs[])(struct Task *) = {
+    SurfFieldEffect_Init,
+    SurfFieldEffect_FieldMovePose,
+    SurfFieldEffect_ShowMon,
+    SurfFieldEffect_JumpOnSurfBlob,
+    SurfFieldEffect_End
 };
 
-void sub_8088954(u8 taskId)
+void Task_SurfFieldEffect(u8 taskId)
 {
-    gUnknown_0839F3E4[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sSurfFieldEffectFuncs[gTasks[taskId].tSurfState](&gTasks[taskId]);
 }
 
-void sub_8088984(struct Task *task)
+void SurfFieldEffect_Init(struct Task *task)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
     gPlayerAvatar.preventStep = TRUE;
-    SetPlayerAvatarStateMask(8);
-    PlayerGetDestCoords(&task->data[1], &task->data[2]);
-    MoveCoords(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection, &task->data[1], &task->data[2]);
-    task->data[0]++;
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_SURFING);
+    PlayerGetDestCoords(&task->tSurfDestX, &task->tSurfDestY);
+    MoveCoords(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection, &task->tSurfDestX, &task->tSurfDestY);
+    task->tSurfState++;
 }
 
-void sub_80889E4(struct Task *task)
+void SurfFieldEffect_FieldMovePose(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2735,23 +2740,23 @@ void sub_80889E4(struct Task *task)
     {
         sub_8059BF4();
         ObjectEventSetHeldMovement(objectEvent, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
-        task->data[0]++;
+        task->tSurfState++;
     }
 }
 
-void sub_8088A30(struct Task *task)
+void SurfFieldEffect_ShowMon(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (ObjectEventCheckHeldMovementStatus(objectEvent))
     {
-        gFieldEffectArguments[0] = task->data[15] | 0x80000000;
+        gFieldEffectArguments[0] = task->tSurfMonId | 0x80000000;
         FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-        task->data[0]++;
+        task->tSurfState++;
     }
 }
 
-void sub_8088A78(struct Task *task)
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     if (!FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
@@ -2760,15 +2765,15 @@ void sub_8088A78(struct Task *task)
         ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
         ObjectEventClearHeldMovementIfFinished(objectEvent);
         ObjectEventSetHeldMovement(objectEvent, GetJumpSpecialMovementAction(objectEvent->movementDirection));
-        gFieldEffectArguments[0] = task->data[1];
-        gFieldEffectArguments[1] = task->data[2];
+        gFieldEffectArguments[0] = task->tSurfDestX;
+        gFieldEffectArguments[1] = task->tSurfDestY;
         gFieldEffectArguments[2] = gPlayerAvatar.objectEventId;
         objectEvent->fieldEffectSpriteId = FieldEffectStart(FLDEFF_SURF_BLOB);
-        task->data[0]++;
+        task->tSurfState++;
     }
 }
 
-void sub_8088AF4(struct Task *task)
+void SurfFieldEffect_End(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -2781,9 +2786,14 @@ void sub_8088AF4(struct Task *task)
         UnfreezeObjectEvents();
         UnlockPlayerFieldControls();
         FieldEffectActiveListRemove(FLDEFF_USE_SURF);
-        DestroyTask(FindTaskIdByFunc(sub_8088954));
+        DestroyTask(FindTaskIdByFunc(Task_SurfFieldEffect));
     }
 }
+
+#undef tSurfState
+#undef tSurfDestX
+#undef tSurfDestY
+#undef tSurfMonId
 
 void sub_8088BC4(struct Sprite *);
 
