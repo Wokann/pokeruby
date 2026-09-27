@@ -271,11 +271,11 @@ static void InfoBox_DrawWindowAndText(struct Task *task);
 static void InfoBox_WaitInput(struct Task *task);
 static void InfoBox_RestoreSlotMachineDisplay(struct Task *task);
 static void InfoBox_FreeTask(struct Task *task);
-static void sub_8104C5C(void);
-static void sub_8104CAC(u8 arg0);
-static bool8 sub_8104E18(void);
-static void nullsub_69(struct Task *task);
-static void sub_8104E74(u8 taskId);
+static void CreateDigitalDisplayTask(void);
+static void CreateDigitalDisplayScene(u8 arg0);
+static bool8 IsDigitalDisplayAnimFinished(void);
+static void DigitalDisplay_Idle(struct Task *task);
+static void Task_DigitalDisplay(u8 taskId);
 static void sub_8104EA8(void);
 static void sub_8104F8C(void);
 static void sub_8104FF4(s16 x, s16 y, u8 a2, s16 a3);
@@ -560,7 +560,7 @@ static void SlotMachineSetup_6_1(void)
 {
     CreatePikaPowerBoltTask();
     CreateReelTasks();
-    sub_8104C5C();
+    CreateDigitalDisplayTask();
     CreateSlotMachineTasks();
 }
 
@@ -640,21 +640,21 @@ static bool8 SlotTask_ReadyNewSpin(struct Task *task)
     else if (sSlotMachine->unk0A)
     {
         sSlotMachine->state = 3;
-        sub_8104CAC(4);
+        CreateDigitalDisplayScene(4);
     }
     return TRUE;
 }
 
 static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task)
 {
-    if (sub_8104E18())
+    if (IsDigitalDisplayAnimFinished())
         sSlotMachine->state = 4;
     return FALSE;
 }
 
 static bool8 SlotTask_AskInsertBet(struct Task *task)
 {
-    sub_8104CAC(0);
+    CreateDigitalDisplayScene(0);
     sSlotMachine->state = 5;
     if (
 #if DEBUG
@@ -766,7 +766,7 @@ static bool8 SlotTask_WaitInfoBox(struct Task *task)
 static bool8 SlotTask_StartSpin(struct Task *task)
 {
     DrawMachineBias();
-    sub_8104DA4();
+    DestroyDigitalDisplayScene();
     SpinSlotReel(0);
     SpinSlotReel(1);
     SpinSlotReel(2);
@@ -778,7 +778,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
     }
     else
     {
-        sub_8104CAC(1);
+        CreateDigitalDisplayScene(1);
         sSlotMachine->state = 11;
     }
     sSlotMachine->unk1A = 8;
@@ -795,7 +795,7 @@ static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
 {
     if (IsReelTimeTaskDone())
     {
-        sub_8104CAC(1);
+        CreateDigitalDisplayScene(1);
         sSlotMachine->unk04 &= 0xDF;
         sSlotMachine->state = 11;
     }
@@ -930,17 +930,17 @@ bool8 SlotTask_CheckMatches(struct Task *task)
         if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
-            sub_8104CAC(6);
+            CreateDigitalDisplayScene(6);
         }
         else if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_777_MIXED))
         {
             PlayFanfare(MUS_SLOTS_JACKPOT);
-            sub_8104CAC(5);
+            CreateDigitalDisplayScene(5);
         }
         else
         {
             PlayFanfare(MUS_SLOTS_WIN);
-            sub_8104CAC(2);
+            CreateDigitalDisplayScene(2);
         }
         if (sSlotMachine->matchedSymbols & ((1 << SLOT_MACHINE_MATCHED_777_MIXED) | (1 << SLOT_MACHINE_MATCHED_777_BLUE) | (1 << SLOT_MACHINE_MATCHED_777_RED)))
         {
@@ -962,7 +962,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
     }
     else
     {
-        sub_8104CAC(3);
+        CreateDigitalDisplayScene(3);
         sSlotMachine->state = 20;
         if ((sSlotMachine->unk10 += sSlotMachine->bet) > 9999)
             sSlotMachine->unk10 = 9999;
@@ -993,7 +993,7 @@ static bool8 SlotTask_EndPayout(struct Task *task)
             sSlotMachine->state = 17;
         if (sSlotMachine->unk0A && sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
         {
-            sub_8104CAC(4);
+            CreateDigitalDisplayScene(4);
             sSlotMachine->state = 18;
         }
     }
@@ -1010,7 +1010,7 @@ static bool8 SlotTask_MatchedPower(struct Task *task)
             sSlotMachine->state = 9;
             if (sSlotMachine->unk0A)
             {
-                sub_8104CAC(4);
+                CreateDigitalDisplayScene(4);
                 sSlotMachine->state = 18;
             }
         }
@@ -1020,7 +1020,7 @@ static bool8 SlotTask_MatchedPower(struct Task *task)
 
 static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
 {
-    if (sub_8104E18())
+    if (IsDigitalDisplayAnimFinished())
     {
         sSlotMachine->state = 19;
         if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
@@ -2874,7 +2874,7 @@ static void ReelTime_DestroySprites(struct Task *task)
     }
     else
     {
-        sub_8104CAC(4);
+        CreateDigitalDisplayScene(4);
         task->data[1] = ReelTimeSpeed();
         task->data[2] = 0;
         task->data[3] = 0;
@@ -2892,7 +2892,7 @@ static void ReelTime_SetReelSpeed(struct Task *task)
 
 static void ReelTime_EndSuccess(struct Task *task)
 {
-    if (sub_8104E18())
+    if (IsDigitalDisplayAnimFinished())
         DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
@@ -3025,7 +3025,7 @@ static void InfoBox_WaitFade(struct Task *task)
 
 static void InfoBox_DrawWindowAndText(struct Task *task)
 {
-    sub_8104DA4();
+    DestroyDigitalDisplayScene();
     sub_81065DC();
     BasicInitMenuWindow(&gWindowTemplate_81E7144);
     Menu_PrintTextPixelCoords(gOtherText_ReelTime, 10, 32, 1);
@@ -3047,7 +3047,7 @@ static void InfoBox_RestoreSlotMachineDisplay(struct Task *task)
     Menu_EraseScreen();
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
     sub_81064B8();
-    sub_8104CAC(task->data[1]);
+    CreateDigitalDisplayScene(task->data[1]);
     LoadPikaPowerMeter(sSlotMachine->pikaPower);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->data[0]++;
@@ -3058,11 +3058,11 @@ static void InfoBox_FreeTask(struct Task *task)
     DestroyTask(FindTaskIdByFunc(Task_InfoBox));
 }
 
-static void sub_8104C5C(void)
+static void CreateDigitalDisplayTask(void)
 {
     u8 i;
     struct Task *task;
-    i = CreateTask(sub_8104E74, 3);
+    i = CreateTask(Task_DigitalDisplay, 3);
     sSlotMachine->unk3D = i;
     task = gTasks + i;
     task->data[1] = -1;
@@ -3072,12 +3072,12 @@ static void sub_8104C5C(void)
 
 static void LoadSlotMachineWheelOverlay(void);
 
-static void sub_8104CAC(u8 arg0)
+static void CreateDigitalDisplayScene(u8 arg0)
 {
     u8 i;
     struct Task *task;
 
-    sub_8104DA4();
+    DestroyDigitalDisplayScene();
 
     task = gTasks + sSlotMachine->unk3D;
     task->data[1] = arg0;
@@ -3099,7 +3099,7 @@ static void sub_8104CAC(u8 arg0)
     }
 }
 
-static void sub_8104D30(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s16 a4)
+static void AddDigitalDisplaySprite(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s16 a4)
 {
     u8 i;
     struct Task *task = gTasks + sSlotMachine->unk3D;
@@ -3113,14 +3113,14 @@ static void sub_8104D30(u8 a0, SpriteCallback a1, s16 a2, s16 a3, s16 a4)
     }
 }
 
-static void (*const gUnknown_083ED064[])(void);
+static void (*const sDigitalDisplaySceneExitCallbacks[])(void);
 
-void sub_8104DA4(void)
+void DestroyDigitalDisplayScene(void)
 {
     u8 i;
     struct Task *task = gTasks + sSlotMachine->unk3D;
     if ((u16)task->data[1] != 0xFFFF)
-        gUnknown_083ED064[task->data[1]]();
+        sDigitalDisplaySceneExitCallbacks[task->data[1]]();
     for (i = 4; i < 16; i++)
     {
         if (task->data[i] != MAX_SPRITES)
@@ -3131,7 +3131,7 @@ void sub_8104DA4(void)
     }
 }
 
-static bool8 sub_8104E18(void)
+static bool8 IsDigitalDisplayAnimFinished(void)
 {
     u8 i;
     struct Task *task = gTasks + sSlotMachine->unk3D;
@@ -3146,17 +3146,17 @@ static bool8 sub_8104E18(void)
     return TRUE;
 }
 
-static void (*const gUnknown_083ECC54[])(struct Task *task) =
+static void (*const sDigitalDisplayTasks[])(struct Task *task) =
 {
-    nullsub_69,
+    DigitalDisplay_Idle,
 };
 
-static void sub_8104E74(u8 taskId)
+static void Task_DigitalDisplay(u8 taskId)
 {
-    gUnknown_083ECC54[gTasks[taskId].data[0]](gTasks + taskId);
+    sDigitalDisplayTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void nullsub_69(struct Task *task)
+static void DigitalDisplay_Idle(struct Task *task)
 {
 }
 
@@ -3982,7 +3982,7 @@ static void sub_8106230(struct Sprite *sprite)
         case 2:
             if (sSlotMachine->bet == 0)
                 break;
-            sub_8104D30(5, SpriteCallbackDummy, 0xd0, 0x74, 0);
+            AddDigitalDisplaySprite(5, SpriteCallbackDummy, 0xd0, 0x74, 0);
             sSlotMachine->win0h = 0xc0e0;
             sSlotMachine->win0v = 0x6880;
             sSlotMachine->winIn = 0x2f;
@@ -4458,7 +4458,7 @@ static const struct UnkStruct1 *const gUnknown_083ED048[] = {
     Unknown_83ECFF8
 };
 
-static void (*const gUnknown_083ED064[])(void) = {
+static void (*const sDigitalDisplaySceneExitCallbacks[])(void) = {
     sub_810639C,
     sub_8106364,
     sub_8106370,
