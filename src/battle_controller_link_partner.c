@@ -221,7 +221,7 @@ static const BattleBufferCmd sLinkPartnerBufferCommands[] =
 };
 // code starts here
 
-void nullsub_74(void)
+void LinkPartnerBufferDoNothing(void)
 {
 }
 
@@ -439,7 +439,7 @@ void SwitchIn_TryShinyAnim(void)
     }
 }
 
-void sub_811E258(void)
+void LinkPartnerWaitForDisconnect(void)
 {
     if (gReceivedRemoteLinkPlayers == 0)
     {
@@ -450,14 +450,14 @@ void sub_811E258(void)
     }
 }
 
-void sub_811E29C(void)
+void LinkPartnerWaitForBattleEndFade(void)
 {
     if (!gPaletteFade.active)
     {
         if (gBattleTypeFlags & 2)
         {
             SetCloseLinkCallback();
-            gBattlerControllerFuncs[gActiveBattler] = sub_811E258;
+            gBattlerControllerFuncs[gActiveBattler] = LinkPartnerWaitForDisconnect;
         }
         else
         {
@@ -1576,7 +1576,7 @@ void LinkPartnerHandleIntroTrainerBallThrow(void)
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = sub_8044CA0;
     ewram17840.unk9_0 = 1;
-    gBattlerControllerFuncs[gActiveBattler] = nullsub_74;
+    gBattlerControllerFuncs[gActiveBattler] = LinkPartnerBufferDoNothing;
 }
 
 void Task_StartSendOutAnim(u8 taskId)
@@ -1692,7 +1692,7 @@ void LinkPartnerHandleEndLinkBattle(void)
     FadeOutMapMusic(5);
     BeginFastPaletteFade(3);
     LinkPartnerBufferExecCompleted();
-    gBattlerControllerFuncs[gActiveBattler] = sub_811E29C;
+    gBattlerControllerFuncs[gActiveBattler] = LinkPartnerWaitForBattleEndFade;
 }
 
 void LinkPartnerCmdEnd(void)
