@@ -215,17 +215,17 @@ static void DecideStop_NoBias_Reel3_Bet2(void);
 static void DecideStop_NoBias_Reel3_Bet3(void);
 static void PressStopReelButton(u8 a0);
 static void Task_PressStopReelButton(u8 taskId);
-static void sub_8103D50(u8 a0);
+static void LightenBetTiles(u8 a0);
 static void StopReelButton_Press(struct Task *task, u8 taskId);
 static void StopReelButton_Wait(struct Task *task, u8 taskId);
 static void StopReelButton_Unpress(struct Task *task, u8 taskId);
-static void sub_8103D8C(u8 a0);
-static void sub_8103DC8(void);
-static void sub_8103E04(u8 a0);
-static bool8 sub_8103E38(void);
-static bool8 sub_8103E7C(void);
-static bool8 sub_8103EAC(u8 spriteId);
-static void sub_8103EE4(struct Sprite *sprite);
+static void DarkenBetTiles(u8 a0);
+static void CreateInvisibleFlashMatchLineSprites(void);
+static void FlashMatchLine(u8 a0);
+static bool8 IsMatchLineDoneFlashingBeforePayout(void);
+static bool8 TryStopMatchLinesFlashing(void);
+static bool8 TryStopMatchLineFlashing(u8 spriteId);
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite);
 static void sub_8103F70(void);
 static bool8 sub_8103FA0(void);
 static void sub_8103FE8(u8 taskId);
@@ -552,7 +552,7 @@ static void SlotMachineSetup_6_0(void)
 {
     sub_8104EA8();
     sub_8104F8C();
-    sub_8103DC8();
+    CreateInvisibleFlashMatchLineSprites();
     sub_81050C4();
 }
 
@@ -678,9 +678,9 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
         }
         else
         {
-            sub_8103D50(0);
-            sub_8103D50(1);
-            sub_8103D50(2);
+            LightenBetTiles(0);
+            LightenBetTiles(1);
+            LightenBetTiles(2);
             sSlotMachine->coins -= 3;
             sSlotMachine->bet = 3;
             sSlotMachine->state = 9;
@@ -705,7 +705,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
         if (sSlotMachine->coins - (3 - sSlotMachine->bet) >= 0)
         {
             for (i = sSlotMachine->bet; i < 3; i++)
-                sub_8103D50(i);
+                LightenBetTiles(i);
             sSlotMachine->coins -= (3 - sSlotMachine->bet);
             sSlotMachine->bet = 3;
             sSlotMachine->state = 9;
@@ -721,7 +721,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
         if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins != 0)
         {
             PlaySE(SE_SHOP);
-            sub_8103D50(sSlotMachine->bet);
+            LightenBetTiles(sSlotMachine->bet);
             sSlotMachine->coins--;
             sSlotMachine->bet++;
         }
@@ -1033,9 +1033,9 @@ static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
 
 static bool8 SlotTask_ResetBetTiles(struct Task *task)
 {
-    sub_8103D8C(0);
-    sub_8103D8C(1);
-    sub_8103D8C(2);
+    DarkenBetTiles(0);
+    DarkenBetTiles(1);
+    DarkenBetTiles(2);
     sSlotMachine->state = 2;
     return FALSE;
 }
@@ -1065,9 +1065,9 @@ static bool8 SlotTask_HandleQuitInput(struct Task *task)
     if (input == 0)
     {
         Menu_EraseScreen();
-        sub_8103D8C(0);
-        sub_8103D8C(1);
-        sub_8103D8C(2);
+        DarkenBetTiles(0);
+        DarkenBetTiles(1);
+        DarkenBetTiles(2);
         sSlotMachine->coins += sSlotMachine->bet;
         sSlotMachine->state = 27;
     }
@@ -1412,7 +1412,7 @@ static void CheckMatch_CenterRow(void)
     {
         sSlotMachine->payout += sSlotPayouts[match];
         sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(0);
+        FlashMatchLine(0);
     }
 }
 
@@ -1430,7 +1430,7 @@ static void CheckMatch_TopAndBottom(void)
             match = SLOT_MACHINE_MATCHED_2CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
         sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(1);
+        FlashMatchLine(1);
     }
     c1 = GetSymbolAtRest(0, 3);
     c2 = GetSymbolAtRest(1, 3);
@@ -1442,7 +1442,7 @@ static void CheckMatch_TopAndBottom(void)
             match = SLOT_MACHINE_MATCHED_2CHERRY;
         sSlotMachine->payout += sSlotPayouts[match];
         sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
-        sub_8103E04(2);
+        FlashMatchLine(2);
     }
 }
 
@@ -1461,7 +1461,7 @@ static void CheckMatch_Diagonals(void)
             sSlotMachine->payout += sSlotPayouts[match];
             sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
         }
-        sub_8103E04(3);
+        FlashMatchLine(3);
     }
     c1 = GetSymbolAtRest(0, 3);
     c2 = GetSymbolAtRest(1, 2);
@@ -1474,7 +1474,7 @@ static void CheckMatch_Diagonals(void)
             sSlotMachine->payout += sSlotPayouts[match];
             sSlotMachine->matchedSymbols |= sSlotMatchFlags[match];
         }
-        sub_8103E04(4);
+        FlashMatchLine(4);
     }
 }
 
@@ -1521,7 +1521,7 @@ static void Task_Payout(u8 taskId)
 
 static bool8 PayoutTask_Init(struct Task *task)
 {
-    if (sub_8103E38())
+    if (IsMatchLineDoneFlashingBeforePayout())
     {
         task->data[0]++;
         if (sSlotMachine->payout == 0)
@@ -1561,7 +1561,7 @@ static bool8 PayoutTask_GivePayout(struct Task *task)
 
 static bool8 PayoutTask_Free(struct Task *task)
 {
-    if (sub_8103E7C())
+    if (TryStopMatchLinesFlashing())
         DestroyTask(FindTaskIdByFunc(Task_Payout));
     return FALSE;
 }
@@ -2339,49 +2339,49 @@ static void StopReelButton_Unpress(struct Task *task, u8 taskId)
     DestroyTask(taskId);
 }
 
-static const u16 *const gUnknown_083EDD08[];
-static const u16 *const gUnknown_083EDD1C[];
-static const u8 gUnknown_083EDD30[];
+static const u16 *const sLitMatchLinePalTable[];
+static const u16 *const sDarkMatchLinePalTable[];
+static const u8 sMatchLinePalOffsets[];
 
-static void sub_8103D00(u8 a0)
+static void LightenMatchLine(u8 a0)
 {
-    LoadPalette(gUnknown_083EDD08[a0], gUnknown_083EDD30[a0], 2);
+    LoadPalette(sLitMatchLinePalTable[a0], sMatchLinePalOffsets[a0], 2);
 }
 
-static void sub_8103D28(u8 a0)
+static void DarkenMatchLine(u8 a0)
 {
-    LoadPalette(gUnknown_083EDD1C[a0], gUnknown_083EDD30[a0], 2);
+    LoadPalette(sDarkMatchLinePalTable[a0], sMatchLinePalOffsets[a0], 2);
 }
 
-static const u8 gUnknown_083EDD35[][2];
-static const u8 gUnknown_083EDD3B[];
+static const u8 sBetToMatchLineIds[][2];
+static const u8 sMatchLinesPerBet[];
 
-static void sub_8103D50(u8 a0)
-{
-    u8 i;
-    for (i = 0; i < gUnknown_083EDD3B[a0]; i++)
-        sub_8103D00(gUnknown_083EDD35[a0][i]);
-}
-
-static void sub_8103D8C(u8 a0)
+static void LightenBetTiles(u8 a0)
 {
     u8 i;
-    for (i = 0; i < gUnknown_083EDD3B[a0]; i++)
-        sub_8103D28(gUnknown_083EDD35[a0][i]);
+    for (i = 0; i < sMatchLinesPerBet[a0]; i++)
+        LightenMatchLine(sBetToMatchLineIds[a0][i]);
 }
 
-static void sub_8103DC8(void)
+static void DarkenBetTiles(u8 a0)
+{
+    u8 i;
+    for (i = 0; i < sMatchLinesPerBet[a0]; i++)
+        DarkenMatchLine(sBetToMatchLineIds[a0][i]);
+}
+
+static void CreateInvisibleFlashMatchLineSprites(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        u8 spriteId = CreateInvisibleSprite(sub_8103EE4);
+        u8 spriteId = CreateInvisibleSprite(SpriteCB_FlashMatchingLines);
         gSprites[spriteId].data[0] = i;
         sSlotMachine->unk44[i] = spriteId;
     }
 }
 
-static void sub_8103E04(u8 a0)
+static void FlashMatchLine(u8 a0)
 {
     struct Sprite *sprite = gSprites + sSlotMachine->unk44[a0];
     sprite->data[1] = 1;
@@ -2392,7 +2392,7 @@ static void sub_8103E04(u8 a0)
     sprite->data[7] = 0;
 }
 
-static bool8 sub_8103E38(void)
+static bool8 IsMatchLineDoneFlashingBeforePayout(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
@@ -2404,18 +2404,18 @@ static bool8 sub_8103E38(void)
     return TRUE;
 }
 
-static bool8 sub_8103E7C(void)
+static bool8 TryStopMatchLinesFlashing(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
     {
-        if (!sub_8103EAC(sSlotMachine->unk44[i]))
+        if (!TryStopMatchLineFlashing(sSlotMachine->unk44[i]))
             return FALSE;
     }
     return TRUE;
 }
 
-static bool8 sub_8103EAC(u8 spriteId)
+static bool8 TryStopMatchLineFlashing(u8 spriteId)
 {
     struct Sprite *sprite = gSprites + spriteId;
     if (!sprite->data[1])
@@ -2425,7 +2425,7 @@ static bool8 sub_8103EAC(u8 spriteId)
     return sprite->data[7];
 }
 
-static void sub_8103EE4(struct Sprite *sprite)
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
 {
     s16 r4;
     if (sprite->data[1])
@@ -2450,7 +2450,7 @@ static void sub_8103EE4(struct Sprite *sprite)
             if (sprite->data[2])
                 sprite->data[3] <<= 1;
         }
-        MultiplyPaletteRGBComponents(gUnknown_083EDD30[sprite->data[0]], sprite->data[4], sprite->data[4], sprite->data[4]);
+        MultiplyPaletteRGBComponents(sMatchLinePalOffsets[sprite->data[0]], sprite->data[4], sprite->data[4], sprite->data[4]);
     }
 }
 
@@ -5485,7 +5485,7 @@ static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/sapphir
 static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/ruby_83EDCE8.gbapal");
 #endif // RS
 
-static const u16 *const gUnknown_083EDD08[] = {
+static const u16 *const sLitMatchLinePalTable[] = {
     UnknownPalette_83EDCE8 + 10,
     UnknownPalette_83EDCE8 + 11,
     UnknownPalette_83EDCE8 + 12,
@@ -5493,7 +5493,7 @@ static const u16 *const gUnknown_083EDD08[] = {
     UnknownPalette_83EDCE8 + 14
 };
 
-static const u16 *const gUnknown_083EDD1C[] = {
+static const u16 *const sDarkMatchLinePalTable[] = {
     gUnknown_08E95A18 + 74,
     gUnknown_08E95A18 + 75,
     gUnknown_08E95A18 + 76,
@@ -5501,16 +5501,16 @@ static const u16 *const gUnknown_083EDD1C[] = {
     gUnknown_08E95A18 + 78
 };
 
-static const u8 gUnknown_083EDD30[] = {
+static const u8 sMatchLinePalOffsets[] = {
     0x4a, 0x4b, 0x4c, 0x4e, 0x4d
 };
 
-static const u8 gUnknown_083EDD35[][2] = {
+static const u8 sBetToMatchLineIds[][2] = {
     {0, 0},
     {1, 2},
     {3, 4}
 };
-static const u8 gUnknown_083EDD3B[] = {1, 2, 2};
+static const u8 sMatchLinesPerBet[] = {1, 2, 2};
 
 #ifdef SAPPHIRE
 static const u16 Unknown_83EDD3E[] = INCBIN_U16("graphics/unknown/sapphire_83EDD96.gbapal");
