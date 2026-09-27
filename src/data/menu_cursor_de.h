@@ -79,10 +79,10 @@ const struct SpriteSheet gUnknown_0842F1C0[] = {
 };
 
 const struct SpritePalette gUnknown_0842F240 = {
-    gUnknown_0203A360, 0xfff0
+    sMenuCursorPalette, 0xfff0
 };
 const struct SpritePalette gUnknown_0842F248 = {
-    gUnknown_0203A360, 0xfff1
+    sMenuCursorPalette, 0xfff1
 };
 
 const struct SpriteTemplate gSpriteTemplate_842F250[] = {
@@ -250,38 +250,38 @@ const struct Subsprite *const gUnknown_0842F5BC[] = {
 };
 
 const struct SubspriteTable gSubspriteTables_842F5C0[] = {
-    {1, gMenuCursorSubsprites},
-    {1, gMenuCursorSubsprites},
-    {2, gMenuCursorSubsprites},
-    {3, gMenuCursorSubsprites},
-    {4, gMenuCursorSubsprites},
-    {5, gMenuCursorSubsprites},
-    {6, gMenuCursorSubsprites},
-    {7, gMenuCursorSubsprites},
-    {8, gMenuCursorSubsprites},
-    {9, gMenuCursorSubsprites},
-    {10, gMenuCursorSubsprites},
-    {11, gMenuCursorSubsprites},
-    {12, gMenuCursorSubsprites},
-    {13, gMenuCursorSubsprites},
-    {14, gMenuCursorSubsprites},
-    {15, gMenuCursorSubsprites},
-    {16, gMenuCursorSubsprites},
-    {17, gMenuCursorSubsprites},
-    {18, gMenuCursorSubsprites},
-    {19, gMenuCursorSubsprites},
-    {20, gMenuCursorSubsprites},
-    {21, gMenuCursorSubsprites},
-    {22, gMenuCursorSubsprites},
-    {23, gMenuCursorSubsprites},
-    {24, gMenuCursorSubsprites},
-    {25, gMenuCursorSubsprites},
-    {26, gMenuCursorSubsprites},
-    {27, gMenuCursorSubsprites},
-    {28, gMenuCursorSubsprites},
-    {29, gMenuCursorSubsprites},
-    {30, gMenuCursorSubsprites},
-    {31, gMenuCursorSubsprites}
+    {1, sMenuCursorSubsprites},
+    {1, sMenuCursorSubsprites},
+    {2, sMenuCursorSubsprites},
+    {3, sMenuCursorSubsprites},
+    {4, sMenuCursorSubsprites},
+    {5, sMenuCursorSubsprites},
+    {6, sMenuCursorSubsprites},
+    {7, sMenuCursorSubsprites},
+    {8, sMenuCursorSubsprites},
+    {9, sMenuCursorSubsprites},
+    {10, sMenuCursorSubsprites},
+    {11, sMenuCursorSubsprites},
+    {12, sMenuCursorSubsprites},
+    {13, sMenuCursorSubsprites},
+    {14, sMenuCursorSubsprites},
+    {15, sMenuCursorSubsprites},
+    {16, sMenuCursorSubsprites},
+    {17, sMenuCursorSubsprites},
+    {18, sMenuCursorSubsprites},
+    {19, sMenuCursorSubsprites},
+    {20, sMenuCursorSubsprites},
+    {21, sMenuCursorSubsprites},
+    {22, sMenuCursorSubsprites},
+    {23, sMenuCursorSubsprites},
+    {24, sMenuCursorSubsprites},
+    {25, sMenuCursorSubsprites},
+    {26, sMenuCursorSubsprites},
+    {27, sMenuCursorSubsprites},
+    {28, sMenuCursorSubsprites},
+    {29, sMenuCursorSubsprites},
+    {30, sMenuCursorSubsprites},
+    {31, sMenuCursorSubsprites}
 };
 
 const struct SubspriteTable gSubspriteTables_842F6C0[] = {
@@ -307,7 +307,7 @@ const struct SubspriteTable gSubspriteTables_842F6C0[] = {
 };
 
 const struct SubspriteTable gUnknown_0842F758[] = {
-    {3, gMenuCursorSubsprites}
+    {3, sMenuCursorSubsprites}
 };
 
 const struct Subsprite gUnknown_0842F760 = {
