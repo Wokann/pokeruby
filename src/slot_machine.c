@@ -105,11 +105,11 @@ struct SlotMachineEwramStruct
 #endif
 };
 
-struct UnkStruct1
+struct DigitalDisplaySprite
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ s16 unk02;
+    /*0x00*/ u8 spriteTemplateId;
+    /*0x01*/ u8 dispInfoId;
+    /*0x02*/ s16 spriteId;
 };
 
 #if ENGLISH
@@ -333,7 +333,7 @@ static u32 unk_debug_bss_1_8;
 
 static struct SlotMachineEwramStruct *const sSlotMachine = eSlotMachine;
 
-static const struct UnkStruct1 *const gUnknown_083ED048[];
+static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[];
 static const u16 gPalette_83EDE24[];
 static const u8 sSpecialDrawOdds[][3];
 static const u8 sBiasSymbols[];
@@ -3082,13 +3082,13 @@ static void CreateDigitalDisplayScene(u8 arg0)
     task = gTasks + sSlotMachine->unk3D;
     task->data[1] = arg0;
 
-    for (i = 0; gUnknown_083ED048[arg0][i].unk00 != 0xFF; i++)
+    for (i = 0; sDigitalDisplayScenes[arg0][i].spriteTemplateId != 0xFF; i++)
     {
         u8 spriteId;
         spriteId = CreateStdDigitalDisplaySprite(
-                gUnknown_083ED048[arg0][i].unk00,
-                gUnknown_083ED048[arg0][i].unk01,
-                gUnknown_083ED048[arg0][i].unk02
+                sDigitalDisplayScenes[arg0][i].spriteTemplateId,
+                sDigitalDisplayScenes[arg0][i].dispInfoId,
+                sDigitalDisplayScenes[arg0][i].spriteId
         );
         task->data[4 + i] = spriteId;
 
@@ -4383,14 +4383,14 @@ static const SpriteCallback sDigitalDisplay_SpriteCallbacks[] = {
     SpriteCB_DigitalDisplay_AButtonStart
 };
 
-static const struct UnkStruct1 Unknown_83ECF98[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_InsertBet[] = {
     {25, 34, 0},
     {2, 0, 0},
     {9, 16, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFA8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_StopReel[] = {
     {10, 1, 0},
     {11, 2, 0},
     {12, 3, 0},
@@ -4400,13 +4400,13 @@ static const struct UnkStruct1 Unknown_83ECFA8[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFC4[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_Win[] = {
     {3, 7, 0},
     {8, 17, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFD0[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_Lose[] = {
     {4, 8, 0},
     {6, 9, 0},
     {6, 10, 1},
@@ -4415,14 +4415,14 @@ static const struct UnkStruct1 Unknown_83ECFD0[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFE8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_ReelTime[] = {
     {0, 13, 0},
     {1, 14, 0},
     {7, 15, 0},
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ECFF8[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusBig[] = {
     {19, 26, 0},
     {20, 27, 1},
     {21, 28, 2},
@@ -4435,7 +4435,7 @@ static const struct UnkStruct1 Unknown_83ECFF8[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 Unknown_83ED020[] = {
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusRegular[] = {
     {22, 18, 0},
     {23, 19, 1},
     {24, 20, 2},
@@ -4448,14 +4448,14 @@ static const struct UnkStruct1 Unknown_83ED020[] = {
     {255, 0, 0}
 };
 
-static const struct UnkStruct1 *const gUnknown_083ED048[] = {
-    Unknown_83ECF98,
-    Unknown_83ECFA8,
-    Unknown_83ECFC4,
-    Unknown_83ECFD0,
-    Unknown_83ECFE8,
-    Unknown_83ED020,
-    Unknown_83ECFF8
+static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[] = {
+    sDigitalDisplay_InsertBet,
+    sDigitalDisplay_StopReel,
+    sDigitalDisplay_Win,
+    sDigitalDisplay_Lose,
+    sDigitalDisplay_ReelTime,
+    sDigitalDisplay_BonusRegular,
+    sDigitalDisplay_BonusBig
 };
 
 static void (*const sDigitalDisplaySceneExitCallbacks[])(void) = {
