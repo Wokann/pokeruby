@@ -324,11 +324,11 @@ bool8 (*const sLavaridgeGym1FWarpEffectFuncs[])(struct Task *, struct ObjectEven
     LavaridgeGym1FWarpEffect_Warp
 };
 
-static void EscapeRopeFieldEffect_Step0(struct Task *);
-static void EscapeRopeFieldEffect_Step1(struct Task *);
-void (*const gEscapeRopeFieldEffectFuncs[])(struct Task *) = {
-    EscapeRopeFieldEffect_Step0,
-    EscapeRopeFieldEffect_Step1
+static void EscapeRopeWarpOutEffect_Init(struct Task *);
+static void EscapeRopeWarpOutEffect_Spin(struct Task *);
+static void (*const sEscapeRopeWarpOutEffectFuncs[])(struct Task *) = {
+    EscapeRopeWarpOutEffect_Init,
+    EscapeRopeWarpOutEffect_Spin
 };
 
 static u8 sActiveList[32];
@@ -1908,8 +1908,8 @@ bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *task, struct ObjectEvent *ob
     return FALSE;
 }
 
-static void DoEscapeRopeFieldEffect(u8);
-void mapldr_080859D4(void);
+static void Task_EscapeRopeWarpOut(u8);
+void FieldCallback_EscapeRopeWarpIn(void);
 
 bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -1941,26 +1941,32 @@ void SpriteCB_AshPuff(struct Sprite *sprite)
     }
 }
 
+#define tEscapeRopeState data[0]
+#define tSpinDelay data[1]
+#define tNumTurns data[2]
+#define tWarpTimer data[14]
+#define tStartDirection data[15]
+
 void StartEscapeRopeFieldEffect(void)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    CreateTask(DoEscapeRopeFieldEffect, 0x50);
+    CreateTask(Task_EscapeRopeWarpOut, 0x50);
 }
 
-static void DoEscapeRopeFieldEffect(u8 taskId)
+static void Task_EscapeRopeWarpOut(u8 taskId)
 {
-    gEscapeRopeFieldEffectFuncs[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sEscapeRopeWarpOutEffectFuncs[gTasks[taskId].tEscapeRopeState](&gTasks[taskId]);
 }
 
-static void EscapeRopeFieldEffect_Step0(struct Task *task)
+static void EscapeRopeWarpOutEffect_Init(struct Task *task)
 {
-    task->data[0]++;
-    task->data[14] = 64;
-    task->data[15] = GetPlayerFacingDirection();
+    task->tEscapeRopeState++;
+    task->tWarpTimer = 64;
+    task->tStartDirection = GetPlayerFacingDirection();
 }
 
-static void EscapeRopeFieldEffect_Step1(struct Task *task)
+static void EscapeRopeWarpOutEffect_Spin(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     u8 clockwiseDirections[5] = {
@@ -1971,7 +1977,7 @@ static void EscapeRopeFieldEffect_Step1(struct Task *task)
         DIR_SOUTH,
     };
 
-    if (task->data[14] != 0 && (--task->data[14]) == 0)
+    if (task->tWarpTimer != 0 && (--task->tWarpTimer) == 0)
     {
         TryFadeOutOldMapMusic();
         WarpFadeOutScreen();
@@ -1980,34 +1986,34 @@ static void EscapeRopeFieldEffect_Step1(struct Task *task)
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
-        if (task->data[14] == 0 && !gPaletteFade.active && BGMusicStopped() == TRUE)
+        if (task->tWarpTimer == 0 && !gPaletteFade.active && BGMusicStopped() == TRUE)
         {
-            SetObjectEventDirection(objectEvent, task->data[15]);
+            SetObjectEventDirection(objectEvent, task->tStartDirection);
             sub_8053678();
             WarpIntoMap();
-            gFieldCallback = mapldr_080859D4;
+            gFieldCallback = FieldCallback_EscapeRopeWarpIn;
             SetMainCallback2(CB2_LoadMap);
-            DestroyTask(FindTaskIdByFunc(DoEscapeRopeFieldEffect));
+            DestroyTask(FindTaskIdByFunc(Task_EscapeRopeWarpOut));
         }
-        else if (task->data[1] == 0 || (--task->data[1]) == 0)
+        else if (task->tSpinDelay == 0 || (--task->tSpinDelay) == 0)
         {
             ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(clockwiseDirections[objectEvent->facingDirection]));
-            if (task->data[2] < 12)
-                task->data[2]++;
+            if (task->tNumTurns < 12)
+                task->tNumTurns++;
 
-            task->data[1] = 8 >> (task->data[2] >> 2);
+            task->tSpinDelay = 8 >> (task->tNumTurns >> 2);
         }
     }
 }
 
-void (*const gUnknown_0839F388[])(struct Task *) = {
-    sub_8087AA4,
-    sub_8087AC8
+static void (*const sEscapeRopeWarpInEffectFuncs[])(struct Task *) = {
+    EscapeRopeWarpInEffect_Init,
+    EscapeRopeWarpInEffect_Spin
 };
 
-void sub_8087A74(u8);
+void Task_EscapeRopeWarpIn(u8);
 
-void mapldr_080859D4(void)
+void FieldCallback_EscapeRopeWarpIn(void)
 {
     Overworld_PlaySpecialMapMusic();
     WarpFadeInScreen();
@@ -2015,50 +2021,56 @@ void mapldr_080859D4(void)
     FreezeObjectEvents();
     gFieldCallback = NULL;
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
-    CreateTask(sub_8087A74, 0);
+    CreateTask(Task_EscapeRopeWarpIn, 0);
 }
 
-void sub_8087A74(u8 taskId)
+void Task_EscapeRopeWarpIn(u8 taskId)
 {
-    gUnknown_0839F388[gTasks[taskId].data[0]](&gTasks[taskId]);
+    sEscapeRopeWarpInEffectFuncs[gTasks[taskId].tEscapeRopeState](&gTasks[taskId]);
 }
 
-void sub_8087AA4(struct Task *task)
+void EscapeRopeWarpInEffect_Init(struct Task *task)
 {
     if (IsWeatherNotFadingIn())
     {
-        task->data[0]++;
-        task->data[15] = GetPlayerFacingDirection();
+        task->tEscapeRopeState++;
+        task->tStartDirection = GetPlayerFacingDirection();
     }
 }
 
-void sub_8087AC8(struct Task *task)
+void EscapeRopeWarpInEffect_Spin(struct Task *task)
 {
     u8 spinDirections[5] = {DIR_SOUTH, DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH};
     struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
-    if (task->data[1] == 0 || (--task->data[1]) == 0)
+    if (task->tSpinDelay == 0 || (--task->tSpinDelay) == 0)
     {
         if (ObjectEventIsMovementOverridden(objectEvent) && !ObjectEventClearHeldMovementIfFinished(objectEvent))
         {
             return;
         }
-        if (task->data[2] >= 32 && task->data[15] == GetPlayerFacingDirection())
+        if (task->tNumTurns >= 32 && task->tStartDirection == GetPlayerFacingDirection())
         {
             objectEvent->invisible = FALSE;
             UnlockPlayerFieldControls();
             UnfreezeObjectEvents();
-            DestroyTask(FindTaskIdByFunc(sub_8087A74));
+            DestroyTask(FindTaskIdByFunc(Task_EscapeRopeWarpIn));
             return;
         }
         ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(spinDirections[objectEvent->facingDirection]));
-        if (task->data[2] < 32)
+        if (task->tNumTurns < 32)
         {
-            task->data[2]++;
+            task->tNumTurns++;
         }
-        task->data[1] = task->data[2] >> 2;
+        task->tSpinDelay = task->tNumTurns >> 2;
     }
     objectEvent->invisible ^= 1;
 }
+
+#undef tEscapeRopeState
+#undef tSpinDelay
+#undef tNumTurns
+#undef tWarpTimer
+#undef tStartDirection
 
 static void Task_TeleportWarpOut(u8);
 static void TeleportWarpOutFieldEffect_Init(struct Task*);

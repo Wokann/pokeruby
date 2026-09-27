@@ -104,8 +104,8 @@ bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *, struct ObjectEvent *, st
 bool8 LavaridgeGym1FWarpEffect_FadeOut(struct Task *, struct ObjectEvent *, struct Sprite *);
 bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *, struct ObjectEvent *, struct Sprite *);
 
-void sub_8087AA4(struct Task *);
-void sub_8087AC8(struct Task *);
+void EscapeRopeWarpInEffect_Init(struct Task *);
+void EscapeRopeWarpInEffect_Spin(struct Task *);
 
 void sub_8088150(struct Task *);
 void sub_80881C0(struct Task *);
