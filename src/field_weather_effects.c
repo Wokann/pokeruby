@@ -651,7 +651,7 @@ static const u16 sRainSpriteFallingDurations[][2] =
 
 static const struct SpriteSheet sRainSpriteSheet = {gWeatherRainTiles, sizeof(gWeatherRainTiles), 0x1206};
 
-static const struct OamData gOamData_839AAD4 =
+static const struct OamData sSnowflakeSpriteOamData =
 {
     .y = 0,
     .affineMode = 0,
@@ -668,40 +668,40 @@ static const struct OamData gOamData_839AAD4 =
     .affineParam = 0,
 };
 
-static const struct SpriteFrameImage gSpriteImageTable_839AADC[] =
+static const struct SpriteFrameImage sSnowflakeSpriteImages[] =
 {
     {gWeatherSnow1Tiles, sizeof(gWeatherSnow1Tiles)},
     {gWeatherSnow2Tiles, sizeof(gWeatherSnow2Tiles)},
 };
 
-static const union AnimCmd gSpriteAnim_839AAEC[] =
+static const union AnimCmd sSnowflakeAnimCmd0[] =
 {
     ANIMCMD_FRAME(0, 16),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gSpriteAnim_839AAF4[] =
+static const union AnimCmd sSnowflakeAnimCmd1[] =
 {
     ANIMCMD_FRAME(1, 16),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gSpriteAnimTable_839AAFC[] =
+static const union AnimCmd *const sSnowflakeAnimCmds[] =
 {
-    gSpriteAnim_839AAEC,
-    gSpriteAnim_839AAF4,
+    sSnowflakeAnimCmd0,
+    sSnowflakeAnimCmd1,
 };
 
-void sub_807ED48(struct Sprite *);
+static void UpdateSnowflakeSprite(struct Sprite *);
 static const struct SpriteTemplate sSnowflakeSpriteTemplate =
 {
     .tileTag = 0xFFFF,
     .paletteTag = 4608,
-    .oam = &gOamData_839AAD4,
-    .anims = gSpriteAnimTable_839AAFC,
-    .images = gSpriteImageTable_839AADC,
+    .oam = &sSnowflakeSpriteOamData,
+    .anims = sSnowflakeAnimCmds,
+    .images = sSnowflakeSpriteImages,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_807ED48,
+    .callback = UpdateSnowflakeSprite,
 };
 
 // unused data
@@ -889,7 +889,7 @@ void Snow_InitVars(void)
 }
 
 void Snow_Main(void);
-void sub_807ED48(struct Sprite *);
+static void UpdateSnowflakeSprite(struct Sprite *);
 
 void Snow_InitAll(void)
 {
@@ -901,16 +901,16 @@ void Snow_InitAll(void)
         Snow_Main();
         for (i = 0; i < gWeatherPtr->snowflakeSpriteCount; i++)
         {
-            sub_807ED48(gWeatherPtr->sprites.s1.snowflakeSprites[i]);
+            UpdateSnowflakeSprite(gWeatherPtr->sprites.s1.snowflakeSprites[i]);
         }
     }
 }
 
-u8 snowflakes_progress(void);
+static bool8 UpdateVisibleSnowflakeSprites(void);
 
 void Snow_Main(void)
 {
-    if (gWeatherPtr->initStep == 0 && snowflakes_progress() == FALSE)
+    if (gWeatherPtr->initStep == 0 && UpdateVisibleSnowflakeSprites() == FALSE)
     {
         gWeatherPtr->weatherGfxLoaded = TRUE;
         gWeatherPtr->initStep++;
@@ -927,7 +927,7 @@ bool8 Snow_Finish(void)
         gWeatherPtr->finishStep++;
         // fall through
     case 1:
-        if (snowflakes_progress() == FALSE)
+        if (UpdateVisibleSnowflakeSprites() == FALSE)
         {
             gWeatherPtr->finishStep++;
             return FALSE;
@@ -937,10 +937,10 @@ bool8 Snow_Finish(void)
     return FALSE;
 }
 
-bool8 CreateSnowflakeSprite(void);
-bool8 RemoveSnowflakeSprite(void);
+static bool8 CreateSnowflakeSprite(void);
+static bool8 DestroySnowflakeSprite(void);
 
-bool8 snowflakes_progress(void)
+static bool8 UpdateVisibleSnowflakeSprites(void)
 {
     if (gWeatherPtr->snowflakeSpriteCount == gWeatherPtr->unknown_6E5)
         return FALSE;
@@ -952,27 +952,27 @@ bool8 snowflakes_progress(void)
         if (gWeatherPtr->snowflakeSpriteCount < gWeatherPtr->unknown_6E5)
             CreateSnowflakeSprite();
         else
-            RemoveSnowflakeSprite();
+            DestroySnowflakeSprite();
     }
     return (gWeatherPtr->snowflakeSpriteCount != gWeatherPtr->unknown_6E5);
 }
 
-void sub_807EC40(struct Sprite *);
+static void InitSnowflakeSpriteMovement(struct Sprite *);
 
-bool8 CreateSnowflakeSprite(void)
+static bool8 CreateSnowflakeSprite(void)
 {
     u8 spriteId = CreateSpriteAtEnd(&sSnowflakeSpriteTemplate, 0, 0, 78);
 
     if (spriteId == 64)
         return FALSE;
     gSprites[spriteId].data[4] = gWeatherPtr->snowflakeSpriteCount;
-    sub_807EC40(&gSprites[spriteId]);
+    InitSnowflakeSpriteMovement(&gSprites[spriteId]);
     gSprites[spriteId].coordOffsetEnabled = TRUE;
     gWeatherPtr->sprites.s1.snowflakeSprites[gWeatherPtr->snowflakeSpriteCount++] = &gSprites[spriteId];
     return TRUE;
 }
 
-bool8 RemoveSnowflakeSprite(void)
+static bool8 DestroySnowflakeSprite(void)
 {
     if (gWeatherPtr->snowflakeSpriteCount != 0)
     {
@@ -982,7 +982,7 @@ bool8 RemoveSnowflakeSprite(void)
     return FALSE;
 }
 
-void sub_807EC40(struct Sprite *sprite)
+static void InitSnowflakeSpriteMovement(struct Sprite *sprite)
 {
     u16 r4 = ((sprite->data[4] * 5) & 7) * 30 + (Random() % 30);
     u16 r6;
@@ -1001,19 +1001,19 @@ void sub_807EC40(struct Sprite *sprite)
     sprite->data[5] = 0;
 }
 
-void sub_807ECEC(struct Sprite *sprite)
+static void WaitSnowflakeSprite(struct Sprite *sprite)
 {
     if (gWeatherPtr->unknown_6E2 > 18)
     {
         sprite->invisible = FALSE;
-        sprite->callback = sub_807ED48;
+        sprite->callback = UpdateSnowflakeSprite;
         sprite->y = 0xFA - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
         sprite->data[0] = sprite->y * 128;
         gWeatherPtr->unknown_6E2 = 0;
     }
 }
 
-void sub_807ED48(struct Sprite *sprite)
+static void UpdateSnowflakeSprite(struct Sprite *sprite)
 {
     s16 r3;
     s16 r2;
@@ -1046,16 +1046,16 @@ void sub_807ED48(struct Sprite *sprite)
         sprite->data[5] = 0;
         sprite->data[6] = 220;
         sprite->invisible = TRUE;
-        sprite->callback = sub_807ECEC;
+        sprite->callback = WaitSnowflakeSprite;
     }
 
     sprite->data[5]++;
     if (sprite->data[5] == sprite->data[6])
     {
-        sub_807EC40(sprite);
+        InitSnowflakeSpriteMovement(sprite);
         sprite->y = 250;
         sprite->invisible = TRUE;
-        sprite->callback = sub_807ECEC;
+        sprite->callback = WaitSnowflakeSprite;
     }
 }
 
