@@ -1074,7 +1074,7 @@ void Thunderstorm_InitVars(void)
     gWeatherPtr->gammaTargetIndex = 3;
     gWeatherPtr->gammaStepDelay = 20;
     gWeatherPtr->weatherGfxLoaded = FALSE;  // duplicate assignment
-    gWeatherPtr->unknown_6ED = 0;
+    gWeatherPtr->thunderEnqueued = 0;
     SetRainStrengthFromSoundEffect(SE_THUNDERSTORM);
 }
 
@@ -1141,42 +1141,42 @@ void Thunderstorm_Main(void)
         gWeatherPtr->initStep = 6;
         break;
     case 4:
-        gWeatherPtr->unknown_6EA = 1;
-        gWeatherPtr->unknown_6E6 = (Random() % 360) + 360;
+        gWeatherPtr->thunderAllowEnd = 1;
+        gWeatherPtr->thunderTimer = (Random() % 360) + 360;
         gWeatherPtr->initStep++;
         // fall through
     case 5:
-        if (--gWeatherPtr->unknown_6E6 != 0)
+        if (--gWeatherPtr->thunderTimer != 0)
             break;
         gWeatherPtr->initStep++;
         break;
     case 6:
-        gWeatherPtr->unknown_6EA = 1;
-        gWeatherPtr->unknown_6EB = Random() % 2;
+        gWeatherPtr->thunderAllowEnd = 1;
+        gWeatherPtr->thunderLongBolt = Random() % 2;
         gWeatherPtr->initStep++;
         break;
     case 7:
-        gWeatherPtr->unknown_6EC = (Random() & 1) + 1;
+        gWeatherPtr->thunderShortBolts = (Random() & 1) + 1;
         gWeatherPtr->initStep++;
         // fall through
     case 8:
         ApplyWeatherColorMapIfIdle(19);
-        if (gWeatherPtr->unknown_6EB == 0 && gWeatherPtr->unknown_6EC == 1)
+        if (gWeatherPtr->thunderLongBolt == 0 && gWeatherPtr->thunderShortBolts == 1)
             EnqueueThunder(20);
-        gWeatherPtr->unknown_6E6 = (Random() % 3) + 6;
+        gWeatherPtr->thunderTimer = (Random() % 3) + 6;
         gWeatherPtr->initStep++;
         break;
     case 9:
-        if (--gWeatherPtr->unknown_6E6 != 0)
+        if (--gWeatherPtr->thunderTimer != 0)
             break;
         ApplyWeatherColorMapIfIdle(3);
-        gWeatherPtr->unknown_6EA = 1;
-        if (--gWeatherPtr->unknown_6EC != 0)
+        gWeatherPtr->thunderAllowEnd = 1;
+        if (--gWeatherPtr->thunderShortBolts != 0)
         {
-            gWeatherPtr->unknown_6E6 = (Random() % 16) + 60;
+            gWeatherPtr->thunderTimer = (Random() % 16) + 60;
             gWeatherPtr->initStep = 10;
         }
-        else if (gWeatherPtr->unknown_6EB == 0)
+        else if (gWeatherPtr->thunderLongBolt == 0)
         {
             gWeatherPtr->initStep = 4;
         }
@@ -1186,25 +1186,25 @@ void Thunderstorm_Main(void)
         }
         break;
     case 10:
-        if (--gWeatherPtr->unknown_6E6 != 0)
+        if (--gWeatherPtr->thunderTimer != 0)
             break;
         gWeatherPtr->initStep = 8;
         break;
     case 11:
-        gWeatherPtr->unknown_6E6 = (Random() % 16) + 60;
+        gWeatherPtr->thunderTimer = (Random() % 16) + 60;
         gWeatherPtr->initStep++;
         break;
     case 12:
-        if (--gWeatherPtr->unknown_6E6 != 0)
+        if (--gWeatherPtr->thunderTimer != 0)
             break;
         EnqueueThunder(100);
         ApplyWeatherColorMapIfIdle(19);
         // Why use "% 16" everywhere else and "& 0xF" here. So dumb.
-        gWeatherPtr->unknown_6E6 = (Random() & 0xF) + 30;
+        gWeatherPtr->thunderTimer = (Random() & 0xF) + 30;
         gWeatherPtr->initStep++;
         break;
     case 13:
-        if (--gWeatherPtr->unknown_6E6 != 0)
+        if (--gWeatherPtr->thunderTimer != 0)
             break;
         ApplyWeatherColorMapIfIdle_Gradual(19, 3, 5);
         gWeatherPtr->initStep++;
@@ -1212,7 +1212,7 @@ void Thunderstorm_Main(void)
     case 14:
         if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_IDLE)
             break;
-        gWeatherPtr->unknown_6EA = 1;
+        gWeatherPtr->thunderAllowEnd = 1;
         gWeatherPtr->initStep = 4;
         break;
     }
@@ -1223,12 +1223,12 @@ bool8 Thunderstorm_Finish(void)
     switch (gWeatherPtr->finishStep)
     {
     case 0:
-        gWeatherPtr->unknown_6EA = 0;
+        gWeatherPtr->thunderAllowEnd = 0;
         gWeatherPtr->finishStep++;
         // fall through
     case 1:
         Thunderstorm_Main();
-        if (gWeatherPtr->unknown_6EA != 0)
+        if (gWeatherPtr->thunderAllowEnd != 0)
         {
             if (gWeatherPtr->nextWeather == WEATHER_RAIN_LIGHT
              || gWeatherPtr->nextWeather == WEATHER_RAIN_MED
@@ -1242,7 +1242,7 @@ bool8 Thunderstorm_Finish(void)
         if (UpdateVisibleRainSprites())
             break;
         DestroyRainSprites();
-        gWeatherPtr->unknown_6ED = 0;
+        gWeatherPtr->thunderEnqueued = 0;
         gWeatherPtr->finishStep++;
         return FALSE;
     default:
@@ -1253,18 +1253,18 @@ bool8 Thunderstorm_Finish(void)
 
 static void EnqueueThunder(u16 max)
 {
-    if (gWeatherPtr->unknown_6ED == 0)
+    if (gWeatherPtr->thunderEnqueued == 0)
     {
-        gWeatherPtr->thunderCounter = Random() % max;
-        gWeatherPtr->unknown_6ED = 1;
+        gWeatherPtr->thunderSETimer = Random() % max;
+        gWeatherPtr->thunderEnqueued = 1;
     }
 }
 
 static void UpdateThunderSound(void)
 {
-    if (gWeatherPtr->unknown_6ED == 1)
+    if (gWeatherPtr->thunderEnqueued == 1)
     {
-        if (gWeatherPtr->thunderCounter == 0)
+        if (gWeatherPtr->thunderSETimer == 0)
         {
             if (IsSEPlaying())
                 return;
@@ -1272,11 +1272,11 @@ static void UpdateThunderSound(void)
                 PlaySE(SE_THUNDER);
             else
                 PlaySE(SE_THUNDER2);
-            gWeatherPtr->unknown_6ED = 0;
+            gWeatherPtr->thunderEnqueued = 0;
         }
         else
         {
-            gWeatherPtr->thunderCounter--;
+            gWeatherPtr->thunderSETimer--;
         }
     }
 }
