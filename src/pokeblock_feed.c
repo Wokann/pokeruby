@@ -43,8 +43,8 @@ extern const u8 gPokeblock_Gfx[];
 extern const u8 gBattleEnvironmentTiles_Building[];
 extern const u8 gUnknown_08E782FC[];
 extern const u8 gBattleEnvironmentPalette_BattleTower[];
-extern const struct CompressedSpriteSheet gUnknown_083F7F74;
-extern const struct CompressedSpritePalette gUnknown_083F7F7C;
+extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;
+extern const struct CompressedSpritePalette gPokeblockCase_SpritePal;
 
 bool8 IsPokeSpriteNotFlipped(u16 species);
 
@@ -633,11 +633,11 @@ static bool8 sub_8147B20(struct Pokemon* mon)
         }
         break;
     case 2:
-        LoadCompressedObjectPic(&gUnknown_083F7F74);
+        LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
         ePokeblockGfxState++;
         break;
     case 3:
-        LoadCompressedObjectPalette(&gUnknown_083F7F7C);
+        LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
         ePokeblockGfxState++;
         break;
     case 4:

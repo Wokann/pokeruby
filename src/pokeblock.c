@@ -39,14 +39,14 @@ static EWRAM_DATA u8 gUnknown_0203924C = 0;
 
 // function declarations
 
-// gUnknown_083F7EF4
+// sPokeblockMenuActions
 static void sub_810C508(u8);
 static void sub_810C5C0(u8);
 static void sub_810C748(u8);
 static void sub_810C788(u8);
 static void sub_810C854(u8);
 
-// gUnknown_083F7F24
+// sTossYesNoFuncTable
 static void sub_810C610(u8);
 static void sub_810C668(u8);
 
@@ -148,7 +148,7 @@ const u8 *const gPokeblockNames[] =
     ContestStatsText_GoldPokeBlock
 };
 
-const struct MenuAction2 gUnknown_083F7EF4[] =
+const struct MenuAction2 sPokeblockMenuActions[] =
 {
     {OtherText_Use,     sub_810C508},
     {OtherText_Toss,    sub_810C5C0},
@@ -157,32 +157,32 @@ const struct MenuAction2 gUnknown_083F7EF4[] =
     {OtherText_Use,     sub_810C854},
 };
 
-const u8 gUnknown_083F7F1C[] = {0, 1, 2};
-const u8 gUnknown_083F7F1F[] = {3, 2};
-const u8 gUnknown_083F7F21[] = {4, 2};
+const u8 sActionsOnField[] = {0, 1, 2};
+const u8 sActionsInBattle[] = {3, 2};
+const u8 sActionsOnPokeblockFeeder[] = {4, 2};
 
-const struct YesNoFuncTable gUnknown_083F7F24 = {sub_810C610, sub_810C668};
+const struct YesNoFuncTable sTossYesNoFuncTable = {sub_810C610, sub_810C668};
 
 const u8 UnreferencedData_083F7F2C[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
 
-const struct OamData gOamData_83F7F34 =
+const struct OamData sOamData_PokeblockCase =
 {
     .size = 3,
     .priority = 2
 };
 
-const union AnimCmd gSpriteAnim_83F7F3C[] =
+const union AnimCmd sSpriteAnim_PokeblockCase[] =
 {
     ANIMCMD_FRAME(.imageValue = 0, .duration = 0),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83F7F44[] =
+const union AnimCmd *const sSpriteAnimTable_PokeblockCase[] =
 {
-    gSpriteAnim_83F7F3C
+    sSpriteAnim_PokeblockCase
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83F7F48[] =
+const union AffineAnimCmd sAffineAnim_PokeblockCaseShake[] =
 {
     AFFINEANIMCMD_FRAME(0, 0, -2,  2),
     AFFINEANIMCMD_FRAME(0, 0,  2,  4),
@@ -191,36 +191,36 @@ const union AffineAnimCmd gSpriteAffineAnim_83F7F48[] =
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83F7F70[] =
+const union AffineAnimCmd *const sAffineAnims_PokeblockCaseShake[] =
 {
-    gSpriteAffineAnim_83F7F48
+    sAffineAnim_PokeblockCaseShake
 };
 
-const struct CompressedSpriteSheet gUnknown_083F7F74 =
+const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet =
 {
     gMenuPokeblockDevice_Gfx,
     0x800,
     GFX_TAG_POKEBLOCK_CASE
 };
 
-const struct CompressedSpritePalette gUnknown_083F7F7C =
+const struct CompressedSpritePalette gPokeblockCase_SpritePal =
 {
     gMenuPokeblockDevice_Pal,
     GFX_TAG_POKEBLOCK_CASE
 };
 
-const struct SpriteTemplate gSpriteTemplate_83F7F84 =
+const struct SpriteTemplate sSpriteTemplate_PokeblockCase =
 {
     GFX_TAG_POKEBLOCK_CASE,
     GFX_TAG_POKEBLOCK_CASE,
-    &gOamData_83F7F34,
-    gSpriteAnimTable_83F7F44,
+    &sOamData_PokeblockCase,
+    sSpriteAnimTable_PokeblockCase,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
 };
 
-const struct Pokeblock gUnknown_083F7F9C[] =
+const struct Pokeblock sFavoritePokeblocksTable[] =
 {
     { PBLOCK_CLR_RED,      20,  0,  0,  0,  0, 20 },
     { PBLOCK_CLR_BLUE,      0, 20,  0,  0,  0, 20 },
@@ -401,11 +401,11 @@ static bool8 sub_810B998(void)
             ePokeblockGfxState++;
             break;
         case 3:
-            LoadCompressedObjectPic(&gUnknown_083F7F74);
+            LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
             ePokeblockGfxState++;
             break;
         case 4:
-            LoadCompressedObjectPalette(&gUnknown_083F7F7C);
+            LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
             ePokeblockGfxState = 0;
             return TRUE;
     }
@@ -414,7 +414,7 @@ static bool8 sub_810B998(void)
 
 u8 sub_810BA50(s16 x, s16 y, u8 subpriority)
 {
-    return CreateSprite(&gSpriteTemplate_83F7F84, x, y, subpriority);
+    return CreateSprite(&sSpriteTemplate_PokeblockCase, x, y, subpriority);
 }
 
 void sub_810BA7C(u8 a0)
@@ -423,16 +423,16 @@ void sub_810BA7C(u8 a0)
     switch (gUnknown_02039244)
     {
         default:
-            gUnknown_03000758 = gUnknown_083F7F1C;
-            gUnknown_0203924C = sizeof gUnknown_083F7F1C;
+            gUnknown_03000758 = sActionsOnField;
+            gUnknown_0203924C = sizeof sActionsOnField;
             break;
         case 2:
-            gUnknown_03000758 = gUnknown_083F7F1F;
-            gUnknown_0203924C = sizeof gUnknown_083F7F1F;
+            gUnknown_03000758 = sActionsInBattle;
+            gUnknown_0203924C = sizeof sActionsInBattle;
             break;
         case 3:
-            gUnknown_03000758 = gUnknown_083F7F21;
-            gUnknown_0203924C = sizeof gUnknown_083F7F21;
+            gUnknown_03000758 = sActionsOnPokeblockFeeder;
+            gUnknown_0203924C = sizeof sActionsOnPokeblockFeeder;
             break;
     }
 }
@@ -454,8 +454,8 @@ void debug_sub_8120F98(void)
 {
     u8 i;
 
-    for (i = 0; i < 40 && gUnknown_083F7F9C[i].color != 0; i++)
-        gSaveBlock1.pokeblocks[i] = gUnknown_083F7F9C[i];
+    for (i = 0; i < 40 && sFavoritePokeblocksTable[i].color != 0; i++)
+        gSaveBlock1.pokeblocks[i] = sFavoritePokeblocksTable[i];
 }
 #endif
 
@@ -830,7 +830,7 @@ static void sub_810C368(u8 taskId)
     StopVerticalScrollIndicators(BOTTOM_ARROW);
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_DrawStdWindowFrame(7, v0 + 4, 13, 11);
-    Menu_PrintItemsReordered(8, v0 + 5, gUnknown_0203924C, gUnknown_083F7EF4, gUnknown_03000758);
+    Menu_PrintItemsReordered(8, v0 + 5, gUnknown_0203924C, sPokeblockMenuActions, gUnknown_03000758);
     InitMenu(0, 8, v0 + 5, gUnknown_0203924C, 0, 5);
     gSpecialVar_ItemId = gUnknown_02039248.unk0 + gUnknown_02039248.unk1;
     gTasks[taskId].func = sub_810C40C;
@@ -857,7 +857,7 @@ static void sub_810C40C(u8 taskId)
     else if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gUnknown_083F7EF4[gUnknown_03000758[Menu_GetCursorPos()]].func(taskId);
+        sPokeblockMenuActions[gUnknown_03000758[Menu_GetCursorPos()]].func(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -901,7 +901,7 @@ static void sub_810C5C0(u8 taskId)
 static void sub_810C5EC(u8 taskId)
 {
     DisplayYesNoMenu(7, 6, 1);
-    DoYesNoFuncWithChoice(taskId, &gUnknown_083F7F24);
+    DoYesNoFuncWithChoice(taskId, &sTossYesNoFuncTable);
 }
 
 static void sub_810C610(u8 taskId)
@@ -995,7 +995,7 @@ static void sub_810C8D4(struct Sprite *sprite)
     {
         case 0:
             sprite->oam.affineMode = 1;
-            sprite->affineAnims = gSpriteAffineAnimTable_83F7F70;
+            sprite->affineAnims = sAffineAnims_PokeblockCaseShake;
             InitSpriteAffineAnim(sprite);
             sprite->data[0] = 1;
             sprite->data[1] = 0;
@@ -1137,7 +1137,7 @@ bool8 sub_810CB68(u8 nature, u8 *dest)
     u8 flavor;
     for (flavor=0; flavor<5; flavor++)
     {
-        if (PokeblockGetGain(nature, &gUnknown_083F7F9C[flavor]) > 0)
+        if (PokeblockGetGain(nature, &sFavoritePokeblocksTable[flavor]) > 0)
         {
             StringCopy(dest, gPokeblockNames[flavor + 1]);
             return TRUE;
