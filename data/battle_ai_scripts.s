@@ -23,25 +23,25 @@ gBattleAI_ScriptsTable:: @ 81DA01C
 	.4byte AI_Nothing
 	.4byte AI_HPAware
 	.4byte AI_TrySunnyDayStart
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
-	.4byte AI_Unused
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
+	.4byte AI_Ret
 	.4byte AI_Roaming
 	.4byte AI_Safari
 	.4byte AI_FirstBattle
@@ -2059,19 +2059,19 @@ AI_CV_BatonPass4: @ 81DB85D
 	goto AI_CV_BatonPass_End
 
 AI_CV_BatonPass5: @ 81DB86A
-	if_stat_level_more_than AI_USER, STAT_ATK, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_DEF, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_SPATK, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_SPDEF, 7, AI_CV_BatonPass6
-	if_stat_level_more_than AI_USER, STAT_EVASION, 7, AI_CV_BatonPass6
+	if_stat_level_more_than AI_USER, STAT_ATK, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_DEF, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_SPATK, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_SPDEF, 7, AI_CV_BatonPass7
+	if_stat_level_more_than AI_USER, STAT_EVASION, 7, AI_CV_BatonPass7
 	goto AI_CV_BatonPass_ScoreDown2
 
-AI_CV_BatonPass6: @ 81DB897
-	if_would_go_first USER, AI_CV_BatonPass7
+AI_CV_BatonPass7: @ 81DB897
+	if_would_go_first USER, AI_CV_BatonPass8
 	if_hp_more_than AI_USER, 60, AI_CV_BatonPass_ScoreDown2
 	goto AI_CV_BatonPass_End
 
-AI_CV_BatonPass7: @ 81DB8A9
+AI_CV_BatonPass8: @ 81DB8A9
 	if_hp_less_than AI_USER, 70, AI_CV_BatonPass_End
 
 AI_CV_BatonPass_ScoreDown2: @ 81DB8B0
@@ -3143,5 +3143,5 @@ AI_FirstBattle: @ 81DC105
 AI_FirstBattle_Flee: @ 81DC114
 	flee
 
-AI_Unused: @ 81DC115
+AI_Ret: @ 81DC115
 	end
