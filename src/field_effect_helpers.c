@@ -1360,6 +1360,13 @@ u32 FldEff_BerryTreeGrowthSparkle(void)
     return 0;
 }
 
+#define sDisguiseState      data[0]
+#define sDisguiseFldEff     data[1]
+#define sDisguiseLocalId    data[2]
+#define sDisguiseMapNum     data[3]
+#define sDisguiseMapGroup   data[4]
+#define sDisguiseReadyToEnd data[7]
+
 u32 ShowTreeDisguiseFieldEffect(void)
 {
     return ShowDisguiseFieldEffect(FLDEFF_TREE_DISGUISE, 24, 4);
@@ -1377,7 +1384,7 @@ u32 ShowSandDisguiseFieldEffect(void)
     return ShowDisguiseFieldEffect(FLDEFF_SAND_DISGUISE, 28, 2);
 }
 
-static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 templateIdx, u8 paletteNum)
+static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 fldEffObj, u8 paletteNum)
 {
     u8 spriteId;
     struct Sprite *sprite;
@@ -1387,16 +1394,16 @@ static u32 ShowDisguiseFieldEffect(u8 fldEff, u8 templateIdx, u8 paletteNum)
         FieldEffectActiveListRemove(fldEff);
         return MAX_SPRITES;
     }
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[templateIdx], 0, 0, 0);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[fldEffObj], 0, 0, 0);
     if (spriteId != MAX_SPRITES)
     {
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled ++;
         sprite->oam.paletteNum = paletteNum;
-        sprite->data[1] = fldEff;
-        sprite->data[2] = gFieldEffectArguments[0];
-        sprite->data[3] = gFieldEffectArguments[1];
-        sprite->data[4] = gFieldEffectArguments[2];
+        sprite->sDisguiseFldEff = fldEff;
+        sprite->sDisguiseLocalId = gFieldEffectArguments[0];
+        sprite->sDisguiseMapNum = gFieldEffectArguments[1];
+        sprite->sDisguiseMapGroup = gFieldEffectArguments[2];
     }
     return spriteId;
 }
@@ -1407,9 +1414,9 @@ void UpdateDisguiseFieldEffect(struct Sprite *sprite)
     const struct ObjectEventGraphicsInfo *graphicsInfo;
     struct Sprite *linkedSprite;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->data[2], sprite->data[3], sprite->data[4], &objectEventId))
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sDisguiseLocalId, sprite->sDisguiseMapNum, sprite->sDisguiseMapGroup, &objectEventId))
     {
-        FieldEffectStop(sprite, sprite->data[1]);
+        FieldEffectStop(sprite, sprite->sDisguiseFldEff);
     }
 
     graphicsInfo = GetObjectEventGraphicsInfo(gObjectEvents[objectEventId].graphicsId);
@@ -1418,18 +1425,18 @@ void UpdateDisguiseFieldEffect(struct Sprite *sprite)
     sprite->x = linkedSprite->x;
     sprite->y = (graphicsInfo->height >> 1) + linkedSprite->y - 16;
     sprite->subpriority = linkedSprite->subpriority - 1;
-    if (sprite->data[0] == 1)
+    if (sprite->sDisguiseState == 1)
     {
-        sprite->data[0] ++;
+        sprite->sDisguiseState++;
         StartSpriteAnim(sprite, 1);
     }
-    if (sprite->data[0] == 2 && sprite->animEnded)
+    if (sprite->sDisguiseState == 2 && sprite->animEnded)
     {
-        sprite->data[7] = 1;
+        sprite->sDisguiseReadyToEnd = 1;
     }
-    if (sprite->data[0] == 3)
+    if (sprite->sDisguiseState == 3)
     {
-        FieldEffectStop(sprite, sprite->data[1]);
+        FieldEffectStop(sprite, sprite->sDisguiseFldEff);
     }
 }
 
@@ -1437,7 +1444,7 @@ void StartRevealDisguise(struct ObjectEvent *objectEvent)
 {
     if (objectEvent->directionSequenceIndex == 1)
     {
-        gSprites[objectEvent->fieldEffectSpriteId].data[0]++;
+        gSprites[objectEvent->fieldEffectSpriteId].sDisguiseState++;
     }
 }
 
@@ -1454,14 +1461,21 @@ bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent)
         return TRUE;
     }
     sprite = &gSprites[objectEvent->fieldEffectSpriteId];
-    if (sprite->data[7])
+    if (sprite->sDisguiseReadyToEnd)
     {
         objectEvent->directionSequenceIndex = 2;
-        sprite->data[0]++;
+        sprite->sDisguiseState++;
         return TRUE;
     }
     return FALSE;
 }
+
+#undef sDisguiseState
+#undef sDisguiseFldEff
+#undef sDisguiseLocalId
+#undef sDisguiseMapNum
+#undef sDisguiseMapGroup
+#undef sDisguiseReadyToEnd
 
 #define sFinished data[0]
 #define sEndTimer data[1]
