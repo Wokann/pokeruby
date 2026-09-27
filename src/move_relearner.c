@@ -36,19 +36,19 @@ extern const u8 *const gContestCategoryNames[];
 extern const u8 deuOtherText_ForgotAndLearned[];
 #endif
 
-static void InitMoveRelearnerMenuWaitFade(u8);
-static void CB2_InitMoveRelearnerMenu(void);
-static void CB2_MoveRelearnerMenu(void);
-static void MoveRelearnerMain(void);
+static void Task_WaitForFadeOut(u8);
+static void CB2_InitLearnMove(void);
+static void CB2_MoveRelearnerMain(void);
+static void DoMoveRelearnerMain(void);
 static void DrawLearnMoveMenuWindow(void);
 static void DrawBattleMoveInfoHeaders(bool8);
 static u8 ChangeToContestMoveInfoWindow(void);
 static void DrawContestMoveInfoHeaders(bool8);
 static u8 ChangeToBattleMoveInfoWindow(void);
-static void ResetMoveRelearnerMenu(void);
-static void InitMoveRelearnerMenuSprites(void);
-static void InitMoveRelearnerMenuStrings(void);
-static void HandleMoveRelearnerMenuInput(void);
+static void ResetMoveRelearnerMenuState(void);
+static void CreateUISprites(void);
+static void CreateLearnableMovesList(void);
+static void HandleInput(void);
 static void DrawMoveSelectionWindow(void);
 static void DrawMoveInfoWindow(bool8, int);
 static void RedrawMoveInfoWindow(void);
@@ -230,7 +230,7 @@ const struct SpriteTemplate gSpriteTemplate_8402E08 =
 
 const u8 gString_AkitoMori[] = _("あきと");  // programmer Akito Mori?
 
-static void VBlankCB_MoveRelearnerMenu(void)
+static void VBlankCB_MoveRelearner(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -240,31 +240,31 @@ static void VBlankCB_MoveRelearnerMenu(void)
 void TeachMoveRelearnerMove(void)
 {
     LockPlayerFieldControls();
-    CreateTask(InitMoveRelearnerMenuWaitFade, 10);
+    CreateTask(Task_WaitForFadeOut, 10);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-static void InitMoveRelearnerMenuWaitFade(u8 taskId)
+static void Task_WaitForFadeOut(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(CB2_InitMoveRelearnerMenu);
+        SetMainCallback2(CB2_InitLearnMove);
         gFieldCallback = sub_8080990;
         DestroyTask(taskId);
     }
 }
 
-static void CB2_InitMoveRelearnerMenu(void)
+static void CB2_InitLearnMove(void)
 {
     REG_DISPCNT = 0;
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
     sMoveRelearnerMenu = eMoveRelearnerMenu;
-    ResetMoveRelearnerMenu();
+    ResetMoveRelearnerMenuState();
     sMoveRelearnerMenu->partyMonIndex = gSpecialVar_0x8004;
-    InitMoveRelearnerMenuStrings();
-    SetVBlankCallback(VBlankCB_MoveRelearnerMenu);
+    CreateLearnableMovesList();
+    SetVBlankCallback(VBlankCB_MoveRelearner);
 
     Text_LoadWindowTemplate(&gMoveRelearnerMenuFramesWindowTemplate);
     InitMenuWindow(&gMoveRelearnerMenuFramesWindowTemplate);
@@ -281,24 +281,24 @@ static void CB2_InitMoveRelearnerMenu(void)
 
     LoadSpriteSheet(&gMoveRelearnerMenuArrowsSpriteSheet);
     LoadSpritePalette(&gMoveRelearnerMenuArrowsPalette);
-    InitMoveRelearnerMenuSprites();
+    CreateUISprites();
     FillPalette(0, 0, 2);
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
-    SetMainCallback2(CB2_MoveRelearnerMenu);
+    SetMainCallback2(CB2_MoveRelearnerMain);
 }
 
-void CB2_ReturnToMoveRelearnerMenu(void)
+void CB2_InitLearnMoveReturnFromSelectMove(void)
 {
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetTasks();
     sMoveRelearnerMenu = eMoveRelearnerMenu;
-    InitMoveRelearnerMenuStrings();
+    CreateLearnableMovesList();
     sMoveRelearnerMenu->forgetMoveIndex = gSpecialVar_0x8005;
-    SetVBlankCallback(VBlankCB_MoveRelearnerMenu);
+    SetVBlankCallback(VBlankCB_MoveRelearner);
 
     Text_LoadWindowTemplate(&gMoveRelearnerMenuFramesWindowTemplate);
     InitMenuWindow(&gMoveRelearnerMenuFramesWindowTemplate);
@@ -316,18 +316,18 @@ void CB2_ReturnToMoveRelearnerMenu(void)
 
     LoadSpriteSheet(&gMoveRelearnerMenuArrowsSpriteSheet);
     LoadSpritePalette(&gMoveRelearnerMenuArrowsPalette);
-    InitMoveRelearnerMenuSprites();
+    CreateUISprites();
     FillPalette(0, 0, 2);
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
-    SetMainCallback2(CB2_MoveRelearnerMenu);
+    SetMainCallback2(CB2_MoveRelearnerMain);
 }
 
-static void CB2_MoveRelearnerMenu(void)
+static void CB2_MoveRelearnerMain(void)
 {
-    MoveRelearnerMain();
+    DoMoveRelearnerMain();
     if (sMoveRelearnerMenu->redrawCursor)
     {
         sMoveRelearnerMenu->redrawCursor = FALSE;
@@ -349,13 +349,13 @@ static void CB2_MoveRelearnerMenu(void)
     UpdatePaletteFade();
 }
 
-static void PrintMainMoveRelearnerMenuText(const u8 *str)
+static void PrintMessageWithPlaceholders(const u8 *str)
 {
     StringExpandPlaceholders(gStringVar4, str);
     MenuPrintMessage(gStringVar4, 3, 15);
 }
 
-static void MoveRelearnerMain(void)
+static void DoMoveRelearnerMain(void)
 {
     switch (sMoveRelearnerMenu->state)
     {
@@ -385,7 +385,7 @@ static void MoveRelearnerMain(void)
         break;
     case 4:
         if (!ChangeToContestMoveInfoWindow())
-            HandleMoveRelearnerMenuInput();
+            HandleInput();
         return;
     case 5:
         DrawContestMoveInfoHeaders(FALSE);
@@ -396,7 +396,7 @@ static void MoveRelearnerMain(void)
         break;
     case 6:
         if (!ChangeToBattleMoveInfoWindow())
-            HandleMoveRelearnerMenuInput();
+            HandleInput();
         break;
     case 8:
         if (Menu_UpdateWindowText())
@@ -413,7 +413,7 @@ static void MoveRelearnerMain(void)
                 RedrawMoveInfoWindow();
                 if (GiveMoveToMon(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]) != 0xFFFF)
                 {
-                    PrintMainMoveRelearnerMenuText(gOtherText_PokeLearnedMove);
+                    PrintMessageWithPlaceholders(gOtherText_PokeLearnedMove);
                     gSpecialVar_0x8004 = 1;
                     sMoveRelearnerMenu->state = 31;
                 }
@@ -460,7 +460,7 @@ static void MoveRelearnerMain(void)
         }
         break;
     case 16:
-        PrintMainMoveRelearnerMenuText(gOtherText_DeleteOlderMove);
+        PrintMessageWithPlaceholders(gOtherText_DeleteOlderMove);
         sMoveRelearnerMenu->state++;
         break;
     case 17:
@@ -477,7 +477,7 @@ static void MoveRelearnerMain(void)
             if (var == 0)
             {
                 RedrawMoveInfoWindow();
-                PrintMainMoveRelearnerMenuText(gOtherText_WhichMoveToForget);
+                PrintMessageWithPlaceholders(gOtherText_WhichMoveToForget);
                 sMoveRelearnerMenu->state = 19;
             }
             else if (var == -1 || var == 1)
@@ -488,7 +488,7 @@ static void MoveRelearnerMain(void)
         }
         break;
     case 24:
-        PrintMainMoveRelearnerMenuText(gOtherText_StopLearningMove);
+        PrintMessageWithPlaceholders(gOtherText_StopLearningMove);
         sMoveRelearnerMenu->state++;
         break;
     case 25:
@@ -539,7 +539,7 @@ static void MoveRelearnerMain(void)
     case 20:
         if (!gPaletteFade.active)
         {
-            ShowSelectMovePokemonSummaryScreen(gPlayerParty, sMoveRelearnerMenu->partyMonIndex, gPlayerPartyCount - 1, CB2_ReturnToMoveRelearnerMenu, sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]);
+            ShowSelectMovePokemonSummaryScreen(gPlayerParty, sMoveRelearnerMenu->partyMonIndex, gPlayerPartyCount - 1, CB2_InitLearnMoveReturnFromSelectMove, sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]);
             sMoveRelearnerMenu->state = 28;
         }
         break;
@@ -587,7 +587,7 @@ static void MoveRelearnerMain(void)
                 RemoveMonPPBonus(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->forgetMoveIndex);
                 SetMonMoveSlot(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection], sMoveRelearnerMenu->forgetMoveIndex);
                 StringCopy(gStringVar2, gMoveNames[sMoveRelearnerMenu->movesToLearn[sMoveRelearnerMenu->menuSelection]]);
-                PrintMainMoveRelearnerMenuText(gOtherText_ForgotMove123);
+                PrintMessageWithPlaceholders(gOtherText_ForgotMove123);
                 sMoveRelearnerMenu->state = 30;
                 gSpecialVar_0x8004 = 1;
             }
@@ -597,9 +597,9 @@ static void MoveRelearnerMain(void)
         if (Menu_UpdateWindowText())
         {
 #ifdef GERMAN
-            PrintMainMoveRelearnerMenuText(deuOtherText_ForgotAndLearned);
+            PrintMessageWithPlaceholders(deuOtherText_ForgotAndLearned);
 #else
-            PrintMainMoveRelearnerMenuText(gOtherText_ForgotOrDidNotLearnMove);
+            PrintMessageWithPlaceholders(gOtherText_ForgotOrDidNotLearnMove);
 #endif
             sMoveRelearnerMenu->state = 31;
             PlayFanfare(MUS_LEVEL_UP);
@@ -726,7 +726,7 @@ static u8 ChangeToBattleMoveInfoWindow(void)
     return result;
 }
 
-static void ResetMoveRelearnerMenu(void)
+static void ResetMoveRelearnerMenuState(void)
 {
     s32 i;
 
@@ -763,7 +763,7 @@ static void UpdateMoveRelearnerMenuCursorPosition(struct Sprite *sprite)
     sprite->data[1]++;
 }
 
-static void InitMoveRelearnerMenuSprites(void)
+static void CreateUISprites(void)
 {
     s32 i;
 
@@ -803,7 +803,7 @@ static void InitMoveRelearnerMenuSprites(void)
     CreateBlendedOutlineCursor(16, 0xFFFF, 12, 0x2D9F, 18);
 }
 
-static void InitMoveRelearnerMenuStrings(void)
+static void CreateLearnableMovesList(void)
 {
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];
@@ -824,7 +824,7 @@ static void MoveCursorPos(s8 delta)
     sMoveRelearnerMenu->redrawCursor = TRUE;
 }
 
-static void HandleMoveRelearnerMenuInput(void)
+static void HandleInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
