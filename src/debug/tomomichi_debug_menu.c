@@ -487,46 +487,46 @@ static const struct MenuAction sMenuActions_ControlFlags_FH[] = {
     {sString_FH09_15, ControlFlags_FH09_15_InitSubsubmenu}
 };
 
-static const u8 gUnknown_Debug_083C11DC[] = _("FH-00");
-static const u8 gUnknown_Debug_083C11E2[] = _("FH-01");
-static const u8 gUnknown_Debug_083C11E8[] = _("FH-02");
-static const u8 gUnknown_Debug_083C11EE[] = _("FH-03");
-static const u8 gUnknown_Debug_083C11F4[] = _("FH-04");
-static const u8 gUnknown_Debug_083C11FA[] = _("FH-05");
-static const u8 gUnknown_Debug_083C1200[] = _("FH-06");
-static const u8 gUnknown_Debug_083C1206[] = _("FH-07");
-static const u8 gUnknown_Debug_083C120C[] = _("FH-08");
+static const u8 sString_FH00[] = _("FH-00");
+static const u8 sString_FH01[] = _("FH-01");
+static const u8 sString_FH02[] = _("FH-02");
+static const u8 sString_FH03[] = _("FH-03");
+static const u8 sString_FH04[] = _("FH-04");
+static const u8 sString_FH05[] = _("FH-05");
+static const u8 sString_FH06[] = _("FH-06");
+static const u8 sString_FH07[] = _("FH-07");
+static const u8 sString_FH08[] = _("FH-08");
 
 static const struct MenuAction sMenuActions_ControlFlags_FH00_08[] = {
-    {gUnknown_Debug_083C11DC, DummyMenuAction},
-    {gUnknown_Debug_083C11E2, DummyMenuAction},
-    {gUnknown_Debug_083C11E8, DummyMenuAction},
-    {gUnknown_Debug_083C11EE, DummyMenuAction},
-    {gUnknown_Debug_083C11F4, DummyMenuAction},
-    {gUnknown_Debug_083C11FA, DummyMenuAction},
-    {gUnknown_Debug_083C1200, DummyMenuAction},
-    {gUnknown_Debug_083C1206, DummyMenuAction},
-    {gUnknown_Debug_083C120C, DummyMenuAction}
+    {sString_FH00, DummyMenuAction},
+    {sString_FH01, DummyMenuAction},
+    {sString_FH02, DummyMenuAction},
+    {sString_FH03, DummyMenuAction},
+    {sString_FH04, DummyMenuAction},
+    {sString_FH05, DummyMenuAction},
+    {sString_FH06, DummyMenuAction},
+    {sString_FH07, DummyMenuAction},
+    {sString_FH08, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C125C[] = _("FHー09");
-static const u8 gUnknown_Debug_083C1262[] = _("FHー10");
-static const u8 gUnknown_Debug_083C1268[] = _("FHー11");
-static const u8 gUnknown_Debug_083C126E[] = _("FHー12");
-static const u8 gUnknown_Debug_083C1274[] = _("FHー13");
-static const u8 gUnknown_Debug_083C127A[] = _("FHー14");
-static const u8 gUnknown_Debug_083C1280[] = _("FHー15");
+static const u8 sString_FH09[] = _("FHー09");
+static const u8 sString_FH10[] = _("FHー10");
+static const u8 sString_FH11[] = _("FHー11");
+static const u8 sString_FH12[] = _("FHー12");
+static const u8 sString_FH13[] = _("FHー13");
+static const u8 sString_FH14[] = _("FHー14");
+static const u8 sString_FH15[] = _("FHー15");
 static const u8 gUnknown_Debug_083C1286[] = _("");
 static const u8 gUnknown_Debug_083C1287[] = _("");
 
 static const struct MenuAction sMenuActions_ControlFlags_FH09_15[] = {
-    {gUnknown_Debug_083C125C, DummyMenuAction},
-    {gUnknown_Debug_083C1262, DummyMenuAction},
-    {gUnknown_Debug_083C1268, DummyMenuAction},
-    {gUnknown_Debug_083C126E, DummyMenuAction},
-    {gUnknown_Debug_083C1274, DummyMenuAction},
-    {gUnknown_Debug_083C127A, DummyMenuAction},
-    {gUnknown_Debug_083C1280, DummyMenuAction},
+    {sString_FH09, DummyMenuAction},
+    {sString_FH10, DummyMenuAction},
+    {sString_FH11, DummyMenuAction},
+    {sString_FH12, DummyMenuAction},
+    {sString_FH13, DummyMenuAction},
+    {sString_FH14, DummyMenuAction},
+    {sString_FH15, DummyMenuAction},
     {gUnknown_Debug_083C1286, DummyMenuAction},
     {gUnknown_Debug_083C1287, DummyMenuAction}
 };
