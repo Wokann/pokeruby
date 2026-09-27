@@ -193,9 +193,9 @@ void BufferTrainerEyesListRowText(u8 *arg0, u16 arg1)
     ptr[3] = 0xFF;
 }
 
-void sub_80F708C(s8 a0)
+void ChangeTrainerEyesDetailSelection(s8 delta)
 {
-    gPokenavStructPtr->listSelectedIndex += a0;
+    gPokenavStructPtr->listSelectedIndex += delta;
     if (gPokenavStructPtr->listSelectedIndex < 0)
     {
         gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8774;
@@ -204,12 +204,12 @@ void sub_80F708C(s8 a0)
     {
         gPokenavStructPtr->listSelectedIndex = 0;
     }
-    gPokenavStructPtr->unkBC94 = a0;
+    gPokenavStructPtr->unkBC94 = delta;
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->unk87DE = 0;
 }
 
-bool8 sub_80F70FC(void)
+bool8 UpdateTrainerEyesDetailSelection(void)
 {
     switch (gPokenavStructPtr->unk87DE)
     {

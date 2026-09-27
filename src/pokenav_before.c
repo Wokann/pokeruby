@@ -3147,13 +3147,13 @@ void ShowTrainerEyesTrainerInfo(void)
         if (JOY_HELD(0x40) && gPokenavStructPtr->unk87DC)
         {
 			PlaySE(SE_SELECT);
-			sub_80F708C(-1);
+			ChangeTrainerEyesDetailSelection(-1);
 			gPokenavStructPtr->callbackStep = 0x10;
         }
         else if (JOY_HELD(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
         {
 			PlaySE(SE_SELECT);
-			sub_80F708C(1);
+			ChangeTrainerEyesDetailSelection(1);
 			gPokenavStructPtr->callbackStep = 0x10;
         }
 		else if (JOY_NEW(B_BUTTON))
@@ -3199,7 +3199,7 @@ void ShowTrainerEyesTrainerInfo(void)
         PausePokenavCallbackForLink();
         break;
     case 16:
-        if (!sub_80F70FC())
+        if (!UpdateTrainerEyesDetailSelection())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 17:
