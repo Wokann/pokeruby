@@ -16,7 +16,7 @@ enum {
 void player_step(u8 a, u16 b, u16 c);
 u8 CheckForObjectEventCollision(struct ObjectEvent *a, s16 b, s16 c, u8 d, u8 e);
 void SetPlayerAvatarTransitionFlags(u16 transitionFlags);
-void sub_8059204(void);
+void UpdatePlayerAvatarTransitionState(void);
 u8 PlayerGetCopyableMovement(void);
 void PlayerSetAnimId(u8 a, u8 b);
 void PlayerGoSpeed1(u8 a);

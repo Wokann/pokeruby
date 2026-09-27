@@ -73,8 +73,8 @@ static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *a);
 static void PlayerAvatarTransition_Surfing(struct ObjectEvent *a);
 static void PlayerAvatarTransition_Underwater(struct ObjectEvent *a);
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent);
-static bool8 player_is_anim_in_certain_ranges(void);
-static bool8 sub_80592A4(void);
+static bool8 PlayerAnimIsMultiFrameStationary(void);
+static bool8 PlayerAnimIsMultiFrameStationaryAndStateNotTurning(void);
 static bool8 PlayerIsAnimActive(void);
 static bool8 PlayerCheckIfAnimFinishedOrInactive(void);
 static void PlayerRun(u8 a);
@@ -758,41 +758,41 @@ static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent)
     gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_CONTROLLABLE;
 }
 
-void sub_8059204(void)
+void UpdatePlayerAvatarTransitionState(void)
 {
     gPlayerAvatar.tileTransitionState = T_NOT_MOVING;
     if (PlayerIsAnimActive())
     {
         if (!PlayerCheckIfAnimFinishedOrInactive())
         {
-            if (!player_is_anim_in_certain_ranges())
+            if (!PlayerAnimIsMultiFrameStationary())
                 gPlayerAvatar.tileTransitionState = T_TILE_TRANSITION;
         }
         else
         {
-            if (!sub_80592A4())
+            if (!PlayerAnimIsMultiFrameStationaryAndStateNotTurning())
                 gPlayerAvatar.tileTransitionState = T_TILE_CENTER;
         }
     }
 }
 
-static bool8 player_is_anim_in_certain_ranges(void)
+static bool8 PlayerAnimIsMultiFrameStationary(void)
 {
     u8 movementActionId = gObjectEvents[gPlayerAvatar.objectEventId].movementActionId;
 
-    if (movementActionId < 4
-     || (movementActionId >= 16 && movementActionId < 0x15)
-     || (movementActionId >= 25 && movementActionId < 41)
-     || (movementActionId >= 98 && movementActionId < 110)
-     || (movementActionId >= 122 && movementActionId < 126))
+    if (movementActionId <= MOVEMENT_ACTION_FACE_RIGHT
+     || (movementActionId >= MOVEMENT_ACTION_DELAY_1 && movementActionId <= MOVEMENT_ACTION_DELAY_16)
+     || (movementActionId >= MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_DOWN && movementActionId <= MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_RIGHT)
+     || (movementActionId >= MOVEMENT_ACTION_ACRO_WHEELIE_FACE_DOWN && movementActionId <= MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_RIGHT)
+     || (movementActionId >= MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_DOWN && movementActionId <= MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_RIGHT))
         return TRUE;
     else
         return FALSE;
 }
 
-static bool8 sub_80592A4(void)
+static bool8 PlayerAnimIsMultiFrameStationaryAndStateNotTurning(void)
 {
-    if (player_is_anim_in_certain_ranges() && gPlayerAvatar.runningState != TURN_DIRECTION)
+    if (PlayerAnimIsMultiFrameStationary() && gPlayerAvatar.runningState != TURN_DIRECTION)
         return TRUE;
     else
         return FALSE;
