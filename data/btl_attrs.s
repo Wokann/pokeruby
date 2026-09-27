@@ -318,7 +318,7 @@ gSpriteAffineAnimTable_81F971C:: @ 81F971C
 	.include "data/text/ability_names.inc"
 
 	.align 2
-gUnknown_081FA640:: @ 81FA640
+gTurnActionsFuncsTable:: @ 81FA640
 	.4byte HandleAction_UseMove
 	.4byte HandleAction_UseItem
 	.4byte HandleAction_Switch
@@ -327,15 +327,15 @@ gUnknown_081FA640:: @ 81FA640
 	.4byte HandleAction_SafariZoneBallThrow
 	.4byte HandleAction_ThrowPokeblock
 	.4byte HandleAction_GoNear
-	.4byte HandleAction_SafriZoneRun
-	.4byte HandleAction_Action9
-	.4byte sub_801B594
-	.4byte HandleAction_Action11
+	.4byte HandleAction_SafariZoneRun
+	.4byte HandleAction_WallyBallThrow
+	.4byte HandleAction_RunBattleScript
+	.4byte HandleAction_TryFinish
 	.4byte HandleAction_ActionFinished
 	.4byte HandleAction_NothingIsFainted
 
 	.align 2
-gUnknown_081FA678:: @ 81FA678
+gEndTurnFuncsTable:: @ 81FA678
 	.4byte HandleEndTurn_ContinueBattle
 	.4byte HandleEndTurn_BattleWon
 	.4byte HandleEndTurn_BattleLost

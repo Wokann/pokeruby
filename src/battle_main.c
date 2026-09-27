@@ -137,8 +137,8 @@ extern u8 gMoveResultFlags;
 extern u8 BattleScript_FocusPunchSetUp[];
 extern u16 gDynamicBasePower;
 extern u8 gCurrentTurnActionNumber;
-extern void (* const gUnknown_081FA640[])(void);
-extern void (* const gUnknown_081FA678[])(void);
+extern void (* const gTurnActionsFuncsTable[])(void);
+extern void (* const gEndTurnFuncsTable[])(void);
 extern u8* gBattlescriptCurrInstr;
 extern u8 BattleScript_LinkBattleWonOrLost[];
 extern u8 BattleScript_PayDayMoneyAndPickUpItems[];
@@ -4909,12 +4909,12 @@ static void RunTurnActionsFunctions(void)
         gCurrentActionFuncId = 12;
 
     gBattleStruct->savedTurnActionNumber = gCurrentTurnActionNumber;
-    gUnknown_081FA640[gCurrentActionFuncId]();
+    gTurnActionsFuncsTable[gCurrentActionFuncId]();
 
     if (gCurrentTurnActionNumber >= gBattlersCount) // everyone did their actions, turn finished
     {
         gHitMarker &= ~(HITMARKER_PASSIVE_HP_UPDATE);
-        gBattleMainFunc = gUnknown_081FA678[gBattleOutcome & 0x7F];
+        gBattleMainFunc = gEndTurnFuncsTable[gBattleOutcome & 0x7F];
     }
     else
     {
@@ -5449,38 +5449,38 @@ void HandleAction_UseItem(void)
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
 
-bool8 TryRunFromBattle(u8 bank)
+bool8 TryRunFromBattle(u8 battler)
 {
     bool8 effect = FALSE;
     u8 holdEffect;
     u8 speedVar;
 
-    if (gBattleMons[bank].item == ITEM_ENIGMA_BERRY)
-        holdEffect = gEnigmaBerries[bank].holdEffect;
+    if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[battler].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[bank].item);
+        holdEffect = ItemId_GetHoldEffect(gBattleMons[battler].item);
 
-    gPotentialItemEffectBattler = bank;
+    gPotentialItemEffectBattler = battler;
 
     if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
     {
-        gLastUsedItem = gBattleMons[bank].item ;
-        gProtectStructs[bank].fleeFlag = 1;
+        gLastUsedItem = gBattleMons[battler].item ;
+        gProtectStructs[battler].fleeFlag = 1;
         effect++;
     }
-    else if (gBattleMons[bank].ability == ABILITY_RUN_AWAY)
+    else if (gBattleMons[battler].ability == ABILITY_RUN_AWAY)
     {
         gLastUsedAbility = ABILITY_RUN_AWAY;
-        gProtectStructs[bank].fleeFlag = 2;
+        gProtectStructs[battler].fleeFlag = 2;
         effect++;
     }
     else
     {
         if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
         {
-            if (gBattleMons[bank].speed < gBattleMons[bank ^ BIT_SIDE].speed)
+            if (gBattleMons[battler].speed < gBattleMons[battler ^ BIT_SIDE].speed)
             {
-                speedVar = (gBattleMons[bank].speed * 128) / (gBattleMons[bank ^ BIT_SIDE].speed) + (gBattleStruct->runTries * 30);
+                speedVar = (gBattleMons[battler].speed * 128) / (gBattleMons[battler ^ BIT_SIDE].speed) + (gBattleStruct->runTries * 30);
                 if (speedVar > (Random() & 0xFF))
                     effect++;
             }
@@ -5624,7 +5624,7 @@ void HandleAction_GoNear(void)
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
 
-void HandleAction_SafriZoneRun(void)
+void HandleAction_SafariZoneRun(void)
 {
     gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
     PlaySE(SE_FLEE);
@@ -5632,7 +5632,7 @@ void HandleAction_SafriZoneRun(void)
     gBattleOutcome = B_OUTCOME_RAN;
 }
 
-void HandleAction_Action9(void)
+void HandleAction_WallyBallThrow(void)
 {
     gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
     gBattle_BG0_X = 0;
@@ -5645,7 +5645,7 @@ void HandleAction_Action9(void)
     gActionsByTurnOrder[1] = B_ACTION_FINISHED;
 }
 
-void HandleAction_Action11(void)
+void HandleAction_TryFinish(void)
 {
     if (!HandleFaintedMonActions())
     {
