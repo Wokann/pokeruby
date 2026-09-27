@@ -37,17 +37,17 @@ bool8 NoharaDebugMenu_TV_HandleCreateCommercialInput(void);
 void NoharaDebugMenu_TV_CreateCommercial(u8, u8);
 bool8 NoharaDebugMenu_TV_FillEmptySlots(void);
 bool8 NoharaDebugMenu_Fan(void);
-bool8 debug_sub_80901A4(void);
-bool8 debug_sub_80901E4(void);
-bool8 debug_sub_80901F8(void);
-bool8 debug_sub_8090238(void);
-bool8 debug_sub_809029C(void);
-bool8 debug_sub_80902E4(void);
-bool8 debug_sub_80902FC(void);
-bool8 debug_sub_8090310(void);
-bool8 debug_sub_8090324(void);
-bool8 debug_sub_8090338(void);
-bool8 debug_sub_8090278(void);
+bool8 NoharaDebugMenu_Fan_HandleInput(void);
+bool8 NoharaDebugMenu_Fan_Start(void);
+bool8 NoharaDebugMenu_Fan_GainRandomFan(void);
+bool8 NoharaDebugMenu_Fan_LoseRandomFan(void);
+bool8 NoharaDebugMenu_Fan_ShowPoints(void);
+bool8 NoharaDebugMenu_Fan_AddSixHours(void);
+bool8 NoharaDebugMenu_Fan_GainAfterEliteFour(void);
+bool8 NoharaDebugMenu_Fan_GainAfterSecretBase(void);
+bool8 NoharaDebugMenu_Fan_GainAfterContest(void);
+bool8 NoharaDebugMenu_Fan_GainAfterBattleTower(void);
+bool8 NoharaDebugMenu_WaitForAButton(void);
 bool8 NoharaDebugMenu_BattleVSDad(void);
 bool8 NoharaDebugMenu_DadAfterBattle(void);
 bool8 NoharaDebugMenu_SootopolisCity(void);
@@ -300,7 +300,7 @@ bool8 NoharaDebugMenu_TV_ShowSlotMachineHitTable(void)
         Menu_PrintText(gStringVar1, gUnknown_Debug_083C4BD4[i][0], gUnknown_Debug_083C4BD4[i][1]);
     }
     gSpecialVar_0x8004 = 0;
-    gMenuCallback = debug_sub_8090278;
+    gMenuCallback = NoharaDebugMenu_WaitForAButton;
     return FALSE;
 }
 
@@ -869,65 +869,65 @@ bool8 NoharaDebugMenu_TV_FillEmptySlots(void)
 // TRN: These translations are probably wrong but it is really hard to tell with
 // the abbreviations. They are mosly based on observation
 // The first one is selected by default when there are no fans.
-const u8 gUnknown_Debug_083C4C77[] = DTR("1　スクル", "1 LASS/NONE"); // school (girl)
-const u8 gUnknown_Debug_083C4C7D[] = DTR("2　ミドル", "2 MIDDLE AGE MAN"); // middle
-const u8 gUnknown_Debug_083C4C83[] = DTR("3　オジヨ", "3 DAUGHTER"); // おしょう (daughter)
-const u8 gUnknown_Debug_083C4C89[] = DTR("4　ボーヤ", "4 YOUNG BOY"); // 坊や (boy)
-const u8 gUnknown_Debug_083C4C8F[] = DTR("5　ボーイ", "5 BOY"); // boy
-const u8 gUnknown_Debug_083C4C95[] = DTR("6　ヤング", "6 YOUNG MAN"); // young
-const u8 gUnknown_Debug_083C4C9B[] = DTR("7　ヲーカ", "7 MOM"); // お母さん? (probably typo)
-const u8 gUnknown_Debug_083C4CA1[] = DTR("8　オルド", "8 OLD LADY"); // old
+const u8 sString_NoharaDebug_Fan_Member1[] = DTR("1　スクル", "1 LASS/NONE"); // school (girl)
+const u8 sString_NoharaDebug_Fan_Member2[] = DTR("2　ミドル", "2 MIDDLE AGE MAN"); // middle
+const u8 sString_NoharaDebug_Fan_Member3[] = DTR("3　オジヨ", "3 DAUGHTER"); // おしょう (daughter)
+const u8 sString_NoharaDebug_Fan_Member4[] = DTR("4　ボーヤ", "4 YOUNG BOY"); // 坊や (boy)
+const u8 sString_NoharaDebug_Fan_Member5[] = DTR("5　ボーイ", "5 BOY"); // boy
+const u8 sString_NoharaDebug_Fan_Member6[] = DTR("6　ヤング", "6 YOUNG MAN"); // young
+const u8 sString_NoharaDebug_Fan_Member7[] = DTR("7　ヲーカ", "7 MOM"); // お母さん? (probably typo)
+const u8 sString_NoharaDebug_Fan_Member8[] = DTR("8　オルド", "8 OLD LADY"); // old
 
-const u8 *const gUnknown_Debug_083C4CA8[] = {
-    gUnknown_Debug_083C4C77,
-    gUnknown_Debug_083C4C7D,
-    gUnknown_Debug_083C4C83,
-    gUnknown_Debug_083C4C89,
-    gUnknown_Debug_083C4C8F,
-    gUnknown_Debug_083C4C95,
-    gUnknown_Debug_083C4C9B,
-    gUnknown_Debug_083C4CA1
+const u8 *const sFanMemberNames_NoharaDebug[] = {
+    sString_NoharaDebug_Fan_Member1,
+    sString_NoharaDebug_Fan_Member2,
+    sString_NoharaDebug_Fan_Member3,
+    sString_NoharaDebug_Fan_Member4,
+    sString_NoharaDebug_Fan_Member5,
+    sString_NoharaDebug_Fan_Member6,
+    sString_NoharaDebug_Fan_Member7,
+    sString_NoharaDebug_Fan_Member8
 };
 
-const u8 gUnknown_Debug_083C4CC8[] = _("Start"); // Starts the "Oh! I've heard of you' script"
-const u8 gUnknown_Debug_083C4CCE[] = _("Increase"); // Increases popularity
-const u8 gUnknown_Debug_083C4CD7[] = _("Reduce"); // reduces popularity
-const u8 gUnknown_Debug_083C4CDE[] = _("Points");
-const u8 gUnknown_Debug_083C4CE5[] = _("Play time 6");
-const u8 gUnknown_Debug_083C4CF1[] = _("P ELITE FOUR");
-const u8 gUnknown_Debug_083C4CFE[] = _("P SECRET BASE");
-const u8 gUnknown_Debug_083C4D0C[] = _("P CONTEST");
-const u8 gUnknown_Debug_083C4D16[] = _("P BATTLE TOWER");
+const u8 sString_NoharaDebug_Fan_Start[] = _("Start"); // Starts the "Oh! I've heard of you' script"
+const u8 sString_NoharaDebug_Fan_Increase[] = _("Increase"); // Increases popularity
+const u8 sString_NoharaDebug_Fan_Reduce[] = _("Reduce"); // reduces popularity
+const u8 sString_NoharaDebug_Fan_Points[] = _("Points");
+const u8 sString_NoharaDebug_Fan_AddSixHours[] = _("Play time 6");
+const u8 sString_NoharaDebug_Fan_EliteFour[] = _("P ELITE FOUR");
+const u8 sString_NoharaDebug_Fan_SecretBase[] = _("P SECRET BASE");
+const u8 sString_NoharaDebug_Fan_Contest[] = _("P CONTEST");
+const u8 sString_NoharaDebug_Fan_BattleTower[] = _("P BATTLE TOWER");
 
-const struct MenuAction gUnknown_Debug_083C4D28[] = {
-    {gUnknown_Debug_083C4CC8, debug_sub_80901E4},
-    {gUnknown_Debug_083C4CCE, debug_sub_80901F8},
-    {gUnknown_Debug_083C4CD7, debug_sub_8090238},
-    {gUnknown_Debug_083C4CDE, debug_sub_809029C},
-    {gUnknown_Debug_083C4CE5, debug_sub_80902E4},
-    {gUnknown_Debug_083C4CF1, debug_sub_80902FC},
-    {gUnknown_Debug_083C4CFE, debug_sub_8090310},
-    {gUnknown_Debug_083C4D0C, debug_sub_8090324},
-    {gUnknown_Debug_083C4D16, debug_sub_8090338}
+const struct MenuAction sMenuActions_NoharaDebug_Fan[] = {
+    {sString_NoharaDebug_Fan_Start, NoharaDebugMenu_Fan_Start},
+    {sString_NoharaDebug_Fan_Increase, NoharaDebugMenu_Fan_GainRandomFan},
+    {sString_NoharaDebug_Fan_Reduce, NoharaDebugMenu_Fan_LoseRandomFan},
+    {sString_NoharaDebug_Fan_Points, NoharaDebugMenu_Fan_ShowPoints},
+    {sString_NoharaDebug_Fan_AddSixHours, NoharaDebugMenu_Fan_AddSixHours},
+    {sString_NoharaDebug_Fan_EliteFour, NoharaDebugMenu_Fan_GainAfterEliteFour},
+    {sString_NoharaDebug_Fan_SecretBase, NoharaDebugMenu_Fan_GainAfterSecretBase},
+    {sString_NoharaDebug_Fan_Contest, NoharaDebugMenu_Fan_GainAfterContest},
+    {sString_NoharaDebug_Fan_BattleTower, NoharaDebugMenu_Fan_GainAfterBattleTower}
 };
 
 bool8 NoharaDebugMenu_Fan(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 11, 19);
-    Menu_PrintItems(1, 1, ARRAY_COUNT(gUnknown_Debug_083C4D28), gUnknown_Debug_083C4D28);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C4D28), 0, 10);
-    gMenuCallback = debug_sub_80901A4;
+    Menu_PrintItems(1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_Fan), sMenuActions_NoharaDebug_Fan);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_Fan), 0, 10);
+    gMenuCallback = NoharaDebugMenu_Fan_HandleInput;
     return FALSE;
 }
 
-bool8 debug_sub_80901A4(void)
+bool8 NoharaDebugMenu_Fan_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     switch (input)
     {
         default:
-            gMenuCallback = gUnknown_Debug_083C4D28[input].func;
+            gMenuCallback = sMenuActions_NoharaDebug_Fan[input].func;
             return FALSE;
         case -2:
             return FALSE;
@@ -937,7 +937,7 @@ bool8 debug_sub_80901A4(void)
     }
 }
 
-bool8 debug_sub_80901E4(void)
+bool8 NoharaDebugMenu_Fan_Start(void)
 {
     ResetFanClub();
     UpdateTrainerFanClubGameClear();
@@ -945,23 +945,23 @@ bool8 debug_sub_80901E4(void)
     return TRUE;
 }
 
-bool8 debug_sub_80901F8(void)
+bool8 NoharaDebugMenu_Fan_GainRandomFan(void)
 {
     u8 fanIndex = PlayerGainRandomTrainerFan();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gFanClubMemberIdsForGainingFans[fanIndex] - 8], 14, 7);
-    gMenuCallback = debug_sub_8090278;
+    Menu_PrintText(sFanMemberNames_NoharaDebug[gFanClubMemberIdsForGainingFans[fanIndex] - 8], 14, 7);
+    gMenuCallback = NoharaDebugMenu_WaitForAButton;
     return FALSE;
 }
 
-bool8 debug_sub_8090238(void)
+bool8 NoharaDebugMenu_Fan_LoseRandomFan(void)
 {
     u8 fanIndex = PlayerLoseRandomTrainerFan();
-    Menu_PrintText(gUnknown_Debug_083C4CA8[gFanClubMemberIdsForLosingFans[fanIndex] - 8], 14, 7);
-    gMenuCallback = debug_sub_8090278;
+    Menu_PrintText(sFanMemberNames_NoharaDebug[gFanClubMemberIdsForLosingFans[fanIndex] - 8], 14, 7);
+    gMenuCallback = NoharaDebugMenu_WaitForAButton;
     return FALSE;
 }
 
-bool8 debug_sub_8090278(void)
+bool8 NoharaDebugMenu_WaitForAButton(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
@@ -972,43 +972,43 @@ bool8 debug_sub_8090278(void)
     return FALSE;
 }
 
-bool8 debug_sub_809029C(void)
+bool8 NoharaDebugMenu_Fan_ShowPoints(void)
 {
     ConvertIntToDecimalStringN(gStringVar1, gSaveBlock1.vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] & 0x7F, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 16, 7);
-    gMenuCallback = debug_sub_8090278;
+    gMenuCallback = NoharaDebugMenu_WaitForAButton;
     return FALSE;
 }
 
-bool8 debug_sub_80902E4(void)
+bool8 NoharaDebugMenu_Fan_AddSixHours(void)
 {
     gSaveBlock2.playTimeHours += 6;
     CloseMenu();
     return TRUE;
 }
 
-bool8 debug_sub_80902FC(void)
+bool8 NoharaDebugMenu_Fan_GainAfterEliteFour(void)
 {
     TryGainNewFanFromCounter(0);
     CloseMenu();
     return TRUE;
 }
 
-bool8 debug_sub_8090310(void)
+bool8 NoharaDebugMenu_Fan_GainAfterSecretBase(void)
 {
     TryGainNewFanFromCounter(1);
     CloseMenu();
     return TRUE;
 }
 
-bool8 debug_sub_8090324(void)
+bool8 NoharaDebugMenu_Fan_GainAfterContest(void)
 {
     TryGainNewFanFromCounter(2);
     CloseMenu();
     return TRUE;
 }
 
-bool8 debug_sub_8090338(void)
+bool8 NoharaDebugMenu_Fan_GainAfterBattleTower(void)
 {
     TryGainNewFanFromCounter(3);
     CloseMenu();
