@@ -2254,7 +2254,7 @@ void Task_PlaceDecoration(u8 taskId)
             if (IsWeatherNotFadingIn() == TRUE)
             {
                 gTasks[taskId].data[12] = 0;
-                sub_810065C(taskId);
+                ContinueDecorating(taskId);
             }
             break;
     }
@@ -2356,7 +2356,7 @@ void AttemptPlaceDecoration(u8 taskId)
     gTasks[taskId].data[10] = 0;
     gSprites[gUnknown_020391A8].data[7] = 1;
     gSprites[gUnknown_020391A9].data[7] = 1;
-    sub_810045C();
+    ResetCursorMovement();
     AttemptPlaceDecoration_(taskId);
 }
 
@@ -2365,7 +2365,7 @@ void AttemptCancelPlaceDecoration(u8 taskId)
     gTasks[taskId].data[10] = 0;
     gSprites[gUnknown_020391A8].data[7] = 1;
     gSprites[gUnknown_020391A9].data[7] = 1;
-    sub_810045C();
+    ResetCursorMovement();
     DisplayItemMessageOnField(taskId, gSecretBaseText_CancelDecorating, CancelDecoratingPrompt, 0);
 }
 
@@ -2543,7 +2543,7 @@ void AttemptPlaceDecoration_(u8 taskId)
     } else
     {
         PlaySE(SE_FAILURE);
-        DisplayItemMessageOnField(taskId, gSecretBaseText_CantBePlacedHere, sub_81006A8, 0);
+        DisplayItemMessageOnField(taskId, gSecretBaseText_CantBePlacedHere, CantPlaceDecorationPrompt, 0);
     }
 }
 
@@ -2662,7 +2662,7 @@ void FieldCB_InitDecorationItemsWindow(void)
     InitDecorationItemsWindow(CreateTask(Task_WaitForDecorationWeather, 8));
 }
 
-bool8 sub_810038C(u8 taskId)
+bool8 ApplyCursorMovement_IsInvalid(u8 taskId)
 {
     s16 *data;
     data = gTasks[taskId].data;
@@ -2686,7 +2686,7 @@ bool8 sub_810038C(u8 taskId)
     return TRUE;
 }
 
-bool8 sub_8100430(void)
+bool8 IsHoldingDirection(void)
 {
     if (JOY_HELD(DPAD_ANY) != DPAD_UP && JOY_HELD(DPAD_ANY) != DPAD_DOWN && JOY_HELD(DPAD_ANY) != DPAD_LEFT && JOY_HELD(DPAD_ANY) != DPAD_RIGHT)
     {
@@ -2695,14 +2695,14 @@ bool8 sub_8100430(void)
     return TRUE;
 }
 
-void sub_810045C(void)
+void ResetCursorMovement(void)
 {
     gUnknown_020391AA = 0;
     gSprites[gUnknown_020391A8].data[2] = 0;
     gSprites[gUnknown_020391A8].data[3] = 0;
 }
 
-void sub_8100494(u8 taskId)
+void Task_SelectLocation(u8 taskId)
 {
     if (!gSprites[gUnknown_020391A8].data[4])
     {
@@ -2743,9 +2743,9 @@ void sub_8100494(u8 taskId)
             gSprites[gUnknown_020391A8].data[3] =  0;
             gTasks[taskId].data[0]++;
         }
-        if (!sub_8100430() || !sub_810038C(taskId))
+        if (!IsHoldingDirection() || !ApplyCursorMovement_IsInvalid(taskId))
         {
-            sub_810045C();
+            ResetCursorMovement();
         }
     }
     if (gUnknown_020391AA)
@@ -2766,19 +2766,19 @@ void sub_8100494(u8 taskId)
     }
 }
 
-void sub_810065C(u8 taskId)
+void ContinueDecorating(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 29, 19);
     gSprites[gUnknown_020391A8].data[7] = 0;
     gTasks[taskId].data[10] = 0;
-    gTasks[taskId].func = sub_8100494;
+    gTasks[taskId].func = Task_SelectLocation;
 }
 
-void sub_81006A8(u8 taskId)
+void CantPlaceDecorationPrompt(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
-        sub_810065C(taskId);
+        ContinueDecorating(taskId);
     }
 }
 
@@ -2947,8 +2947,8 @@ const struct SpriteTemplate gSpriteTemplate_83EC93C = {
 
 const struct SpritePalette gUnknown_083EC954 = {.data = (u16 *)&gUnknown_02038900.palette, .tag = 3000};
 
-const struct YesNoFuncTable gUnknown_083EC95C = {.yesFunc = PlaceDecoration, .noFunc = sub_810065C};
-const struct YesNoFuncTable gUnknown_083EC964 = {.yesFunc = CancelDecorating, .noFunc = sub_810065C};
+const struct YesNoFuncTable gUnknown_083EC95C = {.yesFunc = PlaceDecoration, .noFunc = ContinueDecorating};
+const struct YesNoFuncTable gUnknown_083EC964 = {.yesFunc = CancelDecorating, .noFunc = ContinueDecorating};
 const struct YesNoFuncTable gUnknown_083EC96C[] = {
     {.yesFunc = AttemptPlaceDecoration, .noFunc = AttemptCancelPlaceDecoration},
     {.yesFunc = sub_8100F88, .noFunc = sub_8100FB4}
@@ -3242,20 +3242,20 @@ void sub_8100EEC(u8 taskId)
     gSprites[gUnknown_020391A9].x = 0x88;
     gSprites[gUnknown_020391A9].y = 0x48;
     gTasks[taskId].data[10] = 0;
-    gTasks[taskId].func = sub_8100494;
+    gTasks[taskId].func = Task_SelectLocation;
 }
 
 void sub_8100F88(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
-    sub_810045C();
+    ResetCursorMovement();
     sub_8101024(taskId);
 }
 
 void sub_8100FB4(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
-    sub_810045C();
+    ResetCursorMovement();
     gSprites[gUnknown_020391A8].invisible = FALSE;
     gSprites[gUnknown_020391A8].callback = SpriteCallbackDummy;
     DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, sub_810156C, 0);
