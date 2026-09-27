@@ -217,15 +217,15 @@ void FieldCB_StopPuttingAwayDecorations(void);
 void InitializeCameraSprite1(struct Sprite *);
 void LoadPlayerSpritePalette(void);
 void FreePlayerSpritePalette(void);
-void sub_8101824(u8);
+void TossDecorationPrompt(u8);
 void SetRecycledDecoration(u8);
 
 void DecorationMenuAction_Decorate(u8);
 void DecorationItemsMenuAction_AttemptPlace(u8);
 void DecorationItemsMenuAction_Cancel(u8);
 void DecorationMenuAction_PutAway(u8);
-void sub_8101700(u8);
-void sub_81017A0(u8);
+void DecorationMenuAction_Toss(u8);
+void DecorationItemsMenuAction_AttemptToss(u8);
 void DecorationItemsMenuAction_Trade(u8);
 
 void ReturnToDecorationItemsMenu(u8);
@@ -237,7 +237,7 @@ void AttemptPutAwayDecoration(u8);
 void AttemptCancelPutAwayDecoration(u8);
 void PutAwayDecoration(u8);
 void StopPuttingAwayDecorations(u8);
-void sub_8101848(u8);
+void TossDecoration(u8);
 void DoPlayerRoomDecorationMenu(u8);
 
 #endif // GUARD_DECORATION_H

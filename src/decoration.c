@@ -1410,7 +1410,7 @@ const u8 *const gUnknown_083EC5E4[] = {
 const struct MenuAction2 gUnknown_083EC604[] = {
     {SecretBaseText_Decorate, DecorationMenuAction_Decorate},
     {SecretBaseText_PutAway, DecorationMenuAction_PutAway},
-    {SecretBaseText_Toss, sub_8101700},
+    {SecretBaseText_Toss, DecorationMenuAction_Toss},
     {gOtherText_Exit, DecorationMenuAction_Cancel}
 };
 
@@ -1423,8 +1423,8 @@ const u8 *const gUnknown_083EC624[] = {
 
 const struct YesNoFuncTable gUnknown_083EC634[] = {
     {DecorationItemsMenuAction_AttemptPlace, DecorationItemsMenuAction_Cancel},
-    {sub_81017A0, DecorationItemsMenuAction_Cancel},
-    {sub_81017A0, DecorationItemsMenuAction_Cancel},
+    {DecorationItemsMenuAction_AttemptToss, DecorationItemsMenuAction_Cancel},
+    {DecorationItemsMenuAction_AttemptToss, DecorationItemsMenuAction_Cancel},
     {DecorationItemsMenuAction_Trade, DecorationItemsMenuAction_Cancel}
 };
 
@@ -2991,7 +2991,7 @@ const struct SpriteTemplate gSpriteTemplate_83ECA88 = {
     .callback = InitializeCameraSprite1
 };
 
-const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = sub_8101848, .noFunc = ReturnToDecorationItemsMenu};
+const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = TossDecoration, .noFunc = ReturnToDecorationItemsMenu};
 
 void SetDecorSelectionMetatiles(struct UnkStruct_02038900 *unk_02038900)
 {
@@ -3562,7 +3562,7 @@ void FreePlayerSpritePalette(void)
     FreeSpritePaletteByTag(8);
 }
 
-void sub_8101700(u8 taskId)
+void DecorationMenuAction_Toss(u8 taskId)
 {
     if (!GetNumDecorationsInInventory())
     {
@@ -3575,7 +3575,7 @@ void sub_8101700(u8 taskId)
     }
 }
 
-void sub_8101750(u8 taskId)
+void OpenDecorationTradeCategories(u8 taskId)
 {
     if (!GetNumDecorationsInInventory())
     {
@@ -3588,7 +3588,7 @@ void sub_8101750(u8 taskId)
     }
 }
 
-void sub_81017A0(u8 taskId)
+void DecorationItemsMenuAction_AttemptToss(u8 taskId)
 {
     RemoveDecorationItemsWindow();
     RemoveDecorationItemsOtherWindows();
@@ -3596,20 +3596,20 @@ void sub_81017A0(u8 taskId)
     {
         StringCopy(gStringVar1, gDecorations[gUnknown_020388D0[gUnknown_020388F5]].name);
         StringExpandPlaceholders(gStringVar4, gSecretBaseText_WillBeDiscarded);
-        DisplayItemMessageOnField(taskId, gStringVar4, sub_8101824, 0);
+        DisplayItemMessageOnField(taskId, gStringVar4, TossDecorationPrompt, 0);
     } else
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_DecorInUse, ReturnToDecorationItemsAfterInvalidSelection, 0);
     }
 }
 
-void sub_8101824(u8 taskId)
+void TossDecorationPrompt(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     DoYesNoFuncWithChoice(taskId, &gUnknown_083ECAA0);
 }
 
-void sub_8101848(u8 taskId)
+void TossDecoration(u8 taskId)
 {
     Menu_EraseWindowRect(20, 8, 26, 14);
     SetRecycledDecoration(gUnknown_020388D0[gUnknown_020388F5]);
