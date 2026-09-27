@@ -2244,7 +2244,7 @@ void Task_PlaceDecoration(u8 taskId)
         case 1:
             gPaletteFade.bufferTransferDisabled = 1;
             AddDecorationIconObjectFromObjectEvent(&gUnknown_02038900, gUnknown_020388D0[gUnknown_020388F5]);
-            sub_80FF960(taskId);
+            SetUpDecorationShape(taskId);
             SetUpPlacingDecorationPlayerAvatar(taskId, &gUnknown_02038900);
             pal_fill_black();
             gPaletteFade.bufferTransferDisabled = 0;
@@ -2303,7 +2303,7 @@ void SetUpPlacingDecorationPlayerAvatar(u8 taskId, struct UnkStruct_02038900 *un
     gUnknown_020391A8 = gFieldCamera.trackedSpriteId;
 }
 
-void sub_80FF960(u8 taskId)
+void SetUpDecorationShape(u8 taskId)
 {
     switch (gDecorations[gUnknown_020388D0[gUnknown_020388F5]].shape)
     {
@@ -2351,25 +2351,25 @@ void sub_80FF960(u8 taskId)
     }
 }
 
-void sub_80FFAB0(u8 taskId)
+void AttemptPlaceDecoration(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
     gSprites[gUnknown_020391A8].data[7] = 1;
     gSprites[gUnknown_020391A9].data[7] = 1;
     sub_810045C();
-    sub_8100038(taskId);
+    AttemptPlaceDecoration_(taskId);
 }
 
-void sub_80FFB08(u8 taskId)
+void AttemptCancelPlaceDecoration(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
     gSprites[gUnknown_020391A8].data[7] = 1;
     gSprites[gUnknown_020391A9].data[7] = 1;
     sub_810045C();
-    DisplayItemMessageOnField(taskId, gSecretBaseText_CancelDecorating, sub_8100248, 0);
+    DisplayItemMessageOnField(taskId, gSecretBaseText_CancelDecorating, CancelDecoratingPrompt, 0);
 }
 
-bool8 sub_80FFB6C(u8 metatileBehavior, u16 layerType)
+bool8 IsBlockDecorationOnNormalLayer(u8 metatileBehavior, u16 layerType)
 {
     if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE || layerType != 0)
     {
@@ -2378,7 +2378,7 @@ bool8 sub_80FFB6C(u8 metatileBehavior, u16 layerType)
     return TRUE;
 }
 
-bool8 sub_80FFB94(u8 taskId, s16 x, s16 y, u16 decoId)
+bool8 IsntInitialPosition(u8 taskId, s16 x, s16 y, u16 decoId)
 {
     if (x == gTasks[taskId].data[3] + 7 && y == gTasks[taskId].data[4] + 7 && decoId != 0)
     {
@@ -2387,7 +2387,7 @@ bool8 sub_80FFB94(u8 taskId, s16 x, s16 y, u16 decoId)
     return TRUE;
 }
 
-bool8 sub_80FFBDC(u16 metatileBehavior, const struct Decoration *decoration)
+bool8 IsFloorOrBoardAndHole(u16 metatileBehavior, const struct Decoration *decoration)
 {
     if (MetatileBehavior_IsBlockDecoration(metatileBehavior) != TRUE)
     {
@@ -2403,7 +2403,7 @@ bool8 sub_80FFBDC(u16 metatileBehavior, const struct Decoration *decoration)
     return FALSE;
 }
 
-bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
+bool8 CanPlaceDecoration(u8 taskId, const struct Decoration *decoration)
 {
     u8 i;
     u8 j;
@@ -2427,11 +2427,11 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                     curX = gTasks[taskId].data[0] + j;
                     behaviorAt = MapGridGetMetatileBehaviorAt(curX, curY);
                     layerType = GetMetatileAttributesById(0x200 + decoration->tiles[(mapY - 1 - i) * mapX + j]) & 0xf000;
-                    if (!sub_80FFBDC(behaviorAt, decoration))
+                    if (!IsFloorOrBoardAndHole(behaviorAt, decoration))
                     {
                         return FALSE;
                     }
-                    if (!sub_80FFB94(taskId, curX, curY, layerType))
+                    if (!IsntInitialPosition(taskId, curX, curY, layerType))
                     {
                         return FALSE;
                     }
@@ -2452,11 +2452,11 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                     curX = gTasks[taskId].data[0] + j;
                     behaviorAt = MapGridGetMetatileBehaviorAt(curX, curY);
                     layerType = GetMetatileAttributesById(0x200 + decoration->tiles[(mapY - 1 - i) * mapX + j]) & 0xf000;
-                    if (!MetatileBehavior_IsNormal(behaviorAt) && !sub_80FFB6C(behaviorAt, layerType))
+                    if (!MetatileBehavior_IsNormal(behaviorAt) && !IsBlockDecorationOnNormalLayer(behaviorAt, layerType))
                     {
                         return FALSE;
                     }
-                    if (!sub_80FFB94(taskId, curX, curY, layerType))
+                    if (!IsntInitialPosition(taskId, curX, curY, layerType))
                     {
                         return FALSE;
                     }
@@ -2476,7 +2476,7 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
                 {
                     return FALSE;
                 }
-                if (!sub_80FFB94(taskId, curX, curY, layerType))
+                if (!IsntInitialPosition(taskId, curX, curY, layerType))
                 {
                     return FALSE;
                 }
@@ -2535,11 +2535,11 @@ bool8 sub_80FFC24(u8 taskId, const struct Decoration *decoration)
     return TRUE;
 }
 
-void sub_8100038(u8 taskId)
+void AttemptPlaceDecoration_(u8 taskId)
 {
-    if (sub_80FFC24(taskId, &gDecorations[gUnknown_020388D0[gUnknown_020388F5]]) == 1)
+    if (CanPlaceDecoration(taskId, &gDecorations[gUnknown_020388D0[gUnknown_020388F5]]) == 1)
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_PlaceItHere, sub_81000A0, 0);
+        DisplayItemMessageOnField(taskId, gSecretBaseText_PlaceItHere, PlaceDecorationPrompt, 0);
     } else
     {
         PlaySE(SE_FAILURE);
@@ -2547,16 +2547,16 @@ void sub_8100038(u8 taskId)
     }
 }
 
-void sub_81000A0(u8 taskId)
+void PlaceDecorationPrompt(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     DoYesNoFuncWithChoice(taskId, &gUnknown_083EC95C);
 }
 
-void sub_81000C4(u8 taskId)
+void PlaceDecoration(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 29, 19);
-    sub_8100174(taskId);
+    PlaceDecoration_(taskId);
     if (gDecorations[gUnknown_020388D0[gUnknown_020388F5]].permission != DECORPERM_SOLID_MAT)
     {
         ShowDecorationOnMap(gTasks[taskId].data[0], gTasks[taskId].data[1], gUnknown_020388D0[gUnknown_020388F5]);
@@ -2567,10 +2567,10 @@ void sub_81000C4(u8 taskId)
         ScriptContext_SetupScript(SecretBase_EventScript_SetDecoration);
     }
     gSprites[gUnknown_020391A8].y += 2;
-    sub_810028C(taskId);
+    CancelDecorating_(taskId);
 }
 
-void sub_8100174(u8 taskId)
+void PlaceDecoration_(u8 taskId)
 {
     u16 i;
     for (i=0; i<sDecorationContext.size; i++)
@@ -2605,19 +2605,19 @@ void sub_8100174(u8 taskId)
     }
 }
 
-void sub_8100248(u8 taskId)
+void CancelDecoratingPrompt(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     DoYesNoFuncWithChoice(taskId, &gUnknown_083EC964);
 }
 
-void sub_810026C(u8 taskId)
+void CancelDecorating(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 29, 19);
-    sub_810028C(taskId);
+    CancelDecorating_(taskId);
 }
 
-void sub_810028C(u8 taskId)
+void CancelDecorating_(u8 taskId)
 {
     FadeScreen(1, 0);
     gTasks[taskId].data[2] = 0;
@@ -2639,14 +2639,14 @@ void c1_overworld_prev_quest(u8 taskId)
         case 1:
             sub_81016F4();
             FreeSpritePaletteByTag(0xbb8);
-            gFieldCallback = &sub_8100364;
+            gFieldCallback = &FieldCB_InitDecorationItemsWindow;
             SetMainCallback2(CB2_ReturnToField);
             DestroyTask(taskId);
             break;
     }
 }
 
-void sub_8100334(u8 taskId)
+void Task_WaitForDecorationWeather(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
@@ -2654,12 +2654,12 @@ void sub_8100334(u8 taskId)
     }
 }
 
-void sub_8100364(void)
+void FieldCB_InitDecorationItemsWindow(void)
 {
     LockPlayerFieldControls();
     LoadScrollIndicatorPalette();
     pal_fill_black();
-    InitDecorationItemsWindow(CreateTask(sub_8100334, 8));
+    InitDecorationItemsWindow(CreateTask(Task_WaitForDecorationWeather, 8));
 }
 
 bool8 sub_810038C(u8 taskId)
@@ -2947,10 +2947,10 @@ const struct SpriteTemplate gSpriteTemplate_83EC93C = {
 
 const struct SpritePalette gUnknown_083EC954 = {.data = (u16 *)&gUnknown_02038900.palette, .tag = 3000};
 
-const struct YesNoFuncTable gUnknown_083EC95C = {.yesFunc = sub_81000C4, .noFunc = sub_810065C};
-const struct YesNoFuncTable gUnknown_083EC964 = {.yesFunc = sub_810026C, .noFunc = sub_810065C};
+const struct YesNoFuncTable gUnknown_083EC95C = {.yesFunc = PlaceDecoration, .noFunc = sub_810065C};
+const struct YesNoFuncTable gUnknown_083EC964 = {.yesFunc = CancelDecorating, .noFunc = sub_810065C};
 const struct YesNoFuncTable gUnknown_083EC96C[] = {
-    {.yesFunc = sub_80FFAB0, .noFunc = sub_80FFB08},
+    {.yesFunc = AttemptPlaceDecoration, .noFunc = AttemptCancelPlaceDecoration},
     {.yesFunc = sub_8100F88, .noFunc = sub_8100FB4}
 };
 
