@@ -784,9 +784,9 @@ void sub_8117AA8(u8 r0, u8 r1)
     case 0:
         for (i = 0; i < 12; i++)
         {
-            if (!(eRoulette->var08 & gUnknown_083F8D90[i].var04))
+            if (!(eRoulette->var08 & sRouletteSlots[i].flag))
                 gSprites[eRoulette->var3C[29 + i]].invisible = FALSE;
-            else if(!(gUnknown_083F8D90[i].var02 == r1))
+            else if(!(sRouletteSlots[i].gridSquare == r1))
                 gSprites[eRoulette->var3C[29 + i]].invisible = TRUE;
             else
                 gSprites[eRoulette->var3C[29 + i]].invisible = FALSE;
@@ -830,8 +830,8 @@ void sub_8117C60(u8 r0, u8 r1)
             else
             {
                 gSprites[eRoulette->var3C[49 + i]].invisible = FALSE;
-                gSprites[eRoulette->var3C[49 + i]].x         = (gUnknown_083F8C00[eRoulette->var0C[i]].var03 + 1) * 8 + 4;
-                gSprites[eRoulette->var3C[49 + i]].y         = (gUnknown_083F8C00[eRoulette->var0C[i]].var04 + 1) * 8 + 3;
+                gSprites[eRoulette->var3C[49 + i]].x         = (sGridSelections[eRoulette->var0C[i]].x + 1) * 8 + 4;
+                gSprites[eRoulette->var3C[49 + i]].y         = (sGridSelections[eRoulette->var0C[i]].y + 1) * 8 + 3;
             }
         }
     }
@@ -846,8 +846,8 @@ void sub_8117D68(u8 r0)
     else
     {
         gSprites[eRoulette->var3C[48]].invisible = FALSE;
-        gSprites[eRoulette->var3C[48]].x    = (gUnknown_083F8C00[r0].var03 + 2) * 8;
-        gSprites[eRoulette->var3C[48]].y    = (gUnknown_083F8C00[r0].var04 + 2) * 8;
+        gSprites[eRoulette->var3C[48]].x    = (sGridSelections[r0].x + 2) * 8;
+        gSprites[eRoulette->var3C[48]].y    = (sGridSelections[r0].y + 2) * 8;
     }
 }
 
@@ -956,7 +956,7 @@ u8 sub_81181E8(u8 r0)
     u8 t[] = {0, 1, 2, 3, 4};
     if (r0 >= 20)
         r0 = 0;
-    switch (gUnknown_083F8C00[r0].var01_0)
+    switch (sGridSelections[r0].baseMultiplier)
     {
     case 3:
         r0 = r0 / 5 - 1;
@@ -969,7 +969,7 @@ u8 sub_81181E8(u8 r0)
             return t[((vu8 *)eRoulette->var12)[r0] + 2];
         break;
     case 12:
-        if (!(eRoulette->var08 & gUnknown_083F8C00[r0].var08))
+        if (!(eRoulette->var08 & sGridSelections[r0].flag))
             return t[4];
         break;
     }
@@ -1228,7 +1228,7 @@ void sub_811889C(struct Sprite *sprite)
 void sub_81189A8(struct Sprite *sprite)
 {
     float f0, f1, f2;
-    const struct StructgUnknown_083F8DF4 *p;
+    const struct RouletteTable *p;
     sub_8118724(sprite);
     switch (sprite->data[3])
     {
@@ -1236,9 +1236,9 @@ void sub_81189A8(struct Sprite *sprite)
         if (sprite->data[0] != 1)
         {
             f0 = ((float)sprite->data[7]);
-            p = gUnknown_083F8DF4;
-            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].var01) + (float)((s32)p[eRoulette->var04_0].var02 - 1));
-            f2 = (f0 / ((float)(s32)p[eRoulette->var04_0].var0C));
+            p = sRouletteTables;
+            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].randDistanceHigh) + (float)((s32)p[eRoulette->var04_0].randDistanceLow - 1));
+            f2 = (f0 / ((float)(s32)p[eRoulette->var04_0].shroomishFallSlowdown));
         }
         else
         {
@@ -1249,9 +1249,9 @@ void sub_81189A8(struct Sprite *sprite)
         if (sprite->data[0] != 0)
         {
             f0 = ((float)sprite->data[7]);
-            p = gUnknown_083F8DF4;
-            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].var01) + (float)((s32)p[eRoulette->var04_0].var02 - 1));
-            f2 = -(f0 / ((float)(s32)p[eRoulette->var04_0].var0C));
+            p = sRouletteTables;
+            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].randDistanceHigh) + (float)((s32)p[eRoulette->var04_0].randDistanceLow - 1));
+            f2 = -(f0 / ((float)(s32)p[eRoulette->var04_0].shroomishFallSlowdown));
         }
         else
         {
@@ -1409,11 +1409,11 @@ void debug_sub_812E698(struct Sprite *sprite)
     }
     else
     {
-        eRoulette->var8C = ({float f = gUnknown_083F8DF4[eRoulette->var04_0].var1C; f * 2;});
+        eRoulette->var8C = ({float f = sRouletteTables[eRoulette->var04_0].var1C; f * 2;});
         eRoulette->var7F = eRoulette->var7E;
     }
     sprite->data[0] = 1;
-    sprite->data[2] = gUnknown_083F8DF4[eRoulette->var04_0].var02;
+    sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
     eRoulette->var98 = 0.085f;
     sprite->callback = sub_8118D2C;
     sprite->data[1] = 5;
@@ -1426,7 +1426,7 @@ void sub_8118DE4(struct Sprite *sprite)
     sub_8118724(sprite);
     sprite->data[2] = 0;
     sub_81186B8(sprite);
-    if (!(gUnknown_083F8D90[eRoulette->var7E].var04 & eRoulette->var08))
+    if (!(sRouletteSlots[eRoulette->var7E].flag & eRoulette->var08))
     {
         eRoulette->var7D   = 255;
         eRoulette->var03_7 = 0;
@@ -1454,27 +1454,27 @@ void sub_8118DE4(struct Sprite *sprite)
         else
         {
             eRoulette->var8C = ({
-                float f = gUnknown_083F8DF4[eRoulette->var04_0].var1C;
+                float f = sRouletteTables[eRoulette->var04_0].var1C;
                 f * 2;
             }); // couldn't replicate loads
             t = (eRoulette->var7E + 11) % 12;
             eRoulette->var7F = eRoulette->var7E;
         }
-        if (gUnknown_083F8D90[t].var04 & eRoulette->var08)
+        if (sRouletteSlots[t].flag & eRoulette->var08)
         {
             sprite->data[0] = 1;
-            sprite->data[2] = gUnknown_083F8DF4[eRoulette->var04_0].var02;
+            sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
         }
         else
         {
-            sprite->data[0] = gUnknown_083F8D90[t].var04 & eRoulette->var08;
+            sprite->data[0] = sRouletteSlots[t].flag & eRoulette->var08;
             if (eRoulette->var04_0)
             {
-                sprite->data[2] = gUnknown_083F8DF4[eRoulette->var04_0].var01;
+                sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceHigh;
             }
             else
             {
-                sprite->data[2] = gUnknown_083F8DF4[eRoulette->var04_0].var02;
+                sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
                 if (z)
                 {
                     eRoulette->var8C = 0.5f;
@@ -1499,11 +1499,11 @@ void sub_8118F8C(struct Sprite *sprite)
         sub_81186B8(sprite);
         if (!sub_81186E8(sprite))
         {
-            const struct StructgUnknown_083F8DF4 *p;
+            const struct RouletteTable *p;
             eRoulette->var90 = 0.0f;
-            p = gUnknown_083F8DF4;
-            eRoulette->var8C -= ((float)(p[eRoulette->var04_0].var03))
-                / ((float)(s16)(p[eRoulette->var04_0].var04 + 1));
+            p = sRouletteTables;
+            eRoulette->var8C -= ((float)(p[eRoulette->var04_0].wheelSpeed))
+                / ((float)(s16)(p[eRoulette->var04_0].wheelDelay + 1));
             sprite->data[1] = 4;
 #if DEBUG
             if (unk_2039560 != 0)
@@ -1592,8 +1592,8 @@ void sub_8119224(struct Sprite *sprite)
         gSprites[eRoulette->var3C[55 + i]].data[5]          = eRoulette->var3C[56];
         gSprites[eRoulette->var3C[55 + i]].data[6]          = eRoulette->var3C[57];
         gSprites[eRoulette->var3C[55 + i]].data[2]          = t;
-        gSprites[eRoulette->var3C[55 + i]].data[3]          = (sprite->data[7] * gUnknown_083F8DF4[eRoulette->var04_0].var01) +
-                                                                (gUnknown_083F8DF4[eRoulette->var04_0].var02 + 0xffff);
+        gSprites[eRoulette->var3C[55 + i]].data[3]          = (sprite->data[7] * sRouletteTables[eRoulette->var04_0].randDistanceHigh) +
+                                                                (sRouletteTables[eRoulette->var04_0].randDistanceLow + 0xffff);
     }
     gSprites[eRoulette->var3C[56]].coordOffsetEnabled = TRUE;
     eRoulette->var38 = sprite;
@@ -1607,14 +1607,14 @@ void sub_81193D4(struct Sprite *sprite)
         {256, 84},
         {-16, 84}
     };
-    const struct StructgUnknown_083F8DF4 *p;
+    const struct RouletteTable *p;
     t = sprite->data[7] - 2;
     eRoulette->var3C[55] = CreateSprite(&gSpriteTemplate_83FA524, s[sprite->data[0]][0], s[sprite->data[0]][1], 50);
     StartSpriteAnim(&gSprites[eRoulette->var3C[55]], sprite->data[0]);
     eRoulette->var3C[56] = CreateSprite(&gSpriteTemplate_83FA5F0, s[sprite->data[0]][0], s[sprite->data[0]][1], 51);
     gSprites[eRoulette->var3C[56]].affineAnimPaused = TRUE;
     gSprites[eRoulette->var3C[56]].animPaused       = TRUE;
-    sprite->data[7] = (t * (p = gUnknown_083F8DF4)[eRoulette->var04_0].var01) + (p[eRoulette->var04_0].var10 + 45);
+    sprite->data[7] = (t * (p = sRouletteTables)[eRoulette->var04_0].randDistanceHigh) + (p[eRoulette->var04_0].taillowBaseDropDelay + 45);
     for (; i < 2; i++)
     {
         gSprites[eRoulette->var3C[55 + i]].data[4] = eRoulette->var3C[55];
@@ -1644,7 +1644,7 @@ void sub_811952C(struct Sprite *sprite)
     eRoulette->var7E = 0xFF;
     eRoulette->var88 = sprite->data[3];
     eRoulette->var98 = 0.0f;
-    eRoulette->var8C = gUnknown_083F8DF4[eRoulette->var04_0].var1C;
+    eRoulette->var8C = sRouletteTables[eRoulette->var04_0].var1C;
 
     o = (eRoulette->var04_0 * 30 + 33) + (0x1 - eRoulette->var03_0) * 15;
     for (i = 0; i < 4; i++)
@@ -1686,10 +1686,10 @@ void sub_811952C(struct Sprite *sprite)
 
     for (i = val; i < j; i++)
     {
-        if (!(eRoulette->var08 & gUnknown_083F8D90[z].var04))
+        if (!(eRoulette->var08 & sRouletteSlots[z].flag))
         {
             s[h++] = i;
-            if (p == 0 && (gUnknown_083F8D90[z].var04 & gUnknown_083F8C00[eRoulette->var1B[eRoulette->var1A_0]].var0C))
+            if (p == 0 && (sRouletteSlots[z].flag & sGridSelections[eRoulette->var1B[eRoulette->var1A_0]].inSelectionFlags))
                 p = i;
         }
         z = (z + 1) % 0xC;
@@ -1798,12 +1798,12 @@ void sub_8119964(struct Sprite *sprite)
         if (eRoulette->var38->data[0] == 0)
         {
             t = eRoulette->var38->data[3];
-            z = gUnknown_083F8DF4[eRoulette->var04_0].var08;
+            z = sRouletteTables[eRoulette->var04_0].shroomishStartAngle;
         }
         else
         {
             t = eRoulette->var38->data[3];
-            z = gUnknown_083F8DF4[eRoulette->var04_0].var08;
+            z = sRouletteTables[eRoulette->var04_0].shroomishStartAngle;
             z += 180;
         }
         if (t == z)
@@ -1824,12 +1824,12 @@ void sub_8119964(struct Sprite *sprite)
         if (eRoulette->var38->data[0] == 0)
         {
             t = eRoulette->var38->data[3];
-            z = gUnknown_083F8DF4[eRoulette->var04_0].var0A;
+            z = sRouletteTables[eRoulette->var04_0].shroomishDropAngle;
         }
         else
         {
             t = eRoulette->var38->data[3];
-            z = gUnknown_083F8DF4[eRoulette->var04_0].var0A ;
+            z = sRouletteTables[eRoulette->var04_0].shroomishDropAngle ;
             z += 180;
         }
         if (t == z)
@@ -1959,7 +1959,7 @@ void sub_8119D80(struct Sprite *sprite)
 {
     if (eRoulette->var38->data[0] == 0)
     {
-        if (eRoulette->var38->data[3] == gUnknown_083F8DF4[eRoulette->var04_0].var12 + 90)
+        if (eRoulette->var38->data[3] == sRouletteTables[eRoulette->var04_0].taillowRightStartAngle + 90)
         {
             gSprites[sprite->data[6]].data[1] = 52;
             gSprites[sprite->data[4]].data[1] = 52;
@@ -1971,7 +1971,7 @@ void sub_8119D80(struct Sprite *sprite)
     }
     else
     {
-        if (eRoulette->var38->data[3] == gUnknown_083F8DF4[eRoulette->var04_0].var14 + 270)
+        if (eRoulette->var38->data[3] == sRouletteTables[eRoulette->var04_0].taillowLeftStartAngle + 270)
         {
             gSprites[sprite->data[6]].data[1] = 46;
             gSprites[sprite->data[4]].data[1] = 46;

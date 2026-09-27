@@ -84,11 +84,11 @@ void sub_81175DC(u8);
 void sub_8117630(u8);
 void Task_Roulette_0(u8);
 
-const u16 gUnknown_083F86BC[] = INCBIN_U16("graphics/roulette/83F86BC.gbapal");
-const u8 gUnknown_083F88BC[] = INCBIN_U8("graphics/roulette/83F88BC.bin.lz");
-const u8 gUnknown_083F8A60[] = INCBIN_U8("graphics/roulette/wheel_map.bin.lz");
+const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/83F86BC.gbapal");
+const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/83F88BC.bin.lz");
+const u8 sWheel_Tilemap[] = INCBIN_U8("graphics/roulette/wheel_map.bin.lz");
 
-const struct StructgUnknown_083F8C00 gUnknown_083F8C00[] = {
+const struct GridSelection sGridSelections[] = {
 	{255, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0},
 	{12, 4, 1, 0, 17, 7, 0, 0, 0, 2, 0x10842, 0xe000, 0},
 	{13, 4, 2, 0, 20, 7, 0, 0, 0, 4, 0x21084, 0xe000, 0},
@@ -111,7 +111,7 @@ const struct StructgUnknown_083F8C00 gUnknown_083F8C00[] = {
 	{11, 12, 4, 3, 26, 16, 9, 9, 0, 0x80000, 0x80000, 0x2800, 0},
 };
 
-const struct StructgUnknown_083F8D90 gUnknown_083F8D90[] = {
+const struct RouletteSlot sRouletteSlots[] = {
     { 0,  1,  6, 64},
     { 1,  3, 12, 0x1000},
     { 2,  5, 18, 0x40000},
@@ -126,41 +126,41 @@ const struct StructgUnknown_083F8D90 gUnknown_083F8D90[] = {
     {11, 23, 19, 0x80000}
 };
 
-const u8 gUnknown_083F8DF0[] = {
+const u8 sTableMinBets[] = {
     1, 3,
     1, 6,
 };
 
-const struct StructgUnknown_083F8DF4 gUnknown_083F8DF4[] = {
+const struct RouletteTable sRouletteTables[] = {
     {
-        .var00 = 1,
-        .var01 = 60,
-        .var02 = 30,
-        .var03 = 1,
-        .var04 = 1,
-        .var08 = 45,
-        .var0A = 30,
-        .var0C = 1,
-        .var10 = 75,
-        .var12 = 27,
-        .var14 = 24,
-        .var18 = 10,
-        .var1A = 360,
+        .minBet = 1,
+        .randDistanceHigh = 60,
+        .randDistanceLow = 30,
+        .wheelSpeed = 1,
+        .wheelDelay = 1,
+        .shroomishStartAngle = 45,
+        .shroomishDropAngle = 30,
+        .shroomishFallSlowdown = 1,
+        .taillowBaseDropDelay = 75,
+        .taillowRightStartAngle = 27,
+        .taillowLeftStartAngle = 24,
+        .ballSpeed = 10,
+        .baseTravelDist = 360,
         .var1C = -0.5f
     }, {
-        .var00 = 3,
-        .var01 = 30,
-        .var02 = 15,
-        .var03 = 1,
-        .var04 = 0,
-        .var08 = 75,
-        .var0A = 60,
-        .var0C = 2,
-        .var10 = 0,
-        .var12 = 54,
-        .var14 = 48,
-        .var18 = 10,
-        .var1A = 270,
+        .minBet = 3,
+        .randDistanceHigh = 30,
+        .randDistanceLow = 15,
+        .wheelSpeed = 1,
+        .wheelDelay = 0,
+        .shroomishStartAngle = 75,
+        .shroomishDropAngle = 60,
+        .shroomishFallSlowdown = 2,
+        .taillowBaseDropDelay = 0,
+        .taillowRightStartAngle = 54,
+        .taillowLeftStartAngle = 48,
+        .ballSpeed = 10,
+        .baseTravelDist = 270,
         .var1C = -1.0f
     }
 };
@@ -400,16 +400,16 @@ void sub_8115238(void)
 {
     u8 i;
     u32 temp;
-    const struct StructgUnknown_083F8DF4 *s0;
+    const struct RouletteTable *s0;
     u16 arr[] = {RGB(24, 4, 10), RGB(10, 19, 6), RGB(24, 4, 10)};
     memset(eRoulette, 0, sizeof(*eRoulette));
     eRoulette->var04_0 = (gSpecialVar_0x8004 & 1);
     if (gSpecialVar_0x8004 & 0x80)
         eRoulette->var04_7 = 1;
-    s0 = gUnknown_083F8DF4;
-    eRoulette->var22   = s0[eRoulette->var04_0].var03;
-    eRoulette->var23   = s0[eRoulette->var04_0].var04;
-    eRoulette->var19 = temp = gUnknown_083F8DF0[eRoulette->var04_0 + eRoulette->var04_7 * 2];
+    s0 = sRouletteTables;
+    eRoulette->var22   = s0[eRoulette->var04_0].wheelSpeed;
+    eRoulette->var23   = s0[eRoulette->var04_0].wheelDelay;
+    eRoulette->var19 = temp = sTableMinBets[eRoulette->var04_0 + eRoulette->var04_7 * 2];
     eRoulette->var1A_4 = 1;
     if (temp == 1)
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[0];
@@ -466,14 +466,14 @@ void sub_8115384(void)
     case 2:
         Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
         InitMenuWindow(&gMenuTextWindowTemplate);
-        LoadPalette(gUnknown_083F86BC, 0, 0x1c0);
+        LoadPalette(sWheel_Pal, 0, 0x1c0);
         gMain.state++;
         break;
     case 3:
         sub_8115238();
         ClearBGTilemapBuffers();
-        LZ77UnCompWram(gUnknown_083F88BC, (void *)(ewram18800));
-        LZ77UnCompVram(gUnknown_083F8A60, (void *)(VRAM + 0x3000));
+        LZ77UnCompWram(sGrid_Tilemap, (void *)(ewram18800));
+        LZ77UnCompVram(sWheel_Tilemap, (void *)(VRAM + 0x3000));
         gMain.state++;
         break;
     case 4:
@@ -645,13 +645,13 @@ void sub_81159BC(u8 taskid)
     if (eRoulette->var08 & 0x20)
     {
         for (i = 11; (i < 14); i++)
-            if ((eRoulette->var08 & gUnknown_083F8C00[i].var08) == 0)
+            if ((eRoulette->var08 & sGridSelections[i].flag) == 0)
                 break;
     }
     else
     {
         for (i = 6; (i < 10); i++)
-            if ((eRoulette->var08 & gUnknown_083F8C00[i].var08) == 0)
+            if ((eRoulette->var08 & sGridSelections[i].flag) == 0)
                 break;
     }
     gTasks[taskid].data[4] = i;
@@ -743,7 +743,7 @@ void sub_8115B58(u8 r0)
             gSprites[eRoulette->var3C[i + 41]].sheetTileStart
             + (*gSprites[eRoulette->var3C[i + 41]].anims)->type;
         }
-        if ((u16)(gTasks[r0].data[4] - 1) < 4 && !(eRoulette->var08 & gUnknown_083F8C00[gTasks[r0].data[4]].var08) )
+        if ((u16)(gTasks[r0].data[4] - 1) < 4 && !(eRoulette->var08 & sGridSelections[gTasks[r0].data[4]].flag) )
         {
             z = gTasks[r0].data[4] - 1;
             gSprites[eRoulette->var3C[z + 41]].oam.tileNum =
@@ -797,7 +797,7 @@ void sub_8115E14(u8 taskid)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        if ((eRoulette->var08 & gUnknown_083F8C00[gTasks[taskid].data[4]].var08))
+        if ((eRoulette->var08 & sGridSelections[gTasks[taskid].data[4]].flag))
             PlaySE(SE_BOO);
         else
         {
@@ -840,19 +840,19 @@ u8 sub_8115F58(u16 r0, u16 r1)
                 return 1;
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow / 2;
             }
         }
         else if (!(r1 & 3))
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 2;
+            const struct RouletteTable *p = sRouletteTables;
+            return p[eRoulette->var04_0].randDistanceLow / 2;
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02;
+            const struct RouletteTable *p = sRouletteTables;
+            return p[eRoulette->var04_0].randDistanceLow;
         }
         break;
     case 3:
@@ -862,8 +862,8 @@ u8 sub_8115F58(u16 r0, u16 r1)
         {
             if (r0 < 6 || (r1 & 1))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow / 2;
             }
             else
             {
@@ -872,13 +872,13 @@ u8 sub_8115F58(u16 r0, u16 r1)
         }
         else if ((r1 & 1) && !(r0 < 7))
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 4;
+            const struct RouletteTable *p = sRouletteTables;
+            return p[eRoulette->var04_0].randDistanceLow / 4;
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var02 / 2;
+            const struct RouletteTable *p = sRouletteTables;
+            return p[eRoulette->var04_0].randDistanceLow / 2;
         }
         break;
     case 0:
@@ -893,40 +893,40 @@ u8 sub_8115F58(u16 r0, u16 r1)
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow / 2;
             }
         }
         else if (!(r1 & 3))
         {
             if (!(r0 < 13))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02 / 2;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow / 2;
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow;
             }
         }
         else if (r1 & (128 << 8))
         {
             if (!(r0 < 13))
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var02;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceLow;
             }
             else
             {
-                const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-                return p[eRoulette->var04_0].var01;
+                const struct RouletteTable *p = sRouletteTables;
+                return p[eRoulette->var04_0].randDistanceHigh;
             }
         }
         else
         {
-            const struct StructgUnknown_083F8DF4 *p = gUnknown_083F8DF4;
-            return p[eRoulette->var04_0].var01 * 2;
+            const struct RouletteTable *p = sRouletteTables;
+            return p[eRoulette->var04_0].randDistanceHigh * 2;
         }
     }
 }
@@ -956,7 +956,7 @@ void sub_8116100(u8 taskid)
         r5 *= 2;
     else
         r5 = (1 - r5) * 2;
-    eRoulette->var80 = g = gUnknown_083F8DF4[eRoulette->var04_0].var1A + randfinal;
+    eRoulette->var80 = g = sRouletteTables[eRoulette->var04_0].baseTravelDist + randfinal;
     //
     g = S16TOPOSFLOAT(g) / 5.0f;
     eRoulette->var82 = g * 3;
@@ -964,7 +964,7 @@ void sub_8116100(u8 taskid)
     eRoulette->var86 = g;
     //
     eRoulette->var88 = S16TOPOSFLOAT(angles[(rand & 1) + r5]);
-    eRoulette->var8C = S16TOPOSFLOAT(gUnknown_083F8DF4[eRoulette->var04_0].var18);
+    eRoulette->var8C = S16TOPOSFLOAT(sRouletteTables[eRoulette->var04_0].ballSpeed);
     eRoulette->var90 = ((eRoulette->var8C * 0.5f) - eRoulette->var8C) / S16TOPOSFLOAT(g * 3);
     eRoulette->var94 = 68.0f;
     eRoulette->var9C = 0.0f;
@@ -1168,7 +1168,7 @@ void sub_81167F4(u8 taskid)
     eRoulette->varB8.var04[15].var00_7 = 0;
     eRoulette->varB8.var04[14].var00_7 = 0;
     eRoulette->varB8.var04[13].var00_7 = 0;
-    gSprites[eRoulette->var3C[7 + gUnknown_083F8C00[gTasks[taskid].data[12]].var00]].invisible = TRUE;
+    gSprites[eRoulette->var3C[7 + sGridSelections[gTasks[taskid].data[12]].spriteIdOffset]].invisible = TRUE;
     gTasks[taskid].func = sub_8116880;
 }
 
@@ -1340,24 +1340,24 @@ u8 sub_8116D54(u8 taskid, u8 r1)
     {
         u8 i;
         u8 z;
-        eRoulette->var0C[gTasks[taskid].data[6] - 1] = gUnknown_083F8D90[r1].var02;
-        gTasks[taskid].data[12] = gUnknown_083F8D90[r1].var02;
-        eRoulette->var08 |= gUnknown_083F8D90[r1].var04;
+        eRoulette->var0C[gTasks[taskid].data[6] - 1] = sRouletteSlots[r1].gridSquare;
+        gTasks[taskid].data[12] = sRouletteSlots[r1].gridSquare;
+        eRoulette->var08 |= sRouletteSlots[r1].flag;
         for (i = 0; i < 4; i++)
         {
-            if (gUnknown_083F8D90[r1].var04 & t0[i])
+            if (sRouletteSlots[r1].flag & t0[i])
                 eRoulette->var12[i]++;
             if (eRoulette->var12[i] > 2)
                 eRoulette->var08 |= t0[i];
         }
         for (z = 0; z < 3; z++)
         {
-            if (gUnknown_083F8D90[r1].var04 & t1[z])
+            if (sRouletteSlots[r1].flag & t1[z])
                 eRoulette->var16[z]++;
             if (eRoulette->var16[z] > 3)
                 eRoulette->var08 |= t1[z];
         }
-        return gUnknown_083F8D90[r1].var02;
+        return sRouletteSlots[r1].gridSquare;
     }
 }
 
@@ -1402,8 +1402,8 @@ void sub_8116EF8(u8 r0)
     case 10:
     case 15:
         for (i = (r0 + 1); i < (r0 + 5); i++)
-            if (!(eRoulette->var08 & gUnknown_083F8C00[i].var08))
-                var0 |= gUnknown_083F8C00[i].var10;
+            if (!(eRoulette->var08 & sGridSelections[i].flag))
+                var0 |= sGridSelections[i].flashFlags;
         sub_8124CE8(&eRoulette->varB8, var0 &= 0xdfff);
         break;
     default:
@@ -1432,7 +1432,7 @@ void sub_8116EF8(u8 r0)
         }
         if (var2 == 1)
         {
-            if (!(eRoulette->var08 & gUnknown_083F8C00[r0].var08))
+            if (!(eRoulette->var08 & sGridSelections[r0].flag))
             {
                 var1[r0 / 5 - 1].var02 += var3;
                 sub_812492C(&eRoulette->varB8, 13, &var1[r0 / 5 - 1]);
@@ -1445,19 +1445,19 @@ void sub_8116EF8(u8 r0)
             for (i = 0; i < 3; i++)
             {
                 u8 var4 = i * 5 + r0 + 5;
-                if (!(eRoulette->var08 & gUnknown_083F8C00[var4].var08))
+                if (!(eRoulette->var08 & sGridSelections[var4].flag))
                 {
                     var1[var4 / 5 - 1].var02 += var3;
                     sub_812492C(&eRoulette->varB8, i + 13, &var1[var4 / 5 - 1]);
                     if (var2 == 3)
-                        var0 = gUnknown_083F8C00[var4].var10;
+                        var0 = sGridSelections[var4].flashFlags;
                     var2--;
                 }
             }
             if (var2 != 2)
                 var0 = 0;
         }
-        sub_8124CE8(&eRoulette->varB8, var0 |= gUnknown_083F8C00[r0].var10);
+        sub_8124CE8(&eRoulette->varB8, var0 |= sGridSelections[r0].flashFlags);
         break;
     }
     }
@@ -1497,11 +1497,11 @@ void sub_8117158(u8 r0)
     }
     for (i = 0; i < l; i++)
     {
-        var0 = gUnknown_083F8C00[v[i]].var06;
-        var1 = gUnknown_083F8C00[v[i]].var03;
+        var0 = sGridSelections[v[i]].tilemapOffset;
+        var1 = sGridSelections[v[i]].x;
         for (z = 0; z < 3; z++)
         {
-            var2 = (gUnknown_083F8C00[v[i]].var04 + z) * 32;
+            var2 = (sGridSelections[v[i]].y + z) * 32;
             gBGTilemapBuffers[1][var1 + var2 + 0] = ewram18800[0xD0 + (var0 + z) * 3 + 0];
             gBGTilemapBuffers[1][var1 + var2 + 1] = ewram18800[0xD0 + (var0 + z) * 3 + 1];
             gBGTilemapBuffers[1][var1 + var2 + 2] = ewram18800[0xD0 + (var0 + z) * 3 + 2];
@@ -1514,7 +1514,7 @@ u8 sub_8117380(u8 r0)
     u8 var0[] = {0, 3, 4, 6, 12};
     if (r0 > 19)
         r0 = 0;
-    switch (gUnknown_083F8C00[r0].var01_0)
+    switch (sGridSelections[r0].baseMultiplier)
     {
     case 3:
         r0 = r0 / 5 - 1;
@@ -1527,7 +1527,7 @@ u8 sub_8117380(u8 r0)
             return 0;
         return var0[eRoulette->var12[r0] + 2];
     case 12:
-        if (eRoulette->var08 & gUnknown_083F8C00[r0].var08)
+        if (eRoulette->var08 & sGridSelections[r0].flag)
             return 0;
         return var0[4];
     }
@@ -1615,7 +1615,7 @@ void sub_81175DC(u8 taskid)
 
 void sub_8117630(u8 taskid)
 {
-    u32 temp = gUnknown_083F8DF0[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
+    u32 temp = sTableMinBets[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
     ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
     StringExpandPlaceholders(gStringVar4, Roulette_Text_PlayMinimumWagerIsX);
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
@@ -1630,7 +1630,7 @@ void Task_Roulette_0(u8 taskid)
     StringExpandPlaceholders(gStringVar4, gOtherText_Coins);
     Menu_DrawStdWindowFrame(0, 0, 9, 3);
     MenuPrint_RightAligned(gStringVar4, 9, 1);
-    temp = gUnknown_083F8DF0[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
+    temp = sTableMinBets[(gSpecialVar_0x8004 & 1) + (gSpecialVar_0x8004 >> 7 << 1)];
     ConvertIntToDecimalStringN(gStringVar1, temp, 2, 1);
     if (gTasks[taskid].data[13] >= temp)
     {
