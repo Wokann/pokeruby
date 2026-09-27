@@ -2983,18 +2983,18 @@ static void ItemListMenu_InitMenu(void)
 
 static void sub_80A73C0(void)
 {
-    MenuCursor_SetPos814AD7C(0x70, gBagPocketScrollStates[sCurrentBagPocket].cursorPos * 16 + 16);
+    SetBlendedOutlineCursorPosition(0x70, gBagPocketScrollStates[sCurrentBagPocket].cursorPos * 16 + 16);
 }
 
 static void sub_80A73F0(void)
 {
-    sub_814ADC8();
+    HideBlendedOutlineCursor();
 }
 
 static void sub_80A73FC(void)
 {
     Menu_DestroyCursor();
-    MenuCursor_Destroy814AD44();
+    DestroyBlendedOutlineCursor();
 }
 
 static void sub_80A740C(void)

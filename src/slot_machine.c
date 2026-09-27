@@ -1054,7 +1054,7 @@ static bool8 SlotTask_AskQuit(struct Task *task)
 {
     SlotMachine_PrintMessage(gOtherText_QuitGamePrompt);
     DisplayYesNoMenu(21, 7, 1);
-    sub_814AB84();
+    DestroyOutlineCursorWindowSprite();
     sSlotMachine->state = 22;
     return FALSE;
 }

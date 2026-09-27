@@ -3,22 +3,22 @@
 
 #include "sprite.h"
 
-void sub_814A590(void);
-u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
-u8 sub_814A758(u8 a1, u8 a2, u8 a3, u8 a4);
-u8 unref_sub_814A7AC(u8 a1, u16 a2, u8 a3);
+void InitOutlineCursorState(void);
+u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width);
+u8 CreateOutlineCursorWithPaletteNum(u8 subpriority, u8 paletteNum, u8 tileIndex, u8 width);
+u8 CreateOutlineCursorWithPaletteColor(u8 subpriority, u16 color, u8 width);
 void DestroyMenuCursor(void);
-void MenuCursor_SetPos814A880(u8 a1, u8 a2);
-void sub_814A904(void);
-void sub_814A958(u8 a1);
-void sub_814AABC(void (*callback)(struct Sprite *));
-void sub_814AAF8(u16 a1);
-void sub_814AB84(void);
-void unref_sub_814ABE4(int a1);
-u8 CreateBlendedOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
-void MenuCursor_Destroy814AD44(void);
-void MenuCursor_SetPos814AD7C(u8 a1, u8 a2);
-void sub_814ADC8(void);
-void sub_814ADF4(u8 a1);
+void SetOutlineCursorPosition(u8 x, u8 y);
+void HideOutlineCursor(void);
+void SetOutlineCursorWidth(u8 width);
+void SetOutlineCursorCallback(void (*callback)(struct Sprite *));
+void UpdateOutlineCursorPaletteByColor(u16 color);
+void DestroyOutlineCursorWindowSprite(void);
+void SetOutlineCursorWindowSubsprites(int index);
+u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width);
+void DestroyBlendedOutlineCursor(void);
+void SetBlendedOutlineCursorPosition(u8 x, u8 y);
+void HideBlendedOutlineCursor(void);
+void SetBlendedOutlineCursorWidth(u8 widthIndex);
 
 #endif // GUARD_MENU_CURSOR_H

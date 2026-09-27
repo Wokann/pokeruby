@@ -162,7 +162,7 @@ u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move);
 void IncrementGameStat(u8 index);
 u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
 u16 GetPokedexHeightWeight(u16 national_num, u8 heightweight);
-u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
 void sub_802BC6C(void);
 u8 sub_809FA30(void);
@@ -181,7 +181,7 @@ u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
 u8 sub_809070C(u16 nationalNum, u32 TiD, u32 PiD); //task prepare poke dex display
-void MenuCursor_SetPos814A880(u8 a1, u8 a2);
+void SetOutlineCursorPosition(u8 a1, u8 a2);
 u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
 void sub_8094B6C(u8 bank, u8 partyID, u8 r2);
@@ -5271,7 +5271,7 @@ void sub_8023A80(void)
     sub_802BBD4(0x18, 8, 0x1D, 0xD, 0);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 0x100, 0x19, 0x9);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    MenuCursor_Create814A5C0(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
+    CreateOutlineCursor(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
 }
 
 void sub_8023AD8(void)
@@ -9612,7 +9612,7 @@ void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0)
 
 void sub_802BC6C(void)
 {
-    MenuCursor_SetPos814A880(0xC8, ((gBattleCommunication[1] << 28) + 1207959552) >> 24); //what could that be?
+    SetOutlineCursorPosition(0xC8, ((gBattleCommunication[1] << 28) + 1207959552) >> 24); //what could that be?
 }
 
 void nullsub_6(void)

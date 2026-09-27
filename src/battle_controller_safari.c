@@ -486,7 +486,7 @@ void SafariHandleChooseAction(void)
 
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptionsSafari, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    MenuCursor_Create814A5C0(0, 0xFFFF, 12, 11679, 0);
+    CreateOutlineCursor(0, 0xFFFF, 12, 11679, 0);
 
     for (i = 0; i < 4; i++)
         nullsub_8(i);

@@ -1114,7 +1114,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
                 sEvoCursorPos = 0;
                 Text_InitWindow(&gUnknown_03004828->window, gOtherText_YesNoAndPlayer, gUnknown_03004828->textWindowBaseTileNum + 128, 25, 9);
                 Text_PrintWindow8002F44(&gUnknown_03004828->window);
-                MenuCursor_Create814A5C0(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
+                CreateOutlineCursor(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
                 UpdateEvolutionMoveMenuCursor();
                 gTasks[taskID].tLearnMoveState++;
                 sEvoCursorPos = 0;
@@ -4014,7 +4014,7 @@ static void VBlankCB_TradeEvolutionScene(void)
 
 static void UpdateEvolutionMoveMenuCursor(void)
 {
-    MenuCursor_SetPos814A880(200, 72 + (sEvoCursorPos * 16));
+    SetOutlineCursorPosition(200, 72 + (sEvoCursorPos * 16));
 }
 
 static void EvoDummyFunc2(void)

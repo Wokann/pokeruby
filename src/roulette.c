@@ -570,7 +570,7 @@ void Task_StartPlaying(u8 taskid)
 void Task_AskKeepPlaying(u8 taskid)
 {
     DisplayYesNoMenu(20, 8, 1);
-    sub_814AAF8(RGB(30, 12, 11));
+    UpdateOutlineCursorPaletteByColor(RGB(30, 12, 11));
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
     Menu_PrintText(Roulette_Text_KeepPlaying, 1, 15);
     DoYesNoFuncWithChoice(taskid, &sYesNoTable_KeepPlaying);
@@ -1568,7 +1568,7 @@ s16 sub_81174E0(s16 r0)
 void Task_ShowMinBetYesNo(u8 r0)
 {
     DisplayYesNoMenu(20, 8, 1);
-    sub_814AAF8(RGB(30, 12, 11));
+    UpdateOutlineCursorPaletteByColor(RGB(30, 12, 11));
     DoYesNoFuncWithChoice(r0, &sYesNoTable_AcceptMinBet);
 }
 

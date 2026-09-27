@@ -718,7 +718,7 @@ struct Window *unref_sub_8072D0C(void)
 
 static void sub_8072D18(u8 a1, u8 a2)
 {
-    MenuCursor_Create814A5C0(a1, 0xFFFF, 12, 11679, 8 * a2);
+    CreateOutlineCursor(a1, 0xFFFF, 12, 11679, 8 * a2);
 }
 
 u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, u8 cursorWidth)
@@ -747,17 +747,17 @@ u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, 
 
 static void RedrawMenuCursor(u8 x, u8 y)
 {
-    MenuCursor_SetPos814A880((x + 1) * 8, 8 * y);
+    SetOutlineCursorPosition((x + 1) * 8, 8 * y);
 }
 
 void unref_sub_8072DC0()
 {
-    sub_814A904();
+    HideOutlineCursor();
 }
 
 void sub_8072DCC(u8 a1)
 {
-    sub_814A958(a1);
+    SetOutlineCursorWidth(a1);
 }
 
 void sub_8072DDC(u8 a1)

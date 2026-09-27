@@ -886,7 +886,7 @@ static void ResetAllSprites(void)
     }
 
     ResetSprite(&gSprites[i]);
-    sub_814A590();
+    InitOutlineCursorState();
 }
 
 void FreeSpriteTiles(struct Sprite *sprite)

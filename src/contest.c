@@ -520,7 +520,7 @@ void Task_ShowMoveSelectScreen(u8 taskId)
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     }
 
-    MenuCursor_Create814A5C0(0, 0xFFFF, 12, 0x2D9F, 72);
+    CreateOutlineCursor(0, 0xFFFF, 12, 0x2D9F, 72);
     DrawMoveSelectArrow(sContest.playerMoveChoice);
     PrintContestMoveDescription(gContestMons[gContestPlayerMonIndex].moves[sContest.playerMoveChoice]);
     gTasks[taskId].func = Task_HandleMoveSelectInput;
@@ -551,7 +551,7 @@ void Task_HandleMoveSelectInput(u8 taskId)
         switch (gMain.newAndRepeatedKeys)
         {
         case B_BUTTON:
-            sub_814A904();
+            HideOutlineCursor();
             PlaySE(SE_SELECT);
             SetBottomSliderHeartsInvisibility(FALSE);
             Text_FillWindowRectDefPalette(
@@ -789,7 +789,7 @@ void Task_DebugPlayMoveAnimation(u8 taskId)
 
 void DrawMoveSelectArrow(s8 a)
 {
-    MenuCursor_SetPos814A880(4, 88 + a * 16);
+    SetOutlineCursorPosition(4, 88 + a * 16);
 }
 
 void EraseMoveSelectArrow(s8 a)

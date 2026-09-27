@@ -1676,8 +1676,8 @@ const u8 gUnknown_081FAE91[][2] =
 
 void sub_802E3B4(u8 a, int unused)
 {
-    sub_814A958(0x48);
-    MenuCursor_SetPos814A880(gUnknown_081FAE89[a][0], gUnknown_081FAE89[a][1]);
+    SetOutlineCursorWidth(0x48);
+    SetOutlineCursorPosition(gUnknown_081FAE89[a][0], gUnknown_081FAE89[a][1]);
 }
 
 void nullsub_7(u8 a)
@@ -1686,8 +1686,8 @@ void nullsub_7(u8 a)
 
 void sub_802E3E4(u8 a, int unused)
 {
-    sub_814A958(0x2A);
-    MenuCursor_SetPos814A880(gUnknown_081FAE91[a][0], gUnknown_081FAE91[a][1]);
+    SetOutlineCursorWidth(0x2A);
+    SetOutlineCursorPosition(gUnknown_081FAE91[a][0], gUnknown_081FAE91[a][1]);
 }
 
 void nullsub_8(u8 a)
@@ -2613,7 +2613,7 @@ void PlayerHandlecmd18(void)
 
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_MenuOptions, 400, 18, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    MenuCursor_Create814A5C0(0, 0xFFFF, 12, 11679, 0);
+    CreateOutlineCursor(0, 0xFFFF, 12, 11679, 0);
 
     for (r4 = 0; r4 < 4; r4++)
         nullsub_8(r4);
@@ -2631,7 +2631,7 @@ void PlayerHandlecmd19()
 
 void PlayerHandlecmd20(void)
 {
-    MenuCursor_Create814A5C0(0, 0xFFFF, 12, 0x2D9F, 0);
+    CreateOutlineCursor(0, 0xFFFF, 12, 0x2D9F, 0);
     sub_80304A8();
     gBattlerControllerFuncs[gActiveBattler] = HandleAction_ChooseMove;
 }

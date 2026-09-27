@@ -4975,7 +4975,7 @@ static void Task_SearchCompleteWaitForInput(u8 taskId)
 
 static void PrintSelectorArrow(u16 a, int unused)
 {
-    MenuCursor_SetPos814AD7C(0x90, (a * 2 + 1) * 8);
+    SetBlendedOutlineCursorPosition(0x90, (a * 2 + 1) * 8);
 }
 
 static void Task_SelectSearchMenuItem(u8 taskId)
@@ -5012,7 +5012,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
     r2 = sSearchOptions[r1].numOptions - 1;
     if (JOY_NEW(A_BUTTON))
     {
-        sub_814ADC8();
+        HideBlendedOutlineCursor();
         PlaySE(SE_PIN);
         Menu_EraseWindowRect(18, 1, 28, 12);
         DrawOrEraseSearchParameterBox(1);
@@ -5021,7 +5021,7 @@ static void Task_HandleSearchParameterInput(u8 taskId)
     }
     if (JOY_NEW(B_BUTTON))
     {
-        sub_814ADC8();
+        HideBlendedOutlineCursor();
         PlaySE(SE_BALL);
         Menu_EraseWindowRect(18, 1, 28, 12);
         DrawOrEraseSearchParameterBox(1);

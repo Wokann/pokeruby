@@ -173,8 +173,8 @@ void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
 void sub_80A6978(void);
 u8 sub_80A7DEC(u8 berryId, u8 x, u8 y, bool8 animate);
-void MenuCursor_SetPos814A880(u8 a1, u8 a2);
-u8 MenuCursor_Create814A5C0(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+void SetOutlineCursorPosition(u8 a1, u8 a2);
+u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 s8 GetFirstFreePokeblockSlot(void);
 #ifdef GERMAN
 extern void de_sub_8073110();
@@ -2146,14 +2146,14 @@ static void BlenderDebug_CalculatePokeblock(struct BlenderBerry* berries, struct
 static void sub_80508D4(u8 value)
 {
     gBerryBlenderData->field_AA = value;
-    MenuCursor_SetPos814A880(192, (gBerryBlenderData->field_AA * 16) + 72);
+    SetOutlineCursorPosition(192, (gBerryBlenderData->field_AA * 16) + 72);
 }
 
 static void sub_80508FC(void)
 {
     gBerryBlenderData->field_AA = 0;
     Menu_DrawStdWindowFrame(23, 8, 28, 13);
-    MenuCursor_Create814A5C0(0, -1, 12, 0x2D9F, 32);
+    CreateOutlineCursor(0, -1, 12, 0x2D9F, 32);
     Menu_PrintText(gOtherText_YesNoTerminating, 24, 9);
     sub_80508D4(gBerryBlenderData->field_AA);
 }

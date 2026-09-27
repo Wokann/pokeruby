@@ -548,9 +548,9 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
     }
 
     sMenu->cursorBaseY = y + 8;
-    MenuCursor_Create814A5C0(0, basePaletteTag + 1, 15, 0, 0x30);
-    MenuCursor_SetPos814A880(x + 8, sMenu->cursorBaseY);
-    sub_814AABC(SpriteCB_Cursor);
+    CreateOutlineCursor(0, basePaletteTag + 1, 15, 0, 0x30);
+    SetOutlineCursorPosition(x + 8, sMenu->cursorBaseY);
+    SetOutlineCursorCallback(SpriteCB_Cursor);
 }
 
 static void SpriteCB_Dummy(struct Sprite *sprite)

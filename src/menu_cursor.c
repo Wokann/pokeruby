@@ -17,7 +17,7 @@ EWRAM_DATA static u8 sSavedWinOutHigh = 0;
 #include "data/menu_cursor_de.h"
 #endif // ENGLISH/GERMAN
 
-void sub_814A590(void)
+void InitOutlineCursorState(void)
 {
     sOutlineCursorSpriteId = 0x40;
     sOutlineCursorWindowSpriteId = 0x40;
@@ -26,43 +26,43 @@ void sub_814A590(void)
     sSavedWinOutHigh = 0;
 }
 
-u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5)
+u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width)
 {
-    int v9;
-    struct Sprite *v10;
+    int templateIndex;
+    struct Sprite *sprite;
 
     if (sOutlineCursorSpriteId != 0x40 || sOutlineCursorWindowSpriteId != 0x40)
         DestroyMenuCursor();
 
-    v9 = 1;
+    templateIndex = 1;
     if (paletteTag == 0xFFFF)
     {
-        sMenuCursorPalette[a3 & 0xF] = a4;
+        sMenuCursorPalette[tileIndex & 0xF] = color;
         if (LoadSpritePalette(&gOutlineCursorSpritePalette) != 0xFF)
         {
             paletteTag = 0xFFF0;
-            v9 = 0;
+            templateIndex = 0;
         }
     }
 
-    LoadSpriteSheetDeferred(&gOutlineCursorSpriteSheets[a3 & 0xF]);
-    sOutlineCursorSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[v9], 0, 160, subpriority);
+    LoadSpriteSheetDeferred(&gOutlineCursorSpriteSheets[tileIndex & 0xF]);
+    sOutlineCursorSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[templateIndex], 0, 160, subpriority);
     sOutlineCursorWindowSpriteId = CreateSprite(&gOutlineCursorSpriteTemplates[2], 0, 160, subpriority);
     if (sOutlineCursorSpriteId != 0x40)
     {
-        v10 = &gSprites[sOutlineCursorSpriteId];
+        sprite = &gSprites[sOutlineCursorSpriteId];
         if (paletteTag == 0xFFFF)
-            v10->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            v10->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
     }
     if (sOutlineCursorWindowSpriteId != 0x40)
     {
-        v10 = &gSprites[sOutlineCursorWindowSpriteId];
+        sprite = &gSprites[sOutlineCursorWindowSpriteId];
         if (paletteTag == 0xFFFF)
-            v10->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            v10->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
 
         if (!(REG_DISPCNT & (DISPCNT_WIN0_ON | DISPCNT_WIN1_ON)))
             *(u8 *)(REG_ADDR_WINOUT) |= 0x1F;
@@ -71,41 +71,41 @@ u8 MenuCursor_Create814A5C0(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5
         REG_DISPCNT |= DISPCNT_OBJWIN_ON;
         *(u8 *)(REG_ADDR_WINOUT + 1) = 0x10;
     }
-    sub_814A958(a5);
+    SetOutlineCursorWidth(width);
     return sOutlineCursorSpriteId;
 }
 
 // unused
-u8 sub_814A758(u8 subpriority, u8 a2, u8 a3, u8 a4)
+u8 CreateOutlineCursorWithPaletteNum(u8 subpriority, u8 paletteNum, u8 tileIndex, u8 width)
 {
     u8 result;
     struct Sprite *spr;
 
-    result = MenuCursor_Create814A5C0(subpriority, 0, a3, 0, a4);
+    result = CreateOutlineCursor(subpriority, 0, tileIndex, 0, width);
     if (result != 0x40)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
-        spr->oam.paletteNum = a2;
+        spr->oam.paletteNum = paletteNum;
     }
     return result;
 }
 
-u8 unref_sub_814A7AC(u8 a1, u16 a2, u8 a3)
+u8 CreateOutlineCursorWithPaletteColor(u8 subpriority, u16 color, u8 width)
 {
     u16 i;
-    u8 val1 = 0;
-    u16 val2 = 0xF;
+    u8 paletteNum = 0;
+    u16 tileIndex = 0xF;
 
     for (i = 0; i <= 0xFF; i++)
     {
-        if (gPlttBufferUnfaded[i] == a2)
+        if (gPlttBufferUnfaded[i] == color)
         {
-            val1 = (u8)(i >> 4);
-            val2 = i & 0xF;
+            paletteNum = (u8)(i >> 4);
+            tileIndex = i & 0xF;
         }
     }
 
-    return sub_814A758(a1, val1, val2, a3);
+    return CreateOutlineCursorWithPaletteNum(subpriority, paletteNum, tileIndex, width);
 }
 
 void DestroyMenuCursor(void)
@@ -129,7 +129,7 @@ void DestroyMenuCursor(void)
     return;
 }
 
-void MenuCursor_SetPos814A880(u8 a1, u8 a2)
+void SetOutlineCursorPosition(u8 x, u8 y)
 {
     struct Sprite *spr;
 
@@ -139,8 +139,8 @@ void MenuCursor_SetPos814A880(u8 a1, u8 a2)
         spr->invisible = FALSE;
         spr->centerToCornerVecX = 0;
         spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        spr->x = x;
+        spr->y = y;
     }
 
     if (sOutlineCursorWindowSpriteId != 0x40)
@@ -149,14 +149,14 @@ void MenuCursor_SetPos814A880(u8 a1, u8 a2)
         spr->invisible = FALSE;
         spr->centerToCornerVecX = 0;
         spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        spr->x = x;
+        spr->y = y;
     }
 
     return;
 }
 
-void sub_814A904(void)
+void HideOutlineCursor(void)
 {
     struct Sprite *spr;
 
@@ -178,7 +178,7 @@ void sub_814A904(void)
 #if ENGLISH
 #ifdef NONMATCHING
 // Fix pls
-void sub_814A958(u8 a)
+void SetOutlineCursorWidth(u8 a)
 {
     u8 r7;
     struct Subsprite *r4 = &sMenuCursorSubsprites[0];
@@ -237,7 +237,7 @@ void sub_814A958(u8 a)
 }
 #else
 NAKED
-void sub_814A958(u8 a1)
+void SetOutlineCursorWidth(u8 a1)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -420,7 +420,7 @@ _0814AAB8: .4byte sOutlineCursorWindowSpriteId\n\
 #endif
 #elif GERMAN
 NAKED
-void sub_814A958(u8 a1)
+void SetOutlineCursorWidth(u8 a1)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -603,7 +603,7 @@ _0814AABC: .4byte sOutlineCursorWindowSpriteId\n\
 }
 #endif
 
-void sub_814AABC(void (*callback)(struct Sprite *))
+void SetOutlineCursorCallback(void (*callback)(struct Sprite *))
 {
     struct Sprite *spr;
 
@@ -622,34 +622,34 @@ void sub_814AABC(void (*callback)(struct Sprite *))
     return;
 }
 
-void sub_814AAF8(u16 a1)
+void UpdateOutlineCursorPaletteByColor(u16 color)
 {
     struct Sprite *spr;
-    u8 v2;
-    u8 v3;
-    u16 v4;
+    u8 paletteNum;
+    u8 tileIndex;
+    u16 i;
 
     if (sOutlineCursorSpriteId != 0x40)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
         if (spr->template->paletteTag == 0xFFFF)
         {
-            for (v2 = 0, v3 = 0xF, v4 = 0; v4 <= 0xFF; v4++)
+            for (paletteNum = 0, tileIndex = 0xF, i = 0; i <= 0xFF; i++)
             {
-                if (gPlttBufferUnfaded[v4] == a1)
+                if (gPlttBufferUnfaded[i] == color)
                 {
-                    v2 = v4 >> 4;
-                    v3 = v4 & 0xF;
+                    paletteNum = i >> 4;
+                    tileIndex = i & 0xF;
                 }
             }
-            spr->oam.paletteNum = v2;
-            RequestSpriteSheetCopy(&gOutlineCursorSpriteSheets[v3 & 0xF]);
+            spr->oam.paletteNum = paletteNum;
+            RequestSpriteSheetCopy(&gOutlineCursorSpriteSheets[tileIndex & 0xF]);
         }
     }
     return;
 }
 
-void sub_814AB84(void)
+void DestroyOutlineCursorWindowSprite(void)
 {
     struct Sprite *spr;
 
@@ -667,67 +667,67 @@ void sub_814AB84(void)
     return;
 }
 
-void unref_sub_814ABE4(int a1)
+void SetOutlineCursorWindowSubsprites(int index)
 {
     struct Sprite *spr;
 
-    CpuCopy16(gUnknown_0842F5BC[a1], &sMenuCursorSubsprites, 80);
+    CpuCopy16(gUnknown_0842F5BC[index], &sMenuCursorSubsprites, 80);
 
     if (sOutlineCursorSpriteId != 0x40)
     {
         spr = &gSprites[sOutlineCursorSpriteId];
-        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[a1]);
+        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[index]);
     }
     if (sOutlineCursorWindowSpriteId != 0x40)
     {
         spr = &gSprites[sOutlineCursorWindowSpriteId];
-        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[a1]);
+        SetSubspriteTables(spr, &gOutlineCursorWindowSubspriteTable[index]);
     }
     return;
 }
 
-u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 a3, u16 a4, u8 a5)
+u8 CreateBlendedOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width)
 {
-    int v8;
-    struct Sprite *spr;
+    int templateIndex;
+    struct Sprite *sprite;
 
     if (sBlendedOutlineCursorSpriteId != 0x40)
-        MenuCursor_Destroy814AD44();
+        DestroyBlendedOutlineCursor();
 
-    v8 = 1;
+    templateIndex = 1;
 
     if (paletteTag == 0xFFFF)
     {
-        sMenuCursorPalette[a3 & 0xF] = a4;
+        sMenuCursorPalette[tileIndex & 0xF] = color;
         if (LoadSpritePalette(&gBlendedOutlineCursorSpritePalette) != 0xFF )
         {
             paletteTag = 0xFFF1;
-            v8 = 0;
+            templateIndex = 0;
         }
     }
 
-    LoadSpriteSheetDeferred(&gBlendedOutlineCursorSpriteSheets[a3 & 0xF]);
+    LoadSpriteSheetDeferred(&gBlendedOutlineCursorSpriteSheets[tileIndex & 0xF]);
 #if ENGLISH
-    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[v8], 0, 160, subpriority);
+    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[templateIndex], 0, 160, subpriority);
 #elif GERMAN
-    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[v8], 0, 161, subpriority);
+    sBlendedOutlineCursorSpriteId = CreateSprite(&gBlendedOutlineCursorSpriteTemplates[templateIndex], 0, 161, subpriority);
 #endif
 
     if (sBlendedOutlineCursorSpriteId != 0x40)
     {
-        spr = &gSprites[sBlendedOutlineCursorSpriteId];
+        sprite = &gSprites[sBlendedOutlineCursorSpriteId];
 
         if (paletteTag == 0xFFFF)
-            spr->oam.paletteNum = 0;
+            sprite->oam.paletteNum = 0;
         else
-            spr->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
+            sprite->oam.paletteNum = IndexOfSpritePaletteTag(paletteTag);
     }
-    sub_814ADF4(a5);
+    SetBlendedOutlineCursorWidth(width);
 
     return sBlendedOutlineCursorSpriteId;
 }
 
-void MenuCursor_Destroy814AD44(void)
+void DestroyBlendedOutlineCursor(void)
 {
     if (sBlendedOutlineCursorSpriteId != 0x40)
     {
@@ -738,7 +738,7 @@ void MenuCursor_Destroy814AD44(void)
     return;
 }
 
-void MenuCursor_SetPos814AD7C(u8 a1, u8 a2)
+void SetBlendedOutlineCursorPosition(u8 x, u8 y)
 {
     struct Sprite *spr;
     if (sBlendedOutlineCursorSpriteId != 0x40)
@@ -747,13 +747,13 @@ void MenuCursor_SetPos814AD7C(u8 a1, u8 a2)
         spr->invisible = FALSE;
         spr->centerToCornerVecX = 0;
         spr->centerToCornerVecY = 0;
-        spr->x = a1;
-        spr->y = a2;
+        spr->x = x;
+        spr->y = y;
     }
     return;
 }
 
-void sub_814ADC8()
+void HideBlendedOutlineCursor()
 {
     struct Sprite *spr;
     if (sBlendedOutlineCursorSpriteId != 0x40)
@@ -764,13 +764,13 @@ void sub_814ADC8()
     return;
 }
 
-void sub_814ADF4(u8 a1)
+void SetBlendedOutlineCursorWidth(u8 widthIndex)
 {
-    if (a1 > 0x12)
-        a1 = 0;
+    if (widthIndex > 0x12)
+        widthIndex = 0;
 
     if (sBlendedOutlineCursorSpriteId != 0x40)
-        SetSubspriteTables(&gSprites[sBlendedOutlineCursorSpriteId], &gBlendedOutlineCursorSubspriteTables[a1]);
+        SetSubspriteTables(&gSprites[sBlendedOutlineCursorSpriteId], &gBlendedOutlineCursorSubspriteTables[widthIndex]);
     return;
 }
 

@@ -331,7 +331,7 @@ static void CB2_MoveRelearnerMain(void)
     if (sMoveRelearnerMenu->redrawCursor)
     {
         sMoveRelearnerMenu->redrawCursor = FALSE;
-        MenuCursor_SetPos814AD7C(0x58, (sMoveRelearnerMenu->cursorPos * 2 + 1) * 8);
+        SetBlendedOutlineCursorPosition(0x58, (sMoveRelearnerMenu->cursorPos * 2 + 1) * 8);
     }
     if (sMoveRelearnerMenu->redrawMoveSelectionWindow)
     {
