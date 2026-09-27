@@ -126,13 +126,13 @@ $(PKNAVGFXDIR)/region_map.8bpp: GFX_OPTS := -num_tiles 233
 
 $(PKNAVGFXDIR)/outline.4bpp: GFX_OPTS := -num_tiles 43
 
-$(PKNAVGFXDIR)/menu_options.4bpp: $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp
-	@cat $(PKNAVGFXDIR)/menu_hoennmap.4bpp $(PKNAVGFXDIR)/menu_condition.4bpp $(PKNAVGFXDIR)/menu_eyes.4bpp $(PKNAVGFXDIR)/menu_ribbons.4bpp $(PKNAVGFXDIR)/menu_off.4bpp >$@
+$(PKNAVGFXDIR)/options/main_menu_labels.4bpp: $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/options/trainers_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp
+	@cat $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/options/trainers_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp >$@
 
 $(PKNAVGFXDIR)/condition_menu_misc.4bpp: GFX_OPTS := -num_tiles 41
 
-$(PKNAVGFXDIR)/condition_search.4bpp: $(PKNAVGFXDIR)/condition_search_cool.4bpp $(PKNAVGFXDIR)/condition_search_beauty.4bpp $(PKNAVGFXDIR)/condition_search_cute.4bpp $(PKNAVGFXDIR)/condition_search_smart.4bpp $(PKNAVGFXDIR)/condition_search_tough.4bpp $(PKNAVGFXDIR)/condition_search_cancel.4bpp
-	@cat $(PKNAVGFXDIR)/condition_search_cool.4bpp $(PKNAVGFXDIR)/condition_search_beauty.4bpp $(PKNAVGFXDIR)/condition_search_cute.4bpp $(PKNAVGFXDIR)/condition_search_smart.4bpp $(PKNAVGFXDIR)/condition_search_tough.4bpp $(PKNAVGFXDIR)/condition_search_cancel.4bpp >$@
+$(PKNAVGFXDIR)/options/condition_search_labels.4bpp: $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp
+	@cat $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp >$@
 
 
 #### Trade ####

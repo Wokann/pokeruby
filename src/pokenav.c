@@ -1906,12 +1906,12 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
     {
     case 0:
     {
-        sub_80F2458(menuType);
+        LoadMenuOptionSpriteSheet(menuType);
         break;
     }
     case 1:
     {
-        sub_80F2514(menuType);
+        LoadMenuOptionSpritePalettes(menuType);
         break;
     }
     case 2:
@@ -2267,9 +2267,9 @@ void DestroyMenuOptionSprite(struct Sprite *sprite)
     DestroySprite(sprite);
 }
 
-void sub_80F2458(u8 arg0)
+void LoadMenuOptionSpriteSheet(u8 menuType)
 {
-    switch (arg0)
+    switch (menuType)
     {
     case 0:
         gPokenavStructPtr->menuOptionSpriteSheet.data = gPokenavStructPtr->menuOptionsGfx;
@@ -2293,11 +2293,11 @@ void sub_80F2458(u8 arg0)
     LoadSpriteSheet(&gPokenavStructPtr->menuOptionSpriteSheet);
 }
 
-void sub_80F2514(u8 arg0)
+void LoadMenuOptionSpritePalettes(u8 menuType)
 {
     struct SpritePalette spritePalette;
 
-    switch (arg0)
+    switch (menuType)
     {
     case 0:
         spritePalette.data = gPokenavMenuOptions1_Pal;
