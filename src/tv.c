@@ -264,7 +264,7 @@ const u8 *const gTVNewsTextGroup3[] =
     gTVNewsText_LilycoveDepartment3,
 };
 
-u8 *const gUnknown_083D1464[] =
+u8 *const gTVStringVarPtrs[] =
 {
     gStringVar1,
     gStringVar2,
@@ -1515,16 +1515,16 @@ void sub_80BEF10(u8 strvaridx, u8 rank)
     switch (rank)
     {
     case NORMAL_RANK:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_NORMAL]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_NORMAL]);
         break;
     case SUPER_RANK:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_SUPER]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SUPER]);
         break;
     case HYPER_RANK:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_HYPER]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_HYPER]);
         break;
     case MASTER_RANK:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_MASTER]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_MASTER]);
         break;
     }
 }
@@ -1534,19 +1534,19 @@ void CopyContestCategoryToStringVar(u8 strvaridx, u8 category)
     switch (category)
     {
     case CONTEST_COOL:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_COOL]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_COOL]);
         break;
     case CONTEST_BEAUTY:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_BEAUTY]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_BEAUTY]);
         break;
     case CONTEST_CUTE:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_CUTE]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_CUTE]);
         break;
     case CONTEST_SMART:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_SMART]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SMART]);
         break;
     case CONTEST_TOUGH:
-        StringCopy(gUnknown_083D1464[strvaridx], gStdStrings[STDSTRING_TOUGH]);
+        StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_TOUGH]);
         break;
     }
 }
@@ -1562,7 +1562,7 @@ void sub_80BF088(u8 arg0, s32 price)
 {
     size_t log10val = sub_80BF0B8(price);
 
-    ConvertIntToDecimalStringN(gUnknown_083D1464[arg0], price, 0, log10val);
+    ConvertIntToDecimalStringN(gTVStringVarPtrs[arg0], price, 0, log10val);
 }
 
 size_t sub_80BF0B8(int value)
@@ -1861,7 +1861,7 @@ u16 sub_80BF638(u8 arg0, u16 arg1)
 {
     u16 retval = sub_80BF674(arg1);
 
-    StringCopy(gUnknown_083D1464[arg0], gSpeciesNames[retval]);
+    StringCopy(gTVStringVarPtrs[arg0], gSpeciesNames[retval]);
     return retval;
 }
 
@@ -2034,7 +2034,7 @@ void sub_80BF820(u8 arg0, u8 arg1, u8 arg2, u16 arg3, u16 arg4, struct TVShowNam
             flags[1] = gSpeciesNames[arg4][nameLength - (arg1 + 1)];
         }
     }
-    StringCopy(gUnknown_083D1464[arg0], flags);
+    StringCopy(gTVStringVarPtrs[arg0], flags);
 }
 
 bool8 IsTVShowAlreadyInQueue(void)

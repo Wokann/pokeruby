@@ -1,6 +1,8 @@
 #ifndef GUARD_TV_H
 #define GUARD_TV_H
 
+extern u8 *const gTVStringVarPtrs[3];
+
 enum
 {
     TVSHOW_FAN_CLUB_LETTER = 1,

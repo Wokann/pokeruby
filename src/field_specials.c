@@ -53,8 +53,6 @@ extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 extern u16 gSpecialVar_Result;
 
-extern u8 *const gUnknown_083D1464[3];
-
 EWRAM_DATA bool8 gBikeCyclingChallenge = FALSE;
 EWRAM_DATA u8 gBikeCollisions = 0;
 static EWRAM_DATA u32 sBikeCyclingTimer = 0;
@@ -310,7 +308,7 @@ u8 GetLinkPartnerNames(void)
     {
         if (myLinkPlayerNumber != i)
         {
-            StringCopy(gUnknown_083D1464[j], gLinkPlayers[i].name);
+            StringCopy(gTVStringVarPtrs[j], gLinkPlayers[i].name);
             j++;
         }
     }
