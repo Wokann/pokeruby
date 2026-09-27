@@ -259,5 +259,5 @@ bool8 sub_80F70FC(void)
 void sub_80F7224(u8 a0)
 {
     u8 sheen = GetMonData(&gPlayerParty[a0], MON_DATA_SHEEN);
-    gPokenavStructPtr->unk8931[gPokenavStructPtr->unk8fe9] = sheen != 255 ? sheen / 29 : 9;
+    gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->unk8fe9] = sheen != 255 ? sheen / 29 : 9;
 }

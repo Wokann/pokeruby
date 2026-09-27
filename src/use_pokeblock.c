@@ -361,8 +361,8 @@ static void sub_81365C8(void)
         case 1:
             if (!gPaletteFade.active)
             {
-                sub_80F3C94();
-                sub_80F3D00();
+                LoadConditionSparkles();
+                CreateConditionSparkleSprites();
                 launch_c3_walk_stairs_and_run_once(sub_8136638);
             }
             break;
@@ -378,14 +378,14 @@ static void sub_8136638(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(TRUE);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
             else if (JOY_HELD(DPAD_DOWN))
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(FALSE);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 1;
             }
             else if (JOY_NEW(B_BUTTON))
@@ -416,7 +416,7 @@ static void sub_8136638(void)
             if (!sub_8055870())
             {
                 PrintPokeblockMonNature();
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 gUnknown_02039304->unk50 = 0;
             }
             break;
@@ -524,8 +524,8 @@ static void sub_81368A4(void)
         case 6:
             if (!gPaletteFade.active)
             {
-                sub_80F3C94();
-                sub_80F3D00();
+                LoadConditionSparkles();
+                CreateConditionSparkleSprites();
                 launch_c3_walk_stairs_and_run_once(sub_81369CC);
                 SetMainCallback2(sub_8136244);
             }
@@ -540,7 +540,7 @@ static void sub_81369CC(void)
         case 0:
             gUnknown_02039304->pokemon = &gPlayerParty[0];
             gUnknown_02039304->pokemon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx];
-            move_anim_execute();
+            DestroyConditionSparkleSprites();
             gUnknown_02039304->unk50++;
             break;
         case 1:
@@ -558,7 +558,7 @@ static void sub_81369CC(void)
             if (!sub_80F555C())
             {
                 sub_80F7224(sub_81370A4(gPokenavStructPtr->unk87DC));
-                sub_80F3D00();
+                CreateConditionSparkleSprites();
                 gUnknown_02039304->unk52 = 0;
                 gUnknown_02039304->unk50++;
             }

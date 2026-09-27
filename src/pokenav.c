@@ -132,10 +132,10 @@ extern const struct SpriteTemplate gPokenavConditionSelectionIconTemplate;
 extern const u16 gPokenavConditionMonMarkingsPalette[];
 extern const u8 gPokenavRibbonIconsBigHalfGfx[];
 extern const struct SpriteTemplate gPokenavBigRibbonSpriteTemplate;
-extern const struct SpriteSheet gUnknown_083E4784;
-extern const struct SpritePalette gUnknown_083E478C;
-extern const struct SpriteTemplate gSpriteTemplate_83E4800;
-extern const s16 gUnknown_083E4794[][2];
+extern const struct SpriteSheet gPokenavConditionSparkleSpriteSheet;
+extern const struct SpritePalette gPokenavConditionSparkleSpritePalette;
+extern const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate;
+extern const s16 gPokenavConditionSparkleCoords[][2];
 extern const u8 gUnknown_083E329C[];
 extern const struct SpritePalette gUnknown_083E4818;
 extern const struct SpriteTemplate gSpriteTemplate_83E4850;
@@ -3287,45 +3287,45 @@ void FreeRibbonsSummarySprites(void)
     DestroyPokenavPortraitSprite();
 }
 
-void sub_80F3C94(void)
+void LoadConditionSparkles(void)
 {
     u16 i;
     struct SpriteSheet spriteSheet;
     struct SpritePalette spritePalette;
 
-    spriteSheet = gUnknown_083E4784;
-    spritePalette = gUnknown_083E478C;
+    spriteSheet = gPokenavConditionSparkleSpriteSheet;
+    spritePalette = gPokenavConditionSparkleSpritePalette;
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&spritePalette);
     for (i = 0; i < 10; i++)
-        gPokenavStructPtr->unk8800[i] = NULL;
+        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
 }
 
-void sub_80F3CE8(void)
+void FreeConditionSparkles(void)
 {
-    move_anim_execute();
+    DestroyConditionSparkleSprites();
     FreeSpriteTilesByTag(0x17);
     FreeSpritePaletteByTag(0xF);
 }
 
-void sub_80F3D00(void)
+void CreateConditionSparkleSprites(void)
 {
     u8 spriteId;
     u16 i;
-    u8 var1;
-    struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
+    u8 count;
+    struct UnkUsePokeblockSub *mon = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
 
-    if (!var0->unk3_14)
+    if (!mon->unk3_14)
         return;
 
-    var1 = gPokenavStructPtr->unk8931[gPokenavStructPtr->unk8fe9];
-    for (i = 0; i < var1 + 1; i++)
+    count = gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->unk8fe9];
+    for (i = 0; i < count + 1; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_83E4800, 0, 0, 0);
+        spriteId = CreateSprite(&gPokenavConditionSparkleSpriteTemplate, 0, 0, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk8800[i] = &gSprites[spriteId];
-            gPokenavStructPtr->unk8800[i]->invisible = TRUE;
+            gPokenavStructPtr->conditionSparkleSprites[i] = &gSprites[spriteId];
+            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = TRUE;
         }
         else
         {
@@ -3333,84 +3333,89 @@ void sub_80F3D00(void)
         }
     }
 
-    sub_80F3F20(var1, 1);
+    InitConditionSparkles(count, 1);
 }
 
-void move_anim_execute(void)
+void DestroyConditionSparkleSprites(void)
 {
     u16 i;
 
     for (i = 0; i < 10; i++)
     {
-        if (!gPokenavStructPtr->unk8800[i])
+        if (!gPokenavStructPtr->conditionSparkleSprites[i])
             return;
 
-        DestroySprite(gPokenavStructPtr->unk8800[i]);
-        gPokenavStructPtr->unk8800[i] = NULL;
+        DestroySprite(gPokenavStructPtr->conditionSparkleSprites[i]);
+        gPokenavStructPtr->conditionSparkleSprites[i] = NULL;
     }
 }
 
-void sub_80F3DDC(struct Sprite *sprite)
+#define sSparkleId data[0]
+#define sDelayTimer data[1]
+#define sNumExtraSparkles data[2]
+#define sCurSparkleId data[3]
+
+void SpriteCB_ConditionSparkle_DoNextAfterDelay(struct Sprite *sprite)
 {
-    if (++sprite->data[1] > 60)
+    if (++sprite->sDelayTimer > 60)
     {
-        sprite->data[1] = 0;
-        sub_80F3F20(sprite->data[2], 0);
+        sprite->sDelayTimer = 0;
+        InitConditionSparkles(sprite->sNumExtraSparkles, 0);
     }
 }
 
-void sub_80F3E04(struct Sprite *sprite)
+void SpriteCB_ConditionSparkle_WaitForAllAnim(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
-        sprite->data[1] = 0;
-        sprite->callback = sub_80F3DDC;
+        sprite->sDelayTimer = 0;
+        sprite->callback = SpriteCB_ConditionSparkle_DoNextAfterDelay;
     }
 }
 
-void sub_80F3E24(struct Sprite *sprite)
+void SetConditionSparklePosition(struct Sprite *sprite)
 {
     if (gPokenavStructPtr->portraitSprite)
     {
         sprite->x = gPokenavStructPtr->portraitSprite->x
                          + gPokenavStructPtr->portraitSprite->x2
-                         + gUnknown_083E4794[sprite->data[0]][0];
+                         + gPokenavConditionSparkleCoords[sprite->sSparkleId][0];
         sprite->y = gPokenavStructPtr->portraitSprite->y
                          + gPokenavStructPtr->portraitSprite->y2
-                         + gUnknown_083E4794[sprite->data[0]][1];
+                         + gPokenavConditionSparkleCoords[sprite->sSparkleId][1];
     }
     else
     {
-        sprite->x = gUnknown_083E4794[sprite->data[0]][0] + 40;
-        sprite->y = gUnknown_083E4794[sprite->data[0]][1] + 104;
+        sprite->x = gPokenavConditionSparkleCoords[sprite->sSparkleId][0] + 40;
+        sprite->y = gPokenavConditionSparkleCoords[sprite->sSparkleId][1] + 104;
     }
 }
 
-void sub_80F3E9C(struct Sprite *sprite)
+void SpriteCB_ConditionSparkle(struct Sprite *sprite)
 {
-    if (sprite->data[1])
+    if (sprite->sDelayTimer)
     {
-        if (--sprite->data[1])
+        if (--sprite->sDelayTimer)
             return;
 
         SeekSpriteAnim(sprite, 0);
         sprite->invisible = FALSE;
     }
 
-    sub_80F3E24(sprite);
+    SetConditionSparklePosition(sprite);
     if (sprite->animEnded)
     {
         sprite->invisible = TRUE;
-        if (sprite->data[3] == sprite->data[2])
+        if (sprite->sCurSparkleId == sprite->sNumExtraSparkles)
         {
-            if (sprite->data[3] == 9)
+            if (sprite->sCurSparkleId == 9)
             {
-                sub_80F3FAC();
-                sprite->callback = sub_80F3E04;
+                ShowAllConditionSparkles();
+                sprite->callback = SpriteCB_ConditionSparkle_WaitForAllAnim;
             }
             else
             {
-                sprite->callback = sub_80F3DDC;
+                sprite->callback = SpriteCB_ConditionSparkle_DoNextAfterDelay;
             }
         }
         else
@@ -3420,47 +3425,52 @@ void sub_80F3E9C(struct Sprite *sprite)
     }
 }
 
-void sub_80F3F20(u8 arg0, u8 arg1)
+void InitConditionSparkles(u8 count, u8 allowFirstShowAll)
 {
     u16 i;
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->unk8800[i])
+        if (gPokenavStructPtr->conditionSparkleSprites[i])
         {
-            gPokenavStructPtr->unk8800[i]->data[0] = i;
-            gPokenavStructPtr->unk8800[i]->data[1] = i * 16 + 1;
-            gPokenavStructPtr->unk8800[i]->data[2] = arg0;
-            gPokenavStructPtr->unk8800[i]->data[3] = i;
+            gPokenavStructPtr->conditionSparkleSprites[i]->sSparkleId = i;
+            gPokenavStructPtr->conditionSparkleSprites[i]->sDelayTimer = i * 16 + 1;
+            gPokenavStructPtr->conditionSparkleSprites[i]->sNumExtraSparkles = count;
+            gPokenavStructPtr->conditionSparkleSprites[i]->sCurSparkleId = i;
 
-            if (!arg1 || arg0 != 9)
+            if (!allowFirstShowAll || count != 9)
             {
-                gPokenavStructPtr->unk8800[i]->callback = sub_80F3E9C;
+                gPokenavStructPtr->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle;
             }
             else
             {
-                sub_80F3E24(gPokenavStructPtr->unk8800[i]);
-                sub_80F3FAC();
-                gPokenavStructPtr->unk8800[i]->callback = sub_80F3E04;
-                gPokenavStructPtr->unk8800[i]->invisible = FALSE;
+                SetConditionSparklePosition(gPokenavStructPtr->conditionSparkleSprites[i]);
+                ShowAllConditionSparkles();
+                gPokenavStructPtr->conditionSparkleSprites[i]->callback = SpriteCB_ConditionSparkle_WaitForAllAnim;
+                gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
             }
         }
     }
 }
 
-void sub_80F3FAC(void)
+void ShowAllConditionSparkles(void)
 {
     u16 i;
 
     for (i = 0; i < 10; i++)
     {
-        if (gPokenavStructPtr->unk8800[i])
+        if (gPokenavStructPtr->conditionSparkleSprites[i])
         {
-            SeekSpriteAnim(gPokenavStructPtr->unk8800[i], 0);
-            gPokenavStructPtr->unk8800[i]->invisible = FALSE;
+            SeekSpriteAnim(gPokenavStructPtr->conditionSparkleSprites[i], 0);
+            gPokenavStructPtr->conditionSparkleSprites[i]->invisible = FALSE;
         }
     }
 }
+
+#undef sSparkleId
+#undef sDelayTimer
+#undef sNumExtraSparkles
+#undef sCurSparkleId
 
 void sub_80F3FF0(void)
 {
@@ -3729,7 +3739,7 @@ void sub_80F468C(s16 arg0, u8 arg1)
         gPokenavStructPtr->unk8ff0[arg1][3] = sub_80F44B0(box, monIndex, MON_DATA_CUTE, NULL);
         gPokenavStructPtr->unk8ff0[arg1][4] = sub_80F44B0(box, monIndex, MON_DATA_BEAUTY, NULL);
 
-        gPokenavStructPtr->unk8931[arg1] = sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) != 255
+        gPokenavStructPtr->conditionNumSparkles[arg1] = sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) != 255
                                            ? sub_80F44B0(box, monIndex, MON_DATA_SHEEN, NULL) / 29
                                            : 9;
 

@@ -211,8 +211,8 @@ const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
 const u8 gUnknown_083E329C[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
 const u8 gPokenavConditionPokeball_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball.4bpp");
 const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball_placeholder.4bpp");
-const u16 gPokenavSparkle_Pal[] = INCBIN_U16("graphics/pokenav/sparkle.gbapal");
-const u8 gPokenavSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/sparkle.4bpp");
+const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
+const u8 gPokenavConditionSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/condition/sparkle.4bpp");
 const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
 const u8 gUnknown_083E3BC0[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
 const u8 gTiles_083E3BE0[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
@@ -915,10 +915,10 @@ const struct SpriteTemplate gPokenavBigRibbonSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-const struct SpriteSheet gUnknown_083E4784 = {gPokenavSparkle_Gfx, sizeof(gPokenavSparkle_Gfx), 0x0017};
-const struct SpritePalette gUnknown_083E478C = {gPokenavSparkle_Pal, 0x000f};
+const struct SpriteSheet gPokenavConditionSparkleSpriteSheet = {gPokenavConditionSparkle_Gfx, sizeof(gPokenavConditionSparkle_Gfx), 0x0017};
+const struct SpritePalette gPokenavConditionSparkleSpritePalette = {gPokenavConditionSparkle_Pal, 0x000f};
 
-const s16 gUnknown_083E4794[][2] = 
+const s16 gPokenavConditionSparkleCoords[][2] =
 {
     { 0 , -35},
     { 20, -28},
@@ -932,7 +932,7 @@ const s16 gUnknown_083E4794[][2] =
     {-20, -28},
 };
 
-const struct OamData gOamData_83E47BC = 
+const struct OamData gPokenavConditionSparkleOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -949,7 +949,7 @@ const struct OamData gOamData_83E47BC =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E47C4[] = 
+const union AnimCmd gPokenavConditionSparkleAnim[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_FRAME(4, 5),
@@ -962,28 +962,28 @@ const union AnimCmd gSpriteAnim_83E47C4[] =
 };
 
 // sparkles around pokemon on condition page of pokenav
-const union AnimCmd *const gSpriteAnimTable_83E47E4[] = 
+const union AnimCmd *const gPokenavConditionSparkleAnims[] =
 {
-    &gSpriteAnim_83E47C4[0],
-    &gSpriteAnim_83E47C4[2],
-    &gSpriteAnim_83E47C4[4],
-    &gSpriteAnim_83E47C4[6],
-    &gSpriteAnim_83E47C4[8],
-    &gSpriteAnim_83E47C4[10],
-    &gSpriteAnim_83E47C4[12],
+    &gPokenavConditionSparkleAnim[0],
+    &gPokenavConditionSparkleAnim[2],
+    &gPokenavConditionSparkleAnim[4],
+    &gPokenavConditionSparkleAnim[6],
+    &gPokenavConditionSparkleAnim[8],
+    &gPokenavConditionSparkleAnim[10],
+    &gPokenavConditionSparkleAnim[12],
 };
 
-void sub_80F3E9C(struct Sprite *sprite);
+void SpriteCB_ConditionSparkle(struct Sprite *sprite);
 
-const struct SpriteTemplate gSpriteTemplate_83E4800 = 
+const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate =
 {
     .tileTag = 23,
     .paletteTag = 15,
-    .oam = &gOamData_83E47BC,
-    .anims = gSpriteAnimTable_83E47E4,
+    .oam = &gPokenavConditionSparkleOam,
+    .anims = gPokenavConditionSparkleAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3E9C,
+    .callback = SpriteCB_ConditionSparkle,
 };
 
 const struct SpritePalette gUnknown_083E4818 = {gPokenavIconPalette, 16};
@@ -2447,7 +2447,7 @@ bool8 sub_80F7500(void);
 void SaveAndCloseConditionMonMarkingsMenu(void);
 bool8 sub_80F5038(void);
 void DestroyPokenavPortraitSprite(void);
-void sub_80F3CE8(void);
+void FreeConditionSparkles(void);
 void DestroyConditionMonMarkingsSprite(void);
 void DestroyConditionPartyPokeballIndicators(void);
 void sub_80F4FDC(void);
@@ -2472,8 +2472,8 @@ void HandleConditionGraphInput(void)
     case 3:
         if (!sub_80F4FB4())
         {
-            sub_80F3C94();
-            sub_80F3D00();
+            LoadConditionSparkles();
+            CreateConditionSparkleSprites();
             gPokenavStructPtr->callbackStep = 4;
         }
         break;
@@ -2487,7 +2487,7 @@ void HandleConditionGraphInput(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(1);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gPokenavStructPtr->callbackStep = 5;
                 break;
             }
@@ -2501,7 +2501,7 @@ void HandleConditionGraphInput(void)
             {
                 PlaySE(SE_SELECT);
                 sub_80F5060(0);
-                move_anim_execute();
+                DestroyConditionSparkleSprites();
                 gPokenavStructPtr->callbackStep = 5;
                 break;
             }
@@ -2510,7 +2510,7 @@ void HandleConditionGraphInput(void)
         {
             PlaySE(SE_SELECT);
             sub_80F4FDC();
-            move_anim_execute();
+            DestroyConditionSparkleSprites();
             gPokenavStructPtr->callbackStep = 9;
             break;
         }
@@ -2538,7 +2538,7 @@ void HandleConditionGraphInput(void)
     case 5:
         if (!gpu_sync_bg_show())
         {
-            sub_80F3D00();
+            CreateConditionSparkleSprites();
             gPokenavStructPtr->callbackStep = 6;
         }
         break;
@@ -2573,7 +2573,7 @@ void HandleConditionGraphInput(void)
     case 11:
         if (!gPaletteFade.active)
         {
-            sub_80F3CE8();
+            FreeConditionSparkles();
             sub_80F5BDC();
             if (!gPokenavStructPtr->isConditionGraphSearchMode)
             {
