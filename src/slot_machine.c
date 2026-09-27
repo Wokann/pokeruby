@@ -5010,59 +5010,59 @@ static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke = {
     0xFFFF, 4, &sOam_16x16, sAnims_SingleFrame, sImageTable_ReelTimeSmoke, sAffineAnims_ReelTimeSmoke, SpriteCB_ReelTimeSmoke
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED57C = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Reel = {
     0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reel, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED594 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Time = {
     0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Time, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5AC = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Insert = {
     0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Insert, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5C4 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Stop = {
     18, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Stop, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5DC = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Win = {
     0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Win, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED5F4 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Lose = {
     0xFFFF, 6, &sOam_64x32, sAnims_SingleFrame, sImageTable_DigitalDisplay_Lose, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED60C = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Bonus = {
     19, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Bonus, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED624 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Big = {
     20, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Big, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED63C = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Reg = {
     21, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Reg, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED654 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_AButton = {
     0xFFFF, 6, &sOam_32x32, sAnims_DigitalDisplay_AButton, sImageTable_DigitalDisplay_AButton, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED66C = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Smoke = {
     0xFFFF, 6, &sOam_8x8, sAnims_SingleFrame, sImageTable_DigitalDisplay_Smoke, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED684 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Number = {
     0xFFFF, 6, &sOam_16x16, sAnims_DigitalDisplay_Number, sImageTable_DigitalDisplay_Number, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED69C = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_Pokeball = {
     0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_Pokeball, sImageTable_DigitalDisplay_Pokeball, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED6B4 = {
+static const struct SpriteTemplate sSpriteTemplate_DigitalDisplay_DPad = {
     0xFFFF, 6, &sOam_8x8, sAnims_DigitalDisplay_DPad, sImageTable_DigitalDisplay_DPad, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
@@ -5391,31 +5391,31 @@ static const struct SubspriteTable gSubspriteTables_83EDB54[] = {
 };
 
 static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[] = {
-    &gSpriteTemplate_83ED57C,
-    &gSpriteTemplate_83ED594,
-    &gSpriteTemplate_83ED5AC,
-    &gSpriteTemplate_83ED5DC,
-    &gSpriteTemplate_83ED5F4,
-    &gSpriteTemplate_83ED654,
-    &gSpriteTemplate_83ED66C,
-    &gSpriteTemplate_83ED684,
-    &gSpriteTemplate_83ED69C,
-    &gSpriteTemplate_83ED6B4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED5C4,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED60C,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED624,
-    &gSpriteTemplate_83ED63C,
-    &gSpriteTemplate_83ED63C,
-    &gSpriteTemplate_83ED63C,
+    &sSpriteTemplate_DigitalDisplay_Reel,
+    &sSpriteTemplate_DigitalDisplay_Time,
+    &sSpriteTemplate_DigitalDisplay_Insert,
+    &sSpriteTemplate_DigitalDisplay_Win,
+    &sSpriteTemplate_DigitalDisplay_Lose,
+    &sSpriteTemplate_DigitalDisplay_AButton,
+    &sSpriteTemplate_DigitalDisplay_Smoke,
+    &sSpriteTemplate_DigitalDisplay_Number,
+    &sSpriteTemplate_DigitalDisplay_Pokeball,
+    &sSpriteTemplate_DigitalDisplay_DPad,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Stop,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Bonus,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Big,
+    &sSpriteTemplate_DigitalDisplay_Reg,
+    &sSpriteTemplate_DigitalDisplay_Reg,
+    &sSpriteTemplate_DigitalDisplay_Reg,
     &gDummySpriteTemplate
 };
 
