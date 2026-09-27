@@ -137,11 +137,11 @@ static bool8 ControlFlags_FH_Subsubmenu_HandleInput(void);
 static void ControlFlags_FH_FlagToggle(u8, u8);
 static void ControlFlags_FH_UpdateDisplay(u8);
 static bool8 ControlFlags_BallVanishFlag_InitSubmenu(void);
-static bool8 debug_sub_808D894(void);
-static bool8 debug_sub_808D8D8(void);
-static bool8 debug_sub_808D930(void);
-static void debug_sub_808D97C(u8, u8);
-static void debug_sub_808D9CC(u8);
+static bool8 ControlFlags_BallVanishFlag_HandleCategoryInput(void);
+static bool8 ControlFlags_BallVanishFlag_Part1_InitPage(void);
+static bool8 ControlFlags_BallVanishFlag_HandlePageInput(void);
+static void ControlFlags_BallVanishFlag_ToggleSelection(u8, u8);
+static void ControlFlags_BallVanishFlag_PrintPageValues(u8);
 static bool8 ControlWorks_AnsWork_InitSubmenu(void);
 static bool8 ControlWorks_AnsWork_HandleInput(void);
 static void ControlWorks_AnsWork_PrintRESULT(void);
@@ -756,23 +756,23 @@ static const u16 sSysFlagPageFlags[][9] = {
     {FLAG_LANDMARK_SEAFLOOR_CAVERN, FLAG_LANDMARK_BATTLE_TOWER, FLAG_LANDMARK_SOUTHERN_ISLAND, FLAG_SYS_POKEMON_LEAGUE_FLY, FLAG_LANDMARK_SKY_PILLAR}
 };
 
-static const u8 gDebug_0x83C1A68[] = DTR("FVーBALL　パート1", "FV-BALL PART 1");
+static const u8 sString_BallVanishFlag_Part1[] = DTR("FVーBALL　パート1", "FV-BALL PART 1");
 
-static const struct MenuAction gUnknown_Debug_083C1A78[] = {
-	{gDebug_0x83C1A68, debug_sub_808D8D8}
+static const struct MenuAction sMenuActions_BallVanishFlagCategories[] = {
+	{sString_BallVanishFlag_Part1, ControlFlags_BallVanishFlag_Part1_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C1A80[] = _("FVーBALL1ー78");
-static const u8 gUnknown_Debug_083C1A8C[] = _("FVーBALL1ー133");
+static const u8 sString_BallVanishFlag_AbandonedShipScanner[] = _("FVーBALL1ー78");
+static const u8 sString_BallVanishFlag_StevensHouseHM08[] = _("FVーBALL1ー133");
 
-static const struct MenuAction gUnknown_Debug_083C1A9C[] = {
-	{gUnknown_Debug_083C1A80, DummyMenuAction},
-	{gUnknown_Debug_083C1A8C, DummyMenuAction}
+static const struct MenuAction sMenuActions_BallVanishFlags_Part1[] = {
+	{sString_BallVanishFlag_AbandonedShipScanner, DummyMenuAction},
+	{sString_BallVanishFlag_StevensHouseHM08, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1AAC[] = {2};
+static const u8 sBallVanishFlagPageCounts[] = {2};
 
-static const u16 gUnknown_Debug_083C1AAE[][9] = {
+static const u16 sBallVanishFlagPageFlags[][9] = {
     {FLAG_ITEM_ABANDONED_SHIP_HIDDEN_FLOOR_ROOM_2_SCANNER, FLAG_ITEM_MOSSDEEP_STEVENS_HOUSE_HM08}
 };
 
@@ -3219,14 +3219,14 @@ static void ControlFlags_FH_UpdateDisplay(u8 whichMenu)
 static bool8 ControlFlags_BallVanishFlag_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(gUnknown_Debug_083C1A78) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1A78), gUnknown_Debug_083C1A78);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1A78), 0, 27);
-    gMenuCallback = debug_sub_808D894;
+    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(sMenuActions_BallVanishFlagCategories) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_BallVanishFlagCategories), sMenuActions_BallVanishFlagCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_BallVanishFlagCategories), 0, 27);
+    gMenuCallback = ControlFlags_BallVanishFlag_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D894(void)
+static bool8 ControlFlags_BallVanishFlag_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -3237,28 +3237,28 @@ static bool8 debug_sub_808D894(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C1A78[input].func;
+    gMenuCallback = sMenuActions_BallVanishFlagCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808D8D8(void)
+static bool8 ControlFlags_BallVanishFlag_Part1_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1A9C) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1A9C), gUnknown_Debug_083C1A9C);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1A9C), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_BallVanishFlags_Part1) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_BallVanishFlags_Part1), sMenuActions_BallVanishFlags_Part1);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_BallVanishFlags_Part1), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808D930;
+    gMenuCallback = ControlFlags_BallVanishFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D930(void)
+static bool8 ControlFlags_BallVanishFlag_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808D97C(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808D9CC(sFlagAndVarTest_WhichSubmenu);
+    ControlFlags_BallVanishFlag_ToggleSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlFlags_BallVanishFlag_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -3269,24 +3269,24 @@ static bool8 debug_sub_808D930(void)
     return FALSE;
 }
 
-static void debug_sub_808D97C(u8 whichMenu, u8 cursorPos)
+static void ControlFlags_BallVanishFlag_ToggleSelection(u8 whichMenu, u8 cursorPos)
 {
     if (JOY_NEW(R_BUTTON))
     {
-        if (!FlagGet(gUnknown_Debug_083C1AAE[whichMenu][cursorPos]))
-            FlagSet(gUnknown_Debug_083C1AAE[whichMenu][cursorPos]);
+        if (!FlagGet(sBallVanishFlagPageFlags[whichMenu][cursorPos]))
+            FlagSet(sBallVanishFlagPageFlags[whichMenu][cursorPos]);
         else
-            FlagClear(gUnknown_Debug_083C1AAE[whichMenu][cursorPos]);
+            FlagClear(sBallVanishFlagPageFlags[whichMenu][cursorPos]);
     }
 }
 
-static void debug_sub_808D9CC(u8 whichMenu)
+static void ControlFlags_BallVanishFlag_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C1AAC[whichMenu]; i++)
+    for (i = 0; i < sBallVanishFlagPageCounts[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C1AAE[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sBallVanishFlagPageFlags[whichMenu][i]) ? 1 : 0);
     }
 }
 
