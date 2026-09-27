@@ -348,21 +348,21 @@ gUnknown_03005F14 = .;
 . += 0xC;
 
 // pokeblock_feed.c
-SYMBOL(gPokeblockFeedPokeSprite, 4)
-SYMBOL(gPokeblockFeedMonSpecies, 4)
-SYMBOL(gPokeblockMonNotFlipped, 4)
-SYMBOL(gPokeblockFeedMonSpriteID, 4)
-SYMBOL(gPokeblockFeedMonNature, 4)
-SYMBOL(gUnknown_03005F34, 4)
-SYMBOL(gPokeblockFeedUnused0, 4)
-SYMBOL(gUnknown_03005F3C, 4)
-SYMBOL(gUnknown_03005F40, 4)
-SYMBOL(gPokeblockFeedPokeSpriteCopy, 68)
-SYMBOL(gUnknown_03005F94, 4)
+SYMBOL(sMonSpritePtr, 4)
+SYMBOL(sMonSpecies, 4)
+SYMBOL(sNoMonFlip, 4)
+SYMBOL(sMonSpriteId, 4)
+SYMBOL(sMonNature, 4)
+SYMBOL(sMonAnimLength, 4)
+SYMBOL(sUnused, 4)
+SYMBOL(sMonAnimRunState, 4)
+SYMBOL(sMonAnimId, 4)
+SYMBOL(sSavedMonSprite, 68)
+SYMBOL(sTimer, 4)
 #if DEBUG
-SYMBOL(gUnknown_03005FA0, 32)
+SYMBOL(sAnimData, 32)
 #else
-SYMBOL(gUnknown_03005FA0, 48)
+SYMBOL(sAnimData, 48)
 #endif
 
 // m4a_2.c

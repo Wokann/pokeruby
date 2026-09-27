@@ -474,7 +474,7 @@ static void FeedPokeblockToMon(void)
             if (!gPaletteFade.active)
             {
                 gMain.savedCallback = CB2_ReturnAndChooseMonToGivePokeblock;
-                SetMainCallback2(CB2_PreparePokeblockFeedScene);
+                SetMainCallback2(PreparePokeblockFeedScene);
             }
             break;
     }
