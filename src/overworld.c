@@ -61,6 +61,10 @@
 #define PLAYER_LINK_STATE_READY 0x82
 #define PLAYER_LINK_STATE_EXITING_ROOM 0x83
 
+#define FACING_NONE 0
+#define FACING_FORCED_LEFT 9
+#define FACING_FORCED_RIGHT 10
+
 extern u8 gUnknown_020297ED;
 extern u16 gTotalCameraPixelOffsetY;
 extern u16 gTotalCameraPixelOffsetX;
@@ -125,7 +129,7 @@ static u8 npc_something3(u8, u8);
 static u8 LinkPlayerDetectCollision(u8, u8, s16, s16);
 static void CreateLinkPlayerSprite(u8);
 static void SpriteCB_LinkPlayer(struct Sprite *);
-static u16 sub_8055758(const u8 *);
+static u16 GetDirectionForEventScript(const u8 *);
 static void RunInteractLocalPlayerScript(const u8 *);
 static void InitMenuBasedScript(const u8 *);
 
@@ -1954,7 +1958,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
         script = TryGetTileEventScript(a3);
         if (script)
         {
-            *a4 = sub_8055758(script);
+            *a4 = GetDirectionForEventScript(script);
             sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
             if (a3->isLocalPlayer)
             {
@@ -2066,7 +2070,7 @@ void UpdateAllLinkPlayers(u16 *a1, int a2)
         HandleLinkPlayerKeyInput(i, v5, &st, &v8);
         if (sPlayerLinkStates[i] == PLAYER_LINK_STATE_IDLE)
             v8 = GetDirectionForDpadKey(v5);
-        sub_8055BFC(i, v8);
+        SetPlayerFacingDirection(i, v8);
     }
 }
 
@@ -2364,33 +2368,33 @@ const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
     return GetInteractedLinkPlayerScript(&unkStruct, a1->metatileBehavior, a1->facing);
 }
 
-static u16 sub_8055758(const u8 *script)
+static u16 GetDirectionForEventScript(const u8 *script)
 {
     if (script == DoubleBattleColosseum_EventScript_PlayerSpot0)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == DoubleBattleColosseum_EventScript_PlayerSpot1)
-        return 9;
+        return FACING_FORCED_LEFT;
     if (script == DoubleBattleColosseum_EventScript_PlayerSpot2)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == DoubleBattleColosseum_EventScript_PlayerSpot3)
-        return 9;
+        return FACING_FORCED_LEFT;
     if (script == RecordCorner_EventScript_PlayerSpot0)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == RecordCorner_EventScript_PlayerSpot1)
-        return 9;
+        return FACING_FORCED_LEFT;
     if (script == RecordCorner_EventScript_PlayerSpot2)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == RecordCorner_EventScript_PlayerSpot3)
-        return 9;
+        return FACING_FORCED_LEFT;
     if (script == SingleBattleColosseum_EventScript_PlayerSpot0)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == SingleBattleColosseum_EventScript_PlayerSpot1)
-        return 9;
+        return FACING_FORCED_LEFT;
     if (script == TradeCenter_EventScript_Chair0)
-        return 10;
+        return FACING_FORCED_RIGHT;
     if (script == TradeCenter_EventScript_Chair1)
-        return 9;
-    return 0;
+        return FACING_FORCED_LEFT;
+    return FACING_NONE;
 }
 
 void InitLinkPlayerQueueScript(void)
@@ -2613,7 +2617,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     return 4;
 }
 
-void sub_8055BFC(u8 linkPlayerId, u8 a2)
+void SetPlayerFacingDirection(u8 linkPlayerId, u8 a2)
 {
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     u8 objEventId = linkPlayerObjEvent->objEventId;
@@ -2621,7 +2625,7 @@ void sub_8055BFC(u8 linkPlayerId, u8 a2)
 
     if (linkPlayerObjEvent->active)
     {
-        if (a2 > 10)
+        if (a2 > FACING_FORCED_RIGHT)
             objEvent->triggerGroundEffectsOnMove = 1;
         else
             gUnknown_082166D8[gUnknown_082166A0[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);

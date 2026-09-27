@@ -217,7 +217,7 @@ void GetLinkPlayerCoords(u8, u16 *, u16 *);
 u8 GetLinkPlayerFacingDirection(u8);
 u8 GetLinkPlayerElevation(u8);
 // unref_sub_8055B74
-void sub_8055BFC(u8, u8);
+void SetPlayerFacingDirection(u8, u8);
 // sub_8055C68
 // sub_8055C88
 // sub_8055C8C
