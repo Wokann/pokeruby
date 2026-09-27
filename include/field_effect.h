@@ -72,11 +72,11 @@ bool8 EscalatorWarpIn_Up_Ride(struct Task *);
 bool8 EscalatorWarpIn_WaitForMovement(struct Task *);
 bool8 EscalatorWarpIn_End(struct Task *);
 
-bool8 sub_8086FB0(struct Task *, struct ObjectEvent *);
-bool8 waterfall_1_do_anim_probably(struct Task *, struct ObjectEvent *);
-bool8 waterfall_2_wait_anim_finish_probably(struct Task *, struct ObjectEvent *);
-bool8 sub_8087030(struct Task *, struct ObjectEvent *);
-bool8 sub_8087058(struct Task *, struct ObjectEvent *);
+bool8 WaterfallFieldEffect_Init(struct Task *, struct ObjectEvent *);
+bool8 WaterfallFieldEffect_ShowMon(struct Task *, struct ObjectEvent *);
+bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *, struct ObjectEvent *);
+bool8 WaterfallFieldEffect_RideUp(struct Task *, struct ObjectEvent *);
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *, struct ObjectEvent *);
 
 bool8 sub_8087124(struct Task *);
 bool8 dive_2_unknown(struct Task *);

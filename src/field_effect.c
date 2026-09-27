@@ -286,12 +286,12 @@ static bool8 (*const sEscalatorWarpInFieldEffectFuncs[])(struct Task *) = {
     EscalatorWarpIn_End
 };
 
-bool8 (*const gUnknown_0839F31C[])(struct Task *, struct ObjectEvent *) = {
-    sub_8086FB0,
-    waterfall_1_do_anim_probably,
-    waterfall_2_wait_anim_finish_probably,
-    sub_8087030,
-    sub_8087058
+static bool8 (*const sWaterfallFieldEffectFuncs[])(struct Task *, struct ObjectEvent *) = {
+    WaterfallFieldEffect_Init,
+    WaterfallFieldEffect_ShowMon,
+    WaterfallFieldEffect_WaitForShowMon,
+    WaterfallFieldEffect_RideUp,
+    WaterfallFieldEffect_ContinueRideOrEnd
 };
 
 bool8 (*const gUnknown_0839F330[])(struct Task *) = {
@@ -1511,61 +1511,64 @@ bool8 EscalatorWarpIn_End(struct Task *task)
 #undef tEscalatorOffset
 #undef tEscalatorTimer
 
-void sub_8086F64(u8);
+#define tWaterfallState data[0]
+#define tWaterfallMonId data[1]
+
+void Task_UseWaterfall(u8);
 
 bool8 FldEff_UseWaterfall(void)
 {
     u8 taskId;
-    taskId = CreateTask(sub_8086F64, 0xff);
-    gTasks[taskId].data[1] = gFieldEffectArguments[0];
-    sub_8086F64(taskId);
+    taskId = CreateTask(Task_UseWaterfall, 0xff);
+    gTasks[taskId].tWaterfallMonId = gFieldEffectArguments[0];
+    Task_UseWaterfall(taskId);
     return FALSE;
 }
 
-void sub_8086F64(u8 taskId)
+void Task_UseWaterfall(u8 taskId)
 {
-    while (gUnknown_0839F31C[gTasks[taskId].data[0]](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId]));
+    while (sWaterfallFieldEffectFuncs[gTasks[taskId].tWaterfallState](&gTasks[taskId], &gObjectEvents[gPlayerAvatar.objectEventId]));
 }
 
-bool8 sub_8086FB0(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent)
 {
     LockPlayerFieldControls();
     gPlayerAvatar.preventStep = TRUE;
-    task->data[0]++;
+    task->tWaterfallState++;
     return FALSE;
 }
 
-bool8 waterfall_1_do_anim_probably(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent *objectEvent)
 {
     LockPlayerFieldControls();
     if (!ObjectEventIsMovementOverridden(objectEvent))
     {
         ObjectEventClearHeldMovementIfFinished(objectEvent);
-        gFieldEffectArguments[0] = task->data[1];
+        gFieldEffectArguments[0] = task->tWaterfallMonId;
         FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
-        task->data[0]++;
+        task->tWaterfallState++;
     }
     return FALSE;
 }
 
-bool8 waterfall_2_wait_anim_finish_probably(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_WaitForShowMon(struct Task *task, struct ObjectEvent *objectEvent)
 {
     if (FieldEffectActiveListContains(FLDEFF_FIELD_MOVE_SHOW_MON))
     {
         return FALSE;
     }
-    task->data[0]++;
+    task->tWaterfallState++;
     return TRUE;
 }
 
-bool8 sub_8087030(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent)
 {
     ObjectEventSetHeldMovement(objectEvent, GetWalkSlowMovementAction(DIR_NORTH));
-    task->data[0]++;
+    task->tWaterfallState++;
     return FALSE;
 }
 
-bool8 sub_8087058(struct Task *task, struct ObjectEvent *objectEvent)
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent)
 {
     if (!ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
@@ -1573,15 +1576,18 @@ bool8 sub_8087058(struct Task *task, struct ObjectEvent *objectEvent)
     }
     if (MetatileBehavior_IsWaterfall(objectEvent->currentMetatileBehavior))
     {
-        task->data[0] = 3;
+        task->tWaterfallState = 3;
         return TRUE;
     }
     UnlockPlayerFieldControls();
     gPlayerAvatar.preventStep = FALSE;
-    DestroyTask(FindTaskIdByFunc(sub_8086F64));
+    DestroyTask(FindTaskIdByFunc(Task_UseWaterfall));
     FieldEffectActiveListRemove(FLDEFF_USE_WATERFALL);
     return FALSE;
 }
+
+#undef tWaterfallState
+#undef tWaterfallMonId
 
 static void Task_Dive(u8);
 
