@@ -2832,7 +2832,7 @@ void DoTVShowTodaysSmartShopper(void)
     {
     case 0:
         TVShowConvertInternationalString(gStringVar1, smartShopper->playerName, smartShopper->language);
-        GetMapSectionName(gStringVar2, smartShopper->shopLocation, 0);
+        GetMapName(gStringVar2, smartShopper->shopLocation, 0);
         if (smartShopper->itemAmounts[0] >= 0xff)
             sTVShowState = 11;
         else
@@ -3090,7 +3090,7 @@ void DoTVShowPokemonTodayFailedCapture(void)
         break;
     case 1:
         TVShowConvertInternationalString(gStringVar1, pokemonTodayFailed->playerName, pokemonTodayFailed->language);
-        GetMapSectionName(gStringVar2, pokemonTodayFailed->var12, 0);
+        GetMapName(gStringVar2, pokemonTodayFailed->var12, 0);
         StringCopy(gStringVar3, gSpeciesNames[pokemonTodayFailed->species2]);
         if (pokemonTodayFailed->var11 == 1)
             sTVShowState = 3;
@@ -3245,7 +3245,7 @@ void DoTVShowPokemonNewsMassOutbreak(void)
 {
     struct TVShowMassOutbreak *massOutbreak = &gSaveBlock1.tvShows[gSpecialVar_0x8004].massOutbreak;
 
-    GetMapSectionName(gStringVar1, massOutbreak->locationMapNum, 0);
+    GetMapName(gStringVar1, massOutbreak->locationMapNum, 0);
     StringCopy(gStringVar2, gSpeciesNames[massOutbreak->species]);
     TVShowDone();
     StartMassOutbreak();
@@ -3261,7 +3261,7 @@ void DoTVShowInSearchOfTrainers(void)
     switch (state)
     {
     case 0:
-        GetMapSectionName(gStringVar1, gSaveBlock1.gabbyAndTyData.mapnum, 0);
+        GetMapName(gStringVar1, gSaveBlock1.gabbyAndTyData.mapnum, 0);
         if (gSaveBlock1.gabbyAndTyData.battleNum > 1)
             sTVShowState = 1;
         else
@@ -3358,7 +3358,7 @@ void DoTVShowTheWorldOfMasters(void)
     case 2:
         TVShowConvertInternationalString(gStringVar1, worldOfMasters->playerName,
                                          worldOfMasters->language);
-        GetMapSectionName(gStringVar2, worldOfMasters->var0a, 0);
+        GetMapName(gStringVar2, worldOfMasters->var0a, 0);
         StringCopy(gStringVar3, gSpeciesNames[worldOfMasters->var04]);
         TVShowDone();
         break;

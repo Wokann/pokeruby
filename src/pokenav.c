@@ -1473,7 +1473,7 @@ bool8 UpdateTrainerEyesDetailScroll(void)
 
 void PrintTrainerEyesLocation(u8 listIndex)
 {
-    GetMapSectionName(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
+    GetMapName(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
     BasicInitMenuWindow(&gWindowTemplate_81E710C);
     TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->unk8788);
     AlignStringInMenuWindow(gPokenavStructPtr->unkD138, gPokenavStructPtr->unk8788, 88, 2);

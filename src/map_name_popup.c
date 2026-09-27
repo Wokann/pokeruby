@@ -101,7 +101,7 @@ void DrawMapNamePopup(void)
     u8 name[20];
 
     Menu_LoadStdFrameGraphicsOverrideStyle(0);
-    GetMapSectionName(name, gMapHeader.regionMapSectionId, 0);
+    GetMapName(name, gMapHeader.regionMapSectionId, 0);
     Menu_DrawStdWindowFrame(0, 0, 13, 3);
     MenuPrint_Centered(name, 1, 1, 0x60);
 }

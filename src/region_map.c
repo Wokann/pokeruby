@@ -99,7 +99,7 @@ static void UnhideRegionMapPlayerIcon(void);
 static void SpriteCB_PlayerIconMapFull(struct Sprite *);
 static void SpriteCB_PlayerIcon(struct Sprite *);
 static void SpriteCB_PlayerIconMapZoomed(struct Sprite *);
-const u8 *GetMapSectionName(u8 *, u16, u16);
+const u8 *GetMapName(u8 *, u16, u16);
 static void VBlankCB_FlyRegionMap(void);
 void CB2_FlyRegionMap(void);
 void sub_80FC244(void (*func)(void));
@@ -152,7 +152,7 @@ bool8 LoadRegionMapGfx(void)
         gRegionMap->unk76 = gRegionMap->cursorPosY;
         gRegionMap->unk16 = GetMapsecType(gRegionMap->mapSectionId);
         gRegionMap->mapSectionId = GetOverworldMapFromUnderwaterMap_(gRegionMap->mapSectionId);
-        GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
+        GetMapName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
         break;
     case 6:
         if (gRegionMap->zoomed == FALSE)
@@ -269,7 +269,7 @@ static u8 MoveRegionMapCursor_Full(void)
     if (mapSectionId != gRegionMap->mapSectionId)
     {
         gRegionMap->mapSectionId = mapSectionId;
-        GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
+        GetMapName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
     }
     GetPositionOfCursorWithinMapSec();
     gRegionMap->inputCallback = ProcessRegionMapInput_Full;
@@ -338,7 +338,7 @@ static u8 MoveRegionMapCursor_Zoomed(void)
             if (mapSectionId != gRegionMap->mapSectionId)
             {
                 gRegionMap->mapSectionId = mapSectionId;
-                GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
+                GetMapName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
             }
             GetPositionOfCursorWithinMapSec();
         }
@@ -1116,7 +1116,7 @@ void TrySetPlayerIconBlink(void)
         gRegionMap->blinkPlayerIcon = TRUE;
 }
 
-const u8 *GetMapSectionName(u8 *dest, u16 mapSectionId, u16 length)
+const u8 *GetMapName(u8 *dest, u16 mapSectionId, u16 length)
 {
     if (mapSectionId == MAPSEC_SECRET_BASE)
         return GetSecretBaseMapName(dest);
@@ -1127,7 +1127,7 @@ const u8 *GetMapSectionName(u8 *dest, u16 mapSectionId, u16 length)
     return StringFill(dest, CHAR_SPACE, length);
 }
 
-const u8 *CopyMapName(u8 *dest, u16 mapSectionId)
+const u8 *GetMapNameGeneric(u8 *dest, u16 mapSectionId)
 {
     switch (mapSectionId)
     {
@@ -1136,19 +1136,19 @@ const u8 *CopyMapName(u8 *dest, u16 mapSectionId)
     case MAPSEC_SECRET_BASE:
         return StringCopy(dest, gOtherText_SecretBase);
     default:
-        return GetMapSectionName(dest, mapSectionId, 0);
+        return GetMapName(dest, mapSectionId, 0);
     }
 }
 
-const u8 *CopyLocationName(u8 *dest, u16 mapSectionId)
+const u8 *GetMapNameHandleEvilTeamHideout(u8 *dest, u16 mapSectionId)
 {
     if (mapSectionId == MAPSEC_EVIL_TEAM_HIDEOUT)
         return StringCopy(dest, gOtherText_Hideout);
     else
-        return CopyMapName(dest, mapSectionId);
+        return GetMapNameGeneric(dest, mapSectionId);
 }
 
-static void GetRegionMapLocationPosition(u16 mapSectionId, u16 *x, u16 *y, u16 *width, u16 *height)
+static void GetMapSecDimensions(u16 mapSectionId, u16 *x, u16 *y, u16 *width, u16 *height)
 {
     *x = gRegionMapEntries[mapSectionId].x;
     *y = gRegionMapEntries[mapSectionId].y;
@@ -1479,7 +1479,7 @@ static void CreateCityTownFlyTargetIcons(void)
         u16 r7;
         u8 spriteId;
 
-        GetRegionMapLocationPosition(i, &x, &y, &width, &height);
+        GetMapSecDimensions(i, &x, &y, &width, &height);
         x = (x + 1) * 8 + 4;
         y = (y + 2) * 8 + 4;
         if (width == 2)
@@ -1521,7 +1521,7 @@ static void CreateSpecialAreaFlyTargetIcons(void)
             u16 mapSectionId = sSpecialFlyAreas[i][1];
             u8 spriteId;
 
-            GetRegionMapLocationPosition(mapSectionId, &x, &y, &width, &height);
+            GetMapSecDimensions(mapSectionId, &x, &y, &width, &height);
             x = (x + 1) * 8;
             y = (y + 2) * 8;
             spriteId = CreateSprite(&gFlyTargetSpriteTemplate, x, y, 10);

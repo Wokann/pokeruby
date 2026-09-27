@@ -72,7 +72,7 @@ void PrintSaveMapName(s16 x, s16 y)
 {
     char name[32];
 
-    CopyMapName(name, gMapHeader.regionMapSectionId);
+    GetMapNameGeneric(name, gMapHeader.regionMapSectionId);
     Menu_PrintText(name, x, y);
 }
 

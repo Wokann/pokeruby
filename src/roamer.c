@@ -234,6 +234,6 @@ void Debug_CreateRoamer(void)
 
 void Debug_GetRoamerLocation(u8* str)
 {
-    GetMapSectionName(str, sRoamerLocation[1], 0);
+    GetMapName(str, sRoamerLocation[1], 0);
 }
 #endif

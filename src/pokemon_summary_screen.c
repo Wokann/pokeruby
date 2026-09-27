@@ -2568,7 +2568,7 @@ static void PokemonSummaryScreen_PrintTrainerMemo(struct Pokemon *mon, u8 left, 
             *ptr = CHAR_NEWLINE;
             ptr++;
 
-            CopyLocationName(gStringVar1, locationMet);
+            GetMapNameHandleEvilTeamHideout(gStringVar1, locationMet);
             ptr = SummaryScreen_CopyColoredString(ptr, gStringVar1, 14);
             StringCopy(ptr, gOtherText_Egg2);
         }
@@ -2587,7 +2587,7 @@ static void PokemonSummaryScreen_PrintTrainerMemo(struct Pokemon *mon, u8 left, 
             *ptr = CHAR_NEWLINE;
             ptr++;
 
-            CopyLocationName(gStringVar1, locationMet);
+            GetMapNameHandleEvilTeamHideout(gStringVar1, locationMet);
             ptr = SummaryScreen_CopyColoredString(ptr, gStringVar1, 14);
             StringCopy(ptr, gOtherText_Met);
         }
@@ -2631,7 +2631,7 @@ static void PokemonSummaryScreen_PrintTrainerMemo(struct Pokemon *mon, u8 left, 
                 *ptr = CHAR_NEWLINE;
                 ptr++;
 
-                CopyLocationName(gStringVar1, locationMet);
+                GetMapNameHandleEvilTeamHideout(gStringVar1, locationMet);
                 ptr = SummaryScreen_CopyColoredString(ptr, gStringVar1, 14);
                 StringCopy(ptr, gOtherText_Met2);
             }
