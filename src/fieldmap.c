@@ -103,7 +103,7 @@ static void InitBackupMapLayoutData(const u16 *map, u16 width, u16 height)
     u16 *dest;
     int y;
     dest = gBackupMapLayout.map;
-    dest += gBackupMapLayout.width * 7 + MAP_OFFSET;
+    dest += gBackupMapLayout.width * MAP_OFFSET + MAP_OFFSET;
     for (y = 0; y < height; y++)
     {
         CpuCopy16(map, dest, width * 2);
@@ -474,14 +474,14 @@ static void MoveMapViewToBackup(u8 direction)
     int x0, y0;
     int x2, y2;
     u16 *src, *dest;
-    int srci, desti;
-    int r9, r8;
+    int srcIndex, destIndex;
+    int srcXOffset, srcYOffset;
     int x, y;
     int i, j;
     mapView = gSaveBlock1.mapView;
     width = gBackupMapLayout.width;
-    r9 = 0;
-    r8 = 0;
+    srcXOffset = 0;
+    srcYOffset = 0;
     x0 = gSaveBlock1.pos.x;
     y0 = gSaveBlock1.pos.y;
     x2 = MAP_OFFSET_W;
@@ -493,7 +493,7 @@ static void MoveMapViewToBackup(u8 direction)
         y2 = MAP_OFFSET_H - 1;
         break;
     case CONNECTION_SOUTH:
-        r8 = 1;
+        srcYOffset = 1;
         y2 = MAP_OFFSET_H - 1;
         break;
     case CONNECTION_WEST:
@@ -501,7 +501,7 @@ static void MoveMapViewToBackup(u8 direction)
         x2 = MAP_OFFSET_W - 1;
         break;
     case CONNECTION_EAST:
-        r9 = 1;
+        srcXOffset = 1;
         x2 = MAP_OFFSET_W - 1;
         break;
     }
@@ -511,10 +511,10 @@ static void MoveMapViewToBackup(u8 direction)
         j = 0;
         for (x = 0; x < x2; x++)
         {
-            desti = width * (y + y0);
-            srci = (y + r8) * MAP_OFFSET_W + r9;
-            src = &mapView[srci + i];
-            dest = &sBackupMapData[x0 + desti + j];
+            destIndex = width * (y + y0);
+            srcIndex = (y + srcYOffset) * MAP_OFFSET_W + srcXOffset;
+            src = &mapView[srcIndex + i];
+            dest = &sBackupMapData[x0 + destIndex + j];
             *dest = *src;
             i++;
             j++;
