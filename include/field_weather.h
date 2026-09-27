@@ -98,11 +98,11 @@ struct Weather
     u16 fogDYOffset;
     u8 fogDSpritesCreated;
     u8 filler_725[1];
-    u16 unknown_726;
-    u16 unknown_728;
-    u16 unknown_72A;
-    u16 unknown_72C;
-    u8 unknown_72E;
+    u16 bubblesDelayCounter;
+    u16 bubblesDelayIndex;
+    u16 bubblesCoordsIndex;
+    u16 bubblesSpriteCount;
+    u8 bubblesSpritesCreated;
     u8 filler_72F;
     u16 currBlendEVA;
     u16 currBlendEVB;
