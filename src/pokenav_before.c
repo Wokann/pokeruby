@@ -2248,7 +2248,7 @@ void OpenConditionSearchListFromGraph(void)
         break;
     case 1:
         SetPokenavDisplayForTransition();
-        sub_80F6134();
+        RestorePokenavListSelection();
         gPokenavStructPtr->callbackStep++;
         break;
     case 2:
@@ -2936,7 +2936,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
 		}
         break;
     case 2:
-        sub_80F6134();
+        RestorePokenavListSelection();
         InitPokenavListScreen(POKENAV_LIST_RIBBONS);
         gPokenavStructPtr->callbackStep++;
     case 3:
@@ -3173,7 +3173,7 @@ void ShowTrainerEyesTrainerInfo(void)
 		}
         break;
     case 10:
-        sub_80F6134();
+        RestorePokenavListSelection();
         gPokenavStructPtr->callbackStep++;
         break;
     case 11:

@@ -4639,7 +4639,7 @@ void UpdatePokenavListIndicesAfterScroll(s16 a0)
     }
 }
 
-void sub_80F6134(void)
+void RestorePokenavListSelection(void)
 {
     if (gPokenavStructPtr->hasListScrollArrows != 0)
     {

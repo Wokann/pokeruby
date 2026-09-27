@@ -447,7 +447,7 @@ void sub_80F638C();
 bool8 sub_80F63D0();
 void InitConditionGraphScreen(void);
 bool8 LoadConditionGraphScreenStep(void);
-void sub_80F6134();
+void RestorePokenavListSelection();
 u8 HandlePokenavListDpadInput();
 void InitPokenavListScreen(u8 listMode);
 bool8 LoadPokenavListScreenStep(void);
