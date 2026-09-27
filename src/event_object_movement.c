@@ -840,12 +840,12 @@ const u8 gRideWaterCurrentMovementActions[] = {
     MOVEMENT_ACTION_RIDE_WATER_CURRENT_LEFT,
     MOVEMENT_ACTION_RIDE_WATER_CURRENT_RIGHT,
 };
-const u8 gWalkFastestMovementActions[] = {
-    MOVEMENT_ACTION_WALK_FASTEST_DOWN,
-    MOVEMENT_ACTION_WALK_FASTEST_DOWN,
-    MOVEMENT_ACTION_WALK_FASTEST_UP,
-    MOVEMENT_ACTION_WALK_FASTEST_LEFT,
-    MOVEMENT_ACTION_WALK_FASTEST_RIGHT,
+const u8 gWalkFasterMovementActions[] = {
+    MOVEMENT_ACTION_WALK_FASTER_DOWN,
+    MOVEMENT_ACTION_WALK_FASTER_DOWN,
+    MOVEMENT_ACTION_WALK_FASTER_UP,
+    MOVEMENT_ACTION_WALK_FASTER_LEFT,
+    MOVEMENT_ACTION_WALK_FASTER_RIGHT,
 };
 const u8 gSlideMovementActions[] = {
     MOVEMENT_ACTION_SLIDE_DOWN,
@@ -4095,7 +4095,7 @@ bool8 CopyablePlayerMovement_WalkFaster(struct ObjectEvent *objectEvent, struct 
     direction = playerDirection;
     direction = state_to_direction(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, direction);
     ObjectEventMoveDestCoords(objectEvent, direction, &x, &y);
-    ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkFastestMovementAction(direction));
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetWalkFasterMovementAction(direction));
     if (GetCollisionAtCoords(objectEvent, x, y, direction) || (tileCallback != NULL && !tileCallback(MapGridGetMetatileBehaviorAt(x, y))))
     {
         ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(direction));
@@ -4771,7 +4771,7 @@ dirn_to_anim(GetWalkSlowMovementAction, gWalkSlowMovementActions)
 dirn_to_anim(GetWalkNormalMovementAction, gWalkNormalMovementActions)
 dirn_to_anim(GetWalkFastMovementAction, gWalkFastMovementActions)
 dirn_to_anim(GetRideWaterCurrentMovementAction, gRideWaterCurrentMovementActions)
-dirn_to_anim(GetWalkFastestMovementAction, gWalkFastestMovementActions)
+dirn_to_anim(GetWalkFasterMovementAction, gWalkFasterMovementActions)
 dirn_to_anim(GetSlideMovementAction, gSlideMovementActions)
 dirn_to_anim(GetPlayerRunMovementAction, gPlayerRunMovementActions)
 dirn_to_anim(GetJump2MovementAction, gJump2MovementActions)
@@ -5698,15 +5698,15 @@ bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent
     return FALSE;
 }
 
-bool8 MovementAction_WalkFastestDown_Step1(struct ObjectEvent *, struct Sprite *);
+bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *, struct Sprite *);
 
-bool8 MovementAction_WalkFastestDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     do_go_anim(objectEvent, sprite, DIR_SOUTH, 3);
-    return MovementAction_WalkFastestDown_Step1(objectEvent, sprite);
+    return MovementAction_WalkFasterDown_Step1(objectEvent, sprite);
 }
 
-bool8 MovementAction_WalkFastestDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
     {
@@ -5716,15 +5716,15 @@ bool8 MovementAction_WalkFastestDown_Step1(struct ObjectEvent *objectEvent, stru
     return FALSE;
 }
 
-bool8 MovementAction_WalkFastestUp_Step1(struct ObjectEvent *, struct Sprite *);
+bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *, struct Sprite *);
 
-bool8 MovementAction_WalkFastestUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     do_go_anim(objectEvent, sprite, DIR_NORTH, 3);
-    return MovementAction_WalkFastestUp_Step1(objectEvent, sprite);
+    return MovementAction_WalkFasterUp_Step1(objectEvent, sprite);
 }
 
-bool8 MovementAction_WalkFastestUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
     {
@@ -5735,15 +5735,15 @@ bool8 MovementAction_WalkFastestUp_Step1(struct ObjectEvent *objectEvent, struct
 }
 
 
-bool8 MovementAction_WalkFastestLeft_Step1(struct ObjectEvent *, struct Sprite *);
+bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *, struct Sprite *);
 
-bool8 MovementAction_WalkFastestLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     do_go_anim(objectEvent, sprite, DIR_WEST, 3);
-    return MovementAction_WalkFastestLeft_Step1(objectEvent, sprite);
+    return MovementAction_WalkFasterLeft_Step1(objectEvent, sprite);
 }
 
-bool8 MovementAction_WalkFastestLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
     {
@@ -5754,15 +5754,15 @@ bool8 MovementAction_WalkFastestLeft_Step1(struct ObjectEvent *objectEvent, stru
 }
 
 
-bool8 MovementAction_WalkFastestRight_Step1(struct ObjectEvent *, struct Sprite *);
+bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *, struct Sprite *);
 
-bool8 MovementAction_WalkFastestRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     do_go_anim(objectEvent, sprite, DIR_EAST, 3);
-    return MovementAction_WalkFastestRight_Step1(objectEvent, sprite);
+    return MovementAction_WalkFasterRight_Step1(objectEvent, sprite);
 }
 
-bool8 MovementAction_WalkFastestRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
     {

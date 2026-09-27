@@ -412,7 +412,7 @@ u8 GetWalkSlowMovementAction(u32);
 u8 GetWalkNormalMovementAction(u32);
 u8 GetWalkFastMovementAction(u32);
 u8 GetRideWaterCurrentMovementAction(u32);
-u8 GetWalkFastestMovementAction(u32);
+u8 GetWalkFasterMovementAction(u32);
 u8 GetSlideMovementAction(u32);
 u8 GetPlayerRunMovementAction(u32);
 u8 GetJump2MovementAction(u32);

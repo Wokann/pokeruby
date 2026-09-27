@@ -853,7 +853,7 @@ void PlayerRideWaterCurrent(u8 direction)
 // fastest speed (4 speed)
 void PlayerWalkFaster(u8 direction)
 {
-    PlayerSetAnimId(GetWalkFastestMovementAction(direction), COPY_MOVE_WALK);
+    PlayerSetAnimId(GetWalkFasterMovementAction(direction), COPY_MOVE_WALK);
 }
 
 static void PlayerRun(u8 direction)
