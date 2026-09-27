@@ -1945,7 +1945,7 @@ bool32 IsAnyPlayerInLinkState(u16 a1)
     return FALSE;
 }
 
-void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
+void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a4)
 {
     const u8 *script;
 
@@ -1956,7 +1956,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
         {
             *a4 = sub_8055758(script);
             sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-            if (a3->b)
+            if (a3->isLocalPlayer)
             {
                 SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunInteractLocalPlayerScript(script);
@@ -1966,7 +1966,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
         if (IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == 1)
         {
             sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-            if (a3->b)
+            if (a3->isLocalPlayer)
             {
                 SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunTerminateLinkScript();
@@ -1979,7 +1979,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
             if (sub_8055630(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->b)
+                if (a3->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitLinkRoomStartMenuScript();
@@ -1990,7 +1990,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
             if (sub_8055660(a3) == 1)
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->b)
+                if (a3->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     RunConfirmLeaveCableClubScript();
@@ -2002,7 +2002,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
             if (script)
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->b)
+                if (a3->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitMenuBasedScript(script);
@@ -2013,7 +2013,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
             if (sub_8055618(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->b)
+                if (a3->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
                     InitLinkPlayerQueueScript();
@@ -2024,7 +2024,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
             if (sub_8055618(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->b)
+                if (a3->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
                     InitLinkPlayerQueueScript();
@@ -2044,7 +2044,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
         break;
     case LINK_KEY_CODE_IDLE:
         sPlayerLinkStates[a1] = PLAYER_LINK_STATE_IDLE;
-        if (a3->b)
+        if (a3->isLocalPlayer)
             SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         break;
     case LINK_KEY_CODE_EXIT_SEAT:
@@ -2056,7 +2056,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 
 
 void UpdateAllLinkPlayers(u16 *a1, int a2)
 {
-    struct UnkStruct_8054FF8 st;
+    struct CableClubPlayer st;
     int i;
     for (i = 0; i < 4; i++)
     {
@@ -2284,74 +2284,74 @@ u16 QueueExitLinkRoomKey(void)
     return 0;
 }
 
-void sub_80555B0(int linkPlayerId, int a2, struct UnkStruct_8054FF8 *a3)
+void sub_80555B0(int linkPlayerId, int a2, struct CableClubPlayer *a3)
 {
     s16 x, y;
 
-    a3->a = linkPlayerId;
-    a3->b = (linkPlayerId == a2) ? 1 : 0;
-    a3->c = gLinkPlayerObjectEvents[linkPlayerId].mode;
-    a3->d = sub_8055B30(linkPlayerId);
+    a3->playerId = linkPlayerId;
+    a3->isLocalPlayer = (linkPlayerId == a2) ? 1 : 0;
+    a3->movementMode = gLinkPlayerObjectEvents[linkPlayerId].mode;
+    a3->facing = sub_8055B30(linkPlayerId);
     sub_8055B08(linkPlayerId, &x, &y);
-    a3->sub.x = x;
-    a3->sub.y = y;
-    a3->sub.height = sub_8055B50(linkPlayerId);
-    a3->field_C = MapGridGetMetatileBehaviorAt(x, y);
+    a3->pos.x = x;
+    a3->pos.y = y;
+    a3->pos.height = sub_8055B50(linkPlayerId);
+    a3->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
-bool32 sub_8055618(struct UnkStruct_8054FF8 *a1)
+bool32 sub_8055618(struct CableClubPlayer *a1)
 {
-    u8 v1 = a1->c;
+    u8 v1 = a1->movementMode;
     if (v1 == 2 || v1 == 0)
         return TRUE;
     else
         return FALSE;
 }
 
-bool32 sub_8055630(struct UnkStruct_8054FF8 *a1)
+bool32 sub_8055630(struct CableClubPlayer *a1)
 {
-    u8 v1 = a1->c;
+    u8 v1 = a1->movementMode;
     if (v1 == 2 || v1 == 0)
         return TRUE;
     else
         return FALSE;
 }
 
-const u8 *sub_8055648(struct UnkStruct_8054FF8 *a1)
+const u8 *sub_8055648(struct CableClubPlayer *a1)
 {
-    if (a1->c != 2)
+    if (a1->movementMode != 2)
         return 0;
-    return GetCoordEventScriptAtMapPosition(&a1->sub);
+    return GetCoordEventScriptAtMapPosition(&a1->pos);
 }
 
-bool32 sub_8055660(struct UnkStruct_8054FF8 *a1)
+bool32 sub_8055660(struct CableClubPlayer *a1)
 {
-    if (a1->c != 2 && a1->c != 0)
+    if (a1->movementMode != 2 && a1->movementMode != 0)
         return FALSE;
-    if (!MetatileBehavior_IsSouthArrowWarp(a1->field_C))
+    if (!MetatileBehavior_IsSouthArrowWarp(a1->metatileBehavior))
         return FALSE;
-    if (a1->d != 1)
+    if (a1->facing != 1)
         return FALSE;
     return TRUE;
 }
 
-const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
+const u8 *sub_805568C(struct CableClubPlayer *a1)
 {
     struct MapPosition unkStruct;
     u8 linkPlayerId;
 
-    if (a1->c && a1->c != 2)
+    if (a1->movementMode && a1->movementMode != 2)
         return 0;
 
-    unkStruct = a1->sub;
-    unkStruct.x += gDirectionToVectors[a1->d].x;
-    unkStruct.y += gDirectionToVectors[a1->d].y;
+    unkStruct = a1->pos;
+    unkStruct.x += gDirectionToVectors[a1->facing].x;
+    unkStruct.y += gDirectionToVectors[a1->facing].y;
     unkStruct.height = 0;
     linkPlayerId = GetLinkPlayerIdAt(unkStruct.x, unkStruct.y);
 
     if (linkPlayerId != 4)
     {
-        if (!a1->b)
+        if (!a1->isLocalPlayer)
             return CableClub_EventScript_TooBusyToNotice;
         if (sPlayerLinkStates[linkPlayerId] != PLAYER_LINK_STATE_IDLE)
             return CableClub_EventScript_TooBusyToNotice;
@@ -2361,7 +2361,7 @@ const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
             return CableClub_EventScript_ReadTrainerCardColored;
     }
 
-    return GetInteractedLinkPlayerScript(&unkStruct, a1->field_C, a1->d);
+    return GetInteractedLinkPlayerScript(&unkStruct, a1->metatileBehavior, a1->facing);
 }
 
 static u16 sub_8055758(const u8 *script)

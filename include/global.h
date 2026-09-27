@@ -869,14 +869,14 @@ struct MapPosition
     s8 height;
 };
 
-struct UnkStruct_8054FF8
+struct CableClubPlayer
 {
-    u8 a;
-    u8 b;
-    u8 c;
-    u8 d;
-    struct MapPosition sub;
-    u16 field_C;
+    u8 playerId;
+    u8 isLocalPlayer;
+    u8 movementMode;
+    u8 facing;
+    struct MapPosition pos;
+    u16 metatileBehavior;
 };
 
 extern struct SaveBlock2 gSaveBlock2;
