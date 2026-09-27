@@ -466,7 +466,7 @@ void InitSecretBaseAppearance(u8 flagIn)
              && gSaveBlock1.secretBases[curBaseId].decorations[x] <= 0x78
              && gDecorations[gSaveBlock1.secretBases[curBaseId].decorations[x]].permission != DECORPERM_SOLID_MAT)
             {
-                sub_80FF394(
+                ShowDecorationOnMap(
                     (gSaveBlock1.secretBases[curBaseId].decorationPos[x] >> 4) + 7,
                     (gSaveBlock1.secretBases[curBaseId].decorationPos[x] & 0xF) + 7,
                     gSaveBlock1.secretBases[curBaseId].decorations[x]);

@@ -181,8 +181,8 @@ void PrintDecorationItemDescription(u8);
 #endif
 void InitDecorationItemsMenuScrollAndCursor(u8);
 bool8 IsSelectedDecorationUnused(void);
-void sub_80FF394(u16, u16, u16);
-void sub_80FF6AC(u8);
+void ShowDecorationOnMap(u16, u16, u16);
+void Task_PlaceDecoration(u8);
 void sub_80FF960(u8);
 void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 *, u8);
 void SetUpPlacingDecorationPlayerAvatar(u8, struct UnkStruct_02038900 *);
@@ -220,9 +220,9 @@ void sub_81016F4(void);
 void sub_8101824(u8);
 void SetRecycledDecoration(u8);
 
-void sub_80FF160(u8);
-void sub_80FF5BC(u8);
-void sub_80FF058(u8);
+void DecorationMenuAction_Decorate(u8);
+void DecorationItemsMenuAction_AttemptPlace(u8);
+void DecorationItemsMenuAction_Cancel(u8);
 void sub_8100A0C(u8);
 void sub_8101700(u8);
 void sub_81017A0(u8);
