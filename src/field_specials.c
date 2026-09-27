@@ -66,7 +66,7 @@ EWRAM_DATA u8 gUnknown_0203925C = 0;
 
 static void RecordCyclingRoadResults(u32, u8);
 
-static struct ElevatorMenu gUnknown_03000760[20];
+static struct ElevatorMenu sElevatorMenuItems[20];
 
 void Special_ShowDiploma(void)
 {
@@ -991,7 +991,7 @@ static void Task_MoveElevatorWindowLights(u8);
 static void UpdateElevatorWindowLights(struct Task *);
 void sub_810EEDC(void);
 
-const u8 *const gUnknown_083F8380[] = {
+static const u8 *const sDeptStoreFloorNames[] = {
     OtherText_1F,
     OtherText_2F,
     OtherText_3F,
@@ -1047,13 +1047,13 @@ void ScriptAddElevatorMenuItem(u8 a0, u8 a1, u8 a2, u8 a3)
     {
         for (i = 0; i < 20; i++)
         {
-            gUnknown_03000760[i].var0 = 16;
+            sElevatorMenuItems[i].var0 = 16;
         }
     }
-    gUnknown_03000760[gSpecialVar_0x8004].var0 = a0;
-    gUnknown_03000760[gSpecialVar_0x8004].var1 = a1;
-    gUnknown_03000760[gSpecialVar_0x8004].var2 = a2;
-    gUnknown_03000760[gSpecialVar_0x8004].var3 = a3;
+    sElevatorMenuItems[gSpecialVar_0x8004].var0 = a0;
+    sElevatorMenuItems[gSpecialVar_0x8004].var1 = a1;
+    sElevatorMenuItems[gSpecialVar_0x8004].var2 = a2;
+    sElevatorMenuItems[gSpecialVar_0x8004].var3 = a3;
     gSpecialVar_0x8004++;
 }
 
@@ -1063,7 +1063,7 @@ void ScriptShowElevatorMenu(void)
     gUnknown_0203925A = 0;
     gUnknown_0203925B = 0;
     ScriptAddElevatorMenuItem(16, 0, 0, 0);
-    while (gUnknown_03000760[i].var0 != 16)
+    while (sElevatorMenuItems[i].var0 != 16)
     {
         gUnknown_0203925A++;
         i++;
@@ -1089,9 +1089,9 @@ static void sub_810E874(void)
         Menu_DrawStdWindowFrame(0, 0, 8, 2 * gUnknown_0203925A + 1);
         InitMenu(0, 1, 1, gUnknown_0203925A, 0, 7);
     }
-    for (i = 0; i < 5 && gUnknown_03000760[i].var0 != 16; i ++)
+    for (i = 0; i < 5 && sElevatorMenuItems[i].var0 != 16; i ++)
     {
-        Menu_PrintText(gUnknown_083F8380[gUnknown_03000760[i].var0], 1, 2 * i + 1);
+        Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[i].var0], 1, 2 * i + 1);
     }
     ShowDeptStoreElevatorFloorSelect();
     CreateTask(sub_810E984, 8);
@@ -1101,7 +1101,7 @@ void ShowDeptStoreElevatorFloorSelect(void)
 {
     Menu_DrawStdWindowFrame(20, 0, 29, 5);
     MenuPrint_Centered(gOtherText_NowOn, 21, 1, 64);
-    MenuPrint_Centered(gUnknown_083F8380[gSpecialVar_0x8005], 21, 3, 64);
+    MenuPrint_Centered(sDeptStoreFloorNames[gSpecialVar_0x8005], 21, 3, 64);
 }
 
 void sub_810E984(u8 taskId)
@@ -1123,7 +1123,7 @@ void sub_810E984(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        saved_warp2_set_2(0, gUnknown_03000760[gUnknown_0203925B].var1, gUnknown_03000760[gUnknown_0203925B].var2, -1, 2, 1);
+        saved_warp2_set_2(0, sElevatorMenuItems[gUnknown_0203925B].var1, sElevatorMenuItems[gUnknown_0203925B].var2, -1, 2, 1);
         if (gSpecialVar_0x8005 == gUnknown_0203925B)
         {
             gSpecialVar_Result = 0;
@@ -1184,9 +1184,9 @@ bool8 sub_810EAC8(u8 prevMenuPos, u8 dpadInput)
     {
         sub_810EB90(newPos, 5);
         Menu_BlankWindowRect(2, 1, 7, 10);
-        for (i=0; i<5 && gUnknown_03000760[newPos].var0 != 16; newPos++, i++)
+        for (i=0; i<5 && sElevatorMenuItems[newPos].var0 != 16; newPos++, i++)
         {
-            Menu_PrintText(gUnknown_083F8380[gUnknown_03000760[newPos].var0], 1, i * 2 + 1);
+            Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[newPos].var0], 1, i * 2 + 1);
 #ifndef NONMATCHING
             asm(""::"r"(newPos));
             asm(""::"r"(newPos));
