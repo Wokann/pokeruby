@@ -100,17 +100,17 @@ static void SpriteCB_PlayerIconMapFull(struct Sprite *);
 static void SpriteCB_PlayerIcon(struct Sprite *);
 static void SpriteCB_PlayerIconMapZoomed(struct Sprite *);
 const u8 *GetMapName(u8 *, u16, u16);
-static void VBlankCB_FlyRegionMap(void);
-void CB2_FlyRegionMap(void);
-void sub_80FC244(void (*func)(void));
-static void PrintFlyTargetName(void);
-static void CreateFlyTargetGraphics(void);
-static void CreateCityTownFlyTargetIcons(void);
-static void CreateSpecialAreaFlyTargetIcons(void);
-static void SpriteCB_FlyTargetIcons(struct Sprite *);
-static void sub_80FC5B4(void);
-static void sub_80FC600(void);
-void sub_80FC69C(void);
+static void VBlankCB_FlyMap(void);
+void CB2_FlyMap(void);
+void SetFlyMapCallback(void (*func)(void));
+static void DrawFlyDestTextWindow(void);
+static void LoadFlyDestIcons(void);
+static void CreateFlyDestIcons(void);
+static void TryCreateRedOutlineFlyDestIcons(void);
+static void SpriteCB_FlyDestIcon(struct Sprite *);
+static void CB_FadeInFlyMap(void);
+static void CB_HandleFlyMapInput(void);
+void CB_ExitFlyMap(void);
 
 void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
 {
@@ -1328,7 +1328,7 @@ static const struct SpriteTemplate gFlyTargetSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-void CB2_InitFlyRegionMap(void)
+void CB2_OpenFlyMap(void)
 {
     switch (gMain.state)
     {
@@ -1361,7 +1361,7 @@ void CB2_InitFlyRegionMap(void)
         CreateRegionMapPlayerIcon(1, 1);
         gRegionMapState->mapSectionId = gRegionMapState->regionMap.mapSectionId;
         StringFill(gRegionMapState->blankMapName, CHAR_SPACE, 12);
-        PrintFlyTargetName();
+        DrawFlyDestTextWindow();
         break;
     case 4:
         LZ77UnCompVram(sFlyRegionMapFrame_ImageLZ, (void *)(VRAM + 0xC000));
@@ -1374,18 +1374,18 @@ void CB2_InitFlyRegionMap(void)
         Menu_PrintTextPixelCoords(gOtherText_FlyToWhere, 1, 0x90, 1);
         break;
     case 7:
-        CreateFlyTargetGraphics();
+        LoadFlyDestIcons();
         break;
     case 8:
         BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-        SetVBlankCallback(VBlankCB_FlyRegionMap);
+        SetVBlankCallback(VBlankCB_FlyMap);
         break;
     case 9:
         REG_BLDCNT = 0;
         REG_BG1CNT = 0x1E0D;
         REG_DISPCNT = 0x1741;
-        sub_80FC244(sub_80FC5B4);
-        SetMainCallback2(CB2_FlyRegionMap);
+        SetFlyMapCallback(CB_FadeInFlyMap);
+        SetMainCallback2(CB2_FlyMap);
         break;
     default:
         return;
@@ -1393,27 +1393,27 @@ void CB2_InitFlyRegionMap(void)
     gMain.state++;
 }
 
-static void VBlankCB_FlyRegionMap(void)
+static void VBlankCB_FlyMap(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void CB2_FlyRegionMap(void)
+void CB2_FlyMap(void)
 {
     gRegionMapState->callback();
     AnimateSprites();
     BuildOamBuffer();
 }
 
-void sub_80FC244(void (*func)(void))
+void SetFlyMapCallback(void (*func)(void))
 {
     gRegionMapState->callback = func;
     gRegionMapState->state = 0;
 }
 
-static void PrintFlyTargetName(void)
+static void DrawFlyDestTextWindow(void)
 {
     if (gRegionMapState->regionMap.unk16 == 2 || gRegionMapState->regionMap.unk16 == 4)
     {
@@ -1450,7 +1450,7 @@ static void PrintFlyTargetName(void)
     }
 }
 
-static void CreateFlyTargetGraphics(void)
+static void LoadFlyDestIcons(void)
 {
     struct SpriteSheet spriteSheet;
 
@@ -1460,12 +1460,12 @@ static void CreateFlyTargetGraphics(void)
     spriteSheet.tag = 2;
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&sFlyTargetIconSpritePalette);
-    CreateCityTownFlyTargetIcons();
-    CreateSpecialAreaFlyTargetIcons();
+    CreateFlyDestIcons();
+    TryCreateRedOutlineFlyDestIcons();
 }
 
 // Draws a light overlay on cities and towns that the player can fly to
-static void CreateCityTownFlyTargetIcons(void)
+static void CreateFlyDestIcons(void)
 {
     u16 canFlyFlag = FLAG_VISITED_LITTLEROOT_TOWN;
     u16 i;
@@ -1493,7 +1493,7 @@ static void CreateCityTownFlyTargetIcons(void)
         {
             gSprites[spriteId].oam.shape = r7;
             if (FlagGet(canFlyFlag))
-                gSprites[spriteId].callback = SpriteCB_FlyTargetIcons;
+                gSprites[spriteId].callback = SpriteCB_FlyDestIcon;
             else
                 r7 += 3;
             StartSpriteAnim(&gSprites[spriteId], r7);
@@ -1505,7 +1505,7 @@ static void CreateCityTownFlyTargetIcons(void)
 
 // Draws a red box on other fly targets
 // The Battle Tower is the only one of these
-static void CreateSpecialAreaFlyTargetIcons(void)
+static void TryCreateRedOutlineFlyDestIcons(void)
 {
     u16 i;
 
@@ -1528,7 +1528,7 @@ static void CreateSpecialAreaFlyTargetIcons(void)
             if (spriteId != 64)
             {
                 gSprites[spriteId].oam.size = 1;
-                gSprites[spriteId].callback = SpriteCB_FlyTargetIcons;
+                gSprites[spriteId].callback = SpriteCB_FlyDestIcon;
                 StartSpriteAnim(&gSprites[spriteId], 6);
                 gSprites[spriteId].data[0] = mapSectionId;
             }
@@ -1536,7 +1536,7 @@ static void CreateSpecialAreaFlyTargetIcons(void)
     }
 }
 
-static void SpriteCB_FlyTargetIcons(struct Sprite *sprite)
+static void SpriteCB_FlyDestIcon(struct Sprite *sprite)
 {
     // Blink if our mapSectionId is the one selected on the map
     if (gRegionMapState->regionMap.mapSectionId == sprite->data[0])
@@ -1556,7 +1556,7 @@ static void SpriteCB_FlyTargetIcons(struct Sprite *sprite)
     }
 }
 
-static void sub_80FC5B4(void)
+static void CB_FadeInFlyMap(void)
 {
     switch (gRegionMapState->state)
     {
@@ -1567,12 +1567,12 @@ static void sub_80FC5B4(void)
     case 1:
         if (UpdatePaletteFade() != 0)
             break;
-        sub_80FC244(sub_80FC600);
+        SetFlyMapCallback(CB_HandleFlyMapInput);
         break;
     }
 }
 
-static void sub_80FC600(void)
+static void CB_HandleFlyMapInput(void)
 {
     if (gRegionMapState->state == 0)
     {
@@ -1583,26 +1583,26 @@ static void sub_80FC600(void)
         case INPUT_EVENT_2:
             break;
         case INPUT_EVENT_3:
-            PrintFlyTargetName();
+            DrawFlyDestTextWindow();
             break;
         case INPUT_EVENT_A_BUTTON:
             if (gRegionMapState->regionMap.unk16 == 2 || gRegionMapState->regionMap.unk16 == 4)
             {
                 m4aSongNumStart(SE_SELECT);
                 gRegionMapState->choseFlyLocation = 1;
-                sub_80FC244(sub_80FC69C);
+                SetFlyMapCallback(CB_ExitFlyMap);
             }
             break;
         case INPUT_EVENT_B_BUTTON:
             m4aSongNumStart(SE_SELECT);
             gRegionMapState->choseFlyLocation = 0;
-            sub_80FC244(sub_80FC69C);
+            SetFlyMapCallback(CB_ExitFlyMap);
             break;
         }
     }
 }
 
-void sub_80FC69C(void)
+void CB_ExitFlyMap(void)
 {
     switch (gRegionMapState->state)
     {
@@ -1705,7 +1705,7 @@ void debug_sub_8110D84(void)
             {
                 m4aSongNumStart(SE_SELECT);
                 gSharedMem[0xA6E] = 1;  // TODO: what is this?
-                sub_80FC244(sub_80FC69C);
+                SetFlyMapCallback(CB_ExitFlyMap);
             }
             break;
         case 5:
@@ -1762,12 +1762,12 @@ void debug_sub_8110D84(void)
 
 void debug_sub_8110F28(void)
 {
-    CB2_InitFlyRegionMap();
+    CB2_OpenFlyMap();
     
-    if (gMain.callback2 == CB2_FlyRegionMap)
+    if (gMain.callback2 == CB2_FlyMap)
     {
         TrySetPlayerIconBlink();
-        sub_80FC244(debug_sub_8110D84);
+        SetFlyMapCallback(debug_sub_8110D84);
         debug_sub_8110CCC();
     }
 }

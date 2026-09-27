@@ -159,7 +159,7 @@ u8 debug_sub_80B07DC(void)
     if (!UpdatePaletteFade())
     {
         CloseMenu();
-        SetMainCallback2(CB2_InitFlyRegionMap);
+        SetMainCallback2(CB2_OpenFlyMap);
         return 1;
     }
     return 0;
