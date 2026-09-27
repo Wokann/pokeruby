@@ -208,7 +208,7 @@ void (*const gPokenavListRowPrinters[])(u16, u16) =
 };
 
 const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
-const u8 gUnknown_083E329C[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
+const u8 gPokenavIconGfx[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
 const u8 gPokenavConditionPokeball_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball.4bpp");
 const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball_placeholder.4bpp");
 const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
@@ -986,9 +986,9 @@ const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate =
     .callback = SpriteCB_ConditionSparkle,
 };
 
-const struct SpritePalette gUnknown_083E4818 = {gPokenavIconPalette, 16};
+const struct SpritePalette gPokenavIconSpritePalette = {gPokenavIconPalette, 16};
 
-const union AnimCmd gSpriteAnim_83E4820[] = 
+const union AnimCmd gPokenavIconAnim[] =
 {
     ANIMCMD_FRAME(0, 12),
     ANIMCMD_FRAME(16, 12),
@@ -1001,12 +1001,12 @@ const union AnimCmd gSpriteAnim_83E4820[] =
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E4844[] = 
+const union AnimCmd *const gPokenavIconAnims[] =
 {
-    gSpriteAnim_83E4820,
+    gPokenavIconAnim,
 };
 
-const struct OamData gOamData_83E4848 = 
+const struct OamData gPokenavIconOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -1023,17 +1023,17 @@ const struct OamData gOamData_83E4848 =
     .affineParam = 0,
 };
 
-void sub_80F4138(struct Sprite *);
+void SpriteCB_UpdatePokenavIconPosition(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E4850 =
+const struct SpriteTemplate gPokenavIconSpriteTemplate =
 {
     .tileTag = 24,
     .paletteTag = 16,
-    .oam = &gOamData_83E4848,
-    .anims = gSpriteAnimTable_83E4844,
+    .oam = &gPokenavIconOam,
+    .anims = gPokenavIconAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F4138,
+    .callback = SpriteCB_UpdatePokenavIconPosition,
 };
 
 const struct SpritePalette gUnknown_083E4868 = {Palette_3E42D8, 18};
@@ -1296,11 +1296,11 @@ void InitPokenavMainMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        sub_80F3FF0();
+        InitPokenavIconSprite();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 2:
-        if (!sub_80F4024())
+        if (!LoadPokenavIconSpriteStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:

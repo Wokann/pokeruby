@@ -136,9 +136,9 @@ extern const struct SpriteSheet gPokenavConditionSparkleSpriteSheet;
 extern const struct SpritePalette gPokenavConditionSparkleSpritePalette;
 extern const struct SpriteTemplate gPokenavConditionSparkleSpriteTemplate;
 extern const s16 gPokenavConditionSparkleCoords[][2];
-extern const u8 gUnknown_083E329C[];
-extern const struct SpritePalette gUnknown_083E4818;
-extern const struct SpriteTemplate gSpriteTemplate_83E4850;
+extern const u8 gPokenavIconGfx[];
+extern const struct SpritePalette gPokenavIconSpritePalette;
+extern const struct SpriteTemplate gPokenavIconSpriteTemplate;
 extern const struct SpritePalette gUnknown_083E4868;
 extern const struct SpriteTemplate gSpriteTemplate_83E4878;
 
@@ -3472,14 +3472,14 @@ void ShowAllConditionSparkles(void)
 #undef sNumExtraSparkles
 #undef sCurSparkleId
 
-void sub_80F3FF0(void)
+void InitPokenavIconSprite(void)
 {
     gPokenavStructPtr->unk306 = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while (sub_80F4024());
+        while (LoadPokenavIconSpriteStep());
 }
 
-bool8 sub_80F4024(void)
+bool8 LoadPokenavIconSpriteStep(void)
 {
     u8 paletteIndex;
     u8 spriteId;
@@ -3488,7 +3488,7 @@ bool8 sub_80F4024(void)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gUnknown_083E329C, gPokenavStructPtr->unk131E4);
+        LZ77UnCompWram(gPokenavIconGfx, gPokenavStructPtr->unk131E4);
         break;
     case 1:
     {
@@ -3501,21 +3501,21 @@ bool8 sub_80F4024(void)
         break;
     }
     case 2:
-        spritePalette = gUnknown_083E4818;
+        spritePalette = gPokenavIconSpritePalette;
         LoadSpritePalette(&spritePalette);
         paletteIndex = IndexOfSpritePaletteTag(0x10);
         gPokenavStructPtr->unk308 = -3 & ~(1 << (paletteIndex + 0x10));
         break;
     case 3:
-        spriteId = CreateSprite(&gSpriteTemplate_83E4850, 218, 14, 0);
+        spriteId = CreateSprite(&gPokenavIconSpriteTemplate, 218, 14, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk6D98 = &gSprites[spriteId];
-            gPokenavStructPtr->unk6D98->data[0] = 0;
+            gPokenavStructPtr->pokenavIconSprite = &gSprites[spriteId];
+            gPokenavStructPtr->pokenavIconSprite->data[0] = 0;
         }
         else
         {
-            gPokenavStructPtr->unk6D98 = NULL;
+            gPokenavStructPtr->pokenavIconSprite = NULL;
         }
 
         gPokenavStructPtr->unk306++;
@@ -3528,7 +3528,7 @@ bool8 sub_80F4024(void)
     return TRUE;
 }
 
-void sub_80F4138(struct Sprite *sprite)
+void SpriteCB_UpdatePokenavIconPosition(struct Sprite *sprite)
 {
     sprite->y2 = -gPokenavStructPtr->menuVerticalOffset;
     if (sprite->y2 <= -32)
