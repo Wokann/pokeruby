@@ -360,7 +360,7 @@ void CB2_Roulette(void)
 	AnimateSprites();
 	BuildOamBuffer();
 	if (eRoulette->varB8.var00)
-	   task_tutorial_controls_fadein(&eRoulette->varB8);
+	   RouletteFlash_Run(&eRoulette->varB8);
 }
 
 void VBlankCB_Roulette(void)
@@ -415,9 +415,9 @@ void InitRouletteTableData(void)
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[0];
     else
         gPlttBufferUnfaded[0] = gPlttBufferUnfaded[81] = gPlttBufferFaded[0] = gPlttBufferFaded[81] = arr[1];
-    sub_8124918((&eRoulette->varB8));
+    RouletteFlash_Reset((&eRoulette->varB8));
     for (i = 0; i < 13; i++)
-        sub_812492C((&eRoulette->varB8), i, &sFlashData_Colors[i]);
+        RouletteFlash_Add((&eRoulette->varB8), i, &sFlashData_Colors[i]);
     for (i = 0; i < 6; i++)
     {
         switch (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2))
@@ -732,7 +732,7 @@ void ProcessBetGridInput(u8 r0)
         UpdateGridSelection(r0, FALSE);
         gTasks[r0].data[1] = z;
         PlaySE(SE_SELECT);
-        sub_8124D3C((&eRoulette->varB8), 0xffff);
+        RouletteFlash_Stop((&eRoulette->varB8), 0xffff);
         eRoulette->varB8.var04[15].var00_7 = 0;
         eRoulette->varB8.var04[14].var00_7 = 0;
         eRoulette->varB8.var04[13].var00_7 = 0;
@@ -1006,7 +1006,7 @@ void Task_RecordBallHit(u8 taskid)
                 u8 temp = IsHitInBetSelection(RecordHit(taskid, eRoulette->var7E), eRoulette->var1B[eRoulette->var1A_0]);
                 gTasks[taskid].data[5] = temp;
                 if (temp == 1)
-                    sub_8124CE8((&eRoulette->varB8), 0x1000);
+                    RouletteFlash_Enable((&eRoulette->varB8), 0x1000);
             }
             if (gTasks[taskid].data[1] < 61)
             {
@@ -1164,7 +1164,7 @@ void Task_PrintPayout(u8 taskid)
 
 void Task_EndTurn(u8 taskid)
 {
-    sub_8124D3C((&eRoulette->varB8), 0xffff);
+    RouletteFlash_Stop((&eRoulette->varB8), 0xffff);
     eRoulette->varB8.var04[15].var00_7 = 0;
     eRoulette->varB8.var04[14].var00_7 = 0;
     eRoulette->varB8.var04[13].var00_7 = 0;
@@ -1237,8 +1237,8 @@ void Task_ClearBoard(u8 taskid)
 
 void ExitRoulette(u8 taskid)
 {
-    sub_8124D3C((&eRoulette->varB8), 0xffff);
-    sub_8124918((&eRoulette->varB8));
+    RouletteFlash_Stop((&eRoulette->varB8), 0xffff);
+    RouletteFlash_Reset((&eRoulette->varB8));
     gSaveBlock1.coins = gTasks[taskid].data[13];
     if (gSaveBlock1.coins < eRoulette->var19)
         gSpecialVar_0x8004 = TRUE;
@@ -1404,7 +1404,7 @@ void FlashSelectionOnWheel(u8 r0)
         for (i = (r0 + 1); i < (r0 + 5); i++)
             if (!(eRoulette->var08 & sGridSelections[i].flag))
                 var0 |= sGridSelections[i].flashFlags;
-        sub_8124CE8(&eRoulette->varB8, var0 &= 0xdfff);
+        RouletteFlash_Enable(&eRoulette->varB8, var0 &= 0xdfff);
         break;
     default:
     {
@@ -1435,7 +1435,7 @@ void FlashSelectionOnWheel(u8 r0)
             if (!(eRoulette->var08 & sGridSelections[r0].flag))
             {
                 var1[r0 / 5 - 1].var02 += var3;
-                sub_812492C(&eRoulette->varB8, 13, &var1[r0 / 5 - 1]);
+                RouletteFlash_Add(&eRoulette->varB8, 13, &var1[r0 / 5 - 1]);
             }
             else
                 return;
@@ -1448,7 +1448,7 @@ void FlashSelectionOnWheel(u8 r0)
                 if (!(eRoulette->var08 & sGridSelections[var4].flag))
                 {
                     var1[var4 / 5 - 1].var02 += var3;
-                    sub_812492C(&eRoulette->varB8, i + 13, &var1[var4 / 5 - 1]);
+                    RouletteFlash_Add(&eRoulette->varB8, i + 13, &var1[var4 / 5 - 1]);
                     if (var2 == 3)
                         var0 = sGridSelections[var4].flashFlags;
                     var2--;
@@ -1457,7 +1457,7 @@ void FlashSelectionOnWheel(u8 r0)
             if (var2 != 2)
                 var0 = 0;
         }
-        sub_8124CE8(&eRoulette->varB8, var0 |= sGridSelections[r0].flashFlags);
+        RouletteFlash_Enable(&eRoulette->varB8, var0 |= sGridSelections[r0].flashFlags);
         break;
     }
     }

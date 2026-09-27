@@ -2,21 +2,21 @@
 #include "roulette_util.h"
 #include "roulette.h"
 
-static u8 sub_81249E4(struct UnkStruct3 *);
-static u8 sub_8124BEC(struct UnkStruct3 *);
-u8 unref_sub_81249B0(struct UnkStruct0 *, u8);
+static u8 RouletteFlash_FadePalette(struct UnkStruct3 *);
+static u8 RouletteFlash_FlashPalette(struct UnkStruct3 *);
+u8 RouletteFlash_Remove(struct UnkStruct0 *, u8);
 
 extern u16 gPlttBufferFaded[];
 extern u16 gPlttBufferUnfaded[];
 
-void sub_8124918(struct UnkStruct0 *r0)
+void RouletteFlash_Reset(struct UnkStruct0 *r0)
 {
     r0->var00 = 0;
     r0->var02 = 0;
     memset(&r0->var04, 0, sizeof(r0->var04));
 }
 
-u8 sub_812492C(struct UnkStruct0 *r0, u8 r1, const struct UnkStruct1 *r2)
+u8 RouletteFlash_Add(struct UnkStruct0 *r0, u8 r1, const struct UnkStruct1 *r2)
 {
     if (!(r1 < 16) || (r0->var04[r1].var00_7))
         return 0xFF;
@@ -40,7 +40,7 @@ u8 sub_812492C(struct UnkStruct0 *r0, u8 r1, const struct UnkStruct1 *r2)
     return r1;
 }
 
-u8 unref_sub_81249B0(struct UnkStruct0 *r0, u8 r1)
+u8 RouletteFlash_Remove(struct UnkStruct0 *r0, u8 r1)
 {
     if (r1 >= 16)
         return 0xFF;
@@ -50,7 +50,7 @@ u8 unref_sub_81249B0(struct UnkStruct0 *r0, u8 r1)
     return r1;
 }
 
-u8 sub_81249E4(struct UnkStruct3 *r0)
+u8 RouletteFlash_FadePalette(struct UnkStruct3 *r0)
 {
     u8 i;
     u8 returnval;
@@ -109,7 +109,7 @@ u8 sub_81249E4(struct UnkStruct3 *r0)
     return returnval;
 }
 
-u8 sub_8124BEC(struct UnkStruct3 *r0)
+u8 RouletteFlash_FlashPalette(struct UnkStruct3 *r0)
 {
     u8 rg2 = 0;
 
@@ -129,7 +129,7 @@ u8 sub_8124BEC(struct UnkStruct3 *r0)
     return 1;
 }
 
-void task_tutorial_controls_fadein(struct UnkStruct0 *r0)
+void RouletteFlash_Run(struct UnkStruct0 *r0)
 {
     u8 i = 0;
 
@@ -142,9 +142,9 @@ void task_tutorial_controls_fadein(struct UnkStruct0 *r0)
                 if (--r0->var04[i].var01 == 0xFF) // if underflow ?
                 {
                     if (r0->var04[i].var04.var00 & 0x8000) // PlttData->unused_15 ?
-                        sub_81249E4(&r0->var04[i]);
+                        RouletteFlash_FadePalette(&r0->var04[i]);
                     else
-                        sub_8124BEC(&r0->var04[i]);
+                        RouletteFlash_FlashPalette(&r0->var04[i]);
                     r0->var04[i].var01 = r0->var04[i].var04.var05;
                 }
             }
@@ -152,7 +152,7 @@ void task_tutorial_controls_fadein(struct UnkStruct0 *r0)
     }
 }
 
-void sub_8124CE8(struct UnkStruct0 *r0, u16 r1)
+void RouletteFlash_Enable(struct UnkStruct0 *r0, u16 r1)
 {
     u8 i = 0;
 
@@ -170,7 +170,7 @@ void sub_8124CE8(struct UnkStruct0 *r0, u16 r1)
     }
 }
 
-void sub_8124D3C(struct UnkStruct0 *r0, u16 r1)
+void RouletteFlash_Stop(struct UnkStruct0 *r0, u16 r1)
 {
     u8 i;
 
