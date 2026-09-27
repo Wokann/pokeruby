@@ -1850,14 +1850,14 @@ void StartRegionMapLinkLandmarks(void)
     gRegionMapLinkLandmarkPrintState[1] = 0;
 }
 
-void sub_80F1A90(void)
+void InitPokenavMenuOptionGfx(void)
 {
     gPokenavStructPtr->unk306 = 0;
     if (gPokenavStructPtr->unk6DAC == 0)
-        while (sub_80F1AC4());
+        while (LoadPokenavMenuOptionGfxStep());
 }
 
-bool8 sub_80F1AC4(void)
+bool8 LoadPokenavMenuOptionGfxStep(void)
 {
     u16 i, j;
 
@@ -1873,13 +1873,13 @@ bool8 sub_80F1AC4(void)
         gPokenavStructPtr->unk311 = 0;
         break;
     case 1:
-        LZ77UnCompWram(gPokenavMenuOptions_Gfx, gPokenavStructPtr->unk388);
+        LZ77UnCompWram(gPokenavMenuOptions_Gfx, gPokenavStructPtr->menuOptionsGfx);
         break;
     case 2:
-        LZ77UnCompWram(gPokenavConditionMenu_Gfx, gPokenavStructPtr->unk1788);
+        LZ77UnCompWram(gPokenavConditionMenu_Gfx, gPokenavStructPtr->conditionMenuGfx);
         break;
     case 3:
-        LZ77UnCompWram(gPokenavConditionSearch_Gfx, gPokenavStructPtr->unk2388);
+        LZ77UnCompWram(gPokenavConditionSearch_Gfx, gPokenavStructPtr->conditionSearchGfx);
         return FALSE;
     }
 
@@ -2272,18 +2272,18 @@ void sub_80F2458(u8 arg0)
     switch (arg0)
     {
     case 0:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->unk388;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->unk388);
+        gPokenavStructPtr->unk380.data = gPokenavStructPtr->menuOptionsGfx;
+        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->menuOptionsGfx);
         gPokenavStructPtr->unk380.tag = 0x0;
         break;
     case 1:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->unk1788;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->unk1788);
+        gPokenavStructPtr->unk380.data = gPokenavStructPtr->conditionMenuGfx;
+        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->conditionMenuGfx);
         gPokenavStructPtr->unk380.tag = 0x0;
         break;
     case 2:
-        gPokenavStructPtr->unk380.data = gPokenavStructPtr->unk2388;
-        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->unk2388);
+        gPokenavStructPtr->unk380.data = gPokenavStructPtr->conditionSearchGfx;
+        gPokenavStructPtr->unk380.size = sizeof(gPokenavStructPtr->conditionSearchGfx);
         gPokenavStructPtr->unk380.tag = 0x0;
         break;
     default:

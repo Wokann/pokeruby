@@ -1149,10 +1149,10 @@ void CB2_InitPokeNav(void)
         ScanlineEffect_Stop();
         break;
     case 7:
-        sub_80F1A90();
+        InitPokenavMenuOptionGfx();
         gMain.state++;
     case 8:
-        if (sub_80F1AC4())
+        if (LoadPokenavMenuOptionGfxStep())
             return;
         break;
     case 9:
