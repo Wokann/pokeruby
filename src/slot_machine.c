@@ -335,10 +335,10 @@ static struct SlotMachineEwramStruct *const sSlotMachine = eSlotMachine;
 
 static const struct UnkStruct1 *const gUnknown_083ED048[];
 static const u16 gPalette_83EDE24[];
-static const u8 gUnknown_083ECD04[][3];
-static const u8 gUnknown_083ECE3A[];
-static const u16 gUnknown_083ECE42[];
-static const u16 gUnknown_083ECE48[];
+static const u8 sSpecialDrawOdds[][3];
+static const u8 sBiasSymbols[];
+static const u16 sBiasesSpecial[];
+static const u16 sBiasesRegular[];
 
 void PlaySlotMachine(u8 arg0, MainCallback cb)
 {
@@ -487,7 +487,7 @@ static void SlotMachineSetup_2_1(void)
     REG_BLDALPHA = 0x809;
 }
 
-static const s16 gUnknown_083ECCF8[][2];
+static const s16 sInitialReelPositions[][2];
 
 static void SlotMachineSetup_0_1(void)
 {
@@ -515,7 +515,7 @@ static void SlotMachineSetup_0_1(void)
     for (i = 0; i < 3; i++)
     {
         sSlotMachine->unk22[i] = 0;
-        sSlotMachine->reelPositions[i] = gUnknown_083ECCF8[i][sSlotMachine->unk03] % 21;
+        sSlotMachine->reelPositions[i] = sInitialReelPositions[i][sSlotMachine->unk03] % 21;
         sSlotMachine->unk1C[i] = 0x1f8 - sSlotMachine->reelPositions[i] * 24;
         sSlotMachine->unk1C[i] %= 0x1f8;
     }
@@ -1184,7 +1184,7 @@ static void DrawMachineBias(void)
                 r3 = TrySelectBias_Special();
                 if (r3 != 3)
                 {
-                    sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
+                    sSlotMachine->unk04 |= sBiasesSpecial[r3];
 #if DEBUG
                     if (sSlotMachine->unk04 & 0x80)
                         debug_sub_811B5B4(&sSlotMachine->unk88, 1);
@@ -1202,7 +1202,7 @@ static void DrawMachineBias(void)
             r3 = TrySelectBias_Regular();
             if (r3 != 5)
             {
-                sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
+                sSlotMachine->unk04 |= sBiasesRegular[r3];
 #if DEBUG
                 if (sSlotMachine->unk04 & 0x10)
                     debug_sub_811B5B4(&sSlotMachine->unk80, 1);
@@ -1232,7 +1232,7 @@ static void DrawMachineBias(void)
             r3 = TrySelectBias_Special();
             if (r3 != 3)
             {
-                sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
+                sSlotMachine->unk04 |= sBiasesSpecial[r3];
                 if (r3 != 1)
                 {
                     return;
@@ -1242,7 +1242,7 @@ static void DrawMachineBias(void)
         r3 = TrySelectBias_Regular();
         if (r3 != 5)
         {
-            sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
+            sSlotMachine->unk04 |= sBiasesRegular[r3];
         }
     }
 }
@@ -1262,7 +1262,7 @@ static u8 GetBiasSymbol(u8 a0)
     for (i = 0; i < 8; i++)
     {
         if (a0 & 1)
-            return gUnknown_083ECE3A[i];
+            return sBiasSymbols[i];
         a0 >>= 1;
     }
     return 0;
@@ -1271,12 +1271,12 @@ static u8 GetBiasSymbol(u8 a0)
 static bool8 ShouldTrySpecialBias(void)
 {
     u8 rval = Random();
-    if (gUnknown_083ECD04[sSlotMachine->unk01][sSlotMachine->bet - 1] > rval)
+    if (sSpecialDrawOdds[sSlotMachine->unk01][sSlotMachine->bet - 1] > rval)
         return TRUE;
     return FALSE;
 }
 
-static const u8 gUnknown_083ECD16[][6];
+static const u8 sBiasProbabilities_Special[][6];
 
 static u8 TrySelectBias_Special(void)
 {
@@ -1285,14 +1285,14 @@ static u8 TrySelectBias_Special(void)
     for (i = 0; i < 3; i++)
     {
         s16 rval = Random() & 0xff;
-        s16 value = gUnknown_083ECD16[i][sSlotMachine->unk01];
+        s16 value = sBiasProbabilities_Special[i][sSlotMachine->unk01];
         if (value > rval)
             break;
     }
     return i;
 }
 
-static const u8 gUnknown_083ECD28[][6];
+static const u8 sBiasProbabilities_Regular[][6];
 
 static u8 TrySelectBias_Regular(void)
 {
@@ -1301,7 +1301,7 @@ static u8 TrySelectBias_Regular(void)
     for (i = 0; i < 5; i++)
     {
         s16 rval = Random() & 0xff;
-        s16 r3 = gUnknown_083ECD28[i][sSlotMachine->unk01];
+        s16 r3 = sBiasProbabilities_Regular[i][sSlotMachine->unk01];
         if (i == 0 && sSlotMachine->unk03 == 1)
         {
             r3 += 10;
@@ -1320,15 +1320,15 @@ static u8 TrySelectBias_Regular(void)
     return i;
 }
 
-static const u8 gUnknown_083ECD46[][17];
-static const u8 gUnknown_083ECDAC[][17];
+static const u8 sReelTimeProbabilities_NormalGame[][17];
+static const u8 sReelTimeProbabilities_LuckyGame[][17];
 
 static u8 GetReelTimeSpinProbability(u8 a0)
 {
     if (sSlotMachine->unk03 == 0)
-        return gUnknown_083ECD46[a0][sSlotMachine->pikaPower];
+        return sReelTimeProbabilities_NormalGame[a0][sSlotMachine->pikaPower];
     else
-        return gUnknown_083ECDAC[a0][sSlotMachine->pikaPower];
+        return sReelTimeProbabilities_LuckyGame[a0][sSlotMachine->pikaPower];
 }
 
 static void GetReelTimeDraw(void)
@@ -1349,19 +1349,19 @@ static void GetReelTimeDraw(void)
     sSlotMachine->unk05 = i;
 }
 
-static const u16 gUnknown_083ECE12[];
+static const u16 sReelTimeExplodeProbability[];
 
 static bool8 ShouldReelTimeMachineExplode(u16 a0)
 {
     u16 rval = Random() & 0xff;
-    if (rval < gUnknown_083ECE12[a0])
+    if (rval < sReelTimeExplodeProbability[a0])
         return TRUE;
     else
         return FALSE;
 }
 
-static const u16 gUnknown_083ECE1C[][2];
-static const u16 gUnknown_083ECE30[];
+static const u16 sReelTimeSpeed_Probabilities[][2];
+static const u16 sQuarterSpeed_ProbabilityBoost[];
 
 static u16 ReelTimeSpeed(void)
 {
@@ -1377,11 +1377,11 @@ static u16 ReelTimeSpeed(void)
     else if (sSlotMachine->unk10 >= 150)
         r4 = 1;
     rval = Random() % 100;
-    value = gUnknown_083ECE1C[r4][0];
+    value = sReelTimeSpeed_Probabilities[r4][0];
     if (rval < value)
         return 4;
     rval = Random() % 100;
-    value = gUnknown_083ECE1C[r4][1] + gUnknown_083ECE30[sSlotMachine->unk0B];
+    value = sReelTimeSpeed_Probabilities[r4][1] + sQuarterSpeed_ProbabilityBoost[sSlotMachine->unk0B];
     if (rval < value)
         return 2;
     return 8;
@@ -1478,12 +1478,12 @@ static void CheckMatch_Diagonals(void)
     }
 }
 
-static const u8 sSym2Match[];
+static const u8 sSymbolToMatch[];
 
 static u8 GetMatchFromSymbolsInRow(u8 c1, u8 c2, u8 c3)
 {
     if (c1 == c2 && c1 == c3)
-        return sSym2Match[c1];
+        return sSymbolToMatch[c1];
     if (c1 == SLOT_MACHINE_TAG_7_RED && c2 == SLOT_MACHINE_TAG_7_RED && c3 == SLOT_MACHINE_TAG_7_BLUE)
         return SLOT_MACHINE_MATCHED_777_MIXED;
     if (c1 == SLOT_MACHINE_TAG_7_BLUE && c2 == SLOT_MACHINE_TAG_7_BLUE && c3 == SLOT_MACHINE_TAG_7_RED)
@@ -1584,14 +1584,14 @@ static u8 GetSymbol(u8 x, s16 y)
     return GetSymbolAtRest(x, y + r6);
 }
 
-static const u8 gUnknown_083ECCF1[];
+static const u8 sReelTimeSymbols[];
 
 static u8 GetReelTimeSymbol(s16 a0)
 {
     s16 r1 = (sSlotMachine->unk16 + a0) % 6;
     if (r1 < 0)
         r1 += 6;
-    return gUnknown_083ECCF1[r1];
+    return sReelTimeSymbols[r1];
 }
 
 static void AdvanceSlotReel(u8 a0, s16 a1)
@@ -3458,7 +3458,7 @@ static void CreateReelTimePikachuAuraSprites(void)
     sSlotMachine->unk52[1] = spriteId;
 }
 
-static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through gUnknown_083ECCF8
+static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through sInitialReelPositions
 
 static void SpriteCB_ReelTimePikachuAura(struct Sprite *sprite)
 {
@@ -4201,17 +4201,17 @@ static const u8 sReelSymbols[][21] =
     },
 };
 
-static const u8 gUnknown_083ECCF1[] = {
+static const u8 sReelTimeSymbols[] = {
     1, 0, 5, 4, 3, 2
 };
 
-static const s16 gUnknown_083ECCF8[][2] = {
+static const s16 sInitialReelPositions[][2] = {
     {0,  6},
     {0, 10},
     {0,  2}
 };
 
-static const u8 gUnknown_083ECD04[][3] = {
+static const u8 sSpecialDrawOdds[][3] = {
     {1, 1, 12},
     {1, 1, 14},
     {2, 2, 14},
@@ -4220,13 +4220,13 @@ static const u8 gUnknown_083ECD04[][3] = {
     {3, 3, 16}
 };
 
-static const u8 gUnknown_083ECD16[][6] = {
+static const u8 sBiasProbabilities_Special[][6] = {
     {25, 25, 30, 40, 40, 50},
     {25, 25, 30, 30, 35, 35},
     {25, 25, 30, 25, 25, 30}
 };
 
-static const u8 gUnknown_083ECD28[][6] = {
+static const u8 sBiasProbabilities_Regular[][6] = {
     {20, 25, 25, 20, 25, 25},
     {12, 15, 15, 18, 19, 22},
     {25, 25, 25, 30, 30, 40},
@@ -4234,7 +4234,7 @@ static const u8 gUnknown_083ECD28[][6] = {
     {40, 40, 35, 35, 40, 40}
 };
 
-static const u8 gUnknown_083ECD46[][17] = {
+static const u8 sReelTimeProbabilities_NormalGame[][17] = {
     {243, 243, 243,  80,  80,  80,  80,  40,  40,  40,  40,  40,  40,   5,   5,   5,   5},
     {  5,   5,   5, 150, 150, 150, 150, 130, 130, 130, 130, 130, 130, 100, 100, 100,   5},
     {  4,   4,   4,  20,  20,  20,  20,  80,  80,  80,  80,  80,  80, 100, 100, 100,  40},
@@ -4243,7 +4243,7 @@ static const u8 gUnknown_083ECD46[][17] = {
     {  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   6}
 };
 
-static const u8 gUnknown_083ECDAC[][17] = {
+static const u8 sReelTimeProbabilities_LuckyGame[][17] = {
     { 243, 243, 243, 200, 200, 200, 200, 160, 160, 160, 160, 160, 160,  70,  70,  70,   5},
     {   5,   5,   5,  25,  25,  25,  25,   5,   5,   5,   5,   5,   5,   2,   2,   2,   6},
     {   4,   4,   4,  25,  25,  25,  25,  30,  30,  30,  30,  30,  30,  40,  40,  40,  35},
@@ -4252,11 +4252,11 @@ static const u8 gUnknown_083ECDAC[][17] = {
     {   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   4,   4,   4,  60}
 };
 
-static const u16 gUnknown_083ECE12[] = {
+static const u16 sReelTimeExplodeProbability[] = {
     0x80, 0xaf, 0xc8, 0xe1, 0x100
 };
 
-static const u16 gUnknown_083ECE1C[][2] = {
+static const u16 sReelTimeSpeed_Probabilities[][2] = {
     {10,  5},
     {10, 10},
     {10, 15},
@@ -4264,24 +4264,24 @@ static const u16 gUnknown_083ECE1C[][2] = {
     {10, 35}
 };
 
-static const u16 gUnknown_083ECE30[] = {
+static const u16 sQuarterSpeed_ProbabilityBoost[] = {
     0, 5, 10, 15, 20
 };
 
 
-static const u8 gUnknown_083ECE3A[] = {
+static const u8 sBiasSymbols[] = {
     6, 4, 3, 2, 5, 0, 0, 0
 };
 
-static const u16 gUnknown_083ECE42[] = {
+static const u16 sBiasesSpecial[] = {
     0x80, 0x20, 0x40
 };
 
-static const u16 gUnknown_083ECE48[] = {
+static const u16 sBiasesRegular[] = {
     0x10, 0x08, 0x04, 0x02, 0x01
 };
 
-static const u8 sSym2Match[] = {
+static const u8 sSymbolToMatch[] = {
     SLOT_MACHINE_MATCHED_777_RED,
     SLOT_MACHINE_MATCHED_777_BLUE,
     SLOT_MACHINE_MATCHED_AZURILL,
