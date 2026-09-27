@@ -58,29 +58,29 @@ struct TayaMonDataEwramStruct {
 #define eTayaLuckyNumber (*(struct TayaLuckyNumberEwramStruct *)gSharedMem)
 #define eTayaMonData (*(struct TayaMonDataEwramStruct *)gSharedMem)
 
-const u8 gUnknown_Debug_083C4E54[] = _("Profile");
-const u8 gUnknown_Debug_083C4E5C[] = _("Battle's　start");
-const u8 gUnknown_Debug_083C4E6B[] = _("Good　saying");
-const u8 gUnknown_Debug_083C4E77[] = _("Lose　a　battle");
-const u8 gUnknown_Debug_083C4E85[] = _("MAIL");
-const u8 gUnknown_Debug_083C4E8A[] = _("MAIL　salutation");
-const u8 gUnknown_Debug_083C4E9A[] = _("BARD's　song");
-const u8 gUnknown_Debug_083C4EA6[] = _("Interview");
-const u8 gUnknown_Debug_083C4EB0[] = _("Interview(BT)");
+const u8 sText_TayaEasyChat_Profile[] = _("Profile");
+const u8 sText_TayaEasyChat_BattleStart[] = _("Battle's　start");
+const u8 sText_TayaEasyChat_GoodSaying[] = _("Good　saying");
+const u8 sText_TayaEasyChat_BattleLoss[] = _("Lose　a　battle");
+const u8 sText_TayaEasyChat_Mail[] = _("MAIL");
+const u8 sText_TayaEasyChat_MailSalutation[] = _("MAIL　salutation");
+const u8 sText_TayaEasyChat_BardsSong[] = _("BARD's　song");
+const u8 sText_TayaEasyChat_Interview[] = _("Interview");
+const u8 sText_TayaEasyChat_BattleTowerInterview[] = _("Interview(BT)");
 
 const struct {
     const u8 * text;
     u32 round1Points;
-} gUnknown_Debug_083C4EC0[] = {
-    {gUnknown_Debug_083C4E54, 0x0},
-    {gUnknown_Debug_083C4E5C, 0x1},
-    {gUnknown_Debug_083C4E6B, 0xD},
-    {gUnknown_Debug_083C4E77, 0x3},
-    {gUnknown_Debug_083C4E85, 0x4},
-    {gUnknown_Debug_083C4E8A, 0x5},
-    {gUnknown_Debug_083C4E9A, 0x6},
-    {gUnknown_Debug_083C4EA6, 0x7},
-    {gUnknown_Debug_083C4EB0, 0xC}
+} sEasyChatOptions_TayaDebug[] = {
+    {sText_TayaEasyChat_Profile, 0x0},
+    {sText_TayaEasyChat_BattleStart, 0x1},
+    {sText_TayaEasyChat_GoodSaying, 0xD},
+    {sText_TayaEasyChat_BattleLoss, 0x3},
+    {sText_TayaEasyChat_Mail, 0x4},
+    {sText_TayaEasyChat_MailSalutation, 0x5},
+    {sText_TayaEasyChat_BardsSong, 0x6},
+    {sText_TayaEasyChat_Interview, 0x7},
+    {sText_TayaEasyChat_BattleTowerInterview, 0xC}
 };
 
 const u16 gUnknown_Debug_083C4F08[] = {0x45b, 0x430, 0x20f};
@@ -259,7 +259,7 @@ bool8 TayaDebugMenu_TrendR(void)
     return TRUE;
 }
 
-bool8 debug_sub_8090880(void)
+bool8 TayaDebugMenu_WaitForEasyChatFade(void)
 {
     if (!UpdatePaletteFade())
     {
@@ -270,7 +270,7 @@ bool8 debug_sub_8090880(void)
     return FALSE;
 }
 
-bool8 debug_sub_809089C(void)
+bool8 TayaDebugMenu_HandleEasyChatInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -282,7 +282,7 @@ bool8 debug_sub_809089C(void)
         case -2:
             return FALSE;
         default:
-            gSpecialVar_0x8004 = gUnknown_Debug_083C4EC0[input].round1Points;
+            gSpecialVar_0x8004 = sEasyChatOptions_TayaDebug[input].round1Points;
             switch (gSpecialVar_0x8004)
             {
                 case 5:
@@ -294,7 +294,7 @@ bool8 debug_sub_809089C(void)
                     gSpecialVar_0x8006 = 0;
                 default:
                     FadeScreen(1, 0);
-                    gMenuCallback = debug_sub_8090880;
+                    gMenuCallback = TayaDebugMenu_WaitForEasyChatFade;
                     break;
             }
             return FALSE;
@@ -304,9 +304,9 @@ bool8 debug_sub_809089C(void)
 bool8 TayaDebugMenu_SimpleText(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 12, 19);
-    Menu_PrintItems(1, 1, ARRAY_COUNT(gUnknown_Debug_083C4EC0), gUnknown_Debug_083C4EC0);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C4EC0), 0, 11);
-    gMenuCallback = debug_sub_809089C;
+    Menu_PrintItems(1, 1, ARRAY_COUNT(sEasyChatOptions_TayaDebug), sEasyChatOptions_TayaDebug);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sEasyChatOptions_TayaDebug), 0, 11);
+    gMenuCallback = TayaDebugMenu_HandleEasyChatInput;
     return FALSE;
 }
 
