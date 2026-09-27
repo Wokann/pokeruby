@@ -21,7 +21,7 @@ void Task_FreezePlayer(u8 taskId)
 {
     if (IsPlayerStandingStill())
     {
-        sub_80594C0();
+        PlayerFreeze();
         DestroyTask(taskId);
     }
 }
@@ -51,7 +51,7 @@ void Task_FreezeSelectedObjectAndPlayer(u8 taskId)
 
     if (!task->data[0] && IsPlayerStandingStill() == TRUE)
     {
-        sub_80594C0();
+        PlayerFreeze();
         task->data[0] = 1;
     }
     if (!task->data[1] && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)

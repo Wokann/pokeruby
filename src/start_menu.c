@@ -406,7 +406,7 @@ void sub_8071310(void)
     if (!is_c1_link_related_active())
     {
         FreezeObjectEvents();
-        sub_80594C0();
+        PlayerFreeze();
         sub_80597F4();
     }
     CreateStartMenuTask(sub_80712B4);
