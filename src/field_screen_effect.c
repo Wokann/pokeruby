@@ -10,7 +10,7 @@
 #include "text.h"
 #include "scanline_effect.h"
 
-const static u16 sFlashLevelPixelRadii[] = { 200, 72, 56, 40, 24, 0 };
+const static u16 sFlashLevelToRadius[] = { 200, 72, 56, 40, 24, 0 };
 
 const s32 gMaxFlashLevel = 4;
 
@@ -138,13 +138,13 @@ static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlash
 #undef tFlashRadiusDelta
 #undef tClearScanlineEffect
 
-void AnimateFlash(u8 flashLevel)
+void AnimateFlash(u8 newFlashLevel)
 {
     u8 curFlashLevel = Overworld_GetFlashLevel();
-    u8 value = 0;
-    if (!flashLevel)
-        value = 1;
-    StartUpdateFlashLevelEffect(120, 80, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
+    u8 fullBrightness = 0;
+    if (!newFlashLevel)
+        fullBrightness = 1;
+    StartUpdateFlashLevelEffect(120, 80, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
     StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }
@@ -153,7 +153,7 @@ void WriteFlashScanlineEffectBuffer(u8 flashLevel)
 {
     if (flashLevel)
     {
-        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], 120, 80, sFlashLevelPixelRadii[flashLevel]);
+        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], 120, 80, sFlashLevelToRadius[flashLevel]);
         CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
     }
 }
