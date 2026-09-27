@@ -1005,7 +1005,7 @@ u8 GetPlayerMovementDirection(void)
     return gObjectEvents[gPlayerAvatar.objectEventId].movementDirection;
 }
 
-u8 PlayerGetZCoord(void)
+u8 PlayerGetElevation(void)
 {
     return gObjectEvents[gPlayerAvatar.objectEventId].previousElevation;
 }
@@ -1015,27 +1015,27 @@ void unref_sub_8059790(s16 a, s16 b)
     sub_805C058(&gObjectEvents[gPlayerAvatar.objectEventId], a, b);
 }
 
-u8 TestPlayerAvatarFlags(u8 a)
+u8 TestPlayerAvatarFlags(u8 flag)
 {
-    return gPlayerAvatar.flags & a;
+    return gPlayerAvatar.flags & flag;
 }
 
-u8 sub_80597D0(void)
+u8 GetPlayerAvatarFlags(void)
 {
     return gPlayerAvatar.flags;
 }
 
-u8 GetPlayerAvatarObjectId(void)
+u8 GetPlayerAvatarSpriteId(void)
 {
     return gPlayerAvatar.spriteId;
 }
 
-void sub_80597E8(void)
+void CancelPlayerForcedMovement(void)
 {
     ForcedMovement_None();
 }
 
-void sub_80597F4(void)
+void StopPlayerAvatar(void)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -1131,7 +1131,7 @@ bool8 IsPlayerFacingSurfableFishableWater(void)
     s16 y = playerObjEvent->currentCoords.y;
 
     MoveCoords(playerObjEvent->facingDirection, &x, &y);
-    if (GetCollisionAtCoords(playerObjEvent, x, y, playerObjEvent->facingDirection) == COLLISION_ELEVATION_MISMATCH && PlayerGetZCoord() == 3
+    if (GetCollisionAtCoords(playerObjEvent, x, y, playerObjEvent->facingDirection) == COLLISION_ELEVATION_MISMATCH && PlayerGetElevation() == 3
      && MetatileBehavior_IsSurfableFishableWater(MapGridGetMetatileBehaviorAt(x, y)))
         return TRUE;
     else

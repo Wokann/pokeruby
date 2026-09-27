@@ -407,7 +407,7 @@ void sub_8071310(void)
     {
         FreezeObjectEvents();
         PlayerFreeze();
-        sub_80597F4();
+        StopPlayerAvatar();
     }
     CreateStartMenuTask(sub_80712B4);
     LockPlayerFieldControls();

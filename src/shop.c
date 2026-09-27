@@ -426,7 +426,7 @@ static void Shop_LoadViewportObjects(void)
     u8 r8 = 0;
 
     GetXYCoordsOneStepInFrontOfPlayer(&facingX, &facingY);
-    playerHeight = PlayerGetZCoord();
+    playerHeight = PlayerGetElevation();
     for (y = 0; y < 16; y++)
         gMartViewportObjects[y][OBJ_EVENT_ID] = 16;
     for (y = 0; y < 5; y++)

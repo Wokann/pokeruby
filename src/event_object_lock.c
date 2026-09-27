@@ -34,7 +34,7 @@ bool8 IsFreezePlayerFinished(void)
     }
     else
     {
-        sub_80597F4();
+        StopPlayerAvatar();
         return TRUE;
     }
 }
@@ -71,7 +71,7 @@ bool8 IsFreezeSelectedObjectAndPlayerFinished(void)
     }
     else
     {
-        sub_80597F4();
+        StopPlayerAvatar();
         return TRUE;
     }
 }

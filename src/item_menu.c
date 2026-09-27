@@ -2748,7 +2748,7 @@ bool32 UseRegisteredKeyItem(void)
             LockPlayerFieldControls();
             FreezeObjectEvents();
             PlayerFreeze();
-            sub_80597F4();
+            StopPlayerAvatar();
             gSpecialVar_ItemId = gSaveBlock1.registeredItem;
             taskId = CreateTask(ItemId_GetFieldFunc(gSaveBlock1.registeredItem), 8);
             gTasks[taskId].data[2] = 1;

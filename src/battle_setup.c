@@ -519,7 +519,7 @@ static void DoStandardWildBattle(void)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    sub_80597F4();
+    StopPlayerAvatar();
     gMain.savedCallback = CB2_EndWildBattle;
     gBattleTypeFlags = 0;
     CreateBattleStartTask(GetWildBattleTransition(), 0);
@@ -531,7 +531,7 @@ void BattleSetup_StartRoamerBattle(void)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    sub_80597F4();
+    StopPlayerAvatar();
     gMain.savedCallback = CB2_EndWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_ROAMER;
     CreateBattleStartTask(GetWildBattleTransition(), 0);
@@ -543,7 +543,7 @@ static void DoSafariBattle(void)
 {
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    sub_80597F4();
+    StopPlayerAvatar();
     gMain.savedCallback = CB2_EndSafariBattle;
     gBattleTypeFlags = BATTLE_TYPE_SAFARI;
     CreateBattleStartTask(GetWildBattleTransition(), 0);
