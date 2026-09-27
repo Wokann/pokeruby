@@ -105,7 +105,7 @@ extern const u16 gPokenavCondition6_Pal[];
 extern const u16 gPokenavCondition7_Pal[];
 extern const struct SpriteSheet gSpriteSheet_PokenavBlueLight;
 extern const struct SpritePalette gSpritePalette_PokenavBlueLight;
-extern const struct SpriteTemplate gSpriteTemplate_83E4484;
+extern const struct SpriteTemplate gPokenavBlueLightSpriteTemplate;
 extern const u8 gPokenavMainMenu_Gfx[];
 extern const u8 gPokenavConditionMenuHeader_Gfx[];
 extern const u8 gPokenavRibbonsHeader_Gfx[];
@@ -2324,19 +2324,19 @@ void LoadMenuOptionSpritePalettes(u8 menuType)
     LoadSpritePalette(&spritePalette);
 }
 
-void sub_80F2598(void)
+void CreateRematchBlueLightSprite(void)
 {
     u8 spriteId;
 
-    gPokenavStructPtr->unk6D9C = NULL;
+    gPokenavStructPtr->blueLightSprite = NULL;
     if (DoesSomeoneWantRematchIn(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum) == TRUE)
     {
         LoadSpriteSheet(&gSpriteSheet_PokenavBlueLight);
         LoadSpritePalette(&gSpritePalette_PokenavBlueLight);
-        spriteId = CreateSprite(&gSpriteTemplate_83E4484, 12, 96, 0);
+        spriteId = CreateSprite(&gPokenavBlueLightSpriteTemplate, 12, 96, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk6D9C = &gSprites[spriteId];
+            gPokenavStructPtr->blueLightSprite = &gSprites[spriteId];
         }
         else
         {
@@ -2346,18 +2346,18 @@ void sub_80F2598(void)
     }
 }
 
-void sub_80F2620(void)
+void DestroyRematchBlueLightSprite(void)
 {
-    if (gPokenavStructPtr->unk6D9C)
+    if (gPokenavStructPtr->blueLightSprite)
     {
-        DestroySprite(gPokenavStructPtr->unk6D9C);
+        DestroySprite(gPokenavStructPtr->blueLightSprite);
         FreeSpriteTilesByTag(0x19);
         FreeSpritePaletteByTag(0x11);
-        gPokenavStructPtr->unk6D9C = NULL;
+        gPokenavStructPtr->blueLightSprite = NULL;
     }
 }
 
-void sub_80F2654(struct Sprite *sprite)
+void SpriteCB_BlinkingBlueLight(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 6)
     {

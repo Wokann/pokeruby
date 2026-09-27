@@ -227,8 +227,8 @@ const u16 gUnknown_083E3C60[][16] =
 };
 
 const u8 gUnknown_083E3D00[] = INCBIN_U8("graphics/misc/ribbons_full.4bpp.lz");
-const u16 PokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
-const u8 PokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
+const u16 gPokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
+const u8 gPokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
 const u16 Palette_3E42D8[] = INCBIN_U16("graphics/pokenav/83E42D8.gbapal");
 
 const u16 gUnknown_083E42F8[] = 
@@ -462,12 +462,12 @@ const struct SpriteTemplate gSpriteTemplate_83E4454 =
     .callback = SpriteCallbackDummy,
 };
 
-// sizeof(PokenavBlueLightTiles) ?
-const struct SpriteSheet gSpriteSheet_PokenavBlueLight = {PokenavBlueLightTiles, 0x100, 25};
+// sizeof(gPokenavBlueLightTiles) ?
+const struct SpriteSheet gSpriteSheet_PokenavBlueLight = {gPokenavBlueLightTiles, 0x100, 25};
 
-const struct SpritePalette gSpritePalette_PokenavBlueLight = {PokenavBlueLightPalette, 17};
+const struct SpritePalette gSpritePalette_PokenavBlueLight = {gPokenavBlueLightPalette, 17};
 
-const struct OamData gOamData_83E447C = 
+const struct OamData gPokenavBlueLightOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -484,17 +484,17 @@ const struct OamData gOamData_83E447C =
     .affineParam = 0,
 };
 
-void sub_80F2654(struct Sprite *);
+void SpriteCB_BlinkingBlueLight(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E4484 = 
+const struct SpriteTemplate gPokenavBlueLightSpriteTemplate =
 {
     .tileTag = 25,
     .paletteTag = 17,
-    .oam = &gOamData_83E447C,
+    .oam = &gPokenavBlueLightOamData,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F2654,
+    .callback = SpriteCB_BlinkingBlueLight,
 };
 
 extern const u16 gPokenavMenuOptions3_Pal[];
@@ -1304,7 +1304,7 @@ void InitPokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        sub_80F2598();
+        CreateRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 4:
@@ -1425,7 +1425,7 @@ void RestorePokenavMainMenu(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 9:
-        sub_80F2598();
+        CreateRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 10:
@@ -1612,7 +1612,7 @@ void OpenPokenavRegionMap(void)
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -1875,7 +1875,7 @@ void RestorePokenavConditionMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        sub_80F2598();
+        CreateRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 9:
@@ -2030,7 +2030,7 @@ void ReturnToConditionSearchMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
-        sub_80F2598();
+        CreateRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 15:
@@ -2107,7 +2107,7 @@ void OpenConditionSearchResults(void)
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -2377,7 +2377,7 @@ void OpenConditionGraphFromParty(void)
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -2630,7 +2630,7 @@ void OpenRibbonsMonList(void)
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
@@ -3006,7 +3006,7 @@ void OpenTrainerEyes(void)
 		}
         break;
     case 4:
-        sub_80F2620();
+        DestroyRematchBlueLightSprite();
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
