@@ -73,7 +73,7 @@ extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StoreSpriteCallbackInData6();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_80375B4(void);
-extern void sub_8010384(struct Sprite *);
+extern void SpriteCB_FaintOpponentMon(struct Sprite *);
 extern void sub_8037B78(void);
 extern u8 IsMoveWithoutAnimation();
 extern bool8 mplay_80342A4(u8);
@@ -1291,7 +1291,7 @@ void LinkOpponentHandlecmd10(void)
     {
         gBattleHealthBoxInfo[gActiveBattler].animationState = 0;
         PlaySE12WithPanning(SE_FAINT, 63);
-        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_8010384;
+        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintOpponentMon;
         gBattlerControllerFuncs[gActiveBattler] = sub_8037B78;
     }
 }

@@ -2629,7 +2629,7 @@ void debug_sub_8012688(void)
 	LoadCompressedPalette(gMonPaletteTable[gCurrentMove].data, 272, 32);
 	SetMultiuseSpriteTemplateToPokemon(gCurrentMove, 1);
 	spriteId = CreateSprite(&gCreatingSpriteTemplate, 176, 40 + gMonFrontPicCoords[gCurrentMove].y_offset, 40);
-	gSprites[spriteId].callback = nullsub_37;
+	gSprites[spriteId].callback = SpriteCB_Idle;
 	gSprites[spriteId].oam.paletteNum = 1;
 	REG_DISPCNT = 0x1F40;
 	SetHBlankCallback(debug_nullsub_45);
@@ -3057,50 +3057,50 @@ void debug_sub_80132C8(u8 a, void *b, u32 c)
 }
 #endif
 
-void oac_poke_opponent(struct Sprite *sprite)
+void SpriteCB_WildMon(struct Sprite *sprite)
 {
-    sprite->callback = sub_8010278;
+    sprite->callback = SpriteCB_MoveWildMonToRight;
     StartSpriteAnimIfDifferent(sprite, 0);
     BeginNormalPaletteFade(0x00020000, 0, 10, 10, RGB(15, 15, 15));
 }
 
-void sub_8010278(struct Sprite *sprite)
+void SpriteCB_MoveWildMonToRight(struct Sprite *sprite)
 {
     if ((gIntroSlideFlags & 1) == 0)
     {
         sprite->x2 += 2;
         if (sprite->x2 == 0)
         {
-            sprite->callback = sub_80102AC;
+            sprite->callback = SpriteCB_WildMonShowHealthbox;
             PlayCry_Normal(sprite->data[2], 25);
         }
     }
 }
 
-void sub_80102AC(struct Sprite *sprite)
+void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
         StartHealthboxSlideIn(sprite->data[0]);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[sprite->data[0]]);
-        sprite->callback = nullsub_37;
+        sprite->callback = SpriteCB_Idle;
         StartSpriteAnimIfDifferent(sprite, 0);
         BeginNormalPaletteFade(0x00020000, 0, 10, 0, RGB(15, 15, 15));
     }
 }
 
-void nullsub_37(struct Sprite *sprite)
+void SpriteCB_Idle(struct Sprite *sprite)
 {
 }
 
-void unref_sub_801030C(struct Sprite *sprite)
+void SpriteCB_InitFlicker(struct Sprite *sprite)
 {
     sprite->data[3] = 6;
     sprite->data[4] = 1;
-    sprite->callback = sub_8010320;
+    sprite->callback = SpriteCB_Flicker;
 }
 
-void sub_8010320(struct Sprite *sprite)
+void SpriteCB_Flicker(struct Sprite *sprite)
 {
     sprite->data[4]--;
     if (sprite->data[4] == 0)
@@ -3111,28 +3111,28 @@ void sub_8010320(struct Sprite *sprite)
         if (sprite->data[3] == 0)
         {
             sprite->invisible = FALSE;
-            sprite->callback = nullsub_37;
+            sprite->callback = SpriteCB_Idle;
             gUnknown_03004284 = 0;
         }
     }
 }
 
-void sub_8010384(struct Sprite *sprite)
+void SpriteCB_FaintOpponentMon(struct Sprite *sprite)
 {
-    u8 r6 = sprite->data[0];
+    u8 battler = sprite->data[0];
     u16 species;
     u8 yOffset;
 
-    if (gBattleSpriteInfo[r6].transformSpecies != 0)
-        species = gBattleSpriteInfo[r6].transformSpecies;
+    if (gBattleSpriteInfo[battler].transformSpecies != 0)
+        species = gBattleSpriteInfo[battler].transformSpecies;
     else
         species = sprite->data[2];
 
-    GetMonData(&gEnemyParty[gBattlerPartyIndexes[r6]], MON_DATA_PERSONALITY);  // Unused return value
+    GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_PERSONALITY);  // Unused return value
 
     if (species == SPECIES_UNOWN)
     {
-        u32 personalityValue = GetMonData(&gEnemyParty[gBattlerPartyIndexes[r6]], MON_DATA_PERSONALITY);
+        u32 personalityValue = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_PERSONALITY);
         u16 unownForm = ((((personalityValue & 0x3000000) >> 18) | ((personalityValue & 0x30000) >> 12) | ((personalityValue & 0x300) >> 6) | (personalityValue & 3)) % 0x1C);
         u16 unownSpecies;
 
@@ -3145,7 +3145,7 @@ void sub_8010384(struct Sprite *sprite)
     }
     else if (species == SPECIES_CASTFORM)
     {
-        yOffset = gCastformFrontSpriteCoords[gBattleMonForms[r6]].y_offset;
+        yOffset = gCastformFrontSpriteCoords[gBattleMonForms[battler]].y_offset;
     }
     else if (species > NUM_SPECIES)
     {
@@ -3158,10 +3158,10 @@ void sub_8010384(struct Sprite *sprite)
 
     sprite->data[3] = 8 - yOffset / 8;
     sprite->data[4] = 1;
-    sprite->callback = sub_8010494;
+    sprite->callback = SpriteCB_AnimFaintOpponent;
 }
 
-void sub_8010494(struct Sprite *sprite)
+void SpriteCB_AnimFaintOpponent(struct Sprite *sprite)
 {
     s32 i;
     u8 *dst;
@@ -3188,14 +3188,14 @@ void sub_8010494(struct Sprite *sprite)
     }
 }
 
-void sub_8010520(struct Sprite *sprite)
+void SpriteCB_ShowAsMoveTarget(struct Sprite *sprite)
 {
     sprite->data[3] = 8;
     sprite->data[4] = sprite->invisible;
-    sprite->callback = sub_801053C;
+    sprite->callback = SpriteCB_BlinkVisible;
 }
 
-void sub_801053C(struct Sprite *sprite)
+void SpriteCB_BlinkVisible(struct Sprite *sprite)
 {
     sprite->data[3]--;
     if (sprite->data[3] == 0)
@@ -3205,41 +3205,41 @@ void sub_801053C(struct Sprite *sprite)
     }
 }
 
-void sub_8010574(struct Sprite *sprite)
+void SpriteCB_HideAsMoveTarget(struct Sprite *sprite)
 {
     sprite->invisible = sprite->data[4];
     sprite->data[4] = FALSE;
-    sprite->callback = nullsub_37;
+    sprite->callback = SpriteCB_Idle;
 }
 
-void sub_80105A0(struct Sprite *sprite)
+void SpriteCB_BattleSpriteStartSlideLeft(struct Sprite *sprite)
 {
-    sprite->callback = oac_poke_ally_;
+    sprite->callback = SpriteCB_BattleSpriteSlideLeft;
 }
 
-void oac_poke_ally_(struct Sprite *sprite)
+void SpriteCB_BattleSpriteSlideLeft(struct Sprite *sprite)
 {
     if ((gIntroSlideFlags & 1) == 0)
     {
         sprite->x2 -= 2;
         if (sprite->x2 == 0)
         {
-            sprite->callback = nullsub_86;
+            sprite->callback = SpriteCB_PlayerMonIdle;
             sprite->data[1] = 0;
         }
     }
 }
 
-void sub_80105DC(struct Sprite *sprite)
+void SetIdleSpriteCallback(struct Sprite *sprite)
 {
-    sprite->callback = nullsub_86;
+    sprite->callback = SpriteCB_PlayerMonIdle;
 }
 
-void nullsub_86(struct Sprite *sprite)
+void SpriteCB_PlayerMonIdle(struct Sprite *sprite)
 {
 }
 
-void sub_80105EC(struct Sprite *sprite)
+void SpriteCB_FaintSlideAnim(struct Sprite *sprite)
 {
     if ((gIntroSlideFlags & 1) == 0)
     {
@@ -3248,88 +3248,88 @@ void sub_80105EC(struct Sprite *sprite)
     }
 }
 
-void dp11b_obj_instanciate(u8 bank, u8 b, s8 c, s8 d)
+void DoBounceEffect(u8 battler, u8 which, s8 delta, s8 amplitude)
 {
-    u8 spriteId;
-    u8 objectID;
+    u8 invisibleSpriteId;
+    u8 bouncerSpriteId;
 
-    if (b)
+    if (which)
     {
-        if (gBattleHealthBoxInfo[bank].unk0_1)
+        if (gBattleHealthBoxInfo[battler].unk0_1)
             return;
     }
     else
     {
-        if (gBattleHealthBoxInfo[bank].unk0_2)
+        if (gBattleHealthBoxInfo[battler].unk0_2)
             return;
     }
 
-    spriteId = CreateInvisibleSpriteWithCallback(objc_dp11b_pingpong);
-    if (b == TRUE)
+    invisibleSpriteId = CreateInvisibleSpriteWithCallback(SpriteCB_BounceEffect);
+    if (which == TRUE)
     {
-        objectID = gHealthboxSpriteIds[bank];
-        gBattleHealthBoxInfo[bank].unk2 = spriteId;
-        gBattleHealthBoxInfo[bank].unk0_1 = 1;
-        gSprites[spriteId].data[0] = 0x80;
+        bouncerSpriteId = gHealthboxSpriteIds[battler];
+        gBattleHealthBoxInfo[battler].unk2 = invisibleSpriteId;
+        gBattleHealthBoxInfo[battler].unk0_1 = 1;
+        gSprites[invisibleSpriteId].data[0] = 0x80;
     }
     else
     {
-        objectID = gBattlerSpriteIds[bank];
-        gBattleHealthBoxInfo[bank].unk3 = spriteId;
-        gBattleHealthBoxInfo[bank].unk0_2 = 1;
-        gSprites[spriteId].data[0] = 0xC0;
+        bouncerSpriteId = gBattlerSpriteIds[battler];
+        gBattleHealthBoxInfo[battler].unk3 = invisibleSpriteId;
+        gBattleHealthBoxInfo[battler].unk0_2 = 1;
+        gSprites[invisibleSpriteId].data[0] = 0xC0;
     }
-    gSprites[spriteId].data[1] = c;
-    gSprites[spriteId].data[2] = d;
-    gSprites[spriteId].data[3] = objectID;
-    gSprites[spriteId].data[4] = b;
-    gSprites[objectID].x2 = 0;
-    gSprites[objectID].y2 = 0;
+    gSprites[invisibleSpriteId].data[1] = delta;
+    gSprites[invisibleSpriteId].data[2] = amplitude;
+    gSprites[invisibleSpriteId].data[3] = bouncerSpriteId;
+    gSprites[invisibleSpriteId].data[4] = which;
+    gSprites[bouncerSpriteId].x2 = 0;
+    gSprites[bouncerSpriteId].y2 = 0;
 }
 
-void dp11b_obj_free(u8 a, u8 b)
+void EndBounceEffect(u8 battler, u8 which)
 {
-    u8 r4;
+    u8 bouncerSpriteId;
 
-    if (b == TRUE)
+    if (which == TRUE)
     {
-        if (!gBattleHealthBoxInfo[a].unk0_1)
+        if (!gBattleHealthBoxInfo[battler].unk0_1)
             return;
-        r4 = gSprites[gBattleHealthBoxInfo[a].unk2].data[3];
-        DestroySprite(&gSprites[gBattleHealthBoxInfo[a].unk2]);
-        gBattleHealthBoxInfo[a].unk0_1 = 0;
+        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].unk2].data[3];
+        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].unk2]);
+        gBattleHealthBoxInfo[battler].unk0_1 = 0;
     }
     else
     {
-        if (!gBattleHealthBoxInfo[a].unk0_2)
+        if (!gBattleHealthBoxInfo[battler].unk0_2)
             return;
-        r4 = gSprites[gBattleHealthBoxInfo[a].unk3].data[3];
-        DestroySprite(&gSprites[gBattleHealthBoxInfo[a].unk3]);
-        gBattleHealthBoxInfo[a].unk0_2 = 0;
+        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].unk3].data[3];
+        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].unk3]);
+        gBattleHealthBoxInfo[battler].unk0_2 = 0;
     }
-    gSprites[r4].x2 = 0;
-    gSprites[r4].y2 = 0;
+    gSprites[bouncerSpriteId].x2 = 0;
+    gSprites[bouncerSpriteId].y2 = 0;
 }
 
-void objc_dp11b_pingpong(struct Sprite *sprite)
+void SpriteCB_BounceEffect(struct Sprite *sprite)
 {
-    u8 spriteId = sprite->data[3];
-    s32 var;
+    u8 bouncerSpriteId = sprite->data[3];
+    s32 index;
 
     if (sprite->data[4] == 1)
-        var = sprite->data[0];
+        index = sprite->data[0];
     else
-        var = sprite->data[0];
+        index = sprite->data[0];
 
-    gSprites[spriteId].y2 = Sin(var, sprite->data[2]) + sprite->data[2];
+    gSprites[bouncerSpriteId].y2 = Sin(index, sprite->data[2]) + sprite->data[2];
     sprite->data[0] = (sprite->data[0] + sprite->data[1]) & 0xFF;
 }
 
-void nullsub_41(void)
+void BeginBattleIntroDummy(void)
 {
 }
 
-void sub_8010800(void)
+void BeginBattleIntro(void)
 {
     BattleStartClearSetData();
     gBattleCommunication[1] = 0;

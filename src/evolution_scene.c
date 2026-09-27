@@ -236,7 +236,7 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
     sEvoInfo.preEvoSpriteId = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
 
-    gSprites[ID].callback = nullsub_37;
+    gSprites[ID].callback = SpriteCB_Idle;
     gSprites[ID].oam.paletteNum = 1;
     gSprites[ID].invisible = TRUE;
 
@@ -252,7 +252,7 @@ void EvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, bool8 canStopEvo, 
     SetMultiuseSpriteTemplateToPokemon(speciesToEvolve, 3);
     gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
     sEvoInfo.postEvoSpriteId = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
-    gSprites[ID].callback = nullsub_37;
+    gSprites[ID].callback = SpriteCB_Idle;
     gSprites[ID].oam.paletteNum = 2;
     gSprites[ID].invisible = TRUE;
 
@@ -333,7 +333,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
     sEvoInfo.postEvoSpriteId = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
 
-    gSprites[ID].callback = nullsub_37;
+    gSprites[ID].callback = SpriteCB_Idle;
     gSprites[ID].oam.paletteNum = 2;
 
     REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP;
@@ -409,7 +409,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
             gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
             sEvoInfo.postEvoSpriteId = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
 
-            gSprites[ID].callback = nullsub_37;
+            gSprites[ID].callback = SpriteCB_Idle;
             gSprites[ID].oam.paletteNum = 2;
             gMain.state++;
         }
@@ -453,7 +453,7 @@ void TradeEvolutionScene(struct Pokemon* mon, u16 speciesToEvolve, u8 preEvoSpri
     gCreatingSpriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
     sEvoInfo.postEvoSpriteId = ID = CreateSprite(&gCreatingSpriteTemplate, 120, 64, 30);
 
-    gSprites[ID].callback = nullsub_37;
+    gSprites[ID].callback = SpriteCB_Idle;
     gSprites[ID].oam.paletteNum = 2;
     gSprites[ID].invisible = TRUE;
 

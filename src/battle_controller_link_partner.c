@@ -72,7 +72,7 @@ extern u8 mplay_80342A4();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StoreSpriteCallbackInData6();
 extern void StartAnimLinearTranslation(struct Sprite *);
-extern void sub_80105EC(struct Sprite *);
+extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern s32 sub_803FC34(u16);
 extern void DecompressTrainerBackPic();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
@@ -1230,7 +1230,7 @@ void LinkPartnerHandleFaintAnimation(void)
         PlaySE12WithPanning(SE_FAINT, -64);
         gSprites[gBattlerSpriteIds[gActiveBattler]].data[1] = 0;
         gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 5;
-        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_80105EC;
+        gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintSlideAnim;
         gBattlerControllerFuncs[gActiveBattler] = FreeMonSpriteAfterFaintAnim;
     }
 }

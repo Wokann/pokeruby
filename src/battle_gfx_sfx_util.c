@@ -99,7 +99,7 @@ extern u8 IsBankSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void sub_8094958(void);
-extern void sub_80105DC(struct Sprite *);
+extern void SetIdleSpriteCallback(struct Sprite *);
 extern void move_anim_start_t2();
 
 void sub_80315E8(u8);
@@ -122,7 +122,7 @@ void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *sprite)
             gSprites[spriteId].animPaused = FALSE;
         else if (gSprites[spriteId].animEnded)
         {
-            gSprites[spriteId].callback = sub_80105DC;
+            gSprites[spriteId].callback = SetIdleSpriteCallback;
             StartSpriteAffineAnim(&gSprites[spriteId], 0);
             sprite->callback = SpriteCallbackDummy;
         }

@@ -83,7 +83,7 @@ void SetUpBattleVarsAndBirchPoochyena(void)
 {
     s32 i;
 
-    gBattleMainFunc = nullsub_41;
+    gBattleMainFunc = BeginBattleIntroDummy;
 
     for (i = 0; i < MAX_BATTLERS_COUNT; i++)
     {
@@ -141,7 +141,7 @@ static void InitSinglePlayerBtlControllers(void)
 {
     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
     {
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
         if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
             gBattlerControllerFuncs[0] = SetControllerToSafari;
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
@@ -155,7 +155,7 @@ static void InitSinglePlayerBtlControllers(void)
     }
     else
     {
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
         gBattlerControllerFuncs[0] = SetBankFuncToPlayerBufferRunCommand;
         gBattlerPositions[0] = 0;
         gBattlerControllerFuncs[1] = SetBankFuncToOpponentBufferRunCommand;
@@ -177,7 +177,7 @@ void InitLinkBtlControllers(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_WILD)
         {
-            gBattleMainFunc = sub_8010800;
+            gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetBankFuncToPlayerBufferRunCommand;
             gBattlerPositions[0] = 0;
             gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
@@ -198,7 +198,7 @@ void InitLinkBtlControllers(void)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_WILD)
         {
-            gBattleMainFunc = sub_8010800;
+            gBattleMainFunc = BeginBattleIntro;
             gBattlerControllerFuncs[0] = SetBankFuncToPlayerBufferRunCommand;
             gBattlerPositions[0] = 0;
             gBattlerControllerFuncs[1] = SetBankFuncToLinkOpponentBufferRunCommand;
@@ -226,7 +226,7 @@ void InitLinkBtlControllers(void)
     }
     multiplayerId = GetMultiplayerId();
     if (gBattleTypeFlags & BATTLE_TYPE_WILD)
-        gBattleMainFunc = sub_8010800;
+        gBattleMainFunc = BeginBattleIntro;
     for (i = 0; i < 4; i++)
     {
         switch (gLinkPlayers[i].id)

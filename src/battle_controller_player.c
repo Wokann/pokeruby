@@ -113,7 +113,7 @@ extern u8 IsMoveWithoutAnimation();
 extern void bx_wait_t1(void);
 extern u8 GetBattlerAtPosition(u8);
 extern void sub_802DE10(void);
-extern void sub_80105EC(struct Sprite *);
+extern void SpriteCB_FaintSlideAnim(struct Sprite *);
 extern void sub_802D274(void);
 extern void sub_802D23C(void);
 extern u8 GetBattlerPosition(u8);
@@ -156,12 +156,12 @@ extern u16 gSpecialVar_ItemId;
 extern u8 gDisplayedStringBattle[];
 extern const u8 BattleText_LinkStandby[];
 
-extern void dp11b_obj_instanciate(u8, u8, s8, s8);
+extern void DoBounceEffect(u8, u8, s8, s8);
 extern u8 GetBattlerPosition(u8);
 extern u8 GetBattlerAtPosition(u8);
-extern void dp11b_obj_free(u8, u8);
-extern void sub_8010520(struct Sprite *);
-extern void sub_8010574(struct Sprite *);
+extern void EndBounceEffect(u8, u8);
+extern void SpriteCB_ShowAsMoveTarget(struct Sprite *);
+extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
 extern void sub_8094E20(u8);
 extern void ReshowBattleScreenDummy(void);
@@ -365,8 +365,8 @@ void sub_802C098(void)
 {
     u16 itemId = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);
 
-    dp11b_obj_instanciate(gActiveBattler, 1, 7, 1);
-    dp11b_obj_instanciate(gActiveBattler, 0, 7, 1);
+    DoBounceEffect(gActiveBattler, 1, 7, 1);
+    DoBounceEffect(gActiveBattler, 0, 7, 1);
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
@@ -459,8 +459,8 @@ void sub_802C098(void)
 
 void unref_sub_802C2B8(void)
 {
-    dp11b_obj_free(gActiveBattler, 1);
-    dp11b_obj_free(gActiveBattler, 0);
+    EndBounceEffect(gActiveBattler, 1);
+    EndBounceEffect(gActiveBattler, 0);
     gBattlerControllerFuncs[gActiveBattler] = sub_802C2EC;
 }
 
@@ -470,14 +470,14 @@ void sub_802C2EC(void)
     u8 arr[4] = {0, 2, 3, 1};
     s32 i;
 
-    dp11b_obj_instanciate(gUnknown_03004344, 1, 15, 1);
+    DoBounceEffect(gUnknown_03004344, 1, 15, 1);
     i = 0;
     if (gBattlersCount != 0)
     {
         do
         {
             if (i != gUnknown_03004344)
-                dp11b_obj_free(i, 1);
+                EndBounceEffect(i, 1);
             i++;
         } while (i < gBattlersCount);
     }
@@ -485,25 +485,25 @@ void sub_802C2EC(void)
     {
         DestroyMenuCursor();
         PlaySE(SE_SELECT);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010574;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_HideAsMoveTarget;
         BtlController_EmitTwoReturnValues(1, 10, gMoveSelectionCursor[gActiveBattler] | (gUnknown_03004344 << 8));
-        dp11b_obj_free(gUnknown_03004344, 1);
+        EndBounceEffect(gUnknown_03004344, 1);
         PlayerBufferExecCompleted();
     }
     //_0802C3A8
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010574;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_HideAsMoveTarget;
         gBattlerControllerFuncs[gActiveBattler] = HandleAction_ChooseMove;
-        dp11b_obj_instanciate(gActiveBattler, 1, 7, 1);
-        dp11b_obj_instanciate(gActiveBattler, 0, 7, 1);
-        dp11b_obj_free(gUnknown_03004344, 1);
+        DoBounceEffect(gActiveBattler, 1, 7, 1);
+        DoBounceEffect(gActiveBattler, 0, 7, 1);
+        EndBounceEffect(gUnknown_03004344, 1);
     }
     else if (JOY_NEW(DPAD_LEFT | DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010574;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_HideAsMoveTarget;
         do
         {
             u8 var = GetBattlerPosition(gUnknown_03004344);
@@ -544,13 +544,13 @@ void sub_802C2EC(void)
             if (gAbsentBattlerFlags & gBitTable[gUnknown_03004344])
                 i = 0;
         } while (i == 0);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010520;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_ShowAsMoveTarget;
     }
     //_0802C540
     else if (JOY_NEW(DPAD_RIGHT | DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010574;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_HideAsMoveTarget;
         do
         {
             u8 var = GetBattlerPosition(gUnknown_03004344);
@@ -590,7 +590,7 @@ void sub_802C2EC(void)
             if (gAbsentBattlerFlags & gBitTable[gUnknown_03004344])
                 i = 0;
         } while (i == 0);
-        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010520;
+        gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_ShowAsMoveTarget;
     }
 }
 
@@ -661,7 +661,7 @@ static void HandleAction_ChooseMove(void)
                 gUnknown_03004344 = GetBattlerAtPosition(3);
             else
                 gUnknown_03004344 = GetBattlerAtPosition(1);
-            gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = sub_8010520;
+            gSprites[gBattlerSpriteIds[gUnknown_03004344]].callback = SpriteCB_ShowAsMoveTarget;
         }
     }
     else if (JOY_NEW(B_BUTTON))
@@ -993,8 +993,8 @@ void debug_sub_8030C24(void)
     switch (gMain.newAndRepeatedKeys)
     {
     case START_BUTTON:
-        dp11b_obj_free(gActiveBattler, 1);
-        dp11b_obj_free(gActiveBattler, 0);
+        EndBounceEffect(gActiveBattler, 1);
+        EndBounceEffect(gActiveBattler, 0);
         gBattlerAttacker = gActiveBattler;
         if ((gMain.heldKeysRaw & B_BUTTON) && (gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
             gBattlerTarget = gBattlerAttacker ^ 2;
@@ -1007,8 +1007,8 @@ void debug_sub_8030C24(void)
         gBattlerControllerFuncs[gActiveBattler] = debug_sub_803107C;
         break;
     case SELECT_BUTTON:
-        dp11b_obj_free(gActiveBattler, 1);
-        dp11b_obj_free(gActiveBattler, 0);
+        EndBounceEffect(gActiveBattler, 1);
+        EndBounceEffect(gActiveBattler, 0);
         gBattlerTarget = gActiveBattler;
         if ((gMain.heldKeysRaw & B_BUTTON) && (gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
             gBattlerAttacker = gBattlerTarget ^ 2;
@@ -1023,8 +1023,8 @@ void debug_sub_8030C24(void)
     case R_BUTTON:
         if ((gMain.heldKeysRaw & B_BUTTON) && (gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
         {
-            dp11b_obj_free(gActiveBattler, 1);
-            dp11b_obj_free(gActiveBattler, 0);
+            EndBounceEffect(gActiveBattler, 1);
+            EndBounceEffect(gActiveBattler, 0);
             gBattlerAttacker = GetBattlerAtPosition(3);
             gBattlerTarget = GetBattlerAtPosition(1);
             SetBattlerSpriteAffineMode(0);
@@ -1048,8 +1048,8 @@ void debug_sub_8030C24(void)
     case L_BUTTON:
         if ((gMain.heldKeysRaw & B_BUTTON) && (gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
         {
-            dp11b_obj_free(gActiveBattler, 1);
-            dp11b_obj_free(gActiveBattler, 0);
+            EndBounceEffect(gActiveBattler, 1);
+            EndBounceEffect(gActiveBattler, 0);
             gBattlerAttacker = GetBattlerAtPosition(1);
             gBattlerTarget = GetBattlerAtPosition(3);
             SetBattlerSpriteAffineMode(0);
@@ -1113,8 +1113,8 @@ void debug_sub_803107C(void)
         s32 i;
 
         SetBattlerSpriteAffineMode(1);
-        dp11b_obj_instanciate(gActiveBattler, 1, 7, 1);
-        dp11b_obj_instanciate(gActiveBattler, 0, 7, 1);
+        DoBounceEffect(gActiveBattler, 1, 7, 1);
+        DoBounceEffect(gActiveBattler, 0, 7, 1);
 
         for (i = 0, count = 0; i < MAX_SPRITES; i++)
         {
@@ -2467,7 +2467,7 @@ void PlayerHandlecmd10(void)
             PlaySE12WithPanning(SE_FAINT, -64);
             gSprites[gBattlerSpriteIds[gActiveBattler]].data[1] = 0;
             gSprites[gBattlerSpriteIds[gActiveBattler]].data[2] = 5;
-            gSprites[gBattlerSpriteIds[gActiveBattler]].callback = sub_80105EC;
+            gSprites[gBattlerSpriteIds[gActiveBattler]].callback = SpriteCB_FaintSlideAnim;
             gBattlerControllerFuncs[gActiveBattler] = sub_802DE10;
         }
     }
@@ -2993,8 +2993,8 @@ void PlayerHandlecmd49(void)
 
 void PlayerHandlecmd50(void)
 {
-    dp11b_obj_free(gActiveBattler, 1);
-    dp11b_obj_free(gActiveBattler, 0);
+    EndBounceEffect(gActiveBattler, 1);
+    EndBounceEffect(gActiveBattler, 0);
     PlayerBufferExecCompleted();
 }
 
@@ -3030,8 +3030,8 @@ void PlayerHandleLinkStandbyMsg(void)
         b_link_standby_message();
         // fall through
     case 1:
-        dp11b_obj_free(gActiveBattler, 1);
-        dp11b_obj_free(gActiveBattler, 0);
+        EndBounceEffect(gActiveBattler, 1);
+        EndBounceEffect(gActiveBattler, 0);
         break;
     case 2:
         b_link_standby_message();
