@@ -459,7 +459,7 @@ void StopPokenavBg3Scroll(void);
 void InitPokenavRegionMapGfx(void);
 bool8 LoadPokenavRegionMapGfxStep(void);
 bool8 AnyMonHasRibbonScanStep();
-void sub_80F6C20();
+void BuildTrainerEyesList();
 void InitPokenavMenuGfx(u8 menuType);
 bool8 LoadPokenavMenuGfxStep(u8 menuType);
 void PrintPokenavMenuDescription(u8 menuType, u8 itemId);

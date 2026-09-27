@@ -1544,7 +1544,7 @@ void HandlePokenavMainMenuInput(void)
 		}
 		break;
     case 6:
-        sub_80F6C20();
+        BuildTrainerEyesList();
         if (gPokenavStructPtr->unkD158 != 0)
         {
             PlaySE(SE_SELECT);
