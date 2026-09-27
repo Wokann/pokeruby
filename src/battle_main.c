@@ -1376,17 +1376,17 @@ void CB2_DebugBattlePartyEditor(void);
 void CB2_DebugBattleMoveEditor(void);
 void StartDebugBattleFromPartyEditor(void);
 void VBlankCB_DebugBattlePartyEditor(void);
-void debug_sub_8011E5C(void);
-void debug_sub_8011E74(void);
-void debug_sub_8011EA0(u8);
-void debug_sub_8012294(void);
-void debug_sub_80123D8(u8);
-void debug_sub_8012540(void);
+void DrawAllDebugBattlePartyFields(void);
+void DrawAllDebugBattleMoves(void);
+void DrawDebugBattlePartyField(u8);
+void DrawDebugBattleMove(void);
+void DrawDebugBattleAbilities(u8);
+void DrawDebugBattleModeValue(void);
 void debug_ShowCurrentAnimAudioOptions(void);
-void debug_sub_80125A0(void);
-void debug_sub_80125E4(void);
-void debug_sub_8012628(void);
-void debug_sub_8012658(void);
+void ShowDebugBattlePartyCursor(void);
+void HideDebugBattlePartyCursor(void);
+void ShowDebugBattleMoveCursor(void);
+void HideDebugBattleMoveCursor(void);
 void debug_sub_8012688(void);
 void debug_sub_8012878(void);
 void debug_sub_8012D10(u8);
@@ -1477,14 +1477,14 @@ void CB2_InitDebugBattlePartyEditor(void)
 	gUnknown_Debug_030043A0 = 0;
 	gUnknown_Debug_030043A4 = 0;
 	for (i = 0; i < 31; i++)
-		debug_sub_8011EA0(i);
+		DrawDebugBattlePartyField(i);
 	for (gUnknown_Debug_030043A8 = 0; gUnknown_Debug_030043A8 < 4; gUnknown_Debug_030043A8++)
-		debug_sub_8012294();
-	debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
-	debug_sub_8012540();
+		DrawDebugBattleMove();
+	DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+	DrawDebugBattleModeValue();
 	debug_ShowCurrentAnimAudioOptions();
 	gUnknown_Debug_030043A8 = 0;
-	debug_sub_80125A0();
+	ShowDebugBattlePartyCursor();
 	if (gUnknown_Debug_2023A76[0][0x22] == 8)
 	{
 		StartDebugBattleFromPartyEditor();
@@ -1496,7 +1496,7 @@ void CB2_InitDebugBattlePartyEditor(void)
 	}
 }
 
-void debug_sub_8010A7C(u8 a, u8 b)
+void FillDebugBattleTextBuffer(u8 a, u8 b)
 {
     s32 i;
 
@@ -1505,7 +1505,7 @@ void debug_sub_8010A7C(u8 a, u8 b)
     gBattleTextBuff1[i] = B_BUFF_EOS;
 }
 
-void debug_sub_8010AAC(u8 a)
+void SetDebugBattleMonGender(u8 a)
 {
 	switch (gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5]].genderRatio)
 	{
@@ -1529,7 +1529,7 @@ void debug_sub_8010AAC(u8 a)
 }
 
 // gUnknown_Debug_2023A76 2D array
-void debug_sub_8010B80(u8 a)
+void AdjustDebugBattleTwoDigitValue(u8 a)
 {
 	s8 r12 = 0;
 	s8 r7 = gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5];
@@ -1578,7 +1578,7 @@ void CB2_DebugBattlePartyEditor(void)
         if (gUnknown_Debug_030043A4 < 6)
         {
             gUnknown_Debug_030043A8 = 0;
-            debug_sub_8012628();
+            ShowDebugBattleMoveCursor();
             SetMainCallback2(CB2_DebugBattleMoveEditor);
         }
         if (gUnknown_Debug_030043A0 == 0 && gUnknown_Debug_030043A4 == 6)
@@ -1623,29 +1623,29 @@ void CB2_DebugBattlePartyEditor(void)
         StartDebugBattleFromPartyEditor();
     if (gMain.newKeysRaw == DPAD_UP)
     {
-        debug_sub_80125E4();
+        HideDebugBattlePartyCursor();
         if (gUnknown_Debug_030043A4 != 0)
             gUnknown_Debug_030043A4--;
         else
             gUnknown_Debug_030043A4 = 6;
-        debug_sub_8011E74();
-        debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
-        debug_sub_80125A0();
+        DrawAllDebugBattleMoves();
+        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        ShowDebugBattlePartyCursor();
     }
     if (gMain.newKeysRaw == DPAD_DOWN)
     {
-        debug_sub_80125E4();
+        HideDebugBattlePartyCursor();
         if (gUnknown_Debug_030043A4 == 6)
             gUnknown_Debug_030043A4 = 0;
         else
             gUnknown_Debug_030043A4++;
-        debug_sub_8011E74();
-        debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
-        debug_sub_80125A0();
+        DrawAllDebugBattleMoves();
+        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        ShowDebugBattlePartyCursor();
     }
     if (gMain.newKeysRaw == DPAD_LEFT)
     {
-        debug_sub_80125E4();
+        HideDebugBattlePartyCursor();
         if (gUnknown_Debug_030043A0 != 0)
         {
             gUnknown_Debug_030043A0--;
@@ -1657,16 +1657,16 @@ void CB2_DebugBattlePartyEditor(void)
                 gUnknown_Debug_03004360 = 0;
                 gUnknown_Debug_030043A0 = 4;
                 gBattle_BG1_X = 0;
-                debug_sub_8011E5C();
-                debug_sub_8011E74();
-                debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+                DrawAllDebugBattlePartyFields();
+                DrawAllDebugBattleMoves();
+                DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             }
         }
-        debug_sub_80125A0();
+        ShowDebugBattlePartyCursor();
     }
     if (gMain.newKeysRaw == DPAD_RIGHT)
     {
-        debug_sub_80125E4();
+        HideDebugBattlePartyCursor();
         if (gUnknown_Debug_030043A0 != 4)
         {
             gUnknown_Debug_030043A0++;
@@ -1678,12 +1678,12 @@ void CB2_DebugBattlePartyEditor(void)
                 gUnknown_Debug_03004360 = 1;
                 gUnknown_Debug_030043A0 = 0;
                 gBattle_BG1_X = 0x100;
-                debug_sub_8011E5C();
-                debug_sub_8011E74();
-                debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+                DrawAllDebugBattlePartyFields();
+                DrawAllDebugBattleMoves();
+                DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             }
         }
-        debug_sub_80125A0();
+        ShowDebugBattlePartyCursor();
     }
     if (JOY_REPT(B_BUTTON))
     {
@@ -1691,19 +1691,19 @@ void CB2_DebugBattlePartyEditor(void)
         {
         case 31:
             ResetDebugBattlePartyData();
-            debug_sub_8011E5C();
-            debug_sub_8011E74();
-            debug_sub_8012540();
+            DrawAllDebugBattlePartyFields();
+            DrawAllDebugBattleMoves();
+            DrawDebugBattleModeValue();
             debug_ShowCurrentAnimAudioOptions();
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 32:
             debug_sub_80132C8(31, gUnknown_Debug_2023A76, 0xEC);
-            debug_sub_8011E5C();
-            debug_sub_8011E74();
-            debug_sub_8012540();
+            DrawAllDebugBattlePartyFields();
+            DrawAllDebugBattleMoves();
+            DrawDebugBattleModeValue();
             debug_ShowCurrentAnimAudioOptions();
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 33:
             debug_sub_8013294(31, gUnknown_Debug_2023A76, 0xEC);
@@ -1719,16 +1719,16 @@ void CB2_DebugBattlePartyEditor(void)
                 gUnknown_Debug_2023A76[0][6 * 5 + 4] = 8;
                 gUnknown_Debug_2023A76[1][6 * 5 + 4] = 8;
             }
-            debug_sub_8012540();
+            DrawDebugBattleModeValue();
             break;
         case 30:
-            debug_sub_8010B80(0);
-            debug_sub_8011EA0(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
+            AdjustDebugBattleTwoDigitValue(0);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
             break;
         default:
             if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
             {
-                debug_sub_8010AAC(1);
+                SetDebugBattleMonGender(1);
             }
             else
             {
@@ -1738,11 +1738,11 @@ void CB2_DebugBattlePartyEditor(void)
             }
             if (gUnknown_Debug_030043A0 == 0)
             {
-                debug_sub_8010AAC(0);
-                debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + 4);
+                SetDebugBattleMonGender(0);
+                DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
             }
-            debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         }
     }
@@ -1752,19 +1752,19 @@ void CB2_DebugBattlePartyEditor(void)
         {
         case 31:
             ResetDebugBattlePartyData();
-            debug_sub_8011E5C();
-            debug_sub_8011E74();
-            debug_sub_8012540();
+            DrawAllDebugBattlePartyFields();
+            DrawAllDebugBattleMoves();
+            DrawDebugBattleModeValue();
             debug_ShowCurrentAnimAudioOptions();
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 32:
             debug_sub_80132C8(31, gUnknown_Debug_2023A76, 0xEC);
-            debug_sub_8011E5C();
-            debug_sub_8011E74();
-            debug_sub_8012540();
+            DrawAllDebugBattlePartyFields();
+            DrawAllDebugBattleMoves();
+            DrawDebugBattleModeValue();
             debug_ShowCurrentAnimAudioOptions();
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 33:
             debug_sub_8013294(31, gUnknown_Debug_2023A76, 0xEC);
@@ -1780,16 +1780,16 @@ void CB2_DebugBattlePartyEditor(void)
                 gUnknown_Debug_2023A76[0][6 * 5 + 4] = 0;
                 gUnknown_Debug_2023A76[1][6 * 5 + 4] = 0;
             }
-            debug_sub_8012540();
+            DrawDebugBattleModeValue();
             break;
         case 30:
-            debug_sub_8010B80(1);
-            debug_sub_8011EA0(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
+            AdjustDebugBattleTwoDigitValue(1);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
             break;
         default:
             if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
             {
-                debug_sub_8010AAC(1);
+                SetDebugBattleMonGender(1);
             }
             else
             {
@@ -1799,11 +1799,11 @@ void CB2_DebugBattlePartyEditor(void)
             }
             if (gUnknown_Debug_030043A0 == 0)
             {
-                debug_sub_8010AAC(0);
-                debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + 4);
+                SetDebugBattleMonGender(0);
+                DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
             }
-            debug_sub_8011EA0(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
-            debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         }
     }
@@ -1811,13 +1811,13 @@ void CB2_DebugBattlePartyEditor(void)
     {
         if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
         {
-            debug_sub_8010AAC(1);
+            SetDebugBattleMonGender(1);
         }
         else
         {
             if (gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0 == 30)
             {
-                debug_sub_8010B80(2);
+                AdjustDebugBattleTwoDigitValue(2);
             }
             else
             {
@@ -1828,23 +1828,23 @@ void CB2_DebugBattlePartyEditor(void)
         }
         if (gUnknown_Debug_030043A0 == 0)
         {
-            debug_sub_8010AAC(0);
-            debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + 4);
+            SetDebugBattleMonGender(0);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
         }
-        debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-        debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
+        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
     }
     if (JOY_REPT(R_BUTTON))
     {
         if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
         {
-            debug_sub_8010AAC(1);
+            SetDebugBattleMonGender(1);
         }
         else
         {
             if (gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0 == 30)
             {
-                debug_sub_8010B80(3);
+                AdjustDebugBattleTwoDigitValue(3);
             }
             else
             {
@@ -1855,11 +1855,11 @@ void CB2_DebugBattlePartyEditor(void)
         }
         if (gUnknown_Debug_030043A0 == 0)
         {
-            debug_sub_8010AAC(0);
-            debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + 4);
+            SetDebugBattleMonGender(0);
+            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
         }
-        debug_sub_8011EA0(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-        debug_sub_80123D8(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
+        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
     }
     AnimateSprites();
     BuildOamBuffer();
@@ -1875,50 +1875,50 @@ void CB2_DebugBattleMoveEditor(void)
 		DoSoftReset();
 	if (gMain.newKeysRaw == SELECT_BUTTON)
 	{
-		debug_sub_8012658();
+		HideDebugBattleMoveCursor();
 		SetMainCallback2(CB2_DebugBattlePartyEditor);
 	}
 	if (gMain.newKeysRaw == START_BUTTON)
 		StartDebugBattleFromPartyEditor();
 	if (gMain.newKeysRaw == DPAD_UP || gMain.newKeysRaw == DPAD_DOWN)
 	{
-		debug_sub_8012658();
+		HideDebugBattleMoveCursor();
 		gUnknown_Debug_030043A8 ^= 2;
-		debug_sub_8012628();
+		ShowDebugBattleMoveCursor();
 	}
 	if (gMain.newKeysRaw == DPAD_LEFT || gMain.newKeysRaw == DPAD_RIGHT)
 	{
-		debug_sub_8012658();
+		HideDebugBattleMoveCursor();
 		gUnknown_Debug_030043A8 ^= 1;
-		debug_sub_8012628();
+		ShowDebugBattleMoveCursor();
 	}
 	if (JOY_REPT(B_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]--;
 		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
-		debug_sub_8012294();
+		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(A_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]++;
 		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4];
-		debug_sub_8012294();
+		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(L_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] -= 10;
 		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
-		debug_sub_8012294();
+		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(R_BUTTON))
 	{
 		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += 10;
 		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
 			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] -= gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
-		debug_sub_8012294();
+		DrawDebugBattleMove();
 	}
 	AnimateSprites();
 	BuildOamBuffer();
@@ -2184,29 +2184,29 @@ void debug_sub_8011DD4(void)
     ScanlineEffect_InitHBlankDmaTransfer();
 }
 
-void debug_sub_8011E5C(void)
+void DrawAllDebugBattlePartyFields(void)
 {
     s32 i;
 
     for (i = 0; i < 31; i++)
-        debug_sub_8011EA0(i);
+        DrawDebugBattlePartyField(i);
 }
 
 extern u8 gUnknown_Debug_030043A8;
 
-void debug_sub_8011E74(void)
+void DrawAllDebugBattleMoves(void)
 {
     u8 r5 = gUnknown_Debug_030043A8;
 
     for (gUnknown_Debug_030043A8 = 0; gUnknown_Debug_030043A8 < 4; gUnknown_Debug_030043A8++)
-        debug_sub_8012294();
+        DrawDebugBattleMove();
 
     gUnknown_Debug_030043A8 = r5;
 }
 
 extern const u8 Str_821F624[];
 
-void debug_sub_8011EA0(u8 a)
+void DrawDebugBattlePartyField(u8 a)
 {
     u32 length;
 
@@ -2220,9 +2220,9 @@ void debug_sub_8011EA0(u8 a)
     case 25:
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 8);
+        FillDebugBattleTextBuffer(0, 8);
 #else
-        debug_sub_8010A7C(0, 20);
+        FillDebugBattleTextBuffer(0, 20);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2276,9 +2276,9 @@ void debug_sub_8011EA0(u8 a)
     case 27:
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 11);
+        FillDebugBattleTextBuffer(0, 11);
 #else
-        debug_sub_8010A7C(0, 24);
+        FillDebugBattleTextBuffer(0, 24);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2319,9 +2319,9 @@ void debug_sub_8011EA0(u8 a)
     case 29:
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 2);
+        FillDebugBattleTextBuffer(0, 2);
 #else
-        debug_sub_8010A7C(0, 4);
+        FillDebugBattleTextBuffer(0, 4);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2389,7 +2389,7 @@ void debug_sub_8011EA0(u8 a)
     }
 }
 
-void debug_sub_8012294(void)
+void DrawDebugBattleMove(void)
 {
     u8 r5 = gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5;
     
@@ -2397,9 +2397,9 @@ void debug_sub_8012294(void)
     {
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 10);
+        FillDebugBattleTextBuffer(0, 10);
 #else
-        debug_sub_8010A7C(0, 24);
+        FillDebugBattleTextBuffer(0, 24);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2433,15 +2433,15 @@ void debug_sub_8012294(void)
 
 extern const u16 gUnknown_Debug_821F58C[];
 
-void debug_sub_80123D8(u8 a)
+void DrawDebugBattleAbilities(u8 a)
 {
     if (a < 30)
     {
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 7);
+        FillDebugBattleTextBuffer(0, 7);
 #else
-        debug_sub_8010A7C(0, 18);
+        FillDebugBattleTextBuffer(0, 18);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2460,9 +2460,9 @@ void debug_sub_80123D8(u8 a)
         Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        debug_sub_8010A7C(0, 7);
+        FillDebugBattleTextBuffer(0, 7);
 #else
-        debug_sub_8010A7C(0, 18);
+        FillDebugBattleTextBuffer(0, 18);
 #endif
         Text_InitWindow(
             &gUnknown_Debug_03004370,
@@ -2500,7 +2500,7 @@ void debug_sub_80123D8(u8 a)
     }
 }
 
-void debug_sub_8012540(void)
+void DrawDebugBattleModeValue(void)
 {
     ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[0][0x22], 0, 1);
     Text_InitWindow(
@@ -2561,23 +2561,23 @@ void debug_ShowCurrentAnimAudioOptions(void)
 extern const u32 gUnknown_Debug_821F680[][0x23];
 
 // Shows a cursor
-void debug_sub_80125A0(void)
+void ShowDebugBattlePartyCursor(void)
 {
     gSharedMem[gUnknown_Debug_821F680[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]] = 0x6D;
 }
 
 // Hides a cursor
-void debug_sub_80125E4(void)
+void HideDebugBattlePartyCursor(void)
 {
     gSharedMem[gUnknown_Debug_821F680[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]] = 0x81;
 }
 
-void debug_sub_8012628(void)
+void ShowDebugBattleMoveCursor(void)
 {
 	gSharedMem[gUnknown_Debug_821F798[gUnknown_Debug_03004360][gUnknown_Debug_030043A8]] = 0x6D;
 }
 
-void debug_sub_8012658(void)
+void HideDebugBattleMoveCursor(void)
 {
 	gSharedMem[gUnknown_Debug_821F798[gUnknown_Debug_03004360][gUnknown_Debug_030043A8]] = 0x81;
 }
@@ -2654,7 +2654,7 @@ void debug_sub_8012878(void)
 
 void debug_sub_80128B4(void)
 {
-    debug_sub_8010A7C(0, 9);
+    FillDebugBattleTextBuffer(0, 9);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 144, 2, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     ConvertIntToDecimalStringN(gBattleTextBuff1, gCurrentMove, 2, 3);
@@ -2667,7 +2667,7 @@ void debug_sub_80128B4(void)
 
 void debug_sub_8012938(u8 taskId)
 {
-    debug_sub_8010A7C(0, 7);
+    FillDebugBattleTextBuffer(0, 7);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     StringCopy(gBattleTextBuff1, Str_821F7B8);
@@ -2742,10 +2742,10 @@ void debug_sub_8012B70(u8 taskId, u8 b)
 
 void debug_sub_8012C08(u8 taskId, u8 b)
 {
-    debug_sub_8010A7C(0, 9);
+    FillDebugBattleTextBuffer(0, 9);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 144, 2, 35);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    debug_sub_8010A7C(0, 7);
+    FillDebugBattleTextBuffer(0, 7);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     sub_802BBD4(24, 28, 29, 33, 0);
