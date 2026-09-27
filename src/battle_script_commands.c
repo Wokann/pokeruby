@@ -4769,7 +4769,7 @@ static void atk4F_jumpifcantswitch(void)
     }
 }
 
-void sub_8022A3C(u8 unkown)
+void ChooseMonToSendOut(u8 unkown)
 {
     gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
     BtlController_EmitChoosePokemon(0, 1, unkown, 0, gBattleStruct->unk1606C[gActiveBattler]);
@@ -4806,7 +4806,7 @@ static void atk50_openpartyscreen(void)
                     }
                     else if (!gSpecialStatuses[gActiveBattler].flag40)
                     {
-                        sub_8022A3C(PARTY_SIZE);
+                        ChooseMonToSendOut(PARTY_SIZE);
                         gSpecialStatuses[gActiveBattler].flag40 = 1;
                     }
                 }
@@ -4835,7 +4835,7 @@ static void atk50_openpartyscreen(void)
                 }
                 else if (!gSpecialStatuses[gActiveBattler].flag40)
                 {
-                    sub_8022A3C(gBattleStruct->monToSwitchIntoId[2]);
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[2]);
                     gSpecialStatuses[gActiveBattler].flag40 = 1;
                 }
                 else
@@ -4857,7 +4857,7 @@ static void atk50_openpartyscreen(void)
                 }
                 else if (!gSpecialStatuses[gActiveBattler].flag40)
                 {
-                    sub_8022A3C(gBattleStruct->monToSwitchIntoId[0]);
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[0]);
                     gSpecialStatuses[gActiveBattler].flag40 = 1;
                 }
                 else if (!(flags & 1))
@@ -4878,7 +4878,7 @@ static void atk50_openpartyscreen(void)
                 }
                 else if (!gSpecialStatuses[gActiveBattler].flag40)
                 {
-                    sub_8022A3C(gBattleStruct->monToSwitchIntoId[3]);
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[3]);
                     gSpecialStatuses[gActiveBattler].flag40 = 1;
                 }
                 else
@@ -4900,7 +4900,7 @@ static void atk50_openpartyscreen(void)
                 }
                 else if (!gSpecialStatuses[gActiveBattler].flag40)
                 {
-                    sub_8022A3C(gBattleStruct->monToSwitchIntoId[1]);
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[1]);
                     gSpecialStatuses[gActiveBattler].flag40 = 1;
                 }
                 else if (!(flags & 2))
@@ -4963,7 +4963,7 @@ static void atk50_openpartyscreen(void)
                     }
                     else if (!gSpecialStatuses[gActiveBattler].flag40)
                     {
-                        sub_8022A3C(gBattleStruct->monToSwitchIntoId[0]);
+                        ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[0]);
                         gSpecialStatuses[gActiveBattler].flag40 = 1;
                     }
                 }
@@ -4979,7 +4979,7 @@ static void atk50_openpartyscreen(void)
                     }
                     else if (!gSpecialStatuses[gActiveBattler].flag40)
                     {
-                        sub_8022A3C(gBattleStruct->monToSwitchIntoId[1]);
+                        ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[1]);
                         gSpecialStatuses[gActiveBattler].flag40 = 1;
                     }
                 }
@@ -6713,7 +6713,7 @@ static void atk8E_initmultihitstring(void)
     gBattlescriptCurrInstr++;
 }
 
-static bool8 sub_80264C0(void)
+static bool8 TryDoForceSwitchOut(void)
 {
     if (gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
     {
@@ -6777,7 +6777,7 @@ static void atk8F_forcerandomswitch(void)
         {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         }
-        else if (sub_80264C0())
+        else if (TryDoForceSwitchOut())
         {
 #define MON_CAN_BATTLE(mon) (((GetMonData(mon, MON_DATA_SPECIES) && GetMonData(mon, MON_DATA_IS_EGG) != 1 && GetMonData(mon, MON_DATA_HP))))
             if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
@@ -6818,7 +6818,7 @@ static void atk8F_forcerandomswitch(void)
     }
     else
     {
-        sub_80264C0();
+        TryDoForceSwitchOut();
     }
 }
 
