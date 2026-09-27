@@ -19,23 +19,23 @@ static u8 gDebug_03000726;
 
 bool8 NoharaDebugMenu_HandleInput(void);
 bool8 NoharaDebugMenu_TV(void);
-bool8 debug_sub_808F4AC(void);
-void debug_sub_808F4EC(void);
-bool8 debug_sub_808F560(void);
-bool8 debug_sub_808F594(void);
-bool8 debug_sub_808F5D8(void);
-bool8 debug_sub_808F648(void);
-void debug_sub_808F6BC(void);
-void debug_sub_808F7B4(void);
-bool8 debug_sub_808F8AC(void);
-void debug_sub_808F8CC(void);
-bool8 debug_sub_808F93C(void);
-void debug_sub_808FA88(u8, u8);
-bool8 debug_sub_808FEBC(void);
-void debug_sub_808FECC(void);
-bool8 debug_sub_808FF3C(void);
-void debug_sub_8090080(u8, u8);
-bool8 debug_sub_80900AC(void);
+bool8 NoharaDebugMenu_TV_HandleInput(void);
+void NoharaDebugMenu_TV_ShowSecretTypePrompt(void);
+bool8 NoharaDebugMenu_TV_ClearAllActiveFlags(void);
+bool8 NoharaDebugMenu_TV_SetPopulatedShowsActive(void);
+bool8 NoharaDebugMenu_TV_ShowSlotMachineHitTable(void);
+bool8 NoharaDebugMenu_TV_HandleSecretTypePrompt(void);
+void NoharaDebugMenu_TV_PrintDataKinds(void);
+void NoharaDebugMenu_TV_PrintDataStates(void);
+bool8 NoharaDebugMenu_TV_EnableBroadcasts(void);
+void NoharaDebugMenu_TV_OpenCreateShowMenu(void);
+bool8 NoharaDebugMenu_TV_HandleCreateShowInput(void);
+void NoharaDebugMenu_TV_CreateShow(u8, u8);
+bool8 NoharaDebugMenu_TV_ClearShowData(void);
+void NoharaDebugMenu_TV_OpenCreateCommercialMenu(void);
+bool8 NoharaDebugMenu_TV_HandleCreateCommercialInput(void);
+void NoharaDebugMenu_TV_CreateCommercial(u8, u8);
+bool8 NoharaDebugMenu_TV_FillEmptySlots(void);
 bool8 NoharaDebugMenu_Fan(void);
 bool8 debug_sub_80901A4(void);
 bool8 debug_sub_80901E4(void);
@@ -192,15 +192,15 @@ const struct {
     const u8 * text;
     void *func;
 } sMenuActions_NoharaDebug_TV[] = {
-    {sString_NoharaDebug_TV_SecretType, debug_sub_808F4EC},
-    {sString_NoharaDebug_TV_Start, debug_sub_808F8AC},
-    {sString_NoharaDebug_TV_CreateTV, debug_sub_808F8CC},
-    {sString_NoharaDebug_TV_AllClear, debug_sub_808FEBC},
-    {sString_NoharaDebug_TV_AllSeen, debug_sub_808F560},
-    {sString_NoharaDebug_TV_CreateCM, debug_sub_808FECC},
-    {sString_NoharaDebug_TV_NotYetSeen, debug_sub_808F594},
-    {sString_NoharaDebug_TV_HitTable, debug_sub_808F5D8},
-    {sString_NoharaDebug_TV_SetFull, debug_sub_80900AC}
+    {sString_NoharaDebug_TV_SecretType, NoharaDebugMenu_TV_ShowSecretTypePrompt},
+    {sString_NoharaDebug_TV_Start, NoharaDebugMenu_TV_EnableBroadcasts},
+    {sString_NoharaDebug_TV_CreateTV, NoharaDebugMenu_TV_OpenCreateShowMenu},
+    {sString_NoharaDebug_TV_AllClear, NoharaDebugMenu_TV_ClearShowData},
+    {sString_NoharaDebug_TV_AllSeen, NoharaDebugMenu_TV_ClearAllActiveFlags},
+    {sString_NoharaDebug_TV_CreateCM, NoharaDebugMenu_TV_OpenCreateCommercialMenu},
+    {sString_NoharaDebug_TV_NotYetSeen, NoharaDebugMenu_TV_SetPopulatedShowsActive},
+    {sString_NoharaDebug_TV_HitTable, NoharaDebugMenu_TV_ShowSlotMachineHitTable},
+    {sString_NoharaDebug_TV_SetFull, NoharaDebugMenu_TV_FillEmptySlots}
 };
 
 bool8 NoharaDebugMenu_TV(void)
@@ -210,11 +210,11 @@ bool8 NoharaDebugMenu_TV(void)
     Menu_DrawStdWindowFrame(0, 0, 10, 19);
     Menu_PrintItems(1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_TV), sMenuActions_NoharaDebug_TV);
     InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_NoharaDebug_TV), 0, 9);
-    gMenuCallback = debug_sub_808F4AC;
+    gMenuCallback = NoharaDebugMenu_TV_HandleInput;
     return FALSE;
 }
 
-bool8 debug_sub_808F4AC(void)
+bool8 NoharaDebugMenu_TV_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     switch (input)
@@ -230,15 +230,15 @@ bool8 debug_sub_808F4AC(void)
     }
 }
 
-void debug_sub_808F4EC(void)
+void NoharaDebugMenu_TV_ShowSecretTypePrompt(void)
 {
-    debug_sub_808F6BC();
+    NoharaDebugMenu_TV_PrintDataKinds();
     sub_8071F40(sText_NoharaDebug_TV_SecretTypePrompt);
     DisplayYesNoMenu(3, 3, 1);
-    gMenuCallback = debug_sub_808F648;
+    gMenuCallback = NoharaDebugMenu_TV_HandleSecretTypePrompt;
 }
 
-void debug_sub_808F518(void)
+void NoharaDebugMenu_TV_ActivateSelectedInactiveShows(void)
 {
     u8 i;
 
@@ -251,7 +251,7 @@ void debug_sub_808F518(void)
     }
 }
 
-bool8 debug_sub_808F560(void)
+bool8 NoharaDebugMenu_TV_ClearAllActiveFlags(void)
 {
     u8 i;
 
@@ -261,7 +261,7 @@ bool8 debug_sub_808F560(void)
     return TRUE;
 }
 
-bool8 debug_sub_808F594(void)
+bool8 NoharaDebugMenu_TV_SetPopulatedShowsActive(void)
 {
     u8 i;
 
@@ -289,7 +289,7 @@ const u8 gUnknown_Debug_083C4BD4[][12] = {
     {0x12, 0x0A}
 };
 
-bool8 debug_sub_808F5D8(void)
+bool8 NoharaDebugMenu_TV_ShowSlotMachineHitTable(void)
 {
     u8 i;
 
@@ -304,16 +304,16 @@ bool8 debug_sub_808F5D8(void)
     return FALSE;
 }
 
-bool8 debug_sub_808F648(void)
+bool8 NoharaDebugMenu_TV_HandleSecretTypePrompt(void)
 {
     if (JOY_NEW(DPAD_LEFT))
     {
         Menu_EraseWindowRect(10, 0, 29, 13);
         gDebug_03000726 ^= 1;
         if (gDebug_03000726)
-            debug_sub_808F7B4();
+            NoharaDebugMenu_TV_PrintDataStates();
         else
-            debug_sub_808F6BC();
+            NoharaDebugMenu_TV_PrintDataKinds();
         return FALSE;
     }
     else
@@ -324,7 +324,7 @@ bool8 debug_sub_808F648(void)
             case -2:
                 return FALSE;
             case 0:
-                debug_sub_808F518();
+                NoharaDebugMenu_TV_ActivateSelectedInactiveShows();
                 // fallthrough
             case -1:
             default:
@@ -334,7 +334,7 @@ bool8 debug_sub_808F648(void)
     }
 }
 
-void debug_sub_808F6BC(void)
+void NoharaDebugMenu_TV_PrintDataKinds(void)
 {
     u8 i;
 
@@ -363,7 +363,7 @@ void debug_sub_808F6BC(void)
     }
 }
 
-void debug_sub_808F7B4(void)
+void NoharaDebugMenu_TV_PrintDataStates(void)
 {
     u8 i;
 
@@ -392,7 +392,7 @@ void debug_sub_808F7B4(void)
     }
 }
 
-bool8 debug_sub_808F8AC(void)
+bool8 NoharaDebugMenu_TV_EnableBroadcasts(void)
 {
     FlagSet(FLAG_SYS_TV_START);
     FlagSet(FLAG_VISITED_MAUVILLE_CITY);
@@ -400,7 +400,7 @@ bool8 debug_sub_808F8AC(void)
     return TRUE;
 }
 
-void debug_sub_808F8CC(void)
+void NoharaDebugMenu_TV_OpenCreateShowMenu(void)
 {
     gDebug_03000724 = 0;
     sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
@@ -409,10 +409,10 @@ void debug_sub_808F8CC(void)
     Menu_BlankWindowRect(22, 1, 24, 2);
     ConvertIntToDecimalStringN(gStringVar1, 0, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 23, 1);
-    gMenuCallback = debug_sub_808F93C;
+    gMenuCallback = NoharaDebugMenu_TV_HandleCreateShowInput;
 }
 
-bool8 debug_sub_808F93C(void)
+bool8 NoharaDebugMenu_TV_HandleCreateShowInput(void)
 {
     bool8 updateDisplay = FALSE;
     if (JOY_NEW(DPAD_UP))
@@ -458,7 +458,7 @@ bool8 debug_sub_808F93C(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        debug_sub_808FA88(gDebug_03000725, sTVShowTypes_NoharaDebug[gDebug_03000724]);
+        NoharaDebugMenu_TV_CreateShow(gDebug_03000725, sTVShowTypes_NoharaDebug[gDebug_03000724]);
     }
     if (JOY_NEW(B_BUTTON | START_BUTTON))
     {
@@ -469,7 +469,7 @@ bool8 debug_sub_808F93C(void)
     return FALSE;
 }
 
-void debug_sub_808FA88(u8 a0, u8 a1)
+void NoharaDebugMenu_TV_CreateShow(u8 a0, u8 a1)
 {
     u8 i;
     u8 leadMonIndex = GetLeadMonIndex();
@@ -741,14 +741,14 @@ void debug_sub_808FA88(u8 a0, u8 a1)
 #endif
 }
 
-bool8 debug_sub_808FEBC(void)
+bool8 NoharaDebugMenu_TV_ClearShowData(void)
 {
     ClearTVShowData();
     CloseMenu();
     return TRUE;
 }
 
-void debug_sub_808FECC(void)
+void NoharaDebugMenu_TV_OpenCreateCommercialMenu(void)
 {
     gDebug_03000724 = 0;
     sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
@@ -757,10 +757,10 @@ void debug_sub_808FECC(void)
     Menu_BlankWindowRect(22, 1, 24, 2);
     ConvertIntToDecimalStringN(gStringVar1, 0, STR_CONV_MODE_LEFT_ALIGN, 2);
     Menu_PrintText(gStringVar1, 23, 1);
-    gMenuCallback = debug_sub_808FF3C;
+    gMenuCallback = NoharaDebugMenu_TV_HandleCreateCommercialInput;
 }
 
-bool8 debug_sub_808FF3C(void)
+bool8 NoharaDebugMenu_TV_HandleCreateCommercialInput(void)
 {
     bool8 updateDisplay = FALSE;
 
@@ -812,7 +812,7 @@ bool8 debug_sub_808FF3C(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_PIN);
-        debug_sub_8090080(gDebug_03000725, sTVCommercialTypes_NoharaDebug[gDebug_03000724]);
+        NoharaDebugMenu_TV_CreateCommercial(gDebug_03000725, sTVCommercialTypes_NoharaDebug[gDebug_03000724]);
     }
 
     if (JOY_NEW(B_BUTTON | START_BUTTON))
@@ -825,14 +825,14 @@ bool8 debug_sub_808FF3C(void)
     return FALSE;
 }
 
-void debug_sub_8090080(u8 a0, u8 a1)
+void NoharaDebugMenu_TV_CreateCommercial(u8 a0, u8 a1)
 {
     gSaveBlock1.pokeNews[a0].kind = a1;
     gSaveBlock1.pokeNews[a0].state = 1;
     gSaveBlock1.pokeNews[a0].days = 4;
 }
 
-bool8 debug_sub_80900AC(void)
+bool8 NoharaDebugMenu_TV_FillEmptySlots(void)
 {
     u8 i;
     u8 j;
@@ -844,7 +844,7 @@ bool8 debug_sub_80900AC(void)
         {
             if (j == 12)
                 j = 0;
-            debug_sub_808FA88(i, sTVShowTypes_NoharaDebug[j]);
+            NoharaDebugMenu_TV_CreateShow(i, sTVShowTypes_NoharaDebug[j]);
             gSaveBlock1.tvShows[i].common.active = FALSE;
             j++;
         }
@@ -857,7 +857,7 @@ bool8 debug_sub_80900AC(void)
         {
             if (j == 3)
                 j = 0;
-            debug_sub_8090080(i, sTVCommercialTypes_NoharaDebug[j]);
+            NoharaDebugMenu_TV_CreateCommercial(i, sTVCommercialTypes_NoharaDebug[j]);
             j++;
         }
     }
