@@ -214,7 +214,7 @@ void CB2_InitBattle(void)
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
     {
         HandleLinkBattleSetup();
-        SetMainCallback2(sub_800F104);
+        SetMainCallback2(CB2_PreInitMultiBattle);
         gBattleCommunication[0] = 0;
     }
     else
@@ -281,7 +281,7 @@ void CB2_InitBattleInternal(void)
     DrawBattleEntryBackground();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 4;
-    SetVBlankCallback(sub_800FCFC);
+    SetVBlankCallback(VBlankCB_Battle);
     SetUpBattleVarsAndBirchPoochyena();
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
         SetMainCallback2(CB2_HandleStartMultiBattle);
@@ -602,18 +602,18 @@ void PrepareOwnMultiPartnerBuffer(void)
     memcpy(eMultiTxBuffer.multiBattleMons, gMultiPartnerParty, 3 * sizeof(struct MultiBattlePokemonTx));
 }
 
-void sub_800F104(void)
+void CB2_PreInitMultiBattle(void)
 {
-    u8 playerId;
-    MainCallback *pSavedCallback;
-    u16 *pSavedBattleTypeFlags;
+    u8 multiplayerId;
+    MainCallback *savedCallback;
+    u16 *savedBattleTypeFlags;
     s32 i;
 
-    playerId = GetMultiplayerId();
-    gBattleStruct->multiplayerId = playerId;
+    multiplayerId = GetMultiplayerId();
+    gBattleStruct->multiplayerId = multiplayerId;
     // Seriously, Game Freak?
-    pSavedCallback = &gBattleStruct->unk160C4;
-    pSavedBattleTypeFlags = &gBattleStruct->unk160C2;
+    savedCallback = &gBattleStruct->unk160C4;
+    savedBattleTypeFlags = &gBattleStruct->unk160C2;
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -649,17 +649,17 @@ void sub_800F104(void)
             ResetBlockReceivedFlags();
             for (i = 0; i < 4; i++)
             {
-                if (i != playerId)
+                if (i != multiplayerId)
                 {
-                    if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[playerId].id & 1))
-                     || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[playerId].id & 1)))
+                    if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[multiplayerId].id & 1))
+                     || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[multiplayerId].id & 1)))
                         memcpy(gMultiPartnerParty, gBlockRecvBuffer[i], 3 * sizeof(struct MultiBattlePokemonTx));
                 }
             }
             gBattleCommunication[0]++;
-            *pSavedCallback = gMain.savedCallback;
-            *pSavedBattleTypeFlags = gBattleTypeFlags;
-            gMain.savedCallback = sub_800F104;
+            *savedCallback = gMain.savedCallback;
+            *savedBattleTypeFlags = gBattleTypeFlags;
+            gMain.savedCallback = CB2_PreInitMultiBattle;
             OpenPartyMenu(PARTY_MENU_TYPE_LINK_MULTI_BATTLE, 0);
         }
         break;
@@ -673,8 +673,8 @@ void sub_800F104(void)
     case 3:
         if (gReceivedRemoteLinkPlayers == 0)
         {
-            gBattleTypeFlags = *pSavedBattleTypeFlags;
-            gMain.savedCallback = *pSavedCallback;
+            gBattleTypeFlags = *savedBattleTypeFlags;
+            gMain.savedCallback = *savedCallback;
             SetMainCallback2(CB2_InitBattleInternal);
         }
         break;
@@ -993,13 +993,13 @@ void BattleMainCB2(void)
     RunTasks();
 }
 
-void sub_800F828(struct Sprite *sprite)
+void SpriteCB_DebugBattleInit(struct Sprite *sprite)
 {
     sprite->data[0] = 0;
-    sprite->callback = sub_800F838;
+    sprite->callback = SpriteCB_DebugBattleInit_Main;
 }
 
-void sub_800F838(struct Sprite *sprite)
+void SpriteCB_DebugBattleInit_Main(struct Sprite *sprite)
 {
     u16 *arr = (u16 *)gSharedMem;
 
@@ -1139,13 +1139,13 @@ u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
     return gTrainers[trainerNum].partySize;
 }
 
-void sub_800FCD4(void)
+void HBlankCB_Battle(void)
 {
     if (REG_VCOUNT < 0xA0 && REG_VCOUNT >= 0x6F )
         REG_BG0CNT = 0x9800;
 }
 
-void sub_800FCFC(void)
+void VBlankCB_Battle(void)
 {
     Random();  // unused return value
     REG_BG0HOFS = gBattle_BG0_X;
@@ -1193,86 +1193,86 @@ void SpriteCB_VsLetterInit(struct Sprite *sprite)
     PlaySE(SE_MUGSHOT);
 }
 
-void sub_800FE40(u8 taskId)
+void BufferPartyVsScreenHealth_AtEnd(u8 taskId)
 {
-    struct Pokemon *sp4 = NULL;
-    struct Pokemon *sp8 = NULL;
-    u8 r2 = gBattleStruct->multiplayerId;
-    u32 r7;
+    struct Pokemon *party1 = NULL;
+    struct Pokemon *party2 = NULL;
+    u8 multiplayerId = gBattleStruct->multiplayerId;
+    u32 flags;
     s32 i;
 
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
     {
-        switch (gLinkPlayers[r2].id)
+        switch (gLinkPlayers[multiplayerId].id)
         {
         case 0:
         case 2:
-            sp4 = gPlayerParty;
-            sp8 = gEnemyParty;
+            party1 = gPlayerParty;
+            party2 = gEnemyParty;
             break;
         case 1:
         case 3:
-            sp4 = gEnemyParty;
-            sp8 = gPlayerParty;
+            party1 = gEnemyParty;
+            party2 = gPlayerParty;
             break;
         }
     }
     else
     {
-        sp4 = gPlayerParty;
-        sp8 = gEnemyParty;
+        party1 = gPlayerParty;
+        party2 = gEnemyParty;
     }
 
-    r7 = 0;
+    flags = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&sp4[i], MON_DATA_SPECIES2);
-        u16 hp = GetMonData(&sp4[i], MON_DATA_HP);
-        u32 status = GetMonData(&sp4[i], MON_DATA_STATUS);
+        u16 species = GetMonData(&party1[i], MON_DATA_SPECIES2);
+        u16 hp = GetMonData(&party1[i], MON_DATA_HP);
+        u32 status = GetMonData(&party1[i], MON_DATA_STATUS);
 
         if (species == 0)
             continue;
         if (species != SPECIES_EGG && hp != 0 && status == 0)
-            r7 |= 1 << i * 2;
+            flags |= 1 << i * 2;
 
         if (species == 0)
             continue;
         if (hp != 0 && (species == SPECIES_EGG || status != 0))
-            r7 |= 2 << i * 2;
+            flags |= 2 << i * 2;
 
         if (species == 0)
             continue;
         if (species != SPECIES_EGG && hp == 0)
-            r7 |= 3 << i * 2;
+            flags |= 3 << i * 2;
     }
-    gTasks[taskId].data[3] = r7;
+    gTasks[taskId].data[3] = flags;
 
-    r7 = 0;
+    flags = 0;
     for (i = 0; i < 6; i++)
     {
-        u16 species = GetMonData(&sp8[i], MON_DATA_SPECIES2);
-        u16 hp = GetMonData(&sp8[i], MON_DATA_HP);
-        u32 status = GetMonData(&sp8[i], MON_DATA_STATUS);
+        u16 species = GetMonData(&party2[i], MON_DATA_SPECIES2);
+        u16 hp = GetMonData(&party2[i], MON_DATA_HP);
+        u32 status = GetMonData(&party2[i], MON_DATA_STATUS);
 
         if (species == 0)
             continue;
         if (species != SPECIES_EGG && hp != 0 && status == 0)
-            r7 |= 1 << i * 2;
+            flags |= 1 << i * 2;
 
         if (species == 0)
             continue;
         if (hp != 0 && (species == SPECIES_EGG || status != 0))
-            r7 |= 2 << i * 2;
+            flags |= 2 << i * 2;
 
         if (species == 0)
             continue;
         if (species != SPECIES_EGG && hp == 0)
-            r7 |= 3 << i * 2;
+            flags |= 3 << i * 2;
     }
-    gTasks[taskId].data[4] = r7;
+    gTasks[taskId].data[4] = flags;
 }
 
-void c2_8011A1C(void)
+void CB2_InitEndLinkBattle(void)
 {
     s32 i;
     u8 taskId;
@@ -1322,26 +1322,26 @@ void c2_8011A1C(void)
     REG_WINOUT = 0x37;
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 4;
-    SetVBlankCallback(sub_800FCFC);
+    SetVBlankCallback(VBlankCB_Battle);
     taskId = CreateTask(InitLinkBattleVsScreen, 0);
     gTasks[taskId].data[1] = 0x10E;
     gTasks[taskId].data[2] = 0x5A;
     gTasks[taskId].data[5] = 1;
-    sub_800FE40(taskId);
-    SetMainCallback2(sub_80101B8);
+    BufferPartyVsScreenHealth_AtEnd(taskId);
+    SetMainCallback2(CB2_EndLinkBattle);
     gBattleCommunication[0] = 0;
 }
 
-void sub_80101B8(void)
+void CB2_EndLinkBattle(void)
 {
-    c2_081284E0();
+    EndLinkBattleInSteps();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
     RunTasks();
 }
 
-void c2_081284E0(void)
+void EndLinkBattleInSteps(void)
 {
     switch (gBattleCommunication[0])
     {

@@ -84,7 +84,7 @@ extern u8 GetBattlerSpriteDefault_Y();
 extern void nullsub_10();
 extern void nullsub_9(u16);
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
-extern void c2_8011A1C(void);
+extern void CB2_InitEndLinkBattle(void);
 
 // this file's functions
 
@@ -446,7 +446,7 @@ void LinkPartnerWaitForDisconnect(void)
         m4aSongNumStop(0x5A);
         gMain.inBattle = FALSE;
         gMain.callback1 = gPreBattleCallback1;
-        SetMainCallback2(c2_8011A1C);
+        SetMainCallback2(CB2_InitEndLinkBattle);
     }
 }
 

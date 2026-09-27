@@ -509,7 +509,7 @@ void sub_8037EF0(void)
         m4aSongNumStop(SE_LOW_HEALTH);
         gMain.inBattle = FALSE;
         gMain.callback1 = gPreBattleCallback1;
-        SetMainCallback2(c2_8011A1C);
+        SetMainCallback2(CB2_InitEndLinkBattle);
     }
 }
 

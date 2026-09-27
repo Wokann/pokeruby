@@ -27,7 +27,7 @@ bool8 sub_8031C30(u8 a0);
 void sub_8031EE8(void);
 void sub_80327CC(void);
 void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
-void sub_800FCD4(void);
+void HBlankCB_Battle(void);
 void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
 void BattleLoadPlayerMonSprite(struct Pokemon *, u8 bank);
 void BattleLoadSubstituteOrMonSpriteGfx(u8 bank, u8 loadMonSprite);
@@ -178,8 +178,8 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         }
         break;
     default:
-        SetHBlankCallback(sub_800FCD4);
-        SetVBlankCallback(sub_800FCFC);
+        SetHBlankCallback(HBlankCB_Battle);
+        SetVBlankCallback(VBlankCB_Battle);
         sub_807B06C();
         BeginHardwarePaletteFade(0xFF, 0, 0x10, 0, 1);
         gPaletteFade.bufferTransferDisabled = 0;

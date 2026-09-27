@@ -58,7 +58,7 @@ gUnknown_081F96C8:: @ 81F96C8
 
 	.align 2
 gSpriteTemplate_81F96D0:: @ 81F96D0
-	spr_template 0, 0, gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_800F828
+	spr_template 0, 0, gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_DebugBattleInit
 
 .if DEBUG
 
