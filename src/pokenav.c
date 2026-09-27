@@ -3794,12 +3794,12 @@ void LoadConditionGraphMonData(s16 arg0, u8 arg1)
     LoadConditionGraphMonGfx(arg0, arg1);
 }
 
-void sub_80F492C(void)
+void ResetPokenavMonList(void)
 {
     gPokenavStructPtr->unk8FE4 = 0;
 }
 
-void sub_80F4944(struct UnkUsePokeblockSub *arg0) // This looks like a sorting algorithm. Proposal: Make local variables min, max, and currPos
+void InsertPokenavMonListItem(struct UnkUsePokeblockSub *arg0) // This looks like a sorting algorithm. Proposal: Make local variables min, max, and currPos
 {
     u16 min, max, currPos;
 
@@ -3825,7 +3825,7 @@ void sub_80F4944(struct UnkUsePokeblockSub *arg0) // This looks like a sorting a
     gPokenavStructPtr->unk8FE4++;
 }
 
-void sub_80F49F4(void)
+void FinalizePokenavMonListRanks(void)
 {
     u16 i;
 
@@ -3919,7 +3919,7 @@ void sub_80F4D44(void)
 {
     gPokenavStructPtr->unk8FE6 = 0;
     gPokenavStructPtr->unk8FE7 = 0;
-    sub_80F492C();
+    ResetPokenavMonList();
 
     if (!gPokenavStructPtr->unk6DAC)
         while (sub_80F4D88());
@@ -3947,7 +3947,7 @@ bool8 sub_80F4D88(void)
                 var0.unk0 = GetBoxMonData(
                     &gPokemonStorage.boxes[gPokenavStructPtr->unk8FE6][gPokenavStructPtr->unk8FE7],
                     gPokenavStructPtr->unk87D8);
-                sub_80F4944(&var0);
+                InsertPokenavMonListItem(&var0);
             }
 
             gPokenavStructPtr->unk8FE7++;
@@ -3971,11 +3971,11 @@ bool8 sub_80F4D88(void)
             {
                 var0.partyIdx = i;
                 var0.unk0 = GetMonData(&gPlayerParty[i], gPokenavStructPtr->unk87D8);
-                sub_80F4944(&var0);
+                InsertPokenavMonListItem(&var0);
             }
         }
 
-        sub_80F49F4();
+        FinalizePokenavMonListRanks();
         gPokenavStructPtr->unk87DA = gPokenavStructPtr->unk8FE4;
         gPokenavStructPtr->unk8FE6++;
         break;
@@ -4735,7 +4735,7 @@ void sub_80F638C(void)
 {
     gPokenavStructPtr->unk8FE6 = 0;
     gPokenavStructPtr->unk8FE7 = 0;
-    sub_80F492C();
+    ResetPokenavMonList();
     if (gPokenavStructPtr->unk6DAC == 0)
     {
         while (sub_80F63D0())
@@ -4761,7 +4761,7 @@ bool8 sub_80F63D0(void)
                 sp0.unk1 = gPokenavStructPtr->unk8FE6;
                 sp0.partyIdx = gPokenavStructPtr->unk8FE7;
                 sp0.unk0 = ribbons;
-                sub_80F4944(&sp0);
+                InsertPokenavMonListItem(&sp0);
             }
             if (++gPokenavStructPtr->unk8FE7 == 30)
             {
@@ -4783,10 +4783,10 @@ bool8 sub_80F63D0(void)
             {
                 sp0.partyIdx = i;
                 sp0.unk0 = ribbons;
-                sub_80F4944(&sp0);
+                InsertPokenavMonListItem(&sp0);
             }
         }
-        sub_80F49F4();
+        FinalizePokenavMonListRanks();
         gPokenavStructPtr->unk8FE6++;
         return FALSE;
     }
