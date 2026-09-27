@@ -11,9 +11,9 @@
 #include "constants/field_effects.h"
 #include "constants/event_objects.h"
 
-static void sub_811AA18(void);
-static void sub_811AA38(void);
-static void sub_811AA9C(void);
+static void FieldCallback_Strength(void);
+static void FieldCallback_BrailleStrength(void);
+static void StartStrengthFieldEffect(void);
 
 extern u8 gLastFieldPokeMenuOpened;
 extern u16 gSpecialVar_Result;
@@ -29,13 +29,13 @@ void debug_sub_8130318(void)
     {
         gLastFieldPokeMenuOpened = 0;
         gSpecialVar_Result = 0;
-        sub_811AA38();
+        FieldCallback_BrailleStrength();
     }
     else if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_PUSHABLE_BOULDER) == TRUE)
     {
         gLastFieldPokeMenuOpened = 0;
         gSpecialVar_Result = 0;
-        sub_811AA18();
+        FieldCallback_Strength();
     }
     else
     {
@@ -50,7 +50,7 @@ bool8 SetUpFieldMove_Strength(void)
     {
         gSpecialVar_Result = gLastFieldPokeMenuOpened;
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_811AA38;
+        gPostMenuFieldCallback = FieldCallback_BrailleStrength;
     }
     else
     {
@@ -58,19 +58,19 @@ bool8 SetUpFieldMove_Strength(void)
             return 0;
         gSpecialVar_Result = gLastFieldPokeMenuOpened;
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_811AA18;
+        gPostMenuFieldCallback = FieldCallback_Strength;
     }
 
     return TRUE;
 }
 
-static void sub_811AA18(void)
+static void FieldCallback_Strength(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     ScriptContext_SetupScript(EventScript_UseStrength);
 }
 
-static void sub_811AA38(void)
+static void FieldCallback_BrailleStrength(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     FieldEffectStart(FLDEFF_USE_STRENGTH);
@@ -80,13 +80,13 @@ bool8 FldEff_UseStrength(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    gTasks[taskId].data[8] = (u32)sub_811AA9C >> 16;
-    gTasks[taskId].data[9] = (u32)sub_811AA9C;
+    gTasks[taskId].data[8] = (u32)StartStrengthFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartStrengthFieldEffect;
     GetMonNickname(&gPlayerParty[gFieldEffectArguments[0]], gStringVar1);
     return FALSE;
 }
 
-static void sub_811AA9C(void)
+static void StartStrengthFieldEffect(void)
 {
     if (ShouldDoBrailleStrengthEffect())
     {
