@@ -239,27 +239,27 @@ static void PikaPowerBolt_WaitAnim(struct Task *task);
 static void PikaPowerBolt_ClearAll(struct Task *task);
 static void ResetPikaPowerBoltTask(struct Task *task);
 static void LoadPikaPowerMeter(u8 pikaPower);
-static void sub_810430C(void);
-static bool8 sub_810432C(void);
-static void sub_810434C(u8 taskId);
-static void sub_810437C(struct Task *task);
-static void sub_81043EC(struct Task *task);
-static void sub_8104468(struct Task *task);
-static void sub_8104498(struct Task *task);
-static void sub_8104548(struct Task *task);
-static void sub_8104598(struct Task *task);
-static void sub_81045CC(struct Task *task);
-static void sub_810463C(struct Task *task);
-static void sub_81046C0(struct Task *task);
-static void sub_8104764(struct Task *task);
-static void sub_8104794(struct Task *task);
-static void sub_81047EC(struct Task *task);
-static void sub_8104860(struct Task *task);
-static void sub_81048A8(struct Task *task);
-static void sub_81048CC(struct Task *task);
-static void sub_8104940(struct Task *task);
-static void sub_81049C8(struct Task *task);
-static void sub_81049F8(struct Task *task);
+static void BeginReelTime(void);
+static bool8 IsReelTimeTaskDone(void);
+static void Task_ReelTime(u8 taskId);
+static void ReelTime_Init(struct Task *task);
+static void ReelTime_WindowEnter(struct Task *task);
+static void ReelTime_WaitStartPikachu(struct Task *task);
+static void ReelTime_PikachuSpeedUp1(struct Task *task);
+static void ReelTime_PikachuSpeedUp2(struct Task *task);
+static void ReelTime_WaitReel(struct Task *task);
+static void ReelTime_CheckExplode(struct Task *task);
+static void ReelTime_LandOnOutcome(struct Task *task);
+static void ReelTime_PikachuReact(struct Task *task);
+static void ReelTime_WaitClearPikaPower(struct Task *task);
+static void ReelTime_CloseWindow(struct Task *task);
+static void ReelTime_DestroySprites(struct Task *task);
+static void ReelTime_SetReelSpeed(struct Task *task);
+static void ReelTime_EndSuccess(struct Task *task);
+static void ReelTime_ExplodeMachine(struct Task *task);
+static void ReelTime_WaitExplode(struct Task *task);
+static void ReelTime_WaitSmoke(struct Task *task);
+static void ReelTime_EndFailure(struct Task *task);
 static void sub_8104A40(s16 a0, s16 a1);
 static void sub_8104A88(s16 a0);
 static void sub_8104AB8(u8 a0);
@@ -773,7 +773,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
     task->data[0] = 0;
     if (sSlotMachine->unk04 & 0x20)
     {
-        sub_810430C();
+        BeginReelTime();
         sSlotMachine->state = 10;
     }
     else
@@ -793,7 +793,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
 
 static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
 {
-    if (sub_810432C())
+    if (IsReelTimeTaskDone())
     {
         sub_8104CAC(1);
         sSlotMachine->unk04 &= 0xDF;
@@ -2622,48 +2622,48 @@ static void LoadPikaPowerMeter(u8 pikaPower)
     gTasks[sSlotMachine->unk3E].data[1] = pikaPower;
 }
 
-static void sub_810430C(void)
+static void BeginReelTime(void)
 {
-    u8 taskId = CreateTask(sub_810434C, 7);
-    sub_810434C(taskId);
+    u8 taskId = CreateTask(Task_ReelTime, 7);
+    Task_ReelTime(taskId);
 }
 
-static bool8 sub_810432C(void)
+static bool8 IsReelTimeTaskDone(void)
 {
-    if (FindTaskIdByFunc(sub_810434C) == 0xFF)
+    if (FindTaskIdByFunc(Task_ReelTime) == 0xFF)
         return TRUE;
     return FALSE;
 }
 
-static void (*const gUnknown_083ECBD0[])(struct Task *task) =
+static void (*const sReelTimeTasks[])(struct Task *task) =
 {
-    sub_810437C,
-    sub_81043EC,
-    sub_8104468,
-    sub_8104498,
-    sub_8104548,
-    sub_8104598,
-    sub_81045CC,
-    sub_810463C,
-    sub_81046C0,
-    sub_8104764,
-    sub_8104794,
-    sub_81047EC,
-    sub_8104860,
-    sub_81048A8,
-    sub_81048CC,
-    sub_8104940,
-    sub_81049C8,
-    sub_8104794,
-    sub_81049F8
+    ReelTime_Init,
+    ReelTime_WindowEnter,
+    ReelTime_WaitStartPikachu,
+    ReelTime_PikachuSpeedUp1,
+    ReelTime_PikachuSpeedUp2,
+    ReelTime_WaitReel,
+    ReelTime_CheckExplode,
+    ReelTime_LandOnOutcome,
+    ReelTime_PikachuReact,
+    ReelTime_WaitClearPikaPower,
+    ReelTime_CloseWindow,
+    ReelTime_DestroySprites,
+    ReelTime_SetReelSpeed,
+    ReelTime_EndSuccess,
+    ReelTime_ExplodeMachine,
+    ReelTime_WaitExplode,
+    ReelTime_WaitSmoke,
+    ReelTime_CloseWindow,
+    ReelTime_EndFailure
 };
 
-static void sub_810434C(u8 taskId)
+static void Task_ReelTime(u8 taskId)
 {
-    gUnknown_083ECBD0[gTasks[taskId].data[0]](gTasks + taskId);
+    sReelTimeTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void sub_810437C(struct Task *task)
+static void ReelTime_Init(struct Task *task)
 {
     sSlotMachine->unk0A = 0;
     sSlotMachine->unk14 = 0;
@@ -2687,7 +2687,7 @@ static void sub_810437C(struct Task *task)
     PlayNewMapMusic(MUS_ROULETTE);
 }
 
-static void sub_81043EC(struct Task *task)
+static void ReelTime_WindowEnter(struct Task *task)
 {
     s16 r3;
     gSpriteCoordOffsetX -= 8;
@@ -2708,7 +2708,7 @@ static void sub_81043EC(struct Task *task)
     AdvanceReeltimeReel(task->data[4] >> 8);
 }
 
-static void sub_8104468(struct Task *task)
+static void ReelTime_WaitStartPikachu(struct Task *task)
 {
     AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 60)
@@ -2719,7 +2719,7 @@ static void sub_8104468(struct Task *task)
     }
 }
 
-static void sub_8104498(struct Task *task)
+static void ReelTime_PikachuSpeedUp1(struct Task *task)
 {
     int r5;
     u8 sp0[] = {1, 1, 2, 2};
@@ -2740,7 +2740,7 @@ static void sub_8104498(struct Task *task)
     }
 }
 
-static void sub_8104548(struct Task *task)
+static void ReelTime_PikachuSpeedUp2(struct Task *task)
 {
     AdvanceReeltimeReel(task->data[4] >> 8);
     if (++task->data[5] >= 80)
@@ -2752,7 +2752,7 @@ static void sub_8104548(struct Task *task)
     }
 }
 
-static void sub_8104598(struct Task *task)
+static void ReelTime_WaitReel(struct Task *task)
 {
     AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x80;
@@ -2763,7 +2763,7 @@ static void sub_8104598(struct Task *task)
     }
 }
 
-static void sub_81045CC(struct Task *task)
+static void ReelTime_CheckExplode(struct Task *task)
 {
     AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] = (u8)task->data[4] + 0x40;
@@ -2787,7 +2787,7 @@ static void sub_81045CC(struct Task *task)
     }
 }
 
-static void sub_810463C(struct Task *task)
+static void ReelTime_LandOnOutcome(struct Task *task)
 {
     s16 r5 = sSlotMachine->unk14 % 20;
     if (r5)
@@ -2808,7 +2808,7 @@ static void sub_810463C(struct Task *task)
     }
 }
 
-static void sub_81046C0(struct Task *task)
+static void ReelTime_PikachuReact(struct Task *task)
 {
     if (++task->data[4] >= 60)
     {
@@ -2837,13 +2837,13 @@ static void sub_81046C0(struct Task *task)
     }
 }
 
-static void sub_8104764(struct Task *task)
+static void ReelTime_WaitClearPikaPower(struct Task *task)
 {
     if ((task->data[4] == 0 || --task->data[4] == 0) && !IsPikaPowerBoltAnimating())
         task->data[0]++;
 }
 
-static void sub_8104794(struct Task *task)
+static void ReelTime_CloseWindow(struct Task *task)
 {
     s16 r4;
     gSpriteCoordOffsetX -= 8;
@@ -2857,7 +2857,7 @@ static void sub_8104794(struct Task *task)
         task->data[0]++;
 }
 
-static void sub_81047EC(struct Task *task)
+static void ReelTime_DestroySprites(struct Task *task)
 {
     sSlotMachine->unk0B = 0;
     sSlotMachine->unk0A = sSlotMachine->unk05;
@@ -2870,7 +2870,7 @@ static void sub_81047EC(struct Task *task)
     PlayNewMapMusic(sSlotMachine->backupMapMusic);
     if (sSlotMachine->unk0A == 0)
     {
-        DestroyTask(FindTaskIdByFunc(sub_810434C));
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
     }
     else
     {
@@ -2882,7 +2882,7 @@ static void sub_81047EC(struct Task *task)
     }
 }
 
-static void sub_8104860(struct Task *task)
+static void ReelTime_SetReelSpeed(struct Task *task)
 {
     if (sSlotMachine->unk1A == task->data[1])
         task->data[0]++;
@@ -2890,13 +2890,13 @@ static void sub_8104860(struct Task *task)
         sSlotMachine->unk1A >>= 1;
 }
 
-static void sub_81048A8(struct Task *task)
+static void ReelTime_EndSuccess(struct Task *task)
 {
     if (sub_8104E18())
-        DestroyTask(FindTaskIdByFunc(sub_810434C));
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
-static void sub_81048CC(struct Task *task)
+static void ReelTime_ExplodeMachine(struct Task *task)
 {
     sub_81054B8();
     sub_81056C0();
@@ -2912,7 +2912,7 @@ static void sub_81048CC(struct Task *task)
     PlaySE(SE_M_EXPLOSION);
 }
 
-static void sub_8104940(struct Task *task)
+static void ReelTime_WaitExplode(struct Task *task)
 {
     gSpriteCoordOffsetY = task->data[4];
     REG_BG1VOFS = task->data[4];
@@ -2932,7 +2932,7 @@ static void sub_8104940(struct Task *task)
     }
 }
 
-static void sub_81049C8(struct Task *task)
+static void ReelTime_WaitSmoke(struct Task *task)
 {
     gSpriteCoordOffsetY = 0;
     REG_BG1VOFS = 0;
@@ -2943,7 +2943,7 @@ static void sub_81049C8(struct Task *task)
     }
 }
 
-static void sub_81049F8(struct Task *task)
+static void ReelTime_EndFailure(struct Task *task)
 {
     gSpriteCoordOffsetX = 0;
     REG_BG1HOFS = 0;
@@ -2952,7 +2952,7 @@ static void sub_81049F8(struct Task *task)
     sub_8105554();
     sub_8105524();
     sub_81059B8();
-    DestroyTask(FindTaskIdByFunc(sub_810434C));
+    DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
 static const u16 sReelTimeWindowTilemap[];
