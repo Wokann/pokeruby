@@ -109,41 +109,41 @@ const struct {
 };
 
 const u8 gUnknown_Debug_083C4F94[] = DTR("しょうしょうおまちください！", "Please wait!");
-const u8 gUnknown_Debug_083C4FA3[] = _("Weather");
-const u8 gUnknown_Debug_083C4FAB[] = _("LANETTE'S PC");
-const u8 gUnknown_Debug_083C4FB8[] = _("SimpleText");
-const u8 gUnknown_Debug_083C4FC3[] = _("Old　man");
-const u8 gUnknown_Debug_083C4FCB[] = _("Trend");
-const u8 gUnknown_Debug_083C4FD1[] = _("Trend R");
-const u8 gUnknown_Debug_083C4FD9[] = _("Town flag");
-const u8 gUnknown_Debug_083C4FE3[] = _("Award a ribbon");
-const u8 gUnknown_Debug_083C4FF2[] = _("{PKMN}LOTTERY");
-const u8 gUnknown_Debug_083C4FFC[] = _("Trainer");
-const u8 gUnknown_Debug_083C5004[] = _("POKéNAV D");
+const u8 sText_TayaDebug_Weather[] = _("Weather");
+const u8 sText_TayaDebug_LanettesPC[] = _("LANETTE'S PC");
+const u8 sText_TayaDebug_SimpleText[] = _("SimpleText");
+const u8 sText_TayaDebug_OldMan[] = _("Old　man");
+const u8 sText_TayaDebug_Trend[] = _("Trend");
+const u8 sText_TayaDebug_TrendR[] = _("Trend R");
+const u8 sText_TayaDebug_TownFlags[] = _("Town flag");
+const u8 sText_TayaDebug_AwardRibbon[] = _("Award a ribbon");
+const u8 sText_TayaDebug_PokemonLottery[] = _("{PKMN}LOTTERY");
+const u8 sText_TayaDebug_Trainer[] = _("Trainer");
+const u8 sText_TayaDebug_PokenavD[] = _("POKéNAV D");
 
-const struct MenuAction gUnknown_Debug_083C5010[] = {
-    {gUnknown_Debug_083C4FA3, TayaDebugMenu_Weather},
-    {gUnknown_Debug_083C4FAB, TayaDebugMenu_LanettesPC},
-    {gUnknown_Debug_083C4FB8, TayaDebugMenu_SimpleText},
-    {gUnknown_Debug_083C4FC3, TayaDebugMenu_OldMan},
-    {gUnknown_Debug_083C4FCB, TayaDebugMenu_Trend},
-    {gUnknown_Debug_083C4FD1, TayaDebugMenu_TrendR},
-    {gUnknown_Debug_083C4FD9, TayaDebugMenu_TownFlags},
-    {gUnknown_Debug_083C4FE3, TayaDebugMenu_AwardARibbon},
-    {gUnknown_Debug_083C4FF2, TayaDebugMenu_PKMNLottery}
+const struct MenuAction sMenuActions_TayaDebug_Page1[] = {
+    {sText_TayaDebug_Weather, TayaDebugMenu_Weather},
+    {sText_TayaDebug_LanettesPC, TayaDebugMenu_LanettesPC},
+    {sText_TayaDebug_SimpleText, TayaDebugMenu_SimpleText},
+    {sText_TayaDebug_OldMan, TayaDebugMenu_OldMan},
+    {sText_TayaDebug_Trend, TayaDebugMenu_Trend},
+    {sText_TayaDebug_TrendR, TayaDebugMenu_TrendR},
+    {sText_TayaDebug_TownFlags, TayaDebugMenu_TownFlags},
+    {sText_TayaDebug_AwardRibbon, TayaDebugMenu_AwardARibbon},
+    {sText_TayaDebug_PokemonLottery, TayaDebugMenu_PKMNLottery}
 };
 
-const struct MenuAction gUnknown_Debug_083C5058[] = {
-    {gUnknown_Debug_083C4FFC, TayaDebugMenu_Trainer},
-    {gUnknown_Debug_083C5004, TayaDebugMenu_PokenavD}
+const struct MenuAction sMenuActions_TayaDebug_Page2[] = {
+    {sText_TayaDebug_Trainer, TayaDebugMenu_Trainer},
+    {sText_TayaDebug_PokenavD, TayaDebugMenu_PokenavD}
 };
 
 const struct {
     const struct MenuAction *menuActions;
     u8 nitems;
-} gUnknown_Debug_83C5068[] = {
-    {gUnknown_Debug_083C5010, 9},
-    {gUnknown_Debug_083C5058, 2}
+} sMenuPages_TayaDebug[] = {
+    {sMenuActions_TayaDebug_Page1, 9},
+    {sMenuActions_TayaDebug_Page2, 2}
 };
 
 const u8 gUnknown_Debug_083C5078[] = _("CHANP");
@@ -647,7 +647,7 @@ bool8 TayaDebugMenu_PokenavD(void)
     return TRUE;
 }
 
-bool8 TayaDebugMenu_8091190(void)
+bool8 TayaDebugMenu_HandleInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 r4;
@@ -655,7 +655,7 @@ bool8 TayaDebugMenu_8091190(void)
     switch (input)
     {
         default:
-            gMenuCallback = gUnknown_Debug_83C5068[sTayaTopMenuPage].menuActions[input].func;
+            gMenuCallback = sMenuPages_TayaDebug[sTayaTopMenuPage].menuActions[input].func;
             return FALSE;
         case -2:
             r4 = sTayaTopMenuPage;
@@ -676,8 +676,8 @@ bool8 TayaDebugMenu_8091190(void)
             {
                 Menu_EraseScreen();
                 Menu_DrawStdWindowFrame(0, 0, 11, 19);
-                Menu_PrintItems(1, 1, gUnknown_Debug_83C5068[sTayaTopMenuPage].nitems, gUnknown_Debug_83C5068[sTayaTopMenuPage].menuActions);
-                InitMenu(0, 1, 1, gUnknown_Debug_83C5068[sTayaTopMenuPage].nitems, 0, 10);
+                Menu_PrintItems(1, 1, sMenuPages_TayaDebug[sTayaTopMenuPage].nitems, sMenuPages_TayaDebug[sTayaTopMenuPage].menuActions);
+                InitMenu(0, 1, 1, sMenuPages_TayaDebug[sTayaTopMenuPage].nitems, 0, 10);
             }
             return FALSE;
         case -1:
@@ -691,9 +691,9 @@ bool8 InitTayaDebugWindow(void)
     sTayaTopMenuPage = 0;
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 11, 19);
-    Menu_PrintItems(1, 1, 9, gUnknown_Debug_83C5068[0].menuActions);
+    Menu_PrintItems(1, 1, 9, sMenuPages_TayaDebug[0].menuActions);
     InitMenu(0, 1, 1, 9, 0, 10);
-    gMenuCallback = TayaDebugMenu_8091190;
+    gMenuCallback = TayaDebugMenu_HandleInput;
     return FALSE;
 }
 
