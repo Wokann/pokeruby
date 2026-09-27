@@ -20,9 +20,9 @@
 
 #define MAX_ENCOUNTER_RATE 2880
 
-const struct WildPokemon gWildFeebasRoute119Data = {20, 25, SPECIES_FEEBAS};
+static const struct WildPokemon sWildFeebas = {20, 25, SPECIES_FEEBAS};
 
-const u16 gRoute119WaterTileData[] =
+static const u16 sRoute119WaterTileData[] =
 {
 	0, 0x2D, 0,
 	0x2E, 0x5B, 0x83,
@@ -49,27 +49,27 @@ void DisableWildEncounters(bool8 disabled)
     gWildEncountersDisabled = disabled;
 }
 
-static u16 GetRoute119WaterTileNum(s16 x, s16 y, u8 section)
+static u16 GetFeebasFishingSpotId(s16 targetX, s16 targetY, u8 section)
 {
-    u16 xCur;
-    u16 yCur;
-    u16 yMin = gRoute119WaterTileData[section * 3 + 0];
-    u16 yMax = gRoute119WaterTileData[section * 3 + 1];
-    u16 tileNum = gRoute119WaterTileData[section * 3 + 2];
+    u16 x;
+    u16 y;
+    u16 yMin = sRoute119WaterTileData[section * 3 + 0];
+    u16 yMax = sRoute119WaterTileData[section * 3 + 1];
+    u16 spotId = sRoute119WaterTileData[section * 3 + 2];
 
-    for (yCur = yMin; yCur <= yMax; yCur++)
+    for (y = yMin; y <= yMax; y++)
     {
-        for (xCur = 0; xCur < gMapHeader.mapLayout->width; xCur++)
+        for (x = 0; x < gMapHeader.mapLayout->width; x++)
         {
-            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(xCur + 7, yCur + 7)) == TRUE)
+            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(x + 7, y + 7)) == TRUE)
             {
-                tileNum++;
-                if (x == xCur && y == yCur)
-                    return tileNum;
+                spotId++;
+                if (targetX == x && targetY == y)
+                    return spotId;
             }
         }
     }
-    return tileNum + 1;
+    return spotId + 1;
 }
 
 static bool8 CheckFeebas(void)
@@ -78,8 +78,8 @@ static bool8 CheckFeebas(void)
     u16 feebasSpots[6];
     s16 x;
     s16 y;
-    u8 route119section = 0;
-    u16 waterTileNum;
+    u8 route119Section = 0;
+    u16 spotId;
 
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE119)
      && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE119))
@@ -88,12 +88,12 @@ static bool8 CheckFeebas(void)
         x -= 7;
         y -= 7;
 
-        if (y >= gRoute119WaterTileData[3 * 0 + 0] && y <= gRoute119WaterTileData[3 * 0 + 1])
-            route119section = 0;
-        if (y >= gRoute119WaterTileData[3 * 1 + 0] && y <= gRoute119WaterTileData[3 * 1 + 1])
-            route119section = 1;
-        if (y >= gRoute119WaterTileData[3 * 2 + 0] && y <= gRoute119WaterTileData[3 * 2 + 1])
-            route119section = 2;
+        if (y >= sRoute119WaterTileData[3 * 0 + 0] && y <= sRoute119WaterTileData[3 * 0 + 1])
+            route119Section = 0;
+        if (y >= sRoute119WaterTileData[3 * 1 + 0] && y <= sRoute119WaterTileData[3 * 1 + 1])
+            route119Section = 1;
+        if (y >= sRoute119WaterTileData[3 * 2 + 0] && y <= sRoute119WaterTileData[3 * 2 + 1])
+            route119Section = 2;
 
         if (Random() % 100 > 49) //50% chance of encountering Feebas
             return FALSE;
@@ -107,10 +107,10 @@ static bool8 CheckFeebas(void)
             if (feebasSpots[i] < 1 || feebasSpots[i] >= 4)
                 i++;
         }
-        waterTileNum = GetRoute119WaterTileNum(x, y, route119section);
+        spotId = GetFeebasFishingSpotId(x, y, route119Section);
         for (i = 0; i < NUM_FEEBAS_SPOTS; i++)
         {
-            if (waterTileNum == feebasSpots[i])
+            if (spotId == feebasSpots[i])
                 return TRUE;
         }
     }
@@ -129,13 +129,13 @@ void FeebasSeedRng(u16 seed)
 }
 
 #if DEBUG
-u16 FeebasDebug_GetTrueNumberOfWaterTilesInMapThird(u8 arg0)
+u16 FeebasDebug_GetTrueNumberOfWaterTilesInMapThird(u8 section)
 {
-    if (arg0 == 0)
+    if (section == 0)
         return 131;
-    if (arg0 == 1)
+    if (section == 1)
         return 167;
-    if (arg0 == 2)
+    if (section == 2)
         return 149;
     return 0;
 }
@@ -305,10 +305,10 @@ static u8 PickWildMonNature(void)
     return Random() % 25;
 }
 
-static void CreateWildMon(u16 species, u8 b)
+static void CreateWildMon(u16 species, u8 level)
 {
     ZeroEnemyPartyMons();
-    CreateMonWithNature(&gEnemyParty[0], species, b, 0x20, PickWildMonNature());
+    CreateMonWithNature(&gEnemyParty[0], species, level, 0x20, PickWildMonNature());
 }
 
 static bool8 GenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 area, bool8 checkRepel)
@@ -383,20 +383,20 @@ static bool8 DoWildEncounterRateDiceRoll(u16 encounterRate)
 }
 
 #if DEBUG
-u16 debug_sub_809283C(u16 attempts)
+u16 Debug_CountWildEncounterRateHits(u16 attempts)
 {
-    u16 retval = 0;
+    u16 hits = 0;
     u16 i = 0;
 
     while (i < attempts)
     {
         if (DoWildEncounterRateDiceRoll(320) == TRUE)
-            retval++;
+            hits++;
 
         i++;
     }
 
-    return retval;
+    return hits;
 }
 #endif
 
@@ -601,9 +601,9 @@ void FishingWildEncounter(u8 rod)
 
     if (CheckFeebas() == TRUE)
     {
-        u8 level = ChooseWildMonLevel(&gWildFeebasRoute119Data);
+        u8 level = ChooseWildMonLevel(&sWildFeebas);
 
-        species = gWildFeebasRoute119Data.species;
+        species = sWildFeebas.species;
         CreateWildMon(species, level);
     }
     else
