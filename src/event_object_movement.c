@@ -5260,29 +5260,29 @@ void InitJumpRegular(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 
 
 u8 UpdateJumpAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 (*const callback)(struct Sprite *))
 {
-    s16 vSPp4[3];
+    s16 displacements[3];
     s16 x;
     s16 y;
-    u8 retval;
-    memcpy(vSPp4, sJumpDisplacements, sizeof sJumpDisplacements);
-    retval = callback(sprite);
-    if (retval == JUMP_HALFWAY && vSPp4[sprite->data[4]] != 0)
+    u8 result;
+    memcpy(displacements, sJumpDisplacements, sizeof sJumpDisplacements);
+    result = callback(sprite);
+    if (result == JUMP_HALFWAY && displacements[sprite->data[4]] != 0)
     {
         x = 0;
         y = 0;
-        MoveCoordsInDirection(objectEvent->movementDirection, &x, &y, vSPp4[sprite->data[4]], vSPp4[sprite->data[4]]);
+        MoveCoordsInDirection(objectEvent->movementDirection, &x, &y, displacements[sprite->data[4]], displacements[sprite->data[4]]);
         ShiftObjectEventCoords(objectEvent, objectEvent->currentCoords.x + x, objectEvent->currentCoords.y + y);
         objectEvent->triggerGroundEffectsOnMove = TRUE;
         objectEvent->disableCoveringGroundEffects = TRUE;
     }
-    else if (retval == JUMP_FINISHED)
+    else if (result == JUMP_FINISHED)
     {
         ShiftStillObjectEventCoords(objectEvent);
         objectEvent->triggerGroundEffectsOnStop = TRUE;
         objectEvent->landingJump = TRUE;
         sprite->animPaused = TRUE;
     }
-    return retval;
+    return result;
 }
 
 u8 DoJumpAnimStep(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8162,27 +8162,27 @@ bool8 sub_806468C(struct Sprite *sprite)
         return FALSE;
 }
 
-static const s8 Unknown_837619E[] = {
+static const s8 sJumpY_High[] = {
      -4,  -6,  -8, -10, -11, -12, -12, -12, -11, -10,  -9,  -8,  -6,  -4,   0,   0
 };
 
-static const s8 Unknown_83761AE[] = {
+static const s8 sJumpY_Low[] = {
       0,  -2,  -3,  -4,  -5,  -6,  -6,  -6,  -5,  -5,  -4,  -3,  -2,   0,   0,   0
 };
 
-static const s8 Unknown_83761BE[] = {
+static const s8 sJumpY_Normal[] = {
      -2,  -4,  -6,  -8,  -9, -10, -10, -10,  -9,  -8,  -6,  -5,  -3,  -2,   0,   0
 };
 
-static const s8 *const gUnknown_083761D0[] = {
-    Unknown_837619E,
-    Unknown_83761AE,
-    Unknown_83761BE
+static const s8 *const sJumpYTable[] = {
+    [JUMP_TYPE_HIGH] = sJumpY_High,
+    [JUMP_TYPE_LOW] = sJumpY_Low,
+    [JUMP_TYPE_NORMAL] = sJumpY_Normal
 };
 
-s16 sub_80646C8(s16 a1, u8 a2)
+s16 GetJumpY(s16 i, u8 type)
 {
-    return gUnknown_083761D0[a2][a1];
+    return sJumpYTable[type][i];
 }
 
 void SetJumpSpriteData(struct Sprite *sprite, u8 direction, u8 distance, u8 type)
@@ -8195,52 +8195,68 @@ void SetJumpSpriteData(struct Sprite *sprite, u8 direction, u8 distance, u8 type
 
 u8 DoJumpSpriteMovement(struct Sprite *sprite)
 {
-    s16 v5[3] = {0x10, 0x10, 0x20};
-    u8 v6[3] = {0, 0, 1};
-    u8 v2 = 0;
+    s16 distanceToTime[3] = {
+        [JUMP_DISTANCE_IN_PLACE] = 16,
+        [JUMP_DISTANCE_NORMAL] = 16,
+        [JUMP_DISTANCE_FAR] = 32,
+    };
+    u8 distanceToShift[3] = {
+        [JUMP_DISTANCE_IN_PLACE] = 0,
+        [JUMP_DISTANCE_NORMAL] = 0,
+        [JUMP_DISTANCE_FAR] = 1,
+    };
+    u8 result = 0;
 
-    if (sprite->data[4])
+    if (sprite->data[4] != JUMP_DISTANCE_IN_PLACE)
         Step1(sprite, sprite->data[3]);
 
-    sprite->y2 = sub_80646C8(sprite->data[6] >> v6[sprite->data[4]], sprite->data[5]);
+    sprite->y2 = GetJumpY(sprite->data[6] >> distanceToShift[sprite->data[4]], sprite->data[5]);
 
     sprite->data[6]++;
 
-    if (sprite->data[6] == (v5[sprite->data[4]] >> 1))
-        v2 = JUMP_HALFWAY;
+    if (sprite->data[6] == (distanceToTime[sprite->data[4]] >> 1))
+        result = JUMP_HALFWAY;
 
-    if (sprite->data[6] >= v5[sprite->data[4]])
+    if (sprite->data[6] >= distanceToTime[sprite->data[4]])
     {
         sprite->y2 = 0;
-        v2 = JUMP_FINISHED;
+        result = JUMP_FINISHED;
     }
 
-    return v2;
+    return result;
 }
 
 u8 DoJumpSpecialSpriteMovement(struct Sprite *sprite)
 {
-    s16 v5[3] = {0x20, 0x20, 0x40};
-    u8 v6[3] = {1, 1, 2};
-    u8 v2 = 0;
+    s16 distanceToTime[3] = {
+        [JUMP_DISTANCE_IN_PLACE] = 32,
+        [JUMP_DISTANCE_NORMAL] = 32,
+        [JUMP_DISTANCE_FAR] = 64,
+    };
+    u8 distanceToShift[3] = {
+        [JUMP_DISTANCE_IN_PLACE] = 1,
+        [JUMP_DISTANCE_NORMAL] = 1,
+        [JUMP_DISTANCE_FAR] = 2,
+    };
+    u8 result = 0;
 
-    if (sprite->data[4] && !(sprite->data[6] & 1))
+    if (sprite->data[4] != JUMP_DISTANCE_IN_PLACE && !(sprite->data[6] & 1))
         Step1(sprite, sprite->data[3]);
 
-    sprite->y2 = sub_80646C8(sprite->data[6] >> v6[sprite->data[4]], sprite->data[5]);
+    sprite->y2 = GetJumpY(sprite->data[6] >> distanceToShift[sprite->data[4]], sprite->data[5]);
 
     sprite->data[6]++;
 
-    if (sprite->data[6] == (v5[sprite->data[4]] >> 1))
-        v2 = JUMP_HALFWAY;
+    if (sprite->data[6] == (distanceToTime[sprite->data[4]] >> 1))
+        result = JUMP_HALFWAY;
 
-    if (sprite->data[6] >= v5[sprite->data[4]])
+    if (sprite->data[6] >= distanceToTime[sprite->data[4]])
     {
         sprite->y2 = 0;
-        v2 = JUMP_FINISHED;
+        result = JUMP_FINISHED;
     }
 
-    return v2;
+    return result;
 }
 
 static void SetMovementDelay(struct Sprite *sprite, s16 delay)
