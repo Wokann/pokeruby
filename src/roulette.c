@@ -478,20 +478,20 @@ void CB2_LoadRoulette(void)
         break;
     case 4:
         LoadOrFreeMiscSpritePalettesAndSheets(0);
-        sub_811857C();
-        sub_81184D8();
-        sub_8117F2C();
+        CreateWheelBallSprites();
+        CreateWheelCenterSprite();
+        CreateInterfaceSprites();
         CreateGridSprites();
         CreateGridBallSprites();
-        sub_8117DF4();
+        CreateWheelIconSprites();
         gMain.state++;
         break;
     case 5:
         AnimateSprites();
         BuildOamBuffer();
-        sub_81180F4(gSaveBlock1.coins);
-        sub_81182F8(6);
-        sub_811829C(0);
+        SetCreditDigits(gSaveBlock1.coins);
+        SetBallCounterNumLeft(6);
+        SetMultiplierSprite(0);
         DrawGridBackground(0);
         Menu_DrawStdWindowFrame(0, 14, 29, 19);
         Menu_PrintText(Roulette_Text_ControlsInstruction, 1, 15);
@@ -560,9 +560,9 @@ void Task_StartPlaying(u8 taskid)
         gTasks[taskid].data[6] = 0;
         ResetBallDataForNewSpin(taskid);
         ResetHits();
-        sub_81185E8();
+        HideWheelBalls();
         DrawGridBackground(0);
-        sub_81182F8(6);
+        SetBallCounterNumLeft(6);
         StartTaskAfterDelayOrInput(taskid, Task_SelectFirstEmptySquare, 0xffff, 3);
     }
 }
@@ -623,9 +623,9 @@ void UpdateGridSelectionRect(u8 r0)
 void UpdateGridSelection(u8 taskid, u8 r1)
 {
     if (!r1)
-        sub_811829C(gTasks[taskid].data[4]);
+        SetMultiplierSprite(gTasks[taskid].data[4]);
     else
-        sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
+        SetMultiplierSprite(eRoulette->var1B[eRoulette->var1A_0]);
     UpdateGridSelectionRect(gTasks[taskid].data[4]);
 }
 
@@ -657,7 +657,7 @@ void Task_SelectFirstEmptySquare(u8 taskid)
     gTasks[taskid].data[4] = i;
     ResetBallDataForNewSpin(taskid);
     DrawGridBackground(gTasks[taskid].data[4]);
-    sub_811829C(gTasks[taskid].data[4]);
+    SetMultiplierSprite(gTasks[taskid].data[4]);
     FlashSelectionOnWheel(gTasks[taskid].data[4]);
     gTasks[taskid].data[1] = 0;
     gTasks[taskid].func = Task_StartHandleBetGridInput;
@@ -769,10 +769,10 @@ void Task_PlaceBet(u8 taskid)
 {
     eRoulette->var1B[eRoulette->var1A_0] = gTasks[taskid].data[4];
     gTasks[taskid].data[2] = GetMultiplier(eRoulette->var1B[eRoulette->var1A_0]);
-    sub_811829C(eRoulette->var1B[eRoulette->var1A_0]);
+    SetMultiplierSprite(eRoulette->var1B[eRoulette->var1A_0]);
     if ((gTasks[taskid].data[13] -= eRoulette->var19) < 0)
         gTasks[taskid].data[13] = 0;
-    sub_81180F4(gTasks[taskid].data[13]);
+    SetCreditDigits(gTasks[taskid].data[13]);
     gTasks[taskid].func = Task_StartSpin;
 }
 
@@ -982,7 +982,7 @@ void Task_RollBall(u8 taskid)
     eRoulette->var38->callback = sub_81191F4;
     gTasks[taskid].data[6]++;
     gTasks[taskid].data[8]++;
-    sub_81182F8(6 - gTasks[taskid].data[6]);
+    SetBallCounterNumLeft(6 - gTasks[taskid].data[6]);
     m4aSongNumStart(SE_ROULETTE_BALL);
     gTasks[taskid].func = Task_RecordBallHit;
 }
@@ -1033,7 +1033,7 @@ void Task_SlideGridOnscreen(u8 taskid)
         if (gTasks[taskid].data[1] > 2)
             gSpriteCoordOffsetX -= 2;
         if ((eRoulette->var26 -= 4) == 104)
-            gSprites[eRoulette->var3C[25]].callback = sub_81184CC;
+            gSprites[eRoulette->var3C[25]].callback = SpriteCB_GridSquare;
     }
     else
     {
@@ -1129,7 +1129,7 @@ void Task_GivePayout(u8 taskid)
     case 0:
         gTasks[taskid].data[13]++;
         m4aSongNumStart(SE_PIN);
-        sub_81180F4(gTasks[taskid].data[13]);
+        SetCreditDigits(gTasks[taskid].data[13]);
         if (gTasks[taskid].data[13] > 0x270e)
         {
             gTasks[taskid].data[1] = r0;
@@ -1218,9 +1218,9 @@ void Task_ClearBoard(u8 taskid)
     gTasks[taskid].data[6] = 0;
     ResetBallDataForNewSpin(taskid);
     ResetHits();
-    sub_81185E8();
+    HideWheelBalls();
     DrawGridBackground(0);
-    sub_81182F8(6);
+    SetBallCounterNumLeft(6);
     for (i = 0; i < 12; i++)
         gSprites[eRoulette->var3C[i + 7]].invisible = FALSE;
     if (gTasks[taskid].data[13] == 0x270f)

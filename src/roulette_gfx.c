@@ -314,38 +314,38 @@ const union AnimCmd *const gSpriteAnimTable_83F9FD0[] = {
 };
 
 const struct SpriteTemplate gSpriteTemplate_83F9FD4[] = {
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FA8, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FAC, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB0, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB4, NULL, gDummySpriteAffineAnimTable, sub_81184CC}
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FA8, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FAC, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB0, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB4, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare}
 };
 
 const struct SpriteTemplate gSpriteTemplate_83FA034[] = {
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB8, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FBC, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FC0, NULL, gDummySpriteAffineAnimTable, sub_81184CC}
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FB8, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FBC, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {4, 8, &gOamData_83F9EB8, gSpriteAnimTable_83F9FC0, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare}
 };
 
 const struct SpriteTemplate gSpriteTemplate_83FA07C[] ={
-    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FC4, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FC8, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FCC, NULL, gDummySpriteAffineAnimTable, sub_81184CC},
-    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FD0, NULL, gDummySpriteAffineAnimTable, sub_81184CC}
+    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FC4, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FC8, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FCC, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare},
+    {5, 8, &gOamData_83F9EC0, gSpriteAnimTable_83F9FD0, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare}
 };
 
 const struct SpriteTemplate gSpriteTemplate_83FA0DC[] = {
-    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F24, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F28, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F2C, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F30, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F34, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F38, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F3C, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F40, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F44, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F48, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F4C, NULL, gDummySpriteAffineAnimTable, sub_8117E98},
-    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F50, NULL, gDummySpriteAffineAnimTable, sub_8117E98}
+    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F24, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F28, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F2C, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F30, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F34, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F38, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F3C, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F40, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 9, &gOamData_83F9EC8, gSpriteAnimTable_83F9F44, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 10, &gOamData_83F9EC8, gSpriteAnimTable_83F9F48, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 11, &gOamData_83F9EC8, gSpriteAnimTable_83F9F4C, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon},
+    {0, 12, &gOamData_83F9EC8, gSpriteAnimTable_83F9F50, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelIcon}
 };
 
 const struct OamData gOamData_83FA1FC = {
@@ -429,7 +429,7 @@ const struct SpriteTemplate gSpriteTemplate_83FA2B0 = {7, 5, &gOamData_83FA1FC, 
 
 const struct SpriteTemplate gSpriteTemplate_83FA2C8 = {8, 5, &gOamData_83FA204, gSpriteAnimTable_83FA274, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy};
 
-const struct SpriteTemplate gSpriteTemplate_83FA2E0 = {9, 5, &gOamData_83FA20C, gSpriteAnimTable_83FA290, NULL, gDummySpriteAffineAnimTable, sub_81184CC};
+const struct SpriteTemplate gSpriteTemplate_83FA2E0 = {9, 5, &gOamData_83FA20C, gSpriteAnimTable_83FA290, NULL, gDummySpriteAffineAnimTable, SpriteCB_GridSquare};
 
 const struct SpriteTemplate gSpriteTemplate_83FA2F8 = {10, 3, &gOamData_83FA214, gSpriteAnimTable_83FA2AC, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy};
 
@@ -538,7 +538,7 @@ const struct CompressedSpriteSheet gUnknown_083FA42C = {
     6
 };
 
-const struct SpriteTemplate gSpriteTemplate_83FA434 = {6, 2, &gOamData_83FA424, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_8118554};
+const struct SpriteTemplate gSpriteTemplate_83FA434 = {6, 2, &gOamData_83FA424, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_WheelCenter};
 
 const struct OamData gOamData_83FA44C = {
     .shape = ST_OAM_SQUARE,
@@ -805,7 +805,7 @@ void CreateGridBallSprites(void)
         eRoulette->var3C[49 + i] = CreateSprite(&gSpriteTemplate_83FA40C, 116, 20, 10);
         gSprites[eRoulette->var3C[49 + i]].invisible    = TRUE;
         gSprites[eRoulette->var3C[49 + i]].data[0]      = 1;
-        gSprites[eRoulette->var3C[49 + i]].callback     = sub_81184CC;
+        gSprites[eRoulette->var3C[49 + i]].callback     = SpriteCB_GridSquare;
         gSprites[eRoulette->var3C[49 + i]].oam.priority = 1;
         StartSpriteAnim(&gSprites[eRoulette->var3C[49 + i]], 8);
     }
@@ -851,7 +851,7 @@ void ShowHideWinSlotCursor(u8 r0)
     }
 }
 
-void sub_8117DF4(void)
+void CreateWheelIconSprites(void)
 {
     u8 i, j;
     u16 k;
@@ -875,7 +875,7 @@ void sub_8117DF4(void)
     }
 }
 
-void sub_8117E98(struct Sprite *sprite)
+void SpriteCB_WheelIcon(struct Sprite *sprite)
 {
     s16 cos;
     s16 sin;
@@ -895,7 +895,7 @@ void sub_8117E98(struct Sprite *sprite)
     gOamMatrices[matrixNum].c = -sin;
 }
 
-void sub_8117F2C(void)
+void CreateInterfaceSprites(void)
 {
     u8 i;
     for (i = 0; i < 5; i++)
@@ -929,7 +929,7 @@ void sub_8117F2C(void)
     gSprites[eRoulette->var3C[48]].invisible = TRUE;
 }
 
-void sub_81180F4(u16 r0)
+void SetCreditDigits(u16 r0)
 {
     u8 i;
     u16 d = 1000;
@@ -951,7 +951,7 @@ void sub_81180F4(u16 r0)
     }
 }
 
-u8 sub_81181E8(u8 r0)
+u8 GetMultiplierAnimId(u8 r0)
 {
     u8 t[] = {0, 1, 2, 3, 4};
     if (r0 >= 20)
@@ -976,16 +976,16 @@ u8 sub_81181E8(u8 r0)
     return 0;
 }
 
-void sub_811829C(u8 r0)
+void SetMultiplierSprite(u8 r0)
 {
     struct Sprite *s = &gSprites[eRoulette->var3C[25]];
-    s->animCmdIndex  = sub_81181E8(r0);
+    s->animCmdIndex  = GetMultiplierAnimId(r0);
     s->oam.tileNum   =
         s->sheetTileStart
         + (*s->anims + s->animCmdIndex)->type;
 }
 
-void sub_81182F8(u8 r0)
+void SetBallCounterNumLeft(u8 r0)
 {
     u8 i;
     u8 t = 0;
@@ -1038,12 +1038,12 @@ void sub_81182F8(u8 r0)
     }
 }
 
-void sub_81184CC(struct Sprite *sprite)
+void SpriteCB_GridSquare(struct Sprite *sprite)
 {
     sprite->x2 = eRoulette->var26;
 }
 
-void sub_81184D8(void)
+void CreateWheelCenterSprite(void)
 {
     u8 spriteid;
     struct SpriteSheet s;
@@ -1060,7 +1060,7 @@ void sub_81184D8(void)
     gSprites[spriteid].coordOffsetEnabled = TRUE;
 }
 
-void sub_8118554(struct Sprite *sprite)
+void SpriteCB_WheelCenter(struct Sprite *sprite)
 {
     u32 t = sprite->oam.matrixNum;
     struct OamMatrix *m = gOamMatrices;
@@ -1070,7 +1070,7 @@ void sub_8118554(struct Sprite *sprite)
     m[t].c = eRoulette->var2C.c;
 }
 
-void sub_811857C(void)
+void CreateWheelBallSprites(void)
 {
     u8 i;
     for (i = 0; i < 6; i++)
@@ -1085,7 +1085,7 @@ void sub_811857C(void)
     }
 }
 
-void sub_81185E8(void)
+void HideWheelBalls(void)
 {
     u8 t = eRoulette->var3C[0];
     u8 i;
