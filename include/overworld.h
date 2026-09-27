@@ -207,12 +207,12 @@ bool32 Overworld_IsRecvQueueAtMax(void);
 u32 Overworld_RecvKeysFromLinkIsRunning(void);
 u32 Overworld_SendKeysToLinkIsRunning(void);
 u32 IsSendingKeysOverCable(void);
-// ClearLinkPlayerObjectEvent
+// ZeroLinkPlayerObjectEvent
 void ClearLinkPlayerObjectEvents(void);
 // ZeroObjectEvent
-// unref_sub_8055A6C
-// unref_sub_8055A9C
-u8 sub_8055AE8(u8);
+// SetLinkPlayerObjectRange
+// DestroyLinkPlayerObject
+u8 GetSpriteForLinkedPlayer(u8);
 void GetLinkPlayerCoords(u8, u16 *, u16 *);
 u8 GetLinkPlayerFacingDirection(u8);
 u8 GetLinkPlayerElevation(u8);

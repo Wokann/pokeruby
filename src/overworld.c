@@ -1881,12 +1881,12 @@ void sub_8054E34(void)
 
 void sub_8054E60(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gLocalLinkPlayerId));
+    InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
 void sub_8054E7C(void)
 {
-    InitCameraUpdateCallback(sub_8055AE8(gLocalLinkPlayerId));
+    InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
 void sub_8054E98(void)
@@ -2496,7 +2496,7 @@ bool32 IsSendingKeysOverCable(void)
     return TRUE;
 }
 
-void ClearLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
+void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
 {
     memset(linkPlayerObjEvent, 0, sizeof(struct LinkPlayerObjectEvent));
 }
@@ -2506,7 +2506,7 @@ void ClearLinkPlayerObjectEvents(void)
     memset(gLinkPlayerObjectEvents, 0, sizeof(gLinkPlayerObjectEvents));
 }
 
-static void ClearObjectEvent(struct ObjectEvent *objEvent)
+static void ZeroObjectEvent(struct ObjectEvent *objEvent)
 {
     memset(objEvent, 0, sizeof(struct ObjectEvent));
 }
@@ -2517,8 +2517,8 @@ static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
 
-    ClearLinkPlayerObjectEvent(linkPlayerObjEvent);
-    ClearObjectEvent(objEvent);
+    ZeroLinkPlayerObjectEvent(linkPlayerObjEvent);
+    ZeroObjectEvent(objEvent);
 
     linkPlayerObjEvent->active = 1;
     linkPlayerObjEvent->linkPlayerId = linkPlayerId;
@@ -2527,8 +2527,8 @@ static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
 
     objEvent->active = 1;
     objEvent->singleMovementActive = a4;
-    objEvent->range.as_byte = 2;
-    objEvent->spriteId = 64;
+    objEvent->range.as_byte = DIR_NORTH;
+    objEvent->spriteId = MAX_SPRITES;
 
     InitLinkPlayerObjectEventPos(objEvent, x, y);
 }
@@ -2544,28 +2544,28 @@ static void InitLinkPlayerObjectEventPos(struct ObjectEvent *objEvent, s16 x, s1
     ObjectEventUpdateZCoord(objEvent);
 }
 
-void unref_sub_8055A6C(u8 linkPlayerId, u8 a2)
+void SetLinkPlayerObjectRange(u8 linkPlayerId, u8 direction)
 {
     if (gLinkPlayerObjectEvents[linkPlayerId].active)
     {
         u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
         struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
-        objEvent->range.as_byte = a2;
+        objEvent->range.as_byte = direction;
     }
 }
 
-void unref_sub_8055A9C(u8 linkPlayerId)
+void DestroyLinkPlayerObject(u8 linkPlayerId)
 {
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     u8 objEventId = linkPlayerObjEvent->objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
-    if (objEvent->spriteId != 64 )
+    if (objEvent->spriteId != MAX_SPRITES)
         DestroySprite(&gSprites[objEvent->spriteId]);
     linkPlayerObjEvent->active = 0;
     objEvent->active = 0;
 }
 
-u8 sub_8055AE8(u8 linkPlayerId)
+u8 GetSpriteForLinkedPlayer(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
