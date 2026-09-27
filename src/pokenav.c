@@ -1785,7 +1785,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
     return TRUE;
 }
 
-void sub_80F1934(void)
+void PrintPokeblockMonNature(void)
 {
     u8 *buffer = gPokenavStructPtr->unk8788;
     if (gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14)

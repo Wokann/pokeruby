@@ -321,7 +321,7 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 20:
-            sub_80F1934();
+            PrintPokeblockMonNature();
             gUnknown_02039304->unk50++;
             break;
         case 21:
@@ -415,7 +415,7 @@ static void sub_8136638(void)
         case 2:
             if (!sub_8055870())
             {
-                sub_80F1934();
+                PrintPokeblockMonNature();
                 sub_80F3D00();
                 gUnknown_02039304->unk50 = 0;
             }
@@ -504,7 +504,7 @@ static void sub_81368A4(void)
         case 2:
             if (!sub_8055870())
             {
-                sub_80F1934();
+                PrintPokeblockMonNature();
                 gUnknown_02039304->unk50 = 0;
             }
             break;

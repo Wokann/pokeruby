@@ -241,7 +241,7 @@ extern struct UnkPokenavStruct *const gPokenavStructPtr;
 
 bool8 SlidePokenavMonInfoHeaderIn(void);
 bool8 LoadPokeblockConditionGraphScreenStep(void);
-void sub_80F1934(void);
+void PrintPokeblockMonNature(void);
 void sub_80F2C80(u8);
 void sub_80F2688(void);
 bool8 sub_80F26BC(void);
