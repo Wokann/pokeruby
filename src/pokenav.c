@@ -2669,14 +2669,14 @@ void DestroyPokenavLeftHeaderSprites(u8 headerType)
     }
 }
 
-void sub_80F2DD8(void)
+void CreatePokenavRegionMapIcons(void)
 {
     CreateRegionMapCursor(7, 7);
     CreateRegionMapPlayerIcon(8, 8);
     sub_80FBF94();
 }
 
-void sub_80F2DF4(void)
+void FreePokenavRegionMapIcons(void)
 {
     FreeRegionMapIconResources();
 }

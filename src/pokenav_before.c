@@ -1636,7 +1636,7 @@ void OpenPokenavRegionMap(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 0xA:
-        sub_80F2DD8();
+        CreatePokenavRegionMapIcons();
         SetVBlankCallback(&VBlankCB_PokenavRegionMap);
         gPokenavStructPtr->callbackStep++;
         break;
@@ -1726,7 +1726,7 @@ void HandleRegionMapInput(void)
     case 5:
         if (!gPaletteFade.active)
         {
-			sub_80F2DF4();
+			FreePokenavRegionMapIcons();
 			StartPokenavLeftHeaderSlideOut(0x4);
 			gSaveBlock2.regionMapZoom = (gPokenavStructPtr->regionMap.zoomed == 1) ? 1 : 0;
 			SetPokenavCallback(&RestorePokenavMainMenu);
