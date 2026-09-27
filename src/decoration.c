@@ -1409,7 +1409,7 @@ const u8 *const gUnknown_083EC5E4[] = {
 
 const struct MenuAction2 gUnknown_083EC604[] = {
     {SecretBaseText_Decorate, DecorationMenuAction_Decorate},
-    {SecretBaseText_PutAway, sub_8100A0C},
+    {SecretBaseText_PutAway, DecorationMenuAction_PutAway},
     {SecretBaseText_Toss, sub_8101700},
     {gOtherText_Exit, DecorationMenuAction_Cancel}
 };
@@ -3049,20 +3049,20 @@ void sub_81009C0(struct Sprite *sprite)
     }
 }
 
-void sub_8100A0C(u8 taskId)
+void DecorationMenuAction_PutAway(u8 taskId)
 {
-    if (sub_8100D38(taskId) == 1)
+    if (HasDecorationsInUse(taskId) == 1)
     {
         FadeScreen(1, 0);
         gTasks[taskId].data[2] = 0;
-        gTasks[taskId].func = sub_8100E70;
+        gTasks[taskId].func = Task_ContinuePuttingAwayDecorations;
     } else
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecorInUse, ReturnToDecorationActionsAfterInvalidSelection, 0);
     }
 }
 
-void sub_8100A60(u8 a0)
+void ClearDecorationContextIndex(u8 a0)
 {
     sDecorationContext.items[a0] = 0;
     sDecorationContext.pos[a0] = 0;
@@ -3079,7 +3079,7 @@ void PutAwayDecorationIteration(void)
     } else if (gDecorations[sDecorationContext.items[gUnknown_020391B4[gSpecialVar_0x8004].decorId]].permission == DECORPERM_SOLID_MAT)
     {
         gSpecialVar_0x8005 = gUnknown_020391B4[gSpecialVar_0x8004].flagId;
-        sub_8100A60(gUnknown_020391B4[gSpecialVar_0x8004].decorId);
+        ClearDecorationContextIndex(gUnknown_020391B4[gSpecialVar_0x8004].decorId);
         for (i=0; i<gMapHeader.events->objectEventCount; i++)
         {
             if (gMapHeader.events->objectEvents[i].flagId == gSpecialVar_0x8005)
@@ -3104,7 +3104,7 @@ void GetObjectEventLocalIdByFlag(void)
     }
 }
 
-void sub_8100B6C(void)
+void ClearRearrangementNonSprites(void)
 {
     u8 i;
     u8 j;
@@ -3130,17 +3130,17 @@ void sub_8100B6C(void)
                     MapGridSetMetatileEntryAt(x + 7 + k, y + 7 - j, ((u16 *)gMapHeader.mapLayout->map)[(x + k) + gMapHeader.mapLayout->width * (y - j)] | 0x3000);
                 }
             }
-            sub_8100A60(gUnknown_020391B4[i].decorId);
+            ClearDecorationContextIndex(gUnknown_020391B4[i].decorId);
         }
     }
 }
 
-void sub_8100C88(u8 taskId)
+void Task_PutAwayDecoration(u8 taskId)
 {
     switch (gTasks[taskId].data[2])
     {
         case 0:
-            sub_8100B6C();
+            ClearRearrangementNonSprites();
             gTasks[taskId].data[2] = 1;
             break;
         case 1:
@@ -3168,7 +3168,7 @@ void sub_8100C88(u8 taskId)
     }
 }
 
-bool8 sub_8100D38(u8 taskId)
+bool8 HasDecorationsInUse(u8 taskId)
 {
     u16 i;
     for (i=0; i<sDecorationContext.size; i++)
@@ -3202,7 +3202,7 @@ void SetUpPuttingAwayDecorationPlayerAvatar(void)
     gSprites[gUnknown_020391A8].oam.priority = 1;
 }
 
-void sub_8100E70(u8 taskId)
+void Task_ContinuePuttingAwayDecorations(u8 taskId)
 {
     s16 *data;
     data = gTasks[taskId].data;
@@ -3476,7 +3476,7 @@ void sub_810153C(u8 taskId)
 {
     FadeScreen(1, 0);
     gTasks[taskId].data[2] = 0;
-    gTasks[taskId].func = sub_8100C88;
+    gTasks[taskId].func = Task_PutAwayDecoration;
 }
 
 void sub_810156C(u8 taskId)
