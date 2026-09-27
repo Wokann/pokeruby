@@ -1145,7 +1145,7 @@ static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Spri
         for (i = DIR_SOUTH; i <= DIR_EAST; i++, x = sprite->sPrevX, y = sprite->sPrevY)
         {
             MoveCoords(i, &x, &y);
-            if (MapGridGetElevationAt(x, y) == 3)
+            if (MapGridGetElevationAt(x, y) == ELEVATION_DEFAULT)
             {
                 sprite->sIntervalIdx++;
                 break;
