@@ -430,10 +430,10 @@ gOtherText_WhichMoveToForget:: @ 842CE06
 	.string "werden?\p"
 	.string "$"
 
-gSystemText_ClearAllSaveDataPrompt:: @ 842CE27
+gText_ClearAllSaveData:: @ 842CE27
 	.string "Alle gesich. Datenbereiche löschen?$"
 
-gSystemText_ClearingData:: @ 842CE42
+gText_ClearingData:: @ 842CE42
 	.string "Daten werden gelöscht...\n"
 	.string "Bitte warten...$"
 

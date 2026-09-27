@@ -390,10 +390,10 @@ gOtherText_GiveUpTeachingMove:: @ 842CDDC
 gOtherText_WhichMoveToForget:: @ 842CE06
 	.string "Which move should be forgotten?\p$"
 
-gSystemText_ClearAllSaveDataPrompt:: @ 842CE27
+gText_ClearAllSaveData:: @ 842CE27
 	.string "Clear all save data areas?$"
 
-gSystemText_ClearingData:: @ 842CE42
+gText_ClearingData:: @ 842CE42
 	.string "Clearing data...\nPlease wait.$"
 
 gContestText_AnnounceResults:: @ 842CE60

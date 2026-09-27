@@ -206,9 +206,9 @@ extern const u8 gOtherText_ForgotOrDidNotLearnMove[];
 extern const u8 gOtherText_GiveUpTeachingMove[];
 extern const u8 gOtherText_WhichMoveToForget[];
 
-// clear_save_data_menu
-extern const u8 gSystemText_ClearAllSaveDataPrompt[];
-extern const u8 gSystemText_ClearingData[];
+// clear_save_data_screen
+extern const u8 gText_ClearAllSaveData[];
+extern const u8 gText_ClearingData[];
 
 // contest_link_80C2020
 extern const u8 gContestText_AnnounceResults[];
