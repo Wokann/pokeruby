@@ -590,8 +590,8 @@ u8 (*const gMovementActionFuncs_WalkNormalRight[])(struct ObjectEvent *, struct 
     MovementAction_PauseSpriteAnim
 };
 
-const s16 gUnknown_08375A34[] = {0, 1, 1};
-const s16 gUnknown_08375A3A[] = {0, 0, 1};
+const s16 sJumpInitDisplacements[] = {0, 1, 1};
+const s16 sJumpDisplacements[] = {0, 0, 1};
 
 u8 (*const gMovementActionFuncs_Jump2Down[])(struct ObjectEvent *, struct Sprite *) = {
     MovementAction_Jump2Down_Step0,
