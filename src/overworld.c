@@ -1951,7 +1951,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
 
     if (sPlayerLinkStates[a1] == PLAYER_LINK_STATE_IDLE)
     {
-        script = sub_8055648(a3);
+        script = TryGetTileEventScript(a3);
         if (script)
         {
             *a4 = sub_8055758(script);
@@ -1976,7 +1976,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
         switch (a2)
         {
         case LINK_KEY_CODE_START_BUTTON:
-            if (sub_8055630(a3))
+            if (CanCableClubPlayerPressStart(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
                 if (a3->isLocalPlayer)
@@ -1987,7 +1987,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_DPAD_DOWN:
-            if (sub_8055660(a3) == 1)
+            if (PlayerIsAtSouthExit(a3) == 1)
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
                 if (a3->isLocalPlayer)
@@ -1998,7 +1998,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_A_BUTTON:
-            script = sub_805568C(a3);
+            script = TryInteractWithPlayer(a3);
             if (script)
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
@@ -2010,7 +2010,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_HANDLE_RECV_QUEUE:
-            if (sub_8055618(a3))
+            if (IsCableClubPlayerUnfrozen(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
                 if (a3->isLocalPlayer)
@@ -2021,7 +2021,7 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_HANDLE_SEND_QUEUE:
-            if (sub_8055618(a3))
+            if (IsCableClubPlayerUnfrozen(a3))
             {
                 sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
                 if (a3->isLocalPlayer)
@@ -2062,7 +2062,7 @@ void UpdateAllLinkPlayers(u16 *a1, int a2)
     {
         u16 v5 = a1[i];
         u16 v8 = 0;
-        sub_80555B0(i, a2, &st);
+        LoadCableClubPlayer(i, a2, &st);
         HandleLinkPlayerKeyInput(i, v5, &st, &v8);
         if (sPlayerLinkStates[i] == PLAYER_LINK_STATE_IDLE)
             v8 = GetDirectionForDpadKey(v5);
@@ -2284,7 +2284,7 @@ u16 QueueExitLinkRoomKey(void)
     return 0;
 }
 
-void sub_80555B0(int linkPlayerId, int a2, struct CableClubPlayer *a3)
+void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3)
 {
     s16 x, y;
 
@@ -2299,7 +2299,7 @@ void sub_80555B0(int linkPlayerId, int a2, struct CableClubPlayer *a3)
     a3->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
-bool32 sub_8055618(struct CableClubPlayer *a1)
+bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *a1)
 {
     u8 v1 = a1->movementMode;
     if (v1 == 2 || v1 == 0)
@@ -2308,7 +2308,7 @@ bool32 sub_8055618(struct CableClubPlayer *a1)
         return FALSE;
 }
 
-bool32 sub_8055630(struct CableClubPlayer *a1)
+bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *a1)
 {
     u8 v1 = a1->movementMode;
     if (v1 == 2 || v1 == 0)
@@ -2317,14 +2317,14 @@ bool32 sub_8055630(struct CableClubPlayer *a1)
         return FALSE;
 }
 
-const u8 *sub_8055648(struct CableClubPlayer *a1)
+const u8 *TryGetTileEventScript(struct CableClubPlayer *a1)
 {
     if (a1->movementMode != 2)
         return 0;
     return GetCoordEventScriptAtMapPosition(&a1->pos);
 }
 
-bool32 sub_8055660(struct CableClubPlayer *a1)
+bool32 PlayerIsAtSouthExit(struct CableClubPlayer *a1)
 {
     if (a1->movementMode != 2 && a1->movementMode != 0)
         return FALSE;
@@ -2335,7 +2335,7 @@ bool32 sub_8055660(struct CableClubPlayer *a1)
     return TRUE;
 }
 
-const u8 *sub_805568C(struct CableClubPlayer *a1)
+const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
 {
     struct MapPosition unkStruct;
     u8 linkPlayerId;
