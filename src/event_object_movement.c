@@ -601,7 +601,7 @@ const s16 gMovementDelaysShort[] =  {32, 48,  64,  80};
 
 #include "data/object_events/movement_type_func_tables.h"
 
-const u8 gFaceDirectionAnimNums[] = {
+static const u8 sFaceDirectionAnimNums[] = {
     0, // DIR_NONE
     0, // DIR_SOUTH
     1, // DIR_NORTH
@@ -612,7 +612,7 @@ const u8 gFaceDirectionAnimNums[] = {
     1, // DIR_NORTHWEST
     1, // DIR_NORTHEAST
 };
-const u8 gMoveDirectionAnimNums[] = {
+static const u8 sMoveDirectionAnimNums[] = {
     4, // DIR_NONE
     4, // DIR_SOUTH
     5, // DIR_NORTH
@@ -623,7 +623,7 @@ const u8 gMoveDirectionAnimNums[] = {
     5, // DIR_NORTHWEST
     5, // DIR_NORTHEAST
 };
-const u8 gMoveDirectionFastAnimNums[] = {
+static const u8 sMoveDirectionFastAnimNums[] = {
     8,  // DIR_NONE
     8,  // DIR_SOUTH
     9,  // DIR_NORTH
@@ -634,7 +634,7 @@ const u8 gMoveDirectionFastAnimNums[] = {
     9,  // DIR_NORTHWEST
     9,  // DIR_NORTHEAST
 };
-const u8 gMoveDirectionFasterAnimNums[] = {
+static const u8 sMoveDirectionFasterAnimNums[] = {
     12, // DIR_NONE
     12, // DIR_SOUTH
     13, // DIR_NORTH
@@ -645,7 +645,7 @@ const u8 gMoveDirectionFasterAnimNums[] = {
     13, // DIR_NORTHWEST
     13, // DIR_NORTHEAST
 };
-const u8 gMoveDirectionFastestAnimNums[] = {
+static const u8 sMoveDirectionFastestAnimNums[] = {
     16, // DIR_NONE
     16, // DIR_SOUTH
     17, // DIR_NORTH
@@ -656,7 +656,7 @@ const u8 gMoveDirectionFastestAnimNums[] = {
     17, // DIR_NORTHWEST
     17, // DIR_NORTHEAST
 };
-const u8 gJumpSpecialDirectionAnimNums[] = { // used for jumping onto surf mon
+static const u8 sJumpSpecialDirectionAnimNums[] = { // used for jumping onto surf mon
     20, // DIR_NONE
     20, // DIR_SOUTH
     21, // DIR_NORTH
@@ -667,7 +667,7 @@ const u8 gJumpSpecialDirectionAnimNums[] = { // used for jumping onto surf mon
     21, // DIR_NORTHWEST
     21, // DIR_NORTHEAST
 };
-const u8 gAcroWheelieDirectionAnimNums[] = {
+static const u8 sAcroWheelieDirectionAnimNums[] = {
     20, // DIR_NONE
     20, // DIR_SOUTH
     21, // DIR_NORTH
@@ -678,7 +678,7 @@ const u8 gAcroWheelieDirectionAnimNums[] = {
     21, // DIR_NORTHWEST
     21, // DIR_NORTHEAST
 };
-const u8 gUnrefAnimNums_08375633[] = {
+static const u8 sAcroUnusedDirectionAnimNums[] = {
     24, // DIR_NONE
     24, // DIR_SOUTH
     25, // DIR_NORTH
@@ -689,7 +689,7 @@ const u8 gUnrefAnimNums_08375633[] = {
     25, // DIR_NORTHWEST
     25, // DIR_NORTHEAST
 };
-const u8 gAcroEndWheelieDirectionAnimNums[] = {
+static const u8 sAcroEndWheelieDirectionAnimNums[] = {
     28, // DIR_NONE
     28, // DIR_SOUTH
     29, // DIR_NORTH
@@ -700,7 +700,7 @@ const u8 gAcroEndWheelieDirectionAnimNums[] = {
     29, // DIR_NORTHWEST
     29, // DIR_NORTHEAST
 };
-const u8 gAcroUnusedActionDirectionAnimNums[] = {
+static const u8 sAcroUnusedActionDirectionAnimNums[] = {
     32, // DIR_NONE
     32, // DIR_SOUTH
     33, // DIR_NORTH
@@ -711,7 +711,7 @@ const u8 gAcroUnusedActionDirectionAnimNums[] = {
     33, // DIR_NORTHWEST
     33, // DIR_NORTHEAST
 };
-const u8 gAcroWheeliePedalDirectionAnimNums[] = {
+static const u8 sAcroWheeliePedalDirectionAnimNums[] = {
     36, // DIR_NONE
     36, // DIR_SOUTH
     37, // DIR_NORTH
@@ -722,7 +722,7 @@ const u8 gAcroWheeliePedalDirectionAnimNums[] = {
     37, // DIR_NORTHWEST
     37, // DIR_NORTHEAST
 };
-const u8 gFishingDirectionAnimNums[] = {
+static const u8 sFishingDirectionAnimNums[] = {
     ANIM_TAKE_OUT_ROD_SOUTH, // DIR_NONE
     ANIM_TAKE_OUT_ROD_SOUTH, // DIR_SOUTH
     ANIM_TAKE_OUT_ROD_NORTH, // DIR_NORTH
@@ -733,7 +733,7 @@ const u8 gFishingDirectionAnimNums[] = {
     ANIM_TAKE_OUT_ROD_NORTH, // DIR_NORTHWEST
     ANIM_TAKE_OUT_ROD_NORTH, // DIR_NORTHEAST
 };
-const u8 gFishingNoCatchDirectionAnimNums[] = {
+static const u8 sFishingNoCatchDirectionAnimNums[] = {
     ANIM_PUT_AWAY_ROD_SOUTH, // DIR_NONE
     ANIM_PUT_AWAY_ROD_SOUTH, // DIR_SOUTH
     ANIM_PUT_AWAY_ROD_NORTH, // DIR_NORTH
@@ -744,7 +744,7 @@ const u8 gFishingNoCatchDirectionAnimNums[] = {
     ANIM_PUT_AWAY_ROD_NORTH, // DIR_NORTHWEST
     ANIM_PUT_AWAY_ROD_NORTH, // DIR_NORTHEAST
 };
-const u8 gFishingBiteDirectionAnimNums[] = {
+static const u8 sFishingBiteDirectionAnimNums[] = {
     ANIM_HOOKED_POKEMON_SOUTH, // DIR_NONE
     ANIM_HOOKED_POKEMON_SOUTH, // DIR_SOUTH
     ANIM_HOOKED_POKEMON_NORTH, // DIR_NORTH
@@ -755,7 +755,7 @@ const u8 gFishingBiteDirectionAnimNums[] = {
     ANIM_HOOKED_POKEMON_NORTH, // DIR_NORTHWEST
     ANIM_HOOKED_POKEMON_NORTH, // DIR_NORTHEAST
 };
-const u8 gRunningDirectionAnimNums[] = {
+static const u8 sRunningDirectionAnimNums[] = {
     20, // DIR_NONE
     20, // DIR_SOUTH
     21, // DIR_NORTH
@@ -4321,77 +4321,77 @@ static void ClearObjectEventMovement(struct ObjectEvent *objectEvent, struct Spr
 
 u8 GetFaceDirectionAnimNum(u8 direction)
 {
-    return gFaceDirectionAnimNums[direction];
+    return sFaceDirectionAnimNums[direction];
 }
 
 u8 GetMoveDirectionAnimNum(u8 direction)
 {
-    return gMoveDirectionAnimNums[direction];
+    return sMoveDirectionAnimNums[direction];
 }
 
 u8 GetMoveDirectionFastAnimNum(u8 direction)
 {
-    return gMoveDirectionFastAnimNums[direction];
+    return sMoveDirectionFastAnimNums[direction];
 }
 
 u8 GetMoveDirectionFasterAnimNum(u8 direction)
 {
-    return gMoveDirectionFasterAnimNums[direction];
+    return sMoveDirectionFasterAnimNums[direction];
 }
 
 u8 GetMoveDirectionFastestAnimNum(u8 direction)
 {
-    return gMoveDirectionFastestAnimNums[direction];
+    return sMoveDirectionFastestAnimNums[direction];
 }
 
 u8 GetJumpSpecialDirectionAnimNum(u8 direction)
 {
-    return gJumpSpecialDirectionAnimNums[direction];
+    return sJumpSpecialDirectionAnimNums[direction];
 }
 
 u8 GetAcroWheelieDirectionAnimNum(u8 direction)
 {
-    return gAcroWheelieDirectionAnimNums[direction];
+    return sAcroWheelieDirectionAnimNums[direction];
 }
 
-u8 Unref_GetAnimNums_08375633(u8 direction)
+u8 GetAcroUnusedDirectionAnimNum(u8 direction)
 {
-    return gUnrefAnimNums_08375633[direction];
+    return sAcroUnusedDirectionAnimNums[direction];
 }
 
 u8 GetAcroEndWheelieDirectionAnimNum(u8 direction)
 {
-    return gAcroEndWheelieDirectionAnimNums[direction];
+    return sAcroEndWheelieDirectionAnimNums[direction];
 }
 
 u8 GetAcroUnusedActionDirectionAnimNum(u8 direction)
 {
-    return gAcroUnusedActionDirectionAnimNums[direction];
+    return sAcroUnusedActionDirectionAnimNums[direction];
 }
 
 u8 GetAcroWheeliePedalDirectionAnimNum(u8 direction)
 {
-    return gAcroWheeliePedalDirectionAnimNums[direction];
+    return sAcroWheeliePedalDirectionAnimNums[direction];
 }
 
 u8 GetFishingDirectionAnimNum(u8 direction)
 {
-    return gFishingDirectionAnimNums[direction];
+    return sFishingDirectionAnimNums[direction];
 }
 
 u8 GetFishingNoCatchDirectionAnimNum(u8 direction)
 {
-    return gFishingNoCatchDirectionAnimNums[direction];
+    return sFishingNoCatchDirectionAnimNums[direction];
 }
 
 u8 GetFishingBiteDirectionAnimNum(u8 direction)
 {
-    return gFishingBiteDirectionAnimNums[direction];
+    return sFishingBiteDirectionAnimNums[direction];
 }
 
 u8 GetRunningDirectionAnimNum(u8 direction)
 {
-    return gRunningDirectionAnimNums[direction];
+    return sRunningDirectionAnimNums[direction];
 }
 
 void sub_805FE28(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animNum)
