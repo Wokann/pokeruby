@@ -573,10 +573,10 @@ bool8 LoadPokenavRegionMapGfxStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        sub_80FA904(&gPokenavStructPtr->regionMap, gSaveBlock2.regionMapZoom ? TRUE : FALSE);
+        InitRegionMapData(&gPokenavStructPtr->regionMap, gSaveBlock2.regionMapZoom ? TRUE : FALSE);
         break;
     case 6:
-        if (sub_80FA940())
+        if (LoadRegionMapGfx())
             return TRUE;
         break;
     case 7:

@@ -1668,7 +1668,7 @@ void HandleRegionMapInput(void)
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case 1:
             PausePokenavCallbackForLink();
@@ -1689,17 +1689,17 @@ void HandleRegionMapInput(void)
     case 1:
         if (!gPokenavStructPtr->regionMap.zoomed)
         {
-            sub_80FAEC4();
+            SetRegionMapDataForZoom();
             gPokenavStructPtr->callbackStep++;
         }
         else if (!UpdateRegionMapBgYForZoom(1))
         {
-			sub_80FAEC4();
+			SetRegionMapDataForZoom();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
     case 2:
-        if (!sub_80FAFC0())
+        if (!UpdateRegionMapZoom())
         {
 			if (!gPokenavStructPtr->regionMap.zoomed)
 			{

@@ -74,12 +74,12 @@ struct RegionMapState
 extern struct RegionMapState *const gRegionMapState;
 
 void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed);
-void sub_80FA904(struct RegionMap *regionMap, bool8 zoomed);
-bool8 sub_80FA940(void);
+void InitRegionMapData(struct RegionMap *regionMap, bool8 zoomed);
+bool8 LoadRegionMapGfx(void);
 void FreeRegionMapIconResources(void);
-u8 sub_80FAB60(void);
-void sub_80FAEC4(void);
-u8 sub_80FAFC0(void);
+u8 DoRegionMapInputCallback(void);
+void SetRegionMapDataForZoom(void);
+u8 UpdateRegionMapZoom(void);
 void UpdateRegionMapVideoRegs(void);
 void RegionMapDefaultZoomOffsetPlayerSprite(s16, s16);
 u16 GetOverworldMapFromUnderwaterMap(u16 mapSectionId);

@@ -74,7 +74,7 @@ void sub_813EFDC(void)
             eRegionMapState.unk_888[0]++;
         break;
     case 2:
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case 3:
             sub_813F0C8();

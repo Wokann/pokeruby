@@ -78,10 +78,10 @@ static const u16 sUnderwaterMaps[][2] =
     {MAPSEC_NONE,              MAPSEC_NONE},
 };
 
-static u8 sub_80FAB78(void);
-static u8 _swiopen(void);
-static u8 sub_80FAD04(void);
-static u8 sub_80FADE4(void);
+static u8 ProcessRegionMapInput_Full(void);
+static u8 MoveRegionMapCursor_Full(void);
+static u8 ProcessRegionMapInput_Zoomed(void);
+static u8 MoveRegionMapCursor_Zoomed(void);
 static void CalcZoomScrollParams(s16, s16, s16, s16, u16, u16, u8);
 static void sub_80FB238(s16, s16);
 void UpdateRegionMapVideoRegs(void);
@@ -114,20 +114,20 @@ void sub_80FC69C(void);
 
 void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
 {
-    sub_80FA904(regionMap, zoomed);
-    while (sub_80FA940())
+    InitRegionMapData(regionMap, zoomed);
+    while (LoadRegionMapGfx())
         ;
 }
 
-void sub_80FA904(struct RegionMap *regionMap, bool8 zoomed)
+void InitRegionMapData(struct RegionMap *regionMap, bool8 zoomed)
 {
     gRegionMap = regionMap;
     gRegionMap->initStep = 0;
     gRegionMap->zoomed = zoomed;
-    gRegionMap->inputCallback = (zoomed == 0) ? sub_80FAB78 : sub_80FAD04;
+    gRegionMap->inputCallback = (zoomed == 0) ? ProcessRegionMapInput_Full : ProcessRegionMapInput_Zoomed;
 }
 
-bool8 sub_80FA940(void)
+bool8 LoadRegionMapGfx(void)
 {
     switch (gRegionMap->initStep)
     {
@@ -200,12 +200,12 @@ void FreeRegionMapIconResources(void)
     }
 }
 
-u8 sub_80FAB60(void)
+u8 DoRegionMapInputCallback(void)
 {
     return gRegionMap->inputCallback();
 }
 
-static u8 sub_80FAB78(void)
+static u8 ProcessRegionMapInput_Full(void)
 {
     u8 event = INPUT_EVENT_NONE;
 
@@ -240,12 +240,12 @@ static u8 sub_80FAB78(void)
     if (event == INPUT_EVENT_DPAD)
     {
         gRegionMap->unk7A = 4;
-        gRegionMap->inputCallback = _swiopen;
+        gRegionMap->inputCallback = MoveRegionMapCursor_Full;
     }
     return event;
 }
 
-static u8 _swiopen(void)
+static u8 MoveRegionMapCursor_Full(void)
 {
     u16 mapSectionId;
 
@@ -272,11 +272,11 @@ static u8 _swiopen(void)
         GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
     }
     sub_80FBA18();
-    gRegionMap->inputCallback = sub_80FAB78;
+    gRegionMap->inputCallback = ProcessRegionMapInput_Full;
     return INPUT_EVENT_3;
 }
 
-static u8 sub_80FAD04(void)
+static u8 ProcessRegionMapInput_Zoomed(void)
 {
     u8 event = INPUT_EVENT_NONE;
 
@@ -310,13 +310,13 @@ static u8 sub_80FAD04(void)
 
     if (event == INPUT_EVENT_DPAD)
     {
-        gRegionMap->inputCallback = sub_80FADE4;
+        gRegionMap->inputCallback = MoveRegionMapCursor_Zoomed;
         gRegionMap->unk6C = 0;
     }
     return event;
 }
 
-static u8 sub_80FADE4(void)
+static u8 MoveRegionMapCursor_Zoomed(void)
 {
     gRegionMap->scrollY += gRegionMap->unk68;
     gRegionMap->scrollX += gRegionMap->unk6A;
@@ -343,13 +343,13 @@ static u8 sub_80FADE4(void)
             sub_80FBA18();
         }
         gRegionMap->unk6C = 0;
-        gRegionMap->inputCallback = sub_80FAD04;
+        gRegionMap->inputCallback = ProcessRegionMapInput_Zoomed;
         return INPUT_EVENT_3;
     }
     return INPUT_EVENT_2;
 }
 
-void sub_80FAEC4(void)
+void SetRegionMapDataForZoom(void)
 {
     if (gRegionMap->zoomed == FALSE)
     {
@@ -384,7 +384,7 @@ void sub_80FAEC4(void)
     sub_80FBDF8();
 }
 
-u8 sub_80FAFC0(void)
+u8 UpdateRegionMapZoom(void)
 {
     u8 r4;
 
@@ -399,7 +399,7 @@ u8 sub_80FAFC0(void)
         gRegionMap->scrollY = gRegionMap->unk62;
         gRegionMap->unk4C = (gRegionMap->zoomed == FALSE) ? (128 << 8) : (256 << 8);
         gRegionMap->zoomed = !gRegionMap->zoomed;
-        gRegionMap->inputCallback = (gRegionMap->zoomed == FALSE) ? sub_80FAB78 : sub_80FAD04;
+        gRegionMap->inputCallback = (gRegionMap->zoomed == FALSE) ? ProcessRegionMapInput_Full : ProcessRegionMapInput_Zoomed;
         CreateRegionMapCursor(gRegionMap->cursorTileTag, gRegionMap->cursorPaletteTag);
         sub_80FBE24();
         r4 = 0;
@@ -1576,7 +1576,7 @@ static void sub_80FC600(void)
 {
     if (gRegionMapState->state == 0)
     {
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case INPUT_EVENT_NONE:
         case INPUT_EVENT_DPAD:
@@ -1693,7 +1693,7 @@ void debug_sub_8110D84(void)
             gRegionMapState->state++;
         break;
     case 2:
-        switch (sub_80FAB60())
+        switch (DoRegionMapInputCallback())
         {
         case 0:
             break;
@@ -1720,38 +1720,38 @@ void debug_sub_8110D84(void)
             SetMainCallback2(c2_exit_to_overworld_1_sub_8080DEC);
         break;
     case 4:
-        if (sub_80FAB60() != 0)
+        if (DoRegionMapInputCallback() != 0)
         {
             debug_sub_8110CCC();
         }
         else if (JOY_NEW(A_BUTTON))
         {
             sub_80FBCA0();
-            sub_80FAEC4();
+            SetRegionMapDataForZoom();
             gRegionMapState->state++;
         }
         break;
     case 5:
-        if (sub_80FAFC0() == 0)
+        if (UpdateRegionMapZoom() == 0)
         {
             CreateRegionMapCursor(0, 0);
             gRegionMapState->state++;
         }
         break;
     case 6:
-        if (sub_80FAB60() != 0)
+        if (DoRegionMapInputCallback() != 0)
         {
             debug_sub_8110CCC();
         }
         if (JOY_NEW(A_BUTTON))  // no "else if" like above?
         {
             sub_80FBCA0();
-            sub_80FAEC4();
+            SetRegionMapDataForZoom();
             gRegionMapState->state++;
         }
         break;
     case 7:
-        if (sub_80FAFC0() == 0)
+        if (UpdateRegionMapZoom() == 0)
         {
             CreateRegionMapCursor(0, 0);
             gRegionMapState->state = 3;
