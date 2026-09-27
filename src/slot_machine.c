@@ -569,7 +569,7 @@ static void CreateSlotMachineTasks(void)
     Task_SlotMachine(CreateTask(Task_SlotMachine, 0));
 }
 
-static bool8 (*const gUnknown_083ECAAC[])(struct Task *task) =
+static bool8 (*const sSlotTasks[])(struct Task *task) =
 {
     SlotTask_UnfadeScreen,
     SlotTask_WaitUnfade,
@@ -607,7 +607,7 @@ static bool8 (*const gUnknown_083ECAAC[])(struct Task *task) =
 
 static void Task_SlotMachine(u8 taskId)
 {
-    while (gUnknown_083ECAAC[sSlotMachine->state](gTasks + taskId))
+    while (sSlotTasks[sSlotMachine->state](gTasks + taskId))
         ;
 }
 
