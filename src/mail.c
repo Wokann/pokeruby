@@ -293,15 +293,15 @@ const u8 Str_8411608[] = DTR("メールをけす", "Delete MAIL");
 // XXX: what is this?
 static struct Unk2000000 *const sSharedMemPtr = (struct Unk2000000 *)gSharedMem;
 
-static u8 sub_80F8A28(void);
-static void sub_80F8D50(void);
-static void sub_80F8DA0(void);
-static void sub_80F8E80(void);
-static void sub_80F8F18(void);
-static void sub_80F8F2C(void);
-static void sub_80F8F58(void);
-static void sub_80F8F78(void);
-static void sub_80F8FB4(void);
+static u8 MailReadBuildGraphics(void);
+static void CB2_InitMailRead(void);
+static void BufferMailText(void);
+static void PrintMailText(void);
+static void VBlankCB_MailRead(void);
+static void CB2_MailRead(void);
+static void CB2_WaitForPaletteExitOnKeyPress(void);
+static void CB2_ExitOnKeyPress(void);
+static void CB2_ExitMailReadFreeVars(void);
 
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
@@ -311,7 +311,7 @@ extern u16 gSpecialVar_0x8006;
 static u8 gUnknown_Debug_0300079C;
 #endif
 
-void HandleReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
+void ReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
 {
     u16 buffer[2];
     u16 species;
@@ -379,13 +379,13 @@ void HandleReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
     sSharedMemPtr->varEC = arg1;
     sSharedMemPtr->varF8 = arg2;
 
-    SetMainCallback2(sub_80F8D50);
+    SetMainCallback2(CB2_InitMailRead);
 }
 
 #define RETURN_UP_STATE break
 #define RETURN_SKIP_STATE return FALSE
 
-static u8 sub_80F8A28(void)
+static u8 MailReadBuildGraphics(void)
 {
     switch (gMain.state)
     {
@@ -466,17 +466,17 @@ static u8 sub_80F8A28(void)
     case 14:
         if (sSharedMemPtr->varF8 != 0)
         {
-            sub_80F8DA0();
+            BufferMailText();
         }
         RETURN_UP_STATE;
 
     case 15:
         if (sSharedMemPtr->varF8 != 0)
         {
-            sub_80F8E80();
+            PrintMailText();
         }
 
-        SetVBlankCallback(sub_80F8F18);
+        SetVBlankCallback(VBlankCB_MailRead);
         gPaletteFade.bufferTransferDisabled = 1;
         RETURN_UP_STATE;
 
@@ -516,7 +516,7 @@ static u8 sub_80F8A28(void)
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         gPaletteFade.bufferTransferDisabled = 0;
-        sSharedMemPtr->varF0 = sub_80F8F58;
+        sSharedMemPtr->varF0 = CB2_WaitForPaletteExitOnKeyPress;
         return TRUE;
 
     default:
@@ -527,19 +527,19 @@ static u8 sub_80F8A28(void)
     return FALSE;
 }
 
-static void sub_80F8D50(void)
+static void CB2_InitMailRead(void)
 {
     do
     {
-        if (sub_80F8A28() == 1)
+        if (MailReadBuildGraphics() == 1)
         {
-            SetMainCallback2(sub_80F8F2C);
+            SetMainCallback2(CB2_MailRead);
             return;
         }
     } while (sub_80F9344() != 1);
 }
 
-static u8 *sub_80F8D7C(u8 *dest, u8 *src)
+static u8 *CopyAndSanitizeMailPlayerName(u8 *dest, u8 *src)
 {
     u16 length;
 
@@ -551,7 +551,7 @@ static u8 *sub_80F8D7C(u8 *dest, u8 *src)
     return dest + length;
 }
 
-static void sub_80F8DA0(void)
+static void BufferMailText(void)
 {
     u16 i;
     u8 r6;
@@ -566,7 +566,7 @@ static void sub_80F8DA0(void)
     ptr = sSharedMemPtr->varD8;
     if (sSharedMemPtr->var100 == 0)
     {
-        ptr = sub_80F8D7C(ptr, sSharedMemPtr->varF4->playerName);
+        ptr = CopyAndSanitizeMailPlayerName(ptr, sSharedMemPtr->varF4->playerName);
         StringCopy(ptr, gOtherText_From);
         sSharedMemPtr->varF9 = sSharedMemPtr->var10C->var2 - StringLength(sSharedMemPtr->varD8);
 
@@ -574,12 +574,12 @@ static void sub_80F8DA0(void)
     else
     {
         ptr = StringCopy(ptr, gOtherText_From);
-        sub_80F8D7C(ptr, sSharedMemPtr->varF4->playerName);
+        CopyAndSanitizeMailPlayerName(ptr, sSharedMemPtr->varF4->playerName);
         sSharedMemPtr->varF9 = sSharedMemPtr->var10C->var2;
     }
 }
 
-static void sub_80F8E80(void)
+static void PrintMailText(void)
 {
     u16 pos;
     u8 x;
@@ -606,14 +606,14 @@ static void sub_80F8E80(void)
     Menu_PrintText(sSharedMemPtr->varD8, sSharedMemPtr->varF9, sSharedMemPtr->var10C->var1);
 }
 
-static void sub_80F8F18(void)
+static void VBlankCB_MailRead(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void sub_80F8F2C(void)
+static void CB2_MailRead(void)
 {
     if (sSharedMemPtr->varFB != 0)
     {
@@ -624,27 +624,27 @@ static void sub_80F8F2C(void)
     sSharedMemPtr->varF0();
 }
 
-static void sub_80F8F58(void)
+static void CB2_WaitForPaletteExitOnKeyPress(void)
 {
     u8 local0;
 
     local0 = UpdatePaletteFade();
     if (local0 == 0)
     {
-        sSharedMemPtr->varF0 = sub_80F8F78;
+        sSharedMemPtr->varF0 = CB2_ExitOnKeyPress;
     }
 }
 
-static void sub_80F8F78(void)
+static void CB2_ExitOnKeyPress(void)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        sSharedMemPtr->varF0 = sub_80F8FB4;
+        sSharedMemPtr->varF0 = CB2_ExitMailReadFreeVars;
     }
 }
 
-static void sub_80F8FB4(void)
+static void CB2_ExitMailReadFreeVars(void)
 {
     if (!UpdatePaletteFade())
     {
@@ -679,9 +679,9 @@ void debug_sub_810C910(u8 taskId)
         Menu_EraseScreen();
         DestroyTask(taskId);
         if (gSaveBlock1.mail[gSpecialVar_0x8005].itemId == 0)
-            HandleReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 0);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 0);
         else
-            HandleReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 1);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 1);
     }
 }
 
@@ -1105,7 +1105,7 @@ void debug_sub_810D388(void)
         {
             ScanlineEffect_Stop();
             ResetPaletteFade();
-            SetVBlankCallback(sub_80F8F18);
+            SetVBlankCallback(VBlankCB_MailRead);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         }
         break;
@@ -1146,7 +1146,7 @@ void debug_sub_810D388(void)
         REG_DISPCNT = 0x0340;
         debug_sub_810D340();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(sub_80F8F18);
+        SetVBlankCallback(VBlankCB_MailRead);
         break;
     case 7:
         if (!UpdatePaletteFade())

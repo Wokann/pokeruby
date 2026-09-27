@@ -175,7 +175,7 @@ void Task_ReadMailFromBag(u8 taskId)
     if (!gPaletteFade.active)
     {
         mailStruct.itemId = gSpecialVar_ItemId;
-        HandleReadMail(&mailStruct, sub_80A5D04, 0);
+        ReadMail(&mailStruct, sub_80A5D04, 0);
         DestroyTask(taskId);
     }
 }

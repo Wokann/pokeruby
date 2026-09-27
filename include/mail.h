@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-void HandleReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2);
+void ReadMail(struct MailStruct *mail, MainCallback exitCallback, bool8 hasText);
 
 #endif // GUARD_MAIL_H

@@ -1201,7 +1201,7 @@ static void Mailbox_FadeAndReadMail(u8 taskId)
 {
     if(!gPaletteFade.active)
     {
-        HandleReadMail(&gSaveBlock1.mail[eMailboxInfo.itemsAbove + 6 + eMailboxInfo.cursorPos], Mailbox_ReturnToFieldFromReadMail, 1);
+        ReadMail(&gSaveBlock1.mail[eMailboxInfo.itemsAbove + 6 + eMailboxInfo.cursorPos], Mailbox_ReturnToFieldFromReadMail, 1);
         DestroyTask(taskId);
     }
 }
