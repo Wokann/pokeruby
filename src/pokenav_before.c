@@ -2881,7 +2881,7 @@ void RibbonsSummaryHandleInput(void)
 		}
         break;
     case 6:
-        switch (sub_80F68E8())
+        switch (HandleRibbonsSummaryCursorInput())
         {
         case 1:
             PlaySE(SE_SELECT);

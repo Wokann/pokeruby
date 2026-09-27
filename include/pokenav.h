@@ -441,7 +441,7 @@ void sub_80F6F10();
 void PrintRibbonsSummaryCount(void);
 void sub_80F6A4C(s8);
 bool8 sub_80F6AF0();
-u8 sub_80F68E8();
+u8 HandleRibbonsSummaryCursorInput();
 void InitRibbonsSummaryMonData();
 void InitRibbonsMonList();
 bool8 BuildRibbonsMonListStep();

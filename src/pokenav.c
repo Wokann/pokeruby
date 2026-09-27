@@ -4961,74 +4961,74 @@ void InitRibbonsSummaryMonData(void)
     gPokenavStructPtr->ribbonPageCounts[i] = gPokenavStructPtr->giftRibbonCount;
 }
 
-u8 sub_80F68E8(void)
+u8 HandleRibbonsSummaryCursorInput(void)
 {
-    s8 r5 = gPokenavStructPtr->ribbonCursorPos;
-    s8 r4 = gPokenavStructPtr->ribbonPageIndex;
-    s8 r12 = 1;
+    s8 cursorPos = gPokenavStructPtr->ribbonCursorPos;
+    s8 pageIndex = gPokenavStructPtr->ribbonPageIndex;
+    s8 moved = 1;
     do
     {
-        if (JOY_REPT(DPAD_UP) && r4 > 0)
+        if (JOY_REPT(DPAD_UP) && pageIndex > 0)
         {
-            while (r4 > 0)
+            while (pageIndex > 0)
             {
-                r4--;
-                if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
+                pageIndex--;
+                if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
                     break;
             }
-            if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
+            if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
             {
-                if (r5 >= gPokenavStructPtr->ribbonPageCounts[r4])
-                    r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
+                if (cursorPos >= gPokenavStructPtr->ribbonPageCounts[pageIndex])
+                    cursorPos = gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1;
                 break;
             }
-            r4 = gPokenavStructPtr->ribbonPageIndex;
+            pageIndex = gPokenavStructPtr->ribbonPageIndex;
         }
-        if (JOY_REPT(DPAD_DOWN) && r4 < 3)
+        if (JOY_REPT(DPAD_DOWN) && pageIndex < 3)
         {
-            while (r4 < 3)
+            while (pageIndex < 3)
             {
-                r4++;
-                if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
+                pageIndex++;
+                if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
                     break;
             }
-            if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
+            if (gPokenavStructPtr->ribbonPageCounts[pageIndex] != 0)
             {
-                if (r5 >= gPokenavStructPtr->ribbonPageCounts[r4])
-                    r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
+                if (cursorPos >= gPokenavStructPtr->ribbonPageCounts[pageIndex])
+                    cursorPos = gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1;
                 break;
             }
-            r4 = gPokenavStructPtr->ribbonPageIndex;
+            pageIndex = gPokenavStructPtr->ribbonPageIndex;
         }
         if (JOY_REPT(DPAD_LEFT))
         {
-            if (r5 > 0)
+            if (cursorPos > 0)
             {
-                r5--;
+                cursorPos--;
                 break;
             }
         }
         if (JOY_REPT(DPAD_RIGHT))
         {
-            if (r5 < gPokenavStructPtr->ribbonPageCounts[r4] - 1)
+            if (cursorPos < gPokenavStructPtr->ribbonPageCounts[pageIndex] - 1)
             {
-                r5++;
+                cursorPos++;
                 break;
             }
         }
-        r12 = 0;
+        moved = 0;
     } while (0);
-    if (r12)
+    if (moved)
     {
-        if (r5 != gPokenavStructPtr->ribbonCursorPos || r4 != gPokenavStructPtr->ribbonPageIndex)
+        if (cursorPos != gPokenavStructPtr->ribbonCursorPos || pageIndex != gPokenavStructPtr->ribbonPageIndex)
         {
-            gPokenavStructPtr->ribbonCursorPos = r5;
-            gPokenavStructPtr->ribbonPageIndex = r4;
+            gPokenavStructPtr->ribbonCursorPos = cursorPos;
+            gPokenavStructPtr->ribbonPageIndex = pageIndex;
         }
         else
-            r12 = 0;
+            moved = 0;
     }
-    return r12;
+    return moved;
 }
 
 void sub_80F6A4C(s8 a0)
