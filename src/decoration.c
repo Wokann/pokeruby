@@ -2278,7 +2278,7 @@ void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 * unk_0203
     } else
     {
         gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
-        gFieldCamera.trackedSpriteId = AddPseudoObjectEvent(unk_02038900->decoration->tiles[0], sub_81009A8, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
+        gFieldCamera.trackedSpriteId = AddPseudoObjectEvent(unk_02038900->decoration->tiles[0], InitializeDecorationCursorSprite, gUnknown_083EC900[unk_02038900->decoration->shape].x,  gUnknown_083EC900[unk_02038900->decoration->shape].y, 1);
         gSprites[gFieldCamera.trackedSpriteId].oam.priority = 1;
     }
 }
@@ -2637,7 +2637,7 @@ void c1_overworld_prev_quest(u8 taskId)
             }
             break;
         case 1:
-            sub_81016F4();
+            FreePlayerSpritePalette();
             FreeSpritePaletteByTag(0xbb8);
             gFieldCallback = &FieldCB_InitDecorationItemsWindow;
             SetMainCallback2(CB2_ReturnToField);
@@ -2942,7 +2942,7 @@ const struct SpriteTemplate gSpriteTemplate_83EC93C = {
     .anims = gSpriteAnimTable_83EC930,
     .images = gSpriteImageTable_83EC934,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_81009A8
+    .callback = InitializeDecorationCursorSprite
 };
 
 const struct SpritePalette gUnknown_083EC954 = {.data = (u16 *)&gUnknown_02038900.palette, .tag = 3000};
@@ -2951,7 +2951,7 @@ const struct YesNoFuncTable gUnknown_083EC95C = {.yesFunc = PlaceDecoration, .no
 const struct YesNoFuncTable gUnknown_083EC964 = {.yesFunc = CancelDecorating, .noFunc = ContinueDecorating};
 const struct YesNoFuncTable gUnknown_083EC96C[] = {
     {.yesFunc = AttemptPlaceDecoration, .noFunc = AttemptCancelPlaceDecoration},
-    {.yesFunc = sub_8100F88, .noFunc = sub_8100FB4}
+    {.yesFunc = AttemptPutAwayDecoration, .noFunc = AttemptCancelPutAwayDecoration}
 };
 
 const u8 gUnknown_083EC97C[] = {4, 4, 4, 4, 0, 3, 3, 0};
@@ -2959,8 +2959,8 @@ const u8 gUnknown_083EC984[] = {4, 4, 4, 4, 0, 4, 3, 0};
 
 const u16 gUnknown_083EC98C[] = INCBIN_U16("graphics/unknown/83EC98C.gbapal");
 const u16 Unknown_3EC9AC[] = INCBIN_U16("graphics/unknown/83EC9AC.gbapal");
-const struct YesNoFuncTable gUnknown_083EC9CC = {.yesFunc = sub_810153C, .noFunc = sub_8100EEC};
-const struct YesNoFuncTable gUnknown_083EC9D4 = {.yesFunc = sub_8101590, .noFunc = sub_8100EEC};
+const struct YesNoFuncTable gUnknown_083EC9CC = {.yesFunc = PutAwayDecoration, .noFunc = ContinuePuttingAwayDecorations};
+const struct YesNoFuncTable gUnknown_083EC9D4 = {.yesFunc = StopPuttingAwayDecorations, .noFunc = ContinuePuttingAwayDecorations};
 const u32 gSpriteImage_83EC9DC[] = INCBIN_U32("graphics/unknown_sprites/83EC9DC.4bpp");
 const struct SpritePalette gUnknown_083ECA5C = {.data = gUnknown_083EC98C, .tag = 8};
 const struct SpritePalette gUnknown_083ECA64 = {.data = Unknown_3EC9AC, .tag = 8};
@@ -2988,7 +2988,7 @@ const struct SpriteTemplate gSpriteTemplate_83ECA88 = {
     .anims = gSpriteAnimTable_83ECA7C,
     .images = gSpriteImageTable_83ECA80,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_8101698
+    .callback = InitializeCameraSprite1
 };
 
 const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = sub_8101848, .noFunc = ReturnToDecorationItemsMenu};
@@ -3020,7 +3020,7 @@ void SetDecorSelectionBoxOamAttributes(u8 decoShape)
     gUnknown_020391AC.paletteNum = 0;
 }
 
-void sub_81009A8(struct Sprite *sprite)
+void InitializeDecorationCursorSprite(struct Sprite *sprite)
 {
     sprite->data[2] = 0;
     sprite->data[3] = 0;
@@ -3028,10 +3028,10 @@ void sub_81009A8(struct Sprite *sprite)
     sprite->data[5] = 0;
     sprite->data[6] = 0;
     sprite->data[7] = 0;
-    sprite->callback = sub_81009C0;
+    sprite->callback = UpdateDecorationCursorBlink;
 }
 
-void sub_81009C0(struct Sprite *sprite)
+void UpdateDecorationCursorBlink(struct Sprite *sprite)
 {
     if (sprite->data[7] == 0)
     {
@@ -3162,7 +3162,7 @@ void Task_PutAwayDecoration(u8 taskId)
             if (IsWeatherNotFadingIn() == TRUE)
             {
                 gTasks[taskId].data[13] = -1;
-                DisplayItemMessageOnField(taskId, gSecretBaseText_DecorReturned, sub_81010F0, 0);
+                DisplayItemMessageOnField(taskId, gSecretBaseText_DecorReturned, ContinuePuttingAwayDecorationsPrompt, 0);
             }
             break;
     }
@@ -3187,7 +3187,7 @@ void SetUpPuttingAwayDecorationPlayerAvatar(void)
     GetPlayerFacingDirection();
     Menu_EraseWindowRect(0, 0, 29, 19);
     gUnknown_020391A8 = gSprites[gFieldCamera.trackedSpriteId].data[0];
-    sub_81016C8();
+    LoadPlayerSpritePalette();
     gFieldCamera.trackedSpriteId = CreateSprite(&gSpriteTemplate_83ECA88, 0x78, 0x50, 0);
     if (gSaveBlock2.playerGender == MALE)
     {
@@ -3227,48 +3227,48 @@ void Task_ContinuePuttingAwayDecorations(u8 taskId)
             if (IsWeatherNotFadingIn() == TRUE)
             {
                 data[12] = 1;
-                sub_8100EEC(taskId);
+                ContinuePuttingAwayDecorations(taskId);
             }
             break;
     }
 }
 
-void sub_8100EEC(u8 taskId)
+void ContinuePuttingAwayDecorations(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 29, 19);
     gSprites[gUnknown_020391A8].data[7] = 0;
     gSprites[gUnknown_020391A8].invisible = FALSE;
-    gSprites[gUnknown_020391A8].callback = sub_8101698;
+    gSprites[gUnknown_020391A8].callback = InitializeCameraSprite1;
     gSprites[gUnknown_020391A9].x = 0x88;
     gSprites[gUnknown_020391A9].y = 0x48;
     gTasks[taskId].data[10] = 0;
     gTasks[taskId].func = Task_SelectLocation;
 }
 
-void sub_8100F88(u8 taskId)
+void AttemptPutAwayDecoration(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
     ResetCursorMovement();
-    sub_8101024(taskId);
+    AttemptPutAwayDecoration_(taskId);
 }
 
-void sub_8100FB4(u8 taskId)
+void AttemptCancelPutAwayDecoration(u8 taskId)
 {
     gTasks[taskId].data[10] = 0;
     ResetCursorMovement();
     gSprites[gUnknown_020391A8].invisible = FALSE;
     gSprites[gUnknown_020391A8].callback = SpriteCallbackDummy;
-    DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, sub_810156C, 0);
+    DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, StopPuttingAwayDecorationsPrompt, 0);
 }
 
-void sub_8101024(u8 taskId)
+void AttemptPutAwayDecoration_(u8 taskId)
 {
     u8 metatileBehavior;
     s16 *data;
-    sub_8101460(taskId);
+    AttemptMarkDecorUnderCursorForRemoval(taskId);
     if (gUnknown_02039234 != 0)
     {
-        DisplayItemMessageOnField(taskId, gSecretBaseText_ReturnDecor, sub_8101518, 0);
+        DisplayItemMessageOnField(taskId, gSecretBaseText_ReturnDecor, ReturnDecorationPrompt, 0);
     } else
     {
         data = gTasks[taskId].data;
@@ -3278,23 +3278,23 @@ void sub_8101024(u8 taskId)
         {
             gSprites[gUnknown_020391A8].invisible = FALSE;
             gSprites[gUnknown_020391A8].callback = SpriteCallbackDummy;
-            DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, sub_810156C, 0);
+            DisplayItemMessageOnField(taskId, gSecretBaseText_StopPuttingAwayDecor, StopPuttingAwayDecorationsPrompt, 0);
         } else
         {
-            DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecor, sub_81010F0, 0);
+            DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecor, ContinuePuttingAwayDecorationsPrompt, 0);
         }
     }
 }
 
-void sub_81010F0(u8 taskId)
+void ContinuePuttingAwayDecorationsPrompt(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
-        sub_8100EEC(taskId);
+        ContinuePuttingAwayDecorations(taskId);
     }
 }
 
-void sub_8101118(u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B4)
+void SetDecorRearrangementShape(u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B4)
 {
     if (gDecorations[decorIdx].shape == DECORSHAPE_1x1)
     {
@@ -3339,7 +3339,7 @@ void sub_8101118(u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B4)
     }
 }
 
-void sub_8101198(u8 x, u8 y)
+void SetCameraSpritePosition(u8 x, u8 y)
 {
     gSprites[gUnknown_020391A8].invisible = TRUE;
     gSprites[gUnknown_020391A8].callback = SpriteCallbackDummy;
@@ -3347,7 +3347,7 @@ void sub_8101198(u8 x, u8 y)
     gSprites[gUnknown_020391A9].y = 0x48 + y * 16;
 }
 
-bool8 sub_8101200(u8 taskId, u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B4)
+bool8 DecorationIsUnderCursor(u8 taskId, u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B4)
 {
     u8 x;
     u8 y;
@@ -3363,13 +3363,13 @@ bool8 sub_8101200(u8 taskId, u8 decorIdx, struct UnkStruct_020391B4 *unk_020391B
     }
     if (x >= xOff && x < xOff + unk_020391B4->width && y > yOff - unk_020391B4->height && y <= yOff)
     {
-        sub_8101198(unk_020391B4->width - (x - xOff + 1), yOff - y);
+        SetCameraSpritePosition(unk_020391B4->width - (x - xOff + 1), yOff - y);
         return TRUE;
     }
     return FALSE;
 }
 
-void sub_81012A0(void)
+void SetDecorRearrangementFlagIdIfFlagUnset(void)
 {
     u8 xOff;
     u8 yOff;
@@ -3386,7 +3386,7 @@ void sub_81012A0(void)
     }
 }
 
-bool8 sub_8101340(u8 taskId)
+bool8 AttemptMarkSpriteDecorUnderCursorForRemoval(u8 taskId)
 {
     u16 i;
     for (i=0; i<sDecorationContext.size; i++)
@@ -3395,11 +3395,11 @@ bool8 sub_8101340(u8 taskId)
         {
             if (gDecorations[sDecorationContext.items[i]].permission == DECORPERM_SOLID_MAT)
             {
-                sub_8101118(sDecorationContext.items[i], gUnknown_020391B4);
-                if (sub_8101200(taskId, i, gUnknown_020391B4) == TRUE)
+                SetDecorRearrangementShape(sDecorationContext.items[i], gUnknown_020391B4);
+                if (DecorationIsUnderCursor(taskId, i, gUnknown_020391B4) == TRUE)
                 {
                     gUnknown_020391B4->decorId = i;
-                    sub_81012A0();
+                    SetDecorRearrangementFlagIdIfFlagUnset();
                     gUnknown_02039234 = 1;
                     return TRUE;
                 }
@@ -3409,7 +3409,7 @@ bool8 sub_8101340(u8 taskId)
     return FALSE;
 }
 
-void sub_81013B8(u8 a0, u8 a1, u8 a2, u8 a3)
+void MarkSpriteDecorsInBoundsForRemoval(u8 a0, u8 a1, u8 a2, u8 a3)
 {
     u8 i;
     u8 xOff;
@@ -3423,13 +3423,13 @@ void sub_81013B8(u8 a0, u8 a1, u8 a2, u8 a3)
         if (decorIdx != 0 && gDecorations[decorIdx].permission == DECORPERM_SOLID_MAT && a0 <= xOff && a1 <= yOff && a2 >= xOff && a3 >= yOff)
         {
             gUnknown_020391B4[gUnknown_02039234].decorId = i;
-            sub_81012A0();
+            SetDecorRearrangementFlagIdIfFlagUnset();
             gUnknown_02039234++;
         }
     }
 }
 
-void sub_8101460(u8 taskId)
+void AttemptMarkDecorUnderCursorForRemoval(u8 taskId)
 {
     u8 i;
     u8 xOff;
@@ -3438,15 +3438,15 @@ void sub_8101460(u8 taskId)
     u32 var2;
 
     gUnknown_02039234 = 0;
-    if (sub_8101340(taskId) != TRUE)
+    if (AttemptMarkSpriteDecorUnderCursorForRemoval(taskId) != TRUE)
     {
         for (i = 0; i < sDecorationContext.size; i++)
         {
             var1 = sDecorationContext.items[i];
             if (var1 != 0)
             {
-                sub_8101118(var1, gUnknown_020391B4);
-                if (sub_8101200(taskId, i, gUnknown_020391B4) == TRUE)
+                SetDecorRearrangementShape(var1, gUnknown_020391B4);
+                if (DecorationIsUnderCursor(taskId, i, gUnknown_020391B4) == TRUE)
                 {
                     gUnknown_020391B4[0].decorId = i;
                     gUnknown_02039234++;
@@ -3461,44 +3461,44 @@ void sub_8101460(u8 taskId)
             var1 = yOff - gUnknown_020391B4[0].height + 1;
             var2 = gUnknown_020391B4[0].width + xOff - 1;
 
-            sub_81013B8(xOff, var1, var2, yOff);
+            MarkSpriteDecorsInBoundsForRemoval(xOff, var1, var2, yOff);
         }
     }
 }
 
-void sub_8101518(u8 taskId)
+void ReturnDecorationPrompt(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     DoYesNoFuncWithChoice(taskId, &gUnknown_083EC9CC);
 }
 
-void sub_810153C(u8 taskId)
+void PutAwayDecoration(u8 taskId)
 {
     FadeScreen(1, 0);
     gTasks[taskId].data[2] = 0;
     gTasks[taskId].func = Task_PutAwayDecoration;
 }
 
-void sub_810156C(u8 taskId)
+void StopPuttingAwayDecorationsPrompt(u8 taskId)
 {
     DisplayYesNoMenu(20, 8, 1);
     DoYesNoFuncWithChoice(taskId, &gUnknown_083EC9D4);
 }
 
-void sub_8101590(u8 taskId)
+void StopPuttingAwayDecorations(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 29, 19);
-    sub_81015B0(taskId);
+    StopPuttingAwayDecorations_(taskId);
 }
 
-void sub_81015B0(u8 taskId)
+void StopPuttingAwayDecorations_(u8 taskId)
 {
     FadeScreen(1, 0);
     gTasks[taskId].data[2] = 0;
-    gTasks[taskId].func = sub_81015E0;
+    gTasks[taskId].func = Task_StopPuttingAwayDecorations;
 }
 
-void sub_81015E0(u8 taskId)
+void Task_StopPuttingAwayDecorations(u8 taskId)
 {
     switch (gTasks[taskId].data[2])
     {
@@ -3510,15 +3510,15 @@ void sub_81015E0(u8 taskId)
             }
             break;
         case 1:
-            sub_81016F4();
-            gFieldCallback = sub_8101678;
+            FreePlayerSpritePalette();
+            gFieldCallback = FieldCB_StopPuttingAwayDecorations;
             SetMainCallback2(CB2_ReturnToField);
             DestroyTask(taskId);
             break;
     }
 }
 
-void sub_8101648(u8 taskId)
+void Task_ReinitializeDecorationMenuHandler(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
@@ -3526,15 +3526,15 @@ void sub_8101648(u8 taskId)
     }
 }
 
-void sub_8101678(void)
+void FieldCB_StopPuttingAwayDecorations(void)
 {
     pal_fill_black();
     Menu_DisplayDialogueFrame();
     InitDecorationActionsWindow();
-    CreateTask(sub_8101648, 8);
+    CreateTask(Task_ReinitializeDecorationMenuHandler, 8);
 }
 
-void sub_8101698(struct Sprite *sprite)
+void InitializeCameraSprite1(struct Sprite *sprite)
 {
     sprite->data[0] = (sprite->data[0] + 1) & 0x1f;
     if (sprite->data[0] >= 16)
@@ -3546,7 +3546,7 @@ void sub_8101698(struct Sprite *sprite)
     }
 }
 
-void sub_81016C8(void)
+void LoadPlayerSpritePalette(void)
 {
     if (gSaveBlock2.playerGender == MALE)
     {
@@ -3557,7 +3557,7 @@ void sub_81016C8(void)
     }
 }
 
-void sub_81016F4(void)
+void FreePlayerSpritePalette(void)
 {
     FreeSpritePaletteByTag(8);
 }
