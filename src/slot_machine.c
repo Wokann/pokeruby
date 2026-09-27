@@ -290,19 +290,19 @@ static void CreateReelTimeNumberGapSprite(void);
 static void DestroyReelTimeMachineSprites(void);
 static void DestroyReelTimeShadowSprites(void);
 static void DestroyBrokenReelTimeMachineSprite(void);
-static void sub_8105578(void);
-static void sub_8105688(s16 a0);
-static void sub_81056C0(void);
-static void sub_81056F0(void);
-static void sub_81057E8(s16 a0);
-static void sub_8105804(void);
-static void sub_8105854(void);
-static void sub_81058A0(void);
-static void sub_81058C4(void);
-static void sub_81059B8(void);
-static void sub_81059E8(void);
-static bool8 sub_8105ACC(void);
-static void sub_8105AEC(void);
+static void CreateReelTimeBoltSprites(void);
+static void SetReelTimeBoltDelay(s16 a0);
+static void DestroyReelTimeBoltSprites(void);
+static void CreateReelTimePikachuAuraSprites(void);
+static void SetReelTimePikachuAuraFlashDelay(s16 a0);
+static void DestroyReelTimePikachuAuraSprites(void);
+static void CreateReelTimeExplosionSprite(void);
+static void DestroyReelTimeExplosionSprite(void);
+static void CreateReelTimeDuckSprites(void);
+static void DestroyReelTimeDuckSprites(void);
+static void CreateReelTimeSmokeSprite(void);
+static bool8 IsReelTimeSmokeAnimFinished(void);
+static void DestroyReelTimeSmokeSprite(void);
 static u8 sub_8105B1C(s16 x, s16 y);
 static void sub_8105B88(u8 spriteId);
 static u8 sub_8105BF8(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
@@ -2714,8 +2714,8 @@ static void ReelTime_WaitStartPikachu(struct Task *task)
     if (++task->data[5] >= 60)
     {
         task->data[0]++;
-        sub_8105578();
-        sub_81056F0();
+        CreateReelTimeBoltSprites();
+        CreateReelTimePikachuAuraSprites();
     }
 }
 
@@ -2729,8 +2729,8 @@ static void ReelTime_PikachuSpeedUp1(struct Task *task)
     AdvanceReeltimeReel(task->data[4] >> 8);
     task->data[4] -= 4;
     r5 = 4 - (task->data[4] >> 8);
-    sub_8105688(sp4[r5]);
-    sub_81057E8(spC[r5]);
+    SetReelTimeBoltDelay(sp4[r5]);
+    SetReelTimePikachuAuraFlashDelay(spC[r5]);
     StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, sp0[r5]);
     if (task->data[4] <= 0x100)
     {
@@ -2747,7 +2747,7 @@ static void ReelTime_PikachuSpeedUp2(struct Task *task)
     {
         task->data[0]++;
         task->data[5] = 0;
-        sub_81057E8(2);
+        SetReelTimePikachuAuraFlashDelay(2);
         StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 3);
     }
 }
@@ -2813,8 +2813,8 @@ static void ReelTime_PikachuReact(struct Task *task)
     if (++task->data[4] >= 60)
     {
         StopMapMusic();
-        sub_81056C0();
-        sub_8105804();
+        DestroyReelTimeBoltSprites();
+        DestroyReelTimePikachuAuraSprites();
         task->data[0]++;
         if(sSlotMachine->unk05 == 0)
         {
@@ -2899,9 +2899,9 @@ static void ReelTime_EndSuccess(struct Task *task)
 static void ReelTime_ExplodeMachine(struct Task *task)
 {
     DestroyReelTimeMachineSprites();
-    sub_81056C0();
-    sub_8105804();
-    sub_8105854();
+    DestroyReelTimeBoltSprites();
+    DestroyReelTimePikachuAuraSprites();
+    CreateReelTimeExplosionSprite();
     gSprites[sSlotMachine->unk4E[0]].invisible = TRUE;
     StartSpriteAnimIfDifferent(gSprites + sSlotMachine->unk3F, 5);
     task->data[0]++;
@@ -2922,10 +2922,10 @@ static void ReelTime_WaitExplode(struct Task *task)
         task->data[4] >>= 1;
     if (task->data[4] == 0)
     {
-        sub_81058A0();
-        sub_81058C4();
+        DestroyReelTimeExplosionSprite();
+        CreateReelTimeDuckSprites();
         CreateBrokenReelTimeMachineSprite();
-        sub_81059E8();
+        CreateReelTimeSmokeSprite();
         gSprites[sSlotMachine->unk4E[0]].invisible = FALSE;
         task->data[0]++;
         task->data[5] = 0;
@@ -2936,10 +2936,10 @@ static void ReelTime_WaitSmoke(struct Task *task)
 {
     gSpriteCoordOffsetY = 0;
     REG_BG1VOFS = 0;
-    if (sub_8105ACC())
+    if (IsReelTimeSmokeAnimFinished())
     {
         task->data[0]++;
-        sub_8105AEC();
+        DestroyReelTimeSmokeSprite();
     }
 }
 
@@ -2951,7 +2951,7 @@ static void ReelTime_EndFailure(struct Task *task)
     DestroyReelTimePikachuSprite();
     DestroyBrokenReelTimeMachineSprite();
     DestroyReelTimeShadowSprites();
-    sub_81059B8();
+    DestroyReelTimeDuckSprites();
     DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
@@ -3381,11 +3381,11 @@ static void DestroyBrokenReelTimeMachineSprite(void)
     DestroySprite(&gSprites[sSlotMachine->unk42]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED504;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt;
 
-static void sub_8105578(void)
+static void CreateReelTimeBoltSprites(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED504, 0x98, 0x20, 5);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 0x98, 0x20, 5);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->hFlip = TRUE;
@@ -3395,7 +3395,7 @@ static void sub_8105578(void)
     sprite->data[2] = -1;
     sprite->data[7] = 0x20;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED504, 0xb8, 0x20, 5);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimeBolt, 0xb8, 0x20, 5);
     sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sSlotMachine->unk50[1] = spriteId;
@@ -3404,7 +3404,7 @@ static void sub_8105578(void)
     sprite->data[7] = 0x20;
 }
 
-static void sub_810562C(struct Sprite *sprite)
+static void SpriteCB_ReelTimeBolt(struct Sprite *sprite)
 {
     if (sprite->data[0] != 0)
     {
@@ -3426,13 +3426,13 @@ static void sub_810562C(struct Sprite *sprite)
     }
 }
 
-static void sub_8105688(s16 a0)
+static void SetReelTimeBoltDelay(s16 a0)
 {
     gSprites[sSlotMachine->unk50[0]].data[7] = a0;
     gSprites[sSlotMachine->unk50[1]].data[7] = a0;
 }
 
-static void sub_81056C0(void)
+static void DestroyReelTimeBoltSprites(void)
 {
     u8 i;
 
@@ -3440,11 +3440,11 @@ static void sub_81056C0(void)
         DestroySprite(&gSprites[sSlotMachine->unk50[i]]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED51C;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura;
 
-static void sub_81056F0(void)
+static void CreateReelTimePikachuAuraSprites(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED51C, 0x48, 0x50, 3);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachuAura, 0x48, 0x50, 3);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].data[0] = 1;
     gSprites[spriteId].data[5] = 0;
@@ -3452,7 +3452,7 @@ static void sub_81056F0(void)
     gSprites[spriteId].data[7] = 8;
     sSlotMachine->unk52[0] = spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_83ED51C, 0x68, 0x50, 3);
+    spriteId = CreateSprite(&sSpriteTemplate_ReelTimePikachuAura, 0x68, 0x50, 3);
     gSprites[spriteId].oam.priority = 1;
     gSprites[spriteId].hFlip = TRUE;
     sSlotMachine->unk52[1] = spriteId;
@@ -3460,7 +3460,7 @@ static void sub_81056F0(void)
 
 static const u8 gUnknown_083ECC58[2]; // don't remove this until decompiled through gUnknown_083ECCF8
 
-static void sub_8105784(struct Sprite *sprite)
+static void SpriteCB_ReelTimePikachuAura(struct Sprite *sprite)
 {
     u8 sp[] = {16, 0};
     if (sprite->data[0] && --sprite->data[6] <= 0)
@@ -3472,12 +3472,12 @@ static void sub_8105784(struct Sprite *sprite)
     }
 }
 
-static void sub_81057E8(s16 a0)
+static void SetReelTimePikachuAuraFlashDelay(s16 a0)
 {
     gSprites[sSlotMachine->unk52[0]].data[7] = a0;
 }
 
-static void sub_8105804(void)
+static void DestroyReelTimePikachuAuraSprites(void)
 {
     u8 i;
     MultiplyInvertedPaletteRGBComponents((IndexOfSpritePaletteTag(7) << 4) + 0x103, 0, 0, 0);
@@ -3485,34 +3485,34 @@ static void sub_8105804(void)
         DestroySprite(&gSprites[sSlotMachine->unk52[i]]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED534;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion;
 
-static void sub_8105854(void)
+static void CreateReelTimeExplosionSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED534, 0xa8, 0x50, 6);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeExplosion, 0xa8, 0x50, 6);
     gSprites[spriteId].oam.priority = 1;
     sSlotMachine->unk41 = spriteId;
 }
 
-static void sub_8105894(struct Sprite *sprite)
+static void SpriteCB_ReelTimeExplosion(struct Sprite *sprite)
 {
     sprite->y2 = gSpriteCoordOffsetY;
 }
 
-static void sub_81058A0(void)
+static void DestroyReelTimeExplosionSprite(void)
 {
     DestroySprite(&gSprites[sSlotMachine->unk41]);
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED54C;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck;
 
-static void sub_81058C4(void)
+static void CreateReelTimeDuckSprites(void)
 {
     u8 i;
     u16 sp[] = {0x0, 0x40, 0x80, 0xC0};
     for (i = 0; i < 4; i++)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83ED54C, 0x50 - gSpriteCoordOffsetX, 0x44, 0);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeDuck, 0x50 - gSpriteCoordOffsetX, 0x44, 0);
         struct Sprite *sprite = &gSprites[spriteId];
         sprite->oam.priority = 1;
         sprite->coordOffsetEnabled = TRUE;
@@ -3521,7 +3521,7 @@ static void sub_81058C4(void)
     }
 }
 
-static void sub_810594C(struct Sprite *sprite)
+static void SpriteCB_ReelTimeDuck(struct Sprite *sprite)
 {
     sprite->data[0] -= 2;
     sprite->data[0] &= 0xff;
@@ -3539,7 +3539,7 @@ static void sub_810594C(struct Sprite *sprite)
     }
 }
 
-static void sub_81059B8(void)
+static void DestroyReelTimeDuckSprites(void)
 {
     u8 i;
     for (i = 0; i < 4; i++)
@@ -3548,11 +3548,11 @@ static void sub_81059B8(void)
     }
 }
 
-static const struct SpriteTemplate gSpriteTemplate_83ED564;
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke;
 
-static void sub_81059E8(void)
+static void CreateReelTimeSmokeSprite(void)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83ED564, 0xa8, 0x3c, 8);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeSmoke, 0xa8, 0x3c, 8);
     struct Sprite *sprite = &gSprites[spriteId];
     sprite->oam.priority = 1;
     sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
@@ -3560,7 +3560,7 @@ static void sub_81059E8(void)
     sSlotMachine->unk43 = spriteId;
 }
 
-static void sub_8105A38(struct Sprite *sprite)
+static void SpriteCB_ReelTimeSmoke(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -3587,12 +3587,12 @@ static void sub_8105A38(struct Sprite *sprite)
     sprite->y2 -= (sprite->data[1] >> 8);
 }
 
-u8 sub_8105ACC(void)
+u8 IsReelTimeSmokeAnimFinished(void)
 {
     return gSprites[sSlotMachine->unk43].data[7];
 }
 
-static void sub_8105AEC(void)
+static void DestroyReelTimeSmokeSprite(void)
 {
     struct Sprite *sprite = &gSprites[sSlotMachine->unk43];
     FreeOamMatrix(sprite->oam.matrixNum);
@@ -4990,24 +4990,24 @@ static const struct SpriteTemplate sSpriteTemplate_ReelTimeNumberGap = {
     0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED138, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED504 = {
-    0xFFFF, 4, &gOamData_83ED098, gSpriteAnimTable_83ED364, gSpriteImageTable_83ED140, gDummySpriteAffineAnimTable, sub_810562C
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt = {
+    0xFFFF, 4, &gOamData_83ED098, gSpriteAnimTable_83ED364, gSpriteImageTable_83ED140, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeBolt
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED51C = {
-    0xFFFF, 7, &gOamData_83ED0A8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED150, gDummySpriteAffineAnimTable, sub_8105784
+static const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura = {
+    0xFFFF, 7, &gOamData_83ED0A8, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED150, gDummySpriteAffineAnimTable, SpriteCB_ReelTimePikachuAura
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED534 = {
-    0xFFFF, 5, &gOamData_83ED0A0, gSpriteAnimTable_83ED368, gSpriteImageTable_83ED158, gDummySpriteAffineAnimTable, sub_8105894
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion = {
+    0xFFFF, 5, &gOamData_83ED0A0, gSpriteAnimTable_83ED368, gSpriteImageTable_83ED158, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeExplosion
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED54C = {
-    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED330, gSpriteImageTable_83ED168, gDummySpriteAffineAnimTable, sub_810594C
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck = {
+    0xFFFF, 4, &gOamData_83ED080, gSpriteAnimTable_83ED330, gSpriteImageTable_83ED168, gDummySpriteAffineAnimTable, SpriteCB_ReelTimeDuck
 };
 
-static const struct SpriteTemplate gSpriteTemplate_83ED564 = {
-    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED170, gSpriteAffineAnimTable_83ED3BC, sub_8105A38
+static const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke = {
+    0xFFFF, 4, &gOamData_83ED090, gSpriteAnimTable_83ED32C, gSpriteImageTable_83ED170, gSpriteAffineAnimTable_83ED3BC, SpriteCB_ReelTimeSmoke
 };
 
 static const struct SpriteTemplate gSpriteTemplate_83ED57C = {
