@@ -1149,26 +1149,26 @@ void SetPlayerAvatarStateMask(u8 flags)
     gPlayerAvatar.flags |= flags;
 }
 
-static u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 a, u8 gender)
+static u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 graphicsId, u8 gender)
 {
     u8 i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < ARRAY_COUNT(sPlayerAvatarGfxToStateFlag[0]); i++)
     {
-        if (sPlayerAvatarGfxToStateFlag[gender][i][0] == a)
+        if (sPlayerAvatarGfxToStateFlag[gender][i][0] == graphicsId)
             return sPlayerAvatarGfxToStateFlag[gender][i][1];
     }
-    return 1;
+    return PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
 u8 GetPlayerAvatarGraphicsIdByCurrentState(void)
 {
     u8 i;
-    u8 r5 = gPlayerAvatar.flags;
+    u8 flags = gPlayerAvatar.flags;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < ARRAY_COUNT(sPlayerAvatarGfxToStateFlag[0]); i++)
     {
-        if (sPlayerAvatarGfxToStateFlag[gPlayerAvatar.gender][i][1] & r5)
+        if (sPlayerAvatarGfxToStateFlag[gPlayerAvatar.gender][i][1] & flags)
             return sPlayerAvatarGfxToStateFlag[gPlayerAvatar.gender][i][0];
     }
     return 0;
