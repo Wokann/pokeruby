@@ -557,6 +557,10 @@ void UpdateShortGrassFieldEffect(struct Sprite *sprite)
 #undef sPrevX
 #undef sPrevY
 
+#define sState  data[0]
+#define sTimer  data[1]
+#define sFldEff data[7]
+
 u32 FldEff_SandFootprints(void)
 {
     u8 spriteId;
@@ -569,7 +573,7 @@ u32 FldEff_SandFootprints(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[7] = FLDEFF_SAND_FOOTPRINTS;
+        sprite->sFldEff = FLDEFF_SAND_FOOTPRINTS;
         StartSpriteAnim(sprite, gFieldEffectArguments[4]);
     }
     return 0;
@@ -587,7 +591,7 @@ u32 FldEff_DeepSandFootprints(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[7] = FLDEFF_DEEP_SAND_FOOTPRINTS;
+        sprite->sFldEff = FLDEFF_DEEP_SAND_FOOTPRINTS;
         StartSpriteAnim(sprite, gFieldEffectArguments[4]);
     }
     return spriteId;
@@ -605,7 +609,7 @@ u32 FldEff_BikeTireTracks(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[7] = FLDEFF_BIKE_TIRE_TRACKS;
+        sprite->sFldEff = FLDEFF_BIKE_TIRE_TRACKS;
         StartSpriteAnim(sprite, gFieldEffectArguments[4]);
     }
     return spriteId;
@@ -618,14 +622,14 @@ void (*const gFadeFootprintsTireTracksFuncs[])(struct Sprite *) = {
 
 void UpdateFootprintsTireTracksFieldEffect(struct Sprite *sprite)
 {
-    gFadeFootprintsTireTracksFuncs[sprite->data[0]](sprite);
+    gFadeFootprintsTireTracksFuncs[sprite->sState](sprite);
 }
 
 static void FadeFootprintsTireTracks_Step0(struct Sprite *sprite)
 {
     // Wait 40 frames before the flickering starts.
-    if (++sprite->data[1] > 40)
-        sprite->data[0] = 1;
+    if (++sprite->sTimer > 40)
+        sprite->sState = 1;
 
     UpdateObjectEventSpriteVisibility(sprite, FALSE);
 }
@@ -633,13 +637,17 @@ static void FadeFootprintsTireTracks_Step0(struct Sprite *sprite)
 static void FadeFootprintsTireTracks_Step1(struct Sprite *sprite)
 {
     sprite->invisible ^= 1;
-    sprite->data[1]++;
+    sprite->sTimer++;
     UpdateObjectEventSpriteVisibility(sprite, sprite->invisible);
-    if (sprite->data[1] > 56)
+    if (sprite->sTimer > 56)
     {
-        FieldEffectStop(sprite, sprite->data[7]);
+        FieldEffectStop(sprite, sprite->sFldEff);
     }
 }
+
+#undef sState
+#undef sTimer
+#undef sFldEff
 
 u32 FldEff_Splash(void)
 {
