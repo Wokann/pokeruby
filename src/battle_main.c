@@ -1387,11 +1387,11 @@ void ShowDebugBattlePartyCursor(void);
 void HideDebugBattlePartyCursor(void);
 void ShowDebugBattleMoveCursor(void);
 void HideDebugBattleMoveCursor(void);
-void debug_sub_8012688(void);
-void debug_sub_8012878(void);
-void debug_sub_8012D10(u8);
-u32 debug_sub_8013294(u8, void *, u32);
-void debug_sub_80132C8(u8, void *, u32);
+void InitDebugFlyingMonSpriteOffsetEditor(void);
+void CB2_DebugFlyingMonSpriteOffsetEditor(void);
+void Task_DebugFlyingMonSpriteOffsetEditor(u8);
+u32 WriteDebugDataToFlash(u8, void *, u32);
+void ReadDebugDataFromFlash(u8, void *, u32);
 
 extern s16 gUnknown_Debug_2023A76[][35];
 extern s16 gUnknown_Debug_2023B02[][6][4];
@@ -1602,7 +1602,7 @@ void CB2_DebugBattlePartyEditor(void)
                 EvolutionScene(&gPlayerParty[0], gUnknown_Debug_2023A76[0][1 * 5 + 0], 1, 0);
                 break;
             case 2:
-                debug_sub_8012688();
+                InitDebugFlyingMonSpriteOffsetEditor();
                 break;
             }
         }
@@ -1698,7 +1698,7 @@ void CB2_DebugBattlePartyEditor(void)
             DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 32:
-            debug_sub_80132C8(31, gUnknown_Debug_2023A76, 0xEC);
+            ReadDebugDataFromFlash(31, gUnknown_Debug_2023A76, 0xEC);
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
@@ -1706,7 +1706,7 @@ void CB2_DebugBattlePartyEditor(void)
             DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 33:
-            debug_sub_8013294(31, gUnknown_Debug_2023A76, 0xEC);
+            WriteDebugDataToFlash(31, gUnknown_Debug_2023A76, 0xEC);
             break;
         case 34:
             if (gUnknown_Debug_2023A76[0][6 * 5 + 4] != 0)
@@ -1759,7 +1759,7 @@ void CB2_DebugBattlePartyEditor(void)
             DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 32:
-            debug_sub_80132C8(31, gUnknown_Debug_2023A76, 0xEC);
+            ReadDebugDataFromFlash(31, gUnknown_Debug_2023A76, 0xEC);
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
@@ -1767,7 +1767,7 @@ void CB2_DebugBattlePartyEditor(void)
             DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
             break;
         case 33:
-            debug_sub_8013294(31, gUnknown_Debug_2023A76, 0xEC);
+            WriteDebugDataToFlash(31, gUnknown_Debug_2023A76, 0xEC);
             break;
         case 34:
             if (gUnknown_Debug_2023A76[0][6 * 5 + 4] < 8)
@@ -2158,11 +2158,11 @@ void VBlankCB_DebugBattlePartyEditor(void)
     ProcessSpriteCopyRequests();
 }
 
-void debug_nullsub_45()
+void HBlankCB_DebugFlyingMonSpriteOffsetEditorDummy()
 {
 }
 
-void debug_sub_8011DD4(void)
+void VBlankCB_DebugFlyingMonSpriteOffsetEditor(void)
 {
     REG_BG0CNT = 0x9803;
 
@@ -2582,7 +2582,7 @@ void HideDebugBattleMoveCursor(void)
 	gSharedMem[gUnknown_Debug_821F798[gUnknown_Debug_03004360][gUnknown_Debug_030043A8]] = 0x81;
 }
 
-void debug_sub_8012688(void)
+void InitDebugFlyingMonSpriteOffsetEditor(void)
 {
 	s32 i;
 	u8 spriteId;
@@ -2632,16 +2632,16 @@ void debug_sub_8012688(void)
 	gSprites[spriteId].callback = SpriteCB_Idle;
 	gSprites[spriteId].oam.paletteNum = 1;
 	REG_DISPCNT = 0x1F40;
-	SetHBlankCallback(debug_nullsub_45);
-	SetVBlankCallback(debug_sub_8011DD4);
+	SetHBlankCallback(HBlankCB_DebugFlyingMonSpriteOffsetEditorDummy);
+	SetVBlankCallback(VBlankCB_DebugFlyingMonSpriteOffsetEditor);
 	m4aMPlayAllStop();
-	taskId = CreateTask(debug_sub_8012D10, 0);
+	taskId = CreateTask(Task_DebugFlyingMonSpriteOffsetEditor, 0);
 	gTasks[taskId].data[0] = 0;
 	gTasks[taskId].data[1] = spriteId;
-	SetMainCallback2(debug_sub_8012878);
+	SetMainCallback2(CB2_DebugFlyingMonSpriteOffsetEditor);
 }
 
-void debug_sub_8012878(void)
+void CB2_DebugFlyingMonSpriteOffsetEditor(void)
 {
 	AnimateSprites();
 	BuildOamBuffer();
@@ -2652,7 +2652,7 @@ void debug_sub_8012878(void)
 		SetMainCallback2(CB2_InitDebugBattlePartyEditor);
 }
 
-void debug_sub_80128B4(void)
+void DrawDebugFlyingMonSpecies(void)
 {
     FillDebugBattleTextBuffer(0, 9);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 144, 2, 35);
@@ -2665,7 +2665,7 @@ void debug_sub_80128B4(void)
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
 }
 
-void debug_sub_8012938(u8 taskId)
+void DrawDebugFlyingMonSpriteOffset(u8 taskId)
 {
     FillDebugBattleTextBuffer(0, 7);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
@@ -2677,7 +2677,7 @@ void debug_sub_8012938(u8 taskId)
     gSprites[gTasks[taskId].data[1]].y2 = -gUnknown_Debug_2023B62[gCurrentMove - 1];
 }
 
-void debug_sub_80129F8(u8 taskId)
+void ReloadDebugFlyingMonSprite(u8 taskId)
 {
     DecompressPicFromTable(
       &gMonFrontPicTable[gCurrentMove],
@@ -2692,7 +2692,7 @@ void debug_sub_80129F8(u8 taskId)
     StartSpriteAnim(&gSprites[gTasks[taskId].data[1]], 0);
 }
 
-void debug_sub_8012AC0(s8 a, u8 taskId)
+void ChangeDebugFlyingMonSpecies(s8 a, u8 taskId)
 {
     do
     {
@@ -2702,31 +2702,31 @@ void debug_sub_8012AC0(s8 a, u8 taskId)
         if (gCurrentMove == 411)
             gCurrentMove = 1;
     } while (gBaseStats[gCurrentMove].type1 != 2 && gBaseStats[gCurrentMove].type2 != 2);
-    debug_sub_80128B4();
-    debug_sub_8012938(taskId);
-    debug_sub_80129F8(taskId);
+    DrawDebugFlyingMonSpecies();
+    DrawDebugFlyingMonSpriteOffset(taskId);
+    ReloadDebugFlyingMonSprite(taskId);
 }
 
-void debug_sub_8012B2C(u8 a)
+void ShowDebugFlyingMonYesNoCursor(u8 a)
 {
     *(u16 *)(VRAM + 0xC000 + 0x772 + (a * 4 + 0) * 0x20) = 1;
     *(u16 *)(VRAM + 0xC000 + 0x772 + (a * 4 + 2) * 0x20) = 2;
 }
 
-void debug_sub_8012B4C(u8 a)
+void HideDebugFlyingMonYesNoCursor(u8 a)
 {
     *(u16 *)(VRAM + 0xC000 + 0x772 + (a * 4 + 0) * 0x20) = 0x1016;
     *(u16 *)(VRAM + 0xC000 + 0x772 + (a * 4 + 2) * 0x20) = 0x1016;
 }
 
-void debug_sub_8012B70(u8 taskId, u8 b)
+void SetDebugFlyingMonEditorMenuState(u8 taskId, u8 b)
 {
     if (b != 0)
     {
         sub_802BBD4(24, 28, 29, 33, 1);
-        debug_sub_80128B4();
-        debug_sub_8012938(taskId);
-        debug_sub_80129F8(taskId);
+        DrawDebugFlyingMonSpecies();
+        DrawDebugFlyingMonSpriteOffset(taskId);
+        ReloadDebugFlyingMonSprite(taskId);
         gTasks[taskId].data[0] = 1;
     }
     else
@@ -2736,11 +2736,11 @@ void debug_sub_8012B70(u8 taskId, u8 b)
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7DA, 656, 26, 29);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[3] = 0;
-        debug_sub_8012B2C(0);
+        ShowDebugFlyingMonYesNoCursor(0);
     }
 }
 
-void debug_sub_8012C08(u8 taskId, u8 b)
+void ShowDebugFlyingMonFlashConfirmation(u8 taskId, u8 b)
 {
     FillDebugBattleTextBuffer(0, 9);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 144, 2, 35);
@@ -2763,16 +2763,16 @@ void debug_sub_8012C08(u8 taskId, u8 b)
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 656, 26, 29);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     gTasks[taskId].data[3] = 1;
-    debug_sub_8012B2C(1);
+    ShowDebugFlyingMonYesNoCursor(1);
 }
 
-void debug_sub_8012D10(u8 taskId)
+void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
     case 0:
-        debug_sub_80128B4();
-        debug_sub_8012938(taskId);
+        DrawDebugFlyingMonSpecies();
+        DrawDebugFlyingMonSpriteOffset(taskId);
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7BD, 400, 19, 35);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[0]++;
@@ -2816,23 +2816,23 @@ void debug_sub_8012D10(u8 taskId)
                 if (gUnknown_Debug_2023B62[gCurrentMove - 1] < 64)
                 {
                     gUnknown_Debug_2023B62[gCurrentMove - 1] += 1;
-                    debug_sub_8012938(taskId);
+                    DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
             case 1:
-                debug_sub_8012AC0(1, taskId);
+                ChangeDebugFlyingMonSpecies(1, taskId);
                 break;
             case 2:
                 if (gCurrentMove < 411)
                     gCurrentMove++;
                 else
                     gCurrentMove = 1;
-                debug_sub_80128B4();
-                debug_sub_8012938(taskId);
-                debug_sub_80129F8(taskId);
+                DrawDebugFlyingMonSpecies();
+                DrawDebugFlyingMonSpriteOffset(taskId);
+                ReloadDebugFlyingMonSprite(taskId);
                 break;
             case 3:
-                debug_sub_8012B70(taskId, 0);
+                SetDebugFlyingMonEditorMenuState(taskId, 0);
                 break;
             }
         }
@@ -2845,23 +2845,23 @@ void debug_sub_8012D10(u8 taskId)
                 if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 0)
                 {
                     gUnknown_Debug_2023B62[gCurrentMove - 1] -= 1;
-                    debug_sub_8012938(taskId);
+                    DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
             case 1:
-                debug_sub_8012AC0(-1, taskId);
+                ChangeDebugFlyingMonSpecies(-1, taskId);
                 break;
             case 2:
                 if (gCurrentMove > 1)
                     gCurrentMove--;
                 else
                     gCurrentMove = 411;
-                debug_sub_80128B4();
-                debug_sub_8012938(taskId);
-                debug_sub_80129F8(taskId);
+                DrawDebugFlyingMonSpecies();
+                DrawDebugFlyingMonSpriteOffset(taskId);
+                ReloadDebugFlyingMonSprite(taskId);
                 break;
             case 3:
-                debug_sub_8012B70(taskId, 0);
+                SetDebugFlyingMonEditorMenuState(taskId, 0);
                 break;
             }
         }
@@ -2876,23 +2876,23 @@ void debug_sub_8012D10(u8 taskId)
                     gUnknown_Debug_2023B62[gCurrentMove - 1] += 8;
                     if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 64)
                         gUnknown_Debug_2023B62[gCurrentMove - 1] = 64;
-                    debug_sub_8012938(taskId);
+                    DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
             case 1:
-                debug_sub_8012AC0(1, taskId);
+                ChangeDebugFlyingMonSpecies(1, taskId);
                 break;
             case 2:
                 if (gCurrentMove + 10 < 412)
                     gCurrentMove += 10;
                 else
                     gCurrentMove -= 400;
-                debug_sub_80128B4();
-                debug_sub_8012938(taskId);
-                debug_sub_80129F8(taskId);
+                DrawDebugFlyingMonSpecies();
+                DrawDebugFlyingMonSpriteOffset(taskId);
+                ReloadDebugFlyingMonSprite(taskId);
                 break;
             case 3:
-                debug_sub_8012B70(taskId, 0);
+                SetDebugFlyingMonEditorMenuState(taskId, 0);
                 break;
             }
         }
@@ -2908,23 +2908,23 @@ void debug_sub_8012D10(u8 taskId)
                         gUnknown_Debug_2023B62[gCurrentMove - 1] -= 8;
                     else
                         gUnknown_Debug_2023B62[gCurrentMove - 1] = 0;
-                    debug_sub_8012938(taskId);
+                    DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
             case 1:
-                debug_sub_8012AC0(-1, taskId);
+                ChangeDebugFlyingMonSpecies(-1, taskId);
                 break;
             case 2:
                 if (gCurrentMove - 10 > 1)
                     gCurrentMove -= 10;
                 else
                     gCurrentMove += 400;
-                debug_sub_80128B4();
-                debug_sub_8012938(taskId);
-                debug_sub_80129F8(taskId);
+                DrawDebugFlyingMonSpecies();
+                DrawDebugFlyingMonSpriteOffset(taskId);
+                ReloadDebugFlyingMonSprite(taskId);
                 break;
             case 3:
-                debug_sub_8012B70(taskId, 0);
+                SetDebugFlyingMonEditorMenuState(taskId, 0);
                 break;
             }
         }
@@ -2933,89 +2933,89 @@ void debug_sub_8012D10(u8 taskId)
         if (JOY_NEW(DPAD_UP))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 0;
-            debug_sub_8012B2C(0);
+            ShowDebugFlyingMonYesNoCursor(0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 1;
-            debug_sub_8012B2C(1);
+            ShowDebugFlyingMonYesNoCursor(1);
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012C08(taskId, gTasks[taskId].data[3]);
+            ShowDebugFlyingMonFlashConfirmation(taskId, gTasks[taskId].data[3]);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
             asm("");
-            debug_sub_8012B70(taskId, 1);
+            SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         return;
     case 3:
         if (JOY_NEW(DPAD_UP))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 0;
-            debug_sub_8012B2C(0);
+            ShowDebugFlyingMonYesNoCursor(0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 1;
-            debug_sub_8012B2C(1);
+            ShowDebugFlyingMonYesNoCursor(1);
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             if (gTasks[taskId].data[3] == 0)
-                debug_sub_80132C8(31, gUnknown_Debug_2023B62, 411);
-            debug_sub_8012B70(taskId, 1);
+                ReadDebugDataFromFlash(31, gUnknown_Debug_2023B62, 411);
+            SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B70(taskId, 1);
+            SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         break;
     case 4:
         if (JOY_NEW(DPAD_UP))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 0;
-            debug_sub_8012B2C(0);
+            ShowDebugFlyingMonYesNoCursor(0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B4C(gTasks[taskId].data[3]);
+            HideDebugFlyingMonYesNoCursor(gTasks[taskId].data[3]);
             gTasks[taskId].data[3] = 1;
-            debug_sub_8012B2C(1);
+            ShowDebugFlyingMonYesNoCursor(1);
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             if (gTasks[taskId].data[3] == 0)
-                debug_sub_8013294(31, gUnknown_Debug_2023B62, 411);
-            debug_sub_8012B70(taskId, 1);
+                WriteDebugDataToFlash(31, gUnknown_Debug_2023B62, 411);
+            SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            debug_sub_8012B70(taskId, 1);
+            SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         break;
     }
 }
 
-u8 debug_sub_8013240(void)
+u8 IsDebugFlashUnavailable(void)
 {
     if (IdentifyFlash() == 0)
         return 0;
@@ -3023,7 +3023,7 @@ u8 debug_sub_8013240(void)
         return 1;
 }
 
-u32 debug_sub_8013258(u16 sectorNum, u8 *data, u32 size)
+u32 ProgramDebugFlashSectors(u16 sectorNum, u8 *data, u32 size)
 {
     while (1)
     {
@@ -3038,21 +3038,21 @@ u32 debug_sub_8013258(u16 sectorNum, u8 *data, u32 size)
     return 1;
 }
 
-u32 debug_sub_8013294(u8 sectorNum, void *data, u32 size)
+u32 WriteDebugDataToFlash(u8 sectorNum, void *data, u32 size)
 {
     u32 result;
 
-    if (debug_sub_8013240() != 0)
+    if (IsDebugFlashUnavailable() != 0)
         return 0;
     m4aSoundVSyncOff();
-    result = debug_sub_8013258(sectorNum, data, size);
+    result = ProgramDebugFlashSectors(sectorNum, data, size);
     m4aSoundVSyncOn();
     return result;
 }
 
-void debug_sub_80132C8(u8 a, void *b, u32 c)
+void ReadDebugDataFromFlash(u8 a, void *b, u32 c)
 {
-    if (debug_sub_8013240() == 0)
+    if (IsDebugFlashUnavailable() == 0)
         ReadFlash(a, 0, b, c);
 }
 #endif
