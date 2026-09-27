@@ -122,7 +122,7 @@ bool8 SlideTrainerEyesPortraitOut(void)
     return TRUE;
 }
 
-void sub_80F6F10(void)
+void InitTrainerEyesBackgroundPulse(void)
 {
     gPokenavStructPtr->unkD15E = 0;
     gPokenavStructPtr->unkD15F = 0;
@@ -130,10 +130,10 @@ void sub_80F6F10(void)
     REG_BLDY = 0;
     REG_WININ = 0x3F3F;
     REG_WINOUT = 0x1F1F;
-    sub_80F6FB8(0);
+    SetTrainerEyesDetailWindow(0);
 }
 
-void sub_80F6F64(void)
+void UpdateTrainerEyesBackgroundPulse(void)
 {
     if (++gPokenavStructPtr->unkD15E > 8)
     {
@@ -146,9 +146,9 @@ void sub_80F6F64(void)
     }
 }
 
-void sub_80F6FB8(bool8 a0)
+void SetTrainerEyesDetailWindow(bool8 showDetail)
 {
-    if (!a0)
+    if (!showDetail)
     {
         REG_WIN0H = -0x1710;
         REG_WIN0V = 0x888;
@@ -160,7 +160,7 @@ void sub_80F6FB8(bool8 a0)
     }
 }
 
-void sub_80F6FFC(void)
+void StopTrainerEyesBackgroundPulse(void)
 {
     REG_BLDCNT = 0;
     REG_BLDY = 0;

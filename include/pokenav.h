@@ -430,14 +430,14 @@ void BuildPokenavPaletteGradient(const u16 *startColors, const u16 *endColors, u
 void StartPokenavBg3Scroll(void);
 void SetPokenavMenuPalette(u8 menuType);
 void InitPokenavPaletteGradient(u8 stage);
-void sub_80F6FFC();
-void sub_80F6FB8(bool8);
+void StopTrainerEyesBackgroundPulse();
+void SetTrainerEyesDetailWindow(bool8);
 void PrepareTrainerEyesDetailPortrait();
 bool8 SlideTrainerEyesPortraitIn();
 bool8 SlideTrainerEyesPortraitOut();
 bool8 sub_80F70FC();
 void sub_80F708C(s8);
-void sub_80F6F10();
+void InitTrainerEyesBackgroundPulse();
 void PrintRibbonsSummaryCount(void);
 void BeginRibbonsSummaryMonSwitch(s8);
 bool8 UpdateRibbonsSummaryMonSwitch();
@@ -473,6 +473,6 @@ void VBlankCB_Pokenav(void);
 void sub_80FB260();
 void UpdateRegionMapCityBanner(void);
 void ConditionGraph_Draw();
-void sub_80F6F64();
+void UpdateTrainerEyesBackgroundPulse();
 
 #endif // GUARD_POKENAV_H

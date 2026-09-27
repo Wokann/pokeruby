@@ -1259,7 +1259,7 @@ void VBlankCB_PokenavTrainerEyes(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_80F6F64();
+    UpdateTrainerEyesBackgroundPulse();
 }
 
 void VBlankCB_PokenavOamOnly(void)
@@ -3032,7 +3032,7 @@ void OpenTrainerEyes(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        sub_80F6F10();
+        InitTrainerEyesBackgroundPulse();
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_PokenavTrainerEyes);
         gPokenavStructPtr->callbackStep++;
@@ -3123,7 +3123,7 @@ void ShowTrainerEyesTrainerInfo(void)
     case 3:
         if (!UpdateTrainerEyesDetailScroll())
         {
-			sub_80F6FB8(0x1);
+			SetTrainerEyesDetailWindow(0x1);
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
@@ -3167,7 +3167,7 @@ void ShowTrainerEyesTrainerInfo(void)
     case 9:
         if (!SlideTrainerEyesPortraitOut() && !EraseTrainerEyesDescriptionStep())
         {
-			sub_80F6FB8(0);
+			SetTrainerEyesDetailWindow(0);
 			DestroyTrainerEyesPortrait();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -3222,7 +3222,7 @@ void TrainerEyes_ReturnToMainMenu(void)
         {
 			DestroyPokenavListArrowSprites();
 			DestroyPokenavLeftHeaderSprites(0x2);
-			sub_80F6FFC();
+			StopTrainerEyesBackgroundPulse();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;
