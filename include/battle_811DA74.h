@@ -1,7 +1,7 @@
 #ifndef GUARD_BATTLE_811DA74_H
 #define GUARD_BATTLE_811DA74_H
 
-void SetBankFuncToLinkPartnerBufferRunCommand(void);
+void SetControllerToLinkPartner(void);
 void LinkPartnerBufferRunCommand(void);
 void SwitchIn_WaitAndEnd(void);
 void LinkPartnerBufferExecCompleted(void);

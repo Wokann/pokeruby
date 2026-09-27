@@ -263,7 +263,7 @@ void InitLinkBtlControllers(void)
             if ((!(gLinkPlayers[i].id & 1) && !(gLinkPlayers[multiplayerId].id & 1))
              || ((gLinkPlayers[i].id & 1) && (gLinkPlayers[multiplayerId].id & 1)))
             {
-                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetBankFuncToLinkPartnerBufferRunCommand;
+                gBattlerControllerFuncs[gLinkPlayers[i].id] = SetControllerToLinkPartner;
                 switch (gLinkPlayers[i].id)
                 {
                 case 0:

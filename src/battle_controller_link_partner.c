@@ -99,125 +99,125 @@ void sub_811FF30(void);
 void sub_812071C(u8);
 void sub_81208E0(void);
 
-void LinkPartnerHandleGetAttributes(void);
-void LinkPartnerHandlecmd1(void);
-void LinkPartnerHandleSetAttributes(void);
-void LinkPartnerHandlecmd3(void);
-void LinkPartnerHandleLoadPokeSprite(void);
-void LinkPartnerHandleSendOutPoke(void);
-void LinkPartnerHandleReturnPokeToBall(void);
-void LinkPartnerHandleTrainerThrow(void);
+void LinkPartnerHandleGetMonData(void);
+void LinkPartnerHandleGetRawMonData(void);
+void LinkPartnerHandleSetMonData(void);
+void LinkPartnerHandleSetRawMonData(void);
+void LinkPartnerHandleLoadMonSprite(void);
+void LinkPartnerHandleSwitchInAnim(void);
+void LinkPartnerHandleReturnMonToBall(void);
+void LinkPartnerHandleDrawTrainerPic(void);
 void LinkPartnerHandleTrainerSlide(void);
 void LinkPartnerHandleTrainerSlideBack(void);
-void LinkPartnerHandlecmd10(void);
-void LinkPartnerHandlecmd11(void);
-void LinkPartnerHandlecmd12(void);
-void LinkPartnerHandleBallThrow(void);
-void LinkPartnerHandlePuase(void);
+void LinkPartnerHandleFaintAnimation(void);
+void LinkPartnerHandlePaletteFade(void);
+void LinkPartnerHandleSuccessBallThrowAnim(void);
+void LinkPartnerHandleBallThrowAnim(void);
+void LinkPartnerHandlePause(void);
 void LinkPartnerHandleMoveAnimation(void);
 void LinkPartnerHandlePrintString(void);
-void LinkPartnerHandlePrintStringPlayerOnly(void);
-void LinkPartnerHandlecmd18(void);
-void LinkPartnerHandlecmd19(void);
-void LinkPartnerHandlecmd20(void);
-void LinkPartnerHandleOpenBag(void);
-void LinkPartnerHandlecmd22(void);
-void LinkPartnerHandlecmd23(void);
+void LinkPartnerHandlePrintSelectionString(void);
+void LinkPartnerHandleChooseAction(void);
+void LinkPartnerHandleYesNoBox(void);
+void LinkPartnerHandleChooseMove(void);
+void LinkPartnerHandleChooseItem(void);
+void LinkPartnerHandleChoosePokemon(void);
+void LinkPartnerHandleCmd23(void);
 void LinkPartnerHandleHealthBarUpdate(void);
-void LinkPartnerHandleExpBarUpdate(void);
+void LinkPartnerHandleExpUpdate(void);
 void LinkPartnerHandleStatusIconUpdate(void);
 void LinkPartnerHandleStatusAnimation(void);
 void LinkPartnerHandleStatusXor(void);
-void LinkPartnerHandlecmd29(void);
-void LinkPartnerHandleDMATransfer(void);
-void LinkPartnerHandlecmd31(void);
-void LinkPartnerHandlecmd32(void);
-void LinkPartnerHandlecmd33(void);
-void LinkPartnerHandlecmd34(void);
-void LinkPartnerHandlecmd35(void);
-void LinkPartnerHandlecmd36(void);
-void LinkPartnerHandlecmd37(void);
-void LinkPartnerHandlecmd38(void);
-void LinkPartnerHandlecmd39(void);
-void LinkPartnerHandlecmd40(void);
+void LinkPartnerHandleDataTransfer(void);
+void LinkPartnerHandleDMA3Transfer(void);
+void LinkPartnerHandlePlayBGM(void);
+void LinkPartnerHandleCmd32(void);
+void LinkPartnerHandleTwoReturnValues(void);
+void LinkPartnerHandleChosenMonReturnValue(void);
+void LinkPartnerHandleOneReturnValue(void);
+void LinkPartnerHandleOneReturnValue_Duplicate(void);
+void LinkPartnerHandleClearUnkVar(void);
+void LinkPartnerHandleSetUnkVar(void);
+void LinkPartnerHandleClearUnkFlag(void);
+void LinkPartnerHandleToggleUnkFlag(void);
 void LinkPartnerHandleHitAnimation(void);
-void LinkPartnerHandlecmd42(void);
-void LinkPartnerHandleEffectivenessSound(void);
-void LinkPartnerHandlecmd44(void);
+void LinkPartnerHandleCantSwitch(void);
+void LinkPartnerHandlePlaySE(void);
+void LinkPartnerHandlePlayFanfareOrBGM(void);
 void LinkPartnerHandleFaintingCry(void);
 void LinkPartnerHandleIntroSlide(void);
-void LinkPartnerHandleTrainerBallThrow(void);
-void LinkPartnerHandlecmd48(void);
-void LinkPartnerHandlecmd49(void);
-void LinkPartnerHandlecmd50(void);
+void LinkPartnerHandleIntroTrainerBallThrow(void);
+void LinkPartnerHandleDrawPartyStatusSummary(void);
+void LinkPartnerHandleHidePartyStatusSummary(void);
+void LinkPartnerHandleEndBounceEffect(void);
 void LinkPartnerHandleSpriteInvisibility(void);
 void LinkPartnerHandleBattleAnimation(void);
 void LinkPartnerHandleLinkStandbyMsg(void);
 void LinkPartnerHandleResetActionMoveSelection(void);
-void LinkPartnerHandlecmd55(void);
-void LinkPartnerHandlecmd56(void);
+void LinkPartnerHandleEndLinkBattle(void);
+void LinkPartnerCmdEnd(void);
 
 // const data
 typedef void (*BattleBufferCmd) (void);
-static const BattleBufferCmd gLinkPartnerBufferCommands[] =
+static const BattleBufferCmd sLinkPartnerBufferCommands[] =
 {
-    LinkPartnerHandleGetAttributes,
-    LinkPartnerHandlecmd1,
-    LinkPartnerHandleSetAttributes,
-    LinkPartnerHandlecmd3,
-    LinkPartnerHandleLoadPokeSprite,
-    LinkPartnerHandleSendOutPoke,
-    LinkPartnerHandleReturnPokeToBall,
-    LinkPartnerHandleTrainerThrow,
+    LinkPartnerHandleGetMonData,
+    LinkPartnerHandleGetRawMonData,
+    LinkPartnerHandleSetMonData,
+    LinkPartnerHandleSetRawMonData,
+    LinkPartnerHandleLoadMonSprite,
+    LinkPartnerHandleSwitchInAnim,
+    LinkPartnerHandleReturnMonToBall,
+    LinkPartnerHandleDrawTrainerPic,
     LinkPartnerHandleTrainerSlide,
     LinkPartnerHandleTrainerSlideBack,
-    LinkPartnerHandlecmd10,
-    LinkPartnerHandlecmd11,
-    LinkPartnerHandlecmd12,
-    LinkPartnerHandleBallThrow,
-    LinkPartnerHandlePuase,
+    LinkPartnerHandleFaintAnimation,
+    LinkPartnerHandlePaletteFade,
+    LinkPartnerHandleSuccessBallThrowAnim,
+    LinkPartnerHandleBallThrowAnim,
+    LinkPartnerHandlePause,
     LinkPartnerHandleMoveAnimation,
     LinkPartnerHandlePrintString,
-    LinkPartnerHandlePrintStringPlayerOnly,
-    LinkPartnerHandlecmd18,
-    LinkPartnerHandlecmd19,
-    LinkPartnerHandlecmd20,
-    LinkPartnerHandleOpenBag,
-    LinkPartnerHandlecmd22,
-    LinkPartnerHandlecmd23,
+    LinkPartnerHandlePrintSelectionString,
+    LinkPartnerHandleChooseAction,
+    LinkPartnerHandleYesNoBox,
+    LinkPartnerHandleChooseMove,
+    LinkPartnerHandleChooseItem,
+    LinkPartnerHandleChoosePokemon,
+    LinkPartnerHandleCmd23,
     LinkPartnerHandleHealthBarUpdate,
-    LinkPartnerHandleExpBarUpdate,
+    LinkPartnerHandleExpUpdate,
     LinkPartnerHandleStatusIconUpdate,
     LinkPartnerHandleStatusAnimation,
     LinkPartnerHandleStatusXor,
-    LinkPartnerHandlecmd29,
-    LinkPartnerHandleDMATransfer,
-    LinkPartnerHandlecmd31,
-    LinkPartnerHandlecmd32,
-    LinkPartnerHandlecmd33,
-    LinkPartnerHandlecmd34,
-    LinkPartnerHandlecmd35,
-    LinkPartnerHandlecmd36,
-    LinkPartnerHandlecmd37,
-    LinkPartnerHandlecmd38,
-    LinkPartnerHandlecmd39,
-    LinkPartnerHandlecmd40,
+    LinkPartnerHandleDataTransfer,
+    LinkPartnerHandleDMA3Transfer,
+    LinkPartnerHandlePlayBGM,
+    LinkPartnerHandleCmd32,
+    LinkPartnerHandleTwoReturnValues,
+    LinkPartnerHandleChosenMonReturnValue,
+    LinkPartnerHandleOneReturnValue,
+    LinkPartnerHandleOneReturnValue_Duplicate,
+    LinkPartnerHandleClearUnkVar,
+    LinkPartnerHandleSetUnkVar,
+    LinkPartnerHandleClearUnkFlag,
+    LinkPartnerHandleToggleUnkFlag,
     LinkPartnerHandleHitAnimation,
-    LinkPartnerHandlecmd42,
-    LinkPartnerHandleEffectivenessSound,
-    LinkPartnerHandlecmd44,
+    LinkPartnerHandleCantSwitch,
+    LinkPartnerHandlePlaySE,
+    LinkPartnerHandlePlayFanfareOrBGM,
     LinkPartnerHandleFaintingCry,
     LinkPartnerHandleIntroSlide,
-    LinkPartnerHandleTrainerBallThrow,
-    LinkPartnerHandlecmd48,
-    LinkPartnerHandlecmd49,
-    LinkPartnerHandlecmd50,
+    LinkPartnerHandleIntroTrainerBallThrow,
+    LinkPartnerHandleDrawPartyStatusSummary,
+    LinkPartnerHandleHidePartyStatusSummary,
+    LinkPartnerHandleEndBounceEffect,
     LinkPartnerHandleSpriteInvisibility,
     LinkPartnerHandleBattleAnimation,
     LinkPartnerHandleLinkStandbyMsg,
     LinkPartnerHandleResetActionMoveSelection,
-    LinkPartnerHandlecmd55,
-    LinkPartnerHandlecmd56,
+    LinkPartnerHandleEndLinkBattle,
+    LinkPartnerCmdEnd,
 };
 // code starts here
 
@@ -225,7 +225,7 @@ void nullsub_74(void)
 {
 }
 
-void SetBankFuncToLinkPartnerBufferRunCommand(void)
+void SetControllerToLinkPartner(void)
 {
     gBattlerControllerFuncs[gActiveBattler] = LinkPartnerBufferRunCommand;
 }
@@ -235,7 +235,7 @@ void LinkPartnerBufferRunCommand(void)
     if (gBattleControllerExecFlags & gBitTable[gActiveBattler])
     {
         if (gBattleBufferA[gActiveBattler][0] <= 0x38)
-            gLinkPartnerBufferCommands[gBattleBufferA[gActiveBattler][0]]();
+            sLinkPartnerBufferCommands[gBattleBufferA[gActiveBattler][0]]();
         else
             LinkPartnerBufferExecCompleted();
     }
@@ -498,7 +498,7 @@ void sub_811E3B8(void)
         LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleGetAttributes(void)
+void LinkPartnerHandleGetMonData(void)
 {
     u8 unk[256];
     int r6 = 0;
@@ -825,12 +825,12 @@ u32 dp01_getattr_by_ch1_for_player_pokemon(u8 a, u8 *buffer)
     return size;
 }
 
-void LinkPartnerHandlecmd1(void)
+void LinkPartnerHandleGetRawMonData(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleSetAttributes(void)
+void LinkPartnerHandleSetMonData(void)
 {
     u8 i;
     u8 r4;
@@ -1070,7 +1070,7 @@ void sub_811EC68(u8 a)
     HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
 }
 
-void LinkPartnerHandlecmd3(void)
+void LinkPartnerHandleSetRawMonData(void)
 {
     u8 *dst;
     u8 i;
@@ -1081,7 +1081,7 @@ void LinkPartnerHandlecmd3(void)
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleLoadPokeSprite(void)
+void LinkPartnerHandleLoadMonSprite(void)
 {
     BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     SetMultiuseSpriteTemplateToPokemon(
@@ -1099,7 +1099,7 @@ void LinkPartnerHandleLoadPokeSprite(void)
     gBattlerControllerFuncs[gActiveBattler] = WaitForMonAnimAfterLoad;
 }
 
-void LinkPartnerHandleSendOutPoke(void)
+void LinkPartnerHandleSwitchInAnim(void)
 {
     sub_8032AA8(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
     gBattlerPartyIndexes[gActiveBattler] = gBattleBufferA[gActiveBattler][1];
@@ -1132,7 +1132,7 @@ void sub_811F864(u8 a, u8 b)
     gSprites[gBattleControllerData[a]].data[0] = DoPokeballSendOutAnimation(0, 0xFF);
 }
 
-void LinkPartnerHandleReturnPokeToBall(void)
+void LinkPartnerHandleReturnMonToBall(void)
 {
     if (gBattleBufferA[gActiveBattler][1] == 0)
     {
@@ -1168,7 +1168,7 @@ void sub_811FA5C(void)
     }
 }
 
-void LinkPartnerHandleTrainerThrow(void)
+void LinkPartnerHandleDrawTrainerPic(void)
 {
     s16 xOffset;
     u32 gender;
@@ -1215,7 +1215,7 @@ void LinkPartnerHandleTrainerSlideBack(void)
     gBattlerControllerFuncs[gActiveBattler] = FreeTrainerSpriteAfterSlide;
 }
 
-void LinkPartnerHandlecmd10(void)
+void LinkPartnerHandleFaintAnimation(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].animationState == 0)
     {
@@ -1235,22 +1235,22 @@ void LinkPartnerHandlecmd10(void)
     }
 }
 
-void LinkPartnerHandlecmd11(void)
+void LinkPartnerHandlePaletteFade(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd12(void)
+void LinkPartnerHandleSuccessBallThrowAnim(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleBallThrow(void)
+void LinkPartnerHandleBallThrowAnim(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlePuase(void)
+void LinkPartnerHandlePause(void)
 {
     LinkPartnerBufferExecCompleted();
 }
@@ -1345,37 +1345,37 @@ void LinkPartnerHandlePrintString(void)
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnInactiveTextPrinter;
 }
 
-void LinkPartnerHandlePrintStringPlayerOnly(void)
+void LinkPartnerHandlePrintSelectionString(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd18(void)
+void LinkPartnerHandleChooseAction(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd19(void)
+void LinkPartnerHandleYesNoBox(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd20(void)
+void LinkPartnerHandleChooseMove(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleOpenBag(void)
+void LinkPartnerHandleChooseItem(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd22(void)
+void LinkPartnerHandleChoosePokemon(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd23(void)
+void LinkPartnerHandleCmd23(void)
 {
     LinkPartnerBufferExecCompleted();
 }
@@ -1402,7 +1402,7 @@ void LinkPartnerHandleHealthBarUpdate(void)
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnHealthbarDone;
 }
 
-void LinkPartnerHandleExpBarUpdate(void)
+void LinkPartnerHandleExpUpdate(void)
 {
     LinkPartnerBufferExecCompleted();
 }
@@ -1436,65 +1436,65 @@ void LinkPartnerHandleStatusXor(void)
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd29(void)
+void LinkPartnerHandleDataTransfer(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleDMATransfer(void)
+void LinkPartnerHandleDMA3Transfer(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd31(void)
+void LinkPartnerHandlePlayBGM(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd32(void)
+void LinkPartnerHandleCmd32(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd33(void)
+void LinkPartnerHandleTwoReturnValues(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd34(void)
+void LinkPartnerHandleChosenMonReturnValue(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd35(void)
+void LinkPartnerHandleOneReturnValue(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd36(void)
+void LinkPartnerHandleOneReturnValue_Duplicate(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd37(void)
+void LinkPartnerHandleClearUnkVar(void)
 {
     gUnknown_020238C8.unk0_0 = 0;
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd38(void)
+void LinkPartnerHandleSetUnkVar(void)
 {
     gUnknown_020238C8.unk0_0 = gBattleBufferA[gActiveBattler][1];
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd39(void)
+void LinkPartnerHandleClearUnkFlag(void)
 {
     gUnknown_020238C8.unk0_7 = 0;
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd40(void)
+void LinkPartnerHandleToggleUnkFlag(void)
 {
     gUnknown_020238C8.unk0_7 ^= 1;
     LinkPartnerBufferExecCompleted();
@@ -1515,12 +1515,12 @@ void LinkPartnerHandleHitAnimation(void)
     }
 }
 
-void LinkPartnerHandlecmd42(void)
+void LinkPartnerHandleCantSwitch(void)
 {
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleEffectivenessSound(void)
+void LinkPartnerHandlePlaySE(void)
 {
     s8 pan;
 
@@ -1532,7 +1532,7 @@ void LinkPartnerHandleEffectivenessSound(void)
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd44(void)
+void LinkPartnerHandlePlayFanfareOrBGM(void)
 {
     PlayFanfare(gBattleBufferA[gActiveBattler][1] | (gBattleBufferA[gActiveBattler][2] << 8));
     LinkPartnerBufferExecCompleted();
@@ -1553,7 +1553,7 @@ void LinkPartnerHandleIntroSlide(void)
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandleTrainerBallThrow(void)
+void LinkPartnerHandleIntroTrainerBallThrow(void)
 {
     u8 r4;
     u8 taskId;
@@ -1611,7 +1611,7 @@ void sub_812071C(u8 taskId)
     DestroyTask(taskId);
 }
 
-void LinkPartnerHandlecmd48(void)
+void LinkPartnerHandleDrawPartyStatusSummary(void)
 {
     if (gBattleBufferA[gActiveBattler][1] != 0 && GetBattlerSide(gActiveBattler) == 0)
     {
@@ -1640,14 +1640,14 @@ void sub_81208E0(void)
     }
 }
 
-void LinkPartnerHandlecmd49(void)
+void LinkPartnerHandleHidePartyStatusSummary(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = sub_8044CA0;
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd50(void)
+void LinkPartnerHandleEndBounceEffect(void)
 {
     LinkPartnerBufferExecCompleted();
 }
@@ -1686,7 +1686,7 @@ void LinkPartnerHandleResetActionMoveSelection(void)
     LinkPartnerBufferExecCompleted();
 }
 
-void LinkPartnerHandlecmd55(void)
+void LinkPartnerHandleEndLinkBattle(void)
 {
     gBattleOutcome = gBattleBufferA[gActiveBattler][1];
     FadeOutMapMusic(5);
@@ -1695,6 +1695,6 @@ void LinkPartnerHandlecmd55(void)
     gBattlerControllerFuncs[gActiveBattler] = sub_811E29C;
 }
 
-void LinkPartnerHandlecmd56(void)
+void LinkPartnerCmdEnd(void)
 {
 }
