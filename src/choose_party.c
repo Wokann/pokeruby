@@ -49,7 +49,7 @@ static void PrintLinkMultiBattlePlayerPartyInfo(void);
 static void Task_WaitLinkMultiPartnerIcons(u8);
 static void Task_PrintLinkMultiPartnerPartyInfo(u8);
 static void Task_DelayLinkMultiPartyMenuExit(u8);
-static void Task_DaycareStorageMenu8122EAC(u8);
+static void Task_HandleDaycareStoragePopup(u8);
 void sub_8123138(u8);
 static void sub_8123170(u8);
 static void sub_81231AC(void);
@@ -786,16 +786,16 @@ static const struct MenuAction2 sDaycareStorageMenuItems[] =
     {gOtherText_Exit, DaycareStorageMenuCallback_Exit},
 };
 
-static const u8 gUnknown_08401808[] = {0, 1, 2};
-static const u8 gUnknown_0840180B[] = {1, 2};
+static const u8 sDaycareStorageActions_NonEgg[] = {0, 1, 2};
+static const u8 sDaycareStorageActions_Egg[] = {1, 2};
 
 static const struct PartyPopupMenu sDaycareStorageMenus[] =
 {
-    {ARRAY_COUNT(gUnknown_08401808), 9, gUnknown_08401808},
-    {ARRAY_COUNT(gUnknown_0840180B), 9, gUnknown_0840180B},
+    {ARRAY_COUNT(sDaycareStorageActions_NonEgg), 9, sDaycareStorageActions_NonEgg},
+    {ARRAY_COUNT(sDaycareStorageActions_Egg), 9, sDaycareStorageActions_Egg},
 };
 
-static void sub_8122D94(u8 taskId)
+static void ShowDaycareStoragePopup(u8 taskId)
 {
     if (!GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_IS_EGG))
     {
@@ -819,8 +819,8 @@ void HandleDaycarePartyMenu(u8 taskId)
             PlaySE(SE_SELECT);
             gLastFieldPokeMenuOpened = sub_806CA38(taskId);
             GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
-            sub_8122D94(taskId);
-            gTasks[taskId].func = Task_DaycareStorageMenu8122EAC;
+            ShowDaycareStoragePopup(taskId);
+            gTasks[taskId].func = Task_HandleDaycareStoragePopup;
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
@@ -832,7 +832,7 @@ void HandleDaycarePartyMenu(u8 taskId)
     }
 }
 
-static void Task_DaycareStorageMenu8122EAC(u8 taskId)
+static void Task_HandleDaycareStoragePopup(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -881,7 +881,7 @@ static void DaycareStorageMenuCallback_Store(u8 taskId)
     sub_8123138(taskId);
 }
 
-static void sub_8122F90(void)
+static void CB2_ReturnToDaycarePartyMenu(void)
 {
     while (1)
     {
@@ -891,7 +891,7 @@ static void sub_8122F90(void)
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
             gLastFieldPokeMenuOpened = gUnknown_020384F0;
-            sub_8122D94(ePartyMenu2.menuHandlerTaskId);
+            ShowDaycareStoragePopup(ePartyMenu2.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
@@ -900,14 +900,14 @@ static void sub_8122F90(void)
     }
 }
 
-static void sub_8123004(void)
+static void CB2_InitDaycareSummaryReturn(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_DAYCARE, 0xFF, Task_DaycareStorageMenu8122EAC, 5);
-    SetMainCallback2(sub_8122F90);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_DAYCARE, 0xFF, Task_HandleDaycareStoragePopup, 5);
+    SetMainCallback2(CB2_ReturnToDaycarePartyMenu);
 }
 
-static void sub_8123034(u8 taskId)
+static void Task_OpenDaycareSummary(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -915,14 +915,14 @@ static void sub_8123034(u8 taskId)
 
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, sub_8123004, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, CB2_InitDaycareSummaryReturn, PSS_MODE_NORMAL);
     }
 }
 
 static void DaycareStorageMenuCallback_Summary(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskId].func = sub_8123034;
+    gTasks[taskId].func = Task_OpenDaycareSummary;
 }
 
 static void DaycareStorageMenuCallback_Exit(u8 taskId)
