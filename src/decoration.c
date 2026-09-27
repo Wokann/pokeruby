@@ -1556,7 +1556,7 @@ void PrintDecorationCategoryMenuItem(u8 decoCat, u8 left, u8 top, u8 palIdx) // 
     strptr[2] = palIdx;
     strptr += 3;
     strptr = StringCopy(strptr, gUnknown_083EC5E4[decoCat]);
-    strptr = AlignInt1InMenuWindow(strptr, GetNumDecorationsInInventoryCategory(decoCat), 0x56, 1);
+    strptr = AlignInt1InMenuWindow(strptr, GetNumOwnedDecorationsInCategory(decoCat), 0x56, 1);
     *strptr++ = 0xba;
     strptr = AlignInt1InMenuWindow(strptr, gDecorationInventories[decoCat].size, 0x68, 1);
     strptr[0] = EXT_CTRL_CODE_BEGIN;
@@ -1610,10 +1610,10 @@ void HandleDecorationCategoriesMenuInput(u8 taskId)
             gUnknown_020388F6 = Menu_GetCursorPos();
             if (gUnknown_020388F6 != 8)
             {
-                gUnknown_020388D5 = GetNumDecorationsInInventoryCategory(gUnknown_020388F6);
+                gUnknown_020388D5 = GetNumOwnedDecorationsInCategory(gUnknown_020388F6);
                 if (gUnknown_020388D5)
                 {
-                    SortDecorationInventory(gUnknown_020388F6);
+                    CondenseDecorationsInCategory(gUnknown_020388F6);
                     gUnknown_020388D0 = gDecorationInventories[gUnknown_020388F6].items;
                     InitDecorationItemsMenuScrollAndCursor(taskId);
                     ClearVerticalScrollIndicatorPalettes();
@@ -2023,7 +2023,7 @@ void RefreshDecorationItemsAfterToss(u8 taskId)
     {
         gUnknown_020388F4--;
     }
-    SortDecorationInventory(gUnknown_020388F6);
+    CondenseDecorationsInCategory(gUnknown_020388F6);
     IdentifyOwnedDecorationsCurrentlyInUse(taskId);
     InitDecorationItemsMenuLimits();
 }
@@ -2043,7 +2043,7 @@ void WarpToInitialPosition(u8 taskId)
 }
 void DecorationMenuAction_Decorate(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
@@ -3564,7 +3564,7 @@ void FreePlayerSpritePalette(void)
 
 void DecorationMenuAction_Toss(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
@@ -3577,7 +3577,7 @@ void DecorationMenuAction_Toss(u8 taskId)
 
 void OpenDecorationTradeCategories(u8 taskId)
 {
-    if (!GetNumDecorationsInInventory())
+    if (!GetNumOwnedDecorations())
     {
         DisplayItemMessageOnField(taskId, gSecretBaseText_NoDecors, ReturnToDecorationActionsAfterInvalidSelection, 0);
     } else
