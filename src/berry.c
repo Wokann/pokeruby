@@ -996,7 +996,7 @@ static u16 GetStageDurationByBerryType(u8 berry);
 
 extern u8 sub_80B47D8(u16 var);
 
-u8 debug_sub_80C2B04(void)
+u8 DebugStartEscalatorForwardAndCloseMenu(void)
 {
     u8 taskId = sub_80B47D8(0);
 
@@ -1005,7 +1005,7 @@ u8 debug_sub_80C2B04(void)
     return 1;
 }
 
-u8 debug_sub_80C2B30(void)
+u8 DebugStartEscalatorReverseAndCloseMenu(void)
 {
     u8 taskId = sub_80B47D8(1);
 
@@ -1073,17 +1073,17 @@ extern const u8 gSpriteImage_UnusedCherry[];
 extern const u16 gSpritePalette_UnusedCherry[];
 extern u8 gUnknown_Debug_839B6CE[];
 
-static const u8 gUnknown_Debug_083F7F84[] = DTR("そとから　きた　きのみ", "An exterior BERRY");
-static const u8 gUnknown_Debug_083F7F90[] = DTR("ただいま　かいはつちゅう", "Currently under development");
+static const u8 sDebugEnigmaBerryDescription1[] = DTR("そとから　きた　きのみ", "An exterior BERRY");
+static const u8 sDebugEnigmaBerryDescription2[] = DTR("ただいま　かいはつちゅう", "Currently under development");
 
-void debug_sub_80C2C18(const u8 *name, u8 holdEffect, u8 holdEffectParam)
+void DebugCreateEnigmaBerry(const u8 *name, u8 holdEffect, u8 holdEffectParam)
 {
     s32 i;
 
     gSaveBlock1.enigmaBerry.berry = gBerries[0];
     StringCopy(gSaveBlock1.enigmaBerry.berry.name, name);
-    StringCopy(gSaveBlock1.enigmaBerry.description1, gUnknown_Debug_083F7F84);
-    StringCopy(gSaveBlock1.enigmaBerry.description2, gUnknown_Debug_083F7F90);
+    StringCopy(gSaveBlock1.enigmaBerry.description1, sDebugEnigmaBerryDescription1);
+    StringCopy(gSaveBlock1.enigmaBerry.description2, sDebugEnigmaBerryDescription2);
     gSaveBlock1.enigmaBerry.berry.description1 = gSaveBlock1.enigmaBerry.description1;
     gSaveBlock1.enigmaBerry.berry.description2 = gSaveBlock1.enigmaBerry.description2;
     for (i = 0; i < 0x480; i++)
@@ -1097,7 +1097,7 @@ void debug_sub_80C2C18(const u8 *name, u8 holdEffect, u8 holdEffectParam)
     gSaveBlock1.enigmaBerry.checksum = GetEnigmaBerryChecksum(&gSaveBlock1.enigmaBerry);
 }
 
-void debug_sub_80C2D24(u8 spicy, u8 dry, u8 sweet, u8 bitter, u8 sour, u8 smoothness)
+void DebugSetEnigmaBerryFlavors(u8 spicy, u8 dry, u8 sweet, u8 bitter, u8 sour, u8 smoothness)
 {
     gSaveBlock1.enigmaBerry.berry.spicy = spicy;
     gSaveBlock1.enigmaBerry.berry.dry = dry;
@@ -1476,22 +1476,22 @@ bool8 PlayerHasBerries(void)
 }
 
 #if DEBUG
-void debug_sub_80C33FC(const u8 *buffer, s32 value, u8 n)
+void DebugAppendBerryTreeValue(const u8 *buffer, s32 value, u8 n)
 {
     StringAppend(gStringVar4, buffer);
     ConvertIntToDecimalStringN(gStringVar1, value, STR_CONV_MODE_LEADING_ZEROS, n);
     StringAppend(gStringVar4, gStringVar1);
 }
 
-static const u8 gUnknown_Debug_083F7F9D[] = _("POS:");
-static const u8 gUnknown_Debug_083F7FA2[] = _("\nTYPE:");
-static const u8 gUnknown_Debug_083F7FA9[] = _("\nGROW:");
-static const u8 gUnknown_Debug_083F7FB0[] = _("\nTIME:");
-static const u8 gUnknown_Debug_083F7FB7[] = _("\nFCNT:");
-static const u8 gUnknown_Debug_083F7FBE[] = _("\nSCNT:");
-static const u8 gUnknown_Debug_083F7FC5[] = _("\nHOOK:");
-static const u8 gUnknown_Debug_083F7FCC[] = _("\nWBIT:");
-static const u8 gUnknown_Debug_083F7FD3[] = _("");
+static const u8 sDebugBerryTreePositionText[] = _("POS:");
+static const u8 sDebugBerryTreeTypeText[] = _("\nTYPE:");
+static const u8 sDebugBerryTreeGrowthText[] = _("\nGROW:");
+static const u8 sDebugBerryTreeTimeText[] = _("\nTIME:");
+static const u8 sDebugBerryTreeYieldText[] = _("\nFCNT:");
+static const u8 sDebugBerryTreeRegrowthCountText[] = _("\nSCNT:");
+static const u8 sDebugBerryTreeGrowthSparkleText[] = _("\nHOOK:");
+static const u8 sDebugBerryTreeWateredText[] = _("\nWBIT:");
+static const u8 sDebugBerryTreeEmptyText[] = _("");
 
 u8* DebugOpenBerryInfo(void)
 {
@@ -1508,17 +1508,17 @@ u8* DebugOpenBerryInfo(void)
         for (i = 0; i < 500; i++)
             gStringVar4[i] = EOS;
 
-        debug_sub_80C33FC(gUnknown_Debug_083F7F9D, berryTreeId, 3);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FA2, berryTree->berry, 2);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FA9, berryTree->stage, 2);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FB0, berryTree->minutesUntilNextStage, 5);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FB7, berryTree->berryYield, 2);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FBE, berryTree->regrowthCount, 3);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FC5, berryTree->growthSparkle, 1);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FCC, berryTree->watered1, 1);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FD3, berryTree->watered2, 1);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FD3, berryTree->watered3, 1);
-        debug_sub_80C33FC(gUnknown_Debug_083F7FD3, berryTree->watered4, 1);
+        DebugAppendBerryTreeValue(sDebugBerryTreePositionText, berryTreeId, 3);
+        DebugAppendBerryTreeValue(sDebugBerryTreeTypeText, berryTree->berry, 2);
+        DebugAppendBerryTreeValue(sDebugBerryTreeGrowthText, berryTree->stage, 2);
+        DebugAppendBerryTreeValue(sDebugBerryTreeTimeText, berryTree->minutesUntilNextStage, 5);
+        DebugAppendBerryTreeValue(sDebugBerryTreeYieldText, berryTree->berryYield, 2);
+        DebugAppendBerryTreeValue(sDebugBerryTreeRegrowthCountText, berryTree->regrowthCount, 3);
+        DebugAppendBerryTreeValue(sDebugBerryTreeGrowthSparkleText, berryTree->growthSparkle, 1);
+        DebugAppendBerryTreeValue(sDebugBerryTreeWateredText, berryTree->watered1, 1);
+        DebugAppendBerryTreeValue(sDebugBerryTreeEmptyText, berryTree->watered2, 1);
+        DebugAppendBerryTreeValue(sDebugBerryTreeEmptyText, berryTree->watered3, 1);
+        DebugAppendBerryTreeValue(sDebugBerryTreeEmptyText, berryTree->watered4, 1);
 
         return gStringVar4;
     }

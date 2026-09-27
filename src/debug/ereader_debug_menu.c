@@ -144,7 +144,7 @@ size_t debug_sub_813C5B4(u8 * dest)
     size_t size = gUnknown_Debug_845DDB2End - gUnknown_Debug_845DDB2;
     int i;
 
-    debug_sub_80C2C18(Str_842E23C, 0, 0);
+    DebugCreateEnigmaBerry(Str_842E23C, 0, 0);
 
     for (i = 0; i < 0x1000; i++)
         dest[i] = 0;

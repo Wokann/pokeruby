@@ -947,24 +947,24 @@ u8 DebugMenu_8077434(void)
     switch (Menu_GetCursorPos())
     {
         case 0:
-            debug_sub_80C2C18(Str_839BE0F, 1, 4);
-            debug_sub_80C2D24(0xff, 0xff, 0xff, 0, 0xff, 0xff);
+            DebugCreateEnigmaBerry(Str_839BE0F, 1, 4);
+            DebugSetEnigmaBerryFlavors(0xff, 0xff, 0xff, 0, 0xff, 0xff);
             break;
         case 1:
-            debug_sub_80C2C18(Str_839BE12, 2, 0);
-            debug_sub_80C2D24(0xff, 0xff, 0, 0xff, 0xff, 0xff);
+            DebugCreateEnigmaBerry(Str_839BE12, 2, 0);
+            DebugSetEnigmaBerryFlavors(0xff, 0xff, 0, 0xff, 0xff, 0xff);
             break;
         case 2:
-            debug_sub_80C2C18(Str_839BE16, 3, 0);
-            debug_sub_80C2D24(0xff, 0, 0xff, 0xff, 0xff, 0xff);
+            DebugCreateEnigmaBerry(Str_839BE16, 3, 0);
+            DebugSetEnigmaBerryFlavors(0xff, 0, 0xff, 0xff, 0xff, 0xff);
             break;
         case 3:
-            debug_sub_80C2C18(Str_839BE1A, 4, 0);
-            debug_sub_80C2D24(0, 0xff, 0xff, 0xff, 0xff, 0xff);
+            DebugCreateEnigmaBerry(Str_839BE1A, 4, 0);
+            DebugSetEnigmaBerryFlavors(0, 0xff, 0xff, 0xff, 0xff, 0xff);
             break;
         case 4:
-            debug_sub_80C2C18(Str_839BE1E, 4, 0);
-            debug_sub_80C2D24(0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
+            DebugCreateEnigmaBerry(Str_839BE1E, 4, 0);
+            DebugSetEnigmaBerryFlavors(0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
             break;
     }
     CloseMenu();
