@@ -45,8 +45,8 @@ u8 gDexCryScreenState;
 
 // data/pokedex_cry_screen.o
 
-const u16 CryMeterNeedlePalette[] = INCBIN_U16("graphics/pokedex/cry_meter_needle.gbapal");
-const u8 CryMeterNeedleTiles[] = INCBIN_U8("graphics/pokedex/cry_meter_needle.4bpp");
+const u16 sCryMeterNeedle_Pal[] = INCBIN_U16("graphics/pokedex/cry_meter_needle.gbapal");
+const u8 sCryMeterNeedle_Gfx[] = INCBIN_U8("graphics/pokedex/cry_meter_needle.4bpp");
 
 #if ENGLISH
 const u16 gCryMeter_Tilemap[] = INCBIN_U16("graphics/pokedex/cry_meter_map.bin");
@@ -142,7 +142,7 @@ const u16 sWaveformOffsets[][72] = {
     }
 };
 
-struct PokedexCryScreen * const gPokedexCryScreenPtr = &ePokedexCryScreen;
+struct PokedexCryScreen * const sDexCryScreen = &ePokedexCryScreen;
 
 const u16 sCryScreenBg_Pal[] = INCBIN_U16("graphics/pokedex/83FB6F8.gbapal");
 const u16 sCryScreenBg_Gfx[] = INCBIN_U16("graphics/pokedex/83FB718.4bpp");
@@ -161,14 +161,14 @@ const u8 sWaveformColor[][16] = {
     }
 };
 
-struct PokedexCryMeterNeedle * const gPokedexCryScreenPtr2 = &ePokedexCryScreen2;
+struct PokedexCryMeterNeedle * const sCryMeterNeedle = &ePokedexCryScreen2;
 
-union AnimCmd sAnim_CryMeterNeedle_0[] = {
+union AnimCmd sSpriteAnim_CryMeterNeedle[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd *sAnimTable_CryMeterNeedle[] = { sAnim_CryMeterNeedle_0 };
+const union AnimCmd *sSpriteAnimTable_CryMeterNeedle[] = { sSpriteAnim_CryMeterNeedle };
 
 struct OamData sOamData_CryMeterNeedle = {
     .y = 160,
@@ -177,23 +177,23 @@ struct OamData sOamData_CryMeterNeedle = {
     .priority = 1
 };
 
-struct SpriteTemplate sSpriteTemplate_CryMeterNeedle = {
+struct SpriteTemplate sCryMeterNeedleSpriteTemplate = {
     0x2000,
     0x2000,
     &sOamData_CryMeterNeedle,
-    sAnimTable_CryMeterNeedle,
+    sSpriteAnimTable_CryMeterNeedle,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCB_CryMeterNeedle
 };
 
-struct SpriteSheet gCryMeterNeedleSpriteSheets[] = {
-    {CryMeterNeedleTiles, 0x800, 0x2000},
+struct SpriteSheet sCryMeterNeedleSpriteSheets[] = {
+    {sCryMeterNeedle_Gfx, 0x800, 0x2000},
     {}
 };
 
-struct SpritePalette gCryMeterNeedleSpritePalettes[] = {
-    {CryMeterNeedlePalette, 0x2000},
+struct SpritePalette sCryMeterNeedleSpritePalettes[] = {
+    {sCryMeterNeedle_Pal, 0x2000},
     {}
 };
 
@@ -215,13 +215,13 @@ bool8 LoadCryWaveformWindow(struct CryScreenWindow *cry, u8 bgId)
     switch (gDexCryScreenState)
     {
     case 0:
-        gPokedexCryScreenPtr->charBase = cry->charBase;
-        gPokedexCryScreenPtr->playStartPos = cry->yPos;
-        gPokedexCryScreenPtr->cryOverrideCountdown = 0;
-        gPokedexCryScreenPtr->cryRepeatDelay = 0;
-        gPokedexCryScreenPtr->cryState = 0;
-        gPokedexCryScreenPtr->waveformPreviousY = 28;
-        gPokedexCryScreenPtr->playhead = 0;
+        sDexCryScreen->charBase = cry->charBase;
+        sDexCryScreen->playStartPos = cry->yPos;
+        sDexCryScreen->cryOverrideCountdown = 0;
+        sDexCryScreen->cryRepeatDelay = 0;
+        sDexCryScreen->cryState = 0;
+        sDexCryScreen->waveformPreviousY = 28;
+        sDexCryScreen->playhead = 0;
         ShiftWaveformOver(bgId, -8 * cry->xPos, 1);
         for (i = 0; i < 7; i++)
         {
@@ -242,7 +242,7 @@ bool8 LoadCryWaveformWindow(struct CryScreenWindow *cry, u8 bgId)
                 *((u16 *)(VRAM + (2 * j) + (64 * i) + screenBase)) = tileNum++;
             }
         }
-        for (position = 0; position < gPokedexCryScreenPtr->playStartPos * 8; position++)
+        for (position = 0; position < sDexCryScreen->playStartPos * 8; position++)
         {
             DrawWaveformSegment(position, 0);
         }
@@ -262,54 +262,54 @@ void UpdateCryWaveformWindow(u8 bgId)
     u8 r4;
     DrawWaveformWindow();
     AdvancePlayhead(bgId);
-    if (gPokedexCryScreenPtr->cryRepeatDelay)
-        gPokedexCryScreenPtr->cryRepeatDelay--;
-    if (gPokedexCryScreenPtr->cryOverrideCountdown && !--gPokedexCryScreenPtr->cryOverrideCountdown)
+    if (sDexCryScreen->cryRepeatDelay)
+        sDexCryScreen->cryRepeatDelay--;
+    if (sDexCryScreen->cryOverrideCountdown && !--sDexCryScreen->cryOverrideCountdown)
     {
-        PlayCryScreenCry(gPokedexCryScreenPtr->species);
+        PlayCryScreenCry(sDexCryScreen->species);
         DrawWaveformFlatline();
         return;
     }
-    if (gPokedexCryScreenPtr->cryState == 0)
+    if (sDexCryScreen->cryState == 0)
     {
         DrawWaveformFlatline();
         return;
     }
-    if (gPokedexCryScreenPtr->cryState == 1)
+    if (sDexCryScreen->cryState == 1)
     {
         BufferCryWaveformSegment();
     }
-    else if (gPokedexCryScreenPtr->cryState > 8)
+    else if (sDexCryScreen->cryState > 8)
     {
         if (!IsCryPlaying())
         {
             DrawWaveformFlatline();
-            gPokedexCryScreenPtr->cryState = 0;
+            sDexCryScreen->cryState = 0;
             return;
         }
         BufferCryWaveformSegment();
-        gPokedexCryScreenPtr->cryState = 1;
+        sDexCryScreen->cryState = 1;
     }
-    r4 = 2 * (gPokedexCryScreenPtr->cryState - 1);
-    DrawWaveformSegment(gPokedexCryScreenPtr->playStartPos * 8 + gPokedexCryScreenPtr->playhead - 2,
-        gPokedexCryScreenPtr->cryWaveformBuffer[r4]);
-    DrawWaveformSegment(gPokedexCryScreenPtr->playStartPos * 8 + gPokedexCryScreenPtr->playhead - 1,
-        gPokedexCryScreenPtr->cryWaveformBuffer[r4 + 1]);
-    gPokedexCryScreenPtr->cryState++;
+    r4 = 2 * (sDexCryScreen->cryState - 1);
+    DrawWaveformSegment(sDexCryScreen->playStartPos * 8 + sDexCryScreen->playhead - 2,
+        sDexCryScreen->cryWaveformBuffer[r4]);
+    DrawWaveformSegment(sDexCryScreen->playStartPos * 8 + sDexCryScreen->playhead - 1,
+        sDexCryScreen->cryWaveformBuffer[r4 + 1]);
+    sDexCryScreen->cryState++;
 }
 
 void CryScreenPlayButton(u16 species)
 {
-    if (gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_PAUSE && !gPokedexCryScreenPtr->cryOverrideCountdown)
+    if (gMPlayInfo_BGM.status & MUSICPLAYER_STATUS_PAUSE && !sDexCryScreen->cryOverrideCountdown)
     {
-        if (!gPokedexCryScreenPtr->cryRepeatDelay)
+        if (!sDexCryScreen->cryRepeatDelay)
         {
-            gPokedexCryScreenPtr->cryRepeatDelay = 4;
+            sDexCryScreen->cryRepeatDelay = 4;
             if (IsCryPlaying() == TRUE)
             {
                 StopCry();
-                gPokedexCryScreenPtr->species = species;
-                gPokedexCryScreenPtr->cryOverrideCountdown = 2;
+                sDexCryScreen->species = species;
+                sDexCryScreen->cryOverrideCountdown = 2;
             }
             else
                 PlayCryScreenCry(species);
@@ -320,7 +320,7 @@ void CryScreenPlayButton(u16 species)
 void PlayCryScreenCry(u16 species)
 {
     PlayCry2(species, 0, 125, 10);
-    gPokedexCryScreenPtr->cryState = 1;
+    sDexCryScreen->cryState = 1;
 }
 
 #define GetSrcBufferForCryWaveformSegment(counter) ({ \
@@ -339,14 +339,14 @@ void BufferCryWaveformSegment(void)
 
     src = GetSrcBufferForCryWaveformSegment(gPcmDmaCounter);
     for (i = 0; i < 16; i++)
-        gPokedexCryScreenPtr->cryWaveformBuffer[i] = src[i * 2] * 2;
+        sDexCryScreen->cryWaveformBuffer[i] = src[i * 2] * 2;
 
 }
 
 void DrawWaveformFlatline(void)
 {
-    DrawWaveformSegment(gPokedexCryScreenPtr->playStartPos * 8 + gPokedexCryScreenPtr->playhead - 2, 0);
-    DrawWaveformSegment(gPokedexCryScreenPtr->playStartPos * 8 + gPokedexCryScreenPtr->playhead - 1, 0);
+    DrawWaveformSegment(sDexCryScreen->playStartPos * 8 + sDexCryScreen->playhead - 2, 0);
+    DrawWaveformSegment(sDexCryScreen->playStartPos * 8 + sDexCryScreen->playhead - 1, 0);
 }
 
 void AdvancePlayhead(u8 bgId)
@@ -354,9 +354,9 @@ void AdvancePlayhead(u8 bgId)
     u8 i;
     u16 offset;
 
-    ShiftWaveformOver(bgId, gPokedexCryScreenPtr->playhead, 0);
-    gPokedexCryScreenPtr->playhead += 2;
-    offset = (gPokedexCryScreenPtr->playhead / 8 + gPokedexCryScreenPtr->playStartPos + 1) % 32;
+    ShiftWaveformOver(bgId, sDexCryScreen->playhead, 0);
+    sDexCryScreen->playhead += 2;
+    offset = (sDexCryScreen->playhead / 8 + sDexCryScreen->playStartPos + 1) % 32;
     for (i = 0; i < 7; i++)
     {
         DmaCopy16(3, sCryScreenBg_Gfx, &sCryWaveformWindowTiledata[32 * (32 * i + offset)], 32);
@@ -380,7 +380,7 @@ void DrawWaveformSegment(u8 position, u8 amplitude)
         y = 71 - 16;
     currentPointY = y;
     nybble = VERT_SLICE;
-    if (y > gPokedexCryScreenPtr->waveformPreviousY)
+    if (y > sDexCryScreen->waveformPreviousY)
     {
         do
         {
@@ -388,7 +388,7 @@ void DrawWaveformSegment(u8 position, u8 amplitude)
             sCryWaveformWindowTiledata[offset] &= sWaveformTileDataNybbleMasks[nybble];
             sCryWaveformWindowTiledata[offset] |= sWaveformColor[nybble][((y / 3) - 1) & 0x0F];
             y--;
-        } while (y > gPokedexCryScreenPtr->waveformPreviousY);
+        } while (y > sDexCryScreen->waveformPreviousY);
     }
     else
     {
@@ -398,9 +398,9 @@ void DrawWaveformSegment(u8 position, u8 amplitude)
             sCryWaveformWindowTiledata[offset] &= sWaveformTileDataNybbleMasks[nybble];
             sCryWaveformWindowTiledata[offset] |= sWaveformColor[nybble][((y / 3) - 1) & 0x0F];
             y++;
-        } while (y < gPokedexCryScreenPtr->waveformPreviousY);
+        } while (y < sDexCryScreen->waveformPreviousY);
     }
-    gPokedexCryScreenPtr->waveformPreviousY = currentPointY;
+    sDexCryScreen->waveformPreviousY = currentPointY;
     #undef PLAYHEAD_POS
     #undef PLAY_START_POS
     #undef VERT_SLICE
@@ -408,7 +408,7 @@ void DrawWaveformSegment(u8 position, u8 amplitude)
 
 void DrawWaveformWindow(void)
 {
-    DmaCopy16(3, sCryWaveformWindowTiledata, VRAM + gPokedexCryScreenPtr->charBase, 0x1c00);
+    DmaCopy16(3, sCryWaveformWindowTiledata, VRAM + sDexCryScreen->charBase, 0x1c00);
 }
 
 void ShiftWaveformOver(u8 bgId, s16 pos, u8 axis)
@@ -480,12 +480,12 @@ bool8 ShowPokedexCryScreen(struct CryScreenWindow *cry, UNUSED u8 arg1) {
 
     case 2:
     {
-        LoadSpriteSheets(gCryMeterNeedleSpriteSheets);
-        LoadSpritePalettes(gCryMeterNeedleSpritePalettes);
-        gPokedexCryScreenPtr2->spriteId = CreateSprite(&sSpriteTemplate_CryMeterNeedle, 40 + cry->xPos * 8, 56 + cry->yPos * 8, 1);
-        gPokedexCryScreenPtr2->rotation = 0x20;
-        gPokedexCryScreenPtr2->targetRotation = 0x20;
-        gPokedexCryScreenPtr2->moveIncrement = 0;
+        LoadSpriteSheets(sCryMeterNeedleSpriteSheets);
+        LoadSpritePalettes(sCryMeterNeedleSpritePalettes);
+        sCryMeterNeedle->spriteId = CreateSprite(&sCryMeterNeedleSpriteTemplate, 40 + cry->xPos * 8, 56 + cry->yPos * 8, 1);
+        sCryMeterNeedle->rotation = 0x20;
+        sCryMeterNeedle->targetRotation = 0x20;
+        sCryMeterNeedle->moveIncrement = 0;
 
         returnVal = TRUE;
         break;
@@ -497,8 +497,8 @@ bool8 ShowPokedexCryScreen(struct CryScreenWindow *cry, UNUSED u8 arg1) {
 
 void DestroyCryMeterNeedleSprite(void)
 {
-    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gPokedexCryScreenPtr2->spriteId].oam.paletteNum));
-    DestroySprite(gSprites + gPokedexCryScreenPtr2->spriteId);
+    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[sCryMeterNeedle->spriteId].oam.paletteNum));
+    DestroySprite(gSprites + sCryMeterNeedle->spriteId);
 }
 
 void SpriteCB_CryMeterNeedle(struct Sprite * sprite)
@@ -511,61 +511,61 @@ void SpriteCB_CryMeterNeedle(struct Sprite * sprite)
     struct OamMatrix matrix;
     u8 * r0;
 
-    gSprites[gPokedexCryScreenPtr2->spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
-    gSprites[gPokedexCryScreenPtr2->spriteId].oam.affineParam = 0;
-    switch (gPokedexCryScreenPtr->cryState)
+    gSprites[sCryMeterNeedle->spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[sCryMeterNeedle->spriteId].oam.affineParam = 0;
+    switch (sDexCryScreen->cryState)
     {
         case 0:
-            gPokedexCryScreenPtr2->targetRotation = 0x20;
-            if (gPokedexCryScreenPtr2->rotation > 0)
+            sCryMeterNeedle->targetRotation = 0x20;
+            if (sCryMeterNeedle->rotation > 0)
             {
-                if (gPokedexCryScreenPtr2->moveIncrement != 1)
-                    gPokedexCryScreenPtr2->moveIncrement--;
+                if (sCryMeterNeedle->moveIncrement != 1)
+                    sCryMeterNeedle->moveIncrement--;
             }
             else
-                gPokedexCryScreenPtr2->moveIncrement = 5;
+                sCryMeterNeedle->moveIncrement = 5;
             break;
         case 2:
             peakAmplitude = 0;
             for (i = 0; i < 16; i++)
             {
-                if (peakAmplitude < gPokedexCryScreenPtr->cryWaveformBuffer[i])
-                    peakAmplitude = gPokedexCryScreenPtr->cryWaveformBuffer[i];
+                if (peakAmplitude < sDexCryScreen->cryWaveformBuffer[i])
+                    peakAmplitude = sDexCryScreen->cryWaveformBuffer[i];
             }
             SetCryMeterNeedleTarget(peakAmplitude * 0xd0 / 0x100);
             break;
         case 6:
-            r0 = &gPokedexCryScreenPtr->cryWaveformBuffer[10];
+            r0 = &sDexCryScreen->cryWaveformBuffer[10];
             SetCryMeterNeedleTarget(*r0 * 0xd0 / 0x100);
             break;
     }
-    if (gPokedexCryScreenPtr2->rotation == gPokedexCryScreenPtr2->targetRotation)
+    if (sCryMeterNeedle->rotation == sCryMeterNeedle->targetRotation)
         ; // Empty, needle has reached target
-    else if (gPokedexCryScreenPtr2->rotation < gPokedexCryScreenPtr2->targetRotation)
+    else if (sCryMeterNeedle->rotation < sCryMeterNeedle->targetRotation)
     {
         // Rotate needle left
-        if ((gPokedexCryScreenPtr2->rotation += gPokedexCryScreenPtr2->moveIncrement) > gPokedexCryScreenPtr2->targetRotation)
+        if ((sCryMeterNeedle->rotation += sCryMeterNeedle->moveIncrement) > sCryMeterNeedle->targetRotation)
         {
-            gPokedexCryScreenPtr2->rotation = gPokedexCryScreenPtr2->targetRotation;
-            gPokedexCryScreenPtr2->targetRotation = 0;
+            sCryMeterNeedle->rotation = sCryMeterNeedle->targetRotation;
+            sCryMeterNeedle->targetRotation = 0;
         }
     }
     else
     {
         // Rotate needle right
-        if ((gPokedexCryScreenPtr2->rotation -= gPokedexCryScreenPtr2->moveIncrement) < gPokedexCryScreenPtr2->targetRotation)
+        if ((sCryMeterNeedle->rotation -= sCryMeterNeedle->moveIncrement) < sCryMeterNeedle->targetRotation)
         {
-            gPokedexCryScreenPtr2->rotation = gPokedexCryScreenPtr2->targetRotation;
-            gPokedexCryScreenPtr2->targetRotation = 0;
+            sCryMeterNeedle->rotation = sCryMeterNeedle->targetRotation;
+            sCryMeterNeedle->targetRotation = 0;
         }
     }
     affine.xScale = 0x100;
     affine.yScale = 0x100;
-    affine.rotation = gPokedexCryScreenPtr2->rotation * 256;
+    affine.rotation = sCryMeterNeedle->rotation * 256;
     ObjAffineSet(&affine, &matrix, 1, 2);
     SetOamMatrix(0, matrix.a, matrix.b, matrix.c, matrix.d);
-    x = gSineTable[((gPokedexCryScreenPtr2->rotation + 0x7F) & 0xFF)];
-    y = gSineTable[((gPokedexCryScreenPtr2->rotation + 0x7F) & 0xFF) + 0x40];
+    x = gSineTable[((sCryMeterNeedle->rotation + 0x7F) & 0xFF)];
+    y = gSineTable[((sCryMeterNeedle->rotation + 0x7F) & 0xFF) + 0x40];
     sprite->x2 = x * 24 / 256;
     sprite->y2 = y * 24 / 256;
 }
@@ -575,6 +575,6 @@ void SetCryMeterNeedleTarget(s8 offset)
     u16 rotation = (0x20 - offset) & 0xff;
     if (rotation > 0x20 && rotation < 0xe0)
         rotation = 0xe0;
-    gPokedexCryScreenPtr2->targetRotation = rotation;
-    gPokedexCryScreenPtr2->moveIncrement = 5;
+    sCryMeterNeedle->targetRotation = rotation;
+    sCryMeterNeedle->moveIncrement = 5;
 }
