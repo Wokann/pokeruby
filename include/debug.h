@@ -9,6 +9,9 @@ struct MysteryEventDebugDataSource {
 // start_menu_debug
 void DebugMenu_8077048(void);
 
+// cable_car debug menu
+bool8 DebugOpenMiscMenu(void);
+
 // matsuda_debug_menu
 void PrepareContestArtistDebugResult(void);
 void Crash(const u8 *text);

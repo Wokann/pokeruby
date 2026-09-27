@@ -101,25 +101,25 @@ static void InitGroundTilemapData(u8);
 
 #if DEBUG
 
-void debug_sub_8138D74(void);
-void debug_sub_8138D8C(void);
-u8 debug_sub_8138C14(void);
-u8 debug_sub_8138C34(void);
+void DebugStartCableCarUp(void);
+void DebugStartCableCarDown(void);
+u8 DebugStartRouletteOne(void);
+u8 DebugStartRouletteThree(void);
 u8 StartDebugMailViewer(void);
 
-const u8 Str_842DBD0[] = _("CABLE CAR U");
-const u8 Str_842DBDC[] = _("CABLE CAR D");
-const u8 Str_842DBE8[] = _("ROULETTE1");
-const u8 Str_842DBF2[] = _("ROULETTE3");
-const u8 Str_842DBFC[] = _("View a MAIL");
+const u8 sText_DebugCableCarUp[] = _("CABLE CAR U");
+const u8 sText_DebugCableCarDown[] = _("CABLE CAR D");
+const u8 sText_DebugRouletteOne[] = _("ROULETTE1");
+const u8 sText_DebugRouletteThree[] = _("ROULETTE3");
+const u8 sText_DebugViewMail[] = _("View a MAIL");
 
-const struct MenuAction gUnkDebug4Menu[] =
+const struct MenuAction sDebugMiscMenuActions[] =
 {
-    {Str_842DBD0, (u8 (*)(void))debug_sub_8138D74},  // why do these two functions have a different prototype?
-    {Str_842DBDC, (u8 (*)(void))debug_sub_8138D8C},
-    {Str_842DBE8, debug_sub_8138C14},
-    {Str_842DBF2, debug_sub_8138C34},
-    {Str_842DBFC, StartDebugMailViewer},
+    {sText_DebugCableCarUp, (u8 (*)(void))DebugStartCableCarUp},  // why do these two functions have a different prototype?
+    {sText_DebugCableCarDown, (u8 (*)(void))DebugStartCableCarDown},
+    {sText_DebugRouletteOne, DebugStartRouletteOne},
+    {sText_DebugRouletteThree, DebugStartRouletteThree},
+    {sText_DebugViewMail, StartDebugMailViewer},
 };
 
 #endif
@@ -212,7 +212,7 @@ extern u8 unk_203955C;
 extern const u8 Roulette_EventScript_Table1[];
 extern const u8 Roulette_EventScript_Table2[];
 
-u8 debug_sub_8138C14(void)
+u8 DebugStartRouletteOne(void)
 {
     unk_203955C = 1;
     ScriptContext_SetupScript(Roulette_EventScript_Table1);
@@ -220,7 +220,7 @@ u8 debug_sub_8138C14(void)
     return 1;
 }
 
-u8 debug_sub_8138C34(void)
+u8 DebugStartRouletteThree(void)
 {
     unk_203955C = 1;
     ScriptContext_SetupScript(Roulette_EventScript_Table2);
@@ -228,18 +228,18 @@ u8 debug_sub_8138C34(void)
     return 1;
 }
 
-u8 debug_sub_8138C54(void)
+u8 DebugHandleMiscMenuInput(void)
 {
     if (gMain.newKeys == DPAD_UP)
         Menu_MoveCursor(-1);
     if (gMain.newKeys == DPAD_DOWN)
         Menu_MoveCursor(1);
     if (gMain.newKeys == A_BUTTON)
-        return gUnkDebug4Menu[Menu_GetCursorPos()].func();
+        return sDebugMiscMenuActions[Menu_GetCursorPos()].func();
     if (gMain.newKeys == (R_BUTTON | A_BUTTON))
     {
         gSpecialVar_0x8004 = 1;
-        return gUnkDebug4Menu[Menu_GetCursorPos()].func();
+        return sDebugMiscMenuActions[Menu_GetCursorPos()].func();
     }
     if (gMain.newKeys == B_BUTTON)
     {
@@ -249,14 +249,14 @@ u8 debug_sub_8138C54(void)
     return 0;
 }
 
-u8 debug_sub_8138CC4(void)
+u8 DebugOpenMiscMenu(void)
 {
     gSpecialVar_0x8004 = 0;
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(19, 0, 29, 12);
-    Menu_PrintItems(20, 1, 5, gUnkDebug4Menu);
+    Menu_PrintItems(20, 1, 5, sDebugMiscMenuActions);
     InitMenu(0, 20, 1, 5, 0, 8);
-    gMenuCallback = debug_sub_8138C54;
+    gMenuCallback = DebugHandleMiscMenuInput;
     return 0;
 }
 
@@ -280,14 +280,14 @@ void CableCar(void)
 
 #if DEBUG
 
-void debug_sub_8138D74(void)
+void DebugStartCableCarUp(void)
 {
     gSpecialVar_0x8004 = 0;
     CloseMenu();
     CableCar();
 }
 
-void debug_sub_8138D8C(void)
+void DebugStartCableCarDown(void)
 {
     gSpecialVar_0x8004 = 1;
     CloseMenu();

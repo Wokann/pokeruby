@@ -1087,7 +1087,7 @@ u8 DebugMenu_OpenNakamura(void)
 
 u8 DebugMenu_OpenIwasawa(void)
 {
-    return debug_sub_8138CC4();
+    return DebugOpenMiscMenu();
 }
 
 u8 DebugMenu_Teleport(void)
