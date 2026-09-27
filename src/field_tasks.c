@@ -22,7 +22,7 @@
 #include "field_tasks.h"
 
 void DummyPerStepCallback(u8);
-void PerStepCallback_8069F64(u8);
+static void AshGrassPerStepCallback(u8);
 static void FortreeBridgePerStepCallback(u8);
 static void PacifidlogBridgePerStepCallback(u8);
 static void SootopolisGymIcePerStepCallback(u8);
@@ -30,7 +30,7 @@ void PerStepCallback_806A07C(u8);
 
 void (*const gUnknown_08376364[])(u8) = {
     DummyPerStepCallback,
-    PerStepCallback_8069F64,
+    AshGrassPerStepCallback,
     FortreeBridgePerStepCallback,
     PacifidlogBridgePerStepCallback,
     SootopolisGymIcePerStepCallback,
@@ -628,10 +628,10 @@ static void SootopolisGymIcePerStepCallback(u8 taskId)
     }
 }
 
-void PerStepCallback_8069F64(u8 taskId)
+static void AshGrassPerStepCallback(u8 taskId)
 {
     s16 x, y;
-    u16 *var;
+    u16 *ashGatherCount;
     s16 *data = gTasks[taskId].data;
     PlayerGetDestCoords(&x, &y);
     if (x != data[1] || y != data[2])
@@ -650,10 +650,10 @@ void PerStepCallback_8069F64(u8 taskId)
             }
             if (CheckBagHasItem(ITEM_SOOT_SACK, 1))
             {
-                var = GetVarPointer(VAR_ASH_GATHER_COUNT);
-                if (*var < 9999)
+                ashGatherCount = GetVarPointer(VAR_ASH_GATHER_COUNT);
+                if (*ashGatherCount < 9999)
                 {
-                    (*var)++;
+                    (*ashGatherCount)++;
                 }
             }
         }
