@@ -1057,10 +1057,10 @@ bool8 LoadPokenavListScreenStep(void)
     DmaClear16(3, (void *)VRAM + 0xF800, 0x800);
         break;
     case 11:
-        sub_80F0900();
+        InitPokenavListRows();
         break;
     case 12:
-        if (sub_80F0944())
+        if (LoadPokenavListRowsStep())
         {
             return TRUE;
         }
@@ -1124,12 +1124,12 @@ void BeginPokenavListScroll(s16 rowsToScroll)
         listIndex = 0;
 
     wrappedTilemapRow = tilemapRow & 0x1F;
-    sub_80F0954(listIndex, wrappedTilemapRow, rowsToScroll);
+    QueuePokenavListRows(listIndex, wrappedTilemapRow, rowsToScroll);
 }
 
 bool8 UpdatePokenavListScroll(void)
 {
-    if (!sub_80F098C())
+    if (!PrintPokenavListRowStep())
     {
         if (gPokenavStructPtr->listScrollPixelsRemaining == 0)
             return FALSE;
@@ -1215,66 +1215,66 @@ void ClearTrainerEyesListStats(void)
     Menu_EraseWindowRect(0, 9, 11, 16);
 }
 
-void sub_80F0900(void)
+void InitPokenavListRows(void)
 {
-    s16 var0 = (gPokenavStructPtr->unk8772 - gPokenavStructPtr->unk8770) + 1;
-    if (var0 < 8)
+    s16 visibleRowCount = (gPokenavStructPtr->unk8772 - gPokenavStructPtr->unk8770) + 1;
+    if (visibleRowCount < 8)
         Menu_EraseWindowRect(12, 1, 31, 15);
 
-    sub_80F0954(gPokenavStructPtr->unk8770, 0, var0);
+    QueuePokenavListRows(gPokenavStructPtr->unk8770, 0, visibleRowCount);
 }
 
-bool8 sub_80F0944(void)
+bool8 LoadPokenavListRowsStep(void)
 {
-    return sub_80F098C();
+    return PrintPokenavListRowStep();
 }
 
-void sub_80F0954(u16 arg0, u16 arg1, u16 arg2)
+void QueuePokenavListRows(u16 firstListIndex, u16 firstTilemapRow, u16 rowCount)
 {
-    gPokenavStructPtr->unk877E = arg0;
-    gPokenavStructPtr->unk8780 = arg1;
-    gPokenavStructPtr->unk8784 = arg2;
+    gPokenavStructPtr->listRowToDraw = firstListIndex;
+    gPokenavStructPtr->listTilemapRowToDraw = firstTilemapRow;
+    gPokenavStructPtr->listRowsToDraw = rowCount;
     gPokenavStructPtr->unk8786 = 0;
 }
 
-bool8 sub_80F098C(void)
+bool8 PrintPokenavListRowStep(void)
 {
-    s32 r8;
-    if (gPokenavStructPtr->unk8784 == 0)
+    s32 wrappedListIndex;
+    if (gPokenavStructPtr->listRowsToDraw == 0)
         return FALSE;
-    r8 = 0;
+    wrappedListIndex = 0;
     while (1)
     {
-        gPokenavListRowPrinters[gPokenavStructPtr->listMode](gPokenavStructPtr->unk877E, gPokenavStructPtr->unk8780);
-        if (--gPokenavStructPtr->unk8784 == 0)
+        gPokenavListRowPrinters[gPokenavStructPtr->listMode](gPokenavStructPtr->listRowToDraw, gPokenavStructPtr->listTilemapRowToDraw);
+        if (--gPokenavStructPtr->listRowsToDraw == 0)
             return FALSE;
-        if (++gPokenavStructPtr->unk877E > gPokenavStructPtr->unk8774)
-            gPokenavStructPtr->unk877E = r8;
-        gPokenavStructPtr->unk8780 += 2;
-        gPokenavStructPtr->unk8780 &= 0x1F;
+        if (++gPokenavStructPtr->listRowToDraw > gPokenavStructPtr->unk8774)
+            gPokenavStructPtr->listRowToDraw = wrappedListIndex;
+        gPokenavStructPtr->listTilemapRowToDraw += 2;
+        gPokenavStructPtr->listTilemapRowToDraw &= 0x1F;
         break;
     }
     return TRUE;
 }
 
-void sub_80F0A24(u16 arg0, u16 arg1)
+void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 {
-    u8 var0 = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
-    sub_80F4428(gPokenavStructPtr->unk8788, arg0, var0);
+    u8 displayMode = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
+    sub_80F4428(gPokenavStructPtr->unk8788, listIndex, displayMode);
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-    Menu_PrintText(gPokenavStructPtr->unk8788, 13, arg1);
+    Menu_PrintText(gPokenavStructPtr->unk8788, 13, tilemapRow);
 }
 
-void sub_80F0A74(u16 arg0, u16 arg1)
+void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 {
-    sub_80F700C(gPokenavStructPtr->unk8788, arg0);
-    arg1 &= 0x1F;
+    sub_80F700C(gPokenavStructPtr->unk8788, listIndex);
+    tilemapRow &= 0x1F;
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-    Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, arg1 * 8, 0);
-    if (arg0 < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[arg0].rematchNo != 0)
-        sub_8095C8C((void *)VRAM + 0xF000, 29, arg1, gUnknown_083E039C, 0, 0, 1, 2, 1);
+    Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);
+    if (listIndex < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
+        sub_8095C8C((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E039C, 0, 0, 1, 2, 1);
     else
-        sub_8095C8C((void *)VRAM + 0xF000, 29, arg1, gUnknown_083E03A0, 0, 0, 1, 2, 1);
+        sub_8095C8C((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E03A0, 0, 0, 1, 2, 1);
 }
 
 void sub_80F0B24(void)
@@ -1345,8 +1345,8 @@ bool8 sub_80F0C48(void)
     {
         gPokenavStructPtr->unk306 = 0;
         BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-        sub_80F0A74(gPokenavStructPtr->unk8770 + gPokenavStructPtr->unkD15C,
-                    gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->unkD15C * 2);
+        PrintTrainerEyesListRow(gPokenavStructPtr->unk8770 + gPokenavStructPtr->unkD15C,
+                                gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->unkD15C * 2);
 
         if ((++gPokenavStructPtr->unkD15C) > 7)
         {
@@ -1482,7 +1482,7 @@ void sub_80F0FFC(u8 arg0)
 
 void sub_80F105C(void)
 {
-    sub_80F0A74(gPokenavStructPtr->unk876E, gPokenavStructPtr->listTilemapRow);
+    PrintTrainerEyesListRow(gPokenavStructPtr->unk876E, gPokenavStructPtr->listTilemapRow);
 }
 
 bool8 sub_80F1080(void)

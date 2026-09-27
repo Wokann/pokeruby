@@ -197,14 +197,14 @@ const u8 *const gPokenavConditionSearchDescriptions[] =
 
 #include "data/region_map/city_map_entries.h"
 
-void sub_80F0A24(u16, u16);
-void sub_80F0A74(u16, u16);
+void PrintPokenavMonListRow(u16, u16);
+void PrintTrainerEyesListRow(u16, u16);
 
 void (*const gPokenavListRowPrinters[])(u16, u16) =
 {
-    [POKENAV_LIST_CONDITION_SEARCH] = sub_80F0A24,
-    [POKENAV_LIST_RIBBONS] = sub_80F0A24,
-    [POKENAV_LIST_TRAINERS_EYES] = sub_80F0A74,
+    [POKENAV_LIST_CONDITION_SEARCH] = PrintPokenavMonListRow,
+    [POKENAV_LIST_RIBBONS] = PrintPokenavMonListRow,
+    [POKENAV_LIST_TRAINERS_EYES] = PrintTrainerEyesListRow,
 };
 
 const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
