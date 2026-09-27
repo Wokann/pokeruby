@@ -1269,64 +1269,72 @@ static void HideShowWarpArrow(struct ObjectEvent *objectEvent)
 
 /* Strength */
 
-static void StartStrengthAnim(u8 a, u8 b)
+#define tState        data[0]
+#define tBoulderObjId data[1]
+#define tDirection    data[2]
+
+static void StartStrengthAnim(u8 objectEventId, u8 direction)
 {
     u8 taskId = CreateTask(Task_PushBoulder, 0xFF);
 
-    gTasks[taskId].data[1] = a;
-    gTasks[taskId].data[2] = b;
+    gTasks[taskId].tBoulderObjId = objectEventId;
+    gTasks[taskId].tDirection = direction;
     Task_PushBoulder(taskId);
 }
 
 static void Task_PushBoulder(u8 taskId)
 {
-    while (sPushBoulderFuncs[gTasks[taskId].data[0]](&gTasks[taskId],
+    while (sPushBoulderFuncs[gTasks[taskId].tState](&gTasks[taskId],
                                                      &gObjectEvents[gPlayerAvatar.objectEventId],
-                                                     &gObjectEvents[gTasks[taskId].data[1]]))
+                                                     &gObjectEvents[gTasks[taskId].tBoulderObjId]))
         ;
 }
 
-static bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
     LockPlayerFieldControls();
     gPlayerAvatar.preventStep = TRUE;
-    task->data[0]++;
+    task->tState++;
     return FALSE;
 }
 
-static bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
-    if (!ObjectEventIsMovementOverridden(playerObject)
-     && !ObjectEventIsMovementOverridden(strengthObject))
+    if (!ObjectEventIsMovementOverridden(player)
+     && !ObjectEventIsMovementOverridden(boulder))
     {
-        ObjectEventClearHeldMovementIfFinished(playerObject);
-        ObjectEventClearHeldMovementIfFinished(strengthObject);
-        ObjectEventSetHeldMovement(playerObject, GetWalkInPlaceNormalMovementAction((u8)task->data[2]));
-        ObjectEventSetHeldMovement(strengthObject, GetWalkSlowMovementAction((u8)task->data[2]));
-        gFieldEffectArguments[0] = strengthObject->currentCoords.x;
-        gFieldEffectArguments[1] = strengthObject->currentCoords.y;
-        gFieldEffectArguments[2] = strengthObject->previousElevation;
-        gFieldEffectArguments[3] = gSprites[strengthObject->spriteId].oam.priority;
+        ObjectEventClearHeldMovementIfFinished(player);
+        ObjectEventClearHeldMovementIfFinished(boulder);
+        ObjectEventSetHeldMovement(player, GetWalkInPlaceNormalMovementAction((u8)task->tDirection));
+        ObjectEventSetHeldMovement(boulder, GetWalkSlowMovementAction((u8)task->tDirection));
+        gFieldEffectArguments[0] = boulder->currentCoords.x;
+        gFieldEffectArguments[1] = boulder->currentCoords.y;
+        gFieldEffectArguments[2] = boulder->previousElevation;
+        gFieldEffectArguments[3] = gSprites[boulder->spriteId].oam.priority;
         FieldEffectStart(FLDEFF_DUST);
         PlaySE(SE_M_STRENGTH);
-        task->data[0]++;
+        task->tState++;
     }
     return FALSE;
 }
 
-static bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *playerObject, struct ObjectEvent *strengthObject)
+static bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder)
 {
-    if (ObjectEventCheckHeldMovementStatus(playerObject)
-     && ObjectEventCheckHeldMovementStatus(strengthObject))
+    if (ObjectEventCheckHeldMovementStatus(player)
+     && ObjectEventCheckHeldMovementStatus(boulder))
     {
-        ObjectEventClearHeldMovementIfFinished(playerObject);
-        ObjectEventClearHeldMovementIfFinished(strengthObject);
+        ObjectEventClearHeldMovementIfFinished(player);
+        ObjectEventClearHeldMovementIfFinished(boulder);
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         DestroyTask(FindTaskIdByFunc(Task_PushBoulder));
     }
     return FALSE;
 }
+
+#undef tState
+#undef tBoulderObjId
+#undef tDirection
 
 /* Some field effect */
 
