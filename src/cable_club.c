@@ -371,7 +371,7 @@ static void Task_LinkupTryConfirmation(u8 taskId)
 
     if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
     {
-        if (sub_800820C() != GetLinkPlayerCount_2())
+        if (GetSavedPlayerCount() != GetLinkPlayerCount_2())
         {
             ShowFieldAutoScrollMessage(gUnknown_081A4932);
             gTasks[taskId].func = Task_LinkupConfirmWhenReady;
@@ -399,7 +399,7 @@ static void Task_LinkupConfirm(u8 taskId)
      || TryLinkTimeout(taskId) == TRUE)
         return;
 
-    if (GetLinkPlayerCount_2() != sub_800820C())
+    if (GetLinkPlayerCount_2() != GetSavedPlayerCount())
     {
         gTasks[taskId].func = Task_LinkupConnectionError;
     }
@@ -713,7 +713,7 @@ static void Task_ReestablishLinkAwaitConnection(u8 taskId)
 
 static void Task_ReestablishLinkLeader(u8 taskId)
 {
-    if (sub_800820C() == GetLinkPlayerCount_2())
+    if (GetSavedPlayerCount() == GetLinkPlayerCount_2())
     {
         sub_8007F4C();
         gTasks[taskId].func = Task_ReestablishLinkAwaitConfirmation;
