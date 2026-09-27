@@ -3117,8 +3117,8 @@ static void Blender_PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* ds
 #endif
     StringAppend(dst, sNewLineString_0);
 
-    flavourLvl = sub_810C9B0(pokeblock);
-    feel = sub_810C9E8(pokeblock);
+    flavourLvl = GetHighestPokeblocksFlavorLevel(pokeblock);
+    feel = GetPokeblocksFeel(pokeblock);
 
     StringAppend(dst, gOtherText_BlockLevelIs);
     ConvertIntToDecimalStringN(text, flavourLvl, 0, 3);

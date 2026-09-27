@@ -82,7 +82,7 @@ static const MainCallback sItemUseCallbacks[] =
 {
     [ITEM_USE_PARTY_MENU - 1]  = sub_808B020,
     [ITEM_USE_FIELD - 1]       = CB2_ReturnToField,
-    [ITEM_USE_PBLOCK_CASE - 1] = sub_810B96C,
+    [ITEM_USE_PBLOCK_CASE - 1] = CB2_InitPokeblockMenu,
 };
 
 static const u8 sClockwiseDirections[] = { DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST };
@@ -606,13 +606,13 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
     }
     else if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
     {
-        sub_810BA7C(0);
+        SetPokeblockCaseContext(0);
         ItemMenu_ConfirmNormalFade(taskId);
     }
     else
     {
         gFieldCallback = (void *)sub_8080E28;
-        sub_810BA7C(1);
+        SetPokeblockCaseContext(1);
         ItemMenu_ConfirmComplexFade(taskId);
     }
 }

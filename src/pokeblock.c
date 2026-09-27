@@ -58,7 +58,7 @@ static void sub_810BB0C(void);
 static void sub_810BB30(void);
 static void sub_810BC84(u8);
 
-// sub_810B96C
+// CB2_InitPokeblockMenu
 static void sub_810BF7C(u8);
 
 // sub_810BC84
@@ -334,7 +334,7 @@ static bool8 sub_810B6C0(void)
             gMain.state++;
             break;
         case 13:
-            ePokeblockCaseSpriteId = sub_810BA50(0x38, 0x40, 0);
+            ePokeblockCaseSpriteId = CreatePokeblockCaseSprite(0x38, 0x40, 0);
             gMain.state++;
             break;
         case 14:
@@ -373,7 +373,7 @@ static bool8 sub_810B6C0(void)
     return FALSE;
 }
 
-void sub_810B96C(void)
+void CB2_InitPokeblockMenu(void)
 {
     do {
         if (sub_810B6C0() == TRUE)
@@ -412,12 +412,12 @@ static bool8 sub_810B998(void)
     return FALSE;
 }
 
-u8 sub_810BA50(s16 x, s16 y, u8 subpriority)
+u8 CreatePokeblockCaseSprite(s16 x, s16 y, u8 subpriority)
 {
     return CreateSprite(&sSpriteTemplate_PokeblockCase, x, y, subpriority);
 }
 
-void sub_810BA7C(u8 a0)
+void SetPokeblockCaseContext(u8 a0)
 {
     gUnknown_02039244 = a0;
     switch (gUnknown_02039244)
@@ -437,16 +437,16 @@ void sub_810BA7C(u8 a0)
     }
 }
 
-void sub_810BADC(void)
+void OpenPokeblockCaseInBattle(void)
 {
-    sub_810BA7C(2);
-    SetMainCallback2(sub_810B96C);
+    SetPokeblockCaseContext(2);
+    SetMainCallback2(CB2_InitPokeblockMenu);
 }
 
 void OpenPokeblockCaseOnFeeder(void)
 {
-    sub_810BA7C(3);
-    SetMainCallback2(sub_810B96C);
+    SetPokeblockCaseContext(3);
+    SetMainCallback2(CB2_InitPokeblockMenu);
 }
 
 #if DEBUG
@@ -499,7 +499,7 @@ static void sub_810BB88(u8 a0)
         buf[1] = 0x14;
         buf[2] = 0x06;
         buf += 3;
-        ConvertIntToDecimalStringN(buf, sub_810C9B0(&gSaveBlock1.pokeblocks[i]), STR_CONV_MODE_RIGHT_ALIGN, 3);
+        ConvertIntToDecimalStringN(buf, GetHighestPokeblocksFlavorLevel(&gSaveBlock1.pokeblocks[i]), STR_CONV_MODE_RIGHT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 15, y + 1);
     }
 }
@@ -615,7 +615,7 @@ static void sub_810BDAC(bool8 flag)
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
     if (gUnknown_02039248.unk0 + gUnknown_02039248.unk1 != gUnknown_02039248.unk2)
     {
-        AlignInt1InMenuWindow(gStringVar1, sub_810C9E8(&gSaveBlock1.pokeblocks[gUnknown_02039248.unk0 + gUnknown_02039248.unk1]), 16, 1);
+        AlignInt1InMenuWindow(gStringVar1, GetPokeblocksFeel(&gSaveBlock1.pokeblocks[gUnknown_02039248.unk0 + gUnknown_02039248.unk1]), 16, 1);
         Menu_PrintText(gStringVar1, 11, 17);
     }
     else
@@ -871,7 +871,7 @@ static void sub_810C4C4(u8 taskId)
     if (!gPaletteFade.active)
     {
         sub_810C2B0();
-        sub_8136130(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], sub_810B96C);
+        sub_8136130(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], CB2_InitPokeblockMenu);
         DestroyTask(taskId);
     }
 }
@@ -1033,7 +1033,7 @@ void ClearPokeblocks(void)
     }
 }
 
-u8 sub_810C9B0(struct Pokeblock *pokeblock)
+u8 GetHighestPokeblocksFlavorLevel(struct Pokeblock *pokeblock)
 {
     u8 contestStat;
     u8 maxRating;
@@ -1049,7 +1049,7 @@ u8 sub_810C9B0(struct Pokeblock *pokeblock)
     return rating;
 }
 
-u8 sub_810C9E8(struct Pokeblock *pokeblock)
+u8 GetPokeblocksFeel(struct Pokeblock *pokeblock)
 {
     u8 feel = GetPokeblockData(pokeblock, 6);
     if (feel > 99)
@@ -1132,7 +1132,7 @@ void PokeblockCopyName(struct Pokeblock *pokeblock, u8 *dest)
     StringCopy(dest, gPokeblockNames[color]);
 }
 
-bool8 sub_810CB68(u8 nature, u8 *dest)
+bool8 CopyMonFavoritePokeblockName(u8 nature, u8 *dest)
 {
     u8 flavor;
     for (flavor=0; flavor<5; flavor++)

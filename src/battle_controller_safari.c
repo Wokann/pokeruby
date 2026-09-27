@@ -45,7 +45,7 @@ extern u8 GetBattlerPosition(u8);
 extern void DecompressTrainerBackPic();
 extern u8 GetBattlerSpriteSubpriority();
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
-extern void sub_810BADC(void);
+extern void OpenPokeblockCaseInBattle(void);
 extern void HandleIntroSlide();
 extern bool8 TryHandleLaunchBattleTableAnimation();
 
@@ -315,7 +315,7 @@ void sub_812B724(void)
     if (!gPaletteFade.active)
     {
         gBattlerControllerFuncs[gActiveBattler] = sub_812B758;
-        sub_810BADC();
+        OpenPokeblockCaseInBattle();
     }
 }
 

@@ -798,7 +798,7 @@ static void sub_8148078(struct Sprite* sprite)
 
 static u8 sub_81480B4(void)
 {
-    u8 spriteID = sub_810BA50(188, 100, 2);
+    u8 spriteID = CreatePokeblockCaseSprite(188, 100, 2);
     gSprites[spriteID].oam.affineMode = 1;
     gSprites[spriteID].affineAnims = sSpriteAffineAnimTable_84121A0;
     gSprites[spriteID].callback = SpriteCallbackDummy;
