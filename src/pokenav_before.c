@@ -1233,7 +1233,7 @@ void VBlankCB_Pokenav(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
-    sub_80F1FF0();
+    UpdateMenuOptionBlendRegisters();
 }
 
 void VBlankCB_PokenavRegionMap(void)
@@ -1516,7 +1516,7 @@ void HandlePokenavMainMenuInput(void)
         }
         break;
     case 1:
-        sub_80F208C();
+        ResetMenuOptionBlendOnPokenavExit();
         SetPokenavCallback(&ExitPokenav);
         break;
     case 2:

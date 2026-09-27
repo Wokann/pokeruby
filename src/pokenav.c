@@ -1870,7 +1870,7 @@ bool8 LoadPokenavMenuOptionGfxStep(void)
                 gPokenavStructPtr->menuOptionSprites[i][j] = NULL;
         }
 
-        gPokenavStructPtr->unk311 = 0;
+        gPokenavStructPtr->menuOptionBlendMode = 0;
         break;
     case 1:
         LZ77UnCompWram(gPokenavMenuOptions_Gfx, gPokenavStructPtr->menuOptionsGfx);
@@ -2005,7 +2005,7 @@ bool8 UpdateMenuOptionEntryHighlight(void)
 {
     if (AreMenuOptionSpriteOffsetsAtRest())
     {
-        sub_80F2108();
+        StartMenuOptionHighlight();
         return FALSE;
     }
     else
@@ -2024,7 +2024,7 @@ void StartMenuOptionSpritesSlideOut(void)
     u16 i, j;
 
     gPokenavStructPtr->menuOptionExitStep = 0;
-    sub_80F2148();
+    StopMenuOptionHighlight();
     for (i = 0; i < gPokenavStructPtr->menuOptionRowCount; i++)
     {
         if (i != gPokenavStructPtr->menuCursorPos)
@@ -2078,29 +2078,29 @@ bool8 UpdateMenuOptionSpritesSlideOut(void)
     return TRUE;
 }
 
-void sub_80F1FF0(void)
+void UpdateMenuOptionBlendRegisters(void)
 {
-    if (gPokenavStructPtr->unk311 == 1)
+    if (gPokenavStructPtr->menuOptionBlendMode == 1)
     {
         REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
-        REG_BLDY = gSineTable[gPokenavStructPtr->unk312] >> 5;
-        gPokenavStructPtr->unk312 += 3;
-        gPokenavStructPtr->unk312 &= 0x7F;
+        REG_BLDY = gSineTable[gPokenavStructPtr->menuOptionBlendFrame] >> 5;
+        gPokenavStructPtr->menuOptionBlendFrame += 3;
+        gPokenavStructPtr->menuOptionBlendFrame &= 0x7F;
     }
-    else if (gPokenavStructPtr->unk311 == 2)
+    else if (gPokenavStructPtr->menuOptionBlendMode == 2)
     {
-        REG_BLDALPHA = gUnknown_083E42F8[gPokenavStructPtr->unk312];
-        if (gPokenavStructPtr->unk312 < 15)
-            gPokenavStructPtr->unk312++;
+        REG_BLDALPHA = gUnknown_083E42F8[gPokenavStructPtr->menuOptionBlendFrame];
+        if (gPokenavStructPtr->menuOptionBlendFrame < 15)
+            gPokenavStructPtr->menuOptionBlendFrame++;
     }
 }
 
-void sub_80F208C(void)
+void ResetMenuOptionBlendOnPokenavExit(void)
 {
-    sub_80F2148();
+    StopMenuOptionHighlight();
 }
 
-void sub_80F2098(void)
+void EnableMenuOptionHighlightWindow(void)
 {
     REG_WIN0H = 0x77F0;
     REG_WIN0V = gPokenavStructPtr->menuOptionWin0V[gPokenavStructPtr->menuCursorPos];
@@ -2109,45 +2109,45 @@ void sub_80F2098(void)
     REG_DISPCNT |= DISPCNT_WIN0_ON;
 }
 
-void sub_80F20F4(void)
+void DisableMenuOptionHighlightWindow(void)
 {
     REG_DISPCNT &= ~DISPCNT_WIN0_ON;
 }
 
-void sub_80F2108(void)
+void StartMenuOptionHighlight(void)
 {
-    if (!gPokenavStructPtr->unk311)
+    if (!gPokenavStructPtr->menuOptionBlendMode)
     {
-        gPokenavStructPtr->unk311 = 1;
-        gPokenavStructPtr->unk312 = 0;
+        gPokenavStructPtr->menuOptionBlendMode = 1;
+        gPokenavStructPtr->menuOptionBlendFrame = 0;
         REG_BLDCNT = 0x90;
         REG_BLDY = 0;
-        sub_80F2098();
+        EnableMenuOptionHighlightWindow();
     }
 }
 
-void sub_80F2148(void)
+void StopMenuOptionHighlight(void)
 {
-    gPokenavStructPtr->unk311 = 0;
+    gPokenavStructPtr->menuOptionBlendMode = 0;
     REG_BLDCNT = 0;
-    sub_80F20F4();
+    DisableMenuOptionHighlightWindow();
 }
 
 void StartSelectedMenuOptionFadeOut(void)
 {
     u16 j;
 
-    if (!gPokenavStructPtr->unk311)
+    if (!gPokenavStructPtr->menuOptionBlendMode)
     {
-        sub_80F20F4();
+        DisableMenuOptionHighlightWindow();
         for (j = 0; j < 4; j++)
         {
             struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
             sprite->oam.objMode = ST_OAM_OBJ_BLEND;
         }
 
-        gPokenavStructPtr->unk311 = 2;
-        gPokenavStructPtr->unk312 = 0;
+        gPokenavStructPtr->menuOptionBlendMode = 2;
+        gPokenavStructPtr->menuOptionBlendFrame = 0;
         REG_BLDCNT = 0x3F40;
         REG_BLDALPHA = 0x10;
     }
@@ -2155,7 +2155,7 @@ void StartSelectedMenuOptionFadeOut(void)
 
 void StopMenuOptionFadeOut()
 {
-    gPokenavStructPtr->unk311 = 0;
+    gPokenavStructPtr->menuOptionBlendMode = 0;
     REG_BLDCNT = 0;
 }
 
