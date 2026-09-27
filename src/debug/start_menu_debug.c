@@ -515,7 +515,7 @@ u8 DebugMenu_8076CD4(void)
 
 u8 DebugMenu_8076CD8(void)
 {
-    SetMainCallback2(debug_sub_80524BC);
+    SetMainCallback2(CB2_InitBerryBlenderDebugMenu);
     return 0;
 }
 

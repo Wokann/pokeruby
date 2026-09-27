@@ -202,10 +202,10 @@ extern const u16 gBerryBlenderMiscPalette[];
 extern const u16 gBerryBlenderArrowPalette[];
 
 // ewram
-static EWRAM_DATA u8 gUnknown_020297DC = 0;
-static EWRAM_DATA u32 gUnknown_020297E0 = 0;
-static EWRAM_DATA u32 gUnknown_020297E4 = 0;
-static EWRAM_DATA u8 gUnknown_020297E8 = 0;
+static EWRAM_DATA u8 sBlenderDebugRngTestState = 0;
+static EWRAM_DATA u32 sBlenderDebugRngRunLength = 0;
+static EWRAM_DATA u32 sBlenderDebugRngRunIndex = 0;
+static EWRAM_DATA u8 sBlenderDebugRngBit = 0;
 
 // iwram common
 u16 gUnknown_03004830;
@@ -254,7 +254,7 @@ static void CB2_CheckPlayAgainLink(void);
 static void UpdateProgressBar(u16 a0, u16 a1);
 static void PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst);
 static void Task_PlayPokeblockFanfare(u8 taskID);
-static void sub_8052AF8(void);
+static void CB2_BerryBlenderDebugMenu(void);
 static void Task_HandleOpponent1(u8 taskID);
 static void Task_HandleOpponent2(u8 taskID);
 static void Task_HandleOpponent3(u8 taskID);
@@ -2720,7 +2720,7 @@ void SetPlayerBerryData(u8 bank, u16 itemID)
     ConvertItemToBlenderBerry(&gBerryBlenderData->blendedBerries[bank], itemID);
 }
 
-void unref_sub_80516F8(u8 taskID)
+void UnusedTask_WaitForBlenderLinkPlayers(u8 taskID)
 {
     struct Task* task = &gTasks[taskID];
     if (gReceivedRemoteLinkPlayers)
@@ -3257,7 +3257,7 @@ static bool8 PrintBlendingRanking(void)
 
 // debug menu goes here
 
-void debug_sub_80524BC(void)
+void CB2_InitBerryBlenderDebugMenu(void)
 {
     ResetSpriteData();
     FreeAllSpritePalettes();
@@ -3273,7 +3273,7 @@ void debug_sub_80524BC(void)
     UpdatePaletteFade();
     sBlenderDebug.BPM = 8000;
     sBlenderDebug.field_10++;
-    SetMainCallback2(sub_8052AF8);
+    SetMainCallback2(CB2_BerryBlenderDebugMenu);
 }
 
 // Partially fixes the clipping on longer names.
@@ -3359,35 +3359,35 @@ static void BlenderDebug_PrintBerryData(void)
     }
 }
 
-static void sub_80527BC(void)
+static void PrintBerryBlenderDebugRngData(void)
 {
     u8 text[70];
     u8 buffer[10];
     u16 i;
 
-    if (gUnknown_020297DC == 1)
+    if (sBlenderDebugRngTestState == 1)
     {
         u16 j;
         for (j = 0; j < 10; j++)
             gUnknown_03004840[j] = 0;
         gUnknown_03004830 = Random();
-        gUnknown_020297E0 = 0;
-        gUnknown_020297DC = 2;
+        sBlenderDebugRngRunLength = 0;
+        sBlenderDebugRngTestState = 2;
         for (i = 0; i < 200; i++)
             gSharedMem[i] = 0;
-        gUnknown_020297E8 = 0;
+        sBlenderDebugRngBit = 0;
     }
     for (i = 0; i < 100; i++)
     {
-        if (((Random() >> 15) & 1) == gUnknown_020297E8)
-            gUnknown_020297E0++;
+        if (((Random() >> 15) & 1) == sBlenderDebugRngBit)
+            sBlenderDebugRngRunLength++;
         else
         {
             u16* ewramPtr = ((u16*)(gSharedMem));
-            ewramPtr[gUnknown_020297E4] = gUnknown_020297E0;
-            gUnknown_020297E4++;
-            gUnknown_020297E0 = 0;
-            gUnknown_020297E8 ^= 1;
+            ewramPtr[sBlenderDebugRngRunIndex] = sBlenderDebugRngRunLength;
+            sBlenderDebugRngRunIndex++;
+            sBlenderDebugRngRunLength = 0;
+            sBlenderDebugRngBit ^= 1;
         }
     }
     text[0] = EOS;
@@ -3396,21 +3396,21 @@ static void sub_80527BC(void)
     StringAppend(text, buffer);
     StringAppend(text, sText_Space);
 
-    ConvertIntToHexStringN(buffer, gUnknown_020297E0, 2, 8);
+    ConvertIntToHexStringN(buffer, sBlenderDebugRngRunLength, 2, 8);
     StringAppend(text, buffer);
     StringAppend(text, sNewLineString_1);
 
-    if (gUnknown_020297DC == 3)
+    if (sBlenderDebugRngTestState == 3)
     {
-        ConvertIntToHexStringN(buffer, gUnknown_020297E4, 2, 16);
+        ConvertIntToHexStringN(buffer, sBlenderDebugRngRunIndex, 2, 16);
         StringAppend(text, buffer);
-        gUnknown_020297DC = 0;
+        sBlenderDebugRngTestState = 0;
     }
 
     Menu_PrintText(text, 2, 15);
 }
 
-static void sub_8052918(void)
+static void HandleBerryBlenderDebugMenuInput(void)
 {
     if (JOY_NEW(R_BUTTON))
     {
@@ -3482,19 +3482,19 @@ static void sub_8052918(void)
         BlenderDebug_PrintBerryData();
         sBlenderDebug.field_10 = 0;
     }
-    if (JOY_NEW(SELECT_BUTTON) && gUnknown_020297DC == 0)
+    if (JOY_NEW(SELECT_BUTTON) && sBlenderDebugRngTestState == 0)
     {
-        gUnknown_020297DC++;
-        gUnknown_020297E0 = 0;
+        sBlenderDebugRngTestState++;
+        sBlenderDebugRngRunLength = 0;
         SeedRng(gMain.vblankCounter1);
     }
-    if (gUnknown_020297DC != 0)
-        sub_80527BC();
+    if (sBlenderDebugRngTestState != 0)
+        PrintBerryBlenderDebugRngData();
 }
 
-static void sub_8052AF8(void)
+static void CB2_BerryBlenderDebugMenu(void)
 {
-    sub_8052918();
+    HandleBerryBlenderDebugMenuInput();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
