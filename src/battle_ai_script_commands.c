@@ -86,9 +86,9 @@ static void BattleAICmd_if_user_has_attacking_move(void);
 static void BattleAICmd_if_user_has_no_attacking_moves(void);
 static void BattleAICmd_get_turn_count(void);
 static void BattleAICmd_get_type(void);
-static void BattleAICmd_get_move_power(void);
-static void BattleAICmd_is_most_powerful_move(void);
-static void BattleAICmd_get_move(void);
+static void BattleAICmd_get_considered_move_power(void);
+static void BattleAICmd_get_how_powerful_move_is(void);
+static void BattleAICmd_get_last_used_battler_move(void);
 static void BattleAICmd_if_arg_equal(void);
 static void BattleAICmd_if_arg_not_equal(void);
 static void BattleAICmd_if_would_go_first(void);
@@ -99,8 +99,8 @@ static void BattleAICmd_count_alive_pokemon(void);
 static void BattleAICmd_get_considered_move(void);
 static void BattleAICmd_get_considered_move_effect(void);
 static void BattleAICmd_get_ability(void);
-static void BattleAICmd_get_highest_possible_damage(void);
-static void BattleAICmd_if_damage_bonus(void);
+static void BattleAICmd_get_highest_type_effectiveness(void);
+static void BattleAICmd_if_type_effectiveness(void);
 static void BattleAICmd_nullsub_32(void);
 static void BattleAICmd_nullsub_33(void);
 static void BattleAICmd_if_status_in_party(void);
@@ -185,9 +185,9 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_user_has_no_attacking_moves,         // 0x20
     BattleAICmd_get_turn_count,              // 0x21
     BattleAICmd_get_type,                    // 0x22
-    BattleAICmd_get_move_power,              // 0x23
-    BattleAICmd_is_most_powerful_move,       // 0x24
-    BattleAICmd_get_move,                    // 0x25
+    BattleAICmd_get_considered_move_power,              // 0x23
+    BattleAICmd_get_how_powerful_move_is,       // 0x24
+    BattleAICmd_get_last_used_battler_move,                    // 0x25
     BattleAICmd_if_arg_equal,                // 0x26
     BattleAICmd_if_arg_not_equal,            // 0x27
     BattleAICmd_if_would_go_first,           // 0x28
@@ -198,8 +198,8 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_get_considered_move,         // 0x2D
     BattleAICmd_get_considered_move_effect,  // 0x2E
     BattleAICmd_get_ability,                 // 0x2F
-    BattleAICmd_get_highest_possible_damage, // 0x30
-    BattleAICmd_if_damage_bonus,             // 0x31
+    BattleAICmd_get_highest_type_effectiveness, // 0x30
+    BattleAICmd_if_type_effectiveness,             // 0x31
     BattleAICmd_nullsub_32,                  // 0x32
     BattleAICmd_nullsub_33,                  // 0x33
     BattleAICmd_if_status_in_party,          // 0x34
@@ -936,13 +936,13 @@ static void BattleAICmd_get_type(void)
     gAIScriptPtr += 2;
 }
 
-static void BattleAICmd_get_move_power(void)
+static void BattleAICmd_get_considered_move_power(void)
 {
     AI_THINKING_STRUCT->funcResult = gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power;
     gAIScriptPtr += 1;
 }
 
-static void BattleAICmd_is_most_powerful_move(void)
+static void BattleAICmd_get_how_powerful_move_is(void)
 {
     s32 i, checkedMove;
     s32 moveDmgs[MAX_MON_MOVES];
@@ -1006,7 +1006,7 @@ static void BattleAICmd_is_most_powerful_move(void)
     gAIScriptPtr++;
 }
 
-static void BattleAICmd_get_move(void)
+static void BattleAICmd_get_last_used_battler_move(void)
 {
     if (gAIScriptPtr[1] == USER)
         AI_THINKING_STRUCT->funcResult = gLastMoves[gBattlerAttacker];
@@ -1176,7 +1176,7 @@ static void BattleAICmd_get_ability(void)
     gAIScriptPtr += 2;
 }
 
-static void BattleAICmd_get_highest_possible_damage(void)
+static void BattleAICmd_get_highest_type_effectiveness(void)
 {
     s32 i;
 
@@ -1216,7 +1216,7 @@ static void BattleAICmd_get_highest_possible_damage(void)
     gAIScriptPtr += 1;
 }
 
-static void BattleAICmd_if_damage_bonus(void)
+static void BattleAICmd_if_type_effectiveness(void)
 {
     u8 damageVar;
 
