@@ -46,6 +46,6 @@ bool8 GivePokeblock(const struct Pokeblock *);
 
 #include "main.h"
 
-void sub_8136130(struct Pokeblock *, MainCallback);
+void ChooseMonToGivePokeblock(struct Pokeblock *, MainCallback);
 
 #endif // GUARD_POKEBLOCK_H

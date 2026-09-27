@@ -871,7 +871,7 @@ static void Task_OpenGivePokeblockPartyMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         FreePokeblockMenuResources();
-        sub_8136130(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], CB2_InitPokeblockMenu);
+        ChooseMonToGivePokeblock(&gSaveBlock1.pokeblocks[gSpecialVar_ItemId], CB2_InitPokeblockMenu);
         DestroyTask(taskId);
     }
 }

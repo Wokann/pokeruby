@@ -8,7 +8,7 @@
 extern void *gUnknown_02030400;
 extern s16 gUnknown_02039312;
 
-void sub_8136130(struct Pokeblock *, MainCallback);
-u8 sub_8137124(u8);
+void ChooseMonToGivePokeblock(struct Pokeblock *, MainCallback);
+u8 GetPartyIdFromPokeblockSelection(u8);
 
 #endif //POKERUBY_USE_POKEBLOCK_H
