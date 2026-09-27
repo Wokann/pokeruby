@@ -163,10 +163,10 @@ void sub_8054E7C(void);
 void sub_8054E98(void);
 void sub_8054EC8(void);
 void sub_8054F48(void);
-void sub_8054F70(void);
-// sub_8054F88
-// sub_8054FC0
-// sub_8054FF8
+void ResetAllPlayerLinkStates(void);
+// AreAllPlayersInLinkState
+// IsAnyPlayerInLinkState
+// HandleLinkPlayerKeyInput
 // UpdateAllLinkPlayers
 // UpdateHeldKeyCode
 // KeyInterCB_ReadButtons

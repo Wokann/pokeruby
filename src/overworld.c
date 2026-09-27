@@ -1423,7 +1423,7 @@ void sub_805465C(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
-    sub_8054F70();
+    ResetAllPlayerLinkStates();
     SetMainCallback1(CB1_OverworldLink);
     SetKeyInterceptCallback(KeyInterCB_SelfIdle);
     gFieldCallback = FieldCB_ReturnToFieldCableLink;
@@ -1544,7 +1544,7 @@ static bool32 sub_805483C(u8 *state)
         FieldClearVBlankHBlankCallbacks();
         ScriptContext_Init();
         UnlockPlayerFieldControls();
-        sub_8054F70();
+        ResetAllPlayerLinkStates();
         sub_8054BA8();
         (*state)++;
         break;
@@ -1916,14 +1916,14 @@ void sub_8054F48(void)
         CreateLinkPlayerSprite(i);
 }
 
-void sub_8054F70(void)
+void ResetAllPlayerLinkStates(void)
 {
     int i;
     for (i = 0; i < 4; i++)
         sPlayerLinkStates[i] = PLAYER_LINK_STATE_IDLE;
 }
 
-bool32 sub_8054F88(u16 a1)
+bool32 AreAllPlayersInLinkState(u16 a1)
 {
     int i;
     int count = gFieldLinkPlayerCount;
@@ -1934,7 +1934,7 @@ bool32 sub_8054F88(u16 a1)
     return TRUE;
 }
 
-bool32 sub_8054FC0(u16 a1)
+bool32 IsAnyPlayerInLinkState(u16 a1)
 {
     int i;
     int count = gFieldLinkPlayerCount;
@@ -1945,7 +1945,7 @@ bool32 sub_8054FC0(u16 a1)
     return FALSE;
 }
 
-void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
+void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
 {
     const u8 *script;
 
@@ -1963,7 +1963,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             }
             return;
         }
-        if (sub_8054FC0(PLAYER_LINK_STATE_EXITING_ROOM) == 1)
+        if (IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == 1)
         {
             sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
             if (a3->b)
@@ -2063,7 +2063,7 @@ void UpdateAllLinkPlayers(u16 *a1, int a2)
         u16 v5 = a1[i];
         u16 v8 = 0;
         sub_80555B0(i, a2, &st);
-        sub_8054FF8(i, v5, &st, &v8);
+        HandleLinkPlayerKeyInput(i, v5, &st, &v8);
         if (sPlayerLinkStates[i] == PLAYER_LINK_STATE_IDLE)
             v8 = GetDirectionForDpadKey(v5);
         sub_8055BFC(i, v8);
@@ -2236,7 +2236,7 @@ u16 KeyInterCB_SendNothing(u32 a1)
 
 u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
 {
-    if (sub_8054F88(PLAYER_LINK_STATE_EXITING_ROOM) == TRUE)
+    if (AreAllPlayersInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == TRUE)
     {
         ScriptContext_SetupScript(EventScript_DoLinkRoomExit);
         SetKeyInterceptCallback(KeyInterCB_SendNothing);
@@ -2252,18 +2252,18 @@ u16 KeyInterCB_SendExitRoomKey(u32 a1)
 
 s32 GetCableClubPartnersReady(void)
 {
-    if (sub_8054FC0(PLAYER_LINK_STATE_EXITING_ROOM) == TRUE)
+    if (IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == TRUE)
         return 2;
     if (sPlayerKeyInterceptCallback == KeyInterCB_Ready && sPlayerLinkStates[gLocalLinkPlayerId] != PLAYER_LINK_STATE_READY)
         return 0;
     if (sPlayerKeyInterceptCallback == KeyInterCB_ExitingSeat && sPlayerLinkStates[gLocalLinkPlayerId] == PLAYER_LINK_STATE_BUSY)
         return 2;
-    return sub_8054F88(PLAYER_LINK_STATE_READY);
+    return AreAllPlayersInLinkState(PLAYER_LINK_STATE_READY);
 }
 
 bool32 unref_sub_8055568(void)
 {
-    return sub_8054FC0(PLAYER_LINK_STATE_EXITING_ROOM);
+    return IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM);
 }
 
 u16 SetInCableClubSeat(void)
