@@ -3337,7 +3337,7 @@ void BeginBattleIntro(void)
 }
 
 #if DEBUG
-void debug_sub_80138CC(void)
+void DebugAutoAdvancePlayerBattleAction(void)
 {
     if (GetBattlerSide(gActiveBattler) == 0)
     {
@@ -3386,7 +3386,7 @@ void BattleMainCB1(void)
     if (gUnknown_02023A14_50 & 0x80)
     {
         for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
-            debug_sub_80138CC();
+            DebugAutoAdvancePlayerBattleAction();
         gBattleMainFunc();
         for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
             gBattlerControllerFuncs[gActiveBattler]();
