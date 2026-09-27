@@ -1259,7 +1259,7 @@ u8 *GetTrainerLoseText(void)
     return gStringVar4;
 }
 
-const u8 *unref_sub_808286C(void)
+const u8 *GetTrainerWonSpeech(void)
 {
     return SanitizeString(sTrainerVictorySpeech);
 }

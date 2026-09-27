@@ -77,7 +77,7 @@ void ShowTrainerCantBattleSpeech(void);
 void PlayTrainerEncounterMusic(void);
 //u8 *SanitizeString(u8 *str);
 u8 *GetTrainerLoseText(void);
-//u8 *unref_sub_808286C(void);
+//u8 *GetTrainerWonSpeech(void);
 //s32 sub_8082894(const struct TrainerEyeTrainer *trainers, u16 trainerNum);
 //s32 sub_80828B8(const struct TrainerEyeTrainer *trainers, u16 trainerNum);
 //bool32 sub_80828FC(const struct TrainerEyeTrainer *trainers, u16 mapGroup, u16 mapNum);
