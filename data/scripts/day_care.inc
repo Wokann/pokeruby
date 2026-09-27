@@ -95,7 +95,7 @@ Route117_PokemonDayCare_EventScript_GiveMonToRaise:: @ 81B236C
 	@ Ruby/Sapphire perform the able-mon check after the player selects a mon.
 	specialvar VAR_RESULT, CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
 	goto_if_eq VAR_RESULT, 0, Route117_PokemonDayCare_EventScript_OnlyOneAliveMon
-	specialvar VAR_0x8005, GetSelectedDaycareMonNickname
+	specialvar VAR_0x8005, GetSelectedMonNicknameAndSpecies
 	waitse
 	playmoncry VAR_0x8005, CRY_MODE_NORMAL
 	msgbox Route117_PokemonDayCare_Text_WellRaiseYourMon, MSGBOX_DEFAULT
