@@ -74,13 +74,13 @@ static const struct SpriteTemplate sCloudSpriteTemplate =
     .callback = sub_807E0F4,
 };
 
-extern void sub_807D5BC(s8 gammaIndex);
-extern void sub_807DA14(void);
-extern void sub_807DA4C(void);
+extern void ApplyWeatherColorMapIfIdle(s8 gammaIndex);
+extern void DroughtStateInit(void);
+extern void DroughtStateRun(void);
 extern void Weather_SetTargetBlendCoeffs(u8 a, u8 b, int c);
 extern bool8 Weather_UpdateBlend(void);
 extern void SetRainStrengthFromSoundEffect(u16 sndEff);
-extern void sub_807D5F0(u8 a, u8 b, u8 c);
+extern void ApplyWeatherColorMapIfIdle_Gradual(u8 a, u8 b, u8 c);
 
 //------------------------------------------------------------------------------
 // Clouds
@@ -263,11 +263,11 @@ void Drought_Main(void)
             gWeatherPtr->initStep++;
         break;
     case 3:
-        sub_807DA14();
+        DroughtStateInit();
         gWeatherPtr->initStep++;
         break;
     case 4:
-        sub_807DA4C();
+        DroughtStateRun();
         if (gWeatherPtr->unknown_73C == 6)
         {
             gWeatherPtr->weatherGfxLoaded = TRUE;
@@ -275,7 +275,7 @@ void Drought_Main(void)
         }
         break;
     default:
-        sub_807DA4C();
+        DroughtStateRun();
         break;
     }
 }
@@ -1160,7 +1160,7 @@ void Rain_Main(void)
         gWeatherPtr->initStep++;
         // fall through
     case 8:
-        sub_807D5BC(19);
+        ApplyWeatherColorMapIfIdle(19);
         if (gWeatherPtr->unknown_6EB == 0 && gWeatherPtr->unknown_6EC == 1)
             SetThunderCounter(20);
         gWeatherPtr->unknown_6E6 = (Random() % 3) + 6;
@@ -1169,7 +1169,7 @@ void Rain_Main(void)
     case 9:
         if (--gWeatherPtr->unknown_6E6 != 0)
             break;
-        sub_807D5BC(3);
+        ApplyWeatherColorMapIfIdle(3);
         gWeatherPtr->unknown_6EA = 1;
         if (--gWeatherPtr->unknown_6EC != 0)
         {
@@ -1198,7 +1198,7 @@ void Rain_Main(void)
         if (--gWeatherPtr->unknown_6E6 != 0)
             break;
         SetThunderCounter(100);
-        sub_807D5BC(19);
+        ApplyWeatherColorMapIfIdle(19);
         // Why use "% 16" everywhere else and "& 0xF" here. So dumb.
         gWeatherPtr->unknown_6E6 = (Random() & 0xF) + 30;
         gWeatherPtr->initStep++;
@@ -1206,7 +1206,7 @@ void Rain_Main(void)
     case 13:
         if (--gWeatherPtr->unknown_6E6 != 0)
             break;
-        sub_807D5F0(19, 3, 5);
+        ApplyWeatherColorMapIfIdle_Gradual(19, 3, 5);
         gWeatherPtr->initStep++;
         break;
     case 14:
@@ -2323,7 +2323,7 @@ void SetWeather(u32 weather)
 void SetWeather_Unused(u32 weather)
 {
     SetSav1Weather(weather);
-    sub_807C988(GetSav1Weather());
+    SetCurrentAndNextWeather(GetSav1Weather());
 }
 
 void DoCurrentWeather(void)
@@ -2333,7 +2333,7 @@ void DoCurrentWeather(void)
 
 void sub_8080750(void)
 {
-    sub_807C988(GetSav1Weather());
+    SetCurrentAndNextWeather(GetSav1Weather());
 }
 
 static const u8 sWeatherCycleRoute119[] =

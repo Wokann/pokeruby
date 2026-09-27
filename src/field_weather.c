@@ -304,14 +304,14 @@ void ChangeWeather(u8 weather)
     gWeatherPtr->finishStep = 0;
 }
 
-void sub_807C988(u8 weather)
+void SetCurrentAndNextWeather(u8 weather)
 {
     PlayRainSoundEffect();
     gWeatherPtr->currWeather = weather;
     gWeatherPtr->nextWeather = weather;
 }
 
-void sub_807C9B4(u8 weather)
+void SetCurrentAndNextWeatherNoDelay(u8 weather)
 {
     PlayRainSoundEffect();
     gWeatherPtr->currWeather = weather;
@@ -844,7 +844,7 @@ static bool8 LightenSpritePaletteInFog(u8 paletteIndex)
     return FALSE;
 }
 
-void sub_807D5BC(s8 gammaIndex)
+void ApplyWeatherColorMapIfIdle(s8 gammaIndex)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
     {
@@ -853,7 +853,7 @@ void sub_807D5BC(s8 gammaIndex)
     }
 }
 
-void sub_807D5F0(u8 gammaIndex, u8 gammaTargetIndex, u8 gammaStepDelay)
+void ApplyWeatherColorMapIfIdle_Gradual(u8 gammaIndex, u8 gammaTargetIndex, u8 gammaStepDelay)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_IDLE)
     {
@@ -862,7 +862,7 @@ void sub_807D5F0(u8 gammaIndex, u8 gammaTargetIndex, u8 gammaStepDelay)
         gWeatherPtr->gammaTargetIndex = gammaTargetIndex;
         gWeatherPtr->gammaStepFrameCounter = 0;
         gWeatherPtr->gammaStepDelay = gammaStepDelay;
-        sub_807D5BC(gammaIndex);
+        ApplyWeatherColorMapIfIdle(gammaIndex);
     }
 }
 
@@ -1041,12 +1041,12 @@ bool8 LoadDroughtWeatherPalettes(void)
     return FALSE;
 }
 
-void sub_807DA04(s8 gammaIndex)
+static void SetDroughtColorMap(s8 gammaIndex)
 {
-    sub_807D5BC(-gammaIndex - 1);
+    ApplyWeatherColorMapIfIdle(-gammaIndex - 1);
 }
 
-void sub_807DA14(void)
+void DroughtStateInit(void)
 {
     gWeatherPtr->unknown_73C = 0;
     gWeatherPtr->unknown_740 = 0;
@@ -1055,7 +1055,7 @@ void sub_807DA14(void)
     gUnknown_0202FF58 = 5;
 }
 
-void sub_807DA4C(void)
+void DroughtStateRun(void)
 {
     switch (gWeatherPtr->unknown_742)
     {
@@ -1063,7 +1063,7 @@ void sub_807DA4C(void)
         if (++gWeatherPtr->unknown_740 > gUnknown_0202FF58)
         {
             gWeatherPtr->unknown_740 = 0;
-            sub_807DA04(gWeatherPtr->unknown_73C++);
+            SetDroughtColorMap(gWeatherPtr->unknown_73C++);
             if (gWeatherPtr->unknown_73C > 5)
             {
                 gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
@@ -1076,14 +1076,14 @@ void sub_807DA4C(void)
         gWeatherPtr->unknown_740 = (gWeatherPtr->unknown_740 + 3) & 0x7F;
         gWeatherPtr->unknown_73C = ((gSineTable[gWeatherPtr->unknown_740] - 1) >> 6) + 2;
         if (gWeatherPtr->unknown_73C != gWeatherPtr->unknown_73E)
-            sub_807DA04(gWeatherPtr->unknown_73C);
+            SetDroughtColorMap(gWeatherPtr->unknown_73C);
         gWeatherPtr->unknown_73E = gWeatherPtr->unknown_73C;
         break;
     case 2:
         if (++gWeatherPtr->unknown_740 > gUnknown_0202FF58)
         {
             gWeatherPtr->unknown_740 = 0;
-            sub_807DA04(--gWeatherPtr->unknown_73C);
+            SetDroughtColorMap(--gWeatherPtr->unknown_73C);
             if (gWeatherPtr->unknown_73C == 3)
                 gWeatherPtr->unknown_742 = 0;
         }

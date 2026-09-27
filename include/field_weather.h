@@ -123,8 +123,8 @@ struct Weather
 
 void StartWeather(void);
 void ChangeWeather(u8 weather);
-void sub_807C988(u8 effect);
-void sub_807C9B4(u8 effect);
+void SetCurrentAndNextWeather(u8 effect);
+void SetCurrentAndNextWeatherNoDelay(u8 effect);
 void Task_WeatherInit(u8);
 void Task_WeatherMain(u8);
 void sub_807CAE8(void);
