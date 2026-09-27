@@ -5,10 +5,7 @@
 #include "task.h"
 
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[2];
-extern const struct SpritePalette gUnknown_0839F114;
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[2];
-extern const struct SpriteTemplate gSpriteTemplate_839F128;
-extern const struct OamData gOamData_839F0F4;
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern u8 gLastFieldPokeMenuOpened;
@@ -149,7 +146,7 @@ void FlyInFieldEffect_End(struct Task *);
 
 u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buffer);
 void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest);
-u8 CreateBirchSprite(s16 x, s16 y, u8 subpriority);
+u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority);
 u8 CreateMonSprite_PicBox(u16, s16, s16, u8);
 void FreeResourcesAndDestroySprite(struct Sprite *sprite);
 void MultiplyInvertedPaletteRGBComponents(u16, u8, u8, u8);

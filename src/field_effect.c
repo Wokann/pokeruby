@@ -49,8 +49,8 @@ static void SpriteCB_HallOfFameMonitor(struct Sprite *sprite);
 
 EWRAM_DATA s32 gFieldEffectArguments[8] = {0};
 
-const u32 gSpriteImage_839DC14[] = INCBIN_U32("graphics/birch_speech/birch.4bpp");
-const u16 gBirchPalette[16] = INCBIN_U16("graphics/birch_speech/birch.gbapal");
+static const u32 sNewGameBirch_Gfx[] = INCBIN_U32("graphics/birch_speech/birch.4bpp");
+static const u16 sNewGameBirch_Pal[16] = INCBIN_U16("graphics/birch_speech/birch.gbapal");
 static const u32 sPokeballGlow_Gfx[] = INCBIN_U32("graphics/field_effects/pics/pokeball_glow.4bpp");
 static const u16 sPokeballGlow_Pal[16] = INCBIN_U16("graphics/field_effects/palettes/pokeball_glow.gbapal");
 const u32 gSpriteImage_839E474[] = INCBIN_U32("graphics/misc/pokecenter_monitor/0.4bpp");
@@ -80,30 +80,30 @@ bool8 (*const gFieldEffectScriptFuncs[])(u8 **, u32 *) = {
     FieldEffectCmd_loadfadedpal_callnative,
 };
 
-const struct OamData gOamData_839F0F4 = {.size = 3};
+static const struct OamData sOam_64x64 = {.size = 3};
 static const struct OamData sOam_8x8 = {.size = 0};
 static const struct OamData sOam_16x16 = {.size = 1};
 
-const struct SpriteFrameImage gSpriteImageTable_839F10C[] = {
-    obj_frame_tiles(gSpriteImage_839DC14)
+static const struct SpriteFrameImage sPicTable_NewGameBirch[] = {
+    obj_frame_tiles(sNewGameBirch_Gfx)
 };
-const struct SpritePalette gUnknown_0839F114 = {.data = gBirchPalette, .tag = 0x1006};
+static const struct SpritePalette sSpritePalette_NewGameBirch = {.data = sNewGameBirch_Pal, .tag = 0x1006};
 
-const union AnimCmd gSpriteAnim_839F11C[] = {
+static const union AnimCmd sAnim_NewGameBirch[] = {
     ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_839F124[] = {
-    gSpriteAnim_839F11C
+static const union AnimCmd *const sAnimTable_NewGameBirch[] = {
+    sAnim_NewGameBirch
 };
 
-const struct SpriteTemplate gSpriteTemplate_839F128 = {
+static const struct SpriteTemplate sSpriteTemplate_NewGameBirch = {
     .tileTag = 0xffff,
     .paletteTag = 4102,
-    .oam = &gOamData_839F0F4,
-    .anims = (const union AnimCmd *const *)&gSpriteAnimTable_839F124,
-    .images = gSpriteImageTable_839F10C,
+    .oam = &sOam_64x64,
+    .anims = (const union AnimCmd *const *)&sAnimTable_NewGameBirch,
+    .images = sPicTable_NewGameBirch,
     .affineAnims = (const union AffineAnimCmd *const *)&gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
@@ -538,7 +538,7 @@ u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buf
     LoadCompressedSpriteSheetOverrideBuffer(&gTrainerFrontPicTable[trainerSpriteID], buffer);
     spriteTemplate.tileTag = gTrainerFrontPicTable[trainerSpriteID].tag;
     spriteTemplate.paletteTag = gTrainerFrontPicPaletteTable[trainerSpriteID].tag;
-    spriteTemplate.oam = &gOamData_839F0F4;
+    spriteTemplate.oam = &sOam_64x64;
     spriteTemplate.anims = gDummySpriteAnimTable;
     spriteTemplate.images = NULL;
     spriteTemplate.affineAnims = gDummySpriteAffineAnimTable;
@@ -552,10 +552,10 @@ void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest)
     LoadCompressedPalette(gTrainerFrontPicPaletteTable[gender].data, palOffset, 0x20);
 }
 
-u8 CreateBirchSprite(s16 x, s16 y, u8 subpriority)
+u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
 {
-    LoadSpritePalette(&gUnknown_0839F114);
-    return CreateSprite(&gSpriteTemplate_839F128, x, y, subpriority);
+    LoadSpritePalette(&sSpritePalette_NewGameBirch);
+    return CreateSprite(&sSpriteTemplate_NewGameBirch, x, y, subpriority);
 }
 
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
