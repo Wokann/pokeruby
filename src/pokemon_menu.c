@@ -744,7 +744,7 @@ static void PokemonMenu_FieldMove(u8 taskID)
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             }
             else
-                sub_8133D28(taskID);
+                ChooseMonForSoftboiled(taskID);
         }
         else
         {

@@ -25,10 +25,10 @@ extern u8 gLastFieldPokeMenuOpened;
 extern u8 gUnknown_0202E8F4;
 
 // Static
-static void sub_8133D50(u8 taskId);
+static void Task_TryUseSoftboiledOnPartyMon(u8 taskId);
 static void Task_ChooseNewMonForSoftboiled(u8 taskId);
-static void CantUseSoftboiled(u8 taskId);
-static void sub_8133EF8(u8 taskId);
+static void CantUseSoftboiledOnMon(u8 taskId);
+static void Task_FinishSoftboiled(u8 taskId);
 
 bool8 SetUpFieldMove_SoftBoiled(void) {
     u16 maxHp;
@@ -47,13 +47,13 @@ bool8 SetUpFieldMove_SoftBoiled(void) {
     return FALSE;
 }
 
-void sub_8133D28(u8 taskid) {
-    ePartyMenu.unkC = sub_8133D50;
+void ChooseMonForSoftboiled(u8 taskid) {
+    ePartyMenu.unkC = Task_TryUseSoftboiledOnPartyMon;
     ePartyMenu2.pmUnk272 = 3;
     DoPokemonMenu_Switch(taskid);
 }
 
-static void sub_8133D50(u8 taskId) {
+static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
     u8 userPartyId, recipientPartyId;
     u16 hp;
     struct Pokemon *pokemon;
@@ -75,7 +75,7 @@ static void sub_8133D50(u8 taskId) {
 
     if (hp == 0 || userPartyId == recipientPartyId || GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP) == hp)
     {
-        CantUseSoftboiled(taskId);
+        CantUseSoftboiledOnMon(taskId);
         return;
     }
 
@@ -87,7 +87,7 @@ static void sub_8133D50(u8 taskId) {
     gPartyMenu.pokemon = pokemon;
     gPartyMenu.secondarySelectedIndex = 0;
     gPartyMenu.unkC = -0x8000;
-    gPartyMenu.unk10 = sub_8133EF8;
+    gPartyMenu.unk10 = Task_FinishSoftboiled;
 
 
     gTasks[taskId].data[10] = GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP);
@@ -110,14 +110,14 @@ static void Task_ChooseNewMonForSoftboiled(u8 taskId) {
     gTasks[taskId].func = HandlePartyMenuSwitchPokemonInput;
 }
 
-static void CantUseSoftboiled(u8 taskId) {
+static void CantUseSoftboiledOnMon(u8 taskId) {
     gUnknown_0202E8F4 = 0;
     PartyMenuEraseMsgBoxAndFrame();
     DisplayPartyMenuMessage(gOtherText_CantUseOnPoke, 1);
     gTasks[taskId].func = Task_ChooseNewMonForSoftboiled;
 }
 
-static void sub_8133EF8(u8 taskId)
+static void Task_FinishSoftboiled(u8 taskId)
 {
     sub_806CCE4();
     ePartyMenu2.unk261 = 2;
