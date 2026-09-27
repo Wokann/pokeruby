@@ -1010,9 +1010,9 @@ u8 PlayerGetElevation(void)
     return gObjectEvents[gPlayerAvatar.objectEventId].previousElevation;
 }
 
-void unref_sub_8059790(s16 a, s16 b)
+void MovePlayerToMapCoords(s16 x, s16 y)
 {
-    sub_805C058(&gObjectEvents[gPlayerAvatar.objectEventId], a, b);
+    MoveObjectEventToMapCoords(&gObjectEvents[gPlayerAvatar.objectEventId], x, y);
 }
 
 u8 TestPlayerAvatarFlags(u8 flag)

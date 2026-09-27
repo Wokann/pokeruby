@@ -3263,7 +3263,7 @@ void FlyInFieldEffect_FieldMovePose(struct Task *task)
         objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
         sprite = &gSprites[objectEvent->spriteId];
         objectEvent->inanimate = 0;
-        sub_805C058(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
+        MoveObjectEventToMapCoords(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
         sprite->x2 = 0;
         sprite->y2 = 0;
         sprite->coordOffsetEnabled = 1;

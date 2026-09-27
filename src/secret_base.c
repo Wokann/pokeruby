@@ -532,7 +532,7 @@ void InitSecretBaseDecorationSprites(void)
                         gSpecialVar_Result = gMapHeader.events->objectEvents[objid].localId;
                         FlagClear(gSpecialVar_0x8004 + 0xAE);
                         show_sprite(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
-                        sub_805C0F8(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
+                        TryMoveObjectEventToMapCoords(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, gSpecialVar_0x8006, gSpecialVar_0x8007);
                         TryOverrideTemplateCoordsForObjectEvent(gSpecialVar_Result, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
                         gSpecialVar_0x8004 ++;
                     }

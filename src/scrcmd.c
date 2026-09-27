@@ -1052,7 +1052,7 @@ bool8 ScrCmd_setobjectxy(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    sub_805C0F8(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
+    TryMoveObjectEventToMapCoords(localId, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, x, y);
     return FALSE;
 }
 

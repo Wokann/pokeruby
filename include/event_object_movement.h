@@ -62,7 +62,7 @@ extern const struct SpriteFrameImage gObjectEventPicTable_PechaBerryTree[];
 extern const u8 gFieldEffectPic_CutGrass[];
 extern const u16 gFieldEffectPal_CutGrass[];
 
-void sub_805C058(struct ObjectEvent *objectEvent, s16 a, s16 b);
+void MoveObjectEventToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y);
 void SetObjectEventDirection(struct ObjectEvent *pObject, u8 unk_18);
 void MoveCoords(u8 direction, s16 *x, s16 *y);
 void UpdateObjectEventCurrentMovement(struct ObjectEvent *pObject,  struct Sprite *pSprite,  u8 (*d8)(struct ObjectEvent *, struct Sprite *));
@@ -370,7 +370,7 @@ void PatchObjectPalette(u16, u8);
 void LoadPlayerObjectReflectionPalette(u16, u8);
 void LoadSpecialObjectReflectionPalette(u16, u8);
 void ShiftObjectEventCoords(struct ObjectEvent *pObject, s16 x, s16 y);
-void sub_805C0F8(u8, u8, u8, s16, s16);
+void TryMoveObjectEventToMapCoords(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
 void ShiftStillObjectEventCoords(struct ObjectEvent *pObject);
 u8 GetObjectEventIdByXYZ(u16, u16, u8);
 void UpdateObjectEventsForCameraUpdate(s16, s16);
