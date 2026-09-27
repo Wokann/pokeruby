@@ -5070,7 +5070,7 @@ static const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt = {
     0xFFFF, 4, &sOam_8x8, sAnims_SingleFrame, sImageTable_PikaPowerBolt, sAffineAnims_PikaPowerBolt, SpriteCB_PikaPowerBolt
 };
 
-static const struct Subsprite gSubspriteTable_83ED6E4[] = {
+static const struct Subsprite sSubsprites_ReelBackground[] = {
     {-64, -64, ST_OAM_SQUARE, 3, 0x0, 3},
     {0, -64, ST_OAM_SQUARE, 3, 0x0, 3},
     {-64, 0, ST_OAM_SQUARE, 3, 0x0, 3},
@@ -5078,10 +5078,10 @@ static const struct Subsprite gSubspriteTable_83ED6E4[] = {
 };
 
 static const struct SubspriteTable sSubspriteTable_ReelBackground[] = {
-    {4, gSubspriteTable_83ED6E4}
+    {4, sSubsprites_ReelBackground}
 };
 
-static const struct Subsprite gSubspriteTable_83ED70C[] = {
+static const struct Subsprite sSubsprites_ReelTimeMachineAntennae[] = {
     {-32, -12, ST_OAM_H_RECTANGLE, 1, 0x0, 1},
     {0, -12, ST_OAM_H_RECTANGLE, 1, 0x4, 1},
     {-32, -4, ST_OAM_H_RECTANGLE, 1, 0x8, 1},
@@ -5091,20 +5091,20 @@ static const struct Subsprite gSubspriteTable_83ED70C[] = {
 };
 
 static const struct SubspriteTable sSubspriteTable_ReelTimeMachineAntennae[] = {
-    {6, gSubspriteTable_83ED70C}
+    {6, sSubsprites_ReelTimeMachineAntennae}
 };
 
-static const struct Subsprite gSubspriteTable_83ED744[] = {
+static const struct Subsprite sSubsprites_ReelTimeMachine[] = {
     {-32, -20, ST_OAM_H_RECTANGLE, 3, 0x0, 1},
     {-32, 12, ST_OAM_H_RECTANGLE, 1, 0x20, 1},
     {0, 12, ST_OAM_H_RECTANGLE, 1, 0x24, 1}
 };
 
 static const struct SubspriteTable sSubspriteTable_ReelTimeMachine[] = {
-    {3, gSubspriteTable_83ED744}
+    {3, sSubsprites_ReelTimeMachine}
 };
 
-static const struct Subsprite gSubspriteTable_83ED764[] = {
+static const struct Subsprite sSubsprites_BrokenReelTimeMachine[] = {
     {-32, -24, ST_OAM_H_RECTANGLE, 3, 0x0, 1},
     {-32, 8, ST_OAM_H_RECTANGLE, 1, 0x20, 1},
     {0, 8, ST_OAM_H_RECTANGLE, 1, 0x24, 1},
@@ -5113,10 +5113,10 @@ static const struct Subsprite gSubspriteTable_83ED764[] = {
 };
 
 static const struct SubspriteTable sSubspriteTable_BrokenReelTimeMachine[] = {
-    {5, gSubspriteTable_83ED764}
+    {5, sSubsprites_BrokenReelTimeMachine}
 };
 
-static const struct Subsprite gSubspriteTable_83ED794[] = {
+static const struct Subsprite sSubsprites_ReelTimeShadow[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 1},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 1},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 1},
@@ -5124,20 +5124,20 @@ static const struct Subsprite gSubspriteTable_83ED794[] = {
 };
 
 static const struct SubspriteTable sSubspriteTable_ReelTimeShadow[] = {
-    {4, gSubspriteTable_83ED794}
+    {4, sSubsprites_ReelTimeShadow}
 };
 
-static const struct Subsprite gSubspriteTable_83ED7BC[] = {
+static const struct Subsprite sSubsprites_ReelTimeNumberGap[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 1},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0x0, 1},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x0, 1}
 };
 
 static const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[] = {
-    {3, gSubspriteTable_83ED7BC}
+    {3, sSubsprites_ReelTimeNumberGap}
 };
 
-static const struct Subsprite gSubspriteTable_83ED7DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Reel[] = {
     {-32, -24, ST_OAM_H_RECTANGLE, 3, 0x0, 3},
     {-32, 8, ST_OAM_H_RECTANGLE, 1, 0x20, 3},
     {0, 8, ST_OAM_H_RECTANGLE, 1, 0x24, 3},
@@ -5145,44 +5145,44 @@ static const struct Subsprite gSubspriteTable_83ED7DC[] = {
     {0, 16, ST_OAM_H_RECTANGLE, 1, 0x2c, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED804[] = {
-    {5, gSubspriteTable_83ED7DC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Reel[] = {
+    {5, sSubsprites_DigitalDisplay_Reel}
 };
 
-static const struct Subsprite gSubspriteTable_83ED80C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Time[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED82C[] = {
-    {4, gSubspriteTable_83ED80C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Time[] = {
+    {4, sSubsprites_DigitalDisplay_Time}
 };
 
-static const struct Subsprite gSubspriteTable_83ED834[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Insert[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED854[] = {
-    {4, gSubspriteTable_83ED834}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Insert[] = {
+    {4, sSubsprites_DigitalDisplay_Insert}
 };
 
-static const struct Subsprite gSubspriteTable_83ED85C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Unused1[] = {
     {-32, -8, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -8, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, 0, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
     {0, 0, ST_OAM_H_RECTANGLE, 1, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED87C[] = {
-    {4, gSubspriteTable_83ED85C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Unused1[] = {
+    {4, sSubsprites_DigitalDisplay_Unused1}
 };
 
-static const struct Subsprite gSubspriteTable_83ED884[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Win[] = {
     {-32, -12, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {0, -12, ST_OAM_H_RECTANGLE, 1, 0x4, 3},
     {-32, -4, ST_OAM_H_RECTANGLE, 1, 0x8, 3},
@@ -5191,24 +5191,24 @@ static const struct Subsprite gSubspriteTable_83ED884[] = {
     {0, 4, ST_OAM_H_RECTANGLE, 1, 0x14, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED8B4[] = {
-    {6, gSubspriteTable_83ED884}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Win[] = {
+    {6, sSubsprites_DigitalDisplay_Win}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8BC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_SmokeBig[] = {
     {-16, -16, ST_OAM_SQUARE, 2, 0x0, 3}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8C4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_SmokeSmall[] = {
     {-8, -8, ST_OAM_SQUARE, 1, 0x10, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED8CC[] = {
-    {1, gSubspriteTable_83ED8BC},
-    {1, gSubspriteTable_83ED8C4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Smoke[] = {
+    {1, sSubsprites_DigitalDisplay_SmokeBig},
+    {1, sSubsprites_DigitalDisplay_SmokeSmall}
 };
 
-static const struct Subsprite gSubspriteTable_83ED8DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_Pokeball[] = {
     {-24, -24, ST_OAM_H_RECTANGLE, 1, 0x0, 3},
     {8, -24, ST_OAM_H_RECTANGLE, 0, 0x4, 3},
     {-24, -16, ST_OAM_H_RECTANGLE, 1, 0x6, 3},
@@ -5223,102 +5223,102 @@ static const struct Subsprite gSubspriteTable_83ED8DC[] = {
     {8, 16, ST_OAM_H_RECTANGLE, 0, 0x22, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED93C[] = {
-    12, gSubspriteTable_83ED8DC
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_Pokeball[] = {
+    12, sSubsprites_DigitalDisplay_Pokeball
 };
 
-static const struct Subsprite gSubspriteTable_83ED944[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_DPad[] = {
     {-16, -12, ST_OAM_H_RECTANGLE, 2, 0x0, 3},
     {-16, 4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
     {0, 4, ST_OAM_H_RECTANGLE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED95C[] = {
-    {3, gSubspriteTable_83ED944}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_DPad[] = {
+    {3, sSubsprites_DigitalDisplay_DPad}
 };
 
-static const struct Subsprite gSubspriteTable_83ED964[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopS[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0x8, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED974[] = {
-    {2, gSubspriteTable_83ED964}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopS[] = {
+    {2, sSubsprites_DigitalDisplay_StopS}
 };
 
-static const struct Subsprite gSubspriteTable_83ED97C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopT[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x2, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED98C[] = {
-    {2, gSubspriteTable_83ED97C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopT[] = {
+    {2, sSubsprites_DigitalDisplay_StopT}
 };
 
-static const struct Subsprite gSubspriteTable_83ED994[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopO[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x4, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xc, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9A4[] = {
-    {2, gSubspriteTable_83ED994}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopO[] = {
+    {2, sSubsprites_DigitalDisplay_StopO}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9AC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_StopP[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x6, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xe, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9BC[] = {
-    {2, gSubspriteTable_83ED9AC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_StopP[] = {
+    {2, sSubsprites_DigitalDisplay_StopP}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9C4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusB[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0x8, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9D4[] = {
-    {2, gSubspriteTable_83ED9C4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusB[] = {
+    {2, sSubsprites_DigitalDisplay_BonusB}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9DC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusO[] = {
     {-4, -8, ST_OAM_SQUARE, 0, 0x2, 3},
     {-4, 0, ST_OAM_SQUARE, 0, 0xa, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83ED9EC[] = {
-    {2, gSubspriteTable_83ED9DC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusO[] = {
+    {2, sSubsprites_DigitalDisplay_BonusO}
 };
 
-static const struct Subsprite gSubspriteTable_83ED9F4[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusN[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xb, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA04[] = {
-    {2, gSubspriteTable_83ED9F4}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusN[] = {
+    {2, sSubsprites_DigitalDisplay_BonusN}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA0C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusU[] = {
     {-4, -8, ST_OAM_SQUARE, 0, 0x5, 3},
     {-4, 0, ST_OAM_SQUARE, 0, 0xd, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA1C[] = {
-    {2, gSubspriteTable_83EDA0C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusU[] = {
+    {2, sSubsprites_DigitalDisplay_BonusU}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA24[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BonusS[] = {
     {-8, -8, ST_OAM_H_RECTANGLE, 0, 0x6, 3},
     {-8, 0, ST_OAM_H_RECTANGLE, 0, 0xe, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA34[] = {
-    {2, gSubspriteTable_83EDA24}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BonusS[] = {
+    {2, sSubsprites_DigitalDisplay_BonusS}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA3C[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigB[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x2, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
@@ -5327,21 +5327,21 @@ static const struct Subsprite gSubspriteTable_83EDA3C[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x12, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA6C[] = {
-    {6, gSubspriteTable_83EDA3C}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigB[] = {
+    {6, sSubsprites_DigitalDisplay_BigB}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA74[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigI[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0xb, 3},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x13, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDA8C[] = {
-    {3, gSubspriteTable_83EDA74}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigI[] = {
+    {3, sSubsprites_DigitalDisplay_BigI}
 };
 
-static const struct Subsprite gSubspriteTable_83EDA94[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_BigG[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x5, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x7, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0xd, 3},
@@ -5350,11 +5350,11 @@ static const struct Subsprite gSubspriteTable_83EDA94[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x17, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDAC4[] = {
-    {6, gSubspriteTable_83EDA94}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_BigG[] = {
+    {6, sSubsprites_DigitalDisplay_BigG}
 };
 
-static const struct Subsprite gSubspriteTable_83EDACC[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegR[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x0, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x2, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0x8, 3},
@@ -5363,21 +5363,21 @@ static const struct Subsprite gSubspriteTable_83EDACC[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x12, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDAFC[] = {
-    {6, gSubspriteTable_83EDACC}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegR[] = {
+    {6, sSubsprites_DigitalDisplay_RegR}
 };
 
-static const struct Subsprite gSubspriteTable_83EDB04[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegE[] = {
     {-8, -12, ST_OAM_H_RECTANGLE, 0, 0x3, 3},
     {-8, -4, ST_OAM_H_RECTANGLE, 0, 0xb, 3},
     {-8, 4, ST_OAM_H_RECTANGLE, 0, 0x13, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDB1C[] = {
-    {3, gSubspriteTable_83EDB04}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegE[] = {
+    {3, sSubsprites_DigitalDisplay_RegE}
 };
 
-static const struct Subsprite gSubspriteTable_83EDB24[] = {
+static const struct Subsprite sSubsprites_DigitalDisplay_RegG[] = {
     {-12, -12, ST_OAM_H_RECTANGLE, 0, 0x5, 3},
     {4, -12, ST_OAM_SQUARE, 0, 0x7, 3},
     {-12, -4, ST_OAM_H_RECTANGLE, 0, 0xd, 3},
@@ -5386,8 +5386,8 @@ static const struct Subsprite gSubspriteTable_83EDB24[] = {
     {4, 4, ST_OAM_SQUARE, 0, 0x17, 3}
 };
 
-static const struct SubspriteTable gSubspriteTables_83EDB54[] = {
-    {6, gSubspriteTable_83EDB24}
+static const struct SubspriteTable sSubspriteTable_DigitalDisplay_RegG[] = {
+    {6, sSubsprites_DigitalDisplay_RegG}
 };
 
 static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[] = {
@@ -5420,31 +5420,31 @@ static const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[] = {
 };
 
 static const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[] = {
-    gSubspriteTables_83ED804,
-    gSubspriteTables_83ED82C,
-    gSubspriteTables_83ED854,
-    gSubspriteTables_83ED8B4,
+    sSubspriteTable_DigitalDisplay_Reel,
+    sSubspriteTable_DigitalDisplay_Time,
+    sSubspriteTable_DigitalDisplay_Insert,
+    sSubspriteTable_DigitalDisplay_Win,
     NULL,
     NULL,
-    gSubspriteTables_83ED8CC,
+    sSubspriteTable_DigitalDisplay_Smoke,
     NULL,
-    gSubspriteTables_83ED93C,
-    gSubspriteTables_83ED95C,
-    gSubspriteTables_83ED974,
-    gSubspriteTables_83ED98C,
-    gSubspriteTables_83ED9A4,
-    gSubspriteTables_83ED9BC,
-    gSubspriteTables_83ED9D4,
-    gSubspriteTables_83ED9EC,
-    gSubspriteTables_83EDA04,
-    gSubspriteTables_83EDA1C,
-    gSubspriteTables_83EDA34,
-    gSubspriteTables_83EDA6C,
-    gSubspriteTables_83EDA8C,
-    gSubspriteTables_83EDAC4,
-    gSubspriteTables_83EDAFC,
-    gSubspriteTables_83EDB1C,
-    gSubspriteTables_83EDB54,
+    sSubspriteTable_DigitalDisplay_Pokeball,
+    sSubspriteTable_DigitalDisplay_DPad,
+    sSubspriteTable_DigitalDisplay_StopS,
+    sSubspriteTable_DigitalDisplay_StopT,
+    sSubspriteTable_DigitalDisplay_StopO,
+    sSubspriteTable_DigitalDisplay_StopP,
+    sSubspriteTable_DigitalDisplay_BonusB,
+    sSubspriteTable_DigitalDisplay_BonusO,
+    sSubspriteTable_DigitalDisplay_BonusN,
+    sSubspriteTable_DigitalDisplay_BonusU,
+    sSubspriteTable_DigitalDisplay_BonusS,
+    sSubspriteTable_DigitalDisplay_BigB,
+    sSubspriteTable_DigitalDisplay_BigI,
+    sSubspriteTable_DigitalDisplay_BigG,
+    sSubspriteTable_DigitalDisplay_RegR,
+    sSubspriteTable_DigitalDisplay_RegE,
+    sSubspriteTable_DigitalDisplay_RegG,
     NULL
 };
 
