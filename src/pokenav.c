@@ -5031,9 +5031,9 @@ u8 HandleRibbonsSummaryCursorInput(void)
     return moved;
 }
 
-void sub_80F6A4C(s8 a0)
+void BeginRibbonsSummaryMonSwitch(s8 direction)
 {
-    gPokenavStructPtr->listSelectedIndex += a0;
+    gPokenavStructPtr->listSelectedIndex += direction;
     if (gPokenavStructPtr->listSelectedIndex < 0)
     {
         gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8774;
@@ -5042,7 +5042,7 @@ void sub_80F6A4C(s8 a0)
     {
         gPokenavStructPtr->listSelectedIndex = 0;
     }
-    gPokenavStructPtr->unkBC94 = a0;
+    gPokenavStructPtr->unkBC94 = direction;
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     REG_WININ = 0x3F37;
     REG_WINOUT = 0x3F3F;
@@ -5051,7 +5051,7 @@ void sub_80F6A4C(s8 a0)
     gPokenavStructPtr->unk87DE = 0;
 }
 
-bool8 sub_80F6AF0(void)
+bool8 UpdateRibbonsSummaryMonSwitch(void)
 {
     switch (gPokenavStructPtr->unk87DE)
     {

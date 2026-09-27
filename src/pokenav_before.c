@@ -2839,13 +2839,13 @@ void RibbonsSummaryHandleInput(void)
         if (JOY_REPT(0x40) && (gPokenavStructPtr->unk87DC))
         {
 			PlaySE(SE_SELECT);
-			sub_80F6A4C(-1);
+            BeginRibbonsSummaryMonSwitch(-1);
 			gPokenavStructPtr->callbackStep++;
         }
 		else if (JOY_REPT(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
 		{
             PlaySE(SE_SELECT);
-            sub_80F6A4C(1);
+            BeginRibbonsSummaryMonSwitch(1);
             gPokenavStructPtr->callbackStep++;
         }
         else if (JOY_NEW(A_BUTTON))
@@ -2861,7 +2861,7 @@ void RibbonsSummaryHandleInput(void)
         }
         break;
     case 2:
-        if (!sub_80F6AF0())
+        if (!UpdateRibbonsSummaryMonSwitch())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 3:
