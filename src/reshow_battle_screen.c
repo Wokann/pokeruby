@@ -191,7 +191,7 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
 
 static void sub_807B06C(void)
 {
-    sub_800D6D4();
+    InitBattleBgsVideo();
     ((vBgCnt *)&REG_BG1CNT)->charBaseBlock = 0;
     ((vBgCnt *)&REG_BG2CNT)->charBaseBlock = 0;
 }

@@ -229,24 +229,24 @@ static const struct BattleBackground sBattleEnvironmentTable[] =
     },
 };
 
-static void sub_800D6C4(void);
+static void CB2_DebugBattleSprites(void);
 
-void debug_sub_800D684(void)
+void DebugInitBattleSprites(void)
 {
     u8 spriteId;
     ResetSpriteData();
     spriteId = CreateSprite(&gSpriteTemplate_81F96D0, 0, 0, 0);
     gSprites[spriteId].invisible = TRUE;
-    SetMainCallback2(sub_800D6C4);
+    SetMainCallback2(CB2_DebugBattleSprites);
 }
 
-static void sub_800D6C4(void)
+static void CB2_DebugBattleSprites(void)
 {
     AnimateSprites();
     BuildOamBuffer();
 }
 
-void sub_800D6D4(void)
+void InitBattleBgsVideo(void)
 {
     u16 ime = REG_IME;
     REG_IME = 0;
@@ -392,58 +392,58 @@ void LoadBattleTextboxAndBackground(void)
     #endif
 }
 
-static void sub_800DAF8(u8 taskId, u8 windowId, u8 *dest)
+static void WriteLinkBattleParticipantPokeballs(u8 taskId, u8 multiplayerId, u8 *dest)
 {
     int i;
-    u16 r4 = 0;
-    u16 src[6];
+    u16 pokeballStatuses = 0;
+    u16 tiles[6];
 
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI) {
         if (gTasks[taskId].data[5]) {
-            switch (windowId) {
+            switch (multiplayerId) {
             case 0:
-                r4 = gTasks[taskId].data[3] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[3] & 0x3f;
                 break;
             case 1:
-                r4 = (gTasks[taskId].data[4] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[4] & 0xfc0) >> 6;
                 break;
             case 2:
-                r4 = (gTasks[taskId].data[3] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[3] & 0xfc0) >> 6;
                 break;
             case 3:
-                r4 = gTasks[taskId].data[4] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[4] & 0x3f;
                 break;
             }
         } else {
-            switch (windowId) {
+            switch (multiplayerId) {
             case 0:
-                r4 = gTasks[taskId].data[3] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[3] & 0x3f;
                 break;
             case 1:
-                r4 = gTasks[taskId].data[4] & 0x3f;
+                pokeballStatuses = gTasks[taskId].data[4] & 0x3f;
                 break;
             case 2:
-                r4 = (gTasks[taskId].data[3] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[3] & 0xfc0) >> 6;
                 break;
             case 3:
-                r4 = (gTasks[taskId].data[4] & 0xfc0) >> 6;
+                pokeballStatuses = (gTasks[taskId].data[4] & 0xfc0) >> 6;
                 break;
             }
         }
         for (i = 0; i < 3; i++) {
-            src[i] = ((r4 & (3 << (i * 2))) >> (i * 2)) + 0x6001;
+            tiles[i] = ((pokeballStatuses & (3 << (i * 2))) >> (i * 2)) + 0x6001;
         }
-        CpuSet(src, dest, 3);
+        CpuSet(tiles, dest, 3);
     } else {
-        if (windowId == gBattleStruct->multiplayerId) {
-            r4 = gTasks[taskId].data[3];
+        if (multiplayerId == gBattleStruct->multiplayerId) {
+            pokeballStatuses = gTasks[taskId].data[3];
         } else {
-            r4 = gTasks[taskId].data[4];
+            pokeballStatuses = gTasks[taskId].data[4];
         }
         for (i = 0; i < 6; i++) {
-            src[i] = ((r4 & (3 << (i * 2))) >> (i * 2)) + 0x6001;
+            tiles[i] = ((pokeballStatuses & (3 << (i * 2))) >> (i * 2)) + 0x6001;
         }
-        CpuSet(src, dest, 6);
+        CpuSet(tiles, dest, 6);
     }
 }
 
@@ -470,7 +470,7 @@ static void sub_800DAF8(u8 taskId, u8 windowId, u8 *dest)
 #define PRINT_MESSAGE_LEFT(text, tileDataStartOffset)       PRINT_MESSAGE(text, tileDataStartOffset, LEFT_MESSAGE_X)
 #define PRINT_MESSAGE_RIGHT(text, tileDataStartOffset)      PRINT_MESSAGE(text, tileDataStartOffset, RIGHT_MESSAGE_X)
 
-static void PrintLinkBattleWinLossTie(void)
+static void DrawLinkBattleVsScreenOutcomeText(void)
 {
 
     if (gBattleOutcome == 3)
@@ -573,7 +573,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                     gLinkResultWindows[windowId].top,
                     1);
                 Text_PrintWindow8002F44(gLinkResultWindows[windowId].window);
-                sub_800DAF8(taskId, windowId, gLinkResultWindows[windowId].dest);
+                WriteLinkBattleParticipantPokeballs(taskId, windowId, gLinkResultWindows[windowId].dest);
             }
         } else {
             u8 windowId = 4;
@@ -593,7 +593,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                 gLinkResultWindows[windowId].top,
                 1);
             Text_PrintWindow8002F44(gLinkResultWindows[windowId].window);
-            sub_800DAF8(taskId, playerId, gLinkResultWindows[windowId].dest);
+            WriteLinkBattleParticipantPokeballs(taskId, playerId, gLinkResultWindows[windowId].dest);
 
             Text_InitWindow8002E4C(
                 gLinkResultWindows[windowId + 1].window,
@@ -603,7 +603,7 @@ void InitLinkBattleVsScreen(u8 taskId)
                 gLinkResultWindows[windowId + 1].top,
                 1);
             Text_PrintWindow8002F44(gLinkResultWindows[windowId + 1].window);
-            sub_800DAF8(taskId, opponentId, gLinkResultWindows[windowId + 1].dest);
+            WriteLinkBattleParticipantPokeballs(taskId, opponentId, gLinkResultWindows[windowId + 1].dest);
         }
         gTasks[taskId].data[0]++;
         break;
@@ -635,7 +635,7 @@ void InitLinkBattleVsScreen(u8 taskId)
             gTasks[taskId].data[1] += 2;
         } else {
             if (gTasks[taskId].data[5]) {
-                PrintLinkBattleWinLossTie();
+                DrawLinkBattleVsScreenOutcomeText();
             }
             PlaySE(SE_M_HARDEN);
             DestroyTask(taskId);

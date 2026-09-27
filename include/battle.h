@@ -613,7 +613,7 @@ extern u8 gUnknown_02023A14_50;
 extern u16 gTrainerBattleOpponent;
 
 // src/battle_bg.o
-void sub_800D6D4();
+void InitBattleBgsVideo();
 void ApplyPlayerChosenFrameToBattleMenu();
 void DrawMainBattleBackground(void);
 void LoadBattleTextboxAndBackground();

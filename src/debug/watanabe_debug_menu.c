@@ -1584,7 +1584,7 @@ void debug_80C51E4(u8 taskId)
 {
     sub_80408BC();
     gMain.savedCallback = debug_80C41A8;
-    SetMainCallback2(debug_sub_800D684);
+    SetMainCallback2(DebugInitBattleSprites);
 }
 
 void debug_80C5208(void)

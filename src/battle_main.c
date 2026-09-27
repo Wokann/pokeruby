@@ -274,7 +274,7 @@ void CB2_InitBattleInternal(void)
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
     Text_InitWindowWithTemplate(&gUnknown_030041D0, &gWindowTemplate_81E71D0);
     Text_InitWindowWithTemplate(&gUnknown_03004250, &gWindowTemplate_81E71EC);
-    sub_800D6D4();
+    InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
     ResetTasks();
@@ -1313,7 +1313,7 @@ void c2_8011A1C(void)
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
     Text_InitWindowWithTemplate(&gUnknown_030041D0, &gWindowTemplate_81E71D0);
     Text_InitWindowWithTemplate(&gUnknown_03004250, &gWindowTemplate_81E71EC);
-    sub_800D6D4();
+    InitBattleBgsVideo();
     LoadCompressedPalette(gBattleTextboxPalette, 0, 64);
     ApplyPlayerChosenFrameToBattleMenu();
     ResetSpriteData();
@@ -1931,7 +1931,7 @@ extern const struct Pokeblock gUnknown_Debug_821F5AC[];
 
 extern u8 gUnknown_020297ED;
 
-extern void debug_sub_800D684(void);
+extern void DebugInitBattleSprites(void);
 
 void debug_sub_801174C(void)
 {
@@ -2106,7 +2106,7 @@ void debug_sub_801174C(void)
     }
 
     gMain.savedCallback = debug_sub_80108B8;
-    SetMainCallback2(debug_sub_800D684);
+    SetMainCallback2(DebugInitBattleSprites);
 
     ClearBag();
 
@@ -2611,7 +2611,7 @@ void debug_sub_8012688(void)
 	gBattle_BG3_X = 0;
 	gBattle_BG3_Y = 0;
 	gBattleEnvironment = 9;
-	sub_800D6D4();
+	InitBattleBgsVideo();
 	LoadBattleTextboxAndBackground();
 	ResetSpriteData();
 	ResetTasks();
