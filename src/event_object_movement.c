@@ -5056,7 +5056,7 @@ bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprit
     return FALSE;
 }
 
-void sub_8060E68(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void InitNpcForWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
     s16 x;
     s16 y;
@@ -5065,21 +5065,21 @@ void sub_8060E68(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 dire
     SetObjectEventDirection(objectEvent, direction);
     MoveCoords(direction, &x, &y);
     ShiftObjectEventCoords(objectEvent, x, y);
-    sub_806467C(sprite, direction);
+    SetWalkSlowSpriteData(sprite, direction);
     sprite->animPaused = FALSE;
     objectEvent->triggerGroundEffectsOnMove = TRUE;
     sprite->data[2] = 1;
 }
 
-void sub_8060ED8(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void InitWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    sub_8060E68(objectEvent, sprite, direction);
+    InitNpcForWalkSlow(objectEvent, sprite, direction);
     sub_805FE28(objectEvent, sprite, GetMoveDirectionAnimNum(objectEvent->facingDirection));
 }
 
-bool8 an_walk_any_2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (sub_806468C(sprite))
+    if (UpdateWalkSlowAnim(sprite))
     {
         ShiftStillObjectEventCoords(objectEvent);
         objectEvent->triggerGroundEffectsOnStop = TRUE;
@@ -5093,13 +5093,13 @@ bool8 MovementAction_WalkSlowDown_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkSlowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_SOUTH);
+    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
     return MovementAction_WalkSlowDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkSlowDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5111,13 +5111,13 @@ bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkSlowUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_NORTH);
+    InitWalkSlow(objectEvent, sprite, DIR_NORTH);
     return MovementAction_WalkSlowUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5129,13 +5129,13 @@ bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkSlowLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_WEST);
+    InitWalkSlow(objectEvent, sprite, DIR_WEST);
     return MovementAction_WalkSlowLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5147,13 +5147,13 @@ bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkSlowRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_EAST);
+    InitWalkSlow(objectEvent, sprite, DIR_EAST);
     return MovementAction_WalkSlowRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6515,7 +6515,7 @@ bool8 MovementAction_WalkDownStartAffine_Step1(struct ObjectEvent *, struct Spri
 
 bool8 MovementAction_WalkDownStartAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_SOUTH);
+    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
     sprite->affineAnimPaused = 0;
     StartSpriteAffineAnimIfDifferent(sprite, 0);
     return MovementAction_WalkDownStartAffine_Step1(objectEvent, sprite);
@@ -6523,7 +6523,7 @@ bool8 MovementAction_WalkDownStartAffine_Step0(struct ObjectEvent *objectEvent, 
 
 bool8 MovementAction_WalkDownStartAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->affineAnimPaused = TRUE;
         sprite->data[2] = 2;
@@ -6536,7 +6536,7 @@ bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *, struct Sprite *)
 
 bool8 MovementAction_WalkDownAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8060ED8(objectEvent, sprite, DIR_SOUTH);
+    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
     sprite->affineAnimPaused = 0;
     ChangeSpriteAffineAnimIfDifferent(sprite, 1);
     return MovementAction_WalkDownAffine_Step1(objectEvent, sprite);
@@ -6544,7 +6544,7 @@ bool8 MovementAction_WalkDownAffine_Step0(struct ObjectEvent *objectEvent, struc
 
 bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (an_walk_any_2(objectEvent, sprite))
+    if (UpdateWalkSlow(objectEvent, sprite))
     {
         sprite->affineAnimPaused = TRUE;
         sprite->data[2] = 2;
@@ -8139,14 +8139,14 @@ bool8 obj_npc_ministep(struct Sprite *sprite)
     return TRUE;
 }
 
-void sub_806467C(struct Sprite *sprite, u8 direction)
+void SetWalkSlowSpriteData(struct Sprite *sprite, u8 direction)
 {
     sprite->data[3] = direction;
     sprite->data[4] = 0;
     sprite->data[5] = 0;
 }
 
-bool8 sub_806468C(struct Sprite *sprite)
+bool8 UpdateWalkSlowAnim(struct Sprite *sprite)
 {
     if (!(sprite->data[4] & 1))
     {
