@@ -165,13 +165,13 @@ void HandleSelectPartyMenu(u8 var)
             PlaySE(SE_SELECT);
             gContestMonPartyIndex = sub_806CA38(var);
             gSpecialVar_0x8004 = gContestMonPartyIndex;
-            sub_8123138(var);
+            StartPartyMenuExitToField(var);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
             gContestMonPartyIndex = 0xFF;
             gSpecialVar_0x8004 = 0xFF;
-            sub_8123138(var);
+            StartPartyMenuExitToField(var);
             break;
         }
     }
@@ -264,12 +264,12 @@ void HandleMoveRelearnerPartyMenu(u8 var)
             PlaySE(SE_SELECT);
             gSpecialVar_0x8004 = sub_806CA38(var);
             gSpecialVar_0x8005 = sub_8040574(&gPlayerParty[gSpecialVar_0x8004]);
-            sub_8123138(var);
+            StartPartyMenuExitToField(var);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
             gSpecialVar_0x8004 = 0xFF;
-            sub_8123138(var);
+            StartPartyMenuExitToField(var);
         }
     }
 }

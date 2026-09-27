@@ -50,9 +50,9 @@ static void Task_WaitLinkMultiPartnerIcons(u8);
 static void Task_PrintLinkMultiPartnerPartyInfo(u8);
 static void Task_DelayLinkMultiPartyMenuExit(u8);
 static void Task_HandleDaycareStoragePopup(u8);
-void sub_8123138(u8);
-static void sub_8123170(u8);
-static void sub_81231AC(void);
+void StartPartyMenuExitToField(u8);
+static void Task_WaitPartyMenuExitFade(u8);
+static void FieldCallback_FadeFromPartyMenu(void);
 
 void InitChooseHalfPartyForBattle(void)
 {
@@ -826,7 +826,7 @@ void HandleDaycarePartyMenu(u8 taskId)
             PlaySE(SE_SELECT);
             gLastFieldPokeMenuOpened = 0xFF;
             gSpecialVar_0x8004 = 0xFF;
-            sub_8123138(taskId);
+            StartPartyMenuExitToField(taskId);
             break;
         }
     }
@@ -878,7 +878,7 @@ static void Task_HandleDaycareStoragePopup(u8 taskId)
 static void DaycareStorageMenuCallback_Store(u8 taskId)
 {
     gSpecialVar_0x8004 = gLastFieldPokeMenuOpened;
-    sub_8123138(taskId);
+    StartPartyMenuExitToField(taskId);
 }
 
 static void CB2_ReturnToDaycarePartyMenu(void)
@@ -934,17 +934,17 @@ static void DaycareStorageMenuCallback_Exit(u8 taskId)
     gTasks[taskId].func = HandleDaycarePartyMenu;
 }
 
-void sub_8123138(u8 taskId)
+void StartPartyMenuExitToField(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskId].func = sub_8123170;
+    gTasks[taskId].func = Task_WaitPartyMenuExitFade;
 }
 
-static void sub_8123170(u8 taskId)
+static void Task_WaitPartyMenuExitFade(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        gFieldCallback = sub_81231AC;
+        gFieldCallback = FieldCallback_FadeFromPartyMenu;
         SetMainCallback2(CB2_ReturnToField);
         DestroyTask(taskId);
     }
@@ -952,15 +952,15 @@ static void sub_8123170(u8 taskId)
 
 // Do these last two functions really belong in here?
 
-static void sub_81231C4(u8);
+static void Task_PartyMenuWaitForFade(u8);
 
-void sub_81231AC(void)
+void FieldCallback_FadeFromPartyMenu(void)
 {
     pal_fill_black();
-    CreateTask(sub_81231C4, 10);
+    CreateTask(Task_PartyMenuWaitForFade, 10);
 }
 
-static void sub_81231C4(u8 taskId)
+static void Task_PartyMenuWaitForFade(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
