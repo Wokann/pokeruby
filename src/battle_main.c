@@ -170,7 +170,7 @@ extern u8 gUnknown_081FA71F[];
 struct BattleResults gBattleResults;
 
 void BattleMainCB1(void);
-static void BattlePrepIntroSlide(void);
+static void BattleIntroPrepareBackgroundSlide(void);
 void CheckFocusPunch_ClearVarsBeforeTurnStarts(void);
 void SetActionsAndBanksTurnOrder(void);
 static void TurnValuesCleanUp(u8);
@@ -3333,7 +3333,7 @@ void BeginBattleIntro(void)
 {
     BattleStartClearSetData();
     gBattleCommunication[1] = 0;
-    gBattleMainFunc = bc_8012FAC;
+    gBattleMainFunc = BattleIntroGetMonsData;
 }
 
 #if DEBUG
@@ -3664,7 +3664,7 @@ void UndoEffectsAfterFainting(void)
     gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
 }
 
-void bc_8012FAC(void)
+void BattleIntroGetMonsData(void)
 {
     switch (gBattleCommunication[0])
     {
@@ -3679,7 +3679,7 @@ void bc_8012FAC(void)
         {
             gBattleCommunication[1]++;
             if (gBattleCommunication[1] == gBattlersCount)
-                gBattleMainFunc = BattlePrepIntroSlide;
+                gBattleMainFunc = BattleIntroPrepareBackgroundSlide;
             else
                 gBattleCommunication[0] = 0;
         }
@@ -3687,20 +3687,20 @@ void bc_8012FAC(void)
     }
 }
 
-static void BattlePrepIntroSlide(void)
+static void BattleIntroPrepareBackgroundSlide(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
         gActiveBattler = GetBattlerAtPosition(0);
         BtlController_EmitIntroSlide(0, gBattleEnvironment);
         MarkBattlerForControllerExec(gActiveBattler);
-        gBattleMainFunc = sub_8011384;
+        gBattleMainFunc = BattleIntroDrawTrainersOrMonsSprites;
         gBattleCommunication[0] = 0;
         gBattleCommunication[1] = 0;
     }
 }
 
-void sub_8011384(void)
+void BattleIntroDrawTrainersOrMonsSprites(void)
 {
     u8 *ptr;
     s32 i;
@@ -3768,11 +3768,11 @@ void sub_8011384(void)
                 }
             }
         }
-        gBattleMainFunc = bc_801333C;
+        gBattleMainFunc = BattleIntroDrawPartySummaryScreens;
     }
 }
 
-void bc_801333C(void)
+void BattleIntroDrawPartySummaryScreens(void)
 {
     s32 i;
 
@@ -3818,7 +3818,7 @@ void bc_801333C(void)
             BtlController_EmitDrawPartyStatusSummary(0, hpStatus, 0x80);
             MarkBattlerForControllerExec(gActiveBattler);
 
-            gBattleMainFunc = bc_battle_begin_message;
+            gBattleMainFunc = BattleIntroPrintTrainerWantsToBattle;
         }
         else
         {
@@ -3840,40 +3840,40 @@ void bc_801333C(void)
                 }
             }
 
-            gBattleMainFunc = bc_8013568;
+            gBattleMainFunc = BattleIntroPrintWildMonAttacked;
         }
     }
 }
 
-void bc_battle_begin_message(void)
+void BattleIntroPrintTrainerWantsToBattle(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
         gActiveBattler = GetBattlerAtPosition(1);
         PrepareStringBattle(0, gActiveBattler);
-        gBattleMainFunc = sub_8011800;
+        gBattleMainFunc = BattleIntroPrintOpponentSendsOut;
     }
 }
 
-void bc_8013568(void)
+void BattleIntroPrintWildMonAttacked(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
-        gBattleMainFunc = sub_8011970;
+        gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
         PrepareStringBattle(0, 0);
     }
 }
 
-void sub_8011800(void)
+void BattleIntroPrintOpponentSendsOut(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
         PrepareStringBattle(1, GetBattlerAtPosition(1));
-        gBattleMainFunc = sub_8011834;
+        gBattleMainFunc = BattleIntroOpponent1SendsOutMonAnimation;
     }
 }
 
-void sub_8011834(void)
+void BattleIntroOpponent1SendsOutMonAnimation(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
@@ -3891,11 +3891,11 @@ void sub_8011834(void)
                 MarkBattlerForControllerExec(gActiveBattler);
             }
         }
-        gBattleMainFunc = bc_801362C;
+        gBattleMainFunc = BattleIntroRecordMonsToDex;
     }
 }
 
-void bc_801362C(void)
+void BattleIntroRecordMonsToDex(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
@@ -3905,27 +3905,27 @@ void bc_801362C(void)
              && !(gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_LINK)))
                 GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gActiveBattler].species), 2);
         }
-        gBattleMainFunc = sub_8011970;
+        gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
     }
 }
 
-void unref_sub_8011950(void)
+void BattleIntroUnusedWaitForOpponentSendOut(void)
 {
     if (gBattleControllerExecFlags == 0)
-        gBattleMainFunc = sub_8011970;
+        gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
 }
 
-void sub_8011970(void)
+void BattleIntroPrintPlayerSendsOut(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
         if (!(gBattleTypeFlags & BATTLE_TYPE_SAFARI))
             PrepareStringBattle(1, GetBattlerAtPosition(0));
-        gBattleMainFunc = sub_80119B4;
+        gBattleMainFunc = BattleIntroPlayer1SendsOutMonAnimation;
     }
 }
 
-void sub_80119B4(void)
+void BattleIntroPlayer1SendsOutMonAnimation(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
@@ -3946,11 +3946,11 @@ void sub_80119B4(void)
         gBattleStruct->switchInAbilitiesCounter = 0;
         gBattleStruct->unk160F9 = 0;
         gBattleStruct->unk160E6 = 0;
-        gBattleMainFunc = BattleBeginFirstTurn;
+        gBattleMainFunc = TryDoEventsBeforeFirstTurn;
     }
 }
 
-void unref_sub_8011A68(void)
+void BattleIntroUnusedPlayerSwitchInAnimation(void)
 {
     if (gBattleControllerExecFlags == 0)
     {
@@ -3965,15 +3965,15 @@ void unref_sub_8011A68(void)
         gBattleStruct->switchInAbilitiesCounter = 0;
         gBattleStruct->unk160F9 = 0;
         gBattleStruct->unk160E6 = 0;
-        gBattleMainFunc = BattleBeginFirstTurn;
+        gBattleMainFunc = TryDoEventsBeforeFirstTurn;
     }
 }
 
-void BattleBeginFirstTurn(void)
+void TryDoEventsBeforeFirstTurn(void)
 {
     s32 i;
     s32 j;
-    u8 r9 = 0;
+    u8 effectOccurred = 0;
 
     if (gBattleControllerExecFlags == 0)
     {
@@ -3998,9 +3998,9 @@ void BattleBeginFirstTurn(void)
         while (gBattleStruct->switchInAbilitiesCounter < gBattlersCount)
         {
             if (AbilityBattleEffects(0, gBattlerByTurnOrder[gBattleStruct->switchInAbilitiesCounter], 0, 0, 0) != 0)
-                r9++;
+                effectOccurred++;
             gBattleStruct->switchInAbilitiesCounter++;
-            if (r9 != 0)
+            if (effectOccurred != 0)
                 return;
         }
         if (AbilityBattleEffects(9, 0, 0, 0, 0) != 0)
@@ -4010,9 +4010,9 @@ void BattleBeginFirstTurn(void)
         while (gBattleStruct->unk160F9 < gBattlersCount)
         {
             if (ItemBattleEffects(0, gBattlerByTurnOrder[gBattleStruct->unk160F9], 0) != 0)
-                r9++;
+                effectOccurred++;
             gBattleStruct->unk160F9++;
-            if (r9 != 0)
+            if (effectOccurred != 0)
                 return;
         }
         // Absolutely pointless for-loop that somehow doesn't get optimized out
