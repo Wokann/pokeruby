@@ -34,7 +34,7 @@ static const struct TrainersEyeGymLeadersAndE4 sGymLeaderTrainersEye[13] = {
     {TRAINER_STEVEN,        MAPSEC_EVER_GRANDE_CITY}
 };
 
-void sub_80F6E04(u8);
+void LoadTrainerEyesPortraitGfx(u8);
 
 void BuildTrainerEyesList(void)
 {
@@ -76,25 +76,25 @@ void BuildTrainerEyesList(void)
     gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 < 8 ? 0 : 1;
 }
 
-void sub_80F6DB8(void)
+void PrepareTrainerEyesDetailPortrait(void)
 {
-    s32 r1 = 0;
-    gPokenavStructPtr->unk8fe9 = r1;
-    sub_80F6E04(0);
+    s32 portraitSlot = 0;
+    gPokenavStructPtr->unk8fe9 = portraitSlot;
+    LoadTrainerEyesPortraitGfx(0);
     gPokenavStructPtr->trainerEyesPortraitXOffset = -72;
     CreateOrUpdateTrainerEyesPortrait(0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
 }
 
-void sub_80F6E04(u8 a0)
+void LoadTrainerEyesPortraitGfx(u8 slot)
 {
-    u16 r1 = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].opponentId;
-    u8 r6 = gTrainers[r1].trainerPic;
-    DecompressPicFromTable_2(&gTrainerFrontPicTable[r6], gTrainerFrontPicCoords[r6].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->spriteGfxBuffers[a0], r6);
-    LZ77UnCompWram(gTrainerFrontPicPaletteTable[r6].data, gPokenavStructPtr->unk0[a0]);
+    u16 opponentId = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].opponentId;
+    u8 trainerPicId = gTrainers[opponentId].trainerPic;
+    DecompressPicFromTable_2(&gTrainerFrontPicTable[trainerPicId], gTrainerFrontPicCoords[trainerPicId].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->spriteGfxBuffers[slot], trainerPicId);
+    LZ77UnCompWram(gTrainerFrontPicPaletteTable[trainerPicId].data, gPokenavStructPtr->unk0[slot]);
 }
 
-bool8 sub_80F6E9C(void)
+bool8 SlideTrainerEyesPortraitIn(void)
 {
     if (gPokenavStructPtr->trainerEyesPortraitXOffset == 0)
     {
@@ -108,7 +108,7 @@ bool8 sub_80F6E9C(void)
     return TRUE;
 }
 
-bool8 sub_80F6ED4(void)
+bool8 SlideTrainerEyesPortraitOut(void)
 {
     if (gPokenavStructPtr->trainerEyesPortraitXOffset == -72)
     {
@@ -214,11 +214,11 @@ bool8 sub_80F70FC(void)
     switch (gPokenavStructPtr->unk87DE)
     {
     case 0:
-        if (!sub_80F6ED4())
+        if (!SlideTrainerEyesPortraitOut())
             gPokenavStructPtr->unk87DE++;
         break;
     case 1:
-        sub_80F6E04(0);
+        LoadTrainerEyesPortraitGfx(0);
         gPokenavStructPtr->unk87DE++;
         break;
     case 2:
@@ -246,7 +246,7 @@ bool8 sub_80F70FC(void)
         gPokenavStructPtr->unk87DE++;
         // fallthrough
     case 6:
-        if (!sub_80F6E9C() && !PrintTrainerEyesDescriptionStep())
+        if (!SlideTrainerEyesPortraitIn() && !PrintTrainerEyesDescriptionStep())
             gPokenavStructPtr->unk87DE++;
         break;
     default:
