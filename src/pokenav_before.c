@@ -1201,7 +1201,7 @@ void InitPokenavState(void)
     gPokenavStructPtr->mainMenuCursorPos = 0;
     gPokenavStructPtr->unk9344 = 0;
     gPokenavStructPtr->portraitSprite = 0;
-    gPokenavStructPtr->unkCED0 = 0;
+    gPokenavStructPtr->trainerEyesPortraitSprite = 0;
 
     for (i = 0; i < 5; ++i)
     {
@@ -3168,7 +3168,7 @@ void ShowTrainerEyesTrainerInfo(void)
         if (!sub_80F6ED4() && !EraseTrainerEyesDescriptionStep())
         {
 			sub_80F6FB8(0);
-			sub_80F2FB0();
+			DestroyTrainerEyesPortrait();
 			gPokenavStructPtr->callbackStep++;
 		}
         break;

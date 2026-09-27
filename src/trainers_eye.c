@@ -81,8 +81,8 @@ void sub_80F6DB8(void)
     s32 r1 = 0;
     gPokenavStructPtr->unk8fe9 = r1;
     sub_80F6E04(0);
-    gPokenavStructPtr->unkD15A = -72;
-    sub_80F2F7C(0);
+    gPokenavStructPtr->trainerEyesPortraitXOffset = -72;
+    CreateOrUpdateTrainerEyesPortrait(0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
 }
 
@@ -96,13 +96,13 @@ void sub_80F6E04(u8 a0)
 
 bool8 sub_80F6E9C(void)
 {
-    if (gPokenavStructPtr->unkD15A == 0)
+    if (gPokenavStructPtr->trainerEyesPortraitXOffset == 0)
     {
         return FALSE;
     }
-    if ((gPokenavStructPtr->unkD15A += 8) >= 0)
+    if ((gPokenavStructPtr->trainerEyesPortraitXOffset += 8) >= 0)
     {
-        gPokenavStructPtr->unkD15A = 0;
+        gPokenavStructPtr->trainerEyesPortraitXOffset = 0;
         return FALSE;
     }
     return TRUE;
@@ -110,13 +110,13 @@ bool8 sub_80F6E9C(void)
 
 bool8 sub_80F6ED4(void)
 {
-    if (gPokenavStructPtr->unkD15A == -72)
+    if (gPokenavStructPtr->trainerEyesPortraitXOffset == -72)
     {
         return FALSE;
     }
-    if ((gPokenavStructPtr->unkD15A -= 8) <= -72)
+    if ((gPokenavStructPtr->trainerEyesPortraitXOffset -= 8) <= -72)
     {
-        gPokenavStructPtr->unkD15A = -72;
+        gPokenavStructPtr->trainerEyesPortraitXOffset = -72;
         return FALSE;
     }
     return TRUE;
@@ -222,7 +222,7 @@ bool8 sub_80F70FC(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 2:
-        sub_80F2F7C(0);
+        CreateOrUpdateTrainerEyesPortrait(0);
         gPokenavStructPtr->unk87DE++;
         break;
     case 3:

@@ -2736,28 +2736,28 @@ void DestroyPokenavPortraitSprite(void)
     }
 }
 
-void sub_80F2F7C(u8 arg0)
+void CreateOrUpdateTrainerEyesPortrait(u8 portraitSlot)
 {
-    CreateOrUpdatePokenavPortraitSprite(arg0);
-    gPokenavStructPtr->unkCED0 = gPokenavStructPtr->portraitSprite;
-    gPokenavStructPtr->unkCED0->callback = sub_80F2FEC;
+    CreateOrUpdatePokenavPortraitSprite(portraitSlot);
+    gPokenavStructPtr->trainerEyesPortraitSprite = gPokenavStructPtr->portraitSprite;
+    gPokenavStructPtr->trainerEyesPortraitSprite->callback = SpriteCB_UpdateTrainerEyesPortraitPosition;
 }
 
-void sub_80F2FB0(void)
+void DestroyTrainerEyesPortrait(void)
 {
-    if (gPokenavStructPtr->unkCED0)
+    if (gPokenavStructPtr->trainerEyesPortraitSprite)
     {
-        DestroySprite(gPokenavStructPtr->unkCED0);
+        DestroySprite(gPokenavStructPtr->trainerEyesPortraitSprite);
         FreeSpriteTilesByTag(0x6);
         FreeSpritePaletteByTag(0x6);
-        gPokenavStructPtr->unkCED0 = NULL;
+        gPokenavStructPtr->trainerEyesPortraitSprite = NULL;
         gPokenavStructPtr->portraitSprite = NULL;
     }
 }
 
-void sub_80F2FEC(struct Sprite *sprite)
+void SpriteCB_UpdateTrainerEyesPortraitPosition(struct Sprite *sprite)
 {
-    sprite->x = gPokenavStructPtr->unkD15A + 40;
+    sprite->x = gPokenavStructPtr->trainerEyesPortraitXOffset + 40;
     sprite->y = 104;
 }
 
