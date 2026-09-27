@@ -229,7 +229,7 @@ const u16 gPokenavRibbonIconPalettes[][16] =
 const u8 gPokenavRibbonIconsBigHalfGfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons_big_half.4bpp.lz");
 const u16 gPokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
 const u8 gPokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
-const u16 Palette_3E42D8[] = INCBIN_U16("graphics/pokenav/83E42D8.gbapal");
+const u16 gPokenavTrainerEyesNamePalette[] = INCBIN_U16("graphics/pokenav/trainers_eyes/name_sprite.gbapal");
 
 const u16 gUnknown_083E42F8[] = 
 {
@@ -1036,9 +1036,9 @@ const struct SpriteTemplate gPokenavIconSpriteTemplate =
     .callback = SpriteCB_UpdatePokenavIconPosition,
 };
 
-const struct SpritePalette gUnknown_083E4868 = {Palette_3E42D8, 18};
+const struct SpritePalette gPokenavTrainerEyesNameSpritePalette = {gPokenavTrainerEyesNamePalette, 18};
 
-const struct OamData gOamData_83E4870 = 
+const struct OamData gPokenavTrainerEyesNameOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -1055,11 +1055,11 @@ const struct OamData gOamData_83E4870 =
     .affineParam = 0,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E4878 = 
+const struct SpriteTemplate gPokenavTrainerEyesNameSpriteTemplate =
 {
     .tileTag = 26,
     .paletteTag = 18,
-    .oam = &gOamData_83E4870,
+    .oam = &gPokenavTrainerEyesNameOam,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -3133,7 +3133,7 @@ void ShowTrainerEyesTrainerInfo(void)
         break;
     case 5:
         sub_80F700C((u8 *)(gSharedMem + 0x8788), *(u16 *)(gSharedMem + 0x8788 - 0x1A));
-        sub_80F42C4((u8 *)(gSharedMem + 0x8788));
+        CreateTrainerEyesNameSprites((u8 *)(gSharedMem + 0x8788));
         gPokenavStructPtr->callbackStep++;
         break;
     case 6:
@@ -3159,7 +3159,7 @@ void ShowTrainerEyesTrainerInfo(void)
 		else if (JOY_NEW(B_BUTTON))
 		{
             PlaySE(SE_SELECT);
-            sub_80F4394();
+            DestroyTrainerEyesNameSprites();
             InitTrainerEyesDescriptionErase();
             gPokenavStructPtr->callbackStep++;
         }

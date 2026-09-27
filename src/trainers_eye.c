@@ -227,7 +227,7 @@ bool8 sub_80F70FC(void)
         break;
     case 3:
         sub_80F700C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex);
-        sub_80F43D4(gPokenavStructPtr->unk8788);
+        UpdateTrainerEyesNameSprites(gPokenavStructPtr->unk8788);
         RedrawSelectedTrainerEyesListRow();
         PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
         gPokenavStructPtr->unk87DE++;

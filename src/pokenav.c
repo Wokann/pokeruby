@@ -139,8 +139,8 @@ extern const s16 gPokenavConditionSparkleCoords[][2];
 extern const u8 gPokenavIconGfx[];
 extern const struct SpritePalette gPokenavIconSpritePalette;
 extern const struct SpriteTemplate gPokenavIconSpriteTemplate;
-extern const struct SpritePalette gUnknown_083E4868;
-extern const struct SpriteTemplate gSpriteTemplate_83E4878;
+extern const struct SpritePalette gPokenavTrainerEyesNameSpritePalette;
+extern const struct SpriteTemplate gPokenavTrainerEyesNameSpriteTemplate;
 
 // Static ROM declarations
 
@@ -3549,11 +3549,11 @@ void SpriteCB_UpdatePokenavIconPosition(struct Sprite *sprite)
     }
 }
 
-void sub_80F4194(u8 *arg0, u8 *text)
+void BuildTrainerEyesNameSpriteGfx(u8 *dst, u8 *text)
 {
     u8 i;
     u8 *tileBuffer;
-    u32 *tileBuf2;
+    u32 *tileWords;
 
     tileBuffer = gUnknown_083DFEC8;
     DmaFill16(3, 0x1111, tileBuffer, 0x280);
@@ -3563,35 +3563,35 @@ void sub_80F4194(u8 *arg0, u8 *text)
     DmaClear16(3, tileBuffer + 0x220, 0x60);
     DmaClear16(3, tileBuffer + 0x620, 0x60);
 
-    tileBuf2 = (int *)tileBuffer + 0x80;
-    tileBuf2[0] &= 0x0FFFFFFF;
-    tileBuf2[1] &= 0x0FFFFFFF;
-    tileBuf2[2] &= 0x0FFFFFFF;
-    tileBuf2[3] &= 0x0FFFFFFF;
-    tileBuf2[4] &= 0x0FFFFFFF;
-    tileBuf2[5] &= 0x0FFFFFFF;
-    tileBuf2[6] &= 0x0FFFFFFF;
-    tileBuf2[7] &= 0x0FFFFFFF;
+    tileWords = (int *)tileBuffer + 0x80;
+    tileWords[0] &= 0x0FFFFFFF;
+    tileWords[1] &= 0x0FFFFFFF;
+    tileWords[2] &= 0x0FFFFFFF;
+    tileWords[3] &= 0x0FFFFFFF;
+    tileWords[4] &= 0x0FFFFFFF;
+    tileWords[5] &= 0x0FFFFFFF;
+    tileWords[6] &= 0x0FFFFFFF;
+    tileWords[7] &= 0x0FFFFFFF;
 
-    tileBuf2 = (int *)tileBuffer + 0x180;
-    tileBuf2[0] &= 0x0FFFFFFF;
-    tileBuf2[1] &= 0x0FFFFFFF;
-    tileBuf2[2] &= 0x0FFFFFFF;
-    tileBuf2[3] &= 0x0FFFFFFF;
-    tileBuf2[4] &= 0x0FFFFFFF;
-    tileBuf2[5] &= 0x0FFFFFFF;
-    tileBuf2[6] &= 0x0FFFFFFF;
-    tileBuf2[7] &= 0x0FFFFFFF;
+    tileWords = (int *)tileBuffer + 0x180;
+    tileWords[0] &= 0x0FFFFFFF;
+    tileWords[1] &= 0x0FFFFFFF;
+    tileWords[2] &= 0x0FFFFFFF;
+    tileWords[3] &= 0x0FFFFFFF;
+    tileWords[4] &= 0x0FFFFFFF;
+    tileWords[5] &= 0x0FFFFFFF;
+    tileWords[6] &= 0x0FFFFFFF;
+    tileWords[7] &= 0x0FFFFFFF;
 
     for (i = 0; i < 5; i++)
     {
-        DmaCopy16(3, &tileBuffer[128 * i], &arg0[i * 256], 128);
+        DmaCopy16(3, &tileBuffer[128 * i], &dst[i * 256], 128);
         i++;i--; // fakematch
-        DmaCopy16(3, &tileBuffer[128 * i + 0x400], &arg0[32 * ((i * 8) + 4)], 128);
+        DmaCopy16(3, &tileBuffer[128 * i + 0x400], &dst[32 * ((i * 8) + 4)], 128);
     }
 }
 
-void sub_80F42C4(u8 *arg0)
+void CreateTrainerEyesNameSprites(u8 *text)
 {
     u16 i, tileOffset;
     u8 spriteId;
@@ -3601,47 +3601,47 @@ void sub_80F42C4(u8 *arg0)
         .tag = 0x1A,
     };
 
-    sub_80F4194(gPokenavStructPtr->spriteGfxBuffers[0], arg0);
+    BuildTrainerEyesNameSpriteGfx(gPokenavStructPtr->spriteGfxBuffers[0], text);
     LoadSpriteSheet(&spriteSheet);
-    LoadSpritePalette(&gUnknown_083E4868);
+    LoadSpritePalette(&gPokenavTrainerEyesNameSpritePalette);
 
     tileOffset = 0;
     for (i = 0; i < 5; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_83E4878, i * 32 + 113, 16, 0);
+        spriteId = CreateSprite(&gPokenavTrainerEyesNameSpriteTemplate, i * 32 + 113, 16, 0);
         if (spriteId != MAX_SPRITES)
         {
             gSprites[spriteId].oam.tileNum += tileOffset;
-            gPokenavStructPtr->unkCED4[i] = &gSprites[spriteId];
+            gPokenavStructPtr->trainerEyesNameSprites[i] = &gSprites[spriteId];
         }
         else
         {
-            gPokenavStructPtr->unkCED4[i] = NULL;
+            gPokenavStructPtr->trainerEyesNameSprites[i] = NULL;
         }
 
         tileOffset += 8;
     }
 }
 
-void sub_80F4394(void)
+void DestroyTrainerEyesNameSprites(void)
 {
     u16 i;
 
     for (i = 0; i < 5; i++)
     {
-        if (gPokenavStructPtr->unkCED4[i])
-            DestroySprite(gPokenavStructPtr->unkCED4[i]);
+        if (gPokenavStructPtr->trainerEyesNameSprites[i])
+            DestroySprite(gPokenavStructPtr->trainerEyesNameSprites[i]);
     }
 
     FreeSpriteTilesByTag(0x1A);
     FreeSpritePaletteByTag(0x12);
 }
 
-void sub_80F43D4(u8 *arg0)
+void UpdateTrainerEyesNameSprites(u8 *text)
 {
     u16 tile;
 
-    sub_80F4194(gPokenavStructPtr->spriteGfxBuffers[0], arg0);
+    BuildTrainerEyesNameSpriteGfx(gPokenavStructPtr->spriteGfxBuffers[0], text);
     tile = GetSpriteTileStartByTag(0x1A);
     if (tile != 0xFFFF)
     DmaCopy32Defvars(3, gPokenavStructPtr->spriteGfxBuffers[0], (void *)(VRAM + 0x10000 + (tile * 32)), 0x500);
