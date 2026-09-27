@@ -26,6 +26,7 @@
 #include "util.h"
 #include "constants/event_object_movement.h"
 #include "constants/field_effects.h"
+#include "constants/metatile_behaviors.h"
 #include "constants/songs.h"
 
 #define subsprite_table(ptr) {.subsprites = ptr, .subspriteCount = (sizeof ptr) / (sizeof(struct Subsprite))}
@@ -266,23 +267,23 @@ static bool8 (*const sFallWarpFieldEffectFuncs[])(struct Task *) = {
     FallWarpEffect_End
 };
 
-bool8 (*const gUnknown_0839F2E8[])(struct Task *) = {
-    sub_8086AA0,
-    sub_8086AC0,
-    sub_8086B30,
-    sub_8086B54,
-    sub_8086B64,
-    sub_8086B88
+static bool8 (*const sEscalatorWarpOutFieldEffectFuncs[])(struct Task *) = {
+    EscalatorWarpOut_Init,
+    EscalatorWarpOut_WaitForPlayer,
+    EscalatorWarpOut_Up_Ride,
+    EscalatorWarpOut_Up_End,
+    EscalatorWarpOut_Down_Ride,
+    EscalatorWarpOut_Down_End
 };
 
-bool8 (*const gUnknown_0839F300[])(struct Task *) = {
-    sub_8086CF4,
-    sub_8086D70,
-    sub_8086DB0,
-    sub_8086E10,
-    sub_8086E50,
-    sub_8086EB0,
-    sub_8086ED4
+static bool8 (*const sEscalatorWarpInFieldEffectFuncs[])(struct Task *) = {
+    EscalatorWarpIn_Init,
+    EscalatorWarpIn_Down_Init,
+    EscalatorWarpIn_Down_Ride,
+    EscalatorWarpIn_Up_Init,
+    EscalatorWarpIn_Up_Ride,
+    EscalatorWarpIn_WaitForMovement,
+    EscalatorWarpIn_End
 };
 
 bool8 (*const gUnknown_0839F31C[])(struct Task *, struct ObjectEvent *) = {
@@ -1225,162 +1226,176 @@ bool8 FallWarpEffect_End(struct Task *task)
 #undef tVerticalShake
 #undef tNumShakes
 
-void sub_8086A68(u8);
+void Task_EscalatorWarpOut(u8);
 extern void sub_80B4824(u8);
 extern void TryFadeOutOldMapMusic(void);
 
-void sub_8086B98(struct Task *);
-void sub_8086BE4(struct Task *);
-void sub_8086C30(void);
-void sub_8086C40(void);
+void RideUpEscalatorOut(struct Task *);
+void RideDownEscalatorOut(struct Task *);
+void FadeOutAtEndOfEscalator(void);
+void WarpAtEndOfEscalator(void);
 bool8 BGMusicStopped(void);
-void sub_8086C94(void);
+void FieldCallback_EscalatorWarpIn(void);
 void sub_80B483C(void);
-void sub_8086CBC(u8);
+void Task_EscalatorWarpIn(u8);
 
-void sub_8086A2C(u8 a0, u8 priority)
+#define tEscalatorState data[0]
+#define tGoingUp data[1]
+#define tEscalatorOffset data[2]
+#define tEscalatorTimer data[3]
+
+void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
 {
     u8 taskId;
-    taskId = CreateTask(sub_8086A68, priority);
-    gTasks[taskId].data[1] = 0;
-    if (a0 == 0x6a)
+    taskId = CreateTask(Task_EscalatorWarpOut, priority);
+    gTasks[taskId].tGoingUp = 0;
+    if (metatileBehavior == MB_UP_ESCALATOR)
     {
-        gTasks[taskId].data[1] = 1;
+        gTasks[taskId].tGoingUp = 1;
     }
 }
 
-void sub_8086A68(u8 taskId)
+void Task_EscalatorWarpOut(u8 taskId)
 {
     struct Task *task;
     task = &gTasks[taskId];
-    while (gUnknown_0839F2E8[task->data[0]](task));
+    while (sEscalatorWarpOutFieldEffectFuncs[task->tEscalatorState](task));
 }
 
-bool8 sub_8086AA0(struct Task *task)
+bool8 EscalatorWarpOut_Init(struct Task *task)
 {
     FreezeObjectEvents();
     CameraObjectReset2();
-    sub_80B4824(task->data[1]);
-    task->data[0]++;
+    sub_80B4824(task->tGoingUp);
+    task->tEscalatorState++;
     return FALSE;
 }
 
-bool8 sub_8086AC0(struct Task *task)
+bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (!ObjectEventIsMovementOverridden(objectEvent) || ObjectEventClearHeldMovementIfFinished(objectEvent))
     {
         ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
-        task->data[0]++;
-        task->data[2] = 0;
-        task->data[3] = 0;
-        if ((u8)task->data[1] == 0)
+        task->tEscalatorState++;
+        task->tEscalatorOffset = 0;
+        task->tEscalatorTimer = 0;
+        if ((u8)task->tGoingUp == 0)
         {
-            task->data[0] = 4;
+            task->tEscalatorState = 4;
         }
         PlaySE(SE_ESCALATOR);
     }
     return FALSE;
 }
 
-bool8 sub_8086B30(struct Task *task)
+bool8 EscalatorWarpOut_Up_Ride(struct Task *task)
 {
-    sub_8086B98(task);
-    if (task->data[2] > 3)
+    RideUpEscalatorOut(task);
+    if (task->tEscalatorOffset > 3)
     {
-        sub_8086C30();
-        task->data[0]++;
+        FadeOutAtEndOfEscalator();
+        task->tEscalatorState++;
     }
     return FALSE;
 }
 
-bool8 sub_8086B54(struct Task *task)
+bool8 EscalatorWarpOut_Up_End(struct Task *task)
 {
-    sub_8086B98(task);
-    sub_8086C40();
+    RideUpEscalatorOut(task);
+    WarpAtEndOfEscalator();
     return FALSE;
 }
 
-bool8 sub_8086B64(struct Task *task)
+bool8 EscalatorWarpOut_Down_Ride(struct Task *task)
 {
-    sub_8086BE4(task);
-    if (task->data[2] > 3)
+    RideDownEscalatorOut(task);
+    if (task->tEscalatorOffset > 3)
     {
-        sub_8086C30();
-        task->data[0]++;
+        FadeOutAtEndOfEscalator();
+        task->tEscalatorState++;
     }
     return FALSE;
 }
 
-bool8 sub_8086B88(struct Task *task)
+bool8 EscalatorWarpOut_Down_End(struct Task *task)
 {
-    sub_8086BE4(task);
-    sub_8086C40();
+    RideDownEscalatorOut(task);
+    WarpAtEndOfEscalator();
     return FALSE;
 }
 
-void sub_8086B98(struct Task *task)
+void RideUpEscalatorOut(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x84, task->data[2]);
-    sprite->y2 = Sin(0x94, task->data[2]);
-    task->data[3]++;
-    if (task->data[3] & 1)
+    sprite->x2 = Cos(0x84, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x94, task->tEscalatorOffset);
+    task->tEscalatorTimer++;
+    if (task->tEscalatorTimer & 1)
     {
-        task->data[2]++;
+        task->tEscalatorOffset++;
     }
 }
 
-void sub_8086BE4(struct Task *task)
+void RideDownEscalatorOut(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x7c, task->data[2]);
-    sprite->y2 = Sin(0x76, task->data[2]);
-    task->data[3]++;
-    if (task->data[3] & 1)
+    sprite->x2 = Cos(0x7c, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x76, task->tEscalatorOffset);
+    task->tEscalatorTimer++;
+    if (task->tEscalatorTimer & 1)
     {
-        task->data[2]++;
+        task->tEscalatorOffset++;
     }
 }
 
-void sub_8086C30(void)
+void FadeOutAtEndOfEscalator(void)
 {
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
 }
 
-void sub_8086C40(void)
+void WarpAtEndOfEscalator(void)
 {
     if (!gPaletteFade.active && BGMusicStopped() == TRUE)
     {
         sub_80B483C();
         WarpIntoMap();
-        gFieldCallback = sub_8086C94;
+        gFieldCallback = FieldCallback_EscalatorWarpIn;
         SetMainCallback2(CB2_LoadMap);
-        DestroyTask(FindTaskIdByFunc(sub_8086A68));
+        DestroyTask(FindTaskIdByFunc(Task_EscalatorWarpOut));
     }
 }
 
-void sub_8086C94(void)
+#undef tEscalatorState
+#undef tGoingUp
+#undef tEscalatorOffset
+#undef tEscalatorTimer
+
+#define tEscalatorState data[0]
+#define tEscalatorOffset data[1]
+#define tEscalatorTimer data[2]
+
+void FieldCallback_EscalatorWarpIn(void)
 {
     Overworld_PlaySpecialMapMusic();
     WarpFadeInScreen();
     LockPlayerFieldControls();
-    CreateTask(sub_8086CBC, 0);
+    CreateTask(Task_EscalatorWarpIn, 0);
     gFieldCallback = NULL;
 }
 
-void sub_8086CBC(u8 taskId)
+void Task_EscalatorWarpIn(u8 taskId)
 {
     struct Task *task;
     task = &gTasks[taskId];
-    while (gUnknown_0839F300[task->data[0]](task));
+    while (sEscalatorWarpInFieldEffectFuncs[task->tEscalatorState](task));
 }
 
-bool8 sub_8086CF4(struct Task *task)
+bool8 EscalatorWarpIn_Init(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     s16 x;
@@ -1391,12 +1406,12 @@ bool8 sub_8086CF4(struct Task *task)
     ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(DIR_EAST));
     PlayerGetDestCoords(&x, &y);
     behavior = MapGridGetMetatileBehaviorAt(x, y);
-    task->data[0]++;
-    task->data[1] = 16;
-    if (behavior == 0x6b)
+    task->tEscalatorState++;
+    task->tEscalatorOffset = 16;
+    if (behavior == MB_DOWN_ESCALATOR)
     {
         behavior = 1;
-        task->data[0] = 3;
+        task->tEscalatorState = 3;
     } else
     {
         behavior = 0;
@@ -1405,80 +1420,80 @@ bool8 sub_8086CF4(struct Task *task)
     return TRUE;
 }
 
-bool8 sub_8086D70(struct Task *task)
+bool8 EscalatorWarpIn_Down_Init(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x84, task->data[1]);
-    sprite->y2 = Sin(0x94, task->data[1]);
-    task->data[0]++;
+    sprite->x2 = Cos(0x84, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x94, task->tEscalatorOffset);
+    task->tEscalatorState++;
     return FALSE;
 }
 
-bool8 sub_8086DB0(struct Task *task)
+bool8 EscalatorWarpIn_Down_Ride(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x84, task->data[1]);
-    sprite->y2 = Sin(0x94, task->data[1]);
-    task->data[2]++;
-    if (task->data[2] & 1)
+    sprite->x2 = Cos(0x84, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x94, task->tEscalatorOffset);
+    task->tEscalatorTimer++;
+    if (task->tEscalatorTimer & 1)
     {
-        task->data[1]--;
+        task->tEscalatorOffset--;
     }
-    if (task->data[1] == 0)
+    if (task->tEscalatorOffset == 0)
     {
         sprite->x2 = 0;
         sprite->y2 = 0;
-        task->data[0] = 5;
+        task->tEscalatorState = 5;
     }
     return FALSE;
 }
 
-bool8 sub_8086E10(struct Task *task)
+bool8 EscalatorWarpIn_Up_Init(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x7c, task->data[1]);
-    sprite->y2 = Sin(0x76, task->data[1]);
-    task->data[0]++;
+    sprite->x2 = Cos(0x7c, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x76, task->tEscalatorOffset);
+    task->tEscalatorState++;
     return FALSE;
 }
 
-bool8 sub_8086E50(struct Task *task)
+bool8 EscalatorWarpIn_Up_Ride(struct Task *task)
 {
     struct Sprite *sprite;
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->x2 = Cos(0x7c, task->data[1]);
-    sprite->y2 = Sin(0x76, task->data[1]);
-    task->data[2]++;
-    if (task->data[2] & 1)
+    sprite->x2 = Cos(0x7c, task->tEscalatorOffset);
+    sprite->y2 = Sin(0x76, task->tEscalatorOffset);
+    task->tEscalatorTimer++;
+    if (task->tEscalatorTimer & 1)
     {
-        task->data[1]--;
+        task->tEscalatorOffset--;
     }
-    if (task->data[1] == 0)
+    if (task->tEscalatorOffset == 0)
     {
         sprite->x2 = 0;
         sprite->y2 = 0;
-        task->data[0]++;
+        task->tEscalatorState++;
     }
     return FALSE;
 }
 
 extern bool8 sub_80B4850(void);
 
-bool8 sub_8086EB0(struct Task *task)
+bool8 EscalatorWarpIn_WaitForMovement(struct Task *task)
 {
     if (sub_80B4850())
     {
         return FALSE;
     }
     sub_80B483C();
-    task->data[0]++;
+    task->tEscalatorState++;
     return TRUE;
 }
 
-bool8 sub_8086ED4(struct Task *task)
+bool8 EscalatorWarpIn_End(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -1487,10 +1502,14 @@ bool8 sub_8086ED4(struct Task *task)
         CameraObjectReset1();
         UnlockPlayerFieldControls();
         ObjectEventSetHeldMovement(objectEvent, GetWalkNormalMovementAction(DIR_EAST));
-        DestroyTask(FindTaskIdByFunc(sub_8086CBC));
+        DestroyTask(FindTaskIdByFunc(Task_EscalatorWarpIn));
     }
     return FALSE;
 }
+
+#undef tEscalatorState
+#undef tEscalatorOffset
+#undef tEscalatorTimer
 
 void sub_8086F64(u8);
 

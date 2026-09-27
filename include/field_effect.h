@@ -55,22 +55,22 @@ bool8 FallWarpEffect_Land(struct Task *);
 bool8 FallWarpEffect_CameraShake(struct Task *);
 bool8 FallWarpEffect_End(struct Task *);
 
-void sub_8086A2C(u8, u8);
+void StartEscalatorWarp(u8, u8);
 
-bool8 sub_8086AA0(struct Task *);
-bool8 sub_8086AC0(struct Task *);
-bool8 sub_8086B30(struct Task *);
-bool8 sub_8086B54(struct Task *);
-bool8 sub_8086B64(struct Task *);
-bool8 sub_8086B88(struct Task *);
+bool8 EscalatorWarpOut_Init(struct Task *);
+bool8 EscalatorWarpOut_WaitForPlayer(struct Task *);
+bool8 EscalatorWarpOut_Up_Ride(struct Task *);
+bool8 EscalatorWarpOut_Up_End(struct Task *);
+bool8 EscalatorWarpOut_Down_Ride(struct Task *);
+bool8 EscalatorWarpOut_Down_End(struct Task *);
 
-bool8 sub_8086CF4(struct Task *);
-bool8 sub_8086D70(struct Task *);
-bool8 sub_8086DB0(struct Task *);
-bool8 sub_8086E10(struct Task *);
-bool8 sub_8086E50(struct Task *);
-bool8 sub_8086EB0(struct Task *);
-bool8 sub_8086ED4(struct Task *);
+bool8 EscalatorWarpIn_Init(struct Task *);
+bool8 EscalatorWarpIn_Down_Init(struct Task *);
+bool8 EscalatorWarpIn_Down_Ride(struct Task *);
+bool8 EscalatorWarpIn_Up_Init(struct Task *);
+bool8 EscalatorWarpIn_Up_Ride(struct Task *);
+bool8 EscalatorWarpIn_WaitForMovement(struct Task *);
+bool8 EscalatorWarpIn_End(struct Task *);
 
 bool8 sub_8086FB0(struct Task *, struct ObjectEvent *);
 bool8 waterfall_1_do_anim_probably(struct Task *, struct ObjectEvent *);
