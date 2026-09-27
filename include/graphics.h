@@ -2494,8 +2494,8 @@ extern const u8 gMenuPokeblock_Tilemap[];
 
 extern const u8 gBerryCheck_Gfx[];
 extern const u8 gBerryCheck_Pal[];
-extern const u8 gUnknown_08E788E4[];
-extern const u8 gUnknown_08E78A84[];
+extern const u8 gBerryTag_Gfx[];
+extern const u8 gBerryTag_Tilemap[];
 extern const u8 gBerryCheckCircle_Gfx[];
 
 // data/graphics/berries/graphics.inc

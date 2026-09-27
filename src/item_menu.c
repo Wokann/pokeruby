@@ -2328,8 +2328,8 @@ static void HandlePopupMenuAction_Give(u8 taskId)
 static void HandlePopupMenuAction_CheckTag(u8 taskId)
 {
     sub_80A5AE4(taskId);
-    gTasks[taskId].data[8] = (u32)BerryTagScreen_814625C >> 16;
-    gTasks[taskId].data[9] = (u32)BerryTagScreen_814625C;
+    gTasks[taskId].data[8] = (u32)DoBerryTagScreen >> 16;
+    gTasks[taskId].data[9] = (u32)DoBerryTagScreen;
 }
 
 static void sub_80A61A8(void)
@@ -3948,9 +3948,9 @@ u8 sub_80A7DEC(u8 berryId, u8 x, u8 y, bool8 animate)
     return spriteId;
 }
 
-const struct CompressedSpriteSheet gUnknown_083C1F74 = {gBerryCheckCircle_Gfx, 2048, 0x2710};
+const struct CompressedSpriteSheet gBerryCheckCircleSpriteSheet = {gBerryCheckCircle_Gfx, 2048, 0x2710};
 
-const struct CompressedSpritePalette gUnknown_083C1F7C = {gBerryCheck_Pal, 0x2710};
+const struct CompressedSpritePalette gBerryCheckCircleSpritePalette = {gBerryCheck_Pal, 0x2710};
 
 static const struct OamData gOamData_83C1F84 =
 {

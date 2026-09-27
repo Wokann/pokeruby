@@ -930,11 +930,11 @@ const u8 gPokeblockBlack_Pal[] = INCBIN_U8("graphics/pokeblock/black.gbapal.lz")
 const u8 gPokeblockWhite_Pal[] = INCBIN_U8("graphics/pokeblock/white.gbapal.lz");
 const u8 gPokeblockGold_Pal[] = INCBIN_U8("graphics/pokeblock/gold.gbapal.lz");
 const u8 gUnknown_08E782FC[] = INCBIN_U8("graphics/interface/pokeblock_feeding_bg_map.bin.lz");
-const u8 gBerryCheck_Gfx[] = INCBIN_U8("graphics/interface/check_berry.4bpp.lz");
-const u8 gBerryCheck_Pal[] = INCBIN_U8("graphics/interface/check_berry.gbapal.lz");
-const u8 gUnknown_08E788E4[] = INCBIN_U8("graphics/interface/berry_tag.bin.lz");
-const u8 gUnknown_08E78A84[] = INCBIN_U8("graphics/interface/berry_tag_title.bin.lz");
-const u8 gBerryCheckCircle_Gfx[] = INCBIN_U8("graphics/interface/check_berry_circle.4bpp.lz");
+const u8 gBerryCheck_Gfx[] = INCBIN_U8("graphics/bag/check_berry.4bpp.lz");
+const u8 gBerryCheck_Pal[] = INCBIN_U8("graphics/bag/check_berry.gbapal.lz");
+const u8 gBerryTag_Gfx[] = INCBIN_U8("graphics/bag/berry_tag.bin.lz");
+const u8 gBerryTag_Tilemap[] = INCBIN_U8("graphics/bag/berry_tag_title.bin.lz");
+const u8 gBerryCheckCircle_Gfx[] = INCBIN_U8("graphics/bag/check_berry_circle.4bpp.lz");
 
 #include "graphics/berries.h"
 

@@ -2,12 +2,13 @@
 # misc.mk
 #
 MENUGFXDIR := graphics/interface
+BAGGFXDIR := graphics/bag
 INTROGFXDIR := graphics/intro
 MISCGFXDIR := graphics/misc
 
 $(MENUGFXDIR)/wordgroup_frame.4bpp: $(MENUGFXDIR)/wordgroup_frame.png
 	$(GBAGFX) $< $@ -num_tiles 76
-$(MENUGFXDIR)/check_berry.4bpp: $(MENUGFXDIR)/check_berry.png
+$(BAGGFXDIR)/check_berry.4bpp: $(BAGGFXDIR)/check_berry.png
 	$(GBAGFX) $< $@ -num_tiles 97
 
 $(INTROGFXDIR)/copyright.4bpp: $(INTROGFXDIR)/copyright.png
