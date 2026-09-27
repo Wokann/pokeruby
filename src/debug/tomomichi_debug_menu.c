@@ -109,19 +109,19 @@ static bool8 ControlFlags_TrainerFlag_HandlePageInput(void);
 static void ControlFlags_TrainerFlag_ToggleSelection(u8, u8);
 static void ControlFlags_TrainerFlag_PrintPageValues(u8);
 static bool8 ControlFlags_SysFlag_InitSubmenu(void);
-static bool8 debug_sub_808CF60(void);
-static bool8 debug_sub_808CFA4(void);
-static bool8 debug_sub_808CFFC(void);
-static bool8 debug_sub_808D054(void);
-static bool8 debug_sub_808D0AC(void);
-static bool8 debug_sub_808D104(void);
-static bool8 debug_sub_808D15C(void);
-static bool8 debug_sub_808D1B4(void);
-static bool8 debug_sub_808D20C(void);
-static bool8 debug_sub_808D264(void);
-static bool8 debug_sub_808D2BC(void);
-static void debug_sub_808D308(u8, u8);
-static void debug_sub_808D358(u8);
+static bool8 ControlFlags_SysFlag_HandleCategoryInput(void);
+static bool8 ControlFlags_SysFlag_Badges_InitPage(void);
+static bool8 ControlFlags_SysFlag_TownsVisited_InitPage(void);
+static bool8 ControlFlags_SysFlag_CitiesVisited_InitPage(void);
+static bool8 ControlFlags_SysFlag_Acquired_InitPage(void);
+static bool8 ControlFlags_SysFlag_Other1_InitPage(void);
+static bool8 ControlFlags_SysFlag_Other2_InitPage(void);
+static bool8 ControlFlags_SysFlag_Other3_InitPage(void);
+static bool8 ControlFlags_SysFlag_Other4_InitPage(void);
+static bool8 ControlFlags_SysFlag_Landmarks_InitPage(void);
+static bool8 ControlFlags_SysFlag_HandlePageInput(void);
+static void ControlFlags_SysFlag_ToggleSelection(u8, u8);
+static void ControlFlags_SysFlag_PrintPageValues(u8);
 static bool8 ControlFlags_FH_OBJ_InitSubmenu(void);
 static bool8 ControlFlags_FH_OBJ_HandleInput(void);
 static bool8 ControlFlags_FH_OBJ00_08_InitSubsubmenu(void);
@@ -538,26 +538,26 @@ static const u16 gUnknown_Debug_083C12D2[][9] = {
     {0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10}
 };
 
-static const u8 gUnknown_Debug_083C12F6[] = DTR("BATCH", "BADGE");
-static const u8 gUnknown_Debug_083C12FC[] = DTR("タウンとうちゃく", "Towns arrived");
-static const u8 gUnknown_Debug_083C1305[] = DTR("シティとうちゃく", "Cities arrived");
-static const u8 gUnknown_Debug_083C130E[] = _("GET");
-static const u8 gUnknown_Debug_083C1312[] = DTR("そのた1", "Other 1");
-static const u8 gUnknown_Debug_083C1317[] = DTR("そのた2", "Other 2");
-static const u8 gUnknown_Debug_083C131C[] = DTR("そのた3", "Other 3");
-static const u8 gUnknown_Debug_083C1321[] = DTR("そのた4", "Other 4");
-static const u8 gUnknown_Debug_083C1326[] = DTR("そのた　とうちゃく", "Others arrived");
+static const u8 sString_SysFlag_Badges[] = DTR("BATCH", "BADGE");
+static const u8 sString_SysFlag_TownsVisited[] = DTR("タウンとうちゃく", "Towns arrived");
+static const u8 sString_SysFlag_CitiesVisited[] = DTR("シティとうちゃく", "Cities arrived");
+static const u8 sString_SysFlag_Acquired[] = _("GET");
+static const u8 sString_SysFlag_Other1[] = DTR("そのた1", "Other 1");
+static const u8 sString_SysFlag_Other2[] = DTR("そのた2", "Other 2");
+static const u8 sString_SysFlag_Other3[] = DTR("そのた3", "Other 3");
+static const u8 sString_SysFlag_Other4[] = DTR("そのた4", "Other 4");
+static const u8 sString_SysFlag_Landmarks[] = DTR("そのた　とうちゃく", "Others arrived");
 
-static const struct MenuAction gUnknown_Debug_083C1330[] = {
-    {gUnknown_Debug_083C12F6, debug_sub_808CFA4},
-    {gUnknown_Debug_083C12FC, debug_sub_808CFFC},
-    {gUnknown_Debug_083C1305, debug_sub_808D054},
-    {gUnknown_Debug_083C130E, debug_sub_808D0AC},
-    {gUnknown_Debug_083C1312, debug_sub_808D104},
-    {gUnknown_Debug_083C1317, debug_sub_808D15C},
-    {gUnknown_Debug_083C131C, debug_sub_808D1B4},
-    {gUnknown_Debug_083C1321, debug_sub_808D20C},
-    {gUnknown_Debug_083C1326, debug_sub_808D264}
+static const struct MenuAction sMenuActions_SysFlagCategories[] = {
+    {sString_SysFlag_Badges, ControlFlags_SysFlag_Badges_InitPage},
+    {sString_SysFlag_TownsVisited, ControlFlags_SysFlag_TownsVisited_InitPage},
+    {sString_SysFlag_CitiesVisited, ControlFlags_SysFlag_CitiesVisited_InitPage},
+    {sString_SysFlag_Acquired, ControlFlags_SysFlag_Acquired_InitPage},
+    {sString_SysFlag_Other1, ControlFlags_SysFlag_Other1_InitPage},
+    {sString_SysFlag_Other2, ControlFlags_SysFlag_Other2_InitPage},
+    {sString_SysFlag_Other3, ControlFlags_SysFlag_Other3_InitPage},
+    {sString_SysFlag_Other4, ControlFlags_SysFlag_Other4_InitPage},
+    {sString_SysFlag_Landmarks, ControlFlags_SysFlag_Landmarks_InitPage}
 };
 
 static const u8 gUnknown_Debug_083C1378[] = _("BATCH01ーGET");
@@ -569,7 +569,7 @@ static const u8 gUnknown_Debug_083C13B4[] = _("BATCH06ーGET");
 static const u8 gUnknown_Debug_083C13C0[] = _("BATCH07ーGET");
 static const u8 gUnknown_Debug_083C13CC[] = _("BATCH08ーGET");
 
-static const struct MenuAction gUnknown_Debug_083C13D8[] = {
+static const struct MenuAction sMenuActions_SysFlags_Badges[] = {
     {gUnknown_Debug_083C1378, DummyMenuAction},
     {gUnknown_Debug_083C1384, DummyMenuAction},
     {gUnknown_Debug_083C1390, DummyMenuAction},
@@ -588,7 +588,7 @@ static const u8 gUnknown_Debug_083C1444[] = _("T105ARRIVE");
 static const u8 gUnknown_Debug_083C144F[] = _("T106ARRIVE");
 static const u8 gUnknown_Debug_083C145A[] = _("T107ARRIVE");
 
-static const struct MenuAction gUnknown_Debug_083C1465[] = {
+static const struct MenuAction sMenuActions_SysFlags_TownsVisited[] = {
     {gUnknown_Debug_083C1418, DummyMenuAction},
     {gUnknown_Debug_083C1423, DummyMenuAction},
     {gUnknown_Debug_083C142E, DummyMenuAction},
@@ -608,7 +608,7 @@ static const u8 gUnknown_Debug_083C14E2[] = _("C107ARRIVE");
 static const u8 gUnknown_Debug_083C14ED[] = _("C108ARRIVE");
 static const u8 gUnknown_Debug_083C14F8[] = _("C109ARRIVE");
 
-static const struct MenuAction gUnknown_Debug_083C1503[] = {
+static const struct MenuAction sMenuActions_SysFlags_CitiesVisited[] = {
     {gUnknown_Debug_083C14A0, DummyMenuAction},
     {gUnknown_Debug_083C14AB, DummyMenuAction},
     {gUnknown_Debug_083C14B6, DummyMenuAction},
@@ -625,7 +625,7 @@ static const u8 gUnknown_Debug_083C155C[] = _("SYSーZUKANーGET");
 static const u8 gUnknown_Debug_083C156A[] = _("SYSーPOKEGEARーGET");
 static const u8 gUnknown_Debug_083C157B[] = _("SYSーRIBBONーGET");
 
-static const struct MenuAction gUnknown_Debug_083C158A[] = {
+static const struct MenuAction sMenuActions_SysFlags_Acquired[] = {
     {gUnknown_Debug_083C154C, DummyMenuAction},
     {gUnknown_Debug_083C155C, DummyMenuAction},
     {gUnknown_Debug_083C156A, DummyMenuAction},
@@ -642,7 +642,7 @@ static const u8 gUnknown_Debug_083C1616[] = _("SYSーCYCLINGーROAD");
 static const u8 gUnknown_Debug_083C1627[] = _("SYSーSAFARIーMODE");
 static const u8 gUnknown_Debug_083C1637[] = _("SYSーCRUISEーMODE");
 
-static const struct MenuAction gUnknown_Debug_083C1647[] = {
+static const struct MenuAction sMenuActions_SysFlags_Other1[] = {
     {gUnknown_Debug_083C15AC, DummyMenuAction},
     {gUnknown_Debug_083C15BB, DummyMenuAction},
     {gUnknown_Debug_083C15CA, DummyMenuAction},
@@ -664,7 +664,7 @@ static const u8 gUnknown_Debug_083C16E4[] = _("SYSーCAVEーSHIP");
 static const u8 gUnknown_Debug_083C16F2[] = _("SYSーCAVEーWONDER");
 static const u8 gUnknown_Debug_083C1702[] = _("SYSーCAVEーBATTLE");
 
-static const struct MenuAction gUnknown_Debug_083C1712[] = {
+static const struct MenuAction sMenuActions_SysFlags_Other2[] = {
     {gUnknown_Debug_083C1690, DummyMenuAction},
     {gUnknown_Debug_083C169C, DummyMenuAction},
     {gUnknown_Debug_083C16A9, DummyMenuAction},
@@ -686,7 +686,7 @@ static const u8 gUnknown_Debug_083C17C2[] = _("SYSーTENJIーKAIRIKI");
 static const u8 gUnknown_Debug_083C17D4[] = _("SYSーTENJIーWAIT");
 static const u8 gUnknown_Debug_083C17E3[] = _("SYSーTENJIーSORAWOTOBU");
 
-static const struct MenuAction gUnknown_Debug_083C17F8[] = {
+static const struct MenuAction sMenuActions_SysFlags_Other3[] = {
     {gUnknown_Debug_083C175C, DummyMenuAction},
     {gUnknown_Debug_083C176E, DummyMenuAction},
     {gUnknown_Debug_083C177D, DummyMenuAction},
@@ -708,7 +708,7 @@ static const u8 gUnknown_Debug_083C18A0[] = _("SYSーCTRLーOBJーDELETE");
 static const u8 gUnknown_Debug_083C18B4[] = _("");
 static const u8 gUnknown_Debug_083C18B5[] = _("");
 
-static const struct MenuAction gUnknown_Debug_083C18B8[] = {
+static const struct MenuAction sMenuActions_SysFlags_Other4[] = {
     {gUnknown_Debug_083C1840, DummyMenuAction},
     {gUnknown_Debug_083C1850, DummyMenuAction},
     {gUnknown_Debug_083C1862, DummyMenuAction},
@@ -730,7 +730,7 @@ static const u8 gUnknown_Debug_083C196E[] = _("");
 static const u8 gUnknown_Debug_083C196F[] = _("");
 static const u8 gUnknown_Debug_083C1970[] = _("");
 
-static const struct MenuAction gDebug_0x83C1974[] = {
+static const struct MenuAction sMenuActions_SysFlags_Landmarks[] = {
     {gUnknown_Debug_083C1900, DummyMenuAction},
     {gUnknown_Debug_083C1919, DummyMenuAction},
     {gUnknown_Debug_083C1930, DummyMenuAction},
@@ -742,9 +742,9 @@ static const struct MenuAction gDebug_0x83C1974[] = {
     {gUnknown_Debug_083C1970, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C19BC[] = {8, 7, 9, 4, 9, 9, 9, 7, 5};
+static const u8 sSysFlagPageCounts[] = {8, 7, 9, 4, 9, 9, 9, 7, 5};
 
-static const u16 gUnknown_Debug_083C19C6[][9] = {
+static const u16 sSysFlagPageFlags[][9] = {
     {FLAG_BADGE01_GET, FLAG_BADGE02_GET, FLAG_BADGE03_GET, FLAG_BADGE04_GET, FLAG_BADGE05_GET, FLAG_BADGE06_GET, FLAG_BADGE07_GET, FLAG_BADGE08_GET},
     {FLAG_VISITED_LITTLEROOT_TOWN, FLAG_VISITED_OLDALE_TOWN, FLAG_VISITED_DEWFORD_TOWN, FLAG_VISITED_LAVARIDGE_TOWN, FLAG_VISITED_FALLARBOR_TOWN, FLAG_VISITED_VERDANTURF_TOWN, FLAG_VISITED_PACIFIDLOG_TOWN},
     {FLAG_VISITED_PETALBURG_CITY, FLAG_VISITED_SLATEPORT_CITY, FLAG_VISITED_MAUVILLE_CITY, FLAG_VISITED_RUSTBORO_CITY, FLAG_VISITED_FORTREE_CITY, FLAG_VISITED_LILYCOVE_CITY, FLAG_VISITED_MOSSDEEP_CITY, FLAG_VISITED_SOOTOPOLIS_CITY, FLAG_VISITED_EVER_GRANDE_CITY},
@@ -2887,14 +2887,14 @@ static void ControlFlags_TrainerFlag_PrintPageValues(u8 whichMenu)
 static bool8 ControlFlags_SysFlag_InitSubmenu(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(gUnknown_Debug_083C1330) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1330), gUnknown_Debug_083C1330);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1330), 0, 27);
-    gMenuCallback = debug_sub_808CF60;
+    Menu_DrawStdWindowFrame(0, 0, 28, 2 * ARRAY_COUNT(sMenuActions_SysFlagCategories) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlagCategories), sMenuActions_SysFlagCategories);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlagCategories), 0, 27);
+    gMenuCallback = ControlFlags_SysFlag_HandleCategoryInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CF60(void)
+static bool8 ControlFlags_SysFlag_HandleCategoryInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -2905,116 +2905,116 @@ static bool8 debug_sub_808CF60(void)
         CloseMenu();
         return TRUE;
     }
-    gMenuCallback = gUnknown_Debug_083C1330[input].func;
+    gMenuCallback = sMenuActions_SysFlagCategories[input].func;
     return FALSE;
 }
 
-static bool8 debug_sub_808CFA4(void)
+static bool8 ControlFlags_SysFlag_Badges_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C13D8) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C13D8), gUnknown_Debug_083C13D8);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C13D8), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_Badges) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_Badges), sMenuActions_SysFlags_Badges);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_Badges), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 0;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808CFFC(void)
+static bool8 ControlFlags_SysFlag_TownsVisited_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1465) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1465), gUnknown_Debug_083C1465);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1465), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_TownsVisited) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_TownsVisited), sMenuActions_SysFlags_TownsVisited);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_TownsVisited), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 1;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D054(void)
+static bool8 ControlFlags_SysFlag_CitiesVisited_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1503) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1503), gUnknown_Debug_083C1503);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1503), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_CitiesVisited) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_CitiesVisited), sMenuActions_SysFlags_CitiesVisited);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_CitiesVisited), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 2;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D0AC(void)
+static bool8 ControlFlags_SysFlag_Acquired_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C158A) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C158A), gUnknown_Debug_083C158A);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C158A), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_Acquired) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_Acquired), sMenuActions_SysFlags_Acquired);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_Acquired), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 3;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D104(void)
+static bool8 ControlFlags_SysFlag_Other1_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1647) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1647), gUnknown_Debug_083C1647);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1647), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_Other1) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other1), sMenuActions_SysFlags_Other1);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other1), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 4;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D15C(void)
+static bool8 ControlFlags_SysFlag_Other2_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C1712) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C1712), gUnknown_Debug_083C1712);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C1712), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_Other2) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other2), sMenuActions_SysFlags_Other2);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other2), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 5;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D1B4(void)
+static bool8 ControlFlags_SysFlag_Other3_InitPage(void)
 {
     Menu_EraseScreen();
-    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(gUnknown_Debug_083C17F8) + 1);
-    Menu_PrintItems(2, 1, ARRAY_COUNT(gUnknown_Debug_083C17F8), gUnknown_Debug_083C17F8);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C17F8), 0, 28);
+    Menu_DrawStdWindowFrame(0, 0, 29, 2 * ARRAY_COUNT(sMenuActions_SysFlags_Other3) + 1);
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other3), sMenuActions_SysFlags_Other3);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_SysFlags_Other3), 0, 28);
     sFlagAndVarTest_WhichSubmenu = 6;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D20C(void)
+static bool8 ControlFlags_SysFlag_Other4_InitPage(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 29, 2 * 7 + 1);
-    Menu_PrintItems(2, 1, 7, gUnknown_Debug_083C18B8);
+    Menu_PrintItems(2, 1, 7, sMenuActions_SysFlags_Other4);
     InitMenu(0, 1, 1, 7, 0, 28);
     sFlagAndVarTest_WhichSubmenu = 7;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D264(void)
+static bool8 ControlFlags_SysFlag_Landmarks_InitPage(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 29, 2 * 5 + 1);
-    Menu_PrintItems(2, 1, 5, gDebug_0x83C1974);
+    Menu_PrintItems(2, 1, 5, sMenuActions_SysFlags_Landmarks);
     InitMenu(0, 1, 1, 5, 0, 28);
     sFlagAndVarTest_WhichSubmenu = 8;
-    gMenuCallback = debug_sub_808D2BC;
+    gMenuCallback = ControlFlags_SysFlag_HandlePageInput;
     return FALSE;
 }
 
-static bool8 debug_sub_808D2BC(void)
+static bool8 ControlFlags_SysFlag_HandlePageInput(void)
 {
     s8 input = Menu_ProcessInput();
     s8 cursorPos = Menu_GetCursorPos();
 
-    debug_sub_808D308(sFlagAndVarTest_WhichSubmenu, cursorPos);
-    debug_sub_808D358(sFlagAndVarTest_WhichSubmenu);
+    ControlFlags_SysFlag_ToggleSelection(sFlagAndVarTest_WhichSubmenu, cursorPos);
+    ControlFlags_SysFlag_PrintPageValues(sFlagAndVarTest_WhichSubmenu);
     if (input == -2)
         return FALSE;
     if (input == -1)
@@ -3025,24 +3025,24 @@ static bool8 debug_sub_808D2BC(void)
     return FALSE;
 }
 
-static void debug_sub_808D308(u8 whichMenu, u8 cursorPos)
+static void ControlFlags_SysFlag_ToggleSelection(u8 whichMenu, u8 cursorPos)
 {
     if (JOY_NEW(R_BUTTON))
     {
-        if (!FlagGet(gUnknown_Debug_083C19C6[whichMenu][cursorPos]))
-            FlagSet(gUnknown_Debug_083C19C6[whichMenu][cursorPos]);
+        if (!FlagGet(sSysFlagPageFlags[whichMenu][cursorPos]))
+            FlagSet(sSysFlagPageFlags[whichMenu][cursorPos]);
         else
-            FlagClear(gUnknown_Debug_083C19C6[whichMenu][cursorPos]);
+            FlagClear(sSysFlagPageFlags[whichMenu][cursorPos]);
     }
 }
 
-static void debug_sub_808D358(u8 whichMenu)
+static void ControlFlags_SysFlag_PrintPageValues(u8 whichMenu)
 {
     u8 i;
 
-    for (i = 0; i < gUnknown_Debug_083C19BC[whichMenu]; i++)
+    for (i = 0; i < sSysFlagPageCounts[whichMenu]; i++)
     {
-        PrintBool(28, 2 * i + 1, FlagGet(gUnknown_Debug_083C19C6[whichMenu][i]) ? 1 : 0);
+        PrintBool(28, 2 * i + 1, FlagGet(sSysFlagPageFlags[whichMenu][i]) ? 1 : 0);
     }
 }
 
