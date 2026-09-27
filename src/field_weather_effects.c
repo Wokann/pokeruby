@@ -884,8 +884,8 @@ void Snow_InitVars(void)
     gWeatherPtr->weatherGfxLoaded = FALSE;
     gWeatherPtr->gammaTargetIndex = 3;
     gWeatherPtr->gammaStepDelay = 20;
-    gWeatherPtr->unknown_6E5 = 16;
-    gWeatherPtr->unknown_6E0 = 0;
+    gWeatherPtr->targetSnowflakeSpriteCount = 16;
+    gWeatherPtr->snowflakeVisibleCounter = 0;
 }
 
 void Snow_Main(void);
@@ -922,8 +922,8 @@ bool8 Snow_Finish(void)
     switch (gWeatherPtr->finishStep)
     {
     case 0:
-        gWeatherPtr->unknown_6E5 = 0;
-        gWeatherPtr->unknown_6E0 = 0;
+        gWeatherPtr->targetSnowflakeSpriteCount = 0;
+        gWeatherPtr->snowflakeVisibleCounter = 0;
         gWeatherPtr->finishStep++;
         // fall through
     case 1:
@@ -942,19 +942,19 @@ static bool8 DestroySnowflakeSprite(void);
 
 static bool8 UpdateVisibleSnowflakeSprites(void)
 {
-    if (gWeatherPtr->snowflakeSpriteCount == gWeatherPtr->unknown_6E5)
+    if (gWeatherPtr->snowflakeSpriteCount == gWeatherPtr->targetSnowflakeSpriteCount)
         return FALSE;
 
-    gWeatherPtr->unknown_6E0++;
-    if (gWeatherPtr->unknown_6E0 > 36)
+    gWeatherPtr->snowflakeVisibleCounter++;
+    if (gWeatherPtr->snowflakeVisibleCounter > 36)
     {
-        gWeatherPtr->unknown_6E0 = 0;
-        if (gWeatherPtr->snowflakeSpriteCount < gWeatherPtr->unknown_6E5)
+        gWeatherPtr->snowflakeVisibleCounter = 0;
+        if (gWeatherPtr->snowflakeSpriteCount < gWeatherPtr->targetSnowflakeSpriteCount)
             CreateSnowflakeSprite();
         else
             DestroySnowflakeSprite();
     }
-    return (gWeatherPtr->snowflakeSpriteCount != gWeatherPtr->unknown_6E5);
+    return (gWeatherPtr->snowflakeSpriteCount != gWeatherPtr->targetSnowflakeSpriteCount);
 }
 
 static void InitSnowflakeSpriteMovement(struct Sprite *);
@@ -1003,13 +1003,13 @@ static void InitSnowflakeSpriteMovement(struct Sprite *sprite)
 
 static void WaitSnowflakeSprite(struct Sprite *sprite)
 {
-    if (gWeatherPtr->unknown_6E2 > 18)
+    if (gWeatherPtr->snowflakeTimer > 18)
     {
         sprite->invisible = FALSE;
         sprite->callback = UpdateSnowflakeSprite;
         sprite->y = 0xFA - (gSpriteCoordOffsetY + sprite->centerToCornerVecY);
         sprite->data[0] = sprite->y * 128;
-        gWeatherPtr->unknown_6E2 = 0;
+        gWeatherPtr->snowflakeTimer = 0;
     }
 }
 

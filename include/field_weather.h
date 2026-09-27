@@ -61,10 +61,10 @@ struct Weather
     u8 rainStrength;
     /*0x6DE*/ u8 cloudSpritesCreated;
     u8 filler_6DF[1];
-    u16 unknown_6E0;
-    u16 unknown_6E2;
+    u16 snowflakeVisibleCounter;
+    u16 snowflakeTimer;
     u8 snowflakeSpriteCount;
-    u8 unknown_6E5;
+    u8 targetSnowflakeSpriteCount;
     u16 unknown_6E6;
     u16 thunderCounter;
     u8 unknown_6EA;
