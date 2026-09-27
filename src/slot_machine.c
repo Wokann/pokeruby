@@ -260,17 +260,17 @@ static void ReelTime_ExplodeMachine(struct Task *task);
 static void ReelTime_WaitExplode(struct Task *task);
 static void ReelTime_WaitSmoke(struct Task *task);
 static void ReelTime_EndFailure(struct Task *task);
-static void sub_8104A40(s16 a0, s16 a1);
-static void sub_8104A88(s16 a0);
-static void sub_8104AB8(u8 a0);
-static bool8 sub_8104AEC(void);
-static void sub_8104B0C(u8 taskId);
-static void sub_8104B3C(struct Task *task);
-static void sub_8104B60(struct Task *task);
-static void sub_8104B80(struct Task *task);
-static void sub_8104BC8(struct Task *task);
-static void sub_8104BFC(struct Task *task);
-static void sub_8104C44(struct Task *task);
+static void LoadReelTimeWindowTilemap(s16 a0, s16 a1);
+static void ClearReelTimeWindowTilemap(s16 a0);
+static void OpenInfoBox(u8 a0);
+static bool8 IsInfoBoxClosed(void);
+static void Task_InfoBox(u8 taskId);
+static void InfoBox_FadeIn(struct Task *task);
+static void InfoBox_WaitFade(struct Task *task);
+static void InfoBox_DrawWindowAndText(struct Task *task);
+static void InfoBox_WaitInput(struct Task *task);
+static void InfoBox_RestoreSlotMachineDisplay(struct Task *task);
+static void InfoBox_FreeTask(struct Task *task);
 static void sub_8104C5C(void);
 static void sub_8104CAC(u8 arg0);
 static bool8 sub_8104E18(void);
@@ -697,7 +697,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
 
     if (JOY_NEW(SELECT_BUTTON))
     {
-        sub_8104AB8(0);
+        OpenInfoBox(0);
         sSlotMachine->state = 8;
     }
     else if (JOY_NEW(R_BUTTON))
@@ -758,7 +758,7 @@ static bool8 SlotTask_WaitMsg_Need3Coins(struct Task *task)
 
 static bool8 SlotTask_WaitInfoBox(struct Task *task)
 {
-    if (sub_8104AEC())
+    if (IsInfoBoxClosed())
         sSlotMachine->state = 5;
     return FALSE;
 }
@@ -2676,7 +2676,7 @@ static void ReelTime_Init(struct Task *task)
     gSpriteCoordOffsetY = 0;
     REG_BG1HOFS = 0;
     REG_BG1VOFS = 0;
-    sub_8104A40(30, 0);
+    LoadReelTimeWindowTilemap(30, 0);
     sub_81051C0();
     sub_8105100();
     sub_81052EC();
@@ -2698,7 +2698,7 @@ static void ReelTime_WindowEnter(struct Task *task)
     {
         task->data[2] = r3;
         task->data[3] = task->data[1] >> 3;
-        sub_8104A40(r3, task->data[3]);
+        LoadReelTimeWindowTilemap(r3, task->data[3]);
     }
     if (task->data[1] >= 200)
     {
@@ -2852,7 +2852,7 @@ static void ReelTime_CloseWindow(struct Task *task)
     r4 = ((task->data[1] - 8) & 0xff) >> 3;
     REG_BG1HOFS = task->data[1] & 0x1ff;
     if (task->data[3] >> 3 <= 25)
-        sub_8104A88(r4);
+        ClearReelTimeWindowTilemap(r4);
     else
         task->data[0]++;
 }
@@ -2957,7 +2957,7 @@ static void ReelTime_EndFailure(struct Task *task)
 
 static const u16 sReelTimeWindowTilemap[];
 
-static void sub_8104A40(s16 a0, s16 a1)
+static void LoadReelTimeWindowTilemap(s16 a0, s16 a1)
 {
     s16 i;
 
@@ -2968,7 +2968,7 @@ static void sub_8104A40(s16 a0, s16 a1)
     }
 }
 
-static void sub_8104A88(s16 a0)
+static void ClearReelTimeWindowTilemap(s16 a0)
 {
     s16 i;
 
@@ -2978,52 +2978,52 @@ static void sub_8104A88(s16 a0)
     }
 }
 
-static void sub_8104AB8(u8 a0)
+static void OpenInfoBox(u8 a0)
 {
-    u8 taskId = CreateTask(sub_8104B0C, 1);
+    u8 taskId = CreateTask(Task_InfoBox, 1);
     gTasks[taskId].data[1] = a0;
-    sub_8104B0C(taskId);
+    Task_InfoBox(taskId);
 }
 
-static bool8 sub_8104AEC(void)
+static bool8 IsInfoBoxClosed(void)
 {
-    if (FindTaskIdByFunc(sub_8104B0C) == 0xFF)
+    if (FindTaskIdByFunc(Task_InfoBox) == 0xFF)
         return TRUE;
     else
         return FALSE;
 }
 
-static void (*const gUnknown_083ECC30[])(struct Task *task) =
+static void (*const sInfoBoxTasks[])(struct Task *task) =
 {
-    sub_8104B3C,
-    sub_8104B60,
-    sub_8104B80,
-    sub_8104B60,
-    sub_8104BC8,
-    sub_8104B60,
-    sub_8104BFC,
-    sub_8104B60,
-    sub_8104C44
+    InfoBox_FadeIn,
+    InfoBox_WaitFade,
+    InfoBox_DrawWindowAndText,
+    InfoBox_WaitFade,
+    InfoBox_WaitInput,
+    InfoBox_WaitFade,
+    InfoBox_RestoreSlotMachineDisplay,
+    InfoBox_WaitFade,
+    InfoBox_FreeTask
 };
 
-static void sub_8104B0C(u8 taskId)
+static void Task_InfoBox(u8 taskId)
 {
-    gUnknown_083ECC30[gTasks[taskId].data[0]](gTasks + taskId);
+    sInfoBoxTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void sub_8104B3C(struct Task *task)
+static void InfoBox_FadeIn(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
     task->data[0]++;
 }
 
-static void sub_8104B60(struct Task *task)
+static void InfoBox_WaitFade(struct Task *task)
 {
     if (!gPaletteFade.active)
         task->data[0]++;
 }
 
-static void sub_8104B80(struct Task *task)
+static void InfoBox_DrawWindowAndText(struct Task *task)
 {
     sub_8104DA4();
     sub_81065DC();
@@ -3033,7 +3033,7 @@ static void sub_8104B80(struct Task *task)
     task->data[0]++;
 }
 
-static void sub_8104BC8(struct Task *task)
+static void InfoBox_WaitInput(struct Task *task)
 {
     if (JOY_NEW(B_BUTTON | SELECT_BUTTON))
     {
@@ -3042,7 +3042,7 @@ static void sub_8104BC8(struct Task *task)
     }
 }
 
-static void sub_8104BFC(struct Task *task)
+static void InfoBox_RestoreSlotMachineDisplay(struct Task *task)
 {
     Menu_EraseScreen();
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
@@ -3053,9 +3053,9 @@ static void sub_8104BFC(struct Task *task)
     task->data[0]++;
 }
 
-static void sub_8104C44(struct Task *task)
+static void InfoBox_FreeTask(struct Task *task)
 {
-    DestroyTask(FindTaskIdByFunc(sub_8104B0C));
+    DestroyTask(FindTaskIdByFunc(Task_InfoBox));
 }
 
 static void sub_8104C5C(void)
