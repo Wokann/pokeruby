@@ -786,42 +786,42 @@ static const struct MenuAction sMenuActions_TrainerFlagCategories[] = {
 	{sString_TrainerFlag_Wally, ControlFlags_TrainerFlag_Wally_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C1AF4[] = _("FTーGYMー01ーLEADER");
-static const u8 gUnknown_Debug_083C1B05[] = _("FTーGYMー02ーLEADER");
-static const u8 gUnknown_Debug_083C1B16[] = _("FTーGYMー03ーLEADER");
-static const u8 gUnknown_Debug_083C1B27[] = _("FTーGYMー04ーLEADER");
-static const u8 gUnknown_Debug_083C1B38[] = _("FTーGYMー05ーLEADER");
-static const u8 gUnknown_Debug_083C1B49[] = _("FTーGYMー06ーLEADER");
-static const u8 gUnknown_Debug_083C1B5A[] = _("FTーGYMー07ーLEADER");
-static const u8 gUnknown_Debug_083C1B6B[] = _("FTーGYMー08ーLEADER");
+static const u8 sString_TrainerFlag_RustboroGym[] = _("FTーGYMー01ーLEADER");
+static const u8 sString_TrainerFlag_DewfordGym[] = _("FTーGYMー02ーLEADER");
+static const u8 sString_TrainerFlag_MauvilleGym[] = _("FTーGYMー03ーLEADER");
+static const u8 sString_TrainerFlag_LavaridgeGym[] = _("FTーGYMー04ーLEADER");
+static const u8 sString_TrainerFlag_PetalburgGym[] = _("FTーGYMー05ーLEADER");
+static const u8 sString_TrainerFlag_FortreeGym[] = _("FTーGYMー06ーLEADER");
+static const u8 sString_TrainerFlag_MossdeepGym[] = _("FTーGYMー07ーLEADER");
+static const u8 sString_TrainerFlag_SootopolisGym[] = _("FTーGYMー08ーLEADER");
 
 static const struct MenuAction sMenuActions_TrainerFlags_GymLeaders[] = {
-	{gUnknown_Debug_083C1AF4, DummyMenuAction},
-	{gUnknown_Debug_083C1B05, DummyMenuAction},
-	{gUnknown_Debug_083C1B16, DummyMenuAction},
-	{gUnknown_Debug_083C1B27, DummyMenuAction},
-	{gUnknown_Debug_083C1B38, DummyMenuAction},
-	{gUnknown_Debug_083C1B49, DummyMenuAction},
-	{gUnknown_Debug_083C1B5A, DummyMenuAction},
-	{gUnknown_Debug_083C1B6B, DummyMenuAction}
+	{sString_TrainerFlag_RustboroGym, DummyMenuAction},
+	{sString_TrainerFlag_DewfordGym, DummyMenuAction},
+	{sString_TrainerFlag_MauvilleGym, DummyMenuAction},
+	{sString_TrainerFlag_LavaridgeGym, DummyMenuAction},
+	{sString_TrainerFlag_PetalburgGym, DummyMenuAction},
+	{sString_TrainerFlag_FortreeGym, DummyMenuAction},
+	{sString_TrainerFlag_MossdeepGym, DummyMenuAction},
+	{sString_TrainerFlag_SootopolisGym, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1BBC[] = _("FTーSHITENー01");
-static const u8 gUnknown_Debug_083C1BC9[] = _("FTーSHITENー02");
-static const u8 gUnknown_Debug_083C1BD6[] = _("FTーSHITENー03");
-static const u8 gUnknown_Debug_083C1BE3[] = _("FTーSHITENー04");
+static const u8 sString_TrainerFlag_EliteFourSidney[] = _("FTーSHITENー01");
+static const u8 sString_TrainerFlag_EliteFourPhoebe[] = _("FTーSHITENー02");
+static const u8 sString_TrainerFlag_EliteFourGlacia[] = _("FTーSHITENー03");
+static const u8 sString_TrainerFlag_EliteFourDrake[] = _("FTーSHITENー04");
 
 static const struct MenuAction sMenuActions_TrainerFlags_EliteFour[] = {
-	{gUnknown_Debug_083C1BBC, DummyMenuAction},
-	{gUnknown_Debug_083C1BC9, DummyMenuAction},
-	{gUnknown_Debug_083C1BD6, DummyMenuAction},
-	{gUnknown_Debug_083C1BE3, DummyMenuAction}
+	{sString_TrainerFlag_EliteFourSidney, DummyMenuAction},
+	{sString_TrainerFlag_EliteFourPhoebe, DummyMenuAction},
+	{sString_TrainerFlag_EliteFourGlacia, DummyMenuAction},
+	{sString_TrainerFlag_EliteFourDrake, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1C10[] = _("FTーMITSURUー01ーCAVEーD1301");
+static const u8 sString_TrainerFlag_WallyVictoryRoad[] = _("FTーMITSURUー01ーCAVEーD1301");
 
 static const struct MenuAction sMenuActions_TrainerFlags_Wally[] = {
-	{gUnknown_Debug_083C1C10, DummyMenuAction}
+	{sString_TrainerFlag_WallyVictoryRoad, DummyMenuAction}
 };
 
 static const u8 sTrainerFlagPageCounts[] = {8, 4, 1};
