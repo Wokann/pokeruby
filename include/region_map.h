@@ -81,7 +81,7 @@ u8 DoRegionMapInputCallback(void);
 void SetRegionMapDataForZoom(void);
 u8 UpdateRegionMapZoom(void);
 void UpdateRegionMapVideoRegs(void);
-void RegionMapDefaultZoomOffsetPlayerSprite(s16, s16);
+void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16, s16);
 u16 GetOverworldMapFromUnderwaterMap(u16 mapSectionId);
 void CreateRegionMapCursor(u16, u16);
 void CreateRegionMapPlayerIcon(u16, u16);

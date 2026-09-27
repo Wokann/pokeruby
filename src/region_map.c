@@ -83,15 +83,15 @@ static u8 MoveRegionMapCursor_Full(void);
 static u8 ProcessRegionMapInput_Zoomed(void);
 static u8 MoveRegionMapCursor_Zoomed(void);
 static void CalcZoomScrollParams(s16, s16, s16, s16, u16, u16, u8);
-static void sub_80FB238(s16, s16);
+static void RegionMap_SetBG2XAndBG2Y(s16, s16);
 void UpdateRegionMapVideoRegs(void);
-static u16 GetRegionMapSectionAt(u16, u16);
-static void InitializeCursorPosition(void);
-static void sub_80FB600(void);
-static u16 sub_80FB758(u16);
+static u16 GetMapSecIdAt(u16, u16);
+static void InitMapBasedOnPlayerLocation(void);
+static void RegionMap_InitializeStateBasedOnSSTidalLocation(void);
+static u16 GetMapsecType(u16);
 static u16 GetOverworldMapFromUnderwaterMap_(u16);
-static void sub_80FBA18(void);
-static bool8 sub_80FBAA0(u16);
+static void GetPositionOfCursorWithinMapSec(void);
+static bool8 RegionMap_IsMapSecIdInNextRow(u16);
 void CreateRegionMapCursor(u16, u16);
 void sub_80FBCA0(void);
 static void sub_80FBDF8(void);
@@ -147,10 +147,10 @@ bool8 LoadRegionMapGfx(void)
         LZ77UnCompWram(sRegionMapCursorLarge_ImageLZ, gRegionMap->cursorLargeImage);
         break;
     case 5:
-        InitializeCursorPosition();
+        InitMapBasedOnPlayerLocation();
         gRegionMap->unk74 = gRegionMap->cursorPosX;
         gRegionMap->unk76 = gRegionMap->cursorPosY;
-        gRegionMap->unk16 = sub_80FB758(gRegionMap->mapSectionId);
+        gRegionMap->unk16 = GetMapsecType(gRegionMap->mapSectionId);
         gRegionMap->mapSectionId = GetOverworldMapFromUnderwaterMap_(gRegionMap->mapSectionId);
         GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
         break;
@@ -169,7 +169,7 @@ bool8 LoadRegionMapGfx(void)
         }
         break;
     case 7:
-        sub_80FBA18();
+        GetPositionOfCursorWithinMapSec();
         UpdateRegionMapVideoRegs();
         gRegionMap->cursorSprite = NULL;
         gRegionMap->playerIconSprite = NULL;
@@ -264,14 +264,14 @@ static u8 MoveRegionMapCursor_Full(void)
     if (gRegionMap->cursorDeltaY < 0)
         gRegionMap->cursorPosY--;
 
-    mapSectionId = GetRegionMapSectionAt(gRegionMap->cursorPosX, gRegionMap->cursorPosY);
-    gRegionMap->unk16 = sub_80FB758(mapSectionId);
+    mapSectionId = GetMapSecIdAt(gRegionMap->cursorPosX, gRegionMap->cursorPosY);
+    gRegionMap->unk16 = GetMapsecType(mapSectionId);
     if (mapSectionId != gRegionMap->mapSectionId)
     {
         gRegionMap->mapSectionId = mapSectionId;
         GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
     }
-    sub_80FBA18();
+    GetPositionOfCursorWithinMapSec();
     gRegionMap->inputCallback = ProcessRegionMapInput_Full;
     return INPUT_EVENT_3;
 }
@@ -320,7 +320,7 @@ static u8 MoveRegionMapCursor_Zoomed(void)
 {
     gRegionMap->scrollY += gRegionMap->unk68;
     gRegionMap->scrollX += gRegionMap->unk6A;
-    sub_80FB238(gRegionMap->scrollX, gRegionMap->scrollY);
+    RegionMap_SetBG2XAndBG2Y(gRegionMap->scrollX, gRegionMap->scrollY);
     gRegionMap->unk6C++;
     if (gRegionMap->unk6C == 8)
     {
@@ -333,14 +333,14 @@ static u8 MoveRegionMapCursor_Zoomed(void)
 
             gRegionMap->unk64 = r3;
             gRegionMap->unk66 = r1;
-            mapSectionId = GetRegionMapSectionAt(r3, r1);
-            gRegionMap->unk16 = sub_80FB758(mapSectionId);
+            mapSectionId = GetMapSecIdAt(r3, r1);
+            gRegionMap->unk16 = GetMapsecType(mapSectionId);
             if (mapSectionId != gRegionMap->mapSectionId)
             {
                 gRegionMap->mapSectionId = mapSectionId;
                 GetMapSectionName(gRegionMap->mapSectionName, gRegionMap->mapSectionId, 16);
             }
-            sub_80FBA18();
+            GetPositionOfCursorWithinMapSec();
         }
         gRegionMap->unk6C = 0;
         gRegionMap->inputCallback = ProcessRegionMapInput_Zoomed;
@@ -468,7 +468,7 @@ static void CalcZoomScrollParams(s16 a, s16 b, s16 c, s16 d, u16 e, u16 f, u8 ro
     gRegionMap->needUpdateVideoRegs = TRUE;
 }
 
-static void sub_80FB238(s16 x, s16 y)
+static void RegionMap_SetBG2XAndBG2Y(s16 x, s16 y)
 {
     gRegionMap->bg2x = (0x1C << 8) + (x << 8);
     gRegionMap->bg2y = (0x24 << 8) + (y << 8);
@@ -489,7 +489,7 @@ void UpdateRegionMapVideoRegs(void)
     }
 }
 
-void RegionMapDefaultZoomOffsetPlayerSprite(s16 a, s16 b)
+void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 a, s16 b)
 {
     CalcZoomScrollParams(a, b, 0x38, 0x48, 0x100, 0x100, 0);
     UpdateRegionMapVideoRegs();
@@ -500,7 +500,7 @@ void RegionMapDefaultZoomOffsetPlayerSprite(s16 a, s16 b)
     }
 }
 
-static u16 GetRegionMapSectionAt(u16 x, u16 y)
+static u16 GetMapSecIdAt(u16 x, u16 y)
 {
     if (y < MAPCURSOR_Y_MIN || y > MAPCURSOR_Y_MAX || x < MAPCURSOR_X_MIN || x > MAPCURSOR_X_MAX)
         return MAPSEC_NONE;
@@ -509,7 +509,7 @@ static u16 GetRegionMapSectionAt(u16 x, u16 y)
     return sRegionMapLayout[x + y * 28];
 }
 
-static void InitializeCursorPosition(void)
+static void InitMapBasedOnPlayerLocation(void)
 {
     struct MapHeader *mapHeader;
     u16 mapWidth;
@@ -524,7 +524,7 @@ static void InitializeCursorPosition(void)
       || gSaveBlock1.location.mapNum == MAP_NUM(MAP_SS_TIDAL_LOWER_DECK)
       || gSaveBlock1.location.mapNum == MAP_NUM(MAP_SS_TIDAL_ROOMS)))
     {
-        sub_80FB600();
+        RegionMap_InitializeStateBasedOnSSTidalLocation();
         return;
     }
 
@@ -638,7 +638,7 @@ static void InitializeCursorPosition(void)
     gRegionMap->cursorPosY = gRegionMapEntries[gRegionMap->mapSectionId].y + y + MAPCURSOR_Y_MIN;
 }
 
-static void sub_80FB600(void)
+static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
 {
     u16 y = 0;
     u16 x = 0;
@@ -689,7 +689,7 @@ static void sub_80FB600(void)
     gRegionMap->cursorPosY = gRegionMapEntries[gRegionMap->mapSectionId].y + y + MAPCURSOR_Y_MIN;
 }
 
-static u16 sub_80FB758(u16 mapSectionId)
+static u16 GetMapsecType(u16 mapSectionId)
 {
     switch (mapSectionId)
     {
@@ -739,7 +739,7 @@ static u16 sub_80FB758(u16 mapSectionId)
 
 u16 GetRegionMapSectionAt_(u16 x, u16 y)
 {
-    return GetRegionMapSectionAt(x, y);
+    return GetMapSecIdAt(x, y);
 }
 
 static u16 GetOverworldMapFromUnderwaterMap_(u16 mapSectionId)
@@ -759,7 +759,7 @@ u16 GetOverworldMapFromUnderwaterMap(u16 mapSectionId)
     return GetOverworldMapFromUnderwaterMap_(mapSectionId);
 }
 
-static void sub_80FBA18(void)
+static void GetPositionOfCursorWithinMapSec(void)
 {
     u16 x;
     u16 y;
@@ -787,7 +787,7 @@ static void sub_80FBA18(void)
     {
         if (x <= 1)
         {
-            if (sub_80FBAA0(y))
+            if (RegionMap_IsMapSecIdInNextRow(y))
             {
                 y--;
                 x = 0x1D;
@@ -800,7 +800,7 @@ static void sub_80FBA18(void)
         else
         {
             x--;
-            if (GetRegionMapSectionAt(x, y) == gRegionMap->mapSectionId)
+            if (GetMapSecIdAt(x, y) == gRegionMap->mapSectionId)
                 i++;
         }
     }
@@ -808,7 +808,7 @@ static void sub_80FBA18(void)
     gRegionMap->everGrandeCityArea = i;
 }
 
-static bool8 sub_80FBAA0(u16 a)
+static bool8 RegionMap_IsMapSecIdInNextRow(u16 a)
 {
     u16 x;
     u16 y;
@@ -819,7 +819,7 @@ static bool8 sub_80FBAA0(u16 a)
 
     for (x = MAPCURSOR_X_MIN; x <= MAPCURSOR_X_MAX; x++)
     {
-        if (GetRegionMapSectionAt(x, y) == gRegionMap->mapSectionId)
+        if (GetMapSecIdAt(x, y) == gRegionMap->mapSectionId)
             return TRUE;
     }
     return FALSE;

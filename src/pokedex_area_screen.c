@@ -145,7 +145,7 @@ static void CB2_UnusedPokedexAreaScreen(void)
             break;
         case 4:
             CreateRegionMapPlayerIcon(1, 1);
-            RegionMapDefaultZoomOffsetPlayerSprite(0, -8);
+            PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(0, -8);
             SetVBlankCallback(VBlankCB_AreaScren);
             break;
         case 5:
@@ -1238,7 +1238,7 @@ static void Task_PokedexAreaScreen_0(u8 taskId)
             break;
         case 5:
             CreateRegionMapPlayerIcon(1, 1);
-            RegionMapDefaultZoomOffsetPlayerSprite(0, -8);
+            PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(0, -8);
             break;
         case 6:
             CreateAreaMarkerSprites();
