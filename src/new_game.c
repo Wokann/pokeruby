@@ -208,7 +208,7 @@ void NewGameInitData(void)
 #if DEBUG
 extern void debug_sub_80A3904(void);
 extern void debug_sub_80A3714(void);
-extern void debug_sub_8120F98(void);
+extern void Debug_FillPokeblockCase(void);
 extern void unref_sub_8070F90(void);
 
 void debug_sub_8057508(bool32 arg0)
@@ -227,7 +227,7 @@ void debug_sub_8057508(bool32 arg0)
 
     debug_sub_80A3904();
     debug_sub_80A3714();
-    debug_sub_8120F98();
+    Debug_FillPokeblockCase();
     FlagSet(FLAG_SYS_HIPSTER_MEET);
     UnlockRandomTrendySaying();
     unref_sub_8070F90();

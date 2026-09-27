@@ -450,7 +450,7 @@ void OpenPokeblockCaseOnFeeder(void)
 }
 
 #if DEBUG
-void debug_sub_8120F98(void)
+void Debug_FillPokeblockCase(void)
 {
     u8 i;
 
