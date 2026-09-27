@@ -1615,11 +1615,11 @@ void HandleDecorationCategoriesMenuInput(u8 taskId)
                 {
                     SortDecorationInventory(gUnknown_020388F6);
                     gUnknown_020388D0 = gDecorationInventories[gUnknown_020388F6].items;
-                    sub_80FEF50(taskId);
+                    InitDecorationItemsMenuScrollAndCursor(taskId);
                     ClearVerticalScrollIndicatorPalettes();
                     InitDecorationMarkerSpriteIds(gUnknown_020388F7, 8);
                     LoadScrollIndicatorPalette();
-                    gTasks[taskId].func = sub_80FE868;
+                    gTasks[taskId].func = ShowDecorationItemsWindow;
                 } else
                 {
                     Menu_DestroyCursor();
@@ -1628,28 +1628,28 @@ void HandleDecorationCategoriesMenuInput(u8 taskId)
                 }
             } else
             {
-                sub_80FE728(taskId);
+                ExitDecorationCategoriesMenu(taskId);
             }
         } else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_80FE728(taskId);
+            ExitDecorationCategoriesMenu(taskId);
         }
     }
 }
 
-void sub_80FE728(u8 taskId)
+void ExitDecorationCategoriesMenu(u8 taskId)
 {
     if (gTasks[taskId].data[11] != 3)
     {
-        sub_80FE758(taskId);
+        ReturnToActionsMenuFromCategories(taskId);
     } else
     {
         ExitTraderMenu(taskId);
     }
 }
 
-void sub_80FE758(u8 taskId)
+void ReturnToActionsMenuFromCategories(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 14, 19);
@@ -1665,25 +1665,25 @@ void sub_80FE758(u8 taskId)
     }
 }
 
-void sub_80FE7A8(u8 taskId)
+void ShowDecorationCategoriesWindow(u8 taskId)
 {
     gTasks[taskId].data[11] = 3;
     gUnknown_020388F6 = 0;
     InitDecorationCategoriesWindow(taskId);
 }
 
-void sub_80FE7D4(u8 *dest, u8 decClass)
+void CopyDecorationCategoryName(u8 *dest, u8 decClass)
 {
     StringCopy(dest, gUnknown_083EC5E4[decClass]);
 }
 
-void sub_80FE7EC(u8 taskId)
+void InitDecorationItemsWindow(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
 
-    sub_80FEC94(taskId);
-    sub_80FECB8(gUnknown_020388F6);
+    ShowDecorationItemsListWindow(taskId);
+    ShowDecorationCategorySummaryWindow(gUnknown_020388F6);
 
 #if ENGLISH
     Menu_DrawStdWindowFrame(15, 12, 29, 19);
@@ -1694,17 +1694,17 @@ void sub_80FE7EC(u8 taskId)
     }
 #endif
 
-    sub_80FECE0(gUnknown_020388F2 + gUnknown_020388F4);
+    PrintDecorationItemDescription(gUnknown_020388F2 + gUnknown_020388F4);
     InitMenu(0, 1, 2, gUnknown_020388F3 + 1, gUnknown_020388F2, 13);
 }
 
-void sub_80FE868(u8 taskId)
+void ShowDecorationItemsWindow(u8 taskId)
 {
-    sub_80FE7EC(taskId);
-    gTasks[taskId].func = sub_80FE948;
+    InitDecorationItemsWindow(taskId);
+    gTasks[taskId].func = HandleDecorationItemsMenuInput;
 }
 
-void sub_80FE894(u8 taskId /*r8*/, s8 cursorVector /*r5*/, s8 bgVector /*r7*/)
+void MoveDecorationItemsCursor(u8 taskId /*r8*/, s8 cursorVector /*r5*/, s8 bgVector /*r7*/)
 {
     int v0 /*r10*/;
     u8 v1;
@@ -1718,7 +1718,7 @@ void sub_80FE894(u8 taskId /*r8*/, s8 cursorVector /*r5*/, s8 bgVector /*r7*/)
     {
         v1 = gUnknown_020388F4;
         gUnknown_020388F4 = v1 + bgVector;
-        sub_80FEABC(taskId, 1);
+        UpdateDecorationItemsDisplay(taskId, 1);
     }
     if (gUnknown_020388F2 + gUnknown_020388F4 != gUnknown_020388D5)
     {
@@ -1726,14 +1726,14 @@ void sub_80FE894(u8 taskId /*r8*/, s8 cursorVector /*r5*/, s8 bgVector /*r7*/)
         {
             Menu_DrawStdWindowFrame(15, 12, 29, 19);
         }
-        sub_80FECE0(gUnknown_020388F2 + gUnknown_020388F4);
+        PrintDecorationItemDescription(gUnknown_020388F2 + gUnknown_020388F4);
     } else
     {
         Menu_EraseWindowRect(15, 12, 29, 19);
     }
 }
 
-void sub_80FE948(u8 taskId)
+void HandleDecorationItemsMenuInput(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -1741,20 +1741,20 @@ void sub_80FE948(u8 taskId)
         {
             if (gUnknown_020388F2 != 0)
             {
-                sub_80FE894(taskId, -1, 0);
+                MoveDecorationItemsCursor(taskId, -1, 0);
             } else if (gUnknown_020388F4 != 0)
             {
-                sub_80FE894(taskId, 0, -1);
+                MoveDecorationItemsCursor(taskId, 0, -1);
             }
         }
         if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
         {
             if (gUnknown_020388F2 != gUnknown_020388F3)
             {
-                sub_80FE894(taskId, 1, 0);
+                MoveDecorationItemsCursor(taskId, 1, 0);
             } else if (gUnknown_020388F4 + gUnknown_020388F2 != gUnknown_020388D5)
             {
-                sub_80FE894(taskId, 0, 1);
+                MoveDecorationItemsCursor(taskId, 0, 1);
             }
         }
         if (JOY_NEW(A_BUTTON))
@@ -1780,7 +1780,7 @@ void sub_80FE948(u8 taskId)
 
 const u8 gUnknown_083EC65A[] = _("{PALETTE 13}{STR_VAR_1}");
 
-void sub_80FEABC(u8 taskId, u8 dummy1)
+void UpdateDecorationItemsDisplay(u8 taskId, u8 dummy1)
 {
     u16 i;
     u16 j;
@@ -1839,25 +1839,25 @@ void sub_80FEABC(u8 taskId, u8 dummy1)
     }
 }
 
-void sub_80FEC94(u8 taskId)
+void ShowDecorationItemsListWindow(u8 taskId)
 {
     Menu_DrawStdWindowFrame(0, 0, 14, 19);
-    sub_80FEABC(taskId, 0);
+    UpdateDecorationItemsDisplay(taskId, 0);
 }
 
-void sub_80FECB8(u8 decoCat)
+void ShowDecorationCategorySummaryWindow(u8 decoCat)
 {
     Menu_DrawStdWindowFrame(15, 0, 29, 3);
     PrintDecorationCategoryMenuItem(decoCat, 16, 1, 0xff);
 }
 
 #if ENGLISH
-void sub_80FECE0(u8 decoCat)
+void PrintDecorationItemDescription(u8 decoCat)
 {
     sub_8072AB0(gDecorations[gUnknown_020388D0[decoCat]].description, 0x80, 0x68, 0x68, 0x30, 0x1);
 }
 #elif GERMAN
-int sub_80FECE0(u8 decoCat)
+int PrintDecorationItemDescription(u8 decoCat)
 {
     if (decoCat == gUnknown_020388D5)
         return FALSE;
@@ -1867,19 +1867,19 @@ int sub_80FECE0(u8 decoCat)
 }
 #endif
 
-void sub_80FED1C(void)
+void RemoveDecorationItemsOtherWindows(void)
 {
     Menu_EraseWindowRect(15, 0, 29, 3);
     Menu_EraseWindowRect(15, 12, 29, 19);
 }
 
-void sub_80FED3C(u8 taskId)
+void ReturnToDecorationItemsMenu(u8 taskId)
 {
     LoadScrollIndicatorPalette();
-    gTasks[taskId].func = sub_80FE868;
+    gTasks[taskId].func = ShowDecorationItemsWindow;
 }
 
-bool8 sub_80FED64(u8 a0)
+bool8 IsDecorationIndexInSecretBase(u8 a0)
 {
     u8 i;
     for (i=0; i<16; i++)
@@ -1892,7 +1892,7 @@ bool8 sub_80FED64(u8 a0)
     return FALSE;
 }
 
-void sub_80FED90(u8 taskId)
+void IdentifyOwnedDecorationsCurrentlyInUse(u8 taskId)
 {
     u16 i;
     u16 j;
@@ -1933,7 +1933,7 @@ void sub_80FED90(u8 taskId)
         {
             for (j=0; j<gDecorationInventories[gUnknown_020388F6].size; j++)
             {
-                if (gUnknown_020388D0[j] == gSaveBlock1.playerRoomDecor[i] && !sub_80FED64(j + 1))
+                if (gUnknown_020388D0[j] == gSaveBlock1.playerRoomDecor[i] && !IsDecorationIndexInSecretBase(j + 1))
                 {
                     for (k=0; k<cnt && gUnknown_020388E6[k]!=j+1; k++);
                     if (k == cnt)
@@ -1948,7 +1948,7 @@ void sub_80FED90(u8 taskId)
     }
 }
 
-void sub_80FEF28(void)
+void InitDecorationItemsMenuLimits(void)
 {
     if (gUnknown_020388D5 <= 7)
     {
@@ -1959,15 +1959,15 @@ void sub_80FEF28(void)
     }
 }
 
-void sub_80FEF50(u8 taskId)
+void InitDecorationItemsMenuScrollAndCursor(u8 taskId)
 {
-    sub_80FED90(taskId);
-    sub_80FEF28();
+    IdentifyOwnedDecorationsCurrentlyInUse(taskId);
+    InitDecorationItemsMenuLimits();
     gUnknown_020388F2 = 0;
     gUnknown_020388F4 = 0;
 }
 
-void sub_80FEF74(void)
+void RemoveDecorationItemsWindow(void)
 {
     DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
     DestroyVerticalScrollIndicator(TOP_ARROW);
@@ -1976,7 +1976,7 @@ void sub_80FEF74(void)
     Menu_EraseWindowRect(0, 0, 14, 19);
 }
 
-bool8 sub_80FEFA4(void)
+bool8 IsSelectedDecorationUnused(void)
 {
     u16 i;
     int v0;
@@ -1996,7 +1996,7 @@ void sub_80FEFF4(u8 taskId)
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
         LoadScrollIndicatorPalette();
-        gTasks[taskId].func = sub_80FE868;
+        gTasks[taskId].func = ShowDecorationItemsWindow;
     }
 }
 
@@ -2024,8 +2024,8 @@ void sub_80FF098(u8 taskId)
         gUnknown_020388F4--;
     }
     SortDecorationInventory(gUnknown_020388F6);
-    sub_80FED90(taskId);
-    sub_80FEF28();
+    IdentifyOwnedDecorationsCurrentlyInUse(taskId);
+    InitDecorationItemsMenuLimits();
 }
 
 void sub_80FF0E0(u8 taskId)
@@ -2194,10 +2194,10 @@ void sub_80FF5BC(u8 taskId)
 {
     if (sDecorationContext.isPlayerRoom == 1 && gUnknown_020388F6 != DECORCAT_DOLL && gUnknown_020388F6 != DECORCAT_CUSHION)
     {
-        sub_80FEF74();
-        sub_80FED1C();
+        RemoveDecorationItemsWindow();
+        RemoveDecorationItemsOtherWindows();
         DisplayItemMessageOnField(taskId, gSecretBaseText_DecorCantPlace, sub_80FEFF4, 0);
-    } else if (sub_80FEFA4() == TRUE)
+    } else if (IsSelectedDecorationUnused() == TRUE)
     {
         if (sub_80FF58C() == TRUE)
         {
@@ -2206,8 +2206,8 @@ void sub_80FF5BC(u8 taskId)
             gTasks[taskId].func = sub_80FF6AC;
         } else
         {
-            sub_80FEF74();
-            sub_80FED1C();
+            RemoveDecorationItemsWindow();
+            RemoveDecorationItemsOtherWindows();
             ConvertIntToDecimalStringN(gStringVar1, sDecorationContext.size, STR_CONV_MODE_RIGHT_ALIGN, 2);
             if (!sDecorationContext.isPlayerRoom)
             {
@@ -2220,8 +2220,8 @@ void sub_80FF5BC(u8 taskId)
         }
     } else
     {
-        sub_80FEF74();
-        sub_80FED1C();
+        RemoveDecorationItemsWindow();
+        RemoveDecorationItemsOtherWindows();
         DisplayItemMessageOnField(taskId, gSecretBaseText_InUseAlready, sub_80FEFF4, 0);
     }
 }
@@ -2262,8 +2262,8 @@ void sub_80FF6AC(u8 taskId)
 
 void AddDecorationIconObjectFromObjectEvent(struct UnkStruct_02038900 * unk_02038900, u8 decoIdx)
 {
-    sub_80FEF74();
-    sub_80FED1C();
+    RemoveDecorationItemsWindow();
+    RemoveDecorationItemsOtherWindows();
     sub_81006D0(unk_02038900);
     unk_02038900->decoration = &gDecorations[decoIdx];
     if (gDecorations[decoIdx].permission != DECORPERM_SOLID_MAT)
@@ -2650,7 +2650,7 @@ void sub_8100334(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
-        gTasks[taskId].func = sub_80FE948;
+        gTasks[taskId].func = HandleDecorationItemsMenuInput;
     }
 }
 
@@ -2659,7 +2659,7 @@ void sub_8100364(void)
     LockPlayerFieldControls();
     LoadScrollIndicatorPalette();
     pal_fill_black();
-    sub_80FE7EC(CreateTask(sub_8100334, 8));
+    InitDecorationItemsWindow(CreateTask(sub_8100334, 8));
 }
 
 bool8 sub_810038C(u8 taskId)
@@ -2991,7 +2991,7 @@ const struct SpriteTemplate gSpriteTemplate_83ECA88 = {
     .callback = sub_8101698
 };
 
-const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = sub_8101848, .noFunc = sub_80FED3C};
+const struct YesNoFuncTable gUnknown_083ECAA0 = {.yesFunc = sub_8101848, .noFunc = ReturnToDecorationItemsMenu};
 
 void sub_81008BC(struct UnkStruct_02038900 *unk_02038900)
 {
@@ -3154,7 +3154,7 @@ void sub_8100C88(u8 taskId)
             break;
         case 2:
             LockPlayerFieldControls();
-            sub_80FED90(taskId);
+            IdentifyOwnedDecorationsCurrentlyInUse(taskId);
             pal_fill_black();
             gTasks[taskId].data[2] = 3;
             break;
@@ -3590,9 +3590,9 @@ void sub_8101750(u8 taskId)
 
 void sub_81017A0(u8 taskId)
 {
-    sub_80FEF74();
-    sub_80FED1C();
-    if (sub_80FEFA4() == TRUE)
+    RemoveDecorationItemsWindow();
+    RemoveDecorationItemsOtherWindows();
+    if (IsSelectedDecorationUnused() == TRUE)
     {
         StringCopy(gStringVar1, gDecorations[gUnknown_020388D0[gUnknown_020388F5]].name);
         StringExpandPlaceholders(gStringVar4, gSecretBaseText_WillBeDiscarded);

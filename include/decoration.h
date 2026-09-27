@@ -165,22 +165,22 @@ void PrintCurMainMenuDescription(void);
 void DecorationMenuAction_Cancel(u8);
 void InitDecorationCategoriesWindow(u8);
 void HandleDecorationCategoriesMenuInput(u8);
-void sub_80FE728(u8);
-void sub_80FE758(u8);
-void sub_80FE7A8(u8);
-void sub_80FE7D4(u8 *, u8);
-void sub_80FE868(u8);
-void sub_80FE948(u8);
-void sub_80FEABC(u8, u8);
-void sub_80FEC94(u8);
-void sub_80FECB8(u8);
+void ExitDecorationCategoriesMenu(u8);
+void ReturnToActionsMenuFromCategories(u8);
+void ShowDecorationCategoriesWindow(u8);
+void CopyDecorationCategoryName(u8 *, u8);
+void ShowDecorationItemsWindow(u8);
+void HandleDecorationItemsMenuInput(u8);
+void UpdateDecorationItemsDisplay(u8, u8);
+void ShowDecorationItemsListWindow(u8);
+void ShowDecorationCategorySummaryWindow(u8);
 #ifdef GERMAN
-int sub_80FECE0(u8);
+int PrintDecorationItemDescription(u8);
 #else
-void sub_80FECE0(u8);
+void PrintDecorationItemDescription(u8);
 #endif
-void sub_80FEF50(u8);
-bool8 sub_80FEFA4(void);
+void InitDecorationItemsMenuScrollAndCursor(u8);
+bool8 IsSelectedDecorationUnused(void);
 void sub_80FF394(u16, u16, u16);
 void sub_80FF6AC(u8);
 void sub_80FF960(u8);
@@ -228,7 +228,7 @@ void sub_8101700(u8);
 void sub_81017A0(u8);
 void DecorationItemsMenuAction_Trade(u8);
 
-void sub_80FED3C(u8);
+void ReturnToDecorationItemsMenu(u8);
 void sub_80FFAB0(u8);
 void sub_80FFB08(u8);
 void sub_81000C4(u8);

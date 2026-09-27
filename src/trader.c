@@ -203,14 +203,14 @@ void IsDecorationCategoryFull(void)
     if (gDecorations[gSpecialVar_0x8004].category != gDecorations[gSpecialVar_0x8006].category
         && FindFreeDecorationInventorySlot(gDecorations[gSpecialVar_0x8004].category) == -1)
     {
-        sub_80FE7D4(gStringVar2, gDecorations[gSpecialVar_0x8004].category);
+        CopyDecorationCategoryName(gStringVar2, gDecorations[gSpecialVar_0x8004].category);
         gSpecialVar_Result = TRUE;
     }
 }
 
 void TraderShowDecorationMenu(void)
 {
-    CreateTask(sub_80FE7A8, 0);
+    CreateTask(ShowDecorationCategoriesWindow, 0);
 }
 
 void DecorationItemsMenuAction_Trade(u8 taskId)
@@ -221,7 +221,7 @@ void DecorationItemsMenuAction_Trade(u8 taskId)
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
     BuyMenuFreeMemory();
-    if (sub_80FEFA4() == TRUE)
+    if (IsSelectedDecorationUnused() == TRUE)
     {
         gSpecialVar_0x8006 = gUnknown_020388D0[gUnknown_020388F5];
         StringCopy(gStringVar3, gDecorations[gSpecialVar_0x8004].name);
