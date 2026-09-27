@@ -19,14 +19,14 @@ static void Task_DiplomaWaitForKeyPress(u8);
 static void Task_DiplomaFadeOut(u8);
 static void DisplayDiplomaText(void);
 
-static const u16 gDiplomaPalettes[][16] =
+static const u16 sDiplomaPalettes[][16] =
 {
-    INCBIN_U16("graphics/misc/diploma_national.gbapal"),
-    INCBIN_U16("graphics/misc/diploma_hoenn.gbapal"),
+    INCBIN_U16("graphics/diploma/national.gbapal"),
+    INCBIN_U16("graphics/diploma/hoenn.gbapal"),
 };
 
-static const u8 gDiplomaTilemap[] = INCBIN_U8("graphics/misc/diploma_map.bin.lz");
-static const u8 gDiplomaTiles[] = INCBIN_U8("graphics/misc/diploma.4bpp.lz");
+static const u8 sDiplomaTilemap[] = INCBIN_U8("graphics/diploma/tilemap.bin.lz");
+static const u8 sDiplomaTiles[] = INCBIN_U8("graphics/diploma/tiles.4bpp.lz");
 
 static void VBlankCB(void)
 {
@@ -59,15 +59,15 @@ void CB2_ShowDiploma(void)
     DmaFill32(3, 0, OAM, OAM_SIZE);
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
 
-    LZ77UnCompVram(gDiplomaTiles, (void *)VRAM);
-    LZ77UnCompVram(gDiplomaTilemap, (void *)(VRAM + 0x3000));
+    LZ77UnCompVram(sDiplomaTiles, (void *)VRAM);
+    LZ77UnCompVram(sDiplomaTilemap, (void *)(VRAM + 0x3000));
 
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
     ResetPaletteFade();
     FreeAllSpritePalettes();
-    LoadPalette(gDiplomaPalettes, 0, 64);
+    LoadPalette(sDiplomaPalettes, 0, 64);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);
     DisplayDiplomaText();
