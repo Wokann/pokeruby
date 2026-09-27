@@ -1,7 +1,7 @@
 #ifndef GUARD_FIELD_SCREEN_EFFECT_H
 #define GUARD_FIELD_SCREEN_EFFECT_H
 
-void sub_8081594(u8);
+void AnimateFlash(u8);
 extern const u16 gOrbEffectBackgroundLayerFlags[];
 void DoOrbEffect(void);
 void FadeOutOrbEffect(void);

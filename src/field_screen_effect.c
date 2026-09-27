@@ -99,7 +99,7 @@ static void UpdateFlashLevelEffect(u8 taskId)
     }
 }
 
-static void sub_80814E8(u8 taskId)
+static void Task_WaitForFlashUpdate(u8 taskId)
 {
     if (!FuncIsActiveTask(UpdateFlashLevelEffect))
     {
@@ -108,13 +108,13 @@ static void sub_80814E8(u8 taskId)
     }
 }
 
-static void sub_8081510(void)
+static void StartWaitForFlashUpdate(void)
 {
-    if (!FuncIsActiveTask(sub_80814E8))
-        CreateTask(sub_80814E8, 80);
+    if (!FuncIsActiveTask(Task_WaitForFlashUpdate))
+        CreateTask(Task_WaitForFlashUpdate, 80);
 }
 
-static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
+static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 destFlashRadius, s32 clearScanlineEffect, u8 delta)
 {
     u8 taskId = CreateTask(UpdateFlashLevelEffect, 80);
     s16 *data = gTasks[taskId].data;
@@ -138,14 +138,14 @@ static u8 sub_8081534(s32 centerX, s32 centerY, s32 initialFlashRadius, s32 dest
 #undef tFlashRadiusDelta
 #undef tClearScanlineEffect
 
-void sub_8081594(u8 flashLevel)
+void AnimateFlash(u8 flashLevel)
 {
     u8 curFlashLevel = Overworld_GetFlashLevel();
     u8 value = 0;
     if (!flashLevel)
         value = 1;
-    sub_8081534(120, 80, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
-    sub_8081510();
+    StartUpdateFlashLevelEffect(120, 80, sFlashLevelPixelRadii[curFlashLevel], sFlashLevelPixelRadii[flashLevel], value, 1);
+    StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }
 
@@ -241,7 +241,7 @@ static void Task_OrbEffect(u8 taskId)
     case 1:
         Menu_BlankWindowRect(0, 0, 29, 19);
         LoadOrbEffectPalette(tBlueOrb);
-        sub_8081534(tCenterX, tCenterY, 1, 160, 1, 2);
+        StartUpdateFlashLevelEffect(tCenterX, tCenterY, 1, 160, 1, 2);
         tState = 2;
         break;
     case 2:
