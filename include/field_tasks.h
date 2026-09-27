@@ -1,10 +1,10 @@
 #ifndef GUARD_FIELD_TASKS_H
 #define GUARD_FIELD_TASKS_H
 
-struct MetatileOffset {
+struct PacifidlogMetatileOffsets {
     s8 x;
     s8 y;
-    u16 tileId;
+    u16 metatileId;
 };
 
 void SetUpFieldTasks();

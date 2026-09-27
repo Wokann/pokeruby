@@ -24,7 +24,7 @@
 void DummyPerStepCallback(u8);
 void PerStepCallback_8069F64(u8);
 void PerStepCallback_8069AA0(u8);
-void PerStepCallback_8069864(u8);
+static void PacifidlogBridgePerStepCallback(u8);
 void PerStepCallback_8069DD4(u8);
 void PerStepCallback_806A07C(u8);
 
@@ -32,7 +32,7 @@ void (*const gUnknown_08376364[])(u8) = {
     DummyPerStepCallback,
     PerStepCallback_8069F64,
     PerStepCallback_8069AA0,
-    PerStepCallback_8069864,
+    PacifidlogBridgePerStepCallback,
     PerStepCallback_8069DD4,
     EndTruckSequence,
     sub_80BCF1C,
@@ -147,21 +147,21 @@ void ResetFieldTasksArgs(void)
     }
 }
 
-const struct MetatileOffset gUnknown_08376384[] = {
+static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] = {
     { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical1)},
     { 0, -1, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Vertical1)},
     { 0,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal1)},
     {-1,  0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal0)}, {0, 0, METATILE_ID(Pacifidlog, HalfSubmergedLogs_Horizontal1)}
 };
 
-const struct MetatileOffset gUnknown_083763A4[] = {
+static const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[] = {
     { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical1)},
     { 0, -1, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Vertical1)},
     { 0,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal1)},
     {-1,  0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal0)}, {0, 0, METATILE_ID(Pacifidlog, SubmergedLogs_Horizontal1)}
 };
 
-const struct MetatileOffset gUnknown_083763C4[] = {
+static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] = {
     { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_Vertical0)}, {0, 1, METATILE_ID(Pacifidlog, FloatingLogs_Vertical1)},
     { 0, -1, METATILE_ID(Pacifidlog, FloatingLogs_Vertical0)}, {0, 0, METATILE_ID(Pacifidlog, FloatingLogs_Vertical1)},
     { 0,  0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal0)}, {1, 0, METATILE_ID(Pacifidlog, FloatingLogs_Horizontal1)},
@@ -170,7 +170,7 @@ const struct MetatileOffset gUnknown_083763C4[] = {
 
 void DummyPerStepCallback(u8 taskId) {}
 
-const struct MetatileOffset *sub_80695E0(const struct MetatileOffset *a0, u16 a1)
+static const struct PacifidlogMetatileOffsets *GetPacifidlogBridgeMetatileOffsets(const struct PacifidlogMetatileOffsets *a0, u16 a1)
 {
     if (MetatileBehavior_IsPacifidlogVerticalLog1(a1))
     {
@@ -194,17 +194,17 @@ const struct MetatileOffset *sub_80695E0(const struct MetatileOffset *a0, u16 a1
     }
 }
 
-void sub_8069638(const struct MetatileOffset *offsets, s16 x, s16 y, bool32 flag)
+static void TrySetPacifidlogBridgeMetatiles(const struct PacifidlogMetatileOffsets *offsets, s16 x, s16 y, bool32 flag)
 {
-    offsets = sub_80695E0(offsets, MapGridGetMetatileBehaviorAt(x, y));
+    offsets = GetPacifidlogBridgeMetatileOffsets(offsets, MapGridGetMetatileBehaviorAt(x, y));
     if (offsets)
     {
-        MapGridSetMetatileIdAt(x + offsets[0].x, y + offsets[0].y, offsets[0].tileId);
+        MapGridSetMetatileIdAt(x + offsets[0].x, y + offsets[0].y, offsets[0].metatileId);
         if (flag)
         {
             CurrentMapDrawMetatileAt(x + offsets[0].x, y + offsets[0].y);
         }
-        MapGridSetMetatileIdAt(x + offsets[1].x, y + offsets[1].y, offsets[1].tileId);
+        MapGridSetMetatileIdAt(x + offsets[1].x, y + offsets[1].y, offsets[1].metatileId);
         if (flag)
         {
             CurrentMapDrawMetatileAt(x + offsets[1].x, y + offsets[1].y);
@@ -212,22 +212,22 @@ void sub_8069638(const struct MetatileOffset *offsets, s16 x, s16 y, bool32 flag
     }
 }
 
-void sub_80696C0(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeHalfSubmerged(s16 x, s16 y, bool32 flag)
 {
-    sub_8069638(gUnknown_08376384, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sHalfSubmergedBridgeMetatileOffsets, x, y, flag);
 }
 
-void sub_80696E4(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFullySubmerged(s16 x, s16 y, bool32 flag)
 {
-    sub_8069638(gUnknown_083763A4, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFullySubmergedBridgeMetatileOffsets, x, y, flag);
 }
 
-void sub_8069708(s16 x, s16 y, bool32 flag)
+static void TrySetLogBridgeFloating(s16 x, s16 y, bool32 flag)
 {
-    sub_8069638(gUnknown_083763C4, x, y, flag);
+    TrySetPacifidlogBridgeMetatiles(sFloatingBridgeMetatileOffsets, x, y, flag);
 }
 
-bool32 sub_806972C(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldRaisePacifidlogLogs(s16 x1, s16 y1, s16 x2, s16 y2)
 {
     s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x2, y2);
     if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
@@ -261,7 +261,7 @@ bool32 sub_806972C(s16 x1, s16 y1, s16 x2, s16 y2)
     return TRUE;
 }
 
-bool32 sub_80697C8(s16 x1, s16 y1, s16 x2, s16 y2)
+static bool32 ShouldSinkPacifidlogLogs(s16 x1, s16 y1, s16 x2, s16 y2)
 {
     s8 metatileBehavior = MapGridGetMetatileBehaviorAt(x1, y1);
     if (MetatileBehavior_IsPacifidlogVerticalLog1(metatileBehavior))
@@ -295,7 +295,7 @@ bool32 sub_80697C8(s16 x1, s16 y1, s16 x2, s16 y2)
     return TRUE;
 }
 
-void PerStepCallback_8069864(u8 taskId)
+static void PacifidlogBridgePerStepCallback(u8 taskId)
 {
     s16 *data;
     s16 x, y;
@@ -306,16 +306,16 @@ void PerStepCallback_8069864(u8 taskId)
         case 0:
             data[2] = x;
             data[3] = y;
-            sub_80696E4(x, y, TRUE);
+            TrySetLogBridgeFullySubmerged(x, y, TRUE);
             data[1] = 1;
             break;
         case 1:
             if (x != data[2] || y != data[3])
             {
-                if (sub_806972C(x, y, data[2], data[3]))
+                if (ShouldRaisePacifidlogLogs(x, y, data[2], data[3]))
                 {
-                    sub_80696C0(data[2], data[3], TRUE);
-                    sub_8069708(data[2], data[3], FALSE);
+                    TrySetLogBridgeHalfSubmerged(data[2], data[3], TRUE);
+                    TrySetLogBridgeFloating(data[2], data[3], FALSE);
                     data[4] = data[2];
                     data[5] = data[3];
                     data[1] = 2;
@@ -326,9 +326,9 @@ void PerStepCallback_8069864(u8 taskId)
                     data[4] = -1;
                     data[5] = -1;
                 }
-                if (sub_80697C8(x, y, data[2], data[3]))
+                if (ShouldSinkPacifidlogLogs(x, y, data[2], data[3]))
                 {
-                    sub_80696C0(x, y, TRUE);
+                    TrySetLogBridgeHalfSubmerged(x, y, TRUE);
                     data[1] = 2;
                     data[6] = 8;
                 }
@@ -343,10 +343,10 @@ void PerStepCallback_8069864(u8 taskId)
         case 2:
             if ((--data[6]) == 0)
             {
-                sub_80696E4(x, y, TRUE);
+                TrySetLogBridgeFullySubmerged(x, y, TRUE);
                 if (data[4] != -1 && data[5] != -1)
                 {
-                    sub_8069708(data[4], data[5], TRUE);
+                    TrySetLogBridgeFloating(data[4], data[5], TRUE);
                 }
                 data[1] = 1;
             }
