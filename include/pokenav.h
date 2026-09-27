@@ -160,7 +160,7 @@ struct UnkPokenavStruct {
     /*0x87DC*/ s16 unk87DC;
     /*0x87DE*/ u8 unk87DE;
     /*0x87E0*/ bool8 (*unk87E0)(void);
-    /*0x87E4*/ struct Sprite *unk87E4[7];
+    /*0x87E4*/ struct Sprite *conditionPartyIconSprites[7];
     /*0x8800*/ struct Sprite *unk8800[10];
     /*0x8828*/ u8 unk8828;
     /*0x8829*/ u8 unk8829[3][64];
@@ -247,7 +247,7 @@ void InitPokenavMenuHeaderGfx(void);
 bool8 LoadPokenavMenuHeaderGfxStep(void);
 bool8 LoadPokenavLeftHeaderStep(u8 headerType);
 void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot);
-void sub_80F33A8(void);
+void CreateConditionPartyPokeballIndicators(void);
 void sub_80F3C94(void);
 void sub_80F3D00(void);
 void sub_80F4BD0(void);

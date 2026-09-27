@@ -126,9 +126,9 @@ extern const struct SpritePalette gPokenavListArrowSpritePalette;
 extern const u16 gPokenavListArrowAltPalette[];
 extern const struct SpriteTemplate gPokenavListRightArrowSpriteTemplate;
 extern const struct SpriteTemplate gPokenavListUpDownArrowSpriteTemplate;
-extern const struct SpriteSheet gUnknown_083E4628[4];
-extern const struct SpritePalette gUnknown_083E4648[3];
-extern const struct SpriteTemplate gSpriteTemplate_83E4660;
+extern const struct SpriteSheet gPokenavConditionSelectionIconSheets[4];
+extern const struct SpritePalette gPokenavConditionSelectionIconPalettes[3];
+extern const struct SpriteTemplate gPokenavConditionSelectionIconTemplate;
 extern const u16 gUnknown_083E4678[];
 extern const u8 gUnknown_083E3D00[];
 extern const struct SpriteTemplate gSpriteTemplate_83E476C;
@@ -2898,7 +2898,7 @@ void TogglePokenavListArrows(u8 invisible)
     }
 }
 
-void sub_80F3328(struct Sprite *sprite)
+void SpriteCB_ConditionPartyPokeball(struct Sprite *sprite)
 {
     if (sprite->data[0] == gPokenavStructPtr->unk87DC)
         StartSpriteAnim(sprite, 0);
@@ -2906,7 +2906,7 @@ void sub_80F3328(struct Sprite *sprite)
         StartSpriteAnim(sprite, 1);
 }
 
-void sub_80F3360(struct Sprite *sprite)
+void HighlightCurrentPartyIndexPokeball(struct Sprite *sprite)
 {
     if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x4);
@@ -2914,7 +2914,7 @@ void sub_80F3360(struct Sprite *sprite)
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x5);
 }
 
-void sub_80F33A8(void)
+void CreateConditionPartyPokeballIndicators(void)
 {
     u16 i;
     u8 spriteId;
@@ -2922,9 +2922,9 @@ void sub_80F33A8(void)
     struct SpritePalette spritePalettes[3];
     struct SpriteTemplate spriteTemplate;
 
-    memcpy(spriteSheets, gUnknown_083E4628, sizeof(gUnknown_083E4628));
-    memcpy(spritePalettes, gUnknown_083E4648, sizeof(gUnknown_083E4648));
-    spriteTemplate = gSpriteTemplate_83E4660;
+    memcpy(spriteSheets, gPokenavConditionSelectionIconSheets, sizeof(gPokenavConditionSelectionIconSheets));
+    memcpy(spritePalettes, gPokenavConditionSelectionIconPalettes, sizeof(gPokenavConditionSelectionIconPalettes));
+    spriteTemplate = gPokenavConditionSelectionIconTemplate;
     LoadSpriteSheets(spriteSheets);
     LoadSpritePalettes(spritePalettes);
 
@@ -2933,12 +2933,12 @@ void sub_80F33A8(void)
         spriteId = CreateSprite(&spriteTemplate, 226, i * 20 + 8, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk87E4[i] = &gSprites[spriteId];
-            gPokenavStructPtr->unk87E4[i]->data[0] = i;
+            gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
+            gPokenavStructPtr->conditionPartyIconSprites[i]->data[0] = i;
         }
         else
         {
-            gPokenavStructPtr->unk87E4[i] = NULL;
+            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
         }
     }
 
@@ -2949,40 +2949,40 @@ void sub_80F33A8(void)
         spriteId = CreateSprite(&spriteTemplate, 230, i * 20 + 8, 0);
         if (spriteId != MAX_SPRITES)
         {
-            gPokenavStructPtr->unk87E4[i] = &gSprites[spriteId];
-            gPokenavStructPtr->unk87E4[i]->oam.size = 0;
+            gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
+            gPokenavStructPtr->conditionPartyIconSprites[i]->oam.size = 0;
         }
         else
         {
-            gPokenavStructPtr->unk87E4[i] = NULL;
+            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
         }
     }
 
     spriteTemplate.tileTag = 0x5;
-    spriteTemplate.callback = sub_80F3360;
+    spriteTemplate.callback = HighlightCurrentPartyIndexPokeball;
     spriteId = CreateSprite(&spriteTemplate, 222, i * 20 + 8, 0);
     if (spriteId != MAX_SPRITES)
     {
-        gPokenavStructPtr->unk87E4[i] = &gSprites[spriteId];
-        gPokenavStructPtr->unk87E4[i]->oam.shape = ST_OAM_H_RECTANGLE;
-        gPokenavStructPtr->unk87E4[i]->oam.size = 2;
+        gPokenavStructPtr->conditionPartyIconSprites[i] = &gSprites[spriteId];
+        gPokenavStructPtr->conditionPartyIconSprites[i]->oam.shape = ST_OAM_H_RECTANGLE;
+        gPokenavStructPtr->conditionPartyIconSprites[i]->oam.size = 2;
     }
     else
     {
-        gPokenavStructPtr->unk87E4[i] = NULL;
+        gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
     }
 }
 
-void sub_80F357C(void)
+void DestroyConditionPartyPokeballIndicators(void)
 {
     u16 i;
 
     for (i = 0; i < 7; i++)
     {
-        if (gPokenavStructPtr->unk87E4[i])
+        if (gPokenavStructPtr->conditionPartyIconSprites[i])
         {
-            DestroySprite(gPokenavStructPtr->unk87E4[i]);
-            gPokenavStructPtr->unk87E4[i] = NULL;
+            DestroySprite(gPokenavStructPtr->conditionPartyIconSprites[i]);
+            gPokenavStructPtr->conditionPartyIconSprites[i] = NULL;
         }
     }
 }

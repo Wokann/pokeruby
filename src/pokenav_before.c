@@ -209,8 +209,8 @@ void (*const gPokenavListRowPrinters[])(u16, u16) =
 
 const u16 gPokenavIconPalette[] = INCBIN_U16("graphics/pokenav/icon.gbapal");
 const u8 gUnknown_083E329C[] = INCBIN_U8("graphics/pokenav/icon.4bpp.lz");
-const u8 gPokenavPokeballTiles[] = INCBIN_U8("graphics/pokenav/pokeball.4bpp");
-const u8 gUnknown_083E3780[] = INCBIN_U8("graphics/pokenav/83E3780.4bpp");
+const u8 gPokenavConditionPokeball_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball.4bpp");
+const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokenav/condition/pokeball_placeholder.4bpp");
 const u16 gPokenavSparkle_Pal[] = INCBIN_U16("graphics/pokenav/sparkle.gbapal");
 const u8 gPokenavSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/sparkle.4bpp");
 const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
@@ -754,7 +754,7 @@ const struct SpriteTemplate gPokenavListUpDownArrowSpriteTemplate =
     .callback = SpriteCB_UpdatePokenavListUpDownArrow,
 };
 
-const struct OamData gOamData_83E4608 = 
+const struct OamData gPokenavConditionSelectionIconOam =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -771,55 +771,55 @@ const struct OamData gOamData_83E4608 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E4610[] = 
+const union AnimCmd gPokenavConditionIconSelectedAnim[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E4618[] = 
+const union AnimCmd gPokenavConditionIconUnselectedAnim[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E4620[] = 
+const union AnimCmd *const gPokenavConditionIconAnims[] =
 {
-    gSpriteAnim_83E4610,
-    gSpriteAnim_83E4618,
+    gPokenavConditionIconSelectedAnim,
+    gPokenavConditionIconUnselectedAnim,
 };
 
-extern const u8 gPokenavConditionMenuCancel_Gfx[];
+extern const u8 gPokenavConditionCancel_Gfx[];
 
-const struct SpriteSheet gUnknown_083E4628[] = 
+const struct SpriteSheet gPokenavConditionSelectionIconSheets[] =
 {
-    {gPokenavPokeballTiles, 0x100, 3},
-    {gUnknown_083E3780, 0x20, 4},
-    {gPokenavConditionMenuCancel_Gfx, 0x100, 5},
+    {gPokenavConditionPokeball_Gfx, 0x100, 3},
+    {gPokenavConditionPokeballPlaceholder_Gfx, 0x20, 4},
+    {gPokenavConditionCancel_Gfx, 0x100, 5},
     {},
 };
 
 extern const u16 gPokenavConditionPokeball_Pal[];
-extern const u16 gPokenavCondition4_Pal[];
+extern const u16 gPokenavConditionCancel_Pal[];
 
-const struct SpritePalette gUnknown_083E4648[] = 
+const struct SpritePalette gPokenavConditionSelectionIconPalettes[] =
 {
     {gPokenavConditionPokeball_Pal, 4},
-    {gPokenavCondition4_Pal, 5},
+    {gPokenavConditionCancel_Pal, 5},
     {NULL, 0},
 };
 
-void sub_80F3328(struct Sprite *);
+void SpriteCB_ConditionPartyPokeball(struct Sprite *);
 
-const struct SpriteTemplate gSpriteTemplate_83E4660 = 
+const struct SpriteTemplate gPokenavConditionSelectionIconTemplate =
 {
     .tileTag = 3,
     .paletteTag = 4,
-    .oam = &gOamData_83E4608,
-    .anims = gSpriteAnimTable_83E4620,
+    .oam = &gPokenavConditionSelectionIconOam,
+    .anims = gPokenavConditionIconAnims,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = sub_80F3328,
+    .callback = SpriteCB_ConditionPartyPokeball,
 };
 
 const u16 gUnknown_083E4678[] = INCBIN_U16("graphics/pokenav/83E4678.gbapal");
@@ -2402,7 +2402,7 @@ void OpenConditionGraphFromParty(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 10:
-        sub_80F33A8();
+        CreateConditionPartyPokeballIndicators();
         BeginNormalPaletteFade(gPokenavStructPtr->unk308, -1, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(&VBlankCB_PokenavConditionGraph);
         gPokenavStructPtr->callbackStep++;
@@ -2449,7 +2449,7 @@ bool8 sub_80F5038(void);
 void DestroyPokenavPortraitSprite(void);
 void sub_80F3CE8(void);
 void sub_80F3614(void);
-void sub_80F357C(void);
+void DestroyConditionPartyPokeballIndicators(void);
 void sub_80F4FDC(void);
 
 void HandleConditionGraphInput(void)
@@ -2577,7 +2577,7 @@ void HandleConditionGraphInput(void)
             sub_80F5BDC();
             if (!gPokenavStructPtr->isConditionGraphSearchMode)
             {
-                sub_80F357C();
+                DestroyConditionPartyPokeballIndicators();
                 DestroyPokenavLeftHeaderSprites(1);
                 DestroyPokenavLeftHeaderSprites(6);
                 SetPokenavCallback(RestorePokenavConditionMenu);

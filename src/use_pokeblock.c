@@ -295,7 +295,7 @@ static void sub_8136294(void)
             }
             break;
         case 15:
-            sub_80F33A8();
+            CreateConditionPartyPokeballIndicators();
             gUnknown_02039304->unk50++;
             break;
         case 16:
