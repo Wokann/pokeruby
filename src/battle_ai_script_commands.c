@@ -93,16 +93,16 @@ static void BattleAICmd_if_arg_equal(void);
 static void BattleAICmd_if_arg_not_equal(void);
 static void BattleAICmd_if_would_go_first(void);
 static void BattleAICmd_if_would_not_go_first(void);
-static void BattleAICmd_nullsub_2A(void);
-static void BattleAICmd_nullsub_2B(void);
+static void BattleAICmd_nop_2A(void);
+static void BattleAICmd_nop_2B(void);
 static void BattleAICmd_count_usable_party_mons(void);
 static void BattleAICmd_get_considered_move(void);
 static void BattleAICmd_get_considered_move_effect(void);
 static void BattleAICmd_get_ability(void);
 static void BattleAICmd_get_highest_type_effectiveness(void);
 static void BattleAICmd_if_type_effectiveness(void);
-static void BattleAICmd_nullsub_32(void);
-static void BattleAICmd_nullsub_33(void);
+static void BattleAICmd_nop_32(void);
+static void BattleAICmd_nop_33(void);
 static void BattleAICmd_if_status_in_party(void);
 static void BattleAICmd_if_status_not_in_party(void);
 static void BattleAICmd_get_weather(void);
@@ -115,7 +115,7 @@ static void BattleAICmd_if_stat_level_not_equal(void);
 static void BattleAICmd_if_can_faint(void);
 static void BattleAICmd_if_cant_faint(void);
 static void BattleAICmd_if_has_move(void);
-static void BattleAICmd_if_dont_have_move(void);
+static void BattleAICmd_if_doesnt_have_move(void);
 static void BattleAICmd_if_move_effect(void);
 static void BattleAICmd_if_not_move_effect(void);
 static void BattleAICmd_if_any_move_disabled_or_encored(void);
@@ -133,12 +133,12 @@ static void BattleAICmd_get_move_type_from_result(void);
 static void BattleAICmd_get_move_power_from_result(void);
 static void BattleAICmd_get_move_effect_from_result(void);
 static void BattleAICmd_get_protect_count(void);
-static void BattleAICmd_nullsub_52(void);
-static void BattleAICmd_nullsub_53(void);
-static void BattleAICmd_nullsub_54(void);
-static void BattleAICmd_nullsub_55(void);
-static void BattleAICmd_nullsub_56(void);
-static void BattleAICmd_nullsub_57(void);
+static void BattleAICmd_nop_52(void);
+static void BattleAICmd_nop_53(void);
+static void BattleAICmd_nop_54(void);
+static void BattleAICmd_nop_55(void);
+static void BattleAICmd_nop_56(void);
+static void BattleAICmd_nop_57(void);
 static void BattleAICmd_call(void);
 static void BattleAICmd_jump(void);
 static void BattleAICmd_end(void);
@@ -192,16 +192,16 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_arg_not_equal,            // 0x27
     BattleAICmd_if_would_go_first,           // 0x28
     BattleAICmd_if_would_not_go_first,       // 0x29
-    BattleAICmd_nullsub_2A,                  // 0x2A
-    BattleAICmd_nullsub_2B,                  // 0x2B
+    BattleAICmd_nop_2A,                  // 0x2A
+    BattleAICmd_nop_2B,                  // 0x2B
     BattleAICmd_count_usable_party_mons,         // 0x2C
     BattleAICmd_get_considered_move,         // 0x2D
     BattleAICmd_get_considered_move_effect,  // 0x2E
     BattleAICmd_get_ability,                 // 0x2F
     BattleAICmd_get_highest_type_effectiveness, // 0x30
     BattleAICmd_if_type_effectiveness,             // 0x31
-    BattleAICmd_nullsub_32,                  // 0x32
-    BattleAICmd_nullsub_33,                  // 0x33
+    BattleAICmd_nop_32,                  // 0x32
+    BattleAICmd_nop_33,                  // 0x33
     BattleAICmd_if_status_in_party,          // 0x34
     BattleAICmd_if_status_not_in_party,      // 0x35
     BattleAICmd_get_weather,                 // 0x36
@@ -214,7 +214,7 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_if_can_faint,                // 0x3D
     BattleAICmd_if_cant_faint,               // 0x3E
     BattleAICmd_if_has_move,                 // 0x3F
-    BattleAICmd_if_dont_have_move,           // 0x40
+    BattleAICmd_if_doesnt_have_move,           // 0x40
     BattleAICmd_if_move_effect,              // 0x41
     BattleAICmd_if_not_move_effect,          // 0x42
     BattleAICmd_if_any_move_disabled_or_encored,     // 0x43
@@ -232,12 +232,12 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     BattleAICmd_get_move_power_from_result,  // 0x4F
     BattleAICmd_get_move_effect_from_result, // 0x50
     BattleAICmd_get_protect_count,           // 0x51
-    BattleAICmd_nullsub_52,                  // 0x52
-    BattleAICmd_nullsub_53,                  // 0x53
-    BattleAICmd_nullsub_54,                  // 0x54
-    BattleAICmd_nullsub_55,                  // 0x55
-    BattleAICmd_nullsub_56,                  // 0x56
-    BattleAICmd_nullsub_57,                  // 0x57
+    BattleAICmd_nop_52,                  // 0x52
+    BattleAICmd_nop_53,                  // 0x53
+    BattleAICmd_nop_54,                  // 0x54
+    BattleAICmd_nop_55,                  // 0x55
+    BattleAICmd_nop_56,                  // 0x56
+    BattleAICmd_nop_57,                  // 0x57
     BattleAICmd_call,                        // 0x58
     BattleAICmd_jump,                        // 0x59
     BattleAICmd_end,                         // 0x5A
@@ -1048,11 +1048,11 @@ static void BattleAICmd_if_would_not_go_first(void)
         gAIScriptPtr += 6;
 }
 
-static void BattleAICmd_nullsub_2A(void)
+static void BattleAICmd_nop_2A(void)
 {
 }
 
-static void BattleAICmd_nullsub_2B(void)
+static void BattleAICmd_nop_2B(void)
 {
 }
 
@@ -1252,11 +1252,11 @@ static void BattleAICmd_if_type_effectiveness(void)
         gAIScriptPtr += 6;
 }
 
-static void BattleAICmd_nullsub_32(void)
+static void BattleAICmd_nop_32(void)
 {
 }
 
-static void BattleAICmd_nullsub_33(void)
+static void BattleAICmd_nop_33(void)
 {
 }
 
@@ -1509,7 +1509,7 @@ static void BattleAICmd_if_has_move(void)
     }
 }
 
-static void BattleAICmd_if_dont_have_move(void)
+static void BattleAICmd_if_doesnt_have_move(void)
 {
     int i;
     u16 *temp_ptr = (u16 *)(gAIScriptPtr + 2);
@@ -1798,27 +1798,27 @@ static void BattleAICmd_get_protect_count(void)
     gAIScriptPtr += 2;
 }
 
-static void BattleAICmd_nullsub_52(void)
+static void BattleAICmd_nop_52(void)
 {
 }
 
-static void BattleAICmd_nullsub_53(void)
+static void BattleAICmd_nop_53(void)
 {
 }
 
-static void BattleAICmd_nullsub_54(void)
+static void BattleAICmd_nop_54(void)
 {
 }
 
-static void BattleAICmd_nullsub_55(void)
+static void BattleAICmd_nop_55(void)
 {
 }
 
-static void BattleAICmd_nullsub_56(void)
+static void BattleAICmd_nop_56(void)
 {
 }
 
-static void BattleAICmd_nullsub_57(void)
+static void BattleAICmd_nop_57(void)
 {
 }
 
