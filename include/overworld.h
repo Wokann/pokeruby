@@ -114,7 +114,7 @@ bool32 is_c1_link_related_active(void);
 // OverworldBasic
 void CB2_OverworldBasic(void);
 // SetMainCallback1
-// sub_80543DC
+// SetKeyInterceptCallback
 void CB2_NewGame(void);
 void CB2_WhiteOut(void);
 void CB2_LoadMap(void);

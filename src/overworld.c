@@ -99,8 +99,8 @@ EWRAM_DATA static u16 sAmbientCrySpecies = 0;
 EWRAM_DATA static bool8 sIsAmbientCryWaterMon = FALSE;
 EWRAM_DATA struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4] = {0};
 
-static u8 gUnknown_03000580[4];
-static u16 (*gUnknown_03000584)(u32);
+static u8 sPlayerLinkStates[4];
+static u16 (*sPlayerKeyInterceptCallback)(u32);
 static u8 gUnknown_03000588;
 
 static void CB2_Overworld(void);
@@ -1255,9 +1255,9 @@ void SetMainCallback1(MainCallback cb)
     gMain.callback1 = cb;
 }
 
-void sub_80543DC(u16 (*a1)(u32))
+void SetKeyInterceptCallback(u16 (*a1)(u32))
 {
-    gUnknown_03000584 = a1;
+    sPlayerKeyInterceptCallback = a1;
 }
 
 static void RunFieldCallback(void)
@@ -1381,7 +1381,7 @@ static void c2_80567AC(void)
     {
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_OverworldLink);
-        sub_80543DC(KeyInterCB_SelfIdle);
+        SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         SetMainCallback2(CB2_Overworld);
     }
 }
@@ -1420,7 +1420,7 @@ void sub_805465C(void)
     StopMapMusic();
     sub_8054F70();
     SetMainCallback1(CB1_OverworldLink);
-    sub_80543DC(KeyInterCB_SelfIdle);
+    SetKeyInterceptCallback(KeyInterCB_SelfIdle);
     gFieldCallback = FieldCB_ReturnToFieldCableLink;
     ScriptContext_Init();
     UnlockPlayerFieldControls();
@@ -1915,7 +1915,7 @@ void sub_8054F70(void)
 {
     int i;
     for (i = 0; i < 4; i++)
-        gUnknown_03000580[i] = 0x80;
+        sPlayerLinkStates[i] = 0x80;
 }
 
 bool32 sub_8054F88(u16 a1)
@@ -1924,7 +1924,7 @@ bool32 sub_8054F88(u16 a1)
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (gUnknown_03000580[i] != a1)
+        if (sPlayerLinkStates[i] != a1)
             return FALSE;
     return TRUE;
 }
@@ -1935,7 +1935,7 @@ bool32 sub_8054FC0(u16 a1)
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (gUnknown_03000580[i] == a1)
+        if (sPlayerLinkStates[i] == a1)
             return TRUE;
     return FALSE;
 }
@@ -1944,26 +1944,26 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
 {
     const u8 *script;
 
-    if (gUnknown_03000580[a1] == 0x80)
+    if (sPlayerLinkStates[a1] == 0x80)
     {
         script = sub_8055648(a3);
         if (script)
         {
             *a4 = sub_8055758(script);
-            gUnknown_03000580[a1] = 0x81;
+            sPlayerLinkStates[a1] = 0x81;
             if (a3->b)
             {
-                sub_80543DC(KeyInterCB_DeferToEventScript);
+                SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunInteractLocalPlayerScript(script);
             }
             return;
         }
         if (sub_8054FC0(0x83) == 1)
         {
-            gUnknown_03000580[a1] = 0x81;
+            sPlayerLinkStates[a1] = 0x81;
             if (a3->b)
             {
-                sub_80543DC(KeyInterCB_DeferToEventScript);
+                SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunTerminateLinkScript();
             }
             return;
@@ -1973,10 +1973,10 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
         case 24:
             if (sub_8055630(a3))
             {
-                gUnknown_03000580[a1] = 0x81;
+                sPlayerLinkStates[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(KeyInterCB_DeferToEventScript);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitLinkRoomStartMenuScript();
                 }
             }
@@ -1984,10 +1984,10 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
         case 18:
             if (sub_8055660(a3) == 1)
             {
-                gUnknown_03000580[a1] = 0x81;
+                sPlayerLinkStates[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(KeyInterCB_DeferToEventScript);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     RunConfirmLeaveCableClubScript();
                 }
             }
@@ -1996,10 +1996,10 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             script = sub_805568C(a3);
             if (script)
             {
-                gUnknown_03000580[a1] = 0x81;
+                sPlayerLinkStates[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(KeyInterCB_DeferToEventScript);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitMenuBasedScript(script);
                 }
             }
@@ -2007,10 +2007,10 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
         case 27:
             if (sub_8055618(a3))
             {
-                gUnknown_03000580[a1] = 0x81;
+                sPlayerLinkStates[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(KeyInterCB_DeferToRecvQueue);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
                     InitLinkPlayerQueueScript();
                 }
             }
@@ -2018,10 +2018,10 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
         case 28:
             if (sub_8055618(a3))
             {
-                gUnknown_03000580[a1] = 0x81;
+                sPlayerLinkStates[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(KeyInterCB_DeferToSendQueue);
+                    SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
                     InitLinkPlayerQueueScript();
                 }
             }
@@ -2032,19 +2032,19 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
     switch (a2)
     {
     case 23:
-        gUnknown_03000580[a1] = 0x83;
+        sPlayerLinkStates[a1] = 0x83;
         break;
     case 22:
-        gUnknown_03000580[a1] = 0x82;
+        sPlayerLinkStates[a1] = 0x82;
         break;
     case 26:
-        gUnknown_03000580[a1] = 0x80;
+        sPlayerLinkStates[a1] = 0x80;
         if (a3->b)
-            sub_80543DC(KeyInterCB_SelfIdle);
+            SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         break;
     case 29:
-        if (gUnknown_03000580[a1] == 0x82)
-            gUnknown_03000580[a1] = 0x81;
+        if (sPlayerLinkStates[a1] == 0x82)
+            sPlayerLinkStates[a1] = 0x81;
         break;
     }
 }
@@ -2059,7 +2059,7 @@ void UpdateAllLinkPlayers(u16 *a1, int a2)
         u16 v8 = 0;
         sub_80555B0(i, a2, &st);
         sub_8054FF8(i, v5, &st, &v8);
-        if (gUnknown_03000580[i] == 0x80)
+        if (sPlayerLinkStates[i] == 0x80)
             v8 = GetDirectionForDpadKey(v5);
         sub_8055BFC(i, v8);
     }
@@ -2133,7 +2133,7 @@ void CB1_OverworldLink(void)
 {
     u8 val = gLocalLinkPlayerId;
     UpdateAllLinkPlayers(word_3002910, val);
-    UpdateHeldKeyCode(gUnknown_03000584(val));
+    UpdateHeldKeyCode(sPlayerKeyInterceptCallback(val));
     ResetPlayerHeldKeys(word_3002910);
 }
 
@@ -2163,7 +2163,7 @@ u16 KeyInterCB_DeferToEventScript(u32 a1)
     else
     {
         retVal = 26;
-        sub_80543DC(KeyInterCB_Idle);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
@@ -2179,7 +2179,7 @@ u16 KeyInterCB_DeferToRecvQueue(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(KeyInterCB_Idle);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
@@ -2195,7 +2195,7 @@ u16 KeyInterCB_DeferToSendQueue(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(KeyInterCB_Idle);
+        SetKeyInterceptCallback(KeyInterCB_Idle);
     }
     return retVal;
 }
@@ -2207,9 +2207,9 @@ u16 KeyInterCB_ExitingSeat(u32 a1)
 
 u16 KeyInterCB_Ready(u32 linkPlayerId)
 {
-    if (gUnknown_03000580[linkPlayerId] == 0x82 && JOY_NEW(B_BUTTON))
+    if (sPlayerLinkStates[linkPlayerId] == 0x82 && JOY_NEW(B_BUTTON))
     {
-        sub_80543DC(KeyInterCB_ExitingSeat);
+        SetKeyInterceptCallback(KeyInterCB_ExitingSeat);
         return 29;
     }
     else
@@ -2220,7 +2220,7 @@ u16 KeyInterCB_Ready(u32 linkPlayerId)
 
 u16 KeyInterCB_SetReady(u32 a1)
 {
-    sub_80543DC(KeyInterCB_Ready);
+    SetKeyInterceptCallback(KeyInterCB_Ready);
     return 22;
 }
 
@@ -2234,14 +2234,14 @@ u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
     if (sub_8054F88(0x83) == TRUE)
     {
         ScriptContext_SetupScript(EventScript_DoLinkRoomExit);
-        sub_80543DC(KeyInterCB_SendNothing);
+        SetKeyInterceptCallback(KeyInterCB_SendNothing);
     }
     return 17;
 }
 
 u16 KeyInterCB_SendExitRoomKey(u32 a1)
 {
-    sub_80543DC(KeyInterCB_WaitForPlayersToExit);
+    SetKeyInterceptCallback(KeyInterCB_WaitForPlayersToExit);
     return 23;
 }
 
@@ -2249,9 +2249,9 @@ s32 GetCableClubPartnersReady(void)
 {
     if (sub_8054FC0(0x83) == TRUE)
         return 2;
-    if (gUnknown_03000584 == KeyInterCB_Ready && gUnknown_03000580[gLocalLinkPlayerId] != 0x82)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_Ready && sPlayerLinkStates[gLocalLinkPlayerId] != 0x82)
         return 0;
-    if (gUnknown_03000584 == KeyInterCB_ExitingSeat && gUnknown_03000580[gLocalLinkPlayerId] == 0x81)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_ExitingSeat && sPlayerLinkStates[gLocalLinkPlayerId] == 0x81)
         return 2;
     return sub_8054F88(0x82);
 }
@@ -2263,19 +2263,19 @@ bool32 unref_sub_8055568(void)
 
 u16 SetInCableClubSeat(void)
 {
-    sub_80543DC(KeyInterCB_SetReady);
+    SetKeyInterceptCallback(KeyInterCB_SetReady);
     return 0;
 }
 
 u16 SetLinkWaitingForScript(void)
 {
-    sub_80543DC(KeyInterCB_DeferToEventScript);
+    SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
     return 0;
 }
 
 u16 QueueExitLinkRoomKey(void)
 {
-    sub_80543DC(KeyInterCB_SendExitRoomKey);
+    SetKeyInterceptCallback(KeyInterCB_SendExitRoomKey);
     return 0;
 }
 
@@ -2348,7 +2348,7 @@ const u8 *sub_805568C(struct UnkStruct_8054FF8 *a1)
     {
         if (!a1->b)
             return CableClub_EventScript_TooBusyToNotice;
-        if (gUnknown_03000580[linkPlayerId] != 0x80)
+        if (sPlayerLinkStates[linkPlayerId] != 0x80)
             return CableClub_EventScript_TooBusyToNotice;
         if (!GetLinkTrainerCardColor(linkPlayerId))
             return CableClub_EventScript_ReadTrainerCard;
@@ -2448,10 +2448,10 @@ bool32 Overworld_RecvKeysFromLinkIsRunning(void)
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == KeyInterCB_DeferToRecvQueue)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_DeferToRecvQueue)
         return TRUE;
 
-    if (gUnknown_03000584 != KeyInterCB_DeferToEventScript)
+    if (sPlayerKeyInterceptCallback != KeyInterCB_DeferToEventScript)
         return FALSE;
 
     temp = gUnknown_03000588;
@@ -2474,7 +2474,7 @@ bool32 Overworld_SendKeysToLinkIsRunning(void)
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == KeyInterCB_DeferToSendQueue)
+    if (sPlayerKeyInterceptCallback == KeyInterCB_DeferToSendQueue)
         return TRUE;
 
     return FALSE;
