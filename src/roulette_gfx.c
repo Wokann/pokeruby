@@ -48,16 +48,16 @@ void SpriteCB_RollBall_Fast(struct Sprite *);
 void CreateShroomishSprite(struct Sprite *);
 void CreateTaillowSprite(struct Sprite *);
 void SetBallStuck(struct Sprite *);
-void sub_8119780(struct Sprite *);
-void sub_81197D8(struct Sprite *);
-void sub_8119898(struct Sprite *);
-void sub_8119964(struct Sprite *);
-void sub_8119A90(struct Sprite *);
-void sub_8119AAC(struct Sprite *);
-void sub_8119B24(struct Sprite *);
-void sub_8119BCC(struct Sprite *);
-void sub_8119D08(struct Sprite *);
-void sub_8119D80(struct Sprite *);
+void SpriteCB_ShroomishExit(struct Sprite *);
+void SpriteCB_ShroomishShakeScreen(struct Sprite *);
+void SpriteCB_ShroomishFall(struct Sprite *);
+void SpriteCB_Shroomish(struct Sprite *);
+void SpriteCB_TaillowShadow_Flash(struct Sprite *);
+void SpriteCB_Taillow_FlyAway(struct Sprite *);
+void SpriteCB_Taillow_PickUpBall(struct Sprite *);
+void SpriteCB_Taillow_FlyIn(struct Sprite *);
+void SpriteCB_TaillowShadow_FlyIn(struct Sprite *);
+void SpriteCB_Taillow(struct Sprite *);
 
 #if DEBUG
 extern u8 unk_2039560;
@@ -622,7 +622,7 @@ const union AnimCmd *const gSpriteAnimTable_83FA4F4[] = {
 
 const struct SpriteTemplate gSpriteTemplate_83FA50C = {0xffff, 6, &gOamData_83FA44C, gSpriteAnimTable_83FA4F0, gSpriteImageTable_83FA45C, gDummySpriteAffineAnimTable, SpriteCallbackDummy};
 
-const struct SpriteTemplate gSpriteTemplate_83FA524 = {0xffff, 7, &gOamData_83FA454, gSpriteAnimTable_83FA4F4, gSpriteImageTable_83FA45C, gDummySpriteAffineAnimTable, sub_8119D80};
+const struct SpriteTemplate gSpriteTemplate_83FA524 = {0xffff, 7, &gOamData_83FA454, gSpriteAnimTable_83FA4F4, gSpriteImageTable_83FA45C, gDummySpriteAffineAnimTable, SpriteCB_Taillow};
 
 const struct OamData gOamData_83FA53C = {
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -686,10 +686,10 @@ const union AffineAnimCmd *const gSpriteAffineAnimTable_83FA5BC[] = {
 
 const struct SpriteTemplate gSpriteTemplate_83FA5C0[] = {
     {0xffff, 1, &gOamData_83FA53C, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA554, gDummySpriteAffineAnimTable, SpriteCallbackDummy},
-    {0xffff, 1, &gOamData_83FA544, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, gDummySpriteAffineAnimTable, sub_8119964}
+    {0xffff, 1, &gOamData_83FA544, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, gDummySpriteAffineAnimTable, SpriteCB_Shroomish}
 };
 
-const struct SpriteTemplate gSpriteTemplate_83FA5F0 = {0xffff, 1, &gOamData_83FA54C, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, gSpriteAffineAnimTable_83FA5A8, sub_8119D80};
+const struct SpriteTemplate gSpriteTemplate_83FA5F0 = {0xffff, 1, &gOamData_83FA54C, gSpriteAnimTable_83F9ED8, gSpriteImageTable_83FA55C, gSpriteAffineAnimTable_83FA5A8, SpriteCB_Taillow};
 
 void LoadOrFreeMiscSpritePalettesAndSheets(u8 r0)
 {
@@ -1723,7 +1723,7 @@ const u16 gUnknown_083FA61E[] = {
     BLDALPHA_BLEND(16, 0),
 };
 
-void sub_8119780(struct Sprite *sprite)
+void SpriteCB_ShroomishExit(struct Sprite *sprite)
 {
     if (sprite->data[1]++ >= sprite->data[3])
     {
@@ -1739,7 +1739,7 @@ void sub_8119780(struct Sprite *sprite)
     }
 }
 
-void sub_81197D8(struct Sprite *sprite)
+void SpriteCB_ShroomishShakeScreen(struct Sprite *sprite)
 {
     s16 t[3][4] = {
         {-1, 0, 1, 0},
@@ -1768,7 +1768,7 @@ void sub_81197D8(struct Sprite *sprite)
     }
 }
 
-void sub_8119898(struct Sprite *sprite)
+void SpriteCB_ShroomishFall(struct Sprite *sprite)
 {
     float t;
     sprite->data[1]++;
@@ -1780,16 +1780,16 @@ void sub_8119898(struct Sprite *sprite)
     if (sprite->data[1] > 60)
     {
         sprite->data[1] = 0;
-        sprite->callback = sub_8119780;
-        gSprites[sprite->data[6]].callback  = sub_8119780;
+        sprite->callback = SpriteCB_ShroomishExit;
+        gSprites[sprite->data[6]].callback  = SpriteCB_ShroomishExit;
         gSprites[sprite->data[6]].data[1] = -2;
         gSprites[sprite->data[5]].invisible = FALSE;
-        gSprites[sprite->data[5]].callback  = sub_81197D8;
+        gSprites[sprite->data[5]].callback  = SpriteCB_ShroomishShakeScreen;
         m4aSongNumStart(SE_M_STRENGTH);
     }
 }
 
-void sub_8119964(struct Sprite *sprite)
+void SpriteCB_Shroomish(struct Sprite *sprite)
 {
     if (sprite->data[7] == 0)
     {
@@ -1834,7 +1834,7 @@ void sub_8119964(struct Sprite *sprite)
         }
         if (t == z)
         {
-            gSprites[sprite->data[4]].callback  = sub_8119898;
+            gSprites[sprite->data[4]].callback  = SpriteCB_ShroomishFall;
             gSprites[sprite->data[4]].invisible = FALSE;
             sprite->callback  = &SpriteCallbackDummy;
             sprite->data[7] = 0;
@@ -1842,12 +1842,12 @@ void sub_8119964(struct Sprite *sprite)
     }
 }
 
-void sub_8119A90(struct Sprite *sprite)
+void SpriteCB_TaillowShadow_Flash(struct Sprite *sprite)
 {
     sprite->invisible ^= 1;
 }
 
-void sub_8119AAC(struct Sprite *sprite)
+void SpriteCB_Taillow_FlyAway(struct Sprite *sprite)
 {
     if (sprite->y > -16)
     {
@@ -1865,7 +1865,7 @@ void sub_8119AAC(struct Sprite *sprite)
     }
 }
 
-void sub_8119B24(struct Sprite *sprite)
+void SpriteCB_Taillow_PickUpBall(struct Sprite *sprite)
 {
     if (sprite->data[1] >= 0)
     {
@@ -1891,13 +1891,13 @@ void sub_8119B24(struct Sprite *sprite)
         {
             m4aSongNumStart(SE_FALL);
             StartSpriteAnim(sprite, eRoulette->var38->data[0] + 4);
-            sprite->callback = sub_8119AAC;
+            sprite->callback = SpriteCB_Taillow_FlyAway;
             gSprites[sprite->data[6]].affineAnimPaused = FALSE;
         }
     }
 }
 
-void sub_8119BCC(struct Sprite *sprite)
+void SpriteCB_Taillow_FlyIn(struct Sprite *sprite)
 {
     s8 t[2] = {-1, 1}; //sign
     s8 z[8][2] = {
@@ -1936,12 +1936,12 @@ void sub_8119BCC(struct Sprite *sprite)
                 PlayCry_Normal(SPECIES_TAILLOW, -63);
             StartSpriteAnim(sprite, eRoulette->var38->data[0] + 2);
             sprite->data[1] = 45;
-            sprite->callback = sub_8119B24;
+            sprite->callback = SpriteCB_Taillow_PickUpBall;
         }
     }
 }
 
-void sub_8119D08(struct Sprite *sprite)
+void SpriteCB_TaillowShadow_FlyIn(struct Sprite *sprite)
 {
     s8 t[2] = {-1, 1}; //sign
     if (sprite->data[1]-- >= 0)
@@ -1951,11 +1951,11 @@ void sub_8119D08(struct Sprite *sprite)
     }
     else
     {
-        sprite->callback = sub_8119A90;
+        sprite->callback = SpriteCB_TaillowShadow_Flash;
     }
 }
 
-void sub_8119D80(struct Sprite *sprite)
+void SpriteCB_Taillow(struct Sprite *sprite)
 {
     if (eRoulette->var38->data[0] == 0)
     {
@@ -1981,7 +1981,7 @@ void sub_8119D80(struct Sprite *sprite)
             return;
         }
     }
-    gSprites[sprite->data[6]].callback = sub_8119D08;
-    gSprites[sprite->data[4]].callback = sub_8119BCC;
+    gSprites[sprite->data[6]].callback = SpriteCB_TaillowShadow_FlyIn;
+    gSprites[sprite->data[4]].callback = SpriteCB_Taillow_FlyIn;
     m4aSongNumStart(SE_FALL);
 }
