@@ -1080,7 +1080,7 @@ bool8 ScrCmd_showobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    npc_by_local_id_and_map_set_field_1_bit_x20(localId, mapNum, mapGroup, 0);
+    SetObjectInvisibility(localId, mapNum, mapGroup, FALSE);
     return FALSE;
 }
 
@@ -1090,7 +1090,7 @@ bool8 ScrCmd_hideobjectat(struct ScriptContext *ctx)
     u8 mapGroup = ScriptReadByte(ctx);
     u8 mapNum = ScriptReadByte(ctx);
 
-    npc_by_local_id_and_map_set_field_1_bit_x20(localId, mapNum, mapGroup, 1);
+    SetObjectInvisibility(localId, mapNum, mapGroup, TRUE);
     return FALSE;
 }
 

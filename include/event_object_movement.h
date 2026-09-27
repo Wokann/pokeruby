@@ -358,7 +358,7 @@ void ObjectEventSetGraphicsId(struct ObjectEvent *, u8);
 void ObjectEventTurn(struct ObjectEvent *, u8);
 void ObjectEventTurnByLocalIdAndMap(u8, u8, u8, u8);
 const struct ObjectEventGraphicsInfo *GetObjectEventGraphicsInfo(u8);
-void npc_by_local_id_and_map_set_field_1_bit_x20(u8, u8, u8, u8);
+void SetObjectInvisibility(u8, u8, u8, bool8);
 void ObjectEventGetLocalIdAndMap(struct ObjectEvent *, void *, void *, void *);
 void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y);
 void SetObjectSubpriority(u8, u8, u8, u8);
