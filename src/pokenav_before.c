@@ -1520,11 +1520,11 @@ void HandlePokenavMainMenuInput(void)
         SetPokenavCallback(&ExitPokenav);
         break;
     case 2:
-        sub_80F6208();
+        InitAnyMonHasRibbonScan();
         gPokenavStructPtr->callbackStep++;
         // fall through
     case 3:
-        if (!sub_80F6250())
+        if (!AnyMonHasRibbonScanStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:

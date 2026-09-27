@@ -4669,19 +4669,19 @@ void RestorePokenavListSelection(void)
     }
 }
 
-void sub_80F6208(void)
+void InitAnyMonHasRibbonScan(void)
 {
     gPokenavStructPtr->unk8FE6 = 0;
     gPokenavStructPtr->unk8FE7 = 0;
     gPokenavStructPtr->unk8FE8 = 0xFF;
     if (gPokenavStructPtr->unk6DAC == 0)
     {
-        while (sub_80F6250())
+        while (AnyMonHasRibbonScanStep())
             ;
     }
 }
 
-bool8 sub_80F6250(void)
+bool8 AnyMonHasRibbonScanStep(void)
 {
     u16 i;
 
