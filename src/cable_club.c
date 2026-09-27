@@ -800,7 +800,7 @@ static void CB2_ReturnFromCableClubBattle(void)
     UpdateTrainerFansAfterLinkBattle();
 
     if (gSpecialVar_0x8004 != 5)
-        UpdateLinkBattleRecords(gUnknown_03004860 ^ 1);
+        UpdatePlayerLinkBattleRecords(gUnknown_03004860 ^ 1);
 
     gMain.savedCallback = sub_805465C;
     SetMainCallback2(sub_8071B28);

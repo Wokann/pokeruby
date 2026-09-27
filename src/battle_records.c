@@ -37,7 +37,7 @@ const struct {u8 totalPoints; u8 nextTurnSpriteId;} gUnknown_Debug_8424620[] =
 };
 #endif
 
-static void InitLinkBattleRecord(struct LinkBattleRecord *record)
+static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
 {
     CpuFill16(0, record, sizeof(struct LinkBattleRecord));
     record->name[0] = 0xFF;
@@ -47,12 +47,12 @@ static void InitLinkBattleRecord(struct LinkBattleRecord *record)
     record->draws = 0;
 }
 
-static void InitLinkBattleRecords_(struct LinkBattleRecord *records)
+static void ClearLinkBattleRecords(struct LinkBattleRecord *records)
 {
     int i;
     for (i = 0; i < 5; i++)
     {
-        InitLinkBattleRecord(records + i);
+        ClearLinkBattleRecord(records + i);
     }
     SetGameStat(GAME_STAT_LINK_BATTLE_WINS, 0);
     SetGameStat(GAME_STAT_LINK_BATTLE_LOSSES, 0);
@@ -145,7 +145,7 @@ static void UpdateLinkBattleGameStats(int battleOutcome)
         IncrementGameStat(stat);
 }
 
-static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 *name, u16 trainerId, int battleOutcome, u8 language)
+static void UpdateLinkBattleRecords(struct LinkBattleRecord *records, const u8 *name, u16 trainerId, int battleOutcome, u8 language)
 {
     int index;
     UpdateLinkBattleGameStats(battleOutcome);
@@ -154,7 +154,7 @@ static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 
     if (index == 5)
     {
         index = 4;
-        InitLinkBattleRecord(records + index);
+        ClearLinkBattleRecord(records + index);
         if (language == LANGUAGE_JAPANESE)
         {
             records[index].name[0] = EXT_CTRL_CODE_BEGIN;
@@ -176,9 +176,9 @@ static void UpdateLinkBattleRecords_(struct LinkBattleRecord *records, const u8 
     SortLinkBattleRecords(records);
 }
 
-void InitLinkBattleRecords(void)
+void ClearPlayerLinkBattleRecords(void)
 {
-    InitLinkBattleRecords_(gSaveBlock1.linkBattleRecords);
+    ClearLinkBattleRecords(gSaveBlock1.linkBattleRecords);
 }
 
 static void IncTrainerCardWins(int id)
@@ -212,10 +212,10 @@ static void UpdateTrainerCardWinsLosses(int id)
     }
 }
 
-void UpdateLinkBattleRecords(int id)
+void UpdatePlayerLinkBattleRecords(int id)
 {
     UpdateTrainerCardWinsLosses(id);
-    UpdateLinkBattleRecords_(
+    UpdateLinkBattleRecords(
         gSaveBlock1.linkBattleRecords,
         gTrainerCards[id].playerName,
         gTrainerCards[id].trainerId,
@@ -228,12 +228,12 @@ void debug_sub_81257E0(void)
 {
     u32 i;
 
-    InitLinkBattleRecords();
+    ClearPlayerLinkBattleRecords();
     for (i = 0; i < 3; i++)
     {
         u32 id = gUnknown_Debug_8424620[i].totalPoints - 1;
 
-        UpdateLinkBattleRecords_(
+        UpdateLinkBattleRecords(
             gSaveBlock1.linkBattleRecords,
             gUnknown_Debug_4245CC[id].var1,
             gUnknown_Debug_4245CC[id].var0,
@@ -305,7 +305,7 @@ void ShowLinkBattleRecords(void)
     }
 }
 
-static bool32 sub_8110494(u8 level)
+static bool32 IsBattleTowerWinStreakActive(u8 level)
 {
     struct BattleTowerData *battleTower = &gSaveBlock2.battleTower;
 
@@ -358,7 +358,7 @@ static u16 GetLastWinStreak(u8 level)
 static void PrintLastWinStreak(u8 level, u8 left, u8 top)
 {
     u16 winStreak = GetLastWinStreak(level);
-    if (sub_8110494(level) == TRUE)
+    if (IsBattleTowerWinStreakActive(level) == TRUE)
         PrintWinStreak(gOtherText_Current, winStreak, left, top);
     else
         PrintWinStreak(gOtherText_Prev, winStreak, left, top);
