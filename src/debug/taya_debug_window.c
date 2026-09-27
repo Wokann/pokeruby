@@ -83,29 +83,29 @@ const struct {
     {sText_TayaEasyChat_BattleTowerInterview, 0xC}
 };
 
-const u16 gUnknown_Debug_083C4F08[] = {0x45b, 0x430, 0x20f};
+const u16 sBardTestLyrics[] = {0x45b, 0x430, 0x20f};
 
-const u8 gUnknown_Debug_083C4F0E[] = _("BARD");
-const u8 gUnknown_Debug_083C4F13[] = _("HIPSTER");
-const u8 gUnknown_Debug_083C4F1B[] = _("RECYCLE");
-const u8 gUnknown_Debug_083C4F23[] = _("STORYTELLER");
-const u8 gUnknown_Debug_083C4F2F[] = _("GIDDY GUY");
-const u8 gUnknown_Debug_083C4F39[] = _("Flag OFF");
-const u8 gUnknown_Debug_083C4F42[] = _("21 letters");
-const u8 gUnknown_Debug_083C4F4D[] = DTR("ナウくなる", "BECOME HIP");
+const u8 sText_TayaOldMan_Bard[] = _("BARD");
+const u8 sText_TayaOldMan_Hipster[] = _("HIPSTER");
+const u8 sText_TayaOldMan_Trader[] = _("RECYCLE");
+const u8 sText_TayaOldMan_Storyteller[] = _("STORYTELLER");
+const u8 sText_TayaOldMan_GiddyGuy[] = _("GIDDY GUY");
+const u8 sText_TayaOldMan_FlagOff[] = _("Flag OFF");
+const u8 sText_TayaOldMan_21Letters[] = _("21 letters");
+const u8 sText_TayaOldMan_BecomeHip[] = DTR("ナウくなる", "BECOME HIP");
 
 const struct {
     const u8 * text;
     u8 filler[4];
-} gUnknown_Debug_083C4F54[] = {
-    {gUnknown_Debug_083C4F0E},
-    {gUnknown_Debug_083C4F13},
-    {gUnknown_Debug_083C4F1B},
-    {gUnknown_Debug_083C4F23},
-    {gUnknown_Debug_083C4F2F},
-    {gUnknown_Debug_083C4F39},
-    {gUnknown_Debug_083C4F42},
-    {gUnknown_Debug_083C4F4D}
+} sOldManOptions_TayaDebug[] = {
+    {sText_TayaOldMan_Bard},
+    {sText_TayaOldMan_Hipster},
+    {sText_TayaOldMan_Trader},
+    {sText_TayaOldMan_Storyteller},
+    {sText_TayaOldMan_GiddyGuy},
+    {sText_TayaOldMan_FlagOff},
+    {sText_TayaOldMan_21Letters},
+    {sText_TayaOldMan_BecomeHip}
 };
 
 const u8 gUnknown_Debug_083C4F94[] = DTR("しょうしょうおまちください！", "Please wait!");
@@ -310,7 +310,7 @@ bool8 TayaDebugMenu_SimpleText(void)
     return FALSE;
 }
 
-bool8 debug_sub_8090984(void)
+bool8 TayaDebugMenu_HandleOldManInput(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -342,9 +342,9 @@ bool8 debug_sub_8090984(void)
         for (i = 0; i < 3; i++)
         {
             union OldMan *oldMan = &gSaveBlock1.oldMan;
-            oldMan->bard.songLyrics[i] = gUnknown_Debug_083C4F08[i];
-            oldMan->bard.newSongLyrics[i] = gUnknown_Debug_083C4F08[i];
-            gSaveBlock1.easyChats.unk2B28[i] = gUnknown_Debug_083C4F08[i];
+            oldMan->bard.songLyrics[i] = sBardTestLyrics[i];
+            oldMan->bard.newSongLyrics[i] = sBardTestLyrics[i];
+            gSaveBlock1.easyChats.unk2B28[i] = sBardTestLyrics[i];
         }
     }
     else if (input == 7)
@@ -363,9 +363,9 @@ bool8 debug_sub_8090984(void)
 bool8 TayaDebugMenu_OldMan(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 10, 17);
-    Menu_PrintItems(1, 1, ARRAY_COUNT(gUnknown_Debug_083C4F54), gUnknown_Debug_083C4F54);
-    InitMenu(0, 1, 1, ARRAY_COUNT(gUnknown_Debug_083C4F54), GetCurrentMauvilleOldMan(), 9);
-    gMenuCallback = debug_sub_8090984;
+    Menu_PrintItems(1, 1, ARRAY_COUNT(sOldManOptions_TayaDebug), sOldManOptions_TayaDebug);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sOldManOptions_TayaDebug), GetCurrentMauvilleOldMan(), 9);
+    gMenuCallback = TayaDebugMenu_HandleOldManInput;
     return FALSE;
 }
 
