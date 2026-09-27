@@ -2634,10 +2634,10 @@ void OpenRibbonsMonList(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 5:
-        sub_80F638C();
+        InitRibbonsMonList();
         gPokenavStructPtr->callbackStep++;
     case 6:
-        if (!sub_80F63D0())
+        if (!BuildRibbonsMonListStep())
             gPokenavStructPtr->callbackStep += 2;
         else
 			gPokenavStructPtr->callbackStep += 1;

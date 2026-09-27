@@ -4731,19 +4731,19 @@ bool8 AnyMonHasRibbonScanStep(void)
     return TRUE;
 }
 
-void sub_80F638C(void)
+void InitRibbonsMonList(void)
 {
     gPokenavStructPtr->unk8FE6 = 0;
     gPokenavStructPtr->unk8FE7 = 0;
     ResetPokenavMonList();
     if (gPokenavStructPtr->unk6DAC == 0)
     {
-        while (sub_80F63D0())
+        while (BuildRibbonsMonListStep())
             ;
     }
 }
 
-bool8 sub_80F63D0(void)
+bool8 BuildRibbonsMonListStep(void)
 {
     struct UnkUsePokeblockSub sp0;
     u8 ribbons;
