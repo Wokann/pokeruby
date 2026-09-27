@@ -291,8 +291,8 @@ void CB2_ChooseStarter(void)
     ResetPaletteFade();
     FreeAllSpritePalettes();
     LoadPalette(gBirchBagGrassPal, 0, sizeof(gBirchBagGrassPal));
-    LoadCompressedObjectPic(&sSpriteSheet_PokeballSelect[0]);
-    LoadCompressedObjectPic(&sSpriteSheet_StarterCircle[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_PokeballSelect[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_StarterCircle[0]);
     LoadSpritePalettes(sSpritePalettes_StarterChoose);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);
@@ -569,12 +569,12 @@ static u8 CreatePokemonFrontSprite(u16 species, u8 x, u8 y)
 {
     u8 spriteId;
 
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
       &gMonFrontPicTable[species],
       gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset,
       gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1],
       species);
-    LoadCompressedObjectPalette(&gMonPaletteTable[species]);
+    LoadCompressedSpritePalette(&gMonPaletteTable[species]);
     SetMultiuseSpriteTemplateToPokemon(species, 1);
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
     gSprites[spriteId].callback = SpriteCB_StarterPokemonIdle;

@@ -401,11 +401,11 @@ static bool8 LoadPokeblockMenuGfx(void)
             ePokeblockGfxState++;
             break;
         case 3:
-            LoadCompressedObjectPic(&gPokeblockCase_SpriteSheet);
+            LoadCompressedSpriteSheet(&gPokeblockCase_SpriteSheet);
             ePokeblockGfxState++;
             break;
         case 4:
-            LoadCompressedObjectPalette(&gPokeblockCase_SpritePal);
+            LoadCompressedSpritePalette(&gPokeblockCase_SpritePal);
             ePokeblockGfxState = 0;
             return TRUE;
     }

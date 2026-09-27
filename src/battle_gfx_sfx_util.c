@@ -403,7 +403,7 @@ void sub_8031A6C(u16 a, u8 b)
     struct CompressedSpriteSheet spriteSheet;
 
     status = GetBattlerPosition(b);
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
       &gTrainerFrontPicTable[a],
       gTrainerFrontPicCoords[a].coords,
       gTrainerFrontPicCoords[a].y_offset,
@@ -413,8 +413,8 @@ void sub_8031A6C(u16 a, u8 b)
     spriteSheet.data = gMonSpriteGfx_Sprite_ptr[status];
     spriteSheet.size = gTrainerFrontPicTable[a].size;
     spriteSheet.tag = gTrainerFrontPicTable[a].tag;
-    LoadCompressedObjectPic(&spriteSheet);
-    LoadCompressedObjectPalette(&gTrainerFrontPicPaletteTable[a]);
+    LoadCompressedSpriteSheet(&spriteSheet);
+    LoadCompressedSpritePalette(&gTrainerFrontPicPaletteTable[a]);
 }
 
 void DecompressTrainerBackPic(u16 a, u8 b)
@@ -422,7 +422,7 @@ void DecompressTrainerBackPic(u16 a, u8 b)
     u8 status;
 
     status = GetBattlerPosition(b);
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
       &gTrainerBackPicTable[a],
       gTrainerBackPicCoords[a].coords,
       gTrainerBackPicCoords[a].y_offset,
@@ -451,20 +451,20 @@ void unref_sub_8031BA0(void)
     LoadSpritePalette(&gUnknown_0820A4D4[1]);
     if (!IsDoubleBattle())
     {
-        LoadCompressedObjectPic(&gUnknown_0820A47C);
-        LoadCompressedObjectPic(&gUnknown_0820A484);
+        LoadCompressedSpriteSheet(&gUnknown_0820A47C);
+        LoadCompressedSpriteSheet(&gUnknown_0820A484);
         count = 2;
     }
     else
     {
-        LoadCompressedObjectPic(&gUnknown_0820A48C[0]);
-        LoadCompressedObjectPic(&gUnknown_0820A48C[1]);
-        LoadCompressedObjectPic(&gUnknown_0820A49C[0]);
-        LoadCompressedObjectPic(&gUnknown_0820A49C[1]);
+        LoadCompressedSpriteSheet(&gUnknown_0820A48C[0]);
+        LoadCompressedSpriteSheet(&gUnknown_0820A48C[1]);
+        LoadCompressedSpriteSheet(&gUnknown_0820A49C[0]);
+        LoadCompressedSpriteSheet(&gUnknown_0820A49C[1]);
         count = 4;
     }
     for (i = 0; i < count; i++)
-        LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[i]]);
+        LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[i]]);
 }
 
 bool8 sub_8031C30(u8 a)
@@ -483,37 +483,37 @@ bool8 sub_8031C30(u8 a)
             if (a == 2)
             {
                 if (gBattleTypeFlags & 0x80)
-                    LoadCompressedObjectPic(&gUnknown_0820A4AC);
+                    LoadCompressedSpriteSheet(&gUnknown_0820A4AC);
                 else
-                    LoadCompressedObjectPic(&gUnknown_0820A47C);
+                    LoadCompressedSpriteSheet(&gUnknown_0820A47C);
             }
             else if (a == 3)
-                LoadCompressedObjectPic(&gUnknown_0820A484);
+                LoadCompressedSpriteSheet(&gUnknown_0820A484);
             else if (a == 4)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[0]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[0]]);
             else if (a == 5)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[1]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[1]]);
             else
                 retVal = TRUE;
         }
         else
         {
             if (a == 2)
-                LoadCompressedObjectPic(&gUnknown_0820A48C[0]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A48C[0]);
             else if (a == 3)
-                LoadCompressedObjectPic(&gUnknown_0820A48C[1]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A48C[1]);
             else if (a == 4)
-                LoadCompressedObjectPic(&gUnknown_0820A49C[0]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A49C[0]);
             else if (a == 5)
-                LoadCompressedObjectPic(&gUnknown_0820A49C[1]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A49C[1]);
             else if (a == 6)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[0]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[0]]);
             else if (a == 7)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[1]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[1]]);
             else if (a == 8)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[2]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[2]]);
             else if (a == 9)
-                LoadCompressedObjectPic(&gUnknown_0820A4B4[gBattlerPositions[3]]);
+                LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[3]]);
             else
                 retVal = TRUE;
         }
@@ -878,7 +878,7 @@ void sub_80327CC(void)
 {
     u8 r5;
 
-    LoadCompressedObjectPic(&gUnknown_081FAF24);
+    LoadCompressedSpriteSheet(&gUnknown_081FAF24);
     r5 = GetBattlerAtPosition(1);
     gBattleHealthBoxInfo[r5].unk7 = CreateSprite(&gSpriteTemplate_81FAF34, GetBattlerSpriteCoord(r5, 0), GetBattlerSpriteCoord(r5, 1) + 32, 0xC8);
     gSprites[gBattleHealthBoxInfo[r5].unk7].data[0] = r5;

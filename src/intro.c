@@ -966,8 +966,8 @@ void Task_Scene1_Load(u8 taskId)
     REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(20) | BGCNT_16COLOR | BGCNT_TXT256x512;
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(18) | BGCNT_16COLOR | BGCNT_TXT256x512;
     REG_BG0CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(16) | BGCNT_16COLOR | BGCNT_TXT256x512;
-    LoadCompressedObjectPic(&gUnknown_0840B008[0]);
-    LoadCompressedObjectPic(&gUnknown_0840B018[0]);
+    LoadCompressedSpriteSheet(&gUnknown_0840B008[0]);
+    LoadCompressedSpriteSheet(&gUnknown_0840B018[0]);
     LoadSpritePalettes(gUnknown_0840B028);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1F0, 0x20);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1E1, 0x1E);
@@ -1087,14 +1087,14 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     u8 spriteId;
 
     if (gUnknown_02039318 == 0)
-        LoadCompressedObjectPic(gIntro2BrendanSpriteSheet);
+        LoadCompressedSpriteSheet(gIntro2BrendanSpriteSheet);
     else
-        LoadCompressedObjectPic(gIntro2MaySpriteSheet);
-    LoadCompressedObjectPic(gIntro2BicycleSpriteSheet);
+        LoadCompressedSpriteSheet(gIntro2MaySpriteSheet);
+    LoadCompressedSpriteSheet(gIntro2BicycleSpriteSheet);
 #ifdef SAPPHIRE
-    LoadCompressedObjectPic(gIntro2LatiasSpriteSheet);
+    LoadCompressedSpriteSheet(gIntro2LatiasSpriteSheet);
 #else
-    LoadCompressedObjectPic(gIntro2LatiosSpriteSheet);
+    LoadCompressedSpriteSheet(gIntro2LatiosSpriteSheet);
 #endif
     LoadSpritePalettes(gIntro2SpritePalettes);
     if (gUnknown_02039318 == 0)
@@ -1243,9 +1243,9 @@ static void Task_Scene3_LoadBattleStreaks(u8 taskId)
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
-    LoadCompressedObjectPic(&gIntro3PokeballGfx_Table[0]);
-    LoadCompressedObjectPic(&gIntro3MiscGfx_Table[0]);
-    LoadCompressedObjectPalette(&gInterfacePokeballPal_Table[0]);
+    LoadCompressedSpriteSheet(&gIntro3PokeballGfx_Table[0]);
+    LoadCompressedSpriteSheet(&gIntro3MiscGfx_Table[0]);
+    LoadCompressedSpritePalette(&gInterfacePokeballPal_Table[0]);
     LoadSpritePalettes(gIntro3MiscPal_Table);
     gTasks[taskId].func = Task_Scene3_InitBattleWindow;
 }
@@ -1615,7 +1615,7 @@ static u8 CreateIntroTrainerSprite(u16 a, u16 b, u16 c, u16 d)
 {
     u8 spriteId;
 
-    DecompressPicFromTable_2(&gTrainerBackPicTable[a], gTrainerBackPicCoords[a].coords, gTrainerBackPicCoords[a].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], a);
+    DecompressPicFromTable(&gTrainerBackPicTable[a], gTrainerBackPicCoords[a].coords, gTrainerBackPicCoords[a].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], a);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + d * 0x10, 0x20);
     PrepareHallOfFameTrainerPicSpriteTemplate(d, d);
     gCreatingSpriteTemplate.anims = gUnknown_0840B064;

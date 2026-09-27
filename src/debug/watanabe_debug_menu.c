@@ -2670,15 +2670,15 @@ void debug_80C6B00(u8 taskId)
 
 void debug_80C6CB8(u8 taskId)
 {
-    DecompressPicFromTable_2(gMonFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedObjectPalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
+    DecompressPicFromTable(gMonFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
+    LoadCompressedSpritePalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
     SetMultiuseSpriteTemplateToPokemon(gUnknown_Debug_2038A20->totalPoints, 1);
     gUnknown_Debug_2038A20->excitementAppealBonus = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
     gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].callback = debug_69;
     gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.priority = 0;
 
-    DecompressPicFromTable_2(gMonBackPicTable + gUnknown_Debug_2038A20->totalPoints, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[2], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedObjectPalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
+    DecompressPicFromTable(gMonBackPicTable + gUnknown_Debug_2038A20->totalPoints, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[2], gUnknown_Debug_2038A20->totalPoints);
+    LoadCompressedSpritePalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
     SetMultiuseSpriteTemplateToPokemon(gUnknown_Debug_2038A20->totalPoints, 2);
     gUnknown_Debug_2038A20->unk3 = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x78, 0);
     gSprites[gUnknown_Debug_2038A20->unk3].callback = debug_69;
@@ -3297,8 +3297,8 @@ void debug_80C777C(u8 taskId)
 
 void debug_80C7934(u8 taskId)
 {
-    DecompressPicFromTable_2(gTrainerFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedObjectPalette(gTrainerFrontPicPaletteTable + gUnknown_Debug_2038A20->totalPoints);
+    DecompressPicFromTable(gTrainerFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
+    LoadCompressedSpritePalette(gTrainerFrontPicPaletteTable + gUnknown_Debug_2038A20->totalPoints);
     SetMultiuseSpriteTemplateToTrainerBack(gUnknown_Debug_2038A20->totalPoints, 1);
     gUnknown_Debug_2038A20->excitementAppealBonus = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
     gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].callback = debug_69;

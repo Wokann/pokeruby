@@ -535,13 +535,13 @@ static bool8 LoadBagGraphicsMultistep(void)
         break;
     case 3:
         if (gSaveBlock2.playerGender == MALE || sReturnLocation == RETURN_TO_WALLY_BATTLE)
-            LoadCompressedObjectPic(&sMaleBagSpriteSheet);
+            LoadCompressedSpriteSheet(&sMaleBagSpriteSheet);
         else
-            LoadCompressedObjectPic(&sFemaleBagSpriteSheet);
+            LoadCompressedSpriteSheet(&sFemaleBagSpriteSheet);
         ewramBagSetupStep++;
         break;
     case 4:
-        LoadCompressedObjectPalette(&sBagSpritePalette);
+        LoadCompressedSpritePalette(&sBagSpritePalette);
         ewramBagSetupStep = 0;
         return TRUE;
     }
@@ -3913,7 +3913,7 @@ static void LoadBerryPic(u8 berryId)
     {
         spritePal.data = (u16 *)sBerryGraphicsTable[berryId].lzPalette;
         spritePal.tag = 0x7544;
-        LoadCompressedObjectPalette((struct CompressedSpritePalette *)&spritePal);
+        LoadCompressedSpritePalette((struct CompressedSpritePalette *)&spritePal);
         LZDecompressWram(sBerryGraphicsTable[berryId].lzPic, ewramBerryPicTemp);
         DrawBerryPic(ewramBerryPicTemp, ewramBerryPic);
     }

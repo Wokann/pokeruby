@@ -984,7 +984,7 @@ u8 CreateJudgeSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&sSpriteSheet_Judge);
+    LoadCompressedSpriteSheet(&sSpriteSheet_Judge);
     LoadCompressedPalette(gContest2Pal, 0x110, 32);
     spriteId = CreateSprite(&sSpriteTemplate_Judge, 112, 36, 30);
     gSprites[spriteId].oam.paletteNum = 1;
@@ -996,8 +996,8 @@ u8 CreateJudgeSpeechBubbleSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&sSpriteSheet_JudgeSymbols);
-    LoadCompressedObjectPalette(&sSpritePalette_JudgeSymbols);
+    LoadCompressedSpriteSheet(&sSpriteSheet_JudgeSymbols);
+    LoadCompressedSpritePalette(&sSpritePalette_JudgeSymbols);
     spriteId = CreateSprite(&sSpriteTemplate_JudgeSpeechBubble, 96, 10, 29);
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].data[0] = gSprites[spriteId].oam.tileNum;
@@ -1010,7 +1010,7 @@ u8 CreateUnusedPlayerContestantSprite(void)
     u16 species = gContestMons[gContestPlayerMonIndex].species;
     u8 spriteId;
 
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
         &gMonFrontPicTable[species],
         gMonFrontPicCoords[species].coords,
         gMonFrontPicCoords[species].y_offset,
@@ -2062,7 +2062,7 @@ void CreateNextTurnSprites(void)
     LoadSpritePalette(&gUnknown_083CA3E4);
     for (i = 0; i < 4; i++)
     {
-        LoadCompressedObjectPic(&gUnknown_083CA3C4[i]);
+        LoadCompressedSpriteSheet(&gUnknown_083CA3C4[i]);
         eContestGfxState[i].nextTurnSpriteId = CreateSprite(
             &gSpriteTemplate_83CA3F4[i],
             204, gUnknown_083CA33C[gContestantTurnOrder[i]],
@@ -2076,7 +2076,7 @@ void CreateApplauseMeterSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&gUnknown_083CA46C);
+    LoadCompressedSpriteSheet(&gUnknown_083CA46C);
     LoadSpritePalette(&gUnknown_083CA474);
     spriteId = CreateSprite(&gSpriteTemplate_83CA484, 30, 44, 1);
     gSprites[spriteId].invisible = TRUE;
@@ -2091,9 +2091,9 @@ void CreateUnusedContestantRankSprites(void)
 {
     u8 i;
 
-    LoadCompressedObjectPic(&gUnknown_083CC3AC);
+    LoadCompressedSpriteSheet(&gUnknown_083CC3AC);
     for (i = 0; i < 4; i++)
-        LoadCompressedObjectPalette(&gUnknown_083CC3B4[i]);
+        LoadCompressedSpritePalette(&gUnknown_083CC3B4[i]);
     for (i = 0; i < 4; i++)
     {
         u8 spriteId = CreateSprite(
@@ -2785,7 +2785,7 @@ u8 CreateContestantBoxBlinkSprites(u8 a)
     u8 r6;
     volatile u8 zero;
 
-    LoadCompressedObjectPic(&gUnknown_083CC4B4[a]);
+    LoadCompressedSpriteSheet(&gUnknown_083CC4B4[a]);
     LoadSpritePalette(&gUnknown_083CC4D4[a]);
     r8 = CreateSprite(&gSpriteTemplate_83CC53C[a], 184, r5, 29);
     r6 = CreateSprite(&gSpriteTemplate_83CC53C[a], 248, r5, 29);

@@ -1908,7 +1908,7 @@ static bool8 LoadPokedexListPage(u8 a)
         ResetSpriteData();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 8;
-        LoadCompressedObjectPic(&sInterfaceSpriteSheet[0]);
+        LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[0]);
         LoadSpritePalettes(sInterfaceSpritePalette);
         CreateInterfaceSprites(a);
         gMain.state++;
@@ -4532,7 +4532,7 @@ u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum)
     switch (num)
     {
     default:
-        DecompressPicFromTable_2(
+        DecompressPicFromTable(
           &gMonFrontPicTable[num],
           gMonFrontPicCoords[num].coords,
           gMonFrontPicCoords[num].y_offset,
@@ -4574,7 +4574,7 @@ u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum)
 {
     u8 spriteId;
 
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
       &gTrainerFrontPicTable[gender],
       gTrainerFrontPicCoords[gender].coords,
       gTrainerFrontPicCoords[gender].y_offset,
@@ -4750,7 +4750,7 @@ static void Task_LoadSearchMenu(u8 taskId)
     case 1:
         Text_LoadWindowTemplate(&gWindowTemplate_81E7064);
         InitMenuWindow(&gWindowTemplate_81E7064);
-        LoadCompressedObjectPic(&sInterfaceSpriteSheet[0]);
+        LoadCompressedSpriteSheet(&sInterfaceSpriteSheet[0]);
         LoadSpritePalettes(sInterfaceSpritePalette);
         CreateSearchParameterScrollArrows(taskId);
         for (i = 0; i < 16; i++)

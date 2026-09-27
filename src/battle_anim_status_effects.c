@@ -75,8 +75,8 @@ u8 unref_sub_807B69C(u8 a, u8 b)
     u8 spriteId2;
     u8 i;
 
-    LoadCompressedObjectPic(&gBattleAnimPicTable[136]);
-    LoadCompressedObjectPalette(&gBattleAnimPaletteTable[136]);
+    LoadCompressedSpriteSheet(&gBattleAnimPicTable[136]);
+    LoadCompressedSpritePalette(&gBattleAnimPaletteTable[136]);
     gTasks[taskId].data[0] = a;
     if (b != 0)
     {

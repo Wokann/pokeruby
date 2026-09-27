@@ -939,8 +939,8 @@ void CreatePokeballSprite(u8 a, u8 b, u8 x, u8 y, u8 e, u8 f, u8 g, u32 h)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&sBallSpriteSheets[0]);
-    LoadCompressedObjectPalette(&sBallSpritePalettes[0]);
+    LoadCompressedSpriteSheet(&sBallSpriteSheets[0]);
+    LoadCompressedSpritePalette(&sBallSpritePalettes[0]);
     spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, f);
     gSprites[spriteId].data[0] = a;
     gSprites[spriteId].data[5] = gSprites[a].x;
@@ -1028,8 +1028,8 @@ u8 sub_8047580(u8 a, u8 b, u8 x, u8 y, u8 e, u8 f, u8 g, u32 h)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&sBallSpriteSheets[0]);
-    LoadCompressedObjectPalette(&sBallSpritePalettes[0]);
+    LoadCompressedSpriteSheet(&sBallSpriteSheets[0]);
+    LoadCompressedSpritePalette(&sBallSpritePalettes[0]);
     spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, f);
     gSprites[spriteId].data[0] = a;
     gSprites[spriteId].data[1] = g;
@@ -1171,8 +1171,8 @@ void LoadBallGfx(u8 ballIndex)
 
     if (GetSpriteTileStartByTag(sBallSpriteSheets[ballIndex].tag) == 0xFFFF)
     {
-        LoadCompressedObjectPic(&sBallSpriteSheets[ballIndex]);
-        LoadCompressedObjectPalette(&sBallSpritePalettes[ballIndex]);
+        LoadCompressedSpriteSheet(&sBallSpriteSheets[ballIndex]);
+        LoadCompressedSpritePalette(&sBallSpritePalettes[ballIndex]);
     }
 
     switch (ballIndex)

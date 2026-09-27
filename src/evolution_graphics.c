@@ -259,7 +259,7 @@ static void CreateSparkle_Spray(u8 id)
 
 void LoadEvoSparkleSpriteAndPal(void)
 {
-    LoadCompressedObjectPic(&sEvoSparkleSpriteSheets[0]);
+    LoadCompressedSpriteSheet(&sEvoSparkleSpriteSheets[0]);
     LoadSpritePalettes(sEvoSparkleSpritePals);
 }
 

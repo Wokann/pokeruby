@@ -222,11 +222,11 @@ bool8 LoadBerryTagGfx(void)
         gSharedMem.gfxState += 1;
         break;
     case 5:
-        LoadCompressedObjectPic(&gBerryCheckCircleSpriteSheet);
+        LoadCompressedSpriteSheet(&gBerryCheckCircleSpriteSheet);
         gSharedMem.gfxState += 1;
         break;
     case 6:
-        LoadCompressedObjectPalette(&gBerryCheckCircleSpritePalette);
+        LoadCompressedSpritePalette(&gBerryCheckCircleSpritePalette);
         gSharedMem.gfxState = 0;
         return TRUE;
     }

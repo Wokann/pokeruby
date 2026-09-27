@@ -1236,8 +1236,8 @@ static void LoadHofGfx(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
-    LoadCompressedObjectPic(&sHallOfFame_ConfettiSpriteSheet);
-    LoadCompressedObjectPalette(&sHallOfFame_ConfettiSpritePalette);
+    LoadCompressedSpriteSheet(&sHallOfFame_ConfettiSpriteSheet);
+    LoadCompressedSpritePalette(&sHallOfFame_ConfettiSpritePalette);
     Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
     InitMenuWindow(&gWindowTemplate_81E71B4);
 }
@@ -1311,7 +1311,7 @@ static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 a
 {
     u8 spriteID;
 
-    DecompressPicFromTable_2(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].coords, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gUnknown_0840B5A0[a3], trainerPicID);
+    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].coords, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gUnknown_0840B5A0[a3], trainerPicID);
 
     LoadCompressedPalette(gTrainerFrontPicPaletteTable[trainerPicID].data, 16 * a3 + 256, 0x20);
     PrepareHallOfFameTrainerPicSpriteTemplate(a3, a3);

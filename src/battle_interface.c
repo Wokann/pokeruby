@@ -1130,7 +1130,7 @@ u8 CreatePartyStatusSummarySprites(u8 a, const struct HpAndStatus *b, u8 c, u8 d
             sp14++;
     }
 
-    LoadCompressedObjectPic(&gUnknown_0820A754[r7]);
+    LoadCompressedSpriteSheet(&gUnknown_0820A754[r7]);
     LoadSpriteSheet(&gUnknown_0820A784[r7]);
     LoadSpritePalette(&gUnknown_0820A764[r7]);
     LoadSpritePalette(&gUnknown_0820A774[r7]);

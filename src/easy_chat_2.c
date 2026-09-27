@@ -748,7 +748,7 @@ void CreateInterviewObjectEvents(u8 personType, u8 frameId)
         break;
     }
 
-    LoadCompressedObjectPic(&interviewFrameSheet);
+    LoadCompressedSpriteSheet(&interviewFrameSheet);
     LoadSpritePalette(&interviewFramePalette);
     CreateSprite(&sSpriteTemplate_InterviewFrame, x, y, 1);
 
@@ -888,7 +888,7 @@ void CreateModeWindowSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedObjectPic(&sSpriteSheet_ModeWindow);
+    LoadCompressedSpriteSheet(&sSpriteSheet_ModeWindow);
     LoadSpritePalette(&sSpritePalette_ModeWindow);
 
     spriteId = CreateSprite(&sSpriteTemplate_ModeWindow, 224, 88, 0);

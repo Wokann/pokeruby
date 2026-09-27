@@ -303,7 +303,7 @@ void ShowContestEntryMonPic(void)
           species,
           personality);
         palette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
-        LoadCompressedObjectPalette(palette);
+        LoadCompressedSpritePalette(palette);
         SetMultiuseSpriteTemplateToPokemon(species, 1);
         gCreatingSpriteTemplate.paletteTag = palette->tag;
         spriteId = CreateSprite(&gCreatingSpriteTemplate, 0x78, 0x40, 0);

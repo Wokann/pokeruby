@@ -2619,7 +2619,7 @@ void debug_sub_8012688(void)
 	gReservedSpritePaletteCount = 4;
 	gCurrentMove = 1;
 	Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6C58);
-	DecompressPicFromTable_2(
+	DecompressPicFromTable(
 	  &gMonFrontPicTable[gCurrentMove],
 	  gMonFrontPicCoords[gCurrentMove].coords,
 	  gMonFrontPicCoords[gCurrentMove].y_offset,
@@ -2679,7 +2679,7 @@ void debug_sub_8012938(u8 taskId)
 
 void debug_sub_80129F8(u8 taskId)
 {
-    DecompressPicFromTable_2(
+    DecompressPicFromTable(
       &gMonFrontPicTable[gCurrentMove],
       gMonFrontPicCoords[gCurrentMove].coords,
       gMonFrontPicCoords[gCurrentMove].y_offset,

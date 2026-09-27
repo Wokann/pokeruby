@@ -667,7 +667,7 @@ void DrawBattleEntryBackground(void)
         REG_WINOUT = 0x36;
         gBattle_BG1_Y = 0xff5c;
         gBattle_BG2_Y = 0xff5c;
-        LoadCompressedObjectPic(gUnknown_081F95A4);
+        LoadCompressedSpriteSheet(gUnknown_081F95A4);
     }
     else if (gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_LINK))
     {

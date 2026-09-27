@@ -305,8 +305,8 @@ void OpenMoneyWindow(u32 amount, u8 x, u8 y)
     Menu_DrawStdWindowFrame(x, y, x + 13, y + 3);
     UpdateMoneyWindow(amount, x, y);
 
-    LoadCompressedObjectPic(gUnknown_083CF584);
-    LoadCompressedObjectPalette(gUnknown_083CF58C);
+    LoadCompressedSpriteSheet(gUnknown_083CF584);
+    LoadCompressedSpritePalette(gUnknown_083CF58C);
 
     gUnknown_02038734 = CreateSprite(&gSpriteTemplate_83CF56C, x * 8 + 19, y * 8 + 11, 0);
 }

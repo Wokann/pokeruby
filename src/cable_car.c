@@ -332,7 +332,7 @@ static void CB2_LoadCableCar(void)
         case 2:
             for (i = 0; i < 3; i++)
             {
-                LoadCompressedObjectPic(&gUnknown_08401CF8[i]);
+                LoadCompressedSpriteSheet(&gUnknown_08401CF8[i]);
             }
             LoadSpritePalettes(gUnknown_08401D18);
             LZDecompressWram(gCableCarMtChimneyTilemap, eCableCar2->mtChimneyTilemap);

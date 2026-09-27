@@ -1298,8 +1298,8 @@ u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 subpriority, u8 ballInde
 
     if (GetSpriteTileStartByTag(gBallOpenParticleSpritesheets[ballIndex].tag) == 0xFFFF)
     {
-        LoadCompressedObjectPic(&gBallOpenParticleSpritesheets[ballIndex]);
-        LoadCompressedObjectPalette(&gBallOpenParticlePalettes[ballIndex]);
+        LoadCompressedSpriteSheet(&gBallOpenParticleSpritesheets[ballIndex]);
+        LoadCompressedSpritePalette(&gBallOpenParticlePalettes[ballIndex]);
     }
 
     taskId = CreateTask(gBallOpenParticleAnimationFuncs[ballIndex], 5);
@@ -1876,8 +1876,8 @@ void TryShinyAnimation(u8 battler, struct Pokemon *mon)
         {
             if (GetSpriteTileStartByTag(0x27F9) == 0xFFFF)
             {
-                LoadCompressedObjectPic(&gBattleAnimPicTable[233]);
-                LoadCompressedObjectPalette(&gBattleAnimPaletteTable[233]);
+                LoadCompressedSpriteSheet(&gBattleAnimPicTable[233]);
+                LoadCompressedSpritePalette(&gBattleAnimPaletteTable[233]);
             }
 
             taskId1 = CreateTask(Task_ShinyStars, 10);
@@ -2015,8 +2015,8 @@ void AnimTask_LoadPokeblockGfx(u8 taskId)
 {
     u8 paletteIndex;
 
-    LoadCompressedObjectPic(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
-    LoadCompressedObjectPalette(&gBattleAnimPaletteTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
+    LoadCompressedSpriteSheet(&gBattleAnimPicTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
+    LoadCompressedSpritePalette(&gBattleAnimPaletteTable[GET_TRUE_SPRITE_INDEX(ANIM_TAG_POKEBLOCK)]);
     paletteIndex = IndexOfSpritePaletteTag(ANIM_TAG_POKEBLOCK); // unused
     DestroyAnimVisualTask(taskId);
 }

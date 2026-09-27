@@ -15,7 +15,7 @@ void LZDecompressVram(const void *src, void *dest)
     LZ77UnCompVram(src, dest);
 }
 
-void LoadCompressedObjectPic(const struct CompressedSpriteSheet *src)
+void LoadCompressedSpriteSheet(const struct CompressedSpriteSheet *src)
 {
     struct SpriteSheet dest;
 
@@ -26,7 +26,7 @@ void LoadCompressedObjectPic(const struct CompressedSpriteSheet *src)
     LoadSpriteSheet(&dest);
 }
 
-void LoadCompressedObjectPicOverrideBuffer(const struct CompressedSpriteSheet *src, void *buffer)
+void LoadCompressedSpriteSheetOverrideBuffer(const struct CompressedSpriteSheet *src, void *buffer)
 {
     struct SpriteSheet dest;
 
@@ -37,7 +37,7 @@ void LoadCompressedObjectPicOverrideBuffer(const struct CompressedSpriteSheet *s
     LoadSpriteSheet(&dest);
 }
 
-void LoadCompressedObjectPalette(const struct CompressedSpritePalette *src)
+void LoadCompressedSpritePalette(const struct CompressedSpritePalette *src)
 {
     struct SpritePalette dest;
 
@@ -47,7 +47,7 @@ void LoadCompressedObjectPalette(const struct CompressedSpritePalette *src)
     LoadSpritePalette(&dest);
 }
 
-void LoadCompressedObjectPaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
+void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
 {
     struct SpritePalette dest;
 
@@ -57,7 +57,7 @@ void LoadCompressedObjectPaletteOverrideBuffer(const struct CompressedSpritePale
     LoadSpritePalette(&dest);
 }
 
-void DecompressPicFromTable_2(const struct CompressedSpriteSheet *src, u8 coords, u8 y_offset, void *d, void *dest, s32 species)
+void DecompressPicFromTable(const struct CompressedSpriteSheet *src, u8 coords, u8 yOffset, void *decompBuffer, void *dest, s32 species)
 {
     if (species > SPECIES_EGG)
         LZ77UnCompWram(gMonFrontPicTable[0].data, dest);
@@ -66,45 +66,45 @@ void DecompressPicFromTable_2(const struct CompressedSpriteSheet *src, u8 coords
 }
 
 void HandleLoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 coords, u32 y_offset,
-    void *decompBuf, void *dest, s32 species, u32 pid)
+    void *decompBuf, void *dest, s32 species, u32 personality)
 {
-    u32 frontOrBack;
+    u32 isFrontPic;
 
     // gMonSpriteGfx_Sprite_ptr appears to be a list of pointers to locations to store poke pics for back and front pic here. the first and third pointers are used for back while the others are used for front.
     if (dest == gMonSpriteGfx_Sprite_ptr[0] || dest == gMonSpriteGfx_Sprite_ptr[2])
-        frontOrBack = 0; // backPic
+        isFrontPic = 0; // backPic
     else
-        frontOrBack = 1; // frontPic
+        isFrontPic = 1; // frontPic
 
-    LoadSpecialPokePic(src, coords, y_offset, decompBuf, dest, species, pid, frontOrBack);
+    LoadSpecialPokePic(src, coords, y_offset, decompBuf, dest, species, personality, isFrontPic);
 }
 
-void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 b, u32 c,
-    void *decompBuffer, void *dest, s32 species, u32 pid, u32 frontOrBack)
+void LoadSpecialPokePic(const struct CompressedSpriteSheet *src, u32 coords, u32 yOffset,
+    void *decompBuffer, void *dest, s32 species, u32 personality, u32 isFrontPic)
 {
-    u8 frontOrBack8 = frontOrBack;
+    u8 isFrontPic8 = isFrontPic;
 
     if (species == SPECIES_UNOWN)
     {
-        u16 i = (((pid & 0x3000000) >> 18) | ((pid & 0x30000) >> 12) | ((pid & 0x300) >> 6) | (pid & 3)) % 0x1C;
+        u16 unownLetter = (((personality & 0x3000000) >> 18) | ((personality & 0x30000) >> 12) | ((personality & 0x300) >> 6) | (personality & 3)) % 0x1C;
 
         // The other Unowns are separate from Unown A.
-        if (i == 0)
-            i = SPECIES_UNOWN;
+        if (unownLetter == 0)
+            unownLetter = SPECIES_UNOWN;
         else
-            i += SPECIES_UNOWN_B - 1;
+            unownLetter += SPECIES_UNOWN_B - 1;
 
-        if (frontOrBack8 == 0)
-            LZ77UnCompWram(gMonBackPicTable[i].data, dest);
+        if (isFrontPic8 == 0)
+            LZ77UnCompWram(gMonBackPicTable[unownLetter].data, dest);
         else
-            LZ77UnCompWram(gMonFrontPicTable[i].data, dest);
+            LZ77UnCompWram(gMonFrontPicTable[unownLetter].data, dest);
     }
     else if (species > SPECIES_EGG) // is species unknown? draw the ? icon
         LZ77UnCompWram(gMonFrontPicTable[0].data, dest);
     else
         LZ77UnCompWram(src->data, dest);
 
-    DrawSpindaSpots(species, pid, dest, frontOrBack8);
+    DrawSpindaSpots(species, personality, dest, isFrontPic8);
 }
 
 void Unused_LZDecompressWramIndirect(const void **src, void *dest)
@@ -112,7 +112,7 @@ void Unused_LZDecompressWramIndirect(const void **src, void *dest)
     LZ77UnCompWram(*src, dest);
 }
 
-void unref_sub_800D42C(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
+void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
 {
     /*
       This function appears to emulate behaviour found in the GB(C) versions regarding how the Pokemon images
