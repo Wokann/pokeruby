@@ -306,12 +306,12 @@ static void DestroyReelTimeSmokeSprite(void);
 static u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
 static void DestroyPikaPowerBoltSprite(u8 spriteId);
 static u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 a4);
-static void sub_81063C0(void);
-static void sub_8106404(void);
-static void sub_8106448(void);
-static void sub_81064B8(void);
-static void sub_81065A8(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
-static void sub_81065DC(void);
+static void LoadSlotMachineGfx(void);
+static void LoadReelBackground(void);
+static void LoadMenuGfx(void);
+static void LoadMenuAndReelOverlayTilemaps(void);
+static void SetReelButtonTilemap(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
+static void LoadInfoBoxTilemap(void);
 
 #if DEBUG
 static void debug_sub_811B5D0(void);
@@ -543,9 +543,9 @@ static void SlotMachineSetup_4_0(void)
 
 static void SlotMachineSetup_5_0(void)
 {
-    sub_8106448();
-    sub_81064B8();
-    sub_81063C0();
+    LoadMenuGfx();
+    LoadMenuAndReelOverlayTilemaps();
+    LoadSlotMachineGfx();
 }
 
 static void SlotMachineSetup_6_0(void)
@@ -2323,7 +2323,7 @@ static const s16 sReelButtonOffsets[] = {5, 10, 15};
 
 static void StopReelButton_Press(struct Task *task, u8 taskId)
 {
-    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x62, 0x63, 0x72, 0x73);
+    SetReelButtonTilemap(sReelButtonOffsets[task->data[15]], 0x62, 0x63, 0x72, 0x73);
     task->data[0]++;
 }
 
@@ -2335,7 +2335,7 @@ static void StopReelButton_Wait(struct Task *task, u8 taskId)
 
 static void StopReelButton_Unpress(struct Task *task, u8 taskId)
 {
-    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x42, 0x43, 0x52, 0x53);
+    SetReelButtonTilemap(sReelButtonOffsets[task->data[15]], 0x42, 0x43, 0x52, 0x53);
     DestroyTask(taskId);
 }
 
@@ -3026,7 +3026,7 @@ static void InfoBox_WaitFade(struct Task *task)
 static void InfoBox_DrawWindowAndText(struct Task *task)
 {
     DestroyDigitalDisplayScene();
-    sub_81065DC();
+    LoadInfoBoxTilemap();
     BasicInitMenuWindow(&gWindowTemplate_81E7144);
     Menu_PrintTextPixelCoords(gOtherText_ReelTime, 10, 32, 1);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
@@ -3046,7 +3046,7 @@ static void InfoBox_RestoreSlotMachineDisplay(struct Task *task)
 {
     Menu_EraseScreen();
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
-    sub_81064B8();
+    LoadMenuAndReelOverlayTilemaps();
     CreateDigitalDisplayScene(task->data[1]);
     LoadPikaPowerMeter(sSlotMachine->pikaPower);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
@@ -3070,7 +3070,7 @@ static void CreateDigitalDisplayTask(void)
         task->data[i] = MAX_SPRITES;
 }
 
-static void LoadSlotMachineWheelOverlay(void);
+static void LoadSlotMachineReelOverlay(void);
 
 static void CreateDigitalDisplayScene(u8 arg0)
 {
@@ -4035,24 +4035,24 @@ static const u8 sReelTimeGfx[];
 static const struct SpriteSheet sSlotMachineSpriteSheets[];
 static const struct SpritePalette gSlotMachineSpritePalettes[];
 
-static void sub_81063C0(void)
+static void LoadSlotMachineGfx(void)
 {
-    sub_8106404();
+    LoadReelBackground();
     LZDecompressWram(gSlotMachineReelTimeLights_Gfx, eSlotMachineGfxBuffer);
     LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
     LoadSpritePalettes(gSlotMachineSpritePalettes);
 }
 
-static const u8 *const gUnknown_083EDCE4;
-static const struct SpriteSheet gUnknown_083EDCDC;
+static const u8 *const sReelBackground_Tilemap;
+static const struct SpriteSheet sReelBackgroundSpriteSheet;
 
-static void sub_8106404(void)
+static void LoadReelBackground(void)
 {
     u8 *dest = eSlotMachineGfxBuffer;
     u8 i = 0;
-    const struct SpriteSheet *sheet = &gUnknown_083EDCDC;
-    const u8 *src = gUnknown_083EDCE4;
+    const struct SpriteSheet *sheet = &sReelBackgroundSpriteSheet;
+    const u8 *src = sReelBackground_Tilemap;
     for (i = 0; i < 0x40; i++)
     {
         u8 j;
@@ -4062,7 +4062,7 @@ static void sub_8106404(void)
     LoadSpriteSheet(sheet);
 }
 
-static void sub_8106448(void)
+static void LoadMenuGfx(void)
 {
     LZDecompressWram(gSlotMachine_Gfx, eSlotMachineGfxBuffer);
 
@@ -4072,13 +4072,13 @@ static void sub_8106448(void)
     LoadPalette(gPalette_83EDE24, 208, 32);
 }
 
-static void sub_81064B8(void)
+static void LoadMenuAndReelOverlayTilemaps(void)
 {
     CpuCopy16(gUnknown_08E95AB8, BG_SCREEN_ADDR(29), 20 * 32 * 2);
-    LoadSlotMachineWheelOverlay();
+    LoadSlotMachineReelOverlay();
 }
 
-static void LoadSlotMachineWheelOverlay(void)
+static void LoadSlotMachineReelOverlay(void)
 {
     s16 x, y, dx;
     u16 *screen;
@@ -4103,7 +4103,7 @@ static void LoadSlotMachineWheelOverlay(void)
     }
 }
 
-static void sub_81065A8(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4)
+static void SetReelButtonTilemap(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4)
 {
     u16 *vram = BG_SCREEN_ADDR(29);
 
@@ -4113,7 +4113,7 @@ static void sub_81065A8(s16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4)
     vram[16 * 32 + 1 + arg0] = arg4;
 }
 
-static void sub_81065DC(void)
+static void LoadInfoBoxTilemap(void)
 {
     s16 y, x;
     u16 *screen;
@@ -5473,11 +5473,11 @@ static const struct SpriteSheet sSlotMachineSpriteSheets[] = {
     {}
 };
 
-static const struct SpriteSheet gUnknown_083EDCDC = {
+static const struct SpriteSheet sReelBackgroundSpriteSheet = {
     eSlotMachineGfxBuffer + 0x0000, 0x800, 17
 };
 
-static const u8 *const gUnknown_083EDCE4 = gUnknownPalette_08E997E8;
+static const u8 *const sReelBackground_Tilemap = gUnknownPalette_08E997E8;
 
 #ifdef SAPPHIRE
 static const u16 UnknownPalette_83EDCE8[] = INCBIN_U16("graphics/unknown/sapphire_83EDD40.gbapal");
