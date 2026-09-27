@@ -2290,7 +2290,7 @@ void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3)
 
     a3->playerId = linkPlayerId;
     a3->isLocalPlayer = (linkPlayerId == a2) ? 1 : 0;
-    a3->movementMode = gLinkPlayerObjectEvents[linkPlayerId].mode;
+    a3->movementMode = gLinkPlayerObjectEvents[linkPlayerId].movementMode;
     a3->facing = sub_8055B30(linkPlayerId);
     sub_8055B08(linkPlayerId, &x, &y);
     a3->pos.x = x;
@@ -2302,7 +2302,7 @@ void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3)
 bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *a1)
 {
     u8 v1 = a1->movementMode;
-    if (v1 == 2 || v1 == 0)
+    if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
         return TRUE;
     else
         return FALSE;
@@ -2311,7 +2311,7 @@ bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *a1)
 bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *a1)
 {
     u8 v1 = a1->movementMode;
-    if (v1 == 2 || v1 == 0)
+    if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
         return TRUE;
     else
         return FALSE;
@@ -2319,18 +2319,18 @@ bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *a1)
 
 const u8 *TryGetTileEventScript(struct CableClubPlayer *a1)
 {
-    if (a1->movementMode != 2)
+    if (a1->movementMode != MOVEMENT_MODE_SCRIPTED)
         return 0;
     return GetCoordEventScriptAtMapPosition(&a1->pos);
 }
 
 bool32 PlayerIsAtSouthExit(struct CableClubPlayer *a1)
 {
-    if (a1->movementMode != 2 && a1->movementMode != 0)
+    if (a1->movementMode != MOVEMENT_MODE_SCRIPTED && a1->movementMode != MOVEMENT_MODE_FREE)
         return FALSE;
     if (!MetatileBehavior_IsSouthArrowWarp(a1->metatileBehavior))
         return FALSE;
-    if (a1->facing != 1)
+    if (a1->facing != DIR_SOUTH)
         return FALSE;
     return TRUE;
 }
@@ -2340,7 +2340,7 @@ const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
     struct MapPosition unkStruct;
     u8 linkPlayerId;
 
-    if (a1->movementMode && a1->movementMode != 2)
+    if (a1->movementMode && a1->movementMode != MOVEMENT_MODE_SCRIPTED)
         return 0;
 
     unkStruct = a1->pos;
@@ -2349,7 +2349,7 @@ const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
     unkStruct.height = 0;
     linkPlayerId = GetLinkPlayerIdAt(unkStruct.x, unkStruct.y);
 
-    if (linkPlayerId != 4)
+    if (linkPlayerId != MAX_LINK_PLAYERS)
     {
         if (!a1->isLocalPlayer)
             return CableClub_EventScript_TooBusyToNotice;
@@ -2519,7 +2519,7 @@ static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
     linkPlayerObjEvent->active = 1;
     linkPlayerObjEvent->linkPlayerId = linkPlayerId;
     linkPlayerObjEvent->objEventId = objEventId;
-    linkPlayerObjEvent->mode = 0;
+    linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 
     objEvent->active = 1;
     objEvent->singleMovementActive = a4;
@@ -2603,7 +2603,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     for (i = 0; i < 4; i++)
     {
         if (gLinkPlayerObjectEvents[i].active
-         && (gLinkPlayerObjectEvents[i].mode == 0 || gLinkPlayerObjectEvents[i].mode == 2))
+         && (gLinkPlayerObjectEvents[i].movementMode == MOVEMENT_MODE_FREE || gLinkPlayerObjectEvents[i].movementMode == MOVEMENT_MODE_SCRIPTED))
         {
             struct ObjectEvent *objEvent = &gObjectEvents[gLinkPlayerObjectEvents[i].objEventId];
             if (objEvent->currentCoords.x == x && objEvent->currentCoords.y == y)
@@ -2624,7 +2624,7 @@ void sub_8055BFC(u8 linkPlayerId, u8 a2)
         if (a2 > 10)
             objEvent->triggerGroundEffectsOnMove = 1;
         else
-            gUnknown_082166D8[gUnknown_082166A0[linkPlayerObjEvent->mode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
+            gUnknown_082166D8[gUnknown_082166A0[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
     }
 }
 
@@ -2676,18 +2676,18 @@ static u8 sub_8055D18(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct O
 
 static void sub_8055D30(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
-    linkPlayerObjEvent->mode = 0;
+    linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 }
 
 static void sub_8055D38(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
     objEvent->directionSequenceIndex--;
-    linkPlayerObjEvent->mode = 1;
+    linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FROZEN;
     MoveCoords(objEvent->range.as_byte, &objEvent->initialCoords.x, &objEvent->initialCoords.y);
     if (!objEvent->directionSequenceIndex)
     {
         ShiftStillObjectEventCoords(objEvent);
-        linkPlayerObjEvent->mode = 2;
+        linkPlayerObjEvent->movementMode = MOVEMENT_MODE_SCRIPTED;
     }
 }
 
@@ -2754,7 +2754,7 @@ static void SpriteCB_LinkPlayer(struct Sprite *sprite)
     sprite->y = objEvent->initialCoords.y;
     SetObjectSubpriorityByZCoord(objEvent->previousElevation, sprite, 1);
     sprite->oam.priority = ZCoordToPriority(objEvent->previousElevation);
-    if (!linkPlayerObjEvent->mode)
+    if (!linkPlayerObjEvent->movementMode)
         StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objEvent->range.as_byte));
     else
         StartSpriteAnimIfDifferent(sprite, GetMoveDirectionAnimNum(objEvent->range.as_byte));

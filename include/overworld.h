@@ -18,6 +18,10 @@
 #define LINK_KEY_CODE_EXIT_SEAT 0x1D
 #define LINK_KEY_CODE_UNK_8 0x1E
 
+#define MOVEMENT_MODE_FREE 0
+#define MOVEMENT_MODE_FROZEN 1
+#define MOVEMENT_MODE_SCRIPTED 2
+
 struct InitialPlayerAvatarState
 {
     u8 transitionFlags;
@@ -29,7 +33,7 @@ struct LinkPlayerObjectEvent
     u8 active;
     u8 linkPlayerId;
     u8 objEventId;
-    u8 mode;
+    u8 movementMode;
 };
 
 struct UCoords32
