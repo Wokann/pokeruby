@@ -6553,7 +6553,7 @@ bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *objectEvent, struc
     return FALSE;
 }
 
-void sub_806295C(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
+void AcroWheelieFaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
     SetObjectEventDirection(objectEvent, direction);
     ShiftStillObjectEventCoords(objectEvent);
@@ -6564,25 +6564,25 @@ void sub_806295C(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 dire
 
 bool8 MovementAction_AcroWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_806295C(objectEvent, sprite, DIR_SOUTH);
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_SOUTH);
     return TRUE;
 }
 
 bool8 MovementAction_AcroWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_806295C(objectEvent, sprite, DIR_NORTH);
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_NORTH);
     return TRUE;
 }
 
 bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_806295C(objectEvent, sprite, DIR_WEST);
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_WEST);
     return TRUE;
 }
 
 bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_806295C(objectEvent, sprite, DIR_EAST);
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_EAST);
     return TRUE;
 }
 
@@ -6917,7 +6917,7 @@ bool8 MovementAction_AcroWheelieInPlaceRight_Step0(struct ObjectEvent *objectEve
     return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-void sub_80630D0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitAcroPopWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     InitNpcForMovement(objectEvent, sprite, direction, speed);
     StartSpriteAnim(sprite, GetAcroWheelieDirectionAnimNum(objectEvent->facingDirection));
@@ -6928,7 +6928,7 @@ bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *, struct S
 
 bool8 MovementAction_AcroPopWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_80630D0(objectEvent, sprite, DIR_SOUTH, 1);
+    InitAcroPopWheelie(objectEvent, sprite, DIR_SOUTH, 1);
     return MovementAction_AcroPopWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
@@ -6946,7 +6946,7 @@ bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *, struct Spr
 
 bool8 MovementAction_AcroPopWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_80630D0(objectEvent, sprite, DIR_NORTH, 1);
+    InitAcroPopWheelie(objectEvent, sprite, DIR_NORTH, 1);
     return MovementAction_AcroPopWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
@@ -6964,7 +6964,7 @@ bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *, struct S
 
 bool8 MovementAction_AcroPopWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_80630D0(objectEvent, sprite, DIR_WEST, 1);
+    InitAcroPopWheelie(objectEvent, sprite, DIR_WEST, 1);
     return MovementAction_AcroPopWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
@@ -6982,7 +6982,7 @@ bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *, struct 
 
 bool8 MovementAction_AcroPopWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_80630D0(objectEvent, sprite, DIR_EAST, 1);
+    InitAcroPopWheelie(objectEvent, sprite, DIR_EAST, 1);
     return MovementAction_AcroPopWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
@@ -6996,7 +6996,7 @@ bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEve
     return FALSE;
 }
 
-void sub_8063208(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     InitNpcForMovement(objectEvent, sprite, direction, speed);
     SetStepAnimHandleAlternation(objectEvent, sprite, GetAcroWheeliePedalDirectionAnimNum(objectEvent->facingDirection));
@@ -7006,7 +7006,7 @@ bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *, struct Spri
 
 bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063208(objectEvent, sprite, DIR_SOUTH, 1);
+    InitAcroWheelieMove(objectEvent, sprite, DIR_SOUTH, 1);
     return MovementAction_AcroWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
@@ -7024,7 +7024,7 @@ bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *, struct Sprite
 
 bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063208(objectEvent, sprite, DIR_NORTH, 1);
+    InitAcroWheelieMove(objectEvent, sprite, DIR_NORTH, 1);
     return MovementAction_AcroWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
@@ -7042,7 +7042,7 @@ bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *, struct Spri
 
 bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063208(objectEvent, sprite, DIR_WEST, 1);
+    InitAcroWheelieMove(objectEvent, sprite, DIR_WEST, 1);
     return MovementAction_AcroWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
@@ -7060,7 +7060,7 @@ bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *, struct Spr
 
 bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063208(objectEvent, sprite, DIR_EAST, 1);
+    InitAcroWheelieMove(objectEvent, sprite, DIR_EAST, 1);
     return MovementAction_AcroWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
@@ -7074,7 +7074,7 @@ bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-void sub_8063338(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     InitNpcForMovement(objectEvent, sprite, direction, speed);
     StartSpriteAnim(sprite, GetAcroEndWheelieDirectionAnimNum(objectEvent->facingDirection));
@@ -7085,7 +7085,7 @@ bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *, struct S
 
 bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063338(objectEvent, sprite, DIR_SOUTH, 1);
+    InitAcroEndWheelie(objectEvent, sprite, DIR_SOUTH, 1);
     return MovementAction_AcroEndWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
@@ -7103,7 +7103,7 @@ bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *, struct Spr
 
 bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063338(objectEvent, sprite, DIR_NORTH, 1);
+    InitAcroEndWheelie(objectEvent, sprite, DIR_NORTH, 1);
     return MovementAction_AcroEndWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
@@ -7121,7 +7121,7 @@ bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *, struct S
 
 bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063338(objectEvent, sprite, DIR_WEST, 1);
+    InitAcroEndWheelie(objectEvent, sprite, DIR_WEST, 1);
     return MovementAction_AcroEndWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
@@ -7139,7 +7139,7 @@ bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *, struct 
 
 bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    sub_8063338(objectEvent, sprite, DIR_EAST, 1);
+    InitAcroEndWheelie(objectEvent, sprite, DIR_EAST, 1);
     return MovementAction_AcroEndWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
