@@ -3367,7 +3367,7 @@ static const struct CombinedMove sCombinedMoves[2] =
     {0xFFFF, 0xFFFF, 0xFFFF}
 };
 
-void unref_sub_801B40C(void)
+void TryCombineMoves(void)
 {
     int i = 0;
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
