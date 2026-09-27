@@ -47,13 +47,13 @@ void PokecenterHealEffect_3(struct Task *);
 
 void FieldCB_FallWarpExit(void);
 
-bool8 sub_80867AC(struct Task *);
-bool8 sub_8086854(struct Task *);
-bool8 sub_8086870(struct Task *);
-bool8 sub_80868E4(struct Task *);
-bool8 sub_808699C(struct Task *);
-bool8 sub_80869B8(struct Task *);
-bool8 sub_80869F8(struct Task *);
+bool8 FallWarpEffect_Init(struct Task *);
+bool8 FallWarpEffect_WaitWeather(struct Task *);
+bool8 FallWarpEffect_StartFall(struct Task *);
+bool8 FallWarpEffect_Fall(struct Task *);
+bool8 FallWarpEffect_Land(struct Task *);
+bool8 FallWarpEffect_CameraShake(struct Task *);
+bool8 FallWarpEffect_End(struct Task *);
 
 void sub_8086A2C(u8, u8);
 

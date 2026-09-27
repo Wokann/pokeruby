@@ -256,14 +256,14 @@ static const u8 sPokeballGlowReds[] = {16, 12, 8, 0};
 static const u8 sPokeballGlowGreens[] = {16, 12, 8, 0};
 static const u8 sPokeballGlowBlues[] = { 0,  0, 0, 0};
 
-bool8 (*const gUnknown_0839F2CC[])(struct Task *) = {
-    sub_80867AC,
-    sub_8086854,
-    sub_8086870,
-    sub_80868E4,
-    sub_808699C,
-    sub_80869B8,
-    sub_80869F8
+static bool8 (*const sFallWarpFieldEffectFuncs[])(struct Task *) = {
+    FallWarpEffect_Init,
+    FallWarpEffect_WaitWeather,
+    FallWarpEffect_StartFall,
+    FallWarpEffect_Fall,
+    FallWarpEffect_Land,
+    FallWarpEffect_CameraShake,
+    FallWarpEffect_End
 };
 
 bool8 (*const gUnknown_0839F2E8[])(struct Task *) = {
@@ -1076,7 +1076,15 @@ void c3_080843F8(u8 taskId)
     }
 }
 
-void sub_8086774(u8);
+#define tFallWarpState        data[0]
+#define tFallOffset           data[1]
+#define tTotalFall            data[2]
+#define tSetGroundEffect      data[3]
+#define tOriginalSubspriteMode data[4]
+#define tVerticalShake       data[1]
+#define tNumShakes           data[2]
+
+void Task_FallWarpFieldEffect(u8);
 extern void CameraObjectReset2(void);
 extern void CameraObjectReset1(void);
 
@@ -1086,18 +1094,18 @@ void FieldCB_FallWarpExit(void)
     WarpFadeInScreen();
     LockPlayerFieldControls();
     FreezeObjectEvents();
-    CreateTask(sub_8086774, 0);
+    CreateTask(Task_FallWarpFieldEffect, 0);
     gFieldCallback = NULL;
 }
 
-void sub_8086774(u8 taskId)
+void Task_FallWarpFieldEffect(u8 taskId)
 {
     struct Task *task;
     task = &gTasks[taskId];
-    while (gUnknown_0839F2CC[task->data[0]](task)); // return code signifies whether to continue blocking here
+    while (sFallWarpFieldEffectFuncs[task->tFallWarpState](task)); // return code signifies whether to continue blocking here
 }
 
-bool8 sub_80867AC(struct Task *task) // gUnknown_0839F2CC[0]
+bool8 FallWarpEffect_Init(struct Task *task) // sFallWarpFieldEffectFuncs[0]
 {
     struct ObjectEvent *playerObject;
     struct Sprite *playerSprite;
@@ -1107,59 +1115,59 @@ bool8 sub_80867AC(struct Task *task) // gUnknown_0839F2CC[0]
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = TRUE;
     gPlayerAvatar.preventStep = TRUE;
     ObjectEventSetHeldMovement(playerObject, GetFaceDirectionMovementAction(GetPlayerFacingDirection()));
-    task->data[4] = playerSprite->subspriteMode;
+    task->tOriginalSubspriteMode = playerSprite->subspriteMode;
     playerObject->fixedPriority = 1;
     playerSprite->oam.priority = 1;
     playerSprite->subspriteMode = 2;
-    task->data[0]++;
+    task->tFallWarpState++;
     return TRUE;
 }
 
-bool8 sub_8086854(struct Task *task) // gUnknown_0839F2CC[1]
+bool8 FallWarpEffect_WaitWeather(struct Task *task) // sFallWarpFieldEffectFuncs[1]
 {
     if (IsWeatherNotFadingIn())
     {
-        task->data[0]++;
+        task->tFallWarpState++;
     }
     return FALSE;
 }
 
-bool8 sub_8086870(struct Task *task) // gUnknown_0839F2CC[2]
+bool8 FallWarpEffect_StartFall(struct Task *task) // sFallWarpFieldEffectFuncs[2]
 {
     struct Sprite *sprite;
     s16 centerToCornerVecY;
     sprite = &gSprites[gPlayerAvatar.spriteId];
     centerToCornerVecY = -(sprite->centerToCornerVecY << 1);
     sprite->y2 = -(sprite->y + sprite->centerToCornerVecY + gSpriteCoordOffsetY + centerToCornerVecY);
-    task->data[1] = 1;
-    task->data[2] = 0;
+    task->tFallOffset = 1;
+    task->tTotalFall = 0;
     gObjectEvents[gPlayerAvatar.objectEventId].invisible = FALSE;
     PlaySE(SE_FALL);
-    task->data[0]++;
+    task->tFallWarpState++;
     return FALSE;
 }
 
-bool8 sub_80868E4(struct Task *task)
+bool8 FallWarpEffect_Fall(struct Task *task)
 {
     struct ObjectEvent *objectEvent;
     struct Sprite *sprite;
 
     objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     sprite = &gSprites[gPlayerAvatar.spriteId];
-    sprite->y2 += task->data[1];
-    if (task->data[1] < 8)
+    sprite->y2 += task->tFallOffset;
+    if (task->tFallOffset < 8)
     {
-        task->data[2] += task->data[1];
-        if (task->data[2] & 0xf)
+        task->tTotalFall += task->tFallOffset;
+        if (task->tTotalFall & 0xf)
         {
-            task->data[1] <<= 1;
+            task->tFallOffset <<= 1;
         }
     }
-    if (task->data[3] == 0 && sprite->y2 >= -16)
+    if (task->tSetGroundEffect == 0 && sprite->y2 >= -16)
     {
-        task->data[3]++;
+        task->tSetGroundEffect++;
         objectEvent->fixedPriority = 0;
-        sprite->subspriteMode = task->data[4];
+        sprite->subspriteMode = task->tOriginalSubspriteMode;
         objectEvent->triggerGroundEffectsOnMove = 1;
     }
     if (sprite->y2 >= 0)
@@ -1168,46 +1176,54 @@ bool8 sub_80868E4(struct Task *task)
         objectEvent->triggerGroundEffectsOnStop = 1;
         objectEvent->landingJump = 1;
         sprite->y2 = 0;
-        task->data[0]++;
+        task->tFallWarpState++;
     }
     return FALSE;
 }
 
-bool8 sub_808699C(struct Task *task)
+bool8 FallWarpEffect_Land(struct Task *task)
 {
-    task->data[0]++;
-    task->data[1] = 4;
-    task->data[2] = 0;
+    task->tFallWarpState++;
+    task->tVerticalShake = 4;
+    task->tNumShakes = 0;
     SetCameraPanningCallback(NULL);
     return TRUE;
 }
 
-bool8 sub_80869B8(struct Task *task)
+bool8 FallWarpEffect_CameraShake(struct Task *task)
 {
-    SetCameraPanning(0, task->data[1]);
-    task->data[1] = -task->data[1];
-    task->data[2]++;
-    if ((task->data[2] & 3) == 0)
+    SetCameraPanning(0, task->tVerticalShake);
+    task->tVerticalShake = -task->tVerticalShake;
+    task->tNumShakes++;
+    if ((task->tNumShakes & 3) == 0)
     {
-        task->data[1] >>= 1;
+        task->tVerticalShake >>= 1;
     }
-    if (task->data[1] == 0)
+    if (task->tVerticalShake == 0)
     {
-        task->data[0]++;
+        task->tFallWarpState++;
     }
     return FALSE;
 }
 
-bool8 sub_80869F8(struct Task *task)
+bool8 FallWarpEffect_End(struct Task *task)
 {
     gPlayerAvatar.preventStep = FALSE;
     UnlockPlayerFieldControls();
     CameraObjectReset1();
     UnfreezeObjectEvents();
     InstallCameraPanAheadCallback();
-    DestroyTask(FindTaskIdByFunc(sub_8086774));
+    DestroyTask(FindTaskIdByFunc(Task_FallWarpFieldEffect));
     return FALSE;
 }
+
+#undef tFallWarpState
+#undef tFallOffset
+#undef tTotalFall
+#undef tSetGroundEffect
+#undef tOriginalSubspriteMode
+#undef tVerticalShake
+#undef tNumShakes
 
 void sub_8086A68(u8);
 extern void sub_80B4824(u8);
