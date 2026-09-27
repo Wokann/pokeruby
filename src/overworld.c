@@ -2291,11 +2291,11 @@ void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3)
     a3->playerId = linkPlayerId;
     a3->isLocalPlayer = (linkPlayerId == a2) ? 1 : 0;
     a3->movementMode = gLinkPlayerObjectEvents[linkPlayerId].movementMode;
-    a3->facing = sub_8055B30(linkPlayerId);
-    sub_8055B08(linkPlayerId, &x, &y);
+    a3->facing = GetLinkPlayerFacingDirection(linkPlayerId);
+    GetLinkPlayerCoords(linkPlayerId, &x, &y);
     a3->pos.x = x;
     a3->pos.y = y;
-    a3->pos.height = sub_8055B50(linkPlayerId);
+    a3->pos.height = GetLinkPlayerElevation(linkPlayerId);
     a3->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
@@ -2568,7 +2568,7 @@ u8 sub_8055AE8(u8 linkPlayerId)
     return objEvent->spriteId;
 }
 
-void sub_8055B08(u8 linkPlayerId, u16 *x, u16 *y)
+void GetLinkPlayerCoords(u8 linkPlayerId, u16 *x, u16 *y)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
@@ -2576,14 +2576,14 @@ void sub_8055B08(u8 linkPlayerId, u16 *x, u16 *y)
     *y = objEvent->currentCoords.y;
 }
 
-u8 sub_8055B30(u8 linkPlayerId)
+u8 GetLinkPlayerFacingDirection(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
     return objEvent->range.as_byte;
 }
 
-u8 sub_8055B50(u8 linkPlayerId)
+u8 GetLinkPlayerElevation(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];

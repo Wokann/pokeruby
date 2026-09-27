@@ -213,9 +213,9 @@ void ClearLinkPlayerObjectEvents(void);
 // unref_sub_8055A6C
 // unref_sub_8055A9C
 u8 sub_8055AE8(u8);
-void sub_8055B08(u8, u16 *, u16 *);
-u8 sub_8055B30(u8);
-u8 sub_8055B50(u8);
+void GetLinkPlayerCoords(u8, u16 *, u16 *);
+u8 GetLinkPlayerFacingDirection(u8);
+u8 GetLinkPlayerElevation(u8);
 // unref_sub_8055B74
 void sub_8055BFC(u8, u8);
 // sub_8055C68
