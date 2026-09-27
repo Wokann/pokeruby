@@ -459,7 +459,7 @@ static bool8 sub_8141E64(void)
     return 1;
 }
 
-void sub_8141F90(void)
+void CB2_DoHallOfFameScreen(void)
 {
     if (sub_8141E64() == 0)
     {
@@ -468,7 +468,7 @@ void sub_8141F90(void)
     }
 }
 
-static void sub_8141FC4(void)
+static void CB2_DoHallOfFameScreenDontSaveData(void)
 {
     if (sub_8141E64() == 0)
     {
@@ -559,7 +559,7 @@ static void Task_Hof_InitTeamSaveData(u8 taskID)
 
 static void sub_8142274(u8 taskID)
 {
-    gGameContinueCallback = sub_8141FC4;
+    gGameContinueCallback = CB2_DoHallOfFameScreenDontSaveData;
     Save_WriteData(3);
     PlaySE(SE_SAVE);
     gTasks[taskID].func = sub_81422B8;
@@ -766,7 +766,7 @@ static void sub_81428A0(u8 taskID)
 #undef tPlayerSpriteID
 #undef tMonSpriteID
 
-void sub_81428CC(void)
+void CB2_DoHallOfFamePC(void)
 {
     switch (gMain.state)
     {

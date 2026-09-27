@@ -14,7 +14,7 @@ static void Task_WaitForPaletteFade(u8);
 
 void AccessHallOfFamePC(void)
 {
-    SetMainCallback2(sub_81428CC);
+    SetMainCallback2(CB2_DoHallOfFamePC);
     LockPlayerFieldControls();
 }
 

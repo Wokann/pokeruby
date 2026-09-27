@@ -59,7 +59,7 @@ int GameClear(void)
         FlagSet(FLAG_SYS_RIBBON_GET);
     }
 
-    SetMainCallback2(sub_8141F90);
+    SetMainCallback2(CB2_DoHallOfFameScreen);
     return 0;
 }
 
