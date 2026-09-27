@@ -412,7 +412,7 @@ static void LinkTestProcessKeyInput(void)
     if (JOY_NEW(START_BUTTON))
         SetSuppressLinkErrorMessage(TRUE);
     if (JOY_NEW(R_BUTTON))
-        Save_WriteData(SAVE_LINK);
+        TrySavingData(SAVE_LINK);
     if (JOY_NEW(SELECT_BUTTON))
         SetCloseLinkCallback();
     if (gLinkTestDebugValuesEnabled)

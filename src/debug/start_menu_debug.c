@@ -551,7 +551,7 @@ u8 DebugMenu_8076D3C(void)
 
 u8 DebugMenu_8076D50(void)
 {
-    Save_EraseAllData();
+    ClearSaveData();
     return 0;
 }
 

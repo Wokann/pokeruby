@@ -11,7 +11,7 @@
 
 extern u16 gSaveFileStatus;
 
-void Save_EraseAllData(void);
+void ClearSaveData(void);
 void Save_ResetSaveCounters(void);
 
 enum
@@ -24,16 +24,16 @@ enum
     SAVE_HALL_OF_FAME_ERASE_BEFORE, // unused
 };
 
-u8 Save_WriteDataInternal(u8 saveType);
-u8 Save_WriteData(u8 saveType);
+u8 HandleSavingData(u8 saveType);
+u8 TrySavingData(u8 saveType);
 
-u8 sub_8125D80(void);
-bool8 sub_8125DA8(void);
-u8 sub_8125DDC(void);
-u8 sub_8125E04(void);
-u8 sub_8125E2C(void);
-bool8 sub_8125E6C(void);
-u8 Save_LoadGameData(u8 a1);
+u8 LinkFullSave_Init(void);
+bool8 LinkFullSave_WriteSector(void);
+u8 LinkFullSave_ReplaceLastSector(void);
+u8 LinkFullSave_SetLastSectorSignature(void);
+u8 WriteSaveBlock2(void);
+bool8 WriteSaveBlock1Sector(void);
+u8 LoadGameSave(u8 a1);
 void sub_813B79C(void);
 
 #endif // GUARD_SAVE_H

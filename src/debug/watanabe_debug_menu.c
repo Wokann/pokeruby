@@ -359,11 +359,11 @@ void InitWatanabeDebugMenu(void)
         default:
         case 0:
             SaveMapView();
-            sub_8125E2C();
+            WriteSaveBlock2();
             gMain.state = 1;
             break;
         case 1:
-            if (sub_8125E6C())
+            if (WriteSaveBlock1Sector())
                 gMain.state++;
             break;
         case 2:

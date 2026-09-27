@@ -777,12 +777,12 @@ static u8 SaveDialogCB_DoSave(void)
     IncrementGameStat(GAME_STAT_SAVED_GAME);
     if (gDifferentSaveFile == TRUE)
     {
-        saveStatus = Save_WriteData(SAVE_OVERWRITE_DIFFERENT_FILE);
+        saveStatus = TrySavingData(SAVE_OVERWRITE_DIFFERENT_FILE);
         gDifferentSaveFile = FALSE;
     }
     else
     {
-        saveStatus = Save_WriteData(SAVE_NORMAL);
+        saveStatus = TrySavingData(SAVE_NORMAL);
     }
 
     if (saveStatus == SAVE_STATUS_OK)
@@ -919,11 +919,11 @@ static void Task_8071B64(u8 taskId)
             break;
         case 1:
             SetContinueGameWarpStatusToDynamicWarp();
-            sub_8125E2C();
+            WriteSaveBlock2();
             (*step)++;
             break;
         case 2:
-            if (!sub_8125E6C())
+            if (!WriteSaveBlock1Sector())
                 break;
             ClearContinueGameWarpStatus2();
             (*step)++;

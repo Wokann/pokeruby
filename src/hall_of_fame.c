@@ -533,7 +533,7 @@ static void Task_Hof_InitTeamSaveData(u8 taskID)
             gSharedMem[0x1E000 + i] = 0; // gDecompressionBuffer[i] = 0;
     }
     else
-        Save_LoadGameData(SAVE_HALL_OF_FAME);
+        LoadGameSave(SAVE_HALL_OF_FAME);
 
     for (i = 0; i < HALL_OF_FAME_MAX_TEAMS; i++, lastSavedTeam++)
     {
@@ -560,7 +560,7 @@ static void Task_Hof_InitTeamSaveData(u8 taskID)
 static void sub_8142274(u8 taskID)
 {
     gGameContinueCallback = CB2_DoHallOfFameScreenDontSaveData;
-    Save_WriteData(3);
+    TrySavingData(3);
     PlaySE(SE_SAVE);
     gTasks[taskID].func = sub_81422B8;
     gTasks[taskID].tFrameCount = 32;
@@ -829,7 +829,7 @@ void CB2_DoHallOfFamePC(void)
 
 static void sub_8142A28(u8 taskID)
 {
-    if (Save_LoadGameData(SAVE_HALL_OF_FAME) != SAVE_STATUS_OK)
+    if (LoadGameSave(SAVE_HALL_OF_FAME) != SAVE_STATUS_OK)
         gTasks[taskID].func = sub_8142FEC;
     else
     {
