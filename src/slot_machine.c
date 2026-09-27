@@ -167,12 +167,12 @@ static bool8 SlotTask_FreeDataStructures(struct Task *task);
 #if DEBUG
 static bool8 debug_sub_8116E74(struct Task *);
 #endif
-static void sub_8102484(void);
-static void sub_81024F0(void);
-static bool8 sub_8102540(void);
-static u8 sub_8102578(void);
-static u16 dp15_jump_random_unknown(void);
-static u8 sub_81025BC(void);
+static void DrawMachineBias(void);
+static void ResetBiasFailure(void);
+static bool8 ShouldTrySpecialBias(void);
+static u8 TrySelectBias_Special(void);
+static u16 ReelTimeSpeed(void);
+static u8 TrySelectBias_Regular(void);
 static void CheckMatch(void);
 static void CheckMatch_CenterRow(void);
 static void CheckMatch_TopAndBottom(void);
@@ -765,7 +765,7 @@ static bool8 SlotTask_WaitInfoBox(struct Task *task)
 
 static bool8 SlotTask_StartSpin(struct Task *task)
 {
-    sub_8102484();
+    DrawMachineBias();
     sub_8104DA4();
     sub_8102DEC(0);
     sub_8102DEC(1);
@@ -783,7 +783,7 @@ static bool8 SlotTask_StartSpin(struct Task *task)
     }
     sSlotMachine->unk1A = 8;
     if (sSlotMachine->unk0A)
-        sSlotMachine->unk1A = dp15_jump_random_unknown();
+        sSlotMachine->unk1A = ReelTimeSpeed();
 #if DEBUG
     if (unk_debug_bss_1_1 != 0)
         debug_sub_811B5B4(&sSlotMachine->unk68, 1);
@@ -810,7 +810,7 @@ static bool8 SlotTask_ResetBiasFailure(struct Task *task)
         if (unk_debug_bss_1_1 != 0 && unk_debug_bss_1_4 != 0)
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
 #endif
-        sub_81024F0();
+        ResetBiasFailure();
         sSlotMachine->state = 12;
     }
     return FALSE;
@@ -1146,7 +1146,7 @@ static bool8 debug_sub_8116E74(struct Task *task)
 
 #endif
 
-static void sub_8102484(void)
+static void DrawMachineBias(void)
 {
     u8 r3;
 
@@ -1179,9 +1179,9 @@ static void sub_8102484(void)
 #endif
         if (!(sSlotMachine->unk04 & 0xc0))
         {
-            if (sub_8102540())
+            if (ShouldTrySpecialBias())
             {
-                r3 = sub_8102578();
+                r3 = TrySelectBias_Special();
                 if (r3 != 3)
                 {
                     sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
@@ -1199,7 +1199,7 @@ static void sub_8102484(void)
                     }
                 }
             }
-            r3 = sub_81025BC();
+            r3 = TrySelectBias_Regular();
             if (r3 != 5)
             {
                 sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
@@ -1221,15 +1221,15 @@ static void sub_8102484(void)
 }
 
 /*
-static void sub_8102484(void)
+static void DrawMachineBias(void)
 {
     u8 r3;
 
     if (sSlotMachine->unk0A == 0 && !(sSlotMachine->unk04 & 0xc0))
     {
-        if (sub_8102540())
+        if (ShouldTrySpecialBias())
         {
-            r3 = sub_8102578();
+            r3 = TrySelectBias_Special();
             if (r3 != 3)
             {
                 sSlotMachine->unk04 |= gUnknown_083ECE42[r3];
@@ -1239,7 +1239,7 @@ static void sub_8102484(void)
                 }
             }
         }
-        r3 = sub_81025BC();
+        r3 = TrySelectBias_Regular();
         if (r3 != 5)
         {
             sSlotMachine->unk04 |= gUnknown_083ECE48[r3];
@@ -1248,14 +1248,14 @@ static void sub_8102484(void)
 }
 */
 
-static void sub_81024F0(void)
+static void ResetBiasFailure(void)
 {
     sSlotMachine->unk06 = 0;
     if (sSlotMachine->unk04)
         sSlotMachine->unk06 = 1;
 }
 
-static u8 sub_810250C(u8 a0)
+static u8 GetBiasSymbol(u8 a0)
 {
     u8 i;
 
@@ -1268,7 +1268,7 @@ static u8 sub_810250C(u8 a0)
     return 0;
 }
 
-static bool8 sub_8102540(void)
+static bool8 ShouldTrySpecialBias(void)
 {
     u8 rval = Random();
     if (gUnknown_083ECD04[sSlotMachine->unk01][sSlotMachine->bet - 1] > rval)
@@ -1278,7 +1278,7 @@ static bool8 sub_8102540(void)
 
 static const u8 gUnknown_083ECD16[][6];
 
-static u8 sub_8102578(void)
+static u8 TrySelectBias_Special(void)
 {
     s16 i;
 
@@ -1294,7 +1294,7 @@ static u8 sub_8102578(void)
 
 static const u8 gUnknown_083ECD28[][6];
 
-static u8 sub_81025BC(void)
+static u8 TrySelectBias_Regular(void)
 {
     s16 i;
 
@@ -1323,7 +1323,7 @@ static u8 sub_81025BC(void)
 static const u8 gUnknown_083ECD46[][17];
 static const u8 gUnknown_083ECDAC[][17];
 
-static u8 sub_810264C(u8 a0)
+static u8 GetReelTimeSpinProbability(u8 a0)
 {
     if (sSlotMachine->unk03 == 0)
         return gUnknown_083ECD46[a0][sSlotMachine->pikaPower];
@@ -1331,19 +1331,19 @@ static u8 sub_810264C(u8 a0)
         return gUnknown_083ECDAC[a0][sSlotMachine->pikaPower];
 }
 
-static void sub_8102680(void)
+static void GetReelTimeDraw(void)
 {
     u8 rval;
     s16 i;
 
     sSlotMachine->unk05 = 0;
     rval = Random();
-    if (rval < sub_810264C(0))
+    if (rval < GetReelTimeSpinProbability(0))
         return;
     for (i = 5; i > 0; i--)
     {
         rval = Random();
-        if (rval < sub_810264C(i))
+        if (rval < GetReelTimeSpinProbability(i))
             break;
     }
     sSlotMachine->unk05 = i;
@@ -1351,7 +1351,7 @@ static void sub_8102680(void)
 
 static const u16 gUnknown_083ECE12[];
 
-static bool8 sub_81026DC(u16 a0)
+static bool8 ShouldReelTimeMachineExplode(u16 a0)
 {
     u16 rval = Random() & 0xff;
     if (rval < gUnknown_083ECE12[a0])
@@ -1363,7 +1363,7 @@ static bool8 sub_81026DC(u16 a0)
 static const u16 gUnknown_083ECE1C[][2];
 static const u16 gUnknown_083ECE30[];
 
-static u16 dp15_jump_random_unknown(void)
+static u16 ReelTimeSpeed(void)
 {
     u8 r4 = 0;
     u8 rval;
@@ -1762,7 +1762,7 @@ static bool8 (*const gUnknown_083ECB64[])(u8 a0, u8 a1) =
 
 static bool8 sub_810305C(void)
 {
-    u8 r3 = sub_810250C(sSlotMachine->unk04);
+    u8 r3 = GetBiasSymbol(sSlotMachine->unk04);
     u8 r5 = r3;
     if (sSlotMachine->unk04 & 0xc0)
     {
@@ -2682,7 +2682,7 @@ static void sub_810437C(struct Task *task)
     sub_81052EC();
     sub_81053A0();
     sub_810545C();
-    sub_8102680();
+    GetReelTimeDraw();
     StopMapMusic();
     PlayNewMapMusic(MUS_ROULETTE);
 }
@@ -2779,7 +2779,7 @@ static void sub_81045CC(struct Task *task)
         {
             task->data[0]++;
         }
-        else if (sub_81026DC(task->data[6]))
+        else if (ShouldReelTimeMachineExplode(task->data[6]))
         {
             task->data[0] = 14;
         }
@@ -2875,7 +2875,7 @@ static void sub_81047EC(struct Task *task)
     else
     {
         sub_8104CAC(4);
-        task->data[1] = dp15_jump_random_unknown();
+        task->data[1] = ReelTimeSpeed();
         task->data[2] = 0;
         task->data[3] = 0;
         task->data[0]++;
