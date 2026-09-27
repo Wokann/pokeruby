@@ -1082,185 +1082,185 @@ static const struct MenuAction sMenuActions_EventFlagCategories[] = {
 	{sString_EventFlag_Other6, ControlFlags_EventFlag_Other6_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C2870[] = _("FEーHWAZA01ーGET");
-static const u8 gUnknown_Debug_083C287F[] = _("FEーHWAZA02ー01ーFIELDR119");
-static const u8 gUnknown_Debug_083C2897[] = _("FEーHWAZA03ーGET");
-static const u8 gUnknown_Debug_083C28A6[] = _("FEーHWAZA04ー01ーT106ーR0201");
-static const u8 gUnknown_Debug_083C28BF[] = _("FEーHWAZA05ー01ーCAVEーD0502");
-static const u8 gUnknown_Debug_083C28D8[] = _("FEーHWAZA04ー01ーC103ーR0301");
-static const u8 gUnknown_Debug_083C28F1[] = _("FEーDEBONーNIMOTSUーRETURN");
-static const u8 gUnknown_Debug_083C2909[] = _("FEーDEBONー01ーFIELDーC104");
-static const u8 gUnknown_Debug_083C2920[] = _("FEーDEBONー02ーFIELDーC104");
+static const u8 sString_EventFlag_ReceivedHM01[] = _("FEーHWAZA01ーGET");
+static const u8 sString_EventFlag_ReceivedHMFly[] = _("FEーHWAZA02ー01ーFIELDR119");
+static const u8 sString_EventFlag_ReceivedHMSurf[] = _("FEーHWAZA03ーGET");
+static const u8 sString_EventFlag_ReceivedHMStrength[] = _("FEーHWAZA04ー01ーT106ーR0201");
+static const u8 sString_EventFlag_ReceivedHM05[] = _("FEーHWAZA05ー01ーCAVEーD0502");
+static const u8 sString_EventFlag_ReceivedHM06[] = _("FEーHWAZA04ー01ーC103ーR0301");
+static const u8 sString_EventFlag_ReturnedDevonGoods[] = _("FEーDEBONーNIMOTSUーRETURN");
+static const u8 sString_EventFlag_DevonGoodsStolen[] = _("FEーDEBONー01ーFIELDーC104");
+static const u8 sString_EventFlag_RecoveredDevonGoods[] = _("FEーDEBONー02ーFIELDーC104");
 
 static const struct MenuAction sMenuActions_EventFlags_FieldMovesAndDevon[] = {
-    {gUnknown_Debug_083C2870, DummyMenuAction},
-    {gUnknown_Debug_083C287F, DummyMenuAction},
-    {gUnknown_Debug_083C2897, DummyMenuAction},
-    {gUnknown_Debug_083C28A6, DummyMenuAction},
-    {gUnknown_Debug_083C28BF, DummyMenuAction},
-    {gUnknown_Debug_083C28D8, DummyMenuAction},
-    {gUnknown_Debug_083C28F1, DummyMenuAction},
-    {gUnknown_Debug_083C2909, DummyMenuAction},
-    {gUnknown_Debug_083C2920, DummyMenuAction}
+    {sString_EventFlag_ReceivedHM01, DummyMenuAction},
+    {sString_EventFlag_ReceivedHMFly, DummyMenuAction},
+    {sString_EventFlag_ReceivedHMSurf, DummyMenuAction},
+    {sString_EventFlag_ReceivedHMStrength, DummyMenuAction},
+    {sString_EventFlag_ReceivedHM05, DummyMenuAction},
+    {sString_EventFlag_ReceivedHM06, DummyMenuAction},
+    {sString_EventFlag_ReturnedDevonGoods, DummyMenuAction},
+    {sString_EventFlag_DevonGoodsStolen, DummyMenuAction},
+    {sString_EventFlag_RecoveredDevonGoods, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2980[] = _("FEーCYCLEー01ーP01ーP01ーC103ーR0201");
-static const u8 gUnknown_Debug_083C299F[] = _("FEーSCOOPー01ーP01ーFIELDーR115");
-static const u8 gUnknown_Debug_083C29BA[] = _("FEーROPEー01ーP01ーFIELDーR114");
-static const u8 gUnknown_Debug_083C29D4[] = _("FEーKAMAー01ーP01ーFIELDーR119");
-static const u8 gUnknown_Debug_083C29EE[] = _("FEーZYOUROーGET");
-static const u8 gUnknown_Debug_083C29FC[] = _("FEーCUBECASEーGET");
-static const u8 gUnknown_Debug_083C2A0C[] = _("FEーBORONOTURIZAOーGET");
-static const u8 gUnknown_Debug_083C2A21[] = _("FEーIITURIZAOーGET");
-static const u8 gUnknown_Debug_083C2A32[] = _("FEーSUGOITURIZAOーGET");
+static const u8 sString_EventFlag_ReceivedBike[] = _("FEーCYCLEー01ーP01ーP01ーC103ーR0201");
+static const u8 sString_EventFlag_UnknownFlag05B[] = _("FEーSCOOPー01ーP01ーFIELDーR115");
+static const u8 sString_EventFlag_UnknownFlag05C[] = _("FEーROPEー01ーP01ーFIELDーR114");
+static const u8 sString_EventFlag_UnknownFlag05D[] = _("FEーKAMAー01ーP01ーFIELDーR119");
+static const u8 sString_EventFlag_ReceivedWailmerPail[] = _("FEーZYOUROーGET");
+static const u8 sString_EventFlag_ReceivedPokeblockCase[] = _("FEーCUBECASEーGET");
+static const u8 sString_EventFlag_ReceivedOldRod[] = _("FEーBORONOTURIZAOーGET");
+static const u8 sString_EventFlag_ReceivedGoodRod[] = _("FEーIITURIZAOーGET");
+static const u8 sString_EventFlag_ReceivedSuperRod[] = _("FEーSUGOITURIZAOーGET");
 
 static const struct MenuAction sMenuActions_EventFlags_KeyItems[] = {
-    {gUnknown_Debug_083C2980, DummyMenuAction},
-    {gUnknown_Debug_083C299F, DummyMenuAction},
-    {gUnknown_Debug_083C29BA, DummyMenuAction},
-    {gUnknown_Debug_083C29D4, DummyMenuAction},
-    {gUnknown_Debug_083C29EE, DummyMenuAction},
-    {gUnknown_Debug_083C29FC, DummyMenuAction},
-    {gUnknown_Debug_083C2A0C, DummyMenuAction},
-    {gUnknown_Debug_083C2A21, DummyMenuAction},
-    {gUnknown_Debug_083C2A32, DummyMenuAction}
+    {sString_EventFlag_ReceivedBike, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag05B, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag05C, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag05D, DummyMenuAction},
+    {sString_EventFlag_ReceivedWailmerPail, DummyMenuAction},
+    {sString_EventFlag_ReceivedPokeblockCase, DummyMenuAction},
+    {sString_EventFlag_ReceivedOldRod, DummyMenuAction},
+    {sString_EventFlag_ReceivedGoodRod, DummyMenuAction},
+    {sString_EventFlag_ReceivedSuperRod, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2A90[] = _("FEーBOSSー01ーCAVEーD0701");
-static const u8 gUnknown_Debug_083C2AA6[] = _("FEーTANTIKIーRETURN");
-static const u8 gUnknown_Debug_083C2AB8[] = _("FEーPOKE1ー01ーCAVEーD1111");
-static const u8 gUnknown_Debug_083C2ACF[] = _("FEーPOKE1ー01ーCAVEーD1206");
-static const u8 gUnknown_Debug_083C2AE6[] = _("FEーSHOPー01ーC104ーFS01");
-static const u8 gUnknown_Debug_083C2AFB[] = _("FEーHUNENOTIKETTーGET");
-static const u8 gUnknown_Debug_083C2B0F[] = _("FEーKAKUREー01ーFIELDーC105");
-static const u8 gUnknown_Debug_083C2B27[] = _("FEーKASEKIーRETURN");
-static const u8 gUnknown_Debug_083C2B38[] = _("FEーWINー01ーSPーSHIP01");
+static const u8 sString_EventFlag_DefeatedEvilTeamMtChimney[] = _("FEーBOSSー01ーCAVEーD0701");
+static const u8 sString_EventFlag_ExchangedScanner[] = _("FEーTANTIKIーRETURN");
+static const u8 sString_EventFlag_LegendEscapedSeafloorCavern[] = _("FEーPOKE1ー01ーCAVEーD1111");
+static const u8 sString_EventFlag_LegendaryBattleCompleted[] = _("FEーPOKE1ー01ーCAVEーD1206");
+static const u8 sString_EventFlag_ReceivedRepeatBall[] = _("FEーSHOPー01ーC104ーFS01");
+static const u8 sString_EventFlag_ReceivedSSTicket[] = _("FEーHUNENOTIKETTーGET");
+static const u8 sString_EventFlag_KecleonFledFortree[] = _("FEーKAKUREー01ーFIELDーC105");
+static const u8 sString_EventFlag_ReceivedRevivedFossilMon[] = _("FEーKASEKIーRETURN");
+static const u8 sString_EventFlag_DefeatedSSTidalTrainers[] = _("FEーWINー01ーSPーSHIP01");
 
 static const struct MenuAction sMenuActions_EventFlags_Other1[] = {
-    {gUnknown_Debug_083C2A90, DummyMenuAction},
-    {gUnknown_Debug_083C2AA6, DummyMenuAction},
-    {gUnknown_Debug_083C2AB8, DummyMenuAction},
-    {gUnknown_Debug_083C2ACF, DummyMenuAction},
-    {gUnknown_Debug_083C2AE6, DummyMenuAction},
-    {gUnknown_Debug_083C2AFB, DummyMenuAction},
-    {gUnknown_Debug_083C2B0F, DummyMenuAction},
-    {gUnknown_Debug_083C2B27, DummyMenuAction},
-    {gUnknown_Debug_083C2B38, DummyMenuAction}
+    {sString_EventFlag_DefeatedEvilTeamMtChimney, DummyMenuAction},
+    {sString_EventFlag_ExchangedScanner, DummyMenuAction},
+    {sString_EventFlag_LegendEscapedSeafloorCavern, DummyMenuAction},
+    {sString_EventFlag_LegendaryBattleCompleted, DummyMenuAction},
+    {sString_EventFlag_ReceivedRepeatBall, DummyMenuAction},
+    {sString_EventFlag_ReceivedSSTicket, DummyMenuAction},
+    {sString_EventFlag_KecleonFledFortree, DummyMenuAction},
+    {sString_EventFlag_ReceivedRevivedFossilMon, DummyMenuAction},
+    {sString_EventFlag_DefeatedSSTidalTrainers, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2B94[] = _("FEーMITSURUー01ーT106ーR0201");
-static const u8 gUnknown_Debug_083C2BAD[] = _("FEーMITSURUー01ーCAVEーD1301");
-static const u8 gUnknown_Debug_083C2BC6[] = _("FEーMITSURUー02ーFIELDーC103");
-static const u8 gUnknown_Debug_083C2BDF[] = _("FEーMITSURUー02ーT106ーR0201");
-static const u8 gUnknown_Debug_083C2BF8[] = _("FEーMITSURUー01ーFIELDーC103");
-static const u8 gUnknown_Debug_083C2C11[] = _("FEーDOORーOPENー01ーCAVEーD1712");
-static const u8 gUnknown_Debug_083C2C2C[] = _("FEーDOORーOPENー02ーCAVEーD1712");
-static const u8 gUnknown_Debug_083C2C47[] = _("FEーDOORーOPENー04ーCAVEーD1712");
-static const u8 gUnknown_Debug_083C2C62[] = _("FEーDOORーOPENー06ーCAVEーD1712");
+static const u8 sString_EventFlag_UnknownFlag06C[] = _("FEーMITSURUー01ーT106ーR0201");
+static const u8 sString_EventFlag_DefeatedWallyVictoryRoad[] = _("FEーMITSURUー01ーCAVEーD1301");
+static const u8 sString_EventFlag_DefeatedWallyMauville[] = _("FEーMITSURUー02ーFIELDーC103");
+static const u8 sString_EventFlag_WallySpeech[] = _("FEーMITSURUー02ーT106ーR0201");
+static const u8 sString_EventFlag_DeclinedWallyBattleMauville[] = _("FEーMITSURUー01ーFIELDーC103");
+static const u8 sString_EventFlag_UsedRoom1Key[] = _("FEーDOORーOPENー01ーCAVEーD1712");
+static const u8 sString_EventFlag_UsedRoom2Key[] = _("FEーDOORーOPENー02ーCAVEーD1712");
+static const u8 sString_EventFlag_UsedRoom4Key[] = _("FEーDOORーOPENー04ーCAVEーD1712");
+static const u8 sString_EventFlag_UsedRoom6Key[] = _("FEーDOORーOPENー06ーCAVEーD1712");
 
 static const struct MenuAction sMenuActions_EventFlags_WallyAndDoors[] = {
-    {gUnknown_Debug_083C2B94, DummyMenuAction},
-    {gUnknown_Debug_083C2BAD, DummyMenuAction},
-    {gUnknown_Debug_083C2BC6, DummyMenuAction},
-    {gUnknown_Debug_083C2BDF, DummyMenuAction},
-    {gUnknown_Debug_083C2BF8, DummyMenuAction},
-    {gUnknown_Debug_083C2C11, DummyMenuAction},
-    {gUnknown_Debug_083C2C2C, DummyMenuAction},
-    {gUnknown_Debug_083C2C47, DummyMenuAction},
-    {gUnknown_Debug_083C2C62, DummyMenuAction}
+    {sString_EventFlag_UnknownFlag06C, DummyMenuAction},
+    {sString_EventFlag_DefeatedWallyVictoryRoad, DummyMenuAction},
+    {sString_EventFlag_DefeatedWallyMauville, DummyMenuAction},
+    {sString_EventFlag_WallySpeech, DummyMenuAction},
+    {sString_EventFlag_DeclinedWallyBattleMauville, DummyMenuAction},
+    {sString_EventFlag_UsedRoom1Key, DummyMenuAction},
+    {sString_EventFlag_UsedRoom2Key, DummyMenuAction},
+    {sString_EventFlag_UsedRoom4Key, DummyMenuAction},
+    {sString_EventFlag_UsedRoom6Key, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2CC8[] = _("FEーKARAKURI10ーSWITCHー01");
-static const u8 gUnknown_Debug_083C2CE0[] = _("FEーKARAKURI10ーSWITCHー02");
-static const u8 gUnknown_Debug_083C2CF8[] = _("FEーKARAKURI10ーSWITCHー03");
-static const u8 gUnknown_Debug_083C2D10[] = _("FEーKARAKURI10ーSWITCHー04");
-static const u8 gUnknown_Debug_083C2D28[] = _("FEーKARAKURI10ーSWITCHー05");
-static const u8 gUnknown_Debug_083C2D40[] = _("FEーGYM07ーSWITCHー01");
-static const u8 gUnknown_Debug_083C2D53[] = _("FEーGYM07ーSWITCHー02");
-static const u8 gUnknown_Debug_083C2D66[] = _("FEーGYM07ーSWITCHー03");
-static const u8 gUnknown_Debug_083C2D79[] = _("FEーGYM07ーSWITCHー04");
+static const u8 sString_EventFlag_TrickHousePuzzle7Switch1[] = _("FEーKARAKURI10ーSWITCHー01");
+static const u8 sString_EventFlag_TrickHousePuzzle7Switch2[] = _("FEーKARAKURI10ーSWITCHー02");
+static const u8 sString_EventFlag_TrickHousePuzzle7Switch3[] = _("FEーKARAKURI10ーSWITCHー03");
+static const u8 sString_EventFlag_TrickHousePuzzle7Switch4[] = _("FEーKARAKURI10ーSWITCHー04");
+static const u8 sString_EventFlag_TrickHousePuzzle7Switch5[] = _("FEーKARAKURI10ーSWITCHー05");
+static const u8 sString_EventFlag_MossdeepGymSwitch1[] = _("FEーGYM07ーSWITCHー01");
+static const u8 sString_EventFlag_MossdeepGymSwitch2[] = _("FEーGYM07ーSWITCHー02");
+static const u8 sString_EventFlag_MossdeepGymSwitch3[] = _("FEーGYM07ーSWITCHー03");
+static const u8 sString_EventFlag_MossdeepGymSwitch4[] = _("FEーGYM07ーSWITCHー04");
 
 static const struct MenuAction sMenuActions_EventFlags_TrickHouseAndGym[] = {
-    {gUnknown_Debug_083C2CC8, DummyMenuAction},
-    {gUnknown_Debug_083C2CE0, DummyMenuAction},
-    {gUnknown_Debug_083C2CF8, DummyMenuAction},
-    {gUnknown_Debug_083C2D10, DummyMenuAction},
-    {gUnknown_Debug_083C2D28, DummyMenuAction},
-    {gUnknown_Debug_083C2D40, DummyMenuAction},
-    {gUnknown_Debug_083C2D53, DummyMenuAction},
-    {gUnknown_Debug_083C2D66, DummyMenuAction},
-    {gUnknown_Debug_083C2D79, DummyMenuAction}
+    {sString_EventFlag_TrickHousePuzzle7Switch1, DummyMenuAction},
+    {sString_EventFlag_TrickHousePuzzle7Switch2, DummyMenuAction},
+    {sString_EventFlag_TrickHousePuzzle7Switch3, DummyMenuAction},
+    {sString_EventFlag_TrickHousePuzzle7Switch4, DummyMenuAction},
+    {sString_EventFlag_TrickHousePuzzle7Switch5, DummyMenuAction},
+    {sString_EventFlag_MossdeepGymSwitch1, DummyMenuAction},
+    {sString_EventFlag_MossdeepGymSwitch2, DummyMenuAction},
+    {sString_EventFlag_MossdeepGymSwitch3, DummyMenuAction},
+    {sString_EventFlag_MossdeepGymSwitch4, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2DD4[] = _("FEーSUPPORTー01ーFIELDーR103");
-static const u8 gUnknown_Debug_083C2DED[] = _("FEーSUPPORTー01ーFIELDーC106");
-static const u8 gUnknown_Debug_083C2E06[] = _("FEーSUPPORTー01ーFIELDーR104");
-static const u8 gUnknown_Debug_083C2E1F[] = _("FEーSUPPORTー02ーFIELDーC106");
-static const u8 gUnknown_Debug_083C2E38[] = _("FEーSUPPORTー01ーT101ーR0202");
-static const u8 gUnknown_Debug_083C2E51[] = _("FEーMAMAー01ーP01ーT101ーR0101");
-static const u8 gUnknown_Debug_083C2E6B[] = _("FEーCLOCKーSET");
-static const u8 gUnknown_Debug_083C2E78[] = _("FEーODAMAKIー01ーP01ーT101ーR03");
-static const u8 gUnknown_Debug_083C2E93[] = _("FEーPAPAー01ーP01ーC101ーR0201");
+static const u8 sString_EventFlag_DefeatedRivalRoute103[] = _("FEーSUPPORTー01ーFIELDーR103");
+static const u8 sString_EventFlag_DeclinedRivalBattleLilycove[] = _("FEーSUPPORTー01ーFIELDーC106");
+static const u8 sString_EventFlag_MetRivalRustboro[] = _("FEーSUPPORTー01ーFIELDーR104");
+static const u8 sString_EventFlag_MetRivalLilycove[] = _("FEーSUPPORTー02ーFIELDーC106");
+static const u8 sString_EventFlag_MetRivalInHouseAfterLilycove[] = _("FEーSUPPORTー01ーT101ーR0202");
+static const u8 sString_EventFlag_UnknownFlag050[] = _("FEーMAMAー01ーP01ーT101ーR0101");
+static const u8 sString_EventFlag_SetWallClock[] = _("FEーCLOCKーSET");
+static const u8 sString_EventFlag_RescuedBirch[] = _("FEーODAMAKIー01ーP01ーT101ーR03");
+static const u8 sString_EventFlag_UnknownFlag055[] = _("FEーPAPAー01ーP01ーC101ーR0201");
 
 static const struct MenuAction sMenuActions_EventFlags_SupportAndOther[] = {
-    {gUnknown_Debug_083C2DD4, DummyMenuAction},
-    {gUnknown_Debug_083C2DED, DummyMenuAction},
-    {gUnknown_Debug_083C2E06, DummyMenuAction},
-    {gUnknown_Debug_083C2E1F, DummyMenuAction},
-    {gUnknown_Debug_083C2E38, DummyMenuAction},
-    {gUnknown_Debug_083C2E51, DummyMenuAction},
-    {gUnknown_Debug_083C2E6B, DummyMenuAction},
-    {gUnknown_Debug_083C2E78, DummyMenuAction},
-    {gUnknown_Debug_083C2E93, DummyMenuAction}
+    {sString_EventFlag_DefeatedRivalRoute103, DummyMenuAction},
+    {sString_EventFlag_DeclinedRivalBattleLilycove, DummyMenuAction},
+    {sString_EventFlag_MetRivalRustboro, DummyMenuAction},
+    {sString_EventFlag_MetRivalLilycove, DummyMenuAction},
+    {sString_EventFlag_MetRivalInHouseAfterLilycove, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag050, DummyMenuAction},
+    {sString_EventFlag_SetWallClock, DummyMenuAction},
+    {sString_EventFlag_RescuedBirch, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag055, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C2EF8[] = _("FEーDAISUKIーGOODSーFLAG01");
-static const u8 gUnknown_Debug_083C2F10[] = _("FEーDAISUKIーGOODSーFLAG02");
-static const u8 gUnknown_Debug_083C2F28[] = _("FEーDAISUKIーGOODSーFLAG03");
-static const u8 gUnknown_Debug_083C2F40[] = _("FEーDAISUKIーGOODSーFLAG04");
-static const u8 gUnknown_Debug_083C2F58[] = _("FEーDAISUKIーGOODSーFLAG05");
-static const u8 gUnknown_Debug_083C2F70[] = _("FEーBASHAー01ーP01ーFIELDーC101ー");
-static const u8 gUnknown_Debug_083C2F8C[] = _("FEーBASHAー01ーP02ーFIELDーC101ー");
-static const u8 gUnknown_Debug_083C2FA8[] = _("FEーBALLー01ーP01ーSPーCONTEST");
-static const u8 gUnknown_Debug_083C2FC2[] = _("FEーWOMAN2ー01ーP01ーT101ーR0201");
+static const u8 sString_EventFlag_ReceivedRedScarf[] = _("FEーDAISUKIーGOODSーFLAG01");
+static const u8 sString_EventFlag_ReceivedBlueScarf[] = _("FEーDAISUKIーGOODSーFLAG02");
+static const u8 sString_EventFlag_ReceivedPinkScarf[] = _("FEーDAISUKIーGOODSーFLAG03");
+static const u8 sString_EventFlag_ReceivedGreenScarf[] = _("FEーDAISUKIーGOODSーFLAG04");
+static const u8 sString_EventFlag_ReceivedYellowScarf[] = _("FEーDAISUKIーGOODSーFLAG05");
+static const u8 sString_EventFlag_UnknownFlag053[] = _("FEーBASHAー01ーP01ーFIELDーC101ー");
+static const u8 sString_EventFlag_UnknownFlag054[] = _("FEーBASHAー01ーP02ーFIELDーC101ー");
+static const u8 sString_EventFlag_LinkContestRoomPokeball[] = _("FEーBALLー01ーP01ーSPーCONTEST");
+static const u8 sString_EventFlag_MetRivalMom[] = _("FEーWOMAN2ー01ーP01ーT101ーR0201");
 
 static const struct MenuAction sMenuActions_EventFlags_FanClubAndOther[] = {
-    {gUnknown_Debug_083C2EF8, DummyMenuAction},
-    {gUnknown_Debug_083C2F10, DummyMenuAction},
-    {gUnknown_Debug_083C2F28, DummyMenuAction},
-    {gUnknown_Debug_083C2F40, DummyMenuAction},
-    {gUnknown_Debug_083C2F58, DummyMenuAction},
-    {gUnknown_Debug_083C2F70, DummyMenuAction},
-    {gUnknown_Debug_083C2F8C, DummyMenuAction},
-    {gUnknown_Debug_083C2FA8, DummyMenuAction},
-    {gUnknown_Debug_083C2FC2, DummyMenuAction}
+    {sString_EventFlag_ReceivedRedScarf, DummyMenuAction},
+    {sString_EventFlag_ReceivedBlueScarf, DummyMenuAction},
+    {sString_EventFlag_ReceivedPinkScarf, DummyMenuAction},
+    {sString_EventFlag_ReceivedGreenScarf, DummyMenuAction},
+    {sString_EventFlag_ReceivedYellowScarf, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag053, DummyMenuAction},
+    {sString_EventFlag_UnknownFlag054, DummyMenuAction},
+    {sString_EventFlag_LinkContestRoomPokeball, DummyMenuAction},
+    {sString_EventFlag_MetRivalMom, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C3028[] = _("FEーSOUKOーOPENーCAVEーD1704");
-static const u8 gUnknown_Debug_083C3041[] = _("FEーSORAISIー01ーCAVEーD0101");
-static const u8 gUnknown_Debug_083C305A[] = _("FEーMAYUMIー01ーーR114ーR0201");
-static const u8 gUnknown_Debug_083C3073[] = _("FEーKUSUNOKIー01ーC102ーR0601");
-static const u8 gUnknown_Debug_083C308D[] = _("FEーOLDWOMAN1ー01ーCAVEーD0808");
-static const u8 gUnknown_Debug_083C30A8[] = _("FEーTRAINERM1ー01ーC109ーR0206");
-static const u8 gUnknown_Debug_083C30C3[] = _("FEーSOONANOーTAMAGOーGET");
-static const u8 gUnknown_Debug_083C30D9[] = _("FEーDASHーSHOESーGET");
-static const u8 gUnknown_Debug_083C30EB[] = _("FEーDEBONSUKOOPUーGET");
+static const u8 sString_EventFlag_UsedStorageKey[] = _("FEーSOUKOーOPENーCAVEーD1704");
+static const u8 sString_EventFlag_MetProfCosmo[] = _("FEーSORAISIー01ーCAVEーD0101");
+static const u8 sString_EventFlag_ReceivedDollLanette[] = _("FEーMAYUMIー01ーーR114ーR0201");
+static const u8 sString_EventFlag_EvilTeamEscapedSternSpoke[] = _("FEーKUSUNOKIー01ーC102ーR0601");
+static const u8 sString_EventFlag_ReturnedRedOrBlueOrb[] = _("FEーOLDWOMAN1ー01ーCAVEーD0808");
+static const u8 sString_EventFlag_EnteredEliteFour[] = _("FEーTRAINERM1ー01ーC109ーR0206");
+static const u8 sString_EventFlag_ReceivedLavaridgeEgg[] = _("FEーSOONANOーTAMAGOーGET");
+static const u8 sString_EventFlag_ReceivedRunningShoes[] = _("FEーDASHーSHOESーGET");
+static const u8 sString_EventFlag_ReceivedDevonScope[] = _("FEーDEBONSUKOOPUーGET");
 
 static const struct MenuAction sMenuActions_EventFlags_Other2[] = {
-    {gUnknown_Debug_083C3028, DummyMenuAction},
-    {gUnknown_Debug_083C3041, DummyMenuAction},
-    {gUnknown_Debug_083C305A, DummyMenuAction},
-    {gUnknown_Debug_083C3073, DummyMenuAction},
-    {gUnknown_Debug_083C308D, DummyMenuAction},
-    {gUnknown_Debug_083C30A8, DummyMenuAction},
-    {gUnknown_Debug_083C30C3, DummyMenuAction},
-    {gUnknown_Debug_083C30D9, DummyMenuAction},
-    {gUnknown_Debug_083C30EB, DummyMenuAction}
+    {sString_EventFlag_UsedStorageKey, DummyMenuAction},
+    {sString_EventFlag_MetProfCosmo, DummyMenuAction},
+    {sString_EventFlag_ReceivedDollLanette, DummyMenuAction},
+    {sString_EventFlag_EvilTeamEscapedSternSpoke, DummyMenuAction},
+    {sString_EventFlag_ReturnedRedOrBlueOrb, DummyMenuAction},
+    {sString_EventFlag_EnteredEliteFour, DummyMenuAction},
+    {sString_EventFlag_ReceivedLavaridgeEgg, DummyMenuAction},
+    {sString_EventFlag_ReceivedRunningShoes, DummyMenuAction},
+    {sString_EventFlag_ReceivedDevonScope, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C3148[] = _("FEーSTUDYM1ー01ーP01ーT101R0301");
-static const u8 gUnknown_Debug_083C3164[] = _("FEーWORKERM1ー01ーC103ーR0201");
-static const u8 gUnknown_Debug_083C317E[] = _("FEーHIMITSUーGET");
+static const u8 sString_EventFlag_BirchAideMet[] = _("FEーSTUDYM1ー01ーP01ーT101R0301");
+static const u8 sString_EventFlag_DeclinedBike[] = _("FEーWORKERM1ー01ーC103ーR0201");
+static const u8 sString_EventFlag_ReceivedSecretPower[] = _("FEーHIMITSUーGET");
 static const u8 gUnknown_Debug_083C318D[] = _("");
 static const u8 gUnknown_Debug_083C318E[] = _("");
 static const u8 gUnknown_Debug_083C318F[] = _("");
@@ -1269,9 +1269,9 @@ static const u8 gUnknown_Debug_083C3191[] = _("");
 static const u8 gUnknown_Debug_083C3192[] = _("");
 
 static const struct MenuAction sMenuActions_EventFlags_Other6[] = {
-    {gUnknown_Debug_083C3148, DummyMenuAction},
-    {gUnknown_Debug_083C3164, DummyMenuAction},
-    {gUnknown_Debug_083C317E, DummyMenuAction},
+    {sString_EventFlag_BirchAideMet, DummyMenuAction},
+    {sString_EventFlag_DeclinedBike, DummyMenuAction},
+    {sString_EventFlag_ReceivedSecretPower, DummyMenuAction},
     {gUnknown_Debug_083C318D, DummyMenuAction},
     {gUnknown_Debug_083C318E, DummyMenuAction},
     {gUnknown_Debug_083C318F, DummyMenuAction},
