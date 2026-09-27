@@ -2439,25 +2439,25 @@ void OpenConditionGraphFromParty(void)
     }
 }
 
-void sub_80F4F78(void);
+void StartConditionGraphMonEnter(void);
 void SetConditionGraphBg2Visible(bool8 visible);
-bool8 sub_80F4FB4(void);
+bool8 UpdateConditionGraphMonEnter(void);
 void OpenConditionMonMarkingsMenu(void);
 bool8 sub_80F7500(void);
 void SaveAndCloseConditionMonMarkingsMenu(void);
-bool8 sub_80F5038(void);
+bool8 UpdateConditionGraphMonExit(void);
 void DestroyPokenavPortraitSprite(void);
 void FreeConditionSparkles(void);
 void DestroyConditionMonMarkingsSprite(void);
 void DestroyConditionPartyPokeballIndicators(void);
-void sub_80F4FDC(void);
+void StartConditionGraphMonExit(void);
 
 void HandleConditionGraphInput(void)
 {
     switch (gPokenavStructPtr->callbackStep)
     {
     case 0:
-        sub_80F4F78();
+        StartConditionGraphMonEnter();
         sub_80F5B38();
         gPokenavStructPtr->callbackStep = 1;
         break;
@@ -2470,7 +2470,7 @@ void HandleConditionGraphInput(void)
         gPokenavStructPtr->callbackStep = 3;
         break;
     case 3:
-        if (!sub_80F4FB4())
+        if (!UpdateConditionGraphMonEnter())
         {
             LoadConditionSparkles();
             CreateConditionSparkleSprites();
@@ -2509,7 +2509,7 @@ void HandleConditionGraphInput(void)
         if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_80F4FDC();
+            StartConditionGraphMonExit();
             DestroyConditionSparkleSprites();
             gPokenavStructPtr->callbackStep = 9;
             break;
@@ -2560,7 +2560,7 @@ void HandleConditionGraphInput(void)
         }
         break;
     case 9:
-        if (!sub_80F5038())
+        if (!UpdateConditionGraphMonExit())
         {
             SetConditionGraphBg2Visible(0);
             DestroyPokenavPortraitSprite();

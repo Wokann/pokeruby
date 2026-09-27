@@ -3986,26 +3986,26 @@ bool8 BuildConditionSearchResultsStep(void)
     return TRUE;
 }
 
-void sub_80F4F78(void)
+void StartConditionGraphMonEnter(void)
 {
     sub_80F53EC(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9]);
     sub_80F5504();
 }
 
-bool8 sub_80F4FB4(void)
+bool8 UpdateConditionGraphMonEnter(void)
 {
     bool8 var0 = sub_80F5504();
     bool8 var1 = SlidePokenavMonInfoHeaderIn();
     return var0 || var1;
 }
 
-void sub_80F4FDC(void)
+void StartConditionGraphMonExit(void)
 {
     if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
         sub_80F53EC(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
 }
 
-bool8 sub_80F5038(void)
+bool8 UpdateConditionGraphMonExit(void)
 {
     bool8 var0 = sub_80F5504();
     bool8 var1 = SlidePokenavMonInfoHeaderOut();
@@ -4080,7 +4080,7 @@ bool8 sub_80F5264(void)
         gPokenavStructPtr->unk87DE++;
         // fall through
     case 1:
-        if (!sub_80F4FB4())
+        if (!UpdateConditionGraphMonEnter())
         {
             LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
             gPokenavStructPtr->unk87DE++;
@@ -4098,7 +4098,7 @@ bool8 sub_80F52F8(void)
     switch (gPokenavStructPtr->unk87DE)
     {
     case 0:
-        if (!sub_80F5038())
+        if (!UpdateConditionGraphMonExit())
         {
             PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
             LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
@@ -4126,7 +4126,7 @@ bool8 sub_80F5364(void)
         }
         break;
     case 1:
-        if (!sub_80F4FB4())
+        if (!UpdateConditionGraphMonEnter())
             gPokenavStructPtr->unk87DE++;
         break;
     case 2:
