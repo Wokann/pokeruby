@@ -21,10 +21,10 @@ struct Coords32
     s32 y;
 };
 
-EWRAM_DATA static u16 gBackupMapData[MAX_MAP_DATA_SIZE] = {0};
+EWRAM_DATA static u16 sBackupMapData[MAX_MAP_DATA_SIZE] = {0};
 EWRAM_DATA struct MapHeader gMapHeader = {0};
 EWRAM_DATA struct Camera gCamera = {0};
-EWRAM_DATA static struct ConnectionFlags gMapConnectionFlags = {0};
+EWRAM_DATA static struct ConnectionFlags sMapConnectionFlags = {0};
 
 struct BackupMapLayout gBackupMapLayout;
 
@@ -85,8 +85,8 @@ static void InitMapLayoutData(struct MapHeader *mapHeader)
     int width;
     int height;
     mapLayout = mapHeader->mapLayout;
-    CpuFastFill16(MAPGRID_UNDEFINED, gBackupMapData, sizeof(gBackupMapData));
-    gBackupMapLayout.map = gBackupMapData;
+    CpuFastFill16(MAPGRID_UNDEFINED, sBackupMapData, sizeof(sBackupMapData));
+    gBackupMapLayout.map = sBackupMapData;
     width = mapLayout->width + MAP_OFFSET_W;
     gBackupMapLayout.width = width;
     height = mapLayout->height + MAP_OFFSET_H;
@@ -122,7 +122,7 @@ static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader)
     const struct MapConnection *connection = mapHeader->connections->connections;
     int i;
 
-    gMapConnectionFlags = sDummyConnectionFlags;
+    sMapConnectionFlags = sDummyConnectionFlags;
     for (i = 0; i < count; i++, connection++)
     {
         struct MapHeader const *cMap = GetMapHeaderFromConnection(connection);
@@ -132,19 +132,19 @@ static void InitBackupMapLayoutConnections(struct MapHeader *mapHeader)
         {
         case CONNECTION_SOUTH:
             FillSouthConnection(mapHeader, cMap, offset);
-            gMapConnectionFlags.south = TRUE;
+            sMapConnectionFlags.south = TRUE;
             break;
         case CONNECTION_NORTH:
             FillNorthConnection(mapHeader, cMap, offset);
-            gMapConnectionFlags.north = TRUE;
+            sMapConnectionFlags.north = TRUE;
             break;
         case CONNECTION_WEST:
             FillWestConnection(mapHeader, cMap, offset);
-            gMapConnectionFlags.west = TRUE;
+            sMapConnectionFlags.west = TRUE;
             break;
         case CONNECTION_EAST:
             FillEastConnection(mapHeader, cMap, offset);
-            gMapConnectionFlags.east = TRUE;
+            sMapConnectionFlags.east = TRUE;
             break;
         }
     }
@@ -418,7 +418,7 @@ void SaveMapView(void)
     for (i = y; i < y + MAP_OFFSET_H; i++)
     {
         for (j = x; j < x + MAP_OFFSET_W; j++)
-            *mapView++ = gBackupMapData[width * i + j];
+            *mapView++ = sBackupMapData[width * i + j];
     }
 }
 
@@ -461,7 +461,7 @@ static void LoadSavedMapView(void)
         for (i = y; i < y + MAP_OFFSET_H; i++)
         {
             for (j = x; j < x + MAP_OFFSET_W; j++)
-                gBackupMapData[width * i + j] = *mapView++;
+                sBackupMapData[width * i + j] = *mapView++;
         }
         ClearSavedMapView();
     }
@@ -514,7 +514,7 @@ static void MoveMapViewToBackup(u8 direction)
             desti = width * (y + y0);
             srci = (y + r8) * MAP_OFFSET_W + r9;
             src = &mapView[srci + i];
-            dest = &gBackupMapData[x0 + desti + j];
+            dest = &sBackupMapData[x0 + desti + j];
             *dest = *src;
             i++;
             j++;
@@ -530,28 +530,28 @@ int GetMapBorderIdAt(int x, int y)
 
     if (x >= (gBackupMapLayout.width - (MAP_OFFSET + 1)))
     {
-        if (!gMapConnectionFlags.east)
+        if (!sMapConnectionFlags.east)
             return CONNECTION_INVALID;
 
         return CONNECTION_EAST;
     }
     else if (x < MAP_OFFSET)
     {
-        if (!gMapConnectionFlags.west)
+        if (!sMapConnectionFlags.west)
             return CONNECTION_INVALID;
 
         return CONNECTION_WEST;
     }
     else if (y >= (gBackupMapLayout.height - MAP_OFFSET))
     {
-        if (!gMapConnectionFlags.south)
+        if (!sMapConnectionFlags.south)
             return CONNECTION_INVALID;
 
         return CONNECTION_SOUTH;
     }
     else if (y < MAP_OFFSET)
     {
-        if (!gMapConnectionFlags.north)
+        if (!sMapConnectionFlags.north)
             return CONNECTION_INVALID;
 
         return CONNECTION_NORTH;
