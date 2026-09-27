@@ -2594,7 +2594,7 @@ u8 GetLinkPlayerElevation(u8 linkPlayerId)
     return objEvent->currentElevation;
 }
 
-s32 unref_sub_8055B74(u8 linkPlayerId)
+s32 GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
 {
     u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
     struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
@@ -2604,7 +2604,7 @@ s32 unref_sub_8055B74(u8 linkPlayerId)
 static u8 GetLinkPlayerIdAt(s16 x, s16 y)
 {
     u8 i;
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < MAX_LINK_PLAYERS; i++)
     {
         if (gLinkPlayerObjectEvents[i].active
          && (gLinkPlayerObjectEvents[i].movementMode == MOVEMENT_MODE_FREE || gLinkPlayerObjectEvents[i].movementMode == MOVEMENT_MODE_SCRIPTED))
@@ -2614,7 +2614,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
                 return i;
         }
     }
-    return 4;
+    return MAX_LINK_PLAYERS;
 }
 
 void SetPlayerFacingDirection(u8 linkPlayerId, u8 a2)

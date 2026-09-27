@@ -216,7 +216,7 @@ u8 GetSpriteForLinkedPlayer(u8);
 void GetLinkPlayerCoords(u8, u16 *, u16 *);
 u8 GetLinkPlayerFacingDirection(u8);
 u8 GetLinkPlayerElevation(u8);
-// unref_sub_8055B74
+// GetLinkPlayerObjectStepTimer
 void SetPlayerFacingDirection(u8, u8);
 // MovementEventModeCB_Normal
 // MovementEventModeCB_Ignored
