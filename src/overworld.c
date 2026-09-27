@@ -2547,7 +2547,7 @@ static void InitLinkPlayerObjectEventPos(struct ObjectEvent *objEvent, s16 x, s1
     objEvent->previousCoords.y = y;
     SetSpritePosToMapCoords(x, y, &objEvent->initialCoords.x, &objEvent->initialCoords.y);
     objEvent->initialCoords.x += 8;
-    ObjectEventUpdateZCoord(objEvent);
+    ObjectEventUpdateElevation(objEvent);
 }
 
 void SetLinkPlayerObjectRange(u8 linkPlayerId, u8 direction)
@@ -2673,7 +2673,7 @@ static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObj
     {
         objEvent->directionSequenceIndex = 16;
         ShiftObjectEventCoords(objEvent, x, y);
-        ObjectEventUpdateZCoord(objEvent);
+        ObjectEventUpdateElevation(objEvent);
         return 1;
     }
 }
@@ -2762,8 +2762,8 @@ static void SpriteCB_LinkPlayer(struct Sprite *sprite)
     struct ObjectEvent *objEvent = &gObjectEvents[linkPlayerObjEvent->objEventId];
     sprite->x = objEvent->initialCoords.x;
     sprite->y = objEvent->initialCoords.y;
-    SetObjectSubpriorityByZCoord(objEvent->previousElevation, sprite, 1);
-    sprite->oam.priority = ZCoordToPriority(objEvent->previousElevation);
+    SetObjectSubpriorityByElevation(objEvent->previousElevation, sprite, 1);
+    sprite->oam.priority = ElevationToPriority(objEvent->previousElevation);
     if (linkPlayerObjEvent->movementMode == MOVEMENT_MODE_FREE)
         StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objEvent->range.as_byte));
     else

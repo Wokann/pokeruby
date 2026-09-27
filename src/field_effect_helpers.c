@@ -416,7 +416,7 @@ u32 FldEff_LongGrass(void)
     {
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
-        sprite->oam.priority = ZCoordToPriority(gFieldEffectArguments[2]);
+        sprite->oam.priority = ElevationToPriority(gFieldEffectArguments[2]);
         sprite->sElevation = gFieldEffectArguments[2];
         sprite->sX = gFieldEffectArguments[0];
         sprite->sY = gFieldEffectArguments[1];
@@ -1534,7 +1534,7 @@ void UpdateJumpImpactEffect(struct Sprite *sprite)
     else
     {
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
-        SetObjectSubpriorityByZCoord(sprite->sJumpElevation, sprite, 0);
+        SetObjectSubpriorityByElevation(sprite->sJumpElevation, sprite, 0);
     }
 }
 
@@ -1553,7 +1553,7 @@ static void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite, u8 elevatio
     const struct ObjectEventGraphicsInfo *graphicsInfo; // Unused Variable
     struct Sprite *linkedSprite;
 
-    SetObjectSubpriorityByZCoord(elevation, sprite, subpriority);
+    SetObjectSubpriorityByElevation(elevation, sprite, subpriority);
     for (i = 0; i < OBJECT_EVENTS_COUNT; i ++)
     {
         struct ObjectEvent *objectEvent = &gObjectEvents[i];

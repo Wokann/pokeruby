@@ -456,11 +456,11 @@ void DoShadowFieldEffect(struct ObjectEvent *objectEvent);
 u8 DoJumpSpriteMovement(struct Sprite *);
 u8 DoJumpSpecialSpriteMovement(struct Sprite *);
 void SetAndStartSpriteAnim(struct Sprite *sprite, u8 a2, u8 a3);
-bool8 IsZCoordMismatchAt(u8 z, s16 x, s16 y);
-bool8 AreZCoordsCompatible(u8 z1, u8 z2);
+bool8 IsElevationMismatchAt(u8 z, s16 x, s16 y);
+bool8 AreElevationsCompatible(u8 z1, u8 z2);
 u8 GetLedgeJumpDirection(s16, s16, u8);
-u8 ZCoordToPriority(u8);
-void ObjectEventUpdateZCoord(struct ObjectEvent *pObject);
-void SetObjectSubpriorityByZCoord(u8, struct Sprite *, u8);
+u8 ElevationToPriority(u8);
+void ObjectEventUpdateElevation(struct ObjectEvent *pObject);
+void SetObjectSubpriorityByElevation(u8, struct Sprite *, u8);
 
 #endif // GUARD_EVENT_OBJECT_MOVEMENT_H
