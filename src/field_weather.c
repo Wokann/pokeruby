@@ -982,7 +982,7 @@ void ApplyWeatherGammaShiftToPal(u8 paletteIndex)
     ApplyGammaShift(paletteIndex, 1, gWeatherPtr->gammaIndex);
 }
 
-u8 unref_sub_807D894(void)
+u8 IsFirstFrameOfWeatherFadeIn(void)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_SCREEN_FADING_IN)
         return gWeatherPtr->fadeInFirstFrame;
@@ -1146,7 +1146,7 @@ bool8 Weather_UpdateBlend(void)
     return FALSE;
 }
 
-void unref_sub_807DCB4(u8 a)
+void SetFieldWeather(u8 a)
 {
     switch (a)
     {
@@ -1241,7 +1241,7 @@ void SetWeatherScreenFadeOut(void)
     gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_OUT;
 }
 
-void unref_sub_807DE24(void)
+void SetWeatherPalStateIdle(void)
 {
     gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
 }
