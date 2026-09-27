@@ -2747,12 +2747,12 @@ static void CreateLinkPlayerSprite(u8 linkPlayerId)
 
     if (linkPlayerObjEvent->active)
     {
-        u8 val = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, objEvent->singleMovementActive);
-        objEvent->spriteId = AddPseudoObjectEvent(val, SpriteCB_LinkPlayer, 0, 0, 0);
+        u8 graphicsId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, objEvent->singleMovementActive);
+        objEvent->spriteId = AddPseudoObjectEvent(graphicsId, SpriteCB_LinkPlayer, 0, 0, 0);
         sprite = &gSprites[objEvent->spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[0] = linkPlayerId;
-        objEvent->triggerGroundEffectsOnMove = 0;
+        objEvent->triggerGroundEffectsOnMove = FALSE;
     }
 }
 
@@ -2764,11 +2764,11 @@ static void SpriteCB_LinkPlayer(struct Sprite *sprite)
     sprite->y = objEvent->initialCoords.y;
     SetObjectSubpriorityByZCoord(objEvent->previousElevation, sprite, 1);
     sprite->oam.priority = ZCoordToPriority(objEvent->previousElevation);
-    if (!linkPlayerObjEvent->movementMode)
+    if (linkPlayerObjEvent->movementMode == MOVEMENT_MODE_FREE)
         StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objEvent->range.as_byte));
     else
         StartSpriteAnimIfDifferent(sprite, GetMoveDirectionAnimNum(objEvent->range.as_byte));
-    UpdateObjectEventSpriteVisibility(sprite, 0);
+    UpdateObjectEventSpriteVisibility(sprite, FALSE);
     if (objEvent->triggerGroundEffectsOnMove)
     {
         sprite->invisible = ((sprite->data[7] & 4) >> 2);
