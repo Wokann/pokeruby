@@ -79,9 +79,9 @@ extern const u8 gUnknown_083E039C[];
 extern const u8 gUnknown_083E03A0[];
 extern const u8 gUnknown_083E01F4[];
 extern const u8 *const gTrainerEyeDescriptions[];
-extern const u8 gUnknown_08E9FBA0[];
+extern const u8 gPokenavRibbonsSummaryTilemap[];
 extern const u8 gPokenavRibbonView_Gfx[];
-extern const u8 gUnknown_083E040C[];
+extern const u8 gPokenavRibbonIconsHalf_Gfx[];
 extern const u16 gPokenavRibbonView_Pal[];
 extern const u16 gUnknown_083E03A8[];
 extern const u16 gUnknown_083E3C60[][16];
@@ -1485,7 +1485,7 @@ void RedrawSelectedTrainerEyesListRow(void)
     PrintTrainerEyesListRow(gPokenavStructPtr->listSelectedIndex, gPokenavStructPtr->listTilemapRow);
 }
 
-bool8 sub_80F1080(void)
+bool8 LoadRibbonsSummaryScreenStep(void)
 {
     switch (gPokenavStructPtr->setupStep)
     {
@@ -1514,19 +1514,19 @@ bool8 sub_80F1080(void)
             return TRUE;
         break;
     case 7:
-        LZ77UnCompWram(gUnknown_08E9FBA0, gPokenavStructPtr->unk934C);
+        LZ77UnCompWram(gPokenavRibbonsSummaryTilemap, gPokenavStructPtr->ribbonsSummaryTilemap);
         break;
     case 8:
         DrawMonRibbonIcons();
         break;
     case 9:
-        sub_80F13FC();
+        CopyRibbonsSummaryTilemapToVram();
         break;
     case 10:
         LZ77UnCompVram(gPokenavRibbonView_Gfx, (void *)(VRAM + 0x8000));
         break;
     case 11:
-        LZ77UnCompVram(gUnknown_083E040C, (void *)(VRAM + 0x8200));
+        LZ77UnCompVram(gPokenavRibbonIconsHalf_Gfx, (void *)(VRAM + 0x8200));
         break;
     case 12:
         LoadPalette(gPokenavRibbonView_Pal, 0x20, 0x20);
@@ -1536,7 +1536,7 @@ bool8 sub_80F1080(void)
         LoadPalette(gUnknown_083E03A8 + 0xF, 0xBF, 0x2);
         break;
     case 13:
-        sub_80F1438();
+        PrintRibbonsSummaryMonInfo();
         break;
     case 14:
         REG_BG2CNT = 0x1E02;
@@ -1556,24 +1556,24 @@ void DrawMonRibbonIcons(void)
 {
     u16 i;
     u16 offset;
-    u8 index, palette, tile;
-    u8 var0;
+    u8 ribbonId, palette, tile;
+    u8 normalRibbonCount;
 
     offset = 0x8B;
-    var0 = gPokenavStructPtr->unkBC8E - gPokenavStructPtr->unkBC8F;
+    normalRibbonCount = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
 
     for (i = 0; i < 8; i++)
-    CpuFill16(0x2000, &gPokenavStructPtr->unk934C[offset + i * 32], 0x24);
+    CpuFill16(0x2000, &gPokenavStructPtr->ribbonsSummaryTilemap[offset + i * 32], 0x24);
 
-    for (i = 0; i < var0; i++)
+    for (i = 0; i < normalRibbonCount; i++)
     {
-        index = gPokenavStructPtr->unkBC4C[i];
-        palette = gPokenavRibbonsIconGfx[index][1] + 3;
-        tile = gPokenavRibbonsIconGfx[index][0] * 2 + 0x10;
-        gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->unk934C[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        ribbonId = gPokenavStructPtr->ribbonIds[i];
+        palette = gPokenavRibbonsIconGfx[ribbonId][1] + 3;
+        tile = gPokenavRibbonsIconGfx[ribbonId][0] * 2 + 0x10;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
 
         if ((i + 1) % 9 == 0)
             offset += 0x30;
@@ -1582,29 +1582,29 @@ void DrawMonRibbonIcons(void)
     }
 
     offset = 0x14B;
-    for (i = 0; i < gPokenavStructPtr->unkBC8F; i++)
+    for (i = 0; i < gPokenavStructPtr->giftRibbonCount; i++)
     {
-        index = gPokenavStructPtr->unkBC4C[var0 + i];
-        palette = gPokenavRibbonsIconGfx[index][1] + 3;
-        tile = gPokenavRibbonsIconGfx[index][0] * 2 + 0x10;
-        gPokenavStructPtr->unk934C[offset] = (palette << 12) | tile;
-        gPokenavStructPtr->unk934C[offset + 1] = ((palette << 12) | 0x400) | tile;
-        gPokenavStructPtr->unk934C[offset + 0x20] = (palette << 12) | (tile + 1);
-        gPokenavStructPtr->unk934C[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
+        ribbonId = gPokenavStructPtr->ribbonIds[normalRibbonCount + i];
+        palette = gPokenavRibbonsIconGfx[ribbonId][1] + 3;
+        tile = gPokenavRibbonsIconGfx[ribbonId][0] * 2 + 0x10;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset] = (palette << 12) | tile;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 1] = ((palette << 12) | 0x400) | tile;
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x20] = (palette << 12) | (tile + 1);
+        gPokenavStructPtr->ribbonsSummaryTilemap[offset + 0x21] = (palette << 12) | 0x400 | (tile + 1);
 
         offset += 2;
     }
 }
 
-void sub_80F13FC(void)
+void CopyRibbonsSummaryTilemapToVram(void)
 {
-    u16 *src = gPokenavStructPtr->unk934C;
+    u16 *src = gPokenavStructPtr->ribbonsSummaryTilemap;
     u16 *dest = (u16 *)(VRAM + 0xB800);
     DmaCopy32(3, src, dest, 0x500);
     gPlttBufferUnfaded[0] = *(gPokenavRibbonView_Pal + 14);
 }
 
-void sub_80F1438(void)
+void PrintRibbonsSummaryMonInfo(void)
 {
     Menu_PrintText(gPokenavStructPtr->unk8829[0], 13, 1);
     sub_80F445C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
@@ -1630,14 +1630,14 @@ void sub_80F1494(void)
     if (gPokenavStructPtr->unkBC91 < 3)
     {
         gUnknown_020388B4 = gPokenavStructPtr->unkBC91 * 9 + gPokenavStructPtr->unkBC90;
-        gUnknown_020388B4 = gPokenavStructPtr->unkBC4C[gUnknown_020388B4];
+        gUnknown_020388B4 = gPokenavStructPtr->ribbonIds[gUnknown_020388B4];
         AlignStringInMenuWindow(tileBuffer1, gRibbonDescriptions[gUnknown_020388B4][0], 128, 0);
         AlignStringInMenuWindow(tileBuffer2, gRibbonDescriptions[gUnknown_020388B4][1], 128, 0);
     }
     else
     {
-        gUnknown_020388B4 = gPokenavStructPtr->unkBC8E - gPokenavStructPtr->unkBC8F;
-        gUnknown_020388B4 = gPokenavStructPtr->unkBC4C[gUnknown_020388B4 + gPokenavStructPtr->unkBC90];
+        gUnknown_020388B4 = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
+        gUnknown_020388B4 = gPokenavStructPtr->ribbonIds[gUnknown_020388B4 + gPokenavStructPtr->unkBC90];
 
         // FIXME!
         arr = ((u8*)&gSaveBlock1);
@@ -3188,9 +3188,9 @@ struct Sprite *sub_80F3A3C(u16 arg0, u16 arg1)
     if (arg1 < 3)
         var0 = arg0 + arg1 * 9;
     else
-        var0 = arg0 + (gPokenavStructPtr->unkBC8E - gPokenavStructPtr->unkBC8F);
+        var0 = arg0 + (gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount);
 
-    ribbon = gPokenavStructPtr->unkBC4C[var0];
+    ribbon = gPokenavStructPtr->ribbonIds[var0];
     spriteTemplate = gSpriteTemplate_83E476C;
     spriteTemplate.tileTag = gPokenavRibbonsIconGfx[ribbon][0] + 11;
     spriteTemplate.paletteTag = gPokenavRibbonsIconGfx[ribbon][1] + 10;
@@ -4889,10 +4889,10 @@ void sub_80F66E0(void)
     sub_80F6514(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
     sub_80F4824(gPokenavStructPtr->listSelectedIndex, 0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
-    gPokenavStructPtr->unkBC8E = 0;
+    gPokenavStructPtr->ribbonCount = 0;
     r9 = 0;
     r7 = sub_80F44B0(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
-    gPokenavStructPtr->unkBC8F = 0;
+    gPokenavStructPtr->giftRibbonCount = 0;
     for (i = 0; i < 17; i++)
     {
         switch (gUnknown_083E499C[i])
@@ -4913,12 +4913,12 @@ void sub_80F66E0(void)
             break;
         };
         for (j = 0; j < r2; j++)
-            gPokenavStructPtr->unkBC4C[gPokenavStructPtr->unkBC8E++] = r9 + j;
+            gPokenavStructPtr->ribbonIds[gPokenavStructPtr->ribbonCount++] = r9 + j;
         if (r2 && r9 > 24)
-            gPokenavStructPtr->unkBC8F++;
+            gPokenavStructPtr->giftRibbonCount++;
         r9 += r0;
     }
-    if (gPokenavStructPtr->unkBC8E != gPokenavStructPtr->unkBC8F)
+    if (gPokenavStructPtr->ribbonCount != gPokenavStructPtr->giftRibbonCount)
     {
         gPokenavStructPtr->unkBC90 = 0;
         gPokenavStructPtr->unkBC91 = 0;
@@ -4928,21 +4928,21 @@ void sub_80F66E0(void)
         gPokenavStructPtr->unkBC90 = 0;
         gPokenavStructPtr->unkBC91 = 3;
     }
-    r2 = gPokenavStructPtr->unkBC8E - gPokenavStructPtr->unkBC8F;
+    r2 = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
     for (i = 0; i < 3; i++)
     {
         if (r2 > 8)
         {
-            gPokenavStructPtr->unkBC96[i] = 9;
+            gPokenavStructPtr->ribbonPageCounts[i] = 9;
             r2 -= 9;
         }
         else
         {
-            gPokenavStructPtr->unkBC96[i] = r2;
+            gPokenavStructPtr->ribbonPageCounts[i] = r2;
             r2 = 0;
         }
     }
-    gPokenavStructPtr->unkBC96[i] = gPokenavStructPtr->unkBC8F;
+    gPokenavStructPtr->ribbonPageCounts[i] = gPokenavStructPtr->giftRibbonCount;
 }
 
 u8 sub_80F68E8(void)
@@ -4957,13 +4957,13 @@ u8 sub_80F68E8(void)
             while (r4 > 0)
             {
                 r4--;
-                if (gPokenavStructPtr->unkBC96[r4] != 0)
+                if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
                     break;
             }
-            if (gPokenavStructPtr->unkBC96[r4] != 0)
+            if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
             {
-                if (r5 >= gPokenavStructPtr->unkBC96[r4])
-                    r5 = gPokenavStructPtr->unkBC96[r4] - 1;
+                if (r5 >= gPokenavStructPtr->ribbonPageCounts[r4])
+                    r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
                 break;
             }
             r4 = gPokenavStructPtr->unkBC91;
@@ -4973,13 +4973,13 @@ u8 sub_80F68E8(void)
             while (r4 < 3)
             {
                 r4++;
-                if (gPokenavStructPtr->unkBC96[r4] != 0)
+                if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
                     break;
             }
-            if (gPokenavStructPtr->unkBC96[r4] != 0)
+            if (gPokenavStructPtr->ribbonPageCounts[r4] != 0)
             {
-                if (r5 >= gPokenavStructPtr->unkBC96[r4])
-                    r5 = gPokenavStructPtr->unkBC96[r4] - 1;
+                if (r5 >= gPokenavStructPtr->ribbonPageCounts[r4])
+                    r5 = gPokenavStructPtr->ribbonPageCounts[r4] - 1;
                 break;
             }
             r4 = gPokenavStructPtr->unkBC91;
@@ -4994,7 +4994,7 @@ u8 sub_80F68E8(void)
         }
         if (JOY_REPT(DPAD_RIGHT))
         {
-            if (r5 < gPokenavStructPtr->unkBC96[r4] - 1)
+            if (r5 < gPokenavStructPtr->ribbonPageCounts[r4] - 1)
             {
                 r5++;
                 break;
@@ -5056,7 +5056,7 @@ bool8 sub_80F6AF0(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 3:
-        sub_80F13FC();
+        CopyRibbonsSummaryTilemapToVram();
         gPokenavStructPtr->unk87DE++;
         break;
     case 4:
@@ -5070,7 +5070,7 @@ bool8 sub_80F6AF0(void)
     case 6:
         if (!sub_80F170C())
         {
-            sub_80F1438();
+            PrintRibbonsSummaryMonInfo();
             REG_DISPCNT &= ~DISPCNT_WIN0_ON;
             gPokenavStructPtr->unk87DE++;
             return FALSE;

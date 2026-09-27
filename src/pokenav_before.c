@@ -150,7 +150,7 @@ const u8 gUnknown_083E03A0[][8] =
 
 const u16 gUnknown_083E03A8[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
 const u16 gUnknown_083E03C8[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
-const u8 gUnknown_083E040C[] = INCBIN_U8("graphics/misc/ribbons_half.4bpp.lz");
+const u8 gPokenavRibbonIconsHalf_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons_half.4bpp.lz");
 const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
 const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
 const u8 gPokenavOutlineTilemap[] = INCBIN_U8("graphics/pokenav/outline_map.bin.lz");
@@ -2788,7 +2788,7 @@ void OpenRibbonsSummaryMenu(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        if (!sub_80F1080())
+        if (!LoadRibbonsSummaryScreenStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 4:
