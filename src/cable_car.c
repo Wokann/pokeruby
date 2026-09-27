@@ -105,7 +105,7 @@ void debug_sub_8138D74(void);
 void debug_sub_8138D8C(void);
 u8 debug_sub_8138C14(void);
 u8 debug_sub_8138C34(void);
-u8 debug_sub_810CD9C(void);
+u8 StartDebugMailViewer(void);
 
 const u8 Str_842DBD0[] = _("CABLE CAR U");
 const u8 Str_842DBDC[] = _("CABLE CAR D");
@@ -119,7 +119,7 @@ const struct MenuAction gUnkDebug4Menu[] =
     {Str_842DBDC, (u8 (*)(void))debug_sub_8138D8C},
     {Str_842DBE8, debug_sub_8138C14},
     {Str_842DBF2, debug_sub_8138C34},
-    {Str_842DBFC, debug_sub_810CD9C},
+    {Str_842DBFC, StartDebugMailViewer},
 };
 
 #endif

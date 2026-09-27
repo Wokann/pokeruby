@@ -246,7 +246,7 @@ const u8 Str_8411540[] = DTR("レイアウトを　にほんごで　ひょう�
 const u8 Str_8411553[] = DTR("にほんご　", "JAPANESE");
 const u8 Str_8411559[] = DTR("かいがい　", "OVERSEAS");
 
-const u8 *const _8411560[] =
+const u8 *const sDebugMailLayouts[] =
 {
     Str_8411553,
     Str_8411559,
@@ -267,7 +267,7 @@ const u8 Str_84115B1[] = DTR("ドリーム　", "DREAM  ");
 const u8 Str_84115B7[] = DTR("ミラクル　", "FAB    ");
 const u8 Str_84115BD[] = DTR("レトロ　　", "RETRO  ");
 
-const u8 *const _84115C4[] =
+const u8 *const sDebugMailImageTypes[] =
 {
     Str_841157B,
     Str_8411581,
@@ -308,7 +308,7 @@ extern u16 gSpecialVar_0x8005;
 extern u16 gSpecialVar_0x8006;
 
 #if DEBUG
-static u8 gUnknown_Debug_0300079C;
+static u8 sDebugMailReadActive;
 #endif
 
 void ReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
@@ -317,7 +317,7 @@ void ReadMail(struct MailStruct *arg0, MainCallback arg1, bool8 arg2)
     u16 species;
 
 #if DEBUG
-    if (gUnknown_Debug_0300079C != 0)
+    if (sDebugMailReadActive != 0)
     {
         sSharedMemPtr->varFF = GAME_LANGUAGE;
         sSharedMemPtr->var100 = gSpecialVar_0x8004;
@@ -666,59 +666,59 @@ static void CB2_ExitMailReadFreeVars(void)
 
 #if DEBUG
 
-void debug_sub_810CA7C(u8);
-void debug_sub_810CE1C(u8);
-void debug_sub_810D388(void);
-void debug_sub_810D340(void);
+void Task_DebugMailChooseLayout(u8);
+void Task_DebugMailMenuCallback(u8);
+void CB2_InitDebugMailViewer(void);
+void ShowDebugMailMainMenu(void);
 
-void debug_sub_810C910(u8 taskId)
+void Task_DebugMailOpenSelected(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        gUnknown_Debug_0300079C = 1;
+        sDebugMailReadActive = 1;
         Menu_EraseScreen();
         DestroyTask(taskId);
         if (gSaveBlock1.mail[gSpecialVar_0x8005].itemId == 0)
-            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 0);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], CB2_InitDebugMailViewer, 0);
         else
-            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], debug_sub_810D388, 1);
+            ReadMail(&gSaveBlock1.mail[gSpecialVar_0x8005], CB2_InitDebugMailViewer, 1);
     }
 }
 
-void debug_sub_810C990(u8 taskId)
+void Task_DebugMailChooseImage(u8 taskId)
 {
     if (JOY_NEW(DPAD_LEFT | DPAD_DOWN))
     {
         gSpecialVar_0x8006 = (gSpecialVar_0x8006 + 11) % 12;
         Menu_DrawStdWindowFrame(1, 1, 10, 4);
-        Menu_PrintText(_84115C4[gSpecialVar_0x8006], 2, 2);
+        Menu_PrintText(sDebugMailImageTypes[gSpecialVar_0x8006], 2, 2);
     }
     else if (JOY_NEW(DPAD_UP | DPAD_RIGHT))
     {
         gSpecialVar_0x8006 = (gSpecialVar_0x8006 + 1) % 12;
         Menu_DrawStdWindowFrame(1, 1, 10, 4);
-        Menu_PrintText(_84115C4[gSpecialVar_0x8006], 2, 2);
+        Menu_PrintText(sDebugMailImageTypes[gSpecialVar_0x8006], 2, 2);
     }
     else if (JOY_NEW(A_BUTTON))
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskId].func = debug_sub_810C910;
+        gTasks[taskId].func = Task_DebugMailOpenSelected;
     }
     else if (JOY_NEW(B_BUTTON))
     {
         Menu_DisplayDialogueFrame();
         Menu_PrintText(Str_8411540, 4, 15);
-        Menu_PrintText(_8411560[gSpecialVar_0x8004], 2, 2);
-        gTasks[taskId].func = debug_sub_810CA7C;
+        Menu_PrintText(sDebugMailLayouts[gSpecialVar_0x8004], 2, 2);
+        gTasks[taskId].func = Task_DebugMailChooseLayout;
     }
 }
 
-void debug_sub_810CA7C(u8 taskId)
+void Task_DebugMailChooseLayout(u8 taskId)
 {
     if (JOY_NEW(DPAD_ANY))
     {
         gSpecialVar_0x8004 ^= 1;
-        Menu_PrintText(_8411560[gSpecialVar_0x8004], 2, 2);
+        Menu_PrintText(sDebugMailLayouts[gSpecialVar_0x8004], 2, 2);
     }
     else if (JOY_NEW(A_BUTTON))
     {
@@ -728,20 +728,20 @@ void debug_sub_810CA7C(u8 taskId)
             Menu_DisplayDialogueFrame();
             Menu_PrintText(Str_8411540, 4, 15);
             Menu_DrawStdWindowFrame(1, 1, 10, 4);
-            Menu_PrintText(_8411560[gSpecialVar_0x8004], 2, 2);
+            Menu_PrintText(sDebugMailLayouts[gSpecialVar_0x8004], 2, 2);
         }
         else
         {
             Menu_DisplayDialogueFrame();
             Menu_PrintText(Str_8411568, 4, 15);
             Menu_DrawStdWindowFrame(1, 1, 10, 4);
-            Menu_PrintText(_84115C4[gSpecialVar_0x8006], 2, 2);
-            gTasks[taskId].func = debug_sub_810C990;
+            Menu_PrintText(sDebugMailImageTypes[gSpecialVar_0x8006], 2, 2);
+            gTasks[taskId].func = Task_DebugMailChooseImage;
         }
     }
 }
 
-void debug_sub_810CB50(u8 taskId)
+void Task_DebugMailChooseSpecies(u8 taskId)
 {
     u8 sp0[] = _("{STR_VAR_1}　{STR_VAR_2}");
     u8 sp8[] = DTR("メール{STR_VAR_1}　{STR_VAR_2}", "MAIL{STR_VAR_1} {STR_VAR_2}");
@@ -756,16 +756,16 @@ void debug_sub_810CB50(u8 taskId)
         Menu_DisplayDialogueFrame();
         Menu_PrintText(gStringVar4, 4, 15);
         DestroyTask(taskId);
-        CreateTask(debug_sub_810CE1C, 0);
-        debug_sub_810D340();
+        CreateTask(Task_DebugMailMenuCallback, 0);
+        ShowDebugMailMainMenu();
         return;
     }
     else if (JOY_NEW(B_BUTTON))
     {
         DestroyTask(taskId);
         Menu_EraseScreen();
-        CreateTask(debug_sub_810CE1C, 0);
-        debug_sub_810D340();
+        CreateTask(Task_DebugMailMenuCallback, 0);
+        ShowDebugMailMainMenu();
         return;
     }
     else if (JOY_NEW(DPAD_LEFT | DPAD_DOWN))
@@ -789,7 +789,7 @@ void debug_sub_810CB50(u8 taskId)
     }
 }
 
-void debug_sub_810CCEC(u8 taskId)
+void Task_DebugMailPromptSpecies(u8 taskId)
 {
     u8 string1[] = DTR("メール{STR_VAR_1}を　だれに　もたせる？", "Give MAIL {STR_VAR_1} to who?");
     u8 string2[] = _("000　{STR_VAR_1}");
@@ -804,27 +804,27 @@ void debug_sub_810CCEC(u8 taskId)
     Menu_DrawStdWindowFrame(0, 0, 12, 3);
     Menu_PrintText(string2, 1, 1);  // This probably should have been gStringVar4
 
-    gTasks[taskId].func = debug_sub_810CB50;
+    gTasks[taskId].func = Task_DebugMailChooseSpecies;
 }
 
-u8 debug_sub_810CD9C(void)
+u8 StartDebugMailViewer(void)
 {
     CloseMenu();
     ScriptContext_Stop();
     LockPlayerFieldControls();
-    gUnknown_Debug_0300079C = 0;
+    sDebugMailReadActive = 0;
     gSpecialVar_0x8004 = gSpecialVar_0x8005 = gSpecialVar_0x8006 = 0;
-    SetMainCallback2(debug_sub_810D388);
+    SetMainCallback2(CB2_InitDebugMailViewer);
     return 1;
 }
 
-void debug_sub_810CDE0(void)
+void CB2_DebugMailViewer(void)
 {
     UpdatePaletteFade();
     RunTasks();
 }
 
-void debug_sub_810CDF0(void)
+void CB2_ExitDebugMailViewer(void)
 {
     gMain.watchedKeysPressed = 0;
     gMain.watchedKeysMask = 0;
@@ -832,7 +832,7 @@ void debug_sub_810CDF0(void)
     SetMainCallback2(CB2_ReturnToField);
 }
 
-void debug_sub_810CE1C(u8 taskId)
+void Task_DebugMailMenuCallback(u8 taskId)
 {
     if (gMenuCallback() == TRUE)
     {
@@ -841,7 +841,7 @@ void debug_sub_810CE1C(u8 taskId)
     }
 }
 
-u8 debug_sub_810CE48(void)
+u8 DebugMailChooseSlotToView(void)
 {
     s8 input = Menu_ProcessInput();
 
@@ -849,21 +849,21 @@ u8 debug_sub_810CE48(void)
     {
     case -1:
         Menu_EraseScreen();
-        debug_sub_810D340();
+        ShowDebugMailMainMenu();
         return 0;
     case -2:
         return 0;
     default:
         gSpecialVar_0x8005 = input;
         gSpecialVar_0x8006 %= 12;
-        CreateTask(debug_sub_810CA7C, 0);
+        CreateTask(Task_DebugMailChooseLayout, 0);
         gMain.watchedKeysPressed = TRUE;  // huh?
         gMain.watchedKeysMask = 0;
         return 1;
     }
 }
 
-u8 debug_sub_810CEA4(void)
+u8 DebugMailOpenEasyChat(void)
 {
     if (!gPaletteFade.active)
     {
@@ -874,7 +874,7 @@ u8 debug_sub_810CEA4(void)
     return 0;
 }
 
-u8 debug_sub_810CED0(void)
+u8 DebugMailChooseSlotToRegister(void)
 {
     u8 text[] = DTR("せいきの　データが　とうろくずみ　です\n"
                     "しんき　とうろく　できません",
@@ -902,16 +902,16 @@ u8 debug_sub_810CED0(void)
             gSaveBlock1.mail[gSpecialVar_0x8005].itemId = 0xFFFF;
             StringCopy(gSaveBlock1.mail[gSpecialVar_0x8005].playerName, gSaveBlock2.playerName);
             *(u32 *)gSaveBlock1.mail[gSpecialVar_0x8005].trainerId = *(u32 *)gSaveBlock2.playerTrainerId;
-            gMenuCallback = debug_sub_810CEA4;
+            gMenuCallback = DebugMailOpenEasyChat;
             return 0;
         }
         break;
     }
-    debug_sub_810D340();
+    ShowDebugMailMainMenu();
     return 0;
 }
 
-u8 debug_sub_810CFA4(void)
+u8 DebugMailChooseSlotToSetSpecies(void)
 {
     u8 text[] = DTR("せいきに　とうろくされたメールデータは\n"
                     "へんこう　できません",
@@ -923,7 +923,7 @@ u8 debug_sub_810CFA4(void)
     {
     case -1:
         Menu_EraseScreen();
-        debug_sub_810D340();
+        ShowDebugMailMainMenu();
         return 0;
     case -2:
         return 0;
@@ -934,18 +934,18 @@ u8 debug_sub_810CFA4(void)
             Menu_EraseScreen();
             Menu_DisplayDialogueFrame();
             Menu_PrintText(text, 4, 15);
-            debug_sub_810D340();
+            ShowDebugMailMainMenu();
             return 0;
         }
         else
         {
-            CreateTask(debug_sub_810CCEC, 0);
+            CreateTask(Task_DebugMailPromptSpecies, 0);
             return 1;
         }
     }
 }
 
-u8 debug_sub_810D030(void)
+u8 DebugMailChooseSlotToUnregister(void)
 {
     const u8 text1[] = DTR("メール{STR_VAR_1}　とうろく　かいじょ", "UNREGISTER MAIL{STR_VAR_1}");
     const u8 text2[] = DTR("デバッグメニューから　とうろくした\n"
@@ -958,7 +958,7 @@ u8 debug_sub_810D030(void)
     {
     case -1:
         Menu_EraseScreen();
-        debug_sub_810D340();
+        ShowDebugMailMainMenu();
         return 0;
     case -2:
         return 0;
@@ -970,7 +970,7 @@ u8 debug_sub_810D030(void)
             Menu_EraseScreen();
             Menu_DisplayDialogueFrame();
             Menu_PrintText(text2, 4, 15);
-            debug_sub_810D340();
+            ShowDebugMailMainMenu();
             return 0;
         }
         else
@@ -988,13 +988,13 @@ u8 debug_sub_810D030(void)
             Menu_EraseScreen();
             Menu_DisplayDialogueFrame();
             Menu_PrintText(gStringVar4, 4, 15);
-            debug_sub_810D340();
+            ShowDebugMailMainMenu();
             return 0;
         }
     }
 }
 
-void debug_sub_810D174(u8 a)
+void ShowDebugMailSlotList(u8 a)
 {
     u8 string[] = DTR("メール{STR_VAR_1}　{STR_VAR_2}　{STR_VAR_3}", "MAIL{STR_VAR_1} {STR_VAR_2} {STR_VAR_3}");
     u8 buffer[9][20];
@@ -1028,28 +1028,28 @@ void debug_sub_810D174(u8 a)
     switch (a)
     {
     case 0:
-        gMenuCallback = debug_sub_810CE48;
+        gMenuCallback = DebugMailChooseSlotToView;
         break;
     case 1:
-        gMenuCallback = debug_sub_810CED0;
+        gMenuCallback = DebugMailChooseSlotToRegister;
         break;
     case 2:
-        gMenuCallback = debug_sub_810CFA4;
+        gMenuCallback = DebugMailChooseSlotToSetSpecies;
         break;
     case 3:
-        gMenuCallback = debug_sub_810D030;
+        gMenuCallback = DebugMailChooseSlotToUnregister;
         break;
     }
 }
 
-u8 debug_sub_810D2F4(void)
+u8 DebugMailHandleMainMenuInput(void)
 {
     s8 input = Menu_ProcessInput();
 
     switch (input)
     {
     case -1:
-        SetMainCallback2(debug_sub_810CDF0);
+        SetMainCallback2(CB2_ExitDebugMailViewer);
         return 1;
     case -2:
         return 0;
@@ -1058,23 +1058,23 @@ u8 debug_sub_810D2F4(void)
     switch (input)
     {
     case 0:
-        debug_sub_810D174(input);
+        ShowDebugMailSlotList(input);
         return 0;
     case 1:
-        debug_sub_810D174(input);
+        ShowDebugMailSlotList(input);
         return 0;
     case 2:
-        debug_sub_810D174(input);
+        ShowDebugMailSlotList(input);
         return 0;
     case 3:
-        debug_sub_810D174(input);
+        ShowDebugMailSlotList(input);
         return 0;
     }
 
     return 1;
 }
 
-const struct MenuAction _84116BC[] =
+const struct MenuAction sDebugMailMenuActions[] =
 {
     {Str_84115F4, NULL},
     {Str_84115FB, NULL},
@@ -1082,23 +1082,23 @@ const struct MenuAction _84116BC[] =
     {Str_8411608, NULL},
 };
 
-void debug_sub_810D340(void)
+void ShowDebugMailMainMenu(void)
 {
     Menu_DrawStdWindowFrame(0, 0, 9, 9);
-    Menu_PrintItems(2, 1, 4, _84116BC);
+    Menu_PrintItems(2, 1, 4, sDebugMailMenuActions);
     InitMenu(0, 1, 1, 4, 0, 8);
-    gMenuCallback = debug_sub_810D2F4;
+    gMenuCallback = DebugMailHandleMainMenuInput;
 }
 
-void debug_sub_810D388(void)
+void CB2_InitDebugMailViewer(void)
 {
     switch (gMain.state)
     {
     case 0:
-        if (gUnknown_Debug_0300079C != 0)
+        if (sDebugMailReadActive != 0)
         {
             gMain.state = 2;
-            gUnknown_Debug_0300079C = 0;
+            sDebugMailReadActive = 0;
             return;
         }
         else
@@ -1144,7 +1144,7 @@ void debug_sub_810D388(void)
         REG_BG1CNT = 0x0801;
         REG_BLDCNT = 0;
         REG_DISPCNT = 0x0340;
-        debug_sub_810D340();
+        ShowDebugMailMainMenu();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
         SetVBlankCallback(VBlankCB_MailRead);
         break;
@@ -1153,8 +1153,8 @@ void debug_sub_810D388(void)
             return;
         break;
     case 8:
-        CreateTask(debug_sub_810CE1C, 0);
-        SetMainCallback2(debug_sub_810CDE0);
+        CreateTask(Task_DebugMailMenuCallback, 0);
+        SetMainCallback2(CB2_DebugMailViewer);
         break;
     default:
         return;
