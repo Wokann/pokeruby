@@ -351,7 +351,7 @@ void Overworld_SetObjEventTemplateMovementType(u8 localId, u8 movementType)
 
 static void mapdata_load_assets_to_gpu_and_full_redraw(void)
 {
-    move_tilemap_camera_to_upper_left_corner();
+    ResetFieldCamera();
     CopyMapTilesetsToVram(gMapHeader.mapLayout);
     LoadMapTilesetPalettes(gMapHeader.mapLayout);
     DrawWholeMapView();
@@ -1516,7 +1516,7 @@ static void VBlankCB_Field(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     ScanlineEffect_InitHBlankDmaTransfer();
-    sub_8057A58();
+    FieldUpdateBgTilemapScroll();
     TransferPlttBuffer();
     sub_8072E74();
 }
@@ -1566,7 +1566,7 @@ static bool32 sub_805483C(u8 *state)
         (*state)++;
         break;
     case 5:
-        move_tilemap_camera_to_upper_left_corner();
+        ResetFieldCamera();
         (*state)++;
         break;
     case 6:
@@ -1632,7 +1632,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
         (*state)++;
         break;
     case 5:
-        move_tilemap_camera_to_upper_left_corner();
+        ResetFieldCamera();
         (*state)++;
         break;
     case 6:
@@ -1722,7 +1722,7 @@ bool32 sub_8054A9C(u8 *state)
         (*state)++;
         break;
     case 4:
-        move_tilemap_camera_to_upper_left_corner();
+        ResetFieldCamera();
         (*state)++;
         break;
     case 5:

@@ -2349,7 +2349,7 @@ static void InitTransitionData(void)
 {
     struct TransitionData* const* dummy = &sTransitionStructPtr;
     memset(*dummy, 0, sizeof(struct TransitionData));
-    sub_8057B14(&TRANSITION_STRUCT.field_14, &TRANSITION_STRUCT.field_16);
+    GetCameraOffsetWithPan(&TRANSITION_STRUCT.field_14, &TRANSITION_STRUCT.field_16);
 }
 
 static void VBlankCB_BattleTransition(void)

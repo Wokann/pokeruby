@@ -39,7 +39,7 @@ static void DrawMetatileAt(const struct MapLayout*, u16, int, int);
 static void DrawMetatile(s32, const u16*, u16);
 static void CameraPanningCB_PanAhead(void);
 
-static void move_tilemap_camera_to_upper_left_corner_(struct FieldCameraOffset *cameraOffset)
+static void ResetCameraOffset(struct FieldCameraOffset *cameraOffset)
 {
     cameraOffset->xTileOffset = 0;
     cameraOffset->yTileOffset = 0;
@@ -48,7 +48,7 @@ static void move_tilemap_camera_to_upper_left_corner_(struct FieldCameraOffset *
     cameraOffset->copyBGToVRAM = TRUE;
 }
 
-static void tilemap_move_something(struct FieldCameraOffset *cameraOffset, u32 b, u32 c)
+static void AddCameraTileOffset(struct FieldCameraOffset *cameraOffset, u32 b, u32 c)
 {
     cameraOffset->xTileOffset += b;
     cameraOffset->xTileOffset %= 32;
@@ -56,21 +56,21 @@ static void tilemap_move_something(struct FieldCameraOffset *cameraOffset, u32 b
     cameraOffset->yTileOffset %= 32;
 }
 
-static void coords8_add(struct FieldCameraOffset *cameraOffset, u32 b, u32 c)
+static void AddCameraPixelOffset(struct FieldCameraOffset *cameraOffset, u32 b, u32 c)
 {
     cameraOffset->xPixelOffset += b;
     cameraOffset->yPixelOffset += c;
 }
 
-void move_tilemap_camera_to_upper_left_corner(void)
+void ResetFieldCamera(void)
 {
-    move_tilemap_camera_to_upper_left_corner_(&sFieldCameraOffset);
+    ResetCameraOffset(&sFieldCameraOffset);
     CpuFill16(0, gBGTilemapBuffers[2], 0x800);
     CpuFill16(0, gBGTilemapBuffers[1], 0x800);
     CpuFill16(0x3014, gBGTilemapBuffers[3], 0x800);
 }
 
-void sub_8057A58(void)
+void FieldUpdateBgTilemapScroll(void)
 {
     *gBGHOffsetRegs[1] = sFieldCameraOffset.xPixelOffset + sHorizontalCameraPan;
     *gBGVOffsetRegs[1] = sFieldCameraOffset.yPixelOffset + sVerticalCameraPan + 8;
@@ -88,7 +88,7 @@ void sub_8057A58(void)
     }
 }
 
-void sub_8057B14(u16 *a, u16 *b)
+void GetCameraOffsetWithPan(u16 *a, u16 *b)
 {
     *a = sFieldCameraOffset.xPixelOffset + sHorizontalCameraPan;
     *b = sFieldCameraOffset.yPixelOffset + sVerticalCameraPan + 8;
@@ -419,11 +419,11 @@ void CameraUpdate(void)
         UpdateObjectEventsForCameraUpdate(deltaX, deltaY);
         RotatingGatePuzzleCameraUpdate(deltaX, deltaY);
         ResetBerryTreeSparkleFlags();
-        tilemap_move_something(&sFieldCameraOffset, deltaX * 2, deltaY * 2);
+        AddCameraTileOffset(&sFieldCameraOffset, deltaX * 2, deltaY * 2);
         RedrawMapSlicesForCameraUpdate(&sFieldCameraOffset, deltaX * 2, deltaY * 2);
     }
 
-    coords8_add(&sFieldCameraOffset, movementSpeedX, movementSpeedY);
+    AddCameraPixelOffset(&sFieldCameraOffset, movementSpeedX, movementSpeedY);
     gTotalCameraPixelOffsetX -= movementSpeedX;
     gTotalCameraPixelOffsetY -= movementSpeedY;
 }
