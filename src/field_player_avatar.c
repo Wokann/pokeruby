@@ -177,7 +177,13 @@ static bool8 (*const sAcroBikeTrickMetatiles[])(u8) =
     MetatileBehavior_IsVerticalRail,
     MetatileBehavior_IsHorizontalRail,
 };
-static const u8 sAcroBikeTrickCollisionTypes[] = {9, 10, 11, 12, 13};
+static const u8 sAcroBikeTrickCollisionTypes[] = {
+    COLLISION_WHEELIE_HOP,
+    COLLISION_ISOLATED_VERTICAL_RAIL,
+    COLLISION_ISOLATED_HORIZONTAL_RAIL,
+    COLLISION_VERTICAL_RAIL,
+    COLLISION_HORIZONTAL_RAIL,
+};
 static void (*const sPlayerAvatarTransitionFuncs[])(struct ObjectEvent *) =
 {
     PlayerAvatarTransition_Normal,
@@ -373,10 +379,10 @@ static u8 DoForcedMovement(u8 direction, void (*moveFunc)(u8))
     u8 collisionType = CheckForPlayerAvatarCollision(direction);
 
     playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
-    if (collisionType != 0)
+    if (collisionType != COLLISION_NONE)
     {
         ForcedMovement_None();
-        if (collisionType <= 4)
+        if (collisionType <= COLLISION_OBJECT_EVENT)
         {
             return 0;
         }
@@ -589,26 +595,26 @@ static u8 CheckForPlayerAvatarCollision(u8 direction)
     return CheckForObjectEventCollision(playerObjEvent, x, y, direction, MapGridGetMetatileBehaviorAt(x, y));
 }
 
-u8 CheckForObjectEventCollision(struct ObjectEvent *a, s16 x, s16 y, u8 direction, u8 e)
+u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior)
 {
     u8 collision;
 
-    collision = GetCollisionAtCoords(a, x, y, direction);
-    if (collision == 3 && CanStopSurfing(x, y, direction))
-        return 5;
+    collision = GetCollisionAtCoords(objectEvent, x, y, direction);
+    if (collision == COLLISION_ELEVATION_MISMATCH && CanStopSurfing(x, y, direction))
+        return COLLISION_STOP_SURFING;
     if (ShouldJumpLedge(x, y, direction))
     {
         IncrementGameStat(GAME_STAT_JUMPED_DOWN_LEDGES);
         return COLLISION_LEDGE_JUMP;
     }
-    if (collision == 4 && TryPushBoulder(x, y, direction))
-        return 7;
+    if (collision == COLLISION_OBJECT_EVENT && TryPushBoulder(x, y, direction))
+        return COLLISION_PUSHED_BOULDER;
 
-    if (collision == 0)
+    if (collision == COLLISION_NONE)
     {
         if (CheckForRotatingGatePuzzleCollision(direction, x, y))
-            return 8;
-        CheckAcroBikeCollision(x, y, e, &collision);
+            return COLLISION_ROTATING_GATE;
+        CheckAcroBikeCollision(x, y, metatileBehavior, &collision);
     }
     return collision;
 }
@@ -647,7 +653,7 @@ static u8 TryPushBoulder(s16 x, s16 y, u8 direction)
             x = gObjectEvents[objectEventId].currentCoords.x;
             y = gObjectEvents[objectEventId].currentCoords.y;
             MoveCoords(direction, &x, &y);
-            if (GetCollisionAtCoords(&gObjectEvents[objectEventId], x, y, direction) == 0
+            if (GetCollisionAtCoords(&gObjectEvents[objectEventId], x, y, direction) == COLLISION_NONE
              && MetatileBehavior_IsNonAnimDoor(MapGridGetMetatileBehaviorAt(x, y)) == 0)
             {
                 StartStrengthAnim(objectEventId, direction);
@@ -1125,7 +1131,7 @@ bool8 IsPlayerFacingSurfableFishableWater(void)
     s16 y = playerObjEvent->currentCoords.y;
 
     MoveCoords(playerObjEvent->facingDirection, &x, &y);
-    if (GetCollisionAtCoords(playerObjEvent, x, y, playerObjEvent->facingDirection) == 3 && PlayerGetZCoord() == 3
+    if (GetCollisionAtCoords(playerObjEvent, x, y, playerObjEvent->facingDirection) == COLLISION_ELEVATION_MISMATCH && PlayerGetZCoord() == 3
      && MetatileBehavior_IsSurfableFishableWater(MapGridGetMetatileBehaviorAt(x, y)))
         return TRUE;
     else

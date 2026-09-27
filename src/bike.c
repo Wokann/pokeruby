@@ -231,7 +231,7 @@ static void MachBikeTransition_TrySpeedUp(u8 direction)
     else
     {
         collision = GetBikeCollision(direction);
-        if (collision > 0 && collision < 12)
+        if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
         {
             // we hit a solid object, but check to see if its a ledge and then jump.
             if (collision == COLLISION_LEDGE_JUMP)
@@ -242,7 +242,7 @@ static void MachBikeTransition_TrySpeedUp(u8 direction)
             {
                 // we hit a solid object that is not a ledge, so perform the collision.
                 Bike_SetBikeStill();
-                if (collision < 5 || collision > 8)
+                if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
                     PlayerOnBikeCollide(direction);
             }
         }
@@ -266,7 +266,7 @@ static void MachBikeTransition_TrySlowDown(u8 direction)
 
     collision = GetBikeCollision(direction);
 
-    if (collision > 0 && collision < 12)
+    if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
     {
         if (collision == COLLISION_LEDGE_JUMP)
         {
@@ -275,7 +275,7 @@ static void MachBikeTransition_TrySlowDown(u8 direction)
         else
         {
             Bike_SetBikeStill();
-            if (collision < 5 || collision > 8)
+            if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
                 PlayerOnBikeCollide(direction);
         }
     }
@@ -573,11 +573,11 @@ static void AcroBikeTransition_Moving(u8 direction)
         return;
     }
     collision = GetBikeCollision(direction);
-    if (collision > 0 && collision < 12)
+    if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
     {
         if (collision == COLLISION_LEDGE_JUMP)
             PlayerJumpLedge(direction);
-        else if (collision < 5 || collision > 8)
+        else if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
             PlayerOnBikeCollide(direction);
     }
     else
@@ -634,17 +634,17 @@ static void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
     }
     collision = GetBikeCollision(direction);
     // TODO: Try to get rid of this goto
-    if (collision == 0 || collision == 9)
+    if (collision == COLLISION_NONE || collision == COLLISION_WHEELIE_HOP)
     {
         goto derp;
     }
-    else if (collision == 6)
+    else if (collision == COLLISION_LEDGE_JUMP)
     {
         PlayerLedgeHoppingWheelie(direction);
     }
-    else if (collision < 5 || collision > 8)
+    else if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
     {
-        if (collision <= 11)
+        if (collision <= COLLISION_ISOLATED_HORIZONTAL_RAIL)
         {
             AcroBikeTransition_WheelieHoppingStanding(direction);
         }
@@ -662,11 +662,11 @@ static void AcroBikeTransition_SideJump(u8 direction)
     struct ObjectEvent *playerObjEvent;
 
     collision = GetBikeCollision(direction);
-    if (collision != 0)
+    if (collision != COLLISION_NONE)
     {
-        if (collision == 7)
+        if (collision == COLLISION_PUSHED_BOULDER)
             return;
-        if (collision < 10)
+        if (collision < COLLISION_ISOLATED_VERTICAL_RAIL)
         {
             AcroBikeTransition_TurnDirection(direction);
             return;
@@ -699,17 +699,17 @@ static void AcroBikeTransition_WheelieMoving(u8 direction)
         return;
     }
     collision = GetBikeCollision(direction);
-    if (collision > 0 && collision < 12)
+    if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
     {
-        if (collision == 6)
+        if (collision == COLLISION_LEDGE_JUMP)
         {
             PlayerLedgeHoppingWheelie(direction);
         }
-        else if (collision == 9)
+        else if (collision == COLLISION_WHEELIE_HOP)
         {
             PlayerIdleWheelie(direction);
         }
-        else if (collision <= 4)
+        else if (collision <= COLLISION_OBJECT_EVENT)
         {
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
@@ -733,17 +733,17 @@ static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
         return;
     }
     collision = GetBikeCollision(direction);
-    if (collision > 0 && collision < 12)
+    if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
     {
-        if (collision == 6)
+        if (collision == COLLISION_LEDGE_JUMP)
         {
             PlayerLedgeHoppingWheelie(direction);
         }
-        else if (collision == 9)
+        else if (collision == COLLISION_WHEELIE_HOP)
         {
             PlayerIdleWheelie(direction);
         }
-        else if (collision <= 4)
+        else if (collision <= COLLISION_OBJECT_EVENT)
         {
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
@@ -767,11 +767,11 @@ static void AcroBikeTransition_WheelieLoweringMoving(u8 direction)
         return;
     }
     collision = GetBikeCollision(direction);
-    if (collision > 0 && collision < 12)
+    if (collision > COLLISION_NONE && collision < COLLISION_VERTICAL_RAIL)
     {
-        if (collision == 6)
+        if (collision == COLLISION_LEDGE_JUMP)
             PlayerJumpLedge(direction);
-        else if (collision < 5 || collision > 8)
+        else if (collision < COLLISION_STOP_SURFING || collision > COLLISION_ROTATING_GATE)
             PlayerEndWheelie(direction);
         return;
     }
@@ -901,11 +901,11 @@ static u8 GetBikeCollisionAt(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 d
 {
     u8 collision = CheckForObjectEventCollision(objectEvent, x, y, direction, metatileBehavior);
 
-    if (collision > 4)
+    if (collision > COLLISION_OBJECT_EVENT)
         return collision;
 
-    if (collision == 0 && IsRunningDisallowedByMetatile(metatileBehavior))
-        collision = 2;
+    if (collision == COLLISION_NONE && IsRunningDisallowedByMetatile(metatileBehavior))
+        collision = COLLISION_IMPASSABLE;
 
     if (collision)
         Bike_TryAdvanceCyclingRoadCollisions();

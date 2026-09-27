@@ -4465,16 +4465,16 @@ u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u32 dirn)
     u8 direction;
     direction = dirn;
     if (IsCoordOutsideObjectEventMovementRange(objectEvent, x, y))
-        return 1;
+        return COLLISION_OUTSIDE_RANGE;
     else if (MapGridGetCollisionAt(x, y) || GetMapBorderIdAt(x, y) == -1 || IsMetatileDirectionallyImpassable(objectEvent, x, y, direction))
-        return 2;
+        return COLLISION_IMPASSABLE;
     else if (objectEvent->trackedByCamera && !CanCameraMoveInDirection(direction))
-        return 2;
+        return COLLISION_IMPASSABLE;
     else if (IsZCoordMismatchAt(objectEvent->currentElevation, x, y))
-        return 3;
+        return COLLISION_ELEVATION_MISMATCH;
     else if (DoesObjectCollideWithObjectAt(objectEvent, x, y))
-        return 4;
-    return 0;
+        return COLLISION_OBJECT_EVENT;
+    return COLLISION_NONE;
 }
 
 u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction)
