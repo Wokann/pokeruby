@@ -4987,7 +4987,7 @@ bool8 MovementAction_FaceRight_Step0(struct ObjectEvent *objectEvent, struct Spr
     return TRUE;
 }
 
-void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitNpcForMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     s16 x;
     s16 y;
@@ -5003,25 +5003,25 @@ void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite,
     sprite->data[2] = 1;
 }
 
-extern u8 (*const gUnknown_083759C0[5])(u8);
+extern u8 (*const sDirectionAnimFuncsBySpeed[5])(u8);
 
-void do_go_anim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
+void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     u8 (*const functions[5])(u8);
-    memcpy((void *)functions, gUnknown_083759C0, sizeof(gUnknown_083759C0));
-    npc_apply_direction(objectEvent, sprite, direction, speed);
+    memcpy((void *)functions, sDirectionAnimFuncsBySpeed, sizeof(sDirectionAnimFuncsBySpeed));
+    InitNpcForMovement(objectEvent, sprite, direction, speed);
     sub_805FE28(objectEvent, sprite, functions[speed](objectEvent->facingDirection));
 }
 
 void StartRunningAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    npc_apply_direction(objectEvent, sprite, direction, 1);
+    InitNpcForMovement(objectEvent, sprite, direction, 1);
     sub_805FE28(objectEvent, sprite, GetRunningDirectionAnimNum(objectEvent->facingDirection));
 }
 
 bool8 obj_npc_ministep(struct Sprite *);
 
-bool8 npc_obj_ministep_stop_on_arrival(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     if (obj_npc_ministep(sprite))
     {
@@ -5142,13 +5142,13 @@ bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEvent *, struct Sprite *)
 
 bool8 MovementAction_WalkNormalDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_SOUTH, 0);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, 0);
     return MovementAction_WalkNormalDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5160,13 +5160,13 @@ bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkNormalUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_NORTH, 0);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, 0);
     return MovementAction_WalkNormalUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5178,13 +5178,13 @@ bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEvent *, struct Sprite *)
 
 bool8 MovementAction_WalkNormalLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_WEST, 0);
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, 0);
     return MovementAction_WalkNormalLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5196,13 +5196,13 @@ bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *, struct Sprite *
 
 bool8 MovementAction_WalkNormalRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_EAST, 0);
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, 0);
     return MovementAction_WalkNormalRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5435,13 +5435,13 @@ bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct
 
 bool8 MovementAction_WalkFastDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_SOUTH, 1);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, 1);
     return MovementAction_WalkFastDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFastDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5451,13 +5451,13 @@ bool8 MovementAction_WalkFastDown_Step1(struct ObjectEvent *objectEvent, struct 
 
 bool8 MovementAction_WalkFastUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_NORTH, 1);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, 1);
     return MovementAction_WalkFastUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5467,13 +5467,13 @@ bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent *objectEvent, struct Sp
 
 bool8 MovementAction_WalkFastLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_WEST, 1);
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, 1);
     return MovementAction_WalkFastLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5483,13 +5483,13 @@ bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEvent *objectEvent, struct 
 
 bool8 MovementAction_WalkFastRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_EAST, 1);
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, 1);
     return MovementAction_WalkFastRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5627,13 +5627,13 @@ bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *, struct Spr
 
 bool8 MovementAction_RideWaterCurrentDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_SOUTH, 2);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, 2);
     return MovementAction_RideWaterCurrentDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5646,13 +5646,13 @@ bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *, struct Sprit
 
 bool8 MovementAction_RideWaterCurrentUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_NORTH, 2);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, 2);
     return MovementAction_RideWaterCurrentUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5665,13 +5665,13 @@ bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *, struct Spr
 
 bool8 MovementAction_RideWaterCurrentLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_WEST, 2);
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, 2);
     return MovementAction_RideWaterCurrentLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5684,13 +5684,13 @@ bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *, struct Sp
 
 bool8 MovementAction_RideWaterCurrentRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_EAST, 2);
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, 2);
     return MovementAction_RideWaterCurrentRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5702,13 +5702,13 @@ bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *, struct Sprite *)
 
 bool8 MovementAction_WalkFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_SOUTH, 3);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, 3);
     return MovementAction_WalkFasterDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5720,13 +5720,13 @@ bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_NORTH, 3);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, 3);
     return MovementAction_WalkFasterUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5739,13 +5739,13 @@ bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *, struct Sprite *)
 
 bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_WEST, 3);
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, 3);
     return MovementAction_WalkFasterLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5758,13 +5758,13 @@ bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *, struct Sprite *
 
 bool8 MovementAction_WalkFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_EAST, 3);
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, 3);
     return MovementAction_WalkFasterRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5776,13 +5776,13 @@ bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_SOUTH, 4);
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, 4);
     return MovementAction_SlideDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5794,13 +5794,13 @@ bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_NORTH, 4);
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, 4);
     return MovementAction_SlideUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5813,13 +5813,13 @@ bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_WEST, 4);
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, 4);
     return MovementAction_SlideLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5832,13 +5832,13 @@ bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *, struct Sprite *);
 
 bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    do_go_anim(objectEvent, sprite, DIR_EAST, 4);
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, 4);
     return MovementAction_SlideRight_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5856,7 +5856,7 @@ bool8 MovementAction_PlayerRunDown_Step0(struct ObjectEvent *objectEvent, struct
 
 bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5874,7 +5874,7 @@ bool8 MovementAction_PlayerRunUp_Step0(struct ObjectEvent *objectEvent, struct S
 
 bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5892,7 +5892,7 @@ bool8 MovementAction_PlayerRunLeft_Step0(struct ObjectEvent *objectEvent, struct
 
 bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -5910,7 +5910,7 @@ bool8 MovementAction_PlayerRunRight_Step0(struct ObjectEvent *objectEvent, struc
 
 bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6896,7 +6896,7 @@ bool8 MovementAction_AcroWheelieInPlaceRight_Step0(struct ObjectEvent *objectEve
 
 void sub_80630D0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    npc_apply_direction(objectEvent, sprite, direction, speed);
+    InitNpcForMovement(objectEvent, sprite, direction, speed);
     StartSpriteAnim(sprite, GetAcroWheelieDirectionAnimNum(objectEvent->facingDirection));
     SeekSpriteAnim(sprite, 0);
 }
@@ -6911,7 +6911,7 @@ bool8 MovementAction_AcroPopWheelieMoveDown_Step0(struct ObjectEvent *objectEven
 
 bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6929,7 +6929,7 @@ bool8 MovementAction_AcroPopWheelieMoveUp_Step0(struct ObjectEvent *objectEvent,
 
 bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6947,7 +6947,7 @@ bool8 MovementAction_AcroPopWheelieMoveLeft_Step0(struct ObjectEvent *objectEven
 
 bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6965,7 +6965,7 @@ bool8 MovementAction_AcroPopWheelieMoveRight_Step0(struct ObjectEvent *objectEve
 
 bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -6975,7 +6975,7 @@ bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEve
 
 void sub_8063208(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    npc_apply_direction(objectEvent, sprite, direction, speed);
+    InitNpcForMovement(objectEvent, sprite, direction, speed);
     sub_805FE28(objectEvent, sprite, GetAcroWheeliePedalDirectionAnimNum(objectEvent->facingDirection));
 }
 
@@ -6989,7 +6989,7 @@ bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, 
 
 bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7007,7 +7007,7 @@ bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, st
 
 bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7025,7 +7025,7 @@ bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, 
 
 bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7043,7 +7043,7 @@ bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent,
 
 bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7053,7 +7053,7 @@ bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent,
 
 void sub_8063338(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
-    npc_apply_direction(objectEvent, sprite, direction, speed);
+    InitNpcForMovement(objectEvent, sprite, direction, speed);
     StartSpriteAnim(sprite, GetAcroEndWheelieDirectionAnimNum(objectEvent->facingDirection));
     SeekSpriteAnim(sprite, 0);
 }
@@ -7068,7 +7068,7 @@ bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEven
 
 bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7086,7 +7086,7 @@ bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent,
 
 bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7104,7 +7104,7 @@ bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEven
 
 bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
@@ -7122,7 +7122,7 @@ bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEve
 
 bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (npc_obj_ministep_stop_on_arrival(objectEvent, sprite))
+    if (UpdateMovementNormal(objectEvent, sprite))
     {
         sprite->data[2] = 2;
         return TRUE;
