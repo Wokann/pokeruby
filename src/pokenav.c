@@ -106,7 +106,7 @@ extern const u16 gPokenavCondition7_Pal[];
 extern const struct SpriteSheet gSpriteSheet_PokenavBlueLight;
 extern const struct SpritePalette gSpritePalette_PokenavBlueLight;
 extern const struct SpriteTemplate gPokenavBlueLightSpriteTemplate;
-extern const u8 gPokenavMainMenu_Gfx[];
+extern const u8 gPokenavMainMenuHeader_Gfx[];
 extern const u8 gPokenavConditionMenuHeader_Gfx[];
 extern const u8 gPokenavRibbonsHeader_Gfx[];
 extern const u8 gPokenavHoennMapHeader_Gfx[];
@@ -2366,28 +2366,28 @@ void SpriteCB_BlinkingBlueLight(struct Sprite *sprite)
     }
 }
 
-void sub_80F2688(void)
+void InitPokenavMenuHeaderGfx(void)
 {
     gPokenavStructPtr->unk306 = 0;
     if (!gPokenavStructPtr->unk6DAC)
-        while(sub_80F26BC());
+        while(LoadPokenavMenuHeaderGfxStep());
 }
 
-bool8 sub_80F26BC(void)
+bool8 LoadPokenavMenuHeaderGfxStep(void)
 {
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gPokenavMainMenu_Gfx, gPokenavStructPtr->unk3B98);
+        LZ77UnCompWram(gPokenavMainMenuHeader_Gfx, gPokenavStructPtr->mainMenuHeaderGfx);
         break;
     case 1:
-        LZ77UnCompWram(gPokenavConditionMenuHeader_Gfx, gPokenavStructPtr->unk4198);
+        LZ77UnCompWram(gPokenavConditionMenuHeader_Gfx, gPokenavStructPtr->conditionMenuHeaderGfx);
         break;
     case 2:
-        LZ77UnCompWram(gPokenavRibbonsHeader_Gfx, gPokenavStructPtr->unk4D98);
+        LZ77UnCompWram(gPokenavRibbonsHeader_Gfx, gPokenavStructPtr->ribbonsHeaderGfx);
         break;
     case 3:
-        LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavStructPtr->unk5398);
+        LZ77UnCompWram(gPokenavHoennMapHeader_Gfx, gPokenavStructPtr->hoennMapHeaderGfx);
         break;
     case 4:
         LZ77UnCompWram(gPokenavConditionMenuOptions_Gfx, gPokenavStructPtr->unk5F98);
@@ -2396,7 +2396,7 @@ bool8 sub_80F26BC(void)
         LZ77UnCompWram(gPokenavConditionMenuOptions2_Gfx, gPokenavStructPtr->unk6798);
         break;
     case 6:
-        LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavStructPtr->unk4798);
+        LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavStructPtr->trainersEyesHeaderGfx);
         break;
     case 7:
         LoadSpritePalettes(gUnknown_083E449C);
@@ -2416,28 +2416,28 @@ void sub_80F27DC(u8 arg0)
     switch (arg0)
     {
     case 0:
-        spriteSheet.data = gPokenavStructPtr->unk3B98;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk3B98);
+        spriteSheet.data = gPokenavStructPtr->mainMenuHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->mainMenuHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 1:
-        spriteSheet.data = gPokenavStructPtr->unk4198;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk4198);
+        spriteSheet.data = gPokenavStructPtr->conditionMenuHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->conditionMenuHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 3:
-        spriteSheet.data = gPokenavStructPtr->unk4798;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk4798);
+        spriteSheet.data = gPokenavStructPtr->trainersEyesHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->trainersEyesHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 2:
-        spriteSheet.data = gPokenavStructPtr->unk4D98;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk4D98);
+        spriteSheet.data = gPokenavStructPtr->ribbonsHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->ribbonsHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 4:
-        spriteSheet.data = gPokenavStructPtr->unk5398;
-        spriteSheet.size = sizeof(gPokenavStructPtr->unk5398);
+        spriteSheet.data = gPokenavStructPtr->hoennMapHeaderGfx;
+        spriteSheet.size = sizeof(gPokenavStructPtr->hoennMapHeaderGfx);
         spriteSheet.tag = 0x1;
         break;
     case 5:

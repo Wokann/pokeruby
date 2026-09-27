@@ -1156,11 +1156,11 @@ void CB2_InitPokeNav(void)
             return;
         break;
     case 9:
-        sub_80F2688();
+        InitPokenavMenuHeaderGfx();
         gMain.state++;
         // fall through
     case 10:
-        if (sub_80F26BC())
+        if (LoadPokenavMenuHeaderGfxStep())
             return;
         break;
     case 11:

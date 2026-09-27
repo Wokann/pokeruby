@@ -247,11 +247,11 @@ static void sub_8136294(void)
             gUnknown_02039304->unk50++;
             break;
         case 7:
-            sub_80F2688();
+            InitPokenavMenuHeaderGfx();
             gUnknown_02039304->unk50++;
             // fallthrough
         case 8:
-            if (!sub_80F26BC())
+            if (!LoadPokenavMenuHeaderGfxStep())
             {
                 gUnknown_02039304->unk50++;
             }
