@@ -27,8 +27,8 @@
 void Task_ExitDoor(u8);
 void Task_ExitNonAnimDoor(u8);
 void Task_ExitNonDoor(u8);
-void task0A_fade_n_map_maybe(u8);
-void sub_808115C(u8);
+void Task_WarpAndLoadMap(u8);
+void Task_DoDoorWarp(u8);
 
 void FillPalBufferWhite(void)
 {
@@ -204,7 +204,7 @@ void FieldCB_WarpExitFadeFromBlack(void)
     LockPlayerFieldControls();
 }
 
-void sub_8080B78(void)
+void FieldCB_TeleportTileWarpExit(void)
 {
     Overworld_PlaySpecialMapMusic();
     WarpFadeInScreen();
@@ -382,7 +382,7 @@ void DoWarp(void)
     PlayRainSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = FieldCB_DefaultWarpExit;
-    CreateTask(task0A_fade_n_map_maybe, 10);
+    CreateTask(Task_WarpAndLoadMap, 10);
 }
 
 void DoDiveWarp(void)
@@ -392,14 +392,14 @@ void DoDiveWarp(void)
     WarpFadeOutScreen();
     PlayRainSoundEffect();
     gFieldCallback = FieldCB_DefaultWarpExit;
-    CreateTask(task0A_fade_n_map_maybe, 10);
+    CreateTask(Task_WarpAndLoadMap, 10);
 }
 
 void DoDoorWarp(void)
 {
     LockPlayerFieldControls();
     gFieldCallback = FieldCB_DefaultWarpExit;
-    CreateTask(sub_808115C, 10);
+    CreateTask(Task_DoDoorWarp, 10);
 }
 
 void DoFallWarp(void)
@@ -408,43 +408,43 @@ void DoFallWarp(void)
     gFieldCallback = FieldCB_FallWarpExit;
 }
 
-void sub_8080F2C(u8 metatileBehavior)
+void DoEscalatorWarp(u8 metatileBehavior)
 {
     LockPlayerFieldControls();
     sub_8086A2C(metatileBehavior, 10);
 }
 
-void sub_8080F48(void)
+void DoLavaridgeGymB1FWarp(void)
 {
     LockPlayerFieldControls();
     StartLavaridgeGymB1FWarp(10);
 }
 
-void sub_8080F58(void)
+void DoLavaridgeGym1FWarp(void)
 {
     LockPlayerFieldControls();
     StartLavaridgeGym1FWarp(10);
 }
 
-void sub_8080F68(void)
+void DoTeleportTileWarp(void)
 {
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
     PlaySE(SE_WARP_IN);
-    CreateTask(task0A_fade_n_map_maybe, 10);
-    gFieldCallback = sub_8080B78;
+    CreateTask(Task_WarpAndLoadMap, 10);
+    gFieldCallback = FieldCB_TeleportTileWarpExit;
 }
 
 void DoPortholeWarp(void)
 {
     LockPlayerFieldControls();
     WarpFadeOutScreen();
-    CreateTask(task0A_fade_n_map_maybe, 10);
+    CreateTask(Task_WarpAndLoadMap, 10);
     gFieldCallback = FieldCB_ShowPortholeView;
 }
 
-static void WaitCableClubWarp(u8 taskId)
+static void Task_DoCableClubWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -472,10 +472,10 @@ void DoCableClubWarp(void)
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
     PlaySE(SE_EXIT);
-    CreateTask(WaitCableClubWarp, 10);
+    CreateTask(Task_DoCableClubWarp, 10);
 }
 
-void sub_8081050(u8 taskId)
+void Task_ReturnToWorldFromLinkRoom(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -508,7 +508,7 @@ void sub_8081050(u8 taskId)
 
 void ReturnFromLinkRoom(void)
 {
-    CreateTask(sub_8081050, 10);
+    CreateTask(Task_ReturnToWorldFromLinkRoom, 10);
 }
 
 #if DEBUG
@@ -529,7 +529,7 @@ void debug_sub_80888D8()
 
 #endif
 
-void task0A_fade_n_map_maybe(u8 taskId)
+void Task_WarpAndLoadMap(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
@@ -554,7 +554,7 @@ void task0A_fade_n_map_maybe(u8 taskId)
     }
 }
 
-void sub_808115C(u8 taskId)
+void Task_DoDoorWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
@@ -602,7 +602,7 @@ void sub_808115C(u8 taskId)
         WarpFadeOutScreen();
         PlayRainSoundEffect();
         task->data[0] = 0;
-        task->func = task0A_fade_n_map_maybe;
+        task->func = Task_WarpAndLoadMap;
         break;
     }
 }

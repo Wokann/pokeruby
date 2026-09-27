@@ -785,7 +785,7 @@ bool8 ScrCmd_warpteleport(struct ScriptContext *ctx)
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
     Overworld_SetWarpDestination(mapGroup, mapNum, warpId, x, y);
-    sub_8080F68();
+    DoTeleportTileWarp();
     ResetInitialPlayerAvatarState();
     return TRUE;
 }
