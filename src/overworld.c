@@ -1339,7 +1339,7 @@ void CB2_LoadMap(void)
     ScriptContext_Init();
     UnlockPlayerFieldControls();
     SetMainCallback1(NULL);
-    SetMainCallback2(sub_810CC80);
+    SetMainCallback2(CB2_DoChangeMap);
     gMain.savedCallback = CB2_LoadMap2;
 }
 

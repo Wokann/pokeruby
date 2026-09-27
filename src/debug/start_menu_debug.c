@@ -1389,7 +1389,7 @@ bool8 DebugMenu_8077BB4(void)
 
 bool8 DebugMenu_8077BC0(void)
 {
-    debug_sub_8122080();
+    Debug_UseFlashInCave();
     return TRUE;
 }
 
