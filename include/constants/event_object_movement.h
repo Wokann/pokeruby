@@ -219,6 +219,7 @@
 #define MOVEMENT_ACTION_ACRO_END_WHEELIE_MOVE_RIGHT 0x89
 
 #define MOVEMENT_ACTION_STEP_END                    0xFE
+#define MOVEMENT_ACTION_NONE                        0xFF
 
 #define ANIM_STD_FACE_SOUTH       0
 #define ANIM_STD_FACE_NORTH       1

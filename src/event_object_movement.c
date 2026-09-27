@@ -1042,7 +1042,7 @@ static void ClearObjectEvent(struct ObjectEvent *objectEvent)
     objectEvent->localId = LOCALID_PLAYER;
     objectEvent->mapNum = MAP_NUM(MAP_UNDEFINED);
     objectEvent->mapGroup = MAP_GROUP(MAP_UNDEFINED);
-    objectEvent->movementActionId = 0xFF;
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
 }
 
 static void ClearAllObjectEvents(void)
@@ -4018,7 +4018,7 @@ bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Spri
 
 bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == 0xFF || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
+    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == MOVEMENT_ACTION_NONE || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
     {
         return FALSE;
     }
@@ -4180,7 +4180,7 @@ movement_type_def(MovementType_CopyPlayerInGrass, gMovementTypeFuncs_CopyPlayerI
 
 bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == 0xFF || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
+    if (gObjectEvents[gPlayerAvatar.objectEventId].movementActionId == MOVEMENT_ACTION_NONE || gPlayerAvatar.tileTransitionState == T_TILE_CENTER)
     {
         return FALSE;
     }
@@ -4315,7 +4315,7 @@ static void ClearObjectEventMovement(struct ObjectEvent *objectEvent, struct Spr
     objectEvent->singleMovementActive = 0;
     objectEvent->heldMovementActive = FALSE;
     objectEvent->heldMovementFinished = FALSE;
-    objectEvent->movementActionId = 0xFF;
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
     sprite->data[1] = 0;
 }
 
@@ -4670,7 +4670,7 @@ bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent)
 
 bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
 {
-    if (objectEvent->heldMovementActive && objectEvent->movementActionId != 0xFF)
+    if (objectEvent->heldMovementActive && objectEvent->movementActionId != MOVEMENT_ACTION_NONE)
         return TRUE;
 
     return FALSE;
@@ -4703,7 +4703,7 @@ void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent)
 
 void ObjectEventClearHeldMovement(struct ObjectEvent *objectEvent)
 {
-    objectEvent->movementActionId = 0xFF;
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
     objectEvent->heldMovementActive = FALSE;
     objectEvent->heldMovementFinished = FALSE;
     gSprites[objectEvent->spriteId].data[1] = 0;
@@ -4732,7 +4732,7 @@ u8 ObjectEventGetHeldMovementActionId(struct ObjectEvent *objectEvent)
     if (objectEvent->heldMovementActive)
         return objectEvent->movementActionId;
 
-    return 0xFF;
+    return MOVEMENT_ACTION_NONE;
 }
 
 void UpdateObjectEventCurrentMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 (*callback)(struct ObjectEvent *, struct Sprite *))
@@ -4940,7 +4940,7 @@ static bool8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent
 {
     if (gMovementActionFuncs[objectEvent->movementActionId][sprite->data[2]](objectEvent, sprite))
     {
-        objectEvent->movementActionId = 0xFF;
+        objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
         sprite->data[2] = 0;
         return TRUE;
     }
