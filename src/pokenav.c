@@ -3700,7 +3700,7 @@ void SetMonMarkings(u16 box, u16 monIndex, u8 markings)
         SetBoxMonData(&gPokemonStorage.boxes[box][monIndex], MON_DATA_MARKINGS, &markings);
 }
 
-void sub_80F45A0(s16 arg0, u8 arg1)
+void BufferConditionGraphMonText(s16 arg0, u8 arg1)
 {
     u8 box;
     u8 var0 = gPokenavStructPtr->unk893c[arg0].unk3_14;
@@ -3723,7 +3723,7 @@ void sub_80F45A0(s16 arg0, u8 arg1)
     }
 }
 
-void sub_80F468C(s16 arg0, u8 arg1)
+void LoadConditionGraphMonStats(s16 arg0, u8 arg1)
 {
     u16 i;
     u16 box;
@@ -3757,7 +3757,7 @@ void sub_80F468C(s16 arg0, u8 arg1)
     }
 }
 
-void sub_80F4824(s16 arg0, u8 arg1)
+void LoadConditionGraphMonGfx(s16 arg0, u8 arg1)
 {
     u16 species;
     u32 otId;
@@ -3787,11 +3787,11 @@ void sub_80F4824(s16 arg0, u8 arg1)
     }
 }
 
-void sub_80F4900(s16 arg0, u8 arg1)
+void LoadConditionGraphMonData(s16 arg0, u8 arg1)
 {
-    sub_80F45A0(arg0, arg1);
-    sub_80F468C(arg0, arg1);
-    sub_80F4824(arg0, arg1);
+    BufferConditionGraphMonText(arg0, arg1);
+    LoadConditionGraphMonStats(arg0, arg1);
+    LoadConditionGraphMonGfx(arg0, arg1);
 }
 
 void sub_80F492C(void)
@@ -3851,7 +3851,7 @@ void sub_80F4B20(void)
     s16 var0;
     s16 var1;
 
-    sub_80F4900(gPokenavStructPtr->unk87DC, 0);
+    LoadConditionGraphMonData(gPokenavStructPtr->unk87DC, 0);
     CreateOrUpdatePokenavPortraitSprite(0);
     if (gPokenavStructPtr->unk87DA == 1)
     {
@@ -3873,8 +3873,8 @@ void sub_80F4B20(void)
         if (var1 < 0)
             var1 = gPokenavStructPtr->unk87DA - 1;
 
-        sub_80F4900(var0, 1);
-        sub_80F4900(var1, 2);
+        LoadConditionGraphMonData(var0, 1);
+        LoadConditionGraphMonData(var1, 2);
     }
 }
 
@@ -4082,7 +4082,7 @@ bool8 sub_80F5264(void)
     case 1:
         if (!sub_80F4FB4())
         {
-            sub_80F4900(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
+            LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
             gPokenavStructPtr->unk87DE++;
         }
         break;
@@ -4101,7 +4101,7 @@ bool8 sub_80F52F8(void)
         if (!sub_80F5038())
         {
             PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
-            sub_80F4900(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
+            LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
             gPokenavStructPtr->unk87DE++;
         }
         break;
@@ -4130,7 +4130,7 @@ bool8 sub_80F5364(void)
             gPokenavStructPtr->unk87DE++;
         break;
     case 2:
-        sub_80F4900(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
+        LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
         return FALSE;
     }
 
@@ -4903,7 +4903,7 @@ void sub_80F66E0(void)
     u8 r0;
 
     sub_80F6514(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
-    sub_80F4824(gPokenavStructPtr->listSelectedIndex, 0);
+    LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->ribbonCount = 0;
     r9 = 0;
@@ -5076,7 +5076,7 @@ bool8 sub_80F6AF0(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 4:
-        sub_80F4824(gPokenavStructPtr->listSelectedIndex, 0);
+        LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
         gPokenavStructPtr->unk87DE++;
         break;
     case 5:
