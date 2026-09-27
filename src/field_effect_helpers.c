@@ -17,18 +17,18 @@ static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *, u8);
 static void LoadObjectRegularReflectionPalette(struct ObjectEvent *, u8);
 static void FadeFootprintsTireTracks_Step0(struct Sprite *);
 static void FadeFootprintsTireTracks_Step1(struct Sprite *);
-static void UpdateAshFieldEffect_Step0(struct Sprite *);
-static void UpdateAshFieldEffect_Step1(struct Sprite *);
-static void UpdateAshFieldEffect_Step2(struct Sprite *);
-static void sub_812882C(struct Sprite *, u8, u8);
+static void UpdateAshFieldEffect_Wait(struct Sprite *);
+static void UpdateAshFieldEffect_Show(struct Sprite *);
+static void UpdateAshFieldEffect_End(struct Sprite *);
+static void UpdateGrassFieldEffectSubpriority(struct Sprite *, u8, u8);
 static void UpdateFeetInFlowingWaterFieldEffect(struct Sprite *);
-static void sub_8127FD4(struct ObjectEvent *, struct Sprite *);
-static void sub_812800C(struct ObjectEvent *, struct Sprite *);
-static void sub_81280A0(struct ObjectEvent *, struct Sprite *, struct Sprite *);
-static void sub_8128174(struct Sprite *);
+static void SynchronizeSurfAnim(struct ObjectEvent *, struct Sprite *);
+static void SynchronizeSurfPosition(struct ObjectEvent *, struct Sprite *);
+static void UpdateBobbingEffect(struct ObjectEvent *, struct Sprite *, struct Sprite *);
+static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
 static u32 ShowDisguiseFieldEffect(u8, u8, u8);
 
-void InitObjectReflectionSprite(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 stillReflection)
+void SetUpReflection(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 stillReflection)
 {
     struct Sprite *reflectionSprite;
 
@@ -322,7 +322,7 @@ void UpdateTallGrassFieldEffect(struct Sprite *sprite)
             metatileBehavior = 4;
 
         UpdateObjectEventSpriteVisibility(sprite, 0);
-        sub_812882C(sprite, sprite->data[0], metatileBehavior);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->data[0], metatileBehavior);
     }
 }
 
@@ -425,7 +425,7 @@ void UpdateLongGrassFieldEffect(struct Sprite *sprite)
             sprite->data[7] = TRUE;
         }
         UpdateObjectEventSpriteVisibility(sprite, 0);
-        sub_812882C(sprite, sprite->data[0], 0);
+        UpdateGrassFieldEffectSubpriority(sprite, sprite->data[0], 0);
     }
 }
 
@@ -895,9 +895,9 @@ u32 FldEff_Ash(void)
 }
 
 void (*const gAshFieldEffectFuncs[])(struct Sprite *) = {
-    UpdateAshFieldEffect_Step0,
-    UpdateAshFieldEffect_Step1,
-    UpdateAshFieldEffect_Step2
+    UpdateAshFieldEffect_Wait,
+    UpdateAshFieldEffect_Show,
+    UpdateAshFieldEffect_End
 };
 
 void UpdateAshFieldEffect(struct Sprite *sprite)
@@ -905,7 +905,7 @@ void UpdateAshFieldEffect(struct Sprite *sprite)
     gAshFieldEffectFuncs[sprite->data[0]](sprite);
 }
 
-static void UpdateAshFieldEffect_Step0(struct Sprite *sprite)
+static void UpdateAshFieldEffect_Wait(struct Sprite *sprite)
 {
     sprite->invisible = TRUE;
     sprite->animPaused = TRUE;
@@ -913,7 +913,7 @@ static void UpdateAshFieldEffect_Step0(struct Sprite *sprite)
         sprite->data[0] = 1;
 }
 
-static void UpdateAshFieldEffect_Step1(struct Sprite *sprite)
+static void UpdateAshFieldEffect_Show(struct Sprite *sprite)
 {
     sprite->invisible = FALSE;
     sprite->animPaused = FALSE;
@@ -923,7 +923,7 @@ static void UpdateAshFieldEffect_Step1(struct Sprite *sprite)
     sprite->data[0] = 2;
 }
 
-static void UpdateAshFieldEffect_Step2(struct Sprite *sprite)
+static void UpdateAshFieldEffect_End(struct Sprite *sprite)
 {
     UpdateObjectEventSpriteVisibility(sprite, FALSE);
     if (sprite->animEnded)
@@ -951,33 +951,33 @@ u32 FldEff_SurfBlob(void)
     return spriteId;
 }
 
-void sub_8127ED0(u8 spriteId, u8 value)
+void SetSurfBlob_BobState(u8 spriteId, u8 value)
 {
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF) | (value & 0xF);
 }
 
-void sub_8127EFC(u8 spriteId, u8 value)
+void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 value)
 {
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF0) | ((value & 0xF) << 4);
 }
 
-void sub_8127F28(u8 spriteId, u8 value, s16 data1)
+void SetSurfBlob_PlayerOffset(u8 spriteId, u8 value, s16 data1)
 {
     gSprites[spriteId].data[0] = (gSprites[spriteId].data[0] & ~0xF00) | ((value & 0xF) << 8);
     gSprites[spriteId].data[1] = data1;
 }
 
-static u8 sub_8127F5C(struct Sprite *sprite)
+static u8 GetSurfBlob_BobState(struct Sprite *sprite)
 {
     return sprite->data[0] & 0xF;
 }
 
-static u8 sub_8127F64(struct Sprite *sprite)
+static u8 GetSurfBlob_DontSyncAnim(struct Sprite *sprite)
 {
     return (sprite->data[0] & 0xF0) >> 4;
 }
 
-static u8 sub_8127F70(struct Sprite *sprite)
+static u8 GetSurfBlob_HasPlayerOffset(struct Sprite *sprite)
 {
     return (sprite->data[0] & 0xF00) >> 8;
 }
@@ -989,13 +989,13 @@ void UpdateSurfBlobFieldEffect(struct Sprite *sprite)
 
     objectEvent = &gObjectEvents[sprite->data[2]];
     linkedSprite = &gSprites[objectEvent->spriteId];
-    sub_8127FD4(objectEvent, sprite);
-    sub_812800C(objectEvent, sprite);
-    sub_81280A0(objectEvent, linkedSprite, sprite);
+    SynchronizeSurfAnim(objectEvent, sprite);
+    SynchronizeSurfPosition(objectEvent, sprite);
+    UpdateBobbingEffect(objectEvent, linkedSprite, sprite);
     sprite->oam.priority = linkedSprite->oam.priority;
 }
 
-static void sub_8127FD4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void SynchronizeSurfAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u8 surfBlobDirectionAnims[] = {
         0, // DIR_NONE
@@ -1005,11 +1005,11 @@ static void sub_8127FD4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
         3, // DIR_EAST
     };
 
-    if (sub_8127F64(sprite) == 0)
+    if (GetSurfBlob_DontSyncAnim(sprite) == 0)
         StartSpriteAnimIfDifferent(sprite, surfBlobDirectionAnims[objectEvent->movementDirection]);
 }
 
-static void sub_812800C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+static void SynchronizeSurfPosition(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     u8 i;
     s16 x = objectEvent->currentCoords.x;
@@ -1033,10 +1033,10 @@ static void sub_812800C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
     }
 }
 
-static void sub_81280A0(struct ObjectEvent *objectEvent, struct Sprite *linkedSprite, struct Sprite *sprite)
+static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *linkedSprite, struct Sprite *sprite)
 {
     u16 unk_8401E5A[] = {3, 7};
-    u8 v0 = sub_8127F5C(sprite);
+    u8 v0 = GetSurfBlob_BobState(sprite);
     if (v0 != 0)
     {
         if (((u16)(++ sprite->data[4]) & unk_8401E5A[sprite->data[5]]) == 0)
@@ -1049,7 +1049,7 @@ static void sub_81280A0(struct ObjectEvent *objectEvent, struct Sprite *linkedSp
         }
         if (v0 != 2)
         {
-            if (sub_8127F70(sprite) == 0)
+            if (GetSurfBlob_HasPlayerOffset(sprite) == 0)
             {
                 linkedSprite->y2 = sprite->y2;
             }
@@ -1063,21 +1063,21 @@ static void sub_81280A0(struct ObjectEvent *objectEvent, struct Sprite *linkedSp
     }
 }
 
-u8 sub_8128124(u8 oldSpriteId)
+u8 StartUnderwaterSurfBlobBobbing(u8 oldSpriteId)
 {
     u8 spriteId;
     struct Sprite *sprite;
 
     spriteId = CreateSpriteAtEnd(&gDummySpriteTemplate, 0, 0, -1);
     sprite = &gSprites[spriteId];
-    sprite->callback = sub_8128174;
+    sprite->callback = SpriteCB_UnderwaterSurfBlob;
     sprite->invisible = TRUE;
     sprite->data[0] = oldSpriteId;
     sprite->data[1] = 1;
     return spriteId;
 }
 
-static void sub_8128174(struct Sprite *sprite)
+static void SpriteCB_UnderwaterSurfBlob(struct Sprite *sprite)
 {
     struct Sprite *oldSprite;
 
@@ -1382,7 +1382,7 @@ void WaitFieldEffectSpriteAnim(struct Sprite *sprite)
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
 }
 
-static void sub_812882C(struct Sprite *sprite /*r6*/, u8 z, u8 offset)
+static void UpdateGrassFieldEffectSubpriority(struct Sprite *sprite /*r6*/, u8 z, u8 offset)
 {
     u8 i;
     s16 var, xhi, lyhi, yhi, ylo;

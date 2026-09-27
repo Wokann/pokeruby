@@ -25,11 +25,11 @@ void UpdateLongGrassFieldEffect(struct Sprite *);
 u8 CreateWarpArrowSprite(void);
 void SetSpriteInvisible(u8);
 void ShowWarpArrowSprite(u8 unk_1B, u8 r6, s16 x, s16 y);
-void sub_8127ED0(u8, u8);
-void sub_8127F28(u8, u8, s16);
-u8 sub_8128124(u8 id);
+void SetSurfBlob_BobState(u8, u8);
+void SetSurfBlob_PlayerOffset(u8, u8, s16);
+u8 StartUnderwaterSurfBlobBobbing(u8 id);
 void StartAshFieldEffect(s16, s16, u16, s16);
-void InitObjectReflectionSprite(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 a);
+void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 a);
 u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
 u8 FindTallGrassFieldEffectSpriteId(u8, u8, u8, s16, s16);
 

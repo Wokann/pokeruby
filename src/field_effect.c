@@ -2718,7 +2718,7 @@ void sub_8088AF4(struct Task *task)
         gPlayerAvatar.preventStep = FALSE;
         gPlayerAvatar.flags &= 0xdf;
         ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(objectEvent->movementDirection));
-        sub_8127ED0(objectEvent->fieldEffectSpriteId, 1);
+        SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, 1);
         UnfreezeObjectEvents();
         UnlockPlayerFieldControls();
         FieldEffectActiveListRemove(FLDEFF_USE_SURF);
@@ -2764,7 +2764,7 @@ void sub_8088BC4(struct Sprite *sprite)
 }
 
 void sub_8088C70(u8);
-extern void sub_8127EFC(u8, u8);
+extern void SetSurfBlob_DontSyncAnim(u8, u8);
 u8 sub_8088F60(void);
 bool8 sub_8088FA4(u8);
 void sub_8088FC0(u8);
@@ -2832,8 +2832,8 @@ void sub_8088D3C(struct Task *task)
         objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
         if (task->data[15] & 0x08)
         {
-            sub_8127ED0(objectEvent->fieldEffectSpriteId, 2);
-            sub_8127EFC(objectEvent->fieldEffectSpriteId, 0);
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, 2);
+            SetSurfBlob_DontSyncAnim(objectEvent->fieldEffectSpriteId, 0);
         }
         task->data[1] = sub_8088F60();
         task->data[0]++;
@@ -3107,7 +3107,7 @@ void sub_80892A0(struct Task *task)
         SetPlayerAvatarStateMask(0x01);
         if (task->data[15] & 0x08)
         {
-            sub_8127ED0(objectEvent->fieldEffectSpriteId, 0);
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, 0);
         }
         ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
         CameraObjectReset2();
@@ -3217,7 +3217,7 @@ void fishE(struct Task *task)
         if (task->data[15] & 0x08)
         {
             state = PLAYER_AVATAR_STATE_SURFING;
-            sub_8127ED0(objectEvent->fieldEffectSpriteId, 1);
+            SetSurfBlob_BobState(objectEvent->fieldEffectSpriteId, 1);
         }
         ObjectEventSetGraphicsId(objectEvent, GetPlayerAvatarGraphicsIdByStateId(state));
         ObjectEventTurn(objectEvent, DIR_SOUTH);
