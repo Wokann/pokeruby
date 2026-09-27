@@ -16,7 +16,7 @@
 
 static u8 sHoldState;
 static u16 sMosaicVal;
-static u16 sFrameCounter;
+static u16 sFadeCounter;
 static u8 sVarsInitialized;
 
 u16 (*gContestMonPixels)[][32];
@@ -25,7 +25,7 @@ u8 sCaptionBuffer[76];
 struct ContestWinner *gContestPaintingWinner;
 u16 *gContestPaintingMonPalette;
 
-static const u16 gPictureFramePalettes[][16] =
+static const u16 sPictureFramePalettes[][16] =
 {
     INCBIN_U16("graphics/picture_frame/bg0.gbapal"),
     INCBIN_U16("graphics/picture_frame/bg1.gbapal"),
@@ -37,18 +37,18 @@ static const u16 gPictureFramePalettes[][16] =
     {0},
 };
 const u8 emptySpace[8 * 32] = {0};
-const u8 gPictureFrameTiles_0[] = INCBIN_U8("graphics/picture_frame/frame0.4bpp.rl");
-const u8 gPictureFrameTiles_1[] = INCBIN_U8("graphics/picture_frame/frame1.4bpp.rl");
-const u8 gPictureFrameTiles_2[] = INCBIN_U8("graphics/picture_frame/frame2.4bpp.rl");
-const u8 gPictureFrameTiles_3[] = INCBIN_U8("graphics/picture_frame/frame3.4bpp.rl");
-const u8 gPictureFrameTiles_4[] = INCBIN_U8("graphics/picture_frame/frame4.4bpp.rl");
-const u8 gPictureFrameTiles_5[] = INCBIN_U8("graphics/picture_frame/frame5.4bpp.rl");
-const u8 gPictureFrameTilemap_0[] = INCBIN_U8("graphics/picture_frame/frame0_map.bin.rl");
-const u8 gPictureFrameTilemap_1[] = INCBIN_U8("graphics/picture_frame/frame1_map.bin.rl");
-const u8 gPictureFrameTilemap_2[] = INCBIN_U8("graphics/picture_frame/frame2_map.bin.rl");
-const u8 gPictureFrameTilemap_3[] = INCBIN_U8("graphics/picture_frame/frame3_map.bin.rl");
-const u8 gPictureFrameTilemap_4[] = INCBIN_U8("graphics/picture_frame/frame4_map.bin.rl");
-const u8 gPictureFrameTilemap_5[] = INCBIN_U8("graphics/picture_frame/frame5_map.bin.rl");
+const u8 sPictureFrameTiles_Cool[] = INCBIN_U8("graphics/picture_frame/frame0.4bpp.rl");
+const u8 sPictureFrameTiles_Beauty[] = INCBIN_U8("graphics/picture_frame/frame1.4bpp.rl");
+const u8 sPictureFrameTiles_Cute[] = INCBIN_U8("graphics/picture_frame/frame2.4bpp.rl");
+const u8 sPictureFrameTiles_Smart[] = INCBIN_U8("graphics/picture_frame/frame3.4bpp.rl");
+const u8 sPictureFrameTiles_Tough[] = INCBIN_U8("graphics/picture_frame/frame4.4bpp.rl");
+const u8 sPictureFrameTiles_HallLobby[] = INCBIN_U8("graphics/picture_frame/frame5.4bpp.rl");
+const u8 sPictureFrameTilemap_Cool[] = INCBIN_U8("graphics/picture_frame/frame0_map.bin.rl");
+const u8 sPictureFrameTilemap_Beauty[] = INCBIN_U8("graphics/picture_frame/frame1_map.bin.rl");
+const u8 sPictureFrameTilemap_Cute[] = INCBIN_U8("graphics/picture_frame/frame2_map.bin.rl");
+const u8 sPictureFrameTilemap_Smart[] = INCBIN_U8("graphics/picture_frame/frame3_map.bin.rl");
+const u8 sPictureFrameTilemap_Tough[] = INCBIN_U8("graphics/picture_frame/frame4_map.bin.rl");
+const u8 sPictureFrameTilemap_HallLobby[] = INCBIN_U8("graphics/picture_frame/frame5_map.bin.rl");
 
 const u8 *const sContestRankNames[] =
 {
@@ -190,8 +190,8 @@ static void HoldContestPainting(void)
     case 0:
         if (!gPaletteFade.active)
             sHoldState = 1;
-        if (sVarsInitialized&& sFrameCounter != 0)
-            sFrameCounter--;
+        if (sVarsInitialized&& sFadeCounter != 0)
+            sFadeCounter--;
         break;
     case 1:
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
@@ -200,13 +200,13 @@ static void HoldContestPainting(void)
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
         }
         if (sVarsInitialized != 0)
-            sFrameCounter = 0;
+            sFadeCounter = 0;
         break;
     case 2:
         if (!gPaletteFade.active)
             SetMainCallback2(CB2_QuitContestPainting);
-        if (sVarsInitialized && sFrameCounter < 30)
-            sFrameCounter++;
+        if (sVarsInitialized && sFadeCounter < 30)
+            sFadeCounter++;
         break;
     }
 }
@@ -281,17 +281,17 @@ static void InitContestPaintingVars(bool8 reset)
     {
         sVarsInitialized = FALSE;
         sMosaicVal = 0;
-        sFrameCounter = 0;
+        sFadeCounter = 0;
     }
     else
     {
         sVarsInitialized = TRUE;
         sMosaicVal = 15;
-        sFrameCounter = 30;
+        sFadeCounter = 30;
     }
 }
 
-static void ContestPaintingMosaic(void)
+static void UpdateContestPaintingMosaicEffect(void)
 {
     if (sVarsInitialized == FALSE)
     {
@@ -300,14 +300,14 @@ static void ContestPaintingMosaic(void)
     }
 
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(10) | BGCNT_MOSAIC | BGCNT_16COLOR | BGCNT_TXT256x256;
-    sMosaicVal = sFrameCounter / 2;
+    sMosaicVal = sFadeCounter / 2;
 
     REG_MOSAIC = (sMosaicVal << 12) | (sMosaicVal << 8) | (sMosaicVal << 4) | (sMosaicVal << 0);
 }
 
 static void VBlankCB_ContestPainting(void)
 {
-    ContestPaintingMosaic();
+    UpdateContestPaintingMosaicEffect();
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
@@ -401,30 +401,30 @@ static void LoadContestPaintingFrame(u8 contestWinnerId, u8 isForArtist)
 {
     u8 x, y;
 
-    LoadPalette(gPictureFramePalettes, 0, sizeof(gPictureFramePalettes));
+    LoadPalette(sPictureFramePalettes, 0, sizeof(sPictureFramePalettes));
     if (isForArtist == TRUE)
     {
         switch (gContestPaintingWinner->contestCategory / 3)
         {
         case CONTEST_COOL:
-            RLUnCompVram(gPictureFrameTiles_0, (void *)VRAM);
-            RLUnCompWram(gPictureFrameTilemap_0, gContestMonPixels);
+            RLUnCompVram(sPictureFrameTiles_Cool, (void *)VRAM);
+            RLUnCompWram(sPictureFrameTilemap_Cool, gContestMonPixels);
             break;
         case CONTEST_BEAUTY:
-            RLUnCompVram(gPictureFrameTiles_1, (void *)VRAM);
-            RLUnCompWram(gPictureFrameTilemap_1, gContestMonPixels);
+            RLUnCompVram(sPictureFrameTiles_Beauty, (void *)VRAM);
+            RLUnCompWram(sPictureFrameTilemap_Beauty, gContestMonPixels);
             break;
         case CONTEST_CUTE:
-            RLUnCompVram(gPictureFrameTiles_2, (void *)VRAM);
-            RLUnCompWram(gPictureFrameTilemap_2, gContestMonPixels);
+            RLUnCompVram(sPictureFrameTiles_Cute, (void *)VRAM);
+            RLUnCompWram(sPictureFrameTilemap_Cute, gContestMonPixels);
             break;
         case CONTEST_SMART:
-            RLUnCompVram(gPictureFrameTiles_3, (void *)VRAM);
-            RLUnCompWram(gPictureFrameTilemap_3, gContestMonPixels);
+            RLUnCompVram(sPictureFrameTiles_Smart, (void *)VRAM);
+            RLUnCompWram(sPictureFrameTilemap_Smart, gContestMonPixels);
             break;
         case CONTEST_TOUGH:
-            RLUnCompVram(gPictureFrameTiles_4, (void *)VRAM);
-            RLUnCompWram(gPictureFrameTilemap_4, gContestMonPixels);
+            RLUnCompVram(sPictureFrameTiles_Tough, (void *)VRAM);
+            RLUnCompWram(sPictureFrameTilemap_Tough, gContestMonPixels);
             break;
         }
 
@@ -452,32 +452,32 @@ static void LoadContestPaintingFrame(u8 contestWinnerId, u8 isForArtist)
     }
     else if (contestWinnerId < 8)
     {
-        RLUnCompVram(gPictureFrameTiles_5, (void *)VRAM);
-        RLUnCompVram(gPictureFrameTilemap_5, (void *)(VRAM + 0x6000));
+        RLUnCompVram(sPictureFrameTiles_HallLobby, (void *)VRAM);
+        RLUnCompVram(sPictureFrameTilemap_HallLobby, (void *)(VRAM + 0x6000));
     }
     else
     {
         switch (gContestPaintingWinner->contestCategory / 3)
         {
         case CONTEST_COOL:
-            RLUnCompVram(gPictureFrameTiles_0, (void *)VRAM);
-            RLUnCompVram(gPictureFrameTilemap_0, (void *)(VRAM + 0x6000));
+            RLUnCompVram(sPictureFrameTiles_Cool, (void *)VRAM);
+            RLUnCompVram(sPictureFrameTilemap_Cool, (void *)(VRAM + 0x6000));
             break;
         case CONTEST_BEAUTY:
-            RLUnCompVram(gPictureFrameTiles_1, (void *)VRAM);
-            RLUnCompVram(gPictureFrameTilemap_1, (void *)(VRAM + 0x6000));
+            RLUnCompVram(sPictureFrameTiles_Beauty, (void *)VRAM);
+            RLUnCompVram(sPictureFrameTilemap_Beauty, (void *)(VRAM + 0x6000));
             break;
         case CONTEST_CUTE:
-            RLUnCompVram(gPictureFrameTiles_2, (void *)VRAM);
-            RLUnCompVram(gPictureFrameTilemap_2, (void *)(VRAM + 0x6000));
+            RLUnCompVram(sPictureFrameTiles_Cute, (void *)VRAM);
+            RLUnCompVram(sPictureFrameTilemap_Cute, (void *)(VRAM + 0x6000));
             break;
         case CONTEST_SMART:
-            RLUnCompVram(gPictureFrameTiles_3, (void *)VRAM);
-            RLUnCompVram(gPictureFrameTilemap_3, (void *)(VRAM + 0x6000));
+            RLUnCompVram(sPictureFrameTiles_Smart, (void *)VRAM);
+            RLUnCompVram(sPictureFrameTilemap_Smart, (void *)(VRAM + 0x6000));
             break;
         case CONTEST_TOUGH:
-            RLUnCompVram(gPictureFrameTiles_4, (void *)VRAM);
-            RLUnCompVram(gPictureFrameTilemap_4, (void *)(VRAM + 0x6000));
+            RLUnCompVram(sPictureFrameTiles_Tough, (void *)VRAM);
+            RLUnCompVram(sPictureFrameTilemap_Tough, (void *)(VRAM + 0x6000));
             break;
         }
     }
