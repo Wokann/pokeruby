@@ -618,7 +618,7 @@ static void BardSing(struct Task *task, struct BardSong *song)
             const struct BardSound *sounds = GetWordSounds(EC_GROUP(word), EC_INDEX(word));
 
             song->var04 = 0;
-            GetWordPhonemes(song, sounds, WORD_TO_PITCH_TABLE_INDEX(word));
+            CalcWordPhonemes(song, sounds, WORD_TO_PITCH_TABLE_INDEX(word));
         }
         break;
     case 3:
