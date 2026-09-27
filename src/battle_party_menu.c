@@ -11,7 +11,6 @@
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
 #include "rom_8077ABC.h"
-#include "rom_8094928.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"
@@ -330,18 +329,18 @@ void unref_sub_8094DB0(void)
     }
 }
 
-void sub_8094E20(u8 a)
+void OpenBattlePartyMenuWithAction(u8 action)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
-    gUnknown_02038473 = a;
+    gUnknown_02038473 = action;
     ReshowBattleScreenDummy();
     UpdatePartyToBattleOrder();
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE, 0xFF);
 }
 
-void sub_8094E4C(void)
+void OpenBattlePartyMenuForItemUse(void)
 {
-    sub_8094E20(3);
+    OpenBattlePartyMenuWithAction(3);
 }
 
 bool8 SetUpBattlePartyMenu(void)

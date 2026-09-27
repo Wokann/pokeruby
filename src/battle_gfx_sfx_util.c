@@ -12,7 +12,7 @@
 #include "palette.h"
 #include "pokemon.h"
 #include "rom_8077ABC.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "constants/songs.h"
 #include "constants/moves.h"
 #include "sound.h"

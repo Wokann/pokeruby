@@ -210,5 +210,11 @@ void sub_806D668(u8 monIndex);
 void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
 bool8 IsHMMove(u16 move);
+void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
+u8 GetPartyIdFromBattleSlot(u8 slot);
+void SwitchPartyMonSlots(u8 slot, u8 slot2);
+u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
+void OpenBattlePartyMenuForItemUse(void);
+void OpenBattlePartyMenuWithAction(u8 action);
 
 #endif // GUARD_PARTY_MENU_H

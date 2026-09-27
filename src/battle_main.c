@@ -34,7 +34,6 @@
 #include "random.h"
 #include "roamer.h"
 #include "rom_8077ABC.h"
-#include "rom_8094928.h"
 #include "safari_zone.h"
 #include "sound.h"
 #include "sprite.h"

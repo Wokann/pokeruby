@@ -11,7 +11,7 @@
 #include "constants/items.h"
 #include "link.h"
 #include "pokemon.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "constants/species.h"
 #include "task.h"
 #include "util.h"

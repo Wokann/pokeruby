@@ -27,7 +27,6 @@
 #include "pokemon_item_effect.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom_8094928.h"
 #include "script.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -944,7 +943,7 @@ void Task_CloseBagForBattleItem(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        sub_8094E4C();
+        OpenBattlePartyMenuForItemUse();
         FreeAndReserveObjectSpritePalettes();
         DestroyTask(taskId);
     }

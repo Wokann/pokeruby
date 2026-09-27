@@ -13,6 +13,7 @@
 #include "main.h"
 #include "menu_cursor.h"
 #include "palette.h"
+#include "party_menu.h"
 #include "pokeball.h"
 #include "pokemon.h"
 #include "sound.h"
@@ -163,7 +164,6 @@ extern void EndBounceEffect(u8, u8);
 extern void SpriteCB_ShowAsMoveTarget(struct Sprite *);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
-extern void sub_8094E20(u8);
 extern void ReshowBattleScreenDummy(void);
 extern void sub_80A6DCC(void);
 extern void ReshowBattleScreenAfterMenu(void);
@@ -1514,7 +1514,7 @@ void sub_802DF30(void)
         gBattlerControllerFuncs[gActiveBattler] = sub_802DF88;
         r4 = gTasks[gBattleControllerData[gActiveBattler]].data[0];
         DestroyTask(gBattleControllerData[gActiveBattler]);
-        sub_8094E20(r4);
+        OpenBattlePartyMenuWithAction(r4);
     }
 }
 

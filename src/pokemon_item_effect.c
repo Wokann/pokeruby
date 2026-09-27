@@ -12,7 +12,7 @@
 #include "pokemon.h"
 #include "pokemon_item_effect.h"
 #include "rom_8077ABC.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "util.h"
 #include "constants/item_effects.h"
 

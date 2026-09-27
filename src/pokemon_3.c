@@ -16,7 +16,7 @@
 #include "random.h"
 #include "overworld.h"
 #include "rom_8077ABC.h"
-#include "rom_8094928.h"
+#include "party_menu.h"
 #include "rtc.h"
 #include "constants/songs.h"
 #include "sound.h"
