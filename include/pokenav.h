@@ -406,7 +406,7 @@ void InitPokenavIconSprite(void);
 bool8 LoadPokenavIconSpriteStep(void);
 void CreateTrainerEyesNameSprites(u8*);
 void DestroyTrainerEyesNameSprites(void);
-u8 *sub_80F6514(u8*, u16, u8);
+u8 *BufferPokenavMonNameGenderLevelText(u8*, u16, u8);
 u8 *BufferConditionSearchRankText(u8 *, u16);
 void ConditionGraph_CalcPositions(u8*, struct UnkPokenav11 *);
 void PrepareConditionGraphFromSearchResult(void);

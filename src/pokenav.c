@@ -3649,7 +3649,7 @@ void UpdateTrainerEyesNameSprites(u8 *text)
 
 u8 *BufferPokenavMonListRowText(u8 *dst, u16 listIndex, u8 displayMode)
 {
-    return sub_80F6514(dst, listIndex, displayMode);
+    return BufferPokenavMonNameGenderLevelText(dst, listIndex, displayMode);
 }
 
 u8 *BufferConditionSearchRankText(u8 *dst, u16 rank)
@@ -4793,11 +4793,11 @@ bool8 BuildRibbonsMonListStep(void)
     return TRUE;
 }
 
-u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
+u8 *BufferPokenavMonNameGenderLevelText(u8 *dst, u16 listIndex, u8 displayMode)
 {
-    u8 * dest = r10;
-    u8 box = gPokenavStructPtr->unk893c[sp0].unk1;
-    u8 monNo = gPokenavStructPtr->unk893c[sp0].partyIdx;
+    u8 *dest = dst;
+    u8 box = gPokenavStructPtr->unk893c[listIndex].unk1;
+    u8 monNo = gPokenavStructPtr->unk893c[listIndex].partyIdx;
     u16 species;
     u16 level;
     u8 gender;
@@ -4817,7 +4817,7 @@ u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
             level = GetLevelFromBoxMonExp(&gPokemonStorage.boxes[box][monNo]);
             gender = GetGenderFromSpeciesAndPersonality(species, GetBoxOrPartyMonData(box, monNo, MON_DATA_PERSONALITY, NULL));
         }
-        if (ShouldHideGenderIcon(species, r10))
+        if (ShouldHideGenderIcon(species, dst))
         {
             gender = MON_GENDERLESS;
         }
@@ -4872,9 +4872,9 @@ u8 * sub_80F6514(u8 * r10, u16 sp0, u8 sp4)
         dest += 5;
 
         dest = ConvertIntToDecimalString(dest, level);
-        if (sp4 == 1)
+        if (displayMode == 1)
         {
-            dest = AlignInt1InMenuWindow(dest, gPokenavStructPtr->unk893c[sp0].unk0, 0x80, 0x01);
+            dest = AlignInt1InMenuWindow(dest, gPokenavStructPtr->unk893c[listIndex].unk0, 0x80, 0x01);
         }
         else
         {
@@ -4902,7 +4902,7 @@ void sub_80F66E0(void)
     u8 r2;
     u8 r0;
 
-    sub_80F6514(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
+    BufferPokenavMonNameGenderLevelText(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
     LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->ribbonCount = 0;
