@@ -81,7 +81,7 @@ static u16 LoadFixedWidthFont_Font1Latin(struct Window *, u16);
 static u16 LoadFixedWidthFont_Font4Latin(struct Window *, u16);
 static u16 LoadFixedWidthFont_Braille(struct Window *, u16);
 static void MultistepLoadFont_LoadGlyph(struct Window *, u16, u8);
-static u8 sub_8002FA0(struct Window *, const u8 *);
+static u8 PrintPlaceholderText(struct Window *, const u8 *);
 static u8 PrintNextChar(struct Window *);
 static u8 HandleExtCtrlCode(struct Window *);
 static u8 UpdateWindowText(struct Window *);
@@ -2051,7 +2051,7 @@ u8 Text_PrintWindow8002F44(struct Window *win)
         }
         else if (win->state == WIN_STATE_PLACEHOLDER)
         {
-            sub_8002FA0(win, GetExpandedPlaceholder(win->text[win->textIndex++]));
+            PrintPlaceholderText(win, GetExpandedPlaceholder(win->text[win->textIndex++]));
         }
 
         PrintNextChar(win);
@@ -2059,7 +2059,7 @@ u8 Text_PrintWindow8002F44(struct Window *win)
     return 1;
 }
 
-static u8 sub_8002FA0(struct Window *win, const u8 *text)
+static u8 PrintPlaceholderText(struct Window *win, const u8 *text)
 {
     u8 retVal;
     u8 savedLanguage = win->language;
@@ -2269,7 +2269,7 @@ static void DrawSpace(struct Window *win)
     }
 }
 
-static void sub_8003344(struct Window *win, u8 newX)
+static void DrawSpacesToCursorX(struct Window *win, u8 newX)
 {
     u8 savedSpacing = win->spacing;
 
@@ -2293,7 +2293,7 @@ static void sub_8003344(struct Window *win, u8 newX)
 
 static u8 ExtCtrlCode_Skip(struct Window *win)
 {
-    sub_8003344(win, win->cursorX + win->text[win->textIndex++]);
+    DrawSpacesToCursorX(win, win->cursorX + win->text[win->textIndex++]);
     return 1;
 }
 
@@ -2306,7 +2306,7 @@ static u8 ExtCtrlCode_SetCursorX(struct Window *win)
 
 static u8 ExtCtrlCode_SkipTo(struct Window *win)
 {
-    sub_8003344(win, win->text[win->textIndex++]);
+    DrawSpacesToCursorX(win, win->text[win->textIndex++]);
     return 1;
 }
 
@@ -2357,7 +2357,7 @@ u8 Text_InitWindowAndPrintText(struct Window *win, const u8 *text, u16 tileDataS
     return Text_PrintWindow8002F44(win);
 }
 
-u8 sub_8003490(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 top)
+u8 Text_InitWindowAndPrintChar(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 top)
 {
     u8 retVal;
     u8 text[2];
@@ -2374,19 +2374,19 @@ void RenderTextHandleBold(u8 *tileData, const u8 *text)
     Text_InitWindow8004E3C(&gWindowTemplate_81E6C74, tileData, text);
 }
 
-u8 sub_80034EC(u8 *str)
+u8 GetBoldTextWidth(u8 *str)
 {
     return Text_GetStringWidthFromWindowTemplate((struct WindowTemplate *)&gWindowTemplate_81E6C74, str);
 }
 
-u8 *sub_8003504(u8 *dest, s32 value, u8 alignAmount, u8 alignType)
+u8 *AlignBoldTextInteger(u8 *dest, s32 value, u8 alignAmount, u8 alignType)
 {
     sTempWindow.template = (struct WindowTemplate *)&gWindowTemplate_81E6C74;
     Text_InitWindow(&sTempWindow, 0, 0, 0, 0);
     return AlignInt2(&sTempWindow, dest, value, alignAmount, alignType);
 }
 
-u8 *sub_8003558(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType)
+u8 *AlignBoldTextString(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType)
 {
     sTempWindow.template = (struct WindowTemplate *)&gWindowTemplate_81E6C74;
     Text_InitWindow(&sTempWindow, src, 0, 0, 0);
@@ -3818,7 +3818,7 @@ s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2)
     return retVal;
 }
 
-u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8)
+u8 Text_PrintWithNewlineIndent(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8)
 {
     u8 newlineCount = 0;
     u8 extCtrlCodeLength;

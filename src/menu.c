@@ -184,7 +184,7 @@ void sub_8071F40(const u8 *str)
 
 void sub_8071F60(u8 a1, u8 a2, u8 a3)
 {
-    sub_8003490(gMenuWindowPtr, a1, gMenuTextTileOffset, a2, a3);
+    Text_InitWindowAndPrintChar(gMenuWindowPtr, a1, gMenuTextTileOffset, a2, a3);
 }
 
 u16 unref_sub_8071F98(u8 x, u8 y)
@@ -622,17 +622,17 @@ u8 Menu_PrintTextPixelCoords(const u8 *text, u8 left, u16 top, u8 a4)
 
 u8 sub_8072A18(const u8 *text, u8 left, u16 top, u8 width, u32 a5)
 {
-    return sub_8004FD0(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, a5);
+    return Text_PrintWithNewlineIndent(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, a5);
 }
 
 u8 unref_sub_8072A5C(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 a6)
 {
-    return sub_8004FD0(gMenuWindowPtr, dest, src, gMenuTextTileOffset, left, top, width, a6);
+    return Text_PrintWithNewlineIndent(gMenuWindowPtr, dest, src, gMenuTextTileOffset, left, top, width, a6);
 }
 
 int sub_8072AB0(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 a6)
 {
-    u8 newlineCount = sub_8004FD0(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, a6);
+    u8 newlineCount = Text_PrintWithNewlineIndent(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, a6);
 
 #if ENGLISH
     left /= 8;

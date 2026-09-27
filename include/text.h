@@ -146,11 +146,11 @@ void Contest_StartTextPrinter(struct Window *win, const u8 *text, u16 tileDataSt
 u8 Text_PrintWindow8002F44(struct Window *win);
 u8 Text_PrintWindowSimple(struct Window *win);
 u8 Text_InitWindowAndPrintText(struct Window *win, const u8 *text, u16 tileDataStartOffset, u8 left, u8 top);
-u8 sub_8003490(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 top);
+u8 Text_InitWindowAndPrintChar(struct Window *win, u8 c, u16 tileDataStartOffset, u8 left, u8 top);
 void RenderTextHandleBold(u8 *tileData, const u8 *text);
-u8 sub_80034EC(u8 *str);
-u8 *sub_8003504(u8 *dest, s32 value, u8 alignAmount, u8 alignType);
-u8 *sub_8003558(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType);
+u8 GetBoldTextWidth(u8 *str);
+u8 *AlignBoldTextInteger(u8 *dest, s32 value, u8 alignAmount, u8 alignType);
+u8 *AlignBoldTextString(u8 *dest, const u8 *src, u8 alignAmount, u8 alignType);
 u8 Text_UpdateWindow(struct Window *win);
 u8 Text_UpdateWindowInBattle(struct Window *win);
 u8 Text_UpdateWindowAutoscroll(struct Window *win);
@@ -179,7 +179,7 @@ u8 Text_GetStringWidthFromWindowTemplate(const struct WindowTemplate *winConfig,
 void ConvertInternationalString(u8 *s, u8 language);
 void Text_StripExtCtrlCodes(u8 *str);
 s32 StringCompareWithoutExtCtrlCodes(const u8 *str1, const u8 *str2);
-u8 sub_8004FD0(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
+u8 Text_PrintWithNewlineIndent(struct Window *win, u8 *dest, const u8 *src, u16 tileDataStartOffset, u8 left, u16 top, u8 width, u32 a8);
 
 extern const u16 gUnknownPalette_81E6692[];
 

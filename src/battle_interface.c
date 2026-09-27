@@ -862,7 +862,7 @@ void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent)
             else
                 r4 = gUnknown_0820A848;
             r8 = 3;
-            ptr = sub_8003504(ptr, value, 19, 1);
+            ptr = AlignBoldTextInteger(ptr, value, 19, 1);
             *(ptr++) = CHAR_SLASH;
             *(ptr++) = EOS;
         }
@@ -873,7 +873,7 @@ void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent)
             else
                 r4 = gUnknown_0820A85C;
             r8 = 2;
-            ptr = sub_8003504(ptr, value, 15, 1);
+            ptr = AlignBoldTextInteger(ptr, value, 15, 1);
         }
         RenderTextHandleBold(eBattleInterfaceGfxBuffer, str);
         //asm(""::"r"(a));
@@ -908,7 +908,7 @@ static void sub_8044210(u8 a, s16 b, u8 c)
     {
         r7 = gUnknown_0820A87C;
         r10 = 6;
-        ptr = sub_8003504(ptr, b, 0x2B, 1);
+        ptr = AlignBoldTextInteger(ptr, b, 0x2B, 1);
         *(ptr++) = CHAR_SLASH;
         *(ptr++) = EOS;
     }
@@ -916,7 +916,7 @@ static void sub_8044210(u8 a, s16 b, u8 c)
     {
         r7 = gUnknown_0820A894;
         r10 = 2;
-        sub_8003504(ptr, b, 0xF, 1);
+        AlignBoldTextInteger(ptr, b, 0xF, 1);
         if (GetBattlerSide(r4) == 0)
         {
             CpuCopy32(GetHealthboxElementGfxPtr(0x74), OBJ_VRAM0 + (gSprites[a].oam.tileNum + 0x34) * 32, 32);
@@ -1816,7 +1816,7 @@ static u8 sub_80457E8(u8 a, u8 b)
     s32 i;
 
     r7 = StringCopy(gDisplayedStringBattle, BattleText_SafariBallsLeft);
-    r7 = sub_8003504(r7, gNumSafariBalls, 10, 1);
+    r7 = AlignBoldTextInteger(r7, gNumSafariBalls, 10, 1);
     StringAppend(r7, BattleText_HighlightRed);
     status = GetBattlerPosition(gSprites[a].data[6]);
     r7 = &eBattleInterfaceGfxBuffer[0x520 + status * 0x180];
