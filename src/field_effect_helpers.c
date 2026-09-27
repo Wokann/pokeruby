@@ -29,6 +29,8 @@ static void SpriteCB_UnderwaterSurfBlob(struct Sprite *);
 static u32 ShowDisguiseFieldEffect(u8, u8, u8);
 
 #define sWaitFldEff data[0]
+#define sJumpElevation data[0]
+#define sJumpFldEff data[1]
 
 #define sReflectionObjEventId      data[0]
 #define sReflectionObjEventLocalId data[1]
@@ -369,8 +371,8 @@ u32 FldEff_JumpTallGrass(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = 12;
+        sprite->sJumpElevation = gFieldEffectArguments[2];
+        sprite->sJumpFldEff = FLDEFF_JUMP_TALL_GRASS;
     }
     return 0;
 }
@@ -481,8 +483,8 @@ u32 FldEff_JumpLongGrass(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = 18;
+        sprite->sJumpElevation = gFieldEffectArguments[2];
+        sprite->sJumpFldEff = FLDEFF_JUMP_LONG_GRASS;
     }
     return 0;
 }
@@ -715,8 +717,8 @@ u32 FldEff_JumpSmallSplash(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = FLDEFF_JUMP_SMALL_SPLASH;
+        sprite->sJumpElevation = gFieldEffectArguments[2];
+        sprite->sJumpFldEff = FLDEFF_JUMP_SMALL_SPLASH;
     }
     return 0;
 }
@@ -733,8 +735,8 @@ u32 FldEff_JumpBigSplash(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = FLDEFF_JUMP_BIG_SPLASH;
+        sprite->sJumpElevation = gFieldEffectArguments[2];
+        sprite->sJumpFldEff = FLDEFF_JUMP_BIG_SPLASH;
     }
     return 0;
 }
@@ -1234,8 +1236,8 @@ u32 FldEff_Dust(void)
         sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
-        sprite->data[0] = gFieldEffectArguments[2];
-        sprite->data[1] = 10;
+        sprite->sJumpElevation = gFieldEffectArguments[2];
+        sprite->sJumpFldEff = FLDEFF_DUST;
     }
     return 0;
 }
@@ -1521,12 +1523,12 @@ void UpdateJumpImpactEffect(struct Sprite *sprite)
 {
     if (sprite->animEnded)
     {
-        FieldEffectStop(sprite, sprite->data[1]);
+        FieldEffectStop(sprite, sprite->sJumpFldEff);
     }
     else
     {
         UpdateObjectEventSpriteVisibility(sprite, FALSE);
-        SetObjectSubpriorityByZCoord(sprite->data[0], sprite, 0);
+        SetObjectSubpriorityByZCoord(sprite->sJumpElevation, sprite, 0);
     }
 }
 
