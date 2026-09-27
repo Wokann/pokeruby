@@ -129,15 +129,15 @@ void SurfFieldEffect_ShowMon(struct Task *);
 void SurfFieldEffect_JumpOnSurfBlob(struct Task *);
 void SurfFieldEffect_End(struct Task *);
 
-void sub_8088CA0(struct Task *);
-void sub_8088CF8(struct Task *);
-void sub_8088D3C(struct Task *);
-void sub_8088D94(struct Task *);
-void sub_8088DD8(struct Task *);
-void sub_8088E2C(struct Task *);
-void sub_8088EB4(struct Task *);
-void sub_8088F10(struct Task *);
-void sub_8088F30(struct Task *);
+void FlyOutFieldEffect_FieldMovePose(struct Task *);
+void FlyOutFieldEffect_ShowMon(struct Task *);
+void FlyOutFieldEffect_BirdLeaveBall(struct Task *);
+void FlyOutFieldEffect_WaitBirdLeave(struct Task *);
+void FlyOutFieldEffect_BirdSwoopDown(struct Task *);
+void FlyOutFieldEffect_JumpOnBird(struct Task *);
+void FlyOutFieldEffect_FlyOffWithBird(struct Task *);
+void FlyOutFieldEffect_WaitFlyOff(struct Task *);
+void FlyOutFieldEffect_End(struct Task *);
 
 void sub_80892A0(struct Task *);
 void sub_8089354(struct Task *);
