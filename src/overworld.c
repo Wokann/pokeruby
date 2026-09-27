@@ -1381,7 +1381,7 @@ static void c2_80567AC(void)
     {
         SetFieldVBlankCallback();
         SetMainCallback1(sub_8055354);
-        sub_80543DC(sub_8055390);
+        sub_80543DC(KeyInterCB_SelfIdle);
         SetMainCallback2(CB2_Overworld);
     }
 }
@@ -1420,7 +1420,7 @@ void sub_805465C(void)
     StopMapMusic();
     sub_8054F70();
     SetMainCallback1(sub_8055354);
-    sub_80543DC(sub_8055390);
+    sub_80543DC(KeyInterCB_SelfIdle);
     gFieldCallback = FieldCB_ReturnToFieldCableLink;
     ScriptContext_Init();
     UnlockPlayerFieldControls();
@@ -1953,7 +1953,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             gUnknown_03000580[a1] = 0x81;
             if (a3->b)
             {
-                sub_80543DC(sub_80553E4);
+                sub_80543DC(KeyInterCB_DeferToEventScript);
                 RunInteractLocalPlayerScript(script);
             }
             return;
@@ -1963,7 +1963,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
             gUnknown_03000580[a1] = 0x81;
             if (a3->b)
             {
-                sub_80543DC(sub_80553E4);
+                sub_80543DC(KeyInterCB_DeferToEventScript);
                 RunTerminateLinkScript();
             }
             return;
@@ -1976,7 +1976,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 gUnknown_03000580[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(sub_80553E4);
+                    sub_80543DC(KeyInterCB_DeferToEventScript);
                     InitLinkRoomStartMenuScript();
                 }
             }
@@ -1987,7 +1987,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 gUnknown_03000580[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(sub_80553E4);
+                    sub_80543DC(KeyInterCB_DeferToEventScript);
                     RunConfirmLeaveCableClubScript();
                 }
             }
@@ -1999,7 +1999,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 gUnknown_03000580[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(sub_80553E4);
+                    sub_80543DC(KeyInterCB_DeferToEventScript);
                     InitMenuBasedScript(script);
                 }
             }
@@ -2010,7 +2010,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 gUnknown_03000580[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(sub_8055408);
+                    sub_80543DC(KeyInterCB_DeferToRecvQueue);
                     InitLinkPlayerQueueScript();
                 }
             }
@@ -2021,7 +2021,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
                 gUnknown_03000580[a1] = 0x81;
                 if (a3->b)
                 {
-                    sub_80543DC(sub_8055438);
+                    sub_80543DC(KeyInterCB_DeferToSendQueue);
                     InitLinkPlayerQueueScript();
                 }
             }
@@ -2040,7 +2040,7 @@ void sub_8054FF8(u32 a1, u16 a2, struct UnkStruct_8054FF8 *a3, u16 *a4)
     case 26:
         gUnknown_03000580[a1] = 0x80;
         if (a3->b)
-            sub_80543DC(sub_8055390);
+            sub_80543DC(KeyInterCB_SelfIdle);
         break;
     case 29:
         if (gUnknown_03000580[a1] == 0x82)
@@ -2073,7 +2073,7 @@ void sub_8055280(u16 a1)
         gHeldKeyCodeToSend = 17;
 }
 
-u16 sub_80552B0(u32 a1)
+u16 KeyInterCB_ReadButtons(u32 a1)
 {
     if (JOY_HELD(DPAD_UP))
     {
@@ -2137,23 +2137,23 @@ void sub_8055354(void)
     sub_8055340(word_3002910);
 }
 
-u16 sub_8055390(u32 a1)
+u16 KeyInterCB_SelfIdle(u32 a1)
 {
     if (ArePlayerFieldControlsLocked() == 1)
         return 17;
     if (gLink.recvQueue.count > 4)
         return 27;
     if (gLink.sendQueue.count <= 4)
-        return sub_80552B0(a1);
+        return KeyInterCB_ReadButtons(a1);
     return 28;
 }
 
-u16 sub_80553E0(u32 a1)
+u16 KeyInterCB_Idle(u32 a1)
 {
     return 17;
 }
 
-u16 sub_80553E4(u32 a1)
+u16 KeyInterCB_DeferToEventScript(u32 a1)
 {
     u16 retVal;
     if (ArePlayerFieldControlsLocked() == 1)
@@ -2163,12 +2163,12 @@ u16 sub_80553E4(u32 a1)
     else
     {
         retVal = 26;
-        sub_80543DC(sub_80553E0);
+        sub_80543DC(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055408(u32 a1)
+u16 KeyInterCB_DeferToRecvQueue(u32 a1)
 {
     u16 retVal;
     if (gLink.recvQueue.count > 2)
@@ -2179,12 +2179,12 @@ u16 sub_8055408(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(sub_80553E0);
+        sub_80543DC(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055438(u32 a1)
+u16 KeyInterCB_DeferToSendQueue(u32 a1)
 {
     u16 retVal;
     if (gLink.sendQueue.count > 2)
@@ -2195,21 +2195,21 @@ u16 sub_8055438(u32 a1)
     {
         retVal = 26;
         UnlockPlayerFieldControls();
-        sub_80543DC(sub_80553E0);
+        sub_80543DC(KeyInterCB_Idle);
     }
     return retVal;
 }
 
-u16 sub_8055468(u32 a1)
+u16 KeyInterCB_ExitingSeat(u32 a1)
 {
     return 17;
 }
 
-u16 sub_805546C(u32 linkPlayerId)
+u16 KeyInterCB_Ready(u32 linkPlayerId)
 {
     if (gUnknown_03000580[linkPlayerId] == 0x82 && JOY_NEW(B_BUTTON))
     {
-        sub_80543DC(sub_8055468);
+        sub_80543DC(KeyInterCB_ExitingSeat);
         return 29;
     }
     else
@@ -2218,30 +2218,30 @@ u16 sub_805546C(u32 linkPlayerId)
     }
 }
 
-u16 sub_80554A4(u32 a1)
+u16 KeyInterCB_SetReady(u32 a1)
 {
-    sub_80543DC(sub_805546C);
+    sub_80543DC(KeyInterCB_Ready);
     return 22;
 }
 
-u16 sub_80554B8(u32 a1)
+u16 KeyInterCB_SendNothing(u32 a1)
 {
     return 17;
 }
 
-u16 sub_80554BC(u32 a1)
+u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
 {
     if (sub_8054F88(0x83) == TRUE)
     {
         ScriptContext_SetupScript(EventScript_DoLinkRoomExit);
-        sub_80543DC(sub_80554B8);
+        sub_80543DC(KeyInterCB_SendNothing);
     }
     return 17;
 }
 
-u16 sub_80554E4(u32 a1)
+u16 KeyInterCB_SendExitRoomKey(u32 a1)
 {
-    sub_80543DC(sub_80554BC);
+    sub_80543DC(KeyInterCB_WaitForPlayersToExit);
     return 23;
 }
 
@@ -2249,9 +2249,9 @@ s32 sub_80554F8(void)
 {
     if (sub_8054FC0(0x83) == TRUE)
         return 2;
-    if (gUnknown_03000584 == sub_805546C && gUnknown_03000580[gLocalLinkPlayerId] != 0x82)
+    if (gUnknown_03000584 == KeyInterCB_Ready && gUnknown_03000580[gLocalLinkPlayerId] != 0x82)
         return 0;
-    if (gUnknown_03000584 == sub_8055468 && gUnknown_03000580[gLocalLinkPlayerId] == 0x81)
+    if (gUnknown_03000584 == KeyInterCB_ExitingSeat && gUnknown_03000580[gLocalLinkPlayerId] == 0x81)
         return 2;
     return sub_8054F88(0x82);
 }
@@ -2263,19 +2263,19 @@ bool32 unref_sub_8055568(void)
 
 u16 sub_8055574(void)
 {
-    sub_80543DC(sub_80554A4);
+    sub_80543DC(KeyInterCB_SetReady);
     return 0;
 }
 
 u16 sub_8055588(void)
 {
-    sub_80543DC(sub_80553E4);
+    sub_80543DC(KeyInterCB_DeferToEventScript);
     return 0;
 }
 
 u16 sub_805559C(void)
 {
-    sub_80543DC(sub_80554E4);
+    sub_80543DC(KeyInterCB_SendExitRoomKey);
     return 0;
 }
 
@@ -2448,10 +2448,10 @@ bool32 Overworld_RecvKeysFromLinkIsRunning(void)
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == sub_8055408)
+    if (gUnknown_03000584 == KeyInterCB_DeferToRecvQueue)
         return TRUE;
 
-    if (gUnknown_03000584 != sub_80553E4)
+    if (gUnknown_03000584 != KeyInterCB_DeferToEventScript)
         return FALSE;
 
     temp = gUnknown_03000588;
@@ -2474,7 +2474,7 @@ bool32 Overworld_SendKeysToLinkIsRunning(void)
     if (IsSendingKeysToLink() != TRUE)
         return FALSE;
 
-    if (gUnknown_03000584 == sub_8055438)
+    if (gUnknown_03000584 == KeyInterCB_DeferToSendQueue)
         return TRUE;
 
     return FALSE;
