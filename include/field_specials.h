@@ -11,9 +11,9 @@ struct ElevatorMenu {
 extern u8 gUnknown_02039250;
 extern u8 gUnknown_02039251;
 extern u32 gUnknown_02039254;
-extern u8 gUnknown_0203925A;
-extern u8 gUnknown_0203925B;
-extern u8 gUnknown_0203925C;
+extern u8 gScrollableMenuItemCount;
+extern u8 gScrollableMenuSelection;
+extern u8 gScrollableMenuArrowFlags;
 
 extern const u8 gFanClubMemberIdsForGainingFans[];
 extern const u8 gFanClubMemberIdsForLosingFans[];
