@@ -3109,11 +3109,11 @@ void ShowTrainerEyesTrainerInfo(void)
     case 0:
         sub_80F3294(0x1);
         DrawPokenavBottomToolbar(0xA);
-        sub_80F0B24();
+        InitTrainerEyesListErase();
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (!sub_80F0B44())
+        if (!EraseTrainerEyesListStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 2:
@@ -3185,11 +3185,11 @@ void ShowTrainerEyesTrainerInfo(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
-        sub_80F0C28();
+        InitTrainerEyesListRestore();
         gPokenavStructPtr->callbackStep++;
         break;
     case 14:
-        if (!sub_80F0C48())
+        if (!RestoreTrainerEyesListStep())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 15:

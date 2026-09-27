@@ -1277,16 +1277,16 @@ void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
         sub_8095C8C((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E03A0, 0, 0, 1, 2, 1);
 }
 
-void sub_80F0B24(void)
+void InitTrainerEyesListErase(void)
 {
-    gPokenavStructPtr->unkD15C = 0;
+    gPokenavStructPtr->trainerEyesRowStep = 0;
     gPokenavStructPtr->unk306 = 0;
 }
 
-bool8 sub_80F0B44(void)
+bool8 EraseTrainerEyesListStep(void)
 {
-    int top;
-    if (gPokenavStructPtr->unkD15C > 8)
+    int tilemapRow;
+    if (gPokenavStructPtr->trainerEyesRowStep > 8)
     {
         return FALSE;
     }
@@ -1294,33 +1294,33 @@ bool8 sub_80F0B44(void)
     if (++gPokenavStructPtr->unk306 > 1)
     {
         gPokenavStructPtr->unk306 = 0;
-        if (gPokenavStructPtr->unkD15C < 8)
+        if (gPokenavStructPtr->trainerEyesRowStep < 8)
         {
-            top = (gPokenavStructPtr->listTilemapRow + (gPokenavStructPtr->unkD15C * 2)) & 0x1F;
-            if (gPokenavStructPtr->unkD15C != gPokenavStructPtr->unk876C)
+            tilemapRow = (gPokenavStructPtr->listTilemapRow + (gPokenavStructPtr->trainerEyesRowStep * 2)) & 0x1F;
+            if (gPokenavStructPtr->trainerEyesRowStep != gPokenavStructPtr->unk876C)
             {
                 BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-                Menu_EraseWindowRect(12, top, 31, top + 1);
+                Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
             }
 
-            if (!gPokenavStructPtr->unkD15C)
+            if (!gPokenavStructPtr->trainerEyesRowStep)
                 ClearTrainerEyesListStats();
 
-            gPokenavStructPtr->unkD15C++;
+            gPokenavStructPtr->trainerEyesRowStep++;
             return TRUE;
         }
         else
         {
-            u16 i;
+            u16 row;
             BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-            top = (gPokenavStructPtr->listTilemapRow + 16) & 0x1F;
-            for (i = 0; i < 8; i++)
+            tilemapRow = (gPokenavStructPtr->listTilemapRow + 16) & 0x1F;
+            for (row = 0; row < 8; row++)
             {
-                Menu_EraseWindowRect(12, top, 31, top + 1);
-                top = (top + 2) & 0x1F;
+                Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
+                tilemapRow = (tilemapRow + 2) & 0x1F;
             }
 
-            gPokenavStructPtr->unkD15C++;
+            gPokenavStructPtr->trainerEyesRowStep++;
             return FALSE;
         }
     }
@@ -1330,25 +1330,25 @@ bool8 sub_80F0B44(void)
     }
 }
 
-void sub_80F0C28(void)
+void InitTrainerEyesListRestore(void)
 {
-    gPokenavStructPtr->unkD15C = 0;
+    gPokenavStructPtr->trainerEyesRowStep = 0;
     gPokenavStructPtr->unk306 = 0;
 }
 
-bool8 sub_80F0C48(void)
+bool8 RestoreTrainerEyesListStep(void)
 {
-    if (gPokenavStructPtr->unkD15C > 7)
+    if (gPokenavStructPtr->trainerEyesRowStep > 7)
         return FALSE;
 
     if (++gPokenavStructPtr->unk306 > 1)
     {
         gPokenavStructPtr->unk306 = 0;
         BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-        PrintTrainerEyesListRow(gPokenavStructPtr->unk8770 + gPokenavStructPtr->unkD15C,
-                                gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->unkD15C * 2);
+        PrintTrainerEyesListRow(gPokenavStructPtr->unk8770 + gPokenavStructPtr->trainerEyesRowStep,
+                                gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->trainerEyesRowStep * 2);
 
-        if ((++gPokenavStructPtr->unkD15C) > 7)
+        if ((++gPokenavStructPtr->trainerEyesRowStep) > 7)
         {
             PrintTrainerEyesListStats(0);
             return FALSE;
@@ -1365,7 +1365,7 @@ void LoadTrainerEyesDescriptionLines(void)
     const u8 *curChar;
 
     gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->unkD15C = 0;
+    gPokenavStructPtr->trainerEyesRowStep = 0;
     trainerEyesId = gPokenavStructPtr->trainersEye[gPokenavStructPtr->unk876E].rematchTableIdx;
     gPokenavStructPtr->trainerEyeDescriptionLines[0] = gTrainerEyeDescriptions[trainerEyesId];
 
@@ -1383,17 +1383,17 @@ bool8 sub_80F0D5C(void)
 {
     u32 r5;
 
-    if (gPokenavStructPtr->unkD15C == 7)
+    if (gPokenavStructPtr->trainerEyesRowStep == 7)
         return FALSE;
     if (++gPokenavStructPtr->unk306 < 2)
         return TRUE;
     gPokenavStructPtr->unk306 = 0;
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
-    r5 = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->unkD15C * 2) & 0x1F;
+    r5 = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
 #ifndef NONMATCHING
     asm("":::"r2"); // fakematch
 #endif //NONMATCHING
-    switch (gPokenavStructPtr->unkD15C)
+    switch (gPokenavStructPtr->trainerEyesRowStep)
     {
     default:
         return FALSE;
@@ -1423,30 +1423,30 @@ bool8 sub_80F0D5C(void)
         Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, r5 * 8, 0);
         return FALSE;
     }
-    gPokenavStructPtr->unkD15C++;
+    gPokenavStructPtr->trainerEyesRowStep++;
     return TRUE;
 }
 
 void sub_80F0EC0(void)
 {
     gPokenavStructPtr->unk306 = 0;
-    gPokenavStructPtr->unkD15C = 0;
+    gPokenavStructPtr->trainerEyesRowStep = 0;
     StringFill(gPokenavStructPtr->unk8788, CHAR_SPACE, 16);
 }
 
 bool8 sub_80F0EF4(void)
 {
     int top;
-    if (gPokenavStructPtr->unkD15C > 6)
+    if (gPokenavStructPtr->trainerEyesRowStep > 6)
         return FALSE;
 
     if (++gPokenavStructPtr->unk306 > 1)
     {
         gPokenavStructPtr->unk306 = 0;
-        top = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->unkD15C * 2) & 0x1F;
+        top = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
         BasicInitMenuWindow(&gWindowTemplate_81E70D4);
         Menu_EraseWindowRect(12, top, 31, top + 1);
-        gPokenavStructPtr->unkD15C++;
+        gPokenavStructPtr->trainerEyesRowStep++;
     }
 
     return TRUE;
