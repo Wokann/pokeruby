@@ -1467,7 +1467,7 @@ void ObjectEventInteractionPickBerryTree(void)
 void ObjectEventInteractionRemoveBerryTree(void)
 {
     RemoveBerryTree(ObjectEventGetBerryTreeId(gSelectedObjectEvent));
-    sub_8060288(gSpecialVar_LastTalked, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
+    SetBerryTreeJustPicked(gSpecialVar_LastTalked, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
 }
 
 bool8 PlayerHasBerries(void)

@@ -521,7 +521,7 @@ const u8 *const gBerryTreePaletteSlotTablePointers[] = {
     gBerryTreePaletteSlotTable_Durin
 };
 
-const u8 *const gBerryTreeGraphicsIdTablePointers[] = {
+const u8 *const gBerryTreeObjectEventGraphicsIdTablePointers[] = {
     gBerryTreeGraphicsIdTable,
     gBerryTreeGraphicsIdTable,
     gBerryTreeGraphicsIdTable,
