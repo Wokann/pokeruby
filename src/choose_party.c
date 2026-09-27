@@ -43,12 +43,12 @@ static void Task_CloseChoosePartyMenu(u8);
 static void Task_ValidateBattleTowerParty(u8);
 static void Task_WaitBattleTowerPartyFullMessage(u8);
 static void BattleTowerEntryMenuCallback_Exit(u8);
-static void sub_81228E8(u8);
-static void sub_8122950(u8);
-static void sub_81229B8(void);
-static void sub_8122AB8(u8);
-static void sub_8122B10(u8);
-static void sub_8122C18(u8);
+static void CreateLinkMultiBattlePartyMonIcons(u8);
+static void CreateLinkMultiBattleHeldItemIcons(u8);
+static void PrintLinkMultiBattlePlayerPartyInfo(void);
+static void Task_WaitLinkMultiPartnerIcons(u8);
+static void Task_PrintLinkMultiPartnerPartyInfo(u8);
+static void Task_DelayLinkMultiPartyMenuExit(u8);
 static void Task_DaycareStorageMenu8122EAC(u8);
 void sub_8123138(u8);
 static void sub_8123170(u8);
@@ -562,7 +562,7 @@ bool8 SetupLinkMultiBattlePartyMenu(void)
     switch (ePartyMenu2.pmSetupState)
     {
     case 0:
-        sub_81228E8(ePartyMenu2.menuHandlerTaskId);
+        CreateLinkMultiBattlePartyMonIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 1:
@@ -570,11 +570,11 @@ bool8 SetupLinkMultiBattlePartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        sub_8122950(ePartyMenu2.menuHandlerTaskId);
+        CreateLinkMultiBattleHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        sub_81229B8();
+        PrintLinkMultiBattlePlayerPartyInfo();
         ePartyMenu2.pmSetupState++;
         break;
     case 4:
@@ -584,7 +584,7 @@ bool8 SetupLinkMultiBattlePartyMenu(void)
     return FALSE;
 }
 
-static void sub_81228E8(u8 a)
+static void CreateLinkMultiBattlePartyMonIcons(u8 a)
 {
     u8 i;
 
@@ -600,7 +600,7 @@ static void sub_81228E8(u8 a)
     }
 }
 
-static void sub_8122950(u8 a)
+static void CreateLinkMultiBattleHeldItemIcons(u8 a)
 {
     u8 i;
 
@@ -617,7 +617,7 @@ static void sub_8122950(u8 a)
     }
 }
 
-static void sub_81229B8(void)
+static void PrintLinkMultiBattlePlayerPartyInfo(void)
 {
     u8 i;
 
@@ -648,23 +648,23 @@ void HandleLinkMultiBattlePartyMenu(u8 taskId)
         sub_806D4AC(taskId, gMultiPartnerParty[0].species, 0);
         sub_806D4AC(taskId, gMultiPartnerParty[1].species, 1);
         sub_806D4AC(taskId, gMultiPartnerParty[2].species, 2);
-        gTasks[taskId].func = sub_8122AB8;
+        gTasks[taskId].func = Task_WaitLinkMultiPartnerIcons;
         ePartyMenu2.unk261 = 1;
     }
 }
 
-static void sub_8122AB8(u8 taskId)
+static void Task_WaitLinkMultiPartnerIcons(u8 taskId)
 {
     sub_806D3B4(taskId, gMultiPartnerParty[1].species, gMultiPartnerParty[2].species);
     if (gTasks[taskId].data[0] == 0)
     {
-        gTasks[taskId].func = sub_8122B10;
+        gTasks[taskId].func = Task_PrintLinkMultiPartnerPartyInfo;
         ePartyMenu2.unk261 = 2;
         PlaySE(SE_M_HARDEN);
     }
 }
 
-static void sub_8122B10(u8 taskId)
+static void Task_PrintLinkMultiPartnerPartyInfo(u8 taskId)
 {
     u8 i;
 
@@ -692,11 +692,11 @@ static void sub_8122B10(u8 taskId)
             PartyMenuDoDrawHPBar(i + 3, 3, gMultiPartnerParty[i].hp, gMultiPartnerParty[i].maxhp);
         }
     }
-    gTasks[taskId].func = sub_8122C18;
+    gTasks[taskId].func = Task_DelayLinkMultiPartyMenuExit;
     gTasks[taskId].data[0] = 0;
 }
 
-static void sub_8122C18(u8 taskId)
+static void Task_DelayLinkMultiPartyMenuExit(u8 taskId)
 {
     gTasks[taskId].data[0]++;
     if (gTasks[taskId].data[0] == 256)
@@ -707,7 +707,7 @@ static void sub_8122C18(u8 taskId)
 }
 
 // Exactly the same as SetupBattleTowerPartyMenu except for case 6
-bool8 unref_sub_8122C60(void)
+bool8 Unused_SetupBattleTowerPartyMenu(void)
 {
     switch (ePartyMenu2.pmSetupState)
     {
