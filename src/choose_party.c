@@ -36,12 +36,12 @@ extern u8 GetMonStatusAndPokerus();
 extern void PartyMenuPrintHP();
 extern bool8 MenuHelpers_IsLinkActive(void);
 
-static void ClearPartySelection(void);
+static void ClearSelectedPartyOrder(void);
 static bool8 IsMonAllowedInBattleTower(struct Pokemon *);
-static void sub_812238C(u8);
-static void sub_8122450(u8);
-static void sub_81224A8(u8);
-static void sub_8122728(u8);
+static void Task_HandleBattleTowerEntryPopup(u8);
+static void Task_CloseChoosePartyMenu(u8);
+static void Task_ValidateBattleTowerParty(u8);
+static void Task_WaitBattleTowerPartyFullMessage(u8);
 static void BattleTowerEntryMenuCallback_Exit(u8);
 static void sub_81228E8(u8);
 static void sub_8122950(u8);
@@ -56,19 +56,19 @@ static void sub_81231AC(void);
 
 void InitChooseHalfPartyForBattle(void)
 {
-    ClearPartySelection();
+    ClearSelectedPartyOrder();
     ePartyMenu2.unk263 = 0;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
 void InitChooseBattleTowerParty(void)
 {
-    ClearPartySelection();
+    ClearSelectedPartyOrder();
     ePartyMenu2.unk263 = 1;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
-static void ClearPartySelection(void)
+static void ClearSelectedPartyOrder(void)
 {
     u8 i;
 
@@ -192,7 +192,7 @@ static bool8 IsMonAllowedInBattleTower(struct Pokemon *pkmn)
     return TRUE;
 }
 
-static u8 sub_81220C8(void)
+static u8 CheckBattleTowerEntriesAndGetMessage(void)
 {
     u8 i;
 
@@ -235,19 +235,19 @@ static const struct MenuAction2 sBattleTowerEntryMenuItems[] =
     {gOtherText_Exit, BattleTowerEntryMenuCallback_Exit},
 };
 
-static const u8 gUnknown_084017D0[] = {1, 0, 3};
-static const u8 gUnknown_084017D3[] = {2, 0, 3};
-static const u8 gUnknown_084017D6[] = {0, 3};
+static const u8 sBattleTowerEntryActions_Eligible[] = {1, 0, 3};
+static const u8 sBattleTowerEntryActions_Selected[] = {2, 0, 3};
+static const u8 sBattleTowerEntryActions_Ineligible[] = {0, 3};
 
 static const struct PartyPopupMenu sBattleTowerEntryMenu[] =
 {
-    {ARRAY_COUNT(gUnknown_084017D0), 9, gUnknown_084017D0},
-    {ARRAY_COUNT(gUnknown_084017D3), 9, gUnknown_084017D3},
-    {ARRAY_COUNT(gUnknown_084017D6), 9, gUnknown_084017D6},
+    {ARRAY_COUNT(sBattleTowerEntryActions_Eligible), 9, sBattleTowerEntryActions_Eligible},
+    {ARRAY_COUNT(sBattleTowerEntryActions_Selected), 9, sBattleTowerEntryActions_Selected},
+    {ARRAY_COUNT(sBattleTowerEntryActions_Ineligible), 9, sBattleTowerEntryActions_Ineligible},
 };
 
 
-static bool8 IsPartyMemberAlreadySelected(u8 partyMember)
+static bool8 HasPartySlotAlreadyBeenSelected(u8 partyMember)
 {
     u8 i;
 
@@ -259,12 +259,12 @@ static bool8 IsPartyMemberAlreadySelected(u8 partyMember)
     return FALSE;
 }
 
-static void sub_81221F8(u8 taskId)
+static void ShowBattleTowerEntryPopup(u8 taskId)
 {
     PrintPartyMenuPromptText(5, 1);
     if (IsMonAllowedInBattleTower(&gPlayerParty[gLastFieldPokeMenuOpened]) == TRUE)
     {
-        if (IsPartyMemberAlreadySelected(gLastFieldPokeMenuOpened + 1) == TRUE)
+        if (HasPartySlotAlreadyBeenSelected(gLastFieldPokeMenuOpened + 1) == TRUE)
         {
             gTasks[taskId].data[4] = 1;
             ShowPartyPopupMenu(1, sBattleTowerEntryMenu, sBattleTowerEntryMenuItems, 0);
@@ -294,27 +294,27 @@ void HandleBattleTowerPartyMenu(u8 taskId)
             if (gLastFieldPokeMenuOpened != 6)
             {
                 GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
-                sub_81221F8(taskId);
-                gTasks[taskId].func = sub_812238C;
+                ShowBattleTowerEntryPopup(taskId);
+                gTasks[taskId].func = Task_HandleBattleTowerEntryPopup;
             }
             else
             {
-                gTasks[taskId].func = sub_81224A8;
+                gTasks[taskId].func = Task_ValidateBattleTowerParty;
             }
             sub_808B5B4(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
-            ClearPartySelection();
+            ClearSelectedPartyOrder();
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-            gTasks[taskId].func = sub_8122450;
+            gTasks[taskId].func = Task_CloseChoosePartyMenu;
             break;
         }
     }
 }
 
 // Handle input
-static void sub_812238C(u8 taskId)
+static void Task_HandleBattleTowerEntryPopup(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -358,7 +358,7 @@ static void sub_812238C(u8 taskId)
 }
 
 // Return from menu?
-static void sub_8122450(u8 taskId)
+static void Task_CloseChoosePartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -368,39 +368,39 @@ static void sub_8122450(u8 taskId)
 }
 
 // Wait for A or B press
-static void sub_8122480(u8 taskId)
+static void Task_WaitBattleTowerPromptInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         BattleTowerEntryMenuCallback_Exit(taskId);
 }
 
-static void sub_81224A8(u8 taskId)
+static void Task_ValidateBattleTowerParty(u8 taskId)
 {
-    u8 val = sub_81220C8();
+    u8 val = CheckBattleTowerEntriesAndGetMessage();
 
     if (val != 0xFF)
     {
         PrintPartyMenuPromptText(val, 0);
-        gTasks[taskId].func = sub_8122480;
+        gTasks[taskId].func = Task_WaitBattleTowerPromptInput;
     }
     else
     {
         if (gSelectedOrderFromParty[0] != 0)
         {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-            gTasks[taskId].func = sub_8122450;
+            gTasks[taskId].func = Task_CloseChoosePartyMenu;
         }
         else
         {
             PlaySE(SE_FAILURE);
             PrintPartyMenuPromptText(14, 0);
-            gTasks[taskId].func = sub_8122480;
+            gTasks[taskId].func = Task_WaitBattleTowerPromptInput;
         }
     }
 }
 
 // CB2 for menu?
-static void sub_8122530(void)
+static void CB2_ReturnToBattleTowerPartyMenu(void)
 {
     while (1)
     {
@@ -410,7 +410,7 @@ static void sub_8122530(void)
             ChangeBattleTowerPartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
             gLastFieldPokeMenuOpened = gUnknown_020384F0;
-            sub_81221F8(ePartyMenu2.menuHandlerTaskId);
+            ShowBattleTowerEntryPopup(ePartyMenu2.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
@@ -419,15 +419,15 @@ static void sub_8122530(void)
     }
 }
 
-static void sub_81225A4(void)
+static void CB2_InitBattleTowerSummaryReturn(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_BATTLE_TOWER, 0xFF, sub_812238C, 5);
-    SetMainCallback2(sub_8122530);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_BATTLE_TOWER, 0xFF, Task_HandleBattleTowerEntryPopup, 5);
+    SetMainCallback2(CB2_ReturnToBattleTowerPartyMenu);
 }
 
 // Wait for fade, then show summary screen
-static void sub_81225D4(u8 taskId)
+static void Task_OpenBattleTowerSummary(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -435,7 +435,7 @@ static void sub_81225D4(u8 taskId)
 
         DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, sub_81225A4, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, CB2_InitBattleTowerSummaryReturn, PSS_MODE_NORMAL);
     }
 }
 
@@ -443,7 +443,7 @@ static void sub_81225D4(u8 taskId)
 static void BattleTowerEntryMenuCallback_Summary(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskId].func = sub_81225D4;
+    gTasks[taskId].func = Task_OpenBattleTowerSummary;
 }
 
 static void BattleTowerEntryMenuCallback_Enter(u8 taskId)
@@ -467,10 +467,10 @@ static void BattleTowerEntryMenuCallback_Enter(u8 taskId)
     Menu_DestroyCursor();
     PartyMenuEraseMsgBoxAndFrame();
     DisplayPartyMenuMessage(gOtherText_NoMoreThreePoke, 1);
-    gTasks[taskId].func = sub_8122728;
+    gTasks[taskId].func = Task_WaitBattleTowerPartyFullMessage;
 }
 
-static void sub_8122728(u8 taskId)
+static void Task_WaitBattleTowerPartyFullMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 1)
         return;
@@ -515,7 +515,7 @@ static void BattleTowerEntryMenuCallback_NoEntry(u8 taskId)
     BattleTowerEntryMenuCallback_Exit(taskId);
 }
 
-static void sub_81227FC(u8 taskId)
+static void Task_CloseBattleTowerEntryPopup(u8 taskId)
 {
     Menu_EraseWindowRect(20, 10, 29, 19);
     Menu_DestroyCursor();
@@ -526,7 +526,7 @@ static void sub_81227FC(u8 taskId)
 static void BattleTowerEntryMenuCallback_Exit(u8 taskId)
 {
     PlaySE(SE_SELECT);
-    sub_81227FC(taskId);
+    Task_CloseBattleTowerEntryPopup(taskId);
 }
 
 #if DEBUG
@@ -702,7 +702,7 @@ static void sub_8122C18(u8 taskId)
     if (gTasks[taskId].data[0] == 256)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskId].func = sub_8122450;
+        gTasks[taskId].func = Task_CloseChoosePartyMenu;
     }
 }
 
