@@ -29,10 +29,10 @@ static void Task_DoFieldMove_Init(u8);
 static void Task_DoFieldMove_ShowMonAfterPose(u8);
 static void Task_DoFieldMove_WaitForMon(u8);
 static void Task_DoFieldMove_RunFunc(u8);
-static void sub_810B53C(void);
-static void sub_810B58C(void);
-static void sub_810B5D8(void);
-static void sub_810B634(void);
+static void FieldCallback_RockSmash(void);
+static void FieldMove_RockSmash(void);
+static void FieldCallback_Dig(void);
+static void StartDigFieldEffect(void);
 
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId)
 {
@@ -121,12 +121,12 @@ static void Task_DoFieldMove_RunFunc(u8 taskId)
 }
 
 #if DEBUG
-void debug_sub_8120968(void)
+void Debug_UseRockSmashInFrontOfPlayer(void)
 {
     if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_BREAKABLE_ROCK) == TRUE)
     {
         gLastFieldPokeMenuOpened = 0;
-        sub_810B53C();
+        FieldCallback_RockSmash();
     }
     else
     {
@@ -140,7 +140,7 @@ bool8 SetUpFieldMove_RockSmash(void)
     if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_BREAKABLE_ROCK) == TRUE)
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_810B53C;
+        gPostMenuFieldCallback = FieldCallback_RockSmash;
         return TRUE;
     }
     else
@@ -149,23 +149,23 @@ bool8 SetUpFieldMove_RockSmash(void)
     }
 }
 
-static void sub_810B53C(void)
+static void FieldCallback_RockSmash(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     ScriptContext_SetupScript(EventScript_UseRockSmash);
 }
 
-int FldEff_RockSmash(void)
+int FldEff_UseRockSmash(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    gTasks[taskId].data[8] = (u32)sub_810B58C >> 16;
-    gTasks[taskId].data[9] = (u32)sub_810B58C;
+    gTasks[taskId].data[8] = (u32)FieldMove_RockSmash >> 16;
+    gTasks[taskId].data[9] = (u32)FieldMove_RockSmash;
     IncrementGameStat(GAME_STAT_USED_ROCK_SMASH);
     return 0;
 }
 
-static void sub_810B58C(void)
+static void FieldMove_RockSmash(void)
 {
     PlaySE(SE_M_ROCK_THROW);
     FieldEffectActiveListRemove(FLDEFF_USE_ROCK_SMASH);
@@ -177,7 +177,7 @@ int SetUpFieldMove_Dig(void)
     if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_810B5D8;
+        gPostMenuFieldCallback = FieldCallback_Dig;
         return TRUE;
     }
     else
@@ -186,7 +186,7 @@ int SetUpFieldMove_Dig(void)
     }
 }
 
-static void sub_810B5D8(void)
+static void FieldCallback_Dig(void)
 {
     Overworld_ResetStateAfterDigEscRope();
     FieldEffectStart(FLDEFF_USE_DIG);
@@ -197,14 +197,14 @@ int FldEff_UseDig(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
-    gTasks[taskId].data[8] = (u32)sub_810B634 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_810B634;
+    gTasks[taskId].data[8] = (u32)StartDigFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartDigFieldEffect;
     if (!ShouldDoBrailleDigEffect())
         SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
     return 0;
 }
 
-static void sub_810B634(void)
+static void StartDigFieldEffect(void)
 {
     u8 taskId;
 

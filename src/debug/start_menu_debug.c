@@ -1395,7 +1395,7 @@ bool8 DebugMenu_8077BC0(void)
 
 bool8 DebugMenu_8077BCC(void)
 {
-    debug_sub_8120968();
+    Debug_UseRockSmashInFrontOfPlayer();
     return TRUE;
 }
 

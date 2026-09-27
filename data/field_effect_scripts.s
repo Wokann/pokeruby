@@ -221,7 +221,7 @@ gFieldEffectScript_SandDisguisePlaceholder: @ 81D9D5D
 	end
 
 gFieldEffectScript_UseRockSmash: @ 81D9D63
-	callnative FldEff_RockSmash
+	callnative FldEff_UseRockSmash
 	end
 
 gFieldEffectScript_UseStrength: @ 81D9D69

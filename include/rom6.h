@@ -5,6 +5,6 @@ extern struct MapPosition gPlayerFacingPosition;
 
 bool8 CheckObjectGraphicsInFrontOfPlayer(u8 graphicsId);
 u8 CreateFieldMoveTask(void);
-void debug_sub_8120968(void);
+void Debug_UseRockSmashInFrontOfPlayer(void);
 
 #endif
