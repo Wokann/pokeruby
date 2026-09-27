@@ -1604,7 +1604,7 @@ static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 d, u8 front
         LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], species, 0, 0);
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + d * 0x10, 0x20);
-    sub_8143648(d, d);
+    PrepareHallOfFameMonPicSpriteTemplate(d, d);
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, (d + 1) * 4);
     gSprites[spriteId].oam.paletteNum = d;
     gSprites[spriteId].oam.priority = 1;
@@ -1617,7 +1617,7 @@ static u8 CreateIntroTrainerSprite(u16 a, u16 b, u16 c, u16 d)
 
     DecompressPicFromTable_2(&gTrainerBackPicTable[a], gTrainerBackPicCoords[a].coords, gTrainerBackPicCoords[a].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], a);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + d * 0x10, 0x20);
-    sub_8143680(d, d);
+    PrepareHallOfFameTrainerPicSpriteTemplate(d, d);
     gCreatingSpriteTemplate.anims = gUnknown_0840B064;
     spriteId = CreateSprite(&gCreatingSpriteTemplate, b, c, 1);
     gSprites[spriteId].oam.paletteNum = d;

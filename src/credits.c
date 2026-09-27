@@ -1574,7 +1574,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
     LoadCompressedPalette(lzPaletteData, 0x100 + (position * 16), 0x20);
-    sub_8143648(position, position);
+    PrepareHallOfFameMonPicSpriteTemplate(position, position);
 
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
     gSprites[spriteId].oam.paletteNum = position;
