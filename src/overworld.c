@@ -2438,7 +2438,7 @@ bool32 sub_8055870(void)
     return gUnknown_03000588;
 }
 
-bool32 sub_80558AC(void)
+bool32 Overworld_RecvKeysFromLinkIsRunning(void)
 {
     u8 temp;
 
@@ -2466,7 +2466,7 @@ bool32 sub_80558AC(void)
     return FALSE;
 }
 
-bool32 sub_8055910(void)
+bool32 Overworld_SendKeysToLinkIsRunning(void)
 {
     if (is_c1_link_related_active() != TRUE)
         return FALSE;
@@ -2480,7 +2480,7 @@ bool32 sub_8055910(void)
     return FALSE;
 }
 
-bool32 sub_8055940(void)
+bool32 IsSendingKeysOverCable(void)
 {
     if (!IsSendingKeysToLink())
         return FALSE;

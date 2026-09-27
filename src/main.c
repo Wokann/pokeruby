@@ -138,7 +138,7 @@ void AgbMain()
          && (gMain.heldKeysRaw & B_START_SELECT) == B_START_SELECT)
             DoSoftReset();
 
-        if (gLink.sendQueue.count > 1 && sub_8055910() == 1)
+        if (gLink.sendQueue.count > 1 && Overworld_SendKeysToLinkIsRunning() == 1)
         {
             gLinkTransferringData = TRUE;
             UpdateLinkAndCallCallbacks();
@@ -151,7 +151,7 @@ void AgbMain()
 
             if (gLink.recvQueue.count > 1)
             {
-                if (sub_80558AC() == 1)
+                if (Overworld_RecvKeysFromLinkIsRunning() == 1)
                 {
                     gMain.newKeys = 0;
                     gLinkTransferringData = TRUE;
@@ -171,7 +171,7 @@ static void UpdateLinkAndCallCallbacks(void)
 {
     gLinkStatus = LinkMain1(&gShouldAdvanceLinkState, gSendCmd, gRecvCmds);
     LinkMain2(&gMain.heldKeys);
-    if (!(gLinkStatus & LINK_STAT_RECEIVED_NOTHING) || sub_8055940() != 1)
+    if (!(gLinkStatus & LINK_STAT_RECEIVED_NOTHING) || IsSendingKeysOverCable() != 1)
         CallCallbacks();
 }
 

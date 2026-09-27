@@ -185,9 +185,9 @@ void sub_80557F4(void);
 void sub_8055824(void);
 void sub_805585C(void);
 bool32 sub_8055870(void);
-u32 sub_80558AC(void);
-u32 sub_8055910(void);
-u32 sub_8055940(void);
+u32 Overworld_RecvKeysFromLinkIsRunning(void);
+u32 Overworld_SendKeysToLinkIsRunning(void);
+u32 IsSendingKeysOverCable(void);
 // ClearLinkPlayerObjectEvent
 void ClearLinkPlayerObjectEvents(void);
 // ZeroObjectEvent
