@@ -14,7 +14,7 @@
 extern struct Weather *const gWeatherPtr;
 
 const u16 gCloudsWeatherPalette[] = INCBIN_U16("graphics/weather/1.gbapal");
-const u16 gUnknown_08397128[] = INCBIN_U16("graphics/weather/2.gbapal");
+const u16 gSandstormWeatherPalette[] = INCBIN_U16("graphics/weather/2.gbapal");
 const u8 gWeatherFogDiagonalTiles[] = INCBIN_U8("graphics/weather/fog2.4bpp");
 const u8 gWeatherFogHorizontalTiles[] = INCBIN_U8("graphics/weather/fog1.4bpp");
 const u8 gWeatherCloudTiles[] = INCBIN_U8("graphics/weather/cloud.4bpp");
@@ -1834,14 +1834,14 @@ void Sandstorm_InitVars(void)
     gWeatherPtr->weatherGfxLoaded = 0;
     gWeatherPtr->gammaTargetIndex = 0;
     gWeatherPtr->gammaStepDelay = 20;
-    if (gWeatherPtr->sandstormSprites1Created == 0)
+    if (gWeatherPtr->sandstormSpritesCreated == 0)
     {
-        gWeatherPtr->unknown_704 = gWeatherPtr->unknown_708 = 0;
-        gWeatherPtr->unknown_712 = 8;
-        gWeatherPtr->unknown_714 = 0;
+        gWeatherPtr->sandstormXOffset = gWeatherPtr->sandstormYOffset = 0;
+        gWeatherPtr->sandstormWaveIndex = 8;
+        gWeatherPtr->sandstormWaveCounter = 0;
         // Dead code. How does the compiler not optimize this out?
-        if (gWeatherPtr->unknown_712 > 0x5F)
-            gWeatherPtr->unknown_712 = 0x80 - gWeatherPtr->unknown_712;
+        if (gWeatherPtr->sandstormWaveIndex > 0x5F)
+            gWeatherPtr->sandstormWaveIndex = 0x80 - gWeatherPtr->sandstormWaveIndex;
         Weather_SetBlendCoeffs(0, 16);
     }
 }
@@ -1855,22 +1855,22 @@ void Sandstorm_InitAll(void)
         Sandstorm_Main();
 }
 
-void sub_808002C(void);
-void sub_8080064(void);
-void CreateSandstormSprites_1(void);
-void CreateSandstormSprites_2(void);
+void UpdateSandstormWaveIndex(void);
+void UpdateSandstormMovement(void);
+void CreateSandstormSprites(void);
+void CreateSwirlSandstormSprites(void);
 
 void Sandstorm_Main(void)
 {
-    sub_8080064();
-    sub_808002C();
-    if (gWeatherPtr->unknown_712 > 0x5F)
-        gWeatherPtr->unknown_712 = 32;
+    UpdateSandstormMovement();
+    UpdateSandstormWaveIndex();
+    if (gWeatherPtr->sandstormWaveIndex > 0x5F)
+        gWeatherPtr->sandstormWaveIndex = 32;
     switch (gWeatherPtr->initStep)
     {
     case 0:
-        CreateSandstormSprites_1();
-        CreateSandstormSprites_2();
+        CreateSandstormSprites();
+        CreateSwirlSandstormSprites();
         gWeatherPtr->initStep++;
         break;
     case 1:
@@ -1886,12 +1886,12 @@ void Sandstorm_Main(void)
     }
 }
 
-void sub_80800E4(void);
+void DestroySandstormSprites(void);
 
 bool8 Sandstorm_Finish(void)
 {
-    sub_8080064();
-    sub_808002C();
+    UpdateSandstormMovement();
+    UpdateSandstormWaveIndex();
     switch (gWeatherPtr->finishStep)
     {
     case 0:
@@ -1904,7 +1904,7 @@ bool8 Sandstorm_Finish(void)
         gWeatherPtr->finishStep++;
         break;
     case 2:
-        sub_80800E4();
+        DestroySandstormSprites();
         gWeatherPtr->finishStep++;
         break;
     default:
@@ -1913,50 +1913,50 @@ bool8 Sandstorm_Finish(void)
     return TRUE;
 }
 
-void sub_808002C(void)
+void UpdateSandstormWaveIndex(void)
 {
-    if (gWeatherPtr->unknown_714++ > 4)
+    if (gWeatherPtr->sandstormWaveCounter++ > 4)
     {
-        gWeatherPtr->unknown_712++;
-        gWeatherPtr->unknown_714 = 0;
+        gWeatherPtr->sandstormWaveIndex++;
+        gWeatherPtr->sandstormWaveCounter = 0;
     }
 }
 
-void sub_8080064(void)
+void UpdateSandstormMovement(void)
 {
-    gWeatherPtr->unknown_704 -= gSineTable[gWeatherPtr->unknown_712] * 4;
-    gWeatherPtr->unknown_708 -= gSineTable[gWeatherPtr->unknown_712];
-    gWeatherPtr->unknown_70E = (gSpriteCoordOffsetX + (gWeatherPtr->unknown_704 >> 8)) & 0xFF;
-    gWeatherPtr->unknown_710 = gSpriteCoordOffsetY + (gWeatherPtr->unknown_708 >> 8);
+    gWeatherPtr->sandstormXOffset -= gSineTable[gWeatherPtr->sandstormWaveIndex] * 4;
+    gWeatherPtr->sandstormYOffset -= gSineTable[gWeatherPtr->sandstormWaveIndex];
+    gWeatherPtr->sandstormBaseSpritesX = (gSpriteCoordOffsetX + (gWeatherPtr->sandstormXOffset >> 8)) & 0xFF;
+    gWeatherPtr->sandstormPosY = gSpriteCoordOffsetY + (gWeatherPtr->sandstormYOffset >> 8);
 }
 
-void sub_80800E4(void)
+void DestroySandstormSprites(void)
 {
     u16 i;
 
-    if (gWeatherPtr->sandstormSprites1Created)
+    if (gWeatherPtr->sandstormSpritesCreated)
     {
         for (i = 0; i < 20; i++)
         {
             if (gWeatherPtr->sprites.s2.sandstormSprites1[i] != NULL)
                 DestroySprite(gWeatherPtr->sprites.s2.sandstormSprites1[i]);
         }
-        gWeatherPtr->sandstormSprites1Created = FALSE;
+        gWeatherPtr->sandstormSpritesCreated = FALSE;
         FreeSpriteTilesByTag(0x1204);
     }
 
-    if (gWeatherPtr->sandstormSprites2Created)
+    if (gWeatherPtr->sandstormSwirlSpritesCreated)
     {
         for (i = 0; i < 5; i++)
         {
             if (gWeatherPtr->sprites.s2.sandstormSprites2[i] != NULL)
                 DestroySprite(gWeatherPtr->sprites.s2.sandstormSprites2[i]);
         }
-        gWeatherPtr->sandstormSprites2Created = FALSE;
+        gWeatherPtr->sandstormSwirlSpritesCreated = FALSE;
     }
 }
 
-const struct OamData gOamData_839AC1C =
+const struct OamData sSandstormSpriteOamData =
 {
     .y = 0,
     .affineMode = 0,
@@ -1973,46 +1973,46 @@ const struct OamData gOamData_839AC1C =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_839AC24[] =
+const union AnimCmd sSandstormSpriteAnimCmd0[] =
 {
     ANIMCMD_FRAME(0, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_839AC2C[] =
+const union AnimCmd sSandstormSpriteAnimCmd1[] =
 {
     ANIMCMD_FRAME(64, 3),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_839AC34[] =
+const union AnimCmd *const sSandstormSpriteAnimCmds[] =
 {
-    gSpriteAnim_839AC24,
-    gSpriteAnim_839AC2C,
+    sSandstormSpriteAnimCmd0,
+    sSandstormSpriteAnimCmd1,
 };
 
-void SandstormSpriteCallback1(struct Sprite *);
+void UpdateSandstormSprite(struct Sprite *);
 const struct SpriteTemplate sSandstormSpriteTemplate =
 {
     .tileTag = 4612,
     .paletteTag = 4609,
-    .oam = &gOamData_839AC1C,
-    .anims = gSpriteAnimTable_839AC34,
+    .oam = &sSandstormSpriteOamData,
+    .anims = sSandstormSpriteAnimCmds,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SandstormSpriteCallback1,
+    .callback = UpdateSandstormSprite,
 };
 
 static const struct SpriteSheet sSandstormSpriteSheet = {gWeatherSandstormTiles, sizeof(gWeatherSandstormTiles), 0x1204};
 
-void CreateSandstormSprites_1(void)
+void CreateSandstormSprites(void)
 {
     u16 i;
 
-    if (!gWeatherPtr->sandstormSprites1Created)
+    if (!gWeatherPtr->sandstormSpritesCreated)
     {
         LoadSpriteSheet(&sSandstormSpriteSheet);
-        LoadCustomWeatherSpritePalette(gUnknown_08397128);
+        LoadCustomWeatherSpritePalette(gSandstormWeatherPalette);
         for (i = 0; i < 20; i++)
         {
             u8 spriteId = CreateSpriteAtEnd(&sSandstormSpriteTemplate, 0, (i / 5) * 64, 1);
@@ -2028,19 +2028,19 @@ void CreateSandstormSprites_1(void)
                 gWeatherPtr->sprites.s2.sandstormSprites1[i] = NULL;
             }
         }
-        gWeatherPtr->sandstormSprites1Created = TRUE;
+        gWeatherPtr->sandstormSpritesCreated = TRUE;
     }
 }
 
-const u16 gUnknown_0839AC5C[] = {0,	120, 80, 160, 40, 0};
+const u16 sSwirlEntranceDelays[] = {0,	120, 80, 160, 40, 0};
 
-void SandstormSpriteCallback2(struct Sprite *);
+void WaitSandSwirlSpriteEntrance(struct Sprite *);
 
-void CreateSandstormSprites_2(void)
+void CreateSwirlSandstormSprites(void)
 {
     u16 i;
 
-    if (!gWeatherPtr->sandstormSprites2Created)
+    if (!gWeatherPtr->sandstormSwirlSpritesCreated)
     {
         for (i = 0; i < 5; i++)
         {
@@ -2054,40 +2054,40 @@ void CreateSandstormSprites_2(void)
                 gWeatherPtr->sprites.s2.sandstormSprites2[i]->data[0] = 8;
                 gWeatherPtr->sprites.s2.sandstormSprites2[i]->data[2] = 0;
                 gWeatherPtr->sprites.s2.sandstormSprites2[i]->data[4] = 0x6730;
-                gWeatherPtr->sprites.s2.sandstormSprites2[i]->data[3] = gUnknown_0839AC5C[i];
+                gWeatherPtr->sprites.s2.sandstormSprites2[i]->data[3] = sSwirlEntranceDelays[i];
                 StartSpriteAnim(gWeatherPtr->sprites.s2.sandstormSprites2[i], 1);
                 CalcCenterToCornerVec(gWeatherPtr->sprites.s2.sandstormSprites2[i], 0, 2, 0);
-                gWeatherPtr->sprites.s2.sandstormSprites2[i]->callback = SandstormSpriteCallback2;
+                gWeatherPtr->sprites.s2.sandstormSprites2[i]->callback = WaitSandSwirlSpriteEntrance;
             }
             else
             {
                 gWeatherPtr->sprites.s2.sandstormSprites2[i] = NULL;
             }
-            gWeatherPtr->sandstormSprites2Created = TRUE;
+            gWeatherPtr->sandstormSwirlSpritesCreated = TRUE;
         }
     }
 }
 
-void SandstormSpriteCallback1(struct Sprite *sprite)
+void UpdateSandstormSprite(struct Sprite *sprite)
 {
-    sprite->y2 = gWeatherPtr->unknown_710;
-    sprite->x = gWeatherPtr->unknown_70E + 32 + sprite->data[0] * 64;
+    sprite->y2 = gWeatherPtr->sandstormPosY;
+    sprite->x = gWeatherPtr->sandstormBaseSpritesX + 32 + sprite->data[0] * 64;
     if (sprite->x > 271)
     {
-        sprite->x = gWeatherPtr->unknown_70E + 0x1E0 - (4 - sprite->data[0]) * 64;
+        sprite->x = gWeatherPtr->sandstormBaseSpritesX + 0x1E0 - (4 - sprite->data[0]) * 64;
         sprite->x &= 0x1FF;
     }
 }
 
-void SandstormSpriteCallback3(struct Sprite *);
+void UpdateSandstormSwirlSprite(struct Sprite *);
 
-void SandstormSpriteCallback2(struct Sprite *sprite)
+void WaitSandSwirlSpriteEntrance(struct Sprite *sprite)
 {
     if (--sprite->data[3] == -1)
-        sprite->callback = SandstormSpriteCallback3;
+        sprite->callback = UpdateSandstormSwirlSprite;
 }
 
-void SandstormSpriteCallback3(struct Sprite *sprite)
+void UpdateSandstormSwirlSprite(struct Sprite *sprite)
 {
     u32 x;
     u32 y;
