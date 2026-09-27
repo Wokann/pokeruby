@@ -139,13 +139,13 @@ void FlyOutFieldEffect_FlyOffWithBird(struct Task *);
 void FlyOutFieldEffect_WaitFlyOff(struct Task *);
 void FlyOutFieldEffect_End(struct Task *);
 
-void sub_80892A0(struct Task *);
-void sub_8089354(struct Task *);
-void sub_80893C0(struct Task *);
-void sub_8089414(struct Task *);
-void sub_808948C(struct Task *);
-void sub_80894C4(struct Task *);
-void fishE(struct Task *);
+void FlyInFieldEffect_BirdSwoopDown(struct Task *);
+void FlyInFieldEffect_FlyInWithBird(struct Task *);
+void FlyInFieldEffect_JumpOffBird(struct Task *);
+void FlyInFieldEffect_FieldMovePose(struct Task *);
+void FlyInFieldEffect_BirdReturnToBall(struct Task *);
+void FlyInFieldEffect_WaitBirdReturn(struct Task *);
+void FlyInFieldEffect_End(struct Task *);
 
 u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, u8 subpriority, u8 *buffer);
 void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset, u8 *dest);
