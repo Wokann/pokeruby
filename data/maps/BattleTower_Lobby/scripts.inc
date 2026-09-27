@@ -6,7 +6,7 @@ BattleTower_Lobby_MapScripts:: @ 816027E
 	.byte 0
 
 BattleTower_Lobby_MapScript1_160293:: @ 8160293
-	special TryEnableBravoTrainerBattleTower
+	special TryHideBattleTowerReporter
 	call BattleTower_Lobby_EventScript_16029C
 	end
 

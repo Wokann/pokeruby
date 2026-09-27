@@ -346,7 +346,7 @@ gSpecials::
 	def_special HasAllHoennMons
 	def_special MonOTNameNotPlayer
 	def_special BufferLottoTicketNumber
-	def_special TryEnableBravoTrainerBattleTower
+	def_special TryHideBattleTowerReporter
 	def_special DoesPartyHaveEnigmaBerry
 	def_special GenerateContestRand
 	def_special ValidateMixingGameLanguage

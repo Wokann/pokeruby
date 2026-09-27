@@ -2185,7 +2185,7 @@ void GetMomOrDadStringForTVMessage(void)
     }
 }
 
-void sub_80BFD20(void)
+void HideBattleTowerReporter(void)
 {
     VarSet(VAR_BRAVO_TRAINER_BATTLE_TOWER_ON, 0);
     RemoveObjectEventByLocalIdAndMap(LOCALID_TOWER_LOBBY_REPORTER, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
