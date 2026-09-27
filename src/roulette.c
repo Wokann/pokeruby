@@ -979,7 +979,7 @@ void Task_RollBall(u8 taskid)
     eRoulette->var03_7 = 1;
     index = eRoulette->var3C[eRoulette->var7C];
     eRoulette->var38 = &gSprites[index];
-    eRoulette->var38->callback = sub_81191F4;
+    eRoulette->var38->callback = SpriteCB_RollBall_Start;
     gTasks[taskid].data[6]++;
     gTasks[taskid].data[8]++;
     SetBallCounterNumLeft(6 - gTasks[taskid].data[6]);

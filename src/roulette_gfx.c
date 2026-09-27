@@ -41,13 +41,13 @@ void SpriteCB_UnstickBall_TaillowPickUp(struct Sprite *);
 void SpriteCB_UnstickBall_Taillow(struct Sprite *);
 void SpriteCB_UnstickBall(struct Sprite *);
 void SpriteCB_RollBall_TryLandAdjacent(struct Sprite *);
-void sub_8118DE4(struct Sprite *);
-void sub_8118F8C(struct Sprite *);
-void sub_8119088(struct Sprite *);
-void sub_8119134(struct Sprite *);
-void sub_8119224(struct Sprite *);
-void sub_81193D4(struct Sprite *);
-void sub_811952C(struct Sprite *);
+void SpriteCB_RollBall_TryLand(struct Sprite *);
+void SpriteCB_RollBall_Slow(struct Sprite *);
+void SpriteCB_RollBall_Medium(struct Sprite *);
+void SpriteCB_RollBall_Fast(struct Sprite *);
+void CreateShroomishSprite(struct Sprite *);
+void CreateTaillowSprite(struct Sprite *);
+void SetBallStuck(struct Sprite *);
 void sub_8119780(struct Sprite *);
 void sub_81197D8(struct Sprite *);
 void sub_8119898(struct Sprite *);
@@ -1356,11 +1356,11 @@ void SpriteCB_UnstickBall(struct Sprite *sprite)
     {
     default:
     case 0:
-        sub_8119224(sprite);
+        CreateShroomishSprite(sprite);
         sprite->callback = SpriteCB_UnstickBall_Shroomish;
         break;
     case 1:
-        sub_81193D4(sprite);
+        CreateTaillowSprite(sprite);
         sprite->callback = SpriteCB_UnstickBall_Taillow;
         break;
     }
@@ -1389,7 +1389,7 @@ void SpriteCB_RollBall_TryLandAdjacent(struct Sprite *sprite)
         {
             sprite->animPaused = TRUE;
             m4aSongNumStart(SE_BALL_BOUNCE_1);
-            sub_811952C(sprite);
+            SetBallStuck(sprite);
         }
     }
 }
@@ -1421,7 +1421,7 @@ void debug_sub_812E698(struct Sprite *sprite)
 
 #endif
 
-void sub_8118DE4(struct Sprite *sprite)
+void SpriteCB_RollBall_TryLand(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
     sprite->data[2] = 0;
@@ -1491,7 +1491,7 @@ void sub_8118DE4(struct Sprite *sprite)
     }
 }
 
-void sub_8118F8C(struct Sprite *sprite)
+void SpriteCB_RollBall_Slow(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
     if (!(eRoulette->var8C > 0.5f))
@@ -1510,7 +1510,7 @@ void sub_8118F8C(struct Sprite *sprite)
                 sprite->callback = debug_sub_812E698;
             else
 #endif
-                sprite->callback = sub_8118DE4;
+                sprite->callback = SpriteCB_RollBall_TryLand;
         }
         else
         {
@@ -1527,7 +1527,7 @@ void sub_8118F8C(struct Sprite *sprite)
     }
 }
 
-void sub_8119088(struct Sprite *sprite)
+void SpriteCB_RollBall_Medium(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
     if (!(eRoulette->var94 > 40.f))
@@ -1538,11 +1538,11 @@ void sub_8119088(struct Sprite *sprite)
         sprite->animBeginning = TRUE;
         sprite->animEnded     = FALSE;
         sprite->data[1]     = 3;
-        sprite->callback      = sub_8118F8C;
+        sprite->callback      = SpriteCB_RollBall_Slow;
     }
 }
 
-void sub_8119134(struct Sprite *sprite)
+void SpriteCB_RollBall_Fast(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
     if (!(eRoulette->var94 > 60.0f))
@@ -1554,20 +1554,20 @@ void sub_8119134(struct Sprite *sprite)
         sprite->animBeginning = TRUE;
         sprite->animEnded     = FALSE;
         sprite->data[1]     = 2;
-        sprite->callback      = sub_8119088;
+        sprite->callback      = SpriteCB_RollBall_Medium;
     }
 }
 
-void sub_81191F4(struct Sprite *sprite)
+void SpriteCB_RollBall_Start(struct Sprite *sprite)
 {
     sprite->data[1] = 1;
     sprite->data[2] = 0;
     UpdateBallPos(sprite);
     sprite->invisible = FALSE;
-    sprite->callback  = sub_8119134;
+    sprite->callback  = SpriteCB_RollBall_Fast;
 }
 
-void sub_8119224(struct Sprite *sprite)
+void CreateShroomishSprite(struct Sprite *sprite)
 {
     u16 t;
     u8 i;
@@ -1599,7 +1599,7 @@ void sub_8119224(struct Sprite *sprite)
     eRoulette->var38 = sprite;
 }
 
-void sub_81193D4(struct Sprite *sprite)
+void CreateTaillowSprite(struct Sprite *sprite)
 {
     u8 i = 0;
     s16 t;
@@ -1626,7 +1626,7 @@ void sub_81193D4(struct Sprite *sprite)
     eRoulette->var38 = sprite;
 }
 
-void sub_811952C(struct Sprite *sprite)
+void SetBallStuck(struct Sprite *sprite)
 {
     u8 z;
     u16 o;

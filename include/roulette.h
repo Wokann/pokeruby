@@ -164,6 +164,6 @@ void CreateWheelCenterSprite(void);
 void SpriteCB_WheelCenter(struct Sprite *);
 void CreateWheelBallSprites(void);
 void HideWheelBalls(void);
-void sub_81191F4(struct Sprite *);
+void SpriteCB_RollBall_Start(struct Sprite *);
 
 #endif
