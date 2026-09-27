@@ -76,7 +76,7 @@ static void Step2(struct Sprite *sprite, u8 direction);
 static void Step3(struct Sprite *sprite, u8 direction);
 static void Step4(struct Sprite *sprite, u8 direction);
 static void Step8(struct Sprite *sprite, u8 direction);
-static void oamt_npc_ministep_reset(struct Sprite*, u8, u8);
+static void SetSpriteDataForNormalStep(struct Sprite*, u8, u8);
 static void CameraObject_0(struct Sprite *);
 static void CameraObject_1(struct Sprite *);
 static void CameraObject_2(struct Sprite *);
@@ -5020,7 +5020,7 @@ void InitNpcForMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, 
     SetObjectEventDirection(objectEvent, direction);
     MoveCoords(direction, &x, &y);
     ShiftObjectEventCoords(objectEvent, x, y);
-    oamt_npc_ministep_reset(sprite, direction, speed);
+    SetSpriteDataForNormalStep(sprite, direction, speed);
     sprite->animPaused = FALSE;
     objectEvent->triggerGroundEffectsOnMove = TRUE;
     sprite->data[2] = 1;
@@ -5042,11 +5042,11 @@ void StartRunningAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8
     sub_805FE28(objectEvent, sprite, GetRunningDirectionAnimNum(objectEvent->facingDirection));
 }
 
-bool8 obj_npc_ministep(struct Sprite *);
+bool8 NpcTakeStep(struct Sprite *);
 
 bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    if (obj_npc_ministep(sprite))
+    if (NpcTakeStep(sprite))
     {
         ShiftStillObjectEventCoords(objectEvent);
         objectEvent->triggerGroundEffectsOnStop = TRUE;
@@ -8052,16 +8052,16 @@ static void Step8(struct Sprite *sprite, u8 dir)
     sprite->y += 8 * (u16) sDirectionToVectors[dir].y;
 }
 
-static void oamt_npc_ministep_reset(struct Sprite *sprite, u8 direction, u8 a3)
+static void SetSpriteDataForNormalStep(struct Sprite *sprite, u8 direction, u8 speed)
 {
     sprite->data[3] = direction;
-    sprite->data[4] = a3;
+    sprite->data[4] = speed;
     sprite->data[5] = 0;
 }
 
 typedef void (*SpriteStepFunc)(struct Sprite *sprite, u8 direction);
 
-static const SpriteStepFunc Unknown_83760F0[] = {
+static const SpriteStepFunc sStep1Funcs[] = {
     Step1,
     Step1,
     Step1,
@@ -8080,7 +8080,7 @@ static const SpriteStepFunc Unknown_83760F0[] = {
     Step1
 };
 
-static const SpriteStepFunc Unknown_8376130[] = {
+static const SpriteStepFunc sStep2Funcs[] = {
     Step2,
     Step2,
     Step2,
@@ -8091,7 +8091,7 @@ static const SpriteStepFunc Unknown_8376130[] = {
     Step2
 };
 
-static const SpriteStepFunc Unknown_8376150[] = {
+static const SpriteStepFunc sStep3Funcs[] = {
     Step2,
     Step3,
     Step3,
@@ -8100,40 +8100,44 @@ static const SpriteStepFunc Unknown_8376150[] = {
     Step3
 };
 
-static const SpriteStepFunc Unknown_8376168[] = {
+static const SpriteStepFunc sStep4Funcs[] = {
     Step4,
     Step4,
     Step4,
     Step4
 };
 
-static const SpriteStepFunc Unknown_8376178[] = {
+static const SpriteStepFunc sStep8Funcs[] = {
     Step8,
     Step8
 };
 
-static const SpriteStepFunc *const gUnknown_08376180[] = {
-    Unknown_83760F0,
-    Unknown_8376130,
-    Unknown_8376150,
-    Unknown_8376168,
-    Unknown_8376178
+static const SpriteStepFunc *const sNpcStepFuncTables[] = {
+    [MOVE_SPEED_NORMAL] = sStep1Funcs,
+    [MOVE_SPEED_FAST_1] = sStep2Funcs,
+    [MOVE_SPEED_FAST_2] = sStep3Funcs,
+    [MOVE_SPEED_FASTER] = sStep4Funcs,
+    [MOVE_SPEED_FASTEST] = sStep8Funcs
 };
 
-static const s16 gUnknown_08376194[] = {
-    16, 8, 6, 4, 2
+static const s16 sStepTimes[] = {
+    [MOVE_SPEED_NORMAL] = ARRAY_COUNT(sStep1Funcs),
+    [MOVE_SPEED_FAST_1] = ARRAY_COUNT(sStep2Funcs),
+    [MOVE_SPEED_FAST_2] = ARRAY_COUNT(sStep3Funcs),
+    [MOVE_SPEED_FASTER] = ARRAY_COUNT(sStep4Funcs),
+    [MOVE_SPEED_FASTEST] = ARRAY_COUNT(sStep8Funcs)
 };
 
-bool8 obj_npc_ministep(struct Sprite *sprite)
+bool8 NpcTakeStep(struct Sprite *sprite)
 {
-    if (sprite->data[5] >= gUnknown_08376194[sprite->data[4]])
+    if (sprite->data[5] >= sStepTimes[sprite->data[4]])
         return FALSE;
 
-    gUnknown_08376180[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
+    sNpcStepFuncTables[sprite->data[4]][sprite->data[5]](sprite, sprite->data[3]);
 
     sprite->data[5]++;
 
-    if (sprite->data[5] < gUnknown_08376194[sprite->data[4]])
+    if (sprite->data[5] < sStepTimes[sprite->data[4]])
         return FALSE;
 
     return TRUE;
