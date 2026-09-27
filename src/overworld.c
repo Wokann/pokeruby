@@ -62,6 +62,12 @@
 #define PLAYER_LINK_STATE_EXITING_ROOM 0x83
 
 #define FACING_NONE 0
+#define FACING_UP 1
+#define FACING_DOWN 2
+#define FACING_LEFT 3
+#define FACING_RIGHT 4
+#define FACING_FORCED_UP 7
+#define FACING_FORCED_DOWN 8
 #define FACING_FORCED_LEFT 9
 #define FACING_FORCED_RIGHT 10
 
@@ -2617,7 +2623,7 @@ static u8 GetLinkPlayerIdAt(s16 x, s16 y)
     return MAX_LINK_PLAYERS;
 }
 
-void SetPlayerFacingDirection(u8 linkPlayerId, u8 a2)
+void SetPlayerFacingDirection(u8 linkPlayerId, u8 facing)
 {
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
     u8 objEventId = linkPlayerObjEvent->objEventId;
@@ -2625,38 +2631,38 @@ void SetPlayerFacingDirection(u8 linkPlayerId, u8 a2)
 
     if (linkPlayerObjEvent->active)
     {
-        if (a2 > FACING_FORCED_RIGHT)
+        if (facing > FACING_FORCED_RIGHT)
             objEvent->triggerGroundEffectsOnMove = 1;
         else
-            sMovementStatusHandler[sLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, a2)](linkPlayerObjEvent, objEvent);
+            sMovementStatusHandler[sLinkPlayerMovementModes[linkPlayerObjEvent->movementMode](linkPlayerObjEvent, objEvent, facing)](linkPlayerObjEvent, objEvent);
     }
 }
 
-static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
-    return sLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[direction](linkPlayerObjEvent, objEvent, direction);
 }
 
-static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
-    return 1;
+    return FACING_UP;
 }
 
-static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
-    return sLinkPlayerFacingHandlers[a3](linkPlayerObjEvent, objEvent, a3);
+    return sLinkPlayerFacingHandlers[direction](linkPlayerObjEvent, objEvent, direction);
 }
 
-static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
-    return 0;
+    return FALSE;
 }
 
-static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
     s16 x, y;
 
-    objEvent->range.as_byte = FlipVerticalAndClearForced(a3, objEvent->range.as_byte);
+    objEvent->range.as_byte = FlipVerticalAndClearForced(direction, objEvent->range.as_byte);
     ObjectEventMoveDestCoords(objEvent, objEvent->range.as_byte, &x, &y);
 
     if (LinkPlayerGetCollision(linkPlayerObjEvent->objEventId, objEvent->range.as_byte, x, y))
@@ -2672,10 +2678,10 @@ static u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *linkPlayerObj
     }
 }
 
-static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 a3)
+static u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 direction)
 {
-    objEvent->range.as_byte = FlipVerticalAndClearForced(a3, objEvent->range.as_byte);
-    return 0;
+    objEvent->range.as_byte = FlipVerticalAndClearForced(direction, objEvent->range.as_byte);
+    return FALSE;
 }
 
 static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
@@ -2695,30 +2701,30 @@ static void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent 
     }
 }
 
-static u8 FlipVerticalAndClearForced(u8 a1, u8 a2)
+static u8 FlipVerticalAndClearForced(u8 newFacing, u8 oldFacing)
 {
-    switch (a1 - 1)
+    switch (newFacing - 1)
     {
-    case 0:
-    case 6:
-        return 2;
-    case 1:
-    case 7:
-        return 1;
-    case 2:
-    case 8:
-        return 3;
-    case 3:
-    case 9:
-        return 4;
+    case FACING_UP - 1:
+    case FACING_FORCED_UP - 1:
+        return DIR_NORTH;
+    case FACING_DOWN - 1:
+    case FACING_FORCED_DOWN - 1:
+        return DIR_SOUTH;
+    case FACING_LEFT - 1:
+    case FACING_FORCED_LEFT - 1:
+        return DIR_WEST;
+    case FACING_RIGHT - 1:
+    case FACING_FORCED_RIGHT - 1:
+        return DIR_EAST;
     }
-    return a2;
+    return oldFacing;
 }
 
-static u8 LinkPlayerGetCollision(u8 selfObjEventId, u8 a2, s16 x, s16 y)
+static u8 LinkPlayerGetCollision(u8 selfObjEventId, u8 direction, s16 x, s16 y)
 {
     u8 i;
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
         if (i != selfObjEventId)
         {
