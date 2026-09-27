@@ -594,28 +594,28 @@ void UpdateGridSelectionRect(u8 r0)
     switch (r0)
     {
     case 0:
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
         break;
     case 1:
     case 2:
     case 3:
     case 4:
         temp0 = (r0 * 3 + 14);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x119, temp0, 7, 3, 13);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x119, temp0, 7, 3, 13);
         break;
     case 5:
     case 10:
     case 15:
         temp1 = ((r0 - 1) / 5 * 3 + 10);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x140, 14, temp1, 16, 3);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x140, 14, temp1, 16, 3);
         break;
     default:
         temp0 = ((r0 % 5) * 3 + 14);
         temp1 = ((r0 - 1) / 5 * 3 + 7);
-        sub_8124DDC(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
-        sub_8124E2C(&gBGTilemapBuffers[2][0], ewram18800 + 0x110, temp0, temp1, 3, 3);
+        FillTilemapRect(&gBGTilemapBuffers[2][0], 0, 14, 7, 16, 13);
+        SetTilemapRect(&gBGTilemapBuffers[2][0], ewram18800 + 0x110, temp0, temp1, 3, 3);
         break;
     }
 }
@@ -1474,7 +1474,7 @@ void DrawGridBackground(u8 r0)
     u8 l;
     eRoulette->var2A = 1;
     ShowHideGridIcons(0, 0);
-    sub_8124E2C(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
+    SetTilemapRect(gBGTilemapBuffers[1], (u16 *)ewram18800, 14, 7, 16, 13);
     switch (r0)
     {
     case 0:

@@ -207,7 +207,7 @@ void RouletteFlash_Stop(struct UnkStruct0 *r0, u16 r1)
         r0->var02 = r0->var02 & ~r1;
     }
 }
-void sub_8124DDC(u16 *dest, u16 src, u8 left, u8 top, u8 width, u8 height)
+void FillTilemapRect(u16 *dest, u16 src, u8 left, u8 top, u8 width, u8 height)
 {
     u16 *_dest;
     u8 i;
@@ -223,7 +223,7 @@ void sub_8124DDC(u16 *dest, u16 src, u8 left, u8 top, u8 width, u8 height)
         }
     }
 }
-void sub_8124E2C(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
+void SetTilemapRect(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
 {
     u16 *_dest;
     u16 *_src = src;
