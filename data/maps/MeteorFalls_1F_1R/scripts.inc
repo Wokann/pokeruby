@@ -1,107 +1,93 @@
 MeteorFalls_1F_1R_MapScripts:: @ 815C490
-	map_script MAP_SCRIPT_ON_TRANSITION, MeteorFalls_1F_1R_MapScript1_15C496
+	map_script MAP_SCRIPT_ON_TRANSITION, MeteorFalls_1F_1R_OnTransition
 	.byte 0
 
-MeteorFalls_1F_1R_MapScript1_15C496:: @ 815C496
+MeteorFalls_1F_1R_OnTransition:: @ 815C496
 	call Common_EventScript_SetupEvilTeamGfxIds
 	end
 
-MeteorFalls_1F_1R_EventScript_15C49C:: @ 815C49C
+MeteorFalls_1F_1R_EventScript_EvilTeamStealsMeteoriteScene:: @ 815C49C
 	lockall
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
 	delay 30
-	applymovement 5, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193237, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_WithThisMeteorite, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, Common_Movement_WalkInPlaceFasterUp
-	applymovement 6, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_2, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	playse SE_PIN
-	applymovement 5, Common_Movement_ExclamationMark
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement 5, Common_Movement_Delay48
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_Delay48
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193268, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_DontExpectMercyFromEvilTeam, MSGBOX_DEFAULT
 	closemessage
-	applymovement 5, MeteorFalls_1F_1R_Movement_15C5EE
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, MeteorFalls_1F_1R_Movement_EvilGruntApproachPlayer
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_1932C5, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_HoldItRightThereEvilTeam, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	applymovement 5, Common_Movement_WalkInPlaceFasterLeft
-	applymovement 6, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	addobject 7
-	addobject 8
-	addobject 9
-	applymovement 7, MeteorFalls_1F_1R_Movement_15C608
-	applymovement 8, MeteorFalls_1F_1R_Movement_15C60F
-	applymovement 9, MeteorFalls_1F_1R_Movement_15C617
+	addobject LOCALID_METEOR_FALLS_GOOD_LEADER
+	addobject LOCALID_METEOR_FALLS_GOOD_GRUNT_1
+	addobject LOCALID_METEOR_FALLS_GOOD_GRUNT_2
+	applymovement LOCALID_METEOR_FALLS_GOOD_LEADER, MeteorFalls_1F_1R_Movement_GoodLeaderArrive
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_1, MeteorFalls_1F_1R_Movement_GoodGrunt1Arrive
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_2, MeteorFalls_1F_1R_Movement_GoodGrunt2Arrive
 	waitmovement 0
-	applymovement 5, Common_Movement_WalkInPlaceFasterLeft
-	applymovement 6, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193320, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_BeSeeingYouGoodTeam, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_PLAYER, MeteorFalls_1F_1R_Movement_15C64F
-	applymovement 5, MeteorFalls_1F_1R_Movement_15C5F1
-	applymovement 6, MeteorFalls_1F_1R_Movement_15C5FC
+	applymovement LOCALID_PLAYER, MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_1, MeteorFalls_1F_1R_Movement_EvilGrunt1Exit
+	applymovement LOCALID_METEOR_FALLS_EVIL_GRUNT_2, MeteorFalls_1F_1R_Movement_EvilGrunt2Exit
 	waitmovement 0
-	removeobject 5
-	removeobject 6
-	applymovement 7, MeteorFalls_1F_1R_Movement_15C628
+	removeobject LOCALID_METEOR_FALLS_EVIL_GRUNT_1
+	removeobject LOCALID_METEOR_FALLS_EVIL_GRUNT_2
+	applymovement LOCALID_METEOR_FALLS_GOOD_LEADER, MeteorFalls_1F_1R_Movement_GoodLeaderApproachPlayer
 	waitmovement 0
 	.ifdef SAPPHIRE
-	msgbox MeteorFalls_1F_1R_Text_1933EC, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_MaxieSeenYouBefore, MSGBOX_DEFAULT
 	.else
-	msgbox MeteorFalls_1F_1R_Text_193584, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ArchieSeenYouBefore, MSGBOX_DEFAULT
 	.endif
 	closemessage
-	applymovement 8, MeteorFalls_1F_1R_Movement_15C639
-	applymovement 9, MeteorFalls_1F_1R_Movement_15C64A
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_1, MeteorFalls_1F_1R_Movement_GoodGrunt1ApproachLeader
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_2, MeteorFalls_1F_1R_Movement_GoodGrunt2ApproachLeader
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193720, MSGBOX_DEFAULT
-	applymovement 7, Common_Movement_WalkInPlaceFasterDown
+	msgbox MeteorFalls_1F_1R_Text_BossWeShouldChaseEvilTeam, MSGBOX_DEFAULT
+	applymovement LOCALID_METEOR_FALLS_GOOD_LEADER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_193747, MSGBOX_DEFAULT
-	applymovement 7, Common_Movement_WalkInPlaceFasterLeft
+	msgbox MeteorFalls_1F_1R_Text_GoodLeaderNoTellingWhatEvilTeamWillDo, MSGBOX_DEFAULT
+	applymovement LOCALID_METEOR_FALLS_GOOD_LEADER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
-	msgbox MeteorFalls_1F_1R_Text_1937AA, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_GoodLeaderFarewell, MSGBOX_DEFAULT
 	closemessage
-	applymovement 7, MeteorFalls_1F_1R_Movement_15C61F
-	applymovement 8, MeteorFalls_1F_1R_Movement_15C62E
-	applymovement 9, MeteorFalls_1F_1R_Movement_15C63E
+	applymovement LOCALID_METEOR_FALLS_GOOD_LEADER, MeteorFalls_1F_1R_Movement_GoodLeaderExit
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_1, MeteorFalls_1F_1R_Movement_GoodGrunt1Exit
+	applymovement LOCALID_METEOR_FALLS_GOOD_GRUNT_2, MeteorFalls_1F_1R_Movement_GoodGrunt2Exit
 	waitmovement 0
-	removeobject 7
-	removeobject 8
-	removeobject 9
+	removeobject LOCALID_METEOR_FALLS_GOOD_LEADER
+	removeobject LOCALID_METEOR_FALLS_GOOD_GRUNT_1
+	removeobject LOCALID_METEOR_FALLS_GOOD_GRUNT_2
 	setflag FLAG_HIDE_ROUTE_112_TEAM_GRUNTS
 	setvar VAR_METEOR_FALLS_STATE, 1
 	releaseall
 	end
 
-MeteorFalls_1F_1R_Movement_15C5EE:: @ 815C5EE
+MeteorFalls_1F_1R_Movement_EvilGruntApproachPlayer:: @ 815C5EE
 	walk_right
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C5F1:: @ 815C5F1
-	walk_fast_up
-	walk_fast_up
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	step_end
-
-MeteorFalls_1F_1R_Movement_15C5FC:: @ 815C5FC
-	walk_fast_up
+MeteorFalls_1F_1R_Movement_EvilGrunt1Exit:: @ 815C5F1
 	walk_fast_up
 	walk_fast_up
 	walk_fast_right
@@ -114,7 +100,21 @@ MeteorFalls_1F_1R_Movement_15C5FC:: @ 815C5FC
 	walk_fast_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C608:: @ 815C608
+MeteorFalls_1F_1R_Movement_EvilGrunt2Exit:: @ 815C5FC
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
+MeteorFalls_1F_1R_Movement_GoodLeaderArrive:: @ 815C608
 	walk_right
 	walk_right
 	walk_right
@@ -123,7 +123,7 @@ MeteorFalls_1F_1R_Movement_15C608:: @ 815C608
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C60F:: @ 815C60F
+MeteorFalls_1F_1R_Movement_GoodGrunt1Arrive:: @ 815C60F
 	delay_16
 	delay_16
 	walk_right
@@ -133,7 +133,7 @@ MeteorFalls_1F_1R_Movement_15C60F:: @ 815C60F
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C617:: @ 815C617
+MeteorFalls_1F_1R_Movement_GoodGrunt2Arrive:: @ 815C617
 	delay_16
 	delay_16
 	walk_right
@@ -143,7 +143,7 @@ MeteorFalls_1F_1R_Movement_15C617:: @ 815C617
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C61F:: @ 815C61F
+MeteorFalls_1F_1R_Movement_GoodLeaderExit:: @ 815C61F
 	walk_right
 	walk_right
 	walk_right
@@ -154,7 +154,7 @@ MeteorFalls_1F_1R_Movement_15C61F:: @ 815C61F
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C628:: @ 815C628
+MeteorFalls_1F_1R_Movement_GoodLeaderApproachPlayer:: @ 815C628
 	walk_right
 	walk_right
 	walk_up
@@ -162,7 +162,7 @@ MeteorFalls_1F_1R_Movement_15C628:: @ 815C628
 	walk_in_place_faster_left
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C62E:: @ 815C62E
+MeteorFalls_1F_1R_Movement_GoodGrunt1Exit:: @ 815C62E
 	walk_up
 	walk_up
 	walk_right
@@ -175,14 +175,14 @@ MeteorFalls_1F_1R_Movement_15C62E:: @ 815C62E
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C639:: @ 815C639
+MeteorFalls_1F_1R_Movement_GoodGrunt1ApproachLeader:: @ 815C639
 	walk_right
 	walk_right
 	walk_right
 	walk_in_place_faster_up
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C63E:: @ 815C63E
+MeteorFalls_1F_1R_Movement_GoodGrunt2Exit:: @ 815C63E
 	walk_up
 	walk_up
 	walk_up
@@ -196,14 +196,14 @@ MeteorFalls_1F_1R_Movement_15C63E:: @ 815C63E
 	walk_right
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C64A:: @ 815C64A
+MeteorFalls_1F_1R_Movement_GoodGrunt2ApproachLeader:: @ 815C64A
 	walk_right
 	walk_right
 	walk_right
 	walk_in_place_faster_up
 	step_end
 
-MeteorFalls_1F_1R_Movement_15C64F:: @ 815C64F
+MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay:: @ 815C64F
 	walk_in_place_faster_down
 	delay_4
 	walk_in_place_faster_right
@@ -212,16 +212,16 @@ MeteorFalls_1F_1R_Movement_15C64F:: @ 815C64F
 	unlock_facing_direction
 	step_end
 
-MeteorFalls_1F_1R_EventScript_15C656:: @ 815C656
+MeteorFalls_1F_1R_EventScript_MeetProfCozmo:: @ 815C656
 	lock
 	faceplayer
-	goto_if_set FLAG_MET_PROF_COSMO, MeteorFalls_1F_1R_EventScript_15C66E
+	goto_if_set FLAG_MET_PROF_COSMO, MeteorFalls_1F_1R_EventScript_CozmoAfterMeeting
 	setflag FLAG_MET_PROF_COSMO
-	msgbox MeteorFalls_1F_1R_Text_1937EB, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_MeetProfCozmo, MSGBOX_DEFAULT
 	release
 	end
 
-MeteorFalls_1F_1R_EventScript_15C66E:: @ 815C66E
-	msgbox MeteorFalls_1F_1R_Text_19396A, MSGBOX_DEFAULT
+MeteorFalls_1F_1R_EventScript_CozmoAfterMeeting:: @ 815C66E
+	msgbox MeteorFalls_1F_1R_Text_WhatsEvilTeamDoingAtMtChimney, MSGBOX_DEFAULT
 	release
 	end
