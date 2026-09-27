@@ -229,16 +229,16 @@ static void SpriteCB_FlashMatchingLines(struct Sprite *sprite);
 static void FlashSlotMachineLights(void);
 static bool8 TryStopSlotMachineLights(void);
 static void Task_FlashSlotMachineLights(u8 taskId);
-static void sub_8104048(void);
-static void sub_8104064(u8 pikaPower);
-static bool8 sub_81040C8(void);
-static void sub_81040E8(u8 taskId);
-static void nullsub_68(struct Task *task);
-static void sub_810411C(struct Task *task);
-static void sub_8104144(struct Task *task);
-static void sub_81041AC(struct Task *task);
-static void sub_810421C(struct Task *task);
-static void sub_810423C(u8 pikaPower);
+static void CreatePikaPowerBoltTask(void);
+static void AddPikaPowerBolt(u8 pikaPower);
+static bool8 IsPikaPowerBoltAnimating(void);
+static void Task_CreatePikaPowerBolt(u8 taskId);
+static void PikaPowerBolt_Idle(struct Task *task);
+static void PikaPowerBolt_AddBolt(struct Task *task);
+static void PikaPowerBolt_WaitAnim(struct Task *task);
+static void PikaPowerBolt_ClearAll(struct Task *task);
+static void ResetPikaPowerBoltTask(struct Task *task);
+static void LoadPikaPowerMeter(u8 pikaPower);
 static void sub_810430C(void);
 static bool8 sub_810432C(void);
 static void sub_810434C(u8 taskId);
@@ -558,7 +558,7 @@ static void SlotMachineSetup_6_0(void)
 
 static void SlotMachineSetup_6_1(void)
 {
-    sub_8104048();
+    CreatePikaPowerBoltTask();
     CreateReelTasks();
     sub_8104C5C();
     CreateSlotMachineTasks();
@@ -614,7 +614,7 @@ static void Task_SlotMachine(u8 taskId)
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-    sub_810423C(sSlotMachine->pikaPower);
+    LoadPikaPowerMeter(sSlotMachine->pikaPower);
     sSlotMachine->state++;
     return FALSE;
 }
@@ -957,7 +957,7 @@ bool8 SlotTask_CheckMatches(struct Task *task)
         if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_POWER) && sSlotMachine->pikaPower < 16)
         {
             sSlotMachine->pikaPower++;
-            sub_8104064(sSlotMachine->pikaPower);
+            AddPikaPowerBolt(sSlotMachine->pikaPower);
         }
     }
     else
@@ -1002,7 +1002,7 @@ static bool8 SlotTask_EndPayout(struct Task *task)
 
 static bool8 SlotTask_MatchedPower(struct Task *task)
 {
-    if (!sub_81040C8())
+    if (!IsPikaPowerBoltAnimating())
     {
         sSlotMachine->state = 19;
         if (sSlotMachine->matchedSymbols & (1 << SLOT_MACHINE_MATCHED_REPLAY))
@@ -2489,64 +2489,64 @@ static void Task_FlashSlotMachineLights(u8 taskId)
     LoadPalette(sFlashingLightsPalTable[task->data[2]], 0x10, 0x20);
 }
 
-static void sub_8104048(void)
+static void CreatePikaPowerBoltTask(void)
 {
-    sSlotMachine->unk3E = CreateTask(sub_81040E8, 8);
+    sSlotMachine->unk3E = CreateTask(Task_CreatePikaPowerBolt, 8);
 }
 
-static void sub_8104064(u8 pikaPower)
+static void AddPikaPowerBolt(u8 pikaPower)
 {
     struct Task *task = gTasks + sSlotMachine->unk3E;
-    sub_810421C(task);
+    ResetPikaPowerBoltTask(task);
     task->data[0] = 1;
     task->data[1]++;
     task->data[15] = 1;
 }
 
-static void sub_8104098(void)
+static void ResetPikaPowerBolts(void)
 {
     struct Task *task = gTasks + sSlotMachine->unk3E;
-    sub_810421C(task);
+    ResetPikaPowerBoltTask(task);
     task->data[0] = 3;
     task->data[15] = 1;
 }
 
-static bool8 sub_81040C8(void)
+static bool8 IsPikaPowerBoltAnimating(void)
 {
     return gTasks[sSlotMachine->unk3E].data[15];
 }
 
-static void (*const gUnknown_083ECBB4[])(struct Task *task) =
+static void (*const sPikaPowerBoltTasks[])(struct Task *task) =
 {
-    nullsub_68,
-    sub_810411C,
-    sub_8104144,
-    sub_81041AC
+    PikaPowerBolt_Idle,
+    PikaPowerBolt_AddBolt,
+    PikaPowerBolt_WaitAnim,
+    PikaPowerBolt_ClearAll
 };
 
-static void sub_81040E8(u8 taskId)
+static void Task_CreatePikaPowerBolt(u8 taskId)
 {
-    gUnknown_083ECBB4[gTasks[taskId].data[0]](gTasks + taskId);
+    sPikaPowerBoltTasks[gTasks[taskId].data[0]](gTasks + taskId);
 }
 
-static void nullsub_68(struct Task *task)
+static void PikaPowerBolt_Idle(struct Task *task)
 {
 }
 
-static void sub_810411C(struct Task *task)
+static void PikaPowerBolt_AddBolt(struct Task *task)
 {
     task->data[2] = sub_8105B1C((task->data[1] << 3) + 20, 20);
     task->data[0]++;
 }
 
-static const u16 gUnknown_083ECBC4[][2] =
+static const u16 sPikaPowerTileTable[][2] =
 {
     {0x9e, 0x6e},
     {0x9f, 0x6f},
     {0xaf, 0x7f},
 };
 
-static void sub_8104144(struct Task *task)
+static void PikaPowerBolt_WaitAnim(struct Task *task)
 {
     u16 *vaddr = (u16 *)BG_SCREEN_ADDR(29);
     if (gSprites[task->data[2]].data[7])
@@ -2557,14 +2557,14 @@ static void sub_8104144(struct Task *task)
             r0 = 1;
         else if (task->data[1] == 16)
             r0 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r0][0];
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r0][0];
         sub_8105B88(task->data[2]);
         task->data[0] = 0;
         task->data[15] = 0;
     }
 }
 
-static void sub_81041AC(struct Task *task)
+static void PikaPowerBolt_ClearAll(struct Task *task)
 {
     u16 *vaddr = (u16 *)BG_SCREEN_ADDR(29);
     s16 r4 = task->data[1] + 2;
@@ -2575,7 +2575,7 @@ static void sub_81041AC(struct Task *task)
         r2 = 2;
     if (task->data[2] == 0)
     {
-        vaddr[r4 + 0x40] = gUnknown_083ECBC4[r2][1];
+        vaddr[r4 + 0x40] = sPikaPowerTileTable[r2][1];
         task->data[1]--;
     }
     if (++task->data[2] >= 20)
@@ -2587,7 +2587,7 @@ static void sub_81041AC(struct Task *task)
     }
 }
 
-static void sub_810421C(struct Task *task)
+static void ResetPikaPowerBoltTask(struct Task *task)
 {
     u8 i;
 
@@ -2595,7 +2595,7 @@ static void sub_810421C(struct Task *task)
         task->data[i] = 0;
 }
 
-static void sub_810423C(u8 pikaPower)
+static void LoadPikaPowerMeter(u8 pikaPower)
 {
     s16 i;
     u8 r3;
@@ -2608,7 +2608,7 @@ static void sub_810423C(u8 pikaPower)
             r3 = 1;
         else if (i == 15)
             r3 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r3][0];
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r3][0];
     }
     for (; i < 16; i++, r2++)
     {
@@ -2617,7 +2617,7 @@ static void sub_810423C(u8 pikaPower)
             r3 = 1;
         else if (i == 15)
             r3 = 2;
-        vaddr[r2 + 0x40] = gUnknown_083ECBC4[r3][1];
+        vaddr[r2 + 0x40] = sPikaPowerTileTable[r3][1];
     }
     gTasks[sSlotMachine->unk3E].data[1] = pikaPower;
 }
@@ -2829,7 +2829,7 @@ static void sub_81046C0(struct Task *task)
             gSprites[sSlotMachine->unk3F].animCmdIndex = 0;
             if (sSlotMachine->pikaPower)
             {
-                sub_8104098();
+                ResetPikaPowerBolts();
                 sSlotMachine->pikaPower = 0;
             }
             PlayFanfare(MUS_SLOTS_WIN);
@@ -2839,7 +2839,7 @@ static void sub_81046C0(struct Task *task)
 
 static void sub_8104764(struct Task *task)
 {
-    if ((task->data[4] == 0 || --task->data[4] == 0) && !sub_81040C8())
+    if ((task->data[4] == 0 || --task->data[4] == 0) && !IsPikaPowerBoltAnimating())
         task->data[0]++;
 }
 
@@ -3048,7 +3048,7 @@ static void sub_8104BFC(struct Task *task)
     BasicInitMenuWindow(&gWindowTemplate_81E7128);
     sub_81064B8();
     sub_8104CAC(task->data[1]);
-    sub_810423C(sSlotMachine->pikaPower);
+    LoadPikaPowerMeter(sSlotMachine->pikaPower);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     task->data[0]++;
 }
