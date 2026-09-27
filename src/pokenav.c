@@ -2993,9 +2993,9 @@ void CreateConditionMonMarkingsSprite(void)
 
     gPokenavStructPtr->conditionMarkingsMenu.baseTileTag = 0x1C;
     gPokenavStructPtr->conditionMarkingsMenu.basePaletteTag = 0x13;
-    sub_80F727C(&gPokenavStructPtr->conditionMarkingsMenu);
-    sub_80F7404();
-    sprite = sub_80F7920(27, 21, gPokenavConditionMonMarkingsPalette);
+    InitMonMarkingsMenu(&gPokenavStructPtr->conditionMarkingsMenu);
+    BufferMonMarkingsMenuTiles();
+    sprite = CreateMonMarkingAllCombosSprite(27, 21, gPokenavConditionMonMarkingsPalette);
     sprite->oam.priority = 3;
     sprite->x = 192;
     sprite->y = 32;
@@ -3017,7 +3017,7 @@ void MonMarkingsCallback(struct Sprite *sprite)
 
 void OpenConditionMonMarkingsMenu(void)
 {
-    sub_80F7418(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9], 176, 32);
+    OpenMonMarkingsMenu(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9], 176, 32);
 }
 
 void SaveAndCloseConditionMonMarkingsMenu(void)
@@ -3025,7 +3025,7 @@ void SaveAndCloseConditionMonMarkingsMenu(void)
     struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
     gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9] = gPokenavStructPtr->conditionMarkingsMenu.markings;
     SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->conditionMarkingsMenu.markings);
-    sub_80F7470();
+    FreeMonMarkingsMenu();
 }
 
 void InitRibbonIconGfx(void)

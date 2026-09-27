@@ -280,19 +280,19 @@ const union AnimCmd *const gSpriteAnimTable_83E533C[] =
 
 static EWRAM_DATA struct PokemonMarkMenu *sMenu = NULL;
 
-static void sub_80F761C(s16, s16, u16, u16);
-static void nullsub_65(struct Sprite *);
-static void sub_80F78CC(struct Sprite *);
-static void sub_80F7908(struct Sprite *);
-static struct Sprite *sub_80F7960(u16, u16, const u16 *, u16);
+static void CreateMonMarkingsMenuSprites(s16, s16, u16, u16);
+static void SpriteCB_Dummy(struct Sprite *);
+static void SpriteCB_Marking(struct Sprite *);
+static void SpriteCB_Cursor(struct Sprite *);
+static struct Sprite *CreateMarkingComboSprite(u16, u16, const u16 *, u16);
 
-void sub_80F727C(struct PokemonMarkMenu *ptr)
+void InitMonMarkingsMenu(struct PokemonMarkMenu *ptr)
 {
     sMenu = ptr;
     sMenu->spriteSheetLoadRequired = FALSE;
 }
 
-void sub_80F728C(void)
+static void BufferMenuWindowTiles(void)
 {
     const struct FrameGraphics *frame = TextWindow_GetFrameGraphics(gSaveBlock2.optionsWindowFrameType);
     sMenu->frameTiles = frame->tiles;
@@ -301,7 +301,7 @@ void sub_80F728C(void)
     CpuFill16(0, sMenu->menuWindowSpriteTiles, sizeof(sMenu->menuWindowSpriteTiles));
 }
 
-bool8 sub_80F72D4(void)
+static bool8 BufferMenuFrameTiles(void)
 {
     u16 i;
     u8 *dest = sMenu->menuWindowSpriteTiles + sMenu->tileLoadState * 0x100;
@@ -342,14 +342,14 @@ bool8 sub_80F72D4(void)
     return TRUE;
 }
 
-void sub_80F7404(void)
+void BufferMonMarkingsMenuTiles(void)
 {
-    sub_80F728C();
-    while (sub_80F72D4())
+    BufferMenuWindowTiles();
+    while (BufferMenuFrameTiles())
         ;
 }
 
-void sub_80F7418(u8 markings, s16 x, s16 y)
+void OpenMonMarkingsMenu(u8 markings, s16 x, s16 y)
 {
     u16 i;
     sMenu->cursorPos = 0;
@@ -357,10 +357,10 @@ void sub_80F7418(u8 markings, s16 x, s16 y)
     for (i = 0; i < 4; i++)
         sMenu->markingsArray[i] = (sMenu->markings >> i) & 1;
     DestroyMenuCursor();
-    sub_80F761C(x, y, sMenu->baseTileTag, sMenu->basePaletteTag);
+    CreateMonMarkingsMenuSprites(x, y, sMenu->baseTileTag, sMenu->basePaletteTag);
 }
 
-void sub_80F7470(void)
+void FreeMonMarkingsMenu(void)
 {
     u16 i;
 
@@ -392,7 +392,7 @@ void sub_80F7470(void)
         DestroySprite(sMenu->menuTextSprite);
 }
 
-bool8 sub_80F7500(void)
+bool8 HandleMonMarkingsMenuInput(void)
 {
     u16 i;
     struct SpriteSheet sheets[3] =
@@ -456,7 +456,7 @@ bool8 sub_80F7500(void)
     return TRUE;
 }
 
-void sub_80F761C(s16 x, s16 y, u16 baseTileTag, u16 basePaletteTag)
+static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 basePaletteTag)
 {
     u16 i;
     u8 spriteId;
@@ -483,7 +483,7 @@ void sub_80F761C(s16 x, s16 y, u16 baseTileTag, u16 basePaletteTag)
         gSpriteAnimTable_83E52AC,
         NULL,
         gDummySpriteAffineAnimTable,
-        nullsub_65,
+        SpriteCB_Dummy,
     };
 
     sMenu->spriteSheetLoadRequired = TRUE;
@@ -510,7 +510,7 @@ void sub_80F761C(s16 x, s16 y, u16 baseTileTag, u16 basePaletteTag)
     sprTemplate.tileTag++;
     sprTemplate.paletteTag++;
     sprTemplate.anims = gSpriteAnimTable_83E5274;
-    sprTemplate.callback = sub_80F78CC;
+    sprTemplate.callback = SpriteCB_Marking;
     sprTemplate.oam = &gOamData_83E521C;
 
     for (i = 0; i < 4; i++)
@@ -550,14 +550,14 @@ void sub_80F761C(s16 x, s16 y, u16 baseTileTag, u16 basePaletteTag)
     sMenu->cursorBaseY = y + 8;
     MenuCursor_Create814A5C0(0, basePaletteTag + 1, 15, 0, 0x30);
     MenuCursor_SetPos814A880(x + 8, sMenu->cursorBaseY);
-    sub_814AABC(sub_80F7908);
+    sub_814AABC(SpriteCB_Cursor);
 }
 
-void nullsub_65(struct Sprite *sprite)
+static void SpriteCB_Dummy(struct Sprite *sprite)
 {
 }
 
-void sub_80F78CC(struct Sprite *sprite)
+static void SpriteCB_Marking(struct Sprite *sprite)
 {
     if (sMenu->markingsArray[sprite->data[0]])
         StartSpriteAnim(sprite, 2 * sprite->data[0] + 1);
@@ -565,26 +565,26 @@ void sub_80F78CC(struct Sprite *sprite)
         StartSpriteAnim(sprite, 2 * sprite->data[0]);
 }
 
-void sub_80F7908(struct Sprite *sprite)
+static void SpriteCB_Cursor(struct Sprite *sprite)
 {
     sprite->y = 16 * sMenu->cursorPos + sMenu->cursorBaseY;
 }
 
-struct Sprite *sub_80F7920(u16 tileTag, u16 paletteTag, const u16 *palette)
+struct Sprite *CreateMonMarkingAllCombosSprite(u16 tileTag, u16 paletteTag, const u16 *palette)
 {
     if (!palette)
         palette = gUnknown_083E49F4;
-    return sub_80F7960(tileTag, paletteTag, palette, 16);
+    return CreateMarkingComboSprite(tileTag, paletteTag, palette, 16);
 }
 
-struct Sprite *sub_80F7940(u16 tileTag, u16 paletteTag, const u16 *palette)
+struct Sprite *CreateMonMarkingComboSprite(u16 tileTag, u16 paletteTag, const u16 *palette)
 {
     if (!palette)
         palette = gUnknown_083E49F4;
-    return sub_80F7960(tileTag, paletteTag, palette, 1);
+    return CreateMarkingComboSprite(tileTag, paletteTag, palette, 1);
 }
 
-struct Sprite *sub_80F7960(u16 tileTag, u16 paletteTag, const u16 *palette, u16 size)
+static struct Sprite *CreateMarkingComboSprite(u16 tileTag, u16 paletteTag, const u16 *palette, u16 size)
 {
     u8 spriteId;
     struct SpriteTemplate sprTemplate;
@@ -597,7 +597,7 @@ struct Sprite *sub_80F7960(u16 tileTag, u16 paletteTag, const u16 *palette, u16 
     sprTemplate.anims = gSpriteAnimTable_83E533C;
     sprTemplate.images = NULL;
     sprTemplate.affineAnims = gDummySpriteAffineAnimTable;
-    sprTemplate.callback = nullsub_65;
+    sprTemplate.callback = SpriteCB_Dummy;
 
     sheet.size = size * 0x80;
 
@@ -611,7 +611,7 @@ struct Sprite *sub_80F7960(u16 tileTag, u16 paletteTag, const u16 *palette, u16 
         return NULL;
 }
 
-void sub_80F7A10(u8 markings, void *dest)
+void UpdateMonMarkingTiles(u8 markings, void *dest)
 {
     DmaCopy16Defvars(3, gUnknown_083E4A14 + markings * 0x80, dest, 0x80);
 }

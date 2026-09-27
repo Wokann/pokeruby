@@ -242,8 +242,8 @@ void sub_8096884(void)
         sub_8099BF8(gPokemonStorage.currentBox);
         gPokemonStorageSystemPtr->unk_12bc.baseTileTag = 0x000a;
         gPokemonStorageSystemPtr->unk_12bc.basePaletteTag = 0xdacb;
-        sub_80F727C(&gPokemonStorageSystemPtr->unk_12bc);
-        sub_80F7404();
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->unk_12bc);
+        BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
@@ -305,8 +305,8 @@ void sub_80969A0(void)
         sub_8099BF8(gPokemonStorage.currentBox);
         gPokemonStorageSystemPtr->unk_12bc.baseTileTag = 0x000a;
         gPokemonStorageSystemPtr->unk_12bc.basePaletteTag = 0xdacb;
-        sub_80F727C(&gPokemonStorageSystemPtr->unk_12bc);
-        sub_80F7404();
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->unk_12bc);
+        BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
@@ -1104,13 +1104,13 @@ void sub_80977E4(void)
     case 0:
         PrintStorageActionText(PC_TEXT_MARK_POKE);
         gPokemonStorageSystemPtr->unk_12bc.markings = gPokemonStorageSystemPtr->unk_11f7;
-        sub_80F7418(gPokemonStorageSystemPtr->unk_11f7, 0xb0, 0x10);
+        OpenMonMarkingsMenu(gPokemonStorageSystemPtr->unk_11f7, 0xb0, 0x10);
         gPokemonStorageSystemPtr->unk_0004++;
         break;
     case 1:
-        if (!sub_80F7500())
+        if (!HandleMonMarkingsMenuInput())
         {
-            sub_80F7470();
+            FreeMonMarkingsMenu();
             sub_8098A5C();
             sub_809BDD8(gPokemonStorageSystemPtr->unk_12bc.markings);
             sub_809801C();
@@ -1461,7 +1461,7 @@ void sub_8097E70(void)
 
 void sub_8097F58(void)
 {
-    gPokemonStorageSystemPtr->unk_12ac = sub_80F7940(0x000d, 0xdace, 0);
+    gPokemonStorageSystemPtr->unk_12ac = CreateMonMarkingComboSprite(0x000d, 0xdace, 0);
     gPokemonStorageSystemPtr->unk_12ac->oam.priority = 0;
     gPokemonStorageSystemPtr->unk_12ac->subpriority = 1;
     gPokemonStorageSystemPtr->unk_12ac->x = 0x28;
@@ -1604,7 +1604,7 @@ void sub_80982B4(void)
 {
     if (gPokemonStorageSystemPtr->unk_11f0)
     {
-        sub_80F7A10(gPokemonStorageSystemPtr->unk_11f7, gPokemonStorageSystemPtr->unk_12b8);
+        UpdateMonMarkingTiles(gPokemonStorageSystemPtr->unk_11f7, gPokemonStorageSystemPtr->unk_12b8);
         gPokemonStorageSystemPtr->unk_12ac->invisible = FALSE;
     }
     else

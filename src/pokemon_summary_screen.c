@@ -3945,7 +3945,7 @@ static void sub_80A1D84(struct Pokemon *mon)
 {
     struct Sprite *sprite;
 
-    sprite = sub_80F7920(30003, 30003, sSummaryScreenMonMarkingsPalette);
+    sprite = CreateMonMarkingAllCombosSprite(30003, 30003, sSummaryScreenMonMarkingsPalette);
     gUnknown_020384F4 = sprite;
 
     if (sprite != NULL)

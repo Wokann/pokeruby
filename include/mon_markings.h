@@ -20,12 +20,13 @@ struct PokemonMarkMenu
     /*0x10B0*/ u8 tileLoadState;
 }; // 10b4
 
-void sub_80F727C(struct PokemonMarkMenu *ptr);
-void sub_80F7404(void);
-void sub_80F7418(u8 markings, s16 x, s16 y);
-void sub_80F7470(void);
-bool8 sub_80F7500(void);
-struct Sprite *sub_80F7940(u16 tileTag, u16 paletteTag, const u16 *palette);
-void sub_80F7A10(u8 markings, void *dest);
+void InitMonMarkingsMenu(struct PokemonMarkMenu *ptr);
+void BufferMonMarkingsMenuTiles(void);
+void OpenMonMarkingsMenu(u8 markings, s16 x, s16 y);
+void FreeMonMarkingsMenu(void);
+bool8 HandleMonMarkingsMenuInput(void);
+struct Sprite *CreateMonMarkingAllCombosSprite(u16 tileTag, u16 paletteTag, const u16 *palette);
+struct Sprite *CreateMonMarkingComboSprite(u16 tileTag, u16 paletteTag, const u16 *palette);
+void UpdateMonMarkingTiles(u8 markings, void *dest);
 
 #endif //POKERUBY_MON_MARKINGS_H

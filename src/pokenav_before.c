@@ -2443,7 +2443,7 @@ void StartConditionGraphMonEnter(void);
 void SetConditionGraphBg2Visible(bool8 visible);
 bool8 UpdateConditionGraphMonEnter(void);
 void OpenConditionMonMarkingsMenu(void);
-bool8 sub_80F7500(void);
+bool8 HandleMonMarkingsMenuInput(void);
 void SaveAndCloseConditionMonMarkingsMenu(void);
 bool8 UpdateConditionGraphMonExit(void);
 void DestroyPokenavPortraitSprite(void);
@@ -2552,7 +2552,7 @@ void HandleConditionGraphInput(void)
         gPokenavStructPtr->callbackStep = 8;
         break;
     case 8:
-        if (!sub_80F7500())
+        if (!HandleMonMarkingsMenuInput())
         {
             DrawPokenavBottomToolbar(2);
             SaveAndCloseConditionMonMarkingsMenu();
