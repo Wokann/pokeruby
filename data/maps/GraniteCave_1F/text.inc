@@ -1,4 +1,4 @@
-GraniteCave_1F_Text_194917:: @ 8194917
+GraniteCave_1F_Text_GetsDarkAheadHereYouGo:: @ 8194917
 	.string "Hey, you.\n"
 	.string "It gets awfully dark ahead.\l"
 	.string "It'll be tough trying to explore.\p"
@@ -10,7 +10,7 @@ GraniteCave_1F_Text_194917:: @ 8194917
 	.string "that we meet is our motto.\p"
 	.string "Here you go, I'll pass this on to you.$"
 
-GraniteCave_1F_Text_194A3E:: @ 8194A3E
+GraniteCave_1F_Text_ExplainFlash:: @ 8194A3E
 	.string "Teach that hidden move FLASH to a\n"
 	.string "POKéMON and use it.\p"
 	.string "It lights up even the inky darkness\n"
