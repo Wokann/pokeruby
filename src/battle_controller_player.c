@@ -2088,7 +2088,7 @@ void PlayerHandleSetAttributes(void)
     PlayerBufferExecCompleted();
 }
 
-// Duplicate of sub_811EC68
+// Duplicate of SetLinkPartnerMonData
 void dp01_setattr_by_ch1_for_player_pokemon(u8 a)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
