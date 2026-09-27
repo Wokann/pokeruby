@@ -213,12 +213,12 @@ static void DecideStop_NoBias_Reel3(void);
 static void DecideStop_NoBias_Reel3_Bet1(void);
 static void DecideStop_NoBias_Reel3_Bet2(void);
 static void DecideStop_NoBias_Reel3_Bet3(void);
-static void sub_8103C14(u8 a0);
-static void sub_8103C48(u8 taskId);
+static void PressStopReelButton(u8 a0);
+static void Task_PressStopReelButton(u8 taskId);
 static void sub_8103D50(u8 a0);
-static void sub_8103C78(struct Task *task, u8 taskId);
-static void sub_8103CAC(struct Task *task, u8 taskId);
-static void sub_8103CC8(struct Task *task, u8 taskId);
+static void StopReelButton_Press(struct Task *task, u8 taskId);
+static void StopReelButton_Wait(struct Task *task, u8 taskId);
+static void StopReelButton_Unpress(struct Task *task, u8 taskId);
 static void sub_8103D8C(u8 a0);
 static void sub_8103DC8(void);
 static void sub_8103E04(u8 a0);
@@ -826,7 +826,7 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
         {
             PlaySE(SE_CONTEST_PLACE);
             StopSlotReel(sSlotMachine->unk18);
-            sub_8103C14(sSlotMachine->unk18);
+            PressStopReelButton(sSlotMachine->unk18);
             unk_debug_bss_1_8 = (Random() & 0x1F) + 1;
             sSlotMachine->state = 13;
         }
@@ -838,7 +838,7 @@ static bool8 SlotTask_WaitReelStop(struct Task *task)
     {
         PlaySE(SE_CONTEST_PLACE);
         StopSlotReel(sSlotMachine->unk18);
-        sub_8103C14(sSlotMachine->unk18);
+        PressStopReelButton(sSlotMachine->unk18);
         sSlotMachine->state = 13;
     }
     return FALSE;
@@ -2300,42 +2300,42 @@ static void DecideStop_NoBias_Reel3_Bet3(void)
     }
 }
 
-static void sub_8103C14(u8 a0)
+static void PressStopReelButton(u8 a0)
 {
-    u8 taskId = CreateTask(sub_8103C48, 5);
+    u8 taskId = CreateTask(Task_PressStopReelButton, 5);
     gTasks[taskId].data[15] = a0;
-    sub_8103C48(taskId);
+    Task_PressStopReelButton(taskId);
 }
 
-static void (*const gUnknown_083ECBA0[])(struct Task *task, u8 taskId) =
+static void (*const sReelStopButtonTasks[])(struct Task *task, u8 taskId) =
 {
-    sub_8103C78,
-    sub_8103CAC,
-    sub_8103CC8
+    StopReelButton_Press,
+    StopReelButton_Wait,
+    StopReelButton_Unpress
 };
 
-static void sub_8103C48(u8 taskId)
+static void Task_PressStopReelButton(u8 taskId)
 {
-    gUnknown_083ECBA0[gTasks[taskId].data[0]](gTasks + taskId, taskId);
+    sReelStopButtonTasks[gTasks[taskId].data[0]](gTasks + taskId, taskId);
 }
 
-static const s16 gUnknown_083ECBAC[] = {5, 10, 15};
+static const s16 sReelButtonOffsets[] = {5, 10, 15};
 
-static void sub_8103C78(struct Task *task, u8 taskId)
+static void StopReelButton_Press(struct Task *task, u8 taskId)
 {
-    sub_81065A8(gUnknown_083ECBAC[task->data[15]], 0x62, 0x63, 0x72, 0x73);
+    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x62, 0x63, 0x72, 0x73);
     task->data[0]++;
 }
 
-static void sub_8103CAC(struct Task *task, u8 taskId)
+static void StopReelButton_Wait(struct Task *task, u8 taskId)
 {
     if (++task->data[1] > 11)
         task->data[0]++;
 }
 
-static void sub_8103CC8(struct Task *task, u8 taskId)
+static void StopReelButton_Unpress(struct Task *task, u8 taskId)
 {
-    sub_81065A8(gUnknown_083ECBAC[task->data[15]], 0x42, 0x43, 0x52, 0x53);
+    sub_81065A8(sReelButtonOffsets[task->data[15]], 0x42, 0x43, 0x52, 0x53);
     DestroyTask(taskId);
 }
 
