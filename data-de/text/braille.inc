@@ -67,7 +67,7 @@ SealedChamber_InnerRoom_Braille_ThoseWithCourageHope:: @ 81C5470
 	.string "Û{0x31}ìÉÔ àÉéÎ{0x3F}Ç\n"
 	.string "+ÉëÎ àÉÂÒ$"
 
-SealedChamber_InnerRoom_Braille_1C549B:: @ 81C549B
+SealedChamber_InnerRoom_Braille_OpenDoorEternalPokemonWaits:: @ 81C549B
 	.string "Á êÛÇÂÌÉéÌ ì&ëÌ {0x39}{0x31}\n"
 	.string "ÌÉéÌÛ Ì+ÉÔÌé\n"
 	.string "áçÙÌÛçé\n"
