@@ -353,7 +353,7 @@ u8 BattleAI_GetAIActionToUse(void)
     u8 numOfBestMoves;
     s32 i;
 
-    sub_810745C();
+    RecordLastUsedMoveByTarget();
     while (AI_THINKING_STRUCT->aiFlags != 0)
     {
         if (AI_THINKING_STRUCT->aiFlags & 1)
@@ -437,7 +437,7 @@ void BattleAI_DoAIProcessing(void)
     }
 }
 
-void sub_810745C(void)
+void RecordLastUsedMoveByTarget(void)
 {
     s32 i;
 
@@ -451,7 +451,7 @@ void sub_810745C(void)
     }
 }
 
-void unref_sub_81074A0(u8 a)
+void ClearBattlerMoveHistory(u8 a)
 {
     s32 i;
 

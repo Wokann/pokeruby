@@ -20,7 +20,7 @@ enum
 void BattleAI_SetupAIData(void);
 u8 BattleAI_GetAIActionToUse(void);
 void BattleAI_DoAIProcessing(void);
-void sub_810745C(void);
+void RecordLastUsedMoveByTarget(void);
 void AIStackPushVar(u8 *);
 u8 AIStackPop(void);
 void BattleAI_HandleItemUseBeforeAISetup(void);
