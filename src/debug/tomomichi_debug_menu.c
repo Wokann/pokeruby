@@ -1308,74 +1308,74 @@ static const struct MenuAction sMenuActions_SysWorkCategories[] = {
     {sString_SysWork_Other2, ControlWorks_SysWork_Other2_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C32D4[] = _("WKーCYCLEーROADーHIT");
-static const u8 gUnknown_Debug_083C32E6[] = _("WKーCYCLEーROADーTIMエ1");
-static const u8 gUnknown_Debug_083C32FA[] = _("WKーCYCLEーROADーTIMエ2");
+static const u8 sString_SysWork_CyclingRoadCollisions[] = _("WKーCYCLEーROADーHIT");
+static const u8 sString_SysWork_CyclingRoadTimeLow[] = _("WKーCYCLEーROADーTIMエ1");
+static const u8 sString_SysWork_CyclingRoadTimeHigh[] = _("WKーCYCLEーROADーTIMエ2");
 
-static const u8 gUnknown_Debug_083C330E[] = _("WKーSIZEーKINOKOKOーOYAJI");
-static const u8 gUnknown_Debug_083C3325[] = _("WKーSIZEーNAMAZOーOYAJI");
+static const u8 sString_SysWork_ShroomishSizeRecord[] = _("WKーSIZEーKINOKOKOーOYAJI");
+static const u8 sString_SysWork_BarboachSizeRecord[] = _("WKーSIZEーNAMAZOーOYAJI");
 
-static const u8 gUnknown_Debug_083C333A[] = _("WKーSPRAYーCOUNT");
-static const u8 gUnknown_Debug_083C3349[] = _("WKーICEーCOUNT");
-static const u8 gUnknown_Debug_083C3356[] = _("WKーASHーGATHERーCOUNT");
-static const u8 gUnknown_Debug_083C336A[] = _("WKーCRUISEーCOUNT");
-static const u8 gUnknown_Debug_083C337A[] = _("WKーFRIENDLYーSTEPーCOUNT");
-static const u8 gUnknown_Debug_083C3391[] = _("WKーPOISONーSTEPーCOUNT");
+static const u8 sString_SysWork_RepelSteps[] = _("WKーSPRAYーCOUNT");
+static const u8 sString_SysWork_IceSteps[] = _("WKーICEーCOUNT");
+static const u8 sString_SysWork_AshGatherCount[] = _("WKーASHーGATHERーCOUNT");
+static const u8 sString_SysWork_CruiseSteps[] = _("WKーCRUISEーCOUNT");
+static const u8 sString_SysWork_HappinessSteps[] = _("WKーFRIENDLYーSTEPーCOUNT");
+static const u8 sString_SysWork_PoisonSteps[] = _("WKーPOISONーSTEPーCOUNT");
 
-static const u8 gUnknown_Debug_083C33A6[] = _("WKRECYCLEーGOODS");
-static const u8 gUnknown_Debug_083C33B6[] = _("WKーFIRSTーPOKE");
-static const u8 gUnknown_Debug_083C33C4[] = _("WKーMABOROSIRNDーH");
-static const u8 gUnknown_Debug_083C33D5[] = _("WKーMABOROSIRNDーL");
-static const u8 gUnknown_Debug_083C33E6[] = _("EVーONEーDAYーWORK");
-static const u8 gUnknown_Debug_083C33F6[] = _("EVーFANWORK");
-static const u8 gUnknown_Debug_083C3401[] = _("EVーFANTIME");
-static const u8 gUnknown_Debug_083C340C[] = _("WKーKARAKURIーLEVEL");
-static const u8 gUnknown_Debug_083C341E[] = _("WKーPOKELOTーPRIZE");
+static const u8 sString_SysWork_RecycleGoods[] = _("WKRECYCLEーGOODS");
+static const u8 sString_SysWork_StarterMon[] = _("WKーFIRSTーPOKE");
+static const u8 sString_SysWork_MirageRandomHigh[] = _("WKーMABOROSIRNDーH");
+static const u8 sString_SysWork_MirageRandomLow[] = _("WKーMABOROSIRNDーL");
+static const u8 sString_SysWork_Days[] = _("EVーONEーDAYーWORK");
+static const u8 sString_SysWork_FanClubFanCounter[] = _("EVーFANWORK");
+static const u8 sString_SysWork_FanClubLoseFanTimer[] = _("EVーFANTIME");
+static const u8 sString_SysWork_TrickHouseLevel[] = _("WKーKARAKURIーLEVEL");
+static const u8 sString_SysWork_LotteryPrizeItem[] = _("WKーPOKELOTーPRIZE");
 
-static const u8 gUnknown_Debug_083C342F[] = _("WKーSPECIALーZUKN");
-static const u8 gUnknown_Debug_083C343F[] = _("WKーHYOUKAーDAYS");
-static const u8 gUnknown_Debug_083C344E[] = _("WKーPOKELOTーRND1");
-static const u8 gUnknown_Debug_083C345E[] = _("WKーPOKELOTーRND2");
-static const u8 gUnknown_Debug_083C346E[] = _("WKーBASEーMAPNO");
+static const u8 sString_SysWork_NationalDex[] = _("WKーSPECIALーZUKN");
+static const u8 sString_SysWork_BirchState[] = _("WKーHYOUKAーDAYS");
+static const u8 sString_SysWork_LotteryRandomLow[] = _("WKーPOKELOTーRND1");
+static const u8 sString_SysWork_LotteryRandomHigh[] = _("WKーPOKELOTーRND2");
+static const u8 sString_SysWork_SecretBaseMap[] = _("WKーBASEーMAPNO");
 
 static const struct MenuAction sMenuActions_SysWork_CyclingRoad[] = {
-    {gUnknown_Debug_083C32D4, DummyMenuAction},
-    {gUnknown_Debug_083C32E6, DummyMenuAction},
-    {gUnknown_Debug_083C32FA, DummyMenuAction}
+    {sString_SysWork_CyclingRoadCollisions, DummyMenuAction},
+    {sString_SysWork_CyclingRoadTimeLow, DummyMenuAction},
+    {sString_SysWork_CyclingRoadTimeHigh, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SysWork_SizeRecords[] = {
-    {gUnknown_Debug_083C330E, DummyMenuAction},
-    {gUnknown_Debug_083C3325, DummyMenuAction}
+    {sString_SysWork_ShroomishSizeRecord, DummyMenuAction},
+    {sString_SysWork_BarboachSizeRecord, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SysWork_Counters[] = {
-    {gUnknown_Debug_083C333A, DummyMenuAction},
-    {gUnknown_Debug_083C3349, DummyMenuAction},
-    {gUnknown_Debug_083C3356, DummyMenuAction},
-    {gUnknown_Debug_083C336A, DummyMenuAction},
-    {gUnknown_Debug_083C337A, DummyMenuAction},
-    {gUnknown_Debug_083C3391, DummyMenuAction}
+    {sString_SysWork_RepelSteps, DummyMenuAction},
+    {sString_SysWork_IceSteps, DummyMenuAction},
+    {sString_SysWork_AshGatherCount, DummyMenuAction},
+    {sString_SysWork_CruiseSteps, DummyMenuAction},
+    {sString_SysWork_HappinessSteps, DummyMenuAction},
+    {sString_SysWork_PoisonSteps, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SysWork_Other1[] = {
-    {gUnknown_Debug_083C33A6, DummyMenuAction},
-    {gUnknown_Debug_083C33B6, DummyMenuAction},
-    {gUnknown_Debug_083C33C4, DummyMenuAction},
-    {gUnknown_Debug_083C33D5, DummyMenuAction},
-    {gUnknown_Debug_083C33E6, DummyMenuAction},
-    {gUnknown_Debug_083C33F6, DummyMenuAction},
-    {gUnknown_Debug_083C3401, DummyMenuAction},
-    {gUnknown_Debug_083C340C, DummyMenuAction},
-    {gUnknown_Debug_083C341E, DummyMenuAction}
+    {sString_SysWork_RecycleGoods, DummyMenuAction},
+    {sString_SysWork_StarterMon, DummyMenuAction},
+    {sString_SysWork_MirageRandomHigh, DummyMenuAction},
+    {sString_SysWork_MirageRandomLow, DummyMenuAction},
+    {sString_SysWork_Days, DummyMenuAction},
+    {sString_SysWork_FanClubFanCounter, DummyMenuAction},
+    {sString_SysWork_FanClubLoseFanTimer, DummyMenuAction},
+    {sString_SysWork_TrickHouseLevel, DummyMenuAction},
+    {sString_SysWork_LotteryPrizeItem, DummyMenuAction}
 };
 
 static const struct MenuAction sMenuActions_SysWork_Other2[] = {
-    {gUnknown_Debug_083C342F, DummyMenuAction},
-    {gUnknown_Debug_083C343F, DummyMenuAction},
-    {gUnknown_Debug_083C344E, DummyMenuAction},
-    {gUnknown_Debug_083C345E, DummyMenuAction},
-    {gUnknown_Debug_083C346E, DummyMenuAction}
+    {sString_SysWork_NationalDex, DummyMenuAction},
+    {sString_SysWork_BirchState, DummyMenuAction},
+    {sString_SysWork_LotteryRandomLow, DummyMenuAction},
+    {sString_SysWork_LotteryRandomHigh, DummyMenuAction},
+    {sString_SysWork_SecretBaseMap, DummyMenuAction}
 };
 
 static const u8 sSysWorkPageCounts[] = {3, 2, 6, 9, 5};
