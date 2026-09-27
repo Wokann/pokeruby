@@ -560,64 +560,64 @@ static const struct MenuAction sMenuActions_SysFlagCategories[] = {
     {sString_SysFlag_Landmarks, ControlFlags_SysFlag_Landmarks_InitPage}
 };
 
-static const u8 gUnknown_Debug_083C1378[] = _("BATCH01ーGET");
-static const u8 gUnknown_Debug_083C1384[] = _("BATCH02ーGET");
-static const u8 gUnknown_Debug_083C1390[] = _("BATCH03ーGET");
-static const u8 gUnknown_Debug_083C139C[] = _("BATCH04ーGET");
-static const u8 gUnknown_Debug_083C13A8[] = _("BATCH05ーGET");
-static const u8 gUnknown_Debug_083C13B4[] = _("BATCH06ーGET");
-static const u8 gUnknown_Debug_083C13C0[] = _("BATCH07ーGET");
-static const u8 gUnknown_Debug_083C13CC[] = _("BATCH08ーGET");
+static const u8 sString_SysFlag_GetBadge01[] = _("BATCH01ーGET");
+static const u8 sString_SysFlag_GetBadge02[] = _("BATCH02ーGET");
+static const u8 sString_SysFlag_GetBadge03[] = _("BATCH03ーGET");
+static const u8 sString_SysFlag_GetBadge04[] = _("BATCH04ーGET");
+static const u8 sString_SysFlag_GetBadge05[] = _("BATCH05ーGET");
+static const u8 sString_SysFlag_GetBadge06[] = _("BATCH06ーGET");
+static const u8 sString_SysFlag_GetBadge07[] = _("BATCH07ーGET");
+static const u8 sString_SysFlag_GetBadge08[] = _("BATCH08ーGET");
 
 static const struct MenuAction sMenuActions_SysFlags_Badges[] = {
-    {gUnknown_Debug_083C1378, DummyMenuAction},
-    {gUnknown_Debug_083C1384, DummyMenuAction},
-    {gUnknown_Debug_083C1390, DummyMenuAction},
-    {gUnknown_Debug_083C139C, DummyMenuAction},
-    {gUnknown_Debug_083C13A8, DummyMenuAction},
-    {gUnknown_Debug_083C13B4, DummyMenuAction},
-    {gUnknown_Debug_083C13C0, DummyMenuAction},
-    {gUnknown_Debug_083C13CC, DummyMenuAction}
+    {sString_SysFlag_GetBadge01, DummyMenuAction},
+    {sString_SysFlag_GetBadge02, DummyMenuAction},
+    {sString_SysFlag_GetBadge03, DummyMenuAction},
+    {sString_SysFlag_GetBadge04, DummyMenuAction},
+    {sString_SysFlag_GetBadge05, DummyMenuAction},
+    {sString_SysFlag_GetBadge06, DummyMenuAction},
+    {sString_SysFlag_GetBadge07, DummyMenuAction},
+    {sString_SysFlag_GetBadge08, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C1418[] = _("T101ARRIVE");
-static const u8 gUnknown_Debug_083C1423[] = _("T102ARRIVE");
-static const u8 gUnknown_Debug_083C142E[] = _("T103ARRIVE");
-static const u8 gUnknown_Debug_083C1439[] = _("T104ARRIVE");
-static const u8 gUnknown_Debug_083C1444[] = _("T105ARRIVE");
-static const u8 gUnknown_Debug_083C144F[] = _("T106ARRIVE");
-static const u8 gUnknown_Debug_083C145A[] = _("T107ARRIVE");
+static const u8 sString_SysFlag_VisitedLittlerootTown[] = _("T101ARRIVE");
+static const u8 sString_SysFlag_VisitedOldaleTown[] = _("T102ARRIVE");
+static const u8 sString_SysFlag_VisitedDewfordTown[] = _("T103ARRIVE");
+static const u8 sString_SysFlag_VisitedLavaridgeTown[] = _("T104ARRIVE");
+static const u8 sString_SysFlag_VisitedFallarborTown[] = _("T105ARRIVE");
+static const u8 sString_SysFlag_VisitedVerdanturfTown[] = _("T106ARRIVE");
+static const u8 sString_SysFlag_VisitedPacifidlogTown[] = _("T107ARRIVE");
 
 static const struct MenuAction sMenuActions_SysFlags_TownsVisited[] = {
-    {gUnknown_Debug_083C1418, DummyMenuAction},
-    {gUnknown_Debug_083C1423, DummyMenuAction},
-    {gUnknown_Debug_083C142E, DummyMenuAction},
-    {gUnknown_Debug_083C1439, DummyMenuAction},
-    {gUnknown_Debug_083C1444, DummyMenuAction},
-    {gUnknown_Debug_083C144F, DummyMenuAction},
-    {gUnknown_Debug_083C145A, DummyMenuAction}
+    {sString_SysFlag_VisitedLittlerootTown, DummyMenuAction},
+    {sString_SysFlag_VisitedOldaleTown, DummyMenuAction},
+    {sString_SysFlag_VisitedDewfordTown, DummyMenuAction},
+    {sString_SysFlag_VisitedLavaridgeTown, DummyMenuAction},
+    {sString_SysFlag_VisitedFallarborTown, DummyMenuAction},
+    {sString_SysFlag_VisitedVerdanturfTown, DummyMenuAction},
+    {sString_SysFlag_VisitedPacifidlogTown, DummyMenuAction}
 };
 
-static const u8 gUnknown_Debug_083C14A0[] = _("C101ARRIVE");
-static const u8 gUnknown_Debug_083C14AB[] = _("C102ARRIVE");
-static const u8 gUnknown_Debug_083C14B6[] = _("C103ARRIVE");
-static const u8 gUnknown_Debug_083C14C1[] = _("C104ARRIVE");
-static const u8 gUnknown_Debug_083C14CC[] = _("C105ARRIVE");
-static const u8 gUnknown_Debug_083C14D7[] = _("C106ARRIVE");
-static const u8 gUnknown_Debug_083C14E2[] = _("C107ARRIVE");
-static const u8 gUnknown_Debug_083C14ED[] = _("C108ARRIVE");
-static const u8 gUnknown_Debug_083C14F8[] = _("C109ARRIVE");
+static const u8 sString_SysFlag_VisitedPetalburgCity[] = _("C101ARRIVE");
+static const u8 sString_SysFlag_VisitedSlateportCity[] = _("C102ARRIVE");
+static const u8 sString_SysFlag_VisitedMauvilleCity[] = _("C103ARRIVE");
+static const u8 sString_SysFlag_VisitedRustboroCity[] = _("C104ARRIVE");
+static const u8 sString_SysFlag_VisitedFortreeCity[] = _("C105ARRIVE");
+static const u8 sString_SysFlag_VisitedLilycoveCity[] = _("C106ARRIVE");
+static const u8 sString_SysFlag_VisitedMossdeepCity[] = _("C107ARRIVE");
+static const u8 sString_SysFlag_VisitedSootopolisCity[] = _("C108ARRIVE");
+static const u8 sString_SysFlag_VisitedEverGrandeCity[] = _("C109ARRIVE");
 
 static const struct MenuAction sMenuActions_SysFlags_CitiesVisited[] = {
-    {gUnknown_Debug_083C14A0, DummyMenuAction},
-    {gUnknown_Debug_083C14AB, DummyMenuAction},
-    {gUnknown_Debug_083C14B6, DummyMenuAction},
-    {gUnknown_Debug_083C14C1, DummyMenuAction},
-    {gUnknown_Debug_083C14CC, DummyMenuAction},
-    {gUnknown_Debug_083C14D7, DummyMenuAction},
-    {gUnknown_Debug_083C14E2, DummyMenuAction},
-    {gUnknown_Debug_083C14ED, DummyMenuAction},
-    {gUnknown_Debug_083C14F8, DummyMenuAction}
+    {sString_SysFlag_VisitedPetalburgCity, DummyMenuAction},
+    {sString_SysFlag_VisitedSlateportCity, DummyMenuAction},
+    {sString_SysFlag_VisitedMauvilleCity, DummyMenuAction},
+    {sString_SysFlag_VisitedRustboroCity, DummyMenuAction},
+    {sString_SysFlag_VisitedFortreeCity, DummyMenuAction},
+    {sString_SysFlag_VisitedLilycoveCity, DummyMenuAction},
+    {sString_SysFlag_VisitedMossdeepCity, DummyMenuAction},
+    {sString_SysFlag_VisitedSootopolisCity, DummyMenuAction},
+    {sString_SysFlag_VisitedEverGrandeCity, DummyMenuAction}
 };
 
 static const u8 gUnknown_Debug_083C154C[] = _("SYSーPOKEMONーGET");
