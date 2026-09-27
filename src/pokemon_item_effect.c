@@ -280,7 +280,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *pkmn, u16 item, u8 partyIndex, u8 mo
                                 if (battleId != 4)
                                 {
                                     gAbsentBattlerFlags &= ~gBitTable[battleId];
-                                    CopyPlayerPartyMonToBattleData(battleId, pokemon_order_func(gBattlerPartyIndexes[battleId]));
+                                    CopyPlayerPartyMonToBattleData(battleId, GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battleId]));
                                     if (GetBattlerSide(gActiveBattler) == 0 && gBattleResults.reviveCount < 255)
                                         gBattleResults.reviveCount++;
                                 }

@@ -98,7 +98,7 @@ extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern u8 IsBankSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
-extern void sub_8094958(void);
+extern void BufferBattlePartyCurrentOrder(void);
 extern void SetIdleSpriteCallback(struct Sprite *);
 extern void move_anim_start_t2();
 
@@ -595,7 +595,7 @@ u8 battle_load_something(u8 *pState, u8 *b)
         break;
     case 6:
         sub_80327CC();
-        sub_8094958();
+        BufferBattlePartyCurrentOrder();
         retVal = TRUE;
         break;
     }
@@ -839,8 +839,8 @@ void sub_8032638(void)
     {
         u8 r8 = GetBattlerAtPosition(0);
         u8 r9 = GetBattlerAtPosition(2);
-        u8 r4 = pokemon_order_func(gBattlerPartyIndexes[r8]);
-        u8 r5 = pokemon_order_func(gBattlerPartyIndexes[r9]);
+        u8 r4 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[r8]);
+        u8 r5 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[r9]);
 
         if (GetMonData(&gPlayerParty[r4], MON_DATA_HP) != 0)
             HandleLowHpMusicChange(&gPlayerParty[r4], r8);

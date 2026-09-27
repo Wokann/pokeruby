@@ -133,7 +133,7 @@ void InitBattleControllers(void)
     if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
     {
         for (i = 0; i < gBattlersCount; i++)
-            sub_8094978(i, 0);
+            BufferBattlePartyCurrentOrderBySide(i, 0);
     }
 }
 
@@ -233,11 +233,11 @@ void InitLinkBtlControllers(void)
         {
         case 0:
         case 3:
-            sub_8094978(gLinkPlayers[i].id, 0);
+            BufferBattlePartyCurrentOrderBySide(gLinkPlayers[i].id, 0);
             break;
         case 1:
         case 2:
-            sub_8094978(gLinkPlayers[i].id, 1);
+            BufferBattlePartyCurrentOrderBySide(gLinkPlayers[i].id, 1);
             break;
         }
 

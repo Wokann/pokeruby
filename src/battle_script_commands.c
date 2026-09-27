@@ -184,7 +184,7 @@ u8 sub_809070C(u16 nationalNum, u32 TiD, u32 PiD); //task prepare poke dex displ
 void SetOutlineCursorPosition(u8 a1, u8 a2);
 u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
-void sub_8094B6C(u8 bank, u8 partyID, u8 r2);
+void SwitchPartyOrderLinkMulti(u8 bank, u8 partyID, u8 r2);
 
 //extern BattleScripts
 extern u8 BattleScript_MoveEnd[];
@@ -6811,8 +6811,8 @@ static void atk8F_forcerandomswitch(void)
             gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gBattlerTarget] = i;
             if (!IsLinkDoubleBattle())
                 SwitchPartyOrder(gBattlerTarget);
-            sub_8094B6C(gBattlerTarget, i, 0);
-            sub_8094B6C(gBattlerTarget ^ 2, i, 1);
+            SwitchPartyOrderLinkMulti(gBattlerTarget, i, 0);
+            SwitchPartyOrderLinkMulti(gBattlerTarget ^ 2, i, 1);
 #undef MON_CAN_BATTLE
         }
     }

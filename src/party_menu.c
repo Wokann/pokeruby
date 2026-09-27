@@ -3668,7 +3668,7 @@ bool8 IsMedicineIneffective(struct Pokemon *pkmn, u16 item)
 bool8 ExecuteTableBasedItemEffect__(u8 monIndex, u16 item, u8 moveIndex)
 {
     if (gMain.inBattle)
-        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, sub_8094C20(monIndex), moveIndex);
+        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, GetPartyIdFromBattleSlot(monIndex), moveIndex);
     else
         return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, monIndex, moveIndex);
 }

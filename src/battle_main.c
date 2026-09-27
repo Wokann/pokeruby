@@ -4187,9 +4187,9 @@ void SwitchPartyOrder(u8 battler)
 
     for (i = 0; i < 3; i++)
         gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3];
-    partyId1 = pokemon_order_func(gBattlerPartyIndexes[battler]);
-    partyId2 = pokemon_order_func(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + battler]);
-    sub_8094C98(partyId1, partyId2);
+    partyId1 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]);
+    partyId2 = GetPartyIdFromBattlePartyId(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + battler]);
+    SwitchPartyMonSlots(partyId1, partyId2);
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
     {
         for (i = 0; i < 3; i++)
