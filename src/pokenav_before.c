@@ -1094,7 +1094,7 @@ const struct ScanlineEffectParams gConditionGraphScanlineParams =
     0,
 };
 
-const u16 gUnknown_083E499C[] = 
+const u16 gRibbonSummaryMonDataFields[] =
 {
     MON_DATA_CHAMPION_RIBBON,
     MON_DATA_COOL_RIBBON,
@@ -2783,7 +2783,7 @@ void OpenRibbonsSummaryMenu(void)
 		}
         break;
     case 2:
-        sub_80F66E0();
+        InitRibbonsSummaryMonData();
         ResetPokenavSetupStep();
         gPokenavStructPtr->callbackStep++;
         break;

@@ -442,7 +442,7 @@ void PrintRibbonsSummaryCount(void);
 void sub_80F6A4C(s8);
 bool8 sub_80F6AF0();
 u8 sub_80F68E8();
-void sub_80F66E0();
+void InitRibbonsSummaryMonData();
 void InitRibbonsMonList();
 bool8 BuildRibbonsMonListStep();
 void InitConditionGraphScreen(void);

@@ -4892,47 +4892,47 @@ u8 *BufferPokenavMonNameGenderLevelText(u8 *dst, u16 listIndex, u8 displayMode)
     return dest;
 }
 
-extern const u16 gUnknown_083E499C[];
+extern const u16 gRibbonSummaryMonDataFields[];
 
-void sub_80F66E0(void)
+void InitRibbonsSummaryMonData(void)
 {
-    u8 r9;
-    u32 r7;
+    u8 ribbonIdBase;
+    u32 ribbonFlags;
     u16 i, j;
-    u8 r2;
-    u8 r0;
+    u8 numRibbons;
+    u8 numVariants;
 
     BufferPokenavMonNameGenderLevelText(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
     LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
     gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->ribbonCount = 0;
-    r9 = 0;
-    r7 = GetBoxOrPartyMonData(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
+    ribbonIdBase = 0;
+    ribbonFlags = GetBoxOrPartyMonData(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
     gPokenavStructPtr->giftRibbonCount = 0;
     for (i = 0; i < 17; i++)
     {
-        switch (gUnknown_083E499C[i])
+        switch (gRibbonSummaryMonDataFields[i])
         {
         case MON_DATA_COOL_RIBBON:
         case MON_DATA_BEAUTY_RIBBON:
         case MON_DATA_CUTE_RIBBON:
         case MON_DATA_SMART_RIBBON:
         case MON_DATA_TOUGH_RIBBON:
-            r2 = r7 & 7;
-            r7 >>= 3;
-            r0 = 4;
+            numRibbons = ribbonFlags & 7;
+            ribbonFlags >>= 3;
+            numVariants = 4;
             break;
         default:
-            r2 = r7 & 1;
-            r7 >>= 1;
-            r0 = 1;
+            numRibbons = ribbonFlags & 1;
+            ribbonFlags >>= 1;
+            numVariants = 1;
             break;
         };
-        for (j = 0; j < r2; j++)
-            gPokenavStructPtr->ribbonIds[gPokenavStructPtr->ribbonCount++] = r9 + j;
-        if (r2 && r9 > 24)
+        for (j = 0; j < numRibbons; j++)
+            gPokenavStructPtr->ribbonIds[gPokenavStructPtr->ribbonCount++] = ribbonIdBase + j;
+        if (numRibbons && ribbonIdBase > 24)
             gPokenavStructPtr->giftRibbonCount++;
-        r9 += r0;
+        ribbonIdBase += numVariants;
     }
     if (gPokenavStructPtr->ribbonCount != gPokenavStructPtr->giftRibbonCount)
     {
@@ -4944,18 +4944,18 @@ void sub_80F66E0(void)
         gPokenavStructPtr->ribbonCursorPos = 0;
         gPokenavStructPtr->ribbonPageIndex = 3;
     }
-    r2 = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
+    numRibbons = gPokenavStructPtr->ribbonCount - gPokenavStructPtr->giftRibbonCount;
     for (i = 0; i < 3; i++)
     {
-        if (r2 > 8)
+        if (numRibbons > 8)
         {
             gPokenavStructPtr->ribbonPageCounts[i] = 9;
-            r2 -= 9;
+            numRibbons -= 9;
         }
         else
         {
-            gPokenavStructPtr->ribbonPageCounts[i] = r2;
-            r2 = 0;
+            gPokenavStructPtr->ribbonPageCounts[i] = numRibbons;
+            numRibbons = 0;
         }
     }
     gPokenavStructPtr->ribbonPageCounts[i] = gPokenavStructPtr->giftRibbonCount;
@@ -5064,7 +5064,7 @@ bool8 sub_80F6AF0(void)
     case 1:
         REG_DISPCNT |= DISPCNT_WIN0_ON;
         ClearRibbonsSummaryDescription();
-        sub_80F66E0();
+        InitRibbonsSummaryMonData();
         gPokenavStructPtr->unk87DE++;
         break;
     case 2:
