@@ -199,8 +199,8 @@ void ExpandBattleTextBuffPlaceholders(u8* src, u8* dst);
 
 u8 GetBattlerSide(u8 bank);
 s32 sub_803FC34(u16);
-void get_trainer_name(u8* dst);
-u8 get_trainer_class_name_index(void);
+void GetBattleTowerTrainerName(u8* dst);
+u8 GetBattleTowerTrainerClassNameIndex(void);
 u8 GetMultiplayerId(void);
 u8 GetBattlerAtPosition(u8 ID);
 u8 GetBattlerSide(u8 bank);
@@ -702,7 +702,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
                     toCpy = gTrainerClassNames[GetSecretBaseTrainerNameIndex()];
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-                    toCpy = gTrainerClassNames[get_trainer_class_name_index()];
+                    toCpy = gTrainerClassNames[GetBattleTowerTrainerClassNameIndex()];
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
                     toCpy = gTrainerClassNames[GetEReaderTrainerClassNameIndex()];
                 else
@@ -728,7 +728,7 @@ u32 BattleStringExpandPlaceholders(const u8* src, u8* dst)
                 }
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
                 {
-                    get_trainer_name(text);
+                    GetBattleTowerTrainerName(text);
                     toCpy = text;
                 }
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)

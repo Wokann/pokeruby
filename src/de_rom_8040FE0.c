@@ -35,9 +35,9 @@ u8 *de_sub_804100C(u8 gender)
 
 #ifdef NONMATCHING
 
-u8 de_sub_81364AC(void);
-u8 get_trainer_class_name_index(void);
-u8 de_sub_81364F8(void);
+u8 GetBattleTowerTrainerFacilityClass(void);
+u8 GetBattleTowerTrainerClassNameIndex(void);
+u8 GetEReaderTrainerFacilityClass(void);
 
 u8 *de_sub_8041024(s32 arg0, u32 arg1)
 {
@@ -54,15 +54,15 @@ u8 *de_sub_8041024(s32 arg0, u32 arg1)
             return de_sub_8040FE0(gender);
         return gTrainerClassNames[nameIndex];
     case 0x100:
-        trainerClass = de_sub_81364AC();
-        nameIndex = get_trainer_class_name_index();
+        trainerClass = GetBattleTowerTrainerFacilityClass();
+        nameIndex = GetBattleTowerTrainerClassNameIndex();
         if (trainerClass == FACILITY_CLASS_SCHOOL_KID_F)
             return de_sub_8040FE0(FEMALE);
         if (trainerClass == FACILITY_CLASS_MAY_1 || trainerClass == FACILITY_CLASS_MAY_2 || trainerClass == FACILITY_CLASS_MAY_3)
             return de_sub_8040FF4(FEMALE);
         return gTrainerClassNames[nameIndex];
     case 0x800:
-        trainerClass = de_sub_81364F8();
+        trainerClass = GetEReaderTrainerFacilityClass();
         nameIndex = GetEReaderTrainerClassNameIndex();
         if (trainerClass == FACILITY_CLASS_SCHOOL_KID_F)
             return de_sub_8040FE0(FEMALE);
@@ -126,10 +126,10 @@ _0804104A:\n\
     .align 2, 0\n\
 _08041060: .4byte gSharedMem + 0x17000\n\
 _08041064:\n\
-    bl de_sub_81364AC\n\
+    bl GetBattleTowerTrainerFacilityClass\n\
     lsls r0, 24\n\
     lsrs r4, r0, 24\n\
-    bl get_trainer_class_name_index\n\
+    bl GetBattleTowerTrainerClassNameIndex\n\
 _08041070:\n\
     lsls r0, 24\n\
     lsrs r5, r0, 24\n\
@@ -143,7 +143,7 @@ _08041070:\n\
     bls _080410CC\n\
     b _080410F8\n\
 _08041086:\n\
-    bl de_sub_81364F8\n\
+    bl GetEReaderTrainerFacilityClass\n\
     lsls r0, 24\n\
     lsrs r4, r0, 24\n\
     bl GetEReaderTrainerClassNameIndex\n\

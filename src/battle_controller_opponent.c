@@ -77,7 +77,7 @@ extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void HideBattlerShadowSprite(u8 battler);
 extern void sub_8033160(void);
-extern u8 get_trainer_class_pic_index(void);
+extern u8 GetBattleTowerTrainerFrontSpriteId(void);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_8032B4C(void);
 extern void sub_8031A6C(u16, u8);
@@ -1218,7 +1218,7 @@ void OpponentHandleTrainerThrow(void)
         if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
             trainerPicIndex = GetSecretBaseTrainerPicIndex();
         else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-            trainerPicIndex = get_trainer_class_pic_index();
+            trainerPicIndex = GetBattleTowerTrainerFrontSpriteId();
         else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
             trainerPicIndex = GetEReaderTrainerPicIndex();
         else
@@ -1249,7 +1249,7 @@ void OpponentHandleTrainerSlide(void)
     if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
         trainerPicIndex = GetSecretBaseTrainerPicIndex();
     else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-        trainerPicIndex = get_trainer_class_pic_index();
+        trainerPicIndex = GetBattleTowerTrainerFrontSpriteId();
     else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
         trainerPicIndex = GetEReaderTrainerPicIndex();
     else

@@ -452,7 +452,7 @@ void ReceiveBattleTowerData(void *battleTowerRecord, u32 size, u8 index)
 {
     sub_80B9A88(gUnknown_0300071C);
     memcpy(battleTowerRecord + size * index, battleTowerRecord + size * gUnknown_0300071C[index], sizeof(struct BattleTowerRecord));
-    sub_8134AC0(battleTowerRecord + size * index);
+    PutNewBattleTowerRecord(battleTowerRecord + size * index);
 }
 
 u8 sub_80B9BBC(struct DayCareMail *a)

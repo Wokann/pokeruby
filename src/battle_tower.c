@@ -265,7 +265,7 @@ static void ValidateBattleTowerRecordChecksums(void);
 static void CopyEReaderTrainerFarewellMessage(void);
 extern void SetBattleTowerTrainerGfxId(u8);
 static void SaveCurrentWinStreak(void);
-static void sub_8135CFC(void);
+static void SetTowerInterviewData(void);
 static void CheckMonBattleTowerBanlist(u16, u16, u16, u8, u8, u16 *, u16 *, u8 *);
 static void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *);
 static void SetBattleTowerRecordChecksum(struct BattleTowerRecord *);
@@ -560,7 +560,7 @@ void SetEReaderTrainerGfxId(void)
 
 #define BATTLE_TOWER_RECORD_COUNT 5
 
-void sub_8134AC0(struct BattleTowerRecord *record)
+void PutNewBattleTowerRecord(struct BattleTowerRecord *record)
 {
     u16 slotValues[6];
     u16 slotIds[6];
@@ -653,7 +653,7 @@ void sub_8134AC0(struct BattleTowerRecord *record)
     gSaveBlock2.battleTower.records[slotIds[i]] = *newRecord;
 }
 
-u8 get_trainer_class_pic_index(void)
+u8 GetBattleTowerTrainerFrontSpriteId(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
         return gTrainerClassToPicIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
@@ -663,7 +663,7 @@ u8 get_trainer_class_pic_index(void)
         return gTrainerClassToPicIndex[gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].trainerClass];
 }
 
-u8 get_trainer_class_name_index(void)
+u8 GetBattleTowerTrainerClassNameIndex(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
         return gTrainerClassToNameIndex[gSaveBlock2.battleTower.ereaderTrainer.trainerClass];
@@ -673,7 +673,7 @@ u8 get_trainer_class_name_index(void)
         return gTrainerClassToNameIndex[gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerClass];
 }
 
-void get_trainer_name(u8* dest)
+void GetBattleTowerTrainerName(u8* dest)
 {
     s32 i;
 
@@ -1037,7 +1037,7 @@ void CopyBattleTowerTrainerGreeting(void)
         CopyBattleTowerTrainerSpeech(gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].greeting);
 }
 
-void sub_81354CC(void)
+void HandleSpecialTrainerBattleEnd(void)
 {
     s32 i;
     u16 heldItem;
@@ -1061,11 +1061,11 @@ void sub_81354CC(void)
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-void sub_8135534(u8 taskId)
+void Task_StartBattleAfterTransition(u8 taskId)
 {
     if (IsBattleTransitionDone() == TRUE)
     {
-        gMain.savedCallback = sub_81354CC;
+        gMain.savedCallback = HandleSpecialTrainerBattleEnd;
         SetMainCallback2(CB2_InitBattle);
         DestroyTask(taskId);
     }
@@ -1085,7 +1085,7 @@ void DoSpecialTrainerBattle(void)
 
         FillBattleTowerTrainerParty();
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         current_map_music_set__default_for_battle(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1097,7 +1097,7 @@ void DoSpecialTrainerBattle(void)
             SetMonData(&gSaveBlock1.playerParty[i], MON_DATA_HELD_ITEM, &heldItem);
         }
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         current_map_music_set__default_for_battle(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1111,7 +1111,7 @@ void DoSpecialTrainerBattle(void)
         gBattleTypeFlags = (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER);
         gTrainerBattleOpponent = 0;
 
-        CreateTask(sub_8135534, 1);
+        CreateTask(Task_StartBattleAfterTransition, 1);
         current_map_music_set__default_for_battle(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
@@ -1276,7 +1276,7 @@ static void SaveCurrentWinStreak(void)
     }
 }
 
-void sub_8135AC4(void)
+void SaveBattleTowerRecord(void)
 {
     s32 i;
     u8 trainerClass;
@@ -1320,10 +1320,10 @@ void SaveBattleTowerProgress(void)
     {
         if (gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType] > 1
          || gSaveBlock2.battleTower.curChallengeBattleNum[battleTowerLevelType] > 1)
-            sub_8135AC4();
+            SaveBattleTowerRecord();
     }
 
-    sub_8135CFC();
+    SetTowerInterviewData();
 
     gSaveBlock2.battleTower.battleOutcome = gBattleOutcome;
 
@@ -1383,11 +1383,11 @@ void ClearBattleTowerRecord(struct BattleTowerRecord *record)
         ((u32 *)record)[i] = 0;
 }
 
-void sub_8135CFC(void)
+void SetTowerInterviewData(void)
 {
     s32 i;
 
-    get_trainer_name(gSaveBlock2.battleTower.defeatedByTrainerName);
+    GetBattleTowerTrainerName(gSaveBlock2.battleTower.defeatedByTrainerName);
     gSaveBlock2.battleTower.defeatedBySpecies = gBattleMons[1].species;
     gSaveBlock2.battleTower.firstMonSpecies = gBattleMons[0].species;
 
@@ -1601,7 +1601,7 @@ void TryEnableBravoTrainerBattleTower(void)
 }
 
 #if GERMAN
-u8 de_sub_81364AC(void)
+u8 GetBattleTowerTrainerFacilityClass(void)
 {
     if (gSaveBlock2.battleTower.battleTowerTrainerId == BATTLE_TOWER_EREADER_TRAINER_ID)
         return gSaveBlock2.battleTower.ereaderTrainer.trainerClass;
@@ -1611,7 +1611,7 @@ u8 de_sub_81364AC(void)
         return gBattleTowerTrainers[gSaveBlock2.battleTower.battleTowerTrainerId].trainerClass;
 }
 
-u8 de_sub_81364F8(void)
+u8 GetEReaderTrainerFacilityClass(void)
 {
     return gSaveBlock2.battleTower.ereaderTrainer.trainerClass;
 }
