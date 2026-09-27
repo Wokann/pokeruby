@@ -113,7 +113,7 @@ u8 DebugMenu_ToggleClearFlag(void);
 u8 DebugMenu_ControlEncounter(void);
 u8 DebugMenu_PTime(void);
 u8 DebugMenu_MakeItems(void);
-u8 debug_sub_8091300(void);
+u8 TayaDebugMenu_OpenRegionMap(void);
 u8 DebugMenu_ViewPortraits(void);
 u8 DebugMenu_TimeRecords(void);
 u8 DebugMenu_SetTime(void);
@@ -244,7 +244,7 @@ const struct MenuAction gDebug0x839B9BC[] =
     { Str_839B7B5, DebugMenu_ControlEncounter },
     { Str_839B7C7, DebugMenu_PTime },
     { Str_839B7CD, DebugMenu_MakeItems },
-    { Str_839B7D8, debug_sub_8091300 },
+    { Str_839B7D8, TayaDebugMenu_OpenRegionMap },
     { Str_839B7E2, DebugMenu_ViewPortraits },
     { Str_839B7F0, DebugMenu_TimeRecords },
     { Str_839B7FD, DebugMenu_SetTime },

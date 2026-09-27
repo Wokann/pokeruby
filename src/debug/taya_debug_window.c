@@ -20,7 +20,7 @@
 #include "region_map.h"
 #include "overworld.h"
 
-bool8 debug_sub_8090808(void);
+bool8 TayaDebugMenu_TrendWaitForClose(void);
 bool8 TayaDebugMenu_Weather(void);
 bool8 TayaDebugMenu_LanettesPC(void);
 bool8 TayaDebugMenu_SimpleText(void);
@@ -108,7 +108,7 @@ const struct {
     {sText_TayaOldMan_BecomeHip}
 };
 
-const u8 gUnknown_Debug_083C4F94[] = DTR("しょうしょうおまちください！", "Please wait!");
+const u8 sText_TayaDebug_PleaseWait[] = DTR("しょうしょうおまちください！", "Please wait!");
 const u8 sText_TayaDebug_Weather[] = _("Weather");
 const u8 sText_TayaDebug_LanettesPC[] = _("LANETTE'S PC");
 const u8 sText_TayaDebug_SimpleText[] = _("SimpleText");
@@ -226,11 +226,11 @@ bool8 TayaDebugMenu_Trend(void)
         Menu_PrintText(sp00, 1, 2 * i + 1);
         trend++;
     }
-    gMenuCallback = debug_sub_8090808;
+    gMenuCallback = TayaDebugMenu_TrendWaitForClose;
     return FALSE;
 }
 
-bool8 debug_sub_8090808(void)
+bool8 TayaDebugMenu_TrendWaitForClose(void)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
@@ -431,7 +431,7 @@ bool8 TayaDebugMenu_AwardARibbon(void)
     return TRUE;
 }
 
-void debug_sub_8090C44(void)
+void TayaDebugMenu_PrintLotteryNumber(void)
 {
     ConvertIntToDecimalStringN(eTayaLuckyNumber.charbuf, eTayaLuckyNumber.curLuckyId, STR_CONV_MODE_LEADING_ZEROS, 5);
     Menu_PrintText(eTayaLuckyNumber.charbuf, 1, 1);
@@ -440,7 +440,7 @@ void debug_sub_8090C44(void)
     Menu_PrintText(eTayaLuckyNumber.charbuf, 1, 3);
 }
 
-bool8 debug_sub_8090C88(void)
+bool8 TayaDebugMenu_HandleLotteryNumberInput(void)
 {
     bool8 r8 = TRUE;
 
@@ -505,7 +505,7 @@ bool8 debug_sub_8090C88(void)
     } while (0);
 
     if (r8)
-        debug_sub_8090C44();
+        TayaDebugMenu_PrintLotteryNumber();
     return FALSE;
 }
 
@@ -515,8 +515,8 @@ bool8 TayaDebugMenu_PKMNLottery(void)
     RetrieveLotteryNumber();
     eTayaLuckyNumber.curLuckyId = gSpecialVar_Result;
     eTayaLuckyNumber.digit = 0;
-    debug_sub_8090C44();
-    gMenuCallback = debug_sub_8090C88;
+    TayaDebugMenu_PrintLotteryNumber();
+    gMenuCallback = TayaDebugMenu_HandleLotteryNumberInput;
     return FALSE;
 }
 
@@ -553,7 +553,7 @@ bool8 TayaDebugMenu_PokenavD(void)
     
     for (i = 0; i < 14; i++)
     {
-        StringCopy(gSharedMem, gUnknown_Debug_083C4F94);
+        StringCopy(gSharedMem, sText_TayaDebug_PleaseWait);
         gSharedMem[i + 1] = EOS;
         Menu_PrintText(gSharedMem, 2, 15);
         for (j = 0; j < 30; j++)
@@ -697,7 +697,7 @@ bool8 InitTayaDebugWindow(void)
     return FALSE;
 }
 
-bool8 debug_sub_80912D8(void)
+bool8 TayaDebugMenu_WaitForRegionMapFade(void)
 {
     if (!gPaletteFade.active)
     {
@@ -707,10 +707,10 @@ bool8 debug_sub_80912D8(void)
     return FALSE;
 }
 
-bool8 debug_sub_8091300(void)
+bool8 TayaDebugMenu_OpenRegionMap(void)
 {
     FadeScreen(1, 0);
-    gMenuCallback = debug_sub_80912D8;
+    gMenuCallback = TayaDebugMenu_WaitForRegionMapFade;
     return FALSE;
 }
 
