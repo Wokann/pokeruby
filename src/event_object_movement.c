@@ -106,7 +106,7 @@ static void MakeObjectTemplateFromObjectEventTemplate(const struct ObjectEventTe
 static void RemoveObjectEventIfOutsideView(struct ObjectEvent *objectEvent);
 static void SetPlayerAvatarObjectEventIdAndObjectId(u8, u8);
 static void sub_805B914(struct ObjectEvent *);
-static u8 sub_805BE58(const struct SpritePalette *);
+static u8 LoadSpritePaletteIfTagExists(const struct SpritePalette *);
 static bool8 GetAvailableObjectEventId(u16, u8, u8, u8 *);
 static void SetObjectEventDynamicGraphicsId(struct ObjectEvent *);
 static u8 FindObjectEventPaletteIndexByTag(u16);
@@ -1474,7 +1474,7 @@ u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x
     MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, callback, &spriteTemplate, &subspriteTables);
     if (spriteTemplate.paletteTag != 0xFFFF)
     {
-        sub_805BDF8(spriteTemplate.paletteTag);
+        LoadObjectEventPalette(spriteTemplate.paletteTag);
     }
     spriteId = CreateSprite(&spriteTemplate, x, y, subpriority);
     if (spriteId != MAX_SPRITES && subspriteTables != NULL)
@@ -1892,25 +1892,25 @@ void FreeAndReserveObjectSpritePalettes(void)
     gReservedSpritePaletteCount = 12;
 }
 
-void sub_805BDF8(u16 paletteTag)
+void LoadObjectEventPalette(u16 paletteTag)
 {
     u16 paletteSlot = FindObjectEventPaletteIndexByTag(paletteTag);
 
     if (paletteSlot != OBJ_EVENT_PAL_TAG_NONE)  //always happens. FindObjectEventPaletteIndexByTag returns u8
     {
-        sub_805BE58(&sObjectEventSpritePalettes[paletteSlot]);
+        LoadSpritePaletteIfTagExists(&sObjectEventSpritePalettes[paletteSlot]);
     }
 }
 
-void unref_sub_805BE24(u16 *paletteTags)
+void LoadObjectEventPaletteSet(u16 *paletteTags)
 {
     u8 i;
 
     for (i = 0; paletteTags[i] != OBJ_EVENT_PAL_TAG_NONE; i++)
-        sub_805BDF8(paletteTags[i]);
+        LoadObjectEventPalette(paletteTags[i]);
 }
 
-static u8 sub_805BE58(const struct SpritePalette *palette)
+static u8 LoadSpritePaletteIfTagExists(const struct SpritePalette *palette)
 {
     if (IndexOfSpritePaletteTag(palette->tag) != 0xFF)
     {

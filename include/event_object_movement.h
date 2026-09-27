@@ -365,7 +365,7 @@ void SetObjectSubpriority(u8, u8, u8, u8);
 void ResetObjectSubpriority(u8, u8, u8);
 void SetObjectEventSpritePosByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y);
 void FreeAndReserveObjectSpritePalettes(void);
-void sub_805BDF8(u16);
+void LoadObjectEventPalette(u16);
 void PatchObjectPalette(u16, u8);
 void LoadPlayerObjectReflectionPalette(u16, u8);
 void LoadSpecialObjectReflectionPalette(u16, u8);
