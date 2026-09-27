@@ -68,9 +68,9 @@ void sub_80F6C20(void)
         }
     }
 
-    gPokenavStructPtr->unk876C = 0;
+    gPokenavStructPtr->listCursorRow = 0;
     gPokenavStructPtr->unk8770 = 0;
-    gPokenavStructPtr->unk876E = 0;
+    gPokenavStructPtr->listSelectedIndex = 0;
     gPokenavStructPtr->unk8772 = gPokenavStructPtr->unkD158 <= 8 ? gPokenavStructPtr->unkD158 - 1 : 7;
     gPokenavStructPtr->unk8774 = gPokenavStructPtr->unkD158 - 1;
     gPokenavStructPtr->unk87C9 = gPokenavStructPtr->unk8774 < 8 ? 0 : 1;
@@ -83,12 +83,12 @@ void sub_80F6DB8(void)
     sub_80F6E04(0);
     gPokenavStructPtr->unkD15A = -72;
     sub_80F2F7C(0);
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->unk876E;
+    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
 }
 
 void sub_80F6E04(u8 a0)
 {
-    u16 r1 = gPokenavStructPtr->trainersEye[gPokenavStructPtr->unk876E].opponentId;
+    u16 r1 = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].opponentId;
     u8 r6 = gTrainers[r1].trainerPic;
     DecompressPicFromTable_2(&gTrainerFrontPicTable[r6], gTrainerFrontPicCoords[r6].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->unkD1E4[a0], r6);
     LZ77UnCompWram(gTrainerFrontPicPaletteTable[r6].data, gPokenavStructPtr->unk0[a0]);
@@ -195,17 +195,17 @@ void sub_80F700C(u8 *arg0, u16 arg1)
 
 void sub_80F708C(s8 a0)
 {
-    gPokenavStructPtr->unk876E += a0;
-    if (gPokenavStructPtr->unk876E < 0)
+    gPokenavStructPtr->listSelectedIndex += a0;
+    if (gPokenavStructPtr->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->unk876E = gPokenavStructPtr->unk8774;
+        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8774;
     }
-    if (gPokenavStructPtr->unk876E > gPokenavStructPtr->unk8774)
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
     {
-        gPokenavStructPtr->unk876E = 0;
+        gPokenavStructPtr->listSelectedIndex = 0;
     }
     gPokenavStructPtr->unkBC94 = a0;
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->unk876E;
+    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->unk87DE = 0;
 }
 
@@ -226,10 +226,10 @@ bool8 sub_80F70FC(void)
         gPokenavStructPtr->unk87DE++;
         break;
     case 3:
-        sub_80F700C(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk876E);
+        sub_80F700C(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex);
         sub_80F43D4(gPokenavStructPtr->unk8788);
-        sub_80F105C();
-        sub_80F0FFC(gPokenavStructPtr->unk876E);
+        RedrawSelectedTrainerEyesListRow();
+        PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
         gPokenavStructPtr->unk87DE++;
         break;
     case 4:

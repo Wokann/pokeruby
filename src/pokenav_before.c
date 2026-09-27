@@ -3061,7 +3061,7 @@ void HandleTrainerEyesInput(void)
         {
         case 1:
             PlaySE(SE_SELECT);
-            sub_80F0FFC(gPokenavStructPtr->unk876E);
+            PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
             return;
         case 2:
             PlaySE(SE_SELECT);
@@ -3086,7 +3086,7 @@ void HandleTrainerEyesInput(void)
     case 1:
         if (!UpdatePokenavListScroll())
         {
-			sub_80F0FFC(gPokenavStructPtr->unk876E);
+			PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
 			sub_80F3264();
 			gPokenavStructPtr->callbackStep++;
 		}
@@ -3117,11 +3117,11 @@ void ShowTrainerEyesTrainerInfo(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 2:
-        sub_80F0F64();
+        BeginTrainerEyesDetailEnterScroll();
         gPokenavStructPtr->callbackStep++;
         break;
     case 3:
-        if (!sub_80F0FEC())
+        if (!UpdateTrainerEyesDetailScroll())
         {
 			sub_80F6FB8(0x1);
 			gPokenavStructPtr->callbackStep++;
@@ -3177,11 +3177,11 @@ void ShowTrainerEyesTrainerInfo(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 11:
-        sub_80F0FA0();
+        BeginTrainerEyesDetailExitScroll();
         gPokenavStructPtr->callbackStep++;
         break;
     case 12:
-        if (!sub_80F0FEC())
+        if (!UpdateTrainerEyesDetailScroll())
 			gPokenavStructPtr->callbackStep++;
         break;
     case 13:
