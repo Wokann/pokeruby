@@ -94,12 +94,12 @@ void RecordAbilityBattle(u8 bank, u8 ability);
 void RecordItemEffectBattle(u8 bank, u8 holdEffect);
 s8 GetPokeFlavourRelation(u32 pid, u8 flavor);
 
-extern u8 BattleScript_MoveSelectionDisabledMove[];
-extern u8 BattleScript_MoveSelectionTormented[];
-extern u8 BattleScript_MoveSelectionTaunted[];
-extern u8 BattleScript_MoveSelectionImprisoned[];
+extern u8 BattleScript_SelectingDisabledMove[];
+extern u8 BattleScript_SelectingTormentedMove[];
+extern u8 BattleScript_SelectingNotAllowedMoveTaunt[];
+extern u8 BattleScript_SelectingImprisonedMove[];
 extern u8 BattleScript_MoveSelectionChoiceBanded[];
-extern u8 BattleScript_MoveSelectionNoPP[];
+extern u8 BattleScript_SelectingMoveWithNoPP[];
 extern u8 BattleScript_NoMovesLeft[];
 extern u8 BattleScript_WishComesTrue[];
 extern u8 BattleScript_IngrainTurnHeal[];
@@ -125,8 +125,8 @@ extern u8 BattleScript_PrintUproarOverTurns[]; //uproar BS
 extern u8 BattleScript_ThrashConfuses[];
 extern u8 BattleScript_YawnMakesAsleep[];
 extern u8 BattleScript_MonTookFutureAttack[];
-extern u8 BattleScript_PerishSongHits[];
-extern u8 BattleScript_PerishSongTimerGoesDown[];
+extern u8 BattleScript_PerishSongTakesLife[];
+extern u8 BattleScript_PerishSongCountGoesDown[];
 extern u8 BattleScript_GiveExp[];
 extern u8 BattleScript_HandleFaintedMon[];
 
@@ -143,7 +143,7 @@ extern u8 BattleScript_MoveUsedIsImprisoned[];
 extern u8 BattleScript_MoveUsedIsConfused[];
 extern u8 BattleScript_MoveUsedIsConfusedNoMore[];
 extern u8 BattleScript_MoveUsedIsParalyzed[];
-extern u8 BattleScript_MoveUsedIsParalyzedCantAttack[];
+extern u8 BattleScript_MoveUsedIsInLoveCantAttack[];
 extern u8 BattleScript_MoveUsedIsInLove[];
 extern u8 BattleScript_BideStoringEnergy[];
 extern u8 BattleScript_BideAttack[];
@@ -162,8 +162,8 @@ extern u8 BattleScript_MoveHPDrain[];
 extern u8 BattleScript_MoveHPDrain_PPLoss[];
 extern u8 BattleScript_FlashFireBoost[];
 extern u8 BattleScript_FlashFireBoost_PPLoss[];
-extern u8 BattleScript_MoveHPDrain_FullHP[];
-extern u8 BattleScript_MoveHPDrain_FullHP_PPLoss[];
+extern u8 BattleScript_MonMadeMoveUseless[];
+extern u8 BattleScript_MonMadeMoveUseless_PPLoss[];
 extern u8 BattleScript_ColorChangeActivates[];
 extern u8 BattleScript_RoughSkinActivates[];
 extern u8 BattleScript_ApplySecondaryEffect[];
@@ -480,25 +480,25 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     {
         gBattleStruct->scriptingActive = gActiveBattler;
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionDisabledMove;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingDisabledMove;
         limitations++;
     }
     if (move == gLastMoves[gActiveBattler] && move != MOVE_STRUGGLE && gBattleMons[gActiveBattler].status2 & STATUS2_TORMENT)
     {
         CancelMultiTurnMoves(gActiveBattler);
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionTormented;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingTormentedMove;
         limitations++;
     }
     if (gDisableStructs[gActiveBattler].tauntTimer1 && gBattleMoves[move].power == 0)
     {
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionTaunted;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTaunt;
         limitations++;
     }
     if (IsImprisoned(gActiveBattler, move))
     {
         gCurrentMove = move;
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionImprisoned;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingImprisonedMove;
         limitations++;
     }
 
@@ -518,7 +518,7 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     }
     if (gBattleMons[gActiveBattler].pp[gBattleBufferB[gActiveBattler][2]] == 0)
     {
-        gSelectionBattleScripts[gActiveBattler] = BattleScript_MoveSelectionNoPP;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingMoveWithNoPP;
         limitations++;
     }
     return limitations;
@@ -1262,12 +1262,12 @@ bool8 HandleWishPerishSongOnTurnEnd(void)
                     {
                         gStatuses3[gActiveBattler] &= ~(STATUS3_PERISH_SONG);
                         gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
-                        gBattlescriptCurrInstr = BattleScript_PerishSongHits;
+                        gBattlescriptCurrInstr = BattleScript_PerishSongTakesLife;
                     }
                     else
                     {
                         gDisableStructs[gActiveBattler].perishSongTimer1--;
-                        gBattlescriptCurrInstr = BattleScript_PerishSongTimerGoesDown;
+                        gBattlescriptCurrInstr = BattleScript_PerishSongCountGoesDown;
                     }
                     BattleScriptExecute(gBattlescriptCurrInstr);
                     return 1;
@@ -1568,7 +1568,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                     BattleScriptPushCursor();
                 else
                 {
-                    BattleScriptPush(BattleScript_MoveUsedIsParalyzedCantAttack);
+                    BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttack);
                     gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                     gProtectStructs[gBattlerAttacker].loveImmobility = 1;
                     CancelMultiTurnMoves(gBattlerAttacker);
@@ -2030,9 +2030,9 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     if (gBattleMons[bank].maxHP == gBattleMons[bank].hp)
                     {
                         if ((gProtectStructs[gBattlerAttacker].notFirstStrike))
-                            gBattlescriptCurrInstr = BattleScript_MoveHPDrain_FullHP;
+                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
                         else
-                            gBattlescriptCurrInstr = BattleScript_MoveHPDrain_FullHP_PPLoss;
+                            gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
                     }
                     else
                     {

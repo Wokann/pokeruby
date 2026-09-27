@@ -163,7 +163,7 @@ gBattleScriptsForMoveEffects:: @ 81D6BBC
 	.4byte BattleScript_EffectFutureSight
 	.4byte BattleScript_EffectGust
 	.4byte BattleScript_EffectStomp
-	.4byte BattleScript_EffectSolarbeam
+	.4byte BattleScript_EffectSolarBeam
 	.4byte BattleScript_EffectThunder
 	.4byte BattleScript_EffectTeleport
 	.4byte BattleScript_EffectBeatUp
@@ -578,7 +578,7 @@ BattleScript_EffectEvasionDown: @ 81D7221
 
 BattleScript_EffectStatDown: @ 81D7227
 	attackcanceler
-	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_ButItFailedAtkStringPpReduce
+	jumpifstatus2 TARGET, STATUS2_SUBSTITUTE, BattleScript_FailedFromAtkString
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
 	attackstring
 	ppreduce
@@ -1276,7 +1276,7 @@ BattleScript_EffectPsywave: @ 81D7A2F
 
 BattleScript_EffectCounter: @ 81D7A47
 	attackcanceler
-	counterdamagecalculator BattleScript_ButItFailedAtkStringPpReduce
+	counterdamagecalculator BattleScript_FailedFromAtkString
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
 	attackstring
 	ppreduce
@@ -1570,11 +1570,11 @@ BattleScript_CurseTrySpeed: @ 81D7D60
 
 BattleScript_CurseTryAttack: @ 81D7D86
 	setstatchanger ATTACK, 1, FALSE
-	statbuffchange AFFECTS_USER | 0x1, BattleScript_CurseTryDefence
+	statbuffchange AFFECTS_USER | 0x1, BattleScript_CurseTryDefense
 	printfromtable gStatUpStringIds
 	waitmessage 64
 
-BattleScript_CurseTryDefence: @ 81D7D9A
+BattleScript_CurseTryDefense: @ 81D7D9A
 	setstatchanger DEFENSE, 1, FALSE
 	statbuffchange AFFECTS_USER | 0x1, BattleScript_CurseEnd
 	printfromtable gStatUpStringIds
@@ -1618,7 +1618,7 @@ BattleScript_EffectProtect: @ 81D7DFD
 
 BattleScript_EffectSpikes: @ 81D7E10
 	attackcanceler
-	trysetspikes BattleScript_ButItFailedAtkStringPpReduce
+	trysetspikes BattleScript_FailedFromAtkString
 	attackstring
 	ppreduce
 	attackanimation
@@ -1881,7 +1881,7 @@ BattleScript_EffectPsychUp: @ 81D805A
 
 BattleScript_EffectMirrorCoat: @ 81D806F
 	attackcanceler
-	mirrorcoatdamagecalculator BattleScript_ButItFailedAtkStringPpReduce
+	mirrorcoatdamagecalculator BattleScript_FailedFromAtkString
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
 	attackstring
 	ppreduce
@@ -1989,19 +1989,19 @@ BattleScript_EffectStomp: @ 81D81B3
 	setbyte sDMG_MULTIPLIER, 2
 	goto BattleScript_FlinchEffect
 
-BattleScript_EffectSolarbeam: @ 81D81C9
-	jumpifabilitypresent ABILITY_CLOUD_NINE, BattleScript_SolarbeamDecideTurn
-	jumpifabilitypresent ABILITY_AIR_LOCK, BattleScript_SolarbeamDecideTurn
-	jumpifhalfword COMMON_BITS, gBattleWeather, 96, BattleScript_SolarbeamOnFirstTurn
+BattleScript_EffectSolarBeam: @ 81D81C9
+	jumpifabilitypresent ABILITY_CLOUD_NINE, BattleScript_SolarBeamDecideTurn
+	jumpifabilitypresent ABILITY_AIR_LOCK, BattleScript_SolarBeamDecideTurn
+	jumpifhalfword COMMON_BITS, gBattleWeather, 96, BattleScript_SolarBeamOnFirstTurn
 
-BattleScript_SolarbeamDecideTurn: @ 81D81E1
+BattleScript_SolarBeamDecideTurn: @ 81D81E1
 	jumpifstatus2 USER, STATUS2_MULTIPLETURNS, BattleScript_TwoTurnMovesSecondTurn
 	jumpifword COMMON_BITS, gHitMarker, HITMARKER_NO_ATTACKSTRING, BattleScript_TwoTurnMovesSecondTurn
 	setbyte sTWOTURN_STRINGID, 1
 	call BattleScriptFirstChargingTurn
 	goto BattleScript_MoveEnd
 
-BattleScript_SolarbeamOnFirstTurn: @ 81D8209
+BattleScript_SolarBeamOnFirstTurn: @ 81D8209
 	orword gHitMarker, HITMARKER_CHARGING
 	setbyte cEFFECT_CHOOSER, 76
 	seteffectprimary
@@ -2146,14 +2146,14 @@ BattleScript_AlreadyAtFullHp:: @ 81D83B5
 
 BattleScript_EffectFakeOut: @ 81D83C3
 	attackcanceler
-	jumpifnotfirstturn BattleScript_ButItFailedAtkStringPpReduce
+	jumpifnotfirstturn BattleScript_FailedFromAtkString
 	setbyte cEFFECT_CHOOSER, 136
 	goto BattleScript_EffectHit
 
-BattleScript_ButItFailedAtkStringPpReduce: @ 81D83D4
+BattleScript_FailedFromAtkString: @ 81D83D4
 	attackstring
 
-BattleScript_ButItFailedPpReduce: @ 81D83D5
+BattleScript_FailedFromPPReduce: @ 81D83D5
 	ppreduce
 
 BattleScript_ButItFailed:: @ 81D83D6
@@ -2473,7 +2473,7 @@ BattleScript_EffectWish: @ 81D8726
 BattleScript_EffectAssist: @ 81D8736
 	attackcanceler
 	attackstring
-	assistattackselect BattleScript_ButItFailedPpReduce
+	assistattackselect BattleScript_FailedFromPPReduce
 	attackanimation
 	waitanimation
 	setbyte sANIM_TURN, 0
@@ -2497,7 +2497,7 @@ BattleScript_EffectSuperpower: @ 81D8762
 
 BattleScript_EffectMagicCoat: @ 81D876D
 	attackcanceler
-	trysetmagiccoat BattleScript_ButItFailedAtkStringPpReduce
+	trysetmagiccoat BattleScript_FailedFromAtkString
 	attackstring
 	ppreduce
 	attackanimation
@@ -2652,7 +2652,7 @@ BattleScript_EffectGrudge: @ 81D88DB
 
 BattleScript_EffectSnatch: @ 81D88F0
 	attackcanceler
-	trysetsnatch BattleScript_ButItFailedAtkStringPpReduce
+	trysetsnatch BattleScript_FailedFromAtkString
 	attackstring
 	ppreduce
 	attackanimation
@@ -2955,33 +2955,33 @@ BattleScript_GiveExp:: @ 81D8C72
 BattleScript_HandleFaintedMon:: @ 81D8C7B
 	atk24 BattleScript_LinkHandleFaintedMonMultiple
 	jumpifbyte NOT_EQUAL, gBattleOutcome, 0, BattleScript_FaintedMonEnd
-	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonTryChooseAnother
-	jumpifword NO_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonTryChooseAnother
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonTryChoose
+	jumpifword NO_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonTryChoose
 	printstring BATTLE_TEXT_UseNext
 	setbyte gBattleCommunication, 0
 	yesnobox
-	jumpifbyte EQUAL, gUnknown_02024D1F, 0, BattleScript_FaintedMonTryChooseAnother
+	jumpifbyte EQUAL, gUnknown_02024D1F, 0, BattleScript_FaintedMonTryChoose
 	jumpifplayerran BattleScript_FaintedMonEnd
 	printstring BATTLE_TEXT_CantEscape
 
-BattleScript_FaintedMonTryChooseAnother: @ 81D8CC2
+BattleScript_FaintedMonTryChoose: @ 81D8CC2
 	openpartyscreen 3, BattleScript_FaintedMonEnd
 	switchhandleorder 3, 2
-	jumpifnotbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonChooseAnother
-	jumpifbattletype BATTLE_TYPE_LINK, BattleScript_FaintedMonChooseAnother
-	jumpifbattletype BATTLE_TYPE_BATTLE_TOWER, BattleScript_FaintedMonChooseAnother
-	jumpifbattletype BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonChooseAnother
-	jumpifword COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonChooseAnother
-	jumpifbyte EQUAL, sBATTLE_STYLE, 1, BattleScript_FaintedMonChooseAnother
-	jumpifcantswitch USER, BattleScript_FaintedMonChooseAnother
+	jumpifnotbattletype BATTLE_TYPE_TRAINER, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_LINK, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_BATTLE_TOWER, BattleScript_FaintedMonSendOutNew
+	jumpifbattletype BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonSendOutNew
+	jumpifword COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonSendOutNew
+	jumpifbyte EQUAL, sBATTLE_STYLE, 1, BattleScript_FaintedMonSendOutNew
+	jumpifcantswitch USER, BattleScript_FaintedMonSendOutNew
 	printstring BATTLE_TEXT_WillSwitch
 	setbyte gBattleCommunication, 0
 	yesnobox
-	jumpifbyte EQUAL, gUnknown_02024D1F, 1, BattleScript_FaintedMonChooseAnother
+	jumpifbyte EQUAL, gUnknown_02024D1F, 1, BattleScript_FaintedMonSendOutNew
 	setatktoplayer0
-	openpartyscreen 129, BattleScript_FaintedMonChooseAnother
+	openpartyscreen 129, BattleScript_FaintedMonSendOutNew
 	switchhandleorder USER, 2
-	jumpifbyte EQUAL, gBattleCommunication, 6, BattleScript_FaintedMonChooseAnother
+	jumpifbyte EQUAL, gBattleCommunication, 6, BattleScript_FaintedMonSendOutNew
 	atknameinbuff1
 	resetintrimidatetracebits USER
 	hpthresholds2 USER
@@ -3001,7 +3001,7 @@ BattleScript_FaintedMonTryChooseAnother: @ 81D8CC2
 	switchineffects USER
 	resetsentmonsvalue
 
-BattleScript_FaintedMonChooseAnother: @ 81D8D66
+BattleScript_FaintedMonSendOutNew: @ 81D8D66
 	drawpartystatussummary 3
 	getswitchedmondata 3
 	switchindataupdate 3
@@ -3401,7 +3401,7 @@ BattleScript_MoveUsedIsDisabled:: @ 81D9139
 	waitmessage 64
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveSelectionDisabledMove:: @ 81D9144
+BattleScript_SelectingDisabledMove:: @ 81D9144
 	printselectionstring BATTLE_TEXT_MoveIsDisabled
 	endselectionscript
 
@@ -3452,16 +3452,16 @@ BattleScript_SpikesOnTargetFainted: @ 81D91C0
 	getexp TARGET
 	goto BattleScript_HandleFaintedMon
 
-BattleScript_SpikesOngBank1:: @ 81D91CD
+BattleScript_SpikesOnFaintedBattler:: @ 81D91CD
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate 3
 	datahpupdate 3
 	call BattleScript_PrintHurtBySpikes
 	tryfaintmon GBANK_1, FALSE, NULL
-	tryfaintmon GBANK_1, TRUE, BattleScript_SpikesOngBank1Fainted
+	tryfaintmon GBANK_1, TRUE, BattleScript_SpikesOnFaintedBattlerFainted
 	return
 
-BattleScript_SpikesOngBank1Fainted: @ 81D91EE
+BattleScript_SpikesOnFaintedBattlerFainted: @ 81D91EE
 	setbyte sGIVEEXP_STATE, 0
 	getexp 3
 	goto BattleScript_HandleFaintedMon
@@ -3471,7 +3471,7 @@ BattleScript_PrintHurtBySpikes: @ 81D91FB
 	waitmessage 64
 	return
 
-BattleScript_PerishSongHits:: @ 81D9202
+BattleScript_PerishSongTakesLife:: @ 81D9202
 	printstring BATTLE_TEXT_PerishSongFell
 	waitmessage 64
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
@@ -3480,7 +3480,7 @@ BattleScript_PerishSongHits:: @ 81D9202
 	tryfaintmon USER, FALSE, NULL
 	end2
 
-BattleScript_PerishSongTimerGoesDown:: @ 81D921D
+BattleScript_PerishSongCountGoesDown:: @ 81D921D
 	printstring BATTLE_TEXT_PerishSongFell
 	waitmessage 64
 	end2
@@ -3597,7 +3597,7 @@ BattleScript_NoMovesLeft:: @ 81D9365
 	printselectionstring BATTLE_TEXT_NoMovesLeft
 	endselectionscript
 
-BattleScript_MoveSelectionNoPP:: @ 81D9369
+BattleScript_SelectingMoveWithNoPP:: @ 81D9369
 	printselectionstring BATTLE_TEXT_NoPP1
 	endselectionscript
 
@@ -3608,14 +3608,14 @@ BattleScript_NoPPForMove:: @ 81D936D
 	waitmessage 64
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveSelectionTormented:: @ 81D937C
+BattleScript_SelectingTormentedMove:: @ 81D937C
 	printselectionstring BATTLE_TEXT_TormentNoUse
 	endselectionscript
 	printstring BATTLE_TEXT_TormentNoUse
 	waitmessage 64
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveSelectionTaunted:: @ 81D938B
+BattleScript_SelectingNotAllowedMoveTaunt:: @ 81D938B
 	printselectionstring BATTLE_TEXT_TauntNoUse
 	endselectionscript
 
@@ -3691,11 +3691,11 @@ BattleScript_MoveUsedIsImprisoned:: @ 81D9459
 	waitmessage 64
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveSelectionImprisoned:: @ 81D9464
+BattleScript_SelectingImprisonedMove:: @ 81D9464
 	printselectionstring BATTLE_TEXT_SealedNoUse
 	endselectionscript
 
-BattleScript_GrudgeTakesPp:: @ 81D9468
+BattleScript_GrudgeTakesPP:: @ 81D9468
 	printstring BATTLE_TEXT_GrudgeLosePP
 	waitmessage 64
 	return
@@ -3882,7 +3882,7 @@ BattleScript_MoveUsedIsInLove:: @ 81D95FB
 	status2animation USER, STATUS2_INFATUATION
 	return
 
-BattleScript_MoveUsedIsParalyzedCantAttack:: @ 81D9608
+BattleScript_MoveUsedIsInLoveCantAttack:: @ 81D9608
 	printstring BATTLE_TEXT_ImmobilizedBy
 	waitmessage 64
 	goto BattleScript_MoveEnd
@@ -3975,11 +3975,11 @@ BattleScript_MoveEffectConfusion:: @ 81D96BA
 	waitmessage 64
 	return
 
-BattleScript_MoveEffectRecoil33:: @ 81D96C8
-	jumpifmove MOVE_STRUGGLE, BattleScript_DoRecoil33
-	jumpifability USER, ABILITY_ROCK_HEAD, BattleScript_Recoil33End
+BattleScript_MoveEffectRecoil:: @ 81D96C8
+	jumpifmove MOVE_STRUGGLE, BattleScript_DoRecoil
+	jumpifability USER, ABILITY_ROCK_HEAD, BattleScript_RecoilEnd
 
-BattleScript_DoRecoil33: @ 81D96DB
+BattleScript_DoRecoil: @ 81D96DB
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
 	healthbarupdate USER
 	datahpupdate USER
@@ -3987,7 +3987,7 @@ BattleScript_DoRecoil33: @ 81D96DB
 	waitmessage 64
 	tryfaintmon USER, FALSE, NULL
 
-BattleScript_Recoil33End: @ 81D96F5
+BattleScript_RecoilEnd: @ 81D96F5
 	return
 
 BattleScript_ItemSteal:: @ 81D96F6
@@ -4137,10 +4137,10 @@ BattleScript_MoveHPDrain:: @ 81D9843
 	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
 	goto BattleScript_MoveEnd
 
-BattleScript_MoveHPDrain_FullHP_PPLoss:: @ 81D9865
+BattleScript_MonMadeMoveUseless_PPLoss:: @ 81D9865
 	ppreduce
 
-BattleScript_MoveHPDrain_FullHP:: @ 81D9866
+BattleScript_MonMadeMoveUseless:: @ 81D9866
 	attackstring
 	pause 32
 	printstring BATTLE_TEXT_MadeUseless
@@ -4221,7 +4221,7 @@ BattleScript_AbilityNoSpecificStatLoss:: @ 81D9903
 	setbyte cMULTISTRING_CHOOSER, 3
 	return
 
-BattleScript_NoItemSteal:: @ 81D9913
+BattleScript_StickyHoldActivates:: @ 81D9913
 	pause 32
 	printstring BATTLE_TEXT_MadeIneffective
 	waitmessage 64
@@ -4429,7 +4429,7 @@ BattleScript_MoveSelectionChoiceBanded:: @ 81D9AC2
 	printselectionstring BATTLE_TEXT_ChoiceBand
 	endselectionscript
 
-BattleScript_HangedOnMsg:: @ 81D9AC6
+BattleScript_FocusBandActivates:: @ 81D9AC6
 	playanimation TARGET, B_ANIM_HANGED_ON, NULL
 	printstring BATTLE_TEXT_FocusSash
 	waitmessage 64
