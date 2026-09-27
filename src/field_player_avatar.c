@@ -32,7 +32,7 @@ EWRAM_DATA struct PlayerAvatar gPlayerAvatar = {0};
 
 // Static declarations
 
-static bool8 sub_8058854(struct ObjectEvent *, u8);
+static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *, u8);
 static void npc_clear_strange_bits(struct ObjectEvent *a);
 static void MovePlayerAvatarUsingKeypadInput(u8 a, u16 b, u16 c);
 static void PlayerAllowForcedMovementIfMovingSameDirection(void);
@@ -272,7 +272,7 @@ void player_step(u8 direction, u16 newKeys, u16 heldKeys)
     if (gPlayerAvatar.preventStep == FALSE)
     {
         Bike_TryAcroBikeHistoryUpdate(newKeys, heldKeys);
-        if (!sub_8058854(playerObjEvent, direction))
+        if (!TryInterruptObjectEventSpecialAnim(playerObjEvent, direction))
         {
             npc_clear_strange_bits(playerObjEvent);
             DoPlayerAvatarTransition();
@@ -285,13 +285,13 @@ void player_step(u8 direction, u16 newKeys, u16 heldKeys)
     }
 }
 
-static bool8 sub_8058854(struct ObjectEvent *playerObjEvent, u8 direction)
+static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *playerObjEvent, u8 direction)
 {
     if (ObjectEventIsMovementOverridden(playerObjEvent)
      && !ObjectEventClearHeldMovementIfFinished(playerObjEvent))
     {
         u8 heldMovementActionId = ObjectEventGetHeldMovementActionId(playerObjEvent);
-        if (heldMovementActionId > 24 && heldMovementActionId < 29 && direction != DIR_NONE && playerObjEvent->movementDirection != direction)
+        if (heldMovementActionId > MOVEMENT_ACTION_WALK_FAST_RIGHT && heldMovementActionId < MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_DOWN && direction != DIR_NONE && playerObjEvent->movementDirection != direction)
         {
             ObjectEventClearHeldMovement(playerObjEvent);
             return FALSE;
