@@ -233,7 +233,7 @@ gDebugLinkTestCounter = .;
 #endif
 
 // mori_debug_menu.c
-SYMBOL(gUnknown_03004DA0, 32)
+SYMBOL(gMoriDebugLinkKeyFlagsText, 32)
 
 // scanline_effect.c
 SYMBOL(gScanlineEffect, 32)
