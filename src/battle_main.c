@@ -65,7 +65,7 @@ struct UnknownStruct8
     u8 unk1A;
 };
 
-extern void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
+extern void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern const u8 Str_821F7B8[];
@@ -2723,7 +2723,7 @@ void SetDebugFlyingMonEditorMenuState(u8 taskId, u8 b)
 {
     if (b != 0)
     {
-        sub_802BBD4(24, 28, 29, 33, 1);
+        HandleBattleWindow(24, 28, 29, 33, 1);
         DrawDebugFlyingMonSpecies();
         DrawDebugFlyingMonSpriteOffset(taskId);
         ReloadDebugFlyingMonSprite(taskId);
@@ -2731,7 +2731,7 @@ void SetDebugFlyingMonEditorMenuState(u8 taskId, u8 b)
     }
     else
     {
-        sub_802BBD4(24, 28, 29, 33, 0);
+        HandleBattleWindow(24, 28, 29, 33, 0);
         gTasks[taskId].data[0] = 2;
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7DA, 656, 26, 29);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
@@ -2748,7 +2748,7 @@ void ShowDebugFlyingMonFlashConfirmation(u8 taskId, u8 b)
     FillDebugBattleTextBuffer(0, 7);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    sub_802BBD4(24, 28, 29, 33, 0);
+    HandleBattleWindow(24, 28, 29, 33, 0);
     if (b != 0)
     {
         gTasks[taskId].data[0] = 4;

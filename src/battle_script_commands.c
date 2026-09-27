@@ -164,10 +164,10 @@ u8 GetScaledHPFraction(s16 hp, s16 maxhp, u8 scale);
 u16 GetPokedexHeightWeight(u16 national_num, u8 heightweight);
 u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
-void sub_802BC6C(void);
+void UpdateBattleYesNoCursor(void);
 u8 sub_809FA30(void);
 bool32 IsHMMove2(u16 move);
-void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
+void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
 void ReshowBattleScreenAfterMenu(void);
 void BattleMainCB2(void);
@@ -5266,17 +5266,17 @@ void atk59_handlelearnnewmove(void)
     }
 }
 
-void sub_8023A80(void)
+void ShowBattleYesNoMenu(void)
 {
-    sub_802BBD4(0x18, 8, 0x1D, 0xD, 0);
+    HandleBattleWindow(0x18, 8, 0x1D, 0xD, 0);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 0x100, 0x19, 0x9);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     CreateOutlineCursor(0, 0xFFFF, 0xC, 0x2D9F, 0x20);
 }
 
-void sub_8023AD8(void)
+void HideBattleYesNoMenu(void)
 {
-    sub_802BBD4(0x18, 8, 0x1D, 0xD, 1);
+    HandleBattleWindow(0x18, 8, 0x1D, 0xD, 1);
     DestroyMenuCursor();
 }
 
@@ -5286,10 +5286,10 @@ static void atk5A_yesnoboxlearnmove(void)
     switch (gBattleStruct->atk5A_StateTracker)
     {
     case 0:
-        sub_8023A80();
+        ShowBattleYesNoMenu();
         gBattleStruct->atk5A_StateTracker++;
         gBattleCommunication[1] = 0;
-        sub_802BC6C();
+        UpdateBattleYesNoCursor();
         break;
     case 1:
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[1] != 0)
@@ -5297,21 +5297,21 @@ static void atk5A_yesnoboxlearnmove(void)
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 0;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[1] == 0)
         {
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 1;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
             if (gBattleCommunication[1] == 0)
             {
-                sub_8023AD8();
+                HideBattleYesNoMenu();
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
                 gBattleStruct->atk5A_StateTracker++;
                 return;
@@ -5381,7 +5381,7 @@ static void atk5A_yesnoboxlearnmove(void)
         }
         break;
     case 4:
-        sub_8023AD8();
+        HideBattleYesNoMenu();
         gBattlescriptCurrInstr += 5;
         break;
     case 5:
@@ -5398,10 +5398,10 @@ static void atk5B_yesnoboxstoplearningmove(void)
     switch (gBattleStruct->atk5A_StateTracker)
     {
     case 0:
-        sub_8023A80();
+        ShowBattleYesNoMenu();
         gBattleStruct->atk5A_StateTracker++;
         gBattleCommunication[1] = 0;
-        sub_802BC6C();
+        UpdateBattleYesNoCursor();
         break;
     case 1:
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[1] != 0)
@@ -5409,14 +5409,14 @@ static void atk5B_yesnoboxstoplearningmove(void)
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 0;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[1] == 0)
         {
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 1;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(A_BUTTON))
         {
@@ -5425,13 +5425,13 @@ static void atk5B_yesnoboxstoplearningmove(void)
                 gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
             else
                 gBattlescriptCurrInstr += 5;
-            sub_8023AD8();
+            HideBattleYesNoMenu();
         }
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
-            sub_8023AD8();
+            HideBattleYesNoMenu();
         }
     }
 }
@@ -5656,10 +5656,10 @@ static void atk67_yesnobox(void)
     switch (gBattleCommunication[0])
     {
     case 0:
-        sub_8023A80();
+        ShowBattleYesNoMenu();
         gBattleCommunication[0]++;
         gBattleCommunication[1] = 0;
-        sub_802BC6C();
+        UpdateBattleYesNoCursor();
         break;
     case 1:
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[1] != 0)
@@ -5667,26 +5667,26 @@ static void atk67_yesnobox(void)
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 0;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[1] == 0)
         {
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 1;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(B_BUTTON))
         {
             gBattleCommunication[1] = 1;
             PlaySE(SE_SELECT);
-            sub_8023AD8();
+            HideBattleYesNoMenu();
             gBattlescriptCurrInstr++;
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sub_8023AD8();
+            HideBattleYesNoMenu();
             gBattlescriptCurrInstr++;
         }
         break;
@@ -5782,7 +5782,7 @@ static void atk6C_drawlvlupbox(void)
     switch (gBattleStruct->atk6C_statetracker)
     {
     case 0:
-        sub_802BBD4(0xB, 0, 0x1D, 0x7, 0);
+        HandleBattleWindow(0xB, 0, 0x1D, 0x7, 0);
         r5 = StringCopy(gStringVar4, BattleText_Format2);
         for (i = 0; i < 6; i++)
         {
@@ -5898,7 +5898,7 @@ static void atk6C_drawlvlupbox(void)
         if (gMain.newKeys != 0)
         {
             PlaySE(SE_SELECT);
-            sub_802BBD4(11, 0, 29, 7, TRUE);
+            HandleBattleWindow(11, 0, 29, 7, TRUE);
             gBattleStruct->atk6C_statetracker++;
         }
         break;
@@ -5935,7 +5935,7 @@ static void atk70_recordlastability(void)
     gBattlescriptCurrInstr += 1; //buggy, should be += 2, one byte for command, one byte for argument...
 }
 
-void sub_8024CEC(void)
+void BufferMoveToLearnIntoBattleTextBuff2(void)
 {
     gBattleTextBuff2[0] = 0xFD;
     gBattleTextBuff2[1] = 2;
@@ -5946,7 +5946,7 @@ void sub_8024CEC(void)
 
 static void atk71_buffermovetolearn(void)
 {
-    sub_8024CEC();
+    BufferMoveToLearnIntoBattleTextBuff2();
     gBattlescriptCurrInstr++;
 }
 
@@ -9565,7 +9565,7 @@ static void atkF2_displaydexinfo(void)
     }
 }
 
-void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0)
+void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0)
 {
     int i;
     int j;
@@ -9610,7 +9610,7 @@ void sub_802BBD4(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0)
     }
 }
 
-void sub_802BC6C(void)
+void UpdateBattleYesNoCursor(void)
 {
     SetOutlineCursorPosition(0xC8, ((gBattleCommunication[1] << 28) + 1207959552) >> 24); //what could that be?
 }
@@ -9625,10 +9625,10 @@ static void atkF3_trygivecaughtmonnick(void)
     switch (gBattleCommunication[0])
     {
     case 0:
-        sub_8023A80();
+        ShowBattleYesNoMenu();
         gBattleCommunication[0]++;
         gBattleCommunication[1] = 0;
-        sub_802BC6C();
+        UpdateBattleYesNoCursor();
         break;
     case 1:
         if (JOY_NEW(DPAD_UP) && gBattleCommunication[1] != 0)
@@ -9636,14 +9636,14 @@ static void atkF3_trygivecaughtmonnick(void)
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 0;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[1] == 0)
         {
             PlaySE(SE_SELECT);
             nullsub_6();
             gBattleCommunication[1] = 1;
-            sub_802BC6C();
+            UpdateBattleYesNoCursor();
         }
         if (JOY_NEW(A_BUTTON))
         {

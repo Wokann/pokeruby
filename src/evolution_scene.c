@@ -57,10 +57,10 @@ struct EvoInfo
 };
 
 void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies);
-void sub_8024CEC(void);
-void sub_8023A80(void);
-void sub_802BC6C(void);
-void sub_8023AD8(void);
+void BufferMoveToLearnIntoBattleTextBuff2(void);
+void ShowBattleYesNoMenu(void);
+void UpdateBattleYesNoCursor(void);
+void HideBattleYesNoMenu(void);
 void nullsub_6(void);
 bool32 IsHMMove2(u16 move);
 
@@ -714,7 +714,7 @@ static void Task_EvolutionScene(u8 taskID)
     case 19: // pokemon learned a new move, print string and play a fanfare
         if (gWindowTemplate_Contest_MoveDescription.state == 0 && !IsSEPlaying())
         {
-            sub_8024CEC();
+            BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[3]);
             Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
@@ -732,7 +732,7 @@ static void Task_EvolutionScene(u8 taskID)
         case 0:
             if (gWindowTemplate_Contest_MoveDescription.state == 0 && !IsSEPlaying())
             {
-                sub_8024CEC();
+                BufferMoveToLearnIntoBattleTextBuff2();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[4]);
                 Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
                 gTasks[taskID].tLearnMoveState++;
@@ -760,10 +760,10 @@ static void Task_EvolutionScene(u8 taskID)
         case 3:
             if (gWindowTemplate_Contest_MoveDescription.state == 0 && !IsSEPlaying())
             {
-                sub_8023A80();
+                ShowBattleYesNoMenu();
                 gTasks[taskID].tLearnMoveState++;
                 sEvoCursorPos = 0;
-                sub_802BC6C();
+                UpdateBattleYesNoCursor();
             }
             break;
         case 4:
@@ -772,18 +772,18 @@ static void Task_EvolutionScene(u8 taskID)
                 PlaySE(SE_SELECT);
                 nullsub_6();
                 sEvoCursorPos = 0;
-                sub_802BC6C();
+                UpdateBattleYesNoCursor();
             }
             if (JOY_NEW(DPAD_DOWN) && sEvoCursorPos == 0)
             {
                 PlaySE(SE_SELECT);
                 nullsub_6();
                 sEvoCursorPos = 1;
-                sub_802BC6C();
+                UpdateBattleYesNoCursor();
             }
             if (JOY_NEW(A_BUTTON))
             {
-                sub_8023AD8();
+                HideBattleYesNoMenu();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[292]);
                 Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
                 PlaySE(SE_SELECT);
@@ -798,7 +798,7 @@ static void Task_EvolutionScene(u8 taskID)
             }
             if (JOY_NEW(B_BUTTON))
             {
-                sub_8023AD8();
+                HideBattleYesNoMenu();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[292]);
                 Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 144, 2, 15);
                 PlaySE(SE_SELECT);
@@ -1048,7 +1048,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
     case 15:
         if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
         {
-            sub_8024CEC();
+            BufferMoveToLearnIntoBattleTextBuff2();
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[3]);
             Contest_StartTextPrinter(&gUnknown_03004828->window,
@@ -1070,7 +1070,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
         case 0:
             if (gUnknown_03004828->window.state == 0 && !IsSEPlaying())
             {
-                sub_8024CEC();
+                BufferMoveToLearnIntoBattleTextBuff2();
                 BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[4]);
                 Contest_StartTextPrinter(&gUnknown_03004828->window,
                     gDisplayedStringBattle,
