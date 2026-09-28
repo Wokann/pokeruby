@@ -8,8 +8,8 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimNeedleArmSpike(struct Sprite* sprite);
-static void AnimNeedleArmSpike_Step(struct Sprite* sprite);
+static void AnimNeedleArmSpike(struct Sprite *sprite);
+static void AnimNeedleArmSpike_Step(struct Sprite *sprite);
 
 // homing (the spinning effect of sprites going inward in a static rotation.)
 // Used by Needle Arm.
@@ -25,7 +25,7 @@ const struct SpriteTemplate gNeedleArmSpikeSpriteTemplate =
     .callback = AnimNeedleArmSpike,
 };
 
-void AnimNeedleArmSpike(struct Sprite* sprite)
+static void AnimNeedleArmSpike(struct Sprite *sprite)
 {
     u8 a;
     u8 b;
@@ -81,7 +81,7 @@ void AnimNeedleArmSpike(struct Sprite* sprite)
     }
 }
 
-static void AnimNeedleArmSpike_Step(struct Sprite* sprite)
+static void AnimNeedleArmSpike_Step(struct Sprite *sprite)
 {
     if (sprite->data[0])
     {
