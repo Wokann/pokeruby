@@ -201,7 +201,7 @@ static void SpriteCB_CableEndSending(struct Sprite *);
 static void SpriteCB_GbaScreen(struct Sprite *);
 static void sub_804D80C(struct Sprite *);
 static void sub_804E1DC(void);
-static void sub_804BBCC(void);
+static void CB2_InGameTrade(void);
 static void sub_804D8E4(void);
 static void sub_804C164(void);
 static void SetTradeSceneStrings(void);
@@ -4040,7 +4040,7 @@ NAKED void CB2_LinkTrade(void)
 #endif
 
 // In-game trade init
-void sub_804B790(void)
+void CB2_InitInGameTrade(void)
 {
     u8 otName[11];
     switch (gMain.state)
@@ -4114,7 +4114,7 @@ void sub_804B790(void)
         case 12:
             if (!gPaletteFade.active)
             {
-                SetMainCallback2(sub_804BBCC);
+                SetMainCallback2(CB2_InGameTrade);
             }
             break;
     }
@@ -4124,54 +4124,54 @@ void sub_804B790(void)
     UpdatePaletteFade();
 }
 
-static void sub_804BA18(u8 partyIdx)
+static void UpdatePokedexForReceivedMon(u8 partyIdx)
 {
-    struct Pokemon *pokemon = &gPlayerParty[partyIdx];
-    if (!GetMonData(pokemon, MON_DATA_IS_EGG))
+    struct Pokemon *mon = &gPlayerParty[partyIdx];
+    if (!GetMonData(mon, MON_DATA_IS_EGG))
     {
-        u16 species = SpeciesToNationalPokedexNum(GetMonData(pokemon, MON_DATA_SPECIES, NULL));
+        u16 species = SpeciesToNationalPokedexNum(GetMonData(mon, MON_DATA_SPECIES, NULL));
         GetSetPokedexFlag(species, 2);
         GetSetPokedexFlag(species, 3);
     }
 }
 
-static void sub_804BA64(void)
+static void TryEnableNationalDexFromLinkPartner(void)
 {
     u8 mpId = GetMultiplayerId();
     if (gLinkPlayers[mpId ^ 1].lp_field_2 == 0x8000)
         EnableNationalPokedex();
 }
 
-static void sub_804BA94(u8 a0, u8 a1)
+static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
 {
     u8 friendship;
-    struct Pokemon *playerPokemon = &gPlayerParty[a0];
-    u16 playerMail = GetMonData(playerPokemon, MON_DATA_MAIL);
+    struct Pokemon *playerMon = &gPlayerParty[playerPartyIdx];
+    u16 playerMail = GetMonData(playerMon, MON_DATA_MAIL);
 
-    struct Pokemon *friendPokemon = &gEnemyParty[a1];
-    u16 friendMail = GetMonData(friendPokemon, MON_DATA_MAIL);
+    struct Pokemon *partnerMon = &gEnemyParty[partnerPartyIdx];
+    u16 partnerMail = GetMonData(partnerMon, MON_DATA_MAIL);
 
     if (playerMail != 0xff)
         ClearMailStruct(&gSaveBlock1.mail[playerMail]);
 
     // This is where the actual trade happens!!
-    gUnknown_03004828->pokemon = *playerPokemon;
-    *playerPokemon = *friendPokemon;
-    *friendPokemon = gUnknown_03004828->pokemon;
+    gUnknown_03004828->pokemon = *playerMon;
+    *playerMon = *partnerMon;
+    *partnerMon = gUnknown_03004828->pokemon;
 
     friendship = 70;
-    if (!GetMonData(playerPokemon, MON_DATA_IS_EGG))
-        SetMonData(playerPokemon, MON_DATA_FRIENDSHIP, &friendship);
+    if (!GetMonData(playerMon, MON_DATA_IS_EGG))
+        SetMonData(playerMon, MON_DATA_FRIENDSHIP, &friendship);
 
-    if (friendMail != 0xff)
-        GiveMailToMon2(playerPokemon, &gUnknown_02029700[friendMail]);
+    if (partnerMail != 0xff)
+        GiveMailToMon2(playerMon, &gUnknown_02029700[partnerMail]);
 
-    sub_804BA18(a0);
+    UpdatePokedexForReceivedMon(playerPartyIdx);
     if (gReceivedRemoteLinkPlayers)
-        sub_804BA64();
+        TryEnableNationalDexFromLinkPartner();
 }
 
-static void sub_804BB78(void)
+static void HandleLinkDataSend(void)
 {
     switch (gUnknown_03004828->unk_00bd)
     {
@@ -4188,7 +4188,7 @@ static void sub_804BB78(void)
     }
 }
 
-static void sub_804BBCC(void)
+static void CB2_InGameTrade(void)
 {
     sub_804C29C();
     RunTasks();
@@ -4771,8 +4771,8 @@ static bool8 sub_804C29C(void)
             }
             break;
         case 72: // Only if in-game trade
-            sub_804BA94(gSpecialVar_0x8005, 0);
-            gCB2_AfterEvolution = sub_804BBCC;
+            TradeMons(gSpecialVar_0x8005, 0);
+            gCB2_AfterEvolution = CB2_InGameTrade;
             evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], TRUE, ITEM_NONE);
             if (evoTarget != SPECIES_NONE)
                 TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[0]], evoTarget, gUnknown_03004828->pokePicSpriteIdxs[1], gSelectedTradeMonPositions[0]);
@@ -5027,12 +5027,12 @@ void sub_804DB84(void)
     {
         DestroySprite(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]]);
         FreeSpriteOamMatrix(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[1]]);
-        sub_804BA94(gSelectedTradeMonPositions[0], gSelectedTradeMonPositions[1] % 6);
+        TradeMons(gSelectedTradeMonPositions[0], gSelectedTradeMonPositions[1] % 6);
         gUnknown_03004828->linkData[0] = 0xabcd;
         gUnknown_03004828->unk_00bd = 1;
         SetMainCallback2(sub_804DC18);
     }
-    sub_804BB78();
+    HandleLinkDataSend();
     sub_804D63C();
     RunTasks();
     AnimateSprites();
@@ -5209,7 +5209,7 @@ static void sub_804E1A0(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_804B790);
+        SetMainCallback2(CB2_InitInGameTrade);
         gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }

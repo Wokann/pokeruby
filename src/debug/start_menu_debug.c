@@ -533,7 +533,7 @@ u8 DebugMenu_8076D00(void)
 
 u8 DebugMenu_8076D14(void)
 {
-    SetMainCallback2(sub_804B790);
+    SetMainCallback2(CB2_InitInGameTrade);
     return 0;
 }
 

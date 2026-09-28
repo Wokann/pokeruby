@@ -51,7 +51,7 @@ extern const u32 gUnknown_0820CA98[];
 extern const u16 gUnknown_0820F798[];
 
 void CB2_StartCreateTradeMenu(void);
-void sub_804B790(void);
+void CB2_InitInGameTrade(void);
 void sub_804E174(void);
 extern const u8 gOtherText_MaleSymbol3[2];
 extern const u8 gOtherText_FemaleSymbol3[2];
