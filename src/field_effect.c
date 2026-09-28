@@ -1989,7 +1989,7 @@ static void EscapeRopeWarpOutEffect_Spin(struct Task *task)
         if (task->tWarpTimer == 0 && !gPaletteFade.active && BGMusicStopped() == TRUE)
         {
             SetObjectEventDirection(objectEvent, task->tStartDirection);
-            sub_8053678();
+            SetWarpDestinationToEscapeWarp();
             WarpIntoMap();
             gFieldCallback = FieldCallback_EscapeRopeWarpIn;
             SetMainCallback2(CB2_LoadMap);

@@ -74,9 +74,9 @@ void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused);
 void sub_8053538(u8);
 void Overworld_SetWarpDestToLastHealLoc(void);
 void Overworld_SetHealLocationWarp(u8);
-void sub_80535C4(s16 a1, s16 a2);
-void sub_805363C(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
-void sub_8053678(void);
+void UpdateEscapeWarp(s16 x, s16 y);
+void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
+void SetWarpDestinationToEscapeWarp(void);
 void SetFixedDiveWarp(s8, s8, s8, s8, s8);
 // warp1_set_to_warp2
 void SetFixedHoleWarp(s8, s8, s8, s8, s8);

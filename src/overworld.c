@@ -508,22 +508,22 @@ void Overworld_SetHealLocationWarp(u8 healLocationId)
         SetWarpData(&gSaveBlock1.lastHealLocation, healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
-void sub_80535C4(s16 a1, s16 a2)
+void UpdateEscapeWarp(s16 x, s16 y)
 {
     u8 currMapType = Overworld_GetMapTypeOfSaveblockLocation();
     u8 destMapType = GetMapTypeByGroupAndId(gWarpDestination.mapGroup, gWarpDestination.mapNum);
     if (is_map_type_1_2_3_5_or_6(currMapType) && is_map_type_1_2_3_5_or_6(destMapType) != TRUE)
-        sub_805363C(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, -1, a1 - 7, a2 - 6);
+        SetEscapeWarp(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, WARP_ID_NONE, x - MAP_OFFSET, y - MAP_OFFSET + 1);
 }
 
-void sub_805363C(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    SetWarpData(&gSaveBlock1.warp4, mapGroup, mapNum, warpId, x, y);
+    SetWarpData(&gSaveBlock1.escapeWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void sub_8053678(void)
+void SetWarpDestinationToEscapeWarp(void)
 {
-    gWarpDestination = gSaveBlock1.warp4;
+    gWarpDestination = gSaveBlock1.escapeWarp;
 }
 
 void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)

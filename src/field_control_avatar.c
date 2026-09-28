@@ -778,7 +778,7 @@ static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPositi
         struct MapHeader *mapHeader;
 
         warp1_set_2(warpEvent->mapGroup, warpEvent->mapNum, warpEvent->warpId);
-        sub_80535C4(position->x, position->y);
+        UpdateEscapeWarp(position->x, position->y);
         mapHeader = Overworld_GetMapHeaderByGroupAndId(warpEvent->mapGroup, warpEvent->mapNum);
         if (mapHeader->events->warps[warpEvent->warpId].mapNum == MAP_NUM(MAP_DYNAMIC))
             saved_warp2_set(mapHeader->events->warps[warpEventId].warpId, gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum, warpEventId);

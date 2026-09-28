@@ -536,13 +536,13 @@ static void InitMapBasedOnPlayerLocation(void)
         break;
     case 3:
     case 6:
-        mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.warp4.mapGroup, gSaveBlock1.warp4.mapNum);
+        mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.escapeWarp.mapGroup, gSaveBlock1.escapeWarp.mapNum);
         gRegionMap->mapSectionId = mapHeader->regionMapSectionId;
         gRegionMap->playerIsInCave = TRUE;
         mapWidth = mapHeader->mapLayout->width;
         mapHeight = mapHeader->mapLayout->height;
-        x = gSaveBlock1.warp4.x;
-        y = gSaveBlock1.warp4.y;
+        x = gSaveBlock1.escapeWarp.x;
+        y = gSaveBlock1.escapeWarp.y;
         break;
     case 8:
         mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.dynamicWarp.mapGroup, gSaveBlock1.dynamicWarp.mapNum);
@@ -560,7 +560,7 @@ static void InitMapBasedOnPlayerLocation(void)
             gRegionMap->mapSectionId = gMapHeader.regionMapSectionId;
             if (gRegionMap->mapSectionId != MAPSEC_DYNAMIC)
             {
-                r4 = &gSaveBlock1.warp4;
+                r4 = &gSaveBlock1.escapeWarp;
                 mapHeader = Overworld_GetMapHeaderByGroupAndId(r4->mapGroup, r4->mapNum);
             }
             else

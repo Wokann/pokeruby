@@ -846,7 +846,7 @@ bool8 ScrCmd_setescapewarp(struct ScriptContext *ctx)
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u16 y = VarGet(ScriptReadHalfword(ctx));
 
-    sub_805363C(mapGroup, mapNum, warpId, x, y);
+    SetEscapeWarp(mapGroup, mapNum, warpId, x, y);
     return FALSE;
 }
 
