@@ -3,6 +3,7 @@
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "fieldmap.h"
+#include "rotating_gate.h"
 #include "constants/maps.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -464,7 +465,7 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_RotatingGate[] =
 static const struct SpriteTemplate sSpriteTemplate_RotatingGateLarge =
 {
     .tileTag = ROTATING_GATE_TILE_TAG,
-    .paletteTag = 0xFFFF,
+    .paletteTag = TAG_NONE,
     .oam = &sOamData_RotatingGateLarge,
     .anims = sSpriteAnimTable_RotatingGateLarge,
     .images = NULL,
@@ -475,7 +476,7 @@ static const struct SpriteTemplate sSpriteTemplate_RotatingGateLarge =
 static const struct SpriteTemplate sSpriteTemplate_RotatingGateRegular =
 {
     .tileTag = ROTATING_GATE_TILE_TAG,
-    .paletteTag = 0xFFFF,
+    .paletteTag = TAG_NONE,
     .oam = &sOamData_RotatingGateRegular,
     .anims = sSpriteAnimTable_RotatingGateRegular,
     .images = NULL,
@@ -620,7 +621,7 @@ static EWRAM_DATA u8 sRotatingGate_GateSpriteIds[ROTATING_GATE_PUZZLE_MAX] = {0}
 static EWRAM_DATA const struct RotatingGatePuzzle *sRotatingGate_PuzzleConfig = NULL;
 static EWRAM_DATA u8 sRotatingGate_PuzzleCount = 0;
 
-static int GetCurrentMapRotatingGatePuzzleType(void)
+static s32 GetCurrentMapRotatingGatePuzzleType(void)
 {
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_FORTREE_CITY_GYM) &&
         gSaveBlock1.location.mapNum == MAP_NUM(MAP_FORTREE_CITY_GYM))
@@ -650,7 +651,7 @@ static void RotatingGate_ResetAllGateOrientations(void)
     }
 }
 
-static int RotatingGate_GetGateOrientation(u8 gateId)
+static s32 RotatingGate_GetGateOrientation(u8 gateId)
 {
     return ((u8 *)GetVarPointer(VAR_TEMP_0))[gateId];
 }
@@ -870,7 +871,7 @@ static void RotatingGate_DestroyGatesOutsideViewport(void)
     }
 }
 
-int RotatingGate_CanRotate(u8 gateId, int rotationDirection)
+static s32 RotatingGate_CanRotate(u8 gateId, s32 rotationDirection)
 {
     const struct Coords8 *armPos;
     u8 orientation;
@@ -885,7 +886,7 @@ int RotatingGate_CanRotate(u8 gateId, int rotationDirection)
     else if (rotationDirection == ROTATE_CLOCKWISE)
         armPos = sRotatingGate_ArmPositionsClockwiseRotation;
     else
-        return 0;
+        return FALSE;
 
     orientation = RotatingGate_GetGateOrientation(gateId);
 
@@ -905,15 +906,15 @@ int RotatingGate_CanRotate(u8 gateId, int rotationDirection)
             if (sRotatingGate_ArmLayout[shape][i * 2 + j])
             {
                 if (MapGridGetCollisionAt(x + armPos[armIndex].deltaX, y + armPos[armIndex].deltaY) == 1)
-                    return 0;
+                    return FALSE;
             }
         }
     }
 
-    return 1;
+    return TRUE;
 }
 
-static int RotatingGate_HasArm(u8 gateId, u8 armInfo)
+static s32 RotatingGate_HasArm(u8 gateId, u8 armInfo)
 {
     int isLongArm;
     s8 armOrientation;
@@ -928,7 +929,7 @@ static int RotatingGate_HasArm(u8 gateId, u8 armInfo)
     return sRotatingGate_ArmLayout[shape][armOrientation * 2 + isLongArm];
 }
 
-static void RotatingGate_TriggerRotationAnimation(u8 gateId, int rotationDirection)
+static void RotatingGate_TriggerRotationAnimation(u8 gateId, s32 rotationDirection)
 {
     struct Sprite *sprite;
 
@@ -967,7 +968,7 @@ void RotatingGate_InitPuzzle(void)
     }
 }
 
-void RotatingGatePuzzleCameraUpdate(u16 deltaX, u16 deltaY)
+void RotatingGatePuzzleCameraUpdate(s16 deltaX, s16 deltaY)
 {
     if (GetCurrentMapRotatingGatePuzzleType())
     {
@@ -986,7 +987,7 @@ void RotatingGate_InitPuzzleAndGraphics(void)
     }
 }
 
-bool8 CheckForRotatingGatePuzzleCollision(u8 direction, s16 x, s16 y)
+bool32 CheckForRotatingGatePuzzleCollision(u8 direction, s16 x, s16 y)
 {
     int i;
 
