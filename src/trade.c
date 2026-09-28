@@ -46,8 +46,8 @@ asm(".include \"constants/gba_constants.inc\"");
 #endif
 
 #ifdef ENGLISH
-#define sub_804A96C_alt sub_804A96C
-asm(".set sub_804A96C_alt, sub_804A96C");
+#define CopyTradeTilemapToBufferAndRequestUpload CopyTradeTilemapToBuffer
+asm(".set CopyTradeTilemapToBufferAndRequestUpload, CopyTradeTilemapToBuffer");
 #endif
 
 #define Trade_SendData(ptr) (SendBlock(BitmaskAllOtherLinkPlayers(), ptr->linkData, 20))
@@ -76,12 +76,12 @@ struct UnkStructC {
     /*0x20*/ u16 heldItem;
 };
 
-struct UnkStructD {
+struct TradeTilemapBuffer {
     /*0x00*/ u8 filler_00[8];
-    /*0x08*/ void *vramAddr;
+    /*0x08*/ void *vramDest;
     /*0x0c*/ u8 filler_0c[4];
-    /*0x10*/ u8 unk_10;
-    /*0x12*/ u16 unk_12[0x400];
+    /*0x10*/ u8 needsUpload;
+    /*0x12*/ u16 tilemap[0x400];
 };
 
 struct UnkStructE {
@@ -121,7 +121,7 @@ struct TradeEwramSubstruct {
     /*0x00b4*/ u8 unk_00b4;
     /*0x00b5*/ u8 unk_00b5[11];
     /*0x00c0*/ u8 filler_00c0[8];
-    /*0x00c8*/ struct UnkStructD unk_00c8;
+    /*0x00c8*/ struct TradeTilemapBuffer tilemapBuffer;
     /*0x08dc*/ struct UnkStructE unk_08dc[4];
     /*0x08fc*/ u8 filler_08fc[0x704];
 };
@@ -151,7 +151,7 @@ static void DrawTextWindowAndBufferTiles(const struct WindowTemplate *, u8 *, co
 static void DrawBottomRowText(const u8 *, u8 *, u8);
 static void nullsub_5(u8, u8);
 static void InitTradeMenuActionQueue(void);
-static void sub_804A964(struct UnkStructD *, void *);
+static void InitTradeTilemapBuffer(struct TradeTilemapBuffer *, void *);
 static void VBlankCB_TradeMenu(void);
 static void PrintTradeMessage(u8);
 static bool8 BufferTradeParties(void);
@@ -165,13 +165,13 @@ static void ComputePartyHPBarLevels(u8);
 static void SetTradePartyHPBarSprites(void);
 static void CB1_UpdateLink(void);
 static void CB2_TradeMenu(void);
-static void sub_804A940(struct UnkStructD *);
+static void UploadTradeTilemapIfNeeded(struct TradeTilemapBuffer *);
 void CB2_LinkTrade(void);
 static void RunTradeMenuCallback(void);
 static void DoQueuedActions(void);
 static void DrawSelectedMonScreen(u8);
 static void PrintPartyLevelsAndGenders(u8);
-static void sub_804A938(struct UnkStructD *);
+static void MarkTradeTilemapForUpload(struct TradeTilemapBuffer *);
 static void sub_804A9F4(u8);
 static void sub_804AA00(u8);
 static void SetSelectedMon(u8);
@@ -180,8 +180,8 @@ static void PrintTradePartnerPartyNicknames(void);
 static u8 CountOtherUsableMons(const u8 *, u8, u8);
 static void RedrawPartyWindow(u8);
 u8 GetMonNicknameWidth(u8 *, u8, u8);
-static void sub_804A96C_alt(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u16);
-static void sub_804A96C(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u16);
+static void CopyTradeTilemapToBufferAndRequestUpload(struct TradeTilemapBuffer *, u8, u8, const u16 *, u8, u8, u16);
+static void CopyTradeTilemapToBuffer(struct TradeTilemapBuffer *, u8, u8, const u16 *, u8, u8, u16);
 void BufferMovesString(u8 *, u8, u8);
 void PrintLevelAndGender(u8, u8, u8, u8, u8, u8);
 static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *);
@@ -1073,7 +1073,7 @@ static void CB2_CreateTradeMenu(void)
             ResetSpriteData();
             FreeAllSpritePalettes();
             ResetTasks();
-            sub_804A964(&sTradeMenu->unk_00c8, BG_SCREEN_ADDR(5));
+            InitTradeTilemapBuffer(&sTradeMenu->tilemapBuffer, BG_SCREEN_ADDR(5));
             SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
             Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
@@ -1253,7 +1253,7 @@ static void CB2_ReturnToTradeMenu(void)
             ResetSpriteData();
             FreeAllSpritePalettes();
             ResetTasks();
-            sub_804A964(&sTradeMenu->unk_00c8, BG_SCREEN_ADDR(5));
+            InitTradeTilemapBuffer(&sTradeMenu->tilemapBuffer, BG_SCREEN_ADDR(5));
             SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
             Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
@@ -1385,7 +1385,7 @@ static void CB2_ReturnToTradeMenu(void)
 
 static void VBlankCB_TradeMenu(void)
 {
-    sub_804A940(&sTradeMenu->unk_00c8);
+    UploadTradeTilemapIfNeeded(&sTradeMenu->tilemapBuffer);
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
@@ -1448,14 +1448,14 @@ void LoadTradeBgGfx(u8 state)
             }
             DmaCopyLarge16(3, gUnknown_08EA0348, (void *)BG_VRAM, 0x1280, 0x1000);
             for (i = 0; i < 0x400; i ++)
-                sTradeMenu->unk_00c8.unk_12[i] = gUnknown_08EA15C8[i];
+                sTradeMenu->tilemapBuffer.tilemap[i] = gUnknown_08EA15C8[i];
             DmaCopy16Defvars(3, gTradeStripesBG2Tilemap, BG_SCREEN_ADDR(6), 0x800);
             break;
         case 1:
             DmaCopy16Defvars(3, gTradeStripesBG3Tilemap, BG_SCREEN_ADDR(7), 0x800);
             PrintPartyLevelsAndGenders(0);
             PrintPartyLevelsAndGenders(1);
-            sub_804A938(&sTradeMenu->unk_00c8);
+            MarkTradeTilemapForUpload(&sTradeMenu->tilemapBuffer);
             REG_BG0CNT &= ~0x03; // BGCNT_PRIORITY(0)
             REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_SCREENBASE(5);
             REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_SCREENBASE(6);
@@ -2264,7 +2264,7 @@ static void DrawSelectedMonScreen(u8 a0)
             sub_8078A34(&gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
             Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[whichParty][0], 0, gUnknown_0820C330[whichParty][1], 19);
-            sub_804A96C_alt(&sTradeMenu->unk_00c8, 15 * a0, 0, gTradePartyBoxTilemap, 15, 17, 0);
+            CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15 * a0, 0, gTradePartyBoxTilemap, 15, 17, 0);
             if (whichParty == 0)
             {
                 PrintTradePartnerPartyNicknames();
@@ -2277,7 +2277,7 @@ static void DrawSelectedMonScreen(u8 a0)
             }
             break;
         case 3:
-            sub_804A96C_alt(&sTradeMenu->unk_00c8, 15 * whichParty, 0, gTradePartyBoxTilemap, 15, 17, 0);
+            CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15 * whichParty, 0, gTradePartyBoxTilemap, 15, 17, 0);
             gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]].x = (gTradeMonSpriteCoords[6 * whichParty + whichPokemon ][0] + gTradeMonSpriteCoords[6 * whichParty + whichPokemon + 1][0]) / 2 * 8 + 14;
             gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]].y = gTradeMonSpriteCoords[6 * whichParty + whichPokemon ][1] * 8 - 12;
             gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]].x2 = 0;
@@ -2523,7 +2523,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tmovs r5, 0\n"
                     "\tstr r5, [sp, 0x8]\n"
                     "\tmovs r2, 0\n"
-                    "\tbl sub_804A96C_alt\n"
+                    "\tbl CopyTradeTilemapToBufferAndRequestUpload\n"
                     "\tldr r0, [sp, 0x6C]\n"
                     "\tcmp r0, 0\n"
                     "\tbeq _0804A08C\n"
@@ -2582,7 +2582,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tmovs r5, 0\n"
                     "\tstr r5, [sp, 0x8]\n"
                     "\tmovs r2, 0\n"
-                    "\tbl sub_804A96C_alt\n"
+                    "\tbl CopyTradeTilemapToBufferAndRequestUpload\n"
                     "\tldr r0, _0804A22C @ =sTradeMenu\n"
                     "\tldr r3, [r0]\n"
                     "\tldr r1, [sp, 0x6C]\n"
@@ -3000,7 +3000,7 @@ void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, u8 heig
     u8 level;
     u8 gender;
     u8 levelTens;
-    sub_804A96C(&sTradeMenu->unk_00c8, width, height, gTradeMonBoxTilemap, 6, 3, 0);
+    CopyTradeTilemapToBuffer(&sTradeMenu->tilemapBuffer, width, height, gTradeMonBoxTilemap, 6, 3, 0);
     if (whichParty == 0)
     {
         level = GetMonData(&gPlayerParty[monIdx], MON_DATA_LEVEL, NULL);
@@ -3018,31 +3018,31 @@ void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, u8 heig
         levelTens = level / 10;
         if (levelTens != 0)
         {
-            sTradeMenu->unk_00c8.unk_12[x + 32 * y] = levelTens + 0x60;
+            sTradeMenu->tilemapBuffer.tilemap[x + 32 * y] = levelTens + 0x60;
         }
-        sTradeMenu->unk_00c8.unk_12[x + 32 * y + 1] = (u8)(level % 10) + 0x70;
+        sTradeMenu->tilemapBuffer.tilemap[x + 32 * y + 1] = (u8)(level % 10) + 0x70;
         if (gender == MON_MALE)
         {
             if (!NameHasGenderSymbol(nickname, MON_MALE))
             {
-                sTradeMenu->unk_00c8.unk_12[x + 32 * y - 31] += 1;
+                sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 31] += 1;
             }
         }
         else if (gender == MON_FEMALE)
         {
             if (!NameHasGenderSymbol(nickname, MON_FEMALE))
             {
-                sTradeMenu->unk_00c8.unk_12[x + 32 * y - 31] += 2;
+                sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 31] += 2;
             }
         }
     }
     else
     {
-        sTradeMenu->unk_00c8.unk_12[x + 32 * y - 32] = sTradeMenu->unk_00c8.unk_12[x + 32 * y - 33];
-        sTradeMenu->unk_00c8.unk_12[x + 32 * y - 31] = sTradeMenu->unk_00c8.unk_12[x + 32 * y - 36] | 0x400;
+        sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 32] = sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 33];
+        sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 31] = sTradeMenu->tilemapBuffer.tilemap[x + 32 * y - 36] | 0x400;
     }
 #ifdef GERMAN
-    sTradeMenu->unk_00c8.unk_10 = 1;
+    sTradeMenu->tilemapBuffer.needsUpload = TRUE;
 #endif
 }
 
@@ -3080,47 +3080,47 @@ static void RedrawPartyWindow(u8 whichParty)
     if (whichParty == 0)
     {
         Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[0][0], 0, gUnknown_0820C330[0][1], 19);
-        sub_804A96C_alt(&sTradeMenu->unk_00c8, 0, 0, gTradePartyBoxTilemap, 15, 17, 0);
+        CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 0, 0, gTradePartyBoxTilemap, 15, 17, 0);
         PrintPartyLevelsAndGenders(0);
         PrintPartyNicknames(0);
         ShowTradePartyMonIcons(0);
-        sub_804A938(&sTradeMenu->unk_00c8);
+        MarkTradeTilemapForUpload(&sTradeMenu->tilemapBuffer);
     }
     else
     {
         Menu_DestroyCursor();
         Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[1][0], 0, gUnknown_0820C330[1][1], 19);
-        sub_804A96C_alt(&sTradeMenu->unk_00c8, 15, 0, gTradePartyBoxTilemap, 15, 17, 0);
+        CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15, 0, gTradePartyBoxTilemap, 15, 17, 0);
         PrintPartyLevelsAndGenders(1);
         PrintPartyNicknames(1);
         ShowTradePartyMonIcons(1);
-        sub_804A938(&sTradeMenu->unk_00c8);
+        MarkTradeTilemapForUpload(&sTradeMenu->tilemapBuffer);
     }
     DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * sTradeMenu->unk_007e, 20);
     sTradeMenu->unk_0080[whichParty] = 0;
 }
 
-static void sub_804A938(struct UnkStructD *unkStructD)
+static void MarkTradeTilemapForUpload(struct TradeTilemapBuffer *tilemapBuffer)
 {
-    unkStructD->unk_10 = 1;
+    tilemapBuffer->needsUpload = TRUE;
 }
 
-static void sub_804A940(struct UnkStructD *unkStructD)
+static void UploadTradeTilemapIfNeeded(struct TradeTilemapBuffer *tilemapBuffer)
 {
-    if (unkStructD->unk_10)
+    if (tilemapBuffer->needsUpload)
     {
-        CpuCopy16(unkStructD->unk_12, unkStructD->vramAddr, sizeof(unkStructD->unk_12));
-        unkStructD->unk_10 = 0;
+        CpuCopy16(tilemapBuffer->tilemap, tilemapBuffer->vramDest, sizeof(tilemapBuffer->tilemap));
+        tilemapBuffer->needsUpload = FALSE;
     }
 }
 
-static void sub_804A964(struct UnkStructD *unkStructD, void *dest)
+static void InitTradeTilemapBuffer(struct TradeTilemapBuffer *tilemapBuffer, void *vramDest)
 {
-    unkStructD->unk_10 = 0;
-    unkStructD->vramAddr = dest;
+    tilemapBuffer->needsUpload = FALSE;
+    tilemapBuffer->vramDest = vramDest;
 }
 
-static void sub_804A96C(struct UnkStructD *arg0, u8 left, u8 top, const u16 *tilemap, u8 width, u8 height, u16 sp8) {
+static void CopyTradeTilemapToBuffer(struct TradeTilemapBuffer *tilemapBuffer, u8 left, u8 top, const u16 *tilemap, u8 width, u8 height, u16 paletteOffset) {
     int y, x;
 
     for (y = 0; y < height; y++)
@@ -3128,20 +3128,20 @@ static void sub_804A96C(struct UnkStructD *arg0, u8 left, u8 top, const u16 *til
 
         for (x = 0; x < width; x++)
         {
-            arg0->unk_12[(top * 32 + left) + y * 32 + x] = tilemap[width * y + x] | sp8;
+            tilemapBuffer->tilemap[(top * 32 + left) + y * 32 + x] = tilemap[width * y + x] | paletteOffset;
         }
     }
 
 #if ENGLISH
-    arg0->unk_10 = 1;
+    tilemapBuffer->needsUpload = TRUE;
 #endif
 }
 
 #if GERMAN
-static void sub_804A96C_alt(struct UnkStructD *arg0, u8 left, u8 top, const u16 *tilemap, u8 width, u8 height, u16 sp8) {
-    sub_804A96C(arg0, left, top, tilemap, width, height, sp8);
+static void CopyTradeTilemapToBufferAndRequestUpload(struct TradeTilemapBuffer *tilemapBuffer, u8 left, u8 top, const u16 *tilemap, u8 width, u8 height, u16 paletteOffset) {
+    CopyTradeTilemapToBuffer(tilemapBuffer, left, top, tilemap, width, height, paletteOffset);
 
-    arg0->unk_10 = 1;
+    tilemapBuffer->needsUpload = TRUE;
 }
 #endif
 
