@@ -90,8 +90,8 @@ u8 CountTrailingZeroBits(u32 a);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 u8 sub_803FC34(u8 bank);
 u16 sub_803FBFC(u8 a);
-void RecordAbilityBattle(u8 bank, u8 ability);
-void RecordItemEffectBattle(u8 bank, u8 holdEffect);
+void RecordAbilityBattle(u8 battler, u8 abilityId);
+void RecordItemEffectBattle(u8 battler, u8 itemEffect);
 s8 GetPokeFlavourRelation(u32 pid, u8 flavor);
 
 extern u8 BattleScript_SelectingDisabledMove[];

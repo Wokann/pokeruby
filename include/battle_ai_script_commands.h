@@ -1,19 +1,18 @@
-#ifndef GUARD_BATTLEAI_H
-#define GUARD_BATTLEAI_H
+#ifndef GUARD_BATTLE_AI_SCRIPT_COMMANDS_H
+#define GUARD_BATTLE_AI_SCRIPT_COMMANDS_H
 
-enum
-{
-    TARGET,
-    USER
-};
+// Return values for BattleAI_GetAIActionToUse.
+// 0 - 3 are move indices.
+#define AI_CHOICE_FLEE  4
+#define AI_CHOICE_WATCH 5
 
 // AI states
 enum
 {
-    BATTLEAI_SETTING_UP,
-    BATTLEAI_PROCESSING,
-    BATTLEAI_FINISHED,
-    BATTLEAI_DO_NOT_PROCESS
+    AIState_SettingUp,
+    AIState_Processing,
+    AIState_FinishedProcessing,
+    AIState_DoNotProcess
 };
 
 // battle_ai
@@ -21,9 +20,11 @@ void BattleAI_SetupAIData(void);
 u8 BattleAI_GetAIActionToUse(void);
 void BattleAI_DoAIProcessing(void);
 void RecordLastUsedMoveByTarget(void);
-void AIStackPushVar(u8 *);
+void ClearBattlerMoveHistory(u8 battler);
+void AIStackPushVar(u8 *ptr);
 u8 AIStackPop(void);
 void BattleAI_HandleItemUseBeforeAISetup(void);
-void RecordAbilityBattle(u8 a, u8 b);
+void RecordAbilityBattle(u8 battler, u8 abilityId);
+void RecordItemEffectBattle(u8 battler, u8 itemEffect);
 
-#endif
+#endif // GUARD_BATTLE_AI_SCRIPT_COMMANDS_H
