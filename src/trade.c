@@ -54,12 +54,25 @@ asm(".set CopyTradeTilemapToBufferAndRequestUpload, CopyTradeTilemapToBuffer");
 
 #define GFXTAG_MENU_TEXT 200
 #define GFXTAG_CURSOR 300
+#define GFXTAG_POKEBALL 5557
 #define PALTAG_CURSOR 2345
 #define PALTAG_MENU_TEXT 4925
+#define PALTAG_POKEBALL 5558
 
 enum {
     CURSOR_ANIM_NORMAL,
     CURSOR_ANIM_ON_CANCEL,
+};
+
+enum {
+    POKEBALL_ANIM_SPIN_ONCE,
+    POKEBALL_ANIM_SPIN_TWICE,
+};
+
+enum {
+    POKEBALL_AFFINE_ANIM_NORMAL,
+    POKEBALL_AFFINE_ANIM_SQUISH,
+    POKEBALL_AFFINE_ANIM_UNSQUISH,
 };
 
 struct InGameTrade {
@@ -570,8 +583,8 @@ const u8 gUnknown_0820C3D1[][2] = {
     { 0,  0}
 };
 
-const u16 gTradeBallPalette[] = INCBIN_U16("graphics/trade/ball.gbapal");
-const u32 gTradeBallTiles[] = INCBIN_U32("graphics/trade/ball.4bpp");
+const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/ball.gbapal");
+const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/trade/ball.4bpp");
 const u16 gUnknown_0820C9F8[][16] = {
     INCBIN_U16("graphics/trade/unknown.gbapal"),
     INCBIN_U16("graphics/trade/gba.gbapal"),
@@ -582,11 +595,11 @@ const u16 gUnknown_0820C9F8[][16] = {
 
 const u32 gUnknown_0820CA98[] = INCBIN_U32("graphics/trade/gba.4bpp");
 const u32 gUnknown_0820CA98_2[] = INCBIN_U32("graphics/trade/shadow.4bpp");
-const u32 gUnknown_0820DD98[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
+const u32 sPokeballSymbol_Gfx[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
 const u16 gUnknown_0820F798[] = INCBIN_U16("graphics/trade/shadow_map.bin");
 const u16 gUnknown_08210798[] = INCBIN_U16("graphics/trade/gba_map.bin");
 const u16 gUnknown_08211798[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
-const u16 gUnknown_08211F98[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
+const u16 sPokeballSymbol_Map[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
 const u16 unused_08212098[] = INCBIN_U16("graphics/unused/unknown/8212098.gbapal");
 const u16 gTradeCableEndPalette[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
 const u16 unused_082120D8[] = INCBIN_U16("graphics/unused/unknown/82120D8.gbapal");
@@ -599,12 +612,12 @@ const u32 gTradeGBAScreenTiles[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
 const u32 gUnknown_08213738[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
 const u16 gUnknown_08215778[] = INCBIN_U16("graphics/trade/gba_affine_map.bin");
 
-const struct OamData gOamData_8215878 = {
+const struct OamData sOamData_Pokeball = {
     .affineMode = 1,
     .size = 1
 };
 
-const union AnimCmd gSpriteAnim_8215880[] = {
+const union AnimCmd sAnim_Pokeball_SpinOnce[] = {
     ANIMCMD_FRAME( 0, 3),
     ANIMCMD_FRAME( 4, 3),
     ANIMCMD_FRAME( 8, 3),
@@ -622,7 +635,7 @@ const union AnimCmd gSpriteAnim_8215880[] = {
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_82158BC[] = {
+const union AnimCmd sAnim_Pokeball_SpinTwice[] = {
     ANIMCMD_FRAME( 0, 3),
     ANIMCMD_FRAME( 4, 3),
     ANIMCMD_FRAME( 8, 3),
@@ -640,49 +653,49 @@ const union AnimCmd gSpriteAnim_82158BC[] = {
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_82158F8[] = {
-    gSpriteAnim_8215880,
-    gSpriteAnim_82158BC
+const union AnimCmd *const sAnims_Pokeball[] = {
+    sAnim_Pokeball_SpinOnce,
+    sAnim_Pokeball_SpinTwice
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8215900[] = {
+const union AffineAnimCmd sAffineAnim_Pokeball_Normal[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 1),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8215910[] = {
+const union AffineAnimCmd sAffineAnim_Pokeball_Squish[] = {
     AFFINEANIMCMD_FRAME(-8, 0, 0, 20),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8215920[] = {
+const union AffineAnimCmd sAffineAnim_Pokeball_Unsquish[] = {
     AFFINEANIMCMD_FRAME(0x60, 0x100, 0,  0),
     AFFINEANIMCMD_FRAME(   0,     0, 0,  5),
     AFFINEANIMCMD_FRAME(   8,     0, 0, 20),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8215940[] = {
-    gSpriteAffineAnim_8215900,
-    gSpriteAffineAnim_8215910,
-    gSpriteAffineAnim_8215920
+const union AffineAnimCmd *const sAffineAnims_Pokeball[] = {
+    sAffineAnim_Pokeball_Normal,
+    sAffineAnim_Pokeball_Squish,
+    sAffineAnim_Pokeball_Unsquish
 };
 
-const struct SpriteSheet gUnknown_0821594C = {
-    (const u8 *)gTradeBallTiles, 0x600, 5557
+const struct SpriteSheet sPokeBallSpriteSheet = {
+    (const u8 *)sPokeball_Gfx, 0x600, GFXTAG_POKEBALL
 };
 
-const struct SpritePalette gUnknown_08215954 = {
-    gTradeBallPalette, 5558
+const struct SpritePalette sPokeBallSpritePalette = {
+    sPokeball_Pal, PALTAG_POKEBALL
 };
 
-const struct SpriteTemplate gSpriteTemplate_821595C = {
-    5557,
-    5558,
-    &gOamData_8215878,
-    gSpriteAnimTable_82158F8,
+const struct SpriteTemplate sSpriteTemplate_Pokeball = {
+    GFXTAG_POKEBALL,
+    PALTAG_POKEBALL,
+    &sOamData_Pokeball,
+    sAnims_Pokeball,
     NULL,
-    gSpriteAffineAnimTable_8215940,
+    sAffineAnims_Pokeball,
     SpriteCB_BouncingPokeball
 };
 
@@ -3639,8 +3652,8 @@ void CB2_LinkTrade(void)
             break;
         case 9:
             LoadTradeSequenceSpriteSheetsAndPalettes();
-            LoadSpriteSheet(&gUnknown_0821594C);
-            LoadSpritePalette(&gUnknown_08215954);
+            LoadSpriteSheet(&sPokeBallSpriteSheet);
+            LoadSpritePalette(&sPokeBallSpritePalette);
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_SCREENBASE(5);
             gMain.state ++;
             break;
@@ -3975,9 +3988,9 @@ NAKED void CB2_LinkTrade(void)
                     "_0804B6E0: .4byte 0x0000043c\n"
                     "_0804B6E4_case09:\n"
                     "\tbl LoadTradeSequenceSpriteSheetsAndPalettes\n"
-                    "\tldr r0, _0804B704 @ =gUnknown_0821594C\n"
+                    "\tldr r0, _0804B704 @ =sPokeBallSpriteSheet\n"
                     "\tbl LoadSpriteSheet\n"
-                    "\tldr r0, _0804B708 @ =gUnknown_08215954\n"
+                    "\tldr r0, _0804B708 @ =sPokeBallSpritePalette\n"
                     "\tbl LoadSpritePalette\n"
                     "\tldr r1, _0804B70C @ =REG_BG1CNT\n"
                     "\tldr r2, _0804B710 @ =0x00000502\n"
@@ -3988,8 +4001,8 @@ NAKED void CB2_LinkTrade(void)
                     "\tadds r1, r4\n"
                     "\tb _0804B74C\n"
                     "\t.align 2, 0\n"
-                    "_0804B704: .4byte gUnknown_0821594C\n"
-                    "_0804B708: .4byte gUnknown_08215954\n"
+                    "_0804B704: .4byte sPokeBallSpriteSheet\n"
+                    "_0804B708: .4byte sPokeBallSpritePalette\n"
                     "_0804B70C: .4byte REG_BG1CNT\n"
                     "_0804B710: .4byte 0x00000502\n"
                     "_0804B714: .4byte gMain\n"
@@ -4106,8 +4119,8 @@ void CB2_InitInGameTrade(void)
             break;
         case 9:
             LoadTradeSequenceSpriteSheetsAndPalettes();
-            LoadSpriteSheet(&gUnknown_0821594C);
-            LoadSpritePalette(&gUnknown_08215954);
+            LoadSpriteSheet(&sPokeBallSpriteSheet);
+            LoadSpritePalette(&sPokeBallSpritePalette);
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_SCREENBASE(5);
             gMain.state ++;
             break;
@@ -4245,8 +4258,8 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             gTradeAnim->scrX = 0x78;
             gTradeAnim->scrY = -0x46;
             gTradeAnim->alpha = 0;
-            DmaCopyLarge16(3, gUnknown_0820DD98, BG_CHAR_ADDR(1), 0x1a00, 0x1000);
-            DmaCopy16Defvars(3, gUnknown_08211F98, BG_SCREEN_ADDR(18), 0x100);
+            DmaCopyLarge16(3, sPokeballSymbol_Gfx, BG_CHAR_ADDR(1), 0x1a00, 0x1000);
+            DmaCopy16Defvars(3, sPokeballSymbol_Map, BG_SCREEN_ADDR(18), 0x100);
             break;
         case 4:
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
@@ -4401,7 +4414,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 12:
             if (gSprites[gTradeAnim->releasePokeballSpriteId].callback == SpriteCallbackDummy && Text_UpdateWindow(&gTradeAnim->window) == TRUE)
             {
-                gTradeAnim->bouncingPokeballSpriteId = CreateSprite(&gSpriteTemplate_821595C, 0x78, 0x20, 0);
+                gTradeAnim->bouncingPokeballSpriteId = CreateSprite(&sSpriteTemplate_Pokeball, 0x78, 0x20, 0);
                 gSprites[gTradeAnim->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballDepart;
                 DestroySprite(&gSprites[gTradeAnim->releasePokeballSpriteId]);
                 gTradeAnim->state ++;
@@ -4709,11 +4722,11 @@ static bool8 DoTradeAnim_Cable(void)
             }
             break;
         case 63:
-            gTradeAnim->bouncingPokeballSpriteId = CreateSprite(&gSpriteTemplate_821595C, 0x78, -0x8, 0);
+            gTradeAnim->bouncingPokeballSpriteId = CreateSprite(&sSpriteTemplate_Pokeball, 0x78, -0x8, 0);
             gSprites[gTradeAnim->bouncingPokeballSpriteId].data[3] = 0x4a;
             gSprites[gTradeAnim->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballArrive;
-            StartSpriteAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], 1);
-            StartSpriteAffineAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], 2);
+            StartSpriteAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], POKEBALL_ANIM_SPIN_TWICE);
+            StartSpriteAffineAnim(&gSprites[gTradeAnim->bouncingPokeballSpriteId], POKEBALL_AFFINE_ANIM_UNSQUISH);
             BlendPalettes(1 << (16 + gSprites[gTradeAnim->bouncingPokeballSpriteId].oam.paletteNum), 16, FADE_COLOR_WHITE);
             gTradeAnim->state ++;
             gTradeAnim->timer = 0;
