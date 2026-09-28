@@ -27,9 +27,9 @@ extern void AnimMoveTwisterParticle(struct Sprite *sprite);
 
 static void AnimFallingRock(struct Sprite *sprite);
 static void AnimRockFragment(struct Sprite *sprite);
-void AnimParticleInVortex(struct Sprite *sprite);
+static void AnimParticleInVortex(struct Sprite *sprite);
 static void AnimFlyingSandCrescent(struct Sprite *sprite);
-void AnimRaiseSprite(struct Sprite *sprite);
+static void AnimRaiseSprite(struct Sprite *sprite);
 static void AnimRolloutParticle(struct Sprite *sprite);
 static void AnimRockTomb(struct Sprite *sprite);
 static void AnimRockBlastRock(struct Sprite *sprite);
@@ -149,8 +149,8 @@ const struct SpriteTemplate gFlyingSandCrescentSpriteTemplate =
 
 static const struct Subsprite sFlyingSandSubsprites[] =
 {
-    {.x = -16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = 2, .tileOffset = 0, .priority = 1},
-    {.x =  16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = 2, .tileOffset = 8, .priority = 1},
+    {.x = -16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = SPRITE_SIZE(32x16), .tileOffset = 0, .priority = 1},
+    {.x =  16, .y = 0, .shape = ST_OAM_H_RECTANGLE, .size = SPRITE_SIZE(32x16), .tileOffset = 8, .priority = 1},
 };
 
 static const struct SubspriteTable sFlyingSandSubspriteTable[] =
@@ -383,10 +383,10 @@ static void AnimRockFragment(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
-void AnimParticleInVortex(struct Sprite *sprite)
+static void AnimParticleInVortex(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[6] == ANIM_BATTLER_ATTACKER)
-        InitSpritePosToAnimAttacker(sprite, 0);
+        InitSpritePosToAnimAttacker(sprite, FALSE);
     else
         InitSpritePosToAnimTarget(sprite, FALSE);
 
@@ -421,8 +421,8 @@ void AnimTask_LoadSandstormBackground(u8 taskId)
     struct BattleAnimBgData animBg;
     int scrollRight = FALSE;
 
-    REG_BLDCNT = 0x3F42;
-    REG_BLDALPHA = 0x1000;
+    REG_BLDCNT = BLDCNT_TGT1_BG1 | BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(0, 16);
     REG_BG1CNT_BITFIELD.priority = 1;
     REG_BG1CNT_BITFIELD.screenSize = 0;
 
@@ -438,10 +438,10 @@ void AnimTask_LoadSandstormBackground(u8 taskId)
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     LZDecompressVram(&gBattleAnimBgTilemap_Sandstorm, animBg.bgTilemap);
     LZDecompressVram(&gBattleAnimBgImage_Sandstorm, animBg.bgTiles);
-    LoadCompressedPalette(&gBattleAnimSpritePal_FlyingDirt, animBg.paletteId << 4, 32);
+    LoadCompressedPalette(&gBattleAnimSpritePal_FlyingDirt, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
 
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
 
     if (gBattleAnimArgs[0] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         scrollRight = TRUE;
@@ -468,7 +468,7 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
         {
             gTasks[taskId].tBlendTimer = 0;
             gTasks[taskId].tBlend++;
-            REG_BLDALPHA = gTasks[taskId].tBlend | ((16 - gTasks[taskId].tBlend) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].tBlend, 16 - gTasks[taskId].tBlend);
             if (gTasks[taskId].tBlend == 7)
             {
                 gTasks[taskId].tState++;
@@ -488,7 +488,7 @@ static void AnimTask_LoadSandstormBackground_Step(u8 taskId)
         {
             gTasks[taskId].tBlendTimer = 0;
             gTasks[taskId].tBlend--;
-            REG_BLDALPHA = gTasks[taskId].tBlend | ((16 - gTasks[taskId].tBlend) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].tBlend, 16 - gTasks[taskId].tBlend);
             if (gTasks[taskId].tBlend == 0)
             {
                 gTasks[taskId].tState++;
@@ -540,10 +540,10 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite)
     {
         if (gBattleAnimArgs[3] != 0 && GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
         {
-            sprite->x = 304;
+            sprite->x = DISPLAY_WIDTH + 64;
             gBattleAnimArgs[1] = -gBattleAnimArgs[1];
             sprite->sMirroredX = 1;
-            sprite->oam.matrixNum = 8;
+            sprite->oam.matrixNum = ST_OAM_HFLIP;
         }
         else
         {
@@ -567,7 +567,7 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite)
 
         if (sprite->sMirroredX == 0)
         {
-            if (sprite->x + sprite->x2 > 272)
+            if (sprite->x + sprite->x2 > DISPLAY_WIDTH + 32)
             {
                 sprite->callback = DestroyAnimSprite;
             }
@@ -592,10 +592,10 @@ static void AnimFlyingSandCrescent(struct Sprite *sprite)
 // arg 2: terminal y offset
 // arg 3: duration
 // arg 4: sprite size [1,5]
-void AnimRaiseSprite(struct Sprite *sprite)
+static void AnimRaiseSprite(struct Sprite *sprite)
 {
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
-    InitSpritePosToAnimAttacker(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, FALSE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[2] = sprite->x;
@@ -758,7 +758,7 @@ static void CreateRolloutDirtSprite(struct Task *task)
     x += (task->data[12] * 4);
 
     spriteId = CreateSprite(spriteTemplate, x, y, 35);
-    if (spriteId != 64)
+    if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].data[0] = 18;
         gSprites[spriteId].data[2] = ((task->data[12] * 20) + x) + (task->data[1] * 3);
@@ -778,7 +778,7 @@ static void AnimRolloutParticle(struct Sprite *sprite)
     if (TranslateAnimHorizontalArc(sprite))
     {
         u8 taskId = FindTaskIdByFunc(AnimTask_Rollout_Step);
-        if (taskId != 0xFF)
+        if (taskId != TASK_NONE)
             gTasks[taskId].data[11]--;
 
         DestroySprite(sprite);

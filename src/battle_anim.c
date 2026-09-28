@@ -2015,21 +2015,21 @@ static void sub_8076380(void)
     }
 }
 
-void sub_80763FC(u16 a, u16 *b, u32 c, u8 d)
+void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, bool8 largeScreen)
 {
     u8 i;
     u8 j;
-    u32 r9;
+    u32 size;
 
-    if (d == 0)
-        r9 = 32;
+    if (largeScreen == FALSE)
+        size = 32;
     else
-        r9 = 64;
-    a <<= 12;
-    for (i = 0; i < r9; i++)
+        size = 64;
+    paletteNum <<= 12;
+    for (i = 0; i < size; i++)
     {
         for (j = 0; j < 32; j++)
-            b[j + i * 32] = ((b[j + i * 32] & 0xFFF) | a) + c;
+            dest[j + i * 32] = ((dest[j + i * 32] & 0xFFF) | paletteNum) + offset;
     }
 }
 
@@ -2451,7 +2451,7 @@ static void LoadMoveBg(u16 bgId)
         void *tilemap = gBattleAnimBackgroundTable[bgId].tilemap;
 
         LZDecompressWram(tilemap, IsContest() ? eBattleAnimPalBackup_Contest : eBattleAnimPalBackup_Battle);
-        sub_80763FC(GetBattleBgPaletteNum(), IsContest() ? eBattleAnimPalBackup_Contest : eBattleAnimPalBackup_Battle, 0x100, 0);
+        RelocateBattleBgPal(GetBattleBgPaletteNum(), IsContest() ? eBattleAnimPalBackup_Contest : eBattleAnimPalBackup_Battle, 0x100, FALSE);
         DmaCopy32Defvars(3, IsContest() ? eBattleAnimPalBackup_Contest : eBattleAnimPalBackup_Battle, (void *)(VRAM + 0xD000), 0x800);
         LZDecompressVram(gBattleAnimBackgroundTable[bgId].image, (void *)(VRAM + 0x2000));
         LoadCompressedPalette(gBattleAnimBackgroundTable[bgId].palette, GetBattleBgPaletteNum() * 16, 32);

@@ -1,6 +1,9 @@
 #ifndef GUARD_TASK_H
 #define GUARD_TASK_H
 
+#define TAIL_SENTINEL 0xFF
+#define TASK_NONE TAIL_SENTINEL
+
 #define NUM_TASKS 16
 
 // general task defines

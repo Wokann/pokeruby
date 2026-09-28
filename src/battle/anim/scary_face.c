@@ -52,7 +52,7 @@ void AnimTask_ScaryFace(u8 taskId)
     LZDecompressVram(&gBattleAnimBgImage_ScaryFace, animBg.bgTiles);
     LoadCompressedPalette(&gBattleAnimBgPalette_ScaryFace, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
 
     gTasks[taskId].func = AnimTask_ScaryFace_Step;
 }

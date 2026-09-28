@@ -4,8 +4,6 @@
 
 #define ACTIVE_SENTINEL 0x10
 #define HEAD_SENTINEL 0xFE
-#define TAIL_SENTINEL 0xFF
-
 // gTasks is a queue of the active 16 tasks
 struct Task gTasks[NUM_TASKS];
 

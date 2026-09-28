@@ -304,7 +304,7 @@ void AnimTask_CreateSurfWave(u8 taskId)
     else
     {
         LZDecompressVram(&gBattleAnimBgTilemap_SurfContest, animBg.bgTilemap);
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 1);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, TRUE);
     }
     LZDecompressVram(&gBattleAnimBgImage_Surf, animBg.bgTiles);
     if (gBattleAnimArgs[0] == ANIM_SURF_PAL_SURF)

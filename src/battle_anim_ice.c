@@ -1025,7 +1025,7 @@ void AnimTask_HazeScrollingFog(u8 taskId)
     LoadPalette(&gFogPalette, animBg.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
     
     gTasks[taskId].func = AnimTask_HazeScrollingFog_Step;
 }
@@ -1134,7 +1134,7 @@ void AnimTask_MistBallFog(u8 taskId)
     LoadPalette(&gFogPalette, animBg.paletteId * 16, 32);
 
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
 
     gTasks[taskId].data[15] = -1;
     gTasks[taskId].func = AnimTask_MistBallFog_Step;

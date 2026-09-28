@@ -145,7 +145,7 @@ void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 void DestroyAnimVisualTask(u8 task);
 void DestroyAnimVisualTask(u8 task);
 s8 BattleAnimAdjustPanning(s8 a);
-void sub_80763FC(u16 a, u16 *b, u32 c, u8 d);
+void RelocateBattleBgPal(u16 paletteNum, u16 *dest, u32 offset, bool8 largeScreen);
 s16 CalculatePanIncrement(s16 sourcePan, s16 targetPan, s16 incrementPan);
 s16 KeepPanInRange(s16 panArg, int oldPan);
 void DestroyAnimSoundTask(u8 taskId);

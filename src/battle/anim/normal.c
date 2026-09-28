@@ -1253,7 +1253,7 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     LZDecompressVram(&gUnknown_08D20A30, animBg.bgTilemap);
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
     
     LZDecompressVram(&gUnknown_08D20A14, animBg.bgTiles);
     LoadPalette(&sCurseLinesPaletteColor, animBg.paletteId * 16 + 1, 2);
@@ -1395,7 +1395,7 @@ static void StatsChangeAnimation_Setup(u8 taskId)
         LZDecompressVram(&gBattleStatMask2_Tilemap, animBg.bgTilemap);
 
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
 
     LZDecompressVram(&gBattleStatMask_Gfx, animBg.bgTiles);
 
@@ -1722,7 +1722,7 @@ void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler,
     GetBattleAnimBg1Data(&animBg);
     LZDecompressVram(tilemap, animBg.bgTilemap);
     if (IsContest())
-        sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
+        RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, FALSE);
 
     LZDecompressVram(gfx, animBg.bgTiles);
     LoadCompressedPalette(palette, animBg.paletteId << 4, 32);
