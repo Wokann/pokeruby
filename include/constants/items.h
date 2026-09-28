@@ -138,6 +138,8 @@
 #define ITEM_DREAM_MAIL 130
 #define ITEM_FAB_MAIL 131
 #define ITEM_RETRO_MAIL 132
+
+#define FIRST_MAIL_INDEX ITEM_ORANGE_MAIL
 #define ITEM_CHERI_BERRY 133
 #define ITEM_CHESTO_BERRY 134
 #define ITEM_PECHA_BERRY 135
@@ -410,6 +412,7 @@
 #define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
 
 #define IS_ITEM_MAIL(item) ((item) >= ITEM_ORANGE_MAIL && (item) <= ITEM_RETRO_MAIL)
+#define ITEM_TO_MAIL(itemId) ((itemId) - FIRST_MAIL_INDEX)
 
 #include "constants/tms_hms.h"
 
