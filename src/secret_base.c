@@ -482,7 +482,7 @@ void InitSecretBaseAppearance(bool8 hidePC)
         {
             if (gSaveBlock1.secretBases[secretBaseIndex].decorations[x] > 0
              && gSaveBlock1.secretBases[secretBaseIndex].decorations[x] <= 0x78
-             && gDecorations[gSaveBlock1.secretBases[secretBaseIndex].decorations[x]].permission != DECORPERM_SOLID_MAT)
+             && gDecorations[gSaveBlock1.secretBases[secretBaseIndex].decorations[x]].permission != DECORPERM_SPRITE)
             {
                 ShowDecorationOnMap(
                     (gSaveBlock1.secretBases[secretBaseIndex].decorationPos[x] >> 4) + MAP_OFFSET,
@@ -531,7 +531,7 @@ void InitSecretBaseDecorationSprites(void)
         if (decorations[decorationIndex] != DECOR_NONE)
         {
             permission = gDecorations[decorations[decorationIndex]].permission;
-            if (permission == DECORPERM_SOLID_MAT)
+            if (permission == DECORPERM_SPRITE)
             {
                 for (objectEventId = 0; objectEventId < gMapHeader.events->objectEventCount; objectEventId++)
                 {

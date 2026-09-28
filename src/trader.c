@@ -219,11 +219,11 @@ void DecorationItemsMenuAction_Trade(u8 taskId)
     Menu_EraseWindowRect(0, 0, 29, 19);
     DestroyVerticalScrollIndicator(TOP_ARROW);
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
-    DestroyDecorationMarkerSprites(gUnknown_020388F7, 8);
+    DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, 8);
     BuyMenuFreeMemory();
     if (IsSelectedDecorationUnused() == TRUE)
     {
-        gSpecialVar_0x8006 = gUnknown_020388D0[gUnknown_020388F5];
+        gSpecialVar_0x8006 = gCurDecorationItems[gCurDecorationIndex];
         StringCopy(gStringVar3, gDecorations[gSpecialVar_0x8004].name);
         StringCopy(gStringVar2, gDecorations[gSpecialVar_0x8006].name);
     }

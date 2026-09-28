@@ -148,7 +148,7 @@ extern u8 gSharedMem[];
 #define ePokeblockFeedMonAnimY          ((s16 *)(gSharedMem + 0x1D400))
 
 // decoration.c
-#define sDecorationContext              (*(struct DecoPCPointers *)(gSharedMem + 0x1f000))
+#define sDecorationContext              (*(struct DecorationPCContext *)(gSharedMem + 0x1f000))
 
 #define eCutGrassSpriteArray            (gSharedMem + 0x1FFF0) // 8 sprite IDs
 
