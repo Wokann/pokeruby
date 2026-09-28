@@ -277,7 +277,7 @@ byte_3005E30 = .;
 SYMBOL(gRecordStructSize, 4)
 
 // sound_check_menu.c
-SYMBOL(gUnknown_03005D30, 4)
+SYMBOL(sMPlayInfo_Cry, 4)
 SYMBOL(gSoundTestCryNum, 4)
 
 // tv.c

@@ -15,6 +15,12 @@
 #define tWindowSelected data[0]
 #define tBgmIndex data[1]
 #define tSeIndex data[2]
+#define tBgmIndexOld data[3]
+#define tSeIndexOld data[4]
+
+#define NUM_SOUND_CHECK_BGM 118
+#define NUM_SOUND_CHECK_SE 248
+#define NUM_SOUND_CHECK_CRY_SPECIES 384
 
 // window selections
 enum
@@ -47,37 +53,37 @@ enum
 extern struct ToneData gCryTable[];
 extern struct ToneData gCryTable2[];
 
-static EWRAM_DATA u8 gUnknown_020387B0 = 0;
-static EWRAM_DATA u8 gUnknown_020387B1 = 0;
-static EWRAM_DATA u8 gUnknown_020387B2 = 0;
+static EWRAM_DATA u8 sIsFastForwarding = 0;
+static EWRAM_DATA u8 sDriverTest_IsCryPlaying = 0;
+static EWRAM_DATA u8 sDriverTest_IsCryPlayingOld = 0;
 static EWRAM_DATA s8 sDriverTestSelection = 0;
 static EWRAM_DATA int sSoundTestParams[9] = {0};
-static EWRAM_DATA u8 gUnknown_020387D8 = 0;
-static EWRAM_DATA u8 gUnknown_020387D9 = 0;
+static EWRAM_DATA u8 sDriverTest_Reverse = 0;
+static EWRAM_DATA u8 sDriverTest_Stereo = 0;
 
 u16 gSoundTestCryNum;
 extern u8 gDexCryScreenState;
 
-struct MusicPlayerInfo *gUnknown_03005D30;
+struct MusicPlayerInfo *sMPlayInfo_Cry;
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 void Task_InitSoundCheckMenu(u8);
-void sub_80BA384(u8);
-void sub_80BA65C(u8);
-void sub_80BA68C(u8);
+void Task_HandleDrawingSoundCheckMenuText(u8);
+void Task_ProcessSoundCheckMenuInputAndRedraw(u8);
+void Task_ExitToTitleScreen(u8);
 void HighlightSelectedWindow(u8);
 void PrintSoundNumber(u16, u16, u16);
-void sub_80BA79C(const u8 *const, u16, u16);
+void PrintPaddedString(const u8 *const, u16, u16);
 void Task_DrawDriverTestMenu(u8);
 void Task_ProcessDriverTestInput(u8);
 void AdjustSelectedDriverParam(s8);
 void PrintDriverTestMenuText(void);
-void sub_80BAE10(u8, u8);
+void UpdateDriverTestCursor(u8, u8);
 void PrintSignedNumber(int, u16, u16, u8);
-void sub_80BAF84(u8);
-void sub_80BB038(u8);
-void sub_80BB1D4(void);
+void Task_DrawPanTestMenu(u8);
+void Task_ProcessPanTestInput(u8);
+void PrintPanTestMenuText(void);
 void Task_InitCryTest(u8);
 void Task_ProcessCryTestInput(u8);
 void PrintCryNumber(void);
@@ -96,7 +102,7 @@ void VBlankCB_SoundCheckMenu(void)
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 
-    if (gUnknown_020387B0 != 0)
+    if (sIsFastForwarding != 0)
     {
         m4aSoundMain();
         m4aSoundMain();
@@ -104,7 +110,7 @@ void VBlankCB_SoundCheckMenu(void)
     }
 }
 
-// unused
+// Called by the debug start menu.
 void CB2_StartSoundCheckMenu(void)
 {
     u8 taskId;
@@ -148,9 +154,9 @@ void CB2_StartSoundCheckMenu(void)
     gTasks[taskId].tWindowSelected = MUS_WINDOW;
     gTasks[taskId].tBgmIndex = 0;
     gTasks[taskId].tSeIndex = 0;
-    gTasks[taskId].data[3] = 0;
-    gUnknown_020387B0 = 0;
-    gTasks[taskId].data[3] = 0; // why?
+    gTasks[taskId].tBgmIndexOld = 0;
+    sIsFastForwarding = 0;
+    gTasks[taskId].tBgmIndexOld = 0; // Preserved duplicate initialization.
     m4aSoundInit();
 }
 
@@ -175,26 +181,26 @@ void Task_InitSoundCheckMenu(u8 taskId)
         Menu_PrintText(seStr, 4, 13);
         Menu_PrintText(upDownStr, 14, 13);
         Menu_PrintText(driverStr, 14, 18);
-        gTasks[taskId].func = sub_80BA384;
+        gTasks[taskId].func = Task_HandleDrawingSoundCheckMenuText;
         REG_WIN0H = WIN_RANGE(17, 223);
         REG_WIN0V = WIN_RANGE(1, 31);
     }
 }
 
 // ideally this should be a multi Coords8 struct, but it wont match when its treated like a struct.
-static const u8 gUnknown_083D0300[] = { 1, 1, 1, 3, 1, 5, 1, 7, 1, 9, 1, 11, 1, 13, 1, 15, 1, 17 };
+static const u8 sDriverTestCursorCoords[] = { 1, 1, 1, 3, 1, 5, 1, 7, 1, 9, 1, 11, 1, 13, 1, 15, 1, 17 };
 
 static const u8 *const gBGMNames[];
 static const u8 *const gSENames[];
 
-void sub_80BA384(u8 taskId) // Task_HandleDrawingSoundCheckMenuText
+void Task_HandleDrawingSoundCheckMenuText(u8 taskId)
 {
     HighlightSelectedWindow(gTasks[taskId].tWindowSelected);
     PrintSoundNumber(gTasks[taskId].tBgmIndex + MUS_STOP, 7, 8); // print by BGM index
-    sub_80BA79C(gBGMNames[gTasks[taskId].tBgmIndex], 11, 8);
+    PrintPaddedString(gBGMNames[gTasks[taskId].tBgmIndex], 11, 8);
     PrintSoundNumber(gTasks[taskId].tSeIndex, 7, 15);
-    sub_80BA79C(gSENames[gTasks[taskId].tSeIndex], 11, 15);
-    gTasks[taskId].func = sub_80BA65C;
+    PrintPaddedString(gSENames[gTasks[taskId].tSeIndex], 11, 15);
+    gTasks[taskId].func = Task_ProcessSoundCheckMenuInputAndRedraw;
 }
 
 bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
@@ -205,7 +211,7 @@ bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
     }
     else if (JOY_NEW(L_BUTTON))
     {
-        gTasks[taskId].func = sub_80BAF84;
+        gTasks[taskId].func = Task_DrawPanTestMenu;
     }
     else if (JOY_NEW(START_BUTTON))
     {
@@ -213,48 +219,48 @@ bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        if (gTasks[taskId].tWindowSelected != 0) // is playing?
+        if (gTasks[taskId].tWindowSelected != MUS_WINDOW)
         {
-            if (gTasks[taskId].data[4] != 0)
+            if (gTasks[taskId].tSeIndexOld != 0)
             {
                 if (gTasks[taskId].tSeIndex != 0)
                 {
-                    m4aSongNumStop(gTasks[taskId].data[4]);
+                    m4aSongNumStop(gTasks[taskId].tSeIndexOld);
                     m4aSongNumStart(gTasks[taskId].tSeIndex);
-                    gTasks[taskId].data[4] = gTasks[taskId].tSeIndex;
+                    gTasks[taskId].tSeIndexOld = gTasks[taskId].tSeIndex;
                 }
                 else
                 {
-                    m4aSongNumStop(gTasks[taskId].data[4]);
-                    gTasks[taskId].data[4] = 0;
+                    m4aSongNumStop(gTasks[taskId].tSeIndexOld);
+                    gTasks[taskId].tSeIndexOld = 0;
                 }
             }
             else if (gTasks[taskId].tSeIndex != 0)
             {
                 m4aSongNumStart(gTasks[taskId].tSeIndex);
-                gTasks[taskId].data[4] = gTasks[taskId].tSeIndex;
+                gTasks[taskId].tSeIndexOld = gTasks[taskId].tSeIndex;
             }
         }
         else
         {
-            if (gTasks[taskId].data[3] != 0)
+            if (gTasks[taskId].tBgmIndexOld != 0)
             {
                 if (gTasks[taskId].tBgmIndex != 0)
                 {
-                    m4aSongNumStop(gTasks[taskId].data[3] + MUS_STOP);
+                    m4aSongNumStop(gTasks[taskId].tBgmIndexOld + MUS_STOP);
                     m4aSongNumStart(gTasks[taskId].tBgmIndex + MUS_STOP);
-                    gTasks[taskId].data[3] = gTasks[taskId].tBgmIndex;
+                    gTasks[taskId].tBgmIndexOld = gTasks[taskId].tBgmIndex;
                 }
                 else
                 {
-                    m4aSongNumStop(gTasks[taskId].data[3] + MUS_STOP);
-                    gTasks[taskId].data[3] = 0;
+                    m4aSongNumStop(gTasks[taskId].tBgmIndexOld + MUS_STOP);
+                    gTasks[taskId].tBgmIndexOld = 0;
                 }
             }
             else if (gTasks[taskId].tBgmIndex != 0)
             {
                 m4aSongNumStart(gTasks[taskId].tBgmIndex + MUS_STOP);
-                gTasks[taskId].data[3] = gTasks[taskId].tBgmIndex;
+                gTasks[taskId].tBgmIndexOld = gTasks[taskId].tBgmIndex;
             }
         }
     }
@@ -262,7 +268,7 @@ bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
     {
         m4aSongNumStart(SE_SELECT);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskId].func = sub_80BA68C;
+        gTasks[taskId].func = Task_ExitToTitleScreen;
     }
     else if (JOY_REPT(DPAD_UP))
     {
@@ -276,34 +282,34 @@ bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
     }
     else if (JOY_REPT(DPAD_RIGHT))
     {
-        if (gTasks[taskId].tWindowSelected != 0)
+        if (gTasks[taskId].tWindowSelected != MUS_WINDOW)
         {
             if (gTasks[taskId].tSeIndex > 0)
                 gTasks[taskId].tSeIndex--;
             else
-                gTasks[taskId].tSeIndex = 247;
+                gTasks[taskId].tSeIndex = NUM_SOUND_CHECK_SE - 1;
         }
         else
         {
             if (gTasks[taskId].tBgmIndex > 0)
                 gTasks[taskId].tBgmIndex--;
             else
-                gTasks[taskId].tBgmIndex = 117;
+                gTasks[taskId].tBgmIndex = NUM_SOUND_CHECK_BGM - 1;
         }
         return TRUE;
     }
     else if (JOY_REPT(DPAD_LEFT))
     {
-        if (gTasks[taskId].tWindowSelected != 0)
+        if (gTasks[taskId].tWindowSelected != MUS_WINDOW)
         {
-            if (gTasks[taskId].tSeIndex < 247)
+            if (gTasks[taskId].tSeIndex < NUM_SOUND_CHECK_SE - 1)
                 gTasks[taskId].tSeIndex++;
             else
                 gTasks[taskId].tSeIndex = 0;
         }
         else
         {
-            if (gTasks[taskId].tBgmIndex < 117)
+            if (gTasks[taskId].tBgmIndex < NUM_SOUND_CHECK_BGM - 1)
                 gTasks[taskId].tBgmIndex++;
             else
                 gTasks[taskId].tBgmIndex = 0;
@@ -312,22 +318,22 @@ bool8 Task_ProcessSoundCheckMenuInput(u8 taskId)
     }
     else if (JOY_HELD(SELECT_BUTTON))
     {
-        gUnknown_020387B0 = 1;
+        sIsFastForwarding = 1;
     }
     else
     {
-        gUnknown_020387B0 = 0;
+        sIsFastForwarding = 0;
     }
     return FALSE;
 }
 
-void sub_80BA65C(u8 taskId)
+void Task_ProcessSoundCheckMenuInputAndRedraw(u8 taskId)
 {
     if (Task_ProcessSoundCheckMenuInput(taskId) != FALSE)
-        gTasks[taskId].func = sub_80BA384;
+        gTasks[taskId].func = Task_HandleDrawingSoundCheckMenuText;
 }
 
-void sub_80BA68C(u8 taskId)
+void Task_ExitToTitleScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -352,11 +358,11 @@ void HighlightSelectedWindow(u8 windowType)
     }
 }
 
-void PrintSoundNumber(u16 soundIndex, u16 x, u16 y) // PrintSoundNumber ?
+void PrintSoundNumber(u16 soundIndex, u16 x, u16 y)
 {
     u8 i;
     u8 str[5];
-    bool8 someBool;
+    bool8 hasHundredsDigit;
     u8 divisorValue;
 
     for (i = 0; i < 3; i++)
@@ -364,32 +370,32 @@ void PrintSoundNumber(u16 soundIndex, u16 x, u16 y) // PrintSoundNumber ?
 
     str[3] = CHAR_ELLIPSIS;
     str[4] = EOS;
-    someBool = FALSE;
+    hasHundredsDigit = FALSE;
 
     divisorValue = soundIndex / 100;
     if (divisorValue)
     {
         str[0] = divisorValue + CHAR_0;
-        someBool = TRUE;
+        hasHundredsDigit = TRUE;
     }
 
     divisorValue = (soundIndex % 100) / 10;
-    if (divisorValue || someBool)
+    if (divisorValue || hasHundredsDigit)
         str[1] = divisorValue + CHAR_0;
 
     str[2] = ((soundIndex % 100) % 10) + CHAR_0;
     Menu_PrintText(str, x, y);
 }
 
-void sub_80BA79C(const u8 *const string, u16 x, u16 y)
+void PrintPaddedString(const u8 *const string, u16 x, u16 y)
 {
     u8 i;
     u8 str[11];
 
     for (i = 0; i <= 10; i++)
-        str[i] = 0; // format string.
+        str[i] = 0;
 
-    str[10] = EOS; // the above for loop formats the last element of the array unnecessarily.
+    str[10] = EOS;
 
     for (i = 0; string[i] != EOS && i < 10; i++)
         str[i] = string[i];
@@ -433,11 +439,11 @@ void Task_DrawDriverTestMenu(u8 taskId) // Task_DrawDriverTestMenu
     REG_WIN0H = WIN_RANGE(0, DISPLAY_WIDTH);
     REG_WIN0V = WIN_RANGE(0, DISPLAY_HEIGHT);
     sDriverTestSelection = 0;
-    gUnknown_020387B1 = 0;
-    gUnknown_020387B2 = 0;
-    gUnknown_03005D30 = NULL;
-    gUnknown_020387D8 = 0;
-    gUnknown_020387D9 = 1;
+    sDriverTest_IsCryPlaying = 0;
+    sDriverTest_IsCryPlayingOld = 0;
+    sMPlayInfo_Cry = NULL;
+    sDriverTest_Reverse = 0;
+    sDriverTest_Stereo = 1;
     sSoundTestParams[CRY_TEST_VOICE] = 0;
     sSoundTestParams[CRY_TEST_VOLUME] = 120;
     sSoundTestParams[CRY_TEST_PANPOT] = 0;
@@ -448,7 +454,7 @@ void Task_DrawDriverTestMenu(u8 taskId) // Task_DrawDriverTestMenu
     sSoundTestParams[CRY_TEST_CHORUS] = 0;
     sSoundTestParams[CRY_TEST_PRIORITY] = 2;
     PrintDriverTestMenuText();
-    sub_80BAE10(0, 0);
+    UpdateDriverTestCursor(0, 0);
     gTasks[taskId].func = Task_ProcessDriverTestInput;
 }
 
@@ -463,64 +469,64 @@ void Task_ProcessDriverTestInput(u8 taskId)
         gTasks[taskId].func = Task_InitSoundCheckMenu;
         return;
     }
-    if (JOY_REPT(DPAD_UP)) // _080BAAA8
+    if (JOY_REPT(DPAD_UP))
     {
-        u8 old = sDriverTestSelection;
+        u8 oldSelection = sDriverTestSelection;
 
         if(--sDriverTestSelection < 0)
             sDriverTestSelection = 8;
-        sub_80BAE10(old, sDriverTestSelection);
+        UpdateDriverTestCursor(oldSelection, sDriverTestSelection);
         return;
     }
-    if (JOY_REPT(DPAD_DOWN)) // _080BAAD0
+    if (JOY_REPT(DPAD_DOWN))
     {
-        u8 old = sDriverTestSelection;
+        u8 oldSelection = sDriverTestSelection;
 
         if(++sDriverTestSelection > 8)
             sDriverTestSelection = 0;
-        sub_80BAE10(old, sDriverTestSelection);
+        UpdateDriverTestCursor(oldSelection, sDriverTestSelection);
         return;
     }
-    if (JOY_NEW(START_BUTTON)) // _080BAAF8
+    if (JOY_NEW(START_BUTTON))
     {
-        gUnknown_020387D8 ^= 1;
+        sDriverTest_Reverse ^= 1;
         PrintDriverTestMenuText();
         return;
     }
-    if (JOY_NEW(SELECT_BUTTON)) // _080BAB14
+    if (JOY_NEW(SELECT_BUTTON))
     {
-        gUnknown_020387D9 ^= 1;
+        sDriverTest_Stereo ^= 1;
         PrintDriverTestMenuText();
-        SetPokemonCryStereo(gUnknown_020387D9);
+        SetPokemonCryStereo(sDriverTest_Stereo);
         return;
     }
-    if (JOY_REPT(R_BUTTON)) // _080BAB38
+    if (JOY_REPT(R_BUTTON))
     {
         AdjustSelectedDriverParam(10);
         PrintDriverTestMenuText();
         return;
     }
-    if (JOY_REPT(L_BUTTON)) // _080BAB46
+    if (JOY_REPT(L_BUTTON))
     {
         AdjustSelectedDriverParam(-10);
         PrintDriverTestMenuText();
         return;
     }
-    if (JOY_REPT(DPAD_LEFT)) // _080BAB56
+    if (JOY_REPT(DPAD_LEFT))
     {
         AdjustSelectedDriverParam(-1);
         PrintDriverTestMenuText();
         return;
     }
-    if (JOY_REPT(DPAD_RIGHT)) // _080BAB64
+    if (JOY_REPT(DPAD_RIGHT))
     {
         AdjustSelectedDriverParam(1);
         PrintDriverTestMenuText();
         return;
     }
-    if (JOY_NEW(A_BUTTON)) // _080BAB78
+    if (JOY_NEW(A_BUTTON))
     {
-        u8 divide, remaining;
+        u8 toneTableIndex, toneIndex;
 
         SetPokemonCryVolume(sSoundTestParams[CRY_TEST_VOLUME]);
         SetPokemonCryPanpot(sSoundTestParams[CRY_TEST_PANPOT]);
@@ -531,47 +537,46 @@ void Task_ProcessDriverTestInput(u8 taskId)
         SetPokemonCryChorus(sSoundTestParams[CRY_TEST_CHORUS]);
         SetPokemonCryPriority(sSoundTestParams[CRY_TEST_PRIORITY]);
 
-        remaining = sSoundTestParams[CRY_TEST_VOICE] % 128;
-        divide = sSoundTestParams[CRY_TEST_VOICE] / 128;
+        toneIndex = sSoundTestParams[CRY_TEST_VOICE] % 128;
+        toneTableIndex = sSoundTestParams[CRY_TEST_VOICE] / 128;
 
-        switch (divide)
+        switch (toneTableIndex)
         {
         case 0:
-            if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 0) + remaining]);
+            if (sDriverTest_Reverse)
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 0) + toneIndex]);
             else
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 0) + remaining]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 0) + toneIndex]);
             break;
         case 1:
-            if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 1) + remaining]);
+            if (sDriverTest_Reverse)
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 1) + toneIndex]);
             else
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 1) + remaining]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 1) + toneIndex]);
             break;
         case 2:
-            if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 2) + remaining]);
+            if (sDriverTest_Reverse)
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 2) + toneIndex]);
             else
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 2) + remaining]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 2) + toneIndex]);
             break;
         case 3:
-            if (gUnknown_020387D8)
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable2[(128 * 3) + remaining]);
+            if (sDriverTest_Reverse)
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable2[(128 * 3) + toneIndex]);
             else
-                gUnknown_03005D30 = SetPokemonCryTone(&gCryTable[(128 * 3) + remaining]);
+                sMPlayInfo_Cry = SetPokemonCryTone(&gCryTable[(128 * 3) + toneIndex]);
             break;
         }
     }
 
-    // _080BACA2
-    if (gUnknown_03005D30 != NULL)
+    if (sMPlayInfo_Cry != NULL)
     {
-        gUnknown_020387B1 = IsPokemonCryPlaying(gUnknown_03005D30);
+        sDriverTest_IsCryPlaying = IsPokemonCryPlaying(sMPlayInfo_Cry);
 
-        if (gUnknown_020387B1 != gUnknown_020387B2)
+        if (sDriverTest_IsCryPlaying != sDriverTest_IsCryPlayingOld)
             PrintDriverTestMenuText();
 
-        gUnknown_020387B2 = gUnknown_020387B1;
+        sDriverTest_IsCryPlayingOld = sDriverTest_IsCryPlaying;
     }
 }
 
@@ -588,7 +593,7 @@ void AdjustSelectedDriverParam(s8 delta)
         0, 255,         // Release
         0, 65535,       // Progress
         -64, 63         // Chorus
-                        // Priority??? Why is it missing?
+                        // Priority has no range entry in the original table.
     };
 
     sSoundTestParams[sDriverTestSelection] += delta;
@@ -611,21 +616,21 @@ void PrintDriverTestMenuText(void)
     PrintSignedNumber(sSoundTestParams[CRY_TEST_PROGRESS], 11, 13, 5);
     PrintSignedNumber(sSoundTestParams[CRY_TEST_CHORUS], 11, 15, 5);
     PrintSignedNumber(sSoundTestParams[CRY_TEST_PRIORITY], 11, 17, 5);
-    PrintSignedNumber(gUnknown_020387B1, 27, 16, 1);
-    PrintSignedNumber(gUnknown_020387D8, 27, 14, 1);
-    PrintSignedNumber(gUnknown_020387D9, 27, 12, 1);
+    PrintSignedNumber(sDriverTest_IsCryPlaying, 27, 16, 1);
+    PrintSignedNumber(sDriverTest_Reverse, 27, 14, 1);
+    PrintSignedNumber(sDriverTest_Stereo, 27, 12, 1);
 }
 
-void sub_80BAE10(u8 var1, u8 var2)
+void UpdateDriverTestCursor(u8 oldSelection, u8 newSelection)
 {
-    u8 str1[] = _("▶");
-    u8 str2[] = _(" ");
+    u8 cursorStr[] = _("▶");
+    u8 blankStr[] = _(" ");
 
-    Menu_PrintText(str2, gUnknown_083D0300[MULTI_DIM_ARR(var1, B_16, 0)], gUnknown_083D0300[MULTI_DIM_ARR(var1, B_16, 1)]);
-    Menu_PrintText(str1, gUnknown_083D0300[MULTI_DIM_ARR(var2, B_16, 0)], gUnknown_083D0300[MULTI_DIM_ARR(var2, B_16, 1)]);
+    Menu_PrintText(blankStr, sDriverTestCursorCoords[MULTI_DIM_ARR(oldSelection, B_16, 0)], sDriverTestCursorCoords[MULTI_DIM_ARR(oldSelection, B_16, 1)]);
+    Menu_PrintText(cursorStr, sDriverTestCursorCoords[MULTI_DIM_ARR(newSelection, B_16, 0)], sDriverTestCursorCoords[MULTI_DIM_ARR(newSelection, B_16, 1)]);
 }
 
-void PrintSignedNumber(int n, u16 x, u16 y, u8 digits)
+void PrintSignedNumber(int number, u16 x, u16 y, u8 digits)
 {
     int powersOfTen[6] =
     {
@@ -639,44 +644,44 @@ void PrintSignedNumber(int n, u16 x, u16 y, u8 digits)
     u8 str[8];
     s8 i;
     s8 negative;
-    s8 someVar2;
+    s8 hasPrintedDigit;
 
     for (i = 0; i <= digits; i++)
         str[i] = CHAR_SPACE;
     str[digits + 1] = EOS;
 
     negative = FALSE;
-    if (n < 0)
+    if (number < 0)
     {
-        n = -n;
+        number = -number;
         negative = TRUE;
     }
 
     if (digits == 1)
-        someVar2 = TRUE;
+        hasPrintedDigit = TRUE;
     else
-        someVar2 = FALSE;
+        hasPrintedDigit = FALSE;
 
     for (i = digits - 1; i >= 0; i--)
     {
-        s8 d = n / powersOfTen[i];
+        s8 digit = number / powersOfTen[i];
 
-        if (d != 0 || someVar2 || i == 0)
+        if (digit != 0 || hasPrintedDigit || i == 0)
         {
-            if (negative && !someVar2)
+            if (negative && !hasPrintedDigit)
                 str[digits - i - 1] = CHAR_HYPHEN;
-            str[digits - i] = CHAR_0 + d;
-            someVar2 = TRUE;
+            str[digits - i] = CHAR_0 + digit;
+            hasPrintedDigit = TRUE;
         }
-        n %= powersOfTen[i];
+        number %= powersOfTen[i];
     }
 
     Menu_PrintText(str, x, y);
 }
 
-static const s8 gUnknown_083D03F8[5] = { 0x3F, 0x00, 0xC0, 0x7F, 0x80 };
+static const s8 sPanTestPanpots[5] = { 0x3F, 0x00, 0xC0, 0x7F, 0x80 };
 
-void sub_80BAF84(u8 taskId)
+void Task_DrawPanTestMenu(u8 taskId)
 {
     u8 seStr[] = _("SE");
     u8 panStr[] = _("PAN");
@@ -694,22 +699,22 @@ void sub_80BAF84(u8 taskId)
     sSoundTestParams[CRY_TEST_CHORUS] = 0;
     sSoundTestParams[CRY_TEST_PROGRESS] = 0;
     sSoundTestParams[CRY_TEST_RELEASE] = 0;
-    sub_80BB1D4();
-    gTasks[taskId].func = sub_80BB038;
+    PrintPanTestMenuText();
+    gTasks[taskId].func = Task_ProcessPanTestInput;
 }
 
-void sub_80BB038(u8 taskId)
+void Task_ProcessPanTestInput(u8 taskId)
 {
-    sub_80BB1D4();
+    PrintPanTestMenuText();
     if (sSoundTestParams[CRY_TEST_PROGRESS])
     {
         if (sSoundTestParams[CRY_TEST_RELEASE])
         {
             sSoundTestParams[CRY_TEST_RELEASE]--;
         }
-        else // _080BB05C
+        else
         {
-            s8 panpot = gUnknown_083D03F8[sSoundTestParams[CRY_TEST_PANPOT]];
+            s8 panpot = sPanTestPanpots[sSoundTestParams[CRY_TEST_PANPOT]];
             if (panpot != -128)
             {
                 if (panpot == 127)
@@ -719,7 +724,7 @@ void sub_80BB038(u8 taskId)
                         SE12PanpotControl(sSoundTestParams[CRY_TEST_CHORUS]);
                 }
             }
-            else // _080BB08C
+            else
             {
                 sSoundTestParams[CRY_TEST_CHORUS] -= 2;
                 if (sSoundTestParams[CRY_TEST_CHORUS] > -64)
@@ -727,7 +732,6 @@ void sub_80BB038(u8 taskId)
             }
         }
     }
-     // _080BB0A2
     if (JOY_NEW(B_BUTTON))
     {
         REG_DISPCNT = 0x7140;
@@ -737,9 +741,9 @@ void sub_80BB038(u8 taskId)
         gTasks[taskId].func = Task_InitSoundCheckMenu;
         return;
     }
-    if (JOY_NEW(A_BUTTON)) // _080BB104
+    if (JOY_NEW(A_BUTTON))
     {
-        s8 panpot = gUnknown_083D03F8[sSoundTestParams[CRY_TEST_PANPOT]];
+        s8 panpot = sPanTestPanpots[sSoundTestParams[CRY_TEST_PANPOT]];
         if (panpot != -128)
         {
             if (panpot == 127)
@@ -751,7 +755,7 @@ void sub_80BB038(u8 taskId)
                 return;
             }
         }
-        else // _080BB140
+        else
         {
             PlaySE12WithPanning(sSoundTestParams[CRY_TEST_VOICE], 63);
             sSoundTestParams[CRY_TEST_CHORUS] = 63;
@@ -759,45 +763,44 @@ void sub_80BB038(u8 taskId)
             sSoundTestParams[CRY_TEST_RELEASE] = 30;
             return;
         }
-        // _080BB154
         PlaySE12WithPanning(sSoundTestParams[CRY_TEST_VOICE], panpot);
         sSoundTestParams[CRY_TEST_PROGRESS] = 0;
         return;
     }
-    if (JOY_NEW(L_BUTTON)) // _080BB15E
+    if (JOY_NEW(L_BUTTON))
     {
         sSoundTestParams[CRY_TEST_PANPOT]++;
         if (sSoundTestParams[CRY_TEST_PANPOT] > 4)
             sSoundTestParams[CRY_TEST_PANPOT] = 0;
     }
-    if (JOY_NEW(R_BUTTON)) // _080BB176
+    if (JOY_NEW(R_BUTTON))
     {
         sSoundTestParams[CRY_TEST_PANPOT]--;
         if (sSoundTestParams[CRY_TEST_PANPOT] < 0)
             sSoundTestParams[CRY_TEST_PANPOT] = 4;
     }
-    if (JOY_REPT(DPAD_RIGHT)) // _080BB192
+    if (JOY_REPT(DPAD_RIGHT))
     {
         sSoundTestParams[CRY_TEST_VOICE]++;
-        if (sSoundTestParams[CRY_TEST_VOICE] > 247)
+        if (sSoundTestParams[CRY_TEST_VOICE] > NUM_SOUND_CHECK_SE - 1)
             sSoundTestParams[CRY_TEST_VOICE] = 0;
     }
-    else if (JOY_REPT(DPAD_LEFT)) // _080BB1B0
+    else if (JOY_REPT(DPAD_LEFT))
     {
         sSoundTestParams[CRY_TEST_VOICE]--;
         if (sSoundTestParams[CRY_TEST_VOICE] < 0)
-            sSoundTestParams[CRY_TEST_VOICE] = 247;
+            sSoundTestParams[CRY_TEST_VOICE] = NUM_SOUND_CHECK_SE - 1;
     }
 }
 
-void sub_80BB1D4(void)
+void PrintPanTestMenuText(void)
 {
     u8 lrStr[] = _("  LR");
     u8 rlStr[] = _("  RL");
 
     PrintSignedNumber(sSoundTestParams[CRY_TEST_VOICE], 7, 2, 3);
 
-    switch (gUnknown_083D03F8[sSoundTestParams[CRY_TEST_PANPOT]])
+    switch (sPanTestPanpots[sSoundTestParams[CRY_TEST_PANPOT]])
     {
     case 127:
         Menu_PrintText(lrStr, 7, 4);
@@ -806,7 +809,7 @@ void sub_80BB1D4(void)
         Menu_PrintText(rlStr, 7, 4);
         break;
     default:
-        PrintSignedNumber(gUnknown_083D03F8[sSoundTestParams[CRY_TEST_PANPOT]], 7, 4, 3);
+        PrintSignedNumber(sPanTestPanpots[sSoundTestParams[CRY_TEST_PANPOT]], 7, 4, 3);
         break;
     }
     PrintSignedNumber(IsSEPlaying(), 12, 8, 1);
@@ -1208,8 +1211,8 @@ SOUND_LIST_SE
 
 void Task_InitCryTest(u8 taskId)
 {
-    struct CryScreenWindow cryStruct, cryStruct2;
-    u8 zero;
+    struct CryScreenWindow waveformWindow, cryScreenWindow;
+    u8 unused;
 
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);
@@ -1217,28 +1220,28 @@ void Task_InitCryTest(u8 taskId)
     ResetSpriteData();
     FreeAllSpritePalettes();
 
-    cryStruct.charBase = 0x2000;
-    cryStruct.screenBase = 29;
-    cryStruct.paletteNo = 12;
-    cryStruct.yPos = 30;
-    cryStruct.xPos = 4;
+    waveformWindow.charBase = 0x2000;
+    waveformWindow.screenBase = 29;
+    waveformWindow.paletteNo = 12;
+    waveformWindow.yPos = 30;
+    waveformWindow.xPos = 4;
 
-    zero = 0; // wtf?
+    unused = 0;
     gDexCryScreenState = 0;
 
-    while (LoadCryWaveformWindow(&cryStruct, 3) == FALSE)
+    while (LoadCryWaveformWindow(&waveformWindow, 3) == FALSE)
         ;
 
-    cryStruct2.charBase = 0;
-    cryStruct2.screenBase = 15;
-    cryStruct2.paletteNo = 13;
-    cryStruct2.xPos = 12;
-    cryStruct2.yPos = 12;
+    cryScreenWindow.charBase = 0;
+    cryScreenWindow.screenBase = 15;
+    cryScreenWindow.paletteNo = 13;
+    cryScreenWindow.xPos = 12;
+    cryScreenWindow.yPos = 12;
 
-    zero = 0; // wtf?
+    unused = 0;
     gDexCryScreenState = 0;
 
-    while (ShowPokedexCryScreen(&cryStruct2, 2) == FALSE)
+    while (ShowPokedexCryScreen(&cryScreenWindow, 2) == FALSE)
         ;
 
     Menu_DrawStdWindowFrame(0, 16, 5, 19);
@@ -1268,12 +1271,12 @@ void Task_ProcessCryTestInput(u8 taskId)
     if (JOY_REPT(DPAD_UP))
     {
         if(--gSoundTestCryNum == 0)
-            gSoundTestCryNum = 384; // total species
+            gSoundTestCryNum = NUM_SOUND_CHECK_CRY_SPECIES;
         PrintCryNumber();
     }
     if (JOY_REPT(DPAD_DOWN))
     {
-        if(++gSoundTestCryNum > 384)
+        if(++gSoundTestCryNum > NUM_SOUND_CHECK_CRY_SPECIES)
             gSoundTestCryNum = 1;
         PrintCryNumber();
     }
