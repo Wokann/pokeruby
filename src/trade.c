@@ -556,12 +556,12 @@ const struct MenuAction2 sSelectTradeMonActions[] = {
     {TradeText_Trade2, Task_DrawSelectionTrade}
 };
 
-const u8 gUnknown_0820C330[][2] = {
+const u8 sTradePartyWindowColumnBounds[][2] = {
     { 0, 14},
     {15, 29}
 };
 
-const u8 gUnknown_0820C334[][2] = {
+const u8 sSelectedMonTextCoords[][2] = {
     { 3,  5},
     { 3,  7},
     {18,  5},
@@ -585,10 +585,10 @@ const u8 unref_strings_820C348[][13] = {
     _("はいけいセット"),
 };
 
-const u8 gUnknown_0820C3B0[] = _("ヌケニン");
+const u8 sText_ShedinjaJP[] = _("ヌケニン");
 const u8 unref_string_0820C3B5[] = _("こうかんせいりつ     ");
 const u8 unref_string_0820C3C3[] = _("だめだたらしいよ     ");
-const u8 gUnknown_0820C3D1[][2] = {
+const u8 sSelectedMonLevelGenderCoords[][2] = {
     { 4,  3},
     {19,  3},
     { 0,  0}
@@ -1671,7 +1671,7 @@ static bool8 BufferTradeParties(void)
                 if ((species = GetMonData(pokemon, MON_DATA_SPECIES)) != SPECIES_NONE && species == SPECIES_SHEDINJA && GetMonData(pokemon, MON_DATA_LANGUAGE) != LANGUAGE_JAPANESE)
                 {
                     GetMonData(pokemon, MON_DATA_NICKNAME, nickname);
-                    if (!StringCompareWithoutExtCtrlCodes(nickname, gUnknown_0820C3B0))
+                    if (!StringCompareWithoutExtCtrlCodes(nickname, sText_ShedinjaJP))
                         SetMonData(pokemon, MON_DATA_NICKNAME, gSpeciesNames[SPECIES_SHEDINJA]);
                 }
                 pokemon ++;
@@ -2297,7 +2297,7 @@ static void DrawSelectedMonScreen(u8 a0)
             sTradeMenu->drawSelectedMonState[a0] ++;
             Trade_MoveSelectedMonToTarget(&gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
-            Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[whichParty][0], 0, gUnknown_0820C330[whichParty][1], 19);
+            Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, sTradePartyWindowColumnBounds[whichParty][0], 0, sTradePartyWindowColumnBounds[whichParty][1], 19);
             CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15 * a0, 0, gTradePartyBoxTilemap, 15, 17, 0);
             if (whichParty == 0)
             {
@@ -2323,15 +2323,15 @@ static void DrawSelectedMonScreen(u8 a0)
             string1[3] = 0xFC;
             string1[4] = 0x11;
             string1[5] = (64 - stringLength) / 2;
-            Text_InitWindowAndPrintText(&sTradeMenu->window, string1, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32, gUnknown_0820C334[whichParty][0], gUnknown_0820C334[whichParty][1]);
+            Text_InitWindowAndPrintText(&sTradeMenu->window, string1, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32, sSelectedMonTextCoords[whichParty][0], sSelectedMonTextCoords[whichParty][1]);
             BufferMovesString(string2, whichParty, whichPokemon);
-            Text_InitWindowAndPrintText(&sTradeMenu->window, gOtherText_Terminator2, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32 + 32, gUnknown_0820C334[whichParty + 1][0], gUnknown_0820C334[whichParty + 1][1] + 1);
-            Text_InitWindowAndPrintText(&sTradeMenu->window, string2, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32 + 38, gUnknown_0820C334[whichParty + 1][0], gUnknown_0820C334[whichParty + 1][1] + 1);
+            Text_InitWindowAndPrintText(&sTradeMenu->window, gOtherText_Terminator2, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32 + 32, sSelectedMonTextCoords[whichParty + 1][0], sSelectedMonTextCoords[whichParty + 1][1] + 1);
+            Text_InitWindowAndPrintText(&sTradeMenu->window, string2, sTradeMenu->textWindowBaseTileNum + whichParty * 6 * 32 + 38, sSelectedMonTextCoords[whichParty + 1][0], sSelectedMonTextCoords[whichParty + 1][1] + 1);
             sTradeMenu->drawSelectedMonState[a0] ++;
             break;
         case 4:
             DrawBottomRowText(sActionTexts[5], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
-            PrintLevelAndGender(a0, whichPokemon, gUnknown_0820C3D1[a0][0] + 4, gUnknown_0820C3D1[a0][1] + 1, gUnknown_0820C3D1[a0][0], gUnknown_0820C3D1[a0][1]);
+            PrintLevelAndGender(a0, whichPokemon, sSelectedMonLevelGenderCoords[a0][0] + 4, sSelectedMonLevelGenderCoords[a0][1] + 1, sSelectedMonLevelGenderCoords[a0][0], sSelectedMonLevelGenderCoords[a0][1]);
             sTradeMenu->drawSelectedMonState[a0] ++;
             break;
     }
@@ -2528,7 +2528,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tldr r3, _0804A09C @ =sTradeMenu\n"
                     "\tldr r0, [r3]\n"
                     "\tadds r0, 0x4\n"
-                    "\tldr r1, _0804A0A4 @ =gUnknown_0820C330\n"
+                    "\tldr r1, _0804A0A4 @ =sTradePartyWindowColumnBounds\n"
                     "\tmov r5, r9\n"
                     "\tadds r2, r5, r1\n"
                     "\tldrb r2, [r2]\n"
@@ -2570,7 +2570,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "_0804A098: .4byte gTradeMonSpriteCoords\n"
                     "_0804A09C: .4byte sTradeMenu\n"
                     "_0804A0A0: .4byte SpriteCB_PokemonIcon\n"
-                    "_0804A0A4: .4byte gUnknown_0820C330\n"
+                    "_0804A0A4: .4byte sTradePartyWindowColumnBounds\n"
                     "_0804A0A8: .4byte gTradePartyBoxTilemap\n"
                     "_0804A0AC:\n"
                     "\tldr r2, _0804A0DC @ =gSprites\n"
@@ -2706,12 +2706,12 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tlsls r1, 6\n"
                     "\tmov r9, r1\n"
                     "\tadd r2, r9\n"
-                    "\tldr r4, _0804A238 @ =gUnknown_0820C334\n"
+                    "\tldr r4, _0804A238 @ =sSelectedMonTextCoords\n"
                     "\tldr r3, [sp, 0x6C]\n"
                     "\tlsls r1, r3, 2\n"
                     "\tadds r3, r1, r4\n"
                     "\tldrb r3, [r3]\n"
-                    "\tldr r5, _0804A23C @ =gUnknown_0820C334 + 0x1\n"
+                    "\tldr r5, _0804A23C @ =sSelectedMonTextCoords + 0x1\n"
                     "\tadds r1, r5\n"
                     "\tldrb r1, [r1]\n"
                     "\tstr r1, [sp]\n"
@@ -2734,7 +2734,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tlsls r6, 1\n"
                     "\tadds r4, r6, r4\n"
                     "\tldrb r5, [r4]\n"
-                    "\tldr r3, _0804A23C @ =gUnknown_0820C334 + 0x1\n"
+                    "\tldr r3, _0804A23C @ =sSelectedMonTextCoords + 0x1\n"
                     "\tadds r6, r3\n"
                     "\tldrb r4, [r6]\n"
                     "\tadds r4, 0x1\n"
@@ -2762,8 +2762,8 @@ static void DrawSelectedMonScreen(u8 a0)
                     "_0804A22C: .4byte sTradeMenu\n"
                     "_0804A230: .4byte gSprites\n"
                     "_0804A234: .4byte gTradeMonSpriteCoords\n"
-                    "_0804A238: .4byte gUnknown_0820C334\n"
-                    "_0804A23C: .4byte gUnknown_0820C334 + 0x1\n"
+                    "_0804A238: .4byte sSelectedMonTextCoords\n"
+                    "_0804A23C: .4byte sSelectedMonTextCoords + 0x1\n"
                     "_0804A240: .4byte gOtherText_Terminator2\n"
                     "_0804A244:\n"
                     "\tldr r0, _0804A2A4 @ =sActionTexts\n"
@@ -2776,7 +2776,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tadds r1, r3\n"
                     "\tmovs r2, 0x14\n"
                     "\tbl DrawBottomRowText\n"
-                    "\tldr r0, _0804A2AC @ =gUnknown_0820C3D1\n"
+                    "\tldr r0, _0804A2AC @ =sSelectedMonLevelGenderCoords\n"
                     "\tmov r5, r10\n"
                     "\tlsls r1, r5, 1\n"
                     "\tadds r4, r1, r0\n"
@@ -2817,7 +2817,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\t.align 2, 0\n"
                     "_0804A2A4: .4byte sActionTexts\n"
                     "_0804A2A8: .4byte 0x06010000\n"
-                    "_0804A2AC: .4byte gUnknown_0820C3D1\n"
+                    "_0804A2AC: .4byte sSelectedMonLevelGenderCoords\n"
                     "_0804A2B0: .4byte sTradeMenu");
 }
 #endif
@@ -3105,7 +3105,7 @@ static void ShowTradePartyMonIcons(u8 whichParty)
 
 static void PrintTradePartnerPartyNicknames(void)
 {
-    Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[1][0], 0, gUnknown_0820C330[1][1], 19);
+    Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, sTradePartyWindowColumnBounds[1][0], 0, sTradePartyWindowColumnBounds[1][1], 19);
     PrintPartyNicknames(1);
 }
 
@@ -3113,7 +3113,7 @@ static void RedrawPartyWindow(u8 whichParty)
 {
     if (whichParty == 0)
     {
-        Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[0][0], 0, gUnknown_0820C330[0][1], 19);
+        Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, sTradePartyWindowColumnBounds[0][0], 0, sTradePartyWindowColumnBounds[0][1], 19);
         CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 0, 0, gTradePartyBoxTilemap, 15, 17, 0);
         PrintPartyLevelsAndGenders(0);
         PrintPartyNicknames(0);
@@ -3123,7 +3123,7 @@ static void RedrawPartyWindow(u8 whichParty)
     else
     {
         Menu_DestroyCursor();
-        Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[1][0], 0, gUnknown_0820C330[1][1], 19);
+        Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, sTradePartyWindowColumnBounds[1][0], 0, sTradePartyWindowColumnBounds[1][1], 19);
         CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15, 0, gTradePartyBoxTilemap, 15, 17, 0);
         PrintPartyLevelsAndGenders(1);
         PrintPartyNicknames(1);
