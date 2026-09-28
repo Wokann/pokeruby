@@ -304,8 +304,8 @@ const struct SpriteTemplate gImprisonOrbSpriteTemplate =
 
 const struct SpriteTemplate gRedXSpriteTemplate =
 {
-    .tileTag = 10250,
-    .paletteTag = 10250,
+    .tileTag = ANIM_TAG_X_SIGN,
+    .paletteTag = ANIM_TAG_X_SIGN,
     .oam = &gOamData_AffineOff_ObjNormal_64x64,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
@@ -441,14 +441,14 @@ static void AnimDefensiveWall(struct Sprite *sprite)
         u8 battler = battlerCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
         u8 rank = GetBattlerSpriteBGPriorityRank(battler);
         int var0 = 1;
-        u8 toBG_2 = (rank ^ var0) != 0;
+        u8 toBG2 = (rank ^ var0) != 0;
 
         if (IsBattlerSpriteVisible(battler))
-            MoveBattlerSpriteToBG(battler, toBG_2);
+            MoveBattlerSpriteToBG(battler, toBG2);
 
-        battler = battlerCopy ^ 2;
+        battler = BATTLE_PARTNER(battlerCopy);
         if (IsBattlerSpriteVisible(battler))
-            MoveBattlerSpriteToBG(battler, toBG_2 ^ var0);
+            MoveBattlerSpriteToBG(battler, toBG2 ^ var0);
     }
 
     if (!IsContest() && IsDoubleBattle())
@@ -469,21 +469,21 @@ static void AnimDefensiveWall(struct Sprite *sprite)
         if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
             gBattleAnimArgs[0] = -gBattleAnimArgs[0];
 
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 0) + gBattleAnimArgs[0];
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 1) + gBattleAnimArgs[1];
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
     }
 
     if (IsContest())
         sprite->y += 9;
 
-    sprite->data[0] = 256 + IndexOfSpritePaletteTag(gBattleAnimArgs[2]) * 16;
+    sprite->data[0] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(gBattleAnimArgs[2]));
     sprite->callback = AnimDefensiveWall_Step2;
     sprite->callback(sprite);
 }
 
 static void AnimDefensiveWall_Step2(struct Sprite *sprite)
 {
-    REG_BLDALPHA = ((16 - sprite->data[3]) << 8) | sprite->data[3];
+    REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[3], 16 - sprite->data[3]);
 
     if (sprite->data[3] == 13)
         sprite->callback = AnimDefensiveWall_Step3;
@@ -515,7 +515,7 @@ static void AnimDefensiveWall_Step3(struct Sprite *sprite)
 
 static void AnimDefensiveWall_Step4(struct Sprite *sprite)
 {
-    REG_BLDALPHA = ((16 - sprite->data[3]) << 8) | sprite->data[3];
+    REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[3], 16 - sprite->data[3]);
 
     if (--sprite->data[3] == -1)
     {
@@ -527,7 +527,7 @@ static void AnimDefensiveWall_Step4(struct Sprite *sprite)
             if (IsBattlerSpriteVisible(battler))
                 gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
 
-            battler = battlerCopy ^ 2;
+            battler = BATTLE_PARTNER(battlerCopy);
             if (IsBattlerSpriteVisible(battler))
                 gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
         }
@@ -545,14 +545,14 @@ static void AnimDefensiveWall_Step5(struct Sprite *sprite)
         u8 battler = battlerCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
         u8 rank = GetBattlerSpriteBGPriorityRank(battler);
         int var0 = 1;
-        u8 toBG_2 = (rank ^ var0) != 0;
+        u8 toBG2 = (rank ^ var0) != 0;
 
         if (IsBattlerSpriteVisible(battler))
-            ResetBattleAnimBg(toBG_2);
+            ResetBattleAnimBg(toBG2);
 
-        battler = battlerCopy ^ 2;
+        battler = BATTLE_PARTNER(battlerCopy);
         if (IsBattlerSpriteVisible(battler))
-            ResetBattleAnimBg(toBG_2 ^ var0);
+            ResetBattleAnimBg(toBG2 ^ var0);
     }
 
     sprite->callback = DestroyAnimSprite;
@@ -562,7 +562,7 @@ static void AnimWallSparkle(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
-        int ignoreOffsets = gBattleAnimArgs[3];
+        bool32 ignoreOffsets = gBattleAnimArgs[3];
         bool8 respectMonPicOffsets = FALSE;
         if (ignoreOffsets == 0)
             respectMonPicOffsets = TRUE;
@@ -644,7 +644,7 @@ static void AnimQuestionMark(struct Sprite *sprite)
 
 static void AnimQuestionMark_Step1(struct Sprite *sprite)
 {
-    sprite->oam.affineMode = 1;
+    sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
     sprite->affineAnims = sAffineAnims_QuestionMark;
     sprite->data[0] = 0;
     InitSpriteAffineAnim(sprite);
@@ -659,7 +659,7 @@ static void AnimQuestionMark_Step2(struct Sprite *sprite)
         if (sprite->affineAnimEnded)
         {
             FreeOamMatrix(sprite->oam.matrixNum);
-            sprite->oam.affineMode = 0;
+            sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
             sprite->data[1] = 18;
             sprite->data[0]++;
         }
@@ -723,7 +723,7 @@ static void AnimTask_Teleport_Step(u8 taskId)
         else
         {
             gSprites[task->data[0]].invisible = TRUE;
-            gSprites[task->data[0]].x = 272;
+            gSprites[task->data[0]].x = DISPLAY_WIDTH + 32;
             ResetSpriteRotScale(task->data[0]);
             DestroyAnimVisualTask(taskId);
         }
