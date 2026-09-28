@@ -146,25 +146,25 @@ struct TradeEwramStruct {
     /*0x0f000*/ struct TradeEwramSubstruct2 unk_0f000;
 };
 
-static void sub_8047EC0(void);
+static void CB2_CreateTradeMenu(void);
 static void sub_804AFB8(const struct WindowTemplate *, u8 *, const u8 *, u8);
 static void sub_804ACD8(const u8 *, u8 *, u8);
 static void nullsub_5(u8, u8);
 static void sub_804AA88(void);
 static void sub_804A964(struct UnkStructD *, void *);
-static void sub_80489F4(void);
+static void VBlankCB_TradeMenu(void);
 static void sub_804AA0C(u8);
-static bool8 sub_8048D44(void);
+static bool8 BufferTradeParties(void);
 static void sub_804AF84(void);
 static bool8 sub_804ABF8(void);
 static void sub_804ACF4(u8);
 static void sub_804A41C(u8);
-static void sub_8048C70(void);
-static void sub_8048B0C(u8);
+static void SetActiveMenuOptions(void);
+static void LoadTradeBgGfx(u8);
 static void sub_804AE3C(u8);
 static void sub_804AF10(void);
-static void sub_80494D8(void);
-static void sub_8048AB4(void);
+static void CB1_UpdateLink(void);
+static void CB2_TradeMenu(void);
 static void sub_804A940(struct UnkStructD *);
 void sub_804B41C(void);
 static void sub_8049DE0(void);
@@ -998,7 +998,7 @@ const s8 gTradeBallVerticalVelocityTable[] = {
 
 void CB2_StartCreateTradeMenu(void)
 {
-    SetMainCallback2(sub_8047EC0);
+    SetMainCallback2(CB2_CreateTradeMenu);
 }
 
 static void sub_8047CE8(void)
@@ -1061,7 +1061,7 @@ static void sub_8047E44(void)
     }
 }
 
-static void sub_8047EC0(void)
+static void CB2_CreateTradeMenu(void)
 {
     int i;
 
@@ -1074,7 +1074,7 @@ static void sub_8047EC0(void)
             FreeAllSpritePalettes();
             ResetTasks();
             sub_804A964(&gUnknown_03004824->unk_00c8, BG_SCREEN_ADDR(5));
-            SetVBlankCallback(sub_80489F4);
+            SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
             Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
             Text_InitWindowWithTemplate(&gUnknown_03004824->window, &gWindowTemplate_81E6F84);
@@ -1137,7 +1137,7 @@ static void sub_8047EC0(void)
             }
             break;
         case  5:
-            if (sub_8048D44())
+            if (BufferTradeParties())
             {
                 sub_804AF84();
                 gMain.state ++;
@@ -1191,7 +1191,7 @@ static void sub_8047EC0(void)
             sub_804A41C(0);
             gUnknown_03004824->unk_0000 = 0;
             gUnknown_03004824->unk_0001 = 0;
-            sub_8048C70();
+            SetActiveMenuOptions();
             gMain.state ++;
             nullsub_5(7, 0);
             PlayBGM(MUS_SCHOOL);
@@ -1202,11 +1202,11 @@ static void sub_8047EC0(void)
             gMain.state ++;
             // fallthrough
         case 15:
-            sub_8048B0C(0);
+            LoadTradeBgGfx(0);
             gMain.state ++;
             break;
         case 16:
-            sub_8048B0C(1);
+            LoadTradeBgGfx(1);
             gMain.state ++;
             break;
         case 17:
@@ -1229,8 +1229,8 @@ static void sub_8047EC0(void)
         case 21:
             if (!gPaletteFade.active)
             {
-                gMain.callback1 = sub_80494D8;
-                SetMainCallback2(sub_8048AB4);
+                gMain.callback1 = CB1_UpdateLink;
+                SetMainCallback2(CB2_TradeMenu);
                 gUnknown_03000508[0] = 0;
             }
             break;
@@ -1241,7 +1241,7 @@ static void sub_8047EC0(void)
     UpdatePaletteFade();
 }
 
-static void sub_80484F4(void)
+static void CB2_ReturnToTradeMenu(void)
 {
     int i;
     struct UnkStructF *unkStructF;
@@ -1254,7 +1254,7 @@ static void sub_80484F4(void)
             FreeAllSpritePalettes();
             ResetTasks();
             sub_804A964(&gUnknown_03004824->unk_00c8, BG_SCREEN_ADDR(5));
-            SetVBlankCallback(sub_80489F4);
+            SetVBlankCallback(VBlankCB_TradeMenu);
             InitMenuWindow(&gMenuTextWindowTemplate);
             Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
             Text_InitWindowWithTemplate(&gUnknown_03004824->window, &gWindowTemplate_81E6F84);
@@ -1343,14 +1343,14 @@ static void sub_80484F4(void)
             nullsub_5(6, 0);
             break;
         case 15:
-            sub_8048B0C(0);
+            LoadTradeBgGfx(0);
             gMain.state ++;
             break;
         case 16:
-            sub_8048B0C(1);
+            LoadTradeBgGfx(1);
             gUnknown_03004824->unk_0000 = 0;
             gUnknown_03004824->unk_0001 = 0;
-            sub_8048C70();
+            SetActiveMenuOptions();
             nullsub_5(7, 0);
             gMain.state ++;
             break;
@@ -1372,7 +1372,7 @@ static void sub_80484F4(void)
         case 21:
             if (!gPaletteFade.active)
             {
-                SetMainCallback2(sub_8048AB4);
+                SetMainCallback2(CB2_TradeMenu);
                 gUnknown_03000508[0] = 0;
             }
             break;
@@ -1383,7 +1383,7 @@ static void sub_80484F4(void)
     UpdatePaletteFade();
 }
 
-static void sub_80489F4(void)
+static void VBlankCB_TradeMenu(void)
 {
     sub_804A940(&gUnknown_03004824->unk_00c8);
     LoadOam();
@@ -1420,7 +1420,7 @@ static void sub_80489F4(void)
     }
 }
 
-static void sub_8048AB4(void)
+static void CB2_TradeMenu(void)
 {
     sub_8049DE0();
     sub_804AB30();
@@ -1434,11 +1434,11 @@ static void sub_8048AB4(void)
     UpdatePaletteFade();
 }
 
-void sub_8048B0C(u8 a0)
+void LoadTradeBgGfx(u8 state)
 {
     int i;
 
-    switch (a0)
+    switch (state)
     {
         case 0:
             for (i = 0; i < 48; i ++)
@@ -1472,7 +1472,7 @@ void sub_8048B0C(u8 a0)
     }
 }
 
-void sub_8048C70(void)
+void SetActiveMenuOptions(void)
 {
     int i;
     for (i = 0; i < PARTY_SIZE; i ++)
@@ -1510,7 +1510,7 @@ static void Trade_Memcpy(void *dataDest, void *dataSrc, u32 size)
     for (i = 0; i < size; i ++) dest[i] = src[i];
 }
 
-static bool8 sub_8048D44(void)
+static bool8 BufferTradeParties(void)
 {
     u8 mpId = GetMultiplayerId();
     int i;
@@ -1801,7 +1801,7 @@ static void sub_80492D8(void)
     }
 }
 
-static void sub_80494D8(void)
+static void CB1_UpdateLink(void)
 {
     u8 mpId = GetMultiplayerId();
     u8 status;
@@ -1984,11 +1984,11 @@ static void sub_804997C(void)
     {
         if (gUnknown_03004824->tradeMenuCursorPosition < PARTY_SIZE)
         {
-            ShowPokemonSummaryScreen(gPlayerParty, gUnknown_03004824->tradeMenuCursorPosition, gUnknown_03004824->partyCounts[0] - 1, sub_80484F4, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gPlayerParty, gUnknown_03004824->tradeMenuCursorPosition, gUnknown_03004824->partyCounts[0] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
         }
         else
         {
-            ShowPokemonSummaryScreen(gEnemyParty, gUnknown_03004824->tradeMenuCursorPosition - 6, gUnknown_03004824->partyCounts[1] - 1, sub_80484F4, PSS_MODE_NO_MOVE_ORDER_EDIT);
+            ShowPokemonSummaryScreen(gEnemyParty, gUnknown_03004824->tradeMenuCursorPosition - 6, gUnknown_03004824->partyCounts[1] - 1, CB2_ReturnToTradeMenu, PSS_MODE_NO_MOVE_ORDER_EDIT);
         }
     }
 }
