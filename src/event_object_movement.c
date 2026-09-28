@@ -105,7 +105,7 @@ static void RemoveObjectEventInternal(struct ObjectEvent *);
 static void MakeObjectTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
 static void RemoveObjectEventIfOutsideView(struct ObjectEvent *objectEvent);
 static void SetPlayerAvatarObjectEventIdAndObjectId(u8, u8);
-static void sub_805B914(struct ObjectEvent *);
+static void ResetObjectEventFldEffData(struct ObjectEvent *);
 static u8 LoadSpritePaletteIfTagExists(const struct SpritePalette *);
 static bool8 GetAvailableObjectEventId(u16, u8, u8, u8 *);
 static void SetObjectEventDynamicGraphicsId(struct ObjectEvent *);
@@ -1674,12 +1674,12 @@ void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
         {
             StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objectEvent->facingDirection));
         }
-        sub_805B914(objectEvent);
+        ResetObjectEventFldEffData(objectEvent);
         SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
     }
 }
 
-static void sub_805B914(struct ObjectEvent *objectEvent)
+static void ResetObjectEventFldEffData(struct ObjectEvent *objectEvent)
 {
     objectEvent->singleMovementActive = FALSE;
     objectEvent->triggerGroundEffectsOnMove = TRUE;
@@ -2016,7 +2016,7 @@ void MoveObjectEventToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
     sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
     sprite->x += 8;
     sprite->y += 16 + sprite->centerToCornerVecY;
-    sub_805B914(objectEvent);
+    ResetObjectEventFldEffData(objectEvent);
     if (objectEvent->trackedByCamera)
         CameraObjectReset1();
 }
