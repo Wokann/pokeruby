@@ -13,19 +13,19 @@ static void AnimBouncingMusicNote_Step(struct Sprite *sprite);
 
 // Unused (association assumed)
 
-const union AnimCmd gBouncingMusicNoteAnimCmds[] =
+static const union AnimCmd sAnim_BouncingMusicNote[] =
 {
     ANIMCMD_FRAME(4, 1),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gBouncingMusicNoteAnimTable[] =
+static const union AnimCmd *const sAnims_BouncingMusicNote[] =
 {
-    gBouncingMusicNoteAnimCmds,
+    sAnim_BouncingMusicNote,
 };
 
 // Unused
-const struct SpriteTemplate gBouncingMusicNoteSpriteTemplate =
+static const struct SpriteTemplate sBouncingMusicNoteSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MUSIC_NOTES,
     .paletteTag = ANIM_TAG_MUSIC_NOTES,
