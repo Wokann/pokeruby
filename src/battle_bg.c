@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "link.h"
 #include "main.h"
+#include "overworld.h"
 #include "palette.h"
 #include "task.h"
 #include "text.h"
@@ -26,8 +27,6 @@ extern u8 BattleText_Tie[];
 
 extern void sub_8032A38(void);
 
-#define GetCurrentMapBattleScene sav1_map_get_battletype
-//extern u8 GetCurrentMapBattleScene(void);
 
 extern const u8 gGameVersion;
 extern u16 gBattleTypeFlags;
@@ -57,8 +56,6 @@ extern u16 gBattle_BG1_X;
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG2_X;
 extern u16 gBattle_BG2_Y;
-
-extern u8 sav1_map_get_battletype(void);
 
 struct LinkResultWindow {
     struct Window *window;
@@ -704,7 +701,7 @@ void DrawBattleEntryBackground(void)
                 return;
             }
         }
-        if (sav1_map_get_battletype() == 0)
+        if (GetCurrentMapBattleScene() == 0)
         {
             LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].entryTileset, (void *)(VRAM + 0x4000));
             LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].entryTilemap, (void *)(VRAM + 0xE000));
@@ -763,7 +760,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].tileset, (void *)(BG_CHAR_ADDR(2)));
@@ -830,7 +827,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LZDecompressVram(sBattleEnvironmentTable[gBattleEnvironment].tilemap, (void *)(BG_SCREEN_ADDR(26)));
@@ -897,7 +894,7 @@ int LoadChosenBattleElement(u8 caseId)
                         break;
                     }
                 }
-                switch (sav1_map_get_battletype())
+                switch (GetCurrentMapBattleScene())
                 {
                 case 0:
                     LoadCompressedPalette(sBattleEnvironmentTable[gBattleEnvironment].palette, 0x20, 0x60);

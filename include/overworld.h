@@ -81,7 +81,6 @@ void SetFixedDiveWarp(s8, s8, s8, s8, s8);
 // warp1_set_to_warp2
 void SetFixedHoleWarp(s8, s8, s8, s8, s8);
 void SetFixedHoleWarpAsDestination(s16, s16);
-// unref_sub_8053790
 void SetContinueGameWarpToHealLocation(u8);
 void gpu_sync_bg_hide();
 // GetMapConnection
@@ -121,9 +120,9 @@ u8 GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(u8 a1);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 a1);
 u8 Overworld_MapTypeIsIndoors(u8);
-// unref_sub_8054260
-u8 sav1_map_get_name();
-// sav1_map_get_battletype
+u8 GetSavedWarpRegionMapSectionId(void);
+u8 GetCurrentRegionMapSectionId(void);
+u8 GetCurrentMapBattleScene(void);
 // ResetSafariZoneFlag_
 bool32 is_c1_link_related_active(void);
 // c1_overworld_normal
@@ -185,7 +184,6 @@ u16 KeyInterCB_DeferToSendQueue(u32);
 // KeyInterCB_WaitForPlayersToExit
 // KeyInterCB_SendExitRoomKey
 s32 GetCableClubPartnersReady(void);
-// unref_sub_8055568
 u16 SetInCableClubSeat(void);
 u16 SetLinkWaitingForScript(void);
 u16 QueueExitLinkRoomKey(void);

@@ -554,7 +554,7 @@ void SetWarpDestinationToContinueGameWarp(void)
     gWarpDestination = gSaveBlock1.warp1;
 }
 
-void unref_sub_8053790(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
     SetWarpData(&gSaveBlock1.warp1, mapGroup, mapNum, warpId, x, y);
 }
@@ -1120,17 +1120,17 @@ bool8 Overworld_MapTypeIsIndoors(u8 mapType)
         return FALSE;
 }
 
-u8 unref_sub_8054260(void)
+u8 GetSavedWarpRegionMapSectionId(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.dynamicWarp.mapGroup, gSaveBlock1.dynamicWarp.mapNum)->regionMapSectionId;
 }
 
-u8 sav1_map_get_name(void)
+u8 GetCurrentRegionMapSectionId(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum)->regionMapSectionId;
 }
 
-u8 sav1_map_get_battletype(void)
+u8 GetCurrentMapBattleScene(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1.location.mapGroup, gSaveBlock1.location.mapNum)->battleType;
 }
@@ -2271,7 +2271,7 @@ s32 GetCableClubPartnersReady(void)
     return AreAllPlayersInLinkState(PLAYER_LINK_STATE_READY);
 }
 
-bool32 unref_sub_8055568(void)
+bool32 IsAnyPlayerExitingCableClub(void)
 {
     return IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM);
 }

@@ -46,7 +46,6 @@ extern const u32 gBattleTextboxTilemap[];
 extern const u16 gBattleTextboxPalette[]; //palette
 
 bool8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
-u8 sav1_map_get_name(void);
 const struct CompressedSpritePalette* GetMonSpritePalStruct(struct Pokemon* mon); //gets pokemon palette address
 void FieldCB_ContinueScriptHandleMusic(void);
 
@@ -297,7 +296,7 @@ static void AddHatchedMonToParty(u8 id)
     caughtLvl = 0;
     SetMonData(mon, MON_DATA_MET_LEVEL, (const u8*)  &caughtLvl);
 
-    mapNameID = sav1_map_get_name();
+    mapNameID = GetCurrentRegionMapSectionId();
     SetMonData(mon, MON_DATA_MET_LOCATION, &mapNameID);
 
     MonRestorePP(mon);
