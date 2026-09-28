@@ -610,7 +610,7 @@ void TranslateSpriteLinearFixedPoint(struct Sprite *sprite)
     }
 }
 
-void sub_80783D0(struct Sprite *sprite)
+void TranslateSpriteLinearFixedPointIconFrame(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
@@ -936,12 +936,12 @@ void UpdateAnimBg3ScreenSize(bool8 largeScreenSize)
     }
 }
 
-void sub_8078A34(struct Sprite *sprite)
+void Trade_MoveSelectedMonToTarget(struct Sprite *sprite)
 {
     sprite->data[1] = sprite->x;
     sprite->data[3] = sprite->y;
     InitSpriteDataForLinearTranslation(sprite);
-    sprite->callback = sub_80783D0;
+    sprite->callback = TranslateSpriteLinearFixedPointIconFrame;
     sprite->callback(sprite);
 }
 

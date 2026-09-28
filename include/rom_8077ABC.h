@@ -62,7 +62,7 @@ u8 UpdateEruptAnimTask(struct Task *task);
 void UpdateBattlerSpritePriorities();
 u8 GetBattlerSpriteSubpriority(u8 bank);
 u8 GetBattlerSpriteBGPriorityRank(u8 battler);
-void sub_8078A34(struct Sprite *sprite);
+void Trade_MoveSelectedMonToTarget(struct Sprite *sprite);
 void InitSpritePosToAnimAttacker(struct Sprite *sprite, bool8 respectMonPicOffsets);
 void InitSpritePosToAnimTarget(struct Sprite *sprite, bool8 respectMonPicOffsets);
 void StartAnimLinearTranslation(struct Sprite *sprite);

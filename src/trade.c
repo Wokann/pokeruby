@@ -2261,7 +2261,7 @@ static void DrawSelectedMonScreen(u8 a0)
             gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]].data[4] = gTradeMonSpriteCoords[6 * whichParty + whichPokemon][1] * 8 - 12;
             StoreSpriteCallbackInData6(&gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
             sTradeMenu->unk_0080[a0] ++;
-            sub_8078A34(&gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]]);
+            Trade_MoveSelectedMonToTarget(&gSprites[sTradeMenu->partyIcons[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
             Text_FillWindowRectDefPalette(&sTradeMenu->window, 0, gUnknown_0820C330[whichParty][0], 0, gUnknown_0820C330[whichParty][1], 19);
             CopyTradeTilemapToBufferAndRequestUpload(&sTradeMenu->tilemapBuffer, 15 * a0, 0, gTradePartyBoxTilemap, 15, 17, 0);
@@ -2489,7 +2489,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tadds r0, r1\n"
                     "\tlsls r0, 2\n"
                     "\tadds r0, r7\n"
-                    "\tbl sub_8078A34\n"
+                    "\tbl Trade_MoveSelectedMonToTarget\n"
                     "\tbl Menu_DestroyCursor\n"
                     "\tldr r3, _0804A09C @ =sTradeMenu\n"
                     "\tldr r0, [r3]\n"
