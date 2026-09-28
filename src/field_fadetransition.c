@@ -325,7 +325,7 @@ void Task_WaitForFadeShowStartMenu(u8 taskId)
     if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskId);
-        CreateTask(sub_80712B4, 80);
+        CreateTask(Task_ShowStartMenu, 80);
     }
 }
 

@@ -108,8 +108,8 @@ static void BuildStartMenuActions_Link(void);
 static void DisplaySafariBallsWindow(void);
 static bool32 PrintStartMenuItemsMultistep(s16 *a, u32 b);
 static bool32 InitStartMenuMultistep(s16 *a, s16 *b);
-static void Task_StartMenu(u8 taskId);
-static u8 StartMenu_InputProcessCallback(void);
+static void StartMenuTask(u8 taskId);
+static u8 HandleStartMenuInput(void);
 static u8 SaveCallback1(void);
 static u8 SaveCallback2(void);
 static void sub_807160C(void);
@@ -366,7 +366,7 @@ static void InitStartMenu(void)
         ;
 }
 
-static void Task_StartMenu(u8 taskId)
+static void StartMenuTask(u8 taskId)
 {
     if (InitStartMenuMultistep(gTasks[taskId].data, gTasks[taskId].data + 1) == TRUE)
     {
@@ -380,18 +380,18 @@ void CreateStartMenuTask(void (*func)(u8))
     u8 taskId;
 
     InitMenuWindow(&gMenuTextWindowTemplate);
-    taskId = CreateTask(Task_StartMenu, 0x50);
-    SetTaskFuncWithFollowupFunc(taskId, Task_StartMenu, func);
+    taskId = CreateTask(StartMenuTask, 0x50);
+    SetTaskFuncWithFollowupFunc(taskId, StartMenuTask, func);
 }
 
-void sub_80712B4(u8 taskId)
+void Task_ShowStartMenu(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     switch (task->data[0])
     {
     case 0:
-        gMenuCallback = StartMenu_InputProcessCallback;
+        gMenuCallback = HandleStartMenuInput;
         task->data[0]++;
         break;
     case 1:
@@ -401,7 +401,7 @@ void sub_80712B4(u8 taskId)
     }
 }
 
-void sub_8071310(void)
+void ShowStartMenu(void)
 {
     if (!IsOverworldLinkActive())
     {
@@ -409,11 +409,11 @@ void sub_8071310(void)
         PlayerFreeze();
         StopPlayerAvatar();
     }
-    CreateStartMenuTask(sub_80712B4);
+    CreateStartMenuTask(Task_ShowStartMenu);
     LockPlayerFieldControls();
 }
 
-static u8 StartMenu_InputProcessCallback(void)
+static u8 HandleStartMenuInput(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
@@ -583,7 +583,7 @@ static u8 SaveCallback2(void)
         //Go back to start menu
         Menu_EraseScreen();
         InitStartMenu();
-        gMenuCallback = StartMenu_InputProcessCallback;
+        gMenuCallback = HandleStartMenuInput;
         return FALSE;
     case SAVE_SUCCESS:
     case SAVE_ERROR:
