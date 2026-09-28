@@ -5,581 +5,14 @@
 #include "field_effect.h"
 #include "menu.h"
 #include "palette.h"
-#include "script.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "sprite.h"
 #include "strings.h"
 #include "task.h"
-#include "constants/script_menu.h"
+#include "data/script_menu.h"
 
-// multichoice lists
-const struct MenuAction MultichoiceList_00[] =
-{
-    {OtherText_Petalburg, NULL},
-    {OtherText_Slateport, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_02[] =
-{
-    {OtherText_Enter, NULL},
-    {OtherText_Info3, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_03[] =
-{
-    {OtherText_WhatsAContest, NULL},
-    {OtherText_TypesOfContest, NULL},
-    {OtherText_Ranks, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_04[] =
-{
-    {OtherText_CoolContest, NULL},
-    {OtherText_BeautyContest, NULL},
-    {OtherText_CuteContest, NULL},
-    {OtherText_SmartContest, NULL},
-    {OtherText_ToughContest, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_06[] =
-{
-    {OtherText_Decoration, NULL},
-    {OtherText_PackUp, NULL},
-    {OtherText_Registry, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_05[] =
-{
-    {OtherText_Decoration, NULL},
-    {OtherText_PackUp, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_07[] =
-{
-    {OtherText_Register, NULL},
-    {OtherText_Registry, NULL},
-    {OtherText_Information, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_12[] =
-{
-    {OtherText_Mach, NULL},
-    {OtherText_Acro, NULL},
-};
-
-const struct MenuAction MultichoiceList_13[] =
-{
-    {OtherText_Poison, NULL},
-    {OtherText_Paralysis, NULL},
-    {OtherText_Sleep, NULL},
-    {OtherText_Burn, NULL},
-    {OtherText_Frozen, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_14[] =
-{
-    {OtherText_Dewford, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_16[] =
-{
-    {OtherText_SawIt, NULL},
-    {OtherText_NotYet, NULL},
-};
-
-const struct MenuAction MultichoiceList_17[] =
-{
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
-    {OtherText_Info3, NULL},
-};
-
-const struct MenuAction MultichoiceList_18[] =
-{
-    {OtherText_SingleBattle, NULL},
-    {OtherText_DoubleBattle, NULL},
-    {OtherText_MultiBattle, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_19[] =
-{
-    {OtherText_Littleroot, NULL},
-    {OtherText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
-};
-
-const struct MenuAction MultichoiceList_20[] =
-{
-    {OtherText_Yes, NULL},
-    {OtherText_No, NULL},
-    {OtherText_Info3, NULL},
-};
-
-const struct MenuAction MultichoiceList_23[] =
-{
-    {OtherText_MakeAChallenge, NULL},
-    {OtherText_ObtainInformation, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_24[] =
-{
-    {OtherText_Lv50_2, NULL},
-    {OtherText_Lv100_2, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_25[] =
-{
-    {OtherText_Zigzagoon, NULL},
-    {OtherText_Nincada, NULL},
-    {OtherText_Poochyena, NULL},
-};
-
-const struct MenuAction MultichoiceList_26[] =
-{
-    {OtherText_Nincada2, NULL},
-    {OtherText_Lotad, NULL},
-    {OtherText_Roselia, NULL},
-};
-
-const struct MenuAction MultichoiceList_27[] =
-{
-    {OtherText_Shroomish, NULL},
-    {OtherText_Nincada3, NULL},
-    {OtherText_Surskit, NULL},
-};
-
-const struct MenuAction MultichoiceList_28[] =
-{
-    {OtherText_Treecko, NULL},
-    {OtherText_Torchic, NULL},
-    {OtherText_Mudkip, NULL},
-};
-
-const struct MenuAction MultichoiceList_29[] =
-{
-    {OtherText_Seedot, NULL},
-    {OtherText_Shroomish2, NULL},
-    {OtherText_Spinda, NULL},
-};
-
-const struct MenuAction MultichoiceList_30[] =
-{
-    {OtherText_Shroomish3, NULL},
-    {OtherText_Zigzagoon2, NULL},
-    {OtherText_Wurmple, NULL},
-};
-
-const struct MenuAction MultichoiceList_31[] =
-{
-    {OtherText_PokeBall, NULL},
-    {OtherText_SuperPotion, NULL},
-    {OtherText_SamePrice, NULL},
-};
-
-const struct MenuAction MultichoiceList_32[] =
-{
-    {OtherText_Yen135, NULL},
-    {OtherText_Yen155, NULL},
-    {OtherText_Yen175, NULL},
-};
-
-const struct MenuAction MultichoiceList_33[] =
-{
-    {OtherText_CostMore, NULL},
-    {OtherText_CostLess, NULL},
-    {OtherText_SamePrice2, NULL},
-};
-
-const struct MenuAction MultichoiceList_34[] =
-{
-    {OtherText_MaleSymbol, NULL},
-    {OtherText_FemaleSymbol, NULL},
-    {OtherText_Neither, NULL},
-};
-
-const struct MenuAction MultichoiceList_35[] =
-{
-    {OtherText_Males, NULL},
-    {OtherText_Females, NULL},
-    {OtherText_SameNumber, NULL},
-};
-
-const struct MenuAction MultichoiceList_36[] =
-{
-    {OtherText_Male, NULL},
-    {OtherText_Female, NULL},
-    {OtherText_ItDepends, NULL},
-};
-
-const struct MenuAction MultichoiceList_37[] =
-{
-    {OtherText_Six2, NULL},
-    {OtherText_Eight2, NULL},
-    {OtherText_Ten, NULL},
-};
-
-const struct MenuAction MultichoiceList_38[] =
-{
-    {OtherText_One, NULL},
-    {OtherText_Two, NULL},
-    {OtherText_Three, NULL},
-};
-
-const struct MenuAction MultichoiceList_39[] =
-{
-    {OtherText_Six, NULL},
-    {OtherText_Seven, NULL},
-    {OtherText_Eight, NULL},
-};
-
-const struct MenuAction MultichoiceList_42[] =
-{
-    {OtherText_FreshWater, NULL},
-    {OtherText_SodaPop, NULL},
-    {OtherText_Lemonade, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_43[] =
-{
-    {OtherText_HowToRide, NULL},
-    {OtherText_HowToTurn, NULL},
-    {OtherText_SandySlopes, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_44[] =
-{
-    {OtherText_Wheelies, NULL},
-    {OtherText_BunnyHops, NULL},
-    {OtherText_Jumping, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_45[] =
-{
-    {OtherText_Satisfied, NULL},
-    {OtherText_Dissatisfied, NULL},
-};
-
-const struct MenuAction MultichoiceList_46[] =
-{
-    {OtherText_Deepseatooth, NULL},
-    {OtherText_Deepseascale, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_47[] =
-{
-    {OtherText_BlueFlute2, NULL},
-    {OtherText_YellowFlute2, NULL},
-    {OtherText_RedFlute2, NULL},
-    {OtherText_WhiteFlute2, NULL},
-    {OtherText_BlackFlute2, NULL},
-    {OtherText_GlassChair, NULL},
-    {OtherText_GlassDesk, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_48[] =
-{
-    {OtherText_TreeckoDoll, NULL},
-    {OtherText_TorchicDoll, NULL},
-    {OtherText_MudkipDoll, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_55[] =
-{
-    {OtherText_TM32, NULL},
-    {OtherText_TM29, NULL},
-    {OtherText_TM35, NULL},
-    {OtherText_TM24, NULL},
-    {OtherText_TM13, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_49[] =
-{
-    {OtherText_50Coins, NULL},
-    {OtherText_500Coins, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_50[] =
-{
-    {OtherText_Excellent, NULL},
-    {OtherText_NotSoHot, NULL},
-};
-
-const struct MenuAction MultichoiceList_52[] =
-{
-    {OtherText_Lilycove, NULL},
-    {OtherText_BattleTower, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_53[] =
-{
-    {OtherText_Slateport, NULL},
-    {OtherText_Lilycove, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_54[] =
-{
-    {OtherText_Right, NULL},
-    {OtherText_Left, NULL},
-};
-
-const struct MenuAction MultichoiceList_56[] =
-{
-    {OtherText_Slateport, NULL},
-    {OtherText_BattleTower, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_57[] =
-{
-    {OtherText_1F_2, NULL},
-    {OtherText_2F_2, NULL},
-    {OtherText_3F_2, NULL},
-    {OtherText_4F_2, NULL},
-    {OtherText_5F_2, NULL},
-};
-
-const struct MenuAction MultichoiceList_58[] =
-{
-    {OtherText_RedShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_59[] =
-{
-    {OtherText_YellowShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_60[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_61[] =
-{
-    {OtherText_BlueShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_62[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_63[] =
-{
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_64[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_65[] =
-{
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_66[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_67[] =
-{
-    {OtherText_YellowShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_68[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_69[] =
-{
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_70[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_71[] =
-{
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_72[] =
-{
-    {OtherText_RedShard, NULL},
-    {OtherText_YellowShard, NULL},
-    {OtherText_BlueShard, NULL},
-    {OtherText_GreenShard, NULL},
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-const struct MenuAction MultichoiceList_01[] =
-{
-    {gOtherText_CancelNoTerminator, NULL},
-};
-
-struct MultichoiceListStruct
-{
-    const struct MenuAction *list;
-    u8 count;
-};
-
-const struct MultichoiceListStruct gMultichoiceLists[] =
-{
-    {MultichoiceList_00, ARRAY_COUNT(MultichoiceList_00)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_02, ARRAY_COUNT(MultichoiceList_02)},
-    {MultichoiceList_03, ARRAY_COUNT(MultichoiceList_03)},
-    {MultichoiceList_04, ARRAY_COUNT(MultichoiceList_04)},
-    {MultichoiceList_05, ARRAY_COUNT(MultichoiceList_05)},
-    {MultichoiceList_06, ARRAY_COUNT(MultichoiceList_06)},
-    {MultichoiceList_07, ARRAY_COUNT(MultichoiceList_07)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_12, ARRAY_COUNT(MultichoiceList_12)},
-    {MultichoiceList_13, ARRAY_COUNT(MultichoiceList_13)},
-    {MultichoiceList_14, ARRAY_COUNT(MultichoiceList_14)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_16, ARRAY_COUNT(MultichoiceList_16)},
-    {MultichoiceList_17, ARRAY_COUNT(MultichoiceList_17)},
-    {MultichoiceList_18, ARRAY_COUNT(MultichoiceList_18)},
-    {MultichoiceList_19, ARRAY_COUNT(MultichoiceList_19)},
-    {MultichoiceList_20, ARRAY_COUNT(MultichoiceList_20)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_23, ARRAY_COUNT(MultichoiceList_23)},
-    {MultichoiceList_24, ARRAY_COUNT(MultichoiceList_24)},
-    {MultichoiceList_25, ARRAY_COUNT(MultichoiceList_25)},
-    {MultichoiceList_26, ARRAY_COUNT(MultichoiceList_26)},
-    {MultichoiceList_27, ARRAY_COUNT(MultichoiceList_27)},
-    {MultichoiceList_28, ARRAY_COUNT(MultichoiceList_28)},
-    {MultichoiceList_29, ARRAY_COUNT(MultichoiceList_29)},
-    {MultichoiceList_30, ARRAY_COUNT(MultichoiceList_30)},
-    {MultichoiceList_31, ARRAY_COUNT(MultichoiceList_31)},
-    {MultichoiceList_32, ARRAY_COUNT(MultichoiceList_32)},
-    {MultichoiceList_33, ARRAY_COUNT(MultichoiceList_33)},
-    {MultichoiceList_34, ARRAY_COUNT(MultichoiceList_34)},
-    {MultichoiceList_35, ARRAY_COUNT(MultichoiceList_35)},
-    {MultichoiceList_36, ARRAY_COUNT(MultichoiceList_36)},
-    {MultichoiceList_37, ARRAY_COUNT(MultichoiceList_37)},
-    {MultichoiceList_38, ARRAY_COUNT(MultichoiceList_38)},
-    {MultichoiceList_39, ARRAY_COUNT(MultichoiceList_39)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_42, ARRAY_COUNT(MultichoiceList_42)},
-    {MultichoiceList_43, ARRAY_COUNT(MultichoiceList_43)},
-    {MultichoiceList_44, ARRAY_COUNT(MultichoiceList_44)},
-    {MultichoiceList_45, ARRAY_COUNT(MultichoiceList_45)},
-    {MultichoiceList_46, ARRAY_COUNT(MultichoiceList_46)},
-    {MultichoiceList_47, ARRAY_COUNT(MultichoiceList_47)},
-    {MultichoiceList_48, ARRAY_COUNT(MultichoiceList_48)},
-    {MultichoiceList_49, ARRAY_COUNT(MultichoiceList_49)},
-    {MultichoiceList_50, ARRAY_COUNT(MultichoiceList_50)},
-    {MultichoiceList_01, ARRAY_COUNT(MultichoiceList_01)},
-    {MultichoiceList_52, ARRAY_COUNT(MultichoiceList_52)},
-    {MultichoiceList_53, ARRAY_COUNT(MultichoiceList_53)},
-    {MultichoiceList_54, ARRAY_COUNT(MultichoiceList_54)},
-    {MultichoiceList_55, ARRAY_COUNT(MultichoiceList_55)},
-    {MultichoiceList_56, ARRAY_COUNT(MultichoiceList_56)},
-    {MultichoiceList_57, ARRAY_COUNT(MultichoiceList_57)},
-    {MultichoiceList_58, ARRAY_COUNT(MultichoiceList_58)},
-    {MultichoiceList_59, ARRAY_COUNT(MultichoiceList_59)},
-    {MultichoiceList_60, ARRAY_COUNT(MultichoiceList_60)},
-    {MultichoiceList_61, ARRAY_COUNT(MultichoiceList_61)},
-    {MultichoiceList_62, ARRAY_COUNT(MultichoiceList_62)},
-    {MultichoiceList_63, ARRAY_COUNT(MultichoiceList_63)},
-    {MultichoiceList_64, ARRAY_COUNT(MultichoiceList_64)},
-    {MultichoiceList_65, ARRAY_COUNT(MultichoiceList_65)},
-    {MultichoiceList_66, ARRAY_COUNT(MultichoiceList_66)},
-    {MultichoiceList_67, ARRAY_COUNT(MultichoiceList_67)},
-    {MultichoiceList_68, ARRAY_COUNT(MultichoiceList_68)},
-    {MultichoiceList_69, ARRAY_COUNT(MultichoiceList_69)},
-    {MultichoiceList_70, ARRAY_COUNT(MultichoiceList_70)},
-    {MultichoiceList_71, ARRAY_COUNT(MultichoiceList_71)},
-    {MultichoiceList_72, ARRAY_COUNT(MultichoiceList_72)},
-};
-
-const u8 *const gStdStrings[] =
-{
-    [STDSTRING_COOL]      = OtherText_Cool2,
-    [STDSTRING_BEAUTY]    = OtherText_Beauty3,
-    [STDSTRING_CUTE]      = OtherText_Cute2,
-    [STDSTRING_SMART]     = OtherText_Smart2,
-    [STDSTRING_TOUGH]     = OtherText_Tough2,
-    [STDSTRING_NORMAL]    = OtherText_Normal,
-    [STDSTRING_SUPER]     = OtherText_Super,
-    [STDSTRING_HYPER]     = OtherText_Hyper,
-    [STDSTRING_MASTER]    = OtherText_Master,
-    [STDSTRING_COOL2]     = OtherText_Cool3,
-    [STDSTRING_BEAUTY2]   = OtherText_Beauty4,
-    [STDSTRING_CUTE2]     = OtherText_Cute3,
-    [STDSTRING_SMART2]    = OtherText_Smart3,
-    [STDSTRING_TOUGH2]    = OtherText_Tough3,
-    [STDSTRING_ITEMS]     = OtherText_Items,
-    [STDSTRING_KEYITEMS]  = OtherText_KeyItems,
-    [STDSTRING_POKEBALLS] = OtherText_Balls,
-    [STDSTRING_TMHMS]     = OtherText_TMsHMs,
-    [STDSTRING_BERRIES]   = OtherText_Berries,
-};
-
-extern u8 Text_WhichPCShouldBeAccessed[];
+extern u8 gText_WhichPCShouldBeAccessed[];
 
 extern u16 gSpecialVar_Result;
 
@@ -588,11 +21,12 @@ static void Task_HandleYesNoInput(u8);
 static void Task_HandleMultichoiceGridInput(u8);
 static u16 GetStringWidthInTilesForScriptMenu(const u8 *str);
 static void DrawMultichoiceMenu(u8, u8, u8, const struct MenuAction *list, u8, u8);
+static void DrawMultichoiceMenuNoWindow(u8, u8, u8, const struct MenuAction *list, u8);
 static void StartScriptMenuTask(u8, u8, u8, u8, u8, u8);
-static void sub_80B53B4(u8, u8, u8, const struct MenuAction *list, u8);
+static void CreatePCMultichoice(void);
 static bool8 IsPicboxClosed(void);
 
-bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress)
+bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
 {
     if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
     {
@@ -601,12 +35,12 @@ bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress)
     else
     {
         gSpecialVar_Result = 0xFF;
-        DrawMultichoiceMenu(left, top, gMultichoiceLists[multichoiceId].count, gMultichoiceLists[multichoiceId].list, ignoreBPress, 0);
+        DrawMultichoiceMenu(left, top, sMultichoiceLists[multichoiceId].count, sMultichoiceLists[multichoiceId].list, ignoreBPress, 0);
         return TRUE;
     }
 }
 
-bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress, u8 defaultChoice)
+bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 defaultChoice)
 {
     if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
     {
@@ -615,7 +49,7 @@ bool8 ScriptMenu_MultichoiceWithDefault(u8 left, u8 top, u8 multichoiceId, u8 ig
     else
     {
         gSpecialVar_Result = 0xFF;
-        DrawMultichoiceMenu(left, top, gMultichoiceLists[multichoiceId].count, gMultichoiceLists[multichoiceId].list, ignoreBPress, defaultChoice);
+        DrawMultichoiceMenu(left, top, sMultichoiceLists[multichoiceId].count, sMultichoiceLists[multichoiceId].list, ignoreBPress, defaultChoice);
         return TRUE;
     }
 }
@@ -664,6 +98,7 @@ static void DrawMultichoiceMenu(u8 left, u8 top, u8 count, const struct MenuActi
 #define tBottom       data[3]
 #define tIgnoreBPress data[4]
 #define tDoWrap       data[5]
+#define tYesNoInputDelay data[2]
 
 static void StartScriptMenuTask(u8 left, u8 top, u8 right, u8 bottom, u8 ignoreBPress, u8 count)
 {
@@ -699,7 +134,7 @@ static void Task_HandleMultichoiceInput(u8 taskId)
                 if (gTasks[taskId].tIgnoreBPress)
                     return;
                 PlaySE(SE_SELECT);
-                gSpecialVar_Result = 127;
+                gSpecialVar_Result = MULTI_B_PRESSED;
             }
             else
             {
@@ -713,7 +148,7 @@ static void Task_HandleMultichoiceInput(u8 taskId)
     }
 }
 
-bool8 Multichoice(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress)
+bool8 ScriptMenu_MultichoiceNoWindow(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
 {
     if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
     {
@@ -722,12 +157,12 @@ bool8 Multichoice(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress)
     else
     {
         gSpecialVar_Result = 0xFF;
-        sub_80B53B4(left, top, gMultichoiceLists[multichoiceId].count, gMultichoiceLists[multichoiceId].list, ignoreBPress);
+        DrawMultichoiceMenuNoWindow(left, top, sMultichoiceLists[multichoiceId].count, sMultichoiceLists[multichoiceId].list, ignoreBPress);
         return TRUE;
     }
 }
 
-static void sub_80B53B4(u8 left, u8 top, u8 count, const struct MenuAction *list, u8 ignoreBPress)
+static void DrawMultichoiceMenuNoWindow(u8 left, u8 top, u8 count, const struct MenuAction *list, u8 ignoreBPress)
 {
     u16 width = GetStringWidthInTilesForScriptMenu(list[0].text);
     u16 newWidth;
@@ -771,7 +206,7 @@ bool8 ScriptMenu_YesNo(u8 left, u8 top)
 }
 
 // unused
-bool8 IsScriptActive(void)
+bool8 ScriptMenu_IsResultReady(void)
 {
     if (gSpecialVar_Result == 0xFF)
         return FALSE;
@@ -783,9 +218,9 @@ static void Task_HandleYesNoInput(u8 taskId)
 {
     u8 left, top;
 
-    if (gTasks[taskId].tRight < 5)
+    if (gTasks[taskId].tYesNoInputDelay < 5)
     {
-        gTasks[taskId].tRight++;
+        gTasks[taskId].tYesNoInputDelay++;
         return;
     }
 
@@ -811,7 +246,7 @@ static void Task_HandleYesNoInput(u8 taskId)
     ScriptContext_Enable();
 }
 
-bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPress, u8 columnCount)
+bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 columnCount)
 {
     u8 bottom = 0;
 
@@ -826,18 +261,18 @@ bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, u8 ignoreBPr
 
         gSpecialVar_Result = 0xFF;
 
-        sub_807274C(left, top, gMultichoiceLists[multichoiceId].count, 0, gMultichoiceLists[multichoiceId].list, columnCount, 0);
+        sub_807274C(left, top, sMultichoiceLists[multichoiceId].count, 0, sMultichoiceLists[multichoiceId].list, columnCount, 0);
 
         taskId = CreateTask(Task_HandleMultichoiceGridInput, 80);
 
-        if (!((gMultichoiceLists[multichoiceId].count >> 1) < columnCount || (gMultichoiceLists[multichoiceId].count & 1))
-         || columnCount == 1 || gMultichoiceLists[multichoiceId].count == columnCount)
+        if (!((sMultichoiceLists[multichoiceId].count >> 1) < columnCount || (sMultichoiceLists[multichoiceId].count & 1))
+         || columnCount == 1 || sMultichoiceLists[multichoiceId].count == columnCount)
         {
-            bottom = (2 * (gMultichoiceLists[multichoiceId].count / columnCount)) + 1 + top;
+            bottom = (2 * (sMultichoiceLists[multichoiceId].count / columnCount)) + 1 + top;
         }
         else
         {
-            bottom = (2 * (gMultichoiceLists[multichoiceId].count / columnCount)) + 3 + top;
+            bottom = (2 * (sMultichoiceLists[multichoiceId].count / columnCount)) + 3 + top;
         }
 
         width = Menu_GetColumnXCoord(columnCount);
@@ -861,7 +296,7 @@ static void Task_HandleMultichoiceGridInput(u8 taskId)
             if (gTasks[taskId].tIgnoreBPress)
                 return;
             PlaySE(SE_SELECT);
-            gSpecialVar_Result = 127;
+            gSpecialVar_Result = MULTI_B_PRESSED;
         }
         else
         {
@@ -880,6 +315,7 @@ static void Task_HandleMultichoiceGridInput(u8 taskId)
 #undef tBottom
 #undef tIgnoreBPress
 #undef tDoWrap
+#undef tYesNoInputDelay
 
 bool8 ScriptMenu_CreatePCMultichoice(void)
 {
@@ -890,12 +326,12 @@ bool8 ScriptMenu_CreatePCMultichoice(void)
     else
     {
         gSpecialVar_Result = 0xFF;
-        ScriptMenu_CreatePCMenu();
+        CreatePCMultichoice();
         return TRUE;
     }
 }
 
-void ScriptMenu_CreatePCMenu(void)
+static void CreatePCMultichoice(void)
 {
     u8 width;
     u8 numChoices;
@@ -907,24 +343,24 @@ void ScriptMenu_CreatePCMenu(void)
     else
         width = 8;
 #elif GERMAN
-    s32 sp8[4];
-    s32 r4 = 0;
-    s32 r5;
+    s32 pcOptionWidths[4];
+    s32 optionCount = 0;
+    s32 optionIndex;
 
     if (FlagGet(FLAG_SYS_PC_LANETTE))
-        sp8[r4++] = GetStringWidthInTilesForScriptMenu(gPCText_LanettesPC);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_LanettesPC);
     else
-        sp8[r4++] = GetStringWidthInTilesForScriptMenu(gPCText_SomeonesPC);
-    sp8[r4++] = GetStringWidthInTilesForScriptMenu(gPCText_PlayersPC);
-    sp8[r4++] = GetStringWidthInTilesForScriptMenu(gPCText_LogOff);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_SomeonesPC);
+    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_PlayersPC);
+    pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_LogOff);
     if (FlagGet(FLAG_SYS_GAME_CLEAR))
-        sp8[r4++] = GetStringWidthInTilesForScriptMenu(gPCText_HallOfFame);
+        pcOptionWidths[optionCount++] = GetStringWidthInTilesForScriptMenu(gPCText_HallOfFame);
 
     width = 0;
-    for (r5 = 0; r5 < r4; r5++)
+    for (optionIndex = 0; optionIndex < optionCount; optionIndex++)
     {
-        if (width < sp8[r5])
-            width = sp8[r5];
+        if (width < pcOptionWidths[optionIndex])
+            width = pcOptionWidths[optionIndex];
     }
 #endif
 
@@ -955,7 +391,7 @@ void ScriptMenu_CreatePCMenu(void)
 void ScriptMenu_DisplayPCStartupPrompt(void)
 {
     Menu_DisplayDialogueFrame();
-    Menu_PrintText(Text_WhichPCShouldBeAccessed, 2, 15);
+    Menu_PrintText(gText_WhichPCShouldBeAccessed, 2, 15);
 }
 
 #define tState       data[0]
@@ -1011,7 +447,7 @@ bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
     }
 }  
 
-bool8 (*ScriptMenu_GetPicboxWaitFunc(void))(void)
+bool8 (*ScriptMenu_HidePokemonPic(void))(void)
 {
     u8 taskId = FindTaskIdByFunc(Task_PokemonPicWindow);
 

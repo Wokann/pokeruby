@@ -9,14 +9,14 @@ LilycoveCity_DepartmentStoreElevator_EventScript_Attendant:: @ 815A39C
 	special ShowDeptStoreElevatorFloorSelect
 	message LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike
 	waitmessage
-	multichoice 0, 0, 57, 0
+	multichoice 0, 0, MULTI_FLOORS, 0
 	switch VAR_RESULT
 	case 0, LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom5th
 	case 1, LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom4th
 	case 2, LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom3rd
 	case 3, LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom2nd
 	case 4, LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom1st
-	case 127, LilycoveCity_DepartmentStoreElevator_EventScript_ExitFloorSelect
+	case MULTI_B_PRESSED, LilycoveCity_DepartmentStoreElevator_EventScript_ExitFloorSelect
 	end
 
 LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom5th:: @ 815A402

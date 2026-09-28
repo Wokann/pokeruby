@@ -21,12 +21,12 @@ BattleTower_Outside_EventScript_FerryAttendant:: @ 8160168
 	end
 
 BattleTower_Outside_EventScript_ChooseFerryDestination:: @ 816018E
-	multichoicedefault 21, 6, 53, 2, 0
+	multichoicedefault 21, 6, MULTI_SSTIDAL_BATTLE_TOWER, 2, 0
 	switch VAR_RESULT
 	case 0, BattleTower_Outside_EventScript_SailToSlateport
 	case 1, BattleTower_Outside_EventScript_SailToLilycove
 	case 2, BattleTower_Outside_EventScript_CancelFerry
-	case 127, BattleTower_Outside_EventScript_CancelFerry
+	case MULTI_B_PRESSED, BattleTower_Outside_EventScript_CancelFerry
 	end
 
 BattleTower_Outside_EventScript_NoTicket:: @ 81601C6

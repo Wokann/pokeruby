@@ -25,7 +25,7 @@ MauvilleCity_BikeShop_EventScript_SkipGreeting:: @ 81567D1
 MauvilleCity_BikeShop_EventScript_ChooseBike:: @ 81567F0
 	message MauvilleCity_BikeShop_Text_ExplainBikesChooseWhichOne
 	waitmessage
-	multichoice 21, 8, 12, 1
+	multichoice 21, 8, MULTI_BIKE, 1
 	switch VAR_RESULT
 	case 0, MauvilleCity_BikeShop_EventScript_GetMachBike
 	case 1, MauvilleCity_BikeShop_EventScript_GetAcroBike
@@ -112,13 +112,13 @@ MauvilleCity_BikeShop_EventScript_MachBikeHandbook:: @ 8156914
 	end
 
 MauvilleCity_BikeShop_EventScript_ChooseMachHandbookPage:: @ 8156920
-	multichoice 0, 0, 43, 0
+	multichoice 0, 0, MULTI_MACH_BIKE_INFO, 0
 	switch VAR_RESULT
 	case 0, MauvilleCity_BikeShop_EventScript_HowToRide
 	case 1, MauvilleCity_BikeShop_EventScript_HowToTurn
 	case 2, MauvilleCity_BikeShop_EventScript_SandySlopes
 	case 3, MauvilleCity_BikeShop_EventScript_ExitMachHandbook
-	case 127, MauvilleCity_BikeShop_EventScript_ExitMachHandbook
+	case MULTI_B_PRESSED, MauvilleCity_BikeShop_EventScript_ExitMachHandbook
 	end
 
 MauvilleCity_BikeShop_EventScript_HowToRide:: @ 8156962
@@ -150,13 +150,13 @@ MauvilleCity_BikeShop_EventScript_AcroBikeHandbook:: @ 8156988
 	end
 
 MauvilleCity_BikeShop_EventScript_ChooseAcroHandbookPage:: @ 8156994
-	multichoice 0, 0, 44, 0
+	multichoice 0, 0, MULTI_ACRO_BIKE_INFO, 0
 	switch VAR_RESULT
 	case 0, MauvilleCity_BikeShop_EventScript_Wheelies
 	case 1, MauvilleCity_BikeShop_EventScript_BunnyHops
 	case 2, MauvilleCity_BikeShop_EventScript_Jumps
 	case 3, MauvilleCity_BikeShop_EventScript_ExitAcroHandbook
-	case 127, MauvilleCity_BikeShop_EventScript_ExitAcroHandbook
+	case MULTI_B_PRESSED, MauvilleCity_BikeShop_EventScript_ExitAcroHandbook
 	end
 
 MauvilleCity_BikeShop_EventScript_Wheelies:: @ 81569D6

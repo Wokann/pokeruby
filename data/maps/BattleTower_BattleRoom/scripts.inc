@@ -63,21 +63,21 @@ BattleTower_BattleRoom_EventScript_AskContinue:: @ 81609B2
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_AskSaveAndQuit
 	case YES, BattleTower_BattleRoom_EventScript_ContinueChallenge
-	case 127, BattleTower_BattleRoom_EventScript_AskSaveAndQuit
+	case MULTI_B_PRESSED, BattleTower_BattleRoom_EventScript_AskSaveAndQuit
 
 BattleTower_BattleRoom_EventScript_AskSaveAndQuit:: @ 81609E0
 	msgbox BattleTower_BattleRoom_Text_SaveAndQuitQuestion, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_AskCancelChallenge
 	case YES, BattleTower_BattleRoom_EventScript_SaveAndQuit
-	case 127, BattleTower_BattleRoom_EventScript_AskCancelChallenge
+	case MULTI_B_PRESSED, BattleTower_BattleRoom_EventScript_AskCancelChallenge
 
 BattleTower_BattleRoom_EventScript_AskCancelChallenge:: @ 8160A0E
 	msgbox BattleTower_BattleRoom_Text_CancelChallengeQuestion, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, BattleTower_BattleRoom_EventScript_AskContinue
 	case YES, BattleTower_BattleRoom_EventScript_SoftReset
-	case 127, BattleTower_BattleRoom_EventScript_AskContinue
+	case MULTI_B_PRESSED, BattleTower_BattleRoom_EventScript_AskContinue
 
 BattleTower_BattleRoom_EventScript_ContinueChallenge:: @ 8160A3C
 	closemessage

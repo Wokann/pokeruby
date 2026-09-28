@@ -127,12 +127,12 @@ CableClub_EventScript_Colosseum:: @ 81A3EA6
 	waitmessage
 
 CableClub_EventScript_SelectColosseumAction:: @ 81A3EBC
-	multichoice 17, 6, 17, 0
+	multichoice 17, 6, MULTI_YESNOINFO, 0
 	switch VAR_RESULT
 	case 0, CableClub_EventScript_TryEnterColosseum
 	case 1, CableClub_EventScript_AbortLink
 	case 2, CableClub_EventScript_ExplainBattleModes
-	case 127, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
 
 CableClub_EventScript_TryEnterColosseum:: @ 81A3EF2
 	call Common_EventScript_SaveGame
@@ -207,13 +207,13 @@ CableClub_EventScript_ExplainBattleModes:: @ 81A3FDD
 CableClub_EventScript_SelectBattleMode:: @ 81A3FEF
 	message CableClub_Text_PlayWhichBattleMode
 	waitmessage
-	multichoice 0, 0, 18, 0
+	multichoice 0, 0, MULTI_BATTLE_MODE, 0
 	switch VAR_RESULT
 	case 0, CableClub_EventScript_SelectSingleBattle
 	case 1, CableClub_EventScript_SelectDoubleBattle
 	case 2, CableClub_EventScript_SelectMultiBattle
 	case 3, CableClub_EventScript_CancelBattleTypeSelection
-	case 127, CableClub_EventScript_CancelBattleTypeSelection
+	case MULTI_B_PRESSED, CableClub_EventScript_CancelBattleTypeSelection
 
 CableClub_EventScript_CancelBattleTypeSelection:: @ 81A4036
 	setvar VAR_0x8004, 0

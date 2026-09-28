@@ -8,7 +8,7 @@ EventScript_PC:: @ 81A0009
 	end
 
 EventScript_PCMainMenu:
-	message Text_WhichPCShouldBeAccessed
+	message gText_WhichPCShouldBeAccessed
 	waitmessage
 	special ScriptMenu_CreatePCMultichoice
 	waitstate

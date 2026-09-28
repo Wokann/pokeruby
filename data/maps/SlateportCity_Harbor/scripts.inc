@@ -174,12 +174,12 @@ SlateportCity_Harbor_EventScript_AskForTicket:: @ 81560D9
 	end
 
 SlateportCity_Harbor_EventScript_ChooseDestination:: @ 81560FD
-	multichoicedefault 18, 6, 52, 2, 0
+	multichoicedefault 18, 6, MULTI_SSTIDAL_SLATEPORT_WITH_BATTLE_TOWER, 2, 0
 	switch VAR_RESULT
 	case 0, SlateportCity_Harbor_EventScript_Lilycove
 	case 1, SlateportCity_Harbor_EventScript_BattleTower
 	case 2, SlateportCity_Harbor_EventScript_CancelDestinationSelect
-	case 127, SlateportCity_Harbor_EventScript_CancelDestinationSelect
+	case MULTI_B_PRESSED, SlateportCity_Harbor_EventScript_CancelDestinationSelect
 	end
 
 SlateportCity_Harbor_EventScript_NoTicket:: @ 8156135
@@ -317,12 +317,12 @@ SlateportCity_Harbor_EventScript_AskToTradeScanner:: @ 81562A7
 	end
 
 SlateportCity_Harbor_EventScript_ChooseScannerTrade:: @ 81562B3
-	multichoice 0, 0, 46, 0
+	multichoice 0, 0, MULTI_STERN_DEEPSEA, 0
 	switch VAR_RESULT
 	case 0, SlateportCity_Harbor_EventScript_DeepSeaTooth
 	case 1, SlateportCity_Harbor_EventScript_DeepSeaScale
 	case 2, SlateportCity_Harbor_EventScript_DeclineTrade
-	case 127, SlateportCity_Harbor_EventScript_DeclineTrade
+	case MULTI_B_PRESSED, SlateportCity_Harbor_EventScript_DeclineTrade
 	end
 
 SlateportCity_Harbor_EventScript_DeepSeaTooth:: @ 81562EA

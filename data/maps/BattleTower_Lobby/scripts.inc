@@ -192,20 +192,20 @@ BattleTower_Lobby_EventScript_Receptionist:: @ 816049E
 BattleTower_Lobby_EventScript_ShowChallengeMenu:: @ 81604BE
 	message BattleTower_Lobby_Text_MakeBattleRoomChallenge
 	waitmessage
-	multichoice 15, 6, 23, 0
+	multichoice 15, 6, MULTI_CHALLENGEINFO, 0
 	switch VAR_RESULT
 	case 0, BattleTower_Lobby_EventScript_ChooseLevel
 	case 1, BattleTower_Lobby_EventScript_ExplainBattleTower
 	case 2, BattleTower_Lobby_EventScript_CancelRegistration
-	case 127, BattleTower_Lobby_EventScript_CancelRegistration
+	case MULTI_B_PRESSED, BattleTower_Lobby_EventScript_CancelRegistration
 
 BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	message BattleTower_Lobby_Text_ChooseLevel50Or100
 	waitmessage
-	multichoice 18, 6, 24, 0
+	multichoice 18, 6, MULTI_LEVEL_MODE, 0
 	switch VAR_RESULT
 	case 2, BattleTower_Lobby_EventScript_CancelRegistration
-	case 127, BattleTower_Lobby_EventScript_CancelRegistration
+	case MULTI_B_PRESSED, BattleTower_Lobby_EventScript_CancelRegistration
 	special CheckPartyBattleTowerBanlist
 	compare VAR_0x8004, 1
 	goto_if_eq BattleTower_Lobby_EventScript_ShowEligibilityError
@@ -223,7 +223,7 @@ BattleTower_Lobby_EventScript_ChooseLevel:: @ 81604FA
 	switch VAR_RESULT
 	case NO, BattleTower_Lobby_EventScript_RestoreParty
 	case YES, BattleTower_Lobby_EventScript_ConfirmChallengeAndSave
-	case 127, BattleTower_Lobby_EventScript_RestoreParty
+	case MULTI_B_PRESSED, BattleTower_Lobby_EventScript_RestoreParty
 
 BattleTower_Lobby_EventScript_ConfirmChallengeAndSave:: @ 8160587
 	setvar VAR_0x8004, 5

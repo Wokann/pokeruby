@@ -32,12 +32,12 @@ LilycoveCity_Harbor_EventScript_NoFirstTimeEventTickets:: @ 81598CD
 	end
 
 LilycoveCity_Harbor_EventScript_FerryRegularLocationSelect:: @ 81598F1
-	multichoicedefault 18, 6, 56, 2, 0
+	multichoicedefault 18, 6, MULTI_SSTIDAL_LILYCOVE_WITH_BATTLE_TOWER, 2, 0
 	switch VAR_RESULT
 	case 0, LilycoveCity_Harbor_EventScript_GoToSlateport
 	case 1, LilycoveCity_Harbor_EventScript_GoToBattleTower
 	case 2, LilycoveCity_Harbor_EventScript_ExitSailSelect
-	case 127, LilycoveCity_Harbor_EventScript_ExitSailSelect
+	case MULTI_B_PRESSED, LilycoveCity_Harbor_EventScript_ExitSailSelect
 	end
 
 LilycoveCity_Harbor_EventScript_NoTicket:: @ 8159929

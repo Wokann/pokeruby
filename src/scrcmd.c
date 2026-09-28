@@ -1376,7 +1376,7 @@ bool8 ScrCmd_drawboxtext(struct ScriptContext *ctx)
     u8 multichoiceId = ScriptReadByte(ctx);
     u8 ignoreBPress = ScriptReadByte(ctx);
 
-    if (Multichoice(left, top, multichoiceId, ignoreBPress) == TRUE)
+    if (ScriptMenu_MultichoiceNoWindow(left, top, multichoiceId, ignoreBPress) == TRUE)
     {
         ScriptContext_Stop();
         return TRUE;
@@ -1399,7 +1399,7 @@ bool8 ScrCmd_showmonpic(struct ScriptContext *ctx)
 
 bool8 ScrCmd_hidemonpic(struct ScriptContext *ctx)
 {
-    bool8 (*func)(void) = ScriptMenu_GetPicboxWaitFunc();
+    bool8 (*func)(void) = ScriptMenu_HidePokemonPic();
 
     if (func == NULL)
         return FALSE;

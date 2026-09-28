@@ -335,12 +335,12 @@ LilycoveCity_ContestLobby_EventScript_TrySaveForLinkContest:: @ 8158BC4
 	return
 
 LilycoveCity_ContestLobby_EventScript_AskEnterLinkContest:: @ 8158BF0
-	multichoice 0, 0, 2, 0
+	multichoice 0, 0, MULTI_ENTERINFO, 0
 	switch VAR_RESULT
 	case 0, LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType
 	case 1, LilycoveCity_ContestLobby_EventScript_ExplainLinkContest
 	case 2, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
-	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case MULTI_B_PRESSED, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	end
 
 LilycoveCity_ContestLobby_EventScript_ExplainLinkContest:: @ 8158C27
@@ -402,10 +402,10 @@ LilycoveCity_ContestLobby_EventScript_ChooseLinkContestType:: @ 8158CEA
 	call_if_unset FLAG_TEMP_3, LilycoveCity_ContestLobby_EventScript_TrySaveForLinkContest
 	message LilycoveCity_ContestLobby_Text_EnterWhichContest
 	waitmessage
-	multichoice 0, 0, 4, 0
+	multichoice 0, 0, MULTI_CONTEST_TYPE, 0
 	switch VAR_RESULT
 	case CONTEST_CATEGORIES_COUNT, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
-	case 127, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
+	case MULTI_B_PRESSED, LilycoveCity_ContestLobby_EventScript_CancelEnterContest
 	copyvar VAR_CONTEST_CATEGORY, VAR_RESULT
 	goto LilycoveCity_ContestLobby_EventScript_ChooseLinkContestMon
 	end

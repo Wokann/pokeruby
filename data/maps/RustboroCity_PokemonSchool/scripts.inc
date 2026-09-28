@@ -10,7 +10,7 @@ RustboroCity_PokemonSchool_EventScript_Blackboard:: @ 81579E2
 RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic:: @ 81579F1
 	message RustboroCity_PokemonSchool_Text_ReadWhichTopic
 	waitmessage
-	multichoicegrid 8, 1, 13, 3, 0
+	multichoicegrid 8, 1, MULTI_STATUS_INFO, 3, 0
 	switch VAR_RESULT
 	case 0, RustboroCity_PokemonSchool_EventScript_Poison
 	case 1, RustboroCity_PokemonSchool_EventScript_Paralysis
@@ -18,7 +18,7 @@ RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic:: @ 81579F1
 	case 3, RustboroCity_PokemonSchool_EventScript_Burn
 	case 4, RustboroCity_PokemonSchool_EventScript_Freeze
 	case 5, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
-	case 127, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
+	case MULTI_B_PRESSED, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
 	end
 
 RustboroCity_PokemonSchool_EventScript_Poison:: @ 8157A50
