@@ -9,7 +9,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimCuttingSlice(struct Sprite *sprite);
+static void AnimCuttingSlice(struct Sprite *sprite);
 static void AnimAirCutterSlice(struct Sprite *sprite);
 static void AnimSlice_Step(struct Sprite *sprite);
 
@@ -54,7 +54,7 @@ const struct SpriteTemplate gAirCutterSliceSpriteTemplate =
 // arg 0: initial x pixel offset
 // arg 1: initial y pixel offset
 // arg 2: slice direction; 0 = right-to-left, 1 = left-to-right
-void AnimCuttingSlice(struct Sprite *sprite)
+static void AnimCuttingSlice(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
