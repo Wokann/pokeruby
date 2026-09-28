@@ -159,13 +159,13 @@ static void AnimLockOnTarget_Step4(struct Sprite *sprite)
         sprite->data[1] = 0;
     }
 
-    BlendPalettes(GetBattlePalettesMask(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE), sprite->data[1], RGB(31, 31, 31));
+    BlendPalettes(GetBattlePalettesMask(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE), sprite->data[1], RGB_WHITE);
     if (sprite->data[1] == 16)
     {
         int pal;
         sprite->data[2]++;
         pal = sprite->oam.paletteNum;
-        LoadPalette(&gPlttBufferUnfaded[0x108 + pal * 16], pal * 16 | 0x101, 4);
+        LoadPalette(&gPlttBufferUnfaded[OBJ_PLTT_ID(pal) + 8], OBJ_PLTT_ID(pal) + 1, PLTT_SIZEOF(2));
         PlaySE12WithPanning(SE_M_LEER, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
     }
     else if (sprite->data[1] == 0)
@@ -224,7 +224,7 @@ static void AnimLockOnMoveTarget(struct Sprite *sprite)
         sprite->oam.matrixNum = 24;
     }
 
-    sprite->oam.tileNum = (sprite->oam.tileNum + 16);
+    sprite->oam.tileNum += 16;
     sprite->callback = AnimLockOnTarget;
     AnimLockOnTarget(sprite);
 }
