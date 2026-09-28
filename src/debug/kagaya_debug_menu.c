@@ -121,7 +121,7 @@ u8 Kagaya_80B0734(void)
 {
     if (!UpdatePaletteFade())
     {
-        debug_sub_811609C(Random() % 6, CB2_ReturnToFieldWithOpenMenu);
+        Debug_PlaySlotMachine(Random() % 6, CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
         return 1;

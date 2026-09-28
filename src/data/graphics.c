@@ -1157,13 +1157,13 @@ const u8 gWallClockStart_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_edit.bin
 const u8 gWallClockView_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_view.bin.lz");
 
 #ifdef SAPPHIRE
-const u8 gUnknown_08E95A18[] = INCBIN_U8("graphics/slot_machine/sapphire.gbapal");
+const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/sapphire.gbapal");
 #else
-const u8 gUnknown_08E95A18[] = INCBIN_U8("graphics/slot_machine/ruby.gbapal");
+const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/ruby.gbapal");
 #endif // SAPPHIRE
 
-const u8 gUnknown_08E95AB8[] = INCBIN_U8("graphics/unknown/unknown_E95AB8.bin");
-const u8 gUnknown_08E95FB8[] = INCBIN_U8("graphics/slot_machine/slots_layout.bin");
+const u8 gSlotMachineMenu_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E95AB8.bin");
+const u8 gSlotMachineInfoBox_Tilemap[] = INCBIN_U8("graphics/slot_machine/slots_layout.bin");
 const u8 gContestResultsTitleWords_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/title_words.bin");
 const u16 gUnknown_08E966B8[] = INCBIN_U16("graphics/unknown/unknown_E966B8.gbapal");
 
@@ -1238,7 +1238,7 @@ const u8 gSpriteImage_8E98FE8[] = INCBIN_U8("graphics/slot_machine/reel_time_exp
 const u8 gSpriteImage_8E991E8[] = INCBIN_U8("graphics/slot_machine/shadow.4bpp");
 const u8 gSpriteImage_8E993E8[] = INCBIN_U8("graphics/slot_machine/pika_aura.4bpp");
 
-const u8 gUnknownPalette_08E997E8[] = INCBIN_U8("graphics/unknown/unknown_E997E8.gbapal");
+const u8 gSlotMachineReelBackground_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E997E8.gbapal");
 const u8 gSpriteImage_8E99808[] = INCBIN_U8("graphics/unknown_sprites/8E99808.4bpp");
 const u8 gSlotMachineReelTimeLights_Gfx[] = INCBIN_U8("graphics/slot_machine/reel_time_lights.4bpp.lz");
 
