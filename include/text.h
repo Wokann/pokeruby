@@ -81,7 +81,7 @@ extern const struct WindowTemplate gWindowTemplate_81E6D8C;
 extern const struct WindowTemplate gWindowTemplate_81E6DA8;
 extern const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Values;
 extern const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Labels;
-extern const struct WindowTemplate gWindowTemplate_81E6DFC;
+extern const struct WindowTemplate gMenuWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E6E18;
 extern const struct WindowTemplate gWindowTemplate_81E6E34;
 extern const struct WindowTemplate gWindowTemplate_81E6E50;

@@ -1068,7 +1068,7 @@ u8 GetEasyChatMessageId(void)
 
 void PrintEasyChatStdText(const u8 *a, u8 b, u8 c, u8 d)
 {
-    sub_8072AB0(a, b * 8, c * 8, 176, d * 8, 1);
+    Menu_PrintTextWithNewlineIndentAndClear(a, b * 8, c * 8, 176, d * 8, 1);
 }
 
 void PrintEasyChatStdMessage(u8 a)

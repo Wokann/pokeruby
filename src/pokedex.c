@@ -4711,7 +4711,7 @@ int DoPokedexSearch(u8 dexMode, u8 order, u8 abcGroup, u8 bodyColor, u8 type1, u
 
 void EraseAndPrintSearchTextBox(const u8 *str)
 {
-    sub_8072AB0(str, 9, 120, SUB_8091E20_WIDTH, 32, 1);
+    Menu_PrintTextWithNewlineIndentAndClear(str, 9, 120, SUB_8091E20_WIDTH, 32, 1);
 }
 
 u8 LoadSearchMenu(void)

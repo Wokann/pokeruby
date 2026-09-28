@@ -419,11 +419,11 @@ static bool8 SetupBagMultistep(void)
         gMain.state++;
         break;
     case 7:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6DFC);
+        Text_LoadWindowTemplate(&gMenuWindowTemplate);
         gMain.state++;
         break;
     case 8:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6DFC);
+        MultistepInitMenuWindowBegin(&gMenuWindowTemplate);
         gMain.state++;
         break;
     case 9:
@@ -1355,12 +1355,12 @@ static void ItemListMenu_InitDescription(s16 itemId)
 
     if (gBagPocketScrollStates[sCurrentBagPocket].scrollTop + gBagPocketScrollStates[sCurrentBagPocket].cursorPos == gBagPocketScrollStates[sCurrentBagPocket].numSlots)
     {
-        r5 = sub_8072A18(gOtherText_ReturnTo, 4, 0x68, 0x68, 1);
-        r5 += sub_8072A18(gBagMenuReturnToTexts[sBagMenuLocation], 4, 0x78, 0x68, 1);
+        r5 = Menu_PrintTextWithNewlineIndent(gOtherText_ReturnTo, 4, 0x68, 0x68, 1);
+        r5 += Menu_PrintTextWithNewlineIndent(gBagMenuReturnToTexts[sBagMenuLocation], 4, 0x78, 0x68, 1);
     }
     else
     {
-        r5 = sub_8072A18(ItemId_GetDescription(itemId), 4, 0x68, 0x68, 1);
+        r5 = Menu_PrintTextWithNewlineIndent(ItemId_GetDescription(itemId), 4, 0x68, 0x68, 1);
     }
 
     if (r5 < 3)

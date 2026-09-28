@@ -829,7 +829,7 @@ const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Labels =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6DFC =
+const struct WindowTemplate gMenuWindowTemplate =
 {
     0, // BG number
     2, // BG character base block

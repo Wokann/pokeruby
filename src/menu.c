@@ -620,17 +620,17 @@ u8 Menu_PrintTextPixelCoords(const u8 *text, u8 left, u16 top, u8 a4)
     return Text_InitWindow8004D04(gMenuWindowPtr, text, gMenuTextTileOffset, left, top, a4);
 }
 
-u8 sub_8072A18(const u8 *text, u8 left, u16 top, u8 width, u32 a5)
+u8 Menu_PrintTextWithNewlineIndent(const u8 *text, u8 left, u16 top, u8 width, u32 a5)
 {
     return Text_PrintWithNewlineIndent(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, a5);
 }
 
-u8 unref_sub_8072A5C(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 a6)
+u8 Menu_PrintTextWithNewlineIndentToBuffer(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 a6)
 {
     return Text_PrintWithNewlineIndent(gMenuWindowPtr, dest, src, gMenuTextTileOffset, left, top, width, a6);
 }
 
-int sub_8072AB0(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 a6)
+int Menu_PrintTextWithNewlineIndentAndClear(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 a6)
 {
     u8 newlineCount = Text_PrintWithNewlineIndent(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, a6);
 

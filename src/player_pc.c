@@ -869,7 +869,7 @@ static void ItemStorage_DrawItemList(u8 taskId)
 
         if (i == NUM_ITEMS)
         {
-            sub_8072A18(gOtherText_CancelNoTerminator, 0x80, (yCoord + 2) * 8, 0x68, 1);
+            Menu_PrintTextWithNewlineIndent(gOtherText_CancelNoTerminator, 0x80, (yCoord + 2) * 8, 0x68, 1);
             break;
         }
         else
@@ -948,7 +948,7 @@ static void ItemStorage_PrintDescription(u16 itemId)
             break;
     }
 
-    sub_8072AB0(string, 8, 0x68, 0x68, 0x30, 1);
+    Menu_PrintTextWithNewlineIndentAndClear(string, 8, 0x68, 0x68, 0x30, 1);
 }
 
 static void ItemStorage_DrawBothListAndDescription(u8 taskId)

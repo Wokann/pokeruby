@@ -633,7 +633,7 @@ void UpdateMapSecInfoWindow(void)
         break;
     case 1:
     case 4:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
         top += 2;
         if (gLinkOpen == TRUE)
         {
@@ -653,13 +653,13 @@ void UpdateMapSecInfoWindow(void)
 
                 if (secName == NULL)
                     break;
-                sub_8072A18(secName, 0x70, top * 8, 0x78, 1);
+                Menu_PrintTextWithNewlineIndent(secName, 0x70, top * 8, 0x78, 1);
                 top += 2;
             }
         }
         break;
     case 2:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
         top += 2;
         mapSectionId = gPokenavStructPtr->regionMap.mapSectionId;
         b = gPokenavStructPtr->regionMap.everGrandeCityArea;
@@ -672,7 +672,7 @@ void UpdateMapSecInfoWindow(void)
         }
         break;
     case 3:
-        sub_8072A18(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
         top += 2;
         break;
     }
@@ -1829,7 +1829,7 @@ void UpdateRegionMapLinkLandmarks(void)
 
         if (landmarkName)
         {
-            sub_8072A18(landmarkName, 0x70, 4 * (ptr[1] * 4 + 12), 0x78, 1);
+            Menu_PrintTextWithNewlineIndent(landmarkName, 0x70, 4 * (ptr[1] * 4 + 12), 0x78, 1);
             if (++ptr[1] != 4)
                 return;
         }

@@ -425,11 +425,11 @@ static u8 MailReadBuildGraphics(void)
         RETURN_UP_STATE;
 
     case 6:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6DFC);
+        Text_LoadWindowTemplate(&gMenuWindowTemplate);
         RETURN_UP_STATE;
 
     case 7:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6DFC);
+        MultistepInitMenuWindowBegin(&gMenuWindowTemplate);
         RETURN_UP_STATE;
 
     case 8:

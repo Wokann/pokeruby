@@ -48,7 +48,7 @@ static void Task_CancelItemPurchase(u8 taskId);
 static void Task_DoBuySellMenu(u8);
 static void Shop_FadeAndRunBuySellCallback(u8);
 static void BuyMenuDrawGraphics(void);
-static void sub_80B3240(void);
+static void LoadShopMenuTextColors(void);
 static void DrawFirstMartScrollIndicators(void);
 static void Shop_DrawViewport(void);
 static void Shop_InitMenus(int, int);
@@ -79,7 +79,7 @@ static const struct MenuAction2 sBuySellQuitMenuActions[] =
 static const u8 gMartBuySellOptionList[] = {SHOP_BUY, SHOP_SELL, SHOP_EXIT};
 static const u8 gMartBuyNoSellOptionList[] = {SHOP_BUY, SHOP_EXIT};
 
-static const u16 gUnusedMartArray[] = {0x2, 0x3, 0x4, 0xD, 0x121, 0xE, 0xE, 0xE, 0xE, 0xE, 0xE, 0x0, 0x0};
+static const u16 sUnusedShopItems[] = {0x2, 0x3, 0x4, 0xD, 0x121, 0xE, 0xE, 0xE, 0xE, 0xE, 0xE, 0x0, 0x0};
 
 static const struct YesNoFuncTable sShopPurchaseYesNoFuncs[] =
 {
@@ -184,7 +184,7 @@ static void Task_HandleShopMenuQuit(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 11, 8);
-    sub_80BE3BC();
+    TryPutSmartShopperOnAir();
     UnlockPlayerFieldControls();
     DestroyTask(taskId);
 
@@ -273,8 +273,8 @@ static void BuyMenuDrawGraphics(void)
     ResetPaletteFade();
     ResetSpriteData();
     ResetTasks();
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6DFC);
-    InitMenuWindow(&gWindowTemplate_81E6DFC);
+    Text_LoadWindowTemplate(&gMenuWindowTemplate);
+    InitMenuWindow(&gMenuWindowTemplate);
     Shop_DrawViewport();
     gMartInfo.cursor = 0;
     gMartInfo.choicesAbove = 0;
@@ -284,14 +284,14 @@ static void BuyMenuDrawGraphics(void)
     Shop_PrintItemDesc();
     DrawFirstMartScrollIndicators();
     CreateTask(Shop_DoCursorAction, 0x8);
-    sub_80B3240();
+    LoadShopMenuTextColors();
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     gPaletteFade.bufferTransferDisabled = 0;
     SetVBlankCallback(VBlankCB);
     SetMainCallback2(MainCB2);
 }
 
-static void sub_80B3240(void)
+static void LoadShopMenuTextColors(void)
 {
     u16 colors[2] = {RGB(14, 15, 16), RGB_WHITE};
 
@@ -537,7 +537,7 @@ static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControl
 
     CopyItemName(itemId, stringPtr);
 
-    sub_8072A18(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
+    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
     stringPtr = gStringVar1;
 
     if (hasControlCode)
@@ -560,7 +560,7 @@ static void Shop_DisplayDecorationPriceInList(u16 itemId, u8 var2, bool32 hasCon
     }
 
     StringCopy(stringPtr, gDecorations[itemId].name);
-    sub_8072A18(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
+    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
     stringPtr = gStringVar1;
 
     if (hasControlCode)
@@ -605,18 +605,18 @@ static void Shop_PrintItemDescText(void)
     {
         if (gMartInfo.martType == MART_TYPE_0)
         {
-            sub_8072AB0(ItemId_GetDescription(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]),
+            Menu_PrintTextWithNewlineIndentAndClear(ItemId_GetDescription(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]),
                 0x4, 0x68, 0x68, 0x30, 0);
         }
         else
         {
-            sub_8072AB0(gDecorations[gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]].description,
+            Menu_PrintTextWithNewlineIndentAndClear(gDecorations[gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]].description,
                 0x4, 0x68, 0x68, 0x30, 0);
         }
     }
     else
     {
-        sub_8072AB0(gOtherText_QuitShopping, 0x4, 0x68, 0x68, 0x30, 0);
+        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_QuitShopping, 0x4, 0x68, 0x68, 0x30, 0);
     }
 }
 
@@ -1222,10 +1222,10 @@ void Shop_CreateDecorationShop2Menu(u16 *itemList)
 
 #if DEBUG
 
-void debug_sub_80C2818(void)
+void Debug_OpenUnusedShop(void)
 {
     CreateShopMenu(MART_TYPE_0);
-    SetShopItemsForSale(gUnusedMartArray);
+    SetShopItemsForSale(sUnusedShopItems);
     SetShopMenuCallback(NULL);
 }
 

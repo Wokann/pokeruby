@@ -659,7 +659,7 @@ static void DrawBattleMoveInfoHeaders(bool8 noTeachMoveText)
     }
 
     if (!noTeachMoveText)
-        sub_8072AB0(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
+        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
 }
 
 static u8 ChangeToContestMoveInfoWindow(void)
@@ -705,7 +705,7 @@ static void DrawContestMoveInfoHeaders(bool8 noTeachMoveText)
     }
 
     if (!noTeachMoveText)
-        sub_8072AB0(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
+        Menu_PrintTextWithNewlineIndentAndClear(gOtherText_TeachWhichMove, 24, 120, 192, 32, 1);
 }
 
 static u8 ChangeToBattleMoveInfoWindow(void)
@@ -1021,7 +1021,7 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
                 gSprites[sMoveRelearnerMenu->spriteIDs[i + 4]].invisible = FALSE;
             for (i = 0; i < 3; i++)
                 PrintMoveInfo(moveId, sMoveInfoTextCoords[sContestMoveInfoCoordIds[i]]);
-            sub_8072AB0(gContestEffectStrings[gContestMoves[moveId].effect], 0x58, 0x48, 0x90, 32, 1);
+            Menu_PrintTextWithNewlineIndentAndClear(gContestEffectStrings[gContestMoves[moveId].effect], 0x58, 0x48, 0x90, 32, 1);
         }
         else
         {
@@ -1029,7 +1029,7 @@ static void DrawMoveInfoWindow(bool8 contestInfo, int unused)
 
             for (i = 0; i < 4; i++)
                 PrintMoveInfo(moveId, sMoveInfoTextCoords[sBattleMoveInfoCoordIds[i]]);
-            var = sub_8072A18(gMoveDescriptions[moveId - 1], 0x58, 0x48, 0x90, 1);
+            var = Menu_PrintTextWithNewlineIndent(gMoveDescriptions[moveId - 1], 0x58, 0x48, 0x90, 1);
             if (var < 2)
             {
                 u8 r1 = var * 2 + 9;

@@ -105,7 +105,7 @@ void ReceivePokeNewsData(void *, u32, u8);
 void DoTVShowBravoTrainerPokemonProfile(void);
 void DoTVShowBravoTrainerBattleTowerProfile(void);
 void DoTVShowTodaysSmartShopper(void);
-void sub_80BE3BC(void);
+void TryPutSmartShopperOnAir(void);
 void UpdateTVShowsPerDay(u16);
 void sub_80C045C();
 void sub_80BF088(u8, s32);

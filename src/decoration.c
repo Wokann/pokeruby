@@ -1806,7 +1806,7 @@ void UpdateDecorationItemsDisplay(u8 taskId, u8 dummy1)
         }
         if (i == gUnknown_020388D5)
         {
-            sub_8072A18(gOtherText_Exit, 0x08, 8 * ni, 0x68, 1);
+            Menu_PrintTextWithNewlineIndent(gOtherText_Exit, 0x08, 8 * ni, 0x68, 1);
             break;
         }
         if (gUnknown_020388D0[i])
@@ -1814,10 +1814,10 @@ void UpdateDecorationItemsDisplay(u8 taskId, u8 dummy1)
             if (sDecorationContext.isPlayerRoom == 1 && gUnknown_020388F6 != DECORCAT_DOLL && gUnknown_020388F6 != DECORCAT_CUSHION && gTasks[taskId].data[11] == 0)
             {
                 StringCopy(gStringVar1, gDecorations[gUnknown_020388D0[i]].name);
-                sub_8072A18(gUnknown_083EC65A, 0x08, 8 * ni, 0x68, 1);
+                Menu_PrintTextWithNewlineIndent(gUnknown_083EC65A, 0x08, 8 * ni, 0x68, 1);
             } else
             {
-                sub_8072A18(gDecorations[gUnknown_020388D0[i]].name, 0x08, 8 * ni, 0x68, 1);
+                Menu_PrintTextWithNewlineIndent(gDecorations[gUnknown_020388D0[i]].name, 0x08, 8 * ni, 0x68, 1);
             }
             for (j=0; j<16; j++)
             {
@@ -1854,7 +1854,7 @@ void ShowDecorationCategorySummaryWindow(u8 decoCat)
 #if ENGLISH
 void PrintDecorationItemDescription(u8 decoCat)
 {
-    sub_8072AB0(gDecorations[gUnknown_020388D0[decoCat]].description, 0x80, 0x68, 0x68, 0x30, 0x1);
+    Menu_PrintTextWithNewlineIndentAndClear(gDecorations[gUnknown_020388D0[decoCat]].description, 0x80, 0x68, 0x68, 0x30, 0x1);
 }
 #elif GERMAN
 int PrintDecorationItemDescription(u8 decoCat)
@@ -1862,7 +1862,7 @@ int PrintDecorationItemDescription(u8 decoCat)
     if (decoCat == gUnknown_020388D5)
         return FALSE;
 
-    sub_8072AB0(gDecorations[gUnknown_020388D0[decoCat]].description, 0x80, 0x68, 0x68, 0x30, 0x1);
+    Menu_PrintTextWithNewlineIndentAndClear(gDecorations[gUnknown_020388D0[decoCat]].description, 0x80, 0x68, 0x68, 0x30, 0x1);
     return TRUE;
 }
 #endif

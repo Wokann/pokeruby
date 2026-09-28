@@ -1005,7 +1005,7 @@ void InterviewAfter_BravoTrainerBattleTowerProfile(void)
     bravoTrainerTower->language = GAME_LANGUAGE;
 }
 
-void sub_80BE3BC(void)
+void TryPutSmartShopperOnAir(void)
 {
     u8 rval;
     u8 i;
