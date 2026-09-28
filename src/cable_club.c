@@ -798,7 +798,7 @@ static void CB2_ReturnFromCableClubBattle(void)
     if (gSpecialVar_0x8004 != 5)
         UpdatePlayerLinkBattleRecords(gLocalLinkPlayerId ^ 1);
 
-    gMain.savedCallback = sub_805465C;
+    gMain.savedCallback = CB2_ReturnToFieldFromMultiplayer;
     SetMainCallback2(sub_8071B28);
 }
 

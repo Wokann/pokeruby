@@ -240,7 +240,7 @@ void debug_80C373C(u8 taskId)
 {
     DestroyTask(taskId);
     UnlockPlayerFieldControls();
-    SetMainCallback2(sub_80546F0);
+    SetMainCallback2(CB2_ReturnToFieldFadeFromBlack);
 }
 
 void debug_80C3758(void)
@@ -374,7 +374,7 @@ void InitWatanabeDebugMenu(void)
             if (!IsSEPlaying())
             {
                 UnlockPlayerFieldControls();
-                SetMainCallback2(sub_80546F0);
+                SetMainCallback2(CB2_ReturnToFieldFadeFromBlack);
             }
             break;
     }

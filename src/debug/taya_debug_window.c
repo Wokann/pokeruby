@@ -800,7 +800,7 @@ void TayaDebugRibbon_MainCallback(void)
             else if (JOY_NEW(B_BUTTON))
             {
                 BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-                SetMainCallback2(sub_80546F0);
+                SetMainCallback2(CB2_ReturnToFieldFadeFromBlack);
             }
             break;
         case 1:

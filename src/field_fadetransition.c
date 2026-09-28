@@ -460,7 +460,7 @@ static void Task_DoCableClubWarp(u8 taskId)
         break;
     case 2:
         WarpIntoMap();
-        SetMainCallback2(sub_8054588);
+        SetMainCallback2(CB2_ReturnToFieldCableClub);
         DestroyTask(taskId);
         break;
     }

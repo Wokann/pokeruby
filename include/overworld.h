@@ -105,7 +105,7 @@ void Overworld_ResetMapMusic(void);
 void Overworld_PlaySpecialMapMusic(void);
 void Overworld_SetSavedMusic(u16);
 void Overworld_ClearSavedMusic(void);
-void sub_8053F0C(void);
+void TransitionMapMusic(void);
 void Overworld_ChangeMusicToDefault(void);
 void Overworld_ChangeMusicTo(u16);
 // GetMapMusicFadeoutSpeed
@@ -137,16 +137,14 @@ void CB2_WhiteOut(void);
 void CB2_LoadMap(void);
 void CB2_LoadMap2(void);
 void CB2_ReturnToFieldContestHall(void);
-void sub_8054588(void);
+void CB2_ReturnToFieldCableClub(void);
 void CB2_ReturnToField(void);
 void CB2_ReturnToFieldLocal(void);
 void CB2_ReturnToFieldLink(void);
-// sub_805465C
 void CB2_ReturnToFieldWithOpenMenu(void);
 void CB2_ReturnToFieldContinueScript(void);
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
-void sub_80546F0(void);
-// sub_805470C
+void CB2_ReturnToFieldFadeFromBlack(void);
 void CB2_ContinueSavedGame(void);
 void FieldClearVBlankHBlankCallbacks(void);
 bool32 sub_805493C(u8 *, u32);
@@ -224,7 +222,7 @@ void SetPlayerFacingDirection(u8, u8);
 // FacingHandler_ForcedFacingChange
 // MovementStatusHandler_EnterFreeMode
 // MovementStatusHandler_TryAdvanceScript
-void sub_805465C(void);
+void CB2_ReturnToFieldFromMultiplayer(void);
 
 void CB2_InitTestMenu(void);
 void debug_sub_8058C00(void);

@@ -122,7 +122,7 @@ static void CB2_Overworld(void);
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState*, u16, u8);
 static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState*, u8, u16, u8);
 static bool32 sub_805483C(u8*);
-static void c2_80567AC(void);
+static void CB2_LoadMapOnReturnToFieldCableClub(void);
 static void Overworld_ResetStateAfterWhiteOut(void);
 static void InitOverworldGraphicsRegisters(void);
 static void ChooseAmbientCrySpecies(void);
@@ -622,7 +622,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     s32 paletteIndex;
 
     Overworld_SetWarpDestination(mapGroup, mapNum, -1, -1, -1);
-    sub_8053F0C();
+    TransitionMapMusic();
     ApplyCurrentWarp();
     LoadCurrentMapData();
     LoadObjEventTemplatesFromHeader();
@@ -939,7 +939,7 @@ void Overworld_ClearSavedMusic(void)
     gSaveBlock1.savedMusic = 0;
 }
 
-void sub_8053F0C(void)
+void TransitionMapMusic(void)
 {
     if (FlagGet(FLAG_DONT_TRANSITION_MUSIC) != TRUE)
     {
@@ -1383,14 +1383,14 @@ void CB2_ReturnToFieldContestHall(void)
     }
 }
 
-void sub_8054588(void)
+void CB2_ReturnToFieldCableClub(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = FieldCB_ReturnToFieldWirelessLink;
-    SetMainCallback2(c2_80567AC);
+    SetMainCallback2(CB2_LoadMapOnReturnToFieldCableClub);
 }
 
-static void c2_80567AC(void)
+static void CB2_LoadMapOnReturnToFieldCableClub(void)
 {
     if (sub_805483C(&gMain.state))
     {
@@ -1429,7 +1429,7 @@ void CB2_ReturnToFieldLink(void)
         SetMainCallback2(CB2_Overworld);
 }
 
-void sub_805465C(void)
+void CB2_ReturnToFieldFromMultiplayer(void)
 {
     FieldClearVBlankHBlankCallbacks();
     StopMapMusic();
@@ -1463,14 +1463,14 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
     CB2_ReturnToField();
 }
 
-void sub_80546F0(void)
+void CB2_ReturnToFieldFadeFromBlack(void)
 {
     FieldClearVBlankHBlankCallbacks();
     gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     CB2_ReturnToField();
 }
 
-void sub_805470C(void)
+void FieldCB_FadeTryShowMapPopup(void)
 {
     if (gMapHeader.flags == 1 && sub_80BBB24() == 1)
         ShowMapNamePopup();
@@ -1504,7 +1504,7 @@ void CB2_ContinueSavedGame(void)
     }
     else
     {
-        gFieldCallback = sub_805470C;
+        gFieldCallback = FieldCB_FadeTryShowMapPopup;
         SetMainCallback1(CB1_Overworld);
         CB2_ReturnToField();
     }

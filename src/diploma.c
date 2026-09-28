@@ -119,7 +119,7 @@ static void Task_DiplomaFadeOut(u8 taskId)
     if (!gPaletteFade.active)
     {
         DestroyTask(taskId);
-        SetMainCallback2(sub_80546F0);
+        SetMainCallback2(CB2_ReturnToFieldFadeFromBlack);
     }
 }
 
