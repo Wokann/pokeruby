@@ -466,9 +466,9 @@ const u8 gBattleAnimBackgroundImage_00[] = INCBIN_U8("graphics/battle_anims/back
 const u8 gBattleAnimBackgroundPalette_00[] = INCBIN_U8("graphics/battle_anims/backgrounds/00.gbapal.lz");
 const u8 gBattleAnimBackgroundTilemap_00[] = INCBIN_U8("graphics/battle_anims/backgrounds/00.bin.lz");
 
-const u8 gUnknown_08D1D410[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.4bpp.lz");
-const u8 gUnknown_08D1D54C[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.gbapal.lz");
-const u8 gUnknown_08D1D574[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.bin.lz");
+const u8 gMetalShineGfx[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.4bpp.lz");
+const u8 gMetalShinePalette[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.gbapal.lz");
+const u8 gMetalShineTilemap[] = INCBIN_U8("graphics/battle_anims/masks/metal_shine.bin.lz");
 
 const u8 unused_gfx_goosuto_4bpp[] = INCBIN_U8("graphics/unused/goosuto.4bpp.lz");// ghost
 const u8 unused_gfx_goosuto_pal[] = INCBIN_U8("graphics/unused/goosuto.gbapal.lz");
