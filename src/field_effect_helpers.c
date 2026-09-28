@@ -11,6 +11,8 @@
 #include "constants/field_effects.h"
 #include "constants/songs.h"
 
+#define OBJ_EVENT_PAL_TAG_NONE 0x11FF
+
 static void UpdateObjectReflectionSprite(struct Sprite *);
 static void LoadObjectReflectionPalette(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *, u8);
@@ -86,7 +88,7 @@ static void LoadObjectRegularReflectionPalette(struct ObjectEvent *objectEvent, 
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
-    if (graphicsInfo->bridgeReflectionPaletteTag != 0x11ff)
+    if (graphicsInfo->bridgeReflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
     {
         if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
         {
@@ -111,7 +113,7 @@ static void LoadObjectHighBridgeReflectionPalette(struct ObjectEvent *objectEven
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
-    if (graphicsInfo->bridgeReflectionPaletteTag != 0x11ff)
+    if (graphicsInfo->bridgeReflectionPaletteTag != OBJ_EVENT_PAL_TAG_NONE)
     {
         PatchObjectPalette(graphicsInfo->bridgeReflectionPaletteTag, paletteNum);
         UpdateSpritePaletteWithWeather(paletteNum);

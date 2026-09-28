@@ -145,7 +145,7 @@ const u8 gReflectionEffectPaletteMap[16] = {
     [PALSLOT_NPC_SPECIAL_REFLECTION] = PALSLOT_NPC_SPECIAL_REFLECTION
 };
 
-static const struct SpriteTemplate sCameraSpriteTemplate = {0, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CameraObject};
+static const struct SpriteTemplate sCameraSpriteTemplate = {0, TAG_NONE, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CameraObject};
 
 enum {
     CAMERA_STATE_INIT,
@@ -1361,7 +1361,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     {
         objectEvent->invisible = TRUE;
     }
-    *(u16 *)&spriteTemplate->paletteTag = 0xFFFF;
+    *(u16 *)&spriteTemplate->paletteTag = TAG_NONE;
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
@@ -1491,7 +1491,7 @@ u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x
     u8 spriteId;
 
     MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, callback, &spriteTemplate, &subspriteTables);
-    if (spriteTemplate.paletteTag != 0xFFFF)
+    if (spriteTemplate.paletteTag != TAG_NONE)
     {
         LoadObjectEventPalette(spriteTemplate.paletteTag);
     }
@@ -1513,7 +1513,7 @@ u8 CreateVirtualObject(u8 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevatio
 
     graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
     MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, SpriteCB_VirtualObject, &spriteTemplate, &subspriteTables);
-    *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
     x += 7;
     y += 7;
     SetSpritePosToOffsetMapCoords(&x, &y, 8, 16);
@@ -1656,7 +1656,7 @@ void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
     spriteFrameImage.size = graphicsInfo->size;
     MakeObjectTemplateFromObjectEventGraphicsInfoWithCallbackIndex(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
     spriteTemplate.images = &spriteFrameImage;
-    *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
     if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
     {
         LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
@@ -1665,7 +1665,7 @@ void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
     {
         LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
-    *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
+    *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
     spriteId = CreateSprite(&spriteTemplate, 0, 0, 0);
     if (spriteId != MAX_SPRITES)
     {
