@@ -4,17 +4,16 @@
 #include "script.h"
 #include "task.h"
 
-static void Task_WateringBerryTreeAnim_0(u8);
-static void Task_WateringBerryTreeAnim_1(u8);
-static void Task_WateringBerryTreeAnim_2(u8);
-static void Task_WateringBerryTreeAnim_3(u8);
+static void Task_WateringBerryTreeAnim_Start(u8);
+static void Task_WateringBerryTreeAnim_Continue(u8);
+static void Task_WateringBerryTreeAnim_End(u8);
 
-static void Task_WateringBerryTreeAnim_0(u8 taskId)
+static void Task_WateringBerryTreeAnim(u8 taskId)
 {
-    gTasks[taskId].func = Task_WateringBerryTreeAnim_1;
+    gTasks[taskId].func = Task_WateringBerryTreeAnim_Start;
 }
 
-static void Task_WateringBerryTreeAnim_1(u8 taskId)
+static void Task_WateringBerryTreeAnim_Start(u8 taskId)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (!ObjectEventIsMovementOverridden(playerObjEvent)
@@ -22,11 +21,11 @@ static void Task_WateringBerryTreeAnim_1(u8 taskId)
     {
         SetPlayerAvatarWatering(GetPlayerFacingDirection());
         ObjectEventSetHeldMovement(playerObjEvent, GetWalkInPlaceNormalMovementAction(GetPlayerFacingDirection()));
-        gTasks[taskId].func = Task_WateringBerryTreeAnim_2;
+        gTasks[taskId].func = Task_WateringBerryTreeAnim_Continue;
     }
 }
 
-static void Task_WateringBerryTreeAnim_2(u8 taskId)
+static void Task_WateringBerryTreeAnim_Continue(u8 taskId)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     if (ObjectEventClearHeldMovementIfFinished(playerObjEvent))
@@ -39,12 +38,12 @@ static void Task_WateringBerryTreeAnim_2(u8 taskId)
         }
         else
         {
-            gTasks[taskId].func = Task_WateringBerryTreeAnim_3;
+            gTasks[taskId].func = Task_WateringBerryTreeAnim_End;
         }
     }
 }
 
-static void Task_WateringBerryTreeAnim_3(u8 taskId)
+static void Task_WateringBerryTreeAnim_End(u8 taskId)
 {
     SetPlayerAvatarTransitionFlags(GetPlayerAvatarFlags());
     DestroyTask(taskId);
@@ -53,5 +52,5 @@ static void Task_WateringBerryTreeAnim_3(u8 taskId)
 
 void DoWateringBerryTreeAnim(void)
 {
-    CreateTask(Task_WateringBerryTreeAnim_0, 80);
+    CreateTask(Task_WateringBerryTreeAnim, 80);
 }
