@@ -54,8 +54,8 @@ void Task_LinkContest_Init(u8 taskId)
 #if ENGLISH
     u8 i;
 
-    for (i = 0; i < 4; i++)
-        gBlockRecvBuffer[i][0] = 0xff;
+    for (i = 0; i < CONTESTANT_COUNT; i++)
+        gBlockRecvBuffer[i][0] = 0xFF;
 #endif
     gTasks[taskId].tState = 0;
     gTasks[taskId].func = Task_LinkContest_StartWaitForPlayers;
@@ -227,7 +227,7 @@ void Task_LinkContest_CommunicateRngRS(u8 taskId)
             {
                 if (IsLinkTaskFinished())
                 {
-                    LinkContest_SendBlock(&gRngValue, sizeof(u32));
+                    LinkContest_SendBlock(&gRngValue, sizeof(gRngValue));
                     gTasks[taskId].tState++;
                 }
             }
@@ -239,8 +239,8 @@ void Task_LinkContest_CommunicateRngRS(u8 taskId)
         case 1:
             if (LinkContest_GetBlockReceived(0))
             {
-                memcpy(&gRngValue, gBlockRecvBuffer[0], sizeof(u32));
-                memcpy(&gContestRngValue, gBlockRecvBuffer[0], sizeof(u32));
+                memcpy(&gRngValue, gBlockRecvBuffer[0], sizeof(gRngValue));
+                memcpy(&gContestRngValue, gBlockRecvBuffer[0], sizeof(gContestRngValue));
                 gTasks[taskId].tState++;
             }
             break;
@@ -325,7 +325,7 @@ void Task_LinkContest_CommunicateMonIdxs(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                LinkContest_SendBlock(&gContestPlayerMonIndex, sizeof(u8));
+                LinkContest_SendBlock(&gContestPlayerMonIndex, sizeof(gContestPlayerMonIndex));
                 gTasks[taskId].tState++;
             }
             break;
@@ -351,7 +351,7 @@ void Task_LinkContest_CommunicateMoveSelections(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                LinkContest_SendBlock(&sContestantStatus[gContestPlayerMonIndex].currMove, sizeof(u16));
+                LinkContest_SendBlock(&sContestantStatus[gContestPlayerMonIndex].currMove, sizeof(sContestantStatus[gContestPlayerMonIndex].currMove));
                 gTasks[taskId].tState++;
             }
             break;
@@ -453,14 +453,14 @@ void Task_LinkContest_CommunicateAppealsState(u8 taskId)
         case 0:
             if (IsLinkTaskFinished())
             {
-                LinkContest_SendBlock(sContestantStatus, 4 * sizeof(struct ContestantStatus));
+                LinkContest_SendBlock(sContestantStatus, CONTESTANT_COUNT * sizeof(struct ContestantStatus));
                 gTasks[taskId].tState++;
             }
             break;
         case 1:
             if (LinkContest_GetBlockReceivedFromAllPlayers())
             {
-                memcpy(sContestantStatus, gBlockRecvBuffer[gContestLinkLeaderIndex], 4 * sizeof(struct ContestantStatus));
+                memcpy(sContestantStatus, gBlockRecvBuffer[gContestLinkLeaderIndex], CONTESTANT_COUNT * sizeof(struct ContestantStatus));
                 gTasks[taskId].tState++;
             }
             break;
