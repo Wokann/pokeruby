@@ -50,7 +50,7 @@ extern const u16 gUnknown_0820C9F8[][16];
 extern const u32 gUnknown_0820CA98[];
 extern const u16 gUnknown_0820F798[];
 
-void sub_8047CD8(void);
+void CB2_StartCreateTradeMenu(void);
 void sub_804B790(void);
 void sub_804E174(void);
 extern const u8 gOtherText_MaleSymbol3[2];

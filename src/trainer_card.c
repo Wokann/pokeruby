@@ -438,9 +438,9 @@ void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard)
     trainerCard->stars = TrainerCard_GetStarCount(trainerCard);
 }
 
-u8 sub_80934C4(u8 id)
+u8 GetTrainerCardStars(u8 cardId)
 {
-    return gTrainerCards[id].stars;
+    return gTrainerCards[cardId].stars;
 }
 
 static u32 sav12_xor_get_clamped_above(u8 index, u32 maxVal)

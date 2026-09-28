@@ -996,7 +996,7 @@ const s8 gTradeBallVerticalVelocityTable[] = {
 
 // .text
 
-void sub_8047CD8(void)
+void CB2_StartCreateTradeMenu(void)
 {
     SetMainCallback2(sub_8047EC0);
 }
@@ -5191,7 +5191,7 @@ static void sub_804DC88(void)
 static void sub_804E144(void)
 {
     if (!gPaletteFade.active)
-        SetMainCallback2((sub_8047CD8));
+        SetMainCallback2(CB2_StartCreateTradeMenu);
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();

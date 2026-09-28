@@ -893,7 +893,7 @@ static void Task_StartWiredTrade(u8 taskId)
     case 3:
         if (!gReceivedRemoteLinkPlayers)
         {
-            SetMainCallback2(sub_8047CD8);
+            SetMainCallback2(CB2_StartCreateTradeMenu);
             DestroyTask(taskId);
         }
         break;
@@ -942,16 +942,16 @@ void Script_ShowLinkTrainerCard(void)
 
 bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex)
 {
-    u32 trainerCardColorIndex;
+    u32 numStars;
 
     gSpecialVar_0x8006 = linkPlayerIndex;
     StringCopy(gStringVar1, gLinkPlayers[linkPlayerIndex].name);
 
-    trainerCardColorIndex = sub_80934C4(linkPlayerIndex);
-    if (trainerCardColorIndex == 0)
+    numStars = GetTrainerCardStars(linkPlayerIndex);
+    if (numStars == 0)
         return FALSE;
 
-    StringCopy(gStringVar2, gTrainerCardColorNames[trainerCardColorIndex - 1]);
+    StringCopy(gStringVar2, gTrainerCardColorNames[numStars - 1]);
     return TRUE;
 }
 
