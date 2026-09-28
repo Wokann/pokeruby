@@ -12,10 +12,10 @@ extern u8 gBattleAnimTarget;
 static void AnimPowerAbsorptionOrb(struct Sprite *sprite);
 static void AnimSolarBeamBigOrb(struct Sprite *sprite);
 static void AnimSolarBeamSmallOrb(struct Sprite *sprite);
-void AnimAbsorptionOrb(struct Sprite* sprite);
+static void AnimAbsorptionOrb(struct Sprite *sprite);
 static void AnimHyperBeamOrb(struct Sprite *sprite);
 static void AnimSolarBeamSmallOrb_Step(struct Sprite *sprite);
-static void AnimAbsorptionOrb_Step(struct Sprite* sprite);
+static void AnimAbsorptionOrb_Step(struct Sprite *sprite);
 static void AnimHyperBeamOrb_Step(struct Sprite *sprite);
 
 const union AnimCmd gSolarBeamBigOrbAnimCmds1[] =
@@ -193,33 +193,33 @@ const struct SpriteTemplate gHyperBeamOrbSpriteTemplate =
 
 static void AnimPowerAbsorptionOrb(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
 }
 
 static void AnimSolarBeamBigOrb(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[3]);
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = StartAnimLinearTranslation;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
 static void AnimSolarBeamSmallOrb(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = gBattleAnimArgs[3];
     sprite->callback = AnimSolarBeamSmallOrb_Step;
@@ -266,18 +266,18 @@ void AnimTask_CreateSmallSolarBeamOrbs(u8 taskId)
         DestroyAnimVisualTask(taskId);
 }
 
-void AnimAbsorptionOrb(struct Sprite* sprite)
+static void AnimAbsorptionOrb(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[3];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[5] = gBattleAnimArgs[2];
     InitAnimArcTranslation(sprite);
     sprite->callback = AnimAbsorptionOrb_Step;
 }
 
-static void AnimAbsorptionOrb_Step(struct Sprite* sprite)
+static void AnimAbsorptionOrb_Step(struct Sprite *sprite)
 {
     if (TranslateAnimHorizontalArc(sprite))
         DestroyAnimSprite(sprite);
@@ -289,8 +289,8 @@ static void AnimHyperBeamOrb(struct Sprite *sprite)
     u16 speed;
     
     StartSpriteAnim(sprite, animNum & 7);
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         sprite->x -= 20;
@@ -303,9 +303,9 @@ static void AnimHyperBeamOrb(struct Sprite *sprite)
     speed = Random();
     sprite->data[0] = (speed & 31) + 64;
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     InitAnimFastLinearTranslationWithSpeed(sprite);
     sprite->data[5] = Random() & 0xFF;
     sprite->data[6] = sprite->subpriority;
