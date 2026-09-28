@@ -460,7 +460,7 @@ const struct SpritePalette sObjectEventSpritePalettes[] = {
     {NULL,                  0x0000},
 };
 
-const u16 gPlayerReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_Brendan[] = {
     OBJ_EVENT_PAL_TAG_9,
     OBJ_EVENT_PAL_TAG_9,
     OBJ_EVENT_PAL_TAG_9,
@@ -468,110 +468,110 @@ const u16 gPlayerReflectionPaletteTags[] = {
 };
 
 // These were probably intended to be used for the female player's reflection.
-const u16 gUnusedPlayerReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_UnusedMay[] = {
     OBJ_EVENT_PAL_TAG_18,
     OBJ_EVENT_PAL_TAG_18,
     OBJ_EVENT_PAL_TAG_18,
     OBJ_EVENT_PAL_TAG_18,
 };
 
-const u16 gPlayerUnderwaterReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_PlayerUnderwater[] = {
     OBJ_EVENT_PAL_TAG_11,
     OBJ_EVENT_PAL_TAG_11,
     OBJ_EVENT_PAL_TAG_11,
     OBJ_EVENT_PAL_TAG_11,
 };
 
-const struct ReflectionPaletteSet gPlayerReflectionPaletteSets[] = {
-    {OBJ_EVENT_PAL_TAG_8, gPlayerReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_17, gPlayerReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_11, gPlayerUnderwaterReflectionPaletteTags},
+static const struct ReflectionPaletteSet sPlayerReflectionPaletteSets[] = {
+    {OBJ_EVENT_PAL_TAG_8, sReflectionPaletteTags_Brendan},
+    {OBJ_EVENT_PAL_TAG_17, sReflectionPaletteTags_Brendan},
+    {OBJ_EVENT_PAL_TAG_11, sReflectionPaletteTags_PlayerUnderwater},
     {OBJ_EVENT_PAL_TAG_NONE, NULL},
 };
 
-const u16 gQuintyPlumpReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_QuintyPlump[] = {
     OBJ_EVENT_PAL_TAG_13,
     OBJ_EVENT_PAL_TAG_13,
     OBJ_EVENT_PAL_TAG_13,
     OBJ_EVENT_PAL_TAG_13,
 };
 
-const u16 gTruckReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_Truck[] = {
     OBJ_EVENT_PAL_TAG_14,
     OBJ_EVENT_PAL_TAG_14,
     OBJ_EVENT_PAL_TAG_14,
     OBJ_EVENT_PAL_TAG_14,
 };
 
-const u16 gMachokeMoverReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_MachokeMover[] = {
     OBJ_EVENT_PAL_TAG_15,
     OBJ_EVENT_PAL_TAG_15,
     OBJ_EVENT_PAL_TAG_15,
     OBJ_EVENT_PAL_TAG_15,
 };
 
-const u16 gMovingBoxReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_MovingBox[] = {
     OBJ_EVENT_PAL_TAG_19,
     OBJ_EVENT_PAL_TAG_19,
     OBJ_EVENT_PAL_TAG_19,
     OBJ_EVENT_PAL_TAG_19,
 };
 
-const u16 gCableCarReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_CableCar[] = {
     OBJ_EVENT_PAL_TAG_20,
     OBJ_EVENT_PAL_TAG_20,
     OBJ_EVENT_PAL_TAG_20,
     OBJ_EVENT_PAL_TAG_20,
 };
 
-const u16 gSSTidalReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_SSTidal[] = {
     OBJ_EVENT_PAL_TAG_21,
     OBJ_EVENT_PAL_TAG_21,
     OBJ_EVENT_PAL_TAG_21,
     OBJ_EVENT_PAL_TAG_21,
 };
 
-const u16 gSubmarineShadowReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_SubmarineShadow[] = {
     OBJ_EVENT_PAL_TAG_26,
     OBJ_EVENT_PAL_TAG_26,
     OBJ_EVENT_PAL_TAG_26,
     OBJ_EVENT_PAL_TAG_26,
 };
 
-const u16 gKyogre2ReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_Kyogre2[] = {
     OBJ_EVENT_PAL_TAG_23,
     OBJ_EVENT_PAL_TAG_23,
     OBJ_EVENT_PAL_TAG_23,
     OBJ_EVENT_PAL_TAG_23,
 };
 
-const u16 gGroudon2ReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_Groudon2[] = {
     OBJ_EVENT_PAL_TAG_25,
     OBJ_EVENT_PAL_TAG_25,
     OBJ_EVENT_PAL_TAG_25,
     OBJ_EVENT_PAL_TAG_25,
 };
 
-const u16 gInvisibleKecleonReflectionPaletteTags[] = {
+static const u16 sReflectionPaletteTags_InvisibleKecleon[] = {
     OBJ_EVENT_PAL_TAG_6,
     OBJ_EVENT_PAL_TAG_6,
     OBJ_EVENT_PAL_TAG_6,
     OBJ_EVENT_PAL_TAG_6,
 };
 
-const struct ReflectionPaletteSet gSpecialObjectReflectionPaletteSets[] = {
-    {OBJ_EVENT_PAL_TAG_8, gPlayerReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_17, gPlayerReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_12, gQuintyPlumpReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_14, gTruckReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_15, gMachokeMoverReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_19, gMovingBoxReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_20, gCableCarReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_21, gSSTidalReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_22, gKyogre2ReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_24, gGroudon2ReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_2, gInvisibleKecleonReflectionPaletteTags},
-    {OBJ_EVENT_PAL_TAG_26, gSubmarineShadowReflectionPaletteTags},
+static const struct ReflectionPaletteSet sSpecialObjectReflectionPaletteSets[] = {
+    {OBJ_EVENT_PAL_TAG_8, sReflectionPaletteTags_Brendan},
+    {OBJ_EVENT_PAL_TAG_17, sReflectionPaletteTags_Brendan},
+    {OBJ_EVENT_PAL_TAG_12, sReflectionPaletteTags_QuintyPlump},
+    {OBJ_EVENT_PAL_TAG_14, sReflectionPaletteTags_Truck},
+    {OBJ_EVENT_PAL_TAG_15, sReflectionPaletteTags_MachokeMover},
+    {OBJ_EVENT_PAL_TAG_19, sReflectionPaletteTags_MovingBox},
+    {OBJ_EVENT_PAL_TAG_20, sReflectionPaletteTags_CableCar},
+    {OBJ_EVENT_PAL_TAG_21, sReflectionPaletteTags_SSTidal},
+    {OBJ_EVENT_PAL_TAG_22, sReflectionPaletteTags_Kyogre2},
+    {OBJ_EVENT_PAL_TAG_24, sReflectionPaletteTags_Groudon2},
+    {OBJ_EVENT_PAL_TAG_2, sReflectionPaletteTags_InvisibleKecleon},
+    {OBJ_EVENT_PAL_TAG_26, sReflectionPaletteTags_SubmarineShadow},
     {OBJ_EVENT_PAL_TAG_NONE, NULL},
 };
 
@@ -1961,11 +1961,11 @@ void LoadPlayerObjectReflectionPalette(u16 paletteTag, u8 paletteIndex)
     u8 i;
 
     PatchObjectPalette(paletteTag, paletteIndex);
-    for (i = 0; gPlayerReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    for (i = 0; sPlayerReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
     {
-        if (gPlayerReflectionPaletteSets[i].mainPaletteTag == paletteTag)
+        if (sPlayerReflectionPaletteSets[i].mainPaletteTag == paletteTag)
         {
-            PatchObjectPalette(gPlayerReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType], gReflectionEffectPaletteMap[paletteIndex]);
+            PatchObjectPalette(sPlayerReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType], gReflectionEffectPaletteMap[paletteIndex]);
             break;
         }
     }
@@ -1977,11 +1977,11 @@ void LoadSpecialObjectReflectionPalette(u16 paletteTag, u8 paletteIndex)
 
     sCurrentSpecialObjectPaletteTag = paletteTag;
     PatchObjectPalette(paletteTag, paletteIndex);
-    for (i = 0; gSpecialObjectReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    for (i = 0; sSpecialObjectReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
     {
-        if (gSpecialObjectReflectionPaletteSets[i].mainPaletteTag == paletteTag)
+        if (sSpecialObjectReflectionPaletteSets[i].mainPaletteTag == paletteTag)
         {
-            PatchObjectPalette(gSpecialObjectReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType], gReflectionEffectPaletteMap[paletteIndex]);
+            PatchObjectPalette(sSpecialObjectReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType], gReflectionEffectPaletteMap[paletteIndex]);
             break;
         }
     }
@@ -2382,11 +2382,11 @@ u16 GetObjectPaletteTag(u8 paletteIndex)
         return gObjectPaletteTagSets[sCurrentReflectionType][paletteIndex];
 
     // Palette slots 10 and 11 belong to the special object.
-    for (i = 0; gSpecialObjectReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    for (i = 0; sSpecialObjectReflectionPaletteSets[i].mainPaletteTag != OBJ_EVENT_PAL_TAG_NONE; i++)
     {
-        if (gSpecialObjectReflectionPaletteSets[i].mainPaletteTag == sCurrentSpecialObjectPaletteTag)
+        if (sSpecialObjectReflectionPaletteSets[i].mainPaletteTag == sCurrentSpecialObjectPaletteTag)
         {
-            return gSpecialObjectReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType];
+            return sSpecialObjectReflectionPaletteSets[i].reflectionPaletteTags[sCurrentReflectionType];
         }
     }
 
