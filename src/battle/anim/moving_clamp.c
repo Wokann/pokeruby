@@ -15,7 +15,7 @@ static void AnimMovingClamp_End(struct Sprite *sprite);
 
 // Unused
 
-const struct SpriteTemplate gMovingClampSpriteTemplate =
+static const struct SpriteTemplate sMovingClampSpriteTemplate =
 {
     .tileTag = ANIM_TAG_CLAMP,
     .paletteTag = ANIM_TAG_CLAMP,
@@ -26,7 +26,7 @@ const struct SpriteTemplate gMovingClampSpriteTemplate =
     .callback = AnimMovingClamp,
 };
 
-const union AnimCmd gSmallExplosionAnimCmds[] =
+static const union AnimCmd sAnim_SmallExplosion[] =
 {
     ANIMCMD_FRAME(0, 9),
     ANIMCMD_FRAME(16, 3),
@@ -35,32 +35,32 @@ const union AnimCmd gSmallExplosionAnimCmds[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSmallExplosionAnimTable[] =
+static const union AnimCmd *const sAnims_SmallExplosion[] =
 {
-    gSmallExplosionAnimCmds,
+    sAnim_SmallExplosion,
 };
 
-const union AffineAnimCmd gSmallExplosionAffineAnimCmds[] =
+static const union AffineAnimCmd sAffineAnim_SmallExplosion[] =
 {
     AFFINEANIMCMD_FRAME(0x50, 0x50, 0, 0),
     AFFINEANIMCMD_FRAME(0x9, 0x9, 0, 18),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSmallExplosionAffineAnimTable[] =
+static const union AffineAnimCmd *const sAffineAnims_SmallExplosion[] =
 {
-    gSmallExplosionAffineAnimCmds,
+    sAffineAnim_SmallExplosion,
 };
 
 // Unused
-const struct SpriteTemplate gSmallExplosionSpriteTemplate =
+static const struct SpriteTemplate sSmallExplosionSpriteTemplate =
 {
     .tileTag = ANIM_TAG_EXPLOSION_6,
     .paletteTag = ANIM_TAG_EXPLOSION_6,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
-    .anims = gSmallExplosionAnimTable,
+    .anims = sAnims_SmallExplosion,
     .images = NULL,
-    .affineAnims = gSmallExplosionAffineAnimTable,
+    .affineAnims = sAffineAnims_SmallExplosion,
     .callback = AnimSpriteOnMonPos,
 };
 
