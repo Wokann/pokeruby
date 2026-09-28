@@ -15,13 +15,13 @@ extern u8 gAnimVisualTaskCount;
 extern const struct SpriteTemplate gLightningSpriteTemplate;
 
 static void AnimZapCannonSpark(struct Sprite *sprite);
-void AnimThunderboltOrb(struct Sprite *sprite);
-void AnimSparkElectricityFlashing(struct Sprite *sprite);
+static void AnimThunderboltOrb(struct Sprite *sprite);
+static void AnimSparkElectricityFlashing(struct Sprite *sprite);
 static void AnimElectricity(struct Sprite *sprite);
-void AnimElectricBoltSegment(struct Sprite *sprite);
-void AnimThunderWave(struct Sprite *sprite);
-void AnimGrowingChargeOrb(struct Sprite *sprite);
-void AnimElectricPuff(struct Sprite *sprite);
+static void AnimElectricBoltSegment(struct Sprite *sprite);
+static void AnimThunderWave(struct Sprite *sprite);
+static void AnimGrowingChargeOrb(struct Sprite *sprite);
+static void AnimElectricPuff(struct Sprite *sprite);
 static void AnimVoltTackleOrbSlide(struct Sprite *sprite);
 static void AnimVoltTackleBolt(struct Sprite *sprite);
 static void AnimGrowingShockWaveOrb(struct Sprite *sprite);
@@ -358,13 +358,13 @@ const struct SpriteTemplate gShockWaveProgressingBoltSpriteTemplate =
 
 static void AnimZapCannonSpark(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
 
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = gBattleAnimArgs[2];
@@ -409,7 +409,7 @@ static void AnimThunderboltOrb_Step(struct Sprite *sprite)
     }
 }
 
-void AnimThunderboltOrb(struct Sprite *sprite)
+static void AnimThunderboltOrb(struct Sprite *sprite)
 {
     if (!gMain.inBattle || GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
         gBattleAnimArgs[1] = -gBattleAnimArgs[1];
@@ -422,7 +422,7 @@ void AnimThunderboltOrb(struct Sprite *sprite)
     sprite->callback = AnimThunderboltOrb_Step;
 }
 
-void AnimSparkElectricityFlashing(struct Sprite *sprite)
+static void AnimSparkElectricityFlashing(struct Sprite *sprite)
 {
     u8 battler;
 
@@ -455,7 +455,7 @@ static void AnimSparkElectricityFlashing_Step(struct Sprite *sprite)
 
     sprite->data[7] = (sprite->data[7] + sprite->data[6]) & 0xFF;
     if (sprite->data[7] % sprite->data[4] == 0)
-        sprite->invisible ^= 1;
+        sprite->invisible ^= TRUE;
 
     if (sprite->data[0]-- <= 0)
         DestroyAnimSprite(sprite);
@@ -468,9 +468,9 @@ static void AnimElectricity(struct Sprite *sprite)
     sprite->oam.tileNum += gBattleAnimArgs[3] * 4;
 
     if (gBattleAnimArgs[3] == 1)
-        sprite->oam.matrixNum = 8;
+        sprite->oam.matrixNum = ST_OAM_HFLIP;
     else if (gBattleAnimArgs[3] == 2)
-        sprite->oam.matrixNum = 16;
+        sprite->oam.matrixNum = ST_OAM_VFLIP;
 
     sprite->data[0] = gBattleAnimArgs[2];
     sprite->callback = WaitAnimForDuration;
@@ -554,24 +554,24 @@ static void AnimTask_ElectricBolt_Step(u8 taskId)
     gTasks[taskId].data[10]++;
 }
 
-void AnimElectricBoltSegment(struct Sprite *sprite)
+static void AnimElectricBoltSegment(struct Sprite *sprite)
 {
-    if (sprite->data[0] == 0)
+    if (!sprite->data[0])
     {
-        sprite->oam.shape = 2;
-        sprite->oam.size = 0;
+        sprite->oam.shape = SPRITE_SHAPE(8x16);
+        sprite->oam.size = SPRITE_SIZE(8x16);
     }
     else
     {
-        sprite->oam.shape = 0;
-        sprite->oam.size = 1;
+        sprite->oam.shape = SPRITE_SHAPE(16x16);
+        sprite->oam.size = SPRITE_SIZE(16x16);
     }
 
     if (++sprite->data[1] == 15)
         DestroySprite(sprite);
 }
 
-void AnimThunderWave(struct Sprite *sprite)
+static void AnimThunderWave(struct Sprite *sprite)
 {
     u8 spriteId;
 
@@ -689,7 +689,7 @@ static void AnimElectricChargingParticles(struct Sprite *sprite)
     sprite->callback = AnimElectricChargingParticles_Step;
 }
 
-void AnimGrowingChargeOrb(struct Sprite *sprite)
+static void AnimGrowingChargeOrb(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
@@ -706,7 +706,7 @@ void AnimGrowingChargeOrb(struct Sprite *sprite)
     sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
 }
 
-void AnimElectricPuff(struct Sprite *sprite)
+static void AnimElectricPuff(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[0] == ANIM_BATTLER_ATTACKER)
     {
