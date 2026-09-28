@@ -166,7 +166,7 @@ static void SetTradePartyHPBarSprites(void);
 static void CB1_UpdateLink(void);
 static void CB2_TradeMenu(void);
 static void sub_804A940(struct UnkStructD *);
-void sub_804B41C(void);
+void CB2_LinkTrade(void);
 static void RunTradeMenuCallback(void);
 static void DoQueuedActions(void);
 static void DrawSelectedMonScreen(u8);
@@ -1391,7 +1391,7 @@ static void VBlankCB_TradeMenu(void)
     TransferPlttBuffer();
 }
 
-/*static*/ void sub_8048A14(void)
+/*static*/ void CB_FadeToStartTrade(void)
 {
     if (++sTradeMenu->unk_00b4 >= 16)
     {
@@ -1400,7 +1400,7 @@ static void VBlankCB_TradeMenu(void)
     }
 }
 
-/*static*/ void sub_8048A50(void)
+/*static*/ void CB_WaitToStartTrade(void)
 {
     if (!gPaletteFade.active)
     {
@@ -1411,12 +1411,12 @@ static void VBlankCB_TradeMenu(void)
     }
 }
 
-/*static*/ void sub_8048A90(void)
+/*static*/ void CB_StartLinkTrade(void)
 {
     if (!gReceivedRemoteLinkPlayers)
     {
         gMain.callback1 = NULL;
-        SetMainCallback2(sub_804B41C);
+        SetMainCallback2(CB2_LinkTrade);
     }
 }
 
@@ -2200,10 +2200,10 @@ static void RunTradeMenuCallback(void)
             CB_HandleTradeCanceled();
             break;
         case  9:
-            sub_8048A14();
+            CB_FadeToStartTrade();
             break;
         case 10:
-            sub_8048A50();
+            CB_WaitToStartTrade();
             break;
         case 11:
             CB_InitExitCanceledTrade();
@@ -2212,7 +2212,7 @@ static void RunTradeMenuCallback(void)
             CB_ExitCanceledTrade();
             break;
         case 13:
-            sub_8048A90();
+            CB_StartLinkTrade();
             break;
         case 14:
             CB_InitConfirmTradePrompt();
@@ -3539,7 +3539,7 @@ static void LoadTradeMonPic(u8 whichParty, u8 state)
 // out of order statements + register swaps?
 // r4 is loaded with 0 way before it's used (and it should be r2)
 #ifdef NONMATCHING
-void sub_804B41C(void)
+void CB2_LinkTrade(void)
 // Link trade init
 {
     switch (gMain.state)
@@ -3657,7 +3657,7 @@ void sub_804B41C(void)
     UpdatePaletteFade();
 }
 #else
-NAKED void sub_804B41C(void)
+NAKED void CB2_LinkTrade(void)
 {
     asm_unified("\tpush {r4-r6,lr}\n"
                     "\tsub sp, 0x4\n"
