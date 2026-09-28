@@ -11,7 +11,7 @@ extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];
 
-void AnimToTargetInSinWave(struct Sprite *sprite);
+static void AnimToTargetInSinWave(struct Sprite *sprite);
 static void AnimHydroCannonCharge(struct Sprite *sprite);
 static void AnimHydroCannonBeam(struct Sprite *sprite);
 static void AnimToTargetInSinWave_Step(struct Sprite *);
@@ -22,7 +22,7 @@ static void AnimHydroCannonCharge_Step(struct Sprite *);
 // Used in Hydro Pump, Mud Shot, Signal Beam, Flamethrower, Psywave, and
 // Hydro Cannon.
 
-const union AnimCmd sAnim_WaterMudOrb[] =
+static const union AnimCmd sAnim_WaterMudOrb[] =
 {
     ANIMCMD_FRAME(0, 1),
     ANIMCMD_FRAME(4, 1),
@@ -161,7 +161,7 @@ const struct SpriteTemplate gHydroCannonBeamSpriteTemplate =
     .callback = AnimHydroCannonBeam,
 };
 
-void AnimToTargetInSinWave(struct Sprite *sprite)
+static void AnimToTargetInSinWave(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, 1);
 
