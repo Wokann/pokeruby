@@ -244,7 +244,7 @@ void unref_sub_8070F90(void)
 static void BuildStartMenuActions(void)
 {
     sNumStartMenuActions = 0;
-    if (is_c1_link_related_active() == TRUE)
+    if (IsOverworldLinkActive() == TRUE)
         BuildStartMenuActions_Link();
     else
     {
@@ -403,7 +403,7 @@ void sub_80712B4(u8 taskId)
 
 void sub_8071310(void)
 {
-    if (!is_c1_link_related_active())
+    if (!IsOverworldLinkActive())
     {
         FreezeObjectEvents();
         PlayerFreeze();

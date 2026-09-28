@@ -1202,7 +1202,7 @@ void ResetSafariZoneFlag_(void)
     ResetSafariZoneFlag();
 }
 
-bool32 is_c1_link_related_active(void)
+bool32 IsOverworldLinkActive(void)
 {
     if (gMain.callback1 == CB1_OverworldLink)
         return TRUE;
@@ -1403,7 +1403,7 @@ static void CB2_LoadMapOnReturnToFieldCableClub(void)
 
 void CB2_ReturnToField(void)
 {
-    if (is_c1_link_related_active() == TRUE)
+    if (IsOverworldLinkActive() == TRUE)
     {
         SetMainCallback2(CB2_ReturnToFieldLink);
     }
@@ -2444,7 +2444,7 @@ void RunTerminateLinkScript(void)
 
 bool32 Overworld_IsRecvQueueAtMax(void)
 {
-    if (!is_c1_link_related_active())
+    if (!IsOverworldLinkActive())
         return 0;
     if (gLink.recvQueue.count >= 3)
         sReceivingFromLink = 1;
@@ -2457,7 +2457,7 @@ bool32 Overworld_RecvKeysFromLinkIsRunning(void)
 {
     u8 temp;
 
-    if (is_c1_link_related_active() != TRUE)
+    if (IsOverworldLinkActive() != TRUE)
         return FALSE;
 
     if (IsSendingKeysToLink() != TRUE)
@@ -2483,7 +2483,7 @@ bool32 Overworld_RecvKeysFromLinkIsRunning(void)
 
 bool32 Overworld_SendKeysToLinkIsRunning(void)
 {
-    if (is_c1_link_related_active() != TRUE)
+    if (IsOverworldLinkActive() != TRUE)
         return FALSE;
 
     if (IsSendingKeysToLink() != TRUE)

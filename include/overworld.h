@@ -124,7 +124,7 @@ u8 GetSavedWarpRegionMapSectionId(void);
 u8 GetCurrentRegionMapSectionId(void);
 u8 GetCurrentMapBattleScene(void);
 // ResetSafariZoneFlag_
-bool32 is_c1_link_related_active(void);
+bool32 IsOverworldLinkActive(void);
 // c1_overworld_normal
 // c1_overworld
 // OverworldBasic

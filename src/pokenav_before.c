@@ -1122,7 +1122,7 @@ void CB2_InitPokeNav(void)
     default:
         gMain.state = 0;
     case 0:
-        gPokenavStructPtr->unk6DAC = is_c1_link_related_active();
+        gPokenavStructPtr->unk6DAC = IsOverworldLinkActive();
         if (!gPokenavStructPtr->unk6DAC)
         {
             gPokenavStructPtr->unk6DAB = 0;
