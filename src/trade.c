@@ -54,9 +54,12 @@ asm(".set CopyTradeTilemapToBufferAndRequestUpload, CopyTradeTilemapToBuffer");
 
 #define GFXTAG_MENU_TEXT 200
 #define GFXTAG_CURSOR 300
+#define GFXTAG_LINK_MON_GLOW 5550
+#define GFXTAG_LINK_MON_SHADOW 5552
 #define GFXTAG_POKEBALL 5557
 #define PALTAG_CURSOR 2345
 #define PALTAG_MENU_TEXT 4925
+#define PALTAG_LINK_MON 5551
 #define PALTAG_POKEBALL 5558
 
 enum {
@@ -73,6 +76,11 @@ enum {
     POKEBALL_AFFINE_ANIM_NORMAL,
     POKEBALL_AFFINE_ANIM_SQUISH,
     POKEBALL_AFFINE_ANIM_UNSQUISH,
+};
+
+enum {
+    ANIM_LINKMON_BIG,
+    ANIM_LINKMON_SMALL,
 };
 
 struct InGameTrade {
@@ -604,9 +612,9 @@ const u16 unused_08212098[] = INCBIN_U16("graphics/unused/unknown/8212098.gbapal
 const u16 gTradeCableEndPalette[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
 const u16 unused_082120D8[] = INCBIN_U16("graphics/unused/unknown/82120D8.gbapal");
 const u16 nullpal_082120F8[16] = {};
-const u16 gTradeGlowPalette[] = INCBIN_U16("graphics/trade/glow.gbapal");
-const u32 gTradeGlow1Tiles[] = INCBIN_U32("graphics/trade/glow1.4bpp");
-const u32 gTradeGlow2Tiles[] = INCBIN_U32("graphics/trade/glow2.4bpp");
+const u16 sLinkMon_Pal[] = INCBIN_U16("graphics/trade/glow.gbapal");
+const u32 sLinkMonGlow_Gfx[] = INCBIN_U32("graphics/trade/glow1.4bpp");
+const u32 sLinkMonShadow_Gfx[] = INCBIN_U32("graphics/trade/glow2.4bpp");
 const u32 gTradeCableEndTiles[] = INCBIN_U32("graphics/trade/cable_end.4bpp");
 const u32 gTradeGBAScreenTiles[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
 const u32 gUnknown_08213738[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
@@ -699,84 +707,84 @@ const struct SpriteTemplate sSpriteTemplate_Pokeball = {
     SpriteCB_BouncingPokeball
 };
 
-const struct OamData gOamData_8215974 = {
+const struct OamData sOamData_LinkMonGlow = {
     .affineMode = 1,
     .objMode = 1,
     .size = 2,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_821597C[] = {
+const union AnimCmd sAnim_LinkMonGlow[] = {
     ANIMCMD_FRAME(0, 5, .hFlip = TRUE, .vFlip = TRUE),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_8215984[] = {
-    gSpriteAnim_821597C
+const union AnimCmd *const sAnims_LinkMonGlow[] = {
+    sAnim_LinkMonGlow
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8215988[] = {
+const union AffineAnimCmd sAffineAnim_LinkMonGlow[] = {
     AFFINEANIMCMD_FRAME(-10, -10, 0, 5),
     AFFINEANIMCMD_FRAME(10, 10, 0, 5),
     AFFINEANIMCMD_JUMP(0)
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_82159A0[] = {
-    gSpriteAffineAnim_8215988
+const union AffineAnimCmd *const sAffineAnims_LinkMonGlow[] = {
+    sAffineAnim_LinkMonGlow
 };
 
-const struct SpriteSheet gUnknown_082159A4 = {
-    (const u8 *)gTradeGlow1Tiles, 0x200, 5550
+const struct SpriteSheet sSpriteSheet_LinkMonGlow = {
+    (const u8 *)sLinkMonGlow_Gfx, 0x200, GFXTAG_LINK_MON_GLOW
 };
 
-const struct SpritePalette gUnknown_082159AC = {
-    gTradeGlowPalette, 5551
+const struct SpritePalette sSpritePalette_LinkMon = {
+    sLinkMon_Pal, PALTAG_LINK_MON
 };
 
 const struct SpritePalette gUnknown_082159B4 = {
     gTradeCableEndPalette, 5555
 };
 
-const struct SpriteTemplate gSpriteTemplate_82159BC = {
-    5550,
-    5551,
-    &gOamData_8215974,
-    gSpriteAnimTable_8215984,
+const struct SpriteTemplate sSpriteTemplate_LinkMonGlow = {
+    GFXTAG_LINK_MON_GLOW,
+    PALTAG_LINK_MON,
+    &sOamData_LinkMonGlow,
+    sAnims_LinkMonGlow,
     NULL,
-    gSpriteAffineAnimTable_82159A0,
+    sAffineAnims_LinkMonGlow,
     SpriteCB_LinkMonGlow
 };
 
-const struct OamData gOamData_82159D4 = {
+const struct OamData sOamData_LinkMonShadow = {
     .shape = ST_OAM_V_RECTANGLE,
     .size = 2,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_82159DC[] = {
+const union AnimCmd sAnim_LinkMonShadow_Big[] = {
     ANIMCMD_FRAME(0, 5, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_82159E4[] = {
+const union AnimCmd sAnim_LinkMonShadow_Small[] = {
     ANIMCMD_FRAME(8, 5, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_82159EC[] = {
-    gSpriteAnim_82159DC,
-    gSpriteAnim_82159E4
+const union AnimCmd *const sAnims_LinkMonShadow[] = {
+    sAnim_LinkMonShadow_Big,
+    sAnim_LinkMonShadow_Small
 };
 
-const struct SpriteSheet gUnknown_082159F4 = {
-    (const u8 *)gTradeGlow2Tiles, 0x300, 5552
+const struct SpriteSheet sSpriteSheet_LinkMonShadow = {
+    (const u8 *)sLinkMonShadow_Gfx, 0x300, GFXTAG_LINK_MON_SHADOW
 };
 
-const struct SpriteTemplate gSpriteTemplate_82159FC = {
-    5552,
-    5551,
-    &gOamData_82159D4,
-    gSpriteAnimTable_82159EC,
+const struct SpriteTemplate sSpriteTemplate_LinkMonShadow = {
+    GFXTAG_LINK_MON_SHADOW,
+    PALTAG_LINK_MON,
+    &sOamData_LinkMonShadow,
+    sAnims_LinkMonShadow,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCB_LinkMonShadow
@@ -4331,11 +4339,11 @@ static void UpdateTradeBGAffinePan(u8 direction)
 
 static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
 {
-    LoadSpriteSheet(&gUnknown_082159A4);
-    LoadSpriteSheet(&gUnknown_082159F4);
+    LoadSpriteSheet(&sSpriteSheet_LinkMonGlow);
+    LoadSpriteSheet(&sSpriteSheet_LinkMonShadow);
     LoadSpriteSheet(&gUnknown_08215A28);
     LoadSpriteSheet(&gUnknown_08215A78);
-    LoadSpritePalette(&gUnknown_082159AC);
+    LoadSpritePalette(&sSpritePalette_LinkMon);
     LoadSpritePalette(&gUnknown_082159B4);
 }
 
@@ -4488,9 +4496,9 @@ static bool8 DoTradeAnim_Cable(void)
             }
             break;
         case 27:
-            gTradeAnim->connectionSpriteId1 = CreateSprite(&gSpriteTemplate_82159BC, 0x80, 0x50, 3);
-            gTradeAnim->connectionSpriteId2 = CreateSprite(&gSpriteTemplate_82159FC, 0x80, 0x50, 0);
-            StartSpriteAnim(&gSprites[gTradeAnim->connectionSpriteId2], 1);
+            gTradeAnim->connectionSpriteId1 = CreateSprite(&sSpriteTemplate_LinkMonGlow, 0x80, 0x50, 3);
+            gTradeAnim->connectionSpriteId2 = CreateSprite(&sSpriteTemplate_LinkMonShadow, 0x80, 0x50, 0);
+            StartSpriteAnim(&gSprites[gTradeAnim->connectionSpriteId2], ANIM_LINKMON_SMALL);
             gTradeAnim->state ++;
             break;
         case 28:
@@ -4525,8 +4533,8 @@ static bool8 DoTradeAnim_Cable(void)
             break;
         case 31:
             BeginNormalPaletteFade(0xFFFFFFFF, -1, 16, 0, RGB(0, 0, 0));
-            gTradeAnim->connectionSpriteId1 = CreateSprite(&gSpriteTemplate_82159FC, 0x6f, 0xaa, 0);
-            gTradeAnim->connectionSpriteId2 = CreateSprite(&gSpriteTemplate_82159FC, 0x81, -0xa, 0);
+            gTradeAnim->connectionSpriteId1 = CreateSprite(&sSpriteTemplate_LinkMonShadow, 0x6f, 0xaa, 0);
+            gTradeAnim->connectionSpriteId2 = CreateSprite(&sSpriteTemplate_LinkMonShadow, 0x81, -0xa, 0);
             gTradeAnim->state ++;
             break;
         case 32:
@@ -4615,9 +4623,9 @@ static bool8 DoTradeAnim_Cable(void)
                 gTradeAnim->state ++;
                 SetTradeSequenceBgGpuRegs(1);
                 gTradeAnim->bg1vofs = 0xa6;
-                gTradeAnim->connectionSpriteId1 = CreateSprite(&gSpriteTemplate_82159BC, 0x80, -0x14, 3);
-                gTradeAnim->connectionSpriteId2 = CreateSprite(&gSpriteTemplate_82159FC, 0x80, -0x14, 0);
-                StartSpriteAnim(&gSprites[gTradeAnim->connectionSpriteId2], 1);
+                gTradeAnim->connectionSpriteId1 = CreateSprite(&sSpriteTemplate_LinkMonGlow, 0x80, -0x14, 3);
+                gTradeAnim->connectionSpriteId2 = CreateSprite(&sSpriteTemplate_LinkMonShadow, 0x80, -0x14, 0);
+                StartSpriteAnim(&gSprites[gTradeAnim->connectionSpriteId2], ANIM_LINKMON_SMALL);
             }
             break;
         case 41:
