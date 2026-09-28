@@ -2,6 +2,7 @@
 #include "bike.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
+#include "field_specials.h"
 #include "fieldmap.h"
 #include "global.fieldmap.h"
 #include "metatile_behavior.h"
@@ -11,10 +12,6 @@
 #include "constants/flags.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
-
-extern bool8 gBikeCyclingChallenge;
-extern u8 gBikeCollisions;
-extern u8 gUnusedBikeCameraAheadPanback;
 
 #if DEBUG
 extern u8 gIsDebugMode;
@@ -710,7 +707,7 @@ static void AcroBikeTransition_WheelieMoving(u8 direction)
         {
             PlayerIdleWheelie(direction);
         }
-        else if (collision <= COLLISION_OBJECT_EVENT)
+        else if (collision < COLLISION_STOP_SURFING)
         {
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
@@ -744,7 +741,7 @@ static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
         {
             PlayerIdleWheelie(direction);
         }
-        else if (collision <= COLLISION_OBJECT_EVENT)
+        else if (collision < COLLISION_STOP_SURFING)
         {
             if (MetatileBehavior_IsBumpySlope(playerObjEvent->currentMetatileBehavior))
                 PlayerIdleWheelie(direction);
@@ -855,7 +852,7 @@ static void Bike_UpdateDirTimerHistory(u8 dir)
 
     gPlayerAvatar.directionHistory = (gPlayerAvatar.directionHistory << 4) | (dir & 0xF);
 
-    for (i = 7; i != 0; i--)
+    for (i = ARRAY_COUNT(gPlayerAvatar.dirTimerHistory) - 1; i != 0; i--)
         gPlayerAvatar.dirTimerHistory[i] = gPlayerAvatar.dirTimerHistory[i - 1];
     gPlayerAvatar.dirTimerHistory[0] = 1;
 }
@@ -866,7 +863,7 @@ static void Bike_UpdateABStartSelectHistory(u8 input)
 
     gPlayerAvatar.abStartSelectHistory = (gPlayerAvatar.abStartSelectHistory << 4) | (input & 0xF);
 
-    for (i = 7; i != 0; i--)
+    for (i = ARRAY_COUNT(gPlayerAvatar.abStartSelectTimerHistory) - 1; i != 0; i--)
         gPlayerAvatar.abStartSelectTimerHistory[i] = gPlayerAvatar.abStartSelectTimerHistory[i - 1];
     gPlayerAvatar.abStartSelectTimerHistory[0] = 1;
 }
@@ -960,10 +957,10 @@ static bool8 WillPlayerCollideWithCollision(u8 newTileCollision, u8 direction)
 {
     if (direction == DIR_NORTH || direction == DIR_SOUTH)
     {
-        if (newTileCollision == 10 || newTileCollision == 12)
+        if (newTileCollision == COLLISION_ISOLATED_VERTICAL_RAIL || newTileCollision == COLLISION_VERTICAL_RAIL)
             return FALSE;
     }
-    else if (newTileCollision == 11 || newTileCollision == 13)
+    else if (newTileCollision == COLLISION_ISOLATED_HORIZONTAL_RAIL || newTileCollision == COLLISION_HORIZONTAL_RAIL)
     {
         return FALSE;
     }
@@ -1023,10 +1020,10 @@ void BikeClearState(int newDirHistory, int newAbStartHistory)
     gPlayerAvatar.directionHistory = newDirHistory;
     gPlayerAvatar.abStartSelectHistory = newAbStartHistory;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_COUNT(gPlayerAvatar.dirTimerHistory); i++)
         gPlayerAvatar.dirTimerHistory[i] = 0;
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < ARRAY_COUNT(gPlayerAvatar.abStartSelectTimerHistory); i++)
         gPlayerAvatar.abStartSelectTimerHistory[i] = 0;
 }
 
