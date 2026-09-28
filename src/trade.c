@@ -153,7 +153,7 @@ struct TradeMenuState {
     /*0x008a*/ u8 partnerCursorPosition;
     /*0x008c*/ u16 linkData[20];
     /*0x00b4*/ u8 timer;
-    /*0x00b5*/ u8 giftRibbons[11];
+    /*0x00b5*/ u8 giftRibbons[GIFT_RIBBONS_COUNT];
     /*0x00c0*/ u8 filler_00c0[8];
     /*0x00c8*/ struct TradeTilemapBuffer tilemapBuffer;
     /*0x08dc*/ struct TradeQueuedAction queuedActions[4];
@@ -1646,7 +1646,7 @@ static bool8 BufferTradeParties(void)
             }
             break;
         case 13:
-            Trade_Memcpy(gBlockSendBuffer, gSaveBlock1.giftRibbons, 11);
+            Trade_Memcpy(gBlockSendBuffer, gSaveBlock1.giftRibbons, GIFT_RIBBONS_COUNT);
             sTradeMenu->bufferPartyState ++;
             break;
         case 14:
@@ -1659,7 +1659,7 @@ static bool8 BufferTradeParties(void)
         case 15:
             if (GetBlockReceivedStatus() == 3)
             {
-                Trade_Memcpy(sTradeMenu->giftRibbons, gBlockRecvBuffer[mpId ^ 1], 11);
+                Trade_Memcpy(sTradeMenu->giftRibbons, gBlockRecvBuffer[mpId ^ 1], GIFT_RIBBONS_COUNT);
                 ResetBlockReceivedFlags();
                 sTradeMenu->bufferPartyState ++;
             }

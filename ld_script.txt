@@ -164,6 +164,7 @@ SECTIONS {
         src/contest_util.o(.text);
         src/field_poison.o(.text);
         src/pokemon_size_record.o(.text);
+        src/give_gift_ribbon_to_party.o(.text);
         src/pc_screen_effect.o(.text);
         src/fldeff_secretpower.o(.text);
         src/fldeff_secret_base_pc.o(.text);
@@ -593,6 +594,7 @@ SECTIONS {
         src/contest_link_util.o(.rodata);
         src/contest_util.o(.rodata);
         src/pokemon_size_record.o(.rodata);
+        src/give_gift_ribbon_to_party.o(.rodata);
         src/pc_screen_effect.o(.rodata);
         src/pc_screen_effect.o(.data);
         src/fldeff_secretpower.o(.rodata);

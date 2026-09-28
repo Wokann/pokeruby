@@ -196,36 +196,3 @@ void CompareBarboachSize(void)
 
     gSpecialVar_Result = CompareMonSize(SPECIES_BARBOACH, sizeRecord);
 }
-
-void GiveGiftRibbonToParty(u8 index, u8 ribbonId)
-{
-    s32 i;
-    bool32 gotRibbon = FALSE;
-    u8 data = 1;
-    u8 arr[] = {
-        MON_DATA_MARINE_RIBBON,
-        MON_DATA_LAND_RIBBON,
-        MON_DATA_SKY_RIBBON,
-        MON_DATA_COUNTRY_RIBBON,
-        MON_DATA_NATIONAL_RIBBON,
-        MON_DATA_EARTH_RIBBON,
-        MON_DATA_WORLD_RIBBON,
-    };
-
-    if (index < 11 && ribbonId < 65)
-    {
-        gSaveBlock1.giftRibbons[index] = ribbonId;
-        for (i = 0; i < 6; i++)
-        {
-            struct Pokemon *pkmn = &gPlayerParty[i];
-
-            if (GetMonData(pkmn, MON_DATA_SPECIES) != 0 && GetMonData(pkmn, MON_DATA_SANITY_BIT3) == 0)
-            {
-                SetMonData(pkmn, arr[index], &data);
-                gotRibbon = TRUE;
-            }
-        }
-        if (gotRibbon)
-            FlagSet(FLAG_SYS_RIBBON_GET);
-    }
-}

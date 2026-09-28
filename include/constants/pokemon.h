@@ -93,6 +93,7 @@
 
 #define MIN_LEVEL 1
 #define MAX_LEVEL 100
+#define MAX_GIFT_RIBBON 64
 
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
