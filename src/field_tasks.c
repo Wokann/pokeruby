@@ -35,7 +35,7 @@ void (*const gUnknown_08376364[])(u8) = {
     PacifidlogBridgePerStepCallback,
     SootopolisGymIcePerStepCallback,
     EndTruckSequence,
-    sub_80BCF1C,
+    SecretBasePerStepCallback,
     CrackedFloorPerStepCallback
 };
 

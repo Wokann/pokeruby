@@ -323,7 +323,7 @@ static void BaseLocation_Redraw(void)
         u8 Y;
         BaseLocation_GetCurSecretBaseData(&R, &X, &Y);
 
-        sub_80BC190(gStringVar1, sSecretBaseIdx);
+        GetSecretBaseName(gStringVar1, sSecretBaseIdx);
         Menu_PrintText(gStringVar1, 1, 3);
 
         Menu_PrintText(sText_RouteLabel, 1, 5);

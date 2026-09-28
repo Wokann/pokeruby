@@ -206,8 +206,8 @@ static void SpriteCB_ShrubEntranceEnd(struct Sprite *sprite);
 
 static void SetCurrentSecretBase(void)
 {
-    SetCurrentSecretBaseFromPosition(&gPlayerFacingPosition, gMapHeader.events);
-    SetCurrentSecretBaseVar();
+    SetCurSecretBaseIdFromPosition(&gPlayerFacingPosition, gMapHeader.events);
+    TrySetCurSecretBaseIndex();
 }
 
 static void AdjustSecretPowerSpritePixelOffsets(void)

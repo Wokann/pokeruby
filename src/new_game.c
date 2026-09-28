@@ -177,7 +177,7 @@ void NewGameInitData(void)
     InitEventData();
     ClearTVShowData();
     ResetGabbyAndTy();
-    ResetSecretBases();
+    ClearSecretBases();
     ClearBerryTrees();
     gSaveBlock1.money = 3000;
     ResetLinkContestBoolean();
