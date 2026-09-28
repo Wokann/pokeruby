@@ -46,12 +46,12 @@ static void sub_809DE44(void);
 static void sub_809EB40(u8);
 static void sub_809EBC4(void);
 static void SummaryScreen_LoadPalettes(void);
-static void sub_80A1D84(struct Pokemon *);
+static void CreateMonMarkingsSprite(struct Pokemon *);
 static void sub_80A18C4(void);
 static bool8 LoadPokemonSummaryScreenGraphics(void);
 static bool8 MonKnowsMultipleMoves(struct Pokemon *);
 static void PrintSummaryWindowHeaderText(void);
-static void sub_80A1DCC(struct Pokemon *);
+static void RemoveAndCreateMonMarkingsSprite(struct Pokemon *);
 static void sub_809FE80(void);
 static void sub_80A00A4(void);
 static void sub_80A0390(void);
@@ -153,7 +153,7 @@ extern const u16 gUnknown_08E94590[];
 extern const u8 gUnknown_08E73E88[];
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
-EWRAM_DATA struct Sprite *gUnknown_020384F4 = NULL;
+EWRAM_DATA struct Sprite *sMarkingsSprite = NULL;
 
 #if ENGLISH
 #include "data/text/move_descriptions_en.h"
@@ -739,7 +739,7 @@ bool8 sub_809DA84(void)
         break;
     case 13:
         sub_80A1950();
-        sub_80A1D84(&pssData.loadedMon);
+        CreateMonMarkingsSprite(&pssData.loadedMon);
         gMain.state++;
         break;
     case 14:
@@ -1749,7 +1749,7 @@ void sub_809F43C(u8 taskId)
         }
         break;
     case 6:
-        sub_80A1DCC(&pssData.loadedMon);
+        RemoveAndCreateMonMarkingsSprite(&pssData.loadedMon);
         gMain.state++;
         break;
     case 7:
@@ -3941,27 +3941,27 @@ void sub_80A1D18(void)
     StartSpriteAnim(&gSprites[ewram1A000[29]], statusAndPkrs2);
 }
 
-static void sub_80A1D84(struct Pokemon *mon)
+static void CreateMonMarkingsSprite(struct Pokemon *mon)
 {
     struct Sprite *sprite;
 
     sprite = CreateMonMarkingAllCombosSprite(30003, 30003, sSummaryScreenMonMarkingsPalette);
-    gUnknown_020384F4 = sprite;
+    sMarkingsSprite = sprite;
 
     if (sprite != NULL)
     {
         u8 markings = GetMonData(mon, MON_DATA_MARKINGS);
         StartSpriteAnim(sprite, markings);
 
-        gUnknown_020384F4->x = 60;
-        gUnknown_020384F4->y = 26;
+        sMarkingsSprite->x = 60;
+        sMarkingsSprite->y = 26;
     }
 }
 
-static void sub_80A1DCC(struct Pokemon *mon)
+static void RemoveAndCreateMonMarkingsSprite(struct Pokemon *mon)
 {
-    DestroySprite(gUnknown_020384F4);
-    sub_80A1D84(mon);
+    DestroySprite(sMarkingsSprite);
+    CreateMonMarkingsSprite(mon);
 }
 
 static void sub_80A1DE8(struct Pokemon *mon)
