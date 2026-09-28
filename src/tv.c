@@ -1514,16 +1514,16 @@ void CopyContestRankToStringVar(u8 strvaridx, u8 rank)
 {
     switch (rank)
     {
-    case NORMAL_RANK:
+    case CONTEST_RANK_NORMAL:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_NORMAL]);
         break;
-    case SUPER_RANK:
+    case CONTEST_RANK_SUPER:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SUPER]);
         break;
-    case HYPER_RANK:
+    case CONTEST_RANK_HYPER:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_HYPER]);
         break;
-    case MASTER_RANK:
+    case CONTEST_RANK_MASTER:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_MASTER]);
         break;
     }
@@ -1533,19 +1533,19 @@ void CopyContestCategoryToStringVar(u8 strvaridx, u8 category)
 {
     switch (category)
     {
-    case CONTEST_COOL:
+    case CONTEST_CATEGORY_COOL:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_COOL]);
         break;
-    case CONTEST_BEAUTY:
+    case CONTEST_CATEGORY_BEAUTY:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_BEAUTY]);
         break;
-    case CONTEST_CUTE:
+    case CONTEST_CATEGORY_CUTE:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_CUTE]);
         break;
-    case CONTEST_SMART:
+    case CONTEST_CATEGORY_SMART:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_SMART]);
         break;
-    case CONTEST_TOUGH:
+    case CONTEST_CATEGORY_TOUGH:
         StringCopy(gTVStringVarPtrs[strvaridx], gStdStrings[STDSTRING_TOUGH]);
         break;
     }

@@ -13,6 +13,7 @@
 #include "menu.h"
 #include "start_menu.h"
 #include "main.h"
+#include "contest.h"
 #include "contest_painting.h"
 #include "sound.h"
 
@@ -4075,18 +4076,18 @@ static void ContestPicTest_SelectContestType(void)
 {
     if (JOY_REPT(DPAD_LEFT))
     {
-        if (sPicTest_ContestType != CONTEST_COOL + 1)
+        if (sPicTest_ContestType != CONTEST_CATEGORY_COOL + 1)
             sPicTest_ContestType--;
     }
     if (JOY_REPT(DPAD_RIGHT))
     {
-        if (sPicTest_ContestType != CONTEST_TOUGH + 1)
+        if (sPicTest_ContestType != CONTEST_CATEGORY_TOUGH + 1)
             sPicTest_ContestType++;
     }
     if (JOY_REPT(L_BUTTON))
-        sPicTest_ContestType = CONTEST_COOL + 1;
+        sPicTest_ContestType = CONTEST_CATEGORY_COOL + 1;
     if (JOY_REPT(R_BUTTON))
-        sPicTest_ContestType = CONTEST_TOUGH + 1;
+        sPicTest_ContestType = CONTEST_CATEGORY_TOUGH + 1;
 }
 
 static void MuseumArtPicTest_SelectTitleType(void)

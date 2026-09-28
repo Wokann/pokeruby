@@ -1,3 +1,4 @@
+#include "constants/contest.h"
 	.include "include/macros.inc"
 	.include "include/macros/contest_ai_script.inc"
 	.include "constants/constants.inc"
@@ -603,9 +604,9 @@ AI_CGM_End:
 
 @ Randomly encourage moves in Cute, Smart, and Tough contests.
 AI_Erratic:
-	if_contest_type_eq CONTEST_CUTE, AI_Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_SMART, AI_Erratic_CuteSmartTough
-	if_contest_type_eq CONTEST_TOUGH, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_CUTE, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_SMART, AI_Erratic_CuteSmartTough
+	if_contest_type_eq CONTEST_CATEGORY_TOUGH, AI_Erratic_CuteSmartTough
 	end
 AI_Erratic_CuteSmartTough:
 	if_random_less_than 125, AI_Erratic_End

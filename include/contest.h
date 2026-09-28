@@ -40,6 +40,9 @@ enum
     CONTEST_RANK_LINK
 };
 
+// The number of possible captions for a Contest painting, per category.
+#define NUM_PAINTING_CAPTIONS 3
+
 #define CONTEST_SAVE_FOR_MUSEUM ((u8)-1)
 #define CONTEST_SAVE_FOR_ARTIST ((u8)-2)
 
