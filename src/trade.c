@@ -346,7 +346,7 @@ const struct SpriteTemplate gSpriteTemplate_820C134 = {
     SpriteCallbackDummy
 };
 
-const u8 *const gUnknown_0820C14C[] = {
+const u8 *const sActionTexts[] = {
     TradeText_Cancel,
     TradeText_ChoosePoke,
     TradeText_Summary1,
@@ -1007,8 +1007,8 @@ static void DrawTradeMenuText(void)
     DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[0], gSaveBlock2.playerName, 0xC);
     playerId = GetMultiplayerId();
     DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[3], gLinkPlayers[playerId ^ 1].name, 0xC);
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[6], gUnknown_0820C14C[0], 0x8);
-    DrawBottomRowText(gUnknown_0820C14C[1], sMenuTextTileBuffers[8], 0x14);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[6], sActionTexts[0], 0x8);
+    DrawBottomRowText(sActionTexts[1], sMenuTextTileBuffers[8], 0x14);
     nullsub_5(3, 0);
 }
 
@@ -1909,7 +1909,7 @@ static void CB_ProcessMenuInput(void)
             TextWindow_DrawStdFrame(&sTradeMenu->window, 24, 14, 29, 19);
             InitYesNoMenu(24, 14, 4);
             sTradeMenu->callbackId = 4;
-            DrawBottomRowText(gUnknown_0820C14C[4], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
+            DrawBottomRowText(sActionTexts[4], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
         }
     }
     if (JOY_NEW(R_BUTTON))
@@ -1928,7 +1928,7 @@ static void RedrawChooseAPokemonWindow(void)
     PrintTradePartnerPartyNicknames();
     sTradeMenu->callbackId = 0;
     gSprites[sTradeMenu->cursorSpriteId].invisible = FALSE;
-    DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
+    DrawBottomRowText(sActionTexts[1], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
 }
 
 static void CB_ProcessSelectedMonInput(void)
@@ -2296,7 +2296,7 @@ static void DrawSelectedMonScreen(u8 a0)
             sTradeMenu->drawSelectedMonState[a0] ++;
             break;
         case 4:
-            DrawBottomRowText(gUnknown_0820C14C[5], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
+            DrawBottomRowText(sActionTexts[5], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
             PrintLevelAndGender(a0, whichPokemon, gUnknown_0820C3D1[a0][0] + 4, gUnknown_0820C3D1[a0][1] + 1, gUnknown_0820C3D1[a0][0], gUnknown_0820C3D1[a0][1]);
             sTradeMenu->drawSelectedMonState[a0] ++;
             break;
@@ -2732,7 +2732,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "_0804A23C: .4byte gUnknown_0820C334 + 0x1\n"
                     "_0804A240: .4byte gOtherText_Terminator2\n"
                     "_0804A244:\n"
-                    "\tldr r0, _0804A2A4 @ =gUnknown_0820C14C\n"
+                    "\tldr r0, _0804A2A4 @ =sActionTexts\n"
                     "\tldr r0, [r0, 0x14]\n"
                     "\tadds r1, r5, 0\n"
                     "\tadds r1, 0x7E\n"
@@ -2781,7 +2781,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tpop {r0}\n"
                     "\tbx r0\n"
                     "\t.align 2, 0\n"
-                    "_0804A2A4: .4byte gUnknown_0820C14C\n"
+                    "_0804A2A4: .4byte sActionTexts\n"
                     "_0804A2A8: .4byte 0x06010000\n"
                     "_0804A2AC: .4byte gUnknown_0820C3D1\n"
                     "_0804A2B0: .4byte sTradeMenu");
@@ -3096,7 +3096,7 @@ static void RedrawPartyWindow(u8 whichParty)
         ShowTradePartyMonIcons(1);
         MarkTradeTilemapForUpload(&sTradeMenu->tilemapBuffer);
     }
-    DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
+    DrawBottomRowText(sActionTexts[1], BG_CHAR_ADDR(4) + 32 * sTradeMenu->bottomTextTileStart, 20);
     sTradeMenu->drawSelectedMonState[whichParty] = 0;
 }
 
