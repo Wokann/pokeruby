@@ -153,7 +153,7 @@ SYMBOL(gFlashMemoryPresent, 4)
 
 // trade.c
 SYMBOL(sTradeMenu, 4)
-SYMBOL(gUnknown_03004828, 4)
+SYMBOL(gTradeAnim, 4)
 . += 0x4;
 
 // berry_blender.c

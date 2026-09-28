@@ -2,7 +2,7 @@
 #ifndef GUARD_TRADE_H
 #define GUARD_TRADE_H
 
-struct TradeEwramSubstruct2 {
+struct TradeAnimState {
     /*0x0000*/ u8 filler_0000;
     /*0x0004*/ struct Window window;
     /*0x0034*/ u8 textWindowBaseTileNum;
@@ -45,7 +45,7 @@ struct TradeEwramSubstruct2 {
     /*0x0124*/ u16 unk_0124;
 };
 
-extern struct TradeEwramSubstruct2 *gUnknown_03004828;
+extern struct TradeAnimState *gTradeAnim;
 extern const u16 gUnknown_0820C9F8[][16];
 extern const u32 gUnknown_0820CA98[];
 extern const u16 gUnknown_0820F798[];
