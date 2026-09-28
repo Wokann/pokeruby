@@ -11,8 +11,8 @@ extern u8 gBattleAnimTarget;
 extern const union AnimCmd *const gPetalDanceSmallFlowerAnimTable[];
 extern const union AnimCmd *const gPetalDanceBigFlowerAnimTable[];
 
-void AnimFlyingParticle(struct Sprite* sprite);
-static void AnimFlyingParticle_Step(struct Sprite* sprite);
+static void AnimFlyingParticle(struct Sprite *sprite);
+static void AnimFlyingParticle_Step(struct Sprite *sprite);
 
 // flying_petals (petals fly across the screen.)
 // Used by Aromatherapy.
@@ -112,7 +112,7 @@ const struct SpriteTemplate gSilverWindSmallSparkSpriteTemplate =
     .callback = AnimFlyingParticle,
 };
 
-void AnimFlyingParticle(struct Sprite* sprite)
+static void AnimFlyingParticle(struct Sprite *sprite)
 {
     u8 battler;
     if (!gBattleAnimArgs[6])
@@ -160,7 +160,7 @@ void AnimFlyingParticle(struct Sprite* sprite)
     sprite->callback = AnimFlyingParticle_Step;
 }
 
-static void AnimFlyingParticle_Step(struct Sprite* sprite)
+static void AnimFlyingParticle_Step(struct Sprite *sprite)
 {
     int a = sprite->data[7];
     sprite->data[7]++;
