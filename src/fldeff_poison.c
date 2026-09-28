@@ -4,24 +4,27 @@
 #include "constants/songs.h"
 #include "sound.h"
 
+#define tState  data[0]
+#define tMosaic data[1]
+
 static void Task_FieldPoisonEffect(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
-        data[1] += 2;
-        if (data[1] > 8)
+        tMosaic += 2;
+        if (tMosaic > 8)
         {
-            data[0]++;
+            tState++;
         }
         break;
     case 1:
-        data[1] -= 2;
-        if (data[1] == 0)
+        tMosaic -= 2;
+        if (tMosaic == 0)
         {
-            data[0]++;
+            tState++;
         }
         break;
     case 2:
@@ -29,16 +32,19 @@ static void Task_FieldPoisonEffect(u8 taskId)
         return;
     }
 
-    REG_MOSAIC = (data[1] << 4) | data[1];
+    REG_MOSAIC = (tMosaic << 4) | tMosaic;
 }
 
-void FldeffPoison_Start(void)
+void FldEffPoison_Start(void)
 {
     PlaySE(SE_FIELD_POISON);
     CreateTask(Task_FieldPoisonEffect, 80);
 }
 
-bool32 FldeffPoison_IsActive(void)
+bool32 FldEffPoison_IsActive(void)
 {
     return FuncIsActiveTask(Task_FieldPoisonEffect);
 }
+
+#undef tState
+#undef tMosaic

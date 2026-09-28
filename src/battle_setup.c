@@ -478,7 +478,7 @@ static void Task_BattleStart(u8 taskId)
     switch (tState)
     {
     case 0:
-        if (!FldeffPoison_IsActive()) // is poison not active?
+        if (!FldEffPoison_IsActive()) // is poison not active?
         {
             BattleTransition_StartOnField(tTransition);
             tState++; // go to case 1.

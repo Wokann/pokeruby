@@ -140,7 +140,7 @@ s32 DoPoisonFieldEffect(void)
     }
     if (numFainted != 0 || numPoisoned != 0)
     {
-        FldeffPoison_Start();
+        FldEffPoison_Start();
     }
     if (numFainted != 0)
     {
