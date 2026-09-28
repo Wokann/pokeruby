@@ -52,6 +52,16 @@ asm(".set CopyTradeTilemapToBufferAndRequestUpload, CopyTradeTilemapToBuffer");
 
 #define Trade_SendData(ptr) (SendBlock(BitmaskAllOtherLinkPlayers(), ptr->linkData, 20))
 
+#define GFXTAG_MENU_TEXT 200
+#define GFXTAG_CURSOR 300
+#define PALTAG_CURSOR 2345
+#define PALTAG_MENU_TEXT 4925
+
+enum {
+    CURSOR_ANIM_NORMAL,
+    CURSOR_ANIM_ON_CANCEL,
+};
+
 struct InGameTrade {
     /*0x00*/ u8 name[11];
     /*0x0C*/ u16 species;
@@ -229,118 +239,118 @@ const u16 gTradePartyBoxTilemap[] = INCBIN_U16("graphics/trade/party_box_map.bin
 const u16 gTradeStripesBG2Tilemap[] = INCBIN_U16("graphics/trade/stripes_bg2_map.bin");
 const u16 gTradeStripesBG3Tilemap[] = INCBIN_U16("graphics/trade/stripes_bg3_map.bin");
 
-const struct OamData gOamData_820BFEC = {
+const struct OamData sOamData_MenuText = {
     .shape = ST_OAM_H_RECTANGLE,
     .size = 2,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_820BFF4[] = {
+const union AnimCmd sAnim_MenuText_0[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820BFFC[] = {
+const union AnimCmd sAnim_MenuText_1[] = {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820C004[] = {
+const union AnimCmd sAnim_MenuText_2[] = {
     ANIMCMD_FRAME(16, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820C00C[] = {
+const union AnimCmd sAnim_MenuText_3[] = {
     ANIMCMD_FRAME(24, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820C014[] = {
+const union AnimCmd sAnim_MenuText_4[] = {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820C01C[] = {
+const union AnimCmd sAnim_MenuText_5[] = {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_820C024[] = {
-    gSpriteAnim_820BFF4,
-    gSpriteAnim_820BFFC,
-    gSpriteAnim_820C004,
-    gSpriteAnim_820C00C,
-    gSpriteAnim_820C014,
-    gSpriteAnim_820C01C
+const union AnimCmd *const sAnims_MenuText[] = {
+    sAnim_MenuText_0,
+    sAnim_MenuText_1,
+    sAnim_MenuText_2,
+    sAnim_MenuText_3,
+    sAnim_MenuText_4,
+    sAnim_MenuText_5
 };
 
-const u16 TradeScreenTextPalette[] = INCBIN_U16("graphics/trade/text1.gbapal");
-const u16 UnrefTradeScreenTextPalette[] = INCBIN_U16("graphics/trade/text2.gbapal");
+const u16 sMenuText_Pal[] = INCBIN_U16("graphics/trade/text1.gbapal");
+const u16 sUnusedMenuTextPalette[] = INCBIN_U16("graphics/trade/text2.gbapal");
 
-const struct SpriteSheet gUnknown_0820C07C[] = {
-    {ewram_2010000.tileBuffers[ 0], 256, 200},
-    {ewram_2010000.tileBuffers[ 1], 256, 201},
-    {ewram_2010000.tileBuffers[ 2], 256, 202},
-    {ewram_2010000.tileBuffers[ 3], 256, 203},
-    {ewram_2010000.tileBuffers[ 4], 256, 204},
-    {ewram_2010000.tileBuffers[ 5], 256, 205},
-    {ewram_2010000.tileBuffers[ 6], 256, 206},
-    {ewram_2010000.tileBuffers[ 7], 256, 207},
-    {ewram_2010000.tileBuffers[ 8], 256, 208},
-    {ewram_2010000.tileBuffers[ 9], 256, 209},
-    {ewram_2010000.tileBuffers[10], 256, 210},
-    {ewram_2010000.tileBuffers[11], 256, 211},
-    {ewram_2010000.tileBuffers[12], 256, 212},
+const struct SpriteSheet sMenuTextSpriteSheets[] = {
+    {ewram_2010000.tileBuffers[ 0], 256, GFXTAG_MENU_TEXT +  0},
+    {ewram_2010000.tileBuffers[ 1], 256, GFXTAG_MENU_TEXT +  1},
+    {ewram_2010000.tileBuffers[ 2], 256, GFXTAG_MENU_TEXT +  2},
+    {ewram_2010000.tileBuffers[ 3], 256, GFXTAG_MENU_TEXT +  3},
+    {ewram_2010000.tileBuffers[ 4], 256, GFXTAG_MENU_TEXT +  4},
+    {ewram_2010000.tileBuffers[ 5], 256, GFXTAG_MENU_TEXT +  5},
+    {ewram_2010000.tileBuffers[ 6], 256, GFXTAG_MENU_TEXT +  6},
+    {ewram_2010000.tileBuffers[ 7], 256, GFXTAG_MENU_TEXT +  7},
+    {ewram_2010000.tileBuffers[ 8], 256, GFXTAG_MENU_TEXT +  8},
+    {ewram_2010000.tileBuffers[ 9], 256, GFXTAG_MENU_TEXT +  9},
+    {ewram_2010000.tileBuffers[10], 256, GFXTAG_MENU_TEXT + 10},
+    {ewram_2010000.tileBuffers[11], 256, GFXTAG_MENU_TEXT + 11},
+    {ewram_2010000.tileBuffers[12], 256, GFXTAG_MENU_TEXT + 12},
 };
 
-const struct SpritePalette gSpritePalette_TradeScreenText = {
-    TradeScreenTextPalette, 4925
+const struct SpritePalette sSpritePalette_MenuText = {
+    sMenuText_Pal, PALTAG_MENU_TEXT
 };
 
-const struct SpriteTemplate gSpriteTemplate_820C0EC = {
-    200,
-    4925,
-    &gOamData_820BFEC,
-    gSpriteAnimTable_820C024,
+const struct SpriteTemplate sSpriteTemplate_MenuText = {
+    GFXTAG_MENU_TEXT,
+    PALTAG_MENU_TEXT,
+    &sOamData_MenuText,
+    sAnims_MenuText,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
 };
 
-const struct OamData gOamData_820C104 = {
+const struct OamData sOamData_Cursor = {
     .shape = ST_OAM_H_RECTANGLE,
     .size = 3,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_820C10C[] = {
+const union AnimCmd sAnim_Cursor_Normal[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_820C114[] = {
+const union AnimCmd sAnim_Cursor_OnCancel[] = {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_820C11C[] = {
-    gSpriteAnim_820C10C,
-    gSpriteAnim_820C114
+const union AnimCmd *const sAnims_Cursor[] = {
+    sAnim_Cursor_Normal,
+    sAnim_Cursor_OnCancel
 };
 
-const struct SpriteSheet gUnknown_0820C124 = {
-    gUnknown_08EA1DEC, 0x800, 300
+const struct SpriteSheet sCursorSpriteSheet = {
+    gUnknown_08EA1DEC, 0x800, GFXTAG_CURSOR
 };
 
-const struct SpritePalette gUnknown_0820C12C = {
-    gUnknown_08EA0328, 2345
+const struct SpritePalette sCursorSpritePalette = {
+    gUnknown_08EA0328, PALTAG_CURSOR
 };
 
-const struct SpriteTemplate gSpriteTemplate_820C134 = {
-    300,
-    2345,
-    &gOamData_820C104,
-    gSpriteAnimTable_820C11C,
+const struct SpriteTemplate sSpriteTemplate_Cursor = {
+    GFXTAG_CURSOR,
+    PALTAG_CURSOR,
+    &sOamData_Cursor,
+    sAnims_Cursor,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
@@ -1024,7 +1034,7 @@ static void CreateTradeMenuPlayerNameSprites(void)
     nameLengthLayout = nameLength <= 5 ? 0 : 1;
     for (i = 0; i < 3; i ++)
     {
-        spriteTemplate = gSpriteTemplate_820C0EC;
+        spriteTemplate = sSpriteTemplate_MenuText;
         spriteTemplate.tileTag += i;
         CreateSprite(&spriteTemplate, gTradeMenuNameSpriteCoords[nameLengthLayout][0][0] + 32 * i, gTradeMenuNameSpriteCoords[nameLengthLayout][0][1], 1);
     }
@@ -1034,7 +1044,7 @@ static void CreateTradeMenuPlayerNameSprites(void)
     nameLengthLayout = nameLength <= 5 ? 0 : 1;
     for (i = 0; i < 3; i ++)
     {
-        spriteTemplate = gSpriteTemplate_820C0EC;
+        spriteTemplate = sSpriteTemplate_MenuText;
         spriteTemplate.tileTag += i + 3;
         CreateSprite(&spriteTemplate, gTradeMenuNameSpriteCoords[nameLengthLayout][1][0] + 32 * i, gTradeMenuNameSpriteCoords[nameLengthLayout][1][1], 1);
     }
@@ -1048,14 +1058,14 @@ static void CreateTradeMenuActionTextSprites(void)
 
     for (i = 0; i < 2; i ++)
     {
-        spriteTemplate = gSpriteTemplate_820C0EC;
+        spriteTemplate = sSpriteTemplate_MenuText;
         spriteTemplate.tileTag += i + 6;
         CreateSprite(&spriteTemplate, 0xd6 + 32 * i, 0x98, 1);
     }
 
     for (i = 0; i < 5; i ++)
     {
-        spriteTemplate = gSpriteTemplate_820C0EC;
+        spriteTemplate = sSpriteTemplate_MenuText;
         spriteTemplate.tileTag += i + 8;
         CreateSprite(&spriteTemplate, 0x18 + 32 * i, 0x96, 1);
     }
@@ -1181,7 +1191,7 @@ static void CB2_CreateTradeMenu(void)
             break;
         case 12:
             CreateTradeMenuActionTextSprites();
-            sTradeMenu->cursorSpriteId = CreateSprite(&gSpriteTemplate_820C134, gTradeMonSpriteCoords[0][0] * 8 + 32, gTradeMonSpriteCoords[0][1] * 8, 2);
+            sTradeMenu->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, gTradeMonSpriteCoords[0][0] * 8 + 32, gTradeMonSpriteCoords[0][1] * 8, 2);
             sTradeMenu->cursorPosition = 0;
             gMain.state ++;
             nullsub_5(6, 0);
@@ -1338,7 +1348,7 @@ static void CB2_ReturnToTradeMenu(void)
                 sTradeMenu->cursorPosition = unkStructF->unk_0009;
             else
                 sTradeMenu->cursorPosition = unkStructF->unk_0009 + 6;
-            sTradeMenu->cursorSpriteId = CreateSprite(&gSpriteTemplate_820C134, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][0] * 8 + 32, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][1] * 8, 2);
+            sTradeMenu->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][0] * 8 + 32, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][1] * 8, 2);
             gMain.state = 15;
             nullsub_5(6, 0);
             break;
@@ -1837,13 +1847,13 @@ static void TradeMenuMoveCursor(u8 *cursorPosition, u8 direction)
     u8 newPosition = GetNewCursorPosition(*cursorPosition, direction);
     if (newPosition == 12) // CANCEL
     {
-        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], 1);
+        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], CURSOR_ANIM_ON_CANCEL);
         gSprites[sTradeMenu->cursorSpriteId].x = 0xe0;
         gSprites[sTradeMenu->cursorSpriteId].y = 0xa0;
     }
     else
     {
-        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], 0);
+        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], CURSOR_ANIM_NORMAL);
         gSprites[sTradeMenu->cursorSpriteId].x = gTradeMonSpriteCoords[newPosition][0] * 8 + 32;
         gSprites[sTradeMenu->cursorSpriteId].y = gTradeMonSpriteCoords[newPosition][1] * 8;
     }
@@ -3230,26 +3240,26 @@ static bool8 LoadUISpriteGfx(void)
     switch (sTradeMenu->timer)
     {
         case  8:
-            sTradeMenu->bottomTextTileStart = LoadSpriteSheet(&gUnknown_0820C07C[sTradeMenu->timer]);
+            sTradeMenu->bottomTextTileStart = LoadSpriteSheet(&sMenuTextSpriteSheets[sTradeMenu->timer]);
             sTradeMenu->timer ++;
             return FALSE;
         case 13:
-            LoadSpritePalette(&gSpritePalette_TradeScreenText);
+            LoadSpritePalette(&sSpritePalette_MenuText);
             sTradeMenu->timer ++;
             return FALSE;
         case 14:
-            LoadSpritePalette(&gUnknown_0820C12C);
+            LoadSpritePalette(&sCursorSpritePalette);
             sTradeMenu->timer ++;
             return FALSE;
         case 15:
-            LoadSpriteSheet(&gUnknown_0820C124);
+            LoadSpriteSheet(&sCursorSpriteSheet);
             sTradeMenu->timer ++;
             // fallthrough
         case 16:
             sTradeMenu->timer = 0;
             return TRUE;
         default:
-            LoadSpriteSheet(&gUnknown_0820C07C[sTradeMenu->timer]);
+            LoadSpriteSheet(&sMenuTextSpriteSheets[sTradeMenu->timer]);
             sTradeMenu->timer ++;
             return FALSE;
     }
