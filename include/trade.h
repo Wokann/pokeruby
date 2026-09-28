@@ -57,6 +57,6 @@ extern const u8 gOtherText_MaleSymbol3[2];
 extern const u8 gOtherText_FemaleSymbol3[2];
 extern const u8 gOtherText_GenderlessSymbol[2];
 
-void sub_804E22C(void);
+void LoadTradeAnimGfx(void);
 
 #endif //POKERUBY_TRADE_H

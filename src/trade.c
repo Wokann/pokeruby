@@ -189,8 +189,8 @@ static bool8 DoTradeAnim_Cable(void);
 static void CB2_WaitTradeComplete(void);
 static u8 TradeGetMultiplayerId(void);
 static void CB2_ReturnToTradeMenuAfterLinkTrade(void);
-static void sub_804E1A0(u8);
-static void sub_804DAD4(struct MailStruct *, const struct InGameTrade *);
+static void Task_InGameTrade(u8);
+static void GetInGameTradeMail(struct MailStruct *, const struct InGameTrade *);
 static void CB2_SaveAndEndTrade(void);
 static void SpriteCB_BouncingPokeball(struct Sprite *);
 static void SpriteCB_BouncingPokeballDepart(struct Sprite *);
@@ -200,9 +200,9 @@ static void SpriteCB_LinkMonShadow(struct Sprite *);
 static void SpriteCB_CableEndSending(struct Sprite *);
 static void SpriteCB_GbaScreen(struct Sprite *);
 static void SpriteCB_BouncingPokeballArrive(struct Sprite *);
-static void sub_804E1DC(void);
+static void CheckPartnersMonForRibbons(void);
 static void CB2_InGameTrade(void);
-static void sub_804D8E4(void);
+static void BufferInGameTradeMonName(void);
 static void LoadTradeSequenceSpriteSheetsAndPalettes(void);
 static void BufferTradeSceneStrings(void);
 void CB2_UpdateLinkTrade(void);
@@ -4757,7 +4757,7 @@ static bool8 DoTradeAnim_Cable(void)
             }
             break;
         case 70:
-            sub_804E1DC();
+            CheckPartnersMonForRibbons();
             gUnknown_03004828->unk_00c4 ++;
             break;
         case 71:
@@ -4787,7 +4787,7 @@ static bool8 DoTradeAnim_Cable(void)
             {
                 PlayBGM(gUnknown_03004828->unk_0124);
                 SetMainCallback2(CB2_ReturnToField);
-                sub_804D8E4();
+                BufferInGameTradeMonName();
             }
             break;
     }
@@ -4930,7 +4930,7 @@ u16 GetInGameTradeSpeciesInfo(void)
     return inGameTrade->playerSpecies;
 }
 
-static void sub_804D8E4(void)
+static void BufferInGameTradeMonName(void)
 {
     u8 nickname[32];
     const struct InGameTrade *inGameTrade = &gIngameTrades[gSpecialVar_0x8004];
@@ -4939,55 +4939,55 @@ static void sub_804D8E4(void)
     StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
 }
 
-static void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
+static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade)
 {
     const struct InGameTrade *inGameTrade = &gIngameTrades[whichInGameTrade];
     u8 level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
 
     struct MailStruct mail;
     u8 metLocation = 0xFE;
-    u8 isMail;
-    struct Pokemon *pokemon = &gEnemyParty[0];
+    u8 mailNum;
+    struct Pokemon *mon = &gEnemyParty[0];
 
-    CreateMon(pokemon, inGameTrade->species, level, 32, TRUE, inGameTrade->personality, TRUE, inGameTrade->otId);
+    CreateMon(mon, inGameTrade->species, level, 32, TRUE, inGameTrade->personality, TRUE, inGameTrade->otId);
 
-    SetMonData(pokemon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
-    SetMonData(pokemon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);
-    SetMonData(pokemon, MON_DATA_DEF_IV, &inGameTrade->ivs[2]);
-    SetMonData(pokemon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
-    SetMonData(pokemon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
-    SetMonData(pokemon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
-    SetMonData(pokemon, MON_DATA_NICKNAME, inGameTrade->name);
-    SetMonData(pokemon, MON_DATA_OT_NAME, inGameTrade->otName);
-    SetMonData(pokemon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
-    SetMonData(pokemon, MON_DATA_ALT_ABILITY, &inGameTrade->secondAbility);
-    SetMonData(pokemon, MON_DATA_BEAUTY, &inGameTrade->stats[1]);
-    SetMonData(pokemon, MON_DATA_CUTE, &inGameTrade->stats[2]);
-    SetMonData(pokemon, MON_DATA_COOL, &inGameTrade->stats[0]);
-    SetMonData(pokemon, MON_DATA_SMART, &inGameTrade->stats[3]);
-    SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->stats[4]);
-    SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
-    SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
+    SetMonData(mon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
+    SetMonData(mon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);
+    SetMonData(mon, MON_DATA_DEF_IV, &inGameTrade->ivs[2]);
+    SetMonData(mon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
+    SetMonData(mon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
+    SetMonData(mon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
+    SetMonData(mon, MON_DATA_NICKNAME, inGameTrade->name);
+    SetMonData(mon, MON_DATA_OT_NAME, inGameTrade->otName);
+    SetMonData(mon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
+    SetMonData(mon, MON_DATA_ALT_ABILITY, &inGameTrade->secondAbility);
+    SetMonData(mon, MON_DATA_BEAUTY, &inGameTrade->stats[1]);
+    SetMonData(mon, MON_DATA_CUTE, &inGameTrade->stats[2]);
+    SetMonData(mon, MON_DATA_COOL, &inGameTrade->stats[0]);
+    SetMonData(mon, MON_DATA_SMART, &inGameTrade->stats[3]);
+    SetMonData(mon, MON_DATA_TOUGH, &inGameTrade->stats[4]);
+    SetMonData(mon, MON_DATA_SHEEN, &inGameTrade->sheen);
+    SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
 
-    isMail = FALSE;
+    mailNum = FALSE;
     if (inGameTrade->heldItem != ITEM_NONE)
     {
         if (ItemIsMail(inGameTrade->heldItem))
         {
-            sub_804DAD4(&mail, inGameTrade);
+            GetInGameTradeMail(&mail, inGameTrade);
             gUnknown_02029700[0] = mail;
-            SetMonData(pokemon, MON_DATA_MAIL, &isMail);
-            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+            SetMonData(mon, MON_DATA_MAIL, &mailNum);
+            SetMonData(mon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }
         else
         {
-            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+            SetMonData(mon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }
     }
     CalculateMonStats(&gEnemyParty[0]);
 }
 
-static void sub_804DAD4(struct MailStruct *mail, const struct InGameTrade *trade) {
+static void GetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade) {
     s32 i;
 
     for (i = 0; i < 9; i++)
@@ -5018,7 +5018,7 @@ u16 GetTradeSpecies(void)
 
 void CreateInGameTradePokemon(void)
 {
-    _CreateInGameTradePokemon(gSpecialVar_0x8005, gSpecialVar_0x8004);
+    CreateInGameTradePokemonInternal(gSpecialVar_0x8005, gSpecialVar_0x8004);
 }
 
 void CB2_UpdateLinkTrade(void)
@@ -5201,11 +5201,11 @@ static void CB2_ReturnToTradeMenuAfterLinkTrade(void)
 void DoInGameTradeScene(void)
 {
     LockPlayerFieldControls();
-    CreateTask(sub_804E1A0, 10);
+    CreateTask(Task_InGameTrade, 10);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-static void sub_804E1A0(u8 taskId)
+static void Task_InGameTrade(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -5215,7 +5215,7 @@ static void sub_804E1A0(u8 taskId)
     }
 }
 
-static void sub_804E1DC(void)
+static void CheckPartnersMonForRibbons(void)
 {
     u8 i;
     u8 numRibbons = 0;
@@ -5227,7 +5227,7 @@ static void sub_804E1DC(void)
         FlagSet(FLAG_SYS_RIBBON_GET);
 }
 
-void sub_804E22C(void)
+void LoadTradeAnimGfx(void)
 {
     LZDecompressVram(gBattleTextboxTiles, (void *)VRAM);
     CpuCopy16(gBattleTextboxTilemap, gSharedMem, 0x1000);

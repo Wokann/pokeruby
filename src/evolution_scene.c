@@ -383,7 +383,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
         SetVBlankCallback(VBlankCB_TradeEvolutionScene);
         break;
     case 3:
-        sub_804E22C();
+        LoadTradeAnimGfx();
         gMain.state++;
         break;
     case 4:
