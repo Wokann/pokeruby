@@ -208,7 +208,7 @@ static void BufferTradeSceneStrings(void);
 void CB2_UpdateLinkTrade(void);
 
 EWRAM_DATA u8 *sMenuTextTileBuffers[13] = {0};
-EWRAM_DATA struct MailStruct gUnknown_02029700[6] = {0};
+EWRAM_DATA struct MailStruct gTradeMail[6] = {0};
 EWRAM_DATA u8 gSelectedTradeMonPositions[2] = {0};
 
 struct TradeEwramSubstruct *sTradeMenu;
@@ -1606,7 +1606,7 @@ static bool8 BufferTradeParties(void)
         case 12:
             if (GetBlockReceivedStatus() == 3)
             {
-                Trade_Memcpy(&gUnknown_02029700[0], gBlockRecvBuffer[mpId ^ 1], 6 * sizeof(struct MailStruct));
+                Trade_Memcpy(&gTradeMail[0], gBlockRecvBuffer[mpId ^ 1], 6 * sizeof(struct MailStruct));
                 ResetBlockReceivedFlags();
                 sTradeMenu->unk_0075 ++;
             }
@@ -4164,7 +4164,7 @@ static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
         SetMonData(playerMon, MON_DATA_FRIENDSHIP, &friendship);
 
     if (partnerMail != 0xff)
-        GiveMailToMon2(playerMon, &gUnknown_02029700[partnerMail]);
+        GiveMailToMon2(playerMon, &gTradeMail[partnerMail]);
 
     UpdatePokedexForReceivedMon(playerPartyIdx);
     if (gReceivedRemoteLinkPlayers)
@@ -4975,7 +4975,7 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
         if (ItemIsMail(inGameTrade->heldItem))
         {
             GetInGameTradeMail(&mail, inGameTrade);
-            gUnknown_02029700[0] = mail;
+            gTradeMail[0] = mail;
             SetMonData(mon, MON_DATA_MAIL, &mailNum);
             SetMonData(mon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }
