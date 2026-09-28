@@ -1,5 +1,6 @@
 #include "global.h"
 #include "decompress.h"
+#include "event_data.h"
 #include "graphics.h"
 #include "main.h"
 #include "menu.h"
@@ -12,8 +13,6 @@
 #include "trig.h"
 #include "wallclock.h"
 #include "constants/songs.h"
-
-extern u16 gSpecialVar_0x8004;
 
 static void CB2_WallClock(void);
 static void WallClockInit(void);
@@ -37,8 +36,9 @@ static void SpriteCB_HourHand(struct Sprite *sprite);
 static void SpriteCB_PMIndicator(struct Sprite *sprite);
 static void SpriteCB_AMIndicator(struct Sprite *sprite);
 
-#define TAG_GFX_WALL_CLOCK_HAND 0x1000
-#define TAG_PAL_WALL_CLOCK_HAND 0x1000
+#define GFXTAG_WALL_CLOCK_HAND   0x1000
+#define PALTAG_WALL_CLOCK_MALE   0x1000
+#define PALTAG_WALL_CLOCK_FEMALE 0x1001
 
 enum
 {
@@ -48,9 +48,9 @@ enum
 
 enum
 {
-    MVMT_NONE,
-    MVMT_BACKWARD,
-    MVMT_FORWARD,
+    MOVE_NONE,
+    MOVE_BACKWARD,
+    MOVE_FORWARD,
 };
 
 //--------------------------------------------------
@@ -60,13 +60,13 @@ enum
 static const u8 sHand_Gfx[] = INCBIN_U8("graphics/misc/clock_misc.4bpp.lz");
 static const struct CompressedSpriteSheet sSpriteSheet_ClockHand[] =
 {
-    {sHand_Gfx, 0x2000, 0x1000},
+    {sHand_Gfx, 0x2000, GFXTAG_WALL_CLOCK_HAND},
     {NULL},
 };
 static const struct SpritePalette sSpritePalettes_Clock[] =
 {
-    {gWallClockMale_Pal, 0x1000},
-    {gWallClockFemale_Pal, 0x1001},
+    {gWallClockMale_Pal, PALTAG_WALL_CLOCK_MALE},
+    {gWallClockFemale_Pal, PALTAG_WALL_CLOCK_FEMALE},
     {NULL},
 };
 static const struct OamData sOam_ClockHand =
@@ -106,8 +106,8 @@ static const union AnimCmd *const sAnims_HourHand[] =
 
 static const struct SpriteTemplate sSpriteTemplate_MinuteHand =
 {
-    .tileTag = TAG_GFX_WALL_CLOCK_HAND,
-    .paletteTag = TAG_PAL_WALL_CLOCK_HAND,
+    .tileTag = GFXTAG_WALL_CLOCK_HAND,
+    .paletteTag = PALTAG_WALL_CLOCK_MALE,
     .oam = &sOam_ClockHand,
     .anims = sAnims_MinuteHand,
     .images = NULL,
@@ -117,8 +117,8 @@ static const struct SpriteTemplate sSpriteTemplate_MinuteHand =
 
 static const struct SpriteTemplate sSpriteTemplate_HourHand =
 {
-    .tileTag = TAG_GFX_WALL_CLOCK_HAND,
-    .paletteTag = TAG_PAL_WALL_CLOCK_HAND,
+    .tileTag = GFXTAG_WALL_CLOCK_HAND,
+    .paletteTag = PALTAG_WALL_CLOCK_MALE,
     .oam = &sOam_ClockHand,
     .anims = sAnims_HourHand,
     .images = NULL,
@@ -162,8 +162,8 @@ static const union AnimCmd *const sAnims_AM[] =
 
 static const struct SpriteTemplate sSpriteTemplate_PM =
 {
-    .tileTag = TAG_GFX_WALL_CLOCK_HAND,
-    .paletteTag = TAG_PAL_WALL_CLOCK_HAND,
+    .tileTag = GFXTAG_WALL_CLOCK_HAND,
+    .paletteTag = PALTAG_WALL_CLOCK_MALE,
     .oam = &sOam_PeriodIndicator,
     .anims = sAnims_PM,
     .images = NULL,
@@ -173,8 +173,8 @@ static const struct SpriteTemplate sSpriteTemplate_PM =
 
 static const struct SpriteTemplate sSpriteTemplate_AM =
 {
-    .tileTag = TAG_GFX_WALL_CLOCK_HAND,
-    .paletteTag = TAG_PAL_WALL_CLOCK_HAND,
+    .tileTag = GFXTAG_WALL_CLOCK_HAND,
+    .paletteTag = PALTAG_WALL_CLOCK_MALE,
     .oam = &sOam_PeriodIndicator,
     .anims = sAnims_AM,
     .images = NULL,
@@ -548,7 +548,7 @@ static const s8 sClockHandCoords[][2] =
 
 // text
 
-static void WallClockVblankCallback(void)
+static void VBlankCB_WallClock(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
@@ -602,7 +602,7 @@ static void WallClockInit(void)
     REG_IE |= INTR_FLAG_VBLANK;
     REG_IME = ime;
     REG_DISPSTAT |= DISPSTAT_VBLANK_INTR;
-    SetVBlankCallback(WallClockVblankCallback);
+    SetVBlankCallback(VBlankCB_WallClock);
     SetMainCallback2(CB2_WallClock);
     REG_BLDCNT = 0;
     REG_BLDALPHA = 0;
@@ -617,9 +617,12 @@ static void WallClockInit(void)
 #define tHourHandAngle data[1]
 #define tHours data[2]
 #define tMinutes data[3]
-#define tMvmtDir data[4]
+#define tMoveDir data[4]
 #define tPeriod data[5]
-#define tMvmtSpeed data[6]
+#define tMoveSpeed data[6]
+
+#define sTaskId data[0]
+#define sAngle data[1]
 
 //Allow player to set the clock
 void CB2_StartWallClock(void)
@@ -633,29 +636,29 @@ void CB2_StartWallClock(void)
     taskId = CreateTask(Task_SetClock_WaitFadeIn, 0);
     gTasks[taskId].tHours = 10;
     gTasks[taskId].tMinutes = 0;
-    gTasks[taskId].tMvmtDir = MVMT_NONE;
+    gTasks[taskId].tMoveDir = MOVE_NONE;
     gTasks[taskId].tPeriod = PERIOD_AM;
-    gTasks[taskId].tMvmtSpeed = 0;
+    gTasks[taskId].tMoveSpeed = 0;
     gTasks[taskId].tMinuteHandAngle = 0;
     gTasks[taskId].tHourHandAngle = 300;
 
     spriteId = CreateSprite(&sSpriteTemplate_MinuteHand, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 1);
-    gSprites[spriteId].data[0] = taskId;
+    gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[spriteId].oam.matrixNum = 0;
 
     spriteId = CreateSprite(&sSpriteTemplate_HourHand, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 0);
-    gSprites[spriteId].data[0] = taskId;
+    gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[spriteId].oam.matrixNum = 1;
 
     spriteId = CreateSprite(&sSpriteTemplate_PM, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 2);
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = 45;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sAngle = 45;
 
     spriteId = CreateSprite(&sSpriteTemplate_AM, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, 2);
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = 90;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sAngle = 90;
 
     WallClockInit();
 }
@@ -685,22 +688,22 @@ void CB2_ViewWallClock(void)
     }
 
     spriteId = CreateSprite(&sSpriteTemplate_MinuteHand, 120, 80, 1);
-    gSprites[spriteId].data[0] = taskId;
+    gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[spriteId].oam.matrixNum = 0;
 
     spriteId = CreateSprite(&sSpriteTemplate_HourHand, 120, 80, 0);
-    gSprites[spriteId].data[0] = taskId;
+    gSprites[spriteId].sTaskId = taskId;
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
     gSprites[spriteId].oam.matrixNum = 1;
 
     spriteId = CreateSprite(&sSpriteTemplate_PM, 120, 80, 2);
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = angle1;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sAngle = angle1;
 
     spriteId = CreateSprite(&sSpriteTemplate_AM, 120, 80, 2);
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = angle2;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sAngle = angle2;
 
     WallClockInit();
 }
@@ -726,8 +729,8 @@ static void Task_SetClock_HandleInput(u8 taskId)
     {
         gTasks[taskId].tMinuteHandAngle = CalcNewMinHandAngle(
           gTasks[taskId].tMinuteHandAngle,
-          gTasks[taskId].tMvmtDir,
-          gTasks[taskId].tMvmtSpeed);
+          gTasks[taskId].tMoveDir,
+          gTasks[taskId].tMoveSpeed);
     }
     else
     {
@@ -740,24 +743,24 @@ static void Task_SetClock_HandleInput(u8 taskId)
         }
         else
         {
-            gTasks[taskId].tMvmtDir = JOY_NEW(A_BUTTON);
+            gTasks[taskId].tMoveDir = MOVE_NONE;
             if (JOY_HELD(DPAD_LEFT))
-                gTasks[taskId].tMvmtDir = MVMT_BACKWARD;
+                gTasks[taskId].tMoveDir = MOVE_BACKWARD;
             if (JOY_HELD(DPAD_RIGHT))
-                gTasks[taskId].tMvmtDir = MVMT_FORWARD;
-            if (gTasks[taskId].tMvmtDir)
+                gTasks[taskId].tMoveDir = MOVE_FORWARD;
+            if (gTasks[taskId].tMoveDir != MOVE_NONE)
             {
-                if (gTasks[taskId].tMvmtSpeed < 0xFF)
-                    gTasks[taskId].tMvmtSpeed++;
+                if (gTasks[taskId].tMoveSpeed < 0xFF)
+                    gTasks[taskId].tMoveSpeed++;
                 gTasks[taskId].tMinuteHandAngle = CalcNewMinHandAngle(
                   gTasks[taskId].tMinuteHandAngle,
-                  gTasks[taskId].tMvmtDir,
-                  gTasks[taskId].tMvmtSpeed);
-                AdvanceClock(taskId, gTasks[taskId].tMvmtDir);
+                  gTasks[taskId].tMoveDir,
+                  gTasks[taskId].tMoveSpeed);
+                AdvanceClock(taskId, gTasks[taskId].tMoveDir);
             }
             else
             {
-                gTasks[taskId].tMvmtSpeed = 0;
+                gTasks[taskId].tMoveSpeed = 0;
             }
         }
     }
@@ -767,7 +770,7 @@ static void Task_SetClock_HandleInput(u8 taskId)
 static void Task_SetClock_AskConfirm(u8 taskId)
 {
     Menu_DrawStdWindowFrame(2, 16, 27, 19);
-    Menu_PrintText(gOtherText_CorrectTimePrompt, 3, 17);
+    Menu_PrintText(gText_IsThisTheCorrectTime, 3, 17);
     Menu_DrawStdWindowFrame(23, 8, 29, 13);
     Menu_PrintItems(24, 9, 2, gMenuYesNoItems);
     InitMenu(0, 24, 9, 2, 1, 5);
@@ -852,13 +855,13 @@ static u16 CalcNewMinHandAngle(u16 angle, u8 direction, u8 speed)
 
     switch (direction)
     {
-    case MVMT_BACKWARD:
+    case MOVE_BACKWARD:
         if (angle)
             angle -= delta;
         else
             angle = 360 - delta;
         break;
-    case MVMT_FORWARD:
+    case MOVE_FORWARD:
         if (angle < 360 - delta)
             angle = angle + delta;
         else
@@ -873,7 +876,7 @@ static u8 AdvanceClock(u8 taskId, u8 direction)
 {
     switch (direction)
     {
-    case MVMT_BACKWARD:
+    case MOVE_BACKWARD:
         if (gTasks[taskId].tMinutes > 0)
             gTasks[taskId].tMinutes--;
         else
@@ -886,7 +889,7 @@ static u8 AdvanceClock(u8 taskId, u8 direction)
             UpdateClockPeriod(taskId, direction);
         }
         break;
-    case MVMT_FORWARD:
+    case MOVE_FORWARD:
         if (gTasks[taskId].tMinutes < 59)
             gTasks[taskId].tMinutes++;
         else
@@ -910,7 +913,7 @@ static void UpdateClockPeriod(u8 taskId, u8 direction)
 
     switch (direction)
     {
-    case MVMT_BACKWARD:
+    case MOVE_BACKWARD:
         switch (hours)
         {
         case 11:
@@ -921,7 +924,7 @@ static void UpdateClockPeriod(u8 taskId, u8 direction)
             break;
         }
         break;
-    case MVMT_FORWARD:
+    case MOVE_FORWARD:
         switch (hours)
         {
         case 0:
@@ -950,7 +953,7 @@ static void InitClockWithRtc(u8 taskId)
 
 static void SpriteCB_MinuteHand(struct Sprite *sprite)
 {
-    u16 angle = gTasks[sprite->data[0]].tMinuteHandAngle;
+    u16 angle = gTasks[sprite->sTaskId].tMinuteHandAngle;
     s16 sin = Sin2(angle) / 16;
     s16 cos = Cos2(angle) / 16;
     u16 x, y;
@@ -971,7 +974,7 @@ static void SpriteCB_MinuteHand(struct Sprite *sprite)
 
 static void SpriteCB_HourHand(struct Sprite *sprite)
 {
-    u16 angle = gTasks[sprite->data[0]].tHourHandAngle;
+    u16 angle = gTasks[sprite->sTaskId].tHourHandAngle;
     s16 sin = Sin2(angle) / 16;
     s16 cos = Cos2(angle) / 16;
     u16 x, y;
@@ -992,40 +995,40 @@ static void SpriteCB_HourHand(struct Sprite *sprite)
 
 static void SpriteCB_PMIndicator(struct Sprite *sprite)
 {
-    if (gTasks[sprite->data[0]].tPeriod != PERIOD_AM)
+    if (gTasks[sprite->sTaskId].tPeriod != PERIOD_AM)
     {
-        if (sprite->data[1] >= 60 && sprite->data[1] < 90)
-            sprite->data[1] += 5;
-        if (sprite->data[1] < 60)
-            sprite->data[1]++;
+        if (sprite->sAngle >= 60 && sprite->sAngle < 90)
+            sprite->sAngle += 5;
+        if (sprite->sAngle < 60)
+            sprite->sAngle++;
     }
     else
     {
-        if (sprite->data[1] > 45 && sprite->data[1] <= 75)
-            sprite->data[1] -= 5;
-        if (sprite->data[1] > 75)
-            sprite->data[1]--;
+        if (sprite->sAngle > 45 && sprite->sAngle <= 75)
+            sprite->sAngle -= 5;
+        if (sprite->sAngle > 75)
+            sprite->sAngle--;
     }
-    sprite->x2 =  Cos2(sprite->data[1]) * 30 / 4096;
-    sprite->y2 = Sin2(sprite->data[1]) * 30 / 4096;
+    sprite->x2 =  Cos2(sprite->sAngle) * 30 / 4096;
+    sprite->y2 = Sin2(sprite->sAngle) * 30 / 4096;
 }
 
 static void SpriteCB_AMIndicator(struct Sprite *sprite)
 {
-    if (gTasks[sprite->data[0]].tPeriod != PERIOD_AM)
+    if (gTasks[sprite->sTaskId].tPeriod != PERIOD_AM)
     {
-        if (sprite->data[1] >= 105 && sprite->data[1] < 135)
-            sprite->data[1] += 5;
-        if (sprite->data[1] < 105)
-            sprite->data[1]++;
+        if (sprite->sAngle >= 105 && sprite->sAngle < 135)
+            sprite->sAngle += 5;
+        if (sprite->sAngle < 105)
+            sprite->sAngle++;
     }
     else
     {
-        if (sprite->data[1] > 90 && sprite->data[1] <= 120)
-            sprite->data[1] -= 5;
-        if (sprite->data[1] > 120)
-            sprite->data[1]--;
+        if (sprite->sAngle > 90 && sprite->sAngle <= 120)
+            sprite->sAngle -= 5;
+        if (sprite->sAngle > 120)
+            sprite->sAngle--;
     }
-    sprite->x2 = Cos2(sprite->data[1]) * 30 / 4096;
-    sprite->y2 = Sin2(sprite->data[1]) * 30 / 4096;
+    sprite->x2 = Cos2(sprite->sAngle) * 30 / 4096;
+    sprite->y2 = Sin2(sprite->sAngle) * 30 / 4096;
 }

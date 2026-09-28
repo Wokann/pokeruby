@@ -550,5 +550,5 @@ gOtherText_Day:: @ 842D4F6
 gOtherText_OK:: @ 842D4FC
 	.string "OK$"
 
-gOtherText_CorrectTimePrompt:: @ 842D4FF
+gText_IsThisTheCorrectTime:: @ 842D4FF
 	.string "Is this the correct time?$"

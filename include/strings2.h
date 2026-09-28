@@ -314,7 +314,7 @@ extern const u8 gOtherText_Day[];
 extern const u8 gOtherText_OK[];
 
 // wallclock
-extern const u8 gOtherText_CorrectTimePrompt[];
+extern const u8 gText_IsThisTheCorrectTime[];
 
 #if GERMAN
 extern const u8 deuOtherText_ForgotAndLearned[];
