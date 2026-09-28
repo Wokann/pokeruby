@@ -22,7 +22,7 @@
 EWRAM_DATA u8 gBattlePartyCurrentOrder[3] = {};
 EWRAM_DATA u8 gBattlePartyMenuAction = 0;
 
-extern u8 sub_806BD58(u8, u8);
+extern u8 CreatePartyMenuCursor(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void nullsub_13(void);
 extern void sub_802E414(void);
@@ -383,11 +383,11 @@ bool8 SetUpBattlePartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
         {
             ePartyMenu2.pmMonIndex = 0;
             ePartyMenu2.pmSetupState++;
@@ -476,7 +476,7 @@ void HandleBattlePartyMenu(u8 taskId)
         case A_BUTTON:
             if (gBattlePartyMenuAction == 3)
             {
-                if (GetMonData(&gPlayerParty[sub_806CA38(taskId)], MON_DATA_IS_EGG))
+                if (GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_IS_EGG))
                     PlaySE(SE_FAILURE);
                 else
                 {
@@ -487,8 +487,8 @@ void HandleBattlePartyMenu(u8 taskId)
             else
             {
                 PlaySE(SE_SELECT);
-                GetMonNickname(&gPlayerParty[sub_806CA38(taskId)], gStringVar1);
-                ShowBattlePartyPopupMenu(taskId, sub_806CA38(taskId));
+                GetMonNickname(&gPlayerParty[GetCursorSelectionMonId(taskId)], gStringVar1);
+                ShowBattlePartyPopupMenu(taskId, GetCursorSelectionMonId(taskId));
                 SetTaskFuncWithFollowupFunc(taskId, Task_HandlePopupMenuInput, HandleBattlePartyMenu);
             }
             break;
@@ -621,7 +621,7 @@ static void Task_WaitBattlePartyErrorMessage(u8 taskId)
 
 static void Task_ShowSummaryScreen(u8 taskId)
 {
-    u8 partySelection = sub_806CA38(taskId);
+    u8 partySelection = GetCursorSelectionMonId(taskId);
 
     if (!gPaletteFade.active)
     {
@@ -633,7 +633,7 @@ static void Task_ShowSummaryScreen(u8 taskId)
 
 static void Task_BattlePartyMenuSummary(u8 taskId)
 {
-    sub_806CA38(taskId);  //an unused variable was probably set with this.
+    GetCursorSelectionMonId(taskId);  // An unused variable was probably set with this.
     gTasks[taskId].func = Task_ShowSummaryScreen;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
@@ -645,7 +645,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
     u8 r4;
 
     ClosePartyPopupMenu(gTasks[taskId].data[4], sBattlePartyPopupMenus);
-    partySelection = sub_806CA38(taskId);
+    partySelection = GetCursorSelectionMonId(taskId);
     if (IsLinkDoubleBattle() == TRUE && (partySelection == 1 || partySelection == 4 || partySelection == 5))
     {
         PartyMenuEraseMsgBoxAndFrame();

@@ -6,12 +6,13 @@
 #include "party_menu.h"
 #include "field_fadetransition.h"
 #include "palette.h"
-#include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
 #include "script.h"
 #include "script_party_menu.h"
+#include "constants/moves.h"
+#include "constants/party_menu.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"
@@ -91,11 +92,11 @@ bool8 SetupContestPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
         {
             ePartyMenu2.pmMonIndex++;
             break;
@@ -155,23 +156,23 @@ void DrawContestPartyMonStatus(void)
     }
 }
 
-void HandleSelectPartyMenu(u8 var)
+void HandleSelectPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(var))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gContestMonPartyIndex = sub_806CA38(var);
+            gContestMonPartyIndex = GetCursorSelectionMonId(taskId);
             gSpecialVar_0x8004 = gContestMonPartyIndex;
-            StartPartyMenuExitToField(var);
+            StartPartyMenuExitToField(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
-            gContestMonPartyIndex = 0xFF;
-            gSpecialVar_0x8004 = 0xFF;
-            StartPartyMenuExitToField(var);
+            gContestMonPartyIndex = PARTY_NOTHING_CHOSEN;
+            gSpecialVar_0x8004 = PARTY_NOTHING_CHOSEN;
+            StartPartyMenuExitToField(taskId);
             break;
         }
     }
@@ -199,11 +200,11 @@ bool8 SetupMoveRelearnerPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
         {
             ePartyMenu2.pmMonIndex++;
         }
@@ -247,29 +248,29 @@ void DrawMoveRelearnerPartyMonStatus(void)
 
     for (i = 0; i < gPlayerPartyCount; i++)
     {
-        if (!sub_8040574(&gPlayerParty[i]))
+        if (!GetNumberOfRelearnableMoves(&gPlayerParty[i]))
             DrawMonDescriptorStatus(i, 0x9A);
         else
             DrawMonDescriptorStatus(i, 0x8C);
     }
 }
 
-void HandleMoveRelearnerPartyMenu(u8 var)
+void HandleMoveRelearnerPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(var))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gSpecialVar_0x8004 = sub_806CA38(var);
-            gSpecialVar_0x8005 = sub_8040574(&gPlayerParty[gSpecialVar_0x8004]);
-            StartPartyMenuExitToField(var);
+            gSpecialVar_0x8004 = GetCursorSelectionMonId(taskId);
+            gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[gSpecialVar_0x8004]);
+            StartPartyMenuExitToField(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
-            gSpecialVar_0x8004 = 0xFF;
-            StartPartyMenuExitToField(var);
+            gSpecialVar_0x8004 = PARTY_NOTHING_CHOSEN;
+            StartPartyMenuExitToField(taskId);
         }
     }
 }
@@ -287,58 +288,59 @@ void GetNumMovesSelectedMonHas(void)
 
     gSpecialVar_Result = 0;
 
-    for (i = 0; i < 4; i++) // checks MOVE1-MOVE4
-        if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + i))
+    for (i = 0; i < MAX_MON_MOVES; i++)
+        if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + i) != MOVE_NONE)
             gSpecialVar_Result++;
 }
 
 void BufferMoveDeleterNicknameAndMove(void)
 {
-    struct Pokemon *pkmn = &gPlayerParty[gSpecialVar_0x8004];
-    u16 data = GetMonData(pkmn, MON_DATA_MOVE1 + gSpecialVar_0x8005);
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+    u16 move = GetMonData(mon, MON_DATA_MOVE1 + gSpecialVar_0x8005);
 
-    GetMonNickname(pkmn, gStringVar1);
-    StringCopy(gStringVar2, gMoveNames[data]);
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gMoveNames[move]);
 }
 
-static void SwapMoveSlots(struct Pokemon *pkmn, u8 moveIndex1, u8 moveIndex2)
+static void ShiftMoveSlot(struct Pokemon *mon, u8 slotTo, u8 slotFrom)
 {
-    u16 move1 = GetMonData(pkmn, MON_DATA_MOVE1 + moveIndex1);
-    u16 move2 = GetMonData(pkmn, MON_DATA_MOVE1 + moveIndex2);
-    u8 pp1 = GetMonData(pkmn, MON_DATA_PP1 + moveIndex1);
-    u8 pp2 = GetMonData(pkmn, MON_DATA_PP1 + moveIndex2);
-    u8 bonuses = GetMonData(pkmn, MON_DATA_PP_BONUSES);
+    u16 move1 = GetMonData(mon, MON_DATA_MOVE1 + slotTo);
+    u16 move0 = GetMonData(mon, MON_DATA_MOVE1 + slotFrom);
+    u8 pp1 = GetMonData(mon, MON_DATA_PP1 + slotTo);
+    u8 pp0 = GetMonData(mon, MON_DATA_PP1 + slotFrom);
+    u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
+    u8 ppBonusMask1 = gPPUpReadMasks[slotTo];
+    u8 ppBonusMove1 = (ppBonuses & ppBonusMask1) >> (slotTo * 2);
+    u8 ppBonusMask2 = gPPUpReadMasks[slotFrom];
+    u8 ppBonusMove2 = (ppBonuses & ppBonusMask2) >> (slotFrom * 2);
 
-    u8 r2 = (bonuses & gPPUpReadMasks[moveIndex1]) >> (moveIndex1 * 2);
-    u8 r1 = (bonuses & gPPUpReadMasks[moveIndex2]) >> (moveIndex2 * 2);
-
-    bonuses &= ~gPPUpReadMasks[moveIndex1];
-    bonuses &= ~gPPUpReadMasks[moveIndex2];
-    bonuses |= (r2 << (moveIndex2 * 2)) + (r1 << (moveIndex1 * 2));
-
-    SetMonData(pkmn, MON_DATA_MOVE1 + moveIndex1, &move2);
-    SetMonData(pkmn, MON_DATA_MOVE1 + moveIndex2, &move1);
-    SetMonData(pkmn, MON_DATA_PP1 + moveIndex1, &pp2);
-    SetMonData(pkmn, MON_DATA_PP1 + moveIndex2, &pp1);
-    SetMonData(pkmn, MON_DATA_PP_BONUSES, &bonuses);
+    ppBonuses &= ~ppBonusMask1;
+    ppBonuses &= ~ppBonusMask2;
+    ppBonuses |= (ppBonusMove1 << (slotFrom * 2)) + (ppBonusMove2 << (slotTo * 2));
+    SetMonData(mon, MON_DATA_MOVE1 + slotTo, &move0);
+    SetMonData(mon, MON_DATA_MOVE1 + slotFrom, &move1);
+    SetMonData(mon, MON_DATA_PP1 + slotTo, &pp0);
+    SetMonData(mon, MON_DATA_PP1 + slotFrom, &pp1);
+    SetMonData(mon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
 void MoveDeleterForgetMove(void)
 {
     u16 i;
 
-    SetMonMoveSlot(&gPlayerParty[gSpecialVar_0x8004], 0, gSpecialVar_0x8005);
+    SetMonMoveSlot(&gPlayerParty[gSpecialVar_0x8004], MOVE_NONE, gSpecialVar_0x8005);
     RemoveMonPPBonus(&gPlayerParty[gSpecialVar_0x8004], gSpecialVar_0x8005);
 
-    for (i = gSpecialVar_0x8005; i < 3; i++)
-        SwapMoveSlots(&gPlayerParty[gSpecialVar_0x8004], i, i + 1);
+    for (i = gSpecialVar_0x8005; i < MAX_MON_MOVES - 1; i++)
+        ShiftMoveSlot(&gPlayerParty[gSpecialVar_0x8004], i, i + 1);
 }
 
 void IsSelectedMonEgg(void)
 {
-    struct Pokemon *party = &gPlayerParty[gSpecialVar_0x8004];
-    gSpecialVar_Result = 0;
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
 
-    if (GetMonData(party, MON_DATA_IS_EGG))
-        gSpecialVar_Result = 1;
+    gSpecialVar_Result = FALSE;
+
+    if (GetMonData(mon, MON_DATA_IS_EGG))
+        gSpecialVar_Result = TRUE;
 }

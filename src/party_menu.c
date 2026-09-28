@@ -562,11 +562,11 @@ bool8 SetupDefaultPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) != 1)
         {
             ePartyMenu2.pmMonIndex++;
         }
@@ -1177,7 +1177,7 @@ void sub_806BCE8()
     }
 }
 
-u8 sub_806BD58(u8 taskId, u8 b)
+u8 CreatePartyMenuCursor(u8 taskId, u8 unused)
 {
     u8 spriteId = CreateInvisibleSpriteWithCallback(SpriteCallbackDummy);
     sub_806CA18(taskId, spriteId);
@@ -1780,7 +1780,7 @@ void sub_806CA18(u8 taskId, u8 b)
     gTasks[taskId].data[3] = var1 | (b << 8);
 }
 
-u8 sub_806CA38(u8 taskId)
+u8 GetCursorSelectionMonId(u8 taskId)
 {
     u8 spriteId = sub_806CA00(taskId);
     return gSprites[spriteId].data[0];
@@ -2402,7 +2402,7 @@ void CreateHeldItemIcons(u8 *a, u8 *b, u8 c)
     }
 }
 
-void CreateHeldItemIcons_806DC34(u8 taskId)
+void CreatePartyMenuHeldItemIcons(u8 taskId)
 {
     u8 i;
     u8 monIconSpriteId;
@@ -2901,7 +2901,7 @@ void sub_806E8D0(u8 taskId, u16 b, TaskFunc c)
 {
     gPartyMenu.unk10 = c;
     gPartyMenu.unk4 = taskId;
-    gPartyMenu.primarySelectedMonIndex = sub_806CA38(taskId);
+    gPartyMenu.primarySelectedMonIndex = GetCursorSelectionMonId(taskId);
     gPartyMenu.secondarySelectedIndex = b;
     gPartyMenu.pokemon = &gPlayerParty[gPartyMenu.primarySelectedMonIndex];
 }

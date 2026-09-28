@@ -499,7 +499,7 @@ u8 CheckPartyHasHadPokerus(struct Pokemon *, u8);
 void UpdatePartyPokerusTime(u16);
 u32 CanMonLearnTMHM(struct Pokemon *, u8);
 u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves);
-u8 sub_8040574(struct Pokemon *party);
+u8 GetNumberOfRelearnableMoves(struct Pokemon *mon);
 void ClearBattleMonForms(void);
 void sub_80408BC();
 void current_map_music_set__default_for_battle(u16);

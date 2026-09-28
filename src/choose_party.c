@@ -28,7 +28,7 @@ extern const u16 gBattleTowerBannedSpecies[];
 
 EWRAM_DATA u8 gSelectedOrderFromParty[3] = {0};
 
-extern u8 sub_806BD58(u8, u8);
+extern u8 CreatePartyMenuCursor(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void DrawMonDescriptorStatus(u8, u8);
 extern u8 GetMonStatusAndPokerus();
@@ -99,11 +99,11 @@ bool8 SetupBattleTowerPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
         {
             ePartyMenu2.pmMonIndex = 0;
             ePartyMenu2.pmSetupState++;
@@ -289,7 +289,7 @@ void HandleBattleTowerPartyMenu(u8 taskId)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = sub_806CA38(taskId);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             if (gLastFieldPokeMenuOpened != 6)
             {
                 GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
@@ -728,11 +728,11 @@ bool8 Unused_SetupBattleTowerPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 2:
-        CreateHeldItemIcons_806DC34(ePartyMenu2.menuHandlerTaskId);
+        CreatePartyMenuHeldItemIcons(ePartyMenu2.menuHandlerTaskId);
         ePartyMenu2.pmSetupState++;
         break;
     case 3:
-        if (sub_806BD58(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
+        if (CreatePartyMenuCursor(ePartyMenu2.menuHandlerTaskId, ePartyMenu2.pmMonIndex) == 1)
         {
             ePartyMenu2.pmMonIndex = 0;
             ePartyMenu2.pmSetupState++;
@@ -816,7 +816,7 @@ void HandleDaycarePartyMenu(u8 taskId)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = sub_806CA38(taskId);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
             ShowDaycareStoragePopup(taskId);
             gTasks[taskId].func = Task_HandleDaycareStoragePopup;

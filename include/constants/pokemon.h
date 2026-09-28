@@ -95,6 +95,11 @@
 #define MAX_LEVEL 100
 #define MAX_GIFT_RIBBON 64
 
+#define LEVEL_UP_MOVE_ID   0x01FF
+#define LEVEL_UP_MOVE_LV   0xFE00
+#define MAX_LEVEL_UP_MOVES 20
+#define LEVEL_UP_END       0xFFFF
+
 #define MON_MALE       0x00
 #define MON_FEMALE     0xFE
 #define MON_GENDERLESS 0xFF

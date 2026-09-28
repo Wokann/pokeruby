@@ -257,7 +257,7 @@ void HandleDefaultPartyMenu(u8 taskID)
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = sub_806CA38(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
             GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
             sub_8089A8C();
             sPokeMenuCursorPos = 0;
@@ -419,7 +419,7 @@ static void sub_808A180(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
-        u8 mailID = GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_MAIL);
+        u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
         DestroyTask(taskID);
         DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
     }
@@ -429,7 +429,7 @@ static void sub_808A1E0(u8 taskID)
 {
     if (gPartyMenuMessage_IsPrinting != 1)
     {
-        SetHeldItemIconVisibility(taskID, sub_806CA38(taskID));
+        SetHeldItemIconVisibility(taskID, GetCursorSelectionMonId(taskID));
         PrintPartyMenuPromptText(0, 0);
         gTasks[taskID].func = HandleDefaultPartyMenu;
     }
@@ -458,7 +458,7 @@ static void sub_808A2AC(u8 taskID)
 
 static void sub_808A2DC(u8 taskID)
 {
-    u8 mailID = GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_MAIL);
+    u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
     DestroyTask(taskID);
     DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
 }
@@ -513,10 +513,10 @@ void sub_808A3F8(void)
     {
         u8 taskID = CreateTask(sub_808A330, 0);
         gPaletteFade.bufferTransferDisabled = 1;
-        sub_806BD58(taskID, 0);
+        CreatePartyMenuCursor(taskID, 0);
         sub_806C994(taskID, gLastFieldPokeMenuOpened);
         ChangePartyMenuSelection(taskID, 0);
-        if (!(bool8)(GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_HELD_ITEM)))
+        if (!(bool8)(GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_HELD_ITEM)))
         {
             SetMainCallback2(sub_808A34C);
             return;
@@ -590,7 +590,7 @@ static void sub_808A604(u8 taskID)
 
 static void PokemonMenu_GiveItem(u8 taskID)
 {
-    gUnknown_0202E8F5 = sub_806CA38(taskID);
+    gUnknown_0202E8F5 = GetCursorSelectionMonId(taskID);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
     gTasks[taskID].func = sub_808A604;
 }
@@ -665,7 +665,7 @@ static void sub_808A848(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
-        u8 mailID = GetMonData(&gPlayerParty[sub_806CA38(taskID)], MON_DATA_MAIL);
+        u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
         DestroyTask(taskID);
         ReadMail(&gSaveBlock1.mail[mailID], sub_808A8A8, 1);
     }
@@ -1027,7 +1027,7 @@ void sub_808B0C0(u8 taskID)
         switch (HandleDefaultPartyMenuInput(taskID))
         {
         case A_BUTTON:
-            gLastFieldPokeMenuOpened = sub_806CA38(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
             if (GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_IS_EGG))
                 PlaySE(SE_FAILURE);
             else
@@ -1048,7 +1048,7 @@ void sub_808B0C0(u8 taskID)
             }
             break;
         case B_BUTTON:
-            gLastFieldPokeMenuOpened = sub_806CA38(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
             PlaySE(SE_SELECT);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             if (gPokemonItemUseType == ITEM_USE_SINGLE_MON || gPokemonItemUseType == ITEM_USE_GIVE_ITEM)
@@ -1113,7 +1113,7 @@ static void sub_808B338(u8 taskID)
     {
         u8 mailID;
 
-        gLastFieldPokeMenuOpened = sub_806CA38(taskID);
+        gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
         mailID = GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MAIL);
         DestroyTask(taskID);
         DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808B3EC, 3);
