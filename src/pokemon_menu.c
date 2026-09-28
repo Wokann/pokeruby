@@ -57,7 +57,7 @@ extern void (*gPokemonItemUseCallback)(u8 taskID, u16 itemID, TaskFunc func);
 extern TaskFunc gTaskFuncForLinkRecv;
 
 void sub_808A520(void);
-void sub_80A61D0(void);
+void CB2_BagMenuFromParty(void);
 void CB2_OpenFlyMap(void);
 bool8 SetUpFieldMove_Cut(void);
 bool8 SetUpFieldMove_Flash(void);
@@ -583,7 +583,7 @@ static void sub_808A604(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_80A61D0);
+        SetMainCallback2(CB2_BagMenuFromParty);
         DestroyTask(taskID);
     }
 }
@@ -1076,7 +1076,7 @@ static void sub_808B25C(u8 taskID)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_80A5B40);
+        SetMainCallback2(CB2_ReturnToBagMenu);
         DestroyTask(taskID);
     }
 }

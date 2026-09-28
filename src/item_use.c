@@ -174,7 +174,7 @@ void Task_ReadMailFromBag(u8 taskId)
     if (!gPaletteFade.active)
     {
         mailStruct.itemId = gSpecialVar_ItemId;
-        ReadMail(&mailStruct, sub_80A5D04, 0);
+        ReadMail(&mailStruct, CB2_ReturnToBagMenuAfterMail, 0);
         DestroyTask(taskId);
     }
 }
@@ -781,7 +781,7 @@ static void Task_ShowTMHMContainedMessage(u8 taskId)
 static void UseTMHMYesNo(u8 taskId)
 {
     DisplayYesNoMenu(7, 7, 1);
-    sub_80A3FA0(gBGTilemapBuffers[1], 8, 8, 5, 4, 1);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 8, 8, 5, 4, 1);
     DoYesNoFuncWithChoice(taskId, &sUseTMHMYesNoFuncTable);
 }
 
@@ -794,7 +794,7 @@ static void UseTMHM(u8 taskId)
 static void RemoveUsedItem(void)
 {
     RemoveBagItem(gSpecialVar_ItemId, 1);
-    sub_80A3E0C();
+    UpdateCurrentBagItemSlot();
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
     StringExpandPlaceholders(gStringVar4, gOtherText_UsedItem);
 }
@@ -815,7 +815,7 @@ void ItemUseOutOfBattle_Repel(u8 taskId)
 
 static void PrepareFluteUseMessage(void)
 {
-    sub_80A3E0C();
+    UpdateCurrentBagItemSlot();
     CopyItemName(gSpecialVar_ItemId, gStringVar2);
 }
 
@@ -897,7 +897,7 @@ void ItemUseInBattle_PokeBall(u8 taskId)
     if (PlayerPartyAndPokemonStorageFull() == FALSE) // have room for mon?
     {
         RemoveBagItem(gSpecialVar_ItemId, 1);
-        sub_80A7094(taskId);
+        CloseBagMenuForBattle(taskId);
     }
     else
     {
@@ -909,7 +909,7 @@ void ItemUseInBattle_PokeBall(u8 taskId)
 void Task_CloseStatIncreaseMessage(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
-        sub_80A7094(taskId);
+        CloseBagMenuForBattle(taskId);
 }
 
 void Task_UseStatIncreaseItem(u8 taskId)
@@ -982,7 +982,7 @@ void ItemUseInBattle_UnusedConfusionCure(u8 var)
         RemoveBagItem(gSpecialVar_ItemId, 1);
         GetMonNickname(&gPlayerParty[0], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_SnapConfusion);
-        DisplayItemMessageOnField(var, gStringVar4, sub_80A7094, 1);
+        DisplayItemMessageOnField(var, gStringVar4, CloseBagMenuForBattle, 1);
     }
     else
     {
@@ -997,7 +997,7 @@ void ItemUseInBattle_Escape(u8 taskId)
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) == FALSE)
     {
         RemoveUsedItem();
-        DisplayItemMessageOnField(taskId, gStringVar4, sub_80A7094, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseBagMenuForBattle, 1);
     }
     else
     {

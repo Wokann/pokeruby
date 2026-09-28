@@ -346,7 +346,7 @@ static void Task_ItemStorage_Deposit(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        sub_80A6A30();
+        CB2_GoToItemDepositMenu();
         DestroyTask(taskId);
     }
 }
@@ -601,7 +601,7 @@ static void ItemStorage_DoItemAction(u8 taskId)
     }
     NUM_QUANTITY_ROLLER = 1;
     Menu_DrawStdWindowFrame(6, 8, 13, 11);
-    sub_80A418C(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3);
+    PrintItemQuantity(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3);
     TASK.FUNC = ItemStorage_HandleQuantityRolling;
 }
 
@@ -617,7 +617,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         else
             NUM_QUANTITY_ROLLER = 1; // you are at the max amount of items you have when you press Up, set your quantity back to 1.
 
-        sub_80A418C(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
+        PrintItemQuantity(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
@@ -626,7 +626,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         else
             NUM_QUANTITY_ROLLER = gSaveBlock1.pcItems[trueIndex].quantity; // you are at 0 when you press down, set your quantity to the amount you have.
 
-        sub_80A418C(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
+        PrintItemQuantity(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
     }
     else if (JOY_REPT(DPAD_LEFT)) // reduce by 10.
     {
@@ -635,7 +635,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         if(NUM_QUANTITY_ROLLER <= 0)
             NUM_QUANTITY_ROLLER = 1; // dont underflow or allow 0!
 
-        sub_80A418C(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
+        PrintItemQuantity(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
     }
     else if (JOY_REPT(DPAD_RIGHT)) // add 10.
     {
@@ -644,7 +644,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         if(NUM_QUANTITY_ROLLER > gSaveBlock1.pcItems[trueIndex].quantity)
             NUM_QUANTITY_ROLLER = gSaveBlock1.pcItems[trueIndex].quantity; // dont overflow!
 
-        sub_80A418C(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
+        PrintItemQuantity(NUM_QUANTITY_ROLLER, STR_CONV_MODE_RIGHT_ALIGN, 8, 9, 3); // print quantity?
     }
     else if (JOY_NEW(A_BUTTON)) // confirm quantity.
     {
@@ -811,7 +811,7 @@ static void ItemStorage_FinishItemSwap(u8 taskId, bool8 switchModeDisabled)
 
 static void ItemStorage_DrawItemQuantity(u16 arg1, enum StringConvertMode arg2, u8 arg3, u8 arg4, int isSwapSelected)
 {
-    sub_80A4164(gStringVar1, arg1, arg2, arg4);
+    ConvertIntToItemQuantityString(gStringVar1, arg1, arg2, arg4);
 
     if(isSwapSelected != FALSE)
         Menu_PrintText(gSelectedItemQuantityFormatText, 0x1A, arg3);

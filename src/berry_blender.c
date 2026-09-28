@@ -171,8 +171,8 @@ struct BlenderDebug
 void m4aMPlayPitchControl(struct MusicPlayerInfo *mplayInfo, u16 trackBits, s16 pitch);
 void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
-void sub_80A6978(void);
-u8 sub_80A7DEC(u8 berryId, u8 x, u8 y, bool8 animate);
+void ChooseBerryForBlender(void);
+u8 CreateSpinningBerrySprite(u8 berryId, u8 x, u8 y, bool8 animate);
 void SetOutlineCursorPosition(u8 a1, u8 a2);
 u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 s8 GetFirstFreePokeblockSlot(void);
@@ -946,7 +946,7 @@ static void CB2_LoadBerryBlender(void)
     case 6:
         if (!gPaletteFade.active)
         {
-            sub_80A6978();
+            ChooseBerryForBlender();
             gBerryBlenderData->field_0 = 0;
         }
         break;
@@ -991,7 +991,7 @@ void SetBerrySpriteData(struct Sprite* sprite, s16 a2, s16 a3, s16 a4, s16 a5, s
 
 static void CreateBlenderBerrySprite(u16 a0, u8 a1)
 {
-    u8 spriteID = sub_80A7DEC(a0 + 123, 0, 80, a1 & 1);
+    u8 spriteID = CreateSpinningBerrySprite(a0 + 123, 0, 80, a1 & 1);
     SetBerrySpriteData(&gSprites[spriteID], gUnknown_08216594[a1][0], gUnknown_08216594[a1][1], gUnknown_08216594[a1][2], gUnknown_08216594[a1][3], gUnknown_08216594[a1][4]);
 }
 

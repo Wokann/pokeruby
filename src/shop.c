@@ -174,8 +174,8 @@ static void Task_HandleShopMenuBuy(u8 taskId)
 
 static void Task_HandleShopMenuSell(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)ItemMenu_LoadSellMenu >> 16;
-    gTasks[taskId].data[9] = (u32)ItemMenu_LoadSellMenu;
+    gTasks[taskId].data[8] = (u32)CB2_GoToSellMenu >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_GoToSellMenu;
     gTasks[taskId].func = Shop_FadeAndRunBuySellCallback;
     FadeScreen(1, 0);
 }
@@ -520,7 +520,7 @@ static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
     gStringVar1[2] = 0x6;
     ConvertIntToDecimalStringN(&gStringVar1[3], gTasks[taskId].tItemCount, 1, 2);
     Menu_PrintText(gOtherText_xString1, 1, 11);
-    sub_80A3FA0(gBGTilemapBuffers[1], 1, 11, 12, 2, 0xC3E1);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 1, 11, 12, 2, 0xC3E1);
 }
 
 static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControlCode)
@@ -652,7 +652,7 @@ static void Shop_DoPricePrintAndReturnToBuyMenu(u8 taskId)
 static void Task_DoItemPurchase(u8 taskId)
 {
     Menu_EraseWindowRect(0x7, 0x8, 0xD, 0xD);
-    sub_80A3FA0(gBGTilemapBuffers[1], 8, 9, 4, 4, 0);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 8, 9, 4, 4, 0);
     BuyMenuDrawTextboxBG_Restore();
     Shop_DrawViewportTiles();
 
@@ -695,7 +695,7 @@ static void Task_DoItemPurchase(u8 taskId)
 static void Shop_DoYesNoPurchase(u8 taskId)
 {
     DisplayYesNoMenu(7, 8, 1);
-    sub_80A3FA0(gBGTilemapBuffers[1], 8, 9, 4, 4, 0xC3E1);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 8, 9, 4, 4, 0xC3E1);
     DoYesNoFuncWithChoice(taskId, sShopPurchaseYesNoFuncs);
 }
 
@@ -703,7 +703,7 @@ static void Task_CancelItemPurchase(u8 taskId)
 {
     Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 0);
     Menu_EraseWindowRect(0x7, 0x8, 0xD, 0xD);
-    sub_80A3FA0(gBGTilemapBuffers[1], 0x8, 0x9, 0x4, 0x4, 0);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 0x8, 0x9, 0x4, 0x4, 0);
     Task_ReturnToBuyMenu(taskId);
 }
 
@@ -716,7 +716,7 @@ static void Shop_PrintPrice(u8 taskId)
     {
         gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
         Menu_EraseWindowRect(0, 0xA, 0xD, 0xD);
-        sub_80A3FA0(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
+        FillBgTilemapRect(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
         BuyMenuDrawTextboxBG_Restore();
         Shop_DrawViewportTiles();
         CopyItemName(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor], gStringVar1);
@@ -1136,7 +1136,7 @@ static void Task_ReturnToBuyMenu(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0xE, 0x1D, 0x13);
     Menu_EraseWindowRect(0, 0xA, 0xD, 0xD);
-    sub_80A3FA0(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
+    FillBgTilemapRect(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
     Shop_DrawViewportTiles();
     Shop_InitMenus(6, 7);
     Shop_PrintItemDesc();

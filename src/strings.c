@@ -200,7 +200,7 @@ const u8 OtherText_TheField[] = _("the field.");
 const u8 OtherText_TheField2[] = _("the field.");
 const u8 OtherText_ThePC[] = _("the PC.");
 
-const u8 *const gUnknown_0840E740[7] =
+const u8 *const gBagMenuReturnToTexts[7] =
 {
     OtherText_TheField3,
     OtherText_TheBattle,
@@ -1128,7 +1128,7 @@ const u8 OtherText_TheField[] = _("zum Hauptmenü.");
 const u8 OtherText_TheField2[] = _("zum Hauptmenü.");
 const u8 OtherText_ThePC[] = _("zum PC.");
 
-const u8 *const gUnknown_0840E740[7] =
+const u8 *const gBagMenuReturnToTexts[7] =
 {
     OtherText_TheField3,
     OtherText_TheBattle,

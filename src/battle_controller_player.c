@@ -165,7 +165,7 @@ extern void SpriteCB_ShowAsMoveTarget(struct Sprite *);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
 extern void ReshowBattleScreenDummy(void);
-extern void sub_80A6DCC(void);
+extern void CB2_BagMenuFromBattle(void);
 extern void ReshowBattleScreenAfterMenu(void);
 
 void PlayerHandleGetAttributes(void);
@@ -1538,7 +1538,7 @@ void sub_802E004(void)
     {
         gBattlerControllerFuncs[gActiveBattler] = sub_802E03C;
         ReshowBattleScreenDummy();
-        sub_80A6DCC();
+        CB2_BagMenuFromBattle();
     }
 }
 

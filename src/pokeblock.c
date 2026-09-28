@@ -123,7 +123,7 @@ const s8 gPokeblockFlavorCompatibilityTable[] =
 
 void (*const sExitCallbacksByCase[])(void) =
 {
-    sub_80A5B40,
+    CB2_ReturnToBagMenu,
     CB2_ReturnToField,
     sub_802E424,
     CB2_ReturnToField

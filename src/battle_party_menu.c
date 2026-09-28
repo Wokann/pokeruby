@@ -26,7 +26,7 @@ extern u8 sub_806BD58(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
 extern void nullsub_13(void);
 extern void sub_802E414(void);
-extern void sub_80A6DCC(void);
+extern void CB2_BagMenuFromBattle(void);
 extern u8 *sub_8040D08();
 extern void SetMonPreventsSwitchingString(void);
 extern void ReshowBattleScreenDummy();
@@ -547,7 +547,7 @@ static void Task_ExitBattlePartyMenuToBag(u8 taskId)
     {
         UpdatePartyToFieldOrder();
         DestroyTask(taskId);
-        sub_80A6DCC();
+        CB2_BagMenuFromBattle();
     }
 }
 

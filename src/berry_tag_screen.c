@@ -20,7 +20,7 @@
 #include "task.h"
 #include "text.h"
 
-// CreateBerrySprite takes an 8-bit zero-based berry index; the item ID wraps at 256.
+// CreateBerryTagSprite takes an 8-bit zero-based berry index; the item ID wraps at 256.
 #define BERRY_SPRITE_INDEX_OFFSET (0x100 - FIRST_BERRY_INDEX)
 #define BERRIES_POCKET_INDEX (POCKET_BERRIES - 1)
 
@@ -37,7 +37,7 @@ static EWRAM_DATA u8 sBerrySpriteId = 0;
 static EWRAM_DATA s16 sFlavorCircleSpriteIds[5] = {0};
 
 extern const struct CompressedSpriteSheet gBerryCheckCircleSpriteSheet;
-extern const struct CompressedSpritePalette gBerryCheckCircleSpritePalette;
+extern const struct CompressedSpritePalette gBerryCheckCirclePaletteTable;
 
 extern u8 gBerryCheck_Gfx[];
 extern u8 gBerryCheck_Pal[];
@@ -136,7 +136,7 @@ static bool8 InitBerryTagScreen(void)
         break;
     case 8:
         berry = gSpecialVar_ItemId + BERRY_SPRITE_INDEX_OFFSET;
-        sBerrySpriteId = CreateBerrySprite(berry, 56, 64);
+        sBerrySpriteId = CreateBerryTagSprite(berry, 56, 64);
         gMain.state += 1;
         break;
     case 9:
@@ -226,7 +226,7 @@ bool8 LoadBerryTagGfx(void)
         gSharedMem.gfxState += 1;
         break;
     case 6:
-        LoadCompressedSpritePalette(&gBerryCheckCircleSpritePalette);
+        LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
         gSharedMem.gfxState = 0;
         return TRUE;
     }
@@ -238,8 +238,8 @@ static void Task_CloseBerryTagScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(sub_80A5B40);
-        sub_80A7DD4();
+        SetMainCallback2(CB2_ReturnToBagMenu);
+        FreeBerryTagSpritePalettes();
         FreeAndReserveObjectSpritePalettes();
         DestroyTask(taskId);
     }
@@ -336,15 +336,15 @@ static void CreateFlavorCircleSprites(u8 berry)
 
     // argument is the center of the circle
     if (berryInfo->spicy)
-        sFlavorCircleSpriteIds[0] = sub_80A7E5C(48);
+        sFlavorCircleSpriteIds[0] = CreateBerryFlavorCircleSprite(48);
     if (berryInfo->dry)
-        sFlavorCircleSpriteIds[1] = sub_80A7E5C(88);
+        sFlavorCircleSpriteIds[1] = CreateBerryFlavorCircleSprite(88);
     if (berryInfo->sweet)
-        sFlavorCircleSpriteIds[2] = sub_80A7E5C(128);
+        sFlavorCircleSpriteIds[2] = CreateBerryFlavorCircleSprite(128);
     if (berryInfo->bitter)
-        sFlavorCircleSpriteIds[3] = sub_80A7E5C(168);
+        sFlavorCircleSpriteIds[3] = CreateBerryFlavorCircleSprite(168);
     if (berryInfo->sour)
-        sFlavorCircleSpriteIds[4] = sub_80A7E5C(208);
+        sFlavorCircleSpriteIds[4] = CreateBerryFlavorCircleSprite(208);
 }
 
 static void DestroyFlavorCircleSprites(void)
@@ -440,7 +440,7 @@ static void HandleBagCursorPositionChange(s8 toMove)
     gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos].itemId;
     DestroySprite(&gSprites[sBerrySpriteId]);
     DestroyFlavorCircleSprites();
-    sub_80A7DD4();
+    FreeBerryTagSpritePalettes();
 }
 
 static void PrintBerryDataAndCreateSprites(void)
@@ -449,7 +449,7 @@ static void PrintBerryDataAndCreateSprites(void)
     PrintAllBerryData();
 
     // center of berry sprite
-    sBerrySpriteId = CreateBerrySprite(gSpecialVar_ItemId + BERRY_SPRITE_INDEX_OFFSET, 56, 64);
+    sBerrySpriteId = CreateBerryTagSprite(gSpecialVar_ItemId + BERRY_SPRITE_INDEX_OFFSET, 56, 64);
 
     CreateFlavorCircleSprites(gSpecialVar_ItemId + BERRY_SPRITE_INDEX_OFFSET);
 }
