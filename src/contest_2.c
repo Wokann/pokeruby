@@ -29,6 +29,28 @@
 
 #include "contest_internal.h"
 
+#define TAG_CONTEST_SYMBOLS_PAL 0xABE0
+#define TAG_JUDGE_SYMBOLS_GFX   0xABE0
+#define TAG_APPLAUSE_METER      0xABE2
+
+#define TAG_UNUSED_CONTESTANT_RANK_GFX   0x4E20
+#define TAG_UNUSED_CONTESTANT_RANK_0_PAL 0x4E20
+#define TAG_UNUSED_CONTESTANT_RANK_1_PAL 0x4E21
+#define TAG_UNUSED_CONTESTANT_RANK_2_PAL 0x4E22
+#define TAG_UNUSED_CONTESTANT_RANK_3_PAL 0x4E23
+#define TAG_SLIDER_HEART                 0x4E24
+#define TAG_JUDGE                        0x4E25
+#define TAG_NEXT_TURN_PAL                0x4E26
+#define TAG_NEXT_TURN_1_GFX              0x4E26
+#define TAG_NEXT_TURN_2_GFX              0x4E27
+#define TAG_NEXT_TURN_3_GFX              0x4E28
+#define TAG_NEXT_TURN_4_GFX              0x4E29
+
+#define TAG_BLINK_EFFECT_CONTESTANT0 0x80E8
+#define TAG_BLINK_EFFECT_CONTESTANT1 0x80E9
+#define TAG_BLINK_EFFECT_CONTESTANT2 0x80EA
+#define TAG_BLINK_EFFECT_CONTESTANT3 0x80EB
+
 extern void Task_LinkContest_CommunicateAppealsState(u8 taskId);
 extern void Task_UpdateContestantBoxOrder(u8 taskId);
 
@@ -43,21 +65,21 @@ extern void (*const gContestEffectFuncs[])(void);
 
 #include "data/contest_opponents.h"
 
-const u8 gUnknown_083CA308[][2] = {
+const u8 sContestantMonNameTextCoords[][2] = {
     {19,  0},
     {19,  5},
     {19, 10},
     {19, 15},
 };
 
-const u8 gUnknown_083CA310[][2] = {
+const u8 sContestantTrainerNameTextCoords[][2] = {
     {25,  0},
     {25,  5},
     {25, 10},
     {25, 15},
 };
 
-const u8 gUnknown_083CA318[][2] = {
+const u8 sUnusedContestantMoveTextCoords[][2] = {
     {  20,   2 },
     {  20,   7 },
     {  20,  12 },
@@ -72,7 +94,7 @@ const u8 gUnknown_083CA318[][2] = {
     { 220, 144 },
 };
 
-const u8 gUnknown_083CA330[][2] = {
+const u8 sUnusedContestantRankSpriteCoords[][2] = {
     { 224,  24 },
     { 224,  64 },
     { 224, 104 },
@@ -80,7 +102,7 @@ const u8 gUnknown_083CA330[][2] = {
 };
 
 const u8 sSliderHeartYPositions[] = { 36, 76, 116, 156 };
-const u8 gUnknown_083CA33C[] = { 36, 76, 116, 156 };
+const u8 sNextTurnSpriteYPositions[] = { 36, 76, 116, 156 };
 
 const u8 gContestMoveSelectTextCoords[][4] = {
     { 0, 31, 9, 39 },
@@ -90,12 +112,12 @@ const u8 gContestMoveSelectTextCoords[][4] = {
 };
 
 const struct SpriteSheet sSpriteSheet_SliderHeart = {
-    .data = gTiles_8D1975C,
+    .data = gContestSliderHeart_Gfx,
     .size = 0x20,
-    .tag = 20004
+    .tag = TAG_SLIDER_HEART
 };
 
-const struct OamData gOamData_83CA358 = {
+const struct OamData sOam_SliderHeart = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -111,55 +133,55 @@ const struct OamData gOamData_83CA358 = {
 };
 
 // Idle
-const union AffineAnimCmd gSpriteAffineAnim_83CA360[] = {
+const union AffineAnimCmd sAffineAnim_SliderHeart_Normal[] = {
     AFFINEANIMCMD_FRAME(Q_8_8(1.0), Q_8_8(1.0), 0, 0),
     AFFINEANIMCMD_END
 };
 
 // Shrink
-const union AffineAnimCmd gSpriteAffineAnim_83CA370[] = {
+const union AffineAnimCmd sAffineAnim_SliderHeart_SpinDisappear[] = {
     AFFINEANIMCMD_FRAME(256, 256,   0,  0),
     AFFINEANIMCMD_FRAME(-10, -10, -20, 20),
     AFFINEANIMCMD_END
 };
 
 // Grow
-const union AffineAnimCmd gSpriteAffineAnim_83CA388[] = {
+const union AffineAnimCmd sAffineAnim_SliderHeart_SpinAppear[] = {
     AFFINEANIMCMD_FRAME(56, 56,  0,  0),
     AFFINEANIMCMD_FRAME(10, 10, 20, 20),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83CA3A0[] = {
-    gSpriteAffineAnim_83CA360,
-    gSpriteAffineAnim_83CA370,
-    gSpriteAffineAnim_83CA388,
+const union AffineAnimCmd *const sAffineAnims_SliderHeart[] = {
+    sAffineAnim_SliderHeart_Normal,
+    sAffineAnim_SliderHeart_SpinDisappear,
+    sAffineAnim_SliderHeart_SpinAppear,
 };
 
 const struct SpriteTemplate sSpriteTemplate_SliderHeart = {
-    .tileTag = 20004,
-    .paletteTag = 44000,
-    .oam = &gOamData_83CA358,
+    .tileTag = TAG_SLIDER_HEART,
+    .paletteTag = TAG_CONTEST_SYMBOLS_PAL,
+    .oam = &sOam_SliderHeart,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_83CA3A0,
+    .affineAnims = sAffineAnims_SliderHeart,
     .callback = SpriteCallbackDummy
 };
 
 // One graphic for each contestant.
 // Yes, it's loaded four times.
-const struct CompressedSpriteSheet gUnknown_083CA3C4[] = {
-    { .data = gContestNextTurnGfx, .size = 0x100, .tag = 20006 },
-    { .data = gContestNextTurnGfx, .size = 0x100, .tag = 20007 },
-    { .data = gContestNextTurnGfx, .size = 0x100, .tag = 20008 },
-    { .data = gContestNextTurnGfx, .size = 0x100, .tag = 20009 },
+const struct CompressedSpriteSheet sSpriteSheets_NextTurn[] = {
+    { .data = gContestNextTurnGfx, .size = 0x100, .tag = TAG_NEXT_TURN_1_GFX },
+    { .data = gContestNextTurnGfx, .size = 0x100, .tag = TAG_NEXT_TURN_2_GFX },
+    { .data = gContestNextTurnGfx, .size = 0x100, .tag = TAG_NEXT_TURN_3_GFX },
+    { .data = gContestNextTurnGfx, .size = 0x100, .tag = TAG_NEXT_TURN_4_GFX },
 };
 
-const struct SpritePalette gUnknown_083CA3E4 = {
-    .data = gContestPal, .tag = 20006
+const struct SpritePalette sSpritePalette_NextTurn = {
+    .data = gContestPal, .tag = TAG_NEXT_TURN_PAL
 };
 
-const struct OamData gOamData_83CA3EC = {
+const struct OamData sOam_NextTurn = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -174,34 +196,34 @@ const struct OamData gOamData_83CA3EC = {
     .paletteNum = 0
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CA3F4[] = {
-    { .tileTag = 20006, .paletteTag = 20006, .oam = &gOamData_83CA3EC, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
-    { .tileTag = 20007, .paletteTag = 20006, .oam = &gOamData_83CA3EC, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
-    { .tileTag = 20008, .paletteTag = 20006, .oam = &gOamData_83CA3EC, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
-    { .tileTag = 20009, .paletteTag = 20006, .oam = &gOamData_83CA3EC, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
+const struct SpriteTemplate sSpriteTemplates_NextTurn[] = {
+    { .tileTag = TAG_NEXT_TURN_1_GFX, .paletteTag = TAG_NEXT_TURN_PAL, .oam = &sOam_NextTurn, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
+    { .tileTag = TAG_NEXT_TURN_2_GFX, .paletteTag = TAG_NEXT_TURN_PAL, .oam = &sOam_NextTurn, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
+    { .tileTag = TAG_NEXT_TURN_3_GFX, .paletteTag = TAG_NEXT_TURN_PAL, .oam = &sOam_NextTurn, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
+    { .tileTag = TAG_NEXT_TURN_4_GFX, .paletteTag = TAG_NEXT_TURN_PAL, .oam = &sOam_NextTurn, .anims = gDummySpriteAnimTable, .images = NULL, .affineAnims = gDummySpriteAffineAnimTable, .callback = SpriteCallbackDummy },
 };
 
-const struct Subsprite gSubspriteTable_83CA454[] = {
+const struct Subsprite sSubsprites_NextTurn[] = {
     { .x = -26, .y = -4, .shape = ST_OAM_H_RECTANGLE, .size = 1, .tileOffset = 0, .priority = 0 },
     { .x =   6, .y = -4, .shape = ST_OAM_H_RECTANGLE, .size = 1, .tileOffset = 4, .priority = 0 },
 };
 
-const struct SubspriteTable gSubspriteTables_83CA464[] = {
-    { 2, gSubspriteTable_83CA454 },
+const struct SubspriteTable sSubspriteTable_NextTurn[] = {
+    { 2, sSubsprites_NextTurn },
 };
 
-const struct CompressedSpriteSheet gUnknown_083CA46C = {
+const struct CompressedSpriteSheet sSpriteSheet_ApplauseMeter = {
     .data = gContestApplauseGfx,
     .size = 0x400,
-    .tag = 44002
+    .tag = TAG_APPLAUSE_METER
 };
 
-const struct SpritePalette gUnknown_083CA474 = {
+const struct SpritePalette sSpritePalette_ApplauseMeter = {
     .data = gContestPal,
-    .tag = 44002
+    .tag = TAG_APPLAUSE_METER
 };
 
-const struct OamData gOamData_83CA47C = {
+const struct OamData sOam_ApplauseMeter = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -216,17 +238,17 @@ const struct OamData gOamData_83CA47C = {
     .paletteNum = 0
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CA484 = {
-    .tileTag = 44002,
-    .paletteTag = 44002,
-    .oam = &gOamData_83CA47C,
+const struct SpriteTemplate sSpriteTemplate_ApplauseMeter = {
+    .tileTag = TAG_APPLAUSE_METER,
+    .paletteTag = TAG_APPLAUSE_METER,
+    .oam = &sOam_ApplauseMeter,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
 
-const struct OamData gOamData_83CA49C = {
+const struct OamData sOam_Judge = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -242,9 +264,9 @@ const struct OamData gOamData_83CA49C = {
 };
 
 const struct SpriteTemplate sSpriteTemplate_Judge = {
-    .tileTag = 20005,
-    .paletteTag = 20005,
-    .oam = &gOamData_83CA49C,
+    .tileTag = TAG_JUDGE,
+    .paletteTag = TAG_JUDGE,
+    .oam = &sOam_Judge,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
@@ -254,23 +276,23 @@ const struct SpriteTemplate sSpriteTemplate_Judge = {
 const struct CompressedSpriteSheet sSpriteSheet_Judge = {
     .data = gContestJudgeGfx,
     .size = 0x800,
-    .tag = 20005
+    .tag = TAG_JUDGE
 };
 
 const struct CompressedSpriteSheet sSpriteSheet_JudgeSymbols = {
     .data = gContestJudgeSymbolsGfx,
     .size = 0x380,
-    .tag = 44000
+    .tag = TAG_JUDGE_SYMBOLS_GFX
 };
 
 const struct CompressedSpritePalette sSpritePalette_JudgeSymbols = {
     .data = gContest3Pal,
-    .tag = 44000
+    .tag = TAG_CONTEST_SYMBOLS_PAL
 };
 
 const struct SpriteTemplate sSpriteTemplate_JudgeSpeechBubble = {
-    .tileTag = 44000,
-    .paletteTag = 44000,
+    .tileTag = TAG_JUDGE_SYMBOLS_GFX,
+    .paletteTag = TAG_CONTEST_SYMBOLS_PAL,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
@@ -285,74 +307,74 @@ const struct SpriteTemplate sSpriteTemplate_JudgeSpeechBubble = {
 #endif //ENGLISH
 
 UNUSED
-const u8 ALIGNED(2) _unk_83CC3BE[] = __("ピラ");
-const u8 gUnknownText_UnknownFormatting2[] = _("{COLOR GREEN}{SHADOW RED}");
-const u8 gUnknownText_UnknownFormatting3[] = _("{COLOR LIGHT_GREY}");
+const u8 ALIGNED(2) sUnusedText_Pira[] = __("ピラ");
+const u8 gText_ContestComboMove[] = _("{COLOR GREEN}{SHADOW RED}");
+const u8 gText_ContestRepeatedMove[] = _("{COLOR LIGHT_GREY}");
 
-const struct CompressedSpriteSheet gUnknown_083CC3AC = {
+const struct CompressedSpriteSheet sSpriteSheet_ContestNumbersUnused = {
     .data = gContestNumbers_UnusedGfx,
     .size = 0x200,
-    .tag = 20000
+    .tag = TAG_UNUSED_CONTESTANT_RANK_GFX
 };
 
-const struct CompressedSpritePalette gUnknown_083CC3B4[] = {
-    { .data = gContestNumbers_UnusedPal, .tag = 20000 },
-    { .data = gContestNumbers_UnusedPal, .tag = 20001 },
-    { .data = gContestNumbers_UnusedPal, .tag = 20002 },
-    { .data = gContestNumbers_UnusedPal, .tag = 20003 },
+const struct CompressedSpritePalette sSpritePalettes_ContestNumbersUnused[] = {
+    { .data = gContestNumbers_UnusedPal, .tag = TAG_UNUSED_CONTESTANT_RANK_0_PAL },
+    { .data = gContestNumbers_UnusedPal, .tag = TAG_UNUSED_CONTESTANT_RANK_1_PAL },
+    { .data = gContestNumbers_UnusedPal, .tag = TAG_UNUSED_CONTESTANT_RANK_2_PAL },
+    { .data = gContestNumbers_UnusedPal, .tag = TAG_UNUSED_CONTESTANT_RANK_3_PAL },
 };
 
-const union AnimCmd gSpriteAnim_83CC3D4[] = {
+const union AnimCmd sAnim_ContestNumbersUnused_0[] = {
     ANIMCMD_FRAME( 0, 1),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83CC3DC[] = {
+const union AnimCmd sAnim_ContestNumbersUnused_1[] = {
     ANIMCMD_FRAME( 4, 1),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83CC3E4[] = {
+const union AnimCmd sAnim_ContestNumbersUnused_2[] = {
     ANIMCMD_FRAME( 8, 1),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83CC3EC[] = {
+const union AnimCmd sAnim_ContestNumbersUnused_3[] = {
     ANIMCMD_FRAME(12, 1),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83CC3F4[] = {
-    gSpriteAnim_83CC3D4,
-    gSpriteAnim_83CC3DC,
-    gSpriteAnim_83CC3E4,
-    gSpriteAnim_83CC3EC,
+const union AnimCmd *const sAnims_ContestNumbersUnused[] = {
+    sAnim_ContestNumbersUnused_0,
+    sAnim_ContestNumbersUnused_1,
+    sAnim_ContestNumbersUnused_2,
+    sAnim_ContestNumbersUnused_3,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83CC404[] = {
+const union AffineAnimCmd sAffineAnim_ContestNumbersUnused_Normal[] = {
     AFFINEANIMCMD_FRAME(0, 0, 0, 1),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83CC414[] = {
+const union AffineAnimCmd sAffineAnim_ContestNumbersUnused_Shrink[] = {
     AFFINEANIMCMD_FRAME(-15, -15, 0, 15),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83CC424[] = {
+const union AffineAnimCmd sAffineAnim_ContestNumbersUnused_Grow[] = {
     AFFINEANIMCMD_FRAME(31, 31, 0, 0),
     AFFINEANIMCMD_FRAME(15, 15, 0, 15),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83CC43C[] = {
-    gSpriteAffineAnim_83CC404,
-    gSpriteAffineAnim_83CC414,
-    gSpriteAffineAnim_83CC424,
+const union AffineAnimCmd *const sAffineAnims_ContestNumbersUnused[] = {
+    sAffineAnim_ContestNumbersUnused_Normal,
+    sAffineAnim_ContestNumbersUnused_Shrink,
+    sAffineAnim_ContestNumbersUnused_Grow,
     NULL,
 };
 
-const struct OamData gOamData_83CC44C = {
+const struct OamData sOam_ContestNumbersUnused = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
     .objMode = ST_OAM_OBJ_NORMAL,
@@ -367,60 +389,60 @@ const struct OamData gOamData_83CC44C = {
     .paletteNum = 0
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CC454[] = {
+const struct SpriteTemplate sSpriteTemplates_ContestNumbersUnused[] = {
     {
-        .tileTag = 20000,
-        .paletteTag = 20000,
-        .oam = &gOamData_83CC44C,
-        .anims = gSpriteAnimTable_83CC3F4,
+        .tileTag = TAG_UNUSED_CONTESTANT_RANK_GFX,
+        .paletteTag = TAG_UNUSED_CONTESTANT_RANK_0_PAL,
+        .oam = &sOam_ContestNumbersUnused,
+        .anims = sAnims_ContestNumbersUnused,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC43C,
+        .affineAnims = sAffineAnims_ContestNumbersUnused,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 20000,
-        .paletteTag = 20001,
-        .oam = &gOamData_83CC44C,
-        .anims = gSpriteAnimTable_83CC3F4,
+        .tileTag = TAG_UNUSED_CONTESTANT_RANK_GFX,
+        .paletteTag = TAG_UNUSED_CONTESTANT_RANK_1_PAL,
+        .oam = &sOam_ContestNumbersUnused,
+        .anims = sAnims_ContestNumbersUnused,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC43C,
+        .affineAnims = sAffineAnims_ContestNumbersUnused,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 20000,
-        .paletteTag = 20002,
-        .oam = &gOamData_83CC44C,
-        .anims = gSpriteAnimTable_83CC3F4,
+        .tileTag = TAG_UNUSED_CONTESTANT_RANK_GFX,
+        .paletteTag = TAG_UNUSED_CONTESTANT_RANK_2_PAL,
+        .oam = &sOam_ContestNumbersUnused,
+        .anims = sAnims_ContestNumbersUnused,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC43C,
+        .affineAnims = sAffineAnims_ContestNumbersUnused,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 20000,
-        .paletteTag = 20003,
-        .oam = &gOamData_83CC44C,
-        .anims = gSpriteAnimTable_83CC3F4,
+        .tileTag = TAG_UNUSED_CONTESTANT_RANK_GFX,
+        .paletteTag = TAG_UNUSED_CONTESTANT_RANK_3_PAL,
+        .oam = &sOam_ContestNumbersUnused,
+        .anims = sAnims_ContestNumbersUnused,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC43C,
+        .affineAnims = sAffineAnims_ContestNumbersUnused,
         .callback = SpriteCallbackDummy,
     },
 };
 
-const struct CompressedSpriteSheet gUnknown_083CC4B4[] = {
-    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = 33000 },
-    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = 33001 },
-    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = 33002 },
-    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = 33003 },
+const struct CompressedSpriteSheet sSpriteSheets_ContestantsTurnBlinkEffect[] = {
+    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = TAG_BLINK_EFFECT_CONTESTANT0 },
+    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = TAG_BLINK_EFFECT_CONTESTANT1 },
+    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = TAG_BLINK_EFFECT_CONTESTANT2 },
+    { .data = gBlankGfxCompressed, .size = 0x1000, .tag = TAG_BLINK_EFFECT_CONTESTANT3 },
 };
 
-const struct SpritePalette gUnknown_083CC4D4[] = {
-    { .data = eContestTempSave.cachedWindowPalettes[5], .tag = 33000 },
-    { .data = eContestTempSave.cachedWindowPalettes[6], .tag = 33001 },
-    { .data = eContestTempSave.cachedWindowPalettes[7], .tag = 33002 },
-    { .data = eContestTempSave.cachedWindowPalettes[8], .tag = 33003 },
+const struct SpritePalette sSpritePalettes_ContestantsTurnBlinkEffect[] = {
+    { .data = eContestTempSave.cachedWindowPalettes[5], .tag = TAG_BLINK_EFFECT_CONTESTANT0 },
+    { .data = eContestTempSave.cachedWindowPalettes[6], .tag = TAG_BLINK_EFFECT_CONTESTANT1 },
+    { .data = eContestTempSave.cachedWindowPalettes[7], .tag = TAG_BLINK_EFFECT_CONTESTANT2 },
+    { .data = eContestTempSave.cachedWindowPalettes[8], .tag = TAG_BLINK_EFFECT_CONTESTANT3 },
 };
 
-const struct OamData gOamData_83CC4F4 = {
+const struct OamData sOam_ContestantsTurnBlinkEffect = {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_DOUBLE,
     .objMode = ST_OAM_OBJ_BLEND,
@@ -435,12 +457,12 @@ const struct OamData gOamData_83CC4F4 = {
     .paletteNum = 0
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83CC4FC[] = {
+const union AffineAnimCmd sAffineAnim_ContestantsTurnBlinkEffect_Normal[] = {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83CC50C[] = {
+const union AffineAnimCmd sAffineAnim_ContestantsTurnBlinkEffect_Blink[] = {
     AFFINEANIMCMD_FRAME( 3,  3, 0, 15),
     AFFINEANIMCMD_FRAME(-3, -3, 0, 15),
     AFFINEANIMCMD_FRAME( 3,  3, 0, 15),
@@ -448,54 +470,54 @@ const union AffineAnimCmd gSpriteAffineAnim_83CC50C[] = {
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83CC534[] = {
-    gSpriteAffineAnim_83CC4FC,
-    gSpriteAffineAnim_83CC50C,
+const union AffineAnimCmd *const sAffineAnims_ContestantsTurnBlinkEffect[] = {
+    sAffineAnim_ContestantsTurnBlinkEffect_Normal,
+    sAffineAnim_ContestantsTurnBlinkEffect_Blink,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CC53C[] = {
+const struct SpriteTemplate sSpriteTemplates_ContestantsTurnBlinkEffect[] = {
     {
-        .tileTag = 33000,
-        .paletteTag = 33000,
-        .oam = &gOamData_83CC4F4,
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT0,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT0,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC534,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 33001,
-        .paletteTag = 33001,
-        .oam = &gOamData_83CC4F4,
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT1,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT1,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC534,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 33002,
-        .paletteTag = 33002,
-        .oam = &gOamData_83CC4F4,
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT2,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT2,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC534,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
         .callback = SpriteCallbackDummy,
     },
     {
-        .tileTag = 33003,
-        .paletteTag = 33003,
-        .oam = &gOamData_83CC4F4,
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT3,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT3,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
-        .affineAnims = gSpriteAffineAnimTable_83CC534,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
         .callback = SpriteCallbackDummy,
     },
 };
 
-const u8 gUnknown_083CC59C[] = _("{HIGHLIGHT TRANSPARENT}{COLOR}");
+const u8 gText_ColorTransparent[] = _("{HIGHLIGHT TRANSPARENT}{COLOR}");
 const u8 gText_Slash[] = _("/");
 
-const u16 gUnknown_083CC5A4[] = {
+const u16 sContestantBlendColors[] = {
     RGB(19, 3, 0),
     RGB(6, 15, 6),
     RGB(19, 18, 0),
@@ -851,10 +873,10 @@ void DrawContestantWindowText(void)
         Text_FillWindowRectDefPalette(
             &gWindowTemplate_Contest_MoveDescription,
             0,
-            gUnknown_083CA308[gContestantTurnOrder[i]][0],
-            gUnknown_083CA308[gContestantTurnOrder[i]][1],
-            gUnknown_083CA310[gContestantTurnOrder[i]][0] + 5,
-            gUnknown_083CA310[gContestantTurnOrder[i]][1] + 1);
+            sContestantMonNameTextCoords[gContestantTurnOrder[i]][0],
+            sContestantMonNameTextCoords[gContestantTurnOrder[i]][1],
+            sContestantTrainerNameTextCoords[gContestantTurnOrder[i]][0] + 5,
+            sContestantTrainerNameTextCoords[gContestantTurnOrder[i]][1] + 1);
         PrintContestantTrainerName(i);
         PrintContestantMonName(i);
     }
@@ -862,7 +884,7 @@ void DrawContestantWindowText(void)
 
 u8 *Contest_CopyStringWithColor(u8 *dest, const u8 *src, u8 color)
 {
-    dest = StringCopy(dest, gUnknown_083CC59C); // {HIGHLIGHT TRANSPARENT}{COLOR}$
+    dest = StringCopy(dest, gText_ColorTransparent); // {HIGHLIGHT TRANSPARENT}{COLOR}$
     *dest++ = color;
     dest = StringCopy(dest, src);
     return dest;
@@ -892,8 +914,8 @@ void PrintContestantTrainerNameWithColor(u8 contestant, u8 color)
             &gWindowTemplate_Contest_MoveDescription,
             gDisplayedStringBattle,
             592 + gContestantTurnOrder[contestant] * 22,
-            251 + gUnknown_083CA310[gContestantTurnOrder[contestant]][0] * 8,
-            gUnknown_083CA310[gContestantTurnOrder[contestant]][1] * 8,
+            251 + sContestantTrainerNameTextCoords[gContestantTurnOrder[contestant]][0] * 8,
+            sContestantTrainerNameTextCoords[gContestantTurnOrder[contestant]][1] * 8,
             1);
     }
     else
@@ -903,8 +925,8 @@ void PrintContestantTrainerNameWithColor(u8 contestant, u8 color)
             &gWindowTemplate_Contest_MoveDescription,
             gDisplayedStringBattle,
             592 + gContestantTurnOrder[contestant] * 22,
-            gUnknown_083CA310[gContestantTurnOrder[contestant]][0],
-            gUnknown_083CA310[gContestantTurnOrder[contestant]][1]);
+            sContestantTrainerNameTextCoords[gContestantTurnOrder[contestant]][0],
+            sContestantTrainerNameTextCoords[gContestantTurnOrder[contestant]][1]);
     }
 }
 
@@ -929,8 +951,8 @@ void PrintContestantMonNameWithColor(u8 contestant, u8 color)
         &gWindowTemplate_Contest_MoveDescription,
         gDisplayedStringBattle,
         512 + gContestantTurnOrder[contestant] * 20,
-        253 + gUnknown_083CA308[gContestantTurnOrder[contestant]][0] * 8,
-        gUnknown_083CA308[gContestantTurnOrder[contestant]][1] * 8,
+        253 + sContestantMonNameTextCoords[gContestantTurnOrder[contestant]][0] * 8,
+        sContestantMonNameTextCoords[gContestantTurnOrder[contestant]][1] * 8,
         1);
 }
 
@@ -1385,7 +1407,7 @@ void PrintUnusedContestantMoveText(u8 contestant, u8 useContestantColor)
     else
         textColor = 14;
     if (sContestantStatus[contestant].currMove == MOVE_NONE)
-        Contest_CopyStringWithColor(gDisplayedStringBattle, gUnknownText_MissedTurn, textColor);
+        Contest_CopyStringWithColor(gDisplayedStringBattle, gText_MissedTurn, textColor);
     else
         Contest_CopyStringWithColor(
             gDisplayedStringBattle, gMoveNames[sContestantStatus[contestant].currMove], textColor);
@@ -1394,8 +1416,8 @@ void PrintUnusedContestantMoveText(u8 contestant, u8 useContestantColor)
         &gWindowTemplate_Contest_MoveDescription,
         gDisplayedStringBattle,
         696 + contestant * 20,
-        gUnknown_083CA318[contestant][0],
-        gUnknown_083CA318[contestant][1]);
+        sUnusedContestantMoveTextCoords[contestant][0],
+        sUnusedContestantMoveTextCoords[contestant][1]);
 }
 
 UNUSED
@@ -1413,10 +1435,10 @@ void ClearUnusedContestantMoveText(u8 contestant)
     Text_FillWindowRectDefPalette(
         &gWindowTemplate_Contest_MoveDescription,
         0,
-        gUnknown_083CA318[contestant][0],
-        gUnknown_083CA318[contestant][1],
-        gUnknown_083CA318[contestant][0] + 7,
-        gUnknown_083CA318[contestant][1] + 1);
+        sUnusedContestantMoveTextCoords[contestant][0],
+        sUnusedContestantMoveTextCoords[contestant][1],
+        sUnusedContestantMoveTextCoords[contestant][0] + 7,
+        sUnusedContestantMoveTextCoords[contestant][1] + 1);
 }
 
 UNUSED
@@ -1705,7 +1727,7 @@ void ContestPrintLinkStandby(void)
     gBattle_BG0_Y = 0;
     gBattle_BG2_Y = 0;
     ContestClearGeneralTextWindow();
-    Text_InitWindowAndPrintText(&gMenuWindow, gUnknownText_LinkStandbyAndWinner, 776, 1, 15);
+    Text_InitWindowAndPrintText(&gMenuWindow, gText_LinkStandby4, 776, 1, 15);
 }
 
 UNUSED
@@ -2059,15 +2081,15 @@ void CreateNextTurnSprites(void)
 {
     s32 i;
 
-    LoadSpritePalette(&gUnknown_083CA3E4);
+    LoadSpritePalette(&sSpritePalette_NextTurn);
     for (i = 0; i < 4; i++)
     {
-        LoadCompressedSpriteSheet(&gUnknown_083CA3C4[i]);
+        LoadCompressedSpriteSheet(&sSpriteSheets_NextTurn[i]);
         eContestGfxState[i].nextTurnSpriteId = CreateSprite(
-            &gSpriteTemplate_83CA3F4[i],
-            204, gUnknown_083CA33C[gContestantTurnOrder[i]],
+            &sSpriteTemplates_NextTurn[i],
+            204, sNextTurnSpriteYPositions[gContestantTurnOrder[i]],
             0);
-        SetSubspriteTables(&gSprites[eContestGfxState[i].nextTurnSpriteId], gSubspriteTables_83CA464);
+        SetSubspriteTables(&gSprites[eContestGfxState[i].nextTurnSpriteId], sSubspriteTable_NextTurn);
         gSprites[eContestGfxState[i].nextTurnSpriteId].invisible = TRUE;
     }
 }
@@ -2076,9 +2098,9 @@ void CreateApplauseMeterSprite(void)
 {
     u8 spriteId;
 
-    LoadCompressedSpriteSheet(&gUnknown_083CA46C);
-    LoadSpritePalette(&gUnknown_083CA474);
-    spriteId = CreateSprite(&gSpriteTemplate_83CA484, 30, 44, 1);
+    LoadCompressedSpriteSheet(&sSpriteSheet_ApplauseMeter);
+    LoadSpritePalette(&sSpritePalette_ApplauseMeter);
+    spriteId = CreateSprite(&sSpriteTemplate_ApplauseMeter, 30, 44, 1);
     gSprites[spriteId].invisible = TRUE;
     sContest.applauseMeterSpriteId = spriteId;
 }
@@ -2091,14 +2113,14 @@ void CreateUnusedContestantRankSprites(void)
 {
     u8 i;
 
-    LoadCompressedSpriteSheet(&gUnknown_083CC3AC);
+    LoadCompressedSpriteSheet(&sSpriteSheet_ContestNumbersUnused);
     for (i = 0; i < 4; i++)
-        LoadCompressedSpritePalette(&gUnknown_083CC3B4[i]);
+        LoadCompressedSpritePalette(&sSpritePalettes_ContestNumbersUnused[i]);
     for (i = 0; i < 4; i++)
     {
         u8 spriteId = CreateSprite(
-            &gSpriteTemplate_83CC454[i],
-            gUnknown_083CA330[i][0], gUnknown_083CA330[i][1],
+            &sSpriteTemplates_ContestNumbersUnused[i],
+            sUnusedContestantRankSpriteCoords[i][0], sUnusedContestantRankSpriteCoords[i][1],
             5);
 
         gSprites[spriteId].invisible = TRUE;
@@ -2387,7 +2409,7 @@ void Task_UnusedBrokenBlend(u8 taskId)
                 if (r6 == 3)
                 {
                     r6 = 0;
-                    BlendPalette((r4 + 5) * 16 + 1, 3, r5, gUnknown_083CC5A4[r4]);
+                    BlendPalette((r4 + 5) * 16 + 1, 3, r5, sContestantBlendColors[r4]);
                     if (r5 == 0 && r8 == 2)
                     {
                         gTasks[taskId].data[r1 + 0] = 0;
@@ -2578,7 +2600,7 @@ _080B0820:\n\
 	adds r0, r4, 0x5\n\
 	lsls r0, 4\n\
 	adds r0, 0x1\n\
-	ldr r2, _080B0854 @ =gUnknown_083CC5A4\n\
+	ldr r2, _080B0854 @ =sContestantBlendColors\n\
 	lsls r1, r4, 1\n\
 	adds r1, r2\n\
 	ldrh r3, [r1]\n\
@@ -2594,7 +2616,7 @@ _080B0820:\n\
 	strh r6, [r3]\n\
 	b _080B08EA\n\
 	.align 2, 0\n\
-_080B0854: .4byte gUnknown_083CC5A4\n\
+_080B0854: .4byte sContestantBlendColors\n\
 _080B0858:\n\
 	adds r0, r5, 0x1\n\
 	lsls r0, 24\n\
@@ -2774,9 +2796,9 @@ void StartStopFlashJudgeAttentionEye(u8 contestant)
         StopFlashJudgeAttentionEye(contestant);
 }
 
-extern const struct CompressedSpriteSheet gUnknown_083CC4B4[];
-extern const struct SpritePalette gUnknown_083CC4D4[];
-extern const struct SpriteTemplate gSpriteTemplate_83CC53C[];
+extern const struct CompressedSpriteSheet sSpriteSheets_ContestantsTurnBlinkEffect[];
+extern const struct SpritePalette sSpritePalettes_ContestantsTurnBlinkEffect[];
+extern const struct SpriteTemplate sSpriteTemplates_ContestantsTurnBlinkEffect[];
 
 u8 CreateContestantBoxBlinkSprites(u8 a)
 {
@@ -2785,10 +2807,10 @@ u8 CreateContestantBoxBlinkSprites(u8 a)
     u8 r6;
     volatile u8 zero;
 
-    LoadCompressedSpriteSheet(&gUnknown_083CC4B4[a]);
-    LoadSpritePalette(&gUnknown_083CC4D4[a]);
-    r8 = CreateSprite(&gSpriteTemplate_83CC53C[a], 184, r5, 29);
-    r6 = CreateSprite(&gSpriteTemplate_83CC53C[a], 248, r5, 29);
+    LoadCompressedSpriteSheet(&sSpriteSheets_ContestantsTurnBlinkEffect[a]);
+    LoadSpritePalette(&sSpritePalettes_ContestantsTurnBlinkEffect[a]);
+    r8 = CreateSprite(&sSpriteTemplates_ContestantsTurnBlinkEffect[a], 184, r5, 29);
+    r6 = CreateSprite(&sSpriteTemplates_ContestantsTurnBlinkEffect[a], 248, r5, 29);
     gSprites[r6].oam.tileNum += 64;
 
     CopySpriteTiles(0, 3, (void *)VRAM, (u16 *)(VRAM + 0xE000 + gContestantTurnOrder[a] * 5 * 64 + 0x26), (u8 *)(VRAM + 0x10000 + gSprites[r8].oam.tileNum * 32));
@@ -2886,10 +2908,10 @@ void ContestDebugTogglePointTotal(void)
             Text_FillWindowRectDefPalette(
                 &gWindowTemplate_Contest_MoveDescription,
                 0,
-                gUnknown_083CA308[i][0],
-                gUnknown_083CA308[i][1],
-                gUnknown_083CA310[i][0] + 5,
-                gUnknown_083CA310[i][1] + 1);
+                sContestantMonNameTextCoords[i][0],
+                sContestantMonNameTextCoords[i][1],
+                sContestantTrainerNameTextCoords[i][0] + 5,
+                sContestantTrainerNameTextCoords[i][1] + 1);
         }
         DrawContestantWindowText();
         SwapMoveDescAndContestTilemaps();
@@ -2915,10 +2937,10 @@ void ContestDebugDoPrint(void)
             Text_FillWindowRectDefPalette(
                 &gWindowTemplate_Contest_MoveDescription,
                 0,
-                gUnknown_083CA308[i][0],
-                gUnknown_083CA308[i][1],
-                gUnknown_083CA310[i][0] + 5,
-                gUnknown_083CA310[i][1] + 1);
+                sContestantMonNameTextCoords[i][0],
+                sContestantMonNameTextCoords[i][1],
+                sContestantTrainerNameTextCoords[i][0] + 5,
+                sContestantTrainerNameTextCoords[i][1] + 1);
         }
         for (i = 0; i < 4; i++)
         {
@@ -2934,8 +2956,8 @@ void ContestDebugDoPrint(void)
                 &gWindowTemplate_Contest_MoveDescription,
                 sp8,
                 592 + gContestantTurnOrder[i] * 22,
-                gUnknown_083CA310[gContestantTurnOrder[i]][0],
-                gUnknown_083CA310[gContestantTurnOrder[i]][1]);
+                sContestantTrainerNameTextCoords[gContestantTurnOrder[i]][0],
+                sContestantTrainerNameTextCoords[gContestantTurnOrder[i]][1]);
             r5 = 0;
         }
         for (i = 0; i < 4; i++)
@@ -2952,8 +2974,8 @@ void ContestDebugDoPrint(void)
                 &gWindowTemplate_Contest_MoveDescription,
                 sp8,
                 512 + gContestantTurnOrder[i] * 20,
-                gUnknown_083CA308[gContestantTurnOrder[i]][0],
-                gUnknown_083CA308[gContestantTurnOrder[i]][1]);
+                sContestantMonNameTextCoords[gContestantTurnOrder[i]][0],
+                sContestantMonNameTextCoords[gContestantTurnOrder[i]][1]);
             r5 = 0;
         }
         SwapMoveDescAndContestTilemaps();
@@ -3253,7 +3275,7 @@ void PrintAppealMoveResultText(u8 contestant, u8 stringId)
         StringCopy(gStringVar3, gText_Contest_Hesitancy);
     else
         StringCopy(gStringVar3, gText_Contest_Fear);
-    StringExpandPlaceholders(gStringVar4, gUnknown_083CC188[stringId]);
+    StringExpandPlaceholders(gStringVar4, sAppealResultTexts[stringId]);
     ContestClearGeneralTextWindow();
     Contest_StartTextPrinter(&gMenuWindow, gStringVar4, 776, 1, 15);
 }
@@ -3411,7 +3433,7 @@ UNUSED
 void PrintUnusedContestText(void)
 {
     u8 str[20];
-    StringCopy(str, gUnknown_083CC2EC);
+    StringCopy(str, gText_Tension);
     Text_InitWindowAndPrintText(&gWindowTemplate_Contest_MoveDescription, str, 680, 0, 0);
 }
 
@@ -3426,7 +3448,7 @@ u8 StartApplauseOverflowAnimation(void)
     u8 taskId = CreateTask(Task_ApplauseOverflowAnimation, 10);
 
     gTasks[taskId].data[1] = 1;
-    gTasks[taskId].data[2] = IndexOfSpritePaletteTag(0x0ABE2);
+    gTasks[taskId].data[2] = IndexOfSpritePaletteTag(TAG_APPLAUSE_METER);
     return taskId;
 }
 
@@ -3683,7 +3705,7 @@ void ShowHideNextTurnGfx(bool8 a)
                 GetTurnOrderNumberGfx(i),
                 (void *)(VRAM + 0x10000 + (gSprites[eContestGfxState[i].nextTurnSpriteId].oam.tileNum + 5) * 32),
                 64);
-            gSprites[eContestGfxState[i].nextTurnSpriteId].y = gUnknown_083CA33C[gContestantTurnOrder[i]];
+            gSprites[eContestGfxState[i].nextTurnSpriteId].y = sNextTurnSpriteYPositions[gContestantTurnOrder[i]];
             gSprites[eContestGfxState[i].nextTurnSpriteId].invisible = FALSE;
         }
         else
@@ -3743,7 +3765,7 @@ void SetBgForCurtainDrop(void)
     REG_BG1VOFS = DISPLAY_HEIGHT;
 
     DmaClear32(3, (void *)(VRAM + 0xF000), 0x1000);
-    LZDecompressVram(gUnknown_08D17C3C, (void *)(VRAM + 0xF000));
+    LZDecompressVram(gContestCurtainTilemap, (void *)(VRAM + 0xF000));
 
     ((vBgCnt *)&REG_BG1CNT)->charBaseBlock = 0;
 

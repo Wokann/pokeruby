@@ -329,7 +329,7 @@ const u8 ContestString_AttractedAttention[] = _("It attracted the crowd's\natten
 const u8 ContestString_CrowdWatches[] = _("The crowd continues to\nwatch {STR_VAR_3}.{PAUSE 60}");
 const u8 ContestString_Ignored2[] = _("{STR_VAR_1}'s\n{STR_VAR_2} is ignored.{PAUSE 60}");
 
-const u8 *const gUnknown_083CC188[] = {
+const u8 *const sAppealResultTexts[] = {
     ContestString_MoreConscious,
     ContestString_NoAppeal,
     ContestString_SettleDown,
@@ -418,7 +418,7 @@ const u8 *const gContestCategoryStrings[] = {
     ContestString_Toughness,
 };
 
-const u8 gUnknown_083CC2EC[] = _("TENSION:");
+const u8 gText_Tension[] = _("TENSION:");
 
 const u8 ContestString_CoolMove[] = _("COOL Move");
 
@@ -446,8 +446,8 @@ const u8 ContestString_Rank[] = _("RANK");
 
 const u8 ContestString_HighlightTransparent_ColorMagenta[] = _("{HIGHLIGHT TRANSPARENT}{COLOR MAGENTA} ");
 
-const u8 gUnknownText_MissedTurn[] = _("Missed turn");
+const u8 gText_MissedTurn[] = _("Missed turn");
 
-const u8 gUnknownText_LinkStandbyAndWinner[] = _("Link standby...");
+const u8 gText_LinkStandby4[] = _("Link standby...");
 const u8 gUnknownText_ColorWhite2[] = _("{COLOR WHITE2}");
 const u8 gUnknownText_LinkWinner[] = _("The winner is {STR_VAR_1}'s {STR_VAR_2}!\nCongratulations!");

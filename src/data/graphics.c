@@ -363,7 +363,7 @@ const u8 gContestBgmap[] = INCBIN_U8("graphics/unknown/unknown_D17424.bin.lz");
 const u8 unused_unknown_D176CC[] = INCBIN_U8("graphics/unknown/unknown_D176CC.bin.lz");
 const u8 unused_unknown_D177D8[] = INCBIN_U8("graphics/unknown/unknown_D177D8.bin.lz");
 
-const u8 gUnknown_08D17C3C[] = INCBIN_U8("graphics/unknown/unknown_D17C3C.bin.lz");
+const u8 gContestCurtainTilemap[] = INCBIN_U8("graphics/unknown/unknown_D17C3C.bin.lz");
 
 const u8 gContestMiscGfx[] = INCBIN_U8("graphics/contest/misc.4bpp.lz");
 
@@ -374,7 +374,7 @@ const u8 gContestJudgeSymbolsGfx[] = INCBIN_U8("graphics/contest/judge_symbols.4
 
 const u8 gContest3Pal[] = INCBIN_U8("graphics/contest/judge_symbols.gbapal.lz");
 
-const u8 gTiles_8D1975C[] = INCBIN_U8("graphics/contest/heart.4bpp");
+const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/heart.4bpp");
 
 const u8 gContestResults_Gfx[] = INCBIN_U8("graphics/contest/results_screen/tiles.4bpp.lz");
 

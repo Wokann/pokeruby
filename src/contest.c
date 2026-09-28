@@ -69,8 +69,8 @@ extern const u8 ContestString_CrowdWatches[];
 extern const u8 ContestString_Ignored2[];
 extern const u8 *const gContestCategoryStrings[];
 extern const u8 *const sInvalidContestMoveNames[];
-extern const u8 gUnknownText_UnknownFormatting2[];
-extern const u8 gUnknownText_UnknownFormatting3[];
+extern const u8 gText_ContestComboMove[];
+extern const u8 gText_ContestRepeatedMove[];
 
 EWRAM_DATA u8 gContestDebugMode = 0;
 EWRAM_DATA struct ContestPokemon gContestMons[4] = {0};
@@ -499,14 +499,14 @@ void Task_ShowMoveSelectScreen(u8 taskId)
          && AreMovesContestCombo(sContestantStatus[gContestPlayerMonIndex].prevMove, move) != 0
          && sContestantStatus[gContestPlayerMonIndex].hasJudgesAttention)
         {
-            r5 = StringCopy(sp8, gUnknownText_UnknownFormatting2);
+            r5 = StringCopy(sp8, gText_ContestComboMove);
         }
         else if (move != 0
          && sContestantStatus[gContestPlayerMonIndex].prevMove == move
          && gContestMoves[move].effect != CONTEST_EFFECT_REPETITION_NOT_BORING)
         {
             // Gray the text because it is a repeated move
-            r5 = StringCopy(sp8, gUnknownText_UnknownFormatting3);
+            r5 = StringCopy(sp8, gText_ContestRepeatedMove);
         }
         r5 = StringCopy(r5, gMoveNames[move]);
 
