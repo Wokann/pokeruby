@@ -7,7 +7,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimPresentHealParticle(struct Sprite* sprite);
+static void AnimPresentHealParticle(struct Sprite *sprite);
 
 // heal (healing sparkles on a Pokemon)
 // Used in Present, if the move heals instead of damages.
@@ -37,7 +37,7 @@ const struct SpriteTemplate gPresentHealParticleSpriteTemplate =
     .callback = AnimPresentHealParticle,
 };
 
-void AnimPresentHealParticle(struct Sprite* sprite)
+static void AnimPresentHealParticle(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
