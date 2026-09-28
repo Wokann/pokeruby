@@ -101,7 +101,7 @@ extern void StoreSpriteCallbackInData6();
 extern void BattleLoadPlayerMonSprite();
 extern bool8 IsDoubleBattle(void);
 extern void sub_802D500(void);
-extern bool8 IsBankSpritePresent(u8);
+extern bool8 IsBattlerSpritePresent(u8);
 extern bool8 TryHandleLaunchBattleTableAnimation();
 extern void sub_802E460(void);
 extern void b_link_standby_message(void);
@@ -3000,7 +3000,7 @@ void PlayerHandlecmd50(void)
 
 void PlayerHandleSpriteInvisibility(void)
 {
-    if (IsBankSpritePresent(gActiveBattler))
+    if (IsBattlerSpritePresent(gActiveBattler))
     {
         gSprites[gBattlerSpriteIds[gActiveBattler]].invisible = gBattleBufferA[gActiveBattler][1];
         sub_8031F88(gActiveBattler);

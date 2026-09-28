@@ -416,7 +416,7 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
 
     if (whichBank == ANIM_BATTLER_ATTACKER)
     {
-        if (IsBankSpritePresent(gBattleAnimAttacker))
+        if (IsBattlerSpritePresent(gBattleAnimAttacker))
         {
             sprites = gBattleMonSprites;
             return sprites[gBattleAnimAttacker];
@@ -428,7 +428,7 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
     }
     else if (whichBank == ANIM_BATTLER_TARGET)
     {
-        if (IsBankSpritePresent(gBattleAnimTarget))
+        if (IsBattlerSpritePresent(gBattleAnimTarget))
         {
             sprites = gBattleMonSprites;
             return sprites[gBattleAnimTarget];
@@ -440,14 +440,14 @@ u8 GetAnimBattlerSpriteId(u8 whichBank)
     }
     else if (whichBank == ANIM_BATTLER_ATK_PARTNER)
     {
-        if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
             return 0xff;
         else
             return gBattleMonSprites[gBattleAnimAttacker ^ 2];
     }
     else
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
             return gBattleMonSprites[gBattleAnimTarget ^ 2];
         else
             return 0xff;
@@ -561,12 +561,12 @@ void WaitAnimForDuration(struct Sprite *sprite)
 
 void sub_80782F8(struct Sprite *sprite)
 {
-    sub_8078314(sprite);
+    ConvertPosDataToTranslateLinearData(sprite);
     sprite->callback = TranslateSpriteLinear;
     sprite->callback(sprite);
 }
 
-void sub_8078314(struct Sprite *sprite)
+void ConvertPosDataToTranslateLinearData(struct Sprite *sprite)
 {
     s16 old;
     int v1;
@@ -839,28 +839,28 @@ u8 GetBattlerAtPosition(u8 slot)
     return i;
 }
 
-bool8 IsBankSpritePresent(u8 slot)
+bool8 IsBattlerSpritePresent(u8 battler)
 {
     if (IsContest())
     {
-        if (gBattleAnimAttacker == slot)
+        if (gBattleAnimAttacker == battler)
             return TRUE;
-        if (gBattleAnimTarget == slot)
+        if (gBattleAnimTarget == battler)
             return TRUE;
         return FALSE;
     }
     else
     {
-        if (gBattlerPositions[slot] == 0xff)
+        if (gBattlerPositions[battler] == 0xff)
             return FALSE;
-        if (GetBattlerSide(slot) != B_SIDE_PLAYER)
+        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
         {
-            if (GetMonData(&gEnemyParty[gBattleMonPartyPositions[slot]], MON_DATA_HP) != 0)
+            if (GetMonData(&gEnemyParty[gBattleMonPartyPositions[battler]], MON_DATA_HP) != 0)
                 return TRUE;
         }
         else
         {
-            if (GetMonData(&gPlayerParty[gBattleMonPartyPositions[slot]], MON_DATA_HP) != 0)
+            if (GetMonData(&gPlayerParty[gBattleMonPartyPositions[battler]], MON_DATA_HP) != 0)
                 return TRUE;
         }
         return FALSE;
@@ -1167,7 +1167,7 @@ void PrepareBattlerSpriteForRotScale(u8 spriteId, u8 objMode)
 {
     u8 battler = gSprites[spriteId].data[0];
 
-    if (IsContest() || IsAnimBankSpriteVisible(battler))
+    if (IsContest() || IsBattlerSpriteVisible(battler))
         gSprites[spriteId].invisible = FALSE;
     gSprites[spriteId].oam.objMode = objMode;
     gSprites[spriteId].affineAnimPaused = TRUE;
@@ -1293,7 +1293,7 @@ u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, 
     }
     if (attackerPartner)
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             shift = (gBattleAnimAttacker ^ 2) + 16;
             selectedPalettes |= 1 << shift;
@@ -1301,7 +1301,7 @@ u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, 
     }
     if (targetPartner)
     {
-        if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
             shift = (gBattleAnimTarget ^ 2) + 16;
             selectedPalettes |= 1 << shift;
@@ -1336,24 +1336,24 @@ u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLef
         }
     } else {
         if (playerLeft) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(0))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(0))) {
                 selectedPalettes |= 1 << (GetBattlerAtPosition(0) + 16);
             }
         }
         if (playerRight) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(2))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(2))) {
                 shift = GetBattlerAtPosition(2) + 16;
                 selectedPalettes |= 1 << shift;
             }
         }
         if (opponentLeft) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(1))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(1))) {
                 shift = GetBattlerAtPosition(1) + 16;
                 selectedPalettes |= 1 << shift;
             }
         }
         if (opponentRight) {
-            if (IsAnimBankSpriteVisible(GetBattlerAtPosition(3))) {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(3))) {
                 shift = GetBattlerAtPosition(3) + 16;
                 selectedPalettes |= 1 << shift;
             }
@@ -1859,13 +1859,13 @@ void AnimTask_GetFrustrationPowerLevel(u8 taskId)
 
 void unref_sub_8079D20(u8 priority)
 {
-    if (IsAnimBankSpriteVisible(gBattleAnimTarget))
+    if (IsBattlerSpriteVisible(gBattleAnimTarget))
         gSprites[gBattleMonSprites[gBattleAnimTarget]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker))
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker))
         gSprites[gBattleMonSprites[gBattleAnimAttacker]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+    if (IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         gSprites[gBattleMonSprites[gBattleAnimTarget ^ 2]].oam.priority = priority;
-    if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+    if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         gSprites[gBattleMonSprites[gBattleAnimAttacker ^ 2]].oam.priority = priority;
 }
 
@@ -1875,7 +1875,7 @@ void UpdateBattlerSpritePriorities()
 
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (IsAnimBankSpriteVisible(i))
+        if (IsBattlerSpriteVisible(i))
         {
             gSprites[gBattleMonSprites[i]].subpriority = GetBattlerSpriteSubpriority(i);
             gSprites[gBattleMonSprites[i]].oam.priority = 2;

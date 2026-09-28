@@ -1723,7 +1723,7 @@ void LinkOpponentHandlecmd50(void)
 
 void LinkOpponentHandleSpriteInvisibility(void)
 {
-    if (IsBankSpritePresent(gActiveBattler) != 0)
+    if (IsBattlerSpritePresent(gActiveBattler) != 0)
     {
         gSprites[gBattlerSpriteIds[gActiveBattler]].invisible = gBattleBufferA[gActiveBattler][1];
         sub_8031F88(gActiveBattler);

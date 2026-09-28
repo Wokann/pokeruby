@@ -87,8 +87,8 @@ struct DisableStruct
     /*0x0F*/ u8 perishSongTimer1 : 4;
     /*0x0F*/ u8 perishSongTimer2 : 4;
     /*0x10*/ u8 furyCutterCounter;
-    /*0x11*/ u8 rolloutTimer1 : 4;
-    /*0x11*/ u8 rolloutTimer2 : 4;
+    /*0x11*/ u8 rolloutTimer : 4;
+    /*0x11*/ u8 rolloutTimerStartValue : 4;
     /*0x12*/ u8 chargeTimer1 : 4;
     /*0x12*/ u8 chargeTimer2 : 4;
     /*0x13*/ u8 tauntTimer1:4;

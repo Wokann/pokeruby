@@ -197,7 +197,7 @@ void AnimTask_ShakeMon2(u8 taskId)
             break;
         }
 
-        if (IsAnimBankSpriteVisible(battler) == FALSE)
+        if (IsBattlerSpriteVisible(battler) == FALSE)
             abort = TRUE;
 
         spriteId = gBattlerSpriteIds[battler];
@@ -722,7 +722,7 @@ void AnimTask_SlideOffScreen(u8 taskId)
         spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
         break;
     case 2:
-        if (!IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2))
         {
             DestroyAnimVisualTask(taskId);
             return;
@@ -730,7 +730,7 @@ void AnimTask_SlideOffScreen(u8 taskId)
         spriteId = gBattlerSpriteIds[gBattleAnimAttacker ^ 2];
         break;
     case 3:
-        if (!IsAnimBankSpriteVisible(gBattleAnimTarget ^ 2))
+        if (!IsBattlerSpriteVisible(gBattleAnimTarget ^ 2))
         {
             DestroyAnimVisualTask(taskId);
             return;

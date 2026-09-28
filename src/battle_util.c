@@ -378,7 +378,7 @@ void CancelMultiTurnMoves(u8 bank)
 
     gStatuses3[bank] &= ~(STATUS3_SEMI_INVULNERABLE);
 
-    gDisableStructs[bank].rolloutTimer1 = 0;
+    gDisableStructs[bank].rolloutTimer = 0;
     gDisableStructs[bank].furyCutterCounter = 0;
 }
 

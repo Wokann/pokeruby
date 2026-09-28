@@ -443,11 +443,11 @@ static void AnimDefensiveWall(struct Sprite *sprite)
         int var0 = 1;
         u8 toBG_2 = (rank ^ var0) != 0;
 
-        if (IsAnimBankSpriteVisible(battler))
+        if (IsBattlerSpriteVisible(battler))
             MoveBattlerSpriteToBG(battler, toBG_2);
 
         battler = battlerCopy ^ 2;
-        if (IsAnimBankSpriteVisible(battler))
+        if (IsBattlerSpriteVisible(battler))
             MoveBattlerSpriteToBG(battler, toBG_2 ^ var0);
     }
 
@@ -524,11 +524,11 @@ static void AnimDefensiveWall_Step4(struct Sprite *sprite)
             u8 battlerCopy;
             u8 battler = battlerCopy = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
 
-            if (IsAnimBankSpriteVisible(battler))
+            if (IsBattlerSpriteVisible(battler))
                 gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
 
             battler = battlerCopy ^ 2;
-            if (IsAnimBankSpriteVisible(battler))
+            if (IsBattlerSpriteVisible(battler))
                 gSprites[gBattlerSpriteIds[battler]].invisible = FALSE;
         }
 
@@ -547,11 +547,11 @@ static void AnimDefensiveWall_Step5(struct Sprite *sprite)
         int var0 = 1;
         u8 toBG_2 = (rank ^ var0) != 0;
 
-        if (IsAnimBankSpriteVisible(battler))
+        if (IsBattlerSpriteVisible(battler))
             ResetBattleAnimBg(toBG_2);
 
         battler = battlerCopy ^ 2;
-        if (IsAnimBankSpriteVisible(battler))
+        if (IsBattlerSpriteVisible(battler))
             ResetBattleAnimBg(toBG_2 ^ var0);
     }
 

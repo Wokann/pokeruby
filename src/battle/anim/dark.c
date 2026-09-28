@@ -798,7 +798,7 @@ void AnimTask_InitMementoShadow(u8 taskId)
     MoveBattlerSpriteToBG(gBattleAnimAttacker, toBG2);
     gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].invisible = FALSE;
 
-    if (IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
+    if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
     {
         MoveBattlerSpriteToBG(BATTLE_PARTNER(gBattleAnimAttacker), toBG2 ^ 1);
         gSprites[gBattlerSpriteIds[BATTLE_PARTNER(gBattleAnimAttacker)]].invisible = FALSE;
@@ -812,7 +812,7 @@ void AnimTask_MementoHandleBg(u8 taskId)
     u8 toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) ^ 1 ? 1 : 0;
     ResetBattleAnimBg(toBG2);
 
-    if (IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
+    if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
         ResetBattleAnimBg(toBG2 ^ 1);
 
     DestroyAnimVisualTask(taskId);
@@ -853,7 +853,7 @@ void AnimTask_MetallicShine(u8 taskId)
         if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT
          || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
         {
-            if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
+            if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority--;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -988,7 +988,7 @@ void AnimTask_SetGrayscaleOrOriginalPal(u8 taskId)
     if (calcSpriteId)
     {
         battler = GetBattlerAtPosition(position);
-        if (IsAnimBankSpriteVisible(battler))
+        if (IsBattlerSpriteVisible(battler))
             spriteId = gBattlerSpriteIds[battler];
         else
             spriteId = 0xFF;

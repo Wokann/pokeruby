@@ -8218,16 +8218,16 @@ static void atkB3_rolloutdamagecalculation(void)
         int i;
         if (!(gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)) //first hit
         {
-            gDisableStructs[gBattlerAttacker].rolloutTimer1 = 5;
-            gDisableStructs[gBattlerAttacker].rolloutTimer2 = 5;
+            gDisableStructs[gBattlerAttacker].rolloutTimer = 5;
+            gDisableStructs[gBattlerAttacker].rolloutTimerStartValue = 5;
             gBattleMons[gBattlerAttacker].status2 |= STATUS2_MULTIPLETURNS;
             gLockedMoves[gBattlerAttacker] = gCurrentMove;
         }
-        if (--gDisableStructs[gBattlerAttacker].rolloutTimer1 == 0)
+        if (--gDisableStructs[gBattlerAttacker].rolloutTimer == 0)
             gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_MULTIPLETURNS);
 
         gDynamicBasePower = gBattleMoves[gCurrentMove].power;
-        for (i = 1; i < (5 - gDisableStructs[gBattlerAttacker].rolloutTimer1); i++)
+        for (i = 1; i < (5 - gDisableStructs[gBattlerAttacker].rolloutTimer); i++)
             gDynamicBasePower *= 2;
 
         if (gBattleMons[gBattlerAttacker].status2 & STATUS2_DEFENSE_CURL)

@@ -1016,7 +1016,7 @@ void AnimTask_BlendBattleAnimPalExclude(u8 taskId)
 
     for (battler = 0; battler < 4; battler++)
     {
-        if (battler != sp[0] && battler != sp[1] && IsAnimBankSpriteVisible(battler))
+        if (battler != sp[0] && battler != sp[1] && IsBattlerSpriteVisible(battler))
         {
             u8 paletteIndex = sub_80793A8(battler);
             selectedPalettes |= (0x10000 << paletteIndex);
@@ -1226,7 +1226,7 @@ void AnimTask_DrawFallingWhiteLinesOnAttacker(u8 taskId)
         if (GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_OPPONENT_RIGHT
          || GetBattlerPosition(gBattleAnimAttacker) == B_POSITION_PLAYER_LEFT)
         {
-            if (IsAnimBankSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
+            if (IsBattlerSpriteVisible(gBattleAnimAttacker ^ 2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[gBattleAnimAttacker ^ 2]].oam.priority -= 1;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -1342,7 +1342,7 @@ static void StatsChangeAnimation_Setup(u8 taskId)
         battler1 = gBattleAnimTarget;
 
     battler2 = battler1 ^ 2;
-    if (IsContest() || (taskData[3] && !IsAnimBankSpriteVisible(battler2)))
+    if (IsContest() || (taskData[3] && !IsBattlerSpriteVisible(battler2)))
         taskData[3] = 0;
 
     gBattle_WIN0H = 0;
@@ -1363,7 +1363,7 @@ static void StatsChangeAnimation_Setup(u8 taskId)
         if (GetBattlerPosition(battler1) == B_POSITION_OPPONENT_RIGHT
          || GetBattlerPosition(battler1) == B_POSITION_PLAYER_LEFT)
         {
-            if (IsAnimBankSpriteVisible(battler2) == TRUE)
+            if (IsBattlerSpriteVisible(battler2) == TRUE)
             {
                 gSprites[gBattlerSpriteIds[battler2]].oam.priority -= 1;
                 REG_BG1CNT_BITFIELD.priority = 1;
@@ -1670,7 +1670,7 @@ void AnimTask_SetAllNonAttackersInvisiblity(u8 taskId)
 
     for (battler = 0; battler < MAX_BATTLERS_COUNT; battler++)
     {
-        if (battler != gBattleAnimAttacker && IsAnimBankSpriteVisible(battler))
+        if (battler != gBattleAnimAttacker && IsBattlerSpriteVisible(battler))
             gSprites[gBattlerSpriteIds[battler]].invisible = gBattleAnimArgs[0];
     }
 
@@ -1687,7 +1687,7 @@ void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler,
     spriteId2 = 0;
     battler2 = battler ^ 2;
 
-    if (IsContest() || (includePartner && !IsAnimBankSpriteVisible(battler2)))
+    if (IsContest() || (includePartner && !IsBattlerSpriteVisible(battler2)))
         includePartner = FALSE;
 
     gBattle_WIN0H = 0;

@@ -76,7 +76,7 @@ static void AnimSparklingStars(struct Sprite *sprite)
     else
         battler = gBattleAnimTarget;
 
-    if (IsDoubleBattle() && IsAnimBankSpriteVisible(BATTLE_PARTNER(battler)))
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(BATTLE_PARTNER(battler)))
     {
         SetAverageBattlerPositions(battler, gBattleAnimArgs[6], &sprite->x, &sprite->y);
         SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);

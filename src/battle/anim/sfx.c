@@ -165,7 +165,7 @@ void SoundTask_PlayCryWithMode(u8 taskId)
 
         if (gBattleAnimArgs[0] == ANIM_BATTLER_TARGET || gBattleAnimArgs[0] == ANIM_BATTLER_DEF_PARTNER)
         {
-            if (!IsAnimBankSpriteVisible(battler))
+            if (!IsBattlerSpriteVisible(battler))
             {
                 DestroyAnimVisualTask(taskId);
                 return;

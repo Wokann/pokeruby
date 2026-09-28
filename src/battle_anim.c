@@ -412,7 +412,7 @@ const struct OamData gOamData_837E07C =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E084 =
+const struct OamData gOamData_AffineOff_ObjBlend_8x16 =
 {
     .affineMode = 0,
     .objMode = 1,
@@ -448,7 +448,7 @@ const struct OamData gOamData_837E09C =
     .priority = 2,
 };
 
-const struct OamData gOamData_837E0A4 =
+const struct OamData gOamData_AffineNormal_ObjBlend_8x8 =
 {
     .affineMode = 1,
     .objMode = 1,
@@ -1833,7 +1833,7 @@ static void ScriptCmd_monbg(void)
     else
         bank = gBattleAnimTarget;
 
-    if (IsAnimBankSpriteVisible(bank))
+    if (IsBattlerSpriteVisible(bank))
     {
         identity = GetBattlerPosition(bank);
         identity += 0xFF;
@@ -1865,7 +1865,7 @@ static void ScriptCmd_monbg(void)
     }
 
     bank ^= 2;
-    if (animBank >= ANIM_BATTLER_ATK_PARTNER && IsAnimBankSpriteVisible(bank))
+    if (animBank >= ANIM_BATTLER_ATK_PARTNER && IsBattlerSpriteVisible(bank))
     {
         identity = GetBattlerPosition(bank);
         identity += 0xFF;
@@ -1898,20 +1898,20 @@ static void ScriptCmd_monbg(void)
     sBattleAnimScriptPtr++;
 }
 
-bool8 IsAnimBankSpriteVisible(u8 bank)
+bool8 IsBattlerSpriteVisible(u8 battler)
 {
     if (IsContest())
     {
-        if (bank == gBattleAnimAttacker)
+        if (battler == gBattleAnimAttacker)
             return TRUE;
         else
             return FALSE;
     }
-    if (!IsBankSpritePresent(bank))
+    if (!IsBattlerSpritePresent(battler))
         return FALSE;
     if (IsContest())
         return TRUE; // this line wont ever be reached.
-    if (!gBattleSpriteInfo[bank].invisible || !gSprites[gBattlerSpriteIds[bank]].invisible)
+    if (!gBattleSpriteInfo[battler].invisible || !gSprites[gBattlerSpriteIds[battler]].invisible)
         return TRUE;
 
     return FALSE;
@@ -2167,7 +2167,7 @@ static void ScriptCmd_monbg_22(void)
     else
         bank = gBattleAnimTarget;
 
-    if (IsAnimBankSpriteVisible(bank))
+    if (IsBattlerSpriteVisible(bank))
     {
         identity = GetBattlerPosition(bank);
         identity += 0xFF;
@@ -2180,7 +2180,7 @@ static void ScriptCmd_monbg_22(void)
     }
 
     bank ^= 2;
-    if (animBankId > ANIM_BATTLER_TARGET && IsAnimBankSpriteVisible(bank))
+    if (animBankId > ANIM_BATTLER_TARGET && IsBattlerSpriteVisible(bank))
     {
         identity = GetBattlerPosition(bank);
         identity += 0xFF;
@@ -2213,9 +2213,9 @@ static void ScriptCmd_clearmonbg_23(void)
     else
         bank = gBattleAnimTarget;
 
-    if (IsAnimBankSpriteVisible(bank))
+    if (IsBattlerSpriteVisible(bank))
         gSprites[gBattlerSpriteIds[bank]].invisible = FALSE;
-    if (animBankId > 1 && IsAnimBankSpriteVisible(bank ^ 2))
+    if (animBankId > 1 && IsBattlerSpriteVisible(bank ^ 2))
         gSprites[gBattlerSpriteIds[bank ^ 2]].invisible = FALSE;
     else
         animBankId = 0;
@@ -2243,9 +2243,9 @@ static void sub_80769A4(u8 taskId)
             toBG_2 = 0;
         else
             toBG_2 = 1;
-        if (IsAnimBankSpriteVisible(bank))
+        if (IsBattlerSpriteVisible(bank))
             ResetBattleAnimBg(toBG_2);
-        if (gTasks[taskId].data[0] > 1 && IsAnimBankSpriteVisible(bank ^ 2))
+        if (gTasks[taskId].data[0] > 1 && IsBattlerSpriteVisible(bank ^ 2))
             ResetBattleAnimBg(toBG_2 ^ 1);
         DestroyTask(taskId);
     }

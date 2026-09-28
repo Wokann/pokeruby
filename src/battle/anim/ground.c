@@ -606,7 +606,7 @@ void AnimTask_HorizontalShake(u8 taskId)
         task->tNumBattlers = 0;
         for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         {
-            if (IsAnimBankSpriteVisible(i))
+            if (IsBattlerSpriteVisible(i))
             {
                 task->tbattlerSpriteIds(task->tNumBattlers) = gBattlerSpriteIds[i];
                 task->tNumBattlers++;

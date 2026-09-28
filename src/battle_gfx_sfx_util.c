@@ -95,7 +95,7 @@ const struct SpritePalette gUnknown_0820A4D4[] =
 };
 
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
-extern u8 IsBankSpritePresent(u8);
+extern u8 IsBattlerSpritePresent(u8);
 extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void BufferBattlePartyCurrentOrder(void);
@@ -858,7 +858,7 @@ void SetBattlerSpriteAffineMode(u8 a)
 
     for (i = 0; i < gBattlersCount; i++)
     {
-        if (IsBankSpritePresent(i) != 0)
+        if (IsBattlerSpritePresent(i) != 0)
         {
             gSprites[gBattlerSpriteIds[i]].oam.affineMode = a;
             if (a == 0)
@@ -896,7 +896,7 @@ void SpriteCB_EnemyShadow(struct Sprite *sprite)
     u8 r4 = sprite->data[0];
     struct Sprite *r7 = &gSprites[gBattlerSpriteIds[r4]];
 
-    if (!r7->inUse || IsBankSpritePresent(r4) == 0)
+    if (!r7->inUse || IsBattlerSpritePresent(r4) == 0)
     {
         sprite->callback = SpriteCB_SetInvisible;
         return;

@@ -222,7 +222,7 @@ static void AnimBlendThinRing(struct Sprite* sprite)
         battler = gBattleAnimTarget;
 
     r4 = gBattleAnimArgs[3] ^ 1;
-    if (IsDoubleBattle() && IsAnimBankSpriteVisible(battler ^ 2))
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(battler ^ 2))
     {
         SetAverageBattlerPositions(battler, r4, &x, &y);
         if (r4 == 0)
@@ -285,7 +285,7 @@ static void AnimHyperVoiceRing(struct Sprite *sprite)
     if (GetBattlerSide(battler1) != B_SIDE_PLAYER)
     {
         startX = GetBattlerSpriteCoord(battler1, xCoordType) + gBattleAnimArgs[0];
-        if (IsAnimBankSpriteVisible(battler2 ^ 2))
+        if (IsBattlerSpriteVisible(battler2 ^ 2))
             sprite->subpriority = gSprites[gBattlerSpriteIds[battler2 ^ 2]].subpriority - 1;
         else
             sprite->subpriority = gSprites[gBattlerSpriteIds[battler2]].subpriority - 1;
@@ -293,7 +293,7 @@ static void AnimHyperVoiceRing(struct Sprite *sprite)
     else
     {
         startX = GetBattlerSpriteCoord(battler1, xCoordType) - gBattleAnimArgs[0];
-        if (gMain.inBattle && IsAnimBankSpriteVisible(battler1 ^ 2))
+        if (gMain.inBattle && IsBattlerSpriteVisible(battler1 ^ 2))
         {
             if (gSprites[gBattlerSpriteIds[battler1]].x < gSprites[gBattlerSpriteIds[battler1 ^ 2]].x)
                 sprite->subpriority = gSprites[gBattlerSpriteIds[battler1 ^ 2]].subpriority + 1;
@@ -308,7 +308,7 @@ static void AnimHyperVoiceRing(struct Sprite *sprite)
     }
 
     startY = GetBattlerSpriteCoord(battler1, yCoordType) + gBattleAnimArgs[1];
-    if (gMain.inBattle && IsAnimBankSpriteVisible(battler2 ^ 2))
+    if (gMain.inBattle && IsBattlerSpriteVisible(battler2 ^ 2))
     {
         SetAverageBattlerPositions(battler2, gBattleAnimArgs[6], &x, &y);
     }

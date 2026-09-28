@@ -816,7 +816,7 @@ void AnimTask_DestinyBondWhiteShadow(u8 taskId)
         {
             if (battler != gBattleAnimAttacker
              && battler != (gBattleAnimAttacker ^ 2)
-             && IsAnimBankSpriteVisible(battler))
+             && IsBattlerSpriteVisible(battler))
             {
                 spriteId = CreateSprite(&gDestinyBondWhiteShadowSpriteTemplate, baseX, baseY, 55);
                 if (spriteId != MAX_SPRITES)

@@ -315,7 +315,7 @@ void AnimTask_AirCutterProjectile(u8 taskId)
     attackerX = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
     attackerY = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
     if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
-        && IsAnimBankSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
+        && IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
     {
         SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &targetX, &targetY);
     }
