@@ -12,49 +12,49 @@ s16 GetWordPitch(int tableIndex, int pitchIndex)
 }
 
 #if ENGLISH
-const struct BardSound *GetWordSounds(u16 group, u16 word)
+const struct BardSoundTemplate *GetWordSoundTemplates(u16 group, u16 word)
 {
-    const struct BardSound (*sounds)[6] = gBardSoundsTable[group];
+    const struct BardSoundTemplate (*soundTemplates)[MAX_BARD_SOUNDS_PER_WORD] = gBardSoundTemplatesTable[group];
 
-    return sounds[word];
+    return soundTemplates[word];
 }
 #elif GERMAN
-const struct BardSound *GetWordSounds(u16 group, u16 word)
+const struct BardSoundTemplate *GetWordSoundTemplates(u16 group, u16 word)
 {
-    const struct BardSound (*sounds)[6] = gBardSoundsTable[group];
+    const struct BardSoundTemplate (*soundTemplates)[MAX_BARD_SOUNDS_PER_WORD] = gBardSoundTemplatesTable[group];
     u32 index = GetEasyChatWordIndexInGroup(group, word);
 
-    return sounds[index];
+    return soundTemplates[index];
 }
 #endif
 
-s32 CalcWordPhonemes(struct BardSong *song, const struct BardSound *sounds, u16 pitchTableIndex)
+s32 CalcWordSounds(struct BardSong *song, const struct BardSoundTemplate *soundTemplates, u16 pitchTableIndex)
 {
     s32 i;
     s32 j;
     s32 basePitchTableIndex;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < MAX_BARD_SOUNDS_PER_WORD; i++)
     {
-        song->phonemes[i].sound = sounds[i].var00;
-        if (sounds[i].var00 != 0xFF)
+        song->sounds[i].songId = soundTemplates[i].songId;
+        if (soundTemplates[i].songId != BARD_SOUND_ID_NONE)
         {
-            s32 length = sounds[i].var01 + gBardSoundLengthTable[sounds[i].var00];
+            s32 length = soundTemplates[i].lengthAdjustment + gBardSoundLengthTable[soundTemplates[i].songId];
 
-            song->phonemes[i].length = length;
-            song->phonemes[i].volume = sounds[i].volume;
-            song->var04 += length;
+            song->sounds[i].length = length;
+            song->sounds[i].volume = soundTemplates[i].volume;
+            song->length += length;
         }
     }
 
     for (j = 0, basePitchTableIndex = 30; j < i; j++)
-        song->phonemes[j].pitch = GetWordPitch(basePitchTableIndex + pitchTableIndex, j);
+        song->sounds[j].pitch = GetWordPitch(basePitchTableIndex + pitchTableIndex, j);
 
-    song->currWord++;
-    song->currPhoneme = 0;
-    song->phonemeTimer = 0;
+    song->lyricsIndex++;
+    song->soundIndex = 0;
+    song->timer = 0;
     song->state = 0;
     song->voiceInflection = 0;
 
-    //warning: no return statement in function returning non-void
+    // Ruby's caller ignores this legacy return value.
 }

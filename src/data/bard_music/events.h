@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_EVENTS_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Events[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Events[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // APPEAL
         {0x2C}, {0x0C}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // EVENTS
@@ -50,7 +50,7 @@ const struct BardSound gBardSounds_Events[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Events[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Events[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // APPEAL
         {0x02}, {0x29}, {0x29}, {0xFF}, {0xFF}, {0xFF}
     }, { // EVENTS

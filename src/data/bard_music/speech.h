@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_SPEECH_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Speech[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Speech[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // LISTEN
         {0x09}, {0x10}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // NOT VERY
@@ -126,7 +126,7 @@ const struct BardSound gBardSounds_Speech[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Speech[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Speech[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // LISTEN
         {0x29}, {0x0B}, {0x0B}, {0xFF}, {0xFF}, {0xFF}
     }, { // NOT VERY

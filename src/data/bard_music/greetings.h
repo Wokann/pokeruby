@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_GREETINGS_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Greetings[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Greetings[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // THANKS
         {0x03}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // YES
@@ -90,7 +90,7 @@ const struct BardSound gBardSounds_Greetings[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Greetings[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Greetings[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // THANKS
         {0x02}, {0xFF}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // YES

@@ -19,6 +19,7 @@
 #include "trader.h"
 
 #define WORD_TO_PITCH_TABLE_INDEX(a) (((a) % 4) + (((a) / 8) & 1))
+#define NUM_STORYTELLER_STORIES 36
 
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 
@@ -322,14 +323,14 @@ void SaveBardSongLyrics(void)
 static void PrepareSongText(void)
 {
     struct MauvilleManBard *bard = &gSaveBlock1.oldMan.bard;
-    u16 specialVar = gSpecialVar_0x8004;  // It's a bit odd to use this temp variable, but it seems needed to match.
+    u16 songSelection = gSpecialVar_0x8004;  // It's a bit odd to use this temp variable, but it seems needed to match.
     u16 *lyrics;
     u16 lineNum;
     u8 *wordEnd;
     u8 *str;
 
     lyrics = bard->newSongLyrics;
-    if (specialVar == 0)
+    if (songSelection == 0)
         lyrics = bard->songLyrics;
     wordEnd = gStringVar4;
     str = wordEnd;
@@ -594,52 +595,52 @@ static void BardSing(struct Task *task, struct BardSong *song)
                 lyrics = bard->songLyrics;
             else
                 lyrics = bard->newSongLyrics;
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < NUM_BARD_SONG_WORDS; i++)
                 song->lyrics[i] = lyrics[i];
 
-            // Clear phonemes
-            for (i = 0; i < 6; i++)
+            // Clear sounds
+            for (i = 0; i < MAX_BARD_SOUNDS_PER_WORD; i++)
             {
-                song->phonemes[i].sound = 0xFFFF;
-                song->phonemes[i].length = 0;
-                song->phonemes[i].pitch = 0;
-                song->phonemes[i].volume = 0;
+                song->sounds[i].songId = 0xFFFF;
+                song->sounds[i].length = 0;
+                song->sounds[i].pitch = 0;
+                song->sounds[i].volume = 0;
             }
-            song->currWord = 0;
-            song->currPhoneme = 0;
-            song->var04 = 0;
+            song->lyricsIndex = 0;
+            song->soundIndex = 0;
+            song->length = 0;
         }
         break;
     case 1:  // Wait for BGM to end
         break;
     case 2:  // Initialize word
         {
-            u16 word = song->lyrics[song->currWord];
-            const struct BardSound *sounds = GetWordSounds(EC_GROUP(word), EC_INDEX(word));
+            u16 word = song->lyrics[song->lyricsIndex];
+            const struct BardSoundTemplate *soundTemplates = GetWordSoundTemplates(EC_GROUP(word), EC_INDEX(word));
 
-            song->var04 = 0;
-            CalcWordPhonemes(song, sounds, WORD_TO_PITCH_TABLE_INDEX(word));
+            song->length = 0;
+            CalcWordSounds(song, soundTemplates, WORD_TO_PITCH_TABLE_INDEX(word));
         }
         break;
     case 3:
     case 4:
         {
-            struct BardPhoneme *phoneme = &song->phonemes[song->currPhoneme];
+            struct BardSound *sound = &song->sounds[song->soundIndex];
 
             switch (song->state)
             {
             case 0:
-                if (song->phonemeTimer == 0)  // Timer has expired. Move to next phoneme
+                if (song->timer == 0)  // Timer has expired. Move to next sound
                 {
-                    if (song->currPhoneme == 6 || phoneme->sound == 0xFF)
+                    if (song->soundIndex == MAX_BARD_SOUNDS_PER_WORD || sound->songId == BARD_SOUND_ID_NONE)
                     {
                         song->state = 0xFE;
                         break;
                     }
-                    song->phonemeTimer = phoneme->length;
-                    if (phoneme->sound <= 50)
+                    song->timer = sound->length;
+                    if (sound->songId <= 50)
                     {
-                        u16 num = phoneme->sound / 3;
+                        u16 num = sound->songId / 3;
 
                         m4aSongNumStart(249 + num * 3);
                     }
@@ -657,16 +658,16 @@ static void BardSing(struct Task *task, struct BardSong *song)
                     m4aMPlayPitchControl(&gMPlayInfo_SE2, 0xFFFF, song->pitch);
                     song->voiceInflection++;
                 }
-                song->phonemeTimer--;
+                song->timer--;
                 break;
             case 1:
-                song->currPhoneme++;
+                song->soundIndex++;
                 song->state = 0;
-                if (phoneme->sound <= 50)
+                if (sound->songId <= 50)
                 {
-                    song->volume = 0x100 + phoneme->volume * 16;
+                    song->volume = 0x100 + sound->volume * 16;
                     m4aMPlayVolumeControl(&gMPlayInfo_SE2, 0xFFFF, song->volume);
-                    song->pitch = 0x200 + phoneme->pitch;
+                    song->pitch = 0x200 + sound->pitch;
                     m4aMPlayPitchControl(&gMPlayInfo_SE2, 0xFFFF, song->pitch);
                 }
                 break;
@@ -722,27 +723,27 @@ static void Task_BardSong(u8 taskId)
                 sUnusedPitchTableIndex = WORD_TO_PITCH_TABLE_INDEX(bard->songLyrics[task->tLyricsIndex]);
             else
                 sUnusedPitchTableIndex = WORD_TO_PITCH_TABLE_INDEX(bard->newSongLyrics[task->tLyricsIndex]);
-            gBardSong.var04 /= wordLen;
-            if (gBardSong.var04 <= 0)
-                gBardSong.var04 = 1;
+            gBardSong.length /= wordLen;
+            if (gBardSong.length <= 0)
+                gBardSong.length = 1;
             task->tLyricsIndex++;
-            if (task->data[2] == 0)
+            if (task->tDelay == 0)
             {
                 task->tState = 3;
-                task->data[1] = 0;
+                task->tWordState = 0;
             }
             else
             {
                 task->tState = 5;
-                task->data[1] = 0;
+                task->tWordState = 0;
             }
         }
         break;
     case 5:
-        if (task->data[2] == 0)
+        if (task->tDelay == 0)
             task->tState = 3;
         else
-            task->data[2]--;
+            task->tDelay--;
         break;
     case 3:
         if (gStringVar4[task->tCharIndex] == EOS)
@@ -757,50 +758,50 @@ static void Task_BardSong(u8 taskId)
             Text_PrintWindowSimple(gMenuWindowPtr);
             task->tCharIndex++;
             task->tState = 2;
-            task->data[2] = 0;
+            task->tDelay = 0;
         }
         else if (gStringVar4[task->tCharIndex] == CHAR_NEWLINE)
         {
             task->tCharIndex++;
             task->tState = 2;
-            task->data[2] = 0;
+            task->tDelay = 0;
         }
         else if (gStringVar4[task->tCharIndex] == EXT_CTRL_CODE_BEGIN)
         {
             task->tCharIndex += 2;  // skip over control codes
             task->tState = 2;
-            task->data[2] = 8;
+            task->tDelay = 8;
         }
         else if (gStringVar4[task->tCharIndex] == CHAR_SONG_WORD_SEPARATOR)
         {
             gStringVar4[task->tCharIndex] = CHAR_SPACE;  // restore it back to a space
             Text_PrintWindowSimple(gMenuWindowPtr);
             task->tCharIndex++;
-            task->data[2] = 0;
+            task->tDelay = 0;
         }
         else
         {
-            switch (task->data[1])
+            switch (task->tWordState)
             {
             case 0:
                 Text_PrintWindowSimple(gMenuWindowPtr);
-                task->data[1]++;
+                task->tWordState++;
                 break;
             case 1:
-                task->data[1]++;
+                task->tWordState++;
                 break;
             case 2:
                 task->tCharIndex++;
-                task->data[1] = 0;
-                task->data[2] = gBardSong.var04;
+                task->tWordState = 0;
+                task->tDelay = gBardSong.length;
                 task->tState = 4;
                 break;
             }
         }
         break;
     case 4:
-        task->data[2]--;
-        if (task->data[2] == 0)
+        task->tDelay--;
+        if (task->tDelay == 0)
             task->tState = 3;
         break;
     }
@@ -1001,25 +1002,32 @@ static void ScrambleStatList(u8 *arr, s32 count)
     }
 }
 
-// What purpose does this struct even serve? Only the length field is used.
-static const struct {u32 length; struct MauvilleManStoryteller *unused1; u32 unused2;} sStorytellerStuff =
+// The extra fields preserve Ruby's original data layout; only storyCount is read.
+struct StorytellerStoryCountData
 {
-    36,
+    u32 storyCount;
+    struct MauvilleManStoryteller *unusedStoryteller;
+    u32 unused;
+};
+
+static const struct StorytellerStoryCountData sStorytellerStoryCountData =
+{
+    NUM_STORYTELLER_STORIES,
     &gSaveBlock1.oldMan.storyteller,  // unused
     12,                                    // unused
 };
 
 static bool8 StorytellerInitializeRandomStat(void)
 {
-    u8 arr[sStorytellerStuff.length];
+    u8 storyIds[sStorytellerStoryCountData.storyCount];
     s32 i;
     s32 j;
 
-    ScrambleStatList(arr, 36);
-    for (i = 0; i < 36; i++)
+    ScrambleStatList(storyIds, NUM_STORYTELLER_STORIES);
+    for (i = 0; i < NUM_STORYTELLER_STORIES; i++)
     {
-        u8 stat = sStorytellerStories[arr[i]].stat;
-        u8 minVal = sStorytellerStories[arr[i]].minVal;
+        u8 stat = sStorytellerStories[storyIds[i]].stat;
+        u8 minVal = sStorytellerStories[storyIds[i]].minVal;
         struct MauvilleManStoryteller *storyteller = &gSaveBlock1.oldMan.storyteller;
 
         for (j = 0; j < NUM_STORYTELLER_TALES; j++)

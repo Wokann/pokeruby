@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_BATTLE_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Battle[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Battle[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // MATCH UP
         {0x02}, {0x2A}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // GO
@@ -132,7 +132,7 @@ const struct BardSound gBardSounds_Battle[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Battle[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Battle[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // MATCH UP
         {0x02}, {0x1A}, {0x11}, {0x0B}, {0xFF}, {0xFF}
     }, { // GO

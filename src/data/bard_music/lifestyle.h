@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_LIFESTYLE_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Lifestyle[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Lifestyle[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // CHORES
         {0x31}, {0x33}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // HOME
@@ -96,7 +96,7 @@ const struct BardSound gBardSounds_Lifestyle[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Lifestyle[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Lifestyle[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // CHORES
         {0x11}, {0x0B}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // HOME

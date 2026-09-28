@@ -2,7 +2,7 @@
 #define GUARD_DATA_BARD_MUSIC_MOVES_H
 
 #if ENGLISH
-const struct BardSound gBardSounds_Moves1[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Moves1[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // THUNDERBOLT
         {0x2A}, {0x30}, {0x1A}, {0xFF}, {0xFF}, {0xFF}
     }, { // IRON_TAIL
@@ -312,7 +312,7 @@ const struct BardSound gBardSounds_Moves1[][6] = {
     }
 };
 
-const struct BardSound gBardSounds_Moves2[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Moves2[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // TACKLE
         {0x00}, {0x24}, {0x33}, {0xFF}, {0xFF}, {0xFF}
     }, { // EXPLOSION
@@ -704,7 +704,7 @@ const struct BardSound gBardSounds_Moves2[][6] = {
     }
 };
 #elif GERMAN
-const struct BardSound gBardSounds_Moves1[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Moves1[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // THUNDERBOLT
         {0x1A}, {0x0B}, {0x11}, {0xFF}, {0xFF}, {0xFF}
     }, { // IRON_TAIL
@@ -1014,7 +1014,7 @@ const struct BardSound gBardSounds_Moves1[][6] = {
     }
 };
 
-const struct BardSound gBardSounds_Moves2[][6] = {
+const struct BardSoundTemplate gBardSoundTemplates_Moves2[][MAX_BARD_SOUNDS_PER_WORD] = {
     { // TACKLE
         {0x02}, {0x0B}, {0xFF}, {0xFF}, {0xFF}, {0xFF}
     }, { // EXPLOSION
