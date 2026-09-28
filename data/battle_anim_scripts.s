@@ -2831,12 +2831,12 @@ SkullBashSetUp:
 	waitforvisualfinish
 	goto SkullBashEnd
 SkullBashSetUpHeadDown:
-	createsprite gBattleAnimSpriteTemplate_83C2010, ANIM_BATTLER_ATTACKER, 2, 0, -24, 0, 0, 10, 0
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, -24, 0, 0, 10, 0
 	playsewithpan SE_M_TAKE_DOWN, SOUND_PAN_ATTACKER
 	waitforvisualfinish
 	createvisualtask AnimTask_RotateMonSpriteToSide, 2, 16, 96, ANIM_BATTLER_ATTACKER, 2
 	waitforvisualfinish
-	createsprite gBattleAnimSpriteTemplate_83C2010, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 10, 1
+	createsprite gSlideMonToOffsetAndBackSpriteTemplate, ANIM_BATTLER_ATTACKER, 2, 0, 24, 0, 0, 10, 1
 	waitforvisualfinish
 	return
 SkullBashAttack:
