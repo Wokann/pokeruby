@@ -2282,7 +2282,7 @@ void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *);
 bool8 FldEff_FieldMoveShowMon(void)
 {
     u8 taskId;
-    if (is_map_type_1_2_3_5_or_6(Overworld_GetMapTypeOfSaveblockLocation()) == TRUE)
+    if (IsMapTypeOutdoors(Overworld_GetMapTypeOfSaveblockLocation()) == TRUE)
     {
         taskId = CreateTask(Task_FieldMoveShowMonOutdoors, 0xff);
     } else

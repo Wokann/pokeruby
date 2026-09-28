@@ -120,7 +120,7 @@ u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum);
 // GetMapTypeByWarpData
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 GetLastUsedWarpMapType(void);
-bool8 is_map_type_1_2_3_5_or_6(u8 a1);
+bool8 IsMapTypeOutdoors(u8 a1);
 bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 a1);
 u8 Overworld_MapTypeIsIndoors(u8);
 // unref_sub_8054260
