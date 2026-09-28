@@ -858,7 +858,7 @@ const struct SpriteTemplate sSpriteTemplate_GbaScreenFlash_Long = {
     SpriteCB_GbaScreen
 };
 
-const u16 gTradeGlow2PaletteAnimTable[] = {
+const u16 sLinkMonShadow_Pal[] = {
     RGB(18, 24, 31),
     RGB(18, 24, 31),
     RGB(18, 24, 31),
@@ -3424,7 +3424,7 @@ static void SpriteCB_LinkMonShadow(struct Sprite *sprite)
     {
         if (++ sprite->data[0] == 12)
             sprite->data[0] = 0;
-        LoadPalette(&gTradeGlow2PaletteAnimTable[sprite->data[0]], 16 * (sprite->oam.paletteNum + 16) + 4, 2);
+        LoadPalette(&sLinkMonShadow_Pal[sprite->data[0]], 16 * (sprite->oam.paletteNum + 16) + 4, 2);
     }
 }
 
