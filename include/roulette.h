@@ -140,8 +140,6 @@ extern const struct GridSelection sGridSelections[];
 extern const struct RouletteSlot sRouletteSlots[];
 extern const struct RouletteTable sRouletteTables[];
 
-s16 sub_81174C4(s16, s16);
-s16 sub_81174E0(s16);
 void PlayRoulette(void);
 
 void LoadOrFreeMiscSpritePalettesAndSheets(u8);

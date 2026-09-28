@@ -1,4 +1,5 @@
 #include "global.h"
+#include "math_util.h"
 #include "random.h"
 #include "graphics.h"
 #include "ewram.h"
@@ -1552,17 +1553,17 @@ void UpdateWheelPosition(void)
     REG_BG2Y_H = (x2 & 0xfff0000) >> 16;
 }
 
-s16 sub_81174C4(s16 r0, s16 r1)
+s16 MathUtil_Mul16(s16 x, s16 y)
 {
-    s32 t = r0 * r1;
-    t /= 0x100;
-    return t;
+    s32 result = x * y;
+    result /= 0x100;
+    return result;
 }
 
-s16 sub_81174E0(s16 r0)
+s16 MathUtil_Inv16(s16 y)
 {
-    s32 t = 0x10000;
-    return t / r0;
+    s32 result = 0x10000;
+    return result / y;
 }
 
 void Task_ShowMinBetYesNo(u8 r0)
