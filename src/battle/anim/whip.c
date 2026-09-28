@@ -9,8 +9,8 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimSlidingHit(struct Sprite *sprite);
-void AnimWhipHit(struct Sprite *sprite);
+static void AnimSlidingHit(struct Sprite *sprite);
+static void AnimWhipHit(struct Sprite *sprite);
 
 // whip (does a hitting animation that uses a rotating sprite to invoke the sprite getting hit.)
 // Used by Slam and Vine Whip.
@@ -104,7 +104,7 @@ static void AnimWhipHit_WaitEnd(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
 }
 
-void AnimSlidingHit(struct Sprite *sprite)
+static void AnimSlidingHit(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
@@ -121,7 +121,7 @@ void AnimSlidingHit(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void AnimWhipHit(struct Sprite *sprite)
+static void AnimWhipHit(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
         StartSpriteAnim(sprite, 1);
