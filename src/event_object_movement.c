@@ -2277,7 +2277,7 @@ u8 GetObjectTrainerTypeByObjectEventId(u8 objectEventId)
     return gObjectEvents[objectEventId].trainerType;
 }
 
-u8 unref_sub_805C624(u8 localId, u8 mapNum, u8 mapGroup)
+u8 GetObjectEventBerryTreeIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
     u8 objectEventId;
 
@@ -2287,7 +2287,7 @@ u8 unref_sub_805C624(u8 localId, u8 mapNum, u8 mapGroup)
         return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }
 
-u8 ObjectEventGetBerryTreeId(u8 objectEventId)
+u8 GetObjectEventBerryTreeId(u8 objectEventId)
 {
     return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }

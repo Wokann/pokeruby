@@ -1156,7 +1156,7 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
 {
     // GetBerryTreeInfo does not sanitize the tree retrieved, but there are no known
     // instances where this can cause problems.
-    struct BerryTree *tree = GetBerryTreeInfo(ObjectEventGetBerryTreeId(gSelectedObjectEvent));
+    struct BerryTree *tree = GetBerryTreeInfo(GetObjectEventBerryTreeId(gSelectedObjectEvent));
 
     switch (tree->stage)
     {
@@ -1181,7 +1181,7 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
 bool8 IsPlayerFacingUnplantedSoil(void)
 {
     if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
-     && GetStageByBerryTreeId(ObjectEventGetBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
+     && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
         return TRUE;
     else
         return FALSE;
@@ -1423,7 +1423,7 @@ void ObjectEventInteractionGetBerryTreeData(void)
     u8 group;
     u8 num;
 
-    id = ObjectEventGetBerryTreeId(gSelectedObjectEvent);
+    id = GetObjectEventBerryTreeId(gSelectedObjectEvent);
     berry = GetBerryTypeByBerryTreeId(id);
     ResetBerryTreeSparkleFlag(id);
     localId = gSpecialVar_LastTalked;
@@ -1452,13 +1452,13 @@ void ObjectEventInteractionPlantBerryTree(void)
 {
     u8 berry = ItemIdToBerryType(gSpecialVar_ItemId);
 
-    PlantBerryTree(ObjectEventGetBerryTreeId(gSelectedObjectEvent), berry, 1, TRUE);
+    PlantBerryTree(GetObjectEventBerryTreeId(gSelectedObjectEvent), berry, 1, TRUE);
     ObjectEventInteractionGetBerryTreeData();
 }
 
 void ObjectEventInteractionPickBerryTree(void)
 {
-    u8 id = ObjectEventGetBerryTreeId(gSelectedObjectEvent);
+    u8 id = GetObjectEventBerryTreeId(gSelectedObjectEvent);
     u8 berry = GetBerryTypeByBerryTreeId(id);
 
     gSpecialVar_0x8004 = AddBagItem(BerryTypeToItemId(berry), GetBerryCountByBerryTreeId(id));
@@ -1466,7 +1466,7 @@ void ObjectEventInteractionPickBerryTree(void)
 
 void ObjectEventInteractionRemoveBerryTree(void)
 {
-    RemoveBerryTree(ObjectEventGetBerryTreeId(gSelectedObjectEvent));
+    RemoveBerryTree(GetObjectEventBerryTreeId(gSelectedObjectEvent));
     SetBerryTreeJustPicked(gSpecialVar_LastTalked, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup);
 }
 
@@ -1501,7 +1501,7 @@ u8* DebugOpenBerryInfo(void)
     }
     else
     {
-        u32 berryTreeId = ObjectEventGetBerryTreeId(gSelectedObjectEvent);
+        u32 berryTreeId = GetObjectEventBerryTreeId(gSelectedObjectEvent);
         struct BerryTree *berryTree = GetBerryTreeInfo(berryTreeId);
         s32 i;
 
