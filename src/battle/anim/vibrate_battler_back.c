@@ -15,7 +15,7 @@ static void AnimVibrateBattlerBack(struct Sprite *sprite);
 
 // Unused
 
-const struct SpriteTemplate gVibrateBattlerBackSpriteTemplate =
+static const struct SpriteTemplate sVibrateBattlerBackSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
