@@ -212,8 +212,8 @@ const struct SpriteTemplate gUproarRingSpriteTemplate =
 static void AnimBlendThinRing(struct Sprite* sprite)
 {
     u8 battler = 0;
-    u16 x = 0;
-    u16 y = 0;
+    s16 x = 0;
+    s16 y = 0;
     u8 r4;
 
     if (gBattleAnimArgs[2] == 0)
@@ -251,8 +251,8 @@ static void AnimHyperVoiceRing_WaitEnd(struct Sprite* sprite)
 
 static void AnimHyperVoiceRing(struct Sprite *sprite)
 {
-    u16 startX = 0;
-    u16 startY = 0;
+    s16 startX = 0;
+    s16 startY = 0;
     s16 x = 0;
     s16 y = 0;
     u8 yCoordType;
@@ -413,8 +413,8 @@ static void AnimSoftBoiledEgg_Step3_Callback1(struct Sprite *sprite)
     {
         sprite->data[0] = 16;
         sprite->data[1] = 0;
-        REG_BLDCNT = 0x3F40;
-        REG_BLDALPHA = sprite->data[0];
+        REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+        REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[0], 0);
         sprite->callback = AnimSoftBoiledEgg_Step3_Callback2;
     }
 }
@@ -424,7 +424,7 @@ static void AnimSoftBoiledEgg_Step3_Callback2(struct Sprite *sprite)
     if (sprite->data[1]++ % 3 == 0)
     {
         sprite->data[0]--;
-        REG_BLDALPHA = sprite->data[0] | ((16 - sprite->data[0]) << 8);
+        REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[0], 16 - sprite->data[0]);
         if (sprite->data[0] == 0)
             sprite->callback = AnimSoftBoiledEgg_Step4;
     }
