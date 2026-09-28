@@ -51,9 +51,9 @@ static u32 _debugStartMenu_0  __attribute__((unused));
 static u32 _debugStartMenu_1 __attribute__((unused));
 #endif
 
-static u8 (*saveDialogCallback)(void);
-static u8 saveDialogTimer;    //Number of frames to keep the window on screen after save was completed
-static bool8 savingComplete;
+static u8 (*sSaveDialogCallback)(void);
+static u8 sSaveDialogTimer;    //Number of frames to keep the window on screen after save was completed
+static bool8 sSavingComplete;
 
 extern bool8 gDifferentSaveFile;
 extern u16 gSaveFileStatus;
@@ -110,30 +110,30 @@ static bool32 PrintStartMenuItemsMultistep(s16 *a, u32 b);
 static bool32 InitStartMenuMultistep(s16 *a, s16 *b);
 static void StartMenuTask(u8 taskId);
 static u8 HandleStartMenuInput(void);
-static u8 SaveCallback1(void);
-static u8 SaveCallback2(void);
-static void sub_807160C(void);
-static u8 RunSaveDialogCallback(void);
-static void DisplaySaveMessageWithCallback(const u8 *ptr, u8 (*func)(void));
-static void Task_SaveDialog(u8 taskId);
-static void sub_8071700(void);
-static void HideSaveDialog(void);
-static void SaveDialogStartTimeout(void);
-static u8 SaveDialogCheckForTimeoutOrKeypress(void);
-static u8 SaveDialogCheckForTimeoutAndKeypress(void);
-static u8 SaveDialogCheckForTimeoutAndKeypress(void);
-static u8 SaveDialogCB_DisplayConfirmMessage(void);
-static u8 SaveDialogCB_DisplayConfirmYesNoMenu(void);
-static u8 SaveDialogCB_ProcessConfirmYesNoMenu(void);
-static u8 SaveDialogCB_SaveFileExists(void);
-static u8 SaveDialogCB_DisplayOverwriteYesNoMenu(void);
-static u8 SaveDialogCB_ProcessOverwriteYesNoMenu(void);
-static u8 SaveDialogCB_DisplaySavingMessage(void);
-static u8 SaveDialogCB_DoSave(void);
-static u8 SaveDialogCB_SaveSuccess(void);
-static u8 SaveDialogCB_ReturnSuccess(void);
-static u8 SaveDialogCB_SaveError(void);
-static u8 SaveDialogCB_ReturnError(void);
+static u8 SaveStartCallback(void);
+static u8 SaveCallback(void);
+static void InitSave(void);
+static u8 RunSaveCallback(void);
+static void ShowSaveMessage(const u8 *ptr, u8 (*func)(void));
+static void SaveGameTask(u8 taskId);
+static void HideSaveInfoWindow(void);
+static void HideSaveMessageWindow(void);
+static void SaveStartTimer(void);
+static u8 SaveSuccesTimer(void);
+static u8 SaveErrorTimer(void);
+static u8 SaveErrorTimer(void);
+static u8 SaveConfirmSaveCallback(void);
+static u8 SaveYesNoCallback(void);
+static u8 SaveConfirmInputCallback(void);
+static u8 SaveFileExistsCallback(void);
+static u8 SaveConfirmOverwriteDefaultNoCallback(void);
+static u8 SaveOverwriteInputCallback(void);
+static u8 SaveSavingMessageCallback(void);
+static u8 SaveDoSaveCallback(void);
+static u8 SaveSuccessCallback(void);
+static u8 SaveReturnSuccessCallback(void);
+static u8 SaveErrorCallback(void);
+static u8 SaveReturnErrorCallback(void);
 static void sub_80719F0(void);
 static bool32 sub_80719FC(u8 *ptr);
 static void sub_8071B54(void);
@@ -513,7 +513,7 @@ static u8 StartMenu_PlayerCallback(void)
 static u8 StartMenu_SaveCallback(void)
 {
     Menu_DestroyCursor();
-    gMenuCallback = SaveCallback1;
+    gMenuCallback = SaveStartCallback;
     return 0;
 }
 
@@ -566,16 +566,16 @@ enum
     SAVE_ERROR,
 };
 
-static u8 SaveCallback1(void)
+static u8 SaveStartCallback(void)
 {
-    sub_807160C();
-    gMenuCallback = SaveCallback2;
+    InitSave();
+    gMenuCallback = SaveCallback;
     return FALSE;
 }
 
-static u8 SaveCallback2(void)
+static u8 SaveCallback(void)
 {
-    switch (RunSaveDialogCallback())
+    switch (RunSaveCallback())
     {
     case SAVE_IN_PROGRESS:
         return FALSE;
@@ -595,42 +595,42 @@ static u8 SaveCallback2(void)
     return FALSE;
 }
 
-static void sub_807160C(void)
+static void InitSave(void)
 {
     SaveMapView();
-    saveDialogCallback = SaveDialogCB_DisplayConfirmMessage;
-    savingComplete = FALSE;
+    sSaveDialogCallback = SaveConfirmSaveCallback;
+    sSavingComplete = FALSE;
 }
 
-static u8 RunSaveDialogCallback(void)
+static u8 RunSaveCallback(void)
 {
-    if (savingComplete)
+    if (sSavingComplete)
     {
         if (!Menu_UpdateWindowText())
             return 0;
     }
-    savingComplete = FALSE;
-    return saveDialogCallback();
+    sSavingComplete = FALSE;
+    return sSaveDialogCallback();
 }
 
 void SaveGame(void)
 {
-    sub_807160C();
-    CreateTask(Task_SaveDialog, 0x50);
+    InitSave();
+    CreateTask(SaveGameTask, 0x50);
 }
 
-static void DisplaySaveMessageWithCallback(const u8 *ptr, u8 (*func)(void))
+static void ShowSaveMessage(const u8 *ptr, u8 (*func)(void))
 {
     StringExpandPlaceholders(gStringVar4, ptr);
     Menu_DisplayDialogueFrame();
     MenuPrintMessageDefaultCoords(gStringVar4);
-    savingComplete = TRUE;
-    saveDialogCallback = func;
+    sSavingComplete = TRUE;
+    sSaveDialogCallback = func;
 }
 
-static void Task_SaveDialog(u8 taskId)
+static void SaveGameTask(u8 taskId)
 {
-    u8 status = RunSaveDialogCallback();
+    u8 status = RunSaveCallback();
 
     switch (status)
     {
@@ -648,129 +648,129 @@ static void Task_SaveDialog(u8 taskId)
     ScriptContext_Enable();
 }
 
-static void sub_8071700(void)
+static void HideSaveInfoWindow(void)
 {
     HandleCloseSaveWindow(0, 0);
 }
 
-static void HideSaveDialog(void)
+static void HideSaveMessageWindow(void)
 {
     Menu_EraseWindowRect(20, 8, 26, 13);
 }
 
-static void SaveDialogStartTimeout(void)
+static void SaveStartTimer(void)
 {
-    saveDialogTimer = 60;
+    sSaveDialogTimer = 60;
 }
 
-static bool8 SaveDialogCheckForTimeoutOrKeypress(void)
+static bool8 SaveSuccesTimer(void)
 {
-    saveDialogTimer--;
+    sSaveDialogTimer--;
     if (JOY_HELD(A_BUTTON))
     {
         PlaySE(SE_SELECT);
         return TRUE;
     }
-    else if (saveDialogTimer == 0)
+    else if (sSaveDialogTimer == 0)
         return TRUE;
     return FALSE;
 }
 
-static bool8 SaveDialogCheckForTimeoutAndKeypress(void)
+static bool8 SaveErrorTimer(void)
 {
-    if (saveDialogTimer != 0)
-        saveDialogTimer--;
+    if (sSaveDialogTimer != 0)
+        sSaveDialogTimer--;
     else if (JOY_HELD(A_BUTTON))
         return TRUE;
     return FALSE;
 }
 
-static u8 SaveDialogCB_DisplayConfirmMessage(void)
+static u8 SaveConfirmSaveCallback(void)
 {
     Menu_EraseScreen();
     HandleDrawSaveWindowInfo(0, 0);
-    DisplaySaveMessageWithCallback(gText_ConfirmSave, SaveDialogCB_DisplayConfirmYesNoMenu);
+    ShowSaveMessage(gText_ConfirmSave, SaveYesNoCallback);
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_DisplayConfirmYesNoMenu(void)
+static u8 SaveYesNoCallback(void)
 {
     DisplayYesNoMenu(20, 8, 1);
-    saveDialogCallback = SaveDialogCB_ProcessConfirmYesNoMenu;
+    sSaveDialogCallback = SaveConfirmInputCallback;
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_ProcessConfirmYesNoMenu(void)
+static u8 SaveConfirmInputCallback(void)
 {
     switch (Menu_ProcessInputNoWrap_())
     {
     case 0:     //YES
-        HideSaveDialog();
+        HideSaveMessageWindow();
         switch (gSaveFileStatus)
         {
         case 0:
         case 2:
             if (gDifferentSaveFile == FALSE)
             {
-                saveDialogCallback = SaveDialogCB_SaveFileExists;
+                sSaveDialogCallback = SaveFileExistsCallback;
                 return SAVE_IN_PROGRESS;
             }
-            saveDialogCallback = SaveDialogCB_DisplaySavingMessage;
+            sSaveDialogCallback = SaveSavingMessageCallback;
             return SAVE_IN_PROGRESS;
         default:
-            saveDialogCallback = SaveDialogCB_SaveFileExists;
+            sSaveDialogCallback = SaveFileExistsCallback;
             return SAVE_IN_PROGRESS;
         }
         break;
     case -1:    //B button
     case 1:     //NO
-        HideSaveDialog();
-        sub_8071700();
+        HideSaveMessageWindow();
+        HideSaveInfoWindow();
         return SAVE_CANCELED;
     }
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_SaveFileExists(void)
+static u8 SaveFileExistsCallback(void)
 {
-    DisplaySaveMessageWithCallback(
+    ShowSaveMessage(
       gDifferentSaveFile == TRUE ? gText_DifferentSaveFile : gText_AlreadySavedFile,
-      SaveDialogCB_DisplayOverwriteYesNoMenu);
+      SaveConfirmOverwriteDefaultNoCallback);
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_DisplayOverwriteYesNoMenu(void)
+static u8 SaveConfirmOverwriteDefaultNoCallback(void)
 {
     DisplayYesNoMenu(20, 8, 1);
-    saveDialogCallback = SaveDialogCB_ProcessOverwriteYesNoMenu;
+    sSaveDialogCallback = SaveOverwriteInputCallback;
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_ProcessOverwriteYesNoMenu(void)
+static u8 SaveOverwriteInputCallback(void)
 {
     switch (Menu_ProcessInputNoWrap_())
     {
     case 0:     //YES
-        HideSaveDialog();
-        saveDialogCallback = SaveDialogCB_DisplaySavingMessage;
+        HideSaveMessageWindow();
+        sSaveDialogCallback = SaveSavingMessageCallback;
         break;
     case -1:    //B button
     case 1:     //NO
-        HideSaveDialog();
-        sub_8071700();
+        HideSaveMessageWindow();
+        HideSaveInfoWindow();
         return SAVE_CANCELED;
     }
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_DisplaySavingMessage(void)
+static u8 SaveSavingMessageCallback(void)
 {
     //"SAVING... DON'T TURN OFF THE POWER."
-    DisplaySaveMessageWithCallback(gText_SavingDontTurnOff, SaveDialogCB_DoSave);
+    ShowSaveMessage(gText_SavingDontTurnOff, SaveDoSaveCallback);
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_DoSave(void)
+static u8 SaveDoSaveCallback(void)
 {
     u8 saveStatus;
 
@@ -788,56 +788,56 @@ static u8 SaveDialogCB_DoSave(void)
     if (saveStatus == SAVE_STATUS_OK)
     {
         //"(Player) saved the game."
-        DisplaySaveMessageWithCallback(gText_PlayerSavedGame, SaveDialogCB_SaveSuccess);
+        ShowSaveMessage(gText_PlayerSavedGame, SaveSuccessCallback);
     }
     else
     {
         //"Save error. Please exchange the backup memory."
-        DisplaySaveMessageWithCallback(gSystemText_SaveErrorExchangeBackup, SaveDialogCB_SaveError);
+        ShowSaveMessage(gSystemText_SaveErrorExchangeBackup, SaveErrorCallback);
     }
 
-    SaveDialogStartTimeout();
+    SaveStartTimer();
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_SaveSuccess(void)
+static u8 SaveSuccessCallback(void)
 {
     if (Menu_UpdateWindowText())
     {
         PlaySE(SE_SAVE);
-        saveDialogCallback = SaveDialogCB_ReturnSuccess;
+        sSaveDialogCallback = SaveReturnSuccessCallback;
     }
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_ReturnSuccess(void)
+static u8 SaveReturnSuccessCallback(void)
 {
-    if (!IsSEPlaying() && SaveDialogCheckForTimeoutOrKeypress())
+    if (!IsSEPlaying() && SaveSuccesTimer())
     {
-        sub_8071700();
+        HideSaveInfoWindow();
         return SAVE_SUCCESS;
     }
     else
         return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_SaveError(void)
+static u8 SaveErrorCallback(void)
 {
     if (Menu_UpdateWindowText())
     {
         PlaySE(SE_BOO);
-        saveDialogCallback = SaveDialogCB_ReturnError;
+        sSaveDialogCallback = SaveReturnErrorCallback;
     }
     return SAVE_IN_PROGRESS;
 }
 
-static u8 SaveDialogCB_ReturnError(void)
+static u8 SaveReturnErrorCallback(void)
 {
-    if (!SaveDialogCheckForTimeoutAndKeypress())
+    if (!SaveErrorTimer())
         return SAVE_IN_PROGRESS;
     else
     {
-        sub_8071700();
+        HideSaveInfoWindow();
         return SAVE_ERROR;
     }
 }
