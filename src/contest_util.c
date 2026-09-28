@@ -233,8 +233,8 @@ void ShowContestPainting(void)
     if(gContestDebugMode)
     {
         PrepareContestArtistDebugResult();
-        eCurContestWinnerIsForArtist = TRUE;
-        eCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
+        gCurContestWinnerIsForArtist = TRUE;
+        gCurContestWinnerSaveIdx = GetContestWinnerSaveIdx(CONTEST_SAVE_FOR_ARTIST, 0);
         SaveContestWinner(3);
         gContestDebugMode = 0;
     }

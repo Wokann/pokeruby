@@ -396,16 +396,16 @@ gText_ClearAllSaveData:: @ 842CE27
 gText_ClearingData:: @ 842CE42
 	.string "Clearing data...\nPlease wait.$"
 
-gContestText_AnnounceResults:: @ 842CE60
+gText_AnnouncingResults:: @ 842CE60
 	.string "Announcing the results!$"
 
-gContestText_PreliminaryResults:: @ 842CE78
+gText_PreliminaryResults:: @ 842CE78
 	.string "The preliminary results!$"
 
-gContestText_Round2Results:: @ 842CE91
+gText_Round2Results:: @ 842CE91
 	.string "Round 2 results!$"
 
-gContestText_PokeWon:: @ 842CEA2
+gText_ContestantsMonWon:: @ 842CEA2
 	.string "{STR_VAR_1}'s {STR_VAR_2} won!$"
 
 gOtherText_LinkStandby:: @ 842CEAF
