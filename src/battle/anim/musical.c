@@ -169,19 +169,19 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
     if (index != 0xFF)
     {
         index = OBJ_PLTT_ID(index);
-        for (i = 1; i < 6; i++)
+        for (i = 1; i < ARRAY_COUNT(gParticlesColorBlendTable[0]); i++)
         {
             gPlttBufferFaded[index + i] = gParticlesColorBlendTable[0][i];
         }
     }
 
-    for (j = 1; j < 4; j++)
+    for (j = 1; j < ARRAY_COUNT(gParticlesColorBlendTable); j++)
     {
         index = AllocSpritePalette(gParticlesColorBlendTable[j][0]);
         if (index != 0xFF)
         {
             index = OBJ_PLTT_ID(index);
-            for (i = 1; i < 6; i++)
+            for (i = 1; i < ARRAY_COUNT(gParticlesColorBlendTable[0]); i++)
             {
                 gPlttBufferFaded[index + i] = gParticlesColorBlendTable[j][i];
             }
@@ -194,7 +194,7 @@ void AnimTask_MusicNotesRainbowBlend(u8 taskId)
 void AnimTask_MusicNotesClearRainbowBlend(u8 taskId)
 {
     u16 i;
-    for (i = 1; i < 4; i++)
+    for (i = 1; i < ARRAY_COUNT(gParticlesColorBlendTable); i++)
     {
         FreeSpritePaletteByTag(gParticlesColorBlendTable[i][0]);
     }
@@ -282,7 +282,7 @@ static void AnimWavyMusicNotes_Step(struct Sprite *sprite)
         if (sprite->sBlendCycleTime && ++sprite->sBlendTimer > sprite->sBlendCycleTime)
         {
             sprite->sBlendTimer = 0;
-            if (++sprite->sBlendTableIdx > 3)
+            if (++sprite->sBlendTableIdx > (int)ARRAY_COUNT(gParticlesColorBlendTable) - 1)
                 sprite->sBlendTableIdx = 0;
 
             paletteIndex = IndexOfSpritePaletteTag(gParticlesColorBlendTable[sprite->sBlendTableIdx][0]);
