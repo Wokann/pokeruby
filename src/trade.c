@@ -608,8 +608,8 @@ const u32 gUnknown_0820CA98[] = INCBIN_U32("graphics/trade/gba.4bpp");
 const u32 gUnknown_0820CA98_2[] = INCBIN_U32("graphics/trade/shadow.4bpp");
 const u32 sPokeballSymbol_Gfx[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
 const u16 gUnknown_0820F798[] = INCBIN_U16("graphics/trade/shadow_map.bin");
-const u16 gUnknown_08210798[] = INCBIN_U16("graphics/trade/gba_map.bin");
-const u16 gUnknown_08211798[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
+const u16 sGbaMapCable[] = INCBIN_U16("graphics/trade/gba_map.bin");
+const u16 sCableCloseup_Map[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
 const u16 sPokeballSymbol_Map[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
 const u16 unused_08212098[] = INCBIN_U16("graphics/unused/unknown/8212098.gbapal");
 const u16 sCableEnd_Pal[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
@@ -620,8 +620,8 @@ const u32 sLinkMonGlow_Gfx[] = INCBIN_U32("graphics/trade/glow1.4bpp");
 const u32 sLinkMonShadow_Gfx[] = INCBIN_U32("graphics/trade/glow2.4bpp");
 const u32 sCableEnd_Gfx[] = INCBIN_U32("graphics/trade/cable_end.4bpp");
 const u32 sGbaScreen_Gfx[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
-const u32 gUnknown_08213738[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
-const u16 gUnknown_08215778[] = INCBIN_U16("graphics/trade/gba_affine_map.bin");
+const u32 sGbaAffine_Gfx[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
+const u16 sGbaAffineMapCable[] = INCBIN_U16("graphics/trade/gba_affine_map.bin");
 
 const struct OamData sOamData_Pokeball = {
     .affineMode = 1,
@@ -873,13 +873,13 @@ const u16 gTradeGlow2PaletteAnimTable[] = {
     RGB(31, 31, 31),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8215AB0[] = {
+const union AffineAnimCmd sAffineAnim_CrossingMonPic[] = {
     AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
     AFFINEANIMCMD_JUMP(0)
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8215AC0[] = {
-    gSpriteAffineAnim_8215AB0
+const union AffineAnimCmd *const sAffineAnims_CrossingMonPics[] = {
+    sAffineAnim_CrossingMonPic
 };
 
 const struct InGameTrade gIngameTrades[] = {
@@ -4252,7 +4252,7 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             REG_BG1VOFS = 0x15c;
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(5) | BGCNT_TXT256x512;
 
-            DmaCopy16Defvars(3, gUnknown_08210798, BG_SCREEN_ADDR(5), 0x1000);
+            DmaCopy16Defvars(3, sGbaMapCable, BG_SCREEN_ADDR(5), 0x1000);
             DmaCopyLarge16(3, gUnknown_0820CA98, BG_CHAR_ADDR(0), 0x1300, 0x1000);
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON;
             break;
@@ -4260,7 +4260,7 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             gTradeAnim->bg1vofs = 0;
             gTradeAnim->bg1hofs = 0;
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON;
-            DmaCopy16Defvars(3, gUnknown_08211798, BG_SCREEN_ADDR(5), 0x800);
+            DmaCopy16Defvars(3, sCableCloseup_Map, BG_SCREEN_ADDR(5), 0x800);
             break;
         case 3:
             REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON;
@@ -4280,8 +4280,8 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             gTradeAnim->sXY = 0x20;
             gTradeAnim->gbaScale = 0x400;
             gTradeAnim->alpha = 0;
-            DmaCopyLarge16(3, gUnknown_08213738, BG_CHAR_ADDR(1), 0x2040, 0x1000);
-            DmaCopy16Defvars(3, gUnknown_08215778, BG_SCREEN_ADDR(18), 0x100);
+            DmaCopyLarge16(3, sGbaAffine_Gfx, BG_CHAR_ADDR(1), 0x2040, 0x1000);
+            DmaCopy16Defvars(3, sGbaAffineMapCable, BG_SCREEN_ADDR(18), 0x100);
             break;
         case 5:
             gTradeAnim->bg1vofs = 0;
@@ -4306,8 +4306,8 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             gTradeAnim->scrX = 0x78;
             gTradeAnim->scrY = 0x50;
             gTradeAnim->alpha = 0;
-            DmaCopyLarge16(3, gUnknown_08213738, BG_CHAR_ADDR(1), 0x2040, 0x1000);
-            DmaCopy16Defvars(3, gUnknown_08215778, BG_SCREEN_ADDR(18), 0x100);
+            DmaCopyLarge16(3, sGbaAffine_Gfx, BG_CHAR_ADDR(1), 0x2040, 0x1000);
+            DmaCopy16Defvars(3, sGbaAffineMapCable, BG_SCREEN_ADDR(18), 0x100);
             break;
         case 7:
             gTradeAnim->bg2vofs = 0;
@@ -4574,7 +4574,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 37:
             if (!IsPokeSpriteNotFlipped(gTradeAnim->monSpecies[0]))
             {
-                gSprites[gTradeAnim->monSpriteIds[0]].affineAnims = gSpriteAffineAnimTable_8215AC0;
+                gSprites[gTradeAnim->monSpriteIds[0]].affineAnims = sAffineAnims_CrossingMonPics;
                 gSprites[gTradeAnim->monSpriteIds[0]].oam.affineMode = 3;
                 CalcCenterToCornerVec(&gSprites[gTradeAnim->monSpriteIds[0]], 0, 3, 3);
                 StartSpriteAffineAnim(&gSprites[gTradeAnim->monSpriteIds[0]], 0);
