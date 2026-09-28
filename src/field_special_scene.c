@@ -1,5 +1,4 @@
 #include "global.h"
-#include "field_special_scene.h"
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_fadetransition.h"
@@ -20,40 +19,20 @@
 #include "constants/event_object_movement.h"
 #include "constants/field_specials.h"
 
+// Box 1 (LOCALID_TRUCK_BOX_TOP)
 #define BOX1_X_OFFSET  3
 #define BOX1_Y_OFFSET  3
+// Box 2 (LOCALID_TRUCK_BOX_BOTTOM_L)
 #define BOX2_X_OFFSET  0
 #define BOX2_Y_OFFSET -3
+// Box 3 (LOCALID_TRUCK_BOX_BOTTOM_R)
 #define BOX3_X_OFFSET -3
 #define BOX3_Y_OFFSET  0
-
-#define SECONDS(value) ((signed) (60.0 * value + 0.5))
 
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
 const u16 gObjectEventPal_MovingBox[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
 
-static const s8 sTruckCamera_HorizontalTable[] =
-{
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    -1,
-    -1,
-    -1,
-    0,
-};
+static const s8 sTruckCamera_HorizontalTable[] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, -1, -1, -1, 0};
 
 static const u8 sSSTidalSailEastMovementScript[] =
 {
@@ -76,7 +55,9 @@ enum
     EXIT_PORTHOLE,
 };
 
-s16 GetTruckCameraBobbingY(int time)
+static void Task_Truck3(u8);
+
+static s16 GetTruckCameraBobbingY(int time)
 {
     if (!(time % 120))
         return -1;
@@ -86,7 +67,15 @@ s16 GetTruckCameraBobbingY(int time)
     return 0;
 }
 
-s16 GetTruckBoxYMovement(int time)
+// Determines the frequency that the truck boxes bounce at.
+// The return value of this function is multiplied and added
+// to the boxes resting y offset, the result of which is that
+// when it returns 0 they remain vertically still and when it
+// returns -1 they jump upward.
+// Box 1 has 30 added to the time so it jumps earlier, and
+// box 2 has the return value multiplied by less, so it doesn't
+// jump as high.
+static s16 GetTruckBoxYMovement(int time)
 {
     if (!((time + 120) % 180))
         return -1;
@@ -95,7 +84,7 @@ s16 GetTruckBoxYMovement(int time)
 }
 
 #define tTimer data[0]
-void Task_Truck1(u8 taskId)
+static void Task_Truck1(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan, cameraXpan = 0;
@@ -108,10 +97,10 @@ void Task_Truck1(u8 taskId)
     yBox3 = GetTruckBoxYMovement(tTimer) * 4; // bottom right box.
     SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1.location.mapNum, gSaveBlock1.location.mapGroup, BOX3_X_OFFSET - cameraXpan, BOX3_Y_OFFSET + yBox3);
 
-    if (++tTimer == SECONDS(500)) // this will never run
-        tTimer = 0; // reset the timer if it gets stuck.
+    // Arbitrary timer limit that won't be reached
+    if (++tTimer == 30000)
+        tTimer = 0;
 
-    // this also matches with directly calling GetTruckCameraBobbingY within SetCameraPanning, but this is consistent with a later function that requires a temp variable.
     cameraYpan = GetTruckCameraBobbingY(tTimer);
     SetCameraPanning(cameraXpan, cameraYpan);
 }
@@ -120,7 +109,7 @@ void Task_Truck1(u8 taskId)
 #define tTimerHorizontal data[0]
 #define tMoveStep        data[1]
 #define tTimerVertical   data[2]
-void Task_Truck2(u8 taskId)
+static void Task_Truck2(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     s16 cameraYpan;
@@ -137,6 +126,7 @@ void Task_Truck2(u8 taskId)
     }
     if ((u16)tMoveStep == ARRAY_COUNT(sTruckCamera_HorizontalTable))
     {
+        // Never reached, the task function is changed below before finishing the table
         DestroyTask(taskId);
     }
     else
@@ -156,7 +146,7 @@ void Task_Truck2(u8 taskId)
     }
 }
 
-void Task_Truck3(u8 taskId)
+static void Task_Truck3(u8 taskId)
 {
    s16 *data = gTasks[taskId].data;
    s16 cameraXpan;
@@ -192,30 +182,26 @@ void Task_Truck3(u8 taskId)
 #define tTimer   data[1]
 #define tTaskId1 data[2]
 #define tTaskId2 data[3]
-void Task_HandleTruckSequence(u8 taskId)
+static void Task_HandleTruckSequence(u8 taskId)
 {
    s16 *data = gTasks[taskId].data;
 
     switch (tState)
     {
-        /*
-        Each case has a timer which is handled with data[1], incrementing
-        until it reaches the if function's condition, which sets the next task up.
-        */
     case 0:
         tTimer++;
-        if (tTimer == SECONDS(1.5))
+        if (tTimer == 90)
         {
-            SetCameraPanningCallback(0);
-            tTimer = 0; // reset the timer.
+            SetCameraPanningCallback(NULL);
+            tTimer = 0;
             tTaskId1 = CreateTask(Task_Truck1, 0xA);
-            tState = 1; // run the next case.
+            tState = 1;
             PlaySE(SE_TRUCK_MOVE);
         }
         break;
     case 1:
         tTimer++;
-        if (tTimer == SECONDS(2.5))
+        if (tTimer == 150)
         {
             FadeInFromBlack();
             tTimer = 0;
@@ -224,7 +210,7 @@ void Task_HandleTruckSequence(u8 taskId)
         break;
     case 2:
         tTimer++;
-        if (!gPaletteFade.active && tTimer > SECONDS(5))
+        if (!gPaletteFade.active && tTimer > 300)
         {
             tTimer = 0;
             DestroyTask(tTaskId1);
@@ -234,8 +220,9 @@ void Task_HandleTruckSequence(u8 taskId)
         }
         break;
     case 3:
-        if (!gTasks[tTaskId2].isActive) // is Truck2 no longer active (is Truck3 active?)
+        if (!gTasks[tTaskId2].isActive)
         {
+            // Task_Truck2 / Task_Truck3 has finished
             InstallCameraPanAheadCallback();
             tTimer = 0;
             tState = 4;
@@ -254,9 +241,9 @@ void Task_HandleTruckSequence(u8 taskId)
         tTimer++;
         if (tTimer == 120)
         {
-            MapGridSetMetatileIdAt(11, 8, METATILE_ID(InsideOfTruck, ExitLight_Top));
-            MapGridSetMetatileIdAt(11, 9, METATILE_ID(InsideOfTruck, ExitLight_Mid));
-            MapGridSetMetatileIdAt(11, 10, METATILE_ID(InsideOfTruck, ExitLight_Bottom));
+            MapGridSetMetatileIdAt(4 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_InsideOfTruck_ExitLight_Top);
+            MapGridSetMetatileIdAt(4 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_InsideOfTruck_ExitLight_Mid);
+            MapGridSetMetatileIdAt(4 + MAP_OFFSET, 3 + MAP_OFFSET, METATILE_InsideOfTruck_ExitLight_Bottom);
             DrawWholeMapView();
             PlaySE(SE_TRUCK_DOOR);
             DestroyTask(taskId);
@@ -272,12 +259,12 @@ void Task_HandleTruckSequence(u8 taskId)
 
 void ExecuteTruckSequence(void)
 {
-    MapGridSetMetatileIdAt(11, 8, METATILE_ID(InsideOfTruck, DoorClosedFloor_Top));
-    MapGridSetMetatileIdAt(11, 9, METATILE_ID(InsideOfTruck, DoorClosedFloor_Mid));
-    MapGridSetMetatileIdAt(11, 10, METATILE_ID(InsideOfTruck, DoorClosedFloor_Bottom));
+    MapGridSetMetatileIdAt(4 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Top);
+    MapGridSetMetatileIdAt(4 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Mid);
+    MapGridSetMetatileIdAt(4 + MAP_OFFSET, 3 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Bottom);
     DrawWholeMapView();
     LockPlayerFieldControls();
-    CpuFastFill(0, gPlttBufferFaded, 0x400);
+    CpuFastFill(0, gPlttBufferFaded, PLTT_SIZE);
     CreateTask(Task_HandleTruckSequence, 0xA);
 }
 
