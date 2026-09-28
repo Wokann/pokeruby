@@ -2637,11 +2637,11 @@ extern const u8 gMenuTrainerCardBack_Tilemap[];
 extern const u8 gMenuTrainerCardFront2_Tilemap[];
 extern const u8 gMenuTrainerCardBackground_Tilemap[];
 
-extern const u8 gUnknown_08EA1DEC[];
-extern const u16 gUnknown_08EA0328[];
-extern const u16 gUnknown_08EA02C8[];
-extern const u16 gUnknown_08EA0348[];
-extern const u16 gUnknown_08EA15C8[];
+extern const u8 gTradeCursor_Gfx[];
+extern const u16 gTradeCursor_Pal[];
+extern const u16 gTradeMenu_Pal[];
+extern const u16 gTradeMenu_Gfx[];
+extern const u16 gTradeMenu_Tilemap[];
 extern const u16 gTradeMonBoxTilemap[];
 extern const u8 gBattleTextboxTiles[];
 extern const u16 gBattleTextboxTilemap[];

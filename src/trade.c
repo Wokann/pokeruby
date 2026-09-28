@@ -363,11 +363,11 @@ const union AnimCmd *const sAnims_Cursor[] = {
 };
 
 const struct SpriteSheet sCursorSpriteSheet = {
-    gUnknown_08EA1DEC, 0x800, GFXTAG_CURSOR
+    gTradeCursor_Gfx, 0x800, GFXTAG_CURSOR
 };
 
 const struct SpritePalette sCursorSpritePalette = {
-    gUnknown_08EA0328, PALTAG_CURSOR
+    gTradeCursor_Pal, PALTAG_CURSOR
 };
 
 const struct SpriteTemplate sSpriteTemplate_Cursor = {
@@ -1477,12 +1477,12 @@ void LoadTradeBgGfx(u8 state)
         case 0:
             for (i = 0; i < 48; i ++)
             {
-                gPlttBufferUnfaded[i] = *(gUnknown_08EA02C8 + i);
-                gPlttBufferFaded[i] = *(gUnknown_08EA02C8 + i);
+                gPlttBufferUnfaded[i] = *(gTradeMenu_Pal + i);
+                gPlttBufferFaded[i] = *(gTradeMenu_Pal + i);
             }
-            DmaCopyLarge16(3, gUnknown_08EA0348, (void *)BG_VRAM, 0x1280, 0x1000);
+            DmaCopyLarge16(3, gTradeMenu_Gfx, (void *)BG_VRAM, 0x1280, 0x1000);
             for (i = 0; i < 0x400; i ++)
-                sTradeMenu->tilemapBuffer.tilemap[i] = gUnknown_08EA15C8[i];
+                sTradeMenu->tilemapBuffer.tilemap[i] = gTradeMenu_Tilemap[i];
             DmaCopy16Defvars(3, gTradeStripesBG2Tilemap, BG_SCREEN_ADDR(6), 0x800);
             break;
         case 1:

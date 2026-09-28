@@ -1333,13 +1333,13 @@ const u8 gPokenavMonInfoHeaderTilemap[] = INCBIN_U8("graphics/pokenav/mon_info_h
 const u8 gPokenavMonInfoHeader_Gfx[] = INCBIN_U8("graphics/pokenav/mon_info_header.4bpp");
 const u8 gDialogueFrame_Gfx[] = INCBIN_U8("graphics/text_window/message_box.4bpp");
 
-const u16 gUnknown_08EA02C8[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/trade/stripes.gbapal", "graphics/trade/stripes.gbapal");
+const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal", "graphics/trade/stripes.gbapal", "graphics/trade/stripes.gbapal");
 
-const u16 gUnknown_08EA0328[] = INCBIN_U16("graphics/trade/selected_mon.gbapal");
-const u8 gUnknown_08EA0348[] = INCBIN_U8("graphics/trade/menu.4bpp");
-const u8 gUnknown_08EA15C8[] = INCBIN_U8("graphics/trade/menu_map.bin");
+const u16 gTradeCursor_Pal[] = INCBIN_U16("graphics/trade/selected_mon.gbapal");
+const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
+const u8 gTradeMenu_Tilemap[] = INCBIN_U8("graphics/trade/menu_map.bin");
 const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/mon_box_map.bin");
-const u8 gUnknown_08EA1DEC[] = INCBIN_U8("graphics/trade/selected_mon.4bpp");
+const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/selected_mon.4bpp");
 
 const u8 gUnknown_08EA25EC[] = INCBIN_U8("graphics/unknown/unknown_EA25EC.bin");
 const u8 gCreditsCopyrightEnd_Gfx[] = INCBIN_U8("graphics/misc/end_copyright.4bpp.lz");
