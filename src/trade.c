@@ -56,10 +56,13 @@ asm(".set CopyTradeTilemapToBufferAndRequestUpload, CopyTradeTilemapToBuffer");
 #define GFXTAG_CURSOR 300
 #define GFXTAG_LINK_MON_GLOW 5550
 #define GFXTAG_LINK_MON_SHADOW 5552
+#define GFXTAG_CABLE_END 5554
+#define GFXTAG_GBA_SCREEN 5556
 #define GFXTAG_POKEBALL 5557
 #define PALTAG_CURSOR 2345
 #define PALTAG_MENU_TEXT 4925
 #define PALTAG_LINK_MON 5551
+#define PALTAG_GBA 5555
 #define PALTAG_POKEBALL 5558
 
 enum {
@@ -609,14 +612,14 @@ const u16 gUnknown_08210798[] = INCBIN_U16("graphics/trade/gba_map.bin");
 const u16 gUnknown_08211798[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
 const u16 sPokeballSymbol_Map[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
 const u16 unused_08212098[] = INCBIN_U16("graphics/unused/unknown/8212098.gbapal");
-const u16 gTradeCableEndPalette[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
+const u16 sCableEnd_Pal[] = INCBIN_U16("graphics/trade/cable_end.gbapal");
 const u16 unused_082120D8[] = INCBIN_U16("graphics/unused/unknown/82120D8.gbapal");
 const u16 nullpal_082120F8[16] = {};
 const u16 sLinkMon_Pal[] = INCBIN_U16("graphics/trade/glow.gbapal");
 const u32 sLinkMonGlow_Gfx[] = INCBIN_U32("graphics/trade/glow1.4bpp");
 const u32 sLinkMonShadow_Gfx[] = INCBIN_U32("graphics/trade/glow2.4bpp");
-const u32 gTradeCableEndTiles[] = INCBIN_U32("graphics/trade/cable_end.4bpp");
-const u32 gTradeGBAScreenTiles[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
+const u32 sCableEnd_Gfx[] = INCBIN_U32("graphics/trade/cable_end.4bpp");
+const u32 sGbaScreen_Gfx[] = INCBIN_U32("graphics/trade/gba_screen.4bpp");
 const u32 gUnknown_08213738[] = INCBIN_U32("graphics/trade/gba_affine.8bpp");
 const u16 gUnknown_08215778[] = INCBIN_U16("graphics/trade/gba_affine_map.bin");
 
@@ -741,8 +744,8 @@ const struct SpritePalette sSpritePalette_LinkMon = {
     sLinkMon_Pal, PALTAG_LINK_MON
 };
 
-const struct SpritePalette gUnknown_082159B4 = {
-    gTradeCableEndPalette, 5555
+const struct SpritePalette sSpritePalette_Gba = {
+    sCableEnd_Pal, PALTAG_GBA
 };
 
 const struct SpriteTemplate sSpriteTemplate_LinkMonGlow = {
@@ -790,42 +793,42 @@ const struct SpriteTemplate sSpriteTemplate_LinkMonShadow = {
     SpriteCB_LinkMonShadow
 };
 
-const struct OamData gOamData_8215A14 = {
+const struct OamData sOamData_CableEnd = {
     .shape = ST_OAM_V_RECTANGLE,
     .size = 2,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_8215A1C[] = {
+const union AnimCmd sAnim_CableEnd[] = {
     ANIMCMD_FRAME(0, 10),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_8215A24[] = {
-    gSpriteAnim_8215A1C
+const union AnimCmd *const sAnims_CableEnd[] = {
+    sAnim_CableEnd
 };
 
-const struct SpriteSheet gUnknown_08215A28 = {
-    (const u8 *)gTradeCableEndTiles, 0x100, 5554
+const struct SpriteSheet sSpriteSheet_CableEnd = {
+    (const u8 *)sCableEnd_Gfx, 0x100, GFXTAG_CABLE_END
 };
 
-const struct SpriteTemplate gSpriteTemplate_8215A30 = {
-    5554,
-    5555,
-    &gOamData_8215A14,
-    gSpriteAnimTable_8215A24,
+const struct SpriteTemplate sSpriteTemplate_CableEnd = {
+    GFXTAG_CABLE_END,
+    PALTAG_GBA,
+    &sOamData_CableEnd,
+    sAnims_CableEnd,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCB_CableEndSending
 };
 
-const struct OamData gOamData_8215A48 = {
+const struct OamData sOamData_GbaScreen = {
     .shape = ST_OAM_H_RECTANGLE,
     .size = 3,
     .priority = 1
 };
 
-const union AnimCmd gSpriteAnim_8215A50[] = {
+const union AnimCmd sAnim_GbaScreen_Long[] = {
     ANIMCMD_FRAME( 0, 2, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(32, 2, .vFlip = TRUE, .hFlip = TRUE),
     ANIMCMD_FRAME(64, 2, .vFlip = TRUE, .hFlip = TRUE),
@@ -837,19 +840,19 @@ const union AnimCmd gSpriteAnim_8215A50[] = {
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_8215A74[] = {
-    gSpriteAnim_8215A50
+const union AnimCmd *const sAnims_GbaScreen_Long[] = {
+    sAnim_GbaScreen_Long
 };
 
-const struct SpriteSheet gUnknown_08215A78 = {
-    (const u8 *)gTradeGBAScreenTiles, 0x1000, 5556
+const struct SpriteSheet sSpriteSheet_GbaScreen = {
+    (const u8 *)sGbaScreen_Gfx, 0x1000, GFXTAG_GBA_SCREEN
 };
 
-const struct SpriteTemplate gSpriteTemplate_8215A80 = {
-    5556,
-    5555,
-    &gOamData_8215A48,
-    gSpriteAnimTable_8215A74,
+const struct SpriteTemplate sSpriteTemplate_GbaScreenFlash_Long = {
+    GFXTAG_GBA_SCREEN,
+    PALTAG_GBA,
+    &sOamData_GbaScreen,
+    sAnims_GbaScreen_Long,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCB_GbaScreen
@@ -4341,10 +4344,10 @@ static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
 {
     LoadSpriteSheet(&sSpriteSheet_LinkMonGlow);
     LoadSpriteSheet(&sSpriteSheet_LinkMonShadow);
-    LoadSpriteSheet(&gUnknown_08215A28);
-    LoadSpriteSheet(&gUnknown_08215A78);
+    LoadSpriteSheet(&sSpriteSheet_CableEnd);
+    LoadSpriteSheet(&sSpriteSheet_GbaScreen);
     LoadSpritePalette(&sSpritePalette_LinkMon);
-    LoadSpritePalette(&gUnknown_082159B4);
+    LoadSpritePalette(&sSpritePalette_Gba);
 }
 
 static void BufferTradeSceneStrings(void)
@@ -4472,7 +4475,7 @@ static bool8 DoTradeAnim_Cable(void)
             {
                 SetTradeSequenceBgGpuRegs(3);
                 SetTradeBGAffine();
-                gTradeAnim->connectionSpriteId2 = CreateSprite(&gSpriteTemplate_8215A80, 0x78, 0x50, 0);
+                gTradeAnim->connectionSpriteId2 = CreateSprite(&sSpriteTemplate_GbaScreenFlash_Long, 0x78, 0x50, 0);
                 gTradeAnim->state ++;
             }
             break;
@@ -4492,7 +4495,7 @@ static bool8 DoTradeAnim_Cable(void)
             }
             if (gTradeAnim->bg1vofs == 0x148)
             {
-                gTradeAnim->cableEndSpriteId = CreateSprite(&gSpriteTemplate_8215A30, 0x80, 0x41, 0);
+                gTradeAnim->cableEndSpriteId = CreateSprite(&sSpriteTemplate_CableEnd, 0x80, 0x41, 0);
             }
             break;
         case 27:
@@ -4676,11 +4679,11 @@ static bool8 DoTradeAnim_Cable(void)
                 gTradeAnim->state ++;
             }
             if (gTradeAnim->bg1vofs == 0x148)
-                gTradeAnim->cableEndSpriteId = CreateSprite(&gSpriteTemplate_8215A30, 0x80, 0x41, 0);
+                gTradeAnim->cableEndSpriteId = CreateSprite(&sSpriteTemplate_CableEnd, 0x80, 0x41, 0);
             gSprites[gTradeAnim->cableEndSpriteId].callback = SpriteCB_CableEndReceiving;
             break;
         case 48:
-            gTradeAnim->connectionSpriteId2 = CreateSprite(&gSpriteTemplate_8215A80, 0x78, 0x50, 0);
+            gTradeAnim->connectionSpriteId2 = CreateSprite(&sSpriteTemplate_GbaScreenFlash_Long, 0x78, 0x50, 0);
             gTradeAnim->state = 50;
             break;
 
