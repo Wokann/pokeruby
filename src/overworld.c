@@ -121,7 +121,7 @@ static u8 sReceivingFromLink;
 static void CB2_Overworld(void);
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState*, u16, u8);
 static u8 GetAdjustedInitialDirection(struct InitialPlayerAvatarState*, u8, u16, u8);
-static bool32 sub_805483C(u8*);
+static bool32 LoadMapInStepsLink(u8*);
 static void CB2_LoadMapOnReturnToFieldCableClub(void);
 static void Overworld_ResetStateAfterWhiteOut(void);
 static void InitOverworldGraphicsRegisters(void);
@@ -1295,7 +1295,7 @@ void CB2_NewGame(void)
     ScriptContext_Init();
     UnlockPlayerFieldControls();
     gFieldCallback = ExecuteTruckSequence;
-    do_load_map_stuff_loop(&gMain.state);
+    DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
     SetMainCallback2(CB2_Overworld);
@@ -1318,7 +1318,7 @@ void debug_sub_8058C00(void)
     else
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
 
-    do_load_map_stuff_loop(&gMain.state);
+    DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
     SetMainCallback2(CB2_Overworld);
@@ -1341,7 +1341,7 @@ void CB2_WhiteOut(void)
         UnlockPlayerFieldControls();
         gFieldCallback = FieldCB_WarpExitFadeFromBlack;
         val = 0;
-        do_load_map_stuff_loop(&val);
+        DoMapLoadLoop(&val);
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_Overworld);
         SetMainCallback2(CB2_Overworld);
@@ -1360,7 +1360,7 @@ void CB2_LoadMap(void)
 
 void CB2_LoadMap2(void)
 {
-    do_load_map_stuff_loop(&gMain.state);
+    DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
     SetMainCallback1(CB1_Overworld);
     SetMainCallback2(CB2_Overworld);
@@ -1375,7 +1375,7 @@ void CB2_ReturnToFieldContestHall(void)
         UnlockPlayerFieldControls();
         SetMainCallback1(NULL);
     }
-    if (sub_805493C(&gMain.state, 1))
+    if (LoadMapInStepsLocal(&gMain.state, 1))
     {
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_Overworld);
@@ -1392,7 +1392,7 @@ void CB2_ReturnToFieldCableClub(void)
 
 static void CB2_LoadMapOnReturnToFieldCableClub(void)
 {
-    if (sub_805483C(&gMain.state))
+    if (LoadMapInStepsLink(&gMain.state))
     {
         SetFieldVBlankCallback();
         SetMainCallback1(CB1_OverworldLink);
@@ -1416,7 +1416,7 @@ void CB2_ReturnToField(void)
 
 void CB2_ReturnToFieldLocal(void)
 {
-    if (sub_8054A4C(&gMain.state))
+    if (ReturnToFieldLocal(&gMain.state))
     {
         SetFieldVBlankCallback();
         SetMainCallback2(CB2_Overworld);
@@ -1425,7 +1425,7 @@ void CB2_ReturnToFieldLocal(void)
 
 void CB2_ReturnToFieldLink(void)
 {
-    if (!Overworld_IsRecvQueueAtMax() && sub_8054A9C(&gMain.state))
+    if (!Overworld_IsRecvQueueAtMax() && ReturnToFieldLink(&gMain.state))
         SetMainCallback2(CB2_Overworld);
 }
 
@@ -1546,7 +1546,7 @@ static void InitCurrentFlashLevelScanlineEffect(void)
     }
 }
 
-static bool32 sub_805483C(u8 *state)
+static bool32 LoadMapInStepsLink(u8 *state)
 {
     switch (*state)
     {
@@ -1555,7 +1555,7 @@ static bool32 sub_805483C(u8 *state)
         ScriptContext_Init();
         UnlockPlayerFieldControls();
         ResetAllPlayerLinkStates();
-        sub_8054BA8();
+        ResetScreenForMapLoad();
         (*state)++;
         break;
     case 1:
@@ -1563,14 +1563,14 @@ static bool32 sub_805483C(u8 *state)
         (*state)++;
         break;
     case 2:
-        sub_8054D4C(1);
+        ResumeMap(1);
         (*state)++;
         break;
     case 3:
-        sub_8054E98();
-        sub_8054D90();
-        sub_8054EC8();
-        sub_8054E60();
+        OffsetCameraFocusByLinkPlayerId();
+        InitObjectEventsLink();
+        SpawnLinkPlayers();
+        SetCameraToTrackGuestPlayer();
         (*state)++;
         break;
     case 4:
@@ -1617,7 +1617,7 @@ static bool32 sub_805483C(u8 *state)
     return 0;
 }
 
-bool32 sub_805493C(u8 *state, u32 a2)
+bool32 LoadMapInStepsLocal(u8 *state, u32 a2)
 {
     switch (*state)
     {
@@ -1627,16 +1627,16 @@ bool32 sub_805493C(u8 *state, u32 a2)
         (*state)++;
         break;
     case 1:
-        sub_8054BA8();
+        ResetScreenForMapLoad();
         (*state)++;
         break;
     case 2:
-        sub_8054D4C(a2);
+        ResumeMap(a2);
         (*state)++;
         break;
     case 3:
-        mli4_mapscripts_and_other();
-        sub_8054E34();
+        InitObjectEventsLocal();
+        SetCameraToTrackPlayer();
         (*state)++;
         break;
     case 4:
@@ -1685,19 +1685,19 @@ bool32 sub_805493C(u8 *state, u32 a2)
     return 0;
 }
 
-bool32 sub_8054A4C(u8 *state)
+bool32 ReturnToFieldLocal(u8 *state)
 {
     switch (*state)
     {
     case 0:
-        sub_8054BA8();
-        sub_8054D4C(0);
-        sub_8054E20();
-        sub_8054E34();
+        ResetScreenForMapLoad();
+        ResumeMap(0);
+        InitObjectEventsReturnToField();
+        SetCameraToTrackPlayer();
         (*state)++;
         break;
     case 1:
-        sub_8054C2C();
+        InitViewGraphics();
         (*state)++;
         break;
     case 2:
@@ -1710,23 +1710,23 @@ bool32 sub_8054A4C(u8 *state)
     return 0;
 }
 
-bool32 sub_8054A9C(u8 *state)
+bool32 ReturnToFieldLink(u8 *state)
 {
     switch (*state)
     {
     case 0:
         FieldClearVBlankHBlankCallbacks();
-        sub_8054BA8();
+        ResetScreenForMapLoad();
         (*state)++;
         break;
     case 1:
-        sub_8054D4C(1);
+        ResumeMap(1);
         (*state)++;
         break;
     case 2:
-        sub_8054F48();
-        sub_8054E20();
-        sub_8054E7C();
+        CreateLinkPlayerSprites();
+        InitObjectEventsReturnToField();
+        SetCameraToTrackGuestPlayer_2();
         (*state)++;
         break;
     case 3:
@@ -1776,13 +1776,13 @@ bool32 sub_8054A9C(u8 *state)
     return 0;
 }
 
-void do_load_map_stuff_loop(u8 *a1)
+void DoMapLoadLoop(u8 *a1)
 {
-    while (!sub_805493C(a1, 0))
+    while (!LoadMapInStepsLocal(a1, 0))
         ;
 }
 
-void sub_8054BA8(void)
+void ResetScreenForMapLoad(void)
 {
     REG_DISPCNT = 0;
 
@@ -1794,7 +1794,7 @@ void sub_8054BA8(void)
     LoadOam();
 }
 
-void sub_8054C2C(void)
+void InitViewGraphics(void)
 {
     InitCurrentFlashLevelScanlineEffect();
     InitOverworldGraphicsRegisters();
@@ -1829,7 +1829,7 @@ static void InitOverworldGraphicsRegisters(void)
     REG_DISPCNT = gBgLayerDisplayFlags[1] | 0x7060 | gBgLayerDisplayFlags[2] | gBgLayerDisplayFlags[0] | gBgLayerDisplayFlags[3];
 }
 
-void sub_8054D4C(u32 a1)
+void ResumeMap(u32 a1)
 {
     ResetTasks();
     ResetSpriteData();
@@ -1847,7 +1847,7 @@ void sub_8054D4C(u32 a1)
     RunOnResumeMapScript();
 }
 
-void sub_8054D90(void)
+void InitObjectEventsLink(void)
 {
     gTotalCameraPixelOffsetX = 0;
     gTotalCameraPixelOffsetY = 0;
@@ -1856,7 +1856,7 @@ void sub_8054D90(void)
     TryRunOnWarpIntoMapScript();
 }
 
-void mli4_mapscripts_and_other(void)
+void InitObjectEventsLocal(void)
 {
     s16 x, y;
     struct InitialPlayerAvatarState *initialPlayerAvatarState;
@@ -1873,36 +1873,36 @@ void mli4_mapscripts_and_other(void)
     TryRunOnWarpIntoMapScript();
 }
 
-void sub_8054E20(void)
+void InitObjectEventsReturnToField(void)
 {
     SpawnObjectEventsOnReturnToField(0, 0);
     RotatingGate_InitPuzzleAndGraphics();
 }
 
-void sub_8054E34(void)
+void SetCameraToTrackPlayer(void)
 {
     gObjectEvents[gPlayerAvatar.objectEventId].trackedByCamera = 1;
     InitCameraUpdateCallback(gPlayerAvatar.spriteId);
 }
 
-void sub_8054E60(void)
+void SetCameraToTrackGuestPlayer(void)
 {
     InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
-void sub_8054E7C(void)
+void SetCameraToTrackGuestPlayer_2(void)
 {
     InitCameraUpdateCallback(GetSpriteForLinkedPlayer(gLocalLinkPlayerId));
 }
 
-void sub_8054E98(void)
+void OffsetCameraFocusByLinkPlayerId(void)
 {
     u16 x, y;
     GetCameraFocusCoords(&x, &y);
     SetCameraFocusCoords(x + gLocalLinkPlayerId, y);
 }
 
-void sub_8054EC8(void)
+void SpawnLinkPlayers(void)
 {
     u16 i;
     u16 x, y;
@@ -1919,7 +1919,7 @@ void sub_8054EC8(void)
     ResetPlayerHeldKeys(word_3002910);
 }
 
-void sub_8054F48(void)
+void CreateLinkPlayerSprites(void)
 {
     u16 i;
     for (i = 0; i < gFieldLinkPlayerCount; i++)
