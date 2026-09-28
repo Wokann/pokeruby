@@ -22,7 +22,6 @@
 
 extern u8 gPlayerPartyCount;
 extern u8 gLastFieldPokeMenuOpened;
-extern u8 gUnknown_020384F0;
 extern struct MultiBattlePokemonTx gMultiPartnerParty[3];
 extern u8 gPartyMenuMessage_IsPrinting;
 extern const u16 gBattleTowerBannedSpecies[];
@@ -406,10 +405,10 @@ static void CB2_ReturnToBattleTowerPartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangeBattleTowerPartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
-            GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
-            gLastFieldPokeMenuOpened = gUnknown_020384F0;
+            GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
+            gLastFieldPokeMenuOpened = gLastViewedMonIndex;
             ShowBattleTowerEntryPopup(ePartyMenu2.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -887,10 +886,10 @@ static void CB2_ReturnToDaycarePartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
-            GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
-            gLastFieldPokeMenuOpened = gUnknown_020384F0;
+            GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
+            gLastFieldPokeMenuOpened = gLastViewedMonIndex;
             ShowDaycareStoragePopup(ePartyMenu2.menuHandlerTaskId);
             SetMainCallback2(CB2_PartyMenuMain);
             break;

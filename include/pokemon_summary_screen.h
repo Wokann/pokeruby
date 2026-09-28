@@ -5,6 +5,7 @@
 #include "task.h"
 
 extern const u8 *const gNatureNames[];
+extern u8 gLastViewedMonIndex;
 
 // The Pokemon Summary Screen can operate in different modes. Certain features,
 // such as move re-ordering, are available in the different modes.

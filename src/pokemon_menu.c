@@ -48,7 +48,6 @@ struct PokeMenuFieldMoveFunc
 };
 
 extern u8 gUnknown_020297ED;
-extern u8 gUnknown_020384F0;
 extern u8 gUnknown_0202E8F4;
 extern u8 gUnknown_0202E8F5;
 extern bool8 gPartyMenuMessage_IsPrinting;
@@ -329,9 +328,9 @@ static void sub_8089EBC(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
-            gLastFieldPokeMenuOpened = gUnknown_020384F0;
+            gLastFieldPokeMenuOpened = gLastViewedMonIndex;
             sub_8089E84();
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -674,7 +673,7 @@ static void sub_808A848(u8 taskID)
 
 static void sub_808A8A8(void)
 {
-    gUnknown_020384F0 = gLastFieldPokeMenuOpened;
+    gLastViewedMonIndex = gLastFieldPokeMenuOpened;
     ePartyMenu2.unk262 = 4;
     sub_8089F14();
 }
@@ -1187,7 +1186,7 @@ static void sub_808B518(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;

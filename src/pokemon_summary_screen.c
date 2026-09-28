@@ -152,7 +152,7 @@ extern const u16 gUnknown_08E94550[];
 extern const u16 gUnknown_08E94590[];
 extern const u8 gUnknown_08E73E88[];
 
-EWRAM_DATA u8 gUnknown_020384F0 = 0;
+EWRAM_DATA u8 gLastViewedMonIndex = 0;
 EWRAM_DATA struct Sprite *gUnknown_020384F4 = NULL;
 
 #if ENGLISH
@@ -926,7 +926,7 @@ static void SummaryScreen_DestroyTask(u8 taskId)
 {
     if (Overworld_IsRecvQueueAtMax() != TRUE && !gPaletteFade.active)
     {
-        gUnknown_020384F0 = pssData.monIndex;
+        gLastViewedMonIndex = pssData.monIndex;
 
         ResetSpriteData();
         FreeAllSpritePalettes();

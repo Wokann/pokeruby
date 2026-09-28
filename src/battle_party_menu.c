@@ -39,7 +39,6 @@ extern u8 gBattlerInMenuId;
 extern u8 gUnknown_0202E8F4;
 extern u8 gUnknown_0202E8F5;
 extern u8 gPartyMenuMessage_IsPrinting;
-extern u8 gUnknown_020384F0;
 extern void (*gPokemonItemUseCallback)();  //don't know types yet
 extern struct PokemonStorage gPokemonStorage;
 extern void ReshowBattleScreenDummy();
@@ -565,10 +564,10 @@ static void CB2_InitBattlePartyMenuAfterSummary(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
-            GetMonNickname(&gPlayerParty[gUnknown_020384F0], gStringVar1);
-            ShowBattlePartyPopupMenu(ePartyMenu2.menuHandlerTaskId, gUnknown_020384F0);
+            GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
+            ShowBattlePartyPopupMenu(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             SetTaskFuncWithFollowupFunc(
                 ePartyMenu2.menuHandlerTaskId, Task_HandlePopupMenuInput, HandleBattlePartyMenu);
             SetMainCallback2(CB2_PartyMenuMain);
