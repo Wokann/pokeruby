@@ -22,6 +22,9 @@ enum
 // An undefined map grid block has all metatile id bits set and nothing else
 #define MAPGRID_UNDEFINED   MAPGRID_METATILE_ID_MASK
 
+// Setting all collision bits marks a map grid block as impassable.
+#define MAPGRID_IMPASSABLE MAPGRID_COLLISION_MASK
+
 // Masks/shifts for metatile attributes
 // Metatile attributes consist of an 8 bit behavior value, 4 unused bits, and a 4 bit layer type value
 // This is the data stored in each data/tilesets/*/*/metatile_attributes.bin file

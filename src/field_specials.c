@@ -430,10 +430,10 @@ void MauvilleGymSetDefaultBarriers(void)
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamH2_On));
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamH3_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamH3_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamH3_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamH4_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamH4_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamH4_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamH1_On):
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH1_Off));
@@ -454,41 +454,41 @@ void MauvilleGymSetDefaultBarriers(void)
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH2_On));
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamH3_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH3_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH3_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamH4_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH4_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH4_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamV1_On):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamV2_On):
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, FloorTile));
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamV1_On):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_Off) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_Off) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamV2_On):
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, FloorTile));
                     break;
                 case METATILE_ID(MauvilleGym, PoleBottom_On):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamV1_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamV1_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, FloorTile):
                     if (MapGridGetMetatileIdAt(x, y - 1) == METATILE_ID(MauvilleGym, GreenBeamV1_On))
                     {
-                        MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamV2_On) | MAPGRID_COLLISION_MASK);
+                        MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, GreenBeamV2_On) | MAPGRID_IMPASSABLE);
                     }
                     else
                     {
-                        MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamV2_On) | MAPGRID_COLLISION_MASK);
+                        MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamV2_On) | MAPGRID_IMPASSABLE);
                     }
                     break;
                 case METATILE_ID(MauvilleGym, PoleBottom_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamV1_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamV1_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, PoleTop_Off):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleTop_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleTop_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, PoleTop_On):
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleTop_Off));
@@ -538,10 +538,10 @@ void MauvilleGymDeactivatePuzzle(void)
                     MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, RedBeamH4_Off));
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamV1_On):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_On) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_On) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, RedBeamV1_On):
-                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_Off) | MAPGRID_COLLISION_MASK);
+                    MapGridSetMetatileIdAt(x, y, METATILE_ID(MauvilleGym, PoleBottom_Off) | MAPGRID_IMPASSABLE);
                     break;
                 case METATILE_ID(MauvilleGym, GreenBeamV2_On):
                 case METATILE_ID(MauvilleGym, RedBeamV2_On):
@@ -913,7 +913,7 @@ static void PCTurnOffEffect(void)
     {
         tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
     }
-    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | MAPGRID_COLLISION_MASK);
+    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
 }
 
@@ -949,13 +949,13 @@ static void LotteryCornerComputerEffect(struct Task *task)
         task->data[3] = 0;
         if (task->data[4] != 0)
         {
-            MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Normal) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Normal) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_IMPASSABLE);
         }
         else
         {
-            MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Flash) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Flash) | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Flash) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Flash) | MAPGRID_IMPASSABLE);
         }
         DrawWholeMapView();
         task->data[4] ^= 1;
@@ -969,8 +969,8 @@ static void LotteryCornerComputerEffect(struct Task *task)
 
 void EndLotteryCornerComputerEffect(void)
 {
-    MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Normal) | MAPGRID_COLLISION_MASK);
-    MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_COLLISION_MASK);
+    MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Normal) | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
 }
 
@@ -1302,33 +1302,33 @@ static void UpdateElevatorWindowLights(struct Task *task)
         task->data[3] = 0;
         if (task->data[4] != 0)
         {
-            MapGridSetMetatileIdAt( 7,  7, METATILE_BattleTower_Elevator_Top0 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  7, METATILE_BattleTower_Elevator_Top1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  7, METATILE_BattleTower_Elevator_Top1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  7, METATILE_BattleTower_Elevator_Top2 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 7,  8, METATILE_BattleTower_Elevator_Mid0 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  8, METATILE_BattleTower_Elevator_Mid1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  8, METATILE_BattleTower_Elevator_Mid1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  8, METATILE_BattleTower_Elevator_Mid2 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 7,  9, METATILE_BattleTower_Elevator_Bottom0 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  9, METATILE_BattleTower_Elevator_Bottom1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  9, METATILE_BattleTower_Elevator_Bottom1 | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  9, METATILE_BattleTower_Elevator_Bottom2 | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt( 7,  7, METATILE_BattleTower_Elevator_Top0 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  7, METATILE_BattleTower_Elevator_Top1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  7, METATILE_BattleTower_Elevator_Top1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  7, METATILE_BattleTower_Elevator_Top2 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 7,  8, METATILE_BattleTower_Elevator_Mid0 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  8, METATILE_BattleTower_Elevator_Mid1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  8, METATILE_BattleTower_Elevator_Mid1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  8, METATILE_BattleTower_Elevator_Mid2 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 7,  9, METATILE_BattleTower_Elevator_Bottom0 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  9, METATILE_BattleTower_Elevator_Bottom1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  9, METATILE_BattleTower_Elevator_Bottom1 | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  9, METATILE_BattleTower_Elevator_Bottom2 | MAPGRID_IMPASSABLE);
         }
         else
         {
-            MapGridSetMetatileIdAt( 7,  7, (METATILE_BattleTower_Elevator_Top0 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  7, (METATILE_BattleTower_Elevator_Top1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  7, (METATILE_BattleTower_Elevator_Top1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  7, (METATILE_BattleTower_Elevator_Top2 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 7,  8, (METATILE_BattleTower_Elevator_Mid0 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  8, (METATILE_BattleTower_Elevator_Mid1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  8, (METATILE_BattleTower_Elevator_Mid1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  8, (METATILE_BattleTower_Elevator_Mid2 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 7,  9, (METATILE_BattleTower_Elevator_Bottom0 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 8,  9, (METATILE_BattleTower_Elevator_Bottom1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt( 9,  9, (METATILE_BattleTower_Elevator_Bottom1 + 3) | MAPGRID_COLLISION_MASK);
-            MapGridSetMetatileIdAt(10,  9, (METATILE_BattleTower_Elevator_Bottom2 + 3) | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt( 7,  7, (METATILE_BattleTower_Elevator_Top0 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  7, (METATILE_BattleTower_Elevator_Top1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  7, (METATILE_BattleTower_Elevator_Top1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  7, (METATILE_BattleTower_Elevator_Top2 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 7,  8, (METATILE_BattleTower_Elevator_Mid0 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  8, (METATILE_BattleTower_Elevator_Mid1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  8, (METATILE_BattleTower_Elevator_Mid1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  8, (METATILE_BattleTower_Elevator_Mid2 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 7,  9, (METATILE_BattleTower_Elevator_Bottom0 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 8,  9, (METATILE_BattleTower_Elevator_Bottom1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt( 9,  9, (METATILE_BattleTower_Elevator_Bottom1 + 3) | MAPGRID_IMPASSABLE);
+            MapGridSetMetatileIdAt(10,  9, (METATILE_BattleTower_Elevator_Bottom2 + 3) | MAPGRID_IMPASSABLE);
         }
         DrawWholeMapView();
         task->data[4] ^= 1;

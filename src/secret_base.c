@@ -282,7 +282,7 @@ void ToggleSecretBaseEntranceMetatile(void)
     {
         if (sSecretBaseEntranceMetatiles[i].closedMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_IMPASSABLE);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
@@ -291,7 +291,7 @@ void ToggleSecretBaseEntranceMetatile(void)
     {
         if (sSecretBaseEntranceMetatiles[i].openMetatileId == metatileId)
         {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
+            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_IMPASSABLE);
             CurrentMapDrawMetatileAt(x, y);
             return;
         }
@@ -344,7 +344,7 @@ void SetOccupiedSecretBaseEntranceMetatiles(const struct MapEvents *events)
                     {
                         if (sSecretBaseEntranceMetatiles[idx].closedMetatileId == tile_id)
                         {
-                            MapGridSetMetatileIdAt(events->bgEvents[bgevidx].x + MAP_OFFSET, events->bgEvents[bgevidx].y + MAP_OFFSET, sSecretBaseEntranceMetatiles[idx].openMetatileId | MAPGRID_COLLISION_MASK);
+                            MapGridSetMetatileIdAt(events->bgEvents[bgevidx].x + MAP_OFFSET, events->bgEvents[bgevidx].y + MAP_OFFSET, sSecretBaseEntranceMetatiles[idx].openMetatileId | MAPGRID_IMPASSABLE);
                             break;
                         }
                     }
@@ -745,7 +745,7 @@ void sub_80BC474(void)
                     MapGridSetMetatileIdAt(
                         mapEvents->bgEvents[eventId].x + MAP_OFFSET,
                         mapEvents->bgEvents[eventId].y + MAP_OFFSET,
-                        sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
+                        sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_IMPASSABLE);
                     break;
                 }
             }
