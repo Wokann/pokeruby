@@ -10,8 +10,8 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimProtect(struct Sprite* sprite);
-static void AnimProtect_Step(struct Sprite* sprite);
+static void AnimProtect(struct Sprite *sprite);
+static void AnimProtect_Step(struct Sprite *sprite);
 
 // Used by Protect.
 
@@ -26,7 +26,7 @@ const struct SpriteTemplate gProtectSpriteTemplate =
     .callback = AnimProtect,
 };
 
-void AnimProtect(struct Sprite* sprite)
+static void AnimProtect(struct Sprite *sprite)
 {
     if (IsContest())
     {
@@ -41,14 +41,14 @@ void AnimProtect(struct Sprite* sprite)
         sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
 
     sprite->data[0] = gBattleAnimArgs[2];
-    sprite->data[2] = (IndexOfSpritePaletteTag(ANIM_TAG_PROTECT) << 4) + 0x100;
+    sprite->data[2] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_PROTECT));
     sprite->data[7] = 16;
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = (sprite->data[7] << 8) | (16 - sprite->data[7]);
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]);
     sprite->callback = AnimProtect_Step;
 }
 
-static void AnimProtect_Step(struct Sprite* sprite)
+static void AnimProtect_Step(struct Sprite *sprite)
 {
     int savedPal;
     int i;
@@ -72,7 +72,7 @@ static void AnimProtect_Step(struct Sprite* sprite)
     {
         sprite->data[6] = 0;
         sprite->data[7] -= 1;
-        REG_BLDALPHA = (sprite->data[7] << 8) | (16 - sprite->data[7]);;
+        REG_BLDALPHA = BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]);
     }
 
     if (sprite->data[0] >0)
@@ -83,7 +83,7 @@ static void AnimProtect_Step(struct Sprite* sprite)
     {
         sprite->data[6] = 0;
         sprite->data[7]++;
-        REG_BLDALPHA = (sprite->data[7] << 8) | (16 - sprite->data[7]);
+        REG_BLDALPHA = BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]);
         if (sprite->data[7] == 16)
         {
             sprite->invisible = TRUE;
