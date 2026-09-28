@@ -14,7 +14,7 @@ static void AnimVoidLines_Step(struct Sprite *sprite);
 
 // Unused
 
-const struct SpriteTemplate gVoidLinesSpriteTemplate =
+static const struct SpriteTemplate sVoidLinesSpriteTemplate =
 {
     .tileTag = ANIM_TAG_VOID_LINES,
     .paletteTag = ANIM_TAG_VOID_LINES,
@@ -28,7 +28,7 @@ const struct SpriteTemplate gVoidLinesSpriteTemplate =
 static void AnimVoidLines(struct Sprite *sprite)
 {
     InitSpritePosToAnimAttacker(sprite, FALSE);
-    sprite->data[0] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(gVoidLinesSpriteTemplate.paletteTag));
+    sprite->data[0] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(sVoidLinesSpriteTemplate.paletteTag));
     sprite->callback = AnimVoidLines_Step;
 }
 
