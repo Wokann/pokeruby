@@ -2071,7 +2071,7 @@ void ChangePokemonNickname(void)
     spec = GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_SPECIES, 0);
     gender = GetMonGender(&(gPlayerParty[gSpecialVar_0x8004]));
     pval = GetMonData(&(gPlayerParty[gSpecialVar_0x8004]), MON_DATA_PERSONALITY, 0);
-    DoNamingScreen(3, gStringVar2, spec, gender, pval, ChangePokemonNickname_CB);
+    DoNamingScreen(NAMING_SCREEN_NICKNAME, gStringVar2, spec, gender, pval, ChangePokemonNickname_CB);
 }
 
 void ChangePokemonNickname_CB(void)
