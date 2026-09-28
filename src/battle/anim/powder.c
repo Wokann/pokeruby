@@ -6,7 +6,7 @@
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 
-void AnimMovePowderParticle(struct Sprite *sprite);
+static void AnimMovePowderParticle(struct Sprite *sprite);
 static void AnimMovePowderParticle_Step(struct Sprite *sprite);
 
 const union AnimCmd gPowderParticlesAnimCmds[] =
@@ -68,7 +68,7 @@ const struct SpriteTemplate gPoisonPowderParticleSpriteTemplate =
 // arg 3: vertical movement speed (sub-pixel value)
 // arg 4: wave amplitude
 // arg 5: wave speed
-void AnimMovePowderParticle(struct Sprite *sprite)
+static void AnimMovePowderParticle(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
