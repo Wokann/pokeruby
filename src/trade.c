@@ -596,7 +596,7 @@ const u8 sSelectedMonLevelGenderCoords[][2] = {
 
 const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/ball.gbapal");
 const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/trade/ball.4bpp");
-const u16 gUnknown_0820C9F8[][16] = {
+const u16 gTradeGba2_Pal[][16] = {
     INCBIN_U16("graphics/trade/unknown.gbapal"),
     INCBIN_U16("graphics/trade/gba.gbapal"),
     INCBIN_U16("graphics/trade/shadow.gbapal"),
@@ -604,10 +604,10 @@ const u16 gUnknown_0820C9F8[][16] = {
     INCBIN_U16("graphics/trade/misc.gbapal")
 };
 
-const u32 gUnknown_0820CA98[] = INCBIN_U32("graphics/trade/gba.4bpp");
+const u32 gTradeGba_Gfx[] = INCBIN_U32("graphics/trade/gba.4bpp");
 const u32 gUnknown_0820CA98_2[] = INCBIN_U32("graphics/trade/shadow.4bpp");
 const u32 sPokeballSymbol_Gfx[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
-const u16 gUnknown_0820F798[] = INCBIN_U16("graphics/trade/shadow_map.bin");
+const u16 gTradePlatform_Tilemap[] = INCBIN_U16("graphics/trade/shadow_map.bin");
 const u16 sGbaMapCable[] = INCBIN_U16("graphics/trade/gba_map.bin");
 const u16 sCableCloseup_Map[] = INCBIN_U16("graphics/trade/cable_closeup_map.bin");
 const u16 sPokeballSymbol_Map[] = INCBIN_U16("graphics/trade/pokeball_symbol_map.bin");
@@ -4238,9 +4238,9 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
     switch (state)
     {
         case 0:
-            LoadPalette(gUnknown_0820C9F8, 0x10, 0xa0);
-            DmaCopyLarge16(3, gUnknown_0820CA98, BG_CHAR_ADDR(1), 0x1300, 0x1000);
-            DmaCopy16Defvars(3, gUnknown_0820F798, BG_SCREEN_ADDR(18), 0x1000);
+            LoadPalette(gTradeGba2_Pal, 0x10, 0xa0);
+            DmaCopyLarge16(3, gTradeGba_Gfx, BG_CHAR_ADDR(1), 0x1300, 0x1000);
+            DmaCopy16Defvars(3, gTradePlatform_Tilemap, BG_SCREEN_ADDR(18), 0x1000);
             gTradeAnim->bg2vofs = 0;
             gTradeAnim->bg2hofs = 0xb4;
             REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
@@ -4253,7 +4253,7 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(5) | BGCNT_TXT256x512;
 
             DmaCopy16Defvars(3, sGbaMapCable, BG_SCREEN_ADDR(5), 0x1000);
-            DmaCopyLarge16(3, gUnknown_0820CA98, BG_CHAR_ADDR(0), 0x1300, 0x1000);
+            DmaCopyLarge16(3, gTradeGba_Gfx, BG_CHAR_ADDR(0), 0x1300, 0x1000);
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON;
             break;
         case 2:
@@ -4313,9 +4313,9 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
             gTradeAnim->bg2vofs = 0;
             gTradeAnim->bg2hofs = 0;
             REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(18) | BGCNT_TXT512x256;
-            LoadPalette(gUnknown_0820C9F8, 0x10, 0xa0);
-            DmaCopyLarge16(3, gUnknown_0820CA98, BG_CHAR_ADDR(1), 0x1300, 0x1000);
-            DmaCopy16Defvars(3, gUnknown_0820F798, BG_SCREEN_ADDR(18), 0x1000);
+            LoadPalette(gTradeGba2_Pal, 0x10, 0xa0);
+            DmaCopyLarge16(3, gTradeGba_Gfx, BG_CHAR_ADDR(1), 0x1300, 0x1000);
+            DmaCopy16Defvars(3, gTradePlatform_Tilemap, BG_SCREEN_ADDR(18), 0x1000);
             break;
     }
 }

@@ -444,9 +444,9 @@ static void CB2_LoadEggHatch(void)
         break;
     case 7:
         REG_BG2CNT = 0x4C06;
-        LoadPalette(gUnknown_0820C9F8, 0x10, 0xA0);
-        DmaCopyLarge16(3, gUnknown_0820CA98, (void *)(VRAM + 0x4000), 0x1300, 0x1000);
-        DmaCopy16Defvars(3, gUnknown_0820F798, (void *)(VRAM + 0x6000), 0x1000);
+        LoadPalette(gTradeGba2_Pal, 0x10, 0xA0);
+        DmaCopyLarge16(3, gTradeGba_Gfx, (void *)(VRAM + 0x4000), 0x1300, 0x1000);
+        DmaCopy16Defvars(3, gTradePlatform_Tilemap, (void *)(VRAM + 0x6000), 0x1000);
         gMain.state++;
         break;
     case 8:

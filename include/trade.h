@@ -46,9 +46,9 @@ struct TradeAnimState {
 };
 
 extern struct TradeAnimState *gTradeAnim;
-extern const u16 gUnknown_0820C9F8[][16];
-extern const u32 gUnknown_0820CA98[];
-extern const u16 gUnknown_0820F798[];
+extern const u16 gTradeGba2_Pal[][16];
+extern const u32 gTradeGba_Gfx[];
+extern const u16 gTradePlatform_Tilemap[];
 
 void CB2_StartCreateTradeMenu(void);
 void CB2_InitInGameTrade(void);
