@@ -627,9 +627,9 @@ void Task_LoadShowMons(u8 taskIdA)
         ResetSpriteData();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 8;
-        LZ77UnCompVram(&gBirchHelpGfx, (void *)VRAM);
+        LZ77UnCompVram(&gBirchBagGrass_Gfx, (void *)VRAM);
         LZ77UnCompVram(&gBirchGrassTilemap, (void *)(VRAM + 0x3800));
-        LoadPalette(gBirchBagGrassPal[0] + 1, 1, 31 * 2);
+        LoadPalette(gBirchBagGrass_Pal[0] + 1, 1, 31 * 2);
 
         for (i = 0; i < 0x800; i++)
             gDecompressionBuffer[i] = 0x11;
