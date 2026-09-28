@@ -286,7 +286,7 @@ static bool8 MakeBasesToMax(void)
                 gSaveBlock1.secretBases[i].decorationPos[j] = 0;
             }
 
-            unref_sub_80BCD7C(i);
+            DebugInitSecretBaseParty(i);
         }
     }
 
