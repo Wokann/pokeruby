@@ -184,7 +184,7 @@ static void sub_804A96C_alt(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u1
 static void sub_804A96C(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u16);
 void BufferMovesString(u8 *, u8, u8);
 void PrintLevelAndGender(u8, u8, u8, u8, u8, u8);
-static void sub_804D7AC(struct Sprite *);
+static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *);
 static bool8 DoTradeAnim_Cable(void);
 static void sub_804DC18(void);
 static u8 TradeGetMultiplayerId(void);
@@ -192,14 +192,14 @@ static void sub_804E144(void);
 static void sub_804E1A0(u8);
 static void sub_804DAD4(struct MailStruct *, const struct InGameTrade *);
 static void sub_804DC88(void);
-static void sub_804D6BC(struct Sprite *);
-static void sub_804D738(struct Sprite *);
+static void SpriteCB_BouncingPokeball(struct Sprite *);
+static void SpriteCB_BouncingPokeballDepart(struct Sprite *);
 static void SetTradeSequenceBgGpuRegs(u8);
 static void SpriteCB_LinkMonGlow(struct Sprite *);
 static void SpriteCB_LinkMonShadow(struct Sprite *);
 static void SpriteCB_CableEndSending(struct Sprite *);
 static void SpriteCB_GbaScreen(struct Sprite *);
-static void sub_804D80C(struct Sprite *);
+static void SpriteCB_BouncingPokeballArrive(struct Sprite *);
 static void sub_804E1DC(void);
 static void CB2_InGameTrade(void);
 static void sub_804D8E4(void);
@@ -673,7 +673,7 @@ const struct SpriteTemplate gSpriteTemplate_821595C = {
     gSpriteAnimTable_82158F8,
     NULL,
     gSpriteAffineAnimTable_8215940,
-    sub_804D6BC
+    SpriteCB_BouncingPokeball
 };
 
 const struct OamData gOamData_8215974 = {
@@ -4392,7 +4392,7 @@ static bool8 DoTradeAnim_Cable(void)
             if (gSprites[gUnknown_03004828->unk_0102].callback == SpriteCallbackDummy && Text_UpdateWindow(&gUnknown_03004828->window) == TRUE)
             {
                 gUnknown_03004828->unk_0103 = CreateSprite(&gSpriteTemplate_821595C, 0x78, 0x20, 0);
-                gSprites[gUnknown_03004828->unk_0103].callback = sub_804D738;
+                gSprites[gUnknown_03004828->unk_0103].callback = SpriteCB_BouncingPokeballDepart;
                 DestroySprite(&gSprites[gUnknown_03004828->unk_0102]);
                 gUnknown_03004828->unk_00c4 ++;
             }
@@ -4701,7 +4701,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 63:
             gUnknown_03004828->unk_0103 = CreateSprite(&gSpriteTemplate_821595C, 0x78, -0x8, 0);
             gSprites[gUnknown_03004828->unk_0103].data[3] = 0x4a;
-            gSprites[gUnknown_03004828->unk_0103].callback = sub_804D80C;
+            gSprites[gUnknown_03004828->unk_0103].callback = SpriteCB_BouncingPokeballArrive;
             StartSpriteAnim(&gSprites[gUnknown_03004828->unk_0103], 1);
             StartSpriteAffineAnim(&gSprites[gUnknown_03004828->unk_0103], 2);
             BlendPalettes(1 << (16 + gSprites[gUnknown_03004828->unk_0103].oam.paletteNum), 16, FADE_COLOR_WHITE);
@@ -4847,7 +4847,7 @@ static void sub_804D63C(void)
     }
 }
 
-static void sub_804D6BC(struct Sprite *sprite)
+static void SpriteCB_BouncingPokeball(struct Sprite *sprite)
 {
     sprite->y += sprite->data[0] / 10;
     sprite->data[5] += sprite->data[1];
@@ -4868,7 +4868,7 @@ static void sub_804D6BC(struct Sprite *sprite)
     }
 }
 
-static void sub_804D738(struct Sprite *sprite)
+static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite)
 {
     sprite->y2 += gTradeBallVerticalVelocityTable[sprite->data[0]];
     if (sprite->data[0] == 22)
@@ -4876,13 +4876,13 @@ static void sub_804D738(struct Sprite *sprite)
     if (++ sprite->data[0] == 44)
     {
         PlaySE(SE_M_MEGA_KICK);
-        sprite->callback = sub_804D7AC;
+        sprite->callback = SpriteCB_BouncingPokeballDepartEnd;
         sprite->data[0] = 0;
         BeginNormalPaletteFade(1 << (16 + sprite->oam.paletteNum), -1, 0, 16, FADE_COLOR_WHITE);
     }
 }
 
-static void sub_804D7AC(struct Sprite *sprite)
+static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite)
 {
     if (sprite->data[1] == 20)
         StartSpriteAffineAnim(sprite, 1);
@@ -4897,7 +4897,7 @@ static void sub_804D7AC(struct Sprite *sprite)
     }
 }
 
-static void sub_804D80C(struct Sprite *sprite)
+static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite)
 {
     if (sprite->data[2] == 0)
     {
