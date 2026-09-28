@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "field_camera.h"
 #include "field_effect.h"
+#include "field_effect_helpers.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
@@ -20,7 +21,7 @@ extern const u8 gSandPillar1_Gfx[];
 extern const u8 gSandPillar2_Gfx[];
 extern const u16 gTilesetPalettes_SecretBase[][16];
 
-const struct OamData gOamData_SandPillar =
+static const struct OamData sOam_SandPillar =
 {
     .y = 0,
     .affineMode = 0,
@@ -37,7 +38,7 @@ const struct OamData gOamData_SandPillar =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_SandPillar[] =
+static const union AnimCmd sAnim_SandPillar[] =
 {
     ANIMCMD_FRAME(0, 6),
     ANIMCMD_FRAME(1, 6),
@@ -45,36 +46,34 @@ const union AnimCmd gSpriteAnim_SandPillar[] =
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_SandPillar[] =
+static const union AnimCmd *const sAnimTable_SandPillar[] =
 {
-    gSpriteAnim_SandPillar,
+    sAnim_SandPillar,
 };
 
-const struct SpriteFrameImage gSpriteImageTable_SandPillar[] =
+static const struct SpriteFrameImage sPicTable_SandPillar[] =
 {
     {gSandPillar0_Gfx, 0x100},
     {gSandPillar1_Gfx, 0x100},
     {gSandPillar2_Gfx, 0x100},
 };
 
-void SpriteCB_SandPillar_BreakTop(struct Sprite *);
-void SpriteCB_SandPillar_BreakBase(struct Sprite *);
-void SpriteCB_SandPillar_End(struct Sprite *);
-const struct SpriteTemplate gSpriteTemplate_SandPillar =
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *);
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *);
+static void SpriteCB_SandPillar_End(struct Sprite *);
+static const struct SpriteTemplate sSpriteTemplate_SandPillar =
 {
     .tileTag = 0xFFFF,
     .paletteTag = FLDEFF_PAL_TAG_SAND_PILLAR,
-    .oam = &gOamData_SandPillar,
-    .anims = gSpriteAnimTable_SandPillar,
-    .images = gSpriteImageTable_SandPillar,
+    .oam = &sOam_SandPillar,
+    .anims = sAnimTable_SandPillar,
+    .images = sPicTable_SandPillar,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_SandPillar_BreakTop,
 };
 
 // This uses one of the secret base palettes, so there is no "09.pal" file.
 const struct SpritePalette gSpritePalette_SandPillar = {gTilesetPalettes_SecretBase[5], FLDEFF_PAL_TAG_SAND_PILLAR};
-
-extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[36];
 
 static void Task_PopSecretBaseBalloon(u8);
 static void DoBalloonSoundEffect(s16);
@@ -228,7 +227,7 @@ void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
 }
 #undef tMetatileID
 
-void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
+static void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
 {
     sprite->data[0]++;
     if (sprite->data[0] == 8)
@@ -268,28 +267,28 @@ bool8 FldEff_SandPillar(void)
     {
     case DIR_SOUTH:
         CreateSprite(
-            &gSpriteTemplate_SandPillar,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 32,
             0);
         break;
     case DIR_NORTH:
         CreateSprite(
-            &gSpriteTemplate_SandPillar,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 8,
             gSprites[gPlayerAvatar.spriteId].oam.y,
             148);
         break;
     case DIR_WEST:
         CreateSprite(
-            &gSpriteTemplate_SandPillar,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x - 8,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
         break;
     case DIR_EAST:
         CreateSprite(
-            &gSpriteTemplate_SandPillar,
+            &sSpriteTemplate_SandPillar,
             gSprites[gPlayerAvatar.spriteId].oam.x + 24,
             gSprites[gPlayerAvatar.spriteId].oam.y + 16,
             148);
@@ -299,7 +298,7 @@ bool8 FldEff_SandPillar(void)
     return FALSE;
 }
 
-void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
 {
     PlaySE(SE_M_ROCK_THROW);
     if (MapGridGetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1) == METATILE_SecretBase_SandOrnament_TopWall)
@@ -313,7 +312,7 @@ void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
     sprite->callback = SpriteCB_SandPillar_BreakBase;
 }
 
-void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
 {
     if (sprite->data[0] < 18)
     {
@@ -328,7 +327,7 @@ void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
     }
 }
 
-void SpriteCB_SandPillar_End(struct Sprite *sprite)
+static void SpriteCB_SandPillar_End(struct Sprite *sprite)
 {
     FieldEffectStop(sprite, FLDEFF_SAND_PILLAR);
     ScriptContext_Enable();
