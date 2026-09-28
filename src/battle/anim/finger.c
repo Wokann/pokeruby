@@ -9,8 +9,6 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
-
 static void AnimMetronomeFinger(struct Sprite *sprite);
 static void AnimFollowMeFinger(struct Sprite *sprite);
 static void AnimTauntFinger(struct Sprite *sprite);

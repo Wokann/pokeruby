@@ -141,6 +141,7 @@ bool8 IsContest(void);
 void ClearBattleAnimationVars(void);
 void DestroyAnimSprite(struct Sprite *sprite);
 void DestroyAnimSpriteAfterTimer(struct Sprite *sprite);
+void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 void DestroyAnimVisualTask(u8 task);
 void DestroyAnimVisualTask(u8 task);
 bool8 IsAnimBankSpriteVisible(u8);

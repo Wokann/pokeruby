@@ -8,8 +8,6 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite);
-
 static void AnimBouncingMusicNote(struct Sprite *sprite);
 static void AnimBouncingMusicNote_Step(struct Sprite *sprite);
 
