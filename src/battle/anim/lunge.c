@@ -76,7 +76,7 @@ static void AnimBowMon_Step1(struct Sprite *sprite)
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
     StoreSpriteCallbackInData6(sprite, AnimBowMon_Step1_Callback);
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
 }
 
 static void AnimBowMon_Step1_Callback(struct Sprite *sprite)
@@ -85,7 +85,7 @@ static void AnimBowMon_Step1_Callback(struct Sprite *sprite)
     {
         sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
         PrepareBattlerSpriteForRotScale(sprite->data[3], ST_OAM_OBJ_NORMAL);
-        sprite->data[4] = (sprite->data[6] = GetBattlerSide(gBattleAnimAttacker)) ? 0x300 : 0xFFFFFD00;
+        sprite->data[4] = (sprite->data[6] = GetBattlerSide(gBattleAnimAttacker)) ? 0x300 : -0x300;
         sprite->data[5] = 0;
     }
 
@@ -106,7 +106,7 @@ static void AnimBowMon_Step2(struct Sprite *sprite)
     sprite->data[2] = 0;
     sprite->data[3] = gBattlerSpriteIds[gBattleAnimAttacker];
     StoreSpriteCallbackInData6(sprite, AnimBowMon_Step4);
-    sprite->callback = TranslateMonBGUntil;
+    sprite->callback = TranslateSpriteLinearById;
 }
 
 static void AnimBowMon_Step3(struct Sprite *sprite)
@@ -169,6 +169,7 @@ static void AnimTipMon_Step(struct Sprite *sprite)
         sprite->data[5] = 0;
         PrepareBattlerSpriteForRotScale(sprite->data[2], ST_OAM_OBJ_NORMAL);
         sprite->data[0]++;
+        // fall through
     case 1:
         sprite->data[5] += sprite->data[4];
         SetSpriteRotScale(sprite->data[2], 0x100, 0x100, sprite->data[5]);
@@ -324,7 +325,7 @@ static void AnimTask_SkullBashPositionSet(u8 taskId)
 
 static void AnimTask_SkullBashPositionReset(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (task->data[3])
     {
         task->data[4] -= task->data[5];

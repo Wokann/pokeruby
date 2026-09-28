@@ -636,7 +636,7 @@ void unref_sub_8078414(struct Sprite *sprite)
     sprite->callback = sub_80782F8;
 }
 
-void TranslateMonBGUntil(struct Sprite *sprite)
+void TranslateSpriteLinearById(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
@@ -650,9 +650,9 @@ void TranslateMonBGUntil(struct Sprite *sprite)
     }
 }
 
-// Same as TranslateMonBGUntil, but it operates on sub-pixel values
+// Same as TranslateSpriteLinearById, but it operates on sub-pixel values
 // to handle slower translations.
-void TranslateMonBGSubPixelUntil(struct Sprite *sprite)
+void TranslateSpriteLinearByIdFixedPoint(struct Sprite *sprite)
 {
     if (sprite->data[0] > 0)
     {
