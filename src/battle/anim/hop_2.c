@@ -10,14 +10,14 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern void InitItemBagData(struct Sprite* sprite, s16 c);
-extern bool8 moveAlongLinearPath(struct Sprite* sprite);
-extern void AnimItemSteal_Step2(struct Sprite* sprite);
+extern void InitItemBagData(struct Sprite *sprite, s16 c);
+extern bool8 moveAlongLinearPath(struct Sprite *sprite);
+extern void AnimItemSteal_Step2(struct Sprite *sprite);
 extern const union AnimCmd *const gFallingBagAnimTable[];
 extern const union AffineAnimCmd *const gFallingBagAffineAnimTable[];
 
-void AnimItemSteal(struct Sprite* sprite);
-static void AnimItemSteal_Step3(struct Sprite* sprite);
+static void AnimItemSteal(struct Sprite *sprite);
+static void AnimItemSteal_Step3(struct Sprite *sprite);
 
 // hop_2
 // Used in item steal.
@@ -33,7 +33,7 @@ const struct SpriteTemplate gItemStealSpriteTemplate =
     .callback = AnimItemSteal,
 };
 
-void AnimItemSteal(struct Sprite* sprite)
+static void AnimItemSteal(struct Sprite *sprite)
 {
     s16 attackerX;
     s16 attackerY;
@@ -59,7 +59,7 @@ void AnimItemSteal(struct Sprite* sprite)
     sprite->callback = AnimItemSteal_Step3;
 }
 
-static void AnimItemSteal_Step3(struct Sprite* sprite)
+static void AnimItemSteal_Step3(struct Sprite *sprite)
 {
     int zero;
     sprite->data[0] += ((sprite->data[3] * 128) / sprite->data[4]);
