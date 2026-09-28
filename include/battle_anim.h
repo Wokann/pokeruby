@@ -15,6 +15,18 @@
 #define STAT_ANIM_MULTIPLE_MINUS1 57
 #define STAT_ANIM_MULTIPLE_MINUS2 58
 
+enum
+{
+    STAT_ANIM_PAL_ATK,
+    STAT_ANIM_PAL_DEF,
+    STAT_ANIM_PAL_ACC,
+    STAT_ANIM_PAL_SPEED,
+    STAT_ANIM_PAL_EVASION,
+    STAT_ANIM_PAL_SPATK,
+    STAT_ANIM_PAL_SPDEF,
+    STAT_ANIM_PAL_MULTIPLE = 0xFF
+};
+
 #define REG_BGnCNT_BITFIELD(n) (*(vBgCnt *)REG_ADDR_BG##n##CNT)
 #define REG_BG0CNT_BITFIELD REG_BGnCNT_BITFIELD(0)
 #define REG_BG1CNT_BITFIELD REG_BGnCNT_BITFIELD(1)
@@ -138,6 +150,8 @@ void LaunchBattleAnimation(const u8 *const moveAnims[], u16 b, u8 c);
 bool8 IsBattlerSpriteVisible(u8 battler);
 void MoveBattlerSpriteToBG(u8, u8);
 bool8 IsContest(void);
+u32 UnpackSelectedBattlePalettes(s16 selector);
+u8 GetSpritePalIdxByBattler(u8 battler);
 void ClearBattleAnimationVars(void);
 void DestroyAnimSprite(struct Sprite *sprite);
 void DestroyAnimSpriteAfterTimer(struct Sprite *sprite);

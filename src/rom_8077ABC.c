@@ -1362,9 +1362,9 @@ u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLef
     return selectedPalettes;
 }
 
-u8 sub_80793A8(u8 a1)
+u8 GetSpritePalIdxByBattler(u8 battler)
 {
-    return a1;
+    return battler;
 }
 
 u8 unref_sub_80793B0(u8 a1)

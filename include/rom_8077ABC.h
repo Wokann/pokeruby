@@ -113,6 +113,4 @@ u8 sub_8079F44(u16 species, bool8 isBackpic, u8 a3, s16 a4, s16 a5, u8 a6, u32 a
 void ResetSpriteRotScale_PreserveAffine(struct Sprite *sprite);
 void DestroySpriteAndFreeResources_(struct Sprite *sprite);
 void sub_8078634(u8 task);
-u8 sub_80793A8(u8);
-
 #endif // GUARD_ROM_8077ABC_H
