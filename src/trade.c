@@ -568,10 +568,10 @@ const u8 sSelectedMonTextCoords[][2] = {
     {18,  7}
 };
 
-const u8 gOtherText_Terminator[] = _("");
-const u8 gOtherText_MaleSymbol3[] = _("♂");
-const u8 gOtherText_FemaleSymbol3[] = _("♀");
-const u8 gOtherText_GenderlessSymbol[] = _("$");
+const u8 sText_EmptyString[] = _("");
+const u8 gText_MaleSymbol4[] = _("♂");
+const u8 gText_FemaleSymbol4[] = _("♀");
+const u8 gText_GenderlessSymbol[] = _("$");
 
 u8 *const unref_data_820C344 = gTileBuffer;
 const u8 unref_strings_820C348[][13] = {
@@ -2855,7 +2855,7 @@ void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
             else
                 moves[i] = GetMonData(&gEnemyParty[partyIdx], MON_DATA_MOVE1 + i, NULL);
         }
-        StringCopy(str, gOtherText_Terminator);
+        StringCopy(str, sText_EmptyString);
         for (i = 0; i < 4; i ++)
         {
             if (moves[i] != 0)
@@ -2867,7 +2867,7 @@ void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
     }
     else
     {
-        StringCopy(str, gOtherText_Terminator);
+        StringCopy(str, sText_EmptyString);
         StringAppend(str, gOtherText_FourQuestions);
     }
 }
