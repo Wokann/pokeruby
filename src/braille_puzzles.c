@@ -7,7 +7,7 @@
 #include "main.h"
 #include "event_object_lock.h"
 #include "menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "task.h"

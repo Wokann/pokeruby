@@ -3,7 +3,7 @@
 #include "field_player_avatar.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "task.h"
 #include "constants/field_effects.h"
 

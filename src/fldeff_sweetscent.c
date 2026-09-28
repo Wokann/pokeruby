@@ -3,7 +3,7 @@
 #include "field_player_avatar.h"
 #include "palette.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"

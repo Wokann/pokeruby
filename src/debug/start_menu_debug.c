@@ -35,7 +35,7 @@
 #include "battle_setup.h"
 #include "safari_zone.h"
 #include "fldeff_flash.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "fldeff_strength.h"
 #include "pokemon_menu.h"
 #include "data2.h"

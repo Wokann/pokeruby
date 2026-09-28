@@ -23,6 +23,7 @@
 #include "field_fadetransition.h"
 #include "field_weather.h"
 #include "field_effect.h"
+#include "fldeff.h"
 #include "field_control_avatar.h"
 #include "metatile_behavior.h"
 #include "fieldmap.h"
@@ -61,10 +62,8 @@ void CB2_BagMenuFromParty(void);
 void CB2_OpenFlyMap(void);
 bool8 SetUpFieldMove_Cut(void);
 bool8 SetUpFieldMove_Flash(void);
-bool8 SetUpFieldMove_RockSmash(void);
 bool8 SetUpFieldMove_Strength(void);
 bool8 SetUpFieldMove_Teleport(void);
-bool8 SetUpFieldMove_Dig(void);
 bool8 SetUpFieldMove_SecretPower(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SoftBoiled(void);

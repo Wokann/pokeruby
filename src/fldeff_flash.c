@@ -5,7 +5,7 @@
 #include "palette.h"
 #include "pokemon_menu.h"
 #include "overworld.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"

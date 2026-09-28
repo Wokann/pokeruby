@@ -1,12 +1,13 @@
 #include "global.h"
 #include "braille_puzzles.h"
+#include "event_data.h"
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "item_use.h"
 #include "overworld.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -17,10 +18,6 @@
 #include "constants/map_types.h"
 #include "constants/songs.h"
 
-extern u16 gSpecialVar_LastTalked;
-extern void (*gFieldCallback)(void);
-extern u8 gLastFieldPokeMenuOpened;
-extern void (*gPostMenuFieldCallback)(void);
 extern u8 EventScript_UseRockSmash[];
 
 EWRAM_DATA struct MapPosition gPlayerFacingPosition = {0};
@@ -113,9 +110,9 @@ static void Task_DoFieldMove_WaitForMon(u8 taskId)
 
 static void Task_DoFieldMove_RunFunc(u8 taskId)
 {
-    void (*func)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
+    void (*fieldMoveFunc)(void) = (void (*)(void))(((u16)gTasks[taskId].data[8] << 16) | (u16)gTasks[taskId].data[9]);
 
-    func();
+    fieldMoveFunc();
     gPlayerAvatar.preventStep = FALSE;
     DestroyTask(taskId);
 }
@@ -155,14 +152,14 @@ static void FieldCallback_RockSmash(void)
     ScriptContext_SetupScript(EventScript_UseRockSmash);
 }
 
-int FldEff_UseRockSmash(void)
+bool8 FldEff_UseRockSmash(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
     gTasks[taskId].data[8] = (u32)FieldMove_RockSmash >> 16;
     gTasks[taskId].data[9] = (u32)FieldMove_RockSmash;
     IncrementGameStat(GAME_STAT_USED_ROCK_SMASH);
-    return 0;
+    return FALSE;
 }
 
 static void FieldMove_RockSmash(void)
@@ -172,7 +169,7 @@ static void FieldMove_RockSmash(void)
     ScriptContext_Enable();
 }
 
-int SetUpFieldMove_Dig(void)
+bool8 SetUpFieldMove_Dig(void)
 {
     if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
     {
@@ -193,7 +190,7 @@ static void FieldCallback_Dig(void)
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
 }
 
-int FldEff_UseDig(void)
+bool8 FldEff_UseDig(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
@@ -201,7 +198,7 @@ int FldEff_UseDig(void)
     gTasks[taskId].data[9] = (u32)StartDigFieldEffect;
     if (!ShouldDoBrailleDigEffect())
         SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
-    return 0;
+    return FALSE;
 }
 
 static void StartDigFieldEffect(void)

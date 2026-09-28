@@ -4,7 +4,7 @@
 #include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "task.h"
 #include "text.h"

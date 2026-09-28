@@ -7,7 +7,7 @@
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "pokemon_menu.h"
-#include "rom6.h"
+#include "fldeff.h"
 #include "script.h"
 #include "secret_base.h"
 #include "sound.h"
