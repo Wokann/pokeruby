@@ -1875,7 +1875,7 @@ void mli4_mapscripts_and_other(void)
 
 void sub_8054E20(void)
 {
-    sub_805B710(0, 0);
+    SpawnObjectEventsOnReturnToField(0, 0);
     RotatingGate_InitPuzzleAndGraphics();
 }
 

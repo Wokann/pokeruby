@@ -1589,9 +1589,9 @@ static void RemoveObjectEventIfOutsideView(struct ObjectEvent *objectEvent)
     RemoveObjectEvent(objectEvent);
 }
 
-void sub_805B75C(u8, s16, s16);
+void SpawnObjectEventOnReturnToField(u8, s16, s16);
 
-void sub_805B710(u16 a, u16 b)
+void SpawnObjectEventsOnReturnToField(s16 x, s16 y)
 {
     u8 i;
 
@@ -1603,7 +1603,7 @@ void sub_805B710(u16 a, u16 b)
     {
         if (gObjectEvents[i].active)
         {
-            sub_805B75C(i, a, b);
+            SpawnObjectEventOnReturnToField(i, x, y);
 #if DEBUG
             gUnknown_Debug_03004BC0++;
 #endif
@@ -1612,7 +1612,7 @@ void sub_805B710(u16 a, u16 b)
     CreateReflectionEffectSprites();
 }
 
-void sub_805B75C(u8 objectEventId, s16 x, s16 y)
+void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
 {
     u8 spriteId;
     struct Sprite *sprite;
