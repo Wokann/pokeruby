@@ -8,7 +8,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimMilkBottle(struct Sprite *sprite);
+static void AnimMilkBottle(struct Sprite *sprite);
 static void AnimMilkBottle_Step1(struct Sprite *sprite);
 static void AnimMilkBottle_Step2(struct Sprite *sprite, int unk1, int unk2);
 
@@ -47,7 +47,7 @@ const struct SpriteTemplate gMilkBottleSpriteTemplate =
     .callback = AnimMilkBottle,
 };
 
-void AnimMilkBottle(struct Sprite *sprite)
+static void AnimMilkBottle(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 0xFFE8;
@@ -58,8 +58,8 @@ void AnimMilkBottle(struct Sprite *sprite)
     sprite->data[4] = 0;
     sprite->data[6] = 0;
     sprite->data[7] = 16;
-    REG_BLDCNT = 0x3F40;
-    REG_BLDALPHA = (sprite->data[7] << 8) | sprite->data[6];
+    REG_BLDCNT = BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND;
+    REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[6], sprite->data[7]);
     sprite->callback = AnimMilkBottle_Step1;
 }
 
@@ -79,7 +79,7 @@ static void AnimMilkBottle_Step1(struct Sprite *sprite)
             else if (sprite->data[7] > 0)
                 sprite->data[7]--;
 
-            REG_BLDALPHA = (sprite->data[7] << 8) | sprite->data[6];
+            REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[6], sprite->data[7]);
             if (sprite->data[6] == 16 && sprite->data[7] == 0)
             {
                 sprite->data[1] = 0;
@@ -116,7 +116,7 @@ static void AnimMilkBottle_Step1(struct Sprite *sprite)
             sprite->data[7]++;
         }
 
-        REG_BLDALPHA = (sprite->data[7] << 8) | sprite->data[6];
+        REG_BLDALPHA = BLDALPHA_BLEND(sprite->data[6], sprite->data[7]);
         if (sprite->data[6] == 0 && sprite->data[7] == 16)
         {
             sprite->data[1] = 0;
@@ -130,7 +130,7 @@ static void AnimMilkBottle_Step1(struct Sprite *sprite)
         break;
     case 4:
         REG_BLDCNT = 0;
-        REG_BLDALPHA = 0;
+        REG_BLDALPHA = BLDALPHA_BLEND(0, 0);
         DestroyAnimSprite(sprite);
         break;
     }
