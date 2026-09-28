@@ -2,12 +2,13 @@
 #include "rom_8077ABC.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimLeechSeed(struct Sprite *sprite);
+static void AnimLeechSeed(struct Sprite *sprite);
 static void AnimLeechSeed_Step(struct Sprite *sprite);
 static void AnimLeechSeedSprouts(struct Sprite *sprite);
 
@@ -49,17 +50,17 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 // arg 3: target y pixel offset
 // arg 4: duration
 // arg 5: wave amplitude
-void AnimLeechSeed(struct Sprite *sprite)
+static void AnimLeechSeed(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
-    if (GetBattlerSide(gBattleAnimAttacker))
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
     }
 
     sprite->data[0] = gBattleAnimArgs[4];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 0) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) + gBattleAnimArgs[3];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[3];
     sprite->data[5] = gBattleAnimArgs[5];
     InitAnimArcTranslation(sprite);
     sprite->callback = AnimLeechSeed_Step;
