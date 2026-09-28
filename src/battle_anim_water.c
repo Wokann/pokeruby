@@ -25,11 +25,11 @@ void PrepareBattlerSpriteForRotScale(u8, u8);
 void ResetSpriteRotScale(u8);
 void SetBattlerSpriteYOffsetFromYScale(u8);
 static void AnimWaterGunDroplet(struct Sprite *sprite);
-void AnimSmallBubblePair(struct Sprite *sprite);
+static void AnimSmallBubblePair(struct Sprite *sprite);
 static void AnimTask_CreateSurfWave_Step1(u8 taskId);
 static void AnimTask_SurfWaveScanlineEffect(u8 taskId);
-void AnimSmallDriftingBubbles(struct Sprite *sprite);
-void AnimSmallDriftingBubbles_Step(struct Sprite *);
+static void AnimSmallDriftingBubbles(struct Sprite *sprite);
+static void AnimSmallDriftingBubbles_Step(struct Sprite *);
 static void AnimTask_WaterSpoutLaunch_Step(u8);
 static u8 GetWaterSpoutPowerForAnim(void);
 static void CreateWaterSpoutLaunchDroplets(struct Task *, u8);
@@ -205,7 +205,7 @@ const struct SpriteTemplate gWaterPulseRingBubbleSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_BUBBLES,
     .paletteTag = ANIM_TAG_SMALL_BUBBLES,
-    .oam = &gOamData_837DF84,
+    .oam = &gOamData_AffineNormal_ObjNormal_8x8,
     .anims = sAnims_WaterPulseBubble,
     .images = NULL,
     .affineAnims = sAffineAnims_WaterPulseRingBubble,
@@ -235,7 +235,7 @@ static void AnimWaterGunDroplet(struct Sprite *sprite)
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
 
-void AnimSmallBubblePair(struct Sprite *sprite)
+static void AnimSmallBubblePair(struct Sprite *sprite)
 {
     if (gBattleAnimArgs[3] != ANIM_BATTLER_ATTACKER)
     {
@@ -243,7 +243,7 @@ void AnimSmallBubblePair(struct Sprite *sprite)
     }
     else
     {
-        InitSpritePosToAnimAttacker(sprite, 1);
+        InitSpritePosToAnimAttacker(sprite, TRUE);
     }
 
     sprite->data[7] = gBattleAnimArgs[2];
@@ -363,21 +363,21 @@ static void AnimTask_CreateSurfWave_Step1(u8 taskId)
     struct BattleAnimBgData animBg;
     u8 i;
     u16 rgbBuffer;
-    u16 *x = &gBattle_BG1_X;
-    u16 *y = &gBattle_BG1_Y;
+    u16 *BGptrX = &gBattle_BG1_X;
+    u16 *BGptrY = &gBattle_BG1_Y;
 
-    *x += gTasks[taskId].data[0];
-    *y += gTasks[taskId].data[1];
+    *BGptrX += gTasks[taskId].data[0];
+    *BGptrY += gTasks[taskId].data[1];
     GetBattleAnimBg1Data(&animBg);
     gTasks[taskId].data[2] += gTasks[taskId].data[1];
     if (++gTasks[taskId].data[5] == 4)
     {
-        rgbBuffer = gPlttBufferFaded[animBg.paletteId * 16 + 7];
+        rgbBuffer = gPlttBufferFaded[BG_PLTT_ID(animBg.paletteId) + 7];
         for (i = 6; i != 0; i--)
         {
-            gPlttBufferFaded[animBg.paletteId * 16 + 1 + i] = gPlttBufferFaded[animBg.paletteId * 16 + 1 + i - 1];
+            gPlttBufferFaded[BG_PLTT_ID(animBg.paletteId) + 1 + i] = gPlttBufferFaded[BG_PLTT_ID(animBg.paletteId) + 1 + i - 1];
         }
-        gPlttBufferFaded[animBg.paletteId * 16 + 1] = rgbBuffer;
+        gPlttBufferFaded[BG_PLTT_ID(animBg.paletteId) + 1] = rgbBuffer;
         gTasks[taskId].data[5] = 0;
     }
     if (++gTasks[taskId].data[6] > 1)
@@ -403,8 +403,8 @@ static void AnimTask_CreateSurfWave_Step1(u8 taskId)
         Dma3FillLarge32_(0, animBg.bgTilemap, 0x1000); // !
         if (!IsContest())
             REG_BG1CNT_BITFIELD.charBaseBlock = 0;
-        *x = 0;
-        *y = 0;
+        *BGptrX = 0;
+        *BGptrY = 0;
 
         REG_BLDCNT = 0;
         REG_BLDALPHA = BLDALPHA_BLEND(0, 0);
@@ -444,7 +444,7 @@ static void AnimTask_SurfWaveScanlineEffect(u8 taskId)
             {
                 gScanlineEffectRegBuffers[0][i] = gScanlineEffectRegBuffers[1][i] = task->data[2];
             }
-            params.dmaDest = (vu16 *)REG_ADDR_BLDALPHA;
+            params.dmaDest = &REG_BLDALPHA;
             params.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
             params.initState = 1;
             params.unused9 = 0;
@@ -499,7 +499,7 @@ static void AnimTask_SurfWaveScanlineEffect(u8 taskId)
     }
 }
 
-void AnimSmallDriftingBubbles(struct Sprite *sprite)
+static void AnimSmallDriftingBubbles(struct Sprite *sprite)
 {
     s16 randData;
     s16 randData2;
@@ -515,7 +515,7 @@ void AnimSmallDriftingBubbles(struct Sprite *sprite)
     sprite->callback = AnimSmallDriftingBubbles_Step;
 }
 
-void AnimSmallDriftingBubbles_Step(struct Sprite *sprite)
+static void AnimSmallDriftingBubbles_Step(struct Sprite *sprite)
 {
     sprite->data[3] += sprite->data[1];
     sprite->data[4] += sprite->data[2];
