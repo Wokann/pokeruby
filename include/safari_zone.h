@@ -2,6 +2,7 @@
 #define GUARD_SAFARI_ZONE_H
 
 extern u8 gNumSafariBalls;
+// Used by Ruby's debug menu.
 extern u16 gSafariZoneStepCounter;
 
 bool32 GetSafariZoneFlag(void);
@@ -15,10 +16,10 @@ bool8 SafariZoneTakeStep(void);
 void SafariZoneRetirePrompt(void);
 void CB2_EndSafariBattle(void);
 
-void GetPokeblockFeederInFront(void);
-struct Pokeblock *SafariZoneGetPokeblockInFront(void);
 struct Pokeblock *SafariZoneGetActivePokeblock(void);
 void SafariZoneActivatePokeblockFeeder(u8 pkblId);
-bool32 GetInFrontFeederPokeblockAndSteps(void);
+
+// Used by Ruby's debug menu.
+bool8 GetInFrontFeederPokeblockAndSteps(void);
 
 #endif // GUARD_SAFARI_ZONE_H
