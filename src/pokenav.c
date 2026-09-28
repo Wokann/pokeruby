@@ -624,16 +624,16 @@ void UpdateMapSecInfoWindow(void)
 {
     bool8 someBool = FALSE;
     u16 top = 4;
-    u16 mapSectionId;
+    u16 mapSecId;
     u8 b;
 
-    switch (gPokenavStructPtr->regionMap.unk16)
+    switch (gPokenavStructPtr->regionMap.mapSecType)
     {
-    case 0:
+    case MAPSECTYPE_NONE:
         break;
-    case 1:
-    case 4:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+    case MAPSECTYPE_ROUTE:
+    case MAPSECTYPE_BATTLE_TOWER:
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         if (gLinkOpen == TRUE)
         {
@@ -647,8 +647,8 @@ void UpdateMapSecInfoWindow(void)
             for (i = 0; i < 4; i++)
             {
                 const u8 *secName = GetLandmarkName(
-                    gPokenavStructPtr->regionMap.mapSectionId,
-                    gPokenavStructPtr->regionMap.everGrandeCityArea,
+                    gPokenavStructPtr->regionMap.mapSecId,
+                    gPokenavStructPtr->regionMap.posWithinMapSec,
                     i);
 
                 if (secName == NULL)
@@ -658,21 +658,21 @@ void UpdateMapSecInfoWindow(void)
             }
         }
         break;
-    case 2:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+    case MAPSECTYPE_CITY_CANFLY:
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
-        mapSectionId = gPokenavStructPtr->regionMap.mapSectionId;
-        b = gPokenavStructPtr->regionMap.everGrandeCityArea;
-        if (gPokenavStructPtr->cityMapTilemapPtrs[mapSectionId][b] != NULL)
+        mapSecId = gPokenavStructPtr->regionMap.mapSecId;
+        b = gPokenavStructPtr->regionMap.posWithinMapSec;
+        if (gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b] != NULL)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
             Menu_BlankWindowRect(26, top, 28, 15);
-            sub_8095C8C((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSectionId][b], 0, 0, 10, 10, 10);
+            sub_8095C8C((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
             top += 11;
         }
         break;
-    case 3:
-        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSectionName, 0x70, top * 8, 0x78, 1);
+    case MAPSECTYPE_CITY_CANTFLY:
+        Menu_PrintTextWithNewlineIndent(gPokenavStructPtr->regionMap.mapSecName, 0x70, top * 8, 0x78, 1);
         top += 2;
         break;
     }
@@ -681,7 +681,7 @@ void UpdateMapSecInfoWindow(void)
     if (!someBool && top < 16)
         Menu_BlankWindowRect(14, top, 28, 15);
 
-    if (gPokenavStructPtr->regionMap.unk16 == 2)
+    if (gPokenavStructPtr->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY)
         ShowRegionMapCityBanner();
     else
         HideRegionMapCityBanner();
@@ -1823,8 +1823,8 @@ void UpdateRegionMapLinkLandmarks(void)
     if (ptr[0] == 1)
     {
         const u8 *landmarkName = GetLandmarkName(
-            gPokenavStructPtr->regionMap.mapSectionId,
-            gPokenavStructPtr->regionMap.everGrandeCityArea,
+            gPokenavStructPtr->regionMap.mapSecId,
+            gPokenavStructPtr->regionMap.posWithinMapSec,
             ptr[1]);
 
         if (landmarkName)

@@ -289,7 +289,7 @@ static void SetAreaHasMon(u16 mapGroup, u16 mapNum)
     {
         sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].mapGroup = mapGroup;
         sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].mapNum = mapNum;
-        sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].regionMapSectionId = GetOverworldMapFromUnderwaterMap(Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId);
+        sPokedexAreaScreen->overworldAreasWithMons[sPokedexAreaScreen->numOverworldAreas].regionMapSectionId = CorrectSpecialMapSecId(Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId);
         sPokedexAreaScreen->numOverworldAreas++;
     }
 }
@@ -371,7 +371,7 @@ static void BuildAreaGlowTilemap(void)
         {
             for (gUnknown_02039262 = 0; gUnknown_02039262 < 32; gUnknown_02039262++)
             {
-                if (GetRegionMapSectionAt_(gUnknown_02039262, gUnknown_02039264) == sPokedexAreaScreen->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
+                if (GetRegionMapSecIdAt(gUnknown_02039262, gUnknown_02039264) == sPokedexAreaScreen->overworldAreasWithMons[gUnknown_02039260].regionMapSectionId)
                 {
                     sPokedexAreaScreen->areaGlowTilemap[gUnknown_02039266] = 0xFFFF;
                 }
@@ -548,7 +548,7 @@ static NAKED void BuildAreaGlowTilemap(void)
                 "\tldrh r0, [r5]\n"
                 "\tldrh r1, [r6]\n"
                 "\tstr r2, [sp]\n"
-                "\tbl GetRegionMapSectionAt_\n"
+                "\tbl GetRegionMapSecIdAt\n"
                 "\tldrh r1, [r7]\n"
                 "\tlsls r1, 2\n"
                 "\tldr r3, [sp, 0x8]\n"

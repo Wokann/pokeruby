@@ -42,7 +42,7 @@ void sub_8089A70(void);
 void sub_8089C50(u8 arg0, u8 arg1, u8 arg2, u8 noOfOptions, const struct MenuAction2 *menuActions, const u8 *order);
 void DoPokemonMenu_Switch(u8 taskID);
 void FieldCallback_PrepareFadeInFromMenu(void);
-void sub_808AD58(void);
+void CB2_ReturnToPartyMenuFromFlyMap(void);
 void sub_808B020(void);
 void sub_808B0C0(u8 taskID);
 void sub_808B508(u8);

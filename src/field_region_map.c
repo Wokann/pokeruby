@@ -12,7 +12,7 @@
 void FieldInitRegionMap(MainCallback callback)
 {
     SetVBlankCallback(NULL);
-    eRegionMapState.unk_888[0] = 0;
+    eRegionMapState.buffer.state = 0;
     eRegionMapState.callback = callback;
     SetMainCallback2(MCB2_InitRegionMapRegisters);
 }
@@ -63,15 +63,15 @@ void MCB2_FieldUpdateRegionMap(void)
 
 void FieldUpdateRegionMap(void)
 {
-    switch (eRegionMapState.unk_888[0])
+    switch (eRegionMapState.buffer.state)
     {
     case 0:
         REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
-        eRegionMapState.unk_888[0]++;
+        eRegionMapState.buffer.state++;
         break;
     case 1:
         if (!gPaletteFade.active)
-            eRegionMapState.unk_888[0]++;
+            eRegionMapState.buffer.state++;
         break;
     case 2:
         switch (DoRegionMapInputCallback())
@@ -81,12 +81,12 @@ void FieldUpdateRegionMap(void)
             break;
         case MAP_INPUT_A_BUTTON:
         case MAP_INPUT_B_BUTTON:
-            eRegionMapState.unk_888[0]++;
+            eRegionMapState.buffer.state++;
         }
         break;
     case 3:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        eRegionMapState.unk_888[0]++;
+        eRegionMapState.buffer.state++;
         break;
     case 4:
         if (!gPaletteFade.active)
@@ -101,6 +101,6 @@ void FieldUpdateRegionMap(void)
 void PrintRegionMapSecName(void)
 {
     Menu_BlankWindowRect(17, 17, 28, 18);
-    if (eRegionMapState.regionMap.unk16)
-        Menu_PrintText(eRegionMapState.regionMap.mapSectionName, 17, 17);
+    if (eRegionMapState.regionMap.mapSecType != MAPSECTYPE_NONE)
+        Menu_PrintText(eRegionMapState.regionMap.mapSecName, 17, 17);
 }

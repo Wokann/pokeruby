@@ -846,7 +846,7 @@ static bool8 SetUpFieldMove_Fly(void)
     return FALSE;
 }
 
-static void sub_808AD0C(void)
+static void CB2_InitPartyMenuAfterFlyMap(void)
 {
     while (1)
     {
@@ -862,11 +862,11 @@ static void sub_808AD0C(void)
     }
 }
 
-void sub_808AD58(void)
+void CB2_ReturnToPartyMenuFromFlyMap(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, HandleDefaultPartyMenu, 0);
-    SetMainCallback2(sub_808AD0C);
+    SetMainCallback2(CB2_InitPartyMenuAfterFlyMap);
 }
 
 u16 unref_sub_808AD88(void)
