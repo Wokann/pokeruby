@@ -58,7 +58,7 @@ static void AnimTask_HeartsBackground_Step(u8 taskId)
         {
             gTasks[taskId].data[10] = 0;
             gTasks[taskId].data[11]++;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]);
             if (gTasks[taskId].data[11] == 16)
             {
                 gTasks[taskId].data[12]++;
@@ -78,7 +78,7 @@ static void AnimTask_HeartsBackground_Step(u8 taskId)
         {
             gTasks[taskId].data[10] = 0;
             gTasks[taskId].data[11]--;
-            REG_BLDALPHA = gTasks[taskId].data[11] | ((16 - gTasks[taskId].data[11]) << 8);
+            REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[11], 16 - gTasks[taskId].data[11]);
             if (gTasks[taskId].data[11] == 0)
             {
                 gTasks[taskId].data[12]++;
