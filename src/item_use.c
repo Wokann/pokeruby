@@ -660,7 +660,7 @@ void ItemUseOutOfBattle_SSTicket(u8 taskId)
 
 void ItemUseOutOfBattle_Berry(u8 taskId)
 {
-    if (IsPlayerFacingUnplantedSoil() == TRUE)
+    if (IsPlayerFacingEmptyBerryTreePatch() == TRUE)
     {
         gFieldItemUseCallback = ItemUseOnFieldCB_Berry;
         gFieldCallback = ExecuteItemUseFromBlackPalette;

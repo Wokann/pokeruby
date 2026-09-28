@@ -3990,7 +3990,7 @@ static const u8 StatDataTypes[] =
 
 #if DEBUG
 
-const u8 gUnknown_Debug_839B6CE[] = {0x40, 0, 0, 0, 0x44, 0, 0xFF, 0, 0, 0};
+const u8 gDebugEnigmaBerryItemEffect[] = {0x40, 0, 0, 0, 0x44, 0, 0xFF, 0, 0, 0};
 
 const u8 gUnknown_Debug_839B6D8[] = _(
     "{STR_VAR_1}かい　じっこう\n"

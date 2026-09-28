@@ -7,7 +7,7 @@ void SetEnigmaBerry(u8 *src);
 bool32 IsEnigmaBerryValid(void);
 const struct Berry *GetBerryInfo(u8 berry);
 bool32 ObjectEventInteractionWaterBerryTree(void);
-bool8 IsPlayerFacingUnplantedSoil(void);
+bool8 IsPlayerFacingEmptyBerryTreePatch(void);
 bool8 TryToWaterBerryTree(void);
 void ClearBerryTrees(void);
 void BerryTreeTimeUpdate(s32 minutes);

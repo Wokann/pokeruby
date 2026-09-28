@@ -1071,7 +1071,7 @@ static u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
 
 extern const u8 gSpriteImage_UnusedCherry[];
 extern const u16 gSpritePalette_UnusedCherry[];
-extern u8 gUnknown_Debug_839B6CE[];
+extern const u8 gDebugEnigmaBerryItemEffect[];
 
 static const u8 sDebugEnigmaBerryDescription1[] = DTR("そとから　きた　きのみ", "An exterior BERRY");
 static const u8 sDebugEnigmaBerryDescription2[] = DTR("ただいま　かいはつちゅう", "Currently under development");
@@ -1091,7 +1091,7 @@ void DebugCreateEnigmaBerry(const u8 *name, u8 holdEffect, u8 holdEffectParam)
     for (i = 0; i < 16; i++)
         gSaveBlock1.enigmaBerry.palette[i] = gSpritePalette_UnusedCherry[i];
     for (i = 0; i < 18; i++)
-        gSaveBlock1.enigmaBerry.itemEffect[i] = gUnknown_Debug_839B6CE[i];
+        gSaveBlock1.enigmaBerry.itemEffect[i] = gDebugEnigmaBerryItemEffect[i];
     gSaveBlock1.enigmaBerry.holdEffect = holdEffect;
     gSaveBlock1.enigmaBerry.holdEffectParam = holdEffectParam;
     gSaveBlock1.enigmaBerry.checksum = GetEnigmaBerryChecksum(&gSaveBlock1.enigmaBerry);
@@ -1178,7 +1178,7 @@ bool32 ObjectEventInteractionWaterBerryTree(void)
     return TRUE;
 }
 
-bool8 IsPlayerFacingUnplantedSoil(void)
+bool8 IsPlayerFacingEmptyBerryTreePatch(void)
 {
     if (GetObjectEventScriptPointerPlayerFacing() == BerryTreeScript
      && GetStageByBerryTreeId(GetObjectEventBerryTreeId(gSelectedObjectEvent)) == BERRY_STAGE_NO_BERRY)
