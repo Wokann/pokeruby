@@ -21,11 +21,11 @@ void AnimTask_DoubleTeam(u8 taskId)
     int obj;
     u16 r3;
     u16 r4;
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     task->data[0] = GetAnimBattlerSpriteId(0);
     task->data[1] = AllocSpritePalette(ANIM_TAG_BENT_SPOON);
-    r3 = (task->data[1] * 16) + 0x100;
-    r4 = (gSprites[task->data[0]].oam.paletteNum + 16) << 4;
+    r3 = OBJ_PLTT_ID(task->data[1]);
+    r4 = OBJ_PLTT_ID2(gSprites[task->data[0]].oam.paletteNum);
     for (i = 1; i < 16; i++)
     {
         gPlttBufferUnfaded[r3 + i] = gPlttBufferUnfaded[r4 + i];
@@ -34,7 +34,7 @@ void AnimTask_DoubleTeam(u8 taskId)
     BlendPalette(r3, 16, 11, RGB_BLACK);
     task->data[3] = 0;
     i = 0;
-    while (i <= 1 && (obj = CloneBattlerSpriteWithBlend(0)) >= 0)
+    while (i < 2 && (obj = CloneBattlerSpriteWithBlend(0)) >= 0)
     {
         gSprites[obj].oam.paletteNum = task->data[1];
         gSprites[obj].data[0] = 0;
@@ -48,23 +48,23 @@ void AnimTask_DoubleTeam(u8 taskId)
     task->func = AnimTask_DoubleTeam_Step;
     if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
     {
-        REG_DISPCNT &= 0xFDFF;
+        REG_DISPCNT &= ~DISPCNT_BG1_ON;
     }
     else
     {
-        REG_DISPCNT &= 0xFBFF;
+        REG_DISPCNT &= ~DISPCNT_BG2_ON;
     }
 }
 
 static void AnimTask_DoubleTeam_Step(u8 taskId)
 {
-    struct Task* task = &gTasks[taskId];
+    struct Task *task = &gTasks[taskId];
     if (!task->data[3])
     {
         if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
-            REG_DISPCNT |= 0x200;
+            REG_DISPCNT |= DISPCNT_BG1_ON;
         else
-            REG_DISPCNT |= 0x400;
+            REG_DISPCNT |= DISPCNT_BG2_ON;
 
         FreeSpritePaletteByTag(ANIM_TAG_BENT_SPOON);
         DestroyAnimVisualTask(taskId);
@@ -79,7 +79,7 @@ static void AnimDoubleTeam(struct Sprite *sprite)
         sprite->data[0]++;
     }
 
-    if (sprite->data[0] > 0x40)
+    if (sprite->data[0] > 64)
     {
         gTasks[sprite->data[2]].data[3]--;
         DestroySpriteWithActiveSheet(sprite);
