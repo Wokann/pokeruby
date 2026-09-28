@@ -1142,7 +1142,7 @@ void sub_809D510(struct Sprite *sprite)
     DestroyPokemonIconSprite(sprite);
 }
 
-void sub_809D51C(void)
+void LoadMonIconPalettes(void)
 {
     u8 i;
     for (i = 0; i < 6; i++)

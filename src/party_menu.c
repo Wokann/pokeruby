@@ -682,7 +682,7 @@ bool8 InitPartyMenu(void)
         }
         break;
     case 11:
-        sub_809D51C();
+        LoadMonIconPalettes();
         gMain.state++;
         break;
     case 12:

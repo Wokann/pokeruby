@@ -1081,7 +1081,7 @@ static void CB2_CreateTradeMenu(void)
             sTradeMenu->unk_007a = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&sTradeMenu->window);
             Menu_EraseScreen();
-            sub_809D51C();
+            LoadMonIconPalettes();
             sTradeMenu->unk_0075 = 0;
             sTradeMenu->unk_007b = 0;
             sTradeMenu->unk_007c = 0;
@@ -1261,7 +1261,7 @@ static void CB2_ReturnToTradeMenu(void)
             sTradeMenu->unk_007a = TextWindow_SetBaseTileNum(20);
             TextWindow_LoadStdFrameGraphics(&sTradeMenu->window);
             Menu_EraseScreen();
-            sub_809D51C();
+            LoadMonIconPalettes();
             sTradeMenu->unk_0075 = 0;
             sTradeMenu->unk_007b = 0;
             sTradeMenu->unk_007c = 0;

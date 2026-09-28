@@ -64,7 +64,7 @@ void ResetPSSMonIconSprites(void)
 {
     u16 i;
 
-    sub_809D51C();
+    LoadMonIconPalettes();
     for (i = 0; i < 40; i++)
         gPokemonStorageSystemPtr->unk_10d0[i] = 0;
     for (i = 0; i < 40; i++)

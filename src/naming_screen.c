@@ -1320,7 +1320,7 @@ static void sub_80B6EFC(void)
 {
     u8 spriteId;
 
-    sub_809D51C();
+    LoadMonIconPalettes();
     spriteId = CreateMonIcon(namingScreenDataPtr->speciesOrPlayerGender, SpriteCallbackDummy, 0x34, 0x18, 0, namingScreenDataPtr->monPersonality);
     gSprites[spriteId].oam.priority = 3;
 }
