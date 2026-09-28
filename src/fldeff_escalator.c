@@ -5,48 +5,58 @@
 #include "field_player_avatar.h"
 #include "constants/metatile_labels.h"
 
-extern u8 gUnknown_02038731;
+extern u8 gEscalatorAnimTaskId;
 
-void sub_80B45B4(u8 taskId, const s16 *list, u16 c)
+#define ESCALATOR_STAGES     3
+#define LAST_ESCALATOR_STAGE (ESCALATOR_STAGES - 1)
+
+#define tState            data[0]
+#define tTransitionStage  data[1]
+#define tGoingUp          data[2]
+#define tDrawingEscalator data[3]
+#define tPlayerX          data[4]
+#define tPlayerY          data[5]
+
+void SetEscalatorMetatile(u8 taskId, const s16 *metatileIds, u16 metatileMasks)
 {
-    s16 r5 = gTasks[taskId].data[4] - 1;
-    s16 r3 = gTasks[taskId].data[5] - 1;
-    s16 r4 = gTasks[taskId].data[1];
-    s16 y;
-    s16 x;
+    s16 x = gTasks[taskId].tPlayerX - 1;
+    s16 y = gTasks[taskId].tPlayerY - 1;
+    s16 transitionStage = gTasks[taskId].tTransitionStage;
+    s16 i;
+    s16 j;
     
-    if (gTasks[taskId].data[2] == 0)
+    if (gTasks[taskId].tGoingUp == 0)
     {
-        for (y = 0; y < 3; y++)
+        for (i = 0; i < ESCALATOR_STAGES; i++)
         {
-            for (x = 0; x < 3; x++)
+            for (j = 0; j < ESCALATOR_STAGES; j++)
             {
-                s16 metatileId = MapGridGetMetatileIdAt(r5 + x, r3 + y);
+                s16 metatileId = MapGridGetMetatileIdAt(x + j, y + i);
                 
-                if (list[r4] == metatileId)
+                if (metatileIds[transitionStage] == metatileId)
                 {
-                    if (r4 != 2)
-                        MapGridSetMetatileIdAt(r5 + x, r3 + y, c | list[r4 + 1]);
+                    if (transitionStage != LAST_ESCALATOR_STAGE)
+                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[transitionStage + 1]);
                     else
-                        MapGridSetMetatileIdAt(r5 + x, r3 + y, c | list[0]);
+                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[0]);
                 }
             }
         }
     }
     else
     {
-        for (y = 0; y < 3; y++)
+        for (i = 0; i < ESCALATOR_STAGES; i++)
         {
-            for (x = 0; x < 3; x++)
+            for (j = 0; j < ESCALATOR_STAGES; j++)
             {
-                s16 metatileId = MapGridGetMetatileIdAt(r5 + x, r3 + y);
+                s16 metatileId = MapGridGetMetatileIdAt(x + j, y + i);
                 
-                if (list[2 - r4] == metatileId)
+                if (metatileIds[LAST_ESCALATOR_STAGE - transitionStage] == metatileId)
                 {
-                    if (r4 != 2)
-                        MapGridSetMetatileIdAt(r5 + x, r3 + y, c | list[1 - r4]);
+                    if (transitionStage != LAST_ESCALATOR_STAGE)
+                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[1 - transitionStage]);
                     else
-                        MapGridSetMetatileIdAt(r5 + x, r3 + y, c | list[2]);
+                        MapGridSetMetatileIdAt(x + j, y + i, metatileMasks | metatileIds[LAST_ESCALATOR_STAGE]);
                 }
             }
         }
@@ -95,73 +105,80 @@ const u16 sEscalatorMetatiles_2F_2[] = {
     METATILE_ID(PokemonCenter, Escalator2F_Tile2_Frame2)
 };
 
-void sub_80B4710(u8 taskId)
+void Task_DrawEscalator(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    data[3] = 1;
+    tDrawingEscalator = TRUE;
 
-    switch (data[0])
+    switch (tState)
     {
         case 0:
-            sub_80B45B4(taskId, sEscalatorMetatiles_1F_0, 0);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_0, 0);
             break;
         case 1:
-            sub_80B45B4(taskId, sEscalatorMetatiles_1F_1, 0);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_1, 0);
             break;
         case 2:
-            sub_80B45B4(taskId, sEscalatorMetatiles_1F_2, MAPGRID_COLLISION_MASK);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_2, MAPGRID_COLLISION_MASK);
             break;
         case 3:
-            sub_80B45B4(taskId, sEscalatorMetatiles_1F_3, 0);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_1F_3, 0);
             break;
         case 4:
-            sub_80B45B4(taskId, sEscalatorMetatiles_2F_0, MAPGRID_COLLISION_MASK);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_0, MAPGRID_COLLISION_MASK);
             break;
         case 5:
-            sub_80B45B4(taskId, sEscalatorMetatiles_2F_1, 0);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_1, 0);
             break;
         case 6:
-            sub_80B45B4(taskId, sEscalatorMetatiles_2F_2, 0);
+            SetEscalatorMetatile(taskId, sEscalatorMetatiles_2F_2, 0);
             break;
     }
 
-    data[0] = (data[0] + 1) & 7;
-    if (!data[0])
+    tState = (tState + 1) & 7;
+    if (tState == 0)
     {
         DrawWholeMapView();
-        data[1] = (data[1] + 1) % 3;
-        data[3] = 0;
+        tTransitionStage = (tTransitionStage + 1) % ESCALATOR_STAGES;
+        tDrawingEscalator = FALSE;
     }
 }
 
-u8 sub_80B47D8(u16 var)
+u8 CreateEscalatorTask(bool16 goingUp)
 {
-    u8 taskId = CreateTask(sub_80B4710, 0);
+    u8 taskId = CreateTask(Task_DrawEscalator, 0);
     s16 *data = gTasks[taskId].data;
 
-    PlayerGetDestCoords(&data[4], &data[5]);
-    data[0] = 0;
-    data[1] = 0;
-    data[2] = var;
-    sub_80B4710(taskId);
+    PlayerGetDestCoords(&tPlayerX, &tPlayerY);
+    tState = 0;
+    tTransitionStage = 0;
+    tGoingUp = goingUp;
+    Task_DrawEscalator(taskId);
     return taskId;
 }
 
-void sub_80B4824(u8 var)
+void StartEscalator(bool8 goingUp)
 {
-    gUnknown_02038731 = sub_80B47D8(var);
+    gEscalatorAnimTaskId = CreateEscalatorTask(goingUp);
 }
 
-void sub_80B483C(void)
+void StopEscalator(void)
 {
-    DestroyTask(gUnknown_02038731);
+    DestroyTask(gEscalatorAnimTaskId);
 }
 
-bool8 sub_80B4850(void)
+bool8 IsEscalatorMoving(void)
 {
-    if (gTasks[gUnknown_02038731].data[3] == 0 && gTasks[gUnknown_02038731].data[1] == 2)
+    if (gTasks[gEscalatorAnimTaskId].tDrawingEscalator == FALSE && gTasks[gEscalatorAnimTaskId].tTransitionStage == LAST_ESCALATOR_STAGE)
         return FALSE;
     else
         return TRUE;
 }
+
+#undef tState
+#undef tTransitionStage
+#undef tGoingUp
+#undef tDrawingEscalator
+#undef tPlayerX
+#undef tPlayerY

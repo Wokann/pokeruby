@@ -994,11 +994,11 @@ static u16 GetStageDurationByBerryType(u8 berry);
 
 #if DEBUG
 
-extern u8 sub_80B47D8(u16 var);
+extern u8 CreateEscalatorTask(bool16 goingUp);
 
 u8 DebugStartEscalatorForwardAndCloseMenu(void)
 {
-    u8 taskId = sub_80B47D8(0);
+    u8 taskId = CreateEscalatorTask(0);
 
     gTasks[taskId].data[4]--;
     CloseMenu();
@@ -1007,7 +1007,7 @@ u8 DebugStartEscalatorForwardAndCloseMenu(void)
 
 u8 DebugStartEscalatorReverseAndCloseMenu(void)
 {
-    u8 taskId = sub_80B47D8(1);
+    u8 taskId = CreateEscalatorTask(1);
 
     gTasks[taskId].data[4]--;
     CloseMenu();

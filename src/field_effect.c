@@ -1227,7 +1227,7 @@ bool8 FallWarpEffect_End(struct Task *task)
 #undef tNumShakes
 
 void Task_EscalatorWarpOut(u8);
-extern void sub_80B4824(u8);
+extern void StartEscalator(bool8);
 extern void TryFadeOutOldMapMusic(void);
 
 void RideUpEscalatorOut(struct Task *);
@@ -1236,7 +1236,7 @@ void FadeOutAtEndOfEscalator(void);
 void WarpAtEndOfEscalator(void);
 bool8 BGMusicStopped(void);
 void FieldCallback_EscalatorWarpIn(void);
-void sub_80B483C(void);
+void StopEscalator(void);
 void Task_EscalatorWarpIn(u8);
 
 #define tEscalatorState data[0]
@@ -1266,7 +1266,7 @@ bool8 EscalatorWarpOut_Init(struct Task *task)
 {
     FreezeObjectEvents();
     CameraObjectFreeze();
-    sub_80B4824(task->tGoingUp);
+    StartEscalator(task->tGoingUp);
     task->tEscalatorState++;
     return FALSE;
 }
@@ -1362,7 +1362,7 @@ void WarpAtEndOfEscalator(void)
 {
     if (!gPaletteFade.active && BGMusicStopped() == TRUE)
     {
-        sub_80B483C();
+        StopEscalator();
         WarpIntoMap();
         gFieldCallback = FieldCallback_EscalatorWarpIn;
         SetMainCallback2(CB2_LoadMap);
@@ -1416,7 +1416,7 @@ bool8 EscalatorWarpIn_Init(struct Task *task)
     {
         behavior = 0;
     }
-    sub_80B4824(behavior);
+    StartEscalator(behavior);
     return TRUE;
 }
 
@@ -1480,15 +1480,15 @@ bool8 EscalatorWarpIn_Up_Ride(struct Task *task)
     return FALSE;
 }
 
-extern bool8 sub_80B4850(void);
+extern bool8 IsEscalatorMoving(void);
 
 bool8 EscalatorWarpIn_WaitForMovement(struct Task *task)
 {
-    if (sub_80B4850())
+    if (IsEscalatorMoving())
     {
         return FALSE;
     }
-    sub_80B483C();
+    StopEscalator();
     task->tEscalatorState++;
     return TRUE;
 }
