@@ -207,7 +207,7 @@ static void LoadTradeSequenceSpriteSheetsAndPalettes(void);
 static void BufferTradeSceneStrings(void);
 void CB2_UpdateLinkTrade(void);
 
-EWRAM_DATA u8 *gUnknown_020296CC[13] = {0};
+EWRAM_DATA u8 *sMenuTextTileBuffers[13] = {0};
 EWRAM_DATA struct MailStruct gUnknown_02029700[6] = {0};
 EWRAM_DATA u8 gSelectedTradeMonPositions[2] = {0};
 
@@ -1004,11 +1004,11 @@ void CB2_StartCreateTradeMenu(void)
 static void DrawTradeMenuText(void)
 {
     u8 playerId;
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[0], gSaveBlock2.playerName, 0xC);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[0], gSaveBlock2.playerName, 0xC);
     playerId = GetMultiplayerId();
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[3], gLinkPlayers[playerId ^ 1].name, 0xC);
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[6], gUnknown_0820C14C[0], 0x8);
-    DrawBottomRowText(gUnknown_0820C14C[1], gUnknown_020296CC[8], 0x14);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[3], gLinkPlayers[playerId ^ 1].name, 0xC);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, sMenuTextTileBuffers[6], gUnknown_0820C14C[0], 0x8);
+    DrawBottomRowText(gUnknown_0820C14C[1], sMenuTextTileBuffers[8], 0x14);
     nullsub_5(3, 0);
 }
 
@@ -1095,7 +1095,7 @@ static void CB2_CreateTradeMenu(void)
             PrintTradeMessage(0);
             CpuFill16(0, ewram_2010000.tileBuffers, sizeof(ewram_2010000.tileBuffers));
             for (i = 0; i < 13; i ++)
-                gUnknown_020296CC[i] = ewram_2010000.tileBuffers[i];
+                sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
             break;
         case  1:
             gLinkType = 0x1122;
@@ -1273,7 +1273,7 @@ static void CB2_ReturnToTradeMenu(void)
             gUnknown_03000508[0] = 0;
             gMain.state ++;
             for (i = 0; i < 13; i ++)
-                gUnknown_020296CC[i] = ewram_2010000.tileBuffers[i];
+                sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
             break;
         case  1:
             gMain.state ++;
