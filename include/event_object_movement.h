@@ -3,6 +3,23 @@
 
 #include "sprite.h"
 
+// Standard overworld palettes are kept loaded together, except the player and special NPC slots.
+enum {
+    PALSLOT_PLAYER,
+    PALSLOT_PLAYER_REFLECTION,
+    PALSLOT_NPC_1,
+    PALSLOT_NPC_2,
+    PALSLOT_NPC_3,
+    PALSLOT_NPC_4,
+    PALSLOT_NPC_1_REFLECTION,
+    PALSLOT_NPC_2_REFLECTION,
+    PALSLOT_NPC_3_REFLECTION,
+    PALSLOT_NPC_4_REFLECTION,
+    PALSLOT_NPC_SPECIAL,
+    PALSLOT_NPC_SPECIAL_REFLECTION,
+    OBJ_PALSLOT_COUNT
+};
+
 #define GROUND_EFFECT_FLAG_TALL_GRASS_ON_SPAWN   (1 << 0)
 #define GROUND_EFFECT_FLAG_TALL_GRASS_ON_MOVE    (1 << 1)
 #define GROUND_EFFECT_FLAG_LONG_GRASS_ON_SPAWN   (1 << 2)

@@ -130,7 +130,20 @@ static void GetGroundEffectFlags_JumpLanding(struct ObjectEvent *, u32 *);
 static u8 ObjectEventCheckForReflectiveSurface(struct ObjectEvent *);
 static void DoRippleFieldEffect(struct ObjectEvent *objEvent, struct Sprite *sprite);
 
-const u8 gReflectionEffectPaletteMap[] = {1, 1, 6, 7, 8, 9, 6, 7, 8, 9, 11, 11, 0, 0, 0, 0};
+const u8 gReflectionEffectPaletteMap[16] = {
+    [PALSLOT_PLAYER]                 = PALSLOT_PLAYER_REFLECTION,
+    [PALSLOT_PLAYER_REFLECTION]      = PALSLOT_PLAYER_REFLECTION,
+    [PALSLOT_NPC_1]                  = PALSLOT_NPC_1_REFLECTION,
+    [PALSLOT_NPC_2]                  = PALSLOT_NPC_2_REFLECTION,
+    [PALSLOT_NPC_3]                  = PALSLOT_NPC_3_REFLECTION,
+    [PALSLOT_NPC_4]                  = PALSLOT_NPC_4_REFLECTION,
+    [PALSLOT_NPC_1_REFLECTION]       = PALSLOT_NPC_1_REFLECTION,
+    [PALSLOT_NPC_2_REFLECTION]       = PALSLOT_NPC_2_REFLECTION,
+    [PALSLOT_NPC_3_REFLECTION]       = PALSLOT_NPC_3_REFLECTION,
+    [PALSLOT_NPC_4_REFLECTION]       = PALSLOT_NPC_4_REFLECTION,
+    [PALSLOT_NPC_SPECIAL]            = PALSLOT_NPC_SPECIAL_REFLECTION,
+    [PALSLOT_NPC_SPECIAL_REFLECTION] = PALSLOT_NPC_SPECIAL_REFLECTION
+};
 
 static const struct SpriteTemplate sCameraSpriteTemplate = {0, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CameraObject};
 
@@ -1336,11 +1349,11 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     objectEvent = &gObjectEvents[objectEventId];
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
-    if (graphicsInfo->paletteSlot == 0)
+    if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
     {
         LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
-    else if (graphicsInfo->paletteSlot == 10)
+    else if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
     {
         LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
@@ -1516,7 +1529,7 @@ u8 CreateVirtualObject(u8 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevatio
         sprite->coordOffsetEnabled = TRUE;
         sprite->data[0] = virtualObjId;
         sprite->data[1] = elevation;
-        if (graphicsInfo->paletteSlot == 10)
+        if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
         {
             LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
         }
@@ -1644,11 +1657,11 @@ void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
     MakeObjectTemplateFromObjectEventGraphicsInfoWithCallbackIndex(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
     spriteTemplate.images = &spriteFrameImage;
     *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
-    if (graphicsInfo->paletteSlot == 0)
+    if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
     {
         LoadPlayerObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
-    if (graphicsInfo->paletteSlot > 9)
+    if (graphicsInfo->paletteSlot >= PALSLOT_NPC_SPECIAL)
     {
         LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
@@ -1713,11 +1726,11 @@ void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
 
     graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
     sprite = &gSprites[objectEvent->spriteId];
-    if (graphicsInfo->paletteSlot == 0)
+    if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
     {
         PatchObjectPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
-    if (graphicsInfo->paletteSlot == 10)
+    if (graphicsInfo->paletteSlot == PALSLOT_NPC_SPECIAL)
     {
         LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
     }
@@ -2370,7 +2383,7 @@ void InitObjectEventPalettes(u8 reflectionType)
     FreeAndReserveObjectSpritePalettes();
     sCurrentSpecialObjectPaletteTag = OBJ_EVENT_PAL_TAG_NONE;
     sCurrentReflectionType = reflectionType;
-    PatchObjectPalettes(sObjectPaletteTagSets[sCurrentReflectionType], 0, 10);
+    PatchObjectPalettes(sObjectPaletteTagSets[sCurrentReflectionType], PALSLOT_PLAYER, PALSLOT_NPC_SPECIAL);
 }
 
 u16 GetObjectPaletteTag(u8 paletteIndex)
