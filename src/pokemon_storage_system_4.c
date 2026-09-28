@@ -1582,7 +1582,7 @@ void sub_809BD14(void)
     if (gUnknown_020384E6)
         sub_809BBC0();
     else
-        sBoxCursorPosition = pssData.monIndex;
+        sBoxCursorPosition = pssData.curMonIndex;
 }
 
 s16 CompactPartySlots(void)

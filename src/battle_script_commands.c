@@ -165,7 +165,7 @@ u16 GetPokedexHeightWeight(u16 national_num, u8 heightweight);
 u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
 void UpdateBattleYesNoCursor(void);
-u8 sub_809FA30(void);
+u8 GetMoveSlotToReplace(void);
 bool32 IsHMMove2(u16 move);
 void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
@@ -5335,7 +5335,7 @@ static void atk5A_yesnoboxlearnmove(void)
     case 3:
         if (!gPaletteFade.active && gMain.callback2 == BattleMainCB2)
         {
-            u8 move_pos = sub_809FA30();
+            u8 move_pos = GetMoveSlotToReplace();
             if (move_pos == 4)
             {
                 gBattleStruct->atk5A_StateTracker = 4;

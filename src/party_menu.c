@@ -3373,7 +3373,7 @@ void TaughtMove(u8 taskId)
 
         gTasks[taskId].func = TaskDummy;
         sub_806E8D0(taskId, gSpecialVar_ItemId, sub_808B508);
-        moveIndex = sub_809FA30();
+        moveIndex = GetMoveSlotToReplace();
         r4 = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + moveIndex);
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
         StringCopy(gStringVar2, gMoveNames[r4]);
@@ -3387,8 +3387,8 @@ void TMMoveUpdateMoveSlot(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
-        RemoveMonPPBonus(gPartyMenu.pokemon, sub_809FA30());
-        SetMonMoveSlot(gPartyMenu.pokemon, gPartyMenu.unk8, sub_809FA30());
+        RemoveMonPPBonus(gPartyMenu.pokemon, GetMoveSlotToReplace());
+        SetMonMoveSlot(gPartyMenu.pokemon, gPartyMenu.unk8, GetMoveSlotToReplace());
         Task_TeamMonTMMove2(taskId);
     }
 }

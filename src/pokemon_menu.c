@@ -54,7 +54,7 @@ extern bool8 gPartyMenuMessage_IsPrinting;
 extern u8 gPokemonItemUseType;
 extern u16 gUnknown_0202E8F8;
 extern void (*gPokemonItemUseCallback)(u8 taskID, u16 itemID, TaskFunc func);
-extern TaskFunc gUnknown_03005CF0;
+extern TaskFunc gTaskFuncForLinkRecv;
 
 void sub_808A520(void);
 void sub_80A61D0(void);
@@ -1199,7 +1199,7 @@ static void sub_808B518(void)
 void sub_808B564(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
-    if (sub_809FA30() != 4)
+    if (GetMoveSlotToReplace() != 4)
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, TaughtMove, 0xFF);
     else
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, StopTryingToTeachMove_806F588, 0xFF);
@@ -1208,7 +1208,7 @@ void sub_808B564(void)
 
 void sub_808B5B4(u32 taskID)
 {
-    gUnknown_03005CF0 = gTasks[taskID].func;
+    gTaskFuncForLinkRecv = gTasks[taskID].func;
     gTasks[taskID].func = sub_808B5E4;
     sub_808B5E4(taskID);
 }
@@ -1216,5 +1216,5 @@ void sub_808B5B4(u32 taskID)
 static void sub_808B5E4(u8 taskID)
 {
     if (Overworld_IsRecvQueueAtMax() != TRUE)
-        gTasks[taskID].func = gUnknown_03005CF0;
+        gTasks[taskID].func = gTaskFuncForLinkRecv;
 }

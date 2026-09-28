@@ -248,7 +248,7 @@ SYMBOL(gUnusedPokedexU8, 4)
 SYMBOL(gPokedexVBlankCB, 4)
 
 // pokemon_summary_screen.o
-SYMBOL(gUnknown_03005CF0, 4)
+SYMBOL(gTaskFuncForLinkRecv, 4)
 
 // huh?
 . = ALIGN(16);

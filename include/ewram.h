@@ -127,8 +127,7 @@ extern u8 gSharedMem[];
 #define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
 
 // pokemon_summary_screen.c
-#define pssData                         (*(struct PokemonSummaryScreenStruct *)(gSharedMem + 0x18000))
-#define ewram1A000                      (&gSharedMem[0x1A000])
+#define pssData                         (*(struct PokemonSummaryScreenData *)(gSharedMem + 0x18000))
 
 // roulette.c
 #define ewram18800                      ((u16 *)(gSharedMem + 0x18800))
