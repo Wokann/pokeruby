@@ -11,6 +11,9 @@ extern const union AffineAnimCmd gFallingBagAffineAnimCmds1[];
 extern const union AffineAnimCmd gFallingBagAffineAnimCmds2[];
 extern const union AnimCmd *const gFallingBagAnimTable[];
 
+#define ANIM_TRICK_BAG_ARG_INITIAL_Y 0
+#define ANIM_TRICK_BAG_ARG_WAVE_OFFSET 1
+
 static void AnimTrickBag(struct Sprite *sprite);
 static void AnimTrickBag_Step1(struct Sprite *sprite);
 static void AnimTrickBag_Step2(struct Sprite *sprite);
@@ -71,30 +74,30 @@ const s8 gTrickBagCoordinates[][3] =
 
 static void AnimTrickBag(struct Sprite *sprite)
 {
-    int a;
-    int b;
+    int adjustedWaveOffset;
+    int wrappedWaveOffset;
 
     if (sprite->data[0] == 0)
     {
         if (!IsContest())
         {
-            sprite->data[1] = gBattleAnimArgs[1];
+            sprite->data[1] = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET];
             sprite->x = 120;
         }
         else
         {
-            a = gBattleAnimArgs[1] - 32;
-            if (a < 0)
-                b = gBattleAnimArgs[1] + 0xDF;
+            adjustedWaveOffset = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET] - 32;
+            if (adjustedWaveOffset < 0)
+                wrappedWaveOffset = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET] + 0xDF;
             else
-                b = a;
+                wrappedWaveOffset = adjustedWaveOffset;
 
-            sprite->data[1] = a - ((b >> 8) << 8);
+            sprite->data[1] = adjustedWaveOffset - ((wrappedWaveOffset >> 8) << 8);
             sprite->x = 70;
         }
 
-        sprite->y = gBattleAnimArgs[0];
-        sprite->data[2] = gBattleAnimArgs[0];
+        sprite->y = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_INITIAL_Y];
+        sprite->data[2] = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_INITIAL_Y];
         sprite->data[4] = 20;
         sprite->x2 = Cos(sprite->data[1], 60);
         sprite->y2 = Sin(sprite->data[1], 20);
@@ -139,35 +142,35 @@ static void AnimTrickBag_Step1(struct Sprite *sprite)
 static void AnimTrickBag_Step2(struct Sprite *sprite)
 {
     if (sprite->data[2] == gTrickBagCoordinates[sprite->data[0]][1])
-	{
-	    if (gTrickBagCoordinates[sprite->data[0]][2] == 0x7F)
-		{
-		    sprite->data[0] = 0;
-			sprite->callback = AnimTrickBag_Step3;
-		}
+    {
+        if (gTrickBagCoordinates[sprite->data[0]][2] == 0x7F)
+        {
+            sprite->data[0] = 0;
+            sprite->callback = AnimTrickBag_Step3;
+        }
 
-		sprite->data[2] = 0;
-		sprite->data[0]++;
-	}
-	else
-	{
-	    sprite->data[2]++;
-		sprite->data[1] = (gTrickBagCoordinates[sprite->data[0]][0] * gTrickBagCoordinates[sprite->data[0]][2] + sprite->data[1]) & 0xFF;
-		if (!IsContest())
-		{
-		    if ((u16)(sprite->data[1] - 1) <= 0xBE)
+        sprite->data[2] = 0;
+        sprite->data[0]++;
+    }
+    else
+    {
+        sprite->data[2]++;
+        sprite->data[1] = (gTrickBagCoordinates[sprite->data[0]][0] * gTrickBagCoordinates[sprite->data[0]][2] + sprite->data[1]) & 0xFF;
+        if (!IsContest())
+        {
+            if ((u16)(sprite->data[1] - 1) <= 0xBE)
             {
-			    sprite->subpriority = 31;
-			}
-			else
-			{
-			    sprite->subpriority = 29;
-		    }
-		}
+                sprite->subpriority = 31;
+            }
+            else
+            {
+                sprite->subpriority = 29;
+            }
+        }
 
-		sprite->x2 = Cos(sprite->data[1], 60);
-		sprite->y2 = Sin(sprite->data[1], 20);
-	}
+        sprite->x2 = Cos(sprite->data[1], 60);
+        sprite->y2 = Sin(sprite->data[1], 20);
+    }
 }
 
 static void AnimTrickBag_Step3(struct Sprite *sprite)
@@ -175,6 +178,6 @@ static void AnimTrickBag_Step3(struct Sprite *sprite)
     if (sprite->data[0] > 20)
         DestroyAnimSprite(sprite);
 
-	sprite->invisible = sprite->data[0] % 2;
-	sprite->data[0]++;
+    sprite->invisible = sprite->data[0] % 2;
+    sprite->data[0]++;
 }
