@@ -1981,7 +1981,7 @@ void LoadSpecialObjectReflectionPalette(u16 paletteTag, u8 paletteIndex)
     }
 }
 
-void unref_sub_805C014(struct ObjectEvent *objectEvent, s16 x, s16 y)
+void IncrementObjectEventCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
     objectEvent->previousCoords.x = objectEvent->currentCoords.x;
     objectEvent->previousCoords.y = objectEvent->currentCoords.y;
@@ -2193,7 +2193,7 @@ void CameraObjectReset2(void)
     cameraSprite->data[1] = 2;
 }
 
-u8 unref_sub_805C43C(struct Sprite *src, s16 x, s16 y, u8 subpriority)
+u8 CopySprite(struct Sprite *src, s16 x, s16 y, u8 subpriority)
 {
     u8 i;
 
