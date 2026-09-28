@@ -194,7 +194,7 @@ static void sub_804DAD4(struct MailStruct *, const struct InGameTrade *);
 static void sub_804DC88(void);
 static void sub_804D6BC(struct Sprite *);
 static void sub_804D738(struct Sprite *);
-static void sub_804BBE8(u8);
+static void SetTradeSequenceBgGpuRegs(u8);
 static void SpriteCB_LinkMonGlow(struct Sprite *);
 static void SpriteCB_LinkMonShadow(struct Sprite *);
 static void SpriteCB_CableEndSending(struct Sprite *);
@@ -203,8 +203,8 @@ static void sub_804D80C(struct Sprite *);
 static void sub_804E1DC(void);
 static void CB2_InGameTrade(void);
 static void sub_804D8E4(void);
-static void sub_804C164(void);
-static void SetTradeSceneStrings(void);
+static void LoadTradeSequenceSpriteSheetsAndPalettes(void);
+static void BufferTradeSceneStrings(void);
 void sub_804DB84(void);
 
 EWRAM_DATA u8 *gUnknown_020296CC[13] = {0};
@@ -3628,7 +3628,7 @@ void CB2_LinkTrade(void)
             gMain.state ++;
             break;
         case 9:
-            sub_804C164();
+            LoadTradeSequenceSpriteSheetsAndPalettes();
             LoadSpriteSheet(&gUnknown_0821594C);
             LoadSpritePalette(&gUnknown_08215954);
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_SCREENBASE(5);
@@ -3638,9 +3638,9 @@ void CB2_LinkTrade(void)
             gMain.state ++;
             // fallthrough
         case 11:
-            sub_804BBE8(5);
-            sub_804BBE8(0);
-            SetTradeSceneStrings();
+            SetTradeSequenceBgGpuRegs(5);
+            SetTradeSequenceBgGpuRegs(0);
+            BufferTradeSceneStrings();
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
             gMain.state ++;
             break;
@@ -3964,7 +3964,7 @@ NAKED void CB2_LinkTrade(void)
                     "_0804B6DC: .4byte gMain\n"
                     "_0804B6E0: .4byte 0x0000043c\n"
                     "_0804B6E4_case09:\n"
-                    "\tbl sub_804C164\n"
+                    "\tbl LoadTradeSequenceSpriteSheetsAndPalettes\n"
                     "\tldr r0, _0804B704 @ =gUnknown_0821594C\n"
                     "\tbl LoadSpriteSheet\n"
                     "\tldr r0, _0804B708 @ =gUnknown_08215954\n"
@@ -3992,10 +3992,10 @@ NAKED void CB2_LinkTrade(void)
                     "\tstrb r0, [r1]\n"
                     "_0804B726_case11:\n"
                     "\tmovs r0, 0x5\n"
-                    "\tbl sub_804BBE8\n"
+                    "\tbl SetTradeSequenceBgGpuRegs\n"
                     "\tmovs r0, 0\n"
-                    "\tbl sub_804BBE8\n"
-                    "\tbl SetTradeSceneStrings\n"
+                    "\tbl SetTradeSequenceBgGpuRegs\n"
+                    "\tbl BufferTradeSceneStrings\n"
                     "\tmovs r0, 0x1\n"
                     "\tnegs r0, r0\n"
                     "\tmovs r1, 0\n"
@@ -4095,7 +4095,7 @@ void CB2_InitInGameTrade(void)
             gMain.state ++;
             break;
         case 9:
-            sub_804C164();
+            LoadTradeSequenceSpriteSheetsAndPalettes();
             LoadSpriteSheet(&gUnknown_0821594C);
             LoadSpritePalette(&gUnknown_08215954);
             REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_SCREENBASE(5);
@@ -4105,9 +4105,9 @@ void CB2_InitInGameTrade(void)
             gMain.state ++;
             // fallthrough
         case 11:
-            sub_804BBE8(5);
-            sub_804BBE8(0);
-            SetTradeSceneStrings();
+            SetTradeSequenceBgGpuRegs(5);
+            SetTradeSequenceBgGpuRegs(0);
+            BufferTradeSceneStrings();
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
             gMain.state ++;
             break;
@@ -4197,11 +4197,11 @@ static void CB2_InGameTrade(void)
     UpdatePaletteFade();
 }
 
-static void sub_804BBE8(u8 a0)
+static void SetTradeSequenceBgGpuRegs(u8 state)
 {
     int i;
     u16 *buffer;
-    switch (a0)
+    switch (state)
     {
         case 0:
             LoadPalette(gUnknown_0820C9F8, 0x10, 0xa0);
@@ -4306,7 +4306,7 @@ static void sub_804C0F8(u8 a0)
     }
 }
 
-static void sub_804C164(void)
+static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
 {
     LoadSpriteSheet(&gUnknown_082159A4);
     LoadSpriteSheet(&gUnknown_082159F4);
@@ -4316,7 +4316,7 @@ static void sub_804C164(void)
     LoadSpritePalette(&gUnknown_082159B4);
 }
 
-static void SetTradeSceneStrings(void)
+static void BufferTradeSceneStrings(void)
 {
     /*Sets the variable strings printed on the
      *actual trading screen. For use in strings
@@ -4408,7 +4408,7 @@ static bool8 sub_804C29C(void)
         case 20:
             if (!gPaletteFade.active)
             {
-                sub_804BBE8(4);
+                SetTradeSequenceBgGpuRegs(4);
                 gUnknown_03004828->unk_00c4 ++;
             }
             break;
@@ -4429,7 +4429,7 @@ static bool8 sub_804C29C(void)
             }
             else
             {
-                sub_804BBE8(1);
+                SetTradeSequenceBgGpuRegs(1);
                 gUnknown_03004828->unk_011a = 0x80;
                 gUnknown_03004828->unk_00c4 ++;
                 gUnknown_03004828->unk_00c0 = 0;
@@ -4439,7 +4439,7 @@ static bool8 sub_804C29C(void)
         case 24:
             if (++ gUnknown_03004828->unk_00c0 > 20)
             {
-                sub_804BBE8(3);
+                SetTradeSequenceBgGpuRegs(3);
                 SetTradeBGAffine();
                 gUnknown_03004828->unk_00bb = CreateSprite(&gSpriteTemplate_8215A80, 0x78, 0x50, 0);
                 gUnknown_03004828->unk_00c4 ++;
@@ -4496,7 +4496,7 @@ static bool8 sub_804C29C(void)
             {
                 DestroySprite(&gSprites[gUnknown_03004828->unk_00ba]);
                 DestroySprite(&gSprites[gUnknown_03004828->unk_00bb]);
-                sub_804BBE8(2);
+                SetTradeSequenceBgGpuRegs(2);
                 gUnknown_03004828->unk_00c4 ++;
             }
             break;
@@ -4590,7 +4590,7 @@ static bool8 sub_804C29C(void)
             if (!gPaletteFade.active)
             {
                 gUnknown_03004828->unk_00c4 ++;
-                sub_804BBE8(1);
+                SetTradeSequenceBgGpuRegs(1);
                 gUnknown_03004828->bg1vofs = 0xa6;
                 gUnknown_03004828->unk_00ba = CreateSprite(&gSpriteTemplate_82159BC, 0x80, -0x14, 3);
                 gUnknown_03004828->unk_00bb = CreateSprite(&gSpriteTemplate_82159FC, 0x80, -0x14, 0);
@@ -4657,7 +4657,7 @@ static bool8 sub_804C29C(void)
             if (gSprites[gUnknown_03004828->unk_00bb].animEnded)
             {
                 DestroySprite(&gSprites[gUnknown_03004828->unk_00bb]);
-                sub_804BBE8(6);
+                SetTradeSequenceBgGpuRegs(6);
                 gUnknown_03004828->unk_00c4 ++;
                 PlaySE(SE_M_SAND_ATTACK);
             }
@@ -4682,8 +4682,8 @@ static bool8 sub_804C29C(void)
         case 60:
             if (!gPaletteFade.active)
             {
-                sub_804BBE8(5);
-                sub_804BBE8(7);
+                SetTradeSequenceBgGpuRegs(5);
+                SetTradeSequenceBgGpuRegs(7);
                 gUnknown_03004828->unk_00c4 ++;
             }
             break;
