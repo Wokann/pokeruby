@@ -7,12 +7,12 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimSporeParticle(struct Sprite* sprite);
-static void AnimPetalDanceBigFlower(struct Sprite* sprite);
-static void AnimPetalDanceSmallFlower(struct Sprite* sprite);
-static void AnimSporeParticle_Step(struct Sprite* sprite);
-static void AnimPetalDanceBigFlower_Step(struct Sprite* sprite);
-static void AnimPetalDanceSmallFlower_Step(struct Sprite* sprite);
+static void AnimSporeParticle(struct Sprite *sprite);
+static void AnimPetalDanceBigFlower(struct Sprite *sprite);
+static void AnimPetalDanceSmallFlower(struct Sprite *sprite);
+static void AnimSporeParticle_Step(struct Sprite *sprite);
+static void AnimPetalDanceBigFlower_Step(struct Sprite *sprite);
+static void AnimPetalDanceSmallFlower_Step(struct Sprite *sprite);
 
 const union AnimCmd gSporeParticleAnimCmds1[] =
 {
@@ -90,11 +90,11 @@ const struct SpriteTemplate gPetalDanceSmallFlowerSpriteTemplate =
 // Moves a spore particle in a halo around the target mon.
 // The sprite's priority is updated to give the effect of going
 // behind the mon's sprite.
-static void AnimSporeParticle(struct Sprite* sprite)
+static void AnimSporeParticle(struct Sprite *sprite)
 {
     InitSpritePosToAnimTarget(sprite, TRUE);
     StartSpriteAnim(sprite, gBattleAnimArgs[4]);
-    if (gBattleAnimArgs[4] == 1)
+    if (gBattleAnimArgs[4] == TRUE)
     {
         sprite->oam.objMode = ST_OAM_OBJ_BLEND;
     }
@@ -105,7 +105,7 @@ static void AnimSporeParticle(struct Sprite* sprite)
     AnimSporeParticle_Step(sprite);
 }
 
-static void AnimSporeParticle_Step(struct Sprite* sprite)
+static void AnimSporeParticle_Step(struct Sprite *sprite)
 {
     u8 priority;
     
@@ -153,21 +153,21 @@ void AnimTask_SporeDoubleBattle(u8 taskId)
     }
 }
 
-static void AnimPetalDanceBigFlower(struct Sprite* sprite)
+static void AnimPetalDanceBigFlower(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, FALSE);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
     sprite->callback = AnimPetalDanceBigFlower_Step;
     AnimPetalDanceBigFlower_Step(sprite);
 }
 
-static void AnimPetalDanceBigFlower_Step(struct Sprite* sprite)
+static void AnimPetalDanceBigFlower_Step(struct Sprite *sprite)
 {
     if (!AnimTranslateLinear(sprite))
     {
@@ -190,21 +190,21 @@ static void AnimPetalDanceBigFlower_Step(struct Sprite* sprite)
     }
 }
 
-static void AnimPetalDanceSmallFlower(struct Sprite* sprite)
+static void AnimPetalDanceSmallFlower(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
     sprite->callback = AnimPetalDanceSmallFlower_Step;
     AnimPetalDanceSmallFlower_Step(sprite);
 }
 
-static void AnimPetalDanceSmallFlower_Step(struct Sprite* sprite)
+static void AnimPetalDanceSmallFlower_Step(struct Sprite *sprite)
 {
     if (!AnimTranslateLinear(sprite))
     {
