@@ -134,10 +134,10 @@ static u8 SaveSuccessCallback(void);
 static u8 SaveReturnSuccessCallback(void);
 static u8 SaveErrorCallback(void);
 static u8 SaveReturnErrorCallback(void);
-static void sub_80719F0(void);
-static bool32 sub_80719FC(u8 *ptr);
-static void sub_8071B54(void);
-static void Task_8071B64(u8 taskId);
+static void VBlankCB_LinkBattleSave(void);
+static bool32 InitSaveWindowAfterLinkBattle(u8 *ptr);
+static void CB2_SaveAfterLinkBattle(void);
+static void Task_SaveAfterLinkBattle(u8 taskId);
 
 #if DEBUG
 
@@ -842,12 +842,12 @@ static u8 SaveReturnErrorCallback(void)
     }
 }
 
-static void sub_80719F0(void)
+static void VBlankCB_LinkBattleSave(void)
 {
     TransferPlttBuffer();
 }
 
-static bool32 sub_80719FC(u8 *step)
+static bool32 InitSaveWindowAfterLinkBattle(u8 *step)
 {
     switch (*step)
     {
@@ -874,7 +874,7 @@ static bool32 sub_80719FC(u8 *step)
         u32 savedIme;
 
         BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-        SetVBlankCallback(sub_80719F0);
+        SetVBlankCallback(VBlankCB_LinkBattleSave);
         savedIme = REG_IME;
         REG_IME = 0;
         REG_IE |= 1;
@@ -888,22 +888,22 @@ static bool32 sub_80719FC(u8 *step)
     return FALSE;
 }
 
-void sub_8071B28(void)
+void CB2_SetUpSaveAfterLinkBattle(void)
 {
-    if (sub_80719FC(&gMain.state))
+    if (InitSaveWindowAfterLinkBattle(&gMain.state))
     {
-        CreateTask(Task_8071B64, 0x50);
-        SetMainCallback2(sub_8071B54);
+        CreateTask(Task_SaveAfterLinkBattle, 0x50);
+        SetMainCallback2(CB2_SaveAfterLinkBattle);
     }
 }
 
-static void sub_8071B54(void)
+static void CB2_SaveAfterLinkBattle(void)
 {
     RunTasks();
     UpdatePaletteFade();
 }
 
-static void Task_8071B64(u8 taskId)
+static void Task_SaveAfterLinkBattle(u8 taskId)
 {
     s16 *step = gTasks[taskId].data;
 

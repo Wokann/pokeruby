@@ -799,7 +799,7 @@ static void CB2_ReturnFromCableClubBattle(void)
         UpdatePlayerLinkBattleRecords(gLocalLinkPlayerId ^ 1);
 
     gMain.savedCallback = CB2_ReturnToFieldFromMultiplayer;
-    SetMainCallback2(sub_8071B28);
+    SetMainCallback2(CB2_SetUpSaveAfterLinkBattle);
 }
 
 void CleanupLinkRoomState(void)

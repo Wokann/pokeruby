@@ -8,7 +8,7 @@ void CreateStartMenuTask(void (*func)(u8));
 void Task_ShowStartMenu(u8 taskId);
 void ShowStartMenu(void);
 void SaveGame(void);
-void sub_8071B28(void);
+void CB2_SetUpSaveAfterLinkBattle(void);
 void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u8 *b, u32 trainerId);
 bool8 debug_sub_8075C30(void);
 
