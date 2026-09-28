@@ -30,7 +30,7 @@
 #define SECONDS(value) ((signed) (60.0 * value + 0.5))
 
 const u32 gObjectEventPic_MovingBox[] = INCBIN_U32("graphics/object_events/pics/misc/moving_box.4bpp");
-const u16 gObjectEventPalette19[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
+const u16 gObjectEventPal_MovingBox[] = INCBIN_U16("graphics/object_events/palettes/19.gbapal");
 
 static const s8 sTruckCamera_HorizontalTable[] =
 {

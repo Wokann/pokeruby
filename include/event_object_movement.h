@@ -54,7 +54,7 @@ struct ReflectionPaletteSet
     const u16 *reflectionPaletteTags;
 };
 
-extern const u16 gObjectEventPalette19[];
+extern const u16 gObjectEventPal_MovingBox[];
 
 extern const u32 gObjectEventPic_MovingBox[32];
 extern const struct SpriteFrameImage gObjectEventPicTable_PechaBerryTree[];
