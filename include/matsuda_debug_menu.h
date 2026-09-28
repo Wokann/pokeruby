@@ -1,11 +1,11 @@
-#ifndef GUARD_MATSUDADEBUG_H
-#define GUARD_MATSUDADEBUG_H
+#ifndef GUARD_MATSUDA_DEBUG_MENU_H
+#define GUARD_MATSUDA_DEBUG_MENU_H
 
 #define BIT(n) (1 << (n))
 
-void sub_80AA280(u8);
-void sub_80AA5E8(u8);
-void sub_80AA658(u8);
+void PrintMatsudaDebugContestantNames(u8 contestantId);
+void PrintMatsudaDebugContestRank(u8 contestRank);
+void PrintMatsudaDebugContestantData(u8 contestantId);
 u8 MatsudaDebugMenu_Contest(void);
 u8 MatsudaDebugMenu_ContestResults(void);
 u8 MatsudaDebugMenu_ContestComm(void);
@@ -13,24 +13,23 @@ u8 MatsudaDebugMenu_CommTest(void);
 u8 MatsudaDebugMenu_SetHighScore(void);
 u8 MatsudaDebugMenu_ResetHighScore(void);
 u8 MatsudaDebugMenu_SetArtMuseumItems(void);
-void sub_80AA754(struct Sprite *sprite);
-void sub_80AA8C8(struct Sprite *, s8);
-void sub_80AA8D8(struct Sprite *, s8);
-void sub_80AA8E8(struct Sprite *, s8);
-void sub_80AA8F8(struct Sprite *, s8);
-void sub_80AAC5C(struct Sprite *, s8);
-void sub_80AAC5C(struct Sprite *, s8);
-void sub_80AA930(struct Sprite *, s8);
-void sub_80AA974(struct Sprite *, s8);
-void sub_80AA9B8(struct Sprite *, s8);
-void sub_80AA9FC(struct Sprite *, s8);
-void sub_80AAA40(struct Sprite *, s8);
-void sub_80AAA84(struct Sprite *, s8);
-void sub_80AAAF0(struct Sprite *, s8);
-void sub_80AAB30(struct Sprite *, s8);
-void sub_80AAB70(struct Sprite *, s8);
-void sub_80AABB0(struct Sprite *, s8);
-void sub_80AABF0(struct Sprite *, s8);
-void sub_80AAD44(struct Sprite *, s8);
+void SpriteCB_MatsudaDebugCursor(struct Sprite *sprite);
+void SelectMatsudaDebugContestant0(struct Sprite *sprite, s8 delta);
+void SelectMatsudaDebugContestant1(struct Sprite *sprite, s8 delta);
+void SelectMatsudaDebugContestant2(struct Sprite *sprite, s8 delta);
+void SelectMatsudaDebugContestant3(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestCategory(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestRank(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantCool(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantCute(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantBeauty(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantSmart(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantTough(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantSheen(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantMove1(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantMove2(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantMove3(struct Sprite *sprite, s8 delta);
+void AdjustMatsudaDebugContestantMove4(struct Sprite *sprite, s8 delta);
+void ReturnToFieldWithMatsudaDebugContestScores(struct Sprite *sprite, s8 delta);
 
 #endif
