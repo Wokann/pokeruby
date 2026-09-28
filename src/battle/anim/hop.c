@@ -8,8 +8,10 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimPresent(struct Sprite* sprite);
-void AnimKnockOffItem(struct Sprite* sprite);
+static void AnimPresent(struct Sprite *sprite);
+static void AnimKnockOffItem(struct Sprite *sprite);
+static void AnimItemSteal_Step1(struct Sprite *sprite);
+static void AnimKnockOffOpponentsItem(struct Sprite *sprite);
 
 // hop (where a sprite "hops" across the screen)
 // Used by Present, Trick, and the item knock off effect.
@@ -69,7 +71,7 @@ const struct SpriteTemplate gKnockOffItemSpriteTemplate =
     .callback = AnimKnockOffItem,
 };
 
-void InitItemBagData(struct Sprite* sprite, s16 c)
+void InitItemBagData(struct Sprite *sprite, s16 c)
 {
     s32 a = (sprite->x * 256) | sprite->y;
     s32 b = (sprite->data[6] * 256) | sprite->data[7];
@@ -79,7 +81,7 @@ void InitItemBagData(struct Sprite* sprite, s16 c)
     sprite->data[7] = c;
 }
 
-bool8 moveAlongLinearPath(struct Sprite* sprite)
+bool8 moveAlongLinearPath(struct Sprite *sprite)
 {
     u16 xStartPos = (u8)(sprite->data[5] >> 8);
     u16 yStartPos = (u8)sprite->data[5];
@@ -114,7 +116,7 @@ bool8 moveAlongLinearPath(struct Sprite* sprite)
     return FALSE;
 }
 
-void AnimItemSteal_Step2(struct Sprite* sprite)
+void AnimItemSteal_Step2(struct Sprite *sprite)
 {
     if (sprite->data[0] == 10)
     {
@@ -128,7 +130,7 @@ void AnimItemSteal_Step2(struct Sprite* sprite)
     }
 }
 
-void AnimItemSteal_Step1(struct Sprite* sprite)
+static void AnimItemSteal_Step1(struct Sprite *sprite)
 {
     sprite->data[0] += sprite->data[3] * 128 / sprite->data[4];
     if (sprite->data[0] >= 128)
@@ -146,11 +148,11 @@ void AnimItemSteal_Step1(struct Sprite* sprite)
     }
 }
 
-void AnimPresent(struct Sprite* sprite)
+static void AnimPresent(struct Sprite *sprite)
 {
     s16 targetX;
     s16 targetY;
-    InitSpritePosToAnimAttacker(sprite, 0);
+    InitSpritePosToAnimAttacker(sprite, FALSE);
     targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
     targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
     if (BATTLE_PARTNER(gBattleAnimAttacker) == gBattleAnimTarget)
@@ -172,7 +174,7 @@ void AnimPresent(struct Sprite* sprite)
     sprite->callback = AnimItemSteal_Step1;
 }
 
-void AnimKnockOffOpponentsItem(struct Sprite* sprite)
+static void AnimKnockOffOpponentsItem(struct Sprite *sprite)
 {
     int zero;
     sprite->data[0] += ((sprite->data[3] * 128) / sprite->data[4]);
@@ -192,7 +194,7 @@ void AnimKnockOffOpponentsItem(struct Sprite* sprite)
     }
 }
 
-void AnimKnockOffItem(struct Sprite* sprite)
+static void AnimKnockOffItem(struct Sprite *sprite)
 {
     s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
     if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
