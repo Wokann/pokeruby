@@ -6,13 +6,14 @@
 #include "string_util.h"
 #include "graphics.h"
 
-#define SPRITE_TAG_MONEY (0x2722)
+#define MAX_MONEY 999999
+#define MONEY_LABEL_TAG 0x2722
 
 extern u16 gSpecialVar_0x8005;
 
-static EWRAM_DATA u8 gUnknown_02038734 = 0;
+static EWRAM_DATA u8 sMoneyLabelSpriteId = 0;
 
-static const struct OamData gOamData_83CF558 =
+static const struct OamData sOamData_MoneyLabel =
 {
     .y = 0,
     .affineMode = 0,
@@ -29,34 +30,44 @@ static const struct OamData gOamData_83CF558 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83CF560[] =
+static const union AnimCmd sSpriteAnim_MoneyLabel[] =
 {
     ANIMCMD_FRAME(0, 0),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83CF568[] =
+static const union AnimCmd *const sSpriteAnimTable_MoneyLabel[] =
 {
-    gSpriteAnim_83CF560,
+    sSpriteAnim_MoneyLabel,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83CF56C =
+static const struct SpriteTemplate sSpriteTemplate_MoneyLabel =
 {
-    .tileTag = 10018,
-    .paletteTag = 10018,
-    .oam = &gOamData_83CF558,
-    .anims = gSpriteAnimTable_83CF568,
+    .tileTag = MONEY_LABEL_TAG,
+    .paletteTag = MONEY_LABEL_TAG,
+    .oam = &sOamData_MoneyLabel,
+    .anims = sSpriteAnimTable_MoneyLabel,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-const struct CompressedSpriteSheet gUnknown_083CF584[] = {gMenuMoneyGfx, 256, SPRITE_TAG_MONEY};
-const struct CompressedSpritePalette gUnknown_083CF58C[] = {gMenuMoneyPal, SPRITE_TAG_MONEY};
-
-bool8 IsEnoughMoney(u32 budget, u32 cost)
+static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel =
 {
-    if (budget >= cost)
+    .data = gShopMenuMoney_Gfx,
+    .size = 256,
+    .tag = MONEY_LABEL_TAG,
+};
+
+static const struct CompressedSpritePalette sSpritePalette_MoneyLabel =
+{
+    .data = gShopMenuMoney_Pal,
+    .tag = MONEY_LABEL_TAG,
+};
+
+bool8 IsEnoughMoney(u32 money, u32 cost)
+{
+    if (money >= cost)
     {
         return TRUE;
     }
@@ -64,61 +75,61 @@ bool8 IsEnoughMoney(u32 budget, u32 cost)
     return FALSE;
 }
 
-void AddMoney(u32 *arg0, u32 arg1)
+void AddMoney(u32 *moneyPtr, u32 amount)
 {
-    if (*arg0 > *arg0 + arg1)
+    if (*moneyPtr > *moneyPtr + amount)
     {
-        *arg0 = 999999;
+        *moneyPtr = MAX_MONEY;
         return;
     }
 
-    *arg0 += arg1;
-    if (*arg0 > 999999)
+    *moneyPtr += amount;
+    if (*moneyPtr > MAX_MONEY)
     {
-        *arg0 = 999999;
+        *moneyPtr = MAX_MONEY;
     }
 }
 
-void RemoveMoney(u32 *arg0, u32 arg1)
+void RemoveMoney(u32 *moneyPtr, u32 amount)
 {
-    if (*arg0 < arg1)
+    if (*moneyPtr < amount)
     {
-        *arg0 = 0;
+        *moneyPtr = 0;
     }
     else
     {
-        *arg0 -= arg1;
+        *moneyPtr -= amount;
     }
 }
 
-void GetMoneyAmountText(u8 *buffer, u32 amount, u8 arg2)
+void GetMoneyAmountText(u8 *buffer, u32 amount, u8 fieldWidth)
 {
-    u8 width;
+    u8 amountWidth;
     u8 i;
 
-    if (amount > 999999)
-        width = 7;
+    if (amount > MAX_MONEY)
+        amountWidth = 7;
     else if (amount > 99999)
-        width = 6;
+        amountWidth = 6;
     // A special sprite is used for 10000 in the decoration
     // shop, so be sure to account for this.
     else if (amount > 10000)
-        width = 5;
+        amountWidth = 5;
     else if (amount > 999)
-        width = 4;
+        amountWidth = 4;
     else if (amount > 99)
-        width = 3;
+        amountWidth = 3;
     else if (amount > 9)
-        width = 2;
+        amountWidth = 2;
     else
-        width = 1;
+        amountWidth = 1;
 
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x14;
     buffer[2] = 0x06;
     buffer += 3;
 
-    for (i = 0; i < arg2 - width; i++)
+    for (i = 0; i < fieldWidth - amountWidth; i++)
     {
         buffer[0] = CHAR_SPACE;
         buffer += 1;
@@ -135,26 +146,26 @@ void GetMoneyAmountText(u8 *buffer, u32 amount, u8 arg2)
     buffer[3] = EOS;
 }
 
-void PrintMoneyAmount(u32 amount, u8 size, u8 x, u8 y)
+void PrintMoneyAmount(u32 amount, u8 width, u8 x, u8 y)
 {
     u8 buffer[16];
     u8 stringWidth;
 
-    GetMoneyAmountText(buffer, amount, size);
+    GetMoneyAmountText(buffer, amount, width);
     stringWidth = GetStringWidthInMenuWindow(buffer);
 
-    if (stringWidth >= (size + 1) * 8)
+    if (stringWidth >= (width + 1) * 8)
     {
         Menu_PrintText(buffer, x, y);
     }
     else
     {
         int xPlusOne = x + 1;
-        Menu_PrintTextPixelCoords(buffer, (xPlusOne + size) * 8 - stringWidth, y * 8, 1);
+        Menu_PrintTextPixelCoords(buffer, (xPlusOne + width) * 8 - stringWidth, y * 8, 1);
     }
 }
 
-void sub_80B7AEC(u32 arg0, u8 right, u8 top)
+void PrintMoneyAmountRightAligned(u32 amount, u8 right, u8 top)
 {
     u8 buffer[32];
     u8 *ptr;
@@ -164,7 +175,7 @@ void sub_80B7AEC(u32 arg0, u8 right, u8 top)
     ptr[0] = CHAR_CURRENCY;
     ptr++;
 
-    ptr = ConvertIntToDecimalString(ptr, arg0);
+    ptr = ConvertIntToDecimalString(ptr, amount);
 
     MenuPrint_RightAligned(buffer, right, top);
 
@@ -177,31 +188,31 @@ void sub_80B7AEC(u32 arg0, u8 right, u8 top)
 }
 
 #ifdef NONMATCHING
-void Draw10000Sprite(u8 var1, u8 var2, s32 var3)
+void Draw10000Sprite(u8 x, u8 y, s32 hasControlCode)
 {
     // 2D/3D array manipulation off the wazoo.
     // Converting to 2D/3D array casts makes it match less!
     u16 i;
 
     CpuFastSet(
-        (void*)&gDecoration10000_Gfx[var3 * 0x100],
-        (void*)(VRAM + 0x8000 + (var2 * 0x3c0) + ((var1 + 1) * 0x20)),
+        (void *)&gDecoration10000_Gfx[hasControlCode * 0x100],
+        (void *)(VRAM + 0x8000 + (y * 0x3c0) + ((x + 1) * 0x20)),
         32);
     CpuFastSet(
-        (void*)&gDecoration10000_Gfx[var3 * 0x100 + 0x80],
-        (void*)(VRAM + 0x8000 + ((var2 + 1) * 0x3c0) + ((var1 + 1) * 0x20)),
+        (void *)&gDecoration10000_Gfx[hasControlCode * 0x100 + 0x80],
+        (void *)(VRAM + 0x8000 + ((y + 1) * 0x3c0) + ((x + 1) * 0x20)),
         32);
 
     for (i = 0; i < 4; i++)
     {
-        u32 base = var2 * 0x20 + var1 + i;
-        ((u16 *)(VRAM + 0xF800))[base] = var2 * 0x1e + 1 + var1 + (u16)-4096;
-        ((u16 *)(VRAM + 0xF840))[base] = (var2 + 1) * 0x1e + 1 + var1 + (u16)-4096;
+        u32 base = y * 0x20 + x + i;
+        ((u16 *)(VRAM + 0xF800))[base] = y * 0x1e + 1 + x + (u16)-4096;
+        ((u16 *)(VRAM + 0xF840))[base] = (y + 1) * 0x1e + 1 + x + (u16)-4096;
     };
 }
 #else
 NAKED
-void Draw10000Sprite(u8 var1, u8 var2, s32 var3)
+void Draw10000Sprite(u8 x, u8 y, s32 hasControlCode)
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -295,26 +306,26 @@ _080B7BE8: .4byte 0x0600f840\n\
 }
 #endif
 
-void UpdateMoneyWindow(u32 amount, u8 x, u8 y)
+void ChangeAmountInMoneyBox(u32 amount, u8 x, u8 y)
 {
     PrintMoneyAmount(amount, 6, x + 6, y + 1);
 }
 
-void OpenMoneyWindow(u32 amount, u8 x, u8 y)
+void DrawMoneyBox(u32 amount, u8 x, u8 y)
 {
     Menu_DrawStdWindowFrame(x, y, x + 13, y + 3);
-    UpdateMoneyWindow(amount, x, y);
+    ChangeAmountInMoneyBox(amount, x, y);
 
-    LoadCompressedSpriteSheet(gUnknown_083CF584);
-    LoadCompressedSpritePalette(gUnknown_083CF58C);
+    LoadCompressedSpriteSheet(&sSpriteSheet_MoneyLabel);
+    LoadCompressedSpritePalette(&sSpritePalette_MoneyLabel);
 
-    gUnknown_02038734 = CreateSprite(&gSpriteTemplate_83CF56C, x * 8 + 19, y * 8 + 11, 0);
+    sMoneyLabelSpriteId = CreateSprite(&sSpriteTemplate_MoneyLabel, x * 8 + 19, y * 8 + 11, 0);
 }
 
-void CloseMoneyWindow(u8 x, u8 y)
+void HideMoneyBox(u8 x, u8 y)
 {
-    DestroySpriteAndFreeResources(&gSprites[gUnknown_02038734]);
-    FreeSpritePaletteByTag(SPRITE_TAG_MONEY);
+    DestroySpriteAndFreeResources(&gSprites[sMoneyLabelSpriteId]);
+    FreeSpritePaletteByTag(MONEY_LABEL_TAG);
     Menu_EraseWindowRect(x, y, x + 13, y + 3);
 }
 

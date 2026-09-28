@@ -2553,7 +2553,7 @@ static void Task_ReturnToBagAfterSell(u8 taskId)
 static void BuyMenuPrintItemQuantityAndPrice(u8 taskId)
 {
     ClearBgTilemapRect(gBGTilemapBuffers[1], 0, 0, 31, 31);
-    CloseMoneyWindow(0, 0);
+    HideMoneyBox(0, 0);
     Menu_EraseWindowRect(0, 4, 13, 13);
     Menu_EraseWindowRect(0, 14, 29, 19);
     gTasks[taskId].func = Task_ReturnToBagAfterSell;
@@ -2567,14 +2567,14 @@ static void BuyMenuDisplayMessage(u16 itemId, u16 quantity)
 
 static void DisplaySellMoneyWindow(void)
 {
-    OpenMoneyWindow(gSaveBlock1.money, 0, 0);
+    DrawMoneyBox(gSaveBlock1.money, 0, 0);
     FillBgTilemapRectWithOne(gBGTilemapBuffers[1], 1, 1, 12, 2);
 }
 
 static void AddSaleMoney(u16 itemId, u8 quantity)
 {
     AddMoney(&gSaveBlock1.money, ItemId_GetPrice(itemId) / 2 * quantity);
-    UpdateMoneyWindow(gSaveBlock1.money, 0, 0);
+    ChangeAmountInMoneyBox(gSaveBlock1.money, 0, 0);
 }
 
 static void CB2_InitBerrySelectionBagMenu(void)

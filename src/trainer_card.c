@@ -1152,7 +1152,7 @@ static void TrainerCard_Front_PrintTrainerID(void)
 
 static void TrainerCard_Front_PrintMoney(void)
 {
-    sub_80B7AEC(gTrainerCardPtr->displayedCard.money, 16, 8);
+    PrintMoneyAmountRightAligned(gTrainerCardPtr->displayedCard.money, 16, 8);
 }
 
 static void TrainerCard_Front_PrintPokedexCount(void)

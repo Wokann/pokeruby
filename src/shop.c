@@ -32,7 +32,7 @@ extern bool8 SellMenu_QuantityRoller(u8, u8);
 
 extern u8 gBuyMenuFrame_Gfx[];
 extern u16 gBuyMenuFrame_Tilemap[];
-extern u16 gMenuMoneyPal[16];
+extern const u8 gShopMenuMoney_Pal[32];
 
 static void Shop_DisplayPriceInList(int firstItemId, int lastItemId, bool32 hasControlCode);
 static void Shop_PrintItemDescText(void);
@@ -268,7 +268,7 @@ static void BuyMenuDrawGraphics(void)
     Dma3FillLarge32_(0, (void*)OAM, OAM_SIZE);
     LZDecompressVram(gBuyMenuFrame_Gfx, (void*)(VRAM + 0x7C00));
     LZDecompressWram(gBuyMenuFrame_Tilemap, ewram18000);
-    LoadCompressedPalette(gMenuMoneyPal, 0xC0, sizeof(gMenuMoneyPal));
+    LoadCompressedPalette(gShopMenuMoney_Pal, 0xC0, sizeof(gShopMenuMoney_Pal));
     FreeAllSpritePalettes();
     ResetPaletteFade();
     ResetSpriteData();
@@ -279,7 +279,7 @@ static void BuyMenuDrawGraphics(void)
     gMartInfo.cursor = 0;
     gMartInfo.choicesAbove = 0;
     Menu_EraseWindowRect(0, 0, 0x20, 0x20);
-    OpenMoneyWindow(gSaveBlock1.money, 0, 0);
+    DrawMoneyBox(gSaveBlock1.money, 0, 0);
     Shop_InitMenus(0, 7);
     Shop_PrintItemDesc();
     DrawFirstMartScrollIndicators();
@@ -639,7 +639,7 @@ static void Shop_DoItemTransaction(u8 taskId)
     IncrementGameStat(GAME_STAT_SHOPPED);
     RemoveMoney(&gSaveBlock1.money, gMartTotalCost);
     PlaySE(SE_SHOP);
-    UpdateMoneyWindow(gSaveBlock1.money, 0, 0);
+    ChangeAmountInMoneyBox(gSaveBlock1.money, 0, 0);
     gTasks[taskId].func = Shop_DoPremierBallCheck;
 }
 
@@ -1157,7 +1157,7 @@ static void Task_ExitBuyMenuDoFade(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        CloseMoneyWindow(0, 0);
+        HideMoneyBox(0, 0);
         BuyMenuFreeMemory();
         SetMainCallback2(CB2_ReturnToField);
         DestroyTask(taskId);
