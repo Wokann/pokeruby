@@ -32,157 +32,209 @@
 #include "pokemon_icon.h"
 #include "field_effect.h"
 
-struct WatanabeDebugMenuItemSubstruct {
-    u32 totalPoints;
-    u32 round1Points;
-    u8 random;
-    u8 unk9;
+struct WatanabeDebugPokemonEditorField {
+    u32 minValue;
+    u32 maxValue;
+    u8 skipValueAdjustment;
+    u8 digitCount;
+};
+
+struct WatanabeDebugBattleMode {
+    u8 battleType;
+    u8 battlerCount;
 };
 
 struct WatanabeDebugMenuItem {
-    const u8 * text;
+    const u8 *label;
     union {
-        u8 type1[2];
-        u32 type2;
-        u8 type3;
-        const struct WatanabeDebugMenuItemSubstruct *type4;
+        struct WatanabeDebugBattleMode battleMode;
+        u32 trainerAiMask;
+        u8 battleEnvironment;
+        u8 categoryLength;
+        u8 status;
+        const struct WatanabeDebugPokemonEditorField *pokemonEditorField;
     } data;
 };
 
-struct WatanabeEwram17000 {
-    u8 fill0;
-    u8 unk1_0:4;
-    u8 unk1_4:1;
-    u8 unk1_5:3;
-    u8 excitementAppealBonus;
-    u8 unk3;
-    u8 fill4[5];
-    u8 unk9;
-    u8 unkA;
-    u8 unkB;
-    u8 contestant;
-};
-
-struct WatanabeEwram18000 {
+struct WatanabePokemonCreatorState {
     struct Pokemon pokemon;
-    u32 unk64[0x40];
-    u32 unk164;
-    u8 unk168;
-    u8 unk169;
-    u8 unk16a;
-    u8 unk16b[259];
+    u32 values[0x40];
+    u32 previousValue;
+    u8 categoryIndex;
+    u8 fieldIndex;
+    u8 digitIndex;
+    u8 textBuffer[259];
 };
 
-struct WatanabeEwram18000_2 {
-    u16 totalPoints;
-    u8 excitementAppealBonus;
-    u8 unk3;
-    u8 round1Points;
-    u8 contestant;
-    u8 unk6;
-    u8 unk7;
-    u8 random;
-    u8 unk9;
-    u8 unkA;
-    struct PlttData unkC;
-    u16 personality2[16];
+enum WatanabePokemonCreatorValue {
+    WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM,
+    WATANABE_POKEMON_CREATOR_VALUE_LEVEL,
+    WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE,
+    WATANABE_POKEMON_CREATOR_VALUE_OT_ID,
+    WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY,
+    WATANABE_POKEMON_CREATOR_VALUE_GENDER,
+    WATANABE_POKEMON_CREATOR_VALUE_NATURE,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_1,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_2,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_3,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_4,
+    WATANABE_POKEMON_CREATOR_VALUE_HELD_ITEM,
+    WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT,
+    WATANABE_POKEMON_CREATOR_VALUE_HP_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_HP_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_ATTACK_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SPEED_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_COOL,
+    WATANABE_POKEMON_CREATOR_VALUE_BEAUTY,
+    WATANABE_POKEMON_CREATOR_VALUE_CUTE,
+    WATANABE_POKEMON_CREATOR_VALUE_SMART,
+    WATANABE_POKEMON_CREATOR_VALUE_TOUGH,
+    WATANABE_POKEMON_CREATOR_VALUE_SHEEN,
+    WATANABE_POKEMON_CREATOR_VALUE_FRIENDSHIP,
+    WATANABE_POKEMON_CREATOR_VALUE_POKERUS,
+    WATANABE_POKEMON_CREATOR_VALUE_IS_EGG,
+    WATANABE_POKEMON_CREATOR_VALUE_STATUS,
+    WATANABE_POKEMON_CREATOR_VALUE_HP,
+    WATANABE_POKEMON_CREATOR_VALUE_ATTACK,
+    WATANABE_POKEMON_CREATOR_VALUE_DEFENSE,
+    WATANABE_POKEMON_CREATOR_VALUE_SPEED,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE,
 };
 
-#define eWatanabe17000 (*(struct WatanabeEwram17000 *)(gSharedMem + 0x17000))
-#define eWatanabe18000 (*(struct WatanabeEwram18000 *)(gSharedMem + 0x18000))
-#define eWatanabe18000_2 (*(struct WatanabeEwram18000_2 *)(gSharedMem + 0x18000))
+#define WATANABE_POKEMON_CREATOR_FIELD_SPECIAL_STATS  0xFD
+#define WATANABE_POKEMON_CREATOR_FIELD_PHYSICAL_STATS 0xFE
 
-EWRAM_DATA u8 gUnknown_Debug_20389EC[0x20] = { 0 };
-EWRAM_DATA u8 gUnknown_Debug_2038A0C[0x10] = { 0 };
-EWRAM_DATA struct WatanabeEwram18000 * gUnknown_Debug_2038A1C = NULL;
-EWRAM_DATA struct WatanabeEwram18000_2 * gUnknown_Debug_2038A20 = NULL;
+struct WatanabeGraphicsBrowserState {
+    u16 graphicsId;
+    u8 frontSpriteId;
+    u8 backSpriteId;
+    u8 iconSpriteId;
+    u8 isColorPickerActive;
+    u8 spritePaletteNum;
+    u8 paletteColorIndex;
+    u8 palettePulsePhase;
+    u8 useShinyPalette;
+    u8 selectedRgbComponent;
+    struct PlttData selectedColor;
+    u16 savedPalette[16];
+};
+
+#define eWatanabePokemonCreatorState (*(struct WatanabePokemonCreatorState *)(gSharedMem + 0x18000))
+#define eWatanabeGraphicsBrowserState (*(struct WatanabeGraphicsBrowserState *)(gSharedMem + 0x18000))
+
+EWRAM_DATA u8 gWatanabeSizeComparisonPalette[0x20] = { 0 };
+EWRAM_DATA u8 gWatanabeBattleDebugState[0x10] = { 0 };
+EWRAM_DATA struct WatanabePokemonCreatorState *gWatanabePokemonCreatorState = NULL;
+EWRAM_DATA struct WatanabeGraphicsBrowserState *gWatanabeGraphicsBrowserState = NULL;
 
 u32 byte_3005E30;
 
+#define sWatanabeBattleDebugSelectingEnemyParty gWatanabeBattleDebugState[0]
+#define sWatanabeBattleDebugPlayerPartyIndex    gWatanabeBattleDebugState[1]
+#define sWatanabeBattleDebugEnemyPartyIndex     gWatanabeBattleDebugState[2]
+#define sWatanabeBattleDebugBattleModeIndex     gWatanabeBattleDebugState[3]
+#define sWatanabeBattleDebugTrainerAiMenuOffset gWatanabeBattleDebugState[4]
+#define sWatanabeBattleDebugTrainerAiCursor     gWatanabeBattleDebugState[5]
+#define sWatanabeBattleDebugTerrainMenuOffset   gWatanabeBattleDebugState[6]
+#define sWatanabeBattleDebugTerrainCursor       gWatanabeBattleDebugState[7]
+#define sWatanabeBattleDebugGenderSelection     gWatanabeBattleDebugState[8]
+#define sWatanabeBattleDebugBattlerCount        gWatanabeBattleDebugState[12]
+#define sWatanabeBattleDebugSavedPlayerGender   gWatanabeBattleDebugState[13]
+#define gWatanabeTrainerAiFlags                 byte_3005E30
+
 extern s8 gBattleEnvironment;
 
-void debug_80C3A50(u8 taskId);
-void debug_80C3D2C(u8 taskId);
-void debug_80C4214(u8);
-void debug_80C42B8(u8 taskId);
-void debug_80C4348(u8 taskId);
-void debug_80C43A8(u8 taskId);
-void debug_80C44EC(u8 taskId);
-void debug_80C4550(u8 taskId);
-void debug_80C4694(void);
-void debug_80C4704(void);
-bool8 debug_80C4774(void);
-void debug_80C47BC(u8 taskId);
-void debug_80C48A0(u8 taskId);
-void debug_80C4900(u8 taskId);
-void debug_80C4A60(u8 taskId);
-void debug_80C4AC4(u8 taskId);
-void debug_80C4C44(u8);
-void debug_80C4D14(u8 taskId);
-void debug_80C4DB8(u8 taskId);
-void debug_80C4E18(u8 taskId);
-void debug_80C4F00(u8);
-void debug_80C4F48(u8 taskId);
-void debug_80C5038(u8 taskId);
-void debug_80C5098(u8 taskId);
-void debug_80C5158(u8 taskId);
-void debug_80C5174(u8 taskId);
-void debug_80C5190(u8 taskId);
-void debug_80C51AC(u8 taskId);
-void debug_80C51C8(u8 taskId);
-void debug_80C51E4(u8 taskId);
-void debug_80C53A4(u8 taskId);
-void debug_80C53C0(u8 taskId);
-void debug_80C53F0(u8 taskId);
-void debug_80C55E4(u8 taskId);
-void debug_80C5708(u8 taskId);
-void debug_80C5C94(void);
-void debug_80C5DEC(void);
-void debug_80C5EF4(void);
-void debug_80C5FFC(void);
-void debug_80C627C(u8);
-void debug_80C6384(void);
-void debug_80C643C(void);
-void debug_80C6544(u8);
-void debug_80C689C(u8 *, const u8 *, u8);
-void debug_80C6678(u8 *, u32, u8, u8);
-void debug_80C68CC(u16, u8, u8, u8);
-void debug_80C6B00(u8 taskId);
-void debug_80C6CB8(u8 taskId);
-void debug_80C6EE8(u8 taskId);
-void debug_80C6FA8(u8 taskId);
-void debug_80C71FC(u8 taskId);
-void debug_80C7294(u8 taskId);
-void debug_80C74E4(u8 taskId);
-void debug_80C7584(struct Sprite *);
-void debug_80C777C(u8 taskId);
-void debug_80C7934(u8 taskId);
-void debug_80C7A54(u8 taskId);
-void debug_80C7B14(u8 taskId);
-void debug_80C7D44(u8 taskId);
-void debug_80C7DDC(u8 taskId);
-void debug_80C802C(u8 taskId);
+void Task_WatanabeDebugInitSizeComparison(u8 taskId);
+void Task_WatanabeDebugHandleSizeComparisonInput(u8 taskId);
+void WatanabeDebug_InitBattleSetupScreen(u8);
+void Task_WatanabeDebugInitPartySelection(u8 taskId);
+void Task_WatanabeDebugShowPlayerPartyCursor(u8 taskId);
+void Task_WatanabeDebugHandlePlayerPartyInput(u8 taskId);
+void Task_WatanabeDebugShowEnemyPartyCursor(u8 taskId);
+void Task_WatanabeDebugHandleEnemyPartyInput(u8 taskId);
+void WatanabeDebug_DrawPlayerParty(void);
+void WatanabeDebug_DrawEnemyParty(void);
+bool8 WatanabeDebug_HasEnoughBattleMons(void);
+void Task_WatanabeDebugInitBattleModeMenu(u8 taskId);
+void Task_WatanabeDebugShowBattleModeCursor(u8 taskId);
+void Task_WatanabeDebugHandleBattleModeInput(u8 taskId);
+void Task_WatanabeDebugShowTrainerAiCursor(u8 taskId);
+void Task_WatanabeDebugHandleTrainerAiInput(u8 taskId);
+void WatanabeDebug_DrawTrainerAiOptions(u8);
+void Task_WatanabeDebugInitBattleTerrainMenu(u8 taskId);
+void Task_WatanabeDebugShowBattleTerrainCursor(u8 taskId);
+void Task_WatanabeDebugHandleBattleTerrainInput(u8 taskId);
+void WatanabeDebug_DrawBattleTerrainOptions(u8);
+void Task_WatanabeDebugInitGenderMenu(u8 taskId);
+void Task_WatanabeDebugShowGenderCursor(u8 taskId);
+void Task_WatanabeDebugHandleGenderInput(u8 taskId);
+void Task_WatanabeDebugStartBattle(u8 taskId);
+void Task_WatanabeDebugStartBattleStage2(u8 taskId);
+void Task_WatanabeDebugStartBattleStage3(u8 taskId);
+void Task_WatanabeDebugStartBattleStage4(u8 taskId);
+void Task_WatanabeDebugStartBattleStage5(u8 taskId);
+void Task_WatanabeDebugLaunchBattle(u8 taskId);
+void Task_WatanabeDebugInitPokemonCreator(u8 taskId);
+void Task_WatanabeDebugDrawPokemonCreator(u8 taskId);
+void Task_WatanabeDebugHandlePokemonCreatorInput(u8 taskId);
+void Task_WatanabeDebugHandlePokemonFieldInput(u8 taskId);
+void Task_WatanabeDebugWaitForPokemonCreated(u8 taskId);
+void WatanabeDebug_RecreatePokemon(void);
+void WatanabeDebug_RecalculatePokemonForExperience(void);
+void WatanabeDebug_RecalculatePokemonStats(void);
+void WatanabeDebug_CreatePokemon(void);
+void WatanabeDebug_MovePokemonCreatorCursor(u8);
+void WatanabeDebug_DrawPokemonCreatorFields(void);
+void WatanabeDebug_RedrawPokemonCreatorFields(void);
+void WatanabeDebug_AdjustPokemonCreatorValue(u8);
+void WatanabeDebug_CopyText(u8 *, const u8 *, u8);
+void WatanabeDebug_AppendColoredNumber(u8 *, u32, u8, u8);
+void WatanabeDebug_PrintHexValue(u16, u8, u8, u8);
+void Task_WatanabeDebugInitPokemonGraphicsBrowser(u8 taskId);
+void Task_WatanabeDebugLoadPokemonGraphics(u8 taskId);
+void Task_WatanabeDebugRefreshPokemonPalette(u8 taskId);
+void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId);
+void Task_WatanabeDebugReloadPokemonGraphics(u8 taskId);
+void Task_WatanabeDebugHandlePokemonColorInput(u8 taskId);
+void Task_WatanabeDebugApplyPokemonPaletteColor(u8 taskId);
+void SpriteCB_WatanabeDebugColorPicker(struct Sprite *);
+void Task_WatanabeDebugInitTrainerGraphicsBrowser(u8 taskId);
+void Task_WatanabeDebugLoadTrainerGraphics(u8 taskId);
+void Task_WatanabeDebugRefreshTrainerPalette(u8 taskId);
+void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId);
+void Task_WatanabeDebugReloadTrainerGraphics(u8 taskId);
+void Task_WatanabeDebugHandleTrainerColorInput(u8 taskId);
+void Task_WatanabeDebugApplyTrainerPaletteColor(u8 taskId);
 
 #define SPRITETAG_WATANABE 0x1000
 
-u8 byte_83F88EC[];
-u16 word_83F888C[];
+u8 sWatanabeDebugSpriteBrowserTiles[];
+u16 sWatanabeDebugSpriteBrowserPalette[];
 
-struct SpriteSheet stru_83F8828[] = {
-    {byte_83F88EC, 0x800, SPRITETAG_WATANABE},
+struct SpriteSheet sWatanabeDebugSpriteBrowserSpriteSheets[] = {
+    {sWatanabeDebugSpriteBrowserTiles, 0x800, SPRITETAG_WATANABE},
     {}
 };
-struct SpritePalette stru_83F8838[] = {
-    {word_83F888C, SPRITETAG_WATANABE},
+struct SpritePalette sWatanabeDebugSpriteBrowserSpritePalettes[] = {
+    {sWatanabeDebugSpriteBrowserPalette, SPRITETAG_WATANABE},
     {}
 };
 
-void debug_69(struct Sprite *sprite)
+void SpriteCB_WatanabeDebugDummy(struct Sprite *sprite)
 {
 
 }
 
-void debug_80C35DC(void)
+void WatanabeDebug_InitScreen(void)
 {
     SetVBlankCallback(NULL);
     REG_DISPCNT = 0;
@@ -207,13 +259,13 @@ void debug_80C35DC(void)
     ResetSpriteData();
     ResetPaletteFade(); // I really don't want palette fade here
     FreeAllSpritePalettes();
-    LoadSpriteSheet(stru_83F8828);
-    LoadSpritePalette(stru_83F8838);
+    LoadSpriteSheet(sWatanabeDebugSpriteBrowserSpriteSheets);
+    LoadSpritePalette(sWatanabeDebugSpriteBrowserSpritePalettes);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C3C);
     InitMenuWindow(&gMenuTextWindowTemplate);
 }
 
-void debug_80C36F4(void)
+void CB2_WatanabeDebugRun(void)
 {
     RunTasks();
     AnimateSprites();
@@ -221,11 +273,11 @@ void debug_80C36F4(void)
     UpdatePaletteFade();
 }
 
-void debug_80C370C(void)
+void CB2_WatanabeDebugWaitForFade(void)
 {
     if (!gPaletteFade.active)
     {
-        SetMainCallback2(debug_80C36F4);
+        SetMainCallback2(CB2_WatanabeDebugRun);
     }
 
     else
@@ -236,120 +288,120 @@ void debug_80C370C(void)
     }
 }
 
-void debug_80C373C(u8 taskId)
+void Task_WatanabeDebugExitToField(u8 taskId)
 {
     DestroyTask(taskId);
     UnlockPlayerFieldControls();
     SetMainCallback2(CB2_ReturnToFieldFadeFromBlack);
 }
 
-void debug_80C3758(void)
+void VBlankCB_WatanabeDebug(void)
 {
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-void debug_80C376C(u16 a0, u8 a1, u8 a2)
+void WatanabeDebug_PrintDecimal3(u16 value, u8 x, u8 y)
 {
     u8 i;
-    u8 divresult;
-    u8 sp00[4];
-    bool8 r4;
+    u8 digit;
+    u8 text[4];
+    bool8 hasHundredsDigit;
 
     for (i = 0; i < 3; i++)
-        sp00[i] = CHAR_SPACE;
-    sp00[3] = EOS;
+        text[i] = CHAR_SPACE;
+    text[3] = EOS;
 
-    r4 = FALSE;
-    divresult = a0 / 100;
-    if (divresult)
+    hasHundredsDigit = FALSE;
+    digit = value / 100;
+    if (digit)
     {
-        sp00[0] = CHAR_0 + divresult;
-        r4 = TRUE;
+        text[0] = CHAR_0 + digit;
+        hasHundredsDigit = TRUE;
     }
 
-    divresult = (a0 % 100) / 10;
-    if (divresult || r4)
+    digit = (value % 100) / 10;
+    if (digit || hasHundredsDigit)
     {
-        sp00[1] = CHAR_0 + divresult;
+        text[1] = CHAR_0 + digit;
     }
 
-    sp00[2] = CHAR_0 + ((a0 % 100) % 10);
+    text[2] = CHAR_0 + ((value % 100) % 10);
 
-    Menu_PrintText(sp00, a1, a2);
+    Menu_PrintText(text, x, y);
 }
 
-void debug_80C3800(u16 a0, u8 a1, u8 a2)
+void WatanabeDebug_PrintSpeciesName(u16 species, u8 x, u8 y)
 {
-    u8 sp00[11];
+    u8 speciesName[11];
     u8 i;
 
     for (i = 0; i < 10; i++)
-        sp00[i] = CHAR_SPACE;
-    sp00[i] = EOS;
+        speciesName[i] = CHAR_SPACE;
+    speciesName[i] = EOS;
 
-    for (i = 0; gSpeciesNames[a0][i] != EOS && i < 10; i++)
-        sp00[i] = gSpeciesNames[a0][i];
+    for (i = 0; gSpeciesNames[species][i] != EOS && i < 10; i++)
+        speciesName[i] = gSpeciesNames[species][i];
 
-    Menu_PrintText(sp00, a1, a2);
+    Menu_PrintText(speciesName, x, y);
 }
 
-u16 debug_80C3878(u8 a0, u16 a1)
+u16 WatanabeDebug_AdvanceSpeciesId(u8 direction, u16 species)
 {
-    switch (a0)
+    switch (direction)
     {
         default:
         case 0:
-            if (a1 > SPECIES_BULBASAUR)
-                a1--;
+            if (species > SPECIES_BULBASAUR)
+                species--;
             else
-                a1 = NUM_SPECIES - 1;
+                species = NUM_SPECIES - 1;
             break;
         case 1:
-            if (a1 < NUM_SPECIES - 1)
-                a1++;
+            if (species < NUM_SPECIES - 1)
+                species++;
             else
-                a1 = SPECIES_BULBASAUR;
+                species = SPECIES_BULBASAUR;
             break;
     }
-    return a1;
+    return species;
 }
 
-u16 debug_80C38B4(u8 a0, u16 a1)
+u16 WatanabeDebug_AdvanceTrainerGraphicsId(u8 direction, u16 graphicsId)
 {
-    switch (a0)
+    switch (direction)
     {
         default:
         case 0:
-            if (a1)
-                a1--;
+            if (graphicsId)
+                graphicsId--;
             else
-                a1 = 0x52;
+                graphicsId = 0x52;
             break;
         case 1:
-            if (a1 < 0x52)
-                a1++;
+            if (graphicsId < 0x52)
+                graphicsId++;
             else
-                a1 = 0;
+                graphicsId = 0;
             break;
     }
-    return a1;
+    return graphicsId;
 }
 
-void debug_80C38E4(u8 a0, u8 a1, u8 a2, u8 a3, u8 a4)
+void WatanabeDebug_DrawCursor(u8 cursorY, u8 left, u8 top, u8 bottom, bool8 showCursor)
 {
-    u8 sp00[] = _("▶");
-    Menu_BlankWindowRect(a1, a2, a1, a3);
-    if (a4)
-        Menu_PrintText(sp00, a1, a0);
+    u8 cursor[] = _("▶");
+    Menu_BlankWindowRect(left, top, left, bottom);
+    if (showCursor)
+        Menu_PrintText(cursor, left, cursorY);
 }
 
-const u8 gUnknown_Debug_083F7FD6[] = {0x25, 0x20, 0x01, 0x08};
+const u8 sWatanabeDebugFlashSignature[] = {0x25, 0x20, 0x01, 0x08};
 
-void debug_80C393C(void)
+void WatanabeDebug_WriteFlashSignature(void)
 {
-    ProgramFlashSectorAndVerify(30, (void *)gUnknown_Debug_083F7FD6);
+    ProgramFlashSectorAndVerify(30, (void *)sWatanabeDebugFlashSignature);
 }
 
 void InitWatanabeDebugMenu(void)
@@ -384,35 +436,35 @@ void InitSizeComparison(void)
 {
     u8 taskId;
     u16 imeBak;
-    debug_80C35DC();
+    WatanabeDebug_InitScreen();
     gReservedSpritePaletteCount = 1;
-    LoadPalette(gUnknown_Debug_20389EC, 0x100, 0x20);
+    LoadPalette(gWatanabeSizeComparisonPalette, 0x100, 0x20);
 
     imeBak = REG_IME;
     REG_IME = 0;
     REG_IE |= INTR_FLAG_VBLANK;
     REG_IME = imeBak;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-    SetVBlankCallback(debug_80C3758);
-    SetMainCallback2(debug_80C370C);
+    SetVBlankCallback(VBlankCB_WatanabeDebug);
+    SetMainCallback2(CB2_WatanabeDebugWaitForFade);
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON;
-    taskId = CreateTask(debug_80C3A50, 0);
+    taskId = CreateTask(Task_WatanabeDebugInitSizeComparison, 0);
     gTasks[taskId].data[0] = 0xfc;
 }
 
-const u8 gUnknown_Debug_083F7FDA[] = DTR("ひりつ", "SCALE");
-const u8 gUnknown_Debug_083F7FDE[] = DTR("たかさ", "HEIGHT");
-const u8 gUnknown_Debug_083F7FE2[] = DTR("Lキー▶しゅくしょう", "{LEFT_ARROW}: SHRINK");
-const u8 gUnknown_Debug_083F7FED[] = DTR("Rキー▶かくだい", "{RIGHT_ARROW}: ENLARGE");
-const u8 gUnknown_Debug_083F7FF6[] = DTR("Uキー▶うえ　いどう", "{UP_ARROW}: MOVE UP");
-const u8 gUnknown_Debug_083F8001[] = DTR("Dキー▶した　いどう", "{DOWN_ARROW}: MOVE DOWN");
-const u8 gUnknown_Debug_083F800C[] = DTR("Aボタン▶そうさきりかえ", "A: SWITCH CONTROL");
-const u8 gUnknown_Debug_083F8019[] = DTR("Bボタン▶やめる", "B: QUIT");
-const u8 gUnknown_Debug_083F8022[] = DTR("スタート:", "START:");
-const u8 gUnknown_Debug_083F8028[] = DTR(":セレクト", ":SELECT");
+const u8 sText_WatanabeSizeComparisonScale[] = DTR("ひりつ", "SCALE");
+const u8 sText_WatanabeSizeComparisonHeight[] = DTR("たかさ", "HEIGHT");
+const u8 sText_WatanabeSizeComparisonShrink[] = DTR("Lキー▶しゅくしょう", "{LEFT_ARROW}: SHRINK");
+const u8 sText_WatanabeSizeComparisonEnlarge[] = DTR("Rキー▶かくだい", "{RIGHT_ARROW}: ENLARGE");
+const u8 sText_WatanabeSizeComparisonMoveUp[] = DTR("Uキー▶うえ　いどう", "{UP_ARROW}: MOVE UP");
+const u8 sText_WatanabeSizeComparisonMoveDown[] = DTR("Dキー▶した　いどう", "{DOWN_ARROW}: MOVE DOWN");
+const u8 sText_WatanabeSizeComparisonSwitchControl[] = DTR("Aボタン▶そうさきりかえ", "A: SWITCH CONTROL");
+const u8 sText_WatanabeSizeComparisonQuit[] = DTR("Bボタン▶やめる", "B: QUIT");
+const u8 sText_WatanabeSizeComparisonStart[] = DTR("スタート:", "START:");
+const u8 sText_WatanabeSizeComparisonSelect[] = DTR(":セレクト", ":SELECT");
 
 #ifdef NONMATCHING
-void debug_80C3A50(u8 taskId)
+void Task_WatanabeDebugInitSizeComparison(u8 taskId)
 {
     u16 natDexNum = gTasks[taskId].data[0];
     u16 species = NationalPokedexNumToSpecies(natDexNum);
@@ -423,28 +475,28 @@ void debug_80C3A50(u8 taskId)
     Menu_DrawStdWindowFrame(6, 0, 23, 9);
 
     Menu_DrawStdWindowFrame(0, 0, 5, 9);
-    Menu_PrintText(gUnknown_Debug_083F7FDA, 1, 1);
-    Menu_PrintText(gUnknown_Debug_083F7FDE, 1, 5);
+    Menu_PrintText(sText_WatanabeSizeComparisonScale, 1, 1);
+    Menu_PrintText(sText_WatanabeSizeComparisonHeight, 1, 5);
 
     Menu_DrawStdWindowFrame(24, 0, 29, 9);
-    Menu_PrintText(gUnknown_Debug_083F7FD6, 25, 1);
-    Menu_PrintText(gUnknown_Debug_083F7FDE, 25, 5);
+    Menu_PrintText(sWatanabeDebugFlashSignature, 25, 1);
+    Menu_PrintText(sText_WatanabeSizeComparisonHeight, 25, 5);
 
     Menu_DrawStdWindowFrame(0, 10, 11, 19);
-    Menu_PrintText(gUnknown_Debug_083F7FE2, 1, 11);
-    Menu_PrintText(gUnknown_Debug_083F7FED, 1, 13);
-    Menu_PrintText(gUnknown_Debug_083F7FF6, 1, 15);
-    Menu_PrintText(gUnknown_Debug_083F8001, 1, 17);
+    Menu_PrintText(sText_WatanabeSizeComparisonShrink, 1, 11);
+    Menu_PrintText(sText_WatanabeSizeComparisonEnlarge, 1, 13);
+    Menu_PrintText(sText_WatanabeSizeComparisonMoveUp, 1, 15);
+    Menu_PrintText(sText_WatanabeSizeComparisonMoveDown, 1, 17);
 
     Menu_DrawStdWindowFrame(12, 10, 29, 15);
-    Menu_PrintText(gUnknown_Debug_083F800C, 13, 11);
-    Menu_PrintText(gUnknown_Debug_083F8019, 13, 13);
+    Menu_PrintText(sText_WatanabeSizeComparisonSwitchControl, 13, 11);
+    Menu_PrintText(sText_WatanabeSizeComparisonQuit, 13, 13);
 
     Menu_DrawStdWindowFrame(12, 16, 29, 19);
-    Menu_PrintText(gUnknown_Debug_083F8022, 13, 17);
-    Menu_PrintText(gUnknown_Debug_083F8028, 24, 17);
+    Menu_PrintText(sText_WatanabeSizeComparisonStart, 13, 17);
+    Menu_PrintText(sText_WatanabeSizeComparisonSelect, 24, 17);
 
-    debug_80C3800(species, 18, 17);
+    WatanabeDebug_PrintSpeciesName(species, 18, 17);
 
     spriteId = CreateSizeScreenTrainerPic(saveBlock2->playerGender, 0x98, 0x28, 0);
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
@@ -482,10 +534,10 @@ void debug_80C3A50(u8 taskId)
     REG_BLDALPHA = 0;
     REG_BLDY = 7;
     REG_DISPCNT |= DISPCNT_WIN0_ON | DISPCNT_WIN1_ON;
-    gTasks[taskId].func = debug_80C3D2C;
+    gTasks[taskId].func = Task_WatanabeDebugHandleSizeComparisonInput;
 }
 #else
-NAKED void debug_80C3A50(u8 taskId)
+NAKED void Task_WatanabeDebugInitSizeComparison(u8 taskId)
 {
     asm("\tpush\t{r4, r5, r6, r7, lr}\n"
         "\tmov\tr7, sl\n"
@@ -522,12 +574,12 @@ NAKED void debug_80C3A50(u8 taskId)
         "\tmov\tr2, #0x5\n"
         "\tmov\tr3, #0x9\n"
         "\tbl\tMenu_DrawStdWindowFrame\n"
-        "\tldr\tr5, ._56 + 8    @ gUnknown_Debug_083F7FD6\n"
+        "\tldr\tr5, ._56 + 8    @ sWatanabeDebugFlashSignature\n"
         "\tadd\tr0, r5, #0\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0x1\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr4, ._56 + 12   @ gUnknown_Debug_083F7FDE\n"
+        "\tldr\tr4, ._56 + 12   @ sText_WatanabeSizeComparisonHeight\n"
         "\tadd\tr0, r4, #0\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0x5\n"
@@ -550,19 +602,19 @@ NAKED void debug_80C3A50(u8 taskId)
         "\tmov\tr2, #0xb\n"
         "\tmov\tr3, #0x13\n"
         "\tbl\tMenu_DrawStdWindowFrame\n"
-        "\tldr\tr0, ._56 + 16   @ gUnknown_Debug_083F7FE2\n"
+        "\tldr\tr0, ._56 + 16   @ sText_WatanabeSizeComparisonShrink\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0xb\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr0, ._56 + 20   @ gUnknown_Debug_083F7FED\n"
+        "\tldr\tr0, ._56 + 20   @ sText_WatanabeSizeComparisonEnlarge\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0xd\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr0, ._56 + 24   @ gUnknown_Debug_083F7FF6\n"
+        "\tldr\tr0, ._56 + 24   @ sText_WatanabeSizeComparisonMoveUp\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0xf\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr0, ._56 + 28   @ gUnknown_Debug_083F8001\n"
+        "\tldr\tr0, ._56 + 28   @ sText_WatanabeSizeComparisonMoveDown\n"
         "\tmov\tr1, #0x1\n"
         "\tmov\tr2, #0x11\n"
         "\tbl\tMenu_PrintText\n"
@@ -571,11 +623,11 @@ NAKED void debug_80C3A50(u8 taskId)
         "\tmov\tr2, #0x1d\n"
         "\tmov\tr3, #0xf\n"
         "\tbl\tMenu_DrawStdWindowFrame\n"
-        "\tldr\tr0, ._56 + 32   @ gUnknown_Debug_083F800C\n"
+        "\tldr\tr0, ._56 + 32   @ sText_WatanabeSizeComparisonSwitchControl\n"
         "\tmov\tr1, #0xd\n"
         "\tmov\tr2, #0xb\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr0, ._56 + 36   @ gUnknown_Debug_083F8019\n"
+        "\tldr\tr0, ._56 + 36   @ sText_WatanabeSizeComparisonQuit\n"
         "\tmov\tr1, #0xd\n"
         "\tmov\tr2, #0xd\n"
         "\tbl\tMenu_PrintText\n"
@@ -584,18 +636,18 @@ NAKED void debug_80C3A50(u8 taskId)
         "\tmov\tr2, #0x1d\n"
         "\tmov\tr3, #0x13\n"
         "\tbl\tMenu_DrawStdWindowFrame\n"
-        "\tldr\tr0, ._56 + 40   @ gUnknown_Debug_083F8022\n"
+        "\tldr\tr0, ._56 + 40   @ sText_WatanabeSizeComparisonStart\n"
         "\tmov\tr1, #0xd\n"
         "\tmov\tr2, #0x11\n"
         "\tbl\tMenu_PrintText\n"
-        "\tldr\tr0, ._56 + 44   @ gUnknown_Debug_083F8028\n"
+        "\tldr\tr0, ._56 + 44   @ sText_WatanabeSizeComparisonSelect\n"
         "\tmov\tr1, #0x18\n"
         "\tmov\tr2, #0x11\n"
         "\tbl\tMenu_PrintText\n"
         "\tmov\tr0, r9\n"
         "\tmov\tr1, #0x12\n"
         "\tmov\tr2, #0x11\n"
-        "\tbl\tdebug_80C3800\n"
+        "\tbl\tWatanabeDebug_PrintSpeciesName\n"
         "\tmov\tr1, r8\n"
         "\tldrb\tr0, [r1, #0x8]\n"
         "\tmov\tr1, #0x98\n"
@@ -768,7 +820,7 @@ NAKED void debug_80C3A50(u8 taskId)
         "\tadd\tr1, r3, #0\n"
         "\torr\tr0, r0, r1\n"
         "\tstrh\tr0, [r2]\n"
-        "\tldr\tr0, ._56 + 88   @ debug_80C3D2C\n"
+        "\tldr\tr0, ._56 + 88   @ Task_WatanabeDebugHandleSizeComparisonInput\n"
         "\tstr\tr0, [r7]\n"
         "\tadd\tsp, sp, #0x28\n"
         "\tpop\t{r3, r4, r5}\n"
@@ -783,16 +835,16 @@ NAKED void debug_80C3A50(u8 taskId)
         "._56:\n"
         "\t.word\tgTasks\n"
         "\t.word\tgSaveBlock2\n"
-        "\t.word\tgUnknown_Debug_083F7FD6+0x4\n"
-        "\t.word\tgUnknown_Debug_083F7FDE\n"
-        "\t.word\tgUnknown_Debug_083F7FE2\n"
-        "\t.word\tgUnknown_Debug_083F7FED\n"
-        "\t.word\tgUnknown_Debug_083F7FF6\n"
-        "\t.word\tgUnknown_Debug_083F8001\n"
-        "\t.word\tgUnknown_Debug_083F800C\n"
-        "\t.word\tgUnknown_Debug_083F8019\n"
-        "\t.word\tgUnknown_Debug_083F8022\n"
-        "\t.word\tgUnknown_Debug_083F8028\n"
+        "\t.word\tsWatanabeDebugFlashSignature+0x4\n"
+        "\t.word\tsText_WatanabeSizeComparisonHeight\n"
+        "\t.word\tsText_WatanabeSizeComparisonShrink\n"
+        "\t.word\tsText_WatanabeSizeComparisonEnlarge\n"
+        "\t.word\tsText_WatanabeSizeComparisonMoveUp\n"
+        "\t.word\tsText_WatanabeSizeComparisonMoveDown\n"
+        "\t.word\tsText_WatanabeSizeComparisonSwitchControl\n"
+        "\t.word\tsText_WatanabeSizeComparisonQuit\n"
+        "\t.word\tsText_WatanabeSizeComparisonStart\n"
+        "\t.word\tsText_WatanabeSizeComparisonSelect\n"
         "\t.word\tgSprites\n"
         "\t.word\tgPokedexEntries\n"
         "\t.word\t0x4000048\n"
@@ -803,18 +855,18 @@ NAKED void debug_80C3A50(u8 taskId)
         "\t.word\t0x31bf\n"
         "\t.word\t0x14f\n"
         "\t.word\t0x4000052\n"
-        "\t.word\tdebug_80C3D2C+1");
+        "\t.word\tTask_WatanabeDebugHandleSizeComparisonInput+1");
 }
 #endif // NONMATCHING
 
-void debug_80C3D2C(u8 taskId)
+void Task_WatanabeDebugHandleSizeComparisonInput(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        SetMainCallback2(debug_80C370C);
-        gTasks[taskId].func = debug_80C373C;
+        SetMainCallback2(CB2_WatanabeDebugWaitForFade);
+        gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_NEW(A_BUTTON))
     {
@@ -893,7 +945,7 @@ void debug_80C3D2C(u8 taskId)
             gTasks[taskId].data[0] = 1;
         DestroySprite(gSprites + gTasks[taskId].data[2]);
         DestroySprite(gSprites + gTasks[taskId].data[3]);
-        gTasks[taskId].func = debug_80C3A50;
+        gTasks[taskId].func = Task_WatanabeDebugInitSizeComparison;
     }
     else if (JOY_REPT(SELECT_BUTTON))
     {
@@ -903,29 +955,29 @@ void debug_80C3D2C(u8 taskId)
             gTasks[taskId].data[0] = 0x182;
         DestroySprite(gSprites + gTasks[taskId].data[2]);
         DestroySprite(gSprites + gTasks[taskId].data[3]);
-        gTasks[taskId].func = debug_80C3A50;
+        gTasks[taskId].func = Task_WatanabeDebugInitSizeComparison;
     }
     else
     {
         u16 scale = gTasks[taskId].data[7];
         u16 offset = gTasks[taskId].data[5];
         SetOamMatrix(1, scale, 0, 0, scale);
-        debug_80C68CC(scale, 1, 3, 4);
-        debug_80C68CC(offset, 1, 7, 4);
+        WatanabeDebug_PrintHexValue(scale, 1, 3, 4);
+        WatanabeDebug_PrintHexValue(offset, 1, 7, 4);
         gSprites[gTasks[taskId].data[2]].y2 = offset;
 
         scale = gTasks[taskId].data[6];
         offset = gTasks[taskId].data[4];
         SetOamMatrix(2, scale, 0, 0, scale);
-        debug_80C68CC(scale, 25, 3, 4);
-        debug_80C68CC(offset, 25, 7, 4);
+        WatanabeDebug_PrintHexValue(scale, 25, 3, 4);
+        WatanabeDebug_PrintHexValue(offset, 25, 7, 4);
         gSprites[gTasks[taskId].data[3]].y2 = offset;
 
         REG_WIN0H = ((gTasks[taskId].data[8] * 64 + 0x38) << 8) + (gTasks[taskId].data[8] * 64 + 0x78);
     }
 }
 
-void debug_80C405C(u8 * dest, u16 species)
+void WatanabeDebug_FormatSpeciesName(u8 * dest, u16 species)
 {
     u8 i;
 
@@ -942,14 +994,14 @@ void debug_80C405C(u8 * dest, u16 species)
     }
 }
 
-void debug_80C40C4(bool8 who)
+void WatanabeDebug_RecalculatePartyStats(bool8 enemyParty)
 {
     u8 i;
     u16 maxHp;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (who)
+        if (enemyParty)
         {
             struct Pokemon *pokemon = gEnemyParty + i;
             if (GetMonData(pokemon, MON_DATA_SPECIES) != SPECIES_NONE)
@@ -975,114 +1027,114 @@ void debug_80C40C4(bool8 who)
 void InitBattleForDebug(void)
 {
     SavePlayerParty();
-    gUnknown_Debug_2038A0C[13] = gSaveBlock2.playerGender;
-    gUnknown_Debug_2038A0C[0] = 0;
-    gUnknown_Debug_2038A0C[1] = 0;
-    gUnknown_Debug_2038A0C[2] = 0;
-    gUnknown_Debug_2038A0C[3] = 0;
-    gUnknown_Debug_2038A0C[4] = 0;
-    gUnknown_Debug_2038A0C[5] = 0;
-    gUnknown_Debug_2038A0C[6] = 0;
-    gUnknown_Debug_2038A0C[7] = 0;
-    gUnknown_Debug_2038A0C[8] = 0;
-    gUnknown_Debug_2038A0C[12] = 0;
-    byte_3005E30 = 0;
+    sWatanabeBattleDebugSavedPlayerGender = gSaveBlock2.playerGender;
+    sWatanabeBattleDebugSelectingEnemyParty = 0;
+    sWatanabeBattleDebugPlayerPartyIndex = 0;
+    sWatanabeBattleDebugEnemyPartyIndex = 0;
+    sWatanabeBattleDebugBattleModeIndex = 0;
+    sWatanabeBattleDebugTrainerAiMenuOffset = 0;
+    sWatanabeBattleDebugTrainerAiCursor = 0;
+    sWatanabeBattleDebugTerrainMenuOffset = 0;
+    sWatanabeBattleDebugTerrainCursor = 0;
+    sWatanabeBattleDebugGenderSelection = 0;
+    sWatanabeBattleDebugBattlerCount = 0;
+    gWatanabeTrainerAiFlags = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
-    debug_80C4214(0);
-    CreateTask(debug_80C47BC, 0);
+    WatanabeDebug_InitBattleSetupScreen(0);
+    CreateTask(Task_WatanabeDebugInitBattleModeMenu, 0);
 }
 
-void debug_80C41A8(void)
+void WatanabeDebug_RestartBattleSetup(void)
 {
-    gUnknown_Debug_2038A0C[1] = 0;
-    gUnknown_Debug_2038A0C[2] = 0;
+    sWatanabeBattleDebugPlayerPartyIndex = 0;
+    sWatanabeBattleDebugEnemyPartyIndex = 0;
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
-    debug_80C4214(0);
-    CreateTask(debug_80C47BC, 0);
+    WatanabeDebug_InitBattleSetupScreen(0);
+    CreateTask(Task_WatanabeDebugInitBattleModeMenu, 0);
 }
 
-const u8 gUnknown_Debug_083F802E[] = DTR("やせいたいせん", "Wild BATTLE");
-const u8 gUnknown_Debug_083F8036[] = DTR("1VS1たいせん", "1v1 BATTLE");
-const u8 gUnknown_Debug_083F803F[] = DTR("2VS2たいせん", "2v2 BATTLE");
-const u8 gUnknown_Debug_083F8048[] = DTR("{COLOR BLUE}1VS1つうしんたいせん",
+const u8 sText_WatanabeBattleModeWild[] = DTR("やせいたいせん", "Wild BATTLE");
+const u8 sText_WatanabeBattleModeSingle[] = DTR("1VS1たいせん", "1v1 BATTLE");
+const u8 sText_WatanabeBattleModeDouble[] = DTR("2VS2たいせん", "2v2 BATTLE");
+const u8 sText_WatanabeBattleModeLinkSingle[] = DTR("{COLOR BLUE}1VS1つうしんたいせん",
                                          "{COLOR BLUE}LINK 1v1 BATTLE");
-const u8 gUnknown_Debug_083F8058[] = DTR("{COLOR BLUE}2VS2つうしんたいせん",
+const u8 sText_WatanabeBattleModeLinkDouble[] = DTR("{COLOR BLUE}2VS2つうしんたいせん",
                                          "{COLOR BLUE}LINK 2v2 BATTLE");
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F8068[] = {
-	{gUnknown_Debug_083F802E, {.type1 = {0x00, 0x01}}},
-	{gUnknown_Debug_083F8036, {.type1 = {0x08, 0x01}}},
-	{gUnknown_Debug_083F803F, {.type1 = {0x09, 0x02}}},
-	{gUnknown_Debug_083F8048, {.type1 = {0x0A, 0x01}}},
-	{gUnknown_Debug_083F8058, {.type1 = {0x0B, 0x02}}}
+const struct WatanabeDebugMenuItem sWatanabeBattleModeItems[] = {
+	{sText_WatanabeBattleModeWild, {.battleMode = {0x00, 0x01}}},
+	{sText_WatanabeBattleModeSingle, {.battleMode = {0x08, 0x01}}},
+	{sText_WatanabeBattleModeDouble, {.battleMode = {0x09, 0x02}}},
+	{sText_WatanabeBattleModeLinkSingle, {.battleMode = {0x0A, 0x01}}},
+	{sText_WatanabeBattleModeLinkDouble, {.battleMode = {0x0B, 0x02}}}
 };
 
-const u8 gUnknown_Debug_083F8090[] = DTR("きほんタイプ", "Base type");
-const u8 gUnknown_Debug_083F8097[] = DTR("AIタイプ2", "AI type 2");
-const u8 gUnknown_Debug_083F809E[] = DTR("AIタイプ3", "AI type 3");
-const u8 gUnknown_Debug_083F80A5[] = DTR("AIタイプ4", "AI type 4");
-const u8 gUnknown_Debug_083F80AC[] = DTR("AIタイプ5", "AI type 5");
-const u8 gUnknown_Debug_083F80B3[] = DTR("AIタイプ6", "AI type 6");
-const u8 gUnknown_Debug_083F80BA[] = DTR("AIタイプ7", "AI type 7");
-const u8 gUnknown_Debug_083F80C1[] = DTR("AIタイプ8", "AI type 8");
-const u8 gUnknown_Debug_083F80C8[] = DTR("AIタイプ9", "AI type 9");
-const u8 gUnknown_Debug_083F80CF[] = DTR("AIタイプ10", "AI type 10");
+const u8 sText_WatanabeTrainerAiMode0[] = DTR("きほんタイプ", "Base type");
+const u8 sText_WatanabeTrainerAiMode1[] = DTR("AIタイプ2", "AI type 2");
+const u8 sText_WatanabeTrainerAiMode2[] = DTR("AIタイプ3", "AI type 3");
+const u8 sText_WatanabeTrainerAiMode3[] = DTR("AIタイプ4", "AI type 4");
+const u8 sText_WatanabeTrainerAiMode4[] = DTR("AIタイプ5", "AI type 5");
+const u8 sText_WatanabeTrainerAiMode5[] = DTR("AIタイプ6", "AI type 6");
+const u8 sText_WatanabeTrainerAiMode6[] = DTR("AIタイプ7", "AI type 7");
+const u8 sText_WatanabeTrainerAiMode7[] = DTR("AIタイプ8", "AI type 8");
+const u8 sText_WatanabeTrainerAiMode8[] = DTR("AIタイプ9", "AI type 9");
+const u8 sText_WatanabeTrainerAiMode9[] = DTR("AIタイプ10", "AI type 10");
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F80D8[] = {
-	{gUnknown_Debug_083F8090, {.type2 = 0x1}},
-	{gUnknown_Debug_083F8097, {.type2 = 0x2}},
-	{gUnknown_Debug_083F809E, {.type2 = 0x4}},
-	{gUnknown_Debug_083F80A5, {.type2 = 0x8}},
-	{gUnknown_Debug_083F80AC, {.type2 = 0x10}},
-	{gUnknown_Debug_083F80B3, {.type2 = 0x20}},
-	{gUnknown_Debug_083F80BA, {.type2 = 0x40}},
-	{gUnknown_Debug_083F80C1, {.type2 = 0x80}},
-	{gUnknown_Debug_083F80C8, {.type2 = 0x100}},
-	{gUnknown_Debug_083F80CF, {.type2 = 0x200}}
+const struct WatanabeDebugMenuItem sWatanabeTrainerAiModeItems[] = {
+	{sText_WatanabeTrainerAiMode0, {.trainerAiMask = 0x1}},
+	{sText_WatanabeTrainerAiMode1, {.trainerAiMask = 0x2}},
+	{sText_WatanabeTrainerAiMode2, {.trainerAiMask = 0x4}},
+	{sText_WatanabeTrainerAiMode3, {.trainerAiMask = 0x8}},
+	{sText_WatanabeTrainerAiMode4, {.trainerAiMask = 0x10}},
+	{sText_WatanabeTrainerAiMode5, {.trainerAiMask = 0x20}},
+	{sText_WatanabeTrainerAiMode6, {.trainerAiMask = 0x40}},
+	{sText_WatanabeTrainerAiMode7, {.trainerAiMask = 0x80}},
+	{sText_WatanabeTrainerAiMode8, {.trainerAiMask = 0x100}},
+	{sText_WatanabeTrainerAiMode9, {.trainerAiMask = 0x200}}
 };
 
-const u8 gUnknown_Debug_083F8128[] = DTR("くさ", "GRASS");
-const u8 gUnknown_Debug_083F812B[] = DTR("ながい　くさ", "TALL GRASS");
-const u8 gUnknown_Debug_083F8132[] = DTR("すな", "SAND");
-const u8 gUnknown_Debug_083F8135[] = DTR("みず", "WATER");
-const u8 gUnknown_Debug_083F8138[] = DTR("うみ", "SEA");
-const u8 gUnknown_Debug_083F813B[] = DTR("いけ", "POND");
-const u8 gUnknown_Debug_083F813E[] = DTR("いわ", "ROCKY");
-const u8 gUnknown_Debug_083F8141[] = DTR("どうくつ", "CAVE");
-const u8 gUnknown_Debug_083F8146[] = DTR("そのた", "OTHER");
+const u8 sText_WatanabeBattleTerrainGrass[] = DTR("くさ", "GRASS");
+const u8 sText_WatanabeBattleTerrainTallGrass[] = DTR("ながい　くさ", "TALL GRASS");
+const u8 sText_WatanabeBattleTerrainSand[] = DTR("すな", "SAND");
+const u8 sText_WatanabeBattleTerrainWater[] = DTR("みず", "WATER");
+const u8 sText_WatanabeBattleTerrainSea[] = DTR("うみ", "SEA");
+const u8 sText_WatanabeBattleTerrainPond[] = DTR("いけ", "POND");
+const u8 sText_WatanabeBattleTerrainRocky[] = DTR("いわ", "ROCKY");
+const u8 sText_WatanabeBattleTerrainCave[] = DTR("どうくつ", "CAVE");
+const u8 sText_WatanabeBattleTerrainOther[] = DTR("そのた", "OTHER");
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F814C[] = {
-	{gUnknown_Debug_083F8128, {.type3 = 0x0}},
-	{gUnknown_Debug_083F812B, {.type3 = 0x1}},
-	{gUnknown_Debug_083F8132, {.type3 = 0x2}},
-	{gUnknown_Debug_083F8135, {.type3 = 0x3}},
-	{gUnknown_Debug_083F8138, {.type3 = 0x4}},
-	{gUnknown_Debug_083F813B, {.type3 = 0x5}},
-	{gUnknown_Debug_083F813E, {.type3 = 0x6}},
-	{gUnknown_Debug_083F8141, {.type3 = 0x7}},
-	{gUnknown_Debug_083F8146, {.type3 = 0x8}}
+const struct WatanabeDebugMenuItem sWatanabeBattleTerrainItems[] = {
+    {sText_WatanabeBattleTerrainGrass, {.battleEnvironment = 0x0}},
+    {sText_WatanabeBattleTerrainTallGrass, {.battleEnvironment = 0x1}},
+    {sText_WatanabeBattleTerrainSand, {.battleEnvironment = 0x2}},
+    {sText_WatanabeBattleTerrainWater, {.battleEnvironment = 0x3}},
+    {sText_WatanabeBattleTerrainSea, {.battleEnvironment = 0x4}},
+    {sText_WatanabeBattleTerrainPond, {.battleEnvironment = 0x5}},
+    {sText_WatanabeBattleTerrainRocky, {.battleEnvironment = 0x6}},
+    {sText_WatanabeBattleTerrainCave, {.battleEnvironment = 0x7}},
+    {sText_WatanabeBattleTerrainOther, {.battleEnvironment = 0x8}}
 };
 
-void debug_80C41D4(void)
+void WatanabeDebug_ReturnFromPlayerPartyEditor(void)
 {
-    debug_80C40C4(0);
-    debug_80C4214(0);
-    CreateTask(debug_80C42B8, 0);
+    WatanabeDebug_RecalculatePartyStats(0);
+    WatanabeDebug_InitBattleSetupScreen(0);
+    CreateTask(Task_WatanabeDebugInitPartySelection, 0);
 }
 
-void debug_80C41F4(void)
+void WatanabeDebug_ReturnFromEnemyPartyEditor(void)
 {
-    debug_80C40C4(1);
-    debug_80C4214(1);
-    CreateTask(debug_80C42B8, 0);
+    WatanabeDebug_RecalculatePartyStats(1);
+    WatanabeDebug_InitBattleSetupScreen(1);
+    CreateTask(Task_WatanabeDebugInitPartySelection, 0);
 }
 
-void debug_80C4214(UNUSED u8 a0)
+void WatanabeDebug_InitBattleSetupScreen(UNUSED u8 enemyParty)
 {
     u16 imeBak;
-    debug_80C35DC();
+    WatanabeDebug_InitScreen();
     REG_WIN0H = 0;
     REG_WIN0V = 0;
     REG_WIN1H = 0;
@@ -1098,396 +1150,396 @@ void debug_80C4214(UNUSED u8 a0)
     REG_IE |= INTR_FLAG_VBLANK;
     REG_IME = imeBak;
 
-    SetVBlankCallback(debug_80C3758);
-    SetMainCallback2(debug_80C370C);
+    SetVBlankCallback(VBlankCB_WatanabeDebug);
+    SetMainCallback2(CB2_WatanabeDebugWaitForFade);
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON | DISPCNT_WIN1_ON;
     REG_WIN0H = 0x01EF;
     REG_WIN0V = 0x819F;
 }
 
-void debug_80C42B8(u8 taskId)
+void Task_WatanabeDebugInitPartySelection(u8 taskId)
 {
-     u8 sp00[] = DTR("ポケモンを　えらんでね", "Choose POKéMON");
-     u8 sp0c[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
+     u8 instructions[] = DTR("ポケモンを　えらんでね", "Choose POKéMON");
+     u8 nextText[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
 
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
-    Menu_PrintText(sp00, 1, 17);
-    Menu_PrintText(sp0c, 20, 17);
+    Menu_PrintText(instructions, 1, 17);
+    Menu_PrintText(nextText, 20, 17);
 
-    debug_80C4694();
-    debug_80C4704();
+    WatanabeDebug_DrawPlayerParty();
+    WatanabeDebug_DrawEnemyParty();
 
-    if (gUnknown_Debug_2038A0C[0])
-        gTasks[taskId].func = debug_80C44EC;
+    if (sWatanabeBattleDebugSelectingEnemyParty)
+        gTasks[taskId].func = Task_WatanabeDebugShowEnemyPartyCursor;
     else
-        gTasks[taskId].func = debug_80C4348;
+        gTasks[taskId].func = Task_WatanabeDebugShowPlayerPartyCursor;
 }
 
-void debug_80C4348(u8 taskId)
+void Task_WatanabeDebugShowPlayerPartyCursor(u8 taskId)
 {
-    debug_80C38E4(gUnknown_Debug_2038A0C[1] * 2 + 3, 1, 1, 14, 1);
+    WatanabeDebug_DrawCursor(sWatanabeBattleDebugPlayerPartyIndex * 2 + 3, 1, 1, 14, 1);
     REG_WIN1H = 0x0177;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C43A8;
+    gTasks[taskId].func = Task_WatanabeDebugHandlePlayerPartyInput;
 }
 
-void debug_80C43A8(u8 taskId)
+void Task_WatanabeDebugHandlePlayerPartyInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        debug_sub_80A433C(gPlayerParty + gUnknown_Debug_2038A0C[1], debug_80C41D4);
+        debug_sub_80A433C(gPlayerParty + sWatanabeBattleDebugPlayerPartyIndex, WatanabeDebug_ReturnFromPlayerPartyEditor);
         DestroyTask(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = debug_80C4F48;
+        gTasks[taskId].func = Task_WatanabeDebugInitGenderMenu;
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        if (debug_80C4774())
+        if (WatanabeDebug_HasEnoughBattleMons())
         {
             PlaySE(SE_SELECT);
             CalculatePlayerPartyCount();
             CalculateEnemyPartyCount();
-            gTasks[taskId].func = debug_80C4D14;
+            gTasks[taskId].func = Task_WatanabeDebugInitBattleTerrainMenu;
         }
     }
     else if (JOY_NEW(R_BUTTON | DPAD_RIGHT))
     {
-        debug_80C38E4(0, 1, 1, 14, 0);
-        gTasks[taskId].func = debug_80C44EC;
+        WatanabeDebug_DrawCursor(0, 1, 1, 14, 0);
+        gTasks[taskId].func = Task_WatanabeDebugShowEnemyPartyCursor;
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A0C[1] != 0)
+    else if (JOY_REPT(DPAD_UP) && sWatanabeBattleDebugPlayerPartyIndex != 0)
     {
-        gUnknown_Debug_2038A0C[1]--;
-        gTasks[taskId].func = debug_80C4348;
+        sWatanabeBattleDebugPlayerPartyIndex--;
+        gTasks[taskId].func = Task_WatanabeDebugShowPlayerPartyCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[1] < 5 && GetMonData(gPlayerParty + gUnknown_Debug_2038A0C[1], MON_DATA_SPECIES) != SPECIES_NONE)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugPlayerPartyIndex < 5 && GetMonData(gPlayerParty + sWatanabeBattleDebugPlayerPartyIndex, MON_DATA_SPECIES) != SPECIES_NONE)
     {
-        gUnknown_Debug_2038A0C[1]++;
-        gTasks[taskId].func = debug_80C4348;
+        sWatanabeBattleDebugPlayerPartyIndex++;
+        gTasks[taskId].func = Task_WatanabeDebugShowPlayerPartyCursor;
     }
 }
 
-void debug_80C44EC(u8 taskId)
+void Task_WatanabeDebugShowEnemyPartyCursor(u8 taskId)
 {
-    debug_80C38E4(gUnknown_Debug_2038A0C[2] * 2 + 3, 16, 1, 14, 1);
+    WatanabeDebug_DrawCursor(sWatanabeBattleDebugEnemyPartyIndex * 2 + 3, 16, 1, 14, 1);
     REG_WIN1H = 0x79EF;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C4550;
+    gTasks[taskId].func = Task_WatanabeDebugHandleEnemyPartyInput;
 }
 
-void debug_80C4550(u8 taskId)
+void Task_WatanabeDebugHandleEnemyPartyInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        debug_sub_80A433C(gEnemyParty + gUnknown_Debug_2038A0C[2], debug_80C41F4);
+        debug_sub_80A433C(gEnemyParty + sWatanabeBattleDebugEnemyPartyIndex, WatanabeDebug_ReturnFromEnemyPartyEditor);
         DestroyTask(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = debug_80C4F48;
+        gTasks[taskId].func = Task_WatanabeDebugInitGenderMenu;
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        if (debug_80C4774())
+        if (WatanabeDebug_HasEnoughBattleMons())
         {
             PlaySE(SE_SELECT);
             CalculatePlayerPartyCount();
             CalculateEnemyPartyCount();
-            gTasks[taskId].func = debug_80C4D14;
+            gTasks[taskId].func = Task_WatanabeDebugInitBattleTerrainMenu;
         }
     }
     else if (JOY_NEW(L_BUTTON | DPAD_LEFT))
     {
-        debug_80C38E4(0, 16, 1, 14, 0);
-        gTasks[taskId].func = debug_80C4348;
+        WatanabeDebug_DrawCursor(0, 16, 1, 14, 0);
+        gTasks[taskId].func = Task_WatanabeDebugShowPlayerPartyCursor;
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A0C[2] != 0)
+    else if (JOY_REPT(DPAD_UP) && sWatanabeBattleDebugEnemyPartyIndex != 0)
     {
-        gUnknown_Debug_2038A0C[2]--;
-        gTasks[taskId].func = debug_80C44EC;
+        sWatanabeBattleDebugEnemyPartyIndex--;
+        gTasks[taskId].func = Task_WatanabeDebugShowEnemyPartyCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[2] < 5 && GetMonData(gEnemyParty + gUnknown_Debug_2038A0C[2], MON_DATA_SPECIES) != SPECIES_NONE)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugEnemyPartyIndex < 5 && GetMonData(gEnemyParty + sWatanabeBattleDebugEnemyPartyIndex, MON_DATA_SPECIES) != SPECIES_NONE)
     {
-        gUnknown_Debug_2038A0C[2]++;
-        gTasks[taskId].func = debug_80C44EC;
+        sWatanabeBattleDebugEnemyPartyIndex++;
+        gTasks[taskId].func = Task_WatanabeDebugShowEnemyPartyCursor;
     }
 }
 
-void debug_80C4694(void)
+void WatanabeDebug_DrawPlayerParty(void)
 {
     u8 i;
-    u8 sp00[] = DTR("{COLOR RED}じぶんの　ポケモン", "{COLOR RED}Enemy's POKéMON");
-    u8 sp10[POKEMON_NAME_LENGTH + 1];
+    u8 partyTitle[] = DTR("{COLOR RED}じぶんの　ポケモン", "{COLOR RED}Enemy's POKéMON");
+    u8 speciesName[POKEMON_NAME_LENGTH + 1];
 
     Menu_DrawStdWindowFrame(0, 0, 14, 15);
-    Menu_PrintText(sp00, 2, 1);
+    Menu_PrintText(partyTitle, 2, 1);
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        debug_80C405C(sp10, GetMonData(gPlayerParty + i, MON_DATA_SPECIES));
-        Menu_PrintText(sp10, 2, 2 * i + 3);
+        WatanabeDebug_FormatSpeciesName(speciesName, GetMonData(gPlayerParty + i, MON_DATA_SPECIES));
+        Menu_PrintText(speciesName, 2, 2 * i + 3);
     }
 }
 
-void debug_80C4704(void)
+void WatanabeDebug_DrawEnemyParty(void)
 {
     u8 i;
-    u8 sp00[] = DTR("{COLOR RED}あいての　ポケモン", "{COLOR RED}Your POKéMON");
-    u8 sp10[POKEMON_NAME_LENGTH + 1];
+    u8 partyTitle[] = DTR("{COLOR RED}あいての　ポケモン", "{COLOR RED}Your POKéMON");
+    u8 speciesName[POKEMON_NAME_LENGTH + 1];
 
     Menu_DrawStdWindowFrame(15, 0, 29, 15);
-    Menu_PrintText(sp00, 17, 1);
+    Menu_PrintText(partyTitle, 17, 1);
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        debug_80C405C(sp10, GetMonData(gEnemyParty + i, MON_DATA_SPECIES));
-        Menu_PrintText(sp10, 17, 2 * i + 3);
+        WatanabeDebug_FormatSpeciesName(speciesName, GetMonData(gEnemyParty + i, MON_DATA_SPECIES));
+        Menu_PrintText(speciesName, 17, 2 * i + 3);
     }
 }
 
-bool8 debug_80C4774(void)
+bool8 WatanabeDebug_HasEnoughBattleMons(void)
 {
-    u8 i = gUnknown_Debug_2038A0C[12] - 1;
-    if (GetMonData(gPlayerParty + i, MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(gEnemyParty + i, MON_DATA_SPECIES) != SPECIES_NONE)
+    u8 partyIndex = sWatanabeBattleDebugBattlerCount - 1;
+    if (GetMonData(gPlayerParty + partyIndex, MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(gEnemyParty + partyIndex, MON_DATA_SPECIES) != SPECIES_NONE)
         return TRUE;
     return FALSE;
 }
 
-void debug_80C47BC(u8 taskId)
+void Task_WatanabeDebugInitBattleModeMenu(u8 taskId)
 {
     u8 i;
-    u8 sp00[] = DTR("たいせんモードを　えらんでね", "Choose a battle mode");
-    u8 sp10[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
-    u8 sp20[] = DTR("{COLOR RED}バトルモード　せんたく", "{COLOR RED}Battle mode:");
-    u8 sp30[] = DTR("{COLOR RED}トレーナーAI　せんたく", "{COLOR RED}TRAINER AI mode:");
+    u8 instructions[] = DTR("たいせんモードを　えらんでね", "Choose a battle mode");
+    u8 nextText[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
+    u8 battleModeLabel[] = DTR("{COLOR RED}バトルモード　せんたく", "{COLOR RED}Battle mode:");
+    u8 trainerAiLabel[] = DTR("{COLOR RED}トレーナーAI　せんたく", "{COLOR RED}TRAINER AI mode:");
 
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
-    Menu_PrintText(sp00, 1, 17);
-    Menu_PrintText(sp10, 20, 17);
+    Menu_PrintText(instructions, 1, 17);
+    Menu_PrintText(nextText, 20, 17);
 
     Menu_DrawStdWindowFrame(0, 0, 14, 15);
-    Menu_PrintText(sp20, 2, 1);
+    Menu_PrintText(battleModeLabel, 2, 1);
 
-    for (i = 0; i < ARRAY_COUNT(gUnknown_Debug_083F8068); i++)
-        Menu_PrintText(gUnknown_Debug_083F8068[i].text, 2, 2 * i + 3);
+    for (i = 0; i < ARRAY_COUNT(sWatanabeBattleModeItems); i++)
+        Menu_PrintText(sWatanabeBattleModeItems[i].label, 2, 2 * i + 3);
 
     Menu_DrawStdWindowFrame(15, 0, 29, 15);
-    Menu_PrintText(sp30, 17, 1);
+    Menu_PrintText(trainerAiLabel, 17, 1);
 
-    debug_80C4C44(gUnknown_Debug_2038A0C[4]);
+    WatanabeDebug_DrawTrainerAiOptions(sWatanabeBattleDebugTrainerAiMenuOffset);
 
-    gTasks[taskId].func = debug_80C48A0;
+    gTasks[taskId].func = Task_WatanabeDebugShowBattleModeCursor;
 }
 
-void debug_80C48A0(u8 taskId)
+void Task_WatanabeDebugShowBattleModeCursor(u8 taskId)
 {
-    debug_80C38E4(2 * gUnknown_Debug_2038A0C[3] + 3, 1, 1, 14, 1);
+    WatanabeDebug_DrawCursor(2 * sWatanabeBattleDebugBattleModeIndex + 3, 1, 1, 14, 1);
     REG_WIN1H = 0x0177;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C4900;
+    gTasks[taskId].func = Task_WatanabeDebugHandleBattleModeInput;
 }
 
-void debug_80C4900(u8 taskId)
+void Task_WatanabeDebugHandleBattleModeInput(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        SetMainCallback2(debug_80C370C);
+        SetMainCallback2(CB2_WatanabeDebugWaitForFade);
         LoadPlayerParty();
-        gSaveBlock2.playerGender = gUnknown_Debug_2038A0C[13];
+        gSaveBlock2.playerGender = sWatanabeBattleDebugSavedPlayerGender;
         gBattleTypeFlags = 0;
         gUnknown_02023A14_50 = 0;
-        gTasks[taskId].func = debug_80C373C;
+        gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_NEW(START_BUTTON) || JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gBattleTypeFlags = gUnknown_Debug_083F8068[gUnknown_Debug_2038A0C[3]].data.type1[0];
+        gBattleTypeFlags = sWatanabeBattleModeItems[sWatanabeBattleDebugBattleModeIndex].data.battleMode.battleType;
         gUnknown_02023A14_50 = 8;
-        gUnknown_Debug_2038A0C[12] = gUnknown_Debug_083F8068[gUnknown_Debug_2038A0C[3]].data.type1[1];
-        if (gUnknown_Debug_2038A0C[3] == 1 || gUnknown_Debug_2038A0C[3] == 2)
+        sWatanabeBattleDebugBattlerCount = sWatanabeBattleModeItems[sWatanabeBattleDebugBattleModeIndex].data.battleMode.battlerCount;
+        if (sWatanabeBattleDebugBattleModeIndex == 1 || sWatanabeBattleDebugBattleModeIndex == 2)
         {
-            debug_80C38E4(0, 1, 1, 14, 0);
-            gTasks[taskId].func = debug_80C4A60;
+            WatanabeDebug_DrawCursor(0, 1, 1, 14, 0);
+            gTasks[taskId].func = Task_WatanabeDebugShowTrainerAiCursor;
         }
         else
         {
-            gTasks[taskId].func = debug_80C4F48;
+            gTasks[taskId].func = Task_WatanabeDebugInitGenderMenu;
         }
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A0C[3] > 0)
+    else if (JOY_REPT(DPAD_UP) && sWatanabeBattleDebugBattleModeIndex > 0)
     {
-        gUnknown_Debug_2038A0C[3]--;
-        gTasks[taskId].func = debug_80C48A0;
+        sWatanabeBattleDebugBattleModeIndex--;
+        gTasks[taskId].func = Task_WatanabeDebugShowBattleModeCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[3] < 2)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugBattleModeIndex < 2)
     {
-        gUnknown_Debug_2038A0C[3]++;
-        gTasks[taskId].func = debug_80C48A0;
+        sWatanabeBattleDebugBattleModeIndex++;
+        gTasks[taskId].func = Task_WatanabeDebugShowBattleModeCursor;
     }
 }
 
-void debug_80C4A60(u8 taskId)
+void Task_WatanabeDebugShowTrainerAiCursor(u8 taskId)
 {
-    debug_80C38E4(gUnknown_Debug_2038A0C[5] * 2 + 3, 16, 1, 14, 1);
+    WatanabeDebug_DrawCursor(sWatanabeBattleDebugTrainerAiCursor * 2 + 3, 16, 1, 14, 1);
     REG_WIN1H = 0x79EF;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C4AC4;
+    gTasks[taskId].func = Task_WatanabeDebugHandleTrainerAiInput;
 }
 
-void debug_80C4AC4(u8 taskId)
+void Task_WatanabeDebugHandleTrainerAiInput(u8 taskId)
 {
-    u8 r1 = gUnknown_Debug_2038A0C[4] + gUnknown_Debug_2038A0C[5];
+    u8 selectedOption = sWatanabeBattleDebugTrainerAiMenuOffset + sWatanabeBattleDebugTrainerAiCursor;
     
     if (JOY_NEW(A_BUTTON))
     {
-        u32 mask = gUnknown_Debug_083F80D8[r1].data.type2;
-        if (byte_3005E30 & mask)
-            byte_3005E30 &= (mask ^ 0xFFFF);
+        u32 mask = sWatanabeTrainerAiModeItems[selectedOption].data.trainerAiMask;
+        if (gWatanabeTrainerAiFlags & mask)
+            gWatanabeTrainerAiFlags &= (mask ^ 0xFFFF);
         else
-            byte_3005E30 |= mask;
-        debug_80C4C44(gUnknown_Debug_2038A0C[4]);
-        gTasks[taskId].func = debug_80C4A60;
+            gWatanabeTrainerAiFlags |= mask;
+        WatanabeDebug_DrawTrainerAiOptions(sWatanabeBattleDebugTrainerAiMenuOffset);
+        gTasks[taskId].func = Task_WatanabeDebugShowTrainerAiCursor;
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        debug_80C38E4(0, 16, 1, 14, 0);
-        gTasks[taskId].func = debug_80C48A0;
+        WatanabeDebug_DrawCursor(0, 16, 1, 14, 0);
+        gTasks[taskId].func = Task_WatanabeDebugShowBattleModeCursor;
     }
     else if (JOY_NEW(START_BUTTON))
     {
         PlaySE(SE_SELECT);
         gTrainerBattleOpponent = SECRET_BASE_OPPONENT;
-        eWatanabe17000.unk1_4 = 0;
-        eWatanabe17000.excitementAppealBonus = 0xAC;
-        eWatanabe17000.unk3 = 0xFF;
-        eWatanabe17000.unk9 = 0;
-        eWatanabe17000.unkA = 0;
-        eWatanabe17000.unkB = 0;
-        eWatanabe17000.contestant = 0;
-        gTasks[taskId].func = debug_80C4F48;
+        eSecretBaseRecord->gender = 0;
+        eSecretBaseRecord->playerName[0] = 0xAC;
+        eSecretBaseRecord->playerName[1] = 0xFF;
+        eSecretBaseRecord->trainerId[0] = 0;
+        eSecretBaseRecord->trainerId[1] = 0;
+        eSecretBaseRecord->trainerId[2] = 0;
+        eSecretBaseRecord->trainerId[3] = 0;
+        gTasks[taskId].func = Task_WatanabeDebugInitGenderMenu;
     }
     else if (JOY_REPT(DPAD_UP))
     {
-        if (gUnknown_Debug_2038A0C[5] > 0)
-            gUnknown_Debug_2038A0C[5]--;
-        else if (gUnknown_Debug_2038A0C[4] > 0)
+        if (sWatanabeBattleDebugTrainerAiCursor > 0)
+            sWatanabeBattleDebugTrainerAiCursor--;
+        else if (sWatanabeBattleDebugTrainerAiMenuOffset > 0)
         {
-            gUnknown_Debug_2038A0C[4]--;
-            debug_80C4C44(gUnknown_Debug_2038A0C[4]);
+            sWatanabeBattleDebugTrainerAiMenuOffset--;
+            WatanabeDebug_DrawTrainerAiOptions(sWatanabeBattleDebugTrainerAiMenuOffset);
         }
-        gTasks[taskId].func = debug_80C4A60;
+        gTasks[taskId].func = Task_WatanabeDebugShowTrainerAiCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[5] < 9)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugTrainerAiCursor < 9)
     {
-        if (gUnknown_Debug_2038A0C[5] < 5)
-            gUnknown_Debug_2038A0C[5]++;
-        else if (gUnknown_Debug_2038A0C[4] < 4)
+        if (sWatanabeBattleDebugTrainerAiCursor < 5)
+            sWatanabeBattleDebugTrainerAiCursor++;
+        else if (sWatanabeBattleDebugTrainerAiMenuOffset < 4)
         {
-            gUnknown_Debug_2038A0C[4]++;
-            debug_80C4C44(gUnknown_Debug_2038A0C[4]);
+            sWatanabeBattleDebugTrainerAiMenuOffset++;
+            WatanabeDebug_DrawTrainerAiOptions(sWatanabeBattleDebugTrainerAiMenuOffset);
         }
-        gTasks[taskId].func = debug_80C4A60;
+        gTasks[taskId].func = Task_WatanabeDebugShowTrainerAiCursor;
     }
 }
 
-void debug_80C4C44(u8 a0)
+void WatanabeDebug_DrawTrainerAiOptions(u8 menuOffset)
 {
     u8 i;
     u8 j;
-    u8 sp00[15];
+    u8 optionText[15];
 
     for (i = 0; i < 6; i++)
     {
-        if (i + a0 < 10)
+        if (i + menuOffset < 10)
         {
-            for (j = 0; gUnknown_Debug_083F80D8[i + a0].text[j] != EOS && j < 12; j++)
+            for (j = 0; sWatanabeTrainerAiModeItems[i + menuOffset].label[j] != EOS && j < 12; j++)
             {
-                sp00[j + 3] = gUnknown_Debug_083F80D8[i + a0].text[j];
+                optionText[j + 3] = sWatanabeTrainerAiModeItems[i + menuOffset].label[j];
             }
             for (; j < 12; j++)
             {
-                sp00[j + 3] = CHAR_SPACE;
+                optionText[j + 3] = CHAR_SPACE;
             }
-            sp00[14] = EOS;
-            sp00[0] = EXT_CTRL_CODE_BEGIN;
-            sp00[1] = 0x01;
-            if (byte_3005E30 & (1 << (i + a0)))
-                sp00[2] = 0x03;
+            optionText[14] = EOS;
+            optionText[0] = EXT_CTRL_CODE_BEGIN;
+            optionText[1] = 0x01;
+            if (gWatanabeTrainerAiFlags & (1 << (i + menuOffset)))
+                optionText[2] = 0x03;
             else
-                sp00[2] = 0x01;
-            Menu_PrintText(sp00, 17, 2 * i + 3);
+                optionText[2] = 0x01;
+            Menu_PrintText(optionText, 17, 2 * i + 3);
         }
     }
 }
 
-void debug_80C4D14(u8 taskId)
+void Task_WatanabeDebugInitBattleTerrainMenu(u8 taskId)
 {
-    u8 sp00[] = DTR("たいせんモードを　えらんでね", "Choose a battle mode");
-    u8 sp10[] = DTR("{COLOR RED}START:かいし", "{COLOR RED}START: BEGIN");
-    u8 sp20[] = DTR("{COLOR RED}バトルちけい　せんたく", "{COLOR RED}Battle terrain:");
+    u8 instructions[] = DTR("たいせんモードを　えらんでね", "Choose a battle mode");
+    u8 beginText[] = DTR("{COLOR RED}START:かいし", "{COLOR RED}START: BEGIN");
+    u8 battleTerrainLabel[] = DTR("{COLOR RED}バトルちけい　せんたく", "{COLOR RED}Battle terrain:");
 
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
-    Menu_PrintText(sp00, 1, 17);
-    Menu_PrintText(sp10, 20, 17);
+    Menu_PrintText(instructions, 1, 17);
+    Menu_PrintText(beginText, 20, 17);
 
     Menu_DrawStdWindowFrame(0, 0, 14, 15);
-    Menu_PrintText(sp20, 2, 1);
-    debug_80C4F00(gUnknown_Debug_2038A0C[6]);
+    Menu_PrintText(battleTerrainLabel, 2, 1);
+    WatanabeDebug_DrawBattleTerrainOptions(sWatanabeBattleDebugTerrainMenuOffset);
 
     Menu_DrawStdWindowFrame(15, 0, 29,15);
-    gTasks[taskId].func = debug_80C4DB8;
+    gTasks[taskId].func = Task_WatanabeDebugShowBattleTerrainCursor;
 }
 
-void debug_80C4DB8(u8 taskId)
+void Task_WatanabeDebugShowBattleTerrainCursor(u8 taskId)
 {
-    debug_80C38E4(2 * gUnknown_Debug_2038A0C[7] + 3, 1, 1, 14, 1);
+    WatanabeDebug_DrawCursor(2 * sWatanabeBattleDebugTerrainCursor + 3, 1, 1, 14, 1);
     REG_WIN1H = 0x0177;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C4E18;
+    gTasks[taskId].func = Task_WatanabeDebugHandleBattleTerrainInput;
 }
 
-void debug_80C4E18(u8 taskId)
+void Task_WatanabeDebugHandleBattleTerrainInput(u8 taskId)
 {
-    u8 r6 = gUnknown_Debug_2038A0C[6] + gUnknown_Debug_2038A0C[7];
+    u8 selectedTerrain = sWatanabeBattleDebugTerrainMenuOffset + sWatanabeBattleDebugTerrainCursor;
     if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = debug_80C42B8;
+        gTasks[taskId].func = Task_WatanabeDebugInitPartySelection;
     }
     else if (JOY_NEW(START_BUTTON) || JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gBattleEnvironment = gUnknown_Debug_083F814C[r6].data.type3;
-        gTasks[taskId].func = debug_80C5158;
+        gBattleEnvironment = sWatanabeBattleTerrainItems[selectedTerrain].data.battleEnvironment;
+        gTasks[taskId].func = Task_WatanabeDebugStartBattle;
     }
     else if (JOY_REPT(DPAD_UP))
     {
-        if (gUnknown_Debug_2038A0C[7] > 0)
-            gUnknown_Debug_2038A0C[7]--;
-        else if (gUnknown_Debug_2038A0C[6] > 0)
+        if (sWatanabeBattleDebugTerrainCursor > 0)
+            sWatanabeBattleDebugTerrainCursor--;
+        else if (sWatanabeBattleDebugTerrainMenuOffset > 0)
         {
-            gUnknown_Debug_2038A0C[6]--;
-            debug_80C4F00(gUnknown_Debug_2038A0C[6]);
+            sWatanabeBattleDebugTerrainMenuOffset--;
+            WatanabeDebug_DrawBattleTerrainOptions(sWatanabeBattleDebugTerrainMenuOffset);
         }
-        gTasks[taskId].func = debug_80C4DB8;
+        gTasks[taskId].func = Task_WatanabeDebugShowBattleTerrainCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[7] < 8)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugTerrainCursor < 8)
     {
-        if (gUnknown_Debug_2038A0C[7] < 5)
-            gUnknown_Debug_2038A0C[7]++;
-        else if (gUnknown_Debug_2038A0C[6] < 3)
+        if (sWatanabeBattleDebugTerrainCursor < 5)
+            sWatanabeBattleDebugTerrainCursor++;
+        else if (sWatanabeBattleDebugTerrainMenuOffset < 3)
         {
-            gUnknown_Debug_2038A0C[6]++;
-            debug_80C4F00(gUnknown_Debug_2038A0C[6]);
+            sWatanabeBattleDebugTerrainMenuOffset++;
+            WatanabeDebug_DrawBattleTerrainOptions(sWatanabeBattleDebugTerrainMenuOffset);
         }
-        gTasks[taskId].func = debug_80C4DB8;
+        gTasks[taskId].func = Task_WatanabeDebugShowBattleTerrainCursor;
     }
 }
 
-void debug_80C4F00(u8 a0)
+void WatanabeDebug_DrawBattleTerrainOptions(u8 menuOffset)
 {
     u8 i;
     Menu_BlankWindowRect(1, 3, 13, 14);
@@ -1495,118 +1547,118 @@ void debug_80C4F00(u8 a0)
     for (i = 0; i < 6; i++)
     {
         if (i < 9)
-            Menu_PrintText(gUnknown_Debug_083F814C[i + a0].text, 2, 2 * i + 3);
+            Menu_PrintText(sWatanabeBattleTerrainItems[i + menuOffset].label, 2, 2 * i + 3);
     }
 }
 
-void debug_80C4F48(u8 taskId)
+void Task_WatanabeDebugInitGenderMenu(u8 taskId)
 {
-    u8 sp00[] = DTR("じぶんの　せいべつを　えらんでね", "Choose a gender");
-    u8 sp14[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
-    u8 sp24[] = DTR("{COLOR RED}せいべつ　せんたく", "{COLOR RED}Gender:");
-    u8 sp34[] = DTR("おとこ", "BOY");
-    u8 sp38[] = DTR("おんな", "GIRL");
+    u8 instructions[] = DTR("じぶんの　せいべつを　えらんでね", "Choose a gender");
+    u8 nextText[] = DTR("{COLOR RED}START:つぎへ", "{COLOR RED}START: NEXT");
+    u8 genderLabel[] = DTR("{COLOR RED}せいべつ　せんたく", "{COLOR RED}Gender:");
+    u8 maleText[] = DTR("おとこ", "BOY");
+    u8 femaleText[] = DTR("おんな", "GIRL");
 
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
-    Menu_PrintText(sp00, 1, 17);
-    Menu_PrintText(sp14, 20, 17);
+    Menu_PrintText(instructions, 1, 17);
+    Menu_PrintText(nextText, 20, 17);
 
     Menu_DrawStdWindowFrame(0, 0, 14, 15);
-    Menu_PrintText(sp24, 2, 1);
+    Menu_PrintText(genderLabel, 2, 1);
 
     Menu_BlankWindowRect(1, 3, 13, 14);
-    Menu_PrintText(sp24, 2, 1);
-    Menu_PrintText(sp34, 2, 3);
-    Menu_PrintText(sp38, 2, 5);
+    Menu_PrintText(genderLabel, 2, 1);
+    Menu_PrintText(maleText, 2, 3);
+    Menu_PrintText(femaleText, 2, 5);
 
     Menu_DrawStdWindowFrame(15, 0, 29, 15);
-    gTasks[taskId].func = debug_80C5038;
+    gTasks[taskId].func = Task_WatanabeDebugShowGenderCursor;
 }
 
-void debug_80C5038(u8 taskId)
+void Task_WatanabeDebugShowGenderCursor(u8 taskId)
 {
-    debug_80C38E4(gUnknown_Debug_2038A0C[8] * 2 + 3, 1, 1, 14, 1);
+    WatanabeDebug_DrawCursor(sWatanabeBattleDebugGenderSelection * 2 + 3, 1, 1, 14, 1);
     REG_WIN1H = 0x0177;
     REG_WIN1V = 0x017F;
-    gTasks[taskId].func = debug_80C5098;
+    gTasks[taskId].func = Task_WatanabeDebugHandleGenderInput;
 }
 
-void debug_80C5098(u8 taskId)
+void Task_WatanabeDebugHandleGenderInput(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = debug_80C47BC;
+        gTasks[taskId].func = Task_WatanabeDebugInitBattleModeMenu;
     }
     else if (JOY_NEW(START_BUTTON) || JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        gSaveBlock2.playerGender = gUnknown_Debug_2038A0C[8];
-        gTasks[taskId].func = debug_80C42B8;
+        gSaveBlock2.playerGender = sWatanabeBattleDebugGenderSelection;
+        gTasks[taskId].func = Task_WatanabeDebugInitPartySelection;
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A0C[8] > 0)
+    else if (JOY_REPT(DPAD_UP) && sWatanabeBattleDebugGenderSelection > 0)
     {
-        gUnknown_Debug_2038A0C[8]--;
-        gTasks[taskId].func = debug_80C5038;
+        sWatanabeBattleDebugGenderSelection--;
+        gTasks[taskId].func = Task_WatanabeDebugShowGenderCursor;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A0C[8] < 1)
+    else if (JOY_REPT(DPAD_DOWN) && sWatanabeBattleDebugGenderSelection < 1)
     {
-        gUnknown_Debug_2038A0C[8]++;
-        gTasks[taskId].func = debug_80C5038;
+        sWatanabeBattleDebugGenderSelection++;
+        gTasks[taskId].func = Task_WatanabeDebugShowGenderCursor;
     }
 }
 
-void debug_80C5158(u8 taskId)
+void Task_WatanabeDebugStartBattle(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C5174;
+    gTasks[taskId].func = Task_WatanabeDebugStartBattleStage2;
 }
 
-void debug_80C5174(u8 taskId)
+void Task_WatanabeDebugStartBattleStage2(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C5190;
+    gTasks[taskId].func = Task_WatanabeDebugStartBattleStage3;
 }
 
-void debug_80C5190(u8 taskId)
+void Task_WatanabeDebugStartBattleStage3(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C51AC;
+    gTasks[taskId].func = Task_WatanabeDebugStartBattleStage4;
 }
 
-void debug_80C51AC(u8 taskId)
+void Task_WatanabeDebugStartBattleStage4(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C51C8;
+    gTasks[taskId].func = Task_WatanabeDebugStartBattleStage5;
 }
 
-void debug_80C51C8(u8 taskId)
+void Task_WatanabeDebugStartBattleStage5(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C51E4;
+    gTasks[taskId].func = Task_WatanabeDebugLaunchBattle;
 }
 
-void debug_80C51E4(u8 taskId)
+void Task_WatanabeDebugLaunchBattle(u8 taskId)
 {
     sub_80408BC();
-    gMain.savedCallback = debug_80C41A8;
+    gMain.savedCallback = WatanabeDebug_RestartBattleSetup;
     SetMainCallback2(DebugInitBattleSprites);
 }
 
-void debug_80C5208(void)
+void WatanabeDebug_InitPokemonCreatorState(void)
 {
     u16 i;
 
-    gUnknown_Debug_2038A1C = &eWatanabe18000;
+    gWatanabePokemonCreatorState = &eWatanabePokemonCreatorState;
 
     for (i = 0; i < 64; i++)
     {
-        gUnknown_Debug_2038A1C->unk64[i] = 0;
+        gWatanabePokemonCreatorState->values[i] = 0;
     }
 
-    gUnknown_Debug_2038A1C->unk64[0] = 0xfc;
-    gUnknown_Debug_2038A1C->unk64[3] = gSaveBlock2.playerTrainerId[0] | (gSaveBlock2.playerTrainerId[1] << 8) | (gSaveBlock2.playerTrainerId[2] << 16) | (gSaveBlock2.playerTrainerId[3] << 24);
-    gUnknown_Debug_2038A1C->unk64[4] = (Random() << 16) | Random();
-    gUnknown_Debug_2038A1C->unk64[1] = 1;
-    gUnknown_Debug_2038A1C->unk64[2] = 1;
-    debug_80C5C94();
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM] = 0xfc;
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_OT_ID] = gSaveBlock2.playerTrainerId[0] | (gSaveBlock2.playerTrainerId[1] << 8) | (gSaveBlock2.playerTrainerId[2] << 16) | (gSaveBlock2.playerTrainerId[3] << 24);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY] = (Random() << 16) | Random();
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_LEVEL] = 1;
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE] = 1;
+    WatanabeDebug_RecreatePokemon();
 }
 
-bool8 debug_80C527C(struct Pokemon *pokemon)
+bool8 WatanabeDebug_AddCreatedPokemonToPartyOrPc(struct Pokemon *pokemon)
 {
     u8 i;
 
@@ -1619,239 +1671,275 @@ bool8 debug_80C527C(struct Pokemon *pokemon)
             return FALSE;
         }
     }
-    SendMonToPC(&gUnknown_Debug_2038A1C->pokemon);
+    SendMonToPC(&gWatanabePokemonCreatorState->pokemon);
     return TRUE;
 }
 
-const u8 Str_83F8237[] = _("Kind");
-const struct WatanabeDebugMenuItemSubstruct _83F823C = {1, 0x00000182, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSpecies[] = _("Kind");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpecies = {1, 0x00000182, 0x00, 0x03};
 
-const u8 Str_83F8248[] = _("Level");
-const struct WatanabeDebugMenuItemSubstruct _83F8250 = {1, 0x00000064, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorLevel[] = _("Level");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldLevel = {1, 0x00000064, 0x00, 0x03};
 
-const u8 Str_83F825C[] = _("EXP Points");
-const struct WatanabeDebugMenuItemSubstruct _83F8268 = {1, 0x001E8480, 0x00, 0x07};
+const u8 sText_WatanabePokemonEditorExperience[] = _("EXP Points");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldExperience = {1, 0x001E8480, 0x00, 0x07};
 
-const u8 Str_83F8274[] = _("ID");
-const struct WatanabeDebugMenuItemSubstruct _83F8278 = {0, 0xFFFFFFFF, 0x00, 0x0A};
+const u8 sText_WatanabePokemonEditorOtId[] = _("ID");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldOtId = {0, 0xFFFFFFFF, 0x00, 0x0A};
 
-const u8 Str_83F8284[] = _("Rnd Numbers");
-const struct WatanabeDebugMenuItemSubstruct _83F8290 = {0, 0xFFFFFFFF, 0x00, 0x0A};
+const u8 sText_WatanabePokemonEditorPersonality[] = _("Rnd Numbers");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldPersonality = {0, 0xFFFFFFFF, 0x00, 0x0A};
 
-const u8 Str_83F829C[] = _("Sex");
-const struct WatanabeDebugMenuItemSubstruct _83F82A0 = {0, 0x00000002, 0x00, 0xFF};
+const u8 sText_WatanabePokemonEditorGender[] = _("Sex");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldGender = {0, 0x00000002, 0x00, 0xFF};
 
-const u8 Str_83F82AC[] = _("Character");
-const struct WatanabeDebugMenuItemSubstruct _83F82B8 = {0, 0x00000018, 0x00, 0xFF};
+const u8 sText_WatanabePokemonEditorNature[] = _("Character");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldNature = {0, 0x00000018, 0x00, 0xFF};
 
-const u8 Str_83F82C4[] = _("Move1");
-const struct WatanabeDebugMenuItemSubstruct _83F82CC = {0, 0x00000162, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorMove1[] = _("Move1");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldMove1 = {0, 0x00000162, 0x00, 0x03};
 
-const u8 Str_83F82D8[] = _("Move2");
-const struct WatanabeDebugMenuItemSubstruct _83F82E0 = {0, 0x00000162, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorMove2[] = _("Move2");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldMove2 = {0, 0x00000162, 0x00, 0x03};
 
-const u8 Str_83F82EC[] = _("Move3");
-const struct WatanabeDebugMenuItemSubstruct _83F82F4 = {0, 0x00000162, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorMove3[] = _("Move3");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldMove3 = {0, 0x00000162, 0x00, 0x03};
 
-const u8 Str_83F8300[] = _("Move4");
-const struct WatanabeDebugMenuItemSubstruct _83F8308 = {0, 0x00000162, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorMove4[] = _("Move4");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldMove4 = {0, 0x00000162, 0x00, 0x03};
 
-const u8 Str_83F8314[] = _("Hold");
-const struct WatanabeDebugMenuItemSubstruct _83F831C = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorHeldItem[] = _("Hold");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldHeldItem = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8328[] = _("SP. Ability");
-const struct WatanabeDebugMenuItemSubstruct _83F8334 = {0, 0x00000001, 0x00, 0xFF};
+const u8 sText_WatanabePokemonEditorAbilitySlot[] = _("SP. Ability");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldAbilitySlot = {0, 0x00000001, 0x00, 0xFF};
 
-const u8 Str_83F8340[] = _("HPrnd");
-const struct WatanabeDebugMenuItemSubstruct _83F8348 = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorHpIv[] = _("HPrnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldHpIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F8354[] = _("HPexp");
-const struct WatanabeDebugMenuItemSubstruct _83F835C = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorHpEv[] = _("HPexp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldHpEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8368[] = _("ATKrnd");
-const struct WatanabeDebugMenuItemSubstruct _83F8370 = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorAttackIv[] = _("ATKrnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldAttackIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F837C[] = _("ATKexp");
-const struct WatanabeDebugMenuItemSubstruct _83F8384 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorAttackEv[] = _("ATKexp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldAttackEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8390[] = _("DEFrnd");
-const struct WatanabeDebugMenuItemSubstruct _83F8398 = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorDefenseIv[] = _("DEFrnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldDefenseIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F83A4[] = _("DEFexp");
-const struct WatanabeDebugMenuItemSubstruct _83F83AC = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorDefenseEv[] = _("DEFexp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldDefenseEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F83B8[] = _("SPDrnd");
-const struct WatanabeDebugMenuItemSubstruct _83F83C0 = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorSpeedIv[] = _("SPDrnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpeedIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F83CC[] = _("SPDexp");
-const struct WatanabeDebugMenuItemSubstruct _83F83D4 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSpeedEv[] = _("SPDexp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpeedEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F83E0[] = _("SP. ATK$rnd");
-const struct WatanabeDebugMenuItemSubstruct _83F83EC = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorSpAttackIv[] = _("SP. ATK$rnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpAttackIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F83F8[] = _("SP. ATK$exp");
-const struct WatanabeDebugMenuItemSubstruct _83F8404 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSpAttackEv[] = _("SP. ATK$exp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpAttackEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8410[] = _("SP. DEF$rnd");
-const struct WatanabeDebugMenuItemSubstruct _83F841C = {0, 0x0000001F, 0x00, 0x02};
+const u8 sText_WatanabePokemonEditorSpDefenseIv[] = _("SP. DEF$rnd");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpDefenseIv = {0, 0x0000001F, 0x00, 0x02};
 
-const u8 Str_83F8428[] = _("SP. DEF$exp");
-const struct WatanabeDebugMenuItemSubstruct _83F8434 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSpDefenseEv[] = _("SP. DEF$exp");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSpDefenseEv = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8440[] = _("Cool");
-const struct WatanabeDebugMenuItemSubstruct _83F8448 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorCool[] = _("Cool");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldCool = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8454[] = _("Beauty");
-const struct WatanabeDebugMenuItemSubstruct _83F845C = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorBeauty[] = _("Beauty");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldBeauty = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8468[] = _("Cute");
-const struct WatanabeDebugMenuItemSubstruct _83F8470 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorCute[] = _("Cute");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldCute = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F847C[] = _("Smart");
-const struct WatanabeDebugMenuItemSubstruct _83F8484 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSmart[] = _("Smart");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSmart = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F8490[] = _("Tough");
-const struct WatanabeDebugMenuItemSubstruct _83F8498 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorTough[] = _("Tough");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldTough = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F84A4[] = _("Sheen");
-const struct WatanabeDebugMenuItemSubstruct _83F84AC = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorSheen[] = _("Sheen");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldSheen = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F84B8[] = _("Tameness");
-const struct WatanabeDebugMenuItemSubstruct _83F84C4 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorFriendship[] = _("Tameness");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldFriendship = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F84D0[] = _("{PK}RUS");
-const struct WatanabeDebugMenuItemSubstruct _83F84D8 = {0, 0x000000FF, 0x00, 0x03};
+const u8 sText_WatanabePokemonEditorPokerus[] = _("{PK}RUS");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldPokerus = {0, 0x000000FF, 0x00, 0x03};
 
-const u8 Str_83F84E4[] = _("EGG$");
-const struct WatanabeDebugMenuItemSubstruct _83F84EC = {0, 0x00000001, 0x00, 0xFF};
+const u8 sText_WatanabePokemonEditorIsEgg[] = _("EGG$");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldIsEgg = {0, 0x00000001, 0x00, 0xFF};
 
-const u8 Str_83F84F8[] = _("Status");
-const struct WatanabeDebugMenuItemSubstruct _83F8500 = {0, 0x00000006, 0x00, 0xFF};
+const u8 sText_WatanabePokemonEditorStatus[] = _("Status");
+const struct WatanabeDebugPokemonEditorField sWatanabePokemonEditorFieldStatus = {0, 0x00000006, 0x00, 0xFF};
 
-const u8 gUnknown_Debug_083F850A[] = _("{COLOR RED}HP　　");
-const u8 gUnknown_Debug_083F8514[] = _("{COLOR RED}ATK　");
-const u8 gUnknown_Debug_083F851C[] = _("{COLOR RED}DEF　");
-const u8 gUnknown_Debug_083F8524[] = _("{COLOR RED}SPEED");
-const u8 gUnknown_Debug_083F852D[] = _("{COLOR RED}SP。ATK");
-const u8 gUnknown_Debug_083F8537[] = _("{COLOR RED}SP。DEF");
-const u8 gUnknown_Debug_083F8541[] = DTR("なし", "without");
-const u8 gUnknown_Debug_083F8544[] = _("♂");
-const u8 gUnknown_Debug_083F8546[] = _("♀");
-const u8 gUnknown_Debug_083F8548[] = _("ー");
-const u8 gUnknown_Debug_083F854A[] = _("ON");
-const u8 gUnknown_Debug_083F854D[] = _("OFF");
+const u8 sText_WatanabePokemonEditorHp[] = _("{COLOR RED}HP　　");
+const u8 sText_WatanabePokemonEditorAttack[] = _("{COLOR RED}ATK　");
+const u8 sText_WatanabePokemonEditorDefense[] = _("{COLOR RED}DEF　");
+const u8 sText_WatanabePokemonEditorSpeed[] = _("{COLOR RED}SPEED");
+const u8 sText_WatanabePokemonEditorSpAttack[] = _("{COLOR RED}SP。ATK");
+const u8 sText_WatanabePokemonEditorSpDefense[] = _("{COLOR RED}SP。DEF");
+const u8 sText_WatanabePokemonEditorNone[] = DTR("なし", "without");
+const u8 sText_WatanabePokemonEditorMale[] = _("♂");
+const u8 sText_WatanabePokemonEditorFemale[] = _("♀");
+const u8 sText_WatanabePokemonEditorDash[] = _("ー");
+const u8 sText_WatanabePokemonEditorOn[] = _("ON");
+const u8 sText_WatanabePokemonEditorOff[] = _("OFF");
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F8554[] = {
-    {Str_83F8237, {.type4 = &_83F823C}},
-    {Str_83F8248, {.type4 = &_83F8250}},
-    {Str_83F825C, {.type4 = &_83F8268}},
-    {Str_83F8274, {.type4 = &_83F8278}},
-    {Str_83F8284, {.type4 = &_83F8290}},
-    {Str_83F829C, {.type4 = &_83F82A0}},
-    {Str_83F82AC, {.type4 = &_83F82B8}},
-    {Str_83F82C4, {.type4 = &_83F82CC}},
-    {Str_83F82D8, {.type4 = &_83F82E0}},
-    {Str_83F82EC, {.type4 = &_83F82F4}},
-    {Str_83F8300, {.type4 = &_83F8308}},
-    {Str_83F8314, {.type4 = &_83F831C}},
-    {Str_83F8328, {.type4 = &_83F8334}},
-    {Str_83F8340, {.type4 = &_83F8348}},
-    {Str_83F8354, {.type4 = &_83F835C}},
-    {Str_83F8368, {.type4 = &_83F8370}},
-    {Str_83F837C, {.type4 = &_83F8384}},
-    {Str_83F8390, {.type4 = &_83F8398}},
-    {Str_83F83A4, {.type4 = &_83F83AC}},
-    {Str_83F83B8, {.type4 = &_83F83C0}},
-    {Str_83F83CC, {.type4 = &_83F83D4}},
-    {Str_83F83E0, {.type4 = &_83F83EC}},
-    {Str_83F83F8, {.type4 = &_83F8404}},
-    {Str_83F8410, {.type4 = &_83F841C}},
-    {Str_83F8428, {.type4 = &_83F8434}},
-    {Str_83F8440, {.type4 = &_83F8448}},
-    {Str_83F8454, {.type4 = &_83F845C}},
-    {Str_83F8468, {.type4 = &_83F8470}},
-    {Str_83F847C, {.type4 = &_83F8484}},
-    {Str_83F8490, {.type4 = &_83F8498}},
-    {Str_83F84A4, {.type4 = &_83F84AC}},
-    {Str_83F84B8, {.type4 = &_83F84C4}},
-    {Str_83F84D0, {.type4 = &_83F84D8}},
-    {Str_83F84E4, {.type4 = &_83F84EC}},
-    {Str_83F84F8, {.type4 = &_83F8500}}
+const struct WatanabeDebugMenuItem sWatanabePokemonEditorFieldItems[] = {
+    {sText_WatanabePokemonEditorSpecies, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpecies}},
+    {sText_WatanabePokemonEditorLevel, {.pokemonEditorField = &sWatanabePokemonEditorFieldLevel}},
+    {sText_WatanabePokemonEditorExperience, {.pokemonEditorField = &sWatanabePokemonEditorFieldExperience}},
+    {sText_WatanabePokemonEditorOtId, {.pokemonEditorField = &sWatanabePokemonEditorFieldOtId}},
+    {sText_WatanabePokemonEditorPersonality, {.pokemonEditorField = &sWatanabePokemonEditorFieldPersonality}},
+    {sText_WatanabePokemonEditorGender, {.pokemonEditorField = &sWatanabePokemonEditorFieldGender}},
+    {sText_WatanabePokemonEditorNature, {.pokemonEditorField = &sWatanabePokemonEditorFieldNature}},
+    {sText_WatanabePokemonEditorMove1, {.pokemonEditorField = &sWatanabePokemonEditorFieldMove1}},
+    {sText_WatanabePokemonEditorMove2, {.pokemonEditorField = &sWatanabePokemonEditorFieldMove2}},
+    {sText_WatanabePokemonEditorMove3, {.pokemonEditorField = &sWatanabePokemonEditorFieldMove3}},
+    {sText_WatanabePokemonEditorMove4, {.pokemonEditorField = &sWatanabePokemonEditorFieldMove4}},
+    {sText_WatanabePokemonEditorHeldItem, {.pokemonEditorField = &sWatanabePokemonEditorFieldHeldItem}},
+    {sText_WatanabePokemonEditorAbilitySlot, {.pokemonEditorField = &sWatanabePokemonEditorFieldAbilitySlot}},
+    {sText_WatanabePokemonEditorHpIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldHpIv}},
+    {sText_WatanabePokemonEditorHpEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldHpEv}},
+    {sText_WatanabePokemonEditorAttackIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldAttackIv}},
+    {sText_WatanabePokemonEditorAttackEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldAttackEv}},
+    {sText_WatanabePokemonEditorDefenseIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldDefenseIv}},
+    {sText_WatanabePokemonEditorDefenseEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldDefenseEv}},
+    {sText_WatanabePokemonEditorSpeedIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpeedIv}},
+    {sText_WatanabePokemonEditorSpeedEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpeedEv}},
+    {sText_WatanabePokemonEditorSpAttackIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpAttackIv}},
+    {sText_WatanabePokemonEditorSpAttackEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpAttackEv}},
+    {sText_WatanabePokemonEditorSpDefenseIv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpDefenseIv}},
+    {sText_WatanabePokemonEditorSpDefenseEv, {.pokemonEditorField = &sWatanabePokemonEditorFieldSpDefenseEv}},
+    {sText_WatanabePokemonEditorCool, {.pokemonEditorField = &sWatanabePokemonEditorFieldCool}},
+    {sText_WatanabePokemonEditorBeauty, {.pokemonEditorField = &sWatanabePokemonEditorFieldBeauty}},
+    {sText_WatanabePokemonEditorCute, {.pokemonEditorField = &sWatanabePokemonEditorFieldCute}},
+    {sText_WatanabePokemonEditorSmart, {.pokemonEditorField = &sWatanabePokemonEditorFieldSmart}},
+    {sText_WatanabePokemonEditorTough, {.pokemonEditorField = &sWatanabePokemonEditorFieldTough}},
+    {sText_WatanabePokemonEditorSheen, {.pokemonEditorField = &sWatanabePokemonEditorFieldSheen}},
+    {sText_WatanabePokemonEditorFriendship, {.pokemonEditorField = &sWatanabePokemonEditorFieldFriendship}},
+    {sText_WatanabePokemonEditorPokerus, {.pokemonEditorField = &sWatanabePokemonEditorFieldPokerus}},
+    {sText_WatanabePokemonEditorIsEgg, {.pokemonEditorField = &sWatanabePokemonEditorFieldIsEgg}},
+    {sText_WatanabePokemonEditorStatus, {.pokemonEditorField = &sWatanabePokemonEditorFieldStatus}}
 };
 
-const u8 gUnknown_Debug_083F866C[] = {
-    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0xFF
+const u8 sWatanabePokemonEditorCategoryGeneral[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM,
+    WATANABE_POKEMON_CREATOR_VALUE_LEVEL,
+    WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE,
+    WATANABE_POKEMON_CREATOR_VALUE_OT_ID,
+    WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY,
+    WATANABE_POKEMON_CREATOR_VALUE_GENDER,
+    WATANABE_POKEMON_CREATOR_VALUE_NATURE,
+    EOS
 };
 
-const u8 gUnknown_Debug_083F8674[] = {
-    0x22, 0x1F, 0x20, 0xFF
+const u8 sWatanabePokemonEditorCategoryMisc[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_STATUS,
+    WATANABE_POKEMON_CREATOR_VALUE_FRIENDSHIP,
+    WATANABE_POKEMON_CREATOR_VALUE_POKERUS,
+    EOS
 };
 
-const u8 gUnknown_Debug_083F8678[] = {
-    0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0xFF
+const u8 sWatanabePokemonEditorCategoryMoves[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_1,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_2,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_3,
+    WATANABE_POKEMON_CREATOR_VALUE_MOVE_4,
+    WATANABE_POKEMON_CREATOR_VALUE_HELD_ITEM,
+    WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT,
+    EOS
 };
 
-const u8 gUnknown_Debug_083F867F[] = {
-    0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0xFE, 0xFF
+const u8 sWatanabePokemonEditorCategoryPhysicalStats[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_HP_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_HP_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_ATTACK_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_EV,
+    WATANABE_POKEMON_CREATOR_FIELD_PHYSICAL_STATS,
+    EOS
 };
 
-const u8 gUnknown_Debug_083F8687[] = {
-    0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0xFD, 0xFF
+const u8 sWatanabePokemonEditorCategorySpecialStats[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SPEED_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_EV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV,
+    WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_EV,
+    WATANABE_POKEMON_CREATOR_FIELD_SPECIAL_STATS,
+    EOS
 };
 
-const u8 gUnknown_Debug_083F868F[] = {
-    0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0xFF
+const u8 sWatanabePokemonEditorCategoryContestStats[] = {
+    WATANABE_POKEMON_CREATOR_VALUE_COOL,
+    WATANABE_POKEMON_CREATOR_VALUE_BEAUTY,
+    WATANABE_POKEMON_CREATOR_VALUE_CUTE,
+    WATANABE_POKEMON_CREATOR_VALUE_SMART,
+    WATANABE_POKEMON_CREATOR_VALUE_TOUGH,
+    WATANABE_POKEMON_CREATOR_VALUE_SHEEN,
+    EOS
 };
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F8698[] = {
-    {gUnknown_Debug_083F866C, {.type3 = 0x5}},
-    {gUnknown_Debug_083F8674, {.type3 = 0x3}},
-    {gUnknown_Debug_083F8678, {.type3 = 0x6}},
-    {gUnknown_Debug_083F867F, {.type3 = 0x6}},
-    {gUnknown_Debug_083F8687, {.type3 = 0x6}},
-    {gUnknown_Debug_083F868F, {.type3 = 0x6}}
+const struct WatanabeDebugMenuItem sWatanabePokemonEditorCategories[] = {
+    {sWatanabePokemonEditorCategoryGeneral, {.categoryLength = 0x5}},
+    {sWatanabePokemonEditorCategoryMisc, {.categoryLength = 0x3}},
+    {sWatanabePokemonEditorCategoryMoves, {.categoryLength = 0x6}},
+    {sWatanabePokemonEditorCategoryPhysicalStats, {.categoryLength = 0x6}},
+    {sWatanabePokemonEditorCategorySpecialStats, {.categoryLength = 0x6}},
+    {sWatanabePokemonEditorCategoryContestStats, {.categoryLength = 0x6}}
 };
 
 #if (ENGLISH && REVISION == 0)
-const u8 gUnknown_Debug_083F86C8[] = _("ふつう");
-const u8 gUnknown_Debug_083F86CC[] = _("ねむり");
-const u8 gUnknown_Debug_083F86D0[] = _("どく");
-const u8 gUnknown_Debug_083F86D4[] = _("やけど");
-const u8 gUnknown_Debug_083F86D8[] = _("こおり");
-const u8 gUnknown_Debug_083F86DC[] = _("まひ");
-const u8 gUnknown_Debug_083F86E0[] = _("どくどく");
+const u8 sText_WatanabePokemonEditorStatusHealthy[] = _("ふつう");
+const u8 sText_WatanabePokemonEditorStatusSleep[] = _("ねむり");
+const u8 sText_WatanabePokemonEditorStatusPoison[] = _("どく");
+const u8 sText_WatanabePokemonEditorStatusBurn[] = _("やけど");
+const u8 sText_WatanabePokemonEditorStatusFreeze[] = _("こおり");
+const u8 sText_WatanabePokemonEditorStatusParalysis[] = _("まひ");
+const u8 sText_WatanabePokemonEditorStatusToxic[] = _("どくどく");
 #else
-const u8 gUnknown_Debug_083F86C8[] = _("ーーー");
-const u8 gUnknown_Debug_083F86CC[] = _("SLP");
-const u8 gUnknown_Debug_083F86D0[] = _("PSN");
-const u8 gUnknown_Debug_083F86D4[] = _("BRN");
-const u8 gUnknown_Debug_083F86D8[] = _("FRZ");
-const u8 gUnknown_Debug_083F86DC[] = _("PAR");
-const u8 gUnknown_Debug_083F86E0[] = _("PSN2");
+const u8 sText_WatanabePokemonEditorStatusHealthy[] = _("ーーー");
+const u8 sText_WatanabePokemonEditorStatusSleep[] = _("SLP");
+const u8 sText_WatanabePokemonEditorStatusPoison[] = _("PSN");
+const u8 sText_WatanabePokemonEditorStatusBurn[] = _("BRN");
+const u8 sText_WatanabePokemonEditorStatusFreeze[] = _("FRZ");
+const u8 sText_WatanabePokemonEditorStatusParalysis[] = _("PAR");
+const u8 sText_WatanabePokemonEditorStatusToxic[] = _("PSN2");
 #endif
 
-const struct WatanabeDebugMenuItem gUnknown_Debug_083F86E8[] = {
-    {gUnknown_Debug_083F86C8, {.type3 = 0x0}},
-    {gUnknown_Debug_083F86CC, {.type3 = 0x1}},
-    {gUnknown_Debug_083F86D0, {.type3 = 0x8}},
-    {gUnknown_Debug_083F86D4, {.type3 = 0x10}},
-    {gUnknown_Debug_083F86D8, {.type3 = 0x20}},
-    {gUnknown_Debug_083F86DC, {.type3 = 0x40}},
-    {gUnknown_Debug_083F86E0, {.type3 = 0x80}}
+const struct WatanabeDebugMenuItem sWatanabePokemonEditorStatusItems[] = {
+    {sText_WatanabePokemonEditorStatusHealthy, {.status = 0x0}},
+    {sText_WatanabePokemonEditorStatusSleep, {.status = 0x1}},
+    {sText_WatanabePokemonEditorStatusPoison, {.status = 0x8}},
+    {sText_WatanabePokemonEditorStatusBurn, {.status = 0x10}},
+    {sText_WatanabePokemonEditorStatusFreeze, {.status = 0x20}},
+    {sText_WatanabePokemonEditorStatusParalysis, {.status = 0x40}},
+    {sText_WatanabePokemonEditorStatusToxic, {.status = 0x80}}
 };
 
 #if (ENGLISH && REVISION == 0)
-const u8 gUnknown_Debug_083F8720[] = _("ポケモンを てもちに くわえました");
-const u8 gUnknown_Debug_083F872A[] = _("ポケモンを ボックスに くわえました");
+const u8 sText_WatanabePokemonAddedToParty[] = _("ポケモンを てもちに くわえました");
+const u8 sText_WatanabePokemonAddedToPc[] = _("ポケモンを ボックスに くわえました");
 #else
-const u8 gUnknown_Debug_083F8720[] = _("PKMN{RIGHT_ARROW}LIST");
-const u8 gUnknown_Debug_083F872A[] = _("PKMN{RIGHT_ARROW}BOX");
+const u8 sText_WatanabePokemonAddedToParty[] = _("PKMN{RIGHT_ARROW}LIST");
+const u8 sText_WatanabePokemonAddedToPc[] = _("PKMN{RIGHT_ARROW}BOX");
 #endif
 void InitCreatePokemon(void)
 {
-    u8 sp04[] = _("Create POKéMON   LR:Shift  START:Add");
+    u8 headerText[] = _("Create POKéMON   LR:Shift  START:Add");
 
-    debug_80C35DC();
+    WatanabeDebug_InitScreen();
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     REG_BLDCNT = 0x0000;
     REG_BLDALPHA = 0x0000;
@@ -1866,487 +1954,487 @@ void InitCreatePokemon(void)
 
     REG_DISPSTAT |= DISPSTAT_VBLANK_INTR;
 
-    SetVBlankCallback(debug_80C3758);
-    SetMainCallback2(debug_80C370C);
+    SetVBlankCallback(VBlankCB_WatanabeDebug);
+    SetMainCallback2(CB2_WatanabeDebugWaitForFade);
 
     Menu_DrawStdWindowFrame(0, 0, 29, 3);
-    Menu_PrintText(sp04, 1, 1);
+    Menu_PrintText(headerText, 1, 1);
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON;
-    CreateTask(debug_80C53A4, 0);
-    debug_80C5208();
-    gUnknown_Debug_2038A1C->unk168 = 0;
-    gUnknown_Debug_2038A1C->unk169 = 0;
+    CreateTask(Task_WatanabeDebugInitPokemonCreator, 0);
+    WatanabeDebug_InitPokemonCreatorState();
+    gWatanabePokemonCreatorState->categoryIndex = 0;
+    gWatanabePokemonCreatorState->fieldIndex = 0;
 }
 
-void debug_80C53A4(u8 taskId)
+void Task_WatanabeDebugInitPokemonCreator(u8 taskId)
 {
-    gTasks[taskId].func = debug_80C53C0;
+    gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
 }
 
-void debug_80C53C0(u8 taskId)
+void Task_WatanabeDebugDrawPokemonCreator(u8 taskId)
 {
-    debug_80C6384();
-    debug_80C627C(0);
-    gTasks[taskId].func = debug_80C53F0;
+    WatanabeDebug_DrawPokemonCreatorFields();
+    WatanabeDebug_MovePokemonCreatorCursor(0);
+    gTasks[taskId].func = Task_WatanabeDebugHandlePokemonCreatorInput;
 }
 
-void debug_80C53F0(u8 taskId)
+void Task_WatanabeDebugHandlePokemonCreatorInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        gUnknown_Debug_2038A1C->unk164 = gUnknown_Debug_2038A1C->unk64[gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]];
-        gUnknown_Debug_2038A1C->unk16a = 0;
-        debug_80C643C();
-        gTasks[taskId].func = debug_80C55E4;
+        gWatanabePokemonCreatorState->previousValue = gWatanabePokemonCreatorState->values[sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]];
+        gWatanabePokemonCreatorState->digitIndex = 0;
+        WatanabeDebug_RedrawPokemonCreatorFields();
+        gTasks[taskId].func = Task_WatanabeDebugHandlePokemonFieldInput;
     }
     else if (JOY_NEW(B_BUTTON))
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        SetMainCallback2(debug_80C370C);
-        gTasks[taskId].func = debug_80C373C;
+        SetMainCallback2(CB2_WatanabeDebugWaitForFade);
+        gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        bool8 r4;
+        bool8 sentToPc;
         PlaySE(SE_SELECT);
-        debug_80C5FFC();
-        r4 = debug_80C527C(&gUnknown_Debug_2038A1C->pokemon);
+        WatanabeDebug_CreatePokemon();
+        sentToPc = WatanabeDebug_AddCreatedPokemonToPartyOrPc(&gWatanabePokemonCreatorState->pokemon);
         Menu_DrawStdWindowFrame(3, 8, 26, 11);
-        if (r4)
-            Menu_PrintText(gUnknown_Debug_083F872A, 4, 9);
+        if (sentToPc)
+            Menu_PrintText(sText_WatanabePokemonAddedToPc, 4, 9);
         else
-            Menu_PrintText(gUnknown_Debug_083F8720, 4, 9);
-        gTasks[taskId].func = debug_80C5708;
+            Menu_PrintText(sText_WatanabePokemonAddedToParty, 4, 9);
+        gTasks[taskId].func = Task_WatanabeDebugWaitForPokemonCreated;
     }
     else if (JOY_NEW(SELECT_BUTTON))
     {
-        u32 r4 = gUnknown_Debug_2038A1C->unk64[0];
-        GetSetPokedexFlag(r4, 2);
-        GetSetPokedexFlag(r4, 3);
+        u32 nationalDexNum = gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM];
+        GetSetPokedexFlag(nationalDexNum, 2);
+        GetSetPokedexFlag(nationalDexNum, 3);
         PlaySE(SE_SELECT);
     }
     else if (JOY_NEW(DPAD_UP))
     {
-        debug_80C627C(2);
+        WatanabeDebug_MovePokemonCreatorCursor(2);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
-        debug_80C627C(1);
+        WatanabeDebug_MovePokemonCreatorCursor(1);
     }
-    else if (JOY_NEW(L_BUTTON) && gUnknown_Debug_2038A1C->unk168 > 0)
+    else if (JOY_NEW(L_BUTTON) && gWatanabePokemonCreatorState->categoryIndex > 0)
     {
-        gUnknown_Debug_2038A1C->unk168--;
-        gUnknown_Debug_2038A1C->unk169 = 0;
-        gTasks[taskId].func = debug_80C53C0;
+        gWatanabePokemonCreatorState->categoryIndex--;
+        gWatanabePokemonCreatorState->fieldIndex = 0;
+        gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
     }
-    else if (JOY_NEW(R_BUTTON) && gUnknown_Debug_2038A1C->unk168 < 5)
+    else if (JOY_NEW(R_BUTTON) && gWatanabePokemonCreatorState->categoryIndex < 5)
     {
-        gUnknown_Debug_2038A1C->unk168++;
-        gUnknown_Debug_2038A1C->unk169 = 0;
-        gTasks[taskId].func = debug_80C53C0;
+        gWatanabePokemonCreatorState->categoryIndex++;
+        gWatanabePokemonCreatorState->fieldIndex = 0;
+        gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
     }
 }
 
-void debug_80C55E4(u8 taskId)
+void Task_WatanabeDebugHandlePokemonFieldInput(u8 taskId)
 {
-    u8 r7 = gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169];
+    u8 fieldId = sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex];
     if (JOY_NEW(A_BUTTON))
     {
-        gTasks[taskId].func = debug_80C53C0;
+        gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        gUnknown_Debug_2038A1C->unk64[r7] = gUnknown_Debug_2038A1C->unk164;
-        gTasks[taskId].func = debug_80C53C0;
+        gWatanabePokemonCreatorState->values[fieldId] = gWatanabePokemonCreatorState->previousValue;
+        gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
     }
     else if (JOY_REPT(DPAD_UP))
     {
-        debug_80C6544(1);
-        debug_80C643C();
+        WatanabeDebug_AdjustPokemonCreatorValue(1);
+        WatanabeDebug_RedrawPokemonCreatorFields();
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
-        debug_80C6544(2);
-        debug_80C643C();
+        WatanabeDebug_AdjustPokemonCreatorValue(2);
+        WatanabeDebug_RedrawPokemonCreatorFields();
     }
-    else if (gUnknown_Debug_083F8554[r7].data.type4->unk9 != 0xFF)
+    else if (sWatanabePokemonEditorFieldItems[fieldId].data.pokemonEditorField->digitCount != 0xFF)
     {
-        if (JOY_NEW(DPAD_LEFT) && gUnknown_Debug_2038A1C->unk16a < gUnknown_Debug_083F8554[r7].data.type4->unk9 - 1)
+        if (JOY_NEW(DPAD_LEFT) && gWatanabePokemonCreatorState->digitIndex < sWatanabePokemonEditorFieldItems[fieldId].data.pokemonEditorField->digitCount - 1)
         {
-            gUnknown_Debug_2038A1C->unk16a++;
-            debug_80C643C();
+            gWatanabePokemonCreatorState->digitIndex++;
+            WatanabeDebug_RedrawPokemonCreatorFields();
         }
-        else if (JOY_NEW(DPAD_RIGHT) && gUnknown_Debug_2038A1C->unk16a > 0)
+        else if (JOY_NEW(DPAD_RIGHT) && gWatanabePokemonCreatorState->digitIndex > 0)
         {
-            gUnknown_Debug_2038A1C->unk16a--;
-            debug_80C643C();
+            gWatanabePokemonCreatorState->digitIndex--;
+            WatanabeDebug_RedrawPokemonCreatorFields();
         }
     }
 }
 
-void debug_80C5708(u8 taskId)
+void Task_WatanabeDebugWaitForPokemonCreated(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        gTasks[taskId].func = debug_80C53C0;
+        gTasks[taskId].func = Task_WatanabeDebugDrawPokemonCreator;
     }
 }
 
-u8 debug_80C5738(u8 * a0, u8 a1, u8 a2)
+u8 WatanabeDebug_FormatPokemonField(u8 *text, u8 fieldId, u8 textColor)
 {
     u16 i;
-    u8 r5;
-    u8 r2;
+    u8 numberTextLength;
+    u8 digitCount;
 
-    if (a1 == 0xfe)
+    if (fieldId == WATANABE_POKEMON_CREATOR_FIELD_PHYSICAL_STATS)
     {
-        debug_80C689C(a0, gUnknown_Debug_083F850A, 7);
-        debug_80C6678(a0 + 7, gUnknown_Debug_2038A1C->unk64[35], 3, 1);
-        a0[19] = CHAR_SPACE;
-        a0[20] = CHAR_SPACE;
-        debug_80C689C(a0 + 21, gUnknown_Debug_083F8514, 7);
-        debug_80C6678(a0 + 28, gUnknown_Debug_2038A1C->unk64[36], 3, 1);
-        a0[40] = CHAR_SPACE;
-        a0[41] = CHAR_SPACE;
-        debug_80C689C(a0 + 42, gUnknown_Debug_083F851C, 9);
-        debug_80C6678(a0 + 49, gUnknown_Debug_2038A1C->unk64[37], 3, 1);
+        WatanabeDebug_CopyText(text, sText_WatanabePokemonEditorHp, 7);
+        WatanabeDebug_AppendColoredNumber(text + 7, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP], 3, 1);
+        text[19] = CHAR_SPACE;
+        text[20] = CHAR_SPACE;
+        WatanabeDebug_CopyText(text + 21, sText_WatanabePokemonEditorAttack, 7);
+        WatanabeDebug_AppendColoredNumber(text + 28, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK], 3, 1);
+        text[40] = CHAR_SPACE;
+        text[41] = CHAR_SPACE;
+        WatanabeDebug_CopyText(text + 42, sText_WatanabePokemonEditorDefense, 9);
+        WatanabeDebug_AppendColoredNumber(text + 49, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE], 3, 1);
         return 0;
     }
-    if (a1 == 0xfd)
+    if (fieldId == WATANABE_POKEMON_CREATOR_FIELD_SPECIAL_STATS)
     {
-        debug_80C689C(a0, gUnknown_Debug_083F8524, 9);
-        debug_80C6678(a0 + 9, gUnknown_Debug_2038A1C->unk64[38], 3, 1);
-        a0[21] = CHAR_SPACE;
-        a0[22] = CHAR_SPACE;
-        debug_80C689C(a0 + 23, gUnknown_Debug_083F852D, 9);
-        debug_80C6678(a0 + 32, gUnknown_Debug_2038A1C->unk64[39], 3, 1);
-        a0[44] = CHAR_SPACE;
-        a0[45] = CHAR_SPACE;
-        debug_80C689C(a0 + 46, gUnknown_Debug_083F8537, 9);
-        debug_80C6678(a0 + 55, gUnknown_Debug_2038A1C->unk64[40], 3, 1);
+        WatanabeDebug_CopyText(text, sText_WatanabePokemonEditorSpeed, 9);
+        WatanabeDebug_AppendColoredNumber(text + 9, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED], 3, 1);
+        text[21] = CHAR_SPACE;
+        text[22] = CHAR_SPACE;
+        WatanabeDebug_CopyText(text + 23, sText_WatanabePokemonEditorSpAttack, 9);
+        WatanabeDebug_AppendColoredNumber(text + 32, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK], 3, 1);
+        text[44] = CHAR_SPACE;
+        text[45] = CHAR_SPACE;
+        WatanabeDebug_CopyText(text + 46, sText_WatanabePokemonEditorSpDefense, 9);
+        WatanabeDebug_AppendColoredNumber(text + 55, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE], 3, 1);
         return 0;
     }
     for (i = 0; i < 12; i++)
-        a0[i] = CHAR_SPACE;
-    debug_80C689C(a0, gUnknown_Debug_083F8554[a1].text, 11);
+        text[i] = CHAR_SPACE;
+    WatanabeDebug_CopyText(text, sWatanabePokemonEditorFieldItems[fieldId].label, 11);
     for (i = 12; i < 256; i++)
-        a0[i] = EOS;
-    r2 = gUnknown_Debug_083F8554[a1].data.type4->unk9;
-    r5 = r2 * 4;
-    switch (a1)
+        text[i] = EOS;
+    digitCount = sWatanabePokemonEditorFieldItems[fieldId].data.pokemonEditorField->digitCount;
+    numberTextLength = digitCount * 4;
+    switch (fieldId)
     {
         default:
-            a0[0] = EOS;
+            text[0] = EOS;
             break;
-        case 0:
-            debug_80C6678(a0 + 10, gUnknown_Debug_2038A1C->unk64[a1], r2, a2);
-            a0[10 + r5] = CHAR_SPACE;
-            a0[11 + r5] = EXT_CTRL_CODE_BEGIN;
-            a0[12 + r5] = 0x01;
-            a0[13 + r5] = a2;
-            debug_80C689C(a0 + 14 + r5, gSpeciesNames[NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[a1])], 10);
+        case WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM:
+            WatanabeDebug_AppendColoredNumber(text + 10, gWatanabePokemonCreatorState->values[fieldId], digitCount, textColor);
+            text[10 + numberTextLength] = CHAR_SPACE;
+            text[11 + numberTextLength] = EXT_CTRL_CODE_BEGIN;
+            text[12 + numberTextLength] = 0x01;
+            text[13 + numberTextLength] = textColor;
+            WatanabeDebug_CopyText(text + 14 + numberTextLength, gSpeciesNames[NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[fieldId])], 10);
             break;
-        case 5:
-            switch (gUnknown_Debug_2038A1C->unk64[a1])
+        case WATANABE_POKEMON_CREATOR_VALUE_GENDER:
+            switch (gWatanabePokemonCreatorState->values[fieldId])
             {
                 case 0:
-                    debug_80C689C(a0 + 10, gUnknown_Debug_083F8546, 2);
+                    WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorFemale, 2);
                     break;
                 case 1:
-                    debug_80C689C(a0 + 10, gUnknown_Debug_083F8541, 2);
+                    WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorNone, 2);
                     break;
                 case 2:
-                    debug_80C689C(a0 + 10, gUnknown_Debug_083F8544, 2);
+                    WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorMale, 2);
                     break;
             }
             break;
-        case 7 ... 10:
-            debug_80C6678(a0 + 10, gUnknown_Debug_2038A1C->unk64[a1], r2, a2);
-            a0[10 + r5] = CHAR_SPACE;
-            a0[11 + r5] = EXT_CTRL_CODE_BEGIN;
-            a0[12 + r5] = 0x01;
-            a0[13 + r5] = a2;
-            debug_80C689C(a0 + 14 + r5, gMoveNames[gUnknown_Debug_2038A1C->unk64[a1]], 12);
+        case WATANABE_POKEMON_CREATOR_VALUE_MOVE_1 ... WATANABE_POKEMON_CREATOR_VALUE_MOVE_4:
+            WatanabeDebug_AppendColoredNumber(text + 10, gWatanabePokemonCreatorState->values[fieldId], digitCount, textColor);
+            text[10 + numberTextLength] = CHAR_SPACE;
+            text[11 + numberTextLength] = EXT_CTRL_CODE_BEGIN;
+            text[12 + numberTextLength] = 0x01;
+            text[13 + numberTextLength] = textColor;
+            WatanabeDebug_CopyText(text + 14 + numberTextLength, gMoveNames[gWatanabePokemonCreatorState->values[fieldId]], 12);
             break;
-        case 11:
-            debug_80C6678(a0 + 10, gUnknown_Debug_2038A1C->unk64[a1], r2, a2);
-            a0[10 + r5] = CHAR_SPACE;
-            a0[11 + r5] = EXT_CTRL_CODE_BEGIN;
-            a0[12 + r5] = 0x01;
-            a0[13 + r5] = a2;
-            if (gUnknown_Debug_2038A1C->unk64[a1] != ITEM_NONE)
-                debug_80C689C(a0 + 14 + r5, ItemId_GetName(gUnknown_Debug_2038A1C->unk64[a1]), 9);
+        case WATANABE_POKEMON_CREATOR_VALUE_HELD_ITEM:
+            WatanabeDebug_AppendColoredNumber(text + 10, gWatanabePokemonCreatorState->values[fieldId], digitCount, textColor);
+            text[10 + numberTextLength] = CHAR_SPACE;
+            text[11 + numberTextLength] = EXT_CTRL_CODE_BEGIN;
+            text[12 + numberTextLength] = 0x01;
+            text[13 + numberTextLength] = textColor;
+            if (gWatanabePokemonCreatorState->values[fieldId] != ITEM_NONE)
+                WatanabeDebug_CopyText(text + 14 + numberTextLength, ItemId_GetName(gWatanabePokemonCreatorState->values[fieldId]), 9);
             else
-                debug_80C689C(a0 + 14 + r5, gUnknown_Debug_083F8541, 9);
+                WatanabeDebug_CopyText(text + 14 + numberTextLength, sText_WatanabePokemonEditorNone, 9);
             break;
-        case 12:
-            a0 += 12;
-            debug_80C689C(a0, gAbilityNames[GetAbilityBySpecies(NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0]), gUnknown_Debug_2038A1C->unk64[a1])], 12);
+        case WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT:
+            text += 12;
+            WatanabeDebug_CopyText(text, gAbilityNames[GetAbilityBySpecies(NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM]), gWatanabePokemonCreatorState->values[fieldId])], 12);
             break;
-        case 34:
-            debug_80C689C(a0 + 10, gUnknown_Debug_083F86E8[gUnknown_Debug_2038A1C->unk64[a1]].text, 4);
+        case WATANABE_POKEMON_CREATOR_VALUE_STATUS:
+            WatanabeDebug_CopyText(text + 10, sWatanabePokemonEditorStatusItems[gWatanabePokemonCreatorState->values[fieldId]].label, 4);
             break;
-        case 1 ... 4:
-        case 13 ... 32:
-            debug_80C6678(a0 + 12, gUnknown_Debug_2038A1C->unk64[a1], r2, a2);
+        case WATANABE_POKEMON_CREATOR_VALUE_LEVEL ... WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY:
+        case WATANABE_POKEMON_CREATOR_VALUE_HP_IV ... WATANABE_POKEMON_CREATOR_VALUE_POKERUS:
+            WatanabeDebug_AppendColoredNumber(text + 12, gWatanabePokemonCreatorState->values[fieldId], digitCount, textColor);
             break;
-        case 33:
-            if (gUnknown_Debug_2038A1C->unk64[a1])
-                debug_80C689C(a0 + 10, gUnknown_Debug_083F854A, 4);
+        case WATANABE_POKEMON_CREATOR_VALUE_IS_EGG:
+            if (gWatanabePokemonCreatorState->values[fieldId])
+                WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorOn, 4);
             else
-                debug_80C689C(a0 + 10, gUnknown_Debug_083F854D, 4);
+                WatanabeDebug_CopyText(text + 10, sText_WatanabePokemonEditorOff, 4);
             break;
-        case 6:
-            debug_80C689C(a0 + 10, gNatureNames[gUnknown_Debug_2038A1C->unk64[a1]], 5);
+        case WATANABE_POKEMON_CREATOR_VALUE_NATURE:
+            WatanabeDebug_CopyText(text + 10, gNatureNames[gWatanabePokemonCreatorState->values[fieldId]], 5);
             break;
     }
     return 0;
 }
 
-u32 debug_80C5B60(u8 a0)
+u32 WatanabeDebug_GetPokemonCreatorValue(u8 fieldId)
 {
-    return gUnknown_Debug_2038A1C->unk64[a0];
+    return gWatanabePokemonCreatorState->values[fieldId];
 }
 
-void debug_80C5B74(u32 a0, u8 a1)
+void WatanabeDebug_SetPokemonCreatorValue(u32 value, u8 fieldId)
 {
-    switch (a1)
+    switch (fieldId)
     {
         default:
-            gUnknown_Debug_2038A1C->unk64[a1] = a0;
+            gWatanabePokemonCreatorState->values[fieldId] = value;
             break;
-        case 0:
-        case 3:
-        case 4:
-            gUnknown_Debug_2038A1C->unk64[a1] = a0;
-            debug_80C5C94();
+        case WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM:
+        case WATANABE_POKEMON_CREATOR_VALUE_OT_ID:
+        case WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY:
+            gWatanabePokemonCreatorState->values[fieldId] = value;
+            WatanabeDebug_RecreatePokemon();
             break;
-        case 1:
-            gUnknown_Debug_2038A1C->unk64[a1] = a0;
-            gUnknown_Debug_2038A1C->unk64[2] = gExperienceTables[gBaseStats[NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0])].growthRate][a0];
-            debug_80C5C94();
+        case WATANABE_POKEMON_CREATOR_VALUE_LEVEL:
+            gWatanabePokemonCreatorState->values[fieldId] = value;
+            gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE] = gExperienceTables[gBaseStats[NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM])].growthRate][value];
+            WatanabeDebug_RecreatePokemon();
             break;
-        case 2:
-            gUnknown_Debug_2038A1C->unk64[a1] = a0;
-            debug_80C5DEC();
+        case WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE:
+            gWatanabePokemonCreatorState->values[fieldId] = value;
+            WatanabeDebug_RecalculatePokemonForExperience();
             break;
-        case 13 ... 24:
-            gUnknown_Debug_2038A1C->unk64[a1] = a0;
-            debug_80C5EF4();
+        case WATANABE_POKEMON_CREATOR_VALUE_HP_IV ... WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_EV:
+            gWatanabePokemonCreatorState->values[fieldId] = value;
+            WatanabeDebug_RecalculatePokemonStats();
             break;
     }
 }
 
-void debug_80C5C94(void)
+void WatanabeDebug_RecreatePokemon(void)
 {
-    u32 ivs = gUnknown_Debug_2038A1C->unk64[13] & 0x1f;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[15] & 0x1f) << 5;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[17] & 0x1f) << 10;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[19] & 0x1f) << 15;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[21] & 0x1f) << 20;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[23] & 0x1f) << 25;
-    CreateMon(&gUnknown_Debug_2038A1C->pokemon, NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0]), gUnknown_Debug_2038A1C->unk64[1], ivs, TRUE, gUnknown_Debug_2038A1C->unk64[4], TRUE, gUnknown_Debug_2038A1C->unk64[3]);
-    gUnknown_Debug_2038A1C->unk64[5] = (u8)(GetMonGender(&gUnknown_Debug_2038A1C->pokemon) + 2);
-    gUnknown_Debug_2038A1C->unk64[6] = GetNature(&gUnknown_Debug_2038A1C->pokemon);
-    gUnknown_Debug_2038A1C->unk64[7] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE1);
-    gUnknown_Debug_2038A1C->unk64[8] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE2);
-    gUnknown_Debug_2038A1C->unk64[9] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE3);
-    gUnknown_Debug_2038A1C->unk64[10] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE4);
-    gUnknown_Debug_2038A1C->unk64[2] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_EXP);
-    gUnknown_Debug_2038A1C->unk64[35] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MAX_HP);
-    gUnknown_Debug_2038A1C->unk64[36] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK);
-    gUnknown_Debug_2038A1C->unk64[37] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF);
-    gUnknown_Debug_2038A1C->unk64[38] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED);
-    gUnknown_Debug_2038A1C->unk64[39] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK);
-    gUnknown_Debug_2038A1C->unk64[40] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF);
+    u32 ivs = gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP_IV] & 0x1f;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV] & 0x1f) << 5;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV] & 0x1f) << 10;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV] & 0x1f) << 15;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV] & 0x1f) << 20;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV] & 0x1f) << 25;
+    CreateMon(&gWatanabePokemonCreatorState->pokemon, NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM]), gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_LEVEL], ivs, TRUE, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY], TRUE, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_OT_ID]);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_GENDER] = (u8)(GetMonGender(&gWatanabePokemonCreatorState->pokemon) + 2);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATURE] = GetNature(&gWatanabePokemonCreatorState->pokemon);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_1] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE1);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_2] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE2);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_3] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE3);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_4] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE4);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_EXP);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MAX_HP);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF);
 }
 
-void debug_80C5DEC(void)
+void WatanabeDebug_RecalculatePokemonForExperience(void)
 {
     u32 zero = 0;
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_EXP, gUnknown_Debug_2038A1C->unk64 + 2);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE1, &zero);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE2, &zero);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE3, &zero);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE4, &zero);
-    CalculateMonStats(&gUnknown_Debug_2038A1C->pokemon);
-    GiveMonInitialMoveset(&gUnknown_Debug_2038A1C->pokemon);
-    gUnknown_Debug_2038A1C->unk64[1] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_LEVEL);
-    gUnknown_Debug_2038A1C->unk64[7] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE1);
-    gUnknown_Debug_2038A1C->unk64[8] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE2);
-    gUnknown_Debug_2038A1C->unk64[9] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE3);
-    gUnknown_Debug_2038A1C->unk64[10] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MOVE4);
-    gUnknown_Debug_2038A1C->unk64[35] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MAX_HP);
-    gUnknown_Debug_2038A1C->unk64[36] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK);
-    gUnknown_Debug_2038A1C->unk64[37] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF);
-    gUnknown_Debug_2038A1C->unk64[38] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED);
-    gUnknown_Debug_2038A1C->unk64[39] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK);
-    gUnknown_Debug_2038A1C->unk64[40] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_EXP, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE1, &zero);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE2, &zero);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE3, &zero);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE4, &zero);
+    CalculateMonStats(&gWatanabePokemonCreatorState->pokemon);
+    GiveMonInitialMoveset(&gWatanabePokemonCreatorState->pokemon);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_LEVEL] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_LEVEL);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_1] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE1);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_2] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE2);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_3] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE3);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_4] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MOVE4);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MAX_HP);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF);
 }
 
-void debug_80C5EF4(void)
+void WatanabeDebug_RecalculatePokemonStats(void)
 {
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HP_IV, gUnknown_Debug_2038A1C->unk64 + 13);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HP_EV, gUnknown_Debug_2038A1C->unk64 + 14);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK_IV, gUnknown_Debug_2038A1C->unk64 + 15);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK_EV, gUnknown_Debug_2038A1C->unk64 + 16);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF_IV, gUnknown_Debug_2038A1C->unk64 + 17);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF_EV, gUnknown_Debug_2038A1C->unk64 + 18);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED_IV, gUnknown_Debug_2038A1C->unk64 + 19);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED_EV, gUnknown_Debug_2038A1C->unk64 + 20);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK_IV, gUnknown_Debug_2038A1C->unk64 + 21);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK_EV, gUnknown_Debug_2038A1C->unk64 + 22);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF_IV, gUnknown_Debug_2038A1C->unk64 + 23);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF_EV, gUnknown_Debug_2038A1C->unk64 + 24);
-    CalculateMonStats(&gUnknown_Debug_2038A1C->pokemon);
-    gUnknown_Debug_2038A1C->unk64[35] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MAX_HP);
-    gUnknown_Debug_2038A1C->unk64[36] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK);
-    gUnknown_Debug_2038A1C->unk64[37] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF);
-    gUnknown_Debug_2038A1C->unk64[38] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED);
-    gUnknown_Debug_2038A1C->unk64[39] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK);
-    gUnknown_Debug_2038A1C->unk64[40] = GetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HP_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HP_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HP_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HP_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ATTACK_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SPEED_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_EV);
+    CalculateMonStats(&gWatanabePokemonCreatorState->pokemon);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MAX_HP);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK);
+    gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE] = GetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF);
 }
 
-void debug_80C5FFC(void)
+void WatanabeDebug_CreatePokemon(void)
 {
     u32 ivs;
-    u8 sp10[] = DTR("たまご", "EGG");
+    u8 eggName[] = DTR("たまご", "EGG");
 #if (ENGLISH && REVISION == 0)
-    u8 sp14[] = _("デバッグポケ1");
+    u8 otName[] = _("デバッグポケ1");
 #else
-    u8 sp14[] = _("DebugーG");
+    u8 otName[] = _("DebugーG");
 #endif
-    u8 one;
-    u16 ff;
+    u8 language;
+    u16 metLocation;
 
-    ivs = gUnknown_Debug_2038A1C->unk64[13] & 0x1f;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[15] & 0x1f) << 5;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[17] & 0x1f) << 10;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[19] & 0x1f) << 15;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[21] & 0x1f) << 20;
-    ivs |= (gUnknown_Debug_2038A1C->unk64[23] & 0x1f) << 25;
+    ivs = gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_HP_IV] & 0x1f;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV] & 0x1f) << 5;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV] & 0x1f) << 10;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV] & 0x1f) << 15;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV] & 0x1f) << 20;
+    ivs |= (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV] & 0x1f) << 25;
 
-    CreateMon(&gUnknown_Debug_2038A1C->pokemon, NationalPokedexNumToSpecies(gUnknown_Debug_2038A1C->unk64[0]), gUnknown_Debug_2038A1C->unk64[1], ivs, TRUE, gUnknown_Debug_2038A1C->unk64[4], TRUE, gUnknown_Debug_2038A1C->unk64[3]);
+    CreateMon(&gWatanabePokemonCreatorState->pokemon, NationalPokedexNumToSpecies(gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_NATIONAL_DEX_NUM]), gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_LEVEL], ivs, TRUE, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_PERSONALITY], TRUE, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_OT_ID]);
 
-    if (gUnknown_Debug_2038A1C->unk64[7] != MOVE_NONE)
-        SetMonMoveSlot(&gUnknown_Debug_2038A1C->pokemon, gUnknown_Debug_2038A1C->unk64[7], 0);
-    if (gUnknown_Debug_2038A1C->unk64[8] != MOVE_NONE)
-        SetMonMoveSlot(&gUnknown_Debug_2038A1C->pokemon, gUnknown_Debug_2038A1C->unk64[8], 1);
-    if (gUnknown_Debug_2038A1C->unk64[9] != MOVE_NONE)
-        SetMonMoveSlot(&gUnknown_Debug_2038A1C->pokemon, gUnknown_Debug_2038A1C->unk64[9], 2);
-    if (gUnknown_Debug_2038A1C->unk64[10] != MOVE_NONE)
-        SetMonMoveSlot(&gUnknown_Debug_2038A1C->pokemon, gUnknown_Debug_2038A1C->unk64[10], 3);
+    if (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_1] != MOVE_NONE)
+        SetMonMoveSlot(&gWatanabePokemonCreatorState->pokemon, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_1], 0);
+    if (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_2] != MOVE_NONE)
+        SetMonMoveSlot(&gWatanabePokemonCreatorState->pokemon, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_2], 1);
+    if (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_3] != MOVE_NONE)
+        SetMonMoveSlot(&gWatanabePokemonCreatorState->pokemon, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_3], 2);
+    if (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_4] != MOVE_NONE)
+        SetMonMoveSlot(&gWatanabePokemonCreatorState->pokemon, gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_MOVE_4], 3);
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_EXP, gUnknown_Debug_2038A1C->unk64 + 2);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HP_IV, gUnknown_Debug_2038A1C->unk64 + 13);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HP_EV, gUnknown_Debug_2038A1C->unk64 + 14);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK_IV, gUnknown_Debug_2038A1C->unk64 + 15);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ATK_EV, gUnknown_Debug_2038A1C->unk64 + 16);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF_IV, gUnknown_Debug_2038A1C->unk64 + 17);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_DEF_EV, gUnknown_Debug_2038A1C->unk64 + 18);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED_IV, gUnknown_Debug_2038A1C->unk64 + 19);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPEED_EV, gUnknown_Debug_2038A1C->unk64 + 20);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK_IV, gUnknown_Debug_2038A1C->unk64 + 21);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPATK_EV, gUnknown_Debug_2038A1C->unk64 + 22);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF_IV, gUnknown_Debug_2038A1C->unk64 + 23);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SPDEF_EV, gUnknown_Debug_2038A1C->unk64 + 24);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_EXP, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_EXPERIENCE);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HP_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HP_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HP_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HP_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ATTACK_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ATK_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ATTACK_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_DEF_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_DEFENSE_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SPEED_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPEED_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SPEED_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPATK_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_ATTACK_EV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF_IV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_IV);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SPDEF_EV, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SP_DEFENSE_EV);
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_COOL, gUnknown_Debug_2038A1C->unk64 + 25);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_BEAUTY, gUnknown_Debug_2038A1C->unk64 + 26);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_CUTE, gUnknown_Debug_2038A1C->unk64 + 27);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SMART, gUnknown_Debug_2038A1C->unk64 + 28);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_TOUGH, gUnknown_Debug_2038A1C->unk64 + 29);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_SHEEN, gUnknown_Debug_2038A1C->unk64 + 30);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_FRIENDSHIP, gUnknown_Debug_2038A1C->unk64 + 31);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_POKERUS, gUnknown_Debug_2038A1C->unk64 + 32);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_COOL, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_COOL);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_BEAUTY, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_BEAUTY);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_CUTE, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_CUTE);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SMART, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SMART);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_TOUGH, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_TOUGH);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_SHEEN, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_SHEEN);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_FRIENDSHIP, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_FRIENDSHIP);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_POKERUS, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_POKERUS);
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_HELD_ITEM, gUnknown_Debug_2038A1C->unk64 + 11);
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_ALT_ABILITY, gUnknown_Debug_2038A1C->unk64 + 12);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_HELD_ITEM, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_HELD_ITEM);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_ALT_ABILITY, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_ABILITY_SLOT);
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_STATUS, &gUnknown_Debug_083F86E8[gUnknown_Debug_2038A1C->unk64[34]].data.type3);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_STATUS, &sWatanabePokemonEditorStatusItems[gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_STATUS]].data.status);
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_IS_EGG, gUnknown_Debug_2038A1C->unk64 + 33);
-    if (gUnknown_Debug_2038A1C->unk64[33])
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_IS_EGG, gWatanabePokemonCreatorState->values + WATANABE_POKEMON_CREATOR_VALUE_IS_EGG);
+    if (gWatanabePokemonCreatorState->values[WATANABE_POKEMON_CREATOR_VALUE_IS_EGG])
     {
-        SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_NICKNAME, sp10);
-        one = LANGUAGE_JAPANESE;
-        SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_LANGUAGE, &one);
+        SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_NICKNAME, eggName);
+        language = LANGUAGE_JAPANESE;
+        SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_LANGUAGE, &language);
     }
 
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_OT_NAME, sp14);
-    ff = 0xff;
-    SetMonData(&gUnknown_Debug_2038A1C->pokemon, MON_DATA_MET_LOCATION, &ff);
-    CalculateMonStats(&gUnknown_Debug_2038A1C->pokemon);
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_OT_NAME, otName);
+    metLocation = 0xff;
+    SetMonData(&gWatanabePokemonCreatorState->pokemon, MON_DATA_MET_LOCATION, &metLocation);
+    CalculateMonStats(&gWatanabePokemonCreatorState->pokemon);
 }
 
-void debug_80C627C(u8 a0)
+void WatanabeDebug_MovePokemonCreatorCursor(u8 direction)
 {
-    u8 sp00[] = _("▶");
-    u8 sp04[] = _(" ");
+    u8 cursor[] = _("▶");
+    u8 blank[] = _(" ");
 
-    switch (a0)
+    switch (direction)
     {
         case 0:
-            Menu_PrintText(sp00, 1, 2 * gUnknown_Debug_2038A1C->unk169 + 5);
+            Menu_PrintText(cursor, 1, 2 * gWatanabePokemonCreatorState->fieldIndex + 5);
             break;
         case 1:
-            if (gUnknown_Debug_2038A1C->unk169 < gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].data.type3 - 1)
+            if (gWatanabePokemonCreatorState->fieldIndex < sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].data.categoryLength - 1)
             {
-                Menu_PrintText(sp04, 1, 2 * gUnknown_Debug_2038A1C->unk169 + 5);
-                gUnknown_Debug_2038A1C->unk169++;
-                Menu_PrintText(sp00, 1, 2 * gUnknown_Debug_2038A1C->unk169 + 5);
+                Menu_PrintText(blank, 1, 2 * gWatanabePokemonCreatorState->fieldIndex + 5);
+                gWatanabePokemonCreatorState->fieldIndex++;
+                Menu_PrintText(cursor, 1, 2 * gWatanabePokemonCreatorState->fieldIndex + 5);
             }
             break;
         case 2:
-            if (gUnknown_Debug_2038A1C->unk169 > 0)
+            if (gWatanabePokemonCreatorState->fieldIndex > 0)
             {
-                Menu_PrintText(sp04, 1, 2 * gUnknown_Debug_2038A1C->unk169 + 5);
-                gUnknown_Debug_2038A1C->unk169--;
-                Menu_PrintText(sp00, 1, 2 * gUnknown_Debug_2038A1C->unk169 + 5);
+                Menu_PrintText(blank, 1, 2 * gWatanabePokemonCreatorState->fieldIndex + 5);
+                gWatanabePokemonCreatorState->fieldIndex--;
+                Menu_PrintText(cursor, 1, 2 * gWatanabePokemonCreatorState->fieldIndex + 5);
             }
             break;
     }
 }
 
-void debug_80C6384(void)
+void WatanabeDebug_DrawPokemonCreatorFields(void)
 {
     u16 i;
 
     Menu_DrawStdWindowFrame(0, 4, 29, 19);
-    for (i = 0; gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[i] != EOS; i++)
+    for (i = 0; sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[i] != EOS; i++)
     {
-        gUnknown_Debug_2038A1C->unk16b[0] = EXT_CTRL_CODE_BEGIN;
-        gUnknown_Debug_2038A1C->unk16b[1] = 0x01;
-        gUnknown_Debug_2038A1C->unk16b[2] = 0x01;
-        debug_80C5738(gUnknown_Debug_2038A1C->unk16b + 3, gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[i], 1);
-        Menu_PrintText(gUnknown_Debug_2038A1C->unk16b, 2, 2 * i + 5);
+        gWatanabePokemonCreatorState->textBuffer[0] = EXT_CTRL_CODE_BEGIN;
+        gWatanabePokemonCreatorState->textBuffer[1] = 0x01;
+        gWatanabePokemonCreatorState->textBuffer[2] = 0x01;
+        WatanabeDebug_FormatPokemonField(gWatanabePokemonCreatorState->textBuffer + 3, sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[i], 1);
+        Menu_PrintText(gWatanabePokemonCreatorState->textBuffer, 2, 2 * i + 5);
     }
 }
 
-void debug_80C643C(void)
+void WatanabeDebug_RedrawPokemonCreatorFields(void)
 {
     u16 i;
 
     Menu_BlankWindowRect(2, 5, 28, 18);
-    for (i = 0; gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[i] != EOS; i++)
+    for (i = 0; sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[i] != EOS; i++)
     {
-        gUnknown_Debug_2038A1C->unk16b[0] = EXT_CTRL_CODE_BEGIN;
-        gUnknown_Debug_2038A1C->unk16b[1] = 0x01;
-        if (i == gUnknown_Debug_2038A1C->unk169)
+        gWatanabePokemonCreatorState->textBuffer[0] = EXT_CTRL_CODE_BEGIN;
+        gWatanabePokemonCreatorState->textBuffer[1] = 0x01;
+        if (i == gWatanabePokemonCreatorState->fieldIndex)
         {
-            gUnknown_Debug_2038A1C->unk16b[2] = 0x02;
-            debug_80C5738(gUnknown_Debug_2038A1C->unk16b + 3, gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[i], 2);
+            gWatanabePokemonCreatorState->textBuffer[2] = 0x02;
+            WatanabeDebug_FormatPokemonField(gWatanabePokemonCreatorState->textBuffer + 3, sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[i], 2);
         }
         else
         {
-            gUnknown_Debug_2038A1C->unk16b[2] = 0x01;
-            debug_80C5738(gUnknown_Debug_2038A1C->unk16b + 3, gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[i], 1);
+            gWatanabePokemonCreatorState->textBuffer[2] = 0x01;
+            WatanabeDebug_FormatPokemonField(gWatanabePokemonCreatorState->textBuffer + 3, sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[i], 1);
         }
-        Menu_PrintText(gUnknown_Debug_2038A1C->unk16b, 2, 2 * i + 5);
+        Menu_PrintText(gWatanabePokemonCreatorState->textBuffer, 2, 2 * i + 5);
     }
 }
 
-const u32 gUnknown_Debug_083F8768[] = {
+const u32 sWatanabePowersOfTen[] = {
     1,
     10,
     100,
@@ -2359,189 +2447,189 @@ const u32 gUnknown_Debug_083F8768[] = {
     1000000000
 };
 
-void debug_80C6544(u8 a0)
+void WatanabeDebug_AdjustPokemonCreatorValue(u8 direction)
 {
-    u32 r7 = debug_80C5B60(gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]);
-    u32 r5 = gUnknown_Debug_083F8554[gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]].data.type4->totalPoints;
-    u32 r4 = gUnknown_Debug_083F8554[gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]].data.type4->round1Points;
-    u32 r3 = gUnknown_Debug_083F8768[gUnknown_Debug_2038A1C->unk16a];
+    u32 value = WatanabeDebug_GetPokemonCreatorValue(sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]);
+    u32 minValue = sWatanabePokemonEditorFieldItems[sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]].data.pokemonEditorField->minValue;
+    u32 maxValue = sWatanabePokemonEditorFieldItems[sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]].data.pokemonEditorField->maxValue;
+    u32 adjustment = sWatanabePowersOfTen[gWatanabePokemonCreatorState->digitIndex];
 
-    if (gUnknown_Debug_083F8554[gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]].data.type4->random == 0)
+    if (sWatanabePokemonEditorFieldItems[sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]].data.pokemonEditorField->skipValueAdjustment == 0)
     {
-        switch (a0)
+        switch (direction)
         {
             case 1:
-                if (r7 < r4 - r3)
-                    r7 += r3;
-                else if (r7 < r4)
-                    r7 = r4;
+                if (value < maxValue - adjustment)
+                    value += adjustment;
+                else if (value < maxValue)
+                    value = maxValue;
                 else
-                    r7 = r5;
+                    value = minValue;
                 break;
             case 2:
-                if (r7 > r5 + r3)
-                    r7 -= r3;
-                else if (r7 > r5)
-                    r7 = r5;
+                if (value > minValue + adjustment)
+                    value -= adjustment;
+                else if (value > minValue)
+                    value = minValue;
                 else
-                    r7 = r4;
+                    value = maxValue;
                 break;
         }
     }
-    debug_80C5B74(r7, gUnknown_Debug_083F8698[gUnknown_Debug_2038A1C->unk168].text[gUnknown_Debug_2038A1C->unk169]);
+    WatanabeDebug_SetPokemonCreatorValue(value, sWatanabePokemonEditorCategories[gWatanabePokemonCreatorState->categoryIndex].label[gWatanabePokemonCreatorState->fieldIndex]);
 }
 
-void debug_80C6630(u8 * a0, u8 a1, u8 a2, u8 a3)
+void WatanabeDebug_AppendColoredDigit(u8 *text, u8 digit, u8 textColor, u8 digitIndex)
 {
-    *a0++ = EXT_CTRL_CODE_BEGIN;
-    *a0++ = 0x01;
-    if (a2 == 2)
+    *text++ = EXT_CTRL_CODE_BEGIN;
+    *text++ = 0x01;
+    if (textColor == 2)
     {
-        if (a3 != gUnknown_Debug_2038A1C->unk16a)
-            *a0 = 0x02;
+        if (digitIndex != gWatanabePokemonCreatorState->digitIndex)
+            *text = 0x02;
         else
-            *a0 = 0x04;
+            *text = 0x04;
     }
     else
-        *a0 = 0x01;
-    a0[1] = a1 + CHAR_0;
+        *text = 0x01;
+    text[1] = digit + CHAR_0;
 }
 
-void debug_80C6678(u8 * a0, u32 a1, u8 a2, u8 a3)
+void WatanabeDebug_AppendColoredNumber(u8 *text, u32 value, u8 digitCount, u8 textColor)
 {
-    u8 r7 = 0;
+    u8 textOffset = 0;
 
-    switch (a2)
+    switch (digitCount)
     {
         default:
         case 10:
-            debug_80C6630(a0 + r7, a1 / 1000000000, a3, 9);
-            a1 %= 1000000000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 1000000000, textColor, 9);
+            value %= 1000000000;
+            textOffset += 4;
         case  9:
-            debug_80C6630(a0 + r7, a1 / 100000000, a3, 8);
-            a1 %= 100000000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 100000000, textColor, 8);
+            value %= 100000000;
+            textOffset += 4;
         case  8:
-            debug_80C6630(a0 + r7, a1 / 10000000, a3, 7);
-            a1 %= 10000000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 10000000, textColor, 7);
+            value %= 10000000;
+            textOffset += 4;
         case  7:
-            debug_80C6630(a0 + r7, a1 / 1000000, a3, 6);
-            a1 %= 1000000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 1000000, textColor, 6);
+            value %= 1000000;
+            textOffset += 4;
         case  6:
-            debug_80C6630(a0 + r7, a1 / 100000, a3, 5);
-            a1 %= 100000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 100000, textColor, 5);
+            value %= 100000;
+            textOffset += 4;
         case  5:
-            debug_80C6630(a0 + r7, a1 / 10000, a3, 4);
-            a1 %= 10000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 10000, textColor, 4);
+            value %= 10000;
+            textOffset += 4;
         case  4:
-            debug_80C6630(a0 + r7, a1 / 1000, a3, 3);
-            a1 %= 1000;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 1000, textColor, 3);
+            value %= 1000;
+            textOffset += 4;
         case  3:
-            debug_80C6630(a0 + r7, a1 / 100, a3, 2);
-            a1 %= 100;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 100, textColor, 2);
+            value %= 100;
+            textOffset += 4;
         case  2:
-            debug_80C6630(a0 + r7, a1 / 10, a3, 1);
-            a1 %= 10;
-            r7 += 4;
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value / 10, textColor, 1);
+            value %= 10;
+            textOffset += 4;
         case  1:
-            debug_80C6630(a0 + r7, a1, a3, 0);
+            WatanabeDebug_AppendColoredDigit(text + textOffset, value, textColor, 0);
             break;
     }
 }
 
-void debug_80C689C(u8 * a0, const u8 * a1, u8 a2)
+void WatanabeDebug_CopyText(u8 *dest, const u8 *src, u8 maxLength)
 {
     u8 i;
 
-    for (i = 0; a1[i] != EOS && i < a2; i++)
-        a0[i] = a1[i];
+    for (i = 0; src[i] != EOS && i < maxLength; i++)
+        dest[i] = src[i];
 }
 
-void debug_80C68CC(u16 a0, u8 a1, u8 a2, u8 a3)
+void WatanabeDebug_PrintHexValue(u16 value, u8 x, u8 y, u8 digitCount)
 {
-    u8 sp00[5];
+    u8 hexText[5];
     u8 i;
 
     for (i = 0; i < 4; i++)
-        sp00[i] = 0;
-    sp00[4] = EOS;
+        hexText[i] = 0;
+    hexText[4] = EOS;
 
-    switch (a3)
+    switch (digitCount)
     {
         default:
-            sp00[0] = a0 >> 12;
+            hexText[0] = value >> 12;
         case 3:
-            sp00[1] = (a0 & 0x0F00) >> 8;
+            hexText[1] = (value & 0x0F00) >> 8;
         case 2:
-            sp00[2] = (a0 & 0x00F0) >> 4;
+            hexText[2] = (value & 0x00F0) >> 4;
         case 1:
-            sp00[3] = (a0 & 0x000F);
+            hexText[3] = (value & 0x000F);
             break;
     }
 
     for (i = 0; i < 4; i++)
     {
-        if (sp00[i] < 10)
-            sp00[i] += CHAR_0;
+        if (hexText[i] < 10)
+            hexText[i] += CHAR_0;
         else
-            sp00[i] += CHAR_A - 10;
+            hexText[i] += CHAR_A - 10;
     }
 
-    Menu_PrintText(sp00 + (u8)(4 - a3), a1, a2);
+    Menu_PrintText(hexText + (u8)(4 - digitCount), x, y);
 }
 
-struct OamData gOamData_83F8848 = {
+struct OamData sWatanabeDebugColorPickerOamData = {
     .y = 0xa0
 };
 
-union AnimCmd gSpriteAnim_83F8850[] = {
+union AnimCmd sWatanabeDebugColorPickerAnim0[] = {
     ANIMCMD_FRAME(38, 30),
     ANIMCMD_END
 };
 
-union AnimCmd gSpriteAnim_83F8858[] = {
+union AnimCmd sWatanabeDebugColorPickerAnim1[] = {
     ANIMCMD_FRAME(39, 30),
     ANIMCMD_END
 };
 
-union AnimCmd gSpriteAnim_83F8860[] = {
+union AnimCmd sWatanabeDebugColorPickerAnim2[] = {
     ANIMCMD_FRAME(40, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd *gSpriteAnimTable_83F8868[] = {
-    gSpriteAnim_83F8850,
-    gSpriteAnim_83F8858,
-    gSpriteAnim_83F8860
+const union AnimCmd *sWatanabeDebugColorPickerAnimTable[] = {
+    sWatanabeDebugColorPickerAnim0,
+    sWatanabeDebugColorPickerAnim1,
+    sWatanabeDebugColorPickerAnim2
 };
 
-struct SpriteTemplate gSpriteTemplate_83F8874 = {
+struct SpriteTemplate sWatanabeDebugColorPickerTemplate = {
     SPRITETAG_WATANABE,
     SPRITETAG_WATANABE,
-    &gOamData_83F8848,
-    gSpriteAnimTable_83F8868,
+    &sWatanabeDebugColorPickerOamData,
+    sWatanabeDebugColorPickerAnimTable,
     NULL,
     gDummySpriteAffineAnimTable,
-    debug_80C7584
+    SpriteCB_WatanabeDebugColorPicker
 };
 
-u16 word_83F888C[] = INCBIN_U16("graphics/debug/sprite_browser.gbapal");
-u8 byte_83F88EC[] = INCBIN_U8("graphics/debug/sprite_browser.4bpp");
+u16 sWatanabeDebugSpriteBrowserPalette[] = INCBIN_U16("graphics/debug/sprite_browser.gbapal");
+u8 sWatanabeDebugSpriteBrowserTiles[] = INCBIN_U8("graphics/debug/sprite_browser.4bpp");
 
 void InitSeePokemonGraphics(void)
 {
     u16 pal;
     u8 spriteId;
-    debug_80C35DC();
-    DmaCopy16Defvars(3, byte_83F88EC, BG_SCREEN_ADDR(28), sizeof(byte_83F88EC));
-    LoadPalette(word_83F888C, 0x80, sizeof(word_83F888C));
+    WatanabeDebug_InitScreen();
+    DmaCopy16Defvars(3, sWatanabeDebugSpriteBrowserTiles, BG_SCREEN_ADDR(28), sizeof(sWatanabeDebugSpriteBrowserTiles));
+    LoadPalette(sWatanabeDebugSpriteBrowserPalette, 0x80, sizeof(sWatanabeDebugSpriteBrowserPalette));
     pal = RGB(31, 31, 31);
     LoadPalette(&pal, 0, sizeof(pal));
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
@@ -2560,33 +2648,33 @@ void InitSeePokemonGraphics(void)
         REG_IE |= INTR_FLAG_VBLANK;
         REG_IME = imeBak;
     }
-    SetVBlankCallback(debug_80C3758);
-    SetMainCallback2(debug_80C370C);
+    SetVBlankCallback(VBlankCB_WatanabeDebug);
+    SetMainCallback2(CB2_WatanabeDebugWaitForFade);
     LoadMonIconPalettes();
     REG_BG0CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(31);
     REG_BG1CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(30);
     REG_DISPCNT = DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
-    CreateTask(debug_80C6B00, 0);
-    gUnknown_Debug_2038A20 = &eWatanabe18000_2;
-    gUnknown_Debug_2038A20->totalPoints = 0x115;
-    gUnknown_Debug_2038A20->excitementAppealBonus = 0;
-    gUnknown_Debug_2038A20->unk3 = 0;
-    gUnknown_Debug_2038A20->contestant = 0;
-    gUnknown_Debug_2038A20->unk7 = 0;
-    gUnknown_Debug_2038A20->unkA = 0;
-    gUnknown_Debug_2038A20->random = 0;
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6C, 0x74, 0);
+    CreateTask(Task_WatanabeDebugInitPokemonGraphicsBrowser, 0);
+    gWatanabeGraphicsBrowserState = &eWatanabeGraphicsBrowserState;
+    gWatanabeGraphicsBrowserState->graphicsId = 0x115;
+    gWatanabeGraphicsBrowserState->frontSpriteId = 0;
+    gWatanabeGraphicsBrowserState->backSpriteId = 0;
+    gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
+    gWatanabeGraphicsBrowserState->paletteColorIndex = 0;
+    gWatanabeGraphicsBrowserState->selectedRgbComponent = 0;
+    gWatanabeGraphicsBrowserState->palettePulsePhase = 0;
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6C, 0x74, 0);
     gSprites[spriteId].data[0] = 0;
     StartSpriteAnim(gSprites + spriteId, 0);
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6C, 0x74, 0);
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6C, 0x74, 0);
     gSprites[spriteId].data[0] = 1;
     StartSpriteAnim(gSprites + spriteId, 1);
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6C, 0x74, 0);
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6C, 0x74, 0);
     gSprites[spriteId].data[0] = 2;
     StartSpriteAnim(gSprites + spriteId, 2);
 }
 
-const u16 gUnknown_Debug_083F8790[] = {
+const u16 sWatanabePalettePulseValues[] = {
     0x0000,
     0x0002,
     0x0004,
@@ -2621,25 +2709,25 @@ const u16 gUnknown_Debug_083F8790[] = {
     0x0002
 };
 
-const u8 gUnknown_Debug_083F87D0[] = _("{COLOR RED}L{ESCAPE}{LEFT_ARROW}");
-const u8 gUnknown_Debug_083F87D8[] = _("{COLOR RED}{ESCAPE}{RIGHT_ARROW}R");
-const u8 gUnknown_Debug_083F87E0[] = DTR("かいはつナンバー", "Devel No.");
-const u8 gUnknown_Debug_083F87E9[] = DTR("グラフィックナンバー", "Graphic No.");
-const u8 gUnknown_Debug_083F87F4[] = DTR("{COLOR RED}A:カラーせってい", "{COLOR RED}A: SET COLOR");
-const u8 gUnknown_Debug_083F8801[] = DTR("{COLOR RED}A:けってい　B:キャンセル", "{COLOR RED}A: CONFIRM  B: CANCEL");
-const u8 gUnknown_Debug_083F8813[] = _(":");
-void debug_80C6B00(u8 taskId)
+const u8 sText_WatanabeGraphicsBrowserPrevious[] = _("{COLOR RED}L{ESCAPE}{LEFT_ARROW}");
+const u8 sText_WatanabeGraphicsBrowserNext[] = _("{COLOR RED}{ESCAPE}{RIGHT_ARROW}R");
+const u8 sText_WatanabeGraphicsBrowserDevelopmentNumber[] = DTR("かいはつナンバー", "Devel No.");
+const u8 sText_WatanabeGraphicsBrowserGraphicsNumber[] = DTR("グラフィックナンバー", "Graphic No.");
+const u8 sText_WatanabeGraphicsBrowserSetColor[] = DTR("{COLOR RED}A:カラーせってい", "{COLOR RED}A: SET COLOR");
+const u8 sText_WatanabeGraphicsBrowserConfirmCancel[] = DTR("{COLOR RED}A:けってい　B:キャンセル", "{COLOR RED}A: CONFIRM  B: CANCEL");
+const u8 sText_WatanabeGraphicsBrowserColon[] = _(":");
+void Task_WatanabeDebugInitPokemonGraphicsBrowser(u8 taskId)
 {
-    u8 sp00[] = {0x00, 0x10, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21};
+    u8 colorPickerTileIds[] = {0x00, 0x10, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21};
     u8 i;
 
     Menu_DrawStdWindowFrame(10, 0, 15, 7);
     Menu_DrawStdWindowFrame(0, 0, 9, 9);
     Menu_DrawStdWindowFrame(0, 10, 9, 19);
     Menu_DrawStdWindowFrame(16, 0, 29, 7);
-    Menu_PrintText(gUnknown_Debug_083F87D0, 17, 1);
-    Menu_PrintText(gUnknown_Debug_083F87D8, 27, 1);
-    Menu_PrintText(gUnknown_Debug_083F87E0, 17, 5);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserPrevious, 17, 1);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserNext, 27, 1);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserDevelopmentNumber, 17, 5);
 
     Menu_DrawStdWindowFrame(10, 8, 29, 12);
     for (i = 0; i < 15; i++)
@@ -2647,147 +2735,147 @@ void debug_80C6B00(u8 taskId)
     for (i = 0; i < 15; i++)
         ((u16 *)(VRAM + 0xF256))[i] = 0x8301 + i;
 
-    Menu_PrintText(gUnknown_Debug_083F87F4, 20, 10);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserSetColor, 20, 10);
     Menu_DrawStdWindowFrame(10, 13, 29, 19);
 
-    sp00[0] = 0x23;
+    colorPickerTileIds[0] = 0x23;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF396))[i] = 0x9300 + sp00[i];
-    sp00[0] = 0x24;
+        ((u16 *)(VRAM + 0xF396))[i] = 0x9300 + colorPickerTileIds[i];
+    colorPickerTileIds[0] = 0x24;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF3D6))[i] = 0x9300 + sp00[i];
-    sp00[0] = 0x25;
+        ((u16 *)(VRAM + 0xF3D6))[i] = 0x9300 + colorPickerTileIds[i];
+    colorPickerTileIds[0] = 0x25;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF416))[i] = 0x9300 + sp00[i];
+        ((u16 *)(VRAM + 0xF416))[i] = 0x9300 + colorPickerTileIds[i];
 
-    Menu_PrintText(gUnknown_Debug_083F8801, 15, 17);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserConfirmCancel, 15, 17);
 
     REG_WIN0H = 0x51EF;
     REG_WIN0V = 0x699F;
 
-    gTasks[taskId].func = debug_80C6CB8;
+    gTasks[taskId].func = Task_WatanabeDebugLoadPokemonGraphics;
 }
 
-void debug_80C6CB8(u8 taskId)
+void Task_WatanabeDebugLoadPokemonGraphics(u8 taskId)
 {
-    DecompressPicFromTable(gMonFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedSpritePalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
-    SetMultiuseSpriteTemplateToPokemon(gUnknown_Debug_2038A20->totalPoints, 1);
-    gUnknown_Debug_2038A20->excitementAppealBonus = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
-    gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].callback = debug_69;
-    gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.priority = 0;
+    DecompressPicFromTable(gMonFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gMonFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gWatanabeGraphicsBrowserState->graphicsId);
+    LoadCompressedSpritePalette(gMonPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
+    SetMultiuseSpriteTemplateToPokemon(gWatanabeGraphicsBrowserState->graphicsId, 1);
+    gWatanabeGraphicsBrowserState->frontSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
+    gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].callback = SpriteCB_WatanabeDebugDummy;
+    gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.priority = 0;
 
-    DecompressPicFromTable(gMonBackPicTable + gUnknown_Debug_2038A20->totalPoints, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gMonBackPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[2], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedSpritePalette(gMonPaletteTable + gUnknown_Debug_2038A20->totalPoints);
-    SetMultiuseSpriteTemplateToPokemon(gUnknown_Debug_2038A20->totalPoints, 2);
-    gUnknown_Debug_2038A20->unk3 = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x78, 0);
-    gSprites[gUnknown_Debug_2038A20->unk3].callback = debug_69;
-    gSprites[gUnknown_Debug_2038A20->unk3].oam.priority = 0;
+    DecompressPicFromTable(gMonBackPicTable + gWatanabeGraphicsBrowserState->graphicsId, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gMonBackPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[2], gWatanabeGraphicsBrowserState->graphicsId);
+    LoadCompressedSpritePalette(gMonPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
+    SetMultiuseSpriteTemplateToPokemon(gWatanabeGraphicsBrowserState->graphicsId, 2);
+    gWatanabeGraphicsBrowserState->backSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x78, 0);
+    gSprites[gWatanabeGraphicsBrowserState->backSpriteId].callback = SpriteCB_WatanabeDebugDummy;
+    gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.priority = 0;
 
-    gUnknown_Debug_2038A20->round1Points = CreateMonIcon(gUnknown_Debug_2038A20->totalPoints, SpriteCB_PokemonIcon, 0x68, 0x2C, 0, 0);
+    gWatanabeGraphicsBrowserState->iconSpriteId = CreateMonIcon(gWatanabeGraphicsBrowserState->graphicsId, SpriteCB_PokemonIcon, 0x68, 0x2C, 0, 0);
 
-    PrintFootprint(SpeciesToNationalPokedexNum(gUnknown_Debug_2038A20->totalPoints), 2, 0x3fc);
+    PrintFootprint(SpeciesToNationalPokedexNum(gWatanabeGraphicsBrowserState->graphicsId), 2, 0x3fc);
 
     ((u16 *)(VRAM + 0xF858))[0] = 0xF3FC;
     ((u16 *)(VRAM + 0xF858))[1] = 0xF3FD;
     ((u16 *)(VRAM + 0xF858))[32] = 0xF3FE;
     ((u16 *)(VRAM + 0xF858))[33] = 0xF3FF;
 
-    debug_80C3800(gUnknown_Debug_2038A20->totalPoints, 17, 3);
-    debug_80C376C(gUnknown_Debug_2038A20->totalPoints, 26, 5);
+    WatanabeDebug_PrintSpeciesName(gWatanabeGraphicsBrowserState->graphicsId, 17, 3);
+    WatanabeDebug_PrintDecimal3(gWatanabeGraphicsBrowserState->graphicsId, 26, 5);
 
-    gUnknown_Debug_2038A20->unk6 = gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.paletteNum;
-    CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 0x20);
-    CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 0x20);
+    gWatanabeGraphicsBrowserState->spritePaletteNum = gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.paletteNum;
+    CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 0x20);
+    CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 0x20);
 
-    gTasks[taskId].func = debug_80C6EE8;
+    gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
 
-    gUnknown_Debug_2038A20->unk9 = 0;
+    gWatanabeGraphicsBrowserState->useShinyPalette = 0;
     StopCryAndClearCrySongs();
-    PlayCry_Normal(gUnknown_Debug_2038A20->totalPoints, 0);
+    PlayCry_Normal(gWatanabeGraphicsBrowserState->graphicsId, 0);
 }
 
-void debug_80C6EE8(u8 taskId)
+void Task_WatanabeDebugRefreshPokemonPalette(u8 taskId)
 {
-    u16 hue;
-    CpuCopy16(gPlttBufferUnfaded + 0x80, gUnknown_Debug_2038A20->personality2, 32);
-    hue = gPlttBufferUnfaded[gUnknown_Debug_2038A20->unk7 + 0x81];
-    gUnknown_Debug_2038A20->unkC.r = hue & 0x1f;
-    gUnknown_Debug_2038A20->unkC.g = (hue & 0x3e0) >> 5;
-    gUnknown_Debug_2038A20->unkC.b = (hue & 0x7c00) >> 10;
-    gUnknown_Debug_2038A20->unkC.unused_15 = 0;
-    debug_80C68CC(gUnknown_Debug_2038A20->unk7 + 1, 11, 10, 2);
-    Menu_PrintText(gUnknown_Debug_083F8813, 13, 10);
-    debug_80C68CC(hue, 14, 10, 4);
-    gTasks[taskId].func = debug_80C6FA8;
+    u16 paletteColor;
+    CpuCopy16(gPlttBufferUnfaded + 0x80, gWatanabeGraphicsBrowserState->savedPalette, 32);
+    paletteColor = gPlttBufferUnfaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81];
+    gWatanabeGraphicsBrowserState->selectedColor.r = paletteColor & 0x1f;
+    gWatanabeGraphicsBrowserState->selectedColor.g = (paletteColor & 0x3e0) >> 5;
+    gWatanabeGraphicsBrowserState->selectedColor.b = (paletteColor & 0x7c00) >> 10;
+    gWatanabeGraphicsBrowserState->selectedColor.unused_15 = 0;
+    WatanabeDebug_PrintHexValue(gWatanabeGraphicsBrowserState->paletteColorIndex + 1, 11, 10, 2);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserColon, 13, 10);
+    WatanabeDebug_PrintHexValue(paletteColor, 14, 10, 4);
+    gTasks[taskId].func = Task_WatanabeDebugHandlePokemonGraphicsInput;
 }
 
 #ifdef NONMATCHING
-void debug_80C6FA8(u8 taskId)
+void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        SetMainCallback2(debug_80C370C);
-        gTasks[taskId].func = debug_80C373C;
+        SetMainCallback2(CB2_WatanabeDebugWaitForFade);
+        gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_REPT(R_BUTTON))
     {
-        gUnknown_Debug_2038A20->totalPoints = debug_80C3878(0, gUnknown_Debug_2038A20->totalPoints);
-        gTasks[taskId].func = debug_80C71FC;
+        gWatanabeGraphicsBrowserState->graphicsId = WatanabeDebug_AdvanceSpeciesId(0, gWatanabeGraphicsBrowserState->graphicsId);
+        gTasks[taskId].func = Task_WatanabeDebugReloadPokemonGraphics;
     }
     else if (JOY_REPT(L_BUTTON))
     {
-        gUnknown_Debug_2038A20->totalPoints = debug_80C3878(1, gUnknown_Debug_2038A20->totalPoints);
-        gTasks[taskId].func = debug_80C71FC;
+        gWatanabeGraphicsBrowserState->graphicsId = WatanabeDebug_AdvanceSpeciesId(1, gWatanabeGraphicsBrowserState->graphicsId);
+        gTasks[taskId].func = Task_WatanabeDebugReloadPokemonGraphics;
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 1;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 1;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x4167;
-        gTasks[taskId].func = debug_80C7294;
+        gTasks[taskId].func = Task_WatanabeDebugHandlePokemonColorInput;
     }
-    else if (JOY_REPT(DPAD_RIGHT) && gUnknown_Debug_2038A20->unk7 < 14)
+    else if (JOY_REPT(DPAD_RIGHT) && gWatanabeGraphicsBrowserState->paletteColorIndex < 14)
     {
-        ((u16 *)PLTT)[0x81 + gUnknown_Debug_2038A20->unk7] = 0;
+        ((u16 *)PLTT)[0x81 + gWatanabeGraphicsBrowserState->paletteColorIndex] = 0;
         do; while(0);
-        gUnknown_Debug_2038A20->unk7++;
-        gTasks[taskId].func = debug_80C6EE8;
+        gWatanabeGraphicsBrowserState->paletteColorIndex++;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
     }
-    else if (JOY_REPT(DPAD_LEFT) && gUnknown_Debug_2038A20->unk7 > 0)
+    else if (JOY_REPT(DPAD_LEFT) && gWatanabeGraphicsBrowserState->paletteColorIndex > 0)
     {
-        ((u16 *)PLTT)[0x81 + gUnknown_Debug_2038A20->unk7] = 0;
+        ((u16 *)PLTT)[0x81 + gWatanabeGraphicsBrowserState->paletteColorIndex] = 0;
         do; while(0);
-        gUnknown_Debug_2038A20->unk7--;
-        gTasks[taskId].func = debug_80C6EE8;
+        gWatanabeGraphicsBrowserState->paletteColorIndex--;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        gUnknown_Debug_2038A20->unk9 ^= 1;
-        if (gUnknown_Debug_2038A20->unk9)
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+        gWatanabeGraphicsBrowserState->useShinyPalette ^= 1;
+        if (gWatanabeGraphicsBrowserState->useShinyPalette)
+            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         else
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
-        CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
-        CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
-        gTasks[taskId].func = debug_80C6EE8;
+            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
+        CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
+        CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
+        gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
     }
     else
     {
         if (JOY_NEW(SELECT_BUTTON))
         {
             StopCryAndClearCrySongs();
-            PlayCry_Normal(gUnknown_Debug_2038A20->totalPoints, 0);
+            PlayCry_Normal(gWatanabeGraphicsBrowserState->graphicsId, 0);
         }
-        gUnknown_Debug_2038A20->random += 4;
-        gUnknown_Debug_2038A20->random &= 0x1f;
-        ((u16 *)PLTT)[0xa1 + gUnknown_Debug_2038A20->unk7] = gUnknown_Debug_083F8790[gUnknown_Debug_2038A20->random];
+        gWatanabeGraphicsBrowserState->palettePulsePhase += 4;
+        gWatanabeGraphicsBrowserState->palettePulsePhase &= 0x1f;
+        ((u16 *)PLTT)[0xa1 + gWatanabeGraphicsBrowserState->paletteColorIndex] = sWatanabePalettePulseValues[gWatanabeGraphicsBrowserState->palettePulsePhase];
     }
 }
 #else
-NAKED void debug_80C6FA8(u8 taskId)
+NAKED void Task_WatanabeDebugHandlePokemonGraphicsInput(u8 taskId)
 {
     asm(".equiv PLTT, 0x05000000\n"
         "\tpush\t{r4, r5, r6, lr}\n"
@@ -2810,23 +2898,23 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tmov\tr2, #0x0\n"
         "\tmov\tr3, #0x10\n"
         "\tbl\tBeginNormalPaletteFade\n"
-        "\tldr\tr0, ._674 + 4   @ debug_80C370C\n"
+        "\tldr\tr0, ._674 + 4   @ CB2_WatanabeDebugWaitForFade\n"
         "\tbl\tSetMainCallback2\n"
         "\tldr\tr1, ._674 + 8   @ gTasks\n"
         "\tlsl\tr0, r6, #0x2\n"
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._674 + 12  @ debug_80C373C\n"
+        "\tldr\tr1, ._674 + 12  @ Task_WatanabeDebugExitToField\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._703\n"
         "._675:\n"
         "\t.align\t2, 0\n"
         "._674:\n"
         "\t.word\tgMain\n"
-        "\t.word\tdebug_80C370C+1\n"
+        "\t.word\tCB2_WatanabeDebugWaitForFade+1\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C373C+1\n"
+        "\t.word\tTask_WatanabeDebugExitToField+1\n"
         "._672:\n"
         "\tldrh\tr1, [r4, #0x30]\n"
         "\tmov\tr0, #0x80\n"
@@ -2834,7 +2922,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._676\t@cond_branch\n"
-        "\tldr\tr4, ._678       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._678       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r4]\n"
         "\tldrh\tr1, [r0]\n"
         "\tmov\tr0, #0x0\n"
@@ -2842,19 +2930,19 @@ NAKED void debug_80C6FA8(u8 taskId)
         "._679:\n"
         "\t.align\t2, 0\n"
         "._678:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "._676:\n"
         "\tmov\tr0, #0x80\n"
         "\tlsl\tr0, r0, #0x2\n"
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._680\t@cond_branch\n"
-        "\tldr\tr4, ._682       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._682       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r4]\n"
         "\tldrh\tr1, [r0]\n"
         "\tmov\tr0, #0x1\n"
         "._677:\n"
-        "\tbl\tdebug_80C3878\n"
+        "\tbl\tWatanabeDebug_AdvanceSpeciesId\n"
         "\tldr\tr1, [r4]\n"
         "\tstrh\tr0, [r1]\n"
         "\tldr\tr1, ._682 + 4   @ gTasks\n"
@@ -2862,21 +2950,21 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._682 + 8   @ debug_80C71FC\n"
+        "\tldr\tr1, ._682 + 8   @ Task_WatanabeDebugReloadPokemonGraphics\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._703\n"
         "._683:\n"
         "\t.align\t2, 0\n"
         "._682:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C71FC+1\n"
+        "\t.word\tTask_WatanabeDebugReloadPokemonGraphics+1\n"
         "._680:\n"
         "\tmov\tr3, #0x1\n"
         "\tand\tr3, r3, r2\n"
         "\tcmp\tr3, #0\n"
         "\tbeq\t._684\t@cond_branch\n"
-        "\tldr\tr0, ._686       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr0, ._686       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr1, [r0]\n"
         "\tmov\tr0, #0x1\n"
         "\tstrb\tr0, [r1, #0x5]\n"
@@ -2893,24 +2981,24 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._686 + 20  @ debug_80C7294\n"
+        "\tldr\tr1, ._686 + 20  @ Task_WatanabeDebugHandlePokemonColorInput\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._703\n"
         "._687:\n"
         "\t.align\t2, 0\n"
         "._686:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\t0x4000040\n"
         "\t.word\t0x51ef\n"
         "\t.word\t0x4167\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C7294+1\n"
+        "\t.word\tTask_WatanabeDebugHandlePokemonColorInput+1\n"
         "._684:\n"
         "\tmov\tr0, #0x10\n"
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._689\t@cond_branch\n"
-        "\tldr\tr1, ._691       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr1, ._691       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr2, [r1]\n"
         "\tldrb\tr0, [r2, #0x7]\n"
         "\tcmp\tr0, #0xd\n"
@@ -2927,7 +3015,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "._692:\n"
         "\t.align\t2, 0\n"
         "._691:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tPLTT + 0x102\n"
         "._689:\n"
         "\tldrh\tr1, [r4, #0x30]\n"
@@ -2935,7 +3023,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._694\t@cond_branch\n"
-        "\tldr\tr2, ._696       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr2, ._696       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr1, [r2]\n"
         "\tldrb\tr0, [r1, #0x7]\n"
         "\tcmp\tr0, #0\n"
@@ -2953,7 +3041,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "._697:\n"
         "\t.align\t2, 0\n"
         "._696:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tPLTT + 0x102\n"
         "._694:\n"
         "\tldrh\tr1, [r4, #0x2e]\n"
@@ -2961,7 +3049,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._698\t@cond_branch\n"
-        "\tldr\tr4, ._701       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._701       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr2, [r4]\n"
         "\tldrb\tr0, [r2, #0x9]\n"
         "\tmov\tr1, #0x1\n"
@@ -2988,7 +3076,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "._702:\n"
         "\t.align\t2, 0\n"
         "._701:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "._699:\n"
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
@@ -3004,7 +3092,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tmov\tr2, #0x20\n"
         "\tbl\tLoadCompressedPalette\n"
         "._700:\n"
-        "\tldr\tr5, ._704       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr5, ._704       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r5]\n"
         "\tldrb\tr0, [r0, #0x6]\n"
         "\tlsl\tr0, r0, #0x5\n"
@@ -3027,31 +3115,31 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._704 + 20  @ debug_80C6EE8\n"
+        "\tldr\tr1, ._704 + 20  @ Task_WatanabeDebugRefreshPokemonPalette\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._703\n"
         "._705:\n"
         "\t.align\t2, 0\n"
         "._704:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tgPlttBufferUnfaded+0x200\n"
         "\t.word\t0xffffff00\n"
         "\t.word\tgPlttBufferFaded+0x100\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C6EE8+1\n"
+        "\t.word\tTask_WatanabeDebugRefreshPokemonPalette+1\n"
         "._698:\n"
         "\tmov\tr0, #0x4\n"
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._706\t@cond_branch\n"
         "\tbl\tStopCryAndClearCrySongs\n"
-        "\tldr\tr0, ._707       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr0, ._707       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r0]\n"
         "\tldrh\tr0, [r0]\n"
         "\tmov\tr1, #0x0\n"
         "\tbl\tPlayCry_Normal\n"
         "._706:\n"
-        "\tldr\tr2, ._707       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr2, ._707       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr1, [r2]\n"
         "\tldrb\tr0, [r1, #0x8]\n"
         "\tadd\tr0, r0, #0x4\n"
@@ -3066,7 +3154,7 @@ NAKED void debug_80C6FA8(u8 taskId)
         "\tlsl\tr1, r1, #0x1\n"
         "\tldr\tr2, ._707 + 4   @ PLTT + 0x142\n"
         "\tadd\tr1, r1, r2\n"
-        "\tldr\tr2, ._707 + 8   @ gUnknown_Debug_083F8790\n"
+        "\tldr\tr2, ._707 + 8   @ sWatanabePalettePulseValues\n"
         "\tldrb\tr0, [r0, #0x8]\n"
         "\tlsl\tr0, r0, #0x1\n"
         "\tadd\tr0, r0, r2\n"
@@ -3080,108 +3168,108 @@ NAKED void debug_80C6FA8(u8 taskId)
         "._708:\n"
         "\t.align\t2, 0\n"
         "._707:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tPLTT + 0x142\n"
-        "\t.word\tgUnknown_Debug_083F8790");
+        "\t.word\tsWatanabePalettePulseValues");
 }
 #endif // NONMATCHING
 
-void debug_80C71FC(u8 taskId)
+void Task_WatanabeDebugReloadPokemonGraphics(u8 taskId)
 {
-    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.paletteNum));
-    DestroySprite(gSprites + gUnknown_Debug_2038A20->excitementAppealBonus);
-    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->unk3].oam.paletteNum));
-    DestroySprite(gSprites + gUnknown_Debug_2038A20->unk3);
-    sub_809D510(gSprites + gUnknown_Debug_2038A20->round1Points);
-    gTasks[taskId].func = debug_80C6CB8;
+    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.paletteNum));
+    DestroySprite(gSprites + gWatanabeGraphicsBrowserState->frontSpriteId);
+    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.paletteNum));
+    DestroySprite(gSprites + gWatanabeGraphicsBrowserState->backSpriteId);
+    sub_809D510(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
+    gTasks[taskId].func = Task_WatanabeDebugLoadPokemonGraphics;
 }
 
-void debug_80C7294(u8 taskId)
+void Task_WatanabeDebugHandlePokemonColorInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 0;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x699F;
-        gTasks[taskId].func = debug_80C6EE8;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 0;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x699F;
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferUnfaded + 0x80, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferFaded + 0x80, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferUnfaded + 0x100 + gUnknown_Debug_2038A20->unk6 * 16, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferFaded + 0x100 + gUnknown_Debug_2038A20->unk6 * 16, 32);
-        gTasks[taskId].func = debug_80C6EE8;
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferUnfaded + 0x80, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferFaded + 0x80, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferUnfaded + 0x100 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferFaded + 0x100 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16, 32);
+        gTasks[taskId].func = Task_WatanabeDebugRefreshPokemonPalette;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A20->unkA < 2)
+    else if (JOY_REPT(DPAD_DOWN) && gWatanabeGraphicsBrowserState->selectedRgbComponent < 2)
     {
-        gUnknown_Debug_2038A20->unkA++;
+        gWatanabeGraphicsBrowserState->selectedRgbComponent++;
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A20->unkA > 0)
+    else if (JOY_REPT(DPAD_UP) && gWatanabeGraphicsBrowserState->selectedRgbComponent > 0)
     {
-        gUnknown_Debug_2038A20->unkA--;
+        gWatanabeGraphicsBrowserState->selectedRgbComponent--;
     }
     else if (JOY_REPT(DPAD_RIGHT))
     {
-        switch (gUnknown_Debug_2038A20->unkA)
+        switch (gWatanabeGraphicsBrowserState->selectedRgbComponent)
         {
             case 0:
-                if (gUnknown_Debug_2038A20->unkC.r < 31)
-                    gUnknown_Debug_2038A20->unkC.r++;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.r < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.r++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
             case 1:
-                if (gUnknown_Debug_2038A20->unkC.g < 31)
-                    gUnknown_Debug_2038A20->unkC.g++;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.g < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.g++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
             case 2:
-                if (gUnknown_Debug_2038A20->unkC.b < 31)
-                    gUnknown_Debug_2038A20->unkC.b++;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.b < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.b++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
         }
     }
     else if (JOY_REPT(DPAD_LEFT))
     {
-        switch (gUnknown_Debug_2038A20->unkA)
+        switch (gWatanabeGraphicsBrowserState->selectedRgbComponent)
         {
             case 0:
-                if (gUnknown_Debug_2038A20->unkC.r > 0)
-                    gUnknown_Debug_2038A20->unkC.r--;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.r > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.r--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
             case 1:
-                if (gUnknown_Debug_2038A20->unkC.g > 0)
-                    gUnknown_Debug_2038A20->unkC.g--;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.g > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.g--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
             case 2:
-                if (gUnknown_Debug_2038A20->unkC.b > 0)
-                    gUnknown_Debug_2038A20->unkC.b--;
-                gTasks[taskId].func = debug_80C74E4;
+                if (gWatanabeGraphicsBrowserState->selectedColor.b > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.b--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyPokemonPaletteColor;
                 break;
         }
     }
 }
 
-void debug_80C74E4(u8 taskId)
+void Task_WatanabeDebugApplyPokemonPaletteColor(u8 taskId)
 {
-    u16 pal = (gUnknown_Debug_2038A20->unkC.r & 0x001f) + ((gUnknown_Debug_2038A20->unkC.g << 5) & 0x03e0) + ((gUnknown_Debug_2038A20->unkC.b << 10) & 0x7c00);
-    gPlttBufferUnfaded[gUnknown_Debug_2038A20->unk7 + 0x81] = pal;
-    gPlttBufferFaded[gUnknown_Debug_2038A20->unk7 + 0x81] = pal;
-    gPlttBufferUnfaded[0x101 + gUnknown_Debug_2038A20->unk6 * 16 + gUnknown_Debug_2038A20->unk7] = pal;
-    gPlttBufferFaded[0x101 + gUnknown_Debug_2038A20->unk6 * 16 + gUnknown_Debug_2038A20->unk7] = pal;
-    debug_80C68CC(pal, 14, 10, 4);
-    gTasks[taskId].func = debug_80C7294;
+    u16 paletteColor = (gWatanabeGraphicsBrowserState->selectedColor.r & 0x001f) + ((gWatanabeGraphicsBrowserState->selectedColor.g << 5) & 0x03e0) + ((gWatanabeGraphicsBrowserState->selectedColor.b << 10) & 0x7c00);
+    gPlttBufferUnfaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81] = paletteColor;
+    gPlttBufferFaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81] = paletteColor;
+    gPlttBufferUnfaded[0x101 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + gWatanabeGraphicsBrowserState->paletteColorIndex] = paletteColor;
+    gPlttBufferFaded[0x101 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + gWatanabeGraphicsBrowserState->paletteColorIndex] = paletteColor;
+    WatanabeDebug_PrintHexValue(paletteColor, 14, 10, 4);
+    gTasks[taskId].func = Task_WatanabeDebugHandlePokemonColorInput;
 }
 
-void debug_80C7584(struct Sprite *sprite)
+void SpriteCB_WatanabeDebugColorPicker(struct Sprite *sprite)
 {
-    if (!gUnknown_Debug_2038A20->contestant)
+    if (!gWatanabeGraphicsBrowserState->isColorPickerActive)
         sprite->invisible = TRUE;
     else
     {
@@ -3190,19 +3278,19 @@ void debug_80C7584(struct Sprite *sprite)
         {
             default:
             case 0:
-                shade = gUnknown_Debug_2038A20->unkC.r;
+                shade = gWatanabeGraphicsBrowserState->selectedColor.r;
                 break;
             case 1:
-                shade = gUnknown_Debug_2038A20->unkC.g;
+                shade = gWatanabeGraphicsBrowserState->selectedColor.g;
                 break;
             case 2:
-                shade = gUnknown_Debug_2038A20->unkC.b;
+                shade = gWatanabeGraphicsBrowserState->selectedColor.b;
                 break;
         }
         sprite->x2 = 4 * shade;
         sprite->y2 = 8 * sprite->data[0];
         sprite->data[1]++;
-        if (sprite->data[0] == gUnknown_Debug_2038A20->unkA && !(sprite->data[1] & 0x08))
+        if (sprite->data[0] == gWatanabeGraphicsBrowserState->selectedRgbComponent && !(sprite->data[1] & 0x08))
             sprite->invisible = TRUE;
         else
             sprite->invisible = FALSE;
@@ -3213,9 +3301,9 @@ void InitSeeTrainers(void)
 {
     u8 spriteId;
     u16 imeBak;
-    debug_80C35DC();
-    DmaCopy16Defvars(3, byte_83F88EC, VRAM + 0xe000, 0x800);
-    LoadPalette(word_83F888C, 0x80, 0x60);
+    WatanabeDebug_InitScreen();
+    DmaCopy16Defvars(3, sWatanabeDebugSpriteBrowserTiles, VRAM + 0xe000, 0x800);
+    LoadPalette(sWatanabeDebugSpriteBrowserPalette, 0x80, 0x60);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     REG_WIN0H = 0;
     REG_WIN0V = 0;
@@ -3230,43 +3318,43 @@ void InitSeeTrainers(void)
     REG_IME = 0;
     REG_IE |= INTR_FLAG_VBLANK;
     REG_IME = imeBak;
-    SetVBlankCallback(debug_80C3758);
-    SetMainCallback2(debug_80C370C);
+    SetVBlankCallback(VBlankCB_WatanabeDebug);
+    SetMainCallback2(CB2_WatanabeDebugWaitForFade);
     REG_BG0CNT = 0x1F0B;
     REG_BG1CNT = 0x1E0A;
     REG_DISPCNT = 0x3340;
-    CreateTask(debug_80C777C, 0);
-    gUnknown_Debug_2038A20 = &eWatanabe18000_2;
-    gUnknown_Debug_2038A20->totalPoints = 0;
-    gUnknown_Debug_2038A20->excitementAppealBonus = 0;
-    gUnknown_Debug_2038A20->unk3 = 0;
-    gUnknown_Debug_2038A20->contestant = 0;
-    gUnknown_Debug_2038A20->unk7 = 0;
-    gUnknown_Debug_2038A20->unkA = 0;
-    gUnknown_Debug_2038A20->random = 0;
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6c, 0x74, 0);
+    CreateTask(Task_WatanabeDebugInitTrainerGraphicsBrowser, 0);
+    gWatanabeGraphicsBrowserState = &eWatanabeGraphicsBrowserState;
+    gWatanabeGraphicsBrowserState->graphicsId = 0;
+    gWatanabeGraphicsBrowserState->frontSpriteId = 0;
+    gWatanabeGraphicsBrowserState->backSpriteId = 0;
+    gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
+    gWatanabeGraphicsBrowserState->paletteColorIndex = 0;
+    gWatanabeGraphicsBrowserState->selectedRgbComponent = 0;
+    gWatanabeGraphicsBrowserState->palettePulsePhase = 0;
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6c, 0x74, 0);
     gSprites[spriteId].data[0] = 0;
     StartSpriteAnim(gSprites + spriteId, 0);
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6c, 0x74, 0);
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6c, 0x74, 0);
     gSprites[spriteId].data[0] = 1;
     StartSpriteAnim(gSprites + spriteId, 1);
-    spriteId = CreateSprite(&gSpriteTemplate_83F8874, 0x6c, 0x74, 0);
+    spriteId = CreateSprite(&sWatanabeDebugColorPickerTemplate, 0x6c, 0x74, 0);
     gSprites[spriteId].data[0] = 2;
     StartSpriteAnim(gSprites + spriteId, 2);
 }
 
-void debug_80C777C(u8 taskId)
+void Task_WatanabeDebugInitTrainerGraphicsBrowser(u8 taskId)
 {
-    u8 sp00[] = {0x00, 0x10, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21};
+    u8 colorPickerTileIds[] = {0x00, 0x10, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21, 0x20, 0x20, 0x20, 0x21};
     u8 i;
 
     Menu_DrawStdWindowFrame(9, 0, 14, 7);
     Menu_DrawStdWindowFrame(0, 0, 9, 9);
     Menu_DrawStdWindowFrame(0, 10, 9, 19);
     Menu_DrawStdWindowFrame(14, 0, 29, 7);
-    Menu_PrintText(gUnknown_Debug_083F87D0, 15, 1);
-    Menu_PrintText(gUnknown_Debug_083F87D8, 25, 1);
-    Menu_PrintText(gUnknown_Debug_083F87E0, 15, 5);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserPrevious, 15, 1);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserNext, 25, 1);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserDevelopmentNumber, 15, 5);
 
     Menu_DrawStdWindowFrame(10, 8, 29, 12);
     for (i = 0; i < 15; i++)
@@ -3274,127 +3362,127 @@ void debug_80C777C(u8 taskId)
     for (i = 0; i < 15; i++)
         ((u16 *)(VRAM + 0xF256))[i] = 0x8301 + i;
 
-    Menu_PrintText(gUnknown_Debug_083F87F4, 20, 10);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserSetColor, 20, 10);
     Menu_DrawStdWindowFrame(10, 13, 29, 19);
 
-    sp00[0] = 0x23;
+    colorPickerTileIds[0] = 0x23;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF396))[i] = 0x9300 + sp00[i];
-    sp00[0] = 0x24;
+        ((u16 *)(VRAM + 0xF396))[i] = 0x9300 + colorPickerTileIds[i];
+    colorPickerTileIds[0] = 0x24;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF3D6))[i] = 0x9300 + sp00[i];
-    sp00[0] = 0x25;
+        ((u16 *)(VRAM + 0xF3D6))[i] = 0x9300 + colorPickerTileIds[i];
+    colorPickerTileIds[0] = 0x25;
     for (i = 0; i < 18; i++)
-        ((u16 *)(VRAM + 0xF416))[i] = 0x9300 + sp00[i];
+        ((u16 *)(VRAM + 0xF416))[i] = 0x9300 + colorPickerTileIds[i];
 
-    Menu_PrintText(gUnknown_Debug_083F8801, 15, 17);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserConfirmCancel, 15, 17);
 
     REG_WIN0H = 0x51EF;
     REG_WIN0V = 0x699F;
 
-    gTasks[taskId].func = debug_80C7934;
+    gTasks[taskId].func = Task_WatanabeDebugLoadTrainerGraphics;
 }
 
-void debug_80C7934(u8 taskId)
+void Task_WatanabeDebugLoadTrainerGraphics(u8 taskId)
 {
-    DecompressPicFromTable(gTrainerFrontPicTable + gUnknown_Debug_2038A20->totalPoints, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].coords, gTrainerFrontPicCoords[gUnknown_Debug_2038A20->totalPoints].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gUnknown_Debug_2038A20->totalPoints);
-    LoadCompressedSpritePalette(gTrainerFrontPicPaletteTable + gUnknown_Debug_2038A20->totalPoints);
-    SetMultiuseSpriteTemplateToTrainerBack(gUnknown_Debug_2038A20->totalPoints, 1);
-    gUnknown_Debug_2038A20->excitementAppealBonus = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
-    gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].callback = debug_69;
-    gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.priority = 0;
+    DecompressPicFromTable(gTrainerFrontPicTable + gWatanabeGraphicsBrowserState->graphicsId, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].coords, gTrainerFrontPicCoords[gWatanabeGraphicsBrowserState->graphicsId].y_offset, gMonSpriteGfx_Sprite_ptr[0], gMonSpriteGfx_Sprite_ptr[1], gWatanabeGraphicsBrowserState->graphicsId);
+    LoadCompressedSpritePalette(gTrainerFrontPicPaletteTable + gWatanabeGraphicsBrowserState->graphicsId);
+    SetMultiuseSpriteTemplateToTrainerBack(gWatanabeGraphicsBrowserState->graphicsId, 1);
+    gWatanabeGraphicsBrowserState->frontSpriteId = CreateSprite(&gCreatingSpriteTemplate, 0x28, 0x28, 0);
+    gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].callback = SpriteCB_WatanabeDebugDummy;
+    gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.priority = 0;
 
-    debug_80C376C(gUnknown_Debug_2038A20->totalPoints, 26, 5);
+    WatanabeDebug_PrintDecimal3(gWatanabeGraphicsBrowserState->graphicsId, 26, 5);
 
-    gUnknown_Debug_2038A20->unk6 = gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.paletteNum;
-    CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 0x20);
-    CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 0x20);
+    gWatanabeGraphicsBrowserState->spritePaletteNum = gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.paletteNum;
+    CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 0x20);
+    CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 0x20);
 
-    gTasks[taskId].func = debug_80C7A54;
+    gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
 
-    gUnknown_Debug_2038A20->unk9 = 0;
+    gWatanabeGraphicsBrowserState->useShinyPalette = 0;
 }
 
-void debug_80C7A54(u8 taskId)
+void Task_WatanabeDebugRefreshTrainerPalette(u8 taskId)
 {
-    u16 hue;
-    CpuCopy16(gPlttBufferUnfaded + 0x80, gUnknown_Debug_2038A20->personality2, 32);
-    hue = gPlttBufferUnfaded[gUnknown_Debug_2038A20->unk7 + 0x81];
-    gUnknown_Debug_2038A20->unkC.r = hue & 0x1f;
-    gUnknown_Debug_2038A20->unkC.g = (hue & 0x3e0) >> 5;
-    gUnknown_Debug_2038A20->unkC.b = (hue & 0x7c00) >> 10;
-    gUnknown_Debug_2038A20->unkC.unused_15 = 0;
-    debug_80C68CC(gUnknown_Debug_2038A20->unk7 + 1, 11, 10, 2);
-    Menu_PrintText(gUnknown_Debug_083F8813, 13, 10);
-    debug_80C68CC(hue, 14, 10, 4);
-    gTasks[taskId].func = debug_80C7B14;
+    u16 paletteColor;
+    CpuCopy16(gPlttBufferUnfaded + 0x80, gWatanabeGraphicsBrowserState->savedPalette, 32);
+    paletteColor = gPlttBufferUnfaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81];
+    gWatanabeGraphicsBrowserState->selectedColor.r = paletteColor & 0x1f;
+    gWatanabeGraphicsBrowserState->selectedColor.g = (paletteColor & 0x3e0) >> 5;
+    gWatanabeGraphicsBrowserState->selectedColor.b = (paletteColor & 0x7c00) >> 10;
+    gWatanabeGraphicsBrowserState->selectedColor.unused_15 = 0;
+    WatanabeDebug_PrintHexValue(gWatanabeGraphicsBrowserState->paletteColorIndex + 1, 11, 10, 2);
+    Menu_PrintText(sText_WatanabeGraphicsBrowserColon, 13, 10);
+    WatanabeDebug_PrintHexValue(paletteColor, 14, 10, 4);
+    gTasks[taskId].func = Task_WatanabeDebugHandleTrainerGraphicsInput;
 }
 
 #ifdef NONMATCHING
-void debug_80C7B14(u8 taskId)
+void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId)
 {
     if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        SetMainCallback2(debug_80C370C);
-        gTasks[taskId].func = debug_80C373C;
+        SetMainCallback2(CB2_WatanabeDebugWaitForFade);
+        gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_REPT(R_BUTTON))
     {
-        gUnknown_Debug_2038A20->totalPoints = debug_80C38B4(0, gUnknown_Debug_2038A20->totalPoints);
-        gTasks[taskId].func = debug_80C7D44;
+        gWatanabeGraphicsBrowserState->graphicsId = WatanabeDebug_AdvanceTrainerGraphicsId(0, gWatanabeGraphicsBrowserState->graphicsId);
+        gTasks[taskId].func = Task_WatanabeDebugReloadTrainerGraphics;
     }
     else if (JOY_REPT(L_BUTTON))
     {
-        gUnknown_Debug_2038A20->totalPoints = debug_80C38B4(1, gUnknown_Debug_2038A20->totalPoints);
-        gTasks[taskId].func = debug_80C7D44;
+        gWatanabeGraphicsBrowserState->graphicsId = WatanabeDebug_AdvanceTrainerGraphicsId(1, gWatanabeGraphicsBrowserState->graphicsId);
+        gTasks[taskId].func = Task_WatanabeDebugReloadTrainerGraphics;
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 1;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 1;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x4167;
-        gTasks[taskId].func = debug_80C7DDC;
+        gTasks[taskId].func = Task_WatanabeDebugHandleTrainerColorInput;
     }
-    else if (JOY_REPT(DPAD_RIGHT) && gUnknown_Debug_2038A20->unk7 < 14)
+    else if (JOY_REPT(DPAD_RIGHT) && gWatanabeGraphicsBrowserState->paletteColorIndex < 14)
     {
-        ((u16 *)PLTT)[0x81 + gUnknown_Debug_2038A20->unk7] = 0;
+        ((u16 *)PLTT)[0x81 + gWatanabeGraphicsBrowserState->paletteColorIndex] = 0;
         do; while (0); // this matches the asm here...
-        gUnknown_Debug_2038A20->unk7++;
-        gTasks[taskId].func = debug_80C7A54;
+        gWatanabeGraphicsBrowserState->paletteColorIndex++;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
     }
-    else if (JOY_REPT(DPAD_LEFT) && gUnknown_Debug_2038A20->unk7 > 0)
+    else if (JOY_REPT(DPAD_LEFT) && gWatanabeGraphicsBrowserState->paletteColorIndex > 0)
     {
-        ((u16 *)PLTT)[0x81 + gUnknown_Debug_2038A20->unk7] = 0;
+        ((u16 *)PLTT)[0x81 + gWatanabeGraphicsBrowserState->paletteColorIndex] = 0;
         do; while (0); // ... but not here
-        gUnknown_Debug_2038A20->unk7--;
-        gTasks[taskId].func = debug_80C7A54;
+        gWatanabeGraphicsBrowserState->paletteColorIndex--;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        gUnknown_Debug_2038A20->unk9 ^= 1;
-        if (gUnknown_Debug_2038A20->unk9)
+        gWatanabeGraphicsBrowserState->useShinyPalette ^= 1;
+        if (gWatanabeGraphicsBrowserState->useShinyPalette)
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 0), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 0), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         }
         else
         {
-            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gUnknown_Debug_2038A20->totalPoints, 0, 9), gUnknown_Debug_2038A20->unk6 * 16 + 0x100, 0x20);
+            LoadCompressedPalette(GetMonSpritePalFromOtIdPersonality(gWatanabeGraphicsBrowserState->graphicsId, 0, 9), gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, 0x20);
         }
-        CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
-        CpuCopy16(gPlttBufferUnfaded + gUnknown_Debug_2038A20->unk6 * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
-        gTasks[taskId].func = debug_80C7A54;
+        CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferUnfaded + 0x80, 32);
+        CpuCopy16(gPlttBufferUnfaded + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + 0x100, gPlttBufferFaded + 0x80, 32);
+        gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
     }
     else
     {
-        gUnknown_Debug_2038A20->random += 4;
-        gUnknown_Debug_2038A20->random &= 0x1f;
-        ((u16 *)PLTT)[0xa1 + gUnknown_Debug_2038A20->unk7] = gUnknown_Debug_083F8790[gUnknown_Debug_2038A20->random];
+        gWatanabeGraphicsBrowserState->palettePulsePhase += 4;
+        gWatanabeGraphicsBrowserState->palettePulsePhase &= 0x1f;
+        ((u16 *)PLTT)[0xa1 + gWatanabeGraphicsBrowserState->paletteColorIndex] = sWatanabePalettePulseValues[gWatanabeGraphicsBrowserState->palettePulsePhase];
     }
 }
 #else
-NAKED void debug_80C7B14(u8 taskId)
+NAKED void Task_WatanabeDebugHandleTrainerGraphicsInput(u8 taskId)
 {
     asm("\tpush\t{r4, r5, r6, lr}\n"
         "\tadd\tsp, sp, #0xfffffffc\n"
@@ -3416,23 +3504,23 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tmov\tr2, #0x0\n"
         "\tmov\tr3, #0x10\n"
         "\tbl\tBeginNormalPaletteFade\n"
-        "\tldr\tr0, ._792 + 4   @ debug_80C370C\n"
+        "\tldr\tr0, ._792 + 4   @ CB2_WatanabeDebugWaitForFade\n"
         "\tbl\tSetMainCallback2\n"
         "\tldr\tr1, ._792 + 8   @ gTasks\n"
         "\tlsl\tr0, r6, #0x2\n"
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._792 + 12  @ debug_80C373C\n"
+        "\tldr\tr1, ._792 + 12  @ Task_WatanabeDebugExitToField\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._821\n"
         "._793:\n"
         "\t.align\t2, 0\n"
         "._792:\n"
         "\t.word\tgMain\n"
-        "\t.word\tdebug_80C370C+1\n"
+        "\t.word\tCB2_WatanabeDebugWaitForFade+1\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C373C+1\n"
+        "\t.word\tTask_WatanabeDebugExitToField+1\n"
         "._790:\n"
         "\tldrh\tr1, [r4, #0x30]\n"
         "\tmov\tr0, #0x80\n"
@@ -3440,7 +3528,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._794\t@cond_branch\n"
-        "\tldr\tr4, ._796       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._796       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r4]\n"
         "\tldrh\tr1, [r0]\n"
         "\tmov\tr0, #0x0\n"
@@ -3448,19 +3536,19 @@ NAKED void debug_80C7B14(u8 taskId)
         "._797:\n"
         "\t.align\t2, 0\n"
         "._796:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "._794:\n"
         "\tmov\tr0, #0x80\n"
         "\tlsl\tr0, r0, #0x2\n"
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._798\t@cond_branch\n"
-        "\tldr\tr4, ._800       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._800       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r4]\n"
         "\tldrh\tr1, [r0]\n"
         "\tmov\tr0, #0x1\n"
         "._795:\n"
-        "\tbl\tdebug_80C38B4\n"
+        "\tbl\tWatanabeDebug_AdvanceTrainerGraphicsId\n"
         "\tldr\tr1, [r4]\n"
         "\tstrh\tr0, [r1]\n"
         "\tldr\tr1, ._800 + 4   @ gTasks\n"
@@ -3468,21 +3556,21 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._800 + 8   @ debug_80C7D44\n"
+        "\tldr\tr1, ._800 + 8   @ Task_WatanabeDebugReloadTrainerGraphics\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._821\n"
         "._801:\n"
         "\t.align\t2, 0\n"
         "._800:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C7D44+1\n"
+        "\t.word\tTask_WatanabeDebugReloadTrainerGraphics+1\n"
         "._798:\n"
         "\tmov\tr2, #0x1\n"
         "\tand\tr2, r2, r3\n"
         "\tcmp\tr2, #0\n"
         "\tbeq\t._802\t@cond_branch\n"
-        "\tldr\tr0, ._804       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr0, ._804       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr1, [r0]\n"
         "\tmov\tr0, #0x1\n"
         "\tstrb\tr0, [r1, #0x5]\n"
@@ -3499,22 +3587,22 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._804 + 20  @ debug_80C7DDC\n"
+        "\tldr\tr1, ._804 + 20  @ Task_WatanabeDebugHandleTrainerColorInput\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._821\n"
         "._805:\n"
         "\t.align\t2, 0\n"
         "._804:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\t0x4000040\n"
         "\t.word\t0x51ef\n"
         "\t.word\t0x4167\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C7DDC+1\n"
+        "\t.word\tTask_WatanabeDebugHandleTrainerColorInput+1\n"
         "._802:\n"
         "\tmov\tr0, #0x10\n"
         "\tand\tr0, r0, r1\n"
-        "\tldr\tr3, ._809       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr3, ._809       @ gWatanabeGraphicsBrowserState\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._807\t@cond_branch\n"
         "\tldr\tr1, [r3]\n"
@@ -3533,7 +3621,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "._810:\n"
         "\t.align\t2, 0\n"
         "._809:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\t0x5000102\n"
         "._807:\n"
         "\tldrh\tr1, [r4, #0x30]\n"
@@ -3565,7 +3653,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tand\tr0, r0, r1\n"
         "\tcmp\tr0, #0\n"
         "\tbeq\t._816\t@cond_branch\n"
-        "\tldr\tr4, ._819       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr4, ._819       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr2, [r4]\n"
         "\tldrb\tr0, [r2, #0x9]\n"
         "\tmov\tr1, #0x1\n"
@@ -3592,7 +3680,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "._820:\n"
         "\t.align\t2, 0\n"
         "._819:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "._817:\n"
         "\tldrh\tr0, [r1]\n"
         "\tmov\tr1, #0x0\n"
@@ -3608,7 +3696,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tmov\tr2, #0x20\n"
         "\tbl\tLoadCompressedPalette\n"
         "._818:\n"
-        "\tldr\tr5, ._822       @ gUnknown_Debug_2038A20\n"
+        "\tldr\tr5, ._822       @ gWatanabeGraphicsBrowserState\n"
         "\tldr\tr0, [r5]\n"
         "\tldrb\tr0, [r0, #0x6]\n"
         "\tlsl\tr0, r0, #0x5\n"
@@ -3631,18 +3719,18 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tadd\tr0, r0, r6\n"
         "\tlsl\tr0, r0, #0x3\n"
         "\tadd\tr0, r0, r1\n"
-        "\tldr\tr1, ._822 + 20  @ debug_80C7A54\n"
+        "\tldr\tr1, ._822 + 20  @ Task_WatanabeDebugRefreshTrainerPalette\n"
         "\tstr\tr1, [r0]\n"
         "\tb\t._821\n"
         "._823:\n"
         "\t.align\t2, 0\n"
         "._822:\n"
-        "\t.word\tgUnknown_Debug_2038A20\n"
+        "\t.word\tgWatanabeGraphicsBrowserState\n"
         "\t.word\tgPlttBufferUnfaded+0x200\n"
         "\t.word\t0xffffff00\n"
         "\t.word\tgPlttBufferFaded+0x100\n"
         "\t.word\tgTasks\n"
-        "\t.word\tdebug_80C7A54+1\n"
+        "\t.word\tTask_WatanabeDebugRefreshTrainerPalette+1\n"
         "._816:\n"
         "\tldr\tr1, [r3]\n"
         "\tldrb\tr0, [r1, #0x8]\n"
@@ -3658,7 +3746,7 @@ NAKED void debug_80C7B14(u8 taskId)
         "\tlsl\tr1, r1, #0x1\n"
         "\tldr\tr2, ._824       @ 0x5000142\n"
         "\tadd\tr1, r1, r2\n"
-        "\tldr\tr2, ._824 + 4   @ gUnknown_Debug_083F8790\n"
+        "\tldr\tr2, ._824 + 4   @ sWatanabePalettePulseValues\n"
         "\tldrb\tr0, [r0, #0x8]\n"
         "\tlsl\tr0, r0, #0x1\n"
         "\tadd\tr0, r0, r2\n"
@@ -3673,101 +3761,101 @@ NAKED void debug_80C7B14(u8 taskId)
         "\t.align\t2, 0\n"
         "._824:\n"
         "\t.word\t0x5000142\n"
-        "\t.word\tgUnknown_Debug_083F8790");
+        "\t.word\tsWatanabePalettePulseValues");
 }
 #endif // NONMATCHING
 
-void debug_80C7D44(u8 taskId)
+void Task_WatanabeDebugReloadTrainerGraphics(u8 taskId)
 {
-    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->excitementAppealBonus].oam.paletteNum));
-    DestroySprite(gSprites + gUnknown_Debug_2038A20->excitementAppealBonus);
-    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gUnknown_Debug_2038A20->unk3].oam.paletteNum));
-    DestroySprite(gSprites + gUnknown_Debug_2038A20->unk3);
-    sub_809D510(gSprites + gUnknown_Debug_2038A20->round1Points);
-    gTasks[taskId].func = debug_80C7934;
+    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->frontSpriteId].oam.paletteNum));
+    DestroySprite(gSprites + gWatanabeGraphicsBrowserState->frontSpriteId);
+    FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.paletteNum));
+    DestroySprite(gSprites + gWatanabeGraphicsBrowserState->backSpriteId);
+    sub_809D510(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
+    gTasks[taskId].func = Task_WatanabeDebugLoadTrainerGraphics;
 }
 
-void debug_80C7DDC(u8 taskId)
+void Task_WatanabeDebugHandleTrainerColorInput(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 0;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x699F;
-        gTasks[taskId].func = debug_80C7A54;
+        gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        gUnknown_Debug_2038A20->contestant = 0;
+        gWatanabeGraphicsBrowserState->isColorPickerActive = 0;
         REG_WIN0H = 0x51EF;
         REG_WIN0V = 0x699F;
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferUnfaded + 0x80, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferFaded + 0x80, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferUnfaded + 0x100 + gUnknown_Debug_2038A20->unk6 * 16, 32);
-        CpuCopy16(gUnknown_Debug_2038A20->personality2, gPlttBufferFaded + 0x100 + gUnknown_Debug_2038A20->unk6 * 16, 32);
-        gTasks[taskId].func = debug_80C7A54;
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferUnfaded + 0x80, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferFaded + 0x80, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferUnfaded + 0x100 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16, 32);
+        CpuCopy16(gWatanabeGraphicsBrowserState->savedPalette, gPlttBufferFaded + 0x100 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16, 32);
+        gTasks[taskId].func = Task_WatanabeDebugRefreshTrainerPalette;
     }
-    else if (JOY_REPT(DPAD_DOWN) && gUnknown_Debug_2038A20->unkA < 2)
+    else if (JOY_REPT(DPAD_DOWN) && gWatanabeGraphicsBrowserState->selectedRgbComponent < 2)
     {
-        gUnknown_Debug_2038A20->unkA++;
+        gWatanabeGraphicsBrowserState->selectedRgbComponent++;
     }
-    else if (JOY_REPT(DPAD_UP) && gUnknown_Debug_2038A20->unkA > 0)
+    else if (JOY_REPT(DPAD_UP) && gWatanabeGraphicsBrowserState->selectedRgbComponent > 0)
     {
-        gUnknown_Debug_2038A20->unkA--;
+        gWatanabeGraphicsBrowserState->selectedRgbComponent--;
     }
     else if (JOY_REPT(DPAD_RIGHT))
     {
-        switch (gUnknown_Debug_2038A20->unkA)
+        switch (gWatanabeGraphicsBrowserState->selectedRgbComponent)
         {
             case 0:
-                if (gUnknown_Debug_2038A20->unkC.r < 31)
-                    gUnknown_Debug_2038A20->unkC.r++;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.r < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.r++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
             case 1:
-                if (gUnknown_Debug_2038A20->unkC.g < 31)
-                    gUnknown_Debug_2038A20->unkC.g++;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.g < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.g++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
             case 2:
-                if (gUnknown_Debug_2038A20->unkC.b < 31)
-                    gUnknown_Debug_2038A20->unkC.b++;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.b < 31)
+                    gWatanabeGraphicsBrowserState->selectedColor.b++;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
         }
     }
     else if (JOY_REPT(DPAD_LEFT))
     {
-        switch (gUnknown_Debug_2038A20->unkA)
+        switch (gWatanabeGraphicsBrowserState->selectedRgbComponent)
         {
             case 0:
-                if (gUnknown_Debug_2038A20->unkC.r > 0)
-                    gUnknown_Debug_2038A20->unkC.r--;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.r > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.r--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
             case 1:
-                if (gUnknown_Debug_2038A20->unkC.g > 0)
-                    gUnknown_Debug_2038A20->unkC.g--;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.g > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.g--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
             case 2:
-                if (gUnknown_Debug_2038A20->unkC.b > 0)
-                    gUnknown_Debug_2038A20->unkC.b--;
-                gTasks[taskId].func = debug_80C802C;
+                if (gWatanabeGraphicsBrowserState->selectedColor.b > 0)
+                    gWatanabeGraphicsBrowserState->selectedColor.b--;
+                gTasks[taskId].func = Task_WatanabeDebugApplyTrainerPaletteColor;
                 break;
         }
     }
 }
 
-void debug_80C802C(u8 taskId)
+void Task_WatanabeDebugApplyTrainerPaletteColor(u8 taskId)
 {
-    u16 pal = (gUnknown_Debug_2038A20->unkC.r & 0x001f) + ((gUnknown_Debug_2038A20->unkC.g << 5) & 0x03e0) + ((gUnknown_Debug_2038A20->unkC.b << 10) & 0x7c00);
-    gPlttBufferUnfaded[gUnknown_Debug_2038A20->unk7 + 0x81] = pal;
-    gPlttBufferFaded[gUnknown_Debug_2038A20->unk7 + 0x81] = pal;
-    gPlttBufferUnfaded[0x101 + gUnknown_Debug_2038A20->unk6 * 16 + gUnknown_Debug_2038A20->unk7] = pal;
-    gPlttBufferFaded[0x101 + gUnknown_Debug_2038A20->unk6 * 16 + gUnknown_Debug_2038A20->unk7] = pal;
-    debug_80C68CC(pal, 14, 10, 4);
-    gTasks[taskId].func = debug_80C7DDC;
+    u16 paletteColor = (gWatanabeGraphicsBrowserState->selectedColor.r & 0x001f) + ((gWatanabeGraphicsBrowserState->selectedColor.g << 5) & 0x03e0) + ((gWatanabeGraphicsBrowserState->selectedColor.b << 10) & 0x7c00);
+    gPlttBufferUnfaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81] = paletteColor;
+    gPlttBufferFaded[gWatanabeGraphicsBrowserState->paletteColorIndex + 0x81] = paletteColor;
+    gPlttBufferUnfaded[0x101 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + gWatanabeGraphicsBrowserState->paletteColorIndex] = paletteColor;
+    gPlttBufferFaded[0x101 + gWatanabeGraphicsBrowserState->spritePaletteNum * 16 + gWatanabeGraphicsBrowserState->paletteColorIndex] = paletteColor;
+    WatanabeDebug_PrintHexValue(paletteColor, 14, 10, 4);
+    gTasks[taskId].func = Task_WatanabeDebugHandleTrainerColorInput;
 }
 
 #endif // DEBUG
