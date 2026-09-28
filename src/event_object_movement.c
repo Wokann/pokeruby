@@ -90,10 +90,10 @@ static void Step3(struct Sprite *sprite, u8 direction);
 static void Step4(struct Sprite *sprite, u8 direction);
 static void Step8(struct Sprite *sprite, u8 direction);
 static void SetSpriteDataForNormalStep(struct Sprite*, u8, u8);
-static void CameraObject_0(struct Sprite *);
-static void CameraObject_1(struct Sprite *);
-static void CameraObject_2(struct Sprite *);
-static void ObjectCB_CameraObject(struct Sprite *sprite);
+static void CameraObject_Init(struct Sprite *);
+static void CameraObject_UpdateMove(struct Sprite *);
+static void CameraObject_UpdateFrozen(struct Sprite *);
+static void SpriteCB_CameraObject(struct Sprite *sprite);
 static bool8 ObjectEventDoesElevationMatch(struct ObjectEvent *, u8);
 static const struct ObjectEventTemplate *FindObjectEventTemplateByLocalId(u8, const struct ObjectEventTemplate*, u8);
 static void SpriteCB_VirtualObject(struct Sprite *);
@@ -132,12 +132,18 @@ static void DoRippleFieldEffect(struct ObjectEvent *objEvent, struct Sprite *spr
 
 const u8 gReflectionEffectPaletteMap[] = {1, 1, 6, 7, 8, 9, 6, 7, 8, 9, 11, 11, 0, 0, 0, 0};
 
-const struct SpriteTemplate gCameraSpriteTemplate = {0, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, ObjectCB_CameraObject};
+static const struct SpriteTemplate sCameraSpriteTemplate = {0, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CameraObject};
 
-void (*const gCameraObjectFuncs[])(struct Sprite *) = {
-    CameraObject_0,
-    CameraObject_1,
-    CameraObject_2,
+enum {
+    CAMERA_STATE_INIT,
+    CAMERA_STATE_MOVE,
+    CAMERA_STATE_FROZEN,
+};
+
+static void (*const sCameraObjectFuncs[])(struct Sprite *) = {
+    CameraObject_Init,
+    CameraObject_UpdateMove,
+    CameraObject_UpdateFrozen,
 };
 
 #include "data/object_events/object_event_graphics.h"
@@ -1730,7 +1736,7 @@ void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
     sprite->y += 16 + sprite->centerToCornerVecY;
     if (objectEvent->trackedByCamera)
     {
-        CameraObjectReset1();
+        CameraObjectReset();
     }
 }
 
@@ -2018,7 +2024,7 @@ void MoveObjectEventToMapCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
     sprite->y += 16 + sprite->centerToCornerVecY;
     ResetObjectEventFldEffData(objectEvent);
     if (objectEvent->trackedByCamera)
-        CameraObjectReset1();
+        CameraObjectReset();
 }
 
 void TryMoveObjectEventToMapCoords(u8 localId, u8 mapNum, u8 mapGroup, s16 x, s16 y)
@@ -2098,30 +2104,30 @@ void UpdateObjectEventsForCameraUpdate(s16 cameraDeltaX, s16 cameraDeltaY)
 
 u8 AddCameraObject(u8 trackedSpriteId)
 {
-    u8 spriteId = CreateSprite(&gCameraSpriteTemplate, 0, 0, 4);
+    u8 spriteId = CreateSprite(&sCameraSpriteTemplate, 0, 0, 4);
 
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].data[0] = trackedSpriteId;
     return spriteId;
 }
 
-static void ObjectCB_CameraObject(struct Sprite *sprite)
+static void SpriteCB_CameraObject(struct Sprite *sprite)
 {
     void (*cameraObjectFuncs[3])(struct Sprite *);
-    memcpy(cameraObjectFuncs, gCameraObjectFuncs, sizeof(gCameraObjectFuncs));
+    memcpy(cameraObjectFuncs, sCameraObjectFuncs, sizeof(sCameraObjectFuncs));
     cameraObjectFuncs[sprite->data[1]](sprite);
 }
 
-static void CameraObject_0(struct Sprite *sprite)
+static void CameraObject_Init(struct Sprite *sprite)
 {
     sprite->x = gSprites[sprite->data[0]].x;
     sprite->y = gSprites[sprite->data[0]].y;
     sprite->invisible = TRUE;
-    sprite->data[1] = 1;
-    CameraObject_1(sprite);
+    sprite->data[1] = CAMERA_STATE_MOVE;
+    CameraObject_UpdateMove(sprite);
 }
 
-static void CameraObject_1(struct Sprite *sprite)
+static void CameraObject_UpdateMove(struct Sprite *sprite)
 {
     s16 x = gSprites[sprite->data[0]].x;
     s16 y = gSprites[sprite->data[0]].y;
@@ -2132,7 +2138,7 @@ static void CameraObject_1(struct Sprite *sprite)
     sprite->y = y;
 }
 
-static void CameraObject_2(struct Sprite *sprite)
+static void CameraObject_UpdateFrozen(struct Sprite *sprite)
 {
     sprite->x = gSprites[sprite->data[0]].x;
     sprite->y = gSprites[sprite->data[0]].y;
@@ -2140,13 +2146,13 @@ static void CameraObject_2(struct Sprite *sprite)
     sprite->data[3] = 0;
 }
 
-static struct Sprite *FindCameraObject(void)
+static struct Sprite *FindCameraSprite(void)
 {
     u8 i;
 
     for (i = 0; i < MAX_SPRITES; i++)
     {
-        if (gSprites[i].inUse && gSprites[i].callback == ObjectCB_CameraObject)
+        if (gSprites[i].inUse && gSprites[i].callback == SpriteCB_CameraObject)
         {
             return &gSprites[i];
         }
@@ -2154,31 +2160,31 @@ static struct Sprite *FindCameraObject(void)
     return NULL;
 }
 
-void CameraObjectReset1(void)
+void CameraObjectReset(void)
 {
-    struct Sprite *cameraSprite = FindCameraObject();
+    struct Sprite *cameraSprite = FindCameraSprite();
 
     if (cameraSprite != NULL)
     {
-        cameraSprite->data[1] = 0;
+        cameraSprite->data[1] = CAMERA_STATE_INIT;
         cameraSprite->callback(cameraSprite);
     }
 }
 
-void CameraObjectSetFollowedObjectId(u8 spriteId)
+void CameraObjectSetFollowedSpriteId(u8 spriteId)
 {
-    struct Sprite *cameraSprite = FindCameraObject();
+    struct Sprite *cameraSprite = FindCameraSprite();
 
     if (cameraSprite != NULL)
     {
         cameraSprite->data[0] = spriteId;
-        CameraObjectReset1();
+        CameraObjectReset();
     }
 }
 
-u8 CameraObjectGetFollowedObjectId(void)
+u8 CameraObjectGetFollowedSpriteId(void)
 {
-    struct Sprite *cameraSprite = FindCameraObject();
+    struct Sprite *cameraSprite = FindCameraSprite();
 
     if (cameraSprite == NULL)
         return MAX_SPRITES;
@@ -2186,11 +2192,11 @@ u8 CameraObjectGetFollowedObjectId(void)
         return cameraSprite->data[0];
 }
 
-void CameraObjectReset2(void)
+void CameraObjectFreeze(void)
 {
-    struct Sprite *cameraSprite = FindCameraObject();
+    struct Sprite *cameraSprite = FindCameraSprite();
 
-    cameraSprite->data[1] = 2;
+    cameraSprite->data[1] = CAMERA_STATE_FROZEN;
 }
 
 u8 CopySprite(struct Sprite *src, s16 x, s16 y, u8 subpriority)
