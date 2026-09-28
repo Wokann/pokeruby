@@ -63,6 +63,7 @@
 
 #define TRAINER_ID_LENGTH 4
 #define MAX_MON_MOVES 4
+#define CONTESTANT_COUNT 4
 #define NUM_STATS 6
 #define PARTY_SIZE 6
 

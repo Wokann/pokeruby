@@ -32,7 +32,6 @@
 #include "util.h"
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
-#define CONTESTANT_COUNT 4
 #define tCategory data[9]
 
 enum {

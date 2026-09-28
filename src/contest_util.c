@@ -133,7 +133,7 @@ u8 CountPlayerMuseumPaintings(void)
     int i;
 
     for (i = 0; i < 5; i++)
-        if (gSaveBlock1.museumPortraits[i].species != 0)
+        if (gSaveBlock1.museumPortraits[i].species != SPECIES_NONE)
             count++;
 
     return count;
@@ -141,7 +141,7 @@ u8 CountPlayerMuseumPaintings(void)
 
 void GetContestantNamesAtRank(void)
 {
-    s16 conditions[4];
+    s16 conditions[CONTESTANT_COUNT];
     s32 i;
     s32 j;
     s16 condition;
@@ -151,13 +151,13 @@ void GetContestantNamesAtRank(void)
     u8 rank;
 
     // Get round 1 points
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < CONTESTANT_COUNT; i++)
         conditions[i] = gContestMonRound1Points[i];
 
     // Sort round 1 points
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < CONTESTANT_COUNT - 1; i++)
     {
-        for (j = 3; j > i; j--)
+        for (j = CONTESTANT_COUNT - 1; j > i; j--)
         {
             if (conditions[j - 1] < conditions[j])
             {
@@ -174,7 +174,7 @@ void GetContestantNamesAtRank(void)
     numAtCondition = 0;
     tieRank = 0;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         if (conditions[i] == condition)
         {
@@ -185,7 +185,7 @@ void GetContestantNamesAtRank(void)
     }
 
     // Get rank of first contestant with the same number of points
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         if (conditions[i] == condition)
             break;
@@ -194,7 +194,7 @@ void GetContestantNamesAtRank(void)
 
     // Get contestant id of player at rank (taking ties into account)
     contestantOffset = tieRank;
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         if (condition == gContestMonRound1Points[i])
         {
@@ -218,7 +218,7 @@ void GetContestantNamesAtRank(void)
     else if (tieRank == numAtCondition)
         gSpecialVar_0x8006 = rank;
     else
-        gSpecialVar_0x8006 = rank + 4;
+        gSpecialVar_0x8006 = rank + CONTESTANT_COUNT;
 }
 
 void ExitContestPainting(void)
@@ -269,10 +269,16 @@ bool8 GiveMonArtistRibbon(void)
     }
 }
 
-u8 IsContestDebugActive(void)
+bool8 IsContestDebugActive(void)
 {
     return gContestDebugMode;
 }
+
+#define tState       data[0]
+#define tSpecies     data[1]
+#define tSpriteId    data[2]
+#define tWindowLeft  data[3]
+#define tWindowTop   data[4]
 
 void ShowContestEntryMonPic(void)
 {
@@ -292,8 +298,8 @@ void ShowContestEntryMonPic(void)
         personality = gContestMons[gSpecialVar_0x8006].personality;
         otId = gContestMons[gSpecialVar_0x8006].otId;
         taskId = CreateTask(Task_ShowContestEntryMonPic, 0x50);
-        gTasks[taskId].data[0] = 0;
-        gTasks[taskId].data[1] = species;
+        gTasks[taskId].tState = 0;
+        gTasks[taskId].tSpecies = species;
         HandleLoadSpecialPokePic(
           &gMonFrontPicTable[species],
           gMonFrontPicCoords[species].coords,
@@ -307,9 +313,9 @@ void ShowContestEntryMonPic(void)
         SetMultiuseSpriteTemplateToPokemon(species, 1);
         gCreatingSpriteTemplate.paletteTag = palette->tag;
         spriteId = CreateSprite(&gCreatingSpriteTemplate, 0x78, 0x40, 0);
-        gTasks[taskId].data[2] = spriteId;
-        gTasks[taskId].data[3] = left;
-        gTasks[taskId].data[4] = top;
+        gTasks[taskId].tSpriteId = spriteId;
+        gTasks[taskId].tWindowLeft = left;
+        gTasks[taskId].tWindowTop = top;
         gSprites[spriteId].callback = SpriteCallbackDummy;
         gSprites[spriteId].oam.priority = 0;
     }
@@ -320,7 +326,7 @@ void HideContestEntryMonPic(void)
     u8 taskId = FindTaskIdByFunc(Task_ShowContestEntryMonPic);
 
     if(taskId != 0xFF)
-        gTasks[taskId].data[0]++;
+        gTasks[taskId].tState++;
 }
 
 static void Task_ShowContestEntryMonPic(u8 taskId)
@@ -328,23 +334,23 @@ static void Task_ShowContestEntryMonPic(u8 taskId)
     struct Task *task = &gTasks[taskId];
     struct Sprite *sprite;
 
-    switch(task->data[0])
+    switch(task->tState)
     {
     case 2:
-        sprite = &gSprites[task->data[2]];
+        sprite = &gSprites[task->tSpriteId];
         FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(sprite->oam.paletteNum));
 
         if(sprite->oam.affineMode)
             FreeOamMatrix(sprite->oam.matrixNum);
 
         DestroySprite(sprite);
-        task->data[0]++;
+        task->tState++;
         break;
     case 0:
-        task->data[0]++;
+        task->tState++;
         break;
     case 3:
-        Menu_EraseWindowRect(task->data[3], task->data[4], task->data[3] + 9, task->data[4] + 10);
+        Menu_EraseWindowRect(task->tWindowLeft, task->tWindowTop, task->tWindowLeft + 9, task->tWindowTop + 10);
         DestroyTask(taskId);
         break;
     case 1:
@@ -352,6 +358,12 @@ static void Task_ShowContestEntryMonPic(u8 taskId)
         break;
     }
 }
+
+#undef tState
+#undef tSpecies
+#undef tSpriteId
+#undef tWindowLeft
+#undef tWindowTop
 
 void GetContestMultiplayerId(void)
 {
@@ -396,7 +408,7 @@ void HealPlayerParty(void)
         ppBonuses = GetMonData(&gPlayerParty[i], MON_DATA_PP_BONUSES);
 
         // restore PP.
-        for(j = 0; j < 4; j++)
+        for(j = 0; j < MAX_MON_MOVES; j++)
         {
             arg[0] = CalculatePPWithBonus(GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + j), ppBonuses, j);
             SetMonData(&gPlayerParty[i], MON_DATA_PP1 + j, arg);
@@ -464,11 +476,11 @@ void HasEnoughMonsForDoubleBattle(void)
     }
 }
 
-bool8 CheckPartyMonHasHeldItem(u16 item)
+static bool8 CheckPartyMonHasHeldItem(u16 item)
 {
     int i;
 
-    for(i = 0; i < 6; i++)
+    for(i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2);
         if(species != SPECIES_NONE && species != SPECIES_EGG && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == item)
@@ -504,7 +516,7 @@ void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 
 void ScriptSetMonMoveSlot(u8 monIndex, u16 move, u8 slot)
 {
-    if(monIndex > 6)
+    if(monIndex > PARTY_SIZE)
         monIndex = gPlayerPartyCount - 1;
 
     SetMonMoveSlot(&gPlayerParty[monIndex], move, slot);
