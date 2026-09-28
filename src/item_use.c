@@ -63,10 +63,36 @@ extern u16 gBattleTypeFlags;
 
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
+static void SetUpItemUseCallback(u8);
+static void ItemMenu_ConfirmNormalFade(u8);
+static void ItemMenu_ConfirmComplexFade(u8);
+static void SetUpItemUseOnFieldCallback(u8);
+static void DisplayDadsAdviceCannotUseItemMessage(u8, u8);
+static void DisplayCannotDismountBikeMessage(u8, u8);
+static void Task_ReadMailFromBag(u8);
+static void ItemUseOnFieldCB_Bike(u8);
+static bool32 CanFish(void);
+static void ItemUseOnFieldCB_Rod(u8);
+static void ItemUseOnFieldCB_Itemfinder(u8);
+static void Task_UseItemfinder(u8);
+static void Task_CloseItemfinderMessage(u8);
+static bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *, u8);
+static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *, s16, s16);
+static bool8 IsHiddenItemPresentInConnection(const struct MapConnection *, int, int);
+static void CheckForHiddenItemsInMapConnection(u8);
+static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
+static u8 GetDirectionToHiddenItem(s16, s16);
+static void PlayerFaceHiddenItem(u8);
+static void Task_HiddenItemNearby(u8);
+static void Task_StandingOnHiddenItem(u8);
 static void UseTMHM(u8);
 static void UseTMHMYesNo(u8);
 static void BootUpSoundTMHM(u8);
 static void Task_ShowTMHMContainedMessage(u8);
+static void Task_CloseStatIncreaseMessage(u8);
+static void Task_UseStatIncreaseItem(u8);
+static void Task_CloseBagForBattleItem(u8);
+static void ItemUseInBattle_ShowPartyMenu(u8);
 
 static const u8 sSSTidalBetaString[] = _("この　チケットで　ふねに　のりほうだい\nはやく　のってみたいな");
 static const u8 sSSTidalBetaString2[] = _("この　チケットで　ふねに　のりほうだい\nはやく　のってみたいな");
@@ -92,7 +118,7 @@ static const struct YesNoFuncTable sUseTMHMYesNoFuncTable =
     .noFunc = CleanUpItemMenuMessage,
 };
 
-void SetUpItemUseCallback(u8 taskId)
+static void SetUpItemUseCallback(u8 taskId)
 {
     u8 itemUseTypeIndex;
 
@@ -106,19 +132,19 @@ void SetUpItemUseCallback(u8 taskId)
     gTasks[taskId].func = HandleItemMenuPaletteFade;
 }
 
-void ItemMenu_ConfirmNormalFade(u8 var)
+static void ItemMenu_ConfirmNormalFade(u8 var)
 {
     SetUpItemUseCallback(var);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void ItemMenu_ConfirmComplexFade(u8 var)
+static void ItemMenu_ConfirmComplexFade(u8 var)
 {
     SetUpItemUseCallback(var);
     FadeScreen(1, 0);
 }
 
-void SetUpItemUseOnFieldCallback(u8 taskId)
+static void SetUpItemUseOnFieldCallback(u8 taskId)
 {
     if (gTasks[taskId].tUsingRegisteredKeyItem != 1)
     {
@@ -147,12 +173,12 @@ static void DisplayCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOn
     }
 }
 
-void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
+static void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
 {
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gOtherText_DadsAdvice);
 }
 
-void DisplayCannotDismountBikeMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
+static void DisplayCannotDismountBikeMessage(u8 taskId, u8 isUsingRegisteredKeyItemOnField)
 {
     DisplayCannotUseItemMessage(taskId, isUsingRegisteredKeyItemOnField, gOtherText_CantGetOffBike);
 }
@@ -167,7 +193,7 @@ u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
         return ITEM_IS_OTHER;
 }
 
-void Task_ReadMailFromBag(u8 taskId)
+static void Task_ReadMailFromBag(u8 taskId)
 {
     struct MailStruct mailStruct;
 
@@ -213,7 +239,7 @@ void ItemUseOutOfBattle_Bike(u8 taskId)
     }
 }
 
-void ItemUseOnFieldCB_Bike(u8 taskId)
+static void ItemUseOnFieldCB_Bike(u8 taskId)
 {
     if (ItemId_GetSecondaryId(gSpecialVar_ItemId) == 0)
         GetOnOffBike(PLAYER_AVATAR_FLAG_MACH_BIKE);
@@ -225,7 +251,7 @@ void ItemUseOnFieldCB_Bike(u8 taskId)
     DestroyTask(taskId);
 }
 
-bool32 CanFish(void)
+static bool32 CanFish(void)
 {
     s16 x, y;
     u16 tileBehavior;
@@ -266,7 +292,7 @@ void ItemUseOutOfBattle_Rod(u8 taskId)
         DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
 }
 
-void ItemUseOnFieldCB_Rod(u8 taskId)
+static void ItemUseOnFieldCB_Rod(u8 taskId)
 {
     StartFishing(ItemId_GetSecondaryId(gSpecialVar_ItemId));
     DestroyTask(taskId);
@@ -279,7 +305,7 @@ void ItemUseOutOfBattle_Itemfinder(u8 taskId)
     SetUpItemUseOnFieldCallback(taskId);
 }
 
-void ItemUseOnFieldCB_Itemfinder(u8 taskId)
+static void ItemUseOnFieldCB_Itemfinder(u8 taskId)
 {
     if (ItemfinderCheckForHiddenItems(gMapHeader.events, taskId) == TRUE)
         gTasks[taskId].func = Task_UseItemfinder;
@@ -294,7 +320,7 @@ void ItemUseOnFieldCB_Itemfinder(u8 taskId)
 #define tItemfinderBeeps data[4]
 #define tFacingDir       data[5]
 
-void Task_UseItemfinder(u8 taskId)
+static void Task_UseItemfinder(u8 taskId)
 {
     u8 playerDir;
     u8 playerDirToItem;
@@ -332,7 +358,7 @@ void Task_UseItemfinder(u8 taskId)
     tCounter = (tCounter + 1) & 0x1F;
 }
 
-void Task_CloseItemfinderMessage(u8 taskId)
+static void Task_CloseItemfinderMessage(u8 taskId)
 {
     Menu_EraseWindowRect(0, 14, 29, 19);
     ScriptUnfreezeObjectEvents();
@@ -340,7 +366,7 @@ void Task_CloseItemfinderMessage(u8 taskId)
     DestroyTask(taskId);
 }
 
-bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 taskId)
+static bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 taskId)
 {
     int distanceX, distanceY;
     u16 x, y;
@@ -373,7 +399,7 @@ bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 taskId)
         return FALSE;
 }
 
-bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, s16 y)
+static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, s16 y)
 {
     u8 bgEventCount = events->bgEventCount;
     const struct BgEvent *bgEvent = events->bgEvents;
@@ -392,7 +418,7 @@ bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, s16 y)
     return FALSE;
 }
 
-bool8 IsHiddenItemPresentInConnection(const struct MapConnection *connection, int x, int y)
+static bool8 IsHiddenItemPresentInConnection(const struct MapConnection *connection, int x, int y)
 {
     const struct MapHeader *mapHeader;
     u16 localX, localY;
@@ -434,7 +460,7 @@ bool8 IsHiddenItemPresentInConnection(const struct MapConnection *connection, in
     return IsHiddenItemPresentAtCoords(mapHeader->events, localX, localY);
 }
 
-void CheckForHiddenItemsInMapConnection(u8 taskId)
+static void CheckForHiddenItemsInMapConnection(u8 taskId)
 {
     s16 playerX, playerY;
     s16 x, y;
@@ -463,7 +489,7 @@ void CheckForHiddenItemsInMapConnection(u8 taskId)
     }
 }
 
-void SetDistanceOfClosestHiddenItem(u8 taskId, s16 itemDistanceX, s16 itemDistanceY)
+static void SetDistanceOfClosestHiddenItem(u8 taskId, s16 itemDistanceX, s16 itemDistanceY)
 {
     s16 *data = gTasks[taskId].data;
     s16 oldItemAbsX, oldItemAbsY, newItemAbsX, newItemAbsY;
@@ -513,7 +539,7 @@ void SetDistanceOfClosestHiddenItem(u8 taskId, s16 itemDistanceX, s16 itemDistan
     }
 }
 
-u8 GetDirectionToHiddenItem(s16 itemDistanceX, s16 itemDistanceY)
+static u8 GetDirectionToHiddenItem(s16 itemDistanceX, s16 itemDistanceY)
 {
     s16 absX, absY;
 
@@ -559,7 +585,7 @@ u8 GetDirectionToHiddenItem(s16 itemDistanceX, s16 itemDistanceY)
     }
 }
 
-void PlayerFaceHiddenItem(u8 direction)
+static void PlayerFaceHiddenItem(u8 direction)
 {
     ObjectEventClearHeldMovementIfFinished(&gObjectEvents[GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0)]);
     ObjectEventClearHeldMovement(&gObjectEvents[GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0)]);
@@ -567,13 +593,13 @@ void PlayerFaceHiddenItem(u8 direction)
     PlayerTurnInPlace(direction);
 }
 
-void Task_HiddenItemNearby(u8 taskId)
+static void Task_HiddenItemNearby(u8 taskId)
 {
     if (ObjectEventCheckHeldMovementStatus(&gObjectEvents[GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0)]) == TRUE)
         DisplayItemMessageOnField(taskId, gOtherText_ItemfinderResponding, Task_CloseItemfinderMessage, 0);
 }
 
-void Task_StandingOnHiddenItem(u8 taskId)
+static void Task_StandingOnHiddenItem(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
@@ -906,13 +932,13 @@ void ItemUseInBattle_PokeBall(u8 taskId)
     }
 }
 
-void Task_CloseStatIncreaseMessage(u8 taskId)
+static void Task_CloseStatIncreaseMessage(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         CloseBagMenuForBattle(taskId);
 }
 
-void Task_UseStatIncreaseItem(u8 taskId)
+static void Task_UseStatIncreaseItem(u8 taskId)
 {
     if(++gTasks[taskId].tItemUseTimer > 7)
     {
@@ -939,7 +965,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
     }
 }
 
-void Task_CloseBagForBattleItem(u8 taskId)
+static void Task_CloseBagForBattleItem(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
@@ -949,7 +975,7 @@ void Task_CloseBagForBattleItem(u8 taskId)
     }
 }
 
-void ItemUseInBattle_ShowPartyMenu(u8 taskId)
+static void ItemUseInBattle_ShowPartyMenu(u8 taskId)
 {
     gTasks[taskId].func = Task_CloseBagForBattleItem;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
