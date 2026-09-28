@@ -187,7 +187,7 @@ s32 GetCableClubPartnersReady(void);
 u16 SetInCableClubSeat(void);
 u16 SetLinkWaitingForScript(void);
 u16 QueueExitLinkRoomKey(void);
-void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3);
+void LoadCableClubPlayer(int linkPlayerId, int selfId, struct CableClubPlayer *trainer);
 bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *);
 bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *);
 const u8 *TryGetTileEventScript(struct CableClubPlayer *);

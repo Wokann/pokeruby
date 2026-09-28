@@ -1933,40 +1933,40 @@ void ResetAllPlayerLinkStates(void)
         sPlayerLinkStates[i] = PLAYER_LINK_STATE_IDLE;
 }
 
-bool32 AreAllPlayersInLinkState(u16 a1)
+bool32 AreAllPlayersInLinkState(u16 state)
 {
     int i;
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (sPlayerLinkStates[i] != a1)
+        if (sPlayerLinkStates[i] != state)
             return FALSE;
     return TRUE;
 }
 
-bool32 IsAnyPlayerInLinkState(u16 a1)
+bool32 IsAnyPlayerInLinkState(u16 state)
 {
     int i;
     int count = gFieldLinkPlayerCount;
 
     for (i = 0; i < count; i++)
-        if (sPlayerLinkStates[i] == a1)
+        if (sPlayerLinkStates[i] == state)
             return TRUE;
     return FALSE;
 }
 
-void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a4)
+void HandleLinkPlayerKeyInput(u32 playerId, u16 key, struct CableClubPlayer *trainer, u16 *forceFacing)
 {
     const u8 *script;
 
-    if (sPlayerLinkStates[a1] == PLAYER_LINK_STATE_IDLE)
+    if (sPlayerLinkStates[playerId] == PLAYER_LINK_STATE_IDLE)
     {
-        script = TryGetTileEventScript(a3);
+        script = TryGetTileEventScript(trainer);
         if (script)
         {
-            *a4 = GetDirectionForEventScript(script);
-            sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-            if (a3->isLocalPlayer)
+            *forceFacing = GetDirectionForEventScript(script);
+            sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+            if (trainer->isLocalPlayer)
             {
                 SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunInteractLocalPlayerScript(script);
@@ -1975,21 +1975,21 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
         }
         if (IsAnyPlayerInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == 1)
         {
-            sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-            if (a3->isLocalPlayer)
+            sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+            if (trainer->isLocalPlayer)
             {
                 SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                 RunTerminateLinkScript();
             }
             return;
         }
-        switch (a2)
+        switch (key)
         {
         case LINK_KEY_CODE_START_BUTTON:
-            if (CanCableClubPlayerPressStart(a3))
+            if (CanCableClubPlayerPressStart(trainer))
             {
-                sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->isLocalPlayer)
+                sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+                if (trainer->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitLinkRoomStartMenuScript();
@@ -1997,10 +1997,10 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_DPAD_DOWN:
-            if (PlayerIsAtSouthExit(a3) == 1)
+            if (PlayerIsAtSouthExit(trainer) == 1)
             {
-                sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->isLocalPlayer)
+                sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+                if (trainer->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     RunConfirmLeaveCableClubScript();
@@ -2008,11 +2008,11 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_A_BUTTON:
-            script = TryInteractWithPlayer(a3);
+            script = TryInteractWithPlayer(trainer);
             if (script)
             {
-                sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->isLocalPlayer)
+                sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+                if (trainer->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToEventScript);
                     InitMenuBasedScript(script);
@@ -2020,10 +2020,10 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_HANDLE_RECV_QUEUE:
-            if (IsCableClubPlayerUnfrozen(a3))
+            if (IsCableClubPlayerUnfrozen(trainer))
             {
-                sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->isLocalPlayer)
+                sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+                if (trainer->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToRecvQueue);
                     InitLinkPlayerQueueScript();
@@ -2031,10 +2031,10 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
             }
             break;
         case LINK_KEY_CODE_HANDLE_SEND_QUEUE:
-            if (IsCableClubPlayerUnfrozen(a3))
+            if (IsCableClubPlayerUnfrozen(trainer))
             {
-                sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
-                if (a3->isLocalPlayer)
+                sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
+                if (trainer->isLocalPlayer)
                 {
                     SetKeyInterceptCallback(KeyInterCB_DeferToSendQueue);
                     InitLinkPlayerQueueScript();
@@ -2044,51 +2044,51 @@ void HandleLinkPlayerKeyInput(u32 a1, u16 a2, struct CableClubPlayer *a3, u16 *a
         }
     }
 
-    switch (a2)
+    switch (key)
     {
     case LINK_KEY_CODE_EXIT_ROOM:
-        sPlayerLinkStates[a1] = PLAYER_LINK_STATE_EXITING_ROOM;
+        sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_EXITING_ROOM;
         break;
     case LINK_KEY_CODE_READY:
-        sPlayerLinkStates[a1] = PLAYER_LINK_STATE_READY;
+        sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_READY;
         break;
     case LINK_KEY_CODE_IDLE:
-        sPlayerLinkStates[a1] = PLAYER_LINK_STATE_IDLE;
-        if (a3->isLocalPlayer)
+        sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_IDLE;
+        if (trainer->isLocalPlayer)
             SetKeyInterceptCallback(KeyInterCB_SelfIdle);
         break;
     case LINK_KEY_CODE_EXIT_SEAT:
-        if (sPlayerLinkStates[a1] == PLAYER_LINK_STATE_READY)
-            sPlayerLinkStates[a1] = PLAYER_LINK_STATE_BUSY;
+        if (sPlayerLinkStates[playerId] == PLAYER_LINK_STATE_READY)
+            sPlayerLinkStates[playerId] = PLAYER_LINK_STATE_BUSY;
         break;
     }
 }
 
-void UpdateAllLinkPlayers(u16 *a1, int a2)
+void UpdateAllLinkPlayers(u16 *keys, int selfId)
 {
-    struct CableClubPlayer st;
+    struct CableClubPlayer trainer;
     int i;
     for (i = 0; i < 4; i++)
     {
-        u16 v5 = a1[i];
-        u16 v8 = 0;
-        LoadCableClubPlayer(i, a2, &st);
-        HandleLinkPlayerKeyInput(i, v5, &st, &v8);
+        u16 key = keys[i];
+        u16 forceFacing = 0;
+        LoadCableClubPlayer(i, selfId, &trainer);
+        HandleLinkPlayerKeyInput(i, key, &trainer, &forceFacing);
         if (sPlayerLinkStates[i] == PLAYER_LINK_STATE_IDLE)
-            v8 = GetDirectionForDpadKey(v5);
-        SetPlayerFacingDirection(i, v8);
+            forceFacing = GetDirectionForDpadKey(key);
+        SetPlayerFacingDirection(i, forceFacing);
     }
 }
 
-void UpdateHeldKeyCode(u16 a1)
+void UpdateHeldKeyCode(u16 key)
 {
-    if (a1 >= LINK_KEY_CODE_EMPTY && a1 < LINK_KEY_CODE_UNK_8)
-        gHeldKeyCodeToSend = a1;
+    if (key >= LINK_KEY_CODE_EMPTY && key < LINK_KEY_CODE_UNK_8)
+        gHeldKeyCodeToSend = key;
     else
         gHeldKeyCodeToSend = LINK_KEY_CODE_EMPTY;
 }
 
-u16 KeyInterCB_ReadButtons(u32 a1)
+u16 KeyInterCB_ReadButtons(u32 key)
 {
     if (JOY_HELD(DPAD_UP))
     {
@@ -2120,9 +2120,9 @@ u16 KeyInterCB_ReadButtons(u32 a1)
     }
 }
 
-u16 GetDirectionForDpadKey(u16 a1)
+u16 GetDirectionForDpadKey(u16 key)
 {
-    switch (a1)
+    switch (key)
     {
     case LINK_KEY_CODE_DPAD_RIGHT:
         return 4;
@@ -2137,38 +2137,38 @@ u16 GetDirectionForDpadKey(u16 a1)
     }
 }
 
-void ResetPlayerHeldKeys(u16 *a1)
+void ResetPlayerHeldKeys(u16 *keys)
 {
     int i;
     for (i = 0; i < 4; i++)
-        a1[i] = LINK_KEY_CODE_EMPTY;
+        keys[i] = LINK_KEY_CODE_EMPTY;
 }
 
 void CB1_OverworldLink(void)
 {
-    u8 val = gLocalLinkPlayerId;
-    UpdateAllLinkPlayers(gLinkPartnersHeldKeys, val);
-    UpdateHeldKeyCode(sPlayerKeyInterceptCallback(val));
+    u8 selfId = gLocalLinkPlayerId;
+    UpdateAllLinkPlayers(gLinkPartnersHeldKeys, selfId);
+    UpdateHeldKeyCode(sPlayerKeyInterceptCallback(selfId));
     ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }
 
-u16 KeyInterCB_SelfIdle(u32 a1)
+u16 KeyInterCB_SelfIdle(u32 key)
 {
     if (ArePlayerFieldControlsLocked() == 1)
         return LINK_KEY_CODE_EMPTY;
     if (gLink.recvQueue.count > 4)
         return LINK_KEY_CODE_HANDLE_RECV_QUEUE;
     if (gLink.sendQueue.count <= 4)
-        return KeyInterCB_ReadButtons(a1);
+        return KeyInterCB_ReadButtons(key);
     return LINK_KEY_CODE_HANDLE_SEND_QUEUE;
 }
 
-u16 KeyInterCB_Idle(u32 a1)
+u16 KeyInterCB_Idle(u32 key)
 {
     return LINK_KEY_CODE_EMPTY;
 }
 
-u16 KeyInterCB_DeferToEventScript(u32 a1)
+u16 KeyInterCB_DeferToEventScript(u32 key)
 {
     u16 retVal;
     if (ArePlayerFieldControlsLocked() == 1)
@@ -2183,7 +2183,7 @@ u16 KeyInterCB_DeferToEventScript(u32 a1)
     return retVal;
 }
 
-u16 KeyInterCB_DeferToRecvQueue(u32 a1)
+u16 KeyInterCB_DeferToRecvQueue(u32 key)
 {
     u16 retVal;
     if (gLink.recvQueue.count > 2)
@@ -2199,7 +2199,7 @@ u16 KeyInterCB_DeferToRecvQueue(u32 a1)
     return retVal;
 }
 
-u16 KeyInterCB_DeferToSendQueue(u32 a1)
+u16 KeyInterCB_DeferToSendQueue(u32 key)
 {
     u16 retVal;
     if (gLink.sendQueue.count > 2)
@@ -2215,7 +2215,7 @@ u16 KeyInterCB_DeferToSendQueue(u32 a1)
     return retVal;
 }
 
-u16 KeyInterCB_ExitingSeat(u32 a1)
+u16 KeyInterCB_ExitingSeat(u32 key)
 {
     return LINK_KEY_CODE_EMPTY;
 }
@@ -2233,18 +2233,18 @@ u16 KeyInterCB_Ready(u32 linkPlayerId)
     }
 }
 
-u16 KeyInterCB_SetReady(u32 a1)
+u16 KeyInterCB_SetReady(u32 key)
 {
     SetKeyInterceptCallback(KeyInterCB_Ready);
     return LINK_KEY_CODE_READY;
 }
 
-u16 KeyInterCB_SendNothing(u32 a1)
+u16 KeyInterCB_SendNothing(u32 key)
 {
     return LINK_KEY_CODE_EMPTY;
 }
 
-u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
+u16 KeyInterCB_WaitForPlayersToExit(u32 key)
 {
     if (AreAllPlayersInLinkState(PLAYER_LINK_STATE_EXITING_ROOM) == TRUE)
     {
@@ -2254,7 +2254,7 @@ u16 KeyInterCB_WaitForPlayersToExit(u32 a1)
     return LINK_KEY_CODE_EMPTY;
 }
 
-u16 KeyInterCB_SendExitRoomKey(u32 a1)
+u16 KeyInterCB_SendExitRoomKey(u32 key)
 {
     SetKeyInterceptCallback(KeyInterCB_WaitForPlayersToExit);
     return LINK_KEY_CODE_EXIT_ROOM;
@@ -2294,74 +2294,74 @@ u16 QueueExitLinkRoomKey(void)
     return 0;
 }
 
-void LoadCableClubPlayer(int linkPlayerId, int a2, struct CableClubPlayer *a3)
+void LoadCableClubPlayer(int linkPlayerId, int selfId, struct CableClubPlayer *trainer)
 {
     s16 x, y;
 
-    a3->playerId = linkPlayerId;
-    a3->isLocalPlayer = (linkPlayerId == a2) ? 1 : 0;
-    a3->movementMode = gLinkPlayerObjectEvents[linkPlayerId].movementMode;
-    a3->facing = GetLinkPlayerFacingDirection(linkPlayerId);
+    trainer->playerId = linkPlayerId;
+    trainer->isLocalPlayer = (linkPlayerId == selfId) ? 1 : 0;
+    trainer->movementMode = gLinkPlayerObjectEvents[linkPlayerId].movementMode;
+    trainer->facing = GetLinkPlayerFacingDirection(linkPlayerId);
     GetLinkPlayerCoords(linkPlayerId, &x, &y);
-    a3->pos.x = x;
-    a3->pos.y = y;
-    a3->pos.height = GetLinkPlayerElevation(linkPlayerId);
-    a3->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
+    trainer->pos.x = x;
+    trainer->pos.y = y;
+    trainer->pos.height = GetLinkPlayerElevation(linkPlayerId);
+    trainer->metatileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 }
 
-bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *a1)
+bool32 IsCableClubPlayerUnfrozen(struct CableClubPlayer *trainer)
 {
-    u8 v1 = a1->movementMode;
-    if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
+    u8 movementMode = trainer->movementMode;
+    if (movementMode == MOVEMENT_MODE_SCRIPTED || movementMode == MOVEMENT_MODE_FREE)
         return TRUE;
     else
         return FALSE;
 }
 
-bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *a1)
+bool32 CanCableClubPlayerPressStart(struct CableClubPlayer *trainer)
 {
-    u8 v1 = a1->movementMode;
-    if (v1 == MOVEMENT_MODE_SCRIPTED || v1 == MOVEMENT_MODE_FREE)
+    u8 movementMode = trainer->movementMode;
+    if (movementMode == MOVEMENT_MODE_SCRIPTED || movementMode == MOVEMENT_MODE_FREE)
         return TRUE;
     else
         return FALSE;
 }
 
-const u8 *TryGetTileEventScript(struct CableClubPlayer *a1)
+const u8 *TryGetTileEventScript(struct CableClubPlayer *trainer)
 {
-    if (a1->movementMode != MOVEMENT_MODE_SCRIPTED)
+    if (trainer->movementMode != MOVEMENT_MODE_SCRIPTED)
         return 0;
-    return GetCoordEventScriptAtMapPosition(&a1->pos);
+    return GetCoordEventScriptAtMapPosition(&trainer->pos);
 }
 
-bool32 PlayerIsAtSouthExit(struct CableClubPlayer *a1)
+bool32 PlayerIsAtSouthExit(struct CableClubPlayer *trainer)
 {
-    if (a1->movementMode != MOVEMENT_MODE_SCRIPTED && a1->movementMode != MOVEMENT_MODE_FREE)
+    if (trainer->movementMode != MOVEMENT_MODE_SCRIPTED && trainer->movementMode != MOVEMENT_MODE_FREE)
         return FALSE;
-    if (!MetatileBehavior_IsSouthArrowWarp(a1->metatileBehavior))
+    if (!MetatileBehavior_IsSouthArrowWarp(trainer->metatileBehavior))
         return FALSE;
-    if (a1->facing != DIR_SOUTH)
+    if (trainer->facing != DIR_SOUTH)
         return FALSE;
     return TRUE;
 }
 
-const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
+const u8 *TryInteractWithPlayer(struct CableClubPlayer *trainer)
 {
-    struct MapPosition unkStruct;
+    struct MapPosition pos;
     u8 linkPlayerId;
 
-    if (a1->movementMode && a1->movementMode != MOVEMENT_MODE_SCRIPTED)
+    if (trainer->movementMode && trainer->movementMode != MOVEMENT_MODE_SCRIPTED)
         return 0;
 
-    unkStruct = a1->pos;
-    unkStruct.x += gDirectionToVectors[a1->facing].x;
-    unkStruct.y += gDirectionToVectors[a1->facing].y;
-    unkStruct.height = 0;
-    linkPlayerId = GetLinkPlayerIdAt(unkStruct.x, unkStruct.y);
+    pos = trainer->pos;
+    pos.x += gDirectionToVectors[trainer->facing].x;
+    pos.y += gDirectionToVectors[trainer->facing].y;
+    pos.height = 0;
+    linkPlayerId = GetLinkPlayerIdAt(pos.x, pos.y);
 
     if (linkPlayerId != MAX_LINK_PLAYERS)
     {
-        if (!a1->isLocalPlayer)
+        if (!trainer->isLocalPlayer)
             return CableClub_EventScript_TooBusyToNotice;
         if (sPlayerLinkStates[linkPlayerId] != PLAYER_LINK_STATE_IDLE)
             return CableClub_EventScript_TooBusyToNotice;
@@ -2371,7 +2371,7 @@ const u8 *TryInteractWithPlayer(struct CableClubPlayer *a1)
             return CableClub_EventScript_ReadTrainerCardColored;
     }
 
-    return GetInteractedLinkPlayerScript(&unkStruct, a1->metatileBehavior, a1->facing);
+    return GetInteractedLinkPlayerScript(&pos, trainer->metatileBehavior, trainer->facing);
 }
 
 static u16 GetDirectionForEventScript(const u8 *script)
