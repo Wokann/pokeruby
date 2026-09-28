@@ -27,7 +27,7 @@ void GiveGiftRibbonToParty(u8 index, u8 ribbonId)
         {
             struct Pokemon *mon = &gPlayerParty[i];
 
-            if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(mon, MON_DATA_SANITY_BIT3) == FALSE)
+            if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(mon, MON_DATA_SANITY_IS_EGG) == FALSE)
             {
                 SetMonData(mon, array[index], &data);
                 gotRibbon = TRUE;

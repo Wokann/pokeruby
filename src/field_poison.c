@@ -124,7 +124,7 @@ s32 DoPoisonFieldEffect(void)
     {
         u32 hp;
 
-        if (GetMonData(pokemon, MON_DATA_SANITY_BIT2) != 0
+        if (GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES) != 0
          && GetPrimaryStatus(GetMonData(pokemon, MON_DATA_STATUS)) == STATUS_PRIMARY_POISON)
         {
             // decrement HP of poisoned mon

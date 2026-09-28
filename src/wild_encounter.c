@@ -410,7 +410,7 @@ static bool8 DoWildEncounterTest(u32 encounterRate, bool8 ignoreAbility)
     if (!ignoreAbility)
     {
         // UB: Too few arguments for function 'GetMonData'
-        if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_BIT3))
+        if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
         {
             u32 ability = GetMonAbility(&gPlayerParty[0]);
             if (ability == ABILITY_STENCH)
