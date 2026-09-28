@@ -1743,7 +1743,7 @@ static bool8 Fishing_StartEncounter(struct Task *task)
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         FishingWildEncounter(task->tFishingRod);
-        sub_80BE97C(1);
+        RecordFishingAttemptForTV(1);
         DestroyTask(FindTaskIdByFunc(Task_Fishing));
     }
     return FALSE;
@@ -1804,7 +1804,7 @@ static bool8 Fishing_EndNoMon(struct Task *task)
         UnlockPlayerFieldControls();
         UnfreezeObjectEvents();
         Menu_EraseScreen();
-        sub_80BE97C(0);
+        RecordFishingAttemptForTV(0);
         DestroyTask(FindTaskIdByFunc(Task_Fishing));
     }
     return FALSE;

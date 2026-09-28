@@ -5051,7 +5051,7 @@ void HandleEndTurn_FinishBattle(void)
                     }
                 }
             }
-            PutPokemonTodayCaughtOnAir();
+            TryPutPokemonTodayOnAir();
         }
 
         BeginFastPaletteFade(3);

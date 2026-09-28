@@ -914,7 +914,7 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
     stringPtr[1] = 0x14;
     stringPtr[2] = 0x6;
     stringPtr += 3;
-    stringPtr = ConvertIntToDecimalString(stringPtr, gTasks[taskId].tCurrPageNo);
+    stringPtr = ConvertIntToDecimalStringSimple(stringPtr, gTasks[taskId].tCurrPageNo);
     stringPtr[0] = 0xFC;
     stringPtr[1] = 0x13;
     stringPtr[2] = 0xF0;
@@ -1171,7 +1171,7 @@ static void HallOfFame_PrintPlayerInfo(u8 a0, u8 a1)
     MenuPrint_RightAligned(gStringVar1, a0 + 14, a1 + 3);
     Menu_PrintText(gMainMenuString_Time, a0 + 1, a1 + 5);
 
-    stringPtr = ConvertIntToDecimalString(gStringVar1, gSaveBlock2.playTimeHours);
+    stringPtr = ConvertIntToDecimalStringSimple(gStringVar1, gSaveBlock2.playTimeHours);
     stringPtr[0] = CHAR_SPACE;
     stringPtr[1] = CHAR_COLON;
     stringPtr[2] = CHAR_SPACE;

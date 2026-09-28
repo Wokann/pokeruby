@@ -81,7 +81,7 @@ void PrintSaveBadges(s16 x, s16 y)
     char badges[16];
 
     Menu_PrintText(gOtherText_Badges, x, y);
-    ConvertIntToDecimalString(badges, GetBadgeCount());
+    ConvertIntToDecimalStringSimple(badges, GetBadgeCount());
     MenuPrint_RightAligned(badges, x + 12, y);
 }
 
@@ -130,7 +130,7 @@ u16 GetPokedexSeenCount()
 void FormatPlayTime(char *playtime, u16 hours, u16 minutes, u16 colon)
 {
     s16 _colon = colon;
-    playtime = ConvertIntToDecimalString(playtime, hours);
+    playtime = ConvertIntToDecimalStringSimple(playtime, hours);
 
     // playtime[0] is hours.
     // playtime[1] is the character to render between hours and minutes.

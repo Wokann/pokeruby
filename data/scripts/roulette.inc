@@ -1,4 +1,3 @@
-	.equiv POKENEWS_GAME_CORNER, 2
 	.equiv ROULETTE_SPECIAL_RATE, 1 << 7
 
 Roulette_EventScript_Table1:: @ 81C407E

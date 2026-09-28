@@ -63,7 +63,7 @@ static struct MartInfo gMartInfo;
 // ewram
 EWRAM_DATA u32 gMartTotalCost = 0;
 EWRAM_DATA s16 gMartViewportObjects[16][4] = {0};
-EWRAM_DATA struct ItemSlot gMartPurchaseHistory[3] = {0};
+EWRAM_DATA struct ItemSlot gMartPurchaseHistory[SMARTSHOPPER_NUM_ITEMS] = {0};
 EWRAM_DATA u8 gMartPurchaseHistoryId = 0;
 
 EWRAM_DATA u8 gEscalatorAnimTaskId = 0; // This really should be in fldeff_escalator, but being in a new file aligns the ewram, which doesnt match the ROM.
@@ -512,7 +512,7 @@ static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
 {
     u16 itemListIndex = gMartInfo.choicesAbove + gMartInfo.cursor;
     u16 itemId = gMartInfo.itemList[itemListIndex];
-    u32 price = (ItemId_GetPrice(itemId) >> GetPriceReduction(1));
+    u32 price = (ItemId_GetPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
 
     PrintMoneyAmount(gTasks[taskId].tItemCount * price, 6, 6, 11);
     gStringVar1[0] = EXT_CTRL_CODE_BEGIN;
@@ -543,7 +543,7 @@ static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControl
     if (hasControlCode)
         stringPtr = &gStringVar1[3];
 
-    GetMoneyAmountText(stringPtr, (ItemId_GetPrice(itemId) >> GetPriceReduction(1)), 0x4);
+    GetMoneyAmountText(stringPtr, (ItemId_GetPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)), 0x4);
     Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, var2 << 3, 1);
 }
 
@@ -714,7 +714,7 @@ static void Shop_PrintPrice(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
+        gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * gTasks[taskId].tItemCount; // set total cost of your purchase.
         Menu_EraseWindowRect(0, 0xA, 0xD, 0xD);
         FillBgTilemapRect(gBGTilemapBuffers[1], 0x1, 0xB, 0xC, 0x2, 0);
         BuyMenuDrawTextboxBG_Restore();
@@ -741,7 +741,7 @@ static void Shop_UpdateCurItemCountToMax(u8 taskId)
     Menu_DrawStdWindowFrame(0, 0xA, 0xD, 0xD);
     Shop_DisplayPriceInCheckoutWindow(taskId);
 
-    var = gSaveBlock1.money / (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1));
+    var = gSaveBlock1.money / (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
     if (var > 99)
         gMartInfo.curItemCount = 99;
     else
@@ -1086,7 +1086,7 @@ static void Shop_DoCursorAction(u8 taskId)
 
                 if (gMartInfo.martType == MART_TYPE_0)
                 {
-                    gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> GetPriceReduction(1)); // set 1x price
+                    gMartTotalCost = (ItemId_GetPrice(gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor]) >> IsPokeNewsActive(POKENEWS_SLATEPORT)); // set 1x price
                     if (!IsEnoughMoney(gSaveBlock1.money, gMartTotalCost))
                     {
                         DisplayItemMessageOnField(taskId, gOtherText_NotEnoughMoney, Shop_DoPricePrintAndReturnToBuyMenu, 0xC3E1); // tail merge
@@ -1182,7 +1182,7 @@ static void Task_UpdatePurchaseHistory(u8 taskId)
         }
     }
 
-    if (gMartPurchaseHistoryId < 3)
+    if (gMartPurchaseHistoryId < SMARTSHOPPER_NUM_ITEMS)
     {
         gMartPurchaseHistory[gMartPurchaseHistoryId].itemId = gMartInfo.itemList[gMartInfo.choicesAbove + gMartInfo.cursor];
         gMartPurchaseHistory[gMartPurchaseHistoryId].quantity = gTasks[taskId].tItemCount;
@@ -1195,7 +1195,7 @@ static void Task_UpdatePurchaseHistory(u8 taskId)
 static void ClearItemPurchases(void)
 {
     gMartPurchaseHistoryId = 0;
-    ClearItemSlots(gMartPurchaseHistory, 3);
+    ClearItemSlots(gMartPurchaseHistory, SMARTSHOPPER_NUM_ITEMS);
 }
 
 void Shop_CreatePokemartMenu(u16 *itemList)

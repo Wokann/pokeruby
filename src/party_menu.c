@@ -2654,7 +2654,7 @@ void PartyMenuDoPrintLevel(u8 monIndex, u8 menuLayout, u8 level)
     stringVar[1] = 0x12;
     stringVar[2] = 0x8;
 
-    ConvertIntToDecimalString(&stringVar[3], level);
+    ConvertIntToDecimalStringSimple(&stringVar[3], level);
 
     CpuFastFill(0, gTileBufferPtr + 0x100, 0x80);
     Text_InitWindow8004E3C((struct WindowTemplate *)&gWindowTemplate_81E6CAC, gTileBufferPtr, gStringVar1);

@@ -230,17 +230,17 @@ void ShowEasyChatScreen(void)
         break;
     case 5:
         // TODO: Is this the right TV show?
-        words = gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubLetter.pad04;
+        words = gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubLetter.words;
         displayedPersonType = gSpecialVar_0x8006;
         break;
     case 7:
         // TODO: Is this the right TV show?
-        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubOpinions.var1C[gSpecialVar_0x8006];
+        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubOpinions.words[gSpecialVar_0x8006];
         displayedPersonType = 1;
         break;
     case 8:
         // TODO: Is this the right TV show?
-        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubOpinions.var02;
+        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].fanclubOpinions.species;
         displayedPersonType = 0;
         break;
     case EASY_CHAT_TYPE_TRENDY_PHRASE:
@@ -253,12 +253,12 @@ void ShowEasyChatScreen(void)
         break;
     case 11:
         // TODO: Is this the right TV show?
-        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].bravoTrainer.var04[gSpecialVar_0x8006];
+        words = &gSaveBlock1.tvShows[gSpecialVar_0x8005].bravoTrainer.words[gSpecialVar_0x8006];
         displayedPersonType = 0;
         break;
     case 12:
         // TODO: Is this the right TV show?
-        words = gSaveBlock1.tvShows[gSpecialVar_0x8005].bravoTrainerTower.var18;
+        words = gSaveBlock1.tvShows[gSpecialVar_0x8005].bravoTrainerTower.words;
         displayedPersonType = 1;
         break;
     case EASY_CHAT_TYPE_GOOD_SAYING:

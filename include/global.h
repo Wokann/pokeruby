@@ -243,8 +243,7 @@ struct TVShowCommon
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u8 pad02[20];
-    /*0x16*/ u16 var16[3];
+    /*0x02*/ u8 data[26];
     /*0x1C*/ u8 srcTrainerId3Lo;
     /*0x1D*/ u8 srcTrainerId3Hi;
     /*0x1E*/ u8 srcTrainerId2Lo;
@@ -255,12 +254,19 @@ struct TVShowCommon
     /*0x23*/ u8 trainerIdHi;
 };
 
+struct TVShowCommonInit
+{
+    /*0x00*/ u8 kind;
+    /*0x01*/ bool8 active;
+    /*0x02*/ u8 data[34];
+};
+
 struct TVShowFanClubLetter
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
     /*0x02*/ u16 species;
-    /*0x04*/ u16 pad04[6];
+    /*0x04*/ u16 words[6];
     /*0x10*/ u8 playerName[8];
     /*0x18*/ u8 language;
 };
@@ -269,35 +275,35 @@ struct TVShowRecentHappenings
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u16 var02;
-    /*0x04*/ u16 var04[6];
+    /*0x02*/ u16 species;
+    /*0x04*/ u16 words[6];
     /*0x10*/ u8 playerName[8];
     /*0x18*/ u8 language;
-    /*0x19*/ u8 pad19[10];
+    /*0x19*/ u8 filler_19[10];
 };
 
-struct TVShowFanclubOpinions
+struct TVShowFanClubOpinions
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u16 var02;
-    /*0x04*/ u8 var04A:4;
-    /*0x04*/ u8 var04B:4;
+    /*0x02*/ u16 species;
+    /*0x04*/ u8 friendshipHighNybble:4;
+    /*0x04*/ u8 questionAsked:4;
     /*0x05*/ u8 playerName[8];
     /*0x0D*/ u8 language;
-    /*0x0E*/ u8 var0E;
-    /*0x0F*/ u8 var0F;
-    /*0x10*/ u8 var10[8];
-    /*0x18*/ u16 var18[2];
-    /*0x1C*/ u16 var1C[4];
+    /*0x0E*/ u8 pokemonNameLanguage;
+    /*0x0F*/ u8 filler_0F;
+    /*0x10*/ u8 nickname[8];
+    /*0x18*/ u16 words18[2];
+    /*0x1C*/ u16 words[4];
 };
 
-struct TVShowUnknownType04
+struct TVShowDummy
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u8 pad02[4];
-    /*0x06*/ u16 var06;
+    /*0x02*/ u16 words[2];
+    /*0x06*/ u16 species;
 };
 
 struct TVShowNameRaterShow
@@ -309,7 +315,7 @@ struct TVShowNameRaterShow
     /*0x0F*/ u8 trainerName[11];
     /*0x1A*/ u8 random;
     /*0x1B*/ u8 random2;
-    /*0x1C*/ u16 var1C;
+    /*0x1C*/ u16 randomSpecies;
     /*0x1E*/ u8 language;
     /*0x1F*/ u8 pokemonNameLanguage;
 };
@@ -319,31 +325,31 @@ struct TVShowBravoTrainerPokemonProfiles
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
     /*0x02*/ u16 species;
-    /*0x04*/ u16 var04[2];
+    /*0x04*/ u16 words[2];
     /*0x08*/ u8 pokemonNickname[11];
     /*0x13*/ u8 contestCategory:3;
     /*0x13*/ u8 contestRank:2;
     /*0x13*/ u8 contestResult:2;
-    /*0x13*/ u8 var13_7:1;
-    /*0x14*/ u16 var14;
+    /*0x13*/ u8 padding:1;
+    /*0x14*/ u16 move;
     /*0x16*/ u8 playerName[8];
     /*0x1E*/ u8 language;
-    /*0x1F*/ u8 var1f;
+    /*0x1F*/ u8 pokemonNameLanguage;
 };
 
 struct TVShowBravoTrainerBattleTowerSpotlight
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u8 trainerName[8];
+    /*0x02*/ u8 playerName[8];
     /*0x0A*/ u16 species;
-    /*0x0C*/ u8 enemyTrainerName[8];
+    /*0x0C*/ u8 opponentName[8];
     /*0x14*/ u16 defeatedSpecies;
-    /*0x16*/ u16 var16;
-    /*0x18*/ u16 var18[1];
+    /*0x16*/ u16 numFights;
+    /*0x18*/ u16 words[1];
     /*0x1A*/ u8 btLevel;
-    /*0x1B*/ u8 var1b;
-    /*0x1C*/ u8 var1c;
+    /*0x1B*/ u8 interviewResponse;
+    /*0x1C*/ bool8 wonTheChallenge;
     /*0x1D*/ u8 language;
 };
 
@@ -356,7 +362,7 @@ struct TVShowPokemonToday
     /*0x04*/ u8 nickname[11];
     /*0x0F*/ u8 ball;
     /*0x10*/ u16 species;
-    /*0x12*/ u8 var12;
+    /*0x12*/ u8 nBallsUsed;
     /*0x13*/ u8 playerName[8];
 };
 
@@ -366,7 +372,7 @@ struct TVShowSmartShopper
     /*0x01*/ bool8 active;
     /*0x02*/ u8 priceReduced;
     /*0x03*/ u8 language;
-    /*0x04*/ u8 pad04[2];
+    /*0x04*/ u8 filler_04[2];
     /*0x06*/ u16 itemIds[3];
     /*0x0C*/ u16 itemAmounts[3];
     /*0x12*/ u8 shopLocation;
@@ -381,9 +387,9 @@ struct TVShowPokemonTodayFailed
     /*0x03*/ u8 pad03[9];
     /*0x0c*/ u16 species;
     /*0x0e*/ u16 species2;
-    /*0x10*/ u8 var10;
-    /*0x11*/ u8 var11;
-    /*0x12*/ u8 var12;
+    /*0x10*/ u8 nBallsUsed;
+    /*0x11*/ u8 outcome;
+    /*0x12*/ u8 location;
     /*0x13*/ u8 playerName[8];
 };
 
@@ -391,11 +397,11 @@ struct TVShowPokemonAngler
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u8 var02;
-    /*0x03*/ u8 var03;
-    /*0x04*/ u16 var04;
+    /*0x02*/ u8 nBites;
+    /*0x03*/ u8 nFails;
+    /*0x04*/ u16 species;
     /*0x06*/ u8 language;
-             u8 pad07[12];
+             u8 filler_07[12];
     /*0x13*/ u8 playerName[8];
 };
 
@@ -403,13 +409,13 @@ struct TVShowWorldOfMasters
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u16 var02;
-    /*0x04*/ u16 var04;
-    /*0x06*/ u16 var06;
-    /*0x08*/ u16 var08;
-    /*0x0a*/ u8 var0a;
+    /*0x02*/ u16 numPokeCaught;
+    /*0x04*/ u16 caughtPoke;
+    /*0x06*/ u16 steps;
+    /*0x08*/ u16 species;
+    /*0x0a*/ u8 location;
     /*0x0b*/ u8 language;
-             u8 pad0c[7];
+             u8 filler_0C[7];
     /*0x13*/ u8 playerName[8];
 };
 
@@ -417,29 +423,30 @@ struct TVShowMassOutbreak
 {
     /*0x00*/ u8 kind;
     /*0x01*/ bool8 active;
-    /*0x02*/ u8 var02;
-    /*0x03*/ u8 var03;
+    /*0x02*/ u8 unused1;
+    /*0x03*/ u8 unused3;
     /*0x04*/ u16 moves[4];
     /*0x0C*/ u16 species;
-    /*0x0E*/ u16 var0E;
+    /*0x0E*/ u16 unused2;
     /*0x10*/ u8 locationMapNum;
     /*0x11*/ u8 locationMapGroup;
-    /*0x12*/ u8 var12;
+    /*0x12*/ u8 unused4;
     /*0x13*/ u8 probability;
     /*0x14*/ u8 level;
-    /*0x15*/ u8 var15;
-    /*0x16*/ u16 daysLeft;
+    /*0x15*/ u8 unused5;
+    /*0x16*/ u16 daysBeforeOutbreak;
     /*0x18*/ u8 language;
-             u8 pad19[11];
+             u8 filler_19[11];
 };
 
 typedef union TVShow
 {
     struct TVShowCommon common;
+    struct TVShowCommonInit commonInit;
     struct TVShowFanClubLetter fanclubLetter;
     struct TVShowRecentHappenings recentHappenings;
-    struct TVShowFanclubOpinions fanclubOpinions;
-    struct TVShowUnknownType04 unkShow04;
+    struct TVShowFanClubOpinions fanclubOpinions;
+    struct TVShowDummy dummy;
     struct TVShowNameRaterShow nameRaterShow;
     struct TVShowBravoTrainerPokemonProfiles bravoTrainer;
     struct TVShowBravoTrainerBattleTowerSpotlight bravoTrainerTower;
@@ -528,7 +535,7 @@ struct PokeNews
 {
     u8 kind;
     u8 state;
-    u16 days;
+    u16 dayCountdown;
 };
 
 struct GabbyAndTyData

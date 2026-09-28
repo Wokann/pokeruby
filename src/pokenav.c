@@ -4871,7 +4871,7 @@ u8 *BufferPokenavMonNameGenderLevelText(u8 *dst, u16 listIndex, u8 displayMode)
         dest[4] = CHAR_LV;
         dest += 5;
 
-        dest = ConvertIntToDecimalString(dest, level);
+        dest = ConvertIntToDecimalStringSimple(dest, level);
         if (displayMode == 1)
         {
             dest = AlignInt1InMenuWindow(dest, gPokenavStructPtr->unk893c[listIndex].unk0, 0x80, 0x01);

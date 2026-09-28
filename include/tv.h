@@ -1,90 +1,59 @@
 #ifndef GUARD_TV_H
 #define GUARD_TV_H
 
+#include "constants/tv.h"
+
 extern u8 *const gTVStringVarPtrs[3];
 
-enum
-{
-    TVSHOW_FAN_CLUB_LETTER = 1,
-    TVSHOW_RECENT_HAPPENINGS,
-    TVSHOW_PKMN_FAN_CLUB_OPINIONS,
-    TVSHOW_UNKN_SHOWTYPE_04,
-    TVSHOW_NAME_RATER_SHOW,
-    TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE,
-    TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE,
-    TVSHOW_POKEMON_TODAY_CAUGHT = 21,
-    TVSHOW_SMART_SHOPPER,
-    TVSHOW_POKEMON_TODAY_FAILED,
-    TVSHOW_FISHING_ADVICE,
-    TVSHOW_WORLD_OF_MASTERS,
-    TVSHOW_MASS_OUTBREAK = 41,
-};
-
 void ClearTVShowData(void);
-u8 sub_80BDEAC(u8 *);
-void sub_80BE028(void);
-void sub_80BE074(void);
-void sub_80BE138(TVShow *show);
-void sub_80BE160(TVShow *show);
-void sub_80BE160(TVShow *);
-void sub_80BE188(void);
+void InitWorldOfMastersShowAttempt(void);
+void TryPutPokemonTodayFailedOnTheAir(void);
+void StorePlayerIdInRecordMixShow(TVShow *show);
+void StorePlayerIdInNormalShow(TVShow *show);
 void BravoTrainerPokemonProfile_BeforeInterview1(u16 move);
 void BravoTrainerPokemonProfile_BeforeInterview2(u8 contestStandingPlace);
-void sub_80BE320(void);
 void StartMassOutbreak(void);
-void sub_80BE5FC(void);
-void sub_80BE65C(void);
-void sub_80BE6A0(void);
-void nullsub_21(void);
-void sub_80BE778(void);
-void sub_80BE8EC(u16);
-void UpdateMassOutbreakTimeLeft(u16);
-void sub_80BE97C(u8);
-void sub_80BE9D4();
-void sub_80BEA50(u16);
-void sub_80BEA5C(u16);
-void sub_80BEA88(void);
-void sub_80BEA88(void);
-void sub_80BEB20(void);
-int sub_80BEBC8(struct PokeNews *arg0);
-extern void sub_80BEBF4(void);
-void sub_80BEC10(u8);
-bool8 GetPriceReduction(u8);
-bool8 IsPriceDiscounted(u8);
-bool8 sub_80BEE48(u8);
-void sub_80BEE84(u16);
-size_t sub_80BF0B8(int);
-bool8 sub_80BF1B4(u8);
-void sub_80BF20C(void);
-void sub_80BF334(void);
-void sub_80BF3A4(void);
-void sub_80BF3DC(void);
-void sub_80BF46C(void);
-void sub_80BF478(void);
-void sub_80BF478(void);
-void sub_80BF484(void);
-void sub_80BF4BC(void);
-void sub_80BF55C(TVShow tvShow[], u8 showidx);
-void sub_80BF55C(TVShow tvShow[], u8 showidx);
-void sub_80BF588(TVShow tvShows[]);
-u16 sub_80BF674(u16 species);
-void sub_80BF6D8(void);
-s8 sub_80BF720(TVShow *);
-s8 sub_80BF74C(TVShow tvShow[]);
-bool8 sub_80BF77C(u16);
-bool8 sub_80BF77C(u16);
+void TryStartRandomMassOutbreak(void);
+void UpdateTimeBeforeMassOutbreak(u16 days);
+void TryEndMassOutbreak(u16 days);
+void RecordFishingAttemptForTV(bool8 caughtFish);
+void TryPutFishingAdviceOnAir(void);
+void SetPokemonAnglerSpecies(u16);
+void ResolveWorldOfMastersShow(u16 days);
+void TryPutWorldOfMastersOnAir(void);
+void TryPutRandomPokeNewsOnAir(void);
+int GetFirstEmptyPokeNewsSlot(struct PokeNews *pokeNews);
+void ClearPokeNews(void);
+void ClearPokeNewsBySlot(u8 slot);
+bool8 IsPokeNewsActive(u8 newsKind);
+bool8 ShouldApplyPokeNewsEffect(u8 newsKind);
+bool8 IsAddingPokeNewsDisallowed(u8 newsKind);
+void UpdatePokeNewsCountdown(u16 days);
+void CopyContestRankToStringVar(u8 varIdx, u8 rank);
+void ConvertIntToDecimalString(u8 varIdx, s32 value);
+size_t CountDigits(int value);
+bool8 IsRecordMixShowAlreadySpawned(u8 showKind);
+void SortPurchasesByQuantity(void);
+void DeleteTVShowInArrayByIdx(TVShow tvShows[], u8 showIdx);
+void CompactTVShowArray(TVShow tvShows[]);
+u16 GetRandomDifferentSpeciesAndNameSeenByPlayer(u8 varIdx, u16 excludedSpecies);
+u16 GetRandomDifferentSpeciesSeenByPlayer(u16 excludedSpecies);
+void Script_FindFirstEmptyNormalTVShowSlot(void);
+s8 FindFirstEmptyNormalTVShowSlot(TVShow *tvShows);
+s8 FindFirstEmptyRecordMixTVShowSlot(TVShow tvShows[]);
+bool8 BernoulliTrial(u16 ratio);
 u32 GetPlayerIDAsU32(void);
-void ReceiveTvShowsData(u8 *, u32, u8);
-u8 sub_80C004C(TVShow *tv1, TVShow *tv2, u8 idx);
-u8 sub_80C00B4(TVShow *tv1, TVShow *tv2, u8 idx);
-u8 sub_80C0134(TVShow *tv1, TVShow *tv2, u8 idx);
-s8 sub_80C019C(TVShow tvShows[]);
-void sub_80C01D4(void);
-void sub_80C03A8(u8 showidx);
-void sub_80C03C8(u16 species, u8 showidx);
-void sub_80C0408(void);
-bool8 sub_80C06E8(struct PokeNews *arg0, struct PokeNews *arg1, s8 arg2);
-void TVShowConvertInternationalString(u8 *, u8 *, u8);
+void ReceiveTvShowsData(u8 *src, u32 size, u8 playersLinkId);
+u8 TryMixNormalTVShow(TVShow *dest, TVShow *src, u8 sourcePlayerIdx);
+u8 TryMixRecordMixTVShow(TVShow *dest, TVShow *src, u8 sourcePlayerIdx);
+u8 TryMixOutbreakTVShow(TVShow *dest, TVShow *src, u8 sourcePlayerIdx);
+s8 FindInactiveShowInArray(TVShow tvShows[]);
+void DeactivateShowsWithUnseenSpecies(void);
+void DeactivateShow(u8 showIdx);
+void DeactivateShowIfNotSeenSpecies(u16 species, u8 showIdx);
+void DeactivateGameCompleteShowsIfNotUnlocked(void);
+bool8 TryMixPokeNewsShow(struct PokeNews *dest, struct PokeNews *src, s8 slot);
+void TVShowConvertInternationalString(u8 *dest, u8 *src, u8 language);
 void DoTVShowTheNameRaterShow(void);
 void DoTVShowPokemonTodaySuccessfulCapture(void);
 void DoTVShowPokemonTodayFailedCapture(void);
@@ -98,20 +67,19 @@ void DoTVShowTheWorldOfMasters(void);
 void TVShowDone(void);
 void UpdateTVScreensOnMap(int, int);
 void ResetGabbyAndTy(void);
-void TakeTVShowInSearchOfTrainersOffTheAir(void);
+void TakeGabbyAndTyOffTheAir(void);
 extern u8 GabbyAndTyGetBattleNum(void);
-void sub_80C04A0(void);
+void DeleteExcessMixedShows(void);
 void ReceivePokeNewsData(void *, u32, u8);
 void DoTVShowBravoTrainerPokemonProfile(void);
-void DoTVShowBravoTrainerBattleTowerProfile(void);
+void DoTVShowBravoTrainerBattleTower(void);
 void DoTVShowTodaysSmartShopper(void);
 void TryPutSmartShopperOnAir(void);
 void UpdateTVShowsPerDay(u16);
 void DeactivateAllNormalTVShows(void);
-void sub_80BF088(u8, s32);
 void HideBattleTowerReporter(void);
-void PutPokemonTodayCaughtOnAir(void);
+void TryPutPokemonTodayOnAir(void);
 u8 GetTVGroupByShowId(u8);
-void sub_80BEC40(void);
+void CompactPokeNews(void);
 
 #endif // GUARD_TV_H

@@ -1503,7 +1503,7 @@ bool8 ScrCmd_buffernumberstring(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = ScriptReadByte(ctx);
     u16 number = VarGet(ScriptReadHalfword(ctx));
-    u8 numDigits = sub_80BF0B8(number);
+    u8 numDigits = CountDigits(number);
 
     ConvertIntToDecimalStringN(sScriptStringVars[stringVarIndex], number, 0, numDigits);
     return FALSE;
@@ -1805,7 +1805,7 @@ bool8 ScrCmd_getpricereduction(struct ScriptContext *ctx)
 {
     u16 value = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = GetPriceReduction(value);
+    gSpecialVar_Result = IsPokeNewsActive(value);
     return FALSE;
 }
 

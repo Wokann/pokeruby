@@ -613,7 +613,7 @@ void FishingWildEncounter(u8 rod)
           rod);
     }
     IncrementGameStat(GAME_STAT_FISHING_CAPTURES);
-    sub_80BEA50(species);
+    SetPokemonAnglerSpecies(species);
     BattleSetup_StartWildBattle();
 }
 

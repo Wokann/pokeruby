@@ -3015,7 +3015,7 @@ bool8 PrintBlendingResults(void)
                 de_sub_8073174(textPtr, gOtherText_Berry);
 #endif
                 textPtr = gBerryBlenderData->stringVar;
-                textPtr = ConvertIntToDecimalString(textPtr, i + 1);
+                textPtr = ConvertIntToDecimalStringSimple(textPtr, i + 1);
                 textPtr[0] = CHAR_SPACE;
                 textPtr[1] = CHAR_PERIOD;
                 textPtr[2] = CHAR_SPACE;
@@ -3219,7 +3219,7 @@ static bool8 PrintBlendingRanking(void)
             txtPtr[2] = 4;
             txtPtr += 3;
 
-            txtPtr = ConvertIntToDecimalString(txtPtr, i + 1);
+            txtPtr = ConvertIntToDecimalStringSimple(txtPtr, i + 1);
 
             txtPtr[0] = CHAR_SPACE;
             txtPtr[1] = CHAR_PERIOD;

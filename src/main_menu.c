@@ -724,7 +724,7 @@ void PrintBadgeCount(void)
 #elif defined(GERMAN)
     Menu_PrintTextPixelCoords(gMainMenuString_Badges, 124, 40, TRUE);
 #endif
-    ConvertIntToDecimalString(buffer, GetBadgeCount());
+    ConvertIntToDecimalStringSimple(buffer, GetBadgeCount());
     Menu_PrintTextPixelCoords(buffer, 205, 40, 1);
 }
 

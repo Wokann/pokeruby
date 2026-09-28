@@ -138,7 +138,7 @@ void GetMoneyAmountText(u8 *buffer, u32 amount, u8 fieldWidth)
     buffer[0] = CHAR_CURRENCY;
     buffer += 1;
 
-    buffer = ConvertIntToDecimalString(buffer, amount);
+    buffer = ConvertIntToDecimalStringSimple(buffer, amount);
 
     buffer[0] = EXT_CTRL_CODE_BEGIN;
     buffer[1] = 0x14;
@@ -175,7 +175,7 @@ void PrintMoneyAmountRightAligned(u32 amount, u8 right, u8 top)
     ptr[0] = CHAR_CURRENCY;
     ptr++;
 
-    ptr = ConvertIntToDecimalString(ptr, amount);
+    ptr = ConvertIntToDecimalStringSimple(ptr, amount);
 
     MenuPrint_RightAligned(buffer, right, top);
 

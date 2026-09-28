@@ -1264,10 +1264,10 @@ static void TrainerCard_Back_PrintLinkBattles(void)
 
     if (gTrainerCardPtr->showLinkBattleStatus != 0)
     {
-        ConvertIntToDecimalString(buffer, gTrainerCardPtr->displayedCard.linkBattleWins);
+        ConvertIntToDecimalStringSimple(buffer, gTrainerCardPtr->displayedCard.linkBattleWins);
         MenuPrint_RightAligned(buffer, 22, 7);
 
-        ConvertIntToDecimalString(buffer, gTrainerCardPtr->displayedCard.linkBattleLosses);
+        ConvertIntToDecimalStringSimple(buffer, gTrainerCardPtr->displayedCard.linkBattleLosses);
         MenuPrint_RightAligned(buffer, 28, 7);
     }
 }

@@ -3463,7 +3463,7 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
     switch (alignType)
     {
     case 0:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         dest = StringCopy(dest, temp);
         dest[0] = EXT_CTRL_CODE_BEGIN;
         dest[1] = 19;
@@ -3472,7 +3472,7 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         *dest = 0xFF;
         break;
     case 1:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         width = GetStringWidth(win, temp);
         if (alignAmount > width)
         {
@@ -3484,7 +3484,7 @@ u8 *AlignInt1(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         dest = StringCopy(dest, temp);
         break;
     case 2:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         width = GetStringWidth(win, temp);
         if (alignAmount > width)
         {
@@ -3514,7 +3514,7 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
     switch (alignType)
     {
     case 0:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         width = GetStringWidth(win, temp);
         dest = StringCopy(dest, temp);
         dest[0] = EXT_CTRL_CODE_BEGIN;
@@ -3524,7 +3524,7 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         *dest = 0xFF;
         break;
     case 1:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         width = GetStringWidth(win, temp);
         if (alignAmount > width)
         {
@@ -3536,7 +3536,7 @@ u8 *AlignInt2(struct Window *win, u8 *dest, s32 value, u8 alignAmount, u8 alignT
         dest = StringCopy(dest, temp);
         break;
     case 2:
-        ConvertIntToDecimalString(temp, value);
+        ConvertIntToDecimalStringSimple(temp, value);
         width = GetStringWidth(win, temp);
         if (alignAmount > width)
         {

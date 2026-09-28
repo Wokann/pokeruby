@@ -1633,7 +1633,7 @@ static const u8 sSlotMachineServiceDayIds[] = {3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 
 u16 GetSlotMachineId(void)
 {
     u32 rnd = gSaveBlock1.dewfordTrends[0].trendiness + gSaveBlock1.dewfordTrends[0].rand + sSlotMachineRandomSeeds[gSpecialVar_0x8004];
-    if (GetPriceReduction(2))
+    if (IsPokeNewsActive(POKENEWS_GAME_CORNER))
     {
         return sSlotMachineServiceDayIds[rnd % 12];
     }
@@ -1910,25 +1910,25 @@ void BufferLottoTicketNumber(void)
 {
     if (gSpecialVar_Result >= 10000)
     {
-        sub_80BF088(0, gSpecialVar_Result);
+        ConvertIntToDecimalString(0, gSpecialVar_Result);
     }
     else if (gSpecialVar_Result >= 1000)
     {
         gStringVar1[0] = CHAR_0;
-        ConvertIntToDecimalStringN(gStringVar1 + 1, gSpecialVar_Result, 0, sub_80BF0B8(gSpecialVar_Result));
+        ConvertIntToDecimalStringN(gStringVar1 + 1, gSpecialVar_Result, 0, CountDigits(gSpecialVar_Result));
     }
     else if (gSpecialVar_Result >= 100)
     {
         gStringVar1[0] = CHAR_0;
         gStringVar1[1] = CHAR_0;
-        ConvertIntToDecimalStringN(gStringVar1 + 2, gSpecialVar_Result, 0, sub_80BF0B8(gSpecialVar_Result));
+        ConvertIntToDecimalStringN(gStringVar1 + 2, gSpecialVar_Result, 0, CountDigits(gSpecialVar_Result));
     }
     else if (gSpecialVar_Result >= 10)
     {
         gStringVar1[0] = CHAR_0;
         gStringVar1[1] = CHAR_0;
         gStringVar1[2] = CHAR_0;
-        ConvertIntToDecimalStringN(gStringVar1 + 3, gSpecialVar_Result, 0, sub_80BF0B8(gSpecialVar_Result));
+        ConvertIntToDecimalStringN(gStringVar1 + 3, gSpecialVar_Result, 0, CountDigits(gSpecialVar_Result));
     }
     else
     {
@@ -1936,7 +1936,7 @@ void BufferLottoTicketNumber(void)
         gStringVar1[1] = CHAR_0;
         gStringVar1[2] = CHAR_0;
         gStringVar1[3] = CHAR_0;
-        ConvertIntToDecimalStringN(gStringVar1 + 4, gSpecialVar_Result, 0, sub_80BF0B8(gSpecialVar_Result));
+        ConvertIntToDecimalStringN(gStringVar1 + 4, gSpecialVar_Result, 0, CountDigits(gSpecialVar_Result));
     }
 }
 

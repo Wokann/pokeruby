@@ -29,7 +29,7 @@ void PrintCoins(s32 coins, u8 b, u8 x, u8 y)
     u8 r1;
     u8 foo;
 
-    ConvertIntToDecimalString(string, coins);
+    ConvertIntToDecimalStringSimple(string, coins);
     r1 = (b * 6 + 0x21 - 8 * (b + 2));
     x = x - r1 / 8;
     foo = r1 % 8;

@@ -748,7 +748,7 @@ void sub_809665C(void)
         stringVar[3] = 0x22;
     stringVar += 4;
 
-    stringVar = ConvertIntToDecimalString(stringVar, nPokemonInBox);
+    stringVar = ConvertIntToDecimalStringSimple(stringVar, nPokemonInBox);
 
     stringVar[0] = CHAR_SLASH;
     stringVar[1] = CHAR_0 + 3;
