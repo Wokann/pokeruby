@@ -148,7 +148,7 @@ void AnimTask_ConversionAlphaBlend(u8 taskId)
         {
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[1]++;
-            REG_BLDALPHA = (gTasks[taskId].data[1] << 8) | (16 - gTasks[taskId].data[1]);
+            REG_BLDALPHA = BLDALPHA_BLEND(16 - gTasks[taskId].data[1], gTasks[taskId].data[1]);
             if (gTasks[taskId].data[1] == 16)
                 gTasks[taskId].data[2]++;
         }
@@ -186,7 +186,7 @@ void AnimTask_Conversion2AlphaBlend(u8 taskId)
     {
         gTasks[taskId].data[0] = 0;
         gTasks[taskId].data[1]++;
-        REG_BLDALPHA = gTasks[taskId].data[1] | ((16 - gTasks[taskId].data[1]) << 8);
+        REG_BLDALPHA = BLDALPHA_BLEND(gTasks[taskId].data[1], 16 - gTasks[taskId].data[1]);
         if (gTasks[taskId].data[1] == 16)
             DestroyAnimVisualTask(taskId);
     }
