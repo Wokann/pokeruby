@@ -9,8 +9,8 @@ extern u8 gBattleAnimTarget;
 
 extern const union AnimCmd *const gMusicNotesAnimTable[];
 
-void AnimPerishSongMusicNote2(struct Sprite *sprite);
-void AnimPerishSongMusicNote(struct Sprite *sprite);
+static void AnimPerishSongMusicNote2(struct Sprite *sprite);
+static void AnimPerishSongMusicNote(struct Sprite *sprite);
 static void AnimPerishSongMusicNote_Step1(struct Sprite *);
 static void AnimPerishSongMusicNote_Step2(struct Sprite *);
 
@@ -63,7 +63,7 @@ const struct SpriteTemplate gPerishSongMusicNote2SpriteTemplate =
     .callback = AnimPerishSongMusicNote2,
 };
 
-void AnimPerishSongMusicNote2(struct Sprite *sprite)
+static void AnimPerishSongMusicNote2(struct Sprite *sprite)
 {
     if (sprite->data[0] == 0)
     {
@@ -82,7 +82,7 @@ void AnimPerishSongMusicNote2(struct Sprite *sprite)
     }
 }
 
-void AnimPerishSongMusicNote(struct Sprite *sprite)
+static void AnimPerishSongMusicNote(struct Sprite *sprite)
 {
     int index;
     int angleMask;
@@ -148,8 +148,8 @@ static void AnimPerishSongMusicNote_Step2(struct Sprite *sprite)
 
     if (sprite->data[4] > 3)
     {
-        int var1 = sprite->data[2];
-        sprite->invisible = var1 - (((s32)(var1 + ((u32)var1 >> 31)) >> 1) << 1);
+        int verticalVelocity = sprite->data[2];
+        sprite->invisible = verticalVelocity - (((s32)(verticalVelocity + ((u32)verticalVelocity >> 31)) >> 1) << 1);
         DestroyAnimSprite(sprite);
     }
 
