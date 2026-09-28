@@ -145,7 +145,7 @@ extern u8 deUnkValue1;
 extern u8 deUnkValue2;
 #endif
 extern struct LinkPlayer gLinkPlayers[];
-extern u16 word_3002910[];
+extern u16 gLinkPartnersHeldKeys[];
 extern bool8 gReceivedRemoteLinkPlayers;
 extern bool8 gLinkOpen;
 extern bool8 gLinkPlayerPending[MAX_LINK_PLAYERS];

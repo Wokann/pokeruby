@@ -115,7 +115,7 @@ static u16 sRecvNonzeroCheck;
 static u8 sChecksumAvailable;
 static u8 sHandshakePlayerCount;
 
-u16 word_3002910[MAX_LINK_PLAYERS];
+u16 gLinkPartnersHeldKeys[MAX_LINK_PLAYERS];
 u32 gLinkDebugValue1;
 struct LinkPlayerBlock gLocalLinkPlayerBlock;
 bool8 gLinkErrorOccurred;
@@ -477,7 +477,7 @@ static void ProcessRecvCmds(u8 unusedParam)
     u16 i;
     for (i = 0; i < MAX_LINK_PLAYERS; i++)
     {
-        word_3002910[i] = 0;
+        gLinkPartnersHeldKeys[i] = 0;
         if (!gRecvCmds[0][i])
             continue;
         switch (gRecvCmds[0][i])
@@ -490,7 +490,7 @@ static void ProcessRecvCmds(u8 unusedParam)
             InitBlockSend(&gLocalLinkPlayerBlock, sizeof(gLocalLinkPlayerBlock));
             break;
         case 0x4444:
-            word_3002910[i] = gRecvCmds[1][i];
+            gLinkPartnersHeldKeys[i] = gRecvCmds[1][i];
             break;
         case 0x5555:
             byte_3002A68 = 1;
@@ -589,7 +589,7 @@ static void ProcessRecvCmds(u8 unusedParam)
 #endif
             break;
         case 0xCAFE:
-            word_3002910[i] = gRecvCmds[1][i];
+            gLinkPartnersHeldKeys[i] = gRecvCmds[1][i];
             break;
         }
     }

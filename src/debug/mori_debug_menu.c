@@ -68,7 +68,7 @@ void MoriDebugMenu_PrintLinkKeyFlags(void)
     gMoriDebugLinkKeyFlagsText[0] = EOS;
     StringAppend(gMoriDebugLinkKeyFlagsText, sText_LinkKeyFlagsPrefix);
     for (i = 0; i < 10; i++)
-        if ((word_3002910[id ^ 1] >> i) & 1)
+        if ((gLinkPartnersHeldKeys[id ^ 1] >> i) & 1)
             StringAppend(gMoriDebugLinkKeyFlagsText, sLinkKeyNames[i]);
 }
 

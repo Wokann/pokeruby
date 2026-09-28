@@ -1916,7 +1916,7 @@ void SpawnLinkPlayers(void)
         CreateLinkPlayerSprite(i);
     }
 
-    ResetPlayerHeldKeys(word_3002910);
+    ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }
 
 void CreateLinkPlayerSprites(void)
@@ -2147,9 +2147,9 @@ void ResetPlayerHeldKeys(u16 *a1)
 void CB1_OverworldLink(void)
 {
     u8 val = gLocalLinkPlayerId;
-    UpdateAllLinkPlayers(word_3002910, val);
+    UpdateAllLinkPlayers(gLinkPartnersHeldKeys, val);
     UpdateHeldKeyCode(sPlayerKeyInterceptCallback(val));
-    ResetPlayerHeldKeys(word_3002910);
+    ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }
 
 u16 KeyInterCB_SelfIdle(u32 a1)

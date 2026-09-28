@@ -40,7 +40,7 @@ SYMBOL(gReservedSpritePaletteCount, 4)
 SYMBOL(gUnknownStringVar, 16)
 
 // link.c
-SYMBOL(word_3002910, 8)
+SYMBOL(gLinkPartnersHeldKeys, 8)
 SYMBOL(gLinkDebugValue1, 4)
 SYMBOL(gLocalLinkPlayerBlock, 60)
 SYMBOL(gLinkErrorOccurred, 4)
