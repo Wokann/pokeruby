@@ -147,22 +147,22 @@ struct TradeEwramStruct {
 };
 
 static void CB2_CreateTradeMenu(void);
-static void sub_804AFB8(const struct WindowTemplate *, u8 *, const u8 *, u8);
-static void sub_804ACD8(const u8 *, u8 *, u8);
+static void DrawTextWindowAndBufferTiles(const struct WindowTemplate *, u8 *, const u8 *, u8);
+static void DrawBottomRowText(const u8 *, u8 *, u8);
 static void nullsub_5(u8, u8);
 static void sub_804AA88(void);
 static void sub_804A964(struct UnkStructD *, void *);
 static void VBlankCB_TradeMenu(void);
 static void sub_804AA0C(u8);
 static bool8 BufferTradeParties(void);
-static void sub_804AF84(void);
+static void SaveTradeGiftRibbons(void);
 static bool8 sub_804ABF8(void);
-static void sub_804ACF4(u8);
+static void ComputePartyTradeableFlags(u8);
 static void sub_804A41C(u8);
 static void SetActiveMenuOptions(void);
 static void LoadTradeBgGfx(u8);
-static void sub_804AE3C(u8);
-static void sub_804AF10(void);
+static void ComputePartyHPBarLevels(u8);
+static void SetTradePartyHPBarSprites(void);
 static void CB1_UpdateLink(void);
 static void CB2_TradeMenu(void);
 static void sub_804A940(struct UnkStructD *);
@@ -1004,11 +1004,11 @@ void CB2_StartCreateTradeMenu(void)
 static void sub_8047CE8(void)
 {
     u8 mpId;
-    sub_804AFB8(&gWindowTemplate_81E725C, gUnknown_020296CC[0], gSaveBlock2.playerName, 0xC);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[0], gSaveBlock2.playerName, 0xC);
     mpId = GetMultiplayerId();
-    sub_804AFB8(&gWindowTemplate_81E725C, gUnknown_020296CC[3], gLinkPlayers[mpId ^ 1].name, 0xC);
-    sub_804AFB8(&gWindowTemplate_81E725C, gUnknown_020296CC[6], gUnknown_0820C14C[0], 0x8);
-    sub_804ACD8(gUnknown_0820C14C[1], gUnknown_020296CC[8], 0x14);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[3], gLinkPlayers[mpId ^ 1].name, 0xC);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[6], gUnknown_0820C14C[0], 0x8);
+    DrawBottomRowText(gUnknown_0820C14C[1], gUnknown_020296CC[8], 0x14);
     nullsub_5(3, 0);
 }
 
@@ -1139,7 +1139,7 @@ static void CB2_CreateTradeMenu(void)
         case  5:
             if (BufferTradeParties())
             {
-                sub_804AF84();
+                SaveTradeGiftRibbons();
                 gMain.state ++;
             }
             break;
@@ -1187,7 +1187,7 @@ static void CB2_CreateTradeMenu(void)
             nullsub_5(6, 0);
             break;
         case 13:
-            sub_804ACF4(0);
+            ComputePartyTradeableFlags(0);
             sub_804A41C(0);
             gUnknown_03004824->unk_0000 = 0;
             gUnknown_03004824->unk_0001 = 0;
@@ -1197,7 +1197,7 @@ static void CB2_CreateTradeMenu(void)
             PlayBGM(MUS_SCHOOL);
             break;
         case 14:
-            sub_804ACF4(1);
+            ComputePartyTradeableFlags(1);
             sub_804A41C(1);
             gMain.state ++;
             // fallthrough
@@ -1218,12 +1218,12 @@ static void CB2_CreateTradeMenu(void)
             gMain.state ++;
             break;
         case 19:
-            sub_804AE3C(0);
+            ComputePartyHPBarLevels(0);
             gMain.state ++;
             break;
         case 20:
-            sub_804AE3C(1);
-            sub_804AF10();
+            ComputePartyHPBarLevels(1);
+            SetTradePartyHPBarSprites();
             gMain.state ++;
             break;
         case 21:
@@ -1366,7 +1366,7 @@ static void CB2_ReturnToTradeMenu(void)
             gMain.state ++;
             break;
         case 20:
-            sub_804AF10();
+            SetTradePartyHPBarSprites();
             gMain.state ++;
             break;
         case 21:
@@ -1651,7 +1651,7 @@ static void sub_8049088(void)
 {
     u8 string[28];
     StringCopy(string, gTradeText_TradeOkayPrompt);
-    sub_804ACD8(string, BG_CHAR_ADDR(4) + gUnknown_03004824->unk_007e * 32, 20);
+    DrawBottomRowText(string, BG_CHAR_ADDR(4) + gUnknown_03004824->unk_007e * 32, 20);
 }
 
 static void sub_80490BC(u8 mpId, u8 a1)
@@ -1909,7 +1909,7 @@ static void sub_8049680(void)
             TextWindow_DrawStdFrame(&gUnknown_03004824->window, 24, 14, 29, 19);
             InitYesNoMenu(24, 14, 4);
             gUnknown_03004824->unk_007b = 4;
-            sub_804ACD8(gUnknown_0820C14C[4], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
+            DrawBottomRowText(gUnknown_0820C14C[4], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
         }
     }
     if (JOY_NEW(R_BUTTON))
@@ -1928,7 +1928,7 @@ static void sub_8049804(void)
     sub_804A80C();
     gUnknown_03004824->unk_007b = 0;
     gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx].invisible = FALSE;
-    sub_804ACD8(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
+    DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
 }
 
 static void sub_8049860(void)
@@ -2296,7 +2296,7 @@ static void sub_8049ED4(u8 a0)
             gUnknown_03004824->unk_0080[a0] ++;
             break;
         case 4:
-            sub_804ACD8(gUnknown_0820C14C[5], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
+            DrawBottomRowText(gUnknown_0820C14C[5], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
             sub_804A51C(a0, whichPokemon, gUnknown_0820C3D1[a0][0] + 4, gUnknown_0820C3D1[a0][1] + 1, gUnknown_0820C3D1[a0][0], gUnknown_0820C3D1[a0][1]);
             gUnknown_03004824->unk_0080[a0] ++;
             break;
@@ -2741,7 +2741,7 @@ static void sub_8049ED4(u8 a0)
                     "\tldr r3, _0804A2A8 @ =0x06010000\n"
                     "\tadds r1, r3\n"
                     "\tmovs r2, 0x14\n"
-                    "\tbl sub_804ACD8\n"
+                    "\tbl DrawBottomRowText\n"
                     "\tldr r0, _0804A2AC @ =gUnknown_0820C3D1\n"
                     "\tmov r5, r10\n"
                     "\tlsls r1, r5, 1\n"
@@ -3096,7 +3096,7 @@ static void sub_804A840(u8 whichParty)
         sub_804A740(1);
         sub_804A938(&gUnknown_03004824->unk_00c8);
     }
-    sub_804ACD8(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
+    DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
     gUnknown_03004824->unk_0080[whichParty] = 0;
 }
 
@@ -3255,70 +3255,70 @@ static bool8 sub_804ABF8(void)
     }
 }
 
-static void sub_804ACD8(const u8 *src, u8 *dest, u8 a2)
+static void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused)
 {
-    sub_804AFB8(&gWindowTemplate_81E725C, dest, src, a2);
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, dest, str, unused);
 }
 
-// replacing [who] with [0]/[1] depending on case compiles better code
-static void sub_804ACF4(u8 who)
+// replacing [whichParty] with [0]/[1] depending on case compiles better code
+static void ComputePartyTradeableFlags(u8 whichParty)
 {
     struct Pokemon *pokemon;
     int i;
     
-    switch (who)
+    switch (whichParty)
     {
         case 0:
-            for (i = 0; i < gUnknown_03004824->partyCounts[who]; i++)
+            for (i = 0; i < gUnknown_03004824->partyCounts[whichParty]; i++)
             {
                 pokemon = &gPlayerParty[i];
                 if (GetMonData(pokemon, MON_DATA_IS_EGG) == TRUE)
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 0;
-                    gUnknown_03004824->unk_005d[who][i] = 1;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 0;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 1;
                 }
                 else if (GetMonData(pokemon, MON_DATA_HP) == 0)
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 0;
-                    gUnknown_03004824->unk_005d[who][i] = 0;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 0;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 0;
                 }
                 else
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 1;
-                    gUnknown_03004824->unk_005d[who][i] = 0;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 1;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 0;
                 }
             }
             break;
         case 1:
-            for (i = 0; i < gUnknown_03004824->partyCounts[who]; i++)
+            for (i = 0; i < gUnknown_03004824->partyCounts[whichParty]; i++)
             {
                 pokemon = &gEnemyParty[i];
                 if (GetMonData(pokemon, MON_DATA_IS_EGG) == TRUE)
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 0;
-                    gUnknown_03004824->unk_005d[who][i] = 1;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 0;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 1;
                 }
                 else if (GetMonData(pokemon, MON_DATA_HP) == 0)
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 0;
-                    gUnknown_03004824->unk_005d[who][i] = 0;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 0;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 0;
                 }
                 else
                 {
-                    gUnknown_03004824->unk_0051[who][i] = 1;
-                    gUnknown_03004824->unk_005d[who][i] = 0;
+                    gUnknown_03004824->unk_0051[whichParty][i] = 1;
+                    gUnknown_03004824->unk_005d[whichParty][i] = 0;
                 }
             }
             break;
     }
 }
 
-static void sub_804AE3C(u8 who)
+static void ComputePartyHPBarLevels(u8 whichParty)
 {
     u16 i;
     u16 curHp;
     u16 maxHp;
-    switch (who)
+    switch (whichParty)
     {
         case 0:
             for (i = 0; i < gUnknown_03004824->partyCounts[0]; i ++)
@@ -3339,7 +3339,7 @@ static void sub_804AE3C(u8 who)
     }
 }
 
-static void sub_804AF10(void)
+static void SetTradePartyHPBarSprites(void)
 {
     int i, j;
     for (i = 0; i < 2; i ++)
@@ -3351,7 +3351,7 @@ static void sub_804AF10(void)
     }
 }
 
-static void sub_804AF84(void)
+static void SaveTradeGiftRibbons(void)
 {
     int i;
     for (i = 0; i < 11; i ++)
@@ -3359,19 +3359,19 @@ static void sub_804AF84(void)
             gSaveBlock1.giftRibbons[i] = gUnknown_03004824->unk_00b5[i];
 }
 
-static void sub_804AFB8(const struct WindowTemplate *windowConfig, u8 *dest, const u8 *src, u8 size)
+static void DrawTextWindowAndBufferTiles(const struct WindowTemplate *windowTemplate, u8 *dest, const u8 *str, u8 size)
 {
     u8 i;
     u8 *tileBuffer;
     size = (size + 3) / 4;
     tileBuffer = gTileBuffer;
     CpuFill16(0, tileBuffer, size * 0x80);
-    CpuFill16(0, tileBuffer + windowConfig->width * 0x20, size * 0x80);
-    Text_InitWindow8004E3C(windowConfig, tileBuffer, src);
+    CpuFill16(0, tileBuffer + windowTemplate->width * 0x20, size * 0x80);
+    Text_InitWindow8004E3C(windowTemplate, tileBuffer, str);
     for (i = 0; i < size; i ++)
     {
         CpuCopy16(&tileBuffer[32 * (i * 4)], &dest[32 * (i * 8)], 0x80);
-        CpuCopy16(&tileBuffer[32 * (i * 4 + windowConfig->width)], &dest[32 * (i * 8 + 4)], 0x80);
+        CpuCopy16(&tileBuffer[32 * (i * 4 + windowTemplate->width)], &dest[32 * (i * 8 + 4)], 0x80);
     }
 }
 
