@@ -2012,7 +2012,7 @@ void RemoveDecorationItemsWindow(void)
     Menu_EraseWindowRect(0, 0, 14, 19);
 }
 
-bool8 IsSelectedDecorationUnused(void)
+bool8 IsSelectedDecorInThePC(void)
 {
     u16 i;
     int selectedIndex;
@@ -2235,7 +2235,7 @@ void DecorationItemsMenuAction_AttemptPlace(u8 taskId)
         RemoveDecorationItemsWindow();
         RemoveDecorationItemsOtherWindows();
         DisplayItemMessageOnField(taskId, gSecretBaseText_DecorCantPlace, ReturnToDecorationItemsAfterInvalidSelection, 0);
-    } else if (IsSelectedDecorationUnused() == TRUE)
+    } else if (IsSelectedDecorInThePC() == TRUE)
     {
         if (HasDecorationSpace() == TRUE)
         {
@@ -3632,7 +3632,7 @@ void DecorationItemsMenuAction_AttemptToss(u8 taskId)
 {
     RemoveDecorationItemsWindow();
     RemoveDecorationItemsOtherWindows();
-    if (IsSelectedDecorationUnused() == TRUE)
+    if (IsSelectedDecorInThePC() == TRUE)
     {
         StringCopy(gStringVar1, gDecorations[gCurDecorationItems[gCurDecorationIndex]].name);
         StringExpandPlaceholders(gStringVar4, gSecretBaseText_WillBeDiscarded);

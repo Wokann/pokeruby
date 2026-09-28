@@ -1,10 +1,10 @@
 #include "global.h"
 #include "constants/decorations.h"
+#include "constants/mauville_old_man.h"
 #include "decoration.h"
 #include "decoration_inventory.h"
 #include "event_data.h"
 #include "main.h"
-#include "mauville_old_man.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "script.h"
@@ -14,19 +14,15 @@
 #include "strings.h"
 #include "task.h"
 
-extern u16 gSpecialVar_0x8004;
-extern u16 gSpecialVar_0x8005;
-extern u16 gSpecialVar_0x8006;
-
-static const u8 * const sDefaultTraderNames[] =
+static const u8 *const sDefaultTraderNames[NUM_TRADER_ITEMS] =
 {
-    SecretBaseText_Tristan,
-    SecretBaseText_Philip,
-    SecretBaseText_Dennis,
-    SecretBaseText_Roberto,
+    gText_Tristan,
+    gText_Philip,
+    gText_Dennis,
+    gText_Roberto,
 };
 
-static const u8 sDefaultTraderDecorations[] =
+static const u8 sDefaultTraderDecorations[NUM_TRADER_ITEMS] =
 {
     DECOR_DUSKULL_DOLL,
     DECOR_BALL_CUSHION,
@@ -37,7 +33,7 @@ static const u8 sDefaultTraderDecorations[] =
 static void SortTraderDecorations(void)
 {
     u8 i, j;
-    u8 buffer[12];
+    u8 playerName[12];
     struct MauvilleOldManTrader *trader = &gSaveBlock1.oldMan.trader;
 
     for (i = 0; i < NUM_TRADER_ITEMS - 1; i++)
@@ -46,12 +42,12 @@ static void SortTraderDecorations(void)
         {
             if (trader->decorations[i] == 0)
             {
-                u8 temp = trader->decorations[i];
+                u8 decorationId = trader->decorations[i];
                 trader->decorations[i] = trader->decorations[j];
-                trader->decorations[j] = temp;
-                StringCopy(buffer, trader->playerNames[i]);
+                trader->decorations[j] = decorationId;
+                StringCopy(playerName, trader->playerNames[i]);
                 StringCopy(trader->playerNames[i], trader->playerNames[j]);
-                StringCopy(trader->playerNames[j], buffer);
+                StringCopy(trader->playerNames[j], playerName);
             }
         }
     }
@@ -108,7 +104,7 @@ void CreateAvailableDecorationsMenu(u8 taskId)
         {
             if (trader->decorations[i] > DECOR_REGISTEEL_DOLL)
             {
-                Menu_PrintText(gOtherText_FiveQuestions, 1, numDecorations * 2 + 2);
+                Menu_PrintText(gText_FiveMarks, 1, numDecorations * 2 + 2);
             }
             else
             {
@@ -221,7 +217,7 @@ void DecorationItemsMenuAction_Trade(u8 taskId)
     DestroyVerticalScrollIndicator(BOTTOM_ARROW);
     DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, 8);
     BuyMenuFreeMemory();
-    if (IsSelectedDecorationUnused() == TRUE)
+    if (IsSelectedDecorInThePC() == TRUE)
     {
         gSpecialVar_0x8006 = gCurDecorationItems[gCurDecorationIndex];
         StringCopy(gStringVar3, gDecorations[gSpecialVar_0x8004].name);

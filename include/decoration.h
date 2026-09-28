@@ -140,7 +140,7 @@ int PrintDecorationItemDescription(u8);
 void PrintDecorationItemDescription(u8);
 #endif
 void InitDecorationItemsMenuScrollAndCursor(u8);
-bool8 IsSelectedDecorationUnused(void);
+bool8 IsSelectedDecorInThePC(void);
 void ShowDecorationOnMap(u16, u16, u16);
 void Task_PlaceDecoration(u8);
 void SetUpDecorationShape(u8);

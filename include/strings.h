@@ -164,7 +164,7 @@ extern const u8 gOtherText_None[];
 
 extern const u8 gOtherText_ThreeQuestions2[];
 
-extern const u8 gOtherText_FiveQuestions[];
+extern const u8 gText_FiveMarks[];
 extern const u8 gOtherText_Slash[];
 
 extern const u8 gOtherText_OneDash[];
@@ -436,10 +436,10 @@ extern const u8 gSecretBaseText_NoDecor[];
 extern const u8 gSecretBaseText_ReturnDecor[];
 extern const u8 gSecretBaseText_DecorReturned[];
 extern const u8 gSecretBaseText_NoDecorInUse[];
-extern const u8 SecretBaseText_Tristan[];
-extern const u8 SecretBaseText_Philip[];
-extern const u8 SecretBaseText_Dennis[];
-extern const u8 SecretBaseText_Roberto[];
+extern const u8 gText_Tristan[];
+extern const u8 gText_Philip[];
+extern const u8 gText_Dennis[];
+extern const u8 gText_Roberto[];
 extern const u8 SecretBaseText_TurnOff[];
 extern const u8 SecretBaseText_Decoration[];
 extern const u8 SecretBaseText_ItemStorage[];

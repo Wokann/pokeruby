@@ -1353,7 +1353,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         }
     }
 
-    StringCopy(dest, gOtherText_FiveQuestions);
+    StringCopy(dest, gText_FiveMarks);
     return 0; // PBLOCK_CLR_UNKNOWN
 }
 #else
@@ -1690,7 +1690,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._401:\n"
         "\t.word\tContestStatsText_YellowPokeBlock\n"
         "._399:\n"
-        "\tldr\tr1, ._403       @ gOtherText_FiveQuestions\n"
+        "\tldr\tr1, ._403       @ gText_FiveMarks\n"
         "\tadd\tr0, r6, #0\n"
         "\tbl\tStringCopy\n"
         "\tmov\tr0, #0x0\n"
@@ -1705,7 +1705,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         "._404:\n"
         "\t.align\t2, 0\n"
         "._403:\n"
-        "\t.word\tgOtherText_FiveQuestions");
+        "\t.word\tgText_FiveMarks");
 }
 #endif // NONMATCHING
 
