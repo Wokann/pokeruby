@@ -12,7 +12,7 @@ static void AnimCirclingFinger(struct Sprite *sprite);
 
 // Unused
 
-const struct SpriteTemplate gCirclingFingerSpriteTemplate =
+static const struct SpriteTemplate sCirclingFingerSpriteTemplate =
 {
     .tileTag = ANIM_TAG_FINGER,
     .paletteTag = ANIM_TAG_FINGER,
