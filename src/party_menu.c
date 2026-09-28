@@ -3217,7 +3217,7 @@ void TeachMonTMMove(u8 taskId, u16 move, TaskFunc func)
 }
 
 #if DEBUG
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 #endif
 
 void Task_TeamMonTMMove(u8 taskId)
@@ -3236,7 +3236,7 @@ void Task_TeamMonTMMove(u8 taskId)
     {
         if (
 #if DEBUG
-         !gUnknown_020297ED &&
+         !gIsDebugMode &&
 #endif
          !CanMonLearnTMHM(gPartyMenu.pokemon, gPartyMenu.secondarySelectedIndex - 33))
         {

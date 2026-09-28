@@ -1525,7 +1525,7 @@ void ReceiveSecretBasesData(void *playerRecords, u32 size, u8 c)
 {
     if (
 #if DEBUG
-     gUnknown_020297ED != 0 ||
+     gIsDebugMode != 0 ||
 #endif
      FlagGet(FLAG_RECEIVED_SECRET_POWER))
     {

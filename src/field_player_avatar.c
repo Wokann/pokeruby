@@ -337,7 +337,7 @@ static void PlayerAllowForcedMovementIfMovingSameDirection(void)
 static bool8 TryDoMetatileBehaviorForcedMovement(void)
 {
 #if DEBUG
-    if (gUnknown_020297ED != 0 && JOY_HELD(R_BUTTON))
+    if (gIsDebugMode != 0 && JOY_HELD(R_BUTTON))
         return 0;
 #endif
     return sForcedMovementFuncs[GetForcedMovementByMetatileBehavior()]();
@@ -517,7 +517,7 @@ static bool8 ForcedMovement_MuddySlope(void)
 static void MovePlayerNotOnBike(u8 direction, u16 heldKeys)
 {
 #if DEBUG
-    if (gUnknown_020297ED != 0 && debug_sub_805F2B0(direction) != 0)
+    if (gIsDebugMode != 0 && debug_sub_805F2B0(direction) != 0)
         return;
 #endif
     sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction)](direction, heldKeys);

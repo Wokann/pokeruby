@@ -45,7 +45,7 @@ extern void (*gBattlerControllerFuncs[])(void);
 extern u8 gBattlerAttacker;
 extern u8 gBattlerTarget;
 extern u32 gOamMatrixAllocBitmap;
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 extern u8 gActiveBattler;
 extern u8 gActionSelectionCursor[];
 extern u8 gDisplayedStringBattle[];
@@ -740,7 +740,7 @@ static void HandleAction_ChooseMove(void)
         }
     }
 #if DEBUG
-    else if (gUnknown_020297ED == 1 && JOY_NEW(START_BUTTON))
+    else if (gIsDebugMode == 1 && JOY_NEW(START_BUTTON))
     {
         const u8 *moveName;
         s32 i;

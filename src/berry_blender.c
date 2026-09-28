@@ -183,7 +183,7 @@ extern void de_sub_8073110();
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u16 gSpecialVar_ItemId;
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 extern u8 byte_3002A68;
 
 extern const u8 gUnknown_08E6C100[];
@@ -1838,7 +1838,7 @@ static void HandlePlayerInput(void)
             gBerryBlenderData->field_56--;
         gBerryBlenderData->field_7E = 0;
     }
-    if (gUnknown_020297ED && JOY_NEW(L_BUTTON))
+    if (gIsDebugMode && JOY_NEW(L_BUTTON))
         gBerryBlenderData->field_14B ^= 1;
 }
 

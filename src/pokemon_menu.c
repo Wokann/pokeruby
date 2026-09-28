@@ -47,7 +47,7 @@ struct PokeMenuFieldMoveFunc
     u8 field_1;
 };
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 extern u8 gUnknown_0202E8F4;
 extern u8 gUnknown_0202E8F5;
 extern bool8 gPartyMenuMessage_IsPrinting;
@@ -940,7 +940,7 @@ static void sub_808AE8C(void)
             sub_806D668(i);
             if (
 #if DEBUG
-             gUnknown_020297ED == 0 &&
+             gIsDebugMode == 0 &&
 #endif
              (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !CanMonLearnTMHM(&gPlayerParty[i], arg)))
                 DrawMonDescriptorStatus(i, 0x9A);

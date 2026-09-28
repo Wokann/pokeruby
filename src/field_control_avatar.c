@@ -41,7 +41,7 @@ extern u16 gSpecialVar_Facing;
 extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPreviousPlayerMetatileBehavior = 0;
@@ -182,7 +182,7 @@ void GetPlayerFieldInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
         input->pressedStartButton = FALSE;
     }
 
-    if (gUnknown_020297ED)
+    if (gIsDebugMode)
     {
         if (heldKeys & R_BUTTON)
         {

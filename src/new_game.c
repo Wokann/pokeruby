@@ -32,7 +32,7 @@
 #include "tv.h"
 
 EWRAM_DATA u8 gDifferentSaveFile = 0;
-EWRAM_DATA u8 gUnknown_020297ED = 0;
+EWRAM_DATA u8 gIsDebugMode = 0;
 
 extern u8 gPlayerPartyCount;
 extern u8 gUnusedPokedexU8;
@@ -150,7 +150,7 @@ void sub_8052E4C(void)
 {
     gDifferentSaveFile = 0;
 #if DEBUG
-    gUnknown_020297ED = 0;
+    gIsDebugMode = 0;
 #endif
     ResetPokedexScrollPositions();
     ZeroPlayerPartyMons();
@@ -213,7 +213,7 @@ extern void unref_sub_8070F90(void);
 
 void debug_sub_8057508(bool32 arg0)
 {
-    gUnknown_020297ED = 1;
+    gIsDebugMode = 1;
     NewGameInitData();
     gSaveBlock1.money = 999999;
     FlagSet(FLAG_SYS_POKEMON_GET);

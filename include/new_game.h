@@ -1,7 +1,7 @@
 #ifndef GUARD_NEW_GAME_H
 #define GUARD_NEW_GAME_H
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 
 void write_word_to_mem(u32 var, u8 *dataPtr);
 void copy_word_to_mem(u8 *copyTo, u8 *copyFrom);

@@ -36,7 +36,7 @@
 
 #include "contest_internal.h"
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 
 extern u8 gBattleMonForms[];
 extern u8 gDisplayedStringBattle[];
@@ -48,7 +48,7 @@ extern u8 gBattlerSpriteIds[];
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 u32 gContestRngValue;
 
-extern const u8 gUnknown_083CA340[][4];
+extern const u8 gContestMoveSelectTextCoords[][4];
 extern const u8 gText_Contest_WhichMoveWillBePlayed[];
 extern const u8 gText_Contest_ButItCantParticipate[];
 extern const u8 gText_MonAppealedWithMove[];
@@ -403,7 +403,7 @@ void Task_RaiseCurtainAtStart(u8 taskId)
 void CB2_ContestMain(void)
 {
 #if DEBUG
-    if (gUnknown_020297ED == 1 && gMain.newKeys == SELECT_BUTTON)
+    if (gIsDebugMode == 1 && gMain.newKeys == SELECT_BUTTON)
 	ContestDebugTogglePointTotal();
 #endif
     AnimateSprites();
@@ -483,10 +483,10 @@ void Task_ShowMoveSelectScreen(u8 taskId)
     Text_FillWindowRectDefPalette(
       &gWindowTemplate_Contest_MoveDescription,
       0,
-      gUnknown_083CA340[0][0],
-      gUnknown_083CA340[0][1],
-      gUnknown_083CA340[0][2],
-      gUnknown_083CA340[0][3]);
+      gContestMoveSelectTextCoords[0][0],
+      gContestMoveSelectTextCoords[0][1],
+      gContestMoveSelectTextCoords[0][2],
+      gContestMoveSelectTextCoords[0][3]);
 
     for (i = 0; i < 4; i++)
     {
@@ -514,8 +514,8 @@ void Task_ShowMoveSelectScreen(u8 taskId)
           &gWindowTemplate_Contest_MoveDescription,
           sp8,
           776 + i * 20,
-          gUnknown_083CA340[i][0] * 8 + 4,
-          gUnknown_083CA340[i][1] * 8,
+          gContestMoveSelectTextCoords[i][0] * 8 + 4,
+          gContestMoveSelectTextCoords[i][1] * 8,
           1);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     }
@@ -557,10 +557,10 @@ void Task_HandleMoveSelectInput(u8 taskId)
             Text_FillWindowRectDefPalette(
               &gWindowTemplate_Contest_MoveDescription,
               0,
-              gUnknown_083CA340[0][0],
-              gUnknown_083CA340[0][1],
-              gUnknown_083CA340[0][2],
-              gUnknown_083CA340[0][3]);
+              gContestMoveSelectTextCoords[0][0],
+              gContestMoveSelectTextCoords[0][1],
+              gContestMoveSelectTextCoords[0][2],
+              gContestMoveSelectTextCoords[0][3]);
             if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
                 StringCopy(gDisplayedStringBattle, gText_Contest_WhichMoveWillBePlayed);
             else
@@ -602,7 +602,7 @@ void Task_HandleMoveSelectInput(u8 taskId)
             break;
 #if DEBUG
 	case START_BUTTON:
-	    if (gUnknown_020297ED == 1 && !(gIsLinkContest & 1))
+	    if (gIsDebugMode == 1 && !(gIsLinkContest & 1))
 	    {
 		gTasks[taskId].data[0] = 0;
 		gTasks[taskId].data[1] = gContestMons[gContestPlayerMonIndex].moves[0];
@@ -628,23 +628,23 @@ void Task_DebugSelectMove(u8 taskId)
 	Text_FillWindowRectDefPalette(
 	  &gWindowTemplate_Contest_MoveDescription,
 	  0,
-	  gUnknown_083CA340[0][0],
-	  gUnknown_083CA340[0][1],
-	  gUnknown_083CA340[0][2],
-	  gUnknown_083CA340[0][3]);
+	  gContestMoveSelectTextCoords[0][0],
+	  gContestMoveSelectTextCoords[0][1],
+	  gContestMoveSelectTextCoords[0][2],
+	  gContestMoveSelectTextCoords[0][3]);
 	Text_InitWindowAndPrintText(
 	  &gWindowTemplate_Contest_MoveDescription,
 	  gMoveNames[gTasks[taskId].data[1]],
 	  776,
-	  gUnknown_083CA340[0][0],
-	  gUnknown_083CA340[0][1]);
+	  gContestMoveSelectTextCoords[0][0],
+	  gContestMoveSelectTextCoords[0][1]);
 	ConvertIntToDecimalStringN(text, gTasks[taskId].data[1], 2, 3);
 	Text_InitWindowAndPrintText(
 	  &gWindowTemplate_Contest_MoveDescription,
 	  text,
 	  796,
-	  gUnknown_083CA340[1][0],
-	  gUnknown_083CA340[1][1]);
+	  gContestMoveSelectTextCoords[1][0],
+	  gContestMoveSelectTextCoords[1][1]);
         Contest_ClearMoveDescriptionBox();
 	PrintContestMoveDescription(gTasks[taskId].data[1]);
 	gTasks[taskId].data[0]++;
@@ -1798,7 +1798,7 @@ void Task_EndAppeals(u8 taskId)
         gContestMonAppealPointTotals[i] = sContestantStatus[i].pointTotal;
     CalculateFinalScores();
     ContestClearGeneralTextWindow();
-    sub_80BE23C(sContestantStatus[gContestPlayerMonIndex].prevMove);
+    BravoTrainerPokemonProfile_BeforeInterview1(sContestantStatus[gContestPlayerMonIndex].prevMove);
     gContestRngValue = gRngValue;
     StringExpandPlaceholders(gStringVar4, gText_AllOutOfAppealTime);
     Contest_StartTextPrinter(&gMenuWindow, gStringVar4, 776, 1, 15);

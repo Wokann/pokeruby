@@ -999,7 +999,7 @@ void PrintSafariMonInfo(u8 a, struct Pokemon *pkmn)
     }
 }
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 
 void sub_804454C(void)
 {
@@ -1010,7 +1010,7 @@ void sub_804454C(void)
     {
         if (gSprites[gHealthboxSpriteIds[i]].callback == SpriteCallbackDummy
 #if DEBUG
-         && (gUnknown_020297ED != 0 || GetBattlerSide(i) != 1)
+         && (gIsDebugMode != 0 || GetBattlerSide(i) != 1)
 #else
          && GetBattlerSide(i) != 1
 #endif
@@ -1886,7 +1886,7 @@ void UpdateHealthboxAttribute(u8 a, struct Pokemon *pkmn, u8 c)
         if (c == 3 || c == 0)
             sub_8043FC0(a, GetMonData(pkmn, MON_DATA_LEVEL));
 #if DEBUG
-        if (gUnknown_020297ED == 1)
+        if (gIsDebugMode == 1)
         {
             if (c == 1 || c == 0)
                 UpdateHpTextInHealthbox(a, GetMonData(pkmn, MON_DATA_HP), 0);

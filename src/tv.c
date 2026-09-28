@@ -955,7 +955,7 @@ void InterviewAfter_BravoTrainerPokemonProfile(void)
     }
 }
 
-void sub_80BE23C(u16 a0)
+void BravoTrainerPokemonProfile_BeforeInterview1(u16 move)
 {
     struct TVShowBravoTrainerPokemonProfiles *bravoTrainer = &gSaveBlock1.tvShows[24].bravoTrainer;
 
@@ -964,19 +964,19 @@ void sub_80BE23C(u16 a0)
     if (gUnknown_03005D38.var0 != -1)
     {
         sub_80BF55C(gSaveBlock1.tvShows, 24);
-        bravoTrainer->var14 = a0;
+        bravoTrainer->var14 = move;
         bravoTrainer->kind = TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE;
     }
 }
 
-void sub_80BE284(u8 contestResult)
+void BravoTrainerPokemonProfile_BeforeInterview2(u8 contestStandingPlace)
 {
     struct TVShowBravoTrainerPokemonProfiles *bravoTrainer = &gSaveBlock1.tvShows[24].bravoTrainer;
 
     gUnknown_03005D38.var0 = sub_80BF720(gSaveBlock1.tvShows);
     if (gUnknown_03005D38.var0 != -1)
     {
-        bravoTrainer->contestResult = contestResult;
+        bravoTrainer->contestResult = contestStandingPlace;
         bravoTrainer->contestCategory = gSpecialVar_ContestCategory;
         bravoTrainer->contestRank = (u8)gSpecialVar_ContestRank;
         bravoTrainer->species = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_SPECIES, NULL);

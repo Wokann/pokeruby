@@ -82,7 +82,7 @@ const u8 gUnknown_083CA330[][2] = {
 const u8 sSliderHeartYPositions[] = { 36, 76, 116, 156 };
 const u8 gUnknown_083CA33C[] = { 36, 76, 116, 156 };
 
-const u8 gUnknown_083CA340[][4] = {
+const u8 gContestMoveSelectTextCoords[][4] = {
     { 0, 31, 9, 39 },
     { 0, 33, 9, 39 },
     { 0, 35, 9, 39 },

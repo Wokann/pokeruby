@@ -17,7 +17,7 @@ extern u8 gBikeCollisions;
 extern u8 gUnusedBikeCameraAheadPanback;
 
 #if DEBUG
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 u8 debug_sub_805F2B0(u8);
 #endif
 
@@ -146,7 +146,7 @@ void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys)
 static void MovePlayerOnMachBike(u8 direction, u16 newKeys, u16 heldKeys)
 {
 #if DEBUG
-    if (gUnknown_020297ED && debug_sub_805F2B0(direction))
+    if (gIsDebugMode && debug_sub_805F2B0(direction))
     {
         Bike_SetBikeStill();
         return;
@@ -290,7 +290,7 @@ static void MachBikeTransition_TrySlowDown(u8 direction)
 static void MovePlayerOnAcroBike(u8 newDirection, u16 newKeys, u16 heldKeys)
 {
 #if DEBUG
-    if (gUnknown_020297ED && debug_sub_805F2B0(newDirection))
+    if (gIsDebugMode && debug_sub_805F2B0(newDirection))
     {
         Bike_SetBikeStill();
         return;

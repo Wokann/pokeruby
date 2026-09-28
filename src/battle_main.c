@@ -1928,7 +1928,7 @@ extern const u8 str_821F631[][6];
 extern const u8 Str_821F649[];
 extern const struct Pokeblock gUnknown_Debug_821F5AC[];
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 
 extern void DebugInitBattleSprites(void);
 
@@ -1940,7 +1940,7 @@ void StartDebugBattleFromPartyEditor(void)
 	s32 spC;
 	u16 sp10;
 
-	gUnknown_020297ED = 1;
+	gIsDebugMode = 1;
 	r6 = Random() % 4;
 	StringCopy(gSaveBlock2.playerName, str_821F631[r6]);
 	gSaveBlock2.playerGender = r6 >> 1;

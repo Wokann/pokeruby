@@ -71,7 +71,7 @@
 #define FACING_FORCED_LEFT 9
 #define FACING_FORCED_RIGHT 10
 
-extern u8 gUnknown_020297ED;
+extern u8 gIsDebugMode;
 extern u16 gTotalCameraPixelOffsetY;
 extern u16 gTotalCameraPixelOffsetX;
 
@@ -1483,7 +1483,7 @@ void CB2_ContinueSavedGame(void)
     StopMapMusic();
 #if DEBUG
     if (JOY_HELD(R_BUTTON))
-        gUnknown_020297ED = TRUE;
+        gIsDebugMode = TRUE;
 #endif
     ResetSafariZoneFlag_();
     LoadSaveblockMapHeader();
