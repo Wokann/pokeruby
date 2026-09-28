@@ -195,10 +195,10 @@ static void sub_804DC88(void);
 static void sub_804D6BC(struct Sprite *);
 static void sub_804D738(struct Sprite *);
 static void sub_804BBE8(u8);
-static void sub_804B058(struct Sprite *);
-static void sub_804B07C(struct Sprite *);
-static void sub_804B0BC(struct Sprite *);
-static void sub_804B104(struct Sprite *);
+static void SpriteCB_LinkMonGlow(struct Sprite *);
+static void SpriteCB_LinkMonShadow(struct Sprite *);
+static void SpriteCB_CableEndSending(struct Sprite *);
+static void SpriteCB_GbaScreen(struct Sprite *);
 static void sub_804D80C(struct Sprite *);
 static void sub_804E1DC(void);
 static void sub_804BBCC(void);
@@ -721,7 +721,7 @@ const struct SpriteTemplate gSpriteTemplate_82159BC = {
     gSpriteAnimTable_8215984,
     NULL,
     gSpriteAffineAnimTable_82159A0,
-    sub_804B058
+    SpriteCB_LinkMonGlow
 };
 
 const struct OamData gOamData_82159D4 = {
@@ -756,7 +756,7 @@ const struct SpriteTemplate gSpriteTemplate_82159FC = {
     gSpriteAnimTable_82159EC,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_804B07C
+    SpriteCB_LinkMonShadow
 };
 
 const struct OamData gOamData_8215A14 = {
@@ -785,7 +785,7 @@ const struct SpriteTemplate gSpriteTemplate_8215A30 = {
     gSpriteAnimTable_8215A24,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_804B0BC
+    SpriteCB_CableEndSending
 };
 
 const struct OamData gOamData_8215A48 = {
@@ -821,7 +821,7 @@ const struct SpriteTemplate gSpriteTemplate_8215A80 = {
     gSpriteAnimTable_8215A74,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_804B104
+    SpriteCB_GbaScreen
 };
 
 const u16 gTradeGlow2PaletteAnimTable[] = {
@@ -3375,7 +3375,7 @@ static void DrawTextWindowAndBufferTiles(const struct WindowTemplate *windowTemp
     }
 }
 
-static void sub_804B058(struct Sprite *sprite)
+static void SpriteCB_LinkMonGlow(struct Sprite *sprite)
 {
     if (++ sprite->data[0] == 10)
     {
@@ -3384,7 +3384,7 @@ static void sub_804B058(struct Sprite *sprite)
     }
 }
 
-static void sub_804B07C(struct Sprite *sprite)
+static void SpriteCB_LinkMonShadow(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
@@ -3394,7 +3394,7 @@ static void sub_804B07C(struct Sprite *sprite)
     }
 }
 
-static void sub_804B0BC(struct Sprite *sprite)
+static void SpriteCB_CableEndSending(struct Sprite *sprite)
 {
     sprite->data[0] ++;
     sprite->y2 ++;
@@ -3402,7 +3402,7 @@ static void sub_804B0BC(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-static void sub_804B0E0(struct Sprite *sprite)
+static void SpriteCB_CableEndReceiving(struct Sprite *sprite)
 {
     sprite->data[0] ++;
     sprite->y2 --;
@@ -3410,7 +3410,7 @@ static void sub_804B0E0(struct Sprite *sprite)
         DestroySprite(sprite);
 }
 
-static void sub_804B104(struct Sprite *sprite)
+static void SpriteCB_GbaScreen(struct Sprite *sprite)
 {
     if (++ sprite->data[0] == 15)
     {
@@ -4646,7 +4646,7 @@ static bool8 sub_804C29C(void)
             }
             if (gUnknown_03004828->bg1vofs == 0x148)
                 gUnknown_03004828->unk_00bc = CreateSprite(&gSpriteTemplate_8215A30, 0x80, 0x41, 0);
-            gSprites[gUnknown_03004828->unk_00bc].callback = sub_804B0E0;
+            gSprites[gUnknown_03004828->unk_00bc].callback = SpriteCB_CableEndReceiving;
             break;
         case 48:
             gUnknown_03004828->unk_00bb = CreateSprite(&gSpriteTemplate_8215A80, 0x78, 0x50, 0);
