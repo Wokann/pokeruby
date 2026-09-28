@@ -679,7 +679,7 @@ static u8 CalculateMonAverageEVs(struct Pokemon *mon)
     return (u8)(evsum / 6);
 }
 
-void SetPlayerSecretBaseRecordMixingParty(void)
+void SetPlayerSecretBaseParty(void)
 {
     u16 i;
     u16 secretBasePartyIndex = 0;

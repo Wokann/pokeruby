@@ -274,7 +274,7 @@ byte_3005E30 = .;
 #endif
 
 // record_mixing.c
-SYMBOL(gUnknown_03005D2C, 4)
+SYMBOL(gRecordStructSize, 4)
 
 // sound_check_menu.c
 SYMBOL(gUnknown_03005D30, 4)

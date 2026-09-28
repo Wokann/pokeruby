@@ -107,7 +107,7 @@ void DoTVShowBravoTrainerBattleTowerProfile(void);
 void DoTVShowTodaysSmartShopper(void);
 void TryPutSmartShopperOnAir(void);
 void UpdateTVShowsPerDay(u16);
-void sub_80C045C();
+void DeactivateAllNormalTVShows(void);
 void sub_80BF088(u8, s32);
 void HideBattleTowerReporter(void);
 void PutPokemonTodayCaughtOnAir(void);

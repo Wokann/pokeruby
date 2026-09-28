@@ -204,4 +204,8 @@
 
 #define TRIGGER_RUN_IMMEDIATELY       0
 
+// Temp var aliases
+#define VAR_TEMP_MIXED_RECORDS         VAR_TEMP_0
+#define VAR_TEMP_RECORD_MIX_GIFT_ITEM  VAR_TEMP_1
+
 #endif // GUARD_CONSTANTS_VARS_H
