@@ -187,7 +187,7 @@ void PrintLevelAndGender(u8, u8, u8, u8, u8, u8);
 static void sub_804D7AC(struct Sprite *);
 static bool8 sub_804C29C(void);
 static void sub_804DC18(void);
-static u8 sub_804B2B0(void);
+static u8 TradeGetMultiplayerId(void);
 static void sub_804E144(void);
 static void sub_804E1A0(u8);
 static void sub_804DAD4(struct MailStruct *, const struct InGameTrade *);
@@ -3419,7 +3419,7 @@ static void SpriteCB_GbaScreen(struct Sprite *sprite)
     }
 }
 
-static void sub_804B128(void)
+static void SetTradeBGAffine(void)
 {
     struct BgAffineDstData dest;
     DoBgAffineSet(&dest, gUnknown_03004828->unk_0104 << 8, gUnknown_03004828->unk_0106 << 8, gUnknown_03004828->unk_010c, gUnknown_03004828->unk_010e, gUnknown_03004828->unk_0118, gUnknown_03004828->unk_0118, gUnknown_03004828->unk_011c);
@@ -3431,7 +3431,7 @@ static void sub_804B128(void)
     REG_BG2Y = dest.dy;
 }
 
-static void sub_804B1BC(void)
+static void SetTradeGpuRegs(void)
 {
     u16 dispcnt;
 
@@ -3453,26 +3453,26 @@ static void sub_804B1BC(void)
     }
     else
     {
-        sub_804B128();
+        SetTradeBGAffine();
     }
 }
 
-static void sub_804B210(void)
+static void VBlankCB_TradeAnim(void)
 {
-    sub_804B1BC();
+    SetTradeGpuRegs();
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
 }
 
-static void sub_804B228(void)
+static void ClearLinkTimeoutTimer(void)
 {
     gUnknown_03004828->unk_00b4 = 0;
     gUnknown_03004828->unk_00b2 = 0;
     gUnknown_03004828->unk_00b3 = 0;
 }
 
-void sub_804B24C(void)
+void CheckForLinkTimeout(void)
 {
     if (gUnknown_03004828->unk_00b2 == gUnknown_03004828->unk_00b3)
     {
@@ -3491,43 +3491,43 @@ void sub_804B24C(void)
     gUnknown_03004828->unk_00b3 = gUnknown_03004828->unk_00b2;
 }
 
-static u8 sub_804B2B0(void)
+static u8 TradeGetMultiplayerId(void)
 {
     if (gReceivedRemoteLinkPlayers)
         return GetMultiplayerId();
     return 0;
 }
 
-static void sub_804B2D0(u8 whichParty, u8 a1)
+static void LoadTradeMonPic(u8 whichParty, u8 state)
 {
-    u8 v0;
-    struct Pokemon *pokemon;
+    u8 battlePosition;
+    struct Pokemon *mon;
     u16 species;
     u32 personality;
 
-    v0 = 0;
-    pokemon = NULL;
+    battlePosition = 0;
+    mon = NULL;
     if (whichParty == 0)
     {
-        pokemon = &gPlayerParty[gSelectedTradeMonPositions[0]];
-        v0 = 1;
+        mon = &gPlayerParty[gSelectedTradeMonPositions[0]];
+        battlePosition = 1;
     }
     if (whichParty == 1)
     {
-        pokemon = &gEnemyParty[gSelectedTradeMonPositions[1] % 6];
-        v0 = 3;
+        mon = &gEnemyParty[gSelectedTradeMonPositions[1] % 6];
+        battlePosition = 3;
     }
-    switch (a1)
+    switch (state)
     {
         case 0:
-            species = GetMonData(pokemon, MON_DATA_SPECIES2);
-            personality = GetMonData(pokemon, MON_DATA_PERSONALITY);
+            species = GetMonData(mon, MON_DATA_SPECIES2);
+            personality = GetMonData(mon, MON_DATA_PERSONALITY);
             HandleLoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, gSharedMem, gMonSpriteGfx_Sprite_ptr[whichParty * 2 + 1], species, personality);
-            LoadCompressedSpritePalette(GetMonSpritePalStruct(pokemon));
+            LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
             gUnknown_03004828->tradeSpecies[whichParty] = species;
             break;
         case 1:
-            SetMultiuseSpriteTemplateToPokemon(GetMonSpritePalStruct(pokemon)->tag, v0);
+            SetMultiuseSpriteTemplateToPokemon(GetMonSpritePalStruct(mon)->tag, battlePosition);
             gUnknown_03004828->pokePicSpriteIdxs[whichParty] = CreateSprite(&gCreatingSpriteTemplate, 0x78, 0x3c, 0x6);
             gSprites[gUnknown_03004828->pokePicSpriteIdxs[whichParty]].invisible = TRUE;
             gSprites[gUnknown_03004828->pokePicSpriteIdxs[whichParty]].callback = SpriteCallbackDummy;
@@ -3551,8 +3551,8 @@ void sub_804B41C(void)
             gUnknown_03004828 = &ewram_2010000.unk_0f000;
             ResetSpriteData();
             FreeAllSpritePalettes();
-            SetVBlankCallback(sub_804B210);
-            sub_804B228();
+            SetVBlankCallback(VBlankCB_TradeAnim);
+            ClearLinkTimeoutTimer();
             Text_LoadWindowTemplate(&gWindowTemplate_81E6F84);
             Text_InitWindowWithTemplate(&gUnknown_03004828->window, &gWindowTemplate_81E6F84);
             gUnknown_03004828->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
@@ -3605,26 +3605,26 @@ void sub_804B41C(void)
             }
             break;
         case 4:
-            sub_804B24C();
+            CheckForLinkTimeout();
             if (gReceivedRemoteLinkPlayers == TRUE && IsLinkPlayerDataExchangeComplete() == TRUE) gMain.state ++;
             break;
         case 5:
             gUnknown_03004828->unk_009c = 0;
             gUnknown_03004828->unk_009d = 0;
             gUnknown_03004828->unk_00bd = 0;
-            sub_804B2D0(0, 0);
+            LoadTradeMonPic(0, 0);
             gMain.state ++;
             break;
         case 6:
-            sub_804B2D0(0, 1);
+            LoadTradeMonPic(0, 1);
             gMain.state ++;
             break;
         case 7:
-            sub_804B2D0(1, 0);
+            LoadTradeMonPic(1, 0);
             gMain.state ++;
             break;
         case 8:
-            sub_804B2D0(1, 1);
+            LoadTradeMonPic(1, 1);
             gMain.state ++;
             break;
         case 9:
@@ -3706,9 +3706,9 @@ NAKED void sub_804B41C(void)
                     "\tstr r5, [r6]\n"
                     "\tbl ResetSpriteData\n"
                     "\tbl FreeAllSpritePalettes\n"
-                    "\tldr r0, _0804B578 @ =sub_804B210\n"
+                    "\tldr r0, _0804B578 @ =VBlankCB_TradeAnim\n"
                     "\tbl SetVBlankCallback\n"
-                    "\tbl sub_804B228\n"
+                    "\tbl ClearLinkTimeoutTimer\n"
                     "\tldr r4, _0804B57C @ =gWindowTemplate_81E6F84\n"
                     "\tadds r0, r4, 0\n"
                     "\tbl Text_LoadWindowTemplate\n"
@@ -3805,7 +3805,7 @@ NAKED void sub_804B41C(void)
                     "\t.align 2, 0\n"
                     "_0804B570: .4byte gUnknown_03004828\n"
                     "_0804B574: .4byte gSharedMem + 0x1F000\n"
-                    "_0804B578: .4byte sub_804B210\n"
+                    "_0804B578: .4byte VBlankCB_TradeAnim\n"
                     "_0804B57C: .4byte gWindowTemplate_81E6F84\n"
                     "_0804B580: .4byte gLinkType\n"
                     "_0804B584: .4byte 0x00001144\n"
@@ -3892,7 +3892,7 @@ NAKED void sub_804B41C(void)
                     "_0804B640: .4byte gMain\n"
                     "_0804B644: .4byte 0x0000043c\n"
                     "_0804B648_case04:\n"
-                    "\tbl sub_804B24C\n"
+                    "\tbl CheckForLinkTimeout\n"
                     "\tldr r0, _0804B66C @ =gReceivedRemoteLinkPlayers\n"
                     "\tldrb r0, [r0]\n"
                     "\tcmp r0, 0x1\n"
@@ -3927,7 +3927,7 @@ NAKED void sub_804B41C(void)
                     "\tadds r0, 0xBD\n"
                     "\tstrb r1, [r0]\n"
                     "\tmovs r0, 0\n"
-                    "\tbl sub_804B2D0\n"
+                    "\tbl LoadTradeMonPic\n"
                     "\tldr r1, _0804B6A0 @ =gMain\n"
                     "\tldr r0, _0804B6A4 @ =0x0000043c\n"
                     "\tadds r1, r0\n"
@@ -3939,12 +3939,12 @@ NAKED void sub_804B41C(void)
                     "_0804B6A8_case06:\n"
                     "\tmovs r0, 0\n"
                     "\tmovs r1, 0x1\n"
-                    "\tbl sub_804B2D0\n"
+                    "\tbl LoadTradeMonPic\n"
                     "\tb _0804B746\n"
                     "_0804B6B2_case07:\n"
                     "\tmovs r0, 0x1\n"
                     "\tmovs r1, 0\n"
-                    "\tbl sub_804B2D0\n"
+                    "\tbl LoadTradeMonPic\n"
                     "\tldr r1, _0804B6C4 @ =gMain\n"
                     "\tldr r4, _0804B6C8 @ =0x0000043c\n"
                     "\tadds r1, r4\n"
@@ -3955,7 +3955,7 @@ NAKED void sub_804B41C(void)
                     "_0804B6CC_case08:\n"
                     "\tmovs r0, 0x1\n"
                     "\tmovs r1, 0x1\n"
-                    "\tbl sub_804B2D0\n"
+                    "\tbl LoadTradeMonPic\n"
                     "\tldr r1, _0804B6DC @ =gMain\n"
                     "\tldr r0, _0804B6E0 @ =0x0000043c\n"
                     "\tadds r1, r0\n"
@@ -4056,8 +4056,8 @@ void sub_804B790(void)
             gUnknown_03004828 = &ewram_2010000.unk_0f000;
             ResetSpriteData();
             FreeAllSpritePalettes();
-            SetVBlankCallback(sub_804B210);
-            sub_804B228();
+            SetVBlankCallback(VBlankCB_TradeAnim);
+            ClearLinkTimeoutTimer();
             Text_LoadWindowTemplate(&gWindowTemplate_81E717C);
             Text_InitWindowWithTemplate(&gUnknown_03004828->window, &gWindowTemplate_81E717C);
             gUnknown_03004828->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
@@ -4079,19 +4079,19 @@ void sub_804B790(void)
             gMain.state = 5;
             break;
         case 5:
-            sub_804B2D0(0, 0);
+            LoadTradeMonPic(0, 0);
             gMain.state ++;
             break;
         case 6:
-            sub_804B2D0(0, 1);
+            LoadTradeMonPic(0, 1);
             gMain.state ++;
             break;
         case 7:
-            sub_804B2D0(1, 0);
+            LoadTradeMonPic(1, 0);
             gMain.state ++;
             break;
         case 8:
-            sub_804B2D0(1, 1);
+            LoadTradeMonPic(1, 1);
             gMain.state ++;
             break;
         case 9:
@@ -4440,7 +4440,7 @@ static bool8 sub_804C29C(void)
             if (++ gUnknown_03004828->unk_00c0 > 20)
             {
                 sub_804BBE8(3);
-                sub_804B128();
+                SetTradeBGAffine();
                 gUnknown_03004828->unk_00bb = CreateSprite(&gSpriteTemplate_8215A80, 0x78, 0x50, 0);
                 gUnknown_03004828->unk_00c4 ++;
             }
@@ -4823,7 +4823,7 @@ static void sub_804D588(void)
 static void sub_804D63C(void)
 {
     u8 blockReceivedStatus;
-    sub_804B2B0();
+    TradeGetMultiplayerId();
     blockReceivedStatus = GetBlockReceivedStatus();
     if (blockReceivedStatus & 0x01)
     {
@@ -5042,7 +5042,7 @@ void sub_804DB84(void)
 
 static void sub_804DC18(void)
 {
-    u8 mpId = sub_804B2B0();
+    u8 mpId = TradeGetMultiplayerId();
     sub_804D63C();
     if (mpId == 0 && gUnknown_03004828->unk_009c == 1 && gUnknown_03004828->unk_009d == 1)
     {
