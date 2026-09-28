@@ -4381,7 +4381,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 11:
             if (++gUnknown_03004828->unk_00c0 == 80)
             {
-                gUnknown_03004828->unk_0102 = sub_8047580(gUnknown_03004828->pokePicSpriteIdxs[0], gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]].oam.paletteNum, 0x78, 0x20, 0x2, 0x1, 0x14, 0xfffff);
+                gUnknown_03004828->unk_0102 = CreateTradePokeballSprite(gUnknown_03004828->pokePicSpriteIdxs[0], gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]].oam.paletteNum, 0x78, 0x20, 0x2, 0x1, 0x14, 0xfffff);
                 gUnknown_03004828->unk_00c4 ++;
                 Text_EraseWindowRect(&gUnknown_03004828->window, 0, 0, 29, 19);
                 StringExpandPlaceholders(gStringVar4, gTradeText_ByeBye);

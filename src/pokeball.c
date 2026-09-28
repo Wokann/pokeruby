@@ -1024,19 +1024,19 @@ static void sub_804748C(struct Sprite *sprite)
         DestroySpriteAndFreeResources(sprite);
 }
 
-u8 sub_8047580(u8 a, u8 b, u8 x, u8 y, u8 e, u8 f, u8 g, u32 h)
+u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 delay, u32 fadePalettes)
 {
     u8 spriteId;
 
     LoadCompressedSpriteSheet(&sBallSpriteSheets[0]);
     LoadCompressedSpritePalette(&sBallSpritePalettes[0]);
-    spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, f);
-    gSprites[spriteId].data[0] = a;
-    gSprites[spriteId].data[1] = g;
-    gSprites[spriteId].data[2] = b;
-    gSprites[spriteId].data[3] = h;
-    gSprites[spriteId].data[4] = h >> 16;
-    gSprites[spriteId].oam.priority = e;
+    spriteId = CreateSprite(&gBallSpriteTemplates[0], x, y, subPriority);
+    gSprites[spriteId].data[0] = monSpriteId;
+    gSprites[spriteId].data[1] = delay;
+    gSprites[spriteId].data[2] = monPalNum;
+    gSprites[spriteId].data[3] = fadePalettes;
+    gSprites[spriteId].data[4] = fadePalettes >> 16;
+    gSprites[spriteId].oam.priority = oamPriority;
     gSprites[spriteId].callback = sub_8047638;
     return spriteId;
 }
