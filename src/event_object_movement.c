@@ -96,7 +96,7 @@ static void CameraObject_2(struct Sprite *);
 static void ObjectCB_CameraObject(struct Sprite *sprite);
 static bool8 ObjectEventDoesElevationMatch(struct ObjectEvent *, u8);
 static const struct ObjectEventTemplate *FindObjectEventTemplateByLocalId(u8, const struct ObjectEventTemplate*, u8);
-static void UpdateObjectEventSpriteSubpriorityAndVisibility(struct Sprite *);
+static void SpriteCB_VirtualObject(struct Sprite *);
 static void InitObjectPriorityByElevation(struct Sprite *sprite, u8 z);
 static void CreateReflectionEffectSprites(void);
 static u8 GetObjectEventIdByLocalIdAndMapInternal(u8, u8, u8);
@@ -1485,7 +1485,7 @@ u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x
     return spriteId;
 }
 
-u8 sub_805B410(u8 graphicsId, u8 b, s16 x, s16 y, u8 elevation, u8 direction)
+u8 CreateVirtualObject(u8 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevation, u8 direction)
 {
     u8 spriteId;
     struct SpriteTemplate spriteTemplate;
@@ -1493,7 +1493,7 @@ u8 sub_805B410(u8 graphicsId, u8 b, s16 x, s16 y, u8 elevation, u8 direction)
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
-    MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, UpdateObjectEventSpriteSubpriorityAndVisibility, &spriteTemplate, &subspriteTables);
+    MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, SpriteCB_VirtualObject, &spriteTemplate, &subspriteTables);
     *(u16 *)&spriteTemplate.paletteTag = 0xFFFF;
     x += 7;
     y += 7;
@@ -1508,7 +1508,7 @@ u8 sub_805B410(u8 graphicsId, u8 b, s16 x, s16 y, u8 elevation, u8 direction)
         sprite->y += sprite->centerToCornerVecY;
         sprite->oam.paletteNum = graphicsInfo->paletteSlot;
         sprite->coordOffsetEnabled = TRUE;
-        sprite->data[0] = b;
+        sprite->data[0] = virtualObjId;
         sprite->data[1] = elevation;
         if (graphicsInfo->paletteSlot == 10)
         {
@@ -8333,19 +8333,19 @@ void UpdateObjectEventSpriteVisibility(struct Sprite *sprite, bool8 invisible)
         sprite->invisible = TRUE;
 }
 
-static void UpdateObjectEventSpriteSubpriorityAndVisibility(struct Sprite *sprite)
+static void SpriteCB_VirtualObject(struct Sprite *sprite)
 {
     SetObjectSubpriorityByElevation(sprite->data[1], sprite, 1);
     UpdateObjectEventSpriteVisibility(sprite, 0);
 }
 
-void TurnObjectEvent(u8 objectEventId, u8 direction)
+void TurnVirtualObject(u8 virtualObjId, u8 direction)
 {
     u8 i;
     for (i = 0; i < MAX_SPRITES; i++)
     {
         struct Sprite *sprite = &gSprites[i];
-        if (sprite->inUse && sprite->callback == UpdateObjectEventSpriteSubpriorityAndVisibility && (u8)sprite->data[0] == objectEventId)
+        if (sprite->inUse && sprite->callback == SpriteCB_VirtualObject && (u8)sprite->data[0] == virtualObjId)
         {
             u8 animNum = GetFaceDirectionAnimNum(direction);
             StartSpriteAnim(sprite, animNum);

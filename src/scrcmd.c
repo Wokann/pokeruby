@@ -1152,16 +1152,16 @@ bool8 ScrCmd_createvobject(struct ScriptContext *ctx)
     u8 elevation = ScriptReadByte(ctx);
     u8 direction = ScriptReadByte(ctx);
 
-    sub_805B410(graphicsId, virtualObjId, x, y, elevation, direction);
+    CreateVirtualObject(graphicsId, virtualObjId, x, y, elevation, direction);
     return FALSE;
 }
 
 bool8 ScrCmd_turnvobject(struct ScriptContext *ctx)
 {
-    u8 objectEventId = ScriptReadByte(ctx);
+    u8 virtualObjId = ScriptReadByte(ctx);
     u8 direction = ScriptReadByte(ctx);
 
-    TurnObjectEvent(objectEventId, direction);
+    TurnVirtualObject(virtualObjId, direction);
     return FALSE;
 }
 
