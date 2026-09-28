@@ -488,7 +488,7 @@ const u8 gTradeMonBoxCoords[][2] = {
     {23, 13}
 };
 
-const u8 gTradeUnknownSpriteCoords[][2][2] = {
+const u8 gTradeMenuNameSpriteCoords[][2][2] = {
     {
         { 59, 10},
         {179, 10},
@@ -1001,47 +1001,47 @@ void CB2_StartCreateTradeMenu(void)
     SetMainCallback2(CB2_CreateTradeMenu);
 }
 
-static void sub_8047CE8(void)
+static void DrawTradeMenuText(void)
 {
-    u8 mpId;
+    u8 playerId;
     DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[0], gSaveBlock2.playerName, 0xC);
-    mpId = GetMultiplayerId();
-    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[3], gLinkPlayers[mpId ^ 1].name, 0xC);
+    playerId = GetMultiplayerId();
+    DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[3], gLinkPlayers[playerId ^ 1].name, 0xC);
     DrawTextWindowAndBufferTiles(&gWindowTemplate_81E725C, gUnknown_020296CC[6], gUnknown_0820C14C[0], 0x8);
     DrawBottomRowText(gUnknown_0820C14C[1], gUnknown_020296CC[8], 0x14);
     nullsub_5(3, 0);
 }
 
-static void sub_8047D58(void)
+static void CreateTradeMenuPlayerNameSprites(void)
 {
     struct SpriteTemplate spriteTemplate;
     int i;
-    u8 mpId;
-    u16 slen;
-    int language;
+    u8 playerId;
+    u16 nameLength;
+    int nameLengthLayout;
 
-    slen = StringLength(gSaveBlock2.playerName);
-    language = slen <= 5 ? 0 : 1;
+    nameLength = StringLength(gSaveBlock2.playerName);
+    nameLengthLayout = nameLength <= 5 ? 0 : 1;
     for (i = 0; i < 3; i ++)
     {
         spriteTemplate = gSpriteTemplate_820C0EC;
         spriteTemplate.tileTag += i;
-        CreateSprite(&spriteTemplate, gTradeUnknownSpriteCoords[language][0][0] + 32 * i, gTradeUnknownSpriteCoords[language][0][1], 1);
+        CreateSprite(&spriteTemplate, gTradeMenuNameSpriteCoords[nameLengthLayout][0][0] + 32 * i, gTradeMenuNameSpriteCoords[nameLengthLayout][0][1], 1);
     }
 
-    mpId = GetMultiplayerId();
-    slen = StringLength(gLinkPlayers[mpId ^ 1].name);
-    language = slen <= 5 ? 0 : 1;
+    playerId = GetMultiplayerId();
+    nameLength = StringLength(gLinkPlayers[playerId ^ 1].name);
+    nameLengthLayout = nameLength <= 5 ? 0 : 1;
     for (i = 0; i < 3; i ++)
     {
         spriteTemplate = gSpriteTemplate_820C0EC;
         spriteTemplate.tileTag += i + 3;
-        CreateSprite(&spriteTemplate, gTradeUnknownSpriteCoords[language][1][0] + 32 * i, gTradeUnknownSpriteCoords[language][1][1], 1);
+        CreateSprite(&spriteTemplate, gTradeMenuNameSpriteCoords[nameLengthLayout][1][0] + 32 * i, gTradeMenuNameSpriteCoords[nameLengthLayout][1][1], 1);
     }
     nullsub_5(5, 0);
 }
 
-static void sub_8047E44(void)
+static void CreateTradeMenuActionTextSprites(void)
 {
     struct SpriteTemplate spriteTemplate;
     int i;
@@ -1166,7 +1166,7 @@ static void CB2_CreateTradeMenu(void)
             gMain.state ++;
             break;
         case  9:
-            sub_8047CE8();
+            DrawTradeMenuText();
             gMain.state ++;
             gUnknown_03004824->unk_00b4 = 0;
             break;
@@ -1176,11 +1176,11 @@ static void CB2_CreateTradeMenu(void)
                 gMain.state ++;
             break;
         case 11:
-            sub_8047D58();
+            CreateTradeMenuPlayerNameSprites();
             gMain.state ++;
             break;
         case 12:
-            sub_8047E44();
+            CreateTradeMenuActionTextSprites();
             gUnknown_03004824->tradeMenuCursorSpriteIdx = CreateSprite(&gSpriteTemplate_820C134, gTradeMonSpriteCoords[0][0] * 8 + 32, gTradeMonSpriteCoords[0][1] * 8, 2);
             gUnknown_03004824->tradeMenuCursorPosition = 0;
             gMain.state ++;
@@ -1316,7 +1316,7 @@ static void CB2_ReturnToTradeMenu(void)
             gMain.state ++;
             break;
         case  9:
-            sub_8047CE8();
+            DrawTradeMenuText();
             gMain.state ++;
             gUnknown_03004824->unk_00b4 = 0;
             break;
@@ -1328,11 +1328,11 @@ static void CB2_ReturnToTradeMenu(void)
             }
             break;
         case 11:
-            sub_8047D58();
+            CreateTradeMenuPlayerNameSprites();
             gMain.state ++;
             break;
         case 12:
-            sub_8047E44();
+            CreateTradeMenuActionTextSprites();
             unkStructF = &ewram_2010000.unk_08000;
             if (gUnknown_03004824->tradeMenuCursorPosition < 6)
                 gUnknown_03004824->tradeMenuCursorPosition = unkStructF->unk_0009;
