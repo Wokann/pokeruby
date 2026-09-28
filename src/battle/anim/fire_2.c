@@ -1,7 +1,6 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
-#include "heated_rock.h"
 #include "rom_8077ABC.h"
 #include "task.h"
 #include "trig.h"
@@ -10,21 +9,23 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-void AnimEmberFlare(struct Sprite *sprite);
+static void AnimEmberFlare(struct Sprite *sprite);
 static void AnimBurnFlame(struct Sprite *sprite);
 void AnimFireRing(struct Sprite *sprite);
-void AnimFireCross(struct Sprite *sprite);
-void AnimFireSpiralOutward(struct Sprite *sprite);
+static void AnimFireCross(struct Sprite *sprite);
+static void AnimFireSpiralOutward(struct Sprite *sprite);
 static void AnimEruptionLaunchRock(struct Sprite *sprite);
 static void AnimEruptionFallingRock(struct Sprite *sprite);
-static void AnimFireRingStep1(struct Sprite *);
+static void AnimFireRing_Step1(struct Sprite *);
 static void UpdateFireRingCircleOffset(struct Sprite *);
-static void AnimFireRingStep2(struct Sprite *);
-static void AnimFireRingStep3(struct Sprite *);
+static void AnimFireRing_Step2(struct Sprite *);
+static void AnimFireRing_Step3(struct Sprite *);
 static void AnimFireSpiralOutward_Step1(struct Sprite *);
 static void AnimFireSpiralOutward_Step2(struct Sprite *);
 static void AnimTask_EruptionLaunchRocks_Step(u8 taskId);
 static void CreateEruptionLaunchRocks(u8 spriteId, u8 taskId, u8 activeSpritesIdx);
+static u16 GetEruptionLaunchRockInitialYPos(u8 spriteId);
+static void InitEruptionLaunchRockCoordData(struct Sprite *sprite, s16 speedX, s16 speedY);
 static void UpdateEruptionLaunchRockPos(struct Sprite *sprite);
 static void AnimEruptionFallingRock_Step(struct Sprite *sprite);
 
@@ -163,7 +164,7 @@ const struct SpriteTemplate gEruptionLaunchRockSpriteTemplate =
     .callback = AnimEruptionLaunchRock,
 };
 
-const s16 sEruptionLaunchRockSpeeds[][2] =
+static const s16 sEruptionLaunchRockSpeeds[][2] =
 {
     {-2, -5},
     {-1, -1},
@@ -194,7 +195,7 @@ const struct SpriteTemplate gEruptionFallingRockSpriteTemplate =
 // arg 4: duration
 // arg 5: ? (todo: something related to which mon the pixel offsets are based on)
 // arg 6: ? (todo: something related to which mon the pixel offsets are based on)
-void AnimEmberFlare(struct Sprite *sprite)
+static void AnimEmberFlare(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget)
         && (gBattleAnimAttacker == GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)
@@ -222,15 +223,15 @@ static void AnimBurnFlame(struct Sprite *sprite)
 // arg 2: initial wave offset
 void AnimFireRing(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
 
     sprite->data[7] = gBattleAnimArgs[2];
     sprite->data[0] = 0;
 
-    sprite->callback = AnimFireRingStep1;
+    sprite->callback = AnimFireRing_Step1;
 }
 
-static void AnimFireRingStep1(struct Sprite *sprite)
+static void AnimFireRing_Step1(struct Sprite *sprite)
 {
     UpdateFireRingCircleOffset(sprite);
 
@@ -238,28 +239,28 @@ static void AnimFireRingStep1(struct Sprite *sprite)
     {
         sprite->data[0] = 0x19;
         sprite->data[1] = sprite->x;
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
         sprite->data[3] = sprite->y;
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
 
         InitAnimLinearTranslation(sprite);
 
-        sprite->callback = AnimFireRingStep2;
+        sprite->callback = AnimFireRing_Step2;
     }
 }
 
-static void AnimFireRingStep2(struct Sprite *sprite)
+static void AnimFireRing_Step2(struct Sprite *sprite)
 {
     if (AnimTranslateLinear(sprite))
     {
         sprite->data[0] = 0;
 
-        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
-        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, 3);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
         sprite->y2 = 0;
         sprite->x2 = 0;
 
-        sprite->callback = AnimFireRingStep3;
+        sprite->callback = AnimFireRing_Step3;
         sprite->callback(sprite);
     }
     else
@@ -271,7 +272,7 @@ static void AnimFireRingStep2(struct Sprite *sprite)
     }
 }
 
-static void AnimFireRingStep3(struct Sprite *sprite)
+static void AnimFireRing_Step3(struct Sprite *sprite)
 {
     UpdateFireRingCircleOffset(sprite);
 
@@ -292,7 +293,7 @@ static void UpdateFireRingCircleOffset(struct Sprite *sprite)
 // arg 2: duration
 // arg 3: x delta
 // arg 4: y delta 
-void AnimFireCross(struct Sprite *sprite)
+static void AnimFireCross(struct Sprite *sprite)
 {
     sprite->x += gBattleAnimArgs[0];
     sprite->y += gBattleAnimArgs[1];
@@ -306,9 +307,9 @@ void AnimFireCross(struct Sprite *sprite)
     sprite->callback = TranslateSpriteLinear;
 }
 
-void AnimFireSpiralOutward(struct Sprite *sprite)
+static void AnimFireSpiralOutward(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
 
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[0] = gBattleAnimArgs[3];
@@ -542,7 +543,7 @@ static void AnimEruptionLaunchRock(struct Sprite *sprite)
     }
 }
 
-u16 GetEruptionLaunchRockInitialYPos(u8 spriteId)
+static u16 GetEruptionLaunchRockInitialYPos(u8 spriteId)
 {
     u16 y = gSprites[spriteId].y + gSprites[spriteId].y2 + gSprites[spriteId].centerToCornerVecY;
 
@@ -558,7 +559,7 @@ u16 GetEruptionLaunchRockInitialYPos(u8 spriteId)
     return y;
 }
 
-void InitEruptionLaunchRockCoordData(struct Sprite *sprite, s16 speedX, s16 speedY)
+static void InitEruptionLaunchRockCoordData(struct Sprite *sprite, s16 speedX, s16 speedY)
 {
     sprite->sSpeedDelay = 0;
     sprite->sLaunchStage = 0;
