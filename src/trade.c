@@ -167,17 +167,17 @@ static void CB1_UpdateLink(void);
 static void CB2_TradeMenu(void);
 static void sub_804A940(struct UnkStructD *);
 void sub_804B41C(void);
-static void sub_8049DE0(void);
+static void RunTradeMenuCallback(void);
 static void sub_804AB30(void);
-static void sub_8049ED4(u8);
+static void DrawSelectedMonScreen(u8);
 static void sub_804A6DC(u8);
 static void sub_804A938(struct UnkStructD *);
 static void sub_804A9F4(u8);
 static void sub_804AA00(u8);
-static void sub_8049E9C(u8);
+static void SetSelectedMon(u8);
 static void sub_804AADC(u16, u8);
 static void sub_804A80C(void);
-static u8 sub_80499F0(const u8 *, u8, u8);
+static u8 CountOtherUsableMons(const u8 *, u8, u8);
 static void sub_804A840(u8);
 u8 sub_804A2B4(u8 *, u8, u8);
 static void sub_804A96C_alt(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u16);
@@ -1422,10 +1422,10 @@ static void VBlankCB_TradeMenu(void)
 
 static void CB2_TradeMenu(void)
 {
-    sub_8049DE0();
+    RunTradeMenuCallback();
     sub_804AB30();
-    sub_8049ED4(0);
-    sub_8049ED4(1);
+    DrawSelectedMonScreen(0);
+    DrawSelectedMonScreen(1);
     REG_BG2HOFS = gUnknown_03004824->unk_0000++;
     REG_BG3HOFS = gUnknown_03004824->unk_0001--;
     RunTasks();
@@ -1714,8 +1714,8 @@ static void sub_80491E4(u8 mpId, u8 status)
                 break;
             case 0xdddd:
                 gUnknown_03004824->unk_008a = gBlockRecvBuffer[0][1] + 6;
-                sub_8049E9C(gUnknown_03004824->tradeMenuCursorPosition);
-                sub_8049E9C(gUnknown_03004824->unk_008a);
+                SetSelectedMon(gUnknown_03004824->tradeMenuCursorPosition);
+                SetSelectedMon(gUnknown_03004824->unk_008a);
                 gUnknown_03004824->unk_007b = 7;
                 break;
             case 0xccdd:
@@ -1817,7 +1817,7 @@ static void CB1_UpdateLink(void)
         sub_80492D8();
 }
 
-static u8 sub_8049514(u8 oldPosition, u8 direction)
+static u8 GetNewCursorPosition(u8 oldPosition, u8 direction)
 {
     int i;
     u8 newPosition = 0;
@@ -1832,9 +1832,9 @@ static u8 sub_8049514(u8 oldPosition, u8 direction)
     return newPosition;
 }
 
-static void TradeMenuMoveCursor(u8 *tradeMenuCursorPosition, u8 direction)
+static void TradeMenuMoveCursor(u8 *cursorPosition, u8 direction)
 {
-    u8 newPosition = sub_8049514(*tradeMenuCursorPosition, direction);
+    u8 newPosition = GetNewCursorPosition(*cursorPosition, direction);
     if (newPosition == 12) // CANCEL
     {
         StartSpriteAnim(&gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx], 1);
@@ -1847,14 +1847,14 @@ static void TradeMenuMoveCursor(u8 *tradeMenuCursorPosition, u8 direction)
         gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx].x = gTradeMonSpriteCoords[newPosition][0] * 8 + 32;
         gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx].y = gTradeMonSpriteCoords[newPosition][1] * 8;
     }
-    if (*tradeMenuCursorPosition != newPosition)
+    if (*cursorPosition != newPosition)
     {
         PlaySE(SE_SELECT);
     }
-    *tradeMenuCursorPosition = newPosition;
+    *cursorPosition = newPosition;
 }
 
-static void sub_8049620(void)
+static void SetReadyToTrade(void)
 {
     sub_804AA0C(0);
     gUnknown_03004824->unk_007b = 5;
@@ -1870,7 +1870,7 @@ static void sub_8049620(void)
     }
 }
 
-static void sub_8049680(void)
+static void CB_ProcessMenuInput(void)
 {
     int i;
     if (JOY_REPT(DPAD_UP))
@@ -1922,7 +1922,7 @@ static void sub_8049680(void)
     }
 }
 
-static void sub_8049804(void)
+static void RedrawChooseAPokemonWindow(void)
 {
     Menu_DestroyCursor();
     sub_804A80C();
@@ -1931,7 +1931,7 @@ static void sub_8049804(void)
     DrawBottomRowText(gUnknown_0820C14C[1], BG_CHAR_ADDR(4) + 32 * gUnknown_03004824->unk_007e, 20);
 }
 
-static void sub_8049860(void)
+static void CB_ProcessSelectedMonInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
@@ -1951,34 +1951,34 @@ static void sub_8049860(void)
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             gUnknown_03004824->unk_007b = 2;
         }
-        else if (sub_80499F0(gUnknown_03004824->unk_0051[0], gUnknown_03004824->partyCounts[0], gUnknown_03004824->tradeMenuCursorPosition) == 0)
+        else if (CountOtherUsableMons(gUnknown_03004824->unk_0051[0], gUnknown_03004824->partyCounts[0], gUnknown_03004824->tradeMenuCursorPosition) == 0)
         {
             sub_804AADC(3, 2);
             gUnknown_03004824->unk_007b = 8;
         }
         else
         {
-            sub_8049620();
+            SetReadyToTrade();
             gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx].invisible = TRUE;
         }
     }
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sub_8049804();
+        RedrawChooseAPokemonWindow();
     }
 }
 
-static void sub_8049954(void)
+static void CB_ChooseMonAfterButtonPress(void)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sub_8049804();
+        RedrawChooseAPokemonWindow();
     }
 }
 
-static void sub_804997C(void)
+static void CB_ShowTradeMonSummaryScreen(void)
 {
     if (!gPaletteFade.active)
     {
@@ -1993,29 +1993,29 @@ static void sub_804997C(void)
     }
 }
 
-static u8 sub_80499F0(const u8 *src, u8 partyCount, u8 tradeMenuCursorPosition)
+static u8 CountOtherUsableMons(const u8 *usableMons, u8 partyCount, u8 selectedMonIndex)
 {
-    u8 retval = 0;
+    u8 usableMonCount = 0;
     int i;
     for (i = 0; i < partyCount; i ++)
     {
-        if (tradeMenuCursorPosition != i)
+        if (selectedMonIndex != i)
         {
-            retval += src[i];
+            usableMonCount += usableMons[i];
         }
     }
-    return retval;
+    return usableMonCount;
 }
 
-static void sub_8049A20(void)
+static void CheckMonsBeforeTrade(void)
 {
-    u8 unk_0051[12];
+    u8 usableMons[12];
     int i;
     for (i = 0; i < gUnknown_03004824->partyCounts[0]; i ++)
     {
-        unk_0051[i] = gUnknown_03004824->unk_0051[0][i];
+        usableMons[i] = gUnknown_03004824->unk_0051[0][i];
     }
-    if (sub_80499F0(unk_0051, gUnknown_03004824->partyCounts[0], gUnknown_03004824->tradeMenuCursorPosition) == 0)
+    if (CountOtherUsableMons(usableMons, gUnknown_03004824->partyCounts[0], gUnknown_03004824->tradeMenuCursorPosition) == 0)
     {
         sub_804AADC(3, 2);
         gUnknown_03004824->linkData[0] = 0xbbcc;
@@ -2032,7 +2032,7 @@ static void sub_8049A20(void)
     }
 }
 
-static void sub_8049AC0(void)
+static void CB_ProcessConfirmTradeInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
@@ -2049,7 +2049,7 @@ static void sub_8049AC0(void)
         PlaySE(SE_SELECT);
         if (Menu_GetCursorPos() == 0)
         {
-            sub_8049A20();
+            CheckMonsBeforeTrade();
         }
         else
         {
@@ -2075,7 +2075,7 @@ static void sub_8049AC0(void)
     }
 }
 
-static void sub_8049BC0(void)
+static void CB_ProcessCancelTradeInput(void)
 {
     if (JOY_REPT(DPAD_UP))
     {
@@ -2101,27 +2101,27 @@ static void sub_8049BC0(void)
         }
         else
         {
-            sub_8049804();
+            RedrawChooseAPokemonWindow();
         }
     }
     else if (JOY_NEW(B_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sub_8049804();
+        RedrawChooseAPokemonWindow();
     }
 }
 
-static void sub_8049C8C(void)
+static void CB_SetSelectedMons(void)
 {
     if (GetMultiplayerId() == 0)
     {
-        sub_8049E9C(gUnknown_03004824->tradeMenuCursorPosition);
-        sub_8049E9C(gUnknown_03004824->unk_008a);
+        SetSelectedMon(gUnknown_03004824->tradeMenuCursorPosition);
+        SetSelectedMon(gUnknown_03004824->unk_008a);
     }
     gUnknown_03004824->unk_007b = 7;
 }
 
-static void sub_8049CC4(void)
+static void CB_PrintIsThisTradeOkay(void)
 {
     if (gUnknown_03004824->unk_0080[0] == 5 && gUnknown_03004824->unk_0080[1] == 5)
     {
@@ -2130,7 +2130,7 @@ static void sub_8049CC4(void)
     }
 }
 
-static void DisplayMessageAndContinueTask(void)
+static void CB_InitConfirmTradePrompt(void)
 {
     gUnknown_03004824->unk_00b4++;
     if (gUnknown_03004824->unk_00b4 > 120)
@@ -2142,7 +2142,7 @@ static void DisplayMessageAndContinueTask(void)
     }
 }
 
-static void sub_8049D44(void)
+static void CB_HandleTradeCanceled(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
@@ -2154,7 +2154,7 @@ static void sub_8049D44(void)
     }
 }
 
-static void sub_8049D9C(void)
+static void CB_InitExitCanceledTrade(void)
 {
     if (!gPaletteFade.active)
     {
@@ -2163,7 +2163,7 @@ static void sub_8049D9C(void)
     }
 }
 
-static void sub_8049DC4(void)
+static void CB_ExitCanceledTrade(void)
 {
     if (gReceivedRemoteLinkPlayers == 0)
     {
@@ -2171,33 +2171,33 @@ static void sub_8049DC4(void)
     }
 }
 
-static void sub_8049DE0(void)
+static void RunTradeMenuCallback(void)
 {
     switch (gUnknown_03004824->unk_007b)
     {
         case  0:
-            sub_8049680();
+            CB_ProcessMenuInput();
             break;
         case  1:
-            sub_8049860();
+            CB_ProcessSelectedMonInput();
             break;
         case  2:
-            sub_804997C();
+            CB_ShowTradeMonSummaryScreen();
             break;
         case  3:
-            sub_8049AC0();
+            CB_ProcessConfirmTradeInput();
             break;
         case  4:
-            sub_8049BC0();
+            CB_ProcessCancelTradeInput();
             break;
         case  6:
-            sub_8049C8C();
+            CB_SetSelectedMons();
             break;
         case  7:
-            sub_8049CC4();
+            CB_PrintIsThisTradeOkay();
             break;
         case  8:
-            sub_8049D44();
+            CB_HandleTradeCanceled();
             break;
         case  9:
             sub_8048A14();
@@ -2206,36 +2206,36 @@ static void sub_8049DE0(void)
             sub_8048A50();
             break;
         case 11:
-            sub_8049D9C();
+            CB_InitExitCanceledTrade();
             break;
         case 12:
-            sub_8049DC4();
+            CB_ExitCanceledTrade();
             break;
         case 13:
             sub_8048A90();
             break;
         case 14:
-            DisplayMessageAndContinueTask();
+            CB_InitConfirmTradePrompt();
             break;
         case 15:
-            sub_8049954();
+            CB_ChooseMonAfterButtonPress();
             break;
     }
 }
 
-static void sub_8049E9C(u8 a0)
+static void SetSelectedMon(u8 cursorPosition)
 {
-    u8 v0 = a0 / 6;
-    if (gUnknown_03004824->unk_0080[v0] == 0)
+    u8 whichParty = cursorPosition / PARTY_SIZE;
+    if (gUnknown_03004824->unk_0080[whichParty] == 0)
     {
-        gUnknown_03004824->unk_0080[v0] = 1;
-        gUnknown_03004824->unk_0082[v0] = a0;
+        gUnknown_03004824->unk_0080[whichParty] = 1;
+        gUnknown_03004824->unk_0082[whichParty] = cursorPosition;
     }
 }
 
 // TODO: Figure out what the f**k is going on here
 #ifdef NONMATCHING
-static void sub_8049ED4(u8 a0)
+static void DrawSelectedMonScreen(u8 a0)
 {
     u8 i;
     s8 stringLength;
@@ -2304,7 +2304,7 @@ static void sub_8049ED4(u8 a0)
 }
 #else
 NAKED
-static void sub_8049ED4(u8 a0)
+static void DrawSelectedMonScreen(u8 a0)
 {
     asm_unified("\tpush {r4-r7,lr}\n"
                     "\tmov r7, r10\n"
