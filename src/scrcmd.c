@@ -713,7 +713,7 @@ bool8 ScrCmd_setmaplayoutindex(struct ScriptContext *ctx)
 {
     u16 value = VarGet(ScriptReadHalfword(ctx));
 
-    sub_8053D14(value);
+    SetCurrentMapLayout(value);
     return FALSE;
 }
 

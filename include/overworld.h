@@ -71,7 +71,7 @@ void warp1_set_2(s8 mapGroup, s8 mapNum, s8 warpId);
 void saved_warp2_set(int unused, s8 mapGroup, s8 mapNum, s8 warpId);
 void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
 void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused);
-void sub_8053538(u8);
+void SetWarpDestinationToHealLocation(u8 healLocationId);
 void Overworld_SetWarpDestToLastHealLoc(void);
 void Overworld_SetHealLocationWarp(u8);
 void UpdateEscapeWarp(s16 x, s16 y);
@@ -81,7 +81,6 @@ void SetFixedDiveWarp(s8, s8, s8, s8, s8);
 // warp1_set_to_warp2
 void SetFixedHoleWarp(s8, s8, s8, s8, s8);
 void SetFixedHoleWarpAsDestination(s16, s16);
-// sub_8053778
 // unref_sub_8053790
 void SetContinueGameWarpToHealLocation(u8);
 void gpu_sync_bg_hide();
@@ -89,7 +88,6 @@ void gpu_sync_bg_hide();
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum);
-// sub_8053994
 void ResetInitialPlayerAvatarState(void);
 void StoreInitialPlayerAvatarState(void);
 u16 GetCenterScreenMetatileBehavior(void);
@@ -97,7 +95,7 @@ bool32 Overworld_IsBikingAllowed(void);
 void SetDefaultFlashLevel(void);
 void Overworld_SetFlashLevel(s32 a1);
 u8 Overworld_GetFlashLevel(void);
-void sub_8053D14(u16);
+void SetCurrentMapLayout(u16 mapLayoutId);
 // sub_8053D30
 // sub_8053D6C
 // GetLocationMusic

@@ -1608,20 +1608,20 @@ void CB_ExitFlyMap(void)
             switch (gRegionMapState->regionMap.mapSectionId)
             {
             case MAPSEC_SOUTHERN_ISLAND:
-                sub_8053538(HEAL_LOCATION_SOUTHERN_ISLAND_EXTERIOR);
+                SetWarpDestinationToHealLocation(HEAL_LOCATION_SOUTHERN_ISLAND_EXTERIOR);
                 break;
             case MAPSEC_BATTLE_TOWER:
-                sub_8053538(HEAL_LOCATION_BATTLE_TOWER_OUTSIDE);
+                SetWarpDestinationToHealLocation(HEAL_LOCATION_BATTLE_TOWER_OUTSIDE);
                 break;
             case MAPSEC_LITTLEROOT_TOWN:
-                sub_8053538((gSaveBlock2.playerGender == MALE) ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
+                SetWarpDestinationToHealLocation((gSaveBlock2.playerGender == MALE) ? HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE : HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE);
                 break;
             case MAPSEC_EVER_GRANDE_CITY:
-                sub_8053538((FlagGet(FLAG_SYS_POKEMON_LEAGUE_FLY) && gRegionMapState->regionMap.everGrandeCityArea == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
+                SetWarpDestinationToHealLocation((FlagGet(FLAG_SYS_POKEMON_LEAGUE_FLY) && gRegionMapState->regionMap.everGrandeCityArea == 0) ? HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE : HEAL_LOCATION_EVER_GRANDE_CITY);
                 break;
             default:
                 if (sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2] != HEAL_LOCATION_NONE)
-                    sub_8053538(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2]);
+                    SetWarpDestinationToHealLocation(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][2]);
                 else
                     warp1_set_2(sMapHealLocations[gRegionMapState->regionMap.mapSectionId][0], sMapHealLocations[gRegionMapState->regionMap.mapSectionId][1], -1);
                 break;

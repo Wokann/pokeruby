@@ -272,7 +272,7 @@ static void Overworld_ResetStateAfterWhiteOut(void)
     FlagClear(FLAG_SYS_USE_FLASH);
 }
 
-static void sub_805308C(void)
+static void UpdateMiscOverworldStates(void)
 {
     FlagClear(FLAG_SYS_SAFARI_MODE);
     ChooseAmbientCrySpecies();
@@ -487,12 +487,12 @@ void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused)
     gWarpDestination = gSaveBlock1.dynamicWarp;
 }
 
-void sub_8053538(u8 a1)
+void SetWarpDestinationToHealLocation(u8 healLocationId)
 {
-    const struct HealLocation *warp = GetHealLocation(a1);
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
 
-    if (warp)
-        Overworld_SetWarpDestination(warp->mapGroup, warp->mapNum, -1, warp->x, warp->y);
+    if (healLocation)
+        Overworld_SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
 void Overworld_SetWarpDestToLastHealLoc(void)
@@ -549,7 +549,7 @@ void SetFixedHoleWarpAsDestination(s16 x, s16 y)
         Overworld_SetWarpDestination(gFixedHoleWarp.mapGroup, gFixedHoleWarp.mapNum, -1, x, y);
 }
 
-void sub_8053778(void)
+void SetWarpDestinationToContinueGameWarp(void)
 {
     gWarpDestination = gSaveBlock1.warp1;
 }
@@ -652,15 +652,15 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ShowMapNamePopup();
 }
 
-void sub_8053994(u32 a1)
+void LoadMapFromWarp(u32 a1)
 {
-    bool8 v2;
-    bool8 v3;
+    bool8 isOutdoors;
+    bool8 isIndoors;
 
     LoadCurrentMapData();
     LoadObjEventTemplatesFromHeader();
-    v2 = IsMapTypeOutdoors(gMapHeader.mapType);
-    v3 = Overworld_MapTypeIsIndoors(gMapHeader.mapType);
+    isOutdoors = IsMapTypeOutdoors(gMapHeader.mapType);
+    isIndoors = Overworld_MapTypeIsIndoors(gMapHeader.mapType);
     ClearTempFieldEventData();
     ResetCyclingRoadChallengeData();
     RestartWildEncounterImmunitySteps();
@@ -669,7 +669,7 @@ void sub_8053994(u32 a1)
         DoTimeBasedEvents();
     SetSavedWeatherFromCurrMapHeader();
     ChooseAmbientCrySpecies();
-    if (v2)
+    if (isOutdoors)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
@@ -677,7 +677,7 @@ void sub_8053994(u32 a1)
     UpdateLocationHistoryForRoamer();
     RoamerMoveToOtherLocationSet();
     InitMap();
-    if (a1 != 1 && v3)
+    if (a1 != 1 && isIndoors)
     {
         UpdateTVScreensOnMap(gBackupMapLayout.width, gBackupMapLayout.height);
         InitSecretBaseAppearance(TRUE);
@@ -813,7 +813,7 @@ u8 Overworld_GetFlashLevel(void)
     return gSaveBlock1.flashLevel;
 }
 
-void sub_8053D14(u16 mapLayoutId)
+void SetCurrentMapLayout(u16 mapLayoutId)
 {
     gSaveBlock1.mapLayoutId = mapLayoutId;
     gMapHeader.mapLayout = GetMapLayout();
@@ -1490,7 +1490,7 @@ void CB2_ContinueSavedGame(void)
     LoadSaveblockObjEventScripts();
     UnfreezeObjectEvents();
     DoTimeBasedEvents();
-    sub_805308C();
+    UpdateMiscOverworldStates();
     InitMapFromSavedGame();
     PlayTimeCounter_Start();
     ScriptContext_Init();
@@ -1498,7 +1498,7 @@ void CB2_ContinueSavedGame(void)
     if (GetContinueGameWarpStatus() == 1)
     {
         ClearContinueGameWarpStatus();
-        sub_8053778();
+        SetWarpDestinationToContinueGameWarp();
         WarpIntoMap();
         SetMainCallback2(CB2_LoadMap);
     }
@@ -1559,7 +1559,7 @@ static bool32 sub_805483C(u8 *state)
         (*state)++;
         break;
     case 1:
-        sub_8053994(1);
+        LoadMapFromWarp(1);
         (*state)++;
         break;
     case 2:
@@ -1623,7 +1623,7 @@ bool32 sub_805493C(u8 *state, u32 a2)
     {
     case 0:
         FieldClearVBlankHBlankCallbacks();
-        sub_8053994(a2);
+        LoadMapFromWarp(a2);
         (*state)++;
         break;
     case 1:
