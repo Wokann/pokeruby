@@ -11,11 +11,11 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFaceContest[];
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFacePlayer[];
-extern const u8 gBattleAnimBackgroundTilemap_ScaryFaceOpponent[];
-extern const u8 gBattleAnimBackgroundImage_ScaryFace[];
-extern const u8 gBattleAnimBackgroundPalette_ScaryFace[];
+extern const u8 gBattleAnimBgTilemap_ScaryFaceContest[];
+extern const u8 gBattleAnimBgTilemap_ScaryFacePlayer[];
+extern const u8 gBattleAnimBgTilemap_ScaryFaceOpponent[];
+extern const u8 gBattleAnimBgImage_ScaryFace[];
+extern const u8 gBattleAnimBgPalette_ScaryFace[];
 
 extern u16 gBattle_BG1_Y;
 extern u16 gBattle_BG1_X;
@@ -43,14 +43,14 @@ void AnimTask_ScaryFace(u8 taskId)
     GetBattleAnimBg1Data(&animBg);
     DmaFill32Defvars(3, 0, animBg.bgTilemap, 0x1000);
     if (IsContest())
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceContest, animBg.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFaceContest, animBg.bgTilemap);
     else if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFacePlayer, animBg.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFacePlayer, animBg.bgTilemap);
     else
-        LZDecompressVram(&gBattleAnimBackgroundTilemap_ScaryFaceOpponent, animBg.bgTilemap);
+        LZDecompressVram(&gBattleAnimBgTilemap_ScaryFaceOpponent, animBg.bgTilemap);
 
-    LZDecompressVram(&gBattleAnimBackgroundImage_ScaryFace, animBg.bgTiles);
-    LoadCompressedPalette(&gBattleAnimBackgroundPalette_ScaryFace, animBg.paletteId << 4, 32);
+    LZDecompressVram(&gBattleAnimBgImage_ScaryFace, animBg.bgTiles);
+    LoadCompressedPalette(&gBattleAnimBgPalette_ScaryFace, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
     if (IsContest())
         sub_80763FC(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, 0);
 
