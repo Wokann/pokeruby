@@ -8,13 +8,13 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 
-static void AnimRazorLeafParticle(struct Sprite* sprite);
-void AnimMoveTwisterParticle(struct Sprite* sprite);
-void AnimTranslateLinearSingleSineWave(struct Sprite* sprite);
-static void AnimRazorLeafParticle_Step1(struct Sprite* sprite);
-static void AnimRazorLeafParticle_Step2(struct Sprite* sprite);
-static void AnimTranslateLinearSingleSineWave_Step(struct Sprite* sprite);
-static void AnimMoveTwisterParticle_Step(struct Sprite* sprite);
+static void AnimRazorLeafParticle(struct Sprite *sprite);
+void AnimMoveTwisterParticle(struct Sprite *sprite);
+static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite);
+static void AnimRazorLeafParticle_Step1(struct Sprite *sprite);
+static void AnimRazorLeafParticle_Step2(struct Sprite *sprite);
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite *sprite);
+static void AnimMoveTwisterParticle_Step(struct Sprite *sprite);
 
 // leaf
 // Used by Razor Leaf and Twister.
@@ -115,17 +115,17 @@ const struct SpriteTemplate gSwiftStarSpriteTemplate =
     .callback = AnimTranslateLinearSingleSineWave,
 };
 
-static void AnimRazorLeafParticle(struct Sprite* sprite)
+static void AnimRazorLeafParticle(struct Sprite *sprite)
 {
-    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
-    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->data[0] = gBattleAnimArgs[0];
     sprite->data[1] = gBattleAnimArgs[1];
     sprite->data[2] = gBattleAnimArgs[2];
     sprite->callback = AnimRazorLeafParticle_Step1;
 }
 
-static void AnimRazorLeafParticle_Step1(struct Sprite* sprite)
+static void AnimRazorLeafParticle_Step1(struct Sprite *sprite)
 {
     if (!sprite->data[2])
     {
@@ -151,7 +151,7 @@ static void AnimRazorLeafParticle_Step1(struct Sprite* sprite)
     }
 }
 
-static void AnimRazorLeafParticle_Step2(struct Sprite* sprite)
+static void AnimRazorLeafParticle_Step2(struct Sprite *sprite)
 {
     if (GetBattlerSide(gBattleAnimAttacker))
     {
@@ -185,9 +185,9 @@ static void AnimRazorLeafParticle_Step2(struct Sprite* sprite)
 // arg 4: translation duration
 // arg 5: wave amplitude
 // arg 6: target between double battle opponents (boolean)
-void AnimTranslateLinearSingleSineWave(struct Sprite* sprite)
+static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite)
 {
-    InitSpritePosToAnimAttacker(sprite, 1);
+    InitSpritePosToAnimAttacker(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
         gBattleAnimArgs[2] = -gBattleAnimArgs[2];
@@ -196,12 +196,12 @@ void AnimTranslateLinearSingleSineWave(struct Sprite* sprite)
     sprite->data[0] = gBattleAnimArgs[4];
     if (!gBattleAnimArgs[6])
     {
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 2) + gBattleAnimArgs[2];
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + gBattleAnimArgs[3];
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
     }
     else
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->data[2], &sprite->data[4]);
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->data[2], &sprite->data[4]);
         sprite->data[2] += gBattleAnimArgs[2];
         sprite->data[4] += gBattleAnimArgs[3];
     }
@@ -220,7 +220,7 @@ void AnimTranslateLinearSingleSineWave(struct Sprite* sprite)
     sprite->callback = AnimTranslateLinearSingleSineWave_Step;
 }
 
-static void AnimTranslateLinearSingleSineWave_Step(struct Sprite* sprite)
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite *sprite)
 {
     bool8 destroy = FALSE;
     s16 a = sprite->data[0];
@@ -258,11 +258,11 @@ static void AnimTranslateLinearSingleSineWave_Step(struct Sprite* sprite)
 // arg 2: wave period (higher means faster wave)
 // arg 3: wave amplitude
 // arg 4: speedup frame (particles move faster at the end of the animation)
-void AnimMoveTwisterParticle(struct Sprite* sprite)
+void AnimMoveTwisterParticle(struct Sprite *sprite)
 {
     if (!IsContest() && IsDoubleBattle() == TRUE)
     {
-        SetAverageBattlerPositions(gBattleAnimTarget, 1, &sprite->x, &sprite->y);
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->x, &sprite->y);
     }
 
     sprite->y += 32;
@@ -274,7 +274,7 @@ void AnimMoveTwisterParticle(struct Sprite* sprite)
     sprite->callback = AnimMoveTwisterParticle_Step;
 }
 
-static void AnimMoveTwisterParticle_Step(struct Sprite* sprite)
+static void AnimMoveTwisterParticle_Step(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0xFF)
     {
