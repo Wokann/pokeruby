@@ -1647,49 +1647,49 @@ static bool8 BufferTradeParties(void)
     return FALSE;
 }
 
-static void sub_8049088(void)
+static void PrintIsThisTradeOkay(void)
 {
-    u8 string[28];
-    StringCopy(string, gTradeText_TradeOkayPrompt);
-    DrawBottomRowText(string, BG_CHAR_ADDR(4) + gUnknown_03004824->unk_007e * 32, 20);
+    u8 message[28];
+    StringCopy(message, gTradeText_TradeOkayPrompt);
+    DrawBottomRowText(message, BG_CHAR_ADDR(4) + gUnknown_03004824->unk_007e * 32, 20);
 }
 
-static void sub_80490BC(u8 mpId, u8 a1)
+static void Leader_ReadLinkBuffer(u8 mpId, u8 status)
 {
-    if (a1 & 1)
+    if (status & 1)
     {
         switch (gBlockRecvBuffer[mpId][0])
         {
-            case 0xeeaa:
+            case LINKCMD_REQUEST_CANCEL:
                 gUnknown_03004824->unk_0084 = 2;
                 break;
-            case 0xaabb:
+            case LINKCMD_READY_TO_TRADE:
                 gUnknown_03004824->unk_0084 = 1;
                 break;
-            case 0xbbbb:
+            case LINKCMD_INIT_BLOCK:
                 gUnknown_03004824->unk_0086 = 1;
                 break;
-            case 0xbbcc:
+            case LINKCMD_READY_CANCEL_TRADE:
                 gUnknown_03004824->unk_0086 = 2;
                 break;
         }
         ResetBlockReceivedFlag(0);
     }
-    if (a1 & 2)
+    if (status & 2)
     {
         switch (gBlockRecvBuffer[1][0])
         {
-            case 0xeeaa:
+            case LINKCMD_REQUEST_CANCEL:
                 gUnknown_03004824->unk_0085 = 2;
                 break;
-            case 0xaabb:
-                gUnknown_03004824->unk_008a = gBlockRecvBuffer[1][1] + 6;
+            case LINKCMD_READY_TO_TRADE:
+                gUnknown_03004824->unk_008a = gBlockRecvBuffer[1][1] + PARTY_SIZE;
                 gUnknown_03004824->unk_0085 = 1;
                 break;
-            case 0xbbbb:
+            case LINKCMD_INIT_BLOCK:
                 gUnknown_03004824->unk_0087 = 1;
                 break;
-            case 0xbbcc:
+            case LINKCMD_READY_CANCEL_TRADE:
                 gUnknown_03004824->unk_0087 = 2;
                 break;
         }
@@ -1697,32 +1697,32 @@ static void sub_80490BC(u8 mpId, u8 a1)
     }
 }
 
-static void sub_80491E4(u8 mpId, u8 status)
+static void Follower_ReadLinkBuffer(u8 mpId, u8 status)
 {
     if (status & 1)
     {
         switch (gBlockRecvBuffer[0][0])
         {
-            case 0xeebb:
+            case LINKCMD_BOTH_CANCEL_TRADE:
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
                 sub_804AA0C(4);
                 gUnknown_03004824->unk_007b = 11;
                 break;
-            case 0xeecc:
+            case LINKCMD_PARTNER_CANCEL_TRADE:
                 sub_804AA0C(5);
                 gUnknown_03004824->unk_007b = 8;
                 break;
-            case 0xdddd:
-                gUnknown_03004824->unk_008a = gBlockRecvBuffer[0][1] + 6;
+            case LINKCMD_SET_MONS_TO_TRADE:
+                gUnknown_03004824->unk_008a = gBlockRecvBuffer[0][1] + PARTY_SIZE;
                 SetSelectedMon(gUnknown_03004824->tradeMenuCursorPosition);
                 SetSelectedMon(gUnknown_03004824->unk_008a);
                 gUnknown_03004824->unk_007b = 7;
                 break;
-            case 0xccdd:
+            case LINKCMD_START_TRADE:
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
                 gUnknown_03004824->unk_007b = 10;
                 break;
-            case 0xddee:
+            case LINKCMD_PLAYER_CANCEL_TRADE:
                 sub_804AA0C(1);
                 gUnknown_03004824->unk_007b = 8;
                 break;
@@ -1735,14 +1735,14 @@ static void sub_80491E4(u8 mpId, u8 status)
     }
 }
 
-static void sub_80492D8(void)
+static void Leader_HandleCommunication(void)
 {
     if (gUnknown_03004824->unk_0084 && gUnknown_03004824->unk_0085)
     {
         if (gUnknown_03004824->unk_0084 == 1 && gUnknown_03004824->unk_0085 == 1)
         {
             gUnknown_03004824->unk_007b = 6;
-            gUnknown_03004824->linkData[0] = 0xdddd;
+            gUnknown_03004824->linkData[0] = LINKCMD_SET_MONS_TO_TRADE;
             gUnknown_03004824->linkData[1] = gUnknown_03004824->tradeMenuCursorPosition;
             sub_804AADC(5, 0);
             gUnknown_03004824->unk_0084 = gUnknown_03004824->unk_0085 = 0;
@@ -1750,7 +1750,7 @@ static void sub_80492D8(void)
         else if (gUnknown_03004824->unk_0084 == 1 && gUnknown_03004824->unk_0085 == 2)
         {
             sub_804AA0C(1);
-            gUnknown_03004824->linkData[0] = 0xeecc;
+            gUnknown_03004824->linkData[0] = LINKCMD_PARTNER_CANCEL_TRADE;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             gUnknown_03004824->unk_0086 = gUnknown_03004824->unk_0087 = 0;
@@ -1760,7 +1760,7 @@ static void sub_80492D8(void)
         else if (gUnknown_03004824->unk_0084 == 2 && gUnknown_03004824->unk_0085 == 1)
         {
             sub_804AA0C(5);
-            gUnknown_03004824->linkData[0] = 0xddee;
+            gUnknown_03004824->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             gUnknown_03004824->unk_0086 = gUnknown_03004824->unk_0087 = 0;
@@ -1769,7 +1769,7 @@ static void sub_80492D8(void)
         }
         else if (gUnknown_03004824->unk_0084 == 2 && gUnknown_03004824->unk_0085 == 2)
         {
-            gUnknown_03004824->linkData[0] = 0xeebb;
+            gUnknown_03004824->linkData[0] = LINKCMD_BOTH_CANCEL_TRADE;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
@@ -1781,7 +1781,7 @@ static void sub_80492D8(void)
     {
         if (gUnknown_03004824->unk_0086 == 1 && gUnknown_03004824->unk_0087 == 1)
         {
-            gUnknown_03004824->linkData[0] = 0xccdd;
+            gUnknown_03004824->linkData[0] = LINKCMD_START_TRADE;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             gUnknown_03004824->unk_0086 = 0;
@@ -1791,7 +1791,7 @@ static void sub_80492D8(void)
         if (gUnknown_03004824->unk_0086 == 2 || gUnknown_03004824->unk_0087 == 2)
         {
             sub_804AA0C(1);
-            gUnknown_03004824->linkData[0] = 0xddee;
+            gUnknown_03004824->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             gUnknown_03004824->unk_0086 = 0;
@@ -1808,13 +1808,13 @@ static void CB1_UpdateLink(void)
     if ((status = GetBlockReceivedStatus()))
     {
         if (mpId == 0)
-            sub_80490BC(mpId, status);
+            Leader_ReadLinkBuffer(mpId, status);
         else
-            sub_80491E4(mpId, status);
+            Follower_ReadLinkBuffer(mpId, status);
         ResetBlockReceivedFlags();
     }
     if (mpId == 0)
-        sub_80492D8();
+        Leader_HandleCommunication();
 }
 
 static u8 GetNewCursorPosition(u8 oldPosition, u8 direction)
@@ -1860,7 +1860,7 @@ static void SetReadyToTrade(void)
     gUnknown_03004824->unk_007b = 5;
     if (GetMultiplayerId() == 1)
     {
-        gUnknown_03004824->linkData[0] = 0xaabb;
+        gUnknown_03004824->linkData[0] = LINKCMD_READY_TO_TRADE;
         gUnknown_03004824->linkData[1] = gUnknown_03004824->tradeMenuCursorPosition;
         Trade_SendData(gUnknown_03004824);
     }
@@ -2018,13 +2018,13 @@ static void CheckMonsBeforeTrade(void)
     if (CountOtherUsableMons(usableMons, gUnknown_03004824->partyCounts[0], gUnknown_03004824->tradeMenuCursorPosition) == 0)
     {
         sub_804AADC(3, 2);
-        gUnknown_03004824->linkData[0] = 0xbbcc;
+        gUnknown_03004824->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
         sub_804AADC(0xb4, 0);
     }
     else
     {
         sub_804AADC(3, 1);
-        gUnknown_03004824->linkData[0] = 0xbbbb;
+        gUnknown_03004824->linkData[0] = LINKCMD_INIT_BLOCK;
         if (IsLinkTaskFinished())
         {
             Trade_SendData(gUnknown_03004824);
@@ -2056,7 +2056,7 @@ static void CB_ProcessConfirmTradeInput(void)
             sub_804AADC(3, 1);
             if (IsLinkTaskFinished())
             {
-                gUnknown_03004824->linkData[0] = 0xbbcc;
+                gUnknown_03004824->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
                 Trade_SendData(gUnknown_03004824);
             }
         }
@@ -2069,7 +2069,7 @@ static void CB_ProcessConfirmTradeInput(void)
         {
             gUnknown_03004824->unk_007c = Menu_MoveCursor(+1);
         }
-        gUnknown_03004824->linkData[0] = 0xbbcc;
+        gUnknown_03004824->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
         Trade_SendData(gUnknown_03004824);
         gUnknown_03004824->unk_007b = 100;
     }
@@ -2093,7 +2093,7 @@ static void CB_ProcessCancelTradeInput(void)
         if (Menu_GetCursorPos() == 0)
         {
             sub_804AA0C(4);
-            gUnknown_03004824->linkData[0] = 0xeeaa;
+            gUnknown_03004824->linkData[0] = LINKCMD_REQUEST_CANCEL;
             gUnknown_03004824->linkData[1] = 0;
             sub_804AADC(5, 0);
             gSprites[gUnknown_03004824->tradeMenuCursorSpriteIdx].invisible = TRUE;
@@ -2125,7 +2125,7 @@ static void CB_PrintIsThisTradeOkay(void)
 {
     if (gUnknown_03004824->unk_0080[0] == 5 && gUnknown_03004824->unk_0080[1] == 5)
     {
-        sub_8049088();
+        PrintIsThisTradeOkay();
         gUnknown_03004824->unk_007b = 14;
     }
 }
