@@ -185,7 +185,7 @@ static void sub_804A96C(struct UnkStructD *, u8, u8, const u16 *, u8, u8, u16);
 void BufferMovesString(u8 *, u8, u8);
 void PrintLevelAndGender(u8, u8, u8, u8, u8, u8);
 static void sub_804D7AC(struct Sprite *);
-static bool8 sub_804C29C(void);
+static bool8 DoTradeAnim_Cable(void);
 static void sub_804DC18(void);
 static u8 TradeGetMultiplayerId(void);
 static void sub_804E144(void);
@@ -4190,7 +4190,7 @@ static void HandleLinkDataSend(void)
 
 static void CB2_InGameTrade(void)
 {
-    sub_804C29C();
+    DoTradeAnim_Cable();
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -4286,9 +4286,9 @@ static void SetTradeSequenceBgGpuRegs(u8 state)
     }
 }
 
-static void sub_804C0F8(u8 a0)
+static void UpdateTradeBGAffinePan(u8 direction)
 {
-    if (a0 == 0)
+    if (direction == 0)
     {
         if (gUnknown_03004828->bg1vofs < 0x10a)
         {
@@ -4344,7 +4344,7 @@ static void BufferTradeSceneStrings(void)
     }
 }
 
-static bool8 sub_804C29C(void)
+static bool8 DoTradeAnim_Cable(void)
 {
     u16 evoTarget;
 
@@ -4475,13 +4475,13 @@ static bool8 sub_804C29C(void)
             {
                 gUnknown_03004828->unk_00c4 = 200;
             }
-            sub_804C0F8(0);
+            UpdateTradeBGAffinePan(0);
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
             break;
         case 200:
             gSprites[gUnknown_03004828->unk_00ba].y -= 2;
             gSprites[gUnknown_03004828->unk_00bb].y -= 2;
-            sub_804C0F8(0);
+            UpdateTradeBGAffinePan(0);
             if (gSprites[gUnknown_03004828->unk_00ba].y < -8)
             {
                 gUnknown_03004828->unk_00c4 = 29;
@@ -4603,14 +4603,14 @@ static bool8 sub_804C29C(void)
             break;
         case 42:
             REG_DISPCNT = DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON;
-            sub_804C0F8(1);
+            UpdateTradeBGAffinePan(1);
             if (!gPaletteFade.active)
             {
                 gUnknown_03004828->unk_00c4 ++;
             }
             break;
         case 43:
-            sub_804C0F8(1);
+            UpdateTradeBGAffinePan(1);
             gSprites[gUnknown_03004828->unk_00ba].y2 += 3;
             gSprites[gUnknown_03004828->unk_00bb].y2 += 3;
             if (gSprites[gUnknown_03004828->unk_00ba].y2 + gSprites[gUnknown_03004828->unk_00ba].y == 64)
@@ -4619,7 +4619,7 @@ static bool8 sub_804C29C(void)
             }
             break;
         case 44:
-            sub_804C0F8(1);
+            UpdateTradeBGAffinePan(1);
             if ((gUnknown_03004828->bg1vofs += 2) > 0x13c)
             {
                 gUnknown_03004828->bg1vofs = 0x13c;
@@ -5023,7 +5023,7 @@ void CreateInGameTradePokemon(void)
 
 void sub_804DB84(void)
 {
-    if (sub_804C29C() == TRUE)
+    if (DoTradeAnim_Cable() == TRUE)
     {
         DestroySprite(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[0]]);
         FreeSpriteOamMatrix(&gSprites[gUnknown_03004828->pokePicSpriteIdxs[1]]);
