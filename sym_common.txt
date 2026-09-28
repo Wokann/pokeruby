@@ -152,7 +152,7 @@ SYMBOL(gEggHatchData, 4)
 SYMBOL(gFlashMemoryPresent, 4)
 
 // trade.c
-SYMBOL(gUnknown_03004824, 4)
+SYMBOL(sTradeMenu, 4)
 SYMBOL(gUnknown_03004828, 4)
 . += 0x4;
 
