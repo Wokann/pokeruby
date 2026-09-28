@@ -87,19 +87,19 @@ enum {
 };
 
 struct InGameTrade {
-    /*0x00*/ u8 name[11];
+    /*0x00*/ u8 nickname[11];
     /*0x0C*/ u16 species;
     /*0x0E*/ u8 ivs[6];
-    /*0x14*/ bool8 secondAbility;
+    /*0x14*/ bool8 abilityNum;
     /*0x18*/ u32 otId;
-    /*0x1C*/ u8 stats[5];
+    /*0x1C*/ u8 conditions[5];
     /*0x24*/ u32 personality;
     /*0x28*/ u16 heldItem;
     /*0x2A*/ u8 mailNum;
     /*0x2B*/ u8 otName[11];
     /*0x36*/ u8 otGender;
     /*0x37*/ u8 sheen;
-    /*0x38*/ u16 playerSpecies;
+    /*0x38*/ u16 requestedSpecies;
 };
 
 struct UnkStructC {
@@ -882,7 +882,7 @@ const union AffineAnimCmd *const sAffineAnims_CrossingMonPics[] = {
     sAffineAnim_CrossingMonPic
 };
 
-const struct InGameTrade gIngameTrades[] = {
+const struct InGameTrade sIngameTrades[] = {
 #if ENGLISH
     {
         _("MAKIT"), SPECIES_MAKUHITA,
@@ -946,7 +946,7 @@ const struct InGameTrade gIngameTrades[] = {
 #endif
 };
 
-const u16 gIngameTradeMail[][10] = {
+const u16 sIngameTradeMail[][10] = {
 #if ENGLISH
     {
         EC_POKEMON(PIKACHU),
@@ -998,7 +998,7 @@ const u16 gIngameTradeMail[][10] = {
 #endif
 };
 
-const s8 gTradeBallVerticalVelocityTable[] = {
+const s8 sTradeBallVerticalVelocityTable[] = {
     0,  0,  1,  0,
     1,  0,  1,  1,
     1,  1,  2,  2,
@@ -4370,9 +4370,9 @@ static void BufferTradeSceneStrings(void)
     }
     else
     {
-        ingameTrade = &gIngameTrades[gSpecialVar_0x8004];
+        ingameTrade = &sIngameTrades[gSpecialVar_0x8004];
         StringCopy(gStringVar1, ingameTrade->otName);
-        StringCopy10(gStringVar3, ingameTrade->name);
+        StringCopy10(gStringVar3, ingameTrade->nickname);
         GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, string);
         StringCopy10(gStringVar2, string);
     }
@@ -4904,7 +4904,7 @@ static void SpriteCB_BouncingPokeball(struct Sprite *sprite)
 
 static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite)
 {
-    sprite->y2 += gTradeBallVerticalVelocityTable[sprite->data[0]];
+    sprite->y2 += sTradeBallVerticalVelocityTable[sprite->data[0]];
     if (sprite->data[0] == 22)
         PlaySE(SE_BALL_BOUNCE_1);
     if (++ sprite->data[0] == 44)
@@ -4922,7 +4922,7 @@ static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite)
         StartSpriteAffineAnim(sprite, 1);
     if (++ sprite->data[1] > 20)
     {
-        sprite->y2 -= gTradeBallVerticalVelocityTable[sprite->data[0]];
+        sprite->y2 -= sTradeBallVerticalVelocityTable[sprite->data[0]];
         if (++ sprite->data[0] == 23)
         {
             DestroySprite(sprite);
@@ -4950,7 +4950,7 @@ static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite)
             PlaySE(SE_BALL_BOUNCE_3);
         if (sprite->data[0] == 0x6b)
             PlaySE(SE_BALL_BOUNCE_4);
-        sprite->y2 += gTradeBallVerticalVelocityTable[sprite->data[0]];
+        sprite->y2 += sTradeBallVerticalVelocityTable[sprite->data[0]];
         if (++sprite->data[0] == 0x6c)
             sprite->callback = SpriteCallbackDummy;
     }
@@ -4958,16 +4958,16 @@ static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite)
 
 u16 GetInGameTradeSpeciesInfo(void)
 {
-    const struct InGameTrade *inGameTrade = &gIngameTrades[gSpecialVar_0x8004];
-    StringCopy(gStringVar1, gSpeciesNames[inGameTrade->playerSpecies]);
+    const struct InGameTrade *inGameTrade = &sIngameTrades[gSpecialVar_0x8004];
+    StringCopy(gStringVar1, gSpeciesNames[inGameTrade->requestedSpecies]);
     StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
-    return inGameTrade->playerSpecies;
+    return inGameTrade->requestedSpecies;
 }
 
 static void BufferInGameTradeMonName(void)
 {
     u8 nickname[32];
-    const struct InGameTrade *inGameTrade = &gIngameTrades[gSpecialVar_0x8004];
+    const struct InGameTrade *inGameTrade = &sIngameTrades[gSpecialVar_0x8004];
     GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, nickname);
     StringCopy10(gStringVar1, nickname);
     StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
@@ -4975,7 +4975,7 @@ static void BufferInGameTradeMonName(void)
 
 static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade)
 {
-    const struct InGameTrade *inGameTrade = &gIngameTrades[whichInGameTrade];
+    const struct InGameTrade *inGameTrade = &sIngameTrades[whichInGameTrade];
     u8 level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
 
     struct MailStruct mail;
@@ -4991,15 +4991,15 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     SetMonData(mon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
     SetMonData(mon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
     SetMonData(mon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
-    SetMonData(mon, MON_DATA_NICKNAME, inGameTrade->name);
+    SetMonData(mon, MON_DATA_NICKNAME, inGameTrade->nickname);
     SetMonData(mon, MON_DATA_OT_NAME, inGameTrade->otName);
     SetMonData(mon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
-    SetMonData(mon, MON_DATA_ALT_ABILITY, &inGameTrade->secondAbility);
-    SetMonData(mon, MON_DATA_BEAUTY, &inGameTrade->stats[1]);
-    SetMonData(mon, MON_DATA_CUTE, &inGameTrade->stats[2]);
-    SetMonData(mon, MON_DATA_COOL, &inGameTrade->stats[0]);
-    SetMonData(mon, MON_DATA_SMART, &inGameTrade->stats[3]);
-    SetMonData(mon, MON_DATA_TOUGH, &inGameTrade->stats[4]);
+    SetMonData(mon, MON_DATA_ALT_ABILITY, &inGameTrade->abilityNum);
+    SetMonData(mon, MON_DATA_BEAUTY, &inGameTrade->conditions[1]);
+    SetMonData(mon, MON_DATA_CUTE, &inGameTrade->conditions[2]);
+    SetMonData(mon, MON_DATA_COOL, &inGameTrade->conditions[0]);
+    SetMonData(mon, MON_DATA_SMART, &inGameTrade->conditions[3]);
+    SetMonData(mon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
     SetMonData(mon, MON_DATA_SHEEN, &inGameTrade->sheen);
     SetMonData(mon, MON_DATA_MET_LOCATION, &metLocation);
 
@@ -5026,7 +5026,7 @@ static void GetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade
 
     for (i = 0; i < 9; i++)
     {
-        mail->words[i] = gIngameTradeMail[trade->mailNum][i];
+        mail->words[i] = sIngameTradeMail[trade->mailNum][i];
     }
 
     StringCopy(mail->playerName, trade->otName);
