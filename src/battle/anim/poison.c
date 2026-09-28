@@ -297,7 +297,7 @@ static void AnimBubbleEffect(struct Sprite *sprite)
     {
         SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->x, &sprite->y);
 
-        if (GetBattlerSide(gBattleAnimAttacker))
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
             gBattleAnimArgs[0] = -gBattleAnimArgs[0];
 
         sprite->x += gBattleAnimArgs[0];
