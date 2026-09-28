@@ -172,8 +172,8 @@ static void DoQueuedActions(void);
 static void DrawSelectedMonScreen(u8);
 static void PrintPartyLevelsAndGenders(u8);
 static void MarkTradeTilemapForUpload(struct TradeTilemapBuffer *);
-static void sub_804A9F4(u8);
-static void sub_804AA00(u8);
+static void Task_DrawSelectionSummary(u8);
+static void Task_DrawSelectionTrade(u8);
 static void SetSelectedMon(u8);
 static void QueueAction(u16, u8);
 static void PrintTradePartnerPartyNicknames(void);
@@ -499,7 +499,7 @@ const u8 gTradeMenuNameSpriteCoords[][2][2] = {
     }
 };
 
-const u8 *const gUnknown_0820C2F0[] = {
+const u8 *const sTradeMessages[] = {
     TradeText_LinkStandby,
     TradeText_TradeCancelled,
     TradeText_OnlyPoke,
@@ -517,9 +517,9 @@ const u8 gTradeMessageWindowRects[][4] = {
     {7, 7, 23, 12}
 };
 
-const struct MenuAction2 gUnknown_0820C320[] = {
-    {TradeText_Summary2, sub_804A9F4},
-    {TradeText_Trade2, sub_804AA00}
+const struct MenuAction2 sSelectTradeMonActions[] = {
+    {TradeText_Summary2, Task_DrawSelectionSummary},
+    {TradeText_Trade2, Task_DrawSelectionTrade}
 };
 
 const u8 gUnknown_0820C330[][2] = {
@@ -1895,7 +1895,7 @@ static void CB_ProcessMenuInput(void)
         if (sTradeMenu->tradeMenuCursorPosition < PARTY_SIZE)
         {
             TextWindow_DrawStdFrame(&sTradeMenu->window, 18, 14, 28, 19);
-            Menu_PrintItems(19, 15, 2, (const struct MenuAction *)gUnknown_0820C320);
+            Menu_PrintItems(19, 15, 2, (const struct MenuAction *)sSelectTradeMonActions);
             InitMenu(0, 19, 15, 2, 0, 9);
             sTradeMenu->unk_007b = 1;
         }
@@ -3145,12 +3145,12 @@ static void CopyTradeTilemapToBufferAndRequestUpload(struct TradeTilemapBuffer *
 }
 #endif
 
-static void sub_804A9F4(u8 unused)
+static void Task_DrawSelectionSummary(u8 unused)
 {
     Menu_EraseScreen();
 }
 
-static void sub_804AA00(u8 unused)
+static void Task_DrawSelectionTrade(u8 unused)
 {
     Menu_EraseScreen();
 }
@@ -3158,7 +3158,7 @@ static void sub_804AA00(u8 unused)
 static void PrintTradeMessage(u8 messageId)
 {
     TextWindow_DrawStdFrame(&sTradeMenu->window, gTradeMessageWindowRects[messageId][0], gTradeMessageWindowRects[messageId][1], gTradeMessageWindowRects[messageId][2], gTradeMessageWindowRects[messageId][3]);
-    Text_InitWindowAndPrintText(&sTradeMenu->window, gUnknown_0820C2F0[messageId], 0x180 + sTradeMenu->unk_007a, gTradeMessageWindowRects[messageId][0] + 1, gTradeMessageWindowRects[messageId][1] + 1);
+    Text_InitWindowAndPrintText(&sTradeMenu->window, sTradeMessages[messageId], 0x180 + sTradeMenu->unk_007a, gTradeMessageWindowRects[messageId][0] + 1, gTradeMessageWindowRects[messageId][1] + 1);
 }
 
 static void InitTradeMenuActionQueue(void)
