@@ -35,13 +35,13 @@ EWRAM_DATA u8 gRegionMapLinkLandmarkPrintState[4] = {};
 EWRAM_DATA u16 gPokenavRibbonDescriptionId = 0;
 
 extern const u8 gPokenavTrainerEyesList_Pal[];
-extern const u16 gUnknown_08E9F9E8[];
+extern const u16 gPokenavTrainerEyesListBg_Pal[];
 extern const u16 gPokenavRibbonsList_Pal[];
-extern const u8 gUnknown_08E9FC64[];
+extern const u8 gPokenavList_Tilemap[];
 extern const u8 gPokenavTrainerEyesMisc_Gfx[];
-extern const u8 gUnknown_08E9FD64[];
-extern const u8 gUnknown_08E9FE54[];
-extern const u8 gUnknown_08E9FD1C[];
+extern const u8 gPokenavTrainerEyesListBottom_Tilemap[];
+extern const u8 gPokenavTrainerEyesListTop_Tilemap[];
+extern const u8 gPokenavListInfo_Tilemap[];
 extern const u16 gPokenavConditionSearch2_Pal[];
 extern const u8 gPokenavTrainerEyesMisc_Pal[];
 extern const u16 gPokenavList_Pal[];
@@ -62,16 +62,16 @@ extern const u8 *const gPokenavMainMenuDescriptions[];
 extern const u8 *const gPokenavConditionMenuDescriptions[];
 extern const u8 *const gPokenavConditionSearchDescriptions[];
 extern u8 *const gPokenavTileBuffer;
-extern const u8 gUnknown_083DFEEC[];
-extern const u8 gUnknown_083E005C[];
-extern const u8 gUnknown_083E007C[];
+extern const u8 gPokenavMenuBackground_Gfx[];
+extern const u8 gPokenavBg3Scroll_Gfx[];
+extern const u8 gPokenavBg3Scroll_Tilemap[];
 extern const u8 gPokenavOutlineTilemap[];
 extern const u8 gPokenavOutlineTiles[];
 extern const u8 gPokenavOutlinePalette[];
-extern const u8 gUnknown_083DFECC[];
-extern const u8 gUnknown_083DFF8C[];
+extern const u8 gPokenavMenuBackground_Pal[];
+extern const u8 gPokenavMenuBackground_Tilemap[];
 extern const u8 gPokenavHoennMapMisc_Gfx[];
-extern const u8 gUnknown_08E99FB0[];
+extern const u8 gPokenavHoennMap_Tilemap[];
 extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u16 gPokenavHoennMap1_Pal[];
 extern void (*const gPokenavListRowPrinters[])(u16, u16);
@@ -95,8 +95,8 @@ extern const u16 gPokenavRibbonsMonInfoHeader_Pal[];
 extern const u8 gPokenavMenuOptions_Gfx[];
 extern const u8 gPokenavConditionMenu_Gfx[];
 extern const u8 gPokenavConditionSearch_Gfx[];
-extern const struct SpriteTemplate gSpriteTemplate_83E4454;
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83E4450[];
+extern const struct SpriteTemplate gPokenavMenuOptionSpriteTemplate;
+extern const union AffineAnimCmd *const gPokenavMenuOptionZoomAffineAnimTable[];
 extern const u16 gPokenavMenuOptionBlendAlphas[];
 extern const u16 gPokenavMenuOptions1_Pal[];
 extern const u16 gPokenavMenuOptions2_Pal[];
@@ -188,7 +188,7 @@ bool8 LoadPokenavBackgroundStep(void)
         LZ77UnCompVram(gPokenavHoennMapMisc_Gfx, (void *)VRAM + 0xC000);
         break;
     case 1:
-        LZ77UnCompVram(gUnknown_08E99FB0, (void *)VRAM + 0xD800);
+        LZ77UnCompVram(gPokenavHoennMap_Tilemap, (void *)VRAM + 0xD800);
         break;
     case 2:
         LoadPalette(gPokenavHoennMap1_Pal, 0x10, 0x20);
@@ -330,16 +330,16 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
             return TRUE;
         break;
     case 4:
-    DmaCopy16Defvars(3, gUnknown_083DFEEC, (void *)VRAM + 0x5000, 0xA0);
+    DmaCopy16Defvars(3, gPokenavMenuBackground_Gfx, (void *)VRAM + 0x5000, 0xA0);
         break;
     case 5:
-        LZ77UnCompVram(gUnknown_083DFF8C, (void *)VRAM + 0xF800);
+        LZ77UnCompVram(gPokenavMenuBackground_Tilemap, (void *)VRAM + 0xF800);
         break;
     case 6:
-    DmaCopy16Defvars(3, gUnknown_083E005C, (void *)VRAM + 0x8000, 0x20);
+    DmaCopy16Defvars(3, gPokenavBg3Scroll_Gfx, (void *)VRAM + 0x8000, 0x20);
         break;
     case 7:
-        LZ77UnCompVram(gUnknown_083E007C, (void *)VRAM + 0xE000);
+        LZ77UnCompVram(gPokenavBg3Scroll_Tilemap, (void *)VRAM + 0xE000);
         break;
     case 8:
         LZ77UnCompVram(gPokenavOutlineTilemap, (void *)VRAM + 0xE800);
@@ -349,7 +349,7 @@ bool8 LoadPokenavMenuGfxStep(u8 menuType)
         break;
     case 10:
         SetPokenavMenuPalette(menuType);
-        LoadPalette(gUnknown_083DFECC, 0xF0, 0x20);
+        LoadPalette(gPokenavMenuBackground_Pal, 0xF0, 0x20);
         LoadPalette(gPokenavOutlinePalette, 0x40, 0x20);
         StartPokenavBg3Scroll();
         break;
@@ -985,10 +985,10 @@ bool8 LoadPokenavListScreenStep(void)
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E70D4);
+        Text_LoadWindowTemplate(&gPokenavListWindowTemplate);
         break;
     case 2:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E70D4);
+        MultistepInitMenuWindowBegin(&gPokenavListWindowTemplate);
         break;
     case 3:
         if (!MultistepInitMenuWindowContinue())
@@ -1000,7 +1000,7 @@ bool8 LoadPokenavListScreenStep(void)
         Menu_EraseScreen();
         break;
     case 5:
-        LZ77UnCompVram(gUnknown_08E9FC64, (void *)VRAM + 0xE800);
+        LZ77UnCompVram(gPokenavList_Tilemap, (void *)VRAM + 0xE800);
         break;
     case 6:
         LZ77UnCompVram(gPokenavConditionSearch2_Gfx, (void *)VRAM + 0x8000);
@@ -1030,8 +1030,8 @@ bool8 LoadPokenavListScreenStep(void)
         }
         else
         {
-            LoadPalette(gUnknown_08E9F9E8, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = *(pointer = &gUnknown_08E9F9E8[5]);
+            LoadPalette(gPokenavTrainerEyesListBg_Pal, 0x30, 0x20);
+            gPlttBufferUnfaded[0] = *(pointer = &gPokenavTrainerEyesListBg_Pal[5]);
             LoadPalette(gPokenavTrainerEyesList_Pal, 0x50, 0x20);
             LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
             LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
@@ -1042,12 +1042,12 @@ bool8 LoadPokenavListScreenStep(void)
     case 8:
         if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
-            CopyTilemapRect((void *)VRAM + 0xE800, 0, 5, gUnknown_08E9FD1C, 0, 0, 9, 4, 9);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 5, gPokenavListInfo_Tilemap, 0, 0, 9, 4, 9);
         }
         else
         {
-            CopyTilemapRect((void *)VRAM + 0xE800, 0, 4, gUnknown_08E9FE54, 0, 0, 12, 10, 12);
-            CopyTilemapRect((void *)VRAM + 0xE800, 0, 8, gUnknown_08E9FD64, 0, 0, 12, 10, 12);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 4, gPokenavTrainerEyesListTop_Tilemap, 0, 0, 12, 10, 12);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 8, gPokenavTrainerEyesListBottom_Tilemap, 0, 0, 12, 10, 12);
         }
         break;
     case 9:
@@ -1162,7 +1162,7 @@ void PrintPokenavListSelectionInfo(void)
         return;
     }
 
-    BasicInitMenuWindow(&gWindowTemplate_81E710C);
+    BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
     Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
 }
 
@@ -1170,7 +1170,7 @@ void PrintTrainerEyesListStats(u8 drawStep)
 {
     u32 numTrainerBattles;
 
-    BasicInitMenuWindow(&gWindowTemplate_81E710C);
+    BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
     switch (drawStep)
     {
     case 0:
@@ -1211,7 +1211,7 @@ void PrintTrainerEyesListStats(u8 drawStep)
 
 void ClearTrainerEyesListStats(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E710C);
+    BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
     Menu_EraseWindowRect(0, 9, 11, 16);
 }
 
@@ -1261,7 +1261,7 @@ void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 {
     u8 displayMode = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
     BufferPokenavMonListRowText(gPokenavStructPtr->unk8788, listIndex, displayMode);
-    BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+    BasicInitMenuWindow(&gPokenavListWindowTemplate);
     Menu_PrintText(gPokenavStructPtr->unk8788, 13, tilemapRow);
 }
 
@@ -1269,7 +1269,7 @@ void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 {
     BufferTrainerEyesListRowText(gPokenavStructPtr->unk8788, listIndex);
     tilemapRow &= 0x1F;
-    BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+    BasicInitMenuWindow(&gPokenavListWindowTemplate);
     Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);
     if (listIndex < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
         CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesRematchIconTilemap, 0, 0, 1, 2, 1);
@@ -1299,7 +1299,7 @@ bool8 EraseTrainerEyesListStep(void)
             tilemapRow = (gPokenavStructPtr->listTilemapRow + (gPokenavStructPtr->trainerEyesRowStep * 2)) & 0x1F;
             if (gPokenavStructPtr->trainerEyesRowStep != gPokenavStructPtr->listCursorRow)
             {
-                BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+                BasicInitMenuWindow(&gPokenavListWindowTemplate);
                 Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
             }
 
@@ -1312,7 +1312,7 @@ bool8 EraseTrainerEyesListStep(void)
         else
         {
             u16 row;
-            BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+            BasicInitMenuWindow(&gPokenavListWindowTemplate);
             tilemapRow = (gPokenavStructPtr->listTilemapRow + 16) & 0x1F;
             for (row = 0; row < 8; row++)
             {
@@ -1344,7 +1344,7 @@ bool8 RestoreTrainerEyesListStep(void)
     if (++gPokenavStructPtr->unk306 > 1)
     {
         gPokenavStructPtr->unk306 = 0;
-        BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+        BasicInitMenuWindow(&gPokenavListWindowTemplate);
         PrintTrainerEyesListRow(gPokenavStructPtr->unk8770 + gPokenavStructPtr->trainerEyesRowStep,
                                 gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->trainerEyesRowStep * 2);
 
@@ -1388,7 +1388,7 @@ bool8 PrintTrainerEyesDescriptionStep(void)
     if (++gPokenavStructPtr->unk306 < 2)
         return TRUE;
     gPokenavStructPtr->unk306 = 0;
-    BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+    BasicInitMenuWindow(&gPokenavListWindowTemplate);
     tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
 #ifndef NONMATCHING
     asm("":::"r2"); // fakematch
@@ -1444,7 +1444,7 @@ bool8 EraseTrainerEyesDescriptionStep(void)
     {
         gPokenavStructPtr->unk306 = 0;
         tilemapRow = (gPokenavStructPtr->listTilemapRow + 2 + gPokenavStructPtr->trainerEyesRowStep * 2) & 0x1F;
-        BasicInitMenuWindow(&gWindowTemplate_81E70D4);
+        BasicInitMenuWindow(&gPokenavListWindowTemplate);
         Menu_EraseWindowRect(12, tilemapRow, 31, tilemapRow + 1);
         gPokenavStructPtr->trainerEyesRowStep++;
     }
@@ -1474,7 +1474,7 @@ bool8 UpdateTrainerEyesDetailScroll(void)
 void PrintTrainerEyesLocation(u8 listIndex)
 {
     GetMapName(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
-    BasicInitMenuWindow(&gWindowTemplate_81E710C);
+    BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
     TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->unk8788);
     AlignStringInMenuWindow(gPokenavStructPtr->unkD138, gPokenavStructPtr->unk8788, 88, 2);
     Menu_PrintText(gPokenavStructPtr->unkD138, 0, 5);
@@ -1494,10 +1494,10 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E70B8);
+        Text_LoadWindowTemplate(&gPokenavRibbonsSummaryWindowTemplate);
         break;
     case 2:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E70B8);
+        MultistepInitMenuWindowBegin(&gPokenavRibbonsSummaryWindowTemplate);
         break;
     case 3:
         if (!MultistepInitMenuWindowContinue())
@@ -1960,7 +1960,7 @@ bool8 LoadPokenavMenuOptionSpritesStep(u8 menuType)
 
             for (j = 0; j < 4; j++)
             {
-                spriteId = CreateSprite(&gSpriteTemplate_83E4454, j * 32 + 256, (height * i) + topOffset, 0);
+                spriteId = CreateSprite(&gPokenavMenuOptionSpriteTemplate, j * 32 + 256, (height * i) + topOffset, 0);
                 if (spriteId == MAX_SPRITES)
                     return FALSE;
                 gPokenavStructPtr->menuOptionSprites[i][j] = &gSprites[spriteId];
@@ -2051,7 +2051,7 @@ bool8 UpdateMenuOptionSpritesSlideOut(void)
             {
                 struct Sprite *sprite = gPokenavStructPtr->menuOptionSprites[gPokenavStructPtr->menuCursorPos][j];
                 sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
-                sprite->affineAnims = gSpriteAffineAnimTable_83E4450;
+                sprite->affineAnims = gPokenavMenuOptionZoomAffineAnimTable;
                 InitSpriteAffineAnim(sprite);
                 sprite->data[4] = j * 4 - 6;
                 sprite->data[4] /= 2;
@@ -3558,7 +3558,7 @@ void BuildTrainerEyesNameSpriteGfx(u8 *dst, u8 *text)
     tileBuffer = gPokenavTileBuffer;
     DmaFill16(3, 0x1111, tileBuffer, 0x280);
     DmaFill16Defvars(3, 0x1111, 0x400 + tileBuffer, 0x280);
-    Text_InitWindow8004E3C(&gWindowTemplate_81E70F0, tileBuffer, text);
+    Text_InitWindow8004E3C(&gPokenavTrainerEyesNameWindowTemplate, tileBuffer, text);
 
     DmaClear16(3, tileBuffer + 0x220, 0x60);
     DmaClear16(3, tileBuffer + 0x620, 0x60);

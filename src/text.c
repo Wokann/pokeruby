@@ -1354,7 +1354,7 @@ const struct WindowTemplate gWindowTemplate_81E709C =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E70B8 =
+const struct WindowTemplate gPokenavRibbonsSummaryWindowTemplate =
 {
     2, // BG number
     0, // BG character base block
@@ -1375,7 +1375,7 @@ const struct WindowTemplate gWindowTemplate_81E70B8 =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E70D4 =
+const struct WindowTemplate gPokenavListWindowTemplate =
 {
     3, // BG number
     0, // BG character base block
@@ -1396,7 +1396,7 @@ const struct WindowTemplate gWindowTemplate_81E70D4 =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E70F0 =
+const struct WindowTemplate gPokenavTrainerEyesNameWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -1417,7 +1417,7 @@ const struct WindowTemplate gWindowTemplate_81E70F0 =
     NULL, // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E710C =
+const struct WindowTemplate gPokenavListInfoWindowTemplate =
 {
     0, // BG number
     0, // BG character base block

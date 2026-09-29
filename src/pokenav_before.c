@@ -108,19 +108,19 @@ extern u16 gKeyRepeatStartDelay;
 // rodata?
 u8 *const gPokenavTileBuffer = gTileBuffer;
 
-const u8 gUnknown_083DFECC[] = INCBIN_U8("graphics/pokenav/83DFECC.gbapal");
+const u8 gPokenavMenuBackground_Pal[] = INCBIN_U8("graphics/pokenav/83DFECC.gbapal");
 
-const u8 gUnknown_083DFEEC[] = INCBIN_U8("graphics/pokenav/83DFEEC.4bpp");
-const u8 gUnknown_083DFF8C[] = INCBIN_U8("graphics/pokenav/83DFF8C.bin.lz");
+const u8 gPokenavMenuBackground_Gfx[] = INCBIN_U8("graphics/pokenav/83DFEEC.4bpp");
+const u8 gPokenavMenuBackground_Tilemap[] = INCBIN_U8("graphics/pokenav/83DFF8C.bin.lz");
 const u16 gPokenavMenuPaletteGradientColors[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
 
-const u8 gUnknown_083E005C[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
-const u8 gUnknown_083E007C[] = INCBIN_U8("graphics/pokenav/83E007C.bin.lz");
+const u8 gPokenavBg3Scroll_Gfx[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
+const u8 gPokenavBg3Scroll_Tilemap[] = INCBIN_U8("graphics/pokenav/83E007C.bin.lz");
 const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0124_pal.bin");
 
 const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0144_pal.bin");
 
-const u16 gUnknown_083E0164[] = INCBIN_U16("graphics/pokenav/83E0164.bin");//?
+const u16 gUnusedPokenav1_Pal[] = INCBIN_U16("graphics/pokenav/83E0164.bin");
 
 const u8 gPokenavConditionSearchGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
 const u8 gPokenavPokeblockGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
@@ -131,7 +131,7 @@ const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/conditio
 
 const u16 gPokenavList_Pal[] = INCBIN_U16("graphics/pokenav/83E02B4.gbapal");
 
-const u16 gUnknown_083E02D4[] =  INCBIN_U16("graphics/pokenav/83E02D4.bin");//?
+const u16 gUnusedPokenav2_Pal[] = INCBIN_U16("graphics/pokenav/83E02D4.bin");
 
 const u8 gPokenavTrainerEyesList_Pal[] = INCBIN_U8("graphics/pokenav/83E0314.gbapal");
 const u8 gPokenavTrainerEyesMisc_Pal[] = INCBIN_U8("graphics/pokenav/trainereyes_misc_pal.bin");
@@ -149,7 +149,7 @@ const u8 gPokenavTrainerEyesNoRematchIconTilemap[][8] =
 };
 
 const u16 gPokenavRibbonsSummary_Pal[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
-const u16 gUnknown_083E03C8[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
+const u16 gUnusedPokenav3_Pal[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
 const u8 gPokenavRibbonIcons_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
 const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
 const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
@@ -214,8 +214,8 @@ const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokena
 const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
 const u8 gPokenavConditionSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/condition/sparkle.4bpp");
 const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
-const u8 gUnknown_083E3BC0[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
-const u8 gTiles_083E3BE0[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
+const u8 gUnusedPokenav4_Pal[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
+const u8 gUnusedPokenav_Gfx[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
 
 const u16 gPokenavRibbonIconPalettes[][16] =
 {
@@ -251,7 +251,7 @@ const u16 gPokenavMenuOptionBlendAlphas[] =
     BLDALPHA_BLEND(0, 16),
 };
 
-const struct OamData gOamData_83E4318 = 
+const struct OamData gPokenavMenuOptionOamData =
 {
     .y = 0,
     .affineMode = ST_OAM_AFFINE_OFF,
@@ -268,195 +268,195 @@ const struct OamData gOamData_83E4318 =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_83E4320[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim0[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4328[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim1[] =
 {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4330[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim2[] =
 {
     ANIMCMD_FRAME(16, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4338[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim3[] =
 {
     ANIMCMD_FRAME(24, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4340[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim4[] =
 {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4348[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim5[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4350[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim6[] =
 {
     ANIMCMD_FRAME(48, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4358[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim7[] =
 {
     ANIMCMD_FRAME(56, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4360[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim8[] =
 {
     ANIMCMD_FRAME(64, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4368[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim9[] =
 {
     ANIMCMD_FRAME(72, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4370[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim10[] =
 {
     ANIMCMD_FRAME(80, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4378[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim11[] =
 {
     ANIMCMD_FRAME(88, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4380[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim12[] =
 {
     ANIMCMD_FRAME(96, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4388[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim13[] =
 {
     ANIMCMD_FRAME(104, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4390[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim14[] =
 {
     ANIMCMD_FRAME(112, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E4398[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim15[] =
 {
     ANIMCMD_FRAME(120, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43A0[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim16[] =
 {
     ANIMCMD_FRAME(128, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43A8[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim17[] =
 {
     ANIMCMD_FRAME(136, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43B0[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim18[] =
 {
     ANIMCMD_FRAME(144, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43B8[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim19[] =
 {
     ANIMCMD_FRAME(152, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43C0[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim20[] =
 {
     ANIMCMD_FRAME(160, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43C8[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim21[] =
 {
     ANIMCMD_FRAME(168, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43D0[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim22[] =
 {
     ANIMCMD_FRAME(176, 5),
     ANIMCMD_END,
 };
 
-static const union AnimCmd sSpriteAnim_83E43D8[] = 
+static const union AnimCmd sPokenavMenuOptionSpriteAnim23[] =
 {
     ANIMCMD_FRAME(184, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E43E0[] = 
+const union AnimCmd *const gPokenavMenuOptionSpriteAnimTable[] =
 {
-    sSpriteAnim_83E4320,
-    sSpriteAnim_83E4328,
-    sSpriteAnim_83E4330,
-    sSpriteAnim_83E4338,
-    sSpriteAnim_83E4340,
-    sSpriteAnim_83E4348,
-    sSpriteAnim_83E4350,
-    sSpriteAnim_83E4358,
-    sSpriteAnim_83E4360,
-    sSpriteAnim_83E4368,
-    sSpriteAnim_83E4370,
-    sSpriteAnim_83E4378,
-    sSpriteAnim_83E4380,
-    sSpriteAnim_83E4388,
-    sSpriteAnim_83E4390,
-    sSpriteAnim_83E4398,
-    sSpriteAnim_83E43A0,
-    sSpriteAnim_83E43A8,
-    sSpriteAnim_83E43B0,
-    sSpriteAnim_83E43B8,
-    sSpriteAnim_83E43C0,
-    sSpriteAnim_83E43C8,
-    sSpriteAnim_83E43D0,
-    sSpriteAnim_83E43D8,
+    sPokenavMenuOptionSpriteAnim0,
+    sPokenavMenuOptionSpriteAnim1,
+    sPokenavMenuOptionSpriteAnim2,
+    sPokenavMenuOptionSpriteAnim3,
+    sPokenavMenuOptionSpriteAnim4,
+    sPokenavMenuOptionSpriteAnim5,
+    sPokenavMenuOptionSpriteAnim6,
+    sPokenavMenuOptionSpriteAnim7,
+    sPokenavMenuOptionSpriteAnim8,
+    sPokenavMenuOptionSpriteAnim9,
+    sPokenavMenuOptionSpriteAnim10,
+    sPokenavMenuOptionSpriteAnim11,
+    sPokenavMenuOptionSpriteAnim12,
+    sPokenavMenuOptionSpriteAnim13,
+    sPokenavMenuOptionSpriteAnim14,
+    sPokenavMenuOptionSpriteAnim15,
+    sPokenavMenuOptionSpriteAnim16,
+    sPokenavMenuOptionSpriteAnim17,
+    sPokenavMenuOptionSpriteAnim18,
+    sPokenavMenuOptionSpriteAnim19,
+    sPokenavMenuOptionSpriteAnim20,
+    sPokenavMenuOptionSpriteAnim21,
+    sPokenavMenuOptionSpriteAnim22,
+    sPokenavMenuOptionSpriteAnim23,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83E4440[] = 
+const union AffineAnimCmd gPokenavMenuOptionZoomAffineAnim[] =
 {
     AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 16),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83E4450[] = 
+const union AffineAnimCmd *const gPokenavMenuOptionZoomAffineAnimTable[] =
 {
-    gSpriteAffineAnim_83E4440,
+    gPokenavMenuOptionZoomAffineAnim,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83E4454 = 
+const struct SpriteTemplate gPokenavMenuOptionSpriteTemplate =
 {
     .tileTag = 0,
     .paletteTag = 0,
-    .oam = &gOamData_83E4318,
-    .anims = gSpriteAnimTable_83E43E0,
+    .oam = &gPokenavMenuOptionOamData,
+    .anims = gPokenavMenuOptionSpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,

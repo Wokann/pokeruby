@@ -2728,7 +2728,7 @@ extern const u8 gSpriteImage_8E993E8[];
 extern const u8 gSlotMachineReelBackground_Tilemap[];
 extern const u8 gSpriteImage_8E99808[];
 extern const u8 gSlotMachineReelTimeLights_Gfx[];
-extern const u8 gUnknown_08E99FB0[];
+extern const u8 gPokenavHoennMap_Tilemap[];
 extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u8 gUnknown_08E9A300[];
 extern const u8 gEasyChatBg2_Gfx[];
