@@ -16,8 +16,8 @@
 #include "strings.h"
 #include "scanline_effect.h"
 
-extern const struct WindowTemplate gWindowTemplate_81E6D54;
-extern const struct WindowTemplate gWindowTemplate_81E6DA8;
+extern const struct WindowTemplate gEasyChatInputSelectWindowTemplate;
+extern const struct WindowTemplate gEasyChatMessageWindowTemplate;
 
 extern void CB2_ReturnToFieldContinueScript(void);
 
@@ -305,11 +305,11 @@ void CB2_InitEasyChatScreen(void)
         FreeAllSpritePalettes();
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6DA8);
+        Text_LoadWindowTemplate(&gEasyChatMessageWindowTemplate);
         break;
     case 2:
-        InitMenuWindow(&gWindowTemplate_81E6D54);
-        InitMenuWindow(&gWindowTemplate_81E6DA8);
+        InitMenuWindow(&gEasyChatInputSelectWindowTemplate);
+        InitMenuWindow(&gEasyChatMessageWindowTemplate);
         Menu_EraseScreen();
         break;
     case 3:

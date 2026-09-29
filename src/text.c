@@ -703,7 +703,7 @@ const struct WindowTemplate gPSSBoxTitleWindowTemplate =
     NULL, // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6D54 =
+const struct WindowTemplate gEasyChatInputSelectWindowTemplate =
 {
     3, // BG number
     3, // BG character base block
@@ -724,7 +724,7 @@ const struct WindowTemplate gWindowTemplate_81E6D54 =
     BG_SCREEN_ADDR(15), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6D70 =
+const struct WindowTemplate gEasyChatWordSelectLongWordWindowTemplate =
 {
     3, // BG number
     3, // BG character base block
@@ -745,7 +745,7 @@ const struct WindowTemplate gWindowTemplate_81E6D70 =
     BG_SCREEN_ADDR(15), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6D8C =
+const struct WindowTemplate gEasyChatTitleAndPhraseWindowTemplate =
 {
     1, // BG number
     0, // BG character base block
@@ -766,7 +766,7 @@ const struct WindowTemplate gWindowTemplate_81E6D8C =
     BG_SCREEN_ADDR(14), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6DA8 =
+const struct WindowTemplate gEasyChatMessageWindowTemplate =
 {
     0, // BG number
     0, // BG character base block

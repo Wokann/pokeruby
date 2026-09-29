@@ -927,7 +927,7 @@ void SetModeWindowAnimForVisibility(u8 visible)
     }
 }
 
-const u16 gUnknown_083DBDFC[] = INCBIN_U16("graphics/unknown/unknown_3DBDFC.gbapal");
+static const u16 sEasyChatBg2Secondary_Pal[] = INCBIN_U16("graphics/unknown/unknown_3DBDFC.gbapal");
 
 static const u16 sBlankPhraseWordTilemap[] =
 {
@@ -935,7 +935,7 @@ static const u16 sBlankPhraseWordTilemap[] =
     0x301, 0x301, 0x301, 0x301, 0x301, 0x300, 0x300, 0x300, 0x300,
 };
 
-const u16 gUnknown_083DBE40[] = INCBIN_U16("graphics/unknown/unknown_3DBE40.gbapal");
+static const u16 sEasyChatBg3_Pal[] = INCBIN_U16("graphics/unknown/unknown_3DBE40.gbapal");
 
 // unused tilemap?
 const u16 gUnusedEasyChatPhraseTilemap[] =
@@ -964,8 +964,8 @@ void InitEasyChatScreenGraphics(void)
     REG_BG0CNT = 0x8B00;
     REG_BG1CNT = 0x0D09;
 
-    CpuCopy16(gUnknown_08E945D0, gEasyChatStruct->unk1C8, 0x500);
-    LZ77UnCompWram(gUnknown_08E953D0, gEasyChatStruct->unk6C8);
+    CpuCopy16(gEasyChatWordGroup_Tilemap, gEasyChatStruct->unk1C8, 0x500);
+    LZ77UnCompWram(gEasyChatInputSelect_Tilemap, gEasyChatStruct->unk6C8);
     LZ77UnCompVram(gMenuWordGroupFrame_Gfx, (void *)(VRAM + 0x8000));
     CpuCopy16(gEasyChatStruct->unk1C8, (void *)(VRAM + 0x6800), 0x500);
     LoadPalette(gMenuWordGroupFrame1_Pal, 64, 64);
@@ -973,15 +973,15 @@ void InitEasyChatScreenGraphics(void)
     REG_BG2CNT = 0x0E02;
 
     DmaClear16(3, (void *)(VRAM + 0x7000), 0x800);
-    DmaCopy16Defvars(3, gUnknown_08E9AB00, (void *)(VRAM + 0x6000), 64);
-    LZ77UnCompVram(gUnknown_08E9AB60, (void *)(VRAM + 0x7000));
-    LoadPalette(gUnknown_08E9AB40, 0, 32);
-    LoadPalette(gUnknown_083DBDFC, 16, 32);
+    DmaCopy16Defvars(3, gEasyChatBg2_Gfx, (void *)(VRAM + 0x6000), 64);
+    LZ77UnCompVram(gEasyChatBg2_Tilemap, (void *)(VRAM + 0x7000));
+    LoadPalette(gEasyChatBg2_Pal, 0, 32);
+    LoadPalette(sEasyChatBg2Secondary_Pal, 16, 32);
 
     REG_BG3CNT = 0x0F0F;
 
     DmaClear32(3, (void *)(VRAM + 0x7800), 0x800);
-    LoadPalette(gUnknown_083DBE40, 32, 32);
+    LoadPalette(sEasyChatBg3_Pal, 32, 32);
     gPlttBufferUnfaded[63] = RGB(31, 31, 31);
     gPlttBufferUnfaded[49] = RGB(27, 26, 27);
     gPlttBufferUnfaded[56] = RGB(28, 28, 28);
@@ -1073,7 +1073,7 @@ void PrintEasyChatStdText(const u8 *a, u8 b, u8 c, u8 d)
 
 void PrintEasyChatStdMessage(u8 a)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
+    BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 
     if (a == 10)
     {
@@ -1177,7 +1177,7 @@ void PrintTitle(u8 a)
         break;
     }
 
-    BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
+    BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
     gEasyChatStruct->unk9F8E[0] = EXT_CTRL_CODE_BEGIN;
     gEasyChatStruct->unk9F8E[1] = 5;
     gEasyChatStruct->unk9F8E[2] = 1;
@@ -1198,7 +1198,7 @@ void PrintTitle(u8 a)
         Menu_PrintText(gEasyChatStruct->unk9F8E, 0, 0);
         Menu_PrintText(gEasyChatStruct->unk9F8E, 28, 0);
     }
-    BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
+    BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
 void BufferFrameTilemap(void)
@@ -1206,29 +1206,29 @@ void BufferFrameTilemap(void)
     switch (gEasyChatStruct->unk9)
     {
     case 4:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 3, gUnknown_08E94AD0, 0, 26, 24, 6);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 3, gEasyChatFrame_Tilemap, 0, 26, 24, 6);
         break;
     case 5:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 2, gUnknown_08E94AD0, 0, 18, 13, 8);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 2, gEasyChatFrame_Tilemap, 0, 18, 13, 8);
         break;
     case 0:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 2, gUnknown_08E94AD0, 0, 10, 26, 8);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 2, gEasyChatFrame_Tilemap, 0, 10, 26, 8);
         break;
     case 1:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 0, gUnknown_08E94AD0, 0, 0, 26, 10);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 0, gEasyChatFrame_Tilemap, 0, 0, 26, 10);
         break;
     case 2:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 3, gUnknown_08E94AD0, 13, 18, 13, 4);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 3, gEasyChatFrame_Tilemap, 13, 18, 13, 4);
         break;
     case 3:
-        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 2, gUnknown_08E94AD0, 0, 32, 24, 4);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 2, gEasyChatFrame_Tilemap, 0, 32, 24, 4);
         break;
     }
 }
 
 void PrintCurrentPhrase(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
+    BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
     switch (gEasyChatStruct->unk9)
     {
     case 4:
@@ -1250,7 +1250,7 @@ void PrintCurrentPhrase(void)
         PrintCurrentPhraseWords(3, 6);
         break;
     }
-    BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
+    BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
 void PrintCurrentPhraseWords(u16 a, u16 b)
@@ -1290,7 +1290,7 @@ void PrintCurrentPhraseWords(u16 a, u16 b)
 
 void PrintCurrentPhraseAsText(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
+    BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
     switch (gEasyChatStruct->unk9)
     {
     case 4:
@@ -1312,7 +1312,7 @@ void PrintCurrentPhraseAsText(void)
         PrintCurrentPhraseAsTextAt(3, 6);
         break;
     }
-    BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
+    BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
 void PrintCurrentPhraseAsTextAt(u16 a, u16 b)
@@ -1357,7 +1357,7 @@ void ClearPhraseWindow(void)
     u8 r1;
     u8 r3;
 
-    BasicInitMenuWindow(&gWindowTemplate_81E6D8C);
+    BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
     switch (gEasyChatStruct->unk9)
     {
     case 4:
@@ -1388,7 +1388,7 @@ void ClearPhraseWindow(void)
         return;
     }
     Menu_BlankWindowRect(2, r1, 27, r3 * 2 + r1 - 1);
-    BasicInitMenuWindow(&gWindowTemplate_81E6DA8);
+    BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
 void PrintKeyboardGroupNamesRow(u8 *a, u8 b)
@@ -1429,7 +1429,7 @@ static const u8 *const sAlphabetKeyboardRowsText[] =
 
 void PrintKeyboardText(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6D54);
+    BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
     if (gEasyChatStruct->unk26 == 0)
     {
         u16 i;
@@ -1488,7 +1488,7 @@ void ClearLowerWindow(void)
 {
     u16 i;
 
-    BasicInitMenuWindow(&gWindowTemplate_81E6D54);
+    BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
     for (i = 0; i < 16; i++)
         ClearWordSelectRow(i);
 }
@@ -1511,16 +1511,16 @@ void PrintWordSelectRow(u16 a)
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
             if (GetEasyChatWordStringLength(gEasyChatStruct->unk9A2A[a][i]) == 7)
-                BasicInitMenuWindow(&gWindowTemplate_81E6D70);
+                BasicInitMenuWindow(&gEasyChatWordSelectLongWordWindowTemplate);
             else
-                BasicInitMenuWindow(&gWindowTemplate_81E6D54);
+                BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
             CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
             PrintEasyChatTextAt(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
         }
     }
     else
     {
-        BasicInitMenuWindow(&gWindowTemplate_81E6D54);
+        BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
         for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
         {
             CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
@@ -1571,7 +1571,7 @@ void PrintKeyboardRowsDuringScroll(void)
     u16 r4;
     u16 i;
 
-    BasicInitMenuWindow(&gWindowTemplate_81E6D54);
+    BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
     if (gEasyChatStruct->unk1C0 < 0)
     {
         r6 = -gEasyChatStruct->unk1C0;
