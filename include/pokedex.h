@@ -9,7 +9,7 @@
 void ResetPokedex(void);
 void ResetPokedexScrollPositions(void);
 void CB2_InitPokedex(void);
-u8 sub_809070C(u16 dexNum, u32 b, u32 c);
+u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality);
 const u8 *GetPokemonCategory(u16);
 u16 GetPokedexHeightWeight(u16 dexNum, u8 data);
 
@@ -47,8 +47,8 @@ struct PokedexEntry
 extern const struct PokedexEntry gPokedexEntries[];
 
 u16 CreateSizeScreenTrainerPic(u16 gender, s16 x, s16 y, u16 paletteNum);
-u16 CreateMonSpriteFromNationalDexNumber(u16 num, s16 x, s16 y, u16 paletteNum);
+u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum);
 
-void PrintFootprint(u16 num, u16 b, u16 c);
+void PrintFootprint(u16 dexNum, u16 charBase, u16 screenBase);
 
 #endif // GUARD_POKEDEX_H

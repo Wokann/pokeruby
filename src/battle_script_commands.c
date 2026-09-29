@@ -19,6 +19,7 @@
 #include "pokemon.h"
 #include "text.h"
 #include "palette.h"
+#include "pokedex.h"
 #include "main.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -152,7 +153,6 @@ void HandleLowHpMusicChange(struct Pokemon*, u8 bank);
 bool8 IsTradedMon(struct Pokemon*);
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);
-u8 GetSetPokedexFlag(u16 nationalNum, u8 caseID);
 u16 SpeciesToNationalPokedexNum(u16 species);
 u8 sub_803FC34(u8 bank);
 u16 sub_803FBFC(u8 a);
@@ -180,7 +180,6 @@ u8 CastformDataTypeChange(u8 bank);
 u8 Overworld_GetMapTypeOfSaveblockLocation(void);
 u8 CalculatePlayerPartyCount(void);
 u16 Sqrt(u32 num);
-u8 sub_809070C(u16 nationalNum, u32 TiD, u32 PiD); //task prepare poke dex display
 void SetOutlineCursorPosition(u8 a1, u8 a2);
 u8 CheckMoveLimitations(u8 bank, u8 unusable_moves, u8 flags);
 bool8 IsLinkDoubleBattle(void);
@@ -4690,7 +4689,7 @@ static void atk4E_switchinanim(void)
     gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
     if (GetBattlerSide(gActiveBattler) == 1 && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER)))
     {
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gActiveBattler].species), 2);
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gActiveBattler].species), FLAG_SET_SEEN);
     }
     gAbsentBattlerFlags &= ~(gBitTable[gActiveBattler]);
     BtlController_EmitSwitchInAnim(0, gBattlerPartyIndexes[gActiveBattler], T2_READ_8(gBattlescriptCurrInstr + 2));
@@ -9428,7 +9427,7 @@ void atkEF_handleballthrow(void)
                     ball_multiplier = 10;
                 break;
             case ITEM_REPEAT_BALL:
-                if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1))
+                if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_GET_CAUGHT))
                     ball_multiplier = 30;
                 else
                     ball_multiplier = 10;
@@ -9514,11 +9513,11 @@ static void atkF0_givecaughtmon(void)
 
 static void atkF1_trysetcaughtmondexflags(void)
 {
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1))
+    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_GET_CAUGHT))
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     else
     {
-        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 3);
+        GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_SET_CAUGHT);
         if (gBattleMons[gBattlerTarget].species == SPECIES_UNOWN)
             gSaveBlock2.pokedex.unownPersonality = gBattleMons[gBattlerTarget].personality;
         if (gBattleMons[gBattlerTarget].species == SPECIES_SPINDA) //else if
@@ -9542,7 +9541,7 @@ static void atkF2_displaydexinfo(void)
     case 1:
         if (!gPaletteFade.active)
         {
-            gBattleCommunication[1] = sub_809070C(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), gBattleMons[gBattlerTarget].otId, gBattleMons[gBattlerTarget].personality);
+            gBattleCommunication[1] = DisplayCaughtMonDexPage(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), gBattleMons[gBattlerTarget].otId, gBattleMons[gBattlerTarget].personality);
             gBattleCommunication[0]++;
         }
         break;
