@@ -684,8 +684,6 @@ void BattleControllerDummy(void);
 void SetBankFuncToPlayerBufferRunCommand(void);
 void sub_802C098();
 void Task_PlayerController_RestoreBgmAfterCry(u8);
-void sub_802E3E4(u8, int);
-void nullsub_8(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 

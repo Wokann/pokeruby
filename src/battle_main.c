@@ -2774,36 +2774,36 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
         Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7BD, 400, 19, 35);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[0]++;
-        sub_802E3E4(gTasks[taskId].data[2], 0);
+        ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         break;
     case 1:
         if (JOY_NEW(DPAD_UP))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gTasks[taskId].data[2]);
+            ActionSelectionDestroyCursorAt(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] &= ~2;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gTasks[taskId].data[2]);
+            ActionSelectionDestroyCursorAt(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] |= 2;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_LEFT))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gTasks[taskId].data[2]);
+            ActionSelectionDestroyCursorAt(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] &= ~1;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_NEW(DPAD_RIGHT))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gTasks[taskId].data[2]);
+            ActionSelectionDestroyCursorAt(gTasks[taskId].data[2]);
             gTasks[taskId].data[2] |= 1;
-            sub_802E3E4(gTasks[taskId].data[2], 0);
+            ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
         }
         else if (JOY_REPT(A_BUTTON))
         {

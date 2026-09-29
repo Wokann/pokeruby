@@ -20,13 +20,6 @@
 #include "util.h"
 #include "ewram.h"
 
-struct MovePPInfo
-{
-    u16 moves[MAX_MON_MOVES];
-    u8 pp[MAX_MON_MOVES];
-    u8 ppBonuses;
-};
-
 extern u16 gBattleTypeFlags;
 extern u8 gDisplayedStringBattle[];
 extern u8 gBattleBufferA[][0x200];

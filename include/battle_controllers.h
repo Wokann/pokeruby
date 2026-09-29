@@ -102,6 +102,13 @@ struct HpAndStatus
     u32 status;
 };
 
+struct MovePPInfo
+{
+    u16 moves[MAX_MON_MOVES];
+    u8 pp[MAX_MON_MOVES];
+    u8 ppBonuses;
+};
+
 enum
 {
     CONTROLLER_GETMONDATA,
@@ -227,6 +234,11 @@ void BtlController_EmitEndLinkBattle(u8 a, u8 b);
 // Ruby preserves this fixed EWRAM symbol name in sym_ewram.txt.
 extern struct UnusedControllerStruct gUnknown_020238C8;
 #define gUnusedControllerStruct gUnknown_020238C8
+
+// player controller selection UI
+void ActionSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum);
+void ActionSelectionDestroyCursorAt(u8 cursorPosition);
+void InitMoveSelectionsVarsAndStrings(void);
 
 // link partner
 void SetControllerToLinkPartner(void);

@@ -19,13 +19,6 @@
 #include "util.h"
 #include "ewram.h"
 
-struct MovePpInfo
-{
-    u16 moves[4];
-    u8 pp[4];
-    u8 ppBonuses;
-};
-
 extern u8 gActiveBattler;
 extern u8 gBattleBufferA[][0x200];
 extern u8 gBattlerSpriteIds[];
@@ -584,7 +577,7 @@ void LinkOpponentHandleGetAttributes(void)
 u32 dp01_getattr_by_ch1_for_player_pokemon__(u8 a, u8 *buffer)
 {
     struct BattlePokemon battlePokemon;
-    struct MovePpInfo moveData;
+    struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
     s16 data16;
@@ -913,7 +906,7 @@ void LinkOpponentHandleSetAttributes(void)
 void sub_8038900(u8 a)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
-    struct MovePpInfo *moveData = (struct MovePpInfo *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
     s32 i;
 
     switch (gBattleBufferA[gActiveBattler][1])

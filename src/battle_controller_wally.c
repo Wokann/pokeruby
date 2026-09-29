@@ -24,13 +24,6 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 
-struct MovePpInfo
-{
-    u16 moves[4];
-    u8 pp[4];
-    u8 ppBonuses;
-};
-
 extern u8 gActiveBattler;
 extern void (*gBattlerControllerFuncs[])(void);
 extern u32 gBattleControllerExecFlags;
@@ -77,7 +70,6 @@ extern void SetBattlerSpriteAffineMode();
 extern void CopyAllBattleSpritesInvisibilities(void);
 extern void TrySetBehindSubstituteSpriteBit();
 extern u8 GetBattlerSide(u8);
-extern void sub_80304A8(void);
 extern void DoHitAnimHealthboxEffect();
 extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
@@ -289,8 +281,8 @@ static void WallyHandleActions(void)
         if (--gBattleStruct->wallyWaitFrames == 0)
         {
             PlaySE(SE_SELECT);
-            nullsub_8(0);
-            sub_802E3E4(1, 0);
+            ActionSelectionDestroyCursorAt(0);
+            ActionSelectionCreateCursorAt(1, 0);
             gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
             gBattleStruct->wallyBattleState++;
         }
@@ -519,7 +511,7 @@ static void WallyHandleGetMonData(void)
 static u32 CopyWallyMonData(u8 monId, u8 *dst)
 {
     struct BattlePokemon battleMon;
-    struct MovePpInfo moveData;
+    struct MovePPInfo moveData;
     u8 nickname[POKEMON_NAME_BUFFER_SIZE];
     u8 *src;
     s16 data16;
@@ -848,7 +840,7 @@ static void WallyHandleSetMonData(void)
 static void SetWallyMonData(u8 monId)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
-    struct MovePpInfo *moveData = (struct MovePpInfo *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
     s32 i;
 
     switch (gBattleBufferA[gActiveBattler][1])
@@ -1267,8 +1259,8 @@ static void WallyHandleChooseAction(void)
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     CreateOutlineCursor(0, 0xFFFF, 12, 0x2D9F, 0);
     for (i = 0; i < 4; i++)
-        nullsub_8(i);
-    sub_802E3E4(0, 0);
+        ActionSelectionDestroyCursorAt(i);
+    ActionSelectionCreateCursorAt(0, 0);
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_WallyMenu);
 #ifdef ENGLISH
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, 440, 2, 35);
@@ -1288,7 +1280,7 @@ static void WallyHandleChooseMove(void)
     switch (gBattleStruct->wallyMovesState)
     {
     case 0:
-        sub_80304A8();
+        InitMoveSelectionsVarsAndStrings();
         gBattleStruct->wallyMovesState++;
         gBattleStruct->wallyMoveFrames = 80;
         // fall through

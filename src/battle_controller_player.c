@@ -26,13 +26,6 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 
-struct MovePpInfo
-{
-    u16 moves[4];
-    u8 pp[4];
-    u8 ppBonuses;
-};
-
 #if ENGLISH
 #define SUB_803037C_TILE_DATA_OFFSET 440
 #elif GERMAN
@@ -309,7 +302,6 @@ void dp01_setattr_by_ch1_for_player_pokemon(u8);
 void sub_802F934(u8, u8);
 void sub_802FB2C(void);
 void sub_8030190(void);
-void sub_80304A8(void);
 void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *);
 void task05_08033660(u8);
 void sub_8031064(void);
@@ -391,9 +383,9 @@ void sub_802C098(void)
         if (gActionSelectionCursor[gActiveBattler] & 1)
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gActionSelectionCursor[gActiveBattler]);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_RIGHT))
@@ -401,9 +393,9 @@ void sub_802C098(void)
         if (!(gActionSelectionCursor[gActiveBattler] & 1))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gActionSelectionCursor[gActiveBattler]);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 1;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_UP))
@@ -411,9 +403,9 @@ void sub_802C098(void)
         if (gActionSelectionCursor[gActiveBattler] & 2)
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gActionSelectionCursor[gActiveBattler]);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(DPAD_DOWN))
@@ -421,9 +413,9 @@ void sub_802C098(void)
         if (!(gActionSelectionCursor[gActiveBattler] & 2))
         {
             PlaySE(SE_SELECT);
-            nullsub_8(gActionSelectionCursor[gActiveBattler]);
+            ActionSelectionDestroyCursorAt(gActionSelectionCursor[gActiveBattler]);
             gActionSelectionCursor[gActiveBattler] ^= 2;
-            sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
         }
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1680,14 +1672,16 @@ void nullsub_7(u8 a)
 {
 }
 
-void sub_802E3E4(u8 a, int unused)
+void ActionSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum)
 {
+    // Ruby keeps one outline cursor instead of Emerald's action-menu tilemap cursors.
     SetOutlineCursorWidth(0x2A);
-    SetOutlineCursorPosition(gUnknown_081FAE91[a][0], gUnknown_081FAE91[a][1]);
+    SetOutlineCursorPosition(gUnknown_081FAE91[cursorPosition][0], gUnknown_081FAE91[cursorPosition][1]);
 }
 
-void nullsub_8(u8 a)
+void ActionSelectionDestroyCursorAt(u8 cursorPosition)
 {
+    // Repositioning the Ruby outline cursor needs no separate tile cleanup.
 }
 
 void CB2_SetUpReshowBattleScreenAfterMenu(void)
@@ -1751,7 +1745,7 @@ void PlayerHandleGetAttributes(void)
 u32 dp01_getattr_by_ch1_for_player_pokemon_(u8 a, u8 *buffer)
 {
     struct BattlePokemon battlePokemon;
-    struct MovePpInfo moveData;
+    struct MovePPInfo moveData;
     u8 nickname[20];
     u8 *src;
     s16 data16;
@@ -2088,7 +2082,7 @@ void PlayerHandleSetAttributes(void)
 void dp01_setattr_by_ch1_for_player_pokemon(u8 a)
 {
     struct BattlePokemon *battlePokemon = (struct BattlePokemon *)&gBattleBufferA[gActiveBattler][3];
-    struct MovePpInfo *moveData = (struct MovePpInfo *)&gBattleBufferA[gActiveBattler][3];
+    struct MovePPInfo *moveData = (struct MovePPInfo *)&gBattleBufferA[gActiveBattler][3];
     s32 i;
 
     switch (gBattleBufferA[gActiveBattler][1])
@@ -2612,9 +2606,9 @@ void PlayerHandlecmd18(void)
     CreateOutlineCursor(0, 0xFFFF, 12, 11679, 0);
 
     for (r4 = 0; r4 < 4; r4++)
-        nullsub_8(r4);
+        ActionSelectionDestroyCursorAt(r4);
 
-    sub_802E3E4(gActionSelectionCursor[gActiveBattler], 0);
+    ActionSelectionCreateCursorAt(gActionSelectionCursor[gActiveBattler], 0);
 
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_OtherMenu);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gDisplayedStringBattle, SUB_803037C_TILE_DATA_OFFSET, 2, 35);
@@ -2628,11 +2622,11 @@ void PlayerHandlecmd19()
 void PlayerHandlecmd20(void)
 {
     CreateOutlineCursor(0, 0xFFFF, 12, 0x2D9F, 0);
-    sub_80304A8();
+    InitMoveSelectionsVarsAndStrings();
     gBattlerControllerFuncs[gActiveBattler] = HandleAction_ChooseMove;
 }
 
-void sub_80304A8(void)
+void InitMoveSelectionsVarsAndStrings(void)
 {
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 320;

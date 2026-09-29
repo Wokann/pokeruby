@@ -1,6 +1,7 @@
 #include "global.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
+#include "battle_controllers.h"
 #include "palette.h"
 #include "main.h"
 #include "scanline_effect.h"
@@ -165,7 +166,7 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
                 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBattler]], MON_DATA_SPECIES);
                 SetBattlerShadowSpriteCallback(opponentBattler, species);
             }
-            sub_802E3E4(gActionSelectionCursor[gBattlerInMenuId], 0);
+            ActionSelectionCreateCursorAt(gActionSelectionCursor[gBattlerInMenuId], 0);
         }
         break;
     default:
