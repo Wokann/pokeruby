@@ -107,10 +107,10 @@ void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc taskFunc);
 
 extern u16 Random();
 
-EWRAM_DATA u8 gUnknown_0202E8F4 = 0;
+EWRAM_DATA u8 gPartyMenuActionResult = 0;
 EWRAM_DATA u8 gSelectedMonPartyId = 0;
 EWRAM_DATA u8 gPartyMenuMessage_IsPrinting = 0;
-EWRAM_DATA u16 gUnknown_0202E8F8 = 0;
+EWRAM_DATA u16 gPartyMenuPreviousHeldItem = 0;
 EWRAM_DATA u8 gPartyMenuType = 0;
 
 const u16 TMHMMoves[] =
@@ -1752,11 +1752,11 @@ void sub_806C92C(u8 spriteId)
     gSprites[spriteId].data[1] = menuIndex2;
 }
 
-void sub_806C994(u8 taskId, u8 b)
+void SetPartyMenuCursorSelection(u8 taskId, u8 selection)
 {
     u8 spriteId = sub_806CA00(taskId);
 
-    gSprites[spriteId].data[0] = b;
+    gSprites[spriteId].data[0] = selection;
     sub_806C92C(spriteId);
 }
 
@@ -1838,7 +1838,7 @@ void HandlePartyMenuSwitchPokemonInput(u8 taskId)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(5);
-        gTasks[taskId].func = ePartyMenu.unkC;
+        gTasks[taskId].func = ePartyMenu.twoMonSelectionCallback;
         gTasks[taskId].func(taskId);
     }
     else if (gMain.newKeys == B_BUTTON)
@@ -1882,7 +1882,7 @@ void sub_806CD44(u8 taskId)
     sub_806CC2C(taskId);
 }
 
-void sub_806CD5C(u8 taskId)
+void Task_SwitchSelectedPartyMons(u8 taskId)
 {
     u8 monIndex1 = gSprites[ePartyMenu.slotId].data[0];
     u8 monIndex2 = gSprites[ePartyMenu.slotId2].data[0];
@@ -2182,7 +2182,7 @@ void sub_806D5B8(u8 monIndex)
     CpuFastFill(0, OBJ_VRAM1 + monIndex * 0x400, 0x400);
 }
 
-void sub_806D668(u8 monIndex)
+void ClearPartyMonDescriptorStatus(u8 monIndex)
 {
     u8 left = gUnknown_08376978[IsDoubleBattle()][monIndex].left;
     u8 top = gUnknown_08376978[IsDoubleBattle()][monIndex].top;
@@ -2914,11 +2914,11 @@ bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *pkmn, u16 item)
     {
         if (GiveMailToMonByItemId(pkmn, item) == MAIL_NONE)
             return TRUE;
-        gUnknown_0202E8F4 = 2;
+        gPartyMenuActionResult = 2;
     }
     else
     {
-        gUnknown_0202E8F4 = 1;
+        gPartyMenuActionResult = 1;
     }
 
     itemData[0] = item;
@@ -2934,8 +2934,8 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc c)
     gTasks[taskId].func = TaskDummy;
     sub_806E8D0(taskId, newItem, c);
     currentItem = GetMonData(gPartyMenu.pokemon, MON_DATA_HELD_ITEM);
-    gUnknown_0202E8F4 = 0;
-    gUnknown_0202E8F8 = 0;
+    gPartyMenuActionResult = 0;
+    gPartyMenuPreviousHeldItem = 0;
     if (currentItem != 0)
     {
         if (ItemIsMail(currentItem) == TRUE)
@@ -2951,7 +2951,7 @@ void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc c)
             DisplayPartyMenuMessage(gStringVar4, 1);
             CreateTask(Task_ConfirmGiveHeldItem, 5);
             if (ItemIsMail(newItem) == TRUE)
-                gUnknown_0202E8F8 = currentItem;
+                gPartyMenuPreviousHeldItem = currentItem;
         }
     }
     else
@@ -3048,7 +3048,7 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func)
     gTasks[taskId].func = TaskDummy;
     sub_806E8D0(taskId, 0, func);
     currentItem = GetMonData(gPartyMenu.pokemon, MON_DATA_HELD_ITEM);
-    gUnknown_0202E8F4 = 0;
+    gPartyMenuActionResult = 0;
     var1 = gPlayerPCItemPageInfo.cursorPos + 6;
     mail = &gSaveBlock1.mail[var1 + gPlayerPCItemPageInfo.itemsAbove];
 
@@ -3704,7 +3704,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
 
     if (r0)
     {
-        gUnknown_0202E8F4 = 0;
+        gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
         gTasks[r7].func = sub_806FB0C;
@@ -3713,7 +3713,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
     {
         u8 statusAndPkrs;
 
-        gUnknown_0202E8F4 = 1;
+        gPartyMenuActionResult = 1;
         if (!IsBlueYellowRedFlute(item))
             PlaySE(SE_USE_ITEM);
         else
@@ -3793,7 +3793,7 @@ void sub_8070088(u8 taskId)
         }
         else
         {
-            gUnknown_0202E8F4 = 1;
+            gPartyMenuActionResult = 1;
             Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);
             PlaySE(SE_USE_ITEM);
             PartyMenuUpdateLevelOrStatus(gPartyMenu.pokemon, gPartyMenu.primarySelectedMonIndex);
@@ -3825,7 +3825,7 @@ void sub_80701DC(u8 taskId)
     gPartyMenu.primarySelectedMonIndex++;
     if (gPartyMenu.primarySelectedMonIndex == 6)
     {
-        gUnknown_0202E8F4 = 0;
+        gPartyMenuActionResult = 0;
         if (ePartyMenu2.pmUnk280 == 0)
         {
             gTasks[taskId].func = TaskDummy;
@@ -3940,13 +3940,13 @@ void DoRecoverPP(u8 taskId)
 
     if (ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, gTasks[taskId].data[11]))
     {
-        gUnknown_0202E8F4 = 0;
+        gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
     }
     else
     {
-        gUnknown_0202E8F4 = 1;
+        gPartyMenuActionResult = 1;
         PlaySE(SE_USE_ITEM);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
         r5 = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + gTasks[taskId].data[11]);
@@ -4017,7 +4017,7 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc c)
 
     if (noEffect)
     {
-        gUnknown_0202E8F4 = 0;
+        gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
         CreateTask(sub_806FB0C, 5);
@@ -4026,7 +4026,7 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc c)
     {
         u8 level;
 
-        gUnknown_0202E8F4 = 1;
+        gPartyMenuActionResult = 1;
         PlayFanfareByFanfareNum(0);
         RedrawPokemonInfoInMenu(gPartyMenu.primarySelectedMonIndex, gPartyMenu.pokemon);
         RemoveBagItem(item, 1);
@@ -4283,7 +4283,7 @@ void DoEvolutionStoneItemEffect(u8 taskId, u16 evolutionStoneItem, TaskFunc c)
 
     if (ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, evolutionStoneItem, 0))
     {
-        gUnknown_0202E8F4 = 0;
+        gPartyMenuActionResult = 0;
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
 
         CreateTask(sub_806FB0C, 5);

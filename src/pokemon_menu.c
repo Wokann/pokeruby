@@ -49,10 +49,10 @@ struct FieldMoveCursorCallback
 };
 
 extern u8 gIsDebugMode;
-extern u8 gUnknown_0202E8F4;
+extern u8 gPartyMenuActionResult;
 extern bool8 gPartyMenuMessage_IsPrinting;
 extern u8 gPokemonItemUseType;
-extern u16 gUnknown_0202E8F8;
+extern u16 gPartyMenuPreviousHeldItem;
 extern void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc callback);
 extern TaskFunc gTaskFuncForLinkRecv;
 
@@ -328,7 +328,7 @@ static void CB2_InitPartyMenuFromSummaryScreen(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
             ShowFieldPartyMenuForSelectedMon();
@@ -372,7 +372,7 @@ void DoPokemonMenu_Switch(u8 taskId)
 static void PokemonMenu_Switch(u8 taskId)
 {
     Menu_DestroyCursor();
-    ePartyMenu.unkC = sub_806CD5C;
+    ePartyMenu.twoMonSelectionCallback = Task_SwitchSelectedPartyMons;
     ePartyMenu.array[53553] = 1;
     DoPokemonMenu_Switch(taskId);
 }
@@ -439,7 +439,7 @@ static void Task_UpdateHeldItemSprite(u8 taskId)
 
 static void Task_HandleGiveHeldItemResult(u8 taskId)
 {
-    if (ItemIsMail(gSpecialVar_ItemId) && gUnknown_0202E8F4 != 0)
+    if (ItemIsMail(gSpecialVar_ItemId) && gPartyMenuActionResult != 0)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gTasks[taskId].func = Task_WriteMailToGiveMon;
@@ -482,7 +482,7 @@ static void CB2_InitPartyMenuForFieldBagItem(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -498,7 +498,7 @@ static void CB2_InitFieldPartyMenuAfterBag(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             ePartyMenu2.unk262 = 3;
             ShowFieldPartyMenuForSelectedMon();
@@ -518,7 +518,7 @@ void CB2_ReturnToPartyMenuFromBag(void)
 
         gPaletteFade.bufferTransferDisabled = 1;
         CreatePartyMenuCursor(taskId, 0);
-        sub_806C994(taskId, gLastFieldPokeMenuOpened);
+        SetPartyMenuCursorSelection(taskId, gLastFieldPokeMenuOpened);
         ChangePartyMenuSelection(taskId, 0);
         if (!(bool8)(GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_HELD_ITEM)))
         {
@@ -547,7 +547,7 @@ static void CB2_InitPartyMenuAfterWritingMail(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -562,11 +562,11 @@ void CB2_ReturnToPartyMenuFromWritingMail(void)
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_Result == 0)
     {
-        if (gUnknown_0202E8F8)
-            RemoveBagItem(gUnknown_0202E8F8, 1);
+        if (gPartyMenuPreviousHeldItem)
+            RemoveBagItem(gPartyMenuPreviousHeldItem, 1);
         AddBagItem(GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM), 1);
         TakeMailFromMon(&gPlayerParty[gLastFieldPokeMenuOpened]);
-        SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gUnknown_0202E8F8);
+        SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gPartyMenuPreviousHeldItem);
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, HandleDefaultPartyMenu, 0);
     }
     else
@@ -857,7 +857,7 @@ static void CB2_InitPartyMenuAfterFlyMap(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -943,7 +943,7 @@ static void UpdatePartyMenuForTMHM(void)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
-            sub_806D668(i);
+            ClearPartyMonDescriptorStatus(i);
             if (
 #if DEBUG
              gIsDebugMode == 0 &&
@@ -968,7 +968,7 @@ static void UpdatePartyMenuForEvolutionItem(void)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !GetEvolutionTargetSpecies(&gPlayerParty[i], 3, gSpecialVar_ItemId))
             {
-                sub_806D668(i);
+                ClearPartyMonDescriptorStatus(i);
                 DrawMonDescriptorStatus(i, 0);
             }
         }
@@ -995,7 +995,7 @@ static void CB2_InitPartyMenuForItemUse(void)
             }
             if (gLastFieldPokeMenuOpened >= PARTY_SIZE || !GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_SPECIES))
                 gLastFieldPokeMenuOpened = 0;
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -1105,7 +1105,7 @@ static void Task_FadeOutToMailbox(u8 taskId)
 
 static void Task_HandleBagGiveItemResult(u8 taskId)
 {
-    if (gUnknown_0202E8F4 == 2)
+    if (gPartyMenuActionResult == 2)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gTasks[taskId].func = Task_WriteMailToGiveMonFromBag;
@@ -1133,7 +1133,7 @@ static void CB2_InitPartyMenuAfterBagMail(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -1150,11 +1150,11 @@ static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void)
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_Result == 0)
     {
-        if (gUnknown_0202E8F8)
-            RemoveBagItem(gUnknown_0202E8F8, 1);
+        if (gPartyMenuPreviousHeldItem)
+            RemoveBagItem(gPartyMenuPreviousHeldItem, 1);
         AddBagItem(GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM), 1);
         TakeMailFromMon(&gPlayerParty[gLastFieldPokeMenuOpened]);
-        SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gUnknown_0202E8F8);
+        SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gPartyMenuPreviousHeldItem);
         CreateTask(Task_ReturnToBagMenu, 5);
         gPaletteFade.bufferTransferDisabled = 0;
         callback = CB2_PartyMenuMain;
@@ -1193,7 +1193,7 @@ static void CB2_InitPartyMenuForMoveLearning(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             SetMainCallback2(CB2_PartyMenuMain);
             break;

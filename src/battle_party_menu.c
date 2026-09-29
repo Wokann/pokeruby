@@ -34,7 +34,7 @@ extern u8 gPlayerPartyCount;
 extern u8 gBattlersCount;
 extern u16 gBattlerPartyIndexes[];
 extern u8 gBattlerInMenuId;
-extern u8 gUnknown_0202E8F4;
+extern u8 gPartyMenuActionResult;
 extern u8 gPartyMenuMessage_IsPrinting;
 extern void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc taskFunc);
 extern struct PokemonStorage gPokemonStorage;
@@ -543,12 +543,12 @@ void HandleBattlePartyMenu(u8 taskId)
                 PlaySE(SE_SELECT);
                 if (gBattlePartyMenuAction == PARTY_ACTION_USE_ITEM)
                 {
-                    gUnknown_0202E8F4 = 0;
+                    gPartyMenuActionResult = 0;
                     gTasks[taskId].func = Task_ExitBattlePartyMenuAfterItem;
                 }
                 else
                 {
-                    gUnknown_0202E8F4 = 0;
+                    gPartyMenuActionResult = 0;
                     gTasks[taskId].func = Task_BeginExitBattlePartyMenu;
                 }
             }
@@ -575,7 +575,7 @@ static void Task_ExitBattlePartyMenuToBattle(u8 taskId)
 
 static void Task_ExitBattlePartyMenuAfterItem(u8 taskId)
 {
-    if (gUnknown_0202E8F4 != 0)
+    if (gPartyMenuActionResult != 0)
         Task_BeginExitBattlePartyMenu(taskId);
     else
     {
@@ -607,7 +607,7 @@ static void CB2_InitBattlePartyMenuAfterSummary(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
             ShowBattlePartyPopupMenu(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
@@ -759,7 +759,7 @@ static void Task_BattlePartyMenuShift(u8 taskId)
         return;
     }
     gSelectedMonPartyId = GetPartyIdFromBattleSlot(partySelection);
-    gUnknown_0202E8F4 = 1;
+    gPartyMenuActionResult = 1;
     currentPartyId = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
     SwitchPartyMonSlots(currentPartyId, partySelection);
     SwapPokemon(&gPlayerParty[currentPartyId], &gPlayerParty[partySelection]);

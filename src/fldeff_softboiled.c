@@ -22,7 +22,7 @@
 // extern
 extern u8 gPartyMenuMessage_IsPrinting;
 extern u8 gLastFieldPokeMenuOpened;
-extern u8 gUnknown_0202E8F4;
+extern u8 gPartyMenuActionResult;
 
 // Static
 static void Task_TryUseSoftboiledOnPartyMon(u8 taskId);
@@ -48,7 +48,7 @@ bool8 SetUpFieldMove_SoftBoiled(void) {
 }
 
 void ChooseMonForSoftboiled(u8 taskid) {
-    ePartyMenu.unkC = Task_TryUseSoftboiledOnPartyMon;
+    ePartyMenu.twoMonSelectionCallback = Task_TryUseSoftboiledOnPartyMon;
     ePartyMenu2.pmUnk272 = 3;
     DoPokemonMenu_Switch(taskid);
 }
@@ -111,7 +111,7 @@ static void Task_ChooseNewMonForSoftboiled(u8 taskId) {
 }
 
 static void CantUseSoftboiledOnMon(u8 taskId) {
-    gUnknown_0202E8F4 = 0;
+    gPartyMenuActionResult = 0;
     PartyMenuEraseMsgBoxAndFrame();
     DisplayPartyMenuMessage(gOtherText_CantUseOnPoke, 1);
     gTasks[taskId].func = Task_ChooseNewMonForSoftboiled;

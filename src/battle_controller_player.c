@@ -142,7 +142,7 @@ extern MainCallback gPreBattleCallback1;
 extern u8 gHealthboxSpriteIds[];
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gBattleControllerData[];
-extern u8 gUnknown_0202E8F4;
+extern u8 gPartyMenuActionResult;
 extern u8 gBattlePartyCurrentOrder[];
 extern u16 gSpecialVar_ItemId;
 extern u8 gDisplayedStringBattle[];
@@ -1510,7 +1510,7 @@ void sub_802DF88(void)
 {
     if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
     {
-        if (gUnknown_0202E8F4 == 1)
+        if (gPartyMenuActionResult == 1)
             BtlController_EmitChosenMonReturnValue(1, gSelectedMonPartyId, gBattlePartyCurrentOrder);
         else
             BtlController_EmitChosenMonReturnValue(1, 6, NULL);

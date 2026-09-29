@@ -405,7 +405,7 @@ static void CB2_ReturnToBattleTowerPartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangeBattleTowerPartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
@@ -886,7 +886,7 @@ static void CB2_ReturnToDaycarePartyMenu(void)
     {
         if (InitPartyMenu() == TRUE)
         {
-            sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
+            SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             GetMonNickname(&gPlayerParty[gLastViewedMonIndex], gStringVar1);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
