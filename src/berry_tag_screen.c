@@ -111,11 +111,11 @@ static bool8 InitBerryTagScreen(void)
         gMain.state += 1;
         break;
     case 3:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6E18);
+        Text_LoadWindowTemplate(&gBerryTagWindowTemplate);
         gMain.state += 1;
         break;
     case 4:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6E18);
+        MultistepInitMenuWindowBegin(&gBerryTagWindowTemplate);
         gMain.state += 1;
         break;
     case 5:
@@ -361,6 +361,9 @@ static void DestroyFlavorCircleSprites(void)
     }
 }
 
+#define tScrollSpeed data[0]
+#define tCursorDelta data[1]
+
 static void TryChangeDisplayedBerry(u8 taskId, s8 direction)
 {
     u8 berryPocket = BERRIES_POCKET_INDEX;
@@ -375,36 +378,36 @@ static void TryChangeDisplayedBerry(u8 taskId, s8 direction)
 
     PlaySE(SE_SELECT);
     if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos + direction < 0)
-        data[1] = -(gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos);
+        tCursorDelta = -(gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos);
     else if (gBagPocketScrollStates[berryPocket].scrollTop + gBagPocketScrollStates[berryPocket].cursorPos + direction >= gBagPocketScrollStates[berryPocket].numSlots)
-        data[1] = gBagPocketScrollStates[berryPocket].numSlots - gBagPocketScrollStates[berryPocket].scrollTop - gBagPocketScrollStates[berryPocket].cursorPos - 1;
+        tCursorDelta = gBagPocketScrollStates[berryPocket].numSlots - gBagPocketScrollStates[berryPocket].scrollTop - gBagPocketScrollStates[berryPocket].cursorPos - 1;
     else
-        data[1] = direction;
+        tCursorDelta = direction;
 
     gTasks[taskId].func = Task_DisplayAnotherBerry;
 
     if (direction < 0)
-        data[0] = -16;
+        tScrollSpeed = -16;
     else
-        data[0] = 16;
+        tScrollSpeed = 16;
 
 }
 
 static void Task_DisplayAnotherBerry(u8 taskId)
 {
-    s16 *taskData = gTasks[taskId].data;
+    s16 *data = gTasks[taskId].data;
 
-    gBattle_BG1_Y = (gBattle_BG1_Y + taskData[0]) & 0xFF;
-    if ((taskData[0] > 0 && gBattle_BG1_Y == 144)
-     || (taskData[0] < 0 && gBattle_BG1_Y == 112))
+    gBattle_BG1_Y = (gBattle_BG1_Y + tScrollSpeed) & 0xFF;
+    if ((tScrollSpeed > 0 && gBattle_BG1_Y == 144)
+     || (tScrollSpeed < 0 && gBattle_BG1_Y == 112))
     {
-        HandleBagCursorPositionChange(gTasks[taskId].data[1]);
+        HandleBagCursorPositionChange(gTasks[taskId].tCursorDelta);
         PrintBerryDataAndCreateSprites();
     }
     if (gBattle_BG1_Y == 0)
     {
-        gTasks[taskId].data[0] = gBattle_BG1_Y;
-        gTasks[taskId].data[1] = gBattle_BG1_Y;
+        gTasks[taskId].tScrollSpeed = gBattle_BG1_Y;
+        gTasks[taskId].tCursorDelta = gBattle_BG1_Y;
         gTasks[taskId].func = Task_HandleInput;
     }
 }

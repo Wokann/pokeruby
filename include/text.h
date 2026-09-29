@@ -82,7 +82,7 @@ extern const struct WindowTemplate gEasyChatMessageWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Values;
 extern const struct WindowTemplate gWindowTemplate_TrainerCard_Back_Labels;
 extern const struct WindowTemplate gMenuWindowTemplate;
-extern const struct WindowTemplate gWindowTemplate_81E6E18;
+extern const struct WindowTemplate gBerryTagWindowTemplate;
 extern const struct WindowTemplate gPokeblockCaseWindowTemplate;
 extern const struct WindowTemplate gPokeblockWindowTemplate;
 extern const struct WindowTemplate gSummaryScreenWindowTemplate;

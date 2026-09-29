@@ -850,7 +850,7 @@ const struct WindowTemplate gMenuWindowTemplate =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6E18 =
+const struct WindowTemplate gBerryTagWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
