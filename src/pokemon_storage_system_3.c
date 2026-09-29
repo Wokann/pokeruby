@@ -9,82 +9,87 @@
 
 // Static type declarations
 
+enum {
+    RELEASE_ANIM_RELEASE,
+    RELEASE_ANIM_CAME_BACK,
+};
+
 // Static RAM declarations
 
 // Static ROM declarations
 
-static void sub_8098E68(struct Sprite *sprite);
-static void sub_8099388(struct Sprite *sprite, u16 a1);
-static void sub_80993F4(struct Sprite *sprite);
-static void sub_80999C4(struct Sprite *sprite);
-static struct Sprite *PSS_SpawnMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 priority, u8 subpriority);
-static void PSS_DestroyMonIconSprite(struct Sprite *sprite);
+static void SpriteCB_BoxMonIconScrollOut(struct Sprite *sprite);
+static void MovePartySpriteToNextSlot(struct Sprite *sprite, u16 partyId);
+static void SpriteCB_MovePartyMonToNextSlot(struct Sprite *sprite);
+static void SpriteCB_HeldMon(struct Sprite *sprite);
+static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
+static void DestroyBoxMonIcon(struct Sprite *sprite);
 
 // .rodata
 
-const struct OamData gOamData_83B6F2C;
-const struct SpriteTemplate gSpriteTemplate_83B6F14 = {
+static const struct OamData sOamData_MonIcon;
+static const struct SpriteTemplate sSpriteTemplate_MonIcon = {
     0x000f,
     0xdac0,
-    &gOamData_83B6F2C,
+    &sOamData_MonIcon,
     gDummySpriteAnimTable,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
 };
 
-const struct OamData gOamData_83B6F2C = {
+static const struct OamData sOamData_MonIcon = {
     .size = 2
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83B6F34[] = {
+static const union AffineAnimCmd sAffineAnim_ReleaseMon_Release[] = {
     AFFINEANIMCMD_FRAME(-2, -2, 0, 120),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_83B6F44[] = {
+static const union AffineAnimCmd sAffineAnim_ReleaseMon_CameBack[] = {
     AFFINEANIMCMD_FRAME(16, 16, 0,  0),
     AFFINEANIMCMD_FRAME(16, 16, 0, 15),
     AFFINEANIMCMD_END
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_83B6F5C[] = {
-    gSpriteAffineAnim_83B6F34,
-    gSpriteAffineAnim_83B6F44
+static const union AffineAnimCmd *const sAffineAnims_ReleaseMon[] = {
+    [RELEASE_ANIM_RELEASE] = sAffineAnim_ReleaseMon_Release,
+    [RELEASE_ANIM_CAME_BACK] = sAffineAnim_ReleaseMon_CameBack
 };
 
 // .text
 
-u8 get_preferred_box(void)
+u8 StorageGetCurrentBox(void)
 {
     return gPokemonStorage.currentBox;
 }
 
-void ResetPSSMonIconSprites(void)
+void InitMonIconFields(void)
 {
     u16 i;
 
     LoadMonIconPalettes();
-    for (i = 0; i < 40; i++)
-        gPokemonStorageSystemPtr->unk_10d0[i] = 0;
-    for (i = 0; i < 40; i++)
-        gPokemonStorageSystemPtr->unk_1120[i] = 0;
-    for (i = 0; i < 6; i++)
-        gPokemonStorageSystemPtr->unk_1038[i] = NULL;
-    for (i = 0; i < 30; i++)
-        gPokemonStorageSystemPtr->unk_1050[i] = NULL;
-    gPokemonStorageSystemPtr->unk_1034 = NULL;
+    for (i = 0; i < MAX_MON_ICONS; i++)
+        gPokemonStorageSystemPtr->numIconsPerSpecies[i] = 0;
+    for (i = 0; i < MAX_MON_ICONS; i++)
+        gPokemonStorageSystemPtr->iconSpeciesList[i] = SPECIES_NONE;
+    for (i = 0; i < PARTY_SIZE; i++)
+        gPokemonStorageSystemPtr->partySprites[i] = NULL;
+    for (i = 0; i < IN_BOX_COUNT; i++)
+        gPokemonStorageSystemPtr->boxMonsSprites[i] = NULL;
+    gPokemonStorageSystemPtr->movingMonSprite = NULL;
     gPokemonStorageSystemPtr->unk_0d5c = 0;
 }
 
-void sub_8098BF0(void)
+void CreateMovingMonIcon(void)
 {
-    u32 personality = GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_PERSONALITY);
-    gPokemonStorageSystemPtr->unk_1034 = PSS_SpawnMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->unk_25b4, MON_DATA_SPECIES2), personality, 0, 0, 1, 7);
-    gPokemonStorageSystemPtr->unk_1034->callback = sub_80999C4;
+    u32 personality = GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_PERSONALITY);
+    gPokemonStorageSystemPtr->movingMonSprite = CreateMonIconSprite(GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_SPECIES2), personality, 0, 0, 1, 7);
+    gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCB_HeldMon;
 }
 
-void SpawnBoxIconSprites(u8 boxId)
+void InitBoxMonSprites(u8 boxId)
 {
     struct BoxPokemon *box = gPokemonStorage.boxes[boxId];
     u16 i;
@@ -96,170 +101,178 @@ void SpawnBoxIconSprites(u8 boxId)
         {
             u16 species = GetBoxMonData(box, MON_DATA_SPECIES2);
             if (species != SPECIES_NONE)
-                gPokemonStorageSystemPtr->unk_1050[k] = PSS_SpawnMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
+                gPokemonStorageSystemPtr->boxMonsSprites[k] = CreateMonIconSprite(species, GetBoxMonData(box, MON_DATA_PERSONALITY), 24 * j + 0x64, 24 * i + 0x2c, 2, 18 - j);
             else
-                gPokemonStorageSystemPtr->unk_1050[k] = NULL;
+                gPokemonStorageSystemPtr->boxMonsSprites[k] = NULL;
             box++;
             k++;
         }
     }
 }
 
-void sub_8098D20(u8 monId)
+void CreateBoxMonIconAtPos(u8 boxPosition)
 {
-    struct BoxPokemon *mon = gPokemonStorage.boxes[get_preferred_box()] + monId;
+    struct BoxPokemon *mon = gPokemonStorage.boxes[StorageGetCurrentBox()] + boxPosition;
     u16 species = GetBoxMonData(mon, MON_DATA_SPECIES2);
     if (species != SPECIES_NONE)
     {
-        s16 x = 24 * (monId % 6) + 0x64;
-        s16 y = 24 * (monId / 6) + 0x2c;
-        gPokemonStorageSystemPtr->unk_1050[monId] = PSS_SpawnMonIconSprite(species, GetBoxMonData(mon, MON_DATA_PERSONALITY), x, y, 2, 18 - (monId % 6));
+        s16 x = 24 * (boxPosition % 6) + 0x64;
+        s16 y = 24 * (boxPosition / 6) + 0x2c;
+        gPokemonStorageSystemPtr->boxMonsSprites[boxPosition] = CreateMonIconSprite(species, GetBoxMonData(mon, MON_DATA_PERSONALITY), x, y, 2, 18 - (boxPosition % 6));
     }
 }
 
-static void sub_8098DE0(s16 a0)
+#define sDistance      data[1]
+#define sSpeed         data[2]
+#define sScrollInDestX data[3]
+#define sDelay         data[4]
+#define sScrollOutX    data[5]
+
+static void StartBoxMonIconsScrollOut(s16 speed)
 {
-    u16 monId;
-    for (monId = 0; monId < 30; monId++)
+    u16 boxPosition;
+
+    for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++)
     {
-        if (gPokemonStorageSystemPtr->unk_1050[monId])
+        if (gPokemonStorageSystemPtr->boxMonsSprites[boxPosition])
         {
-            gPokemonStorageSystemPtr->unk_1050[monId]->data[2] = a0;
-            gPokemonStorageSystemPtr->unk_1050[monId]->data[4] = 1;
-            gPokemonStorageSystemPtr->unk_1050[monId]->callback = sub_8098E68;
+            gPokemonStorageSystemPtr->boxMonsSprites[boxPosition]->sSpeed = speed;
+            gPokemonStorageSystemPtr->boxMonsSprites[boxPosition]->sDelay = 1;
+            gPokemonStorageSystemPtr->boxMonsSprites[boxPosition]->callback = SpriteCB_BoxMonIconScrollOut;
         }
     }
 }
 
-static void sub_8098E24(struct Sprite *sprite)
+static void SpriteCB_BoxMonIconScrollIn(struct Sprite *sprite)
 {
-    if (sprite->data[1] != 0)
+    if (sprite->sDistance != 0)
     {
-        sprite->data[1]--;
-        sprite->x += sprite->data[2];
+        sprite->sDistance--;
+        sprite->x += sprite->sSpeed;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_1178--;
-        sprite->x = sprite->data[3];
+        gPokemonStorageSystemPtr->iconScrollNumIncoming--;
+        sprite->x = sprite->sScrollInDestX;
         sprite->callback = SpriteCallbackDummy;
     }
 }
 
-static void sub_8098E68(struct Sprite *sprite)
+static void SpriteCB_BoxMonIconScrollOut(struct Sprite *sprite)
 {
-    if (sprite->data[4] != 0)
+    if (sprite->sDelay != 0)
     {
-        sprite->data[4]--;
+        sprite->sDelay--;
     }
     else
     {
-        sprite->x += sprite->data[2];
-        sprite->data[5] = sprite->x + sprite->x2;
-        if (sprite->data[5] < 0x45 || sprite->data[5] > 0xfb)
+        sprite->x += sprite->sSpeed;
+        sprite->sScrollOutX = sprite->x + sprite->x2;
+        if (sprite->sScrollOutX < 0x45 || sprite->sScrollOutX > 0xfb)
             sprite->callback = SpriteCallbackDummy;
     }
 }
 
-static void sub_8098EA0(u8 col)
+static void DestroyBoxMonIconsInColumn(u8 column)
 {
-    u16 i;
+    u16 row;
+    u8 boxPosition = column;
 
-    for (i = 0; i < 5; i++)
+    for (row = 0; row < 5; row++)
     {
-        if (gPokemonStorageSystemPtr->unk_1050[col])
+        if (gPokemonStorageSystemPtr->boxMonsSprites[boxPosition])
         {
-            PSS_DestroyMonIconSprite(gPokemonStorageSystemPtr->unk_1050[col]);
-            gPokemonStorageSystemPtr->unk_1050[col] = NULL;
+            DestroyBoxMonIcon(gPokemonStorageSystemPtr->boxMonsSprites[boxPosition]);
+            gPokemonStorageSystemPtr->boxMonsSprites[boxPosition] = NULL;
         }
-        col += 6;
+        boxPosition += 6;
     }
 }
 
-static u8 sub_8098EE0(u8 col, u16 a1, s16 a2)
+static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
 {
-    u16 i;
-    u16 x;
+    u16 row;
+    u16 xDest;
     u16 y;
-    u8 count;
-    u8 x1;
+    u8 iconsCreated;
+    u8 subpriority;
     u16 curX;
 
     y = 0x2c;
-    x = 24 * col + 0x64;
-    curX = x - (a1 + 1) * a2;
-    x1 = 18 - col;
-    count = 0;
+    xDest = 24 * column + 0x64;
+    curX = xDest - (distance + 1) * speed;
+    subpriority = 18 - column;
+    iconsCreated = 0;
 
-    for (i = 0; i < 5; i++)
+    for (row = 0; row < 5; row++)
     {
-        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_117d] + col, MON_DATA_SPECIES2);
+        u16 species = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->iconScrollToBoxId] + column, MON_DATA_SPECIES2);
         if (species != SPECIES_NONE)
         {
-            gPokemonStorageSystemPtr->unk_1050[col] = PSS_SpawnMonIconSprite(species, GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_117d] + col, MON_DATA_PERSONALITY), curX, y, 2, x1);
-            if (gPokemonStorageSystemPtr->unk_1050[col])
+            gPokemonStorageSystemPtr->boxMonsSprites[column] = CreateMonIconSprite(species, GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->iconScrollToBoxId] + column, MON_DATA_PERSONALITY), curX, y, 2, subpriority);
+            if (gPokemonStorageSystemPtr->boxMonsSprites[column])
             {
-                gPokemonStorageSystemPtr->unk_1050[col]->data[1] = a1;
-                gPokemonStorageSystemPtr->unk_1050[col]->data[2] = a2;
-                gPokemonStorageSystemPtr->unk_1050[col]->data[3] = x;
-                gPokemonStorageSystemPtr->unk_1050[col]->callback = sub_8098E24;
-                count++;
+                gPokemonStorageSystemPtr->boxMonsSprites[column]->sDistance = distance;
+                gPokemonStorageSystemPtr->boxMonsSprites[column]->sSpeed = speed;
+                gPokemonStorageSystemPtr->boxMonsSprites[column]->sScrollInDestX = xDest;
+                gPokemonStorageSystemPtr->boxMonsSprites[column]->callback = SpriteCB_BoxMonIconScrollIn;
+                iconsCreated++;
             }
         }
-        col += 6;
+        column += 6;
         y += 24;
     }
-    return count;
+    return iconsCreated;
 }
 
-void sub_809900C(u8 a0, s8 a1)
+void InitBoxMonIconScroll(u8 boxId, s8 direction)
 {
-    gPokemonStorageSystemPtr->unk_117c = 0;
-    gPokemonStorageSystemPtr->unk_117d = a0;
-    gPokemonStorageSystemPtr->unk_117b = a1;
-    gPokemonStorageSystemPtr->unk_1172 = 32;
-    gPokemonStorageSystemPtr->unk_1176 = -6 * a1;
-    gPokemonStorageSystemPtr->unk_1178 = 0;
-    if (a1 > 0)
-        gPokemonStorageSystemPtr->unk_117a = 0;
+    gPokemonStorageSystemPtr->iconScrollState = 0;
+    gPokemonStorageSystemPtr->iconScrollToBoxId = boxId;
+    gPokemonStorageSystemPtr->iconScrollDirection = direction;
+    gPokemonStorageSystemPtr->iconScrollDistance = 32;
+    gPokemonStorageSystemPtr->iconScrollSpeed = -6 * direction;
+    gPokemonStorageSystemPtr->iconScrollNumIncoming = 0;
+    if (direction > 0)
+        gPokemonStorageSystemPtr->iconScrollCurColumn = 0;
     else
-        gPokemonStorageSystemPtr->unk_117a = 5;
-    gPokemonStorageSystemPtr->unk_1174 = 24 * gPokemonStorageSystemPtr->unk_117a + 0x64;
-    sub_8098DE0(gPokemonStorageSystemPtr->unk_1176);
+        gPokemonStorageSystemPtr->iconScrollCurColumn = 5;
+    gPokemonStorageSystemPtr->iconScrollPos = 24 * gPokemonStorageSystemPtr->iconScrollCurColumn + 0x64;
+    StartBoxMonIconsScrollOut(gPokemonStorageSystemPtr->iconScrollSpeed);
 }
 
-bool8 sub_80990AC(void)
+bool8 UpdateBoxMonIconScroll(void)
 {
-    if (gPokemonStorageSystemPtr->unk_1172)
-        gPokemonStorageSystemPtr->unk_1172--;
-    switch (gPokemonStorageSystemPtr->unk_117c)
+    if (gPokemonStorageSystemPtr->iconScrollDistance)
+        gPokemonStorageSystemPtr->iconScrollDistance--;
+    switch (gPokemonStorageSystemPtr->iconScrollState)
     {
         case 0:
-            gPokemonStorageSystemPtr->unk_1174 += gPokemonStorageSystemPtr->unk_1176;
-            if (gPokemonStorageSystemPtr->unk_1174 < 0x41 || gPokemonStorageSystemPtr->unk_1174 > 0xfb)
+            gPokemonStorageSystemPtr->iconScrollPos += gPokemonStorageSystemPtr->iconScrollSpeed;
+            if (gPokemonStorageSystemPtr->iconScrollPos < 0x41 || gPokemonStorageSystemPtr->iconScrollPos > 0xfb)
             {
-                sub_8098EA0(gPokemonStorageSystemPtr->unk_117a);
-                gPokemonStorageSystemPtr->unk_1174 += 24 * gPokemonStorageSystemPtr->unk_117b;
-                gPokemonStorageSystemPtr->unk_117c++;
+                DestroyBoxMonIconsInColumn(gPokemonStorageSystemPtr->iconScrollCurColumn);
+                gPokemonStorageSystemPtr->iconScrollPos += 24 * gPokemonStorageSystemPtr->iconScrollDirection;
+                gPokemonStorageSystemPtr->iconScrollState++;
             }
             break;
         case 1:
-            gPokemonStorageSystemPtr->unk_1174 += gPokemonStorageSystemPtr->unk_1176;
-            gPokemonStorageSystemPtr->unk_1178 += sub_8098EE0(gPokemonStorageSystemPtr->unk_117a, gPokemonStorageSystemPtr->unk_1172, gPokemonStorageSystemPtr->unk_1176);
-            if ((gPokemonStorageSystemPtr->unk_117b > 0 && gPokemonStorageSystemPtr->unk_117a == 5) || (gPokemonStorageSystemPtr->unk_117b < 0 && gPokemonStorageSystemPtr->unk_117a == 0))
+            gPokemonStorageSystemPtr->iconScrollPos += gPokemonStorageSystemPtr->iconScrollSpeed;
+            gPokemonStorageSystemPtr->iconScrollNumIncoming += CreateBoxMonIconsInColumn(gPokemonStorageSystemPtr->iconScrollCurColumn, gPokemonStorageSystemPtr->iconScrollDistance, gPokemonStorageSystemPtr->iconScrollSpeed);
+            if ((gPokemonStorageSystemPtr->iconScrollDirection > 0 && gPokemonStorageSystemPtr->iconScrollCurColumn == 5) || (gPokemonStorageSystemPtr->iconScrollDirection < 0 && gPokemonStorageSystemPtr->iconScrollCurColumn == 0))
             {
-                gPokemonStorageSystemPtr->unk_117c++;
+                gPokemonStorageSystemPtr->iconScrollState++;
             }
             else
             {
-                gPokemonStorageSystemPtr->unk_117a += gPokemonStorageSystemPtr->unk_117b;
-                gPokemonStorageSystemPtr->unk_117c = 0;
+                gPokemonStorageSystemPtr->iconScrollCurColumn += gPokemonStorageSystemPtr->iconScrollDirection;
+                gPokemonStorageSystemPtr->iconScrollState = 0;
             }
             break;
         case 2:
-            if (gPokemonStorageSystemPtr->unk_1178 == 0)
+            if (gPokemonStorageSystemPtr->iconScrollNumIncoming == 0)
             {
-                gPokemonStorageSystemPtr->unk_1172++;
+                gPokemonStorageSystemPtr->iconScrollDistance++;
                 return FALSE;
             }
             break;
@@ -269,13 +282,19 @@ bool8 sub_80990AC(void)
     return TRUE;
 }
 
-void sub_8099200(bool8 a0)
+#undef sDistance
+#undef sSpeed
+#undef sScrollInDestX
+#undef sDelay
+#undef sScrollOutX
+
+void CreatePartyMonsSprites(bool8 visible)
 {
     u16 count;
     u16 i;
     u16 species = GetMonData(gPlayerParty + 0, MON_DATA_SPECIES2);
     u32 personality = GetMonData(gPlayerParty + 0, MON_DATA_PERSONALITY);
-    gPokemonStorageSystemPtr->unk_1038[0] = PSS_SpawnMonIconSprite(species, personality, 0x68, 0x40, 1, 11);
+    gPokemonStorageSystemPtr->partySprites[0] = CreateMonIconSprite(species, personality, 0x68, 0x40, 1, 11);
     count = 1;
     for (i = 1; i < PARTY_SIZE; i++)
     {
@@ -283,88 +302,95 @@ void sub_8099200(bool8 a0)
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(gPlayerParty + i, MON_DATA_PERSONALITY);
-            gPokemonStorageSystemPtr->unk_1038[i] = PSS_SpawnMonIconSprite(species, personality, 0x98, (i - 1) * 24 + 0x10, 1, 11);
+            gPokemonStorageSystemPtr->partySprites[i] = CreateMonIconSprite(species, personality, 0x98, (i - 1) * 24 + 0x10, 1, 11);
             count++;
         }
         else
         {
-            gPokemonStorageSystemPtr->unk_1038[i] = NULL;
+            gPokemonStorageSystemPtr->partySprites[i] = NULL;
         }
     }
-    if (!a0)
+    if (!visible)
     {
         for (i = 0; i < count; i++)
         {
             // this routine assumes CompactPartySlots has been called
-            gPokemonStorageSystemPtr->unk_1038[i]->y -= 0xa0;
-            gPokemonStorageSystemPtr->unk_1038[i]->invisible = TRUE;
+            gPokemonStorageSystemPtr->partySprites[i]->y -= 0xa0;
+            gPokemonStorageSystemPtr->partySprites[i]->invisible = TRUE;
         }
     }
 }
 
-void sub_8099310(void)
+void CompactPartySprites(void)
 {
     u16 i;
     u16 count;
 
-    gPokemonStorageSystemPtr->unk_1171 = 0;
+    gPokemonStorageSystemPtr->numPartyToCompact = 0;
     for (i = 0, count = 0; i < PARTY_SIZE; i++)
     {
-        if (gPokemonStorageSystemPtr->unk_1038[i])
+        if (gPokemonStorageSystemPtr->partySprites[i])
         {
             if (i != count)
             {
-                sub_8099388(gPokemonStorageSystemPtr->unk_1038[i], count);
-                gPokemonStorageSystemPtr->unk_1038[i] = NULL;
-                gPokemonStorageSystemPtr->unk_1171++;
+                MovePartySpriteToNextSlot(gPokemonStorageSystemPtr->partySprites[i], count);
+                gPokemonStorageSystemPtr->partySprites[i] = NULL;
+                gPokemonStorageSystemPtr->numPartyToCompact++;
             }
             count++;
         }
     }
 }
 
-u8 sub_8099374(void)
+u8 GetNumPartySpritesCompacting(void)
 {
-    return gPokemonStorageSystemPtr->unk_1171;
+    return gPokemonStorageSystemPtr->numPartyToCompact;
 }
 
-static void sub_8099388(struct Sprite *sprite, u16 a1)
-{
-    s16 r3;
-    s16 r4;
+#define sPartyId   data[1]
+#define sMonX      data[2]
+#define sMonY      data[3]
+#define sSpeedX    data[4]
+#define sSpeedY    data[5]
+#define sMoveSteps data[6]
 
-    sprite->data[1] = a1;
-    if (a1 == 0)
+static void MovePartySpriteToNextSlot(struct Sprite *sprite, u16 partyId)
+{
+    s16 x;
+    s16 y;
+
+    sprite->sPartyId = partyId;
+    if (partyId == 0)
     {
-        r3 = 0x68;
-        r4 = 0x40;
+        x = 0x68;
+        y = 0x40;
     }
     else
     {
-        r3 = 0x98;
-        r4 = 24 * (a1 - 1) + 0x10;
+        x = 0x98;
+        y = 24 * (partyId - 1) + 0x10;
     }
-    sprite->data[2] = sprite->x << 3;
-    sprite->data[3] = sprite->y << 3;
-    sprite->data[4] = (r3 * 8 - sprite->data[2]) / 8;
-    sprite->data[5] = (r4 * 8 - sprite->data[3]) / 8;
-    sprite->data[6] = 8;
-    sprite->callback = sub_80993F4;
+    sprite->sMonX = sprite->x << 3;
+    sprite->sMonY = sprite->y << 3;
+    sprite->sSpeedX = (x * 8 - sprite->sMonX) / 8;
+    sprite->sSpeedY = (y * 8 - sprite->sMonY) / 8;
+    sprite->sMoveSteps = 8;
+    sprite->callback = SpriteCB_MovePartyMonToNextSlot;
 }
 
-static void sub_80993F4(struct Sprite *sprite)
+static void SpriteCB_MovePartyMonToNextSlot(struct Sprite *sprite)
 {
-    if (sprite->data[6])
+    if (sprite->sMoveSteps)
     {
-        sprite->data[2] += sprite->data[4];
-        sprite->data[3] += sprite->data[5];
-        sprite->x = sprite->data[2] >> 3;
-        sprite->y = sprite->data[3] >> 3;
-        sprite->data[6]--;
+        sprite->sMonX += sprite->sSpeedX;
+        sprite->sMonY += sprite->sSpeedY;
+        sprite->x = sprite->sMonX >> 3;
+        sprite->y = sprite->sMonY >> 3;
+        sprite->sMoveSteps--;
     }
     else
     {
-        if (sprite->data[1] == 0)
+        if (sprite->sPartyId == 0)
         {
             sprite->x = 0x68;
             sprite->y = 0x40;
@@ -372,283 +398,290 @@ static void sub_80993F4(struct Sprite *sprite)
         else
         {
             sprite->x = 0x98;
-            sprite->y = (sprite->data[1] - 1) * 24 + 0x10;
+            sprite->y = (sprite->sPartyId - 1) * 24 + 0x10;
         }
         sprite->callback = SpriteCallbackDummy;
-        gPokemonStorageSystemPtr->unk_1038[sprite->data[1]] = sprite;
-        gPokemonStorageSystemPtr->unk_1171--;
+        gPokemonStorageSystemPtr->partySprites[sprite->sPartyId] = sprite;
+        gPokemonStorageSystemPtr->numPartyToCompact--;
     }
 }
 
-void sub_8099480(void)
+#undef sPartyId
+#undef sMonX
+#undef sMonY
+#undef sSpeedX
+#undef sSpeedY
+#undef sMoveSteps
+
+void DestroyMovingMonIcon(void)
 {
-    if (gPokemonStorageSystemPtr->unk_1034)
+    if (gPokemonStorageSystemPtr->movingMonSprite)
     {
-        PSS_DestroyMonIconSprite(gPokemonStorageSystemPtr->unk_1034);
-        gPokemonStorageSystemPtr->unk_1034 = NULL;
+        DestroyBoxMonIcon(gPokemonStorageSystemPtr->movingMonSprite);
+        gPokemonStorageSystemPtr->movingMonSprite = NULL;
     }
 }
 
-void sub_80994A8(s16 y)
+void MovePartySprites(s16 yDelta)
 {
     u16 i;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (gPokemonStorageSystemPtr->unk_1038[i])
+        if (gPokemonStorageSystemPtr->partySprites[i])
         {
             s16 yy;
-            gPokemonStorageSystemPtr->unk_1038[i]->y += y;
-            yy = gPokemonStorageSystemPtr->unk_1038[i]->y + gPokemonStorageSystemPtr->unk_1038[i]->y2 + gPokemonStorageSystemPtr->unk_1038[i]->centerToCornerVecY;
+            gPokemonStorageSystemPtr->partySprites[i]->y += yDelta;
+            yy = gPokemonStorageSystemPtr->partySprites[i]->y + gPokemonStorageSystemPtr->partySprites[i]->y2 + gPokemonStorageSystemPtr->partySprites[i]->centerToCornerVecY;
             if (yy < -0x10 || yy > 0xb0)
-                gPokemonStorageSystemPtr->unk_1038[i]->invisible = TRUE;
+                gPokemonStorageSystemPtr->partySprites[i]->invisible = TRUE;
             else
-                gPokemonStorageSystemPtr->unk_1038[i]->invisible = FALSE;
+                gPokemonStorageSystemPtr->partySprites[i]->invisible = FALSE;
         }
     }
 }
 
-void sub_8099520(u8 a0)
+void DestroyPartyMonIcon(u8 partyId)
 {
-    if (gPokemonStorageSystemPtr->unk_1038[a0])
+    if (gPokemonStorageSystemPtr->partySprites[partyId])
     {
-        PSS_DestroyMonIconSprite(gPokemonStorageSystemPtr->unk_1038[a0]);
-        gPokemonStorageSystemPtr->unk_1038[a0] = NULL;
+        DestroyBoxMonIcon(gPokemonStorageSystemPtr->partySprites[partyId]);
+        gPokemonStorageSystemPtr->partySprites[partyId] = NULL;
     }
 }
 
-void sub_809954C(void)
+void DestroyAllPartyMonIcons(void)
 {
     u16 i;
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (gPokemonStorageSystemPtr->unk_1038[i])
+        if (gPokemonStorageSystemPtr->partySprites[i])
         {
-            PSS_DestroyMonIconSprite(gPokemonStorageSystemPtr->unk_1038[i]);
-            gPokemonStorageSystemPtr->unk_1038[i] = NULL;
+            DestroyBoxMonIcon(gPokemonStorageSystemPtr->partySprites[i]);
+            gPokemonStorageSystemPtr->partySprites[i] = NULL;
         }
     }
 }
 
-void sub_8099584(u8 a0, u8 a1)
+void SetMovingMonSprite(u8 mode, u8 id)
 {
-    if (a0 == 0)
+    if (mode == 0)
     {
-        gPokemonStorageSystemPtr->unk_1034 = gPokemonStorageSystemPtr->unk_1038[a1];
-        gPokemonStorageSystemPtr->unk_1038[a1] = NULL;
+        gPokemonStorageSystemPtr->movingMonSprite = gPokemonStorageSystemPtr->partySprites[id];
+        gPokemonStorageSystemPtr->partySprites[id] = NULL;
     }
-    else if (a0 == 1)
+    else if (mode == 1)
     {
-        gPokemonStorageSystemPtr->unk_1034 = gPokemonStorageSystemPtr->unk_1050[a1];
-        gPokemonStorageSystemPtr->unk_1050[a1] = NULL;
+        gPokemonStorageSystemPtr->movingMonSprite = gPokemonStorageSystemPtr->boxMonsSprites[id];
+        gPokemonStorageSystemPtr->boxMonsSprites[id] = NULL;
     }
     else
     {
         return;
     }
-    gPokemonStorageSystemPtr->unk_1034->callback = sub_80999C4;
-    gPokemonStorageSystemPtr->unk_1034->oam.priority = 1;
-    gPokemonStorageSystemPtr->unk_1034->subpriority = 7;
+    gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCB_HeldMon;
+    gPokemonStorageSystemPtr->movingMonSprite->oam.priority = 1;
+    gPokemonStorageSystemPtr->movingMonSprite->subpriority = 7;
 }
 
-void sub_809960C(u8 a0, u8 a1)
+void SetPlacedMonSprite(u8 boxId, u8 position)
 {
-    if (a0 == 14)
+    if (boxId == TOTAL_BOXES_COUNT)
     {
-        gPokemonStorageSystemPtr->unk_1038[a1] = gPokemonStorageSystemPtr->unk_1034;
-        gPokemonStorageSystemPtr->unk_1038[a1]->oam.priority = 1;
-        gPokemonStorageSystemPtr->unk_1038[a1]->subpriority = 11;
+        gPokemonStorageSystemPtr->partySprites[position] = gPokemonStorageSystemPtr->movingMonSprite;
+        gPokemonStorageSystemPtr->partySprites[position]->oam.priority = 1;
+        gPokemonStorageSystemPtr->partySprites[position]->subpriority = 11;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_1050[a1] = gPokemonStorageSystemPtr->unk_1034;
-        gPokemonStorageSystemPtr->unk_1050[a1]->oam.priority = 2;
-        gPokemonStorageSystemPtr->unk_1050[a1]->subpriority = 18 - (a1 % 6);
+        gPokemonStorageSystemPtr->boxMonsSprites[position] = gPokemonStorageSystemPtr->movingMonSprite;
+        gPokemonStorageSystemPtr->boxMonsSprites[position]->oam.priority = 2;
+        gPokemonStorageSystemPtr->boxMonsSprites[position]->subpriority = 18 - (position % 6);
     }
-    gPokemonStorageSystemPtr->unk_1034->callback = SpriteCallbackDummy;
-    gPokemonStorageSystemPtr->unk_1034 = NULL;
+    gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCallbackDummy;
+    gPokemonStorageSystemPtr->movingMonSprite = NULL;
 }
 
-void sub_80996B0(u8 a0, u8 a1)
+void SaveMonSpriteAtPos(u8 boxId, u8 position)
 {
-    if (a0 == 14)
-        gPokemonStorageSystemPtr->unk_10c8 = gPokemonStorageSystemPtr->unk_1038 + a1;
+    if (boxId == TOTAL_BOXES_COUNT)
+        gPokemonStorageSystemPtr->shiftMonSpritePtr = gPokemonStorageSystemPtr->partySprites + position;
     else
-        gPokemonStorageSystemPtr->unk_10c8 = gPokemonStorageSystemPtr->unk_1050 + a1;
-    gPokemonStorageSystemPtr->unk_1034->callback = SpriteCallbackDummy;
-    gPokemonStorageSystemPtr->unk_1170 = 0;
+        gPokemonStorageSystemPtr->shiftMonSpritePtr = gPokemonStorageSystemPtr->boxMonsSprites + position;
+    gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCallbackDummy;
+    gPokemonStorageSystemPtr->shiftTimer = 0;
 }
 
-bool8 sub_809971C(void)
+bool8 MoveShiftingMons(void)
 {
-    if (gPokemonStorageSystemPtr->unk_1170 == 16)
+    if (gPokemonStorageSystemPtr->shiftTimer == 16)
         return FALSE;
-    gPokemonStorageSystemPtr->unk_1170++;
-    if (gPokemonStorageSystemPtr->unk_1170 & 1)
+    gPokemonStorageSystemPtr->shiftTimer++;
+    if (gPokemonStorageSystemPtr->shiftTimer & 1)
     {
-        (*gPokemonStorageSystemPtr->unk_10c8)->y--;
-        gPokemonStorageSystemPtr->unk_1034->y++;
+        (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->y--;
+        gPokemonStorageSystemPtr->movingMonSprite->y++;
     }
-    (*gPokemonStorageSystemPtr->unk_10c8)->x2 = gSineTable[gPokemonStorageSystemPtr->unk_1170 * 8] / 16;
-    gPokemonStorageSystemPtr->unk_1034->x2 = -(gSineTable[gPokemonStorageSystemPtr->unk_1170 * 8] / 16);
-    if (gPokemonStorageSystemPtr->unk_1170 == 8)
+    (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->x2 = gSineTable[gPokemonStorageSystemPtr->shiftTimer * 8] / 16;
+    gPokemonStorageSystemPtr->movingMonSprite->x2 = -(gSineTable[gPokemonStorageSystemPtr->shiftTimer * 8] / 16);
+    if (gPokemonStorageSystemPtr->shiftTimer == 8)
     {
-        gPokemonStorageSystemPtr->unk_1034->oam.priority = (*gPokemonStorageSystemPtr->unk_10c8)->oam.priority;
-        gPokemonStorageSystemPtr->unk_1034->subpriority = (*gPokemonStorageSystemPtr->unk_10c8)->subpriority;
-        (*gPokemonStorageSystemPtr->unk_10c8)->oam.priority = 1;
-        (*gPokemonStorageSystemPtr->unk_10c8)->subpriority = 7;
+        gPokemonStorageSystemPtr->movingMonSprite->oam.priority = (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->oam.priority;
+        gPokemonStorageSystemPtr->movingMonSprite->subpriority = (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->subpriority;
+        (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->oam.priority = 1;
+        (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->subpriority = 7;
     }
-    if (gPokemonStorageSystemPtr->unk_1170 == 16)
+    if (gPokemonStorageSystemPtr->shiftTimer == 16)
     {
-        struct Sprite *sprite = gPokemonStorageSystemPtr->unk_1034;
-        gPokemonStorageSystemPtr->unk_1034 = *(gPokemonStorageSystemPtr->unk_10c8);
-        (*gPokemonStorageSystemPtr->unk_10c8) = sprite;
-        gPokemonStorageSystemPtr->unk_1034->callback = sub_80999C4;
-        (*gPokemonStorageSystemPtr->unk_10c8)->callback = SpriteCallbackDummy;
+        struct Sprite *sprite = gPokemonStorageSystemPtr->movingMonSprite;
+        gPokemonStorageSystemPtr->movingMonSprite = *(gPokemonStorageSystemPtr->shiftMonSpritePtr);
+        (*gPokemonStorageSystemPtr->shiftMonSpritePtr) = sprite;
+        gPokemonStorageSystemPtr->movingMonSprite->callback = SpriteCB_HeldMon;
+        (*gPokemonStorageSystemPtr->shiftMonSpritePtr)->callback = SpriteCallbackDummy;
     }
     return TRUE;
 }
 
-void sub_809981C(u8 mode, u8 idx)
+void SetReleaseMon(u8 mode, u8 position)
 {
     switch (mode)
     {
         case 0:
-            gPokemonStorageSystemPtr->unk_10cc = gPokemonStorageSystemPtr->unk_1038 + idx;
+            gPokemonStorageSystemPtr->releaseMonSpritePtr = gPokemonStorageSystemPtr->partySprites + position;
             break;
         case 1:
-            gPokemonStorageSystemPtr->unk_10cc = gPokemonStorageSystemPtr->unk_1050 + idx;
+            gPokemonStorageSystemPtr->releaseMonSpritePtr = gPokemonStorageSystemPtr->boxMonsSprites + position;
             break;
         case 2:
-            gPokemonStorageSystemPtr->unk_10cc = &gPokemonStorageSystemPtr->unk_1034;
+            gPokemonStorageSystemPtr->releaseMonSpritePtr = &gPokemonStorageSystemPtr->movingMonSprite;
             break;
         default:
             return;
     }
-    if (*gPokemonStorageSystemPtr->unk_10cc)
+    if (*gPokemonStorageSystemPtr->releaseMonSpritePtr)
     {
-        InitSpriteAffineAnim(*gPokemonStorageSystemPtr->unk_10cc);
-        (*gPokemonStorageSystemPtr->unk_10cc)->oam.affineMode = ST_OAM_AFFINE_NORMAL;
-        (*gPokemonStorageSystemPtr->unk_10cc)->affineAnims = gSpriteAffineAnimTable_83B6F5C;
-        StartSpriteAffineAnim(*gPokemonStorageSystemPtr->unk_10cc, 0);
+        InitSpriteAffineAnim(*gPokemonStorageSystemPtr->releaseMonSpritePtr);
+        (*gPokemonStorageSystemPtr->releaseMonSpritePtr)->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        (*gPokemonStorageSystemPtr->releaseMonSpritePtr)->affineAnims = sAffineAnims_ReleaseMon;
+        StartSpriteAffineAnim(*gPokemonStorageSystemPtr->releaseMonSpritePtr, RELEASE_ANIM_RELEASE);
     }
 }
 
-bool8 sub_80998D8(void)
+bool8 TryHideReleaseMonSprite(void)
 {
-    if (*gPokemonStorageSystemPtr->unk_10cc == NULL || (*gPokemonStorageSystemPtr->unk_10cc)->invisible)
+    if (*gPokemonStorageSystemPtr->releaseMonSpritePtr == NULL || (*gPokemonStorageSystemPtr->releaseMonSpritePtr)->invisible)
         return FALSE;
-    if ((*gPokemonStorageSystemPtr->unk_10cc)->affineAnimEnded)
+    if ((*gPokemonStorageSystemPtr->releaseMonSpritePtr)->affineAnimEnded)
     {
-        (*gPokemonStorageSystemPtr->unk_10cc)->invisible = TRUE;
+        (*gPokemonStorageSystemPtr->releaseMonSpritePtr)->invisible = TRUE;
     }
     return TRUE;
 }
 
-void sub_8099920(void)
+void DestroyReleaseMonIcon(void)
 {
-    if (*gPokemonStorageSystemPtr->unk_10cc)
+    if (*gPokemonStorageSystemPtr->releaseMonSpritePtr)
     {
-        FreeOamMatrix((*gPokemonStorageSystemPtr->unk_10cc)->oam.matrixNum);
-        PSS_DestroyMonIconSprite(*gPokemonStorageSystemPtr->unk_10cc);
-        *gPokemonStorageSystemPtr->unk_10cc = NULL;
+        FreeOamMatrix((*gPokemonStorageSystemPtr->releaseMonSpritePtr)->oam.matrixNum);
+        DestroyBoxMonIcon(*gPokemonStorageSystemPtr->releaseMonSpritePtr);
+        *gPokemonStorageSystemPtr->releaseMonSpritePtr = NULL;
     }
 }
 
-void sub_8099958(void)
+void ReshowReleaseMon(void)
 {
-    if (*gPokemonStorageSystemPtr->unk_10cc)
+    if (*gPokemonStorageSystemPtr->releaseMonSpritePtr)
     {
-        (*gPokemonStorageSystemPtr->unk_10cc)->invisible = FALSE;
-        StartSpriteAffineAnim(*gPokemonStorageSystemPtr->unk_10cc, 1);
+        (*gPokemonStorageSystemPtr->releaseMonSpritePtr)->invisible = FALSE;
+        StartSpriteAffineAnim(*gPokemonStorageSystemPtr->releaseMonSpritePtr, RELEASE_ANIM_CAME_BACK);
     }
 }
 
-bool8 sub_8099990(void)
+bool8 ResetReleaseMonSpritePtr(void)
 {
-    if (gPokemonStorageSystemPtr->unk_10cc == NULL)
+    if (gPokemonStorageSystemPtr->releaseMonSpritePtr == NULL)
         return FALSE;
-    if ((*gPokemonStorageSystemPtr->unk_10cc)->affineAnimEnded)
-        gPokemonStorageSystemPtr->unk_10cc = NULL;
+    if ((*gPokemonStorageSystemPtr->releaseMonSpritePtr)->affineAnimEnded)
+        gPokemonStorageSystemPtr->releaseMonSpritePtr = NULL;
     return TRUE;
 }
 
-static void sub_80999C4(struct Sprite *sprite)
+static void SpriteCB_HeldMon(struct Sprite *sprite)
 {
     sprite->x = gPokemonStorageSystemPtr->unk_11c0->x;
     sprite->y = gPokemonStorageSystemPtr->unk_11c0->y + gPokemonStorageSystemPtr->unk_11c0->y2 + 4;
 }
 
-static u16 PSS_LoadSpeciesIconGfx(u16 a0)
+static u16 TryLoadMonIconTiles(u16 species)
 {
     u16 i;
     u16 retval;
 
-    for (i = 0; i < 40; i++)
+    for (i = 0; i < MAX_MON_ICONS; i++)
     {
-        if (gPokemonStorageSystemPtr->unk_1120[i] == a0)
+        if (gPokemonStorageSystemPtr->iconSpeciesList[i] == species)
             break;
     }
-    if (i == 40)
+    if (i == MAX_MON_ICONS)
     {
-        for (i = 0; i < 40; i++)
+        for (i = 0; i < MAX_MON_ICONS; i++)
         {
-            if (gPokemonStorageSystemPtr->unk_1120[i] == 0)
+            if (gPokemonStorageSystemPtr->iconSpeciesList[i] == 0)
                 break;
         }
     }
-    if (i != 40)
+    if (i != MAX_MON_ICONS)
     {
-        gPokemonStorageSystemPtr->unk_1120[i] = a0;
-        gPokemonStorageSystemPtr->unk_10d0[i]++;
+        gPokemonStorageSystemPtr->iconSpeciesList[i] = species;
+        gPokemonStorageSystemPtr->numIconsPerSpecies[i]++;
         retval = i * 16;
-        CpuCopy32(gMonIconTable[a0], BG_CHAR_ADDR(4) + 32 * retval, 0x200);
+        CpuCopy32(gMonIconTable[species], BG_CHAR_ADDR(4) + 32 * retval, 0x200);
         return retval;
     }
     return 0xFFFF;
 }
 
-static void PSS_ForgetSpeciesIcon(u16 a0)
+static void RemoveSpeciesFromIconList(u16 species)
 {
     u16 i;
 
-    for (i = 0; i < 40; i++)
+    for (i = 0; i < MAX_MON_ICONS; i++)
     {
-        if (gPokemonStorageSystemPtr->unk_1120[i] == a0)
+        if (gPokemonStorageSystemPtr->iconSpeciesList[i] == species)
         {
-            if (--gPokemonStorageSystemPtr->unk_10d0[i] == 0)
-                gPokemonStorageSystemPtr->unk_1120[i] = 0;
+            if (--gPokemonStorageSystemPtr->numIconsPerSpecies[i] == 0)
+                gPokemonStorageSystemPtr->iconSpeciesList[i] = SPECIES_NONE;
             break;
         }
     }
 }
 
-static struct Sprite *PSS_SpawnMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 priority, u8 subpriority)
+static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
-    struct SpriteTemplate template = gSpriteTemplate_83B6F14;
+    struct SpriteTemplate template = sSpriteTemplate_MonIcon;
     u16 tileNum;
     u8 spriteId;
 
     species = mon_icon_convert_unown_species_id(species, personality);
     template.paletteTag = 0xdac0 + gMonIconPaletteIndices[species];
-    tileNum = PSS_LoadSpeciesIconGfx(species);
+    tileNum = TryLoadMonIconTiles(species);
     if (tileNum == 0xFFFF)
         return NULL;
     spriteId = CreateSprite(&template, x, y, subpriority);
     if (spriteId == MAX_SPRITES)
     {
-        PSS_ForgetSpeciesIcon(species);
+        RemoveSpeciesFromIconList(species);
         return NULL;
     }
     gSprites[spriteId].oam.tileNum = tileNum;
-    gSprites[spriteId].oam.priority = priority;
+    gSprites[spriteId].oam.priority = oamPriority;
     gSprites[spriteId].data[0] = species;
     return gSprites + spriteId;
 }
 
-static void PSS_DestroyMonIconSprite(struct Sprite *sprite)
+static void DestroyBoxMonIcon(struct Sprite *sprite)
 {
-    PSS_ForgetSpeciesIcon(sprite->data[0]);
+    RemoveSpeciesFromIconList(sprite->data[0]);
     DestroySprite(sprite);
 }

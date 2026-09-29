@@ -4,6 +4,8 @@
 #include "pc_screen_effect.h"
 #include "mon_markings.h"
 
+#define MAX_MON_ICONS max(IN_BOX_COUNT + PARTY_SIZE + 1, 40)
+
 enum {
     PC_TEXT_EXIT_BOX,
     PC_TEXT_WHAT_YOU_DO,
@@ -139,23 +141,23 @@ struct PokemonStorageSystemData {
     s16 wallpaperId;
     u16 unk_0d62[360];
     u8 unk_1032;
-    struct Sprite *unk_1034;
-    struct Sprite *unk_1038[6]; // party
-    struct Sprite *unk_1050[30]; // box
-    struct Sprite **unk_10c8;
-    struct Sprite **unk_10cc;
-    u16 unk_10d0[40];
-    u16 unk_1120[40];
-    u8 unk_1170;
-    u8 unk_1171;
-    u16 unk_1172;
-    s16 unk_1174;
-    s16 unk_1176;
-    u16 unk_1178;
-    u8 unk_117a;
-    s8 unk_117b;
-    u8 unk_117c;
-    u8 unk_117d;
+    struct Sprite *movingMonSprite;
+    struct Sprite *partySprites[PARTY_SIZE];
+    struct Sprite *boxMonsSprites[IN_BOX_COUNT];
+    struct Sprite **shiftMonSpritePtr;
+    struct Sprite **releaseMonSpritePtr;
+    u16 numIconsPerSpecies[MAX_MON_ICONS];
+    u16 iconSpeciesList[MAX_MON_ICONS];
+    u8 shiftTimer;
+    u8 numPartyToCompact;
+    u16 iconScrollDistance;
+    s16 iconScrollPos;
+    s16 iconScrollSpeed;
+    u16 iconScrollNumIncoming;
+    u8 iconScrollCurColumn;
+    s8 iconScrollDirection;
+    u8 iconScrollState;
+    u8 iconScrollToBoxId;
     u8 filler_117e[2];
     struct StorageText unk_1180[6];
     u8 filler_11b0[8];
@@ -202,7 +204,7 @@ struct PokemonStorageSystemData {
     u16 *markingComboTilesPtr;
     struct PokemonMarkMenu markMenu;
     struct ChooseBoxMenu chooseBoxMenu;
-    struct Pokemon unk_25b4;
+    struct Pokemon movingMon;
     struct Pokemon unk_2618;
     u8 unk_267c;
     u8 unk_267d;
@@ -252,28 +254,29 @@ void FreeChooseBoxMenu(void);
 void CB2_ExitPokeStorage(void);
 void EnterPokeStorage(u8 whichMenu);
 void ResetPokemonStorageSystem(void);
-void ResetPSSMonIconSprites(void);
-void SpawnBoxIconSprites(u8 boxId);
-u8 get_preferred_box(void);
-void sub_8098BF0(void);
-void sub_8098D20(u8 monId);
-bool8 sub_80990AC(void);
-void sub_8099200(bool8 a0);
-void sub_8099310(void);
-bool8 sub_8099374(void);
-void sub_8099480(void);
-void sub_80994A8(s16 a0);
-void sub_8099520(u8 a0);
-void sub_809954C(void);
-void sub_8099584(u8 a0, u8 a1);
-void sub_809960C(u8 a0, u8 a1);
-void sub_80996B0(u8 a0, u8 a1);
-bool8 sub_809971C(void);
-void sub_809981C(u8 mode, u8 idx);
-bool8 sub_80998D8(void);
-void sub_8099920(void);
-void sub_8099958(void);
-bool8 sub_8099990(void);
+void InitMonIconFields(void);
+void InitBoxMonSprites(u8 boxId);
+u8 StorageGetCurrentBox(void);
+void CreateMovingMonIcon(void);
+void CreateBoxMonIconAtPos(u8 boxPosition);
+void InitBoxMonIconScroll(u8 boxId, s8 direction);
+bool8 UpdateBoxMonIconScroll(void);
+void CreatePartyMonsSprites(bool8 visible);
+void CompactPartySprites(void);
+u8 GetNumPartySpritesCompacting(void);
+void DestroyMovingMonIcon(void);
+void MovePartySprites(s16 yDelta);
+void DestroyPartyMonIcon(u8 partyId);
+void DestroyAllPartyMonIcons(void);
+void SetMovingMonSprite(u8 mode, u8 id);
+void SetPlacedMonSprite(u8 boxId, u8 position);
+void SaveMonSpriteAtPos(u8 boxId, u8 position);
+bool8 MoveShiftingMons(void);
+void SetReleaseMon(u8 mode, u8 position);
+bool8 TryHideReleaseMonSprite(void);
+void DestroyReleaseMonIcon(void);
+void ReshowReleaseMon(void);
+bool8 ResetReleaseMonSpritePtr(void);
 struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
 void sub_8099BF8(u8 a0);
 void sub_8099C70(u8 whichBox);

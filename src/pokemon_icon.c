@@ -1017,7 +1017,7 @@ const u16 sSpriteImageSizes[3][4] =
 u16 GetUnownLetterByPersonality(u32);
 const u8 *GetMonIconPtr(u16, u32 personality);
 u8 UpdateMonIconFrame(struct Sprite *);
-u8 CreateMonIconSprite(struct MonIconSpriteTemplate *, s16, s16, u8);
+static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *, s16, s16, u8);
 void DestroyPokemonIconSprite(struct Sprite *);
 
 // duplicate of CreateMonIcon
@@ -1233,7 +1233,7 @@ u8 UpdateMonIconFrame(struct Sprite *sprite)
     return result;
 }
 
-u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
+static u8 CreateMonIconSprite(struct MonIconSpriteTemplate *iconTemplate, s16 x, s16 y, u8 subpriority)
 {
     u8 spriteId;
 
