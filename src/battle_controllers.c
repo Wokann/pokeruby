@@ -519,7 +519,7 @@ void TryReceiveLinkBattleData(void)
     u8 *dest;  //r5
     u8 *src;  //r4
 
-    if (gReceivedRemoteLinkPlayers != 0 && (gBattleTypeFlags & 0x20) && gLinkPlayers[0].linkType == 0x2211)
+    if (gReceivedRemoteLinkPlayers != 0 && (gBattleTypeFlags & BATTLE_TYPE_LINK_IN_BATTLE) && gLinkPlayers[0].linkType == LINKTYPE_BATTLE)
     {
         for (i = 0; i < GetLinkPlayerCount(); i++)
         {

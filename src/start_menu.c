@@ -551,7 +551,7 @@ static u8 StartMenu_PlayerLinkCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        TrainerCard_ShowLinkCard(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
+        ShowTrainerCardInLink(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;

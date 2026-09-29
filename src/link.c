@@ -155,8 +155,8 @@ u8 gLastRecvQueueCount;
 u16 gLinkSavedIme;
 
 #ifdef GERMAN
-u8 deUnkValue1;
-u8 deUnkValue2;
+u8 gGermanDeferredBlockRequestType;
+u8 gGermanLinkBlockRequestState;
 #endif
 
 EWRAM_DATA bool8 gLinkTestDebugValuesEnabled = 0;
@@ -244,7 +244,7 @@ void LinkTestScreen(void)
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
     InitMenuWindow((struct WindowTemplate *)&gMenuTextWindowTemplate);
     ResetBlockSend();
-    gLinkType = 0x1111;
+    gLinkType = LINKTYPE_TRADE;
     OpenLink();
     SeedRng(gMain.vblankCounter1);
 
@@ -568,19 +568,19 @@ static void ProcessRecvCmds(u8 unusedParam)
 #if defined(ENGLISH)
             SendBlock(0, sBlockRequestLookupTable[gRecvCmds[1][i]].address, sBlockRequestLookupTable[gRecvCmds[1][i]].size);
 #elif defined(GERMAN)
-            if (deUnkValue2 == 1)
+            if (gGermanLinkBlockRequestState == 1)
             {
-                deUnkValue2 = 2;
-                deUnkValue1 = gRecvCmds[1][i];
+                gGermanLinkBlockRequestState = 2;
+                gGermanDeferredBlockRequestType = gRecvCmds[1][i];
             }
-            else if (deUnkValue2 == 2 || deUnkValue2 == 3)
+            else if (gGermanLinkBlockRequestState == 2 || gGermanLinkBlockRequestState == 3)
             {
                 SendBlock(0, sBlockRequestLookupTable[gRecvCmds[1][i]].address, sBlockRequestLookupTable[gRecvCmds[1][i]].size);
 
-                if (deUnkValue2 == 2)
-                    deUnkValue2 = 1;
+                if (gGermanLinkBlockRequestState == 2)
+                    gGermanLinkBlockRequestState = 1;
                 else
-                    deUnkValue2 = 0;
+                    gGermanLinkBlockRequestState = 0;
             }
             else
             {
@@ -1175,7 +1175,7 @@ static void LinkCB_WaitCloseLink(void)
 
     if (count == totalCount)
     {
-        gBattleTypeFlags &= ~BATTLE_TYPE_20;
+        gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
         gLinkVSyncDisabled = TRUE;
         CloseLink();
         gLinkCallback = NULL;
@@ -1199,7 +1199,7 @@ static void LinkCB_WaitCloseLinkWithJP(void)
 
     if (count == totalCount)
     {
-        gBattleTypeFlags &= ~BATTLE_TYPE_20;
+        gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
         gLinkVSyncDisabled = TRUE;
         CloseLink();
         gLinkCallback = 0;

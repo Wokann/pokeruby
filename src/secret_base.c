@@ -611,7 +611,7 @@ void Task_WarpOutOfSecretBase(u8 taskId)
             gTasks[taskId].data[0] = 2;
         break;
     case 2:
-        copy_saved_warp2_bank_and_enter_x_to_warp1(WARP_ID_SECRET_BASE);
+        SetWarpDestinationToDynamicWarp(WARP_ID_SECRET_BASE);
         WarpIntoMap();
         gFieldCallback = FieldCB_DefaultWarpExit;
         SetMainCallback2(CB2_LoadMap);

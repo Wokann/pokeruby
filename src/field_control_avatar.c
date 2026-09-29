@@ -771,7 +771,7 @@ static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPositi
 
     if (warpEvent->mapNum == MAP_NUM(MAP_DYNAMIC))
     {
-        copy_saved_warp2_bank_and_enter_x_to_warp1(warpEvent->warpId);
+        SetWarpDestinationToDynamicWarp(warpEvent->warpId);
     }
     else
     {

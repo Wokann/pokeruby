@@ -218,14 +218,14 @@ void TrainerCard_ShowPlayerCard(Callback arg1)
     gTrainerCardPtr->language = GAME_LANGUAGE;
 }
 
-void TrainerCard_ShowLinkCard(u8 playerIndex, Callback arg2)
+void ShowTrainerCardInLink(u8 cardId, Callback callback)
 {
 #if DEBUG
     gDebug_03000748 = 0;
 #endif
-    TrainerCard_InitScreenForLinkPlayer(playerIndex, arg2);
+    TrainerCard_InitScreenForLinkPlayer(cardId, callback);
     SetMainCallback2(sub_8093174);
-    gTrainerCardPtr->language = gLinkPlayers[gLinkPlayerObjectEvents[playerIndex].linkPlayerId].language;
+    gTrainerCardPtr->language = gLinkPlayers[gLinkPlayerObjectEvents[cardId].linkPlayerId].language;
 }
 
 #if DEBUG

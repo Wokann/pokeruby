@@ -1132,7 +1132,7 @@ static void CB2_CreateTradeMenu(void)
                 sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
             break;
         case  1:
-            gLinkType = 0x1122;
+            gLinkType = LINKTYPE_TRADE_CONNECTING;
             OpenLink();
             for (i = 0; i < PARTY_SIZE; i ++)
                 CreateMon(&gEnemyParty[i], 0, 0, 0x20, FALSE, 0, FALSE, 0);
@@ -1576,7 +1576,7 @@ static bool8 BufferTradeParties(void)
         case  2:
             if (mpId == 0)
             {
-                SendBlockRequest(1);
+                SendBlockRequest(BLOCK_REQ_SIZE_200);
             }
             sTradeMenu->bufferPartyState ++;
             break;
@@ -1595,7 +1595,7 @@ static bool8 BufferTradeParties(void)
         case  5:
             if (mpId == 0)
             {
-                SendBlockRequest(1);
+                SendBlockRequest(BLOCK_REQ_SIZE_200);
             }
             sTradeMenu->bufferPartyState ++;
             break;
@@ -1614,7 +1614,7 @@ static bool8 BufferTradeParties(void)
         case  8:
             if (mpId == 0)
             {
-                SendBlockRequest(1);
+                SendBlockRequest(BLOCK_REQ_SIZE_200);
             }
             sTradeMenu->bufferPartyState ++;
             break;
@@ -1633,7 +1633,7 @@ static bool8 BufferTradeParties(void)
         case 11:
             if (mpId == 0)
             {
-                SendBlockRequest(3);
+                SendBlockRequest(BLOCK_REQ_SIZE_220);
             }
             sTradeMenu->bufferPartyState ++;
             break;
@@ -1652,7 +1652,7 @@ static bool8 BufferTradeParties(void)
         case 14:
             if (mpId == 0)
             {
-                SendBlockRequest(4);
+                SendBlockRequest(BLOCK_REQ_SIZE_40);
             }
             sTradeMenu->bufferPartyState ++;
             break;
@@ -3594,7 +3594,7 @@ void CB2_LinkTrade(void)
             // start of nonmatching here?
             TextWindow_LoadStdFrameGraphics(&gTradeAnim->window);
             Menu_EraseScreen();
-            gLinkType = 0x1144;
+            gLinkType = LINKTYPE_TRADE_DISCONNECTED;
             gMain.state++;
             LZDecompressVram(gBattleTextboxTiles, (void *)VRAM);
             CpuCopy16(gBattleTextboxTilemap, gSharedMem, 0x1000);
@@ -4097,7 +4097,7 @@ void CB2_InitInGameTrade(void)
             gTradeAnim->textWindowBaseTileNum = TextWindow_SetBaseTileNum(2);
             TextWindow_LoadStdFrameGraphics(&gTradeAnim->window);
             Menu_EraseScreen();
-            gLinkType = 0x1144;
+            gLinkType = LINKTYPE_TRADE_DISCONNECTED;
             gTradeAnim->isLinkTrade = FALSE;
             gTradeAnim->neverRead_00B6 = 0;
             gTradeAnim->state = 0;

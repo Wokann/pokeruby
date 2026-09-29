@@ -6,7 +6,29 @@
 #define QUEUE_CAPACITY 50
 #define BLOCK_BUFFER_SIZE 0x100
 
-#define LINKTYPE_MYSTERY_EVENT 0x5501
+#define LINKTYPE_TRADE               0x1111
+#define LINKTYPE_TRADE_CONNECTING    0x1122
+#define LINKTYPE_TRADE_SETUP         0x1133
+#define LINKTYPE_TRADE_DISCONNECTED  0x1144
+#define LINKTYPE_BATTLE              0x2211
+#define LINKTYPE_SINGLE_BATTLE       0x2233
+#define LINKTYPE_DOUBLE_BATTLE       0x2244
+#define LINKTYPE_MULTI_BATTLE        0x2255
+#define LINKTYPE_RECORD_MIX_BEFORE   0x3311
+#define LINKTYPE_RECORD_MIX_AFTER    0x3322
+#define LINKTYPE_BERRY_BLENDER_SETUP 0x4411
+#define LINKTYPE_BERRY_BLENDER       0x4422
+#define LINKTYPE_MYSTERY_EVENT       0x5501
+#define LINKTYPE_CONTEST_GMODE       0x6601
+
+enum
+{
+    BLOCK_REQ_SIZE_NONE, // Identical to 200
+    BLOCK_REQ_SIZE_200,
+    BLOCK_REQ_SIZE_100,
+    BLOCK_REQ_SIZE_220,
+    BLOCK_REQ_SIZE_40,
+};
 
 #define LINKCMD_READY_TO_TRADE       0xAABB
 #define LINKCMD_INIT_BLOCK           0xBBBB
@@ -151,8 +173,8 @@ extern u32 gLinkStatus;
 extern u16 gSendCmd[CMD_LENGTH];
 extern u8 gShouldAdvanceLinkState;
 #if GERMAN
-extern u8 deUnkValue1;
-extern u8 deUnkValue2;
+extern u8 gGermanDeferredBlockRequestType;
+extern u8 gGermanLinkBlockRequestState;
 #endif
 extern struct LinkPlayer gLinkPlayers[];
 extern u16 gLinkPartnersHeldKeys[];

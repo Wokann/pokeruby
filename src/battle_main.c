@@ -439,7 +439,7 @@ void CB2_HandleStartBattle(void)
                     for (id = 0; id < 2; id++)  // Why < 2 here?
                     {
                         gLinkPlayers[id].id = id;
-                        gLinkPlayers[id].linkType = 0x2211;
+                        gLinkPlayers[id].linkType = LINKTYPE_BATTLE;
                     }
                 }
 #endif
@@ -569,7 +569,7 @@ void CB2_HandleStartBattle(void)
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
             {
                 gTrainerBattleOpponent = LINK_BATTLE_OPPONENT;
-                gBattleTypeFlags |= BATTLE_TYPE_20;
+                gBattleTypeFlags |= BATTLE_TYPE_LINK_IN_BATTLE;
             }
         }
         break;
@@ -628,7 +628,7 @@ void CB2_PreInitMultiBattle(void)
                 for (i = 0; i < 4; i++)
                 {
                     gLinkPlayers[i].id = i;
-                    gLinkPlayers[i].linkType = 0x2211;
+                    gLinkPlayers[i].linkType = LINKTYPE_BATTLE;
                 }
             }
 #endif
@@ -701,7 +701,7 @@ void CB2_HandleStartMultiBattle(void)
                 for (id = 0; id < 4; id++)
                 {
                     gLinkPlayers[id].id = id;
-                    gLinkPlayers[id].linkType = 0x2211;
+                    gLinkPlayers[id].linkType = LINKTYPE_BATTLE;
                 }
             }
 #endif
@@ -953,7 +953,7 @@ void CB2_HandleStartMultiBattle(void)
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
             {
                 gTrainerBattleOpponent = 0x800;
-                gBattleTypeFlags |= BATTLE_TYPE_20;
+                gBattleTypeFlags |= BATTLE_TYPE_LINK_IN_BATTLE;
             }
         }
         break;

@@ -345,7 +345,7 @@ void Task_HandlePorthole(u8 taskId)
     case EXIT_PORTHOLE: // exit porthole.
         FlagClear(FLAG_DONT_TRANSITION_MUSIC);
         FlagClear(FLAG_HIDE_MAP_NAME_POPUP);
-        copy_saved_warp2_bank_and_enter_x_to_warp1(0);
+        SetWarpDestinationToDynamicWarp(0);
         DoDiveWarp();
         DestroyTask(taskId);
         break;

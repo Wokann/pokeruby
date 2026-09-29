@@ -1076,7 +1076,7 @@ static void CB2_StartBlenderLink(void)
         SetVBlankCallback(VBlankCB0_BerryBlender);
         Text_LoadWindowTemplate(&gWindowTemplate_81E6F68);
         InitMenuWindow(&gWindowTemplate_81E6F68);
-        gLinkType = 0x4422;
+        gLinkType = LINKTYPE_BERRY_BLENDER;
         gBerryBlenderData->field_0++;
         gBerryBlenderData->field_4E = 0;
         gBerryBlenderData->field_7E = 0;
@@ -1141,7 +1141,7 @@ static void CB2_StartBlenderLink(void)
         {
             ResetBlockReceivedFlags();
             if (GetMultiplayerId() == 0)
-                SendBlockRequest(4);
+                SendBlockRequest(BLOCK_REQ_SIZE_40);
             gBerryBlenderData->field_0++;
         }
         break;
@@ -1280,7 +1280,7 @@ static void InitBlenderBgs(void)
     Text_LoadWindowTemplate(&gWindowTemplate_81E6F68);
     InitMenuWindow(&gWindowTemplate_81E6F68);
 
-    gLinkType = 0x4422;
+    gLinkType = LINKTYPE_BERRY_BLENDER;
 
     gBerryBlenderData->field_4E = 0;
     gBerryBlenderData->field_56 = 0;

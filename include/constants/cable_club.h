@@ -8,6 +8,10 @@
 #define USING_RECORD_CORNER  4
 #define USING_MULTI_BATTLE   5
 
+#define CABLE_SEAT_WAITING 0
+#define CABLE_SEAT_SUCCESS 1
+#define CABLE_SEAT_FAILED  2
+
 // Return states for Ruby/Sapphire's wired Cable Club linkup specials.
 #define LINKUP_ONGOING           0
 #define LINKUP_SUCCESS           1

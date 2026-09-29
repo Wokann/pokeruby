@@ -330,7 +330,7 @@ void Task_SendPacket(u8 taskId)
         break;
     case 1:
         if (GetMultiplayerId() == 0)
-            SendBlockRequest(1);
+            SendBlockRequest(BLOCK_REQ_SIZE_200);
         task->tState++;
         break;
     case 2:

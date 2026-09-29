@@ -70,7 +70,7 @@ void Overworld_SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 void warp1_set_2(s8 mapGroup, s8 mapNum, s8 warpId);
 void saved_warp2_set(int unused, s8 mapGroup, s8 mapNum, s8 warpId);
 void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y);
-void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused);
+void SetWarpDestinationToDynamicWarp(u8 unusedWarpId);
 void SetWarpDestinationToHealLocation(u8 healLocationId);
 void Overworld_SetWarpDestToLastHealLoc(void);
 void Overworld_SetHealLocationWarp(u8);

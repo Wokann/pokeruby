@@ -29,7 +29,7 @@ struct TrainerCard {
 };
 
 void TrainerCard_ShowPlayerCard(void (*)(void));
-void TrainerCard_ShowLinkCard(u8, void (*)(void));
+void ShowTrainerCardInLink(u8 cardId, void (*callback)(void));
 void TrainerCard_GenerateCardForPlayer(struct TrainerCard *);
 u8 GetTrainerCardStars(u8 cardId);
 void debug_sub_80A0710(void (*)(void));

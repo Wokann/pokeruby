@@ -481,7 +481,7 @@ void saved_warp2_set_2(int unused, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y
     SetWarpData(&gSaveBlock1.dynamicWarp, mapGroup, mapNum, warpId, x, y);
 }
 
-void copy_saved_warp2_bank_and_enter_x_to_warp1(u8 unused)
+void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
 {
     gWarpDestination = gSaveBlock1.dynamicWarp;
 }

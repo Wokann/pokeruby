@@ -136,7 +136,7 @@ void Task_LinkContest_CommunicateMonsRS(u8 taskId)
                 if (IsLinkTaskFinished()) {
 #if ENGLISH
                     memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
-                    SendBlockRequest(2);
+                    SendBlockRequest(BLOCK_REQ_SIZE_100);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -147,7 +147,7 @@ void Task_LinkContest_CommunicateMonsRS(u8 taskId)
                     {
                         memcpy(gBlockSendBuffer, gContestMons + gContestPlayerMonIndex, sizeof(struct ContestPokemon));
                         UpdateGermanContestLeaderBlockState(FALSE);
-                        SendBlockRequest(2);
+                        SendBlockRequest(BLOCK_REQ_SIZE_100);
                         gTasks[taskId].tState = 1;
                     }
 #endif
@@ -268,7 +268,7 @@ void Task_LinkContest_CommunicateCategoryRS(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    SendBlockRequest(2);
+                    SendBlockRequest(BLOCK_REQ_SIZE_100);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -278,7 +278,7 @@ void Task_LinkContest_CommunicateCategoryRS(u8 taskId)
                     else
                     {
                         UpdateGermanContestLeaderBlockState(TRUE);
-                        SendBlockRequest(2);
+                        SendBlockRequest(BLOCK_REQ_SIZE_100);
                         gTasks[taskId].tState = 1;
                     }
 #endif
@@ -544,7 +544,7 @@ void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId)
                 if (IsLinkTaskFinished())
                 {
 #if ENGLISH
-                    SendBlockRequest(2);
+                    SendBlockRequest(BLOCK_REQ_SIZE_100);
                     gTasks[taskId].tState++;
 #elif GERMAN
                     if (gTasks[taskId].tState == 0)
@@ -554,7 +554,7 @@ void Task_LinkContest_CommunicateLeaderIdsRS(u8 taskId)
                     else
                     {
                         UpdateGermanContestLeaderBlockState(FALSE);
-                        SendBlockRequest(2);
+                        SendBlockRequest(BLOCK_REQ_SIZE_100);
                         gTasks[taskId].tState = 1;
                     }
 #endif
@@ -644,31 +644,31 @@ void Task_LinkContest_CommunicateTurnOrder(u8 taskId)
 
 static void UpdateGermanContestLeaderBlockState(bool32 isCategory)
 {
-    if (deUnkValue2 == 1)
+    if (gGermanLinkBlockRequestState == 1)
     {
         if (isCategory)
-            deUnkValue2 = 3;
+            gGermanLinkBlockRequestState = 3;
         else
-            deUnkValue2 = 2;
+            gGermanLinkBlockRequestState = 2;
     }
 }
 
 static void UpdateGermanContestPlayerBlockState(bool32 isCategory)
 {
-    if (deUnkValue2 == 1)
+    if (gGermanLinkBlockRequestState == 1)
     {
         if (isCategory)
-            deUnkValue2 = 3;
+            gGermanLinkBlockRequestState = 3;
         else
-            deUnkValue2 = 2;
+            gGermanLinkBlockRequestState = 2;
     }
-    else if (deUnkValue2 == 2)
+    else if (gGermanLinkBlockRequestState == 2)
     {
-        SendBlock(0, sBlockRequestLookupTable[deUnkValue1].address, sBlockRequestLookupTable[deUnkValue1].size);
+        SendBlock(0, sBlockRequestLookupTable[gGermanDeferredBlockRequestType].address, sBlockRequestLookupTable[gGermanDeferredBlockRequestType].size);
         if (isCategory)
-            deUnkValue2 = 0;
+            gGermanLinkBlockRequestState = 0;
         else
-            deUnkValue2 = 1;
+            gGermanLinkBlockRequestState = 1;
     }
 }
 
