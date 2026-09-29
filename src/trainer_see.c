@@ -66,7 +66,7 @@ static bool8 CheckTrainer(u8 objEventId)
 
         if (canApproach)
         {
-            TrainerWantsBattle(objEventId, scriptPtr);
+            ConfigureAndSetUpOneTrainerBattle(objEventId, scriptPtr);
             InitTrainerApproachTask(trainerObj, (canApproach - 1));
             return TRUE;
         }

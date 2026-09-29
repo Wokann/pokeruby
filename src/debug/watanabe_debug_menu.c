@@ -1634,7 +1634,7 @@ void Task_WatanabeDebugStartBattleStage5(u8 taskId)
 
 void Task_WatanabeDebugLaunchBattle(u8 taskId)
 {
-    sub_80408BC();
+    PlayBattleBGM();
     gMain.savedCallback = WatanabeDebug_RestartBattleSetup;
     SetMainCallback2(DebugInitBattleSprites);
 }

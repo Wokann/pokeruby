@@ -1086,7 +1086,7 @@ void DoSpecialTrainerBattle(void)
         FillBattleTowerTrainerParty();
 
         CreateTask(Task_StartBattleAfterTransition, 1);
-        current_map_music_set__default_for_battle(0);
+        PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
         break;
@@ -1098,7 +1098,7 @@ void DoSpecialTrainerBattle(void)
         }
 
         CreateTask(Task_StartBattleAfterTransition, 1);
-        current_map_music_set__default_for_battle(0);
+        PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
         break;
@@ -1112,7 +1112,7 @@ void DoSpecialTrainerBattle(void)
         gTrainerBattleOpponent = 0;
 
         CreateTask(Task_StartBattleAfterTransition, 1);
-        current_map_music_set__default_for_battle(0);
+        PlayMapChosenOrBattleBGM(0);
         transition = BattleSetup_GetBattleTowerBattleTransition();
         BattleTransition_StartOnField(transition);
         break;

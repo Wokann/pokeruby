@@ -619,9 +619,9 @@ s32 sub_803FC34(u16 a1)
     return id;
 }
 
-u8 sub_803FC58(u16 trainer)
+u8 GetTrainerEncounterMusicId(u16 trainerOpponentId)
 {
-    return gTrainers[trainer].encounterMusic_gender & 0x7F;
+    return gTrainers[trainerOpponentId].encounterMusic_gender & 0x7F;
 }
 
 u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex)
@@ -1109,7 +1109,7 @@ void ClearBattleMonForms(void)
         gBattleMonForms[i] = 0;
 }
 
-u16 GetMUS_ForBattle(void)
+u16 GetBattleBGM(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON)
         return MUS_VS_KYOGRE_GROUDON;
@@ -1146,21 +1146,21 @@ u16 GetMUS_ForBattle(void)
     return MUS_VS_WILD;
 }
 
-void sub_80408BC(void)
+void PlayBattleBGM(void)
 {
     ResetMapMusic();
     m4aMPlayAllStop();
-    PlayBGM(GetMUS_ForBattle());
+    PlayBGM(GetBattleBGM());
 }
 
-void current_map_music_set__default_for_battle(u16 song)
+void PlayMapChosenOrBattleBGM(u16 songId)
 {
     ResetMapMusic();
     m4aMPlayAllStop();
-    if (song)
-        PlayNewMapMusic(song);
+    if (songId)
+        PlayNewMapMusic(songId);
     else
-        PlayNewMapMusic(GetMUS_ForBattle());
+        PlayNewMapMusic(GetBattleBGM());
 }
 
 const u8 *GetMonSpritePal(struct Pokemon *mon)

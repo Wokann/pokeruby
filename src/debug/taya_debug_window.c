@@ -524,8 +524,8 @@ bool8 TayaDebugMenu_Trainer(void)
 {
     u16 i;
 
-    for (i = 0; i < ARRAY_COUNT(gTrainerEyeTrainers); i++)
-        SetTrainerFlag(gTrainerEyeTrainers[i].opponentIDs[0]);
+    for (i = 0; i < ARRAY_COUNT(gRematchTable); i++)
+        SetTrainerFlag(gRematchTable[i].trainerIds[0]);
 
     SetTrainerFlag(TRAINER_ROXANNE);
     SetTrainerFlag(TRAINER_BRAWLY);

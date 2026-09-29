@@ -72,7 +72,7 @@ u8 *de_sub_8041024(s32 arg0, u32 arg1)
     default:
         trainer = &gTrainers[arg1];
         trainerClass = trainer->trainerClass;
-        local2 = sub_803FC58(arg1);
+        local2 = GetTrainerEncounterMusicId(arg1);
         if (trainerClass == FACILITY_CLASS_LEADER_F)
             return de_sub_8040FE0(local2);
         if (trainerClass == FACILITY_CLASS_BIRD_KEEPER && local2 == FEMALE)
@@ -161,7 +161,7 @@ _0804109C:\n\
     ldrb r5, [r0, 0x1]\n\
     lsls r0, r6, 16\n\
     lsrs r0, 16\n\
-    bl sub_803FC58\n\
+    bl GetTrainerEncounterMusicId\n\
     lsls r0, 24\n\
     lsrs r2, r0, 24\n\
     cmp r5, 0x1A\n\

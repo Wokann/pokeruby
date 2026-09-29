@@ -42,14 +42,14 @@ void BuildTrainerEyesList(void)
 
     gPokenavStructPtr->unkD158 = 0;
 
-    for (i = 0; i < 56; i++)
+    for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
-        if (HasTrainerAlreadyBeenFought(gTrainerEyeTrainers[i].opponentIDs[0]))
+        if (HasTrainerBeenFought(gRematchTable[i].trainerIds[0]))
         {
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gTrainerEyeTrainers[i].opponentIDs[0];
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gRematchTable[i].trainerIds[0];
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchTableIdx = i;
             gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchNo = gSaveBlock1.trainerRematches[i];
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gTrainerEyeTrainers[i].mapGroup, gTrainerEyeTrainers[i].mapNum)->regionMapSectionId;
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gRematchTable[i].mapGroup, gRematchTable[i].mapNum)->regionMapSectionId;
             gPokenavStructPtr->unkD158++;
         }
     }
@@ -57,7 +57,7 @@ void BuildTrainerEyesList(void)
     for (i = 0; i < 13; i++)
     {
         {
-            if (HasTrainerAlreadyBeenFought(sGymLeaderTrainersEye[i].opponentId))
+            if (HasTrainerBeenFought(sGymLeaderTrainersEye[i].opponentId))
             {
                 gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = sGymLeaderTrainersEye[i].opponentId;
                 gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = sGymLeaderTrainersEye[i].regionMapSectionId;

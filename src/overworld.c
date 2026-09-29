@@ -8,6 +8,7 @@
 #include "constants/maps.h"
 #include "constants/songs.h"
 #include "constants/species.h"
+#include "constants/weather.h"
 #include "contest_util.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -870,7 +871,7 @@ u16 GetCurrLocationDefaultMusic(void)
     // Play the desert music only when the sandstorm is active on Route 111.
     if (gSaveBlock1.location.mapGroup == MAP_GROUP(MAP_ROUTE111)
      && gSaveBlock1.location.mapNum == MAP_NUM(MAP_ROUTE111)
-     && GetSavedWeather() == 8)
+     && GetSavedWeather() == WEATHER_SANDSTORM)
         return MUS_ROUTE111;
 
     music = GetLocationMusic(&gSaveBlock1.location);
