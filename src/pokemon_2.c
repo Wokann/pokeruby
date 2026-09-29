@@ -168,9 +168,9 @@ void SetMultiuseSpriteTemplateToTrainerBack(u16 species, u8 a2)
     gCreatingSpriteTemplate = gBattlerSpriteTemplates[a2];
     gCreatingSpriteTemplate.paletteTag = species;
     if (a2 == 0 || a2 == 2)
-        gCreatingSpriteTemplate.anims = gUnknown_081ECACC[species];
+        gCreatingSpriteTemplate.anims = gTrainerBackAnimsPtrTable[species];
     else
-        gCreatingSpriteTemplate.anims = gUnknown_081EC2A4[species];
+        gCreatingSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[species];
 }
 
 void EncryptBoxMon(struct BoxPokemon *boxMon)

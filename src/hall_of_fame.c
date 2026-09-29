@@ -1288,7 +1288,7 @@ void PrepareHallOfFameTrainerPicSpriteTemplate(u16 paletteTag, u8 animID)
     gCreatingSpriteTemplate = sUnknown_0840B6B8;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
     gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gCreatingSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gCreatingSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
 static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID, u32 tid, u32 pid)

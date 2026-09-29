@@ -4576,7 +4576,7 @@ static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imag
     gCreatingSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
     gCreatingSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gCreatingSpriteTemplate.anims = gUnknown_081EC2A4[0];
+    gCreatingSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
 u16 CreateMonSpriteFromNationalDexNumber(u16 dexNum, s16 x, s16 y, u16 paletteNum)
