@@ -24,18 +24,23 @@
 #include "constants/event_objects.h"
 #include "constants/songs.h"
 
-void Task_ExitDoor(u8);
-void Task_ExitNonAnimDoor(u8);
-void Task_ExitNonDoor(u8);
-void Task_WarpAndLoadMap(u8);
-void Task_DoDoorWarp(u8);
+static void Task_ExitDoor(u8);
+static void Task_ExitNonAnimDoor(u8);
+static void Task_ExitNonDoor(u8);
+static void Task_WarpAndLoadMap(u8);
+static void Task_DoDoorWarp(u8);
+static void Task_DoContestHallWarp(u8);
+static bool32 WaitForWeatherFadeIn(void);
 
-void FillPalBufferWhite(void)
+// data[0] is used universally by tasks in this file as a state for switches.
+#define tState data[0]
+
+static void FillPalBufferWhite(void)
 {
     CpuFastFill16(RGB_WHITE, gPlttBufferFaded, PLTT_SIZE);
 }
 
-void FillPalBufferBlack(void)
+static void FillPalBufferBlack(void)
 {
     CpuFastFill16(RGB_BLACK, gPlttBufferFaded, PLTT_SIZE);
 }
@@ -74,12 +79,12 @@ void WarpFadeOutScreen(void)
     }
 }
 
-void SetPlayerVisibility(u8 arg)
+static void SetPlayerVisibility(bool8 visible)
 {
-    SetPlayerInvisibility(!arg);
+    SetPlayerInvisibility(!visible);
 }
 
-void Task_WaitForFadeAndEnableScriptCtx(u8 taskID)
+static void Task_WaitForFadeAndEnableScriptCtx(u8 taskID)
 {
     if (WaitForWeatherFadeIn() == TRUE)
     {
@@ -103,21 +108,21 @@ void FieldCB_ContinueScript(void)
     CreateTask(Task_WaitForFadeAndEnableScriptCtx, 10);
 }
 
-void Task_ReturnToFieldCableLink(u8 taskId)
+static void Task_ReturnToFieldCableLink(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         task->data[1] = CreateTask_ReestablishCableClubLink();
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         if (gTasks[task->data[1]].isActive != TRUE)
         {
             WarpFadeInScreen();
-            task->data[0]++;
+            task->tState++;
         }
         break;
     case 2:
@@ -137,21 +142,21 @@ void FieldCB_ReturnToFieldCableLink(void)
     CreateTask(Task_ReturnToFieldCableLink, 10);
 }
 
-void Task_ReturnToFieldWirelessLink(u8 taskId)
+static void Task_ReturnToFieldWirelessLink(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         SetLinkStandbyCallback();
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         if (IsLinkTaskFinished())
         {
             WarpFadeInScreen();
-            task->data[0]++;
+            task->tState++;
         }
         break;
     case 2:
@@ -172,7 +177,7 @@ void FieldCB_ReturnToFieldWirelessLink(void)
     CreateTask(Task_ReturnToFieldWirelessLink, 10);
 }
 
-void SetUpWarpExitTask(void)
+static void SetUpWarpExitTask(void)
 {
     s16 x, y;
     u8 behavior;
@@ -213,29 +218,29 @@ void FieldCB_TeleportTileWarpExit(void)
     LockPlayerFieldControls();
 }
 
-void Task_ExitDoor(u8 taskId)
+static void Task_ExitDoor(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
     s16 *y = &task->data[3];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
-        SetPlayerVisibility(0);
+        SetPlayerVisibility(FALSE);
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
         FieldSetDoorOpened(*x, *y);
-        task->data[0] = 1;
+        task->tState = 1;
         break;
     case 1:
         if (WaitForWeatherFadeIn())
         {
             u8 objEventId;
-            SetPlayerVisibility(1);
+            SetPlayerVisibility(TRUE);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_WALK_NORMAL_DOWN);
-            task->data[0] = 2;
+            task->tState = 2;
         }
         break;
     case 2:
@@ -245,14 +250,14 @@ void Task_ExitDoor(u8 taskId)
             task->data[1] = FieldAnimateDoorClose(*x, *y);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]);
-            task->data[0] = 3;
+            task->tState = 3;
         }
         break;
     case 3:
         if (task->data[1] < 0 || gTasks[task->data[1]].isActive != TRUE)
         {
             UnfreezeObjectEvents();
-            task->data[0] = 4;
+            task->tState = 4;
         }
         break;
     case 4:
@@ -262,35 +267,35 @@ void Task_ExitDoor(u8 taskId)
     }
 }
 
-void Task_ExitNonAnimDoor(u8 taskId)
+static void Task_ExitNonAnimDoor(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
     s16 *y = &task->data[3];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
-        SetPlayerVisibility(0);
+        SetPlayerVisibility(FALSE);
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
-        task->data[0] = 1;
+        task->tState = 1;
         break;
     case 1:
         if (WaitForWeatherFadeIn())
         {
             u8 objEventId;
-            SetPlayerVisibility(1);
+            SetPlayerVisibility(TRUE);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], GetWalkNormalMovementAction(GetPlayerFacingDirection()));
-            task->data[0] = 2;
+            task->tState = 2;
         }
         break;
     case 2:
         if (IsPlayerStandingStill())
         {
             UnfreezeObjectEvents();
-            task->data[0] = 3;
+            task->tState = 3;
         }
         break;
     case 3:
@@ -300,14 +305,14 @@ void Task_ExitNonAnimDoor(u8 taskId)
     }
 }
 
-void Task_ExitNonDoor(u8 taskId)
+static void Task_ExitNonDoor(u8 taskId)
 {
-    switch (gTasks[taskId].data[0])
+    switch (gTasks[taskId].tState)
     {
     case 0:
         FreezeObjectEvents();
         LockPlayerFieldControls();
-        gTasks[taskId].data[0]++;
+        gTasks[taskId].tState++;
         break;
     case 1:
         if (WaitForWeatherFadeIn())
@@ -320,7 +325,7 @@ void Task_ExitNonDoor(u8 taskId)
     }
 }
 
-void Task_WaitForFadeShowStartMenu(u8 taskId)
+static void Task_WaitForFadeShowStartMenu(u8 taskId)
 {
     if (WaitForWeatherFadeIn() == TRUE)
     {
@@ -336,7 +341,7 @@ void ReturnToFieldOpenStartMenu(void)
     LockPlayerFieldControls();
 }
 
-void Task_ReturnToFieldNoScript(u8 taskId)
+static void Task_ReturnToFieldNoScript(u8 taskId)
 {
     if (WaitForWeatherFadeIn() == 1)
     {
@@ -366,7 +371,7 @@ static bool32 PaletteFadeActive(void)
     return gPaletteFade.active;
 }
 
-bool32 WaitForWeatherFadeIn(void)
+static bool32 WaitForWeatherFadeIn(void)
 {
     if (IsWeatherNotFadingIn() == TRUE)
         return TRUE;
@@ -448,15 +453,15 @@ static void Task_DoCableClubWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         LockPlayerFieldControls();
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         if (!PaletteFadeActive() && BGMusicStopped())
-            task->data[0]++;
+            task->tState++;
         break;
     case 2:
         WarpIntoMap();
@@ -475,24 +480,24 @@ void DoCableClubWarp(void)
     CreateTask(Task_DoCableClubWarp, 10);
 }
 
-void Task_ReturnToWorldFromLinkRoom(u8 taskId)
+static void Task_ReturnToWorldFromLinkRoom(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
         ClearLinkCallback_2();
         FadeScreen(FADE_TO_BLACK, 0);
         TryFadeOutOldMapMusic();
         PlaySE(SE_EXIT);
-        data[0]++;
+        tState++;
         break;
     case 1:
         if (!PaletteFadeActive() && BGMusicStopped())
         {
             SetCloseLinkCallback();
-            data[0]++;
+            tState++;
         }
         break;
     case 2:
@@ -529,21 +534,21 @@ void DebugCycleWarpDestinationAndWarp()
 
 #endif
 
-void Task_WarpAndLoadMap(u8 taskId)
+static void Task_WarpAndLoadMap(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         FreezeObjectEvents();
         LockPlayerFieldControls();
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         if (!PaletteFadeActive() && BGMusicStopped())
         {
-            task->data[0]++;
+            task->tState++;
         }
         break;
     case 2:
@@ -554,20 +559,20 @@ void Task_WarpAndLoadMap(u8 taskId)
     }
 }
 
-void Task_DoDoorWarp(u8 taskId)
+static void Task_DoDoorWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
     s16 *x = &task->data[2];
     s16 *y = &task->data[3];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         FreezeObjectEvents();
         PlayerGetDestCoords(x, y);
         PlaySE(GetDoorSoundEffect(*x, *y - 1));
         task->data[1] = FieldAnimateDoorOpen(*x, *y - 1);
-        task->data[0] = 1;
+        task->tState = 1;
         break;
     case 1:
         if (task->data[1] < 0 || gTasks[task->data[1]].isActive != TRUE)
@@ -577,7 +582,7 @@ void Task_DoDoorWarp(u8 taskId)
             ObjectEventClearHeldMovementIfActive(&gObjectEvents[objEventId]);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventSetHeldMovement(&gObjectEvents[objEventId], MOVEMENT_ACTION_WALK_NORMAL_UP);
-            task->data[0] = 2;
+            task->tState = 2;
         }
         break;
     case 2:
@@ -587,41 +592,41 @@ void Task_DoDoorWarp(u8 taskId)
             task->data[1] = FieldAnimateDoorClose(*x, *y - 1);
             objEventId = GetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0);
             ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]);
-            SetPlayerVisibility(0);
-            task->data[0] = 3;
+            SetPlayerVisibility(FALSE);
+            task->tState = 3;
         }
         break;
     case 3:
         if (task->data[1] < 0 || gTasks[task->data[1]].isActive != TRUE)
         {
-            task->data[0] = 4;
+            task->tState = 4;
         }
         break;
     case 4:
         TryFadeOutOldMapMusic();
         WarpFadeOutScreen();
         PlayRainStoppingSoundEffect();
-        task->data[0] = 0;
+        task->tState = 0;
         task->func = Task_WarpAndLoadMap;
         break;
     }
 }
 
-void Task_DoContestHallWarp(u8 taskId)
+static void Task_DoContestHallWarp(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
     case 0:
         FreezeObjectEvents();
         LockPlayerFieldControls();
-        task->data[0]++;
+        task->tState++;
         break;
     case 1:
         if (!PaletteFadeActive() && BGMusicStopped())
         {
-            task->data[0]++;
+            task->tState++;
         }
         break;
     case 2:
