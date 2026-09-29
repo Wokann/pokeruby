@@ -16,10 +16,10 @@
 extern u8 gPokenavConditionMenuMisc_Gfx[];
 extern u16 gUnknown_08E966B8[];
 
-const u16 gUnknown_083E49F4[] = INCBIN_U16("graphics/misc/mon_markings.gbapal");
-const u8 gUnknown_083E4A14[] = INCBIN_U8("graphics/misc/mon_markings.4bpp");
+static const u16 sMonMarkings_Pal[] = INCBIN_U16("graphics/misc/mon_markings.gbapal");
+static const u8 sMonMarkings_Gfx[] = INCBIN_U8("graphics/misc/mon_markings.4bpp");
 
-const struct OamData gOamData_83E5214 =
+static const struct OamData sOamData_MenuWindow =
 {
     .y = 0,
     .affineMode = 0,
@@ -36,7 +36,7 @@ const struct OamData gOamData_83E5214 =
     .affineParam = 0,
 };
 
-const struct OamData gOamData_83E521C =
+static const struct OamData sOamData_8x8 =
 {
     .y = 0,
     .affineMode = 0,
@@ -53,99 +53,99 @@ const struct OamData gOamData_83E521C =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E5224[] =
+static const union AnimCmd sAnim_Marking_CircleOff[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E522C[] =
+static const union AnimCmd sAnim_Marking_CircleOn[] =
 {
     ANIMCMD_FRAME(1, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5234[] =
+static const union AnimCmd sAnim_Marking_SquareOff[] =
 {
     ANIMCMD_FRAME(2, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E523C[] =
+static const union AnimCmd sAnim_Marking_SquareOn[] =
 {
     ANIMCMD_FRAME(3, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5244[] =
+static const union AnimCmd sAnim_Marking_TriangleOff[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E524C[] =
+static const union AnimCmd sAnim_Marking_TriangleOn[] =
 {
     ANIMCMD_FRAME(5, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5254[] =
+static const union AnimCmd sAnim_Marking_HeartOff[] =
 {
     ANIMCMD_FRAME(6, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E525C[] =
+static const union AnimCmd sAnim_Marking_HeartOn[] =
 {
     ANIMCMD_FRAME(7, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5264[] =
+static const union AnimCmd sAnim_Cursor[] =
 {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E526C[] =
+static const union AnimCmd sAnim_OKCancelText[] =
 {
     ANIMCMD_FRAME(9, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E5274[] =
+static const union AnimCmd *const sAnims_MenuSprite[] =
 {
-    gSpriteAnim_83E5224,
-    gSpriteAnim_83E522C,
-    gSpriteAnim_83E5234,
-    gSpriteAnim_83E523C,
-    gSpriteAnim_83E5244,
-    gSpriteAnim_83E524C,
-    gSpriteAnim_83E5254,
-    gSpriteAnim_83E525C,
-    gSpriteAnim_83E5264,
-    gSpriteAnim_83E526C,
+    sAnim_Marking_CircleOff,
+    sAnim_Marking_CircleOn,
+    sAnim_Marking_SquareOff,
+    sAnim_Marking_SquareOn,
+    sAnim_Marking_TriangleOff,
+    sAnim_Marking_TriangleOn,
+    sAnim_Marking_HeartOff,
+    sAnim_Marking_HeartOn,
+    sAnim_Cursor,
+    sAnim_OKCancelText,
 };
 
-const union AnimCmd gSpriteAnim_83E529C[] =
+static const union AnimCmd sAnim_MenuWindow_UpperHalf[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52A4[] =
+static const union AnimCmd sAnim_MenuWindow_LowerHalf[] =
 {
     ANIMCMD_FRAME(64, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E52AC[] =
+static const union AnimCmd *const sAnims_MenuWindow[] =
 {
-    gSpriteAnim_83E529C,
-    gSpriteAnim_83E52A4,
+    sAnim_MenuWindow_UpperHalf,
+    sAnim_MenuWindow_LowerHalf,
 };
 
-const struct OamData gOamData_83E52B4 =
+static const struct OamData sOamData_MarkingCombo =
 {
     .y = 0,
     .affineMode = 0,
@@ -162,123 +162,123 @@ const struct OamData gOamData_83E52B4 =
     .affineParam = 0,
 };
 
-const union AnimCmd gSpriteAnim_83E52BC[] =
+static const union AnimCmd sAnim_MarkingCombo_AllOff[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52C4[] =
+static const union AnimCmd sAnim_MarkingCombo_Circle[] =
 {
     ANIMCMD_FRAME(4, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52CC[] =
+static const union AnimCmd sAnim_MarkingCombo_Square[] =
 {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52D4[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleSquare[] =
 {
     ANIMCMD_FRAME(12, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52DC[] =
+static const union AnimCmd sAnim_MarkingCombo_Triangle[] =
 {
     ANIMCMD_FRAME(16, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52E4[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleTriangle[] =
 {
     ANIMCMD_FRAME(20, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52EC[] =
+static const union AnimCmd sAnim_MarkingCombo_SquareTriangle[] =
 {
     ANIMCMD_FRAME(24, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52F4[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleSquareTriangle[] =
 {
     ANIMCMD_FRAME(28, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E52FC[] =
+static const union AnimCmd sAnim_MarkingCombo_Heart[] =
 {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5304[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleHeart[] =
 {
     ANIMCMD_FRAME(36, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E530C[] =
+static const union AnimCmd sAnim_MarkingCombo_SquareHeart[] =
 {
     ANIMCMD_FRAME(40, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5314[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleSquareHeart[] =
 {
     ANIMCMD_FRAME(44, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E531C[] =
+static const union AnimCmd sAnim_MarkingCombo_TriangleHeart[] =
 {
     ANIMCMD_FRAME(48, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5324[] =
+static const union AnimCmd sAnim_MarkingCombo_CircleTriangleHeart[] =
 {
     ANIMCMD_FRAME(52, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E532C[] =
+static const union AnimCmd sAnim_MarkingCombo_SquareTriangleHeart[] =
 {
     ANIMCMD_FRAME(56, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd gSpriteAnim_83E5334[] =
+static const union AnimCmd sAnim_MarkingCombo_AllOn[] =
 {
     ANIMCMD_FRAME(60, 5),
     ANIMCMD_END,
 };
 
-const union AnimCmd *const gSpriteAnimTable_83E533C[] =
+static const union AnimCmd *const sAnims_MarkingCombo[] =
 {
-    gSpriteAnim_83E52BC,
-    gSpriteAnim_83E52C4,
-    gSpriteAnim_83E52CC,
-    gSpriteAnim_83E52D4,
-    gSpriteAnim_83E52DC,
-    gSpriteAnim_83E52E4,
-    gSpriteAnim_83E52EC,
-    gSpriteAnim_83E52F4,
-    gSpriteAnim_83E52FC,
-    gSpriteAnim_83E5304,
-    gSpriteAnim_83E530C,
-    gSpriteAnim_83E5314,
-    gSpriteAnim_83E531C,
-    gSpriteAnim_83E5324,
-    gSpriteAnim_83E532C,
-    gSpriteAnim_83E5334,
+    sAnim_MarkingCombo_AllOff,
+    sAnim_MarkingCombo_Circle,
+    sAnim_MarkingCombo_Square,
+    sAnim_MarkingCombo_CircleSquare,
+    sAnim_MarkingCombo_Triangle,
+    sAnim_MarkingCombo_CircleTriangle,
+    sAnim_MarkingCombo_SquareTriangle,
+    sAnim_MarkingCombo_CircleSquareTriangle,
+    sAnim_MarkingCombo_Heart,
+    sAnim_MarkingCombo_CircleHeart,
+    sAnim_MarkingCombo_SquareHeart,
+    sAnim_MarkingCombo_CircleSquareHeart,
+    sAnim_MarkingCombo_TriangleHeart,
+    sAnim_MarkingCombo_CircleTriangleHeart,
+    sAnim_MarkingCombo_SquareTriangleHeart,
+    sAnim_MarkingCombo_AllOn,
 };
 
-static EWRAM_DATA struct PokemonMarkMenu *sMenu = NULL;
+static EWRAM_DATA struct MonMarkingsMenu *sMenu = NULL;
 
 static void CreateMonMarkingsMenuSprites(s16, s16, u16, u16);
 static void SpriteCB_Dummy(struct Sprite *);
@@ -286,7 +286,7 @@ static void SpriteCB_Marking(struct Sprite *);
 static void SpriteCB_Cursor(struct Sprite *);
 static struct Sprite *CreateMarkingComboSprite(u16, u16, const u16 *, u16);
 
-void InitMonMarkingsMenu(struct PokemonMarkMenu *ptr)
+void InitMonMarkingsMenu(struct MonMarkingsMenu *ptr)
 {
     sMenu = ptr;
     sMenu->spriteSheetLoadRequired = FALSE;
@@ -298,13 +298,13 @@ static void BufferMenuWindowTiles(void)
     sMenu->frameTiles = frame->tiles;
     sMenu->framePalette = frame->palette;
     sMenu->tileLoadState = 0;
-    CpuFill16(0, sMenu->menuWindowSpriteTiles, sizeof(sMenu->menuWindowSpriteTiles));
+    CpuFill16(0, sMenu->windowSpriteTiles, sizeof(sMenu->windowSpriteTiles));
 }
 
 static bool8 BufferMenuFrameTiles(void)
 {
     u16 i;
-    u8 *dest = sMenu->menuWindowSpriteTiles + sMenu->tileLoadState * 0x100;
+    u8 *dest = sMenu->windowSpriteTiles + sMenu->tileLoadState * 0x100;
 
     switch (sMenu->tileLoadState)
     {
@@ -374,22 +374,22 @@ void FreeMonMarkingsMenu(void)
 
     for (i = 0; i < 2; i++)
     {
-        if (!sMenu->menuWindowSprites[i])
+        if (!sMenu->windowSprites[i])
             return;
-        DestroySprite(sMenu->menuWindowSprites[i]);
+        DestroySprite(sMenu->windowSprites[i]);
     }
 
     for (i = 0; i < 4; i++)
     {
-        if (!sMenu->menuMarkingSprites[i])
+        if (!sMenu->markingSprites[i])
             return;
-        DestroySprite(sMenu->menuMarkingSprites[i]);
+        DestroySprite(sMenu->markingSprites[i]);
     }
 
     DestroyMenuCursor();
 
-    if (sMenu->menuTextSprite)
-        DestroySprite(sMenu->menuTextSprite);
+    if (sMenu->textSprite)
+        DestroySprite(sMenu->textSprite);
 }
 
 bool8 HandleMonMarkingsMenuInput(void)
@@ -397,7 +397,7 @@ bool8 HandleMonMarkingsMenuInput(void)
     u16 i;
     struct SpriteSheet sheets[3] =
     {
-        { sMenu->menuWindowSpriteTiles, 0x1000, sMenu->baseTileTag },
+        { sMenu->windowSpriteTiles, 0x1000, sMenu->baseTileTag },
         { gPokenavConditionMenuMisc_Gfx, 0x520, sMenu->baseTileTag + 1 },
         { NULL, 0, 0 }
     };
@@ -463,7 +463,7 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
 
     struct SpriteSheet sheets[] =
     {
-        { sMenu->menuWindowSpriteTiles, 0x1000, baseTileTag },
+        { sMenu->windowSpriteTiles, 0x1000, baseTileTag },
         { gPokenavConditionMenuMisc_Gfx, 0x520, baseTileTag + 1 },
         { NULL, 0 }
     };
@@ -479,8 +479,8 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
     {
         baseTileTag,
         basePaletteTag,
-        &gOamData_83E5214,
-        gSpriteAnimTable_83E52AC,
+        &sOamData_MenuWindow,
+        sAnims_MenuWindow,
         NULL,
         gDummySpriteAffineAnimTable,
         SpriteCB_Dummy,
@@ -495,35 +495,35 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
         spriteId = CreateSprite(&sprTemplate, x + 32, y + 32, 2);
         if (spriteId != 64)
         {
-            sMenu->menuWindowSprites[i] = &gSprites[spriteId];
+            sMenu->windowSprites[i] = &gSprites[spriteId];
             StartSpriteAnim(&gSprites[spriteId], i);
         }
         else
         {
-            sMenu->menuWindowSprites[i] = NULL;
+            sMenu->windowSprites[i] = NULL;
             return;
         }
     }
 
-    sMenu->menuWindowSprites[1]->y = y + 96;
+    sMenu->windowSprites[1]->y = y + 96;
 
     sprTemplate.tileTag++;
     sprTemplate.paletteTag++;
-    sprTemplate.anims = gSpriteAnimTable_83E5274;
+    sprTemplate.anims = sAnims_MenuSprite;
     sprTemplate.callback = SpriteCB_Marking;
-    sprTemplate.oam = &gOamData_83E521C;
+    sprTemplate.oam = &sOamData_8x8;
 
     for (i = 0; i < 4; i++)
     {
         spriteId = CreateSprite(&sprTemplate, x + 32, y + 16 + 16 * i, 1);
         if (spriteId != 64)
         {
-            sMenu->menuMarkingSprites[i] = &gSprites[spriteId];
+            sMenu->markingSprites[i] = &gSprites[spriteId];
             gSprites[spriteId].data[0] = i;
         }
         else
         {
-            sMenu->menuMarkingSprites[i] = NULL;
+            sMenu->markingSprites[i] = NULL;
             return;
         }
     }
@@ -534,17 +534,17 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
 
     if (spriteId != 64)
     {
-        sMenu->menuTextSprite = &gSprites[spriteId];
-        sMenu->menuTextSprite->oam.shape = ST_OAM_H_RECTANGLE;
-        sMenu->menuTextSprite->oam.size = 3;
-        StartSpriteAnim(sMenu->menuTextSprite, 9);
-        sMenu->menuTextSprite->x = x + MENU_TEXT_SPRITE_X_OFFSET;
-        sMenu->menuTextSprite->y = y + 80;
-        CalcCenterToCornerVec(sMenu->menuTextSprite, 1, 2, 0);
+        sMenu->textSprite = &gSprites[spriteId];
+        sMenu->textSprite->oam.shape = ST_OAM_H_RECTANGLE;
+        sMenu->textSprite->oam.size = 3;
+        StartSpriteAnim(sMenu->textSprite, 9);
+        sMenu->textSprite->x = x + MENU_TEXT_SPRITE_X_OFFSET;
+        sMenu->textSprite->y = y + 80;
+        CalcCenterToCornerVec(sMenu->textSprite, 1, 2, 0);
     }
     else
     {
-        sMenu->menuTextSprite = NULL;
+        sMenu->textSprite = NULL;
     }
 
     sMenu->cursorBaseY = y + 8;
@@ -573,14 +573,14 @@ static void SpriteCB_Cursor(struct Sprite *sprite)
 struct Sprite *CreateMonMarkingAllCombosSprite(u16 tileTag, u16 paletteTag, const u16 *palette)
 {
     if (!palette)
-        palette = gUnknown_083E49F4;
+        palette = sMonMarkings_Pal;
     return CreateMarkingComboSprite(tileTag, paletteTag, palette, 16);
 }
 
 struct Sprite *CreateMonMarkingComboSprite(u16 tileTag, u16 paletteTag, const u16 *palette)
 {
     if (!palette)
-        palette = gUnknown_083E49F4;
+        palette = sMonMarkings_Pal;
     return CreateMarkingComboSprite(tileTag, paletteTag, palette, 1);
 }
 
@@ -588,13 +588,13 @@ static struct Sprite *CreateMarkingComboSprite(u16 tileTag, u16 paletteTag, cons
 {
     u8 spriteId;
     struct SpriteTemplate sprTemplate;
-    struct SpriteSheet sheet = { gUnknown_083E4A14, 0x80, tileTag };
+    struct SpriteSheet sheet = { sMonMarkings_Gfx, 0x80, tileTag };
     struct SpritePalette sprPalette = { palette, paletteTag };
 
     sprTemplate.tileTag = tileTag;
     sprTemplate.paletteTag = paletteTag;
-    sprTemplate.oam = &gOamData_83E52B4;
-    sprTemplate.anims = gSpriteAnimTable_83E533C;
+    sprTemplate.oam = &sOamData_MarkingCombo;
+    sprTemplate.anims = sAnims_MarkingCombo;
     sprTemplate.images = NULL;
     sprTemplate.affineAnims = gDummySpriteAffineAnimTable;
     sprTemplate.callback = SpriteCB_Dummy;
@@ -613,5 +613,5 @@ static struct Sprite *CreateMarkingComboSprite(u16 tileTag, u16 paletteTag, cons
 
 void UpdateMonMarkingTiles(u8 markings, void *dest)
 {
-    DmaCopy16Defvars(3, gUnknown_083E4A14 + markings * 0x80, dest, 0x80);
+    DmaCopy16Defvars(3, sMonMarkings_Gfx + markings * 0x80, dest, 0x80);
 }

@@ -130,7 +130,7 @@ struct UnkPokenavStruct {
     /*0x769F*/ u8 filler769F[0xB];
     /*0x76AA*/ u8 isConditionGraphSearchMode;
     /*0x76AC*/ struct Sprite *conditionMonMarkingsSprite;
-    /*0x76B0*/ struct PokemonMarkMenu conditionMarkingsMenu;
+    /*0x76B0*/ struct MonMarkingsMenu conditionMarkingsMenu;
     /*0x8764*/ u16 monInfoHeaderGfxStep;
     /*0x8766*/ s16 monInfoHeaderXOffset;
     /*0x8768*/ struct Sprite *portraitSprite;
