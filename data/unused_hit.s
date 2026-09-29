@@ -1,29 +1,30 @@
+#include "constants/battle_anim.h"
 	.include "include/macros.inc"
 	.include "constants/constants.inc"
 
 	.section .rodata
 
 	.align 2
-gSpriteAnim_8393124:: @ 8393124
+sAnim_FlickeringImpact_0:: @ 8393124
 	obj_image_anim_frame 0, 5
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnim_839312C:: @ 839312C
+sAnim_FlickeringImpact_1:: @ 839312C
 	obj_image_anim_frame 0, 5
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnim_8393134:: @ 8393134
+sAnim_FlickeringImpact_2:: @ 8393134
 	obj_image_anim_frame 0, 5
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_839313C:: @ 839313C
-	.4byte gSpriteAnim_8393124
-	.4byte gSpriteAnim_839312C
-	.4byte gSpriteAnim_8393134
+sAnims_FlickeringImpact:: @ 839313C
+	.4byte sAnim_FlickeringImpact_0
+	.4byte sAnim_FlickeringImpact_1
+	.4byte sAnim_FlickeringImpact_2
 
 	.align 2
-gSpriteTemplate_8393148:: @ 8393148
-	spr_template 10135, 10135, gOamData_AffineOff_ObjNormal_32x32, gSpriteAnimTable_839313C, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
+sFlickeringImpactSpriteTemplate:: @ 8393148
+	spr_template ANIM_TAG_IMPACT, ANIM_TAG_IMPACT, gOamData_AffineOff_ObjNormal_32x32, sAnims_FlickeringImpact, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
