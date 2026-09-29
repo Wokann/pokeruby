@@ -1650,7 +1650,7 @@ void HandleDecorationCategoriesMenuInput(u8 taskId)
                     CondenseDecorationsInCategory(sCurDecorationCategory);
                     gCurDecorationItems = gDecorationInventories[sCurDecorationCategory].items;
                     InitDecorationItemsMenuScrollAndCursor(taskId);
-                    ClearVerticalScrollIndicatorPalettes();
+                    ResetScrollIndicatorState();
                     InitDecorationMarkerSpriteIds(gDecorationMarkerSpriteIds, ARRAY_COUNT(gDecorationMarkerSpriteIds));
                     LoadScrollIndicatorPalette();
                     gTasks[taskId].func = ShowDecorationItemsWindow;
@@ -1820,17 +1820,17 @@ void UpdateDecorationItemsDisplay(u8 taskId, u8 unused)
     u16 i;
     u16 j;
     u8 row;
-    if (sDecorationsScrollOffset != 0 || (DestroyVerticalScrollIndicator(TOP_ARROW), sDecorationsScrollOffset != 0))
+    if (sDecorationsScrollOffset != 0 || (DestroyScrollIndicatorArrow(TOP_ARROW), sDecorationsScrollOffset != 0))
     {
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x3c, 0x08);
+        CreateScrollIndicatorArrow(TOP_ARROW, 0x3c, 0x08);
     }
     if (sDecorationsScrollOffset + 7 == sNumOwnedDecorationsInCurCategory)
     {
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     }
     if (sDecorationsScrollOffset + 7 < sNumOwnedDecorationsInCurCategory)
     {
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x3c, 0x98);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 0x3c, 0x98);
     }
     for (i=sDecorationsScrollOffset; i<sDecorationsScrollOffset+8; i++)
     {
@@ -2006,8 +2006,8 @@ void InitDecorationItemsMenuScrollAndCursor(u8 taskId)
 void RemoveDecorationItemsWindow(void)
 {
     DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, ARRAY_COUNT(gDecorationMarkerSpriteIds));
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 14, 19);
 }
@@ -2046,9 +2046,9 @@ void ReinitDecorationCategoriesWindow(u8 taskId)
 void DecorationItemsMenuAction_Cancel(u8 taskId)
 {
     DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, ARRAY_COUNT(gDecorationMarkerSpriteIds));
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
-    BuyMenuFreeMemory();
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
+    FreeScrollIndicatorPalette();
     gTasks[taskId].func = ReinitDecorationCategoriesWindow;
 }
 
@@ -2272,10 +2272,10 @@ void Task_PlaceDecoration(u8 taskId)
             if (!gPaletteFade.active)
             {
                 SetInitialPositions(taskId);
-                DestroyVerticalScrollIndicator(TOP_ARROW);
-                DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+                DestroyScrollIndicatorArrow(TOP_ARROW);
+                DestroyScrollIndicatorArrow(BOTTOM_ARROW);
                 DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, ARRAY_COUNT(gDecorationMarkerSpriteIds));
-                BuyMenuFreeMemory();
+                FreeScrollIndicatorPalette();
                 gTasks[taskId].tState = 1;
             }
             break;

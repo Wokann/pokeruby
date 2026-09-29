@@ -1091,7 +1091,7 @@ static void ShowElevatorMenu(void)
         Menu_DrawStdWindowFrame(0, 0, 8, 11);
         InitMenu(0, 1, 1, 5, 0, 7);
         gScrollableMenuArrowFlags = 0;
-        ClearVerticalScrollIndicatorPalettes();
+        ResetScrollIndicatorState();
         LoadScrollIndicatorPalette();
         CreateElevatorMenuBottomArrow();
     }
@@ -1213,7 +1213,7 @@ void UpdateElevatorMenuScrollIndicators(u8 firstVisibleItem, u8 maxVisibleItems)
     if (firstVisibleItem == 0)
     {
         gScrollableMenuArrowFlags ^= 0x02;
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyScrollIndicatorArrow(TOP_ARROW);
     }
     else
     {
@@ -1226,7 +1226,7 @@ void UpdateElevatorMenuScrollIndicators(u8 firstVisibleItem, u8 maxVisibleItems)
     else if (firstVisibleItem + maxVisibleItems == gScrollableMenuItemCount)
     {
         gScrollableMenuArrowFlags ^= 0x01;
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     }
 }
 
@@ -1277,7 +1277,7 @@ void CreateElevatorMenuTopArrow(void)
     if (gScrollableMenuArrowFlags >> 1 != 1)
     {
         gScrollableMenuArrowFlags |= 0x2;
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x24, 0x08);
+        CreateScrollIndicatorArrow(TOP_ARROW, 0x24, 0x08);
     }
 }
 
@@ -1286,7 +1286,7 @@ void CreateElevatorMenuBottomArrow(void)
     if ((gScrollableMenuArrowFlags & 1) == 0)
     {
         gScrollableMenuArrowFlags |= 0x1;
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x24, 0x48);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 0x24, 0x48);
     }
 }
 
@@ -1358,13 +1358,13 @@ void CloseScrollableMenu(void)
 {
     if ((gScrollableMenuArrowFlags & 1) != 0)
     {
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     }
     if ((gScrollableMenuArrowFlags >> 1) == 1)
     {
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyScrollIndicatorArrow(TOP_ARROW);
     }
-    BuyMenuFreeMemory();
+    FreeScrollIndicatorPalette();
 }
 
 void SetTrickHouseNuggetFlag(void)
@@ -1472,7 +1472,7 @@ void ShowGlassWorkshopMenu(void)
     Menu_DrawStdWindowFrame(0, 0, 10, 11);
     InitMenu(0, 1, 1, 5, 0, 9);
     gScrollableMenuArrowFlags = 0;
-    ClearVerticalScrollIndicatorPalettes();
+    ResetScrollIndicatorState();
     LoadScrollIndicatorPalette();
     CreateGlassWorkshopBottomArrow();
     for (i=0; i<5; i++)
@@ -1571,7 +1571,7 @@ void CreateGlassWorkshopTopArrow(void)
     if (gScrollableMenuArrowFlags >> 1 != 1)
     {
         gScrollableMenuArrowFlags |= 0x02;
-        CreateVerticalScrollIndicators(TOP_ARROW, 0x2c, 0x08);
+        CreateScrollIndicatorArrow(TOP_ARROW, 0x2c, 0x08);
     }
 }
 
@@ -1580,7 +1580,7 @@ void CreateGlassWorkshopBottomArrow(void)
     if (!(gScrollableMenuArrowFlags & 0x01))
     {
         gScrollableMenuArrowFlags |= 0x01;
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0x2c, 0x58);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 0x2c, 0x58);
     }
 }
 
@@ -1589,7 +1589,7 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
     if (newPos == 0)
     {
         gScrollableMenuArrowFlags ^= 0x02;
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyScrollIndicatorArrow(TOP_ARROW);
     }
     else
     {
@@ -1602,7 +1602,7 @@ void GlassWorkshopUpdateScrollIndicators(u8 newPos, u8 maxItems)
     else if (newPos + maxItems == gScrollableMenuItemCount)
     {
         gScrollableMenuArrowFlags ^= 0x01;
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     }
 }
 

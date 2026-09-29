@@ -842,7 +842,7 @@ static void Task_ShowSecretBaseRegistryMenu(u8 taskId)
     s16 *data;
 
     LockPlayerFieldControls();
-    ClearVerticalScrollIndicatorPalettes();
+    ResetScrollIndicatorState();
     LoadScrollIndicatorPalette();
 
     data = gTasks[taskId].data;
@@ -903,7 +903,7 @@ void BuildRegistryMenuItems(u8 taskId)
     {
         Menu_BlankWindowRect(18, 2 * displayedCount + 2, 28, 2 * displayedCount + 3);
         Menu_PrintText(gText_Exit, 18, 2 * displayedCount + 2);
-        DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+        DestroyScrollIndicatorArrow(BOTTOM_ARROW);
         if (displayedCount != 7)
         {
             displayedCount++;
@@ -913,13 +913,13 @@ void BuildRegistryMenuItems(u8 taskId)
     }
     else
     {
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 0xbc, 0x98);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 0xbc, 0x98);
     }
 
     if (tScrollOffset == 0)
-        DestroyVerticalScrollIndicator(TOP_ARROW);
+        DestroyScrollIndicatorArrow(TOP_ARROW);
     else
-        CreateVerticalScrollIndicators(TOP_ARROW, 0xbc, 0x08);
+        CreateScrollIndicatorArrow(TOP_ARROW, 0xbc, 0x08);
 }
 
 void FinalizeRegistryMenu(u8 taskId)
@@ -1015,8 +1015,8 @@ u8 GetRegisteredSecretBaseIndex(u8 registeredBaseIndex)
 
 void ShowRegistryMenuActions(u8 taskId)
 {
-    PauseVerticalScrollIndicator(TOP_ARROW);
-    PauseVerticalScrollIndicator(BOTTOM_ARROW);
+    PauseScrollIndicatorArrow(TOP_ARROW);
+    PauseScrollIndicatorArrow(BOTTOM_ARROW);
     Menu_DrawStdWindowFrame(1, 0, 12, 5);
     Menu_PrintItems(2, 1, 2, (const struct MenuAction *)sRegistryMenuActions);
     InitMenu(0, 2, 1, 2, 0, 10);
@@ -1057,8 +1057,8 @@ void ShowRegistryMenuDeleteConfirmation(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
 
@@ -1112,8 +1112,8 @@ void ReturnToMainRegistryMenu(u8 taskId)
 
     InitMenu(0, 18, 2, tMaxShownItems + 1, tSelectedRow, 11);
     Menu_EraseWindowRect(1, 0, 12, 5);
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartScrollIndicatorArrow(TOP_ARROW);
+    StartScrollIndicatorArrow(BOTTOM_ARROW);
 
     gTasks[taskId].func = HandleRegistryMenuInput;
 }
@@ -1122,9 +1122,9 @@ void GoToSecretBasePCRegisterMenu(u8 taskId)
 {
     u16 curBaseIndex = VarGet(VAR_CURRENT_SECRET_BASE);
 
-    BuyMenuFreeMemory();
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    FreeScrollIndicatorPalette();
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
 
     if (curBaseIndex == 0)
         ScriptContext_SetupScript(SecretBase_EventScript_PCCancel);

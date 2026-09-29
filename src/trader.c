@@ -213,10 +213,10 @@ void DecorationItemsMenuAction_Trade(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 29, 19);
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
     DestroyDecorationMarkerSprites(gDecorationMarkerSpriteIds, 8);
-    BuyMenuFreeMemory();
+    FreeScrollIndicatorPalette();
     if (IsSelectedDecorInThePC() == TRUE)
     {
         gSpecialVar_0x8006 = gCurDecorationItems[gCurDecorationIndex];

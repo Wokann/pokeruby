@@ -16,9 +16,9 @@
 
 #define SCROLL_INDICATOR_PAL_TAG 6
 
-static void SpriteCB_VerticalScrollIndicator(struct Sprite *sprite);
+static void SpriteCB_ScrollIndicatorArrow(struct Sprite *sprite);
 
-static EWRAM_DATA u8 sVerticalScrollIndicatorIds[4] = {0};
+static EWRAM_DATA u8 sScrollIndicatorArrowSpriteIds[4] = {0};
 static EWRAM_DATA struct YesNoFuncTable sYesNo = {0};
 
 static TaskFunc sMessageNextTask;
@@ -100,7 +100,7 @@ static const struct SpriteTemplate sSpriteTemplate_VerticalScrollArrow =
     .anims = sAnims_TwoFrame,
     .images = sSpriteImage_VerticalScrollArrow,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_VerticalScrollIndicator,
+    .callback = SpriteCB_ScrollIndicatorArrow,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_HorizontalScrollArrow =
@@ -111,7 +111,7 @@ static const struct SpriteTemplate sSpriteTemplate_HorizontalScrollArrow =
     .anims = sAnims_TwoFrame,
     .images = sSpriteImage_HorizontalScrollArrow,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_VerticalScrollIndicator,
+    .callback = SpriteCB_ScrollIndicatorArrow,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_DecorationMarker =
@@ -320,13 +320,13 @@ void ClearVideoCallbacks(void)
     SetHBlankCallback(NULL);
 }
 
-void ClearVerticalScrollIndicatorPalettes(void)
+void ResetScrollIndicatorState(void)
 {
     u8 i;
 
     for (i = 0; i < 4; i++)
     {
-        sVerticalScrollIndicatorIds[i] = 0xFF;
+        sScrollIndicatorArrowSpriteIds[i] = 0xFF;
     }
 
     FreeSpritePaletteByTag(SCROLL_INDICATOR_PAL_TAG);
@@ -375,7 +375,7 @@ void DestroyDecorationMarkerSprites(u8 *data, u8 n)
     }
 }
 
-void CreateVerticalScrollIndicators(u8 id, u16 x, u16 y)
+void CreateScrollIndicatorArrow(u8 id, u16 x, u16 y)
 {
     if (id >= 4)
     {
@@ -385,91 +385,91 @@ void CreateVerticalScrollIndicators(u8 id, u16 x, u16 y)
     switch (id)
     {
     case TOP_ARROW:
-        if (sVerticalScrollIndicatorIds[TOP_ARROW] == 0xFF)
+        if (sScrollIndicatorArrowSpriteIds[TOP_ARROW] == 0xFF)
         {
-            sVerticalScrollIndicatorIds[TOP_ARROW] = CreateSprite(&sSpriteTemplate_VerticalScrollArrow, x, y, 0);
-            gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].data[2] = -1;
-            if (sVerticalScrollIndicatorIds[BOTTOM_ARROW] != 0xFF)
+            sScrollIndicatorArrowSpriteIds[TOP_ARROW] = CreateSprite(&sSpriteTemplate_VerticalScrollArrow, x, y, 0);
+            gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].data[2] = -1;
+            if (sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW] != 0xFF)
             {
-                gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].y2 = gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].y2 * -1;
-                gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].data[3] = gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3];
+                gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].y2 = gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].y2 * -1;
+                gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].data[3] = gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].data[3];
             }
             else
             {
-                gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].data[3] = 0;
+                gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].data[3] = 0;
             }
         }
         break;
 
     case BOTTOM_ARROW:
-        if (sVerticalScrollIndicatorIds[BOTTOM_ARROW] == 0xFF)
+        if (sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW] == 0xFF)
         {
-            sVerticalScrollIndicatorIds[BOTTOM_ARROW] = CreateSprite(&sSpriteTemplate_VerticalScrollArrow, x, y, 0);
-            gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[2] = 1;
-            if (sVerticalScrollIndicatorIds[TOP_ARROW] != 0xFF)
+            sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW] = CreateSprite(&sSpriteTemplate_VerticalScrollArrow, x, y, 0);
+            gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].data[2] = 1;
+            if (sScrollIndicatorArrowSpriteIds[TOP_ARROW] != 0xFF)
             {
-                gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].y2 = gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].y2 * -1;
-                gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3] = gSprites[sVerticalScrollIndicatorIds[TOP_ARROW]].data[3];
+                gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].y2 = gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].y2 * -1;
+                gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].data[3] = gSprites[sScrollIndicatorArrowSpriteIds[TOP_ARROW]].data[3];
             }
             else
             {
-                gSprites[sVerticalScrollIndicatorIds[BOTTOM_ARROW]].data[3] = 0;
+                gSprites[sScrollIndicatorArrowSpriteIds[BOTTOM_ARROW]].data[3] = 0;
             }
         }
         break;
 
      case LEFT_ARROW:
-        if (sVerticalScrollIndicatorIds[LEFT_ARROW] == 0xFF)
+        if (sScrollIndicatorArrowSpriteIds[LEFT_ARROW] == 0xFF)
         {
-            sVerticalScrollIndicatorIds[LEFT_ARROW] = CreateSprite(&sSpriteTemplate_HorizontalScrollArrow, x, y, 0);
-            gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].data[0] = -1;
-            if (sVerticalScrollIndicatorIds[RIGHT_ARROW] != 0xFF)
+            sScrollIndicatorArrowSpriteIds[LEFT_ARROW] = CreateSprite(&sSpriteTemplate_HorizontalScrollArrow, x, y, 0);
+            gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].data[0] = -1;
+            if (sScrollIndicatorArrowSpriteIds[RIGHT_ARROW] != 0xFF)
             {
-                gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].x2 = gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].x2 * -1;
-                gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].data[1] = gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1];
+                gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].x2 = gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].x2 * -1;
+                gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].data[1] = gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].data[1];
             }
             else
             {
-                gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].data[1] = 0;
+                gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].data[1] = 0;
             }
         }
         break;
 
     case RIGHT_ARROW:
-        if (sVerticalScrollIndicatorIds[RIGHT_ARROW] == 0xFF)
+        if (sScrollIndicatorArrowSpriteIds[RIGHT_ARROW] == 0xFF)
         {
-            sVerticalScrollIndicatorIds[RIGHT_ARROW] = CreateSprite(&sSpriteTemplate_HorizontalScrollArrow, x, y, 0);
-            gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].data[0] = 1;
-            if (sVerticalScrollIndicatorIds[LEFT_ARROW] != 0xFF)
+            sScrollIndicatorArrowSpriteIds[RIGHT_ARROW] = CreateSprite(&sSpriteTemplate_HorizontalScrollArrow, x, y, 0);
+            gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].data[0] = 1;
+            if (sScrollIndicatorArrowSpriteIds[LEFT_ARROW] != 0xFF)
             {
-                gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].x2 = gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].x2 * -1;
-                gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1] = gSprites[sVerticalScrollIndicatorIds[LEFT_ARROW]].data[1];
+                gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].x2 = gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].x2 * -1;
+                gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].data[1] = gSprites[sScrollIndicatorArrowSpriteIds[LEFT_ARROW]].data[1];
             }
             else
             {
-                gSprites[sVerticalScrollIndicatorIds[RIGHT_ARROW]].data[1] = 0;
+                gSprites[sScrollIndicatorArrowSpriteIds[RIGHT_ARROW]].data[1] = 0;
             }
         }
         break;
     }
 
-    StartSpriteAnim(&gSprites[sVerticalScrollIndicatorIds[id]], id & 1);
+    StartSpriteAnim(&gSprites[sScrollIndicatorArrowSpriteIds[id]], id & 1);
 }
 
-void SetVerticalScrollIndicators(u8 id, bool8 invisible)
+void SetScrollIndicatorArrowInvisibility(u8 id, bool8 invisible)
 {
-    if (id < 4 && sVerticalScrollIndicatorIds[id] != 0xFF)
+    if (id < 4 && sScrollIndicatorArrowSpriteIds[id] != 0xFF)
     {
-        gSprites[sVerticalScrollIndicatorIds[id]].invisible = invisible;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].invisible = invisible;
     }
 }
 
-void DestroyVerticalScrollIndicator(u8 id)
+void DestroyScrollIndicatorArrow(u8 id)
 {
-    if (id < 4 && sVerticalScrollIndicatorIds[id] != 0xFF)
+    if (id < 4 && sScrollIndicatorArrowSpriteIds[id] != 0xFF)
     {
-        DestroySprite(&gSprites[sVerticalScrollIndicatorIds[id]]);
-        sVerticalScrollIndicatorIds[id] = 0xFF;
+        DestroySprite(&gSprites[sScrollIndicatorArrowSpriteIds[id]]);
+        sScrollIndicatorArrowSpriteIds[id] = 0xFF;
     }
 }
 
@@ -478,12 +478,12 @@ void LoadScrollIndicatorPalette(void)
     LoadSpritePalette(&sScrollIndicatorPalette);
 }
 
-void BuyMenuFreeMemory(void)
+void FreeScrollIndicatorPalette(void)
 {
     FreeSpritePaletteByTag(SCROLL_INDICATOR_PAL_TAG);
 }
 
-static void SpriteCB_VerticalScrollIndicator(struct Sprite *sprite)
+static void SpriteCB_ScrollIndicatorArrow(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
@@ -513,43 +513,43 @@ static void SpriteCB_VerticalScrollIndicator(struct Sprite *sprite)
     }
 }
 
-void StopVerticalScrollIndicators(u8 id)
+void StopScrollIndicatorArrow(u8 id)
 {
-    if (sVerticalScrollIndicatorIds[id] != 0xFF && id < 4)
+    if (sScrollIndicatorArrowSpriteIds[id] != 0xFF && id < 4)
     {
-        gSprites[sVerticalScrollIndicatorIds[id]].callback = SpriteCallbackDummy;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].callback = SpriteCallbackDummy;
     }
 }
 
-void StartVerticalScrollIndicators(u8 id)
+void StartScrollIndicatorArrow(u8 id)
 {
-    if (sVerticalScrollIndicatorIds[id] != 0xFF && id < 4)
+    if (sScrollIndicatorArrowSpriteIds[id] != 0xFF && id < 4)
     {
-        gSprites[sVerticalScrollIndicatorIds[id]].callback = SpriteCB_VerticalScrollIndicator;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].callback = SpriteCB_ScrollIndicatorArrow;
     }
 }
 
-static void ResetVerticalScrollIndicators(u8 id)
+static void ResetScrollIndicatorArrowPosition(u8 id)
 {
-    if (sVerticalScrollIndicatorIds[id] != 0xFF && id < 4)
+    if (sScrollIndicatorArrowSpriteIds[id] != 0xFF && id < 4)
     {
-        gSprites[sVerticalScrollIndicatorIds[id]].x2 = 0;
-        gSprites[sVerticalScrollIndicatorIds[id]].y2 = 0;
-        gSprites[sVerticalScrollIndicatorIds[id]].data[1] = 0;
-        gSprites[sVerticalScrollIndicatorIds[id]].data[3] = 0;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].x2 = 0;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].y2 = 0;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].data[1] = 0;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].data[3] = 0;
     }
 }
 
-void PauseVerticalScrollIndicator(u8 id)
+void PauseScrollIndicatorArrow(u8 id)
 {
-    StopVerticalScrollIndicators(id);
-    ResetVerticalScrollIndicators(id);
+    StopScrollIndicatorArrow(id);
+    ResetScrollIndicatorArrowPosition(id);
 }
 
-void SetVerticalScrollIndicatorPriority(u8 id, u8 priority)
+void SetScrollIndicatorArrowPriority(u8 id, u8 priority)
 {
-    if (sVerticalScrollIndicatorIds[id] != 0xFF && id < 4)
+    if (sScrollIndicatorArrowSpriteIds[id] != 0xFF && id < 4)
     {
-        gSprites[sVerticalScrollIndicatorIds[id]].oam.priority = priority;
+        gSprites[sScrollIndicatorArrowSpriteIds[id]].oam.priority = priority;
     }
 }

@@ -432,20 +432,20 @@ static bool8 SetupBagMultistep(void)
         gMain.state++;
         break;
     case 10:
-        ClearVerticalScrollIndicatorPalettes();
+        ResetScrollIndicatorState();
         LoadScrollIndicatorPalette();
-        CreateVerticalScrollIndicators(TOP_ARROW, 172, 12);
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 172, 148);
-        CreateVerticalScrollIndicators(LEFT_ARROW, 28, 88);
-        CreateVerticalScrollIndicators(RIGHT_ARROW, 100, 88);
-        SetVerticalScrollIndicatorPriority(TOP_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(BOTTOM_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(LEFT_ARROW, 2);
-        SetVerticalScrollIndicatorPriority(RIGHT_ARROW, 2);
+        CreateScrollIndicatorArrow(TOP_ARROW, 172, 12);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 172, 148);
+        CreateScrollIndicatorArrow(LEFT_ARROW, 28, 88);
+        CreateScrollIndicatorArrow(RIGHT_ARROW, 100, 88);
+        SetScrollIndicatorArrowPriority(TOP_ARROW, 2);
+        SetScrollIndicatorArrowPriority(BOTTOM_ARROW, 2);
+        SetScrollIndicatorArrowPriority(LEFT_ARROW, 2);
+        SetScrollIndicatorArrowPriority(RIGHT_ARROW, 2);
         if (sBagMenuLocation == ITEMMENULOCATION_BERRY_TREE || sBagMenuLocation == ITEMMENULOCATION_BERRY_BLENDER)
         {
-            SetVerticalScrollIndicators(LEFT_ARROW, INVISIBLE);
-            SetVerticalScrollIndicators(RIGHT_ARROW, INVISIBLE);
+            SetScrollIndicatorArrowInvisibility(LEFT_ARROW, INVISIBLE);
+            SetScrollIndicatorArrowInvisibility(RIGHT_ARROW, INVISIBLE);
         }
         gMain.state++;
         break;
@@ -695,10 +695,10 @@ static void SetFieldItemMenuActions(void)
 static void Task_EnableBagMenuInput(u8 taskId)
 {
     gTasks[taskId].func = Task_BagMenu_HandleInput;
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
-    StartVerticalScrollIndicators(LEFT_ARROW);
-    StartVerticalScrollIndicators(RIGHT_ARROW);
+    StartScrollIndicatorArrow(TOP_ARROW);
+    StartScrollIndicatorArrow(BOTTOM_ARROW);
+    StartScrollIndicatorArrow(LEFT_ARROW);
+    StartScrollIndicatorArrow(RIGHT_ARROW);
 }
 
 static void Task_AnimateBagPocketSwitch(u8 taskId)
@@ -740,8 +740,8 @@ static void Task_AnimateBagPocketSwitch(u8 taskId)
         Task_EnableBagMenuInput(FindTaskIdByFunc(Task_HandleBagPocketSwitchInput));
         DestroyTask(taskId);
         ItemListMenu_InitMenu();
-        SetVerticalScrollIndicators(LEFT_ARROW, VISIBLE);
-        SetVerticalScrollIndicators(RIGHT_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(LEFT_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(RIGHT_ARROW, VISIBLE);
     }
 }
 
@@ -1329,14 +1329,14 @@ static void PrintBagItemList(u16 taskId, int topItemOffset, int bottomItemOffset
         break;
     }
     if (gBagPocketScrollStates[sCurrentBagPocket].scrollTop != 0)
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, VISIBLE);
     else
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
     if ((sBagMenuLocation != ITEMMENULOCATION_BERRY_BLENDER && gBagPocketScrollStates[sCurrentBagPocket].scrollTop + 8 < gBagPocketScrollStates[sCurrentBagPocket].numSlots + 1)
      || (sBagMenuLocation == ITEMMENULOCATION_BERRY_BLENDER && gBagPocketScrollStates[sCurrentBagPocket].scrollTop + 8 < gBagPocketScrollStates[sCurrentBagPocket].numSlots))
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
     else
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
 }
 
 static void PrintBagItemListRange(u16 taskId, int topItemOffset, int bottomItemOffset)
@@ -1531,14 +1531,14 @@ static void DrawItemQuantityWindow(u8 taskId, u8 b, u8 c, u8 d, u8 e, u8 digits)
 static void SwitchBagPocket(s8 delta, u8 b)
 {
     PlaySE(SE_SELECT);
-    SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(LEFT_ARROW, INVISIBLE);
-    SetVerticalScrollIndicators(RIGHT_ARROW, INVISIBLE);
-    PauseVerticalScrollIndicator(TOP_ARROW);
-    PauseVerticalScrollIndicator(BOTTOM_ARROW);
-    PauseVerticalScrollIndicator(LEFT_ARROW);
-    PauseVerticalScrollIndicator(RIGHT_ARROW);
+    SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
+    SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
+    SetScrollIndicatorArrowInvisibility(LEFT_ARROW, INVISIBLE);
+    SetScrollIndicatorArrowInvisibility(RIGHT_ARROW, INVISIBLE);
+    PauseScrollIndicatorArrow(TOP_ARROW);
+    PauseScrollIndicatorArrow(BOTTOM_ARROW);
+    PauseScrollIndicatorArrow(LEFT_ARROW);
+    PauseScrollIndicatorArrow(RIGHT_ARROW);
     ChangePocket(gBGTilemapBuffers[2], delta);
     DrawPocketIndicatorDots(gBGTilemapBuffers[2], sCurrentBagPocket);
     SetFieldItemMenuActions();
@@ -1690,10 +1690,10 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                     gCurSelectedItemSlotIndex = gBagPocketScrollStates[sCurrentBagPocket].scrollTop + gBagPocketScrollStates[sCurrentBagPocket].cursorPos;
                     gSpecialVar_ItemId = gCurrentBagPocketItemSlots[gCurSelectedItemSlotIndex].itemId;
                     sBagMenuLocationCallbacks[sBagMenuLocation].onItemSelect(taskId);
-                    StopVerticalScrollIndicators(TOP_ARROW);
-                    StopVerticalScrollIndicators(BOTTOM_ARROW);
-                    StopVerticalScrollIndicators(LEFT_ARROW);
-                    StopVerticalScrollIndicators(RIGHT_ARROW);
+                    StopScrollIndicatorArrow(TOP_ARROW);
+                    StopScrollIndicatorArrow(BOTTOM_ARROW);
+                    StopScrollIndicatorArrow(LEFT_ARROW);
+                    StopScrollIndicatorArrow(RIGHT_ARROW);
                     SetBagItemListRedrawFlag();
                 }
                 else
@@ -2967,8 +2967,8 @@ static void Task_WallyTutorialBagMenu(u8 taskId)
         break;
     case 204:
         PlaySE(SE_SELECT);
-        StopVerticalScrollIndicators(LEFT_ARROW);
-        StopVerticalScrollIndicators(RIGHT_ARROW);
+        StopScrollIndicatorArrow(LEFT_ARROW);
+        StopScrollIndicatorArrow(RIGHT_ARROW);
         gSpecialVar_ItemId = ITEM_POKE_BALL;
         sItemMenuActionList = sBattleItemMenuActions;
         sItemMenuOptionCount = 2;

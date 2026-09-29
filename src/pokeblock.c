@@ -329,10 +329,10 @@ static bool8 InitPokeblockMenu(void)
             }
             break;
         case 12:
-            ClearVerticalScrollIndicatorPalettes();
+            ResetScrollIndicatorState();
             LoadScrollIndicatorPalette();
-            CreateVerticalScrollIndicators(TOP_ARROW, 0xb0, 0x08);
-            CreateVerticalScrollIndicators(BOTTOM_ARROW, 0xb0, 0x98);
+            CreateScrollIndicatorArrow(TOP_ARROW, 0xb0, 0x08);
+            CreateScrollIndicatorArrow(BOTTOM_ARROW, 0xb0, 0x98);
             gMain.state++;
             break;
         case 13:
@@ -578,19 +578,19 @@ static void DrawPokeblockInfo(bool8 isSwapSelection)
     }
     if (sPokeblockMenuState.scrollOffset)
     {
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, VISIBLE);
     }
     else
     {
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
     }
     if (sPokeblockMenuState.itemsNo > sPokeblockMenuState.maxShowed && sPokeblockMenuState.scrollOffset + sPokeblockMenuState.maxShowed != sPokeblockMenuState.itemsNo)
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
     }
     else
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     }
     for (i=0; i<5; i++)
     {
@@ -794,9 +794,9 @@ static void SwapPokeblockMenuItems(u8 taskId)
 
 static void FreePokeblockMenuResources(void)
 {
-    DestroyVerticalScrollIndicator(TOP_ARROW);
-    DestroyVerticalScrollIndicator(BOTTOM_ARROW);
-    BuyMenuFreeMemory();
+    DestroyScrollIndicatorArrow(TOP_ARROW);
+    DestroyScrollIndicatorArrow(BOTTOM_ARROW);
+    FreeScrollIndicatorPalette();
 }
 
 static void Task_FreeDataAndExitPokeblockCase(u8 taskId)
@@ -828,8 +828,8 @@ static void ShowPokeblockActionsWindow(u8 taskId)
     int menuYOffset = 0;
     if (sPokeblockCaseContext > PBLOCK_CASE_FIELD)
         menuYOffset = 2;
-    StopVerticalScrollIndicators(TOP_ARROW);
-    StopVerticalScrollIndicators(BOTTOM_ARROW);
+    StopScrollIndicatorArrow(TOP_ARROW);
+    StopScrollIndicatorArrow(BOTTOM_ARROW);
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_DrawStdWindowFrame(7, menuYOffset + 4, 13, 11);
     Menu_PrintItemsReordered(8, menuYOffset + 5, sNumPokeblockActions, sPokeblockMenuActions, sPokeblockActionIds);
@@ -896,7 +896,7 @@ static void ShowTossPokeblockPrompt(u8 taskId)
 
 static void PokeblockAction_Toss(u8 taskId)
 {
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+    SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     gTasks[taskId].func = ShowTossPokeblockPrompt;
 }
 
@@ -918,11 +918,11 @@ static void TossedPokeblockMessage(u8 taskId)
 
 static void CloseTossPokeblockWindow(u8 taskId)
 {
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartScrollIndicatorArrow(TOP_ARROW);
+    StartScrollIndicatorArrow(BOTTOM_ARROW);
     if (sPokeblockMenuState.itemsNo > sPokeblockMenuState.maxShowed && sPokeblockMenuState.scrollOffset + sPokeblockMenuState.maxShowed != sPokeblockMenuState.itemsNo)
     {
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
     }
     BasicInitMenuWindow(&gWindowTemplate_81E6E50);
     Menu_EraseWindowRect(7, 6, 13, 11);
@@ -942,14 +942,14 @@ static void RefreshPokeblockListAfterToss(u8 taskId)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
     UpdatePokeblockList(sPokeblockMenuState.scrollOffset);
-    SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+    SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     gTasks[taskId].func = Task_WaitTossMessageDismissal;
 }
 
 static void PokeblockAction_Cancel(u8 taskId)
 {
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartScrollIndicatorArrow(TOP_ARROW);
+    StartScrollIndicatorArrow(BOTTOM_ARROW);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(7, 4, 13, 11);
     gTasks[taskId].func = Task_HandlePokeblockMenuInput;

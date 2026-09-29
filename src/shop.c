@@ -301,27 +301,27 @@ static void LoadShopMenuTextColors(void)
 
 static void DrawFirstMartScrollIndicators(void)
 {
-    ClearVerticalScrollIndicatorPalettes();
+    ResetScrollIndicatorState();
 
     if (gMartInfo.itemCount >= 8)
     {
-        CreateVerticalScrollIndicators(TOP_ARROW, 172, 12);
-        CreateVerticalScrollIndicators(BOTTOM_ARROW, 172, 148);
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        CreateScrollIndicatorArrow(TOP_ARROW, 172, 12);
+        CreateScrollIndicatorArrow(BOTTOM_ARROW, 172, 148);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
     }
 }
 
 static void Shop_TryDrawVerticalScrollIndicators(void)
 {
     if (gMartInfo.choicesAbove == 0)
-        SetVerticalScrollIndicators(TOP_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, INVISIBLE);
     else
-        SetVerticalScrollIndicators(TOP_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(TOP_ARROW, VISIBLE);
 
     if (gMartInfo.choicesAbove + 7 >= gMartInfo.itemCount)
-        SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     else
-        SetVerticalScrollIndicators(BOTTOM_ARROW, VISIBLE);
+        SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
 }
 
 // what is the point of this function? the tiles always get overwritten by BuyMenuDrawTextboxBG.
@@ -1077,9 +1077,9 @@ static void Shop_DoCursorAction(u8 taskId)
 
             if (gMartInfo.choicesAbove + gMartInfo.cursor != gMartInfo.itemCount) // did you not hit CANCEL?
             {
-                PauseVerticalScrollIndicator(TOP_ARROW);
-                PauseVerticalScrollIndicator(BOTTOM_ARROW);
-                SetVerticalScrollIndicators(BOTTOM_ARROW, INVISIBLE);
+                PauseScrollIndicatorArrow(TOP_ARROW);
+                PauseScrollIndicatorArrow(BOTTOM_ARROW);
+                SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
                 Shop_DisplayPriceInList(gMartInfo.cursor, gMartInfo.cursor, 1);
                 Menu_DestroyCursor();
                 Menu_EraseWindowRect(0, 0xC, 0xD, 0x13);
@@ -1140,8 +1140,8 @@ static void Task_ReturnToBuyMenu(u8 taskId)
     Shop_DrawViewportTiles();
     Shop_InitMenus(6, 7);
     Shop_PrintItemDesc();
-    StartVerticalScrollIndicators(TOP_ARROW);
-    StartVerticalScrollIndicators(BOTTOM_ARROW);
+    StartScrollIndicatorArrow(TOP_ARROW);
+    StartScrollIndicatorArrow(BOTTOM_ARROW);
     Shop_TryDrawVerticalScrollIndicators();
     gTasks[taskId].func = Shop_DoCursorAction;
 }
@@ -1158,7 +1158,7 @@ static void Task_ExitBuyMenuDoFade(u8 taskId)
     if (!gPaletteFade.active)
     {
         HideMoneyBox(0, 0);
-        BuyMenuFreeMemory();
+        FreeScrollIndicatorPalette();
         SetMainCallback2(CB2_ReturnToField);
         DestroyTask(taskId);
     }
