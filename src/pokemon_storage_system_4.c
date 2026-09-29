@@ -611,7 +611,7 @@ void DrawBoxTitleText(const u8 *tiles, const u8 *text)
 {
     u8 *tileBuffer = gPokeStorageTileBuffer;
     DmaClear16(3, tileBuffer, 0x200);
-    Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, tileBuffer, text);
+    Text_InitWindow8004E3C(&gPSSBoxTitleWindowTemplate, tileBuffer, text);
     DmaCopy16(3, tileBuffer + 0x000, tiles + 0x000, 0x80);
     DmaCopy16(3, tileBuffer + 0x100, tiles + 0x080, 0x80);
     DmaCopy16(3, tileBuffer + 0x080, tiles + 0x100, 0x80);
