@@ -2997,11 +2997,11 @@ static const struct YesNoFuncTable sPlacePutAwayYesNoFunctions[] = {
 static const u8 sDecorationStandElevations[] = {4, 4, 4, 4, 0, 3, 3, 0};
 static const u8 sDecorationSlideElevation[] = {4, 4, 4, 4, 0, 4, 3, 0};
 
-static const u16 sBrendanPalette[] = INCBIN_U16("graphics/unknown/83EC98C.gbapal");
-static const u16 sMayPalette[] = INCBIN_U16("graphics/unknown/83EC9AC.gbapal");
+static const u16 sBrendanPalette[] = INCBIN_U16("graphics/decorations/brendan.gbapal");
+static const u16 sMayPalette[] = INCBIN_U16("graphics/decorations/may.gbapal");
 static const struct YesNoFuncTable sReturnDecorationYesNoFunctions = {.yesFunc = PutAwayDecoration, .noFunc = ContinuePuttingAwayDecorations};
 static const struct YesNoFuncTable sStopPuttingAwayDecorationsYesNoFunctions = {.yesFunc = StopPuttingAwayDecorations, .noFunc = ContinuePuttingAwayDecorations};
-static const u32 sDecorationPuttingAwayCursor[] = INCBIN_U32("graphics/unknown_sprites/83EC9DC.4bpp");
+static const u32 sDecorationPuttingAwayCursor[] = INCBIN_U32("graphics/decorations/put_away_cursor.4bpp");
 static const struct SpritePalette sSpritePal_PuttingAwayCursorBrendan = {.data = sBrendanPalette, .tag = PLACE_DECORATION_PLAYER_TAG};
 static const struct SpritePalette sSpritePal_PuttingAwayCursorMay = {.data = sMayPalette, .tag = PLACE_DECORATION_PLAYER_TAG};
 static const struct OamData sPuttingAwayCursorOamData = {
