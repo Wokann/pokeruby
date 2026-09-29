@@ -337,7 +337,7 @@ SECTIONS {
         src/battle_message.o(.text);
         src/choose_party.o(.text);
         src/cable_car.o(.text);
-        src/roulette_util.o(.text);
+        src/palette_util.o(.text);
         src/cable_car_util.o(.text);
         src/unused_8124F94.o(.text);
         src/save.o(.text);

@@ -14,7 +14,7 @@
 #include "palette.h"
 #include "pokemon.h"
 #include "roulette.h"
-#include "roulette_util.h"
+#include "palette_util.h"
 #include "rtc.h"
 #include "constants/songs.h"
 #include "sound.h"

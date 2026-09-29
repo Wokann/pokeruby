@@ -2,8 +2,7 @@
 #define GUARD_ROULETTE_H
 
 #include "task.h"
-
-#define FLASHUTIL_USE_EXISTING_COLOR (1 << 15)
+#include "palette_util.h"
 
 #define BALLS_PER_ROUND 6
 
@@ -196,36 +195,6 @@ enum
 #define SPR_POKE_HEADERS  SPR_POKE_HEADER_1
 #define SPR_COLOR_HEADERS SPR_COLOR_HEADER_1
 #define SPR_GRID_BALLS    SPR_GRID_BALL_1
-
-struct RouletteFlashSettings
-{
-	u16 color;
-	u16 paletteOffset;
-	u8 numColors;
-	u8 delay;
-	s8 unk6;
-	s8 numFadeCycles:5;
-	s8 unk7_5:2;
-	s8 colorDeltaDir:1;
-}; // size: 8
-
-struct RouletteFlashPalette
-{
-	u8 state:7;
-	u8 available:1;
-	u8 delayCounter;
-	s8 fadeCycleCounter;
-	s8 colorDelta;
-    struct RouletteFlashSettings settings;
-}; // size: 12
-
-struct RouletteFlashUtil
-{
-	u8 enabled;
-	u8 unused;
-	u16 flags;
-	struct RouletteFlashPalette palettes[16];
-}; // size: 196
 
 struct Roulette /* ewram + 0x19000 */
 {
