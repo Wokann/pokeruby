@@ -35,6 +35,8 @@ enum
     STAT_ANIM_PAL_MULTIPLE = 0xFF
 };
 
+void LaunchStatusAnimation(u8 battler, u8 statusAnimId);
+
 #define REG_BGnCNT_BITFIELD(n) (*(vBgCnt *)REG_ADDR_BG##n##CNT)
 #define REG_BG0CNT_BITFIELD REG_BGnCNT_BITFIELD(0)
 #define REG_BG1CNT_BITFIELD REG_BGnCNT_BITFIELD(1)
@@ -246,6 +248,7 @@ u8 GetSubstituteSpriteDefault_Y(u8 battler);
 
 void DoMoveAnim(u16 move);
 void LaunchBattleAnimation(const u8 *const moveAnims[], u16 b, u8 c);
+void InitStatsChangeAnimation(u8 taskId);
 bool8 IsBattlerSpriteVisible(u8 battler);
 void MoveBattlerSpriteToBG(u8, u8);
 bool8 IsContest(void);

@@ -99,7 +99,6 @@ extern u8 GetBattlerSpriteDefault_Y(u8);
 extern u8 GetSubstituteSpriteDefault_Y(u8);
 extern void BufferBattlePartyCurrentOrder(void);
 extern void SetIdleSpriteCallback(struct Sprite *);
-extern void move_anim_start_t2();
 
 void sub_80315E8(u8);
 u8 sub_803163C(u8);
@@ -155,30 +154,30 @@ void move_anim_start_t2_for_situation(u8 a, u32 b)
     if (a == 0)
     {
         if (b == 0x20)
-            move_anim_start_t2(gActiveBattler, 6);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_FRZ);
         else if (b == 8 || (b & 0x80))
-            move_anim_start_t2(gActiveBattler, 0);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_PSN);
         else if (b == 0x10)
-            move_anim_start_t2(gActiveBattler, 2);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_BRN);
         else if (b & 7)
-            move_anim_start_t2(gActiveBattler, 4);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_SLP);
         else if (b == 0x40)
-            move_anim_start_t2(gActiveBattler, 5);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_PRZ);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
     }
     else
     {
         if (b & 0x000F0000)
-            move_anim_start_t2(gActiveBattler, 3);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_INFATUATION);
         else if (b & 7)
-            move_anim_start_t2(gActiveBattler, 1);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_CONFUSION);
         else if (b & 0x10000000)
-            move_anim_start_t2(gActiveBattler, 7);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_CURSED);
         else if (b & 0x08000000)
-            move_anim_start_t2(gActiveBattler, 8);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_NIGHTMARE);
         else if (b & 0x0000E000)
-            move_anim_start_t2(gActiveBattler, 9);
+            LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_WRAPPED);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
     }
