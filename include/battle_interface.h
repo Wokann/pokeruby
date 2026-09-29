@@ -50,7 +50,7 @@ void UpdateOamPriorityInAllHealthboxes(u8);
 void sub_8043F44(u8);
 void sub_804454C(void);
 u8 CreatePartyStatusSummarySprites(u8, const struct HpAndStatus *, u8, u8);
-void sub_8044CA0(u8);
+void Task_HidePartyStatusSummary(u8 taskId);
 void UpdateHealthboxAttribute(u8, struct Pokemon *, u8);
 s32 MoveBattleBar(u8, u8, u8, u8);
 s16 sub_80460C8(struct BattleInterfaceStruct1 *, int *, u16 *, int);

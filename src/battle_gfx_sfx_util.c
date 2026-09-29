@@ -148,35 +148,35 @@ void SpriteCB_TrainerSlideIn(struct Sprite *sprite)
     }
 }
 
-void move_anim_start_t2_for_situation(u8 a, u32 b)
+void InitAndLaunchChosenStatusAnimation(bool8 isStatus2, u32 status)
 {
     gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 1;
-    if (a == 0)
+    if (!isStatus2)
     {
-        if (b == 0x20)
+        if (status == 0x20)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_FRZ);
-        else if (b == 8 || (b & 0x80))
+        else if (status == 8 || (status & 0x80))
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_PSN);
-        else if (b == 0x10)
+        else if (status == 0x10)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_BRN);
-        else if (b & 7)
+        else if (status & 7)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_SLP);
-        else if (b == 0x40)
+        else if (status == 0x40)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_PRZ);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
     }
     else
     {
-        if (b & 0x000F0000)
+        if (status & 0x000F0000)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_INFATUATION);
-        else if (b & 7)
+        else if (status & 7)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_CONFUSION);
-        else if (b & 0x10000000)
+        else if (status & 0x10000000)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_CURSED);
-        else if (b & 0x08000000)
+        else if (status & 0x08000000)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_NIGHTMARE);
-        else if (b & 0x0000E000)
+        else if (status & 0x0000E000)
             LaunchStatusAnimation(gActiveBattler, B_ANIM_STATUS_WRAPPED);
         else
             gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
@@ -263,13 +263,13 @@ u8 IsMoveWithoutAnimation(int unused1, int unused2)
     return 0;
 }
 
-bool8 mplay_80342A4(u8 a)
+bool8 IsBattleSEPlaying(u8 battler)
 {
     u8 zero = 0;
 
     if (IsSEPlaying())
     {
-        gBattleHealthBoxInfo[a].unk8++;
+        gBattleHealthBoxInfo[battler].unk8++;
         if (gBattleHealthBoxInfo[gActiveBattler].unk8 < 30)
             return TRUE;
         m4aMPlayStop(&gMPlayInfo_SE1);
@@ -277,7 +277,7 @@ bool8 mplay_80342A4(u8 a)
     }
     if (zero == 0)
     {
-        gBattleHealthBoxInfo[a].unk8 = 0;
+        gBattleHealthBoxInfo[battler].unk8 = 0;
         return FALSE;
     }
     return TRUE;
@@ -391,7 +391,7 @@ void unref_sub_8031A64(void)
 {
 }
 
-void nullsub_9(u16 unused)
+void BattleGfxSfxDummy2(u16 species)
 {
 }
 
@@ -430,7 +430,7 @@ void DecompressTrainerBackPic(u16 a, u8 b)
     LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + b * 16, 32);
 }
 
-void nullsub_10(int unused)
+void BattleGfxSfxDummy3(u8 gender)
 {
 }
 
@@ -620,9 +620,9 @@ void CopyAllBattleSpritesInvisibilities(void)
         gBattleSpriteInfo[i].invisible = gSprites[gBattlerSpriteIds[i]].invisible;
 }
 
-void sub_8031F88(u8 a)
+void CopyBattleSpriteInvisibility(u8 battler)
 {
-    gBattleSpriteInfo[a].invisible = gSprites[gBattlerSpriteIds[a]].invisible;
+    gBattleSpriteInfo[battler].invisible = gSprites[gBattlerSpriteIds[battler]].invisible;
 }
 
 void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
@@ -956,10 +956,10 @@ void sub_8032A38(void)
     }
 }
 
-void sub_8032AA8(u8 a, u8 b)
+void ClearTemporarySpeciesSpriteData(u8 battler, bool8 dontClearSubstitute)
 {
-    gBattleSpriteInfo[a].transformSpecies = 0;
-    gBattleMonForms[a] = 0;
-    if (b == 0)
-        ClearBehindSubstituteBit(a);
+    gBattleSpriteInfo[battler].transformSpecies = 0;
+    gBattleMonForms[battler] = 0;
+    if (!dontClearSubstitute)
+        ClearBehindSubstituteBit(battler);
 }

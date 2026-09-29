@@ -1,6 +1,12 @@
 #ifndef GUARD_BATTLE_CONTROLLERS_H
 #define GUARD_BATTLE_CONTROLLERS_H
 
+struct UnusedControllerStruct
+{
+    u8 unk:7;
+    u8 flag:1;
+};
+
 enum {
     REQUEST_ALL_BATTLE,
     REQUEST_SPECIES_BATTLE,
@@ -217,5 +223,12 @@ void BtlController_EmitBattleAnimation(u8 a, u8 b, u16 c);
 void BtlController_EmitLinkStandbyMsg(u8 a, u8 b);
 void BtlController_EmitResetActionMoveSelection(u8 a, u8 b);
 void BtlController_EmitEndLinkBattle(u8 a, u8 b);
+
+// Ruby preserves this fixed EWRAM symbol name in sym_ewram.txt.
+extern struct UnusedControllerStruct gUnknown_020238C8;
+#define gUnusedControllerStruct gUnknown_020238C8
+
+// link partner
+void SetControllerToLinkPartner(void);
 
 #endif // GUARD_BATTLE_CONTROLLERS_H

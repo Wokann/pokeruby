@@ -75,7 +75,6 @@ extern void sub_80375B4(void);
 extern void SpriteCB_FaintOpponentMon(struct Sprite *);
 extern void sub_8037B78(void);
 extern u8 IsMoveWithoutAnimation();
-extern bool8 mplay_80342A4(u8);
 extern void SetBattlerSpriteAffineMode();
 extern void CopyAllBattleSpritesInvisibilities(void);
 extern void TrySetBehindSubstituteSpriteBit();
@@ -83,13 +82,11 @@ extern void BufferStringBattle();
 extern void sub_8037C2C(void);
 extern void sub_8037B24(void);
 extern void sub_8037FAC(void);
-extern void move_anim_start_t2_for_situation();
 extern void dp01t_0F_4_move_anim(void);
 extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
 extern void HandleIntroSlide();
 extern void sub_803A3A8(struct Sprite *);
-extern void sub_8044CA0(u8);
 extern void nullsub_47(void);
 extern bool8 IsDoubleBattle(void);
 extern void sub_8037840(void);
@@ -365,7 +362,7 @@ void sub_8037840(void)
           gActiveBattler,
           GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
-        ewram17840.unk9_0 = 0;
+        ewram17840.introAnimActive = FALSE;
         gBattlerControllerFuncs[gActiveBattler] = sub_8037680;
     }
 }
@@ -483,7 +480,7 @@ void sub_8037D64(void)
           0);
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-        sub_8031F88(gActiveBattler);
+        CopyBattleSpriteInvisibility(gActiveBattler);
         gBattlerControllerFuncs[gActiveBattler] = sub_8037CC0;
     }
 }
@@ -1170,7 +1167,7 @@ void sub_8039430(u8 a, u8 b)
 {
     u16 species;
 
-    sub_8032AA8(a, b);
+    ClearTemporarySpeciesSpriteData(a, b);
     gBattlerPartyIndexes[a] = gBattleBufferA[a][1];
     species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[a]], MON_DATA_SPECIES);
     gBattleControllerData[a] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
@@ -1317,7 +1314,7 @@ void LinkOpponentHandlePuase(void)
 
 void LinkOpponentHandleMoveAnimation(void)
 {
-    if (!mplay_80342A4(gActiveBattler))
+    if (!IsBattleSEPlaying(gActiveBattler))
     {
         u32 r0 = gBattleBufferA[gActiveBattler][1]
                | (gBattleBufferA[gActiveBattler][2] << 8);
@@ -1472,7 +1469,7 @@ void LinkOpponentHandleExpBarUpdate(void)
 
 void LinkOpponentHandleStatusIconUpdate(void)
 {
-    if (mplay_80342A4(gActiveBattler) == 0)
+    if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
         UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], 9);
         gBattleHealthBoxInfo[gActiveBattler].statusAnimActive = 0;
@@ -1482,9 +1479,9 @@ void LinkOpponentHandleStatusIconUpdate(void)
 
 void LinkOpponentHandleStatusAnimation(void)
 {
-    if (mplay_80342A4(gActiveBattler) == 0)
+    if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
-        move_anim_start_t2_for_situation(
+        InitAndLaunchChosenStatusAnimation(
           gBattleBufferA[gActiveBattler][1],
           gBattleBufferA[gActiveBattler][2]
           | (gBattleBufferA[gActiveBattler][3] << 8)
@@ -1541,25 +1538,25 @@ void LinkOpponentHandlecmd36(void)
 
 void LinkOpponentHandlecmd37(void)
 {
-    gUnknown_020238C8.unk0_0 = 0;
+    gUnusedControllerStruct.unk = 0;
     LinkOpponentBufferExecCompleted();
 }
 
 void LinkOpponentHandlecmd38(void)
 {
-    gUnknown_020238C8.unk0_0 = gBattleBufferA[gActiveBattler][1];
+    gUnusedControllerStruct.unk = gBattleBufferA[gActiveBattler][1];
     LinkOpponentBufferExecCompleted();
 }
 
 void LinkOpponentHandlecmd39(void)
 {
-    gUnknown_020238C8.unk0_7 = 0;
+    gUnusedControllerStruct.flag = 0;
     LinkOpponentBufferExecCompleted();
 }
 
 void LinkOpponentHandlecmd40(void)
 {
-    gUnknown_020238C8.unk0_7 ^= 1;
+    gUnusedControllerStruct.flag ^= 1;
     LinkOpponentBufferExecCompleted();
 }
 
@@ -1629,8 +1626,8 @@ void LinkOpponentHandleTrainerBallThrow(void)
     taskId = CreateTask(sub_803A2C4, 5);
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
-        gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = sub_8044CA0;
-    ewram17840.unk9_0 = 1;
+        gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
+    ewram17840.introAnimActive = TRUE;
     gBattlerControllerFuncs[gActiveBattler] = nullsub_47;
 }
 
@@ -1693,17 +1690,17 @@ void LinkOpponentHandlecmd48(void)
       (struct HpAndStatus *)&gBattleBufferA[gActiveBattler][4],
       gBattleBufferA[gActiveBattler][1],
       gBattleBufferA[gActiveBattler][2]);
-    gBattleHealthBoxInfo[gActiveBattler].unk5 = 0;
+    gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer = 0;
     if (gBattleBufferA[gActiveBattler][2] != 0)
-        gBattleHealthBoxInfo[gActiveBattler].unk5 = 0x5D;
+        gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer = 0x5D;
     gBattlerControllerFuncs[gActiveBattler] = sub_803A4E0;
 }
 
 void sub_803A4E0(void)
 {
-    if (gBattleHealthBoxInfo[gActiveBattler].unk5++ >= 93)
+    if (gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer++ >= 93)
     {
-        gBattleHealthBoxInfo[gActiveBattler].unk5 = 0;
+        gBattleHealthBoxInfo[gActiveBattler].partyStatusDelayTimer = 0;
         LinkOpponentBufferExecCompleted();
     }
 }
@@ -1711,7 +1708,7 @@ void sub_803A4E0(void)
 void LinkOpponentHandlecmd49(void)
 {
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
-        gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = sub_8044CA0;
+        gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
     LinkOpponentBufferExecCompleted();
 }
 
@@ -1725,14 +1722,14 @@ void LinkOpponentHandleSpriteInvisibility(void)
     if (IsBattlerSpritePresent(gActiveBattler) != 0)
     {
         gSprites[gBattlerSpriteIds[gActiveBattler]].invisible = gBattleBufferA[gActiveBattler][1];
-        sub_8031F88(gActiveBattler);
+        CopyBattleSpriteInvisibility(gActiveBattler);
     }
     LinkOpponentBufferExecCompleted();
 }
 
 void LinkOpponentHandleBattleAnimation(void)
 {
-    if (mplay_80342A4(gActiveBattler) == 0)
+    if (IsBattleSEPlaying(gActiveBattler) == 0)
     {
         u8 r3 = gBattleBufferA[gActiveBattler][1];
         u16 r4 = gBattleBufferA[gActiveBattler][2] | (gBattleBufferA[gActiveBattler][3] << 8);

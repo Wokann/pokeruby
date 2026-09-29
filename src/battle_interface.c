@@ -1281,7 +1281,7 @@ u8 CreatePartyStatusSummarySprites(u8 a, const struct HpAndStatus *b, u8 c, u8 d
     return taskId;
 }
 
-void sub_8044CA0(u8 taskId)
+void Task_HidePartyStatusSummary(u8 taskId)
 {
     u8 sp[6];
     u8 r9;

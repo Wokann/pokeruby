@@ -464,7 +464,7 @@ struct BattleHealthboxInfo
  /*0x02*/ u8 unk2;
  /*0x03*/ u8 unk3;
  /*0x04*/ u8 animationState;
- /*0x05*/ u8 unk5;
+ /*0x05*/ u8 partyStatusDelayTimer;
  /*0x06*/ u8 unk6;
  /*0x07*/ u8 unk7;
  /*0x08*/ u8 unk8;
@@ -477,16 +477,10 @@ struct Struct2017840
     u16 unk0;
     u8 filler2[6];
     u8 unk8;
-    u8 unk9_0:1;
+    u8 introAnimActive:1;
     u8 unk9_1:1;
     u8 unkA;
     u16 unkC;
-};
-
-struct Struct20238C8
-{
-    u8 unk0_0:7;
-    u8 unk0_7:1;
 };
 
 #define GET_MOVE_TYPE(move, typeArg)                        \
@@ -526,7 +520,6 @@ extern struct SpecialStatus gSpecialStatuses[MAX_BATTLERS_COUNT];
 extern struct SideTimer gSideTimers[2];
 extern struct WishFutureKnock gWishFutureKnock;
 extern struct AI_ThinkingStruct gAIThinkingSpace;
-extern struct Struct20238C8 gUnknown_020238C8;
 
 // used in many battle files, it seems as though Hisashi Sogabe wrote
 // some sort of macro to replace the use of actually calling memset.
@@ -697,15 +690,17 @@ void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 
 // asm/battle_7.o
-void InitAndLaunchSpecialAnimation(u8 a, u8 b, u8 c, u8 d);
-void nullsub_9(u16);
-void nullsub_10(int);
+void InitAndLaunchSpecialAnimation(u8 battler, u8 attacker, u8 target, u8 animId);
+void InitAndLaunchChosenStatusAnimation(bool8 isStatus2, u32 status);
+bool8 IsBattleSEPlaying(u8 battler);
+void BattleGfxSfxDummy2(u16 species);
+void BattleGfxSfxDummy3(u8 gender);
 void LoadBattleBarGfx(u8);
 u8 battle_load_something();
-void sub_8031F88(u8);
+void CopyBattleSpriteInvisibility(u8 battler);
 void HandleLowHpMusicChange(struct Pokemon *, u8);
 void sub_8032638();
-void sub_8032AA8(u8, u8);
+void ClearTemporarySpeciesSpriteData(u8 battler, bool8 dontClearSubstitute);
 void SetBankFuncToOpponentBufferRunCommand(void);
 void BattleStopLowHpSound(void);
 void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform);
