@@ -32,10 +32,71 @@ extern const u8 gInterfacePal_PokeBall[];
 extern const u8 gIntroCopyright_Gfx[];
 extern const u16 gIntroCopyright_Pal[];
 extern const u16 gIntroCopyright_Tilemap[];
-extern void *const gUnknown_0840B5A0[];
 
-static EWRAM_DATA u16 gUnknown_02039318 = 0;
-static EWRAM_DATA u16 gUnknown_0203931A = 0;
+static EWRAM_DATA u16 sIntroCharacterGender = 0;
+static EWRAM_DATA u16 sIntroBattleFinished = 0;
+
+#define GFXTAG_DROPS_LOGO              2000
+#define PALTAG_DROPS                   2000
+#define PALTAG_LOGO                    2001
+#define TAG_LATI_SILHOUETTE            2002
+#define GFXTAG_INTRO_BATTLE_POKEBALL   2002
+#define PALTAG_INTRO_BATTLE_POKEBALL   2002
+#define GFXTAG_INTRO_BATTLE_EFFECTS    2003
+#define PALTAG_INTRO_BATTLE_BURST      2003
+#define PALTAG_INTRO_BATTLE_ATTACK     2004
+
+enum
+{
+    INTRO_BATTLE_BG_GREEN,
+    INTRO_BATTLE_BG_RED,
+    INTRO_BATTLE_BG_BLUE,
+};
+
+// Used by the intro's task and sprite state machines.
+#define tState data[0]
+#define sState data[0]
+
+#define TIMER_BIG_DROP_START             76
+#define TIMER_BIG_DROP_FALLS            251
+#define TIMER_SMALL_DROP_1              368
+#define TIMER_SMALL_DROP_2              384
+#define TIMER_GAME_FREAK_LOGO           560
+#define TIMER_START_SCENE_1_PAN         739
+#define TIMER_LATI_SILHOUETTE_APPEAR    880
+#define TIMER_END_SCENE_1_PAN           904
+#define TIMER_SCENE_1_FADE_OUT         1007
+#define TIMER_START_SCENE_2            1026
+#define TIMER_PLAYER_DRIFT_BACK        1109
+#define TIMER_PLAYER_MOVE_FORWARD      1214
+#define TIMER_LATI_ENTER               1394
+#define TIMER_PLAYER_MOVE_BACKWARD     1398
+#define TIMER_PLAYER_HOLD_POSITION     1586
+#define TIMER_PLAYER_EXIT              1727
+#define TIMER_SCENE_2_FADE_OUT         1823
+#define TIMER_START_SCENE_3            2068
+
+// The scene 3 counter restarts when the Poké Ball is shown.
+#define TIMER_POKEBALL_FADE_OUT          44
+#define TIMER_LOAD_BATTLE_STREAKS         59
+#define TIMER_SHARPEDO_INTRO              80
+#define TIMER_DUSKULL_INTRO              152
+#define TIMER_TRAINER_INTRO              219
+#define TIMER_TRAINER_THROW_POKEBALLS    304
+#define TIMER_TRAINER_RETURN             384
+#define TIMER_TRAINER_FADE               400
+#define TIMER_TRAINER_TRANSFORM_START    432
+#define TIMER_TRAINER_TRANSFORM_END      462
+#define TIMER_SHARPEDO_BATTLE            463
+#define TIMER_DUSKULL_BATTLE             539
+#define TIMER_OPPONENTS_EXIT             623
+#define TIMER_MUDKIP_BATTLE              624
+#define TIMER_TORCHIC_BATTLE             700
+#define TIMER_BATTLE_FINISH              776
+#define TIMER_BATTLE_FLASH               781
+#define TIMER_BATTLE_BLAST_SOUND         800
+#define TIMER_BATTLE_FADE_OUT            850
+#define TIMER_END_INTRO                  946
 
 u32 gIntroFrameCounter;
 struct GcmbStruct gMultibootProgramStruct;
@@ -44,14 +105,14 @@ struct GcmbStruct gMultibootProgramStruct;
 // Graphics Data
 //--------------------------------------------------
 
-static const u16 Palette_406340[] = INCBIN_U16("graphics/intro/unknown1.gbapal");
-static const u16 Palette_406360[] = INCBIN_U16("graphics/intro/unknown2.gbapal");
+static const u16 sIntroDrops_Pal[] = INCBIN_U16("graphics/intro/unknown1.gbapal");
+static const u16 sIntroLogo_Pal[] = INCBIN_U16("graphics/intro/unknown2.gbapal");
 #if ENGLISH
-static const u8 gIntroTiles[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
+static const u8 sIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
 #elif GERMAN
-extern const u8 gIntroTiles[];
+extern const u8 sIntroDropsLogo_Gfx[];
 #endif
-static const u16 gIntro1BGPals[][16] =
+static const u16 sIntro1Bg_Pal[][16] =
 {
     INCBIN_U16("graphics/intro/intro1_bgpal1.gbapal"),
     INCBIN_U16("graphics/intro/intro1_bgpal2.gbapal"),
@@ -70,23 +131,23 @@ static const u16 gIntro1BGPals[][16] =
     INCBIN_U16("graphics/intro/intro1_bgpal15.gbapal"),
     INCBIN_U16("graphics/intro/intro1_bgpal16.gbapal"),
 };
-static const u8 gIntro1BG0_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg0_map.bin.lz");
-static const u8 gIntro1BG1_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg1_map.bin.lz");
-static const u8 gIntro1BG2_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg2_map.bin.lz");
-static const u8 gIntro1BG3_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg3_map.bin.lz");
-static const u8 gIntro1BGLeavesGfx[] = INCBIN_U8("graphics/intro/introgfx.4bpp.lz");
-static const u16 gIntro3PokeballPal[] = INCBIN_U16("graphics/intro/intro3_pokeball.gbapal");
-static const u8 gIntro3Pokeball_Tilemap[] = INCBIN_U8("graphics/intro/intro3_pokeball_map.bin.lz");
-static const u8 gIntro3Pokeball_Gfx[] = INCBIN_U8("graphics/intro/intro3_pokeball.8bpp.lz");
-static const u16 gIntro3Streaks_Pal[] = INCBIN_U16("graphics/intro/intro3_streaks.gbapal");
-static const u8 gIntro3Streaks_Gfx[] = INCBIN_U8("graphics/intro/intro3_streaks.4bpp.lz");
-static const u8 gIntro3Streaks_Tilemap[] = INCBIN_U8("graphics/intro/intro3_streaks_map.bin.lz");
-static const u16 gIntro3Misc1Palette[] = INCBIN_U16("graphics/intro/intro3_misc1.gbapal");
-static const u16 gIntro3Misc2Palette[] = INCBIN_U16("graphics/intro/intro3_misc2.gbapal");
-static const u8 gIntro3MiscTiles[] = INCBIN_U8("graphics/intro/intro3_misc.4bpp.lz");
-static const u16 gIntro1EonPalette[] = INCBIN_U16("graphics/intro/intro1_eon.gbapal");
-static const u8 gIntro1EonTiles[] = INCBIN_U8("graphics/intro/intro1_eon.4bpp.lz");
-static const struct OamData gOamData_840ADE8 =
+static const u8 sIntro1Bg0_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg0_map.bin.lz");
+static const u8 sIntro1Bg1_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg1_map.bin.lz");
+static const u8 sIntro1Bg2_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg2_map.bin.lz");
+static const u8 sIntro1Bg3_Tilemap[] = INCBIN_U8("graphics/intro/intro1_bg3_map.bin.lz");
+static const u8 sIntro1Bg_Gfx[] = INCBIN_U8("graphics/intro/introgfx.4bpp.lz");
+static const u16 sIntroPokeball_Pal[] = INCBIN_U16("graphics/intro/intro3_pokeball.gbapal");
+static const u8 sIntroPokeball_Tilemap[] = INCBIN_U8("graphics/intro/intro3_pokeball_map.bin.lz");
+static const u8 sIntroPokeball_Gfx[] = INCBIN_U8("graphics/intro/intro3_pokeball.8bpp.lz");
+static const u16 sIntroStreaks_Pal[] = INCBIN_U16("graphics/intro/intro3_streaks.gbapal");
+static const u8 sIntroStreaks_Gfx[] = INCBIN_U8("graphics/intro/intro3_streaks.4bpp.lz");
+static const u8 sIntroStreaks_Tilemap[] = INCBIN_U8("graphics/intro/intro3_streaks_map.bin.lz");
+static const u16 sIntroBattleBurst_Pal[] = INCBIN_U16("graphics/intro/intro3_misc1.gbapal");
+static const u16 sIntroBattleAttack_Pal[] = INCBIN_U16("graphics/intro/intro3_misc2.gbapal");
+static const u8 sIntroBattleEffects_Gfx[] = INCBIN_U8("graphics/intro/intro3_misc.4bpp.lz");
+static const u16 sIntroLati_Pal[] = INCBIN_U16("graphics/intro/intro1_eon.gbapal");
+static const u8 sIntroLati_Gfx[] = INCBIN_U8("graphics/intro/intro1_eon.4bpp.lz");
+static const struct OamData sOamData_WaterDrop =
 {
     .y = 160,
     .affineMode = 0,
@@ -102,45 +163,61 @@ static const struct OamData gOamData_840ADE8 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840ADF0[] =
+
+enum
+{
+    WATER_DROP_WAIT,
+    WATER_DROP_SLIDE,
+    WATER_DROP_FALL,
+};
+
+enum
+{
+    DROP_ANIM_UPPER_HALF,
+    DROP_ANIM_LOWER_HALF,
+    DROP_ANIM_REFLECTION,
+    DROP_ANIM_RIPPLE,
+};
+
+static const union AnimCmd sAnim_WaterDrop_UpperHalf[] =
 {
     ANIMCMD_FRAME(16, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840ADF8[] =
+static const union AnimCmd sAnim_WaterDrop_LowerHalf[] =
 {
     ANIMCMD_FRAME(24, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AE00[] =
+static const union AnimCmd sAnim_WaterDrop_Reflection[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AE08[] =
+static const union AnimCmd sAnim_WaterDrop_Ripple[] =
 {
     ANIMCMD_FRAME(48, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840AE10[] =
+static const union AnimCmd *const sAnims_WaterDrop[] =
 {
-    gSpriteAnim_840ADF0,
-    gSpriteAnim_840ADF8,
-    gSpriteAnim_840AE00,
-    gSpriteAnim_840AE08,
+    [DROP_ANIM_UPPER_HALF] = sAnim_WaterDrop_UpperHalf,
+    [DROP_ANIM_LOWER_HALF] = sAnim_WaterDrop_LowerHalf,
+    [DROP_ANIM_REFLECTION] = sAnim_WaterDrop_Reflection,
+    [DROP_ANIM_RIPPLE] = sAnim_WaterDrop_Ripple,
 };
 static void SpriteCB_WaterDrop(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840AE20 =
+static const struct SpriteTemplate sSpriteTemplate_WaterDrop =
 {
-    .tileTag = 2000,
-    .paletteTag = 2000,
-    .oam = &gOamData_840ADE8,
-    .anims = gSpriteAnimTable_840AE10,
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_DROPS,
+    .oam = &sOamData_WaterDrop,
+    .anims = sAnims_WaterDrop,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_WaterDrop,
 };
-static const union AnimCmd Unknown_40AE38[] =
+static const union AnimCmd sAnim_PlayerBicycle_Fast[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
@@ -148,7 +225,7 @@ static const union AnimCmd Unknown_40AE38[] =
     ANIMCMD_FRAME(192, 4),
     ANIMCMD_JUMP(0),
 };
-static const union AnimCmd Unknown_40AE4C[] =
+static const union AnimCmd sAnim_PlayerBicycle_Slow[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(64, 8),
@@ -156,28 +233,37 @@ static const union AnimCmd Unknown_40AE4C[] =
     ANIMCMD_FRAME(192, 8),
     ANIMCMD_JUMP(0),
 };
-static const union AnimCmd Unknown_40AE60[] =
+static const union AnimCmd sAnim_PlayerBicycle_LookBack[] =
 {
     ANIMCMD_FRAME(256, 4),
     ANIMCMD_FRAME(0x140, 4),
     ANIMCMD_FRAME(0x180, 4),
     ANIMCMD_END,
 };
-static const union AnimCmd Unknown_40AE70[] =
+static const union AnimCmd sAnim_PlayerBicycle_LookForward[] =
 {
     ANIMCMD_FRAME(0x180, 16),
     ANIMCMD_FRAME(0x140, 16),
     ANIMCMD_FRAME(256, 16),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gUnknown_0840AE80[] =
+
+enum
 {
-    Unknown_40AE38,
-    Unknown_40AE4C,
-    Unknown_40AE60,
-    Unknown_40AE70,
+    PLAYER_BICYCLE_ANIM_FAST,
+    PLAYER_BICYCLE_ANIM_SLOW,
+    PLAYER_BICYCLE_ANIM_LOOK_BACK,
+    PLAYER_BICYCLE_ANIM_LOOK_FORWARD,
 };
-static const struct OamData gOamData_840AE90 =
+
+static const union AnimCmd *const sAnims_PlayerBicycle[] =
+{
+    [PLAYER_BICYCLE_ANIM_FAST] = sAnim_PlayerBicycle_Fast,
+    [PLAYER_BICYCLE_ANIM_SLOW] = sAnim_PlayerBicycle_Slow,
+    [PLAYER_BICYCLE_ANIM_LOOK_BACK] = sAnim_PlayerBicycle_LookBack,
+    [PLAYER_BICYCLE_ANIM_LOOK_FORWARD] = sAnim_PlayerBicycle_LookForward,
+};
+static const struct OamData sOamData_GameFreakLetter =
 {
     .y = 160,
     .affineMode = 0,
@@ -193,7 +279,7 @@ static const struct OamData gOamData_840AE90 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const struct OamData gOamData_840AE98 =
+static const struct OamData sOamData_PresentsLetter =
 {
     .y = 160,
     .affineMode = 0,
@@ -209,7 +295,7 @@ static const struct OamData gOamData_840AE98 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const struct OamData gOamData_840AEA0 =
+static const struct OamData sOamData_GameFreakLogo =
 {
     .y = 160,
     .affineMode = 0,
@@ -225,164 +311,189 @@ static const struct OamData gOamData_840AEA0 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840AEA8[] =
+static const union AnimCmd sAnim_GameFreakLetter_G[] =
 {
     ANIMCMD_FRAME(80, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEB0[] =
+static const union AnimCmd sAnim_GameFreakLetter_A[] =
 {
     ANIMCMD_FRAME(84, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEB8[] =
+static const union AnimCmd sAnim_GameFreakLetter_M[] =
 {
     ANIMCMD_FRAME(88, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEC0[] =
+static const union AnimCmd sAnim_GameFreakLetter_E[] =
 {
     ANIMCMD_FRAME(92, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEC8[] =
+static const union AnimCmd sAnim_GameFreakLetter_F[] =
 {
     ANIMCMD_FRAME(96, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AED0[] =
+static const union AnimCmd sAnim_GameFreakLetter_R[] =
 {
     ANIMCMD_FRAME(100, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AED8[] =
+static const union AnimCmd sAnim_GameFreakLetter_K[] =
 {
     ANIMCMD_FRAME(104, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEE0[] =
+static const union AnimCmd sAnim_PresentsLetter_P[] =
 {
     ANIMCMD_FRAME(112, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEE8[] =
+static const union AnimCmd sAnim_PresentsLetter_R[] =
 {
     ANIMCMD_FRAME(113, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEF0[] =
+static const union AnimCmd sAnim_PresentsLetter_E[] =
 {
     ANIMCMD_FRAME(114, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AEF8[] =
+static const union AnimCmd sAnim_PresentsLetter_S[] =
 {
     ANIMCMD_FRAME(115, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AF00[] =
+static const union AnimCmd sAnim_PresentsLetter_N[] =
 {
     ANIMCMD_FRAME(116, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AF08[] =
+static const union AnimCmd sAnim_PresentsLetter_T[] =
 {
     ANIMCMD_FRAME(117, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gSpriteAnim_840AF10[] =
+static const union AnimCmd sAnim_GameFreakLogo[] =
 {
     ANIMCMD_FRAME(128, 8),
     ANIMCMD_END,
 };
 #if GERMAN
-static const union AnimCmd gSpriteAnim_8416DA4[] =
+static const union AnimCmd sAnim_PresentsLetter_GermanExtra[] =
 {
     ANIMCMD_FRAME(118, 8),
     ANIMCMD_END,
 };
 #endif
-static const union AnimCmd *const gSpriteAnimTable_840AF18[] =
+
+enum
 {
-    gSpriteAnim_840AEA8,
-    gSpriteAnim_840AEB0,
-    gSpriteAnim_840AEB8,
-    gSpriteAnim_840AEC0,
-    gSpriteAnim_840AEC8,
-    gSpriteAnim_840AED0,
-    gSpriteAnim_840AED8,
+    GAMEFREAK_G,
+    GAMEFREAK_A,
+    GAMEFREAK_M,
+    GAMEFREAK_E,
+    GAMEFREAK_F,
+    GAMEFREAK_R,
+    GAMEFREAK_K,
 };
-static const union AnimCmd *const gSpriteAnimTable_840AF34[] =
+
+enum
 {
-    gSpriteAnim_840AEE0,
-    gSpriteAnim_840AEE8,
-    gSpriteAnim_840AEF0,
-    gSpriteAnim_840AEF8,
-    gSpriteAnim_840AF00,
-    gSpriteAnim_840AF08,
+    PRESENTS_P,
+    PRESENTS_R,
+    PRESENTS_E,
+    PRESENTS_S,
+    PRESENTS_N,
+    PRESENTS_T,
 #if GERMAN
-    gSpriteAnim_8416DA4,
+    PRESENTS_GERMAN_EXTRA,
 #endif
 };
-static const union AnimCmd *const gSpriteAnimTable_840AF4C[] =
+
+static const union AnimCmd *const sAnims_GameFreakLetter[] =
 {
-    gSpriteAnim_840AF10,
+    [GAMEFREAK_G] = sAnim_GameFreakLetter_G,
+    [GAMEFREAK_A] = sAnim_GameFreakLetter_A,
+    [GAMEFREAK_M] = sAnim_GameFreakLetter_M,
+    [GAMEFREAK_E] = sAnim_GameFreakLetter_E,
+    [GAMEFREAK_F] = sAnim_GameFreakLetter_F,
+    [GAMEFREAK_R] = sAnim_GameFreakLetter_R,
+    [GAMEFREAK_K] = sAnim_GameFreakLetter_K,
 };
-static const s16 gUnknown_0840AF50[][2] =
+static const union AnimCmd *const sAnims_PresentsLetter[] =
 {
-    {0, -72},
-    {1, -56},
-    {2, -40},
-    {3, -24},
-    {4, 8},
-    {5, 24},
-    {3, 40},
-    {1, 56},
-    {6, 72},
+    [PRESENTS_P] = sAnim_PresentsLetter_P,
+    [PRESENTS_R] = sAnim_PresentsLetter_R,
+    [PRESENTS_E] = sAnim_PresentsLetter_E,
+    [PRESENTS_S] = sAnim_PresentsLetter_S,
+    [PRESENTS_N] = sAnim_PresentsLetter_N,
+    [PRESENTS_T] = sAnim_PresentsLetter_T,
+#if GERMAN
+    [PRESENTS_GERMAN_EXTRA] = sAnim_PresentsLetter_GermanExtra,
+#endif
 };
-static const s16 gUnknown_0840AF74[][2] =
+static const union AnimCmd *const sAnims_GameFreakLogo[] =
 {
-    {0, -28},
-    {1, -20},
-    {2, -12},
-    {3, -4},
-    {2, 4},
-    {4, 12},
-    {5, 20},
-    {3, 28},
+    sAnim_GameFreakLogo,
+};
+static const s16 sGameFreakLetterData[][2] =
+{
+    {GAMEFREAK_G, -72},
+    {GAMEFREAK_A, -56},
+    {GAMEFREAK_M, -40},
+    {GAMEFREAK_E, -24},
+    {GAMEFREAK_F, 8},
+    {GAMEFREAK_R, 24},
+    {GAMEFREAK_E, 40},
+    {GAMEFREAK_A, 56},
+    {GAMEFREAK_K, 72},
+};
+static const s16 sPresentsLetterData[][2] =
+{
+    {PRESENTS_P, -28},
+    {PRESENTS_R, -20},
+    {PRESENTS_E, -12},
+    {PRESENTS_S, -4},
+    {PRESENTS_E, 4},
+    {PRESENTS_N, 12},
+    {PRESENTS_T, 20},
+    {PRESENTS_S, 28},
 };
 static void SpriteCB_LogoLetter(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840AF94 =
+static const struct SpriteTemplate sSpriteTemplate_GameFreakLetter =
 {
-    .tileTag = 2000,
-    .paletteTag = 2001,
-    .oam = &gOamData_840AE90,
-    .anims = gSpriteAnimTable_840AF18,
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_GameFreakLetter,
+    .anims = sAnims_GameFreakLetter,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_LogoLetter,
 };
-static const struct SpriteTemplate gSpriteTemplate_840AFAC =
+static const struct SpriteTemplate sSpriteTemplate_PresentsLetter =
 {
-    .tileTag = 2000,
-    .paletteTag = 2001,
-    .oam = &gOamData_840AE98,
-    .anims = gSpriteAnimTable_840AF34,
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_PresentsLetter,
+    .anims = sAnims_PresentsLetter,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_LogoLetter,
 };
-static const struct SpriteTemplate gSpriteTemplate_840AFC4 =
+static const struct SpriteTemplate sSpriteTemplate_GameFreakLogo =
 {
-    .tileTag = 2000,
-    .paletteTag = 2001,
-    .oam = &gOamData_840AEA0,
-    .anims = gSpriteAnimTable_840AF4C,
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_GameFreakLogo,
+    .anims = sAnims_GameFreakLogo,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_LogoLetter,
 };
-static const struct OamData gOamData_840AFDC =
+static const struct OamData sOamData_LatiSilhouette =
 {
     .y = 160,
     .affineMode = 0,
@@ -398,66 +509,66 @@ static const struct OamData gOamData_840AFDC =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840AFE4[] =
+static const union AnimCmd sAnim_LatiSilhouette[] =
 {
     ANIMCMD_FRAME(0, 10),
     ANIMCMD_JUMP(0),
 };
-static const union AnimCmd *const gSpriteAnimTable_840AFEC[] =
+static const union AnimCmd *const sAnims_LatiSilhouette[] =
 {
-    gSpriteAnim_840AFE4,
+    sAnim_LatiSilhouette,
 };
-static void SpriteCB_EonSilhouette(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840AFF0 =
+static void SpriteCB_LatiSilhouette(struct Sprite *sprite);
+static const struct SpriteTemplate sSpriteTemplate_LatiSilhouette =
 {
-    .tileTag = 2002,
-    .paletteTag = 2002,
-    .oam = &gOamData_840AFDC,
-    .anims = gSpriteAnimTable_840AFEC,
+    .tileTag = TAG_LATI_SILHOUETTE,
+    .paletteTag = TAG_LATI_SILHOUETTE,
+    .oam = &sOamData_LatiSilhouette,
+    .anims = sAnims_LatiSilhouette,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_EonSilhouette,
+    .callback = SpriteCB_LatiSilhouette,
 };
-const struct CompressedSpriteSheet gUnknown_0840B008[] =
+static const struct CompressedSpriteSheet sSpriteSheet_WaterDropsAndLogo[] =
 {
-    {gIntroTiles, 0x1400, 2000},
+    {sIntroDropsLogo_Gfx, 0x1400, GFXTAG_DROPS_LOGO},
     {NULL},
 };
-const struct CompressedSpriteSheet gUnknown_0840B018[] =
+static const struct CompressedSpriteSheet sSpriteSheet_LatiSilhouette[] =
 {
-    {gIntro1EonTiles, 0x400, 2002},
+    {sIntroLati_Gfx, 0x400, TAG_LATI_SILHOUETTE},
     {NULL},
 };
-const struct SpritePalette gUnknown_0840B028[] =
+static const struct SpritePalette sSpritePalettes_Intro1[] =
 {
-    {Palette_406340, 2000},
-    {Palette_406360, 2001},
-    {gIntro1EonPalette, 2002},
+    {sIntroDrops_Pal, PALTAG_DROPS},
+    {sIntroLogo_Pal, PALTAG_LOGO},
+    {sIntroLati_Pal, TAG_LATI_SILHOUETTE},
     {NULL},
 };
-static const union AnimCmd gUnknown_0840B048[] =
+static const union AnimCmd sAnim_IntroTrainerIdle[] =
 {
     ANIMCMD_FRAME(3, 0),
     ANIMCMD_END,
 };
-static const union AnimCmd gUnknown_0840B050[] =
+static const union AnimCmd sAnim_IntroTrainerReady[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd gUnknown_0840B058[] =
+static const union AnimCmd sAnim_IntroTrainerThrowPokeball[] =
 {
     ANIMCMD_FRAME(1, 8),
     ANIMCMD_FRAME(2, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gUnknown_0840B064[] =
+static const union AnimCmd *const sAnims_IntroTrainer[] =
 {
-    gUnknown_0840B048,
-    gUnknown_0840B050,
-    gUnknown_0840B058,
+    sAnim_IntroTrainerIdle,
+    sAnim_IntroTrainerReady,
+    sAnim_IntroTrainerThrowPokeball,
 };
-static const struct OamData gOamData_840B070 =
+static const struct OamData sOamData_IntroFlyingPokeball =
 {
     .y = 160,
     .affineMode = 0,
@@ -473,27 +584,27 @@ static const struct OamData gOamData_840B070 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B078[] =
+static const union AnimCmd sAnim_IntroFlyingPokeball[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B080[] =
+static const union AnimCmd *const sAnims_IntroFlyingPokeball[] =
 {
-    gSpriteAnim_840B078,
+    sAnim_IntroFlyingPokeball,
 };
 static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B084 =
+static const struct SpriteTemplate sSpriteTemplate_IntroFlyingPokeball =
 {
-    .tileTag = 2002,
-    .paletteTag = 2002,
-    .oam = &gOamData_840B070,
-    .anims = gSpriteAnimTable_840B080,
+    .tileTag = GFXTAG_INTRO_BATTLE_POKEBALL,
+    .paletteTag = PALTAG_INTRO_BATTLE_POKEBALL,
+    .oam = &sOamData_IntroFlyingPokeball,
+    .anims = sAnims_IntroFlyingPokeball,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroFlyingPokeball,
 };
-static const struct OamData gOamData_840B09C =
+static const struct OamData sOamData_IntroBurstParticle =
 {
     .y = 160,
     .affineMode = 0,
@@ -509,27 +620,27 @@ static const struct OamData gOamData_840B09C =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B0A4[] =
+static const union AnimCmd sAnim_IntroBurstParticle[] =
 {
     ANIMCMD_FRAME(1, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B0AC[] =
+static const union AnimCmd *const sAnims_IntroBurstParticle[] =
 {
-    gSpriteAnim_840B0A4,
+    sAnim_IntroBurstParticle,
 };
 static void SpriteCB_IntroBurstParticle(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B0B0 =
+static const struct SpriteTemplate sSpriteTemplate_IntroBurstParticle =
 {
-    .tileTag = 2003,
-    .paletteTag = 2003,
-    .oam = &gOamData_840B09C,
-    .anims = gSpriteAnimTable_840B0AC,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_BURST,
+    .oam = &sOamData_IntroBurstParticle,
+    .anims = sAnims_IntroBurstParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroBurstParticle,
 };
-static const struct OamData gOamData_840B0C8 =
+static const struct OamData sOamData_IntroAttackParticle =
 {
     .y = 160,
     .affineMode = 0,
@@ -545,38 +656,38 @@ static const struct OamData gOamData_840B0C8 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B0D0[] =
+static const union AnimCmd sAnim_IntroAttackParticle[] =
 {
     ANIMCMD_FRAME(14, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B0D8[] =
+static const union AnimCmd *const sAnims_IntroAttackParticle[] =
 {
-    gSpriteAnim_840B0D0,
+    sAnim_IntroAttackParticle,
 };
 static void SpriteCB_IntroAttackParticle(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B0DC =
+static const struct SpriteTemplate sSpriteTemplate_IntroAttackParticle =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B0C8,
-    .anims = gSpriteAnimTable_840B0D8,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroAttackParticle,
+    .anims = sAnims_IntroAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroAttackParticle,
 };
 static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B0F4 =
+static const struct SpriteTemplate sSpriteTemplate_IntroAttackParticleSpawner =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B0C8,
-    .anims = gSpriteAnimTable_840B0D8,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroAttackParticle,
+    .anims = sAnims_IntroAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroAttackParticleSpawner,
 };
-static const struct OamData gOamData_840B10C =
+static const struct OamData sOamData_IntroOrbitingParticle =
 {
     .y = 160,
     .affineMode = 0,
@@ -592,28 +703,28 @@ static const struct OamData gOamData_840B10C =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B114[] =
+static const union AnimCmd sAnim_IntroOrbitingParticle[] =
 {
     ANIMCMD_FRAME(6, 8),
     ANIMCMD_FRAME(6, 8, .hFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
-static const union AnimCmd *const gSpriteAnimTable_840B120[] =
+static const union AnimCmd *const sAnims_IntroOrbitingParticle[] =
 {
-    gSpriteAnim_840B114,
+    sAnim_IntroOrbitingParticle,
 };
 static void SpriteCB_IntroOrbitingParticle(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B124 =
+static const struct SpriteTemplate sSpriteTemplate_IntroOrbitingParticle =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B10C,
-    .anims = gSpriteAnimTable_840B120,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroOrbitingParticle,
+    .anims = sAnims_IntroOrbitingParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroOrbitingParticle,
 };
-static const struct OamData gOamData_840B13C =
+static const struct OamData sOamData_IntroTorchicAttackParticle =
 {
     .y = 160,
     .affineMode = 0,
@@ -629,40 +740,40 @@ static const struct OamData gOamData_840B13C =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B144[] =
+static const union AnimCmd sAnim_IntroTorchicAttackParticle[] =
 {
     ANIMCMD_FRAME(10, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B14C[] =
+static const union AnimCmd *const sAnims_IntroTorchicAttackParticle[] =
 {
-    gSpriteAnim_840B144,
+    sAnim_IntroTorchicAttackParticle,
 };
 static void SpriteCB_IntroTorchicAttackParticle(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B150 =
+static const struct SpriteTemplate sSpriteTemplate_IntroTorchicAttackParticle =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B13C,
-    .anims = gSpriteAnimTable_840B14C,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroTorchicAttackParticle,
+    .anims = sAnims_IntroTorchicAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroTorchicAttackParticle,
 };
-static const u8 gUnknown_0840B168[] = {0xE6, 0xEB, 0xE4, 0xEA, 0xE5, 0xE9, 0xE7, 0xE8};
+static const u8 sTorchicAttackParticleAngles[] = {0xE6, 0xEB, 0xE4, 0xEA, 0xE5, 0xE9, 0xE7, 0xE8};
 static void SpriteCB_IntroTorchicAttackSpawner(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B170 =
+static const struct SpriteTemplate sSpriteTemplate_IntroTorchicAttackSpawner =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B13C,
-    .anims = gSpriteAnimTable_840B14C,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroTorchicAttackParticle,
+    .anims = sAnims_IntroTorchicAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroTorchicAttackSpawner,
 };
-static const u16 gUnknown_0840B188[] = {0x200, 0x1C0, 0x180, 0x140, 0x100, 0xE0, 0xC0, 0xA0, 0x80, 0x80};
-static const struct OamData gOamData_840B19C =
+static const u16 sTorchicAttackParticleScales[] = {0x200, 0x1C0, 0x180, 0x140, 0x100, 0xE0, 0xC0, 0xA0, 0x80, 0x80};
+static const struct OamData sOamData_IntroMudkipAttackParticle =
 {
     .y = 160,
     .affineMode = 0,
@@ -678,38 +789,38 @@ static const struct OamData gOamData_840B19C =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B1A4[] =
+static const union AnimCmd sAnim_IntroMudkipAttackParticle[] =
 {
     ANIMCMD_FRAME(2, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B1AC[] =
+static const union AnimCmd *const sAnims_IntroMudkipAttackParticle[] =
 {
-    gSpriteAnim_840B1A4,
+    sAnim_IntroMudkipAttackParticle,
 };
 static void SpriteCB_IntroMudkipAttackParticle(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B1B0 =
+static const struct SpriteTemplate sSpriteTemplate_IntroMudkipAttackParticle =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B19C,
-    .anims = gSpriteAnimTable_840B1AC,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroMudkipAttackParticle,
+    .anims = sAnims_IntroMudkipAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroMudkipAttackParticle,
 };
 static void SpriteCB_IntroMudkipAttackSpawner(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B1C8 =
+static const struct SpriteTemplate sSpriteTemplate_IntroMudkipAttackSpawner =
 {
-    .tileTag = 2003,
-    .paletteTag = 2004,
-    .oam = &gOamData_840B19C,
-    .anims = gSpriteAnimTable_840B1AC,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_ATTACK,
+    .oam = &sOamData_IntroMudkipAttackParticle,
+    .anims = sAnims_IntroMudkipAttackParticle,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroMudkipAttackSpawner,
 };
-static const struct OamData gOamData_840B1E0 =
+static const struct OamData sOamData_IntroBattleFlash =
 {
     .y = 160,
     .affineMode = 0,
@@ -725,58 +836,58 @@ static const struct OamData gOamData_840B1E0 =
     .paletteNum = 0,
     .affineParam = 0,
 };
-static const union AnimCmd gSpriteAnim_840B1E8[] =
+static const union AnimCmd sAnim_IntroBattleFlash[] =
 {
     ANIMCMD_FRAME(16, 8),
     ANIMCMD_END,
 };
-static const union AnimCmd *const gSpriteAnimTable_840B1F0[] =
+static const union AnimCmd *const sAnims_IntroBattleFlash[] =
 {
-    gSpriteAnim_840B1E8,
+    sAnim_IntroBattleFlash,
 };
 static void SpriteCB_IntroBattleFlash(struct Sprite *sprite);
-static const struct SpriteTemplate gSpriteTemplate_840B1F4 =
+static const struct SpriteTemplate sSpriteTemplate_IntroBattleFlash =
 {
-    .tileTag = 2003,
-    .paletteTag = 2003,
-    .oam = &gOamData_840B1E0,
-    .anims = gSpriteAnimTable_840B1F0,
+    .tileTag = GFXTAG_INTRO_BATTLE_EFFECTS,
+    .paletteTag = PALTAG_INTRO_BATTLE_BURST,
+    .oam = &sOamData_IntroBattleFlash,
+    .anims = sAnims_IntroBattleFlash,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_IntroBattleFlash,
 };
-const struct CompressedSpriteSheet gIntro3PokeballGfx_Table[] =
+static const struct CompressedSpriteSheet sSpriteSheet_IntroBattlePokeball[] =
 {
-    {gInterfaceGfx_PokeBall, 0x100, 2002},
+    {gInterfaceGfx_PokeBall, 0x100, GFXTAG_INTRO_BATTLE_POKEBALL},
     {NULL},
 };
-const struct CompressedSpriteSheet gIntro3MiscGfx_Table[] =
+static const struct CompressedSpriteSheet sSpriteSheet_IntroBattleEffects[] =
 {
-    {gIntro3MiscTiles, 0xa00, 2003},
+    {sIntroBattleEffects_Gfx, 0xa00, GFXTAG_INTRO_BATTLE_EFFECTS},
     {NULL},
 };
-const struct CompressedSpritePalette gInterfacePokeballPal_Table[] =
+static const struct CompressedSpritePalette sSpritePalette_IntroBattlePokeball[] =
 {
-    {gInterfacePal_PokeBall, 2002},
+    {gInterfacePal_PokeBall, PALTAG_INTRO_BATTLE_POKEBALL},
     {NULL},
 };
-const struct SpritePalette gIntro3MiscPal_Table[] =
+static const struct SpritePalette sSpritePalettes_IntroBattleEffects[] =
 {
-    {gIntro3Misc1Palette, 2003},
-    {gIntro3Misc2Palette, 2004},
+    {sIntroBattleBurst_Pal, PALTAG_INTRO_BATTLE_BURST},
+    {sIntroBattleAttack_Pal, PALTAG_INTRO_BATTLE_ATTACK},
     {NULL},
 };
 
 // Game Freak probably used the raw address here.
 // Treating this like a u8 * causes the compiler
 // to remove it at link time.
-u8 (*const ewram0arr)[32] = (u8 (*)[32])gSharedMem;
+static u8 (*const sIntroBattleTilemapBuffer)[32] = (u8 (*)[32])gSharedMem;
 
 static void MainCB2_EndIntro(void);
 void Task_Scene1_Load(u8);
 static void Task_Scene1_FadeIn(u8);
 static void Task_Scene1_WaterDrops(u8);
-static void Task_Scene1_PanUpAndShowEon(u8);
+static void Task_Scene1_PanUpAndShowLati(u8);
 static void Task_Scene1_End(u8);
 static void Task_Scene2_Load(u8);
 static void Task_Scene2_CreateSprites(u8);
@@ -804,7 +915,7 @@ static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *);
 static void SpriteCB_WaterDrop_Fall(struct Sprite *);
 static u8 CreateWaterDrop(s16, s16, u16, u16, u16, u8);
 static void SpriteCB_PlayerOnBicycle(struct Sprite *);
-static void SpriteCB_Eon(struct Sprite *);
+static void SpriteCB_Lati(struct Sprite *);
 static u8 CreateGameFreakLogoSprites(s16, s16, u8);
 static void SpriteCB_IntroOpposingPokemon(struct Sprite *);
 static void SpriteCB_IntroTrainer(struct Sprite *);
@@ -929,7 +1040,7 @@ void CB2_InitCopyrightScreenAfterBootup(void)
 {
     if (!SetUpCopyrightScreen())
     {
-        sub_8052E4C();
+        ResetMenuAndMonGlobals();
         Save_ResetSaveCounters();
         LoadGameSave(SAVE_NORMAL);
         if (gSaveFileStatus == 0 || gSaveFileStatus == 2)
@@ -943,32 +1054,40 @@ void CB2_InitCopyrightScreenAfterTitleScreen(void)
     SetUpCopyrightScreen();
 }
 
+#define sBigDropSpriteId data[0]
+#define tBg2PosHi data[1]
+#define tBg2PosLo data[2]
+#define tBg1PosHi data[3]
+#define tBg1PosLo data[4]
+#define tBg0PosHi data[5]
+#define tBg0PosLo data[6]
+
 void Task_Scene1_Load(u8 taskId)
 {
     SetVBlankCallback(NULL);
-    gUnknown_02039318 = Random() & 1;
+    sIntroCharacterGender = Random() & 1;
     IntroResetGpuRegs();
     REG_BG3VOFS = 0;
     REG_BG2VOFS = 0x50;
     REG_BG1VOFS = 0x18;
     REG_BG0VOFS = 0x28;
-    LZ77UnCompVram(gIntro1BGLeavesGfx, (void *)VRAM);
-    LZ77UnCompVram(gIntro1BG0_Tilemap, (void *)(VRAM + 0x8000));
+    LZ77UnCompVram(sIntro1Bg_Gfx, (void *)VRAM);
+    LZ77UnCompVram(sIntro1Bg0_Tilemap, (void *)(VRAM + 0x8000));
     DmaClear16(3, VRAM + 0x8800, 0x800);
-    LZ77UnCompVram(gIntro1BG1_Tilemap, (void *)(VRAM + 0x9000));
+    LZ77UnCompVram(sIntro1Bg1_Tilemap, (void *)(VRAM + 0x9000));
     DmaClear16(3, VRAM + 0x9800, 0x800);
-    LZ77UnCompVram(gIntro1BG2_Tilemap, (void *)(VRAM + 0xA000));
+    LZ77UnCompVram(sIntro1Bg2_Tilemap, (void *)(VRAM + 0xA000));
     DmaClear16(3, VRAM + 0xA800, 0x800);
-    LZ77UnCompVram(gIntro1BG3_Tilemap, (void *)(VRAM + 0xB000));
+    LZ77UnCompVram(sIntro1Bg3_Tilemap, (void *)(VRAM + 0xB000));
     DmaClear16(3, VRAM + 0xB800, 0x800);
-    LoadPalette(gIntro1BGPals, 0, sizeof(gIntro1BGPals));
+    LoadPalette(sIntro1Bg_Pal, 0, sizeof(sIntro1Bg_Pal));
     REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(22) | BGCNT_16COLOR | BGCNT_TXT256x512;
     REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(20) | BGCNT_16COLOR | BGCNT_TXT256x512;
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(18) | BGCNT_16COLOR | BGCNT_TXT256x512;
     REG_BG0CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(16) | BGCNT_16COLOR | BGCNT_TXT256x512;
-    LoadCompressedSpriteSheet(&gUnknown_0840B008[0]);
-    LoadCompressedSpriteSheet(&gUnknown_0840B018[0]);
-    LoadSpritePalettes(gUnknown_0840B028);
+    LoadCompressedSpriteSheet(&sSpriteSheet_WaterDropsAndLogo[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_LatiSilhouette[0]);
+    LoadSpritePalettes(sSpritePalettes_Intro1);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1F0, 0x20);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1E1, 0x1E);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1D2, 0x1C);
@@ -976,7 +1095,7 @@ void Task_Scene1_Load(u8 taskId)
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1B4, 0x18);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x1A5, 0x16);
     CpuCopy16(gPlttBufferUnfaded + 0x100, gPlttBufferUnfaded + 0x196, 0x14);
-    gTasks[taskId].data[0] = CreateWaterDrop(236, -14, 0x200, 1, 0x78, FALSE);
+    gTasks[taskId].sBigDropSpriteId = CreateWaterDrop(236, -14, 0x200, 1, 0x78, FALSE);
     gTasks[taskId].func = Task_Scene1_FadeIn;
 }
 
@@ -994,57 +1113,57 @@ static void Task_Scene1_FadeIn(u8 taskId)
 static void Task_Scene1_WaterDrops(u8 taskId)
 {
     //start moving rock
-    if (gIntroFrameCounter == 76)
-        gSprites[gTasks[taskId].data[0]].data[0] = 1;
+    if (gIntroFrameCounter == TIMER_BIG_DROP_START)
+        gSprites[gTasks[taskId].sBigDropSpriteId].sState = WATER_DROP_SLIDE;
 
     //drop rock
-    if (gIntroFrameCounter == 251)
-        gSprites[gTasks[taskId].data[0]].data[0] = 2;
+    if (gIntroFrameCounter == TIMER_BIG_DROP_FALLS)
+        gSprites[gTasks[taskId].sBigDropSpriteId].sState = WATER_DROP_FALL;
 
-    if (gIntroFrameCounter == 368)
+    if (gIntroFrameCounter == TIMER_SMALL_DROP_1)
         CreateWaterDrop(48, 0, 0x400, 5, 0x70, TRUE);
-    if (gIntroFrameCounter == 384)
+    if (gIntroFrameCounter == TIMER_SMALL_DROP_2)
         CreateWaterDrop(200, 60, 0x400, 9, 0x80, TRUE);
 
-    if (gIntroFrameCounter == 560)
+    if (gIntroFrameCounter == TIMER_GAME_FREAK_LOGO)
         CreateGameFreakLogoSprites(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, CreateTask(Task_AnimateGameFreakLogoBlend, 0));
 
-    if (gIntroFrameCounter > 739)
+    if (gIntroFrameCounter > TIMER_START_SCENE_1_PAN)
     {
-        gTasks[taskId].data[1] = 0x50;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[3] = 0x18;
-        gTasks[taskId].data[4] = 0;
-        gTasks[taskId].data[5] = 0x28;
-        gTasks[taskId].data[6] = 0;
-        gTasks[taskId].func = Task_Scene1_PanUpAndShowEon;
+        gTasks[taskId].tBg2PosHi = 0x50;
+        gTasks[taskId].tBg2PosLo = 0;
+        gTasks[taskId].tBg1PosHi = 0x18;
+        gTasks[taskId].tBg1PosLo = 0;
+        gTasks[taskId].tBg0PosHi = 0x28;
+        gTasks[taskId].tBg0PosLo = 0;
+        gTasks[taskId].func = Task_Scene1_PanUpAndShowLati;
     }
 }
 
-static void Task_Scene1_PanUpAndShowEon(u8 taskId)
+static void Task_Scene1_PanUpAndShowLati(u8 taskId)
 {
-    if (gIntroFrameCounter < 904)
+    if (gIntroFrameCounter < TIMER_END_SCENE_1_PAN)
     {
-        s32 r2;
+        s32 offset;
 
         //slide backgrounds downward
-        r2 = (gTasks[taskId].data[1] << 16) + (u16)gTasks[taskId].data[2] - 0xC000;
-        gTasks[taskId].data[1] = r2 >> 16;
-        gTasks[taskId].data[2] = r2;
-        REG_BG2VOFS = gTasks[taskId].data[1];
-        r2 = (gTasks[taskId].data[3] << 16) + (u16)gTasks[taskId].data[4] - 0x10000;
-        gTasks[taskId].data[3] = r2 >> 16;
-        gTasks[taskId].data[4] = r2;
-        REG_BG1VOFS = gTasks[taskId].data[3];
-        r2 = (gTasks[taskId].data[5] << 16) + (u16)gTasks[taskId].data[6] - 0x18000;
-        gTasks[taskId].data[5] = r2 >> 16;
-        gTasks[taskId].data[6] = r2;
-        REG_BG0VOFS = gTasks[taskId].data[5];
+        offset = (gTasks[taskId].tBg2PosHi << 16) + (u16)gTasks[taskId].tBg2PosLo - 0xC000;
+        gTasks[taskId].tBg2PosHi = offset >> 16;
+        gTasks[taskId].tBg2PosLo = offset;
+        REG_BG2VOFS = gTasks[taskId].tBg2PosHi;
+        offset = (gTasks[taskId].tBg1PosHi << 16) + (u16)gTasks[taskId].tBg1PosLo - 0x10000;
+        gTasks[taskId].tBg1PosHi = offset >> 16;
+        gTasks[taskId].tBg1PosLo = offset;
+        REG_BG1VOFS = gTasks[taskId].tBg1PosHi;
+        offset = (gTasks[taskId].tBg0PosHi << 16) + (u16)gTasks[taskId].tBg0PosLo - 0x18000;
+        gTasks[taskId].tBg0PosHi = offset >> 16;
+        gTasks[taskId].tBg0PosLo = offset;
+        REG_BG0VOFS = gTasks[taskId].tBg0PosHi;
 
         //show Lati@s sprite
-        if (gIntroFrameCounter == 880)
+        if (gIntroFrameCounter == TIMER_LATI_SILHOUETTE_APPEAR)
         {
-            u8 spriteId = CreateSprite(&gSpriteTemplate_840AFF0, 200, 160, 10);
+            u8 spriteId = CreateSprite(&sSpriteTemplate_LatiSilhouette, 200, 160, 10);
 
             gSprites[spriteId].invisible = TRUE;
         }
@@ -1052,7 +1171,7 @@ static void Task_Scene1_PanUpAndShowEon(u8 taskId)
     else
     {
         //fade to white
-        if (gIntroFrameCounter > 1007)
+        if (gIntroFrameCounter > TIMER_SCENE_1_FADE_OUT)
         {
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
             gTasks[taskId].func = Task_Scene1_End;
@@ -1062,7 +1181,7 @@ static void Task_Scene1_PanUpAndShowEon(u8 taskId)
 
 static void Task_Scene1_End(u8 taskId)
 {
-    if (gIntroFrameCounter > 1026)
+    if (gIntroFrameCounter > TIMER_START_SCENE_2)
         gTasks[taskId].func = Task_Scene2_Load;
 }
 
@@ -1082,11 +1201,33 @@ static void Task_Scene2_Load(u8 taskId)
     gTasks[taskId].func = Task_Scene2_CreateSprites;
 }
 
+#define tBgAnimTaskId data[0]
+#define tPlayerSpriteId data[1]
+#define tLatiSpriteId data[2]
+#define tLatiTimer data[3]
+
+enum
+{
+    PLAYER_BICYCLE_MOVE_FORWARD,
+    PLAYER_BICYCLE_DRIFT_BACK,
+    PLAYER_BICYCLE_MOVE_BACKWARD,
+    PLAYER_BICYCLE_HOLD_POSITION,
+    PLAYER_BICYCLE_EXIT,
+};
+
+enum
+{
+    LATI_WAIT,
+    LATI_ENTER,
+    LATI_APPROACH_PLAYER,
+    LATI_EXIT,
+};
+
 static void Task_Scene2_CreateSprites(u8 taskId)
 {
     u8 spriteId;
 
-    if (gUnknown_02039318 == 0)
+    if (sIntroCharacterGender == MALE)
         LoadCompressedSpriteSheet(gIntro2BrendanSpriteSheet);
     else
         LoadCompressedSpriteSheet(gIntro2MaySpriteSheet);
@@ -1097,27 +1238,27 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     LoadCompressedSpriteSheet(gIntro2LatiosSpriteSheet);
 #endif
     LoadSpritePalettes(gIntro2SpritePalettes);
-    if (gUnknown_02039318 == 0)
+    if (sIntroCharacterGender == MALE)
         spriteId = CreateIntroBrendanSprite(0x110, 100);
     else
         spriteId = CreateIntroMaySprite(0x110, 100);
     gSprites[spriteId].callback = SpriteCB_PlayerOnBicycle;
-    gSprites[spriteId].anims = gUnknown_0840AE80;
-    gTasks[taskId].data[1] = spriteId;
+    gSprites[spriteId].anims = sAnims_PlayerBicycle;
+    gTasks[taskId].tPlayerSpriteId = spriteId;
 #ifdef SAPPHIRE
     spriteId = CreateIntroLatiasSprite(-0x40, 0x3C);
 #else
     spriteId = CreateIntroLatiosSprite(-0x40, 0x3C);
 #endif
-    gSprites[spriteId].callback = SpriteCB_Eon;
-    gTasks[taskId].data[2] = spriteId;
+    gSprites[spriteId].callback = SpriteCB_Lati;
+    gTasks[taskId].tLatiSpriteId = spriteId;
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
     SetVBlankCallback(VBlankCB_Intro);
 #ifdef SAPPHIRE
-    gTasks[taskId].data[0] = CreateBicycleBgAnimationTask(0, 0x4000, 0x40, 0x10);
+    gTasks[taskId].tBgAnimTaskId = CreateBicycleBgAnimationTask(0, 0x4000, 0x40, 0x10);
     SetIntroPart2BgCnt(0);
 #else
-    gTasks[taskId].data[0] = CreateBicycleBgAnimationTask(1, 0x4000, 0x400, 0x10);
+    gTasks[taskId].tBgAnimTaskId = CreateBicycleBgAnimationTask(1, 0x4000, 0x400, 0x10);
     SetIntroPart2BgCnt(1);
 #endif
     gTasks[taskId].func = Task_Scene2_BikeRide;
@@ -1125,33 +1266,33 @@ static void Task_Scene2_CreateSprites(u8 taskId)
 
 static void Task_Scene2_BikeRide(u8 taskId)
 {
-    s16 a;
+    s16 sineIndex;
     u16 sine;
 
-    if (gIntroFrameCounter > 1823)
+    if (gIntroFrameCounter > TIMER_SCENE_2_FADE_OUT)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 16, 0, 16, FADE_COLOR_WHITE);
         gTasks[taskId].func = Task_Scene2_End;
     }
-    if (gIntroFrameCounter == 1109)
-        gSprites[gTasks[taskId].data[1]].data[0] = 1;
-    if (gIntroFrameCounter == 1214)
-        gSprites[gTasks[taskId].data[1]].data[0] = 0;
-    if (gIntroFrameCounter == 1394)
-        gSprites[gTasks[taskId].data[2]].data[0] = 1;
-    if (gIntroFrameCounter == 1398)
-        gSprites[gTasks[taskId].data[1]].data[0] = 2;
-    if (gIntroFrameCounter == 1586)
-        gSprites[gTasks[taskId].data[1]].data[0] = 3;
-    if (gIntroFrameCounter == 1727)
-        gSprites[gTasks[taskId].data[1]].data[0] = 4;
+    if (gIntroFrameCounter == TIMER_PLAYER_DRIFT_BACK)
+        gSprites[gTasks[taskId].tPlayerSpriteId].sState = PLAYER_BICYCLE_DRIFT_BACK;
+    if (gIntroFrameCounter == TIMER_PLAYER_MOVE_FORWARD)
+        gSprites[gTasks[taskId].tPlayerSpriteId].sState = PLAYER_BICYCLE_MOVE_FORWARD;
+    if (gIntroFrameCounter == TIMER_LATI_ENTER)
+        gSprites[gTasks[taskId].tLatiSpriteId].sState = LATI_ENTER;
+    if (gIntroFrameCounter == TIMER_PLAYER_MOVE_BACKWARD)
+        gSprites[gTasks[taskId].tPlayerSpriteId].sState = PLAYER_BICYCLE_MOVE_BACKWARD;
+    if (gIntroFrameCounter == TIMER_PLAYER_HOLD_POSITION)
+        gSprites[gTasks[taskId].tPlayerSpriteId].sState = PLAYER_BICYCLE_HOLD_POSITION;
+    if (gIntroFrameCounter == TIMER_PLAYER_EXIT)
+        gSprites[gTasks[taskId].tPlayerSpriteId].sState = PLAYER_BICYCLE_EXIT;
 
     //TODO: Clean this up
-    a = (((u16)gTasks[taskId].data[3] << 16) >> 18) & 0x7F;
-    sine = Sin(a, 48);
+    sineIndex = (((u16)gTasks[taskId].tLatiTimer << 16) >> 18) & 0x7F;
+    sine = Sin(sineIndex, 48);
     gIntroCredits_MovingSceneryVOffset = sine;
-    if (gTasks[taskId].data[3] < 512)
-        gTasks[taskId].data[3]++;
+    if (gTasks[taskId].tLatiTimer < 512)
+        gTasks[taskId].tLatiTimer++;
 #ifdef SAPPHIRE
     CycleSceneryPalette(0);
 #else
@@ -1161,22 +1302,45 @@ static void Task_Scene2_BikeRide(u8 taskId)
 
 static void Task_Scene2_End(u8 taskId)
 {
-    if (gIntroFrameCounter > 2068)
+    if (gIntroFrameCounter > TIMER_START_SCENE_3)
     {
-        DestroyTask(gTasks[taskId].data[0]);
+        DestroyTask(gTasks[taskId].tBgAnimTaskId);
         gTasks[taskId].func = Task_Scene3_Load;
     }
 }
 
+#define tAlpha data[0]
+#define tZoomDiv data[1]
+#define tZoomDivSpeed data[2]
+#define tBattleWindowHeight data[0]
+#define tBattleBgTaskId data[15]
+#define tTrainerSpriteId data[1]
+#define tSharpedoSpriteId data[2]
+#define tDuskullSpriteId data[3]
+#define tMudkipSpriteId data[4]
+#define tTorchicSpriteId data[5]
+
+enum
+{
+    INTRO_BATTLE_BG_HIDDEN,
+    INTRO_BATTLE_BG_PARTNER_BATTLE = 2,
+    INTRO_BATTLE_BG_OPPONENT_EXIT,
+    INTRO_BATTLE_BG_TRAINER_THROW,
+    INTRO_BATTLE_BG_PARTNER_BATTLE_SCROLL = 20,
+    INTRO_BATTLE_BG_OPPONENT_EXIT_SCROLL = 0x1E,
+    INTRO_BATTLE_BG_TRAINER_THROW_SCROLL = 0x28,
+    INTRO_BATTLE_BG_DISABLED = 0xFF,
+};
+
 static void Task_Scene3_Load(u8 taskId)
 {
     IntroResetGpuRegs();
-    LZ77UnCompVram(gIntro3Pokeball_Gfx, (void *)VRAM);
-    LZ77UnCompVram(gIntro3Pokeball_Tilemap, (void *)(VRAM + 0x4000));
-    LoadPalette(gIntro3PokeballPal, 0, 0x200);
-    gTasks[taskId].data[0] = 0;
-    gTasks[taskId].data[1] = 0;
-    gTasks[taskId].data[2] = 0;
+    LZ77UnCompVram(sIntroPokeball_Gfx, (void *)VRAM);
+    LZ77UnCompVram(sIntroPokeball_Tilemap, (void *)(VRAM + 0x4000));
+    LoadPalette(sIntroPokeball_Pal, 0, 0x200);
+    gTasks[taskId].tAlpha = 0;
+    gTasks[taskId].tZoomDiv = 0;
+    gTasks[taskId].tZoomDivSpeed = 0;
     gTasks[taskId].data[3] = 0;
     PanFadeAndZoomScreen(0x78, 0x50, 0, 0);
     ResetSpriteData();
@@ -1191,24 +1355,24 @@ static void Task_Scene3_Load(u8 taskId)
 
 static void Task_Scene3_SpinPokeball(u8 taskId)
 {
-    gTasks[taskId].data[0] += 0x400;
-    if (gTasks[taskId].data[1] <= 0x6BF)
+    gTasks[taskId].tAlpha += 0x400;
+    if (gTasks[taskId].tZoomDiv <= 0x6BF)
     {
-        gTasks[taskId].data[1] += gTasks[taskId].data[2];
-        gTasks[taskId].data[2]++;
+        gTasks[taskId].tZoomDiv += gTasks[taskId].tZoomDivSpeed;
+        gTasks[taskId].tZoomDivSpeed++;
     }
     else
     {
         gTasks[taskId].func = Task_Scene3_WaitForBattle;
     }
-    PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].data[1], gTasks[taskId].data[0]);
-    if (gIntroFrameCounter == 44)
+    PanFadeAndZoomScreen(0x78, 0x50, 0x10000 / gTasks[taskId].tZoomDiv, gTasks[taskId].tAlpha);
+    if (gIntroFrameCounter == TIMER_POKEBALL_FADE_OUT)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, FADE_COLOR_WHITE);
 }
 
 static void Task_Scene3_WaitForBattle(u8 taskId)
 {
-    if (gIntroFrameCounter > 59)
+    if (gIntroFrameCounter > TIMER_LOAD_BATTLE_STREAKS)
         gTasks[taskId].func = Task_Scene3_LoadBattleStreaks;
 }
 
@@ -1219,11 +1383,11 @@ static void Task_Scene3_LoadBattleStreaks(u8 taskId)
     IntroResetGpuRegs();
     for (i = 0; i < 32; i++)
     {
-        ewram0arr[0][i] = 0;
-        ewram0arr[1][i] = 17;
-        ewram0arr[2][i] = 34;
+        sIntroBattleTilemapBuffer[0][i] = 0;
+        sIntroBattleTilemapBuffer[1][i] = 17;
+        sIntroBattleTilemapBuffer[2][i] = 34;
     }
-    DmaCopy16Defvars(3, ewram0arr, (void *)(VRAM + 0x0), 0x60);
+    DmaCopy16Defvars(3, sIntroBattleTilemapBuffer, (void *)(VRAM + 0x0), 0x60);
     for (i = 0; i < 0x280; i++)
         ((u16 *)(VRAM + 0x3000))[i] = 0xF001;
     for (i = 0; i < 0x80; i++)
@@ -1234,19 +1398,19 @@ static void Task_Scene3_LoadBattleStreaks(u8 taskId)
         ((u16 *)(VRAM + 0x3C00))[i] = 0xF002;
     gPlttBufferUnfaded[0xF0] = RGB_WHITE;
     gPlttBufferFaded[0xF0] = RGB_WHITE;
-    SetIntroBattleBackgroundColor(1);
+    SetIntroBattleBackgroundColor(INTRO_BATTLE_BG_RED);
     gPlttBufferUnfaded[0xF2] = RGB_BLACK;
     gPlttBufferFaded[0xF2] = RGB_BLACK;
-    LZ77UnCompVram(gIntro3Streaks_Gfx, (void *)(VRAM + 0x4000));
-    LZ77UnCompVram(gIntro3Streaks_Tilemap, (void *)(VRAM + 0x7000));
-    LoadPalette(gIntro3Streaks_Pal, 0, 0x20);
+    LZ77UnCompVram(sIntroStreaks_Gfx, (void *)(VRAM + 0x4000));
+    LZ77UnCompVram(sIntroStreaks_Tilemap, (void *)(VRAM + 0x7000));
+    LoadPalette(sIntroStreaks_Pal, 0, 0x20);
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
-    LoadCompressedSpriteSheet(&gIntro3PokeballGfx_Table[0]);
-    LoadCompressedSpriteSheet(&gIntro3MiscGfx_Table[0]);
-    LoadCompressedSpritePalette(&gInterfacePokeballPal_Table[0]);
-    LoadSpritePalettes(gIntro3MiscPal_Table);
+    LoadCompressedSpriteSheet(&sSpriteSheet_IntroBattlePokeball[0]);
+    LoadCompressedSpriteSheet(&sSpriteSheet_IntroBattleEffects[0]);
+    LoadCompressedSpritePalette(&sSpritePalette_IntroBattlePokeball[0]);
+    LoadSpritePalettes(sSpritePalettes_IntroBattleEffects);
     gTasks[taskId].func = Task_Scene3_InitBattleWindow;
 }
 
@@ -1267,22 +1431,22 @@ static void Task_Scene3_InitBattleWindow(u8 taskId)
                | BGCNT_16COLOR
                | BGCNT_TXT256x256;
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
-    gTasks[taskId].data[15] = CreateTask(Task_Scene3_AnimateBattleBackground, 0);
-    gTasks[gTasks[taskId].data[15]].data[0] = 0;
-    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].tBattleBgTaskId = CreateTask(Task_Scene3_AnimateBattleBackground, 0);
+    gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_HIDDEN;
+    gTasks[taskId].tBattleWindowHeight = 0;
     gTasks[taskId].func = Task_Scene3_OpenBattleWindow;
 }
 
 static void Task_Scene3_OpenBattleWindow(u8 taskId)
 {
-    u16 foo = gTasks[taskId].data[0];
+    u16 windowHeight = gTasks[taskId].tBattleWindowHeight;
 
-    if (gTasks[taskId].data[0] != 32)
+    if (gTasks[taskId].tBattleWindowHeight != 32)
     {
-        u32 bar; //needed to match for some reason
+        u32 windowTop; //needed to match for some reason
 
-        gTasks[taskId].data[0] += 4;
-        REG_WIN0V = (gTasks[taskId].data[0] * 256) - (bar = foo - 0x9C);
+        gTasks[taskId].tBattleWindowHeight += 4;
+        REG_WIN0V = (gTasks[taskId].tBattleWindowHeight * 256) - (windowTop = windowHeight - 0x9C);
     }
     else
     {
@@ -1298,7 +1462,7 @@ static void Task_Scene3_FinishOpeningWindow(u8 taskId)
 
 static void Task_Scene3_StartPokemonBattle(u8 taskId)
 {
-    gUnknown_0203931A = 0;
+    sIntroBattleFinished = 0;
     gTasks[taskId].func = Task_Scene3_PokemonBattle;
 }
 
@@ -1306,108 +1470,108 @@ static void Task_Scene3_PokemonBattle(u8 taskId)
 {
     u8 spriteId;
 
-    if (gIntroFrameCounter == 80)
+    if (gIntroFrameCounter == TIMER_SHARPEDO_INTRO)
     {
         spriteId = CreateIntroBattleMonSprite(SPECIES_SHARPEDO, 0xF0, 0xA0, 5, 1);
         gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemon;
         gSprites[spriteId].data[1] = 1;
         gSprites[spriteId].data[2] = 0;
     }
-    if (gIntroFrameCounter == 152)
+    if (gIntroFrameCounter == TIMER_DUSKULL_INTRO)
     {
         spriteId = CreateIntroBattleMonSprite(SPECIES_DUSKULL, 0, 0xA0, 4, 1);
         gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemon;
         gSprites[spriteId].data[1] = 2;
         gSprites[spriteId].data[2] = 1;
     }
-    if (gIntroFrameCounter == 219)
+    if (gIntroFrameCounter == TIMER_TRAINER_INTRO)
     {
-        SetIntroBattleBackgroundColor(0);
-        spriteId = CreateIntroTrainerSprite(gUnknown_02039318, 0x110, 0x60, 6);
+        SetIntroBattleBackgroundColor(INTRO_BATTLE_BG_GREEN);
+        spriteId = CreateIntroTrainerSprite(sIntroCharacterGender, 0x110, 0x60, 6);
         gSprites[spriteId].callback = SpriteCB_IntroTrainer;
-        gTasks[taskId].data[1] = spriteId;
+        gTasks[taskId].tTrainerSpriteId = spriteId;
     }
-    if (gIntroFrameCounter == 304)
+    if (gIntroFrameCounter == TIMER_TRAINER_THROW_POKEBALLS)
     {
-        gTasks[gTasks[taskId].data[15]].data[0] = 4;
-        gSprites[gTasks[taskId].data[1]].data[0] = 2;
+        gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_TRAINER_THROW;
+        gSprites[gTasks[taskId].tTrainerSpriteId].sState = 2;
     }
-    if (gIntroFrameCounter == 384)
+    if (gIntroFrameCounter == TIMER_TRAINER_RETURN)
     {
-        gTasks[gTasks[taskId].data[15]].data[0] = 0;
-        gSprites[gTasks[taskId].data[1]].data[0] = 4;
+        gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_HIDDEN;
+        gSprites[gTasks[taskId].tTrainerSpriteId].sState = 4;
     }
-    if (gIntroFrameCounter == 400)
+    if (gIntroFrameCounter == TIMER_TRAINER_FADE)
     {
         BeginNormalPaletteFade(0xFF0000, 0, 16, 0, RGB(31, 23, 31));
     }
-    if (gIntroFrameCounter == 432)
+    if (gIntroFrameCounter == TIMER_TRAINER_TRANSFORM_START)
     {
-        gSprites[gTasks[taskId].data[1]].data[0] = 5;
+        gSprites[gTasks[taskId].tTrainerSpriteId].sState = 5;
     }
-    if (gIntroFrameCounter == 462)
+    if (gIntroFrameCounter == TIMER_TRAINER_TRANSFORM_END)
     {
-        gSprites[gTasks[taskId].data[1]].data[0] = 6;
-        gTasks[gTasks[taskId].data[15]].data[0] = 2;
+        gSprites[gTasks[taskId].tTrainerSpriteId].sState = 6;
+        gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_PARTNER_BATTLE;
     }
-    if (gIntroFrameCounter == 463)
+    if (gIntroFrameCounter == TIMER_SHARPEDO_BATTLE)
     {
-        SetIntroBattleBackgroundColor(1);
+        SetIntroBattleBackgroundColor(INTRO_BATTLE_BG_RED);
         spriteId = CreateIntroBattleMonSprite(SPECIES_SHARPEDO, 0xD0, 8, 5, 1);
         gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemonBattle;
-        gTasks[taskId].data[2] = spriteId;
+        gTasks[taskId].tSharpedoSpriteId = spriteId;
         CreateIntroOpposingAttackEffect(spriteId);
     }
-    if (gIntroFrameCounter == 539)
+    if (gIntroFrameCounter == TIMER_DUSKULL_BATTLE)
     {
         spriteId = CreateIntroBattleMonSprite(SPECIES_DUSKULL, 0xF8, 0x10, 4, 1);
         gSprites[spriteId].callback = SpriteCB_IntroOpposingPokemonBattle;
-        gTasks[taskId].data[3] = spriteId;
+        gTasks[taskId].tDuskullSpriteId = spriteId;
         CreateIntroOrbitingParticles(spriteId);
     }
-    if (gIntroFrameCounter == 623)
+    if (gIntroFrameCounter == TIMER_OPPONENTS_EXIT)
     {
-        gSprites[gTasks[taskId].data[2]].data[0] = 2;
-        gSprites[gTasks[taskId].data[3]].data[0] = 2;
-        gTasks[gTasks[taskId].data[15]].data[0] = 3;
+        gSprites[gTasks[taskId].tSharpedoSpriteId].sState = 2;
+        gSprites[gTasks[taskId].tDuskullSpriteId].sState = 2;
+        gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_OPPONENT_EXIT;
     }
-    if (gIntroFrameCounter == 624)
+    if (gIntroFrameCounter == TIMER_MUDKIP_BATTLE)
     {
-        SetIntroBattleBackgroundColor(0);
+        SetIntroBattleBackgroundColor(INTRO_BATTLE_BG_GREEN);
         spriteId = CreateIntroBattleMonSprite(SPECIES_MUDKIP, 0x20, 0x98, 0, 0);
         gSprites[spriteId].callback = SpriteCB_IntroPartnerPokemonBattle;
-        gTasks[taskId].data[4] = spriteId;
+        gTasks[taskId].tMudkipSpriteId = spriteId;
         InitIntroMudkipAttackAnim(spriteId);
     }
-    if (gIntroFrameCounter == 700)
+    if (gIntroFrameCounter == TIMER_TORCHIC_BATTLE)
     {
         spriteId = CreateIntroBattleMonSprite(SPECIES_TORCHIC, -8, 0x90, 1, 0);
         gSprites[spriteId].callback = SpriteCB_IntroPartnerPokemonBattle;
-        gTasks[taskId].data[5] = spriteId;
+        gTasks[taskId].tTorchicSpriteId = spriteId;
         InitIntroTorchicAttackAnim(spriteId);
     }
-    if (gIntroFrameCounter == 776)
+    if (gIntroFrameCounter == TIMER_BATTLE_FINISH)
     {
-        gUnknown_0203931A = 1;
-        gSprites[gTasks[taskId].data[4]].data[0] = 2;
-        gSprites[gTasks[taskId].data[5]].data[0] = 2;
-        gTasks[gTasks[taskId].data[15]].data[0] = 0;
+        sIntroBattleFinished = 1;
+        gSprites[gTasks[taskId].tMudkipSpriteId].sState = 2;
+        gSprites[gTasks[taskId].tTorchicSpriteId].sState = 2;
+        gTasks[gTasks[taskId].tBattleBgTaskId].tState = INTRO_BATTLE_BG_HIDDEN;
     }
-    if (gIntroFrameCounter == 781)
+    if (gIntroFrameCounter == TIMER_BATTLE_FLASH)
     {
-        SetIntroBattleBackgroundColor(2);
-        gSprites[gTasks[taskId].data[2]].data[0] = 3;
-        gSprites[gTasks[taskId].data[3]].data[0] = 3;
-        gSprites[gTasks[taskId].data[4]].data[0] = 3;
-        gSprites[gTasks[taskId].data[5]].data[0] = 3;
-        spriteId = CreateSprite(&gSpriteTemplate_840B1F4, 0x78, 0x50, 15);
+        SetIntroBattleBackgroundColor(INTRO_BATTLE_BG_BLUE);
+        gSprites[gTasks[taskId].tSharpedoSpriteId].sState = 3;
+        gSprites[gTasks[taskId].tDuskullSpriteId].sState = 3;
+        gSprites[gTasks[taskId].tMudkipSpriteId].sState = 3;
+        gSprites[gTasks[taskId].tTorchicSpriteId].sState = 3;
+        spriteId = CreateSprite(&sSpriteTemplate_IntroBattleFlash, 0x78, 0x50, 15);
         gSprites[spriteId].invisible = TRUE;
     }
-    if (gIntroFrameCounter == 800)
+    if (gIntroFrameCounter == TIMER_BATTLE_BLAST_SOUND)
         PlaySE(SE_INTRO_BLAST);
-    if (gIntroFrameCounter == 850)
+    if (gIntroFrameCounter == TIMER_BATTLE_FADE_OUT)
         BeginNormalPaletteFade(0xFFFFFFFF, 4, 0, 16, FADE_COLOR_WHITE);
-    if (gIntroFrameCounter == 946)
+    if (gIntroFrameCounter == TIMER_END_INTRO)
         gTasks[taskId].func = Task_EndIntroMovie;
 }
 
@@ -1417,65 +1581,71 @@ static void Task_EndIntroMovie(u8 taskId)
     SetMainCallback2(MainCB2_EndIntro);
 }
 
+#define tBattleBgState data[0]
+#define tBattleBgVOffset data[1]
+#define tBattleBgHOffset data[2]
+#define tBattleBgSpeed data[3]
+#define tBattleBgTimer data[15]
+
 static void Task_Scene3_AnimateBattleBackground(u8 taskId)
 {
 #define BG2_FLAGS (BGCNT_PRIORITY(3) | BGCNT_CHARBASE(1) | BGCNT_SCREENBASE(14) | BGCNT_16COLOR | BGCNT_TXT256x256)
 #define DISPCNT_FLAGS (DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON)
 
-    gTasks[taskId].data[15]++;
-    switch (gTasks[taskId].data[0])
+    gTasks[taskId].tBattleBgTimer++;
+    switch (gTasks[taskId].tBattleBgState)
     {
-    case 0:
+    case INTRO_BATTLE_BG_HIDDEN:
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON;
         REG_BG2CNT = 0;
-        gTasks[taskId].data[0] = 0xFF;
+        gTasks[taskId].tBattleBgState = INTRO_BATTLE_BG_DISABLED;
         break;
-    case 2:
+    case INTRO_BATTLE_BG_PARTNER_BATTLE:
         BeginNormalPaletteFade(0x1, 0, 16, 0, FADE_COLOR_WHITE);
         REG_BG2CNT = BG2_FLAGS;
         REG_DISPCNT = DISPCNT_FLAGS;
-        gTasks[taskId].data[1] = 0;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[0] = 20;
+        gTasks[taskId].tBattleBgVOffset = 0;
+        gTasks[taskId].tBattleBgHOffset = 0;
+        gTasks[taskId].tBattleBgState = INTRO_BATTLE_BG_PARTNER_BATTLE_SCROLL;
         //fall through
-    case 20:
-        REG_BG2VOFS = gTasks[taskId].data[1];
-        REG_BG2HOFS = gTasks[taskId].data[2];
-        gTasks[taskId].data[1] += 6;
-        gTasks[taskId].data[2] -= 8;
+    case INTRO_BATTLE_BG_PARTNER_BATTLE_SCROLL:
+        REG_BG2VOFS = gTasks[taskId].tBattleBgVOffset;
+        REG_BG2HOFS = gTasks[taskId].tBattleBgHOffset;
+        gTasks[taskId].tBattleBgVOffset += 6;
+        gTasks[taskId].tBattleBgHOffset -= 8;
         break;
-    case 3:
+    case INTRO_BATTLE_BG_OPPONENT_EXIT:
         BeginNormalPaletteFade(0x1, 0, 16, 0, FADE_COLOR_WHITE);
         REG_BG2CNT = BG2_FLAGS;
         REG_DISPCNT = DISPCNT_FLAGS;
-        gTasks[taskId].data[1] = 0;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[0] = 0x1E;
+        gTasks[taskId].tBattleBgVOffset = 0;
+        gTasks[taskId].tBattleBgHOffset = 0;
+        gTasks[taskId].tBattleBgState = INTRO_BATTLE_BG_OPPONENT_EXIT_SCROLL;
         //fall through
-    case 0x1E:
-        REG_BG2VOFS = gTasks[taskId].data[1];
-        REG_BG2HOFS = gTasks[taskId].data[2];
-        gTasks[taskId].data[1] -= 6;
-        gTasks[taskId].data[2] += 8;
+    case INTRO_BATTLE_BG_OPPONENT_EXIT_SCROLL:
+        REG_BG2VOFS = gTasks[taskId].tBattleBgVOffset;
+        REG_BG2HOFS = gTasks[taskId].tBattleBgHOffset;
+        gTasks[taskId].tBattleBgVOffset -= 6;
+        gTasks[taskId].tBattleBgHOffset += 8;
         break;
-    case 4:
+    case INTRO_BATTLE_BG_TRAINER_THROW:
         BeginNormalPaletteFade(0x1, 5, 0, 16, RGB(23, 31, 13));
         REG_BG2CNT = BG2_FLAGS;
         REG_DISPCNT = DISPCNT_FLAGS;
-        gTasks[taskId].data[1] = 0;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[3] = 8;
-        gTasks[taskId].data[0] = 0x28;
+        gTasks[taskId].tBattleBgVOffset = 0;
+        gTasks[taskId].tBattleBgHOffset = 0;
+        gTasks[taskId].tBattleBgSpeed = 8;
+        gTasks[taskId].tBattleBgState = INTRO_BATTLE_BG_TRAINER_THROW_SCROLL;
         //fall through
-    case 0x28:
-        REG_BG2VOFS = gTasks[taskId].data[1];
-        REG_BG2HOFS = gTasks[taskId].data[2];
-        gTasks[taskId].data[1] -= gTasks[taskId].data[3];
-        gTasks[taskId].data[2] += gTasks[taskId].data[3];
-        if (!(gTasks[taskId].data[15] & 7) && gTasks[taskId].data[3] != 0)
-            gTasks[taskId].data[3]--;
+    case INTRO_BATTLE_BG_TRAINER_THROW_SCROLL:
+        REG_BG2VOFS = gTasks[taskId].tBattleBgVOffset;
+        REG_BG2HOFS = gTasks[taskId].tBattleBgHOffset;
+        gTasks[taskId].tBattleBgVOffset -= gTasks[taskId].tBattleBgSpeed;
+        gTasks[taskId].tBattleBgHOffset += gTasks[taskId].tBattleBgSpeed;
+        if (!(gTasks[taskId].tBattleBgTimer & 7) && gTasks[taskId].tBattleBgSpeed != 0)
+            gTasks[taskId].tBattleBgSpeed--;
         break;
-    case 0xFF:  //needed to prevent jump table optimization
+    case INTRO_BATTLE_BG_DISABLED:  //needed to prevent jump table optimization
         break;
     }
 
@@ -1501,7 +1671,7 @@ static void IntroResetGpuRegs(void)
 
 static void Task_AnimateGameFreakLogoBlend(u8 taskId)
 {
-    switch (gTasks[taskId].data[0])
+    switch (gTasks[taskId].tState)
     {
     default:
     case 0:
@@ -1509,22 +1679,22 @@ static void Task_AnimateGameFreakLogoBlend(u8 taskId)
         REG_BLDALPHA = 0x1000;
         REG_BLDY = 0;
         gTasks[taskId].data[1] = 0x40;
-        gTasks[taskId].data[0] = 1;
+        gTasks[taskId].tState = 1;
         break;
     case 1:
         if (gTasks[taskId].data[1] != 0)
         {
-            u8 foo;
+            u8 blendIndex;
 
             gTasks[taskId].data[1]--;
-            foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
+            blendIndex = gTasks[taskId].data[1] / 2;
+            REG_BLDALPHA = gTitleScreenAlphaBlend[blendIndex];
         }
         else
         {
             REG_BLDALPHA = gTitleScreenAlphaBlend[0];
             gTasks[taskId].data[1] = 0x80;
-            gTasks[taskId].data[0]++;
+            gTasks[taskId].tState++;
         }
         break;
     case 2:
@@ -1536,24 +1706,24 @@ static void Task_AnimateGameFreakLogoBlend(u8 taskId)
         else
         {
             gTasks[taskId].data[1] = 0;  //redundant?
-            gTasks[taskId].data[0]++;
+            gTasks[taskId].tState++;
         }
         break;
     case 3:
         if (gTasks[taskId].data[1] <= 0x3D)
         {
-            u8 foo;
+            u8 blendIndex;
 
             gTasks[taskId].data[1]++;
-            foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
+            blendIndex = gTasks[taskId].data[1] / 2;
+            REG_BLDALPHA = gTitleScreenAlphaBlend[blendIndex];
         }
         else
         {
             //_0813CDE0
             REG_BLDALPHA = gTitleScreenAlphaBlend[0x1F];
             gTasks[taskId].data[1] = 0x10;
-            gTasks[taskId].data[0]++;
+            gTasks[taskId].tState++;
         }
         break;
     case 4:
@@ -1572,15 +1742,15 @@ static void Task_AnimateGameFreakLogoBlend(u8 taskId)
     }
 }
 
-void PanFadeAndZoomScreen(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
+void PanFadeAndZoomScreen(u16 screenX, u16 screenY, u16 zoom, u16 alpha)
 {
     struct BgAffineSrcData src;
     struct BgAffineDstData dest;
 
     src.texX = 0x8000;
     src.texY = 0x8000;
-    src.scrX = scrX;
-    src.scrY = scrY;
+    src.scrX = screenX;
+    src.scrY = screenY;
     src.sx = zoom;
     src.sy = zoom;
     src.alpha = alpha;
@@ -1593,52 +1763,52 @@ void PanFadeAndZoomScreen(u16 scrX, u16 scrY, u16 zoom, u16 alpha)
     REG_BG2Y = dest.dy;
 }
 
-static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 d, u8 front)
+static u16 CreateIntroBattleMonSprite(u16 species, s16 x, s16 y, u16 spriteSlot, u8 useFrontPic)
 {
     const u8 *lzPaletteData;
     u8 spriteId;
 
-    if (front)
-        LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], species, 0, 1);
+    if (useFrontPic)
+        LoadSpecialPokePic(&gMonFrontPicTable[species], gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 1);
     else
-        LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], species, 0, 0);
+        LoadSpecialPokePic(&gMonBackPicTable[species], gMonBackPicCoords[species].coords, gMonBackPicCoords[species].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], species, 0, 0);
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, 0, 0xFFFF);
-    LoadCompressedPalette(lzPaletteData, 0x100 + d * 0x10, 0x20);
-    PrepareHallOfFameMonPicSpriteTemplate(d, d);
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, (d + 1) * 4);
-    gSprites[spriteId].oam.paletteNum = d;
+    LoadCompressedPalette(lzPaletteData, 0x100 + spriteSlot * 0x10, 0x20);
+    PrepareHallOfFameMonPicSpriteTemplate(spriteSlot, spriteSlot);
+    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, (spriteSlot + 1) * 4);
+    gSprites[spriteId].oam.paletteNum = spriteSlot;
     gSprites[spriteId].oam.priority = 1;
     return spriteId;
 }
 
-static u8 CreateIntroTrainerSprite(u16 a, u16 b, u16 c, u16 d)
+static u8 CreateIntroTrainerSprite(u16 trainerPicId, u16 x, u16 y, u16 spriteSlot)
 {
     u8 spriteId;
 
-    DecompressPicFromTable(&gTrainerBackPicTable[a], gTrainerBackPicCoords[a].coords, gTrainerBackPicCoords[a].y_offset, (void *)EWRAM, gUnknown_0840B5A0[d], a);
-    LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + d * 0x10, 0x20);
-    PrepareHallOfFameTrainerPicSpriteTemplate(d, d);
-    gCreatingSpriteTemplate.anims = gUnknown_0840B064;
-    spriteId = CreateSprite(&gCreatingSpriteTemplate, b, c, 1);
-    gSprites[spriteId].oam.paletteNum = d;
+    DecompressPicFromTable(&gTrainerBackPicTable[trainerPicId], gTrainerBackPicCoords[trainerPicId].coords, gTrainerBackPicCoords[trainerPicId].y_offset, (void *)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicId);
+    LoadCompressedPalette(gTrainerBackPicPaletteTable[trainerPicId].data, 0x100 + spriteSlot * 0x10, 0x20);
+    PrepareHallOfFameTrainerPicSpriteTemplate(spriteSlot, spriteSlot);
+    gCreatingSpriteTemplate.anims = sAnims_IntroTrainer;
+    spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 1);
+    gSprites[spriteId].oam.paletteNum = spriteSlot;
     gSprites[spriteId].oam.priority = 1;
     return spriteId;
 }
 
-static void SetIntroBattleBackgroundColor(u8 a)
+static void SetIntroBattleBackgroundColor(u8 colorId)
 {
     u16 color;
 
-    switch (a)
+    switch (colorId)
     {
     default:
-    case 0:
+    case INTRO_BATTLE_BG_GREEN:
         color = RGB(22, 31, 15);
         break;
-    case 1:
+    case INTRO_BATTLE_BG_RED:
         color = RGB(31, 14, 12);
         break;
-    case 2:
+    case INTRO_BATTLE_BG_BLUE:
         color = RGB(12, 12, 20);
         break;
     }
@@ -1648,7 +1818,7 @@ static void SetIntroBattleBackgroundColor(u8 a)
 
 static void SpriteCB_WaterDrop_Ripple(struct Sprite *sprite)
 {
-    u8 r0;
+    u8 paletteNum;
 
     if (sprite->data[2] >= 192)
     {
@@ -1661,10 +1831,10 @@ static void SpriteCB_WaterDrop_Ripple(struct Sprite *sprite)
             sprite->invisible = FALSE;
             SetOamMatrix(sprite->data[1], sprite->data[2], 0, 0, sprite->data[2]);
             sprite->data[2] = (sprite->data[2] * 95) / 100;
-            r0 = (sprite->data[2] - 192) / 128 + 9;
-            if (r0 > 15)
-                r0 = 15;
-            sprite->oam.paletteNum = r0;
+            paletteNum = (sprite->data[2] - 192) / 128 + 9;
+            if (paletteNum > 15)
+                paletteNum = 15;
+            sprite->oam.paletteNum = paletteNum;
         }
     }
     else
@@ -1680,7 +1850,7 @@ static void SpriteCB_WaterDropHalf(struct Sprite *sprite)
         sprite->invisible = TRUE;
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
-        StartSpriteAnim(sprite, 3);
+        StartSpriteAnim(sprite, DROP_ANIM_RIPPLE);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
         sprite->callback = SpriteCB_WaterDrop_Ripple;
@@ -1699,7 +1869,7 @@ static void SpriteCB_WaterDropHalf(struct Sprite *sprite)
 
 static void SpriteCB_WaterDrop(struct Sprite *sprite)
 {
-    if (sprite->data[0] != 0)
+    if (sprite->sState != WATER_DROP_WAIT)
         sprite->callback = SpriteCB_WaterDrop_Slide;
 }
 
@@ -1775,14 +1945,14 @@ static void SpriteCB_WaterDrop_ReachLeafEnd(struct Sprite *sprite)
 
 static void SpriteCB_WaterDrop_DangleFromLeaf(struct Sprite *sprite)
 {
-    if (sprite->data[0] != 2)
+    if (sprite->sState != WATER_DROP_FALL)
     {
-        s16 r2;
+        s16 sineIndex;
 
         sprite->data[4] += 8;
-        r2 = gSineTable[(u8)sprite->data[4]] / 16 + 64;
-        sprite->x2 = gSineTable[(u8)(r2 + 64)] / 64;
-        sprite->y2 = gSineTable[(u8)r2] / 64;
+        sineIndex = gSineTable[(u8)sprite->data[4]] / 16 + 64;
+        sprite->x2 = gSineTable[(u8)(sineIndex + 64)] / 64;
+        sprite->y2 = gSineTable[(u8)sineIndex] / 64;
     }
     else
     {
@@ -1802,7 +1972,7 @@ static void SpriteCB_WaterDrop_Fall(struct Sprite *sprite)
         sprite->invisible = TRUE;
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
-        StartSpriteAnim(sprite, 3);
+        StartSpriteAnim(sprite, DROP_ANIM_RIPPLE);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
         sprite->callback = SpriteCB_WaterDrop_Ripple;
@@ -1812,7 +1982,8 @@ static void SpriteCB_WaterDrop_Fall(struct Sprite *sprite)
     }
 }
 
-//Duplicate function
+// Identical to SpriteCB_WaterDrop_Fall.
+// Used by the second and third drops to skip the leaf slide.
 static void SpriteCB_WaterDropShort(struct Sprite *sprite)
 {
     if (sprite->y < sprite->data[5])
@@ -1825,7 +1996,7 @@ static void SpriteCB_WaterDropShort(struct Sprite *sprite)
         sprite->invisible = TRUE;
         sprite->x += sprite->x2;
         sprite->y += sprite->y2;
-        StartSpriteAnim(sprite, 3);
+        StartSpriteAnim(sprite, DROP_ANIM_RIPPLE);
         sprite->data[2] = 1024;
         sprite->data[3] = 8 * (sprite->data[1] & 3);
         sprite->callback = SpriteCB_WaterDrop_Ripple;
@@ -1835,77 +2006,77 @@ static void SpriteCB_WaterDropShort(struct Sprite *sprite)
     }
 }
 
-static u8 CreateWaterDrop(s16 x, s16 y, u16 c, u16 d, u16 e, u8 fallImmediately)
+static u8 CreateWaterDrop(s16 x, s16 y, u16 scale, u16 matrixNum, u16 fallY, u8 fallImmediately)
 {
     u8 spriteId;
-    u8 oldSpriteId;
+    u8 reflectionSpriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840AE20, x, y, 0);
-    gSprites[spriteId].data[0] = 0;
+    spriteId = CreateSprite(&sSpriteTemplate_WaterDrop, x, y, 0);
+    gSprites[spriteId].sState = WATER_DROP_WAIT;
     gSprites[spriteId].data[7] = 0;
-    gSprites[spriteId].data[1] = d;
-    gSprites[spriteId].data[2] = c;
-    gSprites[spriteId].data[3] = c;
-    gSprites[spriteId].data[5] = e;
-    gSprites[spriteId].data[6] = c;
+    gSprites[spriteId].data[1] = matrixNum;
+    gSprites[spriteId].data[2] = scale;
+    gSprites[spriteId].data[3] = scale;
+    gSprites[spriteId].data[5] = fallY;
+    gSprites[spriteId].data[6] = scale;
     gSprites[spriteId].oam.affineMode = 3;
-    gSprites[spriteId].oam.matrixNum = d;
+    gSprites[spriteId].oam.matrixNum = matrixNum;
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
-    StartSpriteAnim(&gSprites[spriteId], 2);
+    StartSpriteAnim(&gSprites[spriteId], DROP_ANIM_REFLECTION);
     if (!fallImmediately)
         gSprites[spriteId].callback = SpriteCB_WaterDrop;
     else
         gSprites[spriteId].callback = SpriteCB_WaterDropShort;
-    oldSpriteId = spriteId;
+    reflectionSpriteId = spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840AE20, x, y, 0);
-    gSprites[spriteId].data[7] = oldSpriteId;
-    gSprites[spriteId].data[1] = d + 1;
+    spriteId = CreateSprite(&sSpriteTemplate_WaterDrop, x, y, 0);
+    gSprites[spriteId].data[7] = reflectionSpriteId;
+    gSprites[spriteId].data[1] = matrixNum + 1;
     gSprites[spriteId].oam.affineMode = 3;
-    gSprites[spriteId].oam.matrixNum = d + 1;
+    gSprites[spriteId].oam.matrixNum = matrixNum + 1;
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
     gSprites[spriteId].callback = SpriteCB_WaterDropHalf;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840AE20, x, y, 0);
-    gSprites[spriteId].data[7] = oldSpriteId;
-    gSprites[spriteId].data[1] = d + 2;
-    StartSpriteAnim(&gSprites[spriteId], 1);
+    spriteId = CreateSprite(&sSpriteTemplate_WaterDrop, x, y, 0);
+    gSprites[spriteId].data[7] = reflectionSpriteId;
+    gSprites[spriteId].data[1] = matrixNum + 2;
+    StartSpriteAnim(&gSprites[spriteId], DROP_ANIM_LOWER_HALF);
     gSprites[spriteId].oam.affineMode = 3;
-    gSprites[spriteId].oam.matrixNum = d + 2;
+    gSprites[spriteId].oam.matrixNum = matrixNum + 2;
     CalcCenterToCornerVec(&gSprites[spriteId], 0, 2, 2);
     gSprites[spriteId].callback = SpriteCB_WaterDropHalf;
 
-    SetOamMatrix(d, c + 32, 0, 0, c + 32);
-    SetOamMatrix(d + 1, c + 32, 0, 0, c + 32);
-    SetOamMatrix(d + 2, c + 32, 0, 0, 2 * (c + 32));
+    SetOamMatrix(matrixNum, scale + 32, 0, 0, scale + 32);
+    SetOamMatrix(matrixNum + 1, scale + 32, 0, 0, scale + 32);
+    SetOamMatrix(matrixNum + 2, scale + 32, 0, 0, 2 * (scale + 32));
 
-    return oldSpriteId;
+    return reflectionSpriteId;
 }
 
 static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
-    case 0:
-        StartSpriteAnimIfDifferent(sprite, 0);
+    case PLAYER_BICYCLE_MOVE_FORWARD:
+        StartSpriteAnimIfDifferent(sprite, PLAYER_BICYCLE_ANIM_FAST);
         sprite->x--;
         break;
-    case 1:
-        StartSpriteAnimIfDifferent(sprite, 0);
+    case PLAYER_BICYCLE_DRIFT_BACK:
+        StartSpriteAnimIfDifferent(sprite, PLAYER_BICYCLE_ANIM_FAST);
         if (gIntroFrameCounter & 7)
             return;
         sprite->x++;
         break;
-    case 2:
-        StartSpriteAnimIfDifferent(sprite, 2);
+    case PLAYER_BICYCLE_MOVE_BACKWARD:
+        StartSpriteAnimIfDifferent(sprite, PLAYER_BICYCLE_ANIM_LOOK_BACK);
         if (sprite->x <= 120 || (gIntroFrameCounter & 7))
             sprite->x++;
         break;
-    case 3:
-        StartSpriteAnimIfDifferent(sprite, 3);
+    case PLAYER_BICYCLE_HOLD_POSITION:
+        StartSpriteAnimIfDifferent(sprite, PLAYER_BICYCLE_ANIM_LOOK_FORWARD);
         break;
-    case 4:
-        StartSpriteAnimIfDifferent(sprite, 0);
+    case PLAYER_BICYCLE_EXIT:
+        StartSpriteAnimIfDifferent(sprite, PLAYER_BICYCLE_ANIM_FAST);
         if (sprite->x > -32)
             sprite->x -= 2;
         break;
@@ -1934,25 +2105,25 @@ static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_Eon(struct Sprite *sprite)
+static void SpriteCB_Lati(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
-    case 0:
+    case LATI_WAIT:
         break;
-    case 1:
+    case LATI_ENTER:
         if (sprite->x2 + sprite->x < 304)
             sprite->x2 += 8;
         else
-            sprite->data[0] = 2;
+            sprite->sState = LATI_APPROACH_PLAYER;
         break;
-    case 2:
+    case LATI_APPROACH_PLAYER:
         if (sprite->x2 + sprite->x > 120)
             sprite->x2 -= 1;
         else
-            sprite->data[0] = 3;
+            sprite->sState = LATI_EXIT;
         break;
-    case 3:
+    case LATI_EXIT:
         if (sprite->x2 > 0)
             sprite->x2 -= 2;
         break;
@@ -1961,13 +2132,15 @@ static void SpriteCB_Eon(struct Sprite *sprite)
     sprite->data[1] += 4;
 }
 
+#define sBlendTaskId data[0]
+
 static void SpriteCB_LogoLetter(struct Sprite *sprite)
 {
-    if (gTasks[sprite->data[0]].data[0] == 0)
+    if (gTasks[sprite->sBlendTaskId].tState == 0)
     {
         sprite->invisible = TRUE;
     }
-    else if (gTasks[sprite->data[0]].data[0] != 4)
+    else if (gTasks[sprite->sBlendTaskId].tState != 4)
     {
         sprite->invisible = FALSE;
     }
@@ -1977,34 +2150,36 @@ static void SpriteCB_LogoLetter(struct Sprite *sprite)
     }
 }
 
-static u8 CreateGameFreakLogoSprites(s16 a, s16 b, u8 c)
+static u8 CreateGameFreakLogoSprites(s16 x, s16 y, u8 blendTaskId)
 {
     u8 spriteId;
     u16 i;
 
     for (i = 0; i < 9; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_840AF94, gUnknown_0840AF50[i][1] + a, b - 4, 0);
-        gSprites[spriteId].data[0] = c;
-        StartSpriteAnim(&gSprites[spriteId], gUnknown_0840AF50[i][0]);
+        spriteId = CreateSprite(&sSpriteTemplate_GameFreakLetter, sGameFreakLetterData[i][1] + x, y - 4, 0);
+        gSprites[spriteId].sBlendTaskId = blendTaskId;
+        StartSpriteAnim(&gSprites[spriteId], sGameFreakLetterData[i][0]);
     }
     for (i = 0; i < 8; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_840AFAC, gUnknown_0840AF74[i][1] + a, b + 12, 0);
-        gSprites[spriteId].data[0] = c;
-        StartSpriteAnim(&gSprites[spriteId], gUnknown_0840AF74[i][0]);
+        spriteId = CreateSprite(&sSpriteTemplate_PresentsLetter, sPresentsLetterData[i][1] + x, y + 12, 0);
+        gSprites[spriteId].sBlendTaskId = blendTaskId;
+        StartSpriteAnim(&gSprites[spriteId], sPresentsLetterData[i][0]);
     }
-    spriteId = CreateSprite(&gSpriteTemplate_840AFC4, 120, b - 4, 0);
-    gSprites[spriteId].data[0] = c;
+    spriteId = CreateSprite(&sSpriteTemplate_GameFreakLogo, 120, y - 4, 0);
+    gSprites[spriteId].sBlendTaskId = blendTaskId;
 
     return spriteId;
 }
 
-static void SpriteCB_EonSilhouette(struct Sprite *sprite)
+#undef sBlendTaskId
+
+static void SpriteCB_LatiSilhouette(struct Sprite *sprite)
 {
     sprite->data[7]++;
 
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2012,7 +2187,7 @@ static void SpriteCB_EonSilhouette(struct Sprite *sprite)
         sprite->oam.matrixNum = 1;
         CalcCenterToCornerVec(sprite, 1, 3, 3);
         sprite->invisible = FALSE;
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         sprite->data[1] = 128;
         sprite->data[2] = -24;
         sprite->data[3] = 0;
@@ -2021,10 +2196,10 @@ static void SpriteCB_EonSilhouette(struct Sprite *sprite)
     {
         s16 sin;
         s16 cos;
-        s16 a;
-        s16 b;
-        s16 c;
-        s16 d;
+        s16 matrixA;
+        s16 matrixB;
+        s16 matrixC;
+        s16 matrixD;
 
         if (sprite->data[3] < 0x50)
         {
@@ -2035,12 +2210,12 @@ static void SpriteCB_EonSilhouette(struct Sprite *sprite)
         }
         sin = gSineTable[(u8)sprite->data[2]];
         cos = gSineTable[(u8)(sprite->data[2] + 64)];
-        d =  cos * sprite->data[1] / 256;
-        c = -sin * sprite->data[1] / 256;
-        b =  sin * sprite->data[1] / 256;
-        a  = cos * sprite->data[1] / 256;
+        matrixD =  cos * sprite->data[1] / 256;
+        matrixC = -sin * sprite->data[1] / 256;
+        matrixB =  sin * sprite->data[1] / 256;
+        matrixA = cos * sprite->data[1] / 256;
 
-        SetOamMatrix(1, a, b, c, d);
+        SetOamMatrix(1, matrixA, matrixB, matrixC, matrixD);
 
         if (sprite->data[1] < 0x100)
             sprite->data[1] += 8;
@@ -2059,7 +2234,7 @@ static void SpriteCB_EonSilhouette(struct Sprite *sprite)
 
 static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2067,7 +2242,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
             sprite->hFlip = TRUE;
         else
             sprite->hFlip = FALSE;
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         //fall through
     case 1:
         if (sprite->y > 96)
@@ -2080,7 +2255,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
         }
         else
         {
-            sprite->data[0]++;
+            sprite->sState++;
             sprite->data[3] = 8;
         }
         break;
@@ -2091,7 +2266,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
         }
         else
         {
-            sprite->data[0]++;
+            sprite->sState++;
             sprite->data[3] = 0;  //redundant?
         }
         break;
@@ -2103,7 +2278,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
             SetOamMatrix(sprite->data[1], -256, 0, 0, 256);
         else
             SetOamMatrix(sprite->data[1], 256, 0, 0, 256);
-        sprite->data[0]++;
+        sprite->sState++;
         sprite->data[4] = 0;
         break;
     case 4:
@@ -2111,7 +2286,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
         if (sprite->y + sprite->y2 > -32
          && sprite->x + sprite->x2 > -64)
         {
-            u16 r2;
+            u16 scale;
 
             sprite->y2 = -(sprite->data[4] * sprite->data[4]) / 8;
             if (sprite->data[2] != 0)
@@ -2120,11 +2295,11 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
                 sprite->x2 -= sprite->data[4];
             if (sprite->data[3] < 128)
                 sprite->data[3] += 8;
-            r2 = 256 - sprite->data[3];
+            scale = 256 - sprite->data[3];
             if (sprite->data[2] != 0)
-                SetOamMatrix(sprite->data[1], -r2, 0, 0, r2);
+                SetOamMatrix(sprite->data[1], -scale, 0, 0, scale);
             else
-                SetOamMatrix(sprite->data[1], r2, 0, 0, r2);
+                SetOamMatrix(sprite->data[1], scale, 0, 0, scale);
         }
         else
         {
@@ -2135,7 +2310,7 @@ static void SpriteCB_IntroOpposingPokemon(struct Sprite *sprite)
 
 static void SpriteCB_IntroPartnerPokemon(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2143,7 +2318,7 @@ static void SpriteCB_IntroPartnerPokemon(struct Sprite *sprite)
         sprite->oam.affineMode = 1;
         sprite->oam.matrixNum = sprite->data[1];
         sprite->data[3] = 2048;
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         //fall through
     case 1:
         if (sprite->data[3] > 256)
@@ -2160,7 +2335,7 @@ static void SpriteCB_IntroPartnerPokemon(struct Sprite *sprite)
                 SetOamMatrix(sprite->data[1], -256, 0, 0, 256);
             else
                 SetOamMatrix(sprite->data[1], 256, 0, 0, 256);
-            sprite->data[0]++;
+            sprite->sState++;
         }
         break;
     case 2:
@@ -2178,7 +2353,7 @@ static void SpriteCB_IntroPartnerPokemon(struct Sprite *sprite)
 
 static void SpriteCB_IntroTrainer(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2189,24 +2364,24 @@ static void SpriteCB_IntroTrainer(struct Sprite *sprite)
         else
         {
             StartSpriteAnim(sprite, 1);
-            sprite->data[6] = CreateSprite(&gSpriteTemplate_840B084, 16, 104, 100);
-            sprite->data[7] = CreateSprite(&gSpriteTemplate_840B084, 12, 106, 101);
-            sprite->data[0] = 1;
+            sprite->data[6] = CreateSprite(&sSpriteTemplate_IntroFlyingPokeball, 16, 104, 100);
+            sprite->data[7] = CreateSprite(&sSpriteTemplate_IntroFlyingPokeball, 12, 106, 101);
+            sprite->sState = 1;
         }
         break;
     case 1:
         break;
     case 2:
         StartSpriteAnim(sprite, 2);
-        gSprites[sprite->data[6]].data[0] = 1;
-        gSprites[sprite->data[7]].data[0] = 2;
-        sprite->data[0]++;
+        gSprites[sprite->data[6]].sState = 1;
+        gSprites[sprite->data[7]].sState = 2;
+        sprite->sState++;
         break;
     case 3:
         if (sprite->y > 160)
         {
             sprite->invisible = TRUE;
-            sprite->data[0] = 1;
+            sprite->sState = 1;
         }
         else
         {
@@ -2216,35 +2391,36 @@ static void SpriteCB_IntroTrainer(struct Sprite *sprite)
         break;
     case 4:
     {
-        s16 r4, r5;
+        s16 ballX;
+        s16 ballY;
 
-        r5 = gSprites[sprite->data[6]].x + gSprites[sprite->data[6]].x2;
-        r4 = gSprites[sprite->data[6]].y + gSprites[sprite->data[6]].y2;
+        ballX = gSprites[sprite->data[6]].x + gSprites[sprite->data[6]].x2;
+        ballY = gSprites[sprite->data[6]].y + gSprites[sprite->data[6]].y2;
         DestroySprite(&gSprites[sprite->data[6]]);
-        sprite->data[6] = CreateIntroBattleMonSprite(SPECIES_TORCHIC, r5, r4, 2, 1);
+        sprite->data[6] = CreateIntroBattleMonSprite(SPECIES_TORCHIC, ballX, ballY, 2, 1);
         gSprites[sprite->data[6]].callback = SpriteCB_IntroPartnerPokemon;
         gSprites[sprite->data[6]].invisible = TRUE;
         gSprites[sprite->data[6]].data[1] = 1;
         gSprites[sprite->data[6]].data[2] = 1;
-        CreateIntroBurstParticles(r5, r4);
+        CreateIntroBurstParticles(ballX, ballY);
 
-        r5 = gSprites[sprite->data[7]].x + gSprites[sprite->data[7]].x2;
-        r4 = gSprites[sprite->data[7]].y + gSprites[sprite->data[7]].y2;
+        ballX = gSprites[sprite->data[7]].x + gSprites[sprite->data[7]].x2;
+        ballY = gSprites[sprite->data[7]].y + gSprites[sprite->data[7]].y2;
         DestroySprite(&gSprites[sprite->data[7]]);
-        sprite->data[7] = CreateIntroBattleMonSprite(SPECIES_MUDKIP, r5, r4, 3, 1);
+        sprite->data[7] = CreateIntroBattleMonSprite(SPECIES_MUDKIP, ballX, ballY, 3, 1);
         gSprites[sprite->data[7]].callback = SpriteCB_IntroPartnerPokemon;
         gSprites[sprite->data[7]].invisible = TRUE;
         gSprites[sprite->data[7]].data[1] = 2;
         gSprites[sprite->data[7]].data[2] = 0;
-        CreateIntroBurstParticles(r5, r4);
+        CreateIntroBurstParticles(ballX, ballY);
 
         BeginNormalPaletteFade(0xFF0000, 0, 16, 16, RGB(31, 23, 31));
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         break;
     }
     case 5:
-        gSprites[sprite->data[6]].data[0] = 3;
-        gSprites[sprite->data[7]].data[0] = 3;
+        gSprites[sprite->data[6]].sState = 3;
+        gSprites[sprite->data[7]].sState = 3;
         break;
     case 6:
         DestroySprite(&gSprites[sprite->data[6]]);
@@ -2256,7 +2432,7 @@ static void SpriteCB_IntroTrainer(struct Sprite *sprite)
 
 static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2273,7 +2449,7 @@ static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *sprite)
             sprite->y += sprite->y2;
             sprite->x2 = 0;
             sprite->y2 = 0;
-            sprite->data[0] = 1;
+            sprite->sState = 1;
             sprite->data[1] = 0;
         }
         break;
@@ -2316,7 +2492,7 @@ static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *sprite)
             sprite->y += sprite->y2;
             sprite->x2 = 0;
             sprite->y2 = 0;
-            sprite->data[0] = 1;
+            sprite->sState = 1;
         }
         break;
     }
@@ -2324,7 +2500,7 @@ static void SpriteCB_IntroOpposingPokemonBattle(struct Sprite *sprite)
 
 static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2341,7 +2517,7 @@ static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *sprite)
             sprite->y += sprite->y2;
             sprite->x2 = 0;
             sprite->y2 = 0;
-            sprite->data[0] = 1;
+            sprite->sState = 1;
             sprite->data[1] = 0;
         }
         break;
@@ -2384,7 +2560,7 @@ static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *sprite)
             sprite->y += sprite->y2;
             sprite->x2 = 0;
             sprite->y2 = 0;
-            sprite->data[0] = 1;
+            sprite->sState = 1;
         }
         break;
     }
@@ -2392,10 +2568,11 @@ static void SpriteCB_IntroPartnerPokemonBattle(struct Sprite *sprite)
 
 static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite)
 {
-    u16 r4, r1;
+    u16 sine;
+    u16 cosine;
 
     sprite->data[7]++;
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2403,7 +2580,7 @@ static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite)
     case 1:
         sprite->oam.affineMode = 1;
         sprite->oam.matrixNum = 1;
-        sprite->data[0] = 10;
+        sprite->sState = 10;
         sprite->data[4] = 36;
         //fall through
     case 10:
@@ -2417,14 +2594,14 @@ static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite)
         sprite->data[3] -= sprite->data[4];
         if ((sprite->data[7] & 1) && sprite->data[4] != 0)
             sprite->data[4]--;
-        r4 = gSineTable[(u8)sprite->data[3]];
-        r1 = gSineTable[(u8)(sprite->data[3] + 64)];
-        SetOamMatrix(1, r1, r4, -r4, r1);
+        sine = gSineTable[(u8)sprite->data[3]];
+        cosine = gSineTable[(u8)(sprite->data[3] + 64)];
+        SetOamMatrix(1, cosine, sine, -sine, cosine);
         break;
     case 2:
         sprite->oam.affineMode = 1;
         sprite->oam.matrixNum = 2;
-        sprite->data[0] = 20;
+        sprite->sState = 20;
         sprite->data[4] = 36;
         //fall through
     case 20:
@@ -2438,18 +2615,20 @@ static void SpriteCB_IntroFlyingPokeball(struct Sprite *sprite)
         sprite->data[3] -= sprite->data[4];
         if ((sprite->data[7] & 1) && sprite->data[4] != 0)
             sprite->data[4]--;
-        r4 = gSineTable[(u8)sprite->data[3]];
-        r1 = gSineTable[(u8)(sprite->data[3] + 64)];
-        SetOamMatrix(2, r1, r4, -r4, r1);
+        sine = gSineTable[(u8)sprite->data[3]];
+        cosine = gSineTable[(u8)(sprite->data[3] + 64)];
+        SetOamMatrix(2, cosine, sine, -sine, cosine);
         break;
     }
 }
 
+#define sBurstAngleIndex data[0]
+
 static void SpriteCB_IntroBurstParticle(struct Sprite *sprite)
 {
-    u16 r4;
-    u16 r2;
-    u16 r1;
+    u16 radius;
+    u16 sine;
+    u16 cosine;
 
     sprite->data[7]++;
     if (sprite->data[7] & 1)
@@ -2462,17 +2641,17 @@ static void SpriteCB_IntroBurstParticle(struct Sprite *sprite)
         return;
     }
     sprite->data[2] += 2;
-    r4 = Sin((u8)sprite->data[2], 40);
-    sprite->x2 = Cos((u8)(sprite->data[0] * 32), r4);
-    sprite->y2 = Sin((u8)(sprite->data[0] * 32), r4);
-    if (sprite->data[0] == 0)
+    radius = Sin((u8)sprite->data[2], 40);
+    sprite->x2 = Cos((u8)(sprite->sBurstAngleIndex * 32), radius);
+    sprite->y2 = Sin((u8)(sprite->sBurstAngleIndex * 32), radius);
+    if (sprite->sBurstAngleIndex == 0)
     {
         sprite->data[3] -= sprite->data[1];
         if ((sprite->data[7] & 1) && sprite->data[1] != 0)
             sprite->data[1]--;
-        r2 = gSineTable[(u8)sprite->data[3]];
-        r1 = gSineTable[(u8)(sprite->data[3] + 64)];
-        SetOamMatrix(16, r1, r2, -r2, r1);
+        sine = gSineTable[(u8)sprite->data[3]];
+        cosine = gSineTable[(u8)(sprite->data[3] + 64)];
+        SetOamMatrix(16, cosine, sine, -sine, cosine);
     }
 }
 
@@ -2483,23 +2662,27 @@ static void CreateIntroBurstParticles(u16 x, u16 y)
 
     for (i = 0; i < 8; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_840B0B0, x, y, 0);
+        spriteId = CreateSprite(&sSpriteTemplate_IntroBurstParticle, x, y, 0);
         gSprites[spriteId].oam.affineMode = 1;
         gSprites[spriteId].oam.matrixNum = 16;
-        gSprites[spriteId].data[0] = i;
+        gSprites[spriteId].sBurstAngleIndex = i;
         gSprites[spriteId].data[1] = 32;
     }
 }
 
+#undef sBurstAngleIndex
+
+#define sParentSpriteId data[0]
+
 static void SpriteCB_IntroAttackParticle(struct Sprite *sprite)
 {
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
     else
     {
-        sprite->invisible = gSprites[sprite->data[0]].invisible;
+        sprite->invisible = gSprites[sprite->sParentSpriteId].invisible;
         if (sprite->data[7] < 12)
             sprite->data[7]++;
         sprite->data[6] += 4;
@@ -2517,10 +2700,10 @@ static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite)
 {
     u8 spriteId;
     u8 i;
-    s16 var1;
-    s16 var2;
+    s16 particleX;
+    s16 particleY;
 
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
@@ -2528,26 +2711,26 @@ static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite)
     {
         sprite->data[7]++;
         sprite->invisible = TRUE;
-        if (gSprites[sprite->data[0]].data[0] == 1 && !(sprite->data[7] & 3))
+        if (gSprites[sprite->sParentSpriteId].sState == 1 && !(sprite->data[7] & 3))
         {
-            var1 = sprite->data[1] + gSprites[sprite->data[0]].x;
-            var2 = sprite->data[2] + gSprites[sprite->data[0]].y;
+            particleX = sprite->data[1] + gSprites[sprite->sParentSpriteId].x;
+            particleY = sprite->data[2] + gSprites[sprite->sParentSpriteId].y;
             for (i = 0; i < 3; i++)
             {
-                u8 r3 = gSprites[sprite->data[0]].subpriority - 1;
+                u8 subpriority = gSprites[sprite->sParentSpriteId].subpriority - 1;
                 //Make redundant copies of these variables to get the asm to match
-                s16 _var1 = var1;
-                s16 _var2 = var2;
+                s16 particleXCopy = particleX;
+                s16 particleYCopy = particleY;
 
-                spriteId = CreateSprite(&gSpriteTemplate_840B0DC, _var1, _var2, r3);
+                spriteId = CreateSprite(&sSpriteTemplate_IntroAttackParticle, particleXCopy, particleYCopy, subpriority);
                 if (spriteId != 64)
                 {
-                    gSprites[spriteId].data[0] = sprite->data[0];
+                    gSprites[spriteId].sParentSpriteId = sprite->sParentSpriteId;
                     gSprites[spriteId].data[1] = (((sprite->data[7] >> 2) & 7) << 5) + i * 85;
                     gSprites[spriteId].data[2] = sprite->data[3];
                     gSprites[spriteId].data[3] = 104;
-                    gSprites[spriteId].data[4] = var1;
-                    gSprites[spriteId].data[5] = var2;
+                    gSprites[spriteId].data[4] = particleX;
+                    gSprites[spriteId].data[5] = particleY;
                     gSprites[spriteId].data[6] = 0;
                 }
             }
@@ -2555,14 +2738,14 @@ static void SpriteCB_IntroAttackParticleSpawner(struct Sprite *sprite)
     }
 }
 
-static void CreateIntroOpposingAttackEffect(u8 a)
+static void CreateIntroOpposingAttackEffect(u8 opponentSpriteId)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840B0F4, 0, 0, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_IntroAttackParticleSpawner, 0, 0, 0);
     if (spriteId != 64)
     {
-        gSprites[spriteId].data[0] = a;
+        gSprites[spriteId].sParentSpriteId = opponentSpriteId;
         gSprites[spriteId].data[1] = -12;
         gSprites[spriteId].data[2] = 0;
         gSprites[spriteId].data[3] = 136;
@@ -2571,40 +2754,40 @@ static void CreateIntroOpposingAttackEffect(u8 a)
 
 static void SpriteCB_IntroOrbitingParticle(struct Sprite *sprite)
 {
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
     else
     {
-        sprite->invisible = gSprites[sprite->data[0]].invisible;
+        sprite->invisible = gSprites[sprite->sParentSpriteId].invisible;
         sprite->data[7]++;
         if (sprite->data[3] < 40)
             sprite->data[3] += 2;
         //This useless '+ 0' is needed to make the asm match
-        sprite->x = gSprites[sprite->data[0]].x + gSprites[sprite->data[0]].x2 + gSineTable[(u8)(sprite->data[1] + 64)] * sprite->data[3] / 256;
-        sprite->y = gSprites[sprite->data[0]].y + gSprites[sprite->data[0]].y2 + gSineTable[(u8)(sprite->data[1] + 0)] * sprite->data[3] / 512;
+        sprite->x = gSprites[sprite->sParentSpriteId].x + gSprites[sprite->sParentSpriteId].x2 + gSineTable[(u8)(sprite->data[1] + 64)] * sprite->data[3] / 256;
+        sprite->y = gSprites[sprite->sParentSpriteId].y + gSprites[sprite->sParentSpriteId].y2 + gSineTable[(u8)(sprite->data[1] + 0)] * sprite->data[3] / 512;
         sprite->data[1] += 2;
         sprite->y2 = gSineTable[(u8)(sprite->data[2] + 0)] / 32;
         sprite->data[2] += 8;
         if ((sprite->data[1] & 0xFF) < 128)
-            sprite->subpriority = gSprites[sprite->data[0]].subpriority - 1;
+            sprite->subpriority = gSprites[sprite->sParentSpriteId].subpriority - 1;
         else
-            sprite->subpriority = gSprites[sprite->data[0]].subpriority + 1;
+            sprite->subpriority = gSprites[sprite->sParentSpriteId].subpriority + 1;
     }
 }
 
-static void CreateIntroOrbitingParticles(u8 a)
+static void CreateIntroOrbitingParticles(u8 opponentSpriteId)
 {
     u8 i;
     u8 spriteId;
 
     for (i = 0; i < 8; i++)
     {
-        spriteId = CreateSprite(&gSpriteTemplate_840B124, gSprites[a].x, gSprites[a].y, 0);
+        spriteId = CreateSprite(&sSpriteTemplate_IntroOrbitingParticle, gSprites[opponentSpriteId].x, gSprites[opponentSpriteId].y, 0);
         if (spriteId != 64)
         {
-            gSprites[spriteId].data[0] = a;
+            gSprites[spriteId].sParentSpriteId = opponentSpriteId;
             gSprites[spriteId].data[1] = i * 32;
         }
     }
@@ -2612,24 +2795,24 @@ static void CreateIntroOrbitingParticles(u8 a)
 
 static void SpriteCB_IntroTorchicAttackParticle(struct Sprite *sprite)
 {
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
     else
     {
-        u8 r0;
+        u8 scaleIndex;
         u16 matrixNum;
 
-        sprite->invisible = gSprites[sprite->data[0]].invisible;
+        sprite->invisible = gSprites[sprite->sParentSpriteId].invisible;
         sprite->data[7]++;
         sprite->data[6] += 8;
         sprite->x = sprite->data[4] + gSineTable[(u8)(sprite->data[3] + 64)] * sprite->data[6] / 256;
         sprite->y = sprite->data[5] + gSineTable[(u8)(sprite->data[3] + 0)] * sprite->data[6] / 256;
-        r0 = sprite->data[6] / 16;
-        if (r0 > 9)
-            r0 = 9;
-        matrixNum = (r0 + 18) & 31;
+        scaleIndex = sprite->data[6] / 16;
+        if (scaleIndex > 9)
+            scaleIndex = 9;
+        matrixNum = (scaleIndex + 18) & 31;
         sprite->oam.matrixNum = matrixNum;
         if (sprite->data[6] > 160)
             DestroySprite(sprite);
@@ -2638,11 +2821,12 @@ static void SpriteCB_IntroTorchicAttackParticle(struct Sprite *sprite)
 
 static void SpriteCB_IntroTorchicAttackSpawner(struct Sprite *sprite)
 {
-    bool32 r6;
-    s16 r1, r2;
+    bool32 isOddFrame;
+    s16 particleX;
+    s16 particleY;
     u8 spriteId;
 
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
@@ -2650,58 +2834,58 @@ static void SpriteCB_IntroTorchicAttackSpawner(struct Sprite *sprite)
     {
         sprite->data[7]++;
         sprite->invisible = TRUE;
-        if (gSprites[sprite->data[0]].data[0] == 1)
+        if (gSprites[sprite->sParentSpriteId].sState == 1)
         {
-            r6 = (sprite->data[7] & 1);
-            if (!r6)
+            isOddFrame = (sprite->data[7] & 1);
+            if (!isOddFrame)
             {
-                r1 = sprite->data[1] + gSprites[sprite->data[0]].x;
-                r2 = sprite->data[2] + gSprites[sprite->data[0]].y;
-                spriteId = CreateSprite(&gSpriteTemplate_840B150, r1, r2, gSprites[sprite->data[0]].subpriority + 1);
+                particleX = sprite->data[1] + gSprites[sprite->sParentSpriteId].x;
+                particleY = sprite->data[2] + gSprites[sprite->sParentSpriteId].y;
+                spriteId = CreateSprite(&sSpriteTemplate_IntroTorchicAttackParticle, particleX, particleY, gSprites[sprite->sParentSpriteId].subpriority + 1);
                 if (spriteId != 64)
                 {
                     gSprites[spriteId].oam.affineMode = 3;
                     gSprites[spriteId].oam.matrixNum = 18;
                     CalcCenterToCornerVec(&gSprites[spriteId], 0, 1, 3);
-                    gSprites[spriteId].data[0] = sprite->data[0];
-                    gSprites[spriteId].data[3] = gUnknown_0840B168[(sprite->data[7] >> 1) & 7];
-                    gSprites[spriteId].data[4] = r1;
-                    gSprites[spriteId].data[5] = r2;
-                    gSprites[spriteId].data[6] = r6;
+                    gSprites[spriteId].sParentSpriteId = sprite->sParentSpriteId;
+                    gSprites[spriteId].data[3] = sTorchicAttackParticleAngles[(sprite->data[7] >> 1) & 7];
+                    gSprites[spriteId].data[4] = particleX;
+                    gSprites[spriteId].data[5] = particleY;
+                    gSprites[spriteId].data[6] = isOddFrame;
                 }
             }
         }
     }
 }
 
-static void InitIntroTorchicAttackAnim(u8 a)
+static void InitIntroTorchicAttackAnim(u8 pokemonSpriteId)
 {
     u8 spriteId;
     u8 i;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840B170, 0, 0, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_IntroTorchicAttackSpawner, 0, 0, 0);
     if (spriteId != 64)
     {
-        gSprites[spriteId].data[0] = a;
+        gSprites[spriteId].sParentSpriteId = pokemonSpriteId;
         gSprites[spriteId].data[1] = 0;
         gSprites[spriteId].data[2] = 8;
         gSprites[spriteId].data[3] = 24;
     }
     for (i = 0; i < 10; i++)
     {
-        SetOamMatrix(18 + i, gUnknown_0840B188[i], 0, 0, gUnknown_0840B188[i]);
+        SetOamMatrix(18 + i, sTorchicAttackParticleScales[i], 0, 0, sTorchicAttackParticleScales[i]);
     }
 }
 
 static void SpriteCB_IntroMudkipAttackParticle(struct Sprite *sprite)
 {
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
     else
     {
-        sprite->invisible = gSprites[sprite->data[0]].invisible;
+        sprite->invisible = gSprites[sprite->sParentSpriteId].invisible;
         sprite->data[7] += 1;
         sprite->data[6] += 8;
         sprite->x = sprite->data[4] + gSineTable[(u8)(sprite->data[3] + 64)] * sprite->data[6] / 256;
@@ -2715,12 +2899,13 @@ static void SpriteCB_IntroMudkipAttackParticle(struct Sprite *sprite)
 
 static void SpriteCB_IntroMudkipAttackSpawner(struct Sprite *sprite)
 {
-    bool32 r6;
-    s16 r1, r2;
+    bool32 isOddFrame;
+    s16 particleX;
+    s16 particleY;
     u8 spriteId;
-    u16 foo;
+    u16 matrixScale;
 
-    if (gUnknown_0203931A != 0)
+    if (sIntroBattleFinished != 0)
     {
         DestroySprite(sprite);
     }
@@ -2728,44 +2913,44 @@ static void SpriteCB_IntroMudkipAttackSpawner(struct Sprite *sprite)
     {
         sprite->data[7]++;
         sprite->invisible = TRUE;
-        if (gSprites[sprite->data[0]].data[0] == 1)
+        if (gSprites[sprite->sParentSpriteId].sState == 1)
         {
-            r6 = sprite->data[7] & 1;
-            if (!r6)
+            isOddFrame = sprite->data[7] & 1;
+            if (!isOddFrame)
             {
-                r1 = sprite->data[1] + gSprites[sprite->data[0]].x;
-                r2 = sprite->data[2] + gSprites[sprite->data[0]].y;
-                spriteId = CreateSprite(&gSpriteTemplate_840B1B0, r1, r2, gSprites[sprite->data[0]].subpriority + 1);
+                particleX = sprite->data[1] + gSprites[sprite->sParentSpriteId].x;
+                particleY = sprite->data[2] + gSprites[sprite->sParentSpriteId].y;
+                spriteId = CreateSprite(&sSpriteTemplate_IntroMudkipAttackParticle, particleX, particleY, gSprites[sprite->sParentSpriteId].subpriority + 1);
                 if (spriteId != 64)
                 {
                     gSprites[spriteId].oam.affineMode = 3;
                     gSprites[spriteId].oam.matrixNum = 17;
                     CalcCenterToCornerVec(&gSprites[spriteId], 0, 1, 3);
-                    gSprites[spriteId].data[0] = sprite->data[0];
+                    gSprites[spriteId].sParentSpriteId = sprite->sParentSpriteId;
                     gSprites[spriteId].data[1] = ((sprite->data[7] >> 2) & 7) << 5;
                     gSprites[spriteId].data[2] = sprite->data[3];
                     gSprites[spriteId].data[3] = 232;
-                    gSprites[spriteId].data[4] = r1;
-                    gSprites[spriteId].data[5] = r2;
-                    gSprites[spriteId].data[6] = r6;
+                    gSprites[spriteId].data[4] = particleX;
+                    gSprites[spriteId].data[5] = particleY;
+                    gSprites[spriteId].data[6] = isOddFrame;
                 }
             }
             if (sprite->data[6] < 112)
                 sprite->data[6] += 4;
         }
-        foo = 256 - gSineTable[(u8)sprite->data[6]] / 2;
-        SetOamMatrix(17, foo, 0, 0, foo);
+        matrixScale = 256 - gSineTable[(u8)sprite->data[6]] / 2;
+        SetOamMatrix(17, matrixScale, 0, 0, matrixScale);
     }
 }
 
-static void InitIntroMudkipAttackAnim(u8 a)
+static void InitIntroMudkipAttackAnim(u8 pokemonSpriteId)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&gSpriteTemplate_840B1C8, 0, 0, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_IntroMudkipAttackSpawner, 0, 0, 0);
     if (spriteId != 64)
     {
-        gSprites[spriteId].data[0] = a;
+        gSprites[spriteId].sParentSpriteId = pokemonSpriteId;
         gSprites[spriteId].data[1] = 0;
         gSprites[spriteId].data[2] = 12;
         gSprites[spriteId].data[3] = 24;
@@ -2774,11 +2959,11 @@ static void InitIntroMudkipAttackAnim(u8 a)
 
 static void SpriteCB_IntroBattleFlash(struct Sprite *sprite)
 {
-    u16 foo;
+    u16 matrixScale;
 
     //I'm not sure why a switch statement was used here.
-    //if (sprite->data[0] != 1) would have been more appropriate.
-    switch (sprite->data[0])
+    //if (sprite->sState != 1) would have been more appropriate.
+    switch (sprite->sState)
     {
     case 0:
     default:
@@ -2787,7 +2972,7 @@ static void SpriteCB_IntroBattleFlash(struct Sprite *sprite)
         sprite->oam.matrixNum = 18;
         CalcCenterToCornerVec(sprite, 0, 3, 3);
         sprite->data[1] = 0;
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         //fall through
     case 1:
         break;
@@ -2803,6 +2988,8 @@ static void SpriteCB_IntroBattleFlash(struct Sprite *sprite)
         if (sprite->data[1] < 64)
             sprite->data[1]++;
     }
-    foo = 256 - gSineTable[(u8)sprite->data[1]] / 2;
-    SetOamMatrix(18, foo, 0, 0, foo);
+    matrixScale = 256 - gSineTable[(u8)sprite->data[1]] / 2;
+    SetOamMatrix(18, matrixScale, 0, 0, matrixScale);
 }
+
+#undef sParentSpriteId

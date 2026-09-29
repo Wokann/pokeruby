@@ -194,9 +194,6 @@ static EWRAM_DATA u8 sUsedSpeedUp = 0;
 
 extern u8 gReservedSpritePaletteCount;
 
-// data/hall_of_fame
-extern void *gUnknown_0840B5A0[];
-
 // data/credits
 const u16 gUnknown_0840B7BC[] = INCBIN_U16("graphics/credits/palette_1.gbapal");
 const u8 gUnknown_0840B7FC[] = INCBIN_U8("graphics/credits/ampersand.4bpp");
@@ -1583,7 +1580,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
         gMonFrontPicCoords[species].coords,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
-        gUnknown_0840B5A0[position],
+        gHallOfFameGfxBufferPtrs[position],
         species,
         personality,
         1

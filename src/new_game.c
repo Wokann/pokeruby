@@ -146,7 +146,7 @@ void ClearSav2(void)
     SetDefaultOptions();
 }
 
-void sub_8052E4C(void)
+void ResetMenuAndMonGlobals(void)
 {
     gDifferentSaveFile = 0;
 #if DEBUG

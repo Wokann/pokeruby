@@ -5,5 +5,6 @@ void CB2_DoHallOfFameScreen(void);
 void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 arg1);
 void CB2_DoHallOfFamePC(void);
 void PrepareHallOfFameTrainerPicSpriteTemplate(int, u8);
+extern void *const gHallOfFameGfxBufferPtrs[];
 
 #endif // GUARD_HALL_OF_FAME_H
