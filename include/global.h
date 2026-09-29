@@ -738,7 +738,7 @@ struct SaveBlock1 /* 0x02025734 */
     /*0x2B10*/ struct GabbyAndTyData gabbyAndTyData;
     /*0x2B1C*/ struct {
         /*0x2B1C*/ u16 unk2B1C[6];
-        /*0x2B28*/ u16 unk2B28[6];
+        /*0x2B28*/ u16 easyChatBattleStart[6];
         /*0x2B34*/ u16 unk2B34[6];
         /*0x2B40*/ u16 unk2B40[6];
     } easyChats;
@@ -802,7 +802,7 @@ struct BattleTowerRecord // record mixing
     /*0x04*/ u8 name[8];
     /*0x0C*/ u8 trainerId[4];
     /*0x10*/ u16 greeting[6];
-    /*0x1C*/ struct UnknownPokemonStruct party[3];
+    /*0x1C*/ struct BattleTowerPokemon party[3];
     /*0xA0*/ u32 checksum;
 };
 
@@ -816,7 +816,7 @@ struct BattleTowerEReaderTrainer
     /*0x10*/ u16 greeting[6];
     /*0x1C*/ u16 farewellPlayerLost[6];
     /*0x28*/ u16 farewellPlayerWon[6];
-    /*0x34*/ struct UnknownPokemonStruct party[3];
+    /*0x34*/ struct BattleTowerPokemon party[3];
     /*0xB8*/ u32 checksum;
 };
 
@@ -830,7 +830,7 @@ struct BattleTowerData
     /*0x03E4, 0x048C*/ u8 firstMonNickname[POKEMON_NAME_LENGTH]; // nickname of the first pokemon in the player's battle tower party
     /*0x03F0, 0x0498*/ struct BattleTowerEReaderTrainer ereaderTrainer;
     /*0x04AC, 0x0554*/ u8 battleTowerLevelType:1; // 0 = level 50; 1 = level 100
-    /*0x04AC, 0x0554*/ u8 unk_554:1;
+    /*0x04AC, 0x0554*/ u8 challengePaused:1;
     /*0x04AD, 0x0555*/ u8 battleOutcome;
     /*0x04AE, 0x0556*/ u8 challengeStatus[2];
     /*0x04B0, 0x0558*/ u16 curChallengeBattleNum[2]; // 1-based index of battle in the current challenge. (challenges consist of 7 battles)

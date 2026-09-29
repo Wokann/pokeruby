@@ -1580,7 +1580,7 @@ void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedI
     CalculateMonStats(mon);
 }
 
-void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
+void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src)
 {
     s32 i;
     u8 nickname[POKEMON_NAME_LENGTH + 1];
@@ -1612,7 +1612,7 @@ void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
     SetMonData(mon, MON_DATA_SPEED_EV, &src->speedEV);
     SetMonData(mon, MON_DATA_SPATK_EV, &src->spAttackEV);
     SetMonData(mon, MON_DATA_SPDEF_EV, &src->spDefenseEV);
-    value = src->altAbility;
+    value = src->abilityNum;
     SetMonData(mon, MON_DATA_ALT_ABILITY, &value);
     value = src->hpIV;
     SetMonData(mon, MON_DATA_HP_IV, &value);
@@ -1629,7 +1629,7 @@ void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src)
     CalculateMonStats(mon);
 }
 
-void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest)
+void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerPokemon *dest)
 {
     s32 i;
     u16 heldItem;
@@ -1661,7 +1661,7 @@ void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest)
     dest->speedIV  = GetMonData(mon, MON_DATA_SPEED_IV, NULL);
     dest->spAttackIV  = GetMonData(mon, MON_DATA_SPATK_IV, NULL);
     dest->spDefenseIV  = GetMonData(mon, MON_DATA_SPDEF_IV, NULL);
-    dest->altAbility = GetMonData(mon, MON_DATA_ALT_ABILITY, NULL);
+    dest->abilityNum = GetMonData(mon, MON_DATA_ALT_ABILITY, NULL);
     dest->personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
     GetMonData(mon, MON_DATA_NICKNAME, dest->nickname);
 }

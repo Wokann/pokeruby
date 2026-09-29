@@ -422,7 +422,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160F8*/ u8 unk160F8;
     /*0x160F9*/ u8 unk160F9;
     /*0x160FA*/ u8 levelUpHP;
-    /*0x160FB*/ u8 unk160FB;
+    /*0x160FB*/ u8 battleTowerPreviousChallengeStatus;
     /*0x160FC*/ u8 turnSideTracker;
     /*0x160FD*/ u8 unk160FD;
     /*0x160FE*/ u8 unk160FE;

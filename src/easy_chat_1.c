@@ -208,7 +208,7 @@ void ShowEasyChatScreen(void)
         words = gSaveBlock1.easyChats.unk2B1C;
         break;
     case 1:
-        words = gSaveBlock1.easyChats.unk2B28;
+        words = gSaveBlock1.easyChats.easyChatBattleStart;
         break;
     case 2:
         words = gSaveBlock1.easyChats.unk2B34;
@@ -535,7 +535,7 @@ void InitEasyChatPhrases(void)
         gSaveBlock1.easyChats.unk2B1C[i] = sDefaultProfileWords[i];
 
     for (i = 0; i < 6; i++)
-        gSaveBlock1.easyChats.unk2B28[i] = sDefaultBattleStartWords[i];
+        gSaveBlock1.easyChats.easyChatBattleStart[i] = sDefaultBattleStartWords[i];
 
     for (i = 0; i < 6; i++)
     {

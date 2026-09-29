@@ -289,7 +289,7 @@ extern struct BattlePokemon gBattleMons[];
 
 void SetBattleTowerLobbyState(void)
 {
-    u8 var1 = 0;
+    u8 numPendingChallenges = 0;
     s32 levelType;
 
     for (levelType = 0; levelType < 2; levelType++)
@@ -299,25 +299,25 @@ void SetBattleTowerLobbyState(void)
         case 0:
         default:
             ResetBattleTowerStreak(levelType);
-            if (!var1)
+            if (!numPendingChallenges)
                 VarSet(VAR_TEMP_0, 5);
             break;
         case 1:
             ResetBattleTowerStreak(levelType);
             VarSet(VAR_TEMP_0, 1);
-            var1++;
+            numPendingChallenges++;
             break;
         case 4:
             VarSet(VAR_TEMP_0, 2);
-            var1++;
+            numPendingChallenges++;
             break;
         case 5:
             VarSet(VAR_TEMP_0, 3);
-            var1++;
+            numPendingChallenges++;
             break;
         case 2:
             VarSet(VAR_TEMP_0, 4);
-            var1++;
+            numPendingChallenges++;
             break;
         case 3:
         case 6:
@@ -706,7 +706,7 @@ void FillBattleTowerTrainerParty(void)
     u8 battleMonsOffset;
     u8 monPoolSize;
     u8 teamFlags;
-    const struct BattleTowerPokemon *battleTowerMons;
+    const struct BattleTowerMon *battleTowerMons;
 
     battleMonsOffset = 0;
     monPoolSize = 60;
@@ -761,7 +761,7 @@ void FillBattleTowerTrainerParty(void)
     {
         // Load E-Reader trainer's party.
         for (partyIndex = 0; partyIndex < 3; partyIndex++)
-            sub_803ADE8(&gEnemyParty[partyIndex], &gSaveBlock2.battleTower.ereaderTrainer.party[partyIndex]);
+            CreateBattleTowerMon(&gEnemyParty[partyIndex], &gSaveBlock2.battleTower.ereaderTrainer.party[partyIndex]);
         return;
     }
     else
@@ -769,7 +769,7 @@ void FillBattleTowerTrainerParty(void)
         // Load a battle tower record's party. (From record mixing)
         for (partyIndex = 0; partyIndex < 3; partyIndex++)
         {
-            sub_803ADE8(
+            CreateBattleTowerMon(
                 &gEnemyParty[partyIndex],
                 &gSaveBlock2.battleTower.records[gSaveBlock2.battleTower.battleTowerTrainerId - BATTLE_TOWER_RECORD_MIXING_TRAINER_BASE_ID].party[partyIndex]);
         }
@@ -1106,7 +1106,7 @@ void DoSpecialTrainerBattle(void)
         ZeroEnemyPartyMons();
 
         for (i = 0; i < 3; i++)
-            sub_803ADE8(&gEnemyParty[i], &gSaveBlock2.battleTower.ereaderTrainer.party[i]);
+            CreateBattleTowerMon(&gEnemyParty[i], &gSaveBlock2.battleTower.ereaderTrainer.party[i]);
 
         gBattleTypeFlags = (BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER);
         gTrainerBattleOpponent = 0;
@@ -1127,7 +1127,7 @@ void SetBattleTowerProperty(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        gBattleStruct->unk160FB = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
+        gBattleStruct->battleTowerPreviousChallengeStatus = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
     case 1:
@@ -1164,7 +1164,7 @@ void SetBattleTowerProperty(void)
         gSpecialVar_Result = gSaveBlock2.battleTower.curStreakChallengesNum[battleTowerLevelType];
         break;
     case 8:
-        gSaveBlock2.battleTower.unk_554 = gSpecialVar_0x8005;
+        gSaveBlock2.battleTower.challengePaused = gSpecialVar_0x8005;
         break;
     case 9:
         break;
@@ -1176,7 +1176,7 @@ void SetBattleTowerProperty(void)
             ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->battleTowerPreviousChallengeStatus;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1213,7 +1213,7 @@ void CallBattleTowerFunc(void)
     case 7:
         break;
     case 8:
-        gSpecialVar_Result = gSaveBlock2.battleTower.unk_554;
+        gSpecialVar_Result = gSaveBlock2.battleTower.challengePaused;
         break;
     case 9:
         gSpecialVar_Result = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1225,7 +1225,7 @@ void CallBattleTowerFunc(void)
         ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->battleTowerPreviousChallengeStatus;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1303,10 +1303,10 @@ void SaveBattleTowerRecord(void)
     playerRecord->winStreak = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
 
     for (i = 0; i < 6; i++)
-        playerRecord->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        playerRecord->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
 
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[gSaveBlock2.battleTower.selectedPartyMons[i] - 1], &playerRecord->party[i]);
 
     SetBattleTowerRecordChecksum(&gSaveBlock2.battleTower.playerRecord);
     SaveCurrentWinStreak();
@@ -1331,7 +1331,7 @@ void SaveBattleTowerProgress(void)
         gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8004;
 
     VarSet(VAR_TEMP_0, 0);
-    gSaveBlock2.battleTower.unk_554 = 1;
+    gSaveBlock2.battleTower.challengePaused = TRUE;
     TrySavingData(SAVE_EREADER);
 }
 
@@ -1494,14 +1494,14 @@ void Debug_FillEReaderTrainerWithPlayerData(void)
     j = 7;
     for (i = 0; i < 6; i++)
     {
-        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
         ereaderTrainer->farewellPlayerLost[i] = j;
         ereaderTrainer->farewellPlayerWon[i] = j + 6;
         j++;
     }
 
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[i], &ereaderTrainer->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &ereaderTrainer->party[i]);
 
     SetEReaderTrainerChecksum(ereaderTrainer);
 }

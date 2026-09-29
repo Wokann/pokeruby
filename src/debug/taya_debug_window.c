@@ -344,7 +344,7 @@ bool8 TayaDebugMenu_HandleOldManInput(void)
             union OldMan *oldMan = &gSaveBlock1.oldMan;
             oldMan->bard.songLyrics[i] = sBardTestLyrics[i];
             oldMan->bard.newSongLyrics[i] = sBardTestLyrics[i];
-            gSaveBlock1.easyChats.unk2B28[i] = sBardTestLyrics[i];
+            gSaveBlock1.easyChats.easyChatBattleStart[i] = sBardTestLyrics[i];
         }
     }
     else if (input == 7)

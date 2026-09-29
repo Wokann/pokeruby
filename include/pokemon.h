@@ -167,7 +167,7 @@ struct Pokemon
     /*0x62*/ u16 spDefense;
 };
 
-struct UnknownPokemonStruct
+struct BattleTowerPokemon
 {
     /*0x00*/u16 species;
     /*0x02*/u16 heldItem;
@@ -188,7 +188,7 @@ struct UnknownPokemonStruct
     /*0x1A*/u32 spAttackIV:5;
     /*0x1A*/u32 spDefenseIV:5;
     /*0x1B*/u32 gap:1;
-    /*0x1B*/u32 altAbility:1;
+    /*0x1B*/u32 abilityNum:1;
     /*0x1C*/u32 personality;
     /*0x20*/u8 nickname[POKEMON_NAME_LENGTH + 1];
     /*0x2B*/u8 friendship;
@@ -418,8 +418,8 @@ void CreateMaleMon(struct Pokemon *mon, u16 species, u8 level);
 void CreateMonWithIVsPersonality(struct Pokemon *mon, u16 species, u8 level, u32 ivs, u32 personality);
 void CreateMonWithIVsOTID(struct Pokemon *mon, u16 species, u8 level, u8 *ivs, u32 otId);
 void CreateMonWithEVSpread(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 evSpread);
-void sub_803ADE8(struct Pokemon *mon, struct UnknownPokemonStruct *src);
-void sub_803AF78(struct Pokemon *mon, struct UnknownPokemonStruct *dest);
+void CreateBattleTowerMon(struct Pokemon *mon, struct BattleTowerPokemon *src);
+void ConvertPokemonToBattleTowerPokemon(struct Pokemon *mon, struct BattleTowerPokemon *dest);
 u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon);
 void CalculateMonStats(struct Pokemon *mon);
 void ExpandBoxMon(const struct BoxPokemon *src, struct Pokemon *dest);

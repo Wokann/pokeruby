@@ -2874,8 +2874,8 @@ void ShowEasyChatProfile(void)
         rows = 2;
         break;
     case 1:
-        easyChatWords = gSaveBlock1.easyChats.unk2B28;
-        if (CanPhraseFitInXRowsYCols(gSaveBlock1.easyChats.unk2B28, 3, 2, 20))
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleStart;
+        if (CanPhraseFitInXRowsYCols(gSaveBlock1.easyChats.easyChatBattleStart, 3, 2, 20))
         {
             columns = 2;
             rows = 3;

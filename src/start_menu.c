@@ -222,13 +222,13 @@ void CreateDebugEReaderTrainer(struct BattleTowerEReaderTrainer *eReaderTrainer,
     farewellWordId = 7;
     for (i = 0; i < 6; i++)
     {
-        eReaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        eReaderTrainer->greeting[i] = gSaveBlock1.easyChats.easyChatBattleStart[i];
         eReaderTrainer->farewellPlayerLost[i] = farewellWordId;
         eReaderTrainer->farewellPlayerWon[i] = farewellWordId + 6;
         farewellWordId++;
     }
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[i], &eReaderTrainer->party[i]);
+        ConvertPokemonToBattleTowerPokemon(&gPlayerParty[i], &eReaderTrainer->party[i]);
     SetEReaderTrainerChecksum(eReaderTrainer);
 }
 
