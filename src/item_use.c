@@ -105,7 +105,7 @@ static const u8 *const sSSTidalBetaStrings[] =
 
 static const MainCallback sItemUseCallbacks[] =
 {
-    [ITEM_USE_PARTY_MENU - 1]  = sub_808B020,
+    [ITEM_USE_PARTY_MENU - 1]  = CB2_OpenPartyMenuForItemUse,
     [ITEM_USE_FIELD - 1]       = CB2_ReturnToField,
     [ITEM_USE_PBLOCK_CASE - 1] = CB2_InitPokeblockMenu,
 };

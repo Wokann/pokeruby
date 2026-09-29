@@ -1634,7 +1634,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
     {
         if (HandleBagListInput(taskId) == TRUE)
         {
-            sub_808B5B4(taskId);
+            SetTaskToWaitForLinkRecv(taskId);
             return;
         }
 
@@ -1649,7 +1649,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                     PlaySE(SE_SELECT);
                     StartBagItemSwap(taskId);
                 }
-                sub_808B5B4(taskId);
+                SetTaskToWaitForLinkRecv(taskId);
             }
             else
             {
@@ -1662,7 +1662,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 {
                     CancelBagItemSwap(taskId);
                 }
-                sub_808B5B4(taskId);
+                SetTaskToWaitForLinkRecv(taskId);
             }
             return;
         }
@@ -1680,7 +1680,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 {
                     CancelBagItemSwap(taskId);
                 }
-                sub_808B5B4(taskId);
+                SetTaskToWaitForLinkRecv(taskId);
             }
             else
             {
@@ -1700,7 +1700,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 {
                     FinishBagItemSwap(taskId);
                 }
-                sub_808B5B4(taskId);
+                SetTaskToWaitForLinkRecv(taskId);
             }
             return;
         }
@@ -1719,7 +1719,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
             {
                 CancelBagItemSwap(taskId);
             }
-            sub_808B5B4(taskId);
+            SetTaskToWaitForLinkRecv(taskId);
             return;
         }
     }
@@ -2332,8 +2332,8 @@ static void HandlePopupMenuAction_Give(u8 taskId)
         }
         else
         {
-            gTasks[taskId].data[8] = (u32)sub_808B020 >> 16;
-            gTasks[taskId].data[9] = (u32)sub_808B020;
+            gTasks[taskId].data[8] = (u32)CB2_OpenPartyMenuForItemUse >> 16;
+            gTasks[taskId].data[9] = (u32)CB2_OpenPartyMenuForItemUse;
             gTasks[taskId].func = HandleItemMenuPaletteFade;
             gPokemonItemUseType = ITEM_USE_GIVE_ITEM;
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
@@ -2366,8 +2366,8 @@ void CB2_BagMenuFromParty(void)
 
 static void OnBagClose_Party(u8 taskId)
 {
-    gTasks[taskId].data[8] = (u32)sub_808A3F8 >> 16;
-    gTasks[taskId].data[9] = (u32)sub_808A3F8;
+    gTasks[taskId].data[8] = (u32)CB2_ReturnToPartyMenuFromBag >> 16;
+    gTasks[taskId].data[9] = (u32)CB2_ReturnToPartyMenuFromBag;
     Task_StartBagMenuFadeOut(taskId);
 }
 
@@ -2391,8 +2391,8 @@ static void OnItemSelect_Party(u8 taskId)
     }
     else if (r6 != 5 && ItemId_GetImportance(gSpecialVar_ItemId) == 0)
     {
-        gTasks[taskId].data[8] = (u32)sub_808A3F8 >> 16;
-        gTasks[taskId].data[9] = (u32)sub_808A3F8;
+        gTasks[taskId].data[8] = (u32)CB2_ReturnToPartyMenuFromBag >> 16;
+        gTasks[taskId].data[9] = (u32)CB2_ReturnToPartyMenuFromBag;
         Task_FadeOutBagMenu(taskId);
     }
     else

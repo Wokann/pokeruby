@@ -7,6 +7,25 @@
 
 enum
 {
+    FIELD_MOVE_CUT,
+    FIELD_MOVE_FLASH,
+    FIELD_MOVE_ROCK_SMASH,
+    FIELD_MOVE_STRENGTH,
+    FIELD_MOVE_SURF,
+    FIELD_MOVE_FLY,
+    FIELD_MOVE_DIVE,
+    FIELD_MOVE_WATERFALL,
+    FIELD_MOVE_TELEPORT,
+    FIELD_MOVE_DIG,
+    FIELD_MOVE_SECRET_POWER,
+    FIELD_MOVE_MILK_DRINK,
+    FIELD_MOVE_SOFT_BOILED,
+    FIELD_MOVE_SWEET_SCENT,
+    FIELD_MOVES_COUNT,
+};
+
+enum
+{
     POKEMENU_SUMMARY,           // 0
     POKEMENU_SWITCH,            // 1
     POKEMENU_ITEM,              // 2
@@ -36,18 +55,18 @@ enum
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gPostMenuFieldCallback)(void);
 
-void HandleDefaultPartyMenu(u8 taskID);
-void sub_808B5B4(u32 taskID);
-void sub_8089A70(void);
-void sub_8089C50(u8 arg0, u8 arg1, u8 arg2, u8 noOfOptions, const struct MenuAction2 *menuActions, const u8 *order);
-void DoPokemonMenu_Switch(u8 taskID);
+void HandleDefaultPartyMenu(u8 taskId);
+void SetTaskToWaitForLinkRecv(u32 taskId);
+void CB2_OpenPartyMenuFromStartMenu(void);
+void DrawPartyPopupMenu(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items);
+void DoPokemonMenu_Switch(u8 taskId);
 void FieldCallback_PrepareFadeInFromMenu(void);
 void CB2_ReturnToPartyMenuFromFlyMap(void);
-void sub_808B020(void);
-void sub_808B0C0(u8 taskID);
-void sub_808B508(u8);
-void sub_808B564(void);
-void debug_sub_80986AC(void);
-void sub_808A3F8(void);
+void CB2_OpenPartyMenuForItemUse(void);
+void Task_HandlePartyMenuItemUseInput(u8 taskId);
+void Task_ExitPartyMenuToBag(u8 taskId);
+void CB2_ReturnToPartyMenuForMoveLearning(void);
+void Debug_TryUseWaterfall(void);
+void CB2_ReturnToPartyMenuFromBag(void);
 
 #endif // GUARD_POKEMON_MENU_H

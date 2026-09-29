@@ -300,7 +300,7 @@ void HandleBattleTowerPartyMenu(u8 taskId)
             {
                 gTasks[taskId].func = Task_ValidateBattleTowerParty;
             }
-            sub_808B5B4(taskId);
+            SetTaskToWaitForLinkRecv(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);

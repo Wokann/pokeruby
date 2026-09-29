@@ -1407,7 +1407,7 @@ bool8 DebugMenu_8077BD8(void)
 
 bool8 DebugMenu_8077BE4(void)
 {
-    debug_sub_80986AC();
+    Debug_TryUseWaterfall();
     CloseMenu();
     return TRUE;
 }

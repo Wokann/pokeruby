@@ -30,7 +30,7 @@ extern void PauseVerticalScrollIndicator(u8);
 extern void LoadScrollIndicatorPalette(void);
 extern void ClearMailStruct(struct MailStruct *);
 extern u8 IsWeatherNotFadingIn(void);
-extern void sub_808B020(void);
+extern void CB2_OpenPartyMenuForItemUse(void);
 extern void ClearVerticalScrollIndicatorPalettes(void);
 
 static EWRAM_DATA const u8 *gPcItemMenuOptionOrder = NULL;
@@ -1286,7 +1286,7 @@ static void Mailbox_DoGiveMailPokeMenu(u8 taskId) // Mailbox_DoGiveMailPokeMenu
 {
     if(!gPaletteFade.active)
     {
-        SetMainCallback2(sub_808B020);
+        SetMainCallback2(CB2_OpenPartyMenuForItemUse);
         gPokemonItemUseType = ITEM_USE_GIVE_MAIL;
         DestroyTask(taskId);
     }

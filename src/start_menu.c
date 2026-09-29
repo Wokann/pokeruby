@@ -467,7 +467,7 @@ static u8 StartMenu_PokemonCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        SetMainCallback2(sub_8089A70);
+        SetMainCallback2(CB2_OpenPartyMenuFromStartMenu);
         return 1;
     }
     return 0;

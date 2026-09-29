@@ -42,10 +42,10 @@ Pokemon menu:
     overworld 'pokemon' menu
 */
 
-struct PokeMenuFieldMoveFunc
+struct FieldMoveCursorCallback
 {
-    bool8 (*func)(void);
-    u8 field_1;
+    bool8 (*fieldMoveFunc)(void);
+    u8 msgId;
 };
 
 extern u8 gIsDebugMode;
@@ -54,10 +54,10 @@ extern u8 gUnknown_0202E8F5;
 extern bool8 gPartyMenuMessage_IsPrinting;
 extern u8 gPokemonItemUseType;
 extern u16 gUnknown_0202E8F8;
-extern void (*gPokemonItemUseCallback)(u8 taskID, u16 itemID, TaskFunc func);
+extern void (*gPokemonItemUseCallback)(u8 taskId, u16 itemId, TaskFunc callback);
 extern TaskFunc gTaskFuncForLinkRecv;
 
-void sub_808A520(void);
+void CB2_ReturnToPartyMenuFromWritingMail(void);
 void CB2_BagMenuFromParty(void);
 void CB2_OpenFlyMap(void);
 bool8 SetUpFieldMove_Cut(void);
@@ -69,41 +69,41 @@ bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SoftBoiled(void);
 bool8 SetUpFieldMove_SweetScent(void);
 
-#define sFieldMovesTerminator 0xFF // note: should be changed to 0xFFFF, because currently it makes it impossible to add a field move with 0xFF index
+#define FIELD_MOVE_LIST_END 0xFF // Ruby's original sentinel prevents a field move from using index 0xFF.
 
 // this file's functions
-static void sub_808A8A8(void);
-static void sub_808B3EC(void);
-static void sub_8089D94(u8 taskID);
-static void sub_8089E4C(u8 taskID);
-static void sub_808A5BC(u8 taskID);
-static void sub_808A8D4(u8 taskID);
-static void sub_808A73C(u8 taskID);
-static void sub_808A848(u8 taskID);
-static void sub_808AAF0(u8 taskID);
-static void sub_808ABF4(u8 taskID);
-static void sub_808AB34(u8 taskID);
-static void FieldCallback_AfterFadeInFromMenu(u8 taskID);
-static void sub_808B224(u8 taskID);
-static void sub_808B2EC(u8 taskID);
-static void sub_808B2B4(u8 taskID);
-static void sub_808B25C(u8 taskID);
-static void sub_808B1EC(u8 taskID);
-static void sub_808B338(u8 taskID);
-static void sub_808B4A4(u8 taskID);
-static void sub_808B4EC(u8 taskID);
-static void sub_808B5E4(u8 taskID);
-static void PokemonMenu_Summary(u8 taskID);
-static void PokemonMenu_Switch(u8 taskID);
-static void PokemonMenu_Item(u8 taskID);
-static void PokemonMenu_Cancel(u8 taskID);
-static void PokemonMenu_GiveItem(u8 taskID);
-static void PokemonMenu_TakeItem(u8 taskID);
-static void PokemonMenu_TakeMail(u8 taskID);
-static void PokemonMenu_Mail(u8 taskID);
-static void PokemonMenu_ReadMail(u8 taskID);
-static void PokemonMenu_CancelSubmenu(u8 taskID);
-static void PokemonMenu_FieldMove(u8 taskID);
+static void CB2_ReturnToPartyMenuFromReadingMail(void);
+static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void);
+static void Task_HandleFieldPartyMenuInput(u8 taskId);
+static void Task_CloseFieldPartyMenu(u8 taskId);
+static void Task_DisplayGaveItemMessage(u8 taskId);
+static void Task_ResetFieldPartyMenu(u8 taskId);
+static void Task_HandleMailSubmenuInput(u8 taskId);
+static void Task_OpenMailReader(u8 taskId);
+static void Task_WaitForFieldMoveErrorMessage(u8 taskId);
+static void Task_WaitForFieldMoveMessage(u8 taskId);
+static void Task_ReturnToFieldAfterFieldMove(u8 taskId);
+static void FieldCallback_AfterFadeInFromMenu(u8 taskId);
+static void Task_FadeOutToBagMenu(u8 taskId);
+static void Task_HandleBagGiveItemResult(u8 taskId);
+static void Task_FadeOutToMailbox(u8 taskId);
+static void Task_ReturnToBagMenu(u8 taskId);
+static void Task_UseItemOnAllPartyMons(u8 taskId);
+static void Task_WriteMailToGiveMonFromBag(u8 taskId);
+static void Task_DisplayGaveItemFromBagMessage(u8 taskId);
+static void Task_WaitForGaveItemFromBagMessage(u8 taskId);
+static void Task_WaitForLinkRecv(u8 taskId);
+static void PokemonMenu_Summary(u8 taskId);
+static void PokemonMenu_Switch(u8 taskId);
+static void PokemonMenu_Item(u8 taskId);
+static void PokemonMenu_Cancel(u8 taskId);
+static void PokemonMenu_GiveItem(u8 taskId);
+static void PokemonMenu_TakeItem(u8 taskId);
+static void PokemonMenu_TakeMail(u8 taskId);
+static void PokemonMenu_Mail(u8 taskId);
+static void PokemonMenu_ReadMail(u8 taskId);
+static void PokemonMenu_CancelSubmenu(u8 taskId);
+static void PokemonMenu_FieldMove(u8 taskId);
 static bool8 SetUpFieldMove_Waterfall(void);
 static bool8 SetUpFieldMove_Surf(void);
 static bool8 SetUpFieldMove_Fly(void);
@@ -111,9 +111,9 @@ static bool8 SetUpFieldMove_Dive(void);
 
 // ewram data
 
-EWRAM_DATA static u8 sPokeMenuCursorPos = 0;
-EWRAM_DATA static u8 sPokeMenuOptionsNo = 0;
-EWRAM_DATA static u8 sPokeMenuOptionsOrder[8] = {0}; // 4 possible field moves and 4 default options
+EWRAM_DATA static u8 sFieldPartyMenuCursorPos = 0;
+EWRAM_DATA static u8 sFieldPartyMenuOptionCount = 0;
+EWRAM_DATA static u8 sFieldPartyMenuOptionIds[8] = {0}; // 4 possible field moves and 4 default options
 
 // iwram common
 u8 gLastFieldPokeMenuOpened;
@@ -149,21 +149,21 @@ static const struct MenuAction2 sPokemonMenuActions[] =
     {gMoveNames[MOVE_SWEET_SCENT],  PokemonMenu_FieldMove},
 };
 
-static const u16 sPokeMenuFieldMoves[] =
+static const u16 sFieldMoves[] =
 {
     MOVE_CUT, MOVE_FLASH, MOVE_ROCK_SMASH, MOVE_STRENGTH,
     MOVE_SURF, MOVE_FLY, MOVE_DIVE, MOVE_WATERFALL,
     MOVE_TELEPORT, MOVE_DIG, MOVE_SECRET_POWER, MOVE_MILK_DRINK,
-    MOVE_SOFT_BOILED, MOVE_SWEET_SCENT, sFieldMovesTerminator,
+    MOVE_SOFT_BOILED, MOVE_SWEET_SCENT, FIELD_MOVE_LIST_END,
 };
 
-static const u8 sUnknown_39F572[] = {4, 5, 9, 0};
-static const struct PartyPopupMenu sUnknown_0839F578 = {3, 6, sUnknown_39F572};
+static const u8 sItemSubmenuActions[] = {4, 5, 9, 0};
+static const struct PartyPopupMenu sItemSubmenu = {3, 6, sItemSubmenuActions};
 
-static const u8 sUnknown_39F580[] = {8, 6, 9, 0};
-static const struct PartyPopupMenu sUnknown_0839F584 = {3, 9, sUnknown_39F580};
+static const u8 sMailSubmenuActions[] = {8, 6, 9, 0};
+static const struct PartyPopupMenu sMailSubmenu = {3, 9, sMailSubmenuActions};
 
-static const struct PokeMenuFieldMoveFunc sFieldMoveFuncs[] =
+static const struct FieldMoveCursorCallback sFieldMoveCursorCallbacks[] =
 {
     {SetUpFieldMove_Cut,            0x6},
     {SetUpFieldMove_Flash,          0x9},
@@ -181,147 +181,149 @@ static const struct PokeMenuFieldMoveFunc sFieldMoveFuncs[] =
     {SetUpFieldMove_SweetScent,     0x9},
 };
 
-void sub_8089A70(void)
+void CB2_OpenPartyMenuFromStartMenu(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     OpenPartyMenu(PARTY_MENU_TYPE_STANDARD, 0);
 }
 
-static void sub_8089A8C(void)
+static void BuildFieldPartyMenuOptions(void)
 {
-    sPokeMenuOptionsNo = 0;
+    sFieldPartyMenuOptionCount = 0;
     // if checking pokemon is an egg, we can't give it an item and it doesn't know any move
     if (GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_IS_EGG))
     {
-        AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_SUMMARY);
-        AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_SWITCH);
-        AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_CANCEL);
+        AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_SUMMARY);
+        AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_SWITCH);
+        AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_CANCEL);
     }
     else
     {
-        u16 moveID, tableID;
-        for (moveID = 0; moveID < 4; moveID++) // 4, max number of possible field moves
+        u16 moveId, fieldMoveId;
+
+        for (moveId = 0; moveId < 4; moveId++) // 4, max number of possible field moves
         {
-            for (tableID = 0; sPokeMenuFieldMoves[tableID] != sFieldMovesTerminator; tableID++)
+            for (fieldMoveId = 0; sFieldMoves[fieldMoveId] != FIELD_MOVE_LIST_END; fieldMoveId++)
             {
-                if (GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MOVE1 + moveID) == sPokeMenuFieldMoves[tableID])
+                if (GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MOVE1 + moveId) == sFieldMoves[fieldMoveId])
                 {
-                    u8 fieldID = tableID + POKEMENU_FIRST_FIELD_MOVE_ID;
-                    AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, fieldID);
+                    u8 menuAction = fieldMoveId + POKEMENU_FIRST_FIELD_MOVE_ID;
+
+                    AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, menuAction);
                     break;
                 }
             }
         }
-        AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_SUMMARY);
+        AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_SUMMARY);
 
         // can't switch a pokemon if it's the only one in the party
         if (GetMonData(&gPlayerParty[1], MON_DATA_SPECIES) != 0)
-            AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_SWITCH);
+            AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_SWITCH);
 
         if (ItemIsMail(GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM)))
-            AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_MAIL);
+            AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_MAIL);
         else
-            AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_ITEM);
+            AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_ITEM);
 
-        AppendToList(sPokeMenuOptionsOrder, &sPokeMenuOptionsNo, POKEMENU_CANCEL);
+        AppendToList(sFieldPartyMenuOptionIds, &sFieldPartyMenuOptionCount, POKEMENU_CANCEL);
     }
 }
 
-static void sub_8089BDC(u8 arg0, u8 arg1, u8 arg2, u8 noOfOptions, const struct MenuAction2 *menuActions, const u8 *order, u8 arg6)
+static void DrawPartyPopupMenuInternal(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items, u8 promptTextId)
 {
-    PrintPartyMenuPromptText(5, arg6);
-    Menu_DrawStdWindowFrame(arg0, arg1, arg0 + arg2, (noOfOptions * 2) + arg1 + 1);
-    Menu_PrintItemsReordered(arg0 + 1, arg1 + 1, noOfOptions, menuActions, order);
+    PrintPartyMenuPromptText(5, promptTextId);
+    Menu_DrawStdWindowFrame(left, top, left + width, (numChoices * 2) + top + 1);
+    Menu_PrintItemsReordered(left + 1, top + 1, numChoices, menuActions, items);
 }
 
-void sub_8089C50(u8 arg0, u8 arg1, u8 arg2, u8 noOfOptions, const struct MenuAction2 *menuActions, const u8 *order)
+void DrawPartyPopupMenu(u8 left, u8 top, u8 width, u8 numChoices, const struct MenuAction2 *menuActions, const u8 *items)
 {
-    sub_8089BDC(arg0, arg1, arg2, noOfOptions, menuActions, order, 1);
+    DrawPartyPopupMenuInternal(left, top, width, numChoices, menuActions, items, 1);
 }
 
-static void sub_8089C7C(u8 arg0)
+static void ShowFieldPartyMenu(u8 cursorPos)
 {
-    u32 r4 = (u8)(18 - (sPokeMenuOptionsNo << 1));
+    u32 top = (u8)(18 - (sFieldPartyMenuOptionCount << 1));
 
-    sub_8089BDC(19, r4, 10, sPokeMenuOptionsNo, sPokemonMenuActions, sPokeMenuOptionsOrder, 3);
-    r4 |= 1;
-    InitMenu(0, 20, r4, sPokeMenuOptionsNo, arg0, 9);
+    DrawPartyPopupMenuInternal(19, top, 10, sFieldPartyMenuOptionCount, sPokemonMenuActions, sFieldPartyMenuOptionIds, 3);
+    top |= 1;
+    InitMenu(0, 20, top, sFieldPartyMenuOptionCount, cursorPos, 9);
 }
 
-void HandleDefaultPartyMenu(u8 taskID)
+void HandleDefaultPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(taskID))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
             PlaySE(SE_SELECT);
-            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
-            sub_8089A8C();
-            sPokeMenuCursorPos = 0;
-            sub_8089C7C(0);
-            gTasks[taskID].func = sub_8089D94;
-            sub_808B5B4(taskID);
+            BuildFieldPartyMenuOptions();
+            sFieldPartyMenuCursorPos = 0;
+            ShowFieldPartyMenu(0);
+            gTasks[taskId].func = Task_HandleFieldPartyMenuInput;
+            SetTaskToWaitForLinkRecv(taskId);
             break;
         case B_BUTTON:
             PlaySE(SE_SELECT);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-            gTasks[taskID].func = sub_8089E4C;
+            gTasks[taskId].func = Task_CloseFieldPartyMenu;
             break;
         }
     }
 }
 
-static void sub_8089D94(u8 taskID)
+static void Task_HandleFieldPartyMenuInput(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         if (JOY_REPT(DPAD_ANY) == DPAD_UP)
         {
             PlaySE(SE_SELECT);
-            sPokeMenuCursorPos = Menu_MoveCursor(-1);
-            sub_808B5B4(taskID);
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(-1);
+            SetTaskToWaitForLinkRecv(taskId);
         }
         else if (JOY_REPT(DPAD_ANY) == DPAD_DOWN)
         {
             PlaySE(SE_SELECT);
-            sPokeMenuCursorPos = Menu_MoveCursor(1);
-            sub_808B5B4(taskID);
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(1);
+            SetTaskToWaitForLinkRecv(taskId);
         }
         else if (JOY_NEW(A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            sPokemonMenuActions[sPokeMenuOptionsOrder[sPokeMenuCursorPos]].func(taskID);
-            sub_808B5B4(taskID);
+            sPokemonMenuActions[sFieldPartyMenuOptionIds[sFieldPartyMenuCursorPos]].func(taskId);
+            SetTaskToWaitForLinkRecv(taskId);
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PokemonMenu_Cancel(taskID);
-            sub_808B5B4(taskID);
+            PokemonMenu_Cancel(taskId);
+            SetTaskToWaitForLinkRecv(taskId);
         }
     }
 }
 
-static void sub_8089E4C(u8 taskID)
+static void Task_CloseFieldPartyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         gLastFieldPokeMenuOpened = 0;
         SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
-static void sub_8089E84(void)
+static void ShowFieldPartyMenuForSelectedMon(void)
 {
     GetMonNickname(&gPlayerParty[gLastFieldPokeMenuOpened], gStringVar1);
-    sub_8089A8C();
-    sPokeMenuCursorPos = 0;
-    sub_8089C7C(0);
+    BuildFieldPartyMenuOptions();
+    sFieldPartyMenuCursorPos = 0;
+    ShowFieldPartyMenu(0);
 }
 
-static void sub_8089EBC(void)
+static void CB2_InitPartyMenuFromSummaryScreen(void)
 {
     do
     {
@@ -330,149 +332,152 @@ static void sub_8089EBC(void)
             sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastViewedMonIndex);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             gLastFieldPokeMenuOpened = gLastViewedMonIndex;
-            sub_8089E84();
+            ShowFieldPartyMenuForSelectedMon();
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
     } while (MenuHelpers_IsLinkActive() != TRUE);
 }
 
-static void sub_8089F14(void)
+static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
-    SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, sub_8089D94, 5);
-    SetMainCallback2(sub_8089EBC);
+    SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_HandleFieldPartyMenuInput, 5);
+    SetMainCallback2(CB2_InitPartyMenuFromSummaryScreen);
 }
 
-static void sub_8089F44(u8 taskID)
+static void Task_OpenSummaryScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 spriteID = gSprites[gTasks[taskID].data[3] >> 8].data[0];
-        DestroyTask(taskID);
+        u8 spriteId = gSprites[gTasks[taskId].data[3] >> 8].data[0];
+
+        DestroyTask(taskId);
         ePartyMenu2.unk262 = 1;
-        ShowPokemonSummaryScreen(gPlayerParty, spriteID, gPlayerPartyCount - 1, sub_8089F14, PSS_MODE_NORMAL);
+        ShowPokemonSummaryScreen(gPlayerParty, spriteId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, PSS_MODE_NORMAL);
     }
 }
 
-static void PokemonMenu_Summary(u8 taskID)
+static void PokemonMenu_Summary(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskID].func = sub_8089F44;
+    gTasks[taskId].func = Task_OpenSummaryScreen;
 }
 
-void DoPokemonMenu_Switch(u8 taskID)
+void DoPokemonMenu_Switch(u8 taskId)
 {
-    SetTaskFuncWithFollowupFunc(taskID, SetupDefaultPartyMenuSwitchPokemon, HandleDefaultPartyMenu);
+    SetTaskFuncWithFollowupFunc(taskId, SetupDefaultPartyMenuSwitchPokemon, HandleDefaultPartyMenu);
     Menu_EraseWindowRect(19, 0, 29, 19);
 }
 
-static void PokemonMenu_Switch(u8 taskID)
+static void PokemonMenu_Switch(u8 taskId)
 {
     Menu_DestroyCursor();
     ePartyMenu.unkC = sub_806CD5C;
     ePartyMenu.array[53553] = 1;
-    DoPokemonMenu_Switch(taskID);
+    DoPokemonMenu_Switch(taskId);
 }
 
-static void sub_808A060(u8 taskID)
+static void Task_HandleItemSubmenuInput(u8 taskId)
 {
-    if (gMain.newKeys == DPAD_UP && sPokeMenuCursorPos != 0)
+    if (gMain.newKeys == DPAD_UP && sFieldPartyMenuCursorPos != 0)
     {
-        sPokeMenuCursorPos = Menu_MoveCursor(-1);
+        sFieldPartyMenuCursorPos = Menu_MoveCursor(-1);
         PlaySE(SE_SELECT);
     }
-    if (gMain.newKeys == DPAD_DOWN && sPokeMenuCursorPos != 2)
+    if (gMain.newKeys == DPAD_DOWN && sFieldPartyMenuCursorPos != 2)
     {
-        sPokeMenuCursorPos = Menu_MoveCursor(1);
+        sFieldPartyMenuCursorPos = Menu_MoveCursor(1);
         PlaySE(SE_SELECT);
     }
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        PartyMenuGetPopupMenuFunc(0, &sUnknown_0839F578, sPokemonMenuActions, sPokeMenuCursorPos)(taskID);
+        PartyMenuGetPopupMenuFunc(0, &sItemSubmenu, sPokemonMenuActions, sFieldPartyMenuCursorPos)(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        ClosePartyPopupMenu(0, &sUnknown_0839F578);
-        PokemonMenu_CancelSubmenu(taskID);
+        ClosePartyPopupMenu(0, &sItemSubmenu);
+        PokemonMenu_CancelSubmenu(taskId);
     }
 }
 
-static void sub_808A100(u8 taskID)
+static void Task_ShowItemSubmenu(u8 taskId)
 {
-    ShowPartyPopupMenu(0, &sUnknown_0839F578, (void*)(sPokemonMenuActions), 0);
+    ShowPartyPopupMenu(0, &sItemSubmenu, (void *)sPokemonMenuActions, 0);
     PrintPartyMenuPromptText(0xD, 2);
-    gTasks[taskID].func = sub_808A060;
+    gTasks[taskId].func = Task_HandleItemSubmenuInput;
 }
 
-static void PokemonMenu_Item(u8 taskID)
+static void PokemonMenu_Item(u8 taskId)
 {
     Menu_DestroyCursor();
-    sPokeMenuCursorPos = 0;
+    sFieldPartyMenuCursorPos = 0;
     Menu_EraseWindowRect(19, 0, 29, 19);
-    gTasks[taskID].func = sub_808A100;
+    gTasks[taskId].func = Task_ShowItemSubmenu;
 }
 
-static void sub_808A180(u8 taskID)
+static void Task_WriteMailToGiveMon(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
-        DestroyTask(taskID);
-        DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
+        u8 mailId = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_MAIL);
+
+        DestroyTask(taskId);
+        DoEasyChatScreen(4, gSaveBlock1.mail[mailId].words, CB2_ReturnToPartyMenuFromWritingMail, 3);
     }
 }
 
-static void sub_808A1E0(u8 taskID)
+static void Task_UpdateHeldItemSprite(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting != 1)
     {
-        SetHeldItemIconVisibility(taskID, GetCursorSelectionMonId(taskID));
+        SetHeldItemIconVisibility(taskId, GetCursorSelectionMonId(taskId));
         PrintPartyMenuPromptText(0, 0);
-        gTasks[taskID].func = HandleDefaultPartyMenu;
+        gTasks[taskId].func = HandleDefaultPartyMenu;
     }
 }
 
-static void sub_808A228(u8 taskID)
+static void Task_HandleGiveHeldItemResult(u8 taskId)
 {
     if (ItemIsMail(gSpecialVar_ItemId) && gUnknown_0202E8F4 != 0)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskID].func = sub_808A180;
+        gTasks[taskId].func = Task_WriteMailToGiveMon;
     }
     else
     {
         Menu_EraseWindowRect(0, 0, 29, 19);
         PrintPartyMenuPromptText(0, 0);
-        gTasks[taskID].func = HandleDefaultPartyMenu;
+        gTasks[taskId].func = HandleDefaultPartyMenu;
     }
 }
 
-static void sub_808A2AC(u8 taskID)
+static void Task_GiveHeldItemFromBag(u8 taskId)
 {
     if (!gPaletteFade.active)
-        PartyMenuTryGiveMonHeldItem(taskID, gSpecialVar_ItemId, sub_808A228);
+        PartyMenuTryGiveMonHeldItem(taskId, gSpecialVar_ItemId, Task_HandleGiveHeldItemResult);
 }
 
-static void sub_808A2DC(u8 taskID)
+static void Task_WriteMailToGiveMonFromFieldBag(u8 taskId)
 {
-    u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
-    DestroyTask(taskID);
-    DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808A520, 3);
+    u8 mailId = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_MAIL);
+
+    DestroyTask(taskId);
+    DoEasyChatScreen(4, gSaveBlock1.mail[mailId].words, CB2_ReturnToPartyMenuFromWritingMail, 3);
 }
 
-static void sub_808A330(u8 taskID)
+static void Task_GiveMailFromFieldBag(u8 taskId)
 {
-    PartyMenuTryGiveMonHeldItem(taskID, gSpecialVar_ItemId, sub_808A2DC);
+    PartyMenuTryGiveMonHeldItem(taskId, gSpecialVar_ItemId, Task_WriteMailToGiveMonFromFieldBag);
 }
 
-static void sub_808A34C(void)
+static void CB2_RunTasksForFieldPartyMenu(void)
 {
     RunTasks();
 }
 
-static void sub_808A358(void)
+static void CB2_InitPartyMenuForFieldBagItem(void)
 {
     while (1)
     {
@@ -488,7 +493,7 @@ static void sub_808A358(void)
     }
 }
 
-static void sub_808A3A4(void)
+static void CB2_InitFieldPartyMenuAfterBag(void)
 {
     while (1)
     {
@@ -497,7 +502,7 @@ static void sub_808A3A4(void)
             sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
             ePartyMenu2.unk262 = 3;
-            sub_8089E84();
+            ShowFieldPartyMenuForSelectedMon();
             SetMainCallback2(CB2_PartyMenuMain);
             break;
         }
@@ -506,37 +511,38 @@ static void sub_808A3A4(void)
     }
 }
 
-void sub_808A3F8(void)
+void CB2_ReturnToPartyMenuFromBag(void)
 {
     if (ItemIsMail(gSpecialVar_ItemId))
     {
-        u8 taskID = CreateTask(sub_808A330, 0);
+        u8 taskId = CreateTask(Task_GiveMailFromFieldBag, 0);
+
         gPaletteFade.bufferTransferDisabled = 1;
-        CreatePartyMenuCursor(taskID, 0);
-        sub_806C994(taskID, gLastFieldPokeMenuOpened);
-        ChangePartyMenuSelection(taskID, 0);
-        if (!(bool8)(GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_HELD_ITEM)))
+        CreatePartyMenuCursor(taskId, 0);
+        sub_806C994(taskId, gLastFieldPokeMenuOpened);
+        ChangePartyMenuSelection(taskId, 0);
+        if (!(bool8)(GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_HELD_ITEM)))
         {
-            SetMainCallback2(sub_808A34C);
+            SetMainCallback2(CB2_RunTasksForFieldPartyMenu);
             return;
         }
         else
-            DestroyTask(taskID);
+            DestroyTask(taskId);
     }
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_ItemId)
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, sub_808A2AC, 0xFF);
-        SetMainCallback2(sub_808A358);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_GiveHeldItemFromBag, 0xFF);
+        SetMainCallback2(CB2_InitPartyMenuForFieldBagItem);
     }
     else
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, sub_8089D94, 5);
-        SetMainCallback2(sub_808A3A4);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_HandleFieldPartyMenuInput, 5);
+        SetMainCallback2(CB2_InitFieldPartyMenuAfterBag);
     }
 }
 
-static void sub_808A4D4(void)
+static void CB2_InitPartyMenuAfterWritingMail(void)
 {
     while (1)
     {
@@ -552,7 +558,7 @@ static void sub_808A4D4(void)
     }
 }
 
-void sub_808A520(void)
+void CB2_ReturnToPartyMenuFromWritingMail(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     if (gSpecialVar_Result == 0)
@@ -565,215 +571,216 @@ void sub_808A520(void)
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, HandleDefaultPartyMenu, 0);
     }
     else
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, sub_808A5BC, 0xFF);
-    SetMainCallback2(sub_808A4D4);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0xFF, Task_DisplayGaveItemMessage, 0xFF);
+    SetMainCallback2(CB2_InitPartyMenuAfterWritingMail);
 }
 
-static void sub_808A5BC(u8 taskID)
+static void Task_DisplayGaveItemMessage(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         DisplayGiveHeldItemMessage(gLastFieldPokeMenuOpened, gSpecialVar_ItemId, 0);
-        gTasks[taskID].func = sub_808A1E0;
+        gTasks[taskId].func = Task_UpdateHeldItemSprite;
     }
 }
 
-static void sub_808A604(u8 taskID)
+static void Task_OpenBagMenuFromParty(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_BagMenuFromParty);
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
-static void PokemonMenu_GiveItem(u8 taskID)
+static void PokemonMenu_GiveItem(u8 taskId)
 {
-    gUnknown_0202E8F5 = GetCursorSelectionMonId(taskID);
+    gUnknown_0202E8F5 = GetCursorSelectionMonId(taskId);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskID].func = sub_808A604;
+    gTasks[taskId].func = Task_OpenBagMenuFromParty;
 }
 
-static void sub_808A678(u8 taskID)
+static void Task_ResetFieldPartyMenuAfterItemAction(u8 taskId)
 {
-    sub_808A8D4(taskID);
+    Task_ResetFieldPartyMenu(taskId);
 }
 
-static void PokemonMenu_TakeItem(u8 taskID)
-{
-    Menu_DestroyCursor();
-    Menu_EraseWindowRect(19, 0, 29, 19);
-    PartyMenuEraseMsgBoxAndFrame();
-    PartyMenuTryGiveMonHeldItem_806ECE8(taskID, sub_808A678);
-}
-
-static void PokemonMenu_TakeMail(u8 taskID)
+static void PokemonMenu_TakeItem(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(19, 0, 29, 19);
     PartyMenuEraseMsgBoxAndFrame();
-    DoTakeMail(taskID, sub_808A678);
+    PartyMenuTryGiveMonHeldItem_806ECE8(taskId, Task_ResetFieldPartyMenuAfterItemAction);
 }
 
-static void PokemonMenu_Mail(u8 taskID)
+static void PokemonMenu_TakeMail(u8 taskId)
 {
     Menu_DestroyCursor();
-    sPokeMenuCursorPos = 0;
     Menu_EraseWindowRect(19, 0, 29, 19);
-    ShowPartyPopupMenu(0, &sUnknown_0839F584, (void*) sPokemonMenuActions, 0);
-    gTasks[taskID].func = sub_808A73C;
+    PartyMenuEraseMsgBoxAndFrame();
+    DoTakeMail(taskId, Task_ResetFieldPartyMenuAfterItemAction);
 }
 
-static void sub_808A73C(u8 taskID)
+static void PokemonMenu_Mail(u8 taskId)
+{
+    Menu_DestroyCursor();
+    sFieldPartyMenuCursorPos = 0;
+    Menu_EraseWindowRect(19, 0, 29, 19);
+    ShowPartyPopupMenu(0, &sMailSubmenu, (void *)sPokemonMenuActions, 0);
+    gTasks[taskId].func = Task_HandleMailSubmenuInput;
+}
+
+static void Task_HandleMailSubmenuInput(u8 taskId)
 {
     if (gMain.newAndRepeatedKeys == DPAD_UP)
     {
         PlaySE(SE_SELECT);
-        if (sPokeMenuCursorPos == 0)
-            sPokeMenuCursorPos = Menu_MoveCursor(sUnknown_0839F584.numChoices - 1);
+        if (sFieldPartyMenuCursorPos == 0)
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(sMailSubmenu.numChoices - 1);
         else
-            sPokeMenuCursorPos = Menu_MoveCursor(-1);
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(-1);
     }
     if (gMain.newAndRepeatedKeys == DPAD_DOWN)
     {
         PlaySE(SE_SELECT);
-        if (sPokeMenuCursorPos == sUnknown_0839F584.numChoices - 1)
-            sPokeMenuCursorPos = Menu_MoveCursor(1 - sUnknown_0839F584.numChoices);
+        if (sFieldPartyMenuCursorPos == sMailSubmenu.numChoices - 1)
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(1 - sMailSubmenu.numChoices);
         else
-            sPokeMenuCursorPos = Menu_MoveCursor(1);
+            sFieldPartyMenuCursorPos = Menu_MoveCursor(1);
     }
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        PartyMenuGetPopupMenuFunc(0, &sUnknown_0839F584, sPokemonMenuActions, sPokeMenuCursorPos)(taskID);
+        PartyMenuGetPopupMenuFunc(0, &sMailSubmenu, sPokemonMenuActions, sFieldPartyMenuCursorPos)(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        ClosePartyPopupMenu(0, &sUnknown_0839F584);
-        PokemonMenu_Cancel(taskID);
+        ClosePartyPopupMenu(0, &sMailSubmenu);
+        PokemonMenu_Cancel(taskId);
     }
 }
 
-static void PokemonMenu_ReadMail(u8 taskID)
+static void PokemonMenu_ReadMail(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskID].func = sub_808A848;
+    gTasks[taskId].func = Task_OpenMailReader;
 }
 
-static void sub_808A848(u8 taskID)
+static void Task_OpenMailReader(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 mailID = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskID)], MON_DATA_MAIL);
-        DestroyTask(taskID);
-        ReadMail(&gSaveBlock1.mail[mailID], sub_808A8A8, 1);
+        u8 mailId = GetMonData(&gPlayerParty[GetCursorSelectionMonId(taskId)], MON_DATA_MAIL);
+
+        DestroyTask(taskId);
+        ReadMail(&gSaveBlock1.mail[mailId], CB2_ReturnToPartyMenuFromReadingMail, 1);
     }
 }
 
-static void sub_808A8A8(void)
+static void CB2_ReturnToPartyMenuFromReadingMail(void)
 {
     gLastViewedMonIndex = gLastFieldPokeMenuOpened;
     ePartyMenu2.unk262 = 4;
-    sub_8089F14();
+    CB2_ReturnToPartyMenuFromSummaryScreen();
 }
 
-static void sub_808A8D4(u8 taskID)
+static void Task_ResetFieldPartyMenu(u8 taskId)
 {
-    sPokeMenuCursorPos = 0;
+    sFieldPartyMenuCursorPos = 0;
     Menu_EraseWindowRect(19, 0, 29, 19);
     PrintPartyMenuPromptText(0, 0);
-    gTasks[taskID].func = HandleDefaultPartyMenu;
+    gTasks[taskId].func = HandleDefaultPartyMenu;
 }
 
-static void PokemonMenu_Cancel(u8 taskID)
+static void PokemonMenu_Cancel(u8 taskId)
 {
     Menu_DestroyCursor();
     PlaySE(SE_SELECT);
-    sub_808A8D4(taskID);
+    Task_ResetFieldPartyMenu(taskId);
 }
 
-static void PokemonMenu_CancelSubmenu(u8 taskID)
+static void PokemonMenu_CancelSubmenu(u8 taskId)
 {
     Menu_DestroyCursor();
     PlaySE(SE_SELECT);
     Menu_EraseWindowRect(19, 0, 29, 19);
     PartyMenuEraseMsgBoxAndFrame();
-    sub_8089C7C(sPokeMenuCursorPos);
-    gTasks[taskID].func = sub_8089D94;
+    ShowFieldPartyMenu(sFieldPartyMenuCursorPos);
+    gTasks[taskId].func = Task_HandleFieldPartyMenuInput;
 }
 
-#define IS_SOFTBOILED_MILKDRINK(ID)((ID == (POKEMENU_MILK_DRINK - POKEMENU_FIRST_FIELD_MOVE_ID) || ID == (POKEMENU_SOFT_BOILED - POKEMENU_FIRST_FIELD_MOVE_ID)))
-#define IS_SURF(ID)((ID == (POKEMENU_SURF - POKEMENU_FIRST_FIELD_MOVE_ID)))
-#define IS_FLY(ID)((ID == (POKEMENU_FLY - POKEMENU_FIRST_FIELD_MOVE_ID)))
+#define IS_SOFTBOILED_MILKDRINK(fieldMoveId) ((fieldMoveId) == FIELD_MOVE_MILK_DRINK || (fieldMoveId) == FIELD_MOVE_SOFT_BOILED)
+#define IS_SURF(fieldMoveId)                 ((fieldMoveId) == FIELD_MOVE_SURF)
+#define IS_FLY(fieldMoveId)                  ((fieldMoveId) == FIELD_MOVE_FLY)
 
 #define tFieldMoveId data[11]
 
-static void PokemonMenu_FieldMove(u8 taskID)
+static void PokemonMenu_FieldMove(u8 taskId)
 {
-    s16* data = gTasks[taskID].data;
+    s16 *data = gTasks[taskId].data;
 
     Menu_DestroyCursor();
-    tFieldMoveId = sPokeMenuOptionsOrder[sPokeMenuCursorPos] - POKEMENU_FIRST_FIELD_MOVE_ID;
+    tFieldMoveId = sFieldPartyMenuOptionIds[sFieldPartyMenuCursorPos] - POKEMENU_FIRST_FIELD_MOVE_ID;
     if (MenuHelpers_IsLinkActive() == TRUE)
     {
         Menu_EraseWindowRect(19, 0, 29, 19);
         if (IS_SOFTBOILED_MILKDRINK(tFieldMoveId))
             PrintPartyMenuPromptText(9, 0);
         else
-            PrintPartyMenuPromptText(sFieldMoveFuncs[tFieldMoveId].field_1, 0);
-        gTasks[taskID].func = sub_808ABF4;
+            PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].msgId, 0);
+        gTasks[taskId].func = Task_WaitForFieldMoveMessage;
     }
-    else if (tFieldMoveId <= 7 && FlagGet(FLAG_BADGE01_GET + tFieldMoveId) != TRUE)
+    else if (tFieldMoveId <= FIELD_MOVE_WATERFALL && FlagGet(FLAG_BADGE01_GET + tFieldMoveId) != TRUE)
     {
         // can't use a field HM move without a proper badge
         Menu_EraseWindowRect(19, 0, 29, 19);
         PartyMenuEraseMsgBoxAndFrame();
         DisplayPartyMenuMessage(gOtherText_CantBeUsedBadge, 1);
-        gTasks[taskID].func = sub_808AAF0;
+        gTasks[taskId].func = Task_WaitForFieldMoveErrorMessage;
     }
     else
     {
-        if (sFieldMoveFuncs[tFieldMoveId].func() == TRUE)
+        if (sFieldMoveCursorCallbacks[tFieldMoveId].fieldMoveFunc() == TRUE)
         {
-            sPokeMenuCursorPos = 0;
+            sFieldPartyMenuCursorPos = 0;
             if (!IS_SOFTBOILED_MILKDRINK(tFieldMoveId))
             {
-                gTasks[taskID].func = sub_808AB34;
+                gTasks[taskId].func = Task_ReturnToFieldAfterFieldMove;
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             }
             else
-                ChooseMonForSoftboiled(taskID);
+                ChooseMonForSoftboiled(taskId);
         }
         else
         {
             Menu_EraseWindowRect(19, 0, 29, 19);
-            if (IS_SURF(tFieldMoveId) && TestPlayerAvatarFlags(8))
+            if (IS_SURF(tFieldMoveId) && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
                 PrintPartyMenuPromptText(8, 0);
             else
-                PrintPartyMenuPromptText(sFieldMoveFuncs[tFieldMoveId].field_1, 0);
-            gTasks[taskID].func = sub_808ABF4;
+                PrintPartyMenuPromptText(sFieldMoveCursorCallbacks[tFieldMoveId].msgId, 0);
+            gTasks[taskId].func = Task_WaitForFieldMoveMessage;
         }
     }
 }
 
-static void sub_808AAF0(u8 taskID)
+static void Task_WaitForFieldMoveErrorMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting != 1 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
     {
         Menu_EraseWindowRect(0, 14, 29, 19);
-        PokemonMenu_Cancel(taskID);
+        PokemonMenu_Cancel(taskId);
     }
 }
 
-static void sub_808AB34(u8 taskID)
+static void Task_ReturnToFieldAfterFieldMove(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        if (!IS_FLY(gTasks[taskID].tFieldMoveId) || ShouldDoBrailleFlyEffect())
+        if (!IS_FLY(gTasks[taskId].tFieldMoveId) || ShouldDoBrailleFlyEffect())
             SetMainCallback2(CB2_ReturnToField);
         else
             SetMainCallback2(CB2_OpenFlyMap);
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
@@ -785,26 +792,26 @@ void FieldCallback_PrepareFadeInFromMenu(void)
     CreateTask(FieldCallback_AfterFadeInFromMenu, 8);
 }
 
-static void FieldCallback_AfterFadeInFromMenu(u8 taskID)
+static void FieldCallback_AfterFadeInFromMenu(u8 taskId)
 {
     if (IsWeatherNotFadingIn() == TRUE)
     {
         gFieldEffectArguments[0] = GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_SPECIES);
         gPostMenuFieldCallback();
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
-static void sub_808ABF4(u8 taskID)
+static void Task_WaitForFieldMoveMessage(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
         Menu_EraseWindowRect(1, 17, 28, 18);
-        PokemonMenu_Cancel(taskID);
+        PokemonMenu_Cancel(taskId);
     }
 }
 
-static void sub_808AC2C(void)
+static void FieldCallback_Surf(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     FieldEffectStart(FLDEFF_USE_SURF);
@@ -815,14 +822,14 @@ static bool8 SetUpFieldMove_Surf(void)
     if (PartyHasMonWithSurf() == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_808AC2C;
+        gPostMenuFieldCallback = FieldCallback_Surf;
         return TRUE;
     }
     else
         return FALSE;
 }
 
-static void sub_808AC8C(void)
+static void FieldCallback_Fly(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     FieldEffectStart(FLDEFF_USE_FLY);
@@ -839,7 +846,7 @@ static bool8 SetUpFieldMove_Fly(void)
     if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_808AC8C;
+        gPostMenuFieldCallback = FieldCallback_Fly;
         return TRUE;
     }
     return FALSE;
@@ -868,12 +875,12 @@ void CB2_ReturnToPartyMenuFromFlyMap(void)
     SetMainCallback2(CB2_InitPartyMenuAfterFlyMap);
 }
 
-u16 unref_sub_808AD88(void)
+u16 GetFieldMoveMonSpecies(void)
 {
     return GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_SPECIES);
 }
 
-static void sub_808ADAC(void)
+static void FieldCallback_Dive(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     FieldEffectStart(FLDEFF_USE_DIVE);
@@ -885,14 +892,14 @@ static bool8 SetUpFieldMove_Dive(void)
     if (gFieldEffectArguments[1])
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_808ADAC;
+        gPostMenuFieldCallback = FieldCallback_Dive;
         return TRUE;
     }
     else
         return FALSE;
 }
 
-static void sub_808AE08(void)
+static void FieldCallback_Waterfall(void)
 {
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
     FieldEffectStart(FLDEFF_USE_WATERFALL);
@@ -907,7 +914,7 @@ static bool8 SetUpFieldMove_Waterfall(void)
      && IsPlayerSurfingNorth() == TRUE)
     {
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = sub_808AE08;
+        gPostMenuFieldCallback = FieldCallback_Waterfall;
         return TRUE;
     }
     else
@@ -915,24 +922,25 @@ static bool8 SetUpFieldMove_Waterfall(void)
 }
 
 #if DEBUG
-void debug_sub_80986AC(void)
+void Debug_TryUseWaterfall(void)
 {
     s16 x, y;
 
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     if (MetatileBehavior_IsWaterfall(MapGridGetMetatileBehaviorAt(x, y)) == TRUE
      && IsPlayerSurfingNorth() == TRUE)
-        sub_808AE08();
+        FieldCallback_Waterfall();
     else
         UnlockPlayerFieldControls();
 }
 #endif
 
-static void sub_808AE8C(void)
+static void UpdatePartyMenuForTMHM(void)
 {
     u8 i;
-    u8 arg = gSpecialVar_ItemId - 33;
-    for (i = 0; i < 6; i++)
+    u8 tmhmIndex = gSpecialVar_ItemId - 33;
+
+    for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
@@ -941,7 +949,7 @@ static void sub_808AE8C(void)
 #if DEBUG
              gIsDebugMode == 0 &&
 #endif
-             (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !CanMonLearnTMHM(&gPlayerParty[i], arg)))
+             (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !CanMonLearnTMHM(&gPlayerParty[i], tmhmIndex)))
                 DrawMonDescriptorStatus(i, 0x9A);
             else if (pokemon_has_move(&gPlayerParty[i], ItemIdToBattleMoveId(gSpecialVar_ItemId)))
                 DrawMonDescriptorStatus(i, 0xA8);
@@ -951,10 +959,11 @@ static void sub_808AE8C(void)
     }
 }
 
-static void sub_808AF20(void)
+static void UpdatePartyMenuForEvolutionItem(void)
 {
     u8 i;
-    for (i = 0; i < 6; i++)
+
+    for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
@@ -967,7 +976,7 @@ static void sub_808AF20(void)
     }
 }
 
-static void sub_808AF80(void)
+static void CB2_InitPartyMenuForItemUse(void)
 {
     while (1)
     {
@@ -977,15 +986,15 @@ static void sub_808AF80(void)
             {
                 switch (CheckIfItemIsTMHMOrEvolutionStone(gSpecialVar_ItemId))
                 {
-                case 1:
-                    sub_808AE8C();
+                case ITEM_IS_TM_HM:
+                    UpdatePartyMenuForTMHM();
                     break;
-                case 2:
-                    sub_808AF20();
+                case ITEM_IS_EVOLUTION_STONE:
+                    UpdatePartyMenuForEvolutionItem();
                     break;
                 }
             }
-            if (gLastFieldPokeMenuOpened > 5 || !GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_SPECIES))
+            if (gLastFieldPokeMenuOpened >= PARTY_SIZE || !GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_SPECIES))
                 gLastFieldPokeMenuOpened = 0;
             sub_806C994(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
@@ -997,129 +1006,129 @@ static void sub_808AF80(void)
     }
 }
 
-void sub_808B020(void)
+void CB2_OpenPartyMenuForItemUse(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     switch (gPokemonItemUseType)
     {
     case ITEM_USE_SINGLE_MON:
-        if (CheckIfItemIsTMHMOrEvolutionStone(gSpecialVar_ItemId) == 1)
-            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 20);
+        if (CheckIfItemIsTMHMOrEvolutionStone(gSpecialVar_ItemId) == ITEM_IS_TM_HM)
+            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_HandlePartyMenuItemUseInput, 20);
         else
-            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 3);
+            SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_HandlePartyMenuItemUseInput, 3);
         break;
     case ITEM_USE_ALL_MONS:
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B1EC, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_UseItemOnAllPartyMons, 0xFF);
         break;
     case ITEM_USE_GIVE_ITEM:
     case ITEM_USE_GIVE_MAIL:
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B0C0, 4);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_HandlePartyMenuItemUseInput, 4);
         break;
     }
-    SetMainCallback2(sub_808AF80);
+    SetMainCallback2(CB2_InitPartyMenuForItemUse);
 }
 
-void sub_808B0C0(u8 taskID)
+void Task_HandlePartyMenuItemUseInput(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        switch (HandleDefaultPartyMenuInput(taskID))
+        switch (HandleDefaultPartyMenuInput(taskId))
         {
         case A_BUTTON:
-            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             if (GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_IS_EGG))
                 PlaySE(SE_FAILURE);
             else
             {
                 PartyMenuEraseMsgBoxAndFrame();
                 if (gPokemonItemUseType == ITEM_USE_SINGLE_MON)
-                    gPokemonItemUseCallback(taskID, gSpecialVar_ItemId, sub_808B224);
+                    gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_FadeOutToBagMenu);
                 if (gPokemonItemUseType == ITEM_USE_GIVE_ITEM)
                 {
                     PlaySE(SE_SELECT);
-                    PartyMenuTryGiveMonHeldItem(taskID, gSpecialVar_ItemId, sub_808B2EC);
+                    PartyMenuTryGiveMonHeldItem(taskId, gSpecialVar_ItemId, Task_HandleBagGiveItemResult);
                 }
                 if (gPokemonItemUseType == ITEM_USE_GIVE_MAIL)
                 {
                     PlaySE(SE_SELECT);
-                    PartyMenuTryGiveMonMail(taskID, sub_808B2B4);
+                    PartyMenuTryGiveMonMail(taskId, Task_FadeOutToMailbox);
                 }
             }
             break;
         case B_BUTTON:
-            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
+            gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
             PlaySE(SE_SELECT);
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
             if (gPokemonItemUseType == ITEM_USE_SINGLE_MON || gPokemonItemUseType == ITEM_USE_GIVE_ITEM)
-                gTasks[taskID].func = sub_808B25C;
+                gTasks[taskId].func = Task_ReturnToBagMenu;
             if (gPokemonItemUseType == ITEM_USE_GIVE_MAIL)
-                gTasks[taskID].func = sub_808B2B4;
+                gTasks[taskId].func = Task_FadeOutToMailbox;
             break;
         }
     }
 }
 
-static void sub_808B1EC(u8 taskID)
+static void Task_UseItemOnAllPartyMons(u8 taskId)
 {
     if (!gPaletteFade.active)
-        gPokemonItemUseCallback(taskID, gSpecialVar_ItemId, sub_808B224);
+        gPokemonItemUseCallback(taskId, gSpecialVar_ItemId, Task_FadeOutToBagMenu);
 }
 
-static void sub_808B224(u8 taskID)
+static void Task_FadeOutToBagMenu(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskID].func = sub_808B25C;
+    gTasks[taskId].func = Task_ReturnToBagMenu;
 }
 
-static void sub_808B25C(u8 taskID)
+static void Task_ReturnToBagMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_ReturnToBagMenu);
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
-static void sub_808B288(u8 taskID)
+static void Task_ReturnToMailbox(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         SetMainCallback2(Mailbox_ReturnToMailListAfterDeposit);
-        DestroyTask(taskID);
+        DestroyTask(taskId);
     }
 }
 
-static void sub_808B2B4(u8 taskID)
+static void Task_FadeOutToMailbox(u8 taskId)
 {
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gTasks[taskID].func = sub_808B288;
+    gTasks[taskId].func = Task_ReturnToMailbox;
 }
 
-static void sub_808B2EC(u8 taskID)
+static void Task_HandleBagGiveItemResult(u8 taskId)
 {
     if (gUnknown_0202E8F4 == 2)
     {
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gTasks[taskID].func = sub_808B338;
+        gTasks[taskId].func = Task_WriteMailToGiveMonFromBag;
     }
     else
-        sub_808B224(taskID);
+        Task_FadeOutToBagMenu(taskId);
 }
 
-static void sub_808B338(u8 taskID)
+static void Task_WriteMailToGiveMonFromBag(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        u8 mailID;
+        u8 mailId;
 
-        gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskID);
-        mailID = GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MAIL);
-        DestroyTask(taskID);
-        DoEasyChatScreen(4, gSaveBlock1.mail[mailID].words, sub_808B3EC, 3);
+        gLastFieldPokeMenuOpened = GetCursorSelectionMonId(taskId);
+        mailId = GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_MAIL);
+        DestroyTask(taskId);
+        DoEasyChatScreen(4, gSaveBlock1.mail[mailId].words, CB2_ReturnToPartyOrBagMenuFromWritingMail, 3);
     }
 }
 
-static void sub_808B3A0(void)
+static void CB2_InitPartyMenuAfterBagMail(void)
 {
     while (1)
     {
@@ -1135,7 +1144,7 @@ static void sub_808B3A0(void)
     }
 }
 
-static void sub_808B3EC(void)
+static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void)
 {
     IntrCallback callback;
 
@@ -1147,39 +1156,39 @@ static void sub_808B3EC(void)
         AddBagItem(GetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM), 1);
         TakeMailFromMon(&gPlayerParty[gLastFieldPokeMenuOpened]);
         SetMonData(&gPlayerParty[gLastFieldPokeMenuOpened], MON_DATA_HELD_ITEM, (void*) &gUnknown_0202E8F8);
-        CreateTask(sub_808B25C, 5);
+        CreateTask(Task_ReturnToBagMenu, 5);
         gPaletteFade.bufferTransferDisabled = 0;
         callback = CB2_PartyMenuMain;
     }
     else
     {
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, sub_808B4A4, 0xFF);
-        callback = sub_808B3A0;
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_DisplayGaveItemFromBagMessage, 0xFF);
+        callback = CB2_InitPartyMenuAfterBagMail;
     }
     SetMainCallback2(callback);
 }
 
-static void sub_808B4A4(u8 taskID)
+static void Task_DisplayGaveItemFromBagMessage(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         DisplayGiveHeldItemMessage(gLastFieldPokeMenuOpened, gSpecialVar_ItemId, 1);
-        gTasks[taskID].func = sub_808B4EC;
+        gTasks[taskId].func = Task_WaitForGaveItemFromBagMessage;
     }
 }
 
-static void sub_808B4EC(u8 taskID)
+static void Task_WaitForGaveItemFromBagMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting != 1)
-        sub_808B224(taskID);
+        Task_FadeOutToBagMenu(taskId);
 }
 
-void sub_808B508(u8 taskID)
+void Task_ExitPartyMenuToBag(u8 taskId)
 {
-    sub_808B224(taskID);
+    Task_FadeOutToBagMenu(taskId);
 }
 
-static void sub_808B518(void)
+static void CB2_InitPartyMenuForMoveLearning(void)
 {
     while (1)
     {
@@ -1195,25 +1204,25 @@ static void sub_808B518(void)
     }
 }
 
-void sub_808B564(void)
+void CB2_ReturnToPartyMenuForMoveLearning(void)
 {
     gPaletteFade.bufferTransferDisabled = 1;
     if (GetMoveSlotToReplace() != 4)
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, TaughtMove, 0xFF);
     else
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, StopTryingToTeachMove_806F588, 0xFF);
-    SetMainCallback2(sub_808B518);
+    SetMainCallback2(CB2_InitPartyMenuForMoveLearning);
 }
 
-void sub_808B5B4(u32 taskID)
+void SetTaskToWaitForLinkRecv(u32 taskId)
 {
-    gTaskFuncForLinkRecv = gTasks[taskID].func;
-    gTasks[taskID].func = sub_808B5E4;
-    sub_808B5E4(taskID);
+    gTaskFuncForLinkRecv = gTasks[taskId].func;
+    gTasks[taskId].func = Task_WaitForLinkRecv;
+    Task_WaitForLinkRecv(taskId);
 }
 
-static void sub_808B5E4(u8 taskID)
+static void Task_WaitForLinkRecv(u8 taskId)
 {
     if (Overworld_IsRecvQueueAtMax() != TRUE)
-        gTasks[taskID].func = gTaskFuncForLinkRecv;
+        gTasks[taskId].func = gTaskFuncForLinkRecv;
 }

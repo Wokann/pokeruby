@@ -2849,7 +2849,7 @@ void ShowPartyPopupMenu(u8 menuIndex, const struct PartyPopupMenu *menu, const s
     u8 top;
 
     SetPartyPopupMenuOffsets(menuIndex, &left, &top, menu);
-    sub_8089C50(left, top, menu[menuIndex].width, menu[menuIndex].numChoices, menuActions, menu[menuIndex].items);
+    DrawPartyPopupMenu(left, top, menu[menuIndex].width, menu[menuIndex].numChoices, menuActions, menu[menuIndex].items);
 
     InitMenu(0, left + 1, top + 1, menu[menuIndex].numChoices, cursorPos, menu[menuIndex].width - 1);
 }
@@ -3350,7 +3350,7 @@ void sub_806F3FC(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.primarySelectedMonIndex, gPlayerPartyCount - 1, sub_808B564, gPartyMenu.unk8);
+        ShowSelectMovePokemonSummaryScreen(gPlayerParty, gPartyMenu.primarySelectedMonIndex, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuForMoveLearning, gPartyMenu.unk8);
         DestroyTask(taskId);
     }
 }
@@ -3372,7 +3372,7 @@ void TaughtMove(u8 taskId)
         u16 r4;
 
         gTasks[taskId].func = TaskDummy;
-        sub_806E8D0(taskId, gSpecialVar_ItemId, sub_808B508);
+        sub_806E8D0(taskId, gSpecialVar_ItemId, Task_ExitPartyMenuToBag);
         moveIndex = GetMoveSlotToReplace();
         r4 = GetMonData(gPartyMenu.pokemon, MON_DATA_MOVE1 + moveIndex);
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
@@ -3398,7 +3398,7 @@ void StopTryingToTeachMove_806F588(u8 taskId)
     if (!gPaletteFade.active)
     {
         gTasks[taskId].func = TaskDummy;
-        sub_806E8D0(taskId, gSpecialVar_ItemId, sub_808B508);
+        sub_806E8D0(taskId, gSpecialVar_ItemId, Task_ExitPartyMenuToBag);
         StringCopy(gStringVar2, gMoveNames[gPartyMenu.unk8]);
         StringExpandPlaceholders(gStringVar4, gOtherText_StopTryingTo);
         DisplayPartyMenuMessage(gStringVar4, 1);
@@ -3929,7 +3929,7 @@ void ItemUseMoveMenu_HandleCancel(u8 taskId)
     if (gMain.inBattle)
         gTasks[gPartyMenu.unk4].func = HandleBattlePartyMenu;
     else
-        gTasks[gPartyMenu.unk4].func = sub_808B0C0;
+        gTasks[gPartyMenu.unk4].func = Task_HandlePartyMenuItemUseInput;
     PrintPartyMenuPromptText(3, 0);
     DestroyTask(taskId);
 }
