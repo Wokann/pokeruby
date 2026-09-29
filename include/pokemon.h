@@ -400,6 +400,9 @@ extern const u8 *const gItemEffectTable[];
 extern const struct BaseStats gBaseStats[];
 extern const u32 gExperienceTables[][101];
 extern const u16 *gLevelUpLearnsets[];
+extern const u8 gPPUpGetMask[];
+extern const u8 gPPUpClearMask[];
+extern const u8 gPPUpAddValues[];
 extern struct Evolution gEvolutionTable[][5];
 extern struct PokemonStorage gPokemonStorage;
 

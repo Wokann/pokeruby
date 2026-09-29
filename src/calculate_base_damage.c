@@ -22,14 +22,14 @@ extern struct BattleEnigmaBerry gEnigmaBerries[];
 extern u16 gBattleMovePower;
 extern u16 gTrainerBattleOpponent;
 
-// Masks for getting PP Up count, also PP Max values
-const u8 gPPUpReadMasks[] = {0x03, 0x0c, 0x30, 0xc0};
+// A mask to get the number of PP Ups applied to that move slot.
+const u8 gPPUpGetMask[] = {0x03, 0x0c, 0x30, 0xc0};
 
-// Masks for setting PP Up count
-const u8 gPPUpWriteMasks[] = {0xFC, 0xF3, 0xCF, 0x3F};
+// A mask to clear the number of PP Ups applied to that move slot.
+const u8 gPPUpClearMask[] = {0xFC, 0xF3, 0xCF, 0x3F};
 
-// Values added to PP Up count
-const u8 gPPUpValues[] = {0x01, 0x04, 0x10, 0x40};
+// A value to add to the PP Bonuses byte to apply 1 PP Up to that move slot.
+const u8 gPPUpAddValues[] = {0x01, 0x04, 0x10, 0x40};
 
 const u8 gStatStageRatios[][2] =
 {

@@ -20,8 +20,6 @@
 #include "text.h"
 #include "ewram.h"
 
-extern const u8 gPPUpReadMasks[];
-
 extern u8 gPlayerPartyCount;
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
@@ -309,9 +307,9 @@ static void ShiftMoveSlot(struct Pokemon *mon, u8 slotTo, u8 slotFrom)
     u8 pp1 = GetMonData(mon, MON_DATA_PP1 + slotTo);
     u8 pp0 = GetMonData(mon, MON_DATA_PP1 + slotFrom);
     u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
-    u8 ppBonusMask1 = gPPUpReadMasks[slotTo];
+    u8 ppBonusMask1 = gPPUpGetMask[slotTo];
     u8 ppBonusMove1 = (ppBonuses & ppBonusMask1) >> (slotTo * 2);
-    u8 ppBonusMask2 = gPPUpReadMasks[slotFrom];
+    u8 ppBonusMask2 = gPPUpGetMask[slotFrom];
     u8 ppBonusMove2 = (ppBonuses & ppBonusMask2) >> (slotFrom * 2);
 
     ppBonuses &= ~ppBonusMask1;
