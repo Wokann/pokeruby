@@ -30,83 +30,6 @@
 
 asm(".include \"constants/gba_constants.inc\"");
 
-#define BALLS_PER_ROUND 6
-
-// "Board" refers to both the wheel and the bet-selection grid.
-#define NUM_BOARD_COLORS 3
-#define NUM_BOARD_POKES  4
-#define NUM_ROULETTE_SLOTS (NUM_BOARD_COLORS * NUM_BOARD_POKES)
-
-#define DEGREES_PER_SLOT (360 / NUM_ROULETTE_SLOTS)
-#define SLOT_MIDPOINT (DEGREES_PER_SLOT / 2 - 1)
-
-#define SELECTION_NONE      0
-#define COL_WYNAUT          1
-#define COL_AZURILL         2
-#define COL_SKITTY          3
-#define COL_MAKUHITA        4
-#define ROW_ORANGE          (COL_MAKUHITA + 1)
-#define SQU_ORANGE_WYNAUT   (ROW_ORANGE + COL_WYNAUT)
-#define SQU_ORANGE_AZURILL  (ROW_ORANGE + COL_AZURILL)
-#define SQU_ORANGE_SKITTY   (ROW_ORANGE + COL_SKITTY)
-#define SQU_ORANGE_MAKUHITA (ROW_ORANGE + COL_MAKUHITA)
-#define ROW_GREEN           (SQU_ORANGE_MAKUHITA + 1)
-#define SQU_GREEN_WYNAUT    (ROW_GREEN + COL_WYNAUT)
-#define SQU_GREEN_AZURILL   (ROW_GREEN + COL_AZURILL)
-#define SQU_GREEN_SKITTY    (ROW_GREEN + COL_SKITTY)
-#define SQU_GREEN_MAKUHITA  (ROW_GREEN + COL_MAKUHITA)
-#define ROW_PURPLE          (SQU_GREEN_MAKUHITA + 1)
-#define SQU_PURPLE_WYNAUT   (ROW_PURPLE + COL_WYNAUT)
-#define SQU_PURPLE_AZURILL  (ROW_PURPLE + COL_AZURILL)
-#define SQU_PURPLE_SKITTY   (ROW_PURPLE + COL_SKITTY)
-#define SQU_PURPLE_MAKUHITA (ROW_PURPLE + COL_MAKUHITA)
-#define NUM_GRID_SELECTIONS SQU_PURPLE_MAKUHITA
-
-#define GET_COL(selectionId) ((selectionId) % (NUM_BOARD_POKES + 1))
-#define GET_ROW(selectionId) ((selectionId) / (NUM_BOARD_POKES + 1) * (NUM_BOARD_POKES + 1))
-#define GET_COL_IDX(selectionId) ((selectionId) - 1)
-#define GET_ROW_IDX(selectionId) ((selectionId) / (NUM_BOARD_POKES + 1) - 1)
-
-#define F_WYNAUT_COL      (1 << COL_WYNAUT)
-#define F_AZURILL_COL     (1 << COL_AZURILL)
-#define F_SKITTY_COL      (1 << COL_SKITTY)
-#define F_MAKUHITA_COL    (1 << COL_MAKUHITA)
-#define F_ORANGE_ROW      (1 << ROW_ORANGE)
-#define F_ORANGE_WYNAUT   (1 << SQU_ORANGE_WYNAUT)
-#define F_ORANGE_AZURILL  (1 << SQU_ORANGE_AZURILL)
-#define F_ORANGE_SKITTY   (1 << SQU_ORANGE_SKITTY)
-#define F_ORANGE_MAKUHITA (1 << SQU_ORANGE_MAKUHITA)
-#define F_GREEN_ROW       (1 << ROW_GREEN)
-#define F_GREEN_WYNAUT    (1 << SQU_GREEN_WYNAUT)
-#define F_GREEN_AZURILL   (1 << SQU_GREEN_AZURILL)
-#define F_GREEN_SKITTY    (1 << SQU_GREEN_SKITTY)
-#define F_GREEN_MAKUHITA  (1 << SQU_GREEN_MAKUHITA)
-#define F_PURPLE_ROW      (1 << ROW_PURPLE)
-#define F_PURPLE_WYNAUT   (1 << SQU_PURPLE_WYNAUT)
-#define F_PURPLE_AZURILL  (1 << SQU_PURPLE_AZURILL)
-#define F_PURPLE_SKITTY   (1 << SQU_PURPLE_SKITTY)
-#define F_PURPLE_MAKUHITA (1 << SQU_PURPLE_MAKUHITA)
-
-#define F_FLASH_COLOR_O_WYNAUT   (1 << 0)
-#define F_FLASH_COLOR_G_AZURILL  (1 << 1)
-#define F_FLASH_COLOR_P_SKITTY   (1 << 2)
-#define F_FLASH_COLOR_O_MAKUHITA (1 << 3)
-#define F_FLASH_COLOR_G_WYNAUT   (1 << 4)
-#define F_FLASH_COLOR_P_AZURILL  (1 << 5)
-#define F_FLASH_COLOR_O_SKITTY   (1 << 6)
-#define F_FLASH_COLOR_G_MAKUHITA (1 << 7)
-#define F_FLASH_COLOR_P_WYNAUT   (1 << 8)
-#define F_FLASH_COLOR_O_AZURILL  (1 << 9)
-#define F_FLASH_COLOR_G_SKITTY   (1 << 10)
-#define F_FLASH_COLOR_P_MAKUHITA (1 << 11)
-#define F_FLASH_OUTER_EDGES      (1 << 12)
-#define FLASH_ICON               (NUM_ROULETTE_SLOTS + 1)
-#define FLASH_ICON_2             (FLASH_ICON + 1)
-#define FLASH_ICON_3             (FLASH_ICON + 2)
-#define F_FLASH_ICON             (1 << FLASH_ICON)
-#define F_FLASH_COLUMN           (1 << FLASH_ICON | 1 << FLASH_ICON_2 | 1 << FLASH_ICON_3)
-
-#define MAX_MULTIPLIER 12
 #define HAS_SHROOMISH  (1 << 0)
 #define HAS_TAILLOW    (1 << 1)
 #define NO_DELAY       0xFFFF
@@ -114,93 +37,11 @@ asm(".include \"constants/gba_constants.inc\"");
 #define GET_MIN_BET_ID(value) (((value) & 1) + (((value) >> 7) * 2))
 
 enum {
-    BALL_STATE_ROLLING,
-    BALL_STATE_STUCK,
-    BALL_STATE_LANDED = 0xFF,
-};
-
-enum {
     SELECT_STATE_WAIT,
     SELECT_STATE_DRAW,
     SELECT_STATE_UPDATE,
     SELECT_STATE_ERASE = 0xFF,
 };
-
-enum {
-    SPR_WHEEL_BALL_1,
-    SPR_WHEEL_BALL_2,
-    SPR_WHEEL_BALL_3,
-    SPR_WHEEL_BALL_4,
-    SPR_WHEEL_BALL_5,
-    SPR_WHEEL_BALL_6,
-    SPR_WHEEL_CENTER,
-    SPR_WHEEL_ICON_ORANGE_WYNAUT,
-    SPR_WHEEL_ICON_GREEN_AZURILL,
-    SPR_WHEEL_ICON_PURPLE_SKITTY,
-    SPR_WHEEL_ICON_ORANGE_MAKUHITA,
-    SPR_WHEEL_ICON_GREEN_WYNAUT,
-    SPR_WHEEL_ICON_PURPLE_AZURILL,
-    SPR_WHEEL_ICON_ORANGE_SKITTY,
-    SPR_WHEEL_ICON_GREEN_MAKUHITA,
-    SPR_WHEEL_ICON_PURPLE_WYNAUT,
-    SPR_WHEEL_ICON_ORANGE_AZURILL,
-    SPR_WHEEL_ICON_GREEN_SKITTY,
-    SPR_WHEEL_ICON_PURPLE_MAKUHITA,
-    SPR_UNUSED_19,
-    SPR_CREDIT,
-    SPR_CREDIT_DIG_1,
-    SPR_CREDIT_DIG_10,
-    SPR_CREDIT_DIG_100,
-    SPR_CREDIT_DIG_1000,
-    SPR_MULTIPLIER,
-    SPR_BALL_COUNTER_1,
-    SPR_BALL_COUNTER_2,
-    SPR_BALL_COUNTER_3,
-    SPR_GRID_ICON_ORANGE_WYNAUT,
-    SPR_GRID_ICON_GREEN_AZURILL,
-    SPR_GRID_ICON_PURPLE_SKITTY,
-    SPR_GRID_ICON_ORANGE_MAKUHITA,
-    SPR_GRID_ICON_GREEN_WYNAUT,
-    SPR_GRID_ICON_PURPLE_AZURILL,
-    SPR_GRID_ICON_ORANGE_SKITTY,
-    SPR_GRID_ICON_GREEN_MAKUHITA,
-    SPR_GRID_ICON_PURPLE_WYNAUT,
-    SPR_GRID_ICON_ORANGE_AZURILL,
-    SPR_GRID_ICON_GREEN_SKITTY,
-    SPR_GRID_ICON_PURPLE_MAKUHITA,
-    SPR_POKE_HEADER_1,
-    SPR_POKE_HEADER_2,
-    SPR_POKE_HEADER_3,
-    SPR_POKE_HEADER_4,
-    SPR_COLOR_HEADER_1,
-    SPR_COLOR_HEADER_2,
-    SPR_COLOR_HEADER_3,
-    SPR_WIN_SLOT_CURSOR,
-    SPR_GRID_BALL_1,
-    SPR_GRID_BALL_2,
-    SPR_GRID_BALL_3,
-    SPR_GRID_BALL_4,
-    SPR_GRID_BALL_5,
-    SPR_GRID_BALL_6,
-    SPR_CLEAR_MON,
-    SPR_CLEAR_MON_SHADOW_1,
-    SPR_CLEAR_MON_SHADOW_2,
-    SPR_UNUSED_58,
-    SPR_UNUSED_59,
-    SPR_UNUSED_60,
-    SPR_UNUSED_61,
-    SPR_UNUSED_62,
-    SPR_UNUSED_63,
-};
-
-#define SPR_WHEEL_BALLS   SPR_WHEEL_BALL_1
-#define SPR_WHEEL_ICONS   SPR_WHEEL_ICON_ORANGE_WYNAUT
-#define SPR_BALL_COUNTER  SPR_BALL_COUNTER_1
-#define SPR_CREDIT_DIGITS SPR_CREDIT_DIG_1
-#define SPR_GRID_ICONS    SPR_GRID_ICON_ORANGE_WYNAUT
-#define SPR_POKE_HEADERS  SPR_POKE_HEADER_1
-#define SPR_COLOR_HEADERS SPR_COLOR_HEADER_1
-#define SPR_GRID_BALLS    SPR_GRID_BALL_1
 
 #if DEBUG
 void *gUnknown_Debug_03005FB8;
@@ -839,7 +680,7 @@ extern const u8 Roulette_Text_SpecialRateTable[];
 extern const u8 Roulette_Text_NotEnoughCoins[];
 #if DEBUG
 EWRAM_DATA u8 unk_203955C[4] = { 0 };
-EWRAM_DATA u8 unk_2039560 = 0;
+EWRAM_DATA u8 gRouletteDebugForceBallStuck = 0;
 #endif
 
 
@@ -939,8 +780,8 @@ void CB2_LoadRoulette(void)
         REG_BG1CNT   = BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(4) | BGCNT_TXT512x256;
         REG_BLDCNT   = BLDCNT_EFFECT_NONE | BLDCNT_TGT2_BG2 | BLDCNT_TGT2_BD;
         REG_BLDALPHA = BLDALPHA_BLEND(10, 6);
-        LZ77UnCompVram(gUnknown_08E8096C, (void *)VRAM);
-        LZ77UnCompVram(gRouletteWheelTiles, (void *)(VRAM + 0x4000));
+        LZ77UnCompVram(gRouletteMenu_Gfx, (void *)VRAM);
+        LZ77UnCompVram(gRouletteWheel_Gfx, (void *)(VRAM + 0x4000));
         gMain.state++;
         break;
     case 1:
@@ -2237,7 +2078,7 @@ void debug_sub_812CDE4(u8 taskId)
         StringExpandPlaceholders(gStringVar4, gOtherText_Coins);
         MenuPrint_RightAligned(gStringVar4, 9, 1);
 #endif
-        unk_2039560 = 0;
+        gRouletteDebugForceBallStuck = 0;
     }
     else if (JOY_NEW(SELECT_BUTTON))
     {
@@ -2251,7 +2092,7 @@ void debug_sub_812CDE4(u8 taskId)
         StringExpandPlaceholders(gStringVar4, gOtherText_Coins);
         MenuPrint_RightAligned(gStringVar4, 9, 1);
 #endif
-        unk_2039560 = 1;
+        gRouletteDebugForceBallStuck = 1;
     }
 }
 
@@ -2281,7 +2122,7 @@ void PlayRoulette(void)
 
     LockPlayerFieldControls();
 #if DEBUG
-    unk_2039560 = 0;
+    gRouletteDebugForceBallStuck = 0;
     if (unk_203955C[0] != 0)
     {
 	    CreateTask(debug_sub_812CFE8, 0);

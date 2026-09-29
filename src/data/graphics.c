@@ -952,14 +952,14 @@ const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/misc/cable_car.4bpp.lz");
 const u8 gCableCarDoor_Gfx[] = INCBIN_U8("graphics/misc/cable_car_door.4bpp.lz");
 const u8 gCableCarCord_Gfx[] = INCBIN_U8("graphics/misc/cable_car_cord.4bpp.lz");
 
-const u8 gUnknown_08E8096C[] = INCBIN_U8("graphics/unknown/unknown_E8096C.4bpp.lz");
+const u8 gRouletteMenu_Gfx[] = INCBIN_U8("graphics/unknown/unknown_E8096C.4bpp.lz");
 
-const u8 gRouletteWheelTiles[] = INCBIN_U8("graphics/roulette/wheel.8bpp.lz");
+const u8 gRouletteWheel_Gfx[] = INCBIN_U8("graphics/roulette/wheel.8bpp.lz");
 const u8 gRouletteCenter_Gfx[] = INCBIN_U8("graphics/roulette/center.4bpp.lz");
-const u8 gRouletteHeadersTiles[] = INCBIN_U8("graphics/roulette/headers.4bpp.lz");
-const u8 gRouletteCreditTiles[] = INCBIN_U8("graphics/roulette/credit.4bpp.lz");
-const u8 gRouletteNumbersTiles[] = INCBIN_U8("graphics/roulette/numbers.4bpp.lz");
-const u8 gRouletteMultiplierTiles[] = INCBIN_U8("graphics/roulette/multiplier.4bpp.lz");
+const u8 gRouletteHeaders_Gfx[] = INCBIN_U8("graphics/roulette/headers.4bpp.lz");
+const u8 gRouletteCredit_Gfx[] = INCBIN_U8("graphics/roulette/credit.4bpp.lz");
+const u8 gRouletteNumbers_Gfx[] = INCBIN_U8("graphics/roulette/numbers.4bpp.lz");
+const u8 gRouletteMultiplier_Gfx[] = INCBIN_U8("graphics/roulette/multiplier.4bpp.lz");
 
 const u16 gMailPalette_Orange[] = INCBIN_U16("graphics/mail/orange/palette.gbapal");
 const u16 gMailPalette_Harbor[] = INCBIN_U16("graphics/mail/harbor/palette.gbapal");
@@ -1377,22 +1377,22 @@ const u8 gIntroTiles[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
 const u8 ConditionUpDownTiles[] = INCBIN_U8("graphics/misc/condition_up_down.4bpp");
 const u16 ConditionUpDownPalette[] = INCBIN_U16("graphics/misc/condition_up_down.gbapal");
 
-const u16 RouletteSpritePalette_01[] = INCBIN_U16("graphics/roulette/shadow.gbapal");
-const u16 RouletteSpritePalette_02[] = INCBIN_U16("graphics/roulette/ball.gbapal");
-const u16 RouletteSpritePalette_03[] = INCBIN_U16("graphics/roulette/ball_counter.gbapal");
-const u16 RouletteSpritePalette_04[] = INCBIN_U16("graphics/roulette/cursor.gbapal");
-const u16 RouletteSpritePalette_05[] = INCBIN_U16("graphics/roulette/credit.gbapal");
-const u16 RouletteSpritePalette_06[] = INCBIN_U16("graphics/roulette/shroomish.gbapal");
-const u16 RouletteSpritePalette_07[] = INCBIN_U16("graphics/roulette/tailow.gbapal");
-const u16 RouletteSpritePalette_08[] = INCBIN_U16("graphics/roulette/poke_icons.gbapal");
-const u16 RouletteSpritePalette_09[] = INCBIN_U16("graphics/roulette/wynaut.gbapal");
-const u16 RouletteSpritePalette_10[] = INCBIN_U16("graphics/roulette/azurill.gbapal");
-const u16 RouletteSpritePalette_11[] = INCBIN_U16("graphics/roulette/skitty.gbapal");
-const u16 RouletteSpritePalette_12[] = INCBIN_U16("graphics/roulette/makuhita.gbapal");
-const u16 RouletteSpritePalette_13[] = INCBIN_U16("graphics/roulette/83F907C.gbapal");
-const u16 RouletteSpritePalette_14[] = INCBIN_U16("graphics/roulette/83F909C.gbapal");
-const u16 RouletteSpritePalette_15[] = INCBIN_U16("graphics/roulette/83F90BC.gbapal");
-const u16 RouletteSpritePalette_16[] = INCBIN_U16("graphics/roulette/83F90DC.gbapal");
+const u16 gRouletteShadow_Pal[] = INCBIN_U16("graphics/roulette/shadow.gbapal");
+const u16 gRouletteBall_Pal[] = INCBIN_U16("graphics/roulette/ball.gbapal");
+const u16 gRouletteBallCounter_Pal[] = INCBIN_U16("graphics/roulette/ball_counter.gbapal");
+const u16 gRouletteCursor_Pal[] = INCBIN_U16("graphics/roulette/cursor.gbapal");
+const u16 gRouletteCredit_Pal[] = INCBIN_U16("graphics/roulette/credit.gbapal");
+const u16 gRouletteShroomish_Pal[] = INCBIN_U16("graphics/roulette/shroomish.gbapal");
+const u16 gRouletteTaillow_Pal[] = INCBIN_U16("graphics/roulette/tailow.gbapal");
+const u16 gRouletteGridIcons_Pal[] = INCBIN_U16("graphics/roulette/poke_icons.gbapal");
+const u16 gRouletteWynaut_Pal[] = INCBIN_U16("graphics/roulette/wynaut.gbapal");
+const u16 gRouletteAzurill_Pal[] = INCBIN_U16("graphics/roulette/azurill.gbapal");
+const u16 gRouletteSkitty_Pal[] = INCBIN_U16("graphics/roulette/skitty.gbapal");
+const u16 gRouletteMakuhita_Pal[] = INCBIN_U16("graphics/roulette/makuhita.gbapal");
+const u16 gRouletteUnused1_Pal[] = INCBIN_U16("graphics/roulette/83F907C.gbapal");
+const u16 gRouletteUnused2_Pal[] = INCBIN_U16("graphics/roulette/83F909C.gbapal");
+const u16 gRouletteUnused3_Pal[] = INCBIN_U16("graphics/roulette/83F90BC.gbapal");
+const u16 gRouletteUnused4_Pal[] = INCBIN_U16("graphics/roulette/83F90DC.gbapal");
 
 const u16 gTilesetPalettes_Shop[][16] = 
 {
