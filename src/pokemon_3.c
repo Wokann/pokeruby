@@ -60,7 +60,6 @@ extern u8 BattleText_Rose[];
 extern u8 BattleText_UnknownString3[];
 extern u8 BattleText_MistShroud[];
 extern u8 BattleText_GetPumped[];
-extern u8 *gUnknown_08400F58[];
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId)
 {
@@ -198,7 +197,7 @@ const u8 gUnknown_082082F8[] = {1, 1, 3, 2, 4, 6};
 void sub_803F324(int stat)
 {
     gBattlerTarget = gBattlerInMenuId;
-    StringCopy(gBattleTextBuff1, gUnknown_08400F58[gUnknown_082082F8[stat]]);
+    StringCopy(gBattleTextBuff1, gStatNamesTable[gUnknown_082082F8[stat]]);
     StringCopy(gBattleTextBuff2, BattleText_Rose);
     BattleStringExpandPlaceholdersToDisplayedString(BattleText_UnknownString3);
 }

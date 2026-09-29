@@ -1,21 +1,23 @@
 #ifndef GUARD_BATTLE_MESSAGE_H
 #define GUARD_BATTLE_MESSAGE_H
 
+#include "constants/battle.h"
+
 #define TEXT_BUFF_ARRAY_COUNT   16
 
-struct StringInfoBattle
+struct BattleMsgData
 {
     u16 currentMove;
-    u16 lastMove;
+    u16 originallyUsedMove;
     u16 lastItem;
     u8 lastAbility;
     u8 scrActive;
-    u8 unk1605E;
+    u8 bakScriptPartyIdx;
     u8 hpScale;
-    u8 StringBank;
+    u8 itemEffectBattler;
     u8 moveType;
-    u8 abilities[4];
-    u8 textBuffs[3][0x10];
+    u8 abilities[MAX_BATTLERS_COUNT];
+    u8 textBuffs[3][TEXT_BUFF_ARRAY_COUNT];
 };
 
 #define B_TXT_BUFF1 0x0
@@ -202,5 +204,9 @@ struct StringInfoBattle
 void BufferStringBattle(u16 stringID);
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8* src);
 u32 BattleStringExpandPlaceholders(const u8* src, u8* dst);
+
+extern const u8 *const gBattleStringsTable[];
+extern const u8 *const gStatNamesTable[];
+extern const u8 *const gPokeblockWasTooXStringTable[];
 
 #endif // GUARD_BATTLE_MESSAGE_H

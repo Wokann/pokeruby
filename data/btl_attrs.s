@@ -368,7 +368,7 @@ gStatusConditionString_LoveJpn:: @ 81FA6CC
 	.string "メロメロ$$$$"
 
 	.align 2
-gUnknown_081FA6D4:: @ 81FA6D4
+gStatusConditionStringsTable:: @ 81FA6D4
 	.4byte gStatusConditionString_PoisonJpn, BattleText_PoisonStatus
 	.4byte gStatusConditionString_SleepJpn, BattleText_Sleep
 	.4byte gStatusConditionString_ParalysisJpn, BattleText_Paralysis

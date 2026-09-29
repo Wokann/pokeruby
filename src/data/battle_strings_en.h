@@ -841,7 +841,7 @@ const u8 BattleText_Ice[] = _("an ICE move");
 const u8 BattleText_Dragon[] = _("a DRAGON move");
 const u8 BattleText_Dark[] = _("a DARK move");
 
-const u8 *const gUnknown_08400F58[] =
+const u8 *const gStatNamesTable[] =
 {
     BattleStatText_HP,
     BattleStatText_Attack,
@@ -853,7 +853,7 @@ const u8 *const gUnknown_08400F58[] =
     BattleStatText_Evasion,
 };
 
-const u8 *const gUnknown_08400F78[] =
+const u8 *const gPokeblockWasTooXStringTable[] =
 {
     ContestStatText_TooSpicy,
     ContestStatText_TooDry,
@@ -1589,7 +1589,7 @@ const u8 *const gUnknown_0840165C[] =
     BattleStatText_Speed,
 };
 
-const u8 *const gUnknown_08401674[] =
+static const u8 *const sATypeMove_Table[] =
 {
     BattleText_Normal,
     BattleText_Fighting,

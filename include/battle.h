@@ -353,7 +353,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16059*/ u8 faintedActionsState;
     /*0x1605A*/ u8 faintedActionsBattlerId;
     /*0x1605C*/ u16 exp;
-    /*0x1605E*/ u8 unk1605E;
+    /*0x1605E*/ u8 scriptPartyIdx;
     /*0x1605F*/ u8 sentInPokes;
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
     /*0x16064*/ u8 unk16064[MAX_BATTLERS_COUNT];
