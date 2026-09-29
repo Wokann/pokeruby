@@ -28,7 +28,6 @@ extern void BuyMenuFreeMemory(void);
 extern void DestroyVerticalScrollIndicator(u8);
 extern void PauseVerticalScrollIndicator(u8);
 extern void LoadScrollIndicatorPalette(void);
-extern void ClearMailStruct(struct MailStruct *);
 extern u8 IsWeatherNotFadingIn(void);
 extern void CB2_OpenPartyMenuForItemUse(void);
 extern void ClearVerticalScrollIndicatorPalettes(void);
@@ -1000,8 +999,8 @@ static u8 GetMailboxMailCount(void)
 {
     u8 i, j;
 
-    for(i = 0, j = 6; j < 16; j++)
-        if(gSaveBlock1.mail[j].itemId != 0)
+    for(i = 0, j = PARTY_SIZE; j < MAIL_COUNT; j++)
+        if(gSaveBlock1.mail[j].itemId != ITEM_NONE)
             i++;
 
     return i;
@@ -1009,14 +1008,14 @@ static u8 GetMailboxMailCount(void)
 
 static void Mailbox_CompactMailList(void)
 {
-    struct MailStruct mailBuffer;
+    struct Mail mailBuffer;
     u8 i, j;
 
-    for (i=6; i<15; i++)
+    for (i = PARTY_SIZE; i < MAIL_COUNT - 1; i++)
     {
-        for (j=i+1; j<16; j++)
+        for (j = i + 1; j < MAIL_COUNT; j++)
         {
-            if (gSaveBlock1.mail[i].itemId == 0)
+            if (gSaveBlock1.mail[i].itemId == ITEM_NONE)
             {
                 mailBuffer = gSaveBlock1.mail[i];
                 gSaveBlock1.mail[i] = gSaveBlock1.mail[j];
@@ -1242,7 +1241,7 @@ static void Mailbox_AskConfirmMoveToBag(u8 taskId)
 
 static void Mailbox_DoMailMoveToBag(u8 taskId)
 {
-    struct MailStruct *mail = &gSaveBlock1.mail[eMailboxInfo.itemsAbove + 6 + eMailboxInfo.cursorPos];
+    struct Mail *mail = &gSaveBlock1.mail[eMailboxInfo.itemsAbove + PARTY_SIZE + eMailboxInfo.cursorPos];
 
     Menu_EraseWindowRect(0x14, 8, 0x1A, 0xD);
 
@@ -1253,7 +1252,7 @@ static void Mailbox_DoMailMoveToBag(u8 taskId)
     else
     {
         DisplayItemMessageOnField(taskId, gOtherText_MailWasReturned, Mailbox_DrawMailMenuAndDoProcessInput, 0);
-        ClearMailStruct(mail);
+        ClearMail(mail);
         Mailbox_CompactMailList();
 
         eMailboxInfo.count--;

@@ -2,7 +2,7 @@
 #include "item_menu.h"
 #include "constants/items.h"
 #include "link.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "main.h"
 #include "constants/maps.h"
 #include "menu.h"

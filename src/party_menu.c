@@ -18,7 +18,7 @@
 #include "item_use.h"
 #include "item_menu.h"
 #include "link.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "main.h"
 #include "menu.h"
 #include "menu_helpers.h"
@@ -2912,7 +2912,7 @@ bool8 PartyMenuUpdateMonHeldItem(struct Pokemon *pkmn, u16 item)
 
     if (ItemIsMail(item) == TRUE)
     {
-        if (GiveMailToMon(pkmn, item) == 0xFF)
+        if (GiveMailToMonByItemId(pkmn, item) == MAIL_NONE)
             return TRUE;
         gUnknown_0202E8F4 = 2;
     }
@@ -3043,7 +3043,7 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func)
 {
     u32 var1;
     u16 currentItem;
-    struct MailStruct *mail;
+    struct Mail *mail;
 
     gTasks[taskId].func = TaskDummy;
     sub_806E8D0(taskId, 0, func);
@@ -3059,8 +3059,8 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func)
     }
     else
     {
-        GiveMailToMon2(gPartyMenu.pokemon, mail);
-        ClearMailStruct(mail);
+        GiveMailToMon(gPartyMenu.pokemon, mail);
+        ClearMail(mail);
         DisplayPartyMenuMessage(gOtherText_MailTransferredMailbox, 1);
         CreateTask(party_menu_link_mon_held_item_object, 5);
     }
@@ -3163,7 +3163,7 @@ void Task_TakeHeldMail(u8 taskId)
     if (selection == 0)
     {
         Menu_EraseWindowRect(23, 8, 29, 13);
-        if (TakeMailFromMon2(gPartyMenu.pokemon) != 0xFF)
+        if (TakeMailFromMonAndSave(gPartyMenu.pokemon) != MAIL_NONE)
             DisplayPartyMenuMessage(gOtherText_MailWasSent, 0);
         else
             DisplayPartyMenuMessage(gOtherText_MailboxIsFull, 0);

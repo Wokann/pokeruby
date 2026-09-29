@@ -2,6 +2,7 @@
 #define GUARD_CONSTANTS_ITEMS_H
 
 #define ITEM_NONE 0
+#define MAIL_NONE 0xFF
 
 // Balls
 #define ITEM_MASTER_BALL 1

@@ -8,7 +8,7 @@
 #include "start_menu.h"
 #include "mystery_event_script.h"
 #include "berry.h"
-#include "mail_data.h"
+#include "mail.h"
 
 #if DEBUG
 const u8 Str_842E238[] = DTR("タマゴ", "EGG");
@@ -174,10 +174,10 @@ void debug_sub_813C638(struct Pokemon * mon, u16 species, u8 level, u16 itemId)
     SetMonData(mon, MON_DATA_HELD_ITEM, &_itemId);
 }
 
-void debug_sub_813C6AC(struct Pokemon *mon, struct MailStruct *mail)
+void debug_sub_813C6AC(struct Pokemon *mon, struct Mail *mail)
 {
     u16 itemId;
-    ClearMailStruct(mail);
+    ClearMail(mail);
     itemId = GetMonData(mon, MON_DATA_HELD_ITEM);
     if (ItemIsMail(itemId))
     {
@@ -207,7 +207,7 @@ extern u8 gUnknown_Debug_845E4CB[];
 
 size_t debug_sub_813C740(u8 * dest)
 {
-    struct MailStruct mail;
+    struct Mail mail;
     u8 * src = gUnknown_Debug_845E443;
     u8 * end = gUnknown_Debug_845E443End;
     struct Pokemon *mon = gEnemyParty;
@@ -231,14 +231,14 @@ size_t debug_sub_813C740(u8 * dest)
 
     memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct MailStruct));
+    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
 
     return size;
 }
 
 size_t debug_sub_813C810(u8 * dest)
 {
-    struct MailStruct mail;
+    struct Mail mail;
     u8 * src = gUnknown_Debug_845E443;
     u8 * end = gUnknown_Debug_845E443End;
     struct Pokemon *mon = gEnemyParty;
@@ -250,7 +250,7 @@ size_t debug_sub_813C810(u8 * dest)
 
     memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct MailStruct));
+    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
 
     debug_sub_812620C(dest, src);
 
@@ -259,7 +259,7 @@ size_t debug_sub_813C810(u8 * dest)
 
 size_t debug_sub_813C888(u8 * dest)
 {
-    struct MailStruct mail;
+    struct Mail mail;
     u8 * src = gUnknown_Debug_845E443;
     u8 * end = gUnknown_Debug_845E443End;
     struct Pokemon *mon = gEnemyParty;
@@ -272,7 +272,7 @@ size_t debug_sub_813C888(u8 * dest)
 
     memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct MailStruct));
+    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
 
     debug_sub_812620C(dest, src);
 

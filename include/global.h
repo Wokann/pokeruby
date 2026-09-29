@@ -458,10 +458,10 @@ typedef union TVShow
     struct TVShowMassOutbreak massOutbreak;
 } TVShow;
 
-struct MailStruct
+struct Mail
 {
-    /*0x00*/ u16 words[9];
-    /*0x12*/ u8 playerName[8];
+    /*0x00*/ u16 words[MAIL_WORDS_COUNT];
+    /*0x12*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
     /*0x1A*/ u8 trainerId[4];
     /*0x1E*/ u16 species;
     /*0x20*/ u16 itemId;
@@ -562,7 +562,7 @@ struct GabbyAndTyData
 
 struct DayCareMail
 {
-    /*0x00*/ struct MailStruct message;
+    /*0x00*/ struct Mail message;
     /*0x24*/ u8 names[19];
 };
 
@@ -740,7 +740,7 @@ struct SaveBlock1 /* 0x02025734 */
         /*0x2B34*/ u16 unk2B34[6];
         /*0x2B40*/ u16 unk2B40[6];
     } easyChats;
-    /*0x2B4C*/ struct MailStruct mail[MAIL_COUNT];
+    /*0x2B4C*/ struct Mail mail[MAIL_COUNT];
     /*0x2D8C*/ u8 unlockedTrendySayings[4];  // Bitfield for unlockable Easy Chat words in EC_GROUP_TRENDY_SAYING.
     /*0x2D90*/ u8 filler_2D90[0x4];
     /*0x2D94*/ union OldMan oldMan;

@@ -1,5 +1,6 @@
 #include "global.h"
-#include "mail_data.h"
+#include "mail.h"
+#include "constants/easy_chat.h"
 #include "constants/items.h"
 #include "international_string_util.h"
 #include "pokemon.h"
@@ -7,119 +8,119 @@
 #include "constants/species.h"
 #include "text.h"
 
-void ClearMailData(void)
+#define UNOWN_OFFSET 30000
+
+void ClearAllMail(void)
 {
     u8 i;
 
-    for (i = 0; i < 16; i++)
-        ClearMailStruct(&gSaveBlock1.mail[i]);
+    for (i = 0; i < MAIL_COUNT; i++)
+        ClearMail(&gSaveBlock1.mail[i]);
 }
 
-void ClearMailStruct(struct MailStruct *mail)
+void ClearMail(struct Mail *mail)
 {
-    int i;
+    s32 i;
 
-    for (i = 0; i < 9; i++)
-        mail->words[i] = -1;
+    for (i = 0; i < MAIL_WORDS_COUNT; i++)
+        mail->words[i] = EC_EMPTY_WORD;
 
-    for (i = 0; i < 8; i++)
-        mail->playerName[i] = -1;
+    for (i = 0; i < PLAYER_NAME_LENGTH + 1; i++)
+        mail->playerName[i] = EOS;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < TRAINER_ID_LENGTH; i++)
         mail->trainerId[i] = 0;
 
-    mail->species = 1;
-    mail->itemId = 0;
+    mail->species = SPECIES_BULBASAUR;
+    mail->itemId = ITEM_NONE;
 }
 
 bool8 MonHasMail(struct Pokemon *mon)
 {
     u16 heldItem = GetMonData(mon, MON_DATA_HELD_ITEM);
-    if (ItemIsMail(heldItem) && GetMonData(mon, MON_DATA_MAIL) != 0xFF)
+    if (ItemIsMail(heldItem) && GetMonData(mon, MON_DATA_MAIL) != MAIL_NONE)
         return TRUE;
     else
         return FALSE;
 }
 
-u8 GiveMailToMon(struct Pokemon *mon, u16 itemId)
+u8 GiveMailToMonByItemId(struct Pokemon *mon, u16 itemId)
 {
-    u16 _itemId;
+    u16 mailItemId;
     u8 heldItem[2];
-    u8 id;
+    u8 mailId;
     u8 i;
     u16 species;
     u32 personality;
 
-    _itemId = itemId;
-    heldItem[0] = _itemId;
-    heldItem[1] = _itemId >> 8;
-    id = 0;
+    mailItemId = itemId;
+    heldItem[0] = mailItemId;
+    heldItem[1] = mailItemId >> 8;
 
-    while (id < 6)
+    for (mailId = 0; mailId < PARTY_SIZE; mailId++)
     {
-        if (gSaveBlock1.mail[id].itemId == 0)
+        if (gSaveBlock1.mail[mailId].itemId == ITEM_NONE)
         {
-            for (i = 0; i < 9; i++)
-                gSaveBlock1.mail[id].words[i] = -1;
+            for (i = 0; i < MAIL_WORDS_COUNT; i++)
+                gSaveBlock1.mail[mailId].words[i] = EC_EMPTY_WORD;
 
-            for (i = 0; i < 7; i++)
-                gSaveBlock1.mail[id].playerName[i] = gSaveBlock2.playerName[i];
-            gSaveBlock1.mail[id].playerName[i] = EOS;
-            PadNameString(gSaveBlock1.mail[id].playerName, 0);
+            for (i = 0; i < PLAYER_NAME_LENGTH; i++)
+                gSaveBlock1.mail[mailId].playerName[i] = gSaveBlock2.playerName[i];
+            gSaveBlock1.mail[mailId].playerName[i] = EOS;
+            PadNameString(gSaveBlock1.mail[mailId].playerName, CHAR_SPACE);
 
-            for (i = 0; i < 4; i++)
-                gSaveBlock1.mail[id].trainerId[i] = gSaveBlock2.playerTrainerId[i];
+            for (i = 0; i < TRAINER_ID_LENGTH; i++)
+                gSaveBlock1.mail[mailId].trainerId[i] = gSaveBlock2.playerTrainerId[i];
 
             species = GetBoxMonData(&mon->box, MON_DATA_SPECIES);
             personality = GetBoxMonData(&mon->box, MON_DATA_PERSONALITY);
-            gSaveBlock1.mail[id].species = SpeciesToMailSpecies(species, personality);
-            gSaveBlock1.mail[id].itemId = _itemId;
-            SetMonData(mon, MON_DATA_MAIL, &id);
+            gSaveBlock1.mail[mailId].species = SpeciesToMailSpecies(species, personality);
+            gSaveBlock1.mail[mailId].itemId = mailItemId;
+            SetMonData(mon, MON_DATA_MAIL, &mailId);
             SetMonData(mon, MON_DATA_HELD_ITEM, heldItem);
-            return id;
+            return mailId;
         }
-        id++;
     }
 
-    return -1;
+    return MAIL_NONE;
 }
 
 u16 SpeciesToMailSpecies(u16 species, u32 personality)
 {
     if (species == SPECIES_UNOWN)
     {
-        int mailSpecies = GetUnownLetterByPersonality(personality) + 30000;
+        u32 mailSpecies = GetUnownLetterByPersonality(personality) + UNOWN_OFFSET;
         return mailSpecies;
     }
 
     return species;
 }
 
-u16 MailSpeciesToSpecies(u16 a1, u16 *a2)
+u16 MailSpeciesToSpecies(u16 mailSpecies, u16 *buffer)
 {
     u16 result;
 
-    if (a1 >= 30000 && a1 < (30000 + UNOWN_FORM_COUNT))
+    if (mailSpecies >= UNOWN_OFFSET && mailSpecies < UNOWN_OFFSET + NUM_UNOWN_FORMS)
     {
         result = SPECIES_UNOWN;
-        *a2 = a1 - 30000;
+        *buffer = mailSpecies - UNOWN_OFFSET;
     }
     else
     {
-        result = a1;
+        result = mailSpecies;
     }
 
     return result;
 }
 
-u8 GiveMailToMon2(struct Pokemon *mon, struct MailStruct *mail)
+u8 GiveMailToMon(struct Pokemon *mon, struct Mail *mail)
 {
     u8 heldItem[2];
     u16 itemId = mail->itemId;
-    u8 mailId = GiveMailToMon(mon, itemId);
+    u8 mailId = GiveMailToMonByItemId(mon, itemId);
 
-    if (mailId == 0xFF)
-        return 0xFF;
+    if (mailId == MAIL_NONE)
+        return MAIL_NONE;
 
     gSaveBlock1.mail[mailId] = *mail;
 
@@ -133,9 +134,9 @@ u8 GiveMailToMon2(struct Pokemon *mon, struct MailStruct *mail)
     return mailId;
 }
 
-int unref_sub_80A2DF4(void)
+static bool32 UNUSED DummyMailFunc(void)
 {
-    return 0;
+    return FALSE;
 }
 
 void TakeMailFromMon(struct Pokemon *mon)
@@ -146,43 +147,43 @@ void TakeMailFromMon(struct Pokemon *mon)
     if (MonHasMail(mon))
     {
         mailId = GetMonData(mon, MON_DATA_MAIL);
-        gSaveBlock1.mail[mailId].itemId = 0;
-        mailId = 0xFF;
-        heldItem[0] = 0;
-        heldItem[1] = 0;
+        gSaveBlock1.mail[mailId].itemId = ITEM_NONE;
+        mailId = MAIL_NONE;
+        heldItem[0] = ITEM_NONE;
+        heldItem[1] = ITEM_NONE << 8;
         SetMonData(mon, MON_DATA_MAIL, &mailId);
         SetMonData(mon, MON_DATA_HELD_ITEM, heldItem);
     }
 }
 
-void DeleteMail(u8 mailId)
+void ClearMailItemId(u8 mailId)
 {
-    gSaveBlock1.mail[mailId].itemId = 0;
+    gSaveBlock1.mail[mailId].itemId = ITEM_NONE;
 }
 
-u8 TakeMailFromMon2(struct Pokemon *mon)
+u8 TakeMailFromMonAndSave(struct Pokemon *mon)
 {
     u8 i;
     u8 newHeldItem[2];
     u8 newMailId;
 
-    newHeldItem[0] = 0;
-    newHeldItem[1] = 0;
-    newMailId = 0xFF;
+    newHeldItem[0] = ITEM_NONE;
+    newHeldItem[1] = ITEM_NONE << 8;
+    newMailId = MAIL_NONE;
 
-    for (i = 6; i < 16; i++)
+    for (i = PARTY_SIZE; i < MAIL_COUNT; i++)
     {
-        if (gSaveBlock1.mail[i].itemId == 0)
+        if (gSaveBlock1.mail[i].itemId == ITEM_NONE)
         {
-            memcpy(&gSaveBlock1.mail[i], &gSaveBlock1.mail[GetMonData(mon, MON_DATA_MAIL)], sizeof(struct MailStruct));
-            gSaveBlock1.mail[GetMonData(mon, MON_DATA_MAIL)].itemId = 0;
+            memcpy(&gSaveBlock1.mail[i], &gSaveBlock1.mail[GetMonData(mon, MON_DATA_MAIL)], sizeof(struct Mail));
+            gSaveBlock1.mail[GetMonData(mon, MON_DATA_MAIL)].itemId = ITEM_NONE;
             SetMonData(mon, MON_DATA_MAIL, &newMailId);
             SetMonData(mon, MON_DATA_HELD_ITEM, newHeldItem);
             return i;
         }
     }
 
-    return 0xFF;
+    return MAIL_NONE;
 }
 
 bool8 ItemIsMail(u16 itemId)

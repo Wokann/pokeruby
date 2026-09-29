@@ -3,7 +3,7 @@
 #include "event_data.h"
 #include "field_effect.h"
 #include "constants/items.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "main.h"
 #include "menu.h"
 #include "constants/moves.h"
@@ -217,7 +217,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DayCare * daycare, u8 slot)
     gPlayerParty[PARTY_SIZE - 1] = pokemon;
     if (daycare->misc.mail[slot].message.itemId)
     {
-        GiveMailToMon2(&gPlayerParty[PARTY_SIZE - 1], &daycare->misc.mail[slot].message);
+        GiveMailToMon(&gPlayerParty[PARTY_SIZE - 1], &daycare->misc.mail[slot].message);
         ClearDaycareMonMail(&daycare->misc.mail[slot]);
     }
 
@@ -307,7 +307,7 @@ static void ClearDaycareMonMail(struct DayCareMail *mail)
     zero = 0;
     names = &mail->names[18];
     do *names-- = zero; while ((s32)names >= (s32)names2);
-    ClearMailStruct(&mail->message);
+    ClearMail(&mail->message);
 }
 
 void ClearAllDaycareData(struct DayCare *daycare)

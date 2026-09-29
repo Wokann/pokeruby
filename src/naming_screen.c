@@ -28,7 +28,7 @@
 
 enum
 {
-    PLAYER_NAME_LENGTH = 7,
+    NAMING_SCREEN_PLAYER_NAME_LENGTH = 7,
     BOX_NAME_LENGTH = 8,
 };
 
@@ -2062,7 +2062,7 @@ enum
 static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
 {
     .copyExistingString = FALSE,
-    .maxChars = PLAYER_NAME_LENGTH,
+    .maxChars = NAMING_SCREEN_PLAYER_NAME_LENGTH,
     .iconFunction = ICON_PLAYER,
     .addGenderIcon = FALSE,
     .initialPage = KBPAGE_LETTERS_UPPER,

@@ -195,12 +195,12 @@ u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
 
 static void Task_ReadMailFromBag(u8 taskId)
 {
-    struct MailStruct mailStruct;
+    struct Mail mail;
 
     if (!gPaletteFade.active)
     {
-        mailStruct.itemId = gSpecialVar_ItemId;
-        ReadMail(&mailStruct, CB2_ReturnToBagMenuAfterMail, 0);
+        mail.itemId = gSpecialVar_ItemId;
+        ReadMail(&mail, CB2_ReturnToBagMenuAfterMail, 0);
         DestroyTask(taskId);
     }
 }

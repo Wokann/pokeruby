@@ -45,7 +45,7 @@
 #define BERRY_TREES_COUNT   128
 #define FLAGS_COUNT         288
 #define VARS_COUNT          256
-#define MAIL_COUNT          16
+#define MAIL_COUNT          (10 + PARTY_SIZE)
 #define SECRET_BASES_COUNT  20
 #define TV_SHOWS_COUNT      25
 #define POKE_NEWS_COUNT     16
@@ -62,6 +62,8 @@
 #define MAX_REMATCH_ENTRIES 100 
 
 #define TRAINER_ID_LENGTH 4
+#define PLAYER_NAME_LENGTH 7
+#define MAIL_WORDS_COUNT  9
 #define MAX_MON_MOVES 4
 #define CONTESTANT_COUNT 4
 #define GIFT_RIBBONS_COUNT 11

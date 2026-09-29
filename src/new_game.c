@@ -14,7 +14,7 @@
 #include "field_specials.h"
 #include "item_menu.h"
 #include "lottery_corner.h"
-#include "mail_data.h"
+#include "mail.h"
 #include "mauville_old_man.h"
 #include "overworld.h"
 #include "play_time.h"
@@ -169,7 +169,7 @@ void NewGameInitData(void)
     ResetPokedex();
     ZeroBattleTowerData();
     memset(&gSaveBlock1, 0, sizeof(gSaveBlock1));
-    ClearMailData();
+    ClearAllMail();
     gSaveBlock2.specialSaveWarp = 0;
     InitPlayerTrainerId();
     PlayTimeCounter_Reset();

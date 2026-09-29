@@ -6,7 +6,6 @@
 #include "constants/species.h"
 #include "field_fadetransition.h"
 #include "graphics.h"
-#include "mail_data.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "international_string_util.h"
@@ -47,7 +46,7 @@ struct MailRead
     /* 0x0D8 */ u8 playerName[20];
     /* 0x0EC */ MainCallback exitCallback;
     /* 0x0F0 */ MainCallback callback;
-    /* 0x0F4 */ struct MailStruct *mail;
+    /* 0x0F4 */ struct Mail *mail;
     /* 0x0F8 */ bool8 hasText;
     /* 0x0F9 */ u8 signatureWidth;
     /* 0x0FA */ u8 mailType;
@@ -318,7 +317,7 @@ extern u16 gSpecialVar_0x8006;
 static u8 sDebugMailReadActive;
 #endif
 
-void ReadMail(struct MailStruct *mail, MainCallback exitCallback, bool8 hasText)
+void ReadMail(struct Mail *mail, MainCallback exitCallback, bool8 hasText)
 {
     u16 speciesBuffer[2];
     u16 species;
