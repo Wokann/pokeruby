@@ -1323,23 +1323,23 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
 #undef tState
 #undef tExitAction
 
-const u16 AreaMarkerPalette[];
-const u8 AreaMarkerTiles[];
+static const u16 sAreaMarkerPalette[];
+static const u8 sAreaMarkerTiles[];
 
-const struct SpriteSheet sAreaMarkerSpriteSheet = {
-    AreaMarkerTiles, 0x80, TAG_AREA_MARKER
+static const struct SpriteSheet sAreaMarkerSpriteSheet = {
+    sAreaMarkerTiles, 0x80, TAG_AREA_MARKER
 };
 
-const struct SpritePalette sAreaMarkerSpritePalette = {
-    AreaMarkerPalette, TAG_AREA_MARKER
+static const struct SpritePalette sAreaMarkerSpritePalette = {
+    sAreaMarkerPalette, TAG_AREA_MARKER
 };
 
-const struct OamData sAreaMarkerOamData = {
+static const struct OamData sAreaMarkerOamData = {
     .size = 1,
     .priority = 1
 };
 
-const struct SpriteTemplate sAreaMarkerSpriteTemplate = {
+static const struct SpriteTemplate sAreaMarkerSpriteTemplate = {
     TAG_AREA_MARKER,
     TAG_AREA_MARKER,
     &sAreaMarkerOamData,
@@ -1349,8 +1349,8 @@ const struct SpriteTemplate sAreaMarkerSpriteTemplate = {
     SpriteCallbackDummy
 };
 
-const u16 AreaMarkerPalette[] = INCBIN_U16("graphics/pokedex/area_marker.gbapal");
-const u8 AreaMarkerTiles[] = INCBIN_U8("graphics/pokedex/area_marker.4bpp");
+static const u16 sAreaMarkerPalette[] = INCBIN_U16("graphics/pokedex/area_marker.gbapal");
+static const u8 sAreaMarkerTiles[] = INCBIN_U8("graphics/pokedex/area_marker.4bpp");
 
 static void CreateAreaMarkerSprites(void)
 {
@@ -1401,23 +1401,23 @@ static void DestroyAreaScreenSprites(void)
     }
 }
 
-const struct SpritePalette sAreaUnknownSpritePalette = {gAreaUnknownPalette, TAG_AREA_UNKNOWN};
+static const struct SpritePalette sAreaUnknownSpritePalette = {gPokedexAreaScreenAreaUnknown_Pal, TAG_AREA_UNKNOWN};
 
 static void LoadAreaUnknownGraphics(void)
 {
     struct SpriteSheet spriteSheet = {sPokedexAreaScreen->areaUnknownGraphicsBuffer, 0x600, TAG_AREA_UNKNOWN};
 
-    LZ77UnCompWram(gAreaUnknownTiles, sPokedexAreaScreen->areaUnknownGraphicsBuffer);
+    LZ77UnCompWram(gPokedexAreaScreenAreaUnknown_Gfx, sPokedexAreaScreen->areaUnknownGraphicsBuffer);
     LoadSpriteSheet(&spriteSheet);
     LoadSpritePalette(&sAreaUnknownSpritePalette);
 }
 
-const struct OamData sAreaUnknownOamData = {
+static const struct OamData sAreaUnknownOamData = {
     .size = 2,
     .priority = 1
 };
 
-const struct SpriteTemplate sAreaUnknownSpriteTemplate = {
+static const struct SpriteTemplate sAreaUnknownSpriteTemplate = {
     TAG_AREA_UNKNOWN,
     TAG_AREA_UNKNOWN,
     &sAreaUnknownOamData,

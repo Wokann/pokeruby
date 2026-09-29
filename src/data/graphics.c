@@ -1036,8 +1036,8 @@ const u8 gPokedexInterface_Gfx[] = INCBIN_U8("graphics/pokedex/menu2.4bpp.lz");
 const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/menu1.gbapal");
 const u16 gPokedexCaughtScreen_Pal[] = INCBIN_U16("graphics/pokedex/menu2.gbapal");
 
-const u8 gAreaUnknownTiles[] = INCBIN_U8("graphics/pokedex/area_unknown.4bpp.lz");
-const u16 gAreaUnknownPalette[] = INCBIN_U16("graphics/pokedex/area_unknown.gbapal");
+const u8 gPokedexAreaScreenAreaUnknown_Gfx[] = INCBIN_U8("graphics/pokedex/area_unknown.4bpp.lz");
+const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCBIN_U16("graphics/pokedex/area_unknown.gbapal");
 
 const u8 gPokedexSearchMenu_Gfx[] = INCBIN_U8("graphics/pokedex/menu_search.4bpp.lz");
 const u16 gPokedexSearchMenu_Pal[] = INCBIN_U16("graphics/pokedex/menu3.gbapal");
