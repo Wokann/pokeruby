@@ -196,10 +196,11 @@ SYMBOL(gPokemonItemUseCallback, 4)
 SYMBOL(gMenuCallback, 4)
 
 #if DEBUG
-SYMBOL(gUnknown_Debug_03004BD0, 4)
-// TODO: see if this is in rev1+
 #if (ENGLISH && REVISION == 0)
-SYMBOL(gUnknown_Debug_Murakawa2, 4)
+SYMBOL(gDebugTextModeDisplayEnabled, 4)
+SYMBOL(gDebugTextModeDisplaySuspended, 4)
+#else
+SYMBOL(gDebugForceFlashError, 4)
 #endif
 #endif
 

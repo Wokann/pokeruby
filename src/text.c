@@ -2110,8 +2110,8 @@ static u8 PrintNextChar(struct Window *win)
 
 // TODO: see if this is in rev1+
 #if (DEBUG && ENGLISH && REVISION == 0)
-    // Code related to the Murakawa task.
-    if ((gUnknown_Debug_03004BD0) && (!gUnknown_Debug_Murakawa2))
+    // Debug text-mode display test.
+    if (gDebugTextModeDisplayEnabled && !gDebugTextModeDisplaySuspended)
         c = win->textMode + CHAR_0;
 #endif
     sPrintGlyphFuncs[win->textMode](win, c);

@@ -51,16 +51,11 @@ extern void Debug_SetUpFieldMove_Cut(void);
 extern void Debug_SetUpFieldMove_SecretPower(void);
 
 #if (ENGLISH && REVISION == 0)
-#define TYPE u8
+u8 gDebugTextModeDisplayEnabled;
+u8 gDebugTextModeDisplaySuspended;
 #else
-#define TYPE u32
+u32 gDebugForceFlashError;
 #endif
-
-TYPE gUnknown_Debug_03004BD0;
-#if (ENGLISH && REVISION == 0)
-TYPE gUnknown_Debug_Murakawa2;
-#endif
-#undef TYPE
 
 void debug_sub_8076BB4(u8);
 void DebugMenu_DisplayBuildDate(u8 x, u8 y);
@@ -742,7 +737,7 @@ void DebugMenu_8077048(void)
 u8 DebugMenu_807706C(void)
 {
 #if (ENGLISH && REVISION == 0)
-    gUnknown_Debug_Murakawa2 = 1;
+    gDebugTextModeDisplaySuspended = TRUE;
 #endif
     InitMenuWindow(&gMenuTextWindowTemplate);
     DebugMenu_8077004();
@@ -794,7 +789,7 @@ u8 DebugMenu_807709C(void)
 // TODO: see if this is in rev1+
 #if (ENGLISH && REVISION == 0)
         if (actionRet == 1)
-            gUnknown_Debug_Murakawa2 = 0;
+            gDebugTextModeDisplaySuspended = FALSE;
 #endif
         return actionRet;
     }
@@ -803,7 +798,7 @@ u8 DebugMenu_807709C(void)
         CloseMenu();
 // TODO: see if this is in rev1+
 #if (ENGLISH && REVISION == 0)
-        gUnknown_Debug_Murakawa2 = 0;
+        gDebugTextModeDisplaySuspended = FALSE;
 #endif
         return TRUE;
     }
@@ -2700,9 +2695,9 @@ void DebugMenu_8079058(u8 taskId)
     {
         case 0:
 #if (ENGLISH && REVISION == 0)
-            gUnknown_Debug_Murakawa2 = 1;
+            gDebugTextModeDisplaySuspended = TRUE;
 #else
-            gUnknown_Debug_03004BD0 = 0;
+            gDebugForceFlashError = FALSE;
 #endif
             Menu_DisplayDialogueFrame();
             gTasks[taskId].data[0]++;
@@ -2718,14 +2713,22 @@ void DebugMenu_8079058(u8 taskId)
                 case -2:
                     return;
                 case 0:
-                    gUnknown_Debug_03004BD0 = 1;
+#if (ENGLISH && REVISION == 0)
+                    gDebugTextModeDisplayEnabled = TRUE;
+#else
+                    gDebugForceFlashError = TRUE;
+#endif
                     break;
                 default:
-                    gUnknown_Debug_03004BD0 = 0;
+#if (ENGLISH && REVISION == 0)
+                    gDebugTextModeDisplayEnabled = FALSE;
+#else
+                    gDebugForceFlashError = FALSE;
+#endif
                     break;
             }
 #if (ENGLISH && REVISION == 0)
-            gUnknown_Debug_Murakawa2 = 0;
+            gDebugTextModeDisplaySuspended = FALSE;
 #endif
             Menu_EraseScreen();
             UnlockPlayerFieldControls();

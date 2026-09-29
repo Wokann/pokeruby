@@ -739,7 +739,7 @@ u8 HandleSavingData(u8 saveType)
 }
 
 #if (DEBUG && GERMAN)
-extern u32 gUnknown_Debug_03004BD0;
+extern u32 gDebugForceFlashError;
 #endif
 
 u8 TrySavingData(u8 saveType) // TrySave
@@ -750,7 +750,7 @@ u8 TrySavingData(u8 saveType) // TrySave
     HandleSavingData(saveType);
     if (!gDamagedSaveSectors
 #if (DEBUG && GERMAN)
-        && gUnknown_Debug_03004BD0 == 0
+        && gDebugForceFlashError == FALSE
 #endif
         )
         return SAVE_STATUS_OK;

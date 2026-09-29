@@ -15,18 +15,11 @@ bool8 debug_sub_8075C30(void);
 #if DEBUG
 
 #if (ENGLISH && REVISION == 0)
-#define TYPE u8
+extern u8 gDebugTextModeDisplayEnabled;
+extern u8 gDebugTextModeDisplaySuspended;
 #else
-#define TYPE u32
+extern u32 gDebugForceFlashError;
 #endif
-
-extern TYPE gUnknown_Debug_03004BD0;
-// TODO: see if this is in rev1+
-#if (ENGLISH && REVISION == 0)
-extern TYPE gUnknown_Debug_Murakawa2;
-#endif
-
-#undef TYPE
 #endif // DEBUG
 
 #endif // GUARD_START_MENU_H

@@ -32,7 +32,9 @@ enum
 static EWRAM_DATA u16 sSaveFailedType = 0;
 static EWRAM_DATA u16 sClockInfo[9] = {0};
 
-extern u32 gUnknown_Debug_03004BD0;
+#if (DEBUG && !(ENGLISH && REVISION == 0))
+extern u32 gDebugForceFlashError;
+#endif
 extern u32 gDamagedSaveSectors;
 extern u32 gGameContinueCallback;
 
@@ -162,7 +164,7 @@ static void CB2_WipeSave(void)
     sClockInfo[CLOCK_RUNNING] = TRUE;
 
 #if (DEBUG && !(ENGLISH && REVISION == 0))
-	if (gUnknown_Debug_03004BD0 != 0)
+	if (gDebugForceFlashError != FALSE)
 		gDamagedSaveSectors = 1;
 #endif
 
@@ -286,7 +288,7 @@ static bool8 VerifySectorWipe(u16 sector)
 #if (DEBUG && !(ENGLISH && REVISION == 0))  // Don't verify the sector wipe?
     for (i = 0; i < 0x400; i++, ptr++)
 		;
-    return gUnknown_Debug_03004BD0;
+    return gDebugForceFlashError;
 #else
 	for (i = 0; i < 0x400; i++, ptr++)
         if (*ptr != 0)
