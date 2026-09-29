@@ -2775,10 +2775,10 @@ void PartyMenuDoDrawHPBar(u8 monIndex, u8 menuLayout, u16 currentHP, u16 maxHP)
     u8 hpBarLevel;
     u16 *vramPtr;
     int var = -32768;
-    struct BattleInterfaceStruct1 battleInterface;
-    battleInterface.unk0 = maxHP;
-    battleInterface.unk4 = currentHP;
-    battleInterface.unk8 = 0;
+    struct HealthBarInfo battleInterface;
+    battleInterface.maxValue = maxHP;
+    battleInterface.oldValue = currentHP;
+    battleInterface.receivedValue = 0;
 
     hpBarLevel = GetHPBarLevel(currentHP, maxHP);
     if (hpBarLevel > 2)
@@ -2791,7 +2791,7 @@ void PartyMenuDoDrawHPBar(u8 monIndex, u8 menuLayout, u16 currentHP, u16 maxHP)
     battleInterface.unk10 = 0x100;
 
     vramPtr = gUnknown_08376858[menuLayout][monIndex];
-    sub_80460C8(&battleInterface, &var, vramPtr, 0);
+    UpdateHealthBar(&battleInterface, &var, vramPtr, 0);
 
     vramPtr -= 2;
 
@@ -3465,7 +3465,7 @@ bool8 IsHMMove(u16 move)
     return FALSE;
 }
 
-s16 sub_806F7E8(u8 taskId, struct BattleInterfaceStruct1 *b, s8 c)
+s16 sub_806F7E8(u8 taskId, struct HealthBarInfo *b, s8 c)
 {
     s16 *taskData;
     u8 hpBarLevel;
@@ -3473,11 +3473,11 @@ s16 sub_806F7E8(u8 taskId, struct BattleInterfaceStruct1 *b, s8 c)
 
     taskData = gTasks[taskId].data;
 
-    b->unk0 = taskData[10];
-    b->unk4 = taskData[11];
-    b->unk8 = taskData[12] * c;
+    b->maxValue = taskData[10];
+    b->oldValue = taskData[11];
+    b->receivedValue = taskData[12] * c;
     b->unk10 = 0x100;
-    hpBarLevel = GetHPBarLevel(ePartyMenu2.pmUnk282, b->unk0);
+    hpBarLevel = GetHPBarLevel(ePartyMenu2.pmUnk282, b->maxValue);
     if (hpBarLevel > 2)
         b->unkC_0 = 4;
     if (hpBarLevel == 2)
@@ -3485,22 +3485,22 @@ s16 sub_806F7E8(u8 taskId, struct BattleInterfaceStruct1 *b, s8 c)
     if (hpBarLevel < 2)
         b->unkC_0 = 6;
     vramPtr = gUnknown_08376858[IsDoubleBattle()][gPartyMenu.primarySelectedMonIndex];
-    return sub_80460C8(b, (int *)&gPartyMenu.unkC, vramPtr, 0);
+    return UpdateHealthBar(b, (int *)&gPartyMenu.unkC, vramPtr, 0);
 }
 
 void sub_806F8AC(u8 taskId)
 {
-    struct BattleInterfaceStruct1 sp0;
+    struct HealthBarInfo sp0;
     u16 sp14;
 
     ePartyMenu2.pmUnk282 = sub_806F7E8(taskId, &sp0, -1);
     if (ePartyMenu2.pmUnk282 == -1)
     {
         gPartyMenu.unkC = 0;
-        if (-sp0.unk8 + sp0.unk4 > sp0.unk0)
-            sp14 = sp0.unk0 - sp0.unk4;
+        if (-sp0.receivedValue + sp0.oldValue > sp0.maxValue)
+            sp14 = sp0.maxValue - sp0.oldValue;
         else
-            sp14 = -sp0.unk8;
+            sp14 = -sp0.receivedValue;
         gBattleMoveDamage = -sp14;
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, sp14, 0, 3);
@@ -3512,7 +3512,7 @@ void sub_806F8AC(u8 taskId)
         task_pc_turn_off(&gUnknown_083769A8[IsDoubleBattle() * 12 + gPartyMenu.primarySelectedMonIndex * 2], 7);
         ePartyMenu2.unk261 = 2;
         DisplayPartyMenuMessage(gStringVar4, 1);
-        sp14 += sp0.unk4;
+        sp14 += sp0.oldValue;
         SetMonData(gPartyMenu.pokemon, MON_DATA_HP, &sp14);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
         sub_8032638();
@@ -3520,13 +3520,13 @@ void sub_806F8AC(u8 taskId)
     }
     else
     {
-        PartyMenuDoPrintHP(gPartyMenu.primarySelectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmUnk282, sp0.unk0);
+        PartyMenuDoPrintHP(gPartyMenu.primarySelectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmUnk282, sp0.maxValue);
     }
 }
 
 void sub_806FA18(u8 taskId)
 {
-    struct BattleInterfaceStruct1 sp0;
+    struct HealthBarInfo sp0;
 
     ePartyMenu2.pmUnk282 = sub_806F7E8(taskId, &sp0, 1);
     if (ePartyMenu2.pmUnk282 == -1)
@@ -3547,7 +3547,7 @@ void sub_806FA18(u8 taskId)
     }
     else
     {
-        PartyMenuDoPrintHP(gPartyMenu.primarySelectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmUnk282, sp0.unk0);
+        PartyMenuDoPrintHP(gPartyMenu.primarySelectedMonIndex, IsDoubleBattle(), ePartyMenu2.pmUnk282, sp0.maxValue);
     }
 }
 

@@ -3,11 +3,11 @@
 
 #include "battle_controllers.h"  // for struct HpAndStatus
 
-struct BattleInterfaceStruct1
+struct HealthBarInfo
 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
+    s32 maxValue;
+    s32 oldValue;
+    s32 receivedValue;
     u32 unkC_0:5;
     u32 unk10;
 };
@@ -42,20 +42,20 @@ enum
 
 u8 CreateBattlerHealthboxSprites(u8 battler);
 u8 CreateSafariPlayerHealthboxSprites(void);
-void SetBattleBarStruct(u8, u8, u32, u32, u32);
-void SetHealthboxSpriteInvisible(u8);
-void SetHealthboxSpriteVisible(u8);
+void SetBattleBarStruct(u8 battler, u8 healthboxSpriteId, u32 maxValue, u32 oldValue, u32 receivedValue);
+void SetHealthboxSpriteInvisible(u8 healthboxSpriteId);
+void SetHealthboxSpriteVisible(u8 healthboxSpriteId);
 void DummyBattleInterfaceFunc(u8 healthboxSpriteId, bool8 isDoubleBattleBattlerOnly);
-void UpdateOamPriorityInAllHealthboxes(u8);
+void UpdateOamPriorityInAllHealthboxes(u8 priority);
 void InitBattlerHealthboxCoords(u8 battler);
-void sub_804454C(void);
-u8 CreatePartyStatusSummarySprites(u8, const struct HpAndStatus *, u8, u8);
+void SwapHpBarsWithHpText(void);
+u8 CreatePartyStatusSummarySprites(u8 battler, const struct HpAndStatus *hpAndStatus, u8 arg2, u8 arg3);
 void Task_HidePartyStatusSummary(u8 taskId);
-void UpdateHealthboxAttribute(u8, struct Pokemon *, u8);
-s32 MoveBattleBar(u8, u8, u8, u8);
-s16 sub_80460C8(struct BattleInterfaceStruct1 *, int *, u16 *, int);
-u8 GetScaledHPFraction(s16, s16, u8);
-u8 GetHPBarLevel(s16, s16);
-void UpdateHpTextInHealthbox(u8 a, s16 b, u8 c);
+void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId);
+s32 MoveBattleBar(u8 battler, u8 healthboxSpriteId, u8 whichBar, u8 unused);
+s16 UpdateHealthBar(struct HealthBarInfo *barInfo, int *currValue, u16 *dest, int unused);
+u8 GetScaledHPFraction(s16 hp, s16 maxHp, u8 scale);
+u8 GetHPBarLevel(s16 hp, s16 maxHp);
+void UpdateHpTextInHealthbox(u8 healthboxSpriteId, s16 value, u8 maxOrCurrent);
 
 #endif  // GUARD_BATTLE_INTERFACE_H

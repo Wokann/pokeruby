@@ -89,8 +89,8 @@ const struct CompressedSpriteSheet gUnknown_0820A4B4[] =
 
 const struct SpritePalette gUnknown_0820A4D4[] =
 {
-    { gUnknown_08D1212C, 0xD6FF },
-    { gUnknown_08D1214C, 0xD704 },
+    { gBattleInterface_BallStatusBarPal, 0xD6FF },
+    { gBattleInterface_BallDisplayPal, 0xD704 },
 };
 
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);

@@ -294,12 +294,12 @@ const u8 unused_basic_frame_4bpp[] = INCBIN_U8("graphics/unused/basic_frame.4bpp
 const u8 unused_basic_frame_pal[] = INCBIN_U8("graphics/unused/basic_frame.gbapal.lz");
 const u8 unused_basic_frame_bin[] = INCBIN_U8("graphics/unused/basic_frame.bin.lz");
 
-const u8 gUnknown_08D1212C[] = INCBIN_U8("graphics/battle_interface/window.gbapal");
-const u8 gUnknown_08D1214C[] = INCBIN_U8("graphics/battle_interface/hpbar.gbapal");
+const u8 gBattleInterface_BallStatusBarPal[] = INCBIN_U8("graphics/battle_interface/window.gbapal");
+const u8 gBattleInterface_BallDisplayPal[] = INCBIN_U8("graphics/battle_interface/hpbar.gbapal");
 
 const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8("graphics/battle_interface/healthbox_elements.4bpp");
 
-const u8 Tiles_D129AC[] = INCBIN_U8("graphics/battle_interface/ball_display.4bpp");
+const u8 gBattleInterface_BallDisplayGfx[] = INCBIN_U8("graphics/battle_interface/ball_display.4bpp");
 
 // extra stuff
 const u8 unused_gfx_ball_display_unused_extra[] = INCBIN_U8("graphics/battle_interface/ball_display_unused_extra.4bpp");
@@ -830,7 +830,7 @@ const u8 gBattleAnimSpriteSheet_280[] = INCBIN_U8("graphics/battle_anims/sprites
 const u8 gBattleAnimSpritePalette_280[] = INCBIN_U8("graphics/battle_anims/sprites/280.gbapal.lz");
 const u8 gBattleAnimBackgroundImageMuddyWater_Pal[] = INCBIN_U8("graphics/battle_anims/backgrounds/water_muddy.gbapal.lz");
 const u8 gEnemyMonShadow_Gfx[] = INCBIN_U8("graphics/battle_interface/enemy_mon_shadow.4bpp.lz");
-const u8 gBattleGfx_BallStatusBar[] = INCBIN_U8("graphics/battle_interface/bar.4bpp.lz");
+const u8 gBattleInterface_BallStatusBarGfx[] = INCBIN_U8("graphics/battle_interface/bar.4bpp.lz");
 const u8 gMonIcon_Egg[] = INCBIN_U8("graphics/pokemon/egg/icon.4bpp");
 const u8 gBattleAnimBackgroundImage_02[] = INCBIN_U8("graphics/battle_anims/backgrounds/02.4bpp.lz");
 const u8 gBattleAnimBackgroundPalette_02[] = INCBIN_U8("graphics/battle_anims/backgrounds/02.gbapal.lz");

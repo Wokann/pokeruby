@@ -3434,10 +3434,10 @@ extern const u8 gBattleWindowSmall2Gfx[];
 extern const u8 gBattleWindowSmall3Gfx[];
 extern const u8 gBattleWindowLarge2Gfx[];
 extern const u8 gBlankGfxCompressed[];
-extern const u8 gBattleGfx_BallStatusBar[];
-extern const u16 gUnknown_08D1212C[];
-extern const u16 gUnknown_08D1214C[];
-extern const u8 Tiles_D129AC[];
+extern const u8 gBattleInterface_BallStatusBarGfx[];
+extern const u16 gBattleInterface_BallStatusBarPal[];
+extern const u16 gBattleInterface_BallDisplayPal[];
+extern const u8 gBattleInterface_BallDisplayGfx[];
 
 extern const u8 gPokedexAreaScreenAreaUnknown_Gfx[];
 extern const u16 gPokedexAreaScreenAreaUnknown_Pal[];

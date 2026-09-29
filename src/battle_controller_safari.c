@@ -278,7 +278,7 @@ void HandleInputChooseAction(void)
     }
     else if (JOY_NEW(START_BUTTON))
     {
-        sub_804454C();
+        SwapHpBarsWithHpText();
     }
 #endif
 }
