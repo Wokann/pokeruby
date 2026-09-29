@@ -107,9 +107,9 @@ void Task_PrintRouletteEntryMsg(u8);
 #define tWinningSquare   data[12]
 #define tCoins           data[13]
 
-const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/83F86BC.gbapal");
-const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/83F88BC.bin.lz");
-const u8 sWheel_Tilemap[] = INCBIN_U8("graphics/roulette/wheel_map.bin.lz");
+const u16 sWheel_Pal[] = INCBIN_U16("graphics/roulette/wheel.gbapal");
+const u8 sGrid_Tilemap[] = INCBIN_U8("graphics/roulette/grid.bin.lz");
+const u8 sWheel_Tilemap[] = INCBIN_U8("graphics/roulette/wheel.bin.lz");
 
 const struct GridSelection sGridSelections[NUM_GRID_SELECTIONS + 1] =
 {
