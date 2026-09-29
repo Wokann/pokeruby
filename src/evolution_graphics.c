@@ -32,18 +32,20 @@ static void EndOnPreEvoMon(u8 taskId);
 static void EndOnPostEvoMon(u8 taskId);
 static void Task_CycleEvolutionMonSprite_UpdateSize(u8 taskId);
 
+#define TAG_SPARKLE 1001
+
 // const data
-static const u16 sEvoSparklePalette[] = INCBIN_U16("graphics/misc/evo_sparkle.gbapal");
-static const u8 sEvoSparkleTiles[] = INCBIN_U8("graphics/misc/evo_sparkle.4bpp.lz");
+static const u16 sEvoSparkle_Pal[] = INCBIN_U16("graphics/misc/evo_sparkle.gbapal");
+static const u8 sEvoSparkle_Gfx[] = INCBIN_U8("graphics/misc/evo_sparkle.4bpp.lz");
 
 static const struct CompressedSpriteSheet sEvoSparkleSpriteSheets[] =
 {
-    {sEvoSparkleTiles, 0x20, 1001},
+    {sEvoSparkle_Gfx, 0x20, TAG_SPARKLE},
     {NULL, 0, 0}
 };
 static const struct SpritePalette sEvoSparkleSpritePals[] =
 {
-    {sEvoSparklePalette, 1001},
+    {sEvoSparkle_Pal, TAG_SPARKLE},
     {NULL, 0}
 };
 
@@ -77,8 +79,8 @@ static const union AnimCmd *const sSpriteAnimTable_EvoSparkle[] =
 
 static const struct SpriteTemplate sEvoSparkleSpriteTemplate =
 {
-    .tileTag = 1001,
-    .paletteTag = 1001,
+    .tileTag = TAG_SPARKLE,
+    .paletteTag = TAG_SPARKLE,
     .oam = &sOamData_EvoSparkle,
     .anims = sSpriteAnimTable_EvoSparkle,
     .images = NULL,
@@ -93,6 +95,10 @@ static const s16 sEvoSparkleMatrices[] =
     -1, 0x70, 0x1, 0x70, 0x2, 0x50, 0x3, 0x30, 0x4, 0x10
 };
 
+// The last sixteen values are Ruby's unused trailing data and are retained
+// in the same object layout as the original game.
+#define NUM_EVO_SPARKLE_MATRICES 12
+
 // code
 
 static void SpriteCB_Sparkle_Dummy(struct Sprite* sprite)
@@ -103,7 +109,7 @@ static void SpriteCB_Sparkle_Dummy(struct Sprite* sprite)
 static void SetEvoSparklesMatrices(void)
 {
     u16 i;
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < NUM_EVO_SPARKLE_MATRICES; i++)
     {
         SetOamMatrix(20 + i, sEvoSparkleMatrices[i], 0, 0, sEvoSparkleMatrices[i]);
     }
@@ -142,7 +148,7 @@ static void SpriteCB_Sparkle_SpiralUpward(struct Sprite* sprite)
 
 static void CreateSparkle_SpiralUpward(u8 trigIdx)
 {
-    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 88, 0);
+    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, DISPLAY_WIDTH / 2, 88, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].sAmplitude = 48;
@@ -170,7 +176,7 @@ static void SpriteCB_Sparkle_ArcDown(struct Sprite* sprite)
 
 static void CreateSparkle_ArcDown(u8 trigIdx)
 {
-    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 8, 0);
+    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, DISPLAY_WIDTH / 2, 8, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].sAmplitude = 8;
@@ -198,7 +204,7 @@ static void SpriteCB_Sparkle_CircleInward(struct Sprite* sprite)
 
 static void CreateSparkle_CircleInward(u8 trigIdx, u8 speed)
 {
-    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 56, 0);
+    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, DISPLAY_WIDTH / 2, 56, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].sSpeed = speed;
@@ -221,7 +227,7 @@ static void SpriteCB_Sparkle_Spray(struct Sprite* sprite)
         u8 matrixNum;
 
         sprite->y2 = -Sin((u8)(sprite->sTrigIdx), sprite->sAmplitude);
-        sprite->x = 120 + (sprite->sSpeed * sprite->sTimer) / 3;
+        sprite->x = (DISPLAY_WIDTH / 2) + (sprite->sSpeed * sprite->sTimer) / 3;
         sprite->sTrigIdx++;
         matrixNum = 31 - (sprite->sTrigIdx * 12 / 128);
         if (sprite->sTrigIdx > 64)
@@ -244,7 +250,7 @@ static void SpriteCB_Sparkle_Spray(struct Sprite* sprite)
 
 static void CreateSparkle_Spray(u8 id)
 {
-    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, 120, 56, 0);
+    u8 spriteId = CreateSprite(&sEvoSparkleSpriteTemplate, DISPLAY_WIDTH / 2, 56, 0);
     if (spriteId != MAX_SPRITES)
     {
         gSprites[spriteId].sSpeed = 3 - (Random() % 7);
@@ -268,9 +274,8 @@ void LoadEvoSparkleSpriteAndPal(void)
 #undef sTrigIdx
 #undef sTimer
 
-#define tPalNum       data[1]
-#define tSpecies      data[2]
-#define tTimer data[15]
+#define tPalNum data[1]
+#define tTimer  data[15]
 
 u8 EvolutionSparkles_SpiralUpward(u16 palNum)
 {
@@ -389,6 +394,8 @@ static void Task_Sparkles_CircleInward_End(u8 taskId)
     DestroyTask(taskId);
 }
 
+#define tSpecies data[2] // Never read
+
 u8 EvolutionSparkles_SprayAndFlash(u16 species)
 {
     u8 taskId = CreateTask(Task_Sparkles_SprayAndFlash_Init, 0);
@@ -479,8 +486,8 @@ static void Task_Sparkles_SprayAndFlashTrade(u8 taskId)
         gTasks[taskId].func = Task_Sparkles_SprayAndFlash_End;
 }
 
-#undef tTimer
 #undef tPalNum
+#undef tTimer
 #undef tSpecies
 
 static void SpriteCB_EvolutionMonSprite(struct Sprite* sprite)
@@ -496,6 +503,12 @@ static void SpriteCB_EvolutionMonSprite(struct Sprite* sprite)
 #define tScaleSpeed         data[6]
 #define tEvoStopped         data[8]
 
+#define MATRIX_PRE_EVO  30
+#define MATRIX_POST_EVO 31
+
+#define MON_MAX_SCALE 256
+#define MON_MIN_SCALE 16
+
 u8 CycleEvolutionMonSprite(u8 preEvoSpriteId, u8 postEvoSpriteId)
 {
     u16 i;
@@ -509,22 +522,22 @@ u8 CycleEvolutionMonSprite(u8 preEvoSpriteId, u8 postEvoSpriteId)
     taskId = CreateTask(Task_CycleEvolutionMonSprite_Init, 0);
     gTasks[taskId].tPreEvoSpriteId = preEvoSpriteId;
     gTasks[taskId].tPostEvoSpriteId = postEvoSpriteId;
-    gTasks[taskId].tPreEvoScale = 256;
-    gTasks[taskId].tPostEvoScale = 16;
+    gTasks[taskId].tPreEvoScale = MON_MAX_SCALE;
+    gTasks[taskId].tPostEvoScale = MON_MIN_SCALE;
 
     toDiv = 65536;
-    SetOamMatrix(30, 256, 0, 0, 256);
-    SetOamMatrix(31, toDiv / gTasks[taskId].tPostEvoScale, 0, 0, toDiv / gTasks[taskId].tPostEvoScale);
+    SetOamMatrix(MATRIX_PRE_EVO, MON_MAX_SCALE, 0, 0, MON_MAX_SCALE);
+    SetOamMatrix(MATRIX_POST_EVO, toDiv / gTasks[taskId].tPostEvoScale, 0, 0, toDiv / gTasks[taskId].tPostEvoScale);
 
     gSprites[preEvoSpriteId].callback = SpriteCB_EvolutionMonSprite;
     gSprites[preEvoSpriteId].oam.affineMode = 1;
-    gSprites[preEvoSpriteId].oam.matrixNum = 30;
+    gSprites[preEvoSpriteId].oam.matrixNum = MATRIX_PRE_EVO;
     gSprites[preEvoSpriteId].invisible = FALSE;
     CpuSet(monPalette, &gPlttBufferFaded[0x100 + (gSprites[preEvoSpriteId].oam.paletteNum * 16)], 16);
 
     gSprites[postEvoSpriteId].callback = SpriteCB_EvolutionMonSprite;
     gSprites[postEvoSpriteId].oam.affineMode = 1;
-    gSprites[postEvoSpriteId].oam.matrixNum = 31;
+    gSprites[postEvoSpriteId].oam.matrixNum = MATRIX_POST_EVO;
     gSprites[postEvoSpriteId].invisible = FALSE;
     CpuSet(monPalette, &gPlttBufferFaded[0x100 + (gSprites[postEvoSpriteId].oam.paletteNum * 16)], 16);
 
@@ -534,7 +547,7 @@ u8 CycleEvolutionMonSprite(u8 preEvoSpriteId, u8 postEvoSpriteId)
 
 static void Task_CycleEvolutionMonSprite_Init(u8 taskId)
 {
-    gTasks[taskId].tShowingPostEvo = 0;
+    gTasks[taskId].tShowingPostEvo = FALSE;
     gTasks[taskId].tScaleSpeed = 8;
     gTasks[taskId].func = Task_CycleEvolutionMonSprite_TryEnd;
 }
@@ -561,45 +574,45 @@ static void Task_CycleEvolutionMonSprite_UpdateSize(u8 taskId)
     {
         u16 oamMatrixArg;
         u8 numSpritesFinished = 0;
-        if (gTasks[taskId].tShowingPostEvo == 0)
+        if (!gTasks[taskId].tShowingPostEvo)
         {
-            if (gTasks[taskId].tPreEvoScale < 256 - gTasks[taskId].tScaleSpeed)
+            if (gTasks[taskId].tPreEvoScale < MON_MAX_SCALE - gTasks[taskId].tScaleSpeed)
                 gTasks[taskId].tPreEvoScale += gTasks[taskId].tScaleSpeed;
             else
             {
-                gTasks[taskId].tPreEvoScale = 256;
+                gTasks[taskId].tPreEvoScale = MON_MAX_SCALE;
                 numSpritesFinished++;
             }
-            if (gTasks[taskId].tPostEvoScale > 16 + gTasks[taskId].tScaleSpeed)
+            if (gTasks[taskId].tPostEvoScale > MON_MIN_SCALE + gTasks[taskId].tScaleSpeed)
                 gTasks[taskId].tPostEvoScale  -= gTasks[taskId].tScaleSpeed;
             else
             {
-                gTasks[taskId].tPostEvoScale = 16;
+                gTasks[taskId].tPostEvoScale = MON_MIN_SCALE;
                 numSpritesFinished++;
             }
         }
         else
         {
-            if (gTasks[taskId].tPostEvoScale < 256 - gTasks[taskId].tScaleSpeed)
+            if (gTasks[taskId].tPostEvoScale < MON_MAX_SCALE - gTasks[taskId].tScaleSpeed)
                 gTasks[taskId].tPostEvoScale += gTasks[taskId].tScaleSpeed;
             else
             {
-                gTasks[taskId].tPostEvoScale = 256;
+                gTasks[taskId].tPostEvoScale = MON_MAX_SCALE;
                 numSpritesFinished++;
             }
-            if (gTasks[taskId].tPreEvoScale > 16 + gTasks[taskId].tScaleSpeed)
+            if (gTasks[taskId].tPreEvoScale > MON_MIN_SCALE + gTasks[taskId].tScaleSpeed)
                 gTasks[taskId].tPreEvoScale  -= gTasks[taskId].tScaleSpeed;
             else
             {
-                gTasks[taskId].tPreEvoScale = 16;
+                gTasks[taskId].tPreEvoScale = MON_MIN_SCALE;
                 numSpritesFinished++;
             }
         }
         oamMatrixArg = 65536 / gTasks[taskId].tPreEvoScale;
-        SetOamMatrix(30, oamMatrixArg, 0, 0, oamMatrixArg);
+        SetOamMatrix(MATRIX_PRE_EVO, oamMatrixArg, 0, 0, oamMatrixArg);
 
         oamMatrixArg = 65536 / gTasks[taskId].tPostEvoScale;
-        SetOamMatrix(31, oamMatrixArg, 0, 0, oamMatrixArg);
+        SetOamMatrix(MATRIX_POST_EVO, oamMatrixArg, 0, 0, oamMatrixArg);
         if (numSpritesFinished == 2)
             gTasks[taskId].func = Task_CycleEvolutionMonSprite_TryEnd;
     }
