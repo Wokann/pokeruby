@@ -451,9 +451,9 @@ const u8 BattleText_Clamped[] = _("{ATTACKING_MON} CLAMPED\n{DEFENDING_MON}!");
 const u8 BattleText_HurtBy[] = _("{ATTACKING_MON} is hurt\nby {STRING 0}!");
 const u8 BattleText_FreedFrom[] = _("{ATTACKING_MON} was freed\nfrom {STRING 0}!");
 const u8 BattleText_KeptGoingCrash[] = _("{ATTACKING_MON} kept going\nand crashed!");
-const u8 BattleText_MistShroud[] = _("{STRING 38} became\nshrouded in MIST!");
+const u8 gText_PkmnShroudedInMist[] = _("{STRING 38} became\nshrouded in MIST!");
 const u8 BattleText_MistProtect[] = _("{STRING 16} is protected\nby MIST!");
-const u8 BattleText_GetPumped[] = _("{ATTACKING_MON} is getting\npumped!");
+const u8 gText_PkmnGettingPumped[] = _("{ATTACKING_MON} is getting\npumped!");
 const u8 BattleText_HitRecoil[] = _("{ATTACKING_MON} is hit\nwith recoil!");
 const u8 BattleText_ProtectedItself2[] = _("{ATTACKING_MON} protected\nitself!");
 const u8 BattleText_SandBuffeted[] = _("{ATTACKING_MON} is buffeted\nby the sandstorm!");
@@ -601,11 +601,11 @@ const u8 BattleText_PreventedOther2[] = _("{ATTACKING_MON}'s {STRING 21}\npreven
 const u8 BattleText_CuredOfProblem[] = _("{STRING 16}'s {STRING 23}\ncured its {STRING 0} problem!");
 const u8 BattleText_NoEffectOn[] = _("{STRING 16}'s {STRING 23}\nhad no effect on {STRING 14}!");
 const u8 BattleText_Sharply[] = _("sharply ");
-const u8 BattleText_Rose[] = _("rose!");
+const u8 gText_StatRose[] = _("rose!");
 const u8 BattleText_Harshly[] = _("harshly ");
 const u8 BattleText_Fell[] = _("fell!");
 const u8 BattleText_UnknownString7[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
-const u8 BattleText_UnknownString3[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
+const u8 gText_DefendersStatRose[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
 const u8 BattleText_UnknownString4[] = _("Using {STRING 19}, the {STRING 0}\nof {STRING 16} {STRING 1}");
 const u8 BattleText_UnknownString5[] = _("{ATTACKING_MON}'s {STRING 0}\n{STRING 1}");
 const u8 BattleText_UnknownString6[] = _("{DEFENDING_MON}'s {STRING 0}\n{STRING 1}");
@@ -949,9 +949,9 @@ const u8 *const gBattleStringsTable[] =
     BattleText_HurtBy,
     BattleText_FreedFrom,
     BattleText_KeptGoingCrash,
-    BattleText_MistShroud,
+    gText_PkmnShroudedInMist,
     BattleText_MistProtect,
-    BattleText_GetPumped,
+    gText_PkmnGettingPumped,
     BattleText_HitRecoil,
     BattleText_ProtectedItself2,
     BattleText_SandBuffeted,
@@ -1062,11 +1062,11 @@ const u8 *const gBattleStringsTable[] =
     BattleText_HurtOther,
     BattleText_Traced,
     BattleText_Sharply,
-    BattleText_Rose,
+    gText_StatRose,
     BattleText_Harshly,
     BattleText_Fell,
     BattleText_UnknownString7,
-    BattleText_UnknownString3,
+    gText_DefendersStatRose,
     BattleText_UnknownString5,
     BattleText_UnknownString6,
     BattleText_Critical,

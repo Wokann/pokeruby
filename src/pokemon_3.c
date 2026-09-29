@@ -56,10 +56,10 @@ extern u8 gLastUsedAbility;
 extern const u8 BattleText_PreventedSwitch[];
 extern u16 gBattlerPartyIndexes[];
 
-extern u8 BattleText_Rose[];
-extern u8 BattleText_UnknownString3[];
-extern u8 BattleText_MistShroud[];
-extern u8 BattleText_GetPumped[];
+extern u8 gText_StatRose[];
+extern u8 gText_DefendersStatRose[];
+extern u8 gText_PkmnShroudedInMist[];
+extern u8 gText_PkmnGettingPumped[];
 
 bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId)
 {
@@ -192,17 +192,17 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
     return offset;
 }
 
-const u8 gUnknown_082082F8[] = {1, 1, 3, 2, 4, 6};
+static const u8 sStatsToRaise[] = {1, 1, 3, 2, 4, 6};
 
-void sub_803F324(int stat)
+static void BufferStatRoseMessage(s32 statIdx)
 {
     gBattlerTarget = gBattlerInMenuId;
-    StringCopy(gBattleTextBuff1, gStatNamesTable[gUnknown_082082F8[stat]]);
-    StringCopy(gBattleTextBuff2, BattleText_Rose);
-    BattleStringExpandPlaceholdersToDisplayedString(BattleText_UnknownString3);
+    StringCopy(gBattleTextBuff1, gStatNamesTable[sStatsToRaise[statIdx]]);
+    StringCopy(gBattleTextBuff2, gText_StatRose);
+    BattleStringExpandPlaceholdersToDisplayedString(gText_DefendersStatRose);
 }
 
-u8 *sub_803F378(u16 itemId)
+u8 *UseStatIncreaseItem(u16 itemId)
 {
     int i;
     const u8 *itemEffect;
@@ -228,17 +228,17 @@ u8 *sub_803F378(u16 itemId)
     for (i = 0; i < 3; i++)
     {
         if (itemEffect[i] & 0xF)
-            sub_803F324(i * 2);
+            BufferStatRoseMessage(i * 2);
         if (itemEffect[i] & 0xF0)
         {
             if (i)
             {
-                sub_803F324(i * 2 + 1);
+                BufferStatRoseMessage(i * 2 + 1);
             }
             else
             {
                 gBattlerAttacker = gBattlerInMenuId;
-                BattleStringExpandPlaceholdersToDisplayedString(BattleText_GetPumped);
+                BattleStringExpandPlaceholdersToDisplayedString(gText_PkmnGettingPumped);
             }
         }
     }
@@ -246,7 +246,7 @@ u8 *sub_803F378(u16 itemId)
     if (itemEffect[3] & 0x80)
     {
         gBattlerAttacker = gBattlerInMenuId;
-        BattleStringExpandPlaceholdersToDisplayedString(BattleText_MistShroud);
+        BattleStringExpandPlaceholdersToDisplayedString(gText_PkmnShroudedInMist);
     }
 
     return gDisplayedStringBattle;

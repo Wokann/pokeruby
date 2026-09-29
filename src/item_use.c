@@ -944,7 +944,7 @@ static void Task_UseStatIncreaseItem(u8 taskId)
     {
         PlaySE(SE_USE_ITEM);
         RemoveBagItem(gSpecialVar_ItemId, 1);
-        DisplayItemMessageOnField(taskId, sub_803F378(gSpecialVar_ItemId), Task_CloseStatIncreaseMessage, 1);
+        DisplayItemMessageOnField(taskId, UseStatIncreaseItem(gSpecialVar_ItemId), Task_CloseStatIncreaseMessage, 1);
     }
 }
 

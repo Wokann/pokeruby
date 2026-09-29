@@ -451,9 +451,9 @@ const u8 BattleText_Clamped[] = _("{GOOD_LEGENDARY} wurde von\n{EVIL_LEGENDARY} 
 const u8 BattleText_HurtBy[] = _("{EVIL_LEGENDARY} wurde durch\n{STRING 0} verletzt!");
 const u8 BattleText_FreedFrom[] = _("{EVIL_LEGENDARY} wurde von\n{STRING 0} befreit!");
 const u8 BattleText_KeptGoingCrash[] = _("{EVIL_LEGENDARY} macht weiter\nund bricht zusammen!");
-const u8 BattleText_MistShroud[] = _("{STRING 38} wird in\nWEISSNEBEL gehüllt!");
+const u8 gText_PkmnShroudedInMist[] = _("{STRING 38} wird in\nWEISSNEBEL gehüllt!");
 const u8 BattleText_MistProtect[] = _("{STRING 16} wird durch\nWEISSNEBEL geschützt!");
-const u8 BattleText_GetPumped[] = _("{EVIL_LEGENDARY} pumpt\nsich auf!");
+const u8 gText_PkmnGettingPumped[] = _("{EVIL_LEGENDARY} pumpt\nsich auf!");
 const u8 BattleText_HitRecoil[] = _("{EVIL_LEGENDARY} wurde vom\nRückstoß getroffen!");
 const u8 BattleText_ProtectedItself2[] = _("{EVIL_LEGENDARY} schützt\nsich selbst!");
 const u8 BattleText_SandBuffeted[] = _("{EVIL_LEGENDARY} wird vom\nSandsturm getroffen!");
@@ -601,11 +601,11 @@ const u8 BattleText_PreventedOther2[] = _("{STRING 21} von\n{EVIL_LEGENDARY} mac
 const u8 BattleText_CuredOfProblem[] = _("{STRING 23} von\n{STRING 16} heilte sein\lProblem mit {STRING 0}!");
 const u8 BattleText_NoEffectOn[] = _("{STRING 23} von\n{STRING 16} hat keine\lWirkung auf {STRING 14}!");
 const u8 BattleText_Sharply[] = _("steigt stark!");
-const u8 BattleText_Rose[] = _("steigt.");
+const u8 gText_StatRose[] = _("steigt.");
 const u8 BattleText_Harshly[] = _("sinkt stark!");
 const u8 BattleText_Fell[] = _("sinkt.");
 const u8 BattleText_UnknownString7[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
-const u8 BattleText_UnknownString3[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
+const u8 gText_DefendersStatRose[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
 const u8 BattleText_UnknownString4[] = _("{STRING 19}: {STRING 0} von\n{STRING 16} {PLAYER}");
 const u8 BattleText_UnknownString5[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
 const u8 BattleText_UnknownString6[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
@@ -949,9 +949,9 @@ const u8 *const gBattleStringsTable[] =
     BattleText_HurtBy,
     BattleText_FreedFrom,
     BattleText_KeptGoingCrash,
-    BattleText_MistShroud,
+    gText_PkmnShroudedInMist,
     BattleText_MistProtect,
-    BattleText_GetPumped,
+    gText_PkmnGettingPumped,
     BattleText_HitRecoil,
     BattleText_ProtectedItself2,
     BattleText_SandBuffeted,
@@ -1062,11 +1062,11 @@ const u8 *const gBattleStringsTable[] =
     BattleText_HurtOther,
     BattleText_Traced,
     BattleText_Sharply,
-    BattleText_Rose,
+    gText_StatRose,
     BattleText_Harshly,
     BattleText_Fell,
     BattleText_UnknownString7,
-    BattleText_UnknownString3,
+    gText_DefendersStatRose,
     BattleText_UnknownString5,
     BattleText_UnknownString6,
     BattleText_Critical,
