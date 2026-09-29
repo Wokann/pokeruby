@@ -4,8 +4,15 @@
 // Ruby/Sapphire's save data is Flash 128K, which is 32 save sectors.
 #define NUM_SECTORS 32 // defined in agb_flash but not in a header
 
+// If the sector's signature field is not this value, it is invalid or empty.
+#define SECTOR_SIGNATURE 0x08012025
+
+// Special sector id used when an operation addresses a complete save slot.
+#define FULL_SAVE_SLOT 0xFFFF
+
 #define SAVE_STATUS_EMPTY 0
 #define SAVE_STATUS_OK 1
+#define SAVE_STATUS_CORRUPT 2
 #define SAVE_STATUS_NO_FLASH 4
 #define SAVE_STATUS_ERROR 0xFF
 
@@ -33,7 +40,7 @@ u8 LinkFullSave_ReplaceLastSector(void);
 u8 LinkFullSave_SetLastSectorSignature(void);
 u8 WriteSaveBlock2(void);
 bool8 WriteSaveBlock1Sector(void);
-u8 LoadGameSave(u8 a1);
-void sub_813B79C(void);
+u8 LoadGameSave(u8 saveType);
+void DebugFixSaveChecksums(void);
 
 #endif // GUARD_SAVE_H

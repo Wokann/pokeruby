@@ -8,12 +8,10 @@
 #include "save_failed_screen.h"
 #include "ewram.h"
 
-#define FILE_SIGNATURE 0x08012025  // signature value to determine if a sector is in use
-
-//#define TOTAL_FLASH_SECTORS ((ARRAY_COUNT(sSaveBlockChunks) * 2) + (ARRAY_COUNT(sHallOfFameChunks) * 2)) // there are 2 slots, so double each array count and get the sum.
+//#define TOTAL_FLASH_SECTORS ((ARRAY_COUNT(sSaveSectorLocations) * 2) + (ARRAY_COUNT(sHallOfFameSectorLocations) * 2)) // there are 2 slots, so double each array count and get the sum.
 #define TOTAL_FLASH_SECTORS 32
 
-struct SaveBlockChunk
+struct SaveSectorLocation
 {
     u8 *data;
     u16 size;
@@ -28,47 +26,47 @@ struct SaveSector
     u32 counter;
 }; // size is 0x1000
 
-// headless save section?
-struct UnkSaveSection
+// Ruby-only special save sector, without the normal id/checksum/counter footer.
+struct RubySpecialSaveSector
 {
     u8 data[0xFF4];
     u32 signature;
 }; // size is 0xFF8
 
-static u8 HandleWriteSector(u16, const struct SaveBlockChunk *);
+static u8 HandleWriteSector(u16, const struct SaveSectorLocation *);
 static u8 HandleWriteSectorNBytes(u8 sector, u8 *data, u16 size);
 static u8 TryWriteSector(u8, u8 *);
-static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveBlockChunk *location);
-static u32 RestoreSaveBackupVars(const struct SaveBlockChunk *location);
-static u8 HandleWriteIncrementalSector(u16 a1, const struct SaveBlockChunk *location);
-static u8 HandleReplaceSectorAndVerify(u16 a1, const struct SaveBlockChunk *location);
-static u8 HandleReplaceSector(u16, const struct SaveBlockChunk *location);
-static u8 CopySectorSignatureByte(u16 a1, const struct SaveBlockChunk *location);
-static u8 WriteSectorSignatureByte(u16 a1, const struct SaveBlockChunk *location);
-static u8 TryLoadSaveSlot(u16 a1, const struct SaveBlockChunk *location);
-static u8 CopySaveSlotData(u16, const struct SaveBlockChunk *location);
-static u8 GetSaveValidStatus(const struct SaveBlockChunk *location);
-static u8 TryLoadSaveSector(u8 a1, u8 *data, u16 size);
-static u8 ReadFlashSector(u8, struct SaveSector *);
+static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *location);
+static u32 RestoreSaveBackupVars(const struct SaveSectorLocation *location);
+static u8 HandleWriteIncrementalSector(u16 numSectors, const struct SaveSectorLocation *locations);
+static u8 HandleReplaceSectorAndVerify(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 HandleReplaceSector(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 CopySectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 WriteSectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 TryLoadSaveSlot(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 CopySaveSlotData(u16 sectorId, const struct SaveSectorLocation *locations);
+static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations);
+static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size);
+static u8 ReadFlashSector(u8 sectorId, struct SaveSector *section);
 static u16 CalculateChecksum(void *, u16);
-bool8 unref_sub_8125F4C(struct UnkSaveSection *a1);
-u8 unref_sub_8125FA0(void);
-u8 unref_sub_8125FF0(u8 *data, u16 size);
-u8 unref_sub_8126068(u8 sector, u8 *data, u32 size);
-u8 unref_sub_8126080(u8 sector, u8 *data);
+bool8 TryReadRubySpecialSaveSector(struct RubySpecialSaveSector *section);
+u8 SaveGameAndClearRubySpecialSaveSectors(void);
+u8 TryWriteRubySpecialSaveSector(u8 *data, u16 size);
+u8 TryWriteFlashSector(u8 sector, u8 *data, u32 unusedSize);
+u8 ReadFlashSectorData(u8 sector, u8 *data);
 
 // Sector num to begin writing save data. Sectors are rotated each time the game is saved. (possibly to avoid wear on flash memory?)
-u16 gFirstSaveSector;
-u32 gPrevSaveCounter;
+u16 gLastWrittenSector;
+u32 gLastSaveCounter;
 u16 gLastKnownGoodSector;
 u32 gDamagedSaveSectors;
 u32 gSaveCounter;
-struct SaveSector *gFastSaveSection; // the pointer is in fast IWRAM but may sometimes point to the slower EWRAM.
-u16 gUnknown_03005EB4;
+struct SaveSector *gReadWriteSector; // Temporary buffer for reading and writing a save sector.
+u16 gIncrementalSectorId;
 u16 gSaveFileStatus;
 u32 gGameContinueCallback;
 
-static EWRAM_DATA u32 gLastSaveSectorStatus = 0; // used but in an unferenced function, so unused
+static EWRAM_DATA u32 sRubySpecialSaveSectorWriteStatus = 0;
 
 // Each 4 KiB flash sector contains 3968 bytes of actual data followed by a 128 byte footer
 #define SECTOR_DATA_SIZE 3968
@@ -97,38 +95,38 @@ static EWRAM_DATA u32 gLastSaveSectorStatus = 0; // used but in an unferenced fu
 
 // Divide save blocks into individual chunks to be written to flash sectors
 
-#define SAVEBLOCK_CHUNK_EX(structure, size, chunkNum)         \
+#define SAVE_SECTOR_LOCATION_EX(structure, size, chunkNum)         \
 {                                                             \
     (u8 *)structure + chunkNum * SECTOR_DATA_SIZE,            \
     min(size - chunkNum * SECTOR_DATA_SIZE, SECTOR_DATA_SIZE) \
 }                                                             \
 
-#define SAVEBLOCK_CHUNK(structure, chunkNum) SAVEBLOCK_CHUNK_EX(&structure, sizeof(structure), chunkNum)
+#define SAVE_SECTOR_LOCATION(structure, chunkNum) SAVE_SECTOR_LOCATION_EX(&structure, sizeof(structure), chunkNum)
 
-static const struct SaveBlockChunk sSaveBlockChunks[] =
+static const struct SaveSectorLocation sSaveSectorLocations[] =
 {
-    SAVEBLOCK_CHUNK(gSaveBlock2, 0),
+    SAVE_SECTOR_LOCATION(gSaveBlock2, 0),
 
-    SAVEBLOCK_CHUNK(gSaveBlock1, 0),
-    SAVEBLOCK_CHUNK(gSaveBlock1, 1),
-    SAVEBLOCK_CHUNK(gSaveBlock1, 2),
-    SAVEBLOCK_CHUNK(gSaveBlock1, 3),
+    SAVE_SECTOR_LOCATION(gSaveBlock1, 0),
+    SAVE_SECTOR_LOCATION(gSaveBlock1, 1),
+    SAVE_SECTOR_LOCATION(gSaveBlock1, 2),
+    SAVE_SECTOR_LOCATION(gSaveBlock1, 3),
 
-    SAVEBLOCK_CHUNK(gPokemonStorage, 0),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 1),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 2),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 3),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 4),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 5),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 6),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 7),
-    SAVEBLOCK_CHUNK(gPokemonStorage, 8),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 0),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 1),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 2),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 3),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 4),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 5),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 6),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 7),
+    SAVE_SECTOR_LOCATION(gPokemonStorage, 8),
 };
 
-static const struct SaveBlockChunk sHallOfFameChunks[] =
+static const struct SaveSectorLocation sHallOfFameSectorLocations[] =
 {
-    SAVEBLOCK_CHUNK_EX(gDecompressionBuffer, 2 * SECTOR_DATA_SIZE, 0),
-    SAVEBLOCK_CHUNK_EX(gDecompressionBuffer, 2 * SECTOR_DATA_SIZE, 1),
+    SAVE_SECTOR_LOCATION_EX(gDecompressionBuffer, 2 * SECTOR_DATA_SIZE, 0),
+    SAVE_SECTOR_LOCATION_EX(gDecompressionBuffer, 2 * SECTOR_DATA_SIZE, 1),
 };
 
 void ClearSaveData(void)
@@ -142,15 +140,15 @@ void ClearSaveData(void)
 void Save_ResetSaveCounters(void)
 {
     gSaveCounter = 0;
-    gFirstSaveSector = 0;
+    gLastWrittenSector = 0;
     gDamagedSaveSectors = 0;
 }
 
 enum
 {
-    SECTOR_DAMAGED,
-    SECTOR_OK,
-    SECTOR_CHECK, // unused
+    ENABLE,
+    DISABLE,
+    CHECK, // unused
 };
 
 static bool32 SetDamagedSectorBits(u8 op, u8 sectorNum)
@@ -159,13 +157,13 @@ static bool32 SetDamagedSectorBits(u8 op, u8 sectorNum)
 
     switch (op)
     {
-    case SECTOR_DAMAGED:
+    case ENABLE:
         gDamagedSaveSectors |= (1 << sectorNum);
         break;
-    case SECTOR_OK:
+    case DISABLE:
         gDamagedSaveSectors &= ~(1 << sectorNum);
         break;
-    case SECTOR_CHECK: // unused
+    case CHECK: // unused
         if (gDamagedSaveSectors & (1 << sectorNum))
             retVal = TRUE;
         break;
@@ -174,71 +172,71 @@ static bool32 SetDamagedSectorBits(u8 op, u8 sectorNum)
     return retVal;
 }
 
-// If chunkId is 0xFFFF, this function will write all of the chunks pointed to by 'chunks'.
-// Otherwise, it will write a single chunk with the given 'chunkId'.
-static u8 WriteSaveSectorOrSlot(u16 chunkId, const struct SaveBlockChunk *chunks)
+// If sectorId is FULL_SAVE_SLOT, this function writes every location in the save slot.
+// Otherwise, it writes the single location selected by sectorId.
+static u8 WriteSaveSectorOrSlot(u16 sectorId, const struct SaveSectorLocation *locations)
 {
-    u32 retVal;
+    u32 status;
     u16 i;
 
-    gFastSaveSection = eSaveSection;
+    gReadWriteSector = eSaveSection;
 
-    if (chunkId != 0xFFFF)  // write single chunk
+    if (sectorId != FULL_SAVE_SLOT)  // write single sector
     {
-        retVal = HandleWriteSector(chunkId, chunks);
+        status = HandleWriteSector(sectorId, locations);
     }
-    else  // write all chunks
+    else  // write all sectors
     {
-        gLastKnownGoodSector = gFirstSaveSector;
-        gPrevSaveCounter = gSaveCounter;
-        gFirstSaveSector++;
-        gFirstSaveSector %= NUM_SECTORS_PER_SAVE_SLOT;
+        gLastKnownGoodSector = gLastWrittenSector;
+        gLastSaveCounter = gSaveCounter;
+        gLastWrittenSector++;
+        gLastWrittenSector %= NUM_SECTORS_PER_SAVE_SLOT;
         gSaveCounter++;
-        retVal = SAVE_STATUS_OK;
+        status = SAVE_STATUS_OK;
 
         for (i = 0; i < NUM_SECTORS_PER_SAVE_SLOT; i++)
-            HandleWriteSector(i, chunks);
+            HandleWriteSector(i, locations);
 
         // Check for any bad sectors
         if (gDamagedSaveSectors != 0) // skip the damaged sector.
         {
-            retVal = SAVE_STATUS_ERROR;
-            gFirstSaveSector = gLastKnownGoodSector;
-            gSaveCounter = gPrevSaveCounter;
+            status = SAVE_STATUS_ERROR;
+            gLastWrittenSector = gLastKnownGoodSector;
+            gSaveCounter = gLastSaveCounter;
         }
     }
 
-    return retVal;
+    return status;
 }
 
-static u8 HandleWriteSector(u16 chunkId, const struct SaveBlockChunk *chunks)
+static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 i;
     u16 sectorNum;
-    u8 *chunkData;
-    u16 chunkSize;
+    u8 *data;
+    u16 size;
 
     // select sector number
-    sectorNum = chunkId + gFirstSaveSector;
+    sectorNum = sectorId + gLastWrittenSector;
     sectorNum %= NUM_SECTORS_PER_SAVE_SLOT;
     // select save slot
     sectorNum += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
 
-    chunkData = chunks[chunkId].data;
-    chunkSize = chunks[chunkId].size;
+    data = locations[sectorId].data;
+    size = locations[sectorId].size;
 
     // clear save section.
     for (i = 0; i < sizeof(struct SaveSector); i++)
-        ((u8 *)gFastSaveSection)[i] = 0;
+        ((u8 *)gReadWriteSector)[i] = 0;
 
-    gFastSaveSection->id = chunkId;
-    gFastSaveSection->signature = FILE_SIGNATURE;
-    gFastSaveSection->counter = gSaveCounter;
-    for (i = 0; i < chunkSize; i++)
-        gFastSaveSection->data[i] = chunkData[i];
-    gFastSaveSection->checksum = CalculateChecksum(chunkData, chunkSize);
+    gReadWriteSector->id = sectorId;
+    gReadWriteSector->signature = SECTOR_SIGNATURE;
+    gReadWriteSector->counter = gSaveCounter;
+    for (i = 0; i < size; i++)
+        gReadWriteSector->data[i] = data[i];
+    gReadWriteSector->checksum = CalculateChecksum(data, size);
 
-    return TryWriteSector(sectorNum, gFastSaveSection->data);
+    return TryWriteSector(sectorNum, gReadWriteSector->data);
 }
 
 static u8 HandleWriteSectorNBytes(u8 sectorNum, u8 *data, u16 size)
@@ -249,7 +247,7 @@ static u8 HandleWriteSectorNBytes(u8 sectorNum, u8 *data, u16 size)
     for (i = 0; i < sizeof(struct SaveSector); i++)
         ((char *)section)[i] = 0;
 
-    section->signature = FILE_SIGNATURE;
+    section->signature = SECTOR_SIGNATURE;
     for (i = 0; i < size; i++)
         section->data[i] = data[i];
     section->id = CalculateChecksum(data, size); // though this appears to be incorrect, it might be some sector checksum instead of a whole save checksum and only appears to be relevent to HOF data, if used.
@@ -261,79 +259,79 @@ static u8 TryWriteSector(u8 sectorNum, u8 *data)
 {
     if (ProgramFlashSectorAndVerify(sectorNum, data) != 0) // is damaged?
     {
-        SetDamagedSectorBits(SECTOR_DAMAGED, sectorNum); // set damaged sector bits.
+        SetDamagedSectorBits(ENABLE, sectorNum); // set damaged sector bits.
         return SAVE_STATUS_ERROR;
     }
     else
     {
-        SetDamagedSectorBits(SECTOR_OK, sectorNum); // unset damaged sector bits. it's safe now.
+        SetDamagedSectorBits(DISABLE, sectorNum); // unset damaged sector bits. it's safe now.
         return SAVE_STATUS_OK;
     }
 }
 
-static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveBlockChunk *chunk) // chunk is unused
+static u32 RestoreSaveBackupVarsAndIncrement(const struct SaveSectorLocation *locations) // locations are unused
 {
-    gFastSaveSection = eSaveSection;
-    gLastKnownGoodSector = gFirstSaveSector;
-    gPrevSaveCounter = gSaveCounter;
-    gFirstSaveSector++;
-    gFirstSaveSector %= NUM_SECTORS_PER_SAVE_SLOT;
+    gReadWriteSector = eSaveSection;
+    gLastKnownGoodSector = gLastWrittenSector;
+    gLastSaveCounter = gSaveCounter;
+    gLastWrittenSector++;
+    gLastWrittenSector %= NUM_SECTORS_PER_SAVE_SLOT;
     gSaveCounter++;
-    gUnknown_03005EB4 = 0;
+    gIncrementalSectorId = 0;
     gDamagedSaveSectors = 0;
     return 0;
 }
 
-static u32 RestoreSaveBackupVars(const struct SaveBlockChunk *chunk) // chunk is unused
+static u32 RestoreSaveBackupVars(const struct SaveSectorLocation *locations) // locations are unused
 {
-    gFastSaveSection = eSaveSection;
-    gLastKnownGoodSector = gFirstSaveSector;
-    gPrevSaveCounter = gSaveCounter;
-    gUnknown_03005EB4 = 0;
+    gReadWriteSector = eSaveSection;
+    gLastKnownGoodSector = gLastWrittenSector;
+    gLastSaveCounter = gSaveCounter;
+    gIncrementalSectorId = 0;
     gDamagedSaveSectors = 0;
     return 0;
 }
 
-static u8 HandleWriteIncrementalSector(u16 a1, const struct SaveBlockChunk *chunk)
+static u8 HandleWriteIncrementalSector(u16 numSectors, const struct SaveSectorLocation *locations)
 {
-    u8 retVal;
+    u8 status;
 
-    if (gUnknown_03005EB4 < a1 - 1)
+    if (gIncrementalSectorId < numSectors - 1)
     {
-        retVal = SAVE_STATUS_OK;
-        HandleWriteSector(gUnknown_03005EB4, chunk);
-        gUnknown_03005EB4++;
+        status = SAVE_STATUS_OK;
+        HandleWriteSector(gIncrementalSectorId, locations);
+        gIncrementalSectorId++;
         if (gDamagedSaveSectors)
         {
-            retVal = SAVE_STATUS_ERROR;
-            gFirstSaveSector = gLastKnownGoodSector;
-            gSaveCounter = gPrevSaveCounter;
+            status = SAVE_STATUS_ERROR;
+            gLastWrittenSector = gLastKnownGoodSector;
+            gSaveCounter = gLastSaveCounter;
         }
     }
     else
     {
-        retVal = SAVE_STATUS_ERROR;
+        status = SAVE_STATUS_ERROR;
     }
 
-    return retVal;
+    return status;
 }
 
-static u8 HandleReplaceSectorAndVerify(u16 a1, const struct SaveBlockChunk *chunk)
+static u8 HandleReplaceSectorAndVerify(u16 sectorId, const struct SaveSectorLocation *locations)
 {
-    u8 retVal = SAVE_STATUS_OK;
+    u8 status = SAVE_STATUS_OK;
 
-    HandleReplaceSector(a1 - 1, chunk);
+    HandleReplaceSector(sectorId - 1, locations);
 
     if (gDamagedSaveSectors)
     {
-        retVal = SAVE_STATUS_ERROR;
-        gFirstSaveSector = gLastKnownGoodSector;
-        gSaveCounter = gPrevSaveCounter;
+        status = SAVE_STATUS_ERROR;
+        gLastWrittenSector = gLastKnownGoodSector;
+        gSaveCounter = gLastSaveCounter;
     }
-    return retVal;
+    return status;
 }
 
-static u8 HandleReplaceSector(u16 chunkId, const struct SaveBlockChunk *chunks)
+static u8 HandleReplaceSector(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 i;
     u16 sector;
@@ -342,36 +340,36 @@ static u8 HandleReplaceSector(u16 chunkId, const struct SaveBlockChunk *chunks)
     u8 status;
 
     // select sector number
-    sector = chunkId + gFirstSaveSector;
+    sector = sectorId + gLastWrittenSector;
     sector %= NUM_SECTORS_PER_SAVE_SLOT;
     // select save slot
     sector += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
 
-    data = chunks[chunkId].data;
-    size = chunks[chunkId].size;
+    data = locations[sectorId].data;
+    size = locations[sectorId].size;
 
     // clear temp save section.
     for (i = 0; i < sizeof(struct SaveSector); i++)
-        ((char *)gFastSaveSection)[i] = 0;
+        ((char *)gReadWriteSector)[i] = 0;
 
-    gFastSaveSection->id = chunkId;
-    gFastSaveSection->signature = FILE_SIGNATURE;
-    gFastSaveSection->counter = gSaveCounter;
+    gReadWriteSector->id = sectorId;
+    gReadWriteSector->signature = SECTOR_SIGNATURE;
+    gReadWriteSector->counter = gSaveCounter;
 
     // set temp section's data.
     for (i = 0; i < size; i++)
-        gFastSaveSection->data[i] = data[i];
+        gReadWriteSector->data[i] = data[i];
 
     // calculate checksum.
-    gFastSaveSection->checksum = CalculateChecksum(data, size);
+    gReadWriteSector->checksum = CalculateChecksum(data, size);
 
     EraseFlashSector(sector);
 
     status = SAVE_STATUS_OK;
 
-    for (i = 0; i < sizeof(struct UnkSaveSection); i++)
+    for (i = 0; i < sizeof(struct RubySpecialSaveSector); i++)
     {
-        if (ProgramFlashByte(sector, i, gFastSaveSection->data[i]))
+        if (ProgramFlashByte(sector, i, gReadWriteSector->data[i]))
         {
             status = SAVE_STATUS_ERROR;
             break;
@@ -380,7 +378,7 @@ static u8 HandleReplaceSector(u16 chunkId, const struct SaveBlockChunk *chunks)
 
     if (status == SAVE_STATUS_ERROR)
     {
-        SetDamagedSectorBits(SECTOR_DAMAGED, sector);
+        SetDamagedSectorBits(ENABLE, sector);
         return SAVE_STATUS_ERROR;
     }
     else
@@ -389,7 +387,7 @@ static u8 HandleReplaceSector(u16 chunkId, const struct SaveBlockChunk *chunks)
 
         for (i = 0; i < 7; i++)
         {
-            if (ProgramFlashByte(sector, 0xFF9 + i, ((u8 *)gFastSaveSection)[0xFF9 + i]))
+            if (ProgramFlashByte(sector, 0xFF9 + i, ((u8 *)gReadWriteSector)[0xFF9 + i]))
             {
                 status = SAVE_STATUS_ERROR;
                 break;
@@ -398,83 +396,83 @@ static u8 HandleReplaceSector(u16 chunkId, const struct SaveBlockChunk *chunks)
 
         if (status == SAVE_STATUS_ERROR)
         {
-            SetDamagedSectorBits(SECTOR_DAMAGED, sector);
+            SetDamagedSectorBits(ENABLE, sector);
             return SAVE_STATUS_ERROR;
         }
         else
         {
-            SetDamagedSectorBits(SECTOR_OK, sector);
+            SetDamagedSectorBits(DISABLE, sector);
             return SAVE_STATUS_OK;
         }
     }
 }
 
-static u8 CopySectorSignatureByte(u16 a1, const struct SaveBlockChunk *chunk)
+static u8 CopySectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 sector;
 
     // select sector number
-    sector = a1 + gFirstSaveSector - 1;
+    sector = sectorId + gLastWrittenSector - 1;
     sector %= NUM_SECTORS_PER_SAVE_SLOT;
     // select save slot
     sector += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
 
-    if (ProgramFlashByte(sector, sizeof(struct UnkSaveSection), ((u8 *)gFastSaveSection)[sizeof(struct UnkSaveSection)]))
+    if (ProgramFlashByte(sector, sizeof(struct RubySpecialSaveSector), ((u8 *)gReadWriteSector)[sizeof(struct RubySpecialSaveSector)]))
     {
         // sector is damaged, so enable the bit in gDamagedSaveSectors and restore the last written sector and save counter.
-        SetDamagedSectorBits(SECTOR_DAMAGED, sector);
-        gFirstSaveSector = gLastKnownGoodSector;
-        gSaveCounter = gPrevSaveCounter;
+        SetDamagedSectorBits(ENABLE, sector);
+        gLastWrittenSector = gLastKnownGoodSector;
+        gSaveCounter = gLastSaveCounter;
         return SAVE_STATUS_ERROR;
     }
     else
     {
-        SetDamagedSectorBits(SECTOR_OK, sector);
+        SetDamagedSectorBits(DISABLE, sector);
         return SAVE_STATUS_OK;
     }
 }
 
-static u8 WriteSectorSignatureByte(u16 a1, const struct SaveBlockChunk *chunk)
+static u8 WriteSectorSignatureByte(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 sector;
 
-    sector = a1 + gFirstSaveSector - 1;
+    sector = sectorId + gLastWrittenSector - 1;
     sector %= NUM_SECTORS_PER_SAVE_SLOT;
     sector += NUM_SECTORS_PER_SAVE_SLOT * (gSaveCounter % 2);
 
-    if (ProgramFlashByte(sector, sizeof(struct UnkSaveSection), 0x25))
+    if (ProgramFlashByte(sector, sizeof(struct RubySpecialSaveSector), 0x25))
     {
         // sector is damaged, so enable the bit in gDamagedSaveSectors and restore the last written sector and save counter.
-        SetDamagedSectorBits(SECTOR_DAMAGED, sector);
-        gFirstSaveSector = gLastKnownGoodSector;
-        gSaveCounter = gPrevSaveCounter;
+        SetDamagedSectorBits(ENABLE, sector);
+        gLastWrittenSector = gLastKnownGoodSector;
+        gSaveCounter = gLastSaveCounter;
         return SAVE_STATUS_ERROR;
     }
     else
     {
-        SetDamagedSectorBits(SECTOR_OK, sector);
+        SetDamagedSectorBits(DISABLE, sector);
         return SAVE_STATUS_OK;
     }
 }
 
-static u8 TryLoadSaveSlot(u16 a1, const struct SaveBlockChunk *chunk)
+static u8 TryLoadSaveSlot(u16 sectorId, const struct SaveSectorLocation *locations)
 {
-    u8 retVal;
-    gFastSaveSection = eSaveSection;
-    if (a1 != 0xFFFF)
+    u8 status;
+    gReadWriteSector = eSaveSection;
+    if (sectorId != FULL_SAVE_SLOT)
     {
-        retVal = SAVE_STATUS_ERROR;
+        status = SAVE_STATUS_ERROR;
     }
     else
     {
-        retVal = GetSaveValidStatus(chunk);
-        CopySaveSlotData(0xFFFF, chunk);
+        status = GetSaveValidStatus(locations);
+        CopySaveSlotData(FULL_SAVE_SLOT, locations);
     }
 
-    return retVal;
+    return status;
 }
 
-static u8 CopySaveSlotData(u16 a1, const struct SaveBlockChunk *chunks)
+static u8 CopySaveSlotData(u16 sectorId, const struct SaveSectorLocation *locations)
 {
     u16 i;
     u16 checksum;
@@ -483,24 +481,24 @@ static u8 CopySaveSlotData(u16 a1, const struct SaveBlockChunk *chunks)
 
     for (i = 0; i < NUM_SECTORS_PER_SAVE_SLOT; i++)
     {
-        ReadFlashSector(i + sector, gFastSaveSection);
-        id = gFastSaveSection->id;
+        ReadFlashSector(i + sector, gReadWriteSector);
+        id = gReadWriteSector->id;
         if (id == 0)
-            gFirstSaveSector = i;
-        checksum = CalculateChecksum(gFastSaveSection->data, chunks[id].size);
-        if (gFastSaveSection->signature == FILE_SIGNATURE
-         && gFastSaveSection->checksum == checksum)
+            gLastWrittenSector = i;
+        checksum = CalculateChecksum(gReadWriteSector->data, locations[id].size);
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE
+         && gReadWriteSector->checksum == checksum)
         {
             u16 j;
-            for (j = 0; j < chunks[id].size; j++)
-                chunks[id].data[j] = gFastSaveSection->data[j];
+            for (j = 0; j < locations[id].size; j++)
+                locations[id].data[j] = gReadWriteSector->data[j];
         }
     }
 
     return 1;
 }
 
-static u8 GetSaveValidStatus(const struct SaveBlockChunk *chunks)
+static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
 {
     u16 sector;
     bool8 signatureValid;
@@ -517,15 +515,15 @@ static u8 GetSaveValidStatus(const struct SaveBlockChunk *chunks)
     signatureValid = FALSE;
     for (sector = 0; sector < NUM_SECTORS_PER_SAVE_SLOT; sector++)
     {
-        ReadFlashSector(sector, gFastSaveSection);
-        if (gFastSaveSection->signature == FILE_SIGNATURE)
+        ReadFlashSector(sector, gReadWriteSector);
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gFastSaveSection->data, chunks[gFastSaveSection->id].size);
-            if (gFastSaveSection->checksum == checksum)
+            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            if (gReadWriteSector->checksum == checksum)
             {
-                slot1saveCounter = gFastSaveSection->counter;
-                validSectors |= 1 << gFastSaveSection->id;
+                slot1saveCounter = gReadWriteSector->counter;
+                validSectors |= 1 << gReadWriteSector->id;
             }
         }
     }
@@ -547,15 +545,15 @@ static u8 GetSaveValidStatus(const struct SaveBlockChunk *chunks)
     signatureValid = FALSE;
     for (sector = 0; sector < NUM_SECTORS_PER_SAVE_SLOT; sector++)
     {
-        ReadFlashSector(NUM_SECTORS_PER_SAVE_SLOT + sector, gFastSaveSection);
-        if (gFastSaveSection->signature == FILE_SIGNATURE)
+        ReadFlashSector(NUM_SECTORS_PER_SAVE_SLOT + sector, gReadWriteSector);
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gFastSaveSection->data, chunks[gFastSaveSection->id].size);
-            if (gFastSaveSection->checksum == checksum)
+            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            if (gReadWriteSector->checksum == checksum)
             {
-                slot2saveCounter = gFastSaveSection->counter;
-                validSectors |= 1 << gFastSaveSection->id;
+                slot2saveCounter = gReadWriteSector->counter;
+                validSectors |= 1 << gReadWriteSector->id;
             }
         }
     }
@@ -613,22 +611,22 @@ static u8 GetSaveValidStatus(const struct SaveBlockChunk *chunks)
     if (slot1Status == SAVE_STATUS_EMPTY && slot2Status == SAVE_STATUS_EMPTY)
     {
         gSaveCounter = 0;
-        gFirstSaveSector = 0;
+        gLastWrittenSector = 0;
         return SAVE_STATUS_EMPTY;
     }
 
     gSaveCounter = 0;
-    gFirstSaveSector = 0;
-    return 2;
+    gLastWrittenSector = 0;
+    return SAVE_STATUS_CORRUPT;
 }
 
-static u8 TryLoadSaveSector(u8 sector, u8 *data, u16 size)
+static u8 TryLoadSaveSector(u8 sectorId, u8 *data, u16 size)
 {
     u16 i;
     struct SaveSector *section = eSaveSection;
 
-    ReadFlashSector(sector, section);
-    if (section->signature == FILE_SIGNATURE)
+    ReadFlashSector(sectorId, section);
+    if (section->signature == SECTOR_SIGNATURE)
     {
         u16 checksum = CalculateChecksum(section->data, size);
         if (section->id == checksum)
@@ -639,7 +637,7 @@ static u8 TryLoadSaveSector(u8 sector, u8 *data, u16 size)
         }
         else
         {
-            return 2;
+            return SAVE_STATUS_CORRUPT;
         }
     }
     else
@@ -648,9 +646,9 @@ static u8 TryLoadSaveSector(u8 sector, u8 *data, u16 size)
     }
 }
 
-static u8 ReadFlashSector(u8 sector, struct SaveSector *section)
+static u8 ReadFlashSector(u8 sectorId, struct SaveSector *section)
 {
-    ReadFlash(sector, 0, section->data, sizeof(struct SaveSector));
+    ReadFlash(sectorId, 0, section->data, sizeof(struct SaveSector));
     return 1;
 }
 
@@ -669,30 +667,30 @@ static u16 CalculateChecksum(void *data, u16 size)
 }
 
 #if DEBUG
-void sub_813B79C(void)
+void DebugFixSaveChecksums(void)
 {
-    struct SaveSector *sbSector;
-    struct SaveSector *hofSector;
-    const struct SaveBlockChunk *sbChunks;
-    const struct SaveBlockChunk *hofChunks;
+    struct SaveSector *saveSector;
+    struct SaveSector *hallOfFameSector;
+    const struct SaveSectorLocation *saveSectorLocations;
+    const struct SaveSectorLocation *hallOfFameSectorLocations;
     u16 i;
 
-    sbSector = eSaveSection;
-    sbChunks = sSaveBlockChunks;
+    saveSector = eSaveSection;
+    saveSectorLocations = sSaveSectorLocations;
     for (i = 0; i < NUM_SECTORS_PER_SAVE_SLOT * 2; i++)
     {
-        ReadFlashSector(i, sbSector);
-        sbSector->checksum = CalculateChecksum(sbSector, sbChunks[sbSector->id].size);
-        ProgramFlashSectorAndVerify(i, sbSector->data);
+        ReadFlashSector(i, saveSector);
+        saveSector->checksum = CalculateChecksum(saveSector, saveSectorLocations[saveSector->id].size);
+        ProgramFlashSectorAndVerify(i, saveSector->data);
     }
 
-    hofSector = eSaveSection;
-    hofChunks = sHallOfFameChunks;
+    hallOfFameSector = eSaveSection;
+    hallOfFameSectorLocations = sHallOfFameSectorLocations;
     for (i = 0; i < NUM_HALL_OF_FAME_SECTORS; i++)
     {
-        ReadFlashSector(HALL_OF_FAME_SECTOR + i, hofSector);
-        hofSector->id = CalculateChecksum(hofSector, hofChunks[i].size);  // why id?
-        ProgramFlashSectorAndVerify(HALL_OF_FAME_SECTOR + i, hofSector->data);
+        ReadFlashSector(HALL_OF_FAME_SECTOR + i, hallOfFameSector);
+        hallOfFameSector->id = CalculateChecksum(hallOfFameSector, hallOfFameSectorLocations[i].size);  // why id?
+        ProgramFlashSectorAndVerify(HALL_OF_FAME_SECTOR + i, hallOfFameSector->data);
     }
 }
 #endif
@@ -711,30 +709,30 @@ u8 HandleSavingData(u8 saveType)
         if (GetGameStat(GAME_STAT_ENTERED_HOF) < 999)
             IncrementGameStat(GAME_STAT_ENTERED_HOF);
         for (i = 0; i < NUM_HALL_OF_FAME_SECTORS; i++)
-            HandleWriteSectorNBytes(HALL_OF_FAME_SECTOR + i, sHallOfFameChunks[i].data, sHallOfFameChunks[i].size);
+            HandleWriteSectorNBytes(HALL_OF_FAME_SECTOR + i, sHallOfFameSectorLocations[i].data, sHallOfFameSectorLocations[i].size);
         SaveSerializedGame();
-        WriteSaveSectorOrSlot(0xFFFF, sSaveBlockChunks);
+        WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     case SAVE_NORMAL: // normal save. also called by overwriting your own save.
     default:
         SaveSerializedGame();
-        WriteSaveSectorOrSlot(0xFFFF, sSaveBlockChunks);
+        WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     case SAVE_LINK: // link save. updates only gSaveBlock1 and gSaveBlock2.
         SaveSerializedGame();
         for (i = 0; i < 5; i++)
-            WriteSaveSectorOrSlot(i, sSaveBlockChunks);
+            WriteSaveSectorOrSlot(i, sSaveSectorLocations);
         break;
     case SAVE_EREADER: // used in mossdeep "game corner" before/after battling old man e-reader trainer
         SaveSerializedGame();
-        WriteSaveSectorOrSlot(0, sSaveBlockChunks);
+        WriteSaveSectorOrSlot(0, sSaveSectorLocations);
         break;
     case SAVE_OVERWRITE_DIFFERENT_FILE: // there is a different file, so overwrite it completely.
         // Erase Hall of Fame.
         for (i = HALL_OF_FAME_SECTOR; i < TOTAL_FLASH_SECTORS; i++)
             EraseFlashSector(i);
         SaveSerializedGame();
-        WriteSaveSectorOrSlot(0xFFFF, sSaveBlockChunks);
+        WriteSaveSectorOrSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         break;
     }
     return 0;
@@ -766,16 +764,16 @@ u8 LinkFullSave_Init(void) // trade.s save
     if (gFlashMemoryPresent != TRUE)
         return 1;
     SaveSerializedGame();
-    RestoreSaveBackupVarsAndIncrement(sSaveBlockChunks);
+    RestoreSaveBackupVarsAndIncrement(sSaveSectorLocations);
     return 0;
 }
 
 bool8 LinkFullSave_WriteSector(void) // trade.s save
 {
-    u8 retVal = HandleWriteIncrementalSector(ARRAY_COUNT(sSaveBlockChunks), sSaveBlockChunks);
+    u8 status = HandleWriteIncrementalSector(ARRAY_COUNT(sSaveSectorLocations), sSaveSectorLocations);
     if (gDamagedSaveSectors)
         DoSaveFailedScreen(0);
-    if (retVal == SAVE_STATUS_ERROR)
+    if (status == SAVE_STATUS_ERROR)
         return 1;
     else
         return 0;
@@ -783,7 +781,7 @@ bool8 LinkFullSave_WriteSector(void) // trade.s save
 
 u8 LinkFullSave_ReplaceLastSector(void) // trade.s save
 {
-    HandleReplaceSectorAndVerify(ARRAY_COUNT(sSaveBlockChunks), sSaveBlockChunks);
+    HandleReplaceSectorAndVerify(ARRAY_COUNT(sSaveSectorLocations), sSaveSectorLocations);
     if (gDamagedSaveSectors)
         DoSaveFailedScreen(0);
     return 0;
@@ -791,7 +789,7 @@ u8 LinkFullSave_ReplaceLastSector(void) // trade.s save
 
 u8 LinkFullSave_SetLastSectorSignature(void) // trade.s save
 {
-    CopySectorSignatureByte(ARRAY_COUNT(sSaveBlockChunks), sSaveBlockChunks);
+    CopySectorSignatureByte(ARRAY_COUNT(sSaveSectorLocations), sSaveSectorLocations);
     if (gDamagedSaveSectors)
         DoSaveFailedScreen(0);
     return 0;
@@ -803,34 +801,34 @@ u8 WriteSaveBlock2(void)
         return 1;
 
     SaveSerializedGame();
-    RestoreSaveBackupVars(sSaveBlockChunks);
-    HandleReplaceSectorAndVerify(gUnknown_03005EB4 + 1, sSaveBlockChunks);
+    RestoreSaveBackupVars(sSaveSectorLocations);
+    HandleReplaceSectorAndVerify(gIncrementalSectorId + 1, sSaveSectorLocations);
     return 0;
 }
 
 // something to do with multiplayer. Possibly record mizing?
 bool8 WriteSaveBlock1Sector(void)
 {
-    u8 retVal = FALSE;
-    u16 val = ++gUnknown_03005EB4;
-    if (val <= 4)
+    u8 finished = FALSE;
+    u16 sectorId = ++gIncrementalSectorId;
+    if (sectorId <= 4)
     {
-        HandleReplaceSectorAndVerify(gUnknown_03005EB4 + 1, sSaveBlockChunks);
-        WriteSectorSignatureByte(val, sSaveBlockChunks);
+        HandleReplaceSectorAndVerify(gIncrementalSectorId + 1, sSaveSectorLocations);
+        WriteSectorSignatureByte(sectorId, sSaveSectorLocations);
     }
     else
     {
-        WriteSectorSignatureByte(val, sSaveBlockChunks);
-        retVal = TRUE;
+        WriteSectorSignatureByte(sectorId, sSaveSectorLocations);
+        finished = TRUE;
     }
     if (gDamagedSaveSectors)
         DoSaveFailedScreen(1);
-    return retVal;
+    return finished;
 }
 
 u8 LoadGameSave(u8 saveType)
 {
-    u8 result;
+    u8 status;
 
     if (gFlashMemoryPresent != TRUE)
     {
@@ -842,46 +840,46 @@ u8 LoadGameSave(u8 saveType)
     {
     case SAVE_NORMAL:
     default:
-        result = TryLoadSaveSlot(0xFFFF, sSaveBlockChunks);
+        status = TryLoadSaveSlot(FULL_SAVE_SLOT, sSaveSectorLocations);
         LoadSerializedGame();
-        gSaveFileStatus = result;
+        gSaveFileStatus = status;
         gGameContinueCallback = 0;
         break;
     case SAVE_HALL_OF_FAME:
-        result = TryLoadSaveSector(HALL_OF_FAME_SECTOR, sHallOfFameChunks[0].data, sHallOfFameChunks[0].size);
-        if (result == SAVE_STATUS_OK)
-            result = TryLoadSaveSector(HALL_OF_FAME_SECTOR + 1, sHallOfFameChunks[1].data, sHallOfFameChunks[1].size);
+        status = TryLoadSaveSector(HALL_OF_FAME_SECTOR, sHallOfFameSectorLocations[0].data, sHallOfFameSectorLocations[0].size);
+        if (status == SAVE_STATUS_OK)
+            status = TryLoadSaveSector(HALL_OF_FAME_SECTOR + 1, sHallOfFameSectorLocations[1].data, sHallOfFameSectorLocations[1].size);
         break;
     }
 
-    return result;
+    return status;
 }
 
-const u8 sUnusedFlashSectors[] = { 30, 31 };
+static const u8 sRubySpecialSaveSectors[] = { 30, 31 };
 
-bool8 unref_sub_8125F4C(struct UnkSaveSection *a1)
+bool8 TryReadRubySpecialSaveSector(struct RubySpecialSaveSector *section)
 {
     u16 i;
-    char *raw = (char *)a1;
+    char *raw = (char *)section;
 
     for (i = 0; i < sizeof(struct SaveSector); i++)
         raw[i] = 0;
 
-    ReadFlash(sUnusedFlashSectors[0], 0, a1->data, 4096);
+    ReadFlash(sRubySpecialSaveSectors[0], 0, section->data, 4096);
 
-    if (a1->signature != FILE_SIGNATURE)
+    if (section->signature != SECTOR_SIGNATURE)
         return FALSE;
 
     return TRUE;
 }
 
-u8 unref_sub_8125FA0(void)
+u8 SaveGameAndClearRubySpecialSaveSectors(void)
 {
     u16 i;
     u8 status = TrySavingData(SAVE_NORMAL);
 
     for (i = 0; i < 2; i++)
-        EraseFlashSector(sUnusedFlashSectors[i]);
+        EraseFlashSector(sRubySpecialSaveSectors[i]);
 
     if (status == SAVE_STATUS_ERROR)
     {
@@ -898,28 +896,28 @@ u8 unref_sub_8125FA0(void)
     }
 }
 
-u8 unref_sub_8125FF0(u8 *data, u16 size)
+u8 TryWriteRubySpecialSaveSector(u8 *data, u16 size)
 {
     u16 i;
-    struct UnkSaveSection *section = (struct UnkSaveSection *)eSaveSection;
+    struct RubySpecialSaveSector *section = (struct RubySpecialSaveSector *)eSaveSection;
 
     for (i = 0; i < sizeof(struct SaveSector); i++)
         ((char *)section)[i] = 0;
 
-    section->signature = FILE_SIGNATURE;
+    section->signature = SECTOR_SIGNATURE;
 
     for (i = 0; i < size; i++)
         section->data[i] = data[i];
 
-    gLastSaveSectorStatus = ProgramFlashSectorAndVerifyNBytes(sUnusedFlashSectors[0], section, sizeof(struct SaveSector));
+    sRubySpecialSaveSectorWriteStatus = ProgramFlashSectorAndVerifyNBytes(sRubySpecialSaveSectors[0], section, sizeof(struct SaveSector));
 
-    if (gLastSaveSectorStatus)
+    if (sRubySpecialSaveSectorWriteStatus)
         return SAVE_STATUS_ERROR;
     else
         return SAVE_STATUS_OK;
 }
 
-u8 unref_sub_8126068(u8 sector, u8 *data, u32 size)
+u8 TryWriteFlashSector(u8 sector, u8 *data, u32 unusedSize)
 {
     if (ProgramFlashSectorAndVerify(sector, data))
         return SAVE_STATUS_ERROR;
@@ -927,7 +925,7 @@ u8 unref_sub_8126068(u8 sector, u8 *data, u32 size)
         return SAVE_STATUS_OK;
 }
 
-u8 unref_sub_8126080(u8 sector, u8 *data)
+u8 ReadFlashSectorData(u8 sector, u8 *data)
 {
     ReadFlash(sector, 0, data, sizeof(struct SaveSector));
     return 1;

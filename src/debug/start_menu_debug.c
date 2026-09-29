@@ -620,7 +620,7 @@ void DebugMenu_8076E30(u8 taskId)
             if (JOY_NEW(A_BUTTON))
             {
                 Menu_DisplayDialogueFrame();
-                sub_813B79C();
+                DebugFixSaveChecksums();
                 Menu_PrintText(Str_839BD7D, 2, 15);
                 PlaySE(SE_DING_DONG);
                 data[0]++;
