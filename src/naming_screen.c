@@ -425,8 +425,8 @@ static void NamingScreen_Init(void)
 
 static void NamingScreen_SetUpWindow(void)
 {
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6E88);
-    InitMenuWindow(&gWindowTemplate_81E6E88);
+    Text_LoadWindowTemplate(&gNamingScreenWindowTemplate);
+    InitMenuWindow(&gNamingScreenWindowTemplate);
 }
 
 static void NamingScreen_ResetObjects(void)
@@ -1775,7 +1775,7 @@ static void DisplaySentToPCMessage(void)
 {
     StringCopy(gStringVar1, sNamingScreen->destBuffer);
     StringExpandPlaceholders(gStringVar4, gOtherText_SentToPC);
-    BasicInitMenuWindow(&gWindowTemplate_81E6E88);
+    BasicInitMenuWindow(&gNamingScreenWindowTemplate);
     Menu_DisplayDialogueFrame();
     MenuPrintMessageDefaultCoords(gStringVar4);
 }
@@ -1917,16 +1917,16 @@ static void (*const sPrintKeyboardPageFuncs[][2])(void) =
 static const struct WindowTemplate *const sKeyboardWindowTemplates[][2][2] =
 {
     {
-        {&gWindowTemplate_81E6EDC, &gWindowTemplate_81E6EF8},
-        {&gWindowTemplate_81E6EA4, &gWindowTemplate_81E6EC0},
+        {&gNamingScreenKeyboardLowerWindowTemplateBg1, &gNamingScreenKeyboardLowerWindowTemplateBg2},
+        {&gNamingScreenKeyboardUpperWindowTemplateBg1, &gNamingScreenKeyboardUpperWindowTemplateBg2},
     },
     {
-        {&gWindowTemplate_81E6EA4, &gWindowTemplate_81E6EC0},
-        {&gWindowTemplate_81E6F14, &gWindowTemplate_81E6F30},
+        {&gNamingScreenKeyboardUpperWindowTemplateBg1, &gNamingScreenKeyboardUpperWindowTemplateBg2},
+        {&gNamingScreenKeyboardSymbolsWindowTemplateBg1, &gNamingScreenKeyboardSymbolsWindowTemplateBg2},
     },
     {
-        {&gWindowTemplate_81E6F14, &gWindowTemplate_81E6F30},
-        {&gWindowTemplate_81E6EDC, &gWindowTemplate_81E6EF8},
+        {&gNamingScreenKeyboardSymbolsWindowTemplateBg1, &gNamingScreenKeyboardSymbolsWindowTemplateBg2},
+        {&gNamingScreenKeyboardLowerWindowTemplateBg1, &gNamingScreenKeyboardLowerWindowTemplateBg2},
     },
 };
 
@@ -2000,7 +2000,7 @@ static void PrintKeyboardCharacters(u8 page)  //print letters on page
 
 static void InitializeTextEntryWindow(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6F4C);
+    BasicInitMenuWindow(&gNamingScreenTextEntryWindowTemplate);
     sSpeciesNameFuncs[sNamingScreen->templateNum]();
     sDrawGenderIconFuncs[sNamingScreen->template->addGenderIcon]();
     Menu_PrintText(sNamingScreen->template->title, 9, 2);
@@ -2043,7 +2043,7 @@ static void DrawTextEntry(void)
     string[5] = 1;
     string += 6;
     StringCopy(string, sNamingScreen->textBuffer);
-    BasicInitMenuWindow(&gWindowTemplate_81E6F4C);
+    BasicInitMenuWindow(&gNamingScreenTextEntryWindowTemplate);
     Menu_PrintText(gStringVar1, sNamingScreen->nameLeftOffset, 4);
 }
 

@@ -934,7 +934,7 @@ const struct WindowTemplate gSummaryScreenWindowTemplate =
     BG_SCREEN_ADDR(30), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6E88 =
+const struct WindowTemplate gNamingScreenWindowTemplate =
 {
     0, // BG number
     0, // BG character base block
@@ -955,7 +955,7 @@ const struct WindowTemplate gWindowTemplate_81E6E88 =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6EA4 =
+const struct WindowTemplate gNamingScreenKeyboardUpperWindowTemplateBg1 =
 {
     1, // BG number
     0, // BG character base block
@@ -976,7 +976,7 @@ const struct WindowTemplate gWindowTemplate_81E6EA4 =
     BG_SCREEN_ADDR(28), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6EC0 =
+const struct WindowTemplate gNamingScreenKeyboardUpperWindowTemplateBg2 =
 {
     2, // BG number
     2, // BG character base block
@@ -997,7 +997,7 @@ const struct WindowTemplate gWindowTemplate_81E6EC0 =
     BG_SCREEN_ADDR(29), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6EDC =
+const struct WindowTemplate gNamingScreenKeyboardLowerWindowTemplateBg1 =
 {
     1, // BG number
     0, // BG character base block
@@ -1018,7 +1018,7 @@ const struct WindowTemplate gWindowTemplate_81E6EDC =
     BG_SCREEN_ADDR(28), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6EF8 =
+const struct WindowTemplate gNamingScreenKeyboardLowerWindowTemplateBg2 =
 {
     2, // BG number
     2, // BG character base block
@@ -1039,7 +1039,7 @@ const struct WindowTemplate gWindowTemplate_81E6EF8 =
     BG_SCREEN_ADDR(29), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6F14 =
+const struct WindowTemplate gNamingScreenKeyboardSymbolsWindowTemplateBg1 =
 {
     1, // BG number
     0, // BG character base block
@@ -1060,7 +1060,7 @@ const struct WindowTemplate gWindowTemplate_81E6F14 =
     BG_SCREEN_ADDR(28), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6F30 =
+const struct WindowTemplate gNamingScreenKeyboardSymbolsWindowTemplateBg2 =
 {
     2, // BG number
     2, // BG character base block
@@ -1081,7 +1081,7 @@ const struct WindowTemplate gWindowTemplate_81E6F30 =
     BG_SCREEN_ADDR(29), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6F4C =
+const struct WindowTemplate gNamingScreenTextEntryWindowTemplate =
 {
     3, // BG number
     0, // BG character base block
