@@ -2,6 +2,6 @@
 #define GUARD_MAP_NAME_POPUP_H
 
 void ShowMapNamePopup(void);
-void HideMapNamePopup();
+void HideMapNamePopUpWindow(void);
 
 #endif // GUARD_MAP_NAME_POPUP_H

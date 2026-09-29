@@ -1221,7 +1221,7 @@ static void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
         if (ProcessPlayerFieldInput(&fieldInput) == 1)
         {
             LockPlayerFieldControls();
-            HideMapNamePopup();
+            HideMapNamePopUpWindow();
         }
         else
         {

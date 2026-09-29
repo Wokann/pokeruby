@@ -432,7 +432,7 @@ void EnterNewlyCreatedSecretBase_StartFadeIn(void)
     s16 x, y;
 
     LockPlayerFieldControls();
-    HideMapNamePopup();
+    HideMapNamePopUpWindow();
     FindMetatileIdMapCoords(&x, &y, METATILE_SecretBase_PC);
     MapGridSetMetatileIdAt(x + MAP_OFFSET, y + MAP_OFFSET, METATILE_SecretBase_PC | MAPGRID_IMPASSABLE);
     CurrentMapDrawMetatileAt(x + MAP_OFFSET, y + MAP_OFFSET);

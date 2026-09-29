@@ -5,103 +5,120 @@
 #include "region_map.h"
 #include "task.h"
 
-EWRAM_DATA static u8 sTaskId = 0;
+EWRAM_DATA static u8 sPopupTaskId = 0;
 
-static void Task_MapNamePopup(u8);
-static void DrawMapNamePopup(void);
+static void Task_MapNamePopUpWindow(u8 taskId);
+static void ShowMapNamePopUpWindow(void);
 
-bool8 unref_sub_80A2F44(void)
+static bool8 UNUSED StartMenu_ShowMapNamePopup(void)
 {
     CloseMenu();
     ShowMapNamePopup();
-    return 1;
+    return TRUE;
 }
+
+enum
+{
+    STATE_SLIDE_IN,
+    STATE_WAIT,
+    STATE_SLIDE_OUT,
+    STATE_UNUSED,
+    STATE_END,
+};
+
+#define POPUP_OFFSCREEN_Y 32
+#define POPUP_SLIDE_SPEED 2
+
+#define tState         data[0]
+#define tOnscreenTimer data[1]
+#define tYOffset       data[2]
+#define tIncomingPopUp data[3]
 
 void ShowMapNamePopup(void)
 {
     if (FlagGet(FLAG_HIDE_MAP_NAME_POPUP) != TRUE)
     {
-        if (!FuncIsActiveTask(Task_MapNamePopup))
+        if (!FuncIsActiveTask(Task_MapNamePopUpWindow))
         {
-            sTaskId = CreateTask(Task_MapNamePopup, 90);
-            REG_BG0VOFS = 32;
-            DrawMapNamePopup();
-            gTasks[sTaskId].data[0] = 0;
-            gTasks[sTaskId].data[2] = 32;
+            sPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 90);
+            REG_BG0VOFS = POPUP_OFFSCREEN_Y;
+            ShowMapNamePopUpWindow();
+            gTasks[sPopupTaskId].tState = STATE_SLIDE_IN;
+            gTasks[sPopupTaskId].tYOffset = POPUP_OFFSCREEN_Y;
         }
         else
         {
-            if (gTasks[sTaskId].data[0] != 2)
-                gTasks[sTaskId].data[0] = 2;
-            gTasks[sTaskId].data[3] = 1;
+            if (gTasks[sPopupTaskId].tState != STATE_SLIDE_OUT)
+                gTasks[sPopupTaskId].tState = STATE_SLIDE_OUT;
+            gTasks[sPopupTaskId].tIncomingPopUp = TRUE;
         }
     }
 }
 
-void Task_MapNamePopup(u8 taskId)
+static void Task_MapNamePopUpWindow(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    switch (task->data[0])
+    switch (task->tState)
     {
-    case 0:
-        task->data[2] -= 2;
-        if (task->data[2] <= 0 )
+    case STATE_SLIDE_IN:
+        task->tYOffset -= POPUP_SLIDE_SPEED;
+        if (task->tYOffset <= 0 )
         {
-            task->data[0] = 1;
-            gTasks[sTaskId].data[1] = 0;
+            task->tState = STATE_WAIT;
+            gTasks[sPopupTaskId].tOnscreenTimer = 0;
         }
         break;
-    case 1:
-        task->data[1]++;
-        if (task->data[1] > 120 )
+    case STATE_WAIT:
+        task->tOnscreenTimer++;
+        if (task->tOnscreenTimer > 120 )
         {
-            task->data[1] = 0;
-            task->data[0] = 2;
+            task->tOnscreenTimer = 0;
+            task->tState = STATE_SLIDE_OUT;
         }
         break;
-    case 2:
-        task->data[2] += 2;
-        if (task->data[2] > 31)
+    case STATE_SLIDE_OUT:
+        task->tYOffset += POPUP_SLIDE_SPEED;
+        if (task->tYOffset > POPUP_OFFSCREEN_Y - 1)
         {
-            if (task->data[3])
+            if (task->tIncomingPopUp)
             {
-                DrawMapNamePopup();
-                task->data[0] = 0;
-                task->data[3] = 0;
+                ShowMapNamePopUpWindow();
+                task->tState = STATE_SLIDE_IN;
+                task->tIncomingPopUp = FALSE;
             }
             else
             {
-                task->data[0] = 4;
+                task->tState = STATE_END;
                 return;
             }
         }
         break;
-    case 4:
-        HideMapNamePopup();
+    case STATE_END:
+        HideMapNamePopUpWindow();
         return;
     }
 
-    REG_BG0VOFS = task->data[2];
+    REG_BG0VOFS = task->tYOffset;
 }
 
-void HideMapNamePopup(void)
+void HideMapNamePopUpWindow(void)
 {
-    if (FuncIsActiveTask(Task_MapNamePopup))
+    if (FuncIsActiveTask(Task_MapNamePopUpWindow))
     {
         Menu_LoadStdFrameGraphics();
         Menu_EraseWindowRect(0, 0, 13, 3);
         REG_BG0VOFS = 0;
-        DestroyTask(sTaskId);
+        DestroyTask(sPopupTaskId);
     }
 }
 
-void DrawMapNamePopup(void)
+static void ShowMapNamePopUpWindow(void)
 {
-    u8 name[20];
+    u8 mapName[20];
 
     Menu_LoadStdFrameGraphicsOverrideStyle(0);
-    GetMapName(name, gMapHeader.regionMapSectionId, 0);
+    GetMapName(mapName, gMapHeader.regionMapSectionId, 0);
     Menu_DrawStdWindowFrame(0, 0, 13, 3);
-    MenuPrint_Centered(name, 1, 1, 0x60);
+    MenuPrint_Centered(mapName, 1, 1, 0x60);
 }
