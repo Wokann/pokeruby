@@ -1079,12 +1079,12 @@ void SetSurfBlob_BobState(u8 spriteId, u8 state)
     gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF) | (state & 0xF);
 }
 
-void SetSurfBlob_DontSyncAnim(u8 spriteId, u8 dontSync)
+void SetSurfBlob_DontSyncAnim(u8 spriteId, bool8 dontSync)
 {
     gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF0) | ((dontSync & 0xF) << 4);
 }
 
-void SetSurfBlob_PlayerOffset(u8 spriteId, u8 hasOffset, s16 offset)
+void SetSurfBlob_PlayerOffset(u8 spriteId, bool8 hasOffset, s16 offset)
 {
     gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF00) | ((hasOffset & 0xF) << 8);
     gSprites[spriteId].sPlayerOffset = offset;
@@ -1128,7 +1128,7 @@ static void SynchronizeSurfAnim(struct ObjectEvent *objectEvent, struct Sprite *
         3, // DIR_EAST
     };
 
-    if (GetSurfBlob_DontSyncAnim(sprite) == 0)
+    if (!GetSurfBlob_DontSyncAnim(sprite))
         StartSpriteAnimIfDifferent(sprite, surfBlobDirectionAnims[objectEvent->movementDirection]);
 }
 
@@ -1160,7 +1160,7 @@ static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *
 {
     u16 intervals[] = {3, 7};
     u8 bobState = GetSurfBlob_BobState(sprite);
-    if (bobState != 0)
+    if (bobState != BOB_NONE)
     {
         if (((u16)(++ sprite->sTimer) & intervals[sprite->sIntervalIdx]) == 0)
         {
@@ -1170,9 +1170,9 @@ static void UpdateBobbingEffect(struct ObjectEvent *objectEvent, struct Sprite *
         {
             sprite->sVelocity = -sprite->sVelocity;
         }
-        if (bobState != 2)
+        if (bobState != BOB_JUST_MON)
         {
-            if (GetSurfBlob_HasPlayerOffset(sprite) == 0)
+            if (!GetSurfBlob_HasPlayerOffset(sprite))
             {
                 linkedSprite->y2 = sprite->y2;
             }
