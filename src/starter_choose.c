@@ -25,16 +25,16 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 const u16 gBirchBagGrass_Pal[2][16] =
 {
-    INCBIN_U16("graphics/misc/birch_bag.gbapal"),
-    INCBIN_U16("graphics/misc/birch_grass.gbapal"),
+    INCBIN_U16("graphics/starter_choose/birch_bag.gbapal"),
+    INCBIN_U16("graphics/starter_choose/birch_grass.gbapal"),
 };
-static const u16 sPokeballSelection_Pal[] = INCBIN_U16("graphics/misc/birch_ballarrow.gbapal");
-static const u16 sStarterCircle_Pal[] = INCBIN_U16("graphics/misc/birch_circle.gbapal");
-const u8 gBirchBagTilemap[] = INCBIN_U8("graphics/misc/birch_bag_map.bin.lz");
-const u8 gBirchGrassTilemap[] = INCBIN_U8("graphics/misc/birch_grass_map.bin.lz");
-const u8 gBirchBagGrass_Gfx[] = INCBIN_U8("graphics/misc/birch_help.4bpp.lz");
-static const u8 gPokeballSelection_Gfx[] = INCBIN_U8("graphics/misc/birch_ballarrow.4bpp.lz");
-static const u8 sStarterCircle_Gfx[] = INCBIN_U8("graphics/misc/birch_circle.4bpp.lz");
+static const u16 sPokeballSelection_Pal[] = INCBIN_U16("graphics/starter_choose/pokeball_selection.gbapal");
+static const u16 sStarterCircle_Pal[] = INCBIN_U16("graphics/starter_choose/starter_circle.gbapal");
+const u8 gBirchBagTilemap[] = INCBIN_U8("graphics/starter_choose/birch_bag.bin.lz");
+const u8 gBirchGrassTilemap[] = INCBIN_U8("graphics/starter_choose/birch_grass.bin.lz");
+const u8 gBirchBagGrass_Gfx[] = INCBIN_U8("graphics/starter_choose/tiles.4bpp.lz");
+static const u8 gPokeballSelection_Gfx[] = INCBIN_U8("graphics/starter_choose/pokeball_selection.4bpp.lz");
+static const u8 sStarterCircle_Gfx[] = INCBIN_U8("graphics/starter_choose/starter_circle.4bpp.lz");
 
 #define STARTER_MON_COUNT 3
 

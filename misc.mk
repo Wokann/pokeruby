@@ -225,8 +225,10 @@ $(MISCGFXDIR)/hof.4bpp: GFX_OPTS := -num_tiles 37
 
 $(MISCGFXDIR)/end_copyright.4bpp: GFX_OPTS := -num_tiles 90
 
-$(MISCGFXDIR)/birch_help.4bpp: $(MISCGFXDIR)/birch_bag.4bpp $(MISCGFXDIR)/birch_grass.4bpp
-	@cat $(MISCGFXDIR)/birch_bag.4bpp $(MISCGFXDIR)/birch_grass.4bpp >$@
+STARTERCHOOSEGFXDIR := graphics/starter_choose
+
+$(STARTERCHOOSEGFXDIR)/tiles.4bpp: $(STARTERCHOOSEGFXDIR)/birch_bag.4bpp $(STARTERCHOOSEGFXDIR)/birch_grass.4bpp
+	@cat $(STARTERCHOOSEGFXDIR)/birch_bag.4bpp $(STARTERCHOOSEGFXDIR)/birch_grass.4bpp >$@
 
 $(MISCGFXDIR)/clock_misc.4bpp: $(MISCGFXDIR)/clock_hands.4bpp $(MISCGFXDIR)/clock_ampm.4bpp
 	@cat $(MISCGFXDIR)/clock_hands.4bpp $(MISCGFXDIR)/clock_ampm.4bpp >$@
