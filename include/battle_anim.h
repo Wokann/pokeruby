@@ -246,6 +246,9 @@ void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite);
 u8 GetBattlerSpriteDefault_Y(u8 battler);
 u8 GetSubstituteSpriteDefault_Y(u8 battler);
 
+// battle_anim_smokescreen.c
+u8 SmokescreenImpact(s16 x, s16 y, bool8 persist);
+
 void DoMoveAnim(u16 move);
 void LaunchBattleAnimation(const u8 *const moveAnims[], u16 b, u8 c);
 void InitStatsChangeAnimation(u8 taskId);

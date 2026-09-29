@@ -43,7 +43,6 @@ extern u8 gBattleMonForms[];
 extern u8 gBattlerSpriteIds[];
 extern u16 gBattlerPartyIndexes[];
 
-extern u8 sub_8046234(s16 x, s16 y, u8 a3);
 extern void StartMonScrollingBgMask(u8 taskId, int unused, u16 scrollSpeed, u8 battler, u8 includePartner, u8 numFadeSteps, u8 fadeStepDelay, u8 duration, const u8 *gfx, const u8 *tilemap, const u16 *palette);
 
 static void AnimBlackSmoke_Step(struct Sprite *sprite);
@@ -453,7 +452,7 @@ const struct SpriteTemplate gRapidSpinSpriteTemplate =
     .callback = AnimRapidSpin,
 };
 
-const union AffineAnimCmd gUnknown_08402400[] =
+static const union AffineAnimCmd sAffineAnims_Torment[] =
 {
     AFFINEANIMCMD_FRAME(-12, 8, 0, 4),
     AFFINEANIMCMD_FRAME(20, -20, 0, 4),
@@ -739,7 +738,7 @@ const struct SpriteTemplate gSweetScentPetalSpriteTemplate =
     .callback = AnimSweetScentPetal,
 };
 
-const u16 gUnknown_4026BC[] = INCBIN_U16("graphics/unknown/unknown_4026BC.gbapal");
+static const u16 sUnusedPalette[] = INCBIN_U16("graphics/battle_anims/unused/unknown.gbapal");
 
 const union AnimCmd gPainSplitAnimCmds[] =
 {
@@ -1210,10 +1209,10 @@ static void AnimBlackSmoke_Step(struct Sprite *sprite)
 
 void AnimTask_SmokescreenImpact(u8 taskId)
 {
-    sub_8046234(
-        GetBattlerSpriteCoord(gBattleAnimTarget, 2) + 8,
-        GetBattlerSpriteCoord(gBattleAnimTarget, 3) + 8,
-        0);
+    SmokescreenImpact(
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + 8,
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 8,
+        FALSE);
     DestroyAnimVisualTask(taskId);
 
 }
@@ -1948,7 +1947,7 @@ static void TormentAttacker_Step(u8 taskId)
             task->data[5] -= 6;
         }
 
-        PrepareAffineAnimInTaskData(task, task->data[15], gUnknown_08402400);
+        PrepareAffineAnimInTaskData(task, task->data[15], sAffineAnims_Torment);
         task->data[1]++;
         task->data[0] = 1;
         break;
