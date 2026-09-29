@@ -10,12 +10,13 @@
 #include "task.h"
 #include "wild_encounter.h"
 #include "constants/field_effects.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 
 static void FieldCallback_SweetScent(void);
 static void StartSweetScentFieldEffect(void);
-static void TrySweetScentEncounter(u8);
-static void FailSweetScentEncounter(u8);
+static void TrySweetScentEncounter(u8 taskId);
+static void FailSweetScentEncounter(u8 taskId);
 
 extern u8 gLastFieldPokeMenuOpened;
 extern void (*gFieldCallback)(void);
@@ -36,7 +37,7 @@ static void FieldCallback_SweetScent(void)
     gFieldEffectArguments[0] = gLastFieldPokeMenuOpened;
 }
 
-bool8 FldEff_SweetScent()
+bool8 FldEff_SweetScent(void)
 {
     u8 taskId = CreateFieldMoveTask();
 
@@ -50,7 +51,7 @@ static void StartSweetScentFieldEffect(void)
     u8 taskId;
 
     PlaySE(SE_M_SWEET_SCENT);
-    BeginNormalPaletteFade(~(1 << (gSprites[GetPlayerAvatarSpriteId()].oam.paletteNum + 16)), 4, 0, 8, RGB(31, 0, 0));
+    BeginNormalPaletteFade(~(1 << (gSprites[GetPlayerAvatarSpriteId()].oam.paletteNum + 16)), 4, 0, 8, RGB_RED);
     taskId = CreateTask(TrySweetScentEncounter, 0);
     gTasks[taskId].data[0] = 0;
     FieldEffectActiveListRemove(FLDEFF_SWEET_SCENT);
@@ -70,7 +71,7 @@ static void TrySweetScentEncounter(u8 taskId)
             else
             {
                 gTasks[taskId].func = FailSweetScentEncounter;
-                BeginNormalPaletteFade(~(1 << (gSprites[GetPlayerAvatarSpriteId()].oam.paletteNum + 16)), 4, 8, 0, RGB(31, 0, 0));
+                BeginNormalPaletteFade(~(1 << (gSprites[GetPlayerAvatarSpriteId()].oam.paletteNum + 16)), 4, 8, 0, RGB_RED);
             }
         }
         else
