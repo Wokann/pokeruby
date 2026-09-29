@@ -697,9 +697,9 @@ static bool8 ShouldUseItem(void)
         u8 paramOffset;
         u8 battlerSide;
 
-        if (i != 0 && validMons > (AI_BATTLE_HISTORY->numItems - i) + 1)
+        if (i != 0 && validMons > (BATTLE_HISTORY->itemsNo - i) + 1)
             continue;
-        item = AI_BATTLE_HISTORY->trainerItems[i];
+        item = BATTLE_HISTORY->trainerItems[i];
         if (item == ITEM_NONE)
             continue;
         if (gItemEffectTable[item - 13] == NULL)
@@ -798,7 +798,7 @@ static bool8 ShouldUseItem(void)
             // See also: battle_controller_opponent.c:OpponentHandleOpenBag
             gSharedMem[BSTRUCT_OFF(AI_usedItemId) + (gActiveBattler / 2) * 2] = item;
 //            gSharedMem[BSTRUCT_OFF(AI_usedItemId) + (gActiveBattler / 2) * 2 + 1] = item >> 8;
-            AI_BATTLE_HISTORY->trainerItems[i] = 0;
+            BATTLE_HISTORY->trainerItems[i] = 0;
             return shouldUse;
         }
     }

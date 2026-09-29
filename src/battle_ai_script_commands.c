@@ -262,7 +262,7 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
     s32 i;
     u8 *data;
 
-    MEMSET_ALT(AI_BATTLE_HISTORY, 0, sizeof(struct BattleHistory), i, data);
+    MEMSET_ALT(BATTLE_HISTORY, 0, sizeof(struct BattleHistory), i, data);
 
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
      && gTrainerBattleOpponent != SECRET_BASE_OPPONENT
@@ -272,8 +272,8 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
         {
             if (gTrainers[gTrainerBattleOpponent].items[i] != 0)
             {
-                AI_BATTLE_HISTORY->trainerItems[AI_BATTLE_HISTORY->numItems] = gTrainers[gTrainerBattleOpponent].items[i];
-                AI_BATTLE_HISTORY->numItems++;
+                BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent].items[i];
+                BATTLE_HISTORY->itemsNo++;
             }
         }
     }
@@ -339,7 +339,7 @@ void BattleAI_SetupAIData(void)
 #endif
 }
 
-u8 BattleAI_GetAIActionToUse(void)
+u8 BattleAI_ChooseMoveOrAction(void)
 {
     u8 currentMoveArray[MAX_MON_MOVES];
     u8 consideredMoveArray[MAX_MON_MOVES];
@@ -436,9 +436,9 @@ void RecordLastUsedMoveByTarget(void)
 
     for (i = 0; i < 8; i++)
     {
-        if (AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == 0)
+        if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == 0)
         {
-            AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] = gLastMoves[gBattlerTarget];
+            BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] = gLastMoves[gBattlerTarget];
             return;
         }
     }
@@ -449,19 +449,19 @@ void ClearBattlerMoveHistory(u8 battler)
     s32 i;
 
     for (i = 0; i < 8; i++)
-        AI_BATTLE_HISTORY->usedMoves[battler / 2][i] = 0;
+        BATTLE_HISTORY->usedMoves[battler / 2][i] = 0;
 }
 
 void RecordAbilityBattle(u8 battler, u8 abilityId)
 {
     if (GetBattlerSide(battler) == B_SIDE_PLAYER)
-        AI_BATTLE_HISTORY->abilities[GetBattlerPosition(battler) & 1] = abilityId;
+        BATTLE_HISTORY->abilities[GetBattlerPosition(battler) & 1] = abilityId;
 }
 
 void RecordItemEffectBattle(u8 battler, u8 itemEffect)
 {
     if (GetBattlerSide(battler) == B_SIDE_PLAYER)
-        AI_BATTLE_HISTORY->itemEffects[GetBattlerPosition(battler) & 1] = itemEffect;
+        BATTLE_HISTORY->itemEffects[GetBattlerPosition(battler) & 1] = itemEffect;
 }
 
 static void Cmd_if_random_less_than(void)
@@ -1120,9 +1120,9 @@ static void Cmd_get_ability(void)
     {
         u16 side = GetBattlerPosition(battler) & 1;
 
-        if (AI_BATTLE_HISTORY->abilities[side] != 0)
+        if (BATTLE_HISTORY->abilities[side] != 0)
         {
-            AI_THINKING_STRUCT->funcResult = AI_BATTLE_HISTORY->abilities[side];
+            AI_THINKING_STRUCT->funcResult = BATTLE_HISTORY->abilities[side];
             gAIScriptPtr += 2;
             return;
         }
@@ -1491,7 +1491,7 @@ static void Cmd_if_has_move(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < 8; i++)
         {
-            if (AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
                 break;
         }
         if (i == 8)
@@ -1525,7 +1525,7 @@ static void Cmd_if_doesnt_have_move(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < 8; i++)
         {
-            if (AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] == *movePtr)
                 break;
         }
         if (i != 8)
@@ -1558,7 +1558,7 @@ static void Cmd_if_has_move_with_effect(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < 8; i++)
         {
-            if (gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == gAIScriptPtr[2])
+            if (gBattleMons[gBattlerAttacker].moves[i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == gAIScriptPtr[2])
                 break;
         }
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 3);
@@ -1587,7 +1587,7 @@ static void Cmd_if_doesnt_have_move_with_effect(void)
     case AI_TARGET_PARTNER:
         for (i = 0; i < 8; i++)
         {
-            if (AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] != 0 && gBattleMoves[AI_BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == gAIScriptPtr[2])
+            if (BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i] != 0 && gBattleMoves[BATTLE_HISTORY->usedMoves[gBattlerTarget >> 1][i]].effect == gAIScriptPtr[2])
                 break;
         }
         gAIScriptPtr += 7;
@@ -1685,7 +1685,7 @@ static void Cmd_get_hold_effect(void)
     if (GetBattlerSide(battler) == B_SIDE_PLAYER)
     {
         side = (GetBattlerPosition(battler) & 1);
-        AI_THINKING_STRUCT->funcResult = AI_BATTLE_HISTORY->itemEffects[side];
+        AI_THINKING_STRUCT->funcResult = BATTLE_HISTORY->itemEffects[side];
     }
     else
         AI_THINKING_STRUCT->funcResult = GetItemHoldEffect(gBattleMons[battler].item);
