@@ -70,14 +70,14 @@ extern u8 EventScript_TestSignpostMsg[];
 // Otherwise, the second transition is used.
 static const u8 sBattleTransitionTable_Wild[][2] =
 {
-    {B_TRANSITION_SLICE,               B_TRANSITION_WHITEFADE},     // Normal
-    {B_TRANSITION_CLOCKWISE_BLACKFADE, B_TRANSITION_GRID_SQUARES},  // Cave
+    {B_TRANSITION_SLICE,               B_TRANSITION_WHITE_BARS_FADE}, // Normal
+    {B_TRANSITION_CLOCKWISE_WIPE,      B_TRANSITION_GRID_SQUARES},    // Cave
     {B_TRANSITION_BLUR,                B_TRANSITION_GRID_SQUARES},  // Cave with flash used
     {B_TRANSITION_WAVE,                B_TRANSITION_RIPPLE},        // Water
 };
 static const u8 sBattleTransitionTable_Trainer[][2] =
 {
-    {B_TRANSITION_POKEBALLS_TRAIL, B_TRANSITION_SHARDS},        // Normal
+    {B_TRANSITION_POKEBALLS_TRAIL, B_TRANSITION_ANGLED_WIPES},  // Normal
     {B_TRANSITION_SHUFFLE,         B_TRANSITION_BIG_POKEBALL},  // Cave
     {B_TRANSITION_BLUR,            B_TRANSITION_GRID_SQUARES},  // Cave with flash used
     {B_TRANSITION_SWIRL,           B_TRANSITION_RIPPLE},        // Water
@@ -612,7 +612,7 @@ void StartGroudonKyogreBattle(void)
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_KYOGRE_GROUDON;
     if (gGameVersion == VERSION_RUBY)
-        CreateBattleStartTask(B_TRANSITION_SHARDS, MUS_VS_KYOGRE_GROUDON); // GROUDON
+        CreateBattleStartTask(B_TRANSITION_ANGLED_WIPES, MUS_VS_KYOGRE_GROUDON); // GROUDON
     else
         CreateBattleStartTask(B_TRANSITION_RIPPLE, MUS_VS_KYOGRE_GROUDON); // KYOGRE
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);

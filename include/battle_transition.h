@@ -1,42 +1,43 @@
 #ifndef GUARD_BATTLE_TRANSITION_H
 #define GUARD_BATTLE_TRANSITION_H
 
-void BattleTransition_StartOnField(u8 transitionID);
-void BattleTransition_Start(u8 transitionID);
+void BattleTransition_StartOnField(u8 transitionId);
+void BattleTransition_Start(u8 transitionId);
 bool8 IsBattleTransitionDone(void);
+bool8 FldEff_PokeballTrail(void);
 
-#define TRANSITIONS_NO         17
+extern const struct SpritePalette gSpritePalette_Pokeball;
 
-enum // TRANSITION_MUGSHOT
+enum
 {
     MUGSHOT_SYDNEY,
     MUGSHOT_PHOEBE,
     MUGSHOT_GLACIA,
     MUGSHOT_DRAKE,
     MUGSHOT_STEVEN,
+    MUGSHOTS_COUNT,
 };
 
-#define MUGSHOTS_NO             5
-
-// credits for the names go to Dyskinesia and Tetrable
-// names are naturally subject to change
-
-#define B_TRANSITION_BLUR                   0
-#define B_TRANSITION_SWIRL                  1
-#define B_TRANSITION_SHUFFLE                2
-#define B_TRANSITION_BIG_POKEBALL           3
-#define B_TRANSITION_POKEBALLS_TRAIL        4
-#define B_TRANSITION_CLOCKWISE_BLACKFADE    5
-#define B_TRANSITION_RIPPLE                 6
-#define B_TRANSITION_WAVE                   7
-#define B_TRANSITION_SLICE                  8
-#define B_TRANSITION_WHITEFADE              9
-#define B_TRANSITION_GRID_SQUARES           10
-#define B_TRANSITION_SHARDS                 11
-#define B_TRANSITION_SYDNEY                 12
-#define B_TRANSITION_PHOEBE                 13
-#define B_TRANSITION_GLACIA                 14
-#define B_TRANSITION_DRAKE                  15
-#define B_TRANSITION_STEVEN                 16
+enum
+{
+    B_TRANSITION_BLUR,
+    B_TRANSITION_SWIRL,
+    B_TRANSITION_SHUFFLE,
+    B_TRANSITION_BIG_POKEBALL,
+    B_TRANSITION_POKEBALLS_TRAIL,
+    B_TRANSITION_CLOCKWISE_WIPE,
+    B_TRANSITION_RIPPLE,
+    B_TRANSITION_WAVE,
+    B_TRANSITION_SLICE,
+    B_TRANSITION_WHITE_BARS_FADE,
+    B_TRANSITION_GRID_SQUARES,
+    B_TRANSITION_ANGLED_WIPES,
+    B_TRANSITION_SYDNEY,
+    B_TRANSITION_PHOEBE,
+    B_TRANSITION_GLACIA,
+    B_TRANSITION_DRAKE,
+    B_TRANSITION_STEVEN,
+    B_TRANSITION_COUNT,
+};
 
 #endif // GUARD_BATTLE_TRANSITION_H
