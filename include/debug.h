@@ -2,8 +2,8 @@
 #define GUARD_DEBUG_H
 
 struct MysteryEventDebugDataSource {
-    const u8 * text;
-    size_t (*func)(u8 * dest);
+    const u8 *label;
+    size_t (*buildScript)(u8 *dest);
 };
 
 // start_menu_debug

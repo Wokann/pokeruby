@@ -211,25 +211,25 @@ void debug_sub_8075D9C(void)
     LockPlayerFieldControls();
 }
 
-void debug_sub_8075DB4(struct BattleTowerEReaderTrainer *ereaderTrainer, const u8 *b, u32 trainerId)
+void CreateDebugEReaderTrainer(struct BattleTowerEReaderTrainer *eReaderTrainer, const u8 *trainerName, u32 trainerId)
 {
     s32 i;
-    s32 r3;
+    s32 farewellWordId;
 
-    ereaderTrainer->trainerClass = trainerId % 77;
-    write_word_to_mem(trainerId, ereaderTrainer->trainerId);
-    StringCopy8(ereaderTrainer->name, b);
-    r3 = 7;
+    eReaderTrainer->trainerClass = trainerId % 77;
+    write_word_to_mem(trainerId, eReaderTrainer->trainerId);
+    StringCopy8(eReaderTrainer->name, trainerName);
+    farewellWordId = 7;
     for (i = 0; i < 6; i++)
     {
-        ereaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
-        ereaderTrainer->farewellPlayerLost[i] = r3;
-        ereaderTrainer->farewellPlayerWon[i] = r3 + 6;
-        r3++;
+        eReaderTrainer->greeting[i] = gSaveBlock1.easyChats.unk2B28[i];
+        eReaderTrainer->farewellPlayerLost[i] = farewellWordId;
+        eReaderTrainer->farewellPlayerWon[i] = farewellWordId + 6;
+        farewellWordId++;
     }
     for (i = 0; i < 3; i++)
-        sub_803AF78(&gPlayerParty[i], &ereaderTrainer->party[i]);
-    SetEReaderTrainerChecksum(ereaderTrainer);
+        sub_803AF78(&gPlayerParty[i], &eReaderTrainer->party[i]);
+    SetEReaderTrainerChecksum(eReaderTrainer);
 }
 
 void unref_sub_8070F90(void)

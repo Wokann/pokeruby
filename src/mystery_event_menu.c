@@ -356,7 +356,7 @@ static void Task_SelectMysteryEventDebugData(u8 taskId)
     if (gTasks[taskId].data[0] == 0)
     {
         Menu_DrawStdWindowFrame(4, 4, 13, 7);
-        Menu_PrintText(gMysteryEventDebugDataSources[gTasks[taskId].data[1]].text, 5, 5);
+        Menu_PrintText(gMysteryEventDebugDataSources[gTasks[taskId].data[1]].label, 5, 5);
         gTasks[taskId].data[0]++;
     }
 
@@ -381,7 +381,7 @@ static void Task_SelectMysteryEventDebugData(u8 taskId)
         // TODO: fix this
         s32 var = gTasks[taskId].data[1];
         asm(""::"r"(var * 8));
-        gMysteryEventDebugDataSources[var].func(gSharedMem + 0x4000);
+        gMysteryEventDebugDataSources[var].buildScript(gSharedMem + 0x4000);
 
         gMain.state++;
         DestroyTask(taskId);

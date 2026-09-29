@@ -11,188 +11,188 @@
 #include "mail.h"
 
 #if DEBUG
-const u8 Str_842E238[] = DTR("タマゴ", "EGG");
+const u8 sText_DebugMysteryEventEggNickname[] = DTR("タマゴ", "EGG");
 #else
-const u8 Str_842E238[] = _("タマゴ");
+const u8 sText_DebugMysteryEventEggNickname[] = _("タマゴ");
 #endif
 
 #if DEBUG
 
-extern u8 gUnknown_Debug_845DAE1[];
-extern u8 gUnknown_Debug_845DAE1End[];
+extern u8 gDebugMysteryEventEonTicketScript[];
+extern u8 gDebugMysteryEventEonTicketScriptEnd[];
 
-size_t debug_sub_813C404(u8 * dest)
+size_t BuildDebugMysteryEventEonTicketScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845DAE1End - gUnknown_Debug_845DAE1;
-    memcpy(dest, gUnknown_Debug_845DAE1, size);
-    debug_sub_812620C(dest, gUnknown_Debug_845DAE1);
+    size_t size = gDebugMysteryEventEonTicketScriptEnd - gDebugMysteryEventEonTicketScript;
+    memcpy(dest, gDebugMysteryEventEonTicketScript, size);
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventEonTicketScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E3E0[];
-extern u8 gUnknown_Debug_845E3E0End[];
+extern u8 gDebugMysteryEventSpecialRibbonScript[];
+extern u8 gDebugMysteryEventSpecialRibbonScriptEnd[];
 
-size_t debug_sub_813C430(u8 * dest)
+size_t BuildDebugMysteryEventSpecialRibbonScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E3E0End - gUnknown_Debug_845E3E0;
-    memcpy(dest, gUnknown_Debug_845E3E0, size);
-    debug_sub_812620C(dest, gUnknown_Debug_845E3E0);
+    size_t size = gDebugMysteryEventSpecialRibbonScriptEnd - gDebugMysteryEventSpecialRibbonScript;
+    memcpy(dest, gDebugMysteryEventSpecialRibbonScript, size);
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventSpecialRibbonScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E422[];
-extern u8 gUnknown_Debug_845E422End[];
+extern u8 gDebugMysteryEventRareWordScript[];
+extern u8 gDebugMysteryEventRareWordScriptEnd[];
 
-size_t debug_sub_813C45C(u8 * dest)
+size_t BuildDebugMysteryEventRareWordScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E422End - gUnknown_Debug_845E422;
-    memcpy(dest, gUnknown_Debug_845E422, size);
-    debug_sub_812620C(dest, gUnknown_Debug_845E422);
+    size_t size = gDebugMysteryEventRareWordScriptEnd - gDebugMysteryEventRareWordScript;
+    memcpy(dest, gDebugMysteryEventRareWordScript, size);
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventRareWordScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E402[];
-extern u8 gUnknown_Debug_845E402End[];
+extern u8 gDebugMysteryEventNationalDexScript[];
+extern u8 gDebugMysteryEventNationalDexScriptEnd[];
 
-size_t debug_sub_813C488(u8 * dest)
+size_t BuildDebugMysteryEventNationalDexScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E402End - gUnknown_Debug_845E402;
-    memcpy(dest, gUnknown_Debug_845E402, size);
-    debug_sub_812620C(dest, gUnknown_Debug_845E402);
+    size_t size = gDebugMysteryEventNationalDexScriptEnd - gDebugMysteryEventNationalDexScript;
+    memcpy(dest, gDebugMysteryEventNationalDexScript, size);
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventNationalDexScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E606[];
-extern u8 gUnknown_Debug_845E606End[];
+extern u8 gDebugMysteryEventResetRtcScript[];
+extern u8 gDebugMysteryEventResetRtcScriptEnd[];
 
-size_t debug_sub_813C4B4(u8 * dest)
+size_t BuildDebugMysteryEventResetRtcScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E606End - gUnknown_Debug_845E606;
-    memcpy(dest, gUnknown_Debug_845E606, size);
+    size_t size = gDebugMysteryEventResetRtcScriptEnd - gDebugMysteryEventResetRtcScript;
+    memcpy(dest, gDebugMysteryEventResetRtcScript, size);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E619[];
-extern u8 gUnknown_Debug_845E619End[];
+extern u8 gDebugMysteryEventGanlonBerryScript[];
+extern u8 gDebugMysteryEventGanlonBerryScriptEnd[];
 
-size_t debug_sub_813C4D4(u8 * dest)
+size_t BuildDebugMysteryEventGanlonBerryScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E619End - gUnknown_Debug_845E619;
-    memcpy(dest, gUnknown_Debug_845E619, size);
-    debug_sub_81261B4(dest, gUnknown_Debug_845E619);
+    size_t size = gDebugMysteryEventGanlonBerryScriptEnd - gDebugMysteryEventGanlonBerryScript;
+    memcpy(dest, gDebugMysteryEventGanlonBerryScript, size);
+    TrySetMysteryEventScriptChecksum(dest, gDebugMysteryEventGanlonBerryScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E712[];
-extern u8 gUnknown_Debug_845E712End[];
+extern u8 gDebugMysteryEventRegisteelDollScript[];
+extern u8 gDebugMysteryEventRegisteelDollScriptEnd[];
 
-size_t debug_sub_813C500(u8 * dest)
+size_t BuildDebugMysteryEventRegisteelDollScript(u8 *dest)
 {
-    size_t size = gUnknown_Debug_845E712End - gUnknown_Debug_845E712;
-    memcpy(dest, gUnknown_Debug_845E712, size);
-    debug_sub_812620C(dest, gUnknown_Debug_845E712);
+    size_t size = gDebugMysteryEventRegisteelDollScriptEnd - gDebugMysteryEventRegisteelDollScript;
+    memcpy(dest, gDebugMysteryEventRegisteelDollScript, size);
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventRegisteelDollScript);
     return size;
 }
 
-extern u8 gUnknown_Debug_845E797[];
-extern u8 gUnknown_Debug_845E797End[];
-extern u8 gUnknown_Debug_845E7B5[];
+extern u8 gDebugMysteryEventRecordMixingGiftScript[];
+extern u8 gDebugMysteryEventRecordMixingGiftScriptEnd[];
+extern u8 gDebugMysteryEventRecordMixingGiftData[];
 
-size_t debug_sub_813C52C(u8 * dest, u16 itemId)
+size_t BuildDebugMysteryEventRecordMixingGiftScript(u8 *dest, u16 itemId)
 {
-    u8 * ptr;
-    size_t size = gUnknown_Debug_845E797End - gUnknown_Debug_845E797;
-    memcpy(dest, gUnknown_Debug_845E797, size);
-    ptr = gUnknown_Debug_845E7B5 - gUnknown_Debug_845E797 + dest;
-    ptr += 3;
-    ptr[0] = itemId;
-    ptr[1] = itemId >> 8;
-    debug_sub_812620C(dest, gUnknown_Debug_845E797);
+    u8 *itemIdPtr;
+    size_t size = gDebugMysteryEventRecordMixingGiftScriptEnd - gDebugMysteryEventRecordMixingGiftScript;
+    memcpy(dest, gDebugMysteryEventRecordMixingGiftScript, size);
+    itemIdPtr = gDebugMysteryEventRecordMixingGiftData - gDebugMysteryEventRecordMixingGiftScript + dest;
+    itemIdPtr += 3;
+    itemIdPtr[0] = itemId;
+    itemIdPtr[1] = itemId >> 8;
+    TrySetMysteryEventScriptCRC(dest, gDebugMysteryEventRecordMixingGiftScript);
     return size;
 }
 
-size_t debug_sub_813C580(u8 * dest)
+size_t BuildDebugMysteryEventPotionGiftScript(u8 *dest)
 {
-    return debug_sub_813C52C(dest, ITEM_POTION);
+    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_POTION);
 }
 
-size_t debug_sub_813C58C(u8 * dest)
+size_t BuildDebugMysteryEventPokeBallGiftScript(u8 *dest)
 {
-    return debug_sub_813C52C(dest, ITEM_POKE_BALL);
+    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_POKE_BALL);
 }
 
-size_t debug_sub_813C598(u8 * dest)
+size_t BuildDebugMysteryEventCheriBerryGiftScript(u8 *dest)
 {
-    return debug_sub_813C52C(dest, ITEM_CHERI_BERRY);
+    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_CHERI_BERRY);
 }
 
-size_t debug_sub_813C5A4(u8 * dest)
+size_t BuildDebugMysteryEventFocusPunchGiftScript(u8 *dest)
 {
-    return debug_sub_813C52C(dest, ITEM_TM01_FOCUS_PUNCH);
+    return BuildDebugMysteryEventRecordMixingGiftScript(dest, ITEM_TM01_FOCUS_PUNCH);
 }
 
-extern u8 gUnknown_Debug_845DDB2[];
-extern u8 gUnknown_Debug_845DDB2End[];
-extern u8 gUnknown_Debug_845DDD6[];
+extern u8 gDebugMysteryEventEnigmaBerryScript[];
+extern u8 gDebugMysteryEventEnigmaBerryScriptEnd[];
+extern u8 gDebugMysteryEventEnigmaBerryData[];
 
-const u8 Str_842E23C[] = DTR("ガイブ", "EXTERNAL");
+const u8 sText_DebugMysteryEventExternal[] = DTR("ガイブ", "EXTERNAL");
 
-size_t debug_sub_813C5B4(u8 * dest)
+size_t BuildDebugMysteryEventEnigmaBerryScript(u8 *dest)
 {
-    u8 * saveBerry = (u8 *)&gSaveBlock1.enigmaBerry;
-    u8 * berry = (u8 *)(dest - gUnknown_Debug_845DDB2 + gUnknown_Debug_845DDD6);
-    size_t size = gUnknown_Debug_845DDB2End - gUnknown_Debug_845DDB2;
+    u8 *enigmaBerry = (u8 *)&gSaveBlock1.enigmaBerry;
+    u8 *scriptEnigmaBerry = (u8 *)(dest - gDebugMysteryEventEnigmaBerryScript + gDebugMysteryEventEnigmaBerryData);
+    size_t size = gDebugMysteryEventEnigmaBerryScriptEnd - gDebugMysteryEventEnigmaBerryScript;
     int i;
 
-    DebugCreateEnigmaBerry(Str_842E23C, 0, 0);
+    DebugCreateEnigmaBerry(sText_DebugMysteryEventExternal, 0, 0);
 
     for (i = 0; i < 0x1000; i++)
         dest[i] = 0;
 
     for (i = 0; i < size; i++)
-        dest[i] = gUnknown_Debug_845DDB2[i];
+        dest[i] = gDebugMysteryEventEnigmaBerryScript[i];
 
     for (i = 0; i < sizeof(struct EnigmaBerry); i++)
-        berry[i] = saveBerry[i];
+        scriptEnigmaBerry[i] = enigmaBerry[i];
 
     ClearEnigmaBerries();
-    debug_sub_81261B4(dest, gUnknown_Debug_845DDB2);
+    TrySetMysteryEventScriptChecksum(dest, gDebugMysteryEventEnigmaBerryScript);
     return size;
 }
 
-const u8 Str_842E240[] = _("ENGLISH");
-const u8 Str_842E248[] = _("TOURNAMENT");
+const u8 sText_DebugMysteryEventOtName[] = _("ENGLISH");
+const u8 sText_DebugMysteryEventNickname[] = _("TOURNAMENT");
 
-void debug_sub_813C638(struct Pokemon * mon, u16 species, u8 level, u16 itemId)
+void CreateDebugMysteryEventPokemon(struct Pokemon *mon, u16 species, u8 level, u16 itemId)
 {
-    u32 _itemId;
+    u32 heldItem;
     ZeroMonData(mon);
     CreateMon(mon, species, level, 32, FALSE, 0, TRUE, 9999);
-    SetMonData(mon, MON_DATA_OT_NAME, Str_842E240);
-    SetMonData(mon, MON_DATA_NICKNAME, Str_842E248);
-    _itemId = itemId;
-    SetMonData(mon, MON_DATA_HELD_ITEM, &_itemId);
+    SetMonData(mon, MON_DATA_OT_NAME, sText_DebugMysteryEventOtName);
+    SetMonData(mon, MON_DATA_NICKNAME, sText_DebugMysteryEventNickname);
+    heldItem = itemId;
+    SetMonData(mon, MON_DATA_HELD_ITEM, &heldItem);
 }
 
-void debug_sub_813C6AC(struct Pokemon *mon, struct Mail *mail)
+void CreateDebugMysteryEventMail(struct Pokemon *mon, struct Mail *mail)
 {
     u16 itemId;
     ClearMail(mail);
     itemId = GetMonData(mon, MON_DATA_HELD_ITEM);
     if (ItemIsMail(itemId))
     {
-        u8 * name = mail->playerName;
-        u8 * id = mail->trainerId;
-        u8 nameBuf[8];
+        u8 *playerName = mail->playerName;
+        u8 *trainerId = mail->trainerId;
+        u8 otName[8];
         int i;
 
         for (i = 0; i < 9; i++)
             mail->words[i] = i + 1;
 
-        GetMonData(mon, MON_DATA_OT_NAME, nameBuf);
-        StringCopyN(name, nameBuf, OT_NAME_LENGTH + 1);
+        GetMonData(mon, MON_DATA_OT_NAME, otName);
+        StringCopyN(playerName, otName, OT_NAME_LENGTH + 1);
 
-        write_word_to_mem(GetMonData(mon, MON_DATA_OT_ID), id);
+        write_word_to_mem(GetMonData(mon, MON_DATA_OT_ID), trainerId);
 
         mail->species = SpeciesToMailSpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_PERSONALITY));
         mail->itemId = itemId;
@@ -200,167 +200,167 @@ void debug_sub_813C6AC(struct Pokemon *mon, struct Mail *mail)
     }
 }
 
-extern u8 gUnknown_Debug_845E443[];
-extern u8 gUnknown_Debug_845E443End[];
-extern u8 gUnknown_Debug_845E467[];
-extern u8 gUnknown_Debug_845E4CB[];
+extern u8 gDebugMysteryEventPokemonGiftScript[];
+extern u8 gDebugMysteryEventPokemonGiftScriptEnd[];
+extern u8 gDebugMysteryEventPokemonGiftData[];
+extern u8 gDebugMysteryEventPokemonGiftMailData[];
 
-size_t debug_sub_813C740(u8 * dest)
+size_t BuildDebugMysteryEventEggScript(u8 *dest)
 {
     struct Mail mail;
-    u8 * src = gUnknown_Debug_845E443;
-    u8 * end = gUnknown_Debug_845E443End;
-    struct Pokemon *mon = gEnemyParty;
-    size_t size = end - src;
-    u8 dataBuffer[11];
+    u8 *template = gDebugMysteryEventPokemonGiftScript;
+    u8 *templateEnd = gDebugMysteryEventPokemonGiftScriptEnd;
+    struct Pokemon *pokemon = gEnemyParty;
+    size_t size = templateEnd - template;
+    u8 buffer[11];
 
-    memcpy(dest, src, size);
-    debug_sub_813C638(mon, SPECIES_PIKACHU, 5, ITEM_NONE);
-    dataBuffer[0] = TRUE;
-    SetMonData(mon, MON_DATA_IS_EGG, dataBuffer);
-    dataBuffer[0] = 3;
-    SetMonData(mon, MON_DATA_FRIENDSHIP, dataBuffer);
-    dataBuffer[0] = 255;
-    SetMonData(mon, MON_DATA_MET_LOCATION, dataBuffer);
+    memcpy(dest, template, size);
+    CreateDebugMysteryEventPokemon(pokemon, SPECIES_PIKACHU, 5, ITEM_NONE);
+    buffer[0] = TRUE;
+    SetMonData(pokemon, MON_DATA_IS_EGG, buffer);
+    buffer[0] = 3;
+    SetMonData(pokemon, MON_DATA_FRIENDSHIP, buffer);
+    buffer[0] = 255;
+    SetMonData(pokemon, MON_DATA_MET_LOCATION, buffer);
 
-    StringCopyN(dataBuffer, Str_842E238, POKEMON_NAME_LENGTH + 1);
-    SetMonData(mon, MON_DATA_NICKNAME, dataBuffer);
+    StringCopyN(buffer, sText_DebugMysteryEventEggNickname, POKEMON_NAME_LENGTH + 1);
+    SetMonData(pokemon, MON_DATA_NICKNAME, buffer);
 
-    dataBuffer[0] = LANGUAGE_JAPANESE;
-    SetMonData(mon, MON_DATA_LANGUAGE, dataBuffer);
+    buffer[0] = LANGUAGE_JAPANESE;
+    SetMonData(pokemon, MON_DATA_LANGUAGE, buffer);
 
-    memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
+    memcpy(gDebugMysteryEventPokemonGiftData - template + dest, pokemon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
+    memcpy(gDebugMysteryEventPokemonGiftMailData - template + dest, &mail, sizeof(struct Mail));
 
     return size;
 }
 
-size_t debug_sub_813C810(u8 * dest)
+size_t BuildDebugMysteryEventUnownScript(u8 *dest)
 {
     struct Mail mail;
-    u8 * src = gUnknown_Debug_845E443;
-    u8 * end = gUnknown_Debug_845E443End;
-    struct Pokemon *mon = gEnemyParty;
-    size_t size = end - src;
+    u8 *template = gDebugMysteryEventPokemonGiftScript;
+    u8 *templateEnd = gDebugMysteryEventPokemonGiftScriptEnd;
+    struct Pokemon *pokemon = gEnemyParty;
+    size_t size = templateEnd - template;
 
-    memcpy(dest, src, size);
-    debug_sub_813C638(mon, SPECIES_UNOWN, 21, ITEM_DREAM_MAIL);
-    debug_sub_813C6AC(mon, &mail);
+    memcpy(dest, template, size);
+    CreateDebugMysteryEventPokemon(pokemon, SPECIES_UNOWN, 21, ITEM_DREAM_MAIL);
+    CreateDebugMysteryEventMail(pokemon, &mail);
 
-    memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
+    memcpy(gDebugMysteryEventPokemonGiftData - template + dest, pokemon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
+    memcpy(gDebugMysteryEventPokemonGiftMailData - template + dest, &mail, sizeof(struct Mail));
 
-    debug_sub_812620C(dest, src);
+    TrySetMysteryEventScriptCRC(dest, template);
 
     return size;
 }
 
-size_t debug_sub_813C888(u8 * dest)
+size_t BuildDebugMysteryEventInvalidUnownScript(u8 *dest)
 {
     struct Mail mail;
-    u8 * src = gUnknown_Debug_845E443;
-    u8 * end = gUnknown_Debug_845E443End;
-    struct Pokemon *mon = gEnemyParty;
-    size_t size = end - src;
+    u8 *template = gDebugMysteryEventPokemonGiftScript;
+    u8 *templateEnd = gDebugMysteryEventPokemonGiftScriptEnd;
+    struct Pokemon *pokemon = gEnemyParty;
+    size_t size = templateEnd - template;
 
-    memcpy(dest, src, size);
-    debug_sub_813C638(mon, SPECIES_UNOWN, 21, ITEM_DREAM_MAIL);
-    debug_sub_813C6AC(mon, &mail);
-    mon->box.checksum = 0;
+    memcpy(dest, template, size);
+    CreateDebugMysteryEventPokemon(pokemon, SPECIES_UNOWN, 21, ITEM_DREAM_MAIL);
+    CreateDebugMysteryEventMail(pokemon, &mail);
+    pokemon->box.checksum = 0;
 
-    memcpy(gUnknown_Debug_845E467 - src + dest, mon, sizeof(struct Pokemon));
+    memcpy(gDebugMysteryEventPokemonGiftData - template + dest, pokemon, sizeof(struct Pokemon));
 
-    memcpy(gUnknown_Debug_845E4CB - src + dest, &mail, sizeof(struct Mail));
+    memcpy(gDebugMysteryEventPokemonGiftMailData - template + dest, &mail, sizeof(struct Mail));
 
-    debug_sub_812620C(dest, src);
+    TrySetMysteryEventScriptCRC(dest, template);
 
     return size;
 }
 
-void debug_sub_813C904(void)
+void CreateDebugMysteryEventTrainerParty(void)
 {
-    debug_sub_813C638(gPlayerParty + 0, SPECIES_CHARMELEON, 50, ITEM_QUICK_CLAW);
-    debug_sub_813C638(gPlayerParty + 1, SPECIES_WARTORTLE, 50, ITEM_FOCUS_BAND);
-    debug_sub_813C638(gPlayerParty + 2, SPECIES_IVYSAUR, 50, ITEM_LUM_BERRY);
+    CreateDebugMysteryEventPokemon(gPlayerParty + 0, SPECIES_CHARMELEON, 50, ITEM_QUICK_CLAW);
+    CreateDebugMysteryEventPokemon(gPlayerParty + 1, SPECIES_WARTORTLE, 50, ITEM_FOCUS_BAND);
+    CreateDebugMysteryEventPokemon(gPlayerParty + 2, SPECIES_IVYSAUR, 50, ITEM_LUM_BERRY);
 }
 
-extern u8 gUnknown_Debug_845E4EF[];
-extern u8 gUnknown_Debug_845E4EFEnd[];
-extern u8 gUnknown_Debug_845E506[];
+extern u8 gDebugMysteryEventEReaderTrainerScript[];
+extern u8 gDebugMysteryEventEReaderTrainerScriptEnd[];
+extern u8 gDebugMysteryEventEReaderTrainerData[];
 
-const u8 Str_842E253[] = DTR("　そら　　カードイー", "eCARD TRAINER");
+const u8 sText_DebugMysteryEventEReaderTrainerName[] = DTR("　そら　　カードイー", "eCARD TRAINER");
 
-size_t debug_sub_813C93C(u8 * dest)
+size_t BuildDebugMysteryEventEReaderTrainerScript(u8 *dest)
 {
-    u8 * src = gUnknown_Debug_845E4EF;
-    size_t size = gUnknown_Debug_845E4EFEnd - src;
-    struct BattleTowerEReaderTrainer ereaderTrainer;
+    u8 *template = gDebugMysteryEventEReaderTrainerScript;
+    size_t size = gDebugMysteryEventEReaderTrainerScriptEnd - template;
+    struct BattleTowerEReaderTrainer eReaderTrainer;
 
-    memcpy(dest, src, size);
+    memcpy(dest, template, size);
     SavePlayerParty();
-    debug_sub_813C904();
-    debug_sub_8075DB4(&ereaderTrainer, Str_842E253 + 5, 9999);
+    CreateDebugMysteryEventTrainerParty();
+    CreateDebugEReaderTrainer(&eReaderTrainer, sText_DebugMysteryEventEReaderTrainerName + 5, 9999);
     LoadPlayerParty();
 
-    memcpy(gUnknown_Debug_845E506 - src + dest, &ereaderTrainer, sizeof(ereaderTrainer));
+    memcpy(gDebugMysteryEventEReaderTrainerData - template + dest, &eReaderTrainer, sizeof(eReaderTrainer));
 
     return size;
 }
 
-const u8 Str_842E25E[] = KANA("ポケコッコ"); // TRN: kokko?
-const u8 Str_842E264[] = _("ticket");
-const u8 Str_842E26B[] = _("{PKMN}");
-const u8 Str_842E26E[] = _("wrong {PKMN}");
-const u8 Str_842E277[] = _("ribbon");
-const u8 Str_842E27E[] = _("DEX");
-const u8 Str_842E282[] = _("message");
-const u8 Str_842E28A[] = _("egg");
-const u8 Str_842E28E[] = _("RAM seed");
-const u8 Str_842E297[] = _("trainer");
-const u8 Str_842E29F[] = _("clock");
-const u8 Str_842E2A5[] = _("item");
-const u8 Str_842E2AA[] = _("goods");
-const u8 Str_842E2B0[] = _("potion");
-const u8 Str_842E2B7[] = _("ball");
-const u8 Str_842E2BC[] = _("cheri berry");
-const u8 Str_842E2C8[] = _("TM01");
+const u8 sText_DebugMysteryEventKokko[] = KANA("ポケコッコ"); // TRN: kokko?
+const u8 sText_DebugMysteryEventEonTicket[] = _("ticket");
+const u8 sText_DebugMysteryEventPokemon[] = _("{PKMN}");
+const u8 sText_DebugMysteryEventInvalidPokemon[] = _("wrong {PKMN}");
+const u8 sText_DebugMysteryEventRibbon[] = _("ribbon");
+const u8 sText_DebugMysteryEventNationalDex[] = _("DEX");
+const u8 sText_DebugMysteryEventMessage[] = _("message");
+const u8 sText_DebugMysteryEventEggGift[] = _("egg");
+const u8 sText_DebugMysteryEventRamScript[] = _("RAM seed");
+const u8 sText_DebugMysteryEventTrainer[] = _("trainer");
+const u8 sText_DebugMysteryEventClock[] = _("clock");
+const u8 sText_DebugMysteryEventItem[] = _("item");
+const u8 sText_DebugMysteryEventGoods[] = _("goods");
+const u8 sText_DebugMysteryEventPotion[] = _("potion");
+const u8 sText_DebugMysteryEventPokeBall[] = _("ball");
+const u8 sText_DebugMysteryEventCheriBerry[] = _("cheri berry");
+const u8 sText_DebugMysteryEventFocusPunch[] = _("TM01");
 
 const struct MysteryEventDebugDataSource gMysteryEventDebugDataSources[] = {
-    {Str_842E264, debug_sub_813C404},
-    {Str_842E26B, debug_sub_813C810},
-    {Str_842E26E, debug_sub_813C888},
-    {Str_842E277, debug_sub_813C430},
-    {Str_842E27E, debug_sub_813C488},
-    {Str_842E282, debug_sub_813C45C},
-    {Str_842E28A, debug_sub_813C740},
-    {Str_842E28E, debug_sub_813C5B4},
-    {Str_842E297, debug_sub_813C93C},
-    {Str_842E29F, debug_sub_813C4B4},
-    {Str_842E2A5, debug_sub_813C4D4},
-    {Str_842E2AA, debug_sub_813C500},
-    {Str_842E2B0, debug_sub_813C580},
-    {Str_842E2B7, debug_sub_813C58C},
-    {Str_842E2BC, debug_sub_813C598},
-    {Str_842E2C8, debug_sub_813C5A4}
+    {sText_DebugMysteryEventEonTicket, BuildDebugMysteryEventEonTicketScript},
+    {sText_DebugMysteryEventPokemon, BuildDebugMysteryEventUnownScript},
+    {sText_DebugMysteryEventInvalidPokemon, BuildDebugMysteryEventInvalidUnownScript},
+    {sText_DebugMysteryEventRibbon, BuildDebugMysteryEventSpecialRibbonScript},
+    {sText_DebugMysteryEventNationalDex, BuildDebugMysteryEventNationalDexScript},
+    {sText_DebugMysteryEventMessage, BuildDebugMysteryEventRareWordScript},
+    {sText_DebugMysteryEventEggGift, BuildDebugMysteryEventEggScript},
+    {sText_DebugMysteryEventRamScript, BuildDebugMysteryEventEnigmaBerryScript},
+    {sText_DebugMysteryEventTrainer, BuildDebugMysteryEventEReaderTrainerScript},
+    {sText_DebugMysteryEventClock, BuildDebugMysteryEventResetRtcScript},
+    {sText_DebugMysteryEventItem, BuildDebugMysteryEventGanlonBerryScript},
+    {sText_DebugMysteryEventGoods, BuildDebugMysteryEventRegisteelDollScript},
+    {sText_DebugMysteryEventPotion, BuildDebugMysteryEventPotionGiftScript},
+    {sText_DebugMysteryEventPokeBall, BuildDebugMysteryEventPokeBallGiftScript},
+    {sText_DebugMysteryEventCheriBerry, BuildDebugMysteryEventCheriBerryGiftScript},
+    {sText_DebugMysteryEventFocusPunch, BuildDebugMysteryEventFocusPunchGiftScript}
 };
 
-extern u8 gUnknown_Debug_845E306[];
+extern u8 gDebugMysteryEventPokemonScript[];
 
 const u8 gMysteryEventDebugDataSourceCount = 16;
 
-u8 *const gUnknown_Debug_842E354[] = {
-    gUnknown_Debug_845DAE1,
-    gUnknown_Debug_845DDB2,
-    gUnknown_Debug_845E306,
-    gUnknown_Debug_845E3E0,
-    gUnknown_Debug_845E3E0,
-    gUnknown_Debug_845E402,
-    gUnknown_Debug_845E402,
-    gUnknown_Debug_845E422,
-    gUnknown_Debug_845E422,
-    gUnknown_Debug_845E443
+u8 *const gDebugMysteryEventScriptTemplates[] = {
+    gDebugMysteryEventEonTicketScript,
+    gDebugMysteryEventEnigmaBerryScript,
+    gDebugMysteryEventPokemonScript,
+    gDebugMysteryEventSpecialRibbonScript,
+    gDebugMysteryEventSpecialRibbonScript,
+    gDebugMysteryEventNationalDexScript,
+    gDebugMysteryEventNationalDexScript,
+    gDebugMysteryEventRareWordScript,
+    gDebugMysteryEventRareWordScript,
+    gDebugMysteryEventPokemonGiftScript
 };
 
 #endif // DEBUG
