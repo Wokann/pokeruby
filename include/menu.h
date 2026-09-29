@@ -59,7 +59,7 @@ u8 Menu_MoveCursorNoWrap(s8);
 u8 Menu_GetCursorPos(void);
 s8 Menu_ProcessInput(void);
 s8 Menu_ProcessInputNoWrap(void);
-void sub_807274C(u8, u8, u8, u8, const struct MenuAction[], u8, u32);
+void DrawMenuActionGrid(u8, u8, u8, u8, const struct MenuAction[], u8, u32);
 s8 Menu_ProcessInputGridLayout(void);
 u8 Menu_GetColumnXCoord(u8);
 void Menu_PrintItems(u8, u8, u8, const void *);

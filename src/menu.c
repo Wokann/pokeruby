@@ -27,9 +27,9 @@ struct Menu
 static void MultistepInitMenuWindowInternal(const struct WindowTemplate *, u16);
 static void InitMenuWindowInternal(const struct WindowTemplate *, u16);
 static bool8 IsGridCursorMovementClamped(void);
-static u8 sub_8072484(u8, u8, u8, u8, u8, u8, u32);
-static u8 sub_80724F4(u8, u8, u8, const struct MenuAction[], u8);
-static void sub_8072620(u8, u8, u8, const struct MenuAction[], u8);
+static u8 InitMenuActionGrid(u8, u8, u8, u8, u8, u8, u32);
+static u8 DrawMenuActionGridWindow(u8, u8, u8, const struct MenuAction[], u8);
+static void PrintMenuActionGrid(u8, u8, u8, const struct MenuAction[], u8);
 static void sub_8072D18(u8, u8);
 static void RedrawMenuCursor(u8, u8);
 
@@ -415,7 +415,7 @@ static bool8 IsGridCursorMovementClamped(void)
     return FALSE;
 }
 
-static u8 sub_8072484(u8 a1, u8 a2, u8 menuItemCount, u8 a4, u8 width, u8 a6, u32 a7)
+static u8 InitMenuActionGrid(u8 a1, u8 a2, u8 menuItemCount, u8 a4, u8 width, u8 a6, u32 a7)
 {
     u8 v7;
 
@@ -429,7 +429,7 @@ static u8 sub_8072484(u8 a1, u8 a2, u8 menuItemCount, u8 a4, u8 width, u8 a6, u3
     return a4;
 }
 
-static u8 sub_80724F4(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
+static u8 DrawMenuActionGridWindow(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
 {
     u8 i;
     u8 maxWidth;
@@ -487,7 +487,7 @@ static u8 sub_80724F4(u8 left, u8 top, u8 menuItemCount, const struct MenuAction
     return maxWidth;
 }
 
-static void sub_8072620(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
+static void PrintMenuActionGrid(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
 {
     u8 i;
     u8 maxWidth;
@@ -521,12 +521,12 @@ static void sub_8072620(u8 left, u8 top, u8 menuItemCount, const struct MenuActi
     }
 }
 
-void sub_807274C(u8 left, u8 top, u8 menuItemCount, u8 a4, const struct MenuAction menuItems[], u8 columnCount, u32 a7)
+void DrawMenuActionGrid(u8 left, u8 top, u8 menuItemCount, u8 a4, const struct MenuAction menuItems[], u8 columnCount, u32 a7)
 {
-    u8 maxWidth = sub_80724F4(left, top, menuItemCount, menuItems, columnCount);
+    u8 maxWidth = DrawMenuActionGridWindow(left, top, menuItemCount, menuItems, columnCount);
 
-    sub_8072484(left + 1, top + 1, menuItemCount, a4, columnCount, maxWidth, a7);
-    sub_8072620(left + 1, top + 1, menuItemCount, menuItems, columnCount);
+    InitMenuActionGrid(left + 1, top + 1, menuItemCount, a4, columnCount, maxWidth, a7);
+    PrintMenuActionGrid(left + 1, top + 1, menuItemCount, menuItems, columnCount);
 }
 
 s8 Menu_ProcessInputGridLayout(void)

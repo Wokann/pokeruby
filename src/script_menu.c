@@ -261,7 +261,7 @@ bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignore
 
         gSpecialVar_Result = 0xFF;
 
-        sub_807274C(left, top, sMultichoiceLists[multichoiceId].count, 0, sMultichoiceLists[multichoiceId].list, columnCount, 0);
+        DrawMenuActionGrid(left, top, sMultichoiceLists[multichoiceId].count, 0, sMultichoiceLists[multichoiceId].list, columnCount, 0);
 
         taskId = CreateTask(Task_HandleMultichoiceGridInput, 80);
 
