@@ -182,9 +182,9 @@ void Menu_PrintTextWithStdFrame(const u8 *str)
     Menu_PrintText(str, 3, 15);
 }
 
-void sub_8071F60(u8 a1, u8 a2, u8 a3)
+void Menu_PrintChar(u8 c, u8 left, u8 top)
 {
-    Text_InitWindowAndPrintChar(gMenuWindowPtr, a1, gMenuTextTileOffset, a2, a3);
+    Text_InitWindowAndPrintChar(gMenuWindowPtr, c, gMenuTextTileOffset, left, top);
 }
 
 u16 unref_sub_8071F98(u8 x, u8 y)

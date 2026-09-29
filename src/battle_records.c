@@ -209,11 +209,11 @@ static void UpdateTrainerCardWinsLosses(s32 battler)
     switch (gBattleOutcome)
     {
     case B_OUTCOME_WON:
-        IncTrainerCardWins(battler ^ 1);
+        IncTrainerCardWins(BATTLE_OPPOSITE(battler));
         IncTrainerCardLosses(battler);
         break;
     case B_OUTCOME_LOST:
-        IncTrainerCardLosses(battler ^ 1);
+        IncTrainerCardLosses(BATTLE_OPPOSITE(battler));
         IncTrainerCardWins(battler);
         break;
     }
@@ -380,7 +380,7 @@ void ShowBattleTowerRecords(void)
     Menu_PrintText(gOtherText_Lv100, 5, 12);
     for (i = 5; i < 26; i++)
     {
-        sub_8071F60(CHAR_HYPHEN, i, 10);
+        Menu_PrintChar(CHAR_HYPHEN, i, 10);
     }
     PrintLastWinStreak(0, 10, 6);
     PrintRecordWinStreak(0, 10, 8);

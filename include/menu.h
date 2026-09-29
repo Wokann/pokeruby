@@ -44,7 +44,7 @@ void Menu_BlankWindowRect(u8, u8, u8, u8);
 void Menu_EraseScreen(void);
 void Menu_DrawStdWindowFrame(u8, u8, u8, u8);
 void Menu_PrintTextWithStdFrame(const u8 *str);
-void sub_8071F60(u8, u8, u8);
+void Menu_PrintChar(u8 c, u8 left, u8 top);
 u16 unref_sub_8071F98(u8, u8);
 void unref_sub_8071FBC(u16, u8, u8, u8, u8);
 void Menu_DisplayDialogueFrame(void);

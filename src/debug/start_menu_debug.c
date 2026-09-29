@@ -680,7 +680,7 @@ void DebugMenu_8076EF4(void)
     Menu_PrintItems(2, 1, ARRAY_COUNT(gTestMenu_FieldStartNames), gTestMenu_FieldStartNames);
     for (i = 0; i < ARRAY_COUNT(gTestMenu_FieldStartNames); i++)
     {
-        sub_8071F60((gTestMenu_FieldStartNames[i].flags & 1) == MALE ? CHAR_MALE : CHAR_FEMALE, 10, 2 * i + 1);
+        Menu_PrintChar((gTestMenu_FieldStartNames[i].flags & 1) == MALE ? CHAR_MALE : CHAR_FEMALE, 10, 2 * i + 1);
     }
     InitMenu(0, 1, 1, ARRAY_COUNT(gTestMenu_FieldStartNames), 0, 9);
 }
@@ -2603,17 +2603,17 @@ const struct GameTimeDebugMenuStruct gUnknown_Debug_839C5F4[] = {
 void DebugMenu_8078E80(s16 * a0)
 {
     Menu_BlankWindowRect(2, 15, 22, 16);
-    sub_8071F60(0xd0, gUnknown_Debug_839C5F4[*a0].round1Points, 15);
+    Menu_PrintChar(0xd0, gUnknown_Debug_839C5F4[*a0].round1Points, 15);
 }
 
 void DebugMenu_8078EB0(s16 * a0)
 {
     ConvertIntToDecimalStringN(gStringVar1, a0[1], STR_CONV_MODE_RIGHT_ALIGN, 3);
     Menu_PrintText(gStringVar1, 2, 17);
-    sub_8071F60(0xf0, 5, 17);
+    Menu_PrintChar(0xf0, 5, 17);
     ConvertIntToDecimalStringN(gStringVar1, a0[2], STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar1, 6, 17);
-    sub_8071F60(0xf0, 8, 17);
+    Menu_PrintChar(0xf0, 8, 17);
     ConvertIntToDecimalStringN(gStringVar1, a0[3], STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar1, 9, 17);
 }
