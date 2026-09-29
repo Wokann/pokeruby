@@ -93,7 +93,7 @@ static void Task_WeatherMain(u8 taskId);
 static void None_Init(void);
 static void None_Main(void);
 static u8 None_Finish(void);
-// Ruby retains this weather callback's legacy int definition in field_weather_effects.c.
+// Ruby retains this weather callback's legacy int definition in field_weather_effect.c.
 bool8 Drought_Finish(void);
 
 static const struct WeatherCallbacks sWeatherFuncs[] =
