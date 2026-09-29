@@ -132,9 +132,6 @@ static void CB2_BeginEvolutionScene(void)
 #define TASK_BIT_CAN_STOP       (1 << 0)
 #define TASK_BIT_LEARN_MOVE     (1 << 7)
 
-#define MON_HAS_MAX_MOVES       0xFFFF
-#define MON_ALREADY_KNOWS_MOVE  0xFFFE
-
 static void Task_BeginEvolutionScene(u8 taskID)
 {
     struct Pokemon *mon = NULL;
@@ -1380,9 +1377,6 @@ static void Task_TradeEvolutionScene(u8 taskID)
 #undef tLearnMoveNoState
 #undef tEvoWasStopped
 #undef tPartyId
-#undef MON_HAS_MAX_MOVES
-#undef MON_ALREADY_KNOWS_MOVE
-
 /*
 DizzyEgg, 27.08.2017
 NOTE:

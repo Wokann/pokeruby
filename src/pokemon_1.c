@@ -1873,9 +1873,9 @@ u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
             return move;
         }
         if (existingMove == move)
-            return -2;
+            return MON_ALREADY_KNOWS_MOVE;
     }
-    return -1;
+    return MON_HAS_MAX_MOVES;
 }
 
 u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move)
@@ -1892,7 +1892,7 @@ u16 GiveMoveToBattleMon(struct BattlePokemon *mon, u16 move)
         }
     }
 
-    return -1;
+    return MON_HAS_MAX_MOVES;
 }
 
 void SetMonMoveSlot(struct Pokemon *mon, u16 move, u8 slot)
@@ -1930,7 +1930,7 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
 
         move = (gLevelUpLearnsets[species][i] & 0x1FF);
 
-        if (GiveMoveToBoxMon(boxMon, move) == (u16)-1)
+        if (GiveMoveToBoxMon(boxMon, move) == MON_HAS_MAX_MOVES)
             DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, move);
     }
 }

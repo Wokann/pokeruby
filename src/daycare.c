@@ -180,7 +180,7 @@ static void ApplyDaycareExperience(struct Pokemon * mon)
             while ((learnedMove = MonTryLearningNewMove(mon, firstMove)) != 0)
             {
                 firstMove = FALSE;
-                if (learnedMove == 0xffff)
+                if (learnedMove == MON_HAS_MAX_MOVES)
                 {
                     // Mon already knows 4 moves.
                     DeleteFirstMoveAndGiveMoveToMon(mon, gMoveToLearn);
@@ -538,7 +538,7 @@ void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, struct BoxP
             {
                 if (gHatchedEggFatherMoves[i] == gHatchedEggEggMoves[j])
                 {
-                    if (GiveMoveToMon(egg, gHatchedEggFatherMoves[i]) == 0xffff)
+                    if (GiveMoveToMon(egg, gHatchedEggFatherMoves[i]) == MON_HAS_MAX_MOVES)
                         DeleteFirstMoveAndGiveMoveToMon(egg, gHatchedEggFatherMoves[i]);
                     break;
                 }
@@ -558,7 +558,7 @@ void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, struct BoxP
             {
                 if (gHatchedEggFatherMoves[i] == ItemIdToBattleMoveId(ITEM_TM01_FOCUS_PUNCH + j) && CanMonLearnTMHM(egg, j))
                 {
-                    if (GiveMoveToMon(egg, gHatchedEggFatherMoves[i]) == 0xffff)
+                    if (GiveMoveToMon(egg, gHatchedEggFatherMoves[i]) == MON_HAS_MAX_MOVES)
                         DeleteFirstMoveAndGiveMoveToMon(egg, gHatchedEggFatherMoves[i]);
                 }
             }
@@ -580,7 +580,7 @@ void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, struct BoxP
         {
             if (gHatchedEggLevelUpMoves[j] != MOVE_NONE && gHatchedEggFinalMoves[i] == gHatchedEggLevelUpMoves[j])
             {
-                if (GiveMoveToMon(egg, gHatchedEggFinalMoves[i]) == 0xffff)
+                if (GiveMoveToMon(egg, gHatchedEggFinalMoves[i]) == MON_HAS_MAX_MOVES)
                     DeleteFirstMoveAndGiveMoveToMon(egg, gHatchedEggFinalMoves[i]);
                 break;
             }

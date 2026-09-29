@@ -3246,7 +3246,7 @@ void Task_TeamMonTMMove(u8 taskId)
         }
         else
         {
-            if (GiveMoveToMon(gPartyMenu.pokemon, gPartyMenu.unk8) != 0xFFFF)
+            if (GiveMoveToMon(gPartyMenu.pokemon, gPartyMenu.unk8) != MON_HAS_MAX_MOVES)
             {
                 Task_TeamMonTMMove2(taskId);
             }
@@ -4186,7 +4186,7 @@ void Task_RareCandy3(u8 taskId)
                     sub_8070D90(taskId);
                 }
                 break;
-            case 0xFFFF:
+            case MON_HAS_MAX_MOVES:
                 // Mon already knows 4 moves.
                 GetMonNickname(gPartyMenu.pokemon, gStringVar1);
                 StringCopy(gStringVar2, gMoveNames[gMoveToLearn]);
@@ -4197,7 +4197,7 @@ void Task_RareCandy3(u8 taskId)
                 gPartyMenu.unk8 = gMoveToLearn;
                 gTasks[taskId].func = sub_806F358;
                 break;
-            case 0xFFFE:
+            case MON_ALREADY_KNOWS_MOVE:
                 // Move was already known by the mon.
                 gTasks[taskId].func = TeachMonMoveInPartyMenu;
                 break;
@@ -4238,7 +4238,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
             sub_8070D90(taskId);
         }
         break;
-    case 0xFFFF:
+    case MON_HAS_MAX_MOVES:
         // Mon already knows 4 moves.
         GetMonNickname(gPartyMenu.pokemon, gStringVar1);
         StringCopy(gStringVar2, gMoveNames[gMoveToLearn]);
@@ -4249,7 +4249,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
         gPartyMenu.unk8 = gMoveToLearn;
         gTasks[taskId].func = sub_806F358;
         break;
-    case 0xFFFE:
+    case MON_ALREADY_KNOWS_MOVE:
         // Move was already known by the mon. Go on the the next move to be learned.
         TeachMonMoveInPartyMenu(taskId);
         break;

@@ -5237,14 +5237,14 @@ void atk59_handlelearnnewmove(void)
     u8* loc2 = T1_READ_PTR(gBattlescriptCurrInstr + 5);
 
     u16 ret = MonTryLearningNewMove(&gPlayerParty[gBattleStruct->expGetterMonId], T2_READ_8(gBattlescriptCurrInstr + 9));
-    while (ret == 0xFFFE)
+    while (ret == MON_ALREADY_KNOWS_MOVE)
         ret = MonTryLearningNewMove(&gPlayerParty[gBattleStruct->expGetterMonId], 0);
 
     if (ret == 0)
     {
         gBattlescriptCurrInstr = loc2;
     }
-    else if (ret == 0xFFFF)
+    else if (ret == MON_HAS_MAX_MOVES)
     {
         gBattlescriptCurrInstr += 10;
     }
