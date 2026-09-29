@@ -57,7 +57,7 @@ enum
 // Graphics Data
 //--------------------------------------------------
 
-static const u8 sHand_Gfx[] = INCBIN_U8("graphics/misc/clock_misc.4bpp.lz");
+static const u8 sHand_Gfx[] = INCBIN_U8("graphics/wallclock/hand.4bpp.lz");
 static const struct CompressedSpriteSheet sSpriteSheet_ClockHand[] =
 {
     {sHand_Gfx, 0x2000, GFXTAG_WALL_CLOCK_HAND},

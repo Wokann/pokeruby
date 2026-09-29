@@ -1102,9 +1102,9 @@ const u16 gMenuWordGroupIndicator_Pal[] = INCBIN_U16("graphics/interface/wordgro
 const u16 gMenuWordGroupFrame1_Pal[] = INCBIN_U16("graphics/interface/wordgroup_pink.gbapal");
 const u16 gMenuWordGroupFrame2_Pal[] = INCBIN_U16("graphics/interface/wordgroup_blue.gbapal");
 
-const u8 gWallClock_Gfx[] = INCBIN_U8("graphics/misc/clock.4bpp.lz");
-const u16 gWallClockMale_Pal[] = INCBIN_U16("graphics/misc/clock1.gbapal"); // boy
-const u16 gWallClockFemale_Pal[] = INCBIN_U16("graphics/misc/clock2.gbapal"); // girl
+const u8 gWallClock_Gfx[] = INCBIN_U8("graphics/wallclock/clock.4bpp.lz");
+const u16 gWallClockMale_Pal[] = INCBIN_U16("graphics/wallclock/male.gbapal"); // boy
+const u16 gWallClockFemale_Pal[] = INCBIN_U16("graphics/wallclock/female.gbapal"); // girl
 
 const u8 gSlotMachineMenu_Gfx[] = INCBIN_U8("graphics/slot_machine/menu.4bpp.lz");
 const u8 gBattleInterfaceStatusIcons_DynPal[] = INCBIN_U8("graphics/battle_interface/status.gbapal");
@@ -1153,8 +1153,8 @@ const u8 gSummaryScreen_MoveEffect_Cancel_TilemapBottom[] = INCBIN_U8("graphics/
 const u8 gEasyChatWordGroup_Tilemap[] = INCBIN_U8("graphics/interface/wordgroup_layout.bin");
 const u8 gEasyChatFrame_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E94AD0.bin");
 const u8 gEasyChatInputSelect_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E953D0.bin.lz");
-const u8 gWallClockStart_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_edit.bin.lz");
-const u8 gWallClockView_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_view.bin.lz");
+const u8 gWallClockStart_Tilemap[] = INCBIN_U8("graphics/wallclock/clock_start.bin.lz");
+const u8 gWallClockView_Tilemap[] = INCBIN_U8("graphics/wallclock/clock_view.bin.lz");
 
 #ifdef SAPPHIRE
 const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/menu_sapphire.gbapal");
