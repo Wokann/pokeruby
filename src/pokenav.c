@@ -872,10 +872,10 @@ bool8 LoadConditionGraphScreenStep(void)
         gPokenavStructPtr->unkD162 = 11;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E7080);
+        Text_LoadWindowTemplate(&gPokenavConditionWindowTemplate);
         break;
     case 2:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E7080);
+        MultistepInitMenuWindowBegin(&gPokenavConditionWindowTemplate);
         break;
     case 3:
         if (!MultistepInitMenuWindowContinue())

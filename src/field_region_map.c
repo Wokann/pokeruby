@@ -33,8 +33,8 @@ void MCB2_InitRegionMapRegisters(void)
     InitRegionMap(&eRegionMapState.regionMap, 0);
     CreateRegionMapPlayerIcon(0, 0);
     CreateRegionMapCursor(1, 1);
-    Text_LoadWindowTemplate(&gWindowTemplate_81E709C);
-    InitMenuWindow(&gWindowTemplate_81E709C);
+    Text_LoadWindowTemplate(&gMenuWindowTemplateBg0);
+    InitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_EraseScreen();
     REG_BG0CNT = BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(31) | BGCNT_16COLOR | BGCNT_TXT256x256;
     Menu_DrawStdWindowFrame(21, 0, 29, 3);

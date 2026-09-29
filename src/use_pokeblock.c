@@ -235,11 +235,11 @@ static void LoadUsePokeblockMenu(void)
             sInfo->mainState++;
             break;
         case 3:
-            Text_LoadWindowTemplate(&gWindowTemplate_81E7080);
+            Text_LoadWindowTemplate(&gPokenavConditionWindowTemplate);
             sInfo->mainState++;
             break;
         case 4:
-            MultistepInitMenuWindowBegin(&gWindowTemplate_81E7080);
+            MultistepInitMenuWindowBegin(&gPokenavConditionWindowTemplate);
             sInfo->mainState++;
             break;
         case 5:
@@ -617,7 +617,7 @@ static void AskUsePokeblock(void)
     GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex)], MON_DATA_NICKNAME, sInfo->stringBuffer);
     StringGet_Nickname(sInfo->stringBuffer);
     StringAppend(sInfo->stringBuffer, gOtherText_GetsAPokeBlock);
-    BasicInitMenuWindow(&gWindowTemplate_81E709C);
+    BasicInitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
     Menu_PrintText(sInfo->stringBuffer, 1, 17);
     DisplayYesNoMenu(23, 10, 1);
@@ -630,14 +630,14 @@ static s8 HandleAskUsePokeblockInput(void)
     if ((u8)(menuItem + 1) < 3)
     {
         Menu_EraseScreen();
-        BasicInitMenuWindow(&gWindowTemplate_81E7080);
+        BasicInitMenuWindow(&gPokenavConditionWindowTemplate);
     }
     return menuItem;
 }
 
 static void PrintFirstEnhancement(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E709C);
+    BasicInitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
     for (sInfo->condition = 0; sInfo->condition < 5 && sInfo->enhancements[sInfo->condition] == 0; sInfo->condition++);
     if (sInfo->condition < 5)
@@ -674,7 +674,7 @@ static bool8 TryPrintNextEnhancement(void)
 
 static void PrintWontEatAnymore(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E709C);
+    BasicInitMenuWindow(&gMenuWindowTemplateBg0);
     Menu_DrawStdWindowFrame(0, 16, 29, 19);
     Menu_PrintText(gOtherText_WontEat, 1, 17);
 }
@@ -682,7 +682,7 @@ static void PrintWontEatAnymore(void)
 static void EraseMenuWindow(void)
 {
     Menu_EraseScreen();
-    BasicInitMenuWindow(&gWindowTemplate_81E7080);
+    BasicInitMenuWindow(&gPokenavConditionWindowTemplate);
 }
 
 static void PrintMenuWindowText(const u8 *message)
