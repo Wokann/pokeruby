@@ -344,7 +344,7 @@ SECTIONS {
         src/debug/ereader_debug_menu.o(.text);
         src/field_effect_helpers.o(.text);
         src/contest_ai.o(.text);
-        src/unused_81258BC.o(.text);
+        src/mystery_event_script_util.o(.text);
         src/battle/anim/sfx.o(.text);
         src/battle_controller_safari.o(.text);
         src/fldeff_sweetscent.o(.text);
