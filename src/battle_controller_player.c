@@ -1226,7 +1226,7 @@ void sub_802D500(void)
           0);
         StartHealthboxSlideIn(gActiveBattler);
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-        ewram17840.introAnimActive = FALSE;
+        gBattleAnimationInfo.introAnimActive = FALSE;
         gBattlerControllerFuncs[gActiveBattler] = sub_802D31C;
     }
 }
@@ -2471,7 +2471,7 @@ void PlayerHandlecmd11(void)
 
 void PlayerHandlecmd12(void)
 {
-    ewram17840.ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
+    gBattleAnimationInfo.ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
     gDoingBattleAnim = TRUE;
     InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = bx_wait_t1;
@@ -2481,7 +2481,7 @@ void PlayerHandleBallThrow(void)
 {
     u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
 
-    ewram17840.ballThrowCaseId = ballThrowCaseId;
+    gBattleAnimationInfo.ballThrowCaseId = ballThrowCaseId;
     gDoingBattleAnim = TRUE;
     InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = bx_wait_t1;

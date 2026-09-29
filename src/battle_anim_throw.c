@@ -640,7 +640,7 @@ void AnimTask_FreeBallGfx(u8 taskId)
 
 void AnimTask_IsBallBlockedByTrainer(u8 taskId)
 {
-    if (ewram17840.ballThrowCaseId == BALL_TRAINER_BLOCK)
+    if (gBattleAnimationInfo.ballThrowCaseId == BALL_TRAINER_BLOCK)
         gBattleAnimArgs[7] = -1;
     else
         gBattleAnimArgs[7] = 0;
@@ -691,7 +691,7 @@ void AnimTask_ThrowBall(u8 taskId)
     gSprites[spriteId].data[1] = GetBattlerSpriteCoord(gBattleAnimTarget, 0);
     gSprites[spriteId].data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, 1) - 16;
     gSprites[spriteId].callback = SpriteCB_Ball_Throw;
-    ewram17840.unk9_1 = gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible;
+    gBattleAnimationInfo.wildMonInvisible = gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible;
     gTasks[taskId].data[0] = spriteId;
     gTasks[taskId].func = AnimTask_ThrowBall_Step;
 }
@@ -774,7 +774,7 @@ static void SpriteCB_Ball_Arc(struct Sprite *sprite)
 
     if (TranslateAnimHorizontalArc(sprite))
     {
-        if (ewram17840.ballThrowCaseId == BALL_TRAINER_BLOCK)
+        if (gBattleAnimationInfo.ballThrowCaseId == BALL_TRAINER_BLOCK)
         {
             sprite->callback = SpriteCB_Ball_Block;
         }
@@ -934,7 +934,7 @@ static void SpriteCB_Ball_Bounce_Step(struct Sprite *sprite)
         sprite->data[3] = 0;
         sprite->y += Cos(64, 32);
         sprite->y2 = 0;
-        if (ewram17840.ballThrowCaseId == BALL_NO_SHAKES)
+        if (gBattleAnimationInfo.ballThrowCaseId == BALL_NO_SHAKES)
         {
             sprite->data[5] = 0;
             sprite->callback = SpriteCB_Ball_Release;
@@ -955,7 +955,7 @@ static void SpriteCB_Ball_Wobble(struct Sprite *sprite)
         sprite->data[3] = 0;
         sprite->affineAnimPaused = 1;
         StartSpriteAffineAnim(sprite, 1);
-        ewram17840.unkC = 0;
+        gBattleAnimationInfo.ballSubpx = 0;
         sprite->callback = SpriteCB_Ball_Wobble_Step;
         PlaySE(SE_BALL);
     }
@@ -969,14 +969,14 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
     switch (sprite->data[3] & 0xFF)
     {
     case 0:
-        if ((s16)ewram17840.unkC > 0xFF)
+        if ((s16)gBattleAnimationInfo.ballSubpx > 0xFF)
         {
             sprite->x2 += sprite->data[4];
-            ewram17840.unkC &= 0xFF;
+            gBattleAnimationInfo.ballSubpx &= 0xFF;
         }
         else
         {
-            ewram17840.unkC += 0xB0;
+            gBattleAnimationInfo.ballSubpx += 0xB0;
         }
 
         sprite->data[5]++;
@@ -984,7 +984,7 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
         var0 = sprite->data[5] + 7;
         if (var0 > 14)
         {
-            ewram17840.unkC = 0;
+            gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
             sprite->data[5] = 0;
         }
@@ -1007,14 +1007,14 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
         }
         break;
     case 2:
-        if ((s16)ewram17840.unkC > 0xFF)
+        if ((s16)gBattleAnimationInfo.ballSubpx > 0xFF)
         {
             sprite->x2 += sprite->data[4];
-            ewram17840.unkC &= 0xFF;
+            gBattleAnimationInfo.ballSubpx &= 0xFF;
         }
         else
         {
-            ewram17840.unkC += 0xB0;
+            gBattleAnimationInfo.ballSubpx += 0xB0;
         }
 
         sprite->data[5]++;
@@ -1022,7 +1022,7 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
         var0 = sprite->data[5] + 12;
         if (var0 > 24)
         {
-            ewram17840.unkC = 0;
+            gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
             sprite->data[5] = 0;
         }
@@ -1044,14 +1044,14 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
             ChangeSpriteAffineAnim(sprite, 1);
         // fall through
     case 4:
-        if ((s16)ewram17840.unkC > 0xFF)
+        if ((s16)gBattleAnimationInfo.ballSubpx > 0xFF)
         {
             sprite->x2 += sprite->data[4];
-            ewram17840.unkC &= 0xFF;
+            gBattleAnimationInfo.ballSubpx &= 0xFF;
         }
         else
         {
-            ewram17840.unkC += 0xB0;
+            gBattleAnimationInfo.ballSubpx += 0xB0;
         }
 
         sprite->data[5]++;
@@ -1059,7 +1059,7 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
         var0 = sprite->data[5] + 4;
         if (var0 > 8)
         {
-            ewram17840.unkC = 0;
+            gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
             sprite->data[5] = 0;
             sprite->data[4] = -sprite->data[4];
@@ -1068,14 +1068,14 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
     case 5:
         sprite->data[3] += 0x100;
         state = sprite->data[3] >> 8;
-        if (state == ewram17840.ballThrowCaseId)
+        if (state == gBattleAnimationInfo.ballThrowCaseId)
         {
             sprite->affineAnimPaused = 1;
             sprite->callback = SpriteCB_Ball_Release;
         }
         else
         {
-            if (ewram17840.ballThrowCaseId == BALL_3_SHAKES_SUCCESS && state == 3)
+            if (gBattleAnimationInfo.ballThrowCaseId == BALL_3_SHAKES_SUCCESS && state == 3)
             {
                 sprite->callback = SpriteCB_Ball_Capture;
                 sprite->affineAnimPaused = 1;
@@ -1251,7 +1251,7 @@ static void SpriteCB_Ball_Release_Wait(struct Sprite *sprite)
     if (sprite->animEnded && next)
     {
         gSprites[gBattlerSpriteIds[gBattleAnimTarget]].y2 = 0;
-        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = ewram17840.unk9_1;
+        gSprites[gBattlerSpriteIds[gBattleAnimTarget]].invisible = gBattleAnimationInfo.wildMonInvisible;
         sprite->data[0] = 0;
         sprite->callback = DestroySpriteAfterOneFrame;
         gDoingBattleAnim = 0;
@@ -1310,7 +1310,7 @@ u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 subpriority, u8 ballInde
     gTasks[taskId].data[15] = ballIndex;
     PlaySE(SE_BALL_OPEN);
     if (gMain.inBattle)
-        ewram17840.unkA++;
+        gBattleAnimationInfo.numBallParticles++;
 
     return taskId;
 }
@@ -1658,7 +1658,7 @@ static void DestroyBallOpenAnimationParticle(struct Sprite *sprite)
     }
     else if (sprite->data[7] == 1)
     {
-        if (--ewram17840.unkA == 0)
+        if (--gBattleAnimationInfo.numBallParticles == 0)
         {
             for (i = 0; i < 12; i++)
             {
@@ -1908,7 +1908,7 @@ static void Task_ShinyStars(u8 taskId)
         return;
     }
     
-    if (ewram17840.unkA)
+    if (gBattleAnimationInfo.numBallParticles)
         return;
 
     counter = gTasks[taskId].data[10]++;
@@ -2077,13 +2077,13 @@ void AnimTask_SetAttackerTargetLeftPos(u8 taskId)
 
 void AnimTask_GetTrappedMoveAnimId(u8 taskId)
 {
-    if (ewram17840.unk0 == MOVE_FIRE_SPIN)
+    if (gBattleAnimationInfo.animArg == MOVE_FIRE_SPIN)
         gBattleAnimArgs[0] = TRAP_ANIM_FIRE_SPIN;
-    else if (ewram17840.unk0 == MOVE_WHIRLPOOL)
+    else if (gBattleAnimationInfo.animArg == MOVE_WHIRLPOOL)
         gBattleAnimArgs[0] = TRAP_ANIM_WHIRLPOOL;
-    else if (ewram17840.unk0 == MOVE_CLAMP)
+    else if (gBattleAnimationInfo.animArg == MOVE_CLAMP)
         gBattleAnimArgs[0] = TRAP_ANIM_CLAMP;
-    else if (ewram17840.unk0 == MOVE_SAND_TOMB)
+    else if (gBattleAnimationInfo.animArg == MOVE_SAND_TOMB)
         gBattleAnimArgs[0] = TRAP_ANIM_SAND_TOMB;
     else
         gBattleAnimArgs[0] = TRAP_ANIM_BIND;
@@ -2093,7 +2093,7 @@ void AnimTask_GetTrappedMoveAnimId(u8 taskId)
 
 void AnimTask_GetBattlersFromArg(u8 taskId)
 {
-    gBattleAnimAttacker = ewram17840.unk0;
-    gBattleAnimTarget = ewram17840.unk0 >> 8;
+    gBattleAnimAttacker = gBattleAnimationInfo.animArg;
+    gBattleAnimTarget = gBattleAnimationInfo.animArg >> 8;
     DestroyAnimVisualTask(taskId);
 }

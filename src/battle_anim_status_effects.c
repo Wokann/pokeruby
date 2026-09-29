@@ -278,7 +278,7 @@ void AnimTask_StatsChange(u8 taskId)
     s16 sharply = FALSE;
 
     // Ruby serializes these IDs from the zero-based statStages index.
-    switch (ewram17840.unk0)
+    switch (gBattleAnimationInfo.animArg)
     {
     case STAT_ANIM_PLUS1 + STAT_STAGE_ATK - 1:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_ATK;      break;
     case STAT_ANIM_PLUS1 + STAT_STAGE_DEF - 1:     goesDown = FALSE;  animStatId = STAT_ANIM_PAL_DEF;      break;

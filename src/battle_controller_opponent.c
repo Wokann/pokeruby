@@ -359,7 +359,7 @@ void sub_8032E2C(void)
           gActiveBattler,
           GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES));
 
-        ewram17840.introAnimActive = FALSE;
+        gBattleAnimationInfo.introAnimActive = FALSE;
         gBattlerControllerFuncs[gActiveBattler] = sub_8032C88;
     }
 }
@@ -1767,7 +1767,7 @@ void OpponentHandleTrainerBallThrow(void)
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
-    ewram17840.introAnimActive = TRUE;
+    gBattleAnimationInfo.introAnimActive = TRUE;
     gBattlerControllerFuncs[gActiveBattler] = nullsub_45;
 }
 

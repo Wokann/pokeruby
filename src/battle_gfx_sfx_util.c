@@ -202,7 +202,7 @@ bool8 TryHandleLaunchBattleTableAnimation(u8 a, u8 b, u8 c, u8 d, u16 e)
     }
     gBattleAnimAttacker = b;
     gBattleAnimTarget = c;
-    ewram17840.unk0 = e;
+    gBattleAnimationInfo.animArg = e;
     LaunchBattleAnimation(gBattleAnims_General, d, 0);
     taskId = CreateTask(sub_80315E8, 10);
     gTasks[taskId].data[0] = a;
@@ -603,7 +603,7 @@ bool8 BattleInitAllSprites(u8 *pState, u8 *b)
 void ClearSpritesHealthboxAnimData(void)
 {
     memset(gBattleHealthBoxInfo, 0, 0x30);
-    memset(&ewram17840, 0, 0x10);
+    memset(&gBattleAnimationInfo, 0, sizeof(gBattleAnimationInfo));
 }
 
 static void ClearSpritesBattlerHealthboxAnimData(void)
@@ -636,10 +636,10 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
 
     if (castform)
     {
-        StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerAtk]], ewram17840.unk0);
+        StartSpriteAnim(&gSprites[gBattlerSpriteIds[battlerAtk]], gBattleAnimationInfo.animArg);
         paletteOffset = 0x100 + battlerAtk * 16;
-        LoadPalette(ewram16400 + ewram17840.unk0 * 32, paletteOffset, 32);
-        gBattleMonForms[battlerAtk] = ewram17840.unk0;
+        LoadPalette(ewram16400 + gBattleAnimationInfo.animArg * 32, paletteOffset, 32);
+        gBattleMonForms[battlerAtk] = gBattleAnimationInfo.animArg;
         if (gBattleSpriteInfo[battlerAtk].transformSpecies != SPECIES_NONE)
         {
             BlendPalette(paletteOffset, 16, 6, RGB(31, 31, 31));

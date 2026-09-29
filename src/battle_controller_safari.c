@@ -434,7 +434,7 @@ void SafariHandlePaletteFade(void)
 
 void SafariHandleSuccessBallThrowAnim(void)
 {
-    ewram17840.ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
+    gBattleAnimationInfo.ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
     gDoingBattleAnim = TRUE;
     InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;
@@ -444,7 +444,7 @@ void SafariHandleBallThrowAnim(void)
 {
     u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
 
-    ewram17840.ballThrowCaseId = ballThrowCaseId;
+    gBattleAnimationInfo.ballThrowCaseId = ballThrowCaseId;
     gDoingBattleAnim = TRUE;
     InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW_WITH_TRAINER);
     gBattlerControllerFuncs[gActiveBattler] = CompleteOnSpecialAnimDone;

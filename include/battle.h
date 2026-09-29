@@ -472,15 +472,27 @@ struct BattleHealthboxInfo
  /*0x0A*/ u8 fillerA[2];
 };
 
-struct Struct2017840
+struct BattleAnimationInfo
 {
-    u16 unk0;
-    u8 filler2[6];
+    u16 animArg;
+    u8 field_2;
+    u8 field_3;
+    u8 field_4;
+    u8 field_5;
+    u8 field_6;
+    u8 field_7;
     u8 ballThrowCaseId;
     u8 introAnimActive:1;
-    u8 unk9_1:1;
-    u8 unkA;
-    u16 unkC;
+    u8 wildMonInvisible:1;
+    u8 field_9_x1C:3;
+    u8 field_9_x20:1;
+    u8 field_9_x40:1;
+    u8 field_9_x80:1;
+    u8 numBallParticles;
+    u8 field_B;
+    s16 ballSubpx;
+    u8 field_E;
+    u8 field_F;
 };
 
 #define GET_MOVE_TYPE(move, typeArg)                        \
