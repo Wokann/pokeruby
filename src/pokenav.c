@@ -667,7 +667,7 @@ void UpdateMapSecInfoWindow(void)
         {
             Menu_BlankWindowRect(14, top, 15, 15);
             Menu_BlankWindowRect(26, top, 28, 15);
-            sub_8095C8C((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
+            CopyTilemapRect((void *)(VRAM + 0xF800), 16, 6, gPokenavStructPtr->cityMapTilemapPtrs[mapSecId][b], 0, 0, 10, 10, 10);
             top += 11;
         }
         break;
@@ -787,7 +787,7 @@ void ShowRegionMapCityBanner(void)
 
 void HideRegionMapCityBanner(void)
 {
-    sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerBlank, 0, 0, 15, 1, 15);
+    CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerBlank, 0, 0, 15, 1, 15);
     gPokenavStructPtr->cityBannerVisible = 0;
 }
 
@@ -800,13 +800,13 @@ void DrawRegionMapCityBannerFrame(u8 unused)
 
     if (gPokenavStructPtr->cityBannerVisible != 0)
     {
-        sub_8095C8C((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavStructPtr->cityBannerFrame, 0, var1, 1, 60);
+        CopyTilemapRect((void *)VRAM + 0xF800, 14, 16, gPokenavRegionMapCityBannerFrames, gPokenavStructPtr->cityBannerFrame, 0, var1, 1, 60);
 
         if (var1 < 15)
         {
             u16 var2 = var1 + 14;
 
-            sub_8095C8C((void *)VRAM + 0xF800, var2, 16, gPokenavRegionMapCityBannerFrames, 0, 0, (u16)(15 - var1), 1, 60);
+            CopyTilemapRect((void *)VRAM + 0xF800, var2, 16, gPokenavRegionMapCityBannerFrames, 0, 0, (u16)(15 - var1), 1, 60);
         }
     }
 }
@@ -900,7 +900,7 @@ bool8 LoadConditionGraphScreenStep(void)
         break;
     case 9:
         if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
-            sub_8095C8C((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
+            CopyTilemapRect((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
         break;
     case 10:
         LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)VRAM + 0xB800);
@@ -1042,12 +1042,12 @@ bool8 LoadPokenavListScreenStep(void)
     case 8:
         if (gPokenavStructPtr->listMode != POKENAV_LIST_TRAINERS_EYES)
         {
-            sub_8095C8C((void *)VRAM + 0xE800, 0, 5, gUnknown_08E9FD1C, 0, 0, 9, 4, 9);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 5, gUnknown_08E9FD1C, 0, 0, 9, 4, 9);
         }
         else
         {
-            sub_8095C8C((void *)VRAM + 0xE800, 0, 4, gUnknown_08E9FE54, 0, 0, 12, 10, 12);
-            sub_8095C8C((void *)VRAM + 0xE800, 0, 8, gUnknown_08E9FD64, 0, 0, 12, 10, 12);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 4, gUnknown_08E9FE54, 0, 0, 12, 10, 12);
+            CopyTilemapRect((void *)VRAM + 0xE800, 0, 8, gUnknown_08E9FD64, 0, 0, 12, 10, 12);
         }
         break;
     case 9:
@@ -1272,9 +1272,9 @@ void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
     Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);
     if (listIndex < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
-        sub_8095C8C((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E039C, 0, 0, 1, 2, 1);
+        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E039C, 0, 0, 1, 2, 1);
     else
-        sub_8095C8C((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E03A0, 0, 0, 1, 2, 1);
+        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E03A0, 0, 0, 1, 2, 1);
 }
 
 void InitTrainerEyesListErase(void)
@@ -1755,7 +1755,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 5:
-        sub_8095C8C((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
+        CopyTilemapRect((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
         break;
     case 6:
         LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)(VRAM + 0xB800));

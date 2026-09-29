@@ -25,7 +25,7 @@
 #include "data/text/easy_chat/group_orders.h"
 #include "data/text/easy_chat/group_name_table.h"
 
-extern void sub_8095C8C();
+extern void CopyTilemapRect();
 extern void sub_809D104(void *, u16, u16, const void *, u16, u16, u16, u16);
 
 void CreateMainCursorSprite(void);
@@ -1273,7 +1273,7 @@ void PrintCurrentPhraseWords(u16 a, u16 b)
             }
             if (gEasyChatStruct->unkC[r10] == 0xFFFF)
             {
-                sub_8095C8C((void *)(VRAM + 0x7000), r6, r7, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
+                CopyTilemapRect((void *)(VRAM + 0x7000), r6, r7, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
                 r6 += 11;
             }
             else

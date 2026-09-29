@@ -30,6 +30,9 @@ enum {
     PC_TEXT_PLEASE_REMOVE_MAIL
 };
 
+#define BOXID_NONE_CHOSEN 200
+#define BOXID_CANCELED     201
+
 enum {
     PC_TEXT_FMT_NORMAL,
     PC_TEXT_FMT_MON_NAME,
@@ -56,7 +59,7 @@ struct StorageText {
     int textId;
 };
 
-struct PSS_MenuStringPtrs {
+struct StorageMenuText {
     const u8 *text;
     const u8 *desc;
 };
@@ -75,23 +78,23 @@ struct UnkStruct_2000020 {
     u8 unk_05;
 };
 
-struct UnkPSSStruct_2002370 {
-    struct Sprite *unk_0000;
-    struct Sprite *unk_0004[4];
-    u32 unk_0014[3];
-    struct Sprite *unk_0020[2];
-    u8 filler_0028[0x214];
+struct ChooseBoxMenu {
+    struct Sprite *menuSprite;
+    struct Sprite *menuSideSprites[4];
+    u32 unused1[3];
+    struct Sprite *arrowSprites[2];
+    u8 unused2[0x214];
     u8 curBox;
-    u8 unk_023d;
-    u8 unk_023e;
-    u16 unk_0240;
-    u16 unk_0242;
+    u8 unused3;
+    u8 subpriority;
+    u16 tileTag;
+    u16 paletteTag;
 }; // 0244
 
 struct PokemonStorageSystemData {
     void (*unk_0000)(void);
     u8 unk_0004;
-    u8 unk_0005;
+    u8 boxOption;
     u8 unk_0006;
     u8 unk_0007;
     u16 unk_0008;
@@ -198,7 +201,7 @@ struct PokemonStorageSystemData {
     struct Sprite *unk_12b0[2];
     u16 *unk_12b8;
     struct PokemonMarkMenu unk_12bc;
-    struct UnkPSSStruct_2002370 unk_2370;
+    struct ChooseBoxMenu chooseBoxMenu;
     struct Pokemon unk_25b4;
     struct Pokemon unk_2618;
     u8 unk_267c;
@@ -232,22 +235,22 @@ struct PokemonStorageSystemData {
 };
 
 extern u8 gUnknown_02039760[0xC00];
-extern struct UnkPSSStruct_2002370 *gUnknown_02038478;
 extern struct PokemonStorageSystemData *const gPokemonStorageSystemPtr;
 extern u8 *const gUnknown_083B6DB8;
 
 u8 CountPartyMons(void);
-s16 GetIndexOfFirstEmptySpaceInBoxN(u8 boxId);
+s16 GetFirstFreeBoxSpot(u8 boxId);
 u8 CountPartyAliveNonEggMonsExcept(u8 slotToIgnore);
 u8 CountPartyAliveNonEggMons_IgnoreVar0x8004Slot(void);
-u8 CountPokemonInBoxN(u8 boxId);
-void sub_8096264(struct UnkPSSStruct_2002370 *a0, u16 tileTag, u16 palTag, u8 a3);
-void sub_809634C(u8 curBox);
-u8 sub_8096368(void);
-void sub_809635C(void);
-void sub_8096310(void);
-void sub_80961A8(void);
-void task_intro_29(u8 whichMenu);
+u8 CountMonsInBox(u8 boxId);
+u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n);
+void LoadChooseBoxMenuGfx(struct ChooseBoxMenu *menu, u16 tileTag, u16 palTag, u8 subpriority);
+void CreateChooseBoxMenuSprites(u8 curBox);
+u8 HandleChooseBoxMenuInput(void);
+void DestroyChooseBoxMenuSprites(void);
+void FreeChooseBoxMenu(void);
+void CB2_ExitPokeStorage(void);
+void EnterPokeStorage(u8 whichMenu);
 void ResetPokemonStorageSystem(void);
 void ResetPSSMonIconSprites(void);
 void SpawnBoxIconSprites(u8 boxId);
@@ -271,7 +274,7 @@ bool8 sub_80998D8(void);
 void sub_8099920(void);
 void sub_8099958(void);
 bool8 sub_8099990(void);
-struct Sprite *sub_809A9A0(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
+struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
 void sub_8099BF8(u8 a0);
 void sub_8099C70(u8 whichBox);
 bool8 sub_8099D34(void);

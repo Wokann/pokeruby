@@ -421,7 +421,7 @@ bool8 UpdateConditionGraphScrollBetweenMons(void);
 void InitPokenavListRows(void);
 void SetConditionGraphWindowRegs(void);
 void InitRegionMapCityBanner(void);
-void sub_8095C8C();
+void CopyTilemapRect();
 void HideRegionMapCityBanner(void);
 void ShowRegionMapCityBanner(void);
 bool8 DecompressCityMapsStep(void);

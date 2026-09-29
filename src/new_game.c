@@ -206,7 +206,7 @@ void NewGameInitData(void)
 }
 
 #if DEBUG
-extern void debug_sub_80A3904(void);
+extern void Debug_FillPokemonStorage(void);
 extern void debug_sub_80A3714(void);
 extern void Debug_FillPokeblockCase(void);
 extern void unref_sub_8070F90(void);
@@ -225,7 +225,7 @@ void debug_sub_8057508(bool32 arg0)
     if (arg0 == TRUE)
         SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, gUnknown_Debug_0823C790);
 
-    debug_sub_80A3904();
+    Debug_FillPokemonStorage();
     debug_sub_80A3714();
     Debug_FillPokeblockCase();
     FlagSet(FLAG_SYS_HIPSTER_MEET);

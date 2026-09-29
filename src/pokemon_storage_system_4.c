@@ -867,7 +867,7 @@ void sub_809A8C8(struct Sprite *sprite)
     }
 }
 
-struct Sprite *sub_809A9A0(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
+struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
 {
     u8 spriteId = CreateSprite(&gSpriteTemplate_83BB2F0, x, y, subpriority);
     if (spriteId == MAX_SPRITES)
@@ -881,7 +881,7 @@ struct Sprite *sub_809A9A0(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
 
 void sub_809AA24(void)
 {
-    if (gPokemonStorageSystemPtr->unk_0005 != 1)
+    if (gPokemonStorageSystemPtr->boxOption != 1)
         sBoxCursorArea = 0;
     else
         sBoxCursorArea = 1;
@@ -1354,7 +1354,7 @@ void SetShiftedMonData(u8 boxId, u8 position)
 
 bool8 sub_809B62C(u8 boxId)
 {
-    s16 monIdx = GetIndexOfFirstEmptySpaceInBoxN(boxId);
+    s16 monIdx = GetFirstFreeBoxSpot(boxId);
     if (monIdx == -1)
         return FALSE;
     if (gUnknown_020384E6)
@@ -2018,7 +2018,7 @@ u8 sub_809C664(void)
         {
             if (sBoxCursorPosition == 6)
             {
-                if (gPokemonStorageSystemPtr->unk_0005 == 1)
+                if (gPokemonStorageSystemPtr->boxOption == 1)
                     return 4;
 
                 gotoBox = TRUE;
@@ -2046,7 +2046,7 @@ u8 sub_809C664(void)
 
         if (JOY_NEW(B_BUTTON))
         {
-            if (gPokemonStorageSystemPtr->unk_0005 == 1)
+            if (gPokemonStorageSystemPtr->boxOption == 1)
                 return 16;
 
             gotoBox = TRUE;
@@ -2272,7 +2272,7 @@ bool8 sub_809CAB0(void)
     sub_809CDCC();
     var0 = sub_809AB8C();
 
-    switch (gPokemonStorageSystemPtr->unk_0005)
+    switch (gPokemonStorageSystemPtr->boxOption)
     {
     case 1:
         if (var0)
@@ -2307,7 +2307,7 @@ bool8 sub_809CAB0(void)
     }
 
     sub_809CDEC(6);
-    if (gPokemonStorageSystemPtr->unk_0005 == 2)
+    if (gPokemonStorageSystemPtr->boxOption == 2)
     {
         if (!sBoxCursorArea)
             sub_809CDEC(2);
