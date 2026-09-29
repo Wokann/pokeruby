@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle_records.h"
+#include "constants/battle.h"
 #include "constants/game_stat.h"
 #include "link.h"
 #include "menu.h"
@@ -8,17 +9,23 @@
 #include "strings2.h"
 #include "trainer_card.h"
 
-struct DebugStruct1
+struct DebugLinkBattleRecord
 {
-    u16 var0;
-    u8 var1[10];
+    u16 trainerId;
+    u8 playerName[10];
+};
+
+struct DebugLinkBattleRecordUpdate
+{
+    u8 linkBattleRecordId;
+    u8 battleOutcome;
 };
 
 extern struct LinkPlayerObjectEvent gLinkPlayerObjectEvents[4];
 extern u8 gBattleOutcome;
 
 #if DEBUG
-const struct DebugStruct1 gUnknown_Debug_4245CC[] =
+const struct DebugLinkBattleRecord gDebugLinkBattleRecords[] =
 {
     { 1, _("NUMBER1") },
     { 2, DTR("ナンバー2", "NUMBER2") },
@@ -29,18 +36,18 @@ const struct DebugStruct1 gUnknown_Debug_4245CC[] =
     { 7, DTR("ナンバー7", "NUMBER7") },
 };
 
-const struct {u8 totalPoints; u8 nextTurnSpriteId;} gUnknown_Debug_8424620[] =
+const struct DebugLinkBattleRecordUpdate gDebugLinkBattleRecordUpdates[] =
 {
-    { 1, 1 },
-    { 2, 1 },
-    { 3, 1 },
+    { 1, B_OUTCOME_WON },
+    { 2, B_OUTCOME_WON },
+    { 3, B_OUTCOME_WON },
 };
 #endif
 
 static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
 {
     CpuFill16(0, record, sizeof(struct LinkBattleRecord));
-    record->name[0] = 0xFF;
+    record->name[0] = EOS;
     record->trainerId = 0;
     record->wins = 0;
     record->losses = 0;
@@ -50,7 +57,7 @@ static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
 static void ClearLinkBattleRecords(struct LinkBattleRecord *records)
 {
     int i;
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
     {
         ClearLinkBattleRecord(records + i);
     }
@@ -68,22 +75,22 @@ static int FindLinkBattleRecord(struct LinkBattleRecord *records, const u8 *name
 {
     int i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
     {
-        memcpy(gStringVar1, records[i].name, 7);
-        gStringVar1[7] = EOS;
+        memcpy(gStringVar1, records[i].name, PLAYER_NAME_LENGTH);
+        gStringVar1[PLAYER_NAME_LENGTH] = EOS;
         if (!StringCompareWithoutExtCtrlCodes(gStringVar1, name) && records[i].trainerId == trainerId)
             return i;
     }
 
-    return 5;
+    return LINK_B_RECORDS_COUNT;
 }
 
 static void SortLinkBattleRecords(struct LinkBattleRecord *records)
 {
     int i, j;
 
-    for (i = 4; i > 0; i--)
+    for (i = LINK_B_RECORDS_COUNT - 1; i > 0; i--)
     {
         for (j = i - 1; j >= 0; j--)
         {
@@ -104,17 +111,17 @@ static void UpdateLinkBattleRecord(struct LinkBattleRecord *record, int battleOu
 {
     switch (battleOutcome)
     {
-    case 1:
+    case B_OUTCOME_WON:
         record->wins++;
         if (record->wins > 9999)
             record->wins = 9999;
         break;
-    case 2:
+    case B_OUTCOME_LOST:
         record->losses++;
         if (record->losses > 9999)
             record->losses = 9999;
         break;
-    case 3:
+    case B_OUTCOME_DREW:
         record->draws++;
         if (record->draws > 9999)
             record->draws = 9999;
@@ -128,13 +135,13 @@ static void UpdateLinkBattleGameStats(int battleOutcome)
 
     switch (battleOutcome)
     {
-    case 1:
+    case B_OUTCOME_WON:
         stat = GAME_STAT_LINK_BATTLE_WINS;
         break;
-    case 2:
+    case B_OUTCOME_LOST:
         stat = GAME_STAT_LINK_BATTLE_LOSSES;
         break;
-    case 3:
+    case B_OUTCOME_DREW:
         stat = GAME_STAT_LINK_BATTLE_DRAWS;
         break;
     default:
@@ -151,19 +158,19 @@ static void UpdateLinkBattleRecords(struct LinkBattleRecord *records, const u8 *
     UpdateLinkBattleGameStats(battleOutcome);
     SortLinkBattleRecords(records);
     index = FindLinkBattleRecord(records, name, trainerId);
-    if (index == 5)
+    if (index == LINK_B_RECORDS_COUNT)
     {
-        index = 4;
+        index = LINK_B_RECORDS_COUNT - 1;
         ClearLinkBattleRecord(records + index);
         if (language == LANGUAGE_JAPANESE)
         {
             records[index].name[0] = EXT_CTRL_CODE_BEGIN;
             records[index].name[1] = 0x15;
-            StringCopyN(records[index].name + 2, name, 5);
+            StringCopyN(records[index].name + 2, name, PLAYER_NAME_LENGTH - 2);
         }
         else
         {
-            StringCopyN(records[index].name, name, 7);
+            StringCopyN(records[index].name, name, PLAYER_NAME_LENGTH);
         }
 
         // needed block to match
@@ -181,64 +188,64 @@ void ClearPlayerLinkBattleRecords(void)
     ClearLinkBattleRecords(gSaveBlock1.linkBattleRecords);
 }
 
-static void IncTrainerCardWins(int id)
+static void IncTrainerCardWins(s32 battler)
 {
-    u16 *wins = &gTrainerCards[id].linkBattleWins;
+    u16 *wins = &gTrainerCards[battler].linkBattleWins;
     (*wins)++;
     if (*wins > 9999)
         *wins = 9999;
 }
 
-static void IncTrainerCardLosses(int id)
+static void IncTrainerCardLosses(s32 battler)
 {
-    u16 *losses = &gTrainerCards[id].linkBattleLosses;
+    u16 *losses = &gTrainerCards[battler].linkBattleLosses;
     (*losses)++;
     if (*losses > 9999)
         *losses = 9999;
 }
 
-static void UpdateTrainerCardWinsLosses(int id)
+static void UpdateTrainerCardWinsLosses(s32 battler)
 {
     switch (gBattleOutcome)
     {
-    case 1:
-        IncTrainerCardWins(id ^ 1);
-        IncTrainerCardLosses(id);
+    case B_OUTCOME_WON:
+        IncTrainerCardWins(battler ^ 1);
+        IncTrainerCardLosses(battler);
         break;
-    case 2:
-        IncTrainerCardLosses(id ^ 1);
-        IncTrainerCardWins(id);
+    case B_OUTCOME_LOST:
+        IncTrainerCardLosses(battler ^ 1);
+        IncTrainerCardWins(battler);
         break;
     }
 }
 
-void UpdatePlayerLinkBattleRecords(int id)
+void UpdatePlayerLinkBattleRecords(s32 battler)
 {
-    UpdateTrainerCardWinsLosses(id);
+    UpdateTrainerCardWinsLosses(battler);
     UpdateLinkBattleRecords(
         gSaveBlock1.linkBattleRecords,
-        gTrainerCards[id].playerName,
-        gTrainerCards[id].trainerId,
+        gTrainerCards[battler].playerName,
+        gTrainerCards[battler].trainerId,
         gBattleOutcome,
-        gLinkPlayers[gLinkPlayerObjectEvents[id].linkPlayerId].language);
+        gLinkPlayers[gLinkPlayerObjectEvents[battler].linkPlayerId].language);
 }
 
 #if DEBUG
-void debug_sub_81257E0(void)
+void Debug_CreateSampleLinkBattleRecords(void)
 {
     u32 i;
 
     ClearPlayerLinkBattleRecords();
     for (i = 0; i < 3; i++)
     {
-        u32 id = gUnknown_Debug_8424620[i].totalPoints - 1;
+        u32 recordIndex = gDebugLinkBattleRecordUpdates[i].linkBattleRecordId - 1;
 
         UpdateLinkBattleRecords(
             gSaveBlock1.linkBattleRecords,
-            gUnknown_Debug_4245CC[id].var1,
-            gUnknown_Debug_4245CC[id].var0,
-            gUnknown_Debug_8424620[i].nextTurnSpriteId,
-            gLinkPlayers[gLinkPlayerObjectEvents[id].linkPlayerId].language);
+            gDebugLinkBattleRecords[recordIndex].playerName,
+            gDebugLinkBattleRecords[recordIndex].trainerId,
+            gDebugLinkBattleRecordUpdates[i].battleOutcome,
+            gLinkPlayers[gLinkPlayerObjectEvents[recordIndex].linkPlayerId].language);
     }
 }
 #endif
@@ -299,7 +306,7 @@ void ShowLinkBattleRecords(void)
     Menu_PrintTextPixelCoords(gOtherText_WinLoseDraw, 88, 48, 1);
 #endif
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
     {
         PrintLinkBattleRecord(&gSaveBlock1.linkBattleRecords[i], 6 + (i + 1) * 2);
     }
@@ -309,7 +316,7 @@ static bool32 IsBattleTowerWinStreakActive(u8 level)
 {
     struct BattleTowerData *battleTower = &gSaveBlock2.battleTower;
 
-    switch (battleTower->var_4AE[level])
+    switch (battleTower->challengeStatus[level])
     {
     case 0:
         return FALSE;

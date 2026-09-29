@@ -294,7 +294,7 @@ void SetBattleTowerLobbyState(void)
 
     for (levelType = 0; levelType < 2; levelType++)
     {
-        switch (gSaveBlock2.battleTower.var_4AE[levelType])
+        switch (gSaveBlock2.battleTower.challengeStatus[levelType])
         {
         case 0:
         default:
@@ -325,8 +325,8 @@ void SetBattleTowerLobbyState(void)
         }
     }
 
-    if ((gSaveBlock2.battleTower.var_4AE[0] == 3 || gSaveBlock2.battleTower.var_4AE[0] == 6)
-     && (gSaveBlock2.battleTower.var_4AE[1] == 3 || gSaveBlock2.battleTower.var_4AE[1] == 6))
+    if ((gSaveBlock2.battleTower.challengeStatus[0] == 3 || gSaveBlock2.battleTower.challengeStatus[0] == 6)
+     && (gSaveBlock2.battleTower.challengeStatus[1] == 3 || gSaveBlock2.battleTower.challengeStatus[1] == 6))
         VarSet(VAR_TEMP_0, 5);
 
     ValidateBattleTowerRecordChecksums();
@@ -334,7 +334,7 @@ void SetBattleTowerLobbyState(void)
 
 void ResetBattleTowerStreak(u8 levelType)
 {
-    gSaveBlock2.battleTower.var_4AE[levelType] = 0;
+    gSaveBlock2.battleTower.challengeStatus[levelType] = 0;
     gSaveBlock2.battleTower.curChallengeBattleNum[levelType] = 1;
     gSaveBlock2.battleTower.curStreakChallengesNum[levelType] = 1;
 }
@@ -1127,8 +1127,8 @@ void SetBattleTowerProperty(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        gBattleStruct->unk160FB = gSaveBlock2.battleTower.var_4AE[battleTowerLevelType];
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gSpecialVar_0x8005;
+        gBattleStruct->unk160FB = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8005;
         break;
     case 1:
         gSaveBlock2.battleTower.battleTowerLevelType = gSpecialVar_0x8005;
@@ -1172,11 +1172,11 @@ void SetBattleTowerProperty(void)
         SetGameStat(GAME_STAT_BATTLE_TOWER_BEST_STREAK, gSaveBlock2.battleTower.bestBattleTowerWinStreak);
         break;
     case 11:
-        if (gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] != 3)
+        if (gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] != 3)
             ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1194,7 +1194,7 @@ void CallBattleTowerFunc(void)
     switch (gSpecialVar_0x8004)
     {
     case 0:
-        gSpecialVar_Result = gSaveBlock2.battleTower.var_4AE[battleTowerLevelType];
+        gSpecialVar_Result = gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType];
         break;
     case 1:
         gSpecialVar_Result = gSaveBlock2.battleTower.battleTowerLevelType;
@@ -1225,7 +1225,7 @@ void CallBattleTowerFunc(void)
         ResetBattleTowerStreak(battleTowerLevelType);
         break;
     case 12:
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gBattleStruct->unk160FB;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gBattleStruct->unk160FB;
         break;
     case 13:
         gSaveBlock2.battleTower.currentWinStreaks[battleTowerLevelType] = GetCurrentBattleTowerWinStreak(battleTowerLevelType);
@@ -1328,7 +1328,7 @@ void SaveBattleTowerProgress(void)
     gSaveBlock2.battleTower.battleOutcome = gBattleOutcome;
 
     if (gSpecialVar_0x8004 != 3)
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = gSpecialVar_0x8004;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = gSpecialVar_0x8004;
 
     VarSet(VAR_TEMP_0, 0);
     gSaveBlock2.battleTower.unk_554 = 1;
@@ -1428,7 +1428,7 @@ void GiveBattleTowerPrize(void)
     else
     {
         gSpecialVar_Result = 0;
-        gSaveBlock2.battleTower.var_4AE[battleTowerLevelType] = 6;
+        gSaveBlock2.battleTower.challengeStatus[battleTowerLevelType] = 6;
     }
 }
 
@@ -1595,7 +1595,7 @@ void TryHideBattleTowerReporter(void)
 
     for (i = 0; i < 2; i++)
     {
-        if (gSaveBlock2.battleTower.var_4AE[i] == 1)
+        if (gSaveBlock2.battleTower.challengeStatus[i] == 1)
             HideBattleTowerReporter();
     }
 }

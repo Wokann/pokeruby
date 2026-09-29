@@ -2,7 +2,7 @@
 #define GUARD_BATTLE_RECORDS_H
 
 void ClearPlayerLinkBattleRecords(void);
-void UpdatePlayerLinkBattleRecords(int id);
+void UpdatePlayerLinkBattleRecords(s32 battler);
 void ShowLinkBattleRecords(void);
 void ShowBattleTowerRecords(void);
 

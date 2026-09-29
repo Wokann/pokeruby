@@ -62,8 +62,8 @@ static u8 SogabeDebugMenu_HandleInput(void)
 
 static u8 SogabeDebugMenu_SetRound(void)
 {
-    gSaveBlock2.battleTower.var_4AE[0] = 3;
-    gSaveBlock2.battleTower.var_4AE[1] = 3;
+    gSaveBlock2.battleTower.challengeStatus[0] = 3;
+    gSaveBlock2.battleTower.challengeStatus[1] = 3;
     gSaveBlock2.battleTower.curStreakChallengesNum[0] = gBattleCommunication[0] + 1;
     gSaveBlock2.battleTower.curStreakChallengesNum[1] = gBattleCommunication[0] + 1;
     gSaveBlock2.battleTower.curChallengeBattleNum[0] = 1;
