@@ -1518,11 +1518,11 @@ static void Task_AnimateGameFreakLogoBlend(u8 taskId)
 
             gTasks[taskId].data[1]--;
             foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gUnknown_08393E64[foo];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
         }
         else
         {
-            REG_BLDALPHA = gUnknown_08393E64[0];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[0];
             gTasks[taskId].data[1] = 0x80;
             gTasks[taskId].data[0]++;
         }
@@ -1546,12 +1546,12 @@ static void Task_AnimateGameFreakLogoBlend(u8 taskId)
 
             gTasks[taskId].data[1]++;
             foo = gTasks[taskId].data[1] / 2;
-            REG_BLDALPHA = gUnknown_08393E64[foo];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[foo];
         }
         else
         {
             //_0813CDE0
-            REG_BLDALPHA = gUnknown_08393E64[0x1F];
+            REG_BLDALPHA = gTitleScreenAlphaBlend[0x1F];
             gTasks[taskId].data[1] = 0x10;
             gTasks[taskId].data[0]++;
         }
