@@ -6,6 +6,7 @@
 #include "script.h"
 #include "script_menu.h"
 #include "task.h"
+#include "constants/rgb.h"
 
 extern void (*gFieldCallback)(void);
 
@@ -28,7 +29,7 @@ static void ReshowPCMenuAfterHallOfFamePC(void)
 {
     LockPlayerFieldControls();
     Overworld_PlaySpecialMapMusic();
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     ScriptMenu_CreatePCMultichoice();
     ScriptMenu_DisplayPCStartupPrompt();
     CreateTask(Task_WaitForPaletteFade, 10);
