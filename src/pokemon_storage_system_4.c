@@ -17,205 +17,205 @@
 
 // Static type declarations
 
-struct WallpaperTable {
+struct Wallpaper {
     const u8 *tiles;
-    u32 size;
-    const u8 *tileMap;
+    u32 tilesSize;
+    const u8 *tilemap;
     const u16 *palettes;
 };
 
 // Static RAM declarations
 
-EWRAM_DATA struct Pokemon gUnknown_02038480 = {};
+EWRAM_DATA struct Pokemon sSavedMovingMon = {};
 #if DEBUG
 EWRAM_DATA u8 gDebugPokeStorageActive = 0;
 EWRAM_DATA u32 gDebugPokeStorageReturnCallback = 0;
 EWRAM_DATA u32 gDebugPokeStorageMon = 0;
 #endif
-EWRAM_DATA s8 sBoxCursorArea = 0;
-EWRAM_DATA s8 sBoxCursorPosition = 0;
-EWRAM_DATA bool8 gUnknown_020384E6 = FALSE;
-EWRAM_DATA u8 gUnknown_020384E7 = 0;
-EWRAM_DATA u8 gUnknown_020384E8 = 0;
-EWRAM_DATA u8 gUnknown_020384E9 = 0;
-EWRAM_DATA u8 gUnknown_020384EA = 0;
-EWRAM_DATA struct UnkStruct_2000020 *gUnknown_020384EC = NULL;
+EWRAM_DATA s8 sCursorArea = 0;
+EWRAM_DATA s8 sCursorPosition = 0;
+EWRAM_DATA bool8 sIsMonBeingMoved = FALSE;
+EWRAM_DATA u8 sMovingMonOrigBoxId = 0;
+EWRAM_DATA u8 sMovingMonOrigBoxPos = 0;
+EWRAM_DATA u8 sAutoActionOn = 0;
+EWRAM_DATA u8 sSavedCursorPosition = 0;
+EWRAM_DATA struct UnkUtil *sUnkUtil = NULL;
 
 // Static ROM declarations
 
-s8 sub_8099D90(u8 boxId);
-void sub_8099EB0(u8 boxId, s8 a1);
-void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset);
-void ClearLowestWallpaperTiles(u16 *buffer);
-void sub_809A23C(u8 boxId);
-void sub_809A3D0(u8 boxId, s8 a1);
-void sub_809A598(void);
-void sub_809A5E8(struct Sprite *sprite);
-void sub_809A61C(struct Sprite *sprite);
-void sub_809A654(void);
-s16 sub_809A6D0(u8 width);
-void sub_809A6DC(void);
-void sub_809A774(s8 a0);
-void sub_809A810(void);
-void sub_809AFB8(void);
-void sub_809A8C8(struct Sprite *sprite);
-bool8 sub_809B150(void);
-bool8 sub_809B1D8(void);
-bool8 sub_809B24C(void);
-bool8 sub_809B324(void);
-bool8 sub_809B358(void);
-void sub_809B384(void);
-void sub_809B3E0(void);
-void sub_809B44C(u8 a0, u8 a1);
-void SetPlacedMonData(u8 a0, u8 a1);
-void sub_809B548(u8 a0, u8 a1);
-void SetShiftedMonData(u8 a0, u8 a1);
-bool8 sub_809BF2C(void);
-void sub_809BF74(void);
-void sub_809C028(void);
-void sub_809C04C(void *pokemon, u8 a1);
-bool8 sub_809CAB0(void);
-void sub_809CC04(void);
-void sub_809CD88(void);
-s8 sub_809CE4C(u8 a0);
-void sub_809CA8C(void);
-void sub_809D0BC(struct UnkStruct_2000028*);
-void sub_809D1C4(struct UnkStruct_2000028*);
+s8 DetermineBoxScrollDirection(u8 boxId);
+void LoadWallpaperGfx(u8 boxId, s8 direction);
+void DrawWallpaper(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset);
+void TrimOldWallpaper(u16 *buffer);
+void InitBoxTitle(u8 boxId);
+void CreateIncomingBoxTitle(u8 boxId, s8 direction);
+void CycleBoxTitleSprites(void);
+void SpriteCB_IncomingBoxTitle(struct Sprite *sprite);
+void SpriteCB_OutgoingBoxTitle(struct Sprite *sprite);
+void CycleBoxTitleColor(void);
+s16 GetBoxTitleBaseX(u8 width);
+void CreateBoxScrollArrows(void);
+void StartBoxScrollArrowsSlide(s8 direction);
+void StopBoxScrollArrowsSlide(void);
+void DoCursorNewPosUpdate(void);
+void SpriteCB_Arrow(struct Sprite *sprite);
+bool8 MonPlaceChange_Grab(void);
+bool8 MonPlaceChange_Place(void);
+bool8 MonPlaceChange_Shift(void);
+bool8 MonPlaceChange_CursorDown(void);
+bool8 MonPlaceChange_CursorUp(void);
+void MoveMon(void);
+void PlaceMon(void);
+void SetMovingMonData(u8 boxId, u8 position);
+void SetPlacedMonData(u8 boxId, u8 position);
+void PurgeMonOrBoxMon(u8 boxId, u8 position);
+void SetShiftedMonData(u8 boxId, u8 position);
+bool8 IsCursorOnBoxTitle(void);
+void TryRefreshDisplayMon(void);
+void ReshowDisplayMon(void);
+void SetDisplayMonData(void *pokemon, u8 mode);
+bool8 SetSelectionMenuTexts(void);
+void CreateCursorSprites(void);
+void ToggleCursorAutoAction(void);
+s8 GetPokeStorageMenuItemTextId(u8 menuIndex);
+void AddBoxOptionsMenu(void);
+void UnkUtil_CpuRun(struct UnkUtilData*);
+void UnkUtil_DmaRun(struct UnkUtilData*);
 
 // .rodata
 
-const u16 gWallpaperPalettes_Forest[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Forest_2[] = INCBIN_U16("graphics/pokemon_storage/forest_frame.gbapal");
-const u16 gWallpaperPalettes_Forest_2_3[] = INCBIN_U16("graphics/pokemon_storage/forest_bg.gbapal");
+const u16 sWallpaperBoxPalette_Forest[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Forest[] = INCBIN_U16("graphics/pokemon_storage/forest_frame.gbapal");
+const u16 sWallpaperBgPalette_Forest[] = INCBIN_U16("graphics/pokemon_storage/forest_bg.gbapal");
 
-const u8 gWallpaperTiles_Forest[] = INCBIN_U8("graphics/pokemon_storage/forest.4bpp.lz");
+const u8 sWallpaperTiles_Forest[] = INCBIN_U8("graphics/pokemon_storage/forest.4bpp.lz");
 
-const u8 gWallpaperTilemap_Forest[] = INCBIN_U8("graphics/pokemon_storage/forest.bin.lz");
+const u8 sWallpaperTilemap_Forest[] = INCBIN_U8("graphics/pokemon_storage/forest.bin.lz");
 
-const u16 gWallpaperPalettes_City[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_City_2[] = INCBIN_U16("graphics/pokemon_storage/city_frame.gbapal");
-const u16 gWallpaperPalettes_City_2_3[] = INCBIN_U16("graphics/pokemon_storage/city_bg.gbapal");
+const u16 sWallpaperBoxPalette_City[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_City[] = INCBIN_U16("graphics/pokemon_storage/city_frame.gbapal");
+const u16 sWallpaperBgPalette_City[] = INCBIN_U16("graphics/pokemon_storage/city_bg.gbapal");
 
-const u8 gWallpaperTiles_City[] = INCBIN_U8("graphics/pokemon_storage/city.4bpp.lz");
+const u8 sWallpaperTiles_City[] = INCBIN_U8("graphics/pokemon_storage/city.4bpp.lz");
 
-const u8 gWallpaperTilemap_City[] = INCBIN_U8("graphics/pokemon_storage/city.bin.lz");
+const u8 sWallpaperTilemap_City[] = INCBIN_U8("graphics/pokemon_storage/city.bin.lz");
 
-const u16 gWallpaperPalettes_Desert[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Desert_2[] = INCBIN_U16("graphics/pokemon_storage/desert_frame.gbapal");
-const u16 gWallpaperPalettes_Desert_2_3[] = INCBIN_U16("graphics/pokemon_storage/desert_bg.gbapal");
+const u16 sWallpaperBoxPalette_Desert[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Desert[] = INCBIN_U16("graphics/pokemon_storage/desert_frame.gbapal");
+const u16 sWallpaperBgPalette_Desert[] = INCBIN_U16("graphics/pokemon_storage/desert_bg.gbapal");
 
-const u8 gWallpaperTiles_Desert[] = INCBIN_U8("graphics/pokemon_storage/desert.4bpp.lz");
+const u8 sWallpaperTiles_Desert[] = INCBIN_U8("graphics/pokemon_storage/desert.4bpp.lz");
 
-const u8 gWallpaperTilemap_Desert[] = INCBIN_U8("graphics/pokemon_storage/desert.bin.lz");
+const u8 sWallpaperTilemap_Desert[] = INCBIN_U8("graphics/pokemon_storage/desert.bin.lz");
 
-const u16 gWallpaperPalettes_Savanna[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Savanna_2[] = INCBIN_U16("graphics/pokemon_storage/savanna_frame.gbapal");
-const u16 gWallpaperPalettes_Savanna_2_3[] = INCBIN_U16("graphics/pokemon_storage/savanna_bg.gbapal");
+const u16 sWallpaperBoxPalette_Savanna[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Savanna[] = INCBIN_U16("graphics/pokemon_storage/savanna_frame.gbapal");
+const u16 sWallpaperBgPalette_Savanna[] = INCBIN_U16("graphics/pokemon_storage/savanna_bg.gbapal");
 
-const u8 gWallpaperTiles_Savanna[] = INCBIN_U8("graphics/pokemon_storage/savanna.4bpp.lz");
+const u8 sWallpaperTiles_Savanna[] = INCBIN_U8("graphics/pokemon_storage/savanna.4bpp.lz");
 
-const u8 gWallpaperTilemap_Savanna[] = INCBIN_U8("graphics/pokemon_storage/savanna.bin.lz");
+const u8 sWallpaperTilemap_Savanna[] = INCBIN_U8("graphics/pokemon_storage/savanna.bin.lz");
 
-const u16 gWallpaperPalettes_Crag[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Crag_2[] = INCBIN_U16("graphics/pokemon_storage/crag_frame.gbapal");
-const u16 gWallpaperPalettes_Crag_2_3[] = INCBIN_U16("graphics/pokemon_storage/crag_bg.gbapal");
+const u16 sWallpaperBoxPalette_Crag[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Crag[] = INCBIN_U16("graphics/pokemon_storage/crag_frame.gbapal");
+const u16 sWallpaperBgPalette_Crag[] = INCBIN_U16("graphics/pokemon_storage/crag_bg.gbapal");
 
-const u8 gWallpaperTiles_Crag[] = INCBIN_U8("graphics/pokemon_storage/crag.4bpp.lz");
+const u8 sWallpaperTiles_Crag[] = INCBIN_U8("graphics/pokemon_storage/crag.4bpp.lz");
 
-const u8 gWallpaperTilemap_Crag[] = INCBIN_U8("graphics/pokemon_storage/crag.bin.lz");
+const u8 sWallpaperTilemap_Crag[] = INCBIN_U8("graphics/pokemon_storage/crag.bin.lz");
 
-const u16 gWallpaperPalettes_Volcano[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Volcano_2[] = INCBIN_U16("graphics/pokemon_storage/volcano_frame.gbapal");
-const u16 gWallpaperPalettes_Volcano_2_3[] = INCBIN_U16("graphics/pokemon_storage/volcano_bg.gbapal");
+const u16 sWallpaperBoxPalette_Volcano[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Volcano[] = INCBIN_U16("graphics/pokemon_storage/volcano_frame.gbapal");
+const u16 sWallpaperBgPalette_Volcano[] = INCBIN_U16("graphics/pokemon_storage/volcano_bg.gbapal");
 
-const u8 gWallpaperTiles_Volcano[] = INCBIN_U8("graphics/pokemon_storage/volcano.4bpp.lz");
-const u32 filler_83b871c = 0; // needed to match but otherwise garbage
+const u8 sWallpaperTiles_Volcano[] = INCBIN_U8("graphics/pokemon_storage/volcano.4bpp.lz");
+const u32 sUnusedVolcanoTilemapPadding = 0; // needed to match but otherwise garbage
 
-const u8 gWallpaperTilemap_Volcano[] = INCBIN_U8("graphics/pokemon_storage/volcano.bin.lz");
+const u8 sWallpaperTilemap_Volcano[] = INCBIN_U8("graphics/pokemon_storage/volcano.bin.lz");
 
-const u16 gWallpaperPalettes_Snow[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Snow_2[] = INCBIN_U16("graphics/pokemon_storage/snow_frame.gbapal");
-const u16 gWallpaperPalettes_Snow_2_3[] = INCBIN_U16("graphics/pokemon_storage/snow_bg.gbapal");
+const u16 sWallpaperBoxPalette_Snow[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Snow[] = INCBIN_U16("graphics/pokemon_storage/snow_frame.gbapal");
+const u16 sWallpaperBgPalette_Snow[] = INCBIN_U16("graphics/pokemon_storage/snow_bg.gbapal");
 
-const u8 gWallpaperTiles_Snow[] = INCBIN_U8("graphics/pokemon_storage/snow.4bpp.lz");
+const u8 sWallpaperTiles_Snow[] = INCBIN_U8("graphics/pokemon_storage/snow.4bpp.lz");
 
-const u8 gWallpaperTilemap_Snow[] = INCBIN_U8("graphics/pokemon_storage/snow.bin.lz");
+const u8 sWallpaperTilemap_Snow[] = INCBIN_U8("graphics/pokemon_storage/snow.bin.lz");
 
-const u16 gWallpaperPalettes_Cave[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Cave_2[] = INCBIN_U16("graphics/pokemon_storage/cave_frame.gbapal");
-const u16 gWallpaperPalettes_Cave_2_3[] = INCBIN_U16("graphics/pokemon_storage/cave_bg.gbapal");
+const u16 sWallpaperBoxPalette_Cave[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Cave[] = INCBIN_U16("graphics/pokemon_storage/cave_frame.gbapal");
+const u16 sWallpaperBgPalette_Cave[] = INCBIN_U16("graphics/pokemon_storage/cave_bg.gbapal");
 
-const u8 gWallpaperTiles_Cave[] = INCBIN_U8("graphics/pokemon_storage/cave.4bpp.lz");
+const u8 sWallpaperTiles_Cave[] = INCBIN_U8("graphics/pokemon_storage/cave.4bpp.lz");
 
-const u8 gWallpaperTilemap_Cave[] = INCBIN_U8("graphics/pokemon_storage/cave.bin.lz");
+const u8 sWallpaperTilemap_Cave[] = INCBIN_U8("graphics/pokemon_storage/cave.bin.lz");
 
-const u16 gWallpaperPalettes_Beach[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Beach_2[] = INCBIN_U16("graphics/pokemon_storage/beach_frame.gbapal");
-const u16 gWallpaperPalettes_Beach_2_3[] = INCBIN_U16("graphics/pokemon_storage/beach_bg.gbapal");
+const u16 sWallpaperBoxPalette_Beach[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Beach[] = INCBIN_U16("graphics/pokemon_storage/beach_frame.gbapal");
+const u16 sWallpaperBgPalette_Beach[] = INCBIN_U16("graphics/pokemon_storage/beach_bg.gbapal");
 
-const u8 gWallpaperTiles_Beach[] = INCBIN_U8("graphics/pokemon_storage/beach.4bpp.lz");
+const u8 sWallpaperTiles_Beach[] = INCBIN_U8("graphics/pokemon_storage/beach.4bpp.lz");
 
-const u8 gWallpaperTilemap_Beach[] = INCBIN_U8("graphics/pokemon_storage/beach.bin.lz");
+const u8 sWallpaperTilemap_Beach[] = INCBIN_U8("graphics/pokemon_storage/beach.bin.lz");
 
-const u16 gWallpaperPalettes_Seafloor[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Seafloor_2[] = INCBIN_U16("graphics/pokemon_storage/seafloor_frame.gbapal");
-const u16 gWallpaperPalettes_Seafloor_2_3[] = INCBIN_U16("graphics/pokemon_storage/seafloor_bg.gbapal");
+const u16 sWallpaperBoxPalette_Seafloor[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Seafloor[] = INCBIN_U16("graphics/pokemon_storage/seafloor_frame.gbapal");
+const u16 sWallpaperBgPalette_Seafloor[] = INCBIN_U16("graphics/pokemon_storage/seafloor_bg.gbapal");
 
-const u8 gWallpaperTiles_Seafloor[] = INCBIN_U8("graphics/pokemon_storage/seafloor.4bpp.lz");
+const u8 sWallpaperTiles_Seafloor[] = INCBIN_U8("graphics/pokemon_storage/seafloor.4bpp.lz");
 
-const u8 gWallpaperTilemap_Seafloor[] = INCBIN_U8("graphics/pokemon_storage/seafloor.bin.lz");
+const u8 sWallpaperTilemap_Seafloor[] = INCBIN_U8("graphics/pokemon_storage/seafloor.bin.lz");
 
-const u16 gWallpaperPalettes_River[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_River_2[] = INCBIN_U16("graphics/pokemon_storage/river_frame.gbapal");
-const u16 gWallpaperPalettes_River_2_3[] = INCBIN_U16("graphics/pokemon_storage/river_bg.gbapal");
+const u16 sWallpaperBoxPalette_River[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_River[] = INCBIN_U16("graphics/pokemon_storage/river_frame.gbapal");
+const u16 sWallpaperBgPalette_River[] = INCBIN_U16("graphics/pokemon_storage/river_bg.gbapal");
 
-const u8 gWallpaperTiles_River[] = INCBIN_U8("graphics/pokemon_storage/river.4bpp.lz");
+const u8 sWallpaperTiles_River[] = INCBIN_U8("graphics/pokemon_storage/river.4bpp.lz");
 
-const u8 gWallpaperTilemap_River[] = INCBIN_U8("graphics/pokemon_storage/river.bin.lz");
+const u8 sWallpaperTilemap_River[] = INCBIN_U8("graphics/pokemon_storage/river.bin.lz");
 
-const u16 gWallpaperPalettes_Sky[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
-const u16 gWallpaperPalettes_Sky_2[] = INCBIN_U16("graphics/pokemon_storage/sky_frame.gbapal");
-const u16 gWallpaperPalettes_Sky_2_3[] = INCBIN_U16("graphics/pokemon_storage/sky_bg.gbapal");
+const u16 sWallpaperBoxPalette_Sky[] = INCBIN_U16("graphics/pokemon_storage/box_bg1.gbapal");
+const u16 sWallpaperFramePalette_Sky[] = INCBIN_U16("graphics/pokemon_storage/sky_frame.gbapal");
+const u16 sWallpaperBgPalette_Sky[] = INCBIN_U16("graphics/pokemon_storage/sky_bg.gbapal");
 
-const u8 gWallpaperTiles_Sky[] = INCBIN_U8("graphics/pokemon_storage/sky.4bpp.lz");
+const u8 sWallpaperTiles_Sky[] = INCBIN_U8("graphics/pokemon_storage/sky.4bpp.lz");
 
-const u8 gWallpaperTilemap_Sky[] = INCBIN_U8("graphics/pokemon_storage/sky.bin.lz");
+const u8 sWallpaperTilemap_Sky[] = INCBIN_U8("graphics/pokemon_storage/sky.bin.lz");
 
-const u16 gWallpaperPalettes_Polkadot[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
-const u16 gWallpaperPalettes_Polkadot_2[] = INCBIN_U16("graphics/pokemon_storage/polkadot_frame.gbapal");
-const u16 gWallpaperPalettes_Polkadot_2_3[] = INCBIN_U16("graphics/pokemon_storage/polkadot_bg.gbapal");
+const u16 sWallpaperBoxPalette_Polkadot[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
+const u16 sWallpaperFramePalette_Polkadot[] = INCBIN_U16("graphics/pokemon_storage/polkadot_frame.gbapal");
+const u16 sWallpaperBgPalette_Polkadot[] = INCBIN_U16("graphics/pokemon_storage/polkadot_bg.gbapal");
 
-const u8 gWallpaperTiles_Polkadot[] = INCBIN_U8("graphics/pokemon_storage/polkadot.4bpp.lz");
+const u8 sWallpaperTiles_Polkadot[] = INCBIN_U8("graphics/pokemon_storage/polkadot.4bpp.lz");
 
-const u8 gWallpaperTilemap_Polkadot[] = INCBIN_U8("graphics/pokemon_storage/polkadot.bin.lz");
+const u8 sWallpaperTilemap_Polkadot[] = INCBIN_U8("graphics/pokemon_storage/polkadot.bin.lz");
 
-const u16 gWallpaperPalettes_Pokecenter[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
-const u16 gWallpaperPalettes_Pokecenter_2[] = INCBIN_U16("graphics/pokemon_storage/pokecenter_frame.gbapal");
-const u16 gWallpaperPalettes_Pokecenter_2_3[] = INCBIN_U16("graphics/pokemon_storage/pokecenter_bg.gbapal");
+const u16 sWallpaperBoxPalette_Pokecenter[] = INCBIN_U16("graphics/pokemon_storage/box_bg2.gbapal");
+const u16 sWallpaperFramePalette_Pokecenter[] = INCBIN_U16("graphics/pokemon_storage/pokecenter_frame.gbapal");
+const u16 sWallpaperBgPalette_Pokecenter[] = INCBIN_U16("graphics/pokemon_storage/pokecenter_bg.gbapal");
 
-const u8 gWallpaperTiles_Pokecenter[] = INCBIN_U8("graphics/pokemon_storage/pokecenter.4bpp.lz");
+const u8 sWallpaperTiles_Pokecenter[] = INCBIN_U8("graphics/pokemon_storage/pokecenter.4bpp.lz");
 
-const u8 gWallpaperTilemap_Pokecenter[] = INCBIN_U8("graphics/pokemon_storage/pokecenter.bin.lz");
+const u8 sWallpaperTilemap_Pokecenter[] = INCBIN_U8("graphics/pokemon_storage/pokecenter.bin.lz");
 
-const u16 gWallpaperPalettes_Machine[] = INCBIN_U16("graphics/pokemon_storage/box_bg3.gbapal");
-const u16 gWallpaperPalettes_Machine_2[] = INCBIN_U16("graphics/pokemon_storage/machine_frame.gbapal");
-const u16 gWallpaperPalettes_Machine_2_3[] = INCBIN_U16("graphics/pokemon_storage/machine_bg.gbapal");
+const u16 sWallpaperBoxPalette_Machine[] = INCBIN_U16("graphics/pokemon_storage/box_bg3.gbapal");
+const u16 sWallpaperFramePalette_Machine[] = INCBIN_U16("graphics/pokemon_storage/machine_frame.gbapal");
+const u16 sWallpaperBgPalette_Machine[] = INCBIN_U16("graphics/pokemon_storage/machine_bg.gbapal");
 
-const u8 gWallpaperTiles_Machine[] = INCBIN_U8("graphics/pokemon_storage/machine.4bpp.lz");
+const u8 sWallpaperTiles_Machine[] = INCBIN_U8("graphics/pokemon_storage/machine.4bpp.lz");
 
-const u8 gWallpaperTilemap_Machine[] = INCBIN_U8("graphics/pokemon_storage/machine.bin.lz");
+const u8 sWallpaperTilemap_Machine[] = INCBIN_U8("graphics/pokemon_storage/machine.bin.lz");
 
-const u16 gWallpaperPalettes_Plain[] = INCBIN_U16("graphics/pokemon_storage/box_bg4.gbapal");
-const u16 gWallpaperPalettes_Plain_2[] = INCBIN_U16("graphics/pokemon_storage/plain_frame.gbapal");
-const u16 gWallpaperPalettes_Plain_2_3[] = INCBIN_U16("graphics/pokemon_storage/plain_bg.gbapal");
+const u16 sWallpaperBoxPalette_Plain[] = INCBIN_U16("graphics/pokemon_storage/box_bg4.gbapal");
+const u16 sWallpaperFramePalette_Plain[] = INCBIN_U16("graphics/pokemon_storage/plain_frame.gbapal");
+const u16 sWallpaperBgPalette_Plain[] = INCBIN_U16("graphics/pokemon_storage/plain_bg.gbapal");
 
-const u8 gWallpaperTiles_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.4bpp.lz");
+const u8 sWallpaperTiles_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.4bpp.lz");
 
-const u8 gWallpaperTilemap_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.bin.lz");
+const u8 sWallpaperTilemap_Plain[] = INCBIN_U8("graphics/pokemon_storage/plain.bin.lz");
 
-const u16 gUnknown_083BAEF8[] = INCBIN_U16("graphics/unused/tilemap_3BAEF8.bin");
+const u16 sUnusedWallpaperTilemap[] = INCBIN_U16("graphics/unused/tilemap_3BAEF8.bin");
 
-const u16 gUnknown_083BB0A8[][2] = {
+const u16 sBoxTitleColors[][2] = {
     {0x1CE7, 0x7FFF},
     {0x1CE7, 0x7FFF},
     {0x1CE7, 0x7FFF},
@@ -234,161 +234,161 @@ const u16 gUnknown_083BB0A8[][2] = {
     {0x1CE7, 0x7FFF}
 };
 
-const struct WallpaperTable gWallpaperTable[] = {
-    {gWallpaperTiles_Forest, 0x3D0, gWallpaperTilemap_Forest, gWallpaperPalettes_Forest}, // Forest
-    {gWallpaperTiles_City, 0x208, gWallpaperTilemap_City, gWallpaperPalettes_City}, // City
-    {gWallpaperTiles_Desert, 0x2EC, gWallpaperTilemap_Desert, gWallpaperPalettes_Desert}, // Desert
-    {gWallpaperTiles_Savanna, 0x220, gWallpaperTilemap_Savanna, gWallpaperPalettes_Savanna}, // Savanna
-    {gWallpaperTiles_Crag, 0x350, gWallpaperTilemap_Crag, gWallpaperPalettes_Crag}, // Crag
-    {gWallpaperTiles_Volcano, 0x334, gWallpaperTilemap_Volcano, gWallpaperPalettes_Volcano}, // Volcano
-    {gWallpaperTiles_Snow, 0x2B8, gWallpaperTilemap_Snow, gWallpaperPalettes_Snow}, // Snow
-    {gWallpaperTiles_Cave, 0x344, gWallpaperTilemap_Cave, gWallpaperPalettes_Cave}, // Cave
-    {gWallpaperTiles_Beach, 0x384, gWallpaperTilemap_Beach, gWallpaperPalettes_Beach}, // Beach
-    {gWallpaperTiles_Seafloor, 0x2B4, gWallpaperTilemap_Seafloor, gWallpaperPalettes_Seafloor}, // Seafloor
-    {gWallpaperTiles_River, 0x294, gWallpaperTilemap_River, gWallpaperPalettes_River}, // River
-    {gWallpaperTiles_Sky, 0x298, gWallpaperTilemap_Sky, gWallpaperPalettes_Sky}, // Sky
-    {gWallpaperTiles_Polkadot, 0x1FC, gWallpaperTilemap_Polkadot, gWallpaperPalettes_Polkadot}, // Polkadot
-    {gWallpaperTiles_Pokecenter, 0x3A4, gWallpaperTilemap_Pokecenter, gWallpaperPalettes_Pokecenter}, // Pokecenter
-    {gWallpaperTiles_Machine, 0x2F0, gWallpaperTilemap_Machine, gWallpaperPalettes_Machine}, // Machine
-    {gWallpaperTiles_Plain, 0xFC, gWallpaperTilemap_Plain, gWallpaperPalettes_Plain} // Plain
+const struct Wallpaper sWallpapers[] = {
+    {sWallpaperTiles_Forest, 0x3D0, sWallpaperTilemap_Forest, sWallpaperBoxPalette_Forest}, // Forest
+    {sWallpaperTiles_City, 0x208, sWallpaperTilemap_City, sWallpaperBoxPalette_City}, // City
+    {sWallpaperTiles_Desert, 0x2EC, sWallpaperTilemap_Desert, sWallpaperBoxPalette_Desert}, // Desert
+    {sWallpaperTiles_Savanna, 0x220, sWallpaperTilemap_Savanna, sWallpaperBoxPalette_Savanna}, // Savanna
+    {sWallpaperTiles_Crag, 0x350, sWallpaperTilemap_Crag, sWallpaperBoxPalette_Crag}, // Crag
+    {sWallpaperTiles_Volcano, 0x334, sWallpaperTilemap_Volcano, sWallpaperBoxPalette_Volcano}, // Volcano
+    {sWallpaperTiles_Snow, 0x2B8, sWallpaperTilemap_Snow, sWallpaperBoxPalette_Snow}, // Snow
+    {sWallpaperTiles_Cave, 0x344, sWallpaperTilemap_Cave, sWallpaperBoxPalette_Cave}, // Cave
+    {sWallpaperTiles_Beach, 0x384, sWallpaperTilemap_Beach, sWallpaperBoxPalette_Beach}, // Beach
+    {sWallpaperTiles_Seafloor, 0x2B4, sWallpaperTilemap_Seafloor, sWallpaperBoxPalette_Seafloor}, // Seafloor
+    {sWallpaperTiles_River, 0x294, sWallpaperTilemap_River, sWallpaperBoxPalette_River}, // River
+    {sWallpaperTiles_Sky, 0x298, sWallpaperTilemap_Sky, sWallpaperBoxPalette_Sky}, // Sky
+    {sWallpaperTiles_Polkadot, 0x1FC, sWallpaperTilemap_Polkadot, sWallpaperBoxPalette_Polkadot}, // Polkadot
+    {sWallpaperTiles_Pokecenter, 0x3A4, sWallpaperTilemap_Pokecenter, sWallpaperBoxPalette_Pokecenter}, // Pokecenter
+    {sWallpaperTiles_Machine, 0x2F0, sWallpaperTilemap_Machine, sWallpaperBoxPalette_Machine}, // Machine
+    {sWallpaperTiles_Plain, 0xFC, sWallpaperTilemap_Plain, sWallpaperBoxPalette_Plain} // Plain
 };
 
-const u16 PCPal_Arrow[] = INCBIN_U16("graphics/pokemon_storage/arrow.gbapal");
-const u8 PCGfx_Arrow[] = INCBIN_U8("graphics/pokemon_storage/arrow.4bpp");
+const u16 sArrowPalette[] = INCBIN_U16("graphics/pokemon_storage/arrow.gbapal");
+const u8 sArrowTiles[] = INCBIN_U8("graphics/pokemon_storage/arrow.4bpp");
 
-const struct SpriteSheet gUnknown_083BB288 = {PCGfx_Arrow, 0x80, 6};
-const struct SpritePalette gUnknown_083BB290 = {PCPal_Arrow, 0xdacf};
+const struct SpriteSheet sSpriteSheet_Arrow = {sArrowTiles, 0x80, 6};
+const struct SpritePalette sSpritePalette_Arrow = {sArrowPalette, 0xdacf};
 
-const struct OamData gOamData_83BB298 = {
+const struct OamData sOamData_BoxTitle = {
     .shape = ST_OAM_H_RECTANGLE,
     .size = 2,
     .priority = 2
 };
 
-const union AnimCmd gSpriteAnim_83BB2A0[] = {
+const union AnimCmd sAnim_BoxTitleLeft[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83BB2A8[] = {
+const union AnimCmd sAnim_BoxTitleRight[] = {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83BB2B0[] = {
-    gSpriteAnim_83BB2A0,
-    gSpriteAnim_83BB2A8
+const union AnimCmd *const sAnims_BoxTitle[] = {
+    sAnim_BoxTitleLeft,
+    sAnim_BoxTitleRight
 };
 
-const struct SpriteTemplate gSpriteTemplate_83BB2B8 = {
+const struct SpriteTemplate sSpriteTemplate_BoxTitle = {
     3,
     0xdac8,
-    &gOamData_83BB298,
-    gSpriteAnimTable_83BB2B0,
+    &sOamData_BoxTitle,
+    sAnims_BoxTitle,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy
 };
 
-const struct OamData gOamData_83BB2D0 = {
+const struct OamData sOamData_Arrow = {
     .shape = ST_OAM_V_RECTANGLE,
     .priority = 2
 };
 
-const union AnimCmd gSpriteAnim_83BB2D8[] = {
+const union AnimCmd sAnim_ArrowLeft[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83BB2E0[] = {
+const union AnimCmd sAnim_ArrowRight[] = {
     ANIMCMD_FRAME(2, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gSpriteAnimTable_83BB2E8[] = {
-    gSpriteAnim_83BB2D8,
-    gSpriteAnim_83BB2E0
+const union AnimCmd *const sAnims_Arrow[] = {
+    sAnim_ArrowLeft,
+    sAnim_ArrowRight
 };
 
-const struct SpriteTemplate gSpriteTemplate_83BB2F0 = {
+const struct SpriteTemplate sSpriteTemplate_Arrow = {
     6,
     0xdacf,
-    &gOamData_83BB2D0,
-    gSpriteAnimTable_83BB2E8,
+    &sOamData_Arrow,
+    sAnims_Arrow,
     NULL,
     gDummySpriteAffineAnimTable,
-    sub_809A8C8
+    SpriteCB_Arrow
 };
 
-const u16 HandCursorPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor_pal.bin");
-const u16 HandCursorAltPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor_alt_pal.bin");
-const u8 HandCursorTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor.4bpp");
-const u8 HandCursorShadowTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
+const u16 gHandCursorPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor_pal.bin");
+const u16 gHandCursorAltPalette[] = INCBIN_U16("graphics/pokemon_storage/hand_cursor_alt_pal.bin");
+const u8 gHandCursorTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor.4bpp");
+const u8 gHandCursorShadowTiles[] = INCBIN_U8("graphics/pokemon_storage/hand_cursor_shadow.4bpp");
 
-bool8 (*const gUnknown_083BBBC8[])(void) = {
-    sub_809B150,
-    sub_809B1D8,
-    sub_809B24C
+bool8 (*const sMonPlaceChangeFuncs[])(void) = {
+    MonPlaceChange_Grab,
+    MonPlaceChange_Place,
+    MonPlaceChange_Shift
 };
 
-extern const struct SpriteSheet gHandCursorSpriteSheets[3];
-extern const struct SpritePalette gHandCursorSpritePalettes[3];
-extern const struct SpriteTemplate gSpriteTemplate_83BBC70;
-extern const struct SpriteTemplate gSpriteTemplate_83BBC88;
-extern const u8 *const gUnknown_083BBCA0[];
-extern struct PokemonStorageSystemFunc gUnknown_083BBBD4[];
+extern const struct SpriteSheet gPokeStorageCursorSpriteSheets[3];
+extern const struct SpritePalette gPokeStorageCursorSpritePalettes[3];
+extern const struct SpriteTemplate gSpriteTemplate_PokeStorageCursor;
+extern const struct SpriteTemplate gSpriteTemplate_PokeStorageCursorShadow;
+extern const u8 *const gPokeStorageMenuTexts[];
+extern struct PokeStorageInputHandler gPokeStorageInputHandlers[];
 
 // .text
 
-void sub_8099BF8(u8 boxId)
+void InitPokeStorageBox(u8 boxId)
 {
-    gPokemonStorageSystemPtr->unk_08ba = FALSE;
+    gPokemonStorageSystemPtr->wallpaperOffset = FALSE;
     gPokemonStorageSystemPtr->bg2_X = 0;
     DmaFill32(3, 0, BG_SCREEN_ADDR(26), 0x1000);
-    sub_8099EB0(boxId, 0);
-    sub_809A23C(boxId);
-    sub_809A6DC();
+    LoadWallpaperGfx(boxId, 0);
+    InitBoxTitle(boxId);
+    CreateBoxScrollArrows();
     InitBoxMonSprites(boxId);
     REG_BG2CNT = BGCNT_PRIORITY(2) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(26) | BGCNT_TXT512x256;
 }
 
-void sub_8099C70(u8 whichBox)
+void SetUpScrollToBox(u8 boxId)
 {
-    s8 r4 = sub_8099D90(whichBox);
-    sub_8099EB0(whichBox, r4);
-    gPokemonStorageSystemPtr->unk_08b6 = r4 * 6;
-    gPokemonStorageSystemPtr->unk_08b8 = 0x20;
-    gPokemonStorageSystemPtr->unk_08bb = whichBox;
-    gPokemonStorageSystemPtr->unk_08bc = r4 > 0 ? 0 : 5;
-    gPokemonStorageSystemPtr->unk_08be = r4;
-    gPokemonStorageSystemPtr->unk_08c0 = r4 > 0 ? 0x108 : 0x38;
-    gPokemonStorageSystemPtr->unk_08c2 = r4 > 0 ? 0 : 5;
-    gPokemonStorageSystemPtr->unk_08c4 = r4;
-    gPokemonStorageSystemPtr->unk_08c6 = 0;
-    gPokemonStorageSystemPtr->unk_08c8 = 2;
-    InitBoxMonIconScroll(whichBox, r4);
-    sub_809A3D0(whichBox, r4);
-    sub_809A774(r4);
+    s8 direction = DetermineBoxScrollDirection(boxId);
+    LoadWallpaperGfx(boxId, direction);
+    gPokemonStorageSystemPtr->scrollSpeed = direction * 6;
+    gPokemonStorageSystemPtr->scrollTimer = 0x20;
+    gPokemonStorageSystemPtr->scrollToBoxIdUnused = boxId;
+    gPokemonStorageSystemPtr->scrollUnused2 = direction > 0 ? 0 : 5;
+    gPokemonStorageSystemPtr->scrollDirectionUnused = direction;
+    gPokemonStorageSystemPtr->scrollUnused3 = direction > 0 ? 0x108 : 0x38;
+    gPokemonStorageSystemPtr->scrollUnused4 = direction > 0 ? 0 : 5;
+    gPokemonStorageSystemPtr->scrollUnused5 = direction;
+    gPokemonStorageSystemPtr->scrollUnused6 = 0;
+    gPokemonStorageSystemPtr->scrollUnused7 = 2;
+    InitBoxMonIconScroll(boxId, direction);
+    CreateIncomingBoxTitle(boxId, direction);
+    StartBoxScrollArrowsSlide(direction);
 }
 
-bool8 sub_8099D34(void)
+bool8 ScrollToBox(void)
 {
     bool8 retVal = UpdateBoxMonIconScroll();
-    if (gPokemonStorageSystemPtr->unk_08b8 != 0)
+    if (gPokemonStorageSystemPtr->scrollTimer != 0)
     {
-        gPokemonStorageSystemPtr->bg2_X += gPokemonStorageSystemPtr->unk_08b6;
+        gPokemonStorageSystemPtr->bg2_X += gPokemonStorageSystemPtr->scrollSpeed;
         gPokemonStorageSystemPtr->bg2_X &= 0x1ff;
-        if (--gPokemonStorageSystemPtr->unk_08b8 == 0)
+        if (--gPokemonStorageSystemPtr->scrollTimer == 0)
         {
-            sub_809A598();
-            sub_809A810();
+            CycleBoxTitleSprites();
+            StopBoxScrollArrowsSlide();
         }
         return TRUE;
     }
     return retVal;
 }
 
-s8 sub_8099D90(u8 boxId)
+s8 DetermineBoxScrollDirection(u8 boxId)
 {
     u8 curBox = StorageGetCurrentBox();
     u8 i;
@@ -401,34 +401,34 @@ s8 sub_8099D90(u8 boxId)
     return i <= 6 ? 1 : -1;
 }
 
-void sub_8099DCC(u8 wallpaperId)
+void SetWallpaperForCurrentBox(u8 wallpaperId)
 {
     u8 curBox = StorageGetCurrentBox();
     gPokemonStorage.wallpaper[curBox] = wallpaperId;
-    gPokemonStorageSystemPtr->unk_1032 = 0;
+    gPokemonStorageSystemPtr->wallpaperChangeState = 0;
 }
 
-bool8 sub_8099E08(void)
+bool8 DoWallpaperGfxChange(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_1032)
+    switch (gPokemonStorageSystemPtr->wallpaperChangeState)
     {
         case 0:
-            BeginNormalPaletteFade(gPokemonStorageSystemPtr->unk_0d08, 1, 0, 16, FADE_COLOR_WHITE);
-            gPokemonStorageSystemPtr->unk_1032++;
+            BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 0, 16, FADE_COLOR_WHITE);
+            gPokemonStorageSystemPtr->wallpaperChangeState++;
             break;
         case 1:
             if (!UpdatePaletteFade())
             {
                 u8 curBox = StorageGetCurrentBox();
-                sub_8099EB0(curBox, 0);
-                sub_809A654();
-                BeginNormalPaletteFade(gPokemonStorageSystemPtr->unk_0d08, 1, 16, 0, FADE_COLOR_WHITE);
-                gPokemonStorageSystemPtr->unk_1032++;
+                LoadWallpaperGfx(curBox, 0);
+                CycleBoxTitleColor();
+                BeginNormalPaletteFade(gPokemonStorageSystemPtr->wallpaperPalBits, 1, 16, 0, FADE_COLOR_WHITE);
+                gPokemonStorageSystemPtr->wallpaperChangeState++;
             }
             break;
         case 2:
             if (!UpdatePaletteFade())
-                gPokemonStorageSystemPtr->unk_1032++;
+                gPokemonStorageSystemPtr->wallpaperChangeState++;
             break;
         case 3:
             return FALSE;
@@ -436,20 +436,20 @@ bool8 sub_8099E08(void)
     return TRUE;
 }
 
-void sub_8099EB0(u8 boxId, s8 a1)
+void LoadWallpaperGfx(u8 boxId, s8 direction)
 {
-    const struct WallpaperTable *wallpaperTable;
+    const struct Wallpaper *wallpaper;
 
-    if (a1)
+    if (direction)
     {
-        gPokemonStorageSystemPtr->unk_08ba = gPokemonStorageSystemPtr->unk_08ba ? FALSE : TRUE;
-        ClearLowestWallpaperTiles(BG_SCREEN_ADDR(26));
+        gPokemonStorageSystemPtr->wallpaperOffset = gPokemonStorageSystemPtr->wallpaperOffset ? FALSE : TRUE;
+        TrimOldWallpaper(BG_SCREEN_ADDR(26));
     }
-    wallpaperTable = gWallpaperTable +gPokemonStorage.wallpaper[boxId];
-    LoadPalette(wallpaperTable->palettes, gPokemonStorageSystemPtr->unk_08ba * 0x30 + 0x40, 0x60);
-    LZ77UnCompWram(wallpaperTable->tileMap, gPokemonStorageSystemPtr->unk_0d62);
-    CopyWallpaperTilemap(BG_SCREEN_ADDR(26), gPokemonStorageSystemPtr->unk_0d62, a1, gPokemonStorageSystemPtr->unk_08ba);
-    LZ77UnCompVram(wallpaperTable->tiles, BG_CHAR_ADDR(2) + (gPokemonStorageSystemPtr->unk_08ba << 13));
+    wallpaper = sWallpapers + gPokemonStorage.wallpaper[boxId];
+    LoadPalette(wallpaper->palettes, gPokemonStorageSystemPtr->wallpaperOffset * 0x30 + 0x40, 0x60);
+    LZ77UnCompWram(wallpaper->tilemap, gPokemonStorageSystemPtr->wallpaperTilemap);
+    DrawWallpaper(BG_SCREEN_ADDR(26), gPokemonStorageSystemPtr->wallpaperTilemap, direction, gPokemonStorageSystemPtr->wallpaperOffset);
+    LZ77UnCompVram(wallpaper->tiles, BG_CHAR_ADDR(2) + (gPokemonStorageSystemPtr->wallpaperOffset << 13));
 }
 
 /*
@@ -463,7 +463,7 @@ void sub_8099EB0(u8 boxId, s8 a1)
 
     Also depends on stored BG2 X variable in PSS.
 */
-void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset)
+void DrawWallpaper(u16 *buffer, const u16 *tilemap, s8 direction, u8 offset)
 {
     u16 *dest; // For either all of the wallpaper tilemap, or the first half of it.
     u16 *dest2; // The second half of wallpaper tilemap; used in case of two halves.
@@ -567,7 +567,7 @@ void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offs
             }
             // Needs to be one statement, or else it won't match.
             // fillX = ++fillX & 0x3F; matches, but to have consistency
-            // with ClearLowestWallpaperTiles, which requires var + 1
+            // with TrimOldWallpaper, which requires var + 1
             // instead for a similar operation, we'll use that.
             fillX = (fillX + 1) & 0x3F;
 
@@ -585,7 +585,7 @@ void CopyWallpaperTilemap(u16 *buffer, const u16 *tilemap, s8 direction, u8 offs
 
     - buffer : Wallpaper buffer.
 */
-void ClearLowestWallpaperTiles(u16 *buffer)
+void TrimOldWallpaper(u16 *buffer)
 {
     u16 x;
     s16 rectX = ((gPokemonStorageSystemPtr->bg2_X / 8) + 30) & 0x3F;
@@ -607,238 +607,255 @@ void ClearLowestWallpaperTiles(u16 *buffer)
     }
 }
 
-void sub_809A1BC(const u8 *a0, const u8 *text)
+void DrawBoxTitleText(const u8 *tiles, const u8 *text)
 {
-    u8 *r5 = gUnknown_083B6DB8;
-    DmaClear16(3, r5, 0x200);
-    Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, r5, text);
-    DmaCopy16(3, r5 + 0x000, a0 + 0x000, 0x80);
-    DmaCopy16(3, r5 + 0x100, a0 + 0x080, 0x80);
-    DmaCopy16(3, r5 + 0x080, a0 + 0x100, 0x80);
-    DmaCopy16(3, r5 + 0x180, a0 + 0x180, 0x80);
+    u8 *tileBuffer = gPokeStorageTileBuffer;
+    DmaClear16(3, tileBuffer, 0x200);
+    Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, tileBuffer, text);
+    DmaCopy16(3, tileBuffer + 0x000, tiles + 0x000, 0x80);
+    DmaCopy16(3, tileBuffer + 0x100, tiles + 0x080, 0x80);
+    DmaCopy16(3, tileBuffer + 0x080, tiles + 0x100, 0x80);
+    DmaCopy16(3, tileBuffer + 0x180, tiles + 0x180, 0x80);
 }
 
-const struct SpriteTemplate gSpriteTemplate_83BB2B8;
+const struct SpriteTemplate sSpriteTemplate_BoxTitle;
 
-void sub_809A23C(u8 boxId)
+void InitBoxTitle(u8 boxId)
 {
-    u8 tagIdx;
-    s16 r6;
+    u8 paletteIndex;
+    s16 baseX;
     u16 i;
 
-    struct SpriteSheet spriteSheet = {gPokemonStorageSystemPtr->unk_08ca, 0x200, 3};
+    struct SpriteSheet spriteSheet = {gPokemonStorageSystemPtr->boxTitleTiles, 0x200, 3};
     struct SpritePalette palettes[] = {
-        {gPokemonStorageSystemPtr->unk_0ccc, 0xdac8},
-        {gPokemonStorageSystemPtr->unk_0ccc, 0xdac9},
+        {gPokemonStorageSystemPtr->boxTitlePal, 0xdac8},
+        {gPokemonStorageSystemPtr->boxTitlePal, 0xdac9},
         {}
     };
 
-    u16 wallpaper = gPokemonStorage.wallpaper[boxId];
-    gPokemonStorageSystemPtr->unk_0ccc[14] = gUnknown_083BB0A8[wallpaper][0];
-    gPokemonStorageSystemPtr->unk_0ccc[15] = gUnknown_083BB0A8[wallpaper][1];
+    u16 wallpaperId = gPokemonStorage.wallpaper[boxId];
+    gPokemonStorageSystemPtr->boxTitlePal[14] = sBoxTitleColors[wallpaperId][0];
+    gPokemonStorageSystemPtr->boxTitlePal[15] = sBoxTitleColors[wallpaperId][1];
     LoadSpritePalettes(palettes);
-    gPokemonStorageSystemPtr->unk_0d08 = 0x3f0;
-    tagIdx = IndexOfSpritePaletteTag(0xdac8);
-    gPokemonStorageSystemPtr->unk_0cec = 0x10e + 16 * tagIdx;
-    gPokemonStorageSystemPtr->unk_0d08 |= 0x10000 << tagIdx;
-    tagIdx = IndexOfSpritePaletteTag(0xdac9);
-    gPokemonStorageSystemPtr->unk_0cee = 0x10e + 16 * tagIdx;
-    gPokemonStorageSystemPtr->unk_0d08 |= 0x10000 << tagIdx;
-    sub_809A1BC(gPokemonStorageSystemPtr->unk_08ca, gPokemonStorage.boxNames[boxId]);
+    gPokemonStorageSystemPtr->wallpaperPalBits = 0x3f0;
+    paletteIndex = IndexOfSpritePaletteTag(0xdac8);
+    gPokemonStorageSystemPtr->boxTitlePalOffset = 0x10e + 16 * paletteIndex;
+    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << paletteIndex;
+    paletteIndex = IndexOfSpritePaletteTag(0xdac9);
+    gPokemonStorageSystemPtr->boxTitleAltPalOffset = 0x10e + 16 * paletteIndex;
+    gPokemonStorageSystemPtr->wallpaperPalBits |= 0x10000 << paletteIndex;
+    DrawBoxTitleText(gPokemonStorageSystemPtr->boxTitleTiles, gPokemonStorage.boxNames[boxId]);
     LoadSpriteSheet(&spriteSheet);
-    r6 = sub_809A6D0(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
+    baseX = GetBoxTitleBaseX(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83BB2B8, r6 + i * 32, 0x1c, 23);
-        gPokemonStorageSystemPtr->unk_0cf0[i] = gSprites + spriteId;
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_0cf0[i], i);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_BoxTitle, baseX + i * 32, 0x1c, 23);
+        gPokemonStorageSystemPtr->curBoxTitleSprites[i] = gSprites + spriteId;
+        StartSpriteAnim(gPokemonStorageSystemPtr->curBoxTitleSprites[i], i);
     }
-    gPokemonStorageSystemPtr->unk_0cca = 0;
+    gPokemonStorageSystemPtr->boxTitleCycleId = 0;
 }
 
-void sub_809A3D0(u8 boxId, s8 a1)
-{
-    u16 r8;
-    s16 x;
-    s16 x2;
-    u16 i;
-    struct SpriteSheet spriteSheet = {gPokemonStorageSystemPtr->unk_08ca, 0x200, 3};
-    struct SpriteTemplate template = gSpriteTemplate_83BB2B8;
+// Sprite data for moving box-title text.
+#define sSpeed         data[0]
+#define sIncomingX     data[1]
+#define sIncomingDelay data[2]
+#define sOutgoingDelay data[1]
+#define sOutgoingX     data[2]
 
-    gPokemonStorageSystemPtr->unk_0cca = gPokemonStorageSystemPtr->unk_0cca ? FALSE : TRUE;
-    if (gPokemonStorageSystemPtr->unk_0cca == 0)
+void CreateIncomingBoxTitle(u8 boxId, s8 direction)
+{
+    u16 paletteOffset;
+    s16 baseX;
+    s16 incomingX;
+    u16 i;
+    struct SpriteSheet spriteSheet = {gPokemonStorageSystemPtr->boxTitleTiles, 0x200, 3};
+    struct SpriteTemplate template = sSpriteTemplate_BoxTitle;
+
+    gPokemonStorageSystemPtr->boxTitleCycleId = gPokemonStorageSystemPtr->boxTitleCycleId ? FALSE : TRUE;
+    if (gPokemonStorageSystemPtr->boxTitleCycleId == 0)
     {
         spriteSheet.tag = 3;
-        r8 = gPokemonStorageSystemPtr->unk_0cec;
+        paletteOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
     }
     else
     {
         spriteSheet.tag = 4;
-        r8 = gPokemonStorageSystemPtr->unk_0cec;
+        paletteOffset = gPokemonStorageSystemPtr->boxTitlePalOffset;
         template.tileTag = 4;
         template.paletteTag = 0xdac9;
     }
-    sub_809A1BC(gPokemonStorageSystemPtr->unk_08ca, gPokemonStorage.boxNames[boxId]);
+    DrawBoxTitleText(gPokemonStorageSystemPtr->boxTitleTiles, gPokemonStorage.boxNames[boxId]);
     LoadSpriteSheet(&spriteSheet);
-    LoadPalette(gUnknown_083BB0A8[gPokemonStorage.wallpaper[boxId]], r8, 0x04);
-    x = sub_809A6D0(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
-    x2 = x + a1 * 192;
+    LoadPalette(sBoxTitleColors[gPokemonStorage.wallpaper[boxId]], paletteOffset, 0x04);
+    baseX = GetBoxTitleBaseX(GetStringWidthInMenuWindow(gPokemonStorage.boxNames[boxId]));
+    incomingX = baseX + direction * 192;
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&template, i * 32 + x2, 0x1c, 23);
-        gPokemonStorageSystemPtr->unk_0cf8[i] = gSprites + spriteId;
-        gPokemonStorageSystemPtr->unk_0cf8[i]->data[0] = (-a1) * 6;
-        gPokemonStorageSystemPtr->unk_0cf8[i]->data[1] = i * 32 + x;
-        gPokemonStorageSystemPtr->unk_0cf8[i]->data[2] = 1;
-        gPokemonStorageSystemPtr->unk_0cf8[i]->callback = sub_809A5E8;
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_0cf8[i], i);
-        gPokemonStorageSystemPtr->unk_0cf0[i]->data[0] = (-a1) * 6;
-        gPokemonStorageSystemPtr->unk_0cf0[i]->data[1] = 1;
-        gPokemonStorageSystemPtr->unk_0cf0[i]->callback = sub_809A61C;
+        u8 spriteId = CreateSprite(&template, i * 32 + incomingX, 0x1c, 23);
+        gPokemonStorageSystemPtr->nextBoxTitleSprites[i] = gSprites + spriteId;
+        gPokemonStorageSystemPtr->nextBoxTitleSprites[i]->sSpeed = (-direction) * 6;
+        gPokemonStorageSystemPtr->nextBoxTitleSprites[i]->sIncomingX = i * 32 + baseX;
+        gPokemonStorageSystemPtr->nextBoxTitleSprites[i]->sIncomingDelay = 1;
+        gPokemonStorageSystemPtr->nextBoxTitleSprites[i]->callback = SpriteCB_IncomingBoxTitle;
+        StartSpriteAnim(gPokemonStorageSystemPtr->nextBoxTitleSprites[i], i);
+        gPokemonStorageSystemPtr->curBoxTitleSprites[i]->sSpeed = (-direction) * 6;
+        gPokemonStorageSystemPtr->curBoxTitleSprites[i]->sOutgoingDelay = 1;
+        gPokemonStorageSystemPtr->curBoxTitleSprites[i]->callback = SpriteCB_OutgoingBoxTitle;
     }
 }
 
-void sub_809A598(void)
+void CycleBoxTitleSprites(void)
 {
-    if (gPokemonStorageSystemPtr->unk_0cca == 0)
+    if (gPokemonStorageSystemPtr->boxTitleCycleId == 0)
         FreeSpriteTilesByTag(4);
     else
         FreeSpriteTilesByTag(3);
-    gPokemonStorageSystemPtr->unk_0cf0[0] = gPokemonStorageSystemPtr->unk_0cf8[0];
-    gPokemonStorageSystemPtr->unk_0cf0[1] = gPokemonStorageSystemPtr->unk_0cf8[1];
+    gPokemonStorageSystemPtr->curBoxTitleSprites[0] = gPokemonStorageSystemPtr->nextBoxTitleSprites[0];
+    gPokemonStorageSystemPtr->curBoxTitleSprites[1] = gPokemonStorageSystemPtr->nextBoxTitleSprites[1];
 }
 
-void sub_809A5E8(struct Sprite *sprite)
+void SpriteCB_IncomingBoxTitle(struct Sprite *sprite)
 {
-    if (sprite->data[2])
-        sprite->data[2]--;
-    else if ((sprite->x += sprite->data[0]) == sprite->data[1])
+    if (sprite->sIncomingDelay)
+        sprite->sIncomingDelay--;
+    else if ((sprite->x += sprite->sSpeed) == sprite->sIncomingX)
         sprite->callback = SpriteCallbackDummy;
 }
 
-void sub_809A61C(struct Sprite *sprite)
+void SpriteCB_OutgoingBoxTitle(struct Sprite *sprite)
 {
-    if (sprite->data[1])
-        sprite->data[1]--;
+    if (sprite->sOutgoingDelay)
+        sprite->sOutgoingDelay--;
     else
     {
-        sprite->x += sprite->data[0];
-        sprite->data[2] = sprite->x + sprite->x2;
-        if (sprite->data[2] < 0x40 || sprite->data[2] > 0x100)
+        sprite->x += sprite->sSpeed;
+        sprite->sOutgoingX = sprite->x + sprite->x2;
+        if (sprite->sOutgoingX < 0x40 || sprite->sOutgoingX > 0x100)
             DestroySprite(sprite);
     }
 }
 
-void sub_809A654(void)
+#undef sSpeed
+#undef sIncomingX
+#undef sIncomingDelay
+#undef sOutgoingDelay
+#undef sOutgoingX
+
+void CycleBoxTitleColor(void)
 {
     u8 boxId = StorageGetCurrentBox();
     u8 wallpaperId = gPokemonStorage.wallpaper[boxId];
-    if (gPokemonStorageSystemPtr->unk_0cca == 0)
-        CpuCopy16(gUnknown_083BB0A8[wallpaperId], gPlttBufferUnfaded + gPokemonStorageSystemPtr->unk_0cec, 4);
+    if (gPokemonStorageSystemPtr->boxTitleCycleId == 0)
+        CpuCopy16(sBoxTitleColors[wallpaperId], gPlttBufferUnfaded + gPokemonStorageSystemPtr->boxTitlePalOffset, 4);
     else
-        CpuCopy16(gUnknown_083BB0A8[wallpaperId], gPlttBufferUnfaded + gPokemonStorageSystemPtr->unk_0cee, 4);
+        CpuCopy16(sBoxTitleColors[wallpaperId], gPlttBufferUnfaded + gPokemonStorageSystemPtr->boxTitleAltPalOffset, 4);
 }
 
-s16 sub_809A6D0(u8 width)
+s16 GetBoxTitleBaseX(u8 width)
 {
     return 0xb0 - width / 2;
 }
 
-void sub_809A6DC(void)
+// Sprite data for box scroll arrows.
+#define sState data[0]
+#define sTimer data[1]
+#define sSpeed data[3]
+
+void CreateBoxScrollArrows(void)
 {
     u16 i;
 
-    LoadSpriteSheet(&gUnknown_083BB288);
-    LoadSpritePalette(&gUnknown_083BB290);
+    LoadSpriteSheet(&sSpriteSheet_Arrow);
+    LoadSpritePalette(&sSpritePalette_Arrow);
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83BB2F0, 0x5c + i * 0x88, 0x1c, 21);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_Arrow, 0x5c + i * 0x88, 0x1c, 21);
         if (spriteId != MAX_SPRITES)
         {
             struct Sprite *sprite = gSprites + spriteId;
             StartSpriteAnim(sprite, i);
-            sprite->data[3] = (i == 0) ? -1 : 1;
-            gPokemonStorageSystemPtr->unk_0d00[i] = sprite;
+            sprite->sSpeed = (i == 0) ? -1 : 1;
+            gPokemonStorageSystemPtr->arrowSprites[i] = sprite;
         }
     }
-    if (sub_809BF2C())
-        sub_809A860(TRUE);
+    if (IsCursorOnBoxTitle())
+        AnimateBoxScrollArrows(TRUE);
 }
 
-void sub_809A774(s8 a0)
+void StartBoxScrollArrowsSlide(s8 direction)
 {
     u16 i;
 
     for (i = 0; i < 2; i++)
     {
-        gPokemonStorageSystemPtr->unk_0d00[i]->x2 = 0;
-        gPokemonStorageSystemPtr->unk_0d00[i]->data[0] = 2;
+        gPokemonStorageSystemPtr->arrowSprites[i]->x2 = 0;
+        gPokemonStorageSystemPtr->arrowSprites[i]->sState = 2;
     }
-    if (a0 < 0)
+    if (direction < 0)
     {
-        gPokemonStorageSystemPtr->unk_0d00[0]->data[1] = 29;
-        gPokemonStorageSystemPtr->unk_0d00[1]->data[1] = 5;
-        gPokemonStorageSystemPtr->unk_0d00[0]->data[2] = 0x48;
-        gPokemonStorageSystemPtr->unk_0d00[1]->data[2] = 0x48;
+        gPokemonStorageSystemPtr->arrowSprites[0]->sTimer = 29;
+        gPokemonStorageSystemPtr->arrowSprites[1]->sTimer = 5;
+        gPokemonStorageSystemPtr->arrowSprites[0]->data[2] = 0x48;
+        gPokemonStorageSystemPtr->arrowSprites[1]->data[2] = 0x48;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_0d00[0]->data[1] = 5;
-        gPokemonStorageSystemPtr->unk_0d00[1]->data[1] = 29;
-        gPokemonStorageSystemPtr->unk_0d00[0]->data[2] = 0xF8;
-        gPokemonStorageSystemPtr->unk_0d00[1]->data[2] = 0xF8;
+        gPokemonStorageSystemPtr->arrowSprites[0]->sTimer = 5;
+        gPokemonStorageSystemPtr->arrowSprites[1]->sTimer = 29;
+        gPokemonStorageSystemPtr->arrowSprites[0]->data[2] = 0xF8;
+        gPokemonStorageSystemPtr->arrowSprites[1]->data[2] = 0xF8;
     }
-    gPokemonStorageSystemPtr->unk_0d00[0]->data[7] = 0;
-    gPokemonStorageSystemPtr->unk_0d00[1]->data[7] = 1;
+    gPokemonStorageSystemPtr->arrowSprites[0]->data[7] = 0;
+    gPokemonStorageSystemPtr->arrowSprites[1]->data[7] = 1;
 }
 
-void sub_809A810(void)
+void StopBoxScrollArrowsSlide(void)
 {
     u16 i;
 
     for (i = 0; i < 2; i++)
     {
-        gPokemonStorageSystemPtr->unk_0d00[i]->x = 0x88 * i + 0x5c;
-        gPokemonStorageSystemPtr->unk_0d00[i]->x2 = 0;
-        gPokemonStorageSystemPtr->unk_0d00[i]->invisible = FALSE;
+        gPokemonStorageSystemPtr->arrowSprites[i]->x = 0x88 * i + 0x5c;
+        gPokemonStorageSystemPtr->arrowSprites[i]->x2 = 0;
+        gPokemonStorageSystemPtr->arrowSprites[i]->invisible = FALSE;
     }
-    sub_809A860(TRUE);
+    AnimateBoxScrollArrows(TRUE);
 }
 
-void sub_809A860(bool8 a0)
+void AnimateBoxScrollArrows(bool8 animate)
 {
     u16 i;
-    if (a0)
+
+    if (animate)
     {
         for (i = 0; i < 2; i++)
         {
-            gPokemonStorageSystemPtr->unk_0d00[i]->data[0] = 1;
-            gPokemonStorageSystemPtr->unk_0d00[i]->data[1] = 0;
-            gPokemonStorageSystemPtr->unk_0d00[i]->data[2] = 0;
-            gPokemonStorageSystemPtr->unk_0d00[i]->data[4] = 0;
+            gPokemonStorageSystemPtr->arrowSprites[i]->sState = 1;
+            gPokemonStorageSystemPtr->arrowSprites[i]->sTimer = 0;
+            gPokemonStorageSystemPtr->arrowSprites[i]->data[2] = 0;
+            gPokemonStorageSystemPtr->arrowSprites[i]->data[4] = 0;
         }
     }
-        else
+    else
     {
         for (i = 0; i < 2; i++)
-        {
-            gPokemonStorageSystemPtr->unk_0d00[i]->data[0] = 0;
-        }
+            gPokemonStorageSystemPtr->arrowSprites[i]->sState = 0;
     }
 }
 
-void sub_809A8C8(struct Sprite *sprite)
+void SpriteCB_Arrow(struct Sprite *sprite)
 {
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
         case 0:
             sprite->x2 = 0;
             break;
         case 1:
-            if (++sprite->data[1] > 3)
+            if (++sprite->sTimer > 3)
             {
-                sprite->data[1] = 0;
-                sprite->x2 += sprite->data[3];
+                sprite->sTimer = 0;
+                sprite->x2 += sprite->sSpeed;
                 if (++sprite->data[2] > 5)
                 {
                     sprite->data[2] = 0;
@@ -847,28 +864,32 @@ void sub_809A8C8(struct Sprite *sprite)
             }
             break;
         case 2:
-            sprite->data[0] = 3;
+            sprite->sState = 3;
             break;
         case 3:
-            sprite->x -= gPokemonStorageSystemPtr->unk_08b6;
+            sprite->x -= gPokemonStorageSystemPtr->scrollSpeed;
             if (sprite->x < 0x49 || sprite->x > 0xf7)
                 sprite->invisible = TRUE;
-            if (--sprite->data[1] == 0)
+            if (--sprite->sTimer == 0)
             {
                 sprite->x = sprite->data[2];
                 sprite->invisible = FALSE;
-                sprite->data[0] = 4;
+                sprite->sState = 4;
             }
             break;
         case 4:
-            sprite->x -= gPokemonStorageSystemPtr->unk_08b6;
+            sprite->x -= gPokemonStorageSystemPtr->scrollSpeed;
             break;
     }
 }
 
+#undef sState
+#undef sTimer
+#undef sSpeed
+
 struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
 {
-    u8 spriteId = CreateSprite(&gSpriteTemplate_83BB2F0, x, y, subpriority);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_Arrow, x, y, subpriority);
     if (spriteId == MAX_SPRITES)
         return NULL;
     animId %= 2;
@@ -878,232 +899,232 @@ struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 su
     return gSprites + spriteId;
 }
 
-void sub_809AA24(void)
+void InitCursor(void)
 {
-    if (gPokemonStorageSystemPtr->boxOption != 1)
-        sBoxCursorArea = 0;
+    if (gPokemonStorageSystemPtr->boxOption != PSS_OPTION_DEPOSIT)
+        sCursorArea = PSS_CURSOR_AREA_IN_BOX;
     else
-        sBoxCursorArea = 1;
-    sBoxCursorPosition = 0;
-    gUnknown_020384E6 = FALSE;
-    gUnknown_020384E7 = 0;
-    gUnknown_020384E8 = 0;
-    gUnknown_020384E9 = 0;
-    sub_809B0D4();
-    sub_809CC04();
-    gPokemonStorageSystemPtr->unk_11e2 = 1;
-    sub_809BF74();
+        sCursorArea = PSS_CURSOR_AREA_IN_PARTY;
+    sCursorPosition = 0;
+    sIsMonBeingMoved = FALSE;
+    sMovingMonOrigBoxId = 0;
+    sMovingMonOrigBoxPos = 0;
+    sAutoActionOn = 0;
+    ClearSavedCursorPos();
+    CreateCursorSprites();
+    gPokemonStorageSystemPtr->cursorPrevHorizPos = 1;
+    TryRefreshDisplayMon();
 }
 
-void sub_809AA98(void)
+void InitCursorOnReopen(void)
 {
-    sub_809CC04();
-    sub_809C028();
-    gPokemonStorageSystemPtr->unk_11e2 = 1;
-    if (gUnknown_020384E6)
+    CreateCursorSprites();
+    ReshowDisplayMon();
+    gPokemonStorageSystemPtr->cursorPrevHorizPos = 1;
+    if (sIsMonBeingMoved)
         CreateMovingMonIcon();
 }
 
-void sub_809AACC(u8 a0, u8 a1, u16 *a2, u16 *a3)
+void GetCursorCoordsByPos(u8 cursorArea, u8 cursorPosition, u16 *x, u16 *y)
 {
-    switch (a0)
+    switch (cursorArea)
     {
-        case 0:
-            *a2 = (a1 % 6) * 24 + 100;
-            *a3 = (a1 / 6) * 24 +  32;
+        case PSS_CURSOR_AREA_IN_BOX:
+            *x = (cursorPosition % 6) * 24 + 100;
+            *y = (cursorPosition / 6) * 24 +  32;
             break;
-        case 1:
-            if (a1 == 0)
+        case PSS_CURSOR_AREA_IN_PARTY:
+            if (cursorPosition == 0)
             {
-                *a2 = 0x68;
-                *a3 = 0x34;
+                *x = 0x68;
+                *y = 0x34;
             }
-            else if (a1 == 6)
+            else if (cursorPosition == PARTY_SIZE)
             {
-                *a2 = 0x98;
-                *a3 = 0x84;
+                *x = 0x98;
+                *y = 0x84;
             }
             else
             {
-                *a2 = 0x98;
-                *a3 = (a1 - 1) * 24 + 4;
+                *x = 0x98;
+                *y = (cursorPosition - 1) * 24 + 4;
             }
             break;
-        case 2:
-            *a2 = 0xa2;
-            *a3 = 0x0c;
+        case PSS_CURSOR_AREA_BOX_TITLE:
+            *x = 0xa2;
+            *y = 0x0c;
             break;
-        case 3:
-            *a3 = gUnknown_020384E6 ? 8 : 14;
-            *a2 = a1 * 0x58 + 0x78;
+        case PSS_CURSOR_AREA_BUTTONS:
+            *y = sIsMonBeingMoved ? 8 : 14;
+            *x = cursorPosition * 0x58 + 0x78;
             break;
         case 4:
-            *a2 = 0xa0;
-            *a3 = 0x60;
+            *x = 0xa0;
+            *y = 0x60;
             break;
     }
 }
 
-u16 sub_809AB8C(void)
+u16 GetSpeciesAtCursorPosition(void)
 {
-    switch (sBoxCursorArea)
+    switch (sCursorArea)
     {
-        case 1:
-            return GetMonData(gPlayerParty + sBoxCursorPosition, MON_DATA_SPECIES);
-        case 0:
-            return GetBoxMonData(gPokemonStorage.boxes[StorageGetCurrentBox()] + sBoxCursorPosition, MON_DATA_SPECIES);
+        case PSS_CURSOR_AREA_IN_PARTY:
+            return GetMonData(gPlayerParty + sCursorPosition, MON_DATA_SPECIES);
+        case PSS_CURSOR_AREA_IN_BOX:
+            return GetBoxMonData(gPokemonStorage.boxes[StorageGetCurrentBox()] + sCursorPosition, MON_DATA_SPECIES);
         default:
             return SPECIES_NONE;
     }
 }
 
-bool8 sub_809AC00(void)
+bool8 UpdateCursorPos(void)
 {
     s16 tmp;
-    if (gPokemonStorageSystemPtr->unk_11dc == 0)
+    if (gPokemonStorageSystemPtr->cursorMoveSteps == 0)
         return FALSE;
-    if (--gPokemonStorageSystemPtr->unk_11dc)
+    if (--gPokemonStorageSystemPtr->cursorMoveSteps)
     {
-        gPokemonStorageSystemPtr->unk_11c8 += gPokemonStorageSystemPtr->unk_11d0;
-        gPokemonStorageSystemPtr->unk_11cc += gPokemonStorageSystemPtr->unk_11d4;
-        gPokemonStorageSystemPtr->unk_11c0->x = gPokemonStorageSystemPtr->unk_11c8 >> 8;
-        gPokemonStorageSystemPtr->unk_11c0->y = gPokemonStorageSystemPtr->unk_11cc >> 8;
-        if (gPokemonStorageSystemPtr->unk_11c0->x > 0x100)
+        gPokemonStorageSystemPtr->cursorNewX += gPokemonStorageSystemPtr->cursorSpeedX;
+        gPokemonStorageSystemPtr->cursorNewY += gPokemonStorageSystemPtr->cursorSpeedY;
+        gPokemonStorageSystemPtr->cursorSprite->x = gPokemonStorageSystemPtr->cursorNewX >> 8;
+        gPokemonStorageSystemPtr->cursorSprite->y = gPokemonStorageSystemPtr->cursorNewY >> 8;
+        if (gPokemonStorageSystemPtr->cursorSprite->x > 0x100)
         {
-            tmp = gPokemonStorageSystemPtr->unk_11c0->x - 0x100;
-            gPokemonStorageSystemPtr->unk_11c0->x = tmp + 0x40;
+            tmp = gPokemonStorageSystemPtr->cursorSprite->x - 0x100;
+            gPokemonStorageSystemPtr->cursorSprite->x = tmp + 0x40;
         }
-        if (gPokemonStorageSystemPtr->unk_11c0->x < 0x40)
+        if (gPokemonStorageSystemPtr->cursorSprite->x < 0x40)
         {
-            tmp = 0x40 - gPokemonStorageSystemPtr->unk_11c0->x;
-            gPokemonStorageSystemPtr->unk_11c0->x = 0x100 - tmp;
+            tmp = 0x40 - gPokemonStorageSystemPtr->cursorSprite->x;
+            gPokemonStorageSystemPtr->cursorSprite->x = 0x100 - tmp;
         }
-        if (gPokemonStorageSystemPtr->unk_11c0->y > 0xb0)
+        if (gPokemonStorageSystemPtr->cursorSprite->y > 0xb0)
         {
-            tmp = gPokemonStorageSystemPtr->unk_11c0->y - 0xb0;
-            gPokemonStorageSystemPtr->unk_11c0->y = tmp - 0x10;
+            tmp = gPokemonStorageSystemPtr->cursorSprite->y - 0xb0;
+            gPokemonStorageSystemPtr->cursorSprite->y = tmp - 0x10;
         }
-        if (gPokemonStorageSystemPtr->unk_11c0->y < -0x10)
+        if (gPokemonStorageSystemPtr->cursorSprite->y < -0x10)
         {
-            tmp = -0x10 - gPokemonStorageSystemPtr->unk_11c0->y;
-            gPokemonStorageSystemPtr->unk_11c0->y = 0xb0 - tmp;
+            tmp = -0x10 - gPokemonStorageSystemPtr->cursorSprite->y;
+            gPokemonStorageSystemPtr->cursorSprite->y = 0xb0 - tmp;
         }
-        if (gPokemonStorageSystemPtr->unk_11e3 && --gPokemonStorageSystemPtr->unk_11e3 == 0)
-            gPokemonStorageSystemPtr->unk_11c0->vFlip = gPokemonStorageSystemPtr->unk_11c0->vFlip ? FALSE : TRUE;
+        if (gPokemonStorageSystemPtr->cursorFlipTimer && --gPokemonStorageSystemPtr->cursorFlipTimer == 0)
+            gPokemonStorageSystemPtr->cursorSprite->vFlip = gPokemonStorageSystemPtr->cursorSprite->vFlip ? FALSE : TRUE;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_11c0->x = gPokemonStorageSystemPtr->unk_11d8;
-        gPokemonStorageSystemPtr->unk_11c0->y = gPokemonStorageSystemPtr->unk_11da;
-        sub_809AFB8();
+        gPokemonStorageSystemPtr->cursorSprite->x = gPokemonStorageSystemPtr->cursorTargetX;
+        gPokemonStorageSystemPtr->cursorSprite->y = gPokemonStorageSystemPtr->cursorTargetY;
+        DoCursorNewPosUpdate();
     }
     return TRUE;
 }
 
-void sub_809AD3C(u8 a0, u8 a1)
+void InitNewCursorPos(u8 newCursorArea, u8 newCursorPosition)
 {
     u16 x;
     u16 y;
 
-    sub_809AACC(a0, a1, &x, &y);
-    gPokemonStorageSystemPtr->unk_11e0 = a0;
-    gPokemonStorageSystemPtr->unk_11e1 = a1;
-    gPokemonStorageSystemPtr->unk_11d8 = x;
-    gPokemonStorageSystemPtr->unk_11da = y;
+    GetCursorCoordsByPos(newCursorArea, newCursorPosition, &x, &y);
+    gPokemonStorageSystemPtr->newCursorArea = newCursorArea;
+    gPokemonStorageSystemPtr->newCursorPosition = newCursorPosition;
+    gPokemonStorageSystemPtr->cursorTargetX = x;
+    gPokemonStorageSystemPtr->cursorTargetY = y;
 }
 
-void sub_809AD94(void)
+void InitCursorMove(void)
 {
-    int r7;
-    int r0;
+    int yDistance;
+    int xDistance;
 
-    if (gPokemonStorageSystemPtr->unk_11de || gPokemonStorageSystemPtr->unk_11df)
-        gPokemonStorageSystemPtr->unk_11dc = 12;
+    if (gPokemonStorageSystemPtr->cursorVerticalWrap || gPokemonStorageSystemPtr->cursorHorizontalWrap)
+        gPokemonStorageSystemPtr->cursorMoveSteps = 12;
     else
-        gPokemonStorageSystemPtr->unk_11dc = 6;
-    if (gPokemonStorageSystemPtr->unk_11e3)
-        gPokemonStorageSystemPtr->unk_11e3 = gPokemonStorageSystemPtr->unk_11dc >> 1;
-    switch (gPokemonStorageSystemPtr->unk_11de)
+        gPokemonStorageSystemPtr->cursorMoveSteps = 6;
+    if (gPokemonStorageSystemPtr->cursorFlipTimer)
+        gPokemonStorageSystemPtr->cursorFlipTimer = gPokemonStorageSystemPtr->cursorMoveSteps >> 1;
+    switch (gPokemonStorageSystemPtr->cursorVerticalWrap)
     {
         default:
-            r7 = gPokemonStorageSystemPtr->unk_11da - gPokemonStorageSystemPtr->unk_11c0->y;
+            yDistance = gPokemonStorageSystemPtr->cursorTargetY - gPokemonStorageSystemPtr->cursorSprite->y;
             break;
         case -1:
-            r7 = gPokemonStorageSystemPtr->unk_11da - 0xc0 - gPokemonStorageSystemPtr->unk_11c0->y;
+            yDistance = gPokemonStorageSystemPtr->cursorTargetY - 0xc0 - gPokemonStorageSystemPtr->cursorSprite->y;
             break;
         case 1:
-            r7 = gPokemonStorageSystemPtr->unk_11da + 0xc0 - gPokemonStorageSystemPtr->unk_11c0->y;
+            yDistance = gPokemonStorageSystemPtr->cursorTargetY + 0xc0 - gPokemonStorageSystemPtr->cursorSprite->y;
             break;
     }
-    switch (gPokemonStorageSystemPtr->unk_11df)
+    switch (gPokemonStorageSystemPtr->cursorHorizontalWrap)
     {
         default:
-            r0 = gPokemonStorageSystemPtr->unk_11d8 - gPokemonStorageSystemPtr->unk_11c0->x;
+            xDistance = gPokemonStorageSystemPtr->cursorTargetX - gPokemonStorageSystemPtr->cursorSprite->x;
             break;
         case -1:
-            r0 = gPokemonStorageSystemPtr->unk_11d8 - 0xc0 - gPokemonStorageSystemPtr->unk_11c0->x;
+            xDistance = gPokemonStorageSystemPtr->cursorTargetX - 0xc0 - gPokemonStorageSystemPtr->cursorSprite->x;
             break;
         case 1:
-            r0 = gPokemonStorageSystemPtr->unk_11d8 + 0xc0 - gPokemonStorageSystemPtr->unk_11c0->x;
+            xDistance = gPokemonStorageSystemPtr->cursorTargetX + 0xc0 - gPokemonStorageSystemPtr->cursorSprite->x;
             break;
     }
-    r7 <<= 8;
-    r0 <<= 8;
-    gPokemonStorageSystemPtr->unk_11d0 = r0 / gPokemonStorageSystemPtr->unk_11dc;
-    gPokemonStorageSystemPtr->unk_11d4 = r7 / gPokemonStorageSystemPtr->unk_11dc;
-    gPokemonStorageSystemPtr->unk_11c8 = gPokemonStorageSystemPtr->unk_11c0->x << 8;
-    gPokemonStorageSystemPtr->unk_11cc = gPokemonStorageSystemPtr->unk_11c0->y << 8;
+    yDistance <<= 8;
+    xDistance <<= 8;
+    gPokemonStorageSystemPtr->cursorSpeedX = xDistance / gPokemonStorageSystemPtr->cursorMoveSteps;
+    gPokemonStorageSystemPtr->cursorSpeedY = yDistance / gPokemonStorageSystemPtr->cursorMoveSteps;
+    gPokemonStorageSystemPtr->cursorNewX = gPokemonStorageSystemPtr->cursorSprite->x << 8;
+    gPokemonStorageSystemPtr->cursorNewY = gPokemonStorageSystemPtr->cursorSprite->y << 8;
 }
 
-void sub_809AF18(u8 a0, u8 a1)
+void SetCursorPosition(u8 newCursorArea, u8 newCursorPosition)
 {
-    sub_809AD3C(a0, a1);
-    sub_809AD94();
-    if (!gUnknown_020384E6)
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 1);
-    if (a0 == 1 && sBoxCursorArea != 1)
+    InitNewCursorPos(newCursorArea, newCursorPosition);
+    InitCursorMove();
+    if (!sIsMonBeingMoved)
+        StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_STILL);
+    if (newCursorArea == PSS_CURSOR_AREA_IN_PARTY && sCursorArea != PSS_CURSOR_AREA_IN_PARTY)
     {
-        gPokemonStorageSystemPtr->unk_11e2 = a0;
-        gPokemonStorageSystemPtr->unk_11c4->invisible = TRUE;
+        gPokemonStorageSystemPtr->cursorPrevHorizPos = newCursorArea;
+        gPokemonStorageSystemPtr->cursorShadowSprite->invisible = TRUE;
     }
-    switch (a0)
+    switch (newCursorArea)
     {
-        case 0:
+        case PSS_CURSOR_AREA_IN_BOX:
             break;
-        case 1 ... 3:
-            gPokemonStorageSystemPtr->unk_11c4->invisible = TRUE;
-            gPokemonStorageSystemPtr->unk_11c4->oam.priority = 1;
+        case PSS_CURSOR_AREA_IN_PARTY ... PSS_CURSOR_AREA_BUTTONS:
+            gPokemonStorageSystemPtr->cursorShadowSprite->invisible = TRUE;
+            gPokemonStorageSystemPtr->cursorShadowSprite->oam.priority = 1;
             break;
     }
 }
 
-void sub_809AFB8(void)
+void DoCursorNewPosUpdate(void)
 {
-    sBoxCursorArea = gPokemonStorageSystemPtr->unk_11e0;
-    sBoxCursorPosition = gPokemonStorageSystemPtr->unk_11e1;
-    if (!gUnknown_020384E6)
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 0);
-    sub_809BF74();
-    switch (sBoxCursorArea)
+    sCursorArea = gPokemonStorageSystemPtr->newCursorArea;
+    sCursorPosition = gPokemonStorageSystemPtr->newCursorPosition;
+    if (!sIsMonBeingMoved)
+        StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_BOUNCE);
+    TryRefreshDisplayMon();
+    switch (sCursorArea)
     {
-        case 2:
-            sub_809A860(TRUE);
+        case PSS_CURSOR_AREA_BOX_TITLE:
+            AnimateBoxScrollArrows(TRUE);
             break;
-        case 1:
-            gPokemonStorageSystemPtr->unk_11c4->subpriority = 12;
+        case PSS_CURSOR_AREA_IN_PARTY:
+            gPokemonStorageSystemPtr->cursorShadowSprite->subpriority = 12;
             break;
-        case 0:
-            gPokemonStorageSystemPtr->unk_11c4->oam.priority = 2;
-            gPokemonStorageSystemPtr->unk_11c4->subpriority = 20;
-            gPokemonStorageSystemPtr->unk_11c4->invisible = FALSE;
+        case PSS_CURSOR_AREA_IN_BOX:
+            gPokemonStorageSystemPtr->cursorShadowSprite->oam.priority = 2;
+            gPokemonStorageSystemPtr->cursorShadowSprite->subpriority = 20;
+            gPokemonStorageSystemPtr->cursorShadowSprite->invisible = FALSE;
             break;
     }
 }
 
-void sub_809B068(void)
+void SetCursorInParty(void)
 {
     u8 partyCount;
-    if (!gUnknown_020384E6)
+    if (!sIsMonBeingMoved)
         partyCount = 0;
     else
     {
@@ -1111,62 +1132,62 @@ void sub_809B068(void)
         if (partyCount > PARTY_SIZE - 1)
             partyCount = PARTY_SIZE - 1;
     }
-    if (gPokemonStorageSystemPtr->unk_11c0->vFlip)
-        gPokemonStorageSystemPtr->unk_11e3 = 1;
-    sub_809AF18(1, partyCount);
+    if (gPokemonStorageSystemPtr->cursorSprite->vFlip)
+        gPokemonStorageSystemPtr->cursorFlipTimer = 1;
+    SetCursorPosition(PSS_CURSOR_AREA_IN_PARTY, partyCount);
 }
 
-void sub_809B0C0(u8 a0)
+void SetCursorBoxPosition(u8 cursorBoxPosition)
 {
-    sub_809AF18(0, a0);
+    SetCursorPosition(PSS_CURSOR_AREA_IN_BOX, cursorBoxPosition);
 }
 
-void sub_809B0D4(void)
+void ClearSavedCursorPos(void)
 {
-    gUnknown_020384EA = 0;
+    sSavedCursorPosition = 0;
 }
 
-void sub_809B0E0(void)
+void SaveCursorPos(void)
 {
-    gUnknown_020384EA = sBoxCursorPosition;
+    sSavedCursorPosition = sCursorPosition;
 }
 
-u8 sub_809B0F4(void)
+u8 GetSavedCursorPos(void)
 {
-    return gUnknown_020384EA;
+    return sSavedCursorPosition;
 }
 
-void sub_809B100(u8 a0)
+void InitMonPlaceChange(u8 type)
 {
-    gPokemonStorageSystemPtr->monPlaceChangeFunc = gUnknown_083BBBC8[a0];
+    gPokemonStorageSystemPtr->monPlaceChangeFunc = sMonPlaceChangeFuncs[type];
     gPokemonStorageSystemPtr->monPlaceChangeState = 0;
 }
 
-bool8 sub_809B130(void)
+bool8 DoMonPlaceChange(void)
 {
     return gPokemonStorageSystemPtr->monPlaceChangeFunc();
 }
 
-bool8 sub_809B150(void)
+bool8 MonPlaceChange_Grab(void)
 {
     switch (gPokemonStorageSystemPtr->monPlaceChangeState)
     {
         case 0:
-            if (gUnknown_020384E6)
+            if (sIsMonBeingMoved)
                 return FALSE;
-            StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 2);
+            StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_OPEN);
             gPokemonStorageSystemPtr->monPlaceChangeState++;
             break;
         case 1:
-            if (!sub_809B324())
+            if (!MonPlaceChange_CursorDown())
             {
-                StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 3);
-                sub_809B384();
+                StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_FIST);
+                MoveMon();
                 gPokemonStorageSystemPtr->monPlaceChangeState++;
             }
             break;
         case 2:
-            if (!sub_809B358())
+            if (!MonPlaceChange_CursorUp())
                 gPokemonStorageSystemPtr->monPlaceChangeState++;
             break;
         case 3:
@@ -1175,22 +1196,22 @@ bool8 sub_809B150(void)
     return TRUE;
 }
 
-bool8 sub_809B1D8(void)
+bool8 MonPlaceChange_Place(void)
 {
     switch (gPokemonStorageSystemPtr->monPlaceChangeState)
     {
         case 0:
-            if (!sub_809B324())
+            if (!MonPlaceChange_CursorDown())
             {
-                StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 2);
-                sub_809B3E0();
+                StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_OPEN);
+                PlaceMon();
                 gPokemonStorageSystemPtr->monPlaceChangeState++;
             }
             break;
         case 1:
-            if (!sub_809B358())
+            if (!MonPlaceChange_CursorUp())
             {
-                StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 0);
+                StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_BOUNCE);
                 gPokemonStorageSystemPtr->monPlaceChangeState++;
             }
             break;
@@ -1200,31 +1221,31 @@ bool8 sub_809B1D8(void)
     return TRUE;
 }
 
-bool8 sub_809B24C(void)
+bool8 MonPlaceChange_Shift(void)
 {
     switch (gPokemonStorageSystemPtr->monPlaceChangeState)
     {
         case 0:
-            switch (sBoxCursorArea)
+            switch (sCursorArea)
             {
-                case 1:
+                case PSS_CURSOR_AREA_IN_PARTY:
                     gPokemonStorageSystemPtr->shiftBoxId = TOTAL_BOXES_COUNT;
                     break;
-                case 0:
+                case PSS_CURSOR_AREA_IN_BOX:
                     gPokemonStorageSystemPtr->shiftBoxId = StorageGetCurrentBox();
                     break;
                 default:
                     return FALSE;
             }
-            StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 2);
-            SaveMonSpriteAtPos(gPokemonStorageSystemPtr->shiftBoxId, sBoxCursorPosition);
+            StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_OPEN);
+            SaveMonSpriteAtPos(gPokemonStorageSystemPtr->shiftBoxId, sCursorPosition);
             gPokemonStorageSystemPtr->monPlaceChangeState++;
             break;
         case 1:
             if (!MoveShiftingMons())
             {
-                StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 3);
-                SetShiftedMonData(gPokemonStorageSystemPtr->shiftBoxId, sBoxCursorPosition);
+                StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_FIST);
+                SetShiftedMonData(gPokemonStorageSystemPtr->shiftBoxId, sCursorPosition);
                 gPokemonStorageSystemPtr->monPlaceChangeState++;
             }
             break;
@@ -1234,15 +1255,15 @@ bool8 sub_809B24C(void)
     return TRUE;
 }
 
-bool8 sub_809B324(void)
+bool8 MonPlaceChange_CursorDown(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_11c0->y2)
+    switch (gPokemonStorageSystemPtr->cursorSprite->y2)
     {
         default:
-            gPokemonStorageSystemPtr->unk_11c0->y2++;
+            gPokemonStorageSystemPtr->cursorSprite->y2++;
             break;
         case 0:
-            gPokemonStorageSystemPtr->unk_11c0->y2++;
+            gPokemonStorageSystemPtr->cursorSprite->y2++;
             break;
         case 8:
             return FALSE;
@@ -1250,71 +1271,71 @@ bool8 sub_809B324(void)
     return TRUE;
 }
 
-bool8 sub_809B358(void)
+bool8 MonPlaceChange_CursorUp(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_11c0->y2)
+    switch (gPokemonStorageSystemPtr->cursorSprite->y2)
     {
         case 0:
             return FALSE;
         default:
-            gPokemonStorageSystemPtr->unk_11c0->y2--;
+            gPokemonStorageSystemPtr->cursorSprite->y2--;
             break;
     }
     return TRUE;
 }
 
-void sub_809B384(void)
+void MoveMon(void)
 {
-    switch (sBoxCursorArea)
+    switch (sCursorArea)
     {
-        case 1:
-            sub_809B44C(TOTAL_BOXES_COUNT, sBoxCursorPosition);
-            SetMovingMonSprite(0, sBoxCursorPosition);
+        case PSS_CURSOR_AREA_IN_PARTY:
+            SetMovingMonData(TOTAL_BOXES_COUNT, sCursorPosition);
+            SetMovingMonSprite(PSS_MODE_PARTY, sCursorPosition);
             break;
-        case 0:
-            sub_809B44C(StorageGetCurrentBox(), sBoxCursorPosition);
-            SetMovingMonSprite(1, sBoxCursorPosition);
+        case PSS_CURSOR_AREA_IN_BOX:
+            SetMovingMonData(StorageGetCurrentBox(), sCursorPosition);
+            SetMovingMonSprite(PSS_MODE_BOX, sCursorPosition);
             break;
         default:
             return;
     }
-    gUnknown_020384E6 = TRUE;
+    sIsMonBeingMoved = TRUE;
 }
 
-void sub_809B3E0(void)
+void PlaceMon(void)
 {
     u8 boxId;
-    switch (sBoxCursorArea)
+    switch (sCursorArea)
     {
-        case 1:
-            SetPlacedMonData(TOTAL_BOXES_COUNT, sBoxCursorPosition);
-            SetPlacedMonSprite(TOTAL_BOXES_COUNT, sBoxCursorPosition);
+        case PSS_CURSOR_AREA_IN_PARTY:
+            SetPlacedMonData(TOTAL_BOXES_COUNT, sCursorPosition);
+            SetPlacedMonSprite(TOTAL_BOXES_COUNT, sCursorPosition);
             break;
-        case 0:
+        case PSS_CURSOR_AREA_IN_BOX:
             boxId = StorageGetCurrentBox();
-            SetPlacedMonData(boxId, sBoxCursorPosition);
-            SetPlacedMonSprite(boxId, sBoxCursorPosition);
+            SetPlacedMonData(boxId, sCursorPosition);
+            SetPlacedMonSprite(boxId, sCursorPosition);
             break;
         default:
             return;
     }
-    gUnknown_020384E6 = FALSE;
+    sIsMonBeingMoved = FALSE;
 }
 
-void sub_809B440(void)
+void RefreshDisplayMon(void)
 {
-    sub_809BF74();
+    TryRefreshDisplayMon();
 }
 
-void sub_809B44C(u8 a0, u8 a1)
+void SetMovingMonData(u8 boxId, u8 position)
 {
-    if (a0 == TOTAL_BOXES_COUNT)
-        gPokemonStorageSystemPtr->movingMon = gPlayerParty[sBoxCursorPosition];
+    if (boxId == TOTAL_BOXES_COUNT)
+        gPokemonStorageSystemPtr->movingMon = gPlayerParty[sCursorPosition];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[a0] + a1, &gPokemonStorageSystemPtr->movingMon);
-    sub_809B548(a0, a1);
-    gUnknown_020384E7 = a0;
-    gUnknown_020384E8 = a1;
+        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->movingMon);
+    PurgeMonOrBoxMon(boxId, position);
+    sMovingMonOrigBoxId = boxId;
+    sMovingMonOrigBoxPos = position;
 }
 
 void SetPlacedMonData(u8 boxId, u8 position)
@@ -1330,258 +1351,258 @@ void SetPlacedMonData(u8 boxId, u8 position)
     }
 }
 
-void sub_809B548(u8 a0, u8 a1)
+void PurgeMonOrBoxMon(u8 boxId, u8 position)
 {
-    if (a0 == TOTAL_BOXES_COUNT)
-        ZeroMonData(gPlayerParty + a1);
+    if (boxId == TOTAL_BOXES_COUNT)
+        ZeroMonData(gPlayerParty + position);
     else
-        ZeroBoxMonData(gPokemonStorage.boxes[a0] + a1);
+        ZeroBoxMonData(gPokemonStorage.boxes[boxId] + position);
 }
 
 void SetShiftedMonData(u8 boxId, u8 position)
 {
     if (boxId == TOTAL_BOXES_COUNT)
-        gPokemonStorageSystemPtr->unk_2618 = gPlayerParty[position];
+        gPokemonStorageSystemPtr->tempMon = gPlayerParty[position];
     else
-        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->unk_2618);
+        ExpandBoxMon(gPokemonStorage.boxes[boxId] + position, &gPokemonStorageSystemPtr->tempMon);
     SetPlacedMonData(boxId, position);
-    gPokemonStorageSystemPtr->movingMon = gPokemonStorageSystemPtr->unk_2618;
-    sub_809C04C(&gPokemonStorageSystemPtr->movingMon, 0);
-    gUnknown_020384E7 = boxId;
-    gUnknown_020384E8 = position;
+    gPokemonStorageSystemPtr->movingMon = gPokemonStorageSystemPtr->tempMon;
+    SetDisplayMonData(&gPokemonStorageSystemPtr->movingMon, PSS_MODE_PARTY);
+    sMovingMonOrigBoxId = boxId;
+    sMovingMonOrigBoxPos = position;
 }
 
-bool8 sub_809B62C(u8 boxId)
+bool8 TryStorePartyMonInBox(u8 boxId)
 {
     s16 monIdx = GetFirstFreeBoxSpot(boxId);
     if (monIdx == -1)
         return FALSE;
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
     {
         SetPlacedMonData(boxId, monIdx);
         DestroyMovingMonIcon();
-        gUnknown_020384E6 = FALSE;
+        sIsMonBeingMoved = FALSE;
     }
     else
     {
-        sub_809B44C(TOTAL_BOXES_COUNT, sBoxCursorPosition);
+        SetMovingMonData(TOTAL_BOXES_COUNT, sCursorPosition);
         SetPlacedMonData(boxId, monIdx);
-        DestroyPartyMonIcon(sBoxCursorPosition);
+        DestroyPartyMonIcon(sCursorPosition);
     }
     if (boxId == StorageGetCurrentBox())
         CreateBoxMonIconAtPos(monIdx);
-    StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 1);
+    StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_STILL);
     return TRUE;
 }
 
-void sub_809B6BC(void)
+void ResetSelectionAfterDeposit(void)
 {
-    StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 0);
-    sub_809BF74();
+    StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_BOUNCE);
+    TryRefreshDisplayMon();
 }
 
-void sub_809B6DC(void)
+void InitReleaseMon(void)
 {
     u8 mode;
 
-    if (gUnknown_020384E6)
-        mode = 2;
-    else if (sBoxCursorArea == 1)
-        mode = 0;
+    if (sIsMonBeingMoved)
+        mode = PSS_MODE_MOVE;
+    else if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
+        mode = PSS_MODE_PARTY;
     else
-        mode = 1;
-    SetReleaseMon(mode, sBoxCursorPosition);
+        mode = PSS_MODE_BOX;
+    SetReleaseMon(mode, sCursorPosition);
     StringCopy(gPokemonStorageSystemPtr->releaseMonName, gPokemonStorageSystemPtr->displayMonName);
 }
 
-bool8 sub_809B734(void)
+bool8 TryHideReleaseMon(void)
 {
     if (!TryHideReleaseMonSprite())
     {
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 0);
+        StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_BOUNCE);
         return FALSE;
     }
     return TRUE;
 }
 
-void sub_809B760(void)
+void ReleaseMon(void)
 {
     DestroyReleaseMonIcon();
-    if (gUnknown_020384E6)
-        gUnknown_020384E6 = FALSE;
+    if (sIsMonBeingMoved)
+        sIsMonBeingMoved = FALSE;
     else
     {
         u8 boxId;
-        if (sBoxCursorArea == 1)
+        if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
             boxId = TOTAL_BOXES_COUNT;
         else
             boxId = StorageGetCurrentBox();
-        sub_809B548(boxId, sBoxCursorPosition);
+        PurgeMonOrBoxMon(boxId, sCursorPosition);
     }
-    sub_809BF74();
+    TryRefreshDisplayMon();
 }
 
-void sub_809B7AC(void)
+void TrySetCursorFistAnim(void)
 {
-    if (gUnknown_020384E6)
-        StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 3);
+    if (sIsMonBeingMoved)
+        StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_FIST);
 }
 
-void sub_809B7D4(void)
+void InitCanReleaseMonVars(void)
 {
     u16 knownMoves;
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
     {
-        gPokemonStorageSystemPtr->unk_2618 = gPokemonStorageSystemPtr->movingMon;
-        gPokemonStorageSystemPtr->unk_2682 = -1;
-        gPokemonStorageSystemPtr->unk_2683 = -1;
+        gPokemonStorageSystemPtr->tempMon = gPokemonStorageSystemPtr->movingMon;
+        gPokemonStorageSystemPtr->releaseBoxId = -1;
+        gPokemonStorageSystemPtr->releaseBoxPos = -1;
     }
     else
     {
-        if (sBoxCursorArea == 1)
+        if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
         {
-            gPokemonStorageSystemPtr->unk_2618 = gPlayerParty[sBoxCursorPosition];
-            gPokemonStorageSystemPtr->unk_2682 = TOTAL_BOXES_COUNT;
+            gPokemonStorageSystemPtr->tempMon = gPlayerParty[sCursorPosition];
+            gPokemonStorageSystemPtr->releaseBoxId = TOTAL_BOXES_COUNT;
         }
         else
         {
-            ExpandBoxMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sBoxCursorPosition, &gPokemonStorageSystemPtr->unk_2618);
-            gPokemonStorageSystemPtr->unk_2682 = gPokemonStorage.currentBox;
+            ExpandBoxMon(gPokemonStorage.boxes[gPokemonStorage.currentBox] + sCursorPosition, &gPokemonStorageSystemPtr->tempMon);
+            gPokemonStorageSystemPtr->releaseBoxId = gPokemonStorage.currentBox;
         }
-        gPokemonStorageSystemPtr->unk_2683 = sBoxCursorPosition;
+        gPokemonStorageSystemPtr->releaseBoxPos = sCursorPosition;
     }
-    gPokemonStorageSystemPtr->unk_267e = 0;
-    gPokemonStorageSystemPtr->unk_267f = 0;
-    gPokemonStorageSystemPtr->unk_2686[0] = MOVE_SURF;
-    gPokemonStorageSystemPtr->unk_2686[1] = MOVE_DIVE;
-    gPokemonStorageSystemPtr->unk_2686[2] = NUM_MOVES;
-    knownMoves = GetMonData(&gPokemonStorageSystemPtr->unk_2618, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->unk_2686);
-    gPokemonStorageSystemPtr->unk_267e = knownMoves & 1;
-    gPokemonStorageSystemPtr->unk_267f = (knownMoves >> 1) & 1;
-    if (gPokemonStorageSystemPtr->unk_267e || gPokemonStorageSystemPtr->unk_267f)
-        gPokemonStorageSystemPtr->unk_267d = 0;
+    gPokemonStorageSystemPtr->unresolvedReleaseSurf = 0;
+    gPokemonStorageSystemPtr->unresolvedReleaseDive = 0;
+    gPokemonStorageSystemPtr->restrictedReleaseMoves[0] = MOVE_SURF;
+    gPokemonStorageSystemPtr->restrictedReleaseMoves[1] = MOVE_DIVE;
+    gPokemonStorageSystemPtr->restrictedReleaseMoves[2] = NUM_MOVES;
+    knownMoves = GetMonData(&gPokemonStorageSystemPtr->tempMon, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
+    gPokemonStorageSystemPtr->unresolvedReleaseSurf = knownMoves & 1;
+    gPokemonStorageSystemPtr->unresolvedReleaseDive = (knownMoves >> 1) & 1;
+    if (gPokemonStorageSystemPtr->unresolvedReleaseSurf || gPokemonStorageSystemPtr->unresolvedReleaseDive)
+        gPokemonStorageSystemPtr->releaseStatusResolved = 0;
     else
     {
-        gPokemonStorageSystemPtr->unk_267d = 1;
-        gPokemonStorageSystemPtr->unk_267c = 1;
+        gPokemonStorageSystemPtr->releaseStatusResolved = 1;
+        gPokemonStorageSystemPtr->canReleaseMon = 1;
     }
-    gPokemonStorageSystemPtr->unk_2684 = 0;
+    gPokemonStorageSystemPtr->releaseCheckState = 0;
 }
 
-s8 sub_809B960(void)
+s8 RunCanReleaseMon(void)
 {
     u16 i;
     u16 knownMoves;
 
-    if (gPokemonStorageSystemPtr->unk_267d)
-        return gPokemonStorageSystemPtr->unk_267c;
-    switch (gPokemonStorageSystemPtr->unk_2684)
+    if (gPokemonStorageSystemPtr->releaseStatusResolved)
+        return gPokemonStorageSystemPtr->canReleaseMon;
+    switch (gPokemonStorageSystemPtr->releaseCheckState)
     {
         case 0:
             for (i = 0; i < PARTY_SIZE; i++)
             {
-                if (gPokemonStorageSystemPtr->unk_2682 != TOTAL_BOXES_COUNT || gPokemonStorageSystemPtr->unk_2683 != i)
+                if (gPokemonStorageSystemPtr->releaseBoxId != TOTAL_BOXES_COUNT || gPokemonStorageSystemPtr->releaseBoxPos != i)
                 {
-                    knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->unk_2686);
+                    knownMoves = GetMonData(gPlayerParty + i, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
                     if (knownMoves & 1)
-                        gPokemonStorageSystemPtr->unk_267e = 0;
+                        gPokemonStorageSystemPtr->unresolvedReleaseSurf = 0;
                     if (knownMoves & 2)
-                        gPokemonStorageSystemPtr->unk_267f = 0;
+                        gPokemonStorageSystemPtr->unresolvedReleaseDive = 0;
                 }
             }
-            if (gPokemonStorageSystemPtr->unk_267e == 0 && gPokemonStorageSystemPtr->unk_267f == 0)
+            if (gPokemonStorageSystemPtr->unresolvedReleaseSurf == 0 && gPokemonStorageSystemPtr->unresolvedReleaseDive == 0)
             {
-                gPokemonStorageSystemPtr->unk_267d = 1;
-                gPokemonStorageSystemPtr->unk_267c = 1;
+                gPokemonStorageSystemPtr->releaseStatusResolved = 1;
+                gPokemonStorageSystemPtr->canReleaseMon = 1;
             }
             else
             {
-                gPokemonStorageSystemPtr->unk_2680 = 0;
-                gPokemonStorageSystemPtr->unk_2681 = 0;
-                gPokemonStorageSystemPtr->unk_2684++;
+                gPokemonStorageSystemPtr->releaseCheckBoxId = 0;
+                gPokemonStorageSystemPtr->releaseCheckBoxPos = 0;
+                gPokemonStorageSystemPtr->releaseCheckState++;
             }
             break;
         case 1:
             for (i = 0; i < 5; i++)
             {
-                knownMoves = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->unk_2680] + gPokemonStorageSystemPtr->unk_2681, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->unk_2686);
-                if (knownMoves && (gPokemonStorageSystemPtr->unk_2682 != gPokemonStorageSystemPtr->unk_2680 || gPokemonStorageSystemPtr->unk_2683 != gPokemonStorageSystemPtr->unk_2681))
+                knownMoves = GetBoxMonData(gPokemonStorage.boxes[gPokemonStorageSystemPtr->releaseCheckBoxId] + gPokemonStorageSystemPtr->releaseCheckBoxPos, MON_DATA_KNOWN_MOVES, gPokemonStorageSystemPtr->restrictedReleaseMoves);
+                if (knownMoves && (gPokemonStorageSystemPtr->releaseBoxId != gPokemonStorageSystemPtr->releaseCheckBoxId || gPokemonStorageSystemPtr->releaseBoxPos != gPokemonStorageSystemPtr->releaseCheckBoxPos))
                 {
                     if (knownMoves & 1)
-                        gPokemonStorageSystemPtr->unk_267e = 0;
+                        gPokemonStorageSystemPtr->unresolvedReleaseSurf = 0;
                     if (knownMoves & 2)
-                        gPokemonStorageSystemPtr->unk_267f = 0;
+                        gPokemonStorageSystemPtr->unresolvedReleaseDive = 0;
                 }
-                if (++gPokemonStorageSystemPtr->unk_2681 >= 30)
+                if (++gPokemonStorageSystemPtr->releaseCheckBoxPos >= 30)
                 {
-                    gPokemonStorageSystemPtr->unk_2681 = 0;
-                    if (++gPokemonStorageSystemPtr->unk_2680 >= TOTAL_BOXES_COUNT)
+                    gPokemonStorageSystemPtr->releaseCheckBoxPos = 0;
+                    if (++gPokemonStorageSystemPtr->releaseCheckBoxId >= TOTAL_BOXES_COUNT)
                     {
-                        gPokemonStorageSystemPtr->unk_267d = 1;
-                        gPokemonStorageSystemPtr->unk_267c = 0;
+                        gPokemonStorageSystemPtr->releaseStatusResolved = 1;
+                        gPokemonStorageSystemPtr->canReleaseMon = 0;
                         break;
                     }
                 }
             }
-            if (gPokemonStorageSystemPtr->unk_267e == 0 && gPokemonStorageSystemPtr->unk_267f == 0)
+            if (gPokemonStorageSystemPtr->unresolvedReleaseSurf == 0 && gPokemonStorageSystemPtr->unresolvedReleaseDive == 0)
             {
-                gPokemonStorageSystemPtr->unk_267d = 1;
-                gPokemonStorageSystemPtr->unk_267c = 1;
+                gPokemonStorageSystemPtr->releaseStatusResolved = 1;
+                gPokemonStorageSystemPtr->canReleaseMon = 1;
             }
             break;
     }
     return -1;
 }
 
-void sub_809BB90(void)
+void SaveMovingMon(void)
 {
-    if (gUnknown_020384E6)
-        gUnknown_02038480 = gPokemonStorageSystemPtr->movingMon;
+    if (sIsMonBeingMoved)
+        sSavedMovingMon = gPokemonStorageSystemPtr->movingMon;
 }
 
-void sub_809BBC0(void)
+void LoadSavedMovingMon(void)
 {
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
     {
-        if (gUnknown_020384E7 == TOTAL_BOXES_COUNT)
-            gPokemonStorageSystemPtr->movingMon = gUnknown_02038480;
+        if (sMovingMonOrigBoxId == TOTAL_BOXES_COUNT)
+            gPokemonStorageSystemPtr->movingMon = sSavedMovingMon;
         else
-            gPokemonStorageSystemPtr->movingMon.box = gUnknown_02038480.box;
+            gPokemonStorageSystemPtr->movingMon.box = sSavedMovingMon.box;
     }
 }
 
-void sub_809BC18(void)
+void InitSummaryScreenData(void)
 {
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
     {
-        sub_809BB90();
-        gPokemonStorageSystemPtr->summaryMon.pokemon = &gUnknown_02038480;
+        SaveMovingMon();
+        gPokemonStorageSystemPtr->summaryMon.pokemon = &sSavedMovingMon;
         gPokemonStorageSystemPtr->summaryStartPos = 0;
         gPokemonStorageSystemPtr->summaryMaxPos = 0;
         gPokemonStorageSystemPtr->summaryScreenMode = 0;
     }
-    else if (sBoxCursorArea == 1)
+    else if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
     {
         gPokemonStorageSystemPtr->summaryMon.pokemon = gPlayerParty;
-        gPokemonStorageSystemPtr->summaryStartPos = sBoxCursorPosition;
+        gPokemonStorageSystemPtr->summaryStartPos = sCursorPosition;
         gPokemonStorageSystemPtr->summaryMaxPos = CountPartyMons() - 1;
         gPokemonStorageSystemPtr->summaryScreenMode = 0;
     }
     else
     {
         gPokemonStorageSystemPtr->summaryMon.box = gPokemonStorage.boxes[gPokemonStorage.currentBox];
-        gPokemonStorageSystemPtr->summaryStartPos = sBoxCursorPosition;
+        gPokemonStorageSystemPtr->summaryStartPos = sCursorPosition;
         gPokemonStorageSystemPtr->summaryMaxPos = 30 - 1;
         gPokemonStorageSystemPtr->summaryScreenMode = 5;
     }
 }
 
-void sub_809BD14(void)
+void SetSelectionAfterSummaryScreen(void)
 {
-    if (gUnknown_020384E6)
-        sub_809BBC0();
+    if (sIsMonBeingMoved)
+        LoadSavedMovingMon();
     else
-        sBoxCursorPosition = pssData.curMonIndex;
+        sCursorPosition = pssData.curMonIndex;
 }
 
 s16 CompactPartySlots(void)
@@ -1606,32 +1627,32 @@ s16 CompactPartySlots(void)
     return retVal;
 }
 
-void sub_809BDD8(u8 markings)
+void SetPokeStorageMonMarkings(u8 markings)
 {
     gPokemonStorageSystemPtr->displayMonMarkings = markings;
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
         SetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_MARKINGS, &markings);
     else
     {
-        if (sBoxCursorArea == 1)
-            SetMonData(gPlayerParty + sBoxCursorPosition, MON_DATA_MARKINGS, &markings);
-        if (sBoxCursorArea == 0)
-            SetBoxMonData(gPokemonStorage.boxes[StorageGetCurrentBox()] + sBoxCursorPosition, MON_DATA_MARKINGS, &markings);
+        if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
+            SetMonData(gPlayerParty + sCursorPosition, MON_DATA_MARKINGS, &markings);
+        if (sCursorArea == PSS_CURSOR_AREA_IN_BOX)
+            SetBoxMonData(gPokemonStorage.boxes[StorageGetCurrentBox()] + sCursorPosition, MON_DATA_MARKINGS, &markings);
     }
 }
 
-bool8 sub_809BE80(void)
+bool8 IsRemovingLastPartyMon(void)
 {
-    if (sBoxCursorArea == 1 && !gUnknown_020384E6 && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+    if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY && !sIsMonBeingMoved && CountPartyAliveNonEggMonsExcept(sCursorPosition) == 0)
         return TRUE;
     return FALSE;
 }
 
-bool8 sub_809BEBC(void)
+bool8 CanShiftMon(void)
 {
-    if (gUnknown_020384E6)
+    if (sIsMonBeingMoved)
     {
-        if (sBoxCursorArea == 1 && CountPartyAliveNonEggMonsExcept(sBoxCursorPosition) == 0)
+        if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY && CountPartyAliveNonEggMonsExcept(sCursorPosition) == 0)
         {
             if (gPokemonStorageSystemPtr->displayMonIsEgg || GetMonData(&gPokemonStorageSystemPtr->movingMon, MON_DATA_HP) == 0)
                 return FALSE;
@@ -1641,60 +1662,60 @@ bool8 sub_809BEBC(void)
     return FALSE;
 }
 
-bool8 sub_809BF20(void)
+bool8 IsMonBeingMoved(void)
 {
-    return gUnknown_020384E6;
+    return sIsMonBeingMoved;
 }
 
-bool8 sub_809BF2C(void)
+bool8 IsCursorOnBoxTitle(void)
 {
-    return sBoxCursorArea == 2 ? TRUE : FALSE;
+    return sCursorArea == PSS_CURSOR_AREA_BOX_TITLE ? TRUE : FALSE;
 }
 
-bool8 sub_809BF48(void)
+bool8 IsCursorOnCloseBox(void)
 {
-    return (sBoxCursorArea == 3 && sBoxCursorPosition == 1) ? TRUE : FALSE;
+    return (sCursorArea == PSS_CURSOR_AREA_BUTTONS && sCursorPosition == 1) ? TRUE : FALSE;
 }
 
-void sub_809BF74(void)
+void TryRefreshDisplayMon(void)
 {
-    gPokemonStorageSystemPtr->setMosaic = gUnknown_020384E6 ? 0 : 1;
-    if (!gUnknown_020384E6)
+    gPokemonStorageSystemPtr->setMosaic = sIsMonBeingMoved ? 0 : 1;
+    if (!sIsMonBeingMoved)
     {
-        switch (sBoxCursorArea)
+        switch (sCursorArea)
         {
-            case 1:
-                if (sBoxCursorPosition < PARTY_SIZE)
+            case PSS_CURSOR_AREA_IN_PARTY:
+                if (sCursorPosition < PARTY_SIZE)
                 {
-                    sub_809C04C(gPlayerParty + sBoxCursorPosition, 0);
+                    SetDisplayMonData(gPlayerParty + sCursorPosition, PSS_MODE_PARTY);
                     break;
                 }
                 // fallthrough
-            case 2:
-            case 3:
-                sub_809C04C(NULL, 2);
+            case PSS_CURSOR_AREA_BOX_TITLE:
+            case PSS_CURSOR_AREA_BUTTONS:
+                SetDisplayMonData(NULL, PSS_MODE_MOVE);
                 break;
-            case 0:
-                sub_809C04C(gPokemonStorage.boxes[StorageGetCurrentBox()] + sBoxCursorPosition, 1);
+            case PSS_CURSOR_AREA_IN_BOX:
+                SetDisplayMonData(gPokemonStorage.boxes[StorageGetCurrentBox()] + sCursorPosition, PSS_MODE_BOX);
                 break;
         }
     }
 }
 
-void sub_809C028(void)
+void ReshowDisplayMon(void)
 {
-    if (gUnknown_020384E6)
-        sub_809C04C(&gUnknown_02038480.box, 0);
+    if (sIsMonBeingMoved)
+        SetDisplayMonData(&sSavedMovingMon.box, PSS_MODE_PARTY);
     else
-        sub_809BF74();
+        TryRefreshDisplayMon();
 }
 
-void sub_809C04C(void *pokemon, u8 a1)
+void SetDisplayMonData(void *pokemon, u8 mode)
 {
     u8 *buf;
     u16 gender = MON_MALE;
     gPokemonStorageSystemPtr->displayMonItemId = 0;
-    if (a1 == 0)
+    if (mode == PSS_MODE_PARTY)
     {
         struct Pokemon *pkmn = (struct Pokemon *)pokemon;
         gPokemonStorageSystemPtr->displayMonSpecies = GetMonData(pokemon, MON_DATA_SPECIES2);
@@ -1711,7 +1732,7 @@ void sub_809C04C(void *pokemon, u8 a1)
             gPokemonStorageSystemPtr->displayMonItemId = GetMonData(pkmn, MON_DATA_HELD_ITEM);
         }
     }
-    else if (a1 == 1)
+    else if (mode == PSS_MODE_BOX)
     {
         struct BoxPokemon *boxmon = (struct BoxPokemon *)pokemon;
         gPokemonStorageSystemPtr->displayMonSpecies = GetBoxMonData(pokemon, MON_DATA_SPECIES2);
@@ -1844,117 +1865,117 @@ void sub_809C04C(void *pokemon, u8 a1)
     }
 }
 
-u8 sub_809C464(void)
+u8 InBoxInput_Normal(void)
 {
-    u8 r9;
-    s8 r8 = sBoxCursorArea;
-    s8 r4 = sBoxCursorPosition;
+    u8 input;
+    s8 cursorArea = sCursorArea;
+    s8 cursorPosition = sCursorPosition;
 
     do
     {
-        gPokemonStorageSystemPtr->unk_11de = 0;
-        gPokemonStorageSystemPtr->unk_11df = 0;
-        gPokemonStorageSystemPtr->unk_11e3 = 0;
+        gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
+        gPokemonStorageSystemPtr->cursorHorizontalWrap = 0;
+        gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
         if (JOY_REPT(DPAD_UP))
         {
-            r9 = 1;
-            if (sBoxCursorPosition >= 6)
+            input = PSS_INPUT_MOVE_CURSOR;
+            if (sCursorPosition >= 6)
             {
-                r4 -= 6;
+                cursorPosition -= 6;
             }
             else
             {
-                r8 = 2;
-                r4 = 0;
+                cursorArea = PSS_CURSOR_AREA_BOX_TITLE;
+                cursorPosition = 0;
             }
             break;
         }
         if (JOY_REPT(DPAD_DOWN))
         {
-            r9 = 1;
-            r4 += 6;
-            if (r4 >= 30)
+            input = PSS_INPUT_MOVE_CURSOR;
+            cursorPosition += 6;
+            if (cursorPosition >= 30)
             {
-                r8 = 3;
-                r4 -= 30;
-                r4 /= 3;
-                gPokemonStorageSystemPtr->unk_11de = 1;
-                gPokemonStorageSystemPtr->unk_11e3 = 1;
+                cursorArea = PSS_CURSOR_AREA_BUTTONS;
+                cursorPosition -= 30;
+                cursorPosition /= 3;
+                gPokemonStorageSystemPtr->cursorVerticalWrap = 1;
+                gPokemonStorageSystemPtr->cursorFlipTimer = 1;
             }
             break;
         }
         if (JOY_REPT(DPAD_LEFT))
         {
-            r9 = 1;
-            if (sBoxCursorPosition % 6)
-                r4--;
+            input = PSS_INPUT_MOVE_CURSOR;
+            if (sCursorPosition % 6)
+                cursorPosition--;
             else
             {
-                gPokemonStorageSystemPtr->unk_11df = -1;
-                r4 += 5;
+                gPokemonStorageSystemPtr->cursorHorizontalWrap = -1;
+                cursorPosition += 5;
             }
             break;
         }
         if (JOY_REPT(DPAD_RIGHT))
         {
-            r9 = 1;
-            if ((sBoxCursorPosition + 1) % 6)
-                r4++;
+            input = PSS_INPUT_MOVE_CURSOR;
+            if ((sCursorPosition + 1) % 6)
+                cursorPosition++;
             else
             {
-                gPokemonStorageSystemPtr->unk_11df = 1;
-                r4 -= 5;
+                gPokemonStorageSystemPtr->cursorHorizontalWrap = 1;
+                cursorPosition -= 5;
             }
             break;
         }
         if (JOY_NEW(START_BUTTON))
         {
-            r9 = 1;
-            r8 = 2;
-            r4 = 0;
+            input = PSS_INPUT_MOVE_CURSOR;
+            cursorArea = PSS_CURSOR_AREA_BOX_TITLE;
+            cursorPosition = 0;
             break;
         }
-        if ((JOY_NEW(A_BUTTON)) && sub_809CAB0())
+        if ((JOY_NEW(A_BUTTON)) && SetSelectionMenuTexts())
         {
-            if (gUnknown_020384E9 == 0)
-                return 8;
-            switch (sub_809CE4C(0))
+            if (sAutoActionOn == 0)
+                return PSS_INPUT_IN_MENU;
+            switch (GetPokeStorageMenuItemTextId(0))
             {
-            case 1:
-                return 11;
-            case 2:
-                return 12;
-            case 3:
-                return 13;
-            case 4:
-                return 14;
-            case 5:
-                return 15;
+            case PSS_MENU_STORE:
+                return PSS_INPUT_DEPOSIT;
+            case PSS_MENU_WITHDRAW:
+                return PSS_INPUT_WITHDRAW;
+            case PSS_MENU_MOVE:
+                return PSS_INPUT_MOVE_MON;
+            case PSS_MENU_SHIFT:
+                return PSS_INPUT_SHIFT_MON;
+            case PSS_MENU_PLACE:
+                return PSS_INPUT_PLACE_MON;
             }
         }
         if (JOY_NEW(B_BUTTON))
-            return 16;
+            return PSS_INPUT_PRESSED_B;
         if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
         {
             if (JOY_HELD(L_BUTTON))
-                return 10;
+                return PSS_INPUT_SCROLL_LEFT;
             if (JOY_HELD(R_BUTTON))
-                return 9;
+                return PSS_INPUT_SCROLL_RIGHT;
         }
         if (JOY_NEW(SELECT_BUTTON))
         {
-            sub_809CD88();
-            return 0;
+            ToggleCursorAutoAction();
+            return PSS_INPUT_NONE;
         }
-        r9 = 0;
+        input = PSS_INPUT_NONE;
     } while (0);
-    if (r9)
-        sub_809AF18(r8, r4);
-    return r9;
+    if (input != PSS_INPUT_NONE)
+        SetCursorPosition(cursorArea, cursorPosition);
+    return input;
 }
 
-u8 sub_809C664(void)
+u8 HandleInput_InParty(void)
 {
     u8 retVal;
     bool8 gotoBox;
@@ -1963,20 +1984,20 @@ u8 sub_809C664(void)
 
     do
     {
-        cursorArea = sBoxCursorArea;
-        cursorPosition = sBoxCursorPosition;
-        gPokemonStorageSystemPtr->unk_11df = 0;
-        gPokemonStorageSystemPtr->unk_11de = 0;
-        gPokemonStorageSystemPtr->unk_11e3 = 0;
+        cursorArea = sCursorArea;
+        cursorPosition = sCursorPosition;
+        gPokemonStorageSystemPtr->cursorHorizontalWrap = 0;
+        gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
+        gPokemonStorageSystemPtr->cursorFlipTimer = 0;
         gotoBox = FALSE;
-        retVal = 0;
+        retVal = PSS_INPUT_NONE;
 
         if (JOY_REPT(DPAD_UP))
         {
             if (--cursorPosition < 0)
                 cursorPosition = 6;
-            if (cursorPosition != sBoxCursorPosition)
-                retVal = 1;
+            if (cursorPosition != sCursorPosition)
+                retVal = PSS_INPUT_MOVE_CURSOR;
             break;
         }
 
@@ -1984,30 +2005,30 @@ u8 sub_809C664(void)
         {
             if (++cursorPosition > 6)
                 cursorPosition = 0;
-            if (cursorPosition != sBoxCursorPosition)
-                retVal = 1;
+            if (cursorPosition != sCursorPosition)
+                retVal = PSS_INPUT_MOVE_CURSOR;
             break;
         }
 
-        if (JOY_REPT(DPAD_LEFT) && sBoxCursorPosition != 0)
+        if (JOY_REPT(DPAD_LEFT) && sCursorPosition != 0)
         {
-            retVal = 1;
-            gPokemonStorageSystemPtr->unk_11e2 = sBoxCursorPosition;
+            retVal = PSS_INPUT_MOVE_CURSOR;
+            gPokemonStorageSystemPtr->cursorPrevHorizPos = sCursorPosition;
             cursorPosition = 0;
             break;
         }
 
         if (JOY_REPT(DPAD_RIGHT))
         {
-            if (sBoxCursorPosition == 0)
+            if (sCursorPosition == 0)
             {
-                retVal = 1;
-                cursorPosition = gPokemonStorageSystemPtr->unk_11e2;
+                retVal = PSS_INPUT_MOVE_CURSOR;
+                cursorPosition = gPokemonStorageSystemPtr->cursorPrevHorizPos;
             }
             else
             {
-                retVal = 6;
-                cursorArea = 0;
+                retVal = PSS_INPUT_HIDE_PARTY;
+                cursorArea = PSS_CURSOR_AREA_IN_BOX;
                 cursorPosition = 0;
             }
             break;
@@ -2015,66 +2036,66 @@ u8 sub_809C664(void)
 
         if (JOY_NEW(A_BUTTON))
         {
-            if (sBoxCursorPosition == 6)
+            if (sCursorPosition == 6)
             {
-                if (gPokemonStorageSystemPtr->boxOption == 1)
-                    return 4;
+                if (gPokemonStorageSystemPtr->boxOption == PSS_OPTION_DEPOSIT)
+                    return PSS_INPUT_CLOSE_BOX;
 
                 gotoBox = TRUE;
             }
-            else if (sub_809CAB0())
+            else if (SetSelectionMenuTexts())
             {
-                if (!gUnknown_020384E9)
-                    return 8;
+                if (!sAutoActionOn)
+                    return PSS_INPUT_IN_MENU;
 
-                switch (sub_809CE4C(0))
+                switch (GetPokeStorageMenuItemTextId(0))
                 {
-                case 1:
-                    return 11;
-                case 2:
-                    return 12;
-                case 3:
-                    return 13;
-                case 4:
-                    return 14;
-                case 5:
-                    return 15;
+                case PSS_MENU_STORE:
+                    return PSS_INPUT_DEPOSIT;
+                case PSS_MENU_WITHDRAW:
+                    return PSS_INPUT_WITHDRAW;
+                case PSS_MENU_MOVE:
+                    return PSS_INPUT_MOVE_MON;
+                case PSS_MENU_SHIFT:
+                    return PSS_INPUT_SHIFT_MON;
+                case PSS_MENU_PLACE:
+                    return PSS_INPUT_PLACE_MON;
                 }
             }
         }
 
         if (JOY_NEW(B_BUTTON))
         {
-            if (gPokemonStorageSystemPtr->boxOption == 1)
-                return 16;
+            if (gPokemonStorageSystemPtr->boxOption == PSS_OPTION_DEPOSIT)
+                return PSS_INPUT_PRESSED_B;
 
             gotoBox = TRUE;
         }
 
         if (gotoBox)
         {
-            retVal = 6;
-            cursorArea = 0;
+            retVal = PSS_INPUT_HIDE_PARTY;
+            cursorArea = PSS_CURSOR_AREA_IN_BOX;
             cursorPosition = 0;
             break;
         }
 
         if (JOY_NEW(SELECT_BUTTON))
         {
-            sub_809CD88();
-            return 0;
+            ToggleCursorAutoAction();
+            return PSS_INPUT_NONE;
         }
     } while (0);
 
-    if (retVal != 0)
+    if (retVal != PSS_INPUT_NONE)
     {
-        sub_809AF18(cursorArea, cursorPosition);
+        SetCursorPosition(cursorArea, cursorPosition);
     }
 
     return retVal;
 }
 
-u8 sub_809C85C(void)
+u8 HandleInput_OnBox(void)
 {
     u8 retVal;
     s8 cursorArea;
@@ -2082,69 +2103,69 @@ u8 sub_809C85C(void)
 
     do
     {
-        gPokemonStorageSystemPtr->unk_11df = 0;
-        gPokemonStorageSystemPtr->unk_11de = 0;
-        gPokemonStorageSystemPtr->unk_11e3 = 0;
+        gPokemonStorageSystemPtr->cursorHorizontalWrap = 0;
+        gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
+        gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
         if (JOY_REPT(DPAD_UP))
         {
-            retVal = 1;
-            cursorArea = 3;
+            retVal = PSS_INPUT_MOVE_CURSOR;
+            cursorArea = PSS_CURSOR_AREA_BUTTONS;
             cursorPosition = 0;
-            gPokemonStorageSystemPtr->unk_11e3 = 1;
+            gPokemonStorageSystemPtr->cursorFlipTimer = 1;
             break;
         }
         else if (JOY_REPT(DPAD_DOWN))
         {
-            retVal = 1;
-            cursorArea = 0;
+            retVal = PSS_INPUT_MOVE_CURSOR;
+            cursorArea = PSS_CURSOR_AREA_IN_BOX;
             cursorPosition = 2;
             break;
         }
 
         if (JOY_HELD(DPAD_LEFT))
-            return 10;
+            return PSS_INPUT_SCROLL_LEFT;
         if (JOY_HELD(DPAD_RIGHT))
-            return 9;
+            return PSS_INPUT_SCROLL_RIGHT;
 
         if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
         {
             if (JOY_HELD(L_BUTTON))
-                return 10;
+                return PSS_INPUT_SCROLL_LEFT;
             if (JOY_HELD(R_BUTTON))
-                return 9;
+                return PSS_INPUT_SCROLL_RIGHT;
         }
 
         if (JOY_NEW(A_BUTTON))
         {
-            sub_809A860(FALSE);
-            sub_809CA8C();
-            return 7;
+            AnimateBoxScrollArrows(FALSE);
+            AddBoxOptionsMenu();
+            return PSS_INPUT_BOX_OPTIONS;
         }
 
         if (JOY_NEW(B_BUTTON))
-            return 16;
+            return PSS_INPUT_PRESSED_B;
 
         if (JOY_NEW(SELECT_BUTTON))
         {
-            sub_809CD88();
-            return 0;
+            ToggleCursorAutoAction();
+            return PSS_INPUT_NONE;
         }
 
-        retVal = 0;
+        retVal = PSS_INPUT_NONE;
     } while (0);
 
-    if (retVal != 0)
+    if (retVal != PSS_INPUT_NONE)
     {
-        if (cursorArea != 2)
-            sub_809A860(FALSE);
-        sub_809AF18(cursorArea, cursorPosition);
+        if (cursorArea != PSS_CURSOR_AREA_BOX_TITLE)
+            AnimateBoxScrollArrows(FALSE);
+        SetCursorPosition(cursorArea, cursorPosition);
     }
 
     return retVal;
 }
 
-u8 sub_809C944(void)
+u8 HandleInput_OnButtons(void)
 {
     u8 retVal;
     s8 cursorArea;
@@ -2152,40 +2173,40 @@ u8 sub_809C944(void)
 
     do
     {
-        cursorArea = sBoxCursorArea;
-        cursorPosition = sBoxCursorPosition;
-        gPokemonStorageSystemPtr->unk_11df = 0;
-        gPokemonStorageSystemPtr->unk_11de = 0;
-        gPokemonStorageSystemPtr->unk_11e3 = 0;
+        cursorArea = sCursorArea;
+        cursorPosition = sCursorPosition;
+        gPokemonStorageSystemPtr->cursorHorizontalWrap = 0;
+        gPokemonStorageSystemPtr->cursorVerticalWrap = 0;
+        gPokemonStorageSystemPtr->cursorFlipTimer = 0;
 
         if (JOY_REPT(DPAD_UP))
         {
-            retVal = 1;
-            cursorArea = 0;
-            gPokemonStorageSystemPtr->unk_11de = -1;
-            if (sBoxCursorPosition == 0)
+            retVal = PSS_INPUT_MOVE_CURSOR;
+            cursorArea = PSS_CURSOR_AREA_IN_BOX;
+            gPokemonStorageSystemPtr->cursorVerticalWrap = -1;
+            if (sCursorPosition == 0)
                 cursorPosition = 24;
             else
                 cursorPosition = 29;
-            gPokemonStorageSystemPtr->unk_11e3 = 1;
+            gPokemonStorageSystemPtr->cursorFlipTimer = 1;
             break;
         }
 
         if (JOY_REPT(DPAD_DOWN | START_BUTTON))
         {
-            retVal = 1;
-            cursorArea = 2;
+            retVal = PSS_INPUT_MOVE_CURSOR;
+            cursorArea = PSS_CURSOR_AREA_BOX_TITLE;
             cursorPosition = 0;
-            gPokemonStorageSystemPtr->unk_11e3 = 1;
+            gPokemonStorageSystemPtr->cursorFlipTimer = 1;
             break;
         }
 
         if (JOY_REPT(DPAD_LEFT))
         {
-            retVal = 1;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             if (--cursorPosition < 0)
             {
-                gPokemonStorageSystemPtr->unk_11df = -1;
+                gPokemonStorageSystemPtr->cursorHorizontalWrap = -1;
                 cursorPosition = 1;
             }
             break;
@@ -2193,153 +2214,153 @@ u8 sub_809C944(void)
 
         if (JOY_REPT(DPAD_RIGHT))
         {
-            retVal = 1;
+            retVal = PSS_INPUT_MOVE_CURSOR;
             if (++cursorPosition > 1)
             {
-                gPokemonStorageSystemPtr->unk_11df = 1;
+                gPokemonStorageSystemPtr->cursorHorizontalWrap = 1;
                 cursorPosition = 0;
             }
             break;
         }
 
         if (JOY_NEW(A_BUTTON))
-            return (cursorPosition == 0) ? 5 : 4;
+            return (cursorPosition == 0) ? PSS_INPUT_SHOW_PARTY : PSS_INPUT_CLOSE_BOX;
         if (JOY_NEW(B_BUTTON))
-            return 16;
+            return PSS_INPUT_PRESSED_B;
 
         if (JOY_NEW(SELECT_BUTTON))
         {
-            sub_809CD88();
-            return 0;
+            ToggleCursorAutoAction();
+            return PSS_INPUT_NONE;
         }
 
-        retVal = 0;
+        retVal = PSS_INPUT_NONE;
     } while (0);
 
-    if (retVal != 0)
+    if (retVal != PSS_INPUT_NONE)
     {
-        sub_809AF18(cursorArea, cursorPosition);
+        SetCursorPosition(cursorArea, cursorPosition);
     }
 
     return retVal;
 }
 
-u8 sub_809CA40(void)
+u8 HandlePokeStorageInput(void)
 {
     u16 i = 0;
-    while (gUnknown_083BBBD4[i].func != NULL)
+    while (gPokeStorageInputHandlers[i].func != NULL)
     {
-        if (gUnknown_083BBBD4[i].unk4 == sBoxCursorArea)
-            return gUnknown_083BBBD4[i].func();
+        if (gPokeStorageInputHandlers[i].cursorArea == sCursorArea)
+            return gPokeStorageInputHandlers[i].func();
         i++;
     }
 
-    return 0;
+    return PSS_INPUT_NONE;
 }
 
-void sub_809CA8C(void)
+void AddBoxOptionsMenu(void)
 {
-    sub_809CDCC();
-    sub_809CDEC(9);
-    sub_809CDEC(10);
-    sub_809CDEC(11);
-    sub_809CDEC(0);
+    InitPokeStorageMenu();
+    SetPokeStorageMenuText(PSS_MENU_JUMP);
+    SetPokeStorageMenuText(PSS_MENU_WALLPAPER);
+    SetPokeStorageMenuText(PSS_MENU_NAME);
+    SetPokeStorageMenuText(PSS_MENU_CANCEL);
 }
 
 #if DEBUG
-u8 debug_sub_80AA40C(void)
+u8 Debug_SetSelectionMenuTexts(void)
 {
-    if (!sub_809AB8C())
-        return 0;
+    if (!GetSpeciesAtCursorPosition())
+        return FALSE;
 
-    sub_809CDCC();
-    sub_809CDEC(32);
-    sub_809CDEC(6);
-    return 1;
+    InitPokeStorageMenu();
+    SetPokeStorageMenuText(PSS_MENU_DEBUG_SET);
+    SetPokeStorageMenuText(PSS_MENU_SUMMARY);
+    return TRUE;
 }
 #endif
 
-bool8 sub_809CAB0(void)
+bool8 SetSelectionMenuTexts(void)
 {
-    u16 var0;
+    u16 species;
 
 #if DEBUG
     if (gDebugPokeStorageActive)
-        return debug_sub_80AA40C();
+        return Debug_SetSelectionMenuTexts();
 #endif
 
-    sub_809CDCC();
-    var0 = sub_809AB8C();
+    InitPokeStorageMenu();
+    species = GetSpeciesAtCursorPosition();
 
     switch (gPokemonStorageSystemPtr->boxOption)
     {
-    case 1:
-        if (var0)
-            sub_809CDEC(1);
+    case PSS_OPTION_DEPOSIT:
+        if (species)
+            SetPokeStorageMenuText(PSS_MENU_STORE);
         else
-            return 0;
+            return FALSE;
         break;
-    case 0:
-        if (var0)
-            sub_809CDEC(2);
+    case PSS_OPTION_WITHDRAW:
+        if (species)
+            SetPokeStorageMenuText(PSS_MENU_WITHDRAW);
         else
-            return 0;
+            return FALSE;
         break;
-    case 2:
-        if (gUnknown_020384E6)
+    case PSS_OPTION_MOVE_MONS:
+        if (sIsMonBeingMoved)
         {
-            if (var0)
-                sub_809CDEC(4);
+            if (species)
+                SetPokeStorageMenuText(PSS_MENU_SHIFT);
             else
-                sub_809CDEC(5);
+                SetPokeStorageMenuText(PSS_MENU_PLACE);
         }
         else
         {
-            if (var0)
-                sub_809CDEC(3);
+            if (species)
+                SetPokeStorageMenuText(PSS_MENU_MOVE);
             else
-                return 0;
+                return FALSE;
         }
         break;
     default:
-        return 0;
+        return FALSE;
     }
 
-    sub_809CDEC(6);
-    if (gPokemonStorageSystemPtr->boxOption == 2)
+    SetPokeStorageMenuText(PSS_MENU_SUMMARY);
+    if (gPokemonStorageSystemPtr->boxOption == PSS_OPTION_MOVE_MONS)
     {
-        if (!sBoxCursorArea)
-            sub_809CDEC(2);
+        if (sCursorArea == PSS_CURSOR_AREA_IN_BOX)
+            SetPokeStorageMenuText(PSS_MENU_WITHDRAW);
         else
-            sub_809CDEC(1);
+            SetPokeStorageMenuText(PSS_MENU_STORE);
     }
 
-    sub_809CDEC(8);
-    sub_809CDEC(7);
-    sub_809CDEC(0);
-    return 1;
+    SetPokeStorageMenuText(PSS_MENU_MARK);
+    SetPokeStorageMenuText(PSS_MENU_RELEASE);
+    SetPokeStorageMenuText(PSS_MENU_CANCEL);
+    return TRUE;
 }
 
-void sub_809CB74(struct Sprite *sprite)
+void SpriteCB_CursorShadow(struct Sprite *sprite)
 {
-    sprite->x = gPokemonStorageSystemPtr->unk_11c0->x;
-    sprite->y = gPokemonStorageSystemPtr->unk_11c0->y + 20;
+    sprite->x = gPokemonStorageSystemPtr->cursorSprite->x;
+    sprite->y = gPokemonStorageSystemPtr->cursorSprite->y + 20;
 }
 
-void sub_809CB94(struct Pokemon *mon)
+void CopyCursorMonToDebugMon(struct Pokemon *mon)
 {
-    if (sBoxCursorArea == 1)
+    if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
     {
-        mon->box = gPlayerParty[sBoxCursorPosition].box;
+        mon->box = gPlayerParty[sCursorPosition].box;
     }
     else
     {
         u8 boxId = StorageGetCurrentBox();
-        mon->box = gPokemonStorage.boxes[boxId][sBoxCursorPosition];
+        mon->box = gPokemonStorage.boxes[boxId][sCursorPosition];
     }
 }
 
-void sub_809CC04(void)
+void CreateCursorSprites(void)
 {
     u16 x, y;
     u8 spriteId;
@@ -2347,28 +2368,28 @@ void sub_809CC04(void)
     struct SpriteSheet spriteSheets[3];
     struct SpritePalette spritePalettes[3];
 
-    memcpy(spriteSheets, gHandCursorSpriteSheets, 24);
-    memcpy(spritePalettes, gHandCursorSpritePalettes, 24);
+    memcpy(spriteSheets, gPokeStorageCursorSpriteSheets, 24);
+    memcpy(spritePalettes, gPokeStorageCursorSpritePalettes, 24);
     LoadSpriteSheets(spriteSheets);
     LoadSpritePalettes(spritePalettes);
-    gPokemonStorageSystemPtr->unk_11e4[0] = IndexOfSpritePaletteTag(0xDAC6);
-    gPokemonStorageSystemPtr->unk_11e4[1] = IndexOfSpritePaletteTag(0xDAD1);
+    gPokemonStorageSystemPtr->cursorPalNums[0] = IndexOfSpritePaletteTag(0xDAC6);
+    gPokemonStorageSystemPtr->cursorPalNums[1] = IndexOfSpritePaletteTag(0xDAD1);
 
-    sub_809AACC(sBoxCursorArea, sBoxCursorPosition, &x, &y);
-    spriteId = CreateSprite(&gSpriteTemplate_83BBC70, x, y, 6);
+    GetCursorCoordsByPos(sCursorArea, sCursorPosition, &x, &y);
+    spriteId = CreateSprite(&gSpriteTemplate_PokeStorageCursor, x, y, 6);
     if (spriteId != MAX_SPRITES)
     {
-        gPokemonStorageSystemPtr->unk_11c0 = &gSprites[spriteId];
-        gPokemonStorageSystemPtr->unk_11c0->oam.paletteNum = gPokemonStorageSystemPtr->unk_11e4[gUnknown_020384E9];
-        if (gUnknown_020384E6)
-            StartSpriteAnim(gPokemonStorageSystemPtr->unk_11c0, 3);
+        gPokemonStorageSystemPtr->cursorSprite = &gSprites[spriteId];
+        gPokemonStorageSystemPtr->cursorSprite->oam.paletteNum = gPokemonStorageSystemPtr->cursorPalNums[sAutoActionOn];
+        if (sIsMonBeingMoved)
+            StartSpriteAnim(gPokemonStorageSystemPtr->cursorSprite, PSS_CURSOR_ANIM_FIST);
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_11c0 = NULL;
+        gPokemonStorageSystemPtr->cursorSprite = NULL;
     }
 
-    if (sBoxCursorArea == 1)
+    if (sCursorArea == PSS_CURSOR_AREA_IN_PARTY)
     {
         subpriority = 12;
         priority = 1;
@@ -2379,79 +2400,79 @@ void sub_809CC04(void)
         priority = 2;
     }
 
-    spriteId = CreateSprite(&gSpriteTemplate_83BBC88, 0, 0, subpriority);
+    spriteId = CreateSprite(&gSpriteTemplate_PokeStorageCursorShadow, 0, 0, subpriority);
     if (spriteId != MAX_SPRITES)
     {
-        gPokemonStorageSystemPtr->unk_11c4 = &gSprites[spriteId];
-        gPokemonStorageSystemPtr->unk_11c4->oam.priority = priority;
-        if (sBoxCursorArea)
-            gPokemonStorageSystemPtr->unk_11c4->invisible = TRUE;
+        gPokemonStorageSystemPtr->cursorShadowSprite = &gSprites[spriteId];
+        gPokemonStorageSystemPtr->cursorShadowSprite->oam.priority = priority;
+        if (sCursorArea != PSS_CURSOR_AREA_IN_BOX)
+            gPokemonStorageSystemPtr->cursorShadowSprite->invisible = TRUE;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_11c4 = NULL;
+        gPokemonStorageSystemPtr->cursorShadowSprite = NULL;
     }
 }
 
-void sub_809CD88(void)
+void ToggleCursorAutoAction(void)
 {
-    gUnknown_020384E9 = !gUnknown_020384E9;
-    gPokemonStorageSystemPtr->unk_11c0->oam.paletteNum = gPokemonStorageSystemPtr->unk_11e4[gUnknown_020384E9];
+    sAutoActionOn = !sAutoActionOn;
+    gPokemonStorageSystemPtr->cursorSprite->oam.paletteNum = gPokemonStorageSystemPtr->cursorPalNums[sAutoActionOn];
 }
 
-void sub_809CDCC(void)
+void InitPokeStorageMenu(void)
 {
-    gPokemonStorageSystemPtr->unk_11b8 = 0;
-    gPokemonStorageSystemPtr->unk_11b9 = 0;
+    gPokemonStorageSystemPtr->menuItemsCount = 0;
+    gPokemonStorageSystemPtr->menuWidth = 0;
 }
 
-void sub_809CDEC(u8 arg0)
+void SetPokeStorageMenuText(u8 menuItemId)
 {
     u8 width;
-    u8 var0;
+    u8 menuItemWidth;
 
-    if (gPokemonStorageSystemPtr->unk_11b8 < 7)
+    if (gPokemonStorageSystemPtr->menuItemsCount < 7)
     {
-        struct StorageText *storageText = &gPokemonStorageSystemPtr->unk_1180[gPokemonStorageSystemPtr->unk_11b8];
-        storageText->text = gUnknown_083BBCA0[arg0];
-        storageText->textId = arg0;
+        struct PokeStorageMenuItem *storageText = &gPokemonStorageSystemPtr->menuItems[gPokemonStorageSystemPtr->menuItemsCount];
+        storageText->text = gPokeStorageMenuTexts[menuItemId];
+        storageText->menuItemId = menuItemId;
         width = GetStringWidthInMenuWindow(storageText->text);
-        var0 = (width + 7) / 8;
-        if (var0 > gPokemonStorageSystemPtr->unk_11b9)
-            gPokemonStorageSystemPtr->unk_11b9 = var0;
+        menuItemWidth = (width + 7) / 8;
+        if (menuItemWidth > gPokemonStorageSystemPtr->menuWidth)
+            gPokemonStorageSystemPtr->menuWidth = menuItemWidth;
 
-        gPokemonStorageSystemPtr->unk_11b8++;
+        gPokemonStorageSystemPtr->menuItemsCount++;
     }
 }
 
-s8 sub_809CE4C(u8 arg0)
+s8 GetPokeStorageMenuItemTextId(u8 menuIndex)
 {
-    if (arg0 >= gPokemonStorageSystemPtr->unk_11b8)
+    if (menuIndex >= gPokemonStorageSystemPtr->menuItemsCount)
         return -1;
     else
-        return gPokemonStorageSystemPtr->unk_1180[arg0].textId;
+        return gPokemonStorageSystemPtr->menuItems[menuIndex].menuItemId;
 }
 
-void sub_809CE84(void)
+void AddPokeStorageMenu(void)
 {
-    gPokemonStorageSystemPtr->unk_11bc = 14 - gPokemonStorageSystemPtr->unk_11b8 * 2;
-    gPokemonStorageSystemPtr->unk_11ba = 28 - gPokemonStorageSystemPtr->unk_11b9;
-    Menu_DrawStdWindowFrame(gPokemonStorageSystemPtr->unk_11ba, gPokemonStorageSystemPtr->unk_11bc, 29, 15);
+    gPokemonStorageSystemPtr->menuTop = 14 - gPokemonStorageSystemPtr->menuItemsCount * 2;
+    gPokemonStorageSystemPtr->menuLeft = 28 - gPokemonStorageSystemPtr->menuWidth;
+    Menu_DrawStdWindowFrame(gPokemonStorageSystemPtr->menuLeft, gPokemonStorageSystemPtr->menuTop, 29, 15);
     Menu_PrintItems(
-        gPokemonStorageSystemPtr->unk_11ba + 1,
-        gPokemonStorageSystemPtr->unk_11bc + 1,
-        gPokemonStorageSystemPtr->unk_11b8,
-        gPokemonStorageSystemPtr->unk_1180);
+        gPokemonStorageSystemPtr->menuLeft + 1,
+        gPokemonStorageSystemPtr->menuTop + 1,
+        gPokemonStorageSystemPtr->menuItemsCount,
+        gPokemonStorageSystemPtr->menuItems);
     InitMenu(
         0,
-        gPokemonStorageSystemPtr->unk_11ba + 1,
-        gPokemonStorageSystemPtr->unk_11bc + 1,
-        gPokemonStorageSystemPtr->unk_11b8,
+        gPokemonStorageSystemPtr->menuLeft + 1,
+        gPokemonStorageSystemPtr->menuTop + 1,
+        gPokemonStorageSystemPtr->menuItemsCount,
         0,
-        gPokemonStorageSystemPtr->unk_11b9);
+        gPokemonStorageSystemPtr->menuWidth);
 }
 
-s16 sub_809CF30(void)
+s16 HandlePokeStorageMenuInput(void)
 {
     int textId = -2;
 
@@ -2485,8 +2506,8 @@ s16 sub_809CF30(void)
         {
             Menu_DestroyCursor();
             Menu_EraseWindowRect(
-                gPokemonStorageSystemPtr->unk_11ba,
-                gPokemonStorageSystemPtr->unk_11bc,
+                gPokemonStorageSystemPtr->menuLeft,
+                gPokemonStorageSystemPtr->menuTop,
                 29,
                 15);
         }
@@ -2494,60 +2515,60 @@ s16 sub_809CF30(void)
 
     if (textId >= 0)
     {
-        textId = gPokemonStorageSystemPtr->unk_1180[textId].textId;
+        textId = gPokemonStorageSystemPtr->menuItems[textId].menuItemId;
     }
 
     return textId;
 }
 
-void sub_809CFDC(struct UnkStruct_2000020 *arg0, struct UnkStruct_2000028 *arg1, u8 arg2)
+void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u8 max)
 {
-    gUnknown_020384EC = arg0;
-    arg0->unk_00 = arg1;
-    arg0->unk_05 = arg2;
-    arg0->unk_04 = 0;
+    sUnkUtil = util;
+    util->data = data;
+    util->max = max;
+    util->numActive = 0;
 }
 
-void sub_809CFF0(void)
+void UnkUtil_Run(void)
 {
     u16 i;
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *data;
 
-    if (gUnknown_020384EC->unk_04)
+    if (sUnkUtil->numActive)
     {
-        for (i = 0; i < gUnknown_020384EC->unk_04; i++)
+        for (i = 0; i < sUnkUtil->numActive; i++)
         {
-            unkStruct = &gUnknown_020384EC->unk_00[i];
-            unkStruct->unk_0c(unkStruct);
+            data = &sUnkUtil->data[i];
+            data->func(data);
         }
 
-        gUnknown_020384EC->unk_04 = 0;
+        sUnkUtil->numActive = 0;
     }
 }
 
-bool8 sub_809D034(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
+bool8 UnkUtil_CpuAdd(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
 {
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *data;
 
-    if (gUnknown_020384EC->unk_04 >= gUnknown_020384EC->unk_05)
+    if (sUnkUtil->numActive >= sUnkUtil->max)
         return FALSE;
 
-    unkStruct = &gUnknown_020384EC->unk_00[gUnknown_020384EC->unk_04++];
-    unkStruct->unk_08 = width * 2;
-    unkStruct->unk_04 = dest + (dTop * 64) + (dLeft * 2);
-    unkStruct->unk_00 = src + (sTop * 64) + (sLeft * 2);
-    unkStruct->unk_0a = height;
-    unkStruct->unk_0c = sub_809D0BC;
+    data = &sUnkUtil->data[sUnkUtil->numActive++];
+    data->size = width * 2;
+    data->dest = dest + (dTop * 64) + (dLeft * 2);
+    data->src = src + (sTop * 64) + (sLeft * 2);
+    data->height = height;
+    data->func = UnkUtil_CpuRun;
     return TRUE;
 }
 
-void sub_809D0BC(struct UnkStruct_2000028 *unkStruct)
+void UnkUtil_CpuRun(struct UnkUtilData *data)
 {
     u32 i;
-    const u8 *src = unkStruct->unk_00;
-    u8 *dest = unkStruct->unk_04;
-    int height = unkStruct->unk_0a;
-    int width = unkStruct->unk_08;
+    const u8 *src = data->src;
+    u8 *dest = data->dest;
+    int height = data->height;
+    int width = data->size;
     for (i = 0; i < height; i++)
     {
         CpuCopy16(src, dest, width);
@@ -2556,7 +2577,7 @@ void sub_809D0BC(struct UnkStruct_2000028 *unkStruct)
     }
 }
 
-void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
+void CopyTilemapRectFixedWidth(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
 {
     const u8 *from = src + (sTop * 64) + (sLeft * 2);
     u8 *to = dest + (dTop * 64) + (dLeft * 2);
@@ -2570,28 +2591,28 @@ void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sT
     }
 }
 
-bool8 sub_809D16C(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height)
+bool8 UnkUtil_DmaAdd(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height)
 {
-    struct UnkStruct_2000028 *unkStruct;
+    struct UnkUtilData *data;
 
-    if (gUnknown_020384EC->unk_04 >= gUnknown_020384EC->unk_05)
+    if (sUnkUtil->numActive >= sUnkUtil->max)
         return FALSE;
 
-    unkStruct = &gUnknown_020384EC->unk_00[gUnknown_020384EC->unk_04++];
-    unkStruct->unk_08 = width * 2;
-    unkStruct->unk_04 = dest + ((dTop * 32) + dLeft) * 2;
-    unkStruct->unk_0a = height;
-    unkStruct->unk_0c = sub_809D1C4;
+    data = &sUnkUtil->data[sUnkUtil->numActive++];
+    data->size = width * 2;
+    data->dest = dest + ((dTop * 32) + dLeft) * 2;
+    data->height = height;
+    data->func = UnkUtil_DmaRun;
     return TRUE;
 }
 
-void sub_809D1C4(struct UnkStruct_2000028 *unkStruct)
+void UnkUtil_DmaRun(struct UnkUtilData *data)
 {
     u16 i;
 
-    for (i = 0; i < unkStruct->unk_0a; i++)
+    for (i = 0; i < data->height; i++)
     {
-        Dma3FillLarge_(0, unkStruct->unk_04, unkStruct->unk_08, 16);
-        unkStruct->unk_04 += 64;
+        Dma3FillLarge_(0, data->dest, data->size, 16);
+        data->dest += 64;
     }
 }

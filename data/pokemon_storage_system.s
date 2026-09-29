@@ -5,86 +5,86 @@
 
 	.align 2
 
-gUnknown_083BBBD4:: @ 83BBBD4
-	.4byte sub_809C464, 0
-	.4byte sub_809C664, 1
-	.4byte sub_809C85C, 2
-	.4byte sub_809C944, 3
+gPokeStorageInputHandlers:: @ 83BBBD4
+	.4byte InBoxInput_Normal, 0
+	.4byte HandleInput_InParty, 1
+	.4byte HandleInput_OnBox, 2
+	.4byte HandleInput_OnButtons, 3
 	.4byte NULL, 0
 
 	.align 2
-gHandCursorSpriteSheets:: @ 83BBBFC
-	obj_tiles HandCursorTiles, 0x800, 0
-	obj_tiles HandCursorShadowTiles, 0x80, 1
+gPokeStorageCursorSpriteSheets:: @ 83BBBFC
+	obj_tiles gHandCursorTiles, 0x800, 0
+	obj_tiles gHandCursorShadowTiles, 0x80, 1
 	null_obj_tiles
 
 	.align 2
-gHandCursorSpritePalettes:: @ 83BBC14
-	obj_pal HandCursorPalette, 56006
-	obj_pal HandCursorAltPalette, 56017
+gPokeStorageCursorSpritePalettes:: @ 83BBC14
+	obj_pal gHandCursorPalette, 56006
+	obj_pal gHandCursorAltPalette, 56017
 	null_obj_pal
 
 	.align 2
-gOamData_83BBC2C:: @ 83BBC2C
+gOamData_PokeStorageCursor:: @ 83BBC2C
 	.2byte 0x0000
 	.2byte 0x8000
 	.2byte 0x0400
 
 	.align 2
-gOamData_83BBC34:: @ 83BBC34
+gOamData_PokeStorageCursorShadow:: @ 83BBC34
 	.2byte 0x0000
 	.2byte 0x4000
 	.2byte 0x0800
 
 	.align 2
-gSpriteAnim_83BBC3C:: @ 83BBC3C
+gAnim_PokeStorageCursorBouncing:: @ 83BBC3C
 	obj_image_anim_frame 0, 30
 	obj_image_anim_frame 16, 30
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnim_83BBC48:: @ 83BBC48
+gAnim_PokeStorageCursorStill:: @ 83BBC48
 	obj_image_anim_frame 0, 5
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_83BBC50:: @ 83BBC50
+gAnim_PokeStorageCursorOpen:: @ 83BBC50
 	obj_image_anim_frame 32, 5
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnim_83BBC58:: @ 83BBC58
+gAnim_PokeStorageCursorFist:: @ 83BBC58
 	obj_image_anim_frame 48, 5
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnimTable_83BBC60:: @ 83BBC60
-	.4byte gSpriteAnim_83BBC3C
-	.4byte gSpriteAnim_83BBC48
-	.4byte gSpriteAnim_83BBC50
-	.4byte gSpriteAnim_83BBC58
+gAnims_PokeStorageCursor:: @ 83BBC60
+	.4byte gAnim_PokeStorageCursorBouncing
+	.4byte gAnim_PokeStorageCursorStill
+	.4byte gAnim_PokeStorageCursorOpen
+	.4byte gAnim_PokeStorageCursorFist
 
 	.align 2
-gSpriteTemplate_83BBC70:: @ 83BBC70
-	spr_template 0, 56006, gOamData_83BBC2C, gSpriteAnimTable_83BBC60, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+gSpriteTemplate_PokeStorageCursor:: @ 83BBC70
+	spr_template 0, 56006, gOamData_PokeStorageCursor, gAnims_PokeStorageCursor, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.align 2
-gSpriteTemplate_83BBC88:: @ 83BBC88
-	spr_template 1, 56006, gOamData_83BBC34, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, sub_809CB74
+gSpriteTemplate_PokeStorageCursorShadow:: @ 83BBC88
+	spr_template 1, 56006, gOamData_PokeStorageCursorShadow, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_CursorShadow
 
 .if DEBUG
 .if DEBUG_FIX
-gUnknown_Debug_0x83E6268:: @ 0x83E6268
+gText_DebugPokeStorageSet:: @ 0x83E6268
 @ TODO: translations
 	.string "SET$"
 .else @ !DEBUG_FIX
-gUnknown_Debug_0x83E6268:: @ 0x83E6268
+gText_DebugPokeStorageSet:: @ 0x83E6268
 	.string "セットする$"
 .endif @ !DEBUG_FIX
 .endif
 
 	.align 2
-gUnknown_083BBCA0:: @ 83BBCA0
+gPokeStorageMenuTexts:: @ 83BBCA0
 	.4byte PCText_Cancel2
 	.4byte PCText_Deposit
 	.4byte PCText_Withdraw
@@ -118,5 +118,5 @@ gUnknown_083BBCA0:: @ 83BBCA0
 	.4byte PCText_Machine
 	.4byte PCText_Plain
 .if DEBUG
-	.4byte gUnknown_Debug_0x83E6268
+	.4byte gText_DebugPokeStorageSet
 .endif

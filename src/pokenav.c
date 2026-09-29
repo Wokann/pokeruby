@@ -251,52 +251,52 @@ void DrawPokenavBottomToolbar(u8 toolbarId)
 {
     u8 linkActive;
 
-    sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 0, 17, 2);
+    CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 0, 17, 2);
 
     switch (toolbarId)
     {
     case 0:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 17, 0, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 17, 0, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 11:
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 2:
         linkActive = gPokenavStructPtr->unk6DAC;
         if (!linkActive)
         {
-            sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 2, 10, 2);
-            sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, linkActive, 6, 7, 2);
+            CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 2, 10, 2);
+            CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, linkActive, 6, 7, 2);
         }
         else
         {
-            sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+            CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         }
         break;
     case 3:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 4, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 4:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 2, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 2, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 10, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 7:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 10, 4, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 8:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 4, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 20, 4, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 7, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 5:
     case 9:
-        sub_809D104((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 2, 10, 2);
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 0, 22, gPokenavBottomToolbarTilemap, 0, 2, 10, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     case 10:
-        sub_809D104((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
+        CopyTilemapRectFixedWidth((void *)VRAM + 0xD800, 8, 22, gPokenavBottomToolbarTilemap, 0, 6, 7, 2);
         break;
     }
 }

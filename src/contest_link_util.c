@@ -1466,27 +1466,27 @@ static inline s32 LoadContestResultsRankOrLinkTitleTiles(s32 destLeft)
     s32 titleWidth = 0;
     if (gIsLinkContest & 0x1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 9, 2, 8, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 9, 2, 8, 2);
         titleWidth = 8;
     }
     else if (gSpecialVar_ContestRank == 0)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 0, 9, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 0, 9, 2);
         titleWidth = 9;
     }
     else if (gSpecialVar_ContestRank == 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 9, 0, 8, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 9, 0, 8, 2);
         titleWidth = 8;
     }
     else if (gSpecialVar_ContestRank == 2)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 17, 0, 8, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 17, 0, 8, 2);
         titleWidth = 8;
     }
     else
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 2, 9, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 2, 9, 2);
         titleWidth = 9;
     }
     return titleWidth;
@@ -1498,31 +1498,31 @@ static inline s32 LoadContestResultsCategoryTitleTiles(s32 destLeft, s32 *palett
     if (gSpecialVar_ContestCategory == 0)
     {
         *palette = 0;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 17, 2, 10, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 17, 2, 10, 2);
         titleWidth = 10;
     }
     else if (gSpecialVar_ContestCategory == 1)
     {
         *palette = 1;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 4, 11, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 4, 11, 2);
         titleWidth = 11;
     }
     else if (gSpecialVar_ContestCategory == 2)
     {
         *palette = 2;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 11, 4, 10, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 11, 4, 10, 2);
         titleWidth = 10;
     }
     else if (gSpecialVar_ContestCategory == 3)
     {
         *palette = 3;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 21, 4, 10, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 21, 4, 10, 2);
         titleWidth = 10;
     }
     else
     {
         *palette = 4;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 6, 10, 2);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 1, gContestResultsTitleWords_Tilemap, 0, 6, 10, 2);
         titleWidth = 10;
     }
     return titleWidth;
@@ -1614,7 +1614,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "_080C3870:\n"
                 "\tmovs r1, 0x5\n"
                 "\tmovs r2, 0x1\n"
-                "\tbl sub_809D104\n"
+                "\tbl CopyTilemapRectFixedWidth\n"
                 "\tb _080C389E\n"
                 "\t.align 2, 0\n"
                 "_080C387C: .4byte 0x0600e000\n"
@@ -1631,7 +1631,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tstr r2, [sp, 0xC]\n"
                 "\tmovs r1, 0x5\n"
                 "\tmovs r2, 0x1\n"
-                "\tbl sub_809D104\n"
+                "\tbl CopyTilemapRectFixedWidth\n"
                 "_080C389E:\n"
                 "\tadds r4, 0xD\n"
                 "\tldr r0, _080C38C8 @ =gSpecialVar_ContestCategory\n"
@@ -1703,7 +1703,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "_080C392A:\n"
                 "\tadds r1, r4, 0\n"
                 "\tadds r2, r5, 0\n"
-                "\tbl sub_809D104\n"
+                "\tbl CopyTilemapRectFixedWidth\n"
                 "\tb _080C395A\n"
                 "\t.align 2, 0\n"
                 "_080C3934: .4byte 0x0600e000\n"
@@ -1722,7 +1722,7 @@ void LoadContestResultsTitleBarTilemaps(void)
                 "\tstr r1, [sp, 0xC]\n"
                 "\tadds r1, r4, 0\n"
                 "\tadds r2, r5, 0\n"
-                "\tbl sub_809D104\n"
+                "\tbl CopyTilemapRectFixedWidth\n"
                 "_080C395A:\n"
                 "\tldr r5, _080C398C @ =0x00000fff\n"
                 "\tlsls r4, r6, 12\n"
@@ -1758,27 +1758,27 @@ s16 LoadContestResultsRankOrLinkTitleTiles(s32 destLeft)
     s16 result;
     if (gIsLinkContest & 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 3, 8, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 3, 8, 3);
         result = 8;
     }
     else if (gSpecialVar_ContestRank == 0)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 0, 11, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 0, 11, 3);
         result = 11;
     }
     else if (gSpecialVar_ContestRank == 1)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 0, 10, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 0, 10, 3);
         result = 10;
     }
     else if (gSpecialVar_ContestRank == 2)
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 21, 0, 10, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 21, 0, 10, 3);
         result = 10;
     }
     else
     {
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 3, 11, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 3, 11, 3);
         result = 11;
     }
     return result;
@@ -1790,31 +1790,31 @@ s16 LoadContestResultsCategoryTitleTiles(s32 destLeft, s32 *palette)
     if (gSpecialVar_ContestCategory == 0)
     {
         *palette = 0;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 19, 3, 7, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 19, 3, 7, 3);
         result = 7;
     }
     else if (gSpecialVar_ContestCategory == 1)
     {
         *palette = 1;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 6, 7, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 0, 6, 7, 3);
         result = 7;
     }
     else if (gSpecialVar_ContestCategory == 2)
     {
         *palette = 2;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 7, 6, 4, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 7, 6, 4, 3);
         result = 4;
     }
     else if (gSpecialVar_ContestCategory == 3)
     {
         *palette = 3;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 6, 6, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 11, 6, 6, 3);
         result = 6;
     }
     else
     {
         *palette = 4;
-        sub_809D104((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 17, 6, 5, 3);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0xE000), destLeft, 0, gContestResultsTitleWords_Tilemap, 17, 6, 5, 3);
         result = 5;
     }
     return result;

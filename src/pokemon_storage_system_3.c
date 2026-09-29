@@ -609,8 +609,8 @@ bool8 ResetReleaseMonSpritePtr(void)
 
 static void SpriteCB_HeldMon(struct Sprite *sprite)
 {
-    sprite->x = gPokemonStorageSystemPtr->unk_11c0->x;
-    sprite->y = gPokemonStorageSystemPtr->unk_11c0->y + gPokemonStorageSystemPtr->unk_11c0->y2 + 4;
+    sprite->x = gPokemonStorageSystemPtr->cursorSprite->x;
+    sprite->y = gPokemonStorageSystemPtr->cursorSprite->y + gPokemonStorageSystemPtr->cursorSprite->y2 + 4;
 }
 
 static u16 TryLoadMonIconTiles(u16 species)

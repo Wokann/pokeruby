@@ -7,6 +7,94 @@
 #define MAX_MON_ICONS max(IN_BOX_COUNT + PARTY_SIZE + 1, 40)
 
 enum {
+    PSS_OPTION_WITHDRAW,
+    PSS_OPTION_DEPOSIT,
+    PSS_OPTION_MOVE_MONS,
+};
+
+enum {
+    PSS_MENU_CANCEL,
+    PSS_MENU_STORE,
+    PSS_MENU_WITHDRAW,
+    PSS_MENU_MOVE,
+    PSS_MENU_SHIFT,
+    PSS_MENU_PLACE,
+    PSS_MENU_SUMMARY,
+    PSS_MENU_RELEASE,
+    PSS_MENU_MARK,
+    PSS_MENU_JUMP,
+    PSS_MENU_WALLPAPER,
+    PSS_MENU_NAME,
+    PSS_MENU_SCENERY_1,
+    PSS_MENU_SCENERY_2,
+    PSS_MENU_SCENERY_3,
+    PSS_MENU_ETCETERA,
+    PSS_MENU_FOREST,
+    PSS_MENU_CITY,
+    PSS_MENU_DESERT,
+    PSS_MENU_SAVANNA,
+    PSS_MENU_CRAG,
+    PSS_MENU_VOLCANO,
+    PSS_MENU_SNOW,
+    PSS_MENU_CAVE,
+    PSS_MENU_BEACH,
+    PSS_MENU_SEAFLOOR,
+    PSS_MENU_RIVER,
+    PSS_MENU_SKY,
+    PSS_MENU_POLKADOT,
+    PSS_MENU_POKECENTER,
+    PSS_MENU_MACHINE,
+    PSS_MENU_PLAIN,
+    PSS_MENU_DEBUG_SET,
+};
+
+enum {
+    PSS_INPUT_NONE,
+    PSS_INPUT_MOVE_CURSOR,
+    PSS_INPUT_UNUSED_2,
+    PSS_INPUT_UNUSED_3,
+    PSS_INPUT_CLOSE_BOX,
+    PSS_INPUT_SHOW_PARTY,
+    PSS_INPUT_HIDE_PARTY,
+    PSS_INPUT_BOX_OPTIONS,
+    PSS_INPUT_IN_MENU,
+    PSS_INPUT_SCROLL_RIGHT,
+    PSS_INPUT_SCROLL_LEFT,
+    PSS_INPUT_DEPOSIT,
+    PSS_INPUT_WITHDRAW,
+    PSS_INPUT_MOVE_MON,
+    PSS_INPUT_SHIFT_MON,
+    PSS_INPUT_PLACE_MON,
+    PSS_INPUT_PRESSED_B,
+};
+
+enum {
+    PSS_CURSOR_AREA_IN_BOX,
+    PSS_CURSOR_AREA_IN_PARTY,
+    PSS_CURSOR_AREA_BOX_TITLE,
+    PSS_CURSOR_AREA_BUTTONS,
+};
+
+enum {
+    PSS_CURSOR_ANIM_BOUNCE,
+    PSS_CURSOR_ANIM_STILL,
+    PSS_CURSOR_ANIM_OPEN,
+    PSS_CURSOR_ANIM_FIST,
+};
+
+enum {
+    PSS_MODE_PARTY,
+    PSS_MODE_BOX,
+    PSS_MODE_MOVE,
+};
+
+enum {
+    PSS_PLACE_CHANGE_GRAB,
+    PSS_PLACE_CHANGE_PLACE,
+    PSS_PLACE_CHANGE_SHIFT,
+};
+
+enum {
     PC_TEXT_EXIT_BOX,
     PC_TEXT_WHAT_YOU_DO,
     PC_TEXT_PICK_A_THEME,
@@ -45,10 +133,10 @@ enum {
     PC_TEXT_FMT_MON_NAME_AFTER_EXCL_MARK
 };
 
-struct PokemonStorageSystemFunc
+struct PokeStorageInputHandler
 {
     u8 (*func)(void);
-    s8 unk4;
+    s8 cursorArea;
 };
 
 struct StorageMessage {
@@ -56,9 +144,9 @@ struct StorageMessage {
     u8 format;
 };
 
-struct StorageText {
+struct PokeStorageMenuItem {
     const u8 *text;
-    int textId;
+    int menuItemId;
 };
 
 struct StorageMenuText {
@@ -66,18 +154,18 @@ struct StorageMenuText {
     const u8 *desc;
 };
 
-struct UnkStruct_2000028 {
-    const u8 *unk_00;
-    u8 *unk_04;
-    u16 unk_08;
-    u16 unk_0a;
-    void (*unk_0c)(struct UnkStruct_2000028 *data);
+struct UnkUtilData {
+    const u8 *src;
+    u8 *dest;
+    u16 size;
+    u16 height;
+    void (*func)(struct UnkUtilData *data);
 };
 
-struct UnkStruct_2000020 {
-    struct UnkStruct_2000028 *unk_00;
-    u8 unk_04;
-    u8 unk_05;
+struct UnkUtil {
+    struct UnkUtilData *data;
+    u8 numActive;
+    u8 max;
 };
 
 struct ChooseBoxMenu {
@@ -102,8 +190,8 @@ struct PokemonStorageSystemData {
     u16 bg3_Y;
     u16 bg3_X;
     struct PCScreenEffectStruct pcScreenEffect;
-    struct UnkStruct_2000020 unkUtil;
-    struct UnkStruct_2000028 unkUtilData[8];
+    struct UnkUtil unkUtil;
+    struct UnkUtilData unkUtilData[8];
     u8 partyMenuTilemapBuffer[0x800];
     u16 partyMenuUnused1;
     u16 partyMenuY;
@@ -115,32 +203,32 @@ struct PokemonStorageSystemData {
     bool8 closeBoxFlashState;
     s16 newCurrBoxId;
     u16 bg2_X;
-    u16 unk_08b6;
-    u16 unk_08b8;
-    bool8 unk_08ba;
-    u8 unk_08bb;
-    u16 unk_08bc;
-    u16 unk_08be;
-    u16 unk_08c0;
-    u16 unk_08c2;
-    u16 unk_08c4;
-    u16 unk_08c6;
-    u16 unk_08c8;
-    u8 unk_08ca[0x400];
-    u8 unk_0cca;
-    u16 unk_0ccc[0x10];
-    u16 unk_0cec;
-    u16 unk_0cee;
-    struct Sprite *unk_0cf0[2];
-    struct Sprite *unk_0cf8[2];
-    struct Sprite *unk_0d00[2];
-    u32 unk_0d08;
+    u16 scrollSpeed;
+    u16 scrollTimer;
+    bool8 wallpaperOffset;
+    u8 scrollToBoxIdUnused;
+    u16 scrollUnused2;
+    u16 scrollDirectionUnused;
+    u16 scrollUnused3;
+    u16 scrollUnused4;
+    u16 scrollUnused5;
+    u16 scrollUnused6;
+    u16 scrollUnused7;
+    u8 boxTitleTiles[0x400];
+    u8 boxTitleCycleId;
+    u16 boxTitlePal[0x10];
+    u16 boxTitlePalOffset;
+    u16 boxTitleAltPalOffset;
+    struct Sprite *curBoxTitleSprites[2];
+    struct Sprite *nextBoxTitleSprites[2];
+    struct Sprite *arrowSprites[2];
+    u32 wallpaperPalBits;
     u8 filler_0d0c[0x50];
     u16 unk_0d5c;
     s16 wallpaperSetId;
     s16 wallpaperId;
-    u16 unk_0d62[360];
-    u8 unk_1032;
+    u16 wallpaperTilemap[360];
+    u8 wallpaperChangeState;
     struct Sprite *movingMonSprite;
     struct Sprite *partySprites[PARTY_SIZE];
     struct Sprite *boxMonsSprites[IN_BOX_COUNT];
@@ -159,29 +247,29 @@ struct PokemonStorageSystemData {
     u8 iconScrollState;
     u8 iconScrollToBoxId;
     u8 filler_117e[2];
-    struct StorageText unk_1180[6];
+    struct PokeStorageMenuItem menuItems[6];
     u8 filler_11b0[8];
-    u8 unk_11b8;
-    u8 unk_11b9;
-    u16 unk_11ba;
-    u16 unk_11bc;
+    u8 menuItemsCount;
+    u8 menuWidth;
+    u16 menuLeft;
+    u16 menuTop;
     u8 filler_11be;
-    struct Sprite *unk_11c0;
-    struct Sprite *unk_11c4;
-    s32 unk_11c8;
-    s32 unk_11cc;
-    s32 unk_11d0;
-    s32 unk_11d4;
-    s16 unk_11d8;
-    s16 unk_11da;
-    u16 unk_11dc;
-    s8 unk_11de;
-    s8 unk_11df;
-    u8 unk_11e0;
-    u8 unk_11e1;
-    s8 unk_11e2;
-    u8 unk_11e3;
-    u8 unk_11e4[4];
+    struct Sprite *cursorSprite;
+    struct Sprite *cursorShadowSprite;
+    s32 cursorNewX;
+    s32 cursorNewY;
+    s32 cursorSpeedX;
+    s32 cursorSpeedY;
+    s16 cursorTargetX;
+    s16 cursorTargetY;
+    u16 cursorMoveSteps;
+    s8 cursorVerticalWrap;
+    s8 cursorHorizontalWrap;
+    u8 newCursorArea;
+    u8 newCursorPosition;
+    s8 cursorPrevHorizPos;
+    u8 cursorFlipTimer;
+    u8 cursorPalNums[4];
     const u8 *displayMonPalette;
     u32 displayMonPersonality;
     u16 displayMonSpecies;
@@ -205,17 +293,17 @@ struct PokemonStorageSystemData {
     struct PokemonMarkMenu markMenu;
     struct ChooseBoxMenu chooseBoxMenu;
     struct Pokemon movingMon;
-    struct Pokemon unk_2618;
-    u8 unk_267c;
-    u8 unk_267d;
-    u8 unk_267e;
-    u8 unk_267f;
-    s8 unk_2680;
-    s8 unk_2681;
-    s8 unk_2682;
-    s8 unk_2683;
-    u16 unk_2684;
-    u16 unk_2686[3];
+    struct Pokemon tempMon;
+    u8 canReleaseMon;
+    u8 releaseStatusResolved;
+    u8 unresolvedReleaseSurf;
+    u8 unresolvedReleaseDive;
+    s8 releaseCheckBoxId;
+    s8 releaseCheckBoxPos;
+    s8 releaseBoxId;
+    s8 releaseBoxPos;
+    u16 releaseCheckState;
+    u16 restrictedReleaseMoves[3];
     u8 summaryMaxPos;
     u8 summaryStartPos;
     u8 summaryScreenMode;
@@ -238,7 +326,7 @@ struct PokemonStorageSystemData {
 
 extern u8 gUnknown_02039760[0xC00];
 extern struct PokemonStorageSystemData *const gPokemonStorageSystemPtr;
-extern u8 *const gUnknown_083B6DB8;
+extern u8 *const gPokeStorageTileBuffer;
 
 u8 CountPartyMons(void);
 s16 GetFirstFreeBoxSpot(u8 boxId);
@@ -278,51 +366,51 @@ void DestroyReleaseMonIcon(void);
 void ReshowReleaseMon(void);
 bool8 ResetReleaseMonSpritePtr(void);
 struct Sprite *CreateChooseBoxArrows(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
-void sub_8099BF8(u8 a0);
-void sub_8099C70(u8 whichBox);
-bool8 sub_8099D34(void);
-void sub_8099DCC(u8 a0);
-bool8 sub_8099E08(void);
-void sub_809A860(bool8 a0);
-void sub_809AA24(void);
-void sub_809AA98(void);
-bool8 sub_809AC00(void);
-void sub_809B0C0(u8 a0);
-void sub_809B0D4(void);
-void sub_809B0E0(void);
-u8 sub_809B0F4(void);
-void sub_809B068(void);
-void sub_809B100(u8 a0);
-bool8 sub_809B130(void);
-void sub_809B440(void);
-bool8 sub_809B62C(u8);
-void sub_809B6BC(void);
-void sub_809B6DC(void);
-bool8 sub_809B734(void);
-void sub_809B760(void);
-void sub_809B7AC(void);
-void sub_809B7D4(void);
-s8 sub_809B960(void);
-void sub_809BB90(void);
-void sub_809BBC0(void);
-void sub_809BC18(void);
-void sub_809BD14(void);
+void InitPokeStorageBox(u8 boxId);
+void SetUpScrollToBox(u8 boxId);
+bool8 ScrollToBox(void);
+void SetWallpaperForCurrentBox(u8 wallpaperId);
+bool8 DoWallpaperGfxChange(void);
+void AnimateBoxScrollArrows(bool8 animate);
+void InitCursor(void);
+void InitCursorOnReopen(void);
+bool8 UpdateCursorPos(void);
+void SetCursorBoxPosition(u8 cursorBoxPosition);
+void ClearSavedCursorPos(void);
+void SaveCursorPos(void);
+u8 GetSavedCursorPos(void);
+void SetCursorInParty(void);
+void InitMonPlaceChange(u8 type);
+bool8 DoMonPlaceChange(void);
+void RefreshDisplayMon(void);
+bool8 TryStorePartyMonInBox(u8 boxId);
+void ResetSelectionAfterDeposit(void);
+void InitReleaseMon(void);
+bool8 TryHideReleaseMon(void);
+void ReleaseMon(void);
+void TrySetCursorFistAnim(void);
+void InitCanReleaseMonVars(void);
+s8 RunCanReleaseMon(void);
+void SaveMovingMon(void);
+void LoadSavedMovingMon(void);
+void InitSummaryScreenData(void);
+void SetSelectionAfterSummaryScreen(void);
 s16 CompactPartySlots(void);
-void sub_809BDD8(u8 markings);
-bool8 sub_809BE80(void);
-bool8 sub_809BEBC(void);
-bool8 sub_809BF20(void);
-bool8 sub_809BF48(void);
-u8 sub_809CA40(void);
-void sub_809CDCC(void);
-void sub_809CDEC(u8 a0);
-void sub_809CE84(void);
-s16 sub_809CF30(void);
-void sub_809CFDC(struct UnkStruct_2000020 *a0, struct UnkStruct_2000028 *a1, u8 a2);
-void sub_809CFF0(void);
-bool8 sub_809D034(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
-void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
-bool8 sub_809D16C(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height);
+void SetPokeStorageMonMarkings(u8 markings);
+bool8 IsRemovingLastPartyMon(void);
+bool8 CanShiftMon(void);
+bool8 IsMonBeingMoved(void);
+bool8 IsCursorOnCloseBox(void);
+u8 HandlePokeStorageInput(void);
+void InitPokeStorageMenu(void);
+void SetPokeStorageMenuText(u8 menuItemId);
+void AddPokeStorageMenu(void);
+s16 HandlePokeStorageMenuInput(void);
+void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u8 max);
+void UnkUtil_Run(void);
+bool8 UnkUtil_CpuAdd(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
+void CopyTilemapRectFixedWidth(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
+bool8 UnkUtil_DmaAdd(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height);
 void ShowPokemonStorageSystemPC(void);
 
 void Debug_OpenPokeStorageForMon(struct Pokemon *pokemon, void (*func)(void));

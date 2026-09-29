@@ -787,7 +787,7 @@ static void ChooseBoxMenu_PrintInfo(void)
 static void DrawChooseBoxMenuText(const u8 *text, u16 tileX, u16 tileY)
 {
     u16 *tileDest = (u16 *)(BG_CHAR_ADDR(4) + (GetSpriteTileStartByTag(sChooseBoxMenu->tileTag) * 32) + tileY * 256 + tileX * 32);
-    u8 *tileBuffer = gUnknown_083B6DB8;
+    u8 *tileBuffer = gPokeStorageTileBuffer;
     DmaFill16(3, 0x1111, tileBuffer, 0x400);
     Text_InitWindow8004E3C(&gWindowTemplate_81E6D38, tileBuffer, text);
     DmaCopy16(3, tileBuffer, tileDest, 0x400);

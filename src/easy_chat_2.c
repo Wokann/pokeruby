@@ -26,7 +26,7 @@
 #include "data/text/easy_chat/group_name_table.h"
 
 extern void CopyTilemapRect();
-extern void sub_809D104(void *, u16, u16, const void *, u16, u16, u16, u16);
+extern void CopyTilemapRectFixedWidth(void *, u16, u16, const void *, u16, u16, u16, u16);
 
 void CreateMainCursorSprite(void);
 void SpriteCB_Cursor(struct Sprite *);
@@ -1206,22 +1206,22 @@ void BufferFrameTilemap(void)
     switch (gEasyChatStruct->unk9)
     {
     case 4:
-        sub_809D104((void *)(VRAM + 0x6800), 3, 3, gUnknown_08E94AD0, 0, 26, 24, 6);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 3, gUnknown_08E94AD0, 0, 26, 24, 6);
         break;
     case 5:
-        sub_809D104((void *)(VRAM + 0x6800), 14, 2, gUnknown_08E94AD0, 0, 18, 13, 8);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 2, gUnknown_08E94AD0, 0, 18, 13, 8);
         break;
     case 0:
-        sub_809D104((void *)(VRAM + 0x6800), 2, 2, gUnknown_08E94AD0, 0, 10, 26, 8);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 2, gUnknown_08E94AD0, 0, 10, 26, 8);
         break;
     case 1:
-        sub_809D104((void *)(VRAM + 0x6800), 2, 0, gUnknown_08E94AD0, 0, 0, 26, 10);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 2, 0, gUnknown_08E94AD0, 0, 0, 26, 10);
         break;
     case 2:
-        sub_809D104((void *)(VRAM + 0x6800), 14, 3, gUnknown_08E94AD0, 13, 18, 13, 4);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 14, 3, gUnknown_08E94AD0, 13, 18, 13, 4);
         break;
     case 3:
-        sub_809D104((void *)(VRAM + 0x6800), 3, 2, gUnknown_08E94AD0, 0, 32, 24, 4);
+        CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 2, gUnknown_08E94AD0, 0, 32, 24, 4);
         break;
     }
 }
@@ -2052,7 +2052,7 @@ void CopyLowerWindowAnimRectToVram(void *dst, u16 *rect, struct UnknownEasyChatS
     s16 height = rect[3] - rect[2];
 
     if (width > 0 && height > 0)
-        sub_809D104(dst, rect[0], rect[2], source->unk8, source->unk0, source->unk2, width, height);
+        CopyTilemapRectFixedWidth(dst, rect[0], rect[2], source->unk8, source->unk0, source->unk2, width, height);
 }
 
 // Strange...
