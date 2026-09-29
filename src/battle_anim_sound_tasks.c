@@ -18,47 +18,55 @@ static void SoundTask_FireBlast_Step2(u8 taskId);
 static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId);
 static void SoundTask_AdjustPanningVar_Step(u8 taskId);
 
+#define tFireBlastLoopSongId  data[0]
+#define tFireBlastEndSongId   data[1]
+#define tFireBlastCurrentPan  data[2]
+#define tFireBlastTargetPan   data[3]
+#define tFireBlastPanIncrement data[4]
+#define tFireBlastTimer       data[10]
+#define tFireBlastPhaseCounter data[11]
+
 // used in 1 move:
 //         Move_FIRE_BLAST
 void SoundTask_FireBlast(u8 taskId)
 {
     s8 sourcePan, targetPan, panIncrement;
     
-    TASK.data[0] = gBattleAnimArgs[0];
-    TASK.data[1] = gBattleAnimArgs[1];
+    TASK.tFireBlastLoopSongId = gBattleAnimArgs[0];
+    TASK.tFireBlastEndSongId = gBattleAnimArgs[1];
 
     sourcePan = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER_NEG);
     targetPan = BattleAnimAdjustPanning(SOUND_PAN_TARGET);
     panIncrement = CalculatePanIncrement(sourcePan, targetPan, 2);
 
-    TASK.data[2] = sourcePan;
-    TASK.data[3] = targetPan;
-    TASK.data[4] = panIncrement;
-    TASK.data[10] = 10;
+    TASK.tFireBlastCurrentPan = sourcePan;
+    TASK.tFireBlastTargetPan = targetPan;
+    TASK.tFireBlastPanIncrement = panIncrement;
+    TASK.tFireBlastTimer = 10;
 
     TASK.func = SoundTask_FireBlast_Step1;
 }
 
 static void SoundTask_FireBlast_Step1(u8 taskId)
 {
-    s16 pan = TASK.data[2];
-    s8 dPan = TASK.data[4];
+    s16 pan = TASK.tFireBlastCurrentPan;
+    s8 panIncrement = TASK.tFireBlastPanIncrement;
 
-    if (++TASK.data[11] == 111)
+    if (++TASK.tFireBlastPhaseCounter == 111)
     {
-        TASK.data[10] = 5;
-        TASK.data[11] = 0;
+        TASK.tFireBlastTimer = 5;
+        TASK.tFireBlastPhaseCounter = 0;
         TASK.func = SoundTask_FireBlast_Step2;
     } 
     else
     {
-        if (++TASK.data[10] == 11)
+        if (++TASK.tFireBlastTimer == 11)
         {
-            TASK.data[10] = 0;
-            PlaySE12WithPanning(TASK.data[0], pan);
+            TASK.tFireBlastTimer = 0;
+            PlaySE12WithPanning(TASK.tFireBlastLoopSongId, pan);
         }
-        pan += dPan;
-        TASK.data[2] = KeepPanInRange(pan, dPan);
+        pan += panIncrement;
+        TASK.tFireBlastCurrentPan = KeepPanInRange(pan, panIncrement);
     }
 }
 
@@ -66,19 +74,38 @@ static void SoundTask_FireBlast_Step2(u8 taskId)
 {
     s8 pan;
 
-    if (++TASK.data[10] == 6)
+    if (++TASK.tFireBlastTimer == 6)
     {
-        TASK.data[10] = 0;
+        TASK.tFireBlastTimer = 0;
 
         pan = BattleAnimAdjustPanning(SOUND_PAN_TARGET);
-        PlaySE12WithPanning(TASK.data[1], pan);
+        PlaySE12WithPanning(TASK.tFireBlastEndSongId, pan);
 
-        if (++TASK.data[11] == 2)
+        if (++TASK.tFireBlastPhaseCounter == 2)
         {
             DestroyAnimSoundTask(taskId);
         }
     }
 }
+
+#undef tFireBlastLoopSongId
+#undef tFireBlastEndSongId
+#undef tFireBlastCurrentPan
+#undef tFireBlastTargetPan
+#undef tFireBlastPanIncrement
+#undef tFireBlastTimer
+#undef tFireBlastPhaseCounter
+
+#define tLoopSoundEffectId     data[0]
+#define tLoopSourcePan         data[1]
+#define tLoopTargetPan         data[2]
+#define tLoopPanIncrement      data[3]
+#define tLoopCount             data[4]
+#define tLoopPanDelay          data[5]
+#define tLoopSoundDelay        data[6]
+#define tLoopPanDelayCounter   data[10]
+#define tLoopCurrentPan        data[11]
+#define tLoopSoundDelayCounter data[12]
 
 // used in 7 moves:
 //         Move_ICE_BEAM, Move_AURORA_BEAM, Move_PSYBEAM,
@@ -89,24 +116,24 @@ void SoundTask_LoopSEAdjustPanning(u8 taskId)
     u16 songId = gBattleAnimArgs[0];
     s8 targetPan = gBattleAnimArgs[2];
     s8 panIncrement = gBattleAnimArgs[3];
-    u8 r10 = gBattleAnimArgs[4]; // number of times the sound must be played
-    u8 r7 = gBattleAnimArgs[5];
-    u8 r9 = gBattleAnimArgs[6];
+    u8 numLoops = gBattleAnimArgs[4];
+    u8 panDelay = gBattleAnimArgs[5];
+    u8 soundDelay = gBattleAnimArgs[6];
     s8 sourcePan = BattleAnimAdjustPanning(gBattleAnimArgs[1]);
 
     targetPan = BattleAnimAdjustPanning(targetPan);
     panIncrement = CalculatePanIncrement(sourcePan, targetPan, panIncrement);
 
-    TASK.data[0] = songId;
-    TASK.data[1] = sourcePan;
-    TASK.data[2] = targetPan;
-    TASK.data[3] = panIncrement;
-    TASK.data[4] = r10;
-    TASK.data[5] = r7;
-    TASK.data[6] = r9;
-    TASK.data[10] = 0;
-    TASK.data[11] = sourcePan;
-    TASK.data[12] = r9;
+    TASK.tLoopSoundEffectId = songId;
+    TASK.tLoopSourcePan = sourcePan;
+    TASK.tLoopTargetPan = targetPan;
+    TASK.tLoopPanIncrement = panIncrement;
+    TASK.tLoopCount = numLoops;
+    TASK.tLoopPanDelay = panDelay;
+    TASK.tLoopSoundDelay = soundDelay;
+    TASK.tLoopPanDelayCounter = 0;
+    TASK.tLoopCurrentPan = sourcePan;
+    TASK.tLoopSoundDelayCounter = soundDelay;
 
     TASK.func = SoundTask_LoopSEAdjustPanning_Step;
     TASK.func(taskId);
@@ -114,28 +141,39 @@ void SoundTask_LoopSEAdjustPanning(u8 taskId)
 
 static void SoundTask_LoopSEAdjustPanning_Step(u8 taskId)
 {
-    if (TASK.data[12]++ == TASK.data[6])
+    if (TASK.tLoopSoundDelayCounter++ == TASK.tLoopSoundDelay)
     {
-        TASK.data[12] = 0;
-        PlaySE12WithPanning(TASK.data[0], TASK.data[11]);
+        TASK.tLoopSoundDelayCounter = 0;
+        PlaySE12WithPanning(TASK.tLoopSoundEffectId, TASK.tLoopCurrentPan);
 
-        if (--TASK.data[4] == 0)
+        if (--TASK.tLoopCount == 0)
         {
             DestroyAnimSoundTask(taskId);
             return;
         }
     }
 
-    if (TASK.data[10]++ == TASK.data[5])
+    if (TASK.tLoopPanDelayCounter++ == TASK.tLoopPanDelay)
     {
-        u16 dPan, oldPan;
-        TASK.data[10] = 0;
-        dPan = TASK.data[3];
-        oldPan = TASK.data[11];
-        TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
+        u16 panIncrement, oldPan;
+        TASK.tLoopPanDelayCounter = 0;
+        panIncrement = TASK.tLoopPanIncrement;
+        oldPan = TASK.tLoopCurrentPan;
+        TASK.tLoopCurrentPan = panIncrement + oldPan;
+        TASK.tLoopCurrentPan = KeepPanInRange(TASK.tLoopCurrentPan, oldPan);
     }
 }
+
+#undef tLoopSoundEffectId
+#undef tLoopSourcePan
+#undef tLoopTargetPan
+#undef tLoopPanIncrement
+#undef tLoopCount
+#undef tLoopPanDelay
+#undef tLoopSoundDelay
+#undef tLoopPanDelayCounter
+#undef tLoopCurrentPan
+#undef tLoopSoundDelayCounter
 
 // Used by Move_HOWL, Move_ROAR, and Move_GROWL.
 void SoundTask_PlayCryWithMode(u8 taskId)
@@ -229,25 +267,31 @@ void SoundTask_PlaySE2WithPanning(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
+#define tAdjustSourcePan       data[1]
+#define tAdjustTargetPan       data[2]
+#define tAdjustPanIncrement    data[3]
+#define tAdjustPanDelay        data[5]
+#define tAdjustPanDelayCounter data[10]
+#define tAdjustCurrentPan      data[11]
+
 // used in 2 moves:
 //         Move_CONFUSE_RAY, Move_WILL_O_WISP
 void SoundTask_AdjustPanningVar(u8 taskId)
 {
-    u8 r5 = gBattleAnimArgs[1];
+    s8 targetPan = gBattleAnimArgs[1];
     s8 panIncrement = gBattleAnimArgs[2];
-    s16 r9 = gBattleAnimArgs[3];
-    s8 r1 = gBattleAnimArgs[0];
+    s16 panDelay = gBattleAnimArgs[3];
+    s8 sourcePan = BattleAnimAdjustPanning(gBattleAnimArgs[0]);
 
-    s8 sourcePan = BattleAnimAdjustPanning(r1);
-    s8 targetPan = BattleAnimAdjustPanning(r5);
+    targetPan = BattleAnimAdjustPanning(targetPan);
     panIncrement = CalculatePanIncrement(sourcePan, targetPan, panIncrement);
 
-    TASK.data[1] = sourcePan;
-    TASK.data[2] = targetPan;
-    TASK.data[3] = panIncrement;
-    TASK.data[5] = r9;
-    TASK.data[10] = 0;
-    TASK.data[11] = sourcePan;
+    TASK.tAdjustSourcePan = sourcePan;
+    TASK.tAdjustTargetPan = targetPan;
+    TASK.tAdjustPanIncrement = panIncrement;
+    TASK.tAdjustPanDelay = panDelay;
+    TASK.tAdjustPanDelayCounter = 0;
+    TASK.tAdjustCurrentPan = sourcePan;
 
     TASK.func = SoundTask_AdjustPanningVar_Step;
     TASK.func(taskId);
@@ -255,21 +299,28 @@ void SoundTask_AdjustPanningVar(u8 taskId)
 
 static void SoundTask_AdjustPanningVar_Step(u8 taskId)
 {
-    u16 dPan = TASK.data[3];
+    u16 panIncrement = TASK.tAdjustPanIncrement;
 
-    if (TASK.data[10]++ == TASK.data[5])
+    if (TASK.tAdjustPanDelayCounter++ == TASK.tAdjustPanDelay)
     {
         u16 oldPan;
-        TASK.data[10] = 0;
-        oldPan = TASK.data[11];
-        TASK.data[11] = dPan + oldPan;
-        TASK.data[11] = KeepPanInRange(TASK.data[11], oldPan);
+        TASK.tAdjustPanDelayCounter = 0;
+        oldPan = TASK.tAdjustCurrentPan;
+        TASK.tAdjustCurrentPan = panIncrement + oldPan;
+        TASK.tAdjustCurrentPan = KeepPanInRange(TASK.tAdjustCurrentPan, oldPan);
     }
 
-    gAnimCustomPanning = TASK.data[11];
+    gAnimCustomPanning = TASK.tAdjustCurrentPan;
 
-    if (TASK.data[11] == TASK.data[2])
+    if (TASK.tAdjustCurrentPan == TASK.tAdjustTargetPan)
     {
         DestroyAnimVisualTask(taskId);
     }
 }
+
+#undef tAdjustSourcePan
+#undef tAdjustTargetPan
+#undef tAdjustPanIncrement
+#undef tAdjustPanDelay
+#undef tAdjustPanDelayCounter
+#undef tAdjustCurrentPan

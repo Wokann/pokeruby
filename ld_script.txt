@@ -345,7 +345,7 @@ SECTIONS {
         src/field_effect_helpers.o(.text);
         src/contest_ai.o(.text);
         src/mystery_event_script_util.o(.text);
-        src/battle/anim/sfx.o(.text);
+        src/battle_anim_sound_tasks.o(.text);
         src/battle_controller_safari.o(.text);
         src/fldeff_sweetscent.o(.text);
         src/battle_anim_effects_3.o(.text);
