@@ -248,51 +248,51 @@ static const struct MailLayout sMailLayouts_Tall[] =
 
 #if DEBUG
 
-const u8 Str_8411540[] = DTR("レイアウトを　にほんごで　ひょうじ？", "Display using JAPANESE layout?");
-const u8 Str_8411553[] = DTR("にほんご　", "JAPANESE");
-const u8 Str_8411559[] = DTR("かいがい　", "OVERSEAS");
+static const u8 sText_DebugMailLayoutPrompt[] = DTR("レイアウトを　にほんごで　ひょうじ？", "Display using JAPANESE layout?");
+static const u8 sText_DebugMailLayoutJapanese[] = DTR("にほんご　", "JAPANESE");
+static const u8 sText_DebugMailLayoutOverseas[] = DTR("かいがい　", "OVERSEAS");
 
-const u8 *const sDebugMailLayouts[] =
+static const u8 *const sDebugMailLayouts[] =
 {
-    Str_8411553,
-    Str_8411559,
+    sText_DebugMailLayoutJapanese,
+    sText_DebugMailLayoutOverseas,
 };
 
-const u8 Str_8411568[] = DTR("イメージ　タイプを　えらんでね", "Choose an image type");
-const u8 Str_8411578[] = _("{STR_VAR_1}");
-const u8 Str_841157B[] = DTR("オレンジ　", "ORANGE ");
-const u8 Str_8411581[] = DTR("ハーバー　", "HARBOR ");
-const u8 Str_8411587[] = DTR("キラキラ　", "GLITTER");
-const u8 Str_841158D[] = DTR("メカニカル", "MECH   ");
-const u8 Str_8411593[] = DTR("ウッディー", "WOOD   ");
-const u8 Str_8411599[] = DTR("クロス　　", "WAVE   ");
-const u8 Str_841159F[] = DTR("トレジャー", "BEAD   ");
-const u8 Str_84115A5[] = DTR("シャドウ　", "SHADOW ");
-const u8 Str_84115AB[] = DTR("トロピカル", "TROPIC ");
-const u8 Str_84115B1[] = DTR("ドリーム　", "DREAM  ");
-const u8 Str_84115B7[] = DTR("ミラクル　", "FAB    ");
-const u8 Str_84115BD[] = DTR("レトロ　　", "RETRO  ");
+static const u8 sText_DebugMailImageTypePrompt[] = DTR("イメージ　タイプを　えらんでね", "Choose an image type");
+static const u8 sText_DebugMailImageTypeLabel[] = _("{STR_VAR_1}");
+static const u8 sText_DebugMailImageTypeOrange[] = DTR("オレンジ　", "ORANGE ");
+static const u8 sText_DebugMailImageTypeHarbor[] = DTR("ハーバー　", "HARBOR ");
+static const u8 sText_DebugMailImageTypeGlitter[] = DTR("キラキラ　", "GLITTER");
+static const u8 sText_DebugMailImageTypeMech[] = DTR("メカニカル", "MECH   ");
+static const u8 sText_DebugMailImageTypeWood[] = DTR("ウッディー", "WOOD   ");
+static const u8 sText_DebugMailImageTypeWave[] = DTR("クロス　　", "WAVE   ");
+static const u8 sText_DebugMailImageTypeBead[] = DTR("トレジャー", "BEAD   ");
+static const u8 sText_DebugMailImageTypeShadow[] = DTR("シャドウ　", "SHADOW ");
+static const u8 sText_DebugMailImageTypeTropic[] = DTR("トロピカル", "TROPIC ");
+static const u8 sText_DebugMailImageTypeDream[] = DTR("ドリーム　", "DREAM  ");
+static const u8 sText_DebugMailImageTypeFab[] = DTR("ミラクル　", "FAB    ");
+static const u8 sText_DebugMailImageTypeRetro[] = DTR("レトロ　　", "RETRO  ");
 
-const u8 *const sDebugMailImageTypes[] =
+static const u8 *const sDebugMailImageTypes[] =
 {
-    Str_841157B,
-    Str_8411581,
-    Str_8411587,
-    Str_841158D,
-    Str_8411593,
-    Str_8411599,
-    Str_841159F,
-    Str_84115A5,
-    Str_84115AB,
-    Str_84115B1,
-    Str_84115B7,
-    Str_84115BD,
+    sText_DebugMailImageTypeOrange,
+    sText_DebugMailImageTypeHarbor,
+    sText_DebugMailImageTypeGlitter,
+    sText_DebugMailImageTypeMech,
+    sText_DebugMailImageTypeWood,
+    sText_DebugMailImageTypeWave,
+    sText_DebugMailImageTypeBead,
+    sText_DebugMailImageTypeShadow,
+    sText_DebugMailImageTypeTropic,
+    sText_DebugMailImageTypeDream,
+    sText_DebugMailImageTypeFab,
+    sText_DebugMailImageTypeRetro,
 };
 
-const u8 Str_84115F4[] = DTR("メールをみる", "View MAIL");
-const u8 Str_84115FB[] = DTR("メールとうろく", "Register MAIL");
-const u8 Str_8411603[] = DTR("もたせる", "Give MAIL");
-const u8 Str_8411608[] = DTR("メールをけす", "Delete MAIL");
+static const u8 sText_DebugMailActionView[] = DTR("メールをみる", "View MAIL");
+static const u8 sText_DebugMailActionRegister[] = DTR("メールとうろく", "Register MAIL");
+static const u8 sText_DebugMailActionGive[] = DTR("もたせる", "Give MAIL");
+static const u8 sText_DebugMailActionDelete[] = DTR("メールをけす", "Delete MAIL");
 
 #endif
 
@@ -713,7 +713,7 @@ void Task_DebugMailChooseImage(u8 taskId)
     else if (JOY_NEW(B_BUTTON))
     {
         Menu_DisplayDialogueFrame();
-        Menu_PrintText(Str_8411540, 4, 15);
+        Menu_PrintText(sText_DebugMailLayoutPrompt, 4, 15);
         Menu_PrintText(sDebugMailLayouts[gSpecialVar_0x8004], 2, 2);
         gTasks[taskId].func = Task_DebugMailChooseLayout;
     }
@@ -732,14 +732,14 @@ void Task_DebugMailChooseLayout(u8 taskId)
         {
             gMain.watchedKeysPressed = FALSE;
             Menu_DisplayDialogueFrame();
-            Menu_PrintText(Str_8411540, 4, 15);
+            Menu_PrintText(sText_DebugMailLayoutPrompt, 4, 15);
             Menu_DrawStdWindowFrame(1, 1, 10, 4);
             Menu_PrintText(sDebugMailLayouts[gSpecialVar_0x8004], 2, 2);
         }
         else
         {
             Menu_DisplayDialogueFrame();
-            Menu_PrintText(Str_8411568, 4, 15);
+            Menu_PrintText(sText_DebugMailImageTypePrompt, 4, 15);
             Menu_DrawStdWindowFrame(1, 1, 10, 4);
             Menu_PrintText(sDebugMailImageTypes[gSpecialVar_0x8006], 2, 2);
             gTasks[taskId].func = Task_DebugMailChooseImage;
@@ -1082,10 +1082,10 @@ u8 DebugMailHandleMainMenuInput(void)
 
 const struct MenuAction sDebugMailMenuActions[] =
 {
-    {Str_84115F4, NULL},
-    {Str_84115FB, NULL},
-    {Str_8411603, NULL},
-    {Str_8411608, NULL},
+    {sText_DebugMailActionView, NULL},
+    {sText_DebugMailActionRegister, NULL},
+    {sText_DebugMailActionGive, NULL},
+    {sText_DebugMailActionDelete, NULL},
 };
 
 void ShowDebugMailMainMenu(void)
