@@ -66,7 +66,7 @@ static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
 
     if (userPartyId > 5 || recipientPartyId > 5)
     {
-        sub_806CD44(taskId);
+        CancelTwoMonAction(taskId);
         return;
     }
 
@@ -95,7 +95,7 @@ static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
     gTasks[taskId].data[12] = gTasks[taskId].data[10] / 5;
 
     PartyMenuEraseMsgBoxAndFrame();
-    gTasks[taskId].func = sub_806FA18;
+    gTasks[taskId].func = Task_SoftboiledReduceUserHp;
     ePartyMenu2.pmUnk282 = gTasks[taskId].data[11];
 }
 
@@ -119,7 +119,7 @@ static void CantUseSoftboiledOnMon(u8 taskId) {
 
 static void Task_FinishSoftboiled(u8 taskId)
 {
-    sub_806CCE4();
+    ResetTwoMonActionSelection();
     ePartyMenu2.unk261 = 2;
     DestroySprite(&gSprites[ePartyMenu.slotId]);
     Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);

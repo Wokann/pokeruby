@@ -1844,11 +1844,11 @@ void HandlePartyMenuSwitchPokemonInput(u8 taskId)
     else if (gMain.newKeys == B_BUTTON)
     {
         PlaySE(5);
-        sub_806CD44(taskId);
+        CancelTwoMonAction(taskId);
     }
 }
 
-void sub_806CC2C(u8 taskId)
+void FinishTwoMonAction(u8 taskId)
 {
     DestroySprite(&gSprites[ePartyMenu.slotId]);
     PrintPartyMenuPromptText(0, 0);
@@ -1858,14 +1858,14 @@ void sub_806CC2C(u8 taskId)
     DestroyTask(taskId);
 }
 
-void sub_806CC74(u8 taskId)
+void FinishTwoMonActionAfterSwitch(u8 taskId)
 {
     sub_806BF24(&gUnknown_083769A8[gSprites[ePartyMenu.slotId2].data[0] * 2], gSprites[ePartyMenu.slotId2].data[0], 3, 1);
     sub_806BF24(&gUnknown_083769A8[gSprites[ePartyMenu.slotId].data[0] * 2], gSprites[ePartyMenu.slotId].data[0], 3, 0);
-    sub_806CC2C(taskId);
+    FinishTwoMonAction(taskId);
 }
 
-void sub_806CCE4()
+void ResetTwoMonActionSelection()
 {
     u8 monIndex1 = gSprites[ePartyMenu.slotId].data[0];
     u8 monIndex2 = gSprites[ePartyMenu.slotId2].data[0];
@@ -1876,10 +1876,10 @@ void sub_806CCE4()
         sub_806BF24(&gUnknown_083769A8[monIndex2 * 2], monIndex2, 3, 1);
 }
 
-void sub_806CD44(u8 taskId)
+void CancelTwoMonAction(u8 taskId)
 {
-    sub_806CCE4();
-    sub_806CC2C(taskId);
+    ResetTwoMonActionSelection();
+    FinishTwoMonAction(taskId);
 }
 
 void Task_SwitchSelectedPartyMons(u8 taskId)
@@ -1889,7 +1889,7 @@ void Task_SwitchSelectedPartyMons(u8 taskId)
 
     if (monIndex1 == monIndex2 || monIndex1 == 7 || monIndex2 == 7)
     {
-        sub_806CD44(taskId);
+        CancelTwoMonAction(taskId);
     }
     else
     {
@@ -2081,7 +2081,7 @@ void sub_806D198(u8 taskId)
     nullsub_12(ePartyMenu.unk6, &gPlayerParty[ePartyMenu.unk6]);
 
     PartyMenuDrawHPBars();
-    sub_806CC74(taskId);
+    FinishTwoMonActionAfterSwitch(taskId);
 }
 
 void SpriteCB_sub_806D37C(struct Sprite *sprite)
@@ -3465,7 +3465,7 @@ bool8 IsHMMove(u16 move)
     return FALSE;
 }
 
-s16 sub_806F7E8(u8 taskId, struct HealthBarInfo *b, s8 c)
+s16 UpdatePartyMenuHealthBar(u8 taskId, struct HealthBarInfo *b, s8 c)
 {
     s16 *taskData;
     u8 hpBarLevel;
@@ -3488,12 +3488,12 @@ s16 sub_806F7E8(u8 taskId, struct HealthBarInfo *b, s8 c)
     return UpdateHealthBar(b, (int *)&gPartyMenu.unkC, vramPtr, 0);
 }
 
-void sub_806F8AC(u8 taskId)
+void Task_AnimatePartyMenuHpRestore(u8 taskId)
 {
     struct HealthBarInfo sp0;
     u16 sp14;
 
-    ePartyMenu2.pmUnk282 = sub_806F7E8(taskId, &sp0, -1);
+    ePartyMenu2.pmUnk282 = UpdatePartyMenuHealthBar(taskId, &sp0, -1);
     if (ePartyMenu2.pmUnk282 == -1)
     {
         gPartyMenu.unkC = 0;
@@ -3516,7 +3516,7 @@ void sub_806F8AC(u8 taskId)
         SetMonData(gPartyMenu.pokemon, MON_DATA_HP, &sp14);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
         sub_8032638();
-        gTasks[taskId].func = sub_806FB44;
+        gTasks[taskId].func = Task_WaitForPartyMenuMessageThenFollowup;
     }
     else
     {
@@ -3524,11 +3524,11 @@ void sub_806F8AC(u8 taskId)
     }
 }
 
-void sub_806FA18(u8 taskId)
+void Task_SoftboiledReduceUserHp(u8 taskId)
 {
     struct HealthBarInfo sp0;
 
-    ePartyMenu2.pmUnk282 = sub_806F7E8(taskId, &sp0, 1);
+    ePartyMenu2.pmUnk282 = UpdatePartyMenuHealthBar(taskId, &sp0, 1);
     if (ePartyMenu2.pmUnk282 == -1)
     {
         PlaySE(SE_USE_ITEM);
@@ -3542,7 +3542,7 @@ void sub_806FA18(u8 taskId)
         gTasks[taskId].data[11] = GetMonData(gPartyMenu.pokemon, MON_DATA_HP);
         gPartyMenu.unkC = -32768;
         gPartyMenu.unk14 = gPartyMenu.unk10;
-        gTasks[taskId].func = sub_806F8AC;
+        gTasks[taskId].func = Task_AnimatePartyMenuHpRestore;
         ePartyMenu2.pmUnk282 = gTasks[taskId].data[11];
     }
     else
@@ -3551,7 +3551,7 @@ void sub_806FA18(u8 taskId)
     }
 }
 
-void sub_806FB0C(u8 taskId)
+void Task_WaitForPartyMenuMessage(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
@@ -3560,7 +3560,7 @@ void sub_806FB0C(u8 taskId)
     }
 }
 
-void sub_806FB44(u8 taskId)
+void Task_WaitForPartyMenuMessageThenFollowup(u8 taskId)
 {
     if (gPartyMenuMessage_IsPrinting == 0)
     {
@@ -3707,7 +3707,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
         gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
-        gTasks[r7].func = sub_806FB0C;
+        gTasks[r7].func = Task_WaitForPartyMenuMessage;
     }
     else
     {
@@ -3730,7 +3730,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
             else
                 gTasks[r7].data[14] = 0;
             gPartyMenu.unk14 = gPartyMenu.unk10;
-            gTasks[r7].func = sub_806F8AC;
+            gTasks[r7].func = Task_AnimatePartyMenuHpRestore;
             ePartyMenu2.pmUnk282 = gTasks[r7].data[11];
         }
         else
@@ -3741,7 +3741,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
             GetMedicineItemEffectMessage(item);
             TryPrintPartyMenuMonNickname(gPartyMenu.primarySelectedMonIndex, gPartyMenu.pokemon);
             DisplayPartyMenuMessage(gStringVar4, 1);
-            gTasks[r7].func = sub_806FB0C;
+            gTasks[r7].func = Task_WaitForPartyMenuMessage;
         }
     }
 }
@@ -3805,7 +3805,7 @@ void sub_8070088(u8 taskId)
             ePartyMenu2.pmUnk280 = 1;
             ePartyMenu2.pmUnk282 = taskData[11];
             gPartyMenu.unkC = -32768;
-            gTasks[taskId2].func = sub_806F8AC;
+            gTasks[taskId2].func = Task_AnimatePartyMenuHpRestore;
         }
     }
 }
@@ -3830,7 +3830,7 @@ void sub_80701DC(u8 taskId)
         {
             gTasks[taskId].func = TaskDummy;
             DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
-            CreateTask(sub_806FB0C, 8);
+            CreateTask(Task_WaitForPartyMenuMessage, 8);
         }
         else
         {
@@ -3954,7 +3954,7 @@ void DoRecoverPP(u8 taskId)
         GetMedicineItemEffectMessage(gPartyMenu.secondarySelectedIndex);
         DisplayPartyMenuMessage(gStringVar4, 1);
     }
-    gTasks[taskId].func = sub_806FB0C;
+    gTasks[taskId].func = Task_WaitForPartyMenuMessage;
 }
 
 void DoPPUpItemEffect(u8 taskId, u16 b, TaskFunc c)
@@ -4020,7 +4020,7 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc c)
         gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
-        CreateTask(sub_806FB0C, 5);
+        CreateTask(Task_WaitForPartyMenuMessage, 5);
     }
     else
     {
@@ -4286,7 +4286,7 @@ void DoEvolutionStoneItemEffect(u8 taskId, u16 evolutionStoneItem, TaskFunc c)
         gPartyMenuActionResult = 0;
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);
 
-        CreateTask(sub_806FB0C, 5);
+        CreateTask(Task_WaitForPartyMenuMessage, 5);
     }
     else
     {
