@@ -106,49 +106,49 @@ struct UnkPokenavStruct *const gPokenavStructPtr = (struct UnkPokenavStruct *)gS
 extern u16 gKeyRepeatStartDelay;
 
 // rodata?
-const u8 *const gUnknown_083DFEC8 = gTileBuffer;
+u8 *const gPokenavTileBuffer = gTileBuffer;
 
 const u8 gUnknown_083DFECC[] = INCBIN_U8("graphics/pokenav/83DFECC.gbapal");
 
 const u8 gUnknown_083DFEEC[] = INCBIN_U8("graphics/pokenav/83DFEEC.4bpp");
 const u8 gUnknown_083DFF8C[] = INCBIN_U8("graphics/pokenav/83DFF8C.bin.lz");
-const u16 gUnknown_083E003C[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
+const u16 gPokenavMenuPaletteGradientColors[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
 
 const u8 gUnknown_083E005C[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
 const u8 gUnknown_083E007C[] = INCBIN_U8("graphics/pokenav/83E007C.bin.lz");
-const u16 gUnknown_083E0124[] = INCBIN_U16("graphics/pokenav/83E0124_pal.bin");
+const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0124_pal.bin");
 
-const u16 gUnknown_083E0144[] = INCBIN_U16("graphics/pokenav/83E0144_pal.bin");
+const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0144_pal.bin");
 
 const u16 gUnknown_083E0164[] = INCBIN_U16("graphics/pokenav/83E0164.bin");//?
 
-const u8 gUnknown_083E01AC[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
-const u8 gUnknown_083E01F4[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
-const u8 gUnknown_083E0254[] = INCBIN_U8("graphics/pokenav/83E0254.gbapal");
-const u16 gUnknown_083E0274[] = INCBIN_U16("graphics/pokenav/83E0274.gbapal");
+const u8 gPokenavConditionSearchGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
+const u8 gPokenavPokeblockGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
+const u16 gConditionGraphData_Pal[] = INCBIN_U16("graphics/pokenav/83E0254.gbapal");
+const u16 gPokenavRibbonsList_Pal[] = INCBIN_U16("graphics/pokenav/83E0274.gbapal");
 
 const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
 
-const u16 gUnknown_083E02B4[] = INCBIN_U16("graphics/pokenav/83E02B4.gbapal");
+const u16 gPokenavList_Pal[] = INCBIN_U16("graphics/pokenav/83E02B4.gbapal");
 
 const u16 gUnknown_083E02D4[] =  INCBIN_U16("graphics/pokenav/83E02D4.bin");//?
 
-const u8 gUnknown_083E0314[] = INCBIN_U8("graphics/pokenav/83E0314.gbapal");
-const u8 gUnknown_083E0334[] = INCBIN_U8("graphics/pokenav/trainereyes_misc_pal.bin");
+const u8 gPokenavTrainerEyesList_Pal[] = INCBIN_U8("graphics/pokenav/83E0314.gbapal");
+const u8 gPokenavTrainerEyesMisc_Pal[] = INCBIN_U8("graphics/pokenav/trainereyes_misc_pal.bin");
 
-const u8 gUnknown_083E0354[] = INCBIN_U8("graphics/pokenav/trainereyes_misc.4bpp.lz");
+const u8 gPokenavTrainerEyesMisc_Gfx[] = INCBIN_U8("graphics/pokenav/trainereyes_misc.4bpp.lz");
 
-const u8 gUnknown_083E039C[][4] = 
+const u8 gPokenavTrainerEyesRematchIconTilemap[][4] =
 {
     {0x80, 0x42, 0x82, 0x42},
 };
 
-const u8 gUnknown_083E03A0[][8] = 
+const u8 gPokenavTrainerEyesNoRematchIconTilemap[][8] =
 {
     {0x00, 0x40, 0x00, 0x40, 0x81, 0x42, 0x83, 0x42},
 };
 
-const u16 gUnknown_083E03A8[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
+const u16 gPokenavRibbonsSummary_Pal[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
 const u16 gUnknown_083E03C8[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
 const u8 gPokenavRibbonIcons_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
 const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
@@ -231,7 +231,7 @@ const u16 gPokenavBlueLightPalette[] = INCBIN_U16("graphics/pokenav/blue_light.g
 const u8 gPokenavBlueLightTiles[] = INCBIN_U8("graphics/pokenav/blue_light.4bpp");
 const u16 gPokenavTrainerEyesNamePalette[] = INCBIN_U16("graphics/pokenav/trainers_eyes/name_sprite.gbapal");
 
-const u16 gUnknown_083E42F8[] = 
+const u16 gPokenavMenuOptionBlendAlphas[] =
 {
     BLDALPHA_BLEND(8, 4),
     BLDALPHA_BLEND(8, 4),
@@ -500,7 +500,7 @@ const struct SpriteTemplate gPokenavBlueLightSpriteTemplate =
 extern const u16 gPokenavMenuOptions3_Pal[];
 extern const u16 gPokenavCondition5_Pal[];
 
-const struct SpritePalette gUnknown_083E449C[] = 
+const struct SpritePalette gPokenavMenuHeaderSpritePalettes[] =
 {
     {gPokenavMenuOptions3_Pal, 2},
     {gPokenavCondition5_Pal, 3},
@@ -1066,7 +1066,7 @@ const struct SpriteTemplate gPokenavTrainerEyesNameSpriteTemplate =
     .callback = SpriteCallbackDummy,
 };
 
-const u8 gUnknown_083E4890[] = 
+const u8 gConditionToLineLength[] =
 {   
     4,   5,  6,  7,  8,  9,  9, 10, 10, 11, 11, 12, 12, 13, 13, 13, 
     13, 14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 17, 

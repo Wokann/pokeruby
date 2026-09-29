@@ -34,21 +34,21 @@
 EWRAM_DATA u8 gRegionMapLinkLandmarkPrintState[4] = {};
 EWRAM_DATA u16 gPokenavRibbonDescriptionId = 0;
 
-extern const u8 gUnknown_083E0314[];
+extern const u8 gPokenavTrainerEyesList_Pal[];
 extern const u16 gUnknown_08E9F9E8[];
-extern const u16 gUnknown_083E0274[];
+extern const u16 gPokenavRibbonsList_Pal[];
 extern const u8 gUnknown_08E9FC64[];
-extern const u8 gUnknown_083E0354[];
+extern const u8 gPokenavTrainerEyesMisc_Gfx[];
 extern const u8 gUnknown_08E9FD64[];
 extern const u8 gUnknown_08E9FE54[];
 extern const u8 gUnknown_08E9FD1C[];
 extern const u16 gPokenavConditionSearch2_Pal[];
-extern const u8 gUnknown_083E0334[];
-extern const u16 gUnknown_083E02B4[];
+extern const u8 gPokenavTrainerEyesMisc_Pal[];
+extern const u16 gPokenavList_Pal[];
 extern const u8 gPokenavConditionSearch2_Gfx[];
-extern const u8 gUnknown_083E0254[];
+extern const u16 gConditionGraphData_Pal[];
 extern const u8 gConditionGraphData_Tilemap[];
-extern const u8 gUnknown_083E01AC[];
+extern const u8 gPokenavConditionSearchGraphTilemap[];
 extern const u8 gPokenavCondition_Tilemap[];
 extern const u8 gPokenavConditionMenu2_Pal[];
 extern const u8 gPokenavConditionView_Gfx[];
@@ -57,11 +57,11 @@ extern const u8 gPokenavRegionMapCityBannerBlank[];
 extern const u8 *const gPokenavCityMaps[][2];
 extern const u8 gPokenavHoennMapSquares_Pal[];
 extern const u8 gPokenavHoennMapSquares_Gfx[];
-extern const u16 gUnknown_083E003C[];
+extern const u16 gPokenavMenuPaletteGradientColors[];
 extern const u8 *const gPokenavMainMenuDescriptions[];
 extern const u8 *const gPokenavConditionMenuDescriptions[];
 extern const u8 *const gPokenavConditionSearchDescriptions[];
-extern u8 *gUnknown_083DFEC8;
+extern u8 *const gPokenavTileBuffer;
 extern const u8 gUnknown_083DFEEC[];
 extern const u8 gUnknown_083E005C[];
 extern const u8 gUnknown_083E007C[];
@@ -75,29 +75,29 @@ extern const u8 gUnknown_08E99FB0[];
 extern const u8 gPokenavBottomToolbarTilemap[];
 extern const u16 gPokenavHoennMap1_Pal[];
 extern void (*const gPokenavListRowPrinters[])(u16, u16);
-extern const u8 gUnknown_083E039C[];
-extern const u8 gUnknown_083E03A0[];
-extern const u8 gUnknown_083E01F4[];
+extern const u8 gPokenavTrainerEyesRematchIconTilemap[];
+extern const u8 gPokenavTrainerEyesNoRematchIconTilemap[];
+extern const u8 gPokenavPokeblockGraphTilemap[];
 extern const u8 *const gTrainerEyeDescriptions[];
 extern const u8 gPokenavRibbonsSummaryTilemap[];
 extern const u8 gPokenavRibbonView_Gfx[];
 extern const u8 gPokenavRibbonIcons_Gfx[];
 extern const u16 gPokenavRibbonView_Pal[];
-extern const u16 gUnknown_083E03A8[];
+extern const u16 gPokenavRibbonsSummary_Pal[];
 extern const u16 gPokenavRibbonIconPalettes[][16];
 extern const u16 gPokenavRibbonGfxData[][2];
 extern const u8 *const gRibbonDescriptions[][2];
 extern const u8 *const gGiftRibbonDescriptions[][2];
 extern const u8 gPokenavMonInfoHeaderTilemap[];
 extern const u8 gPokenavMonInfoHeader_Gfx[];
-extern const u16 gUnknown_083E0124[];
-extern const u16 gUnknown_083E0144[];
+extern const u16 gPokenavConditionMonInfoHeader_Pal[];
+extern const u16 gPokenavRibbonsMonInfoHeader_Pal[];
 extern const u8 gPokenavMenuOptions_Gfx[];
 extern const u8 gPokenavConditionMenu_Gfx[];
 extern const u8 gPokenavConditionSearch_Gfx[];
 extern const struct SpriteTemplate gSpriteTemplate_83E4454;
 extern const union AffineAnimCmd *const gSpriteAffineAnimTable_83E4450[];
-extern const u16 gUnknown_083E42F8[];
+extern const u16 gPokenavMenuOptionBlendAlphas[];
 extern const u16 gPokenavMenuOptions1_Pal[];
 extern const u16 gPokenavMenuOptions2_Pal[];
 extern const u16 gPokenavConditionMenu_Pal[];
@@ -113,7 +113,7 @@ extern const u8 gPokenavHoennMapHeader_Gfx[];
 extern const u8 gPokenavConditionHeaderLabels_Gfx[];
 extern const u8 gPokenavConditionHeaderLabels2_Gfx[];
 extern const u8 gPokenavTrainersEyesHeader_Gfx[];
-extern const struct SpritePalette gUnknown_083E449C[];
+extern const struct SpritePalette gPokenavMenuHeaderSpritePalettes[];
 extern const struct SpriteTemplate gPokenavSmallHeaderSpriteTemplate;
 extern const struct SpriteTemplate gPokenavSmallHeaderAltSpriteTemplate;
 extern const struct SpriteTemplate gPokenavLargeHeaderSpriteTemplate;
@@ -151,7 +151,7 @@ u8 PokenavList_PageDown(void);
 
 // .rodata
 
-extern const u8 gUnknown_083E4890[];
+extern const u8 gConditionToLineLength[];
 
 // .text
 
@@ -387,7 +387,7 @@ void PrintPokenavMenuDescription(u8 menuType, u8 itemId)
         break;
     }
 
-    tileBuffer = gUnknown_083DFEC8;
+    tileBuffer = gPokenavTileBuffer;
     AlignStringInMenuWindow(&tileBuffer[0x800], description, 0xC0, 2);
     Menu_PrintText(&tileBuffer[0x800], 3, 17);
 }
@@ -452,12 +452,12 @@ void InitPokenavPaletteGradient(u8 stage)
         break;
     case 1:
         gradient = gPokenavStructPtr->palettesCE52;
-        colors = gUnknown_083E003C;
+        colors = gPokenavMenuPaletteGradientColors;
         BuildPokenavPaletteGradient(&colors[1], &colors[3], 16, 2, gradient);
         break;
     case 2:
         gradient = gPokenavStructPtr->palettesCE8E;
-        colors = gUnknown_083E003C;
+        colors = gPokenavMenuPaletteGradientColors;
         BuildPokenavPaletteGradient(&colors[3], &colors[7], 16, 2, gradient);
         break;
     }
@@ -900,13 +900,13 @@ bool8 LoadConditionGraphScreenStep(void)
         break;
     case 9:
         if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
-            CopyTilemapRect((void *)VRAM + 0xF000, 0, 5, gUnknown_083E01AC, 0, 0, 9, 4, 9);
+            CopyTilemapRect((void *)VRAM + 0xF000, 0, 5, gPokenavConditionSearchGraphTilemap, 0, 0, 9, 4, 9);
         break;
     case 10:
         LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)VRAM + 0xB800);
         break;
     case 11:
-        LoadPalette(gUnknown_083E0254, 0x30, 0x20);
+        LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
@@ -1006,35 +1006,35 @@ bool8 LoadPokenavListScreenStep(void)
         LZ77UnCompVram(gPokenavConditionSearch2_Gfx, (void *)VRAM + 0x8000);
         break;
     case 7:
-        LoadPalette(gUnknown_083E02B4, 0xB0, 0x20);
-        LoadPalette(gUnknown_083E02B4, 0xF0, 0x20);
-        LoadPalette(gUnknown_083E0334, 0x40, 0x20);
+        LoadPalette(gPokenavList_Pal, 0xB0, 0x20);
+        LoadPalette(gPokenavList_Pal, 0xF0, 0x20);
+        LoadPalette(gPokenavTrainerEyesMisc_Pal, 0x40, 0x20);
 
         if (gPokenavStructPtr->listMode == POKENAV_LIST_CONDITION_SEARCH)
         {
             LoadPalette(gPokenavConditionSearch2_Pal, 0x30, 0x20);
             gPlttBufferUnfaded[0] = gPokenavConditionSearch2_Pal[5];
             LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
-            LoadPalette(&gUnknown_083E02B4[1], 0xB1, 0x2);
-            LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
+            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
             LoadPalette(&gPokenavConditionSearch2_Pal[5], 0xBF, 0x2);
         }
         else if (gPokenavStructPtr->listMode == POKENAV_LIST_RIBBONS)
         {
-            LoadPalette(gUnknown_083E0274, 0x30, 0x20);
-            gPlttBufferUnfaded[0] = gUnknown_083E0274[5];
+            LoadPalette(gPokenavRibbonsList_Pal, 0x30, 0x20);
+            gPlttBufferUnfaded[0] = gPokenavRibbonsList_Pal[5];
             LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
-            LoadPalette(&gUnknown_083E02B4[1], 0xB1, 0x2);
-            LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
-            LoadPalette(&gUnknown_083E0274[5], 0xBF, 0x2);
+            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
+            LoadPalette(&gPokenavRibbonsList_Pal[5], 0xBF, 0x2);
         }
         else
         {
             LoadPalette(gUnknown_08E9F9E8, 0x30, 0x20);
             gPlttBufferUnfaded[0] = *(pointer = &gUnknown_08E9F9E8[5]);
-            LoadPalette(gUnknown_083E0314, 0x50, 0x20);
-            LoadPalette(&gUnknown_083E02B4[1], 0xB1, 0x2);
-            LoadPalette(&gUnknown_083E02B4[8], 0xB5, 0x2);
+            LoadPalette(gPokenavTrainerEyesList_Pal, 0x50, 0x20);
+            LoadPalette(&gPokenavList_Pal[1], 0xB1, 0x2);
+            LoadPalette(&gPokenavList_Pal[8], 0xB5, 0x2);
             LoadPalette(pointer, 0xBF, 0x2);
             LoadPalette(pointer, 0x5F, 0x2);
         }
@@ -1051,7 +1051,7 @@ bool8 LoadPokenavListScreenStep(void)
         }
         break;
     case 9:
-        LZ77UnCompVram(gUnknown_083E0354, (void *)VRAM + 0x5000);
+        LZ77UnCompVram(gPokenavTrainerEyesMisc_Gfx, (void *)VRAM + 0x5000);
         break;
     case 10:
     DmaClear16(3, (void *)VRAM + 0xF800, 0x800);
@@ -1272,9 +1272,9 @@ void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
     BasicInitMenuWindow(&gWindowTemplate_81E70D4);
     Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);
     if (listIndex < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
-        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E039C, 0, 0, 1, 2, 1);
+        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesRematchIconTilemap, 0, 0, 1, 2, 1);
     else
-        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gUnknown_083E03A0, 0, 0, 1, 2, 1);
+        CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesNoRematchIconTilemap, 0, 0, 1, 2, 1);
 }
 
 void InitTrainerEyesListErase(void)
@@ -1530,10 +1530,10 @@ bool8 LoadRibbonsSummaryScreenStep(void)
         break;
     case 12:
         LoadPalette(gPokenavRibbonView_Pal, 0x20, 0x20);
-        LoadPalette(gUnknown_083E03A8, 0xF0, 0x20);
+        LoadPalette(gPokenavRibbonsSummary_Pal, 0xF0, 0x20);
         LoadPalette(gPokenavRibbonIconPalettes[0], 0x30, 0xA0);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
-        LoadPalette(gUnknown_083E03A8 + 0xF, 0xBF, 0x2);
+        LoadPalette(gPokenavRibbonsSummary_Pal + 0xF, 0xBF, 0x2);
         break;
     case 13:
         PrintRibbonsSummaryMonInfo();
@@ -1624,8 +1624,8 @@ void ClearRibbonsSummaryDescription(void)
 void PrintRibbonsSummaryDescription(void)
 {
     u8 *arr;
-    u8 *tileBuffer1 = &gUnknown_083DFEC8[0x800];
-    u8 *tileBuffer2 = &gUnknown_083DFEC8[0xA98];
+    u8 *tileBuffer1 = &gPokenavTileBuffer[0x800];
+    u8 *tileBuffer2 = &gPokenavTileBuffer[0xA98];
 
     if (gPokenavStructPtr->ribbonPageIndex < 3)
     {
@@ -1698,9 +1698,9 @@ bool8 LoadPokenavMonInfoHeaderGfxStep(u8 forRibbons)
         break;
     case 3:
         if (!forRibbons)
-            LoadPalette(gUnknown_083E0124, 0xD0, 0x20);
+            LoadPalette(gPokenavConditionMonInfoHeader_Pal, 0xD0, 0x20);
         else
-            LoadPalette(gUnknown_083E0144, 0xD0, 0x20);
+            LoadPalette(gPokenavRibbonsMonInfoHeader_Pal, 0xD0, 0x20);
 
         gPokenavStructPtr->monInfoHeaderXOffset = -80;
         REG_BG0CNT = 0x1D0D;
@@ -1755,13 +1755,13 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         LoadPalette(gPokenavConditionMenu2_Pal, 0x20, 0x20);
         break;
     case 5:
-        CopyTilemapRect((void *)VRAM + 0xF000, 0, 13, gUnknown_083E01F4, 0, 0, 12, 4, 12);
+        CopyTilemapRect((void *)VRAM + 0xF000, 0, 13, gPokenavPokeblockGraphTilemap, 0, 0, 12, 4, 12);
         break;
     case 6:
         LZ77UnCompVram(gConditionGraphData_Tilemap, (void *)(VRAM + 0xB800));
         break;
     case 7:
-        LoadPalette(gUnknown_083E0254, 0x30, 0x20);
+        LoadPalette(gConditionGraphData_Pal, 0x30, 0x20);
         LoadPalette(gUnknownPalette_81E6692, 0xB0, 0x20);
         LoadPalette(&gPokenavConditionMenu2_Pal[2], 0xB1, 0x2);
         LoadPalette(&gPokenavConditionMenu2_Pal[16], 0xB5, 0x2);
@@ -2089,7 +2089,7 @@ void UpdateMenuOptionBlendRegisters(void)
     }
     else if (gPokenavStructPtr->menuOptionBlendMode == 2)
     {
-        REG_BLDALPHA = gUnknown_083E42F8[gPokenavStructPtr->menuOptionBlendFrame];
+        REG_BLDALPHA = gPokenavMenuOptionBlendAlphas[gPokenavStructPtr->menuOptionBlendFrame];
         if (gPokenavStructPtr->menuOptionBlendFrame < 15)
             gPokenavStructPtr->menuOptionBlendFrame++;
     }
@@ -2399,7 +2399,7 @@ bool8 LoadPokenavMenuHeaderGfxStep(void)
         LZ77UnCompWram(gPokenavTrainersEyesHeader_Gfx, gPokenavStructPtr->trainersEyesHeaderGfx);
         break;
     case 7:
-        LoadSpritePalettes(gUnknown_083E449C);
+        LoadSpritePalettes(gPokenavMenuHeaderSpritePalettes);
         break;
     default:
         return FALSE;
@@ -3555,7 +3555,7 @@ void BuildTrainerEyesNameSpriteGfx(u8 *dst, u8 *text)
     u8 *tileBuffer;
     u32 *tileWords;
 
-    tileBuffer = gUnknown_083DFEC8;
+    tileBuffer = gPokenavTileBuffer;
     DmaFill16(3, 0x1111, tileBuffer, 0x280);
     DmaFill16Defvars(3, 0x1111, 0x400 + tileBuffer, 0x280);
     Text_InitWindow8004E3C(&gWindowTemplate_81E70F0, tileBuffer, text);
@@ -4204,7 +4204,7 @@ void ConditionGraph_Update(struct UnkPokenav11 *arg0)
 void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[])
 {
     u16 i;
-    u8 r2 = gUnknown_083E4890[*a0++];
+    u8 r2 = gConditionToLineLength[*a0++];
     u8 r7;
     s8 r12;
 
@@ -4221,7 +4221,7 @@ void ConditionGraph_CalcPositions(u8 *a0, struct UnkPokenav11 a1[])
             r12 = 4;
         if (r12 == 2)
             r7++;
-        r2 = gUnknown_083E4890[*a0++];
+        r2 = gConditionToLineLength[*a0++];
         a1[r12].unk0 = ((r2 * gSineTable[r7 + 0x40]) >> 8) + 0x9b;
         a1[r12].unk2 = 0x5b - ((r2 * gSineTable[r7]) >> 8);
 
