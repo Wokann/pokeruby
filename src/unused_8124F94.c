@@ -2,125 +2,148 @@
 #include "decompress.h"
 #include "palette.h"
 
-struct UnknownStruct2
+struct UnusedTileLoadRequest
 {
-    void *src;
-    u8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u16 unk8;
+    void *tileData;
+    u8 tileWidth;
+    u8 tileHeight;
+    u8 unused;
+    u16 isCompressed;
 };
 
-struct UnknownStruct3
+struct UnusedLoadedTile
 {
-    u16 *paletteSrc;
-    u8 unk4;
+    void *tileData;
+    u8 tileWidth;
+    u8 tileHeight;
+    u8 unused;
+    u16 tileOffset;
+};
+
+struct UnusedPaletteLoadRequest
+{
+    u16 *paletteData;
+    u8 paletteId;
+    u8 isCompressed;
+};
+
+struct UnusedMultiPaletteLoadRequest
+{
+    u16 *paletteData;
+    u8 firstPaletteId;
+    u8 numPalettes;
+};
+
+struct UnusedLoadedPalette
+{
+    u16 *paletteData;
+    u8 paletteId;
+    u8 paletteSlot;
+};
+
+struct UnusedTilePaletteLoader
+{
     u8 paletteCount;
+    u8 tileCount;
+    u16 nextTileOffset;
+    u8 *tileVram;
+    struct UnusedLoadedPalette palettes[16];
+    struct UnusedLoadedTile tiles[32];
 };
 
-struct UnknownStruct1
+void UnusedTilePaletteLoader_Reset(struct UnusedTilePaletteLoader *loader)
 {
-    u8 paletteNum;
-    u8 unk1;
-    u16 unk2;
-    u8 *dest;
-    struct UnknownStruct3 unk8[16];
-    struct UnknownStruct2 unk88[32];
-};
-
-void unref_sub_8124F94(struct UnknownStruct1 *a)
-{
-    a->unk1 = 0;
-    a->paletteNum = 0;
-    a->unk2 = 0;
-    a->dest = (void *)VRAM;
-    DmaFill16(3, 0, a->unk8, sizeof(a->unk8));
-    DmaFill16(3, 0, a->unk88, sizeof(a->unk88));
+    loader->tileCount = 0;
+    loader->paletteCount = 0;
+    loader->nextTileOffset = 0;
+    loader->tileVram = (void *)VRAM;
+    DmaFill16(3, 0, loader->palettes, sizeof(loader->palettes));
+    DmaFill16(3, 0, loader->tiles, sizeof(loader->tiles));
 }
 
-u8 unref_sub_8124FD8(struct UnknownStruct1 *a, const struct UnknownStruct2 *b)
+u8 UnusedTilePaletteLoader_LoadTiles(struct UnusedTilePaletteLoader *loader, const struct UnusedTileLoadRequest *requests)
 {
     while (1)
     {
-        s32 r6;
-        s32 temp;
+        s32 tileCount;
+        s32 nextTileOffset;
 
         // Couldn't get it to match any other way
-        if (a->unk1 < 32 && b->src == NULL)
+        if (loader->tileCount < 32 && requests->tileData == NULL)
             return 0;
-        if (a->unk1 >= 32)
+        if (loader->tileCount >= 32)
             break;
 
-        a->unk88[a->unk1].src = b->src;
-        a->unk88[a->unk1].unk6 = b->unk6;
-        a->unk88[a->unk1].unk4 = b->unk4;
-        a->unk88[a->unk1].unk5 = b->unk5;
-        r6 = b->unk4 * b->unk5;
-        if (a->unk2 + r6 > 0x400)
+        loader->tiles[loader->tileCount].tileData = requests->tileData;
+        loader->tiles[loader->tileCount].unused = requests->unused;
+        loader->tiles[loader->tileCount].tileWidth = requests->tileWidth;
+        loader->tiles[loader->tileCount].tileHeight = requests->tileHeight;
+        tileCount = requests->tileWidth * requests->tileHeight;
+        if (loader->nextTileOffset + tileCount > 0x400)
             return 2;
-        if (b->unk8 == 0)
+        if (requests->isCompressed == 0)
         {
-            DmaCopy16(3, b->src, a->dest + a->unk2 * 64, r6 * 32);
+            DmaCopy16(3, requests->tileData, loader->tileVram + loader->nextTileOffset * 64, tileCount * 32);
         }
         else
         {
-            LZDecompressWram(b->src, a->dest + a->unk2 * 64);
+            LZDecompressWram(requests->tileData, loader->tileVram + loader->nextTileOffset * 64);
         }
-        a->unk88[a->unk1].unk8 = a->unk2;
-        temp = r6 + a->unk2;
-        a->unk2 = temp;
-        a->unk1++;
-        b++;
+        loader->tiles[loader->tileCount].tileOffset = loader->nextTileOffset;
+        nextTileOffset = tileCount + loader->nextTileOffset;
+        loader->nextTileOffset = nextTileOffset;
+        loader->tileCount++;
+        requests++;
     }
     return 1;
 }
 
-u8 unref_sub_81250A4(struct UnknownStruct1 *a, struct UnknownStruct3 *b)
+u8 UnusedTilePaletteLoader_LoadPalettes(struct UnusedTilePaletteLoader *loader, const struct UnusedPaletteLoadRequest *requests)
 {
     while (1)
     {
         // Couldn't get it to match any other way
-        if (a->paletteNum < 16 && b->paletteSrc == NULL)
+        if (loader->paletteCount < 16 && requests->paletteData == NULL)
             return 0;
-        if (a->paletteNum >= 16)
+        if (loader->paletteCount >= 16)
             break;
 
-        a->unk8[a->paletteNum].paletteSrc = b->paletteSrc;
-        a->unk8[a->paletteNum].unk4 = b->unk4;
-        if (b->paletteCount == 0)
+        loader->palettes[loader->paletteCount].paletteData = requests->paletteData;
+        loader->palettes[loader->paletteCount].paletteId = requests->paletteId;
+        if (requests->isCompressed == 0)
         {
-            LoadPalette(b->paletteSrc, a->paletteNum * 16, 32);
+            LoadPalette(requests->paletteData, loader->paletteCount * 16, 32);
         }
         else
         {
             u16 palette[16];
 
-            LZDecompressWram(b->paletteSrc, palette);
-            LoadPalette(palette, a->paletteNum * 16, 32);
+            LZDecompressWram(requests->paletteData, palette);
+            LoadPalette(palette, loader->paletteCount * 16, 32);
         }
-        a->unk8[a->paletteNum].paletteCount = a->paletteNum;
-        a->paletteNum = a->paletteNum + 1;
-        b++;
+        loader->palettes[loader->paletteCount].paletteSlot = loader->paletteCount;
+        loader->paletteCount = loader->paletteCount + 1;
+        requests++;
     }
     return 1;
 }
 
-u8 unref_sub_8125118(struct UnknownStruct1 *a, struct UnknownStruct3 *b)
+u8 UnusedTilePaletteLoader_LoadMultiplePalettes(struct UnusedTilePaletteLoader *loader, const struct UnusedMultiPaletteLoadRequest *request)
 {
     u16 palettes[16][16] = {0};
-    u8 r7 = b->paletteCount;
-    u8 i;
+    u8 numPalettes = request->numPalettes;
+    u8 paletteIndex;
 
-    LZDecompressWram(b->paletteSrc, palettes);
-    for (i = a->paletteNum; i < r7; i++)
+    LZDecompressWram(request->paletteData, palettes);
+    for (paletteIndex = loader->paletteCount; paletteIndex < numPalettes; paletteIndex++)
     {
-        if (a->paletteNum + i >= 16)
+        if (loader->paletteCount + paletteIndex >= 16)
             return 1;
-        a->unk8[i].paletteSrc = b->paletteSrc;
-        a->unk8[i].unk4 = b->unk4 + i;
-        a->unk8[i].paletteCount = a->paletteNum;
-        LoadPalette(palettes[i], a->paletteNum * 16, sizeof(palettes[i]));
-        a->paletteNum++;
+        loader->palettes[paletteIndex].paletteData = request->paletteData;
+        loader->palettes[paletteIndex].paletteId = request->firstPaletteId + paletteIndex;
+        loader->palettes[paletteIndex].paletteSlot = loader->paletteCount;
+        LoadPalette(palettes[paletteIndex], loader->paletteCount * 16, sizeof(palettes[paletteIndex]));
+        loader->paletteCount++;
     }
     return 0;
 }
