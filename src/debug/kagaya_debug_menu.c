@@ -13,171 +13,176 @@
 #include "script.h"
 #include "slot_machine.h"
 #include "trainer_card.h"
+#include "constants/field_effects.h"
+#include "constants/rgb.h"
 
 extern u8 (*gMenuCallback)(void);
 
-void InitKagayaDebugMenu_B(void);
-u8 debug_sub_80B061C(void);
-u8 KagayaDebugMenu_TrainerCard(void);
-u8 debug_sub_80B068C(void);
-u8 KagayaDebugMenu_CardToExchange(void);
-u8 debug_sub_80B06E0(void);
-u8 KagayaDebugMenu_SlotMachine(void);
-u8 Kagaya_80B0734(void);
-u8 debug_sub_80B07DC(void);
+static void InitKagayaDebugMenuDisplay(void);
+static bool8 KagayaDebugMenu_ProcessInput(void);
+static u8 KagayaDebugMenu_ShowTrainerCard(void);
+static u8 KagayaDebugMenu_ShowTrainerCardAfterFade(void);
+static u8 KagayaDebugMenu_ShowLinkTrainerCard(void);
+static u8 KagayaDebugMenu_ShowLinkTrainerCardAfterFade(void);
+static u8 KagayaDebugMenu_PlaySlotMachine(void);
+static u8 KagayaDebugMenu_PlaySlotMachineAfterFade(void);
+static u8 Debug_OpenFlyMapAfterFade(void);
 
-const u8 Str_83EBB34[] = _("Trainer's card");
-const u8 Str_83EBB43[] = _("Card to exchange");
-const u8 Str_83EBB54[] = _("Slot machine");
+#define DEBUG_FIELD_MOVE_PARTY_MON 0
+#define NUM_DEBUG_SLOT_MACHINE_IDS 6
 
-const struct MenuAction _83EBB64[] =
+static const u8 sText_KagayaDebug_TrainerCard[] = _("Trainer's card");
+static const u8 sText_KagayaDebug_LinkTrainerCard[] = _("Card to exchange");
+static const u8 sText_KagayaDebug_SlotMachine[] = _("Slot machine");
+
+static const struct MenuAction sMenuActions_KagayaDebug[] =
 {
-	{ Str_83EBB34, KagayaDebugMenu_TrainerCard },
-	{ Str_83EBB43, KagayaDebugMenu_CardToExchange },
-	{ Str_83EBB54, KagayaDebugMenu_SlotMachine },
+    {sText_KagayaDebug_TrainerCard, KagayaDebugMenu_ShowTrainerCard},
+    {sText_KagayaDebug_LinkTrainerCard, KagayaDebugMenu_ShowLinkTrainerCard},
+    {sText_KagayaDebug_SlotMachine, KagayaDebugMenu_PlaySlotMachine},
 };
 
-u8 InitKagayaDebugMenu_A(void)
+bool8 InitKagayaDebugMenu(void)
 {
-    InitKagayaDebugMenu_B();
-    return 0;
+    InitKagayaDebugMenuDisplay();
+    return FALSE;
 }
 
-void InitKagayaDebugMenu_B(void)
+static void InitKagayaDebugMenuDisplay(void)
 {
     Menu_EraseScreen();
     Menu_DrawStdWindowFrame(0, 0, 14, 7);
-    Menu_PrintItems(2, 1, 3, _83EBB64);
-    InitMenu(0, 1, 1, 3, 0, 13);
-    gMenuCallback = debug_sub_80B061C;
+    Menu_PrintItems(2, 1, ARRAY_COUNT(sMenuActions_KagayaDebug), sMenuActions_KagayaDebug);
+    InitMenu(0, 1, 1, ARRAY_COUNT(sMenuActions_KagayaDebug), 0, 13);
+    gMenuCallback = KagayaDebugMenu_ProcessInput;
 }
 
-u8 debug_sub_80B061C(void)
+static bool8 KagayaDebugMenu_ProcessInput(void)
 {
     s8 input = Menu_ProcessInput();
 
-    if (input == -2)
+    if (input == MENU_NOTHING_CHOSEN)
     {
-        return 0;
+        return FALSE;
     }
-    else if (input == -1)
+    else if (input == MENU_B_PRESSED)
     {
         CloseMenu();
-        return 1;
+        return TRUE;
     }
     else
     {
-        gMenuCallback = _83EBB64[input].func;
-        return 0;
+        gMenuCallback = sMenuActions_KagayaDebug[input].func;
+        return FALSE;
     }
 }
 
-u8 KagayaDebugMenu_TrainerCard(void)
+static u8 KagayaDebugMenu_ShowTrainerCard(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_80B068C;
-    return 0;
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gMenuCallback = KagayaDebugMenu_ShowTrainerCardAfterFade;
+    return FALSE;
 }
 
-u8 debug_sub_80B068C(void)
+static u8 KagayaDebugMenu_ShowTrainerCardAfterFade(void)
 {
     if (!UpdatePaletteFade())
     {
         Debug_ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 KagayaDebugMenu_CardToExchange(void)
+static u8 KagayaDebugMenu_ShowLinkTrainerCard(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_80B06E0;
-    return 0;
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gMenuCallback = KagayaDebugMenu_ShowLinkTrainerCardAfterFade;
+    return FALSE;
 }
 
-u8 debug_sub_80B06E0(void)
+static u8 KagayaDebugMenu_ShowLinkTrainerCardAfterFade(void)
 {
     if (!UpdatePaletteFade())
     {
         Debug_ShowLinkTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 KagayaDebugMenu_SlotMachine(void)
+static u8 KagayaDebugMenu_PlaySlotMachine(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = Kagaya_80B0734;
-    return 0;
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gMenuCallback = KagayaDebugMenu_PlaySlotMachineAfterFade;
+    return FALSE;
 }
 
-u8 Kagaya_80B0734(void)
+static u8 KagayaDebugMenu_PlaySlotMachineAfterFade(void)
 {
     if (!UpdatePaletteFade())
     {
-        Debug_PlaySlotMachine(Random() % 6, CB2_ReturnToFieldWithOpenMenu);
+        Debug_PlaySlotMachine(Random() % NUM_DEBUG_SLOT_MACHINE_IDS, CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 debug_sub_80B0770(void)
+bool8 Debug_TryUseSurf(void)
 {
-    if (!(gPlayerAvatar.flags & 8))
+    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING))
     {
         CloseMenu();
         if (IsPlayerFacingSurfableFishableWater())
         {
-            gFieldEffectArguments[0] = 0;
-            FieldEffectStart(9);
+            gFieldEffectArguments[0] = DEBUG_FIELD_MOVE_PARTY_MON;
+            FieldEffectStart(FLDEFF_USE_SURF);
         }
     }
     else
     {
         CloseMenu();
     }
-    return 1;
+    return TRUE;
 }
 
-u8 debug_sub_80B07B0(void)
+bool8 Debug_OpenFlyMap(void)
 {
-    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-    gMenuCallback = debug_sub_80B07DC;
-    return 0;
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gMenuCallback = Debug_OpenFlyMapAfterFade;
+    return FALSE;
 }
 
-u8 debug_sub_80B07DC(void)
+static u8 Debug_OpenFlyMapAfterFade(void)
 {
     if (!UpdatePaletteFade())
     {
         CloseMenu();
         SetMainCallback2(CB2_OpenFlyMap);
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 debug_sub_80B0800(void)
+bool8 Debug_TryUseDive(void)
 {
-    u8 r2;
+    u8 diveWarpResult;
 
     CloseMenu();
-    r2 = TrySetDiveWarp();
-    if (r2 != 0)
+    diveWarpResult = TrySetDiveWarp();
+    if (diveWarpResult != 0)
     {
-        gFieldEffectArguments[0] = 0;
-        gFieldEffectArguments[1] = r2 - 1;
-        FieldEffectStart(0x2C);
+        gFieldEffectArguments[0] = DEBUG_FIELD_MOVE_PARTY_MON;
+        gFieldEffectArguments[1] = diveWarpResult - 1;
+        FieldEffectStart(FLDEFF_USE_DIVE);
     }
-    return 1;
+    return TRUE;
 }
 
 #endif // DEBUG

@@ -881,7 +881,7 @@ u8 DebugMenu_OpenTamada(void)
 
 u8 DebugMenu_OpenKagaya(void)
 {
-    return InitKagayaDebugMenu_A();
+    return InitKagayaDebugMenu();
 }
 
 u8 DebugMenu_OpenMatsuda(void)
@@ -1423,10 +1423,10 @@ const struct MenuAction gUnknown_Debug_839BF94[] = {
     {gMoveNames[MOVE_FLASH], DebugMenu_8077BC0},
     {gMoveNames[MOVE_ROCK_SMASH], DebugMenu_8077BCC},
     {gMoveNames[MOVE_STRENGTH], DebugMenu_8077BD8},
-    {gMoveNames[MOVE_SURF], debug_sub_80B0770},
-    {gMoveNames[MOVE_FLY], debug_sub_80B07B0},
+    {gMoveNames[MOVE_SURF], Debug_TryUseSurf},
+    {gMoveNames[MOVE_FLY], Debug_OpenFlyMap},
     {gMoveNames[MOVE_WATERFALL], DebugMenu_8077BE4},
-    {gMoveNames[MOVE_DIVE], debug_sub_80B0800},
+    {gMoveNames[MOVE_DIVE], Debug_TryUseDive},
     {gMoveNames[MOVE_SECRET_POWER], DebugMenu_8077BF4}
 };
 

@@ -1,6 +1,9 @@
 #ifndef GUARD_MENU_H
 #define GUARD_MENU_H
 
+#define MENU_NOTHING_CHOSEN -2
+#define MENU_B_PRESSED       -1
+
 #include "task.h"
 #include "text.h"
 

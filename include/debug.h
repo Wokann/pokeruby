@@ -35,10 +35,10 @@ extern const struct MysteryEventDebugDataSource gMysteryEventDebugDataSources[];
 int InitSogabeDebugMenu(void);
 
 // kagaya_debug_menu
-bool8 InitKagayaDebugMenu_A(void);
-bool8 debug_sub_80B0770(void);
-bool8 debug_sub_80B07B0(void);
-bool8 debug_sub_80B0800(void);
+bool8 InitKagayaDebugMenu(void);
+bool8 Debug_TryUseSurf(void);
+bool8 Debug_OpenFlyMap(void);
+bool8 Debug_TryUseDive(void);
 
 // nohara_debug_menu
 bool8 InitNoharaDebugMenu(void);
