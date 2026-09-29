@@ -106,6 +106,15 @@ enum
 #define COLOR_DARK_GREEN 0x1967
 #define COLOR_LIGHT_GREEN 0x328D
 
+#define TAG_MON_BG 1001
+
+enum
+{
+    POS_LEFT,
+    POS_CENTER,
+    POS_RIGHT,
+};
+
 enum
 {
     MODE_NONE,
@@ -182,8 +191,8 @@ static EWRAM_DATA u8 sUsedSpeedUp = 0;
 extern u8 gReservedSpritePaletteCount;
 
 // data/credits
-const u16 gUnknown_0840B7BC[] = INCBIN_U16("graphics/credits/palette_1.gbapal");
-const u8 gUnknown_0840B7FC[] = INCBIN_U8("graphics/credits/ampersand.4bpp");
+static const u16 sCredits_Pal[] = INCBIN_U16("graphics/credits/credits.gbapal");
+static const u8 sCreditsAmpersand_Gfx[] = INCBIN_U8("graphics/credits/ampersand.4bpp");
 
 void SpriteCB_CreditsMonBg(struct Sprite *sprite);
 
@@ -263,7 +272,7 @@ const u8 sMonSpritePos[][2] =
     {136, 36},
 };
 
-static const union AnimCmd gSpriteAnim_840CA08[] =
+static const union AnimCmd sAnim_Player_Slow[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(64, 8),
@@ -272,7 +281,7 @@ static const union AnimCmd gSpriteAnim_840CA08[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gSpriteAnim_840CA1C[] =
+static const union AnimCmd sAnim_Player_Fast[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
@@ -281,7 +290,7 @@ static const union AnimCmd gSpriteAnim_840CA1C[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gSpriteAnim_840CA30[] =
+static const union AnimCmd sAnim_Player_LookBack[] =
 {
     ANIMCMD_FRAME(256, 4),
     ANIMCMD_FRAME(320, 4),
@@ -289,7 +298,7 @@ static const union AnimCmd gSpriteAnim_840CA30[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd gSpriteAnim_840CA40[] =
+static const union AnimCmd sAnim_Player_LookForward[] =
 {
     ANIMCMD_FRAME(384, 30),
     ANIMCMD_FRAME(320, 30),
@@ -298,15 +307,15 @@ static const union AnimCmd gSpriteAnim_840CA40[] =
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gSpriteAnimTable_0840CA54[] =
+static const union AnimCmd *const sAnims_Player[] =
 {
-    gSpriteAnim_840CA08,
-    gSpriteAnim_840CA1C,
-    gSpriteAnim_840CA30,
-    gSpriteAnim_840CA40,
+    sAnim_Player_Slow,
+    sAnim_Player_Fast,
+    sAnim_Player_LookBack,
+    sAnim_Player_LookForward,
 };
 
-static const union AnimCmd gSpriteAnim_840CA64[] =
+static const union AnimCmd sAnim_Rival_Slow[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_FRAME(64, 8),
@@ -315,7 +324,7 @@ static const union AnimCmd gSpriteAnim_840CA64[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gSpriteAnim_840CA78[] =
+static const union AnimCmd sAnim_Rival_Fast[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_FRAME(64, 4),
@@ -324,23 +333,25 @@ static const union AnimCmd gSpriteAnim_840CA78[] =
     ANIMCMD_JUMP(0),
 };
 
-static const union AnimCmd gSpriteAnim_840CA8C[] =
+static const union AnimCmd sAnim_Rival_Still[] =
 {
     ANIMCMD_FRAME(0, 4),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gSpriteAnimTable_0840CA94[] =
+static const union AnimCmd *const sAnims_Rival[] =
 {
-    gSpriteAnim_840CA64,
-    gSpriteAnim_840CA78,
-    gSpriteAnim_840CA8C,
+    sAnim_Rival_Slow,
+    sAnim_Rival_Fast,
+    sAnim_Rival_Still,
 };
 
-static const struct SpriteSheet gUnknown_0840CAA0[] = {{gDecompressionBuffer, 0x1800, 1001}, {0}};
-static const struct SpritePalette gUnknown_0840CAB0[] = {{(u16 *)(gDecompressionBuffer + 0x1800), 1001}, {0}};
+#define MONBG_OFFSET 0x1800
 
-static const struct OamData gOamData_840CAC0 =
+static const struct SpriteSheet sSpriteSheet_MonBg[] = {{gDecompressionBuffer, MONBG_OFFSET, TAG_MON_BG}, {0}};
+static const struct SpritePalette sSpritePalette_MonBg[] = {{(const u16 *)(gDecompressionBuffer + MONBG_OFFSET), TAG_MON_BG}, {0}};
+
+static const struct OamData sOamData_MonBg =
 {
     .y = 160,
     .affineMode = 0,
@@ -357,37 +368,37 @@ static const struct OamData gOamData_840CAC0 =
     .affineParam = 0,
 };
 
-static const union AnimCmd gSpriteAnim_840CAC8[] =
+static const union AnimCmd sAnim_MonBg_Yellow[] =
 {
     ANIMCMD_FRAME(0, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gSpriteAnim_840CAD0[] =
+static const union AnimCmd sAnim_MonBg_Red[] =
 {
     ANIMCMD_FRAME(64, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd gSpriteAnim_840CAD8[] =
+static const union AnimCmd sAnim_MonBg_Blue[] =
 {
     ANIMCMD_FRAME(128, 8),
     ANIMCMD_END,
 };
 
-static const union AnimCmd *const gSpriteAnimTable_840CAE0[] =
+static const union AnimCmd *const sAnims_MonBg[] =
 {
-    gSpriteAnim_840CAC8,
-    gSpriteAnim_840CAD0,
-    gSpriteAnim_840CAD8,
+    sAnim_MonBg_Yellow,
+    sAnim_MonBg_Red,
+    sAnim_MonBg_Blue,
 };
 
-static const struct SpriteTemplate gSpriteTemplate_840CAEC =
+static const struct SpriteTemplate sSpriteTemplate_CreditsMonBg =
 {
-    .tileTag = 1001,
-    .paletteTag = 1001,
-    .oam = &gOamData_840CAC0,
-    .anims = gSpriteAnimTable_840CAE0,
+    .tileTag = TAG_MON_BG,
+    .paletteTag = TAG_MON_BG,
+    .oam = &sOamData_MonBg,
+    .anims = sAnims_MonBg,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_CreditsMonBg,
@@ -414,10 +425,10 @@ static void ResetGpuAndVram(void);
 static void Task_UpdatePage(u8 taskIdB);
 static u8 CheckChangeScene(u8 page, u8 taskIdA);
 static void Task_ShowMons(u8 taskIdD);
-static bool8 LoadBikeScene(u8 data, u8 taskIdA);
+static bool8 LoadBikeScene(u8 scene, u8 taskIdA);
 static void ResetCreditsTasks(u8 taskIdA);
-static void LoadTheEndScreen(u16, u16, u16);
-static void DrawTheEnd(u16 arg0, u16 palette);
+static void LoadTheEndScreen(u16 tileOffsetLoad, u16 tileOffsetWrite, u16 palOffset);
+static void DrawTheEnd(u16 offset, u16 palette);
 static void SpriteCB_Player(struct Sprite *sprite);
 static void SpriteCB_Rival(struct Sprite *sprite);
 static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position);
@@ -479,11 +490,11 @@ void CB2_StartCreditsSequence(void)
     taskIdC = gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID];
     gTasks[taskIdC].data[TDC_STATE] = 40;
 
-    Text_LoadWindowTemplate(&gWindowTemplate_81E7208);
-    InitMenuWindow(&gWindowTemplate_81E7208);
-    LoadPalette(&gUnknown_0840B7BC, 0x80, sizeof(gUnknown_0840B7BC));
+    Text_LoadWindowTemplate(&gWindowTemplate_Credits);
+    InitMenuWindow(&gWindowTemplate_Credits);
+    LoadPalette(sCredits_Pal, 0x80, sizeof(sCredits_Pal));
 
-    CpuCopy16(&gUnknown_0840B7FC, (void *)(VRAM + 0xBEE0), sizeof(gUnknown_0840B7FC));
+    CpuCopy16(sCreditsAmpersand_Gfx, (void *)(VRAM + 0xBEE0), sizeof(sCreditsAmpersand_Gfx));
 
     REG_BG0VOFS = 0xFFFC;
 
@@ -525,7 +536,7 @@ static void Task_WaitPaletteFade(u8 taskIdA)
 
 static void Task_CreditsMain(u8 taskIdA)
 {
-    u16 data1;
+    u16 mode;
 
     if (gTasks[taskIdA].data[TDA_END_CREDITS])
     {
@@ -540,18 +551,18 @@ static void Task_CreditsMain(u8 taskIdA)
     }
 
     sUnusedCreditsValue = 0;
-    data1 = gTasks[taskIdA].data[TDA_NEXT_MODE];
+    mode = gTasks[taskIdA].data[TDA_NEXT_MODE];
 
     if (gTasks[taskIdA].data[TDA_NEXT_MODE] == MODE_BIKE_SCENE)
     {
-        gTasks[taskIdA].data[TDA_CURRENT_MODE] = data1;
+        gTasks[taskIdA].data[TDA_CURRENT_MODE] = mode;
         gTasks[taskIdA].data[TDA_NEXT_MODE] = MODE_NONE;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gTasks[taskIdA].func = Task_ReadyBikeScene;
     }
     else if (gTasks[taskIdA].data[TDA_NEXT_MODE] == MODE_SHOW_MONS)
     {
-        gTasks[taskIdA].data[TDA_CURRENT_MODE] = data1;
+        gTasks[taskIdA].data[TDA_CURRENT_MODE] = mode;
         gTasks[taskIdA].data[TDA_NEXT_MODE] = MODE_NONE;
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
         gTasks[taskIdA].func = Task_ReadyShowMons;
@@ -622,13 +633,13 @@ void Task_LoadShowMons(u8 taskIdA)
         for (i = 0; i < 0x800; i++)
             (gDecompressionBuffer + 0x1000)[i] = 0x33;
 
-        ((u16 *)(gDecompressionBuffer + 0x1800))[0] = RGB( 0,  0,  0); // black
-        ((u16 *)(gDecompressionBuffer + 0x1800))[1] = RGB(31, 31, 20); // light yellow
-        ((u16 *)(gDecompressionBuffer + 0x1800))[2] = RGB(31, 20, 20); // light red
-        ((u16 *)(gDecompressionBuffer + 0x1800))[3] = RGB(20, 20, 31); // light blue
+        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[0] = RGB( 0,  0,  0); // black
+        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[1] = RGB(31, 31, 20); // light yellow
+        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[2] = RGB(31, 20, 20); // light red
+        ((u16 *)(gDecompressionBuffer + MONBG_OFFSET))[3] = RGB(20, 20, 31); // light blue
 
-        LoadSpriteSheet(gUnknown_0840CAA0);
-        LoadSpritePalette(gUnknown_0840CAB0);
+        LoadSpriteSheet(sSpriteSheet_MonBg);
+        LoadSpritePalette(sSpritePalette_MonBg);
 
         gMain.state += 1;
         break;
@@ -941,38 +952,38 @@ static u8 CheckChangeScene(u8 page, u8 taskIdA)
 
 static void Task_ShowMons(u8 taskIdD)
 {
-    struct CreditsData *r6 = &sCreditsData;
-    u8 r2;
+    struct CreditsData *creditsData = &sCreditsData;
+    u8 spriteId;
 
     switch (gTasks[taskIdD].data[TDD_STATE])
     {
     case 0:
         break;
     case 1:
-        if (r6->nextImgPos == 0 && gTasks[gTasks[taskIdD].data[TDD_MAIN_TASK_ID]].data[TDA_PRINTED_PAGE] == 0)
+        if (creditsData->nextImgPos == POS_LEFT && gTasks[gTasks[taskIdD].data[TDD_MAIN_TASK_ID]].data[TDA_PRINTED_PAGE] == 0)
             break;
         gTasks[gTasks[taskIdD].data[TDD_MAIN_TASK_ID]].data[TDA_PRINTED_PAGE] = 0;
         gTasks[taskIdD].data[TDD_STATE]++;
         break;
     case 2:
-        if (r6->imgCounter == NUM_MON_SLIDES || gTasks[gTasks[taskIdD].data[TDD_MAIN_TASK_ID]].func != Task_CreditsMain)
+        if (creditsData->imgCounter == NUM_MON_SLIDES || gTasks[gTasks[taskIdD].data[TDD_MAIN_TASK_ID]].func != Task_CreditsMain)
             break;
-        r2 = CreateCreditsMonSprite(r6->monToShow[r6->currShownMon], sMonSpritePos[r6->nextImgPos][0], sMonSpritePos[r6->nextImgPos][1], r6->nextImgPos);
-        if (r6->currShownMon < r6->numMonToShow - 1)
+        spriteId = CreateCreditsMonSprite(creditsData->monToShow[creditsData->currShownMon], sMonSpritePos[creditsData->nextImgPos][0], sMonSpritePos[creditsData->nextImgPos][1], creditsData->nextImgPos);
+        if (creditsData->currShownMon < creditsData->numMonToShow - 1)
         {
-            r6->currShownMon++;
-            gSprites[r2].data[3] = 50;
+            creditsData->currShownMon++;
+            gSprites[spriteId].data[3] = 50;
         }
         else
         {
-            r6->currShownMon = 0;
-            gSprites[r2].data[3] = 512;
+            creditsData->currShownMon = 0;
+            gSprites[spriteId].data[3] = 512;
         }
-        r6->imgCounter++;
-        if (r6->nextImgPos == 2)
-            r6->nextImgPos = 0;
+        creditsData->imgCounter++;
+        if (creditsData->nextImgPos == POS_RIGHT)
+            creditsData->nextImgPos = POS_LEFT;
         else
-            r6->nextImgPos++;
+            creditsData->nextImgPos++;
         gTasks[taskIdD].data[TDD_DELAY] = 50;
         gTasks[taskIdD].data[TDD_STATE]++;
         break;
@@ -1126,9 +1137,9 @@ void Task_CycleSceneryPalette(u8 taskIdE)
     }
 }
 
-static void SetBikeScene(u8 data, u8 taskIdA)
+static void SetBikeScene(u8 scene, u8 taskIdA)
 {
-    switch (data)
+    switch (scene)
     {
     case SCENE_OCEAN_MORNING:
         gSprites[gTasks[taskIdA].data[TDA_PLAYER_SPRITE_ID]].invisible = FALSE;
@@ -1188,7 +1199,7 @@ static void SetBikeScene(u8 data, u8 taskIdA)
     }
 
     gTasks[taskIdA].data[TDA_SCENERY_PALETTE_TASK_ID] = CreateTask(Task_CycleSceneryPalette, 0);
-    gTasks[gTasks[taskIdA].data[TDA_SCENERY_PALETTE_TASK_ID]].data[TDE_SCENE_NUM] = data;
+    gTasks[gTasks[taskIdA].data[TDA_SCENERY_PALETTE_TASK_ID]].data[TDE_SCENE_NUM] = scene;
     gTasks[gTasks[taskIdA].data[TDA_SCENERY_PALETTE_TASK_ID]].data[TDE_TIMER] = 0;
     gTasks[gTasks[taskIdA].data[TDA_SCENERY_PALETTE_TASK_ID]].data[TDE_MAIN_TASK_ID] = taskIdA;
 
@@ -1199,11 +1210,11 @@ static void SetBikeScene(u8 data, u8 taskIdA)
     gTasks[gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID]].data[TDC_RIVAL_SPRITE_ID] = gTasks[taskIdA].data[TDA_RIVAL_SPRITE_ID];
     gTasks[gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID]].data[TDC_DELAY] = 0;
 
-    if (data == SCENE_FOREST_RIVAL_ARRIVE)
+    if (scene == SCENE_FOREST_RIVAL_ARRIVE)
         gTasks[gTasks[taskIdA].data[TDA_BIKE_SCENE_TASK_ID]].data[TDC_SINE_INDEX] = FOREST_RIVAL_ARRIVAL_SINE_INDEX;
 }
 
-static bool8 LoadBikeScene(u8 data, u8 taskIdA)
+static bool8 LoadBikeScene(u8 scene, u8 taskIdA)
 {
     u8 spriteId;
 
@@ -1227,7 +1238,7 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
     case 1:
         gIntroCredits_MovingSceneryVBase = 34;
         gIntroCredits_MovingSceneryVOffset = 0;
-        LoadCreditsSceneGraphics(data);
+        LoadCreditsSceneGraphics(scene);
         gMain.state += 1;
         break;
     case 2:
@@ -1241,12 +1252,12 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
             spriteId = CreateIntroBrendanSprite(120, 46);
             gTasks[taskIdA].data[TDA_PLAYER_SPRITE_ID] = spriteId;
             gSprites[spriteId].callback = SpriteCB_Player;
-            gSprites[spriteId].anims = gSpriteAnimTable_0840CA54;
+            gSprites[spriteId].anims = sAnims_Player;
 
             spriteId = CreateIntroMaySprite(272, 46);
             gTasks[taskIdA].data[TDA_RIVAL_SPRITE_ID] = spriteId;
             gSprites[spriteId].callback = SpriteCB_Rival;
-            gSprites[spriteId].anims = gSpriteAnimTable_0840CA94;
+            gSprites[spriteId].anims = sAnims_Rival;
         }
         else
         {
@@ -1258,18 +1269,18 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
             spriteId = CreateIntroMaySprite(120, 46);
             gTasks[taskIdA].data[TDA_PLAYER_SPRITE_ID] = spriteId;
             gSprites[spriteId].callback = SpriteCB_Player;
-            gSprites[spriteId].anims = gSpriteAnimTable_0840CA54;
+            gSprites[spriteId].anims = sAnims_Player;
 
             spriteId = CreateIntroBrendanSprite(272, 46);
             gTasks[taskIdA].data[TDA_RIVAL_SPRITE_ID] = spriteId;
             gSprites[spriteId].callback = SpriteCB_Rival;
-            gSprites[spriteId].anims = gSpriteAnimTable_0840CA94;
+            gSprites[spriteId].anims = sAnims_Rival;
         };
         gMain.state += 1;
         break;
     case 3:
-        SetBikeScene(data, taskIdA);
-        SetCreditsSceneBgCnt(data);
+        SetBikeScene(scene, taskIdA);
+        SetCreditsSceneBgCnt(scene);
         gMain.state = 0;
         return TRUE;
     }
@@ -1305,48 +1316,48 @@ static void ResetCreditsTasks(u8 taskIdA)
     gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_DESTROY;
 }
 
-static void LoadTheEndScreen(u16 arg0, u16 arg1, u16 arg2)
+static void LoadTheEndScreen(u16 tileOffsetLoad, u16 tileOffsetWrite, u16 palOffset)
 {
     u16 baseTile;
     u16 i;
 
-    LZ77UnCompVram(gCreditsCopyrightEnd_Gfx, (void *) (VRAM + arg0));
-    LoadPalette(gIntroCopyright_Pal, arg2, sizeof(gIntroCopyright_Pal));
+    LZ77UnCompVram(gCreditsCopyrightEnd_Gfx, (void *) (VRAM + tileOffsetLoad));
+    LoadPalette(gIntroCopyright_Pal, palOffset, sizeof(gIntroCopyright_Pal));
 
-    baseTile = (arg2 / 16) << 12;
+    baseTile = (palOffset / 16) << 12;
 
     for (i = 0; i < 32 * 32; i++)
-        ((u16 *) (VRAM + arg1))[i] = baseTile + 1;
+        ((u16 *) (VRAM + tileOffsetWrite))[i] = baseTile + 1;
 
     for (i = 0; i < 21; i++)
-        ((u16 *) (VRAM + arg1))[7 * 32 + 4 + i] = i + 2 + baseTile;
+        ((u16 *) (VRAM + tileOffsetWrite))[7 * 32 + 4 + i] = i + 2 + baseTile;
 
     for (i = 0; i < 20; i++)
-        ((u16 *) (VRAM + arg1))[9 * 32 + 4 + i] = i + 23 + baseTile;
+        ((u16 *) (VRAM + tileOffsetWrite))[9 * 32 + 4 + i] = i + 23 + baseTile;
 
     for (i = 0; i < 23; i++)
-        ((u16 *) (VRAM + arg1))[11 * 32 + 4 + i] = i + 43 + baseTile;
+        ((u16 *) (VRAM + tileOffsetWrite))[11 * 32 + 4 + i] = i + 43 + baseTile;
 
     for (i = 0; i < 12; i++)
-        ((u16 *) (VRAM + arg1))[13 * 32 + 4 + i] = i + 66 + baseTile;
+        ((u16 *) (VRAM + tileOffsetWrite))[13 * 32 + 4 + i] = i + 66 + baseTile;
 }
 
-u16 GetLetterMapTile(u8 arg0)
+u16 GetLetterMapTile(u8 baseTiles)
 {
-    u16 out = (arg0 & 0x3F) + 80;
+    u16 out = (baseTiles & 0x3F) + 80;
 
-    if (arg0 == 0xFF)
+    if (baseTiles == 0xFF)
         return 1;
 
-    if (arg0 & (1 << 7))
+    if (baseTiles & (1 << 7))
         out |= 1 << 11;
-    if (arg0 & (1 << 6))
+    if (baseTiles & (1 << 6))
         out |= 1 << 10;
 
     return out;
 }
 
-void DrawLetterMapTiles(const u8 arg0[], u8 baseX, u8 baseY, u16 arg3, u16 palette)
+void DrawLetterMapTiles(const u8 letterMap[], u8 baseX, u8 baseY, u16 offset, u16 palette)
 {
     u8 y, x;
     const u16 tileOffset = (palette / 16) << 12;
@@ -1354,32 +1365,34 @@ void DrawLetterMapTiles(const u8 arg0[], u8 baseX, u8 baseY, u16 arg3, u16 palet
     for (y = 0; y < 5; y++)
     {
         for (x = 0; x < 3; x++)
-            ((u16 *) (VRAM + arg3 + (baseY + y) * 64))[baseX + x] = tileOffset + GetLetterMapTile(arg0[y * 3 + x]);
+            ((u16 *) (VRAM + offset + (baseY + y) * 64))[baseX + x] = tileOffset + GetLetterMapTile(letterMap[y * 3 + x]);
     }
 }
 
-static void DrawTheEnd(u16 arg0, u16 palette)
+static void DrawTheEnd(u16 offset, u16 palette)
 {
     u16 pos;
     u16 baseTile = (palette / 16) << 12;
 
     for (pos = 0; pos < 32 * 32; pos++)
-        ((u16 *) (VRAM + arg0))[pos] = baseTile + 1;
+        ((u16 *) (VRAM + offset))[pos] = baseTile + 1;
 
 #if ENGLISH
-    DrawLetterMapTiles(sTheEnd_LetterMap_T, 3, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_H, 7, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_E, 11, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_E, 16, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_N, 20, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_D, 24, 7, arg0, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_T, 3, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_H, 7, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_E, 11, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_E, 16, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_N, 20, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_D, 24, 7, offset, palette);
 #elif GERMAN
-    DrawLetterMapTiles(sTheEnd_LetterMap_E, 7, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_N, 11, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_D, 15, 7, arg0, palette);
-    DrawLetterMapTiles(sTheEnd_LetterMap_E, 19, 7, arg0, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_E, 7, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_N, 11, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_D, 15, 7, offset, palette);
+    DrawLetterMapTiles(sTheEnd_LetterMap_E, 19, 7, offset, palette);
 #endif
 }
+
+#define sState data[0]
 
 static void SpriteCB_Player(struct Sprite *sprite)
 {
@@ -1389,7 +1402,7 @@ static void SpriteCB_Player(struct Sprite *sprite)
         return;
     }
 
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
         StartSpriteAnimIfDifferent(sprite, 0);
@@ -1426,7 +1439,7 @@ static void SpriteCB_Rival(struct Sprite *sprite)
         return;
     }
 
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
         sprite->y2 = 0;
@@ -1455,6 +1468,8 @@ static void SpriteCB_Rival(struct Sprite *sprite)
     }
 }
 
+#define sPosition data[1]
+
 void SpriteCB_CreditsMon(struct Sprite *sprite)
 {
     if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
@@ -1464,37 +1479,37 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
     }
 
     sprite->data[7] += 1;
-    switch (sprite->data[0])
+    switch (sprite->sState)
     {
     case 0:
     default:
         sprite->oam.affineMode = 1;
-        sprite->oam.matrixNum = sprite->data[1];
+        sprite->oam.matrixNum = sprite->sPosition;
         sprite->data[2] = 16;
-        SetOamMatrix(sprite->data[1], 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
+        SetOamMatrix(sprite->sPosition, 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
         sprite->invisible = FALSE;
-        sprite->data[0] = 1;
+        sprite->sState = 1;
         break;
     case 1:
         if (sprite->data[2] < 256)
         {
             sprite->data[2] += 8;
-            SetOamMatrix(sprite->data[1], 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
+            SetOamMatrix(sprite->sPosition, 0x10000 / sprite->data[2], 0, 0, 0x10000 / sprite->data[2]);
         }
         else
         {
-            sprite->data[0] += 1;
+            sprite->sState++;
         }
-        switch (sprite->data[1])
+        switch (sprite->sPosition)
         {
-        case 1:
+        case POS_LEFT + 1:
             if ((sprite->data[7] & 3) == 0)
                 sprite->y += 1;
             sprite->x -= 2;
             break;
-        case 2:
+        case POS_CENTER + 1:
             break;
-        case 3:
+        case POS_RIGHT + 1:
             if ((sprite->data[7] & 3) == 0)
                 sprite->y += 1;
             sprite->x += 2;
@@ -1512,7 +1527,7 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
             REG_BLDALPHA = 0x10;
             sprite->oam.objMode = 1;
             sprite->data[3] = 16;
-            sprite->data[0] += 1;
+            sprite->sState++;
         }
         break;
     case 3:
@@ -1530,7 +1545,7 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
         else
         {
             sprite->invisible = TRUE;
-            sprite->data[0] = 10;
+            sprite->sState = 10;
         }
         break;
     case 10:
@@ -1540,6 +1555,8 @@ void SpriteCB_CreditsMon(struct Sprite *sprite)
         break;
     }
 }
+
+#define sMonSpriteId data[0]
 
 static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 {
@@ -1580,12 +1597,12 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
     spriteId = CreateSprite(&gCreatingSpriteTemplate, x, y, 0);
     gSprites[spriteId].oam.paletteNum = position;
     gSprites[spriteId].oam.priority = 1;
-    gSprites[spriteId].data[1] = position + 1;
+    gSprites[spriteId].sPosition = position + 1;
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].callback = SpriteCB_CreditsMon;
 
-    spriteId2 = CreateSprite(&gSpriteTemplate_840CAEC, gSprites[spriteId].x, gSprites[spriteId].y, 1);
-    gSprites[spriteId2].data[0] = spriteId;
+    spriteId2 = CreateSprite(&sSpriteTemplate_CreditsMonBg, gSprites[spriteId].x, gSprites[spriteId].y, 1);
+    gSprites[spriteId2].sMonSpriteId = spriteId;
 
     StartSpriteAnimIfDifferent(&gSprites[spriteId2], position);
 
@@ -1594,19 +1611,19 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 
 void SpriteCB_CreditsMonBg(struct Sprite *sprite)
 {
-    if (gSprites[sprite->data[0]].data[0] == 10
+    if (gSprites[sprite->sMonSpriteId].sState == 10
      || gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
         return;
     }
 
-    sprite->invisible = gSprites[sprite->data[0]].invisible;
-    sprite->oam.objMode = gSprites[sprite->data[0]].oam.objMode;
-    sprite->oam.affineMode = gSprites[sprite->data[0]].oam.affineMode;
-    sprite->oam.matrixNum = gSprites[sprite->data[0]].oam.matrixNum;
-    sprite->x = gSprites[sprite->data[0]].x;
-    sprite->y = gSprites[sprite->data[0]].y;
+    sprite->invisible = gSprites[sprite->sMonSpriteId].invisible;
+    sprite->oam.objMode = gSprites[sprite->sMonSpriteId].oam.objMode;
+    sprite->oam.affineMode = gSprites[sprite->sMonSpriteId].oam.affineMode;
+    sprite->oam.matrixNum = gSprites[sprite->sMonSpriteId].oam.matrixNum;
+    sprite->x = gSprites[sprite->sMonSpriteId].x;
+    sprite->y = gSprites[sprite->sMonSpriteId].y;
 }
 
 static void DeterminePokemonToShow(void)

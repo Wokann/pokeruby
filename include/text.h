@@ -118,7 +118,7 @@ extern const struct WindowTemplate gWindowTemplate_81E7198;
 extern const struct WindowTemplate gWindowTemplate_81E71B4;
 extern const struct WindowTemplate gWindowTemplate_81E71D0;
 extern const struct WindowTemplate gWindowTemplate_81E71EC;
-extern const struct WindowTemplate gWindowTemplate_81E7208;
+extern const struct WindowTemplate gWindowTemplate_Credits;
 extern const struct WindowTemplate gWindowTemplate_81E7224;
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E725C;
