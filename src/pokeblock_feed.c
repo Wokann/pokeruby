@@ -561,11 +561,11 @@ static bool8 LoadPokeblockFeedScene(void)
         gMain.state++;
         break;
     case 4:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6E50);
+        Text_LoadWindowTemplate(&gPokeblockWindowTemplate);
         gMain.state++;
         break;
     case 5:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6E50);
+        MultistepInitMenuWindowBegin(&gPokeblockWindowTemplate);
         gMain.state++;
         break;
     case 6:

@@ -34,6 +34,15 @@ struct PokeblockMenuState
     u8 maxShowed;
 };
 
+enum
+{
+    PKBL_USE_ON_FIELD,
+    PKBL_TOSS,
+    PKBL_CANCEL,
+    PKBL_USE_IN_BATTLE,
+    PKBL_USE_ON_FEEDER,
+};
+
 static EWRAM_DATA u8 sPokeblockCaseContext = 0;
 static EWRAM_DATA struct PokeblockMenuState sPokeblockMenuState = {0};
 static EWRAM_DATA u8 sNumPokeblockActions = 0;
@@ -90,7 +99,7 @@ static const u8 *sPokeblockActionIds;
 
 // rodata
 
-#define GFX_TAG_POKEBLOCK_CASE 14800
+#define TAG_POKEBLOCK_CASE 14800
 #define tSwapPokeblockId data[0]
 
 const s8 gPokeblockFlavorCompatibilityTable[] =
@@ -159,13 +168,13 @@ const struct MenuAction2 sPokeblockMenuActions[] =
     {OtherText_Use,     PokeblockAction_UseOnPokeblockFeeder},
 };
 
-const u8 sPokeblockActionsOnField[] = {0, 1, 2};
-const u8 sPokeblockActionsInBattle[] = {3, 2};
-const u8 sPokeblockActionsOnFeeder[] = {4, 2};
+const u8 sActionsOnField[] = {PKBL_USE_ON_FIELD, PKBL_TOSS, PKBL_CANCEL};
+const u8 sActionsInBattle[] = {PKBL_USE_IN_BATTLE, PKBL_CANCEL};
+const u8 sActionsOnPokeblockFeeder[] = {PKBL_USE_ON_FEEDER, PKBL_CANCEL};
 
 const struct YesNoFuncTable sTossYesNoFuncTable = {TossedPokeblockMessage, CloseTossPokeblockWindow};
 
-const u8 UnreferencedData_083F7F2C[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
+const u8 gUnusedPokeblockData[] = {0x16, 0x17, 0x18, 0x21, 0x2f};
 
 const struct OamData sOamData_PokeblockCase =
 {
@@ -202,19 +211,19 @@ const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet =
 {
     gMenuPokeblockDevice_Gfx,
     0x800,
-    GFX_TAG_POKEBLOCK_CASE
+    TAG_POKEBLOCK_CASE
 };
 
 const struct CompressedSpritePalette gPokeblockCase_SpritePal =
 {
     gMenuPokeblockDevice_Pal,
-    GFX_TAG_POKEBLOCK_CASE
+    TAG_POKEBLOCK_CASE
 };
 
 const struct SpriteTemplate sSpriteTemplate_PokeblockCase =
 {
-    GFX_TAG_POKEBLOCK_CASE,
-    GFX_TAG_POKEBLOCK_CASE,
+    TAG_POKEBLOCK_CASE,
+    TAG_POKEBLOCK_CASE,
     &sOamData_PokeblockCase,
     sSpriteAnimTable_PokeblockCase,
     NULL,
@@ -294,15 +303,15 @@ static bool8 InitPokeblockMenu(void)
             gMain.state++;
             break;
         case  5:
-            Text_LoadWindowTemplate(&gWindowTemplate_81E6E34);
+            Text_LoadWindowTemplate(&gPokeblockCaseWindowTemplate);
             gMain.state++;
             break;
         case  6:
-            Text_LoadWindowTemplate(&gWindowTemplate_81E6E50);
+            Text_LoadWindowTemplate(&gPokeblockWindowTemplate);
             gMain.state++;
             break;
         case  7:
-            MultistepInitMenuWindowBegin(&gWindowTemplate_81E6E34);
+            MultistepInitMenuWindowBegin(&gPokeblockCaseWindowTemplate);
             gMain.state++;
             break;
         case  8:
@@ -312,7 +321,7 @@ static bool8 InitPokeblockMenu(void)
             }
             break;
         case  9:
-            MultistepInitMenuWindowBegin(&gWindowTemplate_81E6E50);
+            MultistepInitMenuWindowBegin(&gPokeblockWindowTemplate);
             gMain.state++;
             break;
         case 10:
@@ -425,16 +434,16 @@ void SetPokeblockCaseContext(u8 caseContext)
     switch (sPokeblockCaseContext)
     {
         default:
-            sPokeblockActionIds = sPokeblockActionsOnField;
-            sNumPokeblockActions = sizeof sPokeblockActionsOnField;
+            sPokeblockActionIds = sActionsOnField;
+            sNumPokeblockActions = sizeof sActionsOnField;
             break;
         case PBLOCK_CASE_BATTLE:
-            sPokeblockActionIds = sPokeblockActionsInBattle;
-            sNumPokeblockActions = sizeof sPokeblockActionsInBattle;
+            sPokeblockActionIds = sActionsInBattle;
+            sNumPokeblockActions = sizeof sActionsInBattle;
             break;
         case PBLOCK_CASE_FEEDER:
-            sPokeblockActionIds = sPokeblockActionsOnFeeder;
-            sNumPokeblockActions = sizeof sPokeblockActionsOnFeeder;
+            sPokeblockActionIds = sActionsOnPokeblockFeeder;
+            sNumPokeblockActions = sizeof sActionsOnPokeblockFeeder;
             break;
     }
 }
@@ -463,13 +472,13 @@ void Debug_FillPokeblockCase(void)
 
 static void DrawPokeblockMenuTitleText(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6E34);
+    BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
     MenuPrint_Centered(GetItemName(ITEM_POKEBLOCK_CASE), 2, 1, 0x48);
 }
 
 static void DrawPokeblockInfoLabels(void)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6E34);
+    BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
     Menu_PrintText(gContestStatsText_Spicy,   2, 13);
     Menu_PrintText(gContestStatsText_Dry,     2, 15);
     Menu_PrintText(gContestStatsText_Sweet,   2, 17);
@@ -482,7 +491,7 @@ static void PrintPokeblockList(u8 scrollOffset)
     u8 i;
     u8 y;
     u8 *text;
-    BasicInitMenuWindow(&gWindowTemplate_81E6E34);
+    BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
     for (i = scrollOffset; i <= scrollOffset + 8; i++)
     {
         y = (i - scrollOffset) << 1;
@@ -614,7 +623,7 @@ static void DrawPokeblockInfo(bool8 isSwapSelection)
             gBGTilemapBuffers[2][tilemapOffset + 32] = 15;
         }
     }
-    BasicInitMenuWindow(&gWindowTemplate_81E6E34);
+    BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
     if (sPokeblockMenuState.selectedRow + sPokeblockMenuState.scrollOffset != sPokeblockMenuState.itemsNo)
     {
         AlignInt1InMenuWindow(gStringVar1, GetPokeblocksFeel(&gSaveBlock1.pokeblocks[sPokeblockMenuState.selectedRow + sPokeblockMenuState.scrollOffset]), 16, 1);
@@ -830,7 +839,7 @@ static void ShowPokeblockActionsWindow(u8 taskId)
         menuYOffset = 2;
     StopScrollIndicatorArrow(TOP_ARROW);
     StopScrollIndicatorArrow(BOTTOM_ARROW);
-    BasicInitMenuWindow(&gWindowTemplate_81E6E50);
+    BasicInitMenuWindow(&gPokeblockWindowTemplate);
     Menu_DrawStdWindowFrame(7, menuYOffset + 4, 13, 11);
     Menu_PrintItemsReordered(8, menuYOffset + 5, sNumPokeblockActions, sPokeblockMenuActions, sPokeblockActionIds);
     InitMenu(0, 8, menuYOffset + 5, sNumPokeblockActions, 0, 5);
@@ -886,7 +895,7 @@ static void PokeblockAction_UseOnField(u8 taskId)
 
 static void ShowTossPokeblockPrompt(u8 taskId)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6E50);
+    BasicInitMenuWindow(&gPokeblockWindowTemplate);
     Menu_DestroyCursor();
     Menu_EraseWindowRect(7, 4, 13, 11);
     StringCopy(gStringVar1, gPokeblockNames[gSaveBlock1.pokeblocks[sPokeblockMenuState.selectedRow + sPokeblockMenuState.scrollOffset].color]);
@@ -924,7 +933,7 @@ static void CloseTossPokeblockWindow(u8 taskId)
     {
         SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, VISIBLE);
     }
-    BasicInitMenuWindow(&gWindowTemplate_81E6E50);
+    BasicInitMenuWindow(&gPokeblockWindowTemplate);
     Menu_EraseWindowRect(7, 6, 13, 11);
     Menu_EraseWindowRect(0, 14, 29, 19);
     gTasks[taskId].func = Task_HandlePokeblockMenuInput;
@@ -940,7 +949,7 @@ static void Task_WaitTossMessageDismissal(u8 taskId)
 
 static void RefreshPokeblockListAfterToss(u8 taskId)
 {
-    BasicInitMenuWindow(&gWindowTemplate_81E6E34);
+    BasicInitMenuWindow(&gPokeblockCaseWindowTemplate);
     UpdatePokeblockList(sPokeblockMenuState.scrollOffset);
     SetScrollIndicatorArrowInvisibility(BOTTOM_ARROW, INVISIBLE);
     gTasks[taskId].func = Task_WaitTossMessageDismissal;

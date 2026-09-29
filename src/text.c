@@ -871,7 +871,7 @@ const struct WindowTemplate gWindowTemplate_81E6E18 =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6E34 =
+const struct WindowTemplate gPokeblockCaseWindowTemplate =
 {
     1, // BG number
     0, // BG character base block
@@ -892,7 +892,8 @@ const struct WindowTemplate gWindowTemplate_81E6E34 =
     BG_SCREEN_ADDR(31), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6E50 =
+// Shared by the Pokeblock Case and Pokeblock feeding scene.
+const struct WindowTemplate gPokeblockWindowTemplate =
 {
     0, // BG number
     2, // BG character base block
