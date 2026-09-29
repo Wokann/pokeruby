@@ -1654,8 +1654,8 @@ void PrintRibbonsSummaryDescription(void)
         }
         else
         {
-            AlignStringInMenuWindow(tileBuffer1, gEmptyString_81E72B0, 128, 0);
-            AlignStringInMenuWindow(tileBuffer2, gEmptyString_81E72B0, 128, 0);
+            AlignStringInMenuWindow(tileBuffer1, gText_EmptyString, 128, 0);
+            AlignStringInMenuWindow(tileBuffer2, gText_EmptyString, 128, 0);
         }
     }
 
@@ -1796,7 +1796,7 @@ void PrintPokeblockMonNature(void)
     }
     else
     {
-        AlignStringInMenuWindow(buffer, gEmptyString_81E72B0, 87, 0);
+        AlignStringInMenuWindow(buffer, gText_EmptyString, 87, 0);
     }
 
     Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 1, 112, 1);
@@ -3717,8 +3717,8 @@ void BufferConditionGraphMonText(s16 arg0, u8 arg1)
     }
     else
     {
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8829[arg1], gEmptyString_81E72B0, 104, 0);
-        AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gEmptyString_81E72B0, 64, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->unk8829[arg1], gText_EmptyString, 104, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->unk88E9[arg1], gText_EmptyString, 64, 0);
         gPokenavStructPtr->unk8937[arg1] = var0;
     }
 }

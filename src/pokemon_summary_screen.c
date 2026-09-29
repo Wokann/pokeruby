@@ -166,7 +166,7 @@ EWRAM_DATA struct Sprite *sMarkingsSprite = NULL;
 #endif
 
 static const u8 * const sPageHeaderTexts[] = {
-    gEmptyString_81E72B0,
+    gText_EmptyString,
     OtherText_PokeInfo,
     OtherText_PokeSkills,
     OtherText_BattleMoves,

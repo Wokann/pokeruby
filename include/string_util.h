@@ -8,7 +8,7 @@ enum StringConvertMode
     STR_CONV_MODE_LEADING_ZEROS
 };
 
-extern const u8 gEmptyString_81E72B0[];
+extern const u8 gText_EmptyString[];
 
 u8 *StringCopy10(u8 *dest, const u8 *src);
 u8 *StringGet_Nickname(u8 *str);

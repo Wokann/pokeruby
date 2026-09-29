@@ -989,7 +989,7 @@ static void DrawMoveSelectionWindow(void)
     {
         if (listIndex >= sMoveRelearnerMenu->numMenuChoices)
         {
-            str = AlignStringInMenuWindow(str, gEmptyString_81E72B0, 0x90, 0);
+            str = AlignStringInMenuWindow(str, gText_EmptyString, 0x90, 0);
         }
         else if (listIndex == sMoveRelearnerMenu->numMenuChoices - 1)
         {

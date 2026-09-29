@@ -898,7 +898,7 @@ void PrintContestantTrainerNameWithColor(u8 contestant, u8 color)
 {
     u8 *str = gDisplayedStringBattle;
 
-    str = Contest_CopyStringWithColor(str, gEmptyString_81E72B0, color);
+    str = Contest_CopyStringWithColor(str, gText_EmptyString, color);
     str[0] = EXT_CTRL_CODE_BEGIN;
     str[1] = EXT_CTRL_CODE_SIZE;
     str[2] = 4;
