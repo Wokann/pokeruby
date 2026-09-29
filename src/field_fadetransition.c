@@ -379,7 +379,7 @@ void DoWarp(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(Task_WarpAndLoadMap, 10);
@@ -390,7 +390,7 @@ void DoDiveWarp(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     gFieldCallback = FieldCB_DefaultWarpExit;
     CreateTask(Task_WarpAndLoadMap, 10);
 }
@@ -600,7 +600,7 @@ void Task_DoDoorWarp(u8 taskId)
     case 4:
         TryFadeOutOldMapMusic();
         WarpFadeOutScreen();
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         task->data[0] = 0;
         task->func = Task_WarpAndLoadMap;
         break;
@@ -637,7 +637,7 @@ void DoContestHallWarp(void)
     LockPlayerFieldControls();
     TryFadeOutOldMapMusic();
     WarpFadeOutScreen();
-    PlayRainSoundEffect();
+    PlayRainStoppingSoundEffect();
     PlaySE(SE_EXIT);
     gFieldCallback = FieldCB_WarpExitFadeFromBlack;
     CreateTask(Task_DoContestHallWarp, 10);

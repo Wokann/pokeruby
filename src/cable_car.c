@@ -455,7 +455,7 @@ static void Task_CableCar(u8 taskId)
         case 0:
             if (sCableCarPtr->unk_0006 == sCableCarPtr->unk_0004)
             {
-                ChangeWeather(sCableCarPtr->unk_0002);
+                SetNextWeather(sCableCarPtr->unk_0002);
                 sCableCarPtr->unk_0001 = 1;
             }
             break;

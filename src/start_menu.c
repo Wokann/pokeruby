@@ -454,7 +454,7 @@ static u8 StartMenu_PokedexCallback(void)
     if (!gPaletteFade.active)
     {
         IncrementGameStat(GAME_STAT_CHECKED_POKEDEX);
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_InitPokedex);
         return 1;
     }
@@ -466,7 +466,7 @@ static u8 StartMenu_PokemonCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         SetMainCallback2(sub_8089A70);
         return 1;
     }
@@ -478,7 +478,7 @@ static u8 StartMenu_BagCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_BagMenuFromStartMenu);
         return 1;
     }
@@ -490,7 +490,7 @@ static u8 StartMenu_PokenavCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_InitPokeNav);
         return 1;
     }
@@ -502,7 +502,7 @@ static u8 StartMenu_PlayerCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         TrainerCard_ShowPlayerCard(CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
@@ -522,7 +522,7 @@ static u8 StartMenu_OptionCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         SetMainCallback2(CB2_InitOptionMenu);
         gMain.savedCallback = CB2_ReturnToFieldWithOpenMenu;
         return 1;
@@ -550,7 +550,7 @@ static u8 StartMenu_PlayerLinkCallback(void)
 {
     if (!gPaletteFade.active)
     {
-        PlayRainSoundEffect();
+        PlayRainStoppingSoundEffect();
         TrainerCard_ShowLinkCard(gLocalLinkPlayerId, CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
