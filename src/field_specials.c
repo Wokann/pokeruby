@@ -778,42 +778,49 @@ void FieldShowRegionMap(void)
 }
 
 static void Task_PCTurnOnEffect(u8);
-static void PCTurnOffEffect_0(struct Task *);
-static void PCTurnOffEffect_1(s16, s8, s8);
+static void PCTurnOnEffect(struct Task *);
+static void PCTurnOnEffect_SetMetatile(s16, s8, s8);
 static void PCTurnOffEffect(void);
+
+// Task data for Task_PCTurnOnEffect and Task_LotteryCornerComputerEffect
+#define tPaused       data[0] // Never set
+#define tTaskId       data[1]
+#define tFlickerCount data[2]
+#define tTimer        data[3]
+#define tIsScreenOn   data[4]
 
 void DoPCTurnOnEffect(void)
 {
     if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE)
     {
         u8 taskId = CreateTask(Task_PCTurnOnEffect, 8);
-        gTasks[taskId].data[0] = 0;
-        gTasks[taskId].data[1] = taskId;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[3] = 0;
-        gTasks[taskId].data[4] = 0;
+        gTasks[taskId].tPaused = 0;
+        gTasks[taskId].tTaskId = taskId;
+        gTasks[taskId].tFlickerCount = 0;
+        gTasks[taskId].tTimer = 0;
+        gTasks[taskId].tIsScreenOn = 0;
     }
 }
 
 static void Task_PCTurnOnEffect(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    if (task->data[0] == 0)
+    if (task->tPaused == 0)
     {
-        PCTurnOffEffect_0(task);
+        PCTurnOnEffect(task);
     }
 }
 
-static void PCTurnOffEffect_0(struct Task *task)
+static void PCTurnOnEffect(struct Task *task)
 {
-    u8 playerDirectionLowerNybble;
+    u8 playerDirection;
     s8 dx = 0;
     s8 dy = 0;
-    if (task->data[3] == 6)
+    if (task->tTimer == 6)
     {
-        task->data[3] = 0;
-        playerDirectionLowerNybble = GetPlayerFacingDirection();
-        switch (playerDirectionLowerNybble)
+        task->tTimer = 0;
+        playerDirection = GetPlayerFacingDirection();
+        switch (playerDirection)
         {
             case DIR_NORTH:
                 dx = 0;
@@ -828,51 +835,51 @@ static void PCTurnOffEffect_0(struct Task *task)
                 dy = -1;
                 break;
         }
-        PCTurnOffEffect_1(task->data[4], dx, dy);
+        PCTurnOnEffect_SetMetatile(task->tIsScreenOn, dx, dy);
         DrawWholeMapView();
-        task->data[4] ^= 1;
-        if ((++task->data[2]) == 5)
+        task->tIsScreenOn ^= 1;
+        if ((++task->tFlickerCount) == 5)
         {
-            DestroyTask(task->data[1]);
+            DestroyTask(task->tTaskId);
         }
     }
-    task->data[3]++;
+    task->tTimer++;
 }
 
-static void PCTurnOffEffect_1(s16 flag, s8 dx, s8 dy)
+static void PCTurnOnEffect_SetMetatile(s16 isScreenOn, s8 dx, s8 dy)
 {
-    u16 tileId = 0;
-    if (flag != 0)
+    u16 metatileId = 0;
+    if (isScreenOn != 0)
     {
         if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
         {
-            tileId = METATILE_ID(Building, PC_Off);
+            metatileId = METATILE_ID(Building, PC_Off);
         }
         else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
+            metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
         }
         else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
+            metatileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
         }
     }
     else
     {
         if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
         {
-            tileId = METATILE_ID(Building, PC_On);
+            metatileId = METATILE_ID(Building, PC_On);
         }
         else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_On);
+            metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_On);
         }
         else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
         {
-            tileId = METATILE_ID(BrendansMaysHouse, MayPC_On);
+            metatileId = METATILE_ID(BrendansMaysHouse, MayPC_On);
         }
     }
-    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | 0xc00);
+    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, metatileId | 0xc00);
 }
 
 void DoPCTurnOffEffect(void)
@@ -884,9 +891,9 @@ static void PCTurnOffEffect(void)
 {
     s8 dx = 0;
     s8 dy = 0;
-    u16 tileId = 0;
-    u8 playerDirectionLowerNybble = GetPlayerFacingDirection();
-    switch (playerDirectionLowerNybble)
+    u16 metatileId = 0;
+    u8 playerDirection = GetPlayerFacingDirection();
+    switch (playerDirection)
     {
         case DIR_NORTH:
             dx = 0;
@@ -903,17 +910,17 @@ static void PCTurnOffEffect(void)
     }
     if (gSpecialVar_0x8004 == PC_LOCATION_OTHER)
     {
-        tileId = METATILE_ID(Building, PC_Off);
+        metatileId = METATILE_ID(Building, PC_Off);
     }
     else if (gSpecialVar_0x8004 == PC_LOCATION_BRENDANS_HOUSE)
     {
-        tileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
+        metatileId = METATILE_ID(BrendansMaysHouse, BrendanPC_Off);
     }
     else if (gSpecialVar_0x8004 == PC_LOCATION_MAYS_HOUSE)
     {
-        tileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
+        metatileId = METATILE_ID(BrendansMaysHouse, MayPC_Off);
     }
-    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, tileId | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(gSaveBlock1.pos.x + dx + 7, gSaveBlock1.pos.y + dy + 7, metatileId | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
 }
 
@@ -925,18 +932,18 @@ void DoLotteryCornerComputerEffect(void)
     if (FuncIsActiveTask(Task_LotteryCornerComputerEffect) != TRUE)
     {
         u8 taskId = CreateTask(Task_LotteryCornerComputerEffect, 8);
-        gTasks[taskId].data[0] = 0;
-        gTasks[taskId].data[1] = taskId;
-        gTasks[taskId].data[2] = 0;
-        gTasks[taskId].data[3] = 0;
-        gTasks[taskId].data[4] = 0;
+        gTasks[taskId].tPaused = 0;
+        gTasks[taskId].tTaskId = taskId;
+        gTasks[taskId].tFlickerCount = 0;
+        gTasks[taskId].tTimer = 0;
+        gTasks[taskId].tIsScreenOn = 0;
     }
 }
 
 static void Task_LotteryCornerComputerEffect(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    if (task->data[0] == 0)
+    if (task->tPaused == 0)
     {
         LotteryCornerComputerEffect(task);
     }
@@ -944,10 +951,10 @@ static void Task_LotteryCornerComputerEffect(u8 taskId)
 
 static void LotteryCornerComputerEffect(struct Task *task)
 {
-    if (task->data[3] == 6)
+    if (task->tTimer == 6)
     {
-        task->data[3] = 0;
-        if (task->data[4] != 0)
+        task->tTimer = 0;
+        if (task->tIsScreenOn != 0)
         {
             MapGridSetMetatileIdAt(18, 8, METATILE_ID(Shop, Laptop1_Normal) | MAPGRID_IMPASSABLE);
             MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_IMPASSABLE);
@@ -958,13 +965,13 @@ static void LotteryCornerComputerEffect(struct Task *task)
             MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Flash) | MAPGRID_IMPASSABLE);
         }
         DrawWholeMapView();
-        task->data[4] ^= 1;
-        if ((++task->data[2]) == 5)
+        task->tIsScreenOn ^= 1;
+        if ((++task->tFlickerCount) == 5)
         {
-            DestroyTask(task->data[1]);
+            DestroyTask(task->tTaskId);
         }
     }
-    task->data[3]++;
+    task->tTimer++;
 }
 
 void EndLotteryCornerComputerEffect(void)
@@ -973,6 +980,12 @@ void EndLotteryCornerComputerEffect(void)
     MapGridSetMetatileIdAt(18, 9, METATILE_ID(Shop, Laptop2_Normal) | MAPGRID_IMPASSABLE);
     DrawWholeMapView();
 }
+
+#undef tPaused
+#undef tTaskId
+#undef tFlickerCount
+#undef tTimer
+#undef tIsScreenOn
 
 static void ShowElevatorMenu(void);
 void ShowDeptStoreElevatorFloorSelect(void);
@@ -1038,20 +1051,20 @@ void SetDeptStoreFloor(void)
     VarSet(VAR_DEPT_STORE_FLOOR, deptStoreFloor);
 }
 
-void ScriptAddElevatorMenuItem(u8 a0, u8 a1, u8 a2, u8 a3)
+void ScriptAddElevatorMenuItem(u8 floorTextId, u8 mapGroup, u8 mapNum, u8 unused)
 {
     u8 i;
     if (gSpecialVar_0x8004 == 0)
     {
         for (i = 0; i < 20; i++)
         {
-            sElevatorMenuItems[i].var0 = 16;
+            sElevatorMenuItems[i].floorTextId = 16;
         }
     }
-    sElevatorMenuItems[gSpecialVar_0x8004].var0 = a0;
-    sElevatorMenuItems[gSpecialVar_0x8004].var1 = a1;
-    sElevatorMenuItems[gSpecialVar_0x8004].var2 = a2;
-    sElevatorMenuItems[gSpecialVar_0x8004].var3 = a3;
+    sElevatorMenuItems[gSpecialVar_0x8004].floorTextId = floorTextId;
+    sElevatorMenuItems[gSpecialVar_0x8004].mapGroup = mapGroup;
+    sElevatorMenuItems[gSpecialVar_0x8004].mapNum = mapNum;
+    sElevatorMenuItems[gSpecialVar_0x8004].unused = unused;
     gSpecialVar_0x8004++;
 }
 
@@ -1061,7 +1074,7 @@ void ScriptShowElevatorMenu(void)
     gScrollableMenuItemCount = 0;
     gScrollableMenuSelection = 0;
     ScriptAddElevatorMenuItem(16, 0, 0, 0);
-    while (sElevatorMenuItems[i].var0 != 16)
+    while (sElevatorMenuItems[i].floorTextId != 16)
     {
         gScrollableMenuItemCount++;
         i++;
@@ -1087,9 +1100,9 @@ static void ShowElevatorMenu(void)
         Menu_DrawStdWindowFrame(0, 0, 8, 2 * gScrollableMenuItemCount + 1);
         InitMenu(0, 1, 1, gScrollableMenuItemCount, 0, 7);
     }
-    for (i = 0; i < 5 && sElevatorMenuItems[i].var0 != 16; i ++)
+    for (i = 0; i < 5 && sElevatorMenuItems[i].floorTextId != 16; i ++)
     {
-        Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[i].var0], 1, 2 * i + 1);
+        Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[i].floorTextId], 1, 2 * i + 1);
     }
     ShowDeptStoreElevatorFloorSelect();
     CreateTask(Task_ElevatorMenu, 8);
@@ -1121,7 +1134,7 @@ void Task_ElevatorMenu(u8 taskId)
     }
     if (JOY_NEW(A_BUTTON))
     {
-        saved_warp2_set_2(0, sElevatorMenuItems[gScrollableMenuSelection].var1, sElevatorMenuItems[gScrollableMenuSelection].var2, -1, 2, 1);
+        saved_warp2_set_2(0, sElevatorMenuItems[gScrollableMenuSelection].mapGroup, sElevatorMenuItems[gScrollableMenuSelection].mapNum, -1, 2, 1);
         if (gSpecialVar_0x8005 == gScrollableMenuSelection)
         {
             gSpecialVar_Result = 0;
@@ -1156,8 +1169,8 @@ or decreasing the amount of references to i.*/
 bool8 ScrollElevatorMenu(u8 prevMenuPos, u8 dpadInput)
 {
     u8 i;
-    bool8 flag = 0;
-    u8 newPos = 0;
+    bool8 didScroll = 0;
+    u8 firstVisibleItem = 0;
     if (gScrollableMenuItemCount < 5)
     {
         return FALSE;
@@ -1166,38 +1179,38 @@ bool8 ScrollElevatorMenu(u8 prevMenuPos, u8 dpadInput)
     {
         if (prevMenuPos == 0)
         {
-            newPos = gScrollableMenuSelection;
-            flag = 1;
+            firstVisibleItem = gScrollableMenuSelection;
+            didScroll = 1;
         }
     }
     else if (dpadInput == DPAD_DOWN)
     {
         if (prevMenuPos == 4)
         {
-            newPos = gScrollableMenuSelection - 4;
-            flag = 1;
+            firstVisibleItem = gScrollableMenuSelection - 4;
+            didScroll = 1;
         }
     }
-    if (flag)
+    if (didScroll)
     {
-        UpdateElevatorMenuScrollIndicators(newPos, 5);
+        UpdateElevatorMenuScrollIndicators(firstVisibleItem, 5);
         Menu_BlankWindowRect(2, 1, 7, 10);
-        for (i=0; i<5 && sElevatorMenuItems[newPos].var0 != 16; newPos++, i++)
+        for (i=0; i<5 && sElevatorMenuItems[firstVisibleItem].floorTextId != 16; firstVisibleItem++, i++)
         {
-            Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[newPos].var0], 1, i * 2 + 1);
+            Menu_PrintText(sDeptStoreFloorNames[sElevatorMenuItems[firstVisibleItem].floorTextId], 1, i * 2 + 1);
 #ifndef NONMATCHING
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
-            asm(""::"r"(newPos));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
+            asm(""::"r"(firstVisibleItem));
 #endif
         }
     }
-    return flag;
+    return didScroll;
 }
 
-void UpdateElevatorMenuScrollIndicators(u8 newPos, u8 maxItems)
+void UpdateElevatorMenuScrollIndicators(u8 firstVisibleItem, u8 maxVisibleItems)
 {
-    if (newPos == 0)
+    if (firstVisibleItem == 0)
     {
         gScrollableMenuArrowFlags ^= 0x02;
         DestroyVerticalScrollIndicator(TOP_ARROW);
@@ -1206,11 +1219,11 @@ void UpdateElevatorMenuScrollIndicators(u8 newPos, u8 maxItems)
     {
         CreateElevatorMenuTopArrow();
     }
-    if (newPos + maxItems < gScrollableMenuItemCount)
+    if (firstVisibleItem + maxVisibleItems < gScrollableMenuItemCount)
     {
         CreateElevatorMenuBottomArrow();
     }
-    else if (newPos + maxItems == gScrollableMenuItemCount)
+    else if (firstVisibleItem + maxVisibleItems == gScrollableMenuItemCount)
     {
         gScrollableMenuArrowFlags ^= 0x01;
         DestroyVerticalScrollIndicator(BOTTOM_ARROW);
@@ -1729,9 +1742,9 @@ u8 TryUpdateRusturfTunnelState(void)
     return FALSE;
 }
 
-void SetShoalItemFlag(u16 v0)
+void SetShoalItemFlag(u16 unused)
 {
-    FlagSet(0x85f);
+    FlagSet(FLAG_SYS_SHOAL_ITEM);
 }
 
 void LoadWallyZigzagoon(void)
