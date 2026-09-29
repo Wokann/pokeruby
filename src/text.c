@@ -1207,7 +1207,7 @@ const struct WindowTemplate gWindowTemplate_81E6FD8 =
     BG_SCREEN_ADDR(24), // tilemap
 };
 
-const struct WindowTemplate gWindowTemplate_81E6FF4 =
+const struct WindowTemplate gContestMenuWindowTemplate =
 {
     0, // BG number
     0, // BG character base block

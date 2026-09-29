@@ -151,7 +151,7 @@ void InitContestWindows(void)
 {
     Text_LoadWindowTemplate(&gWindowTemplate_81E6FD8);
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gWindowTemplate_81E6FD8);
-    Text_InitWindowWithTemplate(&gMenuWindow, &gWindowTemplate_81E6FF4);
+    Text_InitWindowWithTemplate(&gMenuWindow, &gContestMenuWindowTemplate);
 }
 
 void LoadContestPalettes(void)
