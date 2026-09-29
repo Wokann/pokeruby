@@ -1184,9 +1184,9 @@ static void CB2_CreateTradeMenu(void)
             sTradeMenu->partyCounts[0] = gPlayerPartyCount;
             sTradeMenu->partyCounts[1] = gEnemyPartyCount;
             for (i = 0; i < sTradeMenu->partyCounts[0]; i ++)
-                sTradeMenu->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2), SpriteCB_PokemonIcon, gTradeMonSpriteCoords[i][0] * 8 + 14, gTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+                sTradeMenu->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2), SpriteCB_MonIcon, gTradeMonSpriteCoords[i][0] * 8 + 14, gTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
             for (i = 0; i < sTradeMenu->partyCounts[1]; i ++)
-                sTradeMenu->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_PokemonIcon, gTradeMonSpriteCoords[6 + i][0] * 8 + 14, gTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
+                sTradeMenu->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_MonIcon, gTradeMonSpriteCoords[6 + i][0] * 8 + 14, gTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
             nullsub_5(2, 0);
             gMain.state ++;
             break;
@@ -1334,9 +1334,9 @@ static void CB2_ReturnToTradeMenu(void)
             PrintPartyNicknames(0);
             PrintPartyNicknames(1);
             for (i = 0; i < sTradeMenu->partyCounts[0]; i ++)
-                sTradeMenu->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_PokemonIcon, gTradeMonSpriteCoords[i][0] * 8 + 14, gTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
+                sTradeMenu->partySpriteIds[0][i] = CreateMonIcon(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_MonIcon, gTradeMonSpriteCoords[i][0] * 8 + 14, gTradeMonSpriteCoords[i][1] * 8 - 12, TRUE, GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY));
             for (i = 0; i < sTradeMenu->partyCounts[1]; i ++)
-                sTradeMenu->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_PokemonIcon, gTradeMonSpriteCoords[6 + i][0] * 8 + 14, gTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
+                sTradeMenu->partySpriteIds[1][i] = CreateMonIcon(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES2, NULL), SpriteCB_MonIcon, gTradeMonSpriteCoords[6 + i][0] * 8 + 14, gTradeMonSpriteCoords[6 + i][1] * 8 - 12, TRUE, GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY));
             nullsub_5(2, 0);
             gMain.state ++;
             break;
@@ -2293,7 +2293,7 @@ static void DrawSelectedMonScreen(u8 a0)
             gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]].data[0] = 20;
             gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]].data[2] = (gTradeMonSpriteCoords[6 * whichParty + whichPokemon][0] + gTradeMonSpriteCoords[6 * whichParty + whichPokemon + 1][0]) / 2 * 8 + 14;
             gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]].data[4] = gTradeMonSpriteCoords[6 * whichParty + whichPokemon][1] * 8 - 12;
-            StoreSpriteCallbackInData6(&gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]], SpriteCB_PokemonIcon);
+            StoreSpriteCallbackInData6(&gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]], SpriteCB_MonIcon);
             sTradeMenu->drawSelectedMonState[a0] ++;
             Trade_MoveSelectedMonToTarget(&gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]]);
             Menu_DestroyCursor();
@@ -2305,7 +2305,7 @@ static void DrawSelectedMonScreen(u8 a0)
             }
             break;
         case 2:
-            if (gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]].callback == SpriteCB_PokemonIcon)
+            if (gSprites[sTradeMenu->partySpriteIds[whichParty][whichPokemon]].callback == SpriteCB_MonIcon)
             {
                 sTradeMenu->drawSelectedMonState[a0] = 3;
             }
@@ -2506,7 +2506,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tadds r0, r1\n"
                     "\tlsls r0, 2\n"
                     "\tadds r0, r7\n"
-                    "\tldr r1, _0804A0A0 @ =SpriteCB_PokemonIcon\n"
+                    "\tldr r1, _0804A0A0 @ =SpriteCB_MonIcon\n"
                     "\tbl StoreSpriteCallbackInData6\n"
                     "\tldr r2, _0804A09C @ =sTradeMenu\n"
                     "\tldr r1, [r2]\n"
@@ -2569,7 +2569,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "_0804A094: .4byte gSprites\n"
                     "_0804A098: .4byte gTradeMonSpriteCoords\n"
                     "_0804A09C: .4byte sTradeMenu\n"
-                    "_0804A0A0: .4byte SpriteCB_PokemonIcon\n"
+                    "_0804A0A0: .4byte SpriteCB_MonIcon\n"
                     "_0804A0A4: .4byte sTradePartyWindowColumnBounds\n"
                     "_0804A0A8: .4byte gTradePartyBoxTilemap\n"
                     "_0804A0AC:\n"
@@ -2589,7 +2589,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tadds r2, 0x1C\n"
                     "\tadds r0, r2\n"
                     "\tldr r1, [r0]\n"
-                    "\tldr r0, _0804A0E0 @ =SpriteCB_PokemonIcon\n"
+                    "\tldr r0, _0804A0E0 @ =SpriteCB_MonIcon\n"
                     "\tcmp r1, r0\n"
                     "\tbeq _0804A0D4\n"
                     "\tb _0804A294\n"
@@ -2599,7 +2599,7 @@ static void DrawSelectedMonScreen(u8 a0)
                     "\tb _0804A294\n"
                     "\t.align 2, 0\n"
                     "_0804A0DC: .4byte gSprites\n"
-                    "_0804A0E0: .4byte SpriteCB_PokemonIcon\n"
+                    "_0804A0E0: .4byte SpriteCB_MonIcon\n"
                     "_0804A0E4:\n"
                     "\tadds r0, r5, 0\n"
                     "\tadds r0, 0xC8\n"

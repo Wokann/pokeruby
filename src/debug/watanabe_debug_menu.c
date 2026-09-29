@@ -2772,7 +2772,7 @@ void Task_WatanabeDebugLoadPokemonGraphics(u8 taskId)
     gSprites[gWatanabeGraphicsBrowserState->backSpriteId].callback = SpriteCB_WatanabeDebugDummy;
     gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.priority = 0;
 
-    gWatanabeGraphicsBrowserState->iconSpriteId = CreateMonIcon(gWatanabeGraphicsBrowserState->graphicsId, SpriteCB_PokemonIcon, 0x68, 0x2C, 0, 0);
+    gWatanabeGraphicsBrowserState->iconSpriteId = CreateMonIcon(gWatanabeGraphicsBrowserState->graphicsId, SpriteCB_MonIcon, 0x68, 0x2C, 0, 0);
 
     PrintFootprint(SpeciesToNationalPokedexNum(gWatanabeGraphicsBrowserState->graphicsId), 2, 0x3fc);
 
@@ -3180,7 +3180,7 @@ void Task_WatanabeDebugReloadPokemonGraphics(u8 taskId)
     DestroySprite(gSprites + gWatanabeGraphicsBrowserState->frontSpriteId);
     FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.paletteNum));
     DestroySprite(gSprites + gWatanabeGraphicsBrowserState->backSpriteId);
-    sub_809D510(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
+    FreeAndDestroyMonIconSprite(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
     gTasks[taskId].func = Task_WatanabeDebugLoadPokemonGraphics;
 }
 
@@ -3771,7 +3771,7 @@ void Task_WatanabeDebugReloadTrainerGraphics(u8 taskId)
     DestroySprite(gSprites + gWatanabeGraphicsBrowserState->frontSpriteId);
     FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(gSprites[gWatanabeGraphicsBrowserState->backSpriteId].oam.paletteNum));
     DestroySprite(gSprites + gWatanabeGraphicsBrowserState->backSpriteId);
-    sub_809D510(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
+    FreeAndDestroyMonIconSprite(gSprites + gWatanabeGraphicsBrowserState->iconSpriteId);
     gTasks[taskId].func = Task_WatanabeDebugLoadTrainerGraphics;
 }
 

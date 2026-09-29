@@ -2268,7 +2268,7 @@ void CreatePartyMenuMonIcon(u8 taskId, u8 monIndex, u8 menuType, struct Pokemon 
     u16 species2 = GetMonData(pokemon, MON_DATA_SPECIES2);
     u32 personality = GetMonData(pokemon, MON_DATA_PERSONALITY);
 
-    u8 spriteId = CreateMonIcon(species2, SpriteCB_PokemonIcon, x, y, 5, personality);
+    u8 spriteId = CreateMonIcon(species2, SpriteCB_MonIcon, x, y, 5, personality);
     SetMonIconSpriteId(taskId, monIndex, spriteId);
     SetMonIconAnim(spriteId, pokemon);
 }
@@ -2297,7 +2297,7 @@ void CreateMonIcon_LinkMultiBattle(u8 taskId, u8 monIndex, u8 menuType, struct M
     u8 x = gUnknown_08376678[menuType][monIndex].x;
     u8 y = gUnknown_08376678[menuType][monIndex].y;
 
-    u8 spriteId = CreateMonIcon(pokemon->species, SpriteCB_PokemonIcon, x, y, 5, pokemon->personality);
+    u8 spriteId = CreateMonIcon(pokemon->species, SpriteCB_MonIcon, x, y, 5, pokemon->personality);
     SetMonIconSpriteId(taskId, monIndex, spriteId);
     SetMonIconAnimByHP(spriteId, pokemon->hp, pokemon->maxhp);
 }

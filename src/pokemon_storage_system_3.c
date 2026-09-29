@@ -663,7 +663,7 @@ static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s
     u16 tileNum;
     u8 spriteId;
 
-    species = mon_icon_convert_unown_species_id(species, personality);
+    species = GetIconSpecies(species, personality);
     template.paletteTag = 0xdac0 + gMonIconPaletteIndices[species];
     tileNum = TryLoadMonIconTiles(species);
     if (tileNum == 0xFFFF)

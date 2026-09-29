@@ -491,18 +491,18 @@ static u8 MailReadBuildGraphics(void)
     {
         u16 iconSpecies;
 
-        iconSpecies = sub_809D4A8(sMailRead->mail->species);
+        iconSpecies = GetIconSpeciesNoPersonality(sMailRead->mail->species);
 
         switch (sMailRead->iconType)
         {
         case ICON_TYPE_BEAD:
-            sub_809D580(iconSpecies);
-            sMailRead->monIconSpriteId = sub_809D3A4(iconSpecies, SpriteCallbackDummy, 96, 128, 0);
+            LoadMonIconPalette(iconSpecies);
+            sMailRead->monIconSpriteId = CreateMonIconNoPersonality(iconSpecies, SpriteCallbackDummy, 96, 128, 0);
             break;
 
         case ICON_TYPE_DREAM:
-            sub_809D580(iconSpecies);
-            sMailRead->monIconSpriteId = sub_809D3A4(iconSpecies, SpriteCallbackDummy, 40, 128, 0);
+            LoadMonIconPalette(iconSpecies);
+            sMailRead->monIconSpriteId = CreateMonIconNoPersonality(iconSpecies, SpriteCallbackDummy, 40, 128, 0);
             break;
         }
         RETURN_UP_STATE;
@@ -660,8 +660,8 @@ static void CB2_ExitMailReadFreeVars(void)
         {
         case ICON_TYPE_DREAM:
         case ICON_TYPE_BEAD:
-            sub_809D608(sub_809D4A8(sMailRead->mail->species));
-            sub_809D510(&gSprites[sMailRead->monIconSpriteId]);
+            FreeMonIconPalette(GetIconSpeciesNoPersonality(sMailRead->mail->species));
+            FreeAndDestroyMonIconSprite(&gSprites[sMailRead->monIconSpriteId]);
             break;
         }
 #if !DEBUG
