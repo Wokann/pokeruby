@@ -107,6 +107,8 @@ $(MENUGFXDIR)/party_menu_misc.4bpp: GFX_OPTS := -num_tiles 116
 
 $(MENUGFXDIR)/status_screen.4bpp: GFX_OPTS := -num_tiles 217
 
+$(MENUGFXDIR)/mon_markings_menu.4bpp: GFX_OPTS := -num_tiles 41
+
 $(MENUGFXDIR)/hp_numbers.4bpp: $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp
 	@cat $(MENUGFXDIR)/hpbar_anim.4bpp $(MENUGFXDIR)/numbers1.4bpp $(MENUGFXDIR)/numbers2.4bpp >$@
 
@@ -128,8 +130,6 @@ $(PKNAVGFXDIR)/outline.4bpp: GFX_OPTS := -num_tiles 43
 
 $(PKNAVGFXDIR)/options/main_menu_labels.4bpp: $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/options/trainers_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp
 	@cat $(PKNAVGFXDIR)/options/hoenn_map.4bpp $(PKNAVGFXDIR)/options/condition.4bpp $(PKNAVGFXDIR)/options/trainers_eyes.4bpp $(PKNAVGFXDIR)/options/ribbons.4bpp $(PKNAVGFXDIR)/options/switch_off.4bpp >$@
-
-$(PKNAVGFXDIR)/condition_menu_misc.4bpp: GFX_OPTS := -num_tiles 41
 
 $(PKNAVGFXDIR)/options/condition_search_labels.4bpp: $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp
 	@cat $(PKNAVGFXDIR)/options/cool.4bpp $(PKNAVGFXDIR)/options/beauty.4bpp $(PKNAVGFXDIR)/options/cute.4bpp $(PKNAVGFXDIR)/options/smart.4bpp $(PKNAVGFXDIR)/options/tough.4bpp $(PKNAVGFXDIR)/options/cancel.4bpp >$@

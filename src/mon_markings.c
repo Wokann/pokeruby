@@ -1,4 +1,5 @@
 #include "global.h"
+#include "graphics.h"
 #include "main.h"
 #include "menu_cursor.h"
 #include "text_window.h"
@@ -12,9 +13,6 @@
 #else
 #define MENU_TEXT_SPRITE_X_OFFSET 32
 #endif
-
-extern u8 gPokenavConditionMenuMisc_Gfx[];
-extern u16 gUnknown_08E966B8[];
 
 static const u16 sMonMarkings_Pal[] = INCBIN_U16("graphics/misc/mon_markings.gbapal");
 static const u8 sMonMarkings_Gfx[] = INCBIN_U8("graphics/misc/mon_markings.4bpp");
@@ -398,7 +396,7 @@ bool8 HandleMonMarkingsMenuInput(void)
     struct SpriteSheet sheets[3] =
     {
         { sMenu->windowSpriteTiles, 0x1000, sMenu->baseTileTag },
-        { gPokenavConditionMenuMisc_Gfx, 0x520, sMenu->baseTileTag + 1 },
+        { gMonMarkingsMenu_Gfx, 0x520, sMenu->baseTileTag + 1 },
         { NULL, 0, 0 }
     };
 
@@ -464,14 +462,14 @@ static void CreateMonMarkingsMenuSprites(s16 x, s16 y, u16 baseTileTag, u16 base
     struct SpriteSheet sheets[] =
     {
         { sMenu->windowSpriteTiles, 0x1000, baseTileTag },
-        { gPokenavConditionMenuMisc_Gfx, 0x520, baseTileTag + 1 },
+        { gMonMarkingsMenu_Gfx, 0x520, baseTileTag + 1 },
         { NULL, 0 }
     };
 
     struct SpritePalette palettes[] =
     {
         { sMenu->framePalette, basePaletteTag },
-        { gUnknown_08E966B8, basePaletteTag + 1},
+        { gMonMarkingsMenu_Pal, basePaletteTag + 1},
         { NULL, 0 }
     };
 

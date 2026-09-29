@@ -1062,7 +1062,7 @@ const u8 gPokenavConditionCancel_Gfx[] = INCBIN_U8("graphics/pokenav/condition/c
 const u8 gPokenavConditionPokeball_Pal[] = INCBIN_U8("graphics/pokenav/condition/pokeball.gbapal");//
 const u16 gPokenavConditionCancel_Pal[] = INCBIN_U16("graphics/pokenav/condition/cancel.gbapal");
 const u8 gPokenavConditionHeaderLabels2_Gfx[] = INCBIN_U8("graphics/pokenav/left_headers/condition_labels_2.4bpp.lz");
-const u8 gPokenavConditionMenuMisc_Gfx[] = INCBIN_U8("graphics/pokenav/condition_menu_misc.4bpp");
+const u8 gMonMarkingsMenu_Gfx[] = INCBIN_U8("graphics/interface/mon_markings_menu.4bpp");
 const u16 gPokenavCondition5_Pal[] = INCBIN_U16("graphics/pokenav/condition5.gbapal");
 const u8 gPokenavConditionSearch_Gfx[] = INCBIN_U8("graphics/pokenav/options/condition_search_labels.4bpp.lz");
 const u16 gPokenavCondition6_Pal[] = INCBIN_U16("graphics/pokenav/condition6.gbapal");
@@ -1165,7 +1165,7 @@ const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/ruby.gbapal")
 const u8 gSlotMachineMenu_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E95AB8.bin");
 const u8 gSlotMachineInfoBox_Tilemap[] = INCBIN_U8("graphics/slot_machine/slots_layout.bin");
 const u8 gContestResultsTitleWords_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/title_words.bin");
-const u16 gUnknown_08E966B8[] = INCBIN_U16("graphics/unknown/unknown_E966B8.gbapal");
+const u16 gMonMarkingsMenu_Pal[] = INCBIN_U16("graphics/interface/mon_markings_menu.gbapal");
 
 const u16 gMonIconPalettes[][16] = 
 {
