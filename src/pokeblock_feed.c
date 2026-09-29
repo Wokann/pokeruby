@@ -43,6 +43,21 @@ enum
 
 enum
 {
+    AFFINE_NONE,
+    AFFINE_TURN_UP,
+    AFFINE_TURN_UP_AND_DOWN,
+    AFFINE_TURN_DOWN,
+    AFFINE_TURN_DOWN_SLOW,
+    AFFINE_TURN_DOWN_SLIGHT,
+    AFFINE_TURN_UP_HIGH,
+    AFFINE_UNUSED_1,
+    AFFINE_UNUSED_2,
+    AFFINE_UNUSED_3,
+    NUM_MON_AFFINES,
+};
+
+enum
+{
     NATURE_ANIM_ID,
     NATURE_AFFINE_ANIM,
 };
@@ -50,7 +65,34 @@ enum
 #define MON_X 48
 #define MON_Y 80
 #define TAG_POKEBLOCK 14818
-#define NUM_MON_AFFINES 10
+
+// The animation the Pokémon does during the feeding scene depends on its nature.
+// These values are offsets into sMonPokeblockAnims.
+#define ANIM_HARDY   0
+#define ANIM_LONELY  (ANIM_HARDY + 3)
+#define ANIM_BRAVE   (ANIM_LONELY + 1)
+#define ANIM_ADAMANT (ANIM_BRAVE + 1)
+#define ANIM_NAUGHTY (ANIM_ADAMANT + 5)
+#define ANIM_BOLD    (ANIM_NAUGHTY + 3)
+#define ANIM_DOCILE  (ANIM_BOLD + 2)
+#define ANIM_RELAXED (ANIM_DOCILE + 1)
+#define ANIM_IMPISH  (ANIM_RELAXED + 2)
+#define ANIM_LAX     (ANIM_IMPISH + 1)
+#define ANIM_TIMID   (ANIM_LAX + 1)
+#define ANIM_HASTY   (ANIM_TIMID + 5)
+#define ANIM_SERIOUS (ANIM_HASTY + 2)
+#define ANIM_JOLLY   (ANIM_SERIOUS + 1)
+#define ANIM_NAIVE   (ANIM_JOLLY + 1)
+#define ANIM_MODEST  (ANIM_NAIVE + 4)
+#define ANIM_MILD    (ANIM_MODEST + 3)
+#define ANIM_QUIET   (ANIM_MILD + 1)
+#define ANIM_BASHFUL (ANIM_QUIET + 2)
+#define ANIM_RASH    (ANIM_BASHFUL + 3)
+#define ANIM_CALM    (ANIM_RASH + 3)
+#define ANIM_GENTLE  (ANIM_CALM + 1)
+#define ANIM_SASSY   (ANIM_GENTLE + 1)
+#define ANIM_CAREFUL (ANIM_SASSY + 1)
+#define ANIM_QUIRKY  (ANIM_CAREFUL + 5)
 
 #define STATE_START_THROW 255
 #define STATE_SPAWN_PBLOCK (STATE_START_THROW + 14)
@@ -122,31 +164,31 @@ s16 sAnimData[24];
 
 static const u8 sNatureToMonPokeblockAnim[][2] =
 {
-    {  0, 0 }, // HARDY
-    {  3, 0 }, // LONELY
-    {  4, 1 }, // BRAVE
-    {  5, 0 }, // ADAMANT
-    { 10, 0 }, // NAUGHTY
-    { 13, 0 }, // BOLD
-    { 15, 0 }, // DOCILE
-    { 16, 2 }, // RELAXED
-    { 18, 0 }, // IMPISH
-    { 19, 0 }, // LAX
-    { 20, 0 }, // TIMID
-    { 25, 0 }, // HASTY
-    { 27, 3 }, // SERIOUS
-    { 28, 0 }, // JOLLY
-    { 29, 0 }, // NAIVE
-    { 33, 4 }, // MODEST
-    { 36, 0 }, // MILD
-    { 37, 0 }, // QUIET
-    { 39, 0 }, // BASHFUL
-    { 42, 0 }, // RASH
-    { 45, 0 }, // CALM
-    { 46, 5 }, // GENTLE
-    { 47, 6 }, // SASSY
-    { 48, 0 }, // CAREFUL
-    { 53, 0 }, // QUIRKY
+    { ANIM_HARDY,   AFFINE_NONE },             // HARDY
+    { ANIM_LONELY,  AFFINE_NONE },             // LONELY
+    { ANIM_BRAVE,   AFFINE_TURN_UP },          // BRAVE
+    { ANIM_ADAMANT, AFFINE_NONE },             // ADAMANT
+    { ANIM_NAUGHTY, AFFINE_NONE },             // NAUGHTY
+    { ANIM_BOLD,    AFFINE_NONE },             // BOLD
+    { ANIM_DOCILE,  AFFINE_NONE },             // DOCILE
+    { ANIM_RELAXED, AFFINE_TURN_UP_AND_DOWN }, // RELAXED
+    { ANIM_IMPISH,  AFFINE_NONE },             // IMPISH
+    { ANIM_LAX,     AFFINE_NONE },             // LAX
+    { ANIM_TIMID,   AFFINE_NONE },             // TIMID
+    { ANIM_HASTY,   AFFINE_NONE },             // HASTY
+    { ANIM_SERIOUS, AFFINE_TURN_DOWN },        // SERIOUS
+    { ANIM_JOLLY,   AFFINE_NONE },             // JOLLY
+    { ANIM_NAIVE,   AFFINE_NONE },             // NAIVE
+    { ANIM_MODEST,  AFFINE_TURN_DOWN_SLOW },   // MODEST
+    { ANIM_MILD,    AFFINE_NONE },             // MILD
+    { ANIM_QUIET,   AFFINE_NONE },             // QUIET
+    { ANIM_BASHFUL, AFFINE_NONE },             // BASHFUL
+    { ANIM_RASH,    AFFINE_NONE },             // RASH
+    { ANIM_CALM,    AFFINE_NONE },             // CALM
+    { ANIM_GENTLE,  AFFINE_TURN_DOWN_SLIGHT }, // GENTLE
+    { ANIM_SASSY,   AFFINE_TURN_UP_HIGH },     // SASSY
+    { ANIM_CAREFUL, AFFINE_NONE },             // CAREFUL
+    { ANIM_QUIRKY,  AFFINE_NONE },             // QUIRKY
 };
 
 static const s16 sMonPokeblockAnims[][NUM_ANIMDATA] =
