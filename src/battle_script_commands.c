@@ -8,6 +8,7 @@
 #include "battle_util.h"
 #include "constants/battle_move_effects.h"
 #include "constants/moves.h"
+#include "constants/party_menu.h"
 #include "constants/abilities.h"
 #include "item.h"
 #include "constants/items.h"
@@ -154,8 +155,6 @@ bool8 IsTradedMon(struct Pokemon*);
 void BattleScriptPop(void);
 void SwitchInClearSetData(void);
 u16 SpeciesToNationalPokedexNum(u16 species);
-u8 sub_803FC34(u8 bank);
-u16 sub_803FBFC(u8 a);
 u8 GetBattlerAtPosition(u8 ID);
 void SwitchPartyOrder(u8);
 //MonTryLearningNewMove teach poke a move
@@ -4718,7 +4717,7 @@ static void atk4F_jumpifcantswitch(void)
         else
             party = gPlayerParty;
         val = 0;
-        if (sub_803FBFC(sub_803FC34(gActiveBattler)) == 1)
+        if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gActiveBattler)) == 1)
             val = 3;
         for (to_cmp = val + 3; val < to_cmp; val++)
         {
@@ -4771,7 +4770,7 @@ static void atk4F_jumpifcantswitch(void)
 void ChooseMonToSendOut(u8 unkown)
 {
     gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
-    BtlController_EmitChoosePokemon(0, 1, unkown, 0, gBattleStruct->unk1606C[gActiveBattler]);
+    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_OUT, unkown, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
@@ -5027,7 +5026,7 @@ static void atk50_openpartyscreen(void)
         {
             gActiveBattler = battlerId;
             gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
-            BtlController_EmitChoosePokemon(0, hitmarkerFaintBits, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + (gActiveBattler ^ 2)], ABILITY_NONE, gBattleStruct->unk1606C[gActiveBattler]);
+            BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, hitmarkerFaintBits, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + (gActiveBattler ^ 2)], ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
             MarkBattlerForControllerExec(gActiveBattler);
 
             gBattlescriptCurrInstr += 6;
@@ -5084,12 +5083,12 @@ static void atk51_switchhandleorder(void)
         gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gActiveBattler] = gBattleBufferB[gActiveBattler][1];
         if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] &= 0xF;
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
-            gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] &= 0xF;
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
         }
         else
             SwitchPartyOrder(gActiveBattler);
@@ -6749,7 +6748,7 @@ static void atk8F_forcerandomswitch(void)
         {
             valid = 0;
             val = 0;
-            if (sub_803FBFC(sub_803FC34(gBattlerTarget)) == 1)
+            if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == 1)
                 val = 3;
             for (i = val; i < val + 3; i++)
             {
@@ -6784,7 +6783,7 @@ static void atk8F_forcerandomswitch(void)
                 do
                 {
                     val = Random() % 3;
-                    if (sub_803FBFC(sub_803FC34(gBattlerTarget)) == 1)
+                    if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == 1)
                         i = val + 3;
                     else
                         i = val;

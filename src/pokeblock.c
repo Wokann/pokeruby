@@ -125,7 +125,7 @@ void (*const sExitCallbacksByCase[])(void) =
 {
     CB2_ReturnToBagMenu,
     CB2_ReturnToField,
-    sub_802E424,
+    CB2_SetUpReshowBattleScreenAfterMenu2,
     CB2_ReturnToField
 };
 

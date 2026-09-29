@@ -576,47 +576,49 @@ void EvolutionRenameMon(struct Pokemon *mon, u16 oldSpecies, u16 newSpecies)
 #endif
 }
 
-bool8 sub_803FBBC(void)
+// The below two functions determine which side of a multi battle the trainer battles on.
+// 0 is the left (top in party menu), 1 is right (bottom in party menu).
+u8 GetPlayerFlankId(void)
 {
-    bool8 retVal = FALSE;
+    u8 flankId = 0;
     switch (gLinkPlayers[GetMultiplayerId()].id)
     {
     case 0:
     case 3:
-        retVal = FALSE;
+        flankId = 0;
         break;
     case 1:
     case 2:
-        retVal = TRUE;
+        flankId = 1;
         break;
     }
-    return retVal;
+    return flankId;
 }
 
-bool8 sub_803FBFC(u8 id)
+u16 GetLinkTrainerFlankId(u8 linkPlayerId)
 {
-    bool8 retVal = FALSE;
-    switch (gLinkPlayers[id].id)
+    u16 flankId = 0;
+    switch (gLinkPlayers[linkPlayerId].id)
     {
     case 0:
     case 3:
-        retVal = FALSE;
+        flankId = 0;
         break;
     case 1:
     case 2:
-        retVal = TRUE;
+        flankId = 1;
         break;
     }
-    return retVal;
+    return flankId;
 }
 
-s32 sub_803FC34(u16 a1)
+s32 GetBattlerMultiplayerId(u16 battlerId)
 {
-    s32 id;
-    for (id = 0; id < MAX_LINK_PLAYERS; id++)
-        if (gLinkPlayers[id].id == a1)
+    s32 multiplayerId;
+    for (multiplayerId = 0; multiplayerId < MAX_LINK_PLAYERS; multiplayerId++)
+        if (gLinkPlayers[multiplayerId].id == battlerId)
             break;
-    return id;
+    return multiplayerId;
 }
 
 u8 GetTrainerEncounterMusicId(u16 trainerOpponentId)
@@ -1357,10 +1359,10 @@ bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
     return retVal;
 }
 
-u8 *sub_8040D08(void)
+const u8 *GetTrainerPartnerName(void)
 {
     u8 id = GetMultiplayerId();
-    return gLinkPlayers[sub_803FC34(gLinkPlayers[id].id ^ 2)].name;
+    return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[id].id ^ 2)].name;
 }
 
 const u8 gJapaneseNidoranNames[][11] = {_("ニドラン♂"), _("ニドラン♀")};

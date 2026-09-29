@@ -1,6 +1,7 @@
 #ifndef GUARD_PARTY_MENU_H
 #define GUARD_PARTY_MENU_H
 
+#include "constants/party_menu.h"
 #include "menu.h"
 #include "task.h"
 
@@ -15,16 +16,6 @@ enum
     PARTY_MENU_TYPE_LINK_MULTI_BATTLE,
     PARTY_MENU_TYPE_DAYCARE,
     PARTY_MENU_TYPE_MOVE_RELEARNER,
-};
-
-enum
-{
-    PARTY_CHOOSE_MON,
-    PARTY_MUST_CHOOSE_MON,
-    PARTY_CANT_SWITCH,
-    PARTY_USE_ITEM_ON,
-    PARTY_ABILITY_PREVENTS,
-    PARTY_GIVE_ITEM,
 };
 
 // The party menu screen is presented differently depending on which menu layout is set.
@@ -54,7 +45,7 @@ struct PartyPopupMenu
 
 struct Unk201B000
 {
-    struct Pokemon unk0[6];
+    struct Pokemon partyBuffer[PARTY_SIZE];
     u8 menuType;
     u8 promptTextId;
     TaskFunc menuHandler;
@@ -93,6 +84,8 @@ struct PartyMenu
     /*0x10*/ TaskFunc unk10;
     /*0x14*/ TaskFunc unk14;
 };
+
+extern u8 gSelectedMonPartyId;
 
 void CB2_PartyMenuMain(void);
 void ChangeBattleTowerPartyMenuSelection(u8 taskId, s8 directionPressed);

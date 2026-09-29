@@ -50,7 +50,6 @@ struct FieldMoveCursorCallback
 
 extern u8 gIsDebugMode;
 extern u8 gUnknown_0202E8F4;
-extern u8 gUnknown_0202E8F5;
 extern bool8 gPartyMenuMessage_IsPrinting;
 extern u8 gPokemonItemUseType;
 extern u16 gUnknown_0202E8F8;
@@ -595,7 +594,7 @@ static void Task_OpenBagMenuFromParty(u8 taskId)
 
 static void PokemonMenu_GiveItem(u8 taskId)
 {
-    gUnknown_0202E8F5 = GetCursorSelectionMonId(taskId);
+    gSelectedMonPartyId = GetCursorSelectionMonId(taskId);
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
     gTasks[taskId].func = Task_OpenBagMenuFromParty;
 }

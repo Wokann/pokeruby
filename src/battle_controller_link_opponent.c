@@ -64,7 +64,7 @@ extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void HideBattlerShadowSprite(u8 battler);
 extern void sub_8037BBC(void);
-extern s32 sub_803FC34(u16);
+extern s32 GetBattlerMultiplayerId(u16);
 extern void sub_8031A6C(u16, u8);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_803757C(void);
@@ -1239,7 +1239,7 @@ void LinkOpponentHandleTrainerThrow(void)
             xOffset = -16;
         else
             xOffset = 16;
-        gender = gLinkPlayers[sub_803FC34(gActiveBattler)].gender;
+        gender = gLinkPlayers[GetBattlerMultiplayerId(gActiveBattler)].gender;
     }
     else
     {

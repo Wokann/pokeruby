@@ -358,7 +358,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
     /*0x16064*/ u8 unk16064[MAX_BATTLERS_COUNT];
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
-    /*0x1606C*/ u8 unk1606C[MAX_BATTLERS_COUNT][3];
+    /*0x1606C*/ u8 battlerPartyOrders[MAX_BATTLERS_COUNT][PARTY_SIZE / 2];
     /*0x16078*/ u8 runTries;
     /*0x16079*/ u8 caughtNick[POKEMON_NAME_LENGTH + 1];
     /*0x16084*/ u8 battleStyle;
@@ -375,7 +375,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16098*/ u8 unk16098[3]; // unused
     /*0x1609B*/ u8 castformToChangeInto;
     /*0x1609C*/ u8 atk6C_statetracker;
-    /*0x1609D*/ u8 unk1609D;
+    /*0x1609D*/ u8 prevSelectedPartySlot;
     /*0x1609E*/ u8 dbgAICycleMoveTracker[2]; // debug
     /*0x160A0*/ u8 stringMoveType;
     /*0x160A1*/ u8 animTargetsHit;
@@ -692,8 +692,8 @@ void sub_802C098();
 void Task_PlayerController_RestoreBgmAfterCry(u8);
 void sub_802E3E4(u8, int);
 void nullsub_8(u8);
-void sub_802E414(void);
-void sub_802E424(void);
+void CB2_SetUpReshowBattleScreenAfterMenu(void);
+void CB2_SetUpReshowBattleScreenAfterMenu2(void);
 
 // asm/battle_7.o
 void InitAndLaunchSpecialAnimation(u8 a, u8 b, u8 c, u8 d);

@@ -152,7 +152,6 @@ extern u8 gHealthboxSpriteIds[];
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gBattleControllerData[];
 extern u8 gUnknown_0202E8F4;
-extern u8 gUnknown_0202E8F5;
 extern u8 gBattlePartyCurrentOrder[];
 extern u16 gSpecialVar_ItemId;
 extern u8 gDisplayedStringBattle[];
@@ -1522,7 +1521,7 @@ void sub_802DF88(void)
     if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
     {
         if (gUnknown_0202E8F4 == 1)
-            BtlController_EmitChosenMonReturnValue(1, gUnknown_0202E8F5, gBattlePartyCurrentOrder);
+            BtlController_EmitChosenMonReturnValue(1, gSelectedMonPartyId, gBattlePartyCurrentOrder);
         else
             BtlController_EmitChosenMonReturnValue(1, 6, NULL);
         if ((gBattleBufferA[gActiveBattler][1] & 0xF) == 1)
@@ -1693,12 +1692,12 @@ void nullsub_8(u8 a)
 {
 }
 
-void sub_802E414(void)
+void CB2_SetUpReshowBattleScreenAfterMenu(void)
 {
     SetMainCallback2(ReshowBattleScreenAfterMenu);
 }
 
-void sub_802E424(void)
+void CB2_SetUpReshowBattleScreenAfterMenu2(void)
 {
     SetMainCallback2(ReshowBattleScreenAfterMenu);
 }
@@ -2669,7 +2668,7 @@ void PlayerHandlecmd22(void)
     gBattleControllerData[gActiveBattler] = CreateTask(TaskDummy, 0xFF);
     gTasks[gBattleControllerData[gActiveBattler]].data[0] = gBattleBufferA[gActiveBattler][1] & 0xF;
     gBattleStruct->battlerPreventingSwitchout = gBattleBufferA[gActiveBattler][1] >> 4;
-    gBattleStruct->unk1609D = gBattleBufferA[gActiveBattler][2];
+    gBattleStruct->prevSelectedPartySlot = gBattleBufferA[gActiveBattler][2];
     gBattleStruct->abilityPreventingSwitchout = gBattleBufferA[gActiveBattler][3];
     for (i = 0; i < 3; i++)
         gBattlePartyCurrentOrder[i] = gBattleBufferA[gActiveBattler][4 + i];

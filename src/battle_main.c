@@ -4185,7 +4185,7 @@ void SwitchPartyOrder(u8 battler)
     u8 partyId2;
 
     for (i = 0; i < 3; i++)
-        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3];
+        gBattlePartyCurrentOrder[i] = gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + battler * 3];
     partyId1 = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]);
     partyId2 = GetPartyIdFromBattlePartyId(gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + battler]);
     SwitchPartyMonSlots(partyId1, partyId2);
@@ -4193,8 +4193,8 @@ void SwitchPartyOrder(u8 battler)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3] = gBattlePartyCurrentOrder[i];
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + (battler ^ BIT_FLANK) * 3] =
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + battler * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + (battler ^ BIT_FLANK) * 3] =
                 gBattlePartyCurrentOrder[i];
         }
     }
@@ -4202,7 +4202,7 @@ void SwitchPartyOrder(u8 battler)
     {
         for (i = 0; i < 3; i++)
         {
-            gSharedMem[BSTRUCT_OFF(unk1606C) + i + battler * 3] = gBattlePartyCurrentOrder[i];
+            gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + i + battler * 3] = gBattlePartyCurrentOrder[i];
         }
     }
 }
@@ -4326,7 +4326,7 @@ void HandleTurnActionSelectionState(void)
                             }
                             else
                             {
-                                BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChooseItem(B_COMM_TO_CONTROLLER, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                                 MarkBattlerForControllerExec(gActiveBattler);
                             }
                             break;
@@ -4335,7 +4335,7 @@ void HandleTurnActionSelectionState(void)
                             if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION)
                                 || gStatuses3[gActiveBattler] & STATUS3_ROOTED)
                             {
-                                BtlController_EmitChoosePokemon(0, 2, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CANT_SWITCH, PARTY_SIZE, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                             }
                             else if ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
                                      || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
@@ -4344,16 +4344,16 @@ void HandleTurnActionSelectionState(void)
                                      || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
                                          && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)))
                             {
-                                BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ABILITY_PREVENTS, 6, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, ((i - 1) << 4) | PARTY_ACTION_ABILITY_PREVENTS, PARTY_SIZE, gLastUsedAbility, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                             }
                             else
                             {
                                 if (gActiveBattler == 2 && gActionForBanks[0] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 0], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId)], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                                 else if (gActiveBattler == 3 && gActionForBanks[1] == B_ACTION_SWITCH)
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CHOOSE_MON, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + 1], ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                                 else
-                                    BtlController_EmitChoosePokemon(0, PARTY_CHOOSE_MON, 6, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                                    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CHOOSE_MON, PARTY_SIZE, ABILITY_NONE, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                             }
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
@@ -4368,7 +4368,7 @@ void HandleTurnActionSelectionState(void)
                             }
                             break;
                         case B_ACTION_SAFARI_POKEBLOCK:
-                            BtlController_EmitChooseItem(0, &gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0]);
+                            BtlController_EmitChooseItem(B_COMM_TO_CONTROLLER, &gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler]);
                             MarkBattlerForControllerExec(gActiveBattler);
                             break;
                         case B_ACTION_CANCEL_PARTNER:
@@ -4463,13 +4463,13 @@ void HandleTurnActionSelectionState(void)
 
                                 if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
                                 {
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] &= 0xF;
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] &= 0xF;
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0);
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * gActiveBattler + 1] = gBattleBufferB[gActiveBattler][3];
 
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
-                                    gSharedMem[BSTRUCT_OFF(unk1606C) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] &= (0xF0);
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 0] |= (gBattleBufferB[gActiveBattler][2] & 0xF0) >> 4;
+                                    gSharedMem[BSTRUCT_OFF(battlerPartyOrders) + 3 * (gActiveBattler ^ BIT_FLANK) + 2] = gBattleBufferB[gActiveBattler][3];
                                 }
                                 gBattleCommunication[gActiveBattler]++;
                             }
