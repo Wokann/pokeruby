@@ -3,11 +3,11 @@
 
 #include "roulette.h"
 
-void RouletteFlash_Reset(struct UnkStruct0 *);
-u8 RouletteFlash_Add(struct UnkStruct0 *, u8, const struct UnkStruct1 *);
-void RouletteFlash_Run(struct UnkStruct0 *);
-void RouletteFlash_Enable(struct UnkStruct0 *, u16);
-void RouletteFlash_Stop(struct UnkStruct0 *, u16);
+void RouletteFlash_Reset(struct RouletteFlashUtil *flash);
+u8 RouletteFlash_Add(struct RouletteFlashUtil *flash, u8 id, const struct RouletteFlashSettings *settings);
+void RouletteFlash_Run(struct RouletteFlashUtil *flash);
+void RouletteFlash_Enable(struct RouletteFlashUtil *flash, u16 flags);
+void RouletteFlash_Stop(struct RouletteFlashUtil *flash, u16 flags);
 void FillTilemapRect(u16 *, u16, u8, u8, u8, u8);
 void SetTilemapRect(u16 *, u16 *, u8, u8, u8, u8);
 

@@ -743,7 +743,7 @@ void CreateGridSprites(void)
         u8 o = i * 24;
         for (j = 0; j < 4; j++)
         {
-            spriteid = eRoulette->var3C[29 + i * 4 + j] =
+            spriteid = eRoulette->spriteIds[29 + i * 4 + j] =
                 CreateSprite(&gSpriteTemplate_83FA07C[j], j * 24 + 148, o + 92, 30);
             gSprites[spriteid].animPaused = TRUE;
             o += 24;
@@ -753,13 +753,13 @@ void CreateGridSprites(void)
     }
     for (i = 0; i < 4; i++)
     {
-        spriteid = eRoulette->var3C[41 + i] =
+        spriteid = eRoulette->spriteIds[41 + i] =
             CreateSprite(&gSpriteTemplate_83F9FD4[i], (s16)(i * 24 + 148), 70, 30);
         gSprites[spriteid].animPaused = TRUE;
     }
     for (i = 0; i < 3; i++)
     {
-        spriteid = eRoulette->var3C[45 + i] =
+        spriteid = eRoulette->spriteIds[45 + i] =
             CreateSprite(&gSpriteTemplate_83FA034[i], 126, (s16)(i * 24 + 92), 30);
         gSprites[spriteid].animPaused = TRUE;
     }
@@ -769,7 +769,7 @@ void DestroyGridSprites(void) //destroy all sprites at 29
 {
     u8 i;
     for (i = 0; i < 12; i++)
-        DestroySprite(&gSprites[eRoulette->var3C[29 + i]]);
+        DestroySprite(&gSprites[eRoulette->spriteIds[29 + i]]);
 }
 
 void ShowHideGridIcons(u8 r0, u8 r1)
@@ -779,20 +779,20 @@ void ShowHideGridIcons(u8 r0, u8 r1)
     {
     case 1:
         for (i = 0; i < 19; i++)
-            gSprites[eRoulette->var3C[29 + i]].invisible = TRUE;
+            gSprites[eRoulette->spriteIds[29 + i]].invisible = TRUE;
         break;
     case 0:
         for (i = 0; i < 12; i++)
         {
-            if (!(eRoulette->var08 & sRouletteSlots[i].flag))
-                gSprites[eRoulette->var3C[29 + i]].invisible = FALSE;
+            if (!(eRoulette->hitFlags & sRouletteSlots[i].flag))
+                gSprites[eRoulette->spriteIds[29 + i]].invisible = FALSE;
             else if(!(sRouletteSlots[i].gridSquare == r1))
-                gSprites[eRoulette->var3C[29 + i]].invisible = TRUE;
+                gSprites[eRoulette->spriteIds[29 + i]].invisible = TRUE;
             else
-                gSprites[eRoulette->var3C[29 + i]].invisible = FALSE;
+                gSprites[eRoulette->spriteIds[29 + i]].invisible = FALSE;
         }
         for (; i < 19; i++)
-            gSprites[eRoulette->var3C[29 + i]].invisible = FALSE;
+            gSprites[eRoulette->spriteIds[29 + i]].invisible = FALSE;
         break;
     }
 }
@@ -802,12 +802,12 @@ void CreateGridBallSprites(void)
     u8 i;
     for (i = 0; i < 6; i++)
     {
-        eRoulette->var3C[49 + i] = CreateSprite(&gSpriteTemplate_83FA40C, 116, 20, 10);
-        gSprites[eRoulette->var3C[49 + i]].invisible    = TRUE;
-        gSprites[eRoulette->var3C[49 + i]].data[0]      = 1;
-        gSprites[eRoulette->var3C[49 + i]].callback     = SpriteCB_GridSquare;
-        gSprites[eRoulette->var3C[49 + i]].oam.priority = 1;
-        StartSpriteAnim(&gSprites[eRoulette->var3C[49 + i]], 8);
+        eRoulette->spriteIds[49 + i] = CreateSprite(&gSpriteTemplate_83FA40C, 116, 20, 10);
+        gSprites[eRoulette->spriteIds[49 + i]].invisible    = TRUE;
+        gSprites[eRoulette->spriteIds[49 + i]].data[0]      = 1;
+        gSprites[eRoulette->spriteIds[49 + i]].callback     = SpriteCB_GridSquare;
+        gSprites[eRoulette->spriteIds[49 + i]].oam.priority = 1;
+        StartSpriteAnim(&gSprites[eRoulette->spriteIds[49 + i]], 8);
     }
 }
 
@@ -817,21 +817,21 @@ void ShowHideGridBalls(u8 r0, u8 r1)
     if (r0)
     {
         for ( ; i < 6; i++)
-            gSprites[eRoulette->var3C[49 + i]].invisible = TRUE;
+            gSprites[eRoulette->spriteIds[49 + i]].invisible = TRUE;
     }
     else
     {
         for ( ; i < 6; i++)
         {
-            if (!(eRoulette->var0C[i]) || (i == r1))
+            if (!(eRoulette->hitSquares[i]) || (i == r1))
             {
-                gSprites[eRoulette->var3C[49 + i]].invisible = TRUE;
+                gSprites[eRoulette->spriteIds[49 + i]].invisible = TRUE;
             }
             else
             {
-                gSprites[eRoulette->var3C[49 + i]].invisible = FALSE;
-                gSprites[eRoulette->var3C[49 + i]].x         = (sGridSelections[eRoulette->var0C[i]].x + 1) * 8 + 4;
-                gSprites[eRoulette->var3C[49 + i]].y         = (sGridSelections[eRoulette->var0C[i]].y + 1) * 8 + 3;
+                gSprites[eRoulette->spriteIds[49 + i]].invisible = FALSE;
+                gSprites[eRoulette->spriteIds[49 + i]].x         = (sGridSelections[eRoulette->hitSquares[i]].x + 1) * 8 + 4;
+                gSprites[eRoulette->spriteIds[49 + i]].y         = (sGridSelections[eRoulette->hitSquares[i]].y + 1) * 8 + 3;
             }
         }
     }
@@ -841,13 +841,13 @@ void ShowHideWinSlotCursor(u8 r0)
 {
     if (!r0)
     {
-        gSprites[eRoulette->var3C[48]].invisible = TRUE;
+        gSprites[eRoulette->spriteIds[48]].invisible = TRUE;
     }
     else
     {
-        gSprites[eRoulette->var3C[48]].invisible = FALSE;
-        gSprites[eRoulette->var3C[48]].x    = (sGridSelections[r0].x + 2) * 8;
-        gSprites[eRoulette->var3C[48]].y    = (sGridSelections[r0].y + 2) * 8;
+        gSprites[eRoulette->spriteIds[48]].invisible = FALSE;
+        gSprites[eRoulette->spriteIds[48]].x    = (sGridSelections[r0].x + 2) * 8;
+        gSprites[eRoulette->spriteIds[48]].y    = (sGridSelections[r0].y + 2) * 8;
     }
 }
 
@@ -868,7 +868,7 @@ void CreateWheelIconSprites(void)
         {
             u8 spriteid;
             spriteid =
-                eRoulette->var3C[7 + i * 4 + j] = CreateWheelIconSprite(&gSpriteTemplate_83FA0DC[i * 4 + j], 40, &k);
+                eRoulette->spriteIds[7 + i * 4 + j] = CreateWheelIconSprite(&gSpriteTemplate_83FA0DC[i * 4 + j], 40, &k);
             gSprites[spriteid].animPaused       = TRUE;
             gSprites[spriteid].affineAnimPaused = TRUE;
         }
@@ -880,7 +880,7 @@ void SpriteCB_WheelIcon(struct Sprite *sprite)
     s16 cos;
     s16 sin;
     u32 matrixNum;
-    s16 angle = eRoulette->var24 + sprite->data[0];
+    s16 angle = eRoulette->wheelAngle + sprite->data[0];
     if (angle >= 360)
         angle -= 360;
     sin = Sin2(angle);
@@ -907,26 +907,26 @@ void CreateInterfaceSprites(void)
         s.tag  = sSpriteSheets_Interface[i].tag;
         LoadSpriteSheet(&s);
     }
-    eRoulette->var3C[20] = CreateSprite(&gSpriteTemplate_83FA2B0, 208, 16, 4);
-    gSprites[eRoulette->var3C[20]].animPaused = TRUE;
+    eRoulette->spriteIds[20] = CreateSprite(&gSpriteTemplate_83FA2B0, 208, 16, 4);
+    gSprites[eRoulette->spriteIds[20]].animPaused = TRUE;
     for (i = 0; i < 4; i++)
     {
-        eRoulette->var3C[21 + i] = CreateSprite(&gSpriteTemplate_83FA2C8, (s16)(i * 8 + 196), 24, 0);
-        gSprites[eRoulette->var3C[21 + i]].invisible = TRUE;
-        gSprites[eRoulette->var3C[21 + i]].animPaused = TRUE;
+        eRoulette->spriteIds[21 + i] = CreateSprite(&gSpriteTemplate_83FA2C8, (s16)(i * 8 + 196), 24, 0);
+        gSprites[eRoulette->spriteIds[21 + i]].invisible = TRUE;
+        gSprites[eRoulette->spriteIds[21 + i]].animPaused = TRUE;
     }
-    eRoulette->var3C[25] = CreateSprite(&gSpriteTemplate_83FA2E0, 120, 68, 4);
-    gSprites[eRoulette->var3C[25]].animPaused = TRUE;
+    eRoulette->spriteIds[25] = CreateSprite(&gSpriteTemplate_83FA2E0, 120, 68, 4);
+    gSprites[eRoulette->spriteIds[25]].animPaused = TRUE;
     for (i = 0; i < 3; i++)
     {
-        eRoulette->var3C[26 + i] = CreateSprite(&gSpriteTemplate_83FA2F8, (s16)(i * 16 + 192), 36, 4);
-        gSprites[eRoulette->var3C[26 + i]].invisible = TRUE;
-        gSprites[eRoulette->var3C[26 + i]].animPaused = TRUE;
+        eRoulette->spriteIds[26 + i] = CreateSprite(&gSpriteTemplate_83FA2F8, (s16)(i * 16 + 192), 36, 4);
+        gSprites[eRoulette->spriteIds[26 + i]].invisible = TRUE;
+        gSprites[eRoulette->spriteIds[26 + i]].animPaused = TRUE;
     }
-    eRoulette->var3C[48] = CreateSprite(&gSpriteTemplate_83FA310, 152, 96, 9);
-    gSprites[eRoulette->var3C[48]].oam.priority = 1;
-    gSprites[eRoulette->var3C[48]].animPaused = TRUE;
-    gSprites[eRoulette->var3C[48]].invisible = TRUE;
+    eRoulette->spriteIds[48] = CreateSprite(&gSpriteTemplate_83FA310, 152, 96, 9);
+    gSprites[eRoulette->spriteIds[48]].oam.priority = 1;
+    gSprites[eRoulette->spriteIds[48]].animPaused = TRUE;
+    gSprites[eRoulette->spriteIds[48]].invisible = TRUE;
 }
 
 void SetCreditDigits(u16 r0)
@@ -937,13 +937,13 @@ void SetCreditDigits(u16 r0)
     for (i = 0; i < 4; i++)
     {
         u8 t = r0 / d;
-        gSprites[eRoulette->var3C[21 + i]].invisible = TRUE;
+        gSprites[eRoulette->spriteIds[21 + i]].invisible = TRUE;
         if (t > 0 || v || i == 3)
         {
-            gSprites[eRoulette->var3C[21 + i]].invisible = FALSE;
-            gSprites[eRoulette->var3C[21 + i]].oam.tileNum =
-                gSprites[eRoulette->var3C[21 + i]].sheetTileStart
-                + (*gSprites[eRoulette->var3C[21 + i]].anims + t)->type;
+            gSprites[eRoulette->spriteIds[21 + i]].invisible = FALSE;
+            gSprites[eRoulette->spriteIds[21 + i]].oam.tileNum =
+                gSprites[eRoulette->spriteIds[21 + i]].sheetTileStart
+                + (*gSprites[eRoulette->spriteIds[21 + i]].anims + t)->type;
             v = TRUE;
         }
         r0 = r0 % d;
@@ -960,16 +960,16 @@ u8 GetMultiplierAnimId(u8 r0)
     {
     case 3:
         r0 = r0 / 5 - 1;
-        if (eRoulette->var16[r0] < 4)
-            return t[((vu8 *)eRoulette->var16)[r0] + 1]; // couldn't recreate redundant loads
+        if (eRoulette->colorHits[r0] < 4)
+            return t[((vu8 *)eRoulette->colorHits)[r0] + 1]; // couldn't recreate redundant loads
         break;
     case 4:
         r0--;
-        if (eRoulette->var12[r0] < 3)
-            return t[((vu8 *)eRoulette->var12)[r0] + 2];
+        if (eRoulette->pokeHits[r0] < 3)
+            return t[((vu8 *)eRoulette->pokeHits)[r0] + 2];
         break;
     case 12:
-        if (!(eRoulette->var08 & sGridSelections[r0].flag))
+        if (!(eRoulette->hitFlags & sGridSelections[r0].flag))
             return t[4];
         break;
     }
@@ -978,7 +978,7 @@ u8 GetMultiplierAnimId(u8 r0)
 
 void SetMultiplierSprite(u8 r0)
 {
-    struct Sprite *s = &gSprites[eRoulette->var3C[25]];
+    struct Sprite *s = &gSprites[eRoulette->spriteIds[25]];
     s->animCmdIndex  = GetMultiplierAnimId(r0);
     s->oam.tileNum   =
         s->sheetTileStart
@@ -989,58 +989,58 @@ void SetBallCounterNumLeft(u8 r0)
 {
     u8 i;
     u8 t = 0;
-    if (eRoulette->var19 == 1)
+    if (eRoulette->minBet == 1)
         t = 2;
     switch (r0)
     {
     case 6:
         for (i = 0; i < 3; i++)
         {
-            gSprites[eRoulette->var3C[26 + i]].invisible = FALSE;
-            gSprites[eRoulette->var3C[26 + i]].oam.tileNum =
-                gSprites[eRoulette->var3C[26 + i]].sheetTileStart
-                + (*gSprites[eRoulette->var3C[26 + i]].anims)->type;
+            gSprites[eRoulette->spriteIds[26 + i]].invisible = FALSE;
+            gSprites[eRoulette->spriteIds[26 + i]].oam.tileNum =
+                gSprites[eRoulette->spriteIds[26 + i]].sheetTileStart
+                + (*gSprites[eRoulette->spriteIds[26 + i]].anims)->type;
         }
         break;
     case 5:
-        gSprites[eRoulette->var3C[28]].oam.tileNum =
-            gSprites[eRoulette->var3C[28]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[28]].anims + t + 1)->type;
+        gSprites[eRoulette->spriteIds[28]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[28]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[28]].anims + t + 1)->type;
         break;
     case 4:
-        gSprites[eRoulette->var3C[28]].oam.tileNum =
-            gSprites[eRoulette->var3C[28]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[28]].anims + t + 2)->type;
+        gSprites[eRoulette->spriteIds[28]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[28]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[28]].anims + t + 2)->type;
         break;
     case 3:
-        gSprites[eRoulette->var3C[27]].oam.tileNum =
-            gSprites[eRoulette->var3C[27]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[27]].anims + t + 1)->type;
+        gSprites[eRoulette->spriteIds[27]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[27]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[27]].anims + t + 1)->type;
         break;
     case 2:
-        gSprites[eRoulette->var3C[27]].oam.tileNum =
-            gSprites[eRoulette->var3C[27]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[27]].anims + t + 2)->type;
+        gSprites[eRoulette->spriteIds[27]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[27]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[27]].anims + t + 2)->type;
         break;
     case 1:
-        gSprites[eRoulette->var3C[26]].oam.tileNum =
-            gSprites[eRoulette->var3C[26]].sheetTileStart
-            + (*gSprites[eRoulette->var3C[26]].anims + t + 1)->type;
+        gSprites[eRoulette->spriteIds[26]].oam.tileNum =
+            gSprites[eRoulette->spriteIds[26]].sheetTileStart
+            + (*gSprites[eRoulette->spriteIds[26]].anims + t + 1)->type;
         break;
     case 0:
     default:
         for (i = 0; i < 3; i++)
         {
-            gSprites[eRoulette->var3C[26 + i]].oam.tileNum =
-                gSprites[eRoulette->var3C[26 + i]].sheetTileStart
-                + (*gSprites[eRoulette->var3C[26 + i]].anims + t + 2)->type;
+            gSprites[eRoulette->spriteIds[26 + i]].oam.tileNum =
+                gSprites[eRoulette->spriteIds[26 + i]].sheetTileStart
+                + (*gSprites[eRoulette->spriteIds[26 + i]].anims + t + 2)->type;
         }
     }
 }
 
 void SpriteCB_GridSquare(struct Sprite *sprite)
 {
-    sprite->x2 = eRoulette->var26;
+    sprite->x2 = eRoulette->gridX;
 }
 
 void CreateWheelCenterSprite(void)
@@ -1053,7 +1053,7 @@ void CreateWheelCenterSprite(void)
     s.tag  = sSpriteSheet_WheelCenter.tag;
     LoadSpriteSheet(&s);
     spriteid = CreateSprite(&gSpriteTemplate_83FA434, 116, 80, 81);
-    gSprites[spriteid].data[0]            = eRoulette->var24;
+    gSprites[spriteid].data[0]            = eRoulette->wheelAngle;
     gSprites[spriteid].data[1]            = 0;
     gSprites[spriteid].animPaused         = TRUE;
     gSprites[spriteid].affineAnimPaused   = TRUE;
@@ -1064,10 +1064,10 @@ void SpriteCB_WheelCenter(struct Sprite *sprite)
 {
     u32 t = sprite->oam.matrixNum;
     struct OamMatrix *m = gOamMatrices;
-    m[t].d = eRoulette->var2C.a;
-    m[t].a = eRoulette->var2C.a;
-    m[t].b = eRoulette->var2C.b;
-    m[t].c = eRoulette->var2C.c;
+    m[t].d = eRoulette->wheelRotation.a;
+    m[t].a = eRoulette->wheelRotation.a;
+    m[t].b = eRoulette->wheelRotation.b;
+    m[t].c = eRoulette->wheelRotation.c;
 }
 
 void CreateWheelBallSprites(void)
@@ -1076,18 +1076,18 @@ void CreateWheelBallSprites(void)
     for (i = 0; i < 6; i++)
     {
         u8 spriteid =
-            eRoulette->var3C[i] = CreateSprite(&gSpriteTemplate_83FA40C, 116, 80, 57 - i);
+            eRoulette->spriteIds[i] = CreateSprite(&gSpriteTemplate_83FA40C, 116, 80, 57 - i);
         if (spriteid != 64)
         {
-            gSprites[eRoulette->var3C[i]].invisible          = TRUE;
-            gSprites[eRoulette->var3C[i]].coordOffsetEnabled = TRUE;
+            gSprites[eRoulette->spriteIds[i]].invisible          = TRUE;
+            gSprites[eRoulette->spriteIds[i]].coordOffsetEnabled = TRUE;
         }
     }
 }
 
 void HideWheelBalls(void)
 {
-    u8 t = eRoulette->var3C[0];
+    u8 t = eRoulette->spriteIds[0];
     u8 i;
     for (i = 0; i < 6; i++)
     {
@@ -1103,21 +1103,21 @@ void HideWheelBalls(void)
 
 s16 UpdateBallRelativeWheelAngle(struct Sprite *sprite)
 {
-    if (eRoulette->var24 > sprite->data[3])
+    if (eRoulette->wheelAngle > sprite->data[3])
     {
-        sprite->data[6] = 360 - eRoulette->var24 + sprite->data[3];
+        sprite->data[6] = 360 - eRoulette->wheelAngle + sprite->data[3];
         if (sprite->data[6] >= 360)
             sprite->data[6] -= 360;
     }
     else
-        sprite->data[6] = sprite->data[3] - eRoulette->var24;
+        sprite->data[6] = sprite->data[3] - eRoulette->wheelAngle;
     return sprite->data[6];
 }
 
 u8 UpdateSlotBelowBall(struct Sprite *sprite)
 {
-    eRoulette->var7E = (u8)(((float)(s16)UpdateBallRelativeWheelAngle(sprite)) / 30.0f);
-    return eRoulette->var7E;
+    eRoulette->hitSlot = (u8)(((float)(s16)UpdateBallRelativeWheelAngle(sprite)) / 30.0f);
+    return eRoulette->hitSlot;
 }
 
 s16 GetBallDistanceToSlotMidpoint(struct Sprite *sprite)
@@ -1144,16 +1144,16 @@ s16 GetBallDistanceToSlotMidpoint(struct Sprite *sprite)
 void UpdateBallPos(struct Sprite *sprite)
 {
     s16 sin, cos;
-    eRoulette->var8C += eRoulette->var90;
-    eRoulette->var88 += eRoulette->var8C;
-    if (eRoulette->var88 >= 360)
-        eRoulette->var88 -= 360.0f;
-    else if (eRoulette->var88 < 0.0f)
-        eRoulette->var88 += 360.0f;
-    sprite->data[3] = eRoulette->var88;
-    eRoulette->var98 += eRoulette->var9C;
-    eRoulette->var94 += eRoulette->var98;
-    sprite->data[4] = eRoulette->var94;
+    eRoulette->ballAngleSpeed += eRoulette->ballAngleAccel;
+    eRoulette->ballAngle += eRoulette->ballAngleSpeed;
+    if (eRoulette->ballAngle >= 360)
+        eRoulette->ballAngle -= 360.0f;
+    else if (eRoulette->ballAngle < 0.0f)
+        eRoulette->ballAngle += 360.0f;
+    sprite->data[3] = eRoulette->ballAngle;
+    eRoulette->ballFallSpeed += eRoulette->ballFallAccel;
+    eRoulette->ballDistToCenter += eRoulette->ballFallSpeed;
+    sprite->data[4] = eRoulette->ballDistToCenter;
     sin = Sin2(sprite->data[3]);
     cos = Cos2(sprite->data[3]);
     sprite->x2 =  sin * sprite->data[4] >> 12;
@@ -1168,7 +1168,7 @@ void UpdateBallPos(struct Sprite *sprite)
 void SpriteCB_BallLandInSlot(struct Sprite *sprite)
 {
     s16 sin, cos;
-    sprite->data[3] = eRoulette->var24 + sprite->data[6];
+    sprite->data[3] = eRoulette->wheelAngle + sprite->data[6];
     if (sprite->data[3] >= 360)
         sprite->data[3] -= 360;
     sin = Sin2(sprite->data[3]);
@@ -1190,10 +1190,10 @@ void SpriteCB_UnstickBall_ShroomishBallFall(struct Sprite *sprite)
     {
         if (!sprite->data[0])
         {
-            if (eRoulette->var94 <= eRoulette->varA0 - 2.0f)
+            if (eRoulette->ballDistToCenter <= eRoulette->varA0 - 2.0f)
             {
-                eRoulette->var7D = 255;
-                eRoulette->var03_7 = 0;
+                eRoulette->ballState = 255;
+                eRoulette->ballRolling = 0;
                 StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
                 UpdateSlotBelowBall(sprite);
                 sprite->data[4] = 30;
@@ -1201,16 +1201,16 @@ void SpriteCB_UnstickBall_ShroomishBallFall(struct Sprite *sprite)
                 sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
                 sprite->callback = SpriteCB_BallLandInSlot;
                 m4aSongNumStartOrChange(SE_BRIDGE_WALK);
-                eRoulette->var9C = eRoulette->var98 = 0.0f;
-                eRoulette->var8C = -1.0f;
+                eRoulette->ballFallAccel = eRoulette->ballFallSpeed = 0.0f;
+                eRoulette->ballAngleSpeed = -1.0f;
             }
         }
         else
         {
-            if (eRoulette->var94 >= eRoulette->varA0 - 2.0f)
+            if (eRoulette->ballDistToCenter >= eRoulette->varA0 - 2.0f)
             {
-                eRoulette->var7D = 255;
-                eRoulette->var03_7 = 0;
+                eRoulette->ballState = 255;
+                eRoulette->ballRolling = 0;
                 StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
                 UpdateSlotBelowBall(sprite);
                 sprite->data[4] = 30;
@@ -1218,8 +1218,8 @@ void SpriteCB_UnstickBall_ShroomishBallFall(struct Sprite *sprite)
                 sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
                 sprite->callback = SpriteCB_BallLandInSlot;
                 m4aSongNumStartOrChange(SE_BRIDGE_WALK);
-                eRoulette->var9C = eRoulette->var98 = 0.0f;
-                eRoulette->var8C = -1.0f;
+                eRoulette->ballFallAccel = eRoulette->ballFallSpeed = 0.0f;
+                eRoulette->ballAngleSpeed = -1.0f;
             }
         }
     }
@@ -1237,8 +1237,8 @@ void SpriteCB_UnstickBall_Shroomish(struct Sprite *sprite)
         {
             f0 = ((float)sprite->data[7]);
             p = sRouletteTables;
-            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].randDistanceHigh) + (float)((s32)p[eRoulette->var04_0].randDistanceLow - 1));
-            f2 = (f0 / ((float)(s32)p[eRoulette->var04_0].shroomishFallSlowdown));
+            f1 = (f0 * ((float)(s32)p[eRoulette->tableId].randDistanceHigh) + (float)((s32)p[eRoulette->tableId].randDistanceLow - 1));
+            f2 = (f0 / ((float)(s32)p[eRoulette->tableId].shroomish.fallSlowdown));
         }
         else
         {
@@ -1250,8 +1250,8 @@ void SpriteCB_UnstickBall_Shroomish(struct Sprite *sprite)
         {
             f0 = ((float)sprite->data[7]);
             p = sRouletteTables;
-            f1 = (f0 * ((float)(s32)p[eRoulette->var04_0].randDistanceHigh) + (float)((s32)p[eRoulette->var04_0].randDistanceLow - 1));
-            f2 = -(f0 / ((float)(s32)p[eRoulette->var04_0].shroomishFallSlowdown));
+            f1 = (f0 * ((float)(s32)p[eRoulette->tableId].randDistanceHigh) + (float)((s32)p[eRoulette->tableId].randDistanceLow - 1));
+            f2 = -(f0 / ((float)(s32)p[eRoulette->tableId].shroomish.fallSlowdown));
         }
         else
         {
@@ -1260,10 +1260,10 @@ void SpriteCB_UnstickBall_Shroomish(struct Sprite *sprite)
         break;
         default: return;
     }
-    eRoulette->varA0 = eRoulette->var94;
-    eRoulette->var98 = f2;
-    eRoulette->var9C = -((f2 + f2) / f1 + (2.0f / (f1 * f1)));
-    eRoulette->var8C = 0.0f;
+    eRoulette->varA0 = eRoulette->ballDistToCenter;
+    eRoulette->ballFallSpeed = f2;
+    eRoulette->ballFallAccel = -((f2 + f2) / f1 + (2.0f / (f1 * f1)));
+    eRoulette->ballAngleSpeed = 0.0f;
     sprite->animPaused    = FALSE;
     sprite->animNum       = 0;
     sprite->animBeginning = TRUE;
@@ -1278,8 +1278,8 @@ void SpriteCB_UnstickBall_TaillowDrop(struct Sprite *sprite)
     sprite->data[2]++;
     if (sprite->data[2] > 29 && sprite->y2 >= 0)
     {
-        eRoulette->var7D   = 255;
-        eRoulette->var03_7 = FALSE;
+        eRoulette->ballState   = 255;
+        eRoulette->ballRolling = FALSE;
         StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
         UpdateSlotBelowBall(sprite);
         sprite->data[4] = 30;
@@ -1287,7 +1287,7 @@ void SpriteCB_UnstickBall_TaillowDrop(struct Sprite *sprite)
         sprite->data[6] = (sprite->data[6] / 30) * 30 + 15;
         sprite->callback  = SpriteCB_BallLandInSlot;
         m4aSongNumStartOrChange(SE_BRIDGE_WALK);
-        eRoulette->var03_6 = TRUE;
+        eRoulette->ballUnstuck = TRUE;
     }
 }
 
@@ -1298,7 +1298,7 @@ void SpriteCB_UnstickBall_TaillowPickUp(struct Sprite *sprite)
         sprite->y2--;
         if (sprite->data[2] == 45)
         {
-            if (gSprites[eRoulette->var3C[55]].animCmdIndex == 1)
+            if (gSprites[eRoulette->spriteIds[55]].animCmdIndex == 1)
                 sprite->y2++;
         }
     }
@@ -1306,9 +1306,9 @@ void SpriteCB_UnstickBall_TaillowPickUp(struct Sprite *sprite)
     {
         if (sprite->data[2] < sprite->data[7])
         {
-            if (gSprites[eRoulette->var3C[55]].animDelayCounter == 0)
+            if (gSprites[eRoulette->spriteIds[55]].animDelayCounter == 0)
             {
-                if (gSprites[eRoulette->var3C[55]].animCmdIndex == 1)
+                if (gSprites[eRoulette->spriteIds[55]].animCmdIndex == 1)
                     sprite->y2++;
                 else
                     sprite->y2--;
@@ -1352,7 +1352,7 @@ void SpriteCB_UnstickBall_Taillow(struct Sprite *sprite)
 void SpriteCB_UnstickBall(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
-    switch (eRoulette->var03_0)
+    switch (eRoulette->useTaillow)
     {
     default:
     case 0:
@@ -1370,13 +1370,13 @@ void SpriteCB_RollBall_TryLandAdjacent(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
     if (sprite->data[2]-- == 16)
-        eRoulette->var98 *= -1.0f;
+        eRoulette->ballFallSpeed *= -1.0f;
     if (sprite->data[2] == 0)
     {
         if (!sprite->data[0])
         {
-            eRoulette->var7D   = 255;
-            eRoulette->var03_7 = 0;
+            eRoulette->ballState   = 255;
+            eRoulette->ballRolling = 0;
             StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
             UpdateSlotBelowBall(sprite);
             sprite->data[4] = 30;
@@ -1404,17 +1404,17 @@ void debug_sub_812E698(struct Sprite *sprite)
     m4aSongNumStart(SE_BALL_BOUNCE_1);
     if (Random() & 1)
     {
-        eRoulette->var8C = 0;
-        eRoulette->var7F = (eRoulette->var7E + 1) % 12;
+        eRoulette->ballAngleSpeed = 0;
+        eRoulette->stuckHitSlot = (eRoulette->hitSlot + 1) % 12;
     }
     else
     {
-        eRoulette->var8C = ({float f = sRouletteTables[eRoulette->var04_0].var1C; f * 2;});
-        eRoulette->var7F = eRoulette->var7E;
+        eRoulette->ballAngleSpeed = ({float f = sRouletteTables[eRoulette->tableId].var1C; f * 2;});
+        eRoulette->stuckHitSlot = eRoulette->hitSlot;
     }
     sprite->data[0] = 1;
-    sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
-    eRoulette->var98 = 0.085f;
+    sprite->data[2] = sRouletteTables[eRoulette->tableId].randDistanceLow;
+    eRoulette->ballFallSpeed = 0.085f;
     sprite->callback = SpriteCB_RollBall_TryLandAdjacent;
     sprite->data[1] = 5;
 }
@@ -1426,10 +1426,10 @@ void SpriteCB_RollBall_TryLand(struct Sprite *sprite)
     UpdateBallPos(sprite);
     sprite->data[2] = 0;
     UpdateSlotBelowBall(sprite);
-    if (!(sRouletteSlots[eRoulette->var7E].flag & eRoulette->var08))
+    if (!(sRouletteSlots[eRoulette->hitSlot].flag & eRoulette->hitFlags))
     {
-        eRoulette->var7D   = 255;
-        eRoulette->var03_7 = 0;
+        eRoulette->ballState   = 255;
+        eRoulette->ballRolling = 0;
         StartSpriteAnim(sprite, sprite->animCmdIndex + 3);
         UpdateSlotBelowBall(sprite);
         sprite->data[4] = 30;
@@ -1446,46 +1446,46 @@ void SpriteCB_RollBall_TryLand(struct Sprite *sprite)
         if ((z = (Random() & 1)))
         {
             u32 o;
-            eRoulette->var8C = 0.0f;
-            o = (eRoulette->var7E + 1) % 12;
+            eRoulette->ballAngleSpeed = 0.0f;
+            o = (eRoulette->hitSlot + 1) % 12;
             t = o;
-            eRoulette->var7F = o;
+            eRoulette->stuckHitSlot = o;
         }
         else
         {
-            eRoulette->var8C = ({
-                float f = sRouletteTables[eRoulette->var04_0].var1C;
+            eRoulette->ballAngleSpeed = ({
+                float f = sRouletteTables[eRoulette->tableId].var1C;
                 f * 2;
             }); // couldn't replicate loads
-            t = (eRoulette->var7E + 11) % 12;
-            eRoulette->var7F = eRoulette->var7E;
+            t = (eRoulette->hitSlot + 11) % 12;
+            eRoulette->stuckHitSlot = eRoulette->hitSlot;
         }
-        if (sRouletteSlots[t].flag & eRoulette->var08)
+        if (sRouletteSlots[t].flag & eRoulette->hitFlags)
         {
             sprite->data[0] = 1;
-            sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
+            sprite->data[2] = sRouletteTables[eRoulette->tableId].randDistanceLow;
         }
         else
         {
-            sprite->data[0] = sRouletteSlots[t].flag & eRoulette->var08;
-            if (eRoulette->var04_0)
+            sprite->data[0] = sRouletteSlots[t].flag & eRoulette->hitFlags;
+            if (eRoulette->tableId)
             {
-                sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceHigh;
+                sprite->data[2] = sRouletteTables[eRoulette->tableId].randDistanceHigh;
             }
             else
             {
-                sprite->data[2] = sRouletteTables[eRoulette->var04_0].randDistanceLow;
+                sprite->data[2] = sRouletteTables[eRoulette->tableId].randDistanceLow;
                 if (z)
                 {
-                    eRoulette->var8C = 0.5f;
+                    eRoulette->ballAngleSpeed = 0.5f;
                 }
                 else
                 {
-                    eRoulette->var8C = -1.5f;
+                    eRoulette->ballAngleSpeed = -1.5f;
                 }
             }
         }
-        eRoulette->var98 = 0.085f;
+        eRoulette->ballFallSpeed = 0.085f;
         sprite->callback = SpriteCB_RollBall_TryLandAdjacent;
         sprite->data[1] = 5;
     }
@@ -1494,16 +1494,16 @@ void SpriteCB_RollBall_TryLand(struct Sprite *sprite)
 void SpriteCB_RollBall_Slow(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
-    if (!(eRoulette->var8C > 0.5f))
+    if (!(eRoulette->ballAngleSpeed > 0.5f))
     {
         UpdateSlotBelowBall(sprite);
         if (!GetBallDistanceToSlotMidpoint(sprite))
         {
             const struct RouletteTable *p;
-            eRoulette->var90 = 0.0f;
+            eRoulette->ballAngleAccel = 0.0f;
             p = sRouletteTables;
-            eRoulette->var8C -= ((float)(p[eRoulette->var04_0].wheelSpeed))
-                / ((float)(s16)(p[eRoulette->var04_0].wheelDelay + 1));
+            eRoulette->ballAngleSpeed -= ((float)(p[eRoulette->tableId].wheelSpeed))
+                / ((float)(s16)(p[eRoulette->tableId].wheelDelay + 1));
             sprite->data[1] = 4;
 #if DEBUG
             if (unk_2039560 != 0)
@@ -1514,13 +1514,13 @@ void SpriteCB_RollBall_Slow(struct Sprite *sprite)
         }
         else
         {
-            if (eRoulette->var90 != 0.0f)
+            if (eRoulette->ballAngleAccel != 0.0f)
             {
-                if (eRoulette->var8C < 0.0f)
+                if (eRoulette->ballAngleSpeed < 0.0f)
                 {
-                    eRoulette->var90 = 0.0f;
-                    eRoulette->var8C = 0.0f;
-                    eRoulette->var98 /= 1.2;
+                    eRoulette->ballAngleAccel = 0.0f;
+                    eRoulette->ballAngleSpeed = 0.0f;
+                    eRoulette->ballFallSpeed /= 1.2;
                 }
             }
         }
@@ -1530,10 +1530,10 @@ void SpriteCB_RollBall_Slow(struct Sprite *sprite)
 void SpriteCB_RollBall_Medium(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
-    if (!(eRoulette->var94 > 40.f))
+    if (!(eRoulette->ballDistToCenter > 40.f))
     {
-        eRoulette->var98 = - (        4.0f / (float)((u16)eRoulette->var86));
-        eRoulette->var90 = - (eRoulette->var8C / (float)((u16)eRoulette->var86));
+        eRoulette->ballFallSpeed = - (        4.0f / (float)((u16)eRoulette->ballTravelDistSlow));
+        eRoulette->ballAngleAccel = - (eRoulette->ballAngleSpeed / (float)((u16)eRoulette->ballTravelDistSlow));
         sprite->animNum       = 2;
         sprite->animBeginning = TRUE;
         sprite->animEnded     = FALSE;
@@ -1545,11 +1545,11 @@ void SpriteCB_RollBall_Medium(struct Sprite *sprite)
 void SpriteCB_RollBall_Fast(struct Sprite *sprite)
 {
     UpdateBallPos(sprite);
-    if (!(eRoulette->var94 > 60.0f))
+    if (!(eRoulette->ballDistToCenter > 60.0f))
     {
         m4aSongNumStartOrChange(SE_ROULETTE_BALL2);
-        eRoulette->var98 = - (                20.0f / (float)((u16)eRoulette->var84));
-        eRoulette->var90 =   ((1.0f - eRoulette->var8C) / (float)((u16)eRoulette->var84));
+        eRoulette->ballFallSpeed = - (                20.0f / (float)((u16)eRoulette->ballTravelDistMed));
+        eRoulette->ballAngleAccel =   ((1.0f - eRoulette->ballAngleSpeed) / (float)((u16)eRoulette->ballTravelDistMed));
         sprite->animNum       = 1;
         sprite->animBeginning = TRUE;
         sprite->animEnded     = FALSE;
@@ -1578,25 +1578,25 @@ void CreateShroomishSprite(struct Sprite *sprite)
     struct Roulette *p;
     t = sprite->data[7] - 2;
     p = eRoulette;
-    p->var3C[55] = CreateSprite(&gSpriteTemplate_83FA50C, 36, -12, 50);
-    p->var3C[56] = CreateSprite(gSpriteTemplate_83FA5C0, s[sprite->data[0]][0], s[sprite->data[0]][1], 59);
-    p->var3C[57] = CreateSprite(&gSpriteTemplate_83FA5C0[1], 36, 140, 51);
-    gSprites[eRoulette->var3C[57]].oam.objMode = 1;
+    p->spriteIds[55] = CreateSprite(&gSpriteTemplate_83FA50C, 36, -12, 50);
+    p->spriteIds[56] = CreateSprite(gSpriteTemplate_83FA5C0, s[sprite->data[0]][0], s[sprite->data[0]][1], 59);
+    p->spriteIds[57] = CreateSprite(&gSpriteTemplate_83FA5C0[1], 36, 140, 51);
+    gSprites[eRoulette->spriteIds[57]].oam.objMode = 1;
     for (i = 0; i < 3; i++)
     {
-        gSprites[eRoulette->var3C[55 + i]].coordOffsetEnabled = FALSE;
-        gSprites[eRoulette->var3C[55 + i]].invisible          = TRUE;
-        gSprites[eRoulette->var3C[55 + i]].animPaused         = TRUE;
-        gSprites[eRoulette->var3C[55 + i]].affineAnimPaused   = TRUE;
-        gSprites[eRoulette->var3C[55 + i]].data[4]          = eRoulette->var3C[55];
-        gSprites[eRoulette->var3C[55 + i]].data[5]          = eRoulette->var3C[56];
-        gSprites[eRoulette->var3C[55 + i]].data[6]          = eRoulette->var3C[57];
-        gSprites[eRoulette->var3C[55 + i]].data[2]          = t;
-        gSprites[eRoulette->var3C[55 + i]].data[3]          = (sprite->data[7] * sRouletteTables[eRoulette->var04_0].randDistanceHigh) +
-                                                                (sRouletteTables[eRoulette->var04_0].randDistanceLow + 0xffff);
+        gSprites[eRoulette->spriteIds[55 + i]].coordOffsetEnabled = FALSE;
+        gSprites[eRoulette->spriteIds[55 + i]].invisible          = TRUE;
+        gSprites[eRoulette->spriteIds[55 + i]].animPaused         = TRUE;
+        gSprites[eRoulette->spriteIds[55 + i]].affineAnimPaused   = TRUE;
+        gSprites[eRoulette->spriteIds[55 + i]].data[4]          = eRoulette->spriteIds[55];
+        gSprites[eRoulette->spriteIds[55 + i]].data[5]          = eRoulette->spriteIds[56];
+        gSprites[eRoulette->spriteIds[55 + i]].data[6]          = eRoulette->spriteIds[57];
+        gSprites[eRoulette->spriteIds[55 + i]].data[2]          = t;
+        gSprites[eRoulette->spriteIds[55 + i]].data[3]          = (sprite->data[7] * sRouletteTables[eRoulette->tableId].randDistanceHigh) +
+                                                                (sRouletteTables[eRoulette->tableId].randDistanceLow + 0xffff);
     }
-    gSprites[eRoulette->var3C[56]].coordOffsetEnabled = TRUE;
-    eRoulette->var38 = sprite;
+    gSprites[eRoulette->spriteIds[56]].coordOffsetEnabled = TRUE;
+    eRoulette->ball = sprite;
 }
 
 void CreateTaillowSprite(struct Sprite *sprite)
@@ -1609,21 +1609,21 @@ void CreateTaillowSprite(struct Sprite *sprite)
     };
     const struct RouletteTable *p;
     t = sprite->data[7] - 2;
-    eRoulette->var3C[55] = CreateSprite(&gSpriteTemplate_83FA524, s[sprite->data[0]][0], s[sprite->data[0]][1], 50);
-    StartSpriteAnim(&gSprites[eRoulette->var3C[55]], sprite->data[0]);
-    eRoulette->var3C[56] = CreateSprite(&gSpriteTemplate_83FA5F0, s[sprite->data[0]][0], s[sprite->data[0]][1], 51);
-    gSprites[eRoulette->var3C[56]].affineAnimPaused = TRUE;
-    gSprites[eRoulette->var3C[56]].animPaused       = TRUE;
-    sprite->data[7] = (t * (p = sRouletteTables)[eRoulette->var04_0].randDistanceHigh) + (p[eRoulette->var04_0].taillowBaseDropDelay + 45);
+    eRoulette->spriteIds[55] = CreateSprite(&gSpriteTemplate_83FA524, s[sprite->data[0]][0], s[sprite->data[0]][1], 50);
+    StartSpriteAnim(&gSprites[eRoulette->spriteIds[55]], sprite->data[0]);
+    eRoulette->spriteIds[56] = CreateSprite(&gSpriteTemplate_83FA5F0, s[sprite->data[0]][0], s[sprite->data[0]][1], 51);
+    gSprites[eRoulette->spriteIds[56]].affineAnimPaused = TRUE;
+    gSprites[eRoulette->spriteIds[56]].animPaused       = TRUE;
+    sprite->data[7] = (t * (p = sRouletteTables)[eRoulette->tableId].randDistanceHigh) + (p[eRoulette->tableId].taillow.baseDropDelay + 45);
     for (; i < 2; i++)
     {
-        gSprites[eRoulette->var3C[55 + i]].data[4] = eRoulette->var3C[55];
-        gSprites[eRoulette->var3C[55 + i]].data[5] = eRoulette->var3C[56];
-        gSprites[eRoulette->var3C[55 + i]].data[6] = eRoulette->var3C[56];
-        gSprites[eRoulette->var3C[55 + i]].data[2] = t;
-        gSprites[eRoulette->var3C[55 + i]].data[3] = sprite->data[7] - 45;
+        gSprites[eRoulette->spriteIds[55 + i]].data[4] = eRoulette->spriteIds[55];
+        gSprites[eRoulette->spriteIds[55 + i]].data[5] = eRoulette->spriteIds[56];
+        gSprites[eRoulette->spriteIds[55 + i]].data[6] = eRoulette->spriteIds[56];
+        gSprites[eRoulette->spriteIds[55 + i]].data[2] = t;
+        gSprites[eRoulette->spriteIds[55 + i]].data[3] = sprite->data[7] - 45;
     }
-    eRoulette->var38 = sprite;
+    eRoulette->ball = sprite;
 }
 
 void SetBallStuck(struct Sprite *sprite)
@@ -1638,33 +1638,33 @@ void SetBallStuck(struct Sprite *sprite)
     u8 s[10] = {};
     u16 rand = Random();
 
-    eRoulette->var7D = 1;
-    eRoulette->var03_5 = TRUE;
-    eRoulette->var03_6 = FALSE;
-    eRoulette->var7E = 0xFF;
-    eRoulette->var88 = sprite->data[3];
-    eRoulette->var98 = 0.0f;
-    eRoulette->var8C = sRouletteTables[eRoulette->var04_0].var1C;
+    eRoulette->ballState = 1;
+    eRoulette->ballStuck = TRUE;
+    eRoulette->ballUnstuck = FALSE;
+    eRoulette->hitSlot = 0xFF;
+    eRoulette->ballAngle = sprite->data[3];
+    eRoulette->ballFallSpeed = 0.0f;
+    eRoulette->ballAngleSpeed = sRouletteTables[eRoulette->tableId].var1C;
 
-    o = (eRoulette->var04_0 * 30 + 33) + (0x1 - eRoulette->var03_0) * 15;
+    o = (eRoulette->tableId * 30 + 33) + (0x1 - eRoulette->useTaillow) * 15;
     for (i = 0; i < 4; i++)
     {
         if (o < sprite->data[3] && sprite->data[3] <= o + 90)
         {
             sprite->data[0] = i / 2;
-            eRoulette->var03_0 = i % 2;
+            eRoulette->useTaillow = i % 2;
             break;
         }
         if (i == 3)
         {
             sprite->data[0] = 1;
-            eRoulette->var03_0 = 1;
+            eRoulette->useTaillow = 1;
             break;
         }
         o += 90;
     }
 
-    if (eRoulette->var03_0)
+    if (eRoulette->useTaillow)
     {
         if (sprite->data[0])
             PlayCry_Normal(SPECIES_TAILLOW, -63);
@@ -1677,25 +1677,25 @@ void SetBallStuck(struct Sprite *sprite)
     }
 
     val = 2;
-    z = (eRoulette->var7F + 2) % 12;
+    z = (eRoulette->stuckHitSlot + 2) % 12;
 
-    if (eRoulette->var03_0 == 1 && eRoulette->var04_0 == 1)
+    if (eRoulette->useTaillow == 1 && eRoulette->tableId == 1)
         j += 6;
     else
         j += val;
 
     for (i = val; i < j; i++)
     {
-        if (!(eRoulette->var08 & sRouletteSlots[z].flag))
+        if (!(eRoulette->hitFlags & sRouletteSlots[z].flag))
         {
             s[h++] = i;
-            if (p == 0 && (sRouletteSlots[z].flag & sGridSelections[eRoulette->var1B[eRoulette->var1A_0]].inSelectionFlags))
+            if (p == 0 && (sRouletteSlots[z].flag & sGridSelections[eRoulette->betSelection[eRoulette->curBallNum]].inSelectionFlags))
                 p = i;
         }
         z = (z + 1) % 0xC;
     }
 
-    if ((eRoulette->var03_0 + 1) & eRoulette->var02)
+    if ((eRoulette->useTaillow + 1) & eRoulette->partySpeciesFlags)
     {
         if (p && (rand & 0xFF) < 0xc0)
             sprite->data[7] = p;
@@ -1730,11 +1730,11 @@ void SpriteCB_ShroomishExit(struct Sprite *sprite)
         sprite->x -= 2;
         if (sprite->x < -16)
         {
-            if (!eRoulette->var03_6)
-                eRoulette->var03_6 = TRUE;
+            if (!eRoulette->ballUnstuck)
+                eRoulette->ballUnstuck = TRUE;
             DestroySprite(sprite);
-            eRoulette->var01 = 0;
-            eRoulette->var34 = gUnknown_083FA61E[0];
+            eRoulette->shroomishShadowTimer = 0;
+            eRoulette->shroomishShadowAlpha = gUnknown_083FA61E[0];
         }
     }
 }
@@ -1763,7 +1763,7 @@ void SpriteCB_ShroomishShakeScreen(struct Sprite *sprite)
     else
     {
         gSpriteCoordOffsetY = 0;
-        gSprites[eRoulette->var3C[55]].animPaused = FALSE;
+        gSprites[eRoulette->spriteIds[55]].animPaused = FALSE;
         DestroySprite(sprite);
     }
 }
@@ -1774,9 +1774,9 @@ void SpriteCB_ShroomishFall(struct Sprite *sprite)
     sprite->data[1]++;
     t = sprite->data[1];
     sprite->y2 = t * 0.039f * t;
-    eRoulette->var34 = gUnknown_083FA61E[(eRoulette->var01 - 1) / 2];
-    if (eRoulette->var01 < 19)
-        eRoulette->var01++;
+    eRoulette->shroomishShadowAlpha = gUnknown_083FA61E[(eRoulette->shroomishShadowTimer - 1) / 2];
+    if (eRoulette->shroomishShadowTimer < 19)
+        eRoulette->shroomishShadowTimer++;
     if (sprite->data[1] > 60)
     {
         sprite->data[1] = 0;
@@ -1795,15 +1795,15 @@ void SpriteCB_Shroomish(struct Sprite *sprite)
     {
         register u32 t asm("r2");
         u32 z ;
-        if (eRoulette->var38->data[0] == 0)
+        if (eRoulette->ball->data[0] == 0)
         {
-            t = eRoulette->var38->data[3];
-            z = sRouletteTables[eRoulette->var04_0].shroomishStartAngle;
+            t = eRoulette->ball->data[3];
+            z = sRouletteTables[eRoulette->tableId].shroomish.startAngle;
         }
         else
         {
-            t = eRoulette->var38->data[3];
-            z = sRouletteTables[eRoulette->var04_0].shroomishStartAngle;
+            t = eRoulette->ball->data[3];
+            z = sRouletteTables[eRoulette->tableId].shroomish.startAngle;
             z += 180;
         }
         if (t == z)
@@ -1811,25 +1811,25 @@ void SpriteCB_Shroomish(struct Sprite *sprite)
             sprite->invisible = FALSE;
             sprite->data[7]++;
             m4aSongNumStart(SE_FALL);
-            eRoulette->var01 = 1;
-            eRoulette->var34 = gUnknown_083FA61E[0];
+            eRoulette->shroomishShadowTimer = 1;
+            eRoulette->shroomishShadowAlpha = gUnknown_083FA61E[0];
         }
     }
     else
     {
         u32 t, z;
-        eRoulette->var34 = gUnknown_083FA61E[(eRoulette->var01 - 1) / 2];
-        if (eRoulette->var01 < 19)
-            eRoulette->var01++;
-        if (eRoulette->var38->data[0] == 0)
+        eRoulette->shroomishShadowAlpha = gUnknown_083FA61E[(eRoulette->shroomishShadowTimer - 1) / 2];
+        if (eRoulette->shroomishShadowTimer < 19)
+            eRoulette->shroomishShadowTimer++;
+        if (eRoulette->ball->data[0] == 0)
         {
-            t = eRoulette->var38->data[3];
-            z = sRouletteTables[eRoulette->var04_0].shroomishDropAngle;
+            t = eRoulette->ball->data[3];
+            z = sRouletteTables[eRoulette->tableId].shroomish.dropAngle;
         }
         else
         {
-            t = eRoulette->var38->data[3];
-            z = sRouletteTables[eRoulette->var04_0].shroomishDropAngle ;
+            t = eRoulette->ball->data[3];
+            z = sRouletteTables[eRoulette->tableId].shroomish.dropAngle;
             z += 180;
         }
         if (t == z)
@@ -1860,8 +1860,8 @@ void SpriteCB_Taillow_FlyAway(struct Sprite *sprite)
         sprite->animPaused = TRUE;
         m4aSongNumStop(SE_TAILLOW_WING_FLAP);
         DestroySprite(sprite);
-        FreeOamMatrix(gSprites[eRoulette->var3C[56]].oam.matrixNum);
-        DestroySprite(&gSprites[eRoulette->var3C[56]]);
+        FreeOamMatrix(gSprites[eRoulette->spriteIds[56]].oam.matrixNum);
+        DestroySprite(&gSprites[eRoulette->spriteIds[56]]);
     }
 }
 
@@ -1890,7 +1890,7 @@ void SpriteCB_Taillow_PickUpBall(struct Sprite *sprite)
         else
         {
             m4aSongNumStart(SE_FALL);
-            StartSpriteAnim(sprite, eRoulette->var38->data[0] + 4);
+            StartSpriteAnim(sprite, eRoulette->ball->data[0] + 4);
             sprite->callback = SpriteCB_Taillow_FlyAway;
             gSprites[sprite->data[6]].affineAnimPaused = FALSE;
         }
@@ -1912,7 +1912,7 @@ void SpriteCB_Taillow_FlyIn(struct Sprite *sprite)
     };
     if (sprite->data[1]-- > 7)
     {
-        sprite->x += t[eRoulette->var38->data[0]] * 2;
+        sprite->x += t[eRoulette->ball->data[0]] * 2;
         if (IsSEPlaying())
         {
             s8 u =  -((116 - sprite->x) / 2);
@@ -1924,17 +1924,17 @@ void SpriteCB_Taillow_FlyIn(struct Sprite *sprite)
     {
         if (sprite->data[1] >= 0)
         {
-            sprite->x += t[eRoulette->var38->data[0]] * z[7 - sprite->data[1]][0];
+            sprite->x += t[eRoulette->ball->data[0]] * z[7 - sprite->data[1]][0];
             sprite->y += z[7 - sprite->data[1]][1];
         }
         else
         {
             m4aSongNumStartOrChange(SE_TAILLOW_WING_FLAP);
-            if (eRoulette->var38->data[0] == 0)
+            if (eRoulette->ball->data[0] == 0)
                 PlayCry_Normal(SPECIES_TAILLOW, 63);
             else
                 PlayCry_Normal(SPECIES_TAILLOW, -63);
-            StartSpriteAnim(sprite, eRoulette->var38->data[0] + 2);
+            StartSpriteAnim(sprite, eRoulette->ball->data[0] + 2);
             sprite->data[1] = 45;
             sprite->callback = SpriteCB_Taillow_PickUpBall;
         }
@@ -1946,7 +1946,7 @@ void SpriteCB_TaillowShadow_FlyIn(struct Sprite *sprite)
     s8 t[2] = {-1, 1}; //sign
     if (sprite->data[1]-- >= 0)
     {
-        sprite->x += t[eRoulette->var38->data[0]] * 2;
+        sprite->x += t[eRoulette->ball->data[0]] * 2;
         gSprites[sprite->data[6]].invisible ^= 1;
     }
     else
@@ -1957,9 +1957,9 @@ void SpriteCB_TaillowShadow_FlyIn(struct Sprite *sprite)
 
 void SpriteCB_Taillow(struct Sprite *sprite)
 {
-    if (eRoulette->var38->data[0] == 0)
+    if (eRoulette->ball->data[0] == 0)
     {
-        if (eRoulette->var38->data[3] == sRouletteTables[eRoulette->var04_0].taillowRightStartAngle + 90)
+        if (eRoulette->ball->data[3] == sRouletteTables[eRoulette->tableId].taillow.rightStartAngle + 90)
         {
             gSprites[sprite->data[6]].data[1] = 52;
             gSprites[sprite->data[4]].data[1] = 52;
@@ -1971,7 +1971,7 @@ void SpriteCB_Taillow(struct Sprite *sprite)
     }
     else
     {
-        if (eRoulette->var38->data[3] == sRouletteTables[eRoulette->var04_0].taillowLeftStartAngle + 270)
+        if (eRoulette->ball->data[3] == sRouletteTables[eRoulette->tableId].taillow.leftStartAngle + 270)
         {
             gSprites[sprite->data[6]].data[1] = 46;
             gSprites[sprite->data[4]].data[1] = 46;
