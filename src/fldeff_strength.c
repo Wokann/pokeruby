@@ -1,6 +1,8 @@
 #include "global.h"
 #include "braille_puzzles.h"
+#include "event_data.h"
 #include "field_effect.h"
+#include "overworld.h"
 #include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_menu.h"
@@ -15,15 +17,10 @@ static void FieldCallback_Strength(void);
 static void FieldCallback_BrailleStrength(void);
 static void StartStrengthFieldEffect(void);
 
-extern u8 gLastFieldPokeMenuOpened;
-extern u16 gSpecialVar_Result;
-extern void (*gFieldCallback)(void);
-extern void (*gPostMenuFieldCallback)(void);
-
-extern u8 EventScript_UseStrength[];
+extern const u8 EventScript_UseStrength[];
 
 #if DEBUG
-void debug_sub_8130318(void)
+void Debug_UseStrength(void)
 {
     if (ShouldDoBrailleStrengthEffect())
     {
@@ -55,7 +52,7 @@ bool8 SetUpFieldMove_Strength(void)
     else
     {
         if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_PUSHABLE_BOULDER) != TRUE)
-            return 0;
+            return FALSE;
         gSpecialVar_Result = gLastFieldPokeMenuOpened;
         gFieldCallback = FieldCallback_PrepareFadeInFromMenu;
         gPostMenuFieldCallback = FieldCallback_Strength;
@@ -94,7 +91,7 @@ static void StartStrengthFieldEffect(void)
     }
     else
     {
-        FieldEffectActiveListRemove(40);
+        FieldEffectActiveListRemove(FLDEFF_USE_STRENGTH);
         ScriptContext_Enable();
     }
 }

@@ -1399,9 +1399,9 @@ bool8 DebugMenu_8077BCC(void)
     return TRUE;
 }
 
-bool8 DebugMenu_8077BD8(void)
+bool8 DebugMenu_UseStrength(void)
 {
-    debug_sub_8130318();
+    Debug_UseStrength();
     return TRUE;
 }
 
@@ -1422,7 +1422,7 @@ const struct MenuAction gUnknown_Debug_839BF94[] = {
     {gMoveNames[MOVE_CUT], DebugMenu_8077BB4},
     {gMoveNames[MOVE_FLASH], DebugMenu_8077BC0},
     {gMoveNames[MOVE_ROCK_SMASH], DebugMenu_8077BCC},
-    {gMoveNames[MOVE_STRENGTH], DebugMenu_8077BD8},
+    {gMoveNames[MOVE_STRENGTH], DebugMenu_UseStrength},
     {gMoveNames[MOVE_SURF], Debug_TryUseSurf},
     {gMoveNames[MOVE_FLY], Debug_OpenFlyMap},
     {gMoveNames[MOVE_WATERFALL], DebugMenu_8077BE4},
