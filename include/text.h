@@ -96,7 +96,7 @@ extern const struct WindowTemplate gNamingScreenKeyboardSymbolsWindowTemplateBg2
 extern const struct WindowTemplate gNamingScreenTextEntryWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E6F68;
 extern const struct WindowTemplate gWindowTemplate_81E6F84;
-extern const struct WindowTemplate gWindowTemplate_81E6FA0;
+extern const struct WindowTemplate gContestResultsWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E6FBC;
 extern const struct WindowTemplate gWindowTemplate_81E6FD8;
 extern const struct WindowTemplate gContestMenuWindowTemplate;
@@ -122,7 +122,7 @@ extern const struct WindowTemplate gWindowTemplate_81E7208;
 extern const struct WindowTemplate gWindowTemplate_81E7224;
 extern const struct WindowTemplate gMenuTextWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E725C;
-extern const struct WindowTemplate gWindowTemplate_81E7278;
+extern const struct WindowTemplate gContestResultsTextWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E7294;
 
 extern u16 gBGTilemapBuffers[4][0x400];

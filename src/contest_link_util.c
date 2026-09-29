@@ -214,8 +214,8 @@ const u8 sText_ResultsTextWindowStyle[] = _("{SIZE 3}{COLOR_HIGHLIGHT_SHADOW WHI
 void InitContestResultsDisplay(void)
 {
     REG_DISPCNT = DISPCNT_OBJ_1D_MAP;
-    Text_LoadWindowTemplate(&gWindowTemplate_81E6FA0);
-    Text_InitWindowWithTemplate(&gMenuWindow, &gWindowTemplate_81E6FA0);
+    Text_LoadWindowTemplate(&gContestResultsWindowTemplate);
+    Text_InitWindowWithTemplate(&gMenuWindow, &gContestResultsWindowTemplate);
     REG_BG0CNT = BGCNT_WRAP | BGCNT_SCREENBASE(30);
     REG_BG1CNT = BGCNT_PRIORITY(3) | BGCNT_SCREENBASE(24);
     REG_BG2CNT = BGCNT_PRIORITY(3) | BGCNT_SCREENBASE(28);
@@ -269,7 +269,7 @@ void LoadContestResultsBgGfx(void)
     LZDecompressVram(gContestResults_WinnerBanner_Tilemap, BG_SCREEN_ADDR(30));
     LoadContestResultsTitleBarTilemaps();
     LoadCompressedPalette(gContestResults_Pal, 0, 0x200);
-    LoadFontDefaultPalette(&gWindowTemplate_81E6FA0);
+    LoadFontDefaultPalette(&gContestResultsWindowTemplate);
     for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         numStars = GetNumPreliminaryPoints(i, TRUE);
@@ -911,7 +911,7 @@ void DrawResultsTextWindow(const u8 *string, u8 spriteId)
         DmaClear32(3, (void *)VRAM + 0x10000 + 32 * spriteTileNums[i], 0x400);
     }
 
-    textWidth = Text_GetStringWidthFromWindowTemplate(&gWindowTemplate_81E7278, string);
+    textWidth = Text_GetStringWidthFromWindowTemplate(&gContestResultsTextWindowTemplate, string);
     textBuffer = gDisplayedStringBattle;
     textBuffer = StringCopy(textBuffer, sText_ResultsTextWindowStyle);
     if ((~textWidth + 1) & 7)
@@ -1035,7 +1035,7 @@ void DrawResultsTextWindow(const u8 * string, u8 spriteId)
                 "\tlsls r0, 22\n"
                 "\tlsrs r0, 22\n"
                 "\tstrh r0, [r4, 0x6]\n"
-                "\tldr r1, _080C32C4 @ =gWindowTemplate_81E7278\n"
+                "\tldr r1, _080C32C4 @ =gContestResultsTextWindowTemplate\n"
                 "\tmov r8, r1\n"
                 "\tldr r7, _080C32C8 @ =0x06010000\n"
                 "\tldr r2, _080C32CC @ =0x040000d4\n"
@@ -1161,7 +1161,7 @@ void DrawResultsTextWindow(const u8 * string, u8 spriteId)
                 "\tb _080C3322\n"
                 "\t.align 2, 0\n"
                 "_080C32C0: .4byte gSprites\n"
-                "_080C32C4: .4byte gWindowTemplate_81E7278\n"
+                "_080C32C4: .4byte gContestResultsTextWindowTemplate\n"
                 "_080C32C8: .4byte 0x06010000\n"
                 "_080C32CC: .4byte 0x040000d4\n"
                 "_080C32D0: .4byte 0x85000100\n"
