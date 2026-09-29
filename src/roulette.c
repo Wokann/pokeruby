@@ -44,7 +44,7 @@ enum {
 };
 
 #if DEBUG
-void *gUnknown_Debug_03005FB8;
+void *gRouletteDebugState;
 #endif
 
 void CB2_Roulette(void);
@@ -679,7 +679,7 @@ extern const u8 Roulette_Text_PlayMinimumWagerIsX[];
 extern const u8 Roulette_Text_SpecialRateTable[];
 extern const u8 Roulette_Text_NotEnoughCoins[];
 #if DEBUG
-EWRAM_DATA u8 unk_203955C[4] = { 0 };
+EWRAM_DATA u8 gRouletteDebugActive[4] = { 0 };
 EWRAM_DATA u8 gRouletteDebugForceBallStuck = 0;
 #endif
 
@@ -766,7 +766,7 @@ void CB2_LoadRoulette(void)
     u8 taskId;
 
 #if DEBUG
-    gUnknown_Debug_03005FB8 = eRoulette;
+    gRouletteDebugState = eRoulette;
 #endif
 
     switch (gMain.state)
@@ -868,7 +868,7 @@ void Task_SpinWheel(u8 taskId)
     eRoulette->wheelRotation.b =  sin;
     eRoulette->wheelRotation.c = -sin;
 #if DEBUG
-    if (unk_203955C[0] != 0 && JOY_NEW(START_BUTTON))
+    if (gRouletteDebugActive[0] != 0 && JOY_NEW(START_BUTTON))
     {
         gTasks[eRoulette->playTaskId].func = Task_StopPlaying;
         m4aMPlayStop(&gMPlayInfo_SE1);
@@ -1596,7 +1596,7 @@ void Task_ExitRoulette(u8 taskId) // end roulette ?
         SetMainCallback2(&CB2_ReturnToField);
         DestroyTask(taskId);
 #if DEBUG
-        unk_203955C[0] = 0;
+        gRouletteDebugActive[0] = 0;
 #endif
     }
 }
@@ -1932,7 +1932,7 @@ void Task_AcceptMinBet(u8 taskId)
 void Task_DeclineMinBet(u8 taskId)
 {
 #if DEBUG
-    unk_203955C[0] = 0;
+    gRouletteDebugActive[0] = 0;
 #endif
     Menu_EraseScreen();
     UnlockPlayerFieldControls();
@@ -2123,7 +2123,7 @@ void PlayRoulette(void)
     LockPlayerFieldControls();
 #if DEBUG
     gRouletteDebugForceBallStuck = 0;
-    if (unk_203955C[0] != 0)
+    if (gRouletteDebugActive[0] != 0)
     {
 	    CreateTask(debug_sub_812CFE8, 0);
 	    return;

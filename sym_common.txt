@@ -314,7 +314,7 @@ SYMBOL(gContestPaintingMonPalette, 4)
 SYMBOL(gCB2_AfterEvolution, 4)
 
 #if DEBUG
-gUnknown_Debug_03005FB8 = .;
+gRouletteDebugState = .;
 . += 0x4;
 #endif
 

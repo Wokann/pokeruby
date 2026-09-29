@@ -214,14 +214,14 @@ static const struct SpriteTemplate sSpriteTemplates_CableCar[] =
 
 #if DEBUG
 
-extern u8 unk_203955C;
+extern u8 gRouletteDebugActive;
 
 extern const u8 Roulette_EventScript_Table1[];
 extern const u8 Roulette_EventScript_Table2[];
 
 u8 DebugStartRouletteOne(void)
 {
-    unk_203955C = 1;
+    gRouletteDebugActive = 1;
     ScriptContext_SetupScript(Roulette_EventScript_Table1);
     CloseMenu();
     return 1;
@@ -229,7 +229,7 @@ u8 DebugStartRouletteOne(void)
 
 u8 DebugStartRouletteThree(void)
 {
-    unk_203955C = 1;
+    gRouletteDebugActive = 1;
     ScriptContext_SetupScript(Roulette_EventScript_Table2);
     CloseMenu();
     return 1;
