@@ -631,13 +631,13 @@ void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
     }
     else if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
     {
-        SetPokeblockCaseContext(0);
+        SetPokeblockCaseContext(PBLOCK_CASE_BAG);
         ItemMenu_ConfirmNormalFade(taskId);
     }
     else
     {
         gFieldCallback = (void *)FieldCB_ReturnToFieldNoScript;
-        SetPokeblockCaseContext(1);
+        SetPokeblockCaseContext(PBLOCK_CASE_FIELD);
         ItemMenu_ConfirmComplexFade(taskId);
     }
 }

@@ -1310,7 +1310,7 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
         if (lastNonzeroFlavor == 3)
         {
             StringCopy(dest, ContestStatsText_LiteBluePokeBlock);
-            return PBLOCK_CLR_LITEBLUE;
+            return PBLOCK_CLR_LITE_BLUE;
         }
 
         if (lastNonzeroFlavor == 4)
@@ -1870,7 +1870,7 @@ static void SetPokeblock_GivePokeblock(void)
         }
     }
 
-    GivePokeblock(pkblk);
+    AddPokeblock(pkblk);
     SetPokeblock_RecomputeAndPrintColor();
 
     for (i = 0; i < 6; i++)

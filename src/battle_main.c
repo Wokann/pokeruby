@@ -2138,7 +2138,7 @@ void StartDebugBattleFromPartyEditor(void)
     AddBagItem(ITEM_POKE_DOLL, 99);
 
     for (i = 0; i < 15; i++)
-        GivePokeblock(&gUnknown_Debug_821F5AC[i]);
+        AddPokeblock(&gUnknown_Debug_821F5AC[i]);
 }
 
 void VBlankCB_DebugBattlePartyEditor(void)

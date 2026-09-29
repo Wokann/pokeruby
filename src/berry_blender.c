@@ -190,7 +190,6 @@ extern const u8 gUnknown_08E6C100[];
 extern const u8 gUnknown_08E6C920[];
 extern const u8 gUnknown_08E6D354[];
 extern const struct WindowTemplate gWindowTemplate_81E6F68;
-extern const u8 *const gPokeblockNames[];
 extern const struct Berry gBerries[];
 
 extern const u8 gBerryBlenderArrowTiles[];
@@ -1954,7 +1953,7 @@ u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersNo,
             if (gUnknown_03000520[0] == 2)
                 return (gUnknown_03000520[1] << 16) | PBLOCK_CLR_BROWN;
             if (gUnknown_03000520[0] == 3)
-                return (gUnknown_03000520[1] << 16) | PBLOCK_CLR_LITEBLUE;
+                return (gUnknown_03000520[1] << 16) | PBLOCK_CLR_LITE_BLUE;
             if (gUnknown_03000520[0] == 4)
                 return (gUnknown_03000520[1] << 16) | PBLOCK_CLR_OLIVE;
         }
@@ -1967,7 +1966,7 @@ u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* a1, u8 playersNo,
             if (gUnknown_03000520[1] == 2)
                 return (gUnknown_03000520[0] << 16) | PBLOCK_CLR_BROWN;
             if (gUnknown_03000520[1] == 3)
-                return (gUnknown_03000520[0] << 16) | PBLOCK_CLR_LITEBLUE;
+                return (gUnknown_03000520[0] << 16) | PBLOCK_CLR_LITE_BLUE;
             if (gUnknown_03000520[1] == 4)
                 return (gUnknown_03000520[0] << 16) | PBLOCK_CLR_OLIVE;
         }
@@ -3089,7 +3088,7 @@ bool8 PrintBlendingResults(void)
 #endif
         MenuPrintMessage(gBerryBlenderData->stringVar, 1, 15);
         RemoveBagItem(gSpecialVar_ItemId, 1);
-        GivePokeblock(&pokeblock);
+        AddPokeblock(&pokeblock);
         gBerryBlenderData->field_0++;
         break;
     case 6:

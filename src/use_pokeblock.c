@@ -573,7 +573,7 @@ static void ShowPokeblockResults(void)
         case 5:
             if (JOY_NEW(A_BUTTON | B_BUTTON) && !TryPrintNextEnhancement())
             {
-                PokeblockClearIfExists((u8)gSpecialVar_ItemId);
+                TryClearPokeblock((u8)gSpecialVar_ItemId);
                 SetUsePokeblockCallback(CloseUsePokeblockMenu);
             }
             break;

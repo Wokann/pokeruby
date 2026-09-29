@@ -79,9 +79,6 @@ extern const u8 gPokeblock_Gfx[];
 extern const u8 gBattleEnvironmentTiles_Building[];
 extern const u8 gPokeblockFeedBg_Tilemap[];
 extern const u8 gBattleEnvironmentPalette_BattleTower[];
-extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;
-extern const struct CompressedSpritePalette gPokeblockCase_SpritePal;
-
 bool8 IsPokeSpriteNotFlipped(u16 species);
 
 // this file's functions

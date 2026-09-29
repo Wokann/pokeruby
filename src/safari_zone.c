@@ -5,6 +5,7 @@
 #include "field_player_avatar.h"
 #include "main.h"
 #include "overworld.h"
+#include "pokeblock.h"
 #include "script.h"
 #include "string_util.h"
 #include "text.h"
@@ -36,8 +37,6 @@ extern const u8 SafariZone_EventScript_OutOfBallsMidBattle[];
 extern const u8 SafariZone_EventScript_RetirePrompt[];
 extern const u8 SafariZone_EventScript_TimesUp[];
 extern const u8 SafariZone_EventScript_OutOfBalls[];
-extern u8 *gPokeblockNames[];
-
 extern u16 gSpecialVar_Result;
 
 bool32 GetSafariZoneFlag(void)
