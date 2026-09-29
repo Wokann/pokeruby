@@ -891,7 +891,7 @@ static void CreateCableCarSprites(void)
             gSprites[spriteId].data[1] = 0x41;
             sCableCarPtr->unk_0002 = 2;
             sCableCarPtr->unk_0004 = 0x109;
-            SetCurrentAndNextWeatherNoDelay(WEATHER_ASH);
+            SetCurrentAndNextWeatherNoDelay(WEATHER_VOLCANIC_ASH);
             break;
     }
     for (i = 0; i < 9; i++)

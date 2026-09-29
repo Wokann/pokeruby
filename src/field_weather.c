@@ -105,7 +105,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_SNOW]               = {Snow_InitVars,          Snow_Main,          Snow_InitAll,          Snow_Finish},
     [WEATHER_RAIN_MED]           = {Thunderstorm_InitVars,  Thunderstorm_Main,  Thunderstorm_InitAll,  Thunderstorm_Finish},
     [WEATHER_FOG_1]              = {FogHorizontal_InitVars, FogHorizontal_Main, FogHorizontal_InitAll, FogHorizontal_Finish},
-    [WEATHER_ASH]                = {Ash_InitVars,           Ash_Main,           Ash_InitAll,           Ash_Finish},
+    [WEATHER_VOLCANIC_ASH]       = {Ash_InitVars,           Ash_Main,           Ash_InitAll,           Ash_Finish},
     [WEATHER_SANDSTORM]          = {Sandstorm_InitVars,     Sandstorm_Main,     Sandstorm_InitAll,     Sandstorm_Finish},
     [WEATHER_FOG_2]              = {FogDiagonal_InitVars,   FogDiagonal_Main,   FogDiagonal_InitAll,   FogDiagonal_Finish},
     [WEATHER_FOG_3]              = {FogHorizontal_InitVars, FogHorizontal_Main, FogHorizontal_InitAll, FogHorizontal_Finish},
@@ -190,7 +190,7 @@ static const u8 *const sDebugText_Weather[] =
     [WEATHER_SNOW]       = sDebugText_Weather_Snow,
     [WEATHER_RAIN_MED]   = sDebugText_Weather_Lightning,
     [WEATHER_FOG_1]      = sDebugText_Weather_Fog,
-    [WEATHER_ASH]        = sDebugText_Weather_VolcanicAsh,
+    [WEATHER_VOLCANIC_ASH]       = sDebugText_Weather_VolcanicAsh,
     [WEATHER_SANDSTORM]  = sDebugText_Weather_Sandstorm,
     [WEATHER_FOG_2]      = sDebugText_Weather_Fog2,
     [WEATHER_FOG_3]      = sDebugText_Weather_Underwater,
@@ -440,7 +440,7 @@ static void FadeInScreenWithWeather(void)
             gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_IDLE;
         }
         break;
-    case WEATHER_ASH:
+    case WEATHER_VOLCANIC_ASH:
     case WEATHER_SANDSTORM:
     case WEATHER_FOG_2:
     case WEATHER_FOG_3:
@@ -1120,8 +1120,8 @@ static void UNUSED SetFieldWeather(u8 weather)
     case COORD_EVENT_WEATHER_FOG_2:
         SetWeather(WEATHER_FOG_2);
         break;
-    case COORD_EVENT_WEATHER_ASH:
-        SetWeather(WEATHER_ASH);
+    case COORD_EVENT_WEATHER_VOLCANIC_ASH:
+        SetWeather(WEATHER_VOLCANIC_ASH);
         break;
     case COORD_EVENT_WEATHER_SANDSTORM:
         SetWeather(WEATHER_SANDSTORM);

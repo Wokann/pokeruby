@@ -16,7 +16,7 @@ Route113_EventScript_CheckSetAshWeather:: @ 81505E5
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
 	goto_if_lt VAR_TEMP_0, 19, Route113_EventScript_DontSetAshWeather
 	goto_if_gt VAR_TEMP_0, 84, Route113_EventScript_DontSetAshWeather
-	setweather WEATHER_ASH
+	setweather WEATHER_VOLCANIC_ASH
 	return
 
 Route113_EventScript_DontSetAshWeather:: @ 8150604

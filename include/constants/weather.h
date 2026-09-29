@@ -8,7 +8,7 @@
 #define WEATHER_SNOW           4
 #define WEATHER_RAIN_MED       5
 #define WEATHER_FOG_1          6
-#define WEATHER_ASH            7
+#define WEATHER_VOLCANIC_ASH   7
 #define WEATHER_SANDSTORM      8
 #define WEATHER_FOG_2          9
 #define WEATHER_FOG_3          10
@@ -29,7 +29,7 @@
 #define COORD_EVENT_WEATHER_RAIN_MED       5
 #define COORD_EVENT_WEATHER_FOG_1          6
 #define COORD_EVENT_WEATHER_FOG_2          7
-#define COORD_EVENT_WEATHER_ASH            8
+#define COORD_EVENT_WEATHER_VOLCANIC_ASH 8
 #define COORD_EVENT_WEATHER_SANDSTORM      9
 #define COORD_EVENT_WEATHER_SHADE          10
 #define COORD_EVENT_WEATHER_DROUGHT        11
