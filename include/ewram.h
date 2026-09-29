@@ -153,8 +153,8 @@ extern u8 gSharedMem[];
 #define eCutGrassSpriteArray            (gSharedMem + 0x1FFF0) // 8 sprite IDs
 
 // reshow_battle_screen.c
-#define gHelperState                    (gSharedMem[0x1FFFE])
-#define gReshowState                    (gSharedMem[0x1FFFF])
+#define gReshowBattleScreenHelperState  (gSharedMem[0x1FFFE])
+#define gReshowBattleScreenMainState    (gSharedMem[0x1FFFF])
 
 // item_menu.c
 #define ewramBagSetupStep               (gSharedMem[0x1FFFF])

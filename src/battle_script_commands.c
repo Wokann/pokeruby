@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reshow_battle_screen.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_message.h"
@@ -169,7 +170,6 @@ u8 GetMoveSlotToReplace(void);
 bool32 IsHMMove2(u16 move);
 void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
-void ReshowBattleScreenAfterMenu(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CountAliveMons(u8 caseID);

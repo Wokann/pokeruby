@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reshow_battle_screen.h"
 #include "battle_anim_throw.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
@@ -164,9 +165,7 @@ extern void EndBounceEffect(u8, u8);
 extern void SpriteCB_ShowAsMoveTarget(struct Sprite *);
 extern void SpriteCB_HideAsMoveTarget(struct Sprite *);
 extern bool8 IsDoubleBattle();
-extern void ReshowBattleScreenDummy(void);
 extern void CB2_BagMenuFromBattle(void);
-extern void ReshowBattleScreenAfterMenu(void);
 
 void PlayerHandleGetAttributes(void);
 void PlayerHandleGetRawMonData(void);
