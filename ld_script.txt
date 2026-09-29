@@ -339,7 +339,7 @@ SECTIONS {
         src/cable_car.o(.text);
         src/palette_util.o(.text);
         src/cable_car_util.o(.text);
-        src/unused_8124F94.o(.text);
+        src/unused_tile_palette_loader.o(.text);
         src/save.o(.text);
         src/mystery_event_script.o(.text);
         src/debug/ereader_debug_menu.o(.text);
