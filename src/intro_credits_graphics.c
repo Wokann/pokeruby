@@ -35,82 +35,90 @@ struct IntroCreditsSpriteMetadata
     u16 xOff;
 };
 
-const u16 gIntro2GrassPalette[] = INCBIN_U16("graphics/intro/intro2_grass.gbapal");
-const u16 gIntro2GrassAfternoonPalette[] = INCBIN_U16("graphics/intro/intro2_grass_afternoon.gbapal");
-const u16 gIntro2GrassNightPalette[] = INCBIN_U16("graphics/intro/intro2_grass_night.gbapal");
-const u8 gIntro2GrassTiles[] = INCBIN_U8("graphics/intro/intro2_grass.4bpp.lz");
-const u8 gIntro2GrassTilemap[] = INCBIN_U8("graphics/intro/intro2_grass_map.bin.lz");
-const u16 gIntro2CloudsBgPalette[] = INCBIN_U16("graphics/intro/8412818.gbapal");
-const u16 gIntro2CloudsBgAfternoonPalette[] = INCBIN_U16("graphics/intro/8412878.gbapal");
-const u8 gIntro2CloudsBgTiles[] = INCBIN_U8("graphics/intro/intro2_bgclouds.4bpp.lz");
-const u8 gIntro2CloudsBgTilemap[] = INCBIN_U8("graphics/intro/intro2_bgclouds_map.bin.lz");
-const u16 gIntro2CloudsPalette[] = INCBIN_U16("graphics/intro/intro2_bgclouds.gbapal");
-const u16 gIntro2CloudsAfternoonPalette[] = INCBIN_U16("graphics/intro/intro2_bgclouds_afternoon.gbapal");
-const u8 gIntro2CloudsTiles[] = INCBIN_U8("graphics/intro/intro2_bgclouds2.4bpp.lz");
-const u16 gIntro2TreesBgPalette[] = INCBIN_U16("graphics/intro/intro2_bgtrees2.gbapal");
-const u16 gIntro2TreesAfternoonPalette[] = INCBIN_U16("graphics/intro/intro2_bgtrees2_afternoon.gbapal");
-const u8 gIntro2TreesTiles[] = INCBIN_U8("graphics/intro/intro2_bgtrees.4bpp.lz");
-const u8 gIntro2TreesTilemap[] = INCBIN_U8("graphics/intro/intro2_bgtrees_map.bin.lz");
-const u16 gIntro2TreesSmallPalette[] = INCBIN_U16("graphics/intro/intro2_bgtrees.gbapal");
-const u8 gIntro2TreeTiles[] = INCBIN_U8("graphics/intro/intro2_bgtreessmall.4bpp.lz");
-const u16 gIntro2NightBgLayerPalette[] = INCBIN_U16("graphics/intro/8413E38.gbapal");
-const u8 gIntro2NightBgTiles[] = INCBIN_U8("graphics/intro/intro2_bgnight.4bpp.lz"); // only used in credits, coupled with intro because bicycle sequence
-const u16 gIntro2NightBgPalette[] = INCBIN_U16("graphics/intro/intro2_bgnight.gbapal");
-const u8 gIntro2NightBgTilemap[] = INCBIN_U8("graphics/intro/intro2_bgnight_map.bin.lz");
-const u8 gIntro2NightTiles[] = INCBIN_U8("graphics/intro/intro2_night.4bpp.lz");
-const u16 gIntro2BrendanPalette[] = INCBIN_U16("graphics/intro/intro2_brendan.gbapal");
-const u8 gIntro2BrendanTiles[] = INCBIN_U8("graphics/intro/intro2_brendan.4bpp.lz");
-const u16 gIntro2MayPalette[] = INCBIN_U16("graphics/intro/intro2_may.gbapal");
-const u16 gIntro2UnusedPaletteData[0xF0] = {0};
-const u8 gIntro2MayTiles[] = INCBIN_U8("graphics/intro/intro2_may.4bpp.lz");
-const u8 gIntro2BicycleTiles[] = INCBIN_U8("graphics/intro/intro2_bicycle.4bpp.lz");
-const u16 gIntro2LatiosPalette[] = INCBIN_U16("graphics/intro/intro2_latios.gbapal");
-const u8 gIntro2LatiosTiles[] = INCBIN_U8("graphics/intro/intro2_latios.4bpp.lz");
-const u16 gIntro2LatiasPalette[] = INCBIN_U16("graphics/intro/intro2_latias.gbapal");
-const u8 gIntro2LatiasTiles[] = INCBIN_U8("graphics/intro/intro2_latias.4bpp.lz");
+#define TAG_BICYCLE        1001
+#define TAG_BRENDAN        1002
+#define TAG_MAY            1003
+#define TAG_LATIOS         1004
+#define TAG_LATIAS         1005
+#define TAG_MOVING_SCENERY 2000
 
-void SpriteCB_MovingScenery(struct Sprite *sprite);
-void SpriteCB_Player(struct Sprite *sprite);
-void SpriteCB_Bicycle(struct Sprite *sprite);
-void SpriteCB_LatiLeftHalf(struct Sprite *sprite);
+static const u16 sGrass_Pal[] = INCBIN_U16("graphics/intro/intro2_grass.gbapal");
+static const u16 sGrassAfternoon_Pal[] = INCBIN_U16("graphics/intro/intro2_grass_afternoon.gbapal");
+static const u16 sGrassNight_Pal[] = INCBIN_U16("graphics/intro/intro2_grass_night.gbapal");
+static const u8 sGrass_Gfx[] = INCBIN_U8("graphics/intro/intro2_grass.4bpp.lz");
+static const u8 sGrass_Tilemap[] = INCBIN_U8("graphics/intro/intro2_grass_map.bin.lz");
+static const u16 sCloudsBg_Pal[] = INCBIN_U16("graphics/intro/8412818.gbapal");
+static const u16 sCloudsBgAfternoon_Pal[] = INCBIN_U16("graphics/intro/8412878.gbapal");
+static const u8 sCloudsBg_Gfx[] = INCBIN_U8("graphics/intro/intro2_bgclouds.4bpp.lz");
+static const u8 sCloudsBg_Tilemap[] = INCBIN_U8("graphics/intro/intro2_bgclouds_map.bin.lz");
+static const u16 sClouds_Pal[] = INCBIN_U16("graphics/intro/intro2_bgclouds.gbapal");
+static const u16 sCloudsAfternoon_Pal[] = INCBIN_U16("graphics/intro/intro2_bgclouds_afternoon.gbapal");
+static const u8 sClouds_Gfx[] = INCBIN_U8("graphics/intro/intro2_bgclouds2.4bpp.lz");
+static const u16 sTrees_Pal[] = INCBIN_U16("graphics/intro/intro2_bgtrees2.gbapal");
+static const u16 sTreesAfternoon_Pal[] = INCBIN_U16("graphics/intro/intro2_bgtrees2_afternoon.gbapal");
+static const u8 sTrees_Gfx[] = INCBIN_U8("graphics/intro/intro2_bgtrees.4bpp.lz");
+static const u8 sTrees_Tilemap[] = INCBIN_U8("graphics/intro/intro2_bgtrees_map.bin.lz");
+static const u16 sTreesSmall_Pal[] = INCBIN_U16("graphics/intro/intro2_bgtrees.gbapal");
+static const u8 sTreesSmall_Gfx[] = INCBIN_U8("graphics/intro/intro2_bgtreessmall.4bpp.lz");
+static const u16 sHouses_Pal[] = INCBIN_U16("graphics/intro/8413E38.gbapal");
+static const u8 sHouses_Gfx[] = INCBIN_U8("graphics/intro/intro2_bgnight.4bpp.lz"); // Only used by the credits.
+static const u16 sHouseSilhouette_Pal[] = INCBIN_U16("graphics/intro/intro2_bgnight.gbapal");
+static const u8 sHouses_Tilemap[] = INCBIN_U8("graphics/intro/intro2_bgnight_map.bin.lz");
+static const u8 sHouseSilhouette_Gfx[] = INCBIN_U8("graphics/intro/intro2_night.4bpp.lz");
+static const u16 sBrendan_Pal[] = INCBIN_U16("graphics/intro/intro2_brendan.gbapal");
+static const u8 sBrendan_Gfx[] = INCBIN_U8("graphics/intro/intro2_brendan.4bpp.lz");
+static const u16 sMay_Pal[] = INCBIN_U16("graphics/intro/intro2_may.gbapal");
+static const u16 sUnused[0xF0] = {0};
+static const u8 sMay_Gfx[] = INCBIN_U8("graphics/intro/intro2_may.4bpp.lz");
+static const u8 sBicycle_Gfx[] = INCBIN_U8("graphics/intro/intro2_bicycle.4bpp.lz");
+static const u16 sLatios_Pal[] = INCBIN_U16("graphics/intro/intro2_latios.gbapal");
+static const u8 sLatios_Gfx[] = INCBIN_U8("graphics/intro/intro2_latios.4bpp.lz");
+static const u16 sLatias_Pal[] = INCBIN_U16("graphics/intro/intro2_latias.gbapal");
+static const u8 sLatias_Gfx[] = INCBIN_U8("graphics/intro/intro2_latias.4bpp.lz");
 
-const struct SpriteTemplate gSpriteTemplate_MovingScenery = {
-    2000, 0xFFFF, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_MovingScenery
+static void SpriteCB_MovingScenery(struct Sprite *sprite);
+static void SpriteCB_Player(struct Sprite *sprite);
+static void SpriteCB_Bicycle(struct Sprite *sprite);
+static void SpriteCB_LatiLeftHalf(struct Sprite *sprite);
+static void Task_BicycleBgAnimation(u8 taskId);
+
+static const struct SpriteTemplate sSpriteTemplate_MovingScenery = {
+    TAG_MOVING_SCENERY, TAG_NONE, &gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_MovingScenery
 };
 
-const struct CompressedSpriteSheet gSpriteSheet_Clouds[] = {
-    { gIntro2CloudsTiles, 0x400, 2000 },
+static const struct CompressedSpriteSheet sSpriteSheet_Clouds[] = {
+    { sClouds_Gfx, 0x400, TAG_MOVING_SCENERY },
     {}
 };
 
-const union AnimCmd gAnim_CloudLargest[] = {
+static const union AnimCmd sAnim_Cloud_Largest[] = {
     ANIMCMD_FRAME( 0, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_CloudLarge[] = {
+static const union AnimCmd sAnim_Cloud_Large[] = {
     ANIMCMD_FRAME(16, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_CloudSmall[] = {
+static const union AnimCmd sAnim_Cloud_Small[] = {
     ANIMCMD_FRAME(20, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_CloudSmallest[] = {
+static const union AnimCmd sAnim_Cloud_Smallest[] = {
     ANIMCMD_FRAME(22, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gAnims_Clouds[] = {
-    gAnim_CloudLargest,
-    gAnim_CloudLarge,
-    gAnim_CloudSmall,
-    gAnim_CloudSmallest
+static const union AnimCmd *const sAnims_Clouds[] = {
+    sAnim_Cloud_Largest,
+    sAnim_Cloud_Large,
+    sAnim_Cloud_Small,
+    sAnim_Cloud_Smallest
 };
 
-const struct IntroCreditsSpriteMetadata gSpriteMetadata_Clouds[] = {
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Clouds[] = {
     {  0, ST_OAM_SQUARE,      2,   72, 32, 100, 0xc00 },
     {  0, ST_OAM_SQUARE,      2,  158, 32, 100, 0xc00 },
     {  1, ST_OAM_SQUARE,      1,  192, 40, 101, 0x800 },
@@ -122,33 +130,33 @@ const struct IntroCreditsSpriteMetadata gSpriteMetadata_Clouds[] = {
     {  3, ST_OAM_H_RECTANGLE, 0,  240, 46, 103, 0x100 },
 };
 
-const struct CompressedSpriteSheet gSpriteSheet_TreesSmall[] = {
-    { gIntro2TreeTiles, 0x400, 2000 },
+static const struct CompressedSpriteSheet sSpriteSheet_TreesSmall[] = {
+    { sTreesSmall_Gfx, 0x400, TAG_MOVING_SCENERY },
     {}
 };
 
-const union AnimCmd gAnim_Trees0[] = {
+static const union AnimCmd sAnim_Trees_0[] = {
     ANIMCMD_FRAME( 0, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_Trees1[] = {
+static const union AnimCmd sAnim_Trees_1[] = {
     ANIMCMD_FRAME(16, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_Trees2[] = {
+static const union AnimCmd sAnim_Trees_2[] = {
     ANIMCMD_FRAME(24, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gAnims_Trees[] = {
-    gAnim_Trees0,
-    gAnim_Trees1,
-    gAnim_Trees2
+static const union AnimCmd *const sAnims_Trees[] = {
+    sAnim_Trees_0,
+    sAnim_Trees_1,
+    sAnim_Trees_2
 };
 
-const struct IntroCreditsSpriteMetadata gSpriteMetadata_Trees[] = {
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_Trees[] = {
     {  0, ST_OAM_SQUARE,      2,   16, 88, 100, 0x2000 },
     {  0, ST_OAM_SQUARE,      2,   80, 88, 100, 0x2000 },
     {  0, ST_OAM_SQUARE,      2,  144, 88, 100, 0x2000 },
@@ -163,21 +171,21 @@ const struct IntroCreditsSpriteMetadata gSpriteMetadata_Trees[] = {
     {  2, ST_OAM_V_RECTANGLE, 2,  248, 88, 102, 0x800  },
 };
 
-const struct CompressedSpriteSheet gSpriteSheet_HouseSilhouette[] = {
-    { gIntro2NightTiles, 0x400, 2000 },
+static const struct CompressedSpriteSheet sSpriteSheet_HouseSilhouette[] = {
+    { sHouseSilhouette_Gfx, 0x400, TAG_MOVING_SCENERY },
     {}
 };
 
-const union AnimCmd gAnim_HouseSilhouette[] = {
+static const union AnimCmd sAnim_HouseSilhouette[] = {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gAnims_HouseSilhouette[] = {
-    gAnim_HouseSilhouette
+static const union AnimCmd *const sAnims_HouseSilhouette[] = {
+    sAnim_HouseSilhouette
 };
 
-const struct IntroCreditsSpriteMetadata gSpriteMetadata_HouseSilhouette[] = {
+static const struct IntroCreditsSpriteMetadata sSpriteMetadata_HouseSilhouette[] = {
     { 0, ST_OAM_SQUARE, 2,   24, 88, 100, 0x1000 },
     { 0, ST_OAM_SQUARE, 2,   64, 88, 100, 0x1000 },
     { 0, ST_OAM_SQUARE, 2,  104, 88, 100, 0x1000 },
@@ -186,11 +194,11 @@ const struct IntroCreditsSpriteMetadata gSpriteMetadata_HouseSilhouette[] = {
     { 0, ST_OAM_SQUARE, 2,  224, 88, 100, 0x1000 },
 };
 
-const struct OamData gOamData_Player = {
+static const struct OamData sOamData_Player = {
     .y = 160, .shape = ST_OAM_SQUARE, .size = 3, .priority = 1
 };
 
-const union AnimCmd gAnim_Player[] = {
+static const union AnimCmd sAnim_Player[] = {
     ANIMCMD_FRAME(  0, 8),
     ANIMCMD_FRAME( 64, 8),
     ANIMCMD_FRAME(128, 8),
@@ -198,23 +206,23 @@ const union AnimCmd gAnim_Player[] = {
     ANIMCMD_JUMP(0)
 };
 
-const union AnimCmd *const gAnims_Player[] = {
-    gAnim_Player
+static const union AnimCmd *const sAnims_Player[] = {
+    sAnim_Player
 };
 
-const struct SpriteTemplate gSpriteTemplate_Brendan = {
-    1002, 1002, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
+static const struct SpriteTemplate sSpriteTemplate_Brendan = {
+    TAG_BRENDAN, TAG_BRENDAN, &sOamData_Player, sAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
 };
 
-const struct SpriteTemplate gSpriteTemplate_May = {
-    1003, 1003, &gOamData_Player, gAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
+static const struct SpriteTemplate sSpriteTemplate_May = {
+    TAG_MAY, TAG_MAY, &sOamData_Player, sAnims_Player, NULL, gDummySpriteAffineAnimTable, SpriteCB_Player
 };
 
-const struct OamData gOamData_Bicycle = {
+static const struct OamData sOamData_Bicycle = {
     .y = 160, .shape = ST_OAM_H_RECTANGLE, .size = 3, .priority = 1
 };
 
-const union AnimCmd gAnim_Bicycle[] = {
+static const union AnimCmd sAnim_Bicycle[] = {
     ANIMCMD_FRAME(  0, 8),
     ANIMCMD_FRAME( 32, 8),
     ANIMCMD_FRAME( 64, 8),
@@ -222,120 +230,120 @@ const union AnimCmd gAnim_Bicycle[] = {
     ANIMCMD_JUMP(0)
 };
 
-const union AnimCmd *const gAnims_Bicycle[] = {
-    gAnim_Bicycle
+static const union AnimCmd *const sAnims_Bicycle[] = {
+    sAnim_Bicycle
 };
 
-const struct SpriteTemplate gSpriteTemplate_BrendanBicycle = {
-    1001, 1002, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
+static const struct SpriteTemplate sSpriteTemplate_BrendanBicycle = {
+    TAG_BICYCLE, TAG_BRENDAN, &sOamData_Bicycle, sAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
 };
 
-const struct SpriteTemplate gSpriteTemplate_MayBicycle = {
-    1001, 1003, &gOamData_Bicycle, gAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
+static const struct SpriteTemplate sSpriteTemplate_MayBicycle = {
+    TAG_BICYCLE, TAG_MAY, &sOamData_Bicycle, sAnims_Bicycle, NULL, gDummySpriteAffineAnimTable, SpriteCB_Bicycle
 };
 
-const struct OamData gOamData_LatiosLatias = {
+static const struct OamData sOamData_Lati = {
     .y = 160, .shape = ST_OAM_SQUARE, .size = 3, .priority = 1
 };
 
-const union AnimCmd gAnim_LatiLeftHalf[] = {
+static const union AnimCmd sAnim_LatiLeftHalf[] = {
     ANIMCMD_FRAME(  0, 16),
     ANIMCMD_END
 };
 
-const union AnimCmd gAnim_LatiRightHalf[] = {
+static const union AnimCmd sAnim_LatiRightHalf[] = {
     ANIMCMD_FRAME( 64, 16),
     ANIMCMD_END
 };
 
-const union AnimCmd *const gAnims_Lati[] = {
-    gAnim_LatiLeftHalf,
-    gAnim_LatiRightHalf
+static const union AnimCmd *const sAnims_Lati[] = {
+    sAnim_LatiLeftHalf,
+    sAnim_LatiRightHalf
 };
 
-const struct SpriteTemplate gSpriteTemplate_Latios = {
-    1004, 1004, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
+static const struct SpriteTemplate sSpriteTemplate_Latios = {
+    TAG_LATIOS, TAG_LATIOS, &sOamData_Lati, sAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
 };
 
-const struct SpriteTemplate gSpriteTemplate_Latias = {
-    1005, 1005, &gOamData_LatiosLatias, gAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
+static const struct SpriteTemplate sSpriteTemplate_Latias = {
+    TAG_LATIAS, TAG_LATIAS, &sOamData_Lati, sAnims_Lati, NULL, gDummySpriteAffineAnimTable, SpriteCB_LatiLeftHalf
 };
 
-const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[] = {
-    { gIntro2BrendanTiles, 0x3800, 1002 },
+const struct CompressedSpriteSheet gSpriteSheet_IntroBrendan[] = {
+    { sBrendan_Gfx, 0x3800, TAG_BRENDAN },
     {}
 };
-const struct CompressedSpriteSheet gIntro2MaySpriteSheet[] = {
-    { gIntro2MayTiles, 0x3800, 1003 },
+const struct CompressedSpriteSheet gSpriteSheet_IntroMay[] = {
+    { sMay_Gfx, 0x3800, TAG_MAY },
     {}
 };
-const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[] = {
-    { gIntro2BicycleTiles, 0x1000, 1001 },
+const struct CompressedSpriteSheet gSpriteSheet_IntroBicycle[] = {
+    { sBicycle_Gfx, 0x1000, TAG_BICYCLE },
     {}
 };
-const struct CompressedSpriteSheet gIntro2LatiosSpriteSheet[] = {
-    { gIntro2LatiosTiles, 0x1000, 1004 },
+const struct CompressedSpriteSheet gSpriteSheet_IntroLatios[] = {
+    { sLatios_Gfx, 0x1000, TAG_LATIOS },
     {}
 };
-const struct CompressedSpriteSheet gIntro2LatiasSpriteSheet[] = {
-    { gIntro2LatiasTiles, 0x1000, 1005 },
+const struct CompressedSpriteSheet gSpriteSheet_IntroLatias[] = {
+    { sLatias_Gfx, 0x1000, TAG_LATIAS },
     {}
 };
 
-const struct SpritePalette gIntro2SpritePalettes[] = {
-    {gIntro2BrendanPalette, 1002},
-    {gIntro2MayPalette,     1003},
-    {gIntro2LatiosPalette,  1004},
-    {gIntro2LatiasPalette,  1005},
+const struct SpritePalette gSpritePalettes_IntroPlayerLati[] = {
+    { sBrendan_Pal, TAG_BRENDAN },
+    { sMay_Pal,     TAG_MAY },
+    { sLatios_Pal,  TAG_LATIOS },
+    { sLatias_Pal,  TAG_LATIAS },
     {}
 };
 
 const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalBrendan[] = {
-    { gIntro2BrendanTiles, 0x2000, 1002},
+    { sBrendan_Gfx, 0x2000, TAG_BRENDAN },
     {}
 };
 
 const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[] = {
-    { gIntro2MayTiles, 0x2000, 1003},
+    { sMay_Gfx, 0x2000, TAG_MAY },
     {}
 };
 
 
 EWRAM_DATA u16 gIntroCredits_MovingSceneryVBase = 0;
 EWRAM_DATA s16 gIntroCredits_MovingSceneryVOffset = 0;
-EWRAM_DATA s16 gIntroCredits_MovingSceneryState = 0;
+EWRAM_DATA s16 gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_NORMAL;
 
 extern u8 gReservedSpritePaletteCount;
 
-void CreateIntroCloudSprites();
-void CreateTreeSprites();
+static void CreateCloudSprites(void);
+static void CreateTreeSprites(void);
 
 void LoadIntroPart2Graphics(u8 scenery)
 {
-    LZ77UnCompVram(&gIntro2GrassTiles, (void *)(VRAM + 0x4000));
-    LZ77UnCompVram(&gIntro2GrassTilemap, (void *)(VRAM + 0x7800));
-    LoadPalette(&gIntro2GrassPalette, 240, 32);
+    LZ77UnCompVram(&sGrass_Gfx, (void *)(VRAM + 0x4000));
+    LZ77UnCompVram(&sGrass_Tilemap, (void *)(VRAM + 0x7800));
+    LoadPalette(&sGrass_Pal, 240, 32);
     switch (scenery)
     {
     case 0:
     default:
-        LZ77UnCompVram(&gIntro2CloudsBgTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2CloudsBgTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2CloudsBgPalette, 0, 96);
-        LoadCompressedSpriteSheet(gSpriteSheet_Clouds);
-        LoadPalette(&gIntro2CloudsPalette, 256, 32);
-        CreateIntroCloudSprites();
+        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sCloudsBg_Pal, 0, 96);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
+        LoadPalette(&sClouds_Pal, 256, 32);
+        CreateCloudSprites();
         break;
     case 1:
-        LZ77UnCompVram(&gIntro2TreesTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2TreesTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2TreesBgPalette, 0, 32);
-        LoadCompressedSpriteSheet(gSpriteSheet_TreesSmall);
-        LoadPalette(&gIntro2TreesSmallPalette, 256, 32);
+        LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sTrees_Pal, 0, 32);
+        LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
+        LoadPalette(&sTreesSmall_Pal, 256, 32);
         CreateTreeSprites();
         break;
     }
-    gIntroCredits_MovingSceneryState = 0;
+    gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_NORMAL;
     gReservedSpritePaletteCount = 8;
 }
 
@@ -357,57 +365,57 @@ void SetIntroPart2BgCnt(u8 scenery)
     }
 }
 
-void CreateHouseSprites();
+static void CreateHouseSprites(void);
 
 void LoadCreditsSceneGraphics(u8 scene)
 {
-    LZ77UnCompVram(&gIntro2GrassTiles, (void *)(VRAM + 0x4000));
-    LZ77UnCompVram(&gIntro2GrassTilemap, (void *)(VRAM + 0x7800));
+    LZ77UnCompVram(&sGrass_Gfx, (void *)(VRAM + 0x4000));
+    LZ77UnCompVram(&sGrass_Tilemap, (void *)(VRAM + 0x7800));
     switch (scene)
     {
-    case 0:
+    case SCENE_OCEAN_MORNING:
     default:
-        LoadPalette(&gIntro2GrassPalette, 240, 32);
-        LZ77UnCompVram(&gIntro2CloudsBgTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2CloudsBgTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2CloudsBgPalette, 0, 96);
-        LoadCompressedSpriteSheet(gSpriteSheet_Clouds);
-        LZ77UnCompVram(&gIntro2CloudsTiles, (void *)(VRAM + 0x10000));
-        LoadPalette(&gIntro2CloudsPalette, 256, 32);
-        CreateIntroCloudSprites();
+        LoadPalette(&sGrass_Pal, 240, 32);
+        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sCloudsBg_Pal, 0, 96);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
+        LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
+        LoadPalette(&sClouds_Pal, 256, 32);
+        CreateCloudSprites();
         break;
-    case 1:
-        LoadPalette(&gIntro2GrassAfternoonPalette, 240, 32);
-        LZ77UnCompVram(&gIntro2CloudsBgTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2CloudsBgTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2CloudsBgAfternoonPalette, 0, 96);
-        LoadCompressedSpriteSheet(gSpriteSheet_Clouds);
-        LZ77UnCompVram(&gIntro2CloudsTiles, (void *)(VRAM + 0x10000));
-        LoadPalette(&gIntro2CloudsAfternoonPalette, 256, 32);
-        CreateIntroCloudSprites();
+    case SCENE_OCEAN_SUNSET:
+        LoadPalette(&sGrassAfternoon_Pal, 240, 32);
+        LZ77UnCompVram(&sCloudsBg_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sCloudsBg_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sCloudsBgAfternoon_Pal, 0, 96);
+        LoadCompressedSpriteSheet(sSpriteSheet_Clouds);
+        LZ77UnCompVram(&sClouds_Gfx, (void *)(VRAM + 0x10000));
+        LoadPalette(&sCloudsAfternoon_Pal, 256, 32);
+        CreateCloudSprites();
         break;
-    case 2:
-    case 3:
-        LoadPalette(&gIntro2GrassAfternoonPalette, 240, 32);
-        LZ77UnCompVram(&gIntro2TreesTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2TreesTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2TreesAfternoonPalette, 0, 32);
-        LoadCompressedSpriteSheet(gSpriteSheet_TreesSmall);
-        LoadPalette(&gIntro2TreesAfternoonPalette, 256, 32);
+    case SCENE_FOREST_RIVAL_ARRIVE:
+    case SCENE_FOREST_CATCH_RIVAL:
+        LoadPalette(&sGrassAfternoon_Pal, 240, 32);
+        LZ77UnCompVram(&sTrees_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sTrees_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sTreesAfternoon_Pal, 0, 32);
+        LoadCompressedSpriteSheet(sSpriteSheet_TreesSmall);
+        LoadPalette(&sTreesAfternoon_Pal, 256, 32);
         CreateTreeSprites();
         break;
-    case 4:
-        LoadPalette(&gIntro2GrassNightPalette, 240, 32);
-        LZ77UnCompVram(&gIntro2NightBgTiles, (void *)(VRAM));
-        LZ77UnCompVram(&gIntro2NightBgTilemap, (void *)(VRAM + 0x3000));
-        LoadPalette(&gIntro2NightBgLayerPalette, 0, 64);
-        LoadCompressedSpriteSheet(gSpriteSheet_HouseSilhouette);
-        LoadPalette(&gIntro2NightBgPalette, 256, 32);
+    case SCENE_CITY_NIGHT:
+        LoadPalette(&sGrassNight_Pal, 240, 32);
+        LZ77UnCompVram(&sHouses_Gfx, (void *)(VRAM));
+        LZ77UnCompVram(&sHouses_Tilemap, (void *)(VRAM + 0x3000));
+        LoadPalette(&sHouses_Pal, 0, 64);
+        LoadCompressedSpriteSheet(sSpriteSheet_HouseSilhouette);
+        LoadPalette(&sHouseSilhouette_Pal, 256, 32);
         CreateHouseSprites();
         break;
     }
     gReservedSpritePaletteCount = 8;
-    gIntroCredits_MovingSceneryState = 0;
+    gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_NORMAL;
 }
 
 void SetCreditsSceneBgCnt(u8 scene)
@@ -418,67 +426,89 @@ void SetCreditsSceneBgCnt(u8 scene)
     REG_DISPCNT = 0x1F40;
 }
 
+#define tMode     data[0]
+#define tBg1Speed data[1]
+#define tBg1PosHi data[2]
+#define tBg1PosLo data[3]
+#define tBg2Speed data[4]
+#define tBg2PosHi data[5]
+#define tBg2PosLo data[6]
+#define tBg3Speed data[7]
+#define tBg3PosHi data[8]
+#define tBg3PosLo data[9]
+
 u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Speed)
 {
     u8 taskId = CreateTask(&Task_BicycleBgAnimation, 0);
 
-    gTasks[taskId].data[0] = mode;
-    gTasks[taskId].data[1] = bg1Speed;
-    gTasks[taskId].data[2] = 0;
-    gTasks[taskId].data[3] = 0;
-    gTasks[taskId].data[4] = bg2Speed;
-    gTasks[taskId].data[5] = 0;
-    gTasks[taskId].data[6] = 0;
-    gTasks[taskId].data[7] = bg3Speed;
-    gTasks[taskId].data[8] = 8;
-    gTasks[taskId].data[9] = 0;
+    gTasks[taskId].tMode = mode;
+    gTasks[taskId].tBg1Speed = bg1Speed;
+    gTasks[taskId].tBg1PosHi = 0;
+    gTasks[taskId].tBg1PosLo = 0;
+    gTasks[taskId].tBg2Speed = bg2Speed;
+    gTasks[taskId].tBg2PosHi = 0;
+    gTasks[taskId].tBg2PosLo = 0;
+    gTasks[taskId].tBg3Speed = bg3Speed;
+    gTasks[taskId].tBg3PosHi = 8;
+    gTasks[taskId].tBg3PosLo = 0;
     Task_BicycleBgAnimation(taskId);
     return taskId;
 }
 
-void Task_BicycleBgAnimation(u8 taskId)
+static void Task_BicycleBgAnimation(u8 taskId)
 {
     s16 bg1Speed;
     s16 bg2Speed;
     s16 bg3Speed;
     s32 offset;
 
-    bg1Speed = gTasks[taskId].data[1];
+    bg1Speed = gTasks[taskId].tBg1Speed;
     if (bg1Speed != 0)
     {
-        offset = (gTasks[taskId].data[2] << 16) + (u16)gTasks[taskId].data[3];
+        offset = (gTasks[taskId].tBg1PosHi << 16) + (u16)gTasks[taskId].tBg1PosLo;
         offset -= 16 * (u16)bg1Speed;
-        gTasks[taskId].data[2] = offset >> 16;
-        gTasks[taskId].data[3] = offset;
-        REG_BG1HOFS = gTasks[taskId].data[2];
+        gTasks[taskId].tBg1PosHi = offset >> 16;
+        gTasks[taskId].tBg1PosLo = offset;
+        REG_BG1HOFS = gTasks[taskId].tBg1PosHi;
         REG_BG1VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
     }
 
-    bg2Speed = gTasks[taskId].data[4];
+    bg2Speed = gTasks[taskId].tBg2Speed;
     if (bg2Speed != 0)
     {
-        offset = (gTasks[taskId].data[5] << 16) + (u16)gTasks[taskId].data[6];
+        offset = (gTasks[taskId].tBg2PosHi << 16) + (u16)gTasks[taskId].tBg2PosLo;
         offset -= 16 * (u16)bg2Speed;
-        gTasks[taskId].data[5] = offset >> 16;
-        gTasks[taskId].data[6] = offset;
-        REG_BG2HOFS = gTasks[taskId].data[5];
-        if (gTasks[taskId].data[0] != 0)
+        gTasks[taskId].tBg2PosHi = offset >> 16;
+        gTasks[taskId].tBg2PosLo = offset;
+        REG_BG2HOFS = gTasks[taskId].tBg2PosHi;
+        if (gTasks[taskId].tMode != 0)
             REG_BG2VOFS = gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset;
         else
             REG_BG2VOFS = gIntroCredits_MovingSceneryVBase;
     }
 
-    bg3Speed = gTasks[taskId].data[7];
+    bg3Speed = gTasks[taskId].tBg3Speed;
     if (bg3Speed != 0)
     {
-        offset = (gTasks[taskId].data[8] << 16) + (u16)gTasks[taskId].data[9];
+        offset = (gTasks[taskId].tBg3PosHi << 16) + (u16)gTasks[taskId].tBg3PosLo;
         offset -= 16 * (u16)bg3Speed;
-        gTasks[taskId].data[8] = offset >> 16;
-        gTasks[taskId].data[9] = offset;
-        REG_BG3HOFS = gTasks[taskId].data[8];
+        gTasks[taskId].tBg3PosHi = offset >> 16;
+        gTasks[taskId].tBg3PosLo = offset;
+        REG_BG3HOFS = gTasks[taskId].tBg3PosHi;
         REG_BG3VOFS = gIntroCredits_MovingSceneryVBase;
     }
 }
+
+#undef tMode
+#undef tBg1Speed
+#undef tBg1PosHi
+#undef tBg1PosLo
+#undef tBg2Speed
+#undef tBg2PosHi
+#undef tBg2PosLo
+#undef tBg3Speed
+#undef tBg3PosHi
+#undef tBg3PosLo
 
 void CycleSceneryPalette(u8 mode)
 {
@@ -525,19 +555,25 @@ void CycleSceneryPalette(u8 mode)
     }
 }
 
-void SpriteCB_MovingScenery(struct Sprite *sprite)
+#define tHasVerticalMove data[0]
+#define tXOffset         data[1]
+#define tXPos            data[2]
+
+static void SpriteCB_MovingScenery(struct Sprite *sprite)
 {
-    if (gIntroCredits_MovingSceneryState)
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
     }
     else
     {
-        s32 var = ((sprite->x << 16) | (u16)sprite->data[2]) + (u16)sprite->data[1];
-        sprite->x = var >> 16;
-        sprite->data[2] = var;
-        if (sprite->x > 255) sprite->x = 0xFFE0;
-        if (sprite->data[0])
+        s32 x = ((sprite->x << 16) | (u16)sprite->tXPos) + (u16)sprite->tXOffset;
+
+        sprite->x = x >> 16;
+        sprite->tXPos = x;
+        if (sprite->x > 255)
+            sprite->x = 0xFFE0;
+        if (sprite->tHasVerticalMove)
         {
             sprite->y2 = -(gIntroCredits_MovingSceneryVBase + gIntroCredits_MovingSceneryVOffset);
         }
@@ -548,100 +584,115 @@ void SpriteCB_MovingScenery(struct Sprite *sprite)
     }
 }
 
-void CreateMovingScenerySprites(bool8 hasVerticalMove, const struct IntroCreditsSpriteMetadata *metadata, const union AnimCmd *const *anims, u8 numSprites)
+static void CreateMovingScenerySprites(bool8 hasVerticalMove, const struct IntroCreditsSpriteMetadata *metadata, const union AnimCmd *const *anims, u8 numSprites)
 {
     u8 i;
 
-    for(i = 0; i < numSprites; i++)
+    for (i = 0; i < numSprites; i++)
     {
-        u8 sprite = CreateSprite(&gSpriteTemplate_MovingScenery, metadata[i].x, metadata[i].y, metadata[i].subpriority);
-        CalcCenterToCornerVec(&gSprites[sprite], metadata[i].shape, metadata[i].size, 0);
-        gSprites[sprite].oam.priority = 3;
-        gSprites[sprite].oam.shape = metadata[i].shape;
-        gSprites[sprite].oam.size = metadata[i].size;
-        gSprites[sprite].oam.paletteNum = 0;
-        gSprites[sprite].anims = anims;
-        StartSpriteAnim(&gSprites[sprite], metadata[i].animNum);
-        gSprites[sprite].data[0] = hasVerticalMove;
-        gSprites[sprite].data[1] = metadata[i].xOff;
-        gSprites[sprite].data[2] = 0;
+        u8 spriteId = CreateSprite(&sSpriteTemplate_MovingScenery, metadata[i].x, metadata[i].y, metadata[i].subpriority);
+
+        CalcCenterToCornerVec(&gSprites[spriteId], metadata[i].shape, metadata[i].size, 0);
+        gSprites[spriteId].oam.priority = 3;
+        gSprites[spriteId].oam.shape = metadata[i].shape;
+        gSprites[spriteId].oam.size = metadata[i].size;
+        gSprites[spriteId].oam.paletteNum = 0;
+        gSprites[spriteId].anims = anims;
+        StartSpriteAnim(&gSprites[spriteId], metadata[i].animNum);
+        gSprites[spriteId].tHasVerticalMove = hasVerticalMove;
+        gSprites[spriteId].tXOffset = metadata[i].xOff;
+        gSprites[spriteId].tXPos = 0;
     }
 }
 
-void CreateIntroCloudSprites()
+static void CreateCloudSprites(void)
 {
-    CreateMovingScenerySprites(0, gSpriteMetadata_Clouds, gAnims_Clouds, 9);
+    CreateMovingScenerySprites(FALSE, sSpriteMetadata_Clouds, sAnims_Clouds, 9);
 }
 
-void CreateTreeSprites()
+static void CreateTreeSprites(void)
 {
-    CreateMovingScenerySprites(1, gSpriteMetadata_Trees, gAnims_Trees, 12);
+    CreateMovingScenerySprites(TRUE, sSpriteMetadata_Trees, sAnims_Trees, 12);
 }
 
-void CreateHouseSprites()
+static void CreateHouseSprites(void)
 {
-    CreateMovingScenerySprites(1, gSpriteMetadata_HouseSilhouette, gAnims_HouseSilhouette, 6);
+    CreateMovingScenerySprites(TRUE, sSpriteMetadata_HouseSilhouette, sAnims_HouseSilhouette, 6);
 }
 
-void SpriteCB_Player(struct Sprite *sprite)
+#undef tHasVerticalMove
+#undef tXOffset
+#undef tXPos
+
+static void SpriteCB_Player(struct Sprite *sprite)
 {
 }
 
-void SpriteCB_Bicycle(struct Sprite* sprite)
+#define sPlayerSpriteId data[0]
+
+static void SpriteCB_Bicycle(struct Sprite *sprite)
 {
-    sprite->invisible = gSprites[sprite->data[0]].invisible;
-    sprite->x = gSprites[sprite->data[0]].x;
-    sprite->y = gSprites[sprite->data[0]].y + 8;
-    sprite->x2 = gSprites[sprite->data[0]].x2;
-    sprite->y2 = gSprites[sprite->data[0]].y2;
+    sprite->invisible = gSprites[sprite->sPlayerSpriteId].invisible;
+    sprite->x = gSprites[sprite->sPlayerSpriteId].x;
+    sprite->y = gSprites[sprite->sPlayerSpriteId].y + 8;
+    sprite->x2 = gSprites[sprite->sPlayerSpriteId].x2;
+    sprite->y2 = gSprites[sprite->sPlayerSpriteId].y2;
 }
-
-
 
 u8 CreateIntroBrendanSprite(s16 x, s16 y)
 {
-    u8 playerSprite = CreateSprite(&gSpriteTemplate_Brendan, x, y, 0);
-    u8 bicycleSprite = CreateSprite(&gSpriteTemplate_BrendanBicycle, x, y + 8, 1);
-    gSprites[bicycleSprite].data[0] = playerSprite;
-    return playerSprite;
+    u8 playerSpriteId = CreateSprite(&sSpriteTemplate_Brendan, x, y, 0);
+    u8 bicycleSpriteId = CreateSprite(&sSpriteTemplate_BrendanBicycle, x, y + 8, 1);
+
+    gSprites[bicycleSpriteId].sPlayerSpriteId = playerSpriteId;
+    return playerSpriteId;
 }
 
 u8 CreateIntroMaySprite(s16 x, s16 y)
 {
-    u8 playerSprite = CreateSprite(&gSpriteTemplate_May, x, y, 0);
-    u8 bicycleSprite = CreateSprite(&gSpriteTemplate_MayBicycle, x, y + 8, 1);
-    gSprites[bicycleSprite].data[0] = playerSprite;
-    return playerSprite;
+    u8 playerSpriteId = CreateSprite(&sSpriteTemplate_May, x, y, 0);
+    u8 bicycleSpriteId = CreateSprite(&sSpriteTemplate_MayBicycle, x, y + 8, 1);
+
+    gSprites[bicycleSpriteId].sPlayerSpriteId = playerSpriteId;
+    return playerSpriteId;
 }
 
-void SpriteCB_LatiLeftHalf(struct Sprite *sprite)
+#undef sPlayerSpriteId
+
+static void SpriteCB_LatiLeftHalf(struct Sprite *sprite)
 {
 }
 
-void SpriteCB_LatiRightHalf(struct Sprite* sprite)
+#define sLeftSpriteId data[0]
+
+static void SpriteCB_LatiRightHalf(struct Sprite *sprite)
 {
-    sprite->invisible = gSprites[sprite->data[0]].invisible;
-    sprite->y = gSprites[sprite->data[0]].y;
-    sprite->x2 = gSprites[sprite->data[0]].x2;
-    sprite->y2 = gSprites[sprite->data[0]].y2;
+    sprite->invisible = gSprites[sprite->sLeftSpriteId].invisible;
+    sprite->y = gSprites[sprite->sLeftSpriteId].y;
+    sprite->x2 = gSprites[sprite->sLeftSpriteId].x2;
+    sprite->y2 = gSprites[sprite->sLeftSpriteId].y2;
 }
 
 u8 CreateIntroLatiosSprite(s16 x, s16 y)
 {
-    u8 leftHalf = CreateSprite(&gSpriteTemplate_Latios, x - 32, y, 2);
-    u8 rightHalf = CreateSprite(&gSpriteTemplate_Latios, x + 32, y, 2);
-    gSprites[rightHalf].data[0] = leftHalf;
-    StartSpriteAnim(&gSprites[rightHalf], 1);
-    gSprites[rightHalf].callback = &SpriteCB_LatiRightHalf;
-    return leftHalf;
+    u8 leftSpriteId = CreateSprite(&sSpriteTemplate_Latios, x - 32, y, 2);
+    u8 rightSpriteId = CreateSprite(&sSpriteTemplate_Latios, x + 32, y, 2);
+
+    gSprites[rightSpriteId].sLeftSpriteId = leftSpriteId;
+    StartSpriteAnim(&gSprites[rightSpriteId], 1);
+    gSprites[rightSpriteId].callback = SpriteCB_LatiRightHalf;
+    return leftSpriteId;
 }
 
 u8 CreateIntroLatiasSprite(s16 x, s16 y)
 {
-    u8 leftHalf = CreateSprite(&gSpriteTemplate_Latias, x - 32, y, 2);
-    u8 rightHalf = CreateSprite(&gSpriteTemplate_Latias, x + 32, y, 2);
-    gSprites[rightHalf].data[0] = leftHalf;
-    StartSpriteAnim(&gSprites[rightHalf], 1);
-    gSprites[rightHalf].callback = &SpriteCB_LatiRightHalf;
-    return leftHalf;
+    u8 leftSpriteId = CreateSprite(&sSpriteTemplate_Latias, x - 32, y, 2);
+    u8 rightSpriteId = CreateSprite(&sSpriteTemplate_Latias, x + 32, y, 2);
+
+    gSprites[rightSpriteId].sLeftSpriteId = leftSpriteId;
+    StartSpriteAnim(&gSprites[rightSpriteId], 1);
+    gSprites[rightSpriteId].callback = SpriteCB_LatiRightHalf;
+    return leftSpriteId;
 }
+
+#undef sLeftSpriteId

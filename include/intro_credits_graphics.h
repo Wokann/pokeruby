@@ -1,25 +1,45 @@
 #ifndef GUARD_INTRO_CREDITS_GRAPHICS_H
 #define GUARD_INTRO_CREDITS_GRAPHICS_H
 
-extern const struct CompressedSpriteSheet gIntro2BrendanSpriteSheet[];
-extern const struct CompressedSpriteSheet gIntro2MaySpriteSheet[];
-extern const struct CompressedSpriteSheet gIntro2BicycleSpriteSheet[];
-extern const struct CompressedSpriteSheet gIntro2LatiosSpriteSheet[];
-extern const struct CompressedSpriteSheet gIntro2LatiasSpriteSheet[];
-extern const struct SpritePalette gIntro2SpritePalettes[];
+// States for gIntroCredits_MovingSceneryState.
+enum
+{
+    INTROCRED_SCENERY_NORMAL,
+    INTROCRED_SCENERY_DESTROY,
+};
+
+// Scenes for the credits sequence.
+enum
+{
+    SCENE_OCEAN_MORNING,
+    SCENE_OCEAN_SUNSET,
+    SCENE_FOREST_RIVAL_ARRIVE,
+    SCENE_FOREST_CATCH_RIVAL,
+    SCENE_CITY_NIGHT,
+};
+
+extern u16 gIntroCredits_MovingSceneryVBase;
+extern s16 gIntroCredits_MovingSceneryVOffset;
+extern s16 gIntroCredits_MovingSceneryState;
+
+extern const struct CompressedSpriteSheet gSpriteSheet_IntroBrendan[];
+extern const struct CompressedSpriteSheet gSpriteSheet_IntroMay[];
+extern const struct CompressedSpriteSheet gSpriteSheet_IntroBicycle[];
+extern const struct CompressedSpriteSheet gSpriteSheet_IntroLatios[];
+extern const struct CompressedSpriteSheet gSpriteSheet_IntroLatias[];
+extern const struct SpritePalette gSpritePalettes_IntroPlayerLati[];
 extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalBrendan[];
 extern const struct CompressedSpriteSheet gSpriteSheet_CreditsRivalMay[];
 
-void LoadIntroPart2Graphics(u8 a);
-void SetIntroPart2BgCnt(u8 a);
-void LoadCreditsSceneGraphics(u8);
-void SetCreditsSceneBgCnt(u8);
-u8 CreateBicycleBgAnimationTask(u8 a, u16 b, u16 c, u16 d);
-void Task_BicycleBgAnimation(u8);
+void LoadIntroPart2Graphics(u8 scenery);
+void SetIntroPart2BgCnt(u8 scenery);
+void LoadCreditsSceneGraphics(u8 scene);
+void SetCreditsSceneBgCnt(u8 scene);
+u8 CreateBicycleBgAnimationTask(u8 mode, u16 bg1Speed, u16 bg2Speed, u16 bg3Speed);
 void CycleSceneryPalette(u8);
-u8 CreateIntroBrendanSprite(s16 a, s16 b);
-u8 CreateIntroMaySprite(s16 a, s16 b);
-u8 CreateIntroLatiosSprite(s16 a, s16 b);
-u8 CreateIntroLatiasSprite(s16 a, s16 b);
+u8 CreateIntroBrendanSprite(s16 x, s16 y);
+u8 CreateIntroMaySprite(s16 x, s16 y);
+u8 CreateIntroLatiosSprite(s16 x, s16 y);
+u8 CreateIntroLatiasSprite(s16 x, s16 y);
 
 #endif // GUARD_INTRO_CREDITS_GRAPHICS_H

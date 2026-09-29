@@ -108,15 +108,6 @@ enum
 
 enum
 {
-    SCENE_OCEAN_MORNING,
-    SCENE_OCEAN_SUNSET,
-    SCENE_FOREST_RIVAL_ARRIVE,
-    SCENE_FOREST_CATCH_RIVAL,
-    SCENE_CITY_NIGHT,
-};
-
-enum
-{
     MODE_NONE,
     MODE_BIKE_SCENE,
     MODE_SHOW_MONS,
@@ -182,10 +173,6 @@ struct CreditsEntry
 };
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-
-extern u16 gIntroCredits_MovingSceneryVBase;
-extern s16 gIntroCredits_MovingSceneryVOffset;
-extern s16 gIntroCredits_MovingSceneryState;
 
 static EWRAM_DATA s16 sUnusedCreditsValue = 0;
 static EWRAM_DATA u16 sSavedTaskId = 0; // TASK A
@@ -659,7 +646,7 @@ void Task_LoadShowMons(u8 taskIdA)
         REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_ON;
 
         gMain.state = 0;
-        gIntroCredits_MovingSceneryState = 0;
+        gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_NORMAL;
         gTasks[taskIdA].func = Task_WaitPaletteFade;
         break;
     }
@@ -1246,10 +1233,10 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
     case 2:
         if (gSaveBlock2.playerGender == MALE)
         {
-            LoadCompressedSpriteSheet(gIntro2BrendanSpriteSheet);
+            LoadCompressedSpriteSheet(gSpriteSheet_IntroBrendan);
             LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalMay);
-            LoadCompressedSpriteSheet(gIntro2BicycleSpriteSheet);
-            LoadSpritePalettes(gIntro2SpritePalettes);
+            LoadCompressedSpriteSheet(gSpriteSheet_IntroBicycle);
+            LoadSpritePalettes(gSpritePalettes_IntroPlayerLati);
 
             spriteId = CreateIntroBrendanSprite(120, 46);
             gTasks[taskIdA].data[TDA_PLAYER_SPRITE_ID] = spriteId;
@@ -1263,10 +1250,10 @@ static bool8 LoadBikeScene(u8 data, u8 taskIdA)
         }
         else
         {
-            LoadCompressedSpriteSheet(gIntro2MaySpriteSheet);
+            LoadCompressedSpriteSheet(gSpriteSheet_IntroMay);
             LoadCompressedSpriteSheet(gSpriteSheet_CreditsRivalBrendan);
-            LoadCompressedSpriteSheet(gIntro2BicycleSpriteSheet);
-            LoadSpritePalettes(gIntro2SpritePalettes);
+            LoadCompressedSpriteSheet(gSpriteSheet_IntroBicycle);
+            LoadSpritePalettes(gSpritePalettes_IntroPlayerLati);
 
             spriteId = CreateIntroMaySprite(120, 46);
             gTasks[taskIdA].data[TDA_PLAYER_SPRITE_ID] = spriteId;
@@ -1315,7 +1302,7 @@ static void ResetCreditsTasks(u8 taskIdA)
         gTasks[taskIdA].data[TDA_SHOW_MONS_TASK_ID] = 0;
     }
 
-    gIntroCredits_MovingSceneryState = 1;
+    gIntroCredits_MovingSceneryState = INTROCRED_SCENERY_DESTROY;
 }
 
 static void LoadTheEndScreen(u16 arg0, u16 arg1, u16 arg2)
@@ -1396,7 +1383,7 @@ static void DrawTheEnd(u16 arg0, u16 palette)
 
 static void SpriteCB_Player(struct Sprite *sprite)
 {
-    if (gIntroCredits_MovingSceneryState != 0)
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
         return;
@@ -1433,7 +1420,7 @@ static void SpriteCB_Player(struct Sprite *sprite)
 
 static void SpriteCB_Rival(struct Sprite *sprite)
 {
-    if (gIntroCredits_MovingSceneryState != 0)
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
         return;
@@ -1470,7 +1457,7 @@ static void SpriteCB_Rival(struct Sprite *sprite)
 
 void SpriteCB_CreditsMon(struct Sprite *sprite)
 {
-    if (gIntroCredits_MovingSceneryState)
+    if (gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
         return;
@@ -1608,7 +1595,7 @@ static u8 CreateCreditsMonSprite(u16 species, u16 x, u16 y, u16 position)
 void SpriteCB_CreditsMonBg(struct Sprite *sprite)
 {
     if (gSprites[sprite->data[0]].data[0] == 10
-     || gIntroCredits_MovingSceneryState != 0)
+     || gIntroCredits_MovingSceneryState != INTROCRED_SCENERY_NORMAL)
     {
         DestroySprite(sprite);
         return;

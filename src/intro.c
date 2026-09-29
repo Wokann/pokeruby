@@ -23,8 +23,6 @@
 #include "ewram.h"
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-extern u16 gIntroCredits_MovingSceneryVBase;
-extern u16 gIntroCredits_MovingSceneryVOffset;
 extern u16 gSaveFileStatus;
 extern u8 gReservedSpritePaletteCount;
 extern const u8 gInterfaceGfx_PokeBall[];
@@ -1228,16 +1226,16 @@ static void Task_Scene2_CreateSprites(u8 taskId)
     u8 spriteId;
 
     if (sIntroCharacterGender == MALE)
-        LoadCompressedSpriteSheet(gIntro2BrendanSpriteSheet);
+        LoadCompressedSpriteSheet(gSpriteSheet_IntroBrendan);
     else
-        LoadCompressedSpriteSheet(gIntro2MaySpriteSheet);
-    LoadCompressedSpriteSheet(gIntro2BicycleSpriteSheet);
+        LoadCompressedSpriteSheet(gSpriteSheet_IntroMay);
+    LoadCompressedSpriteSheet(gSpriteSheet_IntroBicycle);
 #ifdef SAPPHIRE
-    LoadCompressedSpriteSheet(gIntro2LatiasSpriteSheet);
+    LoadCompressedSpriteSheet(gSpriteSheet_IntroLatias);
 #else
-    LoadCompressedSpriteSheet(gIntro2LatiosSpriteSheet);
+    LoadCompressedSpriteSheet(gSpriteSheet_IntroLatios);
 #endif
-    LoadSpritePalettes(gIntro2SpritePalettes);
+    LoadSpritePalettes(gSpritePalettes_IntroPlayerLati);
     if (sIntroCharacterGender == MALE)
         spriteId = CreateIntroBrendanSprite(0x110, 100);
     else
