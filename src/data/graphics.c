@@ -1374,8 +1374,8 @@ const u8 gSummaryScreenTextTiles[] = INCBIN_U8("graphics/summary_screen/text.4bp
 const u8 gPokedexNoBall_Gfx[] = INCBIN_U8("graphics/pokedex/noball.4bpp.lz");
 const u8 gIntroTiles[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
 
-const u8 ConditionUpDownTiles[] = INCBIN_U8("graphics/misc/condition_up_down.4bpp");
-const u16 ConditionUpDownPalette[] = INCBIN_U16("graphics/misc/condition_up_down.gbapal");
+const u8 gUsePokeblockUpDown_Gfx[] = INCBIN_U8("graphics/misc/condition_up_down.4bpp");
+const u16 gUsePokeblockUpDown_Pal[] = INCBIN_U16("graphics/misc/condition_up_down.gbapal");
 
 const u16 gRouletteShadow_Pal[] = INCBIN_U16("graphics/roulette/shadow.gbapal");
 const u16 gRouletteBall_Pal[] = INCBIN_U16("graphics/roulette/ball.gbapal");

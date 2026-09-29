@@ -42,6 +42,10 @@ enum
     PBLOCK_CASE_FEEDER,
 };
 
+// Use Pokeblock
+extern u8 gPokeblockMonId;
+extern s16 gPokeblockGain;
+
 extern const s8 gPokeblockFlavorCompatibilityTable[];
 extern const u8 *const gPokeblockNames[];
 extern const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet;

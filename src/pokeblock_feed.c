@@ -58,8 +58,6 @@ enum
 #define STATE_PRINT_MSG (STATE_START_JUMP + 16)
 
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
-extern u8 gPokeblockMonID;
-extern s16 gPokeblockGain;
 
 extern const u8 gPokeblockRed_Pal[];
 extern const u8 gPokeblockBlue_Pal[];
@@ -578,7 +576,7 @@ static bool8 LoadPokeblockFeedScene(void)
         }
         break;
     case 7:
-        if (LoadMonAndSceneGfx(&gPlayerParty[gPokeblockMonID]))
+        if (LoadMonAndSceneGfx(&gPlayerParty[gPokeblockMonId]))
         {
             gMain.state++;
         }
@@ -588,7 +586,7 @@ static bool8 LoadPokeblockFeedScene(void)
         gMain.state++;
         break;
     case 9:
-        ePokeblockMonSpriteId = CreateMonSprite(&gPlayerParty[gPokeblockMonID]);
+        ePokeblockMonSpriteId = CreateMonSprite(&gPlayerParty[gPokeblockMonId]);
         gMain.state++;
         break;
     case 10:
@@ -757,7 +755,7 @@ static void Task_WaitForAtePokeblockMessage(u8 taskId)
 
 static void Task_PrintAtePokeblockMessage(u8 taskId)
 {
-    struct Pokemon* mon = &gPlayerParty[gPokeblockMonID];
+    struct Pokemon* mon = &gPlayerParty[gPokeblockMonId];
     struct Pokeblock* pokeblock = &gSaveBlock1.pokeblocks[gSpecialVar_ItemId];
 
     gPokeblockGain = PokeblockGetGain(GetNature(mon), pokeblock);
