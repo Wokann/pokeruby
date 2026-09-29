@@ -15,7 +15,7 @@
 #include "pokedex.h"
 #include "random.h"
 #include "overworld.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "party_menu.h"
 #include "rtc.h"
 #include "constants/songs.h"

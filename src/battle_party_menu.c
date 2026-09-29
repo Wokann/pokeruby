@@ -10,7 +10,7 @@
 #include "party_menu.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "constants/songs.h"
 #include "sound.h"
 #include "string_util.h"

@@ -22,7 +22,7 @@
 #include "data2.h"
 #include "pokemon_summary_screen.h"
 #include "overworld.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "daycare.h"
 #include "event_data.h"
 #include "strings.h"

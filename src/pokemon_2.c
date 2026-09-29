@@ -8,7 +8,7 @@
 #include "main.h"
 #include "pokemon.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "constants/species.h"
 #include "sprite.h"
 #include "string_util.h"

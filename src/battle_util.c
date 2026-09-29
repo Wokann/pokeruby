@@ -11,7 +11,7 @@
 #include "link.h"
 #include "pokemon.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "string_util.h"
 #include "text.h"
 #include "util.h"

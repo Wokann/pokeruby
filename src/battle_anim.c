@@ -1,5 +1,4 @@
 #include "global.h"
-#include "battle_anim.h"
 #include "battle.h"
 #include "battle_interface.h"
 #include "contest.h"
@@ -7,7 +6,7 @@
 #include "m4a.h"
 #include "main.h"
 #include "palette.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
@@ -1305,7 +1304,7 @@ EWRAM_DATA u8 sAnimBackgroundFadeState = 0;
 EWRAM_DATA u16 sAnimMoveIndex = 0; // set but unused.
 EWRAM_DATA u8 gBattleAnimAttacker = 0;
 EWRAM_DATA u8 gBattleAnimTarget = 0;
-EWRAM_DATA u16 gAnimSpeciesByBanks[4] = {0};
+EWRAM_DATA u16 gAnimBattlerSpecies[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u8 gAnimCustomPanning = 0;
 
 u16 gSoundAnimFramesToWait;
@@ -1474,20 +1473,20 @@ void LaunchBattleAnimation(const u8 *const moveAnims[], u16 move, u8 isMoveAnim)
 
     if (!IsContest())
     {
-        UpdateBattlerSpritePriorities();
+        InitPrioritiesForVisibleBattlers();
         UpdateOamPriorityInAllHealthboxes(0);
         for (i = 0; i < 4; i++)
         {
             if (GetBattlerSide(i) != B_SIDE_PLAYER)
-                gAnimSpeciesByBanks[i] = GetMonData(&gEnemyParty[gBattlerPartyIndexes[i]], MON_DATA_SPECIES);
+                gAnimBattlerSpecies[i] = GetMonData(&gEnemyParty[gBattlerPartyIndexes[i]], MON_DATA_SPECIES);
             else
-                gAnimSpeciesByBanks[i] = GetMonData(&gPlayerParty[gBattlerPartyIndexes[i]], MON_DATA_SPECIES);
+                gAnimBattlerSpecies[i] = GetMonData(&gPlayerParty[gBattlerPartyIndexes[i]], MON_DATA_SPECIES);
         }
     }
     else
     {
         for (i = 0; i < 4; i++)
-            gAnimSpeciesByBanks[i] = gContestResources__moveAnim.species;
+            gAnimBattlerSpecies[i] = gContestResources__moveAnim.species;
     }
 
     if (isMoveAnim == 0)
@@ -1794,7 +1793,7 @@ static void ScriptCmd_end(void)
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 256);
         if (!IsContest())
         {
-            UpdateBattlerSpritePriorities();
+            InitPrioritiesForVisibleBattlers();
             UpdateOamPriorityInAllHealthboxes(1);
         }
         gAnimScriptActive = FALSE;

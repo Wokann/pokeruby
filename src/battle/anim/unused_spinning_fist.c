@@ -1,7 +1,6 @@
 #include "global.h"
-#include "battle_anim.h"
 #include "constants/battle.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "trig.h"
 
 extern s16 gBattleAnimArgs[8];

@@ -28,7 +28,7 @@
 #include "pokemon_item_effect.h"
 #include "pokemon_menu.h"
 #include "pokemon_summary_screen.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"

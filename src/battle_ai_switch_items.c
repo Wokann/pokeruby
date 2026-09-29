@@ -7,7 +7,7 @@
 #include "ewram.h"
 #include "pokemon.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "util.h"
 #include "constants/abilities.h"
 #include "constants/items.h"

@@ -1,6 +1,5 @@
 #include "global.h"
 #include "battle.h"
-#include "battle_anim.h"
 #include "blend_palette.h"
 #include "contest.h"
 #include "data2.h"
@@ -8,7 +7,7 @@
 #include "ewram.h"
 #include "palette.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "trig.h"
@@ -3239,7 +3238,7 @@ void AnimTask_RolePlaySilhouette(u8 taskId)
 
     coord1 = GetBattlerSpriteCoord(gBattleAnimAttacker, 0);
     coord2 = GetBattlerSpriteCoord(gBattleAnimAttacker, 1);
-    spriteId = sub_8079F44(species, isBackPic, 0, coord1 + xOffset, coord2, 5, personality, otId);
+    spriteId = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, coord1 + xOffset, coord2, 5, personality, otId);
 
     gSprites[spriteId].oam.priority = priority;
     gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
@@ -3279,7 +3278,7 @@ static void AnimTask_RolePlaySilhouette_Step2(u8 taskId)
     {
         ResetSpriteRotScale_PreserveAffine(&gSprites[spriteId]);
         DestroySpriteAndFreeResources_(&gSprites[spriteId]);
-        gTasks[taskId].func = sub_8078634;
+        gTasks[taskId].func = DestroyAnimVisualTaskAndDisableBlend;
     }
 }
 
@@ -5016,7 +5015,7 @@ void AnimTask_SnatchOpposingMonMove(u8 taskId)
             }
         }
 
-        spriteId2 = sub_8079F44(species, isBackPic, 0, x, GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y), subpriority, personality, otId);
+        spriteId2 = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, x, GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y), subpriority, personality, otId);
         if (gBattleSpriteInfo[gBattleAnimTarget].transformSpecies != SPECIES_NONE)
             BlendPalette((gSprites[spriteId2].oam.paletteNum * 16) | 0x100, 16, 6, RGB_WHITE);
 
@@ -5394,7 +5393,7 @@ _08131B94:\n\
 	adds r0, r5, 0\n\
 	adds r1, r7, 0\n\
 	movs r2, 0\n\
-	bl sub_8079F44\n\
+	bl CreateAdditionalMonSpriteForMoveAnim\n\
 	lsls r0, 24\n\
 	lsrs r5, r0, 24\n\
 	ldr r0, _08131C10 @ =gBattleAnimAttacker\n\

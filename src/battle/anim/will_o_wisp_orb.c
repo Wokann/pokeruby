@@ -1,8 +1,7 @@
 #include "global.h"
-#include "battle_anim.h"
 #include "constants/battle.h"
 #include "constants/songs.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "sound.h"
 #include "trig.h"
 

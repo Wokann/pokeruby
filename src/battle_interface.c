@@ -5,7 +5,7 @@
 #include "palette.h"
 #include "pokedex.h"
 #include "pokemon.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "safari_zone.h"
 #include "constants/songs.h"
 #include "sound.h"

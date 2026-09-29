@@ -1,8 +1,7 @@
 #include "global.h"
-#include "battle_anim.h"
 #include "contest.h"
 #include "ewram.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "sound.h"
 #include "task.h"
 #include "constants/sound.h"
@@ -11,7 +10,7 @@ extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
 extern u8 gBattleAnimTarget;
 extern u16 gBattlerPartyIndexes[];
-extern u16 gAnimSpeciesByBanks[];
+extern u16 gAnimBattlerSpecies[];
 extern u8 gAnimCustomPanning;
 
 static void SoundTask_FireBlast_Step1(u8 taskId);
@@ -198,7 +197,7 @@ void SoundTask_PlayHyperVoiceCry(u8 taskId)
     if (IsContest())
         species = gContestResources__moveAnim.species;
     else
-        species = gAnimSpeciesByBanks[gBattleAnimAttacker];
+        species = gAnimBattlerSpecies[gBattleAnimAttacker];
 
     if (species != 0)
         PlayCry3(species, pan, CRY_MODE_HYPER_VOICE);

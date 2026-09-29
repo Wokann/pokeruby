@@ -1,10 +1,9 @@
 #include "global.h"
 #include "battle.h"
-#include "battle_anim.h"
 #include "battle_anim_internal.h"
 #include "scanline_effect.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "task.h"
 #include "trig.h"
 

@@ -9,7 +9,7 @@
 #include "constants/moves.h"
 #include "pokemon.h"
 #include "random.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "constants/species.h"
 #include "util.h"
 #include "ewram.h"

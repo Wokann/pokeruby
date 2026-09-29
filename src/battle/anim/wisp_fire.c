@@ -1,9 +1,8 @@
 #include "global.h"
 #include "constants/battle.h"
-#include "battle_anim.h"
 #include "blend_palette.h"
 #include "main.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "task.h"
 #include "trig.h"
 

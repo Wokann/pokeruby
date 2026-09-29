@@ -33,7 +33,7 @@
 #include "pokemon.h"
 #include "random.h"
 #include "roamer.h"
-#include "rom_8077ABC.h"
+#include "battle_anim.h"
 #include "safari_zone.h"
 #include "sound.h"
 #include "sprite.h"
