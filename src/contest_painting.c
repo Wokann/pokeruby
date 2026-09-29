@@ -28,60 +28,60 @@ u16 *gContestPaintingMonPalette;
 
 static const u16 sPictureFramePalettes[][16] =
 {
-    INCBIN_U16("graphics/picture_frame/bg0.gbapal"),
-    INCBIN_U16("graphics/picture_frame/bg1.gbapal"),
-    INCBIN_U16("graphics/picture_frame/bg2.gbapal"),
-    INCBIN_U16("graphics/picture_frame/bg3.gbapal"),
-    INCBIN_U16("graphics/picture_frame/bg4.gbapal"),
-    INCBIN_U16("graphics/picture_frame/bg5.gbapal"),
+    INCBIN_U16("graphics/picture_frame/cool.gbapal"),
+    INCBIN_U16("graphics/picture_frame/beauty.gbapal"),
+    INCBIN_U16("graphics/picture_frame/cute.gbapal"),
+    INCBIN_U16("graphics/picture_frame/smart.gbapal"),
+    INCBIN_U16("graphics/picture_frame/tough.gbapal"),
+    INCBIN_U16("graphics/picture_frame/lobby.gbapal"),
     {0},
     {0},
 };
 const u8 emptySpace[8 * 32] = {0};
-const u8 sPictureFrameTiles_Cool[] = INCBIN_U8("graphics/picture_frame/frame0.4bpp.rl");
-const u8 sPictureFrameTiles_Beauty[] = INCBIN_U8("graphics/picture_frame/frame1.4bpp.rl");
-const u8 sPictureFrameTiles_Cute[] = INCBIN_U8("graphics/picture_frame/frame2.4bpp.rl");
-const u8 sPictureFrameTiles_Smart[] = INCBIN_U8("graphics/picture_frame/frame3.4bpp.rl");
-const u8 sPictureFrameTiles_Tough[] = INCBIN_U8("graphics/picture_frame/frame4.4bpp.rl");
-const u8 sPictureFrameTiles_HallLobby[] = INCBIN_U8("graphics/picture_frame/frame5.4bpp.rl");
-const u8 sPictureFrameTilemap_Cool[] = INCBIN_U8("graphics/picture_frame/frame0_map.bin.rl");
-const u8 sPictureFrameTilemap_Beauty[] = INCBIN_U8("graphics/picture_frame/frame1_map.bin.rl");
-const u8 sPictureFrameTilemap_Cute[] = INCBIN_U8("graphics/picture_frame/frame2_map.bin.rl");
-const u8 sPictureFrameTilemap_Smart[] = INCBIN_U8("graphics/picture_frame/frame3_map.bin.rl");
-const u8 sPictureFrameTilemap_Tough[] = INCBIN_U8("graphics/picture_frame/frame4_map.bin.rl");
-const u8 sPictureFrameTilemap_HallLobby[] = INCBIN_U8("graphics/picture_frame/frame5_map.bin.rl");
+const u8 sPictureFrameTiles_Cool[] = INCBIN_U8("graphics/picture_frame/cool.4bpp.rl");
+const u8 sPictureFrameTiles_Beauty[] = INCBIN_U8("graphics/picture_frame/beauty.4bpp.rl");
+const u8 sPictureFrameTiles_Cute[] = INCBIN_U8("graphics/picture_frame/cute.4bpp.rl");
+const u8 sPictureFrameTiles_Smart[] = INCBIN_U8("graphics/picture_frame/smart.4bpp.rl");
+const u8 sPictureFrameTiles_Tough[] = INCBIN_U8("graphics/picture_frame/tough.4bpp.rl");
+const u8 sPictureFrameTiles_HallLobby[] = INCBIN_U8("graphics/picture_frame/lobby.4bpp.rl");
+const u8 sPictureFrameTilemap_Cool[] = INCBIN_U8("graphics/picture_frame/cool_map.bin.rl");
+const u8 sPictureFrameTilemap_Beauty[] = INCBIN_U8("graphics/picture_frame/beauty_map.bin.rl");
+const u8 sPictureFrameTilemap_Cute[] = INCBIN_U8("graphics/picture_frame/cute_map.bin.rl");
+const u8 sPictureFrameTilemap_Smart[] = INCBIN_U8("graphics/picture_frame/smart_map.bin.rl");
+const u8 sPictureFrameTilemap_Tough[] = INCBIN_U8("graphics/picture_frame/tough_map.bin.rl");
+const u8 sPictureFrameTilemap_HallLobby[] = INCBIN_U8("graphics/picture_frame/lobby_map.bin.rl");
 
 const u8 *const sContestCategoryNames[] =
 {
-    OtherText_Cool,
-    OtherText_Beauty2,
-    OtherText_Cute,
-    OtherText_Smart,
-    OtherText_Tough,
+    gContestCoolness,
+    gContestBeauty,
+    gContestCuteness,
+    gContestSmartness,
+    gContestToughness,
 };
 
 const struct LabelPair sMuseumCaptions[] =
 {
     // COOL
-    {OtherText_NonstopSuperCool, OtherText_Terminator6},
-    {OtherText_GoodLookingPoke, OtherText_Terminator7},
-    {OtherText_MarvelousGreat, OtherText_Terminator8},
+    {gContestPaintingCool1Prefix, gContestPaintingCool1Suffix},
+    {gContestPaintingCool2Prefix, gContestPaintingCool2Suffix},
+    {gContestPaintingCool3Prefix, gContestPaintingCool3Suffix},
     // BEAUTY
-    {OtherText_CenturyLastVenus, OtherText_Terminator9},
-    {OtherText_Terminator10, OtherText_DazzlingSmile},
-    {OtherText_PokeCenterIdol, OtherText_Terminator11},
+    {gContestPaintingBeauty1Prefix, gContestPaintingBeauty1Suffix},
+    {gContestPaintingBeauty2Prefix, gContestPaintingBeauty2Suffix},
+    {gContestPaintingBeauty3Prefix, gContestPaintingBeauty3Suffix},
     // CUTE
-    {OtherText_LovelyAndSweet, OtherText_Terminator12},
-    {OtherText_ThePretty, OtherText_WinningPortrait},
-    {OtherText_GiveUsWink, OtherText_Terminator13},
+    {gContestPaintingCute1Prefix, gContestPaintingCute1Suffix},
+    {gContestPaintingCute2Prefix, gContestPaintingCute2Suffix},
+    {gContestPaintingCute3Prefix, gContestPaintingCute3Suffix},
     // SMART
-    {OtherText_SmartnessMaestro, OtherText_Terminator15},
-    {OtherText_ChosenPokeAmong, OtherText_Terminator15},
-    {OtherText_TheExcellent, OtherText_ItsMomentOfElegance},
+    {gContestPaintingSmart1Prefix, gContestPaintingSmartSharedSuffix},
+    {gContestPaintingSmart2Prefix, gContestPaintingSmartSharedSuffix},
+    {gContestPaintingSmart3Prefix, gContestPaintingSmart3Suffix},
     // TOUGH
-    {OtherText_PowerfullyMuscular, OtherText_Terminator16},
-    {OtherText_StrongErEst, OtherText_Terminator17},
-    {OtherText_MightyTough, OtherText_Exclamation},
+    {gContestPaintingTough1Prefix, gContestPaintingTough1Suffix},
+    {gContestPaintingTough2Prefix, gContestPaintingTough2Suffix},
+    {gContestPaintingTough3Prefix, gContestPaintingTough3Suffix},
 };
 
 const struct OamData sContestPaintingMonOamData =
@@ -231,7 +231,7 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
     if (contestWinnerId < MUSEUM_CONTEST_WINNERS_START)
     {
         ptr = StringCopy(ptr, sContestCategoryNames[contestCategory]);
-        ptr = StringCopy(ptr, gContestText_ContestWinner);
+        ptr = StringCopy(ptr, gContestPaintingWinnerTitle);
 #if ENGLISH
         ptr = StringCopy(ptr, gContestPaintingWinner->trainerName);
 #elif GERMAN
@@ -243,7 +243,7 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
         ptr[1] = 0x16;
         ptr += 2;
 
-        ptr = StringCopy(ptr, gOtherText_Unknown1);
+        ptr = StringCopy(ptr, gContestPaintingTrainerSeparator);
 #if ENGLISH
         ptr = StringCopy10(ptr, gContestPaintingWinner->nickname);
 #elif GERMAN
