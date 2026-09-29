@@ -19,11 +19,11 @@ int GameClear(void)
 
     if (FlagGet(FLAG_SYS_GAME_CLEAR) == TRUE)
     {
-        gHasHallOfFameRecords = 1;
+        gHasHallOfFameRecords = TRUE;
     }
     else
     {
-        gHasHallOfFameRecords = 0;
+        gHasHallOfFameRecords = FALSE;
         FlagSet(FLAG_SYS_GAME_CLEAR);
     }
 
@@ -39,16 +39,16 @@ int GameClear(void)
 
     ribbonGet = FALSE;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < PARTY_SIZE; i++)
     {
-        u8 val;
-        u8 *ptr = &val;
+        u8 ribbonValue;
+        u8 *ribbonValuePtr = &ribbonValue;
         if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES)
          && !GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG)
          && !GetMonData(&gPlayerParty[i], MON_DATA_CHAMPION_RIBBON))
         {
-            *ptr = 1;
-            SetMonData(&gPlayerParty[i], MON_DATA_CHAMPION_RIBBON, ptr);
+            *ribbonValuePtr = TRUE;
+            SetMonData(&gPlayerParty[i], MON_DATA_CHAMPION_RIBBON, ribbonValuePtr);
             ribbonGet = TRUE;
         }
     }
@@ -66,5 +66,5 @@ int GameClear(void)
 bool8 SetCB2WhiteOut(void)
 {
     SetMainCallback2(CB2_WhiteOut);
-    return 0;
+    return FALSE;
 }
