@@ -268,7 +268,7 @@ unk_debug_common_0 = .;
 . += 0x4;
 
 // watanabe_debug_menu.c
-byte_3005E30 = .;
+gWatanabeTrainerAiFlags = .;
 . += 0x20;
 
 #endif

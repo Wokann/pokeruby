@@ -15,8 +15,6 @@
 #include "constants/species.h"
 #include "constants/item_effects.h"
 
-extern u8 gUnknown_02023A14_50;
-
 extern u8 gActiveBattler;
 extern u16 gBattleTypeFlags;
 extern u8 gAbsentBattlerFlags;
@@ -493,7 +491,7 @@ void AI_TrySwitchOrUseItem(void)
         else
         {
             #if DEBUG
-            if (!(gUnknown_02023A14_50 & 0x20) && ShouldUseItem())
+            if (!(gDebugBattleFlags & 0x20) && ShouldUseItem())
                 return;
             #else
             if (ShouldUseItem())

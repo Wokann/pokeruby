@@ -68,7 +68,6 @@ extern void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
 extern const u8 Str_821F7B8[];
-extern u8 gUnknown_02023A14_50;
 extern const u16 gBattleTextboxPalette[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const u8 Str_821F7EA[];
@@ -264,7 +263,7 @@ void CB2_InitBattleInternal(void)
     gBattle_BG3_Y = 0;
 
 #if DEBUG
-    if (!(gUnknown_02023A14_50 & 8))
+    if (!(gDebugBattleFlags & 8))
         gBattleEnvironment = BattleSetup_GetEnvironmentId();
 #else
     gBattleEnvironment = BattleSetup_GetEnvironmentId();
@@ -288,7 +287,7 @@ void CB2_InitBattleInternal(void)
         SetMainCallback2(CB2_HandleStartBattle);
     if (!(gBattleTypeFlags & BATTLE_TYPE_LINK)
 #if DEBUG
-     && !(gUnknown_02023A14_50 & 8)
+     && !(gDebugBattleFlags & 8)
 #endif
        )
     {
@@ -434,7 +433,7 @@ void CB2_HandleStartBattle(void)
                 BufferPartyVsScreenHealth_AtStart();
                 SetPlayerBerryDataInBattleStruct();
 #if DEBUG
-                if (gUnknown_02023A14_50 & 8)
+                if (gDebugBattleFlags & 8)
                 {
                     for (id = 0; id < 2; id++)  // Why < 2 here?
                     {
@@ -623,7 +622,7 @@ void CB2_PreInitMultiBattle(void)
         if (gReceivedRemoteLinkPlayers != 0)
         {
 #if DEBUG
-            if (gUnknown_02023A14_50 & 8)
+            if (gDebugBattleFlags & 8)
             {
                 for (i = 0; i < 4; i++)
                 {
@@ -696,7 +695,7 @@ void CB2_HandleStartMultiBattle(void)
         if (gReceivedRemoteLinkPlayers != 0)
         {
 #if DEBUG
-            if (gUnknown_02023A14_50 & 8)
+            if (gDebugBattleFlags & 8)
             {
                 for (id = 0; id < 4; id++)
                 {
@@ -1958,7 +1957,7 @@ void StartDebugBattleFromPartyEditor(void)
 		}
 	}
 	gBattleTypeFlags = gUnknown_Debug_821F598[i - 1];
-	gUnknown_02023A14_50 = 8;
+	gDebugBattleFlags = 8;
 	gBattleEnvironment = spC;
 	if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
 		EnterSafariMode();
@@ -2055,7 +2054,7 @@ void StartDebugBattleFromPartyEditor(void)
 		if (gUnknown_Debug_2023A76[1][i + 3] > 2)
 		{
 			SetMonData(&gPlayerParty[i / 5], MON_DATA_OT_NAME, Str_821F649);
-			gUnknown_02023A14_50 |= 0x40;
+			gDebugBattleFlags |= 0x40;
 		}
 	}
 
@@ -2072,17 +2071,17 @@ void StartDebugBattleFromPartyEditor(void)
 
     if (gUnknown_Debug_2023A76[0][0x22] == 8)
     {
-        gUnknown_02023A14_50 |= 0x80;
+        gDebugBattleFlags |= 0x80;
         PlayBattleBGM();
     }
     else if (gUnknown_Debug_2023A76[0][0x22] == 7)
     {
-        gUnknown_02023A14_50 |= 0x20;
+        gDebugBattleFlags |= 0x20;
         PlayBattleBGM();
     }
     else if (gUnknown_Debug_2023A76[0][0x22] == 6)
     {
-        gUnknown_02023A14_50 |= 0x10;
+        gDebugBattleFlags |= 0x10;
         if (gUnknown_Debug_2023A76[0][2] > 5)
             gBattleStruct->unk160A3 = gUnknown_Debug_2023A76[0][2] - 2;
         else
@@ -2091,7 +2090,7 @@ void StartDebugBattleFromPartyEditor(void)
     }
     else if (gUnknown_Debug_2023A76[0][0x22] == 5)
     {
-        gUnknown_02023A14_50 |= 0x21;
+        gDebugBattleFlags |= 0x21;
         PlayBattleBGM();
     }
     else
@@ -2099,9 +2098,9 @@ void StartDebugBattleFromPartyEditor(void)
         if (!(gUnknown_Debug_2023A76[0][0x22] & 1))
             PlayBattleBGM();
         if (gUnknown_Debug_2023A76[0][0x22] & 2)
-            gUnknown_02023A14_50 |= 4;
+            gDebugBattleFlags |= 4;
         if (gUnknown_Debug_2023A76[0][0x22] & 4)
-            gUnknown_02023A14_50 |= 6;
+            gDebugBattleFlags |= 6;
     }
 
     gMain.savedCallback = CB2_InitDebugBattlePartyEditor;
@@ -3382,7 +3381,7 @@ void DebugAutoAdvancePlayerBattleAction(void)
 void BattleMainCB1(void)
 {
 #if DEBUG
-    if (gUnknown_02023A14_50 & 0x80)
+    if (gDebugBattleFlags & 0x80)
     {
         for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
             DebugAutoAdvancePlayerBattleAction();

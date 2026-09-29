@@ -37,7 +37,6 @@
 #define RET_VALUE_LEVELLED_UP   11
 
 //extern needed variables
-extern u8 gUnknown_02023A14_50;
 extern u8 gCritMultiplier;
 extern s32 gBattleMoveDamage;
 extern u32 gStatuses3[MAX_BATTLERS_COUNT];
@@ -2982,7 +2981,7 @@ static void atk15_seteffectwithchance(void)
     else
         percentChance = gBattleMoves[gCurrentMove].secondaryEffectChance;
 
-    if (DEBUG && (gUnknown_02023A14_50 & 4)
+    if (DEBUG && (gDebugBattleFlags & 4)
         && !(gBattleCommunication[MOVE_EFFECT_BYTE] & MOVE_EFFECT_CERTAIN)
         && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
     {

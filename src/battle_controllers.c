@@ -75,10 +75,6 @@ void HandleLinkBattleSetup(void)
     }
 }
 
-#if DEBUG
-extern u8 gUnknown_02023A14_50;
-#endif
-
 void SetUpBattleVarsAndBirchPoochyena(void)
 {
     s32 i;
@@ -109,7 +105,7 @@ void SetUpBattleVarsAndBirchPoochyena(void)
     gUnknown_02024C78 = 0;
 
 #if DEBUG
-    if (gUnknown_02023A14_50 & 0x80)
+    if (gDebugBattleFlags & 0x80)
     {
         gSharedMem[0x160fd] = 0;
         gSharedMem[0x160fe] = 0;

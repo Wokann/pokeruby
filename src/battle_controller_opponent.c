@@ -33,7 +33,6 @@ struct MovePpInfo
     u8 ppBonuses;
 };
 
-extern u8 gUnknown_02023A14_50;
 extern u8 gActiveBattler;
 extern u8 gBattleBufferA[][0x200];
 extern u16 gBattlerPartyIndexes[];
@@ -1207,7 +1206,7 @@ void OpponentHandleTrainerThrow(void)
     u32 trainerPicIndex;
 
 #if DEBUG
-    if (gUnknown_02023A14_50 & 0x10)
+    if (gDebugBattleFlags & 0x10)
     {
         trainerPicIndex = gSharedMem[BSTRUCT_OFF(unk160A3)];
     }
@@ -1436,7 +1435,7 @@ void OpponentHandlecmd20(void)
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)&gBattleBufferA[gActiveBattler][4];
 #if DEBUG
     u16 battler;
-    if (gUnknown_02023A14_50 & 4)
+    if (gDebugBattleFlags & 4)
     {
         // Move selection cycle
         move = MOVE_NONE;
@@ -1463,7 +1462,7 @@ void OpponentHandlecmd20(void)
         }
         else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
         {
-            if (gUnknown_02023A14_50 & 2)
+            if (gDebugBattleFlags & 2)
             {
                 if (gBattleMoves[move].target == MOVE_TARGET_SELECTED)
                 {

@@ -609,7 +609,8 @@ extern u8 gLastHitBy[MAX_BATTLERS_COUNT];
 extern u8 gDisplayedStringBattle[];
 
 extern u16 gBattleTypeFlags;
-extern u8 gUnknown_02023A14_50;
+extern u32 gDebugBattleTrainerAiFlags;
+extern u8 gDebugBattleFlags;
 extern u16 gTrainerBattleOpponent;
 
 // src/battle_bg.o

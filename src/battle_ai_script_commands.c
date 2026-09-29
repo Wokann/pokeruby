@@ -14,8 +14,6 @@
 #include "util.h"
 #include "ewram.h"
 
-extern u8 gUnknown_02023A14_50;
-extern u32 gUnknown_02023A14_4C;
 extern u16 gBattleTypeFlags;
 extern u16 gBattleWeather;
 extern u8 gActiveBattler;
@@ -336,8 +334,8 @@ void BattleAI_SetupAIData(void)
     else // otherwise, just set aiFlags to whatever flags the trainer has set in their data.
         AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent].aiFlags;
 #if DEBUG
-    if (gUnknown_02023A14_50 & 1)
-        AI_THINKING_STRUCT->aiFlags = gUnknown_02023A14_4C;
+    if (gDebugBattleFlags & 1)
+        AI_THINKING_STRUCT->aiFlags = gDebugBattleTrainerAiFlags;
 #endif
 }
 

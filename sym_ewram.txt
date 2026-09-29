@@ -32,10 +32,10 @@ gMultiPartnerParty = .; /* 2023A00 */
 #if DEBUG
 
 	. = ALIGN(4);
-gUnknown_02023A14_4C = .;
+gDebugBattleTrainerAiFlags = .;
     . += 0x4;
 
-gUnknown_02023A14_50 = .;
+gDebugBattleFlags = .;
     . += 0x1;
 
 	. = ALIGN(2);

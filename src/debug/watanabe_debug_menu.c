@@ -136,7 +136,7 @@ EWRAM_DATA u8 gWatanabeBattleDebugState[0x10] = { 0 };
 EWRAM_DATA struct WatanabePokemonCreatorState *gWatanabePokemonCreatorState = NULL;
 EWRAM_DATA struct WatanabeGraphicsBrowserState *gWatanabeGraphicsBrowserState = NULL;
 
-u32 byte_3005E30;
+u32 gWatanabeTrainerAiFlags;
 
 #define sWatanabeBattleDebugSelectingEnemyParty gWatanabeBattleDebugState[0]
 #define sWatanabeBattleDebugPlayerPartyIndex    gWatanabeBattleDebugState[1]
@@ -149,8 +149,6 @@ u32 byte_3005E30;
 #define sWatanabeBattleDebugGenderSelection     gWatanabeBattleDebugState[8]
 #define sWatanabeBattleDebugBattlerCount        gWatanabeBattleDebugState[12]
 #define sWatanabeBattleDebugSavedPlayerGender   gWatanabeBattleDebugState[13]
-#define gWatanabeTrainerAiFlags                 byte_3005E30
-
 extern s8 gBattleEnvironment;
 
 void Task_WatanabeDebugInitSizeComparison(u8 taskId);
@@ -1351,14 +1349,14 @@ void Task_WatanabeDebugHandleBattleModeInput(u8 taskId)
         LoadPlayerParty();
         gSaveBlock2.playerGender = sWatanabeBattleDebugSavedPlayerGender;
         gBattleTypeFlags = 0;
-        gUnknown_02023A14_50 = 0;
+        gDebugBattleFlags = 0;
         gTasks[taskId].func = Task_WatanabeDebugExitToField;
     }
     else if (JOY_NEW(START_BUTTON) || JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
         gBattleTypeFlags = sWatanabeBattleModeItems[sWatanabeBattleDebugBattleModeIndex].data.battleMode.battleType;
-        gUnknown_02023A14_50 = 8;
+        gDebugBattleFlags = 8;
         sWatanabeBattleDebugBattlerCount = sWatanabeBattleModeItems[sWatanabeBattleDebugBattleModeIndex].data.battleMode.battlerCount;
         if (sWatanabeBattleDebugBattleModeIndex == 1 || sWatanabeBattleDebugBattleModeIndex == 2)
         {

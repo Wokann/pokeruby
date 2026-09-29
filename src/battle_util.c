@@ -24,8 +24,6 @@
 #include "constants/species.h"
 #include "constants/weather.h"
 
-extern u8 gUnknown_02023A14_50;
-
 extern const u8* gBattlescriptCurrInstr;
 extern u8 gActiveBattler;
 extern u8 gBattleBufferB[4][0x200];
@@ -2081,7 +2079,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 }
                 break;
             case ABILITY_EFFECT_SPORE:
-		if (DEBUG && (gUnknown_02023A14_50 & 4))
+		if (DEBUG && (gDebugBattleFlags & 4))
 		{
 		    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
 		    && gBattleMons[gBattlerAttacker].hp != 0
@@ -2126,7 +2124,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
 		}
                 break;
             case ABILITY_POISON_POINT:
-		if (DEBUG && (gUnknown_02023A14_50 & 4))
+		if (DEBUG && (gDebugBattleFlags & 4))
 		{
 		    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
 		     && gBattleMons[gBattlerAttacker].hp != 0
@@ -2159,7 +2157,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
 		}
                 break;
             case ABILITY_STATIC:
-		if (DEBUG && (gUnknown_02023A14_50 & 4))
+		if (DEBUG && (gDebugBattleFlags & 4))
 		{
 		    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
 		     && gBattleMons[gBattlerAttacker].hp != 0
@@ -2192,7 +2190,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
 		}
                 break;
             case ABILITY_FLAME_BODY:
-		if (DEBUG && (gUnknown_02023A14_50 & 4))
+		if (DEBUG && (gDebugBattleFlags & 4))
 		{
 		    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
 		     && gBattleMons[gBattlerAttacker].hp != 0
@@ -2225,7 +2223,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
 		}
                 break;
             case ABILITY_CUTE_CHARM:
-		if (DEBUG && (gUnknown_02023A14_50 & 4))
+		if (DEBUG && (gDebugBattleFlags & 4))
 		{
 		    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
 		     && gBattleMons[gBattlerAttacker].hp != 0
@@ -3494,7 +3492,7 @@ u8 IsMonDisobedient(void)
      || !IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
 	return 0;
 
-    if (DEBUG && (gUnknown_02023A14_50 & 0x40))
+    if (DEBUG && (gDebugBattleFlags & 0x40))
     {
 	obedienceLevel = 10;
     }
