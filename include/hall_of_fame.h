@@ -2,9 +2,9 @@
 #define GUARD_HALL_OF_FAME_H
 
 void CB2_DoHallOfFameScreen(void);
-void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 arg1);
+void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 spriteSlot);
 void CB2_DoHallOfFamePC(void);
-void PrepareHallOfFameTrainerPicSpriteTemplate(int, u8);
+void PrepareHallOfFameTrainerPicSpriteTemplate(int paletteTag, u8 spriteSlot);
 extern void *const gHallOfFameGfxBufferPtrs[];
 
 #endif // GUARD_HALL_OF_FAME_H

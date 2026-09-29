@@ -1092,8 +1092,8 @@ const u16 gPSSMenu3_Pal[] = INCBIN_U16("graphics/pokemon_storage/menu3.gbapal");
 const u16 gPSSMenu4_Pal[] = INCBIN_U16("graphics/pokemon_storage/menu4.gbapal");
 const u8 gPSSMenuMisc_Tilemap[] = INCBIN_U8("graphics/pokemon_storage/misc1.bin.lz");
 
-const u8 gHallOfFame_Gfx[] = INCBIN_U8("graphics/misc/hof.4bpp.lz");
-const u16 gHallOfFame_Pal[] = INCBIN_U16("graphics/misc/hof.gbapal");
+const u8 gHallOfFameGfx[] = INCBIN_U8("graphics/misc/hall_of_fame.4bpp.lz");
+const u16 gHallOfFamePal[] = INCBIN_U16("graphics/misc/hall_of_fame.gbapal");
 
 const u8 gMenuWordGroupIndicator_Gfx[] = INCBIN_U8("graphics/interface/wordgroup_indicator.4bpp.lz");
 const u8 gMenuWordGroupFrame_Gfx[] = INCBIN_U8("graphics/interface/wordgroup_frame.4bpp.lz");

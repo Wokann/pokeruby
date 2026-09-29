@@ -33,8 +33,8 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern const u8 gConfetti_Gfx[];
 extern const u8 gConfetti_Pal[];
-extern const u8 gHallOfFame_Gfx[];
-extern const u16 gHallOfFame_Pal[];
+extern const u8 gHallOfFameGfx[];
+extern const u16 gHallOfFamePal[];
 
 struct HallofFameMon
 {
@@ -51,6 +51,7 @@ struct HallofFameTeam
 };
 
 #define HALL_OF_FAME_MAX_TEAMS 50
+#define TAG_CONFETTI 1001
 
 static void Task_Hof_InitMonData(u8 taskId);
 static void Task_Hof_SetMonDisplayTask(u8 taskId);
@@ -93,21 +94,21 @@ static bool8 CreateHofConfettiSprite(void);
 
 // data and gfx
 
-static const struct CompressedSpriteSheet sHallOfFame_ConfettiSpriteSheet =
+static const struct CompressedSpriteSheet sSpriteSheet_Confetti =
 {
-      gConfetti_Gfx, 0x220, 1001
+      gConfetti_Gfx, 0x220, TAG_CONFETTI
 };
 
 static const u8 sUnused0[8] = {};
 
-static const struct CompressedSpritePalette sHallOfFame_ConfettiSpritePalette =
+static const struct CompressedSpritePalette sSpritePalette_Confetti =
 {
-      gConfetti_Pal, 1001
+      gConfetti_Pal, TAG_CONFETTI
 };
 
 static const u8 sUnused1[8] = {};
 
-static const s16 sHallOfFame_MonsFullTeamPositions[6][4] =
+static const s16 sHallOfFame_MonFullTeamPositions[6][4] =
 {
     {120,   210,    120,    40},
     {326,   220,    56,     40},
@@ -117,7 +118,7 @@ static const s16 sHallOfFame_MonsFullTeamPositions[6][4] =
     {265,   -62,    40,     88}
 };
 
-static const s16 sHallOfFame_MonsHalfTeamPositions[3][4] =
+static const s16 sHallOfFame_MonHalfTeamPositions[3][4] =
 {
     {120,   214,    120,    64},
     {281,   214,    56,     64},
@@ -131,7 +132,7 @@ static const struct PCScreenEffectStruct sPCScreenEffectTemplate = {
 
 static const u8 sUnused2[6] = {2, 1, 3, 6, 4, 5};
 
-static const struct OamData sOamData_840B598 =
+static const struct OamData sOamData_HallOfFameSprite =
 {
     .y = 0,
     .affineMode = 0,
@@ -159,7 +160,7 @@ void *const gHallOfFameGfxBufferPtrs[] =
     eHofGfxPtr + 0x10000
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B5BC[] =
+static const struct SpriteFrameImage sHallOfFameMon0SpriteImages[] =
 {
     {eHofGfxPtr + 0x0000, 0x800},
     {eHofGfxPtr + 0x800, 0x800},
@@ -167,7 +168,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B5BC[] =
     {eHofGfxPtr + 0x1800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B5DC[] =
+static const struct SpriteFrameImage sHallOfFameMon1SpriteImages[] =
 {
     {eHofGfxPtr + 0x2000, 0x800},
     {eHofGfxPtr + 0x2800, 0x800},
@@ -175,7 +176,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B5DC[] =
     {eHofGfxPtr + 0x3800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B5FC[] =
+static const struct SpriteFrameImage sHallOfFameMon2SpriteImages[] =
 {
     {eHofGfxPtr + 0x4000, 0x800},
     {eHofGfxPtr + 0x4800, 0x800},
@@ -183,7 +184,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B5FC[] =
     {eHofGfxPtr + 0x5800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B61C[] =
+static const struct SpriteFrameImage sHallOfFameMon3SpriteImages[] =
 {
     {eHofGfxPtr + 0x6000, 0x800},
     {eHofGfxPtr + 0x6800, 0x800},
@@ -191,7 +192,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B61C[] =
     {eHofGfxPtr + 0x7800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B63C[] =
+static const struct SpriteFrameImage sHallOfFameMon4SpriteImages[] =
 {
     {eHofGfxPtr + 0x8000, 0x800},
     {eHofGfxPtr + 0x8800, 0x800},
@@ -199,7 +200,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B63C[] =
     {eHofGfxPtr + 0x9800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B65C[] =
+static const struct SpriteFrameImage sHallOfFameMon5SpriteImages[] =
 {
     {eHofGfxPtr + 0xC000, 0x800},
     {eHofGfxPtr + 0xC800, 0x800},
@@ -207,7 +208,7 @@ static const struct SpriteFrameImage sSpriteImageTable_840B65C[] =
     {eHofGfxPtr + 0xD800, 0x800}
 };
 
-static const struct SpriteFrameImage sSpriteImageTable_840B67C[] =
+static const struct SpriteFrameImage sHallOfFameTrainerSpriteImages[] =
 {
     {eHofGfxPtr + 0x10000, 0x800},
     {eHofGfxPtr + 0x10800, 0x800},
@@ -215,29 +216,29 @@ static const struct SpriteFrameImage sSpriteImageTable_840B67C[] =
     {eHofGfxPtr + 0x11800, 0x800}
 };
 
-static const struct SpriteFrameImage* const sUnknown_0840B69C[7] =
+static const struct SpriteFrameImage *const sHallOfFameSpriteImageTables[7] =
 {
-    sSpriteImageTable_840B5BC,
-    sSpriteImageTable_840B5DC,
-    sSpriteImageTable_840B5FC,
-    sSpriteImageTable_840B61C,
-    sSpriteImageTable_840B63C,
-    sSpriteImageTable_840B65C,
-    sSpriteImageTable_840B67C
+    sHallOfFameMon0SpriteImages,
+    sHallOfFameMon1SpriteImages,
+    sHallOfFameMon2SpriteImages,
+    sHallOfFameMon3SpriteImages,
+    sHallOfFameMon4SpriteImages,
+    sHallOfFameMon5SpriteImages,
+    sHallOfFameTrainerSpriteImages
 };
 
-static const struct SpriteTemplate sUnknown_0840B6B8 =
+static const struct SpriteTemplate sSpriteTemplate_HallOfFameSprite =
 {
     .tileTag = -1,
     .paletteTag = -1,
-    .oam = &sOamData_840B598,
+    .oam = &sOamData_HallOfFameSprite,
     .anims = NULL,
-    .images = sSpriteImageTable_840B5BC,
+    .images = sHallOfFameMon0SpriteImages,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_HallOfFame_Dummy
 };
 
-static const struct OamData sOamData_840B6D0 =
+static const struct OamData sOamData_Confetti =
 {
     .y = 0,
     .affineMode = 0,
@@ -254,135 +255,135 @@ static const struct OamData sOamData_840B6D0 =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_840B6D8[] =
+static const union AnimCmd sAnim_PinkConfettiA[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B6E0[] =
+static const union AnimCmd sAnim_RedConfettiA[] =
 {
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B6E8[] =
+static const union AnimCmd sAnim_BlueConfettiA[] =
 {
     ANIMCMD_FRAME(2, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B6F0[] =
+static const union AnimCmd sAnim_RedConfettiB[] =
 {
     ANIMCMD_FRAME(3, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B6F8[] =
+static const union AnimCmd sAnim_BlueConfettiB[] =
 {
     ANIMCMD_FRAME(4, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B700[] =
+static const union AnimCmd sAnim_YellowConfettiA[] =
 {
     ANIMCMD_FRAME(5, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B708[] =
+static const union AnimCmd sAnim_WhiteConfettiA[] =
 {
     ANIMCMD_FRAME(6, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B710[] =
+static const union AnimCmd sAnim_GreenConfettiA[] =
 {
     ANIMCMD_FRAME(7, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B718[] =
+static const union AnimCmd sAnim_PinkConfettiB[] =
 {
     ANIMCMD_FRAME(8, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B720[] =
+static const union AnimCmd sAnim_BlueConfettiC[] =
 {
     ANIMCMD_FRAME(9, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B728[] =
+static const union AnimCmd sAnim_YellowConfettiB[] =
 {
     ANIMCMD_FRAME(10, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B730[] =
+static const union AnimCmd sAnim_WhiteConfettiB[] =
 {
     ANIMCMD_FRAME(11, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B738[] =
+static const union AnimCmd sAnim_GreenConfettiB[] =
 {
     ANIMCMD_FRAME(12, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B740[] =
+static const union AnimCmd sAnim_PinkConfettiC[] =
 {
     ANIMCMD_FRAME(13, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B748[] =
+static const union AnimCmd sAnim_RedConfettiC[] =
 {
     ANIMCMD_FRAME(14, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B750[] =
+static const union AnimCmd sAnim_YellowConfettiC[] =
 {
     ANIMCMD_FRAME(15, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_840B758[] =
+static const union AnimCmd sAnim_WhiteConfettiC[] =
 {
     ANIMCMD_FRAME(16, 30),
     ANIMCMD_END
 };
 
-static const union AnimCmd* const sSpriteAnimTable_840B760[] =
+static const union AnimCmd *const sAnims_Confetti[] =
 {
-    sSpriteAnim_840B6D8,
-    sSpriteAnim_840B6E0,
-    sSpriteAnim_840B6E8,
-    sSpriteAnim_840B6F0,
-    sSpriteAnim_840B6F8,
-    sSpriteAnim_840B700,
-    sSpriteAnim_840B708,
-    sSpriteAnim_840B710,
-    sSpriteAnim_840B718,
-    sSpriteAnim_840B720,
-    sSpriteAnim_840B728,
-    sSpriteAnim_840B730,
-    sSpriteAnim_840B738,
-    sSpriteAnim_840B740,
-    sSpriteAnim_840B748,
-    sSpriteAnim_840B750,
-    sSpriteAnim_840B758
+    sAnim_PinkConfettiA,
+    sAnim_RedConfettiA,
+    sAnim_BlueConfettiA,
+    sAnim_RedConfettiB,
+    sAnim_BlueConfettiB,
+    sAnim_YellowConfettiA,
+    sAnim_WhiteConfettiA,
+    sAnim_GreenConfettiA,
+    sAnim_PinkConfettiB,
+    sAnim_BlueConfettiC,
+    sAnim_YellowConfettiB,
+    sAnim_WhiteConfettiB,
+    sAnim_GreenConfettiB,
+    sAnim_PinkConfettiC,
+    sAnim_RedConfettiC,
+    sAnim_YellowConfettiC,
+    sAnim_WhiteConfettiC
 };
 
-static const struct SpriteTemplate sSpriteTemplate_840B7A4 =
+static const struct SpriteTemplate sSpriteTemplate_HofConfetti =
 {
-    .tileTag = 1001,
-    .paletteTag = 1001,
-    .oam = &sOamData_840B6D0,
-    .anims = sSpriteAnimTable_840B760,
+    .tileTag = TAG_CONFETTI,
+    .paletteTag = TAG_CONFETTI,
+    .oam = &sOamData_Confetti,
+    .anims = sAnims_Confetti,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_HofConfetti
@@ -592,17 +593,17 @@ static void Task_Hof_DisplayMon(u8 taskId)
 
     if (gTasks[taskId].tMonNumber > 3)
     {
-        xPos = sHallOfFame_MonsFullTeamPositions[currMonId][0];
-        yPos = sHallOfFame_MonsFullTeamPositions[currMonId][1];
-        field4 = sHallOfFame_MonsFullTeamPositions[currMonId][2];
-        field6 = sHallOfFame_MonsFullTeamPositions[currMonId][3];
+        xPos = sHallOfFame_MonFullTeamPositions[currMonId][0];
+        yPos = sHallOfFame_MonFullTeamPositions[currMonId][1];
+        field4 = sHallOfFame_MonFullTeamPositions[currMonId][2];
+        field6 = sHallOfFame_MonFullTeamPositions[currMonId][3];
     }
     else
     {
-        xPos = sHallOfFame_MonsHalfTeamPositions[currMonId][0];
-        yPos = sHallOfFame_MonsHalfTeamPositions[currMonId][1];
-        field4 = sHallOfFame_MonsHalfTeamPositions[currMonId][2];
-        field6 = sHallOfFame_MonsHalfTeamPositions[currMonId][3];
+        xPos = sHallOfFame_MonHalfTeamPositions[currMonId][0];
+        yPos = sHallOfFame_MonHalfTeamPositions[currMonId][1];
+        field4 = sHallOfFame_MonHalfTeamPositions[currMonId][2];
+        field6 = sHallOfFame_MonHalfTeamPositions[currMonId][3];
     }
 
     spriteID = HallOfFame_LoadPokemonPic(currMon->species, xPos, yPos, currMonId, currMon->tid, currMon->personality);
@@ -890,13 +891,13 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
             s16 posX, posY;
             if (gTasks[taskId].tMonNo > 3)
             {
-                posX = sHallOfFame_MonsFullTeamPositions[i][2];
-                posY = sHallOfFame_MonsFullTeamPositions[i][3];
+                posX = sHallOfFame_MonFullTeamPositions[i][2];
+                posY = sHallOfFame_MonFullTeamPositions[i][3];
             }
             else
             {
-                posX = sHallOfFame_MonsHalfTeamPositions[i][2];
-                posY = sHallOfFame_MonsHalfTeamPositions[i][3];
+                posX = sHallOfFame_MonHalfTeamPositions[i][2];
+                posY = sHallOfFame_MonHalfTeamPositions[i][3];
             }
             spriteID = HallOfFame_LoadPokemonPic(currMon->species, posX, posY, i, currMon->tid, currMon->personality);
             gSprites[spriteID].oam.priority = 1;
@@ -1209,7 +1210,7 @@ static void ClearVramOamPltt_LoadHofGfx(void)
     DmaFill32Defvars(3, 0, OAM, OAM_SIZE);
     DmaFill16Defvars(3, 0, PLTT, PLTT_SIZE);
 
-    LZ77UnCompVram(gHallOfFame_Gfx, (void*)(VRAM));
+    LZ77UnCompVram(gHallOfFameGfx, (void*)(VRAM));
 
     for (i = 0; i < 64; i++)
     {
@@ -1226,7 +1227,7 @@ static void ClearVramOamPltt_LoadHofGfx(void)
 
     DmaFill16Large(3, 0, gSharedMem, 0x4000, 0x1000);
     ResetPaletteFade();
-    LoadPalette(gHallOfFame_Pal, 0, 0x20);
+    LoadPalette(gHallOfFamePal, 0, 0x20);
 }
 
 static void LoadHofGfx(void)
@@ -1236,8 +1237,8 @@ static void LoadHofGfx(void)
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 8;
-    LoadCompressedSpriteSheet(&sHallOfFame_ConfettiSpriteSheet);
-    LoadCompressedSpritePalette(&sHallOfFame_ConfettiSpritePalette);
+    LoadCompressedSpriteSheet(&sSpriteSheet_Confetti);
+    LoadCompressedSpritePalette(&sSpritePalette_Confetti);
     Text_LoadWindowTemplate(&gWindowTemplate_81E71B4);
     InitMenuWindow(&gWindowTemplate_81E71B4);
 }
@@ -1275,19 +1276,19 @@ static void SpriteCB_HallOfFame_Dummy(struct Sprite* sprite)
 
 }
 
-void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 animID)
+void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 spriteSlot)
 {
-    gCreatingSpriteTemplate = sUnknown_0840B6B8;
+    gCreatingSpriteTemplate = sSpriteTemplate_HallOfFameSprite;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
+    gCreatingSpriteTemplate.images = sHallOfFameSpriteImageTables[spriteSlot];
     gCreatingSpriteTemplate.anims = gAnims_MonPic;
 }
 
-void PrepareHallOfFameTrainerPicSpriteTemplate(u16 paletteTag, u8 animID)
+void PrepareHallOfFameTrainerPicSpriteTemplate(u16 paletteTag, u8 spriteSlot)
 {
-    gCreatingSpriteTemplate = sUnknown_0840B6B8;
+    gCreatingSpriteTemplate = sSpriteTemplate_HallOfFameSprite;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
-    gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
+    gCreatingSpriteTemplate.images = sHallOfFameSpriteImageTables[spriteSlot];
     gCreatingSpriteTemplate.anims = gTrainerFrontAnimsPtrTable[0];
 }
 
@@ -1350,7 +1351,7 @@ static bool8 CreateHofConfettiSprite(void)
     s16 posX = Random() % 240;
     s16 posY = -(Random() % 8);
 
-    spriteID = CreateSprite(&sSpriteTemplate_840B7A4, posX, posY, 0);
+    spriteID = CreateSprite(&sSpriteTemplate_HofConfetti, posX, posY, 0);
     sprite = &gSprites[spriteID];
 
     StartSpriteAnim(sprite, Random() % 17);

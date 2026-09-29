@@ -221,7 +221,7 @@ $(TYPESGFXDIR)/move_types.gbapal: $(TYPESGFXDIR)/move_types_1.gbapal $(TYPESGFXD
 
 MISCGFXDIR := graphics/misc
 
-$(MISCGFXDIR)/hof.4bpp: GFX_OPTS := -num_tiles 37
+$(MISCGFXDIR)/hall_of_fame.4bpp: GFX_OPTS := -num_tiles 37
 
 $(MISCGFXDIR)/end_copyright.4bpp: GFX_OPTS := -num_tiles 90
 
