@@ -65,10 +65,9 @@ struct LinkResultWindow {
     u8 *dest;
 };
 
-#define gLinkResultWindows gUnknown_081F9680
 extern const struct LinkResultWindow gLinkResultWindows[];
 
-extern struct SpriteTemplate gSpriteTemplate_81F96D0;
+extern const struct SpriteTemplate gDebugBattleInitSprite;
 
 const struct OamData gOamData_81F952C = {
     .affineMode = ST_OAM_AFFINE_DOUBLE,
@@ -232,7 +231,7 @@ void DebugInitBattleSprites(void)
 {
     u8 spriteId;
     ResetSpriteData();
-    spriteId = CreateSprite(&gSpriteTemplate_81F96D0, 0, 0, 0);
+    spriteId = CreateSprite(&gDebugBattleInitSprite, 0, 0, 0);
     gSprites[spriteId].invisible = TRUE;
     SetMainCallback2(CB2_DebugBattleSprites);
 }

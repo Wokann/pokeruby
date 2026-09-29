@@ -162,9 +162,9 @@ extern u8 * const gBattlescriptsForUsingItem[];
 extern u8 * const gBattlescriptsForSafariActions[];
 extern u8 gBattleTextBuff2[];
 extern u8 gNumSafariBalls;
-extern u8 gUnknown_081FA70C[][3];
-extern u8 gUnknown_081FA71B[];
-extern u8 gUnknown_081FA71F[];
+extern const u8 gPkblToEscapeFactor[][3];
+extern const u8 gGoNearCounterToCatchFactor[];
+extern const u8 gGoNearCounterToEscapeFactor[];
 struct BattleResults gBattleResults;
 
 void BattleMainCB1(void);
@@ -249,8 +249,8 @@ void CB2_InitBattleInternal(void)
         gScanlineEffectRegBuffers[0][i] = 0xFF10;
         gScanlineEffectRegBuffers[1][i] = 0xFF10;
     }
-    //ScanlineEffect_SetParams(gUnknown_081F9674.totalPoints, gUnknown_081F9674.round1Points, gUnknown_081F9674.random);
-    ScanlineEffect_SetParams(gUnknown_081F9674);
+    //ScanlineEffect_SetParams(gIntroScanlineParams16Bit.totalPoints, gIntroScanlineParams16Bit.round1Points, gIntroScanlineParams16Bit.random);
+    ScanlineEffect_SetParams(gIntroScanlineParams16Bit);
     Text_LoadWindowTemplate(&gWindowTemplate_81E6C58);
     ResetPaletteFade();
     gBattle_BG0_X = 0;
@@ -402,7 +402,7 @@ void TryCorrectShedinjaLanguage(struct Pokemon *pkmn)
      && GetMonData(pkmn, MON_DATA_LANGUAGE) != language)
     {
         GetMonData(pkmn, MON_DATA_NICKNAME, nickname);
-        if (StringCompareWithoutExtCtrlCodes(nickname, gUnknown_081F96C8) == 0)
+        if (StringCompareWithoutExtCtrlCodes(nickname, gText_ShedinjaJpnName) == 0)
             SetMonData(pkmn, MON_DATA_LANGUAGE, &language);
     }
 }
@@ -5585,10 +5585,10 @@ void HandleAction_ThrowPokeblock(void)
         gBattleStruct->safariPkblThrowCounter++;
     if (gBattleStruct->safariFleeRate > 1)
     {
-        if (gBattleStruct->safariFleeRate < gUnknown_081FA70C[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]])
+        if (gBattleStruct->safariFleeRate < gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]])
             gBattleStruct->safariFleeRate = 1;
         else
-            gBattleStruct->safariFleeRate -= gUnknown_081FA70C[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]];
+            gBattleStruct->safariFleeRate -= gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]];
     }
 
     gBattlescriptCurrInstr = gBattlescriptsForSafariActions[2];
@@ -5601,11 +5601,11 @@ void HandleAction_GoNear(void)
     gBattle_BG0_X = 0;
     gBattle_BG0_Y = 0;
 
-    gBattleStruct->safariCatchFactor += gUnknown_081FA71B[gBattleStruct->safariGoNearCounter];
+    gBattleStruct->safariCatchFactor += gGoNearCounterToCatchFactor[gBattleStruct->safariGoNearCounter];
     if (gBattleStruct->safariCatchFactor > 20)
         gBattleStruct->safariCatchFactor = 20;
 
-    gBattleStruct->safariFleeRate += gUnknown_081FA71F[gBattleStruct->safariGoNearCounter];
+    gBattleStruct->safariFleeRate += gGoNearCounterToEscapeFactor[gBattleStruct->safariGoNearCounter];
     if (gBattleStruct->safariFleeRate > 20)
         gBattleStruct->safariFleeRate = 20;
 

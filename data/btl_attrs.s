@@ -10,13 +10,13 @@
 	.section .rodata
 
 	.align 2
-gUnknown_081F9674:: @ 81F9674
+gIntroScanlineParams16Bit:: @ 81F9674
 	.4byte REG_BG3HOFS
 	.4byte ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1
 	.4byte 1
 
 	.align 2
-gUnknown_081F9680:: @ 81F9680
+gLinkResultWindows:: @ 81F9680
 	.4byte gUnknown_030041D0
 	.2byte 0x20
 	.byte 0x13
@@ -53,11 +53,11 @@ gUnknown_081F9680:: @ 81F9680
 	.byte 0x18
 	.4byte BG_VRAM + 0xF1C4
 
-gUnknown_081F96C8:: @ 81F96C8
+gText_ShedinjaJpnName:: @ 81F96C8
 	.string "ヌケニン$" @ "Nukenin" (Shedinja)
 
 	.align 2
-gSpriteTemplate_81F96D0:: @ 81F96D0
+gDebugBattleInitSprite:: @ 81F96D0
 	spr_template 0, 0, gDummyOamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCB_DebugBattleInit
 
 .if DEBUG
@@ -284,23 +284,23 @@ gOamData_BattleSpritePlayerSide:: @ 81F96F0
 	.2byte 0x2800
 
 	.align 2
-gSpriteAnim_81F96F8:: @ 81F96F8
+sAnim_Unused:: @ 81F96F8
 	obj_image_anim_frame 0, 5
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_81F9700:: @ 81F9700
-	.4byte gSpriteAnim_81F96F8
+sAnims_Unused:: @ 81F9700
+	.4byte sAnim_Unused
 
 	.align 2
-gSpriteAffineAnim_81F9704:: @ 81F9704
+sAffineAnim_Unused:: @ 81F9704
 	obj_rot_scal_anim_frame 0xFFF0, 0x0, 0, 4
 	obj_rot_scal_anim_frame 0x0, 0x0, 0, 60
 	obj_rot_scal_anim_jump 1
 
 	.align 2
-gSpriteAffineAnimTable_81F971C:: @ 81F971C
-	.4byte gSpriteAffineAnim_81F9704
+sAffineAnims_Unused:: @ 81F971C
+	.4byte sAffineAnim_Unused
 
 @ 81F9720
 	.include "data/type_effectiveness.inc"
@@ -377,29 +377,29 @@ gStatusConditionStringsTable:: @ 81FA6D4
 	.4byte gStatusConditionString_ConfusionJpn, BattleText_Confusion
 	.4byte gStatusConditionString_LoveJpn, BattleText_Love
 
-gUnknown_081FA70C:: @ 81FA70C
+gPkblToEscapeFactor:: @ 81FA70C
 	.byte 0, 0, 0
 	.byte 3, 5, 0
 	.byte 2, 3, 0
 	.byte 1, 2, 0
 	.byte 1, 1, 0
 
-gUnknown_081FA71B:: @ 81FA71B
+gGoNearCounterToCatchFactor:: @ 81FA71B
 	.byte 4, 3, 2, 1
 
-gUnknown_081FA71F:: @ 81FA71F
+gGoNearCounterToEscapeFactor:: @ 81FA71F
 	.byte 4, 4, 4, 4
 
 	.align 1
 gSoundMovesTable:: @ 81FA724
-	.2byte   0x2D
-	.2byte   0x2E
-	.2byte   0x2F
-	.2byte   0x30
-	.2byte   0x67
-	.2byte   0xAD
-	.2byte   0xFD
-	.2byte  0x13F
-	.2byte  0x140
-	.2byte  0x130
+	.2byte MOVE_GROWL
+	.2byte MOVE_ROAR
+	.2byte MOVE_SING
+	.2byte MOVE_SUPERSONIC
+	.2byte MOVE_SCREECH
+	.2byte MOVE_SNORE
+	.2byte MOVE_UPROAR
+	.2byte MOVE_METAL_SOUND
+	.2byte MOVE_GRASS_WHISTLE
+	.2byte MOVE_HYPER_VOICE
 	.2byte 0xFFFF
