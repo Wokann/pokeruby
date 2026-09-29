@@ -2622,7 +2622,7 @@ void InitDebugFlyingMonSpriteOffsetEditor(void)
 	  gMonFrontPicCoords[gCurrentMove].coords,
 	  gMonFrontPicCoords[gCurrentMove].y_offset,
 	  (void *)EWRAM,
-	  gMonSpriteGfx_Sprite_ptr[1],
+	  gMonSpriteGfxBufferPtrs[1],
 	  gCurrentMove);
 	LoadCompressedPalette(gMonPaletteTable[gCurrentMove].data, 272, 32);
 	SetMultiuseSpriteTemplateToPokemon(gCurrentMove, 1);
@@ -2682,7 +2682,7 @@ void ReloadDebugFlyingMonSprite(u8 taskId)
       gMonFrontPicCoords[gCurrentMove].coords,
       gMonFrontPicCoords[gCurrentMove].y_offset,
       (void *)EWRAM,
-      gMonSpriteGfx_Sprite_ptr[1],
+      gMonSpriteGfxBufferPtrs[1],
       gCurrentMove);
     LoadCompressedPalette(gMonPaletteTable[gCurrentMove].data, 272, 32);
     gSprites[gTasks[taskId].data[1]].y = gMonFrontPicCoords[gCurrentMove].y_offset + 40;
@@ -3178,7 +3178,7 @@ void SpriteCB_AnimFaintOpponent(struct Sprite *sprite)
         else
         {
             // this should use a MEMSET_ALT, but *(dst++) wont match with it.
-            dst = (u8 *)gMonSpriteGfx_Sprite_ptr[GetBattlerPosition(sprite->data[0])] + (gBattleMonForms[sprite->data[0]] << 11) + (sprite->data[3] << 8);
+            dst = (u8 *)gMonSpriteGfxBufferPtrs[GetBattlerPosition(sprite->data[0])] + (gBattleMonForms[sprite->data[0]] << 11) + (sprite->data[3] << 8);
             for (i = 0; i < 0x100; i++)
                 *(dst++) = 0;
             StartSpriteAnim(sprite, gBattleMonForms[sprite->data[0]]);

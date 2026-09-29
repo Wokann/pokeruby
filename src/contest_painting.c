@@ -328,11 +328,11 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
             gMonFrontPicCoords[species].coords,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
-            gMonSpriteGfx_Sprite_ptr[1],
+            gMonSpriteGfxBufferPtrs[1],
             species,
             (u32)gContestPaintingWinner->personality
         );
-        _InitContestMonPixels((u8*)gMonSpriteGfx_Sprite_ptr[1], (u16*)gContestPaintingMonPalette, (u16*)gContestMonPixels);
+        _InitContestMonPixels((u8*)gMonSpriteGfxBufferPtrs[1], (u16*)gContestPaintingMonPalette, (u16*)gContestMonPixels);
     }
     else
     {
@@ -341,11 +341,11 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
             gMonBackPicCoords[species].coords,
             gMonBackPicCoords[species].y_offset,
             (void *)EWRAM,
-            gMonSpriteGfx_Sprite_ptr[0],
+            gMonSpriteGfxBufferPtrs[0],
             species,
             (u32)gContestPaintingWinner->personality
         );
-        _InitContestMonPixels((u8*)gMonSpriteGfx_Sprite_ptr[0], (u16*)gContestPaintingMonPalette, (u16*)gContestMonPixels);
+        _InitContestMonPixels((u8*)gMonSpriteGfxBufferPtrs[0], (u16*)gContestPaintingMonPalette, (u16*)gContestMonPixels);
     }
 }
 

@@ -48,8 +48,8 @@ extern const u8 gText_ShedinjaJpnName[];
 extern const struct CompressedSpriteSheet gSmokescreenImpactSpriteSheet;
 extern const struct CompressedSpritePalette gSmokescreenImpactSpritePalette;
 extern const struct SpriteTemplate gSmokescreenImpactSpriteTemplate;
-extern u8 *const gMonSpriteGfx_Sprite_ptr[];
-//extern u8 (*const gMonSpriteGfx_Sprite_ptr[])[0x800];
+extern u8 *const gMonSpriteGfxBufferPtrs[];
+//extern u8 (*const gMonSpriteGfxBufferPtrs[])[0x800];
 extern const struct BattleMove gBattleMoves[];
 
 // data/graphics/trainers/front_pic_coords.inc

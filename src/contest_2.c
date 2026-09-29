@@ -1036,7 +1036,7 @@ u8 CreateUnusedPlayerContestantSprite(void)
         gMonFrontPicCoords[species].coords,
         gMonFrontPicCoords[species].y_offset,
         (void *)EWRAM,
-        gMonSpriteGfx_Sprite_ptr[1],
+        gMonSpriteGfxBufferPtrs[1],
         species);
     LoadCompressedPalette(gMonPaletteTable[species].data, 0x110, 32);
     SetMultiuseSpriteTemplateToPokemon(gContestMons[gContestPlayerMonIndex].species, 1);
@@ -1062,7 +1062,7 @@ u8 CreateContestantSprite(u16 species, u32 otId, u32 personality)
         gMonBackPicCoords[species].coords,
         gMonBackPicCoords[species].y_offset,
         (void *)EWRAM,
-        gMonSpriteGfx_Sprite_ptr[0],
+        gMonSpriteGfxBufferPtrs[0],
         species,
         personality);
     lzPaletteData = GetMonSpritePalFromOtIdPersonality(species, otId, personality);

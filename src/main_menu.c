@@ -1424,8 +1424,8 @@ u8 CreateAzurillSprite(u8 x, u8 y)
         &gMonFrontPicTable[SPECIES_AZURILL],
         gMonFrontPicCoords[SPECIES_AZURILL].coords,
         gMonFrontPicCoords[SPECIES_AZURILL].y_offset,
-        gMonSpriteGfx_Sprite_ptr[0],
-        gMonSpriteGfx_Sprite_ptr[1],
+        gMonSpriteGfxBufferPtrs[0],
+        gMonSpriteGfxBufferPtrs[1],
         SPECIES_AZURILL);
     LoadCompressedSpritePalette(&gMonPaletteTable[SPECIES_AZURILL]);
     SetMultiuseSpriteTemplateToPokemon(SPECIES_AZURILL, 1);

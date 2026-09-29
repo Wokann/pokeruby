@@ -2294,7 +2294,7 @@ void AnimTask_TransformMon(u8 taskId)
         else
             position = GetBattlerPosition(gBattleAnimAttacker);
 
-        dest = gMonSpriteGfx_Sprite_ptr[position] + (gBattleMonForms[gBattleAnimAttacker] << 11);
+        dest = gMonSpriteGfxBufferPtrs[position] + (gBattleMonForms[gBattleAnimAttacker] << 11);
         src = animBg.bgTiles;
         DmaCopy32(3, dest, src, 0x800);
 

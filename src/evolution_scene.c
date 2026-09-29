@@ -231,7 +231,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
                              gMonFrontPicCoords[currSpecies].coords,
                              gMonFrontPicCoords[currSpecies].y_offset,
                              (void*)EWRAM,
-                             gMonSpriteGfx_Sprite_ptr[1], currSpecies);
+                             gMonSpriteGfxBufferPtrs[1], currSpecies);
     pokePal = (void*) GetMonSpritePalStructFromOtIdPersonality(currSpecies, trainerId, personality);
     LoadCompressedPalette(*pokePal, 0x110, 0x20);
 
@@ -248,7 +248,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
                              gMonFrontPicCoords[postEvoSpecies].coords,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
-                             gMonSpriteGfx_Sprite_ptr[3], postEvoSpecies);
+                             gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
     pokePal = (void*) GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 
@@ -328,7 +328,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
                              gMonFrontPicCoords[postEvoSpecies].coords,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
-                             gMonSpriteGfx_Sprite_ptr[3], postEvoSpecies);
+                             gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
     pokePal = (void*) GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 
@@ -398,7 +398,7 @@ static void CB2_TradeEvolutionSceneLoadGraphics(void)
                                      gMonFrontPicCoords[postEvoSpecies].coords,
                                      gMonFrontPicCoords[postEvoSpecies].y_offset,
                                      (void*)EWRAM,
-                                     gMonSpriteGfx_Sprite_ptr[3], postEvoSpecies);
+                                     gMonSpriteGfxBufferPtrs[3], postEvoSpecies);
             pokePal = (void*) GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
             LoadCompressedPalette(*pokePal, 0x120, 0x20);
             gMain.state++;
@@ -448,7 +448,7 @@ void TradeEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, u8 preEvoSprit
                              gMonFrontPicCoords[postEvoSpecies].coords,
                              gMonFrontPicCoords[postEvoSpecies].y_offset,
                              (void*)EWRAM,
-                             gMonSpriteGfx_Sprite_ptr[1], postEvoSpecies);
+                             gMonSpriteGfxBufferPtrs[1], postEvoSpecies);
     pokePal = (void*) GetMonSpritePalStructFromOtIdPersonality(postEvoSpecies, trainerId, personality);
     LoadCompressedPalette(*pokePal, 0x120, 0x20);
 

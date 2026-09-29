@@ -473,7 +473,7 @@ void DrawBattlerOnBg(u8 x, u8 y, u8 battlerPosition, u8 paletteId, u16 tilesOffs
     s32 tileY;
     u8 battler = GetBattlerAtPosition(battlerPosition);
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + gBattleMonForms[battler] * 0x800, (void *)(VRAM + tilesOffset), 0x800);
+    DmaCopy16(3, gMonSpriteGfxBufferPtrs[battlerPosition] + gBattleMonForms[battler] * 0x800, (void *)(VRAM + tilesOffset), 0x800);
     tileOffset = tilesOffset / 32 - charBaseBlock * 512;
     for (tileY = y; tileY < y + 8; tileY++)
     {
@@ -491,7 +491,7 @@ void DrawBattlerOnBgDMA(u8 x, u8 y, u8 battlerPosition, u8 form, u8 paletteId, u
     s32 tileX;
     s32 tileY;
 
-    DmaCopy16(3, gMonSpriteGfx_Sprite_ptr[battlerPosition] + form * 0x800, (void *)(VRAM + tilesOffset), 0x800);
+    DmaCopy16(3, gMonSpriteGfxBufferPtrs[battlerPosition] + form * 0x800, (void *)(VRAM + tilesOffset), 0x800);
     tileOffset = tilesOffset / 32 - charBaseBlock * 512;
     for (tileY = y; tileY < y + 8; tileY++)
     {

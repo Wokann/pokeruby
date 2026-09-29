@@ -51,8 +51,8 @@ extern const u8 *const gBattleAnims_Special[];
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 extern const struct MonCoords gTrainerFrontPicCoords[];
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
-extern const struct CompressedSpriteSheet gUnknown_081FAF24;
-extern const struct SpriteTemplate gSpriteTemplate_81FAF34;
+extern const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow;
+extern const struct SpriteTemplate gSpriteTemplate_EnemyShadow;
 extern const u8 gSubstituteDollTilemap[]; // graphics.s
 extern const u8 gSubstituteDollGfx[]; // graphics.s
 extern const u8 gSubstituteDollPal[]; // graphics.s
@@ -311,7 +311,7 @@ void BattleLoadOpponentMonSprite(struct Pokemon *pkmn, u8 b)
       gMonFrontPicCoords[species].coords,
       gMonFrontPicCoords[species].y_offset,
       eBattleInterfaceGfxBuffer,
-      gMonSpriteGfx_Sprite_ptr[var],
+      gMonSpriteGfxBufferPtrs[var],
       species,
       r7);
     paletteOffset = 0x100 + b * 16;
@@ -363,7 +363,7 @@ void BattleLoadPlayerMonSprite(struct Pokemon *pkmn, u8 b)
       gMonBackPicCoords[species].coords,
       gMonBackPicCoords[species].y_offset,
       eBattleInterfaceGfxBuffer,
-      gMonSpriteGfx_Sprite_ptr[var],
+      gMonSpriteGfxBufferPtrs[var],
       species,
       r7);
     paletteOffset = 0x100 + b * 16;
@@ -406,9 +406,9 @@ void sub_8031A6C(u16 a, u8 b)
       gTrainerFrontPicCoords[a].coords,
       gTrainerFrontPicCoords[a].y_offset,
       eBattleInterfaceGfxBuffer,
-      gMonSpriteGfx_Sprite_ptr[status],
+      gMonSpriteGfxBufferPtrs[status],
       0);
-    spriteSheet.data = gMonSpriteGfx_Sprite_ptr[status];
+    spriteSheet.data = gMonSpriteGfxBufferPtrs[status];
     spriteSheet.size = gTrainerFrontPicTable[a].size;
     spriteSheet.tag = gTrainerFrontPicTable[a].tag;
     LoadCompressedSpriteSheet(&spriteSheet);
@@ -425,7 +425,7 @@ void DecompressTrainerBackPic(u16 a, u8 b)
       gTrainerBackPicCoords[a].coords,
       gTrainerBackPicCoords[a].y_offset,
       eBattleInterfaceGfxBuffer,
-      gMonSpriteGfx_Sprite_ptr[status],
+      gMonSpriteGfxBufferPtrs[status],
       0);
     LoadCompressedPalette(gTrainerBackPicPaletteTable[a].data, 0x100 + b * 16, 32);
 }
@@ -660,7 +660,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
               gMonBackPicCoords[targetSpecies].coords,
               gMonBackPicCoords[targetSpecies].y_offset,
               eBattleInterfaceGfxBuffer,
-              gMonSpriteGfx_Sprite_ptr[position],
+              gMonSpriteGfxBufferPtrs[position],
               targetSpecies,
                 gContestResources__moveAnim.targetPersonality);
         }
@@ -680,7 +680,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                   gMonBackPicCoords[targetSpecies].coords,
                   gMonBackPicCoords[targetSpecies].y_offset,
                   eBattleInterfaceGfxBuffer,
-                  gMonSpriteGfx_Sprite_ptr[position],
+                  gMonSpriteGfxBufferPtrs[position],
                   targetSpecies,
                   gTransformedPersonalities[battlerAtk]);
             }
@@ -693,12 +693,12 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform)
                   gMonFrontPicCoords[targetSpecies].coords,
                   gMonFrontPicCoords[targetSpecies].y_offset,
                   eBattleInterfaceGfxBuffer,
-                  gMonSpriteGfx_Sprite_ptr[position],
+                  gMonSpriteGfxBufferPtrs[position],
                   targetSpecies,
                   gTransformedPersonalities[battlerAtk]);
             }
         }
-        DmaCopy32Defvars(3, gMonSpriteGfx_Sprite_ptr[position], (void *)(VRAM + 0x10000 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32), 0x800);
+        DmaCopy32Defvars(3, gMonSpriteGfxBufferPtrs[position], (void *)(VRAM + 0x10000 + gSprites[gBattlerSpriteIds[battlerAtk]].oam.tileNum * 32), 0x800);
         paletteOffset = 0x100 + battlerAtk * 16;
         lzPaletteData = GetMonSpritePalFromOtIdPersonality(targetSpecies, otId, personalityValue);
         LZDecompressWram(lzPaletteData, gSharedMem);
@@ -737,15 +737,15 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite)
         else
             position = GetBattlerPosition(battler);
         if (IsContest())
-            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[position]);
+            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfxBufferPtrs[position]);
         else if (GetBattlerSide(battler) != 0)
-            LZDecompressVram(gSubstituteDollGfx, gMonSpriteGfx_Sprite_ptr[position]);
+            LZDecompressVram(gSubstituteDollGfx, gMonSpriteGfxBufferPtrs[position]);
         else
-            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfx_Sprite_ptr[position]);
+            LZDecompressVram(gSubstituteDollTilemap, gMonSpriteGfxBufferPtrs[position]);
         // There is probably a way to do this without all the temp variables, but I couldn't figure it out.
         palOffset = battler * 16;
         substituteDollPal = gSubstituteDollPal;
-        gfxSrc = gMonSpriteGfx_Sprite_ptr[position];
+        gfxSrc = gMonSpriteGfxBufferPtrs[position];
         for (i = 0; i < 3; i++)
             DmaCopy32(3, gfxSrc, gfxSrc + i * 0x800 + 0x800, 0x800);
         LoadCompressedPalette(substituteDollPal, 0x100 + palOffset, 32);
@@ -876,14 +876,14 @@ void sub_80327CC(void)
 {
     u8 r5;
 
-    LoadCompressedSpriteSheet(&gUnknown_081FAF24);
+    LoadCompressedSpriteSheet(&gSpriteSheet_EnemyShadow);
     r5 = GetBattlerAtPosition(1);
-    gBattleHealthBoxInfo[r5].unk7 = CreateSprite(&gSpriteTemplate_81FAF34, GetBattlerSpriteCoord(r5, 0), GetBattlerSpriteCoord(r5, 1) + 32, 0xC8);
+    gBattleHealthBoxInfo[r5].unk7 = CreateSprite(&gSpriteTemplate_EnemyShadow, GetBattlerSpriteCoord(r5, 0), GetBattlerSpriteCoord(r5, 1) + 32, 0xC8);
     gSprites[gBattleHealthBoxInfo[r5].unk7].data[0] = r5;
     if (IsDoubleBattle())
     {
         r5 = GetBattlerAtPosition(3);
-        gBattleHealthBoxInfo[r5].unk7 = CreateSprite(&gSpriteTemplate_81FAF34, GetBattlerSpriteCoord(r5, 0), GetBattlerSpriteCoord(r5, 1) + 32, 0xC8);
+        gBattleHealthBoxInfo[r5].unk7 = CreateSprite(&gSpriteTemplate_EnemyShadow, GetBattlerSpriteCoord(r5, 0), GetBattlerSpriteCoord(r5, 1) + 32, 0xC8);
         gSprites[gBattleHealthBoxInfo[r5].unk7].data[0] = r5;
     }
 }

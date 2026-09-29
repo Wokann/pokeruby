@@ -1845,7 +1845,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, u8 *state)
             gMonFrontPicCoords[species].coords,
             gMonFrontPicCoords[species].y_offset,
             (void *)EWRAM,
-            gMonSpriteGfx_Sprite_ptr[1],
+            gMonSpriteGfxBufferPtrs[1],
             species,
             personality);
         *state += 1;

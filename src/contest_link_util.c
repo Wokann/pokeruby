@@ -639,7 +639,7 @@ static void Task_ShowWinnerMonBanner(u8 taskId)
             species = gContestMons[i].species;
             personality = gContestMons[i].personality;
             otId = gContestMons[i].otId;
-            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)gSharedMem, gMonSpriteGfx_Sprite_ptr[1], species, personality);
+            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, gMonFrontPicCoords[species].y_offset, (void *)gSharedMem, gMonSpriteGfxBufferPtrs[1], species, personality);
             pokePal = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
             LoadCompressedSpritePalette(pokePal);
             SetMultiuseSpriteTemplateToPokemon(species, 1);

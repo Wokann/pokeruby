@@ -304,8 +304,8 @@ void ShowContestEntryMonPic(void)
           &gMonFrontPicTable[species],
           gMonFrontPicCoords[species].coords,
           gMonFrontPicCoords[species].y_offset,
-          gMonSpriteGfx_Sprite_ptr[0],
-          gMonSpriteGfx_Sprite_ptr[1],
+          gMonSpriteGfxBufferPtrs[0],
+          gMonSpriteGfxBufferPtrs[1],
           species,
           personality);
         palette = GetMonSpritePalStructFromOtIdPersonality(species, otId, personality);
