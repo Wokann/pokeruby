@@ -2748,10 +2748,10 @@ extern const u8 gTitleScreenPokemonLogoTilemap[];
 
 extern const u8 gCableCar_Gfx[];
 extern const u8 gCableCarDoor_Gfx[];
-extern const u8 gCableCarCord_Gfx[];
+extern const u8 gCableCarCable_Gfx[];
 extern const u16 gCableCar_Pal[];
-extern const u16 gCableCarBG_Pal[];
-extern const u8 gCableCarBG_Gfx[];
+extern const u16 gCableCarBg_Pal[];
+extern const u8 gCableCarBg_Gfx[];
 
 extern const u8 gPSSMenuHeader_Gfx[];
 extern const u8 gPSSMenuHeader_Tilemap[];

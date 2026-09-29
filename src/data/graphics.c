@@ -945,12 +945,12 @@ const u8 gBattleAnimSpriteSheet_270[] = INCBIN_U8("graphics/battle_anims/sprites
 const u8 gBattleAnimSpritePalette_271[] = INCBIN_U8("graphics/battle_anims/sprites/271.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_271[] = INCBIN_U8("graphics/battle_anims/sprites/271.4bpp.lz");
 
-const u16 gCableCarBG_Pal[] = INCBIN_U16("graphics/misc/cable_car_bg.gbapal");
+const u16 gCableCarBg_Pal[] = INCBIN_U16("graphics/misc/cable_car_bg.gbapal");
 const u16 gCableCar_Pal[] = INCBIN_U16("graphics/misc/cable_car.gbapal");
-const u8 gCableCarBG_Gfx[] = INCBIN_U8("graphics/misc/cable_car_bg.4bpp.lz");
+const u8 gCableCarBg_Gfx[] = INCBIN_U8("graphics/misc/cable_car_bg.4bpp.lz");
 const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/misc/cable_car.4bpp.lz");
 const u8 gCableCarDoor_Gfx[] = INCBIN_U8("graphics/misc/cable_car_door.4bpp.lz");
-const u8 gCableCarCord_Gfx[] = INCBIN_U8("graphics/misc/cable_car_cord.4bpp.lz");
+const u8 gCableCarCable_Gfx[] = INCBIN_U8("graphics/misc/cable_car_cord.4bpp.lz");
 
 const u8 gRouletteMenu_Gfx[] = INCBIN_U8("graphics/unknown/unknown_E8096C.4bpp.lz");
 

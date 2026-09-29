@@ -120,8 +120,8 @@ extern u8 gSharedMem[];
 #define ewram17E00                      ((u16 *)(gSharedMem + 0x17E00))
 #define ewram18000                      ((u16 *)(gSharedMem + 0x18000)) // also: shop.c, battle_anim.c
 
-#define eCableCar1                      ((struct CableCarEwramStruct1 *)(gSharedMem + 0x17000))
-#define eCableCar2                      ((struct CableCarEwramStruct2 *)(gSharedMem + 0x19000))
+#define eCableCar                       ((struct CableCar *)(gSharedMem + 0x17000))
+#define eCableCarTilemapData            ((struct CableCarTilemapData *)(gSharedMem + 0x19000))
 
 #define eBerryBlenderData               (struct BerryBlenderData*)(&gSharedMem[0x18000])
 #define eEggHatchData                   (struct EggHatchData*)(&gSharedMem[0x18000])
