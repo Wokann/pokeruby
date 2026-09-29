@@ -651,7 +651,7 @@ const struct ItemSlot sDebugBagItems[60] =
     {ITEM_NONE,           1 },
 };
 
-void debug_sub_80A3714(void)
+void Debug_InitBagItems(void)
 {
     u16 arr[5];
     u16 i;
@@ -1496,7 +1496,7 @@ static void DrawFieldItemMenu(u16 *a)
             InitMenu(0, 1, 8, sItemMenuOptionCount, sItemMenuSelection, 1);
         else
             InitMenu(0, 1, 8, sItemMenuOptionCount, 0, 1);
-        sub_8072DCC(0x2F);
+        Menu_SetCursorWidth(0x2F);
     }
     else
     {
@@ -1505,7 +1505,7 @@ static void DrawFieldItemMenu(u16 *a)
         for (i = 0; i < sItemMenuOptionCount; i++)
             Menu_PrintText(sItemMenuActions[sItemMenuActionList[i]].text, 1 + (i / 3) * 6, 6 + (i % 3) * 2);
         InitMenu(0, 1, 6, sItemMenuOptionCount, 0, 1);
-        sub_8072DCC(0x2F);
+        Menu_SetCursorWidth(0x2F);
     }
     StartBagDescriptionPrinter(2);
 }
@@ -1867,18 +1867,18 @@ static void Task_HandleFieldItemMenu(u8 taskId)
         if (sBagMenuLocation == ITEMMENULOCATION_BERRY_BLENDER)
         {
             if (sItemMenuSelection == 0)
-                sub_8072DDC(12);
+                Menu_SetCursorWidthInTiles(12);
             else if (sItemMenuSelection < 2)
-                sub_8072DCC(47);
+                Menu_SetCursorWidth(47);
             else
-                sub_8072DCC(48);
+                Menu_SetCursorWidth(48);
         }
         else
         {
             if (sItemMenuSelection < 2)
-                sub_8072DCC(47);
+                Menu_SetCursorWidth(47);
             else
-                sub_8072DCC(48);
+                Menu_SetCursorWidth(48);
         }
     }
 }
@@ -1948,15 +1948,15 @@ static void Task_HandleBerryItemMenu(u8 taskId)
     {
         if (sItemMenuSelection == 0)
         {
-            sub_8072DDC(12);
+            Menu_SetCursorWidthInTiles(12);
         }
         else if (sItemMenuSelection < 3)
         {
-            sub_8072DCC(47);
+            Menu_SetCursorWidth(47);
         }
         else
         {
-            sub_8072DCC(48);
+            Menu_SetCursorWidth(48);
         }
     }
 }

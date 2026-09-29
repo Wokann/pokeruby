@@ -755,14 +755,14 @@ void unref_sub_8072DC0()
     HideOutlineCursor();
 }
 
-void sub_8072DCC(u8 a1)
+void Menu_SetCursorWidth(u8 a1)
 {
     SetOutlineCursorWidth(a1);
 }
 
-void sub_8072DDC(u8 a1)
+void Menu_SetCursorWidthInTiles(u8 a1)
 {
-    sub_8072DCC(8 * a1);
+    Menu_SetCursorWidth(8 * a1);
 }
 
 void Menu_DestroyCursor(void)
