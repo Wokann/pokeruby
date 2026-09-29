@@ -404,7 +404,7 @@ static void UsePokeblockMenu(void)
             else if (JOY_NEW(A_BUTTON))
             {
                 PlaySE(SE_SELECT);
-                if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
+                if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
                 {
                     sInfo->mainState = 3;
                 }
@@ -472,7 +472,7 @@ static void FeedPokeblockToMon(void)
     switch (sInfo->mainState)
     {
         case 0:
-            gPokeblockMonId = GetPartyIdFromSelectionId(gPokenavStructPtr->unk87DC);
+            gPokeblockMonId = GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex);
             sExitCallback = sInfo->exitCallback;
             sPokeblock = sInfo->pokeblock;
             BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
@@ -493,7 +493,7 @@ static void ShowUsePokeblockMenuForResults(void)
     switch (sInfo->mainState)
     {
         case 0:
-            if (gPokenavStructPtr->unk87DC != gPokeblockMonId)
+            if (gPokenavStructPtr->detailSelectionIndex != gPokeblockMonId)
             {
                 BeginConditionGraphMonScroll(sInfo->monInTopHalf);
                 sInfo->mainState++;
@@ -547,7 +547,7 @@ static void ShowPokeblockResults(void)
     {
         case 0:
             sInfo->mon = &gPlayerParty[0];
-            sInfo->mon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx];
+            sInfo->mon = &gPlayerParty[gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx];
             DestroyConditionSparkleSprites();
             sInfo->mainState++;
             break;
@@ -558,14 +558,14 @@ static void ShowPokeblockResults(void)
         case 2:
             CalculateConditionEnhancements();
             CalcPokeblockConditionGraphPositions(sInfo->conditionsAfterBlock, gPokenavStructPtr->unk9004[3]);
-            StartPokeblockConditionGraphReset(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
+            StartPokeblockConditionGraphReset(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[3]);
             LoadAndCreateUpDownSprites();
             sInfo->mainState++;
             break;
         case 3:
             if (!UpdatePokeblockConditionGraphReset())
             {
-                CalculateNumAdditionalSparkles(GetPartyIdFromSelectionId(gPokenavStructPtr->unk87DC));
+                CalculateNumAdditionalSparkles(GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex));
                 CreateConditionSparkleSprites();
                 sInfo->timer = 0;
                 sInfo->mainState++;
@@ -614,7 +614,7 @@ static void CloseUsePokeblockMenu(void)
 
 static void AskUsePokeblock(void)
 {
-    GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavStructPtr->unk87DC)], MON_DATA_NICKNAME, sInfo->stringBuffer);
+    GetMonData(&gPlayerParty[GetPartyIdFromSelectionId(gPokenavStructPtr->detailSelectionIndex)], MON_DATA_NICKNAME, sInfo->stringBuffer);
     StringGet_Nickname(sInfo->stringBuffer);
     StringAppend(sInfo->stringBuffer, gOtherText_GetsAPokeBlock);
     BasicInitMenuWindow(&gWindowTemplate_81E709C);
@@ -753,7 +753,7 @@ static void CalculateConditionEnhancements(void)
 {
     u16 i;
     struct Pokemon *mon = gPlayerParty;
-    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx;
+    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx;
     GetMonConditions(mon, sInfo->conditionsBeforeBlock);
     AddPokeblockToConditions(sInfo->pokeblock, mon);
     GetMonConditions(mon, sInfo->conditionsAfterBlock);
@@ -798,7 +798,7 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
 static bool8 IsSheenMaxed(void)
 {
     struct Pokemon *mon = gPlayerParty;
-    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].partyIdx;
+    mon += gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].partyIdx;
     if (GetMonData(mon, MON_DATA_SHEEN) == 255)
         return TRUE;
     return FALSE;

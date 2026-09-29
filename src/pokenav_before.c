@@ -1545,7 +1545,7 @@ void HandlePokenavMainMenuInput(void)
 		break;
     case 6:
         BuildTrainerEyesList();
-        if (gPokenavStructPtr->unkD158 != 0)
+        if (gPokenavStructPtr->trainerEyesCount != 0)
         {
             PlaySE(SE_SELECT);
             SetPokenavCallback(&OpenTrainerEyes);
@@ -2482,7 +2482,7 @@ void HandleConditionGraphInput(void)
         {
             if (gPokenavStructPtr->unk87CB && (
                 gPokenavStructPtr->isConditionGraphSearchMode == 0
-                || gPokenavStructPtr->unk87DC != 0
+                || gPokenavStructPtr->detailSelectionIndex != 0
             ))
             {
                 PlaySE(SE_SELECT);
@@ -2496,7 +2496,7 @@ void HandleConditionGraphInput(void)
         {
             if (gPokenavStructPtr->unk87CB && (
                 gPokenavStructPtr->isConditionGraphSearchMode == 0
-                || gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774
+                || gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex
             ))
             {
                 PlaySE(SE_SELECT);
@@ -2518,7 +2518,7 @@ void HandleConditionGraphInput(void)
         {
             if (gPokenavStructPtr->isConditionGraphSearchMode == 0)
             {
-                if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
+                if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
                 {
                     PlaySE(SE_SELECT);
                     gPokenavStructPtr->callbackStep = 9;
@@ -2836,13 +2836,13 @@ void RibbonsSummaryHandleInput(void)
         gPokenavStructPtr->callbackStep++;
         break;
     case 1:
-        if (JOY_REPT(0x40) && (gPokenavStructPtr->unk87DC))
+        if (JOY_REPT(0x40) && (gPokenavStructPtr->detailSelectionIndex))
         {
 			PlaySE(SE_SELECT);
             BeginRibbonsSummaryMonSwitch(-1);
 			gPokenavStructPtr->callbackStep++;
         }
-		else if (JOY_REPT(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
+		else if (JOY_REPT(0x80) && gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex)
 		{
             PlaySE(SE_SELECT);
             BeginRibbonsSummaryMonSwitch(1);
@@ -3144,13 +3144,13 @@ void ShowTrainerEyesTrainerInfo(void)
 			gPokenavStructPtr->callbackStep++;
         break;
     case 8:
-        if (JOY_HELD(0x40) && gPokenavStructPtr->unk87DC)
+        if (JOY_HELD(0x40) && gPokenavStructPtr->detailSelectionIndex)
         {
 			PlaySE(SE_SELECT);
 			ChangeTrainerEyesDetailSelection(-1);
 			gPokenavStructPtr->callbackStep = 0x10;
         }
-        else if (JOY_HELD(0x80) && gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774)
+        else if (JOY_HELD(0x80) && gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex)
         {
 			PlaySE(SE_SELECT);
 			ChangeTrainerEyesDetailSelection(1);

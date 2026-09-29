@@ -914,7 +914,7 @@ bool8 LoadConditionGraphScreenStep(void)
         SetConditionGraphWindowRegs();
         break;
     case 12:
-        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
         break;
     case 13:
         REG_BG3CNT = 0x1E03;
@@ -955,8 +955,8 @@ void PrintConditionGraphMonInfo(u16 portraitSlot)
     if (gPokenavStructPtr->isConditionGraphSearchMode == 1)
     {
         Menu_PrintText(gPokenavStructPtr->unk88E9[portraitSlot], 13, 3);
-        BufferConditionSearchRankText(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk2_5);
-        Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
+        BufferConditionSearchRankText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk2_5);
+        Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 6);
     }
 }
 
@@ -1108,19 +1108,19 @@ void BeginPokenavListScroll(s16 rowsToScroll)
     {
         gPokenavStructPtr->listScrollStep *= -1;
         tilemapRow = rowsToScroll * 2 + gPokenavStructPtr->listTilemapRow;
-        listIndex = rowsToScroll + gPokenavStructPtr->unk8770;
+        listIndex = rowsToScroll + gPokenavStructPtr->firstVisibleListIndex;
         if (listIndex < 0)
-            listIndex += gPokenavStructPtr->unk8774 + 1;
+            listIndex += gPokenavStructPtr->lastListIndex + 1;
 
         rowsToScroll *= -1;
     }
     else
     {
         tilemapRow = gPokenavStructPtr->listTilemapRow + 16;
-        listIndex = gPokenavStructPtr->unk8772 + 1;
+        listIndex = gPokenavStructPtr->lastVisibleListIndex + 1;
     }
 
-    if (listIndex > gPokenavStructPtr->unk8774)
+    if (listIndex > gPokenavStructPtr->lastListIndex)
         listIndex = 0;
 
     wrappedTilemapRow = tilemapRow & 0x1F;
@@ -1153,17 +1153,17 @@ void PrintPokenavListSelectionInfo(void)
     switch (gPokenavStructPtr->listMode)
     {
     case POKENAV_LIST_CONDITION_SEARCH:
-        BufferConditionSearchRankText(gPokenavStructPtr->unk8788, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk2_5);
+        BufferConditionSearchRankText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk2_5);
         break;
     case POKENAV_LIST_RIBBONS:
-        BufferRibbonsMonListIndexText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
+        BufferRibbonsMonListIndexText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->listSelectedIndex + 1);
         break;
     default:
         return;
     }
 
     BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
-    Menu_PrintText(gPokenavStructPtr->unk8788, 1, 6);
+    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 6);
 }
 
 void PrintTrainerEyesListStats(u8 drawStep)
@@ -1181,11 +1181,11 @@ void PrintTrainerEyesListStats(u8 drawStep)
         // fall through
     case 2:
         ConvertIntToDecimalStringN(
-            gPokenavStructPtr->unk8788,
-            gPokenavStructPtr->unk8774 + 1,
+            gPokenavStructPtr->pokenavTextBuffer,
+            gPokenavStructPtr->lastListIndex + 1,
             STR_CONV_MODE_RIGHT_ALIGN,
             5);
-        MenuPrint_RightAligned(gPokenavStructPtr->unk8788, 10, 11);
+        MenuPrint_RightAligned(gPokenavStructPtr->pokenavTextBuffer, 10, 11);
         if (drawStep != 0)
             break;
         // fall through
@@ -1200,11 +1200,11 @@ void PrintTrainerEyesListStats(u8 drawStep)
             numTrainerBattles = 99999;
 
         ConvertIntToDecimalStringN(
-            gPokenavStructPtr->unk8788,
+            gPokenavStructPtr->pokenavTextBuffer,
             numTrainerBattles,
             STR_CONV_MODE_RIGHT_ALIGN,
             5);
-        MenuPrint_RightAligned(gPokenavStructPtr->unk8788, 10, 15);
+        MenuPrint_RightAligned(gPokenavStructPtr->pokenavTextBuffer, 10, 15);
         break;
     }
 }
@@ -1217,11 +1217,11 @@ void ClearTrainerEyesListStats(void)
 
 void InitPokenavListRows(void)
 {
-    s16 visibleRowCount = (gPokenavStructPtr->unk8772 - gPokenavStructPtr->unk8770) + 1;
+    s16 visibleRowCount = (gPokenavStructPtr->lastVisibleListIndex - gPokenavStructPtr->firstVisibleListIndex) + 1;
     if (visibleRowCount < 8)
         Menu_EraseWindowRect(12, 1, 31, 15);
 
-    QueuePokenavListRows(gPokenavStructPtr->unk8770, 0, visibleRowCount);
+    QueuePokenavListRows(gPokenavStructPtr->firstVisibleListIndex, 0, visibleRowCount);
 }
 
 bool8 LoadPokenavListRowsStep(void)
@@ -1248,7 +1248,7 @@ bool8 PrintPokenavListRowStep(void)
         gPokenavListRowPrinters[gPokenavStructPtr->listMode](gPokenavStructPtr->listRowToDraw, gPokenavStructPtr->listTilemapRowToDraw);
         if (--gPokenavStructPtr->listRowsToDraw == 0)
             return FALSE;
-        if (++gPokenavStructPtr->listRowToDraw > gPokenavStructPtr->unk8774)
+        if (++gPokenavStructPtr->listRowToDraw > gPokenavStructPtr->lastListIndex)
             gPokenavStructPtr->listRowToDraw = wrappedListIndex;
         gPokenavStructPtr->listTilemapRowToDraw += 2;
         gPokenavStructPtr->listTilemapRowToDraw &= 0x1F;
@@ -1260,18 +1260,18 @@ bool8 PrintPokenavListRowStep(void)
 void PrintPokenavMonListRow(u16 listIndex, u16 tilemapRow)
 {
     u8 displayMode = gPokenavStructPtr->isRibbonsList == 0 ? 2 : 1;
-    BufferPokenavMonListRowText(gPokenavStructPtr->unk8788, listIndex, displayMode);
+    BufferPokenavMonListRowText(gPokenavStructPtr->pokenavTextBuffer, listIndex, displayMode);
     BasicInitMenuWindow(&gPokenavListWindowTemplate);
-    Menu_PrintText(gPokenavStructPtr->unk8788, 13, tilemapRow);
+    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 13, tilemapRow);
 }
 
 void PrintTrainerEyesListRow(u16 listIndex, u16 tilemapRow)
 {
-    BufferTrainerEyesListRowText(gPokenavStructPtr->unk8788, listIndex);
+    BufferTrainerEyesListRowText(gPokenavStructPtr->pokenavTextBuffer, listIndex);
     tilemapRow &= 0x1F;
     BasicInitMenuWindow(&gPokenavListWindowTemplate);
-    Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 97, tilemapRow * 8, 0);
-    if (listIndex < gPokenavStructPtr->unkD158 && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
+    Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 97, tilemapRow * 8, 0);
+    if (listIndex < gPokenavStructPtr->trainerEyesCount && gPokenavStructPtr->trainersEye[listIndex].rematchNo != 0)
         CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesRematchIconTilemap, 0, 0, 1, 2, 1);
     else
         CopyTilemapRect((void *)VRAM + 0xF000, 29, tilemapRow, gPokenavTrainerEyesNoRematchIconTilemap, 0, 0, 1, 2, 1);
@@ -1345,7 +1345,7 @@ bool8 RestoreTrainerEyesListStep(void)
     {
         gPokenavStructPtr->unk306 = 0;
         BasicInitMenuWindow(&gPokenavListWindowTemplate);
-        PrintTrainerEyesListRow(gPokenavStructPtr->unk8770 + gPokenavStructPtr->trainerEyesRowStep,
+        PrintTrainerEyesListRow(gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->trainerEyesRowStep,
                                 gPokenavStructPtr->listTilemapRow + gPokenavStructPtr->trainerEyesRowStep * 2);
 
         if ((++gPokenavStructPtr->trainerEyesRowStep) > 7)
@@ -1401,26 +1401,26 @@ bool8 PrintTrainerEyesDescriptionStep(void)
         Menu_PrintTextPixelCoords(gOtherText_Strategy, 0x61, tilemapRow * 8, 0);
         break;
     case 1:
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[0], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[0], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 2:
         Menu_PrintTextPixelCoords(gOtherText_TrainersPokemon, 0x61, tilemapRow * 8, 0);
         break;
     case 3:
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[1], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[1], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 4:
         Menu_PrintTextPixelCoords(gOtherText_SelfIntroduction, 0x61, tilemapRow * 8, 0);
         break;
     case 5:
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[2], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[2], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         break;
     case 6:
-        AlignStringInMenuWindow(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainerEyeDescriptionLines[3], 0x88, 0);
-        Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 0x61, tilemapRow * 8, 0);
+        AlignStringInMenuWindow(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainerEyeDescriptionLines[3], 0x88, 0);
+        Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 0x61, tilemapRow * 8, 0);
         return FALSE;
     }
     gPokenavStructPtr->trainerEyesRowStep++;
@@ -1431,7 +1431,7 @@ void InitTrainerEyesDescriptionErase(void)
 {
     gPokenavStructPtr->unk306 = 0;
     gPokenavStructPtr->trainerEyesRowStep = 0;
-    StringFill(gPokenavStructPtr->unk8788, CHAR_SPACE, 16);
+    StringFill(gPokenavStructPtr->pokenavTextBuffer, CHAR_SPACE, 16);
 }
 
 bool8 EraseTrainerEyesDescriptionStep(void)
@@ -1473,11 +1473,11 @@ bool8 UpdateTrainerEyesDetailScroll(void)
 
 void PrintTrainerEyesLocation(u8 listIndex)
 {
-    GetMapName(gPokenavStructPtr->unk8788, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
+    GetMapName(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->trainersEye[listIndex].regionMapSectionId, 0);
     BasicInitMenuWindow(&gPokenavListInfoWindowTemplate);
-    TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->unk8788);
-    AlignStringInMenuWindow(gPokenavStructPtr->unkD138, gPokenavStructPtr->unk8788, 88, 2);
-    Menu_PrintText(gPokenavStructPtr->unkD138, 0, 5);
+    TruncateTrainerEyesLocationAtControlCode(gPokenavStructPtr->pokenavTextBuffer);
+    AlignStringInMenuWindow(gPokenavStructPtr->trainerEyesLocationTextBuffer, gPokenavStructPtr->pokenavTextBuffer, 88, 2);
+    Menu_PrintText(gPokenavStructPtr->trainerEyesLocationTextBuffer, 0, 5);
 }
 
 void RedrawSelectedTrainerEyesListRow(void)
@@ -1607,8 +1607,8 @@ void CopyRibbonsSummaryTilemapToVram(void)
 void PrintRibbonsSummaryMonInfo(void)
 {
     Menu_PrintText(gPokenavStructPtr->unk8829[0], 13, 1);
-    BufferRibbonsMonListIndexText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex + 1);
-    Menu_PrintText(gPokenavStructPtr->unk8788, 1, 5);
+    BufferRibbonsMonListIndexText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->listSelectedIndex + 1);
+    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 1, 5);
 }
 
 void ClearRibbonsSummaryDescription(void)
@@ -1667,16 +1667,16 @@ void PrintRibbonsSummaryCount(void)
 {
     u8 *buffer;
     Menu_EraseWindowRect(12, 13, 27, 16);
-    buffer = StringCopy(gPokenavStructPtr->unk8788, gOtherText_Ribbons);
+    buffer = StringCopy(gPokenavStructPtr->pokenavTextBuffer, gOtherText_Ribbons);
     buffer[0] = CHAR_SPACE;
     buffer++;
     buffer = ConvertIntToDecimalStringN(
         buffer,
-        gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk0,
+        gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk0,
         STR_CONV_MODE_LEFT_ALIGN,
         2);
     buffer[0] = EOS;
-    Menu_PrintText(gPokenavStructPtr->unk8788, 12, 13);
+    Menu_PrintText(gPokenavStructPtr->pokenavTextBuffer, 12, 13);
 }
 
 void InitPokenavMonInfoHeaderGfx(void)
@@ -1769,7 +1769,7 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
         SetConditionGraphWindowRegs();
         break;
     case 8:
-        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
         break;
     case 9:
         REG_BG3CNT = 0x1E03;
@@ -1787,10 +1787,10 @@ bool8 LoadPokeblockConditionGraphScreenStep(void)
 
 void PrintPokeblockMonNature(void)
 {
-    u8 *buffer = gPokenavStructPtr->unk8788;
-    if (gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14)
+    u8 *buffer = gPokenavStructPtr->pokenavTextBuffer;
+    if (gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14)
     {
-        u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavStructPtr->unk87DC)]);
+        u8 nature = GetNature(&gPlayerParty[GetPartyIdFromPokeblockSelection(gPokenavStructPtr->detailSelectionIndex)]);
         buffer = StringCopy(buffer, gOtherText_Nature2);
         AlignStringInMenuWindow(buffer, gNatureNames[nature], 87, 0);
     }
@@ -1799,7 +1799,7 @@ void PrintPokeblockMonNature(void)
         AlignStringInMenuWindow(buffer, gEmptyString_81E72B0, 87, 0);
     }
 
-    Menu_PrintTextPixelCoords(gPokenavStructPtr->unk8788, 1, 112, 1);
+    Menu_PrintTextPixelCoords(gPokenavStructPtr->pokenavTextBuffer, 1, 112, 1);
 }
 
 void TruncateTrainerEyesLocationAtControlCode(u8 *text)
@@ -2700,7 +2700,7 @@ void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot)
         spritePalette = gPokenavPortraitSpritePalette;
 
         spriteSheet.data = gPokenavStructPtr->spriteGfxBuffers[portraitSlot];
-        spritePalette.data = gPokenavStructPtr->unk0[portraitSlot];
+        spritePalette.data = gPokenavStructPtr->portraitPaletteBuffers[portraitSlot];
         gPokenavStructPtr->portraitPaletteOffset = LoadSpritePalette(&spritePalette);
         gPokenavStructPtr->portraitTileStart = LoadSpriteSheet(&spriteSheet);
 
@@ -2721,7 +2721,7 @@ void CreateOrUpdatePokenavPortraitSprite(u8 portraitSlot)
     else
     {
         DmaCopy16Defvars(3, gPokenavStructPtr->spriteGfxBuffers[portraitSlot], gPokenavStructPtr->portraitVramDest, 0x800);
-        LoadPalette(gPokenavStructPtr->unk0[portraitSlot], gPokenavStructPtr->portraitPaletteOffset, 0x20);
+        LoadPalette(gPokenavStructPtr->portraitPaletteBuffers[portraitSlot], gPokenavStructPtr->portraitPaletteOffset, 0x20);
     }
 }
 
@@ -2846,9 +2846,9 @@ void SpriteCB_UpdatePokenavListUpDownArrow(struct Sprite *sprite)
         if (sprite->data[4])
         {
             if (!sprite->data[3])
-                sprite->invisible = gPokenavStructPtr->unk8770 == 0;
+                sprite->invisible = gPokenavStructPtr->firstVisibleListIndex == 0;
             else
-                sprite->invisible = gPokenavStructPtr->unk8772 == gPokenavStructPtr->unk8774;
+                sprite->invisible = gPokenavStructPtr->lastVisibleListIndex == gPokenavStructPtr->lastListIndex;
 
             sprite->data[4] = 0;
         }
@@ -2900,7 +2900,7 @@ void TogglePokenavListArrows(u8 invisible)
 
 void SpriteCB_ConditionPartyPokeball(struct Sprite *sprite)
 {
-    if (sprite->data[0] == gPokenavStructPtr->unk87DC)
+    if (sprite->data[0] == gPokenavStructPtr->detailSelectionIndex)
         StartSpriteAnim(sprite, 0);
     else
         StartSpriteAnim(sprite, 1);
@@ -2908,7 +2908,7 @@ void SpriteCB_ConditionPartyPokeball(struct Sprite *sprite)
 
 void HighlightCurrentPartyIndexPokeball(struct Sprite *sprite)
 {
-    if (gPokenavStructPtr->unk87DC == gPokenavStructPtr->unk87DA - 1)
+    if (gPokenavStructPtr->detailSelectionIndex == gPokenavStructPtr->unk87DA - 1)
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x4);
     else
         sprite->oam.paletteNum = IndexOfSpritePaletteTag(0x5);
@@ -3012,18 +3012,18 @@ void DestroyConditionMonMarkingsSprite(void)
 
 void MonMarkingsCallback(struct Sprite *sprite)
 {
-    StartSpriteAnim(sprite, gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9]);
+    StartSpriteAnim(sprite, gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot]);
 }
 
 void OpenConditionMonMarkingsMenu(void)
 {
-    OpenMonMarkingsMenu(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9], 176, 32);
+    OpenMonMarkingsMenu(gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot], 176, 32);
 }
 
 void SaveAndCloseConditionMonMarkingsMenu(void)
 {
-    struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
-    gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->unk8fe9] = gPokenavStructPtr->conditionMarkingsMenu.markings;
+    struct UnkUsePokeblockSub *var0 = &gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex];
+    gPokenavStructPtr->conditionMonMarkings[gPokenavStructPtr->portraitSlot] = gPokenavStructPtr->conditionMarkingsMenu.markings;
     SetMonMarkings(var0->unk1, var0->partyIdx, gPokenavStructPtr->conditionMarkingsMenu.markings);
     FreeMonMarkingsMenu();
 }
@@ -3313,12 +3313,12 @@ void CreateConditionSparkleSprites(void)
     u8 spriteId;
     u16 i;
     u8 count;
-    struct UnkUsePokeblockSub *mon = &gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC];
+    struct UnkUsePokeblockSub *mon = &gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex];
 
     if (!mon->unk3_14)
         return;
 
-    count = gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->unk8fe9];
+    count = gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->portraitSlot];
     for (i = 0; i < count + 1; i++)
     {
         spriteId = CreateSprite(&gPokenavConditionSparkleSpriteTemplate, 0, 0, 0);
@@ -3488,13 +3488,13 @@ bool8 LoadPokenavIconSpriteStep(void)
     switch (gPokenavStructPtr->unk306)
     {
     case 0:
-        LZ77UnCompWram(gPokenavIconGfx, gPokenavStructPtr->unk131E4);
+        LZ77UnCompWram(gPokenavIconGfx, gPokenavStructPtr->spriteGfxScratchBuffer);
         break;
     case 1:
     {
         struct SpriteSheet spriteSheet = {
-            .data = gPokenavStructPtr->unk131E4,
-            .size = sizeof(gPokenavStructPtr->unk131E4),
+            .data = gPokenavStructPtr->spriteGfxScratchBuffer,
+            .size = sizeof(gPokenavStructPtr->spriteGfxScratchBuffer),
             .tag = 0x18,
         };
         LoadSpriteSheet(&spriteSheet);
@@ -3670,7 +3670,7 @@ u8 *BufferRibbonsMonListIndexText(u8 *dst, u16 index)
     buffer[1] = 0x11;
     buffer[2] = 1;
     buffer += 3;
-    buffer = AlignInt1InMenuWindow(buffer, gPokenavStructPtr->unk8774 + 1, 50, 1);
+    buffer = AlignInt1InMenuWindow(buffer, gPokenavStructPtr->lastListIndex + 1, 50, 1);
     return buffer;
 }
 
@@ -3777,12 +3777,12 @@ void LoadConditionGraphMonGfx(s16 arg0, u8 arg1)
             &gMonFrontPicTable[species],
             gMonFrontPicCoords[species].coords,
             1,
-            gPokenavStructPtr->unk131E4,
+            gPokenavStructPtr->spriteGfxScratchBuffer,
             gPokenavStructPtr->spriteGfxBuffers[arg1],
             species,
             personality);
 
-        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavStructPtr->unk0[arg1]);
+        LZ77UnCompWram(GetMonSpritePalFromOtIdPersonality(species, otId, personality), gPokenavStructPtr->portraitPaletteBuffers[arg1]);
         gPokenavStructPtr->unkD1D6[arg1] = species;
     }
 }
@@ -3839,11 +3839,11 @@ void FinalizePokenavMonListRanks(void)
     }
 
     gPokenavStructPtr->listCursorRow = 0;
-    gPokenavStructPtr->unk8770 = 0;
+    gPokenavStructPtr->firstVisibleListIndex = 0;
     gPokenavStructPtr->listSelectedIndex = 0;
-    gPokenavStructPtr->unk8772 = gPokenavStructPtr->unk8FE4 < 9 ? (gPokenavStructPtr->unk8FE4 - 1) : 7;
-    gPokenavStructPtr->unk8774 = gPokenavStructPtr->unk8FE4 - 1;
-    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 > 7;
+    gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->unk8FE4 < 9 ? (gPokenavStructPtr->unk8FE4 - 1) : 7;
+    gPokenavStructPtr->lastListIndex = gPokenavStructPtr->unk8FE4 - 1;
+    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->lastListIndex > 7;
 }
 
 void LoadConditionGraphMonNeighbors(void)
@@ -3851,25 +3851,25 @@ void LoadConditionGraphMonNeighbors(void)
     s16 var0;
     s16 var1;
 
-    LoadConditionGraphMonData(gPokenavStructPtr->unk87DC, 0);
+    LoadConditionGraphMonData(gPokenavStructPtr->detailSelectionIndex, 0);
     CreateOrUpdatePokenavPortraitSprite(0);
     if (gPokenavStructPtr->unk87DA == 1)
     {
-        gPokenavStructPtr->unk8fe9 = 0;
+        gPokenavStructPtr->portraitSlot = 0;
         gPokenavStructPtr->unk8FEA = 0;
         gPokenavStructPtr->unk8FEB = 0;
     }
     else
     {
-        gPokenavStructPtr->unk8fe9 = 0;
+        gPokenavStructPtr->portraitSlot = 0;
         gPokenavStructPtr->unk8FEA = 1;
         gPokenavStructPtr->unk8FEB = 2;
 
-        var0 = gPokenavStructPtr->unk87DC + 1;
+        var0 = gPokenavStructPtr->detailSelectionIndex + 1;
         if (var0 >= gPokenavStructPtr->unk87DA)
             var0 = 0;
 
-        var1 = gPokenavStructPtr->unk87DC - 1;
+        var1 = gPokenavStructPtr->detailSelectionIndex - 1;
         if (var1 < 0)
             var1 = gPokenavStructPtr->unk87DA - 1;
 
@@ -3898,7 +3898,7 @@ void BuildPartyConditionGraphMonList(void)
     gPokenavStructPtr->unk893c[j].partyIdx = 0;
     gPokenavStructPtr->unk893c[j].unk2_5 = 0;
     gPokenavStructPtr->unk893c[j].unk3_14 = 0;
-    gPokenavStructPtr->unk87DC = 0;
+    gPokenavStructPtr->detailSelectionIndex = 0;
     gPokenavStructPtr->unk87DA = j + 1;
     LoadConditionGraphMonNeighbors();
     gPokenavStructPtr->unk87CB = 1;
@@ -3906,10 +3906,10 @@ void BuildPartyConditionGraphMonList(void)
 
 void PrepareConditionGraphFromSearchResult(void)
 {
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
+    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
     LoadConditionGraphMonNeighbors();
 
-    if (gPokenavStructPtr->unk8774 == 0)
+    if (gPokenavStructPtr->lastListIndex == 0)
         gPokenavStructPtr->unk87CB = 0;
     else
         gPokenavStructPtr->unk87CB = 1;
@@ -3988,7 +3988,7 @@ bool8 BuildConditionSearchResultsStep(void)
 
 void StartConditionGraphMonEnter(void)
 {
-    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9]);
+    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[3], gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot]);
     ConditionGraph_TryUpdate();
 }
 
@@ -4001,8 +4001,8 @@ bool8 UpdateConditionGraphMonEnter(void)
 
 void StartConditionGraphMonExit(void)
 {
-    if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->unk87DC != gPokenavStructPtr->unk8828)
-        ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[3]);
+    if (gPokenavStructPtr->isConditionGraphSearchMode || gPokenavStructPtr->detailSelectionIndex != gPokenavStructPtr->unk8828)
+        ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[3]);
 }
 
 bool8 UpdateConditionGraphMonExit(void)
@@ -4023,38 +4023,38 @@ void BeginConditionGraphMonScroll(u8 arg0)
     else
         var0 = gPokenavStructPtr->unk8FEA;
 
-    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->unk8fe9], gPokenavStructPtr->unk9004[var0]);
-    var1 = gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14;
+    ConditionGraph_SetNewPositions(gPokenavStructPtr->unk9004[gPokenavStructPtr->portraitSlot], gPokenavStructPtr->unk9004[var0]);
+    var1 = gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14;
     if (arg0)
     {
         gPokenavStructPtr->unk8FEB = gPokenavStructPtr->unk8FEA;
-        gPokenavStructPtr->unk8FEA = gPokenavStructPtr->unk8fe9;
-        gPokenavStructPtr->unk8fe9 = var0;
+        gPokenavStructPtr->unk8FEA = gPokenavStructPtr->portraitSlot;
+        gPokenavStructPtr->portraitSlot = var0;
         gPokenavStructPtr->unk8FEC = gPokenavStructPtr->unk8FEB;
 
-        gPokenavStructPtr->unk87DC = gPokenavStructPtr->unk87DC
-                                     ? gPokenavStructPtr->unk87DC - 1
+        gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->detailSelectionIndex
+                                     ? gPokenavStructPtr->detailSelectionIndex - 1
                                      : gPokenavStructPtr->unk87DA - 1;
-        gPokenavStructPtr->unk8FEE = gPokenavStructPtr->unk87DC
-                                     ? gPokenavStructPtr->unk87DC - 1
+        gPokenavStructPtr->unk8FEE = gPokenavStructPtr->detailSelectionIndex
+                                     ? gPokenavStructPtr->detailSelectionIndex - 1
                                      : gPokenavStructPtr->unk87DA - 1;
     }
     else
     {
         gPokenavStructPtr->unk8FEA = gPokenavStructPtr->unk8FEB;
-        gPokenavStructPtr->unk8FEB = gPokenavStructPtr->unk8fe9;
-        gPokenavStructPtr->unk8fe9 = var0;
+        gPokenavStructPtr->unk8FEB = gPokenavStructPtr->portraitSlot;
+        gPokenavStructPtr->portraitSlot = var0;
         gPokenavStructPtr->unk8FEC = gPokenavStructPtr->unk8FEA;
 
-        gPokenavStructPtr->unk87DC = (gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk87DA - 1)
-                                     ? gPokenavStructPtr->unk87DC + 1
+        gPokenavStructPtr->detailSelectionIndex = (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->unk87DA - 1)
+                                     ? gPokenavStructPtr->detailSelectionIndex + 1
                                      : 0;
-        gPokenavStructPtr->unk8FEE = (gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk87DA - 1)
-                                     ? gPokenavStructPtr->unk87DC + 1
+        gPokenavStructPtr->unk8FEE = (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->unk87DA - 1)
+                                     ? gPokenavStructPtr->detailSelectionIndex + 1
                                      : 0;
     }
 
-    var2 = gPokenavStructPtr->unk893c[gPokenavStructPtr->unk87DC].unk3_14;
+    var2 = gPokenavStructPtr->unk893c[gPokenavStructPtr->detailSelectionIndex].unk3_14;
     if (!var1)
         gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollToMon;
     else if (!var2)
@@ -4062,7 +4062,7 @@ void BeginConditionGraphMonScroll(u8 arg0)
     else
         gPokenavStructPtr->unk87E0 = UpdateConditionGraphScrollBetweenMons;
 
-    gPokenavStructPtr->unk87DE = 0;
+    gPokenavStructPtr->detailTransitionState = 0;
 }
 
 bool8 UpdateConditionGraphMonScroll(void)
@@ -4072,18 +4072,18 @@ bool8 UpdateConditionGraphMonScroll(void)
 
 bool8 UpdateConditionGraphScrollToMon(void)
 {
-    switch (gPokenavStructPtr->unk87DE)
+    switch (gPokenavStructPtr->detailTransitionState)
     {
     case 0:
-        CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->unk8fe9);
-        PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
-        gPokenavStructPtr->unk87DE++;
+        CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->portraitSlot);
+        PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
+        gPokenavStructPtr->detailTransitionState++;
         // fall through
     case 1:
         if (!UpdateConditionGraphMonEnter())
         {
             LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         }
         break;
     case 2:
@@ -4095,14 +4095,14 @@ bool8 UpdateConditionGraphScrollToMon(void)
 
 bool8 UpdateConditionGraphScrollToEmpty(void)
 {
-    switch (gPokenavStructPtr->unk87DE)
+    switch (gPokenavStructPtr->detailTransitionState)
     {
     case 0:
         if (!UpdateConditionGraphMonExit())
         {
-            PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
+            PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
             LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         }
         break;
     case 1:
@@ -4114,20 +4114,20 @@ bool8 UpdateConditionGraphScrollToEmpty(void)
 
 bool8 UpdateConditionGraphScrollBetweenMons(void)
 {
-    switch (gPokenavStructPtr->unk87DE)
+    switch (gPokenavStructPtr->detailTransitionState)
     {
     case 0:
         ConditionGraph_TryUpdate();
         if (!SlidePokenavMonInfoHeaderOut())
         {
-            CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->unk8fe9);
-            PrintConditionGraphMonInfo(gPokenavStructPtr->unk8fe9);
-            gPokenavStructPtr->unk87DE++;
+            CreateOrUpdatePokenavPortraitSprite(gPokenavStructPtr->portraitSlot);
+            PrintConditionGraphMonInfo(gPokenavStructPtr->portraitSlot);
+            gPokenavStructPtr->detailTransitionState++;
         }
         break;
     case 1:
         if (!UpdateConditionGraphMonEnter())
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         break;
     case 2:
         LoadConditionGraphMonData(gPokenavStructPtr->unk8FEE, gPokenavStructPtr->unk8FEC);
@@ -4536,19 +4536,19 @@ u8 PokenavList_MoveCursorUp(void)
     gPokenavStructPtr->listCursorRow--;
     if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow < 0)
     {
-        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->unk8772;
+        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->lastVisibleListIndex;
     }
-    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8770 + gPokenavStructPtr->listCursorRow;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
+    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->listCursorRow;
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
     }
     return 1;
 }
 
 u8 PokenavList_MoveCursorDown(void)
 {
-    if (gPokenavStructPtr->listSelectedIndex == gPokenavStructPtr->unk8774)
+    if (gPokenavStructPtr->listSelectedIndex == gPokenavStructPtr->lastListIndex)
     {
         return 0;
     }
@@ -4559,14 +4559,14 @@ u8 PokenavList_MoveCursorDown(void)
         return 2;
     }
     gPokenavStructPtr->listCursorRow++;
-    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow > gPokenavStructPtr->unk8772)
+    if (gPokenavStructPtr->hasListScrollArrows == 0 && gPokenavStructPtr->listCursorRow > gPokenavStructPtr->lastVisibleListIndex)
     {
         gPokenavStructPtr->listCursorRow = 0;
     }
-    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8770 + gPokenavStructPtr->listCursorRow;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
+    gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->firstVisibleListIndex + gPokenavStructPtr->listCursorRow;
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
     }
     return 1;
 }
@@ -4574,13 +4574,13 @@ u8 PokenavList_MoveCursorDown(void)
 u8 PokenavList_PageUp(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->unk8770 == 0 || gPokenavStructPtr->hasListScrollArrows == 0)
+    if (gPokenavStructPtr->firstVisibleListIndex == 0 || gPokenavStructPtr->hasListScrollArrows == 0)
     {
         return 0;
     }
-    if (gPokenavStructPtr->unk8770 < 8)
+    if (gPokenavStructPtr->firstVisibleListIndex < 8)
     {
-        r4 = -gPokenavStructPtr->unk8770;
+        r4 = -gPokenavStructPtr->firstVisibleListIndex;
     }
     else
     {
@@ -4594,11 +4594,11 @@ u8 PokenavList_PageUp(void)
 u8 PokenavList_PageDown(void)
 {
     s16 r4;
-    if (gPokenavStructPtr->unk8772 == gPokenavStructPtr->unk8774 || gPokenavStructPtr->hasListScrollArrows == 0)
+    if (gPokenavStructPtr->lastVisibleListIndex == gPokenavStructPtr->lastListIndex || gPokenavStructPtr->hasListScrollArrows == 0)
     {
         return 0;
     }
-    r4 = gPokenavStructPtr->unk8774 - gPokenavStructPtr->unk8772;
+    r4 = gPokenavStructPtr->lastListIndex - gPokenavStructPtr->lastVisibleListIndex;
     if (r4 > 8)
     {
         r4 = 8;
@@ -4610,32 +4610,32 @@ u8 PokenavList_PageDown(void)
 
 void UpdatePokenavListIndicesAfterScroll(s16 a0)
 {
-    gPokenavStructPtr->unk8770 += a0;
-    if (gPokenavStructPtr->unk8770 > gPokenavStructPtr->unk8774)
+    gPokenavStructPtr->firstVisibleListIndex += a0;
+    if (gPokenavStructPtr->firstVisibleListIndex > gPokenavStructPtr->lastListIndex)
     {
-        gPokenavStructPtr->unk8770 -= gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->firstVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
     }
-    if (gPokenavStructPtr->unk8770 < 0)
+    if (gPokenavStructPtr->firstVisibleListIndex < 0)
     {
-        gPokenavStructPtr->unk8770 += gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->firstVisibleListIndex += gPokenavStructPtr->lastListIndex + 1;
     }
-    gPokenavStructPtr->unk8772 += a0;
-    if (gPokenavStructPtr->unk8772 > gPokenavStructPtr->unk8774)
+    gPokenavStructPtr->lastVisibleListIndex += a0;
+    if (gPokenavStructPtr->lastVisibleListIndex > gPokenavStructPtr->lastListIndex)
     {
-        gPokenavStructPtr->unk8772 -= gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->lastVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
     }
-    if (gPokenavStructPtr->unk8772 < 0)
+    if (gPokenavStructPtr->lastVisibleListIndex < 0)
     {
-        gPokenavStructPtr->unk8772 += gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->lastVisibleListIndex += gPokenavStructPtr->lastListIndex + 1;
     }
     gPokenavStructPtr->listSelectedIndex += a0;
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
     {
-        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->listSelectedIndex -= gPokenavStructPtr->lastListIndex + 1;
     }
     if (gPokenavStructPtr->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->listSelectedIndex += gPokenavStructPtr->unk8774 + 1;
+        gPokenavStructPtr->listSelectedIndex += gPokenavStructPtr->lastListIndex + 1;
     }
 }
 
@@ -4643,29 +4643,29 @@ void RestorePokenavListSelection(void)
 {
     if (gPokenavStructPtr->hasListScrollArrows != 0)
     {
-        if (gPokenavStructPtr->unk87DC < gPokenavStructPtr->unk8774 - 7)
+        if (gPokenavStructPtr->detailSelectionIndex < gPokenavStructPtr->lastListIndex - 7)
         {
             gPokenavStructPtr->listCursorRow = 0;
-            gPokenavStructPtr->unk8770 = gPokenavStructPtr->unk87DC;
-            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk87DC;
-            gPokenavStructPtr->unk8772 = gPokenavStructPtr->unk8770 + 7;
-            if (gPokenavStructPtr->unk8772 > gPokenavStructPtr->unk8774)
+            gPokenavStructPtr->firstVisibleListIndex = gPokenavStructPtr->detailSelectionIndex;
+            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
+            gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->firstVisibleListIndex + 7;
+            if (gPokenavStructPtr->lastVisibleListIndex > gPokenavStructPtr->lastListIndex)
             {
-                gPokenavStructPtr->unk8772 -= gPokenavStructPtr->unk8774 + 1;
+                gPokenavStructPtr->lastVisibleListIndex -= gPokenavStructPtr->lastListIndex + 1;
             }
         }
         else
         {
-            gPokenavStructPtr->unk8770 = gPokenavStructPtr->unk8774 - 7;
-            gPokenavStructPtr->unk8772 = gPokenavStructPtr->unk8774;
-            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk87DC;
-            gPokenavStructPtr->listCursorRow = 7 - (gPokenavStructPtr->unk8774 -  gPokenavStructPtr->listSelectedIndex);
+            gPokenavStructPtr->firstVisibleListIndex = gPokenavStructPtr->lastListIndex - 7;
+            gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->lastListIndex;
+            gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
+            gPokenavStructPtr->listCursorRow = 7 - (gPokenavStructPtr->lastListIndex -  gPokenavStructPtr->listSelectedIndex);
         }
     }
     else
     {
-        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->unk87DC;
-        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk87DC;
+        gPokenavStructPtr->listCursorRow = gPokenavStructPtr->detailSelectionIndex;
+        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->detailSelectionIndex;
     }
 }
 
@@ -4904,7 +4904,7 @@ void InitRibbonsSummaryMonData(void)
 
     BufferPokenavMonNameGenderLevelText(gPokenavStructPtr->unk8829[0], gPokenavStructPtr->listSelectedIndex, 0);
     LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
+    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
     gPokenavStructPtr->ribbonCount = 0;
     ribbonIdBase = 0;
     ribbonFlags = GetBoxOrPartyMonData(gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].unk1, gPokenavStructPtr->unk893c[gPokenavStructPtr->listSelectedIndex].partyIdx, MON_DATA_RIBBONS, NULL);
@@ -5036,59 +5036,59 @@ void BeginRibbonsSummaryMonSwitch(s8 direction)
     gPokenavStructPtr->listSelectedIndex += direction;
     if (gPokenavStructPtr->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8774;
+        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->lastListIndex;
     }
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
     {
         gPokenavStructPtr->listSelectedIndex = 0;
     }
-    gPokenavStructPtr->unkBC94 = direction;
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
+    gPokenavStructPtr->detailSelectionDelta = direction;
+    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
     REG_WININ = 0x3F37;
     REG_WINOUT = 0x3F3F;
     REG_WIN0H = 0x58F0;
     REG_WIN0V = 0x2060;
-    gPokenavStructPtr->unk87DE = 0;
+    gPokenavStructPtr->detailTransitionState = 0;
 }
 
 bool8 UpdateRibbonsSummaryMonSwitch(void)
 {
-    switch (gPokenavStructPtr->unk87DE)
+    switch (gPokenavStructPtr->detailTransitionState)
     {
     case 0:
         if (!SlidePokenavMonInfoHeaderOut())
         {
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         }
         break;
     case 1:
         REG_DISPCNT |= DISPCNT_WIN0_ON;
         ClearRibbonsSummaryDescription();
         InitRibbonsSummaryMonData();
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 2:
         DrawMonRibbonIcons();
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 3:
         CopyRibbonsSummaryTilemapToVram();
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 4:
         LoadConditionGraphMonGfx(gPokenavStructPtr->listSelectedIndex, 0);
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 5:
         CreateOrUpdatePokenavPortraitSprite(0);
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 6:
         if (!SlidePokenavMonInfoHeaderIn())
         {
             PrintRibbonsSummaryMonInfo();
             REG_DISPCNT &= ~DISPCNT_WIN0_ON;
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
             return FALSE;
         }
         break;

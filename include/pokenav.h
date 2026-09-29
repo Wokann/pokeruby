@@ -69,7 +69,7 @@ struct UnknownStruct_Pokenav_8FF0 {
 };
 
 struct UnkPokenavStruct {
-    /*0x0000*/ u16 unk0[6][0x40];
+    /*0x0000*/ u16 portraitPaletteBuffers[6][0x40];
     /*0x0300*/ void (*callback)(void);
     /*0x0304*/ u16 callbackStep;
     /*0x0306*/ u16 unk306;
@@ -137,9 +137,9 @@ struct UnkPokenavStruct {
     /*0x8768*/ struct Sprite *portraitSprite;
     /*0x876C*/ s16 listCursorRow;
     /*0x876E*/ s16 listSelectedIndex;
-    /*0x8770*/ s16 unk8770;
-    /*0x8772*/ s16 unk8772;
-    /*0x8774*/ s16 unk8774;
+    /*0x8770*/ s16 firstVisibleListIndex;
+    /*0x8772*/ s16 lastVisibleListIndex;
+    /*0x8774*/ s16 lastListIndex;
     /*0x8776*/ s16 listBg3YOffset;
     /*0x8778*/ u16 listTilemapRow;
     /*0x877A*/ s16 listScrollStep;
@@ -149,7 +149,7 @@ struct UnkPokenavStruct {
     /*0x8782*/ u16 unk8782;
     /*0x8784*/ u16 listRowsToDraw;
     /*0x8786*/ u16 unk8786;
-    /*0x8788*/ u8 unk8788[0x40];
+    /*0x8788*/ u8 pokenavTextBuffer[0x40];
     /*0x87C8*/ u8 isRibbonsList;
     /*0x87C9*/ u8 hasListScrollArrows;
     /*0x87CA*/ u8 listMode;
@@ -158,8 +158,8 @@ struct UnkPokenavStruct {
     /*0x87D0*/ struct Sprite *listUpDownArrowSprites[2];
     /*0x87D8*/ u8 unk87D8;
     /*0x87DA*/ s16 unk87DA;
-    /*0x87DC*/ s16 unk87DC;
-    /*0x87DE*/ u8 unk87DE;
+    /*0x87DC*/ s16 detailSelectionIndex;
+    /*0x87DE*/ u8 detailTransitionState;
     /*0x87E0*/ bool8 (*unk87E0)(void);
     /*0x87E4*/ struct Sprite *conditionPartyIconSprites[7];
     /*0x8800*/ struct Sprite *conditionSparkleSprites[10];
@@ -174,7 +174,7 @@ struct UnkPokenavStruct {
     /*0x8FE6*/ u8 unk8FE6;
     /*0x8FE7*/ u8 unk8FE7;
     /*0x8FE8*/ s8 unk8FE8;
-    /*0x8fe9*/ s8 unk8fe9;
+    /*0x8fe9*/ s8 portraitSlot;
     /*0x8fea*/ s8 unk8FEA;
     /*0x8feb*/ s8 unk8FEB;
     /*0x8fec*/ s8 unk8FEC;
@@ -203,8 +203,8 @@ struct UnkPokenavStruct {
     /*0xBC91*/ u8 ribbonPageIndex;
     /*0xBC92*/ u8 isBigRibbonAnimating;
     /*0xBC93*/ u8 ribbonIconLoadIndex;
-    /*0xBC94*/ u8 unkBC94;
-    /*0xBC95*/ u8 unkBC95;
+    /*0xBC94*/ u8 detailSelectionDelta;
+    /*0xBC95*/ u8 trainerEyesDescriptionLoadStep;
     /*0xBC96*/ u8 ribbonPageCounts[0x4];
     /*0xBC9A*/ u8 cityMapSectionIndex;
     /*0xBC9B*/ u8 cityMapBufferIndex;
@@ -220,12 +220,12 @@ struct UnkPokenavStruct {
     /*0xCEE8*/ struct TrainersEyeStruct trainersEye[69];
     /*0xD110*/ const u8 *trainerEyeDescriptionLines[4];
     /*0xD120*/ u8 fillerD114[0x18];
-    /*0xD138*/ u8 unkD138[0x20];
-    /*0xD158*/ u16 unkD158;
+    /*0xD138*/ u8 trainerEyesLocationTextBuffer[0x20];
+    /*0xD158*/ u16 trainerEyesCount;
     /*0xD15A*/ s16 trainerEyesPortraitXOffset;
     /*0xD15C*/ u16 trainerEyesRowStep;
-    /*0xD15E*/ u8 unkD15E;
-    /*0xD15F*/ u8 unkD15F;
+    /*0xD15E*/ u8 trainerEyesPulseFrameCounter;
+    /*0xD15F*/ u8 trainerEyesPulseState;
     /*0xD160*/ u16 setupStep;
     /*0xD162*/ u8 unkD162;
     /*0xD164*/ struct UsePokeblockSession usePokeblockSession;
@@ -235,7 +235,7 @@ struct UnkPokenavStruct {
     /*0xD1DE*/ u16 portraitTileStart;
     /*0xD1E0*/ u8 *portraitVramDest;
     /*0xD1E4*/ u8 spriteGfxBuffers[3][0x2000];
-    /*0x131E4*/ u8 unk131E4[0x1000];
+    /*0x131E4*/ u8 spriteGfxScratchBuffer[0x1000];
 };
 
 extern struct UnkPokenavStruct *const gPokenavStructPtr;

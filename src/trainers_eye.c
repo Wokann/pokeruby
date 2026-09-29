@@ -40,17 +40,17 @@ void BuildTrainerEyesList(void)
 {
     u16 i;
 
-    gPokenavStructPtr->unkD158 = 0;
+    gPokenavStructPtr->trainerEyesCount = 0;
 
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
         if (HasTrainerBeenFought(gRematchTable[i].trainerIds[0]))
         {
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = gRematchTable[i].trainerIds[0];
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchTableIdx = i;
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchNo = gSaveBlock1.trainerRematches[i];
-            gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gRematchTable[i].mapGroup, gRematchTable[i].mapNum)->regionMapSectionId;
-            gPokenavStructPtr->unkD158++;
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].opponentId = gRematchTable[i].trainerIds[0];
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].rematchTableIdx = i;
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].rematchNo = gSaveBlock1.trainerRematches[i];
+            gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].regionMapSectionId = Overworld_GetMapHeaderByGroupAndId(gRematchTable[i].mapGroup, gRematchTable[i].mapNum)->regionMapSectionId;
+            gPokenavStructPtr->trainerEyesCount++;
         }
     }
 
@@ -59,39 +59,39 @@ void BuildTrainerEyesList(void)
         {
             if (HasTrainerBeenFought(sGymLeaderTrainersEye[i].opponentId))
             {
-                gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].opponentId = sGymLeaderTrainersEye[i].opponentId;
-                gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].regionMapSectionId = sGymLeaderTrainersEye[i].regionMapSectionId;
-                gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchNo = 0;
-                gPokenavStructPtr->trainersEye[gPokenavStructPtr->unkD158].rematchTableIdx = i + 0x38;
-                gPokenavStructPtr->unkD158++;
+                gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].opponentId = sGymLeaderTrainersEye[i].opponentId;
+                gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].regionMapSectionId = sGymLeaderTrainersEye[i].regionMapSectionId;
+                gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].rematchNo = 0;
+                gPokenavStructPtr->trainersEye[gPokenavStructPtr->trainerEyesCount].rematchTableIdx = i + 0x38;
+                gPokenavStructPtr->trainerEyesCount++;
             }
         }
     }
 
     gPokenavStructPtr->listCursorRow = 0;
-    gPokenavStructPtr->unk8770 = 0;
+    gPokenavStructPtr->firstVisibleListIndex = 0;
     gPokenavStructPtr->listSelectedIndex = 0;
-    gPokenavStructPtr->unk8772 = gPokenavStructPtr->unkD158 <= 8 ? gPokenavStructPtr->unkD158 - 1 : 7;
-    gPokenavStructPtr->unk8774 = gPokenavStructPtr->unkD158 - 1;
-    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->unk8774 < 8 ? 0 : 1;
+    gPokenavStructPtr->lastVisibleListIndex = gPokenavStructPtr->trainerEyesCount <= 8 ? gPokenavStructPtr->trainerEyesCount - 1 : 7;
+    gPokenavStructPtr->lastListIndex = gPokenavStructPtr->trainerEyesCount - 1;
+    gPokenavStructPtr->hasListScrollArrows = gPokenavStructPtr->lastListIndex < 8 ? 0 : 1;
 }
 
 void PrepareTrainerEyesDetailPortrait(void)
 {
     s32 portraitSlot = 0;
-    gPokenavStructPtr->unk8fe9 = portraitSlot;
+    gPokenavStructPtr->portraitSlot = portraitSlot;
     LoadTrainerEyesPortraitGfx(0);
     gPokenavStructPtr->trainerEyesPortraitXOffset = -72;
     CreateOrUpdateTrainerEyesPortrait(0);
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
+    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
 }
 
 void LoadTrainerEyesPortraitGfx(u8 slot)
 {
     u16 opponentId = gPokenavStructPtr->trainersEye[gPokenavStructPtr->listSelectedIndex].opponentId;
     u8 trainerPicId = gTrainers[opponentId].trainerPic;
-    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicId], gTrainerFrontPicCoords[trainerPicId].coords, 1, gPokenavStructPtr->unk131E4, gPokenavStructPtr->spriteGfxBuffers[slot], trainerPicId);
-    LZ77UnCompWram(gTrainerFrontPicPaletteTable[trainerPicId].data, gPokenavStructPtr->unk0[slot]);
+    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicId], gTrainerFrontPicCoords[trainerPicId].coords, 1, gPokenavStructPtr->spriteGfxScratchBuffer, gPokenavStructPtr->spriteGfxBuffers[slot], trainerPicId);
+    LZ77UnCompWram(gTrainerFrontPicPaletteTable[trainerPicId].data, gPokenavStructPtr->portraitPaletteBuffers[slot]);
 }
 
 bool8 SlideTrainerEyesPortraitIn(void)
@@ -124,8 +124,8 @@ bool8 SlideTrainerEyesPortraitOut(void)
 
 void InitTrainerEyesBackgroundPulse(void)
 {
-    gPokenavStructPtr->unkD15E = 0;
-    gPokenavStructPtr->unkD15F = 0;
+    gPokenavStructPtr->trainerEyesPulseFrameCounter = 0;
+    gPokenavStructPtr->trainerEyesPulseState = 0;
     REG_BLDCNT = BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_DARKEN;
     REG_BLDY = 0;
     REG_WININ = 0x3F3F;
@@ -135,11 +135,11 @@ void InitTrainerEyesBackgroundPulse(void)
 
 void UpdateTrainerEyesBackgroundPulse(void)
 {
-    if (++gPokenavStructPtr->unkD15E > 8)
+    if (++gPokenavStructPtr->trainerEyesPulseFrameCounter > 8)
     {
-        gPokenavStructPtr->unkD15E = 0;
-        ++gPokenavStructPtr->unkD15F;
-        if (gPokenavStructPtr->unkD15F & 1)
+        gPokenavStructPtr->trainerEyesPulseFrameCounter = 0;
+        ++gPokenavStructPtr->trainerEyesPulseState;
+        if (gPokenavStructPtr->trainerEyesPulseState & 1)
             REG_BLDY = 6;
         else
             REG_BLDY = 0;
@@ -166,18 +166,18 @@ void StopTrainerEyesBackgroundPulse(void)
     REG_BLDY = 0;
 }
 
-void BufferTrainerEyesListRowText(u8 *arg0, u16 arg1)
+void BufferTrainerEyesListRowText(u8 *buffer, u16 listIndex)
 {
-    const struct Trainer *trainer = &gTrainers[gPokenavStructPtr->trainersEye[arg1].opponentId];
-    u8 *ptr = arg0;
+    const struct Trainer *trainer = &gTrainers[gPokenavStructPtr->trainersEye[listIndex].opponentId];
+    u8 *ptr = buffer;
 
-    ptr = arg0;
-    if (arg1 < gPokenavStructPtr->unkD158)
+    ptr = buffer;
+    if (listIndex < gPokenavStructPtr->trainerEyesCount)
     {
 #if ENGLISH
         ptr = StringCopy(ptr, gTrainerClassNames[trainer->trainerClass]);
 #elif GERMAN
-        ptr = StringCopy(ptr, de_sub_8041024(0, gPokenavStructPtr->trainersEye[arg1].opponentId));
+        ptr = StringCopy(ptr, de_sub_8041024(0, gPokenavStructPtr->trainersEye[listIndex].opponentId));
 #endif
 
         ptr[0] = EXT_CTRL_CODE_BEGIN;
@@ -198,56 +198,56 @@ void ChangeTrainerEyesDetailSelection(s8 delta)
     gPokenavStructPtr->listSelectedIndex += delta;
     if (gPokenavStructPtr->listSelectedIndex < 0)
     {
-        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->unk8774;
+        gPokenavStructPtr->listSelectedIndex = gPokenavStructPtr->lastListIndex;
     }
-    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->unk8774)
+    if (gPokenavStructPtr->listSelectedIndex > gPokenavStructPtr->lastListIndex)
     {
         gPokenavStructPtr->listSelectedIndex = 0;
     }
-    gPokenavStructPtr->unkBC94 = delta;
-    gPokenavStructPtr->unk87DC = gPokenavStructPtr->listSelectedIndex;
-    gPokenavStructPtr->unk87DE = 0;
+    gPokenavStructPtr->detailSelectionDelta = delta;
+    gPokenavStructPtr->detailSelectionIndex = gPokenavStructPtr->listSelectedIndex;
+    gPokenavStructPtr->detailTransitionState = 0;
 }
 
 bool8 UpdateTrainerEyesDetailSelection(void)
 {
-    switch (gPokenavStructPtr->unk87DE)
+    switch (gPokenavStructPtr->detailTransitionState)
     {
     case 0:
         if (!SlideTrainerEyesPortraitOut())
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         break;
     case 1:
         LoadTrainerEyesPortraitGfx(0);
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 2:
         CreateOrUpdateTrainerEyesPortrait(0);
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 3:
-        BufferTrainerEyesListRowText(gPokenavStructPtr->unk8788, gPokenavStructPtr->listSelectedIndex);
-        UpdateTrainerEyesNameSprites(gPokenavStructPtr->unk8788);
+        BufferTrainerEyesListRowText(gPokenavStructPtr->pokenavTextBuffer, gPokenavStructPtr->listSelectedIndex);
+        UpdateTrainerEyesNameSprites(gPokenavStructPtr->pokenavTextBuffer);
         RedrawSelectedTrainerEyesListRow();
         PrintTrainerEyesLocation(gPokenavStructPtr->listSelectedIndex);
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         break;
     case 4:
         LoadTrainerEyesDescriptionLines();
-        gPokenavStructPtr->unkBC95 = 0;
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->trainerEyesDescriptionLoadStep = 0;
+        gPokenavStructPtr->detailTransitionState++;
         // fallthrough
     case 5:
-        if (gPokenavStructPtr->unkBC95 < 2){
+        if (gPokenavStructPtr->trainerEyesDescriptionLoadStep < 2){
             PrintTrainerEyesDescriptionStep();
-            gPokenavStructPtr->unkBC95++;
+            gPokenavStructPtr->trainerEyesDescriptionLoadStep++;
             break;
         }
-        gPokenavStructPtr->unk87DE++;
+        gPokenavStructPtr->detailTransitionState++;
         // fallthrough
     case 6:
         if (!SlideTrainerEyesPortraitIn() && !PrintTrainerEyesDescriptionStep())
-            gPokenavStructPtr->unk87DE++;
+            gPokenavStructPtr->detailTransitionState++;
         break;
     default:
         return FALSE;
@@ -259,5 +259,5 @@ bool8 UpdateTrainerEyesDetailSelection(void)
 void CalculateNumAdditionalSparkles(u8 monIndex)
 {
     u8 sheen = GetMonData(&gPlayerParty[monIndex], MON_DATA_SHEEN);
-    gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->unk8fe9] = sheen != 255 ? sheen / 29 : 9;
+    gPokenavStructPtr->conditionNumSparkles[gPokenavStructPtr->portraitSlot] = sheen != 255 ? sheen / 29 : 9;
 }
