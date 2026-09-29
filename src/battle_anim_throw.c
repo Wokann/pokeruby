@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim_throw.h"
+#include "battle_controllers.h"
 #include "battle_interface.h"
 #include "blend_palette.h"
 #include "decompress.h"
@@ -639,7 +640,7 @@ void AnimTask_FreeBallGfx(u8 taskId)
 
 void AnimTask_IsBallBlockedByTrainer(u8 taskId)
 {
-    if (ewram17840.unk8 == 5)
+    if (ewram17840.ballThrowCaseId == BALL_TRAINER_BLOCK)
         gBattleAnimArgs[7] = -1;
     else
         gBattleAnimArgs[7] = 0;
@@ -773,7 +774,7 @@ static void SpriteCB_Ball_Arc(struct Sprite *sprite)
 
     if (TranslateAnimHorizontalArc(sprite))
     {
-        if (ewram17840.unk8 == 5)
+        if (ewram17840.ballThrowCaseId == BALL_TRAINER_BLOCK)
         {
             sprite->callback = SpriteCB_Ball_Block;
         }
@@ -933,7 +934,7 @@ static void SpriteCB_Ball_Bounce_Step(struct Sprite *sprite)
         sprite->data[3] = 0;
         sprite->y += Cos(64, 32);
         sprite->y2 = 0;
-        if (ewram17840.unk8 == 0)
+        if (ewram17840.ballThrowCaseId == BALL_NO_SHAKES)
         {
             sprite->data[5] = 0;
             sprite->callback = SpriteCB_Ball_Release;
@@ -1067,14 +1068,14 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
     case 5:
         sprite->data[3] += 0x100;
         state = sprite->data[3] >> 8;
-        if (state == ewram17840.unk8)
+        if (state == ewram17840.ballThrowCaseId)
         {
             sprite->affineAnimPaused = 1;
             sprite->callback = SpriteCB_Ball_Release;
         }
         else
         {
-            if (ewram17840.unk8 == 4 && state == 3)
+            if (ewram17840.ballThrowCaseId == BALL_3_SHAKES_SUCCESS && state == 3)
             {
                 sprite->callback = SpriteCB_Ball_Capture;
                 sprite->affineAnimPaused = 1;

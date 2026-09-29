@@ -2477,19 +2477,19 @@ void PlayerHandlecmd11(void)
 
 void PlayerHandlecmd12(void)
 {
-    ewram17840.unk8 = 4;
-    gDoingBattleAnim = 1;
-    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(1), 3);
+    ewram17840.ballThrowCaseId = BALL_3_SHAKES_SUCCESS;
+    gDoingBattleAnim = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = bx_wait_t1;
 }
 
 void PlayerHandleBallThrow(void)
 {
-    u8 var = gBattleBufferA[gActiveBattler][1];
+    u8 ballThrowCaseId = gBattleBufferA[gActiveBattler][1];
 
-    ewram17840.unk8 = var;
-    gDoingBattleAnim = 1;
-    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(1), 3);
+    ewram17840.ballThrowCaseId = ballThrowCaseId;
+    gDoingBattleAnim = TRUE;
+    InitAndLaunchSpecialAnimation(gActiveBattler, gActiveBattler, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), B_ANIM_BALL_THROW);
     gBattlerControllerFuncs[gActiveBattler] = bx_wait_t1;
 }
 

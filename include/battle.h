@@ -476,7 +476,7 @@ struct Struct2017840
 {
     u16 unk0;
     u8 filler2[6];
-    u8 unk8;
+    u8 ballThrowCaseId;
     u8 introAnimActive:1;
     u8 unk9_1:1;
     u8 unkA;
