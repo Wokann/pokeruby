@@ -2269,23 +2269,23 @@ Move_SMOKESCREEN: @ 81CA710
 	loadspritegfx ANIM_TAG_BLACK_SMOKE
 	loadspritegfx ANIM_TAG_BLACK_BALL
 	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
-	createsprite gBattleAnimSpriteTemplate_84021B0, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 35, -25
+	createsprite gBlackBallSpriteTemplate, ANIM_BATTLER_TARGET, 2, 20, 0, 0, 0, 35, -25
 	waitforvisualfinish
 	createvisualtask AnimTask_SmokescreenImpact, 2
 	delay 2
 	playsewithpan SE_M_SAND_ATTACK, SOUND_PAN_TARGET
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, -12, 104, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, -12, 72, 1, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, -6, 56, 1, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, -6, 88, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 0, 56, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 0, 88, 1, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 6, 72, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 6, 104, 1, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 12, 72, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 12, 56, 1, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 18, 80, 0, 75
-	createsprite gBattleAnimSpriteTemplate_8402198, ANIM_BATTLER_TARGET, 4, 0, 18, 72, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, -12, 104, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, -12, 72, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, -6, 56, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, -6, 88, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 56, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 0, 88, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 6, 72, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 6, 104, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 12, 72, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 12, 56, 1, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 18, 80, 0, 75
+	createsprite gBlackSmokeSpriteTemplate, ANIM_BATTLER_TARGET, 4, 0, 18, 72, 1, 75
 	waitforvisualfinish
 	end
 
@@ -3158,7 +3158,7 @@ Move_FORESIGHT: @ 81CB9ED
 	monbg ANIM_BATTLER_DEF_PARTNER
 	splitbgprio ANIM_BATTLER_TARGET
 	setalpha 16, 0
-	createsprite gBattleAnimSpriteTemplate_8402A24, ANIM_BATTLER_TARGET, 2, 1
+	createsprite gForesightMagnifyingGlassSpriteTemplate, ANIM_BATTLER_TARGET, 2, 1
 	delay 17
 	loopsewithpan SE_M_SKETCH, SOUND_PAN_TARGET, 16, 4
 	delay 48
@@ -10462,32 +10462,32 @@ General_SmokeballEscape: @ 81D6690
 	setalpha 12, 4
 	delay 0
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_TARGET, 0, 0, 32, 28, 30
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_TARGET, 0, 0, 32, 28, 30
 	delay 4
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 127, 2, 12, 20, 30
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 127, 2, 12, 20, 30
 	delay 12
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 126, 2, -28, 4, 30
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 126, 2, -28, 4, 30
 	delay 4
 	delay 8
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 124, 2, 14, -20, 30
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 124, 2, 14, -20, 30
 	delay 4
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
 	createvisualtask AnimTask_AttackerFadeToInvisible, 2, 2
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 123, 3, 4, 4, 30
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 123, 3, 4, 4, 30
 	delay 14
 	playsewithpan SE_BALL_OPEN, SOUND_PAN_TARGET
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 122, 3, -14, 18, 46
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 122, 3, -14, 18, 46
 	delay 0
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 121, 3, 14, -14, 46
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 121, 3, 14, -14, 46
 	delay 0
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 120, 3, -12, -10, 46
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 120, 3, -12, -10, 46
 	delay 0
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 119, 3, 14, 14, 46
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 119, 3, 14, 14, 46
 	delay 0
-	createsprite gPinkSmokeTemplate, ANIM_BATTLER_ATTACKER, 118, 3, 0, 0, 46
+	createsprite gSmokeBallEscapeCloudSpriteTemplate, ANIM_BATTLER_ATTACKER, 118, 3, 0, 0, 46
 	waitforvisualfinish
 	clearmonbg ANIM_BATTLER_ATTACKER
 	invisible ANIM_BATTLER_ATTACKER

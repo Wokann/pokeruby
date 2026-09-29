@@ -167,7 +167,7 @@ const struct SpriteTemplate gScratchSpriteTemplate =
     .callback = AnimSpriteOnMonPos,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402198 =
+const struct SpriteTemplate gBlackSmokeSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLACK_SMOKE,
     .paletteTag = ANIM_TAG_BLACK_SMOKE,
@@ -178,7 +178,7 @@ const struct SpriteTemplate gBattleAnimSpriteTemplate_8402198 =
     .callback = AnimBlackSmoke,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_84021B0 =
+const struct SpriteTemplate gBlackBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_BLACK_BALL,
     .paletteTag = ANIM_TAG_BLACK_BALL,
@@ -849,7 +849,7 @@ const struct SpriteTemplate gYawnCloudSpriteTemplate =
     .callback = AnimYawnCloud,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402804[] =
+const union AffineAnimCmd gSmokeBallEscapeCloudAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
     AFFINEANIMCMD_FRAME(0xFFFC, 0xFFFA, 0, 16),
@@ -857,7 +857,7 @@ const union AffineAnimCmd gSpriteAffineAnim_8402804[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402824[] =
+const union AffineAnimCmd gSmokeBallEscapeCloudAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0xC0, 0xC0, 0, 0),
     AFFINEANIMCMD_FRAME(0x4, 0x6, 0, 16),
@@ -865,7 +865,7 @@ const union AffineAnimCmd gSpriteAffineAnim_8402824[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402844[] =
+const union AffineAnimCmd gSmokeBallEscapeCloudAffineAnimCmds3[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x4, 0x6, 0, 16),
@@ -873,7 +873,7 @@ const union AffineAnimCmd gSpriteAffineAnim_8402844[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_8402864[] =
+const union AffineAnimCmd gSmokeBallEscapeCloudAffineAnimCmds4[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
     AFFINEANIMCMD_FRAME(0x8, 0xA, 0, 30),
@@ -881,26 +881,26 @@ const union AffineAnimCmd gSpriteAffineAnim_8402864[] =
     AFFINEANIMCMD_JUMP(0),
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_8402884[] =
+const union AffineAnimCmd *const gSmokeBallEscapeCloudAffineAnimTable[] =
 {
-    gSpriteAffineAnim_8402804,
-    gSpriteAffineAnim_8402824,
-    gSpriteAffineAnim_8402844,
-    gSpriteAffineAnim_8402864,
+    gSmokeBallEscapeCloudAffineAnimCmds1,
+    gSmokeBallEscapeCloudAffineAnimCmds2,
+    gSmokeBallEscapeCloudAffineAnimCmds3,
+    gSmokeBallEscapeCloudAffineAnimCmds4,
 };
 
 //arg[0]: frame (0-3)
 //arg[1]: x
 //arg[2]: y
 //arg[3]: ??? (time on screen?)
-const struct SpriteTemplate gPinkSmokeTemplate =
+const struct SpriteTemplate gSmokeBallEscapeCloudSpriteTemplate =
 {
     .tileTag = ANIM_TAG_PINK_CLOUD,
     .paletteTag = ANIM_TAG_PINK_CLOUD,
     .oam = &gOamData_AffineDouble_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_8402884,
+    .affineAnims = gSmokeBallEscapeCloudAffineAnimTable,
     .callback = AnimSmokeBallEscapeCloud,
 };
 
@@ -956,7 +956,7 @@ const struct SpriteTemplate gRoarNoiseLineSpriteTemplate =
     .callback = AnimRoarNoiseLine,
 };
 
-const struct SpriteTemplate gSpriteTemplate_840294C =
+const struct SpriteTemplate gGlareEyeDotSpriteTemplate =
 {
     .tileTag = ANIM_TAG_SMALL_RED_EYE,
     .paletteTag = ANIM_TAG_SMALL_RED_EYE,
@@ -978,33 +978,33 @@ const struct SpriteTemplate gAssistPawprintSpriteTemplate =
     .callback = AnimAssistPawprint,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_840297C[] =
+const union AffineAnimCmd gBarrageBallAffineAnimCmds1[] =
 {
     AFFINEANIMCMD_FRAME(0x0, 0x0, -4, 24),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd gSpriteAffineAnim_840298C[] =
+const union AffineAnimCmd gBarrageBallAffineAnimCmds2[] =
 {
     AFFINEANIMCMD_FRAME(0x100, 0x100, -64, 0),
     AFFINEANIMCMD_FRAME(0x0, 0x0, 4, 24),
     AFFINEANIMCMD_END,
 };
 
-const union AffineAnimCmd *const gSpriteAffineAnimTable_84029A4[] =
+const union AffineAnimCmd *const gBarrageBallAffineAnimTable[] =
 {
-    gSpriteAffineAnim_840297C,
-    gSpriteAffineAnim_840298C,
+    gBarrageBallAffineAnimCmds1,
+    gBarrageBallAffineAnimCmds2,
 };
 
-const struct SpriteTemplate gSpriteTemplate_84029AC =
+const struct SpriteTemplate gBarrageBallSpriteTemplate =
 {
     .tileTag = ANIM_TAG_RED_BALL,
     .paletteTag = ANIM_TAG_RED_BALL,
     .oam = &gOamData_AffineNormal_ObjNormal_32x32,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
-    .affineAnims = gSpriteAffineAnimTable_84029A4,
+    .affineAnims = gBarrageBallAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
@@ -1048,7 +1048,7 @@ const struct SpriteTemplate gHelpingHandClapSpriteTemplate =
     .callback = AnimHelpingHandClap,
 };
 
-const struct SpriteTemplate gBattleAnimSpriteTemplate_8402A24 =
+const struct SpriteTemplate gForesightMagnifyingGlassSpriteTemplate =
 {
     .tileTag = ANIM_TAG_MAGNIFYING_GLASS,
     .paletteTag = ANIM_TAG_MAGNIFYING_GLASS,
@@ -1070,7 +1070,7 @@ const struct SpriteTemplate gMeteorMashStarSpriteTemplate =
     .callback = AnimMeteorMashStar,
 };
 
-const struct SpriteTemplate gSpriteTemplate_8402A54 =
+static const struct SpriteTemplate sUnusedStarBurstSpriteTemplate =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
     .paletteTag = ANIM_TAG_GOLD_STARS,
@@ -1092,7 +1092,7 @@ const struct SpriteTemplate gBlockXSpriteTemplate =
     .callback = AnimBlockX,
 };
 
-const struct SpriteTemplate gSpriteTemplate_8402A84 =
+static const struct SpriteTemplate sUnusedItemBagStealSpriteTemplate =
 {
     .tileTag = ANIM_TAG_ITEM_BAG,
     .paletteTag = ANIM_TAG_ITEM_BAG,
@@ -3976,7 +3976,7 @@ static void AnimTask_GlareEyeDots_Step(u8 taskId)
 
             for (i = 0; i < 2; i++)
             {
-                u8 spriteId = CreateSprite(&gSpriteTemplate_840294C, x, y, 35);
+                u8 spriteId = CreateSprite(&gGlareEyeDotSpriteTemplate, x, y, 35);
                 if (spriteId != MAX_SPRITES)
                 {
                     if (task->data[7] == 0)
@@ -4074,7 +4074,7 @@ void AnimTask_BarrageBall(u8 taskId)
     task->data[12] = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
     task->data[13] = GetBattlerSpriteCoord(gBattleAnimTarget, 2);
     task->data[14] = GetBattlerSpriteCoord(gBattleAnimTarget, 3) + GetBattlerSpriteCoordAttr(gBattleAnimTarget, 0) / 4;
-    task->data[15] = CreateSprite(&gSpriteTemplate_84029AC, task->data[11], task->data[12], GetBattlerSpriteSubpriority(gBattleAnimTarget) - 5);
+    task->data[15] = CreateSprite(&gBarrageBallSpriteTemplate, task->data[11], task->data[12], GetBattlerSpriteSubpriority(gBattleAnimTarget) - 5);
     if (task->data[15] != MAX_SPRITES)
     {
         gSprites[task->data[15]].data[0] = 16;
