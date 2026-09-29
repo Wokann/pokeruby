@@ -20,9 +20,9 @@ static void InitTrainerApproachTask(struct ObjectEvent *, u8);
 static bool8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 approachDistance, u8 direction);
 static void Task_RunTrainerSeeFuncList(u8 taskId);
 
-const u8 sEmotion_ExclamationMarkGfx[] = INCBIN_U8("graphics/unknown_sprites/839B4E0/0.4bpp");
-const u8 sEmotion_QuestionMarkGfx[] = INCBIN_U8("graphics/unknown_sprites/839B4E0/1.4bpp");
-const u8 sEmotion_HeartGfx[] = INCBIN_U8("graphics/unknown_sprites/839B408.4bpp");
+const u8 sEmotion_ExclamationMarkGfx[] = INCBIN_U8("graphics/field_effects/pics/emotion_exclamation.4bpp");
+const u8 sEmotion_QuestionMarkGfx[] = INCBIN_U8("graphics/field_effects/pics/emotion_question.4bpp");
+const u8 sEmotion_HeartGfx[] = INCBIN_U8("graphics/field_effects/pics/emotion_heart.4bpp");
 
 static u8 GetTrainerApproachDistanceSouth(struct ObjectEvent *trainerObj, s16 range, s16 x, s16 y);
 static u8 GetTrainerApproachDistanceNorth(struct ObjectEvent *trainerObj, s16 range, s16 x, s16 y);
