@@ -153,7 +153,6 @@ struct SearchMenuItem
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u8 gReservedSpritePaletteCount;
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-extern u8 gDexCryScreenState;
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 extern const struct MonCoords gTrainerFrontPicCoords[];
 extern const struct PokedexEntry gPokedexEntries[];
@@ -3245,14 +3244,14 @@ static void Task_InitCryScreenMultistep(u8 taskId)
         break;
     case 7:
         {
-            struct CryScreenWindow sp10;
+            struct CryScreenWindow cryMeter;
 
-            sp10.charBase = 0x3000;
-            sp10.screenBase = 0xE;
-            sp10.paletteNo = 9;
-            sp10.xPos = 0x12;
-            sp10.yPos = 3;
-            if (ShowPokedexCryScreen(&sp10, 1) != 0)
+            cryMeter.charBase = 0x3000;
+            cryMeter.screenBase = 0xE;
+            cryMeter.paletteNo = 9;
+            cryMeter.xPos = 0x12;
+            cryMeter.yPos = 3;
+            if (LoadCryMeter(&cryMeter, 1) != 0)
                 gMain.state++;
         }
         break;
@@ -3339,7 +3338,7 @@ static void Task_SwitchScreensFromCryScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        DestroyCryMeterNeedleSprite();
+        FreeCryScreen();
         switch (sPokedexView->screenSwitchState)
         {
         default:

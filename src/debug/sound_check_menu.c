@@ -62,7 +62,6 @@ static EWRAM_DATA u8 sDriverTest_Reverse = 0;
 static EWRAM_DATA u8 sDriverTest_Stereo = 0;
 
 u16 gSoundTestCryNum;
-extern u8 gDexCryScreenState;
 
 struct MusicPlayerInfo *sMPlayInfo_Cry;
 
@@ -1241,7 +1240,7 @@ void Task_InitCryTest(u8 taskId)
     unused = 0;
     gDexCryScreenState = 0;
 
-    while (ShowPokedexCryScreen(&cryScreenWindow, 2) == FALSE)
+    while (LoadCryMeter(&cryScreenWindow, 2) == FALSE)
         ;
 
     Menu_DrawStdWindowFrame(0, 16, 5, 19);
@@ -1287,7 +1286,7 @@ void Task_ProcessCryTestInput(u8 taskId)
         REG_WIN0V = WIN_RANGE(1, 31);
         Menu_EraseWindowRect(0, 0, 29, 19);
         gTasks[taskId].func = Task_InitSoundCheckMenu;
-        DestroyCryMeterNeedleSprite();
+        FreeCryScreen();
     }
 }
 

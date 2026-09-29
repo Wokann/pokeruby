@@ -10,10 +10,12 @@ struct CryScreenWindow
     u8 yPos;
 };
 
-bool8 ShowPokedexCryScreen(struct CryScreenWindow * cry, u8 arg1);
-bool8 LoadCryWaveformWindow(struct CryScreenWindow * cry, u8 bgId);
+extern u8 gDexCryScreenState;
+
+bool8 LoadCryMeter(struct CryScreenWindow *window, u8 unused);
+bool8 LoadCryWaveformWindow(struct CryScreenWindow *window, u8 bgId);
 void UpdateCryWaveformWindow(u8 bgId);
 void CryScreenPlayButton(u16 species);
-void DestroyCryMeterNeedleSprite();
+void FreeCryScreen(void);
 
 #endif // GUARD_POKEDEX_CRY_SCREEN_H

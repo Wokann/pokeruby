@@ -107,7 +107,7 @@ extern u8 gSharedMem[];
 // pokedex_cry_screen.c
 #define sCryWaveformWindowTiledata      (&gSharedMem[0])
 #define ePokedexCryScreen               (*(struct PokedexCryScreen *)(gSharedMem + 0x1C000))
-#define ePokedexCryScreen2              (*(struct PokedexCryMeterNeedle *)(gSharedMem + 0x1C800))
+#define ePokedexCryMeterNeedle          (*(struct PokedexCryMeterNeedle *)(gSharedMem + 0x1C800))
 
 #define ewram_2010000                   (*(struct TradeEwramStruct *)(gSharedMem + 0x10000))
 #define eBerryBlenderGfxBuffer          (&gSharedMem[0x10000])
