@@ -1457,7 +1457,7 @@ const u8 *const sGlassWorkshopMenuItems[] = {
     OtherText_BlackFlute,
     OtherText_PrettyChair,
     OtherText_PrettyDesk,
-    gOtherText_CancelNoTerminator
+    gText_Cancel
 };
 
 void Task_GlassWorkshopMenu(u8);

@@ -154,7 +154,7 @@ const struct MenuAction2 sPokeblockMenuActions[] =
 {
     {OtherText_Use,     PokeblockAction_UseOnField},
     {OtherText_Toss,    PokeblockAction_Toss},
-    {gOtherText_CancelNoTerminator, PokeblockAction_Cancel},
+    {gText_Cancel, PokeblockAction_Cancel},
     {OtherText_Use,     PokeblockAction_UseInBattle},
     {OtherText_Use,     PokeblockAction_UseOnPokeblockFeeder},
 };

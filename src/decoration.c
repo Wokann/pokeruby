@@ -1445,14 +1445,14 @@ static const struct MenuAction2 sDecorationMainMenuActions[] = {
     {SecretBaseText_Decorate, DecorationMenuAction_Decorate},
     {SecretBaseText_PutAway, DecorationMenuAction_PutAway},
     {SecretBaseText_Toss, DecorationMenuAction_Toss},
-    {gOtherText_Exit, DecorationMenuAction_Cancel}
+    {gText_Exit, DecorationMenuAction_Cancel}
 };
 
 static const u8 *const sSecretBasePCMenuItemDescriptions[] = {
     SecretBaseText_PutOutDecor,
     SecretBaseText_StoreChosenDecor,
     SecretBaseText_ThrowAwayDecor,
-    gMenuText_GoBackToPrev
+    gText_GoBackPrevMenu
 };
 
 static const struct YesNoFuncTable sDecorationItemsMenuActions[] = {
@@ -1614,7 +1614,7 @@ void PrintDecorationCategoryMenuItems(u8 taskId) // PrintDecorationCategorySelec
             PrintDecorationCategoryMenuItem(category, 1, 2 * category + 1, 255); // Unselectable
         }
     }
-    Menu_PrintText(gOtherText_Exit, 1, 17);
+    Menu_PrintText(gText_Exit, 1, 17);
 }
 
 void InitDecorationCategoriesWindow(u8 taskId)
@@ -1841,7 +1841,7 @@ void UpdateDecorationItemsDisplay(u8 taskId, u8 unused)
         }
         if (i == sNumOwnedDecorationsInCurCategory)
         {
-            Menu_PrintTextWithNewlineIndent(gOtherText_Exit, 0x08, 8 * row, 0x68, 1);
+            Menu_PrintTextWithNewlineIndent(gText_Exit, 0x08, 8 * row, 0x68, 1);
             break;
         }
         if (gCurDecorationItems[i])

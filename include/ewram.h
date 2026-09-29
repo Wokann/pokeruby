@@ -83,7 +83,8 @@ extern u8 gSharedMem[];
 #define gPartyMenu                      (*(struct PartyMenu *)(gSharedMem + 0x1C000))
 
 // player_pc.c, party_menu.c
-#define eMailboxInfo                    (*(struct MailboxStruct *)(gSharedMem + 0x1FE00))
+// Ruby's legacy menu stores this four-byte mailbox paging subset in fixed EWRAM.
+#define gPlayerPCItemPageInfo           (*(struct PlayerPCItemPageStruct *)(gSharedMem + 0x1FE00))
 
 // item_menu.c
 #define ewramBerryPic                   (gSharedMem + 0x0)

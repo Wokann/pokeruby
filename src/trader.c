@@ -115,7 +115,7 @@ void CreateAvailableDecorationsMenu(u8 taskId)
         }
     }
 
-    Menu_PrintText(gOtherText_CancelNoTerminator, 1, numDecorations * 2 + 2);
+    Menu_PrintText(gText_Cancel, 1, numDecorations * 2 + 2);
     InitMenu(0, 1, 2, numChoices, 0, 11);
     gTasks[taskId].data[1] = numDecorations;
 }

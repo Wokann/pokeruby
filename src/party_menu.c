@@ -3049,8 +3049,8 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func)
     sub_806E8D0(taskId, 0, func);
     currentItem = GetMonData(gPartyMenu.pokemon, MON_DATA_HELD_ITEM);
     gUnknown_0202E8F4 = 0;
-    var1 = eMailboxInfo.cursorPos + 6;
-    mail = &gSaveBlock1.mail[var1 + eMailboxInfo.itemsAbove];
+    var1 = gPlayerPCItemPageInfo.cursorPos + 6;
+    mail = &gSaveBlock1.mail[var1 + gPlayerPCItemPageInfo.itemsAbove];
 
     if (currentItem != 0)
     {

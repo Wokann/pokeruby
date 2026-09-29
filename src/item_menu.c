@@ -180,10 +180,10 @@ static const struct MenuAction2 sItemMenuActions[] =
 {
     {OtherText_Use,                   HandlePopupMenuAction_UseOnField},
     {OtherText_Toss,                  HandlePopupMenuAction_Toss},
-    {gOtherText_CancelNoTerminator,   ItemMenu_Cancel},
+    {gText_Cancel,   ItemMenu_Cancel},
     {OtherText_Register,              HandlePopupMenuAction_Register},
     {OtherText_Use,                   HandlePopupMenuAction_UseInBattle},
-    {gOtherText_CancelNoTerminator,   ItemMenu_CancelBattle},
+    {gText_Cancel,   ItemMenu_CancelBattle},
     {OtherText_Give2,                 HandlePopupMenuAction_Give},
     {OtherText_CheckTag,              HandlePopupMenuAction_CheckTag},
     {gOtherText_CancelWithTerminator, NULL},
@@ -2120,7 +2120,7 @@ static void DisplayNoPokemonForItemUse(u8 taskId)
 {
     DestroyBagListCursor();
     ClearBagItemDescription();
-    DisplayCannotUseItemMessage(taskId, gOtherText_NoPokemon, CleanUpItemMenuMessage, 1);
+    DisplayCannotUseItemMessage(taskId, gText_NoPokemon, CleanUpItemMenuMessage, 1);
 }
 
 static void Task_ReturnToBagAfterItemMessage(u8 taskId)
@@ -2660,7 +2660,7 @@ void CB2_GoToItemDepositMenu(void)
 
 static void OnBagClose_ItemPC(u8 taskId)
 {
-    gFieldCallback = ItemStorage_ReshowAfterDeposit;
+    gFieldCallback = ItemStorage_ReshowAfterBagMenu;
     gTasks[taskId].data[8] = (u32)CB2_ReturnToField >> 16;
     gTasks[taskId].data[9] = (u32)CB2_ReturnToField;
     Task_StartBagMenuFadeOut(taskId);
@@ -3046,19 +3046,19 @@ static void UpdateBagItemDescription(void)
             ItemListMenu_ChangeDescription(gCurrentBagPocketItemSlots[index].itemId, printer->textLine);
             break;
         case 1:
-            PrintBagDescriptionLine(gOtherText_SwitchWhichItem, printer->textLine);
+            PrintBagDescriptionLine(gText_SwitchWhichItem, printer->textLine);
             break;
         case 2:
             PrintBagDescriptionLine(gOtherText_WhatWillYouDo2, printer->textLine);
             break;
         case 3:
-            PrintBagDescriptionLine(gOtherText_HowManyToToss, printer->textLine);
+            PrintBagDescriptionLine(gText_TossHowManyItems, printer->textLine);
             break;
         case 4:
-            PrintBagDescriptionLine(gOtherText_ThrewAwayItem, printer->textLine);
+            PrintBagDescriptionLine(gText_ThrewAwayVar2Var1s, printer->textLine);
             break;
         case 5:
-            PrintBagDescriptionLine(gOtherText_OkayToThrowAwayPrompt, printer->textLine);
+            PrintBagDescriptionLine(gText_ConfirmTossItems, printer->textLine);
             break;
         case 6:
             PrintBagDescriptionLine(gOtherText_HowManyToDeposit, printer->textLine);

@@ -90,7 +90,7 @@ enum
 static const struct MenuAction2 sBattlePartyMenuActions[] =
 {
     {OtherText_Summary,             Task_BattlePartyMenuSummary},
-    {gOtherText_CancelNoTerminator, Task_BattlePartyMenuCancel},
+    {gText_Cancel, Task_BattlePartyMenuCancel},
     {OtherText_Shift,               Task_BattlePartyMenuShift},
     {OtherText_SendOut,             Task_BattlePartyMenuShift},
 };
