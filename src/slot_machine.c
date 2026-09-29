@@ -4378,7 +4378,7 @@ static const struct SpritePalette sSlotMachineSpritePalettes[];
 static void LoadSlotMachineGfx(void)
 {
     LoadReelBackground();
-    LZDecompressWram(gSlotMachineReelTimeLights_Gfx, eSlotMachineGfxBuffer);
+    LZDecompressWram(gSlotMachineDigitalDisplay_Gfx, eSlotMachineGfxBuffer);
     LZDecompressWram(sReelTimeGfx, eSlotMachineReelTimeGfxBuffer);
     LoadSpriteSheets(sSlotMachineSpriteSheets);
     LoadSpritePalettes(sSlotMachineSpritePalettes);
@@ -4404,7 +4404,7 @@ static void LoadReelBackground(void)
 
 static void LoadMenuGfx(void)
 {
-    LZDecompressWram(gSlotMachine_Gfx, eSlotMachineGfxBuffer);
+    LZDecompressWram(gSlotMachineMenu_Gfx, eSlotMachineGfxBuffer);
 
     DmaCopyLarge16(3, eSlotMachineGfxBuffer, BG_VRAM, SLOTMACHINE_GFX_TILES * 32, 0x1000);
 
@@ -4971,42 +4971,42 @@ static const struct SpriteFrameImage sImageTable_BrokenReelTimeMachine[] = {
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeNumbers[] = {
-    {gSpriteImage_8E988E8, 0x80},
-    {gSpriteImage_8E98968, 0x80},
-    {gSpriteImage_8E989E8, 0x80},
-    {gSpriteImage_8E98A68, 0x80},
-    {gSpriteImage_8E98AE8, 0x80},
-    {gSpriteImage_8E98B68, 0x80}
+    {gSlotMachineReelTimeNumber0, 0x80},
+    {gSlotMachineReelTimeNumber1, 0x80},
+    {gSlotMachineReelTimeNumber2, 0x80},
+    {gSlotMachineReelTimeNumber3, 0x80},
+    {gSlotMachineReelTimeNumber4, 0x80},
+    {gSlotMachineReelTimeNumber5, 0x80}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeShadow[] = {
-    {gSpriteImage_8E991E8, 0x200}
+    {gSlotMachineReelTimeShadow, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeNumberGap[] = {
-    {gSpriteImage_8E99808, 0x40}
+    {gSlotMachineReelTimeNumberGap_Gfx, 0x40}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeBolt[] = {
-    {gSpriteImage_8E98BE8, 0x100},
-    {gSpriteImage_8E98CE8, 0x100}
+    {gSlotMachineReelTimeBolt0, 0x100},
+    {gSlotMachineReelTimeBolt1, 0x100}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimePikachuAura[] = {
-    {gSpriteImage_8E993E8, 0x400}
+    {gSlotMachineReelTimePikaAura, 0x400}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeExplosion[] = {
-    {gSpriteImage_8E98DE8, 0x200},
-    {gSpriteImage_8E98FE8, 0x200}
+    {gSlotMachineReelTimeExplosion0, 0x200},
+    {gSlotMachineReelTimeExplosion1, 0x200}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeDuck[] = {
-    {gSpriteImage_8E98848, 0x20}
+    {gSlotMachineReelTimeDuck, 0x20}
 };
 
 static const struct SpriteFrameImage sImageTable_ReelTimeSmoke[] = {
-    {gSpriteImage_8E98868, 0x80}
+    {gSlotMachineReelTimeSmoke, 0x80}
 };
 
 static const struct SpriteFrameImage sImageTable_DigitalDisplay_Reel[] = {
@@ -5074,7 +5074,7 @@ static const struct SpriteFrameImage sImageTable_DigitalDisplay_DPad[] = {
 };
 
 static const struct SpriteFrameImage sImageTable_PikaPowerBolt[] = {
-    {gSpriteImage_8E98828, 0x20}
+    {gSlotMachinePikaPowerBolt, 0x20}
 };
 
 static const union AnimCmd sAnim_SingleFrame[] = {
@@ -5832,10 +5832,11 @@ static const struct SpriteSheet sReelBackgroundSpriteSheet = {
 
 static const u8 *const sReelBackground_Tilemap = gSlotMachineReelBackground_Tilemap;
 
+// Ruby and Sapphire use distinct match-line palette data.
 #ifdef SAPPHIRE
-static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDD40.gbapal");
+static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/slot_machine/lit_match_lines_sapphire.gbapal");
 #elif defined(RUBY)
-static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDCE8.gbapal");
+static const u16 sLitMatchLines_Pal[] = INCBIN_U16("graphics/slot_machine/lit_match_lines_ruby.gbapal");
 #endif // RS
 
 static const u16 *const sLitMatchLinePalTable[] = {
@@ -5865,14 +5866,15 @@ static const u8 sBetToMatchLineIds[][2] = {
 };
 static const u8 sMatchLinesPerBet[] = {1, 2, 2};
 
+// Ruby and Sapphire use distinct flashing-light palette data.
 #ifdef SAPPHIRE
-static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDD96.gbapal");
-static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDDB6.gbapal");
-static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/unknown/sapphire_83EDDD6.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_inside_sapphire.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_middle_sapphire.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_outside_sapphire.gbapal");
 #elif defined (RUBY)
-static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD3E.gbapal");
-static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD5E.gbapal");
-static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/unknown/ruby_83EDD7E.gbapal");
+static const u16 sFlashingLightsInside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_inside_ruby.gbapal");
+static const u16 sFlashingLightsMiddle_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_middle_ruby.gbapal");
+static const u16 sFlashingLightsOutside_Pal[] = INCBIN_U16("graphics/slot_machine/flashing_lights_outside_ruby.gbapal");
 #endif // RS
 
 static const u16 *const sFlashingLightsPalTable[] = {
@@ -5883,36 +5885,36 @@ static const u16 *const sFlashingLightsPalTable[] = {
 
 static const u16 *const sSlotMachineMenu_Pal = gSlotMachineMenu_Pal + 16;
 
-static const u16 sPokeballShining0_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDB0.gbapal");
-static const u16 sPokeballShining1_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDD0.gbapal");
-static const u16 sPokeballShining2_Pal[] = INCBIN_U16("graphics/slot_machine/83EDDF0.gbapal");
+static const u16 sPokeballShining0_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_0.gbapal");
+static const u16 sPokeballShining1_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_1.gbapal");
+static const u16 sPokeballShining2_Pal[] = INCBIN_U16("graphics/slot_machine/pokeball_shining_2.gbapal");
 
 static const u16 *const sPokeballShiningPalTable[] = {
     sPokeballShining0_Pal,
     sPokeballShining1_Pal,
     sPokeballShining2_Pal,
-    gSlotMachineSpritePalette6
+    gSlotMachineDigitalDisplay_Pal
 };
 
-static const u16 *const sDigitalDisplay_Pal = gSlotMachineSpritePalette6;
+static const u16 *const sDigitalDisplay_Pal = gSlotMachineDigitalDisplay_Pal;
 
-static const u16 sUnkPalette[] = INCBIN_U16("graphics/slot_machine/83EDE24_pal.bin");
+static const u16 sUnkPalette[] = INCBIN_U16("graphics/slot_machine/unknown_palette.bin");
 
 static const struct SpritePalette sSlotMachineSpritePalettes[] = {
-    {gSlotMachineSpritePalette0, PALTAG_REEL},
-    {gSlotMachineSpritePalette1, PALTAG_REEL_TIME_PIKACHU},
-    {gSlotMachineSpritePalette2, PALTAG_REEL_TIME_MISC},
-    {gSlotMachineSpritePalette3, PALTAG_REEL_TIME_MACHINE},
-    {gSlotMachineSpritePalette4, PALTAG_MISC},
-    {gSlotMachineSpritePalette5, PALTAG_EXPLOSION},
-    {gSlotMachineSpritePalette6, PALTAG_DIG_DISPLAY},
-    {gSlotMachineSpritePalette4, PALTAG_PIKA_AURA},
+    {gSlotMachineReelSymbols_Pal, PALTAG_REEL},
+    {gSlotMachineReelTimePikachu_Pal, PALTAG_REEL_TIME_PIKACHU},
+    {gSlotMachineReelTimeMisc_Pal, PALTAG_REEL_TIME_MISC},
+    {gSlotMachineReelTimeMachine_Pal, PALTAG_REEL_TIME_MACHINE},
+    {gSlotMachineMisc_Pal, PALTAG_MISC},
+    {gSlotMachineReelTimeExplosion_Pal, PALTAG_EXPLOSION},
+    {gSlotMachineDigitalDisplay_Pal, PALTAG_DIG_DISPLAY},
+    {gSlotMachineMisc_Pal, PALTAG_PIKA_AURA},
     {}
 };
 
-static const u8 sReelTimeGfx[] = INCBIN_U8("graphics/slot_machine/reel_time.4bpp.lz");
+static const u8 sReelTimeGfx[] = INCBIN_U8("graphics/slot_machine/reel_time_gfx.4bpp.lz");
 
-static const u16 sReelTimeWindow_Tilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window_map.bin");
+static const u16 sReelTimeWindow_Tilemap[] = INCBIN_U16("graphics/slot_machine/reel_time_window.bin");
 
 #if DEBUG
 

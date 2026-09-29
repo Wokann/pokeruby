@@ -1106,7 +1106,7 @@ const u8 gWallClock_Gfx[] = INCBIN_U8("graphics/misc/clock.4bpp.lz");
 const u16 gWallClockMale_Pal[] = INCBIN_U16("graphics/misc/clock1.gbapal"); // boy
 const u16 gWallClockFemale_Pal[] = INCBIN_U16("graphics/misc/clock2.gbapal"); // girl
 
-const u8 gSlotMachine_Gfx[] = INCBIN_U8("graphics/slot_machine/slots.4bpp.lz");
+const u8 gSlotMachineMenu_Gfx[] = INCBIN_U8("graphics/slot_machine/menu.4bpp.lz");
 const u8 gBattleInterfaceStatusIcons_DynPal[] = INCBIN_U8("graphics/battle_interface/status.gbapal");
 const u8 gUnusedArrowGfx[] = INCBIN_U8("graphics/unused/arrow.4bpp"); // unused
 const u8 gBerryBlenderMarubatsuTiles[] = INCBIN_U8("graphics/berry_blender/marubatsu.4bpp");
@@ -1157,13 +1157,13 @@ const u8 gWallClockStart_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_edit.bin
 const u8 gWallClockView_Tilemap[] = INCBIN_U8("graphics/misc/wallclock_view.bin.lz");
 
 #ifdef SAPPHIRE
-const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/sapphire.gbapal");
+const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/menu_sapphire.gbapal");
 #else
-const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/ruby.gbapal");
+const u8 gSlotMachineMenu_Pal[] = INCBIN_U8("graphics/slot_machine/menu_ruby.gbapal");
 #endif // SAPPHIRE
 
-const u8 gSlotMachineMenu_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E95AB8.bin");
-const u8 gSlotMachineInfoBox_Tilemap[] = INCBIN_U8("graphics/slot_machine/slots_layout.bin");
+const u8 gSlotMachineMenu_Tilemap[] = INCBIN_U8("graphics/slot_machine/menu.bin");
+const u8 gSlotMachineInfoBox_Tilemap[] = INCBIN_U8("graphics/slot_machine/info_box.bin");
 const u8 gContestResultsTitleWords_Tilemap[] = INCBIN_U8("graphics/contest/results_screen/title_words.bin");
 const u16 gMonMarkingsMenu_Pal[] = INCBIN_U16("graphics/interface/mon_markings_menu.gbapal");
 
@@ -1184,24 +1184,24 @@ const u8 gPokedexSearchMenu_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E96D
 
 const u8 gBagScreenLabels_Tilemap[] = INCBIN_U8("graphics/interface/bag_screen_labels.bin");
 
-const u16 gSlotMachineSpritePalette0[] = INCBIN_U16("graphics/slot_machine/spr0.gbapal");
-const u16 gSlotMachineSpritePalette1[] = INCBIN_U16("graphics/slot_machine/spr1.gbapal");
+const u16 gSlotMachineReelSymbols_Pal[] = INCBIN_U16("graphics/slot_machine/reel_symbols.gbapal");
+const u16 gSlotMachineReelTimePikachu_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_pikachu.gbapal");
 
 #ifdef SAPPHIRE
-const u16 gSlotMachineSpritePalette2[] = INCBIN_U16("graphics/slot_machine/spr2_sapphire.gbapal");
+const u16 gSlotMachineReelTimeMisc_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_misc_sapphire.gbapal");
 #else
-const u16 gSlotMachineSpritePalette2[] = INCBIN_U16("graphics/slot_machine/spr2_ruby.gbapal");
+const u16 gSlotMachineReelTimeMisc_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_misc_ruby.gbapal");
 #endif // SAPPHIRE
 
 #ifdef SAPPHIRE
-const u16 gSlotMachineSpritePalette3[] = INCBIN_U16("graphics/slot_machine/spr3_sapphire.gbapal");
+const u16 gSlotMachineReelTimeMachine_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_machine_sapphire.gbapal");
 #else
-const u16 gSlotMachineSpritePalette3[] = INCBIN_U16("graphics/slot_machine/spr3_ruby.gbapal");
+const u16 gSlotMachineReelTimeMachine_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_machine_ruby.gbapal");
 #endif // SAPPHIRE
 
-const u16 gSlotMachineSpritePalette4[] = INCBIN_U16("graphics/slot_machine/spr4.gbapal");
-const u16 gSlotMachineSpritePalette5[] = INCBIN_U16("graphics/slot_machine/spr5.gbapal");
-const u16 gSlotMachineSpritePalette6[] = INCBIN_U16("graphics/slot_machine/spr6.gbapal");
+const u16 gSlotMachineMisc_Pal[] = INCBIN_U16("graphics/slot_machine/misc.gbapal");
+const u16 gSlotMachineReelTimeExplosion_Pal[] = INCBIN_U16("graphics/slot_machine/reel_time_explosion.gbapal");
+const u16 gSlotMachineDigitalDisplay_Pal[] = INCBIN_U16("graphics/slot_machine/digital_display.gbapal");
 
 const u8 gSlotMachineReelSymbol1Tiles[] = INCBIN_U8("graphics/slot_machine/reel_symbols/1.4bpp");
 const u8 gSlotMachineReelSymbol2Tiles[] = INCBIN_U8("graphics/slot_machine/reel_symbols/2.4bpp");
@@ -1222,25 +1222,25 @@ const u8 gSlotMachineNumber7Tiles[] = INCBIN_U8("graphics/slot_machine/numbers/7
 const u8 gSlotMachineNumber8Tiles[] = INCBIN_U8("graphics/slot_machine/numbers/8.4bpp");
 const u8 gSlotMachineNumber9Tiles[] = INCBIN_U8("graphics/slot_machine/numbers/9.4bpp");
 
-const u8 gSpriteImage_8E98828[] = INCBIN_U8("graphics/slot_machine/bolt.4bpp");
-const u8 gSpriteImage_8E98848[] = INCBIN_U8("graphics/slot_machine/duck.4bpp");
-const u8 gSpriteImage_8E98868[] = INCBIN_U8("graphics/slot_machine/smoke.4bpp");
-const u8 gSpriteImage_8E988E8[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/0.4bpp");
-const u8 gSpriteImage_8E98968[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/1.4bpp");
-const u8 gSpriteImage_8E989E8[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/2.4bpp");
-const u8 gSpriteImage_8E98A68[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/3.4bpp");
-const u8 gSpriteImage_8E98AE8[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/4.4bpp");
-const u8 gSpriteImage_8E98B68[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/5.4bpp");
-const u8 gSpriteImage_8E98BE8[] = INCBIN_U8("graphics/slot_machine/large_bolt/0.4bpp");
-const u8 gSpriteImage_8E98CE8[] = INCBIN_U8("graphics/slot_machine/large_bolt/1.4bpp");
-const u8 gSpriteImage_8E98DE8[] = INCBIN_U8("graphics/slot_machine/reel_time_explosion/0.4bpp");
-const u8 gSpriteImage_8E98FE8[] = INCBIN_U8("graphics/slot_machine/reel_time_explosion/1.4bpp");
-const u8 gSpriteImage_8E991E8[] = INCBIN_U8("graphics/slot_machine/shadow.4bpp");
-const u8 gSpriteImage_8E993E8[] = INCBIN_U8("graphics/slot_machine/pika_aura.4bpp");
+const u8 gSlotMachinePikaPowerBolt[] = INCBIN_U8("graphics/slot_machine/bolt.4bpp");
+const u8 gSlotMachineReelTimeDuck[] = INCBIN_U8("graphics/slot_machine/duck.4bpp");
+const u8 gSlotMachineReelTimeSmoke[] = INCBIN_U8("graphics/slot_machine/smoke.4bpp");
+const u8 gSlotMachineReelTimeNumber0[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/0.4bpp");
+const u8 gSlotMachineReelTimeNumber1[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/1.4bpp");
+const u8 gSlotMachineReelTimeNumber2[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/2.4bpp");
+const u8 gSlotMachineReelTimeNumber3[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/3.4bpp");
+const u8 gSlotMachineReelTimeNumber4[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/4.4bpp");
+const u8 gSlotMachineReelTimeNumber5[] = INCBIN_U8("graphics/slot_machine/reel_time_numbers/5.4bpp");
+const u8 gSlotMachineReelTimeBolt0[] = INCBIN_U8("graphics/slot_machine/large_bolt/0.4bpp");
+const u8 gSlotMachineReelTimeBolt1[] = INCBIN_U8("graphics/slot_machine/large_bolt/1.4bpp");
+const u8 gSlotMachineReelTimeExplosion0[] = INCBIN_U8("graphics/slot_machine/reel_time_explosion/0.4bpp");
+const u8 gSlotMachineReelTimeExplosion1[] = INCBIN_U8("graphics/slot_machine/reel_time_explosion/1.4bpp");
+const u8 gSlotMachineReelTimeShadow[] = INCBIN_U8("graphics/slot_machine/shadow.4bpp");
+const u8 gSlotMachineReelTimePikaAura[] = INCBIN_U8("graphics/slot_machine/pika_aura.4bpp");
 
-const u8 gSlotMachineReelBackground_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E997E8.gbapal");
-const u8 gSpriteImage_8E99808[] = INCBIN_U8("graphics/unknown_sprites/8E99808.4bpp");
-const u8 gSlotMachineReelTimeLights_Gfx[] = INCBIN_U8("graphics/slot_machine/reel_time_lights.4bpp.lz");
+const u8 gSlotMachineReelBackground_Tilemap[] = INCBIN_U8("graphics/slot_machine/reel_background.gbapal");
+const u8 gSlotMachineReelTimeNumberGap_Gfx[] = INCBIN_U8("graphics/slot_machine/reel_time_number_gap.4bpp");
+const u8 gSlotMachineDigitalDisplay_Gfx[] = INCBIN_U8("graphics/slot_machine/digital_display.4bpp.lz");
 
 const u8 gPokenavHoennMap_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E99FB0.bin.lz");
 const u8 gPokenavBottomToolbarTilemap[] = INCBIN_U8("graphics/pokenav/bottom_toolbar.bin");
