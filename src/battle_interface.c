@@ -535,7 +535,7 @@ void unref_sub_80438E0(s16 a, s16 b, u16 *c)
     sub_8043740(a, c + 5, 1);
 }
 
-u8 battle_make_oam_normal_battle(u8 a)
+u8 CreateBattlerHealthboxSprites(u8 a)
 {
     int sp0 = 0;
     u8 spriteId1;
@@ -616,7 +616,7 @@ u8 battle_make_oam_normal_battle(u8 a)
     return spriteId1;
 }
 
-u8 battle_make_oam_safari_battle(void)
+u8 CreateSafariPlayerHealthboxSprites(void)
 {
     u8 spriteId1 = CreateSprite(&gSpriteTemplate_820A54C, 240, 160, 1);
     u8 spriteId2 = CreateSpriteAtEnd(&gSpriteTemplate_820A54C, 240, 160, 1);
@@ -705,7 +705,7 @@ void unref_sub_8043E70(u8 a)
     DestroySprite(&gSprites[a]);
 }
 
-void nullsub_11()
+void DummyBattleInterfaceFunc(u8 healthboxSpriteId, bool8 isDoubleBattleBattlerOnly)
 {
 }
 
@@ -728,7 +728,7 @@ void UpdateOamPriorityInAllHealthboxes(u8 priority)
     }
 }
 
-void sub_8043F44(u8 a)
+void InitBattlerHealthboxCoords(u8 a)
 {
     s16 x = 0;
     s16 y = 0;

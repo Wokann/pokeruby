@@ -90,7 +90,7 @@ extern void HandleIntroSlide();
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void StoreSpriteCallbackInData6();
-extern void BattleLoadPlayerMonSprite();
+extern void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8);
 extern bool8 IsDoubleBattle(void);
 extern void sub_802D500(void);
 extern bool8 IsBattlerSpritePresent(u8);
@@ -2308,7 +2308,7 @@ void PlayerHandlecmd3(void)
 
 void PlayerHandleLoadPokeSprite(void)
 {
-    BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     gSprites[gBattlerSpriteIds[gActiveBattler]].oam.paletteNum = gActiveBattler;
     gBattlerControllerFuncs[gActiveBattler] = bx_0802E404;
 }
@@ -2317,7 +2317,7 @@ void PlayerHandleSendOutPoke(void)
 {
     ClearTemporarySpeciesSpriteData(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
     gBattlerPartyIndexes[gActiveBattler] = gBattleBufferA[gActiveBattler][1];
-    BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     gActionSelectionCursor[gActiveBattler] = 0;
     gMoveSelectionCursor[gActiveBattler] = 0;
     sub_802F934(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
@@ -2912,7 +2912,7 @@ void SpriteCB_FreePlayerSpriteLoadMonSprite(struct Sprite *sprite)
     FreeSpriteOamMatrix(sprite);
     FreeSpritePaletteByTag(GetSpritePaletteTagByPaletteNum(sprite->oam.paletteNum));
     DestroySprite(sprite);
-    BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[r4]], r4);
+    BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[r4]], r4);
     StartSpriteAnim(&gSprites[gBattlerSpriteIds[r4]], 0);
 }
 
@@ -2938,7 +2938,7 @@ void task05_08033660(u8 taskId)
             sub_802F934(gActiveBattler, 0);
             gActiveBattler ^= 2;
             gBattleBufferA[gActiveBattler][1] = gBattlerPartyIndexes[gActiveBattler];
-            BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+            BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
             sub_802F934(gActiveBattler, 0);
             gActiveBattler ^= 2;
         }

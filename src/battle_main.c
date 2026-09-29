@@ -560,7 +560,7 @@ void CB2_HandleStartBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 9:
-        if (battle_load_something(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
+        if (BattleInitAllSprites(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;
@@ -944,7 +944,7 @@ void CB2_HandleStartMultiBattle(void)
         gBattleCommunication[2] = 0;
         break;
     case 7:
-        if (battle_load_something(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
+        if (BattleInitAllSprites(gBattleCommunicationTail, gBattleCommunicationTail + 1) != 0)
         {
             gPreBattleCallback1 = gMain.callback1;
             gMain.callback1 = BattleMainCB1;

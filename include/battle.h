@@ -694,7 +694,7 @@ bool8 IsBattleSEPlaying(u8 battler);
 void BattleGfxSfxDummy2(u16 species);
 void BattleGfxSfxDummy3(u8 gender);
 void LoadBattleBarGfx(u8);
-u8 battle_load_something();
+bool8 BattleInitAllSprites(u8 *state1, u8 *battler);
 void CopyBattleSpriteInvisibility(u8 battler);
 void HandleLowHpMusicChange(struct Pokemon *, u8);
 void sub_8032638();

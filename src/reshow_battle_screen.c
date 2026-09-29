@@ -25,12 +25,12 @@ extern u8 gBattleMonForms[4];
 extern u8 gHealthboxSpriteIds[4];
 
 bool8 LoadChosenBattleElement(u8 a0);
-bool8 sub_8031C30(u8 a0);
-void sub_8031EE8(void);
-void sub_80327CC(void);
+bool8 BattleLoadAllHealthBoxesGfx(u8 state);
+void ClearSpritesHealthboxAnimData(void);
+void LoadAndCreateEnemyShadowSprites(void);
 void HBlankCB_Battle(void);
-void BattleLoadOpponentMonSprite(struct Pokemon *, u8 bank);
-void BattleLoadPlayerMonSprite(struct Pokemon *, u8 bank);
+void BattleLoadOpponentMonSpriteGfx(struct Pokemon *, u8 battler);
+void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8 battler);
 void BattleLoadSubstituteOrMonSpriteGfx(u8 bank, u8 loadMonSprite);
 void DecompressTrainerBackPic(u16 a0, u8 bank);
 
@@ -98,10 +98,10 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
         gReservedSpritePaletteCount = 4;
         break;
     case 5:
-        sub_8031EE8();
+        ClearSpritesHealthboxAnimData();
         break;
     case 6:
-        if (sub_8031C30(gReshowBattleScreenHelperState))
+        if (BattleLoadAllHealthBoxesGfx(gReshowBattleScreenHelperState))
             gReshowBattleScreenHelperState = 0;
         else
         {
@@ -154,7 +154,7 @@ static void CB2_ReshowBattleScreenAfterMenu(void)
             u8 opponentBattler;
             u16 species;
 
-            sub_80327CC();
+            LoadAndCreateEnemyShadowSprites();
 
             opponentBattler = GetBattlerAtPosition(1);
             species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[opponentBattler]], MON_DATA_SPECIES);
@@ -195,7 +195,7 @@ static bool8 LoadBattlerSpriteGfx(u8 battler)
         if (GetBattlerSide(battler))
         {
             if (!gBattleSpriteInfo[battler].behindSubstitute)
-                BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
+                BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
             else
                 BattleLoadSubstituteOrMonSpriteGfx(battler, FALSE);
         }
@@ -204,7 +204,7 @@ static bool8 LoadBattlerSpriteGfx(u8 battler)
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL && battler == 0)
             DecompressTrainerBackPic(TRAINER_BACK_PIC_WALLY, 0);
         else if (!gBattleSpriteInfo[battler].behindSubstitute)
-            BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[battler]], battler);
+            BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[battler]], battler);
         else
             BattleLoadSubstituteOrMonSpriteGfx(battler, FALSE);
 
@@ -277,13 +277,13 @@ static void CreateHealthboxSprite(u8 battler)
     {
         u8 healthboxSpriteId;
         if (gBattleTypeFlags & BATTLE_TYPE_SAFARI && battler == 0)
-            healthboxSpriteId = battle_make_oam_safari_battle();
+            healthboxSpriteId = CreateSafariPlayerHealthboxSprites();
         else if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL && battler == 0)
             return;
         else
-            healthboxSpriteId = battle_make_oam_normal_battle(battler);
+            healthboxSpriteId = CreateBattlerHealthboxSprites(battler);
         gHealthboxSpriteIds[battler] = healthboxSpriteId;
-        sub_8043F44(battler);
+        InitBattlerHealthboxCoords(battler);
         SetHealthboxSpriteVisible(healthboxSpriteId);
         if (GetBattlerSide(battler))
             UpdateHealthboxAttribute(gHealthboxSpriteIds[battler], &gEnemyParty[gBattlerPartyIndexes[battler]], 0);
@@ -292,9 +292,9 @@ static void CreateHealthboxSprite(u8 battler)
         else
             UpdateHealthboxAttribute(gHealthboxSpriteIds[battler], &gPlayerParty[gBattlerPartyIndexes[battler]], 0);
         if (GetBattlerPosition(battler) == 3 || GetBattlerPosition(battler) == 2)
-            nullsub_11(gHealthboxSpriteIds[battler], 1);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[battler], TRUE);
         else
-            nullsub_11(gHealthboxSpriteIds[battler], 0);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[battler], FALSE);
         if (GetBattlerSide(battler))
         {
             if (GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_HP) == 0)

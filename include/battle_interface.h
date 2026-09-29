@@ -40,14 +40,14 @@ enum
     HEALTHBOX_SAFARI_BALLS_TEXT
 };
 
-u8 battle_make_oam_normal_battle(u8);
-u8 battle_make_oam_safari_battle(void);
+u8 CreateBattlerHealthboxSprites(u8 battler);
+u8 CreateSafariPlayerHealthboxSprites(void);
 void SetBattleBarStruct(u8, u8, u32, u32, u32);
 void SetHealthboxSpriteInvisible(u8);
 void SetHealthboxSpriteVisible(u8);
-void nullsub_11();
+void DummyBattleInterfaceFunc(u8 healthboxSpriteId, bool8 isDoubleBattleBattlerOnly);
 void UpdateOamPriorityInAllHealthboxes(u8);
-void sub_8043F44(u8);
+void InitBattlerHealthboxCoords(u8 battler);
 void sub_804454C(void);
 u8 CreatePartyStatusSummarySprites(u8, const struct HpAndStatus *, u8, u8);
 void Task_HidePartyStatusSummary(u8 taskId);

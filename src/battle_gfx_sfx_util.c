@@ -103,10 +103,10 @@ extern void SetIdleSpriteCallback(struct Sprite *);
 void sub_80315E8(u8);
 u8 sub_803163C(u8);
 void sub_80316CC(u8);
-void sub_8031F0C(void);
+static void ClearSpritesBattlerHealthboxAnimData(void);
 void LoadBattleMonGfxAndAnimate(u8, u8, u8);
 void ClearBehindSubstituteBit(u8 battler);
-void sub_80327CC(void);
+void LoadAndCreateEnemyShadowSprites(void);
 void SpriteCB_SetInvisible(struct Sprite *);
 void SpriteCB_EnemyShadow(struct Sprite *);
 
@@ -283,7 +283,7 @@ bool8 IsBattleSEPlaying(u8 battler)
     return TRUE;
 }
 
-void BattleLoadOpponentMonSprite(struct Pokemon *pkmn, u8 b)
+void BattleLoadOpponentMonSpriteGfx(struct Pokemon *pkmn, u8 b)
 {
     u32 personalityValue;
     u16 species;
@@ -335,7 +335,7 @@ void BattleLoadOpponentMonSprite(struct Pokemon *pkmn, u8 b)
     }
 }
 
-void BattleLoadPlayerMonSprite(struct Pokemon *pkmn, u8 b)
+void BattleLoadPlayerMonSpriteGfx(struct Pokemon *pkmn, u8 b)
 {
     u32 personalityValue;
     u16 species;
@@ -465,7 +465,7 @@ void unref_sub_8031BA0(void)
         LoadCompressedSpriteSheet(&gUnknown_0820A4B4[gBattlerPositions[i]]);
 }
 
-bool8 sub_8031C30(u8 a)
+bool8 BattleLoadAllHealthBoxesGfx(u8 a)
 {
     bool8 retVal = FALSE;
 
@@ -524,18 +524,18 @@ void LoadBattleBarGfx(u8 a)
     LZDecompressWram(gUnknown_08D09C48, eBattleInterfaceGfxBuffer);
 }
 
-u8 battle_load_something(u8 *pState, u8 *b)
+bool8 BattleInitAllSprites(u8 *pState, u8 *b)
 {
     bool8 retVal = FALSE;
 
     switch (*pState)
     {
     case 0:
-        sub_8031F0C();
+        ClearSpritesBattlerHealthboxAnimData();
         (*pState)++;
         break;
     case 1:
-        if (sub_8031C30(*b) == 0)
+        if (BattleLoadAllHealthBoxesGfx(*b) == 0)
         {
             (*b)++;
         }
@@ -550,9 +550,9 @@ u8 battle_load_something(u8 *pState, u8 *b)
         break;
     case 3:
         if ((gBattleTypeFlags & 0x80) && *b == 0)
-            gHealthboxSpriteIds[*b] = battle_make_oam_safari_battle();
+            gHealthboxSpriteIds[*b] = CreateSafariPlayerHealthboxSprites();
         else
-            gHealthboxSpriteIds[*b] = battle_make_oam_normal_battle(*b);
+            gHealthboxSpriteIds[*b] = CreateBattlerHealthboxSprites(*b);
         (*b)++;
         if (*b == gBattlersCount)
         {
@@ -561,11 +561,11 @@ u8 battle_load_something(u8 *pState, u8 *b)
         }
         break;
     case 4:
-        sub_8043F44(*b);
+        InitBattlerHealthboxCoords(*b);
         if (gBattlerPositions[*b] <= 1)
-            nullsub_11(gHealthboxSpriteIds[*b], 0);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[*b], FALSE);
         else
-            nullsub_11(gHealthboxSpriteIds[*b], 1);
+            DummyBattleInterfaceFunc(gHealthboxSpriteIds[*b], TRUE);
         (*b)++;
         if (*b == gBattlersCount)
         {
@@ -592,7 +592,7 @@ u8 battle_load_something(u8 *pState, u8 *b)
         }
         break;
     case 6:
-        sub_80327CC();
+        LoadAndCreateEnemyShadowSprites();
         BufferBattlePartyCurrentOrder();
         retVal = TRUE;
         break;
@@ -600,15 +600,15 @@ u8 battle_load_something(u8 *pState, u8 *b)
     return retVal;
 }
 
-void sub_8031EE8(void)
+void ClearSpritesHealthboxAnimData(void)
 {
     memset(gBattleHealthBoxInfo, 0, 0x30);
     memset(&ewram17840, 0, 0x10);
 }
 
-void sub_8031F0C(void)
+static void ClearSpritesBattlerHealthboxAnimData(void)
 {
-    sub_8031EE8();
+    ClearSpritesHealthboxAnimData();
     memset(gBattleSpriteInfo, 0, 0x10);
 }
 
@@ -755,9 +755,9 @@ void BattleLoadSubstituteOrMonSpriteGfx(u8 battler, u8 loadMonSprite)
         if (!IsContest())
         {
             if (GetBattlerSide(battler) != 0)
-                BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
+                BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[battler]], battler);
             else
-                BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[battler]], battler);
+                BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[battler]], battler);
         }
     }
 }
@@ -872,7 +872,7 @@ void SetBattlerSpriteAffineMode(u8 a)
     }
 }
 
-void sub_80327CC(void)
+void LoadAndCreateEnemyShadowSprites(void)
 {
     u8 r5;
 

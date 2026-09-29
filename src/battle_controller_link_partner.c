@@ -66,7 +66,7 @@ extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern u8 DoPokeballSendOutAnimation();
 extern void SpriteCB_WaitForBattlerBallReleaseAnim(struct Sprite *);
 extern u8 CreateInvisibleSpriteWithCallback();
-extern void BattleLoadPlayerMonSprite();
+extern void BattleLoadPlayerMonSpriteGfx(struct Pokemon *, u8);
 extern u8 GetBattlerSpriteDefault_Y();
 extern void Task_PlayerController_RestoreBgmAfterCry(u8);
 extern void CB2_InitEndLinkBattle(void);
@@ -1062,7 +1062,7 @@ static void LinkPartnerHandleSetRawMonData(void)
 
 static void LinkPartnerHandleLoadMonSprite(void)
 {
-    BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     SetMultiuseSpriteTemplateToPokemon(
       GetMonData(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES),
       GetBattlerPosition(gActiveBattler));
@@ -1082,7 +1082,7 @@ static void LinkPartnerHandleSwitchInAnim(void)
 {
     ClearTemporarySpeciesSpriteData(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
     gBattlerPartyIndexes[gActiveBattler] = gBattleBufferA[gActiveBattler][1];
-    BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     StartSendOutAnim(gActiveBattler, gBattleBufferA[gActiveBattler][2]);
     gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnim;
 }
@@ -1597,7 +1597,7 @@ static void Task_StartSendOutAnim(u8 taskId)
         StartSendOutAnim(gActiveBattler, FALSE);
         gActiveBattler ^= BIT_FLANK;
         gBattleBufferA[gActiveBattler][1] = gBattlerPartyIndexes[gActiveBattler];
-        BattleLoadPlayerMonSprite(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+        BattleLoadPlayerMonSpriteGfx(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
         StartSendOutAnim(gActiveBattler, FALSE);
         gActiveBattler ^= BIT_FLANK;
     }

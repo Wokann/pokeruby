@@ -49,7 +49,7 @@ extern struct MusicPlayerInfo gMPlayInfo_BGM;
 
 extern u8 GetBattlerSpriteDefault_Y();
 extern u8 GetBattlerPosition(u8);
-extern void BattleLoadOpponentMonSprite(struct Pokemon *, u8);
+extern void BattleLoadOpponentMonSpriteGfx(struct Pokemon *, u8);
 extern void sub_8037A74(void);
 extern void SetBattlerShadowSpriteCallback(u8, u16);
 extern void sub_8037E30(void);
@@ -1134,7 +1134,7 @@ void LinkOpponentHandleLoadPokeSprite(void)
 {
     u16 species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES);
 
-    BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1164,7 +1164,7 @@ void sub_8039430(u8 a, u8 b)
     gBattlerPartyIndexes[a] = gBattleBufferA[a][1];
     species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[a]], MON_DATA_SPECIES);
     gBattleControllerData[a] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
-    BattleLoadOpponentMonSprite(&gEnemyParty[gBattlerPartyIndexes[a]], a);
+    BattleLoadOpponentMonSpriteGfx(&gEnemyParty[gBattlerPartyIndexes[a]], a);
     SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(a));
     gBattlerSpriteIds[a] = CreateSprite(
       &gCreatingSpriteTemplate,
