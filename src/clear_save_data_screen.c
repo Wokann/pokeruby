@@ -57,7 +57,7 @@ static void Task_ClearSaveDataScreenYesNoChoice(u8 taskId)
     {
     case 0:
         PlaySE(SE_SELECT);
-        sub_8071F40(gText_ClearingData);
+        Menu_PrintTextWithStdFrame(gText_ClearingData);
         gTasks[taskId].func = Task_ClearSaveData;
         break;
     case -1:

@@ -176,7 +176,7 @@ void Menu_DrawStdWindowFrame(u8 left, u8 top, u8 right, u8 bottom)
     TextWindow_DrawStdFrame(gMenuWindowPtr, left, top, right, bottom);
 }
 
-void sub_8071F40(const u8 *str)
+void Menu_PrintTextWithStdFrame(const u8 *str)
 {
     Menu_DrawStdWindowFrame(2, 14, 28, 19);
     Menu_PrintText(str, 3, 15);

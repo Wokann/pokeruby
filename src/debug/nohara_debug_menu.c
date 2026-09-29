@@ -233,7 +233,7 @@ bool8 NoharaDebugMenu_TV_HandleInput(void)
 void NoharaDebugMenu_TV_ShowSecretTypePrompt(void)
 {
     NoharaDebugMenu_TV_PrintDataKinds();
-    sub_8071F40(sText_NoharaDebug_TV_SecretTypePrompt);
+    Menu_PrintTextWithStdFrame(sText_NoharaDebug_TV_SecretTypePrompt);
     DisplayYesNoMenu(3, 3, 1);
     gMenuCallback = NoharaDebugMenu_TV_HandleSecretTypePrompt;
 }
@@ -403,7 +403,7 @@ bool8 NoharaDebugMenu_TV_EnableBroadcasts(void)
 void NoharaDebugMenu_TV_OpenCreateShowMenu(void)
 {
     sTVDataTypeIndex = 0;
-    sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
+    Menu_PrintTextWithStdFrame(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 26, 8);
     Menu_PrintText(sTVShowNames_NoharaDebug[0], 14, 7);
     Menu_BlankWindowRect(22, 1, 24, 2);
@@ -751,7 +751,7 @@ bool8 NoharaDebugMenu_TV_ClearShowData(void)
 void NoharaDebugMenu_TV_OpenCreateCommercialMenu(void)
 {
     sTVDataTypeIndex = 0;
-    sub_8071F40(sText_NoharaDebug_TV_CreateShowPrompt);
+    Menu_PrintTextWithStdFrame(sText_NoharaDebug_TV_CreateShowPrompt);
     Menu_BlankWindowRect(13, 6, 23, 8);
     Menu_PrintText(sTVCommercialNames_NoharaDebug[0], 14, 7);
     Menu_BlankWindowRect(22, 1, 24, 2);

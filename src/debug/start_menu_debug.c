@@ -1250,7 +1250,7 @@ bool8 DebugMenu_8077974(void)
         StringCopy(gStringVar2, Str_839BE8D);
     else
         StringCopy(gStringVar2, Str_839BE90);
-    sub_8071F40(Str_839BE6B);
+    Menu_PrintTextWithStdFrame(Str_839BE6B);
     gMenuCallback = DebugMenu_8077DB4;
     return FALSE;
 }
@@ -1338,9 +1338,9 @@ bool8 DebugMenu_8077B00(void)
 {
     Menu_EraseScreen();
     if (GetInFrontFeederPokeblockAndSteps())
-        sub_8071F40(Str_839BF14);
+        Menu_PrintTextWithStdFrame(Str_839BF14);
     else
-        sub_8071F40(Str_839BF1F);
+        Menu_PrintTextWithStdFrame(Str_839BF1F);
     gMenuCallback = DebugMenu_8077DB4;
     return FALSE;
 }
@@ -1375,7 +1375,7 @@ u8 DebugMenu_Safari(void)
     Menu_EraseScreen();
     DebugMenu_8077D24(gUnknown_Debug_839BF6C, 14, ARRAY_COUNT(gUnknown_Debug_839BF6C));
     ConvertIntToDecimalStringN(gStringVar1, gSafariZoneStepCounter, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    sub_8071F40(Str_839BF0C);
+    Menu_PrintTextWithStdFrame(Str_839BF0C);
     gMenuCallback = DebugMenu_8077B3C;
     LockPlayerFieldControls();
     return FALSE;
@@ -1831,7 +1831,7 @@ const u8 Str_839C053[] = _("Miracle Island emerged\n"
 void DebugMenu_80782EC(u16 rnums)
 {
     ConvertIntToHexStringN(gStringVar1, rnums, STR_CONV_MODE_LEFT_ALIGN, 4);
-    sub_8071F40(Str_839C053);
+    Menu_PrintTextWithStdFrame(Str_839C053);
 }
 
 void DebugMenu_8078310(u8 taskId)
@@ -2367,7 +2367,7 @@ const u8 Str_839C438[] = DTR("ポロック　グループ{STR_VAR_1}", "{POKEBLO
 void DebugMenu_8078B70(u16 value)
 {
     ConvertIntToHexStringN(gStringVar1, value, STR_CONV_MODE_LEFT_ALIGN, 1);
-    sub_8071F40(Str_839C438);
+    Menu_PrintTextWithStdFrame(Str_839C438);
 }
 
 const struct Pokeblock gUnknown_Debug_839C444[] = {
