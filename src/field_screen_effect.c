@@ -9,12 +9,13 @@
 #include "task.h"
 #include "text.h"
 #include "scanline_effect.h"
+#include "constants/rgb.h"
 
-const static u16 sFlashLevelToRadius[] = { 200, 72, 56, 40, 24, 0 };
+static const u16 sFlashLevelToRadius[] = { 200, 72, 56, 40, 24, 0 };
 
 const s32 gMaxFlashLevel = 4;
 
-const static struct ScanlineEffectParams sFlashEffectParams =
+static const struct ScanlineEffectParams sFlashEffectParams =
 {
     (void *)REG_ADDR_WIN0H,
     ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
@@ -58,6 +59,7 @@ static void SetFlashScanlineEffectWindowBoundaries(u16 *dest, s32 centerX, s32 c
     }
 }
 
+#define tState               data[0]
 #define tFlashCenterX        data[1]
 #define tFlashCenterY        data[2]
 #define tCurFlashRadius      data[3]
@@ -69,22 +71,22 @@ static void UpdateFlashLevelEffect(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
         SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
-        data[0] = 1;
+        tState = 1;
         break;
     case 1:
         SetFlashScanlineEffectWindowBoundaries(gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], tFlashCenterX, tFlashCenterY, tCurFlashRadius);
-        data[0] = 0;
+        tState = 0;
         tCurFlashRadius += tFlashRadiusDelta;
         if (tCurFlashRadius > tDestFlashRadius)
         {
             if (tClearScanlineEffect == 1)
             {
                 ScanlineEffect_Stop();
-                data[0] = 2;
+                tState = 2;
             }
             else
             {
@@ -133,6 +135,8 @@ static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlash
     return taskId;
 }
 
+#undef tFlashCenterX
+#undef tFlashCenterY
 #undef tCurFlashRadius
 #undef tDestFlashRadius
 #undef tFlashRadiusDelta
@@ -141,10 +145,10 @@ static u8 StartUpdateFlashLevelEffect(s32 centerX, s32 centerY, s32 initialFlash
 void AnimateFlash(u8 newFlashLevel)
 {
     u8 curFlashLevel = Overworld_GetFlashLevel();
-    u8 fullBrightness = 0;
-    if (!newFlashLevel)
-        fullBrightness = 1;
-    StartUpdateFlashLevelEffect(120, 80, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
+    bool8 fullBrightness = FALSE;
+    if (newFlashLevel == 0)
+        fullBrightness = TRUE;
+    StartUpdateFlashLevelEffect(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
     StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }
@@ -153,7 +157,7 @@ void WriteFlashScanlineEffectBuffer(u8 flashLevel)
 {
     if (flashLevel)
     {
-        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], 120, 80, sFlashLevelToRadius[flashLevel]);
+        SetFlashScanlineEffectWindowBoundaries(&gScanlineEffectRegBuffers[0][0], DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[flashLevel]);
         CpuFastSet(&gScanlineEffectRegBuffers[0], &gScanlineEffectRegBuffers[1], 480);
     }
 }
@@ -164,13 +168,13 @@ static void LoadOrbEffectPalette(bool8 blueOrb)
     u16 color[1];
 
     if (!blueOrb)
-        color[0] = 0x1F;
+        color[0] = RGB_RED;
     else
-        color[0] = 0x7C00;
+        color[0] = RGB_BLUE;
 
     for (i = 0; i < 16; i++)
     {
-        LoadPalette(color, 0xF0 + i, 2);
+        LoadPalette(color, BG_PLTT_ID(15) + i, PLTT_SIZEOF(1));
     }
 }
 
@@ -204,7 +208,6 @@ static bool8 UpdateOrbEffectBlend(u16 shakeDir)
     return FALSE;
 }
 
-#define tState      data[0]
 #define tBlueOrb    data[1]
 #define tCenterX    data[2]
 #define tCenterY    data[3]

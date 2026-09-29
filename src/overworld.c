@@ -98,8 +98,6 @@ extern u8 EventScript_DoLinkRoomExit[];
 
 extern struct MapLayout * const gMapLayouts[];
 extern struct MapHeader * const * const gMapGroups[];
-extern s32 gMaxFlashLevel;
-
 u16 gHeldKeyCodeToSend;
 void (*gFieldCallback)(void);
 u8 gLocalLinkPlayerId;
