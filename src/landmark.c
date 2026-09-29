@@ -1,6 +1,7 @@
 #include "global.h"
 #include "landmark.h"
 #include "event_data.h"
+#include "strings2.h"
 #include "constants/region_map_sections.h"
 
 struct Landmark
@@ -15,44 +16,6 @@ struct LandmarkList
     u8 id;
     const struct Landmark *const *landmarks;
 };
-
-extern const u8 gLandmarkName_FlowerShop[];
-extern const u8 gLandmarkName_PetalburgWoods[];
-extern const u8 gLandmarkName_MrBrineysCottage[];
-extern const u8 gLandmarkName_AbandonedShip[];
-extern const u8 gLandmarkName_SeashoreHouse[];
-extern const u8 gLandmarkName_SlateportBeach[];
-extern const u8 gLandmarkName_CyclingRoad[];
-extern const u8 gLandmarkName_NewMauville[];
-extern const u8 gLandmarkName_TrickHouse[];
-extern const u8 gLandmarkName_OldLadysRestShop[];
-extern const u8 gLandmarkName_Desert[];
-extern const u8 gLandmarkName_WinstrateFamily[];
-extern const u8 gLandmarkName_CableCar[];
-extern const u8 gLandmarkName_GlassWorkshop[];
-extern const u8 gLandmarkName_WeatherInstitute[];
-extern const u8 gLandmarkName_MeteorFalls[];
-extern const u8 gLandmarkName_TunnelersRestHouse[];
-extern const u8 gLandmarkName_RusturfTunnel[];
-extern const u8 gLandmarkName_PokemonDayCare[];
-extern const u8 gLandmarkName_SafariZoneEntrance[];
-extern const u8 gLandmarkName_MtPyre[];
-extern const u8 gLandmarkName_ShoalCave[];
-extern const u8 gLandmarkName_SeafloorCavern[];
-extern const u8 gLandmarkName_GraniteCave[];
-extern const u8 gLandmarkName_OceanCurrent[];
-extern const u8 gLandmarkName_LanettesHouse[];
-extern const u8 gLandmarkName_FieryPath[];
-extern const u8 gLandmarkName_JaggedPass[];
-extern const u8 gLandmarkName_BerryMastersHouse[];
-extern const u8 gLandmarkName_IslandCave[];
-extern const u8 gLandmarkName_DesertRuins[];
-extern const u8 gLandmarkName_ScorchedSlab[];
-extern const u8 gLandmarkName_AncientTomb[];
-extern const u8 gLandmarkName_SealedChamber[];
-extern const u8 gLandmarkName_FossilManiacsHouse[];
-extern const u8 gLandmarkName_HuntersHouse[];
-extern const u8 gLandmarkName_SkyPillar[];
 
 static const struct Landmark Landmark_FlowerShop = {gLandmarkName_FlowerShop, FLAG_LANDMARK_FLOWER_SHOP};
 static const struct Landmark Landmark_PetalburgWoods = {gLandmarkName_PetalburgWoods, -1};
@@ -313,7 +276,7 @@ static const struct Landmark *const Landmarks_MtChimney_2[]  =
     NULL,
 };
 
-static const struct LandmarkList gLandmarkLists[] =
+static const struct LandmarkList sLandmarkLists[] =
 {
 	{MAPSEC_ROUTE_104, 0, Landmarks_Route104_0},
     {MAPSEC_ROUTE_104, 1, Landmarks_Route104_1},
@@ -396,21 +359,21 @@ static const struct Landmark *const *GetLandmarks(u8 mapSection, u8 id)
 {
     u16 i = 0;
 
-    for (; gLandmarkLists[i].mapSection != MAPSEC_NONE; i++)
+    for (; sLandmarkLists[i].mapSection != MAPSEC_NONE; i++)
     {
-        if (gLandmarkLists[i].mapSection > mapSection)
+        if (sLandmarkLists[i].mapSection > mapSection)
             return NULL;
-        if (gLandmarkLists[i].mapSection == mapSection)
+        if (sLandmarkLists[i].mapSection == mapSection)
             break;
     }
 
-    if (gLandmarkLists[i].mapSection == MAPSEC_NONE)
+    if (sLandmarkLists[i].mapSection == MAPSEC_NONE)
         return NULL;
 
-    for (; gLandmarkLists[i].mapSection == mapSection; i++)
+    for (; sLandmarkLists[i].mapSection == mapSection; i++)
     {
-        if (gLandmarkLists[i].id == id)
-            return gLandmarkLists[i].landmarks;
+        if (sLandmarkLists[i].id == id)
+            return sLandmarkLists[i].landmarks;
     }
 
     return NULL;
