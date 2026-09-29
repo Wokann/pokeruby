@@ -1856,7 +1856,7 @@ void SetDisplayMonData(void *pokemon, u8 mode)
             buf[1] = 0x06; // size
             buf[2] = 0x04;
             buf = gPokemonStorageSystemPtr->displayMonItemName + 8;
-            buf = StringCopy(buf, ItemId_GetName(gPokemonStorageSystemPtr->displayMonItemId));
+            buf = StringCopy(buf, GetItemName(gPokemonStorageSystemPtr->displayMonItemId));
             buf[0] = EXT_CTRL_CODE_BEGIN;
             buf[1] = 0x07; // UNKNOWN_7;
             buf += 2;

@@ -503,7 +503,7 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
     if (gBattleMons[gActiveBattler].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[gActiveBattler].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[gActiveBattler].item);
 
     gPotentialItemEffectBattler = gActiveBattler;
 
@@ -531,7 +531,7 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
     if (gBattleMons[battlerId].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[battlerId].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[battlerId].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[battlerId].item);
 
     gPotentialItemEffectBattler = battlerId;
 
@@ -2657,8 +2657,8 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
     }
     else
     {
-        bankHoldEffect = ItemId_GetHoldEffect(gLastUsedItem);
-        bankQuality = ItemId_GetHoldEffectParam(gLastUsedItem);
+        bankHoldEffect = GetItemHoldEffect(gLastUsedItem);
+        bankQuality = GetItemHoldEffectParam(gLastUsedItem);
     }
 
     atkItem = gBattleMons[gBattlerAttacker].item;
@@ -2669,8 +2669,8 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
     }
     else
     {
-        atkHoldEffect = ItemId_GetHoldEffect(atkItem);
-        atkQuality = ItemId_GetHoldEffectParam(atkItem);
+        atkHoldEffect = GetItemHoldEffect(atkItem);
+        atkQuality = GetItemHoldEffectParam(atkItem);
     }
 
     // def variables are unused
@@ -2682,8 +2682,8 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
     }
     else
     {
-        defHoldEffect = ItemId_GetHoldEffect(defItem);
-        defQuality = ItemId_GetHoldEffectParam(defItem);
+        defHoldEffect = GetItemHoldEffect(defItem);
+        defQuality = GetItemHoldEffectParam(defItem);
     }
 
     switch (caseID)
@@ -3169,8 +3169,8 @@ u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn)
             }
             else
             {
-                bankHoldEffect = ItemId_GetHoldEffect(gLastUsedItem);
-                bankQuality = ItemId_GetHoldEffectParam(gLastUsedItem);
+                bankHoldEffect = GetItemHoldEffect(gLastUsedItem);
+                bankQuality = GetItemHoldEffectParam(gLastUsedItem);
             }
             switch (bankHoldEffect)
             {

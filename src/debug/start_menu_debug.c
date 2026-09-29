@@ -1638,7 +1638,7 @@ void DebugMenu_8077EE0(u16 itemId, u16 quantity)
     Menu_BlankWindowRect(4, 17, 22, 18);
     ConvertIntToDecimalStringN(gStringVar1, itemId, STR_CONV_MODE_RIGHT_ALIGN, 3);
     Menu_PrintText(gStringVar1, 4, 17);
-    Menu_PrintText(ItemId_GetName(itemId), 8, 17);
+    Menu_PrintText(GetItemName(itemId), 8, 17);
     ConvertIntToDecimalStringN(gStringVar1, quantity, STR_CONV_MODE_RIGHT_ALIGN, 3);
     Menu_PrintText(gStringVar1, 18, 17);
 }

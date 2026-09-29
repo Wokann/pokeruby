@@ -2163,7 +2163,7 @@ u8 WatanabeDebug_FormatPokemonField(u8 *text, u8 fieldId, u8 textColor)
             text[12 + numberTextLength] = 0x01;
             text[13 + numberTextLength] = textColor;
             if (gWatanabePokemonCreatorState->values[fieldId] != ITEM_NONE)
-                WatanabeDebug_CopyText(text + 14 + numberTextLength, ItemId_GetName(gWatanabePokemonCreatorState->values[fieldId]), 9);
+                WatanabeDebug_CopyText(text + 14 + numberTextLength, GetItemName(gWatanabePokemonCreatorState->values[fieldId]), 9);
             else
                 WatanabeDebug_CopyText(text + 14 + numberTextLength, sText_WatanabePokemonEditorNone, 9);
             break;

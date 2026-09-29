@@ -462,7 +462,7 @@ void Debug_FillPokeblockCase(void)
 static void DrawPokeblockMenuTitleText(void)
 {
     BasicInitMenuWindow(&gWindowTemplate_81E6E34);
-    MenuPrint_Centered(ItemId_GetName(ITEM_POKEBLOCK_CASE), 2, 1, 0x48);
+    MenuPrint_Centered(GetItemName(ITEM_POKEBLOCK_CASE), 2, 1, 0x48);
 }
 
 static void DrawPokeblockInfoLabels(void)

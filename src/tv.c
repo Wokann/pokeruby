@@ -1596,7 +1596,7 @@ void SmartShopper_BufferPurchaseTotal(u8 varIdx, struct TVShowSmartShopper *smar
     for (i = 0; i < SMARTSHOPPER_NUM_ITEMS; i++)
     {
         if (smartShopper->itemIds[i])
-            price += ItemId_GetPrice(smartShopper->itemIds[i]) * smartShopper->itemAmounts[i];
+            price += GetItemPrice(smartShopper->itemIds[i]) * smartShopper->itemAmounts[i];
     }
     if (smartShopper->priceReduced == TRUE)
         ConvertIntToDecimalString(varIdx, price >> 1);
@@ -2844,7 +2844,7 @@ void DoTVShowTodaysSmartShopper(void)
         break;
     case 1:
         TVShowConvertInternationalString(gStringVar1, smartShopper->playerName, smartShopper->language);
-        StringCopy(gStringVar2, ItemId_GetName(smartShopper->itemIds[0]));
+        StringCopy(gStringVar2, GetItemName(smartShopper->itemIds[0]));
         ConvertIntToDecimalString(2, smartShopper->itemAmounts[0]);
         sTVShowState += (Random() % 4) + 1;
         break;
@@ -2864,7 +2864,7 @@ void DoTVShowTodaysSmartShopper(void)
             sTVShowState = 10;
         break;
     case 6:
-        StringCopy(gStringVar2, ItemId_GetName(smartShopper->itemIds[1]));
+        StringCopy(gStringVar2, GetItemName(smartShopper->itemIds[1]));
         ConvertIntToDecimalString(2, smartShopper->itemAmounts[1]);
         if (smartShopper->itemIds[2] != 0)
             sTVShowState = 7;
@@ -2874,7 +2874,7 @@ void DoTVShowTodaysSmartShopper(void)
             sTVShowState = 9;
         break;
     case 7:
-        StringCopy(gStringVar2, ItemId_GetName(smartShopper->itemIds[2]));
+        StringCopy(gStringVar2, GetItemName(smartShopper->itemIds[2]));
         ConvertIntToDecimalString(2, smartShopper->itemAmounts[2]);
         if (smartShopper->priceReduced == 1)
             sTVShowState = 8;
@@ -2899,7 +2899,7 @@ void DoTVShowTodaysSmartShopper(void)
         break;
     case 11:
         TVShowConvertInternationalString(gStringVar1, smartShopper->playerName, smartShopper->language);
-        StringCopy(gStringVar2, ItemId_GetName(smartShopper->itemIds[0]));
+        StringCopy(gStringVar2, GetItemName(smartShopper->itemIds[0]));
         if (smartShopper->priceReduced == 1)
             sTVShowState = 8;
         else
@@ -3031,7 +3031,7 @@ void DoTVShowPokemonTodaySuccessfulCapture(void)
         sTVShowState = 2;
         break;
     case 2:
-        StringCopy(gStringVar2, ItemId_GetName(pokemonToday->ball));
+        StringCopy(gStringVar2, GetItemName(pokemonToday->ball));
         ConvertIntToDecimalString(2, pokemonToday->nBallsUsed);
         if (pokemonToday->nBallsUsed < 4)
             sTVShowState = 3;

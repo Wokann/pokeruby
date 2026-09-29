@@ -279,7 +279,7 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
     if (heldItem == ITEM_ENIGMA_BERRY)
         holdEffect = gSaveBlock1.enigmaBerry.holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(heldItem);
+        holdEffect = GetItemHoldEffect(heldItem);
 
     if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && type != 3)
         return 0;
@@ -678,7 +678,7 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
     }
     else
     {
-        holdEffect = ItemId_GetHoldEffect(heldItem);
+        holdEffect = GetItemHoldEffect(heldItem);
     }
 
     if (species && species != SPECIES_EGG)
@@ -783,7 +783,7 @@ void MonGainEVs(struct Pokemon *mon, u16 defeatedSpecies)
         }
         else
         {
-            holdEffect = ItemId_GetHoldEffect(heldItem);
+            holdEffect = GetItemHoldEffect(heldItem);
         }
 
         if (holdEffect == HOLD_EFFECT_MACHO_BRACE)

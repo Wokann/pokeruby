@@ -2299,7 +2299,7 @@ void DrawDebugBattlePartyField(u8 a)
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
         if (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a] != 0)
-            StringAppend(gBattleTextBuff1, ItemId_GetName(gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]));
+            StringAppend(gBattleTextBuff1, GetItemName(gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]));
         else
             StringAppend(gBattleTextBuff1, Str_821F624);
         Text_InitWindow(
@@ -4126,7 +4126,7 @@ u8 IsRunningFromBattleImpossible(void)
     if (gBattleMons[gActiveBattler].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[gActiveBattler].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[gActiveBattler].item);
     gPotentialItemEffectBattler = gActiveBattler;
     if (holdEffect == HOLD_EFFECT_CAN_ALWAYS_RUN)
         return 0;
@@ -4622,8 +4622,8 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
     }
     else
     {
-        heldItemEffect = ItemId_GetHoldEffect(gBattleMons[bank1].item);
-        heldItemEffectParam = ItemId_GetHoldEffectParam(gBattleMons[bank1].item);
+        heldItemEffect = GetItemHoldEffect(gBattleMons[bank1].item);
+        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank1].item);
     }
 
     // Only give badge speed boost to the player's mon.
@@ -4650,8 +4650,8 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
     }
     else
     {
-        heldItemEffect = ItemId_GetHoldEffect(gBattleMons[bank2].item);
-        heldItemEffectParam = ItemId_GetHoldEffectParam(gBattleMons[bank2].item);
+        heldItemEffect = GetItemHoldEffect(gBattleMons[bank2].item);
+        heldItemEffectParam = GetItemHoldEffectParam(gBattleMons[bank2].item);
     }
 
     // Only give badge speed boost to the player's mon.
@@ -5457,7 +5457,7 @@ bool8 TryRunFromBattle(u8 battler)
     if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY)
         holdEffect = gEnigmaBerries[battler].holdEffect;
     else
-        holdEffect = ItemId_GetHoldEffect(gBattleMons[battler].item);
+        holdEffect = GetItemHoldEffect(gBattleMons[battler].item);
 
     gPotentialItemEffectBattler = battler;
 
