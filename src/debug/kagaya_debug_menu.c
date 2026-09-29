@@ -83,7 +83,7 @@ u8 debug_sub_80B068C(void)
 {
     if (!UpdatePaletteFade())
     {
-        debug_sub_80A0710(CB2_ReturnToFieldWithOpenMenu);
+        Debug_ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
         return 1;
@@ -102,7 +102,7 @@ u8 debug_sub_80B06E0(void)
 {
     if (!UpdatePaletteFade())
     {
-        debug_sub_80A073C(CB2_ReturnToFieldWithOpenMenu);
+        Debug_ShowLinkTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         CloseMenu();
         LockPlayerFieldControls();
         return 1;

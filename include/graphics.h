@@ -2626,16 +2626,16 @@ extern const u8 gMailTilemap_Retro[];
 
 extern const u8 gBagScreenLabels_Tilemap[];
 
-extern const u8 gMenuTrainerCard_Gfx[];
-extern const u16 gMenuTrainerCard0Star_Pal[];
-extern const u16 gMenuTrainerCard1Star_Pal[];
-extern const u16 gMenuTrainerCard2Star_Pal[];
-extern const u16 gMenuTrainerCard3Star_Pal[];
-extern const u16 gMenuTrainerCard4Star_Pal[];
-extern const u8 gMenuTrainerCardFront_Tilemap[];
-extern const u8 gMenuTrainerCardBack_Tilemap[];
-extern const u8 gMenuTrainerCardFront2_Tilemap[];
-extern const u8 gMenuTrainerCardBackground_Tilemap[];
+extern const u8 gHoennTrainerCard_Gfx[];
+extern const u16 gHoennTrainerCardGreen_Pal[];
+extern const u16 gHoennTrainerCardBronze_Pal[];
+extern const u16 gHoennTrainerCardCopper_Pal[];
+extern const u16 gHoennTrainerCardSilver_Pal[];
+extern const u16 gHoennTrainerCardGold_Pal[];
+extern const u8 gHoennTrainerCardFront_Tilemap[];
+extern const u8 gHoennTrainerCardBack_Tilemap[];
+extern const u8 gHoennTrainerCardFrontLink_Tilemap[];
+extern const u8 gHoennTrainerCardBg_Tilemap[];
 
 extern const u8 gTradeCursor_Gfx[];
 extern const u16 gTradeCursor_Pal[];

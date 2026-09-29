@@ -503,7 +503,7 @@ static u8 StartMenu_PlayerCallback(void)
     if (!gPaletteFade.active)
     {
         PlayRainStoppingSoundEffect();
-        TrainerCard_ShowPlayerCard(CB2_ReturnToFieldWithOpenMenu);
+        ShowPlayerTrainerCard(CB2_ReturnToFieldWithOpenMenu);
         return 1;
     }
     return 0;
