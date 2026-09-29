@@ -67,10 +67,11 @@ static const struct FlashStruct sTransitionTypes[] =
 static const u16 sCaveTransitionPalette_White[] = {0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF};
 static const u16 sCaveTransitionPalette_Black[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
-static const u16 sCaveTransitionPalette_Enter[] = INCBIN_U16("graphics/misc/83F808C.gbapal");
-static const u16 sCaveTransitionPalette_Exit[] = INCBIN_U16("graphics/misc/83F809C.gbapal");
-static const u16 sCaveTransitionTilemap[] = INCBIN_U16("graphics/misc/cave_transition_map.bin.lz");
-static const u8 sCaveTransitionTiles[] = INCBIN_U8("graphics/misc/cave_transition.4bpp.lz");
+// Ruby keeps the cave-transition palette halves separate.
+static const u16 sCaveTransitionPalette_Enter[] = INCBIN_U16("graphics/cave_transition/enter.gbapal");
+static const u16 sCaveTransitionPalette_Exit[] = INCBIN_U16("graphics/cave_transition/exit.gbapal");
+static const u16 sCaveTransitionTilemap[] = INCBIN_U16("graphics/cave_transition/tilemap.bin.lz");
+static const u8 sCaveTransitionTiles[] = INCBIN_U8("graphics/cave_transition/tiles.4bpp.lz");
 
 #if DEBUG
 
