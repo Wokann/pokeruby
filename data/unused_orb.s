@@ -1,10 +1,11 @@
+#include "constants/battle_anim.h"
 	.include "include/macros.inc"
 	.include "constants/constants.inc"
 
 	.section .rodata
 
 	.align 2
-gSpriteAnim_8393054:: @ 8393054
+sAnim_FlickeringOrb:: @ 8393054
 	obj_image_anim_frame 0, 3
 	obj_image_anim_frame 4, 3
 	obj_image_anim_frame 8, 3
@@ -12,13 +13,13 @@ gSpriteAnim_8393054:: @ 8393054
 	obj_image_anim_jump 0
 
 	.align 2
-gSpriteAnimTable_8393068:: @ 8393068
-	.4byte gSpriteAnim_8393054
+sAnims_FlickeringOrb:: @ 8393068
+	.4byte sAnim_FlickeringOrb
 
 	.align 2
-gSpriteTemplate_839306C:: @ 839306C
-	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gSpriteAnimTable_8393068, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
+sFlickeringOrbSpriteTemplate:: @ 839306C
+	spr_template ANIM_TAG_UNUSED_ORB, ANIM_TAG_UNUSED_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker
 
 	.align 2
-gSpriteTemplate_8393084:: @ 8393084
-	spr_template 10004, 10004, gOamData_AffineOff_ObjNormal_16x16, gSpriteAnimTable_8393068, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
+sFlickeringOrbFlippedSpriteTemplate:: @ 8393084
+	spr_template ANIM_TAG_UNUSED_ORB, ANIM_TAG_UNUSED_ORB, gOamData_AffineOff_ObjNormal_16x16, sAnims_FlickeringOrb, NULL, gDummySpriteAffineAnimTable, AnimTranslateLinearAndFlicker_Flipped
