@@ -4568,7 +4568,7 @@ static void SetSpriteTemplateForPokemonPic(u16 paletteTag, u8 imagesSet)
     gCreatingSpriteTemplate = sMonOrTrainerPicSpriteTemplate;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
     gCreatingSpriteTemplate.images = sSpriteFrameImages_MonOrTrainerPic[imagesSet];
-    gCreatingSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gCreatingSpriteTemplate.anims = gAnims_MonPic;
 }
 
 static void SetSpriteTemplateForSizeComparisonTrainerPic(u16 paletteTag, u8 imagesSet)

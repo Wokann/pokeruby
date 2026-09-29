@@ -272,13 +272,13 @@ gUnknown_Debug_821F7F3::
 .endif @ DEBUG
 
 	.align 2
-gOamData_81F96E8:: @ 81F96E8
+gOamData_BattleSpriteOpponentSide:: @ 81F96E8
 	.2byte 0x0100
 	.2byte 0xC000
 	.2byte 0x0800
 
 	.align 2
-gOamData_81F96F0:: @ 81F96F0
+gOamData_BattleSpritePlayerSide:: @ 81F96F0
 	.2byte 0x0100
 	.2byte 0xC000
 	.2byte 0x2800

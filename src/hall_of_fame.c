@@ -1280,7 +1280,7 @@ void PrepareHallOfFameMonPicSpriteTemplate(u16 paletteTag, u8 animID)
     gCreatingSpriteTemplate = sUnknown_0840B6B8;
     gCreatingSpriteTemplate.paletteTag = paletteTag;
     gCreatingSpriteTemplate.images = sUnknown_0840B69C[animID];
-    gCreatingSpriteTemplate.anims = gSpriteAnimTable_81E7C64;
+    gCreatingSpriteTemplate.anims = gAnims_MonPic;
 }
 
 void PrepareHallOfFameTrainerPicSpriteTemplate(u16 paletteTag, u8 animID)

@@ -39,7 +39,7 @@ extern struct PokemonStorage gPokemonStorage;
 EWRAM_DATA struct SpriteTemplate gCreatingSpriteTemplate = {0};
 
 extern u8 gBadEggNickname[];
-extern const struct SpriteTemplate gSpriteTemplate_8208288[];
+extern const struct SpriteTemplate gBattlerSpriteTemplates[];
 //array of pointers to arrays of pointers to union AnimCmd (We probably need to typedef this.)
 extern u8 gTrainerClassToPicIndex[];
 extern u8 gTrainerClassToNameIndex[];
@@ -146,26 +146,26 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
         return MON_MALE;
 }
 
-const struct SpriteTemplate gSpriteTemplate_8208288[] =
+const struct SpriteTemplate gBattlerSpriteTemplates[] =
 {
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A10, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A30,
+    {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerLeft, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentLeft,
         gAffineAnims_BattleSpriteOpponentSide, SpriteCB_WildMon},
-    {0xFFFF, 0, &gOamData_81F96F0, NULL, gSpriteImageTable_81E7A50, gSpriteAffineAnimTable_81E7B70, SpriteCB_BattleSpriteStartSlideLeft},
-    {0xFFFF, 0, &gOamData_81F96E8, NULL, gSpriteImageTable_81E7A70,
+    {0xFFFF, 0, &gOamData_BattleSpritePlayerSide, NULL, gBattlerPicTable_PlayerRight, gAffineAnims_BattleSpritePlayerSide, SpriteCB_BattleSpriteStartSlideLeft},
+    {0xFFFF, 0, &gOamData_BattleSpriteOpponentSide, NULL, gBattlerPicTable_OpponentRight,
         gAffineAnims_BattleSpriteOpponentSide, SpriteCB_WildMon},
 };
 
 void SetMultiuseSpriteTemplateToPokemon(u16 species, u8 a2)
 {
-    gCreatingSpriteTemplate = gSpriteTemplate_8208288[a2];
+    gCreatingSpriteTemplate = gBattlerSpriteTemplates[a2];
     gCreatingSpriteTemplate.paletteTag = species;
-    gCreatingSpriteTemplate.anims = (const union AnimCmd *const *)gSpriteAnimTable_81E7C64;  //Why do I have to cast this?
+    gCreatingSpriteTemplate.anims = (const union AnimCmd *const *)gAnims_MonPic;  //Why do I have to cast this?
 }
 
 void SetMultiuseSpriteTemplateToTrainerBack(u16 species, u8 a2)
 {
-    gCreatingSpriteTemplate = gSpriteTemplate_8208288[a2];
+    gCreatingSpriteTemplate = gBattlerSpriteTemplates[a2];
     gCreatingSpriteTemplate.paletteTag = species;
     if (a2 == 0 || a2 == 2)
         gCreatingSpriteTemplate.anims = gUnknown_081ECACC[species];

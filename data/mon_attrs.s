@@ -9,28 +9,28 @@
 	.section .rodata
 
 	.align 2
-gSpriteImageTable_81E7A10:: @ 81E7A10
+gBattlerPicTable_PlayerLeft:: @ 81E7A10
 	obj_frame_tiles gSharedMem + 0x8000, 0x800
 	obj_frame_tiles gSharedMem + 0x8800, 0x800
 	obj_frame_tiles gSharedMem + 0x9000, 0x800
 	obj_frame_tiles gSharedMem + 0x9800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A30:: @ 81E7A30
+gBattlerPicTable_OpponentLeft:: @ 81E7A30
 	obj_frame_tiles gSharedMem + 0xA000, 0x800
 	obj_frame_tiles gSharedMem + 0xA800, 0x800
 	obj_frame_tiles gSharedMem + 0xB000, 0x800
 	obj_frame_tiles gSharedMem + 0xB800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A50:: @ 81E7A50
+gBattlerPicTable_PlayerRight:: @ 81E7A50
 	obj_frame_tiles gSharedMem + 0xC000, 0x800
 	obj_frame_tiles gSharedMem + 0xC800, 0x800
 	obj_frame_tiles gSharedMem + 0xD000, 0x800
 	obj_frame_tiles gSharedMem + 0xD800, 0x800
 
 	.align 2
-gSpriteImageTable_81E7A70:: @ 81E7A70
+gBattlerPicTable_OpponentRight:: @ 81E7A70
 	obj_frame_tiles gSharedMem + 0xE000, 0x800
 	obj_frame_tiles gSharedMem + 0xE800, 0x800
 	obj_frame_tiles gSharedMem + 0xF000, 0x800
@@ -103,7 +103,7 @@ gSpriteAffineAnim_81E7B58:: @ 81E7B58
 	obj_rot_scal_anim_end
 
 	.align 2
-gSpriteAffineAnimTable_81E7B70:: @ 81E7B70
+gAffineAnims_BattleSpritePlayerSide:: @ 81E7B70
 	.4byte gSpriteAffineAnim_81E7AA0
 	.4byte gSpriteAffineAnim_81E7AC0
 	.4byte gSpriteAffineAnim_81E7AD8
@@ -186,7 +186,7 @@ gSpriteAnim_81E7C5C:: @ 81E7C5C
 	obj_image_anim_end
 
 	.align 2
-gSpriteAnimTable_81E7C64:: @ 81E7C64
+gAnims_MonPic:: @ 81E7C64
 	.4byte gSpriteAnim_81E7C44
 	.4byte gSpriteAnim_81E7C4C
 	.4byte gSpriteAnim_81E7C54

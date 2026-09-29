@@ -14,17 +14,17 @@ struct MonCoords
     u8 y_offset;
 };
 
-extern const struct OamData gOamData_81F96F0;
-extern const struct OamData gOamData_81F96E8;
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A10[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A30[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A50[];
-extern const struct SpriteFrameImage gSpriteImageTable_81E7A70[];
-extern const union AffineAnimCmd *const gSpriteAffineAnimTable_81E7B70[];
+extern const struct OamData gOamData_BattleSpritePlayerSide;
+extern const struct OamData gOamData_BattleSpriteOpponentSide;
+extern const struct SpriteFrameImage gBattlerPicTable_PlayerLeft[];
+extern const struct SpriteFrameImage gBattlerPicTable_OpponentLeft[];
+extern const struct SpriteFrameImage gBattlerPicTable_PlayerRight[];
+extern const struct SpriteFrameImage gBattlerPicTable_OpponentRight[];
+extern const union AffineAnimCmd *const gAffineAnims_BattleSpritePlayerSide[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
-extern const union AnimCmd *const gSpriteAnimTable_81E7C64[];
+extern const union AnimCmd *const gAnims_MonPic[];
 extern const struct MonCoords gMonFrontPicCoords[];
 extern const struct MonCoords gMonBackPicCoords[];
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
