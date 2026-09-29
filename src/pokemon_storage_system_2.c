@@ -92,7 +92,7 @@ const u16 gPokemonStorageScrollingBGTile[] = INCBIN_U16("graphics/pokemon_storag
 
 const u8 gPokemonStorageScrollingBGTilemap[] = INCBIN_U8("graphics/pokemon_storage/scrolling_bg_map.bin.lz");
 
-const u16 sUnknownTilemap[] = {
+const u16 gUnusedPSSMenuTilemap[] = {
     0x1281,
     0x1282,
     0x1283,
@@ -131,20 +131,20 @@ const u16 sUnknownTilemap[] = {
     0x12A8
 };
 
-const u16 WaveformPalette[] = INCBIN_U16("graphics/pokemon_storage/waveform.gbapal");
+static const u16 sWaveform_Pal[] = INCBIN_U16("graphics/pokemon_storage/waveform.gbapal");
 
-const u8 WaveformTiles[] = INCBIN_U8("graphics/pokemon_storage/waveform.4bpp");
+static const u8 sWaveform_Gfx[] = INCBIN_U8("graphics/pokemon_storage/waveform.4bpp");
 
-const u16 gUnknown_083B6D74[] = INCBIN_U16("graphics/pokemon_storage/83B6D74.gbapal");
+static const u16 sPSSMenuHeader_Pal1[] = INCBIN_U16("graphics/pokemon_storage/83B6D74.gbapal");
 
-const u16 gUnknown_083B6D94[] = INCBIN_U16("graphics/pokemon_storage/83B6D94.gbapal");
+static const u16 sPSSMenuHeader_Pal2[] = INCBIN_U16("graphics/pokemon_storage/83B6D94.gbapal");
 
 struct PokemonStorageSystemData *const gPokemonStorageSystemPtr = &ePokemonStorageSystem;
 
 u8 *const gPokeStorageTileBuffer = gTileBuffer;
 
-static const struct SpritePalette gWaveformSpritePalette = {
-    WaveformPalette, 0xdacd
+static const struct SpritePalette sWaveformSpritePalette = {
+    sWaveform_Pal, 0xdacd
 };
 
 // .text
@@ -208,11 +208,11 @@ static void CB2_InitPokeStorage(void)
         gMain.state++;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6D00);
+        Text_LoadWindowTemplate(&gPSSWindowTemplate);
         gMain.state++;
         break;
     case 2:
-        InitMenuWindow(&gWindowTemplate_81E6D00);
+        InitMenuWindow(&gPSSWindowTemplate);
         Menu_EraseScreen();
         gMain.state++;
         break;
@@ -272,11 +272,11 @@ static void CB2_ReturnToPokeStorage(void)
         gMain.state++;
         break;
     case 1:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6D00);
+        Text_LoadWindowTemplate(&gPSSWindowTemplate);
         gMain.state++;
         break;
     case 2:
-        InitMenuWindow(&gWindowTemplate_81E6D00);
+        InitMenuWindow(&gPSSWindowTemplate);
         Menu_EraseScreen();
         gMain.state++;
         break;
@@ -1440,19 +1440,19 @@ static void ScrollBackground(void)
 static void InitPalettesAndSprites(void)
 {
     LZ77UnCompVram(gPSSMenuHeader_Gfx, BG_SCREEN_ADDR(10));
-    LZ77UnCompWram(gPSSMenuHeader_Tilemap, gUnknown_02039760);
-    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 0, 0, gUnknown_02039760, 0, 0, 10, 20);
+    LZ77UnCompWram(gPSSMenuHeader_Tilemap, gPSSMenuHeaderTilemapBuffer);
+    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 0, 0, gPSSMenuHeaderTilemapBuffer, 0, 0, 10, 20);
     LoadPalette(gPSSMenu1_Pal, 0x10, 0x20);
     LoadPalette(gPSSMenu2_Pal, 0x00, 0x20);
-    LoadPalette(gUnknown_083B6D74, 0xB0, 0x20);
-    LoadPalette(gUnknown_083B6D94, 0xC0, 0x20);
+    LoadPalette(sPSSMenuHeader_Pal1, 0xB0, 0x20);
+    LoadPalette(sPSSMenuHeader_Pal2, 0xC0, 0x20);
     LoadPalette(gUnknownPalette_81E6692 +  1, 0xF1, 0x02);
     LoadPalette(gUnknownPalette_81E6692 +  1, 0xF2, 0x02);
     LoadPalette(gUnknownPalette_81E6692 +  5, 0xF3, 0x02);
     LoadPalette(gUnknownPalette_81E6692 + 12, 0xF4, 0x04);
     LoadPalette(gUnknownPalette_81E6692 + 10, 0xF6, 0x04);
     LoadPalette(gUnknownPalette_81E6692 +  2, 0xFF, 0x02);
-    LoadSpritePalette(&gWaveformSpritePalette);
+    LoadSpritePalette(&sWaveformSpritePalette);
     CreateDisplayMonSprite();
     CreateMarkingComboSprite();
     CreateWaveformSprites();
@@ -1469,17 +1469,17 @@ static void CreateMarkingComboSprite(void)
     gPokemonStorageSystemPtr->markingComboTilesPtr = BG_CHAR_ADDR(4) + 32 * GetSpriteTileStartByTag(0x000d);
 }
 
-const struct SpriteTemplate gSpriteTemplate_83B6EFC;
+static const struct SpriteTemplate sSpriteTemplate_Waveform;
 
 static void CreateWaveformSprites(void)
 {
     u16 i;
-    struct SpriteSheet sheet = {WaveformTiles, 0x1c0, 0x0005};
+    struct SpriteSheet sheet = {sWaveform_Gfx, 0x1c0, 0x0005};
 
     LoadSpriteSheet(&sheet);
     for (i = 0; i < 2; i++)
     {
-        u8 spriteId = CreateSprite(&gSpriteTemplate_83B6EFC, i * 63 + 8, 9, 2);
+        u8 spriteId = CreateSprite(&sSpriteTemplate_Waveform, i * 63 + 8, 9, 2);
         gPokemonStorageSystemPtr->waveformSprites[i] = gSprites + spriteId;
     }
 }
@@ -1519,7 +1519,7 @@ static void SpriteCB_DisplayMonMosaic(struct Sprite *sprite)
 
 // CreateDisplayMonSprite
 
-const struct OamData gOamData_83B6EAC;
+static const struct OamData sOamData_DisplayMon;
 
 static void CreateDisplayMonSprite(void)
 {
@@ -1540,7 +1540,7 @@ static void CreateDisplayMonSprite(void)
     struct SpriteTemplate spriteTemplate = {
         .tileTag = 0x0002,
         .paletteTag = 0xDAC7,
-        .oam = &gOamData_83B6EAC,
+        .oam = &sOamData_DisplayMon,
         .anims = gDummySpriteAnimTable,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
@@ -1624,13 +1624,13 @@ static void UpdateWaveformAnimation(void)
 
     if (gPokemonStorageSystemPtr->displayMonSpecies)
     {
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gUnknown_02039760, 1, 0, 8, 2);
+        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 1, 0, 8, 2);
         for (i = 0; i < 2; i++)
             StartSpriteAnimIfDifferent(gPokemonStorageSystemPtr->waveformSprites[i], i * 2 + 1);
     }
     else
     {
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gUnknown_02039760, 10, 0, 8, 2);
+        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 10, 0, 8, 2);
         for (i = 0; i < 2; i++)
             StartSpriteAnim(gPokemonStorageSystemPtr->waveformSprites[i], i * 2);
     }
@@ -1896,50 +1896,50 @@ static void PrintMessage(u8 id)
     Menu_PrintText(gPokemonStorageSystemPtr->messageText, 11, 17);
 }
 
-const struct OamData gOamData_83B6EAC = {
+static const struct OamData sOamData_DisplayMon = {
     .size = 3
 };
 
-const struct OamData gOamData_83B6EB4 = {
+static const struct OamData sOamData_Waveform = {
     .shape = ST_OAM_H_RECTANGLE
 };
 
-const union AnimCmd gSpriteAnim_83B6EBC[] = {
+static const union AnimCmd sAnim_Waveform_LeftOff[] = {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83B6EC4[] = {
+static const union AnimCmd sAnim_Waveform_LeftOn[] = {
     ANIMCMD_FRAME(2, 8),
     ANIMCMD_FRAME(4, 8),
     ANIMCMD_FRAME(6, 8),
     ANIMCMD_JUMP(0)
 };
 
-const union AnimCmd gSpriteAnim_83B6ED4[] = {
+static const union AnimCmd sAnim_Waveform_RightOff[] = {
     ANIMCMD_FRAME(8, 5),
     ANIMCMD_END
 };
 
-const union AnimCmd gSpriteAnim_83B6EDC[] = {
+static const union AnimCmd sAnim_Waveform_RightOn[] = {
     ANIMCMD_FRAME(10, 8),
     ANIMCMD_FRAME( 4, 8),
     ANIMCMD_FRAME(12, 8),
     ANIMCMD_JUMP(0)
 };
 
-const union AnimCmd *const gSpriteAnimTable_83B6EEC[] = {
-    gSpriteAnim_83B6EBC,
-    gSpriteAnim_83B6EC4,
-    gSpriteAnim_83B6ED4,
-    gSpriteAnim_83B6EDC
+static const union AnimCmd *const sAnims_Waveform[] = {
+    sAnim_Waveform_LeftOff,
+    sAnim_Waveform_LeftOn,
+    sAnim_Waveform_RightOff,
+    sAnim_Waveform_RightOn
 };
 
-const struct SpriteTemplate gSpriteTemplate_83B6EFC = {
+static const struct SpriteTemplate sSpriteTemplate_Waveform = {
     0x0005,
     0xdacd,
-    &gOamData_83B6EB4,
-    gSpriteAnimTable_83B6EEC,
+    &sOamData_Waveform,
+    sAnims_Waveform,
     NULL,
     gDummySpriteAffineAnimTable,
     SpriteCallbackDummy

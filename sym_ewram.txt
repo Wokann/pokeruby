@@ -380,7 +380,7 @@ gBattleMonForms = .; /* 2024E84 */
 gTileBuffer = .; /* 2039360 */
     . += 0x400;
 
-gUnknown_02039760 = .; /* 2039760 */
+gPSSMenuHeaderTilemapBuffer = .; /* 2039760 */
     . += 0xC00;
 
 . = ALIGN(4); src/menu_cursor.o(ewram_data);

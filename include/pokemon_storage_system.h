@@ -324,7 +324,7 @@ struct PokemonStorageSystemData {
     u8 displayMonPicBuffer[0x800];
 };
 
-extern u8 gUnknown_02039760[0xC00];
+extern u8 gPSSMenuHeaderTilemapBuffer[0xC00];
 extern struct PokemonStorageSystemData *const gPokemonStorageSystemPtr;
 extern u8 *const gPokeStorageTileBuffer;
 
