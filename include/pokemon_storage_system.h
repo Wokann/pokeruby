@@ -49,7 +49,7 @@ struct PokemonStorageSystemFunc
     s8 unk4;
 };
 
-struct StorageAction {
+struct StorageMessage {
     const u8 *text;
     u8 format;
 };
@@ -92,27 +92,27 @@ struct ChooseBoxMenu {
 }; // 0244
 
 struct PokemonStorageSystemData {
-    void (*unk_0000)(void);
-    u8 unk_0004;
+    void (*callback)(void);
+    u8 state;
     u8 boxOption;
-    u8 unk_0006;
-    u8 unk_0007;
-    u16 unk_0008;
-    u16 unk_000a;
+    u8 screenChangeType;
+    u8 scrollBackgroundTimer;
+    u16 bg3_Y;
+    u16 bg3_X;
     struct PCScreenEffectStruct pcScreenEffect;
-    struct UnkStruct_2000020 unk_0020;
-    struct UnkStruct_2000028 unk_0028[8];
-    u8 unk_00a8[0x800];
-    u16 unk_08a8;
-    u16 unk_08aa;
+    struct UnkStruct_2000020 unkUtil;
+    struct UnkStruct_2000028 unkUtilData[8];
+    u8 partyMenuTilemapBuffer[0x800];
+    u16 partyMenuUnused1;
+    u16 partyMenuY;
     u8 unk_08ac;
-    u8 unk_08ad;
-    u8 unk_08ae;
-    u8 unk_08af;
-    u8 unk_08b0;
-    bool8 unk_08b1;
-    s16 unk_08b2;
-    u16 unk_08b4;
+    u8 partyMenuMoveTimer;
+    u8 showPartyMenuState;
+    u8 closeBoxFlashing;
+    u8 closeBoxFlashTimer;
+    bool8 closeBoxFlashState;
+    s16 newCurrBoxId;
+    u16 bg2_X;
     u16 unk_08b6;
     u16 unk_08b8;
     bool8 unk_08ba;
@@ -135,8 +135,8 @@ struct PokemonStorageSystemData {
     u32 unk_0d08;
     u8 filler_0d0c[0x50];
     u16 unk_0d5c;
-    s16 unk_0d5e;
-    s16 unk_0d60;
+    s16 wallpaperSetId;
+    s16 wallpaperId;
     u16 unk_0d62[360];
     u8 unk_1032;
     struct Sprite *unk_1034;
@@ -180,27 +180,27 @@ struct PokemonStorageSystemData {
     s8 unk_11e2;
     u8 unk_11e3;
     u8 unk_11e4[4];
-    const u8 *unk_11e8;
-    u32 unk_11ec;
-    u16 unk_11f0;
-    u16 unk_11f2;
+    const u8 *displayMonPalette;
+    u32 displayMonPersonality;
+    u16 displayMonSpecies;
+    u16 displayMonItemId;
     u8 filler_11f4[2];
-    u8 unk_11f6;
-    u8 unk_11f7;
-    u8 unk_11f8;
-    u8 unk_11f9;
-    u8 unk_11fa[0x15];
-    u8 unk_120f[0x25];
-    u8 unk_1234[0x25];
-    u8 unk_1259[0x21];
-    u8 unk_127a[0x2a];
-    bool8 (*unk_12a4)(void);
-    u8 unk_12a8;
-    u8 unk_12a9;
-    struct Sprite *unk_12ac;
-    struct Sprite *unk_12b0[2];
-    u16 *unk_12b8;
-    struct PokemonMarkMenu unk_12bc;
+    u8 setMosaic;
+    u8 displayMonMarkings;
+    u8 displayMonLevel;
+    u8 displayMonIsEgg;
+    u8 displayMonName[0x15];
+    u8 displayMonNameText[0x25];
+    u8 displayMonSpeciesName[0x25];
+    u8 displayMonGenderLvlText[0x21];
+    u8 displayMonItemName[0x2a];
+    bool8 (*monPlaceChangeFunc)(void);
+    u8 monPlaceChangeState;
+    u8 shiftBoxId;
+    struct Sprite *markingComboSprite;
+    struct Sprite *waveformSprites[2];
+    u16 *markingComboTilesPtr;
+    struct PokemonMarkMenu markMenu;
     struct ChooseBoxMenu chooseBoxMenu;
     struct Pokemon unk_25b4;
     struct Pokemon unk_2618;
@@ -214,24 +214,24 @@ struct PokemonStorageSystemData {
     s8 unk_2683;
     u16 unk_2684;
     u16 unk_2686[3];
-    u8 unk_268c;
-    u8 unk_268d;
-    u8 unk_268e;
+    u8 summaryMaxPos;
+    u8 summaryStartPos;
+    u8 summaryScreenMode;
     union {
         struct Pokemon *pokemon;
         struct BoxPokemon *box;
-    } unk_2690;
-    u8 unk_2694[18];
+    } summaryMon;
+    u8 messageText[18];
     u8 unk_26a6[62];
-    u8 unk_26e4[0x16];
-    u16 unk_26fa;
-    u16 *unk_26fc;
-    struct Sprite *unk_2700;
-    u16 unk_2704[0x10];
+    u8 releaseMonName[0x16];
+    u16 displayMonPalOffset;
+    u16 *displayMonTilePtr;
+    struct Sprite *displayMonSprite;
+    u16 displayMonPalBuffer[0x10];
     u8 filler_2724[0x60];
-    u8 unk_2784[0x800];
+    u8 tileBuffer[0x800];
     u8 filler_2f84[0x1800];
-    u8 unk_4784[0x800];
+    u8 displayMonPicBuffer[0x800];
 };
 
 extern u8 gUnknown_02039760[0xC00];
@@ -322,6 +322,6 @@ void sub_809D104(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sT
 bool8 sub_809D16C(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height);
 void ShowPokemonStorageSystemPC(void);
 
-void debug_sub_80A433C(struct Pokemon *pokemon, void (*func)(void));
+void Debug_OpenPokeStorageForMon(struct Pokemon *pokemon, void (*func)(void));
 
 #endif // GUARD_POKEMON_STORAGE_SYSTEM_H

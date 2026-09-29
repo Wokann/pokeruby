@@ -23,66 +23,66 @@
 
 // Static RAM declarations
 
-EWRAM_DATA u8 gUnknown_0203847C = 0;
-EWRAM_DATA u8 gUnknown_0203847D = 0;
-EWRAM_DATA u8 gUnknown_0203847E = 0;
-EWRAM_DATA u8 gUnknown_0203847F = 0;
+EWRAM_DATA u8 gPokeStorageInPartyMenu = 0;
+EWRAM_DATA u8 gPokeStorageBoxOption = 0;
+EWRAM_DATA u8 gPokeStorageDepositBoxId = 0;
+EWRAM_DATA u8 gPokeStorageScreenToReshow = 0;
 
 // Static ROM declarations
 
-void sub_8096884(void);
-void sub_8096AFC(void);
-void sub_8096B38(void);
-void SetPSSCallback(void (*func)(void));
-void sub_8096BF0(void);
-void sub_8096C68(void);
-void sub_8096C84(void);
-void sub_8096FC8(void);
-void sub_8097004(void);
-void sub_8097078(void);
-void sub_80972A8(void);
-void sub_80972FC(void);
-void c3_0808DC50(void);
-void sub_8097390(void);
-void sub_809746C(void);
-void sub_8097594(void);
-void sub_8097788(void);
-void sub_80977E4(void);
-void sub_8097858(void);
-void sub_809789C(void);
-void sub_8097974(void);
-void sub_8097A64(void);
-void sub_8097B44(void);
-void sub_8097BA0(void);
-void sub_8097CC0(void);
-void sub_8097DE0(void);
-void sub_8097E44(void);
-void sub_8097E70(void);
-void sub_8097F58(void);
-void sub_8097FB8(void);
-void sub_809801C(void);
-void BoxSetMosaic(void);
-void sub_8098090(struct Sprite *sprite);
-void sub_80980D4(void);
-void sub_80981F0(u16 species, u32 pid);
-void sub_80982B4(void);
-void sub_8098350(void);
-void sub_8098400(void);
-void add_to_c3_somehow(void);
-void sub_8098780(void);
-void sub_8098690(bool8 flag);
-bool8 sub_80985CC(void);
-void sub_80986E8(void);
-void sub_8098710(void);
-void sub_8098734(void);
-void sub_80987DC(void);
-void sub_809880C(void);
-bool8 sub_8098830(void);
-void PrintStorageActionText(u8 index);
-void sub_8098A38(s8);
-void sub_8098A5C(void);
-void sub_8098A80(void);
-void sub_8098AA8(u8 a0);
+static void CB2_InitPokeStorage(void);
+static void VBlankCB_PokeStorage(void);
+static void CB2_PokeStorage(void);
+static void SetPokeStorageCallback(void (*func)(void));
+static void Task_ShowPokeStorage(void);
+static void Task_ReshowPokeStorage(void);
+static void Task_PokeStorageMain(void);
+static void Task_ShowPartyPokemon(void);
+static void Task_HidePartyPokemon(void);
+static void Task_OnSelectedMon(void);
+static void Task_MoveMon(void);
+static void Task_PlaceMon(void);
+static void Task_ShiftMon(void);
+static void Task_WithdrawMon(void);
+static void Task_DepositMenu(void);
+static void Task_ReleaseMon(void);
+static void Task_ShowMonSummary(void);
+static void Task_ShowMarkMenu(void);
+static void Task_HandleMovingMonFromParty(void);
+static void Task_HandleBoxOptions(void);
+static void Task_HandleWallpapers(void);
+static void Task_JumpBox(void);
+static void Task_NameBox(void);
+static void Task_OnCloseBoxPressed(void);
+static void Task_OnBPressed(void);
+static void SetScrollingBackground(void);
+static void ScrollBackground(void);
+static void InitPalettesAndSprites(void);
+static void CreateMarkingComboSprite(void);
+static void CreateWaveformSprites(void);
+static void RefreshDisplayMonData(void);
+static void StartDisplayMonMosaicEffect(void);
+static void SpriteCB_DisplayMonMosaic(struct Sprite *sprite);
+static void CreateDisplayMonSprite(void);
+static void LoadDisplayMonGfx(u16 species, u32 pid);
+static void PrintDisplayMonInfo(void);
+static void UpdateWaveformAnimation(void);
+static void InitSupplementalTilemaps(void);
+static void SetUpHidePartyMenu(void);
+static void SetPartySlotTilemaps(void);
+static void UpdateCloseBoxButtonTilemap(bool8 flag);
+static bool8 HidePartyMenu(void);
+static void StartFlashingCloseBoxButton(void);
+static void StopFlashingCloseBoxButton(void);
+static void UpdateCloseBoxButtonFlash(void);
+static void UpdatePartySlotColors(void);
+static void SetUpDoShowPartyMenu(void);
+static bool8 DoShowPartyMenu(void);
+static void PrintMessage(u8 index);
+static void ShowYesNoWindow(s8);
+static void ClearBottomWindow(void);
+static void AddWallpaperSetsMenu(void);
+static void AddWallpapersMenu(u8 a0);
 
 // .rodata
 
@@ -143,7 +143,7 @@ struct PokemonStorageSystemData *const gPokemonStorageSystemPtr = &ePokemonStora
 
 u8 *const gUnknown_083B6DB8 = gTileBuffer;
 
-const struct SpritePalette gWaveformSpritePalette = {
+static const struct SpritePalette gWaveformSpritePalette = {
     WaveformPalette, 0xdacd
 };
 
@@ -151,12 +151,12 @@ const struct SpritePalette gWaveformSpritePalette = {
 
 void EnterPokeStorage(u8 whichMenu)
 {
-    gUnknown_0203847D = whichMenu;
+    gPokeStorageBoxOption = whichMenu;
     gPokemonStorageSystemPtr->boxOption = whichMenu;
-    SetMainCallback2(sub_8096884);
+    SetMainCallback2(CB2_InitPokeStorage);
 }
 
-void sub_80967DC(void)
+static void ResetAllBgCoords(void)
 {
     REG_BG0HOFS = 0;
     REG_BG0VOFS = 0;
@@ -168,7 +168,7 @@ void sub_80967DC(void)
     REG_BG3VOFS = 0;
 }
 
-void sub_8096804(void)
+static void ResetForPokeStorage(void)
 {
     ResetPaletteFade();
     ResetSpriteData();
@@ -176,34 +176,34 @@ void sub_8096804(void)
     FreeAllSpritePalettes();
     ResetTasks();
     gReservedSpriteTileCount = 0x280;
-    sub_809CFDC(&gPokemonStorageSystemPtr->unk_0020, gPokemonStorageSystemPtr->unk_0028, 8);
+    sub_809CFDC(&gPokemonStorageSystemPtr->unkUtil, gPokemonStorageSystemPtr->unkUtilData, 8);
     gKeyRepeatStartDelay = 20;
 }
 
-void sub_8096848(void)
+static void InitStartingPosData(void)
 {
     sub_809B0D4();
-    gUnknown_0203847C = (gPokemonStorageSystemPtr->boxOption == 1 ? 1 : 0);
-    gUnknown_0203847E = 0;
+    gPokeStorageInPartyMenu = (gPokemonStorageSystemPtr->boxOption == 1 ? 1 : 0);
+    gPokeStorageDepositBoxId = 0;
 }
 
-void sub_8096874(void)
+static void SetMonIconTransparency(void)
 {
     REG_DISPCNT = DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_ON;
 }
 
-extern u8 unk_2038790;
+extern u8 gDebugPokeStorageActive;
 
-void sub_8096884(void)
+static void CB2_InitPokeStorage(void)
 {
     switch (gMain.state)
     {
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        sub_8096804();
+        ResetForPokeStorage();
 #if DEBUG
-        unk_2038790 = 0;
+        gDebugPokeStorageActive = 0;
 #endif
         gMain.state++;
         break;
@@ -217,8 +217,8 @@ void sub_8096884(void)
         gMain.state++;
         break;
     case 3:
-        sub_80967DC();
-        sub_8096848();
+        ResetAllBgCoords();
+        InitStartingPosData();
         gMain.state++;
         break;
     case 4:
@@ -227,47 +227,47 @@ void sub_8096884(void)
         gMain.state++;
         break;
     case 5:
-        sub_8097DE0();
+        SetScrollingBackground();
         gMain.state++;
         break;
     case 6:
-        sub_8097E70();
+        InitPalettesAndSprites();
         gMain.state++;
         break;
     case 7:
-        sub_8098400();
+        InitSupplementalTilemaps();
         gMain.state++;
         break;
     case 8:
         sub_8099BF8(gPokemonStorage.currentBox);
-        gPokemonStorageSystemPtr->unk_12bc.baseTileTag = 0x000a;
-        gPokemonStorageSystemPtr->unk_12bc.basePaletteTag = 0xdacb;
-        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->unk_12bc);
+        gPokemonStorageSystemPtr->markMenu.baseTileTag = 0x000a;
+        gPokemonStorageSystemPtr->markMenu.basePaletteTag = 0xdacb;
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->markMenu);
         BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
-        sub_8096874();
-        SetPSSCallback(sub_8096BF0);
-        SetMainCallback2(sub_8096B38);
-        SetVBlankCallback(sub_8096AFC);
+        SetMonIconTransparency();
+        SetPokeStorageCallback(Task_ShowPokeStorage);
+        SetMainCallback2(CB2_PokeStorage);
+        SetVBlankCallback(VBlankCB_PokeStorage);
         gMain.state++;
         break;
     }
 }
 
-void sub_80969A0(void)
+static void CB2_ReturnToPokeStorage(void)
 {
     switch (gMain.state)
     {
     case 0:
         SetVBlankCallback(NULL);
         REG_DISPCNT = 0;
-        gPokemonStorageSystemPtr->boxOption = gUnknown_0203847D;
-        sub_8096804();
-        if (gUnknown_0203847F == 1)
+        gPokemonStorageSystemPtr->boxOption = gPokeStorageBoxOption;
+        ResetForPokeStorage();
+        if (gPokeStorageScreenToReshow == 1)
             sub_809BBC0();
-        if (gUnknown_0203847F == 0)
+        if (gPokeStorageScreenToReshow == 0)
             sub_809BD14();
         gMain.state++;
         break;
@@ -281,7 +281,7 @@ void sub_80969A0(void)
         gMain.state++;
         break;
     case 3:
-        sub_80967DC();
+        ResetAllBgCoords();
         gMain.state++;
         break;
     case 4:
@@ -290,34 +290,34 @@ void sub_80969A0(void)
         gMain.state++;
         break;
     case 5:
-        sub_8097DE0();
+        SetScrollingBackground();
         gMain.state++;
         break;
     case 6:
-        sub_8097E70();
+        InitPalettesAndSprites();
         gMain.state++;
         break;
     case 7:
-        sub_8098400();
+        InitSupplementalTilemaps();
         gMain.state++;
         break;
     case 8:
         sub_8099BF8(gPokemonStorage.currentBox);
-        gPokemonStorageSystemPtr->unk_12bc.baseTileTag = 0x000a;
-        gPokemonStorageSystemPtr->unk_12bc.basePaletteTag = 0xdacb;
-        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->unk_12bc);
+        gPokemonStorageSystemPtr->markMenu.baseTileTag = 0x000a;
+        gPokemonStorageSystemPtr->markMenu.basePaletteTag = 0xdacb;
+        InitMonMarkingsMenu(&gPokemonStorageSystemPtr->markMenu);
         BufferMonMarkingsMenuTiles();
         gMain.state++;
         break;
     case 9:
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
-        SetVBlankCallback(sub_8096AFC);
+        SetVBlankCallback(VBlankCB_PokeStorage);
         gMain.state++;
         break;
     case 10:
-        sub_8096874();
-        SetPSSCallback(sub_8096C68);
-        SetMainCallback2(sub_8096B38);
+        SetMonIconTransparency();
+        SetPokeStorageCallback(Task_ReshowPokeStorage);
+        SetMainCallback2(CB2_PokeStorage);
         gMain.state++;
         break;
     }
@@ -325,91 +325,91 @@ void sub_80969A0(void)
 
 #if DEBUG
 
-void debug_sub_80A4300(void)
+static void Debug_InitPokeStorage(void)
 {
-    gUnknown_0203847D = 0;
+    gPokeStorageBoxOption = 0;
     gPokemonStorageSystemPtr->boxOption = 0;
-    sub_8096884();
-    if (gMain.callback2 == sub_8096B38)
-        unk_2038790 = 1;
+    CB2_InitPokeStorage();
+    if (gMain.callback2 == CB2_PokeStorage)
+        gDebugPokeStorageActive = 1;
 }
 
-extern void (*unk_2038794)(void);
-extern struct Pokemon * unk_2038798;
+extern void (*gDebugPokeStorageReturnCallback)(void);
+extern struct Pokemon * gDebugPokeStorageMon;
 
 extern void sub_809CB94(struct Pokemon *);
 
-void debug_sub_80A433C(struct Pokemon * a, void (*b)(void))
+void Debug_OpenPokeStorageForMon(struct Pokemon *mon, void (*returnCallback)(void))
 {
-    unk_2038794 = b;
-    unk_2038798 = a;
-    SetMainCallback2(debug_sub_80A4300);
+    gDebugPokeStorageReturnCallback = returnCallback;
+    gDebugPokeStorageMon = mon;
+    SetMainCallback2(Debug_InitPokeStorage);
 }
 
-void debug_sub_80A435C(void)
+static void Debug_ReturnFromPokeStorage(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_809CB94(unk_2038798);
+        sub_809CB94(gDebugPokeStorageMon);
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!UpdatePaletteFade())
-            unk_2038794();
+            gDebugPokeStorageReturnCallback();
         break;
     }
 }
 
 #endif
 
-void sub_8096AFC(void)
+static void VBlankCB_PokeStorage(void)
 {
-    REG_BG2HOFS = gPokemonStorageSystemPtr->unk_08b4;
-    REG_BG3HOFS = gPokemonStorageSystemPtr->unk_000a;
-    REG_BG3VOFS = gPokemonStorageSystemPtr->unk_0008;
+    REG_BG2HOFS = gPokemonStorageSystemPtr->bg2_X;
+    REG_BG3HOFS = gPokemonStorageSystemPtr->bg3_X;
+    REG_BG3VOFS = gPokemonStorageSystemPtr->bg3_Y;
     LoadOam();
     ProcessSpriteCopyRequests();
     sub_809CFF0();
     TransferPlttBuffer();
 }
 
-void sub_8096B38(void)
+static void CB2_PokeStorage(void)
 {
-    gPokemonStorageSystemPtr->unk_0000();
-    sub_8097E44();
-    sub_8098734();
+    gPokemonStorageSystemPtr->callback();
+    ScrollBackground();
+    UpdateCloseBoxButtonFlash();
     AnimateSprites();
     BuildOamBuffer();
 }
 
-void sub_8096B5C(void)
+static void CB2_ChangePokeStorageScreen(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0006)
+    switch (gPokemonStorageSystemPtr->screenChangeType)
     {
     case 0:
-        ShowPokemonSummaryScreen(gPokemonStorageSystemPtr->unk_2690.pokemon, gPokemonStorageSystemPtr->unk_268d, gPokemonStorageSystemPtr->unk_268c, sub_80969A0, gPokemonStorageSystemPtr->unk_268e);
+        ShowPokemonSummaryScreen(gPokemonStorageSystemPtr->summaryMon.pokemon, gPokemonStorageSystemPtr->summaryStartPos, gPokemonStorageSystemPtr->summaryMaxPos, CB2_ReturnToPokeStorage, gPokemonStorageSystemPtr->summaryScreenMode);
         break;
     case 1:
-        DoNamingScreen(NAMING_SCREEN_BOX, gPokemonStorage.boxNames[gPokemonStorage.currentBox], 0, 0, 0, sub_80969A0);
+        DoNamingScreen(NAMING_SCREEN_BOX, gPokemonStorage.boxNames[gPokemonStorage.currentBox], 0, 0, 0, CB2_ReturnToPokeStorage);
         break;
     }
 }
 
-void SetPSSCallback(void (*func)(void))
+static void SetPokeStorageCallback(void (*func)(void))
 {
-    gPokemonStorageSystemPtr->unk_0000 = func;
-    gPokemonStorageSystemPtr->unk_0004 = 0;
+    gPokemonStorageSystemPtr->callback = func;
+    gPokemonStorageSystemPtr->state = 0;
 }
 
-void sub_8096BF0(void)
+static void Task_ShowPokeStorage(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         BlendPalettes(0xFFFFFFFF, 16, RGB(0, 0, 0));
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         PlaySE(SE_PC_LOGIN);
@@ -419,138 +419,138 @@ void sub_8096BF0(void)
         gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
         StartPCScreenOpenEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
         BlendPalettes(0xFFFFFFFF, 0, RGB(0, 0, 0));
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 2:
         if (UpdatePCScreenOpenEffect())
-            SetPSSCallback(sub_8096C84);
+            SetPokeStorageCallback(Task_PokeStorageMain);
         break;
     }
 }
 
-void sub_8096C68(void)
+static void Task_ReshowPokeStorage(void)
 {
     if (!UpdatePaletteFade())
-        SetPSSCallback(sub_8096C84);
+        SetPokeStorageCallback(Task_PokeStorageMain);
 }
 
-void sub_8096C84(void)
+static void Task_PokeStorageMain(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         switch (sub_809CA40())
         {
         case 1:
             PlaySE(SE_SELECT);
-            gPokemonStorageSystemPtr->unk_0004 = 1;
+            gPokemonStorageSystemPtr->state = 1;
             break;
         case 5:
             if (gPokemonStorageSystemPtr->boxOption != 2)
             {
-                PrintStorageActionText(PC_TEXT_WHICH_ONE_WILL_TAKE);
-                gPokemonStorageSystemPtr->unk_0004 = 3;
+                PrintMessage(PC_TEXT_WHICH_ONE_WILL_TAKE);
+                gPokemonStorageSystemPtr->state = 3;
             }
             else
             {
                 sub_809B0D4();
-                SetPSSCallback(sub_8096FC8);
+                SetPokeStorageCallback(Task_ShowPartyPokemon);
             }
             break;
         case 6:
             if (gPokemonStorageSystemPtr->boxOption == 2)
             {
-                if (sub_809BF20() && ItemIsMail(gPokemonStorageSystemPtr->unk_11f2))
-                    gPokemonStorageSystemPtr->unk_0004 = 5;
+                if (sub_809BF20() && ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
+                    gPokemonStorageSystemPtr->state = 5;
                 else
-                    SetPSSCallback(sub_8097004);
+                    SetPokeStorageCallback(Task_HidePartyPokemon);
             }
             break;
         case 4:
 #if DEBUG
-            if (unk_2038790 != 0)
+            if (gDebugPokeStorageActive != 0)
                 break;
 #endif
-            SetPSSCallback(sub_8097BA0);
+            SetPokeStorageCallback(Task_OnCloseBoxPressed);
             break;
         case 16:
 #if DEBUG
-            if (unk_2038790 != 0)
+            if (gDebugPokeStorageActive != 0)
                 break;
 #endif
-            SetPSSCallback(sub_8097CC0);
+            SetPokeStorageCallback(Task_OnBPressed);
             break;
         case 7:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_809789C);
+            SetPokeStorageCallback(Task_HandleBoxOptions);
             break;
         case 8:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_8097078);
+            SetPokeStorageCallback(Task_OnSelectedMon);
             break;
         case 9:
             PlaySE(SE_SELECT);
-            gPokemonStorageSystemPtr->unk_08b2 = gPokemonStorage.currentBox + 1;
-            if (gPokemonStorageSystemPtr->unk_08b2 > 13)
-                gPokemonStorageSystemPtr->unk_08b2 = 0;
-            sub_8099C70(gPokemonStorageSystemPtr->unk_08b2);
-            gPokemonStorageSystemPtr->unk_0004 = 2;
+            gPokemonStorageSystemPtr->newCurrBoxId = gPokemonStorage.currentBox + 1;
+            if (gPokemonStorageSystemPtr->newCurrBoxId > 13)
+                gPokemonStorageSystemPtr->newCurrBoxId = 0;
+            sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+            gPokemonStorageSystemPtr->state = 2;
             break;
         case 10:
             PlaySE(SE_SELECT);
-            gPokemonStorageSystemPtr->unk_08b2 = gPokemonStorage.currentBox - 1;
-            if (gPokemonStorageSystemPtr->unk_08b2 < 0)
-                gPokemonStorageSystemPtr->unk_08b2 = 13;
-            sub_8099C70(gPokemonStorageSystemPtr->unk_08b2);
-            gPokemonStorageSystemPtr->unk_0004 = 2;
+            gPokemonStorageSystemPtr->newCurrBoxId = gPokemonStorage.currentBox - 1;
+            if (gPokemonStorageSystemPtr->newCurrBoxId < 0)
+                gPokemonStorageSystemPtr->newCurrBoxId = 13;
+            sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+            gPokemonStorageSystemPtr->state = 2;
             break;
         case 11:
             if (!sub_809BE80())
             {
-                if (ItemIsMail(gPokemonStorageSystemPtr->unk_11f2))
+                if (ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
                 {
-                    gPokemonStorageSystemPtr->unk_0004 = 5;
+                    gPokemonStorageSystemPtr->state = 5;
                 }
                 else
                 {
                     PlaySE(SE_SELECT);
-                    SetPSSCallback(sub_809746C);
+                    SetPokeStorageCallback(Task_DepositMenu);
                 }
             }
             else
             {
-                gPokemonStorageSystemPtr->unk_0004 = 4;
+                gPokemonStorageSystemPtr->state = 4;
             }
             break;
         case 13:
             if (sub_809BE80())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 4;
+                gPokemonStorageSystemPtr->state = 4;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                SetPSSCallback(sub_80972A8);
+                SetPokeStorageCallback(Task_MoveMon);
             }
             break;
         case 14:
             if (!sub_809BEBC())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 4;
+                gPokemonStorageSystemPtr->state = 4;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                SetPSSCallback(c3_0808DC50);
+                SetPokeStorageCallback(Task_ShiftMon);
             }
             break;
         case 12:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_8097390);
+            SetPokeStorageCallback(Task_WithdrawMon);
             break;
         case 15:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_80972FC);
+            SetPokeStorageCallback(Task_PlaceMon);
             break;
         }
         break;
@@ -558,417 +558,417 @@ void sub_8096C84(void)
         if (!sub_809AC00())
         {
             if (sub_809BF48())
-                sub_80986E8();
+                StartFlashingCloseBoxButton();
             else
-                sub_8098710();
-            if (gPokemonStorageSystemPtr->unk_11f6)
-                BoxSetMosaic();
-            gPokemonStorageSystemPtr->unk_0004 = 0;
+                StopFlashingCloseBoxButton();
+            if (gPokemonStorageSystemPtr->setMosaic)
+                StartDisplayMonMosaicEffect();
+            gPokemonStorageSystemPtr->state = 0;
         }
         break;
     case 2:
         if (!sub_8099D34())
         {
-            gPokemonStorage.currentBox = gPokemonStorageSystemPtr->unk_08b2;
-            if (!gUnknown_0203847C && !sub_809BF20())
+            gPokemonStorage.currentBox = gPokemonStorageSystemPtr->newCurrBoxId;
+            if (!gPokeStorageInPartyMenu && !sub_809BF20())
             {
                 sub_809B440();
-                BoxSetMosaic();
+                StartDisplayMonMosaicEffect();
             }
-            gPokemonStorageSystemPtr->unk_0004 = 0;
+            gPokemonStorageSystemPtr->state = 0;
         }
         break;
     case 3:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            gPokemonStorageSystemPtr->unk_0004 = 0;
+            ClearBottomWindow();
+            gPokemonStorageSystemPtr->state = 0;
         }
         break;
     case 4:
         PlaySE(SE_FAILURE);
-        PrintStorageActionText(PC_TEXT_LAST_POKE);
-        gPokemonStorageSystemPtr->unk_0004 = 6;
+        PrintMessage(PC_TEXT_LAST_POKE);
+        gPokemonStorageSystemPtr->state = 6;
         break;
     case 5:
         PlaySE(SE_FAILURE);
-        PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
-        gPokemonStorageSystemPtr->unk_0004 = 6;
+        PrintMessage(PC_TEXT_PLEASE_REMOVE_MAIL);
+        gPokemonStorageSystemPtr->state = 6;
         break;
     case 6:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8096FC8(void)
+static void Task_ShowPartyPokemon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
         case 0:
-            sub_809880C();
-            gPokemonStorageSystemPtr->unk_0004++;
+            SetUpDoShowPartyMenu();
+            gPokemonStorageSystemPtr->state++;
             break;
         case 1:
-            if (!sub_8098830())
-                SetPSSCallback(sub_8096C84);
+            if (!DoShowPartyMenu())
+                SetPokeStorageCallback(Task_PokeStorageMain);
             break;
     }
 }
 
-void sub_8097004(void)
+static void Task_HidePartyPokemon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
         case 0:
             PlaySE(SE_SELECT);
-            add_to_c3_somehow();
-            gPokemonStorageSystemPtr->unk_0004++;
+            SetUpHidePartyMenu();
+            gPokemonStorageSystemPtr->state++;
             break;
         case 1:
-            if (!sub_80985CC())
+            if (!HidePartyMenu())
             {
                 sub_809B0C0(sub_809B0F4());
-                gPokemonStorageSystemPtr->unk_0004++;
+                gPokemonStorageSystemPtr->state++;
             }
             break;
         case 2:
             if (!sub_809AC00())
             {
-                if (gPokemonStorageSystemPtr->unk_11f6)
-                    BoxSetMosaic();
-                SetPSSCallback(sub_8096C84);
+                if (gPokemonStorageSystemPtr->setMosaic)
+                    StartDisplayMonMosaicEffect();
+                SetPokeStorageCallback(Task_PokeStorageMain);
             }
             break;
     }
 }
 
-void sub_8097078(void)
+static void Task_OnSelectedMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_IS_SELECTED);
+        PrintMessage(PC_TEXT_IS_SELECTED);
         sub_809CE84();
-        gPokemonStorageSystemPtr->unk_0004 = 1;
+        gPokemonStorageSystemPtr->state = 1;
         break;
     case 1:
         switch (sub_809CF30())
         {
         case -1:
         case  0:
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
             break;
         case 3:
             if (sub_809BE80())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 2;
+                gPokemonStorageSystemPtr->state = 2;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                sub_8098A5C();
-                SetPSSCallback(sub_80972A8);
+                ClearBottomWindow();
+                SetPokeStorageCallback(Task_MoveMon);
             }
             break;
         case 5:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            SetPSSCallback(sub_80972FC);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PlaceMon);
             break;
         case 4:
             if (!sub_809BEBC())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 2;
+                gPokemonStorageSystemPtr->state = 2;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                sub_8098A5C();
-                SetPSSCallback(c3_0808DC50);
+                ClearBottomWindow();
+                SetPokeStorageCallback(Task_ShiftMon);
             }
             break;
         case 2:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            SetPSSCallback(sub_8097390);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_WithdrawMon);
             break;
         case 1:
             if (sub_809BE80())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 2;
+                gPokemonStorageSystemPtr->state = 2;
             }
-            else if (ItemIsMail(gPokemonStorageSystemPtr->unk_11f2))
+            else if (ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
             {
-                gPokemonStorageSystemPtr->unk_0004 = 3;
+                gPokemonStorageSystemPtr->state = 3;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                sub_8098A5C();
-                SetPSSCallback(sub_809746C);
+                ClearBottomWindow();
+                SetPokeStorageCallback(Task_DepositMenu);
             }
             break;
         case 7:
             if (sub_809BE80())
             {
-                gPokemonStorageSystemPtr->unk_0004 = 2;
+                gPokemonStorageSystemPtr->state = 2;
             }
-            else if (gPokemonStorageSystemPtr->unk_11f9)
+            else if (gPokemonStorageSystemPtr->displayMonIsEgg)
             {
-                gPokemonStorageSystemPtr->unk_0004 = 4;
+                gPokemonStorageSystemPtr->state = 4;
             }
-            else if (ItemIsMail(gPokemonStorageSystemPtr->unk_11f2))
+            else if (ItemIsMail(gPokemonStorageSystemPtr->displayMonItemId))
             {
-                gPokemonStorageSystemPtr->unk_0004 = 3;
+                gPokemonStorageSystemPtr->state = 3;
             }
             else
             {
                 PlaySE(SE_SELECT);
-                SetPSSCallback(sub_8097594);
+                SetPokeStorageCallback(Task_ReleaseMon);
             }
             break;
         case 6:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_8097788);
+            SetPokeStorageCallback(Task_ShowMonSummary);
             break;
         case 8:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_80977E4);
+            SetPokeStorageCallback(Task_ShowMarkMenu);
             break;
 #if DEBUG
         case 32:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            SetPSSCallback(debug_sub_80A435C);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Debug_ReturnFromPokeStorage);
             break;
 #endif
         }
         break;
     case 2:
         PlaySE(SE_FAILURE);
-        PrintStorageActionText(PC_TEXT_LAST_POKE);
-        gPokemonStorageSystemPtr->unk_0004 = 5;
+        PrintMessage(PC_TEXT_LAST_POKE);
+        gPokemonStorageSystemPtr->state = 5;
         break;
     case 4:
         PlaySE(SE_FAILURE);
-        PrintStorageActionText(PC_TEXT_CANT_RELEASE_EGG);
-        gPokemonStorageSystemPtr->unk_0004 = 5;
+        PrintMessage(PC_TEXT_CANT_RELEASE_EGG);
+        gPokemonStorageSystemPtr->state = 5;
         break;
     case 3:
         PlaySE(SE_FAILURE);
-        PrintStorageActionText(PC_TEXT_PLEASE_REMOVE_MAIL);
-        gPokemonStorageSystemPtr->unk_0004 = 5;
+        PrintMessage(PC_TEXT_PLEASE_REMOVE_MAIL);
+        gPokemonStorageSystemPtr->state = 5;
         break;
     case 5:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_80972A8(void)
+static void Task_MoveMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         sub_809B100(0);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!sub_809B130())
         {
-            if (gUnknown_0203847C)
-                SetPSSCallback(sub_8097858);
+            if (gPokeStorageInPartyMenu)
+                SetPokeStorageCallback(Task_HandleMovingMonFromParty);
             else
-                SetPSSCallback(sub_8096C84);
+                SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_80972FC(void)
+static void Task_PlaceMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         sub_809B100(1);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!sub_809B130())
         {
-            if (gUnknown_0203847C)
-                SetPSSCallback(sub_8097858);
+            if (gPokeStorageInPartyMenu)
+                SetPokeStorageCallback(Task_HandleMovingMonFromParty);
             else
-                SetPSSCallback(sub_8096C84);
+                SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void c3_0808DC50(void)
+static void Task_ShiftMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         sub_809B100(2);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!sub_809B130())
         {
-            BoxSetMosaic();
-            SetPSSCallback(sub_8096C84);
+            StartDisplayMonMosaicEffect();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8097390(void)
+static void Task_WithdrawMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         if (CalculatePlayerPartyCount() == 6)
         {
-            PrintStorageActionText(PC_TEXT_PARTY_FULL);
-            gPokemonStorageSystemPtr->unk_0004 = 1;
+            PrintMessage(PC_TEXT_PARTY_FULL);
+            gPokemonStorageSystemPtr->state = 1;
         }
         else
         {
             sub_809B0E0();
             sub_809B100(0);
-            gPokemonStorageSystemPtr->unk_0004 = 2;
+            gPokemonStorageSystemPtr->state = 2;
         }
         break;
     case 1:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     case 2:
         if (!sub_809B130())
         {
-            sub_809880C();
-            gPokemonStorageSystemPtr->unk_0004++;
+            SetUpDoShowPartyMenu();
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 3:
-        if (!sub_8098830())
+        if (!DoShowPartyMenu())
         {
             sub_809B100(1);
-            gPokemonStorageSystemPtr->unk_0004++;
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 4:
         if (!sub_809B130())
         {
-            sub_80987DC();
-            gPokemonStorageSystemPtr->unk_0004++;
+            UpdatePartySlotColors();
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 5:
-        SetPSSCallback(sub_8097004);
+        SetPokeStorageCallback(Task_HidePartyPokemon);
         break;
     }
 }
 
-void sub_809746C(void)
+static void Task_DepositMenu(void)
 {
     u8 r4;
 
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
+        PrintMessage(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
         LoadChooseBoxMenuGfx(&gPokemonStorageSystemPtr->chooseBoxMenu, 0x0007, 0xdaca, 3);
-        CreateChooseBoxMenuSprites(gUnknown_0203847E);
-        gPokemonStorageSystemPtr->unk_0004++;
+        CreateChooseBoxMenuSprites(gPokeStorageDepositBoxId);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         r4 = HandleChooseBoxMenuInput();
         if (r4 == BOXID_NONE_CHOSEN);
         else if (r4 == BOXID_CANCELED)
         {
-            sub_8098A5C();
+            ClearBottomWindow();
             DestroyChooseBoxMenuSprites();
             FreeChooseBoxMenu();
-            SetPSSCallback(sub_8096C84);
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         else
         {
             if (sub_809B62C(r4))
             {
-                sub_8098A5C();
+                ClearBottomWindow();
                 DestroyChooseBoxMenuSprites();
                 FreeChooseBoxMenu();
-                gPokemonStorageSystemPtr->unk_0004 = 2;
+                gPokemonStorageSystemPtr->state = 2;
             }
             else
             {
-                PrintStorageActionText(PC_TEXT_BOX_IS_FULL);
-                gPokemonStorageSystemPtr->unk_0004 = 4;
+                PrintMessage(PC_TEXT_BOX_IS_FULL);
+                gPokemonStorageSystemPtr->state = 4;
             }
-            gUnknown_0203847E = r4;
+            gPokeStorageDepositBoxId = r4;
         }
         break;
     case 2:
         CompactPartySlots();
         sub_8099310();
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 3:
         if (sub_8099374() == 0)
         {
             sub_809B6BC();
-            BoxSetMosaic();
-            sub_80987DC();
-            SetPSSCallback(sub_8096C84);
+            StartDisplayMonMosaicEffect();
+            UpdatePartySlotColors();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     case 4:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            PrintStorageActionText(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
-            gPokemonStorageSystemPtr->unk_0004 = 1;
+            PrintMessage(PC_TEXT_DEPOSIT_IN_WHICH_BOX);
+            gPokemonStorageSystemPtr->state = 1;
         }
         break;
     }
 }
 
-void sub_8097594(void)
+static void Task_ReleaseMon(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_RELEASE_POKE);
-        sub_8098A38(1);
-        gPokemonStorageSystemPtr->unk_0004++;
+        PrintMessage(PC_TEXT_RELEASE_POKE);
+        ShowYesNoWindow(1);
+        gPokemonStorageSystemPtr->state++;
         // fallthrough
     case 1:
         switch (Menu_ProcessInputNoWrap())
         {
             case -1:
             case  1:
-                sub_8098A5C();
-                SetPSSCallback(sub_8096C84);
+                ClearBottomWindow();
+                SetPokeStorageCallback(Task_PokeStorageMain);
                 break;
             case  0:
-                sub_8098A5C();
+                ClearBottomWindow();
                 sub_809B7D4();
                 sub_809B6DC();
-                gPokemonStorageSystemPtr->unk_0004++;
+                gPokemonStorageSystemPtr->state++;
                 break;
         }
         break;
@@ -981,12 +981,12 @@ void sub_8097594(void)
                 s8 r0 = sub_809B960();
                 if (r0 == 1)
                 {
-                    gPokemonStorageSystemPtr->unk_0004++;
+                    gPokemonStorageSystemPtr->state++;
                     break;
                 }
                 if (r0 == 0)
                 {
-                    gPokemonStorageSystemPtr->unk_0004 = 8;
+                    gPokemonStorageSystemPtr->state = 8;
                     break;
                 }
             }
@@ -994,30 +994,30 @@ void sub_8097594(void)
         break;
     case 3:
         sub_809B760();
-        sub_809801C();
-        PrintStorageActionText(PC_TEXT_WAS_RELEASED);
-        gPokemonStorageSystemPtr->unk_0004++;
+        RefreshDisplayMonData();
+        PrintMessage(PC_TEXT_WAS_RELEASED);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 4:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            PrintStorageActionText(PC_TEXT_BYE_BYE);
-            gPokemonStorageSystemPtr->unk_0004++;
+            PrintMessage(PC_TEXT_BYE_BYE);
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 5:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            sub_8098A5C();
-            if (gUnknown_0203847C)
+            ClearBottomWindow();
+            if (gPokeStorageInPartyMenu)
             {
                 CompactPartySlots();
                 sub_8099310();
-                gPokemonStorageSystemPtr->unk_0004++;
+                gPokemonStorageSystemPtr->state++;
             }
             else
             {
-                gPokemonStorageSystemPtr->unk_0004 = 7;
+                gPokemonStorageSystemPtr->state = 7;
             }
         }
         break;
@@ -1025,128 +1025,128 @@ void sub_8097594(void)
         if (sub_8099374() == 0)
         {
             sub_809B440();
-            BoxSetMosaic();
-            sub_80987DC();
-            gPokemonStorageSystemPtr->unk_0004++;
+            StartDisplayMonMosaicEffect();
+            UpdatePartySlotColors();
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 7:
-        SetPSSCallback(sub_8096C84);
+        SetPokeStorageCallback(Task_PokeStorageMain);
         break;
     case 8:
-        PrintStorageActionText(PC_TEXT_WAS_RELEASED);
-        gPokemonStorageSystemPtr->unk_0004++;
+        PrintMessage(PC_TEXT_WAS_RELEASED);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 9:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            PrintStorageActionText(PC_TEXT_SURPRISE);
-            gPokemonStorageSystemPtr->unk_0004++;
+            PrintMessage(PC_TEXT_SURPRISE);
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 10:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            sub_8098A5C();
+            ClearBottomWindow();
             sub_8099958();
-            gPokemonStorageSystemPtr->unk_0004++;
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 11:
         if (!sub_8099990())
         {
             sub_809B7AC();
-            PrintStorageActionText(PC_TEXT_CAME_BACK);
-            gPokemonStorageSystemPtr->unk_0004++;
+            PrintMessage(PC_TEXT_CAME_BACK);
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 12:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            PrintStorageActionText(PC_TEXT_WORRIED);
-            gPokemonStorageSystemPtr->unk_0004++;
+            PrintMessage(PC_TEXT_WORRIED);
+            gPokemonStorageSystemPtr->state++;
         }
         break;
     case 13:
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8097788(void)
+static void Task_ShowMonSummary(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         sub_809BC18();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!UpdatePaletteFade())
         {
-            gUnknown_0203847F = 0;
-            gPokemonStorageSystemPtr->unk_0006 = 0;
-            SetMainCallback2(sub_8096B5C);
+            gPokeStorageScreenToReshow = 0;
+            gPokemonStorageSystemPtr->screenChangeType = 0;
+            SetMainCallback2(CB2_ChangePokeStorageScreen);
         }
         break;
     }
 }
 
-void sub_80977E4(void)
+static void Task_ShowMarkMenu(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_MARK_POKE);
-        gPokemonStorageSystemPtr->unk_12bc.markings = gPokemonStorageSystemPtr->unk_11f7;
-        OpenMonMarkingsMenu(gPokemonStorageSystemPtr->unk_11f7, 0xb0, 0x10);
-        gPokemonStorageSystemPtr->unk_0004++;
+        PrintMessage(PC_TEXT_MARK_POKE);
+        gPokemonStorageSystemPtr->markMenu.markings = gPokemonStorageSystemPtr->displayMonMarkings;
+        OpenMonMarkingsMenu(gPokemonStorageSystemPtr->displayMonMarkings, 0xb0, 0x10);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!HandleMonMarkingsMenuInput())
         {
             FreeMonMarkingsMenu();
-            sub_8098A5C();
-            sub_809BDD8(gPokemonStorageSystemPtr->unk_12bc.markings);
-            sub_809801C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            sub_809BDD8(gPokemonStorageSystemPtr->markMenu.markings);
+            RefreshDisplayMonData();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8097858(void)
+static void Task_HandleMovingMonFromParty(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         CompactPartySlots();
         sub_8099310();
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (sub_8099374() == 0)
         {
-            sub_80987DC();
-            SetPSSCallback(sub_8096C84);
+            UpdatePartySlotColors();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_809789C(void)
+static void Task_HandleBoxOptions(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_WHAT_YOU_DO);
+        PrintMessage(PC_TEXT_WHAT_YOU_DO);
         sub_809CE84();
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         switch (sub_809CF30())
@@ -1154,71 +1154,71 @@ void sub_809789C(void)
         case -1:
         case  0:
             sub_809A860(TRUE);
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
             break;
         case 11:
             PlaySE(SE_SELECT);
-            SetPSSCallback(sub_8097B44);
+            SetPokeStorageCallback(Task_NameBox);
             break;
         case 10:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            SetPSSCallback(sub_8097974);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_HandleWallpapers);
             break;
         case 9:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            SetPSSCallback(sub_8097A64);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_JumpBox);
             break;
         }
         break;
     }
 }
 
-void sub_8097974(void)
+static void Task_HandleWallpapers(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        sub_8098A80();
-        PrintStorageActionText(PC_TEXT_PICK_A_THEME);
-        gPokemonStorageSystemPtr->unk_0004++;
+        AddWallpaperSetsMenu();
+        PrintMessage(PC_TEXT_PICK_A_THEME);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        gPokemonStorageSystemPtr->unk_0d5e = sub_809CF30();
-        switch (gPokemonStorageSystemPtr->unk_0d5e)
+        gPokemonStorageSystemPtr->wallpaperSetId = sub_809CF30();
+        switch (gPokemonStorageSystemPtr->wallpaperSetId)
         {
         case -1:
             sub_809A860(TRUE);
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
             break;
         case 12 ... 15:
             PlaySE(SE_SELECT);
-            gPokemonStorageSystemPtr->unk_0d5e -= 12;
-            sub_8098AA8(gPokemonStorageSystemPtr->unk_0d5e);
-            PrintStorageActionText(PC_TEXT_PICK_A_WALLPAPER);
-            gPokemonStorageSystemPtr->unk_0004++;
+            gPokemonStorageSystemPtr->wallpaperSetId -= 12;
+            AddWallpapersMenu(gPokemonStorageSystemPtr->wallpaperSetId);
+            PrintMessage(PC_TEXT_PICK_A_WALLPAPER);
+            gPokemonStorageSystemPtr->state++;
             break;
         }
         break;
     case 2:
-        gPokemonStorageSystemPtr->unk_0d60 = sub_809CF30();
-        switch (gPokemonStorageSystemPtr->unk_0d60)
+        gPokemonStorageSystemPtr->wallpaperId = sub_809CF30();
+        switch (gPokemonStorageSystemPtr->wallpaperId)
         {
         case -1:
-            sub_8098A5C();
-            gPokemonStorageSystemPtr->unk_0004 = 0;
+            ClearBottomWindow();
+            gPokemonStorageSystemPtr->state = 0;
             break;
         case -2:
             break;
         default:
             PlaySE(SE_SELECT);
-            sub_8098A5C();
-            gPokemonStorageSystemPtr->unk_0d60 -= 16;
-            sub_8099DCC(gPokemonStorageSystemPtr->unk_0d60);
-            gPokemonStorageSystemPtr->unk_0004++;
+            ClearBottomWindow();
+            gPokemonStorageSystemPtr->wallpaperId -= 16;
+            sub_8099DCC(gPokemonStorageSystemPtr->wallpaperId);
+            gPokemonStorageSystemPtr->state++;
             break;
         }
         break;
@@ -1226,102 +1226,102 @@ void sub_8097974(void)
         if (!sub_8099E08())
         {
             sub_809A860(TRUE);
-            SetPSSCallback(sub_8096C84);
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8097A64(void)
+static void Task_JumpBox(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
-        PrintStorageActionText(PC_TEXT_JUMP_TO_WHICH_BOX);
+        PrintMessage(PC_TEXT_JUMP_TO_WHICH_BOX);
         LoadChooseBoxMenuGfx(&gPokemonStorageSystemPtr->chooseBoxMenu, 0x0007, 0xdaca, 3);
         CreateChooseBoxMenuSprites(gPokemonStorage.currentBox);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
-        gPokemonStorageSystemPtr->unk_08b2 = HandleChooseBoxMenuInput();
-        switch (gPokemonStorageSystemPtr->unk_08b2)
+        gPokemonStorageSystemPtr->newCurrBoxId = HandleChooseBoxMenuInput();
+        switch (gPokemonStorageSystemPtr->newCurrBoxId)
         {
         case BOXID_NONE_CHOSEN:
             break;
         default:
-            sub_8098A5C();
+            ClearBottomWindow();
             DestroyChooseBoxMenuSprites();
             FreeChooseBoxMenu();
-            if (gPokemonStorageSystemPtr->unk_08b2 == BOXID_CANCELED || gPokemonStorageSystemPtr->unk_08b2 == gPokemonStorage.currentBox)
+            if (gPokemonStorageSystemPtr->newCurrBoxId == BOXID_CANCELED || gPokemonStorageSystemPtr->newCurrBoxId == gPokemonStorage.currentBox)
             {
                 sub_809A860(TRUE);
-                SetPSSCallback(sub_8096C84);
+                SetPokeStorageCallback(Task_PokeStorageMain);
             }
             else
             {
-                gPokemonStorageSystemPtr->unk_0004++;
+                gPokemonStorageSystemPtr->state++;
             }
             break;
         }
         break;
     case 2:
-        sub_8099C70(gPokemonStorageSystemPtr->unk_08b2);
-        gPokemonStorageSystemPtr->unk_0004++;
+        sub_8099C70(gPokemonStorageSystemPtr->newCurrBoxId);
+        gPokemonStorageSystemPtr->state++;
         break;
     case 3:
         if (!sub_8099D34())
         {
-            gPokemonStorage.currentBox = gPokemonStorageSystemPtr->unk_08b2;
-            SetPSSCallback(sub_8096C84);
+            gPokemonStorage.currentBox = gPokemonStorageSystemPtr->newCurrBoxId;
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     }
 }
 
-void sub_8097B44(void)
+static void Task_NameBox(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         sub_809BB90();
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 1:
         if (!UpdatePaletteFade())
         {
-            gUnknown_0203847F = 1;
-            gPokemonStorageSystemPtr->unk_0006 = 1;
-            SetMainCallback2(sub_8096B5C);
+            gPokeStorageScreenToReshow = 1;
+            gPokemonStorageSystemPtr->screenChangeType = 1;
+            SetMainCallback2(CB2_ChangePokeStorageScreen);
         }
         break;
     }
 }
 
-void sub_8097BA0(void)
+static void Task_OnCloseBoxPressed(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         if (sub_809BF20())
         {
             PlaySE(SE_FAILURE);
-            PrintStorageActionText(PC_TEXT_HOLDING_POKE);
-            gPokemonStorageSystemPtr->unk_0004 = 1;
+            PrintMessage(PC_TEXT_HOLDING_POKE);
+            gPokemonStorageSystemPtr->state = 1;
         }
         else
         {
             PlaySE(SE_SELECT);
-            PrintStorageActionText(PC_TEXT_EXIT_BOX);
-            sub_8098A38(0);
-            gPokemonStorageSystemPtr->unk_0004 = 2;
+            PrintMessage(PC_TEXT_EXIT_BOX);
+            ShowYesNoWindow(0);
+            gPokemonStorageSystemPtr->state = 2;
         }
         break;
     case 1:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     case 2:
@@ -1329,13 +1329,13 @@ void sub_8097BA0(void)
         {
         case 1:
         case -1:
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
             break;
         case 0:
             PlaySE(SE_PC_OFF);
-            sub_8098A5C();
-            gPokemonStorageSystemPtr->unk_0004++;
+            ClearBottomWindow();
+            gPokemonStorageSystemPtr->state++;
             break;
         }
         break;
@@ -1345,7 +1345,7 @@ void sub_8097BA0(void)
         gPokemonStorageSystemPtr->pcScreenEffect.spriteSpeed = 20;
         gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
         StartPCScreenCloseEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 4:
         if (UpdatePCScreenCloseEffect())
@@ -1357,44 +1357,44 @@ void sub_8097BA0(void)
     }
 }
 
-void sub_8097CC0(void)
+static void Task_OnBPressed(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_0004)
+    switch (gPokemonStorageSystemPtr->state)
     {
     case 0:
         if (sub_809BF20())
         {
             PlaySE(SE_FAILURE);
-            PrintStorageActionText(PC_TEXT_HOLDING_POKE);
-            gPokemonStorageSystemPtr->unk_0004 = 1;
+            PrintMessage(PC_TEXT_HOLDING_POKE);
+            gPokemonStorageSystemPtr->state = 1;
         }
         else
         {
             PlaySE(SE_SELECT);
-            PrintStorageActionText(PC_TEXT_CONTINUE_BOX);
-            sub_8098A38(0);
-            gPokemonStorageSystemPtr->unk_0004 = 2;
+            PrintMessage(PC_TEXT_CONTINUE_BOX);
+            ShowYesNoWindow(0);
+            gPokemonStorageSystemPtr->state = 2;
         }
         break;
     case 1:
         if (JOY_NEW(A_BUTTON | B_BUTTON | DPAD_ANY))
         {
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
         }
         break;
     case 2:
         switch (Menu_ProcessInputNoWrap())
         {
         case 0:
-            sub_8098A5C();
-            SetPSSCallback(sub_8096C84);
+            ClearBottomWindow();
+            SetPokeStorageCallback(Task_PokeStorageMain);
             break;
         case -1:
         case 1:
             PlaySE(SE_PC_OFF);
-            sub_8098A5C();
-            gPokemonStorageSystemPtr->unk_0004++;
+            ClearBottomWindow();
+            gPokemonStorageSystemPtr->state++;
             break;
         }
         break;
@@ -1404,7 +1404,7 @@ void sub_8097CC0(void)
         gPokemonStorageSystemPtr->pcScreenEffect.spriteSpeed = 20;
         gPokemonStorageSystemPtr->pcScreenEffect.revealSpeed = 0;
         StartPCScreenCloseEffect(&gPokemonStorageSystemPtr->pcScreenEffect);
-        gPokemonStorageSystemPtr->unk_0004++;
+        gPokemonStorageSystemPtr->state++;
         break;
     case 4:
         if (UpdatePCScreenCloseEffect())
@@ -1416,28 +1416,28 @@ void sub_8097CC0(void)
     }
 }
 
-void sub_8097DE0(void)
+static void SetScrollingBackground(void)
 {
-    gPokemonStorageSystemPtr->unk_0007 = 0;
-    gPokemonStorageSystemPtr->unk_0008 = 0;
-    gPokemonStorageSystemPtr->unk_000a = 0;
+    gPokemonStorageSystemPtr->scrollBackgroundTimer = 0;
+    gPokemonStorageSystemPtr->bg3_Y = 0;
+    gPokemonStorageSystemPtr->bg3_X = 0;
     REG_BG3CNT = BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(30);
     DmaCopy16Defvars(3, gPokemonStorageScrollingBGTile, BG_SCREEN_ADDR(28), sizeof gPokemonStorageScrollingBGTile);
     LZ77UnCompVram(gPokemonStorageScrollingBGTilemap, BG_SCREEN_ADDR(30));
     LoadPalette(gPokemonStorageScrollingBGPalette, 0xd0, 0x10);
 }
 
-void sub_8097E44(void)
+static void ScrollBackground(void)
 {
-    if (++gPokemonStorageSystemPtr->unk_0007 >= 2)
+    if (++gPokemonStorageSystemPtr->scrollBackgroundTimer >= 2)
     {
-        gPokemonStorageSystemPtr->unk_0007 = 0;
-        gPokemonStorageSystemPtr->unk_0008--;
-        gPokemonStorageSystemPtr->unk_000a++;
+        gPokemonStorageSystemPtr->scrollBackgroundTimer = 0;
+        gPokemonStorageSystemPtr->bg3_Y--;
+        gPokemonStorageSystemPtr->bg3_X++;
     }
 }
 
-void sub_8097E70(void)
+static void InitPalettesAndSprites(void)
 {
     LZ77UnCompVram(gPSSMenuHeader_Gfx, BG_SCREEN_ADDR(10));
     LZ77UnCompWram(gPSSMenuHeader_Tilemap, gUnknown_02039760);
@@ -1453,25 +1453,25 @@ void sub_8097E70(void)
     LoadPalette(gUnknownPalette_81E6692 + 10, 0xF6, 0x04);
     LoadPalette(gUnknownPalette_81E6692 +  2, 0xFF, 0x02);
     LoadSpritePalette(&gWaveformSpritePalette);
-    sub_80980D4();
-    sub_8097F58();
-    sub_8097FB8();
-    sub_809801C();
+    CreateDisplayMonSprite();
+    CreateMarkingComboSprite();
+    CreateWaveformSprites();
+    RefreshDisplayMonData();
 }
 
-void sub_8097F58(void)
+static void CreateMarkingComboSprite(void)
 {
-    gPokemonStorageSystemPtr->unk_12ac = CreateMonMarkingComboSprite(0x000d, 0xdace, 0);
-    gPokemonStorageSystemPtr->unk_12ac->oam.priority = 0;
-    gPokemonStorageSystemPtr->unk_12ac->subpriority = 1;
-    gPokemonStorageSystemPtr->unk_12ac->x = 0x28;
-    gPokemonStorageSystemPtr->unk_12ac->y = 0x95;
-    gPokemonStorageSystemPtr->unk_12b8 = BG_CHAR_ADDR(4) + 32 * GetSpriteTileStartByTag(0x000d);
+    gPokemonStorageSystemPtr->markingComboSprite = CreateMonMarkingComboSprite(0x000d, 0xdace, 0);
+    gPokemonStorageSystemPtr->markingComboSprite->oam.priority = 0;
+    gPokemonStorageSystemPtr->markingComboSprite->subpriority = 1;
+    gPokemonStorageSystemPtr->markingComboSprite->x = 0x28;
+    gPokemonStorageSystemPtr->markingComboSprite->y = 0x95;
+    gPokemonStorageSystemPtr->markingComboTilesPtr = BG_CHAR_ADDR(4) + 32 * GetSpriteTileStartByTag(0x000d);
 }
 
 const struct SpriteTemplate gSpriteTemplate_83B6EFC;
 
-void sub_8097FB8(void)
+static void CreateWaveformSprites(void)
 {
     u16 i;
     struct SpriteSheet sheet = {WaveformTiles, 0x1c0, 0x0005};
@@ -1480,31 +1480,31 @@ void sub_8097FB8(void)
     for (i = 0; i < 2; i++)
     {
         u8 spriteId = CreateSprite(&gSpriteTemplate_83B6EFC, i * 63 + 8, 9, 2);
-        gPokemonStorageSystemPtr->unk_12b0[i] = gSprites + spriteId;
+        gPokemonStorageSystemPtr->waveformSprites[i] = gSprites + spriteId;
     }
 }
 
-void sub_809801C(void)
+static void RefreshDisplayMonData(void)
 {
-    sub_80981F0(gPokemonStorageSystemPtr->unk_11f0, gPokemonStorageSystemPtr->unk_11ec);
-    sub_80982B4();
-    sub_8098350();
+    LoadDisplayMonGfx(gPokemonStorageSystemPtr->displayMonSpecies, gPokemonStorageSystemPtr->displayMonPersonality);
+    PrintDisplayMonInfo();
+    UpdateWaveformAnimation();
 }
 
-void BoxSetMosaic(void)
+static void StartDisplayMonMosaicEffect(void)
 {
-    sub_809801C();
-    if (gPokemonStorageSystemPtr->unk_2700)
+    RefreshDisplayMonData();
+    if (gPokemonStorageSystemPtr->displayMonSprite)
     {
-        gPokemonStorageSystemPtr->unk_2700->oam.mosaic = TRUE;
-        gPokemonStorageSystemPtr->unk_2700->data[0] = 10;
-        gPokemonStorageSystemPtr->unk_2700->data[1] = 1;
-        gPokemonStorageSystemPtr->unk_2700->callback = sub_8098090;
-        REG_MOSAIC = (gPokemonStorageSystemPtr->unk_2700->data[0] << 12) | (gPokemonStorageSystemPtr->unk_2700->data[0] << 8);
+        gPokemonStorageSystemPtr->displayMonSprite->oam.mosaic = TRUE;
+        gPokemonStorageSystemPtr->displayMonSprite->data[0] = 10;
+        gPokemonStorageSystemPtr->displayMonSprite->data[1] = 1;
+        gPokemonStorageSystemPtr->displayMonSprite->callback = SpriteCB_DisplayMonMosaic;
+        REG_MOSAIC = (gPokemonStorageSystemPtr->displayMonSprite->data[0] << 12) | (gPokemonStorageSystemPtr->displayMonSprite->data[0] << 8);
     }
 }
 
-void sub_8098090(struct Sprite *sprite)
+static void SpriteCB_DisplayMonMosaic(struct Sprite *sprite)
 {
     sprite->data[0] -= sprite->data[1];
     if (sprite->data[0] < 0)
@@ -1517,11 +1517,11 @@ void sub_8098090(struct Sprite *sprite)
     }
 }
 
-// sub_80980D4
+// CreateDisplayMonSprite
 
 const struct OamData gOamData_83B6EAC;
 
-void sub_80980D4(void)
+static void CreateDisplayMonSprite(void)
 {
     u16 i;
     u16 startTile;
@@ -1529,12 +1529,12 @@ void sub_80980D4(void)
     u8 spriteId;
 
     struct SpriteSheet spriteSheet = {
-        .data = gPokemonStorageSystemPtr->unk_2784,
+        .data = gPokemonStorageSystemPtr->tileBuffer,
         .size = 0x800,
         .tag = 0x0002
     };
     struct SpritePalette spritePalette = {
-        .data = gPokemonStorageSystemPtr->unk_2704,
+        .data = gPokemonStorageSystemPtr->displayMonPalBuffer,
         .tag = 0xDAC7
     };
     struct SpriteTemplate spriteTemplate = {
@@ -1549,13 +1549,13 @@ void sub_80980D4(void)
 
     for (i = 0; i < 0x800; i++)
     {
-        gPokemonStorageSystemPtr->unk_2784[i] = 0;
+        gPokemonStorageSystemPtr->tileBuffer[i] = 0;
     }
     for (i = 0; i < 0x10; i++)
     {
-        gPokemonStorageSystemPtr->unk_2704[i] = 0;
+        gPokemonStorageSystemPtr->displayMonPalBuffer[i] = 0;
     }
-    gPokemonStorageSystemPtr->unk_2700 = NULL;
+    gPokemonStorageSystemPtr->displayMonSprite = NULL;
     do
     {
         startTile = LoadSpriteSheet(&spriteSheet);
@@ -1570,181 +1570,181 @@ void sub_80980D4(void)
         if (spriteId == MAX_SPRITES)
             break;
 
-        gPokemonStorageSystemPtr->unk_2700 = &gSprites[spriteId];
-        gPokemonStorageSystemPtr->unk_26fa = 0x100 + 16 * paletteNum;
-        gPokemonStorageSystemPtr->unk_26fc = (void *)(OBJ_VRAM0 + 32 * startTile);
+        gPokemonStorageSystemPtr->displayMonSprite = &gSprites[spriteId];
+        gPokemonStorageSystemPtr->displayMonPalOffset = 0x100 + 16 * paletteNum;
+        gPokemonStorageSystemPtr->displayMonTilePtr = (void *)(OBJ_VRAM0 + 32 * startTile);
     } while (0);
-    if (gPokemonStorageSystemPtr->unk_2700 == NULL)
+    if (gPokemonStorageSystemPtr->displayMonSprite == NULL)
     {
         FreeSpriteTilesByTag(0x0002);
         FreeSpritePaletteByTag(0xDAC7);
     }
 }
 
-void sub_80981F0(u16 species, u32 pid)
+static void LoadDisplayMonGfx(u16 species, u32 pid)
 {
-    if (gPokemonStorageSystemPtr->unk_2700)
+    if (gPokemonStorageSystemPtr->displayMonSprite)
     {
         if (species != SPECIES_NONE)
         {
-            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, 1, gPokemonStorageSystemPtr->unk_4784, gPokemonStorageSystemPtr->unk_2784, species, pid);
-            LZ77UnCompWram(gPokemonStorageSystemPtr->unk_11e8, gPokemonStorageSystemPtr->unk_2704);
-            CpuCopy32(gPokemonStorageSystemPtr->unk_2784, gPokemonStorageSystemPtr->unk_26fc, 0x800);
-            LoadPalette(gPokemonStorageSystemPtr->unk_2704, gPokemonStorageSystemPtr->unk_26fa, 0x20);
-            gPokemonStorageSystemPtr->unk_2700->invisible = FALSE;
+            HandleLoadSpecialPokePic(gMonFrontPicTable + species, gMonFrontPicCoords[species].coords, 1, gPokemonStorageSystemPtr->displayMonPicBuffer, gPokemonStorageSystemPtr->tileBuffer, species, pid);
+            LZ77UnCompWram(gPokemonStorageSystemPtr->displayMonPalette, gPokemonStorageSystemPtr->displayMonPalBuffer);
+            CpuCopy32(gPokemonStorageSystemPtr->tileBuffer, gPokemonStorageSystemPtr->displayMonTilePtr, 0x800);
+            LoadPalette(gPokemonStorageSystemPtr->displayMonPalBuffer, gPokemonStorageSystemPtr->displayMonPalOffset, 0x20);
+            gPokemonStorageSystemPtr->displayMonSprite->invisible = FALSE;
         }
         else
         {
-            gPokemonStorageSystemPtr->unk_2700->invisible = TRUE;
+            gPokemonStorageSystemPtr->displayMonSprite->invisible = TRUE;
         }
     }
 }
 
-void sub_80982B4(void)
+static void PrintDisplayMonInfo(void)
 {
-    if (gPokemonStorageSystemPtr->unk_11f0)
+    if (gPokemonStorageSystemPtr->displayMonSpecies)
     {
-        UpdateMonMarkingTiles(gPokemonStorageSystemPtr->unk_11f7, gPokemonStorageSystemPtr->unk_12b8);
-        gPokemonStorageSystemPtr->unk_12ac->invisible = FALSE;
+        UpdateMonMarkingTiles(gPokemonStorageSystemPtr->displayMonMarkings, gPokemonStorageSystemPtr->markingComboTilesPtr);
+        gPokemonStorageSystemPtr->markingComboSprite->invisible = FALSE;
     }
     else
     {
-        gPokemonStorageSystemPtr->unk_12ac->invisible = TRUE;
+        gPokemonStorageSystemPtr->markingComboSprite->invisible = TRUE;
     }
     Menu_EraseWindowRect(0, 11, 9, 17);
-    Menu_PrintText(gPokemonStorageSystemPtr->unk_127a, 1, 16);
-    Menu_PrintText(gPokemonStorageSystemPtr->unk_120f, 1, 11);
-    Menu_PrintText(gPokemonStorageSystemPtr->unk_1234, 0, 13);
-    Menu_PrintText(gPokemonStorageSystemPtr->unk_1259, 1, 15);
+    Menu_PrintText(gPokemonStorageSystemPtr->displayMonItemName, 1, 16);
+    Menu_PrintText(gPokemonStorageSystemPtr->displayMonNameText, 1, 11);
+    Menu_PrintText(gPokemonStorageSystemPtr->displayMonSpeciesName, 0, 13);
+    Menu_PrintText(gPokemonStorageSystemPtr->displayMonGenderLvlText, 1, 15);
 }
 
-void sub_8098350(void)
+static void UpdateWaveformAnimation(void)
 {
     u16 i;
 
-    if (gPokemonStorageSystemPtr->unk_11f0)
+    if (gPokemonStorageSystemPtr->displayMonSpecies)
     {
         sub_809D034(BG_SCREEN_ADDR(15), 1, 0, gUnknown_02039760, 1, 0, 8, 2);
         for (i = 0; i < 2; i++)
-            StartSpriteAnimIfDifferent(gPokemonStorageSystemPtr->unk_12b0[i], i * 2 + 1);
+            StartSpriteAnimIfDifferent(gPokemonStorageSystemPtr->waveformSprites[i], i * 2 + 1);
     }
     else
     {
         sub_809D034(BG_SCREEN_ADDR(15), 1, 0, gUnknown_02039760, 10, 0, 8, 2);
         for (i = 0; i < 2; i++)
-            StartSpriteAnim(gPokemonStorageSystemPtr->unk_12b0[i], i * 2);
+            StartSpriteAnim(gPokemonStorageSystemPtr->waveformSprites[i], i * 2);
     }
 }
 
-void sub_8098400(void)
+static void InitSupplementalTilemaps(void)
 {
     REG_BG1CNT = BGCNT_PRIORITY(1) | BGCNT_SCREENBASE(15);
     LZ77UnCompVram(gPSSMenuMisc_Gfx, BG_SCREEN_ADDR(13));
-    LZ77UnCompWram(gPSSMenuMisc_Tilemap, gPokemonStorageSystemPtr->unk_00a8);
+    LZ77UnCompWram(gPSSMenuMisc_Tilemap, gPokemonStorageSystemPtr->partyMenuTilemapBuffer);
     LoadPalette(gPSSMenu3_Pal, 0x20, 0x20);
     LoadPalette(gPSSMenu4_Pal, 0x30, 0x20);
     DmaClear16(3, BG_SCREEN_ADDR(15), 0x800);
-    sub_8098780();
-    if (gUnknown_0203847C)
+    SetPartySlotTilemaps();
+    if (gPokeStorageInPartyMenu)
     {
-        sub_8098690(TRUE);
+        UpdateCloseBoxButtonTilemap(TRUE);
         sub_8099200(TRUE);
-        sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, 0, 12, 22);
+        sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
     }
     else
     {
-        sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, 20, 12, 2);
-        sub_8098690(TRUE);
+        sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 20, 12, 2);
+        UpdateCloseBoxButtonTilemap(TRUE);
     }
-    gPokemonStorageSystemPtr->unk_08af = 0;
+    gPokemonStorageSystemPtr->closeBoxFlashing = 0;
 }
 
-void sub_80984E8(void)
+static void SetUpShowPartyMenu(void)
 {
-    gPokemonStorageSystemPtr->unk_08a8 = 20;
-    gPokemonStorageSystemPtr->unk_08aa = 2;
-    gPokemonStorageSystemPtr->unk_08ad = 0;
+    gPokemonStorageSystemPtr->partyMenuUnused1 = 20;
+    gPokemonStorageSystemPtr->partyMenuY = 2;
+    gPokemonStorageSystemPtr->partyMenuMoveTimer = 0;
     sub_8099200(FALSE);
 }
 
-bool8 sub_8098520(void)
+static bool8 ShowPartyMenu(void)
 {
-    if (gPokemonStorageSystemPtr->unk_08ad == 20)
+    if (gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
         return FALSE;
-    gPokemonStorageSystemPtr->unk_08a8--;
-    gPokemonStorageSystemPtr->unk_08aa++;
-    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, gPokemonStorageSystemPtr->unk_08a8, 12, gPokemonStorageSystemPtr->unk_08aa);
+    gPokemonStorageSystemPtr->partyMenuUnused1--;
+    gPokemonStorageSystemPtr->partyMenuY++;
+    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
     sub_80994A8(8);
-    if (++gPokemonStorageSystemPtr->unk_08ad == 20)
+    if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
-        gUnknown_0203847C = 1;
+        gPokeStorageInPartyMenu = 1;
         return FALSE;
     }
     return TRUE;
 }
 
-void add_to_c3_somehow(void)
+static void SetUpHidePartyMenu(void)
 {
-    gPokemonStorageSystemPtr->unk_08a8 = 0;
-    gPokemonStorageSystemPtr->unk_08aa = 22;
-    gPokemonStorageSystemPtr->unk_08ad = 0;
+    gPokemonStorageSystemPtr->partyMenuUnused1 = 0;
+    gPokemonStorageSystemPtr->partyMenuY = 22;
+    gPokemonStorageSystemPtr->partyMenuMoveTimer = 0;
 }
 
-bool8 sub_80985CC(void)
+static bool8 HidePartyMenu(void)
 {
-    if (gPokemonStorageSystemPtr->unk_08ad == 20)
+    if (gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
         return FALSE;
-    gPokemonStorageSystemPtr->unk_08a8++;
-    gPokemonStorageSystemPtr->unk_08aa--;
-    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, gPokemonStorageSystemPtr->unk_08a8, 12, gPokemonStorageSystemPtr->unk_08aa);
-    sub_809D16C(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->unk_08aa, 12, 1);
+    gPokemonStorageSystemPtr->partyMenuUnused1++;
+    gPokemonStorageSystemPtr->partyMenuY--;
+    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
+    sub_809D16C(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
     sub_80994A8(-8);
-    if (++gPokemonStorageSystemPtr->unk_08ad == 20)
+    if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
-        gUnknown_0203847C = 0;
+        gPokeStorageInPartyMenu = 0;
         sub_809954C();
         CompactPartySlots();
-        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 0, 1, 2);
+        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 1, 2);
         return FALSE;
     }
     return TRUE;
 }
 
-void sub_8098690(bool8 flag)
+static void UpdateCloseBoxButtonTilemap(bool8 flag)
 {
     if (flag)
-        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 0, 9, 2);
+        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 9, 2);
     else
-        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->unk_00a8, 12, 2, 9, 2);
+        sub_809D034(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 2, 9, 2);
 }
 
-void sub_80986E8(void)
+static void StartFlashingCloseBoxButton(void)
 {
-    gPokemonStorageSystemPtr->unk_08af = 1;
-    gPokemonStorageSystemPtr->unk_08b0 = 30;
-    gPokemonStorageSystemPtr->unk_08b1 = 1;
+    gPokemonStorageSystemPtr->closeBoxFlashing = 1;
+    gPokemonStorageSystemPtr->closeBoxFlashTimer = 30;
+    gPokemonStorageSystemPtr->closeBoxFlashState = 1;
 }
 
-void sub_8098710(void)
+static void StopFlashingCloseBoxButton(void)
 {
-    if (gPokemonStorageSystemPtr->unk_08af)
+    if (gPokemonStorageSystemPtr->closeBoxFlashing)
     {
-        gPokemonStorageSystemPtr->unk_08af = 0;
-        sub_8098690(TRUE);
+        gPokemonStorageSystemPtr->closeBoxFlashing = 0;
+        UpdateCloseBoxButtonTilemap(TRUE);
     }
 }
 
-void sub_8098734(void)
+static void UpdateCloseBoxButtonFlash(void)
 {
-    if (gPokemonStorageSystemPtr->unk_08af && ++gPokemonStorageSystemPtr->unk_08b0 > 30)
+    if (gPokemonStorageSystemPtr->closeBoxFlashing && ++gPokemonStorageSystemPtr->closeBoxFlashTimer > 30)
     {
-        gPokemonStorageSystemPtr->unk_08b0 = 0;
-        gPokemonStorageSystemPtr->unk_08b1 = gPokemonStorageSystemPtr->unk_08b1 ? FALSE : TRUE;
-        sub_8098690(gPokemonStorageSystemPtr->unk_08b1);
+        gPokemonStorageSystemPtr->closeBoxFlashTimer = 0;
+        gPokemonStorageSystemPtr->closeBoxFlashState = gPokemonStorageSystemPtr->closeBoxFlashState ? FALSE : TRUE;
+        UpdateCloseBoxButtonTilemap(gPokemonStorageSystemPtr->closeBoxFlashState);
     }
 }
 
-void sub_8098780(void)
+static void SetPartySlotTilemaps(void)
 {
     int i;
 
@@ -1755,40 +1755,40 @@ void sub_8098780(void)
         if (r0)
             r0 = TRUE;
         r1 = r0 ? 12 : 16;
-        sub_809D104(gPokemonStorageSystemPtr->unk_00a8, 7, (i - 1) * 3 + 1, gPokemonStorageSystemPtr->unk_00a8, r1, 4, 4, 3);
+        sub_809D104(gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 7, (i - 1) * 3 + 1, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, r1, 4, 4, 3);
     }
 }
 
-void sub_80987DC(void)
+static void UpdatePartySlotColors(void)
 {
-    sub_8098780();
-    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->unk_00a8, 0, 0, 12, 22);
+    SetPartySlotTilemaps();
+    sub_809D034(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
 }
 
-void sub_809880C(void)
+static void SetUpDoShowPartyMenu(void)
 {
-    gPokemonStorageSystemPtr->unk_08ae = 0;
+    gPokemonStorageSystemPtr->showPartyMenuState = 0;
     PlaySE(SE_WIN_OPEN);
-    sub_80984E8();
+    SetUpShowPartyMenu();
 }
 
-bool8 sub_8098830(void)
+static bool8 DoShowPartyMenu(void)
 {
-    switch (gPokemonStorageSystemPtr->unk_08ae)
+    switch (gPokemonStorageSystemPtr->showPartyMenuState)
     {
     case 0:
-        if (!sub_8098520())
+        if (!ShowPartyMenu())
         {
             sub_809B068();
-            gPokemonStorageSystemPtr->unk_08ae++;
+            gPokemonStorageSystemPtr->showPartyMenuState++;
         }
         break;
     case 1:
         if (!sub_809AC00())
         {
-            if (gPokemonStorageSystemPtr->unk_11f6)
-                BoxSetMosaic();
-            gPokemonStorageSystemPtr->unk_08ae++;
+            if (gPokemonStorageSystemPtr->setMosaic)
+                StartDisplayMonMosaicEffect();
+            gPokemonStorageSystemPtr->showPartyMenuState++;
         }
         break;
     case 2:
@@ -1797,7 +1797,7 @@ bool8 sub_8098830(void)
     return TRUE;
 }
 
-const struct StorageAction gPCStorageActionTexts[] =
+static const struct StorageMessage sMessages[] =
 {
     {PCText_ExitBox, 0},
     {PCText_WhatYouDo, 0},
@@ -1824,34 +1824,34 @@ const struct StorageAction gPCStorageActionTexts[] =
     {PCText_PleaseRemoveMail, 0}
 };
 
-void PrintStorageActionText(u8 index)
+static void PrintMessage(u8 id)
 {
     u8 *ptr;
 
     Menu_DrawStdWindowFrame(10, 16, 29, 19);
 
-    switch (gPCStorageActionTexts[index].format)
+    switch (sMessages[id].format)
     {
     case PC_TEXT_FMT_UNK_02:
-        ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
-        ptr = StringCopy(ptr, gPokemonStorageSystemPtr->unk_11fa);
+        ptr = StringCopy(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
+        ptr = StringCopy(ptr, gPokemonStorageSystemPtr->displayMonName);
         break;
     case PC_TEXT_FMT_UNK_05:
-        ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
-        ptr = StringCopy(ptr, gPokemonStorageSystemPtr->unk_26e4);
+        ptr = StringCopy(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
+        ptr = StringCopy(ptr, gPokemonStorageSystemPtr->releaseMonName);
         break;
     case PC_TEXT_FMT_MON_NAME:
         // {var} + " is selected."
-        ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPokemonStorageSystemPtr->unk_11fa);
-        ptr = StringCopy(ptr, gPCStorageActionTexts[index].text);
+        ptr = StringCopy(gPokemonStorageSystemPtr->messageText, gPokemonStorageSystemPtr->displayMonName);
+        ptr = StringCopy(ptr, sMessages[id].text);
         break;
     case PC_TEXT_FMT_MON_NAME_2:
         // {var} + " was released."
-        ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPokemonStorageSystemPtr->unk_26e4);
+        ptr = StringCopy(gPokemonStorageSystemPtr->messageText, gPokemonStorageSystemPtr->releaseMonName);
 #if ENGLISH
-        ptr = StringCopy(ptr, gPCStorageActionTexts[index].text);
+        ptr = StringCopy(ptr, sMessages[id].text);
 #elif GERMAN
-        ptr = de_sub_8073174(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
+        ptr = de_sub_8073174(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
 #endif
         break;
     case PC_TEXT_FMT_UNK_03:
@@ -1859,11 +1859,11 @@ void PrintStorageActionText(u8 index)
             const u8 *stringLength;
             const u8 *text;
 
-            text = gPCStorageActionTexts[index].text;
+            text = sMessages[id].text;
             stringLength = &text[StringLength(text)] + 1;
 
-            ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
-            ptr = StringCopy(ptr, gPokemonStorageSystemPtr->unk_11fa);
+            ptr = StringCopy(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
+            ptr = StringCopy(ptr, gPokemonStorageSystemPtr->displayMonName);
             ptr = StringCopy(ptr, stringLength);
         }
         break;
@@ -1872,17 +1872,17 @@ void PrintStorageActionText(u8 index)
             const u8 *stringLength;
             const u8 *text;
 
-            text = gPCStorageActionTexts[index].text;
+            text = sMessages[id].text;
             stringLength = &text[StringLength(text)] - 1;
 
-            ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
-            ptr = StringCopy(ptr - 1, gPokemonStorageSystemPtr->unk_26e4);
+            ptr = StringCopy(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
+            ptr = StringCopy(ptr - 1, gPokemonStorageSystemPtr->releaseMonName);
             ptr = StringCopy(ptr, stringLength);
         }
         break;
     case PC_TEXT_FMT_NORMAL:
     default:
-        ptr = StringCopy(gPokemonStorageSystemPtr->unk_2694, gPCStorageActionTexts[index].text);
+        ptr = StringCopy(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
         break;
     }
 
@@ -1893,7 +1893,7 @@ void PrintStorageActionText(u8 index)
     }
 
     ptr[0] = EOS;
-    Menu_PrintText(gPokemonStorageSystemPtr->unk_2694, 11, 17);
+    Menu_PrintText(gPokemonStorageSystemPtr->messageText, 11, 17);
 }
 
 const struct OamData gOamData_83B6EAC = {
@@ -1945,20 +1945,20 @@ const struct SpriteTemplate gSpriteTemplate_83B6EFC = {
     SpriteCallbackDummy
 };
 
-void sub_8098A38(s8 a0)
+static void ShowYesNoWindow(s8 a0)
 {
     DisplayYesNoMenu(23, 10, 0);
     Menu_MoveCursor(a0);
 }
 
-void sub_8098A5C(void)
+static void ClearBottomWindow(void)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(10, 16, 29, 19);
     Menu_EraseWindowRect(23, 10, 29, 15);
 }
 
-void sub_8098A80(void)
+static void AddWallpaperSetsMenu(void)
 {
     sub_809CDCC();
     sub_809CDEC(12);
@@ -1968,7 +1968,7 @@ void sub_8098A80(void)
     sub_809CE84();
 }
 
-void sub_8098AA8(u8 a0)
+static void AddWallpapersMenu(u8 a0)
 {
     sub_809CDCC();
     switch (a0)

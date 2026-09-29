@@ -1188,7 +1188,7 @@ void Task_WatanabeDebugHandlePlayerPartyInput(u8 taskId)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        debug_sub_80A433C(gPlayerParty + sWatanabeBattleDebugPlayerPartyIndex, WatanabeDebug_ReturnFromPlayerPartyEditor);
+        Debug_OpenPokeStorageForMon(gPlayerParty + sWatanabeBattleDebugPlayerPartyIndex, WatanabeDebug_ReturnFromPlayerPartyEditor);
         DestroyTask(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1235,7 +1235,7 @@ void Task_WatanabeDebugHandleEnemyPartyInput(u8 taskId)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        debug_sub_80A433C(gEnemyParty + sWatanabeBattleDebugEnemyPartyIndex, WatanabeDebug_ReturnFromEnemyPartyEditor);
+        Debug_OpenPokeStorageForMon(gEnemyParty + sWatanabeBattleDebugEnemyPartyIndex, WatanabeDebug_ReturnFromEnemyPartyEditor);
         DestroyTask(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
