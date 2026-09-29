@@ -2,13 +2,11 @@
 #include "debug.h"
 #include "task.h"
 
-#define ACTIVE_SENTINEL 0x10
-#define HEAD_SENTINEL 0xFE
 // gTasks is a queue of the active 16 tasks
 struct Task gTasks[NUM_TASKS];
 
 static void InsertTask(u8 newTaskId);
-static u8 FindFirstActiveTask();
+static u8 FindFirstActiveTask(void);
 
 const u8 gError_NoTasksLeft[] = _(
     "TASK OVER\n"
@@ -62,7 +60,7 @@ static void InsertTask(u8 newTaskId)
 
     if (taskId == NUM_TASKS)
     {
-        // The task system inserts from the top downwards starting from the end (0xFF) to 0. If FindFirstActiveTask returned the value equivalent to ACTIVE_SENTINEL, it means it is the only task because it searched the entire queue.
+        // The new task is the only task.
         gTasks[newTaskId].prev = HEAD_SENTINEL;
         gTasks[newTaskId].next = TAIL_SENTINEL;
         return;
@@ -195,7 +193,7 @@ u8 FindTaskIdByFunc(TaskFunc func)
         if (gTasks[i].isActive == TRUE && gTasks[i].func == func)
             return (u8)i;
 
-    return 0xFF;
+    return TASK_NONE;
 }
 
 u8 GetTaskCount(void)
