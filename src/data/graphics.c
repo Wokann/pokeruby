@@ -886,18 +886,18 @@ const u8 gPartyMenuHpBar_Gfx[] = INCBIN_U8("graphics/interface/party_menu_hpbar.
 const u8 gPartyMenuOrderText_Gfx[] = INCBIN_U8("graphics/interface/party_menu_ordertext.4bpp.lz");
 const u8 gMoveTypes_Gfx[] = INCBIN_U8("graphics/types/move_types.4bpp.lz");
 const u8 gMoveTypes_Pal[] = INCBIN_U8("graphics/types/move_types.gbapal.lz");
-const u8 gMenuSummaryGfx[] = INCBIN_U8("graphics/interface/summary_frames.4bpp.lz");// the arrows appear to be unused.
+const u8 gSummaryMoveSelect_Gfx[] = INCBIN_U8("graphics/interface/summary_frames.4bpp.lz");// the arrows appear to be unused.
 
-const u8 gMenuSummaryPal[] = INCBIN_U8("graphics/interface/summary_frames.gbapal.lz");
+const u8 gSummaryMoveSelect_Pal[] = INCBIN_U8("graphics/interface/summary_frames.gbapal.lz");
 const u8 gStatusGfx_Icons[] = INCBIN_U8("graphics/interface/status_icons.4bpp.lz");
 const u8 gStatusPal_Icons[] = INCBIN_U8("graphics/interface/status_icons.gbapal.lz");
-const u8 gStatusScreen_Gfx[] = INCBIN_U8("graphics/interface/status_screen.4bpp.lz");
-const u8 gStatusScreen_Pal[] = INCBIN_U8("graphics/interface/status_screen.gbapal.lz");
-const u8 gUnknown_08E73508[] = INCBIN_U8("graphics/interface/status_screen.bin");
-const u8 gStatusScreen_Tilemap[] = INCBIN_U8("graphics/interface/status_screen_pokemon_skills.bin.lz");
-const u8 gUnknown_08E73E88[] = INCBIN_U8("graphics/interface/status_screen_battle_moves.bin");
-const u8 gUnknown_08E74688[] = INCBIN_U8("graphics/interface/status_screen_contest_moves.bin");
-const u8 gUnknown_08E74E88[] = INCBIN_U8("graphics/interface/pokemon_info.bin.lz");
+const u8 gSummaryScreen_Gfx[] = INCBIN_U8("graphics/interface/status_screen.4bpp.lz");
+const u8 gSummaryScreen_Pal[] = INCBIN_U8("graphics/interface/status_screen.gbapal.lz");
+const u8 gSummaryScreen_StatusTilemap[] = INCBIN_U8("graphics/interface/status_screen.bin");
+const u8 gSummaryPage_Skills_Tilemap[] = INCBIN_U8("graphics/interface/status_screen_pokemon_skills.bin.lz");
+const u8 gSummaryPage_BattleMoves_Tilemap[] = INCBIN_U8("graphics/interface/status_screen_battle_moves.bin");
+const u8 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U8("graphics/interface/status_screen_contest_moves.bin");
+const u8 gSummaryPage_Info_Tilemap[] = INCBIN_U8("graphics/interface/pokemon_info.bin.lz");
 const u8 gBagMaleTiles[] = INCBIN_U8("graphics/misc/bag_male.4bpp.lz");
 const u8 gBagFemaleTiles[] = INCBIN_U8("graphics/misc/bag_female.4bpp.lz");
 const u8 gBagPalette[] = INCBIN_U8("graphics/misc/bag.gbapal.lz");
@@ -1147,9 +1147,9 @@ const u16 gTilesetPalettes_General[][16] =
     INCBIN_U16("data/tilesets/primary/general/palettes/15.gbapal"),
 };
 
-const u8 gUnknown_08E94510[] = INCBIN_U8("graphics/unknown/unknown_E94510.bin");
-const u8 gUnknown_08E94550[] = INCBIN_U8("graphics/unknown/unknown_E94550.bin");
-const u8 gUnknown_08E94590[] = INCBIN_U8("graphics/unknown/unknown_E94590.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapTop[] = INCBIN_U8("graphics/unknown/unknown_E94510.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[] = INCBIN_U8("graphics/unknown/unknown_E94550.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapBottom[] = INCBIN_U8("graphics/unknown/unknown_E94590.bin");
 const u8 gUnknown_08E945D0[] = INCBIN_U8("graphics/interface/wordgroup_layout.bin");
 const u8 gUnknown_08E94AD0[] = INCBIN_U8("graphics/unknown/unknown_E94AD0.bin");
 const u8 gUnknown_08E953D0[] = INCBIN_U8("graphics/unknown/unknown_E953D0.bin.lz");

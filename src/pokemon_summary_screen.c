@@ -133,26 +133,26 @@ extern struct SpriteTemplate gCreatingSpriteTemplate;
 
 extern const u8 gStatusPal_Icons[];
 extern const u8 gStatusGfx_Icons[];
-extern const u8 gMenuSummaryPal[];
-extern const u8 gMenuSummaryGfx[];
+extern const u8 gSummaryMoveSelect_Pal[];
+extern const u8 gSummaryMoveSelect_Gfx[];
 extern const u8 gMoveTypes_Gfx[];
 extern const u8 gMoveTypes_Pal[];
-extern const u8 gStatusScreen_Pal[];
-extern const u8 gStatusScreen_Tilemap[];
-extern const u8 gUnknown_08E74688[];
-extern const u8 gUnknown_08E74E88[];
-extern const u16 gUnknown_08E73508[];
-extern const u8 gStatusScreen_Gfx[];
+extern const u8 gSummaryScreen_Pal[];
+extern const u8 gSummaryPage_Skills_Tilemap[];
+extern const u8 gSummaryPage_ContestMoves_Tilemap[];
+extern const u8 gSummaryPage_Info_Tilemap[];
+extern const u16 gSummaryScreen_StatusTilemap[];
+extern const u8 gSummaryScreen_Gfx[];
 extern const u8 gFontDefaultPalette[];
 extern const u8 gAbilityNames[][13];
 extern const u8 * const gAbilityDescriptions[];
 extern const u8 * const gContestEffectStrings[];
 extern const struct ContestMove gContestMoves[];
 extern const struct ContestEffect gContestEffects[];
-extern const u16 gUnknown_08E94510[];
-extern const u16 gUnknown_08E94550[];
-extern const u16 gUnknown_08E94590[];
-extern const u8 gUnknown_08E73E88[];
+extern const u16 gSummaryScreen_MoveEffect_Cancel_TilemapTop[];
+extern const u16 gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[];
+extern const u16 gSummaryScreen_MoveEffect_Cancel_TilemapBottom[];
+extern const u8 gSummaryPage_BattleMoves_Tilemap[];
 
 EWRAM_DATA u8 gLastViewedMonIndex = 0;
 EWRAM_DATA struct Sprite *sMarkingsSprite = NULL;
@@ -409,8 +409,8 @@ static const union AnimCmd *const sSpriteAnimTable_MoveSelector[] = {
     sSpriteAnim_MoveSelector9,
 };
 
-static const struct CompressedSpriteSheet sMoveSelectorSpriteSheet = { gMenuSummaryGfx, 0x400, TAG_MOVE_SELECTOR };
-static const struct CompressedSpritePalette sMoveSelectorSpritePal = { gMenuSummaryPal, TAG_MOVE_SELECTOR };
+static const struct CompressedSpriteSheet sMoveSelectorSpriteSheet = { gSummaryMoveSelect_Gfx, 0x400, TAG_MOVE_SELECTOR };
+static const struct CompressedSpritePalette sMoveSelectorSpritePal = { gSummaryMoveSelect_Pal, TAG_MOVE_SELECTOR };
 
 static const struct SpriteTemplate sMoveSelectorSpriteTemplate = {
     .tileTag = TAG_MOVE_SELECTOR,
@@ -701,11 +701,11 @@ bool8 LoadGraphics(void)
         gMain.state++;
         break;
     case 5:
-        Text_LoadWindowTemplate(&gWindowTemplate_81E6E6C);
+        Text_LoadWindowTemplate(&gSummaryScreenWindowTemplate);
         gMain.state++;
         break;
     case 6:
-        MultistepInitMenuWindowBegin(&gWindowTemplate_81E6E6C);
+        MultistepInitMenuWindowBegin(&gSummaryScreenWindowTemplate);
         gMain.state++;
         break;
     case 7:
@@ -856,25 +856,25 @@ static bool8 DecompressGraphics(void)
     switch (pssData.loadState)
     {
     case 0:
-        LZDecompressVram(gStatusScreen_Gfx, (void *)VRAM + 0);
+        LZDecompressVram(gSummaryScreen_Gfx, (void *)VRAM + 0);
         break;
     case 1:
-        CpuSet(gUnknown_08E73508, (void *)VRAM + 0xE000, 0x400);
+        CpuSet(gSummaryScreen_StatusTilemap, (void *)VRAM + 0xE000, 0x400);
         break;
     case 2:
-        LZDecompressVram(gUnknown_08E74E88, (void *)VRAM + 0xE800);
+        LZDecompressVram(gSummaryPage_Info_Tilemap, (void *)VRAM + 0xE800);
         break;
     case 3:
-        LZDecompressVram(gStatusScreen_Tilemap, (void *)VRAM + 0x4800);
+        LZDecompressVram(gSummaryPage_Skills_Tilemap, (void *)VRAM + 0x4800);
         break;
     case 4:
-        CpuSet(gUnknown_08E73E88, (void *)VRAM + 0x5800, 0x400);
+        CpuSet(gSummaryPage_BattleMoves_Tilemap, (void *)VRAM + 0x5800, 0x400);
         break;
     case 5:
-        CpuSet(gUnknown_08E74688, (void *)VRAM + 0x6800, 0x400);
+        CpuSet(gSummaryPage_ContestMoves_Tilemap, (void *)VRAM + 0x6800, 0x400);
         break;
     case 6:
-        LoadCompressedPalette(gStatusScreen_Pal, 0, 160);
+        LoadCompressedPalette(gSummaryScreen_Pal, 0, 160);
         break;
     case 7:
         LoadCompressedSpriteSheet(&sSpriteSheet_MoveTypes);
@@ -3005,10 +3005,10 @@ void Task_SlideStatusWindow(u8 taskId)
     data[1] += data[0];
     if (data[1] != 0)
     {
-        DmaCopyLargeCheckFirst16(&gUnknown_08E73508[0x24A - data[1]], (void *)(BG_SCREEN_ADDR(28) + 0x480), data[1] * 2);
-        DmaCopyLargeCheckFirst16(&gUnknown_08E73508[0x26A - data[1]], (void *)(BG_SCREEN_ADDR(28) + 0x4C0), data[1] * 2);
-        DmaCopyLargeCheckFirst16(&gUnknown_08E73508[0x24A - data[1]], (void *)(BG_SCREEN_ADDR(29) + 0x480), data[1] * 2);
-        DmaCopyLargeCheckFirst16(&gUnknown_08E73508[0x26A - data[1]], (void *)(BG_SCREEN_ADDR(29) + 0x4C0), data[1] * 2);
+        DmaCopyLargeCheckFirst16(&gSummaryScreen_StatusTilemap[0x24A - data[1]], (void *)(BG_SCREEN_ADDR(28) + 0x480), data[1] * 2);
+        DmaCopyLargeCheckFirst16(&gSummaryScreen_StatusTilemap[0x26A - data[1]], (void *)(BG_SCREEN_ADDR(28) + 0x4C0), data[1] * 2);
+        DmaCopyLargeCheckFirst16(&gSummaryScreen_StatusTilemap[0x24A - data[1]], (void *)(BG_SCREEN_ADDR(29) + 0x480), data[1] * 2);
+        DmaCopyLargeCheckFirst16(&gSummaryScreen_StatusTilemap[0x26A - data[1]], (void *)(BG_SCREEN_ADDR(29) + 0x4C0), data[1] * 2);
     }
     for (i = data[1]; i < 10; i++)
     {
@@ -3066,7 +3066,7 @@ static void PositionStatusSlidingWindow(s8 a)
 //         u8 *vramAddr = (u8 *)(VRAM + 0x5B40);
 //         for (i = 0; i < 7; i++)
 //         {
-//             CpuSet(&gUnknown_08E73E88[(i + 13) * 64], vramAddr, var1 & 0x1FFFFF);
+//             CpuSet(&gSummaryPage_BattleMoves_Tilemap[(i + 13) * 64], vramAddr, var1 & 0x1FFFFF);
 //             vramAddr += 64;
 //         }
 //     }
@@ -3162,7 +3162,7 @@ _080A1386:\n\
     adds r0, r5, 0\n\
     adds r0, 0xD\n\
     lsls r0, 6\n\
-    ldr r1, _080A13F0 @ =gUnknown_08E73E88\n\
+    ldr r1, _080A13F0 @ =gSummaryPage_BattleMoves_Tilemap\n\
     adds r0, r1\n\
     adds r1, r4, 0\n\
     mov r2, r8\n\
@@ -3209,7 +3209,7 @@ _080A13C2:\n\
 _080A13E4: .4byte gTasks + 0x8\n\
 _080A13E8: .4byte 0x06005b40\n\
 _080A13EC: .4byte 0x001fffff\n\
-_080A13F0: .4byte gUnknown_08E73E88\n\
+_080A13F0: .4byte gSummaryPage_BattleMoves_Tilemap\n\
 _080A13F4:\n\
     movs r0, 0\n\
     movs r1, 0x13\n\
@@ -3358,7 +3358,7 @@ _080A1552:\n\
     adds r0, r5, 0\n\
     adds r0, 0xD\n\
     lsls r0, 6\n\
-    ldr r1, _080A15BC @ =gUnknown_08E74688\n\
+    ldr r1, _080A15BC @ =gSummaryPage_ContestMoves_Tilemap\n\
     adds r0, r1\n\
     adds r1, r4, 0\n\
     mov r2, r8\n\
@@ -3405,7 +3405,7 @@ _080A158E:\n\
 _080A15B0: .4byte gTasks + 0x8\n\
 _080A15B4: .4byte 0x06006b40\n\
 _080A15B8: .4byte 0x001fffff\n\
-_080A15BC: .4byte gUnknown_08E74688\n\
+_080A15BC: .4byte gSummaryPage_ContestMoves_Tilemap\n\
 _080A15C0:\n\
     movs r0, 0\n\
     movs r1, 0x13\n\
@@ -3513,9 +3513,9 @@ static void TilemapFiveMovesDisplay(u8 a)
     {
         for (i = 0; i < 20; i++)
         {
-            vramAddr[i] = gUnknown_08E94510[i] + 0x1000;
-            vramAddr[i + 0x20] = gUnknown_08E94510[i] + 0x1000;
-            vramAddr[i + 0x40] = gUnknown_08E94550[i] + 0x1000;
+            vramAddr[i] = gSummaryScreen_MoveEffect_Cancel_TilemapTop[i] + 0x1000;
+            vramAddr[i + 0x20] = gSummaryScreen_MoveEffect_Cancel_TilemapTop[i] + 0x1000;
+            vramAddr[i + 0x40] = gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[i] + 0x1000;
         }
     }
     else
@@ -3523,9 +3523,9 @@ static void TilemapFiveMovesDisplay(u8 a)
         i = 0;
         for (i = 0; i < 20; i++)
         {
-            vramAddr[i] = gUnknown_08E94550[i] + 0x1000;
-            vramAddr[i + 0x20] = gUnknown_08E94590[i] + 0x1000;
-            vramAddr[i + 0x40] = gUnknown_08E94590[i] + 0x1000;
+            vramAddr[i] = gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[i] + 0x1000;
+            vramAddr[i + 0x20] = gSummaryScreen_MoveEffect_Cancel_TilemapBottom[i] + 0x1000;
+            vramAddr[i + 0x40] = gSummaryScreen_MoveEffect_Cancel_TilemapBottom[i] + 0x1000;
         }
     }
 
@@ -3535,18 +3535,18 @@ static void TilemapFiveMovesDisplay(u8 a)
     {
         for (i = 0; i < 20; i++)
         {
-            vramAddr[i] = gUnknown_08E94510[i] + 0x3000;
-            vramAddr[i + 0x20] = gUnknown_08E94510[i] + 0x3000;
-            vramAddr[i + 0x40] = gUnknown_08E94550[i] + 0x3000;
+            vramAddr[i] = gSummaryScreen_MoveEffect_Cancel_TilemapTop[i] + 0x3000;
+            vramAddr[i + 0x20] = gSummaryScreen_MoveEffect_Cancel_TilemapTop[i] + 0x3000;
+            vramAddr[i + 0x40] = gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[i] + 0x3000;
         }
     }
     else
     {
         for (i = 0; i < 20; i++)
         {
-            vramAddr[i] = gUnknown_08E94550[i] + 0x3000;
-            vramAddr[i + 0x20] = gUnknown_08E94590[i] + 0x3000;
-            vramAddr[i + 0x40] = gUnknown_08E94590[i] + 0x3000;
+            vramAddr[i] = gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[i] + 0x3000;
+            vramAddr[i + 0x20] = gSummaryScreen_MoveEffect_Cancel_TilemapBottom[i] + 0x3000;
+            vramAddr[i + 0x40] = gSummaryScreen_MoveEffect_Cancel_TilemapBottom[i] + 0x3000;
         }
     }
 }
@@ -3568,7 +3568,7 @@ static void TilemapFiveMovesDisplay(u8 a)
     cmp r1, 0\n\
     bne _080A172C\n\
     movs r5, 0\n\
-    ldr r7, _080A1728 @ =gUnknown_08E94510\n\
+    ldr r7, _080A1728 @ =gSummaryScreen_MoveEffect_Cancel_TilemapTop\n\
     movs r0, 0x80\n\
     lsls r0, 5\n\
     adds r6, r0, 0\n\
@@ -3601,10 +3601,10 @@ _080A16F4:\n\
     b _080A1768\n\
     .align 2, 0\n\
 _080A1724: .4byte 0x06006ad4\n\
-_080A1728: .4byte gUnknown_08E94510\n\
+_080A1728: .4byte gSummaryScreen_MoveEffect_Cancel_TilemapTop\n\
 _080A172C:\n\
     movs r5, 0\n\
-    ldr r6, _080A17B0 @ =gUnknown_08E94550\n\
+    ldr r6, _080A17B0 @ =gSummaryScreen_MoveEffect_Cancel_TilemapMiddle\n\
     movs r7, 0x80\n\
     lsls r7, 5\n\
     adds r4, r7, 0\n\
@@ -3641,7 +3641,7 @@ _080A1768:\n\
     cmp r1, 0\n\
     bne _080A17BC\n\
     movs r5, 0\n\
-    ldr r7, _080A17B8 @ =gUnknown_08E94510\n\
+    ldr r7, _080A17B8 @ =gSummaryScreen_MoveEffect_Cancel_TilemapTop\n\
     movs r0, 0xC0\n\
     lsls r0, 6\n\
     adds r6, r0, 0\n\
@@ -3673,12 +3673,12 @@ _080A1782:\n\
     bls _080A1782\n\
     b _080A17F8\n\
     .align 2, 0\n\
-_080A17B0: .4byte gUnknown_08E94550\n\
+_080A17B0: .4byte gSummaryScreen_MoveEffect_Cancel_TilemapMiddle\n\
 _080A17B4: .4byte 0x06005ad4\n\
-_080A17B8: .4byte gUnknown_08E94510\n\
+_080A17B8: .4byte gSummaryScreen_MoveEffect_Cancel_TilemapTop\n\
 _080A17BC:\n\
     movs r5, 0\n\
-    ldr r6, _080A1804 @ =gUnknown_08E94550\n\
+    ldr r6, _080A1804 @ =gSummaryScreen_MoveEffect_Cancel_TilemapMiddle\n\
     movs r7, 0xC0\n\
     lsls r7, 6\n\
     adds r4, r7, 0\n\
@@ -3716,7 +3716,7 @@ _080A17F8:\n\
     pop {r0}\n\
     bx r0\n\
     .align 2, 0\n\
-_080A1804: .4byte gUnknown_08E94550\n\
+_080A1804: .4byte gSummaryScreen_MoveEffect_Cancel_TilemapMiddle\n\
     .syntax divided\n");
 }
 #endif // NONMATCHING

@@ -85,7 +85,7 @@ extern const struct WindowTemplate gMenuWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E6E18;
 extern const struct WindowTemplate gWindowTemplate_81E6E34;
 extern const struct WindowTemplate gWindowTemplate_81E6E50;
-extern const struct WindowTemplate gWindowTemplate_81E6E6C;
+extern const struct WindowTemplate gSummaryScreenWindowTemplate;
 extern const struct WindowTemplate gWindowTemplate_81E6E88;
 extern const struct WindowTemplate gWindowTemplate_81E6EA4;
 extern const struct WindowTemplate gWindowTemplate_81E6EC0;
