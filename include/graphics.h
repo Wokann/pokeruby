@@ -35,6 +35,17 @@ extern const u8 gInterfaceGfx_PremierBall[];
 extern const u8 gInterfacePal_PremierBall[];
 extern const u8 gOpenPokeballGfx[];
 
+extern const u8 gBerryBlenderPlayerArrow_Gfx[];
+extern const u8 gBerryBlenderScoreSymbols_Gfx[];
+extern const u8 gBerryBlenderParticles_Gfx[];
+extern const u8 gBerryBlenderCountdownNumbers_Gfx[];
+extern const u8 gBerryBlenderStart_Gfx[];
+extern const u16 gBerryBlenderMiscPalette[];
+extern const u16 gBerryBlenderArrowPalette[];
+extern const u8 gBerryBlenderCenter_Gfx[];
+extern const u8 gBerryBlenderOuter_Gfx[];
+extern const u8 gBerryBlenderOuter_Tilemap[];
+
 extern const u8 gContestPalette[];
 extern const u8 gContestGfx[];
 extern const u8 gContestBgmap[];
