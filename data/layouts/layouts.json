@@ -3262,14 +3262,14 @@
       "blockdata_filepath": "data/layouts/SkyPillar_4F/map.bin"
     },
     {
-      "id": "LAYOUT_UNKNOWN_MAP_083041B4",
-      "name": "UnknownMap_083041B4_Layout",
+      "id": "LAYOUT_SEAFLOOR_CAVERN_ROOM9_LAVA",
+      "name": "SeafloorCavern_Room9_Lava_Layout",
       "width": 27,
       "height": 46,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
-      "border_filepath": "data/layouts/UnknownMap_083041B4/border.bin",
-      "blockdata_filepath": "data/layouts/UnknownMap_083041B4/map.bin"
+      "border_filepath": "data/layouts/SeafloorCavern_Room9_Lava/border.bin",
+      "blockdata_filepath": "data/layouts/SeafloorCavern_Room9_Lava/map.bin"
     },
     {
       "id": "LAYOUT_MOSSDEEP_CITY_STEVENS_HOUSE",
