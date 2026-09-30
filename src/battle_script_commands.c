@@ -254,12 +254,6 @@ extern u8 BattleScript_GrudgeTakesPP[];
 #define MULTISTRING_CHOOSER 0x5
 #define MSG_DISPLAY         0x7
 
-#define TARGET_SELECTED         0x0
-#define TARGET_DEPENDS          0x1
-#define MOVE_TARGET_BOTH             0x8
-#define MOVE_TARGET_FOES_AND_ALLY    0x20
-#define MOVE_TARGET_OPPONENTS_FIELD  0x40
-
 #define TYPE_FORESIGHT  0xFE
 #define TYPE_ENDTABLE   0xFF
 
@@ -1873,7 +1867,7 @@ static void Cmd_attackanimation(void)
     }
     else
     {
-        if ((gBattleMoves[gCurrentMove].target & MOVE_TARGET_BOTH || gBattleMoves[gCurrentMove].target & MOVE_TARGET_FOES_AND_ALLY || gBattleMoves[gCurrentMove].target & TARGET_DEPENDS) && gBattleStruct->animTargetsHit)
+        if ((gBattleMoves[gCurrentMove].target & MOVE_TARGET_BOTH || gBattleMoves[gCurrentMove].target & MOVE_TARGET_FOES_AND_ALLY || gBattleMoves[gCurrentMove].target & MOVE_TARGET_DEPENDS) && gBattleStruct->animTargetsHit)
         {
             gBattlescriptCurrInstr++;
             return;
