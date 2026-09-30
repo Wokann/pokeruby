@@ -3524,7 +3524,7 @@ void SwitchInClearSetData(void)
             gBattleMons[gActiveBattler].statStages[i] = 6;
         for (i = 0; i < gBattlersCount; i++)
         {
-            if ((gBattleMons[i].status2 & STATUS2_ESCAPE_PREVENTION) && gDisableStructs[i].bankPreventingEscape == gActiveBattler)
+            if ((gBattleMons[i].status2 & STATUS2_ESCAPE_PREVENTION) && gDisableStructs[i].battlerPreventingEscape == gActiveBattler)
                 gBattleMons[i].status2 &= ~STATUS2_ESCAPE_PREVENTION;
             if ((gStatuses3[i] & STATUS3_ALWAYS_HITS) && gDisableStructs[i].battlerWithSureHit == gActiveBattler)
             {
@@ -3572,8 +3572,8 @@ void SwitchInClearSetData(void)
     {
         gDisableStructs[gActiveBattler].substituteHP = sp0.substituteHP;
         gDisableStructs[gActiveBattler].battlerWithSureHit = sp0.battlerWithSureHit;
-        gDisableStructs[gActiveBattler].perishSongTimer1 = sp0.perishSongTimer1;
-        gDisableStructs[gActiveBattler].perishSongTimer2 = sp0.perishSongTimer2;
+        gDisableStructs[gActiveBattler].perishSongTimer = sp0.perishSongTimer;
+        gDisableStructs[gActiveBattler].perishSongTimerStartValue = sp0.perishSongTimerStartValue;
     }
 
     gDisableStructs[gActiveBattler].isFirstTurn= 2;
@@ -3609,7 +3609,7 @@ void UndoEffectsAfterFainting(void)
     gStatuses3[gActiveBattler] = 0;
     for (i = 0; i < gBattlersCount; i++)
     {
-        if ((gBattleMons[i].status2 & STATUS2_ESCAPE_PREVENTION) && gDisableStructs[i].bankPreventingEscape == gActiveBattler)
+        if ((gBattleMons[i].status2 & STATUS2_ESCAPE_PREVENTION) && gDisableStructs[i].battlerPreventingEscape == gActiveBattler)
             gBattleMons[i].status2 &= ~STATUS2_ESCAPE_PREVENTION;
         if (gBattleMons[i].status2 & STATUS2_INFATUATED_WITH(gActiveBattler))
             gBattleMons[i].status2 &= ~STATUS2_INFATUATED_WITH(gActiveBattler);
@@ -4838,10 +4838,10 @@ static void TurnValuesCleanUp(bool8 var0)
             if (gDisableStructs[gActiveBattler].isFirstTurn)
                 gDisableStructs[gActiveBattler].isFirstTurn--;
 
-            if (gDisableStructs[gActiveBattler].rechargeCounter)
+            if (gDisableStructs[gActiveBattler].rechargeTimer)
             {
-                gDisableStructs[gActiveBattler].rechargeCounter--;
-                if (gDisableStructs[gActiveBattler].rechargeCounter == 0)
+                gDisableStructs[gActiveBattler].rechargeTimer--;
+                if (gDisableStructs[gActiveBattler].rechargeTimer == 0)
                     gBattleMons[gActiveBattler].status2 &= ~(STATUS2_RECHARGE);
             }
         }
@@ -5215,7 +5215,7 @@ void HandleAction_UseMove(void)
         gCurrentMove = gChosenMove = gBattleMons[gBattlerAttacker].moves[gCurrMovePos];
         gDisableStructs[gBattlerAttacker].encoredMove = MOVE_NONE;
         gDisableStructs[gBattlerAttacker].encoredMovePos = 0;
-        gDisableStructs[gBattlerAttacker].encoreTimer1 = 0;
+        gDisableStructs[gBattlerAttacker].encoreTimer = 0;
         gSharedMem[BSTRUCT_OFF(moveTarget) + gBattlerAttacker] = GetMoveTarget(gCurrentMove, 0);
     }
     else if (gBattleMons[gBattlerAttacker].moves[gCurrMovePos] != gChosenMovesByBanks[gBattlerAttacker])

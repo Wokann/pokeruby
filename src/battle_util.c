@@ -483,7 +483,7 @@ u8 TrySetCantSelectMoveBattleScript(void) //msg can't select a move
         gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingTormentedMove;
         limitations++;
     }
-    if (gDisableStructs[gActiveBattler].tauntTimer1 && gBattleMoves[move].power == 0)
+    if (gDisableStructs[gActiveBattler].tauntTimer && gBattleMoves[move].power == 0)
     {
         gCurrentMove = move;
         gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTaunt;
@@ -541,11 +541,11 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
             unusableMoves |= gBitTable[i];
         if (gBattleMons[battlerId].moves[i] == gLastMoves[battlerId] && check & MOVE_LIMITATION_TORMENTED && gBattleMons[battlerId].status2 & STATUS2_TORMENT)
             unusableMoves |= gBitTable[i];
-        if (gDisableStructs[battlerId].tauntTimer1 && check & MOVE_LIMITATION_TAUNT && gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0)
+        if (gDisableStructs[battlerId].tauntTimer && check & MOVE_LIMITATION_TAUNT && gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0)
             unusableMoves |= gBitTable[i];
         if (IsImprisoned(battlerId, gBattleMons[battlerId].moves[i]) && check & MOVE_LIMITATION_IMPRISON)
             unusableMoves |= gBitTable[i];
-        if (gDisableStructs[battlerId].encoreTimer1 && gDisableStructs[battlerId].encoredMove != gBattleMons[battlerId].moves[i])
+        if (gDisableStructs[battlerId].encoreTimer && gDisableStructs[battlerId].encoredMove != gBattleMons[battlerId].moves[i])
             unusableMoves |= gBitTable[i];
         if (holdEffect == HOLD_EFFECT_CHOICE_BAND && *choicedMove != 0 && *choicedMove != 0xFFFF && *choicedMove != gBattleMons[battlerId].moves[i])
             unusableMoves |= gBitTable[i];
@@ -1108,7 +1108,7 @@ u8 TurnBasedEffects(void)
                 gBattleStruct->turnEffectsTracker++;
                 break;
             case ENDTURN_DISABLE:  // disable
-                if (gDisableStructs[gActiveBattler].disableTimer1 != 0)
+                if (gDisableStructs[gActiveBattler].disableTimer != 0)
                 {
                     s32 i;
                     for (i = 0; i < MAX_MON_MOVES; i++)
@@ -1119,9 +1119,9 @@ u8 TurnBasedEffects(void)
                     if (i == 4)  // pokemon does not have the disabled move anymore
                     {
                         gDisableStructs[gActiveBattler].disabledMove = 0;
-                        gDisableStructs[gActiveBattler].disableTimer1 = 0;
+                        gDisableStructs[gActiveBattler].disableTimer = 0;
                     }
-                    else if (--gDisableStructs[gActiveBattler].disableTimer1 == 0)  // disable ends
+                    else if (--gDisableStructs[gActiveBattler].disableTimer == 0)  // disable ends
                     {
                         gDisableStructs[gActiveBattler].disabledMove = 0;
                         BattleScriptExecute(BattleScript_DisabledNoMore);
@@ -1131,18 +1131,18 @@ u8 TurnBasedEffects(void)
                 gBattleStruct->turnEffectsTracker++;
                 break;
             case ENDTURN_ENCORE:  // encore
-                if (gDisableStructs[gActiveBattler].encoreTimer1 != 0)
+                if (gDisableStructs[gActiveBattler].encoreTimer != 0)
                 {
                     if (gBattleMons[gActiveBattler].moves[gDisableStructs[gActiveBattler].encoredMovePos] != gDisableStructs[gActiveBattler].encoredMove)  // pokemon does not have the encored move anymore
                     {
                         gDisableStructs[gActiveBattler].encoredMove = 0;
-                        gDisableStructs[gActiveBattler].encoreTimer1 = 0;
+                        gDisableStructs[gActiveBattler].encoreTimer = 0;
                     }
-                    else if (--gDisableStructs[gActiveBattler].encoreTimer1 == 0
+                    else if (--gDisableStructs[gActiveBattler].encoreTimer == 0
                      || gBattleMons[gActiveBattler].pp[gDisableStructs[gActiveBattler].encoredMovePos] == 0)
                     {
                         gDisableStructs[gActiveBattler].encoredMove = 0;
-                        gDisableStructs[gActiveBattler].encoreTimer1 = 0;
+                        gDisableStructs[gActiveBattler].encoreTimer = 0;
                         BattleScriptExecute(BattleScript_EncoredNoMore);
                         effect++;
                     }
@@ -1155,13 +1155,13 @@ u8 TurnBasedEffects(void)
                 gBattleStruct->turnEffectsTracker++;
                 break;
             case ENDTURN_CHARGE:  // charge
-                if (gDisableStructs[gActiveBattler].chargeTimer1 && --gDisableStructs[gActiveBattler].chargeTimer1 == 0)
+                if (gDisableStructs[gActiveBattler].chargeTimer && --gDisableStructs[gActiveBattler].chargeTimer == 0)
                     gStatuses3[gActiveBattler] &= ~STATUS3_CHARGED_UP;
                 gBattleStruct->turnEffectsTracker++;
                 break;
             case ENDTURN_TAUNT:  // taunt
-                if (gDisableStructs[gActiveBattler].tauntTimer1)
-                    gDisableStructs[gActiveBattler].tauntTimer1--;
+                if (gDisableStructs[gActiveBattler].tauntTimer)
+                    gDisableStructs[gActiveBattler].tauntTimer--;
                 gBattleStruct->turnEffectsTracker++;
                 break;
             case ENDTURN_YAWN:  // yawn
@@ -1250,9 +1250,9 @@ bool8 HandleWishPerishSongOnTurnEnd(void)
                     gBattleTextBuff1[1] = 1;
                     gBattleTextBuff1[2] = 1;
                     gBattleTextBuff1[3] = 1;
-                    gBattleTextBuff1[4] = gDisableStructs[gActiveBattler].perishSongTimer1;
+                    gBattleTextBuff1[4] = gDisableStructs[gActiveBattler].perishSongTimer;
                     gBattleTextBuff1[5] = 0xFF;
-                    if (gDisableStructs[gActiveBattler].perishSongTimer1 == 0)
+                    if (gDisableStructs[gActiveBattler].perishSongTimer == 0)
                     {
                         gStatuses3[gActiveBattler] &= ~(STATUS3_PERISH_SONG);
                         gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
@@ -1260,7 +1260,7 @@ bool8 HandleWishPerishSongOnTurnEnd(void)
                     }
                     else
                     {
-                        gDisableStructs[gActiveBattler].perishSongTimer1--;
+                        gDisableStructs[gActiveBattler].perishSongTimer--;
                         gBattlescriptCurrInstr = BattleScript_PerishSongCountGoesDown;
                     }
                     BattleScriptExecute(gBattlescriptCurrInstr);
@@ -1459,7 +1459,7 @@ u8 AtkCanceller_UnableToUseMove(void)
             if (gBattleMons[gBattlerAttacker].status2 & STATUS2_RECHARGE)
             {
                 gBattleMons[gBattlerAttacker].status2 &= ~(STATUS2_RECHARGE);
-                gDisableStructs[gBattlerAttacker].rechargeCounter = 0;
+                gDisableStructs[gBattlerAttacker].rechargeTimer = 0;
                 CancelMultiTurnMoves(gBattlerAttacker);
                 gBattlescriptCurrInstr = BattleScript_MoveUsedMustRecharge;
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
@@ -1492,7 +1492,7 @@ u8 AtkCanceller_UnableToUseMove(void)
             gBattleStruct->atkCancellerTracker++;
             break;
         case 7: // taunt
-            if (gDisableStructs[gBattlerAttacker].tauntTimer1 && gBattleMoves[gCurrentMove].power == 0)
+            if (gDisableStructs[gBattlerAttacker].tauntTimer && gBattleMoves[gCurrentMove].power == 0)
             {
                 gProtectStructs[gBattlerAttacker].usedTauntedMove = 1;
                 CancelMultiTurnMoves(gBattlerAttacker);

@@ -36,7 +36,7 @@ static bool8 ShouldUseItem(void);
 static bool8 ShouldSwitchIfPerishSong(void)
 {
     if (gStatuses3[gActiveBattler] & STATUS3_PERISH_SONG
-        && gDisableStructs[gActiveBattler].perishSongTimer1 == 0)
+        && gDisableStructs[gActiveBattler].perishSongTimer == 0)
     {
         gSharedMem[BSTRUCT_OFF(AI_monToSwitchIntoId) + (GetBattlerPosition(gActiveBattler)) / 2] = 6;
         BtlController_EmitTwoReturnValues(1, 2, 0);
