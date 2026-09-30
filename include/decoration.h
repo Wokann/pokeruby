@@ -117,7 +117,7 @@ extern u8 SecretBase_EventScript_PutAwayDecoration[];
 extern const struct DecorationInventory gDecorationInventories[];
 
 void ExitTraderMenu(u8); // src/trader
-extern void ReshowPlayerPC(u8); // src/player_pc
+extern void ReshowPlayerPC(u8 taskId); // src/player_pc
 void DoSecretBaseDecorationMenu(u8 taskId);
 void LoadDecorationMenuPalette(void);
 void HandleDecorationActionsMenuInput(u8);

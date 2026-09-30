@@ -9,7 +9,7 @@ struct PlayerPCItemPageStruct
  /*0x03*/ u8 count; // total number of items in mailbox storage.
 };
 
-void ReshowPlayerPC(u8 var);
+void ReshowPlayerPC(u8 taskId);
 void NewGameInitPCItems(void);
 void BedroomPC(void);
 void PlayerPC(void);

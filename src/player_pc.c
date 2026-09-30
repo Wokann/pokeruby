@@ -92,9 +92,9 @@ extern void (*gFieldCallback)(void);
 
 static void InitPlayerPCMenu(u8 taskId);
 static void PlayerPCProcessMenuInput(u8 taskId);
-static void InitItemStorageMenu(u8);
+static void InitItemStorageMenu(u8 menuOption);
 static void ItemStorageMenuPrint(const u8 *);
-static void ItemStorageMenuProcessInput(u8);
+static void ItemStorageMenuProcessInput(u8 taskId);
 static void ItemStorage_ProcessInput(u8);
 static void SetPlayerPCListCount(u8);
 static void ItemStorage_DoItemAction(u8);
@@ -129,12 +129,12 @@ static void Mailbox_Cancel(u8);
 static void Mailbox_DrawMailMenuAndDoProcessInput(u8);
 static void PlayerPC_ItemStorage(u8 taskId);
 static void PlayerPC_Mailbox(u8 taskId);
-static void PlayerPC_Decoration(u8 var);
+static void PlayerPC_Decoration(u8 taskId);
 static void PlayerPC_TurnOff(u8 taskId);
 static void ItemStorage_Withdraw(u8);
 static void ItemStorage_Deposit(u8);
 static void ItemStorage_Toss(u8);
-static void ItemStorage_Exit(u8);
+static void ItemStorage_Exit(u8 taskId);
 static void ItemStorage_TossItemYes(u8);
 static void ItemStorage_TossItemNo(u8);
 static void Mailbox_DoMailMoveToBag(u8);
@@ -274,9 +274,9 @@ static void PlayerPCProcessMenuInput(u8 taskId)
     }
 }
 
-void ReshowPlayerPC(u8 var)
+void ReshowPlayerPC(u8 taskId)
 {
-    DisplayItemMessageOnField(var, gText_WhatWouldYouLike, InitPlayerPCMenu, 0);
+    DisplayItemMessageOnField(taskId, gText_WhatWouldYouLike, InitPlayerPCMenu, 0);
 }
 
 static void PlayerPC_ItemStorage(u8 taskId)
@@ -303,10 +303,10 @@ static void PlayerPC_Mailbox(u8 taskId)
     }
 }
 
-static void PlayerPC_Decoration(u8 var)
+static void PlayerPC_Decoration(u8 taskId)
 {
     Menu_EraseWindowRect(0, 0, 10, 9);
-    DoPlayerRoomDecorationMenu(var);
+    DoPlayerRoomDecorationMenu(taskId);
 }
 
 static void PlayerPC_TurnOff(u8 taskId)
@@ -328,13 +328,13 @@ static void PlayerPC_TurnOff(u8 taskId)
     DestroyTask(taskId);
 }
 
-static void InitItemStorageMenu(u8 var)
+static void InitItemStorageMenu(u8 menuOption)
 {
     Menu_EraseWindowRect(0, 0, 10, 9);
     Menu_DrawStdWindowFrame(0, 0, 11, 9);
     Menu_PrintItems(1, 1, 4, (struct MenuAction *)sItemStorage_MenuActions);
-    InitMenu(0, 1, 1, 4, var, 10);
-    ItemStorageMenuPrint(sItemStorage_OptionDescriptions[var]);
+    InitMenu(0, 1, 1, 4, menuOption, 10);
+    ItemStorageMenuPrint(sItemStorage_OptionDescriptions[menuOption]);
 }
 
 static void ItemStorageMenuPrint(const u8 *textPtr)
@@ -343,7 +343,7 @@ static void ItemStorageMenuPrint(const u8 *textPtr)
     Menu_PrintText(textPtr, 2, 15);
 }
 
-static void ItemStorageMenuProcessInput(u8 var)
+static void ItemStorageMenuProcessInput(u8 taskId)
 {
     if (JOY_REPT(DPAD_UP))
     {
@@ -360,13 +360,13 @@ static void ItemStorageMenuProcessInput(u8 var)
     else if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        sItemStorage_MenuActions[Menu_GetCursorPos()].func(var);
+        sItemStorage_MenuActions[Menu_GetCursorPos()].func(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
         Menu_DestroyCursor();
         PlaySE(SE_SELECT);
-        sItemStorage_MenuActions[MENU_EXIT].func(var);
+        sItemStorage_MenuActions[MENU_EXIT].func(taskId);
     }
 }
 
@@ -414,7 +414,7 @@ static void ItemStorage_Withdraw(u8 taskId)
         tItemStorageCursorPos = 0;
         tItemStorageItemsAbove = 0;
         SetPlayerPCListCount(taskId);
-        ItemStorage_DrawItemListMenu(taskId, 0);
+        ItemStorage_DrawItemListMenu(taskId, MENU_WITHDRAW);
         TASK.FUNC = ItemStorage_ProcessInput;
     }
     else
@@ -436,18 +436,18 @@ static void ItemStorage_Toss(u8 taskId)
         tItemStorageCursorPos = 0;
         tItemStorageItemsAbove = 0;
         SetPlayerPCListCount(taskId);
-        ItemStorage_DrawItemListMenu(taskId, 2);
+        ItemStorage_DrawItemListMenu(taskId, MENU_TOSS);
         TASK.FUNC = ItemStorage_ProcessInput;
     }
     else
         DisplayItemMessageOnField(taskId, gText_NoItems, PlayerPC_ItemStorage, 0);
 }
 
-static void ItemStorage_Exit(u8 var)
+static void ItemStorage_Exit(u8 taskId)
 {
     Menu_DestroyCursor();
     Menu_EraseWindowRect(0, 0, 11, 9);
-    ReshowPlayerPC(var);
+    ReshowPlayerPC(taskId);
 }
 
 static void SetPlayerPCListCount(u8 taskId)
@@ -718,11 +718,11 @@ static void ItemStorage_DoItemWithdraw(u8 taskId)
 static void ItemStorage_DoItemToss(u8 taskId)
 {
     s16 *data = TASK.data;
-    u8 var = tItemStorageCursorPos + tItemStorageItemsAbove;
+    u8 itemIndex = tItemStorageCursorPos + tItemStorageItemsAbove;
 
-    if(GetItemImportance(gSaveBlock1.pcItems[var].itemId) == FALSE)
+    if(GetItemImportance(gSaveBlock1.pcItems[itemIndex].itemId) == FALSE)
     {
-        CopyItemName(gSaveBlock1.pcItems[var].itemId, gStringVar1);
+        CopyItemName(gSaveBlock1.pcItems[itemIndex].itemId, gStringVar1);
         ConvertIntToDecimalStringN(gStringVar2, tItemStorageQuantity, 0, 3);
         ItemStorage_PrintDescription(MSG_OKAY_TO_THROW_AWAY);
         DisplayYesNoMenu(7, 6, 1);
@@ -837,57 +837,57 @@ static void ItemStorage_FinishItemSwap(u8 taskId, bool8 switchModeDisabled)
     }
 }
 
-static void ItemStorage_DrawItemQuantity(u16 arg1, enum StringConvertMode arg2, u8 arg3, u8 arg4, int isSwapSelected)
+static void ItemStorage_DrawItemQuantity(u16 quantity, enum StringConvertMode conversionMode, u8 y, u8 maxDigits, int isSwapSelected)
 {
-    ConvertIntToItemQuantityString(gStringVar1, arg1, arg2, arg4);
+    ConvertIntToItemQuantityString(gStringVar1, quantity, conversionMode, maxDigits);
 
     if(isSwapSelected != FALSE)
-        Menu_PrintText(sSelectedItemQuantityText, 0x1A, arg3);
+        Menu_PrintText(sSelectedItemQuantityText, 0x1A, y);
     else
-        Menu_PrintText(sUnselectedItemQuantityText, 0x1A, arg3);
+        Menu_PrintText(sUnselectedItemQuantityText, 0x1A, y);
 }
 
-static void ItemStorage_DrawItemVoidQuantity(u8 var)
+static void ItemStorage_DrawItemVoidQuantity(u8 y)
 {
-    Menu_PrintText(sEmptyItemQuantityText, 0x19, var);
+    Menu_PrintText(sEmptyItemQuantityText, 0x19, y);
 }
 
-static void ItemStorage_DrawItemName(struct ItemSlot *itemSlot, u8 var, int isSwapSelected)
+static void ItemStorage_DrawItemName(struct ItemSlot *itemSlot, u8 y, int isSwapSelected)
 {
     CopyItemName(itemSlot->itemId, gStringVar1);
 
     if(isSwapSelected != FALSE)
-        Menu_PrintText(sSelectedItemNameText, 16, var);
+        Menu_PrintText(sSelectedItemNameText, 16, y);
     else
-        Menu_PrintText(sUnselectedItemNameText, 16, var);
+        Menu_PrintText(sUnselectedItemNameText, 16, y);
 }
 
-static void ItemStorage_DrawNormalItemEntry(struct ItemSlot *itemSlot, u8 var, int var2)
+static void ItemStorage_DrawNormalItemEntry(struct ItemSlot *itemSlot, u8 y, int isSwapSelected)
 {
-    ItemStorage_DrawItemName(itemSlot, var, var2);
-    ItemStorage_DrawItemQuantity(itemSlot->quantity, STR_CONV_MODE_RIGHT_ALIGN, var, 3, var2);
+    ItemStorage_DrawItemName(itemSlot, y, isSwapSelected);
+    ItemStorage_DrawItemQuantity(itemSlot->quantity, STR_CONV_MODE_RIGHT_ALIGN, y, 3, isSwapSelected);
 }
 
-static void ItemStorage_DrawKeyItemEntry(struct ItemSlot *itemSlot, u8 var, int var2)
+static void ItemStorage_DrawKeyItemEntry(struct ItemSlot *itemSlot, u8 y, int isSwapSelected)
 {
-    ItemStorage_DrawItemName(itemSlot, var, var2);
-    ItemStorage_DrawItemVoidQuantity(var);
+    ItemStorage_DrawItemName(itemSlot, y, isSwapSelected);
+    ItemStorage_DrawItemVoidQuantity(y);
 }
 
-static void ItemStorage_DrawTMHMEntry(struct ItemSlot *itemSlot, u8 var, int var2)
+static void ItemStorage_DrawTMHMEntry(struct ItemSlot *itemSlot, u8 y, int isSwapSelected)
 {
-    ItemStorage_DrawItemName(itemSlot, var, var2);
+    ItemStorage_DrawItemName(itemSlot, y, isSwapSelected);
 
     if(itemSlot->itemId < ITEM_HM01_CUT)
-        ItemStorage_DrawItemQuantity(itemSlot->quantity, STR_CONV_MODE_RIGHT_ALIGN, var, 3, var2);
+        ItemStorage_DrawItemQuantity(itemSlot->quantity, STR_CONV_MODE_RIGHT_ALIGN, y, 3, isSwapSelected);
     else
-        ItemStorage_DrawItemVoidQuantity(var); // HMs do not have a quantity.
+        ItemStorage_DrawItemVoidQuantity(y); // HMs do not have a quantity.
 }
 
 static void ItemStorage_DrawItemList(u8 taskId)
 {
     s16 *data = TASK.data;
-    int tempArg;
+    int isSwapSelected;
     u16 i;
     u16 yCoord = 0;
 
@@ -902,23 +902,23 @@ static void ItemStorage_DrawItemList(u8 taskId)
         }
         else
         {
-            tempArg = 0;
+            isSwapSelected = FALSE;
 
             if (tItemStorageIsSwitching != FALSE && i == tItemStorageSwapItemPos)
-                tempArg = 1;
+                isSwapSelected = TRUE;
 
             switch (GetPocketByItemId(gSaveBlock1.pcItems[i].itemId) - 1)
             {
             case 0:
             case 1:
             case 3:
-                ItemStorage_DrawNormalItemEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, tempArg);
+                ItemStorage_DrawNormalItemEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, isSwapSelected);
                 break;
             case 4:
-                ItemStorage_DrawKeyItemEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, tempArg);
+                ItemStorage_DrawKeyItemEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, isSwapSelected);
                 break;
             case 2:
-                ItemStorage_DrawTMHMEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, tempArg);
+                ItemStorage_DrawTMHMEntry((struct ItemSlot *)&gSaveBlock1.pcItems[i], yCoord + 2, isSwapSelected);
                 break;
             }
         }
@@ -995,7 +995,7 @@ static void ItemStorage_DrawBothListAndDescription(u8 taskId)
     }
 }
 
-static void ItemStorage_DrawItemListMenu(u8 taskId, u8 var)
+static void ItemStorage_DrawItemListMenu(u8 taskId, u8 menuOption)
 {
     s16 *data = TASK.data;
 
@@ -1006,7 +1006,7 @@ static void ItemStorage_DrawItemListMenu(u8 taskId, u8 var)
     Menu_DrawStdWindowFrame(0, 0xC, 0xE, 0x13);
     Menu_DrawStdWindowFrame(0, 0, 0xB, 3);
     ItemStorage_PrintDescription(gSaveBlock1.pcItems[0].itemId);
-    Menu_PrintText(sItemStorage_MenuActions[var].text, 1, 1);
+    Menu_PrintText(sItemStorage_MenuActions[menuOption].text, 1, 1);
     ItemStorage_DrawItemList(taskId);
     InitMenu(0, 0x10, 2, tItemStoragePageItems, tItemStorageCursorPos, 0xD);
 }
