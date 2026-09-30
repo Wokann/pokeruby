@@ -24,7 +24,7 @@ static const s32 sPowersOfTen[] =
     1000000000,
 };
 
-u8 *StringCopy10(u8 *dest, const u8 *src)
+u8 *StringCopy_Nickname(u8 *dest, const u8 *src)
 {
     u8 i;
     u32 limit = 10;
@@ -54,7 +54,7 @@ u8 *StringGet_Nickname(u8 *str)
     return &str[i];
 }
 
-u8 *StringCopy8(u8 *dest, const u8 *src)
+u8 *StringCopy_PlayerName(u8 *dest, const u8 *src)
 {
     s32 i;
 
@@ -230,7 +230,7 @@ u8 *ConvertIntToDecimalStringN_DigitWidth6(u8 *dest, s32 value, enum StringConve
     s32 largestPowerOfTen = sPowersOfTen[n - 1];
 
     *dest++ = EXT_CTRL_CODE_BEGIN;
-    *dest++ = 0x14;
+    *dest++ = EXT_CTRL_CODE_MIN_LETTER_SPACING;
     *dest++ = 6;
 
     state = WAITING_FOR_NONZERO_DIGIT;
@@ -280,7 +280,7 @@ u8 *ConvertIntToDecimalStringN_DigitWidth6(u8 *dest, s32 value, enum StringConve
     }
 
     *dest++ = EXT_CTRL_CODE_BEGIN;
-    *dest++ = 0x14;
+    *dest++ = EXT_CTRL_CODE_MIN_LETTER_SPACING;
     *dest++ = 0x00;
 
     *dest = EOS;

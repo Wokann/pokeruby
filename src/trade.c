@@ -2828,14 +2828,14 @@ u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
     if (whichParty == 0)
     {
         GetMonData(&gPlayerParty[partyIdx], MON_DATA_NICKNAME, nickname);
-        StringCopy10(str, nickname);
+        StringCopy_Nickname(str, nickname);
         GetMonGender(&gPlayerParty[partyIdx]);
         GetMonData(&gPlayerParty[partyIdx], MON_DATA_LEVEL);
     }
     else
     {
         GetMonData(&gEnemyParty[partyIdx], MON_DATA_NICKNAME, nickname);
-        StringCopy10(str, nickname);
+        StringCopy_Nickname(str, nickname);
         GetMonGender(&gEnemyParty[partyIdx]);
         GetMonData(&gEnemyParty[partyIdx], MON_DATA_LEVEL);
     }
@@ -2891,7 +2891,7 @@ static void PrintPartyNicknames(u8 whichParty)
     {
         pokemon = whichParty == 0 ? &gPlayerParty[i] : &gEnemyParty[i];
         GetMonData(pokemon, MON_DATA_NICKNAME, nickname);
-        StringCopy10(string + 6, nickname);
+        StringCopy_Nickname(string + 6, nickname);
         GetMonGender(pokemon);
         string[5] = (50 - Text_GetStringWidthFromWindowTemplate(&gTradeNicknameWindowTemplate, string + 6)) / 2;
         Text_InitWindowAndPrintText(&sTradeMenu->window, string, sTradeMenu->textWindowBaseTileNum + 22 * 6 * whichParty + 22 * i, gTradeMonSpriteCoords[i + 6 * whichParty][0], gTradeMonSpriteCoords[i + 6 * whichParty][1]);
@@ -2962,7 +2962,7 @@ static void PrintPartyNicknames(u8 whichParty)
                     "\tmov r0, sp\n"
                     "\tadds r0, 0x22\n"
                     "\tadd r1, sp, 0x4\n"
-                    "\tbl StringCopy10\n"
+                    "\tbl StringCopy_Nickname\n"
                     "\tadds r0, r4, 0\n"
                     "\tbl GetMonGender\n"
                     "\tmov r1, sp\n"
@@ -4364,17 +4364,17 @@ static void BufferTradeSceneStrings(void)
         mpId = GetMultiplayerId();
         StringCopy(gStringVar1, gLinkPlayers[mpId ^ 1].name);
         GetMonData(&gEnemyParty[gSelectedTradeMonPositions[1] % 6], MON_DATA_NICKNAME, string);
-        StringCopy10(gStringVar3, string);
+        StringCopy_Nickname(gStringVar3, string);
         GetMonData(&gPlayerParty[gSelectedTradeMonPositions[0]], MON_DATA_NICKNAME, string);
-        StringCopy10(gStringVar2, string);
+        StringCopy_Nickname(gStringVar2, string);
     }
     else
     {
         ingameTrade = &sIngameTrades[gSpecialVar_0x8004];
         StringCopy(gStringVar1, ingameTrade->otName);
-        StringCopy10(gStringVar3, ingameTrade->nickname);
+        StringCopy_Nickname(gStringVar3, ingameTrade->nickname);
         GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, string);
-        StringCopy10(gStringVar2, string);
+        StringCopy_Nickname(gStringVar2, string);
     }
 }
 
@@ -4969,7 +4969,7 @@ static void BufferInGameTradeMonName(void)
     u8 nickname[32];
     const struct InGameTrade *inGameTrade = &sIngameTrades[gSpecialVar_0x8004];
     GetMonData(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, nickname);
-    StringCopy10(gStringVar1, nickname);
+    StringCopy_Nickname(gStringVar1, nickname);
     StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
 }
 

@@ -894,7 +894,7 @@ static void CreateLearnableMovesList(void)
     for (i = 0; i < sMoveRelearnerMenu->numMenuChoices; i++)
         StringCopy(sMoveRelearnerMenu->moveNames[i], gMoveNames[sMoveRelearnerMenu->movesToLearn[i]]);
     GetMonData(&gPlayerParty[sMoveRelearnerMenu->partyMonIndex], MON_DATA_NICKNAME, nickname);
-    StringCopy10(gStringVar1, nickname);
+    StringCopy_Nickname(gStringVar1, nickname);
     StringCopy(sMoveRelearnerMenu->moveNames[sMoveRelearnerMenu->numMenuChoices], gText_Exit);
     sMoveRelearnerMenu->numMenuChoices++;
 }

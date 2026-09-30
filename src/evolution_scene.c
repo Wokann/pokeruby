@@ -220,7 +220,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     gReservedSpritePaletteCount = 4;
 
     GetMonData(mon, MON_DATA_NICKNAME, name);
-    StringCopy10(gStringVar1, name);
+    StringCopy_Nickname(gStringVar1, name);
     StringCopy(gStringVar2, gSpeciesNames[postEvoSpecies]);
 
     // preEvo sprite
@@ -434,7 +434,7 @@ void TradeEvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, u8 preEvoSprit
     u8 id;
 
     GetMonData(mon, MON_DATA_NICKNAME, name);
-    StringCopy10(gStringVar1, name);
+    StringCopy_Nickname(gStringVar1, name);
     StringCopy(gStringVar2, gSpeciesNames[postEvoSpecies]);
 
     gAffineAnimsDisabled = TRUE;
@@ -713,7 +713,7 @@ static void Task_EvolutionScene(u8 taskID)
                 gTasks[taskID].tLearnsFirstMove = FALSE;
                 gTasks[taskID].tLearnMoveState = MVSTATE_INTRO_MSG_1;
                 GetMonData(mon, MON_DATA_NICKNAME, nickname);
-                StringCopy10(gBattleTextBuff1, nickname);
+                StringCopy_Nickname(gBattleTextBuff1, nickname);
                 if (var == MON_HAS_MAX_MOVES) // no place to learn it
                     gTasks[taskID].tState = EVOSTATE_REPLACE_MOVE;
                 else if (var == MON_ALREADY_KNOWS_MOVE) // it already knows that move
@@ -1112,7 +1112,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
                 gTasks[taskID].tLearnsFirstMove = FALSE;
                 gTasks[taskID].tLearnMoveState = T_MVSTATE_INTRO_MSG_1;
                 GetMonData(mon, MON_DATA_NICKNAME, nickname);
-                StringCopy10(gBattleTextBuff1, nickname);
+                StringCopy_Nickname(gBattleTextBuff1, nickname);
                 if (var == MON_HAS_MAX_MOVES)
                     gTasks[taskID].tState = T_EVOSTATE_REPLACE_MOVE;
                 else if (var == MON_ALREADY_KNOWS_MOVE)
