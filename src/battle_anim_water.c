@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "random.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "sprite.h"
 #include "trig.h"
 #include "util.h"
@@ -265,6 +266,8 @@ static void AnimSmallBubblePair_Step(struct Sprite *sprite)
 
 void AnimTask_CreateSurfWave(u8 taskId)
 {
+    CMD_ARGS(palette);
+
     struct BattleAnimBgData animBg;
     u8 taskId2;
     u16 *x = &gBattle_BG1_X;
@@ -306,7 +309,7 @@ void AnimTask_CreateSurfWave(u8 taskId)
         RelocateBattleBgPal(animBg.paletteId, (u16 *)animBg.bgTilemap, 0, TRUE);
     }
     LZDecompressVram(&gBattleAnimBgImage_Surf, animBg.bgTiles);
-    if (gBattleAnimArgs[0] == ANIM_SURF_PAL_SURF)
+    if (cmd->palette == ANIM_SURF_PAL_SURF)
         LoadCompressedPalette(&gBattleAnimBgPalette_Surf, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
     else
         LoadCompressedPalette(&gBattleAnimBackgroundImageMuddyWater_Pal, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
