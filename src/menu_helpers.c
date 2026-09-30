@@ -23,19 +23,19 @@ static EWRAM_DATA struct YesNoFuncTable sYesNo = {0};
 
 static TaskFunc sMessageNextTask;
 
-static const u8 sSpriteGfx_VerticalScrollArrow_Up[] = INCBIN_U8("graphics/unknown_sprites/83E59A0/0.4bpp");
+static const u8 sSpriteGfx_VerticalScrollArrow_Up[] = INCBIN_U8("graphics/interface/scroll_indicator_up.4bpp");
 
-static const u8 sSpriteGfx_VerticalScrollArrow_Down[] = INCBIN_U8("graphics/unknown_sprites/83E59A0/1.4bpp");
+static const u8 sSpriteGfx_VerticalScrollArrow_Down[] = INCBIN_U8("graphics/interface/scroll_indicator_down.4bpp");
 
-static const u8 sSpriteGfx_HorizontalScrollArrow_Left[] = INCBIN_U8("graphics/unknown_sprites/83E59B0/0.4bpp");
+static const u8 sSpriteGfx_HorizontalScrollArrow_Left[] = INCBIN_U8("graphics/interface/scroll_indicator_left.4bpp");
 
-static const u8 sSpriteGfx_HorizontalScrollArrow_Right[] = INCBIN_U8("graphics/unknown_sprites/83E59B0/1.4bpp");
+static const u8 sSpriteGfx_HorizontalScrollArrow_Right[] = INCBIN_U8("graphics/interface/scroll_indicator_right.4bpp");
 
-static const u8 sSpriteGfx_DecorationMarker0[] = INCBIN_U8("graphics/unknown_sprites/83E59C0/0.4bpp");
+static const u8 sSpriteGfx_SecretBaseDecorationMarker[] = INCBIN_U8("graphics/decorations/secret_base_marker.4bpp");
 
-static const u8 sSpriteGfx_DecorationMarker1[] = INCBIN_U8("graphics/unknown_sprites/83E59C0/1.4bpp");
+static const u8 sSpriteGfx_PlayerRoomDecorationMarker[] = INCBIN_U8("graphics/decorations/player_room_marker.4bpp");
 
-static const u16 sScrollIndicatorPal[] = INCBIN_U16("graphics/interface/83E5948.gbapal");
+static const u16 sScrollIndicatorPal[] = INCBIN_U16("graphics/interface/scroll_indicator.gbapal");
 
 static const struct SpritePalette sScrollIndicatorPalette = { sScrollIndicatorPal, SCROLL_INDICATOR_PAL_TAG };
 
@@ -88,8 +88,8 @@ static const struct SpriteFrameImage sSpriteImage_HorizontalScrollArrow[] =
 
 static const struct SpriteFrameImage sSpriteImage_DecorationMarker[] =
 {
-    { sSpriteGfx_DecorationMarker0, 0x20 },
-    { sSpriteGfx_DecorationMarker1, 0x20 },
+    { sSpriteGfx_SecretBaseDecorationMarker, 0x20 },
+    { sSpriteGfx_PlayerRoomDecorationMarker, 0x20 },
 };
 
 static const struct SpriteTemplate sSpriteTemplate_VerticalScrollArrow =
