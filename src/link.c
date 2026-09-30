@@ -50,7 +50,7 @@ static void InitLocalLinkPlayer(void);
 static void VBlankCB_LinkTest(void);
 static void InitLink(void);
 static void Task_TriggerHandshake(u8);
-static void TestBlockTransfer(u32, u32, u32);
+static void TestBlockTransfer(u32 nothing, u32 is, u32 used);
 static void LinkTestProcessKeyInput(void);
 static void CB2_LinkTest(void);
 static void HandleReceiveRemoteLinkPlayer(u8);
@@ -58,14 +58,14 @@ static void ProcessRecvCmds(u8);
 static void BuildSendCmd(u16);
 static void LinkCB_SendHeldKeys(void);
 static void ResetBlockSend(void);
-static bool8 InitBlockSend(void *, u32);
+static bool8 InitBlockSend(void *src, u32 size);
 static void LinkCB_BlockSendBegin(void);
 static void LinkCB_BlockSend(void);
 static void LinkCB_BlockSendEnd(void);
 static void LinkCB_BerryBlenderSendHeldKeys(void);
 u32 GetBerryBlenderKeySendAttempts(void);
 static void SetBlockReceivedFlag(u8);
-static u16 LinkTestCalcBlockChecksum(void *, u16);
+static u16 LinkTestCalcBlockChecksum(void *src, u16 size);
 static void LinkTest_PrintNumChar(u8, u8, u8);
 static void LinkCB_RequestPlayerDataExchange(void);
 static void Task_PrintTestData(u8);
@@ -272,9 +272,9 @@ void LinkTestScreen(void)
     SetMainCallback2(CB2_LinkTest);
 }
 
-void SetLocalLinkPlayerId(u8 a1)
+void SetLocalLinkPlayerId(u8 playerId)
 {
-    gLocalLinkPlayer.id = a1;
+    gLocalLinkPlayer.id = playerId;
 }
 
 static void InitLocalLinkPlayer(void)
@@ -361,10 +361,10 @@ void CloseLink(void)
     DisableSerial();
 }
 
-static void TestBlockTransfer(u32 a1, u32 a2, u32 a3)
+static void TestBlockTransfer(u32 nothing, u32 is, u32 used)
 {
     u8 i;
-    u8 val;
+    u8 status;
 
     if (sLinkTestLastBlockSendPos != sBlockSend.pos)
     {
@@ -381,13 +381,13 @@ static void TestBlockTransfer(u32 a1, u32 a2, u32 a3)
         }
     }
 
-    val = GetBlockReceivedStatus();
+    status = GetBlockReceivedStatus();
 
-    if (val == 0xF)
+    if (status == 0xF)
     {
         for (i = 0; i < MAX_LINK_PLAYERS; i++)
         {
-            if ((val >> i) & 1)
+            if ((status >> i) & 1)
             {
                 gLinkTestBlockChecksums[i] = LinkTestCalcBlockChecksum(&gBlockRecvBuffer[i], sBlockRecv[i].size);
                 ResetBlockReceivedFlag(i);
@@ -418,10 +418,10 @@ static void LinkTestProcessKeyInput(void)
     if (gLinkTestDebugValuesEnabled)
     {
         u32 vblankCounter1 = gMain.vblankCounter1;
-        u8 val = gLinkVSyncDisabled;
+        u8 linkDebugFlags = gLinkVSyncDisabled;
         if (!gLinkCallback)
-            val = gLinkVSyncDisabled | 0x10;
-        SetLinkDebugValues(vblankCounter1, val);
+            linkDebugFlags = gLinkVSyncDisabled | 0x10;
+        SetLinkDebugValues(vblankCounter1, linkDebugFlags);
     }
 }
 
@@ -787,7 +787,7 @@ static void ResetBlockSend(void)
     sBlockSend.src = NULL;
 }
 
-static bool8 InitBlockSend(void *data, u32 size)
+static bool8 InitBlockSend(void *src, u32 size)
 {
     if (sBlockSend.active)
     {
@@ -802,12 +802,12 @@ static bool8 InitBlockSend(void *data, u32 size)
 
         if (size > BLOCK_BUFFER_SIZE)
         {
-            sBlockSend.src = data;
+            sBlockSend.src = src;
         }
         else
         {
-            if (data != gBlockSendBuffer)
-                memcpy(gBlockSendBuffer, data, size);
+            if (src != gBlockSendBuffer)
+                memcpy(gBlockSendBuffer, src, size);
             sBlockSend.src = gBlockSendBuffer;
         }
 
@@ -885,16 +885,16 @@ u8 BitmaskAllOtherLinkPlayers(void)
     return ((1 << GetMultiplayerId()) ^ 0xF);
 }
 
-bool8 SendBlock(u8 a1, void *a2, u16 a3)
+bool8 SendBlock(u8 unused, void *src, u16 size)
 {
-    return InitBlockSend(a2, a3);
+    return InitBlockSend(src, size);
 }
 
-bool8 SendBlockRequest(u8 a1)
+bool8 SendBlockRequest(u8 blockReqType)
 {
     if (!gLinkCallback)
     {
-        gBlockRequestType = a1;
+        gBlockRequestType = blockReqType;
         BuildSendCmd(LINKCMD_SEND_BLOCK_REQ);
         return TRUE;
     }
@@ -941,15 +941,15 @@ void CheckShouldAdvanceLinkState(void)
         gShouldAdvanceLinkState = 1;
 }
 
-static u16 LinkTestCalcBlockChecksum(void *data, u16 size)
+static u16 LinkTestCalcBlockChecksum(void *src, u16 size)
 {
-    u16 sum = 0;
+    u16 checksum = 0;
     u16 i;
 
     for (i = 0; i < size / 2; i++)
-        sum += ((u16 *)data)[i];
+        checksum += ((u16 *)src)[i];
 
-    return sum;
+    return checksum;
 }
 
 static void LinkTest_PrintNumChar(u8 tileNum, u8 x, u8 y)
