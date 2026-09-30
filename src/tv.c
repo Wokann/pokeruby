@@ -2625,7 +2625,7 @@ void DoTVShow(void)
             DoTVShowPokemonFanClubOpinions();
             break;
         case TVSHOW_DUMMY:
-            nullsub_22();
+            DoTVShowDummiedOut();
             break;
         case TVSHOW_MASS_OUTBREAK:
             DoTVShowPokemonNewsMassOutbreak();
@@ -3241,7 +3241,7 @@ void DoTVShowPokemonFanClubOpinions(void)
     ShowFieldMessage(sTVFanClubOpinionsTextGroup[state]);
 }
 
-void nullsub_22(void)
+void DoTVShowDummiedOut(void)
 {
 }
 

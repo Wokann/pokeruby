@@ -60,7 +60,7 @@ void DoTVShowPokemonTodayFailedCapture(void);
 void DoTVShowPokemonFanClubLetter(void);
 void DoTVShowRecentHappenings(void);
 void DoTVShowPokemonFanClubOpinions(void);
-void nullsub_22(void);
+void DoTVShowDummiedOut(void);
 void DoTVShowPokemonNewsMassOutbreak(void);
 void DoTVShowPokemonAngler(void);
 void DoTVShowTheWorldOfMasters(void);
