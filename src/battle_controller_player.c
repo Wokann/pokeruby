@@ -1155,9 +1155,9 @@ void FreeTrainerSpriteAfterSlide(void)
 
 void Intro_DelayAndEnd(void)
 {
-    if (--gBattleHealthBoxInfo[gActiveBattler].unk9 == 0xFF)
+    if (--gBattleHealthBoxInfo[gActiveBattler].introEndDelay == 0xFF)
     {
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 0;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 0;
         PlayerBufferExecCompleted();
     }
 }
@@ -1195,7 +1195,7 @@ void Intro_WaitForShinyAnimAndHealthbox(void)
         HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
         if (IsDoubleBattle())
             HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler ^ 2]], gActiveBattler ^ 2);
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 3;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 3;
         gBattlerControllerFuncs[gActiveBattler] = Intro_DelayAndEnd;
     }
 }
@@ -2900,7 +2900,7 @@ void PlayerHandleIntroTrainerBallThrow(void)
     gTasks[taskId].data[0] = gActiveBattler;
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
-    gBattleHealthBoxInfo[4].unk9 |= 1;
+    gBattleHealthBoxInfo[4].introEndDelay |= 1;
     gBattlerControllerFuncs[gActiveBattler] = BattleControllerDummy;
 }
 

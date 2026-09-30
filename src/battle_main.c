@@ -3254,12 +3254,12 @@ void DoBounceEffect(u8 battler, u8 which, s8 delta, s8 amplitude)
 
     if (which)
     {
-        if (gBattleHealthBoxInfo[battler].unk0_1)
+        if (gBattleHealthBoxInfo[battler].healthboxIsBouncing)
             return;
     }
     else
     {
-        if (gBattleHealthBoxInfo[battler].unk0_2)
+        if (gBattleHealthBoxInfo[battler].battlerIsBouncing)
             return;
     }
 
@@ -3267,15 +3267,15 @@ void DoBounceEffect(u8 battler, u8 which, s8 delta, s8 amplitude)
     if (which == TRUE)
     {
         bouncerSpriteId = gHealthboxSpriteIds[battler];
-        gBattleHealthBoxInfo[battler].unk2 = invisibleSpriteId;
-        gBattleHealthBoxInfo[battler].unk0_1 = 1;
+        gBattleHealthBoxInfo[battler].healthboxBounceSpriteId = invisibleSpriteId;
+        gBattleHealthBoxInfo[battler].healthboxIsBouncing = 1;
         gSprites[invisibleSpriteId].data[0] = 0x80;
     }
     else
     {
         bouncerSpriteId = gBattlerSpriteIds[battler];
-        gBattleHealthBoxInfo[battler].unk3 = invisibleSpriteId;
-        gBattleHealthBoxInfo[battler].unk0_2 = 1;
+        gBattleHealthBoxInfo[battler].battlerBounceSpriteId = invisibleSpriteId;
+        gBattleHealthBoxInfo[battler].battlerIsBouncing = 1;
         gSprites[invisibleSpriteId].data[0] = 0xC0;
     }
     gSprites[invisibleSpriteId].data[1] = delta;
@@ -3292,19 +3292,19 @@ void EndBounceEffect(u8 battler, u8 which)
 
     if (which == TRUE)
     {
-        if (!gBattleHealthBoxInfo[battler].unk0_1)
+        if (!gBattleHealthBoxInfo[battler].healthboxIsBouncing)
             return;
-        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].unk2].data[3];
-        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].unk2]);
-        gBattleHealthBoxInfo[battler].unk0_1 = 0;
+        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].healthboxBounceSpriteId].data[3];
+        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].healthboxBounceSpriteId]);
+        gBattleHealthBoxInfo[battler].healthboxIsBouncing = 0;
     }
     else
     {
-        if (!gBattleHealthBoxInfo[battler].unk0_2)
+        if (!gBattleHealthBoxInfo[battler].battlerIsBouncing)
             return;
-        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].unk3].data[3];
-        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].unk3]);
-        gBattleHealthBoxInfo[battler].unk0_2 = 0;
+        bouncerSpriteId = gSprites[gBattleHealthBoxInfo[battler].battlerBounceSpriteId].data[3];
+        DestroySprite(&gSprites[gBattleHealthBoxInfo[battler].battlerBounceSpriteId]);
+        gBattleHealthBoxInfo[battler].battlerIsBouncing = 0;
     }
     gSprites[bouncerSpriteId].x2 = 0;
     gSprites[bouncerSpriteId].y2 = 0;

@@ -454,23 +454,25 @@ struct BattleSpriteInfo
 struct BattleHealthboxInfo
 {
  /*0x00*/ u8 partyStatusSummaryShown:1;
- /*0x00*/ u8 unk0_1:1;
- /*0x00*/ u8 unk0_2:1;
+ /*0x00*/ u8 healthboxIsBouncing:1;
+ /*0x00*/ u8 battlerIsBouncing:1;
  /*0x00*/ u8 ballAnimActive:1;
  /*0x00*/ u8 statusAnimActive:1;
  /*0x00*/ u8 animFromTableActive:1;
  /*0x00*/ u8 specialAnimActive:1;
  /*0x00*/ u8 triedShinyMonAnim:1;
  /*0x01*/ u8 finishedShinyMonAnim:1;
- /*0x01*/ u8 unk1_1:5;
- /*0x02*/ u8 unk2;
- /*0x03*/ u8 unk3;
+ // Ruby uses the full five-bit field here; Emerald later split its upper bit
+ // into additional healthbox flags.
+ /*0x01*/ u8 opponentDrawPartyStatusSummaryDelay:5;
+ /*0x02*/ u8 healthboxBounceSpriteId;
+ /*0x03*/ u8 battlerBounceSpriteId;
  /*0x04*/ u8 animationState;
  /*0x05*/ u8 partyStatusDelayTimer;
  /*0x06*/ u8 matrixNum;
  /*0x07*/ u8 shadowSpriteId;
  /*0x08*/ u8 soundTimer;
- /*0x09*/ u8 unk9;
+ /*0x09*/ u8 introEndDelay;
  /*0x0A*/ u8 fillerA[2];
 };
 

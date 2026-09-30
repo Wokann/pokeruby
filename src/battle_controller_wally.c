@@ -1492,7 +1492,7 @@ static void WallyHandleIntroTrainerBallThrow(void)
     if (gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown)
         gTasks[gBattlerStatusSummaryTaskId[gActiveBattler]].func = Task_HidePartyStatusSummary;
 
-    gBattleHealthBoxInfo[4].unk9 |= 1;
+    gBattleHealthBoxInfo[4].introEndDelay |= 1;
     gBattlerControllerFuncs[gActiveBattler] = BattleControllerDummy;
 }
 

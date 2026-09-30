@@ -241,9 +241,9 @@ static void FreeTrainerSpriteAfterSlide(void)
 
 static void Intro_DelayAndEnd(void)
 {
-    if ((--gBattleHealthBoxInfo[gActiveBattler].unk9) == 0xFF)
+    if ((--gBattleHealthBoxInfo[gActiveBattler].introEndDelay) == 0xFF)
     {
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 0;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 0;
         LinkPartnerBufferExecCompleted();
     }
 }
@@ -267,7 +267,7 @@ static void Intro_WaitForHealthbox(void)
         finished = FALSE;
     if (finished)
     {
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 3;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 3;
         gBattlerControllerFuncs[gActiveBattler] = Intro_DelayAndEnd;
     }
 }
@@ -279,9 +279,9 @@ static void Intro_ShowHealthbox(void)
     if (!gBattleHealthBoxInfo[gActiveBattler].ballAnimActive)
     {
         partnerBallAnimActive = *((u8 *)&gBattleHealthBoxInfo[BATTLE_PARTNER(gActiveBattler)]) & 8;
-        if (!partnerBallAnimActive && (++gBattleHealthBoxInfo[gActiveBattler].unk9) != 1)
+        if (!partnerBallAnimActive && (++gBattleHealthBoxInfo[gActiveBattler].introEndDelay) != 1)
         {
-            gBattleHealthBoxInfo[gActiveBattler].unk9 = partnerBallAnimActive;
+            gBattleHealthBoxInfo[gActiveBattler].introEndDelay = partnerBallAnimActive;
             if (IsDoubleBattle() && !(gBattleTypeFlags & BATTLE_TYPE_MULTI))
             {
                 DestroySprite(&gSprites[gBattleControllerData[BATTLE_PARTNER(gActiveBattler)]]);
@@ -293,7 +293,7 @@ static void Intro_ShowHealthbox(void)
             UpdateHealthboxAttribute(gHealthboxSpriteIds[gActiveBattler], &gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], HEALTHBOX_ALL);
             StartHealthboxSlideIn(gActiveBattler);
             SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
-            gBattleHealthBoxInfo[4].unk9 = (s8)gBattleHealthBoxInfo[4].unk9 & ~1;
+            gBattleHealthBoxInfo[4].introEndDelay = (s8)gBattleHealthBoxInfo[4].introEndDelay & ~1;
             gBattlerControllerFuncs[gActiveBattler] = Intro_WaitForHealthbox;
         }
     }

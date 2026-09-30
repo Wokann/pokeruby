@@ -284,9 +284,9 @@ static void FreeTrainerSpriteAfterSlide(void)
 
 static void Intro_DelayAndEnd(void)
 {
-    if ((--gBattleHealthBoxInfo[gActiveBattler].unk9) == 0xFF)
+    if ((--gBattleHealthBoxInfo[gActiveBattler].introEndDelay) == 0xFF)
     {
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 0;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 0;
         OpponentBufferExecCompleted();
     }
 }
@@ -323,7 +323,7 @@ static void Intro_WaitForShinyAnimAndHealthbox(void)
             m4aMPlayContinue(&gMPlayInfo_BGM);
         else
             m4aMPlayVolumeControl(&gMPlayInfo_BGM, 0xFFFF, 256);
-        gBattleHealthBoxInfo[gActiveBattler].unk9 = 3;
+        gBattleHealthBoxInfo[gActiveBattler].introEndDelay = 3;
         gBattlerControllerFuncs[gActiveBattler] = Intro_DelayAndEnd;
     }
 }
@@ -1818,14 +1818,14 @@ static void OpponentHandleDrawPartyStatusSummary(void)
     gBattleHealthBoxInfo[gActiveBattler].partyStatusSummaryShown = 1;
     if (gBattleBufferA[gActiveBattler][2] != 0)
     {
-        if (gBattleHealthBoxInfo[gActiveBattler].unk1_1 < 2)
+        if (gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay < 2)
         {
-            gBattleHealthBoxInfo[gActiveBattler].unk1_1++;
+            gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay++;
             return;
         }
         else
         {
-            gBattleHealthBoxInfo[gActiveBattler].unk1_1 = 0;
+            gBattleHealthBoxInfo[gActiveBattler].opponentDrawPartyStatusSummaryDelay = 0;
         }
     }
     gBattlerStatusSummaryTaskId[gActiveBattler] = CreatePartyStatusSummarySprites(
