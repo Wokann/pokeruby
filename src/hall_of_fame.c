@@ -82,14 +82,14 @@ static void SpriteCB_GetOnScreenAndAnimate(struct Sprite* sprite);
 static void SpriteCB_HofConfetti(struct Sprite* sprite);
 static void SpriteCB_HallOfFame_Dummy(struct Sprite* sprite);
 
-static void HallOfFame_PrintWelcomeText(u8 a0, u8 a1);
-static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2);
-static void HallOfFame_PrintPlayerInfo(u8 a0, u8 a1);
+static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 y);
+static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 x, u8 y);
+static void HallOfFame_PrintPlayerInfo(u8 x, u8 y);
 static void ClearVramOamPltt_LoadHofGfx(void);
 static void LoadHofGfx(void);
 static void SetHofBgDisplayRegs(void);
 static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID, u32 tid, u32 pid);
-static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 a3);
+static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 spriteSlot);
 static bool8 CreateHofConfettiSprite(void);
 
 // data and gfx
@@ -585,7 +585,7 @@ static void Task_Hof_SetMonDisplayTask(u8 taskId)
 static void Task_Hof_DisplayMon(u8 taskId)
 {
     u8 spriteID;
-    s16 xPos, yPos, field4, field6;
+    s16 xPos, yPos, destX, destY;
 
     struct HallofFameTeam* fameTeam = eHofMonPtr;
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
@@ -595,20 +595,20 @@ static void Task_Hof_DisplayMon(u8 taskId)
     {
         xPos = sHallOfFame_MonFullTeamPositions[currMonId][0];
         yPos = sHallOfFame_MonFullTeamPositions[currMonId][1];
-        field4 = sHallOfFame_MonFullTeamPositions[currMonId][2];
-        field6 = sHallOfFame_MonFullTeamPositions[currMonId][3];
+        destX = sHallOfFame_MonFullTeamPositions[currMonId][2];
+        destY = sHallOfFame_MonFullTeamPositions[currMonId][3];
     }
     else
     {
         xPos = sHallOfFame_MonHalfTeamPositions[currMonId][0];
         yPos = sHallOfFame_MonHalfTeamPositions[currMonId][1];
-        field4 = sHallOfFame_MonHalfTeamPositions[currMonId][2];
-        field6 = sHallOfFame_MonHalfTeamPositions[currMonId][3];
+        destX = sHallOfFame_MonHalfTeamPositions[currMonId][2];
+        destY = sHallOfFame_MonHalfTeamPositions[currMonId][3];
     }
 
     spriteID = HallOfFame_LoadPokemonPic(currMon->species, xPos, yPos, currMonId, currMon->tid, currMon->personality);
-    gSprites[spriteID].data[1] = field4;
-    gSprites[spriteID].data[2] = field6;
+    gSprites[spriteID].data[1] = destX;
+    gSprites[spriteID].data[2] = destY;
     gSprites[spriteID].data[0] = 0;
     gSprites[spriteID].callback = SpriteCB_GetOnScreenAndAnimate;
     gTasks[taskId].tMonSpriteId(currMonId) = spriteID;
@@ -1046,12 +1046,12 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId)
 #undef tMonNo
 #undef tMonSpriteId
 
-static void HallOfFame_PrintWelcomeText(u8 a0, u8 a1)
+static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 y)
 {
-    MenuPrint_Centered(gMenuText_WelcomeToHOFAndDexRating, 0, a1 + 1, 0xF0);
+    MenuPrint_Centered(gMenuText_WelcomeToHOFAndDexRating, 0, y + 1, 0xF0);
 }
 
-static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2)
+static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 x, u8 y)
 {
     u8* stringPtr;
     u16 monData;
@@ -1073,7 +1073,7 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2)
         }
     }
 
-    Menu_PrintText(gStringVar1, a1 + 4, a2 + 1);
+    Menu_PrintText(gStringVar1, x + 4, y + 1);
     stringPtr = gStringVar1;
 
     for (i = 0; i < 10 && currMon->nickname[i] != EOS; stringPtr[i] = currMon->nickname[i], i++) {}
@@ -1086,8 +1086,8 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2)
         stringPtr[1] = 0x13;
         stringPtr[2] = 0xA0;
         stringPtr[3] = EOS;
-        Menu_PrintText(gStringVar1, a1 + 9, a2 + 1);
-        Menu_EraseWindowRect(0, a2 + 3, 29, a2 + 4);
+        Menu_PrintText(gStringVar1, x + 9, y + 1);
+        Menu_EraseWindowRect(0, y + 3, 29, y + 4);
     }
     else
     {
@@ -1126,7 +1126,7 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2)
         stringPtr[2] = 0xA0;
         stringPtr[3] = EOS;
 
-        Menu_PrintText(gStringVar1, a1 + 9, a2 + 1);
+        Menu_PrintText(gStringVar1, x + 9, y + 1);
 
         monData = currMon->lvl;
 
@@ -1144,33 +1144,33 @@ static void HallOfFame_PrintMonInfo(struct HallofFameMon* currMon, u8 a1, u8 a2)
         stringPtr[2] = 0x30;
         stringPtr[3] = EOS;
 
-        Menu_PrintText(gStringVar1, a1 + 7, a2 + 3);
+        Menu_PrintText(gStringVar1, x + 7, y + 3);
 
         monData = currMon->tid;
 
         stringPtr = StringCopy(gStringVar1, gOtherText_IDNumber);
         ConvertIntToDecimalStringN(stringPtr, monData, 2, 5);
 
-        Menu_PrintText(gStringVar1, a1 + 13, a2 + 3);
+        Menu_PrintText(gStringVar1, x + 13, y + 3);
     }
 }
 
 #define ByteRead16(ptr) ((ptr)[0] | ((ptr)[1] << 8))
 
-static void HallOfFame_PrintPlayerInfo(u8 a0, u8 a1)
+static void HallOfFame_PrintPlayerInfo(u8 x, u8 y)
 {
     u8* stringPtr;
     u16 visibleTid;
 
-    Menu_PrintText(gOtherText_Name, a0 + 1, a1 + 1);
-    MenuPrint_RightAligned(gSaveBlock2.playerName, a0 + 14, a1 + 1);
+    Menu_PrintText(gOtherText_Name, x + 1, y + 1);
+    MenuPrint_RightAligned(gSaveBlock2.playerName, x + 14, y + 1);
 
-    Menu_PrintText(gOtherText_IDNumber2, a0 + 1, a1 + 3);
+    Menu_PrintText(gOtherText_IDNumber2, x + 1, y + 3);
     visibleTid = ByteRead16(gSaveBlock2.playerTrainerId);
     ConvertIntToDecimalStringN(gStringVar1, visibleTid, 2, 5);
 
-    MenuPrint_RightAligned(gStringVar1, a0 + 14, a1 + 3);
-    Menu_PrintText(gMainMenuString_Time, a0 + 1, a1 + 5);
+    MenuPrint_RightAligned(gStringVar1, x + 14, y + 3);
+    Menu_PrintText(gMainMenuString_Time, x + 1, y + 5);
 
     stringPtr = ConvertIntToDecimalStringSimple(gStringVar1, gSaveBlock2.playTimeHours);
     stringPtr[0] = CHAR_SPACE;
@@ -1181,7 +1181,7 @@ static void HallOfFame_PrintPlayerInfo(u8 a0, u8 a1)
     stringPtr = ConvertIntToDecimalStringN(stringPtr, gSaveBlock2.playTimeMinutes, 2, 2);
     stringPtr[0] = EOS;
 
-    MenuPrint_RightAligned(gStringVar1, a0 + 14, a1 + 5);
+    MenuPrint_RightAligned(gStringVar1, x + 14, y + 5);
 }
 
 static void ClearVramOamPltt_LoadHofGfx(void)
@@ -1308,17 +1308,17 @@ static u32 HallOfFame_LoadPokemonPic(u16 species, s16 posX, s16 posY, u16 pokeID
     return spriteID;
 }
 
-static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 a3)
+static u32 HallOfFame_LoadTrainerPic(u16 trainerPicID, s16 posX, s16 posY, u16 spriteSlot)
 {
     u8 spriteID;
 
-    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].coords, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gHallOfFameGfxBufferPtrs[a3], trainerPicID);
+    DecompressPicFromTable(&gTrainerFrontPicTable[trainerPicID], gTrainerFrontPicCoords[trainerPicID].coords, gTrainerFrontPicCoords[trainerPicID].y_offset, (void*)EWRAM, gHallOfFameGfxBufferPtrs[spriteSlot], trainerPicID);
 
-    LoadCompressedPalette(gTrainerFrontPicPaletteTable[trainerPicID].data, 16 * a3 + 256, 0x20);
-    PrepareHallOfFameTrainerPicSpriteTemplate(a3, a3);
+    LoadCompressedPalette(gTrainerFrontPicPaletteTable[trainerPicID].data, 16 * spriteSlot + 256, 0x20);
+    PrepareHallOfFameTrainerPicSpriteTemplate(spriteSlot, spriteSlot);
 
     spriteID = CreateSprite(&gCreatingSpriteTemplate, posX, posY, 1);
-    gSprites[spriteID].oam.paletteNum = a3;
+    gSprites[spriteID].oam.paletteNum = spriteSlot;
 
     return spriteID;
 }
