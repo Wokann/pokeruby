@@ -1147,9 +1147,9 @@ const u16 gTilesetPalettes_General[][16] =
     INCBIN_U16("data/tilesets/primary/general/palettes/15.gbapal"),
 };
 
-const u8 gSummaryScreen_MoveEffect_Cancel_TilemapTop[] = INCBIN_U8("graphics/unknown/unknown_E94510.bin");
-const u8 gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[] = INCBIN_U8("graphics/unknown/unknown_E94550.bin");
-const u8 gSummaryScreen_MoveEffect_Cancel_TilemapBottom[] = INCBIN_U8("graphics/unknown/unknown_E94590.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapTop[] = INCBIN_U8("graphics/summary_screen/effect_cancel_top.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapMiddle[] = INCBIN_U8("graphics/summary_screen/effect_cancel_middle.bin");
+const u8 gSummaryScreen_MoveEffect_Cancel_TilemapBottom[] = INCBIN_U8("graphics/summary_screen/effect_cancel_bottom.bin");
 const u8 gEasyChatWordGroup_Tilemap[] = INCBIN_U8("graphics/interface/wordgroup_layout.bin");
 const u8 gEasyChatFrame_Tilemap[] = INCBIN_U8("graphics/easy_chat/frame.bin");
 const u8 gEasyChatInputSelect_Tilemap[] = INCBIN_U8("graphics/easy_chat/input_select.bin.lz");
