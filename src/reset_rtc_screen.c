@@ -663,7 +663,7 @@ void debug_sub_806F9E4(u8 taskId)
     case 2:
         RtcCalcLocalTime();
         FormatHexRtcTime(str);
-        debug_sub_8009894(str + 20);
+        FormatRtcDayCount(str + 20);
         FormatDecimalTime(str + 40, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
         ConvertIntToDecimalStringN(str + 60, gLocalTime.days, 1, 4);
         if (gSaveBlock2.playTimeVBlanks == 0)

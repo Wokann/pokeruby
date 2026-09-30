@@ -44,6 +44,11 @@ void RtcInitLocalTimeOffset(s32 hour, s32 minute);
 void RtcCalcLocalTimeOffset(s32 days, s32 hours, s32 minutes, s32 seconds);
 void CalcTimeDifference(struct Time *result, struct Time *t1, struct Time *t2);
 u32 RtcGetMinuteCount(void);
-void debug_sub_8009894(u8 *);
+#if DEBUG
+void FormatHexRtcDate(u8 *dest);
+void FormatRtcDayCount(u8 *dest);
+void FormatHexRtcStatus(u8 *dest);
+void RtcRefreshRawInfo(void);
+#endif
 
 #endif // GUARD_RTC_UTIL_H

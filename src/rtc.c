@@ -12,7 +12,7 @@ struct Time gLocalTime;
 
 static const struct SiiRtcInfo sRtcDummy = {0, MONTH_JAN, 1}; // 2000 Jan 1
 
-static const s32 sNumDaysInMonths[12] =
+static const s32 sNumDaysInMonths[MONTH_COUNT] =
 {
     31,
     28,
@@ -179,7 +179,7 @@ u16 RtcCheckInfo(struct SiiRtcInfo *rtc)
 
     month = ConvertBcdToBinary(rtc->month);
 
-    if (month == 0xFF || month == 0 || month > 12)
+    if (month == 0xFF || month == 0 || month > MONTH_COUNT)
         errorFlags |= RTC_ERR_INVALID_MONTH;
 
     value = ConvertBcdToBinary(rtc->day);
@@ -200,17 +200,17 @@ u16 RtcCheckInfo(struct SiiRtcInfo *rtc)
 
     value = ConvertBcdToBinary(rtc->hour);
 
-    if (value > 24)
+    if (value > HOURS_PER_DAY)
         errorFlags |= RTC_ERR_INVALID_HOUR;
 
     value = ConvertBcdToBinary(rtc->minute);
 
-    if (value > 60)
+    if (value > MINUTES_PER_HOUR)
         errorFlags |= RTC_ERR_INVALID_MINUTE;
 
     value = ConvertBcdToBinary(rtc->second);
 
-    if (value > 60)
+    if (value > SECONDS_PER_MINUTE)
         errorFlags |= RTC_ERR_INVALID_SECOND;
 
     return errorFlags;
@@ -270,12 +270,12 @@ void FormatHexDate(u8 *dest, s32 year, s32 month, s32 day)
 
 #if DEBUG
 
-void debug_sub_800987C(u8 *dest)
+void FormatHexRtcDate(u8 *dest)
 {
     FormatHexDate(dest, sRtc.year, sRtc.month, sRtc.day);
 }
 
-void debug_sub_8009894(u8 *dest)
+void FormatRtcDayCount(u8 *dest)
 {
     u16 dayCount;
 
@@ -283,7 +283,7 @@ void debug_sub_8009894(u8 *dest)
     ConvertIntToDecimalStringN(dest, dayCount, STR_CONV_MODE_RIGHT_ALIGN, 4);
 }
 
-void debug_sub_80098B8(u8 *dest)
+void FormatHexRtcStatus(u8 *dest)
 {
     ConvertIntToHexStringN(dest, sRtc.status, STR_CONV_MODE_LEADING_ZEROS, 2);
 }
@@ -300,19 +300,19 @@ void RtcCalcTimeDifference(struct SiiRtcInfo *rtc, struct Time *result, struct T
 
     if (result->seconds < 0)
     {
-        result->seconds += 60;
+        result->seconds += SECONDS_PER_MINUTE;
         --result->minutes;
     }
 
     if (result->minutes < 0)
     {
-        result->minutes += 60;
+        result->minutes += MINUTES_PER_HOUR;
         --result->hours;
     }
 
     if (result->hours < 0)
     {
-        result->hours += 24;
+        result->hours += HOURS_PER_DAY;
         --result->days;
     }
 }
@@ -347,19 +347,19 @@ void CalcTimeDifference(struct Time *result, struct Time *t1, struct Time *t2)
 
     if (result->seconds < 0)
     {
-        result->seconds += 60;
+        result->seconds += SECONDS_PER_MINUTE;
         --result->minutes;
     }
 
     if (result->minutes < 0)
     {
-        result->minutes += 60;
+        result->minutes += MINUTES_PER_HOUR;
         --result->hours;
     }
 
     if (result->hours < 0)
     {
-        result->hours += 24;
+        result->hours += HOURS_PER_DAY;
         --result->days;
     }
 }
@@ -367,11 +367,11 @@ void CalcTimeDifference(struct Time *result, struct Time *t1, struct Time *t2)
 u32 RtcGetMinuteCount()
 {
     RtcGetInfo(&sRtc);
-    return (24 * 60) * RtcGetDayCount(&sRtc) + 60 * sRtc.hour + sRtc.minute;
+    return (HOURS_PER_DAY * MINUTES_PER_HOUR) * RtcGetDayCount(&sRtc) + MINUTES_PER_HOUR * sRtc.hour + sRtc.minute;
 }
 
 #if DEBUG
-void debug_sub_8009A60()
+void RtcRefreshRawInfo(void)
 {
     RtcGetRawInfo(&sRtc);
 }
