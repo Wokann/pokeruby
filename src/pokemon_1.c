@@ -1695,7 +1695,7 @@ u16 CalculateBoxMonChecksum(struct BoxPokemon *boxMon)
     u8 baseStat = gBaseStats[species].base;                     \
     s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; \
     u8 nature = GetNature(mon);                                 \
-    n = nature_stat_mod(nature, n, statIndex);                  \
+    n = ModifyStatByNature(nature, n, statIndex);               \
     SetMonData(mon, field, &n);                                 \
 }
 

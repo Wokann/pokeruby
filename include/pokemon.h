@@ -208,8 +208,6 @@ struct MultiBattlePokemonTx
     /*0x1D*/ u8 language;
 };
 
-#define BATTLE_STATS_NO 8
-
 struct BattlePokemon
 {
     /*0x00*/ u16 species;
@@ -227,7 +225,7 @@ struct BattlePokemon
     /*0x17*/ u32 spDefenseIV:5;
     /*0x17*/ u32 isEgg:1;
     /*0x17*/ u32 altAbility:1;
-    /*0x18*/ s8 statStages[BATTLE_STATS_NO];
+    /*0x18*/ s8 statStages[NUM_BATTLE_STATS];
     /*0x20*/ u8 ability;
     /*0x21*/ u8 type1;
     /*0x22*/ u8 type2;
@@ -380,6 +378,13 @@ enum {
 #define EVO_LEVEL_SHEDINJA   0x000e // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
 
+#define EVOS_PER_MON 5
+
+#define EVO_MODE_NORMAL     0
+#define EVO_MODE_TRADE      1
+#define EVO_MODE_ITEM_USE   2
+#define EVO_MODE_ITEM_CHECK 3
+
 struct Evolution
 {
     u16 method;
@@ -389,7 +394,7 @@ struct Evolution
 
 struct EvolutionData
 {
-    struct Evolution evolutions[5];
+    struct Evolution evolutions[EVOS_PER_MON];
 };
 
 extern u8 gPlayerPartyCount;
@@ -480,9 +485,9 @@ void CopyPlayerPartyMonToBattleData(u8 battler, u8 partyIndex);
 u8 GetNature(struct Pokemon *mon);
 u8 GetNatureFromPersonality(u32 personality);
 
-u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem);
+u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem);
 
-u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex);
+u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex);
 
 void MonRestorePP(struct Pokemon *);
 
@@ -494,7 +499,7 @@ u16 NationalToHoennOrder(u16);
 u16 SpeciesToNationalPokedexNum(u16);
 u16 HoennToNationalOrder(u16);
 u16 SpeciesToCryId(u16 species);
-void DrawSpindaSpots(u16, u32, u8 *, u8);
+void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, bool8 isFrontPic);
 u8 GetPlayerFlankId(void);
 u16 GetLinkTrainerFlankId(u8 linkPlayerId);
 s32 GetBattlerMultiplayerId(u16 battlerId);
@@ -521,9 +526,10 @@ bool32 ShouldHideGenderIcon(u16 species, u8 *name);
 s8 GetMonFlavorRelation(struct Pokemon *, u8);
 s8 GetFlavorRelationByPersonality(u32, u8);
 u16 GetMonEVCount(struct Pokemon *);
-u16 GetEvolutionTargetSpecies(struct Pokemon *, u8, u16);
+u16 GetEvolutionTargetSpecies(struct Pokemon *, u8 mode, u16 evolutionItem);
 const struct CompressedSpritePalette *GetMonSpritePalStruct(struct Pokemon *);
 bool8 IsPokeSpriteNotFlipped(u16);
+bool32 IsHMMove(u16 move);
 u8 GetLevelUpMovesBySpecies(u16, u16 *);
 u8 TryIncrementMonLevel(struct Pokemon *);
 bool8 IsShiny(struct Pokemon *mon);
@@ -533,7 +539,7 @@ void PartySpreadPokerus(struct Pokemon *party);
 struct Sprite *CreateMonMarkingAllCombosSprite(u16, u16, const u16 *);
 void BoxMonRestorePP(struct BoxPokemon *);
 
-bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId);
+bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler);
 u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit);
 
 #if DEBUG && !(ENGLISH && REVISION == 0)

@@ -1229,7 +1229,7 @@ void CopyPlayerPartyMonToBattleData(u8 battler, u8 partyIndex)
     hpSwitchout = &gBattleStruct->HP_OnSwitchout[GetBattlerSide(battler)];
     *hpSwitchout = gBattleMons[battler].hp;
 
-    for (i = 0; i < BATTLE_STATS_NO; i++)
+    for (i = 0; i < NUM_BATTLE_STATS; i++)
         gBattleMons[battler].statStages[i] = DEFAULT_STAT_STAGE;
 
     gBattleMons[battler].status2 = 0;

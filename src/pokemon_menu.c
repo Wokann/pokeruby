@@ -966,7 +966,7 @@ static void UpdatePartyMenuForEvolutionItem(void)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
         {
-            if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !GetEvolutionTargetSpecies(&gPlayerParty[i], 3, gSpecialVar_ItemId))
+            if (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !GetEvolutionTargetSpecies(&gPlayerParty[i], EVO_MODE_ITEM_CHECK, gSpecialVar_ItemId))
             {
                 ClearPartyMonDescriptorStatus(i);
                 DrawMonDescriptorStatus(i, 0);

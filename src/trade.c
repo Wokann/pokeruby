@@ -4807,7 +4807,7 @@ static bool8 DoTradeAnim_Cable(void)
         case 72: // Only if in-game trade
             TradeMons(gSpecialVar_0x8005, 0);
             gCB2_AfterEvolution = CB2_InGameTrade;
-            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], TRUE, ITEM_NONE);
+            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], EVO_MODE_TRADE, ITEM_NONE);
             if (evoTarget != SPECIES_NONE)
                 TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[0]], evoTarget, gTradeAnim->monSpriteIds[1], gSelectedTradeMonPositions[0]);
             gTradeAnim->state ++;
@@ -4839,7 +4839,7 @@ static void CB2_TryLinkTradeEvolution(void)
             break;
         case 4:
             gCB2_AfterEvolution = CB2_SaveAndEndTrade;
-            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], TRUE, ITEM_NONE);
+            evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[0]], EVO_MODE_TRADE, ITEM_NONE);
             if (evoTarget != SPECIES_NONE)
                 TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[0]], evoTarget, gTradeAnim->monSpriteIds[1], gSelectedTradeMonPositions[0]);
             else

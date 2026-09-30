@@ -166,7 +166,6 @@ u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 void DestroyMenuCursor(void);
 void UpdateBattleYesNoCursor(void);
 u8 GetMoveSlotToReplace(void);
-bool32 IsHMMove2(u16 move);
 void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
 void BattleMainCB2(void);
@@ -5340,7 +5339,7 @@ static void atk5A_yesnoboxlearnmove(void)
             else
             {
                 u16 move = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MOVE1 + move_pos);
-                if (IsHMMove2(move))
+                if (IsHMMove(move))
                 {
                     PrepareStringBattle(0x13F, gActiveBattler);
                     gBattleStruct->atk5A_StateTracker = 5;

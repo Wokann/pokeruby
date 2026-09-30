@@ -66,7 +66,6 @@ void ShowBattleYesNoMenu(void);
 void UpdateBattleYesNoCursor(void);
 void HideBattleYesNoMenu(void);
 void nullsub_6(void);
-bool32 IsHMMove2(u16 move);
 
 extern struct Window gWindowTemplate_Contest_MoveDescription;
 extern u8 gBattleEnvironment;
@@ -876,7 +875,7 @@ static void Task_EvolutionScene(u8 taskID)
                 else
                 {
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
-                    if (IsHMMove2(move))
+                    if (IsHMMove(move))
                     {
                         BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[307]);
                         Contest_StartTextPrinter(&gWindowTemplate_Contest_MoveDescription,
@@ -1282,7 +1281,7 @@ static void Task_TradeEvolutionScene(u8 taskID)
                 else
                 {
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
-                    if (IsHMMove2(move))
+                    if (IsHMMove(move))
                     {
                         BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[307]);
                         Contest_StartTextPrinter(&gTradeAnim->window,

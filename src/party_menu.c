@@ -3452,7 +3452,7 @@ void StopTryingToTeachMove_806F6B4(u8 taskId)
     }
 }
 
-bool8 IsHMMove(u16 move)
+bool8 IsHMMoveInPartyMenu(u16 move)
 {
     u8 i;
 
@@ -4174,7 +4174,7 @@ void Task_RareCandy3(u8 taskId)
             {
             case 0:
                 // No move is learned.
-                evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, 0, 0);
+                evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, EVO_MODE_NORMAL, 0);
                 if (evolutionSpecies != 0)
                 {
                     gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
@@ -4226,7 +4226,7 @@ void TeachMonMoveInPartyMenu(u8 taskId)
     {
     case 0:
         // No move is learned.
-        evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, 0, 0);
+        evolutionSpecies = GetEvolutionTargetSpecies(gPartyMenu.pokemon, EVO_MODE_NORMAL, 0);
         if (evolutionSpecies != 0)
         {
             gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;

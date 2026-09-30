@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/hold_effects.h"
+#include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "battle.h"
@@ -61,7 +62,7 @@ extern u8 gText_DefendersStatRose[];
 extern u8 gText_PkmnShroudedInMist[];
 extern u8 gText_PkmnGettingPumped[];
 
-bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId)
+bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask, u8 battler)
 {
     u32 status = GetMonData(mon, MON_DATA_STATUS, 0);
 
@@ -69,8 +70,8 @@ bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 bat
     {
         status &= ~healMask;
         SetMonData(mon, MON_DATA_STATUS, &status);
-        if (gMain.inBattle && battleId != 4)
-            gBattleMons[battleId].status1 &= ~healMask;
+        if (gMain.inBattle && battler != MAX_BATTLERS_COUNT)
+            gBattleMons[battler].status1 &= ~healMask;
         return FALSE;
     }
     else
@@ -86,11 +87,11 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
     u8 offset;
     int i;
     u8 j;
-    u8 val;
+    u8 effectFlags;
 
-    offset = 6;
+    offset = ITEM_EFFECT_ARG_START;
 
-    temp = gItemEffectTable[itemId - 13];
+    temp = gItemEffectTable[itemId - ITEM_POTION];
 
     if (!temp && itemId != ITEM_ENIGMA_BERRY)
         return 0;
@@ -102,7 +103,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
 
     itemEffect = temp;
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < ITEM_EFFECT_ARG_START; i++)
     {
         switch (i)
         {
@@ -114,31 +115,31 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                 return 0;
             break;
         case 4:
-            val = itemEffect[4];
-            if (val & 0x20)
-                val &= 0xDF;
+            effectFlags = itemEffect[4];
+            if (effectFlags & ITEM4_PP_UP)
+                effectFlags &= ~ITEM4_PP_UP;
             j = 0;
-            while (val)
+            while (effectFlags)
             {
-                if (val & 1)
+                if (effectFlags & 1)
                 {
                     switch (j)
                     {
                     case 2:
-                        if (val & 0x10)
-                            val &= 0xEF;
+                        if (effectFlags & (ITEM4_REVIVE >> 2))
+                            effectFlags &= ~(ITEM4_REVIVE >> 2);
                     case 0:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
                     case 1:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
                     case 3:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
@@ -149,17 +150,17 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     }
                 }
                 j++;
-                val >>= 1;
+                effectFlags >>= 1;
                 if (i == effectByte)
                     effectBit >>= 1;
             }
             break;
         case 5:
-            val = itemEffect[5];
+            effectFlags = itemEffect[5];
             j = 0;
-            while (val)
+            while (effectFlags)
             {
-                if (val & 1)
+                if (effectFlags & 1)
                 {
                     switch (j)
                     {
@@ -170,7 +171,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     case 4:
                     case 5:
                     case 6:
-                        if (i == effectByte && (val & effectBit))
+                        if (i == effectByte && (effectFlags & effectBit))
                             return offset;
                         offset++;
                         break;
@@ -181,7 +182,7 @@ u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit)
                     }
                 }
                 j++;
-                val >>= 1;
+                effectFlags >>= 1;
                 if (i == effectByte)
                     effectBit >>= 1;
             }
@@ -220,16 +221,16 @@ u8 *UseStatIncreaseItem(u16 itemId)
     }
     else
     {
-        itemEffect = gItemEffectTable[itemId - 13];
+        itemEffect = gItemEffectTable[itemId - ITEM_POTION];
     }
 
     gPotentialItemEffectBattler = gBattlerInMenuId;
 
     for (i = 0; i < 3; i++)
     {
-        if (itemEffect[i] & 0xF)
+        if (itemEffect[i] & (ITEM0_X_ATTACK | ITEM1_X_SPEED | ITEM2_X_SPATK))
             BufferStatRoseMessage(i * 2);
-        if (itemEffect[i] & 0xF0)
+        if (itemEffect[i] & (ITEM0_DIRE_HIT | ITEM1_X_DEFEND | ITEM2_X_ACCURACY))
         {
             if (i)
             {
@@ -243,7 +244,7 @@ u8 *UseStatIncreaseItem(u16 itemId)
         }
     }
 
-    if (itemEffect[3] & 0x80)
+    if (itemEffect[3] & ITEM3_GUARD_SPEC)
     {
         gBattlerAttacker = gBattlerInMenuId;
         BattleStringExpandPlaceholdersToDisplayedString(gText_PkmnShroudedInMist);
@@ -254,15 +255,15 @@ u8 *UseStatIncreaseItem(u16 itemId)
 
 u8 GetNature(struct Pokemon *mon)
 {
-    return GetMonData(mon, MON_DATA_PERSONALITY, 0) % 25;
+    return GetMonData(mon, MON_DATA_PERSONALITY, 0) % NUM_NATURES;
 }
 
 u8 GetNatureFromPersonality(u32 personality)
 {
-    return personality % 25;
+    return personality % NUM_NATURES;
 }
 
-u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
+u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
 {
     int i;
     u16 targetSpecies = 0;
@@ -280,16 +281,16 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
     else
         holdEffect = GetItemHoldEffect(heldItem);
 
-    if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && type != 3)
+    if (holdEffect == HOLD_EFFECT_PREVENT_EVOLVE && mode != EVO_MODE_ITEM_CHECK)
         return 0;
 
-    switch (type)
+    switch (mode)
     {
-    case 0:
+    case EVO_MODE_NORMAL:
         level = GetMonData(mon, MON_DATA_LEVEL, 0);
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, 0);
 
-        for (i = 0; i < 5; i++)
+        for (i = 0; i < EVOS_PER_MON; i++)
         {
             switch (gEvolutionTable[species][i].method)
             {
@@ -345,8 +346,8 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
             }
         }
         break;
-    case 1:
-        for (i = 0; i < 5; i++)
+    case EVO_MODE_TRADE:
+        for (i = 0; i < EVOS_PER_MON; i++)
         {
             switch (gEvolutionTable[species][i].method)
             {
@@ -364,9 +365,9 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 type, u16 evolutionItem)
             }
         }
         break;
-    case 2:
-    case 3:
-        for (i = 0; i < 5; i++)
+    case EVO_MODE_ITEM_USE:
+    case EVO_MODE_ITEM_CHECK:
+        for (i = 0; i < EVOS_PER_MON; i++)
         {
             if (gEvolutionTable[species][i].method == EVO_ITEM
              && gEvolutionTable[species][i].param == evolutionItem)
@@ -470,7 +471,7 @@ u16 SpeciesToCryId(u16 species)
     return gSpeciesIdToCryId[species - ((SPECIES_OLD_UNOWN_Z + 1) - 1)];
 }
 
-void unref_sub_803F938(u16 species, u32 personality, u8 *dest)
+void DrawSpindaSpotsUnused(u16 species, u32 personality, u8 *dest)
 {
     if (species == SPECIES_SPINDA && dest != gMonSpriteGfxBufferPtrs[0] && dest != gMonSpriteGfxBufferPtrs[2])
     {
@@ -515,9 +516,9 @@ void unref_sub_803F938(u16 species, u32 personality, u8 *dest)
     }
 }
 
-void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, u8 a4)
+void DrawSpindaSpots(u16 species, u32 personality, u8 *dest, bool8 isFrontPic)
 {
-    if (species == SPECIES_SPINDA && a4)
+    if (species == SPECIES_SPINDA && isFrontPic)
     {
         int i;
         for (i = 0; i < 4; i++)
@@ -625,12 +626,12 @@ u8 GetTrainerEncounterMusicId(u16 trainerOpponentId)
     return gTrainers[trainerOpponentId].encounterMusic_gender & 0x7F;
 }
 
-u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex)
+u16 ModifyStatByNature(u8 nature, u16 stat, u8 statIndex)
 {
-    if (statIndex < 1 || statIndex > 5)
+    if (statIndex < STAT_ATK || statIndex > NUM_NATURE_STATS)
     {
-        // should just be "return n", but it wouldn't match without this
-        u16 retVal = n;
+        // Should just return stat, but this expression is needed to match.
+        u16 retVal = stat;
         retVal++;
         retVal--;
         return retVal;
@@ -639,12 +640,12 @@ u16 nature_stat_mod(u8 nature, u16 n, u8 statIndex)
     switch (gNatureStatTable[nature][statIndex - 1])
     {
     case 1:
-        return (u16)(n * 110) / 100;
+        return (u16)(stat * 110) / 100;
     case -1:
-        return (u16)(n * 90) / 100;
+        return (u16)(stat * 90) / 100;
     }
 
-    return n;
+    return stat;
 }
 
 // Friendship deltas. Each event has 3 separate values, depending on the mon's
@@ -711,8 +712,8 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
 
             if (friendship < 0)
                 friendship = 0;
-            if (friendship > 255)
-                friendship = 255;
+            if (friendship > MAX_FRIENDSHIP)
+                friendship = MAX_FRIENDSHIP;
 
             SetMonData(mon, MON_DATA_FRIENDSHIP, &friendship);
         }
@@ -791,9 +792,9 @@ void MonGainEVs(struct Pokemon *mon, u16 defeatedSpecies)
         if (totalEVs + (s16)evIncrease > MAX_TOTAL_EVS)
             evIncrease = ((s16)evIncrease + MAX_TOTAL_EVS) - (totalEVs + evIncrease);
 
-        if (evs[i] + (s16)evIncrease > 255)
+        if (evs[i] + (s16)evIncrease > MAX_PER_STAT_EVS)
         {
-            int val1 = (s16)evIncrease + 255;
+            int val1 = (s16)evIncrease + MAX_PER_STAT_EVS;
             int val2 = evs[i] + evIncrease;
             evIncrease = val1 - val2;
         }
@@ -1106,7 +1107,7 @@ u16 SpeciesToPokedexNum(u16 species)
 void ClearBattleMonForms(void)
 {
     int i;
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < MAX_BATTLERS_COUNT; i++)
         gBattleMonForms[i] = 0;
 }
 
@@ -1122,23 +1123,23 @@ u16 GetBattleBGM(void)
     {
         switch (gTrainers[gTrainerBattleOpponent].trainerClass)
         {
-        case 2:
-        case 0x31:
+        case TRAINER_CLASS_AQUA_LEADER:
+        case TRAINER_CLASS_MAGMA_LEADER:
             return MUS_VS_AQUA_MAGMA_LEADER;
-        case 3:
-        case 4:
-        case 0x32:
-        case 0x33:
+        case TRAINER_CLASS_TEAM_AQUA:
+        case TRAINER_CLASS_AQUA_ADMIN:
+        case TRAINER_CLASS_TEAM_MAGMA:
+        case TRAINER_CLASS_MAGMA_ADMIN:
             return MUS_VS_AQUA_MAGMA;
-        case 0x19:
+        case TRAINER_CLASS_LEADER:
             return MUS_VS_GYM_LEADER;
-        case 0x20:
+        case TRAINER_CLASS_CHAMPION:
             return MUS_VS_CHAMPION;
-        case 0x2E:
+        case TRAINER_CLASS_POKEMON_TRAINER_3:
             if (!StringCompare(gTrainers[gTrainerBattleOpponent].trainerName, BattleText_Wally))
                 return MUS_VS_TRAINER;
             return MUS_VS_RIVAL;
-        case 0x18:
+        case TRAINER_CLASS_ELITE_FOUR:
             return MUS_VS_ELITE_FOUR;
         default:
             return MUS_VS_TRAINER;
@@ -1186,7 +1187,7 @@ const u8 *GetMonSpritePalFromOtIdPersonality(u16 species, u32 otId, u32 personal
         return gMonPaletteTable[0].data;
 
     shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
-    if (shinyValue < 8)
+    if (shinyValue < SHINY_ODDS)
         return gMonShinyPaletteTable[species].data;
     else
         return gMonPaletteTable[species].data;
@@ -1205,13 +1206,13 @@ const struct CompressedSpritePalette *GetMonSpritePalStructFromOtIdPersonality(u
     u32 shinyValue;
 
     shinyValue = HIHALF(otId) ^ LOHALF(otId) ^ HIHALF(personality) ^ LOHALF(personality);
-    if (shinyValue < 8)
+    if (shinyValue < SHINY_ODDS)
         return &gMonShinyPaletteTable[species];
     else
         return &gMonPaletteTable[species];
 }
 
-const u16 gHMMoves[] =
+static const u16 sHMMoves[] =
 {
     MOVE_CUT,
     MOVE_FLY,
@@ -1224,12 +1225,12 @@ const u16 gHMMoves[] =
     0xffff
 };
 
-bool32 IsHMMove2(u16 move)
+bool32 IsHMMove(u16 move)
 {
     int i = 0;
-    while (gHMMoves[i] != 0xFFFF)
+    while (sHMMoves[i] != 0xFFFF)
     {
-        if (gHMMoves[i++] == move)
+        if (sHMMoves[i++] == move)
             return TRUE;
     }
     return FALSE;
@@ -1243,13 +1244,13 @@ bool8 IsPokeSpriteNotFlipped(u16 species)
 s8 GetMonFlavorRelation(struct Pokemon *mon, u8 flavor)
 {
     u8 nature = GetNature(mon);
-    return gPokeblockFlavorCompatibilityTable[nature * 5 + flavor];
+    return gPokeblockFlavorCompatibilityTable[nature * NUM_NATURE_STATS + flavor];
 }
 
 s8 GetFlavorRelationByPersonality(u32 personality, u8 flavor)
 {
     u8 nature = GetNatureFromPersonality(personality);
-    return gPokeblockFlavorCompatibilityTable[nature * 5 + flavor];
+    return gPokeblockFlavorCompatibilityTable[nature * NUM_NATURE_STATS + flavor];
 }
 
 bool8 IsTradedMon(struct Pokemon *mon)
@@ -1360,11 +1361,11 @@ bool8 IsShinyOtIdPersonality(u32 otId, u32 personality)
 
 const u8 *GetTrainerPartnerName(void)
 {
-    u8 id = GetMultiplayerId();
-    return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[id].id ^ 2)].name;
+    u8 multiplayerId = GetMultiplayerId();
+    return gLinkPlayers[GetBattlerMultiplayerId(gLinkPlayers[multiplayerId].id ^ 2)].name;
 }
 
-const u8 gJapaneseNidoranNames[][11] = {_("ニドラン♂"), _("ニドラン♀")};
+static const u8 sJapaneseNidoranNames[][11] = {_("ニドラン♂"), _("ニドラン♀")};
 
 bool32 ShouldHideGenderIconForLanguage(u16 species, u8 *name, u8 language)
 {
@@ -1379,9 +1380,9 @@ bool32 ShouldHideGenderIconForLanguage(u16 species, u8 *name, u8 language)
         else
         {
             if (species == SPECIES_NIDORAN_M)
-                speciesName = gJapaneseNidoranNames[0];
+                speciesName = sJapaneseNidoranNames[0];
             else
-                speciesName = gJapaneseNidoranNames[1];
+                speciesName = sJapaneseNidoranNames[1];
         }
         if (!StringCompareWithoutExtCtrlCodes(name, speciesName))
             retVal = TRUE;
@@ -1399,7 +1400,7 @@ bool32 ShouldHideGenderIcon(u16 species, u8 *name)
     return ShouldHideGenderIconForLanguage(species, name, language);
 }
 
-bool32 unref_sub_8040DAC(struct Pokemon *mon)
+bool32 ShouldHideGenderIconForMon(struct Pokemon *mon)
 {
     u8 name[12];
     u16 species = GetMonData(mon, MON_DATA_SPECIES, 0);

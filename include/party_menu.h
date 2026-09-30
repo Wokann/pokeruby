@@ -201,7 +201,7 @@ void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func);
 void ClearPartyMonDescriptorStatus(u8 monIndex);
 void TaughtMove(u8 taskId);
 void StopTryingToTeachMove_806F588(u8 taskId);
-bool8 IsHMMove(u16 move);
+bool8 IsHMMoveInPartyMenu(u16 move);
 void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
 u8 GetPartyIdFromBattleSlot(u8 slot);
 void SwitchPartyMonSlots(u8 slot, u8 slot2);
