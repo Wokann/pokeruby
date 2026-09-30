@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "constants/battle.h"
 #include "constants/songs.h"
 #include "sound.h"
@@ -34,6 +35,8 @@ const struct SpriteTemplate gItemStealSpriteTemplate =
 
 static void AnimItemSteal(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY);
+
     s16 attackerX;
     s16 attackerY;
     InitSpritePosToAnimTarget(sprite, FALSE);

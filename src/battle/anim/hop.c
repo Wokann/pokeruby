@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
@@ -149,6 +150,8 @@ static void AnimItemSteal_Step1(struct Sprite *sprite)
 
 static void AnimPresent(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, unk2, unk3, unk4);
+
     s16 targetX;
     s16 targetY;
     InitSpritePosToAnimAttacker(sprite, FALSE);

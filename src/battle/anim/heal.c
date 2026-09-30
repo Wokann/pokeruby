@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -38,10 +39,12 @@ const struct SpriteTemplate gPresentHealParticleSpriteTemplate =
 
 static void AnimPresentHealParticle(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, velocityY, unused3);
+
     if (sprite->data[0] == 0)
     {
         InitSpritePosToAnimTarget(sprite, FALSE);
-        sprite->data[1] = gBattleAnimArgs[2];
+        sprite->data[1] = cmd->velocityY;
     }
 
     sprite->data[0]++;
