@@ -128,8 +128,8 @@ void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo);
 void m4aMPlayStop(struct MusicPlayerInfo *mplayInfo);
 void ChooseBerryForBlender(void);
 u8 CreateSpinningBerrySprite(u8 berryId, u8 x, u8 y, bool8 animate);
-void SetOutlineCursorPosition(u8 a1, u8 a2);
-u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
+void SetOutlineCursorPosition(u8 x, u8 y);
+u8 CreateOutlineCursor(u8 subpriority, u16 paletteTag, u8 tileIndex, u16 color, u8 width);
 s8 GetFirstFreePokeblockSlot(void);
 #ifdef GERMAN
 extern void GermanStringReplaceNamePlaceholder();
@@ -184,9 +184,9 @@ static void PrintPlayerNames(void);
 static void ResetLinkCmds(void);
 static void CreateParticleSprites(void);
 void SpriteCB_ScoreSymbolBest(struct Sprite* sprite);
-static void ShakeBgCoordForHit(s16* a0, u16 a1);
-static void TryUpdateProgressBar(u16 a0, u16 a1);
-static void UpdateRPM(u16 a0);
+static void ShakeBgCoordForHit(s16* coord, u16 speed);
+static void TryUpdateProgressBar(u16 current, u16 limit);
+static void UpdateRPM(u16 speed);
 static void RestoreBgCoords(void);
 static void ProcessLinkPlayerCmds(void);
 static void CB2_EndBlenderGame(void);
@@ -194,7 +194,7 @@ static bool8 PrintBlendingRanking(void);
 bool8 PrintBlendingResults(void);
 static void CB2_CheckPlayAgainLocal(void);
 static void CB2_CheckPlayAgainLink(void);
-static void UpdateProgressBar(u16 a0, u16 a1);
+static void UpdateProgressBar(u16 value, u16 limit);
 static void PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst);
 static void Task_PlayPokeblockFanfare(u8 taskID);
 static void CB2_BerryBlenderDebugMenu(void);
@@ -919,23 +919,23 @@ void SpriteCB_Berry(struct Sprite* sprite)
     sprite->y = sprite->data[2];
 }
 
-void SetBerrySpriteData(struct Sprite* sprite, s16 a2, s16 a3, s16 a4, s16 a5, s16 a6)
+void SetBerrySpriteData(struct Sprite* sprite, s16 x, s16 y, s16 bounceSpeed, s16 xSpeed, s16 ySpeed)
 {
-    sprite->data[0] = a3;
-    sprite->data[1] = a2;
-    sprite->data[2] = a3;
-    sprite->data[3] = a4;
+    sprite->data[0] = y;
+    sprite->data[1] = x;
+    sprite->data[2] = y;
+    sprite->data[3] = bounceSpeed;
     sprite->data[4] = 10;
     sprite->data[5] = 0;
-    sprite->data[6] = a5;
-    sprite->data[7] = a6;
+    sprite->data[6] = xSpeed;
+    sprite->data[7] = ySpeed;
     sprite->callback = SpriteCB_Berry;
 }
 
-static void CreateBlenderBerrySprite(u16 a0, u8 a1)
+static void CreateBlenderBerrySprite(u16 itemId, u8 playerId)
 {
-    u8 spriteID = CreateSpinningBerrySprite(a0 + 123, 0, 80, a1 & 1);
-    SetBerrySpriteData(&gSprites[spriteID], sBerrySpriteData[a1][0], sBerrySpriteData[a1][1], sBerrySpriteData[a1][2], sBerrySpriteData[a1][3], sBerrySpriteData[a1][4]);
+    u8 spriteID = CreateSpinningBerrySprite(itemId + 123, 0, 80, playerId & 1);
+    SetBerrySpriteData(&gSprites[spriteID], sBerrySpriteData[playerId][0], sBerrySpriteData[playerId][1], sBerrySpriteData[playerId][2], sBerrySpriteData[playerId][3], sBerrySpriteData[playerId][4]);
 }
 
 static void ConvertItemToBlenderBerry(struct BlenderBerry* berry, u16 itemId)
@@ -1234,15 +1234,15 @@ static void InitBlenderBgs(void)
     gBerryBlenderData->mainState++;
 }
 
-static u8 GetArrowProximity(u16 arrowPos, u8 a1)
+static u8 GetArrowProximity(u16 arrowPos, u8 playerId)
 {
-    u32 var1 = (arrowPos / 256) + 24;
-    u8 arrID = gBerryBlenderData->playerIdToArrowId[a1];
-    u32 var2 = sArrowHitRangeStart[arrID];
+    u32 pos = (arrowPos / 256) + 24;
+    u8 arrowId = gBerryBlenderData->playerIdToArrowId[playerId];
+    u32 hitRangeStart = sArrowHitRangeStart[arrowId];
 
-    if (var1 >= var2 && var1 < var2 + 48)
+    if (pos >= hitRangeStart && pos < hitRangeStart + 48)
     {
-        if (var1 >= var2 + 20 && var1 < var2 + 28)
+        if (pos >= hitRangeStart + 20 && pos < hitRangeStart + 28)
             return 2;
         else
             return 1;
@@ -1251,28 +1251,28 @@ static u8 GetArrowProximity(u16 arrowPos, u8 a1)
         return 0;
 }
 
-static void SetOpponentsBerryData(u16 itemId, u8 a1, struct BlenderBerry* berry)
+static void SetOpponentsBerryData(u16 playerBerryItemId, u8 playersNum, struct BlenderBerry* playerBerry)
 {
-    u16 r4 = 0;
+    u16 opponentSetId = 0;
     u16 i;
-    if (itemId == ITEM_ENIGMA_BERRY)
+    if (playerBerryItemId == ITEM_ENIGMA_BERRY)
     {
         for (i = 0; i < 5; i++)
         {
-            if (berry->flavors[r4] > berry->flavors[i])
-                r4 = i;
+            if (playerBerry->flavors[opponentSetId] > playerBerry->flavors[i])
+                opponentSetId = i;
         }
-        r4 += 5;
+        opponentSetId += 5;
     }
     else
     {
-        r4 = itemId - 133;
-        if (r4 >= 5)
-            r4 = (r4 % 5) + 5;
+        opponentSetId = playerBerryItemId - 133;
+        if (opponentSetId >= 5)
+            opponentSetId = (opponentSetId % 5) + 5;
     }
-    for (i = 0; i < a1 - 1; i++)
+    for (i = 0; i < playersNum - 1; i++)
     {
-        SetPlayerBerryData(i + 1, sOpponentBerrySets[r4][i] + 133);
+        SetPlayerBerryData(i + 1, sOpponentBerrySets[opponentSetId][i] + 133);
     }
 }
 
@@ -1482,11 +1482,11 @@ static void Task_OpponentMiss(u8 taskID)
    }
 }
 
-static void CreateOpponentMissTask(u8 a0, u8 a1)
+static void CreateOpponentMissTask(u8 playerId, u8 delay)
 {
     u8 taskID = CreateTask(Task_OpponentMiss, 80);
-    gTasks[taskID].data[1] = a1;
-    gTasks[taskID].data[2] = a0;
+    gTasks[taskID].data[1] = delay;
+    gTasks[taskID].data[2] = playerId;
 }
 
 static void Task_HandleOpponent1(u8 taskID)
@@ -1543,8 +1543,8 @@ static void Task_HandleOpponent1(u8 taskID)
 static void Task_HandleOpponent2(u8 taskID)
 {
     u32 var1 = (gBerryBlenderData->arrowPos + 0x1800) & 0xFFFF;
-    u32 var2 = gBerryBlenderData->playerIdToArrowId[2] & 0xFF;
-    if ((var1 >> 8) > sArrowHitRangeStart[var2] + 20 && (var1 >> 8) < sArrowHitRangeStart[var2] + 40)
+    u32 arrowId = gBerryBlenderData->playerIdToArrowId[2] & 0xFF;
+    if ((var1 >> 8) > sArrowHitRangeStart[arrowId] + 20 && (var1 >> 8) < sArrowHitRangeStart[arrowId] + 40)
     {
         if (gTasks[taskID].data[0] == 0)
         {
@@ -1585,11 +1585,11 @@ static void Task_HandleOpponent2(u8 taskID)
 
 static void Task_HandleOpponent3(u8 taskID)
 {
-    u32 var1, var2;
+    u32 var1, arrowId;
 
     var1 = (gBerryBlenderData->arrowPos + 0x1800) & 0xFFFF;
-    var2 = gBerryBlenderData->playerIdToArrowId[3] & 0xFF;
-    if ((var1 >> 8) > sArrowHitRangeStart[var2] + 20 && (var1 >> 8) < sArrowHitRangeStart[var2] + 40)
+    arrowId = gBerryBlenderData->playerIdToArrowId[3] & 0xFF;
+    if ((var1 >> 8) > sArrowHitRangeStart[arrowId] + 20 && (var1 >> 8) < sArrowHitRangeStart[arrowId] + 40)
     {
         if (gTasks[taskID].data[0] == 0)
         {
@@ -1630,26 +1630,26 @@ static void Task_HandleOpponent3(u8 taskID)
         gTasks[taskID].data[0] = 0;
 }
 
-static void CreateScoreSymbolSprite(u16 a0, u8 a1)
+static void CreateScoreSymbolSprite(u16 cmd, u8 arrowId)
 {
     u8 spriteID;
 
     spriteID = CreateSprite(&sSpriteTemplate_ScoreSymbols,
-                            sPlayerArrowPos[a1][0] - (10 * sPlayerArrowQuadrant[a1][0]),
-                            sPlayerArrowPos[a1][1] - (10 * sPlayerArrowQuadrant[a1][1]),
+                            sPlayerArrowPos[arrowId][0] - (10 * sPlayerArrowQuadrant[arrowId][0]),
+                            sPlayerArrowPos[arrowId][1] - (10 * sPlayerArrowQuadrant[arrowId][1]),
                             1);
-    if (a0 == 0x4523)
+    if (cmd == 0x4523)
     {
         StartSpriteAnim(&gSprites[spriteID], 2);
         gSprites[spriteID].callback = SpriteCB_ScoreSymbolBest;
         PlaySE(SE_ICE_STAIRS);
     }
-    else if (a0 == 0x5432)
+    else if (cmd == 0x5432)
     {
         StartSpriteAnim(&gSprites[spriteID], 0);
         PlaySE(SE_SUCCESS);
     }
-    else if (a0 == 0x2345)
+    else if (cmd == 0x2345)
     {
         StartSpriteAnim(&gSprites[spriteID], 1);
         PlaySE(SE_FAILURE);
@@ -1657,10 +1657,10 @@ static void CreateScoreSymbolSprite(u16 a0, u8 a1)
     CreateParticleSprites();
 }
 
-static void UpdateSpeedFromHit(u16 a0)
+static void UpdateSpeedFromHit(u16 cmd)
 {
     UpdateHitPitch();
-    switch (a0)
+    switch (cmd)
     {
     case 0x4523:
         if (gBerryBlenderData->speed < 1500)
@@ -1754,22 +1754,22 @@ static void UpdateOpponentScores(void)
 
 static void HandlePlayerInput(void)
 {
-    bool8 A_pressed = 0;
-    u8 var2 = gBerryBlenderData->playerIdToArrowId[GetMultiplayerId()];
+    bool8 pressedA = 0;
+    u8 arrowId = gBerryBlenderData->playerIdToArrowId[GetMultiplayerId()];
     if (gBerryBlenderData->gameEndState == 0)
     {
         if (gSaveBlock2.optionsButtonMode == OPTIONS_BUTTON_MODE_L_EQUALS_A && JOY_NEW(A_BUTTON))
-            A_pressed = ((gMain.heldKeysRaw & (A_BUTTON | L_BUTTON)) != (A_BUTTON | L_BUTTON));
+            pressedA = ((gMain.heldKeysRaw & (A_BUTTON | L_BUTTON)) != (A_BUTTON | L_BUTTON));
         else if (JOY_NEW(A_BUTTON))
-            A_pressed = 1;
-        if (A_pressed)
+            pressedA = 1;
+        if (pressedA)
         {
-            u8 var3;
-            StartSpriteAnim(&gSprites[gBerryBlenderData->playerArrowSpriteIds[gBerryBlenderData->arrowIdToPlayerId[var2]]], var2 + 4);
-            var3 = GetArrowProximity(gBerryBlenderData->arrowPos, GetMultiplayerId());
-            if (var3 == 2)
+            u8 proximity;
+            StartSpriteAnim(&gSprites[gBerryBlenderData->playerArrowSpriteIds[gBerryBlenderData->arrowIdToPlayerId[arrowId]]], arrowId + 4);
+            proximity = GetArrowProximity(gBerryBlenderData->arrowPos, GetMultiplayerId());
+            if (proximity == 2)
                 gSendCmd[2] = 0x4523;
-            else if (var3 == 1)
+            else if (proximity == 1)
                 gSendCmd[2] = 0x5432;
             else
                 gSendCmd[2] = 0x2345;
@@ -1824,12 +1824,12 @@ static bool8 AreBlenderBerriesSame(struct BlenderBerry* berries, u8 index1, u8 i
         return FALSE;
 }
 
-u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* a1, u8 numPlayers, u8 a3)
+u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* _flavors, u8 numPlayers, u8 negativeFlavors)
 {
-    s16 vars[5];
+    s16 flavors[5];
     s32 i;
-    s32 r6;
-    u8 r2;
+    s32 j;
+    u8 numFlavors;
 
     // bug, writing one index too far
 #ifdef UBFIX
@@ -1837,58 +1837,58 @@ u32 CalculatePokeblockColor(struct BlenderBerry* berries, s16* a1, u8 numPlayers
 #else
     for (i = 0; i <= 5; i++)
 #endif //UBFIX
-        vars[i] = a1[i];
-    r6 = 0;
+        flavors[i] = _flavors[i];
+    j = 0;
     for (i = 0; i < 5; i++)
     {
-        if (vars[i] == 0)
-            r6++;
+        if (flavors[i] == 0)
+            j++;
     }
-    if (r6 == 5 || a3 > 3)
+    if (j == 5 || negativeFlavors > 3)
         return PBLOCK_CLR_BLACK;
     for (i = 0; i < numPlayers; i++)
     {
-        for (r6 = 0; r6 < numPlayers; r6++)
+        for (j = 0; j < numPlayers; j++)
         {
-            if (berries[i].itemId == berries[r6].itemId && i != r6
-                && (berries[i].itemId != ITEM_ENIGMA_BERRY || AreBlenderBerriesSame(berries, i, r6)))
+            if (berries[i].itemId == berries[j].itemId && i != j
+                && (berries[i].itemId != ITEM_ENIGMA_BERRY || AreBlenderBerriesSame(berries, i, j)))
                     return PBLOCK_CLR_BLACK;
         }
     }
-    r2 = 0;
-    for (r2 = 0, i = 0; i < 5; i++)
+    numFlavors = 0;
+    for (numFlavors = 0, i = 0; i < 5; i++)
     {
-        if (vars[i] > 0)
-            r2++;
+        if (flavors[i] > 0)
+            numFlavors++;
     }
-    if (r2 > 3)
+    if (numFlavors > 3)
         return PBLOCK_CLR_WHITE;
-    if (r2 == 3)
+    if (numFlavors == 3)
         return PBLOCK_CLR_GRAY;
     for (i = 0; i < 5; i++)
     {
-        if (vars[i] > 50)
+        if (flavors[i] > 50)
             return PBLOCK_CLR_GOLD;
     }
-    if (r2 == 1 && vars[0] > 0)
+    if (numFlavors == 1 && flavors[0] > 0)
         return PBLOCK_CLR_RED;
-    if (r2 == 1 && vars[1] > 0)
+    if (numFlavors == 1 && flavors[1] > 0)
         return PBLOCK_CLR_BLUE;
-    if (r2 == 1 && vars[2] > 0)
+    if (numFlavors == 1 && flavors[2] > 0)
         return PBLOCK_CLR_PINK;
-    if (r2 == 1 && vars[3] > 0)
+    if (numFlavors == 1 && flavors[3] > 0)
         return PBLOCK_CLR_GREEN;
-    if (r2 == 1 && vars[4] > 0)
+    if (numFlavors == 1 && flavors[4] > 0)
         return PBLOCK_CLR_YELLOW;
-    if (r2 == 2)
+    if (numFlavors == 2)
     {
-        s32 var = 0;
+        s32 idx = 0;
         for (i = 0; i < 5; i++)
         {
-            if (vars[i] > 0)
-                sPokeblockPresentFlavors[var++] = i;
+            if (flavors[i] > 0)
+                sPokeblockPresentFlavors[idx++] = i;
         }
-        if (vars[sPokeblockPresentFlavors[0]] >= vars[sPokeblockPresentFlavors[1]])
+        if (flavors[sPokeblockPresentFlavors[0]] >= flavors[sPokeblockPresentFlavors[1]])
         {
             if (sPokeblockPresentFlavors[0] == 0)
                 return (sPokeblockPresentFlavors[1] << 16) | PBLOCK_CLR_PURPLE;
@@ -1942,10 +1942,10 @@ static void CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* p
 {
     s32 i;
     s32 j;
-    s32 var3;
-    s32 var4;
-    s32 var6;
-    u8 r10;
+    s32 flavor;
+    s32 remainder;
+    s32 multiuseVar;
+    u8 numNegatives;
 
     for (i = 0; i < 6; i++)
         sPokeblockFlavors[i] = 0;
@@ -1955,31 +1955,31 @@ static void CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* p
             sPokeblockFlavors[j] += berries[i].flavors[j];
     }
 
-    var6 = sPokeblockFlavors[0];
+    multiuseVar = sPokeblockFlavors[0];
     sPokeblockFlavors[0] -= sPokeblockFlavors[1];
     sPokeblockFlavors[1] -= sPokeblockFlavors[2];
     sPokeblockFlavors[2] -= sPokeblockFlavors[3];
     sPokeblockFlavors[3] -= sPokeblockFlavors[4];
-    sPokeblockFlavors[4] -= var6;
+    sPokeblockFlavors[4] -= multiuseVar;
 
-    var6 = 0;
+    multiuseVar = 0;
     for (i = 0; i < 5; i++)
     {
         if (sPokeblockFlavors[i] < 0)
         {
             sPokeblockFlavors[i] = 0;
-            var6++;
+            multiuseVar++;
         }
     }
-    r10 = var6;
+    numNegatives = multiuseVar;
     for (i = 0; i < 5; i++)
     {
         if (sPokeblockFlavors[i] > 0)
         {
-            if (sPokeblockFlavors[i] < var6)
+            if (sPokeblockFlavors[i] < multiuseVar)
                 sPokeblockFlavors[i] = 0;
             else
-                sPokeblockFlavors[i] -= var6;
+                sPokeblockFlavors[i] -= multiuseVar;
         }
     }
     for (i = 0; i < 5; i++)
@@ -1987,33 +1987,33 @@ static void CalculatePokeblock(struct BlenderBerry* berries, struct Pokeblock* p
         sDebug_PokeblockFactorFlavors[i] = sPokeblockFlavors[i];
     }
 
-    var6 = maxRPM / 333 + 100;
-    sDebug_PokeblockFactorRPM = var6;
+    multiuseVar = maxRPM / 333 + 100;
+    sDebug_PokeblockFactorRPM = multiuseVar;
 
     for (i = 0; i < 5; i++)
     {
-        var3 = sPokeblockFlavors[i];
-        var3 = (var3 * var6) / 10;
-        var4 = var3 % 10;
-        var3 /= 10;
-        if (var4 > 4)
-            var3++;
-        sPokeblockFlavors[i] = var3;
+        flavor = sPokeblockFlavors[i];
+        flavor = (flavor * multiuseVar) / 10;
+        remainder = flavor % 10;
+        flavor /= 10;
+        if (remainder > 4)
+            flavor++;
+        sPokeblockFlavors[i] = flavor;
     }
     for (i = 0; i < 5; i++)
     {
         sDebug_PokeblockFactorFlavorsAfterRPM[i] = sPokeblockFlavors[i];
     }
-    pokeblock->color = CalculatePokeblockColor(berries, &sPokeblockFlavors[0], numPlayers, r10);
+    pokeblock->color = CalculatePokeblockColor(berries, &sPokeblockFlavors[0], numPlayers, numNegatives);
     sPokeblockFlavors[5] = (sPokeblockFlavors[5] / numPlayers) - numPlayers;
     if (sPokeblockFlavors[5] < 0)
         sPokeblockFlavors[5] = 0;
     if (pokeblock->color == 12)
     {
-        var6 = Random() % 10;
+        multiuseVar = Random() % 10;
         for (i = 0; i < 5; i++)
         {
-            if ((sBlackPokeblockFlavorFlags[var6] >> i) & 1)
+            if ((sBlackPokeblockFlavorFlags[multiuseVar] >> i) & 1)
                 sPokeblockFlavors[i] = 2;
             else
                 sPokeblockFlavors[i] = 0;
@@ -2775,79 +2775,79 @@ static void SpriteCB_Start(struct Sprite* sprite)
     sprite->y2 = sprite->data[1];
 }
 
-static void TryUpdateProgressBar(u16 a0, u16 a1)
+static void TryUpdateProgressBar(u16 current, u16 limit)
 {
-    if (gBerryBlenderData->maxProgressBarValue < a0)
+    if (gBerryBlenderData->maxProgressBarValue < current)
     {
         gBerryBlenderData->maxProgressBarValue += 2;
-        UpdateProgressBar(gBerryBlenderData->maxProgressBarValue, a1);
+        UpdateProgressBar(gBerryBlenderData->maxProgressBarValue, limit);
     }
 }
 
-static void UpdateProgressBar(u16 a0, u16 a1)
+static void UpdateProgressBar(u16 value, u16 limit)
 {
-    s32 var1, var2, var3, var4;
+    s32 amountFilled, maxFilledSegment, subSegmentsFilled, i;
     u16* vram;
 
     vram = (u16*)(VRAM + 0x6000);
-    var1 = (a0 * 64) / a1;
-    var2 = var1 / 8;
-    for (var4 = 0; var4 < var2; var4++)
+    amountFilled = (value * 64) / limit;
+    maxFilledSegment = amountFilled / 8;
+    for (i = 0; i < maxFilledSegment; i++)
     {
-        vram[11 + var4] = 0x81E9;
-        vram[43 + var4] = 0x81F9;
+        vram[11 + i] = 0x81E9;
+        vram[43 + i] = 0x81F9;
     }
-    var3 = var1 % 8;
-    if (var3 != 0)
+    subSegmentsFilled = amountFilled % 8;
+    if (subSegmentsFilled != 0)
     {
-        vram[11 + var4] = var3 - 32287;
-        vram[43 + var4] = var3 - 32271;
-        var4++;
+        vram[11 + i] = subSegmentsFilled - 32287;
+        vram[43 + i] = subSegmentsFilled - 32271;
+        i++;
     }
-    for (; var4 < 8; var4++)
+    for (; i < 8; i++)
     {
-        vram[11 + var4] = 33249;
-        vram[43 + var4] = 33249 + 16;
+        vram[11 + i] = 33249;
+        vram[43 + i] = 33249 + 16;
     }
 }
 
-static u32 ArrowSpeedToRPM(u16 a0)
+static u32 ArrowSpeedToRPM(u16 speed)
 {
-    return 360000 * a0 / 0x10000;
+    return 360000 * speed / 0x10000;
 }
 
-static void UpdateRPM(u16 a0)
+static void UpdateRPM(u16 speed)
 {
     u8 i;
-    u8 palAdders[5];
+    u8 digits[5];
 
-    u32 var = ArrowSpeedToRPM(a0);
-    if (gBerryBlenderData->maxRPM < var)
-        gBerryBlenderData->maxRPM = var;
+    u32 currentRPM = ArrowSpeedToRPM(speed);
+    if (gBerryBlenderData->maxRPM < currentRPM)
+        gBerryBlenderData->maxRPM = currentRPM;
     for (i = 0; i < 5; i++)
     {
-        palAdders[i] = var % 10;
-        var /= 10;
+        digits[i] = currentRPM % 10;
+        currentRPM /= 10;
     }
-    *((u16*)(VRAM + 0x6458)) = palAdders[4] + 0x8172;
-    *((u16*)(VRAM + 0x645A)) = palAdders[3] + 0x8172;
-    *((u16*)(VRAM + 0x645C)) = palAdders[2] + 0x8172;
-    *((u16*)(VRAM + 0x6460)) = palAdders[1] + 0x8172;
-    *((u16*)(VRAM + 0x6462)) = palAdders[0] + 0x8172;
+    *((u16*)(VRAM + 0x6458)) = digits[4] + 0x8172;
+    *((u16*)(VRAM + 0x645A)) = digits[3] + 0x8172;
+    *((u16*)(VRAM + 0x645C)) = digits[2] + 0x8172;
+    *((u16*)(VRAM + 0x6460)) = digits[1] + 0x8172;
+    *((u16*)(VRAM + 0x6462)) = digits[0] + 0x8172;
 }
 
-static void ShakeBgCoordForHit(s16* a0, u16 a1)
+static void ShakeBgCoordForHit(s16* coord, u16 speed)
 {
-    if (*a0 == 0)
-        *a0 = (Random() % a1) - (a1 / 2);
+    if (*coord == 0)
+        *coord = (Random() % speed) - (speed / 2);
 }
 
-static void RestoreBgCoord(s16* a0)
+static void RestoreBgCoord(s16* coord)
 {
-    if (*a0 < 0 )
-        (*a0)++;
-    if (*a0 > 0 )
-        (*a0)--;
+    if (*coord < 0 )
+        (*coord)++;
+    if (*coord > 0 )
+        (*coord)--;
 }
 
 static void RestoreBgCoords(void)
@@ -2856,21 +2856,21 @@ static void RestoreBgCoords(void)
     RestoreBgCoord(&gBerryBlenderData->bg_Y);
 }
 
-static void BlenderLandShakeBgCoord(s16* a0, u16 a1)
+static void BlenderLandShakeBgCoord(s16* coord, u16 timer)
 {
-    s32 var;
-    if (a1 < 10)
-        var = 16;
+    s32 strength;
+    if (timer < 10)
+        strength = 16;
     else
-        var = 8;
-    if (*a0 == 0)
-        *a0 = (Random() % var) - (var / 2);
+        strength = 8;
+    if (*coord == 0)
+        *coord = (Random() % strength) - (strength / 2);
     else
     {
-        if (*a0 < 0)
-            (*a0)++;
-        if (*a0 > 0)
-            (*a0)--;
+        if (*coord < 0)
+            (*coord)++;
+        if (*coord > 0)
+            (*coord)--;
     }
 }
 
