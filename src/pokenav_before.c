@@ -1369,7 +1369,7 @@ void InitPokenavMainMenu(void)
             SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         }
         break;
@@ -1447,7 +1447,7 @@ void RestorePokenavMainMenu(void)
 			SetPokenavCallback(&HandlePokenavMainMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
 		}
 		break;
@@ -1652,7 +1652,7 @@ void OpenPokenavRegionMap(void)
         SetPokenavDisplayForScreen(0x1);
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x75E0), 0, (void *)(VRAM + 0xF800), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x75E0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         gPokenavStructPtr->callbackStep++;
         break;
@@ -1735,7 +1735,7 @@ void HandleRegionMapInput(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 1, 1, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 1, 1, 2, 4);
 #endif
 }
 
@@ -1901,7 +1901,7 @@ void RestorePokenavConditionMenu(void)
 			SetPokenavCallback(&HandleConditionMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
 		}
 		break;
@@ -2066,7 +2066,7 @@ void ReturnToConditionSearchMenu(void)
 			SetPokenavCallback(&HandleConditionSearchMenuInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
 		}
 		break;
@@ -2181,7 +2181,7 @@ void OpenConditionSearchResults(void)
 			SetPokenavCallback(&HandleConditionSearchInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
 		}
         break;
@@ -2234,7 +2234,7 @@ void HandleConditionSearchInput(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 1, 8, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 1, 8, 2, 4);
 #endif
 }
 
@@ -2278,7 +2278,7 @@ void OpenConditionSearchListFromGraph(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         break;
     case 8:
@@ -2333,7 +2333,7 @@ void OpenConditionGraphFromSearchResults(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
 #endif
         break;
     case 8:
@@ -2432,7 +2432,7 @@ void OpenConditionGraphFromParty(void)
 			SetPokenavCallback(&HandleConditionGraphInput);
 #if DEBUG
 			if (gLinkOpen == TRUE)
-				debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
+				InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
 #endif
 		}
         break;
@@ -2593,7 +2593,7 @@ void HandleConditionGraphInput(void)
 
 #if DEBUG
     if (gLinkOpen == TRUE)
-        debug_sub_8008264(gLink.recvQueue.count, 9, 6, 2, 4);
+        PrintDebugHex(gLink.recvQueue.count, 9, 6, 2, 4);
 #endif
 }
 
@@ -2682,7 +2682,7 @@ void OpenRibbonsMonList(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         break;
     case 17:
@@ -2738,7 +2738,7 @@ void HandleRibbonsMonListInput(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 1, 8, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 1, 8, 2, 4);
 #endif
 }
 
@@ -2813,7 +2813,7 @@ void OpenRibbonsSummaryMenu(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF000), 4);
 #endif
         break;
     case 9:
@@ -2913,7 +2913,7 @@ void RibbonsSummaryHandleInput(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 1, 4, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 1, 4, 2, 4);
 #endif
 }
 
@@ -2962,7 +2962,7 @@ void OpenRibbonsMonListFromRibbonsSummary(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         break;
     case 8:
@@ -3042,7 +3042,7 @@ void OpenTrainerEyes(void)
         gPokenavStructPtr->callbackStep++;
 #if DEBUG
 		if (gLinkOpen == TRUE)
-			debug_sub_8008218((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
+			InitDebugHexPrinter((void *)(VRAM + 0x7DE0), 0, (void *)(VRAM + 0xF800), 4);
 #endif
         break;
     case 13:
@@ -3098,7 +3098,7 @@ void HandleTrainerEyesInput(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 1, 3, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 1, 3, 2, 4);
 #endif
 }
 
@@ -3357,7 +3357,7 @@ bool8 UpdateMainMenuCursorPos(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 6, 10, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 6, 10, 2, 4);
 #endif
     return FALSE;
 }
@@ -3378,7 +3378,7 @@ bool8 UpdateSubmenuCursorPos(void)
     }
 #if DEBUG
 	if (gLinkOpen == TRUE)
-		debug_sub_8008264(gLink.recvQueue.count, 6, 10, 2, 4);
+		PrintDebugHex(gLink.recvQueue.count, 6, 10, 2, 4);
 #endif
     return FALSE;
 }

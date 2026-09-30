@@ -30,15 +30,29 @@ enum
     BLOCK_REQ_SIZE_40,
 };
 
-#define LINKCMD_READY_TO_TRADE       0xAABB
-#define LINKCMD_INIT_BLOCK           0xBBBB
-#define LINKCMD_READY_CANCEL_TRADE   0xBBCC
-#define LINKCMD_START_TRADE          0xCCDD
-#define LINKCMD_SET_MONS_TO_TRADE    0xDDDD
-#define LINKCMD_PLAYER_CANCEL_TRADE  0xDDEE
-#define LINKCMD_REQUEST_CANCEL       0xEEAA
-#define LINKCMD_BOTH_CANCEL_TRADE    0xEEBB
-#define LINKCMD_PARTNER_CANCEL_TRADE 0xEECC
+#define LINKCMD_SEND_LINK_TYPE          0x2222
+#define LINKCMD_READY_EXIT_STANDBY      0x2FFE
+#define LINKCMD_BLENDER_SEND_KEYS       0x4444
+#define LINKCMD_DUMMY_1                 0x5555
+#define LINKCMD_DUMMY_2                 0x5566
+#define LINKCMD_READY_CLOSE_LINK        0x5FFF
+#define LINKCMD_SEND_EMPTY              0x6666
+#define LINKCMD_SEND_0xEE               0x7777
+#define LINKCMD_CONT_BLOCK              0x8888
+#define LINKCMD_BLENDER_NO_PBLOCK_SPACE 0xAAAA
+#define LINKCMD_SEND_ITEM               0xAAAB
+#define LINKCMD_READY_TO_TRADE          0xAABB
+#define LINKCMD_INIT_BLOCK              0xBBBB
+#define LINKCMD_READY_CANCEL_TRADE      0xBBCC
+#define LINKCMD_SEND_HELD_KEYS          0xCAFE
+#define LINKCMD_SEND_BLOCK_REQ          0xCCCC
+#define LINKCMD_START_TRADE             0xCCDD
+#define LINKCMD_SET_MONS_TO_TRADE       0xDDDD
+#define LINKCMD_PLAYER_CANCEL_TRADE     0xDDEE
+#define LINKCMD_REQUEST_CANCEL          0xEEAA
+#define LINKCMD_BOTH_CANCEL_TRADE       0xEEBB
+#define LINKCMD_PARTNER_CANCEL_TRADE    0xEECC
+#define LINKCMD_NONE                    0xEFFF
 
 #define LINK_STAT_LOCAL_ID               0x00000003
 #define LINK_STAT_PLAYER_COUNT           0x0000001C
@@ -182,7 +196,7 @@ extern bool8 gReceivedRemoteLinkPlayers;
 extern bool8 gLinkOpen;
 extern bool8 gLinkPlayerPending[MAX_LINK_PLAYERS];
 extern void (*gLinkCallback)(void);
-extern u8 gUnknown_Debug_30030E0;
+extern u8 gMysteryEventDebugRButtonCounter;
 
 void Task_DestroySelf(u8);
 void SetLocalLinkPlayerId(u8);
@@ -233,8 +247,8 @@ void LinkVSync(void);
 void Timer3Intr(void);
 void SerialCB(void);
 void LinkTestScreen(void);
-void debug_sub_8008218(u16 *buffer, u32 arg1, u16 *arg2, u32 arg3);
-void debug_sub_8008264(u32 value, int left, int top, int r3, int sp0);
+void InitDebugHexPrinter(u16 *digitsGfxDest, u32 gfxBase, u16 *tilemap, u32 displayId);
+void PrintDebugHex(u32 value, int left, int top, int digitCount, int displayId);
 u32 GetBerryBlenderKeySendAttempts(void);
 void LinkTest_PrintHex(u32, u8, u8, u8);
 void LoadLinkTestBgGfx(u8, u8, u8, u8);

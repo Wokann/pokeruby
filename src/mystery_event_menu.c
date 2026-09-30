@@ -423,7 +423,7 @@ void CB2_MysteryEventDebugMenu(void)
         if (!gPaletteFade.active)
         {
             if (JOY_HELD(R_BUTTON))
-                gUnknown_Debug_30030E0++;
+                gMysteryEventDebugRButtonCounter++;
             MenuPrintMessage(sText_EReaderEmulation, 4, 15);
             gMain.state++;
         }

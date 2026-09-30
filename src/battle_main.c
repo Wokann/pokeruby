@@ -980,9 +980,9 @@ void BattleMainCB2(void)
     }
     if (gBattleTypeFlags & 2)
     {
-        debug_sub_8008264((gBattleTypeFlags >> 2) % 2, 1, 1, 1, 1);
-        debug_sub_8008264((gBattleTypeFlags >> 2) % 2, 1, 21, 1, 1);
-        debug_sub_8008264((gBattleTypeFlags >> 2) % 2, 1, 41, 1, 1);
+        PrintDebugHex((gBattleTypeFlags >> 2) % 2, 1, 1, 1, 1);
+        PrintDebugHex((gBattleTypeFlags >> 2) % 2, 1, 21, 1, 1);
+        PrintDebugHex((gBattleTypeFlags >> 2) % 2, 1, 41, 1, 1);
     }
 #endif
 

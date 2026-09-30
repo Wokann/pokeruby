@@ -380,10 +380,10 @@ void LoadBattleTextboxAndBackground(void)
     #if DEBUG
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
-        debug_sub_8008218((void*)(VRAM + 0x600), 0, (void*)(VRAM + 0xC000), 1);
-        debug_sub_8008264(257, 3, 1, 3, 1);
-        debug_sub_8008264(257, 3, 21, 3, 1);
-        debug_sub_8008264(257, 3, 41, 3, 1);
+        InitDebugHexPrinter((void*)(VRAM + 0x600), 0, (void*)(VRAM + 0xC000), 1);
+        PrintDebugHex(257, 3, 1, 3, 1);
+        PrintDebugHex(257, 3, 21, 3, 1);
+        PrintDebugHex(257, 3, 41, 3, 1);
     }
     #endif
 }

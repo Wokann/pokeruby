@@ -567,7 +567,7 @@ void MainCB2(void)
     UpdatePaletteFade();
 #if DEBUG
     if (gLinkOpen == TRUE)
-        debug_sub_8008264(gLink.recvQueue.count, 20, 1, 2, 3);
+        PrintDebugHex(gLink.recvQueue.count, 20, 1, 2, 3);
 #endif
 }
 
@@ -810,7 +810,7 @@ bool8 LoadGraphics(void)
         gPaletteFade.bufferTransferDisabled = 0;
 #if DEBUG
         if (gLinkOpen == TRUE)
-            debug_sub_8008218((void *)(VRAM + 0xDDE0), 0x8000, (void *)(VRAM + 0xF000), 3);
+            InitDebugHexPrinter((void *)(VRAM + 0xDDE0), 0x8000, (void *)(VRAM + 0xF000), 3);
 #endif
         return TRUE;
     }

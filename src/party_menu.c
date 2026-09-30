@@ -504,7 +504,7 @@ void CB2_PartyMenuMain(void)
 
 #if DEBUG
     if (gLinkOpen == TRUE)
-        debug_sub_8008264(gLink.recvQueue.count, 1, 1, 2, 2);
+        PrintDebugHex(gLink.recvQueue.count, 1, 1, 2, 2);
 #endif
 }
 
@@ -710,7 +710,7 @@ bool8 InitPartyMenu(void)
         SetVBlankCallback(VBlankCB_PartyMenu);
 #if DEBUG
         if (gLinkOpen == TRUE)
-            debug_sub_8008218((void *)(VRAM + 0xE5E0), 0x8000, (void *)(VRAM + 0x7800), 2);
+            InitDebugHexPrinter((void *)(VRAM + 0xE5E0), 0x8000, (void *)(VRAM + 0x7800), 2);
 #endif
         return TRUE;
     }

@@ -184,7 +184,7 @@ extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MusicPlayerInfo gMPlayInfo_BGM;
 extern u16 gSpecialVar_ItemId;
 extern u8 gIsDebugMode;
-extern u8 byte_3002A68;
+extern u8 gLinkDummyCommandReceived;
 
 extern const u8 gUnknown_08E6C100[];
 extern const u8 gUnknown_08E6C920[];
@@ -2753,7 +2753,7 @@ void UnusedTask_WaitForBlenderLinkPlayers(u8 taskID)
                 Menu_PrintText(gOtherText_PleaseWait, 3, 10);
             if (++task->data[0] > 120)
                 task->data[0] = 0;
-            if (byte_3002A68 > 4 && gReceivedRemoteLinkPlayers == 1)
+            if (gLinkDummyCommandReceived > 4 && gReceivedRemoteLinkPlayers == 1)
                 DestroyTask(taskID);
         }
     }

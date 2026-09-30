@@ -501,7 +501,7 @@ static bool8 SetupBagMultistep(void)
         ResetBagItemListRedrawFlag();
 #if DEBUG
         if (gLinkOpen == TRUE)
-            debug_sub_8008218((void *)(VRAM + 0xF5E0), 0x8000, (void *)(VRAM + 0xF800), 0);
+            InitDebugHexPrinter((void *)(VRAM + 0xF5E0), 0x8000, (void *)(VRAM + 0xF800), 0);
 #endif
         return TRUE;
     }
@@ -3024,7 +3024,7 @@ static void UpdateBagMenu(void)
     UpdateBagItemDescription();
 #if DEBUG
     if (gLinkOpen == TRUE)
-        debug_sub_8008264(gLink.recvQueue.count, 1, 1, 2, 0);
+        PrintDebugHex(gLink.recvQueue.count, 1, 1, 2, 0);
 #endif
 }
 
