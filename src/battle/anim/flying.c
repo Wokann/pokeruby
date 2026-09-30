@@ -188,7 +188,7 @@ const struct SpriteTemplate gFallingFeatherSpriteTemplate =
     .callback = AnimFallingFeather,
 };
 
-static const u16 sUnusedFlyingPalette[] = INCBIN_U16("graphics/unknown/unknown_3DA4B0.gbapal");
+static const u16 sUnusedFlyingPalette[] = INCBIN_U16("graphics/battle_anims/unused/flying.gbapal");
 
 // Unused
 static const struct SpriteTemplate sUnusedBubbleThrowSpriteTemplate =
