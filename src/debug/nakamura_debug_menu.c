@@ -38,10 +38,19 @@ static bool8 FishingPoints(void);
 static void NakaGenderTest_PrintSpeciesName(u8);
 static void NakaGenderTest_PrintSpeciesGender(u8);
 static void NakaGenderTest_PrintSpeciesLevel(u8);
-static void NakaGenderTest_JoypadAction(u8);
+static void NakaGenderTest_MoveCursor(u8);
 static bool8 NakaGenderTest_HandleJoypad(void);
 static u8 NakaGenderTest_ForceRerollPokemon(u8);
 static bool8 SetPokeblock(void);
+
+enum
+{
+    GENDER_TEST_CURSOR_UP,
+    GENDER_TEST_CURSOR_DOWN,
+    GENDER_TEST_CURSOR_LEFT,
+    GENDER_TEST_CURSOR_RIGHT,
+    GENDER_TEST_CURSOR_REDRAW = 5,
+};
 
 // =======================================================
 // TOP MENU
@@ -293,7 +302,7 @@ static bool8 MakeBasesToMax(void)
     return TRUE;
 }
 
-static void BaseLocation_GetCurSecretBaseData(u8 * R, u8 * X, u8 * Y)
+static void BaseLocation_GetCurSecretBaseData(u8 *route, u8 *x, u8 *y)
 {
     u8 i;
     u8 sbId = gSaveBlock1.secretBases[sSecretBaseIdx].secretBaseId;
@@ -302,9 +311,9 @@ static void BaseLocation_GetCurSecretBaseData(u8 * R, u8 * X, u8 * Y)
     {
         if (sSecretBaseTemplates[i * 4] == sbId)
         {
-            *R = sSecretBaseTemplates[i * 4 + 1];
-            *X = sSecretBaseTemplates[i * 4 + 2];
-            *Y = sSecretBaseTemplates[i * 4 + 3];
+            *route = sSecretBaseTemplates[i * 4 + 1];
+            *x = sSecretBaseTemplates[i * 4 + 2];
+            *y = sSecretBaseTemplates[i * 4 + 3];
             break;
         }
     }
@@ -318,24 +327,24 @@ static void BaseLocation_Redraw(void)
 
     if (gSaveBlock1.secretBases[sSecretBaseIdx].secretBaseId != 0)
     {
-        u8 R;
-        u8 X;
-        u8 Y;
-        BaseLocation_GetCurSecretBaseData(&R, &X, &Y);
+        u8 route;
+        u8 x;
+        u8 y;
+        BaseLocation_GetCurSecretBaseData(&route, &x, &y);
 
         GetSecretBaseName(gStringVar1, sSecretBaseIdx);
         Menu_PrintText(gStringVar1, 1, 3);
 
         Menu_PrintText(sText_RouteLabel, 1, 5);
-        ConvertIntToDecimalStringN(gStringVar1, R, STR_CONV_MODE_LEFT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar1, route, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 2, 5);
 
         Menu_PrintText(sText_XCoordinateLabel, 1, 7);
-        ConvertIntToDecimalStringN(gStringVar1, X, STR_CONV_MODE_LEFT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar1, x, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 3, 7);
 
         Menu_PrintText(sText_YCoordinateLabel, 1, 9);
-        ConvertIntToDecimalStringN(gStringVar1, Y, STR_CONV_MODE_LEFT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar1, y, STR_CONV_MODE_LEFT_ALIGN, 3);
         Menu_PrintText(gStringVar1, 3, 9);
     }
 }
@@ -448,12 +457,12 @@ static void MoveYourBase_EditOwnerID(s8 direction)
     u8 * otIdPtr = gSaveBlock1.secretBases[sSecretBaseIdx].trainerId;
     u32 otId = (otIdPtr[3] << 24) | (otIdPtr[2] << 16) | (otIdPtr[1] << 8) | (otIdPtr[0] << 0);
     s8 digit;
-    int r1 = direction;
+    int increment = direction;
 
     for (digit = 9; digit > sMoveYourBase_XCursorPos; digit--)
-        r1 *= 10;
+        increment *= 10;
 
-    otId += r1;
+    otId += increment;
     otIdPtr[3] = (otId & 0xFF000000) >> 24;
     otIdPtr[2] = (otId & 0x00FF0000) >> 16;
     otIdPtr[1] = (otId & 0x0000FF00) >> 8;
@@ -461,14 +470,14 @@ static void MoveYourBase_EditOwnerID(s8 direction)
     MoveYourBase_PrintSBOwnerID();
 }
 
-static void MoveYourBase_EditOwnerNameChar(s8 a0)
+static void MoveYourBase_EditOwnerNameChar(s8 charDelta)
 {
     u8 * namePtr = gSaveBlock1.secretBases[sSecretBaseIdx].playerName;
-    u8 r2 = 0;
-    u8 r3 = 0;
+    u8 maxChar = 0;
+    u8 minChar = 0;
     u8 i;
 
-    if (a0 == 100)
+    if (charDelta == 100)
     {
         for (i = sMoveYourBase_XCursorPos; i < 7; i++)
         {
@@ -480,39 +489,39 @@ static void MoveYourBase_EditOwnerNameChar(s8 a0)
         switch (sSecretBaseNameCharGroup)
         {
             case 0: // HIRA
-                r3 = 1;
-                r2 = 80;
+                minChar = 1;
+                maxChar = 80;
                 break;
             case 1: // KATA
-                r3 = 81;
-                r2 = 160;
+                minChar = 81;
+                maxChar = 160;
                 break;
             case 2: // A-Z
-                r3 = CHAR_A;
-                r2 = CHAR_Z;
+                minChar = CHAR_A;
+                maxChar = CHAR_Z;
                 break;
             case 3: // a-z
-                r3 = CHAR_a;
-                r2 = CHAR_z;
+                minChar = CHAR_a;
+                maxChar = CHAR_z;
                 break;
             case 4: // 0-9
-                r3 = CHAR_0;
-                r2 = CHAR_0 + 9;
+                minChar = CHAR_0;
+                maxChar = CHAR_0 + 9;
                 break;
         }
 
-        namePtr[sMoveYourBase_XCursorPos] += a0;
-        if (namePtr[sMoveYourBase_XCursorPos] < r3)
-            namePtr[sMoveYourBase_XCursorPos] = r2;
-        if (namePtr[sMoveYourBase_XCursorPos] > r2)
-            namePtr[sMoveYourBase_XCursorPos] = r3;
+        namePtr[sMoveYourBase_XCursorPos] += charDelta;
+        if (namePtr[sMoveYourBase_XCursorPos] < minChar)
+            namePtr[sMoveYourBase_XCursorPos] = maxChar;
+        if (namePtr[sMoveYourBase_XCursorPos] > maxChar)
+            namePtr[sMoveYourBase_XCursorPos] = minChar;
     }
     MoveYourBase_PrintSBOwnerName();
 }
 
-static bool8 MoveYourBase_HandleJoypad_2(void)
+static bool8 MoveYourBase_EditJoypadAction(void)
 {
-    u32 r4 = sMoveYourBase_CursorPos == 0 ? 7 : 10;
+    u32 fieldLength = sMoveYourBase_CursorPos == 0 ? 7 : 10;
 
     if (JOY_REPT(DPAD_UP))
     {
@@ -535,7 +544,7 @@ static bool8 MoveYourBase_HandleJoypad_2(void)
     if (JOY_REPT(DPAD_LEFT))
     {
         if (sMoveYourBase_XCursorPos == 0)
-            sMoveYourBase_XCursorPos = r4 - 1;
+            sMoveYourBase_XCursorPos = fieldLength - 1;
         else
             sMoveYourBase_XCursorPos--;
         MoveYourBase_UpdateXCursorPosition();
@@ -544,7 +553,7 @@ static bool8 MoveYourBase_HandleJoypad_2(void)
 
     if (JOY_REPT(DPAD_RIGHT))
     {
-        if (sMoveYourBase_XCursorPos == r4 - 1)
+        if (sMoveYourBase_XCursorPos == fieldLength - 1)
             sMoveYourBase_XCursorPos = 0;
         else
             sMoveYourBase_XCursorPos++;
@@ -620,7 +629,7 @@ static bool8 MoveYourBase_JoypadAction(void)
             sMoveYourBase_XCursorPos = 0;
             MoveYourBase_UpdateXCursorPosition();
             MoveYourBase_PrintCharacterSetName();
-            gMenuCallback = MoveYourBase_HandleJoypad_2;
+            gMenuCallback = MoveYourBase_EditJoypadAction;
         }
         return FALSE;
     }
@@ -763,53 +772,53 @@ static const u8 sText_FishingLocations[] = _(
                                     "front of you");
 #endif
 
-static u16 FishingPoints_CountFishingTilesInMapThird(u8 a0)
+static u16 FishingPoints_CountFishingTilesInMapThird(u8 mapThird)
 {
-    u16 retval = 0;
+    u16 count = 0;
     u16 height = gMapHeader.mapLayout->height / 3;
     u16 y;
     u16 x;
-    u16 start = height * a0;
+    u16 startY = height * mapThird;
 
-    for (y = start; y < start + height; y++)
+    for (y = startY; y < startY + height; y++)
     {
         for (x = 0; x < gMapHeader.mapLayout->width; x++)
         {
             if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(x + 7, y + 7)) == TRUE)
             {
-                retval++;
+                count++;
             }
         }
     }
 
-    return retval;
+    return count;
 }
 
 static u16 FishingPoints_GetIndexOfCurrentFishingSpot(void)
 {
-    u16 retval = 0;
-    s16 x;
-    s16 y;
-    u16 xx;
-    u16 yy;
+    u16 fishingSpotIndex = 0;
+    s16 playerX;
+    s16 playerY;
+    u16 mapX;
+    u16 mapY;
 
-    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
-    x -= 7;
-    y -= 7;
+    GetXYCoordsOneStepInFrontOfPlayer(&playerX, &playerY);
+    playerX -= 7;
+    playerY -= 7;
 
-    for (yy = 0; yy < gMapHeader.mapLayout->height; yy++)
+    for (mapY = 0; mapY < gMapHeader.mapLayout->height; mapY++)
     {
-        for (xx = 0; xx < gMapHeader.mapLayout->width; xx++)
+        for (mapX = 0; mapX < gMapHeader.mapLayout->width; mapX++)
         {
-            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(xx + 7, yy + 7)) == TRUE)
+            if (MetatileBehavior_IsFeebasEncounterable(MapGridGetMetatileBehaviorAt(mapX + 7, mapY + 7)) == TRUE)
             {
-                retval++;
-                if (x == xx && y == yy)
-                    return retval;
+                fishingSpotIndex++;
+                if (playerX == mapX && playerY == mapY)
+                    return fishingSpotIndex;
             }
         }
     }
-    return retval + 1;
+    return fishingSpotIndex + 1;
 }
 
 static bool8 FishingPoints_HandleJoypad(void)
@@ -826,8 +835,8 @@ static bool8 FishingPoints_HandleJoypad(void)
 
 static bool8 FishingPoints(void)
 {
-    u16 nWaterTiles;
-    u16 nFeebas;
+    u16 totalFishingTiles;
+    u16 numFeebasSpots;
 
     Menu_EraseWindowRect(0, 0, 29, 19);
     Menu_DrawStdWindowFrame(0, 0, 16, 19);
@@ -852,19 +861,19 @@ static bool8 FishingPoints(void)
     Menu_PrintText(gStringVar1, 11, 7);
 
     FeebasSeedRng(gSaveBlock1.dewfordTrends[0].rand);
-    nWaterTiles = FishingPoints_CountFishingTilesInMapThird(0) + FishingPoints_CountFishingTilesInMapThird(1) + FishingPoints_CountFishingTilesInMapThird(2);
-    nFeebas = 0;
+    totalFishingTiles = FishingPoints_CountFishingTilesInMapThird(0) + FishingPoints_CountFishingTilesInMapThird(1) + FishingPoints_CountFishingTilesInMapThird(2);
+    numFeebasSpots = 0;
 
-    while (nFeebas != 6)
+    while (numFeebasSpots != 6)
     {
-        u16 randTile = FeebasRandom() % nWaterTiles;
-        if (randTile == 0)
-            randTile = nWaterTiles;
-        if (randTile == 0 || randTile > 3)
+        u16 fishingTileIndex = FeebasRandom() % totalFishingTiles;
+        if (fishingTileIndex == 0)
+            fishingTileIndex = totalFishingTiles;
+        if (fishingTileIndex == 0 || fishingTileIndex > 3)
         {
-            ConvertIntToDecimalStringN(gStringVar1, randTile, STR_CONV_MODE_RIGHT_ALIGN, 4);
-            Menu_PrintText(gStringVar1, (nFeebas % 3) * 5 + 2, (nFeebas / 3) * 2 + 11);
-            nFeebas++;
+            ConvertIntToDecimalStringN(gStringVar1, fishingTileIndex, STR_CONV_MODE_RIGHT_ALIGN, 4);
+            Menu_PrintText(gStringVar1, (numFeebasSpots % 3) * 5 + 2, (numFeebasSpots / 3) * 2 + 11);
+            numFeebasSpots++;
         }
     }
 
@@ -956,44 +965,44 @@ static void NakaGenderTest_RedrawCurrent(u8 i)
         NakaGenderTest_PrintSpeciesGender(i);
         NakaGenderTest_PrintSpeciesLevel(i);
     }
-    NakaGenderTest_JoypadAction(5);
+    NakaGenderTest_MoveCursor(GENDER_TEST_CURSOR_REDRAW);
 }
 
-static void NakaGenderTest_AdjustSpecies(u8 i, s8 dirn)
+static void NakaGenderTest_AdjustSpecies(u8 partySlot, s8 speciesDelta)
 {
-    if (sNakaGenderTestData[i].species == SPECIES_NONE && sNakaGenderTestData[i].unk3 == 0 && dirn == 1)
-        sNakaGenderTestData[i].species = SPECIES_TREECKO - 1;
-    sNakaGenderTestData[i].species += dirn;
-    if (sNakaGenderTestData[i].species >= SPECIES_CHIMECHO)
-        sNakaGenderTestData[i].species -= SPECIES_CHIMECHO;
-    if (sNakaGenderTestData[i].species < 0)
-        sNakaGenderTestData[i].species += SPECIES_CHIMECHO;
-    CreateMon(gPlayerParty + i, sNakaGenderTestData[i].species, sNakaGenderTestData[i].level, 0x20, FALSE, 0, FALSE, 0);
-    sNakaGenderTestData[i].unk3 = 1;
+    if (sNakaGenderTestData[partySlot].species == SPECIES_NONE && sNakaGenderTestData[partySlot].unk3 == 0 && speciesDelta == 1)
+        sNakaGenderTestData[partySlot].species = SPECIES_TREECKO - 1;
+    sNakaGenderTestData[partySlot].species += speciesDelta;
+    if (sNakaGenderTestData[partySlot].species >= SPECIES_CHIMECHO)
+        sNakaGenderTestData[partySlot].species -= SPECIES_CHIMECHO;
+    if (sNakaGenderTestData[partySlot].species < 0)
+        sNakaGenderTestData[partySlot].species += SPECIES_CHIMECHO;
+    CreateMon(gPlayerParty + partySlot, sNakaGenderTestData[partySlot].species, sNakaGenderTestData[partySlot].level, 0x20, FALSE, 0, FALSE, 0);
+    sNakaGenderTestData[partySlot].unk3 = 1;
 }
 
-static void NakaGenderTest_RerollPokemon(u8 i)
+static void NakaGenderTest_RerollPokemon(u8 partySlot)
 {
-    if (sNakaGenderTestData[i].species != SPECIES_NONE)
-        NakaGenderTest_ForceRerollPokemon(i);
+    if (sNakaGenderTestData[partySlot].species != SPECIES_NONE)
+        NakaGenderTest_ForceRerollPokemon(partySlot);
 }
 
-static void NakaGenderTest_AdjustLevel(u8 i, s8 dirn)
+static void NakaGenderTest_AdjustLevel(u8 partySlot, s8 levelDelta)
 {
-    if (sNakaGenderTestData[i].species != SPECIES_NONE)
+    if (sNakaGenderTestData[partySlot].species != SPECIES_NONE)
     {
-        sNakaGenderTestData[i].level += dirn;
-        if (sNakaGenderTestData[i].level > 100)
-            sNakaGenderTestData[i].level = 1;
-        if (sNakaGenderTestData[i].level < 1)
-            sNakaGenderTestData[i].level = 100;
-        SetMonData(gPlayerParty + i, MON_DATA_EXP, gExperienceTables[gBaseStats[sNakaGenderTestData[i].species].growthRate] + sNakaGenderTestData[i].level);
+        sNakaGenderTestData[partySlot].level += levelDelta;
+        if (sNakaGenderTestData[partySlot].level > 100)
+            sNakaGenderTestData[partySlot].level = 1;
+        if (sNakaGenderTestData[partySlot].level < 1)
+            sNakaGenderTestData[partySlot].level = 100;
+        SetMonData(gPlayerParty + partySlot, MON_DATA_EXP, gExperienceTables[gBaseStats[sNakaGenderTestData[partySlot].species].growthRate] + sNakaGenderTestData[partySlot].level);
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-        CalculateMonStats(gPlayerParty + i);
+        CalculateMonStats(gPlayerParty + partySlot);
 #else
         // Same function, but without the Shedninja specific code.
-        Nakamura_NakaGenderTest_RecalcStats(gPlayerParty + i);
+        Nakamura_NakaGenderTest_RecalcStats(gPlayerParty + partySlot);
 #endif
     }
 }
@@ -1024,75 +1033,76 @@ static void NakaGenderTest_PartyCompactionEnsureAtLeastOne(void)
     }
 }
 
-static void NakaGenderTest_JoypadAction(u8 i)
+static void NakaGenderTest_MoveCursor(u8 direction)
 {
-    u8 q;
-    u8 r;
-    PlaySE(SE_SELECT);
-    q = sNakaGenderTest_CursorPosition / 6;
-    r = sNakaGenderTest_CursorPosition % 6;
-    Menu_BlankWindowRect(sGenderTestCursorXPositions[q], r * 2 + 1, sGenderTestCursorXPositions[q], r * 2 + 2);
+    u8 column;
+    u8 row;
 
-    if (i == 0)
+    PlaySE(SE_SELECT);
+    column = sNakaGenderTest_CursorPosition / 6;
+    row = sNakaGenderTest_CursorPosition % 6;
+    Menu_BlankWindowRect(sGenderTestCursorXPositions[column], row * 2 + 1, sGenderTestCursorXPositions[column], row * 2 + 2);
+
+    if (direction == GENDER_TEST_CURSOR_UP)
     {
-        if (r != 0)
+        if (row != 0)
             sNakaGenderTest_CursorPosition--;
         else
-            sNakaGenderTest_CursorPosition = q * 6 + 5;
+            sNakaGenderTest_CursorPosition = column * 6 + 5;
     }
 
-    if (i == 1)
+    if (direction == GENDER_TEST_CURSOR_DOWN)
     {
-        if (r != 5)
+        if (row != 5)
             sNakaGenderTest_CursorPosition++;
         else
-            sNakaGenderTest_CursorPosition = q * 6;
+            sNakaGenderTest_CursorPosition = column * 6;
     }
 
-    if (i == 2)
+    if (direction == GENDER_TEST_CURSOR_LEFT)
     {
-        if (q != 0)
+        if (column != 0)
             sNakaGenderTest_CursorPosition -= 6;
         else
-            sNakaGenderTest_CursorPosition = 12 + r;
+            sNakaGenderTest_CursorPosition = 12 + row;
     }
 
-    if (i == 3)
+    if (direction == GENDER_TEST_CURSOR_RIGHT)
     {
-        if (q != 2)
+        if (column != 2)
             sNakaGenderTest_CursorPosition += 6;
         else
-            sNakaGenderTest_CursorPosition = r;
+            sNakaGenderTest_CursorPosition = row;
     }
 
-    q = sNakaGenderTest_CursorPosition / 6;
-    r = sNakaGenderTest_CursorPosition % 6;
-    PrintTriangleCursorWithPalette(sGenderTestCursorXPositions[q], r * 2 + 1, 0xFF);
+    column = sNakaGenderTest_CursorPosition / 6;
+    row = sNakaGenderTest_CursorPosition % 6;
+    PrintTriangleCursorWithPalette(sGenderTestCursorXPositions[column], row * 2 + 1, 0xFF);
 }
 
 static bool8 NakaGenderTest_HandleJoypad(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
-        NakaGenderTest_JoypadAction(0);
+        NakaGenderTest_MoveCursor(GENDER_TEST_CURSOR_UP);
         return FALSE;
     }
 
     if (JOY_NEW(DPAD_DOWN))
     {
-        NakaGenderTest_JoypadAction(1);
+        NakaGenderTest_MoveCursor(GENDER_TEST_CURSOR_DOWN);
         return FALSE;
     }
 
     if (JOY_NEW(DPAD_LEFT))
     {
-        NakaGenderTest_JoypadAction(2);
+        NakaGenderTest_MoveCursor(GENDER_TEST_CURSOR_LEFT);
         return FALSE;
     }
 
     if (JOY_NEW(DPAD_RIGHT))
     {
-        NakaGenderTest_JoypadAction(3);
+        NakaGenderTest_MoveCursor(GENDER_TEST_CURSOR_RIGHT);
         return FALSE;
     }
 
@@ -1154,15 +1164,15 @@ static bool8 NakaGenderTest_HandleJoypad(void)
     return FALSE;
 }
 
-static u8 NakaGenderTest_ForceRerollPokemon(u8 i)
+static u8 NakaGenderTest_ForceRerollPokemon(u8 partySlot)
 {
-    u16 species = GetMonData(gPlayerParty + i, MON_DATA_SPECIES);
-    u8 gender = GetMonGender(gPlayerParty + i);
+    u16 species = GetMonData(gPlayerParty + partySlot, MON_DATA_SPECIES);
+    u8 gender = GetMonGender(gPlayerParty + partySlot);
     u8 ratio = gBaseStats[species].genderRatio;
     u32 personality;
 
     if (ratio == MON_MALE || ratio == MON_FEMALE || ratio ==  MON_GENDERLESS)
-        return GetMonGender(gPlayerParty + i);
+        return GetMonGender(gPlayerParty + partySlot);
 
     switch (gender)
     {
@@ -1182,8 +1192,8 @@ static u8 NakaGenderTest_ForceRerollPokemon(u8 i)
         personality |= (Random() << 16);
     } while (GetGenderFromSpeciesAndPersonality(species, personality) != ratio);
 
-    GetMonData(gPlayerParty + i, MON_DATA_IVS);
-    CreateMon(gPlayerParty + i, sNakaGenderTestData[i].species, sNakaGenderTestData[i].level, 0x20, TRUE, personality, FALSE, 0);
+    GetMonData(gPlayerParty + partySlot, MON_DATA_IVS);
+    CreateMon(gPlayerParty + partySlot, sNakaGenderTestData[partySlot].species, sNakaGenderTestData[partySlot].level, 0x20, TRUE, personality, FALSE, 0);
     return ratio;
 }
 
@@ -1709,108 +1719,108 @@ static u8 SetPokeblock_CalcColor(u8 * dest, struct Pokeblock * pokeblock)
 }
 #endif // NONMATCHING
 
-static void NakaDebug_PrintNum3Chars(u8 * buff, s16 a1)
+static void NakaDebug_PrintNum3Chars(u8 *str, s16 value)
 {
     u8 i;
     s16 divisor;
-    s16 quot;
-    s16 printZero;
+    s16 digit;
+    s16 hasPrintedDigit;
 
     for (i = 0; i < 4; i++)
-        buff[i] = CHAR_SPACE;
-    buff[4] = EOS;
+        str[i] = CHAR_SPACE;
+    str[4] = EOS;
 
-    if (a1 == 0)
-        buff[3] = CHAR_0;
-    else if (a1 > 0)
+    if (value == 0)
+        str[3] = CHAR_0;
+    else if (value > 0)
     {
         divisor = 100;
-        printZero = FALSE;
+        hasPrintedDigit = FALSE;
         for (i = 0; i < 3; i++)
         {
-            quot = a1 / divisor;
-            if (printZero || i == 2 || quot != 0)
+            digit = value / divisor;
+            if (hasPrintedDigit || i == 2 || digit != 0)
             {
-                buff[i + 1] = CHAR_0 + quot;
-                printZero = TRUE;
+                str[i + 1] = CHAR_0 + digit;
+                hasPrintedDigit = TRUE;
             }
-            a1 %= divisor;
+            value %= divisor;
             divisor /= 10;
         }
     }
-    else if (a1 < 0)
+    else if (value < 0)
     {
-        a1 = -a1;
+        value = -value;
         divisor = 100;
-        printZero = FALSE;
+        hasPrintedDigit = FALSE;
         for (i = 0; i < 3; i++)
         {
-            quot = a1 / divisor;
-            if (printZero || i == 2 || quot != 0)
+            digit = value / divisor;
+            if (hasPrintedDigit || i == 2 || digit != 0)
             {
-                buff[i + 1] = CHAR_0 + quot;
-                if (!printZero)
-                    buff[i] = CHAR_HYPHEN;
-                printZero = TRUE;
+                str[i + 1] = CHAR_0 + digit;
+                if (!hasPrintedDigit)
+                    str[i] = CHAR_HYPHEN;
+                hasPrintedDigit = TRUE;
             }
-            a1 %= divisor;
+            value %= divisor;
             divisor /= 10;
         }
     }
 }
 
-static void SetPokeblock_PrintFlavorValue(u8 a0)
+static void SetPokeblock_PrintFlavorValue(u8 flavorIndex)
 {
     struct Pokeblock *pkblk = &sPokeblock;
 
-    if (a0 == 0)
+    if (flavorIndex == 0)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->spicy);
         Menu_PrintText(gStringVar1, 8, 3);
     }
-    else if (a0 == 1)
+    else if (flavorIndex == 1)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->dry);
         Menu_PrintText(gStringVar1, 8, 5);
     }
-    else if (a0 == 2)
+    else if (flavorIndex == 2)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->sweet);
         Menu_PrintText(gStringVar1, 8, 7);
     }
-    else if (a0 == 3)
+    else if (flavorIndex == 3)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->bitter);
         Menu_PrintText(gStringVar1, 8, 9);
     }
-    else if (a0 == 4)
+    else if (flavorIndex == 4)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->sour);
         Menu_PrintText(gStringVar1, 8, 11);
     }
-    else if (a0 == 5)
+    else if (flavorIndex == 5)
     {
         NakaDebug_PrintNum3Chars(gStringVar1, pkblk->feel);
         Menu_PrintText(gStringVar1, 8, 13);
     }
 }
 
-static void SetPokeblock_AdjustFlavor(u8 a0, s8 a1)
+static void SetPokeblock_AdjustFlavor(u8 flavorIndex, s8 delta)
 {
     struct Pokeblock *pkblk = &sPokeblock;
 
-    if (a0 == 0)
-        pkblk->spicy += a1;
-    else if (a0 == 1)
-        pkblk->dry += a1;
-    else if (a0 == 2)
-        pkblk->sweet += a1;
-    else if (a0 == 3)
-        pkblk->bitter += a1;
-    else if (a0 == 4)
-        pkblk->sour += a1;
-    else if (a0 == 5)
-        pkblk->feel += a1;
+    if (flavorIndex == 0)
+        pkblk->spicy += delta;
+    else if (flavorIndex == 1)
+        pkblk->dry += delta;
+    else if (flavorIndex == 2)
+        pkblk->sweet += delta;
+    else if (flavorIndex == 3)
+        pkblk->bitter += delta;
+    else if (flavorIndex == 4)
+        pkblk->sour += delta;
+    else if (flavorIndex == 5)
+        pkblk->feel += delta;
 }
 
 static void SetPokeblock_RecomputeAndPrintColor(void)
@@ -2018,10 +2028,10 @@ static void EVTest_PrintMonData(struct Pokemon *pokemon)
     Menu_PrintText(gStringVar1, 13, 17);
 }
 
-static void EVTest_MovePartyCursor(s8 a0)
+static void EVTest_MovePartyCursor(s8 direction)
 {
     s16 i;
-    if (a0 == -1)
+    if (direction == -1)
     {
         if (sEVTest_CursorPosition == 0)
         {
@@ -2034,13 +2044,13 @@ static void EVTest_MovePartyCursor(s8 a0)
                 }
             }
         }
-        sEVTest_CursorPosition += a0;
+        sEVTest_CursorPosition += direction;
         return;
     }
 
-    if (a0 == 1)
+    if (direction == 1)
     {
-        sEVTest_CursorPosition += a0;
+        sEVTest_CursorPosition += direction;
         if (sEVTest_CursorPosition == 6)
             sEVTest_CursorPosition = 0;
         else if (GetMonData(gPlayerParty + sEVTest_CursorPosition, MON_DATA_SPECIES) == SPECIES_NONE)
@@ -2101,9 +2111,9 @@ static const u8 sText_TimesSymbol[] = DTR("かい", "×");
 static const u8 sText_Zero[] = _("0");
 static const u8 sText_Range[] = DTR("はんい", "RANGE");
 
-static u16 EVTest_GetDiscreteUniformRandomSamples(void)
+static u16 RNGTest_GetDiscreteUniformRandomSamples(void)
 {
-    u16 sampCount = 0;
+    u16 sampleCount = 0;
     u16 left;
     u16 right;
     u32 i;
@@ -2121,12 +2131,12 @@ static u16 EVTest_GetDiscreteUniformRandomSamples(void)
 
     for (i = 0; i < sNumSamples; i++)
     {
-        u16 r0 = Random() % sRngMax;
-        if (r0 >= left && r0 <= right)
-            sampCount++;
+        u16 randomValue = Random() % sRngMax;
+        if (randomValue >= left && randomValue <= right)
+            sampleCount++;
     }
 
-    return sampCount;
+    return sampleCount;
 }
 
 static void RNGTest_Init(void)
@@ -2146,23 +2156,23 @@ static void RNGTest_Init(void)
     InitMenu(0, 1, 1, 4, 0, 14);
 }
 
-static void RNGTest_PrintNum(u16 a0)
+static void RNGTest_PrintNum(u16 value)
 {
-    ConvertIntToDecimalStringN(gStringVar1, a0, STR_CONV_MODE_RIGHT_ALIGN, 5);
+    ConvertIntToDecimalStringN(gStringVar1, value, STR_CONV_MODE_RIGHT_ALIGN, 5);
     Menu_PrintText(gStringVar1, 8, 9);
 }
 
-static void RNGTest_AdjustAndPrintNumAtLine(u16 * a0, s8 a1, u8 a2)
+static void RNGTest_AdjustAndPrintNumAtLine(u16 *value, s8 delta, u8 line)
 {
-    *a0 += a1;
-    ConvertIntToDecimalStringN(gStringVar1, *a0, STR_CONV_MODE_RIGHT_ALIGN, 5);
-    Menu_PrintText(gStringVar1, 8, a2);
+    *value += delta;
+    ConvertIntToDecimalStringN(gStringVar1, *value, STR_CONV_MODE_RIGHT_ALIGN, 5);
+    Menu_PrintText(gStringVar1, 8, line);
 }
 
 static bool8 RNGTest_HandleJoypad(void)
 {
-    s8 r5 = JOY_HELD(R_BUTTON) ? 100 : 1;
-    s8 r4;
+    s8 increment = JOY_HELD(R_BUTTON) ? 100 : 1;
+    s8 cursorPos;
 
     if (JOY_REPT(DPAD_UP))
     {
@@ -2178,29 +2188,29 @@ static bool8 RNGTest_HandleJoypad(void)
 
     if (JOY_REPT(DPAD_LEFT))
     {
-        r4 = Menu_GetCursorPos();
-        if (r4 == 0)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngLeft, -r5, 1);
-        if (r4 == 1)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngRight, -r5, 3);
-        if (r4 == 2)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngMax, -r5, 5);
-        if (r4 == 3)
-            RNGTest_AdjustAndPrintNumAtLine(&sNumSamples, -r5, 7);
+        cursorPos = Menu_GetCursorPos();
+        if (cursorPos == 0)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngLeft, -increment, 1);
+        if (cursorPos == 1)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngRight, -increment, 3);
+        if (cursorPos == 2)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngMax, -increment, 5);
+        if (cursorPos == 3)
+            RNGTest_AdjustAndPrintNumAtLine(&sNumSamples, -increment, 7);
         return FALSE;
     }
 
     if (JOY_REPT(DPAD_RIGHT))
     {
-        r4 = Menu_GetCursorPos();
-        if (r4 == 0)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngLeft, r5, 1);
-        if (r4 == 1)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngRight, r5, 3);
-        if (r4 == 2)
-            RNGTest_AdjustAndPrintNumAtLine(&sRngMax, r5, 5);
-        if (r4 == 3)
-            RNGTest_AdjustAndPrintNumAtLine(&sNumSamples, r5, 7);
+        cursorPos = Menu_GetCursorPos();
+        if (cursorPos == 0)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngLeft, increment, 1);
+        if (cursorPos == 1)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngRight, increment, 3);
+        if (cursorPos == 2)
+            RNGTest_AdjustAndPrintNumAtLine(&sRngMax, increment, 5);
+        if (cursorPos == 3)
+            RNGTest_AdjustAndPrintNumAtLine(&sNumSamples, increment, 7);
         return FALSE;
     }
 
@@ -2209,7 +2219,7 @@ static bool8 RNGTest_HandleJoypad(void)
         if (sRngMax != 0)
         {
             PlaySE(SE_SELECT);
-            RNGTest_PrintNum(EVTest_GetDiscreteUniformRandomSamples());
+            RNGTest_PrintNum(RNGTest_GetDiscreteUniformRandomSamples());
         }
         return FALSE;
     }
