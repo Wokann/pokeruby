@@ -927,7 +927,7 @@ void SetModeWindowAnimForVisibility(u8 visible)
     }
 }
 
-static const u16 sEasyChatBg2Secondary_Pal[] = INCBIN_U16("graphics/unknown/unknown_3DBDFC.gbapal");
+static const u16 sEasyChatBg2Secondary_Pal[] = INCBIN_U16("graphics/easy_chat/bg2_secondary.gbapal");
 
 static const u16 sBlankPhraseWordTilemap[] =
 {
@@ -935,7 +935,7 @@ static const u16 sBlankPhraseWordTilemap[] =
     0x301, 0x301, 0x301, 0x301, 0x301, 0x300, 0x300, 0x300, 0x300,
 };
 
-static const u16 sEasyChatBg3_Pal[] = INCBIN_U16("graphics/unknown/unknown_3DBE40.gbapal");
+static const u16 sEasyChatBg3_Pal[] = INCBIN_U16("graphics/easy_chat/bg3.gbapal");
 
 // unused tilemap?
 const u16 gUnusedEasyChatPhraseTilemap[] =
