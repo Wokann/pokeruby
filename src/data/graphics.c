@@ -90,7 +90,7 @@ const u8 gBattleAnimSpriteGfx_BlackSmoke[] = INCBIN_U8("graphics/battle_anims/sp
 const u8 gBattleAnimSpritePal_BlackSmoke[] = INCBIN_U8("graphics/battle_anims/sprites/black_smoke.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_BlackBall[] = INCBIN_U8("graphics/battle_anims/sprites/black_ball.4bpp.lz");
 
-const u8 gUknown_08D04388[] = INCBIN_U8("graphics/unknown/unknown_D04388.4bpp.lz");
+const u8 gBattleAnimSpritePal_BlackBall[] = INCBIN_U8("graphics/battle_anims/sprites/black_ball.gbapal.lz");
 
 const u8 gBattleAnimSpritePal_Glass[] = INCBIN_U8("graphics/battle_anims/sprites/glass.gbapal.lz");
 const u8 gBattleAnimSpriteGfx_Glass[] = INCBIN_U8("graphics/battle_anims/sprites/glass.4bpp.lz");
@@ -1115,7 +1115,7 @@ asm(".space 0x120");
 
 const u8 gBerryBlenderCountdownNumbers_Gfx[] = INCBIN_U8("graphics/berry_blender/countdown_numbers.4bpp");
 const u8 gBerryBlenderStart_Gfx[] = INCBIN_U8("graphics/berry_blender/start.4bpp");
-const u8 gUnknown_08E91418[] = INCBIN_U8("graphics/unknown/unknown_E91418.bin");
+const u8 gUnusedBerryBlenderGfx[] = INCBIN_U8("graphics/berry_blender/unused.bin");
 
 asm(".space 0x1E0");
 
