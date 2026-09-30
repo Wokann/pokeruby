@@ -3193,7 +3193,7 @@ static void atk1E_jumpifability(void)
             gLastUsedAbility = ability;
             gBattlescriptCurrInstr = jumpPtr;
             RecordAbilityBattle(battlerId -1, gLastUsedAbility);
-            gBattleStruct->unk160F8 = battlerId - 1;
+            gBattleStruct->battlerWithAbility = battlerId - 1;
         }
         else
             gBattlescriptCurrInstr += 7;
@@ -3206,7 +3206,7 @@ static void atk1E_jumpifability(void)
             gLastUsedAbility = ability;
             gBattlescriptCurrInstr = jumpPtr;
             RecordAbilityBattle(battlerId - 1, gLastUsedAbility);
-            gBattleStruct->unk160F8 = battlerId - 1;
+            gBattleStruct->battlerWithAbility = battlerId - 1;
         }
         else
             gBattlescriptCurrInstr += 7;
@@ -3219,7 +3219,7 @@ static void atk1E_jumpifability(void)
             gLastUsedAbility = ability;
             gBattlescriptCurrInstr = jumpPtr;
             RecordAbilityBattle(battlerId, gLastUsedAbility);
-            gBattleStruct->unk160F8 = battlerId;
+            gBattleStruct->battlerWithAbility = battlerId;
         }
         else
             gBattlescriptCurrInstr += 7;
@@ -4767,7 +4767,7 @@ static void atk4F_jumpifcantswitch(void)
 
 void ChooseMonToSendOut(u8 unkown)
 {
-    gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
+    gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
     BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_OUT, unkown, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
     MarkBattlerForControllerExec(gActiveBattler);
 }
@@ -5023,7 +5023,7 @@ static void atk50_openpartyscreen(void)
         else
         {
             gActiveBattler = battlerId;
-            gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
+            gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
             BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, hitmarkerFaintBits, gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + (gActiveBattler ^ 2)], ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
             MarkBattlerForControllerExec(gActiveBattler);
 
@@ -6713,7 +6713,7 @@ static bool8 TryDoForceSwitchOut(void)
 {
     if (gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
     {
-        gSharedMem[BSTRUCT_OFF(unk16064) + gBattlerTarget] = gBattlerPartyIndexes[gBattlerTarget];
+        gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gBattlerTarget] = gBattlerPartyIndexes[gBattlerTarget];
     }
     else
     {
@@ -6723,7 +6723,7 @@ static bool8 TryDoForceSwitchOut(void)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
             return 0;
         }
-        gSharedMem[BSTRUCT_OFF(unk16064) + gBattlerTarget] = gBattlerPartyIndexes[gBattlerTarget];
+        gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gBattlerTarget] = gBattlerPartyIndexes[gBattlerTarget];
     }
     gBattlescriptCurrInstr = BattleScript_SuccessForceOut;
     return 1;
@@ -9140,7 +9140,7 @@ static void atkE2_switchoutabilities(void)
     {
     case ABILITY_NATURAL_CURE:
         gBattleMons[gActiveBattler].status1 = 0;
-        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, gBitTable[gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler]], 4, &gBattleMons[gActiveBattler].status1);
+        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, gBitTable[gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler]], 4, &gBattleMons[gActiveBattler].status1);
         MarkBattlerForControllerExec(gActiveBattler);
         break;
     }

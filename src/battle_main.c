@@ -611,8 +611,8 @@ void CB2_PreInitMultiBattle(void)
     multiplayerId = GetMultiplayerId();
     gBattleStruct->multiplayerId = multiplayerId;
     // Seriously, Game Freak?
-    savedCallback = &gBattleStruct->unk160C4;
-    savedBattleTypeFlags = &gBattleStruct->unk160C2;
+    savedCallback = &gBattleStruct->savedCallback;
+    savedBattleTypeFlags = &gBattleStruct->savedBattleTypeFlags;
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
@@ -3340,39 +3340,39 @@ void DebugAutoAdvancePlayerBattleAction(void)
 {
     if (GetBattlerSide(gActiveBattler) == 0)
     {
-        switch (gBattleStruct->unk160FD)
+        switch (gBattleStruct->debugAutoAdvanceState)
         {
         case 0:
             if (gBattlerControllerFuncs[gActiveBattler] == HandleInputChooseAction)
-                gBattleStruct->unk160FD++;
+                gBattleStruct->debugAutoAdvanceState++;
             break;
         case 1:
             gMain.heldKeys = A_BUTTON;
             gMain.newKeys = A_BUTTON;
-            gBattleStruct->unk160FD++;
-            gBattleStruct->unk160FE = 0x80;
+            gBattleStruct->debugAutoAdvanceState++;
+            gBattleStruct->debugAutoAdvanceTimer = 0x80;
             break;
         case 2:
-            gBattleStruct->unk160FE--;
-            if (gBattleStruct->unk160FE == 0)
+            gBattleStruct->debugAutoAdvanceTimer--;
+            if (gBattleStruct->debugAutoAdvanceTimer == 0)
             {
                 gMain.heldKeys = A_BUTTON;
                 gMain.newKeys = A_BUTTON;
-                gBattleStruct->unk160FD++;
-                gBattleStruct->unk160FE = 0x80;
+                gBattleStruct->debugAutoAdvanceState++;
+                gBattleStruct->debugAutoAdvanceTimer = 0x80;
             }
             break;
         case 3:
-            gBattleStruct->unk160FE--;
-            if (gBattleStruct->unk160FE == 0)
+            gBattleStruct->debugAutoAdvanceTimer--;
+            if (gBattleStruct->debugAutoAdvanceTimer == 0)
             {
                 gMain.heldKeys = A_BUTTON;
                 gMain.newKeys = A_BUTTON;
-                gBattleStruct->unk160FD++;
+                gBattleStruct->debugAutoAdvanceState++;
             }
             break;
         case 4:
-            gBattleStruct->unk160FD = 0;
+            gBattleStruct->debugAutoAdvanceState = 0;
             break;
         }
     }
@@ -3943,8 +3943,8 @@ void BattleIntroPlayer1SendsOutMonAnimation(void)
             }
         }
         gBattleStruct->switchInAbilitiesCounter = 0;
-        gBattleStruct->unk160F9 = 0;
-        gBattleStruct->unk160E6 = 0;
+        gBattleStruct->switchInItemsCounter = 0;
+        gBattleStruct->overworldWeatherDone = 0;
         gBattleMainFunc = TryDoEventsBeforeFirstTurn;
     }
 }
@@ -3962,8 +3962,8 @@ void BattleIntroUnusedPlayerSwitchInAnimation(void)
             }
         }
         gBattleStruct->switchInAbilitiesCounter = 0;
-        gBattleStruct->unk160F9 = 0;
-        gBattleStruct->unk160E6 = 0;
+        gBattleStruct->switchInItemsCounter = 0;
+        gBattleStruct->overworldWeatherDone = 0;
         gBattleMainFunc = TryDoEventsBeforeFirstTurn;
     }
 }
@@ -3989,9 +3989,9 @@ void TryDoEventsBeforeFirstTurn(void)
                 }
             }
         }
-        if (gBattleStruct->unk160E6 == 0 && AbilityBattleEffects(0, 0, 0, 0xFF, 0) != 0)
+        if (gBattleStruct->overworldWeatherDone == 0 && AbilityBattleEffects(0, 0, 0, 0xFF, 0) != 0)
         {
-            gBattleStruct->unk160E6 = 1;
+            gBattleStruct->overworldWeatherDone = 1;
             return;
         }
         while (gBattleStruct->switchInAbilitiesCounter < gBattlersCount)
@@ -4006,11 +4006,11 @@ void TryDoEventsBeforeFirstTurn(void)
             return;
         if (AbilityBattleEffects(11, 0, 0, 0, 0) != 0)
             return;
-        while (gBattleStruct->unk160F9 < gBattlersCount)
+        while (gBattleStruct->switchInItemsCounter < gBattlersCount)
         {
-            if (ItemBattleEffects(0, gBattlerByTurnOrder[gBattleStruct->unk160F9], 0) != 0)
+            if (ItemBattleEffects(0, gBattlerByTurnOrder[gBattleStruct->switchInItemsCounter], 0) != 0)
                 effectOccurred++;
-            gBattleStruct->unk160F9++;
+            gBattleStruct->switchInItemsCounter++;
             if (effectOccurred != 0)
                 return;
         }
@@ -4025,7 +4025,7 @@ void TryDoEventsBeforeFirstTurn(void)
         }
         TurnValuesCleanUp(0);
         SpecialStatusesClear();
-        gBattleStruct->unk160A6 = gAbsentBattlerFlags;
+        gBattleStruct->absentBattlerFlags = gAbsentBattlerFlags;
         gBattleMainFunc = HandleTurnActionSelectionState;
         ResetSentPokesToOpponentValue();
         for (i = 0; i < 8; i++)
@@ -4112,7 +4112,7 @@ void BattleTurnPassed(void)
     }
     for (i = 0; i < 4; i++)
         gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + i] = 6;
-    gBattleStruct->unk160A6 = gAbsentBattlerFlags;
+    gBattleStruct->absentBattlerFlags = gAbsentBattlerFlags;
     gBattleMainFunc = HandleTurnActionSelectionState;
     gRandomTurnNumber = Random();
 }
@@ -4242,11 +4242,11 @@ void HandleTurnActionSelectionState(void)
                 gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + gActiveBattler] = 6;
                 if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI)
                     && (position & BIT_FLANK) != B_FLANK_LEFT
-                    && !(gBattleStruct->unk160A6 & gBitTable[GetBattlerAtPosition(BATTLE_PARTNER(position))])
+                    && !(gBattleStruct->absentBattlerFlags & gBitTable[GetBattlerAtPosition(BATTLE_PARTNER(position))])
                     && gBattleCommunication[GetBattlerAtPosition(BATTLE_PARTNER(position))] != STATE_WAIT_ACTION_CONFIRMED)
                     break;
                 //_080123F8
-                if (gBattleStruct->unk160A6 & gBitTable[gActiveBattler])
+                if (gBattleStruct->absentBattlerFlags & gBitTable[gActiveBattler])
                 {
                     gActionForBanks[gActiveBattler] = 13;
                     if (!(gBattleTypeFlags & 0x40))
@@ -4331,7 +4331,7 @@ void HandleTurnActionSelectionState(void)
                             }
                             break;
                         case B_ACTION_SWITCH:
-                            gSharedMem[BSTRUCT_OFF(unk16064) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
+                            gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
                             if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION)
                                 || gStatuses3[gActiveBattler] & STATUS3_ROOTED)
                             {
@@ -4512,7 +4512,7 @@ void HandleTurnActionSelectionState(void)
                 {
                     if (((gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_DOUBLE)) != BATTLE_TYPE_DOUBLE)
                         || (position & BIT_FLANK) != B_FLANK_LEFT
-                        || (gBattleStruct->unk160A6 & gBitTable[GetBattlerAtPosition(position ^ BIT_FLANK)]))
+                        || (gBattleStruct->absentBattlerFlags & gBitTable[GetBattlerAtPosition(position ^ BIT_FLANK)]))
                     {
                         BtlController_EmitLinkStandbyMsg(0, 0);
                     }
@@ -5173,7 +5173,7 @@ void HandleAction_UseMove(void)
 
     gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
 
-    if (gBattleStruct->unk160A6 & gBitTable[gBattlerAttacker])
+    if (gBattleStruct->absentBattlerFlags & gBitTable[gBattlerAttacker])
     {
         gCurrentActionFuncId = B_ACTION_FINISHED;
         return;
@@ -5360,7 +5360,7 @@ void HandleAction_Switch(void)
     gActionSelectionCursor[gBattlerAttacker] = 0;
     gMoveSelectionCursor[gBattlerAttacker] = 0;
 
-    PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gSharedMem[BSTRUCT_OFF(unk16064) + gBattlerAttacker])
+    PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gBattlerAttacker])
 
     gBattleStruct->scriptingActive = gBattlerAttacker;
     gBattlescriptCurrInstr = BattleScript_ActionSwitch;

@@ -358,7 +358,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x1605E*/ u8 scriptPartyIdx;
     /*0x1605F*/ u8 sentInPokes;
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
-    /*0x16064*/ u8 unk16064[MAX_BATTLERS_COUNT];
+    /*0x16064*/ u8 battlerPartyIndexes[MAX_BATTLERS_COUNT];
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
     /*0x1606C*/ u8 battlerPartyOrders[MAX_BATTLERS_COUNT][PARTY_SIZE / 2];
     /*0x16078*/ u8 runTries;
@@ -385,7 +385,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160A3*/ u8 debugTrainerPicIndex;
     /*0x160A4*/ u8 animArg1;
     /*0x160A5*/ u8 animArg2;
-    /*0x160A6*/ u8 unk160A6; // related to gAbsentBattlerFlags, possibly absent flags turn ago?
+    /*0x160A6*/ u8 absentBattlerFlags;
     /*0x160A7*/ u8 unk160A7;
     /*0x160A8*/ u8 wallyBattleState;
     /*0x160A9*/ u8 wallyMovesState;
@@ -395,8 +395,8 @@ struct BattleStruct /* 0x2000000 */
     /*0x160BC*/ u16 HP_OnSwitchout[2];
     /*0x160C0*/ u8 abilityPreventingSwitchout;
     /*0x160C1*/ u8 hpScale;
-    /*0x160C2*/ u16 unk160C2;
-    /*0x160C4*/ MainCallback unk160C4;
+    /*0x160C2*/ u16 savedBattleTypeFlags;
+    /*0x160C4*/ MainCallback savedCallback;
 
     // Buffers used by the AI are indexed using (battler / 2)
     // i.e. the flank bit, because at no point in game is the
@@ -417,17 +417,17 @@ struct BattleStruct /* 0x2000000 */
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
     /*0x160E0*/ u8 unk160E0[6];
-    /*0x160E6*/ u8 unk160E6;
+    /*0x160E6*/ bool8 overworldWeatherDone;
     /*0x160E7*/ u8 atkCancellerTracker;
     /*0x160E8*/ u16 choicedMove[MAX_BATTLERS_COUNT];
     /*0x160F0*/ u16 changedItems[MAX_BATTLERS_COUNT];
-    /*0x160F8*/ u8 unk160F8;
-    /*0x160F9*/ u8 unk160F9;
+    /*0x160F8*/ u8 battlerWithAbility;
+    /*0x160F9*/ u8 switchInItemsCounter;
     /*0x160FA*/ u8 levelUpHP;
     /*0x160FB*/ u8 battleTowerPreviousChallengeStatus;
     /*0x160FC*/ u8 turnSideTracker;
-    /*0x160FD*/ u8 unk160FD;
-    /*0x160FE*/ u8 unk160FE;
+    /*0x160FD*/ u8 debugAutoAdvanceState;
+    /*0x160FE*/ u8 debugAutoAdvanceTimer;
     /*0x160FF*/ u8 unk160FF;
 	/*0x16100*/ u16 lastTakenMoveFrom[2 * 4];
     /*0x16110*/ u8 wishPerishSongState;
