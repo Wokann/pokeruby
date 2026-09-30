@@ -5,9 +5,6 @@
 #ifndef POKERUBY_USE_POKEBLOCK_H
 #define POKERUBY_USE_POKEBLOCK_H
 
-extern void *gUnknown_02030400;
-extern s16 gUnknown_02039312;
-
 void ChooseMonToGivePokeblock(struct Pokeblock *, MainCallback);
 u8 GetPartyIdFromPokeblockSelection(u8);
 
