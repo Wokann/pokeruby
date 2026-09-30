@@ -15,7 +15,7 @@ bool8 MetatileBehavior_IsIce(u8);
 bool8 MetatileBehavior_IsWarpDoor(u8);
 bool8 MetatileBehavior_IsDoor(u8);
 bool8 MetatileBehavior_IsEscalator(u8);
-bool8 unref_sub_8056EE0(u8);
+bool8 Unref_MetatileBehavior_IsUnused04(u8);
 bool8 MetatileBehavior_IsLadder(u8);
 bool8 MetatileBehavior_IsNonAnimDoor(u8);
 bool8 MetatileBehavior_IsDeepSouthWarp(u8);
