@@ -351,5 +351,5 @@ gSpecials::
 	def_special GenerateContestRand
 	def_special ValidateMixingGameLanguage
 .ifdef GERMAN
-	def_special nullsub_814B200
+	def_special Special_GermanNoOp
 .endif

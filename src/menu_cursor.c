@@ -775,7 +775,7 @@ void SetBlendedOutlineCursorWidth(u8 widthIndex)
 }
 
 #if GERMAN
-void nullsub_814B200(void)
+void Special_GermanNoOp(void)
 {
 }
 #endif
