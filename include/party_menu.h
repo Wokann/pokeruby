@@ -37,52 +37,57 @@ struct PartyPopupMenu
 #define pmStatGrowths      data
 #define pmSetupState       data[0]
 #define pmMonIndex         data[1]
-#define pmUnk268           data[2]
-#define pmUnk272           data[7]
-#define pmUnk27E           data[13]
-#define pmUnk280           data[14]
-#define pmUnk282           data[15]
+#define pmUnusedData2                      data[2]
+#define pmTwoMonActionPromptTextId         data[7]
+#define pmSacredAshRestoreInProgress       data[13]
+#define pmBattleTowerHeldItem               data[14]
+#define pmSacredAshHadEffect                data[14]
+#define pmBattleTowerSpecies                data[15]
+#define pmMoveLearningFromLevelUp           data[15]
+#define pmPartyMenuHpBarValue               data[15]
 
-struct Unk201B000
+// Shared state for all of Ruby's old-style party menu layouts.
+struct PartyMenuState
 {
     struct Pokemon partyBuffer[PARTY_SIZE];
     u8 menuType;
     u8 promptTextId;
     TaskFunc menuHandler;
     u8 menuHandlerTaskId;
-    u8 unk261;
-    u8 unk262; // Never read
-    u8 unk263;
+    u8 backgroundRedrawState;
+    u8 unusedResumeAction; // Never read
+    u8 battleTowerSelectionMode;
     s16 data[16];
 };
 
-struct Unk2001000
+// State used while selecting two party mons, such as switching or Soft-Boiled.
+struct PartyMenuTwoMonActionState
 {
-    u8 unk0;
-    u8 slotId;
-    u8 slotId2;
-    u8 unk3;
-    u8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u8 unk7;
-    s16 unk8;
-    s16 unkA;
-    TaskFunc twoMonSelectionCallback;
-    u16 array[53561];
+    u8 partyMenuTaskId;
+    u8 firstSelectedMonSpriteId;
+    u8 currentSelectionSpriteId;
+    u8 lowerMonIconSpriteId;
+    u8 higherMonIconSpriteId;
+    u8 lowerMonIndex;
+    u8 higherMonIndex;
+    u8 unused;
+    s16 lowerMonBackgroundX;
+    s16 higherMonBackgroundX;
+    TaskFunc twoMonActionCallback;
 };
 
-struct PartyMenu
+// Context shared by party-menu item effects and their follow-up tasks.
+struct PartyMenuActionState
 {
-    /*0x00*/ struct Pokemon *pokemon;
-    /*0x04*/ u8 unk4;
-    /*0x05*/ u8 primarySelectedMonIndex;
-    /*0x06*/ u16 secondarySelectedIndex;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u8 pad_0A[2];
-    /*0x0C*/ s32 unkC;
-    /*0x10*/ TaskFunc unk10;
-    /*0x14*/ TaskFunc unk14;
+    /*0x00*/ struct Pokemon *selectedMon;
+    /*0x04*/ u8 menuTaskId;
+    /*0x05*/ u8 selectedMonIndex;
+    /*0x06*/ u16 itemOrMoveId;
+    /*0x08*/ u16 moveToLearn;
+    /*0x0A*/ u8 padding[2];
+    /*0x0C*/ s32 hpBarAnimationState;
+    /*0x10*/ TaskFunc followupCallback;
+    /*0x14*/ TaskFunc afterHpAnimationCallback;
 };
 
 extern u8 gSelectedMonPartyId;
@@ -94,13 +99,13 @@ void OpenPartyMenu(u8 menuType, u8 battleFlags);
 bool8 InitPartyMenu(void);
 bool8 IsLinkDoubleBattle(void);
 u8 DrawPartyMonBackground(u8);
-void sub_806B908(void);
+void DrawLinkMultiBattlePartyMonBackgrounds(void);
 void DrawMonDescriptorStatus(u8, u8);
-void sub_806BCE8(void);
+void DrawPartyMonGenderDescriptorStatuses(void);
 u8 CreatePartyMenuCursor(u8, u8);
 u16 HandleDefaultPartyMenuInput(u8 taskId);
 u16 HandleBattleTowerPartyMenuInput(u8 taskId);
-void task_pc_turn_off(const u8 *a, u8 b);
+void DrawPartyMenuMonBackgroundAt(const u8 *coords, u8 paletteNum);
 void ChangePartyMenuSelection(u8 taskId, s8 directionPressed);
 void SelectBattleTowerOKButton(u8 taskId);
 void SetPartyMenuCursorSelection(u8 taskId, u8 selection);
@@ -108,9 +113,9 @@ u8 GetCursorSelectionMonId(u8 taskId);
 void HandlePartyMenuSwitchPokemonInput(u8 taskId);
 void ResetTwoMonActionSelection(void);
 void CancelTwoMonAction(u8 taskId);
-void sub_806D3B4(u8 taskId, u16 species1, u16 species2);
-void sub_806D4AC(u8 taskId, u16 species, u8 c);
-void sub_806D50C(u8 taskId, u8 monIndex);
+void UpdateLinkMultiBattlePartnerPartyBackgrounds(u8 taskId, u16 species1, u16 species2);
+void StartLinkMultiBattlePartnerMonIconSlide(u8 taskId, u16 species, u8 partnerMonIndex);
+void OffsetLinkMultiBattlePartnerMonIcon(u8 taskId, u8 monIndex);
 void PrintPartyMenuPromptText(u8 textId, u8 b);
 void PartyMenuEraseMsgBoxAndFrame(void);
 void SetMonIconAnim(u8 spriteId, struct Pokemon *pokemon);
@@ -119,7 +124,7 @@ void TryCreatePartyMenuMonIcon(u8 a, u8 monIndex, struct Pokemon *pokemon);
 void LoadHeldItemIconGraphics(void);
 void PartyMenuTryGiveMonHeldItem(u8 taskId, u16 newItem, TaskFunc c);
 void SetMonIconSpriteId(u8 taskId, u8 monIndex, u8 spriteId);
-void CreateHeldItemIcon_806DCD4(u8 taskId, u8 monIndex, u16 item);
+void CreatePartyMenuHeldItemIcon(u8 taskId, u8 monIndex, u16 item);
 void CreatePartyMenuHeldItemIcons(u8 taskId);
 void CreateHeldItemIcons(u8 *a, u8 *b, u8 c);
 void SetHeldItemIconVisibility(u8 a, u8 monIndex);
@@ -137,7 +142,7 @@ void PartyMenuDoPrintGenderIcon(u16 species, u8 gender, u8 c, u8 monIndex, u8 *n
 void PartyMenuPrintGenderIcon(u8 monIndex, u8 b, struct Pokemon *pokemon);
 void PartyMenuDoPrintHP(u8 monIndex, u8 b, u16 currentHP, u16 maxHP);
 void PartyMenuTryPrintMonsHP(void);
-void nullsub_13(void);
+void PartyMenuNoOpSetupStep(void);
 void PartyMenuDoDrawHPBar(u8 monIndex, u8 b, u16 currentHP, u16 maxHP);
 void PartyMenuDrawHPBar(u8 monIndex, u8 b, struct Pokemon *pokemon);
 void PartyMenuTryDrawHPBar(u8 monIndex, struct Pokemon *pokemon);
@@ -148,26 +153,26 @@ void ShowPartyPopupMenu(u8 menuIndex, const struct PartyPopupMenu *menu, const s
 void ClosePartyPopupMenu(u8 index, const struct PartyPopupMenu *menu);
 TaskFunc PartyMenuGetPopupMenuFunc(u8 menuIndex, const struct PartyPopupMenu *menus, const struct MenuAction2 *menuActions, u8 itemIndex);
 u8 DisplayPartyMenuMessage(const u8 *message, u8 noClearAfter);
-void sub_806E8D0(u8 taskId, u16 b, TaskFunc c);
-void party_menu_link_mon_held_item_object(u8);
+void SetPartyMenuItemUseContext(u8 taskId, u16 itemOrMoveId, TaskFunc followupCallback);
+void Task_UpdatePartyMenuHeldItemIconAndFollowup(u8 taskId);
 void Task_ConfirmGiveHeldItem(u8);
 void DisplayGiveHeldItemMessage(u8, u16, u8);
 void DisplayTakeHeldItemMessage(u8, u16, u8);
 void Task_ConfirmTakeHeldMail(u8);
 u16 ItemIdToBattleMoveId(u16);
-bool8 pokemon_has_move(struct Pokemon *, u16);
+bool8 MonKnowsMove(struct Pokemon *, u16);
 void TeachMonTMMove(u8, u16, TaskFunc);
 void Task_TeamMonTMMove(u8);
 void Task_TeamMonTMMove2(u8);
 void Task_TeamMonTMMove3(u8);
 void Task_TeamMonTMMove4(u8);
-void sub_806F358(u8);
-void sub_806F390(u8);
-void sub_806F44C(u8);
+void Task_ShowForgetMovePrompt(u8 taskId);
+void Task_HandleForgetMovePrompt(u8 taskId);
+void Task_FadeToMoveSelectionSummary(u8 taskId);
 void TMMoveUpdateMoveSlot(u8);
-void StopTryingToTeachMove_806F614(u8);
-void StopTryingToTeachMove_806F67C(u8);
-void StopTryingToTeachMove_806F6B4(u8);
+void Task_ShowStopTryingMoveMessage(u8 taskId);
+void Task_ShowStopTryingMovePrompt(u8 taskId);
+void Task_HandleStopTryingMovePrompt(u8 taskId);
 void Task_AnimatePartyMenuHpRestore(u8 taskId);
 void Task_SoftboiledReduceUserHp(u8 taskId);
 void Task_WaitForPartyMenuMessage(u8 taskId);
@@ -178,8 +183,8 @@ bool8 ExecuteTableBasedItemEffectForPartyMon(u8 monIndex, u16 item, u8 moveIndex
 void UseMedicine(u8, u16, TaskFunc);
 bool8 IsBlueYellowRedFlute(u16);
 void DoSacredAshItemEffect(u8, u16, TaskFunc);
-void sub_8070088(u8);
-void sub_80701DC(u8 taskId);
+void TryUseSacredAshOnNextPartyMon(u8 taskId);
+void FinishSacredAshPartyMonRestore(u8 taskId);
 void DoPPRecoveryItemEffect(u8, u16, TaskFunc);
 void DoRecoverPP(u8);
 void DoPPUpItemEffect(u8, u16, TaskFunc);
@@ -196,11 +201,11 @@ u8 GetItemEffectType(u16 item);
 void SetupDefaultPartyMenuSwitchPokemon(u8 taskId);
 void Task_SwitchSelectedPartyMons(u8 taskId);
 void DoTakeMail(u8 taskId, TaskFunc func);
-void PartyMenuTryGiveMonHeldItem_806ECE8(u8 taskId, TaskFunc func);
+void TryTakePartyMonHeldItem(u8 taskId, TaskFunc func);
 void PartyMenuTryGiveMonMail(u8 taskId, TaskFunc func);
 void ClearPartyMonDescriptorStatus(u8 monIndex);
 void TaughtMove(u8 taskId);
-void StopTryingToTeachMove_806F588(u8 taskId);
+void Task_WaitToShowStopTryingMoveMessage(u8 taskId);
 bool8 IsHMMoveInPartyMenu(u16 move);
 void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId);
 u8 GetPartyIdFromBattleSlot(u8 slot);

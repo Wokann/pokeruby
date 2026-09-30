@@ -48,8 +48,8 @@ bool8 SetUpFieldMove_SoftBoiled(void) {
 }
 
 void ChooseMonForSoftboiled(u8 taskid) {
-    ePartyMenu.twoMonSelectionCallback = Task_TryUseSoftboiledOnPartyMon;
-    ePartyMenu2.pmUnk272 = 3;
+    ePartyMenu.twoMonActionCallback = Task_TryUseSoftboiledOnPartyMon;
+    ePartyMenu2.pmTwoMonActionPromptTextId = 3;
     DoPokemonMenu_Switch(taskid);
 }
 
@@ -61,8 +61,8 @@ static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
 
     struct Sprite *sprites = gSprites;
 
-    userPartyId = sprites[ePartyMenu.slotId].data[0];
-    recipientPartyId = sprites[ePartyMenu.slotId2].data[0];
+    userPartyId = sprites[ePartyMenu.firstSelectedMonSpriteId].data[0];
+    recipientPartyId = sprites[ePartyMenu.currentSelectionSpriteId].data[0];
 
     if (userPartyId > 5 || recipientPartyId > 5)
     {
@@ -70,10 +70,10 @@ static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
         return;
     }
 
-    gPartyMenu.pokemon = &gPlayerParty[sprites[ePartyMenu.slotId2].data[0]];
-    hp = GetMonData(gPartyMenu.pokemon, MON_DATA_HP);
+    gPartyMenu.selectedMon = &gPlayerParty[sprites[ePartyMenu.currentSelectionSpriteId].data[0]];
+    hp = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP);
 
-    if (hp == 0 || userPartyId == recipientPartyId || GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP) == hp)
+    if (hp == 0 || userPartyId == recipientPartyId || GetMonData(gPartyMenu.selectedMon, MON_DATA_MAX_HP) == hp)
     {
         CantUseSoftboiledOnMon(taskId);
         return;
@@ -81,22 +81,22 @@ static void Task_TryUseSoftboiledOnPartyMon(u8 taskId) {
 
     PlaySE(SE_USE_ITEM);
 
-    gPartyMenu.primarySelectedMonIndex = gSprites[ePartyMenu.slotId].data[0];
+    gPartyMenu.selectedMonIndex = gSprites[ePartyMenu.firstSelectedMonSpriteId].data[0];
 
-    pokemon = &gPlayerParty[gPartyMenu.primarySelectedMonIndex];
-    gPartyMenu.pokemon = pokemon;
-    gPartyMenu.secondarySelectedIndex = 0;
-    gPartyMenu.unkC = -0x8000;
-    gPartyMenu.unk10 = Task_FinishSoftboiled;
+    pokemon = &gPlayerParty[gPartyMenu.selectedMonIndex];
+    gPartyMenu.selectedMon = pokemon;
+    gPartyMenu.itemOrMoveId = 0;
+    gPartyMenu.hpBarAnimationState = -0x8000;
+    gPartyMenu.followupCallback = Task_FinishSoftboiled;
 
 
-    gTasks[taskId].data[10] = GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP);
-    gTasks[taskId].data[11] = GetMonData(gPartyMenu.pokemon, MON_DATA_HP);
+    gTasks[taskId].data[10] = GetMonData(gPartyMenu.selectedMon, MON_DATA_MAX_HP);
+    gTasks[taskId].data[11] = GetMonData(gPartyMenu.selectedMon, MON_DATA_HP);
     gTasks[taskId].data[12] = gTasks[taskId].data[10] / 5;
 
     PartyMenuEraseMsgBoxAndFrame();
     gTasks[taskId].func = Task_SoftboiledReduceUserHp;
-    ePartyMenu2.pmUnk282 = gTasks[taskId].data[11];
+    ePartyMenu2.pmPartyMenuHpBarValue = gTasks[taskId].data[11];
 }
 
 static void Task_ChooseNewMonForSoftboiled(u8 taskId) {
@@ -120,9 +120,9 @@ static void CantUseSoftboiledOnMon(u8 taskId) {
 static void Task_FinishSoftboiled(u8 taskId)
 {
     ResetTwoMonActionSelection();
-    ePartyMenu2.unk261 = 2;
-    DestroySprite(&gSprites[ePartyMenu.slotId]);
+    ePartyMenu2.backgroundRedrawState = 2;
+    DestroySprite(&gSprites[ePartyMenu.firstSelectedMonSpriteId]);
     Menu_EraseWindowRect(WINDOW_LEFT, 14, WINDOW_RIGHT, 19);
     PrintPartyMenuPromptText(0, 0);
-    SwitchTaskToFollowupFunc(ePartyMenu.unk0);
+    SwitchTaskToFollowupFunc(ePartyMenu.partyMenuTaskId);
 }

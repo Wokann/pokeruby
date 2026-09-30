@@ -1244,7 +1244,7 @@ const u8 gSlotMachineDigitalDisplay_Gfx[] = INCBIN_U8("graphics/slot_machine/dig
 
 const u8 gPokenavHoennMap_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E99FB0.bin.lz");
 const u8 gPokenavBottomToolbarTilemap[] = INCBIN_U8("graphics/pokenav/bottom_toolbar.bin");
-const u8 gUnknown_08E9A300[] = INCBIN_U8("graphics/unknown/unknown_E9A300.bin");
+const u8 gPartyMenuDescriptorStatusTilemap[] = INCBIN_U8("graphics/interface/party_menu_descriptor_status_tilemap.bin");
 const u8 gEasyChatBg2_Gfx[] = INCBIN_U8("graphics/unknown/unknown_E9AB00.bin");
 const u8 gEasyChatBg2_Pal[] = INCBIN_U8("graphics/unknown/unknown_E9AB40.gbapal");
 const u8 gEasyChatBg2_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E9AB60.bin.lz");

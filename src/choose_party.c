@@ -56,14 +56,14 @@ static void FieldCallback_FadeFromPartyMenu(void);
 void InitChooseHalfPartyForBattle(void)
 {
     ClearSelectedPartyOrder();
-    ePartyMenu2.unk263 = 0;
+    ePartyMenu2.battleTowerSelectionMode = 0;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
 void InitChooseBattleTowerParty(void)
 {
     ClearSelectedPartyOrder();
-    ePartyMenu2.unk263 = 1;
+    ePartyMenu2.battleTowerSelectionMode = 1;
     OpenPartyMenu(PARTY_MENU_TYPE_BATTLE_TOWER, 0);
 }
 
@@ -168,7 +168,7 @@ static bool8 IsMonAllowedInBattleTower(struct Pokemon *pkmn)
     if (GetMonData(pkmn, MON_DATA_IS_EGG))
         return FALSE;
 
-    if (ePartyMenu2.unk263 == 0)
+    if (ePartyMenu2.battleTowerSelectionMode == 0)
     {
         if (GetMonData(pkmn, MON_DATA_HP) == 0)
             return FALSE;
@@ -195,7 +195,7 @@ static u8 CheckBattleTowerEntriesAndGetMessage(void)
 {
     u8 i;
 
-    if (ePartyMenu2.unk263 == 0)
+    if (ePartyMenu2.battleTowerSelectionMode == 0)
         return 0xFF;
     if (gSelectedOrderFromParty[2] == 0)
         return 0x11;
@@ -203,14 +203,14 @@ static u8 CheckBattleTowerEntriesAndGetMessage(void)
     {
         u8 j;
 
-        ePartyMenu2.pmUnk282 = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_SPECIES);
-        ePartyMenu2.pmUnk280 = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_HELD_ITEM);
+        ePartyMenu2.pmBattleTowerSpecies = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_SPECIES);
+        ePartyMenu2.pmBattleTowerHeldItem = GetMonData(&gPlayerParty[gSelectedOrderFromParty[i] - 1], MON_DATA_HELD_ITEM);
         for (j = i + 1; j < 3; j++)
         {
-            if (ePartyMenu2.pmUnk282 == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_SPECIES))
+            if (ePartyMenu2.pmBattleTowerSpecies == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_SPECIES))
                 return 0x12;
-            if (ePartyMenu2.pmUnk280 != 0 &&
-                ePartyMenu2.pmUnk280 == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_HELD_ITEM))
+            if (ePartyMenu2.pmBattleTowerHeldItem != 0 &&
+                ePartyMenu2.pmBattleTowerHeldItem == GetMonData(&gPlayerParty[gSelectedOrderFromParty[j] - 1], MON_DATA_HELD_ITEM))
                 return 0x13;
         }
     }
@@ -433,7 +433,7 @@ static void Task_OpenBattleTowerSummary(u8 taskId)
         u8 r4 = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
-        ePartyMenu2.unk262 = 1;
+        ePartyMenu2.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, CB2_InitBattleTowerSummaryReturn, PSS_MODE_NORMAL);
     }
 }
@@ -577,7 +577,7 @@ bool8 SetupLinkMultiBattlePartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 4:
-        sub_806B908();
+        DrawLinkMultiBattlePartyMonBackgrounds();
         return TRUE;
     }
     return FALSE;
@@ -594,7 +594,7 @@ static void CreateLinkMultiBattlePartyMonIcons(u8 a)
         if (gMultiPartnerParty[i].species != 0)
         {
             CreateMonIcon_LinkMultiBattle(a, i + 3, 3, &gMultiPartnerParty[i]);
-            sub_806D50C(a, i + 3);
+            OffsetLinkMultiBattlePartnerMonIcon(a, i + 3);
         }
     }
 }
@@ -609,10 +609,10 @@ static void CreateLinkMultiBattleHeldItemIcons(u8 a)
         {
             u16 item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
 
-            CreateHeldItemIcon_806DCD4(a, i, item);
+            CreatePartyMenuHeldItemIcon(a, i, item);
         }
         if (gMultiPartnerParty[i].species != 0)
-            CreateHeldItemIcon_806DCD4(a, i + 3, gMultiPartnerParty[i].heldItem);
+            CreatePartyMenuHeldItemIcon(a, i + 3, gMultiPartnerParty[i].heldItem);
     }
 }
 
@@ -644,21 +644,21 @@ void HandleLinkMultiBattlePartyMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         gTasks[taskId].data[0] = 30;
-        sub_806D4AC(taskId, gMultiPartnerParty[0].species, 0);
-        sub_806D4AC(taskId, gMultiPartnerParty[1].species, 1);
-        sub_806D4AC(taskId, gMultiPartnerParty[2].species, 2);
+        StartLinkMultiBattlePartnerMonIconSlide(taskId, gMultiPartnerParty[0].species, 0);
+        StartLinkMultiBattlePartnerMonIconSlide(taskId, gMultiPartnerParty[1].species, 1);
+        StartLinkMultiBattlePartnerMonIconSlide(taskId, gMultiPartnerParty[2].species, 2);
         gTasks[taskId].func = Task_WaitLinkMultiPartnerIcons;
-        ePartyMenu2.unk261 = 1;
+        ePartyMenu2.backgroundRedrawState = 1;
     }
 }
 
 static void Task_WaitLinkMultiPartnerIcons(u8 taskId)
 {
-    sub_806D3B4(taskId, gMultiPartnerParty[1].species, gMultiPartnerParty[2].species);
+    UpdateLinkMultiBattlePartnerPartyBackgrounds(taskId, gMultiPartnerParty[1].species, gMultiPartnerParty[2].species);
     if (gTasks[taskId].data[0] == 0)
     {
         gTasks[taskId].func = Task_PrintLinkMultiPartnerPartyInfo;
-        ePartyMenu2.unk261 = 2;
+        ePartyMenu2.backgroundRedrawState = 2;
         PlaySE(SE_M_HARDEN);
     }
 }
@@ -751,7 +751,7 @@ bool8 Unused_SetupBattleTowerPartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case 6:
-        sub_806BCE8();
+        DrawPartyMonGenderDescriptorStatuses();
         ePartyMenu2.pmSetupState++;
         break;
     case 7:
@@ -913,7 +913,7 @@ static void Task_OpenDaycareSummary(u8 taskId)
         u8 r4 = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
-        ePartyMenu2.unk262 = 1;
+        ePartyMenu2.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, r4, gPlayerPartyCount - 1, CB2_InitDaycareSummaryReturn, PSS_MODE_NORMAL);
     }
 }

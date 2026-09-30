@@ -150,7 +150,7 @@ u8 debug_sub_8075C30(void)
     return 1;
 }
 
-extern const u8 gUnknown_Debug_839B6D8[];
+extern const u8 gDebugText_ExecutionCountAndTime[];
 
 void debug_sub_8075C40(u8 taskId)
 {
@@ -191,7 +191,7 @@ void debug_sub_8075C40(u8 taskId)
         ConvertIntToDecimalStringN(gStringVar1, _debugStartMenu_1, 1, 8);
         ConvertIntToDecimalStringN(gStringVar2, _debugStartMenu_0, 1, 8);
         Menu_DisplayDialogueFrame();
-        Menu_PrintText(gUnknown_Debug_839B6D8, 2, 15);
+        Menu_PrintText(gDebugText_ExecutionCountAndTime, 2, 15);
         data[0]++;
         break;
     case 3:

@@ -352,7 +352,7 @@ static void Task_OpenSummaryScreen(u8 taskId)
         u8 spriteId = gSprites[gTasks[taskId].data[3] >> 8].data[0];
 
         DestroyTask(taskId);
-        ePartyMenu2.unk262 = 1;
+        ePartyMenu2.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, spriteId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen, PSS_MODE_NORMAL);
     }
 }
@@ -372,8 +372,8 @@ void DoPokemonMenu_Switch(u8 taskId)
 static void PokemonMenu_Switch(u8 taskId)
 {
     Menu_DestroyCursor();
-    ePartyMenu.twoMonSelectionCallback = Task_SwitchSelectedPartyMons;
-    ePartyMenu.array[53553] = 1;
+    ePartyMenu.twoMonActionCallback = Task_SwitchSelectedPartyMons;
+    ePartyMenu2.pmTwoMonActionPromptTextId = 1;
     DoPokemonMenu_Switch(taskId);
 }
 
@@ -500,7 +500,7 @@ static void CB2_InitFieldPartyMenuAfterBag(void)
         {
             SetPartyMenuCursorSelection(ePartyMenu2.menuHandlerTaskId, gLastFieldPokeMenuOpened);
             ChangePartyMenuSelection(ePartyMenu2.menuHandlerTaskId, 0);
-            ePartyMenu2.unk262 = 3;
+            ePartyMenu2.unusedResumeAction = 3;
             ShowFieldPartyMenuForSelectedMon();
             SetMainCallback2(CB2_PartyMenuMain);
             break;
@@ -609,7 +609,7 @@ static void PokemonMenu_TakeItem(u8 taskId)
     Menu_DestroyCursor();
     Menu_EraseWindowRect(19, 0, 29, 19);
     PartyMenuEraseMsgBoxAndFrame();
-    PartyMenuTryGiveMonHeldItem_806ECE8(taskId, Task_ResetFieldPartyMenuAfterItemAction);
+    TryTakePartyMonHeldItem(taskId, Task_ResetFieldPartyMenuAfterItemAction);
 }
 
 static void PokemonMenu_TakeMail(u8 taskId)
@@ -679,7 +679,7 @@ static void Task_OpenMailReader(u8 taskId)
 static void CB2_ReturnToPartyMenuFromReadingMail(void)
 {
     gLastViewedMonIndex = gLastFieldPokeMenuOpened;
-    ePartyMenu2.unk262 = 4;
+    ePartyMenu2.unusedResumeAction = 4;
     CB2_ReturnToPartyMenuFromSummaryScreen();
 }
 
@@ -950,7 +950,7 @@ static void UpdatePartyMenuForTMHM(void)
 #endif
              (GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) || !CanMonLearnTMHM(&gPlayerParty[i], tmhmIndex)))
                 DrawMonDescriptorStatus(i, 0x9A);
-            else if (pokemon_has_move(&gPlayerParty[i], ItemIdToBattleMoveId(gSpecialVar_ItemId)))
+            else if (MonKnowsMove(&gPlayerParty[i], ItemIdToBattleMoveId(gSpecialVar_ItemId)))
                 DrawMonDescriptorStatus(i, 0xA8);
             else
                 DrawMonDescriptorStatus(i, 0x8C);
@@ -1209,7 +1209,7 @@ void CB2_ReturnToPartyMenuForMoveLearning(void)
     if (GetMoveSlotToReplace() != 4)
         SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, TaughtMove, 0xFF);
     else
-        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, StopTryingToTeachMove_806F588, 0xFF);
+        SetPartyMenuSettings(PARTY_MENU_TYPE_STANDARD, 0, Task_WaitToShowStopTryingMoveMessage, 0xFF);
     SetMainCallback2(CB2_InitPartyMenuForMoveLearning);
 }
 

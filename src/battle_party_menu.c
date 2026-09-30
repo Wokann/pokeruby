@@ -26,7 +26,7 @@ EWRAM_DATA u8 gBattlePartyMenuAction = 0;
 
 extern u8 CreatePartyMenuCursor(u8, u8);
 extern void PartyMenuPrintMonsLevelOrStatus(void);
-extern void nullsub_13(void);
+extern void PartyMenuNoOpSetupStep(void);
 extern void CB2_BagMenuFromBattle(void);
 extern void SetMonPreventsSwitchingString(void);
 
@@ -450,7 +450,7 @@ bool8 SetUpBattlePartyMenu(void)
         ePartyMenu2.pmSetupState++;
         break;
     case BATTLE_PARTY_MENU_SETUP_UNUSED:
-        nullsub_13();
+        PartyMenuNoOpSetupStep();
         ePartyMenu2.pmSetupState++;
         break;
     case BATTLE_PARTY_MENU_SETUP_HP_BARS:
@@ -669,7 +669,7 @@ static void Task_ShowSummaryScreen(u8 taskId)
     if (!gPaletteFade.active)
     {
         DestroyTask(taskId);
-        ePartyMenu2.unk262 = 1;
+        ePartyMenu2.unusedResumeAction = 1;
         ShowPokemonSummaryScreen(gPlayerParty, partySelection, gPlayerPartyCount - 1, CB2_ReopenBattlePartyMenuAfterSummary, PSS_MODE_NO_MOVE_ORDER_EDIT);
     }
 }
