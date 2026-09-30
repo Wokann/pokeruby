@@ -4473,7 +4473,7 @@ static void PrepareDebugOverlayBeforeShowingContestPainting(u8 a0)
 {
     struct ContestWinner *contestEntry = &eCurContestWinner;
     contestEntry->species = sPicTest_Species;
-    contestEntry->otId = sPicTest_OTID;
+    contestEntry->trainerId = sPicTest_OTID;
     contestEntry->personality = sPicTest_Personality;
     switch (a0)
     {
@@ -4482,13 +4482,13 @@ static void PrepareDebugOverlayBeforeShowingContestPainting(u8 a0)
             gCurContestWinnerSaveIdx = 0;
             contestEntry->contestCategory = sPicTest_ContestType - 1;
             StringCopy(contestEntry->trainerName, sDummyTrainerName);
-            StringCopy(contestEntry->nickname, sDummyNickname);
+            StringCopy(contestEntry->monName, sDummyNickname);
             break;
         case 1:
             gCurContestWinnerIsForArtist = FALSE;
             gCurContestWinnerSaveIdx = 8;
             contestEntry->contestCategory = sPicTest_MuseumArtTitleType - 1;
-            StringCopy(contestEntry->nickname, sDummyNickname);
+            StringCopy(contestEntry->monName, sDummyNickname);
             break;
         case 2:
             gCurContestWinnerIsForArtist = TRUE;
@@ -4499,19 +4499,19 @@ static void PrepareDebugOverlayBeforeShowingContestPainting(u8 a0)
             gCurContestWinnerIsForArtist = FALSE;
             gCurContestWinnerSaveIdx = 8;
             contestEntry->contestCategory = 0;
-            StringCopy(contestEntry->nickname, sDummyNickname);
+            StringCopy(contestEntry->monName, sDummyNickname);
             break;
         case 4:
             gCurContestWinnerIsForArtist = FALSE;
             gCurContestWinnerSaveIdx = 8;
             contestEntry->contestCategory = 3;
-            StringCopy(contestEntry->nickname, sDummyNickname);
+            StringCopy(contestEntry->monName, sDummyNickname);
             break;
         case 5:
             gCurContestWinnerIsForArtist = FALSE;
             gCurContestWinnerSaveIdx = 8;
             contestEntry->contestCategory = 9;
-            StringCopy(contestEntry->nickname, sDummyNickname);
+            StringCopy(contestEntry->monName, sDummyNickname);
             break;
     }
 }

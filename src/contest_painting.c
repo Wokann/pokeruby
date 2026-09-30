@@ -235,7 +235,7 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
 #if ENGLISH
         ptr = StringCopy(ptr, gContestPaintingWinner->trainerName);
 #elif GERMAN
-        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->nickname);
+        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->monName);
 #endif
 
         // {LATIN}
@@ -245,7 +245,7 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
 
         ptr = StringCopy(ptr, gContestPaintingTrainerSeparator);
 #if ENGLISH
-        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->nickname);
+        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->monName);
 #elif GERMAN
         ptr = StringCopy(ptr, gContestPaintingWinner->trainerName);
 #endif
@@ -256,7 +256,7 @@ static void PrintContestPaintingCaption(u8 contestWinnerId, bool8 isForArtist)
     else
     {
         ptr = StringCopy(ptr, sMuseumCaptions[contestCategory].prefix);
-        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->nickname);
+        ptr = StringCopy_Nickname(ptr, gContestPaintingWinner->monName);
         ptr = StringCopy(ptr, sMuseumCaptions[contestCategory].suffix);
 
         xPos = 3;
@@ -318,7 +318,7 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
 {
     const void *pal;
 
-    pal = GetMonSpritePalFromOtIdPersonality(species, gContestPaintingWinner->otId, gContestPaintingWinner->personality);
+    pal = GetMonSpritePalFromOtIdPersonality(species, gContestPaintingWinner->trainerId, gContestPaintingWinner->personality);
     LZDecompressVram(pal, gContestPaintingMonPalette);
 
     if (backPic == FALSE)

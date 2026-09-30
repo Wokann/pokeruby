@@ -42,7 +42,7 @@ extern u8 EventScript_ResetAllMapFlags[];
 
 static const struct ContestWinner sEmptyMuseumPortrait =
 {
-    .nickname = {EOS},
+    .monName = {EOS},
     .trainerName = {EOS},
 };
 
