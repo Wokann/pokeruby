@@ -1,5 +1,5 @@
 	enum_start 12
-	enum BATTLE_TEXT_UnknownString
+	enum BATTLE_TEXT_PlayerGotMoney
 	enum BATTLE_TEXT_GainExpPoints
 	enum BATTLE_TEXT_GrewLevel
 	enum BATTLE_TEXT_LearnedMove
@@ -200,10 +200,10 @@
 	enum BATTLE_TEXT_Rose
 	enum BATTLE_TEXT_Harshly
 	enum BATTLE_TEXT_Fell
-	enum BATTLE_TEXT_UnknownString7
-	enum BATTLE_TEXT_UnknownString3
-	enum BATTLE_TEXT_UnknownString5
-	enum BATTLE_TEXT_UnknownString6
+	enum BATTLE_TEXT_AttackersStatRose
+	enum BATTLE_TEXT_DefendersStatRose
+	enum BATTLE_TEXT_AttackersStatFell
+	enum BATTLE_TEXT_DefendersStatFell
 	enum BATTLE_TEXT_Critical
 	enum BATTLE_TEXT_GrandSlam
 	enum BATTLE_TEXT_MoveForget123
@@ -311,8 +311,8 @@
 	enum BATTLE_TEXT_PlayerDefeatedTrainer2
 	enum BATTLE_TEXT_SoothingAroma
 	enum BATTLE_TEXT_CantUseItems
-	enum BATTLE_TEXT_UnknownString2
-	enum BATTLE_TEXT_UnknownString4
+	enum BATTLE_TEXT_PkmnsItemDislikedFlavor
+	enum BATTLE_TEXT_UsingItemTheStatOfPkmnRose
 	enum BATTLE_TEXT_HustleUse
 	enum BATTLE_TEXT_MadeUseless
 	enum BATTLE_TEXT_SandTombTrapped @ sand tomb

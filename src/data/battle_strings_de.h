@@ -2,7 +2,7 @@
 
 enum
 {
-    BATTLE_TEXT_UnknownString = 12,
+    BATTLE_TEXT_PlayerGotMoney = 12,
     BATTLE_TEXT_GainExpPoints,
     BATTLE_TEXT_GrewLevel,
     BATTLE_TEXT_LearnedMove,
@@ -203,10 +203,10 @@ enum
     BATTLE_TEXT_Rose,
     BATTLE_TEXT_Harshly,
     BATTLE_TEXT_Fell,
-    BATTLE_TEXT_UnknownString7,
-    BATTLE_TEXT_UnknownString3,
-    BATTLE_TEXT_UnknownString5,
-    BATTLE_TEXT_UnknownString6,
+    BATTLE_TEXT_AttackersStatRose,
+    BATTLE_TEXT_DefendersStatRose,
+    BATTLE_TEXT_AttackersStatFell,
+    BATTLE_TEXT_DefendersStatFell,
     BATTLE_TEXT_Critical,
     BATTLE_TEXT_GrandSlam,
     BATTLE_TEXT_MoveForget123,
@@ -314,8 +314,8 @@ enum
     BATTLE_TEXT_PlayerDefeatedTrainer2,
     BATTLE_TEXT_SoothingAroma,
     BATTLE_TEXT_CantUseItems,
-    BATTLE_TEXT_UnknownString2,
-    BATTLE_TEXT_UnknownString4,
+    BATTLE_TEXT_PkmnsItemDislikedFlavor,
+    BATTLE_TEXT_UsingItemTheStatOfPkmnRose,
     BATTLE_TEXT_HustleUse,
     BATTLE_TEXT_MadeUseless,
     BATTLE_TEXT_SandTombTrapped,
@@ -355,7 +355,7 @@ enum
     BATTLE_TEXT_NoEffectOn,
 };
 
-const u8 BattleText_UnknownString[] = _("{STRING 33}");
+const u8 BattleText_PlayerGotMoney[] = _("{STRING 33}");
 const u8 BattleText_GainExpPoints[] = _("{STRING 0} erhält{PLAYER}\n{STRING 42} E-Punkte!\p");
 const u8 BattleText_Terminator[] = _("");
 const u8 BattleText_BoostedExp[] = _(" spezielle");
@@ -552,7 +552,7 @@ const u8 BattleText_FireWeakened[] = _("Die Stärke des Feuers\nwurde geschwäch
 const u8 BattleText_FoundOne[] = _("{EVIL_LEGENDARY} hat 1\n{STRING 19} gefunden!");
 const u8 BattleText_SoothingAroma[] = _("Ein wohltuendes Aroma\nbreitet sich aus!");
 const u8 BattleText_CantUseItems[] = _("Hier können Items nicht eingesetzt\nwerden.{PAUSE 64}");
-const u8 BattleText_UnknownString2[] = _("Für {STRING 16} war\n{STRING 19} {STRING 0}");
+const u8 BattleText_PkmnsItemDislikedFlavor[] = _("Für {STRING 16} war\n{STRING 19} {STRING 0}");
 const u8 BattleText_HustleUse[] = _("{STRING 16} setzt\n{STRING 19} ein, um zu drängeln!");
 const u8 BattleText_LostFocus[] = _("{EVIL_LEGENDARY} hat seinen\nFokus verloren und kann\lnicht angreifen!");
 const u8 BattleText_DraggedOut[] = _("{GOOD_LEGENDARY} wurde\nauserwählt!\p");
@@ -604,11 +604,11 @@ const u8 BattleText_Sharply[] = _("steigt stark!");
 const u8 gText_StatRose[] = _("steigt.");
 const u8 BattleText_Harshly[] = _("sinkt stark!");
 const u8 BattleText_Fell[] = _("sinkt.");
-const u8 BattleText_UnknownString7[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
+const u8 BattleText_AttackersStatRose[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
 const u8 gText_DefendersStatRose[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
-const u8 BattleText_UnknownString4[] = _("{STRING 19}: {STRING 0} von\n{STRING 16} {PLAYER}");
-const u8 BattleText_UnknownString5[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
-const u8 BattleText_UnknownString6[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
+const u8 BattleText_UsingItemTheStatOfPkmnRose[] = _("{STRING 19}: {STRING 0} von\n{STRING 16} {PLAYER}");
+const u8 BattleText_AttackersStatFell[] = _("{STRING 0} von\n{EVIL_LEGENDARY} {PLAYER}");
+const u8 BattleText_DefendersStatFell[] = _("{STRING 0} von\n{GOOD_LEGENDARY} {PLAYER}");
 const u8 BattleText_StatNoHigher[] = _("Status von {EVIL_LEGENDARY}\nkann nicht weiter erhöht werden!");
 const u8 BattleText_StatNoLower[] = _("Status von {GOOD_LEGENDARY}\nkann nicht weiter sinken!");
 const u8 BattleText_Critical[] = _("Ein Volltreffer!");
@@ -864,7 +864,7 @@ const u8 *const gPokeblockWasTooXStringTable[] =
 
 const u8 *const gBattleStringsTable[] =
 {
-    BattleText_UnknownString,
+    BattleText_PlayerGotMoney,
     BattleText_GainExpPoints,
     BattleText_GrewLevel,
     BattleText_LearnedMove,
@@ -1065,10 +1065,10 @@ const u8 *const gBattleStringsTable[] =
     gText_StatRose,
     BattleText_Harshly,
     BattleText_Fell,
-    BattleText_UnknownString7,
+    BattleText_AttackersStatRose,
     gText_DefendersStatRose,
-    BattleText_UnknownString5,
-    BattleText_UnknownString6,
+    BattleText_AttackersStatFell,
+    BattleText_DefendersStatFell,
     BattleText_Critical,
     BattleText_GrandSlam,
     BattleText_MoveForget123,
@@ -1176,8 +1176,8 @@ const u8 *const gBattleStringsTable[] =
     BattleText_PlayerDefeatedTrainer2,
     BattleText_SoothingAroma,
     BattleText_CantUseItems,
-    BattleText_UnknownString2,
-    BattleText_UnknownString4,
+    BattleText_PkmnsItemDislikedFlavor,
+    BattleText_UsingItemTheStatOfPkmnRose,
     BattleText_HustleUse,
     BattleText_MadeUseless,
     BattleText_SandTombTrapped,
@@ -1336,18 +1336,18 @@ const u16 gUproarAwakeStringIds[] =
 
 const u16 gStatUpStringIds[] =
 {
-    BATTLE_TEXT_UnknownString7,
-    BATTLE_TEXT_UnknownString3,
+    BATTLE_TEXT_AttackersStatRose,
+    BATTLE_TEXT_DefendersStatRose,
     BATTLE_TEXT_AttackingStatNoHigher,
     BATTLE_TEXT_Terminator2,
-    BATTLE_TEXT_UnknownString4,
+    BATTLE_TEXT_UsingItemTheStatOfPkmnRose,
     BATTLE_TEXT_HustleUse,
 };
 
 const u16 gStatDownStringIds[] =
 {
-    BATTLE_TEXT_UnknownString5,
-    BATTLE_TEXT_UnknownString6,
+    BATTLE_TEXT_AttackersStatFell,
+    BATTLE_TEXT_DefendersStatFell,
     BATTLE_TEXT_DefendingStatNoHigher,
     BATTLE_TEXT_Terminator2,
 };

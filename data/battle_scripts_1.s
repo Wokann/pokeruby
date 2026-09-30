@@ -3046,7 +3046,7 @@ BattleScript_LocalTrainerBattleWon:: @ 81D8DBE
 	printstring BATTLE_TEXT_PlayerDefeatedTrainer2
 	trainerslidein 1
 	waitstate
-	printstring BATTLE_TEXT_UnknownString
+	printstring BATTLE_TEXT_PlayerGotMoney
 	getmoneyreward
 	printstring BATTLE_TEXT_WinningPrize
 	waitmessage 64
@@ -4443,7 +4443,7 @@ BattleScript_BerryConfuseHealEnd2:: @ 81D9AD4
 	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
 	healthbarupdate USER
 	datahpupdate USER
-	printstring BATTLE_TEXT_UnknownString2
+	printstring BATTLE_TEXT_PkmnsItemDislikedFlavor
 	waitmessage 64
 	setmoveeffect EFFECT_CONFUSION | AFFECTS_USER
 	seteffectprimary
