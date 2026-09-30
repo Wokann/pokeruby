@@ -1173,7 +1173,7 @@ bool8 ScrCmd_lockall(struct ScriptContext *ctx)
     }
     else
     {
-        ScriptFreezeObjectEvents();
+        FreezeObjects_WaitForPlayer();
         SetupNativeScript(ctx, IsFreezePlayerFinished);
         return TRUE;
     }
@@ -1189,12 +1189,12 @@ bool8 ScrCmd_lock(struct ScriptContext *ctx)
     {
         if (gObjectEvents[gSelectedObjectEvent].active)
         {
-            LockSelectedObjectEvent();
+            FreezeObjects_WaitForPlayerAndSelected();
             SetupNativeScript(ctx, IsFreezeSelectedObjectAndPlayerFinished);
         }
         else
         {
-            ScriptFreezeObjectEvents();
+            FreezeObjects_WaitForPlayer();
             SetupNativeScript(ctx, IsFreezePlayerFinished);
         }
         return TRUE;

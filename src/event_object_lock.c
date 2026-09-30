@@ -6,6 +6,9 @@
 #include "task.h"
 #include "constants/event_objects.h"
 
+#define tPlayerFrozen data[0]
+#define tObjectFrozen data[1]
+
 extern u16 gSpecialVar_Facing;
 u8 gSelectedObjectEvent;
 
@@ -39,7 +42,7 @@ bool8 IsFreezePlayerFinished(void)
     }
 }
 
-void ScriptFreezeObjectEvents(void)
+void FreezeObjects_WaitForPlayer(void)
 {
     FreezeObjectEvents();
     CreateTask(Task_FreezePlayer, 80);
@@ -49,17 +52,17 @@ void Task_FreezeSelectedObjectAndPlayer(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
-    if (!task->data[0] && IsPlayerStandingStill() == TRUE)
+    if (!task->tPlayerFrozen && IsPlayerStandingStill() == TRUE)
     {
         PlayerFreeze();
-        task->data[0] = 1;
+        task->tPlayerFrozen = TRUE;
     }
-    if (!task->data[1] && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)
+    if (!task->tObjectFrozen && !gObjectEvents[gSelectedObjectEvent].singleMovementActive)
     {
         FreezeObjectEvent(&gObjectEvents[gSelectedObjectEvent]);
-        task->data[1] = 1;
+        task->tObjectFrozen = TRUE;
     }
-    if (task->data[0] && task->data[1])
+    if (task->tPlayerFrozen && task->tObjectFrozen)
         DestroyTask(taskId);
 }
 
@@ -76,7 +79,7 @@ bool8 IsFreezeSelectedObjectAndPlayerFinished(void)
     }
 }
 
-void LockSelectedObjectEvent(void)
+void FreezeObjects_WaitForPlayerAndSelected(void)
 {
     u8 taskId;
     FreezeObjectEventsExceptOne(gSelectedObjectEvent);
@@ -84,7 +87,7 @@ void LockSelectedObjectEvent(void)
     if (!gObjectEvents[gSelectedObjectEvent].singleMovementActive)
     {
         FreezeObjectEvent(&gObjectEvents[gSelectedObjectEvent]);
-        gTasks[taskId].data[1] = 1;
+        gTasks[taskId].tObjectFrozen = TRUE;
     }
 }
 
@@ -96,7 +99,7 @@ void ScriptUnfreezeObjectEvents(void)
     UnfreezeObjectEvents();
 }
 
-void unref_sub_8064E5C(void)
+void UnlockPlayerAndSelectedObjectEvent(void)
 {
     u8 playerObjectId;
 
@@ -117,3 +120,6 @@ void Script_ClearHeldMovement(void)
 {
     ObjectEventClearHeldMovementIfActive(&gObjectEvents[gSelectedObjectEvent]);
 }
+
+#undef tPlayerFrozen
+#undef tObjectFrozen
