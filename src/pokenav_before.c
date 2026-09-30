@@ -215,7 +215,7 @@ const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/conditio
 const u8 gPokenavConditionSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/condition/sparkle.4bpp");
 const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
 const u8 gUnusedPokenav4_Pal[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
-const u8 gUnusedPokenav_Gfx[] = INCBIN_U8("graphics/unknown/unknown_3E3BE0.4bpp");
+const u8 gUnusedPokenav_Gfx[] = INCBIN_U8("graphics/pokenav/unused.4bpp");
 
 const u16 gPokenavRibbonIconPalettes[][16] =
 {
