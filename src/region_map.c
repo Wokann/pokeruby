@@ -1457,9 +1457,9 @@ static void LoadFlyDestIcons(void)
 static void CreateFlyDestIcons(void)
 {
     u16 canFlyFlag = FLAG_VISITED_LITTLEROOT_TOWN;
-    u16 i;
+    u16 mapSecId;
 
-    for (i = 0; i < 16; i++)
+    for (mapSecId = MAPSEC_LITTLEROOT_TOWN; mapSecId <= MAPSEC_EVER_GRANDE_CITY; mapSecId++)
     {
         u16 x;
         u16 y;
@@ -1468,7 +1468,7 @@ static void CreateFlyDestIcons(void)
         u16 shape;
         u8 spriteId;
 
-        GetMapSecDimensions(i, &x, &y, &width, &height);
+        GetMapSecDimensions(mapSecId, &x, &y, &width, &height);
         x = (x + 1) * 8 + 4;
         y = (y + 2) * 8 + 4;
         if (width == 2)
@@ -1486,7 +1486,7 @@ static void CreateFlyDestIcons(void)
             else
                 shape += 3;
             StartSpriteAnim(&gSprites[spriteId], shape);
-            gSprites[spriteId].data[0] = i;
+            gSprites[spriteId].data[0] = mapSecId;
         }
         canFlyFlag++;
     }
