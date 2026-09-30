@@ -35,7 +35,7 @@ MtChimney_EventScript_LavaCookieLady:: @ 815CF95
 	end
 
 MtChimney_EventScript_BagIsFull:: @ 815CFF3
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	hidemoneybox 0, 0
 	release
 	end

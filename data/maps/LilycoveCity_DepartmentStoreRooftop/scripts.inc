@@ -152,7 +152,7 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink:: @ 815A267
 	additem VAR_TEMP_0
 	bufferitemname 1, VAR_TEMP_0
 	bufferstdstring 2, 14
-	msgbox Text_PutItemInPocket, MSGBOX_DEFAULT
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	random 64
 	compare VAR_RESULT, 0
 	goto_if_ne LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink
@@ -164,7 +164,7 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink:: @ 815A267
 	additem VAR_TEMP_0
 	bufferitemname 1, VAR_TEMP_0
 	bufferstdstring 2, 14
-	msgbox Text_PutItemInPocket, MSGBOX_DEFAULT
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	random 64
 	compare VAR_RESULT, 0
 	goto_if_ne LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink
@@ -176,7 +176,7 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink:: @ 815A267
 	additem VAR_TEMP_0
 	bufferitemname 1, VAR_TEMP_0
 	bufferstdstring 2, 14
-	msgbox Text_PutItemInPocket, MSGBOX_DEFAULT
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink
 	end
 
@@ -192,7 +192,7 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink:: @ 815A3
 	end
 
 LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink:: @ 815A388
-	msgbox Text_TheBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TheBagIsFull, MSGBOX_DEFAULT
 	goto LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine
 	end
 

@@ -66,7 +66,7 @@ Route109_SeashoreHouse_EventScript_NotEnoughMoney:: @ 8160E9E
 	end
 
 Route109_SeashoreHouse_EventScript_NotEnoughSpace:: @ 8160EAB
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	hidemoneybox 0, 0
 	release
 	end

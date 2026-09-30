@@ -413,7 +413,7 @@ BattleTower_Lobby_EventScript_GiveGoldShield:: @ 8160773
 
 BattleTower_Lobby_EventScript_DecorationStorageFull:: @ 81607AF
 	bufferdecorationname 1, VAR_0x8008
-	msgbox Text_NoRoomLeftForAnother, MSGBOX_DEFAULT
+	msgbox gText_NoRoomLeftForAnother, MSGBOX_DEFAULT
 	msgbox BattleTower_Lobby_Text_NoRoomForShield, MSGBOX_DEFAULT
 	release
 	end

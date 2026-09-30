@@ -841,21 +841,21 @@ EventScript_BackupMrBrineyLocation:: @ 81A010C
 	.include "data/scripts/set_gym_trainers.inc"
 
 Common_EventScript_ShowBagIsFull:: @ 81A029B
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	release
 	end
 
 Common_EventScript_BagIsFull:: @ 81A02A5
-	msgbox Text_TooBadBagIsFull, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	return
 
 Common_EventScript_ShowNoRoomForDecor:: @ 81A02AE
-	msgbox Text_NoRoomLeftForAnother, MSGBOX_DEFAULT
+	msgbox gText_NoRoomLeftForAnother, MSGBOX_DEFAULT
 	release
 	end
 
 Common_EventScript_NoRoomForDecor:: @ 81A02B8
-	msgbox Text_NoRoomLeftForAnother, MSGBOX_DEFAULT
+	msgbox gText_NoRoomLeftForAnother, MSGBOX_DEFAULT
 	return
 
 Common_EventScript_SetLegendaryWeather:: @ 81A02C1

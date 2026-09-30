@@ -54,10 +54,10 @@ EventScript_BufferBerriesPocket:
 	return
 
 EventScript_ObtainedItem: @ 819FEB7
-	message Text_ObtainedTheItem
+	message gText_ObtainedTheItem
 	waitfanfare
 	waitmessage
-	msgbox Text_PutItemInPocket
+	msgbox gText_PutItemInPocket
 	setvar VAR_RESULT, TRUE
 	return
 
@@ -89,10 +89,10 @@ EventScript_ObtainDecorationMessage: @ 819FEE8
 
 EventScript_ObtainedDecor: @ 819FF03
 	playfanfare MUS_OBTAIN_ITEM
-	message Text_ObtainedTheDecor
+	message gText_ObtainedTheDecor
 	waitfanfare
 	waitmessage
-	msgbox Text_TheDecorWasTransferredToThePC
+	msgbox gText_TheDecorWasTransferredToThePC
 	setvar VAR_RESULT, TRUE
 	return
 
@@ -118,15 +118,15 @@ Std_FindItem: @ 819FF21
 
 EventScript_PickUpItem: @ 819FF52
 	removeobject VAR_LAST_TALKED
-	message Text_FoundOneItem
+	message gText_PlayerFoundOneItem
 	waitfanfare
 	waitmessage
-	msgbox Text_PutItemInPocket
+	msgbox gText_PutItemInPocket
 	return
 
 EventScript_NoRoomToPickUpItem: @ 819FF65
-	msgbox Text_ObtainedTheItem
-	msgbox Text_TooBadBagIsFull
+	msgbox gText_ObtainedTheItem
+	msgbox gText_TooBadBagIsFull
 	setvar VAR_RESULT, FALSE
 	return
 
@@ -145,17 +145,17 @@ EventScript_HiddenItem:: @ 819FF7B
 	end
 
 EventScript_PickUpHiddenItem:
-	message Text_FoundOneItem
+	message gText_PlayerFoundOneItem
 	waitfanfare
 	waitmessage
-	msgbox Text_PutItemInPocket
+	msgbox gText_PutItemInPocket
 	special SetHiddenItemFlag
 	releaseall
 	end
 
 EventScript_NoRoomToPickUpHiddenItem:
-	msgbox Text_FoundOneItem
-	msgbox Text_TooBadBagIsFull
+	msgbox gText_PlayerFoundOneItem
+	msgbox gText_TooBadBagIsFull
 	setvar VAR_RESULT, FALSE
 	releaseall
 	end
