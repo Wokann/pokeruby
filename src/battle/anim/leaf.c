@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "trig.h"
 
 extern s16 gBattleAnimArgs[];
@@ -116,11 +117,13 @@ const struct SpriteTemplate gSwiftStarSpriteTemplate =
 
 static void AnimRazorLeafParticle(struct Sprite *sprite)
 {
+    CMD_ARGS(upwardDeltaX, upwardDeltaY, upwardDuration);
+
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
-    sprite->data[0] = gBattleAnimArgs[0];
-    sprite->data[1] = gBattleAnimArgs[1];
-    sprite->data[2] = gBattleAnimArgs[2];
+    sprite->data[0] = cmd->upwardDeltaX;
+    sprite->data[1] = cmd->upwardDeltaY;
+    sprite->data[2] = cmd->upwardDuration;
     sprite->callback = AnimRazorLeafParticle_Step1;
 }
 
@@ -186,26 +189,28 @@ static void AnimRazorLeafParticle_Step2(struct Sprite *sprite)
 // arg 6: target between double battle opponents (boolean)
 static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, targetX, targetY, duration, waveAmplitude, targetBoth);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
-        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+        cmd->targetX = -cmd->targetX;
     }
 
-    sprite->data[0] = gBattleAnimArgs[4];
-    if (!gBattleAnimArgs[6])
+    sprite->data[0] = cmd->duration;
+    if (!cmd->targetBoth)
     {
-        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[2];
-        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + cmd->targetX;
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
     }
     else
     {
         SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->data[2], &sprite->data[4]);
-        sprite->data[2] += gBattleAnimArgs[2];
-        sprite->data[4] += gBattleAnimArgs[3];
+        sprite->data[2] += cmd->targetX;
+        sprite->data[4] += cmd->targetY;
     }
 
-    sprite->data[5] = gBattleAnimArgs[5];
+    sprite->data[5] = cmd->waveAmplitude;
     InitAnimArcTranslation(sprite);
     if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
     {
@@ -259,17 +264,19 @@ static void AnimTranslateLinearSingleSineWave_Step(struct Sprite *sprite)
 // arg 4: speedup frame (particles move faster at the end of the animation)
 void AnimMoveTwisterParticle(struct Sprite *sprite)
 {
+    CMD_ARGS(duration, distanceY, wavePeriod, waveAmplitude, speedUpOnFrame);
+
     if (!IsContest() && IsDoubleBattle() == TRUE)
     {
         SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->x, &sprite->y);
     }
 
     sprite->y += 32;
-    sprite->data[0] = gBattleAnimArgs[0];
-    sprite->data[1] = gBattleAnimArgs[1];
-    sprite->data[2] = gBattleAnimArgs[2];
-    sprite->data[3] = gBattleAnimArgs[3];
-    sprite->data[4] = gBattleAnimArgs[4];
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = cmd->distanceY;
+    sprite->data[2] = cmd->wavePeriod;
+    sprite->data[3] = cmd->waveAmplitude;
+    sprite->data[4] = cmd->speedUpOnFrame;
     sprite->callback = AnimMoveTwisterParticle_Step;
 }
 
