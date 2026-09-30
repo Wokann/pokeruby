@@ -1235,7 +1235,7 @@ static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId);
 static bool8 LoadPokedexListPage(u8 page);
 static void LoadPokedexBgPalette(void);
 static void SortPokedex(u8 dexMode, u8 sortMode);
-static void CreateMonDexNum(u16 entryNum, u8 x, u8 y, u16 screenBase);
+static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 screenBase);
 static void CreateCaughtBall(u16 owned, u8 x, u8 y, u16 screenBase);
 static u8 CreateMonName(u16 dexNum, u8 left, u8 top);
 static void ClearMonListEntry(u8 x, u8 y, u16 screenBase);
@@ -2222,7 +2222,7 @@ static void CreateMonListEntry(u8 position, u16 selectedMon, u16 screenBase)
     }
 }
 
-static void CreateMonDexNum(u16 entryNum, u8 x, u8 y, u16 screenBase)
+static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 screenBase)
 {
     u8 text[4];
     u16 tileIds[2];
@@ -2236,9 +2236,9 @@ static void CreateMonDexNum(u16 entryNum, u8 x, u8 y, u16 screenBase)
     text[1] = CHAR_0 + (dexNum % 100) / 10;
     text[2] = CHAR_0 + (dexNum % 100) % 10;
     text[3] = EOS;
-    *(u16 *)(BG_VRAM + screenBase * 0x800 + y * 0x40 + x * 2) = tileIds[0];
-    *(u16 *)(BG_VRAM + screenBase * 0x800 + (y + 1) * 0x40 + x * 2) = tileIds[1];
-    Menu_PrintText(text, x - 15, y);
+    *(u16 *)(BG_VRAM + screenBase * 0x800 + top * 0x40 + left * 2) = tileIds[0];
+    *(u16 *)(BG_VRAM + screenBase * 0x800 + (top + 1) * 0x40 + left * 2) = tileIds[1];
+    Menu_PrintText(text, left - 15, top);
 }
 
 static void CreateCaughtBall(u16 owned, u8 x, u8 y, u16 screenBase)
