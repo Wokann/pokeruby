@@ -212,7 +212,7 @@ static const u8 sBlenderCenterMap[] = INCBIN_U8("graphics/berry_blender/center_m
 static const u16 sBlenderOuterPal[] = INCBIN_U16("graphics/berry_blender/outer.gbapal");
 
 // unreferenced pals?
-static const u16 sUnused_Pal[] = INCBIN_U16("graphics/unused/unknown/821604C.gbapal");
+static const u16 sUnused_Pal[] = INCBIN_U16("graphics/berry_blender/unused.gbapal");
 static const u16 sEmpty_Pal[224] = {0};
 
 // unreferenced Japanese strings
