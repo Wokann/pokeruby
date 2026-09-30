@@ -12,9 +12,9 @@
 #define CMP_COMMON_BITS         0x4
 #define CMP_NO_COMMON_BITS      0x5
 
-#define BS_ATTACKER_WITH_PARTNER        4 // for atk98_status_icon_update
-#define BS_GET_ATTACKER_SIDE            8 // for atk1E_jumpifability
-#define BS_GET_NOT_ATTACKER_SIDE        9 // for atk1E_jumpifability
+#define BS_ATTACKER_WITH_PARTNER        4 // for Cmd_updatestatusicon
+#define BS_ATTACKER_SIDE                8 // for Cmd_jumpifability
+#define BS_NOT_ATTACKER_SIDE            9 // for Cmd_jumpifability
 
 #define STAT_CHANGE_NEGATIVE         (1 << 0)
 #define STAT_CHANGE_BY_TWO           (1 << 1)

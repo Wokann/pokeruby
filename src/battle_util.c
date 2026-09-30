@@ -48,7 +48,7 @@ extern u8 gAbsentBattlerFlags;
 extern u8 gBattleCommunication[];
 extern u32 gHitMarker;
 extern u8 gEffectBattler;
-extern u8 gBank1;
+extern u8 gBattlerFainted;
 extern s32 gBattleMoveDamage;
 extern u16 gBattlerPartyIndexes[4];
 extern u16 gChosenMovesByBanks[4];
@@ -211,23 +211,23 @@ u8 GetBattlerForBattleScript(u8 caseId)
     case BS_TARGET:
         ret = gBattlerTarget;
         break;
-    case BS_GET_ATTACKER:
+    case BS_ATTACKER:
         ret = gBattlerAttacker;
         break;
-    case BS_GET_EFFECT_BANK:
+    case BS_EFFECT_BATTLER:
         ret = gEffectBattler;
         break;
-    case BS_GET_BANK_0:
+    case BS_BATTLER_0:
         ret = 0;
         break;
-    case BS_GET_SCRIPTING_BANK:
+    case BS_SCRIPTING:
         ret = gBattleStruct->battler;
         break;
-    case BS_GET_gBank1:
-        ret = gBank1;
+    case BS_FAINTED:
+        ret = gBattlerFainted;
         break;
     case 5:
-        ret = gBank1;
+        ret = gBattlerFainted;
         break;
     }
     return ret;
@@ -1296,7 +1296,7 @@ bool8 HandleFaintedMonActions(void)
         case 1:
             do
             {
-                gBank1 = gBattlerTarget = gBattleStruct->faintedActionsBattlerId;
+                gBattlerFainted = gBattlerTarget = gBattleStruct->faintedActionsBattlerId;
                 if (gBattleMons[gBattleStruct->faintedActionsBattlerId].hp == 0 && !(gBattleStruct->givenExpMons & gBitTable[gBattlerPartyIndexes[gBattleStruct->faintedActionsBattlerId]]) && !(gAbsentBattlerFlags & gBitTable[gBattleStruct->faintedActionsBattlerId]))
                 {
                     BattleScriptExecute(BattleScript_GiveExp);
@@ -1307,7 +1307,7 @@ bool8 HandleFaintedMonActions(void)
             gBattleStruct->faintedActionsState = 3;
             break;
         case 2:
-            OpponentSwitchInResetSentPokesToOpponentValue(gBank1);
+            OpponentSwitchInResetSentPokesToOpponentValue(gBattlerFainted);
             if (++gBattleStruct->faintedActionsBattlerId == gBattlersCount)
                 gBattleStruct->faintedActionsState = 3;
             else
@@ -1319,7 +1319,7 @@ bool8 HandleFaintedMonActions(void)
         case 4:
             do
             {
-                gBank1 = gBattlerTarget = gBattleStruct->faintedActionsBattlerId; //or should banks be switched?
+                gBattlerFainted = gBattlerTarget = gBattleStruct->faintedActionsBattlerId; //or should banks be switched?
                 if (gBattleMons[gBattleStruct->faintedActionsBattlerId].hp == 0 && !(gAbsentBattlerFlags & gBitTable[gBattleStruct->faintedActionsBattlerId]))
                 {
                     BattleScriptExecute(BattleScript_HandleFaintedMon);

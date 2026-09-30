@@ -3037,7 +3037,7 @@ BattleScript_LinkHandleFaintedMonLoop: @ 81D8D99
 	switchinanim 3, 0
 	waitstate
 	switchineffects 5
-	jumpifbytenotequal gBank1, gBattlersCount, BattleScript_LinkHandleFaintedMonLoop
+	jumpifbytenotequal gBattlerFainted, gBattlersCount, BattleScript_LinkHandleFaintedMonLoop
 
 BattleScript_LinkHandleFaintedMonMultipleEnd: @ 81D8DBD
 	end2
