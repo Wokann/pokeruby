@@ -976,7 +976,7 @@ static void SpriteCB_Ball_Wobble(struct Sprite *sprite)
 static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
 {
     s8 state;
-    u16 var0;
+    u16 frame;
 
     switch (sprite->data[3] & 0xFF)
     {
@@ -993,8 +993,8 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
 
         sprite->data[5]++;
         sprite->affineAnimPaused = 0;
-        var0 = sprite->data[5] + 7;
-        if (var0 > 14)
+        frame = sprite->data[5] + 7;
+        if (frame > 14)
         {
             gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
@@ -1031,8 +1031,8 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
 
         sprite->data[5]++;
         sprite->affineAnimPaused = 0;
-        var0 = sprite->data[5] + 12;
-        if (var0 > 24)
+        frame = sprite->data[5] + 12;
+        if (frame > 24)
         {
             gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
@@ -1068,8 +1068,8 @@ static void SpriteCB_Ball_Wobble_Step(struct Sprite *sprite)
 
         sprite->data[5]++;
         sprite->affineAnimPaused = 0;
-        var0 = sprite->data[5] + 4;
-        if (var0 > 8)
+        frame = sprite->data[5] + 4;
+        if (frame > 8)
         {
             gBattleAnimationInfo.ballSubpx = 0;
             sprite->data[3]++;
@@ -1287,10 +1287,10 @@ static void SpriteCB_Ball_Block(struct Sprite *sprite)
 
 static void SpriteCB_Ball_Block_Step(struct Sprite *sprite)
 {
-    s16 var0 = sprite->data[0] + 0x800;
-    s16 var1 = sprite->data[1] + 0x680;
-    sprite->x2 -= var1 >> 8;
-    sprite->y2 += var0 >> 8;
+    s16 dy = sprite->data[0] + 0x800;
+    s16 dx = sprite->data[1] + 0x680;
+    sprite->x2 -= dx >> 8;
+    sprite->y2 += dy >> 8;
     sprite->data[0] = (sprite->data[0] + 0x800) & 0xFF;
     sprite->data[1] = (sprite->data[1] + 0x680) & 0xFF;
 
