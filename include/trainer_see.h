@@ -6,6 +6,6 @@
 
 bool8 CheckTrainers(void);
 void DoTrainerApproach(void);
-void SetBuriedTrainerMovement(struct ObjectEvent *var);
+void SetBuriedTrainerMovement(struct ObjectEvent *objEvent);
 
 #endif // GUARD_TRAINER_SEE_H

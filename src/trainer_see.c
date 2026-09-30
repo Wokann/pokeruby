@@ -446,9 +446,9 @@ void Task_SetBuriedTrainerMovement(u8 taskId)
     }
 }
 
-void SetBuriedTrainerMovement(struct ObjectEvent *var)
+void SetBuriedTrainerMovement(struct ObjectEvent *objEvent)
 {
-    StoreWordInTwoHalfwords(&gTasks[CreateTask(Task_SetBuriedTrainerMovement, 0)].data[1], (u32)var);
+    StoreWordInTwoHalfwords(&gTasks[CreateTask(Task_SetBuriedTrainerMovement, 0)].data[1], (u32)objEvent);
 }
 
 static void Task_EndTrainerApproach(u8);
