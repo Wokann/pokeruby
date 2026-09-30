@@ -935,7 +935,7 @@ static const u8 *const sMonFootprintTable[] =
     gMonFootprint_Bulbasaur,
 };
 static const u8 sText_ClearTo0[] = _("{CLEAR_TO 0}");
-const u8 gUnusedPokedexData[] = INCBIN_U8("graphics/unknown/unknown_3B555C.bin");
+const u8 gUnusedPokedexData[] = INCBIN_U8("graphics/pokedex/unused.bin");
 static const struct OamData sOamData_MonOrTrainerPic =
 {
     .y = 0,
