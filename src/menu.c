@@ -20,14 +20,14 @@ struct Menu
     s8 maxCursorPos;
     u8 width;
     u8 height;
-    u8 menu_field_7;
+    u8 destroyCursorOnExit;
     u8 columnXCoords[8];
 };
 
 static void MultistepInitMenuWindowInternal(const struct WindowTemplate *, u16);
 static void InitMenuWindowInternal(const struct WindowTemplate *, u16);
 static bool8 IsGridCursorMovementClamped(void);
-static u8 InitMenuActionGrid(u8, u8, u8, u8, u8, u8, u32);
+static u8 InitMenuActionGrid(u8 left, u8 top, u8 menuItemCount, u8 initialCursorPos, u8 columnCount, u8 cursorWidth, u32 destroyCursorOnExit);
 static u8 DrawMenuActionGridWindow(u8, u8, u8, const struct MenuAction[], u8);
 static void PrintMenuActionGrid(u8, u8, u8, const struct MenuAction[], u8);
 static void CreateMenuOutlineCursor(u8, u8);
@@ -272,14 +272,14 @@ s8 Menu_ProcessInput(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         return gMenu.cursorPos;
     }
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         return -1;
     }
@@ -307,14 +307,14 @@ s8 Menu_ProcessInputNoWrap(void)
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         return gMenu.cursorPos;
     }
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         return -1;
     }
@@ -415,18 +415,18 @@ static bool8 IsGridCursorMovementClamped(void)
     return FALSE;
 }
 
-static u8 InitMenuActionGrid(u8 a1, u8 a2, u8 menuItemCount, u8 a4, u8 width, u8 a6, u32 a7)
+static u8 InitMenuActionGrid(u8 left, u8 top, u8 menuItemCount, u8 initialCursorPos, u8 columnCount, u8 cursorWidth, u32 destroyCursorOnExit)
 {
-    u8 v7;
+    u8 destroyCursor;
 
-    gMenu.width = width;
-    gMenu.height = menuItemCount / width;
-    InitMenu(0, a1, a2, menuItemCount, a4, a6);
-    v7 = 0;
-    if (a7)
-        v7 = -1;
-    gMenu.menu_field_7 = v7;
-    return a4;
+    gMenu.width = columnCount;
+    gMenu.height = menuItemCount / columnCount;
+    InitMenu(0, left, top, menuItemCount, initialCursorPos, cursorWidth);
+    destroyCursor = 0;
+    if (destroyCursorOnExit)
+        destroyCursor = -1;
+    gMenu.destroyCursorOnExit = destroyCursor;
+    return initialCursorPos;
 }
 
 static u8 DrawMenuActionGridWindow(u8 left, u8 top, u8 menuItemCount, const struct MenuAction menuItems[], u8 columnCount)
@@ -521,11 +521,11 @@ static void PrintMenuActionGrid(u8 left, u8 top, u8 menuItemCount, const struct 
     }
 }
 
-void DrawMenuActionGrid(u8 left, u8 top, u8 menuItemCount, u8 a4, const struct MenuAction menuItems[], u8 columnCount, u32 a7)
+void DrawMenuActionGrid(u8 left, u8 top, u8 menuItemCount, u8 initialCursorPos, const struct MenuAction menuItems[], u8 columnCount, u32 destroyCursorOnExit)
 {
     u8 maxWidth = DrawMenuActionGridWindow(left, top, menuItemCount, menuItems, columnCount);
 
-    InitMenuActionGrid(left + 1, top + 1, menuItemCount, a4, columnCount, maxWidth, a7);
+    InitMenuActionGrid(left + 1, top + 1, menuItemCount, initialCursorPos, columnCount, maxWidth, destroyCursorOnExit);
     PrintMenuActionGrid(left + 1, top + 1, menuItemCount, menuItems, columnCount);
 }
 
@@ -533,7 +533,7 @@ s8 Menu_ProcessInputGridLayout(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         PlaySE(SE_SELECT);
         return Menu_GetCursorPos();
@@ -541,7 +541,7 @@ s8 Menu_ProcessInputGridLayout(void)
 
     if (JOY_NEW(B_BUTTON))
     {
-        if (gMenu.menu_field_7)
+        if (gMenu.destroyCursorOnExit)
             Menu_DestroyCursor();
         return -1;
     }
@@ -597,17 +597,17 @@ void Menu_PrintItemsReordered(u8 left, u8 top, u8 menuItemCount, const void * me
         Menu_PrintText(((const struct MenuAction *)menuItems)[order[i]].text, left, top + 2 * i);
 }
 
-void InitYesNoMenu(u8 left, u8 top, u8 a3)
+void InitYesNoMenu(u8 left, u8 top, u8 cursorWidth)
 {
     Menu_PrintItems(left + 1, top + 1, 2, gMenuYesNoItems);
-    InitMenu(0, left + 1, top + 1, 2, 0, a3);
+    InitMenu(0, left + 1, top + 1, 2, 0, cursorWidth);
 }
 
-void DisplayYesNoMenu(u8 left, u8 top, u32 a3)
+void DisplayYesNoMenu(u8 left, u8 top, u32 destroyCursorOnExit)
 {
     Menu_DrawStdWindowFrame(left, top, left + 6, top + 5);
     InitYesNoMenu(left, top, 5);
-    gMenu.menu_field_7 = a3 ? -1 : 0;
+    gMenu.destroyCursorOnExit = destroyCursorOnExit ? -1 : 0;
 }
 
 s8 Menu_ProcessInputNoWrap_(void)
@@ -615,24 +615,24 @@ s8 Menu_ProcessInputNoWrap_(void)
     return Menu_ProcessInputNoWrap();
 }
 
-u8 Menu_PrintTextPixelCoords(const u8 *text, u8 left, u16 top, u8 a4)
+u8 Menu_PrintTextPixelCoords(const u8 *text, u8 left, u16 top, u8 clipLeft)
 {
-    return Text_InitWindow8004D04(gMenuWindowPtr, text, gMenuTextTileOffset, left, top, a4);
+    return Text_InitWindow8004D04(gMenuWindowPtr, text, gMenuTextTileOffset, left, top, clipLeft);
 }
 
-u8 Menu_PrintTextWithNewlineIndent(const u8 *text, u8 left, u16 top, u8 width, u32 a5)
+u8 Menu_PrintTextWithNewlineIndent(const u8 *text, u8 left, u16 top, u8 width, u32 clipLeft)
 {
-    return Text_PrintWithNewlineIndent(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, a5);
+    return Text_PrintWithNewlineIndent(gMenuWindowPtr, 0, text, gMenuTextTileOffset, left, top, width, clipLeft);
 }
 
-u8 Menu_PrintTextWithNewlineIndentToBuffer(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 a6)
+u8 Menu_PrintTextWithNewlineIndentToBuffer(u8 *dest, u8 *src, u8 left, u16 top, u8 width, u32 clipLeft)
 {
-    return Text_PrintWithNewlineIndent(gMenuWindowPtr, dest, src, gMenuTextTileOffset, left, top, width, a6);
+    return Text_PrintWithNewlineIndent(gMenuWindowPtr, dest, src, gMenuTextTileOffset, left, top, width, clipLeft);
 }
 
-int Menu_PrintTextWithNewlineIndentAndClear(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 a6)
+int Menu_PrintTextWithNewlineIndentAndClear(const u8 *str, u8 left, u16 top, u8 width, u8 height, u32 clipLeft)
 {
-    u8 newlineCount = Text_PrintWithNewlineIndent(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, a6);
+    u8 newlineCount = Text_PrintWithNewlineIndent(gMenuWindowPtr, NULL, str, gMenuTextTileOffset, left, top, width, clipLeft);
 
 #if ENGLISH
     left /= 8;
@@ -644,12 +644,12 @@ int Menu_PrintTextWithNewlineIndentAndClear(const u8 *str, u8 left, u16 top, u8 
         Menu_BlankWindowRect(left, top + 2 * newlineCount, left + width - 1, height + top - 1);
 #elif GERMAN
     // This looks suspiciously macro-like
-    u8 r1;
+    u8 widthInTiles;
     if ((left & 7) == 0)
-        r1 = (width + 7) / 8 - 1;
+        widthInTiles = (width + 7) / 8 - 1;
     else
-        r1 = (width + (left & 7) - 1) / 8;
-    width = r1;
+        widthInTiles = (width + (left & 7) - 1) / 8;
+    width = widthInTiles;
     left /= 8;
     height = (height + 7) / 8;
     top /= 8;
@@ -701,9 +701,9 @@ u8 Menu_GetTextWindowPaletteNum(void)
     return Text_GetWindowPaletteNum(gMenuWindowPtr);
 }
 
-void Menu_GetTextColors(u8 *a1, u8 *a2, u8 *a3)
+void Menu_GetTextColors(u8 *foreground, u8 *background, u8 *shadow)
 {
-    Text_GetTextColors(gMenuWindowPtr, a1, a2, a3);
+    Text_GetTextColors(gMenuWindowPtr, foreground, background, shadow);
 }
 
 u32 Menu_UpdateWindowTextOverrideLineLength(u8 lineLength)
@@ -732,7 +732,7 @@ u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, 
     gMenu.top = top;
     gMenu.minCursorPos = 0;
     gMenu.maxCursorPos = numChoices - 1;
-    gMenu.menu_field_7 = 0;
+    gMenu.destroyCursorOnExit = 0;
 
     pos = cursorPos;
 
@@ -755,14 +755,14 @@ void Menu_HideCursor()
     HideOutlineCursor();
 }
 
-void Menu_SetCursorWidth(u8 a1)
+void Menu_SetCursorWidth(u8 width)
 {
-    SetOutlineCursorWidth(a1);
+    SetOutlineCursorWidth(width);
 }
 
-void Menu_SetCursorWidthInTiles(u8 a1)
+void Menu_SetCursorWidthInTiles(u8 widthInTiles)
 {
-    Menu_SetCursorWidth(8 * a1);
+    Menu_SetCursorWidth(8 * widthInTiles);
 }
 
 void Menu_DestroyCursor(void)
