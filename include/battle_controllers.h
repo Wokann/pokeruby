@@ -231,9 +231,7 @@ void BtlController_EmitLinkStandbyMsg(u8 bufferId, u8 mode);
 void BtlController_EmitResetActionMoveSelection(u8 bufferId, u8 caseId);
 void BtlController_EmitEndLinkBattle(u8 bufferId, u8 battleOutcome);
 
-// Ruby preserves this fixed EWRAM symbol name in sym_ewram.txt.
-extern struct UnusedControllerStruct gUnknown_020238C8;
-#define gUnusedControllerStruct gUnknown_020238C8
+extern struct UnusedControllerStruct gUnusedControllerStruct;
 
 // player controller selection UI
 void ActionSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum);
