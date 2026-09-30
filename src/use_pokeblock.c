@@ -701,7 +701,7 @@ void BufferEnhancedText(u8 *dest, u8 condition, s16 enhancement)
 
         if (enhancement < 0)
             // matches, but can also be a variety of values too
-            { u8 unk = -unk; } // see water.c for a similar behavior
+            { u8 unusedVar = -unusedVar; } // see water.c for a similar behavior
 
         StringCopy(dest, sConditionNames[condition]);
         StringAppend(dest, gOtherText_WasEnhanced);
