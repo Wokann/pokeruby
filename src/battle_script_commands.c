@@ -5956,18 +5956,18 @@ static void Cmd_jumpifplayerran(void)
 
 static void Cmd_hpthresholds(void)
 {
-    u8 opposing_bank;
+    u8 opposingBattler;
     s32 result;
     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
     {
         gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
-        opposing_bank = gActiveBattler ^ 1;
+        opposingBattler = gActiveBattler ^ 1;
 
-        result = gBattleMons[opposing_bank].hp * 100 / gBattleMons[opposing_bank].maxHP;
+        result = gBattleMons[opposingBattler].hp * 100 / gBattleMons[opposingBattler].maxHP;
         if (result == 0)
             result = 1;
 
-        if (result >= 70 || !gBattleMons[opposing_bank].hp)
+        if (result >= 70 || !gBattleMons[opposingBattler].hp)
             gBattleStruct->hpScale = 0;
         else if (result >= 40)
             gBattleStruct->hpScale = 1;
@@ -5982,17 +5982,17 @@ static void Cmd_hpthresholds(void)
 
 static void Cmd_hpthresholds2(void)
 {
-    u8 opposing_bank;
-    u8 hp_switchout;
+    u8 opposingBattler;
+    u8 hpSwitchout;
     s32 result;
     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
     {
         gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
-        opposing_bank = gActiveBattler ^ 1;
-        hp_switchout = gSharedMem[BSTRUCT_OFF(hpOnSwitchout) + GetBattlerSide(opposing_bank) * 2];
-        result = (hp_switchout - gBattleMons[opposing_bank].hp) * 100 / hp_switchout;
+        opposingBattler = gActiveBattler ^ 1;
+        hpSwitchout = gSharedMem[BSTRUCT_OFF(hpOnSwitchout) + GetBattlerSide(opposingBattler) * 2];
+        result = (hpSwitchout - gBattleMons[opposingBattler].hp) * 100 / hpSwitchout;
 
-        if (gBattleMons[opposing_bank].hp >= hp_switchout)
+        if (gBattleMons[opposingBattler].hp >= hpSwitchout)
             gBattleStruct->hpScale = 0;
         else if (result <= 29)
             gBattleStruct->hpScale = 1;
