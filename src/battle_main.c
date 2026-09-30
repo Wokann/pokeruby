@@ -2084,9 +2084,9 @@ void StartDebugBattleFromPartyEditor(void)
     {
         gDebugBattleFlags |= 0x10;
         if (gDebugBattlePartyEditorData[0][2] > 5)
-            gBattleStruct->unk160A3 = gDebugBattlePartyEditorData[0][2] - 2;
+            gBattleStruct->debugTrainerPicIndex = gDebugBattlePartyEditorData[0][2] - 2;
         else
-            gBattleStruct->unk160A3 = gDebugBattlePartyEditorData[0][2];
+            gBattleStruct->debugTrainerPicIndex = gDebugBattlePartyEditorData[0][2];
         PlayBattleBGM();
     }
     else if (gDebugBattlePartyEditorData[0][0x22] == 5)

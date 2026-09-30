@@ -382,7 +382,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160A0*/ u8 stringMoveType;
     /*0x160A1*/ u8 animTargetsHit;
     /*0x160A2*/ u8 expGetterBattlerId;
-    /*0x160A3*/ u8 unk160A3;
+    /*0x160A3*/ u8 debugTrainerPicIndex;
     /*0x160A4*/ u8 animArg1;
     /*0x160A5*/ u8 animArg2;
     /*0x160A6*/ u8 unk160A6; // related to gAbsentBattlerFlags, possibly absent flags turn ago?
