@@ -103,65 +103,65 @@ const struct SpriteTemplate gBlendedOutlineCursorSpriteTemplates[] = {
 };
 
 
-const struct Subsprite gSubspriteTable_842F2C8[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width0Or1[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F2D8[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width2[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F2F0[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width3[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {  17,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F310[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width4[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  25,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F328[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width5[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F340[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width6[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  41,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F360[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width7[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  17,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  49,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F380[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width8[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  25,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  57,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F3A0[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width9[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  65,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F3C0[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width10[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -169,7 +169,7 @@ const struct Subsprite gSubspriteTable_842F3C0[] = {
     {  73,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F3E8[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width11[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -177,7 +177,7 @@ const struct Subsprite gSubspriteTable_842F3E8[] = {
     {  81,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F410[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width12[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -185,7 +185,7 @@ const struct Subsprite gSubspriteTable_842F410[] = {
     {  89,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F438[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width13[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -193,7 +193,7 @@ const struct Subsprite gSubspriteTable_842F438[] = {
     {  97,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F460[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width14[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -202,7 +202,7 @@ const struct Subsprite gSubspriteTable_842F460[] = {
     { 105,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F490[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width15[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -211,7 +211,7 @@ const struct Subsprite gSubspriteTable_842F490[] = {
     { 113,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F4C0[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width16[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -220,7 +220,7 @@ const struct Subsprite gSubspriteTable_842F4C0[] = {
     { 121,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F4F0[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width17[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  33,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -229,7 +229,7 @@ const struct Subsprite gSubspriteTable_842F4F0[] = {
     { 129,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F520[] = {
+const struct Subsprite sSubsprites_BlendedOutlineCursor_Width18[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 1,   0, 0 },
     {   1,  -1, ST_OAM_V_RECTANGLE, 1,   4, 0 },
     {   9,  -1, ST_OAM_SQUARE, 2,  12, 0 },
@@ -239,14 +239,14 @@ const struct Subsprite gSubspriteTable_842F520[] = {
     { 137,  -1, ST_OAM_V_RECTANGLE, 1,   8, 0 }
 };
 
-const struct Subsprite gSubspriteTable_842F558[] = {
+const struct Subsprite sSubsprites_OutlineCursorWindow[] = {
     {  -1,  -1, ST_OAM_V_RECTANGLE, 0,   0, 0 },
     {   7,  -1, ST_OAM_SQUARE, 2,  12, 0 },
     {  35,  -1, ST_OAM_V_RECTANGLE, 0,   8, 0 }
 };
 
 const struct Subsprite *const gOutlineCursorWindowSubspritePointers[] = {
-    gSubspriteTable_842F558
+    sSubsprites_OutlineCursorWindow
 };
 
 const struct SubspriteTable gDynamicOutlineCursorSubspriteTables[] = {
@@ -285,25 +285,25 @@ const struct SubspriteTable gDynamicOutlineCursorSubspriteTables[] = {
 };
 
 const struct SubspriteTable gBlendedOutlineCursorSubspriteTables[] = {
-    {2, gSubspriteTable_842F2C8},
-    {2, gSubspriteTable_842F2C8},
-    {3, gSubspriteTable_842F2D8},
-    {4, gSubspriteTable_842F2F0},
-    {3, gSubspriteTable_842F310},
-    {3, gSubspriteTable_842F328},
-    {4, gSubspriteTable_842F340},
-    {4, gSubspriteTable_842F360},
-    {4, gSubspriteTable_842F380},
-    {4, gSubspriteTable_842F3A0},
-    {5, gSubspriteTable_842F3C0},
-    {5, gSubspriteTable_842F3E8},
-    {5, gSubspriteTable_842F410},
-    {5, gSubspriteTable_842F438},
-    {6, gSubspriteTable_842F460},
-    {6, gSubspriteTable_842F490},
-    {6, gSubspriteTable_842F4C0},
-    {6, gSubspriteTable_842F4F0},
-    {7, gSubspriteTable_842F520}
+    {2, sSubsprites_BlendedOutlineCursor_Width0Or1},
+    {2, sSubsprites_BlendedOutlineCursor_Width0Or1},
+    {3, sSubsprites_BlendedOutlineCursor_Width2},
+    {4, sSubsprites_BlendedOutlineCursor_Width3},
+    {3, sSubsprites_BlendedOutlineCursor_Width4},
+    {3, sSubsprites_BlendedOutlineCursor_Width5},
+    {4, sSubsprites_BlendedOutlineCursor_Width6},
+    {4, sSubsprites_BlendedOutlineCursor_Width7},
+    {4, sSubsprites_BlendedOutlineCursor_Width8},
+    {4, sSubsprites_BlendedOutlineCursor_Width9},
+    {5, sSubsprites_BlendedOutlineCursor_Width10},
+    {5, sSubsprites_BlendedOutlineCursor_Width11},
+    {5, sSubsprites_BlendedOutlineCursor_Width12},
+    {5, sSubsprites_BlendedOutlineCursor_Width13},
+    {6, sSubsprites_BlendedOutlineCursor_Width14},
+    {6, sSubsprites_BlendedOutlineCursor_Width15},
+    {6, sSubsprites_BlendedOutlineCursor_Width16},
+    {6, sSubsprites_BlendedOutlineCursor_Width17},
+    {7, sSubsprites_BlendedOutlineCursor_Width18}
 };
 
 const struct SubspriteTable gOutlineCursorWindowSubspriteTable[] = {
