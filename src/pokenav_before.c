@@ -4,7 +4,7 @@
 #include "ewram.h"
 #include "battle.h"
 #include "data2.h"
-#include "de_rom_8040FE0.h"
+#include "de_string_util.h"
 #include "decompress.h"
 #include "event_data.h"
 #include "constants/flags.h"

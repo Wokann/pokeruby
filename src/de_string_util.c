@@ -9,7 +9,7 @@
 extern u8 gTrainerClassNames[][13];
 extern struct Trainer gTrainers[];
 
-u8 *de_sub_8040FE0(u8 gender)
+u8 *GetGermanSchoolKidTrainerClassName(u8 gender)
 {
     if (gender)
         gender++;
@@ -17,7 +17,7 @@ u8 *de_sub_8040FE0(u8 gender)
     return gTrainerClassNames[gender];
 }
 
-u8 *de_sub_8040FF4(u8 gender)
+u8 *GetGermanPokemonTrainerClassName(u8 gender)
 {
     if (gender)
         gender++;
@@ -25,7 +25,7 @@ u8 *de_sub_8040FF4(u8 gender)
     return gTrainerClassNames[gender];
 }
 
-u8 *de_sub_804100C(u8 gender)
+u8 *GetGermanLeaderTrainerClassName(u8 gender)
 {
     if (gender)
         gender++;
@@ -39,50 +39,50 @@ u8 GetBattleTowerTrainerFacilityClass(void);
 u8 GetBattleTowerTrainerClassNameIndex(void);
 u8 GetEReaderTrainerFacilityClass(void);
 
-u8 *de_sub_8041024(s32 arg0, u32 arg1)
+u8 *GetGermanTrainerClassName(s32 trainerSource, u32 trainerId)
 {
-    u8 nameIndex, trainerClass, gender;
+    u8 trainerClassNameIndex, trainerClass, gender;
     struct Trainer *trainer;
-    u8 local2;
+    u8 encounterMusic;
 
-    switch (arg0)
+    switch (trainerSource)
     {
-    case 0x400:
-        nameIndex = GetSecretBaseTrainerNameIndex();
+    case SECRET_BASE_OPPONENT:
+        trainerClassNameIndex = GetSecretBaseTrainerNameIndex();
         gender = eSecretBaseRecord.gender;
-        if (nameIndex == TRAINER_CLASS_SCHOOL_KID)
-            return de_sub_8040FE0(gender);
-        return gTrainerClassNames[nameIndex];
-    case 0x100:
+        if (trainerClassNameIndex == TRAINER_CLASS_SCHOOL_KID)
+            return GetGermanSchoolKidTrainerClassName(gender);
+        return gTrainerClassNames[trainerClassNameIndex];
+    case BATTLE_TYPE_BATTLE_TOWER:
         trainerClass = GetBattleTowerTrainerFacilityClass();
-        nameIndex = GetBattleTowerTrainerClassNameIndex();
+        trainerClassNameIndex = GetBattleTowerTrainerClassNameIndex();
         if (trainerClass == FACILITY_CLASS_SCHOOL_KID_F)
-            return de_sub_8040FE0(FEMALE);
+            return GetGermanSchoolKidTrainerClassName(FEMALE);
         if (trainerClass == FACILITY_CLASS_MAY_1 || trainerClass == FACILITY_CLASS_MAY_2 || trainerClass == FACILITY_CLASS_MAY_3)
-            return de_sub_8040FF4(FEMALE);
-        return gTrainerClassNames[nameIndex];
-    case 0x800:
+            return GetGermanPokemonTrainerClassName(FEMALE);
+        return gTrainerClassNames[trainerClassNameIndex];
+    case BATTLE_TYPE_EREADER_TRAINER:
         trainerClass = GetEReaderTrainerFacilityClass();
-        nameIndex = GetEReaderTrainerClassNameIndex();
+        trainerClassNameIndex = GetEReaderTrainerClassNameIndex();
         if (trainerClass == FACILITY_CLASS_SCHOOL_KID_F)
-            return de_sub_8040FE0(FEMALE);
+            return GetGermanSchoolKidTrainerClassName(FEMALE);
         if (trainerClass == FACILITY_CLASS_MAY_1 || trainerClass == FACILITY_CLASS_MAY_2 || trainerClass == FACILITY_CLASS_MAY_3)
-            return de_sub_8040FF4(FEMALE);
-        return gTrainerClassNames[nameIndex];
+            return GetGermanPokemonTrainerClassName(FEMALE);
+        return gTrainerClassNames[trainerClassNameIndex];
     default:
-        trainer = &gTrainers[arg1];
+        trainer = &gTrainers[trainerId];
         trainerClass = trainer->trainerClass;
-        local2 = GetTrainerEncounterMusicId(arg1);
+        encounterMusic = GetTrainerEncounterMusicId(trainerId);
         if (trainerClass == FACILITY_CLASS_LEADER_F)
-            return de_sub_8040FE0(local2);
-        if (trainerClass == FACILITY_CLASS_BIRD_KEEPER && local2 == FEMALE)
-            return de_sub_8040FF4(FEMALE);
+            return GetGermanSchoolKidTrainerClassName(encounterMusic);
+        if (trainerClass == FACILITY_CLASS_BIRD_KEEPER && encounterMusic == FEMALE)
+            return GetGermanPokemonTrainerClassName(FEMALE);
         if (trainerClass == FACILITY_CLASS_ELITE_FOUR_F)
         {
-            if (gTrainers[arg1].doubleBattle == TRUE)
-                return de_sub_804100C(FEMALE);
+            if (gTrainers[trainerId].doubleBattle == TRUE)
+                return GetGermanLeaderTrainerClassName(FEMALE);
             else
-                return de_sub_804100C(MALE);
+                return GetGermanLeaderTrainerClassName(MALE);
         }
         return gTrainerClassNames[trainerClass];
     }
@@ -90,7 +90,7 @@ u8 *de_sub_8041024(s32 arg0, u32 arg1)
 #else
 
 NAKED
-void de_sub_8041024(void) {
+void GetGermanTrainerClassName(void) {
     asm(".syntax unified\n\
     push {r4-r6,lr}\n\
     adds r2, r0, 0\n\
@@ -150,7 +150,7 @@ _08041086:\n\
     b _08041070\n\
 _08041094:\n\
     movs r0, 0x1\n\
-    bl de_sub_8040FE0\n\
+    bl GetGermanSchoolKidTrainerClassName\n\
     b _08041102\n\
 _0804109C:\n\
     ldr r1, _080410C0 @ =gTrainers\n\
@@ -168,7 +168,7 @@ _0804109C:\n\
     bne _080410C4\n\
 _080410B8:\n\
     adds r0, r2, 0\n\
-    bl de_sub_8040FE0\n\
+    bl GetGermanSchoolKidTrainerClassName\n\
     b _08041102\n\
     .align 2, 0\n\
 _080410C0: .4byte gTrainers\n\
@@ -179,7 +179,7 @@ _080410C4:\n\
     bne _080410D4\n\
 _080410CC:\n\
     movs r0, 0x1\n\
-    bl de_sub_8040FF4\n\
+    bl GetGermanPokemonTrainerClassName\n\
     b _08041102\n\
 _080410D4:\n\
     cmp r5, 0x19\n\
@@ -195,7 +195,7 @@ _080410D4:\n\
     movs r2, 0x1\n\
 _080410EA:\n\
     adds r0, r2, 0\n\
-    bl de_sub_804100C\n\
+    bl GetGermanLeaderTrainerClassName\n\
     b _08041102\n\
     .align 2, 0\n\
 _080410F4: .4byte gTrainers\n\
@@ -215,9 +215,9 @@ _08041108: .4byte gTrainerClassNames\n\
 }
 #endif
 
-u32 de_sub_804110C(u32 arg0, u32 arg1)
+const u8 *GetGermanBattleString(u16 stringId, const u8 *battleString)
 {
-    return arg1;
+    return battleString;
 }
 
 #endif

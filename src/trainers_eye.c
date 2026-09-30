@@ -9,7 +9,7 @@
 #include "constants/opponents.h"
 #include "constants/region_map_sections.h"
 #include "text.h"
-#include "de_rom_8040FE0.h"
+#include "de_string_util.h"
 #include "string_util.h"
 
 struct TrainersEyeGymLeadersAndE4
@@ -177,7 +177,7 @@ void BufferTrainerEyesListRowText(u8 *buffer, u16 listIndex)
 #if ENGLISH
         ptr = StringCopy(ptr, gTrainerClassNames[trainer->trainerClass]);
 #elif GERMAN
-        ptr = StringCopy(ptr, de_sub_8041024(0, gPokenavStructPtr->trainersEye[listIndex].opponentId));
+        ptr = StringCopy(ptr, GetGermanTrainerClassName(0, gPokenavStructPtr->trainersEye[listIndex].opponentId));
 #endif
 
         ptr[0] = EXT_CTRL_CODE_BEGIN;

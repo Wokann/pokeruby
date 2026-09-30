@@ -13,6 +13,7 @@
 #include "link.h"
 #include "battle_setup.h"
 #include "battle_tower.h"
+#include "de_string_util.h"
 #include "constants/flags.h"
 #include "ewram.h"
 
@@ -193,10 +194,6 @@ u8 GetMultiplayerId(void);
 u8 GetBattlerAtPosition(u8 position);
 u8 GetBattlerSide(u8 battler);
 u8 GetBattlerPosition(u8 battler);
-#ifdef GERMAN
-extern u8 *de_sub_804110C();
-#endif
-
 void BufferStringBattle(u16 stringID)
 {
     int i;
@@ -236,7 +233,7 @@ void BufferStringBattle(u16 stringID)
             {
                 stringPtr = BattleText_SingleWantToBattle1;
 #ifdef GERMAN
-                stringPtr = de_sub_804110C(0xFFFF, stringPtr);
+                stringPtr = GetGermanBattleString(0xFFFF, stringPtr);
 #endif
             }
         }
@@ -277,7 +274,7 @@ void BufferStringBattle(u16 stringID)
                 {
                     stringPtr = BattleText_SentOutDouble1;
 #ifdef GERMAN
-                    stringPtr = de_sub_804110C(0xFFFF, stringPtr);
+                    stringPtr = GetGermanBattleString(0xFFFF, stringPtr);
 #endif
                 }
             }
@@ -287,7 +284,7 @@ void BufferStringBattle(u16 stringID)
             {
                 stringPtr = BattleText_SentOutSingle1;
 #ifdef GERMAN
-                stringPtr = de_sub_804110C(0xFFFF, stringPtr);
+                stringPtr = GetGermanBattleString(0xFFFF, stringPtr);
 #endif
             }
         }
@@ -317,7 +314,7 @@ void BufferStringBattle(u16 stringID)
             {
                 stringPtr = BattleText_WithdrewPoke1;
 #ifdef GERMAN
-                stringPtr = de_sub_804110C(0xFFFF, stringPtr);
+                stringPtr = GetGermanBattleString(0xFFFF, stringPtr);
 #endif
             }
         }
@@ -347,7 +344,7 @@ void BufferStringBattle(u16 stringID)
             {
                 stringPtr = BattleText_SentOutSingle2;
 #ifdef GERMAN
-                stringPtr = de_sub_804110C(0xFFFF, stringPtr);
+                stringPtr = GetGermanBattleString(0xFFFF, stringPtr);
 #endif
             }
         }
@@ -423,7 +420,7 @@ void BufferStringBattle(u16 stringID)
         {
             stringPtr = gBattleStringsTable[stringID - BATTLESTRINGS_ID_ADDER];
 #ifdef GERMAN
-            stringPtr = de_sub_804110C(stringID, stringPtr);
+            stringPtr = GetGermanBattleString(stringID, stringPtr);
 #endif
         }
         break;
@@ -699,13 +696,13 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 break;
 #else
                 if (gTrainerBattleOpponent == SECRET_BASE_OPPONENT)
-                    toCpy = de_sub_8041024(gTrainerBattleOpponent, 0);
+                    toCpy = GetGermanTrainerClassName(gTrainerBattleOpponent, 0);
                 else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
-                    toCpy = de_sub_8041024(BATTLE_TYPE_BATTLE_TOWER, 0);
+                    toCpy = GetGermanTrainerClassName(BATTLE_TYPE_BATTLE_TOWER, 0);
                 else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
-                    toCpy = de_sub_8041024(BATTLE_TYPE_EREADER_TRAINER, 0);
+                    toCpy = GetGermanTrainerClassName(BATTLE_TYPE_EREADER_TRAINER, 0);
                 else
-                    toCpy = de_sub_8041024(0, gTrainerBattleOpponent);
+                    toCpy = GetGermanTrainerClassName(0, gTrainerBattleOpponent);
                 break;
 #endif
             case B_TXT_TRAINER1_NAME: // trainer name
