@@ -95,14 +95,14 @@ SYMBOL(gBattle_BG3_X, 4)
 SYMBOL(gBattle_BG1_Y, 4)
 SYMBOL(gBattle_BG3_Y, 4)
 SYMBOL(gBattleTextBuff1, 16)
-SYMBOL(gUnknown_030041D0, 48)
+SYMBOL(gLinkBattleResultWindowBg1, 48)
 SYMBOL(gBattle_WIN1H, 4)
 SYMBOL(gWindowTemplate_Contest_MoveDescription, 48)
 SYMBOL(gBattle_WIN0V, 4)
 SYMBOL(gBattle_WIN1V, 4)
-SYMBOL(gUnknown_03004250, 48)
+SYMBOL(gLinkBattleResultWindowBg2, 48)
 SYMBOL(gBattle_BG2_Y, 4)
-SYMBOL(gUnknown_03004284, 4)
+SYMBOL(gUnusedBattleFlickerVar, 4)
 SYMBOL(gBattle_BG2_X, 4)
 SYMBOL(gBattleEnvironment, 4)
 SYMBOL(gBattleTextBuff2, 16)
@@ -114,15 +114,15 @@ SYMBOL(gBattle_WIN0H, 4)
 . += 0x8;
 
 #if DEBUG
-gUnknown_Debug_03004360 = .;
+gDebugBattlePartyEditorSide = .;
     . += 0x10;
-gUnknown_Debug_03004370 = .;
+gDebugBattlePartyEditorWindow = .;
     . += 0x30;
-gUnknown_Debug_030043A0 = .;
+gDebugBattlePartyEditorField = .;
     . += 0x4;
-gUnknown_Debug_030043A4 = .;
+gDebugBattlePartyEditorMonIndex = .;
     . += 0x4;
-gUnknown_Debug_030043A8 = .;
+gDebugBattlePartyEditorMoveIndex = .;
     . += 0x8;
 #endif
 
@@ -132,8 +132,8 @@ SYMBOL(gBattleResults, 68)
 SYMBOL(gLeveledUpInBattle, 4)
 SYMBOL(gBattlerControllerFuncs, 16)
 SYMBOL(gHealthboxSpriteIds, 4)
-SYMBOL(gUnknown_03004344, 4)
-SYMBOL(gUnknown_03004348, 4)
+SYMBOL(gMultiUsePlayerCursor, 4)
+SYMBOL(gNumberOfMovesToChoose, 4)
 SYMBOL(gBattleControllerData, 4)
 
 // pokemon_1.c

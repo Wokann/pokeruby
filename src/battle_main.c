@@ -68,11 +68,11 @@ struct UnknownStruct8
 extern void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 
 extern struct SpriteTemplate gCreatingSpriteTemplate;
-extern const u8 Str_821F7B8[];
+extern const u8 sText_DebugFlyingMonHeight[];
 extern const u16 gBattleTextboxPalette[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
-extern const u8 Str_821F7EA[];
-extern const u8 gUnknown_Debug_821F7F3[];
+extern const u8 sText_DebugFlyingMonLoadConfirm[];
+extern const u8 sText_DebugFlyingMonSaveConfirm[];
 extern const u8 BattleText_YesNo[];
 extern u8 gStatStageRatios[][2];
 extern u8 gActionsByTurnOrder[4];
@@ -114,8 +114,8 @@ extern u8 gActionSelectionCursor[];
 extern u8 gMoveSelectionCursor[];
 extern u8 gBattlePartyCurrentOrder[];
 MainCallback gPreBattleCallback1;
-u8 gUnknown_03004344;
-u8 gUnknown_03004348;
+u8 gMultiUsePlayerCursor;
+u8 gNumberOfMovesToChoose;
 extern void (*gBattleMainFunc)(void);
 u8 gLeveledUpInBattle;
 void (*gBattlerControllerFuncs[MAX_BATTLERS_COUNT])(void);
@@ -153,7 +153,7 @@ extern u8 BattleScript_PrintFailedToRunString[];
 extern const BattleCmdFunc gBattleScriptingCommandsTable[];
 extern u8 gCritMultiplier;
 extern u8 gCurrMovePos;
-extern u8 gUnknown_02024BE5;
+extern u8 gChosenMovePos;
 extern u16 gChosenMove;
 extern u8* gBattleScriptsForMoveEffects[];
 extern u16 gLastUsedItem;
@@ -203,10 +203,10 @@ s8 gBattleEnvironment;
 
 void (*gBattleMainFunc)(void);
 
-u32 gUnknown_03004284;
+u32 gUnusedBattleFlickerVar;
 struct Window gWindowTemplate_Contest_MoveDescription;
-struct Window gUnknown_030041D0;
-struct Window gUnknown_03004250;
+struct Window gLinkBattleResultWindowBg1;
+struct Window gLinkBattleResultWindowBg2;
 
 void CB2_InitBattle(void)
 {
@@ -271,8 +271,8 @@ void CB2_InitBattleInternal(void)
 #endif
 
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
-    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gLinkBattleResultWindowTemplateBg1);
-    Text_InitWindowWithTemplate(&gUnknown_03004250, &gLinkBattleResultWindowTemplateBg2);
+    Text_InitWindowWithTemplate(&gLinkBattleResultWindowBg1, &gLinkBattleResultWindowTemplateBg1);
+    Text_InitWindowWithTemplate(&gLinkBattleResultWindowBg2, &gLinkBattleResultWindowTemplateBg2);
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
     ResetSpriteData();
@@ -1310,8 +1310,8 @@ void CB2_InitEndLinkBattle(void)
     gBattle_BG3_Y = 0;
 
     Text_InitWindowWithTemplate(&gWindowTemplate_Contest_MoveDescription, &gStandardBattleWindowTemplate);
-    Text_InitWindowWithTemplate(&gUnknown_030041D0, &gLinkBattleResultWindowTemplateBg1);
-    Text_InitWindowWithTemplate(&gUnknown_03004250, &gLinkBattleResultWindowTemplateBg2);
+    Text_InitWindowWithTemplate(&gLinkBattleResultWindowBg1, &gLinkBattleResultWindowTemplateBg1);
+    Text_InitWindowWithTemplate(&gLinkBattleResultWindowBg2, &gLinkBattleResultWindowTemplateBg2);
     InitBattleBgsVideo();
     LoadCompressedPalette(gBattleTextboxPalette, 0, 64);
     ApplyPlayerChosenFrameToBattleMenu();
@@ -1365,9 +1365,9 @@ void EndLinkBattleInSteps(void)
 
 #if DEBUG
 
-extern u8 gUnknown_Debug_2023B62[];
-extern const u8 Str_821F7BD[];
-extern const u8 Str_821F7DA[];
+extern u8 gDebugFlyingMonSpriteOffsets[];
+extern const u8 sText_DebugFlyingMonFileMenu[];
+extern const u8 sText_DebugFlyingMonLoadSave[];
 
 void ResetDebugBattlePartyData(void);
 void CB2_InitDebugBattlePartyEditor(void);
@@ -1381,7 +1381,7 @@ void DrawDebugBattlePartyField(u8);
 void DrawDebugBattleMove(void);
 void DrawDebugBattleAbilities(u8);
 void DrawDebugBattleModeValue(void);
-void debug_ShowCurrentAnimAudioOptions(void);
+void Debug_ShowCurrentBattleAnimationAndSoundOptions(void);
 void ShowDebugBattlePartyCursor(void);
 void HideDebugBattlePartyCursor(void);
 void ShowDebugBattleMoveCursor(void);
@@ -1392,18 +1392,18 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8);
 u32 WriteDebugDataToFlash(u8, void *, u32);
 void ReadDebugDataFromFlash(u8, void *, u32);
 
-extern s16 gUnknown_Debug_2023A76[][35];
-extern s16 gUnknown_Debug_2023B02[][6][4];
-u8 gUnknown_Debug_03004360;
-struct Window gUnknown_Debug_03004370;
-u8 gUnknown_Debug_030043A0;
-u8 gUnknown_Debug_030043A4;
-u8 gUnknown_Debug_030043A8;
+extern s16 gDebugBattlePartyEditorData[][35];
+extern s16 gDebugBattlePartyEditorMoves[][6][4];
+u8 gDebugBattlePartyEditorSide;
+struct Window gDebugBattlePartyEditorWindow;
+u8 gDebugBattlePartyEditorField;
+u8 gDebugBattlePartyEditorMonIndex;
+u8 gDebugBattlePartyEditorMoveIndex;
 extern u8 gBattleBuffersTransferData[];
 
-extern const u16 gUnknown_Debug_821F424[][5];
-extern const u16 gUnknown_Debug_821F56C[][5];
-extern const u32 gUnknown_Debug_821F798[][4];
+extern const u16 sDebugBattlePartyFieldData[][5];
+extern const u16 sDebugBattleDefaultMoves[][5];
+extern const u32 sDebugBattleMoveCursorTileOffsets[][4];
 
 extern const u8 gDebugBattleCharmap_Gfx_lz[];
 extern const u8 gDebugBattleCharmap_Tilemap_lz[];
@@ -1420,20 +1420,20 @@ void ResetDebugBattlePartyData(void)
 {
 	s32 i;
 
-	gUnknown_Debug_2023A76[0][0] = 0x115;
-	gUnknown_Debug_2023A76[1][0] = 0x115;
+	gDebugBattlePartyEditorData[0][0] = 0x115;
+	gDebugBattlePartyEditorData[1][0] = 0x115;
 	for (i = 1; i < 31; i++)
 	{
-		gUnknown_Debug_2023A76[0][i] = gUnknown_Debug_821F424[i][4];
-		gUnknown_Debug_2023A76[1][i] = gUnknown_Debug_821F424[i][4];
+		gDebugBattlePartyEditorData[0][i] = sDebugBattlePartyFieldData[i][4];
+		gDebugBattlePartyEditorData[1][i] = sDebugBattlePartyFieldData[i][4];
 	}
 
 	for (i = 0; i < 6; i++)
 	{
-		for (gUnknown_Debug_030043A8 = 0; gUnknown_Debug_030043A8 < 4; gUnknown_Debug_030043A8++)
+		for (gDebugBattlePartyEditorMoveIndex = 0; gDebugBattlePartyEditorMoveIndex < 4; gDebugBattlePartyEditorMoveIndex++)
 		{
-			gUnknown_Debug_2023B02[0][i][gUnknown_Debug_030043A8] = gUnknown_Debug_821F56C[gUnknown_Debug_030043A8][0];
-			gUnknown_Debug_2023B02[1][i][gUnknown_Debug_030043A8] = gUnknown_Debug_821F56C[gUnknown_Debug_030043A8][0];
+			gDebugBattlePartyEditorMoves[0][i][gDebugBattlePartyEditorMoveIndex] = sDebugBattleDefaultMoves[gDebugBattlePartyEditorMoveIndex][0];
+			gDebugBattlePartyEditorMoves[1][i][gDebugBattlePartyEditorMoveIndex] = sDebugBattleDefaultMoves[gDebugBattlePartyEditorMoveIndex][0];
 		}
 	}
 }
@@ -1471,20 +1471,20 @@ void CB2_InitDebugBattlePartyEditor(void)
 	ResetSpriteData();
 	ScanlineEffect_Stop();
 	Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
-	Text_InitWindowWithTemplate(&gUnknown_Debug_03004370, &gMenuTextWindowLoadTemplate);
-	gUnknown_Debug_03004360 = 0;
-	gUnknown_Debug_030043A0 = 0;
-	gUnknown_Debug_030043A4 = 0;
+	Text_InitWindowWithTemplate(&gDebugBattlePartyEditorWindow, &gMenuTextWindowLoadTemplate);
+	gDebugBattlePartyEditorSide = 0;
+	gDebugBattlePartyEditorField = 0;
+	gDebugBattlePartyEditorMonIndex = 0;
 	for (i = 0; i < 31; i++)
 		DrawDebugBattlePartyField(i);
-	for (gUnknown_Debug_030043A8 = 0; gUnknown_Debug_030043A8 < 4; gUnknown_Debug_030043A8++)
+	for (gDebugBattlePartyEditorMoveIndex = 0; gDebugBattlePartyEditorMoveIndex < 4; gDebugBattlePartyEditorMoveIndex++)
 		DrawDebugBattleMove();
-	DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+	DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
 	DrawDebugBattleModeValue();
-	debug_ShowCurrentAnimAudioOptions();
-	gUnknown_Debug_030043A8 = 0;
+	Debug_ShowCurrentBattleAnimationAndSoundOptions();
+	gDebugBattlePartyEditorMoveIndex = 0;
 	ShowDebugBattlePartyCursor();
-	if (gUnknown_Debug_2023A76[0][0x22] == 8)
+	if (gDebugBattlePartyEditorData[0][0x22] == 8)
 	{
 		StartDebugBattleFromPartyEditor();
 	}
@@ -1506,32 +1506,32 @@ void FillDebugBattleTextBuffer(u8 a, u8 b)
 
 void SetDebugBattleMonGender(u8 a)
 {
-	switch (gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5]].genderRatio)
+	switch (gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5]].genderRatio)
 	{
 	case 0:
-		gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] = 2;
+		gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] = 2;
 		break;
 	case 0xFE:
-		gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] = 3;
+		gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] = 3;
 		break;
 	case 0xFF:
-		gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] = 4;
+		gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] = 4;
 		break;
 	default:
-		gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] &= 1;
+		gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] &= 1;
 		if (a != 0)
-			gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] ^= 1;
+			gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] ^= 1;
 		else
-			gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + 4] = 0;
+			gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + 4] = 0;
 		break;
 	}
 }
 
-// gUnknown_Debug_2023A76 2D array
+// gDebugBattlePartyEditorData 2D array
 void AdjustDebugBattleTwoDigitValue(u8 a)
 {
 	s8 r12 = 0;
-	s8 r7 = gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5];
+	s8 r7 = gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5];
 
 	while (r7 >= 10)
 	{
@@ -1561,8 +1561,8 @@ void AdjustDebugBattleTwoDigitValue(u8 a)
 		if (r7 > 9)
 			r7 = 1;
 	}
-	gUnknown_Debug_2023A76[gUnknown_Debug_03004360 ^ 1][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]
-	= gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]
+	gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide ^ 1][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]
+	= gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]
 	= r12 * 10 + r7;
 }
 
@@ -1574,38 +1574,38 @@ void CB2_DebugBattlePartyEditor(void)
         DoSoftReset();
     if (gMain.newKeysRaw == SELECT_BUTTON)
     {
-        if (gUnknown_Debug_030043A4 < 6)
+        if (gDebugBattlePartyEditorMonIndex < 6)
         {
-            gUnknown_Debug_030043A8 = 0;
+            gDebugBattlePartyEditorMoveIndex = 0;
             ShowDebugBattleMoveCursor();
             SetMainCallback2(CB2_DebugBattleMoveEditor);
         }
-        if (gUnknown_Debug_030043A0 == 0 && gUnknown_Debug_030043A4 == 6)
+        if (gDebugBattlePartyEditorField == 0 && gDebugBattlePartyEditorMonIndex == 6)
         {
             gMain.savedCallback = CB2_InitDebugBattlePartyEditor;
             CreateMon(
               &gPlayerParty[0],
-              gUnknown_Debug_2023A76[0][0 * 5 + 0],
-              gUnknown_Debug_2023A76[0][0 * 5 + 1],
+              gDebugBattlePartyEditorData[0][0 * 5 + 0],
+              gDebugBattlePartyEditorData[0][0 * 5 + 1],
               32,
               0, 0, 0, 0);
             for (r5 = 0; r5 < 4; r5++)
             {
-                SetMonData(&gPlayerParty[0], MON_DATA_MOVE1 + r5, &gUnknown_Debug_2023B02[0][0][r5]);
-                SetMonData(&gPlayerParty[0], MON_DATA_PP1 + r5, &gBattleMoves[gUnknown_Debug_2023B02[0][0][r5]].pp);
+                SetMonData(&gPlayerParty[0], MON_DATA_MOVE1 + r5, &gDebugBattlePartyEditorMoves[0][0][r5]);
+                SetMonData(&gPlayerParty[0], MON_DATA_PP1 + r5, &gBattleMoves[gDebugBattlePartyEditorMoves[0][0][r5]].pp);
             }
-            switch (gUnknown_Debug_2023A76[0][6 * 5 + 0])
+            switch (gDebugBattlePartyEditorData[0][6 * 5 + 0])
             {
             case 1:
                 gCB2_AfterEvolution = CB2_InitDebugBattlePartyEditor;
-                EvolutionScene(&gPlayerParty[0], gUnknown_Debug_2023A76[0][1 * 5 + 0], 1, 0);
+                EvolutionScene(&gPlayerParty[0], gDebugBattlePartyEditorData[0][1 * 5 + 0], 1, 0);
                 break;
             case 2:
                 InitDebugFlyingMonSpriteOffsetEditor();
                 break;
             }
         }
-        if (gUnknown_Debug_030043A0 == 1 && gUnknown_Debug_030043A4 == 6)
+        if (gDebugBattlePartyEditorField == 1 && gDebugBattlePartyEditorMonIndex == 6)
         {
             // This is really weird
             r5 = (gSaveBlock2.optionsBattleSceneOff | (gSaveBlock2.optionsSound << 1));
@@ -1615,7 +1615,7 @@ void CB2_DebugBattlePartyEditor(void)
             gSaveBlock2.optionsBattleSceneOff = (r5 & 1);
             gSaveBlock2.optionsSound = (r5 & 2) >> 1;
             SetPokemonCryStereo(gSaveBlock2.optionsSound);
-            debug_ShowCurrentAnimAudioOptions();
+            Debug_ShowCurrentBattleAnimationAndSoundOptions();
         }
     }
     if (gMain.newKeysRaw == START_BUTTON)
@@ -1623,42 +1623,42 @@ void CB2_DebugBattlePartyEditor(void)
     if (gMain.newKeysRaw == DPAD_UP)
     {
         HideDebugBattlePartyCursor();
-        if (gUnknown_Debug_030043A4 != 0)
-            gUnknown_Debug_030043A4--;
+        if (gDebugBattlePartyEditorMonIndex != 0)
+            gDebugBattlePartyEditorMonIndex--;
         else
-            gUnknown_Debug_030043A4 = 6;
+            gDebugBattlePartyEditorMonIndex = 6;
         DrawAllDebugBattleMoves();
-        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
         ShowDebugBattlePartyCursor();
     }
     if (gMain.newKeysRaw == DPAD_DOWN)
     {
         HideDebugBattlePartyCursor();
-        if (gUnknown_Debug_030043A4 == 6)
-            gUnknown_Debug_030043A4 = 0;
+        if (gDebugBattlePartyEditorMonIndex == 6)
+            gDebugBattlePartyEditorMonIndex = 0;
         else
-            gUnknown_Debug_030043A4++;
+            gDebugBattlePartyEditorMonIndex++;
         DrawAllDebugBattleMoves();
-        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
         ShowDebugBattlePartyCursor();
     }
     if (gMain.newKeysRaw == DPAD_LEFT)
     {
         HideDebugBattlePartyCursor();
-        if (gUnknown_Debug_030043A0 != 0)
+        if (gDebugBattlePartyEditorField != 0)
         {
-            gUnknown_Debug_030043A0--;
+            gDebugBattlePartyEditorField--;
         }
         else
         {
-            if (gUnknown_Debug_03004360 != 0)
+            if (gDebugBattlePartyEditorSide != 0)
             {
-                gUnknown_Debug_03004360 = 0;
-                gUnknown_Debug_030043A0 = 4;
+                gDebugBattlePartyEditorSide = 0;
+                gDebugBattlePartyEditorField = 4;
                 gBattle_BG1_X = 0;
                 DrawAllDebugBattlePartyFields();
                 DrawAllDebugBattleMoves();
-                DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+                DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             }
         }
         ShowDebugBattlePartyCursor();
@@ -1666,209 +1666,209 @@ void CB2_DebugBattlePartyEditor(void)
     if (gMain.newKeysRaw == DPAD_RIGHT)
     {
         HideDebugBattlePartyCursor();
-        if (gUnknown_Debug_030043A0 != 4)
+        if (gDebugBattlePartyEditorField != 4)
         {
-            gUnknown_Debug_030043A0++;
+            gDebugBattlePartyEditorField++;
         }
         else
         {
-            if (gUnknown_Debug_03004360 == 0)
+            if (gDebugBattlePartyEditorSide == 0)
             {
-                gUnknown_Debug_03004360 = 1;
-                gUnknown_Debug_030043A0 = 0;
+                gDebugBattlePartyEditorSide = 1;
+                gDebugBattlePartyEditorField = 0;
                 gBattle_BG1_X = 0x100;
                 DrawAllDebugBattlePartyFields();
                 DrawAllDebugBattleMoves();
-                DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+                DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             }
         }
         ShowDebugBattlePartyCursor();
     }
     if (JOY_REPT(B_BUTTON))
     {
-        switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
+        switch (gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5)
         {
         case 31:
             ResetDebugBattlePartyData();
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
-            debug_ShowCurrentAnimAudioOptions();
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            Debug_ShowCurrentBattleAnimationAndSoundOptions();
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         case 32:
-            ReadDebugDataFromFlash(31, gUnknown_Debug_2023A76, 0xEC);
+            ReadDebugDataFromFlash(31, gDebugBattlePartyEditorData, 0xEC);
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
-            debug_ShowCurrentAnimAudioOptions();
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            Debug_ShowCurrentBattleAnimationAndSoundOptions();
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         case 33:
-            WriteDebugDataToFlash(31, gUnknown_Debug_2023A76, 0xEC);
+            WriteDebugDataToFlash(31, gDebugBattlePartyEditorData, 0xEC);
             break;
         case 34:
-            if (gUnknown_Debug_2023A76[0][6 * 5 + 4] != 0)
+            if (gDebugBattlePartyEditorData[0][6 * 5 + 4] != 0)
             {
-                gUnknown_Debug_2023A76[0][6 * 5 + 4]--;
-                gUnknown_Debug_2023A76[1][6 * 5 + 4]--;
+                gDebugBattlePartyEditorData[0][6 * 5 + 4]--;
+                gDebugBattlePartyEditorData[1][6 * 5 + 4]--;
             }
             else
             {
-                gUnknown_Debug_2023A76[0][6 * 5 + 4] = 8;
-                gUnknown_Debug_2023A76[1][6 * 5 + 4] = 8;
+                gDebugBattlePartyEditorData[0][6 * 5 + 4] = 8;
+                gDebugBattlePartyEditorData[1][6 * 5 + 4] = 8;
             }
             DrawDebugBattleModeValue();
             break;
         case 30:
             AdjustDebugBattleTwoDigitValue(0);
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5);
             break;
         default:
-            if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
+            if (gDebugBattlePartyEditorField == 4 && gDebugBattlePartyEditorMonIndex < 6)
             {
                 SetDebugBattleMonGender(1);
             }
             else
             {
-                gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]--;
-                if (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5] < gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][4])
-                    gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5] = gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][3];
+                gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]--;
+                if (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5] < sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][4])
+                    gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5] = sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][3];
             }
-            if (gUnknown_Debug_030043A0 == 0)
+            if (gDebugBattlePartyEditorField == 0)
             {
                 SetDebugBattleMonGender(0);
-                DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
+                DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + 4);
             }
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField);
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         }
     }
     if (JOY_REPT(A_BUTTON))
     {
-        switch (gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5)
+        switch (gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5)
         {
         case 31:
             ResetDebugBattlePartyData();
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
-            debug_ShowCurrentAnimAudioOptions();
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            Debug_ShowCurrentBattleAnimationAndSoundOptions();
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         case 32:
-            ReadDebugDataFromFlash(31, gUnknown_Debug_2023A76, 0xEC);
+            ReadDebugDataFromFlash(31, gDebugBattlePartyEditorData, 0xEC);
             DrawAllDebugBattlePartyFields();
             DrawAllDebugBattleMoves();
             DrawDebugBattleModeValue();
-            debug_ShowCurrentAnimAudioOptions();
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            Debug_ShowCurrentBattleAnimationAndSoundOptions();
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         case 33:
-            WriteDebugDataToFlash(31, gUnknown_Debug_2023A76, 0xEC);
+            WriteDebugDataToFlash(31, gDebugBattlePartyEditorData, 0xEC);
             break;
         case 34:
-            if (gUnknown_Debug_2023A76[0][6 * 5 + 4] < 8)
+            if (gDebugBattlePartyEditorData[0][6 * 5 + 4] < 8)
             {
-                gUnknown_Debug_2023A76[0][6 * 5 + 4]++;
-                gUnknown_Debug_2023A76[1][6 * 5 + 4]++;
+                gDebugBattlePartyEditorData[0][6 * 5 + 4]++;
+                gDebugBattlePartyEditorData[1][6 * 5 + 4]++;
             }
             else
             {
-                gUnknown_Debug_2023A76[0][6 * 5 + 4] = 0;
-                gUnknown_Debug_2023A76[1][6 * 5 + 4] = 0;
+                gDebugBattlePartyEditorData[0][6 * 5 + 4] = 0;
+                gDebugBattlePartyEditorData[1][6 * 5 + 4] = 0;
             }
             DrawDebugBattleModeValue();
             break;
         case 30:
             AdjustDebugBattleTwoDigitValue(1);
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5);
             break;
         default:
-            if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
+            if (gDebugBattlePartyEditorField == 4 && gDebugBattlePartyEditorMonIndex < 6)
             {
                 SetDebugBattleMonGender(1);
             }
             else
             {
-                gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]++;
-                if (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] > gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][3])
-                    gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] = gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][4];
+                gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]++;
+                if (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] > sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][3])
+                    gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] = sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][4];
             }
-            if (gUnknown_Debug_030043A0 == 0)
+            if (gDebugBattlePartyEditorField == 0)
             {
                 SetDebugBattleMonGender(0);
-                DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
+                DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + 4);
             }
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5);
-            DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5);
+            DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
             break;
         }
     }
     if (JOY_REPT(L_BUTTON))
     {
-        if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
+        if (gDebugBattlePartyEditorField == 4 && gDebugBattlePartyEditorMonIndex < 6)
         {
             SetDebugBattleMonGender(1);
         }
         else
         {
-            if (gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0 == 30)
+            if (gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField == 30)
             {
                 AdjustDebugBattleTwoDigitValue(2);
             }
             else
             {
-                gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] -= 10;
-                while (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] < gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][4])
-                    gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] += gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][3];
+                gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] -= 10;
+                while (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] < sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][4])
+                    gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] += sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][3];
             }
         }
-        if (gUnknown_Debug_030043A0 == 0)
+        if (gDebugBattlePartyEditorField == 0)
         {
             SetDebugBattleMonGender(0);
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + 4);
         }
-        DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField);
+        DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
     }
     if (JOY_REPT(R_BUTTON))
     {
-        if (gUnknown_Debug_030043A0 == 4 && gUnknown_Debug_030043A4 < 6)
+        if (gDebugBattlePartyEditorField == 4 && gDebugBattlePartyEditorMonIndex < 6)
         {
             SetDebugBattleMonGender(1);
         }
         else
         {
-            if (gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0 == 30)
+            if (gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField == 30)
             {
                 AdjustDebugBattleTwoDigitValue(3);
             }
             else
             {
-                gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] += 10;
-                while (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] > gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][3])
-                    gUnknown_Debug_2023A76[gUnknown_Debug_03004360][gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0] -= gUnknown_Debug_821F424[gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0][3];
+                gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] += 10;
+                while (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] > sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][3])
+                    gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField] -= sDebugBattlePartyFieldData[gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField][3];
             }
         }
-        if (gUnknown_Debug_030043A0 == 0)
+        if (gDebugBattlePartyEditorField == 0)
         {
             SetDebugBattleMonGender(0);
-            DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + 4);
+            DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + 4);
         }
-        DrawDebugBattlePartyField(gUnknown_Debug_030043A4 * 5 + gUnknown_Debug_030043A0);
-        DrawDebugBattleAbilities(gUnknown_Debug_030043A4 * 5);
+        DrawDebugBattlePartyField(gDebugBattlePartyEditorMonIndex * 5 + gDebugBattlePartyEditorField);
+        DrawDebugBattleAbilities(gDebugBattlePartyEditorMonIndex * 5);
     }
     AnimateSprites();
     BuildOamBuffer();
 }
 
-extern u16 gUnknown_Debug_821F564[][5];
+extern u16 sDebugBattleMoveFieldData[][5];
 
 void CB2_DebugBattleMoveEditor(void)
 {
-	u8 r9 = gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5;
+	u8 r9 = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
 
 	if (gMain.heldKeysRaw == (L_BUTTON | SELECT_BUTTON))
 		DoSoftReset();
@@ -1882,51 +1882,51 @@ void CB2_DebugBattleMoveEditor(void)
 	if (gMain.newKeysRaw == DPAD_UP || gMain.newKeysRaw == DPAD_DOWN)
 	{
 		HideDebugBattleMoveCursor();
-		gUnknown_Debug_030043A8 ^= 2;
+		gDebugBattlePartyEditorMoveIndex ^= 2;
 		ShowDebugBattleMoveCursor();
 	}
 	if (gMain.newKeysRaw == DPAD_LEFT || gMain.newKeysRaw == DPAD_RIGHT)
 	{
 		HideDebugBattleMoveCursor();
-		gUnknown_Debug_030043A8 ^= 1;
+		gDebugBattlePartyEditorMoveIndex ^= 1;
 		ShowDebugBattleMoveCursor();
 	}
 	if (JOY_REPT(B_BUTTON))
 	{
-		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]--;
-		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
-			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex]--;
+		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(A_BUTTON))
 	{
-		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8]++;
-		if (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
-			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] = gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex]++;
+		if (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] = sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(L_BUTTON))
 	{
-		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] -= 10;
-		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] < gUnknown_Debug_821F564[gUnknown_Debug_030043A8][4])
-			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] -= 10;
+		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] < sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][4])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] += sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	if (JOY_REPT(R_BUTTON))
 	{
-		gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] += 10;
-		while (gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] > gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3])
-			gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r9 / 5][gUnknown_Debug_030043A8] -= gUnknown_Debug_821F564[gUnknown_Debug_030043A8][3];
+		gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] += 10;
+		while (gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] > sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3])
+			gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r9 / 5][gDebugBattlePartyEditorMoveIndex] -= sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][3];
 		DrawDebugBattleMove();
 	}
 	AnimateSprites();
 	BuildOamBuffer();
 }
 
-extern const u16 gUnknown_Debug_821F598[];
-extern const u8 str_821F631[][6];
-extern const u8 Str_821F649[];
-extern const struct Pokeblock gUnknown_Debug_821F5AC[];
+extern const u16 sDebugBattleTypeFlags[];
+extern const u8 sDebugBattlePlayerNames[][6];
+extern const u8 sText_DebugBattleOtName[];
+extern const struct Pokeblock sDebugBattlePokeblocks[];
 
 extern u8 gIsDebugMode;
 
@@ -1942,11 +1942,11 @@ void StartDebugBattleFromPartyEditor(void)
 
 	gIsDebugMode = 1;
 	r6 = Random() % 4;
-	StringCopy(gSaveBlock2.playerName, str_821F631[r6]);
+	StringCopy(gSaveBlock2.playerName, sDebugBattlePlayerNames[r6]);
 	gSaveBlock2.playerGender = r6 >> 1;
 	ZeroPlayerPartyMons();
 	ZeroEnemyPartyMons();
-	i = gUnknown_Debug_2023A76[0][30];
+	i = gDebugBattlePartyEditorData[0][30];
 	spC = 0;
 	if (i >= 10)
 	{
@@ -1957,20 +1957,20 @@ void StartDebugBattleFromPartyEditor(void)
 			spC++;
 		}
 	}
-	gBattleTypeFlags = gUnknown_Debug_821F598[i - 1];
+	gBattleTypeFlags = sDebugBattleTypeFlags[i - 1];
 	gDebugBattleFlags = 8;
 	gBattleEnvironment = spC;
 	if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
 		EnterSafariMode();
-	if (gUnknown_Debug_2023A76[0][30] >= 2 && gUnknown_Debug_2023A76[0][30] <= 4)
+	if (gDebugBattlePartyEditorData[0][30] >= 2 && gDebugBattlePartyEditorData[0][30] <= 4)
 		gTrainerBattleOpponent = (Random() & 7) + 1;
 
 	gPlayerPartyCount = 0;
 	for (i = 0; i < 30; i += 5)
 	{
-		if (gUnknown_Debug_2023A76[0][i] != 0)
+		if (gDebugBattlePartyEditorData[0][i] != 0)
 		{
-			switch (gUnknown_Debug_2023A76[0][i + 4])
+			switch (gDebugBattlePartyEditorData[0][i + 4])
 			{
 			case 0:
 			case 2:
@@ -1984,35 +1984,35 @@ void StartDebugBattleFromPartyEditor(void)
 				r6 = 0xFF;
 				break;
 			}
-			if (gUnknown_Debug_2023A76[0][i] == 0xC9 && i + 5 < 30)
-				r9 = gUnknown_Debug_2023A76[0][i + 7];
+			if (gDebugBattlePartyEditorData[0][i] == 0xC9 && i + 5 < 30)
+				r9 = gDebugBattlePartyEditorData[0][i + 7];
 			else
 				r9 = 0;
 			CreateMonWithGenderNatureLetter(
 				&gEnemyParty[i / 5],
-				gUnknown_Debug_2023A76[0][i],
-				gUnknown_Debug_2023A76[0][i + 1],
+				gDebugBattlePartyEditorData[0][i],
+				gDebugBattlePartyEditorData[0][i + 1],
 				0,
 				r6,
 				0,
 				r9);
 		}
-		SetMonData(&gEnemyParty[i / 5], MON_DATA_HELD_ITEM, &gUnknown_Debug_2023A76[0][i + 2]);
-		sp10 = gUnknown_Debug_2023A76[0][i + 2] - 1;
+		SetMonData(&gEnemyParty[i / 5], MON_DATA_HELD_ITEM, &gDebugBattlePartyEditorData[0][i + 2]);
+		sp10 = gDebugBattlePartyEditorData[0][i + 2] - 1;
 		if (sp10 <= 11)
-			SetMonData(&gEnemyParty[i / 5], MON_DATA_POKEBALL, &gUnknown_Debug_2023A76[0][i + 2]);
-		if (gUnknown_Debug_2023A76[0][i + 3] != 0 && gUnknown_Debug_2023A76[0][i + 3] != 3)
+			SetMonData(&gEnemyParty[i / 5], MON_DATA_POKEBALL, &gDebugBattlePartyEditorData[0][i + 2]);
+		if (gDebugBattlePartyEditorData[0][i + 3] != 0 && gDebugBattlePartyEditorData[0][i + 3] != 3)
 		{
-			if (gUnknown_Debug_2023A76[0][i + 3] <= 2)
-				spC = gUnknown_Debug_2023A76[0][i + 3] - 1;
+			if (gDebugBattlePartyEditorData[0][i + 3] <= 2)
+				spC = gDebugBattlePartyEditorData[0][i + 3] - 1;
 			else
-				spC = gUnknown_Debug_2023A76[0][i + 3] - 4;
+				spC = gDebugBattlePartyEditorData[0][i + 3] - 4;
 			SetMonData(&gEnemyParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
 		}
 
-		if (gUnknown_Debug_2023A76[1][i] != 0)
+		if (gDebugBattlePartyEditorData[1][i] != 0)
 		{
-			switch (gUnknown_Debug_2023A76[1][i + 4])
+			switch (gDebugBattlePartyEditorData[1][i + 4])
 			{
 			case 0:
 			case 2:
@@ -2026,35 +2026,35 @@ void StartDebugBattleFromPartyEditor(void)
 				r6 = 0xFF;
 				break;
 			}
-			if (gUnknown_Debug_2023A76[1][i] == 0xC9 && i + 5 < 30)
-				r9 = gUnknown_Debug_2023A76[1][i + 7];
+			if (gDebugBattlePartyEditorData[1][i] == 0xC9 && i + 5 < 30)
+				r9 = gDebugBattlePartyEditorData[1][i + 7];
 			else
 				r9 = 0;
 			CreateMonWithGenderNatureLetter(
 				&gPlayerParty[i / 5],
-				gUnknown_Debug_2023A76[1][i],
-				gUnknown_Debug_2023A76[1][i + 1],
+				gDebugBattlePartyEditorData[1][i],
+				gDebugBattlePartyEditorData[1][i + 1],
 				0,
 				r6,
 				0,
 				r9);
 			gPlayerPartyCount++;
 		}
-		SetMonData(&gPlayerParty[i / 5], MON_DATA_HELD_ITEM, &gUnknown_Debug_2023A76[1][i + 2]);
-		sp10 = gUnknown_Debug_2023A76[0][i + 2] - 1;
+		SetMonData(&gPlayerParty[i / 5], MON_DATA_HELD_ITEM, &gDebugBattlePartyEditorData[1][i + 2]);
+		sp10 = gDebugBattlePartyEditorData[0][i + 2] - 1;
 		if (sp10 <= 11)
-			SetMonData(&gPlayerParty[i / 5], MON_DATA_POKEBALL, &gUnknown_Debug_2023A76[1][i + 2]);
-		if (gUnknown_Debug_2023A76[1][i + 3] != 0 && gUnknown_Debug_2023A76[1][i + 3] != 3)
+			SetMonData(&gPlayerParty[i / 5], MON_DATA_POKEBALL, &gDebugBattlePartyEditorData[1][i + 2]);
+		if (gDebugBattlePartyEditorData[1][i + 3] != 0 && gDebugBattlePartyEditorData[1][i + 3] != 3)
 		{
-			if (gUnknown_Debug_2023A76[1][i + 3] <= 2)
-				spC = gUnknown_Debug_2023A76[1][i + 3] - 1;
+			if (gDebugBattlePartyEditorData[1][i + 3] <= 2)
+				spC = gDebugBattlePartyEditorData[1][i + 3] - 1;
 			else
-				spC = gUnknown_Debug_2023A76[1][i + 3] - 4;
+				spC = gDebugBattlePartyEditorData[1][i + 3] - 4;
 			SetMonData(&gPlayerParty[i / 5], MON_DATA_ALT_ABILITY, &spC);
 		}
-		if (gUnknown_Debug_2023A76[1][i + 3] > 2)
+		if (gDebugBattlePartyEditorData[1][i + 3] > 2)
 		{
-			SetMonData(&gPlayerParty[i / 5], MON_DATA_OT_NAME, Str_821F649);
+			SetMonData(&gPlayerParty[i / 5], MON_DATA_OT_NAME, sText_DebugBattleOtName);
 			gDebugBattleFlags |= 0x40;
 		}
 	}
@@ -2063,44 +2063,44 @@ void StartDebugBattleFromPartyEditor(void)
     {
         for (i = 0; i < 4; i++)
         {
-            SetMonData(&gEnemyParty[spC], MON_DATA_MOVE1 + i, &gUnknown_Debug_2023B02[0][spC][i]);
-            SetMonData(&gEnemyParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gUnknown_Debug_2023B02[0][spC][i]].pp);
-            SetMonData(&gPlayerParty[spC], MON_DATA_MOVE1 + i, &gUnknown_Debug_2023B02[1][spC][i]);
-            SetMonData(&gPlayerParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gUnknown_Debug_2023B02[1][spC][i]].pp);
+            SetMonData(&gEnemyParty[spC], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[0][spC][i]);
+            SetMonData(&gEnemyParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[0][spC][i]].pp);
+            SetMonData(&gPlayerParty[spC], MON_DATA_MOVE1 + i, &gDebugBattlePartyEditorMoves[1][spC][i]);
+            SetMonData(&gPlayerParty[spC], MON_DATA_PP1 + i, &gBattleMoves[gDebugBattlePartyEditorMoves[1][spC][i]].pp);
         }
     }
 
-    if (gUnknown_Debug_2023A76[0][0x22] == 8)
+    if (gDebugBattlePartyEditorData[0][0x22] == 8)
     {
         gDebugBattleFlags |= 0x80;
         PlayBattleBGM();
     }
-    else if (gUnknown_Debug_2023A76[0][0x22] == 7)
+    else if (gDebugBattlePartyEditorData[0][0x22] == 7)
     {
         gDebugBattleFlags |= 0x20;
         PlayBattleBGM();
     }
-    else if (gUnknown_Debug_2023A76[0][0x22] == 6)
+    else if (gDebugBattlePartyEditorData[0][0x22] == 6)
     {
         gDebugBattleFlags |= 0x10;
-        if (gUnknown_Debug_2023A76[0][2] > 5)
-            gBattleStruct->unk160A3 = gUnknown_Debug_2023A76[0][2] - 2;
+        if (gDebugBattlePartyEditorData[0][2] > 5)
+            gBattleStruct->unk160A3 = gDebugBattlePartyEditorData[0][2] - 2;
         else
-            gBattleStruct->unk160A3 = gUnknown_Debug_2023A76[0][2];
+            gBattleStruct->unk160A3 = gDebugBattlePartyEditorData[0][2];
         PlayBattleBGM();
     }
-    else if (gUnknown_Debug_2023A76[0][0x22] == 5)
+    else if (gDebugBattlePartyEditorData[0][0x22] == 5)
     {
         gDebugBattleFlags |= 0x21;
         PlayBattleBGM();
     }
     else
     {
-        if (!(gUnknown_Debug_2023A76[0][0x22] & 1))
+        if (!(gDebugBattlePartyEditorData[0][0x22] & 1))
             PlayBattleBGM();
-        if (gUnknown_Debug_2023A76[0][0x22] & 2)
+        if (gDebugBattlePartyEditorData[0][0x22] & 2)
             gDebugBattleFlags |= 4;
-        if (gUnknown_Debug_2023A76[0][0x22] & 4)
+        if (gDebugBattlePartyEditorData[0][0x22] & 4)
             gDebugBattleFlags |= 6;
     }
 
@@ -2139,7 +2139,7 @@ void StartDebugBattleFromPartyEditor(void)
     AddBagItem(ITEM_POKE_DOLL, 99);
 
     for (i = 0; i < 15; i++)
-        AddPokeblock(&gUnknown_Debug_821F5AC[i]);
+        AddPokeblock(&sDebugBattlePokeblocks[i]);
 }
 
 void VBlankCB_DebugBattlePartyEditor(void)
@@ -2191,19 +2191,19 @@ void DrawAllDebugBattlePartyFields(void)
         DrawDebugBattlePartyField(i);
 }
 
-extern u8 gUnknown_Debug_030043A8;
+extern u8 gDebugBattlePartyEditorMoveIndex;
 
 void DrawAllDebugBattleMoves(void)
 {
-    u8 r5 = gUnknown_Debug_030043A8;
+    u8 r5 = gDebugBattlePartyEditorMoveIndex;
 
-    for (gUnknown_Debug_030043A8 = 0; gUnknown_Debug_030043A8 < 4; gUnknown_Debug_030043A8++)
+    for (gDebugBattlePartyEditorMoveIndex = 0; gDebugBattlePartyEditorMoveIndex < 4; gDebugBattlePartyEditorMoveIndex++)
         DrawDebugBattleMove();
 
-    gUnknown_Debug_030043A8 = r5;
+    gDebugBattlePartyEditorMoveIndex = r5;
 }
 
-extern const u8 Str_821F624[];
+extern const u8 sText_DebugBattleNoItem[];
 
 void DrawDebugBattlePartyField(u8 a)
 {
@@ -2224,32 +2224,32 @@ void DrawDebugBattlePartyField(u8 a)
         FillDebugBattleTextBuffer(0, 20);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a], 2, 3);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a], 2, 3);
 // TODO: check other revisions
 #if !(ENGLISH && REVISION == 0)
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
             422,
-            gUnknown_Debug_03004360 * 32 + 25,
+            gDebugBattlePartyEditorSide * 32 + 25,
             0);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
-        StringAppend(gBattleTextBuff1, gSpeciesNames[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]]);
+        StringAppend(gBattleTextBuff1, gSpeciesNames[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]]);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         break;
     case 1:
     case 6:
@@ -2258,14 +2258,14 @@ void DrawDebugBattlePartyField(u8 a)
     case 21:
     case 26:
     case 30:
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a], 2, 3);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a], 2, 3);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         break;
     case 2:
     case 7:
@@ -2280,35 +2280,35 @@ void DrawDebugBattlePartyField(u8 a)
         FillDebugBattleTextBuffer(0, 24);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a], 2, 3);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a], 2, 3);
 // TODO: check other revisions
 #if !(ENGLISH && REVISION == 0)
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
             422,
-            gUnknown_Debug_03004360 * 32 + 25,
+            gDebugBattlePartyEditorSide * 32 + 25,
             0);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
-        if (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a] != 0)
-            StringAppend(gBattleTextBuff1, GetItemName(gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]));
+        if (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a] != 0)
+            StringAppend(gBattleTextBuff1, GetItemName(gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]));
         else
-            StringAppend(gBattleTextBuff1, Str_821F624);
+            StringAppend(gBattleTextBuff1, sText_DebugBattleNoItem);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         break;
     case 4:
     case 9:
@@ -2323,14 +2323,14 @@ void DrawDebugBattlePartyField(u8 a)
         FillDebugBattleTextBuffer(0, 4);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         length = 0;
-        switch (gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a])
+        switch (gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a])
         {
         case 0:
             gBattleTextBuff1[0] = CHAR_MALE;
@@ -2357,12 +2357,12 @@ void DrawDebugBattlePartyField(u8 a)
         }
         gBattleTextBuff1[length] = B_BUFF_EOS;
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         break;
     case 3:
     case 8:
@@ -2371,14 +2371,14 @@ void DrawDebugBattlePartyField(u8 a)
     case 23:
     case 28:
     default:
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a], 2, 1);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a], 2, 1);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F424[a][0],
-            gUnknown_Debug_821F424[a][1],
-            gUnknown_Debug_821F424[a][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattlePartyFieldData[a][0],
+            sDebugBattlePartyFieldData[a][1],
+            sDebugBattlePartyFieldData[a][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         break;
     case 31:
     case 32:
@@ -2390,7 +2390,7 @@ void DrawDebugBattlePartyField(u8 a)
 
 void DrawDebugBattleMove(void)
 {
-    u8 r5 = gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5;
+    u8 r5 = gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5;
     
     if (r5 < 30)
     {
@@ -2401,36 +2401,36 @@ void DrawDebugBattleMove(void)
         FillDebugBattleTextBuffer(0, 24);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][0],
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][1],
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r5 / 5][gUnknown_Debug_030043A8], 2, 3);
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][0],
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][1],
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
+        ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r5 / 5][gDebugBattlePartyEditorMoveIndex], 2, 3);
 // TODO: check other revisions
 #if !(ENGLISH && REVISION == 0)
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
             422,
-            gUnknown_Debug_03004360 * 32 + 25,
+            gDebugBattlePartyEditorSide * 32 + 25,
             0);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         gBattleTextBuff1[0] = B_BUFF_EOS;
 #endif
-        StringAppend(gBattleTextBuff1, gMoveNames[gUnknown_Debug_2023B02[gUnknown_Debug_03004360][r5 / 5][gUnknown_Debug_030043A8]]);
+        StringAppend(gBattleTextBuff1, gMoveNames[gDebugBattlePartyEditorMoves[gDebugBattlePartyEditorSide][r5 / 5][gDebugBattlePartyEditorMoveIndex]]);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][0],
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][1],
-            gUnknown_Debug_821F564[gUnknown_Debug_030043A8][2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][0],
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][1],
+            sDebugBattleMoveFieldData[gDebugBattlePartyEditorMoveIndex][2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
     }
 }
 
-extern const u16 gUnknown_Debug_821F58C[];
+extern const u16 sDebugBattleAbilityFieldData[];
 
 void DrawDebugBattleAbilities(u8 a)
 {
@@ -2443,20 +2443,20 @@ void DrawDebugBattleAbilities(u8 a)
         FillDebugBattleTextBuffer(0, 18);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[0],
-            gUnknown_Debug_821F58C[1],
-            gUnknown_Debug_821F58C[2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability1]);
+            sDebugBattleAbilityFieldData[0],
+            sDebugBattleAbilityFieldData[1],
+            sDebugBattleAbilityFieldData[2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].ability1]);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[0],
-            gUnknown_Debug_821F58C[1],
-            gUnknown_Debug_821F58C[2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattleAbilityFieldData[0],
+            sDebugBattleAbilityFieldData[1],
+            sDebugBattleAbilityFieldData[2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
         FillDebugBattleTextBuffer(0, 7);
@@ -2464,121 +2464,121 @@ void DrawDebugBattleAbilities(u8 a)
         FillDebugBattleTextBuffer(0, 18);
 #endif
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[3],
-            gUnknown_Debug_821F58C[4],
-            gUnknown_Debug_821F58C[5]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
-        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gUnknown_Debug_2023A76[gUnknown_Debug_03004360][a]].ability2]);
+            sDebugBattleAbilityFieldData[3],
+            sDebugBattleAbilityFieldData[4],
+            sDebugBattleAbilityFieldData[5]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
+        StringCopy(gBattleTextBuff1, gAbilityNames[gBaseStats[gDebugBattlePartyEditorData[gDebugBattlePartyEditorSide][a]].ability2]);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[3],
-            gUnknown_Debug_821F58C[4],
-            gUnknown_Debug_821F58C[5]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattleAbilityFieldData[3],
+            sDebugBattleAbilityFieldData[4],
+            sDebugBattleAbilityFieldData[5]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
     }
     else
     {
         StringCopy(gBattleTextBuff1, gAbilityNames[0]);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[0],
-            gUnknown_Debug_821F58C[1],
-            gUnknown_Debug_821F58C[2]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattleAbilityFieldData[0],
+            sDebugBattleAbilityFieldData[1],
+            sDebugBattleAbilityFieldData[2]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
+            &gDebugBattlePartyEditorWindow,
             gBattleTextBuff1,
-            gUnknown_Debug_821F58C[3],
-            gUnknown_Debug_821F58C[4],
-            gUnknown_Debug_821F58C[5]);
-        Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+            sDebugBattleAbilityFieldData[3],
+            sDebugBattleAbilityFieldData[4],
+            sDebugBattleAbilityFieldData[5]);
+        Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
     }
 }
 
 void DrawDebugBattleModeValue(void)
 {
-    ConvertIntToDecimalStringN(gBattleTextBuff1, gUnknown_Debug_2023A76[0][0x22], 0, 1);
+    ConvertIntToDecimalStringN(gBattleTextBuff1, gDebugBattlePartyEditorData[0][0x22], 0, 1);
     Text_InitWindow(
-        &gUnknown_Debug_03004370,
+        &gDebugBattlePartyEditorWindow,
         gBattleTextBuff1,
-        gUnknown_Debug_821F424[31][0],
-        gUnknown_Debug_821F424[31][1],
-        gUnknown_Debug_821F424[31][2]);
-    Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+        sDebugBattlePartyFieldData[31][0],
+        sDebugBattlePartyFieldData[31][1],
+        sDebugBattlePartyFieldData[31][2]);
+    Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
 }
 
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
-extern const u8 Str_821F64D[];
-extern const u8 Str_821F652[];
-extern const u8 Str_821F655[];
-extern const u8 Str_821F65A[];
+extern const u8 sText_DebugBattleOptionOn[];
+extern const u8 sText_DebugBattleOptionOff[];
+extern const u8 sText_DebugBattleOptionMono[];
+extern const u8 sText_DebugBattleOptionStereo[];
 #endif
 
-void debug_ShowCurrentAnimAudioOptions(void)
+void Debug_ShowCurrentBattleAnimationAndSoundOptions(void)
 {
 // TODO: check other revisions
 #if (ENGLISH && REVISION == 0)
     if (gSaveBlock2.optionsBattleSceneOff)
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
-            Str_821F652,
+            &gDebugBattlePartyEditorWindow,
+            sText_DebugBattleOptionOff,
             418,
-            gUnknown_Debug_03004360 * 32 + 21,
+            gDebugBattlePartyEditorSide * 32 + 21,
             0);
     else
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
-            Str_821F64D,
+            &gDebugBattlePartyEditorWindow,
+            sText_DebugBattleOptionOn,
             418,
-            gUnknown_Debug_03004360 * 32 + 21,
+            gDebugBattlePartyEditorSide * 32 + 21,
             0);
-    Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+    Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
 
     if (gSaveBlock2.optionsSound)
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
-            Str_821F65A,
+            &gDebugBattlePartyEditorWindow,
+            sText_DebugBattleOptionStereo,
             422,
-            gUnknown_Debug_03004360 * 32 + 24,
+            gDebugBattlePartyEditorSide * 32 + 24,
             0);
     else
         Text_InitWindow(
-            &gUnknown_Debug_03004370,
-            Str_821F655,
+            &gDebugBattlePartyEditorWindow,
+            sText_DebugBattleOptionMono,
             422,
-            gUnknown_Debug_03004360 * 32 + 24,
+            gDebugBattlePartyEditorSide * 32 + 24,
             0);
-    Text_PrintWindow8002F44(&gUnknown_Debug_03004370);
+    Text_PrintWindow8002F44(&gDebugBattlePartyEditorWindow);
 #endif
 }
 
-extern const u32 gUnknown_Debug_821F680[][0x23];
+extern const u32 sDebugBattlePartyCursorTileOffsets[][0x23];
 
 // Shows a cursor
 void ShowDebugBattlePartyCursor(void)
 {
-    gSharedMem[gUnknown_Debug_821F680[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]] = 0x6D;
+    gSharedMem[sDebugBattlePartyCursorTileOffsets[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]] = 0x6D;
 }
 
 // Hides a cursor
 void HideDebugBattlePartyCursor(void)
 {
-    gSharedMem[gUnknown_Debug_821F680[gUnknown_Debug_03004360][gUnknown_Debug_030043A0 + gUnknown_Debug_030043A4 * 5]] = 0x81;
+    gSharedMem[sDebugBattlePartyCursorTileOffsets[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorField + gDebugBattlePartyEditorMonIndex * 5]] = 0x81;
 }
 
 void ShowDebugBattleMoveCursor(void)
 {
-	gSharedMem[gUnknown_Debug_821F798[gUnknown_Debug_03004360][gUnknown_Debug_030043A8]] = 0x6D;
+	gSharedMem[sDebugBattleMoveCursorTileOffsets[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMoveIndex]] = 0x6D;
 }
 
 void HideDebugBattleMoveCursor(void)
 {
-	gSharedMem[gUnknown_Debug_821F798[gUnknown_Debug_03004360][gUnknown_Debug_030043A8]] = 0x81;
+	gSharedMem[sDebugBattleMoveCursorTileOffsets[gDebugBattlePartyEditorSide][gDebugBattlePartyEditorMoveIndex]] = 0x81;
 }
 
 void InitDebugFlyingMonSpriteOffsetEditor(void)
@@ -2588,7 +2588,7 @@ void InitDebugFlyingMonSpriteOffsetEditor(void)
 	u8 taskId;
 
 	for (i = 0; i < 411; i++)
-		gUnknown_Debug_2023B62[i] = 0;
+		gDebugFlyingMonSpriteOffsets[i] = 0;
 	SetHBlankCallback(NULL);
 	SetVBlankCallback(NULL);
 	DmaFill32(3, 0, (void *)VRAM, VRAM_SIZE);
@@ -2669,11 +2669,11 @@ void DrawDebugFlyingMonSpriteOffset(u8 taskId)
     FillDebugBattleTextBuffer(0, 7);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    StringCopy(gBattleTextBuff1, Str_821F7B8);
-    ConvertIntToDecimalStringN(gBattleTextBuff1 + 4, gUnknown_Debug_2023B62[gCurrentMove - 1], 2, 3);
+    StringCopy(gBattleTextBuff1, sText_DebugFlyingMonHeight);
+    ConvertIntToDecimalStringN(gBattleTextBuff1 + 4, gDebugFlyingMonSpriteOffsets[gCurrentMove - 1], 2, 3);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gBattleTextBuff1, 162, 2, 37);
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
-    gSprites[gTasks[taskId].data[1]].y2 = -gUnknown_Debug_2023B62[gCurrentMove - 1];
+    gSprites[gTasks[taskId].data[1]].y2 = -gDebugFlyingMonSpriteOffsets[gCurrentMove - 1];
 }
 
 void ReloadDebugFlyingMonSprite(u8 taskId)
@@ -2687,7 +2687,7 @@ void ReloadDebugFlyingMonSprite(u8 taskId)
       gCurrentMove);
     LoadCompressedPalette(gMonPaletteTable[gCurrentMove].data, 272, 32);
     gSprites[gTasks[taskId].data[1]].y = gMonFrontPicCoords[gCurrentMove].y_offset + 40;
-    gSprites[gTasks[taskId].data[1]].y2 = -gUnknown_Debug_2023B62[gCurrentMove - 1];
+    gSprites[gTasks[taskId].data[1]].y2 = -gDebugFlyingMonSpriteOffsets[gCurrentMove - 1];
     StartSpriteAnim(&gSprites[gTasks[taskId].data[1]], 0);
 }
 
@@ -2732,7 +2732,7 @@ void SetDebugFlyingMonEditorMenuState(u8 taskId, u8 b)
     {
         HandleBattleWindow(24, 28, 29, 33, 0);
         gTasks[taskId].data[0] = 2;
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7DA, 656, 26, 29);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, sText_DebugFlyingMonLoadSave, 656, 26, 29);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[3] = 0;
         ShowDebugFlyingMonYesNoCursor(0);
@@ -2751,12 +2751,12 @@ void ShowDebugFlyingMonFlashConfirmation(u8 taskId, u8 b)
     if (b != 0)
     {
         gTasks[taskId].data[0] = 4;
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, gUnknown_Debug_821F7F3, 144, 2, 35);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, sText_DebugFlyingMonSaveConfirm, 144, 2, 35);
     }
     else
     {
         gTasks[taskId].data[0] = 3;
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7EA, 144, 2, 35);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, sText_DebugFlyingMonLoadConfirm, 144, 2, 35);
     }
     Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
     Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, BattleText_YesNo, 656, 26, 29);
@@ -2772,7 +2772,7 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
     case 0:
         DrawDebugFlyingMonSpecies();
         DrawDebugFlyingMonSpriteOffset(taskId);
-        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, Str_821F7BD, 400, 19, 35);
+        Text_InitWindow(&gWindowTemplate_Contest_MoveDescription, sText_DebugFlyingMonFileMenu, 400, 19, 35);
         Text_PrintWindow8002F44(&gWindowTemplate_Contest_MoveDescription);
         gTasks[taskId].data[0]++;
         ActionSelectionCreateCursorAt(gTasks[taskId].data[2], 0);
@@ -2812,9 +2812,9 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
             switch (gTasks[taskId].data[2])
             {
             case 0:
-                if (gUnknown_Debug_2023B62[gCurrentMove - 1] < 64)
+                if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] < 64)
                 {
-                    gUnknown_Debug_2023B62[gCurrentMove - 1] += 1;
+                    gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] += 1;
                     DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
@@ -2841,9 +2841,9 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
             switch (gTasks[taskId].data[2])
             {
             case 0:
-                if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 0)
+                if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] > 0)
                 {
-                    gUnknown_Debug_2023B62[gCurrentMove - 1] -= 1;
+                    gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] -= 1;
                     DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
@@ -2870,11 +2870,11 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
             switch (gTasks[taskId].data[2])
             {
             case 0:
-                if (gUnknown_Debug_2023B62[gCurrentMove - 1] < 64)
+                if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] < 64)
                 {
-                    gUnknown_Debug_2023B62[gCurrentMove - 1] += 8;
-                    if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 64)
-                        gUnknown_Debug_2023B62[gCurrentMove - 1] = 64;
+                    gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] += 8;
+                    if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] > 64)
+                        gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] = 64;
                     DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
@@ -2901,12 +2901,12 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
             switch (gTasks[taskId].data[2])
             {
             case 0:
-                if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 0)
+                if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] > 0)
                 {
-                    if (gUnknown_Debug_2023B62[gCurrentMove - 1] > 8)
-                        gUnknown_Debug_2023B62[gCurrentMove - 1] -= 8;
+                    if (gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] > 8)
+                        gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] -= 8;
                     else
-                        gUnknown_Debug_2023B62[gCurrentMove - 1] = 0;
+                        gDebugFlyingMonSpriteOffsets[gCurrentMove - 1] = 0;
                     DrawDebugFlyingMonSpriteOffset(taskId);
                 }
                 break;
@@ -2974,7 +2974,7 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
         {
             PlaySE(SE_SELECT);
             if (gTasks[taskId].data[3] == 0)
-                ReadDebugDataFromFlash(31, gUnknown_Debug_2023B62, 411);
+                ReadDebugDataFromFlash(31, gDebugFlyingMonSpriteOffsets, 411);
             SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         else if (JOY_NEW(B_BUTTON))
@@ -3002,7 +3002,7 @@ void Task_DebugFlyingMonSpriteOffsetEditor(u8 taskId)
         {
             PlaySE(SE_SELECT);
             if (gTasks[taskId].data[3] == 0)
-                WriteDebugDataToFlash(31, gUnknown_Debug_2023B62, 411);
+                WriteDebugDataToFlash(31, gDebugFlyingMonSpriteOffsets, 411);
             SetDebugFlyingMonEditorMenuState(taskId, 1);
         }
         else if (JOY_NEW(B_BUTTON))
@@ -3111,7 +3111,7 @@ void SpriteCB_Flicker(struct Sprite *sprite)
         {
             sprite->invisible = FALSE;
             sprite->callback = SpriteCB_Idle;
-            gUnknown_03004284 = 0;
+            gUnusedBattleFlickerVar = 0;
         }
     }
 }
@@ -3343,7 +3343,7 @@ void DebugAutoAdvancePlayerBattleAction(void)
         switch (gBattleStruct->unk160FD)
         {
         case 0:
-            if (gBattlerControllerFuncs[gActiveBattler] == sub_802C098)
+            if (gBattlerControllerFuncs[gActiveBattler] == HandleInputChooseAction)
                 gBattleStruct->unk160FD++;
             break;
         case 1:
@@ -5185,7 +5185,7 @@ void HandleAction_UseMove(void)
     gMoveResultFlags = 0;
     gMultiHitCounter = 0;
     gBattleCommunication[6] = 0;
-    gCurrMovePos = gUnknown_02024BE5 = gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gBattlerAttacker];
+    gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gBattlerAttacker];
 
     // choose move
     if (gProtectStructs[gBattlerAttacker].noValidMoves)
@@ -5204,14 +5204,14 @@ void HandleAction_UseMove(void)
              && gDisableStructs[gBattlerAttacker].encoredMove == gBattleMons[gBattlerAttacker].moves[gDisableStructs[gBattlerAttacker].encoredMovePos])
     {
         gCurrentMove = gChosenMove = gDisableStructs[gBattlerAttacker].encoredMove;
-        gCurrMovePos = gUnknown_02024BE5 = gDisableStructs[gBattlerAttacker].encoredMovePos;
+        gCurrMovePos = gChosenMovePos = gDisableStructs[gBattlerAttacker].encoredMovePos;
         gSharedMem[BSTRUCT_OFF(moveTarget) + gBattlerAttacker] = GetMoveTarget(gCurrentMove, 0);
     }
     // check if the encored move wasn't overwritten
     else if (gDisableStructs[gBattlerAttacker].encoredMove != MOVE_NONE
              && gDisableStructs[gBattlerAttacker].encoredMove != gBattleMons[gBattlerAttacker].moves[gDisableStructs[gBattlerAttacker].encoredMovePos])
     {
-        gCurrMovePos = gUnknown_02024BE5 = gDisableStructs[gBattlerAttacker].encoredMovePos;
+        gCurrMovePos = gChosenMovePos = gDisableStructs[gBattlerAttacker].encoredMovePos;
         gCurrentMove = gChosenMove = gBattleMons[gBattlerAttacker].moves[gCurrMovePos];
         gDisableStructs[gBattlerAttacker].encoredMove = MOVE_NONE;
         gDisableStructs[gBattlerAttacker].encoredMovePos = 0;

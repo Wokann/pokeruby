@@ -688,7 +688,7 @@ u8 TypeCalc(u16 move, u8 bank_atk, u8 bank_def);
 u8 GetBattlerTurnOrderNum(u8 bank);
 
 void BattleControllerDummy(void);
-void sub_802C098();
+void HandleInputChooseAction(void);
 void Task_PlayerController_RestoreBgmAfterCry(u8);
 void CB2_SetUpReshowBattleScreenAfterMenu(void);
 void CB2_SetUpReshowBattleScreenAfterMenu2(void);

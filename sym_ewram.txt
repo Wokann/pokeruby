@@ -39,14 +39,14 @@ gDebugBattleFlags = .;
     . += 0x1;
 
 	. = ALIGN(2);
-gUnknown_Debug_2023A76 = .;
+gDebugBattlePartyEditorData = .;
 	. += 0x8C;
 
 	. = ALIGN(2);
-gUnknown_Debug_2023B02 = .;
+gDebugBattlePartyEditorMoves = .;
     . += 0x60;
 
-gUnknown_Debug_2023B62 = .;
+gDebugFlyingMonSpriteOffsets = .;
     . += 0x1A2;
 
 #endif
@@ -93,7 +93,7 @@ gBattlerSpriteIds = .; /* 2024BE0 */
 gCurrMovePos = .; /* 2024BE4 */
     . += 0x1;
 
-gUnknown_02024BE5 = .; /* 2024BE5 */
+gChosenMovePos = .; /* 2024BE5 */
     . += 0x1;
 
 gCurrentMove = .; /* 2024BE6 */

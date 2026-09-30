@@ -59,7 +59,7 @@ extern u8 gLastUsedAbility;
 extern u8 gBattleTextBuff2[];
 extern u8 gCurrentActionFuncId;
 extern struct BattleEnigmaBerry gEnigmaBerries[4];
-extern u8 gUnknown_02024BE5;
+extern u8 gChosenMovePos;
 extern u8 gCurrMovePos;
 extern u16 gRandomMove;
 extern s32 gBattleMoveDamage;
@@ -3538,7 +3538,7 @@ u8 IsMonDisobedient(void)
         {
             do
             {
-                gCurrMovePos = gUnknown_02024BE5 = Random() & 3;
+                gCurrMovePos = gChosenMovePos = Random() & 3;
             } while (gBitTable[gCurrMovePos] & calc);
             gRandomMove = gBattleMons[gBattlerAttacker].moves[gCurrMovePos];
             gBattleCommunication[3] = 0;
