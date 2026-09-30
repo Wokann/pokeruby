@@ -933,25 +933,25 @@ void HideBattlerShadowSprite(u8 battler)
     gSprites[gBattleHealthBoxInfo[battler].unk7].callback = SpriteCB_SetInvisible;
 }
 
-void sub_8032A38(void)
+void SetBattleMenuWindowTransparentPixelsToOpaque(void)
 {
-    u16 *ptr = (u16 *)(VRAM + 0x240);
-    s32 i;
-    s32 j;
+    u16 *tilePixels = (u16 *)(VRAM + 0x240);
+    s32 tile;
+    s32 pixelWord;
 
-    for (i = 0; i < 9; i++)
+    for (tile = 0; tile < 9; tile++)
     {
-        for (j = 0; j < 16; j++)
+        for (pixelWord = 0; pixelWord < 16; pixelWord++)
         {
-            if (!(*ptr & 0xF000))
-                *ptr |= 0xF000;
-            if (!(*ptr & 0x0F00))
-                *ptr |= 0x0F00;
-            if (!(*ptr & 0x00F0))
-                *ptr |= 0x00F0;
-            if (!(*ptr & 0x000F))
-                *ptr |= 0x000F;
-            ptr++;
+            if (!(*tilePixels & 0xF000))
+                *tilePixels |= 0xF000;
+            if (!(*tilePixels & 0x0F00))
+                *tilePixels |= 0x0F00;
+            if (!(*tilePixels & 0x00F0))
+                *tilePixels |= 0x00F0;
+            if (!(*tilePixels & 0x000F))
+                *tilePixels |= 0x000F;
+            tilePixels++;
         }
     }
 }

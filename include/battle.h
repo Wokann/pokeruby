@@ -622,14 +622,6 @@ extern u32 gDebugBattleTrainerAiFlags;
 extern u8 gDebugBattleFlags;
 extern u16 gTrainerBattleOpponent;
 
-// src/battle_bg.o
-void InitBattleBgsVideo();
-void ApplyPlayerChosenFrameToBattleMenu();
-void DrawMainBattleBackground(void);
-void LoadBattleTextboxAndBackground();
-void InitLinkBattleVsScreen(u8);
-void DrawBattleEntryBackground();
-
 // src/battle_2.o
 void CB2_InitBattle(void);
 void CB2_InitBattleInternal(void);
@@ -718,6 +710,7 @@ void HandleSpeciesGfxDataChange(u8 battlerAtk, u8 battlerDef, bool8 castform);
 void SetBattlerShadowSpriteCallback(u8 battler, u16 species);
 void LoadBattleMonGfxAndAnimate(u8, u8, u8);
 void ClearBehindSubstituteBit(u8 battler);
+void SetBattleMenuWindowTransparentPixelsToOpaque(void);
 
 void GameClear(void);
 

@@ -2,5 +2,12 @@
 #define GUARD_BATTLE_BG_H
 
 void DebugInitBattleSprites(void);
+void InitBattleBgsVideo(void);
+void ApplyPlayerChosenFrameToBattleMenu(void);
+void DrawMainBattleBackground(void);
+void LoadBattleTextboxAndBackground(void);
+void InitLinkBattleVsScreen(u8 taskId);
+void DrawBattleEntryBackground(void);
+bool8 LoadChosenBattleElement(u8 caseId);
 
-#endif //GUARD_BATTLE_BG_H
+#endif // GUARD_BATTLE_BG_H

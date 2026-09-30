@@ -2,6 +2,7 @@
 #include "gba/m4a_internal.h"
 #include "pokedex.h"
 #include "battle.h"
+#include "battle_bg.h"
 #include "data2.h"
 #include "decompress.h"
 #include "event_data.h"

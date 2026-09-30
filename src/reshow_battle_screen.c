@@ -1,6 +1,7 @@
 #include "global.h"
 #include "reshow_battle_screen.h"
 #include "battle.h"
+#include "battle_bg.h"
 #include "battle_controllers.h"
 #include "palette.h"
 #include "main.h"
@@ -24,7 +25,6 @@ extern u8 gBattlerSpriteIds[4];
 extern u8 gBattleMonForms[4];
 extern u8 gHealthboxSpriteIds[4];
 
-bool8 LoadChosenBattleElement(u8 a0);
 bool8 BattleLoadAllHealthBoxesGfx(u8 state);
 void ClearSpritesHealthboxAnimData(void);
 void LoadAndCreateEnemyShadowSprites(void);

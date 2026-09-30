@@ -8,6 +8,7 @@
 #include "constants/species.h"
 #include "gba/flash_internal.h"
 #include "battle.h"
+#include "battle_bg.h"
 #include "battle_ai_script_commands.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"

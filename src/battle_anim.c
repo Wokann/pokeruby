@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_bg.h"
 #include "battle_interface.h"
 #include "contest.h"
 #include "decompress.h"
