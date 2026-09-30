@@ -463,7 +463,6 @@ static const u8 *TryGetStatusString(u8 *src)
 
 #ifdef GERMAN
 extern u8 *GermanStringFormatName(u8 *, const u8 *);
-extern u8 *de_sub_8041024(s32, u32);
 #endif
 
 #ifdef ENGLISH
