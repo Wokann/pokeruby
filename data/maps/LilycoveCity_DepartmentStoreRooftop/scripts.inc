@@ -21,10 +21,10 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_HideSaleWoman:: @ 815A163
 LilycoveCity_DepartmentStoreRooftop_EventScript_SaleWoman:: @ 815A167
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration LilycoveCity_DepartmentStoreRooftop_PokemartDecor_ClearOutSale
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

@@ -42,10 +42,10 @@ Route104_PrettyPetalFlowerShop_EventScript_DontExplainBerries:: @ 815BE73
 	return
 
 Route104_PrettyPetalFlowerShop_EventScript_SellDecorations:: @ 815BE7C
-	message Text_PlayerWhatCanIDoForYou
+	message gText_PlayerWhatCanIDoForYou
 	waitmessage
 	pokemartdecoration2 Route104_PrettyPetalFlowerShop_Pokemart_Plants
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

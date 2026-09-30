@@ -16,10 +16,10 @@ LilycoveCity_DepartmentStore_4F_EventScript_Youngster:: @ 815A010
 LilycoveCity_DepartmentStore_4F_EventScript_ClerkLeft:: @ 815A019
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -36,10 +36,10 @@ LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs:: @ 815A030
 LilycoveCity_DepartmentStore_4F_EventScript_ClerkRight:: @ 815A03C
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

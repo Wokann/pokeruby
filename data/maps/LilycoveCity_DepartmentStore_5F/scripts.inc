@@ -4,10 +4,10 @@ LilycoveCity_DepartmentStore_5F_MapScripts:: @ 815A060
 LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarLeft:: @ 815A061
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_StatBoostersAndStones
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -32,10 +32,10 @@ LilycoveCity_DepartmentStore_5F_Pokemart_StatBoostersAndStones:: @ 815A078
 LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidLeft:: @ 815A094
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Treasures
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -57,10 +57,10 @@ LilycoveCity_DepartmentStore_5F_Pokemart_Treasures:: @ 815A0AC
 LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidRight:: @ 815A0C2
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_Vitamins
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -82,10 +82,10 @@ LilycoveCity_DepartmentStore_5F_Pokemart_Vitamins:: @ 815A0DC
 LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarRight:: @ 815A0F2
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration2 LilycoveCity_DepartmentStore_5F_Pokemart_VitaminsAndShards
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 

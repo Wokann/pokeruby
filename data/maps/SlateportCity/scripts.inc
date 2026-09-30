@@ -45,7 +45,7 @@ SlateportCity_EventScript_EnergyGuru:: @ 814BAB6
 	message SlateportCity_Text_EnergyGuruSellWhatYouNeed
 	waitmessage
 	pokemart SlateportCity_Pokemart_EnergyGuru
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -381,10 +381,10 @@ SlateportCity_EventScript_EvilTeamGrunt8:: @ 814BDDB
 SlateportCity_EventScript_DollClerk:: @ 814BDF2
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration SlateportCity_PokemartDecor_Dolls
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -406,10 +406,10 @@ SlateportCity_EventScript_DecorClerk:: @ 814BE20
 	lock
 	faceplayer
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration SlateportCity_PokemartDecor
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -437,10 +437,10 @@ SlateportCity_EventScript_UnusedDecorClerk:: @ 814BE60
 	lock
 	faceplayer
 	goto_if_unset FLAG_RECEIVED_SECRET_POWER, SlateportCity_EventScript_ComeBackWithSecretPower
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemartdecoration SlateportCity_PokemartDecor_Unused
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
@@ -464,10 +464,10 @@ SlateportCity_PokemartDecor_Unused:: @ 814BE80
 SlateportCity_EventScript_PowerTMClerk:: @ 814BE9A
 	lock
 	faceplayer
-	message Text_HowMayIServeYou
+	message gText_HowMayIServeYou
 	waitmessage
 	pokemart SlateportCity_Pokemart_PowerTMs
-	msgbox Text_PleaseComeAgain, MSGBOX_DEFAULT
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
