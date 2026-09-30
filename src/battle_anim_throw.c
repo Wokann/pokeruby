@@ -20,9 +20,9 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 
-int gMonShrinkDuration __asm__("gUnknown_03005F0C");
-u16 gMonShrinkDelta __asm__("gUnknown_03005F10");
-u16 gMonShrinkDistance __asm__("gUnknown_03005F14");
+int gMonShrinkDuration;
+u16 gMonShrinkDelta;
+u16 gMonShrinkDistance;
 
 #define TAG_PARTICLES_POKEBALL    55020
 #define TAG_PARTICLES_GREATBALL   55021

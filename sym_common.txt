@@ -342,10 +342,10 @@ SYMBOL(gGameContinueCallback, 4)
 SYMBOL(gIntroFrameCounter, 4)
 SYMBOL(gMultibootProgramStruct, 44)
 
-// battle_anim_813F0F4.c
-SYMBOL(gUnknown_03005F0C, 4)
-SYMBOL(gUnknown_03005F10, 4)
-gUnknown_03005F14 = .;
+// battle_anim_throw.c
+SYMBOL(gMonShrinkDuration, 4)
+SYMBOL(gMonShrinkDelta, 4)
+gMonShrinkDistance = .;
 . += 0xC;
 
 // pokeblock_feed.c
