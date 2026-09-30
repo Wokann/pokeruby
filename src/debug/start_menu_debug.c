@@ -700,9 +700,9 @@ void DebugMenu_8076F60(u8 taskId)
             gSaveBlock2.playerGender = flags & 1;
             StringCopy(gSaveBlock2.playerName, gTestMenu_FieldStartNames[cursorPos].text);
             if ((flags & 0x80) == 0)
-                debug_sub_8057508(FALSE);
+                Debug_NewGameInit(FALSE);
             else
-                debug_sub_8057508(TRUE);
+                Debug_NewGameInit(TRUE);
             DestroyTask(taskId);
             SetMainCallback2(debug_sub_8058C00);
             break;

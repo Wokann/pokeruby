@@ -192,7 +192,7 @@ void CreateDebugMysteryEventMail(struct Pokemon *mon, struct Mail *mail)
         GetMonData(mon, MON_DATA_OT_NAME, otName);
         StringCopyN(playerName, otName, OT_NAME_LENGTH + 1);
 
-        write_word_to_mem(GetMonData(mon, MON_DATA_OT_ID), trainerId);
+        SetTrainerId(GetMonData(mon, MON_DATA_OT_ID), trainerId);
 
         mail->species = SpeciesToMailSpecies(GetMonData(mon, MON_DATA_SPECIES), GetMonData(mon, MON_DATA_PERSONALITY));
         mail->itemId = itemId;

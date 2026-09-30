@@ -55,27 +55,27 @@ const s8 gDebugWarpDestinations[][2] =
     { MAP_GROUP(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F), MAP_NUM(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F) }
 };
 
-const u8 gUnknown_Debug_0823C790[] = _("KRÖTE");
+const u8 sDebugNickname_Krote[] = _("KRÖTE");
 #endif
 
-void write_word_to_mem(u32 var, u8 *dataPtr)
+void SetTrainerId(u32 trainerId, u8 *dst)
 {
-    dataPtr[0] = var;
-    dataPtr[1] = var >> 8;
-    dataPtr[2] = var >> 16;
-    dataPtr[3] = var >> 24;
+    dst[0] = trainerId;
+    dst[1] = trainerId >> 8;
+    dst[2] = trainerId >> 16;
+    dst[3] = trainerId >> 24;
 }
 
-void copy_word_to_mem(u8 *copyTo, u8 *copyFrom)
+void CopyTrainerId(u8 *dst, u8 *src)
 {
     s32 i;
     for (i = 0; i < 4; i++)
-        copyTo[i] = copyFrom[i];
+        dst[i] = src[i];
 }
 
 void InitPlayerTrainerId(void)
 {
-    write_word_to_mem((Random() << 16) | Random(), gSaveBlock2.playerTrainerId);
+    SetTrainerId((Random() << 16) | Random(), gSaveBlock2.playerTrainerId);
 }
 
 // L=A isnt set here for some reason.
@@ -96,7 +96,7 @@ void ClearPokedexFlags(void)
     memset(&gSaveBlock2.pokedex.seen, 0, sizeof(gSaveBlock2.pokedex.seen));
 }
 
-void ResetContestAndMuseumWinners(void)
+void ClearAllContestWinnerPics(void)
 {
     s32 i;
 
@@ -105,7 +105,7 @@ void ResetContestAndMuseumWinners(void)
         gSaveBlock1.museumPortraits[i] = sEmptyMuseumPortrait;
 }
 
-void ZeroBattleTowerData(void)
+void ClearBattleTowerData(void)
 {
     CpuFill32(0, &gSaveBlock2.battleTower, sizeof(gSaveBlock2.battleTower));
 }
@@ -140,7 +140,7 @@ void WarpToTruck(void)
     WarpIntoMap();
 }
 
-void ClearSav2(void)
+void Sav2_ClearSetDefault(void)
 {
     CpuFill16(0, &gSaveBlock2, sizeof(gSaveBlock2));
     SetDefaultOptions();
@@ -167,7 +167,7 @@ void NewGameInitData(void)
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
     ResetPokedex();
-    ZeroBattleTowerData();
+    ClearBattleTowerData();
     memset(&gSaveBlock1, 0, sizeof(gSaveBlock1));
     ClearAllMail();
     gSaveBlock2.specialSaveWarp = 0;
@@ -182,7 +182,7 @@ void NewGameInitData(void)
     gSaveBlock1.money = 3000;
     ResetLinkContestBoolean();
     ResetGameStats();
-    ResetContestAndMuseumWinners();
+    ClearAllContestWinnerPics();
     ClearPlayerLinkBattleRecords();
     InitShroomishSizeRecord();
     InitBarboachSizeRecord();
@@ -211,7 +211,7 @@ extern void Debug_InitBagItems(void);
 extern void Debug_FillPokeblockCase(void);
 extern void unref_sub_8070F90(void);
 
-void debug_sub_8057508(bool32 arg0)
+void Debug_NewGameInit(bool32 setKroteNickname)
 {
     gIsDebugMode = 1;
     NewGameInitData();
@@ -222,8 +222,8 @@ void debug_sub_8057508(bool32 arg0)
     FlagSet(FLAG_SYS_B_DASH);
     ScriptGiveMon(SPECIES_TREECKO, 99, 0, 0, 0, 0);
 
-    if (arg0 == TRUE)
-        SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, gUnknown_Debug_0823C790);
+    if (setKroteNickname == TRUE)
+        SetMonData(&gPlayerParty[0], MON_DATA_NICKNAME, sDebugNickname_Krote);
 
     Debug_FillPokemonStorage();
     Debug_InitBagItems();

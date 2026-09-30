@@ -217,7 +217,7 @@ void CreateDebugEReaderTrainer(struct BattleTowerEReaderTrainer *eReaderTrainer,
     s32 farewellWordId;
 
     eReaderTrainer->trainerClass = trainerId % 77;
-    write_word_to_mem(trainerId, eReaderTrainer->trainerId);
+    SetTrainerId(trainerId, eReaderTrainer->trainerId);
     StringCopy_PlayerName(eReaderTrainer->name, trainerName);
     farewellWordId = 7;
     for (i = 0; i < 6; i++)
