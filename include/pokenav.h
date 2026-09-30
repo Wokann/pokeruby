@@ -471,7 +471,6 @@ void CB2_ContinueInitPokeNav(void);
 void InitPokenavMainMenu(void);
 void CB2_Pokenav(void);
 void VBlankCB_Pokenav(void);
-void sub_80FB260();
 void UpdateRegionMapCityBanner(void);
 void ConditionGraph_Draw();
 void UpdateTrainerEyesBackgroundPulse();
