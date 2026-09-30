@@ -1306,10 +1306,10 @@ static void CompleteOnInactiveTextPrinter(void)
 void Task_GiveExpToMon(u8 taskId)
 {
     u32 pkmnIndex = (u8)gTasks[taskId].data[0];
-    u8 bank = gTasks[taskId].data[2];
+    u8 battler = gTasks[taskId].data[2];
     s16 gainedExp = gTasks[taskId].data[1];
 
-    if (IsDoubleBattle() == TRUE || pkmnIndex != gBattlerPartyIndexes[bank])
+    if (IsDoubleBattle() == TRUE || pkmnIndex != gBattlerPartyIndexes[battler])
     {
         struct Pokemon *pkmn = &gPlayerParty[pkmnIndex];
         u16 species = GetMonData(pkmn, MON_DATA_SPECIES);
@@ -1319,18 +1319,18 @@ void Task_GiveExpToMon(u8 taskId)
 
         if (currExp + gainedExp >= nextLvlExp)
         {
-            u8 savedActiveBank;
+            u8 savedActiveBattler;
 
             SetMonData(pkmn, MON_DATA_EXP, &nextLvlExp);
             CalculateMonStats(pkmn);
             gainedExp -= nextLvlExp - currExp;
-            savedActiveBank = gActiveBattler;
-            gActiveBattler = bank;
+            savedActiveBattler = gActiveBattler;
+            gActiveBattler = battler;
             BtlController_EmitTwoReturnValues(1, 11, gainedExp);
-            gActiveBattler = savedActiveBank;
+            gActiveBattler = savedActiveBattler;
 
             if (IsDoubleBattle() == TRUE
-             && ((u16)pkmnIndex == gBattlerPartyIndexes[bank] || (u16)pkmnIndex == gBattlerPartyIndexes[bank ^ 2]))
+             && ((u16)pkmnIndex == gBattlerPartyIndexes[battler] || (u16)pkmnIndex == gBattlerPartyIndexes[battler ^ 2]))
                 gTasks[taskId].func = Task_LaunchLvlUpAnim;
             else
                 gTasks[taskId].func = DestroyExpTaskAndCompleteOnInactiveTextPrinter;
@@ -1339,7 +1339,7 @@ void Task_GiveExpToMon(u8 taskId)
         {
             currExp += gainedExp;
             SetMonData(pkmn, MON_DATA_EXP, &currExp);
-            gBattlerControllerFuncs[bank] = CompleteOnInactiveTextPrinter;
+            gBattlerControllerFuncs[battler] = CompleteOnInactiveTextPrinter;
             DestroyTask(taskId);
         }
     }
@@ -1353,7 +1353,7 @@ void Task_PrepareToGiveExpWithExpBar(u8 taskId)
 {
     u8 pkmnIndex = gTasks[taskId].data[0];
     s32 r9 = gTasks[taskId].data[1];
-    u8 bank = gTasks[taskId].data[2];
+    u8 battler = gTasks[taskId].data[2];
     struct Pokemon *pkmn = &gPlayerParty[pkmnIndex];
     u8 level = GetMonData(pkmn, MON_DATA_LEVEL);
     u16 species = GetMonData(pkmn, MON_DATA_SPECIES);
@@ -1363,7 +1363,7 @@ void Task_PrepareToGiveExpWithExpBar(u8 taskId)
 
     exp -= currLvlExp;
     expToNextLvl = gExperienceTables[gBaseStats[species].growthRate][level + 1] - currLvlExp;
-    SetBattleBarStruct(bank, gHealthboxSpriteIds[bank], expToNextLvl, exp, -r9);
+    SetBattleBarStruct(battler, gHealthboxSpriteIds[battler], expToNextLvl, exp, -r9);
     PlaySE(SE_EXP);
     gTasks[taskId].func = Task_GiveExpWithExpBar;
 }
@@ -1422,28 +1422,28 @@ void Task_GiveExpWithExpBar(u8 taskId)
 
 void Task_LaunchLvlUpAnim(u8 taskId)
 {
-    u8 bank = gTasks[taskId].data[2];
+    u8 battler = gTasks[taskId].data[2];
     u8 pkmnIndex = gTasks[taskId].data[0];
 
-    if (IsDoubleBattle() == TRUE && pkmnIndex == gBattlerPartyIndexes[bank ^ 2])
-        bank ^= 2;
-    InitAndLaunchSpecialAnimation(bank, bank, bank, 0);
+    if (IsDoubleBattle() == TRUE && pkmnIndex == gBattlerPartyIndexes[battler ^ 2])
+        battler ^= 2;
+    InitAndLaunchSpecialAnimation(battler, battler, battler, 0);
     gTasks[taskId].func = Task_UpdateLvlInHealthbox;
 }
 
 void Task_UpdateLvlInHealthbox(u8 taskId)
 {
-    u8 bank = gTasks[taskId].data[2];
+    u8 battler = gTasks[taskId].data[2];
 
-    if (!gBattleHealthBoxInfo[bank].specialAnimActive)
+    if (!gBattleHealthBoxInfo[battler].specialAnimActive)
     {
         u8 pkmnIndex = gTasks[taskId].data[0];
 
         GetMonData(&gPlayerParty[pkmnIndex], MON_DATA_LEVEL);  // Unused return value
-        if (IsDoubleBattle() == TRUE && pkmnIndex == gBattlerPartyIndexes[bank ^ 2])
-            UpdateHealthboxAttribute(gHealthboxSpriteIds[bank ^ 2], &gPlayerParty[pkmnIndex], 0);
+        if (IsDoubleBattle() == TRUE && pkmnIndex == gBattlerPartyIndexes[battler ^ 2])
+            UpdateHealthboxAttribute(gHealthboxSpriteIds[battler ^ 2], &gPlayerParty[pkmnIndex], 0);
         else
-            UpdateHealthboxAttribute(gHealthboxSpriteIds[bank], &gPlayerParty[pkmnIndex], 0);
+            UpdateHealthboxAttribute(gHealthboxSpriteIds[battler], &gPlayerParty[pkmnIndex], 0);
         gTasks[taskId].func = DestroyExpTaskAndCompleteOnInactiveTextPrinter;
     }
 }
@@ -1451,12 +1451,12 @@ void Task_UpdateLvlInHealthbox(u8 taskId)
 void DestroyExpTaskAndCompleteOnInactiveTextPrinter(u8 taskId)
 {
     u8 pkmnIndex;
-    u8 bank;
+    u8 battler;
 
     pkmnIndex = gTasks[taskId].data[0];
     GetMonData(&gPlayerParty[pkmnIndex], MON_DATA_LEVEL);  // Unused return value
-    bank = gTasks[taskId].data[2];
-    gBattlerControllerFuncs[bank] = CompleteOnInactiveTextPrinter;
+    battler = gTasks[taskId].data[2];
+    gBattlerControllerFuncs[battler] = CompleteOnInactiveTextPrinter;
     DestroyTask(taskId);
 }
 
@@ -2323,28 +2323,28 @@ void PlayerHandleSwitchInAnim(void)
     gBattlerControllerFuncs[gActiveBattler] = SwitchIn_TryShinyAnimShowHealthbox;
 }
 
-void StartSendOutAnim(u8 bank, u8 b)
+void StartSendOutAnim(u8 battler, u8 dontClearSubstituteBit)
 {
     u16 species;
 
-    ClearTemporarySpeciesSpriteData(bank, b);
-    gBattlerPartyIndexes[bank] = gBattleBufferA[bank][1];
-    species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[bank]], MON_DATA_SPECIES);
-    gBattleControllerData[bank] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
-    SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(bank));
-    gBattlerSpriteIds[bank] = CreateSprite(
+    ClearTemporarySpeciesSpriteData(battler, dontClearSubstituteBit);
+    gBattlerPartyIndexes[battler] = gBattleBufferA[battler][1];
+    species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES);
+    gBattleControllerData[battler] = CreateInvisibleSpriteWithCallback(SpriteCB_WaitForBattlerBallReleaseAnim);
+    SetMultiuseSpriteTemplateToPokemon(species, GetBattlerPosition(battler));
+    gBattlerSpriteIds[battler] = CreateSprite(
       &gCreatingSpriteTemplate,
-      GetBattlerSpriteCoord(bank, 2),
-      GetBattlerSpriteDefault_Y(bank),
-      GetBattlerSpriteSubpriority(bank));
-    gSprites[gBattleControllerData[bank]].data[1] = gBattlerSpriteIds[bank];
-    gSprites[gBattlerSpriteIds[bank]].data[0] = bank;
-    gSprites[gBattlerSpriteIds[bank]].data[2] = species;
-    gSprites[gBattlerSpriteIds[bank]].oam.paletteNum = bank;
-    StartSpriteAnim(&gSprites[gBattlerSpriteIds[bank]], gBattleMonForms[bank]);
-    gSprites[gBattlerSpriteIds[bank]].invisible = TRUE;
-    gSprites[gBattlerSpriteIds[bank]].callback = SpriteCallbackDummy;
-    gSprites[gBattleControllerData[bank]].data[0] = DoPokeballSendOutAnimation(0, POKEBALL_PLAYER_SENDOUT);
+      GetBattlerSpriteCoord(battler, 2),
+      GetBattlerSpriteDefault_Y(battler),
+      GetBattlerSpriteSubpriority(battler));
+    gSprites[gBattleControllerData[battler]].data[1] = gBattlerSpriteIds[battler];
+    gSprites[gBattlerSpriteIds[battler]].data[0] = battler;
+    gSprites[gBattlerSpriteIds[battler]].data[2] = species;
+    gSprites[gBattlerSpriteIds[battler]].oam.paletteNum = battler;
+    StartSpriteAnim(&gSprites[gBattlerSpriteIds[battler]], gBattleMonForms[battler]);
+    gSprites[gBattlerSpriteIds[battler]].invisible = TRUE;
+    gSprites[gBattlerSpriteIds[battler]].callback = SpriteCallbackDummy;
+    gSprites[gBattleControllerData[battler]].data[0] = DoPokeballSendOutAnimation(0, POKEBALL_PLAYER_SENDOUT);
 }
 
 void PlayerHandleReturnMonToBall(void)
@@ -2923,7 +2923,7 @@ void Task_StartSendOutAnim(u8 taskId)
     }
     else
     {
-        u8 savedActiveBank = gActiveBattler;
+        u8 savedActiveBattler = gActiveBattler;
 
         gActiveBattler = gTasks[taskId].data[0];
         if (!IsDoubleBattle() || (gBattleTypeFlags & 0x40))
@@ -2942,7 +2942,7 @@ void Task_StartSendOutAnim(u8 taskId)
             gActiveBattler ^= 2;
         }
         gBattlerControllerFuncs[gActiveBattler] = Intro_TryShinyAnimShowHealthbox;
-        gActiveBattler = savedActiveBank;
+        gActiveBattler = savedActiveBattler;
         DestroyTask(taskId);
     }
 }
