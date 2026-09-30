@@ -354,10 +354,9 @@ const u8 gJPContestWindowsTilemap[] = INCBIN_U8("graphics/contest/japanese/windo
 const u8 gContestNumbers_UnusedGfx[] = INCBIN_U8("graphics/unused/numbers.4bpp.lz");
 const u8 gContestNumbers_UnusedPal[] = INCBIN_U8("graphics/unused/numbers.gbapal.lz");
 const u8 unused_old_contest_2_4bpp[] = INCBIN_U8("graphics/unused/old_contest_2.4bpp.lz");
-// the tilemap and palette for unused contest assets are used. however, these two files aren't old
-const u8 gContestPalette[] = INCBIN_U8("graphics/unused/old_contest_2.gbapal.lz");
+const u8 gContestInterfaceAudiencePalette[] = INCBIN_U8("graphics/contest/interface.gbapal.lz");
 
-const u8 gContestGfx[] = INCBIN_U8("graphics/unused/old_contest_2.bin.lz");
+const u8 gContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/interface.bin.lz");
 
 const u8 gContestBgTilemap[] = INCBIN_U8("graphics/contest/bgmap.bin.lz");
 const u8 gJPContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/japanese/interface.bin.lz");
