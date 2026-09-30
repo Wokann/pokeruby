@@ -952,7 +952,7 @@ const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/misc/cable_car.4bpp.lz");
 const u8 gCableCarDoor_Gfx[] = INCBIN_U8("graphics/misc/cable_car_door.4bpp.lz");
 const u8 gCableCarCable_Gfx[] = INCBIN_U8("graphics/misc/cable_car_cord.4bpp.lz");
 
-const u8 gRouletteMenu_Gfx[] = INCBIN_U8("graphics/unknown/unknown_E8096C.4bpp.lz");
+const u8 gRouletteMenu_Gfx[] = INCBIN_U8("graphics/roulette/window.4bpp.lz");
 
 const u8 gRouletteWheel_Gfx[] = INCBIN_U8("graphics/roulette/wheel.8bpp.lz");
 const u8 gRouletteCenter_Gfx[] = INCBIN_U8("graphics/roulette/center.4bpp.lz");
@@ -1030,7 +1030,7 @@ const u16 gNamingScreenMenu_Pal[][16] =
     INCBIN_U16("graphics/naming_screen/5.gbapal"),
 };
 
-const u8 gNamingScreenBackground_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E86258.bin");
+const u8 gNamingScreenBackground_Tilemap[] = INCBIN_U8("graphics/naming_screen/background.bin");
 const u8 gPokedexMenu_Gfx[] = INCBIN_U8("graphics/pokedex/menu.4bpp.lz");
 const u8 gPokedexInterface_Gfx[] = INCBIN_U8("graphics/pokedex/menu2.4bpp.lz");
 const u16 gPokedexBgHoenn_Pal[] = INCBIN_U16("graphics/pokedex/menu1.gbapal");
@@ -1174,7 +1174,7 @@ const u16 gMonIconPalettes[][16] =
     INCBIN_U16("graphics/pokemon_icon_palettes/2.gbapal"),
 };
 
-const u8 gPokedexList_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E96738.bin.lz");
+const u8 gPokedexList_Tilemap[] = INCBIN_U8("graphics/pokedex/list.bin.lz");
 const u8 gPokedexStartMenuMain_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_list_menu.bin.lz");
 const u8 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_listing_menu.bin.lz");
 const u8 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_navbar.bin.lz");
@@ -1294,7 +1294,7 @@ const u16 gTextWindowFrame19_Pal[] = INCBIN_U16("graphics/text_window/19.gbapal"
 const u8 gTextWindowFrame20_Gfx[] = INCBIN_U8("graphics/text_window/20.4bpp");
 const u16 gTextWindowFrame20_Pal[] = INCBIN_U16("graphics/text_window/20.gbapal");
 
-const u8 gPokedexListUnderlay_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E9C6DC.bin.lz");
+const u8 gPokedexListUnderlay_Tilemap[] = INCBIN_U8("graphics/pokedex/list_underlay.bin.lz");
 
 const u8 gIntroCopyright_Gfx[] = INCBIN_U8("graphics/intro/copyright.4bpp.lz");
 const u16 gIntroCopyright_Pal[] = INCBIN_U16("graphics/intro/copyright.gbapal");

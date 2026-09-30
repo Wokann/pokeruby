@@ -299,8 +299,8 @@ static void LoadMatsudaDebugMenuGraphics(void)
 }
 
 //const u8 gMatsudaDebugMenu_UnknownByteArray[] = {0xFC, 0x02, 0x0F, 0x00, 0xFF};
-const u8 gMatsudaDebugCursorGfx[] = INCBIN_U8("graphics/unknown/ball.4bpp");
-const u16 gMatsudaDebugCursorPal[] = INCBIN_U16("graphics/unknown/ball.gbapal");
+const u8 gMatsudaDebugCursorGfx[] = INCBIN_U8("graphics/debug/matsuda_cursor.4bpp");
+const u16 gMatsudaDebugCursorPal[] = INCBIN_U16("graphics/debug/matsuda_cursor.gbapal");
 
 const u8 gMatsudaDebugContestantNameCoords[][2] =
     {

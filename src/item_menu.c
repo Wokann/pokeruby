@@ -3434,7 +3434,7 @@ static int ConsumeBagItemListRedrawFlag(void)
     return val;
 }
 
-static const u16 sRotatingBallPalette[] = INCBIN_U16("graphics/unknown/83C170C.gbapal");
+static const u16 sRotatingBallPalette[] = INCBIN_U16("graphics/interface/bag_spinner.gbapal");
 static const u8 sRotatingBallGfx[] = INCBIN_U8("graphics/interface/bag_spinner.4bpp");
 
 const u8 gSpriteImage_UnusedCherry[] = INCBIN_U8("graphics/unused/cherry.4bpp");
