@@ -597,7 +597,7 @@ void BtlController_EmitBattleAnimation(u8 bufferId, u8 animationId, u16 argument
 void BtlController_EmitResetActionMoveSelection(u8 bufferId, u8 caseId); //0x36
 void BtlController_EmitEndLinkBattle(u8 bufferId, u8 battleOutcome); //0x37
 
-void MarkBattlerForControllerExec(u8 bank);
+void MarkBattlerForControllerExec(u8 battler);
 
 extern u8 gBattleTextBuff1[];
 
@@ -667,7 +667,7 @@ void TryDoEventsBeforeFirstTurn(void);
 void BattleTurnPassed(void);
 void RunBattleScriptCommands_PopCallbacksStack(void);
 void RunBattleScriptCommands(void);
-bool8 TryRunFromBattle(u8 bank);
+bool8 TryRunFromBattle(u8 battler);
 
 // asm/battle_2.o
 void HandleTurnActionSelectionState(void);
@@ -677,18 +677,18 @@ u8 GetWhoStrikesFirst(u8, u8, u8);
 void InitDebugBattlePartyEditor(void);
 
 // asm/battle_3.o
-u8 CheckMoveLimitations(u8 bank, u8 unusableMoves, u8 check);
+u8 CheckMoveLimitations(u8 battler, u8 unusableMoves, u8 check);
 u8 DoFieldEndTurnEffects(void);
 u8 TurnBasedEffects(void);
 u8 HandleFaintedMonActions();
-u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 move);
-u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn);
+u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveArg);
+u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 
 // asm/battle_4.o
 void AI_CalcDmg(u8, u8);
-u8 TypeCalc(u16 move, u8 bank_atk, u8 bank_def);
-u8 GetBattlerTurnOrderNum(u8 bank);
+u8 TypeCalc(u16 move, u8 attacker, u8 defender);
+u8 GetBattlerTurnOrderNum(u8 battler);
 
 void BattleControllerDummy(void);
 void HandleInputChooseAction(void);
