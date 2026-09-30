@@ -553,7 +553,7 @@ u8 DebugMenu_8076D50(void)
 u8 DebugMenu_8076D5C(void)
 {
     debug_sub_8076B4C();
-    debug_sub_806F8F8();
+    Debug_StartResetRtcScreen();
     return 0;
 }
 
@@ -1807,7 +1807,7 @@ u8 DebugMenu_AllBadges(void)
 u8 DebugMenu_TimeRecords(void)
 {
     CloseMenu();
-    CreateTask(debug_sub_806F9E4, 80);
+    CreateTask(Task_DebugDisplayRtcInfo, 80);
     LockPlayerFieldControls();
     return TRUE;
 }
@@ -1815,7 +1815,7 @@ u8 DebugMenu_TimeRecords(void)
 u8 DebugMenu_SetTime(void)
 {
     CloseMenu();
-    debug_sub_806F99C();
+    Debug_StartSetRtcTime();
     LockPlayerFieldControls();
     return TRUE;
 }

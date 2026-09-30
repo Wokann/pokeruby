@@ -1,4 +1,5 @@
 #include "global.h"
+#include "reset_rtc_screen.h"
 #include "event_data.h"
 #include "main.h"
 #include "menu.h"
@@ -16,14 +17,51 @@
 #include "text.h"
 #include "scanline_effect.h"
 
-struct ResetRtcStruct
+#define PALTAG_ARROW 0x1000
+
+enum
+{
+    DATAIDX_DAYS = 3,
+    DATAIDX_HOURS,
+    DATAIDX_MINS,
+    DATAIDX_SECS,
+    DATAIDX_CONFIRM,
+};
+
+#define tFinished  data[0]
+#define tSetTime   data[1]
+#define tSelection data[2]
+#define tDays      data[DATAIDX_DAYS]
+#define tHours     data[DATAIDX_HOURS]
+#define tMinutes   data[DATAIDX_MINS]
+#define tSeconds   data[DATAIDX_SECS]
+#define tConfirm   data[DATAIDX_CONFIRM]
+
+enum
+{
+    SELECTION_DAYS = 1,
+    SELECTION_HOURS,
+    SELECTION_MINS,
+    SELECTION_SECS,
+    SELECTION_CONFIRM,
+    SELECTION_NONE,
+};
+
+enum
+{
+    ARROW_DOWN,
+    ARROW_UP,
+    ARROW_RIGHT,
+};
+
+struct ResetRtcInputMap
 {
     /*0x0*/ u8 dataIndex;
     /*0x2*/ u16 minVal;
     /*0x4*/ u16 maxVal;
     /*0x6*/ u8 left;
     /*0x7*/ u8 right;
-    /*0x8*/ u8 unk8;
+    /*0x8*/ u8 unk;
 };
 
 extern u16 gSaveFileStatus;
@@ -31,247 +69,258 @@ extern u16 gSaveFileStatus;
 void CB2_ResetRtcScreen(void);
 void VBlankCB_ResetRtcScreen(void);
 void Task_ResetRtcScreen(u8);
+void Task_ResetRtc_SetFinished(u8);
+void Task_ResetRtc_Exit(u8);
+void Task_ResetRtc_HandleInput(u8);
+void Task_ResetRtc_Init(u8);
+void Task_ShowResetRtcPrompt(u8);
 
-static const struct ResetRtcStruct gUnknown_08376420[5] =
+static const struct ResetRtcInputMap sInputMap[] =
 {
     {
-        .dataIndex = 3,
+        .dataIndex = DATAIDX_DAYS,
         .minVal = 1,
         .maxVal = 9999,
         .left = 0,
         .right = 2,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
-        .dataIndex = 4,
+        .dataIndex = DATAIDX_HOURS,
         .minVal = 0,
         .maxVal = 23,
         .left = 1,
         .right = 3,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
-        .dataIndex = 5,
+        .dataIndex = DATAIDX_MINS,
         .minVal = 0,
         .maxVal = 59,
         .left = 2,
         .right = 4,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
-        .dataIndex = 6,
+        .dataIndex = DATAIDX_SECS,
         .minVal = 0,
         .maxVal = 59,
         .left = 3,
         .right = 5,
-        .unk8 = 0,
+        .unk = 0,
     },
     {
-        .dataIndex = 7,
+        .dataIndex = DATAIDX_CONFIRM,
         .minVal = 0,
         .maxVal = 0,
         .left = 4,
         .right = 0,
-        .unk8 = 6,
+        .unk = 6,
     },
 };
 
-const struct OamData gOamData_837645C =
+const struct OamData gOamData_ResetRtcArrow =
 {
     .y = 0,
-    .affineMode = 0,
-    .objMode = 0,
-    .mosaic = 0,
-    .bpp = 0,
-    .shape = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
     .x = 0,
     .matrixNum = 0,
-    .size = 0,
+    .size = SPRITE_SIZE(8x8),
     .tileNum = 0,
     .priority = 0,
     .paletteNum = 0,
     .affineParam = 0,
 };
 
-const u8 gSpriteImage_8376464[] = INCBIN_U8("graphics/unknown_sprites/83764AC/0.4bpp");
-const u8 gSpriteImage_8376484[] = INCBIN_U8("graphics/unknown_sprites/83764AC/1.4bpp");
+const u8 gResetRtcArrowDown_Gfx[] = INCBIN_U8("graphics/reset_rtc_screen/arrow_down.4bpp");
+const u8 gResetRtcArrowRight_Gfx[] = INCBIN_U8("graphics/reset_rtc_screen/arrow_right.4bpp");
 
-const u16 Palette_3764A4[] = INCBIN_U16("graphics/unknown/83764A4.gbapal");
+const u16 gResetRtcArrow_Pal[] = INCBIN_U16("graphics/reset_rtc_screen/arrow.gbapal");
 
-const struct SpriteFrameImage gSpriteImageTable_83764AC[] =
+const struct SpriteFrameImage gResetRtcArrowPicTable[] =
 {
-    { gSpriteImage_8376464, 0x20 },
-    { gSpriteImage_8376484, 0x20 },
+    { gResetRtcArrowDown_Gfx, 0x20 },
+    { gResetRtcArrowRight_Gfx, 0x20 },
 };
 
-const struct SpritePalette gUnknown_083764BC =
+const struct SpritePalette gSpritePalette_ResetRtcArrow =
 {
-    .data = Palette_3764A4,
-    .tag = 0x1000,
+    .data = gResetRtcArrow_Pal,
+    .tag = PALTAG_ARROW,
 };
 
-const union AnimCmd gSpriteAnim_83764C4[] =
+const union AnimCmd gAnim_ResetRtcArrow_Down[] =
 {
     ANIMCMD_FRAME(0, 30),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83764CC[] =
+const union AnimCmd gAnim_ResetRtcArrow_Up[] =
 {
     ANIMCMD_FRAME(0, 30, .vFlip = TRUE),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd gSpriteAnim_83764D4[] =
+const union AnimCmd gAnim_ResetRtcArrow_Right[] =
 {
     ANIMCMD_FRAME(1, 30),
     ANIMCMD_JUMP(0),
 };
 
-const union AnimCmd *const gSpriteAnimTable_83764DC[] =
+const union AnimCmd *const gAnims_ResetRtcArrow[] =
 {
-    gSpriteAnim_83764C4,
-    gSpriteAnim_83764CC,
-    gSpriteAnim_83764D4,
+    gAnim_ResetRtcArrow_Down,
+    gAnim_ResetRtcArrow_Up,
+    gAnim_ResetRtcArrow_Right,
 };
 
-const struct SpriteTemplate gSpriteTemplate_83764E8 =
+const struct SpriteTemplate gSpriteTemplate_ResetRtcArrow =
 {
-    .tileTag = 0xFFFF,
-    .paletteTag = 0x1000,
-    .oam = &gOamData_837645C,
-    .anims = gSpriteAnimTable_83764DC,
-    .images = gSpriteImageTable_83764AC,
+    .tileTag = TAG_NONE,
+    .paletteTag = PALTAG_ARROW,
+    .oam = &gOamData_ResetRtcArrow,
+    .anims = gAnims_ResetRtcArrow,
+    .images = gResetRtcArrowPicTable,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
 };
 
-const u8 gUnknown_08376500[] = _(" : ");
+const u8 gText_ResetRtcColon[] = _(" : ");
 
-void SpriteCB_ResetRtcCusor0(struct Sprite *sprite)
+#define sTaskId data[0]
+#define sState  data[1]
+
+void SpriteCB_Cursor_UpOrRight(struct Sprite *sprite)
 {
-    int state = gTasks[sprite->data[0]].data[2];
-    if (state != sprite->data[1])
+    int selection = gTasks[sprite->sTaskId].tSelection;
+    if (selection != sprite->sState)
     {
-        sprite->data[1] = state;
-        switch (state)
+        sprite->sState = selection;
+        switch (selection)
         {
-        case 1:
+        case SELECTION_DAYS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 53;
             sprite->y = 68;
             break;
-        case 2:
+        case SELECTION_HOURS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 86;
             sprite->y = 68;
             break;
-        case 3:
+        case SELECTION_MINS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 107;
             sprite->y = 68;
             break;
-        case 4:
+        case SELECTION_SECS:
             sprite->invisible = FALSE;
-            sprite->animNum = 1;
+            sprite->animNum = ARROW_UP;
             sprite->animDelayCounter = 0;
             sprite->x = 128;
             sprite->y = 68;
             break;
-        case 5:
+        case SELECTION_CONFIRM:
             sprite->invisible = FALSE;
-            sprite->animNum = 2;
+            sprite->animNum = ARROW_RIGHT;
             sprite->animDelayCounter = 0;
             sprite->x = 155;
             sprite->y = 80;
             break;
-        case 6:
+        case SELECTION_NONE:
             DestroySprite(sprite);
             break;
         }
     }
 }
 
-void SpriteCB_ResetRtcCusor1(struct Sprite *sprite)
+void SpriteCB_Cursor_Down(struct Sprite *sprite)
 {
-    int state = gTasks[sprite->data[0]].data[2];
-    if (state != sprite->data[1])
+    int selection = gTasks[sprite->sTaskId].tSelection;
+    if (selection != sprite->sState)
     {
-        sprite->data[1] = state;
-        switch (state)
+        sprite->sState = selection;
+        switch (selection)
         {
-        case 1:
+        case SELECTION_DAYS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 53;
             sprite->y = 92;
             break;
-        case 2:
+        case SELECTION_HOURS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 86;
             sprite->y = 92;
             break;
-        case 3:
+        case SELECTION_MINS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 107;
             sprite->y = 92;
             break;
-        case 4:
+        case SELECTION_SECS:
             sprite->invisible = FALSE;
-            sprite->animNum = 0;
+            sprite->animNum = ARROW_DOWN;
             sprite->animDelayCounter = 0;
             sprite->x = 128;
             sprite->y = 92;
             break;
-        case 5:
+        case SELECTION_CONFIRM:
             sprite->invisible = TRUE;
             break;
-        case 6:
+        case SELECTION_NONE:
             DestroySprite(sprite);
             break;
         }
     }
 }
 
-void ResetRtcScreen_CreateCursor(u8 taskId)
+void CreateCursor(u8 taskId)
 {
     int spriteId;
 
-    LoadSpritePalette(&gUnknown_083764BC);
+    LoadSpritePalette(&gSpritePalette_ResetRtcArrow);
 
-    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_83764E8, 53, 68, 0);
-    gSprites[spriteId].callback = SpriteCB_ResetRtcCusor0;
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = -1;
+    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_ResetRtcArrow, 53, 68, 0);
+    gSprites[spriteId].callback = SpriteCB_Cursor_UpOrRight;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sState = -1;
 
-    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_83764E8, 53, 68, 0);
-    gSprites[spriteId].callback = SpriteCB_ResetRtcCusor1;
-    gSprites[spriteId].data[0] = taskId;
-    gSprites[spriteId].data[1] = -1;
+    spriteId = CreateSpriteAtEnd(&gSpriteTemplate_ResetRtcArrow, 53, 68, 0);
+    gSprites[spriteId].callback = SpriteCB_Cursor_Down;
+    gSprites[spriteId].sTaskId = taskId;
+    gSprites[spriteId].sState = -1;
 }
 
-void ResetRtcScreen_FreeCursorPalette(void)
+#undef sTaskId
+#undef sState
+
+void FreeCursorPalette(void)
 {
-    FreeSpritePaletteByTag(gUnknown_083764BC.tag);
+    FreeSpritePaletteByTag(gSpritePalette_ResetRtcArrow.tag);
 }
 
-void ResetRtcScreen_HideChooseTimeWindow(void)
+void HideChooseTimeWindow(void)
 {
     Menu_EraseWindowRect(3, 8, 25, 11);
 }
 
-void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 seconds)
+void PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 seconds)
 {
     u8 *dest = gStringVar4;
     days %= 10000;
@@ -283,21 +332,21 @@ void ResetRtcScreen_PrintTime(u8 x, u8 y, u16 days, u8 hours, u8 minutes, u8 sec
     dest = StringCopy(dest, gOtherText_Day);
     AlignInt2InMenuWindow(gStringVar1, hours, 18, 1);
     dest = StringCopy(dest, gStringVar1);
-    dest = StringCopy(dest, gUnknown_08376500);
+    dest = StringCopy(dest, gText_ResetRtcColon);
     dest = ConvertIntToDecimalStringN(dest, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
-    dest = StringCopy(dest, gUnknown_08376500);
+    dest = StringCopy(dest, gText_ResetRtcColon);
     ConvertIntToDecimalStringN(dest, seconds, STR_CONV_MODE_LEADING_ZEROS, 2);
     Menu_PrintText(gStringVar4, x, y);
 }
 
-void ResetRtcScreen_ShowChooseTimeWindow(u16 days, u8 hours, u8 minutes, u8 seconds)
+void ShowChooseTimeWindow(u16 days, u8 hours, u8 minutes, u8 seconds)
 {
     Menu_DrawStdWindowFrame(3, 8, 25, 11);
     Menu_PrintText(gOtherText_OK, 20, 9);
-    ResetRtcScreen_PrintTime(4, 9, days, hours, minutes, seconds);
+    PrintTime(4, 9, days, hours, minutes, seconds);
 }
 
-bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
+bool32 MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
 {
     if (keys & DPAD_DOWN)
     {
@@ -331,29 +380,29 @@ bool32 ResetRtcScreen_MoveTimeUpDown(s16 *val, int minVal, int maxVal, u16 keys)
     return TRUE;
 }
 
-void Task_ResetRtc_3(u8 taskId)
+void Task_ResetRtc_SetFinished(u8 taskId)
 {
-    gTasks[taskId].data[0] = 1;
+    gTasks[taskId].tFinished = TRUE;
 }
 
-void Task_ResetRtc_2(u8 taskId)
+void Task_ResetRtc_Exit(u8 taskId)
 {
-    ResetRtcScreen_HideChooseTimeWindow();
-    ResetRtcScreen_FreeCursorPalette();
-    gTasks[taskId].func = Task_ResetRtc_3;
+    HideChooseTimeWindow();
+    FreeCursorPalette();
+    gTasks[taskId].func = Task_ResetRtc_SetFinished;
 }
 
-void Task_ResetRtc_1(u8 taskId)
+void Task_ResetRtc_HandleInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u8 selection = data[2];
-    const struct ResetRtcStruct *selectionInfo = &gUnknown_08376420[selection - 1];
+    u8 selection = tSelection;
+    const struct ResetRtcInputMap *selectionInfo = &sInputMap[selection - 1];
 
     if (JOY_NEW(B_BUTTON))
     {
-        gTasks[taskId].func = Task_ResetRtc_2;
-        data[1] = 0;
-        data[2] = 6;
+        gTasks[taskId].func = Task_ResetRtc_Exit;
+        tSetTime = FALSE;
+        tSelection = SELECTION_NONE;
         PlaySE(SE_SELECT);
         return;
     }
@@ -362,7 +411,7 @@ void Task_ResetRtc_1(u8 taskId)
     {
         if (selectionInfo->right)
         {
-            data[2] = selectionInfo->right;
+            tSelection = selectionInfo->right;
             PlaySE(SE_SELECT);
             return;
         }
@@ -372,53 +421,62 @@ void Task_ResetRtc_1(u8 taskId)
     {
         if (selectionInfo->left)
         {
-            data[2] = selectionInfo->left;
+            tSelection = selectionInfo->left;
             PlaySE(SE_SELECT);
             return;
         }
     }
 
-    if (selection == 5)
+    if (selection == SELECTION_CONFIRM)
     {
         if (JOY_NEW(A_BUTTON))
         {
-            gLocalTime.days = data[3];
-            gLocalTime.hours = data[4];
-            gLocalTime.minutes = data[5];
-            gLocalTime.seconds = data[6];
+            gLocalTime.days = tDays;
+            gLocalTime.hours = tHours;
+            gLocalTime.minutes = tMinutes;
+            gLocalTime.seconds = tSeconds;
             PlaySE(SE_SELECT);
-            gTasks[taskId].func = Task_ResetRtc_2;
-            data[1] = 1;
-            data[2] = 6;
+            gTasks[taskId].func = Task_ResetRtc_Exit;
+            tSetTime = TRUE;
+            tSelection = SELECTION_NONE;
         }
     }
-    else if (ResetRtcScreen_MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPT(DPAD_UP | DPAD_DOWN)))
+    else if (MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPT(DPAD_UP | DPAD_DOWN)))
     {
         PlaySE(SE_SELECT);
-        ResetRtcScreen_PrintTime(4, 9, data[3], data[4], data[5], data[6]);
+        PrintTime(4, 9, tDays, tHours, tMinutes, tSeconds);
     }
 }
 
-void Task_ResetRtc_0(u8 taskId)
+void Task_ResetRtc_Init(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    data[0] = 0;
-    data[3] = gLocalTime.days;
-    data[4] = gLocalTime.hours;
-    data[5] = gLocalTime.minutes;
-    data[6] = gLocalTime.seconds;
-    ResetRtcScreen_ShowChooseTimeWindow(data[3], data[4], data[5], data[6]);
-    ResetRtcScreen_CreateCursor(taskId);
-    data[2] = 2;
-    gTasks[taskId].func = Task_ResetRtc_1;
+    tFinished = FALSE;
+    tDays = gLocalTime.days;
+    tHours = gLocalTime.hours;
+    tMinutes = gLocalTime.minutes;
+    tSeconds = gLocalTime.seconds;
+    ShowChooseTimeWindow(tDays, tHours, tMinutes, tSeconds);
+    CreateCursor(taskId);
+    tSelection = SELECTION_HOURS;
+    gTasks[taskId].func = Task_ResetRtc_HandleInput;
 }
+
+#undef tFinished
+#undef tSetTime
+#undef tSelection
+#undef tDays
+#undef tHours
+#undef tMinutes
+#undef tSeconds
+#undef tConfirm
 
 void CB2_InitResetRtcScreen(void)
 {
     REG_DISPCNT = 0;
     SetVBlankCallback(NULL);
     DmaClear16(3, PLTT, PLTT_SIZE);
-    DmaFill16Large(3, 0, (u8 *)VRAM, 0x18000, 0x1000);
+    DmaFill16Large(3, 0, (u8 *)VRAM, VRAM_SIZE, 0x1000);
     ResetOamRange(0, 128);
     LoadOam();
     ScanlineEffect_Stop();
@@ -428,7 +486,7 @@ void CB2_InitResetRtcScreen(void)
     ResetPaletteFade();
     Text_LoadWindowTemplate(&gMenuTextWindowTemplate);
     InitMenuWindow(&gMenuTextWindowTemplate);
-    REG_DISPCNT = 4352;
+    REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON;
     SetVBlankCallback(VBlankCB_ResetRtcScreen);
     SetMainCallback2(CB2_ResetRtcScreen);
     CreateTask(Task_ResetRtcScreen, 80);
@@ -449,23 +507,25 @@ void VBlankCB_ResetRtcScreen(void)
     TransferPlttBuffer();
 }
 
-void ResetRtcScreen_ShowMessage(const u8 *str)
+void ShowMessage(const u8 *text)
 {
     Menu_DisplayDialogueFrame();
-    Menu_PrintText(str, 2, 15);
+    Menu_PrintText(text, 2, 15);
 }
+
+#define tPromptState data[0]
 
 void Task_ShowResetRtcPrompt(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tPromptState)
     {
     case 0:
         Menu_EraseScreen();
         Menu_DrawStdWindowFrame(0, 0, 20, 10);
         Menu_PrintText(gSystemText_PresentTime, 1, 1);
-        ResetRtcScreen_PrintTime(
+        PrintTime(
             1,
             3,
             gLocalTime.days,
@@ -473,15 +533,15 @@ void Task_ShowResetRtcPrompt(u8 taskId)
             gLocalTime.minutes,
             gLocalTime.seconds);
         Menu_PrintText(gSystemText_PreviousTime, 1, 5);
-        ResetRtcScreen_PrintTime(
+        PrintTime(
             1,
             7,
             gSaveBlock2.lastBerryTreeUpdate.days,
             gSaveBlock2.lastBerryTreeUpdate.hours,
             gSaveBlock2.lastBerryTreeUpdate.minutes,
             gSaveBlock2.lastBerryTreeUpdate.seconds);
-        ResetRtcScreen_ShowMessage(gSystemText_ResetRTCPrompt);
-        data[0]++;
+        ShowMessage(gSystemText_ResetRTCPrompt);
+        tPromptState++;
     case 1:
         if (JOY_NEW(B_BUTTON))
         {
@@ -497,53 +557,72 @@ void Task_ShowResetRtcPrompt(u8 taskId)
     }
 }
 
+// Task states for Task_ResetRtcScreen.
+enum
+{
+    MAINSTATE_FADE_IN,
+    MAINSTATE_CHECK_SAVE,
+    MAINSTATE_START_SET_TIME,
+    MAINSTATE_WAIT_SET_TIME,
+    MAINSTATE_SAVE,
+    MAINSTATE_WAIT_EXIT,
+    MAINSTATE_EXIT,
+};
+
+#undef tPromptState
+
+#define tState           data[0]
+#define tSubTaskId       data[1]
+#define tSubTaskFinished gTasks[tSubTaskId].data[0]
+#define tSubTaskSetTime  gTasks[tSubTaskId].data[1]
+
 void Task_ResetRtcScreen(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
-    case 0:
-        BeginNormalPaletteFade(0xFFFFFFFF, 1, 16, 0, FADE_COLOR_WHITE);
-        data[0] = 1;
+    case MAINSTATE_FADE_IN:
+        BeginNormalPaletteFade(PALETTES_ALL, 1, 16, 0, FADE_COLOR_WHITE);
+        tState = MAINSTATE_CHECK_SAVE;
         break;
-    case 1:
+    case MAINSTATE_CHECK_SAVE:
         if (!gPaletteFade.active)
         {
-            if (gSaveFileStatus == 0 || gSaveFileStatus == 2)
+            if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
             {
-                ResetRtcScreen_ShowMessage(gSystemText_NoSaveFileNoTime);
-                data[0] = 5;
+                ShowMessage(gSystemText_NoSaveFileNoTime);
+                tState = MAINSTATE_WAIT_EXIT;
             }
             else
             {
                 RtcCalcLocalTime();
-                data[1] = CreateTask(Task_ShowResetRtcPrompt, 80);
-                data[0] = 2;
+                tSubTaskId = CreateTask(Task_ShowResetRtcPrompt, 80);
+                tState = MAINSTATE_START_SET_TIME;
             }
         }
         break;
-    case 2:
-        if (gTasks[data[1]].isActive != TRUE)
+    case MAINSTATE_START_SET_TIME:
+        if (gTasks[tSubTaskId].isActive != TRUE)
         {
             Menu_EraseScreen();
-            ResetRtcScreen_ShowMessage(gSystemText_PleaseResetTime);
+            ShowMessage(gSystemText_PleaseResetTime);
             gLocalTime = gSaveBlock2.lastBerryTreeUpdate;
-            data[1] = CreateTask(Task_ResetRtc_0, 80);
-            data[0] = 3;
+            tSubTaskId = CreateTask(Task_ResetRtc_Init, 80);
+            tState = MAINSTATE_WAIT_SET_TIME;
         }
         break;
-    case 3:
-        if (gTasks[data[1]].data[0])
+    case MAINSTATE_WAIT_SET_TIME:
+        if (tSubTaskFinished)
         {
-            if (!gTasks[data[1]].data[1])
+            if (!tSubTaskSetTime)
             {
-                DestroyTask(data[1]);
-                data[0] = 2;
+                DestroyTask(tSubTaskId);
+                tState = MAINSTATE_START_SET_TIME;
             }
             else
             {
-                DestroyTask(data[1]);
+                DestroyTask(tSubTaskId);
                 RtcReset();
                 RtcCalcLocalTimeOffset(
                     gLocalTime.days,
@@ -553,36 +632,36 @@ void Task_ResetRtcScreen(u8 taskId)
                 gSaveBlock2.lastBerryTreeUpdate = gLocalTime;
                 VarSet(VAR_DAYS, gLocalTime.days);
                 DisableResetRTC();
-                ResetRtcScreen_ShowMessage(gSystemText_ClockResetDataSave);
-                data[0] = 4;
+                ShowMessage(gSystemText_ClockResetDataSave);
+                tState = MAINSTATE_SAVE;
             }
         }
         break;
-    case 4:
-        if (TrySavingData(0) == SAVE_STATUS_OK)
+    case MAINSTATE_SAVE:
+        if (TrySavingData(SAVE_NORMAL) == SAVE_STATUS_OK)
         {
-            ResetRtcScreen_ShowMessage(gSystemText_SaveCompleted);
+            ShowMessage(gSystemText_SaveCompleted);
             PlaySE(SE_DING_DONG);
         }
         else
         {
-            ResetRtcScreen_ShowMessage(gSystemText_SaveFailed);
+            ShowMessage(gSystemText_SaveFailed);
             PlaySE(SE_BOO);
         }
-        data[0] = 5;
+        tState = MAINSTATE_WAIT_EXIT;
         // fall through
-    case 5:
+    case MAINSTATE_WAIT_EXIT:
         if (JOY_NEW(A_BUTTON))
         {
-            BeginNormalPaletteFade(0xFFFFFFFF, 1, 0, 16, FADE_COLOR_WHITE);
-            data[0] = 6;
+            BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, FADE_COLOR_WHITE);
+            tState = MAINSTATE_EXIT;
         }
         else
         {
             break;
         }
         // fall through
-    case 6:
+    case MAINSTATE_EXIT:
         if (!gPaletteFade.active)
         {
             DestroyTask(taskId);
@@ -591,28 +670,38 @@ void Task_ResetRtcScreen(u8 taskId)
     }
 }
 
+#undef tState
+#undef tSubTaskId
+#undef tSubTaskFinished
+#undef tSubTaskSetTime
+
 #if DEBUG
-void debug_sub_806F8F8(void)
+void Debug_StartResetRtcScreen(void)
 {
     SetMainCallback2(CB2_InitResetRtcScreen);
 }
 
-void debug_sub_806F908(u8 taskId)
+#define tState           data[0]
+#define tSubTaskId       data[1]
+#define tSubTaskFinished gTasks[tSubTaskId].data[0]
+#define tSubTaskSetTime  gTasks[tSubTaskId].data[1]
+
+void Task_DebugSetRtcTime(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
-        data[1] = CreateTask(Task_ResetRtc_0, 80);
-        data[0]++;
+        tSubTaskId = CreateTask(Task_ResetRtc_Init, 80);
+        tState++;
         break;
     case 1:
-        if (gTasks[data[1]].data[0] != 0)
+        if (tSubTaskFinished != FALSE)
         {
-            if (gTasks[data[1]].data[1] == 1)
+            if (tSubTaskSetTime == TRUE)
                 RtcCalcLocalTimeOffset(gLocalTime.days, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
-            DestroyTask(data[1]);
+            DestroyTask(tSubTaskId);
             Menu_EraseScreen();
             UnlockPlayerFieldControls();
             DestroyTask(taskId);
@@ -621,17 +710,22 @@ void debug_sub_806F908(u8 taskId)
     }
 }
 
-void debug_sub_806F99C(void)
+#undef tState
+#undef tSubTaskId
+#undef tSubTaskFinished
+#undef tSubTaskSetTime
+
+void Debug_StartSetRtcTime(void)
 {
     RtcCalcLocalTime();
-    CreateTask(debug_sub_806F908, 80);
+    CreateTask(Task_DebugSetRtcTime, 80);
     LockPlayerFieldControls();
 }
 
-void debug_sub_806F9B8(void)
+void Debug_StartSetRtcTimeFromLastBerryUpdate(void)
 {
     gLocalTime = gSaveBlock2.lastBerryTreeUpdate;
-    CreateTask(debug_sub_806F908, 80);
+    CreateTask(Task_DebugSetRtcTime, 80);
     LockPlayerFieldControls();
 }
 
@@ -640,42 +734,45 @@ static const u8 sDebugText_Time[] = DTR("じかん", "time");
 static const u8 sDebugText_GameTime[] = DTR("ゲームない　じかん", "game time");
 static const u8 sDebugText_RTCTime[] = DTR("RTC　じかん", "RTC time");
 
-void debug_sub_806F9E4(u8 taskId)
+#define tState      data[0]
+#define tInputDelay data[1]
+
+void Task_DebugDisplayRtcInfo(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u8 *str = gStringVar4;
+    u8 *text = gStringVar4;
 
-    switch (data[0])
+    switch (tState)
     {
     case 0:
-        data[0]++;
+        tState++;
         break;
     case 1:
         Menu_DrawStdWindowFrame(0, 9, 29, 19);
-        ConvertIntToHexStringN(str + 80, RtcGetErrorStatus(), 2, 4);
-        Menu_PrintText(str + 80, 2, 10);
+        ConvertIntToHexStringN(text + 80, RtcGetErrorStatus(), 2, 4);
+        Menu_PrintText(text + 80, 2, 10);
         Menu_PrintText(sDebugText_Days, 12, 12);
         Menu_PrintText(sDebugText_Time, 20, 12);
         Menu_PrintText(sDebugText_RTCTime, 1, 14);
         Menu_PrintText(sDebugText_GameTime, 1, 16);
-        data[0]++;
+        tState++;
         break;
     case 2:
         RtcCalcLocalTime();
-        FormatHexRtcTime(str);
-        FormatRtcDayCount(str + 20);
-        FormatDecimalTime(str + 40, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
-        ConvertIntToDecimalStringN(str + 60, gLocalTime.days, 1, 4);
+        FormatHexRtcTime(text);
+        FormatRtcDayCount(text + 20);
+        FormatDecimalTime(text + 40, gLocalTime.hours, gLocalTime.minutes, gLocalTime.seconds);
+        ConvertIntToDecimalStringN(text + 60, gLocalTime.days, 1, 4);
         if (gSaveBlock2.playTimeVBlanks == 0)
         {
-            Menu_PrintText(str, 20, 14);
-            Menu_PrintText(str + 20, 12, 14);
-            Menu_PrintText(str + 40, 20, 16);
-            Menu_PrintText(str + 60, 12, 16);
+            Menu_PrintText(text, 20, 14);
+            Menu_PrintText(text + 20, 12, 14);
+            Menu_PrintText(text + 40, 20, 16);
+            Menu_PrintText(text + 60, 12, 16);
         }
-        if (data[1] > 19)  // Did you mean < 19?
+        if (tInputDelay > 19)  // Did you mean < 19?
         {
-            data[1]++;
+            tInputDelay++;
         }
         else
         {
@@ -689,4 +786,7 @@ void debug_sub_806F9E4(u8 taskId)
         break;
     }
 }
+
+#undef tState
+#undef tInputDelay
 #endif
