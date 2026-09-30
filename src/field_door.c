@@ -9,7 +9,7 @@
 #define DOOR_SOUND_NORMAL  0
 #define DOOR_SOUND_SLIDING 1
 
-const u8 DoorAnimTiles_04[][0x100] =
+const u8 sDoorAnimTiles_Littleroot[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/04/0.4bpp"),
     INCBIN_U8("graphics/door_anims/04/1.4bpp"),
@@ -19,14 +19,14 @@ const u8 DoorAnimTiles_04[][0x100] =
 // TODO: Make these blank palette includes?
 asm(".space 32");
 
-const u8 DoorAnimTiles_05[][0x100] =
+const u8 sDoorAnimTiles_BirchsLab[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/05/0.4bpp"),
     INCBIN_U8("graphics/door_anims/05/1.4bpp"),
     INCBIN_U8("graphics/door_anims/05/2.4bpp"),
 };
 
-const u8 DoorAnimTiles_08[][0x100] =
+const u8 sDoorAnimTiles_FallarborLightRoof[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/08/0.4bpp"),
     INCBIN_U8("graphics/door_anims/08/1.4bpp"),
@@ -35,7 +35,7 @@ const u8 DoorAnimTiles_08[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_15[][0x100] =
+const u8 sDoorAnimTiles_Lilycove[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/15/0.4bpp"),
     INCBIN_U8("graphics/door_anims/15/1.4bpp"),
@@ -44,7 +44,7 @@ const u8 DoorAnimTiles_15[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_16[][0x100] =
+const u8 sDoorAnimTiles_LilycoveWooden[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/16/0.4bpp"),
     INCBIN_U8("graphics/door_anims/16/1.4bpp"),
@@ -53,7 +53,7 @@ const u8 DoorAnimTiles_16[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_00[][0x100] =
+const u8 sDoorAnimTiles_General[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/00/0.4bpp"),
     INCBIN_U8("graphics/door_anims/00/1.4bpp"),
@@ -81,21 +81,21 @@ const u8 sDoorAnimTiles_PokeMart[][0x100] =
     INCBIN_U8("graphics/door_anims/03/2.4bpp"),
 };
 
-const u8 DoorAnimTiles_06[][0x100] =
+const u8 sDoorAnimTiles_RustboroTan[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/06/0.4bpp"),
     INCBIN_U8("graphics/door_anims/06/1.4bpp"),
     INCBIN_U8("graphics/door_anims/06/2.4bpp"),
 };
 
-const u8 DoorAnimTiles_07[][0x100] =
+const u8 sDoorAnimTiles_RustboroGray[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/07/0.4bpp"),
     INCBIN_U8("graphics/door_anims/07/1.4bpp"),
     INCBIN_U8("graphics/door_anims/07/2.4bpp"),
 };
 
-const u8 DoorAnimTiles_09[][0x100] =
+const u8 sDoorAnimTiles_Oldale[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/09/0.4bpp"),
     INCBIN_U8("graphics/door_anims/09/1.4bpp"),
@@ -104,7 +104,7 @@ const u8 DoorAnimTiles_09[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_10[][0x100] =
+const u8 sDoorAnimTiles_Mauville[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/10/0.4bpp"),
     INCBIN_U8("graphics/door_anims/10/1.4bpp"),
@@ -113,7 +113,7 @@ const u8 DoorAnimTiles_10[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_11[][0x100] =
+const u8 sDoorAnimTiles_Verdanturf[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/11/0.4bpp"),
     INCBIN_U8("graphics/door_anims/11/1.4bpp"),
@@ -122,7 +122,7 @@ const u8 DoorAnimTiles_11[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_12[][0x100] =
+const u8 sDoorAnimTiles_Slateport[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/12/0.4bpp"),
     INCBIN_U8("graphics/door_anims/12/1.4bpp"),
@@ -131,7 +131,7 @@ const u8 DoorAnimTiles_12[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_13[][0x100] =
+const u8 sDoorAnimTiles_Dewford[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/13/0.4bpp"),
     INCBIN_U8("graphics/door_anims/13/1.4bpp"),
@@ -149,7 +149,7 @@ const u8 sDoorAnimTiles_Contest[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_17[][0x100] =
+const u8 sDoorAnimTiles_Mossdeep[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/17/0.4bpp"),
     INCBIN_U8("graphics/door_anims/17/1.4bpp"),
@@ -158,7 +158,7 @@ const u8 DoorAnimTiles_17[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_18[][0x100] =
+const u8 sDoorAnimTiles_SootopolisPeakedRoof[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/18/0.4bpp"),
     INCBIN_U8("graphics/door_anims/18/1.4bpp"),
@@ -185,7 +185,7 @@ const u8 sDoorAnimTiles_PokemonLeague[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_21[][0x100] =
+const u8 sDoorAnimTiles_Pacifidlog[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/21/0.4bpp"),
     INCBIN_U8("graphics/door_anims/21/1.4bpp"),
@@ -194,7 +194,7 @@ const u8 DoorAnimTiles_21[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_22[][0x100] =
+const u8 sDoorAnimTiles_PetalburgGym[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/22/0.4bpp"),
     INCBIN_U8("graphics/door_anims/22/1.4bpp"),
@@ -203,7 +203,7 @@ const u8 DoorAnimTiles_22[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_23[][0x100] =
+const u8 sDoorAnimTiles_CyclingRoad[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/23/0.4bpp"),
     INCBIN_U8("graphics/door_anims/23/1.4bpp"),
@@ -212,7 +212,7 @@ const u8 DoorAnimTiles_23[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_24[][0x100] =
+const u8 sDoorAnimTiles_LilycoveDeptStore[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/24/0.4bpp"),
     INCBIN_U8("graphics/door_anims/24/1.4bpp"),
@@ -221,7 +221,7 @@ const u8 DoorAnimTiles_24[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_25[][0x100] =
+const u8 sDoorAnimTiles_SafariZone[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/25/0.4bpp"),
     INCBIN_U8("graphics/door_anims/25/1.4bpp"),
@@ -230,7 +230,7 @@ const u8 DoorAnimTiles_25[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_26[][0x100] =
+const u8 sDoorAnimTiles_MossdeepSpaceCenter[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/26/0.4bpp"),
     INCBIN_U8("graphics/door_anims/26/1.4bpp"),
@@ -257,7 +257,7 @@ const u8 sDoorAnimTiles_AbandonedShip[][0x100] =
 
 asm(".space 32");
 
-const u8 DoorAnimTiles_29[][0x100] =
+const u8 sDoorAnimTiles_FallarborDarkRoof[][0x100] =
 {
     INCBIN_U8("graphics/door_anims/29/0.4bpp"),
     INCBIN_U8("graphics/door_anims/29/1.4bpp"),
@@ -320,36 +320,36 @@ static const struct DoorAnimFrame sDoorCloseAnimFrames[] =
     {0, 0},
 };
 
-const u8 DoorAnimPalettes_830F8A4[] = {1, 1, 1, 1, 1, 1, 1, 1}; // door 00
+const u8 sDoorAnimPalettes_General[] = {1, 1, 1, 1, 1, 1, 1, 1}; // door 00
 const u8 sDoorAnimPalettes_PokeCenter[] = {1, 1, 1, 1, 1, 1, 1, 1}; // door 01
 const u8 sDoorAnimPalettes_Gym[] = {5, 5, 5, 5, 5, 5, 5, 5}; // door 02
 const u8 sDoorAnimPalettes_PokeMart[] = {0, 0, 1, 1, 1, 1, 1, 1}; // door 03
-const u8 DoorAnimPalettes_830F8C4[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 04
-const u8 DoorAnimPalettes_830F8CC[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 05
-const u8 DoorAnimPalettes_830F8D4[] = {11, 11, 11, 11, 11, 11, 11, 11}; // door 06
-const u8 DoorAnimPalettes_830F8DC[] = {10, 10, 10, 10, 10, 10, 10, 10}; // door 07
-const u8 DoorAnimPalettes_830F8E4[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 08
-const u8 DoorAnimPalettes_830F8EC[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 09
-const u8 DoorAnimPalettes_830F8F4[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 10
-const u8 DoorAnimPalettes_830F8FC[] = {9, 9, 1, 1, 1, 1, 1, 1}; // door 11
-const u8 sDoorAnimPalettes_PokemonLeague[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 12
-const u8 DoorAnimPalettes_830F90C[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 13
-const u8 DoorAnimPalettes_830F914[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 14
-const u8 sDoorAnimPalettes_Sootopolis[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 15
-const u8 DoorAnimPalettes_830F924[] = {0, 0, 5, 5, 5, 5, 5, 5}; // door 16
-const u8 DoorAnimPalettes_830F92C[] = {6, 6, 1, 1, 1, 1, 1, 1}; // door 17
-const u8 DoorAnimPalettes_830F934[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 18
-const u8 DoorAnimPalettes_830F93C[] = {6, 6, 5, 5, 5, 5, 5, 5}; // door 19
-const u8 DoorAnimPalettes_830F944[] = {5, 5, 5, 5, 5, 5, 5, 5}; // door 20
-const u8 sDoorAnimPalettes_Contest[] = {1, 1, 1, 1, 1, 1, 1, 1}; // door 21
-const u8 DoorAnimPalettes_830F954[] = {6, 6, 7, 7, 7, 7, 7, 7}; // door 22
-const u8 DoorAnimPalettes_830F95C[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 23
-const u8 DoorAnimPalettes_830F964[] = {5, 5, 5, 5, 5, 5, 5, 5}; // door 24
-const u8 DoorAnimPalettes_830F96C[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 25
-const u8 DoorAnimPalettes_830F974[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 26
+const u8 sDoorAnimPalettes_Littleroot[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 04
+const u8 sDoorAnimPalettes_BirchsLab[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 05
+const u8 sDoorAnimPalettes_RustboroTan[] = {11, 11, 11, 11, 11, 11, 11, 11}; // door 06
+const u8 sDoorAnimPalettes_RustboroGray[] = {10, 10, 10, 10, 10, 10, 10, 10}; // door 07
+const u8 sDoorAnimPalettes_FallarborLightRoof[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 08
+const u8 sDoorAnimPalettes_Lilycove[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 15
+const u8 sDoorAnimPalettes_Oldale[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 09
+const u8 sDoorAnimPalettes_Mossdeep[] = {9, 9, 1, 1, 1, 1, 1, 1}; // door 17
+const u8 sDoorAnimPalettes_PokemonLeague[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 20
+const u8 sDoorAnimPalettes_Pacifidlog[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 21
+const u8 sDoorAnimPalettes_SootopolisPeakedRoof[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 18
+const u8 sDoorAnimPalettes_Sootopolis[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 19
+const u8 sDoorAnimPalettes_Dewford[] = {0, 0, 5, 5, 5, 5, 5, 5}; // door 13
+const u8 sDoorAnimPalettes_Slateport[] = {6, 6, 1, 1, 1, 1, 1, 1}; // door 12
+const u8 sDoorAnimPalettes_Mauville[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 10
+const u8 sDoorAnimPalettes_Verdanturf[] = {6, 6, 5, 5, 5, 5, 5, 5}; // door 11
+const u8 sDoorAnimPalettes_LilycoveWooden[] = {5, 5, 5, 5, 5, 5, 5, 5}; // door 16
+const u8 sDoorAnimPalettes_Contest[] = {1, 1, 1, 1, 1, 1, 1, 1}; // door 14
+const u8 sDoorAnimPalettes_PetalburgGym[] = {6, 6, 7, 7, 7, 7, 7, 7}; // door 22
+const u8 sDoorAnimPalettes_CyclingRoad[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 23
+const u8 sDoorAnimPalettes_LilycoveDeptStore[] = {5, 5, 5, 5, 5, 5, 5, 5}; // door 24
+const u8 sDoorAnimPalettes_SafariZone[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 25
+const u8 sDoorAnimPalettes_MossdeepSpaceCenter[] = {8, 8, 8, 8, 8, 8, 8, 8}; // door 26
 const u8 sDoorAnimPalettes_CableClub[] = {6, 6, 6, 6, 6, 6, 6, 6}; // door 27
 const u8 sDoorAnimPalettes_AbandonedShip[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 28
-const u8 DoorAnimPalettes_830F98C[] = {11, 11, 7, 7, 7, 7, 7, 7}; // door 29
+const u8 sDoorAnimPalettes_FallarborDarkRoof[] = {11, 11, 7, 7, 7, 7, 7, 7}; // door 29
 const u8 sDoorAnimPalettes_AbandonedShipRoom[] = {7, 7, 7, 7, 7, 7, 7, 7}; // door 30
 const u8 sDoorAnimPalettes_LilycoveDeptStoreElevator[] = {6, 6, 7, 7, 7, 7, 7, 7}; // door 31
 const u8 sDoorAnimPalettes_BattleTowerOld[] = {9, 9, 9, 9, 9, 9, 9, 9}; // door 32
@@ -357,36 +357,36 @@ const u8 sDoorAnimPalettes_BattleTowerElevator[] = {7, 7, 7, 7, 7, 7, 7, 7}; // 
 
 static const struct DoorGraphics sDoorAnimGraphicsTable[] =
 {
-    {0x021, DOOR_SOUND_NORMAL, DoorAnimTiles_00, DoorAnimPalettes_830F8A4}, // door 00
+    {0x021, DOOR_SOUND_NORMAL, sDoorAnimTiles_General, sDoorAnimPalettes_General}, // door 00
     {0x061, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokeCenter, sDoorAnimPalettes_PokeCenter}, // door 01
     {0x1CD, DOOR_SOUND_SLIDING, sDoorAnimTiles_Gym, sDoorAnimPalettes_Gym}, // door 02
     {0x041, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokeMart, sDoorAnimPalettes_PokeMart}, // door 03
-    {0x248, DOOR_SOUND_NORMAL, DoorAnimTiles_04, DoorAnimPalettes_830F8C4}, // door 04
-    {0x249, DOOR_SOUND_NORMAL, DoorAnimTiles_05, DoorAnimPalettes_830F8CC}, // door 05
-    {0x22F, DOOR_SOUND_NORMAL, DoorAnimTiles_06, DoorAnimPalettes_830F8D4}, // door 06
-    {0x21F, DOOR_SOUND_NORMAL, DoorAnimTiles_07, DoorAnimPalettes_830F8DC}, // door 07
-    {0x2A5, DOOR_SOUND_NORMAL, DoorAnimTiles_08, DoorAnimPalettes_830F8E4}, // door 08
-    {0x287, DOOR_SOUND_NORMAL, DoorAnimTiles_09, DoorAnimPalettes_830F8F4}, // door 09
-    {0x2AC, DOOR_SOUND_NORMAL, DoorAnimTiles_10, DoorAnimPalettes_830F934}, // door 10
-    {0x3A1, DOOR_SOUND_NORMAL, DoorAnimTiles_11, DoorAnimPalettes_830F93C}, // door 11
-    {0x2DC, DOOR_SOUND_NORMAL, DoorAnimTiles_12, DoorAnimPalettes_830F92C}, // door 12
-    {0x225, DOOR_SOUND_NORMAL, DoorAnimTiles_13, DoorAnimPalettes_830F924}, // door 13
+    {0x248, DOOR_SOUND_NORMAL, sDoorAnimTiles_Littleroot, sDoorAnimPalettes_Littleroot}, // door 04
+    {0x249, DOOR_SOUND_NORMAL, sDoorAnimTiles_BirchsLab, sDoorAnimPalettes_BirchsLab}, // door 05
+    {0x22F, DOOR_SOUND_NORMAL, sDoorAnimTiles_RustboroTan, sDoorAnimPalettes_RustboroTan}, // door 06
+    {0x21F, DOOR_SOUND_NORMAL, sDoorAnimTiles_RustboroGray, sDoorAnimPalettes_RustboroGray}, // door 07
+    {0x2A5, DOOR_SOUND_NORMAL, sDoorAnimTiles_FallarborLightRoof, sDoorAnimPalettes_FallarborLightRoof}, // door 08
+    {0x287, DOOR_SOUND_NORMAL, sDoorAnimTiles_Oldale, sDoorAnimPalettes_Oldale}, // door 09
+    {0x2AC, DOOR_SOUND_NORMAL, sDoorAnimTiles_Mauville, sDoorAnimPalettes_Mauville}, // door 10
+    {0x3A1, DOOR_SOUND_NORMAL, sDoorAnimTiles_Verdanturf, sDoorAnimPalettes_Verdanturf}, // door 11
+    {0x2DC, DOOR_SOUND_NORMAL, sDoorAnimTiles_Slateport, sDoorAnimPalettes_Slateport}, // door 12
+    {0x225, DOOR_SOUND_NORMAL, sDoorAnimTiles_Dewford, sDoorAnimPalettes_Dewford}, // door 13
     {0x1DB, DOOR_SOUND_SLIDING, sDoorAnimTiles_Contest, sDoorAnimPalettes_Contest}, // door 14
-    {0x246, DOOR_SOUND_NORMAL, DoorAnimTiles_15, DoorAnimPalettes_830F8EC}, // door 15
-    {0x28E, DOOR_SOUND_NORMAL, DoorAnimTiles_16, DoorAnimPalettes_830F944}, // door 16
-    {0x2A1, DOOR_SOUND_NORMAL, DoorAnimTiles_17, DoorAnimPalettes_830F8FC}, // door 17
-    {0x21C, DOOR_SOUND_NORMAL, DoorAnimTiles_18, DoorAnimPalettes_830F914}, // door 18
+    {0x246, DOOR_SOUND_NORMAL, sDoorAnimTiles_Lilycove, sDoorAnimPalettes_Lilycove}, // door 15
+    {0x28E, DOOR_SOUND_NORMAL, sDoorAnimTiles_LilycoveWooden, sDoorAnimPalettes_LilycoveWooden}, // door 16
+    {0x2A1, DOOR_SOUND_NORMAL, sDoorAnimTiles_Mossdeep, sDoorAnimPalettes_Mossdeep}, // door 17
+    {0x21C, DOOR_SOUND_NORMAL, sDoorAnimTiles_SootopolisPeakedRoof, sDoorAnimPalettes_SootopolisPeakedRoof}, // door 18
     {0x21E, DOOR_SOUND_NORMAL, sDoorAnimTiles_Sootopolis, sDoorAnimPalettes_Sootopolis}, // door 19
     {0x21D, DOOR_SOUND_SLIDING, sDoorAnimTiles_PokemonLeague, sDoorAnimPalettes_PokemonLeague}, // door 20
-    {0x21A, DOOR_SOUND_NORMAL, DoorAnimTiles_21, DoorAnimPalettes_830F90C}, // door 21
-    {0x224, DOOR_SOUND_NORMAL, DoorAnimTiles_22, DoorAnimPalettes_830F954}, // door 22
-    {0x289, DOOR_SOUND_NORMAL, DoorAnimTiles_23, DoorAnimPalettes_830F95C}, // door 23
-    {0x30C, DOOR_SOUND_SLIDING, DoorAnimTiles_24, DoorAnimPalettes_830F964}, // door 24
-    {0x32D, DOOR_SOUND_SLIDING, DoorAnimTiles_25, DoorAnimPalettes_830F96C}, // door 25
-    {0x2ED, DOOR_SOUND_SLIDING, DoorAnimTiles_26, DoorAnimPalettes_830F974}, // door 26
+    {0x21A, DOOR_SOUND_NORMAL, sDoorAnimTiles_Pacifidlog, sDoorAnimPalettes_Pacifidlog}, // door 21
+    {0x224, DOOR_SOUND_NORMAL, sDoorAnimTiles_PetalburgGym, sDoorAnimPalettes_PetalburgGym}, // door 22
+    {0x289, DOOR_SOUND_NORMAL, sDoorAnimTiles_CyclingRoad, sDoorAnimPalettes_CyclingRoad}, // door 23
+    {0x30C, DOOR_SOUND_SLIDING, sDoorAnimTiles_LilycoveDeptStore, sDoorAnimPalettes_LilycoveDeptStore}, // door 24
+    {0x32D, DOOR_SOUND_SLIDING, sDoorAnimTiles_SafariZone, sDoorAnimPalettes_SafariZone}, // door 25
+    {0x2ED, DOOR_SOUND_SLIDING, sDoorAnimTiles_MossdeepSpaceCenter, sDoorAnimPalettes_MossdeepSpaceCenter}, // door 26
     {0x264, DOOR_SOUND_SLIDING, sDoorAnimTiles_CableClub, sDoorAnimPalettes_CableClub}, // door 27
     {0x22B, DOOR_SOUND_NORMAL, sDoorAnimTiles_AbandonedShip, sDoorAnimPalettes_AbandonedShip}, // door 28
-    {0x2F7, DOOR_SOUND_NORMAL, DoorAnimTiles_29, DoorAnimPalettes_830F98C}, // door 29
+    {0x2F7, DOOR_SOUND_NORMAL, sDoorAnimTiles_FallarborDarkRoof, sDoorAnimPalettes_FallarborDarkRoof}, // door 29
     {0x297, DOOR_SOUND_NORMAL, sDoorAnimTiles_AbandonedShipRoom, sDoorAnimPalettes_AbandonedShipRoom}, // door 30
     {0x285, DOOR_SOUND_SLIDING, sDoorAnimTiles_LilycoveDeptStoreElevator, sDoorAnimPalettes_LilycoveDeptStoreElevator}, // door 31
     {0x25D, DOOR_SOUND_SLIDING, sDoorAnimTiles_BattleTowerOld, sDoorAnimPalettes_BattleTowerOld}, // door 32
@@ -439,7 +439,7 @@ static void DrawDoor(const struct DoorGraphics *gfx, const struct DoorAnimFrame 
     else
     {
         CopyDoorTilesToVram(gfx->tiles + frame->offset);
-        DrawCurrentDoorAnimFrame(x, y, gfx->palette);
+        DrawCurrentDoorAnimFrame(x, y, gfx->palettes);
     }
 }
 
@@ -559,7 +559,7 @@ static s8 GetDoorSoundType(const struct DoorGraphics *gfx, u32 x, u32 y)
         return gfx->sound;
 }
 
-void unref_sub_805869C(u32 x, u32 y)
+void Debug_FieldAnimateDoorOpen(u32 x, u32 y)
 {
     StartDoorOpenAnimation(sDoorAnimGraphicsTable, x, y);
 }
