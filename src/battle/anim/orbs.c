@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "random.h"
 #include "constants/battle.h"
 
@@ -192,8 +193,10 @@ const struct SpriteTemplate gHyperBeamOrbSpriteTemplate =
 
 static void AnimPowerAbsorptionOrb(struct Sprite *sprite)
 {
+    CMD_ARGS(x, y, duration);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
-    sprite->data[0] = gBattleAnimArgs[2];
+    sprite->data[0] = cmd->duration;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = StartAnimLinearTranslation;
@@ -202,9 +205,11 @@ static void AnimPowerAbsorptionOrb(struct Sprite *sprite)
 
 static void AnimSolarBeamBigOrb(struct Sprite *sprite)
 {
+    CMD_ARGS(x, y, duration, animation);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
-    StartSpriteAnim(sprite, gBattleAnimArgs[3]);
-    sprite->data[0] = gBattleAnimArgs[2];
+    StartSpriteAnim(sprite, cmd->animation);
+    sprite->data[0] = cmd->duration;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     sprite->callback = StartAnimLinearTranslation;
@@ -213,14 +218,16 @@ static void AnimSolarBeamBigOrb(struct Sprite *sprite)
 
 static void AnimSolarBeamSmallOrb(struct Sprite *sprite)
 {
+    CMD_ARGS(x, y, duration, waveOffset);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
-    sprite->data[0] = gBattleAnimArgs[2];
+    sprite->data[0] = cmd->duration;
     sprite->data[1] = sprite->x;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
     sprite->data[3] = sprite->y;
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
     InitAnimLinearTranslation(sprite);
-    sprite->data[5] = gBattleAnimArgs[3];
+    sprite->data[5] = cmd->waveOffset;
     sprite->callback = AnimSolarBeamSmallOrb_Step;
     AnimSolarBeamSmallOrb_Step(sprite);
 }
@@ -267,11 +274,13 @@ void AnimTask_CreateSmallSolarBeamOrbs(u8 taskId)
 
 static void AnimAbsorptionOrb(struct Sprite *sprite)
 {
+    CMD_ARGS(x, y, waveAmplitude, wavePeriod);
+
     InitSpritePosToAnimTarget(sprite, TRUE);
-    sprite->data[0] = gBattleAnimArgs[3];
+    sprite->data[0] = cmd->wavePeriod;
     sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
-    sprite->data[5] = gBattleAnimArgs[2];
+    sprite->data[5] = cmd->waveAmplitude;
     InitAnimArcTranslation(sprite);
     sprite->callback = AnimAbsorptionOrb_Step;
 }
