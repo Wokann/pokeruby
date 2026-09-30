@@ -1,6 +1,12 @@
+	.equiv TRACK_SIZE, 0x50
+	.equiv NUM_TRACKS_BGM, 10
+	.equiv NUM_TRACKS_SE1, 3
+	.equiv NUM_TRACKS_SE2, 9
+	.equiv NUM_TRACKS_SE3, 1
+
 	.align 2
 gMPlayTable:: @ 845545C
-	music_player gMPlayInfo_BGM, gUnknown_030007B8 + 0x40,  10, 0
-	music_player gMPlayInfo_SE1, gUnknown_030007B8 + 0x360,  3, 1
-	music_player gMPlayInfo_SE2, gUnknown_030007B8 + 0x450,  9, 1
-	music_player gMPlayInfo_SE3, gUnknown_030007B8 + 0x720,  1, 0
+	music_player gMPlayInfo_BGM, gMPlayTrack_BGM, NUM_TRACKS_BGM, 0
+	music_player gMPlayInfo_SE1, gMPlayTrack_SE1, NUM_TRACKS_SE1, 1
+	music_player gMPlayInfo_SE2, gMPlayTrack_SE2, NUM_TRACKS_SE2, 1
+	music_player gMPlayInfo_SE3, gMPlayTrack_SE3, NUM_TRACKS_SE3, 0

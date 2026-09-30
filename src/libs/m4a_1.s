@@ -6,9 +6,29 @@
 
 	.bss
 
-	.global gUnknown_030007B8
-gUnknown_030007B8:
-	.space 0x770
+sDecodingBuffer: @ Used as a buffer for audio decoded from compressed DPCM
+	.space 0x40
+	.size sDecodingBuffer, .-sDecodingBuffer
+
+	.global gMPlayTrack_BGM
+gMPlayTrack_BGM:
+	.space 0x320
+	.size gMPlayTrack_BGM, .-gMPlayTrack_BGM
+
+	.global gMPlayTrack_SE1
+gMPlayTrack_SE1:
+	.space 0xF0
+	.size gMPlayTrack_SE1, .-gMPlayTrack_SE1
+
+	.global gMPlayTrack_SE2
+gMPlayTrack_SE2:
+	.space 0x2D0
+	.size gMPlayTrack_SE2, .-gMPlayTrack_SE2
+
+	.global gMPlayTrack_SE3
+gMPlayTrack_SE3:
+	.space 0x50
+	.size gMPlayTrack_SE3, .-gMPlayTrack_SE3
 
 	.text
 
@@ -308,7 +328,7 @@ _081DD044:
 	ldrb r0, [r4, o_SoundChannel_type]
 	tst r0, 0x30
 	beq _081DD068
-	bl sub_81DD264
+	bl SoundMainRAM_Unk1
 	b _081DD228
 _081DD068:
 	mov r10, r10, lsl 16
@@ -471,8 +491,8 @@ _081DD25E:
 	.pool
 	thumb_func_end SoundMainRAM
 
-	arm_func_start sub_81DD264
-sub_81DD264:
+	arm_func_start SoundMainRAM_Unk1
+SoundMainRAM_Unk1:
 	ldr r6, [r4, o_SoundChannel_wav]
 	ldrb r0, [r4, o_SoundChannel_status]
 	tst r0, 0x20
@@ -511,10 +531,10 @@ _081DD2B4:
 	ldrb r0, [r4, o_SoundChannel_type]
 	tst r0, 0x10
 	bne _081DD3C0
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	mov r0, r1
 	add r3, r3, 0x1
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	sub r1, r1, r0
 _081DD308:
 	ldr r6, [r5]
@@ -540,11 +560,11 @@ _081DD310:
 	b _081DD364
 _081DD358:
 	add r3, r3, lr
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	mov r0, r1
 _081DD364:
 	add r3, r3, 0x1
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	sub r1, r1, r0
 _081DD370:
 	adds r5, r5, 0x40000000
@@ -571,10 +591,10 @@ _081DD3B0:
 	b _081DD3B0
 _081DD3C0:
 	sub r3, r3, 0x1
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	mov r0, r1
 	sub r3, r3, 0x1
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	sub r1, r1, r0
 _081DD3D8:
 	ldr r6, [r5]
@@ -600,11 +620,11 @@ _081DD3E0:
 	b _081DD434
 _081DD428:
 	sub r3, r3, lr
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	mov r0, r1
 _081DD434:
 	sub r3, r3, 0x1
-	bl sub_81DD520
+	bl SoundMainRAM_Unk2
 	sub r1, r1, r0
 _081DD440:
 	adds r5, r5, 0x40000000
@@ -669,10 +689,10 @@ _081DD4F4:
 	str r7, [r5, 0x630]
 	str r6, [r5], 0x4
 	pop {r8,r12,pc}
-	arm_func_end sub_81DD264
+	arm_func_end SoundMainRAM_Unk1
 
-	arm_func_start sub_81DD520
-sub_81DD520:
+	arm_func_start SoundMainRAM_Unk2
+SoundMainRAM_Unk2:
 	push {r0,r2,r5-r7,lr}
 	mov r0, r3, lsr 6
 	ldr r1, [r4, o_SoundChannel_xpi]
@@ -684,7 +704,7 @@ sub_81DD520:
 	ldr r1, [r4, o_SoundChannel_wav]
 	add r2, r2, r1
 	add r2, r2, 0x10
-	ldr r5, =gUnknown_030007B8
+	ldr r5, =sDecodingBuffer
 	ldr r6, =gDeltaEncodingTable
 	mov r7, 0x40
 	ldrb lr, [r2], 1
@@ -705,12 +725,12 @@ _081DD57C:
 	subs r7, r7, 2
 	bgt _081DD568
 _081DD594:
-	ldr r5, =gUnknown_030007B8
+	ldr r5, =sDecodingBuffer
 	and r0, r3, 0x3F
 	ldrsb r1, [r5, r0]
 	pop {r0,r2,r5-r7,pc}
 	.pool
-	arm_func_end sub_81DD520
+	arm_func_end SoundMainRAM_Unk2
 
 	thumb_func_start SoundMainBTM
 SoundMainBTM:
