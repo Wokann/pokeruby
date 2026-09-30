@@ -4259,10 +4259,10 @@ void Cmd_moveend(void)
     u16 moveType;
     u8 holdEffectAtk;
     u16 *choicedMoveAtk;
-    u8 arg1, arg2;
+    u8 endMode, endState;
 
-    arg1 = T2_READ_8(gBattlescriptCurrInstr + 1);
-    arg2 = T2_READ_8(gBattlescriptCurrInstr + 2);
+    endMode = T2_READ_8(gBattlescriptCurrInstr + 1);
+    endState = T2_READ_8(gBattlescriptCurrInstr + 2);
 
     if (gBattleMons[gBattlerAttacker].item == ITEM_ENIGMA_BERRY)
         holdEffectAtk = gEnigmaBerries[gBattlerAttacker].holdEffect;
@@ -4514,9 +4514,9 @@ void Cmd_moveend(void)
             break;
         }
 
-        if (arg1 == 1 && effect == FALSE)
+        if (endMode == 1 && effect == FALSE)
             gBattleStruct->moveendState = ATK49_COUNT;
-        if (arg1 == 2 && arg2 == gBattleStruct->moveendState)
+        if (endMode == 2 && endState == gBattleStruct->moveendState)
             gBattleStruct->moveendState = ATK49_COUNT;
 
     } while (gBattleStruct->moveendState != ATK49_COUNT && effect == FALSE);
