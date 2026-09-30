@@ -892,7 +892,7 @@ static bool8 FishingPoints(void)
 static struct {
     s16 species;
     s8 level;
-    u8 unk3;
+    u8 hasSelectedSpecies;
 } sNakaGenderTestData[PARTY_SIZE];
 
 EWRAM_DATA u8 sNakaGenderTest_CursorPosition = 0;
@@ -923,7 +923,7 @@ void NakaGenderTest(void)
         }
         else
             sNakaGenderTestData[i].level = 1;
-        sNakaGenderTestData[i].unk3 = 0;
+        sNakaGenderTestData[i].hasSelectedSpecies = 0;
     }
 
     sNakaGenderTest_CursorPosition = 0;
@@ -970,7 +970,7 @@ static void NakaGenderTest_RedrawCurrent(u8 i)
 
 static void NakaGenderTest_AdjustSpecies(u8 partySlot, s8 speciesDelta)
 {
-    if (sNakaGenderTestData[partySlot].species == SPECIES_NONE && sNakaGenderTestData[partySlot].unk3 == 0 && speciesDelta == 1)
+    if (sNakaGenderTestData[partySlot].species == SPECIES_NONE && sNakaGenderTestData[partySlot].hasSelectedSpecies == 0 && speciesDelta == 1)
         sNakaGenderTestData[partySlot].species = SPECIES_TREECKO - 1;
     sNakaGenderTestData[partySlot].species += speciesDelta;
     if (sNakaGenderTestData[partySlot].species >= SPECIES_CHIMECHO)
@@ -978,7 +978,7 @@ static void NakaGenderTest_AdjustSpecies(u8 partySlot, s8 speciesDelta)
     if (sNakaGenderTestData[partySlot].species < 0)
         sNakaGenderTestData[partySlot].species += SPECIES_CHIMECHO;
     CreateMon(gPlayerParty + partySlot, sNakaGenderTestData[partySlot].species, sNakaGenderTestData[partySlot].level, 0x20, FALSE, 0, FALSE, 0);
-    sNakaGenderTestData[partySlot].unk3 = 1;
+    sNakaGenderTestData[partySlot].hasSelectedSpecies = 1;
 }
 
 static void NakaGenderTest_RerollPokemon(u8 partySlot)
