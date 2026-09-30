@@ -1999,12 +1999,12 @@ void Task_PrintRouletteEntryMsg(u8 taskId)
 #if DEBUG
 
 #if (ENGLISH && REVISION == 0)
-    static const u8 gUnknown_Debug_0842510D[] = _("コインの かず STARTで きめて\nAーp1　Bーm1　R:Lー×10");
+    static const u8 sText_RouletteDebugSetCoins[] = _("コインの かず STARTで きめて\nAーp1　Bーm1　R:Lー×10");
 #else
-    static const u8 gUnknown_Debug_0842510D[] = _("Set　COIN　and　Press　START\nAーp1　Bーm1　R:Lー×10");
+    static const u8 sText_RouletteDebugSetCoins[] = _("Set　COIN　and　Press　START\nAーp1　Bーm1　R:Lー×10");
 #endif
 
-void debug_sub_812CDE4(u8 taskId)
+void Task_RouletteDebugSetCoins(u8 taskId)
 {
 #if (ENGLISH && REVISION == 0)
     u8 coinText[] = {0xFD, 0x02, 0xFF};
@@ -2096,7 +2096,7 @@ void debug_sub_812CDE4(u8 taskId)
     }
 }
 
-void debug_sub_812CFE8(u8 taskId)
+void Task_RouletteDebugInit(u8 taskId)
 {
     gTasks[taskId].tCoins = gSaveBlock1.coins;
     if (Random() & 1)
@@ -2110,8 +2110,8 @@ void debug_sub_812CFE8(u8 taskId)
     MenuPrint_RightAligned(gStringVar4, 9, 1);
 #endif
     Menu_DrawStdWindowFrame(0, 14, 29, 19);
-    Menu_PrintText(gUnknown_Debug_0842510D, 1, 15);
-    gTasks[taskId].func = debug_sub_812CDE4;
+    Menu_PrintText(sText_RouletteDebugSetCoins, 1, 15);
+    gTasks[taskId].func = Task_RouletteDebugSetCoins;
 }
 
 #endif
@@ -2125,7 +2125,7 @@ void PlayRoulette(void)
     gRouletteDebugForceBallStuck = 0;
     if (gRouletteDebugActive[0] != 0)
     {
-	    CreateTask(debug_sub_812CFE8, 0);
+	    CreateTask(Task_RouletteDebugInit, 0);
 	    return;
     }
 #endif
