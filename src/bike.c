@@ -15,7 +15,7 @@
 
 #if DEBUG
 extern u8 gIsDebugMode;
-u8 debug_sub_805F2B0(u8);
+u8 Debug_TryMovePlayerFaster(u8 direction);
 #endif
 
 // this file's functions
@@ -143,7 +143,7 @@ void MovePlayerOnBike(u8 direction, u16 newKeys, u16 heldKeys)
 static void MovePlayerOnMachBike(u8 direction, u16 newKeys, u16 heldKeys)
 {
 #if DEBUG
-    if (gIsDebugMode && debug_sub_805F2B0(direction))
+    if (gIsDebugMode && Debug_TryMovePlayerFaster(direction))
     {
         Bike_SetBikeStill();
         return;
@@ -287,7 +287,7 @@ static void MachBikeTransition_TrySlowDown(u8 direction)
 static void MovePlayerOnAcroBike(u8 newDirection, u16 newKeys, u16 heldKeys)
 {
 #if DEBUG
-    if (gIsDebugMode && debug_sub_805F2B0(newDirection))
+    if (gIsDebugMode && Debug_TryMovePlayerFaster(newDirection))
     {
         Bike_SetBikeStill();
         return;

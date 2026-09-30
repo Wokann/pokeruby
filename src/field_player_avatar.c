@@ -34,8 +34,8 @@ EWRAM_DATA struct PlayerAvatar gPlayerAvatar = {0};
 // Static declarations
 
 static bool8 TryInterruptObjectEventSpecialAnim(struct ObjectEvent *, u8);
-static void npc_clear_strange_bits(struct ObjectEvent *a);
-static void MovePlayerAvatarUsingKeypadInput(u8 a, u16 b, u16 c);
+static void npc_clear_strange_bits(struct ObjectEvent *objEvent);
+static void MovePlayerAvatarUsingKeypadInput(u8 direction, u16 newKeys, u16 heldKeys);
 static void PlayerAllowForcedMovementIfMovingSameDirection(void);
 static bool8 TryDoMetatileBehaviorForcedMovement(void);
 static u8 GetForcedMovementByMetatileBehavior(void);
@@ -56,33 +56,33 @@ static bool8 ForcedMovement_SlideEast(void);
 static bool8 ForcedMovement_MatJump(void);
 static bool8 ForcedMovement_MatSpin(void);
 static bool8 ForcedMovement_MuddySlope(void);
-static void MovePlayerNotOnBike(u8 a, u16 b);
-static u8 CheckMovementInputNotOnBike(u8 a);
+static void MovePlayerNotOnBike(u8 direction, u16 heldKeys);
+static u8 CheckMovementInputNotOnBike(u8 direction);
 static void PlayerNotOnBikeNotMoving(u8 direction, u16 heldKeys);
 static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys);
 static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys);
-static u8 CheckForPlayerAvatarCollision(u8 a);
+static u8 CheckForPlayerAvatarCollision(u8 direction);
 static bool8 CanStopSurfing(s16 x, s16 y, u8 direction);
-static bool8 ShouldJumpLedge(s16 a, s16 b, u8 c);
+static bool8 ShouldJumpLedge(s16 x, s16 y, u8 direction);
 static u8 TryPushBoulder(s16 x, s16 y, u8 direction);
-static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior, u8 *collision);
+static void CheckAcroBikeCollision(s16 x, s16 y, u8 metatileBehavior, u8 *collision);
 static void DoPlayerAvatarTransition(void);
 static void PlayerAvatarTransition_Dummy(struct ObjectEvent *objEvent);
-static void PlayerAvatarTransition_Normal(struct ObjectEvent *a);
-static void PlayerAvatarTransition_MachBike(struct ObjectEvent *a);
-static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *a);
-static void PlayerAvatarTransition_Surfing(struct ObjectEvent *a);
-static void PlayerAvatarTransition_Underwater(struct ObjectEvent *a);
+static void PlayerAvatarTransition_Normal(struct ObjectEvent *objEvent);
+static void PlayerAvatarTransition_MachBike(struct ObjectEvent *objEvent);
+static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *objEvent);
+static void PlayerAvatarTransition_Surfing(struct ObjectEvent *objEvent);
+static void PlayerAvatarTransition_Underwater(struct ObjectEvent *objEvent);
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent);
 static bool8 PlayerAnimIsMultiFrameStationary(void);
 static bool8 PlayerAnimIsMultiFrameStationaryAndStateNotTurning(void);
 static bool8 PlayerIsAnimActive(void);
 static bool8 PlayerCheckIfAnimFinishedOrInactive(void);
-static void PlayerRun(u8 a);
-static void PlayerNotOnBikeCollide(u8 a);
-static void PlayCollisionSoundIfNotFacingWarp(u8 a);
-static void HideShowWarpArrow(struct ObjectEvent *a);
-static void StartStrengthAnim(u8 a, u8 b);
+static void PlayerRun(u8 direction);
+static void PlayerNotOnBikeCollide(u8 direction);
+static void PlayCollisionSoundIfNotFacingWarp(u8 direction);
+static void HideShowWarpArrow(struct ObjectEvent *objEvent);
+static void StartStrengthAnim(u8 objectEventId, u8 direction);
 static void Task_PushBoulder(u8 taskId);
 static bool8 PushBoulder_Start(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
 static bool8 PushBoulder_Move(struct Task *task, struct ObjectEvent *player, struct ObjectEvent *boulder);
@@ -118,8 +118,8 @@ static bool8 Fishing_PutRodAway(struct Task *task);
 static bool8 Fishing_EndNoMon(struct Task *task);
 static void AlignFishingAnimationFrames(void);
 
-u8 debug_sub_805F2B0(u8);
-u8 debug_sub_805F2DC(u8);
+u8 Debug_TryMovePlayerFaster(u8 direction);
+u8 Debug_MovePlayerFaster(u8 direction);
 
 static bool8 (*const sForcedMovementTestFuncs[])(u8) =
 {
@@ -271,7 +271,7 @@ static u8 (*const sPlayerAvatarSecretBaseMatSpin[])(struct Task *, struct Object
 
 movement_type_empty_callback(MovementType_Player);
 
-void player_step(u8 direction, u16 newKeys, u16 heldKeys)
+void PlayerStep(u8 direction, u16 newKeys, u16 heldKeys)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -517,7 +517,7 @@ static bool8 ForcedMovement_MuddySlope(void)
 static void MovePlayerNotOnBike(u8 direction, u16 heldKeys)
 {
 #if DEBUG
-    if (gIsDebugMode != 0 && debug_sub_805F2B0(direction) != 0)
+    if (gIsDebugMode != 0 && Debug_TryMovePlayerFaster(direction) != 0)
         return;
 #endif
     sPlayerNotOnBikeFuncs[CheckMovementInputNotOnBike(direction)](direction, heldKeys);
@@ -554,18 +554,18 @@ static void PlayerNotOnBikeTurningInPlace(u8 direction, u16 heldKeys)
 
 static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
 {
-    u8 r1 = CheckForPlayerAvatarCollision(direction);
+    u8 collision = CheckForPlayerAvatarCollision(direction);
 
-    switch (r1)
+    switch (collision)
     {
-    case 6:
+    case COLLISION_LEDGE_JUMP:
         PlayerJumpLedge(direction);
         return;
     default:
-        if (r1 > 8 || r1 < 5)
+        if (collision > COLLISION_ROTATING_GATE || collision < COLLISION_STOP_SURFING)
             PlayerNotOnBikeCollide(direction);
         return;
-    case 0:
+    case COLLISION_NONE:
         if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
         {
 			// speed 2 is fast, same speed as running
@@ -624,7 +624,7 @@ static bool8 CanStopSurfing(s16 x, s16 y, u8 direction)
 {
     if ((gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
      && MapGridGetElevationAt(x, y) == ELEVATION_DEFAULT
-     && GetObjectEventIdByXYZ(x, y, ELEVATION_DEFAULT) == 16)
+     && GetObjectEventIdByXYZ(x, y, ELEVATION_DEFAULT) == OBJECT_EVENTS_COUNT)
     {
         CreateStopSurfingTask(direction);
         return TRUE;
@@ -635,9 +635,9 @@ static bool8 CanStopSurfing(s16 x, s16 y, u8 direction)
     }
 }
 
-static bool8 ShouldJumpLedge(s16 x, s16 y, u8 z)
+static bool8 ShouldJumpLedge(s16 x, s16 y, u8 direction)
 {
-    if (GetLedgeJumpDirection(x, y, z) != 0)
+    if (GetLedgeJumpDirection(x, y, direction) != DIR_NONE)
         return TRUE;
     else
         return FALSE;
@@ -649,23 +649,23 @@ static u8 TryPushBoulder(s16 x, s16 y, u8 direction)
     {
         u8 objectEventId = GetObjectEventIdByXY(x, y);
 
-        if (objectEventId != 16 && gObjectEvents[objectEventId].graphicsId == OBJ_EVENT_GFX_PUSHABLE_BOULDER)
+        if (objectEventId != OBJECT_EVENTS_COUNT && gObjectEvents[objectEventId].graphicsId == OBJ_EVENT_GFX_PUSHABLE_BOULDER)
         {
             x = gObjectEvents[objectEventId].currentCoords.x;
             y = gObjectEvents[objectEventId].currentCoords.y;
             MoveCoords(direction, &x, &y);
             if (GetCollisionAtCoords(&gObjectEvents[objectEventId], x, y, direction) == COLLISION_NONE
-             && MetatileBehavior_IsNonAnimDoor(MapGridGetMetatileBehaviorAt(x, y)) == 0)
+             && MetatileBehavior_IsNonAnimDoor(MapGridGetMetatileBehaviorAt(x, y)) == FALSE)
             {
                 StartStrengthAnim(objectEventId, direction);
-                return 1;
+                return TRUE;
             }
         }
     }
-    return 0;
+    return FALSE;
 }
 
-static void CheckAcroBikeCollision(s16 unused1, s16 unused2, u8 metatileBehavior, u8 *collision)
+static void CheckAcroBikeCollision(s16 x, s16 y, u8 metatileBehavior, u8 *collision)
 {
     u8 i;
 
@@ -1106,7 +1106,7 @@ bool8 PartyHasMonWithSurf(void)
 
     if (!TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
     {
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < PARTY_SIZE; i++)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
@@ -1851,22 +1851,22 @@ static void AlignFishingAnimationFrames(void)
 
 #if DEBUG
 
-u8 debug_sub_805F2B0(u8 a)
+u8 Debug_TryMovePlayerFaster(u8 direction)
 {
     if (JOY_HELD(R_BUTTON))
-        return debug_sub_805F2DC(a);
+        return Debug_MovePlayerFaster(direction);
     else
         return 0;
 }
 
-u8 debug_sub_805F2DC(u8 a)
+u8 Debug_MovePlayerFaster(u8 direction)
 {
-    if (a == 0)
+    if (direction == DIR_NONE)
         PlayerFaceDirection(gObjectEvents[gPlayerAvatar.objectEventId].movementDirection);
-    else if (gObjectEvents[gPlayerAvatar.objectEventId].trackedByCamera && !CanCameraMoveInDirection(a))
-        PlayerOnBikeCollide(a);
+    else if (gObjectEvents[gPlayerAvatar.objectEventId].trackedByCamera && !CanCameraMoveInDirection(direction))
+        PlayerOnBikeCollide(direction);
     else
-        PlayerWalkFaster(a);
+        PlayerWalkFaster(direction);
     return 1;
 }
 
