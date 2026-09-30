@@ -499,7 +499,7 @@ u8 DebugMenu_TestMenuNoOp(void)
 
 u8 DebugMenu_OpenDisabledTest2(void)
 {
-    SetMainCallback2(debug_nullsub_66);
+    SetMainCallback2(CB2_DebugMenuDisabledTest);
     return 0;
 }
 

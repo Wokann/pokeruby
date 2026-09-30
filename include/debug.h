@@ -18,7 +18,7 @@ void Crash(const u8 *text);
 bool8 InitMatsudaDebugMenu(void);
 
 // tomomichi_debug_menu
-void debug_nullsub_66(void);
+void CB2_DebugMenuDisabledTest(void);
 bool8 InitTomomichiDebugWindow(void);
 
 // sound_check_menu

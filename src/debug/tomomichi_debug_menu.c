@@ -4537,7 +4537,7 @@ static void PrintUnsignedShort(u8 a0, u8 a1, u16 a2)
     Menu_PrintText(sPicTest_StringBuffer, a0, a1);
 }
 
-void debug_nullsub_66(void)
+void CB2_DebugMenuDisabledTest(void)
 {
 // This function likely serves as the entry point into this file.
 }
