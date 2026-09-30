@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "sound.h"
 
 extern s16 gBattleAnimArgs[];
@@ -9,9 +10,6 @@ extern u8 gBattleAnimTarget;
 extern const union AffineAnimCmd gFallingBagAffineAnimCmds1[];
 extern const union AffineAnimCmd gFallingBagAffineAnimCmds2[];
 extern const union AnimCmd *const gFallingBagAnimTable[];
-
-#define ANIM_TRICK_BAG_ARG_INITIAL_Y 0
-#define ANIM_TRICK_BAG_ARG_WAVE_OFFSET 1
 
 static void AnimTrickBag(struct Sprite *sprite);
 static void AnimTrickBag_Step1(struct Sprite *sprite);
@@ -73,6 +71,8 @@ const s8 gTrickBagCoordinates[][3] =
 
 static void AnimTrickBag(struct Sprite *sprite)
 {
+    CMD_ARGS(initialY, waveOffset);
+
     int adjustedWaveOffset;
     int wrappedWaveOffset;
 
@@ -80,14 +80,14 @@ static void AnimTrickBag(struct Sprite *sprite)
     {
         if (!IsContest())
         {
-            sprite->data[1] = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET];
+            sprite->data[1] = cmd->waveOffset;
             sprite->x = 120;
         }
         else
         {
-            adjustedWaveOffset = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET] - 32;
+            adjustedWaveOffset = cmd->waveOffset - 32;
             if (adjustedWaveOffset < 0)
-                wrappedWaveOffset = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_WAVE_OFFSET] + 0xDF;
+                wrappedWaveOffset = cmd->waveOffset + 0xDF;
             else
                 wrappedWaveOffset = adjustedWaveOffset;
 
@@ -95,8 +95,8 @@ static void AnimTrickBag(struct Sprite *sprite)
             sprite->x = 70;
         }
 
-        sprite->y = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_INITIAL_Y];
-        sprite->data[2] = gBattleAnimArgs[ANIM_TRICK_BAG_ARG_INITIAL_Y];
+        sprite->y = cmd->initialY;
+        sprite->data[2] = cmd->initialY;
         sprite->data[4] = 20;
         sprite->x2 = Cos(sprite->data[1], 60);
         sprite->y2 = Sin(sprite->data[1], 20);
