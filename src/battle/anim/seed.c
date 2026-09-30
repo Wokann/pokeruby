@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 #include "constants/battle.h"
 
 extern s16 gBattleAnimArgs[];
@@ -51,16 +52,18 @@ const struct SpriteTemplate gLeechSeedSpriteTemplate =
 // arg 5: wave amplitude
 static void AnimLeechSeed(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, targetX, targetY, duration, waveAmplitude);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
     if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
     {
-        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+        cmd->targetX = -cmd->targetX;
     }
 
-    sprite->data[0] = gBattleAnimArgs[4];
-    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[2];
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[3];
-    sprite->data[5] = gBattleAnimArgs[5];
+    sprite->data[0] = cmd->duration;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + cmd->targetX;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + cmd->targetY;
+    sprite->data[5] = cmd->waveAmplitude;
     InitAnimArcTranslation(sprite);
     sprite->callback = AnimLeechSeed_Step;
 }

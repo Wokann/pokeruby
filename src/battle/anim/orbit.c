@@ -1,6 +1,7 @@
 #include "global.h"
 #include "trig.h"
 #include "battle_anim.h"
+#include "battle_anim_internal.h"
 
 extern s16 gBattleAnimArgs[];
 extern u8 gBattleAnimAttacker;
@@ -91,15 +92,17 @@ const struct SpriteTemplate gPetalDanceSmallFlowerSpriteTemplate =
 // behind the mon's sprite.
 static void AnimSporeParticle(struct Sprite *sprite)
 {
+    CMD_ARGS(x, y, waveOffset, duration, blend);
+
     InitSpritePosToAnimTarget(sprite, TRUE);
-    StartSpriteAnim(sprite, gBattleAnimArgs[4]);
-    if (gBattleAnimArgs[4] == TRUE)
+    StartSpriteAnim(sprite, cmd->blend);
+    if (cmd->blend == TRUE)
     {
         sprite->oam.objMode = ST_OAM_OBJ_BLEND;
     }
 
-    sprite->data[0] = gBattleAnimArgs[3];
-    sprite->data[1] = gBattleAnimArgs[2];
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = cmd->waveOffset;
     sprite->callback = AnimSporeParticle_Step;
     AnimSporeParticle_Step(sprite);
 }
@@ -154,12 +157,14 @@ void AnimTask_SporeDoubleBattle(u8 taskId)
 
 static void AnimPetalDanceBigFlower(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, targetY, duration);
+
     InitSpritePosToAnimAttacker(sprite, FALSE);
-    sprite->data[0] = gBattleAnimArgs[3];
+    sprite->data[0] = cmd->duration;
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
     sprite->callback = AnimPetalDanceBigFlower_Step;
@@ -191,12 +196,14 @@ static void AnimPetalDanceBigFlower_Step(struct Sprite *sprite)
 
 static void AnimPetalDanceSmallFlower(struct Sprite *sprite)
 {
+    CMD_ARGS(initialX, initialY, targetY, duration);
+
     InitSpritePosToAnimAttacker(sprite, TRUE);
-    sprite->data[0] = gBattleAnimArgs[3];
+    sprite->data[0] = cmd->duration;
     sprite->data[1] = sprite->x;
     sprite->data[2] = sprite->x;
     sprite->data[3] = sprite->y;
-    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
     InitAnimLinearTranslation(sprite);
     sprite->data[5] = 0x40;
     sprite->callback = AnimPetalDanceSmallFlower_Step;
