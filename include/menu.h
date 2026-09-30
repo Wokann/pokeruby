@@ -34,7 +34,7 @@ void AppendToList(u8 *list, u8 *pindex, u32 value);
 void InitMenuWindow(const struct WindowTemplate *);
 void MultistepInitMenuWindowBegin(const struct WindowTemplate *);
 bool32 MultistepInitMenuWindowContinue(void);
-void unref_sub_8071DA4(struct WindowTemplate *, u16);
+void InitMenuWindowWithCustomTileOffsets(struct WindowTemplate *, u16);
 void Menu_LoadStdFrameGraphicsOverrideStyle(u8);
 void Menu_LoadStdFrameGraphics(void);
 void BasicInitMenuWindow(const struct WindowTemplate *);
@@ -45,14 +45,14 @@ void Menu_EraseScreen(void);
 void Menu_DrawStdWindowFrame(u8, u8, u8, u8);
 void Menu_PrintTextWithStdFrame(const u8 *str);
 void Menu_PrintChar(u8 c, u8 left, u8 top);
-u16 unref_sub_8071F98(u8, u8);
-void unref_sub_8071FBC(u16, u8, u8, u8, u8);
+u16 Menu_GetWindowTilemapEntry(u8, u8);
+void Menu_FillWindowBorder(u16, u8, u8, u8, u8);
 void Menu_DisplayDialogueFrame(void);
 void MenuPrintMessage(const u8 *, u8, u8);
 void MenuPrintMessageDefaultCoords(const u8 *);
 void Menu_SetText(const u8 *);
 u8 Menu_UpdateWindowText(void);
-u8 unref_sub_8072098(void);
+u8 Menu_PrintWindowSimple(void);
 void Menu_ClearWindowText(void);
 u8 Menu_MoveCursor(s8);
 u8 Menu_MoveCursorNoWrap(s8);
@@ -83,16 +83,16 @@ u8 GetStringWidthInMenuWindow(const u8 *s);
 u8 Menu_GetTextWindowPaletteNum(void);
 void Menu_GetTextColors(u8 *, u8 *, u8 *);
 u32 Menu_UpdateWindowTextOverrideLineLength(u8);
-struct Window * unref_sub_8072D0C(void);
+struct Window *Menu_GetWindow(void);
 u8 InitMenu(u8, u8, u8, u8, u8, u8);
-void unref_sub_8072DC0(void);
+void Menu_HideCursor(void);
 void Menu_SetCursorWidth(u8);
 void Menu_SetCursorWidthInTiles(u8);
 void Menu_DestroyCursor(void);
 u8 MoveMenuCursor3(s8 delta);
 
 #if GERMAN
-u8 *de_sub_8073174(u8 *name, const u8 *format);
+u8 *GermanStringFormatName(u8 *name, const u8 *format);
 #endif
 
 #endif // GUARD_MENU_H

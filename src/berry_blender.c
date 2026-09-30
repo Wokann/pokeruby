@@ -132,7 +132,7 @@ void SetOutlineCursorPosition(u8 a1, u8 a2);
 u8 CreateOutlineCursor(u8 a1, u16 a2, u8 a3, u16 a4, u8 a5);
 s8 GetFirstFreePokeblockSlot(void);
 #ifdef GERMAN
-extern void de_sub_8073110();
+extern void GermanStringReplaceNamePlaceholder();
 #endif
 
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
@@ -2347,7 +2347,7 @@ static void CB2_CheckPlayAgainLink(void)
         StringAppend(gStringVar4, gOtherText_OtherCaseIsFull);
 #else
         StringCopy(gStringVar4, gOtherText_OtherCaseIsFull);
-        de_sub_8073110(gStringVar4, gLinkPlayers[gBerryBlenderData->canceledPlayerId].name);
+        GermanStringReplaceNamePlaceholder(gStringVar4, gLinkPlayers[gBerryBlenderData->canceledPlayerId].name);
 #endif
         MenuPrintMessage(gStringVar4, 1, 15);
         break;
@@ -2360,7 +2360,7 @@ static void CB2_CheckPlayAgainLink(void)
         StringAppend(gStringVar4, gOtherText_NoBerriesForBlend);
 #else
         StringCopy(gStringVar4, gOtherText_NoBerriesForBlend);
-        de_sub_8073110(gStringVar4, gLinkPlayers[gBerryBlenderData->canceledPlayerId].name);
+        GermanStringReplaceNamePlaceholder(gStringVar4, gLinkPlayers[gBerryBlenderData->canceledPlayerId].name);
 #endif
         MenuPrintMessage(gStringVar4, 1, 15);
         break;
@@ -2955,7 +2955,7 @@ bool8 PrintBlendingResults(void)
 #ifdef ENGLISH
                 StringAppend(textPtr, gOtherText_Berry);
 #else
-                de_sub_8073174(textPtr, gOtherText_Berry);
+                GermanStringFormatName(textPtr, gOtherText_Berry);
 #endif
                 textPtr = gBerryBlenderData->stringVar;
                 textPtr = ConvertIntToDecimalStringSimple(textPtr, i + 1);
@@ -3056,7 +3056,7 @@ static void PrintMadePokeblockString(struct Pokeblock* pokeblock, u8* dst)
 #ifdef ENGLISH
     StringAppend(dst, gOtherText_PokeBlockMade);
 #else
-    de_sub_8073174(dst, gOtherText_PokeBlockMade);
+    GermanStringFormatName(dst, gOtherText_PokeBlockMade);
 #endif
     StringAppend(dst, sNewLineString_0);
 

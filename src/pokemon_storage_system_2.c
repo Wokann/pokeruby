@@ -1851,7 +1851,7 @@ static void PrintMessage(u8 id)
 #if ENGLISH
         ptr = StringCopy(ptr, sMessages[id].text);
 #elif GERMAN
-        ptr = de_sub_8073174(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
+        ptr = GermanStringFormatName(gPokemonStorageSystemPtr->messageText, sMessages[id].text);
 #endif
         break;
     case PC_TEXT_FMT_UNK_03:

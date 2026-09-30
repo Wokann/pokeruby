@@ -1237,7 +1237,7 @@ static void TrainerCard_Back_PrintName(void)
 #if ENGLISH
     StringAppend(str, gOtherText_TrainersTrainerCard);
 #elif GERMAN
-    de_sub_8073174(str, gOtherText_TrainersTrainerCard);
+    GermanStringFormatName(str, gOtherText_TrainersTrainerCard);
 #endif
 
     MenuPrint_RightAligned(gStringVar1, 28, 2);

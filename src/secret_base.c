@@ -660,7 +660,7 @@ u8 *GetSecretBaseName(u8 *dest, u8 secretBaseIndex)
 #if ENGLISH
     return StringAppend(dest, gText_ApostropheSBase);
 #elif GERMAN
-    return de_sub_8073174(dest, gText_ApostropheSBase);
+    return GermanStringFormatName(dest, gText_ApostropheSBase);
 #endif
 }
 

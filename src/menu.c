@@ -30,7 +30,7 @@ static bool8 IsGridCursorMovementClamped(void);
 static u8 InitMenuActionGrid(u8, u8, u8, u8, u8, u8, u32);
 static u8 DrawMenuActionGridWindow(u8, u8, u8, const struct MenuAction[], u8);
 static void PrintMenuActionGrid(u8, u8, u8, const struct MenuAction[], u8);
-static void sub_8072D18(u8, u8);
+static void CreateMenuOutlineCursor(u8, u8);
 static void RedrawMenuCursor(u8, u8);
 
 static struct Menu gMenu;
@@ -123,7 +123,7 @@ static void InitMenuWindowInternal(const struct WindowTemplate *winTemplate, u16
     gMenuMessageBoxContentTileOffset = TextWindow_SetDlgFrameBaseTileNum(gMenuTextWindowContentTileOffset);
 }
 
-void unref_sub_8071DA4(struct WindowTemplate *winTemplate, u16 tileOffset)
+void InitMenuWindowWithCustomTileOffsets(struct WindowTemplate *winTemplate, u16 tileOffset)
 {
     gMenuWindowPtr = &gMenuWindow;
     Text_InitWindowWithTemplate(&gMenuWindow, winTemplate);
@@ -187,14 +187,14 @@ void Menu_PrintChar(u8 c, u8 left, u8 top)
     Text_InitWindowAndPrintChar(gMenuWindowPtr, c, gMenuTextTileOffset, left, top);
 }
 
-u16 unref_sub_8071F98(u8 x, u8 y)
+u16 Menu_GetWindowTilemapEntry(u8 x, u8 y)
 {
     return Text_GetWindowTilemapEntry(gMenuWindowPtr, x, y);
 }
 
-void unref_sub_8071FBC(u16 a1, u8 a2, u8 a3, u8 a4, u8 a5)
+void Menu_FillWindowBorder(u16 tilemapEntry, u8 left, u8 top, u8 right, u8 bottom)
 {
-    Text_FillWindowBorder(gMenuWindowPtr, a1, a2, a3, a4, a5);
+    Text_FillWindowBorder(gMenuWindowPtr, tilemapEntry, left, top, right, bottom);
 }
 
 void Menu_DisplayDialogueFrame(void)
@@ -222,7 +222,7 @@ u8 Menu_UpdateWindowText(void)
     return Text_UpdateWindow(gMenuWindowPtr);
 }
 
-u8 unref_sub_8072098(void)
+u8 Menu_PrintWindowSimple(void)
 {
     return Text_PrintWindowSimple(gMenuWindowPtr);
 }
@@ -711,14 +711,14 @@ u32 Menu_UpdateWindowTextOverrideLineLength(u8 lineLength)
     return Text_UpdateWindowOverrideLineLength(gMenuWindowPtr, lineLength);
 }
 
-struct Window *unref_sub_8072D0C(void)
+struct Window *Menu_GetWindow(void)
 {
     return gMenuWindowPtr;
 }
 
-static void sub_8072D18(u8 a1, u8 a2)
+static void CreateMenuOutlineCursor(u8 subpriority, u8 width)
 {
-    CreateOutlineCursor(a1, 0xFFFF, 12, 11679, 8 * a2);
+    CreateOutlineCursor(subpriority, 0xFFFF, 12, 11679, 8 * width);
 }
 
 u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, u8 cursorWidth)
@@ -726,7 +726,7 @@ u8 InitMenu(u8 cursorSubpriority, u8 left, u8 top, u8 numChoices, u8 cursorPos, 
     s32 pos;
 
     if (cursorWidth)
-        sub_8072D18(cursorSubpriority, cursorWidth);
+        CreateMenuOutlineCursor(cursorSubpriority, cursorWidth);
 
     gMenu.left = left - 1;
     gMenu.top = top;
@@ -750,7 +750,7 @@ static void RedrawMenuCursor(u8 x, u8 y)
     SetOutlineCursorPosition((x + 1) * 8, 8 * y);
 }
 
-void unref_sub_8072DC0()
+void Menu_HideCursor()
 {
     HideOutlineCursor();
 }
@@ -771,7 +771,7 @@ void Menu_DestroyCursor(void)
 }
 
 #if GERMAN
-void de_sub_8073110(u8 * buffer, u8 * name) {
+void GermanStringReplaceNamePlaceholder(u8 *buffer, u8 *name) {
     u8 * ptr, *ptr2, *ptr3;
 
     ptr2 = buffer;
@@ -803,7 +803,7 @@ void de_sub_8073110(u8 * buffer, u8 * name) {
     }
 }
 
-u8 *de_sub_8073174(u8 *name, const u8 *format) {
+u8 *GermanStringFormatName(u8 *name, const u8 *format) {
     u32 offset;
     u8 *ptr;
 
@@ -812,7 +812,7 @@ u8 *de_sub_8073174(u8 *name, const u8 *format) {
 
     StringCopy(ptr, format);
 
-    de_sub_8073110(ptr, name);
+    GermanStringReplaceNamePlaceholder(ptr, name);
 
     return StringCopy(name, ptr);
 }

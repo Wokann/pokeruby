@@ -462,7 +462,7 @@ static const u8 *TryGetStatusString(u8 *src)
 }
 
 #ifdef GERMAN
-extern u8 *de_sub_8073174(u8 *, const u8 *);
+extern u8 *GermanStringFormatName(u8 *, const u8 *);
 extern u8 *de_sub_8041024(s32, u32);
 #endif
 
@@ -649,7 +649,7 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
 #ifdef ENGLISH
                             StringAppend(text, BattleText_Berry);
 #else
-                            de_sub_8073174(text, BattleText_Berry);
+                            GermanStringFormatName(text, BattleText_Berry);
 #endif
                             toCpy = text;
                         }
@@ -937,7 +937,7 @@ static void ExpandBattleTextBuffPlaceholders(u8 *src, u8 *dst)
 #ifdef ENGLISH
                             StringAppend(dst, BattleText_Berry);
 #else
-                            de_sub_8073174(dst, BattleText_Berry);
+                            GermanStringFormatName(dst, BattleText_Berry);
 #endif
                         }
                         else
