@@ -250,7 +250,7 @@ struct BattleResults
     u16 opponentMove;         // 0x24
     u16 opponentSpecies;      // 0x26
     u16 caughtPoke;           // 0x28
-    u8 caughtNick[10];        // 0x2A
+    u8 caughtMonNick[10];     // 0x2A
     u8 filler34[2];
     u8 usedBalls[11];
 };
@@ -343,11 +343,11 @@ struct BattleStruct /* 0x2000000 */
     /*0x1601A*/ u8 atk5A_StateTracker; //also atk5B, statetracker
     /*0x1601B*/ u8 wildVictorySong;
     /*0x1601C*/ u8 dynamicMoveType;
-    /*0x1601D*/ u8 focusPunchBattler;
+    /*0x1601D*/ u8 focusPunchBattlerId;
     /*0x1601E*/ u8 statChanger;
     /*0x1601F*/ u8 dmgMultiplier;
     /*0x16020*/ u8 wrappedBy[MAX_BATTLERS_COUNT];
-    /*0x16024*/ u16 assistMove[PARTY_SIZE * MAX_MON_MOVES];
+    /*0x16024*/ u16 assistPossibleMoves[PARTY_SIZE * MAX_MON_MOVES];
     /*0x16054*/ u8 battlerPreventingSwitchout;
     /*0x16055*/ u8 unk16055; // unused
     /*0x16056*/ u8 moneyMultiplier;
@@ -355,7 +355,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x16058*/ u8 switchInAbilitiesCounter;
     /*0x16059*/ u8 faintedActionsState;
     /*0x1605A*/ u8 faintedActionsBattlerId;
-    /*0x1605C*/ u16 exp;
+    /*0x1605C*/ u16 expValue;
     /*0x1605E*/ u8 scriptPartyIdx;
     /*0x1605F*/ u8 sentInPokes;
     /*0x16060*/ u8 selectionScriptFinished[MAX_BATTLERS_COUNT];
@@ -363,20 +363,20 @@ struct BattleStruct /* 0x2000000 */
     /*0x16068*/ u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
     /*0x1606C*/ u8 battlerPartyOrders[MAX_BATTLERS_COUNT][PARTY_SIZE / 2];
     /*0x16078*/ u8 runTries;
-    /*0x16079*/ u8 caughtNick[POKEMON_NAME_LENGTH + 1];
+    /*0x16079*/ u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];
     /*0x16084*/ u8 battleStyle;
     /*0x16085*/ u8 unk16085;
     /*0x16086*/ u8 safariGoNearCounter;
     /*0x16087*/ u8 safariPkblThrowCounter;
-    /*0x16088*/ u8 safariFleeRate;
+    /*0x16088*/ u8 safariEscapeFactor;
     /*0x16089*/ u8 safariCatchFactor;
     /*0x1608A*/ u8 linkBattleVsSpriteId_V;
     /*0x1608B*/ u8 linkBattleVsSpriteId_S;
-    /*0x1608C*/ u8 ChosenMoveID[MAX_BATTLERS_COUNT];
+    /*0x1608C*/ u8 chosenMovePositions[MAX_BATTLERS_COUNT];
     /*0x16090*/ s32 bideDmg;
     /*0x16094*/ u8 stateIdAfterSelScript[4];
     /*0x16098*/ u8 unk16098[3]; // unused
-    /*0x1609B*/ u8 castformToChangeInto;
+    /*0x1609B*/ u8 formToChangeInto;
     /*0x1609C*/ u8 atk6C_statetracker;
     /*0x1609D*/ u8 prevSelectedPartySlot;
     /*0x1609E*/ u8 dbgAICycleMoveTracker[2]; // debug
@@ -393,7 +393,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160AA*/ u8 wallyWaitFrames;
     /*0x160AB*/ u8 wallyMoveFrames;
     /*0x160AC*/ u16 lastTakenMove[2 * 2 * 2];
-    /*0x160BC*/ u16 HP_OnSwitchout[2];
+    /*0x160BC*/ u16 hpOnSwitchout[2];
     /*0x160C0*/ u8 abilityPreventingSwitchout;
     /*0x160C1*/ u8 hpScale;
     /*0x160C2*/ u16 savedBattleTypeFlags;
@@ -405,7 +405,7 @@ struct BattleStruct /* 0x2000000 */
     // This is changed in Emerald to support the Tabitha fight
     // in the Space Center.
     /*0x160C8*/ u8 AI_monToSwitchIntoId[2];
-    /*0x160CA*/ u8 synchroniseEffect;
+    /*0x160CA*/ u8 synchronizeMoveEffect;
     /*0x160CB*/ u8 multiplayerId;
     /*0x160CC*/ u16 usedHeldItems[MAX_BATTLERS_COUNT];
     // Space is reserved for two u16s, one for each opponent in
@@ -414,7 +414,7 @@ struct BattleStruct /* 0x2000000 */
     /*0x160D8*/ u8 AI_usedItemType[2];
     /*0x160DA*/ u8 AI_usedItemEffect[2];
     /*0x160DC*/ u8 statAnimPlayed;
-    /*0x160DD*/ u8 intimidateBank;
+    /*0x160DD*/ u8 intimidateBattler;
     /*0x160DE*/ u8 unk160DE;
     /*0x160DF*/ u8 unk160DF;
     /*0x160E0*/ u8 multihitString[6];

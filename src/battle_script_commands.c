@@ -2580,7 +2580,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 || gBattleCommunication[MOVE_EFFECT_BYTE] == MOVE_EFFECT_PARALYSIS
                 || gBattleCommunication[MOVE_EFFECT_BYTE] == MOVE_EFFECT_BURN)
             {
-                gBattleStruct->synchroniseEffect = gBattleCommunication[MOVE_EFFECT_BYTE];
+                gBattleStruct->synchronizeMoveEffect = gBattleCommunication[MOVE_EFFECT_BYTE];
                 gHitMarker |= HITMARKER_SYNCHRONIZE_EFFECT;
             }
             return;
@@ -3114,7 +3114,7 @@ static void atk19_tryfaintmon(void)
              && gBattleMons[gBattlerAttacker].hp != 0
              && gCurrentMove != MOVE_STRUGGLE)
             {
-                u8 moveIndex = gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gBattlerAttacker];
+                u8 moveIndex = gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gBattlerAttacker];
 
                 gBattleMons[gBattlerAttacker].pp[moveIndex] = 0;
                 BattleScriptPush(gBattlescriptCurrInstr);
@@ -3327,7 +3327,7 @@ static void atk23_getexp(void)
     s32 sentIn;
 
     s32 viaExpShare = 0;
-    u16* exp = &gBattleStruct->exp;
+    u16* exp = &gBattleStruct->expValue;
 
     gBank1 = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
     sentIn = gSentPokesToOpponent[(gBank1 & 2) >> 1];
@@ -5157,7 +5157,7 @@ static void atk52_switchineffects(void)
 
             for (i = 0; i < gBattlersCount; i++)
             {
-                *((u16 *)&gSharedMem[BSTRUCT_OFF(HP_OnSwitchout) + 2 * GetBattlerSide(i)]) = gBattleMons[i].hp;
+                *((u16 *)&gSharedMem[BSTRUCT_OFF(hpOnSwitchout) + 2 * GetBattlerSide(i)]) = gBattleMons[i].hp;
             }
 
             if (T2_READ_8(gBattlescriptCurrInstr + 1) == 5)
@@ -5989,7 +5989,7 @@ static void atk74_hpthresholds2(void)
     {
         gActiveBattler = GetBattlerForBattleScript(T2_READ_8(gBattlescriptCurrInstr + 1));
         opposing_bank = gActiveBattler ^ 1;
-        hp_switchout = gSharedMem[BSTRUCT_OFF(HP_OnSwitchout) + GetBattlerSide(opposing_bank) * 2];
+        hp_switchout = gSharedMem[BSTRUCT_OFF(hpOnSwitchout) + GetBattlerSide(opposing_bank) * 2];
         result = (hp_switchout - gBattleMons[opposing_bank].hp) * 100 / hp_switchout;
 
         if (gBattleMons[opposing_bank].hp >= hp_switchout)
@@ -9044,7 +9044,7 @@ static void atkDE_assistattackselect(void)
     s32 chooseableMovesNo = 0;
     struct Pokemon *party;
     s32 monId, moveId;
-    u16 *movesArray = (u16 *)&gBattleStruct->assistMove;
+    u16 *movesArray = (u16 *)&gBattleStruct->assistPossibleMoves;
 
     if (GET_BATTLER_SIDE(gBattlerAttacker) != B_SIDE_PLAYER)
         party = gEnemyParty;
@@ -9112,7 +9112,7 @@ static void atkE1_trygetintimidatetarget(void)
 {
     u8 side;
 
-    gBattleStruct->scriptingActive = gBattleStruct->intimidateBank;
+    gBattleStruct->scriptingActive = gBattleStruct->intimidateBattler;
     side = GetBattlerSide(gBattleStruct->scriptingActive);
     gBattleTextBuff1[0] = 0xFD;
     gBattleTextBuff1[1] = 9;
@@ -9223,8 +9223,8 @@ static void atkE6_docastformchangeanimation(void)
 {
     gActiveBattler = gBattleStruct->scriptingActive;
     if (gBattleMons[gActiveBattler].status2 & STATUS2_SUBSTITUTE)
-        gBattleStruct->castformToChangeInto |= 0x80;
-    BtlController_EmitBattleAnimation(0, B_ANIM_CASTFORM_CHANGE, gBattleStruct->castformToChangeInto);
+        gBattleStruct->formToChangeInto |= 0x80;
+    BtlController_EmitBattleAnimation(0, B_ANIM_CASTFORM_CHANGE, gBattleStruct->formToChangeInto);
     MarkBattlerForControllerExec(gActiveBattler);
     gBattlescriptCurrInstr++;
 }
@@ -9237,7 +9237,7 @@ static void atkE7_trycastformdatachange(void)
     if (form)
     {
         BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
-        gBattleStruct->castformToChangeInto = form - 1;
+        gBattleStruct->formToChangeInto = form - 1;
     }
 }
 
@@ -9504,7 +9504,7 @@ static void atkF0_givecaughtmon(void)
 {
     GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]);
     gBattleResults.caughtPoke = gBattleMons[gBattlerAttacker ^ 1].species;
-    GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleResults.caughtNick);
+    GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
     gBattlescriptCurrInstr++;
 }
 
@@ -9661,15 +9661,15 @@ static void atkF3_trygivecaughtmonnick(void)
     case 2:
         if (!gPaletteFade.active)
         {
-            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtNick);
-            DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gBattleStruct->caughtNick, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_SPECIES), GetMonGender(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]), GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_PERSONALITY, 0), BattleMainCB2);
+            GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
+            DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gBattleStruct->caughtMonNick, GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_SPECIES), GetMonGender(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]), GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_PERSONALITY, 0), BattleMainCB2);
             gBattleCommunication[0]++;
         }
         break;
     case 3:
         if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active )
         {
-            SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtNick);
+            SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         }
         break;

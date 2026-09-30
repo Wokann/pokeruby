@@ -3464,7 +3464,7 @@ void BattleStartClearSetData(void)
     gBattleStruct->safariGoNearCounter = 0;
     gBattleStruct->safariPkblThrowCounter = 0;
     gBattleStruct->safariCatchFactor = gBaseStats[GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)].catchRate * 100 / 1275;
-    gBattleStruct->safariFleeRate = 3;
+    gBattleStruct->safariEscapeFactor = 3;
     gBattleStruct->wildVictorySong = 0;
     gBattleStruct->moneyMultiplier = 1;
 
@@ -3504,7 +3504,7 @@ void BattleStartClearSetData(void)
     {
         gBattleResults.pokeString1[i] = 0;
         gBattleResults.pokeString2[i] = 0;
-        gBattleResults.caughtNick[i] = 0;
+        gBattleResults.caughtMonNick[i] = 0;
     }
 #if DEBUG
     gSharedMem[BSTRUCT_OFF(dbgAICycleMoveTracker) + 0] = 0;
@@ -3722,7 +3722,7 @@ void BattleIntroDrawTrainersOrMonsSprites(void)
                 gBattleMons[gActiveBattler].type2 = gBaseStats[gBattleMons[gActiveBattler].species].type2;
                 gBattleMons[gActiveBattler].ability = GetAbilityBySpecies(gBattleMons[gActiveBattler].species, gBattleMons[gActiveBattler].altAbility);
 
-                hpOnSwitchout = &gBattleStruct->HP_OnSwitchout[GetBattlerSide(gActiveBattler)];
+                hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(gActiveBattler)];
                 *hpOnSwitchout = gBattleMons[gActiveBattler].hp;
                 for (i = 0; i < 8; i++)
                     gBattleMons[gActiveBattler].statStages[i] = 6;
@@ -4433,8 +4433,8 @@ void HandleTurnActionSelectionState(void)
                                     }
                                     else
                                     {
-                                        gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gActiveBattler] = gBattleBufferB[gActiveBattler][2];
-                                        gChosenMovesByBanks[gActiveBattler] = gBattleMons[gActiveBattler].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gActiveBattler]];
+                                        gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gActiveBattler] = gBattleBufferB[gActiveBattler][2];
+                                        gChosenMovesByBanks[gActiveBattler] = gBattleMons[gActiveBattler].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gActiveBattler]];
                                         gSharedMem[BSTRUCT_OFF(moveTarget) + gActiveBattler] = gBattleBufferB[gActiveBattler][3];
                                         gBattleCommunication[gActiveBattler]++;
                                     }
@@ -4681,7 +4681,7 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
             if (gProtectStructs[bank1].noValidMoves)
                 bank1Move = MOVE_STRUGGLE;
             else
-                bank1Move = gBattleMons[bank1].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + bank1]];
+                bank1Move = gBattleMons[bank1].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank1]];
         }
         else
             bank1Move = MOVE_NONE;
@@ -4691,7 +4691,7 @@ u8 GetWhoStrikesFirst(u8 bank1, u8 bank2, bool8 ignoreMovePriorities)
             if (gProtectStructs[bank2].noValidMoves)
                 bank2Move = MOVE_STRUGGLE;
             else
-                bank2Move = gBattleMons[bank2].moves[gSharedMem[BSTRUCT_OFF(ChosenMoveID) + bank2]];
+                bank2Move = gBattleMons[bank2].moves[gSharedMem[BSTRUCT_OFF(chosenMovePositions) + bank2]];
         }
         else
             bank2Move = MOVE_NONE;
@@ -4771,7 +4771,7 @@ void SetActionsAndBattlersTurnOrder(void)
                 }
             }
             gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
-            gBattleStruct->focusPunchBattler = 0;
+            gBattleStruct->focusPunchBattlerId = 0;
             return;
         }
         else
@@ -4814,7 +4814,7 @@ void SetActionsAndBattlersTurnOrder(void)
     }
 
     gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
-    gBattleStruct->focusPunchBattler = 0;
+    gBattleStruct->focusPunchBattlerId = 0;
 }
 
 static void TurnValuesCleanUp(bool8 var0)
@@ -4870,10 +4870,10 @@ void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
 {
     if (!(gHitMarker & HITMARKER_RUN))
     {
-        while (gBattleStruct->focusPunchBattler < gBattlersCount)
+        while (gBattleStruct->focusPunchBattlerId < gBattlersCount)
         {
-            gActiveBattler = gBattlerAttacker = gBattleStruct->focusPunchBattler;
-            gBattleStruct->focusPunchBattler++;
+            gActiveBattler = gBattlerAttacker = gBattleStruct->focusPunchBattlerId;
+            gBattleStruct->focusPunchBattlerId++;
             if (gChosenMovesByBanks[gActiveBattler] == MOVE_FOCUS_PUNCH
                 && !(gBattleMons[gActiveBattler].status1 & STATUS1_SLEEP)
                 && !(gDisableStructs[gBattlerAttacker].truantCounter)
@@ -5185,7 +5185,7 @@ void HandleAction_UseMove(void)
     gMoveResultFlags = 0;
     gMultiHitCounter = 0;
     gBattleCommunication[6] = 0;
-    gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(ChosenMoveID) + gBattlerAttacker];
+    gCurrMovePos = gChosenMovePos = gSharedMem[BSTRUCT_OFF(chosenMovePositions) + gBattlerAttacker];
 
     // choose move
     if (gProtectStructs[gBattlerAttacker].noValidMoves)
@@ -5584,12 +5584,12 @@ void HandleAction_ThrowPokeblock(void)
 
     if (gBattleStruct->safariPkblThrowCounter < 3)
         gBattleStruct->safariPkblThrowCounter++;
-    if (gBattleStruct->safariFleeRate > 1)
+    if (gBattleStruct->safariEscapeFactor > 1)
     {
-        if (gBattleStruct->safariFleeRate < gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]])
-            gBattleStruct->safariFleeRate = 1;
+        if (gBattleStruct->safariEscapeFactor < gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]])
+            gBattleStruct->safariEscapeFactor = 1;
         else
-            gBattleStruct->safariFleeRate -= gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]];
+            gBattleStruct->safariEscapeFactor -= gPkblToEscapeFactor[gBattleStruct->safariPkblThrowCounter][gBattleCommunication[MULTISTRING_CHOOSER]];
     }
 
     gBattlescriptCurrInstr = gBattlescriptsForSafariActions[2];
@@ -5606,9 +5606,9 @@ void HandleAction_GoNear(void)
     if (gBattleStruct->safariCatchFactor > 20)
         gBattleStruct->safariCatchFactor = 20;
 
-    gBattleStruct->safariFleeRate += gGoNearCounterToEscapeFactor[gBattleStruct->safariGoNearCounter];
-    if (gBattleStruct->safariFleeRate > 20)
-        gBattleStruct->safariFleeRate = 20;
+    gBattleStruct->safariEscapeFactor += gGoNearCounterToEscapeFactor[gBattleStruct->safariGoNearCounter];
+    if (gBattleStruct->safariEscapeFactor > 20)
+        gBattleStruct->safariEscapeFactor = 20;
 
     if (gBattleStruct->safariGoNearCounter < 3)
     {

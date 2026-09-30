@@ -1226,7 +1226,7 @@ void CopyPlayerPartyMonToBattleData(u8 battler, u8 partyIndex)
     StringCopy_Nickname(gBattleMons[battler].nickname, nickname);
     GetMonData(&gPlayerParty[partyIndex], MON_DATA_OT_NAME, gBattleMons[battler].otName);
 
-    hpSwitchout = &gBattleStruct->HP_OnSwitchout[GetBattlerSide(battler)];
+    hpSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(battler)];
     *hpSwitchout = gBattleMons[battler].hp;
 
     for (i = 0; i < NUM_BATTLE_STATS; i++)

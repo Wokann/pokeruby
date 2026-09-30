@@ -812,7 +812,7 @@ void TryPutPokemonTodayOnAir(void)
     else
     {
         InitWorldOfMastersShowAttempt();
-        if (BernoulliTrial(0xffff) == 0 && StringCompareWithoutExtCtrlCodes(gSpeciesNames[gBattleResults.caughtPoke], gBattleResults.caughtNick) != 0)
+        if (BernoulliTrial(0xffff) == 0 && StringCompareWithoutExtCtrlCodes(gSpeciesNames[gBattleResults.caughtPoke], gBattleResults.caughtMonNick) != 0)
         {
             sCurTVShowSlot.slot = FindFirstEmptyRecordMixTVShowSlot(gSaveBlock1.tvShows);
             if (sCurTVShowSlot.slot != -1 && IsRecordMixShowAlreadySpawned(TVSHOW_POKEMON_TODAY_CAUGHT) != 1)
@@ -843,7 +843,7 @@ void TryPutPokemonTodayOnAir(void)
                     pokemonToday->nBallsUsed = total;
                     pokemonToday->ball = item;
                     StringCopy(pokemonToday->playerName, gSaveBlock2.playerName);
-                    StringCopy(pokemonToday->nickname, gBattleResults.caughtNick);
+                    StringCopy(pokemonToday->nickname, gBattleResults.caughtMonNick);
                     pokemonToday->species = gBattleResults.caughtPoke;
                     StorePlayerIdInRecordMixShow((TVShow *)pokemonToday);
                     pokemonToday->language = GAME_LANGUAGE;

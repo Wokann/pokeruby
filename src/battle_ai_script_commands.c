@@ -1659,7 +1659,7 @@ static void Cmd_flee(void)
 
 static void Cmd_if_random_safari_flee(void)
 {
-    u8 safariFleeRate = gBattleStruct->safariFleeRate * 5; // safari flee rate, from 0-20
+    u8 safariFleeRate = gBattleStruct->safariEscapeFactor * 5; // safari flee rate, from 0-20
 
     if ((u8)(Random() % 100) < safariFleeRate)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);

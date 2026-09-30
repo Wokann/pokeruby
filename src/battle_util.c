@@ -1864,7 +1864,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
                     gBattleStruct->scriptingActive = bank;
-                    gBattleStruct->castformToChangeInto = effect - 1;
+                    gBattleStruct->formToChangeInto = effect - 1;
                 }
                 break;
             case ABILITY_TRACE:
@@ -1885,7 +1885,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         {
                             BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
                             gBattleStruct->scriptingActive = target1;
-                            gBattleStruct->castformToChangeInto = effect - 1;
+                            gBattleStruct->formToChangeInto = effect - 1;
                             break;
                         }
                     }
@@ -2359,7 +2359,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                         {
                             BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
                             gBattleStruct->scriptingActive = bank;
-                            gBattleStruct->castformToChangeInto = effect - 1;
+                            gBattleStruct->formToChangeInto = effect - 1;
                             return effect;
                         }
                     }
@@ -2370,10 +2370,10 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
             if (gLastUsedAbility == ABILITY_SYNCHRONIZE && (gHitMarker & HITMARKER_SYNCHRONIZE_EFFECT))
             {
                 gHitMarker &= ~(HITMARKER_SYNCHRONIZE_EFFECT);
-                gBattleStruct->synchroniseEffect &= 0x3F;
-                if (gBattleStruct->synchroniseEffect == 6)
-                    gBattleStruct->synchroniseEffect = 2;
-                gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchroniseEffect + 0x40;
+                gBattleStruct->synchronizeMoveEffect &= 0x3F;
+                if (gBattleStruct->synchronizeMoveEffect == 6)
+                    gBattleStruct->synchronizeMoveEffect = 2;
+                gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchronizeMoveEffect + 0x40;
                 gBattleStruct->scriptingActive = gBattlerTarget;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_SynchronizeActivates;
@@ -2385,10 +2385,10 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
             if (gLastUsedAbility == ABILITY_SYNCHRONIZE && (gHitMarker & HITMARKER_SYNCHRONIZE_EFFECT))
             {
                 gHitMarker &= ~(HITMARKER_SYNCHRONIZE_EFFECT);
-                gBattleStruct->synchroniseEffect &= 0x3F;
-                if (gBattleStruct->synchroniseEffect == 6)
-                    gBattleStruct->synchroniseEffect = 2;
-                gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchroniseEffect;
+                gBattleStruct->synchronizeMoveEffect &= 0x3F;
+                if (gBattleStruct->synchronizeMoveEffect == 6)
+                    gBattleStruct->synchronizeMoveEffect = 2;
+                gBattleCommunication[MOVE_EFFECT_BYTE] = gBattleStruct->synchronizeMoveEffect;
                 gBattleStruct->scriptingActive = gBattlerAttacker;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_SynchronizeActivates;
@@ -2404,7 +2404,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     gLastUsedAbility = ABILITY_INTIMIDATE;
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
                     BattleScriptPushCursorAndCallback(BattleScript_IntimidateActivatesEnd3);
-                    gBattleStruct->intimidateBank = i;
+                    gBattleStruct->intimidateBattler = i;
                     effect++;
                     break;
                 }
@@ -2484,7 +2484,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
                     gStatuses3[i] &= ~(STATUS3_INTIMIDATE_POKES);
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_IntimidateActivates;
-                    gBattleStruct->intimidateBank = i;
+                    gBattleStruct->intimidateBattler = i;
                     effect++;
                     break;
                 }
