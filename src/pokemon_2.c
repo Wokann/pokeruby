@@ -80,7 +80,7 @@ u8 CountAliveMons(u8 a1)
     return retVal;
 }
 
-u8 sub_803C434(u8 a1)
+u8 GetDefaultMoveTarget(u8 a1)
 {
     u8 status = GetBattlerPosition(a1) & 1;
 
