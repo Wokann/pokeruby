@@ -135,9 +135,9 @@ static const u16 sWaveform_Pal[] = INCBIN_U16("graphics/pokemon_storage/waveform
 
 static const u8 sWaveform_Gfx[] = INCBIN_U8("graphics/pokemon_storage/waveform.4bpp");
 
-static const u16 sPSSMenuHeader_Pal1[] = INCBIN_U16("graphics/pokemon_storage/83B6D74.gbapal");
+static const u16 sPSSMenuHeader_Pal1[] = INCBIN_U16("graphics/pokemon_storage/menu_header1.gbapal");
 
-static const u16 sPSSMenuHeader_Pal2[] = INCBIN_U16("graphics/pokemon_storage/83B6D94.gbapal");
+static const u16 sPSSMenuHeader_Pal2[] = INCBIN_U16("graphics/pokemon_storage/menu_header2.gbapal");
 
 struct PokemonStorageSystemData *const gPokemonStorageSystemPtr = &ePokemonStorageSystem;
 
