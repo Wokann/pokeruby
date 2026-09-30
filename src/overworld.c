@@ -1138,9 +1138,9 @@ u8 GetCurrentMapBattleScene(void)
 
 void DebugMenu_InitTestMenu(void);
 
-void debug_sub_80589D8(void);
+void CB2_DebugTestMenu(void);
 
-void debug_sub_8058A50(void);
+void VBlankCB_DebugTestMenu(void);
 
 void CB2_InitTestMenu(void)
 {
@@ -1159,12 +1159,12 @@ void CB2_InitTestMenu(void)
     REG_IE |= 1;
     REG_DISPCNT = DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP;
     m4aSoundVSyncOn();
-    SetVBlankCallback(debug_sub_8058A50);
+    SetVBlankCallback(VBlankCB_DebugTestMenu);
     m4aSongNumStart(0x19D);
-    SetMainCallback2(debug_sub_80589D8);
+    SetMainCallback2(CB2_DebugTestMenu);
 }
 
-void debug_sub_80589D8(void)
+void CB2_DebugTestMenu(void)
 {
     if (UpdatePaletteFade())
         return;
@@ -1174,7 +1174,7 @@ void debug_sub_80589D8(void)
     BuildOamBuffer();
 }
 
-void debug_sub_80589F4(void)
+void CB2_ExitDebugTestMenu(void)
 {
     if (UpdatePaletteFade())
         return;
@@ -1187,7 +1187,7 @@ void debug_sub_80589F4(void)
     SetMainCallback2(gMain.savedCallback);
 }
 
-void debug_sub_8058A50(void)
+void VBlankCB_DebugTestMenu(void)
 {
     ProcessSpriteCopyRequests();
     LoadOam();
