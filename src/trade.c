@@ -247,7 +247,7 @@ EWRAM_DATA u8 gSelectedTradeMonPositions[2] = {0};
 
 struct TradeMenuState *sTradeMenu;
 
-const u32 unref_data_820ABD4[] =
+const u32 sUnusedTradeData[] =
 {
     0x00000890,
     0x00003AC0,
@@ -573,8 +573,8 @@ const u8 gText_MaleSymbol4[] = _("♂");
 const u8 gText_FemaleSymbol4[] = _("♀");
 const u8 gText_GenderlessSymbol[] = _("$");
 
-u8 *const unref_data_820C344 = gTileBuffer;
-const u8 unref_strings_820C348[][13] = {
+u8 *const sUnusedTradeTileBuffer = gTileBuffer;
+const u8 sUnusedTradeDebugStrings[][13] = {
     _("かいめの そうしん"),
     _("かいめの じゅしん"),
     _("ポケモンアイコンセット"),
@@ -586,8 +586,8 @@ const u8 unref_strings_820C348[][13] = {
 };
 
 const u8 sText_ShedinjaJP[] = _("ヌケニン");
-const u8 unref_string_0820C3B5[] = _("こうかんせいりつ     ");
-const u8 unref_string_0820C3C3[] = _("だめだたらしいよ     ");
+const u8 sUnusedTradeCompleteText[] = _("こうかんせいりつ     ");
+const u8 sUnusedTradeFailureText[] = _("だめだたらしいよ     ");
 const u8 sSelectedMonLevelGenderCoords[][2] = {
     { 4,  3},
     {19,  3},
