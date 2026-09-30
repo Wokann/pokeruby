@@ -52,7 +52,7 @@ enum
 static void CB2_MainMenu(void);
 static void VBlankCB_MainMenu(void);
 static void CB2_ReinitMainMenu(void);
-static u32 InitMainMenu(bool8 a1);
+static u32 InitMainMenu(bool8 returningFromOptionsMenu);
 static void Task_MainMenuCheckSaveFile(u8 taskId);
 static void Task_WaitForSaveFileErrorWindow(u8 taskId);
 static void Task_MainMenuCheckBattery(u8 taskId);
@@ -196,7 +196,7 @@ static void CB2_ReinitMainMenu(void)
 #define tMenuLayout    data[0]
 #define tMenuSelection data[1]
 
-u32 InitMainMenu(u8 a1)
+u32 InitMainMenu(bool8 returningFromOptionsMenu)
 {
     u16 savedIme;
     u8 taskId;
@@ -227,7 +227,7 @@ u32 InitMainMenu(u8 a1)
     Text_LoadWindowTemplate(&gMenuTextWindowLoadTemplate);
     InitMenuWindow((struct WindowTemplate *)&gMenuTextWindowTemplate);
 
-    if (a1)
+    if (returningFromOptionsMenu)
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB(0, 0, 0));
     else
         BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, FADE_COLOR_WHITE);
