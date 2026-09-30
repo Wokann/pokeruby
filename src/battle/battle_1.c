@@ -467,4 +467,4 @@ const u8 gEnemyMonElevation[] = {
 #include "../data/text/move_names_de.h"
 #endif
 
-const u32 gUnknown_81F9528 = 0x101;
+const u32 gUnusedBattleData = 0x101;
