@@ -3,6 +3,10 @@
 
 extern u32 gRngValue;
 
+// The number 1103515245 comes from the example implementation of rand and srand
+// in the ISO C standard.
+#define ISO_RANDOMIZE1(val) (1103515245 * (val) + 24691)
+
 //Returns a 16-bit pseudorandom number
 u16 Random(void);
 
@@ -13,4 +17,3 @@ u16 Random(void);
 void SeedRng(u16 seed);
 
 #endif // GUARD_RANDOM_H
-
