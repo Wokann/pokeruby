@@ -3,8 +3,6 @@
 #include "battle_controllers.h"
 #include "battle_ai_script_commands.h"
 #include "battle_anim.h"
-#include "battle_anim_81258BC.h"
-#include "battle_anim_8137220.h"
 #include "battle_util.h"
 #include "cable_club.h"
 #include "constants/items.h"

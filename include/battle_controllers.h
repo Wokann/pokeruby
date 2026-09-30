@@ -251,4 +251,10 @@ void SetControllerToLinkPartner(void);
 // link opponent
 void SetControllerToLinkOpponent(void);
 
+// safari controller
+void SetControllerToSafari(void);
+
+// wally controller
+void SetControllerToWally(void);
+
 #endif // GUARD_BATTLE_CONTROLLERS_H
