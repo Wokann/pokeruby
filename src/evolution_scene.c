@@ -1388,7 +1388,7 @@ NOTE:
 */
 
 /*
-void unref_sub_8113B50(u8 *a, u8 *b)
+void EvoScene_UnusedPrototypeLayout(u8 *a, u8 *b)
 {
     //u8 *sp0 = a;
     //u8 *sp4 = b;
@@ -1595,21 +1595,21 @@ void unref_sub_8113B50(u8 *a, u8 *b)
                     }
                 }
                 //_08113F3E
-                sub_81141F0(spC, sp10, sp8);
+                EvoScene_UnusedPrototypeSetTransition(spC, sp10, sp8);
             }
             //_08113F54
 
             for (r6 = 0; r6 < sEvoInfo.unk44[sp8]; r6++)
             {
                 if (sEvoInfo.unkC4[sp8][r6] == 0 && sEvoInfo.unk8C4[sp8][r6] == 0)
-                    sub_811430C(r6, sp8);
+                    EvoScene_UnusedPrototypeCenterTransition(r6, sp8);
             }
         }
         //_08113F9E
         if (sEvoInfo.round1Points[sp8] == sEvoInfo.unk44[sp8])
         {
             for (r6 = 0; r6 < sEvoInfo.round1Points[sp8]; r6++)
-                sub_81141F0(r6, r6, sp8);
+                EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
         }
         //_08113FCC
         if (sEvoInfo.round1Points[sp8] > sEvoInfo.unk44[sp8])
@@ -1654,7 +1654,7 @@ void unref_sub_8113B50(u8 *a, u8 *b)
                 if (sEvoInfo.unkC4[sp8][r6] != 0)
                 {
                     sEvoInfo.unkC4[sp8][r6] = 0;
-                    sub_81141F0(r6, r6, sp8);
+                    EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
                 }
                 else
                 {
@@ -1672,7 +1672,7 @@ void unref_sub_8113B50(u8 *a, u8 *b)
 
                     sEvoInfo.unk20C4[sp8][r6] = sEvoInfo.unk28C4[sp8][r6] = r2_ + r2 / 2;
                     sEvoInfo.unk28C4[sp8][r6]++;
-                    sub_81141F0(r6, r6, sp8);
+                    EvoScene_UnusedPrototypeSetTransition(r6, r6, sp8);
                 }
             }
         }
@@ -1683,7 +1683,7 @@ void unref_sub_8113B50(u8 *a, u8 *b)
 }
 */
 NAKED
-void unref_sub_8113B50()
+void EvoScene_UnusedPrototypeLayout()
 {
     asm(".syntax unified\n\
     push {r4-r7,lr}\n\
@@ -2214,7 +2214,7 @@ _08113F3E:\n\
     ldr r0, [sp, 0xC]\n\
     ldr r1, [sp, 0x10]\n\
     ldr r2, [sp, 0x8]\n\
-    bl sub_81141F0\n\
+    bl EvoScene_UnusedPrototypeSetTransition\n\
     ldr r5, [sp, 0x34]\n\
     str r5, [sp, 0xC]\n\
     ldr r0, [sp, 0x18]\n\
@@ -2253,7 +2253,7 @@ _08113F6E:\n\
     bne _08113F94\n\
     adds r0, r6, 0\n\
     adds r1, r5, 0\n\
-    bl sub_811430C\n\
+    bl EvoScene_UnusedPrototypeCenterTransition\n\
 _08113F94:\n\
     adds r6, 0x1\n\
     ldr r2, _08114058 @ =gSharedMem + 0x14800\n\
@@ -2279,7 +2279,7 @@ _08113FBA:\n\
     adds r0, r6, 0\n\
     adds r1, r6, 0\n\
     ldr r2, [sp, 0x8]\n\
-    bl sub_81141F0\n\
+    bl EvoScene_UnusedPrototypeSetTransition\n\
     adds r6, 0x1\n\
     ldrb r5, [r4]\n\
     cmp r6, r5\n\
@@ -2488,7 +2488,7 @@ _0811411E:\n\
     adds r0, r6, 0\n\
     adds r1, r6, 0\n\
     ldr r2, [sp, 0x8]\n\
-    bl sub_81141F0\n\
+    bl EvoScene_UnusedPrototypeSetTransition\n\
     b _081141B4\n\
     .align 2, 0\n\
 _08114164: .4byte gSharedMem + 0x14800\n\
@@ -2522,7 +2522,7 @@ _08114184:\n\
     adds r0, r6, 0\n\
     adds r1, r6, 0\n\
     ldr r2, [sp, 0x8]\n\
-    bl sub_81141F0\n\
+    bl EvoScene_UnusedPrototypeSetTransition\n\
 _081141B4:\n\
     adds r6, 0x1\n\
     ldr r4, _081141E8 @ =gSharedMem + 0x14800\n\
@@ -2555,7 +2555,7 @@ _081141EC: .4byte gSharedMem + 0x14804\n\
         .syntax divided");
 }
 
-void sub_81141F0(s32 a, s32 b, s32 c)
+void EvoScene_UnusedPrototypeSetTransition(s32 a, s32 b, s32 c)
 {
     u32 r7;
 
@@ -2591,7 +2591,7 @@ void sub_81141F0(s32 a, s32 b, s32 c)
     sEvoInfo.unk84[c]++;
 }
 
-void sub_811430C(u32 a, u32 b)
+void EvoScene_UnusedPrototypeCenterTransition(u32 a, u32 b)
 {
     u8 r2 = sEvoInfo.unk28C4[b][a];
     u8 r3 = sEvoInfo.unk20C4[b][a];
@@ -2608,7 +2608,7 @@ void sub_811430C(u32 a, u32 b)
 }
 
 NAKED
-void unref_sub_81143CC()
+void EvoScene_UnusedPrototypeUpdate()
 {
     asm(".syntax unified\n\
             push {r4-r7,lr}\n\
@@ -2728,7 +2728,7 @@ _081144B8:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldrb r0, [r4]\n\
     ldr r2, [sp, 0xC]\n\
     ldr r3, [sp, 0x10]\n\
@@ -2798,7 +2798,7 @@ _08114548:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldrb r0, [r4]\n\
     subs r0, 0x1\n\
     strb r0, [r4]\n\
@@ -2862,7 +2862,7 @@ _081145C8:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldrb r0, [r4]\n\
     ldr r2, [sp, 0xC]\n\
     ldr r3, [sp, 0x10]\n\
@@ -2932,7 +2932,7 @@ _08114658:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldrb r0, [r4]\n\
     adds r0, 0x1\n\
     strb r0, [r4]\n\
@@ -2960,7 +2960,7 @@ _0811468C:\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     ldr r3, [sp, 0x10]\n\
     adds r2, r3, 0x1\n\
@@ -2990,7 +2990,7 @@ _081146C8:\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     ldr r3, [sp, 0x10]\n\
     adds r2, r3, 0x1\n\
@@ -3020,7 +3020,7 @@ _08114704:\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     ldr r3, [sp, 0x10]\n\
     adds r2, r3, 0x1\n\
@@ -3050,7 +3050,7 @@ _08114740:\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     ldr r3, [sp, 0x10]\n\
     adds r2, r3, 0x1\n\
@@ -3080,7 +3080,7 @@ _0811477C:\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldr r2, _081147BC @ =0x000020c4\n\
     adds r0, r6, r2\n\
     adds r0, r5, r0\n\
@@ -3121,7 +3121,7 @@ _081147D0:\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldr r1, _0811480C @ =0x000020c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3151,7 +3151,7 @@ _08114810:\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldr r1, _08114854 @ =0x000020c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3186,7 +3186,7 @@ _08114858:\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldr r1, _0811489C @ =0x000020c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3322,7 +3322,7 @@ _0811497E:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldrb r0, [r4]\n\
     ldr r2, [sp, 0xC]\n\
     ldr r3, [sp, 0x10]\n\
@@ -3389,7 +3389,7 @@ _08114A0C:\n\
     adds r1, r0, 0\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldrb r0, [r4]\n\
     subs r0, 0x1\n\
     strb r0, [r4]\n\
@@ -3451,7 +3451,7 @@ _08114A86:\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
     str r3, [sp, 0x10]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldrb r0, [r4]\n\
     ldr r2, [sp, 0xC]\n\
     ldr r3, [sp, 0x10]\n\
@@ -3518,7 +3518,7 @@ _08114B14:\n\
     adds r1, r0, 0\n\
     ldr r0, [sp]\n\
     str r2, [sp, 0xC]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldrb r0, [r4]\n\
     adds r0, 0x1\n\
     strb r0, [r4]\n\
@@ -3544,7 +3544,7 @@ _08114B44:\n\
     adds r0, r4, r0\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     bne _08114B64\n\
@@ -3570,7 +3570,7 @@ _08114B7C:\n\
     adds r0, r4, r0\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     bne _08114B9C\n\
@@ -3596,7 +3596,7 @@ _08114BB4:\n\
     adds r0, r4, r0\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     bne _08114BD4\n\
@@ -3622,7 +3622,7 @@ _08114BEC:\n\
     adds r0, r4, r0\n\
     ldrb r1, [r0]\n\
     ldr r0, [sp]\n\
-    bl sub_8114E48\n\
+    bl EvoScene_UnusedPrototypeAnimateTileNibbles\n\
     lsls r0, 24\n\
     cmp r0, 0\n\
     bne _08114C0C\n\
@@ -3648,7 +3648,7 @@ _08114C24:\n\
     adds r4, r5, r4\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldr r2, _08114C60 @ =0x000028c4\n\
     adds r0, r6, r2\n\
     adds r0, r5, r0\n\
@@ -3687,7 +3687,7 @@ _08114C78:\n\
     adds r4, r5, r4\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldr r1, _08114CB0 @ =0x000028c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3716,7 +3716,7 @@ _08114CB8:\n\
     adds r4, r5, r4\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
-    bl sub_8114DB4\n\
+    bl EvoScene_UnusedPrototypeSetTileNibble\n\
     ldr r1, _08114CF0 @ =0x000028c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3745,7 +3745,7 @@ _08114CF8:\n\
     adds r4, r5, r4\n\
     ldrb r1, [r4]\n\
     ldr r0, [sp]\n\
-    bl sub_8114DF0\n\
+    bl EvoScene_UnusedPrototypeClearTileNibble\n\
     ldr r1, _08114D34 @ =0x000028c4\n\
     adds r0, r6, r1\n\
     adds r0, r5, r0\n\
@@ -3832,7 +3832,7 @@ _08114DB0: .4byte gSharedMem + 0x14800\n\
         .syntax divided");
 }
 
-void sub_8114DB4(u32 a, u8 b)
+void EvoScene_UnusedPrototypeSetTileNibble(u32 a, u8 b)
 {
     u8 *r2 = sEvoInfo.unk40C4[a][b / 2];
 
@@ -3842,7 +3842,7 @@ void sub_8114DB4(u32 a, u8 b)
         *r2 |= 0x0F;
 }
 
-void sub_8114DF0(u32 a, u8 b)
+void EvoScene_UnusedPrototypeClearTileNibble(u32 a, u8 b)
 {
     u8 *r2 = sEvoInfo.unk40C4[a][b / 2];
     u8 *r1 = r2 + 0x6000;
@@ -3860,7 +3860,7 @@ void sub_8114DF0(u32 a, u8 b)
 }
 
 NAKED
-void sub_8114E48()
+void EvoScene_UnusedPrototypeAnimateTileNibbles()
 {
     asm(".syntax unified\n\
         push {r4-r7,lr}\n\
