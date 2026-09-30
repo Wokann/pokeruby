@@ -71,7 +71,7 @@ static const u16 sEggPalette[] = INCBIN_U16("graphics/pokemon/egg/palette.gbapal
 static const u8 sEggHatchTiles[] = INCBIN_U8("graphics/misc/egg_hatch.4bpp");
 static const u8 sEggShardTiles[] = INCBIN_U8("graphics/misc/egg_shard.4bpp");
 
-static const struct OamData sOamData_820A378 =
+static const struct OamData sOamData_Egg =
 {
     .y = 0,
     .affineMode = 0,
@@ -88,71 +88,71 @@ static const struct OamData sOamData_820A378 =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_820A380[] =
+static const union AnimCmd sSpriteAnim_Egg_Normal[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A388[] =
+static const union AnimCmd sSpriteAnim_Egg_Cracked1[] =
 {
     ANIMCMD_FRAME(16, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A390[] =
+static const union AnimCmd sSpriteAnim_Egg_Cracked2[] =
 {
     ANIMCMD_FRAME(32, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A398[] =
+static const union AnimCmd sSpriteAnim_Egg_Cracked3[] =
 {
     ANIMCMD_FRAME(48, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sSpriteAnimTable_820A3A0[] =
+static const union AnimCmd *const sSpriteAnimTable_Egg[] =
 {
-    sSpriteAnim_820A380,
-    sSpriteAnim_820A388,
-    sSpriteAnim_820A390,
-    sSpriteAnim_820A398,
+    sSpriteAnim_Egg_Normal,
+    sSpriteAnim_Egg_Cracked1,
+    sSpriteAnim_Egg_Cracked2,
+    sSpriteAnim_Egg_Cracked3,
 };
 
-static const struct SpriteSheet sUnknown_0820A3B0 =
+static const struct SpriteSheet sEggHatch_Sheet =
 {
     .data = sEggHatchTiles,
     .size = 2048,
     .tag = 12345,
 };
 
-static const struct SpriteSheet sUnknown_0820A3B8 =
+static const struct SpriteSheet sEggShards_Sheet =
 {
     .data = sEggShardTiles,
     .size = 128,
     .tag = 23456,
 };
 
-static const struct SpritePalette sUnknown_0820A3C0 =
+static const struct SpritePalette sEgg_SpritePalette =
 {
     .data = sEggPalette,
     .tag = 54321
 };
 
-static const struct SpriteTemplate sSpriteTemplate_820A3C8 =
+static const struct SpriteTemplate sSpriteTemplate_Egg =
 {
     .tileTag = 12345,
     .paletteTag = 54321,
-    .oam = &sOamData_820A378,
-    .anims = sSpriteAnimTable_820A3A0,
+    .oam = &sOamData_Egg,
+    .anims = sSpriteAnimTable_Egg,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
 
 
-static const struct OamData sOamData_820A3E0 =
+static const struct OamData sOamData_EggShard =
 {
     .y = 0,
     .affineMode = 0,
@@ -169,44 +169,44 @@ static const struct OamData sOamData_820A3E0 =
     .affineParam = 0,
 };
 
-static const union AnimCmd sSpriteAnim_820A3E8[] =
+static const union AnimCmd sSpriteAnim_EggShard0[] =
 {
     ANIMCMD_FRAME(0, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A3F0[] =
+static const union AnimCmd sSpriteAnim_EggShard1[] =
 {
     ANIMCMD_FRAME(1, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A3F8[] =
+static const union AnimCmd sSpriteAnim_EggShard2[] =
 {
     ANIMCMD_FRAME(2, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_820A400[] =
+static const union AnimCmd sSpriteAnim_EggShard3[] =
 {
     ANIMCMD_FRAME(3, 5),
     ANIMCMD_END
 };
 
-static const union AnimCmd *const sSpriteAnimTable_820A408[] =
+static const union AnimCmd *const sSpriteAnimTable_EggShard[] =
 {
-    sSpriteAnim_820A3E8,
-    sSpriteAnim_820A3F0,
-    sSpriteAnim_820A3F8,
-    sSpriteAnim_820A400,
+    sSpriteAnim_EggShard0,
+    sSpriteAnim_EggShard1,
+    sSpriteAnim_EggShard2,
+    sSpriteAnim_EggShard3,
 };
 
-static const struct SpriteTemplate sSpriteTemplate_820A418 =
+static const struct SpriteTemplate sSpriteTemplate_EggShard =
 {
     .tileTag = 23456,
     .paletteTag = 54321,
-    .oam = &sOamData_820A3E0,
-    .anims = sSpriteAnimTable_820A408,
+    .oam = &sOamData_EggShard,
+    .anims = sSpriteAnimTable_EggShard,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_EggShard
@@ -424,13 +424,13 @@ static void CB2_LoadEggHatch(void)
         gMain.state++;
         break;
     case 3:
-        LoadSpriteSheet(&sUnknown_0820A3B0);
-        LoadSpriteSheet(&sUnknown_0820A3B8);
-        LoadSpritePalette(&sUnknown_0820A3C0);
+        LoadSpriteSheet(&sEggHatch_Sheet);
+        LoadSpriteSheet(&sEggShards_Sheet);
+        LoadSpritePalette(&sEgg_SpritePalette);
         gMain.state++;
         break;
     case 4:
-        gEggHatchData->eggSpriteID = CreateSprite(&sSpriteTemplate_820A3C8, 0x78, 0x4B, 5);
+        gEggHatchData->eggSpriteID = CreateSprite(&sSpriteTemplate_Egg, 0x78, 0x4B, 5);
         AddHatchedMonToParty(gEggHatchData->eggPartyID);
         gMain.state++;
         break;
@@ -751,7 +751,7 @@ static void CreateRandomEggShardSprite(void)
 
 static void CreateEggShardSprite(u8 x, u8 y, s16 data1, s16 data2, s16 data3, u8 spriteAnimIndex)
 {
-    u8 spriteID = CreateSprite(&sSpriteTemplate_820A418, x, y, 4);
+    u8 spriteID = CreateSprite(&sSpriteTemplate_EggShard, x, y, 4);
     gSprites[spriteID].data[1] = data1;
     gSprites[spriteID].data[2] = data2;
     gSprites[spriteID].data[3] = data3;
