@@ -999,32 +999,41 @@ Text_PokemonCenterSign:: @ 81A0D75
 	.string "“Erfrische deine müden Partner!”\n"
 	.string "POKéMON-CENTER$"
 
-UnknownString_81A0DA6: @ 81A0DA6
+@ Unused
+Text_UnusedFufufu:: @ 81A0DA6
 	.string "Hahaha...$"
 
-UnknownString_81A0DB0: @ 81A0DB0
+@ Unused
+Text_UnusedMumble:: @ 81A0DB0
 	.string "Murmel... Murmel...$"
 
-UnknownString_81A0DC2: @ 81A0DC2
+@ Unused
+Text_UnusedOh:: @ 81A0DC2
 	.string "Oh!$"
 
-UnknownString_81A0DC6: @ 81A0DC6
+@ Unused
+Text_UnusedClosedToday:: @ 81A0DC6
 	.string "Heute geschlossen!$"
 
-UnknownString_81A0DD4: @ 81A0DD4
+@ Unused
+Text_UnusedLikesTypePokemon:: @ 81A0DD4
 	.string "Magst du {STR_VAR_3}-POKéMON, {STR_VAR_1}?$"
 
-UnknownString_81A0DF5: @ 81A0DF5
+@ Unused
+Text_UnusedContainsPokemon:: @ 81A0DF5
 	.string "Er enthält ein POKéMON.$"
 
-UnknownString_81A0E0C: @ 81A0E0C
+@ Unused
+Text_UnusedMakingPreparations:: @ 81A0E0C
 	.string "Wir treffen Vorbereitungen.$"
 
-UnknownString_81A0E27: @ 81A0E27
+@ Unused
+Text_UnusedPseudoGymLeaderForInterviews:: @ 81A0E27
 	.string "Ich bin ein Pseudo-ARENALEITER für\n"
 	.string "Interviews.$"
 
-UnknownString_81A0E4F: @ 81A0E4F
+@ Unused
+Text_UnusedReadyForTestBattle:: @ 81A0E4F
 	.string "Bereit für einen Testkampf.$"
 
 gText_MomOrDadMightLikeThisProgram: @ 81A0E68
@@ -1032,7 +1041,8 @@ gText_MomOrDadMightLikeThisProgram: @ 81A0E68
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Ich beeile mich besser!$"
 
-UnknownString_81A0ED6: @ 81A0ED6
+@ Unused
+Text_UnusedWhatToDoForFun:: @ 81A0ED6
 	.string "Womit soll ich mir die Zeit vertreiben?$"
 
 LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
@@ -1040,16 +1050,20 @@ LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "EINKAUFSZENTRUM.\p"
 	.string "In welches Stockwerk möchtest du?$"
 
-UnknownString_81A0F38: @ 81A0F38
+@ Unused
+Text_UnusedWarpToBattleTower:: @ 81A0F38
 	.string "Zum DUELLTURM warpen.$"
 
-UnknownString_81A0F4E: @ 81A0F4E
+@ Unused
+Text_UnusedWarpToLilycove:: @ 81A0F4E
 	.string "Nach SEEGRASULB CITY warpen.$"
 
-UnknownString_81A0F60: @ 81A0F60
+@ Unused
+Text_UnusedCurrentTime:: @ 81A0F60
 	.string "Es ist {STR_VAR_1} Uhr.$"
 
-UnknownString_81A0F70: @ 81A0F70
+@ Unused
+Text_UnusedHallOfFameAccessed:: @ 81A0F70
 	.string "Zugang zur RUHMESHALLE genehmigt.$"
 
 gText_SandstormIsVicious:: @ 81A0F93

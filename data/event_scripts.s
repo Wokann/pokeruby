@@ -999,33 +999,42 @@ Text_PokemonCenterSign:: @ 81A0D75
 	.string "“Rejuvenate your tired partners!”\n"
 	.string "POKéMON CENTER$"
 
-UnknownString_81A0DA6: @ 81A0DA6
+@ Unused
+Text_UnusedFufufu:: @ 81A0DA6
 	.string "Fufufu...$"
 
-UnknownString_81A0DB0: @ 81A0DB0
+@ Unused
+Text_UnusedMumble:: @ 81A0DB0
 	.string "Mumble, mumble...$"
 
-UnknownString_81A0DC2: @ 81A0DC2
+@ Unused
+Text_UnusedOh:: @ 81A0DC2
 	.string "Oh!$"
 
-UnknownString_81A0DC6: @ 81A0DC6
+@ Unused
+Text_UnusedClosedToday:: @ 81A0DC6
 	.string "Closed today!$"
 
-UnknownString_81A0DD4: @ 81A0DD4
+@ Unused
+Text_UnusedLikesTypePokemon:: @ 81A0DD4
 	.string "You like the {STR_VAR_3}-type POKéMON\n"
 	.string "{STR_VAR_1}?$"
 
-UnknownString_81A0DF5: @ 81A0DF5
+@ Unused
+Text_UnusedContainsPokemon:: @ 81A0DF5
 	.string "It contains a POKéMON!$"
 
-UnknownString_81A0E0C: @ 81A0E0C
+@ Unused
+Text_UnusedMakingPreparations:: @ 81A0E0C
 	.string "We're making preparations.$"
 
-UnknownString_81A0E27: @ 81A0E27
+@ Unused
+Text_UnusedPseudoGymLeaderForInterviews:: @ 81A0E27
 	.string "I'm a pseudo-GYM LEADER for\n"
 	.string "interviews.$"
 
-UnknownString_81A0E4F: @ 81A0E4F
+@ Unused
+Text_UnusedReadyForTestBattle:: @ 81A0E4F
 	.string "Ready for a test battle.$"
 
 gText_MomOrDadMightLikeThisProgram: @ 81A0E68
@@ -1033,23 +1042,28 @@ gText_MomOrDadMightLikeThisProgram: @ 81A0E68
 	.string "... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...\p"
 	.string "Better get going!$"
 
-UnknownString_81A0ED6: @ 81A0ED6
+@ Unused
+Text_UnusedWhatToDoForFun:: @ 81A0ED6
 	.string "What should I do for fun today?$"
 
 LilycoveCity_DepartmentStoreElevator_Text_WhichFloorWouldYouLike:: @ 81A0EF6
 	.string "Welcome to LILYCOVE DEPARTMENT STORE.\p"
 	.string "Which floor would you like?$"
 
-UnknownString_81A0F38: @ 81A0F38
+@ Unused
+Text_UnusedWarpToBattleTower:: @ 81A0F38
 	.string "Warp to BATTLE TOWER.$"
 
-UnknownString_81A0F4E: @ 81A0F4E
+@ Unused
+Text_UnusedWarpToLilycove:: @ 81A0F4E
 	.string "Warp to LILYCOVE.$"
 
-UnknownString_81A0F60: @ 81A0F60
+@ Unused
+Text_UnusedCurrentTime:: @ 81A0F60
 	.string "The time is {STR_VAR_1}!$"
 
-UnknownString_81A0F70: @ 81A0F70
+@ Unused
+Text_UnusedHallOfFameAccessed:: @ 81A0F70
 	.string "The HALL OF FAME will be accessed.$"
 
 gText_SandstormIsVicious:: @ 81A0F93
