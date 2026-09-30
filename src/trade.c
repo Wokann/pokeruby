@@ -102,7 +102,7 @@ struct InGameTrade {
     /*0x38*/ u16 requestedSpecies;
 };
 
-struct UnkStructC {
+struct UnusedTradeData {
     /*0x00*/ u16 words[9];
     /*0x10*/ u8 string[8];
     /*0x1A*/ u8 otId[4];
@@ -140,8 +140,8 @@ struct TradeMenuState {
     /*0x0076*/ u8 filler_0076[4];
     /*0x007a*/ u8 textWindowBaseTileNum;
     /*0x007b*/ u8 callbackId;
-    /*0x007c*/ u8 unk_007c;
-    /*0x007d*/ u8 unk_007d;
+    /*0x007c*/ u8 menuCursorPosition;
+    /*0x007d*/ u8 filler_007d;
     /*0x007e*/ u16 bottomTextTileStart;
     /*0x0080*/ u8 drawSelectedMonState[2];
     /*0x0082*/ u8 selectedMonIdx[2];
@@ -162,18 +162,18 @@ struct TradeMenuState {
 
 struct TradeAnimState *gTradeAnim;
 
-static u8 gUnknown_03000508[8];
+static u8 sUnusedTradeMenuData[8];
 
-struct UnkStructF {
+struct SummaryScreenCursorState {
     u8 filler_0000[9];
-    u8 unk_0009;
+    u8 cursorPosition;
     u8 filler_000a[0xff6];
 };
 
 struct TradeEwramStruct {
     /*0x00000*/ u8 filler_00000[0x7000];
     /*0x07000*/ struct TradeMenuState tradeMenu;
-    /*0x08000*/ struct UnkStructF unk_08000;
+    /*0x08000*/ struct SummaryScreenCursorState summaryScreenCursorState;
     /*0x09000*/ u8 filler_09000[0x4000];
     /*0x0d000*/ u8 tileBuffers[13][256];
     /*0x0dd00*/ u8 filler_0dd00[0x1300];
@@ -605,7 +605,7 @@ const u16 gTradeGba2_Pal[][16] = {
 };
 
 const u32 gTradeGba_Gfx[] = INCBIN_U32("graphics/trade/gba.4bpp");
-const u32 gUnknown_0820CA98_2[] = INCBIN_U32("graphics/trade/shadow.4bpp");
+const u32 gUnusedTradeGbaShadow_Gfx[] = INCBIN_U32("graphics/trade/shadow.4bpp");
 const u32 sPokeballSymbol_Gfx[] = INCBIN_U32("graphics/trade/pokeball_symbol.8bpp");
 const u16 gTradePlatform_Tilemap[] = INCBIN_U16("graphics/trade/shadow_map.bin");
 const u16 sGbaMapCable[] = INCBIN_U16("graphics/trade/gba_map.bin");
@@ -1118,13 +1118,13 @@ static void CB2_CreateTradeMenu(void)
             LoadMonIconPalettes();
             sTradeMenu->bufferPartyState = 0;
             sTradeMenu->callbackId = 0;
-            sTradeMenu->unk_007c = 0;
+            sTradeMenu->menuCursorPosition = 0;
             sTradeMenu->drawSelectedMonState[0] = 0;
             sTradeMenu->drawSelectedMonState[1] = 0;
             sTradeMenu->playerConfirmStatus = 0;
             sTradeMenu->partnerConfirmStatus = 0;
             sTradeMenu->timer = 0;
-            gUnknown_03000508[0] = 0;
+            sUnusedTradeMenuData[0] = 0;
             gMain.state ++;
             PrintTradeMessage(0);
             CpuFill16(0, ewram_2010000.tileBuffers, sizeof(ewram_2010000.tileBuffers));
@@ -1265,7 +1265,7 @@ static void CB2_CreateTradeMenu(void)
             {
                 gMain.callback1 = CB1_UpdateLink;
                 SetMainCallback2(CB2_TradeMenu);
-                gUnknown_03000508[0] = 0;
+                sUnusedTradeMenuData[0] = 0;
             }
             break;
     }
@@ -1278,7 +1278,7 @@ static void CB2_CreateTradeMenu(void)
 static void CB2_ReturnToTradeMenu(void)
 {
     int i;
-    struct UnkStructF *unkStructF;
+    struct SummaryScreenCursorState *summaryScreenCursorState;
 
     switch (gMain.state)
     {
@@ -1298,13 +1298,13 @@ static void CB2_ReturnToTradeMenu(void)
             LoadMonIconPalettes();
             sTradeMenu->bufferPartyState = 0;
             sTradeMenu->callbackId = 0;
-            sTradeMenu->unk_007c = 0;
+            sTradeMenu->menuCursorPosition = 0;
             sTradeMenu->drawSelectedMonState[0] = 0;
             sTradeMenu->drawSelectedMonState[1] = 0;
             sTradeMenu->playerConfirmStatus = 0;
             sTradeMenu->partnerConfirmStatus = 0;
             sTradeMenu->timer = 0;
-            gUnknown_03000508[0] = 0;
+            sUnusedTradeMenuData[0] = 0;
             gMain.state ++;
             for (i = 0; i < 13; i ++)
                 sMenuTextTileBuffers[i] = ewram_2010000.tileBuffers[i];
@@ -1367,11 +1367,11 @@ static void CB2_ReturnToTradeMenu(void)
             break;
         case 12:
             CreateTradeMenuActionTextSprites();
-            unkStructF = &ewram_2010000.unk_08000;
+            summaryScreenCursorState = &ewram_2010000.summaryScreenCursorState;
             if (sTradeMenu->cursorPosition < 6)
-                sTradeMenu->cursorPosition = unkStructF->unk_0009;
+                sTradeMenu->cursorPosition = summaryScreenCursorState->cursorPosition;
             else
-                sTradeMenu->cursorPosition = unkStructF->unk_0009 + 6;
+                sTradeMenu->cursorPosition = summaryScreenCursorState->cursorPosition + 6;
             sTradeMenu->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][0] * 8 + 32, gTradeMonSpriteCoords[sTradeMenu->cursorPosition][1] * 8, 2);
             gMain.state = 15;
             nullsub_5(6, 0);
@@ -1407,7 +1407,7 @@ static void CB2_ReturnToTradeMenu(void)
             if (!gPaletteFade.active)
             {
                 SetMainCallback2(CB2_TradeMenu);
-                gUnknown_03000508[0] = 0;
+                sUnusedTradeMenuData[0] = 0;
             }
             break;
     }
@@ -1970,12 +1970,12 @@ static void CB_ProcessSelectedMonInput(void)
     if (JOY_REPT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(-1);
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(+1);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2071,12 +2071,12 @@ static void CB_ProcessConfirmTradeInput(void)
     if (JOY_REPT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(-1);
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(+1);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -2101,7 +2101,7 @@ static void CB_ProcessConfirmTradeInput(void)
         QueueAction(3, 1);
         if (Menu_GetCursorPos() == 0)
         {
-            sTradeMenu->unk_007c = Menu_MoveCursor(+1);
+            sTradeMenu->menuCursorPosition = Menu_MoveCursor(+1);
         }
         sTradeMenu->linkData[0] = LINKCMD_READY_CANCEL_TRADE;
         Trade_SendData(sTradeMenu);
@@ -2114,12 +2114,12 @@ static void CB_ProcessCancelTradeInput(void)
     if (JOY_REPT(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(-1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(-1);
     }
     else if (JOY_REPT(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sTradeMenu->unk_007c = Menu_MoveCursor(+1);
+        sTradeMenu->menuCursorPosition = Menu_MoveCursor(+1);
     }
     if (JOY_NEW(A_BUTTON))
     {
@@ -3600,13 +3600,13 @@ void CB2_LinkTrade(void)
             CpuCopy16(gBattleTextboxTilemap, gSharedMem, 0x1000);
             DmaCopy16Defvars(3, gSharedMem, BG_SCREEN_ADDR(5), 0x500);
             LoadCompressedPalette(gBattleTextboxPalette, 0, 32);
-            gTradeAnim->neverRead_00B6 = 0; // nonmatching code writes to this address with r4, as opposed to r2 in matching code. r4 is also loaded with zero way before
+            gTradeAnim->unused_00B6 = 0; // nonmatching code writes to this address with r4, as opposed to r2 in matching code. r4 is also loaded with zero way before
             gTradeAnim->state = 0;
             gTradeAnim->isLinkTrade = TRUE;
             gTradeAnim->texX = 0x40;
             gTradeAnim->texY = 0x40;
-            gTradeAnim->neverRead_0108 = 0;
-            gTradeAnim->neverRead_010A = 0;
+            gTradeAnim->unused_0108 = 0;
+            gTradeAnim->unused_010A = 0;
             gTradeAnim->scrX = 0x78;
             gTradeAnim->scrY = 0x50;
             gTradeAnim->sXY = 0x100;
@@ -4099,12 +4099,12 @@ void CB2_InitInGameTrade(void)
             Menu_EraseScreen();
             gLinkType = LINKTYPE_TRADE_DISCONNECTED;
             gTradeAnim->isLinkTrade = FALSE;
-            gTradeAnim->neverRead_00B6 = 0;
+            gTradeAnim->unused_00B6 = 0;
             gTradeAnim->state = 0;
             gTradeAnim->texX = 0x40;
             gTradeAnim->texY = 0x40;
-            gTradeAnim->neverRead_0108 = 0;
-            gTradeAnim->neverRead_010A = 0;
+            gTradeAnim->unused_0108 = 0;
+            gTradeAnim->unused_010A = 0;
             gTradeAnim->scrX = 0x78;
             gTradeAnim->scrY = 0x50;
             gTradeAnim->sXY = 0x100;

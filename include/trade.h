@@ -13,7 +13,7 @@ struct TradeAnimState {
     /*0x00b2*/ u8 linkTimeoutZero1;
     /*0x00b3*/ u8 linkTimeoutZero2;
     /*0x00b4*/ u16 linkTimeoutTimer;
-    /*0x00b6*/ u16 neverRead_00B6;
+    /*0x00b6*/ u16 unused_00B6;
     // Sprite indices
     /*0x00b8*/ u8 monSpriteIds[2];
     /*0x00ba*/ u8 connectionSpriteId1;
@@ -29,8 +29,8 @@ struct TradeAnimState {
     /*0x0103*/ u8 bouncingPokeballSpriteId;
     /*0x0104*/ u16 texX;
     /*0x0106*/ u16 texY;
-    /*0x0108*/ u16 neverRead_0108;
-    /*0x010a*/ u16 neverRead_010A;
+    /*0x0108*/ u16 unused_0108;
+    /*0x010a*/ u16 unused_010A;
     /*0x010c*/ u16 scrX;
     /*0x010e*/ s16 scrY;
     /*0x0110*/ s16 bg1vofs;
@@ -52,7 +52,7 @@ extern const u16 gTradePlatform_Tilemap[];
 
 void CB2_StartCreateTradeMenu(void);
 void CB2_InitInGameTrade(void);
-void sub_804E174(void);
+void DoInGameTradeScene(void);
 extern const u8 gText_MaleSymbol4[2];
 extern const u8 gText_FemaleSymbol4[2];
 extern const u8 gText_GenderlessSymbol[2];
