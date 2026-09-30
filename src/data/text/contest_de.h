@@ -466,5 +466,5 @@ const u8 ContestString_HighlightTransparent_ColorMagenta[] = _("{HIGHLIGHT TRANS
 const u8 gText_MissedTurn[] = _("Verpasste Chance");
 
 const u8 gText_LinkStandby4[] = _("Verbindung...");
-const u8 gUnknownText_ColorWhite2[] = _("{COLOR WHITE2}");
-const u8 gUnknownText_LinkWinner[] = _("Der Sieger ist {STR_VAR_2} von\n{STR_VAR_1}! Herzlichen Glückwunsch!");
+const u8 gText_ContestLinkColorWhite2[] = _("{COLOR WHITE2}");
+const u8 gText_WinnerIsPlayersMonCongrats[] = _("Der Sieger ist {STR_VAR_2} von\n{STR_VAR_1}! Herzlichen Glückwunsch!");
