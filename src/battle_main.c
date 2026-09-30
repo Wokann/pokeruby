@@ -3485,25 +3485,25 @@ void BattleStartClearSetData(void)
 
     // Reset gBattleResults
     for (i = 0; i < 11; i++)
-        gBattleResults.usedBalls[i] = 0;
+        gBattleResults.catchAttempts[i] = 0;
     gBattleResults.battleTurnCounter = 0;
     gBattleResults.playerFaintCounter = 0;
     gBattleResults.opponentFaintCounter = 0;
-    gBattleResults.totalMonSwitchCounter = 0;
-    gBattleResults.playerHealInBattleCount = 0;
-    gBattleResults.reviveCount = 0;
+    gBattleResults.playerSwitchesCounter = 0;
+    gBattleResults.numHealingItemsUsed = 0;
+    gBattleResults.numRevivesUsed = 0;
     gBattleResults.playerMonWasDamaged = 0;
     gBattleResults.usedMasterBall = 0;
     gBattleResults.lastOpponentSpecies = 0;
-    gBattleResults.lastUsedMove = 0;
-    gBattleResults.opponentMove = 0;
-    gBattleResults.poke1Species = 0;
-    gBattleResults.opponentSpecies = 0;
-    gBattleResults.caughtPoke = 0;
+    gBattleResults.lastUsedMovePlayer = 0;
+    gBattleResults.lastUsedMoveOpponent = 0;
+    gBattleResults.playerMon1Species = 0;
+    gBattleResults.playerMon2Species = 0;
+    gBattleResults.caughtMonSpecies = 0;
     for (i = 0; i < 10; i++)
     {
-        gBattleResults.pokeString1[i] = 0;
-        gBattleResults.pokeString2[i] = 0;
+        gBattleResults.playerMon1Name[i] = 0;
+        gBattleResults.playerMon2Name[i] = 0;
         gBattleResults.caughtMonNick[i] = 0;
     }
 #if DEBUG
@@ -5039,15 +5039,15 @@ void HandleEndTurn_FinishBattle(void)
             {
                 if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
                 {
-                    if (gBattleResults.poke1Species == SPECIES_NONE)
+                    if (gBattleResults.playerMon1Species == SPECIES_NONE)
                     {
-                        gBattleResults.poke1Species = gBattleMons[gActiveBattler].species;
-                        StringCopy(gBattleResults.pokeString1, gBattleMons[gActiveBattler].nickname);
+                        gBattleResults.playerMon1Species = gBattleMons[gActiveBattler].species;
+                        StringCopy(gBattleResults.playerMon1Name, gBattleMons[gActiveBattler].nickname);
                     }
                     else
                     {
-                        gBattleResults.opponentSpecies = gBattleMons[gActiveBattler].species;
-                        StringCopy(gBattleResults.pokeString2, gBattleMons[gActiveBattler].nickname);
+                        gBattleResults.playerMon2Species = gBattleMons[gActiveBattler].species;
+                        StringCopy(gBattleResults.playerMon2Name, gBattleMons[gActiveBattler].nickname);
                     }
                 }
             }
@@ -5229,9 +5229,9 @@ void HandleAction_UseMove(void)
     }
 
     if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
-        gBattleResults.lastUsedMove = gCurrentMove;
+        gBattleResults.lastUsedMovePlayer = gCurrentMove;
     else
-        gBattleResults.opponentMove = gCurrentMove;
+        gBattleResults.lastUsedMoveOpponent = gCurrentMove;
 
     // choose target
     side = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
@@ -5366,8 +5366,8 @@ void HandleAction_Switch(void)
     gBattlescriptCurrInstr = BattleScript_ActionSwitch;
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 
-    if (gBattleResults.totalMonSwitchCounter < 255)
-        gBattleResults.totalMonSwitchCounter++;
+    if (gBattleResults.playerSwitchesCounter < 255)
+        gBattleResults.playerSwitchesCounter++;
 }
 
 void HandleAction_UseItem(void)

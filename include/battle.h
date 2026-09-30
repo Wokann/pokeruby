@@ -234,25 +234,24 @@ struct BattleResults
 {
     u8 playerFaintCounter;    // 0x0
     u8 opponentFaintCounter;  // 0x1
-    u8 totalMonSwitchCounter; // 0x2
-    u8 playerHealInBattleCount; // 0x3
-    u8 reviveCount;           // 0x4
+    u8 playerSwitchesCounter; // 0x2
+    u8 numHealingItemsUsed;   // 0x3
+    u8 numRevivesUsed;        // 0x4
     u8 playerMonWasDamaged:1; // 0x5
     u8 usedMasterBall:1;      // 0x5
-    u16 poke1Species;         // 0x6
-    u8 pokeString1[10];       // 0x8
-    u8 unk12; // unused
+    u16 playerMon1Species;    // 0x6
+    u8 playerMon1Name[POKEMON_NAME_LENGTH + 1]; // 0x8
     u8 battleTurnCounter;     // 0x13
-    u8 pokeString2[10];       // 0x14
-    u8 filler1E[2];
+    u8 playerMon2Name[POKEMON_NAME_LENGTH + 1]; // 0x14
+    u8 filler1F;
     u16 lastOpponentSpecies;  // 0x20
-    u16 lastUsedMove;         // 0x22
-    u16 opponentMove;         // 0x24
-    u16 opponentSpecies;      // 0x26
-    u16 caughtPoke;           // 0x28
-    u8 caughtMonNick[10];     // 0x2A
-    u8 filler34[2];
-    u8 usedBalls[11];
+    u16 lastUsedMovePlayer;   // 0x22
+    u16 lastUsedMoveOpponent; // 0x24
+    u16 playerMon2Species;    // 0x26
+    u16 caughtMonSpecies;     // 0x28
+    u8 caughtMonNick[POKEMON_NAME_LENGTH + 1]; // 0x2A
+    u8 filler35;
+    u8 catchAttempts[11];
 };
 
 union TrainerMonPtr

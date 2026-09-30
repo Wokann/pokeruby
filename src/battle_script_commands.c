@@ -4765,10 +4765,10 @@ static void atk4F_jumpifcantswitch(void)
     }
 }
 
-void ChooseMonToSendOut(u8 unkown)
+void ChooseMonToSendOut(u8 slotId)
 {
     gSharedMem[BSTRUCT_OFF(battlerPartyIndexes) + gActiveBattler] = gBattlerPartyIndexes[gActiveBattler];
-    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_OUT, unkown, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
+    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_OUT, slotId, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
@@ -5029,8 +5029,8 @@ static void atk50_openpartyscreen(void)
 
             gBattlescriptCurrInstr += 6;
 
-            if (GetBattlerPosition(gActiveBattler) == 0 && gBattleResults.totalMonSwitchCounter < 0xFF)
-                gBattleResults.totalMonSwitchCounter++;
+            if (GetBattlerPosition(gActiveBattler) == 0 && gBattleResults.playerSwitchesCounter < 0xFF)
+                gBattleResults.playerSwitchesCounter++;
 
             if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
             {
@@ -9457,8 +9457,8 @@ void atkEF_handleballthrow(void)
             }
             else
             {
-                if (gBattleResults.usedBalls[gLastUsedItem - ITEM_ULTRA_BALL] < 0xFF)
-                    gBattleResults.usedBalls[gLastUsedItem - ITEM_ULTRA_BALL]++;
+                if (gBattleResults.catchAttempts[gLastUsedItem - ITEM_ULTRA_BALL] < 0xFF)
+                    gBattleResults.catchAttempts[gLastUsedItem - ITEM_ULTRA_BALL]++;
             }
         }
         if (odds > 254) //poke caught
@@ -9503,7 +9503,7 @@ void atkEF_handleballthrow(void)
 static void atkF0_givecaughtmon(void)
 {
     GiveMonToPlayer(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]]);
-    gBattleResults.caughtPoke = gBattleMons[gBattlerAttacker ^ 1].species;
+    gBattleResults.caughtMonSpecies = gBattleMons[gBattlerAttacker ^ 1].species;
     GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker ^ 1]], MON_DATA_NICKNAME, gBattleResults.caughtMonNick);
     gBattlescriptCurrInstr++;
 }
