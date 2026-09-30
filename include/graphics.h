@@ -3485,7 +3485,7 @@ extern const u8 gPokedexScreenSelectBarMain_Tilemap[];
 extern const u8 gPokedexScreenSelectBarSubmenu_Tilemap[];
 extern const u8 gPokedexInfoScreen_Tilemap[];
 extern const u8 gPokedexSearchMenu_Gfx[];
-extern const u8 gPokedexSearchMenu_Tilemap[];
+extern const u8 gPokedexSearchMenuNational_Tilemap[];
 extern const u16 gPokedexSearchMenu_Pal[];
 
 #endif  // GUARD_GRAPHICS_H

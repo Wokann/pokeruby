@@ -131,9 +131,9 @@ const u8 gBattleAnimSpritePalette_036[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpriteSheet_036[] = INCBIN_U8("graphics/battle_anims/sprites/036.4bpp.lz");
 const u8 gBattleAnimSpriteSheet_037[] = INCBIN_U8("graphics/battle_anims/sprites/037.4bpp.lz");
 
-const u8 gUnknown_08D07B68[] = INCBIN_U8("graphics/unknown/unknown_D07B68.4bpp.lz");
-const u8 gUnknown_08D07B68_pal[] = INCBIN_U8("graphics/unknown/unknown_D07B68.gbapal.lz");
-const u8 gUnknown_08D07B68_2[] = INCBIN_U8("graphics/unknown/unknown_D07B68_2.gbapal.lz");
+const u8 gBattleAnimSpriteGfx_SpinningBall[] = INCBIN_U8("graphics/battle_anims/unused/spinning_ball.4bpp.lz");
+const u8 gBattleAnimSpritePal_SpinningBall[] = INCBIN_U8("graphics/battle_anims/unused/spinning_ball.gbapal.lz");
+const u8 gBattleAnimSpritePal_SpinningBall2[] = INCBIN_U8("graphics/battle_anims/unused/spinning_ball_2.gbapal.lz");
 
 // old battle interface data, unused
 const u8 unused_gfx_obi1[] = INCBIN_U8("graphics/unused/obi1.4bpp.lz");
@@ -216,9 +216,9 @@ const u8 gBattleAnimSpritePalette_080[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpriteSheet_081[] = INCBIN_U8("graphics/battle_anims/sprites/081.4bpp.lz");
 const u8 gBattleAnimSpritePalette_081[] = INCBIN_U8("graphics/battle_anims/sprites/081.gbapal.lz");
 
-const u8 gUnknown_08D0CFAC[] = INCBIN_U8("graphics/unknown/unknown_D0CFAC.bin");
-const u8 gUnknown_08D0CFD0[] = INCBIN_U8("graphics/unknown/unknown_D0CFD0.bin");
-const u8 gUnknown_08D0CFF4[] = INCBIN_U8("graphics/unknown/unknown_D0CFF4.bin");
+const u8 gBattleAnimUnused_Unknown1[] = INCBIN_U8("graphics/battle_anims/unused/unknown_1.bin");
+const u8 gBattleAnimUnused_Unknown2[] = INCBIN_U8("graphics/battle_anims/unused/unknown_2.bin");
+const u8 gBattleAnimUnused_Unknown3[] = INCBIN_U8("graphics/battle_anims/unused/unknown_3.bin");
 const u8 unused_line_sketch_2[] = INCBIN_U8("graphics/unused/line_sketch_2.8bpp.lz");
 const u8 gUnknown_08D0D070[] = INCBIN_U8("graphics/unknown/unknown_D0D070.bin");
 const u8 unused_line_sketch_2_tilemap[] = INCBIN_U8("graphics/unused/line_sketch_2.bin.lz");
@@ -234,7 +234,7 @@ const u8 gBattleAnimSpritePalette_090[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpritePalette_092[] = INCBIN_U8("graphics/battle_anims/sprites/092.gbapal.lz");
 const u8 gBattleAnimSpritePalette_093[] = INCBIN_U8("graphics/battle_anims/sprites/093.gbapal.lz");
 const u8 gBattleAnimSpritePalette_094[] = INCBIN_U8("graphics/battle_anims/sprites/094.gbapal.lz");
-const u8 gUnknown_08D0D2B4[] = INCBIN_U8("graphics/unknown/unknown_D0D2B4.bin.lz");
+const u8 gBattleAnimUnused_Unknown4[] = INCBIN_U8("graphics/battle_anims/unused/unknown_4.bin.lz");
 const u8 gBattleAnimSpritePalette_095[] = INCBIN_U8("graphics/battle_anims/sprites/095.gbapal.lz");
 const u8 gBattleAnimSpritePalette_096[] = INCBIN_U8("graphics/battle_anims/sprites/096.gbapal.lz");
 const u8 gBattleAnimSpritePalette_097[] = INCBIN_U8("graphics/battle_anims/sprites/097.gbapal.lz");
@@ -349,7 +349,7 @@ const u8 gBattleAnimSpriteSheet_077[] = INCBIN_U8("graphics/battle_anims/sprites
 const u8 unused_old_contest_4bpp[] = INCBIN_U8("graphics/unused/old_contest.4bpp.lz");
 const u8 unused_old_contest_pal[] = INCBIN_U8("graphics/unused/old_contest.gbapal.lz");
 const u8 unused_old_contest_bin[] = INCBIN_U8("graphics/unused/old_contest.bin.lz");
-const u8 unused_unknown_D15D64[] = INCBIN_U8("graphics/unknown/unknown_D15D64.bin.lz");
+const u8 gJPContestWindowsTilemap[] = INCBIN_U8("graphics/contest/japanese/windows.bin.lz");
 
 const u8 gContestNumbers_UnusedGfx[] = INCBIN_U8("graphics/unused/numbers.4bpp.lz");
 const u8 gContestNumbers_UnusedPal[] = INCBIN_U8("graphics/unused/numbers.gbapal.lz");
@@ -360,10 +360,10 @@ const u8 gContestPalette[] = INCBIN_U8("graphics/unused/old_contest_2.gbapal.lz"
 const u8 gContestGfx[] = INCBIN_U8("graphics/unused/old_contest_2.bin.lz");
 
 const u8 gContestBgmap[] = INCBIN_U8("graphics/unknown/unknown_D17424.bin.lz");
-const u8 unused_unknown_D176CC[] = INCBIN_U8("graphics/unknown/unknown_D176CC.bin.lz");
-const u8 unused_unknown_D177D8[] = INCBIN_U8("graphics/unknown/unknown_D177D8.bin.lz");
+const u8 gJPContestInterfaceTilemap[] = INCBIN_U8("graphics/contest/japanese/interface.bin.lz");
+const u8 gJPContestAudienceTilemap[] = INCBIN_U8("graphics/contest/japanese/audience.bin.lz");
 
-const u8 gContestCurtainTilemap[] = INCBIN_U8("graphics/unknown/unknown_D17C3C.bin.lz");
+const u8 gContestCurtainTilemap[] = INCBIN_U8("graphics/contest/curtain.bin.lz");
 
 const u8 gContestMiscGfx[] = INCBIN_U8("graphics/contest/misc.4bpp.lz");
 
@@ -434,9 +434,9 @@ const u8 gBattleAnimSpritePalette_160[] = INCBIN_U8("graphics/battle_anims/sprit
 const u8 gBattleAnimSpriteSheet_144[] = INCBIN_U8("graphics/battle_anims/sprites/144.4bpp.lz");
 const u8 gBattleAnimSpritePalette_144[] = INCBIN_U8("graphics/battle_anims/sprites/144.gbapal.lz");
 
-const u8 unused_unknown_D1C060_4bpp[] = INCBIN_U8("graphics/unknown/unknown_D1C060.4bpp.lz");
-const u8 unused_unknown_D1C060_pal[] = INCBIN_U8("graphics/unknown/unknown_D1C060.gbapal.lz");
-const u8 unused_unknown_D1C060_bin[] = INCBIN_U8("graphics/unknown/unknown_D1C060.bin.lz");
+const u8 gBattleAnimUnusedGfx_Lights[] = INCBIN_U8("graphics/battle_anims/unused/lights.4bpp.lz");
+const u8 gBattleAnimUnusedPal_Lights[] = INCBIN_U8("graphics/battle_anims/unused/lights.gbapal.lz");
+const u8 gBattleAnimUnusedTilemap_Lights[] = INCBIN_U8("graphics/battle_anims/unused/lights.bin.lz");
 
 const u8 gBattleAnimSpriteSheet_162[] = INCBIN_U8("graphics/battle_anims/sprites/162.4bpp.lz");
 const u8 gBattleAnimSpritePalette_162[] = INCBIN_U8("graphics/battle_anims/sprites/162.gbapal.lz");
@@ -837,7 +837,7 @@ const u8 gBattleAnimBackgroundPalette_02[] = INCBIN_U8("graphics/battle_anims/ba
 const u8 gBattleAnimBackgroundTilemap_02[] = INCBIN_U8("graphics/battle_anims/backgrounds/02.bin.lz");
 const u8 gBattleAnimSpritePalette_287[] = INCBIN_U8("graphics/battle_anims/sprites/287.gbapal.lz");
 const u8 gBattleAnimBackgroundPalette_24[] = INCBIN_U8("graphics/battle_anims/backgrounds/24.gbapal.lz");
-const u8 unused_unknown_E6BC04[] = INCBIN_U8("graphics/unknown/unknown_E6BC04.bin.lz");
+const u8 gBattleAnimBgTilemap_SolarBeam[] = INCBIN_U8("graphics/battle_anims/backgrounds/solarbeam.bin.lz");
 const u8 gBerryBlenderCenter_Gfx[] = INCBIN_U8("graphics/berry_blender/center.8bpp.lz");
 const u8 gBerryBlenderOuter_Gfx[] = INCBIN_U8("graphics/berry_blender/outer.4bpp.lz");
 const u8 gBerryBlenderOuter_Tilemap[] = INCBIN_U8("graphics/berry_blender/outer_map.bin.lz");
@@ -1180,7 +1180,7 @@ const u8 gPokedexStartMenuSearchResults_Tilemap[] = INCBIN_U8("graphics/pokedex/
 const u8 gPokedexScreenSelectBarMain_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_navbar.bin.lz");
 const u8 gPokedexScreenSelectBarSubmenu_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_navbar_3.bin.lz");
 const u8 gPokedexInfoScreen_Tilemap[] = INCBIN_U8("graphics/pokedex/pokedex_detail_layout.bin.lz");
-const u8 gPokedexSearchMenu_Tilemap[] = INCBIN_U8("graphics/unknown/unknown_E96D2C.bin.lz");
+const u8 gPokedexSearchMenuNational_Tilemap[] = INCBIN_U8("graphics/pokedex/search_menu_national.bin.lz");
 
 const u8 gBagScreenLabels_Tilemap[] = INCBIN_U8("graphics/interface/bag_screen_labels.bin");
 
@@ -1315,8 +1315,7 @@ const u8 gTitleScreenRubySapphireVersionGfx[] = INCBIN_U8("graphics/title_screen
 const u16 gTitleScreenBgPalettes[] = INCBIN_U16("graphics/title_screen/logo_ruby.gbapal");
 #endif // SAPPHIRE
 
-// The legacy extracted path contains the Ruby/Sapphire title screen logo tilemap.
-const u8 gTitleScreenPokemonLogoTilemap[] = INCBIN_U8("graphics/unknown/unknown_E9F7E4.bin.lz");
+const u8 gTitleScreenPokemonLogoTilemap[] = INCBIN_U8("graphics/title_screen/pokemon_logo.bin.lz");
 const u16 gPokenavListArrowPalette[] = INCBIN_U16("graphics/pokenav/list_arrows_up_down.gbapal");
 const u16 gPokenavListArrowAltPalette[] = INCBIN_U16("graphics/pokenav/list_arrows_alt.gbapal");
 const u8 gPokenavListRightArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_right.4bpp");
@@ -1342,7 +1341,7 @@ const u8 gTradeMenu_Tilemap[] = INCBIN_U8("graphics/trade/menu_map.bin");
 const u8 gTradeMonBoxTilemap[] = INCBIN_U8("graphics/trade/mon_box_map.bin");
 const u8 gTradeCursor_Gfx[] = INCBIN_U8("graphics/trade/selected_mon.4bpp");
 
-const u8 gUnknown_08EA25EC[] = INCBIN_U8("graphics/unknown/unknown_EA25EC.bin");
+const u8 gTradeUnused_Tilemap[] = INCBIN_U8("graphics/trade/unused.bin");
 const u8 gCreditsCopyrightEnd_Gfx[] = INCBIN_U8("graphics/misc/end_copyright.4bpp.lz");
 const u8 gDecoration10000_Gfx[] = INCBIN_U8("graphics/misc/decoration_10000.4bpp");
 

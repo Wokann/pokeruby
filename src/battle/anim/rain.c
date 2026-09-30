@@ -12,8 +12,8 @@ static void AnimRainDrop_Step(struct Sprite *sprite);
 // rain (spawns and animates raindrops)
 // Used in Rain Dance and general rain animation.
 
-static const u8 sUnusedWater_Gfx[] = INCBIN_U8("graphics/unknown/unknown_3D7D8C.4bpp");
-static const u8 sUnusedWater[] = INCBIN_U8("graphics/unknown/unknown_3D810C.bin");
+static const u8 sUnusedWater_Gfx[] = INCBIN_U8("graphics/battle_anims/unused/water_gfx.4bpp");
+static const u8 sUnusedWater[] = INCBIN_U8("graphics/battle_anims/unused/water.bin");
 
 static const union AnimCmd sAnim_RainDrop[] =
 {
