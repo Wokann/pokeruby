@@ -1071,15 +1071,15 @@ void StartMassOutbreak(void)
     gSaveBlock1.outbreakLocationMapNum = massOutbreak->locationMapNum;
     gSaveBlock1.outbreakLocationMapGroup = massOutbreak->locationMapGroup;
     gSaveBlock1.outbreakPokemonLevel = massOutbreak->level;
-    gSaveBlock1.outbreakUnk1 = massOutbreak->unused1;
-    gSaveBlock1.outbreakUnk2 = massOutbreak->unused2;
+    gSaveBlock1.outbreakUnused1 = massOutbreak->unused1;
+    gSaveBlock1.outbreakUnused2 = massOutbreak->unused2;
     gSaveBlock1.outbreakPokemonMoves[0] = massOutbreak->moves[0];
     gSaveBlock1.outbreakPokemonMoves[1] = massOutbreak->moves[1];
     gSaveBlock1.outbreakPokemonMoves[2] = massOutbreak->moves[2];
     gSaveBlock1.outbreakPokemonMoves[3] = massOutbreak->moves[3];
-    gSaveBlock1.outbreakUnk4 = massOutbreak->unused3;
+    gSaveBlock1.outbreakUnused3 = massOutbreak->unused3;
     gSaveBlock1.outbreakPokemonProbability = massOutbreak->probability;
-    gSaveBlock1.outbreakUnk5 = 2;
+    gSaveBlock1.outbreakDaysLeft = 2;
 }
 
 void InterviewAfter_FanClubLetter(void)
@@ -1180,15 +1180,15 @@ void EndMassOutbreak(void)
     gSaveBlock1.outbreakLocationMapNum = 0;
     gSaveBlock1.outbreakLocationMapGroup = 0;
     gSaveBlock1.outbreakPokemonLevel = 0;
-    gSaveBlock1.outbreakUnk1 = 0;
-    gSaveBlock1.outbreakUnk2 = 0;
+    gSaveBlock1.outbreakUnused1 = 0;
+    gSaveBlock1.outbreakUnused2 = 0;
     gSaveBlock1.outbreakPokemonMoves[0] = 0;
     gSaveBlock1.outbreakPokemonMoves[1] = 0;
     gSaveBlock1.outbreakPokemonMoves[2] = 0;
     gSaveBlock1.outbreakPokemonMoves[3] = 0;
-    gSaveBlock1.outbreakUnk4 = 0;
+    gSaveBlock1.outbreakUnused3 = 0;
     gSaveBlock1.outbreakPokemonProbability = 0;
-    gSaveBlock1.outbreakUnk5 = 0;
+    gSaveBlock1.outbreakDaysLeft = 0;
 }
 
 void UpdateTVShowsPerDay(u16 days)
@@ -1224,10 +1224,10 @@ void UpdateTimeBeforeMassOutbreak(u16 days)
 
 void TryEndMassOutbreak(u16 days)
 {
-    if (gSaveBlock1.outbreakUnk5 <= days)
+    if (gSaveBlock1.outbreakDaysLeft <= days)
         EndMassOutbreak();
     else
-        gSaveBlock1.outbreakUnk5 -= days;
+        gSaveBlock1.outbreakDaysLeft -= days;
 }
 
 void RecordFishingAttemptForTV(bool8 caughtFish)
