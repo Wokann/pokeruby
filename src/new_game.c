@@ -209,7 +209,7 @@ void NewGameInitData(void)
 extern void Debug_FillPokemonStorage(void);
 extern void Debug_InitBagItems(void);
 extern void Debug_FillPokeblockCase(void);
-extern void unref_sub_8070F90(void);
+extern void SetDexPokemonPokenavFlags(void);
 
 void Debug_NewGameInit(bool32 setKroteNickname)
 {
@@ -230,7 +230,7 @@ void Debug_NewGameInit(bool32 setKroteNickname)
     Debug_FillPokeblockCase();
     FlagSet(FLAG_SYS_HIPSTER_MEET);
     UnlockRandomTrendySaying();
-    unref_sub_8070F90();
+    SetDexPokemonPokenavFlags();
     InitTimeBasedEvents();
 }
 #endif

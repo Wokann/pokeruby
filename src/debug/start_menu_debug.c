@@ -871,7 +871,7 @@ u8 DebugMenu_OpenSogabe(void)
 
 u8 DebugMenu_OpenTamada(void)
 {
-    return debug_sub_8075C30();
+    return DebugMenu_StartDmaTimingTest();
 }
 
 u8 DebugMenu_OpenKagaya(void)

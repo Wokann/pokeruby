@@ -47,8 +47,8 @@ enum {
 };
 
 #if DEBUG
-static u32 _debugStartMenu_0  __attribute__((unused));
-static u32 _debugStartMenu_1 __attribute__((unused));
+static u32 sDmaTimingTestElapsedCycles __attribute__((unused));
+static u32 sDmaTimingTestIterations __attribute__((unused));
 #endif
 
 static u8 (*sSaveDialogCallback)(void);
@@ -141,18 +141,18 @@ static void Task_SaveAfterLinkBattle(u8 taskId);
 
 #if DEBUG
 
-void debug_sub_8075D9C(void);
+static void StartDebugDmaTimingTest(void);
 
-u8 debug_sub_8075C30(void)
+bool8 DebugMenu_StartDmaTimingTest(void)
 {
     CloseMenu();
-    debug_sub_8075D9C();
-    return 1;
+    StartDebugDmaTimingTest();
+    return TRUE;
 }
 
 extern const u8 gDebugText_ExecutionCountAndTime[];
 
-void debug_sub_8075C40(u8 taskId)
+static void Task_DebugDmaTimingTest(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     u16 savedIme;
@@ -179,17 +179,17 @@ void debug_sub_8075C40(u8 taskId)
             DmaStop(0);
         }
         REG_TM2CNT_H = 0;
-        _debugStartMenu_0 = REG_TM2CNT_L;
+        sDmaTimingTestElapsedCycles = REG_TM2CNT_L;
         REG_TM2CNT_L = 0;
         REG_IME = savedIme;
-        _debugStartMenu_1 = i;
+        sDmaTimingTestIterations = i;
         m4aSoundVSyncOn();
         data[0]++;
         break;
     case 2:
         PlaySE(0x15);
-        ConvertIntToDecimalStringN(gStringVar1, _debugStartMenu_1, 1, 8);
-        ConvertIntToDecimalStringN(gStringVar2, _debugStartMenu_0, 1, 8);
+        ConvertIntToDecimalStringN(gStringVar1, sDmaTimingTestIterations, 1, 8);
+        ConvertIntToDecimalStringN(gStringVar2, sDmaTimingTestElapsedCycles, 1, 8);
         Menu_DisplayDialogueFrame();
         Menu_PrintText(gDebugText_ExecutionCountAndTime, 2, 15);
         data[0]++;
@@ -205,9 +205,9 @@ void debug_sub_8075C40(u8 taskId)
     }
 }
 
-void debug_sub_8075D9C(void)
+static void StartDebugDmaTimingTest(void)
 {
-    CreateTask(debug_sub_8075C40, 10);
+    CreateTask(Task_DebugDmaTimingTest, 10);
     LockPlayerFieldControls();
 }
 
@@ -232,7 +232,7 @@ void CreateDebugEReaderTrainer(struct BattleTowerEReaderTrainer *eReaderTrainer,
     SetEReaderTrainerChecksum(eReaderTrainer);
 }
 
-void unref_sub_8070F90(void)
+void SetDexPokemonPokenavFlags(void)
 {
     FlagSet(FLAG_SYS_POKEDEX_GET);
     FlagSet(FLAG_SYS_POKEMON_GET);
