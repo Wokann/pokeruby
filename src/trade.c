@@ -597,7 +597,7 @@ const u8 sSelectedMonLevelGenderCoords[][2] = {
 const u16 sPokeball_Pal[] = INCBIN_U16("graphics/trade/ball.gbapal");
 const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/trade/ball.4bpp");
 const u16 gTradeGba2_Pal[][16] = {
-    INCBIN_U16("graphics/trade/unknown.gbapal"),
+    INCBIN_U16("graphics/trade/unused1.gbapal"),
     INCBIN_U16("graphics/trade/gba.gbapal"),
     INCBIN_U16("graphics/trade/shadow.gbapal"),
     {},
