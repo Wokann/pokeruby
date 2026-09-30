@@ -176,7 +176,7 @@ static void ResetForPokeStorage(void)
     FreeAllSpritePalettes();
     ResetTasks();
     gReservedSpriteTileCount = 0x280;
-    UnkUtil_Init(&gPokemonStorageSystemPtr->unkUtil, gPokemonStorageSystemPtr->unkUtilData, 8);
+    InitTilemapTransferQueue(&gPokemonStorageSystemPtr->tilemapTransferQueue, gPokemonStorageSystemPtr->tilemapTransfers, 8);
     gKeyRepeatStartDelay = 20;
 }
 
@@ -371,7 +371,7 @@ static void VBlankCB_PokeStorage(void)
     REG_BG3VOFS = gPokemonStorageSystemPtr->bg3_Y;
     LoadOam();
     ProcessSpriteCopyRequests();
-    UnkUtil_Run();
+    RunTilemapTransferQueue();
     TransferPlttBuffer();
 }
 
@@ -1441,7 +1441,7 @@ static void InitPalettesAndSprites(void)
 {
     LZ77UnCompVram(gPSSMenuHeader_Gfx, BG_SCREEN_ADDR(10));
     LZ77UnCompWram(gPSSMenuHeader_Tilemap, gPSSMenuHeaderTilemapBuffer);
-    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 0, 0, gPSSMenuHeaderTilemapBuffer, 0, 0, 10, 20);
+    QueueTilemapCopy(BG_SCREEN_ADDR(15), 0, 0, gPSSMenuHeaderTilemapBuffer, 0, 0, 10, 20);
     LoadPalette(gPSSMenu1_Pal, 0x10, 0x20);
     LoadPalette(gPSSMenu2_Pal, 0x00, 0x20);
     LoadPalette(sPSSMenuHeader_Pal1, 0xB0, 0x20);
@@ -1624,13 +1624,13 @@ static void UpdateWaveformAnimation(void)
 
     if (gPokemonStorageSystemPtr->displayMonSpecies)
     {
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 1, 0, 8, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 1, 0, 8, 2);
         for (i = 0; i < 2; i++)
             StartSpriteAnimIfDifferent(gPokemonStorageSystemPtr->waveformSprites[i], i * 2 + 1);
     }
     else
     {
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 10, 0, 8, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 1, 0, gPSSMenuHeaderTilemapBuffer, 10, 0, 8, 2);
         for (i = 0; i < 2; i++)
             StartSpriteAnim(gPokemonStorageSystemPtr->waveformSprites[i], i * 2);
     }
@@ -1649,11 +1649,11 @@ static void InitSupplementalTilemaps(void)
     {
         UpdateCloseBoxButtonTilemap(TRUE);
         CreatePartyMonsSprites(TRUE);
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
     }
     else
     {
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 20, 12, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 20, 12, 2);
         UpdateCloseBoxButtonTilemap(TRUE);
     }
     gPokemonStorageSystemPtr->closeBoxFlashing = 0;
@@ -1673,7 +1673,7 @@ static bool8 ShowPartyMenu(void)
         return FALSE;
     gPokemonStorageSystemPtr->partyMenuUnused1--;
     gPokemonStorageSystemPtr->partyMenuY++;
-    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
+    QueueTilemapCopy(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
     MovePartySprites(8);
     if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
@@ -1696,15 +1696,15 @@ static bool8 HidePartyMenu(void)
         return FALSE;
     gPokemonStorageSystemPtr->partyMenuUnused1++;
     gPokemonStorageSystemPtr->partyMenuY--;
-    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
-    UnkUtil_DmaAdd(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
+    QueueTilemapCopy(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, gPokemonStorageSystemPtr->partyMenuUnused1, 12, gPokemonStorageSystemPtr->partyMenuY);
+    QueueTilemapFill(BG_SCREEN_ADDR(15), 10, gPokemonStorageSystemPtr->partyMenuY, 12, 1);
     MovePartySprites(-8);
     if (++gPokemonStorageSystemPtr->partyMenuMoveTimer == 20)
     {
         gPokeStorageInPartyMenu = 0;
         DestroyAllPartyMonIcons();
         CompactPartySlots();
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 1, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 1, 2);
         return FALSE;
     }
     return TRUE;
@@ -1713,9 +1713,9 @@ static bool8 HidePartyMenu(void)
 static void UpdateCloseBoxButtonTilemap(bool8 flag)
 {
     if (flag)
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 9, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 0, 9, 2);
     else
-        UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 2, 9, 2);
+        QueueTilemapCopy(BG_SCREEN_ADDR(15), 21, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 12, 2, 9, 2);
 }
 
 static void StartFlashingCloseBoxButton(void)
@@ -1762,7 +1762,7 @@ static void SetPartySlotTilemaps(void)
 static void UpdatePartySlotColors(void)
 {
     SetPartySlotTilemaps();
-    UnkUtil_CpuAdd(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
+    QueueTilemapCopy(BG_SCREEN_ADDR(15), 10, 0, gPokemonStorageSystemPtr->partyMenuTilemapBuffer, 0, 0, 12, 22);
 }
 
 static void SetUpDoShowPartyMenu(void)

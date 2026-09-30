@@ -39,7 +39,7 @@ EWRAM_DATA u8 sMovingMonOrigBoxId = 0;
 EWRAM_DATA u8 sMovingMonOrigBoxPos = 0;
 EWRAM_DATA u8 sAutoActionOn = 0;
 EWRAM_DATA u8 sSavedCursorPosition = 0;
-EWRAM_DATA struct UnkUtil *sUnkUtil = NULL;
+EWRAM_DATA struct TilemapTransferQueue *sTilemapTransferQueue = NULL;
 
 // Static ROM declarations
 
@@ -79,8 +79,8 @@ void CreateCursorSprites(void);
 void ToggleCursorAutoAction(void);
 s8 GetPokeStorageMenuItemTextId(u8 menuIndex);
 void AddBoxOptionsMenu(void);
-void UnkUtil_CpuRun(struct UnkUtilData*);
-void UnkUtil_DmaRun(struct UnkUtilData*);
+void RunTilemapCopy(struct TilemapTransfer *transfer);
+void RunTilemapFill(struct TilemapTransfer *transfer);
 
 // .rodata
 
@@ -2521,59 +2521,59 @@ s16 HandlePokeStorageMenuInput(void)
     return textId;
 }
 
-void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u8 max)
+void InitTilemapTransferQueue(struct TilemapTransferQueue *queue, struct TilemapTransfer *transfers, u8 capacity)
 {
-    sUnkUtil = util;
-    util->data = data;
-    util->max = max;
-    util->numActive = 0;
+    sTilemapTransferQueue = queue;
+    queue->transfers = transfers;
+    queue->capacity = capacity;
+    queue->transferCount = 0;
 }
 
-void UnkUtil_Run(void)
+void RunTilemapTransferQueue(void)
 {
     u16 i;
-    struct UnkUtilData *data;
+    struct TilemapTransfer *transfer;
 
-    if (sUnkUtil->numActive)
+    if (sTilemapTransferQueue->transferCount)
     {
-        for (i = 0; i < sUnkUtil->numActive; i++)
+        for (i = 0; i < sTilemapTransferQueue->transferCount; i++)
         {
-            data = &sUnkUtil->data[i];
-            data->func(data);
+            transfer = &sTilemapTransferQueue->transfers[i];
+            transfer->execute(transfer);
         }
 
-        sUnkUtil->numActive = 0;
+        sTilemapTransferQueue->transferCount = 0;
     }
 }
 
-bool8 UnkUtil_CpuAdd(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height)
+bool8 QueueTilemapCopy(u8 *destination, u16 destLeft, u16 destTop, const u8 *source, u16 sourceLeft, u16 sourceTop, u16 width, u16 height)
 {
-    struct UnkUtilData *data;
+    struct TilemapTransfer *transfer;
 
-    if (sUnkUtil->numActive >= sUnkUtil->max)
+    if (sTilemapTransferQueue->transferCount >= sTilemapTransferQueue->capacity)
         return FALSE;
 
-    data = &sUnkUtil->data[sUnkUtil->numActive++];
-    data->size = width * 2;
-    data->dest = dest + (dTop * 64) + (dLeft * 2);
-    data->src = src + (sTop * 64) + (sLeft * 2);
-    data->height = height;
-    data->func = UnkUtil_CpuRun;
+    transfer = &sTilemapTransferQueue->transfers[sTilemapTransferQueue->transferCount++];
+    transfer->rowSize = width * 2;
+    transfer->destination = destination + (destTop * 64) + (destLeft * 2);
+    transfer->source = source + (sourceTop * 64) + (sourceLeft * 2);
+    transfer->height = height;
+    transfer->execute = RunTilemapCopy;
     return TRUE;
 }
 
-void UnkUtil_CpuRun(struct UnkUtilData *data)
+void RunTilemapCopy(struct TilemapTransfer *transfer)
 {
     u32 i;
-    const u8 *src = data->src;
-    u8 *dest = data->dest;
-    int height = data->height;
-    int width = data->size;
+    const u8 *source = transfer->source;
+    u8 *destination = transfer->destination;
+    int height = transfer->height;
+    int rowSize = transfer->rowSize;
     for (i = 0; i < height; i++)
     {
-        CpuCopy16(src, dest, width);
-        dest += 64;
-        src += 64;
+        CpuCopy16(source, destination, rowSize);
+        destination += 64;
+        source += 64;
     }
 }
 
@@ -2591,28 +2591,28 @@ void CopyTilemapRectFixedWidth(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16
     }
 }
 
-bool8 UnkUtil_DmaAdd(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height)
+bool8 QueueTilemapFill(void *destination, u16 destLeft, u16 destTop, u16 width, u16 height)
 {
-    struct UnkUtilData *data;
+    struct TilemapTransfer *transfer;
 
-    if (sUnkUtil->numActive >= sUnkUtil->max)
+    if (sTilemapTransferQueue->transferCount >= sTilemapTransferQueue->capacity)
         return FALSE;
 
-    data = &sUnkUtil->data[sUnkUtil->numActive++];
-    data->size = width * 2;
-    data->dest = dest + ((dTop * 32) + dLeft) * 2;
-    data->height = height;
-    data->func = UnkUtil_DmaRun;
+    transfer = &sTilemapTransferQueue->transfers[sTilemapTransferQueue->transferCount++];
+    transfer->rowSize = width * 2;
+    transfer->destination = destination + ((destTop * 32) + destLeft) * 2;
+    transfer->height = height;
+    transfer->execute = RunTilemapFill;
     return TRUE;
 }
 
-void UnkUtil_DmaRun(struct UnkUtilData *data)
+void RunTilemapFill(struct TilemapTransfer *transfer)
 {
     u16 i;
 
-    for (i = 0; i < data->height; i++)
+    for (i = 0; i < transfer->height; i++)
     {
-        Dma3FillLarge_(0, data->dest, data->size, 16);
-        data->dest += 64;
+        Dma3FillLarge_(0, transfer->destination, transfer->rowSize, 16);
+        transfer->destination += 64;
     }
 }

@@ -154,18 +154,20 @@ struct StorageMenuText {
     const u8 *desc;
 };
 
-struct UnkUtilData {
-    const u8 *src;
-    u8 *dest;
-    u16 size;
+// Ruby schedules active storage tilemap transfers for VBlank. Emerald retains a
+// related but unused utility under generic UnkUtil names.
+struct TilemapTransfer {
+    const u8 *source;
+    u8 *destination;
+    u16 rowSize;
     u16 height;
-    void (*func)(struct UnkUtilData *data);
+    void (*execute)(struct TilemapTransfer *transfer);
 };
 
-struct UnkUtil {
-    struct UnkUtilData *data;
-    u8 numActive;
-    u8 max;
+struct TilemapTransferQueue {
+    struct TilemapTransfer *transfers;
+    u8 transferCount;
+    u8 capacity;
 };
 
 struct ChooseBoxMenu {
@@ -190,8 +192,8 @@ struct PokemonStorageSystemData {
     u16 bg3_Y;
     u16 bg3_X;
     struct PCScreenEffectStruct pcScreenEffect;
-    struct UnkUtil unkUtil;
-    struct UnkUtilData unkUtilData[8];
+    struct TilemapTransferQueue tilemapTransferQueue;
+    struct TilemapTransfer tilemapTransfers[8];
     u8 partyMenuTilemapBuffer[0x800];
     u16 partyMenuUnused1;
     u16 partyMenuY;
@@ -407,11 +409,11 @@ void InitPokeStorageMenu(void);
 void SetPokeStorageMenuText(u8 menuItemId);
 void AddPokeStorageMenu(void);
 s16 HandlePokeStorageMenuInput(void);
-void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u8 max);
-void UnkUtil_Run(void);
-bool8 UnkUtil_CpuAdd(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
+void InitTilemapTransferQueue(struct TilemapTransferQueue *queue, struct TilemapTransfer *transfers, u8 capacity);
+void RunTilemapTransferQueue(void);
+bool8 QueueTilemapCopy(u8 *destination, u16 destLeft, u16 destTop, const u8 *source, u16 sourceLeft, u16 sourceTop, u16 width, u16 height);
 void CopyTilemapRectFixedWidth(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height);
-bool8 UnkUtil_DmaAdd(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height);
+bool8 QueueTilemapFill(void *destination, u16 destLeft, u16 destTop, u16 width, u16 height);
 void ShowPokemonStorageSystemPC(void);
 
 void Debug_OpenPokeStorageForMon(struct Pokemon *pokemon, void (*func)(void));
