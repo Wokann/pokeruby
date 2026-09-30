@@ -981,25 +981,25 @@ static void ItemUseInBattle_ShowPartyMenu(u8 taskId)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
 }
 
-void ItemUseInBattle_Medicine(u8 var)
+void ItemUseInBattle_Medicine(u8 taskId)
 {
     gPokemonItemUseCallback = UseMedicine;
-    ItemUseInBattle_ShowPartyMenu(var);
+    ItemUseInBattle_ShowPartyMenu(taskId);
 }
 
-void ItemUseInBattle_SacredAsh(u8 var)
+void ItemUseInBattle_SacredAsh(u8 taskId)
 {
     gPokemonItemUseCallback = DoSacredAshItemEffect;
-    ItemUseInBattle_ShowPartyMenu(var);
+    ItemUseInBattle_ShowPartyMenu(taskId);
 }
 
-void ItemUseInBattle_PPRecovery(u8 var)
+void ItemUseInBattle_PPRecovery(u8 taskId)
 {
     gPokemonItemUseCallback = DoPPRecoveryItemEffect;
-    ItemUseInBattle_ShowPartyMenu(var);
+    ItemUseInBattle_ShowPartyMenu(taskId);
 }
 
-void ItemUseInBattle_UnusedConfusionCure(u8 var)
+void ItemUseInBattle_UnusedConfusionCure(u8 taskId)
 {
     Menu_EraseWindowRect(0, 13, 13, 20);
 
@@ -1008,11 +1008,11 @@ void ItemUseInBattle_UnusedConfusionCure(u8 var)
         RemoveBagItem(gSpecialVar_ItemId, 1);
         GetMonNickname(&gPlayerParty[0], gStringVar1);
         StringExpandPlaceholders(gStringVar4, gOtherText_SnapConfusion);
-        DisplayItemMessageOnField(var, gStringVar4, CloseBagMenuForBattle, 1);
+        DisplayItemMessageOnField(taskId, gStringVar4, CloseBagMenuForBattle, 1);
     }
     else
     {
-        DisplayItemMessageOnField(var, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
+        DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
     }
 }
 
