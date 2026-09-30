@@ -2479,14 +2479,14 @@ bool8 MovementType_WanderAround_Step6(struct ObjectEvent *objectEvent, struct Sp
 
 bool8 ObjectEventIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
 {
-    s16 x;
-    s16 y;
-    s16 objx;
-    s16 objy;
-    s16 minx;
-    s16 maxx;
-    s16 miny;
-    s16 maxy;
+    s16 playerX;
+    s16 playerY;
+    s16 objX;
+    s16 objY;
+    s16 minX;
+    s16 maxX;
+    s16 minY;
+    s16 maxY;
     if (!TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_DASH))
     {
         return FALSE;
@@ -2495,27 +2495,27 @@ bool8 ObjectEventIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
     {
         return FALSE;
     }
-    PlayerGetDestCoords(&x, &y);
-    objx = objectEvent->currentCoords.x;
-    objy = objectEvent->currentCoords.y;
-    minx = objx - objectEvent->trainerRange_berryTreeId;
-    miny = objy - objectEvent->trainerRange_berryTreeId;
-    maxx = objx + objectEvent->trainerRange_berryTreeId;
-    maxy = objy + objectEvent->trainerRange_berryTreeId;
-    if (minx > x || maxx < x || miny > y || maxy < y)
+    PlayerGetDestCoords(&playerX, &playerY);
+    objX = objectEvent->currentCoords.x;
+    objY = objectEvent->currentCoords.y;
+    minX = objX - objectEvent->trainerRange_berryTreeId;
+    minY = objY - objectEvent->trainerRange_berryTreeId;
+    maxX = objX + objectEvent->trainerRange_berryTreeId;
+    maxY = objY + objectEvent->trainerRange_berryTreeId;
+    if (minX > playerX || maxX < playerX || minY > playerY || maxY < playerY)
     {
         return FALSE;
     }
     return TRUE;
 }
 
-u8 GetVectorDirection(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetVectorDirection(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    if (xAbs > yAbs)
+    if (absdx > absdy)
     {
         direction = DIR_EAST;
-        if (x < 0)
+        if (dx < 0)
         {
             direction = DIR_WEST;
         }
@@ -2523,7 +2523,7 @@ u8 GetVectorDirection(s16 x, s16 y, s16 xAbs, s16 yAbs)
     else
     {
         direction = DIR_SOUTH;
-        if (y < 0)
+        if (dy < 0)
         {
             direction = DIR_NORTH;
         }
@@ -2531,35 +2531,35 @@ u8 GetVectorDirection(s16 x, s16 y, s16 xAbs, s16 yAbs)
     return direction;
 }
 
-u8 GetLimitedVectorDirection_SouthNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_SouthNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
     direction = DIR_SOUTH;
-    if (y < 0)
+    if (dy < 0)
     {
         direction = DIR_NORTH;
     }
     return direction;
 }
 
-u8 GetLimitedVectorDirection_WestEast(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_WestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
     direction = DIR_EAST;
-    if (x < 0)
+    if (dx < 0)
     {
         direction = DIR_WEST;
     }
     return direction;
 }
 
-u8 GetLimitedVectorDirection_WestNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_WestNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_SOUTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
         if (direction == DIR_EAST)
         {
             direction = DIR_NORTH;
@@ -2567,7 +2567,7 @@ u8 GetLimitedVectorDirection_WestNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     }
     else if (direction == DIR_EAST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
         if (direction == DIR_SOUTH)
         {
             direction = DIR_NORTH;
@@ -2576,13 +2576,13 @@ u8 GetLimitedVectorDirection_WestNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     return direction;
 }
 
-u8 GetLimitedVectorDirection_EastNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_EastNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_SOUTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
         if (direction == DIR_WEST)
         {
             direction = DIR_NORTH;
@@ -2590,7 +2590,7 @@ u8 GetLimitedVectorDirection_EastNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     }
     else if (direction == DIR_WEST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
         if (direction == DIR_SOUTH)
         {
             direction = DIR_NORTH;
@@ -2599,13 +2599,13 @@ u8 GetLimitedVectorDirection_EastNorth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     return direction;
 }
 
-u8 GetLimitedVectorDirection_WestSouth(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_WestSouth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_NORTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
         if (direction == DIR_EAST)
         {
             direction = DIR_SOUTH;
@@ -2613,7 +2613,7 @@ u8 GetLimitedVectorDirection_WestSouth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     }
     else if (direction == DIR_EAST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
         if (direction == DIR_NORTH)
         {
             direction = DIR_SOUTH;
@@ -2622,12 +2622,12 @@ u8 GetLimitedVectorDirection_WestSouth(s16 x, s16 y, s16 xAbs, s16 yAbs)
     return direction;
 }
 
-u8 GetLimitedVectorDirection_EastSouth(s16 x, s16 y, s16 xAbs, s16 yAbs) {
+u8 GetLimitedVectorDirection_EastSouth(s16 dx, s16 dy, s16 absdx, s16 absdy) {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_NORTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
         if (direction == DIR_WEST)
         {
             direction = DIR_SOUTH;
@@ -2635,7 +2635,7 @@ u8 GetLimitedVectorDirection_EastSouth(s16 x, s16 y, s16 xAbs, s16 yAbs) {
     }
     else if (direction == DIR_WEST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
         if (direction == DIR_NORTH)
         {
             direction = DIR_SOUTH;
@@ -2644,69 +2644,69 @@ u8 GetLimitedVectorDirection_EastSouth(s16 x, s16 y, s16 xAbs, s16 yAbs) {
     return direction;
 }
 
-u8 GetLimitedVectorDirection_SouthNorthWest(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_SouthNorthWest(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_EAST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
     }
     return direction;
 }
 
-u8 GetLimitedVectorDirection_SouthNorthEast(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_SouthNorthEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_WEST)
     {
-        direction = GetLimitedVectorDirection_SouthNorth(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
     }
     return direction;
 }
 
-u8 GetLimitedVectorDirection_NorthWestEast(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_NorthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_SOUTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
     }
     return direction;
 }
 
-u8 GetLimitedVectorDirection_SouthWestEast(s16 x, s16 y, s16 xAbs, s16 yAbs)
+u8 GetLimitedVectorDirection_SouthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
     u8 direction;
-    direction = GetVectorDirection(x, y, xAbs, yAbs);
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
     if (direction == DIR_NORTH)
     {
-        direction = GetLimitedVectorDirection_WestEast(x, y, xAbs, yAbs);
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
     }
     return direction;
 }
 
-u8 TryGetTrainerEncounterDirection(struct ObjectEvent *objectEvent, u8 directionFuncIndex)
+u8 TryGetTrainerEncounterDirection(struct ObjectEvent *objectEvent, u8 movementType)
 {
-    s16 x, y;
-    s16 xAbs, yAbs;
+    s16 dx, dy;
+    s16 absdx, absdy;
     if (!ObjectEventIsTrainerAndCloseToPlayer(objectEvent))
     {
         return 0;
     }
-    PlayerGetDestCoords(&x, &y);
-    x -= objectEvent->currentCoords.x;
-    y -= objectEvent->currentCoords.y;
-    xAbs = x;
-    yAbs = y;
-    if (xAbs < 0)
-        xAbs = -xAbs;
-    if (yAbs < 0)
-        yAbs = -yAbs;
+    PlayerGetDestCoords(&dx, &dy);
+    dx -= objectEvent->currentCoords.x;
+    dy -= objectEvent->currentCoords.y;
+    absdx = dx;
+    absdy = dy;
+    if (absdx < 0)
+        absdx = -absdx;
+    if (absdy < 0)
+        absdy = -absdy;
 
-    return gGetVectorDirectionFuncs[directionFuncIndex](x, y, xAbs, yAbs);
+    return gGetVectorDirectionFuncs[movementType](dx, dy, absdx, absdy);
 }
 
 movement_type_def(MovementType_LookAround, gMovementTypeFuncs_LookAround);
