@@ -8,7 +8,7 @@ void Task_TryStartLinkContest(u8 taskId);
 void Task_CommunicateMonIdxs(u8 taskId);
 void Task_EndCommunicateMonIdxs(u8 taskId);
 void Task_ReadyStartLinkContest(u8 taskId);
-u8 SetupContestGraphics(u8 *a);
+u8 SetupContestGraphics(u8 *stateVar);
 void Task_WaitToRaiseCurtainAtStart(u8 taskId);
 void Task_RaiseCurtainAtStart(u8 taskId);
 void CB2_ContestMain(void);
@@ -18,8 +18,8 @@ void Task_WaitForAppealNumberText(u8 taskId);
 void Task_TryShowMoveSelectScreen(u8 taskId);
 void Task_ShowMoveSelectScreen(u8 taskId);
 void Task_HandleMoveSelectInput(u8 taskId);
-void DrawMoveSelectArrow(s8 a);
-void EraseMoveSelectArrow(s8 a); // nullsub
+void DrawMoveSelectArrow(s8 moveIndex);
+void EraseMoveSelectArrow(s8 moveIndex); // nullsub
 void Task_SelectedMove(u8 taskId);
 void Task_EndCommunicateMoveSelections(u8 taskId);
 void Task_HideMoveSelectScreen(u8 taskId);

@@ -288,12 +288,12 @@ void Task_ReadyStartLinkContest(u8 taskId)
     gRngValue = gContestRngValue;
 }
 
-u8 SetupContestGraphics(u8 *a)
+u8 SetupContestGraphics(u8 *stateVar)
 {
     u16 sp0[16];
     u16 sp20[16];
 
-    switch (*a)
+    switch (*stateVar)
     {
     case 0:
         gPaletteFade.bufferTransferDisabled = TRUE;
@@ -343,11 +343,11 @@ u8 SetupContestGraphics(u8 *a)
         CreateInvisibleBattleTargetSprite();
         break;
     default:
-        *a = 0;
+        *stateVar = 0;
         return 1;
     }
 
-    (*a)++;
+    (*stateVar)++;
     return 0;
 }
 
@@ -786,12 +786,12 @@ void Task_DebugPlayMoveAnimation(u8 taskId)
 
 #endif
 
-void DrawMoveSelectArrow(s8 a)
+void DrawMoveSelectArrow(s8 moveIndex)
 {
-    SetOutlineCursorPosition(4, 88 + a * 16);
+    SetOutlineCursorPosition(4, 88 + moveIndex * 16);
 }
 
-void EraseMoveSelectArrow(s8 a)
+void EraseMoveSelectArrow(s8 moveIndex)
 {
 }
 
