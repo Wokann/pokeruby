@@ -1977,7 +1977,7 @@ const u8 gDebugTextGameStatUsedCut[] = DTR("ひでん:いあいぎり", "HM: CUT
 const u8 gDebugTextGameStatUsedRockSmash[] = DTR("ひでん:いわくだき", "HM: ROCK SMASH");
 const u8 gDebugTextGameStatMovedSecretBase[] = DTR("きち　ひっこし", "BASE relocations");
 const u8 gDebugTextGameStatPokemonTrades[] = DTR("つうしんこうかん", "LINK TRADES");
-const u8 gDebugTextGameStatUnknown22[] = DTR("つうしんたいせん", "LINK BATTLES");
+const u8 gDebugTextGameStatLinkBattles[] = DTR("つうしんたいせん", "LINK BATTLES");
 const u8 gDebugTextGameStatLinkBattleWins[] = DTR("つうしん　かち", "LINK WINS");
 const u8 gDebugTextGameStatLinkBattleLosses[] = DTR("つうしん　まけ", "LINK LOSSES");
 const u8 gDebugTextGameStatLinkBattleDraws[] = DTR("つうしん　ひきわけ", "LINK TIES");
@@ -1987,7 +1987,7 @@ const u8 gDebugTextGameStatUsedStruggle[] = DTR("わざ:わるあがき", "Move:
 const u8 gDebugTextGameStatSlotJackpots[] = DTR("スロットおおあたりかいすう", "SLOTS jackpots");
 const u8 gDebugTextGameStatConsecutiveRouletteWins[] = DTR("ルーレット　れんしょう", "ROULETTE streak");
 const u8 gDebugTextGameStatEnteredBattleTower[] = DTR("バトルタワー", "BATTLE TOWER");
-const u8 gDebugTextGameStatUnknown31[] = DTR("バトルタワーかち", "BATTLE TOWER wins");
+const u8 gDebugTextGameStatBattleTowerWins[] = DTR("バトルタワーかち", "BATTLE TOWER wins");
 const u8 gDebugTextGameStatBattleTowerBestStreak[] = DTR("バトルタワーれんしょう", "BATTLE TOWER streak");
 const u8 gDebugTextGameStatPokeblocks[] = DTR("ポロックさくせい", "{POKEBLOCK}s created");
 const u8 gDebugTextGameStatPokeblocksWithFriends[] = DTR("つうしんでポロックつくった", "LINK {POKEBLOCK}s made");
@@ -2035,7 +2035,7 @@ const struct DebugGameStatInfo gDebugGameStatInfo[] = {
     {0xFFFFFF, gDebugTextGameStatUsedRockSmash},
     {0xFFFFFF, gDebugTextGameStatMovedSecretBase},
     {0xFFFFFF, gDebugTextGameStatPokemonTrades},
-    {0xFFFFFF, gDebugTextGameStatUnknown22},
+    {0xFFFFFF, gDebugTextGameStatLinkBattles},
     {9999,     gDebugTextGameStatLinkBattleWins},
     {9999,     gDebugTextGameStatLinkBattleLosses},
     {9999,     gDebugTextGameStatLinkBattleDraws},
@@ -2044,7 +2044,7 @@ const struct DebugGameStatInfo gDebugGameStatInfo[] = {
     {0xFFFFFF, gDebugTextGameStatSlotJackpots},
     {0xFFFFFF, gDebugTextGameStatConsecutiveRouletteWins},
     {0xFFFFFF, gDebugTextGameStatEnteredBattleTower},
-    {0x0,      gDebugTextGameStatUnknown31},
+    {0x0,      gDebugTextGameStatBattleTowerWins},
     {0x0,      gDebugTextGameStatBattleTowerBestStreak},
     {0xFFFFFF, gDebugTextGameStatPokeblocks},
     {0xFFFFFF, gDebugTextGameStatPokeblocksWithFriends},
