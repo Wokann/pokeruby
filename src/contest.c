@@ -475,7 +475,7 @@ void Task_TryShowMoveSelectScreen(u8 taskId)
 void Task_ShowMoveSelectScreen(u8 taskId)
 {
     u8 i;
-    u8 sp8[32];
+    u8 moveName[32];
 
     gBattle_BG0_Y = 0xA0;
     gBattle_BG2_Y = 0xA0;
@@ -490,7 +490,7 @@ void Task_ShowMoveSelectScreen(u8 taskId)
     for (i = 0; i < 4; i++)
     {
         u16 move = gContestMons[gContestPlayerMonIndex].moves[i];
-        u8 *r5 = sp8;
+        u8 *moveNameBuffer = moveName;
 
         if (sContestantStatus[gContestPlayerMonIndex].prevMove != MOVE_NONE
          &&
@@ -498,20 +498,20 @@ void Task_ShowMoveSelectScreen(u8 taskId)
          && AreMovesContestCombo(sContestantStatus[gContestPlayerMonIndex].prevMove, move) != 0
          && sContestantStatus[gContestPlayerMonIndex].hasJudgesAttention)
         {
-            r5 = StringCopy(sp8, gText_ContestComboMove);
+            moveNameBuffer = StringCopy(moveName, gText_ContestComboMove);
         }
         else if (move != 0
          && sContestantStatus[gContestPlayerMonIndex].prevMove == move
          && gContestMoves[move].effect != CONTEST_EFFECT_REPETITION_NOT_BORING)
         {
             // Gray the text because it is a repeated move
-            r5 = StringCopy(sp8, gText_ContestRepeatedMove);
+            moveNameBuffer = StringCopy(moveName, gText_ContestRepeatedMove);
         }
-        r5 = StringCopy(r5, gMoveNames[move]);
+        moveNameBuffer = StringCopy(moveNameBuffer, gMoveNames[move]);
 
         Text_InitWindow8002E4C(
           &gWindowTemplate_Contest_MoveDescription,
-          sp8,
+          moveName,
           776 + i * 20,
           gContestMoveSelectTextCoords[i][0] * 8 + 4,
           gContestMoveSelectTextCoords[i][1] * 8,
@@ -1118,16 +1118,16 @@ void Task_DoAppeals(u8 taskId)
         return;
     case 26:
         {
-            s32 r2 = 0;
+            s32 j = 0;
 
             r4 = 0;
             for (i = gTasks[taskId].data[1]; i < 4; i++)
             {
                 r4 = 0;
-                for (r2 = 0; r2 < 4; r2++)
+                for (j = 0; j < 4; j++)
                 {
-                    if (r2 != contestant && gContestantTurnOrder[r2] == i
-                     && sContestantStatus[r2].effectStringId != CONTEST_STRING_NONE)
+                    if (j != contestant && gContestantTurnOrder[j] == i
+                     && sContestantStatus[j].effectStringId != CONTEST_STRING_NONE)
                     {
                         r4 = 1;
                         break;
@@ -1138,9 +1138,9 @@ void Task_DoAppeals(u8 taskId)
             }
             if (r4)
             {
-                gTasks[taskId].data[1] = gContestantTurnOrder[r2];
-                PrintAppealMoveResultText(r2, sContestantStatus[r2].effectStringId);
-                sContestantStatus[r2].effectStringId = CONTEST_STRING_NONE;
+                gTasks[taskId].data[1] = gContestantTurnOrder[j];
+                PrintAppealMoveResultText(j, sContestantStatus[j].effectStringId);
+                sContestantStatus[j].effectStringId = CONTEST_STRING_NONE;
                 gTasks[taskId].data[0] = 27;
             }
             else
@@ -1716,11 +1716,11 @@ void Task_WaitBeforePrintRoundResult(u8 taskId)
 
 void Task_PrintRoundResultText(u8 taskId)
 {
-    u8 r4 = sContestantStatus[gContestPlayerMonIndex].attentionLevel;
+    u8 attention = sContestantStatus[gContestPlayerMonIndex].attentionLevel;
 
     ContestClearGeneralTextWindow();
     StringCopy(gStringVar1, gContestMons[gContestPlayerMonIndex].nickname);
-    StringExpandPlaceholders(gStringVar4, gContestStandOutStrings[r4]);
+    StringExpandPlaceholders(gStringVar4, gContestStandOutStrings[attention]);
     Contest_StartTextPrinter(&gMenuWindow, gStringVar4, 776, 1, 15);
     gTasks[taskId].func = Task_WaitPrintRoundResultText;
 }
