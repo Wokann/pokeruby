@@ -657,14 +657,11 @@ const struct YesNoFuncTable sYesNoTable_KeepPlaying = {
     Task_StopPlaying
 };
 
-extern u8 gUnknown_02019000[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gPlttBufferFaded[];
 extern u16 gPlttBufferUnfaded[];
 extern const u8 Roulette_Text_ControlsInstruction[];
 extern const u8 Roulette_Text_KeepPlaying[];
-extern const u16 gUnknown_083F8ECE;
-const extern u8 gUnknown_083F8ECA[];
 extern const u8 Roulette_Text_Jackpot[];
 extern const u8 Roulette_Text_ItsAHit[];
 extern const u8 Roulette_Text_NothingDoing[];
@@ -672,9 +669,6 @@ extern const u8 Roulette_Text_YouveWonXCoins[];
 extern const u8 Roulette_Text_BoardWillBeCleared[];
 extern const u8 Roulette_Text_CoinCaseIsFull[];
 extern const u8 Roulette_Text_NoCoinsLeft[];
-extern const u32 gUnknown_083F8ED8[];
-extern const u32 gUnknown_083F8EE8[];
-extern const u8 gUnknown_083F8EF4[];
 extern const u8 Roulette_Text_PlayMinimumWagerIsX[];
 extern const u8 Roulette_Text_SpecialRateTable[];
 extern const u8 Roulette_Text_NotEnoughCoins[];
