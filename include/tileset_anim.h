@@ -1,30 +1,30 @@
-#ifndef GUARD_TITLE_SCREEN_H
-#define GUARD_TITLE_SCREEN_H
+#ifndef GUARD_TILESET_ANIM_H
+#define GUARD_TILESET_ANIM_H
 
 void TransferTilesetAnimsBuffer(void);
 void InitTilesetAnimations(void);
 void InitSecondaryTilesetAnimation(void);
 void UpdateTilesetAnimations(void);
-void TilesetCB_General(void);
-void TilesetCB_Building(void);
-void TilesetCB_Petalburg(void);
-void TilesetCB_Rustboro(void);
-void TilesetCB_Dewford(void);
-void TilesetCB_Slateport(void);
-void TilesetCB_Mauville(void);
-void TilesetCB_Lavaridge(void);
-void TilesetCB_Fallarbor(void);
-void TilesetCB_Fortree(void);
-void TilesetCB_Lilycove(void);
-void TilesetCB_Mossdeep(void);
-void TilesetCB_EverGrande(void);
-void TilesetCB_Pacifidlog(void);
-void TilesetCB_Sootopolis(void);
-void TilesetCB_Underwater(void);
-void TilesetCB_SootopolisGym(void);
-void TilesetCB_Cave(void);
-void TilesetCB_EliteFour(void);
-void TilesetCB_MauvilleGym(void);
-void TilesetCB_BikeShop(void);
+void InitTilesetAnim_General(void);
+void InitTilesetAnim_Building(void);
+void InitTilesetAnim_Petalburg(void);
+void InitTilesetAnim_Rustboro(void);
+void InitTilesetAnim_Dewford(void);
+void InitTilesetAnim_Slateport(void);
+void InitTilesetAnim_Mauville(void);
+void InitTilesetAnim_Lavaridge(void);
+void InitTilesetAnim_Fallarbor(void);
+void InitTilesetAnim_Fortree(void);
+void InitTilesetAnim_Lilycove(void);
+void InitTilesetAnim_Mossdeep(void);
+void InitTilesetAnim_EverGrande(void);
+void InitTilesetAnim_Pacifidlog(void);
+void InitTilesetAnim_Sootopolis(void);
+void InitTilesetAnim_Underwater(void);
+void InitTilesetAnim_SootopolisGym(void);
+void InitTilesetAnim_Cave(void);
+void InitTilesetAnim_EliteFour(void);
+void InitTilesetAnim_MauvilleGym(void);
+void InitTilesetAnim_BikeShop(void);
 
-#endif // GUARD_TITLE_SCREEN_H
+#endif // GUARD_TILESET_ANIM_H
