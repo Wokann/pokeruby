@@ -4766,7 +4766,7 @@ void ChooseMonToSendOut(u8 slotId)
     MarkBattlerForControllerExec(gActiveBattler);
 }
 
-bool8 HasNoMonsToSwitch(u8 battler, u8, u8);
+bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2);
 
 static void Cmd_openpartyscreen(void)
 {

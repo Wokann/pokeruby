@@ -82,7 +82,7 @@ u8 GetBattlerPosition(u8 battler);
 u8 GetBattlerSide(u8 battler);
 void SetMoveEffect(bool8 primary, u8 certainArg);
 bool8 UproarWakeUpCheck(u8 battler);
-bool8 HasNoMonsToSwitch(u8 battler, u8, u8);
+bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2);
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 u8 CountTrailingZeroBits(u32 a);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
@@ -1290,7 +1290,7 @@ bool8 HandleFaintedMonActions(void)
             gBattleStruct->faintedActionsState++;
             for (i = 0; i < gBattlersCount; i++)
             {
-                if (gAbsentBattlerFlags & gBitTable[i] && !HasNoMonsToSwitch(i, 6, 6))
+                if (gAbsentBattlerFlags & gBitTable[i] && !HasNoMonsToSwitch(i, PARTY_SIZE, PARTY_SIZE))
                     gAbsentBattlerFlags &= ~(gBitTable[i]);
             }
         case 1:
@@ -1626,50 +1626,50 @@ u8 AtkCanceller_UnableToUseMove(void)
     return effect;
 }
 
-bool8 HasNoMonsToSwitch(u8 battler, u8 r1, u8 r2)
+bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2)
 {
     struct Pokemon* party;
-    u8 r7;
-    u8 r6;
+    u8 flankId;
+    u8 playerId;
     s32 i;
     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
         return 0;
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
     {
-        r7 = GetBattlerMultiplayerId(battler);
-        if (GetBattlerSide(battler) == 0)
+        flankId = GetBattlerMultiplayerId(battler);
+        if (GetBattlerSide(battler) == B_SIDE_PLAYER)
             party = gPlayerParty;
         else
             party = gEnemyParty;
-        r6 = GetLinkTrainerFlankId(r7);
-        for (i = r6 * 3; i < r6 * 3 + 3; i++)
+        playerId = GetLinkTrainerFlankId(flankId);
+        for (i = playerId * 3; i < playerId * 3 + 3; i++)
         {
             if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG)
                 break;
         }
-        return (i == r6 * 3 + 3);
+        return (i == playerId * 3 + 3);
     }
     else
     {
         if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
         {
-            r7 = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
-            r6 = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+            flankId = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+            playerId = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
             party = gEnemyParty;
         }
         else
         {
-            r7 = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
-            r6 = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+            flankId = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+            playerId = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
             party = gPlayerParty;
         }
-        if (r1 == PARTY_SIZE)
-            r1 = gBattlerPartyIndexes[r7];
-        if (r2 == PARTY_SIZE)
-            r2 = gBattlerPartyIndexes[r6];
+        if (partyIdBattlerOn1 == PARTY_SIZE)
+            partyIdBattlerOn1 = gBattlerPartyIndexes[flankId];
+        if (partyIdBattlerOn2 == PARTY_SIZE)
+            partyIdBattlerOn2 = gBattlerPartyIndexes[playerId];
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG && i != r1 && i != r2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r7] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + r6])
+            if (GetMonData(&party[i], MON_DATA_HP) && GetMonData(&party[i], MON_DATA_SPECIES2) && GetMonData(&party[i], MON_DATA_SPECIES2) != SPECIES_EGG && i != partyIdBattlerOn1 && i != partyIdBattlerOn2 && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + flankId] && i != gSharedMem[BSTRUCT_OFF(monToSwitchIntoId) + playerId])
                 break;
         }
         return (i == PARTY_SIZE);
