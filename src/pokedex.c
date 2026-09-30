@@ -1231,7 +1231,7 @@ static void Task_PokedexResultsScreenMenu(u8 taskId);
 static void Task_OpenSearchResultsInfoScreenAfterMonMovement(u8 taskId);
 static void Task_WaitForExitSearchResultsInfoScreen(u8 taskId);
 static void Task_PokedexResultsScreenReturnToMainScreen(u8 taskId);
-static void Task_PokedexResultsScreenExitPokedex(u8 taskId);
+static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId);
 static bool8 LoadPokedexListPage(u8 page);
 static void LoadPokedexBgPalette(void);
 static void SortPokedex(u8 dexMode, u8 sortMode);
@@ -1820,7 +1820,7 @@ static void Task_PokedexResultsScreenMenu(u8 taskId)
                 break;
             case 4: //CLOSE POKEDEX
                 BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB(0, 0, 0));
-                gTasks[taskId].func = Task_PokedexResultsScreenExitPokedex;
+                gTasks[taskId].func = Task_ClosePokedexFromSearchResultsStartMenu;
                 PlaySE(SE_PC_OFF);
                 break;
             }
@@ -1884,7 +1884,7 @@ static void Task_PokedexResultsScreenReturnToMainScreen(u8 taskId)
     }
 }
 
-static void Task_PokedexResultsScreenExitPokedex(u8 taskId)
+static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
