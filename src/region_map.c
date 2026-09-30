@@ -344,31 +344,31 @@ void SetRegionMapDataForZoom(void)
     {
         sRegionMap->scrollY = 0;
         sRegionMap->scrollX = 0;
-        sRegionMap->unk_040 = 0;
-        sRegionMap->unk_03c = 0;
-        sRegionMap->unk_060 = sRegionMap->cursorPosX * 8 - 52;
-        sRegionMap->unk_062 = sRegionMap->cursorPosY * 8 - 68;
-        sRegionMap->unk_044 = (sRegionMap->unk_060 << 8) / 16;
-        sRegionMap->unk_048 = (sRegionMap->unk_062 << 8) / 16;
+        sRegionMap->zoomScrollYFixed = 0;
+        sRegionMap->zoomScrollXFixed = 0;
+        sRegionMap->zoomTargetScrollX = sRegionMap->cursorPosX * 8 - 52;
+        sRegionMap->zoomTargetScrollY = sRegionMap->cursorPosY * 8 - 68;
+        sRegionMap->zoomScrollXDelta = (sRegionMap->zoomTargetScrollX << 8) / 16;
+        sRegionMap->zoomScrollYDelta = (sRegionMap->zoomTargetScrollY << 8) / 16;
         sRegionMap->zoomedCursorPosX = sRegionMap->cursorPosX;
         sRegionMap->zoomedCursorPosY = sRegionMap->cursorPosY;
-        sRegionMap->unk_04c = (256 << 8);
-        sRegionMap->unk_050 = -0x800;
+        sRegionMap->zoomScale = (256 << 8);
+        sRegionMap->zoomScaleDelta = -0x800;
     }
     else
     {
-        sRegionMap->unk_03c = sRegionMap->scrollX * 256;
-        sRegionMap->unk_040 = sRegionMap->scrollY * 256;
-        sRegionMap->unk_060 = 0;
-        sRegionMap->unk_062 = 0;
-        sRegionMap->unk_044 = -(sRegionMap->unk_03c / 16);
-        sRegionMap->unk_048 = -(sRegionMap->unk_040 / 16);
+        sRegionMap->zoomScrollXFixed = sRegionMap->scrollX * 256;
+        sRegionMap->zoomScrollYFixed = sRegionMap->scrollY * 256;
+        sRegionMap->zoomTargetScrollX = 0;
+        sRegionMap->zoomTargetScrollY = 0;
+        sRegionMap->zoomScrollXDelta = -(sRegionMap->zoomScrollXFixed / 16);
+        sRegionMap->zoomScrollYDelta = -(sRegionMap->zoomScrollYFixed / 16);
         sRegionMap->cursorPosX = sRegionMap->zoomedCursorPosX;
         sRegionMap->cursorPosY = sRegionMap->zoomedCursorPosY;
-        sRegionMap->unk_04c = (128 << 8);
-        sRegionMap->unk_050 = 0x800;
+        sRegionMap->zoomScale = (128 << 8);
+        sRegionMap->zoomScaleDelta = 0x800;
     }
-    sRegionMap->unk_06e = 0;
+    sRegionMap->zoomTransitionFrameCounter = 0;
     FreeRegionMapCursorSprite();
     HideRegionMapPlayerIcon();
 }
@@ -377,16 +377,16 @@ bool8 UpdateRegionMapZoom(void)
 {
     bool8 retVal;
 
-    if (sRegionMap->unk_06e >= 16)
+    if (sRegionMap->zoomTransitionFrameCounter >= 16)
         return 0;
-    sRegionMap->unk_06e++;
-    if (sRegionMap->unk_06e == 16)
+    sRegionMap->zoomTransitionFrameCounter++;
+    if (sRegionMap->zoomTransitionFrameCounter == 16)
     {
-        sRegionMap->unk_044 = 0;
-        sRegionMap->unk_048 = 0;
-        sRegionMap->scrollX = sRegionMap->unk_060;
-        sRegionMap->scrollY = sRegionMap->unk_062;
-        sRegionMap->unk_04c = (sRegionMap->zoomed == FALSE) ? (128 << 8) : (256 << 8);
+        sRegionMap->zoomScrollXDelta = 0;
+        sRegionMap->zoomScrollYDelta = 0;
+        sRegionMap->scrollX = sRegionMap->zoomTargetScrollX;
+        sRegionMap->scrollY = sRegionMap->zoomTargetScrollY;
+        sRegionMap->zoomScale = (sRegionMap->zoomed == FALSE) ? (128 << 8) : (256 << 8);
         sRegionMap->zoomed = !sRegionMap->zoomed;
         sRegionMap->inputCallback = (sRegionMap->zoomed == FALSE) ? ProcessRegionMapInput_Full : ProcessRegionMapInput_Zoomed;
         CreateRegionMapCursor(sRegionMap->cursorTileTag, sRegionMap->cursorPaletteTag);
@@ -395,42 +395,42 @@ bool8 UpdateRegionMapZoom(void)
     }
     else
     {
-        sRegionMap->unk_03c += sRegionMap->unk_044;
-        sRegionMap->unk_040 += sRegionMap->unk_048;
-        sRegionMap->scrollX = sRegionMap->unk_03c >> 8;
-        sRegionMap->scrollY = sRegionMap->unk_040 >> 8;
-        sRegionMap->unk_04c += sRegionMap->unk_050;
-        if ((sRegionMap->unk_044 < 0 && sRegionMap->scrollX < sRegionMap->unk_060)
-         || (sRegionMap->unk_044 > 0 && sRegionMap->scrollX > sRegionMap->unk_060))
+        sRegionMap->zoomScrollXFixed += sRegionMap->zoomScrollXDelta;
+        sRegionMap->zoomScrollYFixed += sRegionMap->zoomScrollYDelta;
+        sRegionMap->scrollX = sRegionMap->zoomScrollXFixed >> 8;
+        sRegionMap->scrollY = sRegionMap->zoomScrollYFixed >> 8;
+        sRegionMap->zoomScale += sRegionMap->zoomScaleDelta;
+        if ((sRegionMap->zoomScrollXDelta < 0 && sRegionMap->scrollX < sRegionMap->zoomTargetScrollX)
+         || (sRegionMap->zoomScrollXDelta > 0 && sRegionMap->scrollX > sRegionMap->zoomTargetScrollX))
         {
-            sRegionMap->scrollX = sRegionMap->unk_060;
-            sRegionMap->unk_044 = 0;
+            sRegionMap->scrollX = sRegionMap->zoomTargetScrollX;
+            sRegionMap->zoomScrollXDelta = 0;
         }
-        if ((sRegionMap->unk_048 < 0 && sRegionMap->scrollY < sRegionMap->unk_062)
-         || (sRegionMap->unk_048 > 0 && sRegionMap->scrollY > sRegionMap->unk_062))
+        if ((sRegionMap->zoomScrollYDelta < 0 && sRegionMap->scrollY < sRegionMap->zoomTargetScrollY)
+         || (sRegionMap->zoomScrollYDelta > 0 && sRegionMap->scrollY > sRegionMap->zoomTargetScrollY))
         {
-            sRegionMap->scrollY = sRegionMap->unk_062;
-            sRegionMap->unk_048 = 0;
+            sRegionMap->scrollY = sRegionMap->zoomTargetScrollY;
+            sRegionMap->zoomScrollYDelta = 0;
         }
         if (sRegionMap->zoomed == FALSE)
         {
-            if (sRegionMap->unk_04c < (128 << 8))
+            if (sRegionMap->zoomScale < (128 << 8))
             {
-                sRegionMap->unk_04c = (128 << 8);
-                sRegionMap->unk_050 = 0;
+                sRegionMap->zoomScale = (128 << 8);
+                sRegionMap->zoomScaleDelta = 0;
             }
         }
         else
         {
-            if (sRegionMap->unk_04c > (256 << 8))
+            if (sRegionMap->zoomScale > (256 << 8))
             {
-                sRegionMap->unk_04c = (256 << 8);
-                sRegionMap->unk_050 = 0;
+                sRegionMap->zoomScale = (256 << 8);
+                sRegionMap->zoomScaleDelta = 0;
             }
         }
         retVal = TRUE;
     }
-    CalcZoomScrollParams(sRegionMap->scrollX, sRegionMap->scrollY, 0x38, 0x48, sRegionMap->unk_04c >> 8, sRegionMap->unk_04c >> 8, 0);
+    CalcZoomScrollParams(sRegionMap->scrollX, sRegionMap->scrollY, 0x38, 0x48, sRegionMap->zoomScale >> 8, sRegionMap->zoomScale >> 8, 0);
     return retVal;
 }
 
