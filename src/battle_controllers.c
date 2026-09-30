@@ -861,7 +861,8 @@ void BtlController_EmitChooseAction(u8 bufferId, u8 action, u16 itemId)
     PrepareBufferDataTransfer(bufferId, gBattleBuffersTransferData, 4);
 }
 
-void BtlController_EmitUnknownYesNoBox(u8 bufferId, u8 unused)
+// Ruby's legacy Yes/No command retains an otherwise unused payload byte.
+void BtlController_EmitYesNoBox(u8 bufferId, u8 unused)
 {
     gBattleBuffersTransferData[0] = CONTROLLER_YESNOBOX;
     gBattleBuffersTransferData[1] = unused;
