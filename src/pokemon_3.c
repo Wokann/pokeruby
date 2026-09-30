@@ -698,7 +698,7 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
             || gTrainers[gTrainerBattleOpponent].trainerClass == TRAINER_CLASS_CHAMPION))))
         {
             s8 delta = sFriendshipEventDeltas[event][friendshipLevel];
-            if (delta > 0 && holdEffect == HOLD_EFFECT_HAPPINESS_UP)
+            if (delta > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
                 delta = (150 * delta) / 100;
 
             friendship += delta;

@@ -469,7 +469,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                         {
                             friendshipChange = itemEffect[itemEffectParam];
                             friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);
-                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_HAPPINESS_UP)
+                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
                                 friendship += 150 * friendshipChange / 100;
                             else
                                 friendship += friendshipChange;
@@ -495,7 +495,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                         {
                             friendshipChange = itemEffect[itemEffectParam];
                             friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);
-                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_HAPPINESS_UP)
+                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
                                 friendship += 150 * friendshipChange / 100;
                             else
                                 friendship += friendshipChange;
@@ -520,7 +520,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                         {
                             friendshipChange = itemEffect[itemEffectParam];
                             friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);
-                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_HAPPINESS_UP)
+                            if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
                                 friendship += 150 * friendshipChange / 100;
                             else
                                 friendship += friendshipChange;
