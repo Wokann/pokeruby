@@ -8,7 +8,7 @@
 
 void ResetPokedex(void);
 void ResetPokedexScrollPositions(void);
-void CB2_InitPokedex(void);
+void CB2_OpenPokedex(void);
 u8 DisplayCaughtMonDexPage(u16 dexNum, u32 otId, u32 personality);
 const u8 *GetPokemonCategory(u16);
 u16 GetPokedexHeightWeight(u16 dexNum, u8 data);
