@@ -1208,7 +1208,7 @@ void PrepareBattlerSpriteForRotScale(u8 spriteId, u8 objMode)
     gSprites[spriteId].oam.objMode = objMode;
     gSprites[spriteId].affineAnimPaused = TRUE;
     if (!IsContest() && !gSprites[spriteId].oam.affineMode)
-        gSprites[spriteId].oam.matrixNum = gBattleHealthBoxInfo[battler].unk6;
+        gSprites[spriteId].oam.matrixNum = gBattleHealthBoxInfo[battler].matrixNum;
     gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
     CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
 }

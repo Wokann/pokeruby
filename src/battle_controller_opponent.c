@@ -70,7 +70,6 @@ extern void sub_8033160(void);
 extern u8 GetBattleTowerTrainerFrontSpriteId(void);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_8032B4C(void);
-extern void sub_8031A6C(u16, u8);
 extern void sub_8032B84(void);
 extern void StartAnimLinearTranslation(struct Sprite *);
 extern void sub_8032BBC(void);
@@ -93,7 +92,6 @@ extern void DoHitAnimHealthboxEffect();
 extern u8 GetBattlerSide(u8);
 extern void HandleIntroSlide();
 extern void nullsub_45(void);
-extern void sub_8031B74();
 extern bool8 IsDoubleBattle(void);
 extern void sub_8032E2C(void);
 extern u8 TryHandleLaunchBattleTableAnimation();
@@ -275,7 +273,7 @@ void sub_8032BBC(void)
 {
     if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
     {
-        sub_8031B74(gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam);
+        FreeTrainerFrontPicPalette(gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam);
         gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = gSprites[gBattlerSpriteIds[gActiveBattler]].data[5];
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
@@ -1212,7 +1210,7 @@ void OpponentHandleTrainerThrow(void)
             trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
     }
 
-    sub_8031A6C(trainerPicIndex, gActiveBattler);
+    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1242,7 +1240,7 @@ void OpponentHandleTrainerSlide(void)
     else
         trainerPicIndex = gTrainers[gTrainerBattleOpponent].trainerPic;
 
-    sub_8031A6C(trainerPicIndex, gActiveBattler);
+    DecompressTrainerFrontPic(trainerPicIndex, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(trainerPicIndex, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1773,7 +1771,7 @@ void OpponentHandleTrainerBallThrow(void)
 
 void sub_8035C10(struct Sprite *sprite)
 {
-    sub_8031B74(sprite->oam.affineParam);
+    FreeTrainerFrontPicPalette(sprite->oam.affineParam);
     sprite->oam.tileNum = sprite->data[5];
     FreeSpriteOamMatrix(sprite);
     DestroySprite(sprite);

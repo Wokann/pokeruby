@@ -268,7 +268,7 @@ void ApplyPlayerChosenFrameToBattleMenu(void)
     gPlttBufferUnfaded[94] = 0x7fff;
     gPlttBufferUnfaded[95] = 0x675a;
     CpuSet(&gPlttBufferUnfaded[92], &gPlttBufferFaded[92], 4);
-    SetBattleMenuWindowTransparentPixelsToOpaque();
+    FillAroundBattleWindows();
 }
 
 void DrawMainBattleBackground(void)

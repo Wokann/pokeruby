@@ -3515,7 +3515,7 @@ void Task_AnimatePartyMenuHpRestore(u8 taskId)
         sp14 += sp0.oldValue;
         SetMonData(gPartyMenu.pokemon, MON_DATA_HP, &sp14);
         RemoveBagItem(gPartyMenu.secondarySelectedIndex, 1);
-        sub_8032638();
+        HandleBattleLowHpMusicChange();
         gTasks[taskId].func = Task_WaitForPartyMenuMessageThenFollowup;
     }
     else

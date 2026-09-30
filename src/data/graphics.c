@@ -158,7 +158,7 @@ const u8 gBattleAnimSpriteSheet_044[] = INCBIN_U8("graphics/battle_anims/sprites
 const u8 gBattleAnimSpritePalette_045[] = INCBIN_U8("graphics/battle_anims/sprites/045.gbapal.lz");
 const u8 gBattleAnimSpriteSheet_045[] = INCBIN_U8("graphics/battle_anims/sprites/045.4bpp.lz");
 
-const u8 gUnknown_08D09C48[] = INCBIN_U8("graphics/interface/hp_numbers.4bpp.lz");
+const u8 gBattleInterfaceGfx_HpNumbers[] = INCBIN_U8("graphics/interface/hp_numbers.4bpp.lz");
 
 const u8 gBattleAnimSpriteSheet_046[] = INCBIN_U8("graphics/battle_anims/sprites/046.4bpp.lz");
 const u8 gBattleAnimSpritePalette_046[] = INCBIN_U8("graphics/battle_anims/sprites/046.gbapal.lz");

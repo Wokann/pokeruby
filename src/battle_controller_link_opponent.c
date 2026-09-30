@@ -58,7 +58,6 @@ extern u8 DoPokeballSendOutAnimation();
 extern void HideBattlerShadowSprite(u8 battler);
 extern void sub_8037BBC(void);
 extern s32 GetBattlerMultiplayerId(u16);
-extern void sub_8031A6C(u16, u8);
 extern void SpriteCB_TrainerSlideIn(struct Sprite *);
 extern void sub_803757C(void);
 extern void SetSpritePrimaryCoordsFromSecondaryCoords();
@@ -83,7 +82,6 @@ extern void sub_803A3A8(struct Sprite *);
 extern void nullsub_47(void);
 extern bool8 IsDoubleBattle(void);
 extern void sub_8037840(void);
-extern void sub_8031B74();
 extern u8 TryHandleLaunchBattleTableAnimation();
 extern void sub_8037FD8(void);
 extern void sub_8037F34(void);
@@ -255,7 +253,7 @@ void sub_80375B4(void)
 {
     if (gSprites[gBattlerSpriteIds[gActiveBattler]].callback == SpriteCallbackDummy)
     {
-        sub_8031B74(gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam);
+        FreeTrainerFrontPicPalette(gSprites[gBattlerSpriteIds[gActiveBattler]].oam.affineParam);
         gSprites[gBattlerSpriteIds[gActiveBattler]].oam.tileNum = gSprites[gBattlerSpriteIds[gActiveBattler]].data[5];
         FreeSpriteOamMatrix(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
         DestroySprite(&gSprites[gBattlerSpriteIds[gActiveBattler]]);
@@ -1236,7 +1234,7 @@ void LinkOpponentHandleTrainerThrow(void)
         xOffset = 0;
         gender = gLinkPlayers[GetMultiplayerId() ^ 1].gender;
     }
-    sub_8031A6C(gender, gActiveBattler);
+    DecompressTrainerFrontPic(gender, gActiveBattler);
     SetMultiuseSpriteTemplateToTrainerBack(gender, GetBattlerPosition(gActiveBattler));
     gBattlerSpriteIds[gActiveBattler] = CreateSprite(
       &gCreatingSpriteTemplate,
@@ -1651,7 +1649,7 @@ void sub_803A2C4(u8 taskId)
 
 void sub_803A3A8(struct Sprite *sprite)
 {
-    sub_8031B74(sprite->oam.affineParam);
+    FreeTrainerFrontPicPalette(sprite->oam.affineParam);
     sprite->oam.tileNum = sprite->data[5];
     FreeSpriteOamMatrix(sprite);
     DestroySprite(sprite);
