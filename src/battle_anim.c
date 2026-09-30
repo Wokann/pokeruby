@@ -1331,13 +1331,13 @@ static void ScriptCmd_hang2(void);
 static void ScriptCmd_end(void);
 static void ScriptCmd_playse(void);
 static void ScriptCmd_monbg(void);
-static void sub_8076380(void);
+static void FlipBattlerBgTiles(void);
 static void task_pA_ma0A_obj_to_bg_pal(u8);
 static void ScriptCmd_clearmonbg(void);
-static void sub_807672C(u8);
+static void Task_ClearMonBg(u8);
 static void ScriptCmd_monbg_22(void);
 static void ScriptCmd_clearmonbg_23(void);
-static void sub_80769A4(u8);
+static void Task_ClearMonBgStatic(u8);
 static void ScriptCmd_setalpha(void);
 static void ScriptCmd_setbldcnt(void);
 static void ScriptCmd_blendoff(void);
@@ -1956,7 +1956,7 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
             r2 = GetBattlerPosition(bank);
         DrawBattlerOnBg(0, 0, r2, animBg.paletteId, (u32)animBg.bgTiles, (((s32)animBg.bgTilemap - VRAM) / 2048), REG_BG1CNT_BITFIELD.charBaseBlock);
         if (IsContest())
-            sub_8076380();
+            FlipBattlerBgTiles();
     }
     else
     {
@@ -1986,7 +1986,7 @@ void MoveBattlerSpriteToBG(u8 bank, u8 toBG_2)
     }
 }
 
-static void sub_8076380(void)
+static void FlipBattlerBgTiles(void)
 {
     int i;
     int j;
@@ -2111,13 +2111,13 @@ static void ScriptCmd_clearmonbg(void)
     else
         animBankId = 0;
 
-    taskId = CreateTask(sub_807672C, 5);
+    taskId = CreateTask(Task_ClearMonBg, 5);
     gTasks[taskId].data[0] = animBankId;
     gTasks[taskId].data[2] = bank;
     sBattleAnimScriptPtr++;
 }
 
-static void sub_807672C(u8 taskId)
+static void Task_ClearMonBg(u8 taskId)
 {
     u8 identity;
     u8 to_BG2;
@@ -2220,14 +2220,14 @@ static void ScriptCmd_clearmonbg_23(void)
     else
         animBankId = 0;
 
-    taskId = CreateTask(sub_80769A4, 5);
+    taskId = CreateTask(Task_ClearMonBgStatic, 5);
     gTasks[taskId].data[0] = animBankId;
     gTasks[taskId].data[2] = bank;
 
     sBattleAnimScriptPtr++;
 }
 
-static void sub_80769A4(u8 taskId)
+static void Task_ClearMonBgStatic(u8 taskId)
 {
     u8 identity;
     u8 bank;
