@@ -103,8 +103,8 @@ struct GcmbStruct gMultibootProgramStruct;
 // Graphics Data
 //--------------------------------------------------
 
-static const u16 sIntroDrops_Pal[] = INCBIN_U16("graphics/intro/unknown1.gbapal");
-static const u16 sIntroLogo_Pal[] = INCBIN_U16("graphics/intro/unknown2.gbapal");
+static const u16 sIntroDrops_Pal[] = INCBIN_U16("graphics/intro/scene_1/drops.gbapal");
+static const u16 sIntroLogo_Pal[] = INCBIN_U16("graphics/intro/scene_1/logo.gbapal");
 #if ENGLISH
 static const u8 sIntroDropsLogo_Gfx[] = INCBIN_U8("graphics/intro/intro.4bpp.lz");
 #elif GERMAN
