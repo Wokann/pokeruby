@@ -108,35 +108,35 @@ extern u16 gKeyRepeatStartDelay;
 // rodata?
 u8 *const gPokenavTileBuffer = gTileBuffer;
 
-const u8 gPokenavMenuBackground_Pal[] = INCBIN_U8("graphics/pokenav/83DFECC.gbapal");
+const u8 gPokenavMenuBackground_Pal[] = INCBIN_U8("graphics/pokenav/menu/background.gbapal");
 
-const u8 gPokenavMenuBackground_Gfx[] = INCBIN_U8("graphics/pokenav/83DFEEC.4bpp");
-const u8 gPokenavMenuBackground_Tilemap[] = INCBIN_U8("graphics/pokenav/83DFF8C.bin.lz");
-const u16 gPokenavMenuPaletteGradientColors[] = INCBIN_U16("graphics/pokenav/83E003C.gbapal");
+const u8 gPokenavMenuBackground_Gfx[] = INCBIN_U8("graphics/pokenav/menu/background.4bpp");
+const u8 gPokenavMenuBackground_Tilemap[] = INCBIN_U8("graphics/pokenav/menu/background.bin.lz");
+const u16 gPokenavMenuPaletteGradientColors[] = INCBIN_U16("graphics/pokenav/menu/palette_gradient.gbapal");
 
-const u8 gPokenavBg3Scroll_Gfx[] = INCBIN_U8("graphics/pokenav/83E005C.4bpp");
-const u8 gPokenavBg3Scroll_Tilemap[] = INCBIN_U8("graphics/pokenav/83E007C.bin.lz");
-const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0124_pal.bin");
+const u8 gPokenavBg3Scroll_Gfx[] = INCBIN_U8("graphics/pokenav/menu/bg3_scroll.4bpp");
+const u8 gPokenavBg3Scroll_Tilemap[] = INCBIN_U8("graphics/pokenav/menu/bg3_scroll.bin.lz");
+const u16 gPokenavConditionMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/condition/mon_info_header_pal.bin");
 
-const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/83E0144_pal.bin");
+const u16 gPokenavRibbonsMonInfoHeader_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/mon_info_pal.bin");
 
-const u16 gUnusedPokenav1_Pal[] = INCBIN_U16("graphics/pokenav/83E0164.bin");
+const u16 gUnusedPokenav1_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette1.bin");
 
-const u8 gPokenavConditionSearchGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01AC.bin");
-const u8 gPokenavPokeblockGraphTilemap[] = INCBIN_U8("graphics/pokenav/83E01F4.bin");
-const u16 gConditionGraphData_Pal[] = INCBIN_U16("graphics/pokenav/83E0254.gbapal");
-const u16 gPokenavRibbonsList_Pal[] = INCBIN_U16("graphics/pokenav/83E0274.gbapal");
+const u8 gPokenavConditionSearchGraphTilemap[] = INCBIN_U8("graphics/pokenav/condition/search_graph.bin");
+const u8 gPokenavPokeblockGraphTilemap[] = INCBIN_U8("graphics/pokenav/condition/pokeblock_graph.bin");
+const u16 gConditionGraphData_Pal[] = INCBIN_U16("graphics/pokenav/condition/graph_data.gbapal");
+const u16 gPokenavRibbonsList_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/list_ui.gbapal");
 
 const u16 gPokenavConditionSearch2_Pal[] = INCBIN_U16("graphics/pokenav/condition_search2.gbapal");
 
-const u16 gPokenavList_Pal[] = INCBIN_U16("graphics/pokenav/83E02B4.gbapal");
+const u16 gPokenavList_Pal[] = INCBIN_U16("graphics/pokenav/list.gbapal");
 
-const u16 gUnusedPokenav2_Pal[] = INCBIN_U16("graphics/pokenav/83E02D4.bin");
+const u16 gUnusedPokenav2_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette2.bin");
 
-const u8 gPokenavTrainerEyesList_Pal[] = INCBIN_U8("graphics/pokenav/83E0314.gbapal");
-const u8 gPokenavTrainerEyesMisc_Pal[] = INCBIN_U8("graphics/pokenav/trainereyes_misc_pal.bin");
+const u8 gPokenavTrainerEyesList_Pal[] = INCBIN_U8("graphics/pokenav/trainers_eyes/list.gbapal");
+const u8 gPokenavTrainerEyesMisc_Pal[] = INCBIN_U8("graphics/pokenav/trainers_eyes/misc_pal.bin");
 
-const u8 gPokenavTrainerEyesMisc_Gfx[] = INCBIN_U8("graphics/pokenav/trainereyes_misc.4bpp.lz");
+const u8 gPokenavTrainerEyesMisc_Gfx[] = INCBIN_U8("graphics/pokenav/trainers_eyes/misc.4bpp.lz");
 
 const u8 gPokenavTrainerEyesRematchIconTilemap[][4] =
 {
@@ -148,8 +148,8 @@ const u8 gPokenavTrainerEyesNoRematchIconTilemap[][8] =
     {0x00, 0x40, 0x00, 0x40, 0x81, 0x42, 0x83, 0x42},
 };
 
-const u16 gPokenavRibbonsSummary_Pal[] = INCBIN_U16("graphics/pokenav/83E03A8.gbapal");
-const u16 gUnusedPokenav3_Pal[] = INCBIN_U16("graphics/pokenav/83E03C8.bin");
+const u16 gPokenavRibbonsSummary_Pal[] = INCBIN_U16("graphics/pokenav/ribbons/summary.gbapal");
+const u16 gUnusedPokenav3_Pal[] = INCBIN_U16("graphics/pokenav/unused/palette3.bin");
 const u8 gPokenavRibbonIcons_Gfx[] = INCBIN_U8("graphics/pokenav/ribbons/icons.4bpp.lz");
 const u8 gPokenavOutlinePalette[] = INCBIN_U8("graphics/pokenav/outline.gbapal");
 const u8 gPokenavOutlineTiles[] = INCBIN_U8("graphics/pokenav/outline.4bpp.lz");
@@ -214,7 +214,7 @@ const u8 gPokenavConditionPokeballPlaceholder_Gfx[] = INCBIN_U8("graphics/pokena
 const u16 gPokenavConditionSparkle_Pal[] = INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
 const u8 gPokenavConditionSparkle_Gfx[] = INCBIN_U8("graphics/pokenav/condition/sparkle.4bpp");
 const u8 gPokenavListUpDownArrowGfx[] = INCBIN_U8("graphics/pokenav/list_arrows_up_down.4bpp");
-const u8 gUnusedPokenav4_Pal[] =  INCBIN_U8("graphics/pokenav/83E3BC0.bin");
+const u8 gUnusedPokenav4_Pal[] =  INCBIN_U8("graphics/pokenav/unused/palette4.bin");
 const u8 gUnusedPokenav_Gfx[] = INCBIN_U8("graphics/pokenav/unused.4bpp");
 
 const u16 gPokenavRibbonIconPalettes[][16] =
