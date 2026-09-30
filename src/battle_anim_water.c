@@ -1049,7 +1049,7 @@ static void CreateWaterPulseRingBubbles(struct Sprite *sprite, s32 xDiff, s32 yD
     // Nothing but this appears to reproduce the behavior.
     if (xDiff) // yDiff works too, but not sprite.
     {
-        u8 unk = -unk; // this can be any sort of negation
+        u8 unusedVar = -unusedVar; // this can be any sort of negation
     }
 
     randomSomethingY = yDiff + (Random() % 10) - 5;
