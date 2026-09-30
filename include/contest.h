@@ -324,7 +324,7 @@ struct Contest
 {
     /*0x19204*/ u8 playerMoveChoice;
     /*0x19205*/ u8 appealNumber;
-    /*0x19206*/ u8 unk[4];
+    /*0x19206*/ u8 unusedMoveChoices[4];
     /*0x1920A*/ bool16 unused1:1;
                 bool16 unused2:1;
                 bool16 unused3:1;

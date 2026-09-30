@@ -1608,11 +1608,11 @@ bool8 UnusedTryRecordPlayerMoveChoice(u8 contestant, u8 choice)
             sContest.unused2 = 1;
             return TRUE;
         }
-        if (sContest.unk[i] == choice)
+        if (sContest.unusedMoveChoices[i] == choice)
             return TRUE;
-        if (sContest.unk[i] == 0xFF)
+        if (sContest.unusedMoveChoices[i] == 0xFF)
         {
-            sContest.unk[i] = choice;
+            sContest.unusedMoveChoices[i] = choice;
             return TRUE;
         }
     }

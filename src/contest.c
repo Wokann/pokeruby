@@ -171,7 +171,7 @@ void InitContestResources(void)
 
     memset(&sContest, 0, sizeof(sContest));
     for (i = 0; i < 4; i++)
-        sContest.unk[i] = 0xFF;
+        sContest.unusedMoveChoices[i] = 0xFF;
 
     for (i = 0; i < 4; i++)
         memset(&sContestantStatus[i], 0, sizeof(sContestantStatus[i]));
