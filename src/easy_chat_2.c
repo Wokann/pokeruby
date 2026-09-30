@@ -64,9 +64,9 @@ void InitKeyboardRestoreAfterWordSelectAnim(void);
 void InitWordSelectCollapseVerticalAnim(void);
 void InitLowerWindowAnimRect(u16 *, u16, u16, u16, u16, u16, u16, u16, u16);
 void UpdateLowerWindowAnimRect(u16 *);
-void InitLowerWindowAnimSource(struct UnknownEasyChatStruct1 *, u16, u16, u16, u16, void *);
-void UpdateLowerWindowAnimSource(struct UnknownEasyChatStruct1 *);
-void CopyLowerWindowAnimRectToVram(void *, u16 *, struct UnknownEasyChatStruct1 *);
+void InitLowerWindowAnimSource(struct EasyChatWindowAnimSource *, u16, u16, u16, u16, void *);
+void UpdateLowerWindowAnimSource(struct EasyChatWindowAnimSource *);
+void CopyLowerWindowAnimRectToVram(void *, u16 *, struct EasyChatWindowAnimSource *);
 u8 *CopyEasyChatGroupName(u8 *, u8, int);
 u8 *CopyEasyChatWordPadded(u8 *, u16, u16);
 u16 GetEasyChatWordStringLength(u16 easyChatWord);
@@ -146,36 +146,36 @@ void CreateMainCursorSprite(void)
     u8 spriteId;
 
     spriteId = CreateSprite(&sSpriteTemplate_TriangleCursor, 0, 0, 0);
-    gSprites[spriteId].y = gEasyChatStruct->unk8A * 8 + 8;
-    gSprites[spriteId].x = gEasyChatStruct->unk88 * 8 + 4;
+    gSprites[spriteId].y = gEasyChatScreen->phraseFrameTop * 8 + 8;
+    gSprites[spriteId].x = gEasyChatScreen->phraseFrameLeft * 8 + 4;
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
-    gEasyChatStruct->unk98 = &gSprites[spriteId];
+    gEasyChatScreen->mainCursorSprite = &gSprites[spriteId];
 }
 
 void SpriteCB_Cursor(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
-        if (gEasyChatStruct->unk87)
+        if (gEasyChatScreen->mainCursorMoved)
         {
-            u16 r5 = gEasyChatStruct->unk86;
-            u16 r4 = gEasyChatStruct->unk85;
+            u16 r5 = gEasyChatScreen->mainCursorRow;
+            u16 r4 = gEasyChatScreen->mainCursorColumn;
             u16 r7 = 0;
             u16 i;
 
             for (i = 0; i < r4; i++)
-                r7 += gEasyChatStruct->unk8C[r5][i];
+                r7 += gEasyChatScreen->phraseWordSpacing[r5][i];
 
-            if (r5 == gEasyChatStruct->unk84)
+            if (r5 == gEasyChatScreen->numRows)
             {
                 sprite->y = 96;
                 sprite->x = (r4 * 7  + 3) * 8 + 4;
             }
             else
             {
-                sprite->y = (gEasyChatStruct->unk8A + r5 * 2) * 8 + 8;
-                sprite->x = (gEasyChatStruct->unk88 + r7 + r4 * 11) * 8 + 4;
+                sprite->y = (gEasyChatScreen->phraseFrameTop + r5 * 2) * 8 + 8;
+                sprite->x = (gEasyChatScreen->phraseFrameLeft + r7 + r4 * 11) * 8 + 4;
             }
 
             sprite->x2 = -6;
@@ -198,19 +198,19 @@ void SetMainCursorState(u8 state)
     switch (state)
     {
     case 0:
-        gEasyChatStruct->unk98->data[1] = state;
-        gEasyChatStruct->unk98->x2 = state;
-        gEasyChatStruct->unk98->invisible = FALSE;
+        gEasyChatScreen->mainCursorSprite->data[1] = state;
+        gEasyChatScreen->mainCursorSprite->x2 = state;
+        gEasyChatScreen->mainCursorSprite->invisible = FALSE;
         break;
     case 1:
-        gEasyChatStruct->unk98->data[1] = state;
-        gEasyChatStruct->unk98->x2 = 0;
-        gEasyChatStruct->unk98->invisible = FALSE;
+        gEasyChatScreen->mainCursorSprite->data[1] = state;
+        gEasyChatScreen->mainCursorSprite->x2 = 0;
+        gEasyChatScreen->mainCursorSprite->invisible = FALSE;
         break;
     case 2:
-        gEasyChatStruct->unk98->data[1] = 1;
-        gEasyChatStruct->unk98->x2 = 0;
-        gEasyChatStruct->unk98->invisible = TRUE;
+        gEasyChatScreen->mainCursorSprite->data[1] = 1;
+        gEasyChatScreen->mainCursorSprite->x2 = 0;
+        gEasyChatScreen->mainCursorSprite->invisible = TRUE;
         break;
     }
 }
@@ -351,57 +351,57 @@ void CreateRectangleCursorSprites(void)
     u8 spriteId;
 
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 3);
-    gEasyChatStruct->unk9C = &gSprites[spriteId];
+    gEasyChatScreen->rectangleCursorPrimarySprite = &gSprites[spriteId];
 
     spriteTemplate_83DBCAC.anims = sAnims_RectCursorMiddle;
     spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorMiddle;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 4);
-    gEasyChatStruct->unkA0 = &gSprites[spriteId];
+    gEasyChatScreen->rectangleCursorMiddleSprite = &gSprites[spriteId];
 
     spriteTemplate_83DBCAC.anims = sAnims_RectCursorEnd;
     spriteTemplate_83DBCAC.callback = SpriteCB_RectangleCursorEnd;
     spriteId = CreateSprite(&spriteTemplate_83DBCAC, 0, 0, 5);
-    gEasyChatStruct->unkA4 = &gSprites[spriteId];
+    gEasyChatScreen->rectangleCursorEndSprite = &gSprites[spriteId];
 
-    gEasyChatStruct->unk9C->data[0] = 0;
-    gEasyChatStruct->unkA0->data[0] = 0;
-    gEasyChatStruct->unkA4->data[0] = 0;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[0] = 0;
+    gEasyChatScreen->rectangleCursorMiddleSprite->data[0] = 0;
+    gEasyChatScreen->rectangleCursorEndSprite->data[0] = 0;
 
-    gEasyChatStruct->unk9C->data[3] = 0x0101 + IndexOfSpritePaletteTag(1) * 16;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[3] = 0x0101 + IndexOfSpritePaletteTag(1) * 16;
     UpdateRectangleCursorPos();
-    gEasyChatStruct->unk96 = 1;
+    gEasyChatScreen->keyboardCursorMoved = 1;
     REG_BLDCNT = 0x3F40;
 }
 
 void DestroyRectangleCursorSprites(void)
 {
-    DestroySprite(gEasyChatStruct->unk9C);
-    DestroySprite(gEasyChatStruct->unkA0);
-    DestroySprite(gEasyChatStruct->unkA4);
+    DestroySprite(gEasyChatScreen->rectangleCursorPrimarySprite);
+    DestroySprite(gEasyChatScreen->rectangleCursorMiddleSprite);
+    DestroySprite(gEasyChatScreen->rectangleCursorEndSprite);
 }
 
 void UpdateRectangleCursorPos(void)
 {
-    if (gEasyChatStruct->unk1B7 != 0)
+    if (gEasyChatScreen->inButtonWindow != 0)
         sRectangleCursorAnim = 1;
-    else if (gEasyChatStruct->unk26 == 0)
+    else if (gEasyChatScreen->inAlphabetMode == 0)
         sRectangleCursorAnim = 0;
-    else if (gEasyChatStruct->unk1A8 == 0 && gEasyChatStruct->unk1A9 == 6)
+    else if (gEasyChatScreen->keyboardRow == 0 && gEasyChatScreen->keyboardColumn == 6)
         sRectangleCursorAnim = 2;
     else
         sRectangleCursorAnim = 3;
 
-    gEasyChatStruct->unk9C->data[2] = sRectangleCursorAnim;
-    gEasyChatStruct->unkA0->data[2] = sRectangleCursorAnim;
-    gEasyChatStruct->unkA4->data[2] = sRectangleCursorAnim;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[2] = sRectangleCursorAnim;
+    gEasyChatScreen->rectangleCursorMiddleSprite->data[2] = sRectangleCursorAnim;
+    gEasyChatScreen->rectangleCursorEndSprite->data[2] = sRectangleCursorAnim;
 
-    StartSpriteAnim(gEasyChatStruct->unk9C, sRectangleCursorAnim);
-    StartSpriteAnim(gEasyChatStruct->unkA0, sRectangleCursorAnim);
-    StartSpriteAnim(gEasyChatStruct->unkA4, sRectangleCursorAnim);
+    StartSpriteAnim(gEasyChatScreen->rectangleCursorPrimarySprite, sRectangleCursorAnim);
+    StartSpriteAnim(gEasyChatScreen->rectangleCursorMiddleSprite, sRectangleCursorAnim);
+    StartSpriteAnim(gEasyChatScreen->rectangleCursorEndSprite, sRectangleCursorAnim);
 
-    gEasyChatStruct->unk9C->data[5] = 8;
-    gEasyChatStruct->unk9C->data[6] = 8;
-    gEasyChatStruct->unk9C->data[1] = 0;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[5] = 8;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[6] = 8;
+    gEasyChatScreen->rectangleCursorPrimarySprite->data[1] = 0;
 }
 
 static const s8 sAlphabetKeyboardColumnOffsets[][7] =
@@ -424,19 +424,19 @@ void SpriteCB_RectangleCursorPrimary(struct Sprite *sprite)
 
     REG_BLDALPHA = (sprite->data[6] << 8) | sprite->data[5];
 
-    if (gEasyChatStruct->unk96 != 0)
+    if (gEasyChatScreen->keyboardCursorMoved != 0)
     {
         UpdateRectangleCursorPos();
 
-        gEasyChatStruct->unk9C->data[5] = 8;
-        gEasyChatStruct->unk9C->data[6] = 8;
-        gEasyChatStruct->unk9C->data[1] = 0;
+        gEasyChatScreen->rectangleCursorPrimarySprite->data[5] = 8;
+        gEasyChatScreen->rectangleCursorPrimarySprite->data[6] = 8;
+        gEasyChatScreen->rectangleCursorPrimarySprite->data[1] = 0;
 
         switch (sprite->data[2])
         {
         case 0:
-            sprite->x = gEasyChatStruct->unk1A9 * 88 + 32;
-            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->unk1B5) * 16 + 96;
+            sprite->x = gEasyChatScreen->keyboardColumn * 88 + 32;
+            sprite->y = (gEasyChatScreen->keyboardRow - gEasyChatScreen->keyboardScrollOffset) * 16 + 96;
             break;
         case 1:
 #if ENGLISH
@@ -444,15 +444,15 @@ void SpriteCB_RectangleCursorPrimary(struct Sprite *sprite)
 #else
             sprite->x = 214;
 #endif
-            sprite->y = gEasyChatStruct->unk1A8 * 16 + 96;
+            sprite->y = gEasyChatScreen->keyboardRow * 16 + 96;
             break;
         case 2:
             sprite->x = 151;
             sprite->y = 96;
             break;
         case 3:
-            sprite->x = sAlphabetKeyboardColumnOffsets[gEasyChatStruct->unk1A8][gEasyChatStruct->unk1A9] * 8 + 31;
-            sprite->y = (gEasyChatStruct->unk1A8 - gEasyChatStruct->unk1B5) * 16 + 96;
+            sprite->x = sAlphabetKeyboardColumnOffsets[gEasyChatScreen->keyboardRow][gEasyChatScreen->keyboardColumn] * 8 + 31;
+            sprite->y = (gEasyChatScreen->keyboardRow - gEasyChatScreen->keyboardScrollOffset) * 16 + 96;
             break;
         }
     }
@@ -461,32 +461,32 @@ void SpriteCB_RectangleCursorPrimary(struct Sprite *sprite)
 
 void SpriteCB_RectangleCursorMiddle(struct Sprite *sprite)
 {
-    if (gEasyChatStruct->unk96 != 0 && sprite->data[2] == 0)
+    if (gEasyChatScreen->keyboardCursorMoved != 0 && sprite->data[2] == 0)
     {
-        sprite->x = gEasyChatStruct->unk9C->x + 32;
-        sprite->y = gEasyChatStruct->unk9C->y;
+        sprite->x = gEasyChatScreen->rectangleCursorPrimarySprite->x + 32;
+        sprite->y = gEasyChatScreen->rectangleCursorPrimarySprite->y;
     }
 }
 
 void SpriteCB_RectangleCursorEnd(struct Sprite *sprite)
 {
-    if (gEasyChatStruct->unk96 != 0)
+    if (gEasyChatScreen->keyboardCursorMoved != 0)
     {
         switch (sprite->data[2])
         {
         case 0:
-            sprite->x = gEasyChatStruct->unk9C->x + 64;
-            sprite->y = gEasyChatStruct->unk9C->y;
+            sprite->x = gEasyChatScreen->rectangleCursorPrimarySprite->x + 64;
+            sprite->y = gEasyChatScreen->rectangleCursorPrimarySprite->y;
             break;
 #if GERMAN
         case 1:
-            sprite->x = gEasyChatStruct->unk9C->x + 28;
-            sprite->y = gEasyChatStruct->unk9C->y;
+            sprite->x = gEasyChatScreen->rectangleCursorPrimarySprite->x + 28;
+            sprite->y = gEasyChatScreen->rectangleCursorPrimarySprite->y;
             break;
 #endif
         case 2:
-            sprite->x = gEasyChatStruct->unk9C->x + 21;
-            sprite->y = gEasyChatStruct->unk9C->y;
+            sprite->x = gEasyChatScreen->rectangleCursorPrimarySprite->x + 21;
+            sprite->y = gEasyChatScreen->rectangleCursorPrimarySprite->y;
             break;
         }
     }
@@ -494,16 +494,16 @@ void SpriteCB_RectangleCursorEnd(struct Sprite *sprite)
 
 void SetWordSelectCursorAnim(u8 visible)
 {
-    gEasyChatStruct->unkA8->data[1] = (visible == 0);
-    gEasyChatStruct->unkA8->x2 = 0;
+    gEasyChatScreen->wordSelectCursorSprite->data[1] = (visible == 0);
+    gEasyChatScreen->wordSelectCursorSprite->x2 = 0;
 }
 
 void SetWordSelectCursorVisibility(u8 visible)
 {
-    gEasyChatStruct->unkA8->invisible = (visible == 0);
+    gEasyChatScreen->wordSelectCursorSprite->invisible = (visible == 0);
     SetWordSelectCursorAnim(visible);
     if (visible != 0)
-        gEasyChatStruct->unk1B9 = 1;
+        gEasyChatScreen->wordSelectCursorMoved = 1;
 }
 
 void CreateWordSelectCursorSprite(void)
@@ -512,8 +512,8 @@ void CreateWordSelectCursorSprite(void)
 
     gSprites[spriteId].data[0] = 0;
     gSprites[spriteId].data[1] = 0;
-    gEasyChatStruct->unkA8 = &gSprites[spriteId];
-    gEasyChatStruct->unkA8->callback = SpriteCB_WordSelectCursor;
+    gEasyChatScreen->wordSelectCursorSprite = &gSprites[spriteId];
+    gEasyChatScreen->wordSelectCursorSprite->callback = SpriteCB_WordSelectCursor;
     SetWordSelectCursorVisibility(0);
 }
 
@@ -521,10 +521,10 @@ void SpriteCB_WordSelectCursor(struct Sprite *sprite)
 {
     if (sprite->data[1] == 0)
     {
-        if (gEasyChatStruct->unk1B9 != 0)
+        if (gEasyChatScreen->wordSelectCursorMoved != 0)
         {
-            sprite->x = gEasyChatStruct->unk99A5 * 88 + 44;
-            sprite->y = (gEasyChatStruct->unk99A4 - gEasyChatStruct->unk9A29) * 16 + 96;
+            sprite->x = gEasyChatScreen->wordSelectColumn * 88 + 44;
+            sprite->y = (gEasyChatScreen->wordSelectRow - gEasyChatScreen->wordSelectScrollOffset) * 16 + 96;
             sprite->x2 = -6;
             sprite->data[0] = 0;
         }
@@ -548,12 +548,12 @@ void HideScrollIndicatorSprites(void)
 
     for (i = 0; i < 2; i++)
     {
-        gEasyChatStruct->unkAC[i]->invisible = TRUE;
-        gEasyChatStruct->unkAC[i]->data[1] = 0;
-        gEasyChatStruct->unkB4[i]->invisible = TRUE;
-        gEasyChatStruct->unkB4[i]->data[1] = 0;
+        gEasyChatScreen->scrollIndicatorSprites[i]->invisible = TRUE;
+        gEasyChatScreen->scrollIndicatorSprites[i]->data[1] = 0;
+        gEasyChatScreen->pageScrollButtonSprites[i]->invisible = TRUE;
+        gEasyChatScreen->pageScrollButtonSprites[i]->data[1] = 0;
     }
-    gEasyChatStruct->unk9C70 = 0;
+    gEasyChatScreen->scrollIndicatorsActive = 0;
 }
 
 void SetScrollIndicatorMode(u8 animNum)
@@ -564,36 +564,36 @@ void SetScrollIndicatorMode(u8 animNum)
     if (animNum == 0)
     {
         r9 = 100;
-        gEasyChatStruct->unk9C6C = &gEasyChatStruct->unk1B5;
-        if (gEasyChatStruct->unk26 == 0)
-            gEasyChatStruct->unk9C71 = gEasyChatStruct->unk1B6 - 4;
+        gEasyChatScreen->scrollOffsetPtr = &gEasyChatScreen->keyboardScrollOffset;
+        if (gEasyChatScreen->inAlphabetMode == 0)
+            gEasyChatScreen->scrollOffsetMax = gEasyChatScreen->keyboardLastRow - 4;
         else
-            gEasyChatStruct->unk9C71 = 0;
+            gEasyChatScreen->scrollOffsetMax = 0;
     }
     else
     {
         r9 = 120;
-        gEasyChatStruct->unk9C6C = &gEasyChatStruct->unk9A29;
-        gEasyChatStruct->unk9C71 = gEasyChatStruct->unk9A28 - 4;
+        gEasyChatScreen->scrollOffsetPtr = &gEasyChatScreen->wordSelectScrollOffset;
+        gEasyChatScreen->scrollOffsetMax = gEasyChatScreen->wordSelectLastRow - 4;
         for (i = 0; i < 2; i++)
         {
-            gEasyChatStruct->unkB4[i]->invisible = FALSE;
-            gEasyChatStruct->unkB4[i]->data[1] = 1;
+            gEasyChatScreen->pageScrollButtonSprites[i]->invisible = FALSE;
+            gEasyChatScreen->pageScrollButtonSprites[i]->data[1] = 1;
         }
     }
 
-    if (gEasyChatStruct->unk9C71 < 0)
-        gEasyChatStruct->unk9C71 = 0;
+    if (gEasyChatScreen->scrollOffsetMax < 0)
+        gEasyChatScreen->scrollOffsetMax = 0;
 
     for (i = 0; i < 2; i++)
     {
-        gEasyChatStruct->unkAC[i]->x = r9;
-        gEasyChatStruct->unkAC[i]->invisible = FALSE;
-        gEasyChatStruct->unkAC[i]->data[1] = 1;
-        StartSpriteAnim(gEasyChatStruct->unkAC[i], animNum);
+        gEasyChatScreen->scrollIndicatorSprites[i]->x = r9;
+        gEasyChatScreen->scrollIndicatorSprites[i]->invisible = FALSE;
+        gEasyChatScreen->scrollIndicatorSprites[i]->data[1] = 1;
+        StartSpriteAnim(gEasyChatScreen->scrollIndicatorSprites[i], animNum);
     }
 
-    gEasyChatStruct->unk9C70 = 1;
+    gEasyChatScreen->scrollIndicatorsActive = 1;
 }
 
 static const struct OamData sOamData_ScrollIndicator =
@@ -667,9 +667,9 @@ void CreateScrollIndicatorSprites(void)
     for (i = 0; i < 2; i++)
     {
         spriteId = CreateSprite(&spriteTemplate_83DBD18, 0, 84 + i * 72 , 0);
-        gEasyChatStruct->unkAC[i] = &gSprites[spriteId];
-        gEasyChatStruct->unkAC[i]->data[0] = i;
-        gEasyChatStruct->unkAC[i]->vFlip = i;
+        gEasyChatScreen->scrollIndicatorSprites[i] = &gSprites[spriteId];
+        gEasyChatScreen->scrollIndicatorSprites[i]->data[0] = i;
+        gEasyChatScreen->scrollIndicatorSprites[i]->vFlip = i;
     }
 
     spriteTemplate_83DBD18.tileTag = 3;
@@ -678,11 +678,11 @@ void CreateScrollIndicatorSprites(void)
     for (i = 0; i < 2; i++)
     {
         spriteId = CreateSprite(&spriteTemplate_83DBD18, 142 + i * 40, 88, 0);
-        gEasyChatStruct->unkB4[i] = &gSprites[spriteId];
-        gEasyChatStruct->unkB4[i]->data[0] = i;
-        gEasyChatStruct->unkB4[i]->oam.shape = 1;
-        gEasyChatStruct->unkB4[i]->oam.size = 1;
-        StartSpriteAnim(gEasyChatStruct->unkB4[i], i);
+        gEasyChatScreen->pageScrollButtonSprites[i] = &gSprites[spriteId];
+        gEasyChatScreen->pageScrollButtonSprites[i]->data[0] = i;
+        gEasyChatScreen->pageScrollButtonSprites[i]->oam.shape = 1;
+        gEasyChatScreen->pageScrollButtonSprites[i]->oam.size = 1;
+        StartSpriteAnim(gEasyChatScreen->pageScrollButtonSprites[i], i);
     }
 
     SetScrollIndicatorMode(0);
@@ -693,19 +693,19 @@ void SpriteCB_ScrollIndicator(struct Sprite *sprite)
 {
     bool8 invisible;
 
-    if (gEasyChatStruct->unk9C70 != 0 && sprite->data[1] != 0)
+    if (gEasyChatScreen->scrollIndicatorsActive != 0 && sprite->data[1] != 0)
     {
         if (sprite->data[0] == 0)
         {
             invisible = FALSE;
-            if (*gEasyChatStruct->unk9C6C == 0)
+            if (*gEasyChatScreen->scrollOffsetPtr == 0)
                 invisible = TRUE;
             sprite->invisible = invisible;
         }
         else
         {
             invisible = FALSE;
-            if (*gEasyChatStruct->unk9C6C == gEasyChatStruct->unk9C71)
+            if (*gEasyChatScreen->scrollOffsetPtr == gEasyChatScreen->scrollOffsetMax)
                 invisible = TRUE;
             sprite->invisible = invisible;
         }
@@ -893,36 +893,36 @@ void CreateModeWindowSprite(void)
 
     spriteId = CreateSprite(&sSpriteTemplate_ModeWindow, 224, 88, 0);
     if (spriteId != MAX_SPRITES)
-        gEasyChatStruct->unk9C74 = &gSprites[spriteId];
+        gEasyChatScreen->modeWindowSprite = &gSprites[spriteId];
     else
-        gEasyChatStruct->unk9C74 = NULL;
+        gEasyChatScreen->modeWindowSprite = NULL;
 }
 
 void UpdateModeWindowAnim(void)
 {
-    if (gEasyChatStruct->unk9C74 != NULL)
+    if (gEasyChatScreen->modeWindowSprite != NULL)
     {
-        if (gEasyChatStruct->unk26 == 0)
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 1);
+        if (gEasyChatScreen->inAlphabetMode == 0)
+            StartSpriteAnim(gEasyChatScreen->modeWindowSprite, 1);
         else
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 2);
+            StartSpriteAnim(gEasyChatScreen->modeWindowSprite, 2);
     }
 }
 
 void SetModeWindowAnimForVisibility(u8 visible)
 {
-    if (gEasyChatStruct->unk9C74 != NULL)
+    if (gEasyChatScreen->modeWindowSprite != NULL)
     {
         if (visible != 0)
         {
-            if (gEasyChatStruct->unk26 == 0)
-                StartSpriteAnim(gEasyChatStruct->unk9C74, 3);
+            if (gEasyChatScreen->inAlphabetMode == 0)
+                StartSpriteAnim(gEasyChatScreen->modeWindowSprite, 3);
             else
-                StartSpriteAnim(gEasyChatStruct->unk9C74, 4);
+                StartSpriteAnim(gEasyChatScreen->modeWindowSprite, 4);
         }
         else
         {
-            StartSpriteAnim(gEasyChatStruct->unk9C74, 5);
+            StartSpriteAnim(gEasyChatScreen->modeWindowSprite, 5);
         }
     }
 }
@@ -964,10 +964,10 @@ void InitEasyChatScreenGraphics(void)
     REG_BG0CNT = 0x8B00;
     REG_BG1CNT = 0x0D09;
 
-    CpuCopy16(gEasyChatWordGroup_Tilemap, gEasyChatStruct->unk1C8, 0x500);
-    LZ77UnCompWram(gEasyChatInputSelect_Tilemap, gEasyChatStruct->unk6C8);
+    CpuCopy16(gEasyChatWordGroup_Tilemap, gEasyChatScreen->wordGroupTilemapBuffer, 0x500);
+    LZ77UnCompWram(gEasyChatInputSelect_Tilemap, gEasyChatScreen->inputSelectTilemapBuffer);
     LZ77UnCompVram(gMenuWordGroupFrame_Gfx, (void *)(VRAM + 0x8000));
-    CpuCopy16(gEasyChatStruct->unk1C8, (void *)(VRAM + 0x6800), 0x500);
+    CpuCopy16(gEasyChatScreen->wordGroupTilemapBuffer, (void *)(VRAM + 0x6800), 0x500);
     LoadPalette(gMenuWordGroupFrame1_Pal, 64, 64);
 
     REG_BG2CNT = 0x0E02;
@@ -989,7 +989,7 @@ void InitEasyChatScreenGraphics(void)
     gPlttBufferFaded[49] = RGB(27, 26, 27);
     gPlttBufferFaded[56] = RGB(28, 28, 28);
 
-    gEasyChatStruct->unkBC = 0;
+    gEasyChatScreen->lowerWindowAnimDirty = 0;
     InitEasyChatFramePaletteBlend();
     BufferFrameTilemap();
     SetEasyChatMessageId(10);
@@ -1029,30 +1029,30 @@ void InitEasyChatFramePaletteBlend(void)
 
         for (r4 = 0; r4 < 8; r4++)
         {
-            gEasyChatStruct->unk9C34[i][r4] = RGB_(sp0[0] >> 8, sp0[1] >> 8, sp0[2] >> 8);
+            gEasyChatScreen->framePaletteBlendColors[i][r4] = RGB_(sp0[0] >> 8, sp0[1] >> 8, sp0[2] >> 8);
             for (r3 = 0; r3 < 3; r3++)
                 sp0[r3] += sp18[r3];
         }
-        gEasyChatStruct->unk9C34[i][r4] = RGB_(spC[0] >> 8, spC[1] >> 8, spC[2] >> 8);
+        gEasyChatScreen->framePaletteBlendColors[i][r4] = RGB_(spC[0] >> 8, spC[1] >> 8, spC[2] >> 8);
     }
-    gEasyChatStruct->unk9C32 = 0;
+    gEasyChatScreen->framePaletteBlendIndex = 0;
 }
 
 void UpdateEasyChatFramePaletteBlend(s8 a)
 {
     u16 i;
 
-    gEasyChatStruct->unk9C32 += a;
+    gEasyChatScreen->framePaletteBlendIndex += a;
     for (i = 0; i < 3; i++)
     {
-        gPlttBufferUnfaded[81 + i] = gEasyChatStruct->unk9C34[i][gEasyChatStruct->unk9C32];
-        gPlttBufferFaded[81 + i] = gEasyChatStruct->unk9C34[i][gEasyChatStruct->unk9C32];
+        gPlttBufferUnfaded[81 + i] = gEasyChatScreen->framePaletteBlendColors[i][gEasyChatScreen->framePaletteBlendIndex];
+        gPlttBufferFaded[81 + i] = gEasyChatScreen->framePaletteBlendColors[i][gEasyChatScreen->framePaletteBlendIndex];
     }
 }
 
 void ResetEasyChatFramePaletteBlend(void)
 {
-    gEasyChatStruct->unk9C32 = 0;
+    gEasyChatScreen->framePaletteBlendIndex = 0;
     UpdateEasyChatFramePaletteBlend(0);
 }
 
@@ -1089,24 +1089,24 @@ void PrintEasyChatStdMessage(u8 a)
     switch (a)
     {
     case 0:
-        PrintEasyChatStdText(gEasyChatStruct->unk9C80, 4, 15, 2);
-        PrintEasyChatStdText(gEasyChatStruct->unk9CC9, 4, 17, 2);
+        PrintEasyChatStdText(gEasyChatScreen->instructionsText1, 4, 15, 2);
+        PrintEasyChatStdText(gEasyChatScreen->instructionsText2, 4, 17, 2);
         break;
     case 1:
-        PrintEasyChatStdText(gEasyChatStruct->unk9D12, 4, 15, 2);
-        PrintEasyChatStdText(gEasyChatStruct->unk9D5B, 4, 17, 2);
+        PrintEasyChatStdText(gEasyChatScreen->confirmText1, 4, 15, 2);
+        PrintEasyChatStdText(gEasyChatScreen->confirmText2, 4, 17, 2);
         break;
     case 2:
         PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage1, 4, 15, 2);
         PrintEasyChatStdText(gOtherText_TextDeletedConfirmPage2, 4, 17, 2);
         break;
     case 3:
-        switch (gEasyChatStruct->unk8)
+        switch (gEasyChatScreen->type)
         {
-        case 9:
+        case EASY_CHAT_TYPE_TRENDY_PHRASE:
             PrintEasyChatStdText(gOtherText_QuitGivingInfo, 4, 15, 4);
             break;
-        case 4:
+        case EASY_CHAT_TYPE_MAIL:
             PrintEasyChatStdText(gOtherText_StopGivingMail, 4, 15, 4);
             break;
         default:
@@ -1143,33 +1143,33 @@ void PrintTitle(u8 a)
 
     switch (a)
     {
-    case 0:
+    case EASY_CHAT_TYPE_PROFILE:
         r4 = gOtherText_Profile;
         break;
-    case 1:
+    case EASY_CHAT_TYPE_BATTLE_START:
         r4 = gOtherText_AtBattleStart;
         break;
-    case 2:
+    case EASY_CHAT_TYPE_BATTLE_WON:
         r4 = gOtherText_UponWinningBattle;
         break;
-    case 3:
+    case EASY_CHAT_TYPE_BATTLE_LOST:
         r4 = gOtherText_UponLosingBattle;
         break;
-    case 6:
+    case EASY_CHAT_TYPE_BARD_SONG:
         r4 = gOtherText_TheBardsSong;
         break;
-    case 9:
+    case EASY_CHAT_TYPE_TRENDY_PHRASE:
         r4 = gOtherText_WhatsHipHappening;
         break;
-    case 5:
-    case 7:
-    case 8:
+    case EASY_CHAT_TYPE_INTERVIEW:
+    case EASY_CHAT_TYPE_FAN_CLUB:
+    case EASY_CHAT_TYPE_DUMMY_SHOW:
     case EASY_CHAT_TYPE_GABBY_AND_TY:
-    case 11:
-    case 12:
+    case EASY_CHAT_TYPE_CONTEST_INTERVIEW:
+    case EASY_CHAT_TYPE_BATTLE_TOWER_INTERVIEW:
         r4 = gOtherText_Interview;
         break;
-    case 13:
+    case EASY_CHAT_TYPE_GOOD_SAYING:
         r4 = gOtherText_GoodSaying;
         break;
     default:
@@ -1178,32 +1178,32 @@ void PrintTitle(u8 a)
     }
 
     BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
-    gEasyChatStruct->unk9F8E[0] = EXT_CTRL_CODE_BEGIN;
-    gEasyChatStruct->unk9F8E[1] = 5;
-    gEasyChatStruct->unk9F8E[2] = 1;
+    gEasyChatScreen->titlePrintBuffer[0] = EXT_CTRL_CODE_BEGIN;
+    gEasyChatScreen->titlePrintBuffer[1] = 5;
+    gEasyChatScreen->titlePrintBuffer[2] = 1;
     if (r4 != NULL)
     {
-        AlignStringInMenuWindow(gEasyChatStruct->unk9F8E + 3, r4, 240, 2);
-        Menu_PrintText(gEasyChatStruct->unk9F8E, 0, 0);
+        AlignStringInMenuWindow(gEasyChatScreen->titlePrintBuffer + 3, r4, 240, 2);
+        Menu_PrintText(gEasyChatScreen->titlePrintBuffer, 0, 0);
     }
     else
     {
-        u8 *str = gEasyChatStruct->unk9F8E + 3;
+        u8 *str = gEasyChatScreen->titlePrintBuffer + 3;
 
         str[0] = EXT_CTRL_CODE_BEGIN;
         str[1] = 0x11;
         str[2] = 0x10;
         str[3] = EOS;
 
-        Menu_PrintText(gEasyChatStruct->unk9F8E, 0, 0);
-        Menu_PrintText(gEasyChatStruct->unk9F8E, 28, 0);
+        Menu_PrintText(gEasyChatScreen->titlePrintBuffer, 0, 0);
+        Menu_PrintText(gEasyChatScreen->titlePrintBuffer, 28, 0);
     }
     BasicInitMenuWindow(&gEasyChatMessageWindowTemplate);
 }
 
 void BufferFrameTilemap(void)
 {
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatScreen->templateId)
     {
     case 4:
         CopyTilemapRectFixedWidth((void *)(VRAM + 0x6800), 3, 3, gEasyChatFrame_Tilemap, 0, 26, 24, 6);
@@ -1229,7 +1229,7 @@ void BufferFrameTilemap(void)
 void PrintCurrentPhrase(void)
 {
     BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatScreen->templateId)
     {
     case 4:
         PrintCurrentPhraseWords(4, 6);
@@ -1260,27 +1260,27 @@ void PrintCurrentPhraseWords(u16 a, u16 b)
     u16 r10 = 0;
     u16 r7 = a;
 
-    for (i = 0; i < gEasyChatStruct->unk84; i++)
+    for (i = 0; i < gEasyChatScreen->numRows; i++)
     {
         u16 r6 = b;
 
-        for (j = 0; j < gEasyChatStruct->unk83; j++)
+        for (j = 0; j < gEasyChatScreen->numColumns; j++)
         {
-            if (r10 >= gEasyChatStruct->unkA)
+            if (r10 >= gEasyChatScreen->maxWords)
             {
                 Menu_PrintText(sClearPhraseRowText, r6, r7);
                 break;
             }
-            if (gEasyChatStruct->unkC[r10] == 0xFFFF)
+            if (gEasyChatScreen->currentPhrase[r10] == 0xFFFF)
             {
                 CopyTilemapRect((void *)(VRAM + 0x7000), r6, r7, sBlankPhraseWordTilemap, 0, 0, 9, 2, 9);
                 r6 += 11;
             }
             else
             {
-                CopyEasyChatWordPadded(gEasyChatStruct->unk9E14, gEasyChatStruct->unkC[r10], 11);
-                Menu_PrintText(gEasyChatStruct->unk9E14, r6, r7);
-                r6 += gEasyChatStruct->unk8C[i][j] + 11;
+                CopyEasyChatWordPadded(gEasyChatScreen->wordPrintBuffer, gEasyChatScreen->currentPhrase[r10], 11);
+                Menu_PrintText(gEasyChatScreen->wordPrintBuffer, r6, r7);
+                r6 += gEasyChatScreen->phraseWordSpacing[i][j] + 11;
             }
             r10++;
         }
@@ -1291,7 +1291,7 @@ void PrintCurrentPhraseWords(u16 a, u16 b)
 void PrintCurrentPhraseAsText(void)
 {
     BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatScreen->templateId)
     {
     case 4:
         PrintCurrentPhraseAsTextAt(4, 6);
@@ -1322,31 +1322,31 @@ void PrintCurrentPhraseAsTextAt(u16 a, u16 b)
 
     asm("":::"r9");
 
-    for (i = 0; i < gEasyChatStruct->unk84; i++)
+    for (i = 0; i < gEasyChatScreen->numRows; i++)
     {
         u8 r6;
-        u8 *r2 = gEasyChatStruct->unk9E6E;
+        u8 *r2 = gEasyChatScreen->phraseTextBuffer;
         u32 r1;
 
-        for (r6 = 0; r6 < gEasyChatStruct->unk83; r6++)
+        for (r6 = 0; r6 < gEasyChatScreen->numColumns; r6++)
         {
-            if (r7 >= gEasyChatStruct->unkA)
+            if (r7 >= gEasyChatScreen->maxWords)
                 break;
-            if (gEasyChatStruct->unkC[r7] != 0xFFFF)
+            if (gEasyChatScreen->currentPhrase[r7] != 0xFFFF)
             {
-                r2 = CopyEasyChatWordPadded(r2, gEasyChatStruct->unkC[r7], 0);
+                r2 = CopyEasyChatWordPadded(r2, gEasyChatScreen->currentPhrase[r7], 0);
                 *r2++ = CHAR_SPACE;
             }
             r7++;
         }
 
-        r1 = gEasyChatStruct->unk83 * 11;
+        r1 = gEasyChatScreen->numColumns * 11;
         r2[0] = EXT_CTRL_CODE_BEGIN;
         r2[1] = 0x13;
         r2[2] = r1 * 8;
         r2[3] = EOS;
 
-        Menu_PrintText(gEasyChatStruct->unk9E6E, b, a);
+        Menu_PrintText(gEasyChatScreen->phraseTextBuffer, b, a);
 
         a += 2;
     }
@@ -1358,7 +1358,7 @@ void ClearPhraseWindow(void)
     u8 r3;
 
     BasicInitMenuWindow(&gEasyChatTitleAndPhraseWindowTemplate);
-    switch (gEasyChatStruct->unk9)
+    switch (gEasyChatScreen->templateId)
     {
     case 4:
         r1 = 4;
@@ -1430,12 +1430,12 @@ static const u8 *const sAlphabetKeyboardRowsText[] =
 void PrintKeyboardText(void)
 {
     BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-    if (gEasyChatStruct->unk26 == 0)
+    if (gEasyChatScreen->inAlphabetMode == 0)
     {
         u16 i;
 
-        for (i = gEasyChatStruct->unk1B5; i < gEasyChatStruct->unk1B5 + 4; i++)
-            PrintKeyboardGroupNamesRow(gEasyChatStruct->unk9DC9, i);
+        for (i = gEasyChatScreen->keyboardScrollOffset; i < gEasyChatScreen->keyboardScrollOffset + 4; i++)
+            PrintKeyboardGroupNamesRow(gEasyChatScreen->groupNamePrintBuffer, i);
     }
     else
     {
@@ -1450,13 +1450,13 @@ void PrintKeyboardText(void)
 void RestoreKeyboardScrollOffset(void)
 {
     ResetLowerWindowScroll();
-    if (gEasyChatStruct->unk26 == 0)
-        gEasyChatStruct->unk1BA += gEasyChatStruct->unk1B5 * 16;
+    if (gEasyChatScreen->inAlphabetMode == 0)
+        gEasyChatScreen->lowerWindowScrollOffset += gEasyChatScreen->keyboardScrollOffset * 16;
 }
 
 void ResetLowerWindowScroll(void)
 {
-    gEasyChatStruct->unk1BA = 0;
+    gEasyChatScreen->lowerWindowScrollOffset = 0;
 }
 
 void PrintEasyChatTextAt(const u8 *a, u16 b, u16 c)
@@ -1477,9 +1477,9 @@ void BufferEasyChatGroupNamesRow(u8 *dest, u16 b)
         dest[2] = 88 * i;
         dest += 3;
 
-        dest = CopyEasyChatGroupName(dest, gEasyChatStruct->unk2A[b][i], 11);
+        dest = CopyEasyChatGroupName(dest, gEasyChatScreen->unlockedGroupIds[b][i], 11);
         r5++;
-        if (r5 >= gEasyChatStruct->unk28)
+        if (r5 >= gEasyChatScreen->numUnlockedGroups)
             break;
     }
 }
@@ -1500,31 +1500,31 @@ void PrintWordSelectRow(u16 a)
 
     ClearWordSelectRow(a);
 
-    r8 = gEasyChatStruct->unk9E14;
+    r8 = gEasyChatScreen->wordPrintBuffer;
     r8[0] = EXT_CTRL_CODE_BEGIN;
     r8[1] = 0x11;
     r8[2] = 0x10;
     r8 += 3;
 
-    if (gEasyChatStruct->unk7D != 0)
+    if (gEasyChatScreen->unusedLongWordLimit != 0)
     {
-        for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
+        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[a]; i++)
         {
-            if (GetEasyChatWordStringLength(gEasyChatStruct->unk9A2A[a][i]) == 7)
+            if (GetEasyChatWordStringLength(gEasyChatScreen->selectedGroupWords[a][i]) == 7)
                 BasicInitMenuWindow(&gEasyChatWordSelectLongWordWindowTemplate);
             else
                 BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-            CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
-            PrintEasyChatTextAt(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
+            CopyEasyChatWordPadded(r8, gEasyChatScreen->selectedGroupWords[a][i], 9);
+            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, a * 2);
         }
     }
     else
     {
         BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-        for (i = 0; i < gEasyChatStruct->unk99A6[a]; i++)
+        for (i = 0; i < gEasyChatScreen->wordSelectLastColumns[a]; i++)
         {
-            CopyEasyChatWordPadded(r8, gEasyChatStruct->unk9A2A[a][i], 9);
-            PrintEasyChatTextAt(gEasyChatStruct->unk9E14, i * 11 + 4, a * 2);
+            CopyEasyChatWordPadded(r8, gEasyChatScreen->selectedGroupWords[a][i], 9);
+            PrintEasyChatTextAt(gEasyChatScreen->wordPrintBuffer, i * 11 + 4, a * 2);
         }
     }
 }
@@ -1537,11 +1537,11 @@ void ClearWordSelectRow(u16 a)
 
 void PrintInitialWordSelectText(void)
 {
-    u16 r5 = min(gEasyChatStruct->unk9A28, 4);
+    u16 r5 = min(gEasyChatScreen->wordSelectLastRow, 4);
     u16 i;
 
     for (i = 0; i < r5; i++)
-        PrintWordSelectRow(gEasyChatStruct->unk9A29 + i);
+        PrintWordSelectRow(gEasyChatScreen->wordSelectScrollOffset + i);
     while (i < 4)
         ClearWordSelectRow(i++);
 }
@@ -1551,15 +1551,15 @@ void PrintWordSelectRowsDuringScroll(void)
     u16 r4;
     u16 r5;
 
-    if (gEasyChatStruct->unk1C0 > 0)
+    if (gEasyChatScreen->lowerWindowScrollChange > 0)
     {
-        r4 = gEasyChatStruct->unk1C0;
-        r5 = gEasyChatStruct->unk9A29 + 4;
+        r4 = gEasyChatScreen->lowerWindowScrollChange;
+        r5 = gEasyChatScreen->wordSelectScrollOffset + 4;
     }
     else
     {
-        r4 = -gEasyChatStruct->unk1C0;
-        r5 = gEasyChatStruct->unk9A29 - r4;
+        r4 = -gEasyChatScreen->lowerWindowScrollChange;
+        r5 = gEasyChatScreen->wordSelectScrollOffset - r4;
     }
     while (--r4 != 0xFFFF)
         PrintWordSelectRow(r5++);
@@ -1572,33 +1572,33 @@ void PrintKeyboardRowsDuringScroll(void)
     u16 i;
 
     BasicInitMenuWindow(&gEasyChatInputSelectWindowTemplate);
-    if (gEasyChatStruct->unk1C0 < 0)
+    if (gEasyChatScreen->lowerWindowScrollChange < 0)
     {
-        r6 = -gEasyChatStruct->unk1C0;
-        r4 = gEasyChatStruct->unk1B5 - r6;
+        r6 = -gEasyChatScreen->lowerWindowScrollChange;
+        r4 = gEasyChatScreen->keyboardScrollOffset - r6;
     }
     else
     {
-        r6 = gEasyChatStruct->unk1C0;
-        r4 = gEasyChatStruct->unk1B5 + 4;
+        r6 = gEasyChatScreen->lowerWindowScrollChange;
+        r4 = gEasyChatScreen->keyboardScrollOffset + 4;
     }
     for (i = 0; i < r6; i++)
     {
-        PrintKeyboardGroupNamesRow(gEasyChatStruct->unk9DC9, r4);
+        PrintKeyboardGroupNamesRow(gEasyChatScreen->groupNamePrintBuffer, r4);
         r4++;
     }
 }
 
 void InitLowerWindowScroll(u8 a)
 {
-    gEasyChatStruct->unk1BC = (gEasyChatStruct->unk1BA + gEasyChatStruct->unk1C0 * 16) & 0x7F;
-    gEasyChatStruct->unk1BF = (gEasyChatStruct->unk1C0 < 0) ? -a : a;
+    gEasyChatScreen->lowerWindowScrollDest = (gEasyChatScreen->lowerWindowScrollOffset + gEasyChatScreen->lowerWindowScrollChange * 16) & 0x7F;
+    gEasyChatScreen->lowerWindowScrollStep = (gEasyChatScreen->lowerWindowScrollChange < 0) ? -a : a;
 }
 
 bool8 UpdateLowerWindowScroll(void)
 {
-    gEasyChatStruct->unk1BA = (gEasyChatStruct->unk1BA + gEasyChatStruct->unk1BF) & 0x7F;
-    return (gEasyChatStruct->unk1BA == gEasyChatStruct->unk1BC);
+    gEasyChatScreen->lowerWindowScrollOffset = (gEasyChatScreen->lowerWindowScrollOffset + gEasyChatScreen->lowerWindowScrollStep) & 0x7F;
+    return (gEasyChatScreen->lowerWindowScrollOffset == gEasyChatScreen->lowerWindowScrollDest);
 }
 
 void nullsub_23(void)
@@ -1607,37 +1607,37 @@ void nullsub_23(void)
 
 void ResetLowerWindowAnimState(void)
 {
-    gEasyChatStruct->unkBE = 0;
+    gEasyChatScreen->lowerWindowAnimState = 0;
 }
 
 bool8 OpenKeyboard(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         InitLowerWindowExpandHorizontalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
         {
             InitKeyboardExpandVerticalAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 2:
         if (UpdateLowerWindowAnim() != 0)
         {
             InitKeyboardRightPanelExpandAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 3:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 4:
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 5:
         return TRUE;
@@ -1647,32 +1647,32 @@ bool8 OpenKeyboard(void)
 
 bool8 CloseKeyboard(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         nullsub_23();
         InitKeyboardRightPanelCollapseAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 2:
         InitKeyboardCollapseVerticalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 3:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 4:
         InitLowerWindowCollapseHorizontalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 5:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 6:
         return TRUE;
@@ -1682,12 +1682,12 @@ bool8 CloseKeyboard(void)
 
 bool8 StartSwitchKeyboardMode(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         nullsub_23();
         InitKeyboardCollapseVerticalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
@@ -1699,11 +1699,11 @@ bool8 StartSwitchKeyboardMode(void)
 
 bool8 FinishSwitchKeyboardMode(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         InitKeyboardExpandVerticalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
@@ -1715,18 +1715,18 @@ bool8 FinishSwitchKeyboardMode(void)
 
 bool8 OpenWordSelect(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         nullsub_23();
         InitKeyboardRightPanelCollapseAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 1:
         if (UpdateLowerWindowAnim() != 0)
         {
             InitWordSelectRevealAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 2:
@@ -1734,13 +1734,13 @@ bool8 OpenWordSelect(void)
         if (UpdateLowerWindowAnim() != 0)
         {
             InitWordSelectRevealFinishAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 3:
         UpdateEasyChatFramePaletteBlend(1);
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 4:
         return TRUE;
@@ -1750,18 +1750,18 @@ bool8 OpenWordSelect(void)
 
 bool8 ReturnToKeyboard(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         InitWordSelectHideAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         UpdateEasyChatFramePaletteBlend(-1);
         if (UpdateLowerWindowAnim() != 0)
         {
             InitKeyboardRestoreAfterWordSelectAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 2:
@@ -1769,12 +1769,12 @@ bool8 ReturnToKeyboard(void)
         if (UpdateLowerWindowAnim() != 0)
         {
             InitKeyboardRightPanelExpandAnim();
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         }
         break;
     case 3:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 4:
         return TRUE;
@@ -1784,15 +1784,15 @@ bool8 ReturnToKeyboard(void)
 
 bool8 CloseWordSelect(void)
 {
-    switch (gEasyChatStruct->unkBE)
+    switch (gEasyChatScreen->lowerWindowAnimState)
     {
     case 0:
         InitWordSelectCollapseVerticalAnim();
-        gEasyChatStruct->unkBE++;
+        gEasyChatScreen->lowerWindowAnimState++;
         // fall through
     case 1:
         if (UpdateLowerWindowAnim() != 0)
-            gEasyChatStruct->unkBE++;
+            gEasyChatScreen->lowerWindowAnimState++;
         break;
     case 2:
         ResetEasyChatFramePaletteBlend();
@@ -1805,15 +1805,15 @@ bool8 UpdateLowerWindowAnim(void)
 {
     u16 i;
 
-    if (gEasyChatStruct->unkC4 != 0)
+    if (gEasyChatScreen->lowerWindowAnimFrames != 0)
     {
-        for (i = 0; i < gEasyChatStruct->unkC2; i++)
+        for (i = 0; i < gEasyChatScreen->lowerWindowAnimRectCount; i++)
         {
-            UpdateLowerWindowAnimRect(gEasyChatStruct->unkC8[i]);
-            UpdateLowerWindowAnimSource(&gEasyChatStruct->unk148[i]);
+            UpdateLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[i]);
+            UpdateLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[i]);
         }
-        gEasyChatStruct->unkBC = 1;
-        gEasyChatStruct->unkC4--;
+        gEasyChatScreen->lowerWindowAnimDirty = 1;
+        gEasyChatScreen->lowerWindowAnimFrames--;
         return FALSE;
     }
     return TRUE;
@@ -1821,182 +1821,182 @@ bool8 UpdateLowerWindowAnim(void)
 
 void InitLowerWindowExpandHorizontalAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 13, 14, 13, 15, -2, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 13, 14, 13, 15, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 12, 15, 0, 0, 2, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 30, 0, -2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 12, 14, 12, 15, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 30, 0, -2, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 13, 15, 13, 16, -2, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 13, 15, 13, 16, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 9, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 12, 16, 0, 0, 2, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 30, 9, -2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 12, 15, 12, 16, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 30, 9, -2, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 4;
-    gEasyChatStruct->unkC4 = 6;
+    gEasyChatScreen->lowerWindowAnimRectCount = 4;
+    gEasyChatScreen->lowerWindowAnimFrames = 6;
 }
 
 void InitLowerWindowCollapseHorizontalAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 2, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 1, 14, 13, 15, 2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, 0, -2, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 12, 14, 24, 15, 0, 0, -2, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 18, 0, 2, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 2, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 1, 15, 13, 16, 2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 9, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, -2, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 9, 2, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 12, 15, 24, 16, 0, 0, -2, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 18, 9, 2, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[4], 1, 14, 1, 16, 0, 0, 2, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[4], 1, 14, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[4], 1, 14, 1, 16, 0, 0, 2, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[4], 1, 14, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[5], 24, 14, 24, 16, -2, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[5], 24, 14, -2, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[5], 24, 14, 24, 16, -2, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[5], 24, 14, -2, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 6;
-    gEasyChatStruct->unkC4 = 6;
+    gEasyChatScreen->lowerWindowAnimRectCount = 6;
+    gEasyChatScreen->lowerWindowAnimFrames = 6;
 }
 
 void InitKeyboardExpandVerticalAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 14, 13, 15, 0, -1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 1, 14, 13, 15, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 14, 24, 15, 0, -1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 12, 14, 24, 15, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 18, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 16, 0, 0, 0, 1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 9, 0, -1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 1, 15, 13, 16, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 9, 0, -1, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 16, 0, 0, 0, 1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 9, 0, -1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 12, 15, 24, 16, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 18, 9, 0, -1, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 4;
-    gEasyChatStruct->unkC4 = 4;
+    gEasyChatScreen->lowerWindowAnimRectCount = 4;
+    gEasyChatScreen->lowerWindowAnimFrames = 4;
 }
 
 void InitKeyboardCollapseVerticalAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 1, 10, 13, 15, 0, 1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 1, 10, 13, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 12, 10, 24, 15, 0, 1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 18, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 12, 10, 24, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 18, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 15, 13, 20, 0, 0, 0, -1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 1, 15, 13, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 5, 0, 1, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 12, 15, 24, 20, 0, 0, 0, -1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 18, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 12, 15, 24, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 18, 5, 0, 1, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[4], 1, 10, 24, 10, 0, 0, 0, 1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[4], 1, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[4], 1, 10, 24, 10, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[4], 1, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[5], 1, 20, 24, 20, 0, -1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[5], 1, 20, 0, -1, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[5], 1, 20, 24, 20, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[5], 1, 20, 0, -1, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 6;
-    gEasyChatStruct->unkC4 = 4;
+    gEasyChatScreen->lowerWindowAnimRectCount = 6;
+    gEasyChatScreen->lowerWindowAnimFrames = 4;
 }
 
 void InitKeyboardRightPanelExpandAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 25, 20, 0, 0, 1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 5, 10, -1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 24, 12, 25, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 5, 10, -1, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 1;
-    gEasyChatStruct->unkC4 = 5;
+    gEasyChatScreen->lowerWindowAnimRectCount = 1;
+    gEasyChatScreen->lowerWindowAnimFrames = 5;
 }
 
 void InitKeyboardRightPanelCollapseAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 12, 30, 20, 0, 0, -1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 24, 12, 30, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 10, 1, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 30, 12, 31, 20, -1, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 30, 12, -1, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 30, 12, 31, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 30, 12, -1, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 2;
-    gEasyChatStruct->unkC4 = 6;
+    gEasyChatScreen->lowerWindowAnimRectCount = 2;
+    gEasyChatScreen->lowerWindowAnimFrames = 6;
 }
 
 void InitWordSelectRevealAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 20, 10, 25, 20, 0, 0, 1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 25, 0, -1, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 20, 10, 25, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 25, 0, -1, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 10, 1, 20, 0, 0, 1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 0, 10, 1, 20, 0, 0, 1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 0, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 1, 10, 4, 20, 1, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 1, 10, 4, 20, 1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 3;
-    gEasyChatStruct->unkC4 = 2;
+    gEasyChatScreen->lowerWindowAnimRectCount = 3;
+    gEasyChatScreen->lowerWindowAnimFrames = 2;
 }
 
 void InitWordSelectRevealFinishAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 3, 10, 4, 20, 0, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 3, 10, 4, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 10, 2, 20, 0, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 0, 10, 2, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 0, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 2;
-    gEasyChatStruct->unkC4 = 1;
+    gEasyChatScreen->lowerWindowAnimRectCount = 2;
+    gEasyChatScreen->lowerWindowAnimFrames = 1;
 }
 
 void InitWordSelectHideAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 2, 20, 0, 0, -1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 0, 10, 2, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 3, 10, 5, 20, -1, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 3, 10, 5, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 26, 10, 30, 20, -1, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 26, 10, -1, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 26, 10, 30, 20, -1, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 26, 10, -1, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 25, 10, 26, 20, -1, 0, -1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 25, 10, 26, 20, -1, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 29, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 4;
-    gEasyChatStruct->unkC4 = 2;
+    gEasyChatScreen->lowerWindowAnimRectCount = 4;
+    gEasyChatScreen->lowerWindowAnimFrames = 2;
 }
 
 void InitKeyboardRestoreAfterWordSelectAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 24, 10, 30, 20, 0, 0, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 24, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 24, 10, 30, 20, 0, 0, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 24, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 23, 10, 24, 20, 0, 0, -1, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 29, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 23, 10, 24, 20, 0, 0, -1, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 29, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 2;
-    gEasyChatStruct->unkC4 = 1;
+    gEasyChatScreen->lowerWindowAnimRectCount = 2;
+    gEasyChatScreen->lowerWindowAnimFrames = 1;
 }
 
 void InitWordSelectCollapseVerticalAnim(void)
 {
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[0], 0, 10, 30, 15, 0, 1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[0], 0, 0, 0, 0, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[0], 0, 10, 30, 15, 0, 1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[0], 0, 0, 0, 0, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[1], 0, 15, 30, 20, 0, 0, 0, -1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[1], 0, 5, 0, 1, gEasyChatStruct->unk6C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[1], 0, 15, 30, 20, 0, 0, 0, -1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[1], 0, 5, 0, 1, gEasyChatScreen->inputSelectTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[2], 0, 10, 30, 10, 0, 0, 0, 1);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[2], 0, 10, 0, 0, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[2], 0, 10, 30, 10, 0, 0, 0, 1);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[2], 0, 10, 0, 0, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    InitLowerWindowAnimRect(gEasyChatStruct->unkC8[3], 0, 20, 30, 20, 0, -1, 0, 0);
-    InitLowerWindowAnimSource(&gEasyChatStruct->unk148[3], 0, 20, 0, -1, gEasyChatStruct->unk1C8);
+    InitLowerWindowAnimRect(gEasyChatScreen->lowerWindowAnimRects[3], 0, 20, 30, 20, 0, -1, 0, 0);
+    InitLowerWindowAnimSource(&gEasyChatScreen->lowerWindowAnimSources[3], 0, 20, 0, -1, gEasyChatScreen->wordGroupTilemapBuffer);
 
-    gEasyChatStruct->unkC2 = 4;
-    gEasyChatStruct->unkC4 = 5;
+    gEasyChatScreen->lowerWindowAnimRectCount = 4;
+    gEasyChatScreen->lowerWindowAnimFrames = 5;
 }
 
 void InitLowerWindowAnimRect(u16 *rect, u16 left, u16 top, u16 right, u16 bottom, u16 leftStep, u16 topStep, u16 rightStep, u16 bottomStep)
@@ -2019,40 +2019,40 @@ void UpdateLowerWindowAnimRect(u16 *rect)
     rect[3] += rect[7];
 }
 
-void InitLowerWindowAnimSource(struct UnknownEasyChatStruct1 *source, u16 x, u16 y, u16 dx, u16 dy, void *tilemap)
+void InitLowerWindowAnimSource(struct EasyChatWindowAnimSource *source, u16 x, u16 y, u16 dx, u16 dy, void *tilemap)
 {
-    source->unk0 = x;
-    source->unk2 = y;
-    source->unk4 = dx;
-    source->unk6 = dy;
-    source->unk8 = tilemap;
+    source->tilemapX = x;
+    source->tilemapY = y;
+    source->tilemapXStep = dx;
+    source->tilemapYStep = dy;
+    source->tilemap = tilemap;
 }
 
-void UpdateLowerWindowAnimSource(struct UnknownEasyChatStruct1 *source)
+void UpdateLowerWindowAnimSource(struct EasyChatWindowAnimSource *source)
 {
-    source->unk0 += source->unk4;
-    source->unk2 += source->unk6;
+    source->tilemapX += source->tilemapXStep;
+    source->tilemapY += source->tilemapYStep;
 }
 
 void CopyLowerWindowAnimToVram(void)
 {
     u16 i;
 
-    if (gEasyChatStruct->unkBC != 0)
+    if (gEasyChatScreen->lowerWindowAnimDirty != 0)
     {
-        for (i = 0; i < gEasyChatStruct->unkC2; i++)
-            CopyLowerWindowAnimRectToVram((void *)(VRAM + 0x6800), gEasyChatStruct->unkC8[i], &gEasyChatStruct->unk148[i]);
-        gEasyChatStruct->unkBC = 0;
+        for (i = 0; i < gEasyChatScreen->lowerWindowAnimRectCount; i++)
+            CopyLowerWindowAnimRectToVram((void *)(VRAM + 0x6800), gEasyChatScreen->lowerWindowAnimRects[i], &gEasyChatScreen->lowerWindowAnimSources[i]);
+        gEasyChatScreen->lowerWindowAnimDirty = 0;
     }
 }
 
-void CopyLowerWindowAnimRectToVram(void *dst, u16 *rect, struct UnknownEasyChatStruct1 *source)
+void CopyLowerWindowAnimRectToVram(void *dst, u16 *rect, struct EasyChatWindowAnimSource *source)
 {
     s16 width = rect[1] - rect[0];
     s16 height = rect[3] - rect[2];
 
     if (width > 0 && height > 0)
-        CopyTilemapRectFixedWidth(dst, rect[0], rect[2], source->unk8, source->unk0, source->unk2, width, height);
+        CopyTilemapRectFixedWidth(dst, rect[0], rect[2], source->tilemap, source->tilemapX, source->tilemapY, width, height);
 }
 
 // Strange...
@@ -2064,11 +2064,11 @@ void UpdateEasyChatScanlineEffect(void)
 
     r4 = gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer];
     r4 += 88;
-    r2 = (gEasyChatStruct->unk1BA - 88) & 0xFF;
+    r2 = (gEasyChatScreen->lowerWindowScrollOffset - 88) & 0xFF;
 
     for (i = 0; i < 64; i++)
     {
-        if (gEasyChatStruct->unk1BA + i == 128)
+        if (gEasyChatScreen->lowerWindowScrollOffset + i == 128)
             r2 = (-i - 88) & 0xFF;
         *r4++ = r2;
     }
@@ -2101,7 +2101,7 @@ bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
     switch (group)
     {
     case EC_GROUP_TRENDY_SAYING:
-        if (gEasyChatStruct->unk40[2][11 + group] == 0)
+        if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
             return FALSE;
         return IsTrendySayingUnlocked(word);
     case EC_GROUP_POKEMON_1:
@@ -2109,7 +2109,7 @@ bool8 IsEasyChatIndexAndGroupUnlocked(u8 group, u16 word)
     case EC_GROUP_EVENTS:
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
-        if (gEasyChatStruct->unk40[2][11 + group] == 0)
+        if (gEasyChatScreen->alphabetGroupIds[2][11 + group] == 0)
             return FALSE;
         return TRUE;
     case EC_GROUP_POKEMON_2:
@@ -2336,7 +2336,7 @@ void SetUnlockedWordsByAlphabet(void)
         u16 word = gEasyChatWordsByLetter[i];
         u16 sp0 = gEasyChatWordsByLetter[i + 1];
 
-        gEasyChatStruct->unk4142[i] = 0;
+        gEasyChatScreen->numUnlockedWordsByAlphabet[i] = 0;
         r9 = 0;
         r6 = word;
         while (r6 < sp0)
@@ -2352,8 +2352,8 @@ void SetUnlockedWordsByAlphabet(void)
                     word = gEasyChatWordsAlphabetized[r6++];
                     if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)) && !r7)
                     {
-                        gEasyChatStruct->unkB78[i][r9++] = word;
-                        gEasyChatStruct->unk4142[i]++;
+                        gEasyChatScreen->alphabetizedWords[i][r9++] = word;
+                        gEasyChatScreen->numUnlockedWordsByAlphabet[i]++;
                         r7 = TRUE;
                     }
                 }
@@ -2362,8 +2362,8 @@ void SetUnlockedWordsByAlphabet(void)
             {
                 if (IsEasyChatIndexAndGroupUnlocked(EC_GROUP(word), EC_INDEX(word)))
                 {
-                    gEasyChatStruct->unkB78[i][r9++] = word;
-                    gEasyChatStruct->unk4142[i]++;
+                    gEasyChatScreen->alphabetizedWords[i][r9++] = word;
+                    gEasyChatScreen->numUnlockedWordsByAlphabet[i]++;
                 }
             }
         }
@@ -2389,7 +2389,7 @@ void LoadEasyChatStrings(void)
             index = 0;
             while (*wordText != EOS)
             {
-                gEasyChatStruct->ecWordStrings[group][index] = wordText;
+                gEasyChatScreen->wordStrings[group][index] = wordText;
 
                 // Find the end of the current word
                 while (*wordText != EOS)
@@ -2410,20 +2410,20 @@ void SetSelectedWordGroup(void)
     u16 r9;
     u16 r8;
 
-    if (gEasyChatStruct->unk26 == 0)
+    if (gEasyChatScreen->inAlphabetMode == 0)
     {
-        u16 group = gEasyChatStruct->unk1B8;
+        u16 group = gEasyChatScreen->selectedGroupId;
 
-        gEasyChatStruct->unk4178[group] = 0;
+        gEasyChatScreen->numUnlockedWordsByGroup[group] = 0;
         r7 = 0;
         r9 = 0;
         sp0 = gEasyChatGroupOrders[group];
-        for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatStruct->unk1B8]; r8++)
+        for (r8 = 0; r8 < gEasyChatGroupSizes[gEasyChatScreen->selectedGroupId]; r8++)
         {
             if (IsEasyChatIndexAndGroupUnlocked(group, sp0[r8]))
             {
-                gEasyChatStruct->unk9A2A[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
-                gEasyChatStruct->unk4178[group]++;
+                gEasyChatScreen->selectedGroupWords[r9][r7] = ((group & 0x7F) << 9) | (sp0[r8] & 0x1FF);
+                gEasyChatScreen->numUnlockedWordsByGroup[group]++;
                 r7++;
                 if (r7 > 1)
                 {
@@ -2435,14 +2435,14 @@ void SetSelectedWordGroup(void)
     }
     else
     {
-        u8 r2 = gEasyChatStruct->unk1B8;
+        u8 r2 = gEasyChatScreen->selectedGroupId;
         u16 r3 = 0;
         u16 r6 = 0;
         u16 r5;
 
-        for (r5 = 0; r5 < gEasyChatStruct->unk4142[r2]; r5++)
+        for (r5 = 0; r5 < gEasyChatScreen->numUnlockedWordsByAlphabet[r2]; r5++)
         {
-            gEasyChatStruct->unk9A2A[r6][r3] = gEasyChatStruct->unkB78[r2][r5];
+            gEasyChatScreen->selectedGroupWords[r6][r3] = gEasyChatScreen->alphabetizedWords[r2][r5];
             r3++;
             if (r3 > 1)
             {
@@ -2482,7 +2482,7 @@ u8 *CopyEasyChatWordPadded(u8 *dest, u16 word, u16 c)
             wordText = StringCopy(dest, gMoveNames[index]);
             break;
         default:
-            wordText = StringCopy(dest, gEasyChatStruct->ecWordStrings[group][index]);
+            wordText = StringCopy(dest, gEasyChatScreen->wordStrings[group][index]);
             break;
         }
     }
@@ -2526,7 +2526,7 @@ u16 GetEasyChatWordStringLength(u16 easyChatWord)
             wordText = gMoveNames[index];
             break;
         default:
-            wordText = gEasyChatStruct->ecWordStrings[groupId][index];
+            wordText = gEasyChatScreen->wordStrings[groupId][index];
             break;
         }
     }
@@ -2868,12 +2868,12 @@ void ShowEasyChatProfile(void)
 
     switch (gSpecialVar_0x8004)
     {
-    case 0:
-        easyChatWords = gSaveBlock1.easyChats.unk2B1C;
+    case EASY_CHAT_TYPE_PROFILE:
+        easyChatWords = gSaveBlock1.easyChats.easyChatProfile;
         columns = 2;
         rows = 2;
         break;
-    case 1:
+    case EASY_CHAT_TYPE_BATTLE_START:
         easyChatWords = gSaveBlock1.easyChats.easyChatBattleStart;
         if (CanPhraseFitInXRowsYCols(gSaveBlock1.easyChats.easyChatBattleStart, 3, 2, 20))
         {
@@ -2886,13 +2886,13 @@ void ShowEasyChatProfile(void)
             rows = 2;
         }
         break;
-    case 2:
-        easyChatWords = gSaveBlock1.easyChats.unk2B34;
+    case EASY_CHAT_TYPE_BATTLE_WON:
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleWon;
         columns = 3;
         rows = 2;
         break;
-    case 3:
-        easyChatWords = gSaveBlock1.easyChats.unk2B40;
+    case EASY_CHAT_TYPE_BATTLE_LOST:
+        easyChatWords = gSaveBlock1.easyChats.easyChatBattleLost;
         columns = 3;
         rows = 2;
         break;

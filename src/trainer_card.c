@@ -444,7 +444,7 @@ void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard)
 
     for (i = 0; i < TRAINER_CARD_PROFILE_LENGTH; i++)
     {
-        trainerCard->easyChatProfile[i] = gSaveBlock1.easyChats.unk2B1C[i];
+        trainerCard->easyChatProfile[i] = gSaveBlock1.easyChats.easyChatProfile[i];
     }
 
     for (i = 0; i < 8; i++)
