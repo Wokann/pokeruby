@@ -217,9 +217,9 @@ unk_debug_common_2 = .;
 #endif
 
 // battle_anim.c
-SYMBOL(gSoundAnimFramesToWait, 4)
+SYMBOL(sSoundAnimFramesToWait, 4)
 SYMBOL(gBattleAnimArgs, 16)
-SYMBOL(gAnimSpriteIndexArray, 16)
+SYMBOL(sAnimSpriteIndexArray, 16)
 
 // task.c
 SYMBOL(gTasks, 640)
