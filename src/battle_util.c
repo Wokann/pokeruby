@@ -83,7 +83,7 @@ u8 GetBattlerSide(u8 bank);
 void SetMoveEffect(bool8 primary, u8 certainArg);
 bool8 UproarWakeUpCheck(u8 bank);
 bool8 HasNoMonsToSwitch(u8 bank, u8, u8);
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 a4, u16 powerOverride, u8 typeOverride, u8 bank_atk, u8 bank_def);
+s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 u8 CountTrailingZeroBits(u32 a);
 u8 GetMoveTarget(u16 move, u8 useMoveTarget);
 void RecordAbilityBattle(u8 battler, u8 abilityId);
@@ -1774,7 +1774,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
             move = gCurrentMove;
 
         if (gBattleStruct->dynamicMoveType)
-            moveType = gBattleStruct->dynamicMoveType & 0x3F;
+            moveType = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK;
         else
             moveType = gBattleMoves[move].type;
 
@@ -2515,14 +2515,14 @@ u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
         case ABILITYEFFECT_FIELD_SPORT: // 14
             switch (gLastUsedAbility)
             {
-            case 0xFD:
+            case ABILITYEFFECT_MUD_SPORT:
                 for (i = 0; i < gBattlersCount; i++)
                 {
                     if (gStatuses3[i] & STATUS3_MUDSPORT)
                         effect = i + 1;
                 }
                 break;
-            case 0xFE:
+            case ABILITYEFFECT_WATER_SPORT:
                 for (i = 0; i < gBattlersCount; i++)
                 {
                     if (gStatuses3[i] & STATUS3_WATERSPORT)

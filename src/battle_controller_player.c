@@ -628,7 +628,7 @@ static void HandleInputChooseMove(void)
             {
                 r8 = 0;
             }
-            else if (!(r4 & 0x12) && CountAliveMons(0) <= 1)
+            else if (!(r4 & 0x12) && CountAliveMonsInBattle(BATTLE_ALIVE_EXCEPT_ACTIVE) <= 1)
             {
                 gMultiUsePlayerCursor = GetDefaultMoveTarget(gActiveBattler);
                 r8 = 0;

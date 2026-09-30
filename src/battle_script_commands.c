@@ -142,7 +142,7 @@ static void CheckWonderGuardAndLevitate(void);
 u8 GetBattlerPosition(u8 bank);
 u8 GetBattlerSide(u8 bank);
 u8 GetBattlerForBattleScript(u8 bankValue);
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 a4, u16 powerOverride, u8 typeOverride, u8 bank_atk, u8 bank_def);
+s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef);
 static u8 AttacksThisTurn(u8 bank, u16 move); //Note: returns 1 if it's a charging turn, otherwise 2
 void UndoEffectsAfterFainting(void);
 void BattleStopLowHpSound(void);
@@ -170,7 +170,7 @@ void HandleBattleWindow(u8 r0, u8 r1, u8 r2, u8 r3, u8 sp0);
 void nullsub_6(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
-u8 CountAliveMons(u8 caseID);
+u8 CountAliveMonsInBattle(u8 caseId);
 void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
 u8 IsRunningFromBattleImpossible(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
@@ -1476,7 +1476,7 @@ static void atk06_typecalc(void)
     if (gCurrentMove != MOVE_STRUGGLE)
     {
         if (gBattleStruct->dynamicMoveType)
-            moveType = gBattleStruct->dynamicMoveType & 0x3F;
+            moveType = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK;
         else
             moveType = gBattleMoves[gCurrentMove].type;
 
@@ -1954,7 +1954,7 @@ static void atk0C_datahpupdate(void)
     if (gBattleStruct->dynamicMoveType == 0)
         moveType = gBattleMoves[gCurrentMove].type;
     else if (!(gBattleStruct->dynamicMoveType & 0x40))
-        moveType = gBattleStruct->dynamicMoveType & 0x3F;
+        moveType = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK;
     else
         moveType = gBattleMoves[gCurrentMove].type;
 
@@ -6273,7 +6273,7 @@ static void atk7E_setreflect(void)
     {
         gSideStatuses[GetBattlerPosition(gBattlerAttacker) & 1] |= SIDE_STATUS_REFLECT;
         gSideTimers[GetBattlerPosition(gBattlerAttacker) & 1].reflectTimer = 5;
-        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMons(1) == 2)
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(BATTLE_ALIVE_ATK_SIDE) == 2)
             gBattleCommunication[MULTISTRING_CHOOSER] = 2;
         else
             gBattleCommunication[MULTISTRING_CHOOSER] = 1;
@@ -6909,7 +6909,7 @@ static void atk92_setlightscreen(void)
     {
         gSideStatuses[GetBattlerPosition(gBattlerAttacker) & 1] |= SIDE_STATUS_LIGHTSCREEN;
         gSideTimers[GetBattlerPosition(gBattlerAttacker) & 1].lightscreenTimer = 5;
-        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMons(1) == 2)
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(BATTLE_ALIVE_ATK_SIDE) == 2)
             gBattleCommunication[MULTISTRING_CHOOSER] = 4;
         else
             gBattleCommunication[MULTISTRING_CHOOSER] = 3;

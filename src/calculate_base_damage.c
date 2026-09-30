@@ -6,6 +6,7 @@
 #include "constants/moves.h"
 #include "constants/species.h"
 #include "battle.h"
+#include "battle_util.h"
 #include "berry.h"
 #include "data2.h"
 #include "event_data.h"
@@ -48,9 +49,9 @@ const u8 gStatStageRatios[][2] =
     {40, 10}  //  6
 };
 
-const u8 unknownGameFreakAbbrev_820825E[] = _("ゲーフリ");
+const u8 gJPText_GameFreakAbbrev[] = _("ゲーフリ");
 
-const u8 gHoldEffectToType[][2] =
+static const u8 sHoldEffectToType[][2] =
 {
     {HOLD_EFFECT_BUG_POWER,      TYPE_BUG},
     {HOLD_EFFECT_STEEL_POWER,    TYPE_STEEL},
@@ -71,7 +72,7 @@ const u8 gHoldEffectToType[][2] =
     {HOLD_EFFECT_NORMAL_POWER,   TYPE_NORMAL}
 };
 
-u8 GetBattlerSide(u8 bank);
+u8 GetBattlerSide(u8 battler);
 
 #define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \
 {                                                                                   \
@@ -79,18 +80,18 @@ u8 GetBattlerSide(u8 bank);
     (var) /= (gStatStageRatios)[(mon)->statStages[(statIndex)]][1];                 \
 }
 
-#define BADGE_BOOST(badge, stat, bank) ({ \
+#define BADGE_BOOST(badge, stat, battler) ({ \
 if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER))) \
 { \
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) \
     && gTrainerBattleOpponent != SECRET_BASE_OPPONENT \
     && FlagGet(FLAG_BADGE0##badge##_GET) \
-    && GetBattlerSide(bank) == B_SIDE_PLAYER) \
+    && GetBattlerSide(battler) == B_SIDE_PLAYER) \
         (stat) = (110 * (stat)) / 100; \
 } \
 })
 
-s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 bankAtk, u8 bankDef)
+s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef)
 {
     u32 i;
     s32 damage = 0;
@@ -111,7 +112,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (!typeOverride)
         type = gBattleMoves[move].type;
     else
-        type = typeOverride & 0x3F;
+        type = typeOverride & DYNAMIC_TYPE_MASK;
 
     attack = attacker->attack;
     defense = defender->defense;
@@ -120,8 +121,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (attacker->item == ITEM_ENIGMA_BERRY)
     {
-        attackerHoldEffect = gEnigmaBerries[bankAtk].holdEffect;
-        attackerHoldEffectParam = gEnigmaBerries[bankAtk].holdEffectParam;
+        attackerHoldEffect = gEnigmaBerries[battlerIdAtk].holdEffect;
+        attackerHoldEffectParam = gEnigmaBerries[battlerIdAtk].holdEffectParam;
     }
     else
     {
@@ -131,8 +132,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (defender->item == ITEM_ENIGMA_BERRY)
     {
-        defenderHoldEffect = gEnigmaBerries[bankDef].holdEffect;
-        defenderHoldEffectParam = gEnigmaBerries[bankDef].holdEffectParam;
+        defenderHoldEffect = gEnigmaBerries[battlerIdDef].holdEffect;
+        defenderHoldEffectParam = gEnigmaBerries[battlerIdDef].holdEffectParam;
     }
     else
     {
@@ -143,15 +144,15 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (attacker->ability == ABILITY_HUGE_POWER || attacker->ability == ABILITY_PURE_POWER)
         attack *= 2;
 
-    BADGE_BOOST(1, attack, bankAtk);
-    BADGE_BOOST(5, defense, bankDef);
-    BADGE_BOOST(7, spAttack, bankAtk);
-    BADGE_BOOST(7, spDefense, bankDef);
+    BADGE_BOOST(1, attack, battlerIdAtk);
+    BADGE_BOOST(5, defense, battlerIdDef);
+    BADGE_BOOST(7, spAttack, battlerIdAtk);
+    BADGE_BOOST(7, spDefense, battlerIdDef);
 
-    for (i = 0; i < 17; i++)
+    for (i = 0; i < ARRAY_COUNT(sHoldEffectToType); i++)
     {
-        if (attackerHoldEffect == gHoldEffectToType[i][0]
-            && type == gHoldEffectToType[i][1])
+        if (attackerHoldEffect == sHoldEffectToType[i][0]
+            && type == sHoldEffectToType[i][1])
         {
             if (IS_TYPE_PHYSICAL(type))
                 attack = (attack * (attackerHoldEffectParam + 100)) / 100;
@@ -189,9 +190,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         attack = (150 * attack) / 100;
     if (defender->ability == ABILITY_MARVEL_SCALE && defender->status1)
         defense = (150 * defense) / 100;
-    if (type == TYPE_ELECTRIC && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, 0, 0xFD, 0))
+    if (type == TYPE_ELECTRIC && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, 0, ABILITYEFFECT_MUD_SPORT, 0))
         gBattleMovePower /= 2;
-    if (type == TYPE_FIRE && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, 0, 0xFE, 0))
+    if (type == TYPE_FIRE && AbilityBattleEffects(ABILITYEFFECT_FIELD_SPORT, 0, 0, ABILITYEFFECT_WATER_SPORT, 0))
         gBattleMovePower /= 2;
     if (type == TYPE_GRASS && attacker->ability == ABILITY_OVERGROW && attacker->hp <= (attacker->maxHP / 3))
         gBattleMovePower = (150 * gBattleMovePower) / 100;
@@ -208,7 +209,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     {
         if (gCritMultiplier == 2)
         {
-            if (attacker->statStages[STAT_STAGE_ATK] > 6)
+            if (attacker->statStages[STAT_STAGE_ATK] > DEFAULT_STAT_STAGE)
                 APPLY_STAT_MOD(damage, attacker, attack, STAT_STAGE_ATK)
             else
                 damage = attack;
@@ -221,7 +222,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
         if (gCritMultiplier == 2)
         {
-            if (defender->statStages[STAT_STAGE_DEF] < 6)
+            if (defender->statStages[STAT_STAGE_DEF] < DEFAULT_STAT_STAGE)
                 APPLY_STAT_MOD(damageHelper, defender, defense, STAT_STAGE_DEF)
             else
                 damageHelper = defense;
@@ -237,13 +238,13 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
         if ((sideStatus & SIDE_STATUS_REFLECT) && gCritMultiplier == 1)
         {
-            if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && CountAliveMons(2) == 2)
+            if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
                 damage = 2 * (damage / 3);
             else
                 damage /= 2;
         }
 
-        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == 8 && CountAliveMons(2) == 2)
+        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
             damage /= 2;
 
         // moves always do at least 1 damage.
@@ -258,7 +259,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     {
         if (gCritMultiplier == 2)
         {
-            if (attacker->statStages[STAT_STAGE_SPATK] > 6)
+            if (attacker->statStages[STAT_STAGE_SPATK] > DEFAULT_STAT_STAGE)
                 APPLY_STAT_MOD(damage, attacker, spAttack, STAT_STAGE_SPATK)
             else
                 damage = spAttack;
@@ -271,7 +272,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
         if (gCritMultiplier == 2)
         {
-            if (defender->statStages[STAT_STAGE_SPDEF] < 6)
+            if (defender->statStages[STAT_STAGE_SPDEF] < DEFAULT_STAT_STAGE)
                 APPLY_STAT_MOD(damageHelper, defender, spDefense, STAT_STAGE_SPDEF)
             else
                 damageHelper = spDefense;
@@ -284,13 +285,13 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
         if ((sideStatus & SIDE_STATUS_LIGHTSCREEN) && gCritMultiplier == 1)
         {
-            if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && CountAliveMons(2) == 2)
+            if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
                 damage = 2 * (damage / 3);
             else
                 damage /= 2;
         }
 
-        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == 8 && CountAliveMons(2) == 2)
+        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
             damage /= 2;
 
         // are effects of weather negated with cloud nine or air lock
@@ -330,7 +331,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         }
 
         // flash fire triggered
-        if ((eBattleFlagsArr.arr[bankAtk] & 1) && type == TYPE_FIRE)
+        if ((eBattleFlagsArr.arr[battlerIdAtk] & 1) && type == TYPE_FIRE)
             damage = (15 * damage) / 10;
     }
 

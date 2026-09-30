@@ -497,10 +497,12 @@ struct BattleAnimationInfo
     u8 field_F;
 };
 
+#define DYNAMIC_TYPE_MASK ((1 << 6) - 1)
+
 #define GET_MOVE_TYPE(move, typeArg)                        \
 {                                                           \
     if (gBattleStruct->dynamicMoveType)                     \
-        typeArg = gBattleStruct->dynamicMoveType & 0x3F;    \
+        typeArg = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK; \
     else                                                    \
         typeArg = gBattleMoves[move].type;                  \
 }
