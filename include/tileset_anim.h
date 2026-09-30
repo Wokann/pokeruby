@@ -1,10 +1,10 @@
 #ifndef GUARD_TITLE_SCREEN_H
 #define GUARD_TITLE_SCREEN_H
 
-void sub_8072E74(void);
-void cur_mapheader_run_tileset_funcs_after_some_cpuset(void);
-void sub_8072ED0(void);
-void sub_8072EDC(void);
+void TransferTilesetAnimsBuffer(void);
+void InitTilesetAnimations(void);
+void InitSecondaryTilesetAnimation(void);
+void UpdateTilesetAnimations(void);
 void TilesetCB_General(void);
 void TilesetCB_Building(void);
 void TilesetCB_Petalburg(void);

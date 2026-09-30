@@ -46,7 +46,6 @@ extern void (*gFieldCallback)(void);
 extern u8 gFieldLinkPlayerCount;
 extern u8 gLocalLinkPlayerId;
 
-// sub_8052F5C
 void Overworld_ResetStateAfterFly(void);
 void Overworld_ResetStateAfterTeleport(void);
 void Overworld_ResetStateAfterDigEscRope(void);
@@ -95,8 +94,6 @@ void SetDefaultFlashLevel(void);
 void Overworld_SetFlashLevel(s32 a1);
 u8 Overworld_GetFlashLevel(void);
 void SetCurrentMapLayout(u16 mapLayoutId);
-// sub_8053D30
-// sub_8053D6C
 // GetLocationMusic
 // GetCurrLocationDefaultMusic
 // GetWarpDestinationMusic

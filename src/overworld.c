@@ -369,7 +369,7 @@ static void mapdata_load_assets_to_gpu_and_full_redraw(void)
     CopyMapTilesetsToVram(gMapHeader.mapLayout);
     LoadMapTilesetPalettes(gMapHeader.mapLayout);
     DrawWholeMapView();
-    cur_mapheader_run_tileset_funcs_after_some_cpuset();
+    InitTilesetAnimations();
 }
 
 static struct MapLayout *GetMapLayout(void)
@@ -642,7 +642,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     for (paletteIndex = 6; paletteIndex < 12; paletteIndex++)
         ApplyWeatherColorMapToPal(paletteIndex);
 
-    sub_8072ED0();
+    InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
     RoamerMove();
     DoCurrentWeather();
@@ -1245,7 +1245,7 @@ static void OverworldBasic(void)
     UpdateCameraPanning();
     BuildOamBuffer();
     UpdatePaletteFade();
-    sub_8072EDC();
+    UpdateTilesetAnimations();
 }
 
 // This CB2 is used when starting
@@ -1532,7 +1532,7 @@ static void VBlankCB_Field(void)
     ScanlineEffect_InitHBlankDmaTransfer();
     FieldUpdateBgTilemapScroll();
     TransferPlttBuffer();
-    sub_8072E74();
+    TransferTilesetAnimsBuffer();
 }
 
 static void InitCurrentFlashLevelScanlineEffect(void)
@@ -1600,7 +1600,7 @@ static bool32 LoadMapInStepsLink(u8 *state)
         (*state)++;
         break;
     case 10:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 12:
@@ -1666,7 +1666,7 @@ bool32 LoadMapInStepsLocal(u8 *state, u32 a2)
         (*state)++;
         break;
     case 10:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 11:
@@ -1756,7 +1756,7 @@ bool32 ReturnToFieldLink(u8 *state)
         (*state)++;
         break;
     case 9:
-        cur_mapheader_run_tileset_funcs_after_some_cpuset();
+        InitTilesetAnimations();
         (*state)++;
         break;
     case 12:

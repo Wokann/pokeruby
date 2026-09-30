@@ -467,7 +467,7 @@ static void QueueTilesetAnimDma(const void *src, const void *dest, u16 size)
     }
 }
 
-void sub_8072E74(void)
+void TransferTilesetAnimsBuffer(void)
 {
     int i;
     for (i = 0; i < gNumTilesetAnimDmas; i++)
@@ -480,19 +480,19 @@ void sub_8072E74(void)
     gNumTilesetAnimDmas = 0;
 }
 
-void cur_mapheader_run_tileset_funcs_after_some_cpuset(void)
+void InitTilesetAnimations(void)
 {
     ClearTilesetAnimDmas();
     StartTileset1Animation();
     StartTileset2Animation();
 }
 
-void sub_8072ED0(void)
+void InitSecondaryTilesetAnimation(void)
 {
     StartTileset2Animation();
 }
 
-void sub_8072EDC(void)
+void UpdateTilesetAnimations(void)
 {
     ClearTilesetAnimDmas();
     if (++gTileset1AnimFrame >= gTileset1AnimLength)
