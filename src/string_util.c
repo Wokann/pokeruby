@@ -3,7 +3,7 @@
 #include "strings.h"
 #include "text.h"
 
-u8 gUnknownStringVar[16];
+u8 sUnknownStringVar[16];
 
 const u8 gText_EmptyString[] = _("");
 const u8 gRightPointingTriangleString[] = _("▶");
@@ -434,7 +434,7 @@ u8 *StringBraille(u8 *dest, const u8 *src)
 
 static const u8 *ExpandPlaceholder_UnknownStringVar(void)
 {
-    return gUnknownStringVar;
+    return sUnknownStringVar;
 }
 
 static const u8 *ExpandPlaceholder_PlayerName(void)
