@@ -11,14 +11,17 @@ gText_NurseJoy_ThankYouForWaiting:: @ 81A0B14
 	.string "Danke!\p"
 	.string "Deine POKéMON sind wieder topfit!$"
 
-UnknownString_81A0B57: @ 81A0B57
+@ Unused
+gText_CableClubTradeCenterWelcome:: @ 81A0B57
 	.string "Willkommen im POKéMON KABEL-CLUB-\n"
 	.string "HANDELSCENTER.$"
 
-UnknownString_81A0B87: @ 81A0B87
+@ Unused
+gText_CableClubColosseumWelcome:: @ 81A0B87
 	.string "Willkommen im POKéMON KABEL-CLUB-\n"
 	.string "KOLOSSEUM.$"
 
-UnknownString_81A0BB4: @ 81A0BB4
+@ Unused
+gText_CableClubTimeCapsuleWelcome:: @ 81A0BB4
 	.string "Willkommen in der POKéMON KABEL-CLUB-\n"
 	.string "ZEITKAPSEL.$"
