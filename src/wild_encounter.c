@@ -171,7 +171,7 @@ static u8 ChooseWildMonIndex_Land(void)
         return 11;
 }
 
-static u8 ChooseWildMonIndex_Water(void)
+static u8 ChooseWildMonIndex_WaterRock(void)
 {
     u8 rand = Random() % ENCOUNTER_CHANCE_WATER_MONS_TOTAL;
 
@@ -322,10 +322,10 @@ static bool8 GenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 area,
         wildMonIndex = ChooseWildMonIndex_Land();
         break;
     case 1:
-        wildMonIndex = ChooseWildMonIndex_Water();
+        wildMonIndex = ChooseWildMonIndex_WaterRock();
         break;
     case 2:
-        wildMonIndex = ChooseWildMonIndex_Water();
+        wildMonIndex = ChooseWildMonIndex_WaterRock();
         break;
     }
     level = ChooseWildMonLevel(&wildMonInfo->wildPokemon[wildMonIndex]);
@@ -639,7 +639,7 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
     if (landMonsInfo == NULL && waterMonsInfo != NULL)
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_WaterRock()].species;
     }
     //Either land or water Pokemon
     if ((Random() % 100) < 80)
@@ -647,7 +647,7 @@ u16 GetLocalWildMon(bool8 *isWaterMon)
     else
     {
         *isWaterMon = TRUE;
-        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+        return waterMonsInfo->wildPokemon[ChooseWildMonIndex_WaterRock()].species;
     }
 }
 
@@ -660,7 +660,7 @@ u16 GetLocalWaterMon(void)
         const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerNum].waterMonsInfo;
 
         if (waterMonsInfo)
-            return waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+            return waterMonsInfo->wildPokemon[ChooseWildMonIndex_WaterRock()].species;
     }
     return 0;
 }
