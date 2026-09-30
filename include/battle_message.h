@@ -34,7 +34,7 @@ struct BattleMsgData
 #define B_TXT_ATK_PARTNER_NAME 0xB
 #define B_TXT_ATK_NAME_WITH_PREFIX 0xC
 #define B_TXT_DEF_NAME_WITH_PREFIX 0xD
-#define B_TXT_EFF_NAME_WITH_PREFIX 0xE // EFF = short for gEffectBank
+#define B_TXT_EFF_NAME_WITH_PREFIX 0xE // EFF = short for gEffectBattler
 #define B_TXT_ACTIVE_NAME_WITH_PREFIX 0xF
 #define B_TXT_SCR_ACTIVE_NAME_WITH_PREFIX 0x10
 #define B_TXT_CURRENT_MOVE 0x11
@@ -183,20 +183,20 @@ struct BattleMsgData
     textVar[4] = B_BUFF_EOS;                                    \
 }
 
-#define PREPARE_MON_NICK_WITH_PREFIX_BUFFER(textVar, bank, partyId)         \
+#define PREPARE_MON_NICK_WITH_PREFIX_BUFFER(textVar, battler, partyId)      \
 {                                                                           \
     textVar[0] = B_BUFF_PLACEHOLDER_BEGIN;                                  \
     textVar[1] = B_BUFF_MON_NICK_WITH_PREFIX;                               \
-    textVar[2] = bank;                                                      \
+    textVar[2] = battler;                                                   \
     textVar[3] = partyId;                                                   \
     textVar[4] = B_BUFF_EOS;                                                \
 }
 
-#define PREPARE_MON_NICK_BUFFER(textVar, bank, partyId)         \
+#define PREPARE_MON_NICK_BUFFER(textVar, battler, partyId)      \
 {                                                               \
     textVar[0] = B_BUFF_PLACEHOLDER_BEGIN;                      \
     textVar[1] = B_BUFF_MON_NICK;                               \
-    textVar[2] = bank;                                          \
+    textVar[2] = battler;                                       \
     textVar[3] = partyId;                                       \
     textVar[4] = B_BUFF_EOS;                                    \
 }
