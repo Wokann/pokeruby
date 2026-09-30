@@ -310,19 +310,19 @@ const struct SubspriteTable gOutlineCursorWindowSubspriteTable[] = {
     {3, sMenuCursorSubsprites}
 };
 
-const struct Subsprite gUnknown_0842F760 = {
+const struct Subsprite gUnusedOutlineCursorSubsprite_Left = {
     .y = -1, .shape = ST_OAM_V_RECTANGLE, .size = 1
 };
 
-const struct Subsprite gUnknown_0842F768 = {
+const struct Subsprite gUnusedOutlineCursorSubsprite_Right = {
     .y = -1, .shape = ST_OAM_V_RECTANGLE, .size = 1, .tileOffset = 8
 };
 
-const struct Subsprite gUnknown_0842F770 = {
+const struct Subsprite gUnusedOutlineCursorSubsprite_BodyLarge = {
     .y = -1, .shape = ST_OAM_SQUARE, .size = 2, .tileOffset = 12
 };
 
-const struct Subsprite gUnknown_0842F778 = {
+const struct Subsprite gUnusedOutlineCursorSubsprite_BodySmall = {
     .y = -1, .shape = ST_OAM_V_RECTANGLE, .size = 1, .tileOffset = 4
 };
 
