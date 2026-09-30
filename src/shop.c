@@ -331,45 +331,45 @@ static void BuyMenuDrawTextboxBG_Old(u16 *array, s16 offset1, s16 offset2)
     array[offset1 + offset2 + 1] = 0xC3E1;
 }
 
-static void BuyMenuDrawMapMetatileLayer(u16 *array, s16 offset1, s16 offset2, u16 *array2)
+static void BuyMenuDrawMapMetatileLayer(u16 *dest, s16 offset1, s16 offset2, u16 *src)
 {
     // This function draws a whole 2x2 metatile.
-    array[offset1 + offset2] = array2[0]; // top left
-    array[offset1 + offset2 + 1] = array2[1]; // top right
-    array[offset1 + offset2 + 32] = array2[2]; // bottom left
-    array[offset1 + offset2 + 33] = array2[3]; // bottom right
+    dest[offset1 + offset2] = src[0]; // top left
+    dest[offset1 + offset2 + 1] = src[1]; // top right
+    dest[offset1 + offset2 + 32] = src[2]; // bottom left
+    dest[offset1 + offset2 + 33] = src[3]; // bottom right
 }
 
-static void BuyMenuDrawMapMetatile(s16 var1, s16 var2, u16 *var3, u8 var4)
+static void BuyMenuDrawMapMetatile(s16 x, s16 y, u16 *src, u8 metatileLayerType)
 {
-    var1 <<= 1;
-    var2 = (var2 <<6) + 0x40;
+    x <<= 1;
+    y = (y <<6) + 0x40;
 
-    switch (var4)
+    switch (metatileLayerType)
     {
     case 0:
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], var1, var2, var3);
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[1], var1, var2, var3 + 4);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], x, y, src);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[1], x, y, src + 4);
         break;
     case 1:
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], var1, var2, var3);
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], var1, var2, var3 + 4);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], x, y, src);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], x, y, src + 4);
         break;
     case 2:
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], var1, var2, var3);
-        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[1], var1, var2, var3 + 4);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], x, y, src);
+        BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[1], x, y, src + 4);
         break;
     }
 }
 
 // used to draw the border tiles around the viewport.
-static void BuyMenuDrawMapPartialMetatile(s16 var1, s16 var2, u16 *var3)
+static void BuyMenuDrawMapPartialMetatile(s16 x, s16 y, u16 *src)
 {
-    var1 <<=1;
-    var2 = (var2 << 6) + 0x40;
+    x <<=1;
+    y = (y << 6) + 0x40;
 
-    BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], var1, var2, var3);
-    BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], var1, var2, var3 + 4);
+    BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[3], x, y, src);
+    BuyMenuDrawMapMetatileLayer(gBGTilemapBuffers[2], x, y, src + 4);
 }
 
 static void Shop_DrawViewportTiles(void)
@@ -523,7 +523,7 @@ static void Shop_DisplayPriceInCheckoutWindow(u8 taskId)
     FillBgTilemapRect(gBGTilemapBuffers[1], 1, 11, 12, 2, 0xC3E1);
 }
 
-static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControlCode)
+static void Shop_DisplayNormalPriceInList(u16 itemId, u8 y, bool32 hasControlCode)
 {
     u8 *stringPtr = gStringVar1;
 
@@ -537,17 +537,17 @@ static void Shop_DisplayNormalPriceInList(u16 itemId, u8 var2, bool32 hasControl
 
     CopyItemName(itemId, stringPtr);
 
-    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
+    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, y << 3, 0x58, 0x1);
     stringPtr = gStringVar1;
 
     if (hasControlCode)
         stringPtr = &gStringVar1[3];
 
     GetMoneyAmountText(stringPtr, (GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)), 0x4);
-    Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, var2 << 3, 1);
+    Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, y << 3, 1);
 }
 
-static void Shop_DisplayDecorationPriceInList(u16 itemId, u8 var2, bool32 hasControlCode)
+static void Shop_DisplayDecorationPriceInList(u16 itemId, u8 y, bool32 hasControlCode)
 {
     u8 *stringPtr = gStringVar1;
 
@@ -560,7 +560,7 @@ static void Shop_DisplayDecorationPriceInList(u16 itemId, u8 var2, bool32 hasCon
     }
 
     StringCopy(stringPtr, gDecorations[itemId].name);
-    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, var2 << 3, 0x58, 0x1);
+    Menu_PrintTextWithNewlineIndent(&gStringVar1[0], 0x70, y << 3, 0x58, 0x1);
     stringPtr = gStringVar1;
 
     if (hasControlCode)
@@ -571,12 +571,12 @@ static void Shop_DisplayDecorationPriceInList(u16 itemId, u8 var2, bool32 hasCon
     // is the maximum decoration price in order to fit it on screen.
     if (gDecorations[itemId].price == 10000)
     {
-        Draw10000Sprite(0x19, var2, hasControlCode);
+        Draw10000Sprite(0x19, y, hasControlCode);
     }
     else
     {
         GetMoneyAmountText(stringPtr, gDecorations[itemId].price, 0x4);
-        Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, var2 << 3, 0x1);
+        Menu_PrintTextPixelCoords(&gStringVar1[0], 0xCA, y << 3, 0x1);
     }
 }
 
