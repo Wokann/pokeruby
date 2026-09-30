@@ -1717,14 +1717,14 @@ void PrintLinkStandbyMsg(void)
 
 void PlayerHandleGetMonData(void)
 {
-    u8 unkData[0x100];
+    u8 monData[0x100];
     u32 offset = 0;
     u8 r4;
     s32 i;
 
     if (gBattleBufferA[gActiveBattler][2] == 0)
     {
-        offset += CopyPlayerMonData(gBattlerPartyIndexes[gActiveBattler], unkData);
+        offset += CopyPlayerMonData(gBattlerPartyIndexes[gActiveBattler], monData);
     }
     else
     {
@@ -1732,11 +1732,11 @@ void PlayerHandleGetMonData(void)
         for (i = 0; i < 6; i++)
         {
             if (r4 & 1)
-                offset += CopyPlayerMonData(i, unkData + offset);
+                offset += CopyPlayerMonData(i, monData + offset);
             r4 >>= 1;
         }
     }
-    BtlController_EmitDataTransfer(1, offset, unkData);
+    BtlController_EmitDataTransfer(1, offset, monData);
     PlayerBufferExecCompleted();
 }
 
