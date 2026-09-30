@@ -80,7 +80,7 @@ void SetFixedDiveWarp(s8, s8, s8, s8, s8);
 // warp1_set_to_warp2
 void SetFixedHoleWarp(s8, s8, s8, s8, s8);
 void SetFixedHoleWarpAsDestination(s16, s16);
-void SetContinueGameWarpToHealLocation(u8);
+void SetContinueGameWarpToHealLocation(u8 healLocationId);
 void gpu_sync_bg_hide();
 // GetMapConnection
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
@@ -143,10 +143,10 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 void CB2_ReturnToFieldFadeFromBlack(void);
 void CB2_ContinueSavedGame(void);
 void FieldClearVBlankHBlankCallbacks(void);
-bool32 LoadMapInStepsLocal(u8 *, u32);
-bool32 ReturnToFieldLocal(u8 *);
-bool32 ReturnToFieldLink(u8 *a1);
-void DoMapLoadLoop(u8 *a1);
+bool32 LoadMapInStepsLocal(u8 *state, u32 a2);
+bool32 ReturnToFieldLocal(u8 *state);
+bool32 ReturnToFieldLink(u8 *state);
+void DoMapLoadLoop(u8 *state);
 void ResetScreenForMapLoad(void);
 void InitViewGraphics(void);
 void ResumeMap(u32 a1);

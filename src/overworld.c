@@ -558,11 +558,11 @@ void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
     SetWarpData(&gSaveBlock1.warp1, mapGroup, mapNum, warpId, x, y);
 }
 
-void SetContinueGameWarpToHealLocation(u8 a1)
+void SetContinueGameWarpToHealLocation(u8 healLocationId)
 {
-    const struct HealLocation *warp = GetHealLocation(a1);
-    if (warp)
-        SetWarpData(&gSaveBlock1.warp1, warp->mapGroup, warp->mapNum, -1, warp->x, warp->y);
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
+    if (healLocation)
+        SetWarpData(&gSaveBlock1.warp1, healLocation->mapGroup, healLocation->mapNum, -1, healLocation->x, healLocation->y);
 }
 
 void gpu_sync_bg_hide()
@@ -1269,9 +1269,9 @@ void SetMainCallback1(MainCallback cb)
     gMain.callback1 = cb;
 }
 
-void SetKeyInterceptCallback(u16 (*a1)(u32))
+void SetKeyInterceptCallback(u16 (*func)(u32))
 {
-    sPlayerKeyInterceptCallback = a1;
+    sPlayerKeyInterceptCallback = func;
 }
 
 static void RunFieldCallback(void)
@@ -1775,9 +1775,9 @@ bool32 ReturnToFieldLink(u8 *state)
     return 0;
 }
 
-void DoMapLoadLoop(u8 *a1)
+void DoMapLoadLoop(u8 *state)
 {
-    while (!LoadMapInStepsLocal(a1, 0))
+    while (!LoadMapInStepsLocal(state, 0))
         ;
 }
 
@@ -2516,7 +2516,7 @@ static void ZeroObjectEvent(struct ObjectEvent *objEvent)
     memset(objEvent, 0, sizeof(struct ObjectEvent));
 }
 
-static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
+static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 gender)
 {
     u8 objEventId = GetFirstInactiveObjectEventId();
     struct LinkPlayerObjectEvent *linkPlayerObjEvent = &gLinkPlayerObjectEvents[linkPlayerId];
@@ -2531,7 +2531,7 @@ static void SpawnLinkPlayerObjectEvent(u8 linkPlayerId, s16 x, s16 y, u8 a4)
     linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 
     objEvent->active = 1;
-    objEvent->singleMovementActive = a4;
+    objEvent->singleMovementActive = gender;
     objEvent->range.as_byte = DIR_NORTH;
     objEvent->spriteId = MAX_SPRITES;
 
