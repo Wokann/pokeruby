@@ -2370,7 +2370,7 @@ s8 FindInactiveShowInArray(TVShow tvShows[])
 void DeactivateShowsWithUnseenSpecies(void)
 {
     u16 i;
-    u16 j;
+    u16 species;
 
     for (i = 0; i < LAST_TVSHOW_IDX; i++)
     {
@@ -2382,52 +2382,52 @@ void DeactivateShowsWithUnseenSpecies(void)
             case TVSHOW_MASS_OUTBREAK:
                 break;
             case TVSHOW_FAN_CLUB_LETTER:
-                j = (&gSaveBlock1.tvShows[i])->fanclubLetter.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->fanclubLetter.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_PKMN_FAN_CLUB_OPINIONS:
-                j = (&gSaveBlock1.tvShows[i])->fanclubOpinions.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->fanclubOpinions.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_DUMMY:
-                j = (&gSaveBlock1.tvShows[i])->dummy.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->dummy.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_NAME_RATER_SHOW:
-                j = (&gSaveBlock1.tvShows[i])->nameRaterShow.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
-                j = (&gSaveBlock1.tvShows[i])->nameRaterShow.randomSpecies;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->nameRaterShow.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
+                species = (&gSaveBlock1.tvShows[i])->nameRaterShow.randomSpecies;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_BRAVO_TRAINER_POKEMON_PROFILE:
-                j = (&gSaveBlock1.tvShows[i])->bravoTrainer.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->bravoTrainer.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_BRAVO_TRAINER_BATTLE_TOWER_PROFILE:
-                j = (&gSaveBlock1.tvShows[i])->bravoTrainerTower.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
-                j = (&gSaveBlock1.tvShows[i])->bravoTrainerTower.defeatedSpecies;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->bravoTrainerTower.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
+                species = (&gSaveBlock1.tvShows[i])->bravoTrainerTower.defeatedSpecies;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_POKEMON_TODAY_CAUGHT:
-                j = (&gSaveBlock1.tvShows[i])->pokemonToday.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->pokemonToday.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_POKEMON_TODAY_FAILED:
-                j = (&gSaveBlock1.tvShows[i])->pokemonTodayFailed.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
-                j = (&gSaveBlock1.tvShows[i])->pokemonTodayFailed.species2;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->pokemonTodayFailed.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
+                species = (&gSaveBlock1.tvShows[i])->pokemonTodayFailed.species2;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_FISHING_ADVICE:
-                j = (&gSaveBlock1.tvShows[i])->pokemonAngler.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->pokemonAngler.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             case TVSHOW_WORLD_OF_MASTERS:
-                j = (&gSaveBlock1.tvShows[i])->worldOfMasters.species;
-                DeactivateShowIfNotSeenSpecies(j, i);
-                j = (&gSaveBlock1.tvShows[i])->worldOfMasters.caughtPoke;
-                DeactivateShowIfNotSeenSpecies(j, i);
+                species = (&gSaveBlock1.tvShows[i])->worldOfMasters.species;
+                DeactivateShowIfNotSeenSpecies(species, i);
+                species = (&gSaveBlock1.tvShows[i])->worldOfMasters.caughtPoke;
+                DeactivateShowIfNotSeenSpecies(species, i);
                 break;
             default:
                 DeactivateShow(i);
