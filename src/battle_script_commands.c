@@ -5767,7 +5767,7 @@ static void atk6B_atknameinbuff1(void)
 extern const u8 BattleText_Format2[];
 extern const u8 BattleText_Dash[];
 extern const u8 BattleText_Plus[];
-extern const u8 *const gUnknown_0840165C[];
+extern const u8 *const gLvlUpStatStrings[];
 
 static void atk6C_drawlvlupbox(void)
 {
@@ -5784,7 +5784,7 @@ static void atk6C_drawlvlupbox(void)
         for (i = 0; i < 6; i++)
         {
             sign = FALSE;
-            r5 = StringAppend(r5, gUnknown_0840165C[i]);
+            r5 = StringAppend(r5, gLvlUpStatStrings[i]);
             r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
             switch (i)
             {
@@ -5856,7 +5856,7 @@ static void atk6C_drawlvlupbox(void)
             for (i = 0; i < 6; i++)
             {
                 sign = FALSE;
-                r5 = StringAppend(r5, gUnknown_0840165C[i]);
+                r5 = StringAppend(r5, gLvlUpStatStrings[i]);
                 r1 = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], gLevelUpStatBoxStats[i]);
                 r5[0] = EXT_CTRL_CODE_BEGIN;
                 r5[1] = EXT_CTRL_CODE_CLEAR_TO;

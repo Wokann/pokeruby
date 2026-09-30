@@ -1579,7 +1579,7 @@ const u16 gTrappingMoves[] =
     0xFFFF,
 };
 
-const u8 *const gUnknown_0840165C[] =
+const u8 *const gLvlUpStatStrings[] =
 {
     BattleText_HP,
     BattleText_SpAtk,
