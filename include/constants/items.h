@@ -184,9 +184,9 @@
 #define ITEM_LANSAT_BERRY 173
 #define ITEM_STARF_BERRY 174
 #define ITEM_ENIGMA_BERRY 175
-#define ITEM_0B0 176
-#define ITEM_0B1 177
-#define ITEM_0B2 178
+#define ITEM_UNUSED_BERRY_1 176
+#define ITEM_UNUSED_BERRY_2 177
+#define ITEM_UNUSED_BERRY_3 178
 
 // hold items
 #define ITEM_BRIGHT_POWDER 179
@@ -410,7 +410,7 @@
 #define ITEM_TO_BERRY(itemId)(((itemId - FIRST_BERRY_INDEX) + 1))
 
 // Check if the item is one that can be used on a Pokemon.
-#define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
+#define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= ITEM_UNUSED_BERRY_3)
 
 #define IS_ITEM_MAIL(item) ((item) >= ITEM_ORANGE_MAIL && (item) <= ITEM_RETRO_MAIL)
 #define ITEM_TO_MAIL(itemId) ((itemId) - FIRST_MAIL_INDEX)
