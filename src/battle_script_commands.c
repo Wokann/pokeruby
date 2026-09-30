@@ -18,6 +18,7 @@
 #include "battle_controllers.h"
 #include "constants/species.h"
 #include "pokemon.h"
+#include "pokemon_item_effect.h"
 #include "text.h"
 #include "palette.h"
 #include "pokedex.h"
@@ -171,7 +172,6 @@ void nullsub_6(void);
 void BattleMainCB2(void);
 void AddMoney(u32* moneySaveblock, u32 to_give);
 u8 CountAliveMonsInBattle(u8 caseId);
-void PokemonUseItemEffects(struct Pokemon*, u16 item, u8 partyID, u8 r3, u8 sp);
 u8 IsRunningFromBattleImpossible(void);
 u8 GetMoveTarget(u16 move, u8 targetbyte); //get target of move
 u8 CastformDataTypeChange(u8 bank);
@@ -6009,7 +6009,7 @@ static void atk74_hpthresholds2(void)
 static void atk75_useitemonopponent(void)
 {
     gBattlerInMenuId = gBattlerAttacker;
-    PokemonUseItemEffects(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], 0, 1);
+    PokemonUseItemEffects(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], 0, TRUE);
     gBattlescriptCurrInstr += 1;
 }
 

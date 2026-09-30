@@ -174,7 +174,7 @@ void Task_WaitForPartyMenuMessage(u8 taskId);
 void Task_WaitForPartyMenuMessageThenFollowup(u8 taskId);
 void PartyMenuUpdateLevelOrStatus(struct Pokemon *, u8);
 void GetMedicineItemEffectMessage(u16);
-bool8 ExecuteTableBasedItemEffect__(u8, u16, u8);
+bool8 ExecuteTableBasedItemEffectForPartyMon(u8 monIndex, u16 item, u8 moveIndex);
 void UseMedicine(u8, u16, TaskFunc);
 bool8 IsBlueYellowRedFlute(u16);
 void DoSacredAshItemEffect(u8, u16, TaskFunc);

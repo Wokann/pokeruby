@@ -3664,12 +3664,12 @@ bool8 IsMedicineIneffective(struct Pokemon *pkmn, u16 item)
         return FALSE;
 }
 
-bool8 ExecuteTableBasedItemEffect__(u8 monIndex, u16 item, u8 moveIndex)
+bool8 ExecuteTableBasedItemEffectForPartyMon(u8 monIndex, u16 item, u8 moveIndex)
 {
     if (gMain.inBattle)
-        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, GetPartyIdFromBattleSlot(monIndex), moveIndex);
+        return ExecuteTableBasedItemEffect(&gPlayerParty[monIndex], item, GetPartyIdFromBattleSlot(monIndex), moveIndex);
     else
-        return ExecuteTableBasedItemEffect_(&gPlayerParty[monIndex], item, monIndex, moveIndex);
+        return ExecuteTableBasedItemEffect(&gPlayerParty[monIndex], item, monIndex, moveIndex);
 }
 
 void UseMedicine(u8 taskId, u16 item, TaskFunc func)
@@ -3695,7 +3695,7 @@ void UseMedicine(u8 taskId, u16 item, TaskFunc func)
                 gTasks[r7].data[11] = 0;
             }
         }
-        r0 = ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, item, 0);
+        r0 = ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.primarySelectedMonIndex, item, 0);
     }
     else
     {
@@ -3786,7 +3786,7 @@ void sub_8070088(u8 taskId)
         gPartyMenu.pokemon = &gPlayerParty[gPartyMenu.primarySelectedMonIndex];
         taskData[10] = GetMonData(gPartyMenu.pokemon, MON_DATA_MAX_HP);
         taskData[11] = GetMonData(gPartyMenu.pokemon, MON_DATA_HP);
-        if (ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, 0))
+        if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, 0))
         {
             DestroyTask(taskId2);
             gTasks[taskId].func = sub_80701DC;
@@ -3938,7 +3938,7 @@ void DoRecoverPP(u8 taskId)
 {
     u16 r5 = 0;
 
-    if (ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, gTasks[taskId].data[11]))
+    if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.primarySelectedMonIndex, gPartyMenu.secondarySelectedIndex, gTasks[taskId].data[11]))
     {
         gPartyMenuActionResult = 0;
         PlaySE(SE_SELECT);
@@ -4010,7 +4010,7 @@ void DoRareCandyItemEffect(u8 taskId, u16 item, TaskFunc c)
     {
         for (i = 0; i < NUM_STATS; i++)
             ePartyMenu2.pmStatGrowths[i] = GetMonData(gPartyMenu.pokemon, StatDataTypes[i]);
-        noEffect = ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, item, 0);
+        noEffect = ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.primarySelectedMonIndex, item, 0);
     }
     else
         noEffect = TRUE;
@@ -4281,7 +4281,7 @@ void DoEvolutionStoneItemEffect(u8 taskId, u16 evolutionStoneItem, TaskFunc c)
 
     gCB2_AfterEvolution = CB2_BagMenuFromStartMenu;
 
-    if (ExecuteTableBasedItemEffect__(gPartyMenu.primarySelectedMonIndex, evolutionStoneItem, 0))
+    if (ExecuteTableBasedItemEffectForPartyMon(gPartyMenu.primarySelectedMonIndex, evolutionStoneItem, 0))
     {
         gPartyMenuActionResult = 0;
         DisplayPartyMenuMessage(gOtherText_WontHaveAnyEffect, 1);

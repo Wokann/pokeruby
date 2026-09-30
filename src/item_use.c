@@ -954,7 +954,7 @@ void ItemUseInBattle_StatIncrease(u8 taskId)
 
     Menu_EraseWindowRect(0, 13, 13, 20);
 
-    if (ExecuteTableBasedItemEffect_(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
+    if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
     {
         DisplayItemMessageOnField(taskId, gOtherText_WontHaveAnyEffect, CleanUpItemMenuMessage, 1);
     }
@@ -1003,7 +1003,7 @@ void ItemUseInBattle_UnusedConfusionCure(u8 var)
 {
     Menu_EraseWindowRect(0, 13, 13, 20);
 
-    if (ExecuteTableBasedItemEffect__(0, gSpecialVar_ItemId, 0) == FALSE)
+    if (ExecuteTableBasedItemEffectForPartyMon(0, gSpecialVar_ItemId, 0) == FALSE)
     {
         RemoveBagItem(gSpecialVar_ItemId, 1);
         GetMonNickname(&gPlayerParty[0], gStringVar1);
