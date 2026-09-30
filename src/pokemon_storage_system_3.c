@@ -79,7 +79,7 @@ void InitMonIconFields(void)
     for (i = 0; i < IN_BOX_COUNT; i++)
         gPokemonStorageSystemPtr->boxMonsSprites[i] = NULL;
     gPokemonStorageSystemPtr->movingMonSprite = NULL;
-    gPokemonStorageSystemPtr->unk_0d5c = 0;
+    gPokemonStorageSystemPtr->unkUnused1 = 0;
 }
 
 void CreateMovingMonIcon(void)

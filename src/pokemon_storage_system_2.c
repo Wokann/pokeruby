@@ -1886,7 +1886,7 @@ static void PrintMessage(u8 id)
         break;
     }
 
-    while (ptr < gPokemonStorageSystemPtr->unk_26a6)
+    while (ptr < gPokemonStorageSystemPtr->messageTextBoundary)
     {
         ptr[0] = CHAR_SPACE;
         ptr++;

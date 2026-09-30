@@ -195,7 +195,7 @@ struct PokemonStorageSystemData {
     u8 partyMenuTilemapBuffer[0x800];
     u16 partyMenuUnused1;
     u16 partyMenuY;
-    u8 unk_08ac;
+    u8 partyMenuUnused2; // Unused.
     u8 partyMenuMoveTimer;
     u8 showPartyMenuState;
     u8 closeBoxFlashing;
@@ -224,7 +224,7 @@ struct PokemonStorageSystemData {
     struct Sprite *arrowSprites[2];
     u32 wallpaperPalBits;
     u8 filler_0d0c[0x50];
-    u16 unk_0d5c;
+    u16 unkUnused1; // Never read.
     s16 wallpaperSetId;
     s16 wallpaperId;
     u16 wallpaperTilemap[360];
@@ -312,7 +312,8 @@ struct PokemonStorageSystemData {
         struct BoxPokemon *box;
     } summaryMon;
     u8 messageText[18];
-    u8 unk_26a6[62];
+    // Its address is used as the one-past-end boundary for messageText.
+    u8 messageTextBoundary[62];
     u8 releaseMonName[0x16];
     u16 displayMonPalOffset;
     u16 *displayMonTilePtr;
