@@ -528,7 +528,6 @@ struct BattleAnimationInfo
 
 #define SET_STATCHANGER(statId, stage, goesDown)(gBattleScripting.statChanger = (statId) + (stage << 4) + (goesDown << 7))
 
-extern struct BattleHistory unk_2016A00;
 extern struct DisableStruct gDisableStructs[MAX_BATTLERS_COUNT];
 extern struct BattleResults gBattleResults;
 extern struct ProtectStruct gProtectStructs[MAX_BATTLERS_COUNT];
