@@ -29,10 +29,11 @@ void ClearDecorationInventory(u8 category)
 
 void ClearDecorationInventories(void)
 {
-    u8 i;
-    for (i = 0; i < 8; i++)
+    u8 category;
+
+    for (category = 0; category < DECORCAT_COUNT; category++)
     {
-        ClearDecorationInventory(i);
+        ClearDecorationInventory(category);
     }
 }
 
@@ -145,10 +146,11 @@ u8 GetNumOwnedDecorationsInCategory(u8 category)
 
 u8 GetNumOwnedDecorations(void)
 {
-    u8 i;
+    u8 category;
     u8 count = 0;
-    for (i = 0; i < 8; i++)
-        count += GetNumOwnedDecorationsInCategory(i);
+
+    for (category = 0; category < DECORCAT_COUNT; category++)
+        count += GetNumOwnedDecorationsInCategory(category);
 
     return count;
 }
