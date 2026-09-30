@@ -102,7 +102,7 @@ static void CreateReflectionEffectSprites(void);
 static u8 GetObjectEventIdByLocalIdAndMapInternal(u8, u8, u8);
 static u8 GetObjectEventIdByLocalId(u8);
 static void RemoveObjectEventInternal(struct ObjectEvent *);
-static void MakeObjectTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
+static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);
 static void RemoveObjectEventIfOutsideView(struct ObjectEvent *objectEvent);
 static void SetPlayerAvatarObjectEventIdAndObjectId(u8, u8);
 static void ResetObjectEventFldEffData(struct ObjectEvent *);
@@ -1400,7 +1400,7 @@ static u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEv
     const struct SubspriteTable *subspriteTables = NULL;
 
     graphicsInfo = GetObjectEventGraphicsInfo(objectEventTemplate->graphicsId);
-    MakeObjectTemplateFromObjectEventTemplate(objectEventTemplate, &spriteTemplate, &subspriteTables);
+    MakeSpriteTemplateFromObjectEventTemplate(objectEventTemplate, &spriteTemplate, &subspriteTables);
     spriteFrameImage.size = graphicsInfo->size;
     spriteTemplate.images = &spriteFrameImage;
     objectEventId = TrySetupObjectEventSprite(objectEventTemplate, &spriteTemplate, mapNum, mapGroup, cameraDeltaX, cameraDeltaY);
@@ -1460,7 +1460,7 @@ u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup)
     return TrySpawnObjectEventTemplate(objectEventTemplate, mapNum, mapGroup, x, y);
 }
 
-void MakeObjectTemplateFromObjectEventGraphicsInfo(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
+void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
     const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
 
@@ -1474,14 +1474,14 @@ void MakeObjectTemplateFromObjectEventGraphicsInfo(u16 graphicsId, void (*callba
     *subspriteTables = graphicsInfo->subspriteTables;
 }
 
-static void MakeObjectTemplateFromObjectEventGraphicsInfoWithCallbackIndex(u16 graphicsId, u16 movementType, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
+static void CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(u16 graphicsId, u16 movementType, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, sMovementTypeCallbacks[movementType], spriteTemplate, subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, sMovementTypeCallbacks[movementType], spriteTemplate, subspriteTables);
 }
 
-static void MakeObjectTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
+static void MakeSpriteTemplateFromObjectEventTemplate(const struct ObjectEventTemplate *objEventTemplate, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    MakeObjectTemplateFromObjectEventGraphicsInfoWithCallbackIndex(objEventTemplate->graphicsId, objEventTemplate->movementType, spriteTemplate, subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(objEventTemplate->graphicsId, objEventTemplate->movementType, spriteTemplate, subspriteTables);
 }
 
 u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority)
@@ -1490,7 +1490,7 @@ u8 AddPseudoObjectEvent(u16 graphicsId, void (*callback)(struct Sprite *), s16 x
     const struct SubspriteTable *subspriteTables;
     u8 spriteId;
 
-    MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, callback, &spriteTemplate, &subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, callback, &spriteTemplate, &subspriteTables);
     if (spriteTemplate.paletteTag != TAG_NONE)
     {
         LoadObjectEventPalette(spriteTemplate.paletteTag);
@@ -1512,7 +1512,7 @@ u8 CreateVirtualObject(u8 graphicsId, u8 virtualObjId, s16 x, s16 y, u8 elevatio
     const struct ObjectEventGraphicsInfo *graphicsInfo;
 
     graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
-    MakeObjectTemplateFromObjectEventGraphicsInfo(graphicsId, SpriteCB_VirtualObject, &spriteTemplate, &subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, SpriteCB_VirtualObject, &spriteTemplate, &subspriteTables);
     *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
     x += 7;
     y += 7;
@@ -1654,7 +1654,7 @@ void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
     subspriteTables = NULL;
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
     spriteFrameImage.size = graphicsInfo->size;
-    MakeObjectTemplateFromObjectEventGraphicsInfoWithCallbackIndex(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
+    CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
     spriteTemplate.images = &spriteFrameImage;
     *(u16 *)&spriteTemplate.paletteTag = TAG_NONE;
     if (graphicsInfo->paletteSlot == PALSLOT_PLAYER)
