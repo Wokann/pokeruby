@@ -353,14 +353,14 @@ void MarkBattlerForControllerExec(u8 battler)
         gBattleControllerExecFlags |= gBitTable[battler];
 }
 
-void MarkBattlerReceivedLinkData(u8 arg0)
+void MarkBattlerReceivedLinkData(u8 battler)
 {
     s32 i;
 
     for (i = 0; i < GetLinkPlayerCount(); i++)
-        gBattleControllerExecFlags |= gBitTable[arg0] << (i << 2);
+        gBattleControllerExecFlags |= gBitTable[battler] << (i << 2);
 
-    gBattleControllerExecFlags &= ~(0x10000000 << arg0);
+    gBattleControllerExecFlags &= ~(0x10000000 << battler);
 }
 
 void CancelMultiTurnMoves(u8 battler)
